@@ -1,0 +1,7 @@
+[General]
+tags = Тест, test, двойной тег
+type = html
+
+[Section1]
+param1 = абырвалг
+param2 = 125

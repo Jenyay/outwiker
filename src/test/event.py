@@ -1,0 +1,346 @@
+#!/usr/bin/env python
+# -*- coding: UTF-8 -*-
+
+"""
+Тесты обработки событий
+"""
+
+import os.path
+import shutil
+import unittest
+
+from core.tree import RootWikiPage, WikiDocument
+from pages.text.textpage import TextPageFactory
+from pages.html.htmlpage import HtmlPageFactory
+from core.event import Event
+from core.controller import Controller
+from core.factory import FactorySelector
+from test.utils import removeWiki
+
+
+class EventTest (unittest.TestCase):
+	def setUp (self):
+		self.value1 = 0
+		self.value2 = 0
+		self.value3 = 0
+
+	def event1 (self):
+		self.value1 = 1
+
+	def event2 (self, param):
+		self.value2 = 2
+
+	def event3 (self, param):
+		self.value3 = 3
+
+	def testAdd1 (self):
+		event = Event()
+		event += self.event1
+
+		event()
+
+		self.assertEqual (self.value1, 1)
+		self.assertEqual (self.value2, 0)
+
+
+	def testAdd2 (self):
+		event = Event()
+		event += self.event2
+
+		event(111)
+
+		self.assertEqual (self.value1, 0)
+		self.assertEqual (self.value2, 2)
+
+
+	def testAdd3 (self):
+		event = Event()
+		event += self.event2
+		event += self.event3
+
+		event(111)
+
+		self.assertEqual (self.value2, 2)
+		self.assertEqual (self.value3, 3)
+
+
+	def testRemove1 (self):
+		event = Event()
+		event += self.event1
+		event -= self.event1
+
+		event()
+
+		self.assertEqual (self.value1, 0)
+
+	def testRemove2 (self):
+		event = Event()
+		event += self.event2
+		event += self.event3
+		event -= self.event2
+
+		event(111)
+
+		self.assertEqual (self.value2, 0)
+		self.assertEqual (self.value3, 3)
+
+
+class EventsTest (unittest.TestCase):
+	def setUp (self):
+		self.isPageUpdate = False
+		self.isPageCreate = False
+		self.isTreeUpdate = False
+		self.isPageSelect = False
+		
+		self.pageUpdateSender = None
+		self.pageCreateSender = None
+		self.treeUpdateSender = None
+		self.pageSelectSender = None
+
+		self.pageUpdateCount = 0
+		self.pageCreateCount = 0
+		self.treeUpdateCount = 0
+		self.pageSelectCount = 0
+
+	def tearDown(self):
+		path = u"../test/testwiki"
+		removeWiki (path)
+
+	def pageUpdate (self, sender):
+		self.isPageUpdate = True
+		self.pageUpdateSender = sender
+		self.pageUpdateCount += 1
+
+	def pageCreate(self, sender):
+		self.isPageCreate = True
+		self.pageCreateSender = sender
+		self.pageCreateCount += 1
+
+	def treeUpdate (self, sender):
+		self.isTreeUpdate = True
+		self.treeUpdateSender = sender
+		self.treeUpdateCount += 1
+
+	def pageSelect (self, sender):
+		self.isPageSelect = True
+		self.pageSelectSender = sender
+		self.pageSelectCount += 1
+
+
+	def testLoad (self):
+		path = u"../test/samplewiki"
+		Controller.instance().onTreeUpdate += self.treeUpdate
+
+		self.assertFalse(self.isTreeUpdate)
+		root = WikiDocument.load (path)
+
+		self.assertTrue (self.isTreeUpdate)
+		self.assertEqual (self.treeUpdateSender, root)
+		self.assertEqual (self.treeUpdateCount, 1)
+
+		# Отключимся от события и проверим, что оно больше не вызывается
+		Controller.instance().onTreeUpdate -= self.treeUpdate
+		self.isTreeUpdate = False
+		self.treeUpdateSender = None
+
+		root = WikiDocument.load (path)
+
+		self.assertFalse (self.isTreeUpdate)
+		self.assertEqual (self.treeUpdateSender, None)
+
+
+	def testCreate (self):
+		Controller.instance().onTreeUpdate += self.treeUpdate
+		Controller.instance().onPageCreate += self.pageCreate
+
+		path = u"../test/testwiki"
+		removeWiki (path)
+
+		self.assertFalse(self.isTreeUpdate)
+		self.assertFalse(self.isPageUpdate)
+		self.assertFalse(self.isPageCreate)
+
+		# Создаем вики
+		rootwiki = WikiDocument.create (path)
+
+		self.assertTrue(self.isTreeUpdate)
+		self.assertEqual (self.treeUpdateSender, rootwiki)
+
+		# Создаем страницу верхнего уровня (не считая корня)
+		self.setUp()
+
+		TextPageFactory.create (rootwiki, u"Страница 1", [])
+		self.assertTrue(self.isTreeUpdate)
+		self.assertEqual (self.treeUpdateSender, rootwiki[u"Страница 1"])
+		
+		self.assertTrue(self.isPageCreate)
+		self.assertEqual (self.pageCreateSender, rootwiki[u"Страница 1"])
+
+		# Создаем еще одну страницу
+		self.setUp()
+
+		TextPageFactory.create (rootwiki, u"Страница 2", [])
+		self.assertTrue(self.isTreeUpdate)
+		self.assertEqual (self.treeUpdateSender, rootwiki[u"Страница 2"])
+
+		self.assertTrue(self.isPageCreate)
+		self.assertEqual (self.pageCreateSender, rootwiki[u"Страница 2"])
+
+		# Создаем подстраницу
+		self.setUp()
+
+		TextPageFactory.create (rootwiki[u"Страница 2"], u"Страница 3", [])
+		self.assertTrue(self.isTreeUpdate)
+		self.assertEqual (self.treeUpdateSender, rootwiki[u"Страница 2/Страница 3"])
+
+		self.assertTrue(self.isPageCreate)
+		self.assertEqual (self.pageCreateSender, rootwiki[u"Страница 2/Страница 3"])
+
+		Controller.instance().onTreeUpdate -= self.treeUpdate
+		Controller.instance().onPageCreate -= self.pageCreate
+
+
+	def testUpdateContent (self):
+		"""
+		Тест на срабатывание событий при обновлении контента
+		"""
+		Controller.instance().onPageUpdate += self.pageUpdate
+
+		path = u"../test/testwiki"
+		removeWiki (path)
+
+		self.assertFalse(self.isTreeUpdate)
+		self.assertFalse(self.isPageUpdate)
+		self.assertFalse(self.isPageCreate)
+
+		# Создаем вики
+		rootwiki = WikiDocument.create (path)
+		TextPageFactory.create (rootwiki, u"Страница 1", [])
+
+		# Изменим содержимое страницы
+		rootwiki[u"Страница 1"].content = "1111"
+		
+		self.assertTrue(self.isPageUpdate)
+		self.assertEqual (self.pageUpdateSender, rootwiki[u"Страница 1"])
+
+		Controller.instance().onPageUpdate -= self.pageUpdate
+
+
+	def testUpdateTags (self):
+		"""
+		Тест на срабатывание событий при обновлении меток (тегов)
+		"""
+		Controller.instance().onPageUpdate += self.pageUpdate
+
+		path = u"../test/testwiki"
+		removeWiki (path)
+
+		self.assertFalse(self.isTreeUpdate)
+		self.assertFalse(self.isPageUpdate)
+		self.assertFalse(self.isPageCreate)
+
+		# Создаем вики
+		rootwiki = WikiDocument.create (path)
+		TextPageFactory.create (rootwiki, u"Страница 1", [])
+
+		# Изменим содержимое страницы
+		rootwiki[u"Страница 1"].tags = ["test"]
+		
+		self.assertTrue(self.isPageUpdate)
+		self.assertEqual (self.pageUpdateSender, rootwiki[u"Страница 1"])
+
+		Controller.instance().onPageUpdate -= self.pageUpdate
+
+
+	def testUpdateIcon (self):
+		"""
+		Тест на срабатывание событий при обновлении иконки
+		"""
+		Controller.instance().onPageUpdate += self.pageUpdate
+		Controller.instance().onTreeUpdate += self.treeUpdate
+
+		path = u"../test/testwiki"
+		removeWiki (path)
+
+		self.assertFalse(self.isTreeUpdate)
+		self.assertFalse(self.isPageUpdate)
+		self.assertFalse(self.isPageCreate)
+
+		# Создаем вики
+		rootwiki = WikiDocument.create (path)
+		TextPageFactory.create (rootwiki, u"Страница 1", [])
+
+		# Изменим содержимое страницы
+		rootwiki[u"Страница 1"].icon = "../test/images/feed.gif"
+		
+		self.assertTrue (self.isPageUpdate)
+		self.assertEqual (self.pageUpdateSender, rootwiki[u"Страница 1"])
+		
+		self.assertTrue (self.isTreeUpdate)
+		self.assertEqual (self.treeUpdateSender, rootwiki[u"Страница 1"])
+
+		Controller.instance().onPageUpdate -= self.pageUpdate
+		Controller.instance().onTreeUpdate -= self.treeUpdate
+
+
+	def testPageSelectCreate (self):
+		Controller.instance().onPageSelect += self.pageSelect
+
+		path = u"../test/testwiki"
+		removeWiki (path)
+
+		rootwiki = WikiDocument.create (path)
+		TextPageFactory.create (rootwiki, u"Страница 1", [])
+		TextPageFactory.create (rootwiki, u"Страница 2", [])
+		TextPageFactory.create (rootwiki[u"Страница 2"], u"Страница 3", [])
+
+		self.assertEqual (rootwiki.selectedPage, None)
+
+		rootwiki.selectedPage = rootwiki[u"Страница 1"]
+		
+		self.assertEqual (rootwiki.selectedPage, rootwiki[u"Страница 1"])
+		self.assertEqual (self.isPageSelect, True)
+		self.assertEqual (self.pageSelectSender, rootwiki[u"Страница 1"])
+		self.assertEqual (self.pageSelectCount, 1)
+
+		rootwiki.selectedPage = rootwiki[u"Страница 2/Страница 3"]
+
+		self.assertEqual (rootwiki.selectedPage, rootwiki[u"Страница 2/Страница 3"])
+		self.assertEqual (self.isPageSelect, True)
+		self.assertEqual (self.pageSelectSender, rootwiki[u"Страница 2/Страница 3"])
+		self.assertEqual (self.pageSelectCount, 2)
+
+		Controller.instance().onPageSelect -= self.pageSelect
+
+
+	def testPageSelectLoad (self):
+		Controller.instance().onPageSelect += self.pageSelect
+
+		path = u"../test/testwiki"
+		removeWiki (path)
+
+		rootwiki = WikiDocument.create (path)
+		TextPageFactory.create (rootwiki, u"Страница 1", [])
+		TextPageFactory.create (rootwiki, u"Страница 2", [])
+		TextPageFactory.create (rootwiki[u"Страница 2"], u"Страница 3", [])
+
+
+		document = WikiDocument.load (path)
+
+		self.assertEqual (document.selectedPage, None)
+
+		document.selectedPage = document[u"Страница 1"]
+		
+		self.assertEqual (document.selectedPage, document[u"Страница 1"])
+		self.assertEqual (self.isPageSelect, True)
+		self.assertEqual (self.pageSelectSender, document[u"Страница 1"])
+		self.assertEqual (self.pageSelectCount, 1)
+
+		document.selectedPage = document[u"Страница 2/Страница 3"]
+
+		self.assertEqual (document.selectedPage, document[u"Страница 2/Страница 3"])
+		self.assertEqual (self.isPageSelect, True)
+		self.assertEqual (self.pageSelectSender, document[u"Страница 2/Страница 3"])
+		self.assertEqual (self.pageSelectCount, 2)
+
+		Controller.instance().onPageSelect -= self.pageSelect

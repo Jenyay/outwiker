@@ -1,0 +1,42 @@
+#!/usr/bin/env python
+# -*- coding: UTF-8 -*-
+"""
+Необходимые классы для создания страниц с HTML
+"""
+
+import os.path
+
+from core.tree import WikiPage
+from HtmlPanel import HtmlPagePanel
+
+class HtmlWikiPage (WikiPage):
+	"""
+	Класс HTML-страниц
+	"""
+	def __init__ (self, path, subpath, create = False):
+		WikiPage.__init__ (self, path, subpath, create = False)
+
+
+class HtmlPageFactory (object):
+	type = u"html"
+
+	def __init__ (self):
+		pass
+
+	@staticmethod
+	def create (parent, title, tags):
+		assert not title.startswith ("__")
+
+		path = os.path.join (parent.path, title)
+		page = HtmlWikiPage.create (parent, path, title, HtmlPageFactory.type, tags)
+		return page
+
+	@staticmethod
+	def getPageView (page, parent):
+		"""
+		Вернуть контрол, который будет отображать и редактировать страницу
+		"""
+		panel = HtmlPagePanel (parent)
+		panel.page = page
+
+		return panel

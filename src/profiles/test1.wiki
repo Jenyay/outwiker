@@ -1,0 +1,186 @@
+﻿!!! Tables
+
+||border=1 width=350
+||left aligned || centered || right aligned||
+||left aligned || centered || right aligned||
+||left aligned || centered || right aligned||
+
+---------
+
+|| border=1
+|| '''Синтаксис''' || '''Результат''' || '''Комментарий''' ||
+||[=http://example.com=]||http://example.com||Ссылка на адрес в интернете||
+||[=[[http://example.com]]=]||[[http://example.com]]||Ссылка на адрес в интернете||
+||[=[[Пример ссылки -> http://example.com]]=]||[[Пример ссылки -> http://example.com]]||Ссылка на адрес в интернете с заданным текстом||
+||[=[[http://example.com | Пример ссылки]]=]||[[http://example.com | Пример ссылки]]||Ссылка на адрес в интернете с заданным текстом||
+
+----
+
+|| width = 350
+||left aligned || centered || right aligned||
+||left aligned || centered || right aligned||
+||left aligned || centered || right aligned||
+
+----
+
+
+||border=1
+||!table caption!||
+||left aligned || centered || right aligned||
+||!column heading||
+||spanned columns ||||||
+
+!!! External links
+
+http://example.com
+[[http://example.com]]
+[[http://example.com | link text]]
+[[link text -> http://example.com]]
+
+http://jenyay.net/Photo/Nature?action=imgtpl&G=1&upname=tsaritsyno_01.jpg.;,* sdf
+
+!!! Page links
+
+[[PageName]] 
+[[PageName | link text]]
+[[link text -> PageName]]
+
+[[#anchor]] (to create an anchor)
+[[#anchor | link text]] (to refer to an anchor)
+[[PageName#anchor | link text]] (to refer to an anchor in another page)
+
+!!! Attach links
+
+Attach:file.odt
+[[Attach:file.odt]]
+[[Attach:file.odt | alternative text ]]
+[[Attach:file with spaces.pdf]]
+
+!!! Images
+
+http://jenyay.net/social/feed.png
+Attach:image.gif
+Attach:Groupname./image.gif
+Attach:Groupname.Pagename/image.gif
+
+%width=200px% Attach:first.jpg %%
+
+%thumb width=200px% Attach:first.jpg %%
+
+% height=200px% Attach:first.jpg %%
+
+%thumb height=200px% Attach:first.jpg %%
+
+%thumb% Attach:first.jpg %%
+
+%thumb% Attach:first_rotate.jpg %%
+
+%thumb maxsize = 300 % Attach:first.jpg %%
+
+%maxsize = 300 % Attach:first.jpg %%
+
+%thumb maxsize=300 % Attach:first_rotate.jpg %%
+
+%maxsize=300 % Attach:first_rotate.jpg %%
+
+!!! Images as links
+
+[[Текстовая страница | Attach:image.gif]] 
+[[http://example.com/ | Attach:image.gif]] 
+[[Attach:image.gif]]
+
+!!! Lists
+
+* unordered list '''(item 1)'''\
+* unordered ''list'' (item 2)
+* unordered [[list -> http://jenyay.net]] (item 3)\\\бла-бла-бла
+* unordered list (item 4) http://jenyay.net [[<<]] dsf sdf 
+** deeper list 1
+** deeper list 2
+** deeper list 3
+** deeper list 4
+*** deeper list 1
+*** deeper list 2
+** deeper list 3
+** deeper list 4
+
+# ordered list 1
+# ordered list 2\\\бла-бла-бла
+# ordered list 3
+# ordered list 4[[<<]] dsf sdf 
+# ordered list 5
+## deeper list 1
+## deeper list 2
+## deeper list 3
+### deeper list 1
+### deeper list 2
+## deeper list 4
+
+----
+* Несортированный список. Элемент 1
+* Несортированный список. Элемент 2
+* Несортированный список. Элемент 3
+## Вложенный сортированный список. Элемент 1
+## Вложенный сортированный список. Элемент 2
+## Вложенный сортированный список. Элемент 3
+## Вложенный сортированный список. Элемент 4
+*** Совсем вложенный сортированный список. Элемент 1
+*** Совсем вложенный сортированный список. Элемент 2
+## Вложенный сортированный список. Элемент 5
+** Вложенный несортированный список. Элемент 1
+
+----
+
+# %item value=#% arbitrary start number
+# %decimal%, %roman%, %ROMAN%, %alpha%, %ALPHA%
+
+----
+
+!!! Headings
+
+!! Heading
+!!! Deeper heading
+!!!! Deeper heading
+!!!!! Deeper heading
+!!!!!! Deeper heading
+!!!!!!! Deeper heading
+
+----
+
+!!! Paragraph blocks
+
+-> indented text
+-< hanging indent
+<space> preformatted text
+[@...@] preformatted block
+---- (horizontal rule)
+blank line is vertical space
+\ at end of line joins next line
+\\ at end of line produces a line break
+\\\ at the end of a line produces a blank line, even within a list item
+[[<<]] produces a line break that clears floating content
+
+!!! Text markup
+
+''italic''
+'''strong'''
+''''strong italic''''
+@@monospaced@@
+[-small-], [--smaller--]
+[+big+], [++bigger++]
+'-small-', '+big+'
+'^superscript^', '_subscript_'
+{+inserted+} (underscore, underline)
+{-deleted-} (strikethrough)
+[@escaped code@]
+[=escaped text=]
+
+!!! Structured tables
+
+See Table directives
+(:table attr:)
+(:cellnr attr:)
+(:cell attr:)
+(:tableend:)
+Directives
+
