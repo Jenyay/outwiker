@@ -887,3 +887,11 @@ sdfsdf || centered || right aligned||
 		result = u'бла-бла-бла <B><I>x<SUP>c</SUP></I></B> бла-бла-бла'
 
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+	def testUrlParse1 (self):
+		text = u"http://example.com/,"
+		result = u'<A HREF="http://example.com/">http://example.com/</A>,'
+
+		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+

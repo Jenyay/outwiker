@@ -18,7 +18,7 @@ def replaceBreakes (text):
 
 
 def noConvert (s, l, t):
-		return t[0]
+	return t[0]
 
 
 class ThumbException (Exception):
@@ -348,7 +348,7 @@ class Parser (object):
 	
 
 	def __getUrlToken (self):
-		token =  Regex ("([0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}|(((news|telnet|nttp|file|http|ftp|https)://)|(www|ftp)[-A-Za-z0-9]*\\.)[-A-Za-z0-9\\.]+)(:[0-9]*)?(/[-A-Za-z0-9_\\$\\.\\+\\!\\*\\(\\),;:@&=\\?/~\\#\\%]*)?", re.IGNORECASE)
+		token =  Regex ("([0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}|(((news|telnet|nttp|file|http|ftp|https)://)|(www|ftp)[-A-Za-z0-9]*\\.)[-A-Za-z0-9\\.]+)(:[0-9]*)?(/[-A-Za-z0-9_\\$\\.\\+\\!\\*\\(\\):@&=\\?/~\\#\\%]*)?", re.IGNORECASE)
 
 		token.setParseAction(self.__convertToLink)
 		return token
