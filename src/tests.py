@@ -22,6 +22,7 @@ from test.search import SearcherTest, TagsListTest, SearchPageTest
 from test.localsearch import LocalSearchTest
 from test.movepages import MoveTest
 from test.parser import ParserTest
+from test.htmlimprover_test import HtmlImproverTest
 
 
 if __name__ == '__main__':

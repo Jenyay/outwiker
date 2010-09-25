@@ -10,6 +10,7 @@ from gui.BaseTextPanel import BaseTextPanel
 from wikiparser import Parser
 from core.config import Config
 from core.tree import RootWikiPage
+from pages.wiki.htmlimprover import HtmlImprover
 
 class WikiPagePanel (HtmlPanel):
 	def __init__ (self, *args, **kwds):
@@ -261,7 +262,7 @@ class WikiPagePanel (HtmlPanel):
 
 		parser = Parser (page)
 
-		text = self.improveHtml (parser.toCompleteHtml (page.content) )
+		text = HtmlImprover.run (parser.toCompleteHtml (page.content) )
 
 		with open (path, "wb") as fp:
 			fp.write (text.encode ("utf-8"))
@@ -269,37 +270,6 @@ class WikiPagePanel (HtmlPanel):
 		self._saveHash (page, hash)
 
 		return path
-
-
-	def improveHtml (self, text):
-		"""
-		Сделать HTML более читаемым
-		"""
-		result = self.ireplace (text, "<p>", "\n\n<p>")
-		result = self.ireplace (result, "<br>", "\n<br>")
-		result = self.ireplace (result, "<br/>", "\n<br/>")
-
-		result = self.ireplace (result, "<html>", "<html>\n")
-		result = self.ireplace (result, "</html>", "\n</html>")
-		
-		result = self.ireplace (result, "<head>", "<head>\n")
-		result = self.ireplace (result, "</head>", "\n</head>")
-		
-		result = self.ireplace (result, "<body>", "\n<body>\n")
-		result = self.ireplace (result, "</body>", "\n</body>")
-		
-		result = self.ireplace (result, "<li>", "\n<li>")
-
-		return result
-
-
-	def ireplace (self, text, old, new):
-		"""
-		Замена заглавных и прописных строк тегов
-		"""
-		result = text.replace (old.lower(), new.lower())
-		result = result.replace (old.upper(), new.upper())
-		return result
 
 
 	def removeGui (self):

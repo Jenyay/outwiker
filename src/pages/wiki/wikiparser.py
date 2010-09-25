@@ -969,14 +969,49 @@ class Parser (object):
 
 		text = text.replace ("\r\n", "\n")
 
-		text = self.toHtml (text)
-
-		text = text.replace ("\n\n", "<p>")
-		text = text.replace ("\n", "<br>")
-		text = text.replace ("<br><li>", "<li>")
+		text = self.__replaceEndlines (self.toHtml (text) )
 
 		text = template % text
 
 		return text
+
+
+	def __replaceEndlines (self, text):
+		"""
+		Заменить переводы строк, но не трогать текст внутри <PRE>...</PRE>
+		"""
+		text_lower = text.lower()
+
+		starttag = "<pre>"
+		endtag = "</pre>"
+
+		# Разобьем строку по <pre>
+		part1 = text_lower.split (starttag)
+
+		# Подстроки разобьем по </pre>
+		parts2 = [item.split (endtag) for item in part1]
+
+		# Склеим части в один массив
+		parts = reduce (lambda x, y: x + y, parts2, [])
+
+		# В четных элементах массива заменим переводы строк, а нечетные оставим как есть
+		# Строки берем из исходного текста с учетом пропущенных в массиве тегов <pre> и </pre>
+		result = u""
+		index = 0
+
+		for n in range (len (parts)):
+			item = text[index: index + len (parts[n]) ]
+			if n % 2 == 0:
+				item = item.replace ("\n\n", "<p>")
+				item = item.replace ("\n", "<br>")
+				item = item.replace ("<br><li>", "<li>")
+				index += len (parts[n]) + len (starttag)
+			else:
+				item = "<PRE>" + item + "</PRE>"
+				index += len (parts[n]) + len (endtag)
+
+			result += item
+
+		return result
 
 
