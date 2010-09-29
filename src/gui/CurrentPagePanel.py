@@ -63,11 +63,13 @@ class CurrentPagePanel(wx.Panel):
 		"""
 		Событие при выборе страницы
 		"""
+		self.Freeze()
 		self.destroyPageView()
 
 		self.currentPage = page
 		self.updatePageInfo (page)
 		self.updatePageView (page)
+		self.Thaw()
 
 
 	def onPageUpdate (self, page):
@@ -99,15 +101,9 @@ class CurrentPagePanel(wx.Panel):
 			assert self.pageView != None
 
 			self.contentSizer.Add (self.pageView, 1, wx.EXPAND, 0)
-			#wx.GetApp().GetTopWindow().Layout()
 			self.Layout()
 
 			self.pageView.initGui(wx.GetApp().GetTopWindow() )
-
-
-		#self.GetParent().Layout()
-		#wx.GetApp().GetTopWindow().Layout()
-		#self.GetParent().Layout()
 
 
 	def updatePageInfo (self, page):
