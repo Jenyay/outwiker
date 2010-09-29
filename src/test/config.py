@@ -7,8 +7,10 @@
 import unittest
 import os
 import ConfigParser
+import shutil
 
-from core.config import Config
+from core.config import Config, getConfigPath
+import core.system
 
 
 class ConfigTest (unittest.TestCase):
@@ -61,3 +63,57 @@ class ConfigTest (unittest.TestCase):
 		
 		result = config.remove_section (u"Секция 1")
 		self.assertEqual (config.has_section (u"Секция 1"), False)
+	
+
+	def testPortableConfig (self):
+		"""
+		Проверка правильности определения расположения конфига при хранении его в папке с программой
+		"""
+		dirname = u".outwiker_test"
+		fname = u"outwiker_test.ini"
+
+		programDir = core.system.getCurrentDir()
+		localPath = os.path.join (programDir, fname)
+
+		# Создадим файл рядом с запускаемым файлом
+		fp = open (localPath, "w")
+		fp.close()
+		
+		fullpath = getConfigPath(dirname, fname)
+
+		self.assertEqual (localPath, fullpath)
+
+		# Удалим созданный файл
+		os.remove (localPath)
+	
+
+	def testNotPortableConfig1 (self):
+		"""
+		Проверка правильности определения расположения конфига при хранении его в папке профиля
+		"""
+		dirname = u".outwiker_test"
+		fname = u"outwiker_test.ini"
+
+		programDir = core.system.getCurrentDir()
+		localPath = os.path.join (programDir, fname)
+
+		# На всякий случай проверим, что файла в локальной папке нет, иначе удалим его
+		if os.path.exists (localPath):
+			os.remove (localPath)
+
+		homeDir = os.path.join (os.path.expanduser("~"), dirname)
+		homePath = os.path.join (homeDir, fname)
+
+		# Удалим папку в профиле
+		if os.path.exists (homeDir):
+			shutil.rmtree (homeDir)
+
+		fullpath = getConfigPath(dirname, fname)
+
+		self.assertEqual (homePath, fullpath)
+		self.assertTrue (os.path.exists (homeDir))
+
+		# Удалим папку в профиле
+		if os.path.exists (homeDir):
+			shutil.rmtree (homeDir)
+

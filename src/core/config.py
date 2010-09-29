@@ -2,6 +2,32 @@
 # -*- coding: UTF-8 -*-
 
 import ConfigParser
+import os
+import core.system
+
+
+def getConfigPath (dirname, fname):
+	"""
+	Вернуть полный путь до файла настроек.
+	Поиск пути осуществляется следующим образом:
+	1. Если в папке с программой есть файл настроек, то вернуть путь до него
+	2. Иначе настройки будут храниться в домашней поддиректории. При этом создать директорию .outwiker в домашней директории.
+	"""
+	#fname = u"outwiker.ini"
+	#dirname = u".outwiker"
+
+	someDir = os.path.join (core.system.getCurrentDir(), fname)
+	if os.path.exists (someDir):
+		path = someDir
+	else:
+		homeDir = os.path.join (os.path.expanduser("~"), dirname)
+		if not os.path.exists (homeDir):
+			os.mkdir (homeDir)
+
+		path = os.path.join (homeDir, fname)
+
+	return path
+
 
 class Config (object):
 	"""
