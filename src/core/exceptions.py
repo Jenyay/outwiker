@@ -14,3 +14,8 @@ class TreeException (OutWikerException):
 class DublicateTitle (TreeException):
 	def __init__ (self):
 		TreeException.__init__(self)
+
+
+class ReadonlyException (OutWikerException):
+	def __init__ (self):
+		OutWikerException.__init__(self)
