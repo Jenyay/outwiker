@@ -70,6 +70,10 @@ def editPage (parentWnd, currentPage):
 	parentWnd -- родительское окно
 	currentPage -- страница для редактирования
 	"""
+	if currentPage.readonly:
+		wx.MessageBox (u"Wiki is opened as read-only", u"Error", wx.ICON_ERROR | wx.OK)
+		return
+
 	dlg = CreatePageDialog.CreateForEdit (currentPage, parentWnd)
 	page = None
 
@@ -106,6 +110,8 @@ def removePage (page):
 			page.remove()
 		except IOError:
 			wx.MessageBox (u"Can't remove page", u"Error", wx.ICON_ERROR | wx.OK)
+		except core.exceptions.ReadonlyException:
+			wx.MessageBox (u"Wiki is opened as read-only", u"Error", wx.ICON_ERROR | wx.OK)
 		finally:
 			Controller.instance().onEndTreeUpdate(root)
 
@@ -242,6 +248,8 @@ def movePage (page, newParent):
 	except core.exceptions.TreeException:
 		# Невозможно переместить по другой причине
 		wx.MessageBox (u"Can't move page", u"Error", wx.ICON_ERROR | wx.OK)
+	except core.exceptions.ReadonlyException:
+		wx.MessageBox (u"Wiki is opened as read-only", u"Error", wx.ICON_ERROR | wx.OK)
 
 
 def setStatusText (text, index = 0):

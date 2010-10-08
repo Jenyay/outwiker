@@ -22,7 +22,7 @@ class RootWikiPage (object):
 	attachDir = u"__attach"
 	iconName = u"__icon"
 
-	def __init__(self, path, readonly = False):
+	def __init__(self, path, readonly=False):
 		"""
 		Constructor.
 		
@@ -34,11 +34,11 @@ class RootWikiPage (object):
 		self._children = []
 		self.readonly = readonly
 
-		self._params = self._readParams()
+		self._params = self._readParams(self.readonly)
 
 	
-	def _readParams (self):
-		return Config (os.path.join (self.path, RootWikiPage.pageConfig) )
+	def _readParams (self, readonly=False):
+		return Config (os.path.join (self.path, RootWikiPage.pageConfig), readonly)
 
 
 	@property
@@ -202,7 +202,7 @@ class WikiDocument (RootWikiPage):
 	def selectedPage (self, page):
 		self._selectedPage = page
 
-		if page != None:
+		if page != None and not self.readonly:
 			self.setParameter (WikiDocument.sectionHistory, 
 					WikiDocument.paramHistory,
 					page.subpath)

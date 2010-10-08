@@ -321,3 +321,11 @@ class ReadonlyChangeTest (unittest.TestCase):
 			pass
 		else:
 			self.fail()
+	
+
+	def testSelectedPage1 (self):
+		self.wiki.root.selectedPage = self.wiki[u"Страница 1"]
+
+	
+	def testSelectedPage2 (self):
+		self.wiki.root.selectedPage = self.wiki[u"Страница 2/Страница 3"]

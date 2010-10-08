@@ -33,10 +33,11 @@ class Config (object):
 	"""
 	Оболочка над ConfigParser
 	"""
-	def __init__ (self, fname):
+	def __init__ (self, fname, readonly=False):
 		"""
 		fname -- имя файла конфига
 		"""
+		self.readonly = readonly
 		self.fname = fname
 		self.__config = ConfigParser.ConfigParser()
 		self.__config.read (self.fname)
@@ -52,8 +53,9 @@ class Config (object):
 
 
 	def save (self):
-		with open (self.fname, "wb") as fp:
-			self.__config.write (fp)
+		if not self.readonly:
+			with open (self.fname, "wb") as fp:
+				self.__config.write (fp)
 	
 	
 	def get (self, section, param):
