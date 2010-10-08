@@ -172,8 +172,8 @@ def openWikiWithDialog (parent, oldWikiRoot):
 	return wikiroot
 
 
-def openWiki (path):
-	wikiroot = WikiDocument.load (path)
+def openWiki (path, readonly=False):
+	wikiroot = WikiDocument.load (path, readonly)
 
 	if wikiroot.lastViewedPage != None:
 		wikiroot.selectedPage = wikiroot[wikiroot.lastViewedPage]

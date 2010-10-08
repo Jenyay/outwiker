@@ -22,7 +22,7 @@ class RootWikiPage (object):
 	attachDir = u"__attach"
 	iconName = u"__icon"
 
-	def __init__(self, path):
+	def __init__(self, path, readonly = False):
 		"""
 		Constructor.
 		
@@ -32,6 +32,7 @@ class RootWikiPage (object):
 		self._path = path
 		self._parent = None
 		self._children = []
+		self.readonly = readonly
 
 		self._params = self._readParams()
 
@@ -83,11 +84,17 @@ class RootWikiPage (object):
 		"""
 		Установить значение параметра param секции section в value
 		"""
+		if self.readonly:
+			raise core.exceptions.ReadonlyException
+
 		self._params.set (section, param, value)
 		#self.save()
 
 
 	def save (self):
+		if self.readonly:
+			return
+
 		if not os.path.exists (self.path):
 			os.mkdir (self.path)
 
@@ -136,7 +143,7 @@ class RootWikiPage (object):
 
 			if not name.startswith ("__") and os.path.isdir (fullpath):
 				try:
-					page = WikiPage.load (fullpath, self)
+					page = WikiPage.load (fullpath, self, self.readonly)
 				except Exception as e:
 					#raise
 					continue
@@ -158,19 +165,19 @@ class WikiDocument (RootWikiPage):
 	sectionHistory = u"History"
 	paramHistory = u"LastViewedPage"
 
-	def __init__ (self, path):
-		RootWikiPage.__init__ (self, path)
+	def __init__ (self, path, readonly = False):
+		RootWikiPage.__init__ (self, path, readonly)
 		self._selectedPage = None
 		self.bookmarks = Bookmarks (self, self._params)
 
 
 	@staticmethod
-	def load(path):
+	def load(path, readonly = False):
 		"""
 		Загрузить корневую страницу вики.
 		Использовать этот метод вместо конструктора
 		"""
-		result = WikiDocument(path)
+		result = WikiDocument(path, readonly)
 		result._children = result.getChildren()
 		Controller.instance().onTreeUpdate(result)
 		return result
@@ -223,7 +230,7 @@ class WikiPage (RootWikiPage):
 	Страница в дереве.
 	"""
 
-	def __init__(self, path, title, parent):
+	def __init__(self, path, title, parent, readonly = False):
 		"""
 		Constructor.
 		
@@ -232,7 +239,7 @@ class WikiPage (RootWikiPage):
 		if not RootWikiPage.testDublicate(parent, title):
 			raise core.exceptions.DublicateTitle
 
-		RootWikiPage.__init__ (self, path)
+		RootWikiPage.__init__ (self, path, readonly)
 		self._title = title
 		self._parent = parent
 		parent._children.append (self)
@@ -245,6 +252,9 @@ class WikiPage (RootWikiPage):
 	
 	@title.setter
 	def title (self, newtitle):
+		if self.readonly:
+			raise core.exceptions.ReadonlyException
+
 		oldtitle = self.title
 		oldpath = self.path
 		oldsubpath = self.subpath
@@ -295,6 +305,9 @@ class WikiPage (RootWikiPage):
 		"""
 		Переместить запись к другому родителю
 		"""
+		if self.readonly:
+			raise core.exceptions.ReadonlyException
+
 		if self._parent == newparent:
 			return
 
@@ -339,6 +352,9 @@ class WikiPage (RootWikiPage):
 
 	@icon.setter
 	def icon (self, iconpath):
+		if self.readonly:
+			raise core.exceptions.ReadonlyException
+
 		name = os.path.basename (iconpath)
 		dot = name.rfind (".")
 		extension = name[dot:]
@@ -362,6 +378,9 @@ class WikiPage (RootWikiPage):
 
 	@tags.setter
 	def tags (self, tags):
+		if self.readonly:
+			raise core.exceptions.ReadonlyException
+
 		self._tags = tags[:]
 		self.save()
 		Controller.instance().onPageUpdate(self)
@@ -396,6 +415,9 @@ class WikiPage (RootWikiPage):
 		Прикрепить файл к странице
 		files -- список файлов, которые надо прикрепить
 		"""
+		if self.readonly:
+			raise core.exceptions.ReadonlyException
+
 		attachPath = os.path.join (self.path, RootWikiPage.attachDir)
 		
 		if not os.path.exists (attachPath):
@@ -411,6 +433,9 @@ class WikiPage (RootWikiPage):
 		"""
 		Удалить прикрепленные файлы
 		"""
+		if self.readonly:
+			raise core.exceptions.ReadonlyException
+
 		attachPath = os.path.join (self.path, RootWikiPage.attachDir)
 
 		for fname in files:
@@ -446,13 +471,13 @@ class WikiPage (RootWikiPage):
 	
 
 	@staticmethod
-	def load (path, parent):
+	def load (path, parent, readonly = False):
 		"""
 		Загрузить страницу.
 		Использовать этот метод вместо конструктора, когда надо загрузить страницу
 		"""
 		title = os.path.basename(path)
-		page = WikiPage (path, title, parent)
+		page = WikiPage (path, title, parent, readonly)
 
 		try:
 			page._load ()
@@ -467,6 +492,9 @@ class WikiPage (RootWikiPage):
 		"""
 		Сохранить страницу
 		"""
+		if self.readonly:
+			return
+
 		if not os.path.exists (self.path):
 			os.mkdir (self.path)
 
@@ -504,6 +532,9 @@ class WikiPage (RootWikiPage):
 		"""
 		Создать страницу. Вызывать этот метод вместо конструктора
 		"""
+		if parent.readonly:
+			raise core.exceptions.ReadonlyException
+
 		page = WikiPage (path, title, parent)
 
 		try:
@@ -560,6 +591,9 @@ class WikiPage (RootWikiPage):
 
 	@content.setter
 	def content (self, text):
+		if self.readonly:
+			raise core.exceptions.ReadonlyException
+
 		path = os.path.join (self.path, RootWikiPage.contentFile)
 
 		with open (path, "wb") as fp:

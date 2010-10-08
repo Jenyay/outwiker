@@ -346,14 +346,14 @@ class MainWindow(wx.Frame):
 		self.openWiki (self._recentId[event.Id])
 
 
-	def openWiki (self, path):
+	def openWiki (self, path, readonly=False):
 		Controller.instance().onStartTreeUpdate(self.wikiroot)
 		
 		try:
 			if self.wikiroot != None:
 				Controller.instance().onWikiClose (self.wikiroot)
 			
-			wikiroot = core.commands.openWiki (path)
+			wikiroot = core.commands.openWiki (path, readonly)
 			self._openLoadedWiki(wikiroot)
 		except IOError:
 			wx.MessageBox (u"Can't load wiki '%s'" % path, u"Error", wx.ICON_ERROR | wx.OK)
@@ -687,7 +687,7 @@ class MainWindow(wx.Frame):
 		help_dir = u"help"
 		current_help = "help_rus"
 		path = os.path.join (core.system.getCurrentDir(), help_dir, current_help)
-		self.openWiki (path)
+		self.openWiki (path, readonly=True)
 
 # end of class MainWindow
 
