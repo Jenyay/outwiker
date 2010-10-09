@@ -23,6 +23,10 @@ def attachFilesWithDialog (parent, page):
 	parent -- родительское окно
 	page -- страница, куда прикрепляем файлы
 	"""
+	if page.readonly:
+		wx.MessageBox (u"Wiki is opened as read-only", u"Error", wx.ICON_ERROR | wx.OK)
+		return
+
 	dlg = wx.FileDialog (parent, style = wx.FD_OPEN | wx.FD_FILE_MUST_EXIST | wx.FD_MULTIPLE)
 
 	if dlg.ShowModal() == wx.ID_OK:
@@ -37,6 +41,10 @@ def attachFiles (parent, page, files):
 	"""
 	Прикрепить файлы к странице с диалогом о перезаписи при необходимости
 	"""
+	if page.readonly:
+		wx.MessageBox (u"Wiki is opened as read-only", u"Error", wx.ICON_ERROR | wx.OK)
+		return
+
 	oldAttaches = [os.path.basename (fname).lower() for fname in page.attachment]
 
 	overwriteDialog = OverwriteDialog (parent)
@@ -100,6 +108,10 @@ def editPage (parentWnd, currentPage):
 
 
 def removePage (page):
+	if page.readonly:
+		wx.MessageBox (u"Wiki is opened as read-only", u"Error", wx.ICON_ERROR | wx.OK)
+		return
+
 	text = u"Remove page '%s' and all subpages?" % (page.title)
 
 	if wx.MessageBox (text, u"Remove page?", wx.YES_NO  | wx.ICON_QUESTION) == wx.YES:
@@ -120,6 +132,10 @@ def createPageWithDialog (parentwnd, parentpage):
 	"""
 	Показать диалог настроек и создать страницу
 	"""
+	if parentpage.readonly:
+		wx.MessageBox (u"Wiki is opened as read-only", u"Error", wx.ICON_ERROR | wx.OK)
+		return
+	
 	dlg = CreatePageDialog.CreateForCreate (parentpage, parentwnd)
 	page = None
 
@@ -237,6 +253,10 @@ def movePage (page, newParent):
 	"""
 	Сделать страницу page ребенком newParent
 	"""
+	if page.readonly:
+		wx.MessageBox (u"Wiki is opened as read-only", u"Error", wx.ICON_ERROR | wx.OK)
+		return
+
 	assert page != None
 	assert newParent != None
 

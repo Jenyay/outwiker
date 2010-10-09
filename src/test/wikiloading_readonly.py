@@ -206,21 +206,11 @@ class ReadonlyChangeTest (unittest.TestCase):
 	
 
 	def testSetParameter1 (self):
-		try:
-			self.wiki[u"Страница 1"].setParameter ("section", "param", "value")
-		except ReadonlyException:
-			pass
-		else:
-			self.fail()
+		self.wiki[u"Страница 1"].setParameter ("section", "param", "value")
 
 
 	def testSetParameter2 (self):
-		try:
-			self.wiki[u"Страница 2/Страница 3"].setParameter ("section", "param", "value")
-		except ReadonlyException:
-			pass
-		else:
-			self.fail()
+		self.wiki[u"Страница 2/Страница 3"].setParameter ("section", "param", "value")
 
 	
 	def testChangeIcon1 (self):
@@ -329,3 +319,25 @@ class ReadonlyChangeTest (unittest.TestCase):
 	
 	def testSelectedPage2 (self):
 		self.wiki.root.selectedPage = self.wiki[u"Страница 2/Страница 3"]
+
+	
+	def testRemove1 (self):
+		try:
+			self.wiki[u"Страница 1"].remove()
+		except ReadonlyException:
+			pass
+		else:
+			self.fail()
+
+		self.assertTrue (self.wiki[u"Страница 1"] != None)
+
+
+	def testRemove2 (self):
+		try:
+			self.wiki[u"Страница 2/Страница 3"].remove()
+		except ReadonlyException:
+			pass
+		else:
+			self.fail()
+
+		self.assertTrue (self.wiki[u"Страница 2/Страница 3"] != None)

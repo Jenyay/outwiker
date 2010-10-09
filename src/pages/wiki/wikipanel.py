@@ -257,7 +257,7 @@ class WikiPagePanel (HtmlPanel):
 		hash = hashlib.md5(self.__getFullContent (page) ).hexdigest()
 		old_hash = self._getOldHash(page)
 
-		if os.path.exists (path) and hash == old_hash:
+		if os.path.exists (path) and (hash == old_hash or page.readonly):
 			return path
 
 		parser = Parser (page)

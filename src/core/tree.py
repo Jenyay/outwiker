@@ -85,10 +85,10 @@ class RootWikiPage (object):
 		Установить значение параметра param секции section в value
 		"""
 		if self.readonly:
-			raise core.exceptions.ReadonlyException
+			return False
 
 		self._params.set (section, param, value)
-		#self.save()
+		return True
 
 
 	def save (self):
@@ -629,6 +629,9 @@ class WikiPage (RootWikiPage):
 		"""
 		Удалить страницу
 		"""
+		if self.readonly:
+			raise core.exceptions.ReadonlyException
+
 		self._removePageFromTree (self)
 
 		try:
