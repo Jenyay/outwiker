@@ -165,7 +165,7 @@ def createPageWithDialog (parentwnd, parentpage):
 	return page
 
 
-def openWikiWithDialog (parent, oldWikiRoot):
+def openWikiWithDialog (parent, oldWikiRoot, readonly=False):
 	"""
 	Показать диалог открытия вики и вернуть открытую wiki
 	parent -- родительское окно
@@ -185,7 +185,7 @@ def openWikiWithDialog (parent, oldWikiRoot):
 		try:
 			fullpath = dialog.GetPath()
 			path = os.path.dirname(fullpath)
-			wikiroot = openWiki (path)
+			wikiroot = openWiki (path, readonly)
 		finally:
 			Controller.instance().onEndTreeUpdate(wikiroot)
 

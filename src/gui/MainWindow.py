@@ -28,6 +28,7 @@ class MainWindow(wx.Frame):
 	def makeId (self):
 		self.ID_NEW = wx.NewId()
 		self.ID_OPEN = wx.NewId()
+		self.ID_OPEN_READONLY = wx.NewId()
 		self.ID_SAVE = wx.NewId()
 		self.ID_SAVEAS = wx.NewId()
 		self.ID_RELOAD = wx.NewId()
@@ -106,6 +107,7 @@ class MainWindow(wx.Frame):
 		self.fileMenu = wx.Menu()
 		self.fileMenu.Append(self.ID_NEW, "&New\tCtrl+N", "", wx.ITEM_NORMAL)
 		self.fileMenu.Append(self.ID_OPEN, u"&Open…\tCtrl+O", "", wx.ITEM_NORMAL)
+		self.fileMenu.Append(self.ID_OPEN_READONLY, "Open &Read-only\tCtrl+Shift+O", "", wx.ITEM_NORMAL)
 		self.fileMenu.Append(self.ID_SAVE, "&Save\tCtrl+S", "", wx.ITEM_NORMAL)
 		self.fileMenu.Append(self.ID_EXIT, u"&Exit…\tAlt+F4", "", wx.ITEM_NORMAL)
 		self.fileMenu.AppendSeparator()
@@ -175,6 +177,7 @@ class MainWindow(wx.Frame):
 
 		self.Bind(wx.EVT_MENU, self.onNew, id=self.ID_NEW)
 		self.Bind(wx.EVT_MENU, self.onOpen, id=self.ID_OPEN)
+		self.Bind(wx.EVT_MENU, self.onOpenReadOnly, id=self.ID_OPEN_READONLY)
 		self.Bind(wx.EVT_MENU, self.onSave, id=self.ID_SAVE)
 		self.Bind(wx.EVT_MENU, self.onExit, id=self.ID_EXIT)
 		self.Bind(wx.EVT_MENU, self.onStdEvent, id=wx.ID_UNDO)
@@ -463,7 +466,7 @@ class MainWindow(wx.Frame):
 		self.rightPane.SetSizer(rightSizer)
 		rightSizer.AddGrowableRow(0)
 		rightSizer.AddGrowableCol(0)
-		self.splitter.SplitVertically(self.leftPane, self.rightPane, 20)
+		self.splitter.SplitVertically(self.leftPane, self.rightPane, 181)
 		mainSizer.Add(self.splitter, 1, wx.EXPAND, 0)
 		mainSizer.Add(self.statusbar, 1, wx.EXPAND, 0)
 		self.SetSizer(mainSizer)
@@ -695,6 +698,11 @@ class MainWindow(wx.Frame):
 		current_help = "help_rus"
 		path = os.path.join (core.system.getCurrentDir(), help_dir, current_help)
 		self.openWiki (path, readonly=True)
+
+
+	def onOpenReadOnly(self, event): # wxGlade: MainWindow.<event_handler>
+		wikiroot = core.commands.openWikiWithDialog (self, self.wikiroot, readonly=True)
+		self._openLoadedWiki(wikiroot)
 
 # end of class MainWindow
 
