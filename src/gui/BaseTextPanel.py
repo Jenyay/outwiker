@@ -62,7 +62,7 @@ class BaseTextPanel (wx.Panel):
 		"""
 		Сохранить страницу
 		"""
-		if self.page != None and not self.page.isRemoved:
+		if self.page != None and not self.page.isRemoved and not self.page.readonly:
 			self.page.content = self.GetContentFromGui()
 	
 

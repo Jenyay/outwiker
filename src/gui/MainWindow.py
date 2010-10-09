@@ -346,14 +346,14 @@ class MainWindow(wx.Frame):
 		self.openWiki (self._recentId[event.Id])
 
 
-	def openWiki (self, path):
+	def openWiki (self, path, readonly=False):
 		Controller.instance().onStartTreeUpdate(self.wikiroot)
 		
 		try:
 			if self.wikiroot != None:
 				Controller.instance().onWikiClose (self.wikiroot)
 			
-			wikiroot = core.commands.openWiki (path)
+			wikiroot = core.commands.openWiki (path, readonly)
 			self._openLoadedWiki(wikiroot)
 		except IOError:
 			wx.MessageBox (u"Can't load wiki '%s'" % path, u"Error", wx.ICON_ERROR | wx.OK)
@@ -599,7 +599,7 @@ class MainWindow(wx.Frame):
 
 	def onAttach(self, event): # wxGlade: MainWindow.<event_handler>
 		if self.wikiroot != None and self.wikiroot.selectedPage != None:
-			core.commands.attachFiles (self, self.wikiroot.selectedPage)
+			core.commands.attachFilesWithDialog (self, self.wikiroot.selectedPage)
 
 	def onAbout(self, event): # wxGlade: MainWindow.<event_handler>
 		info = wx.AboutDialogInfo()
@@ -667,7 +667,14 @@ class MainWindow(wx.Frame):
 
 	def onGlobalSearch(self, event): # wxGlade: MainWindow.<event_handler>
 		if self.wikiroot != None:
-			pages.search.searchpage.GlobalSearch.create (self.wikiroot)
+			if self.wikiroot.readonly:
+				wx.MessageBox (u"Wiki is opened as read-only", u"Error", wx.ICON_ERROR | wx.OK)
+				return
+			else:
+				try:
+					pages.search.searchpage.GlobalSearch.create (self.wikiroot)
+				except IOError:
+					wx.MessageBox (u"Can't create page", u"Error", wx.ICON_ERROR | wx.OK)
 
 
 	def onStdEvent(self, event): # wxGlade: MainWindow.<event_handler>
@@ -687,7 +694,7 @@ class MainWindow(wx.Frame):
 		help_dir = u"help"
 		current_help = "help_rus"
 		path = os.path.join (core.system.getCurrentDir(), help_dir, current_help)
-		self.openWiki (path)
+		self.openWiki (path, readonly=True)
 
 # end of class MainWindow
 

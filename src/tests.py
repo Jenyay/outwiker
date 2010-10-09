@@ -23,6 +23,7 @@ from test.localsearch import LocalSearchTest
 from test.movepages import MoveTest
 from test.parser import ParserTest
 from test.htmlimprover_test import HtmlImproverTest
+from test.wikiloading_readonly import ReadonlyLoadTest, ReadonlyChangeTest
 
 
 if __name__ == '__main__':

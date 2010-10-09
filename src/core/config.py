@@ -33,27 +33,37 @@ class Config (object):
 	"""
 	Оболочка над ConfigParser
 	"""
-	def __init__ (self, fname):
+	def __init__ (self, fname, readonly=False):
 		"""
 		fname -- имя файла конфига
 		"""
+		self.readonly = readonly
 		self.fname = fname
 		self.__config = ConfigParser.ConfigParser()
 		self.__config.read (self.fname)
 	
 
 	def set (self, section, param, value):
+		if self.readonly:
+			return False
+
 		section_encoded = section.encode ("utf-8")
 		if not self.__config.has_section (section_encoded):
 			self.__config.add_section (section_encoded)
 
 		self.__config.set (section_encoded, param.encode ("utf-8"), unicode (value).encode ("utf-8"))
-		self.save()
+
+		return self.save()
 
 
 	def save (self):
+		if self.readonly:
+			return False
+
 		with open (self.fname, "wb") as fp:
 			self.__config.write (fp)
+
+		return True
 	
 	
 	def get (self, section, param):
@@ -71,9 +81,10 @@ class Config (object):
 
 	def remove_section (self, section):
 		section_encoded = section.encode ("utf-8")
-		result = self.__config.remove_section (section_encoded)
-		self.save()
-		return result
+		result1 = self.__config.remove_section (section_encoded)
+		result2 = self.save()
+
+		return result1 and result2
 
 
 	def has_section (self, section):

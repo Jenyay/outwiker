@@ -164,8 +164,11 @@ class HtmlPanel(BaseTextPanel):
 
 		path = self.getHtmlPath (self._currentpage)
 		self.currentHtmlFile = path
-		self.generateHtml (self._currentpage, path)
-		self.htmlWindow.LoadPage (path)
+		try:
+			self.generateHtml (self._currentpage, path)
+			self.htmlWindow.LoadPage (path)
+		except IOError:
+			wx.MessageBox (u"Can not save HTML-file", u"Error", wx.ICON_ERROR | wx.OK)
 
 		core.commands.setStatusText (u"")
 		Controller.instance().onHtmlRenderingEnd (self._currentpage, self.htmlWindow)
@@ -595,6 +598,10 @@ class HtmlPagePanel (HtmlPanel):
 
 	
 	def generateHtml (self, page, path):
+		if page.readonly and os.path.exists (path):
+			# Если страница открыта только для чтения и html-файл уже существует, то покажем его
+			return path
+
 		template = u"<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/></head><body>%s</body></html>"
 
 		text = page.content
