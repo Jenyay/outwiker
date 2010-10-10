@@ -26,6 +26,7 @@ class TextPanel (BaseTextPanel):
 	def UpdateView (self, page):
 		self.textEditor.textCtrl.SetText (self._currentpage.content)
 		self.textEditor.textCtrl.EmptyUndoBuffer()
+		self.textEditor.textCtrl.SetReadOnly (page.readonly)
 	
 
 	def __layout (self):

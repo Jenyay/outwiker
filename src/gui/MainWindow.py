@@ -107,7 +107,7 @@ class MainWindow(wx.Frame):
 		self.fileMenu = wx.Menu()
 		self.fileMenu.Append(self.ID_NEW, "&New\tCtrl+N", "", wx.ITEM_NORMAL)
 		self.fileMenu.Append(self.ID_OPEN, u"&Open…\tCtrl+O", "", wx.ITEM_NORMAL)
-		self.fileMenu.Append(self.ID_OPEN_READONLY, "Open &Read-only\tCtrl+Shift+O", "", wx.ITEM_NORMAL)
+		self.fileMenu.Append(self.ID_OPEN_READONLY, "Open &Read-only...\tCtrl+Shift+O", "", wx.ITEM_NORMAL)
 		self.fileMenu.Append(self.ID_SAVE, "&Save\tCtrl+S", "", wx.ITEM_NORMAL)
 		self.fileMenu.Append(self.ID_EXIT, u"&Exit…\tAlt+F4", "", wx.ITEM_NORMAL)
 		self.fileMenu.AppendSeparator()

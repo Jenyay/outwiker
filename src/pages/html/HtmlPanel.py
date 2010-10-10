@@ -76,6 +76,7 @@ class HtmlPanel(BaseTextPanel):
 		self.htmlWindow.page = self._currentpage
 		self.codeWindow.textCtrl.SetText (self._currentpage.content)
 		self.codeWindow.textCtrl.EmptyUndoBuffer()
+		self.codeWindow.textCtrl.SetReadOnly (page.readonly)
 
 
 	def GetContentFromGui(self):
