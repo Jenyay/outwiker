@@ -1,7 +1,7 @@
 *.pyc
 *.bak
 *.~ml
-distrib
+;distrib
 *.ini
 doxydoc
 logdict2.6.1.final.0-1.log
@@ -10,3 +10,4 @@ warnoutwiker_win32.txt
 warnoutwiker_linux.txt
 build
 *.py~
+distrib/outwiker-0.99.3/opt/outwiker
