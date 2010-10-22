@@ -12,3 +12,4 @@ build
 *.py~
 distrib/outwiker-*/opt/outwiker
 *.deb
+distrib/exe.win32-2.6
