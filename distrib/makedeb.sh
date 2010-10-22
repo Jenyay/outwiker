@@ -4,10 +4,12 @@ DIR_NAME="outwiker-0.99.3-1"
 
 outwiker_dir="$DIR_NAME/opt/outwiker/"
 
-if [ ! -d $outwiker_dir ] ; 
+if [ -d $outwiker_dir ] ;
 then
-	mkdir $outwiker_dir
+	rm -r $outwiker_dir
 fi
+
+mkdir $outwiker_dir
 
 # Скопируем нужные файлы из исходников
 cp -r "../src/core" $outwiker_dir
