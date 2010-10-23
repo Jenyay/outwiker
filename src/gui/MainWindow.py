@@ -14,6 +14,7 @@ import core.commands
 from core.recent import RecentWiki
 import pages.search.searchpage
 import core.system
+from gui.preferences.PrefDialog import PrefDialog
 
 # begin wxGlade: dependencies
 # end wxGlade
@@ -48,6 +49,7 @@ class MainWindow(wx.Frame):
 		self.ID_GLOBAL_SEARCH = wx.NewId()
 		self.ID_RENAME = wx.NewId()
 		self.ID_HELP = wx.NewId()
+		self.ID_PREFERENCES = wx.NewId()
 
 
 	def __init__(self, *args, **kwds):
@@ -119,6 +121,8 @@ class MainWindow(wx.Frame):
 		wxglade_tmp_menu.Append(wx.ID_CUT, "Cu&t\tCtrl+X", "", wx.ITEM_NORMAL)
 		wxglade_tmp_menu.Append(wx.ID_COPY, "&Copy\tCtrl+C", "", wx.ITEM_NORMAL)
 		wxglade_tmp_menu.Append(wx.ID_PASTE, "&Paste\tCtrl+V", "", wx.ITEM_NORMAL)
+		wxglade_tmp_menu.AppendSeparator()
+		wxglade_tmp_menu.Append(self.ID_PREFERENCES, "Pr&eferences...\tCtrl+F8", "", wx.ITEM_NORMAL)
 		self.mainMenu.Append(wxglade_tmp_menu, "&Edit")
 		wxglade_tmp_menu = wx.Menu()
 		wxglade_tmp_menu.Append(self.ID_ADDPAGE, u"Add &sibling page…\tCtrl+T", "", wx.ITEM_NORMAL)
@@ -185,6 +189,7 @@ class MainWindow(wx.Frame):
 		self.Bind(wx.EVT_MENU, self.onStdEvent, id=wx.ID_CUT)
 		self.Bind(wx.EVT_MENU, self.onStdEvent, id=wx.ID_COPY)
 		self.Bind(wx.EVT_MENU, self.onStdEvent, id=wx.ID_PASTE)
+		self.Bind(wx.EVT_MENU, self.onPreferences, id=self.ID_PREFERENCES)
 		self.Bind(wx.EVT_MENU, self.onAddSiblingPage, id=self.ID_ADDPAGE)
 		self.Bind(wx.EVT_MENU, self.onAddChildPage, id=self.ID_ADDCHILD)
 		self.Bind(wx.EVT_MENU, self.onRename, id=self.ID_RENAME)
@@ -214,6 +219,8 @@ class MainWindow(wx.Frame):
 		self.__setMenuBitmaps()
 		
 		self.Bind (wx.EVT_CLOSE, self.onClose)
+		self.Bind (wx.EVT_ICONIZE, self.OnMinimize)
+
 		self.Bind (wx.EVT_IDLE, self.onIdle)
 		#self._hideElements()
 
@@ -221,6 +228,7 @@ class MainWindow(wx.Frame):
 
 		self.SetDropTarget (self._dropTarget)
 		self.__enableGui()
+		self. __createTrayIcon()
 
 		self.minPaneSize = 30
 		self.splitter.SetMinimumPaneSize (self.minPaneSize)
@@ -233,6 +241,25 @@ class MainWindow(wx.Frame):
 			(wx.ACCEL_SHIFT,  wx.WXK_INSERT, wx.ID_PASTE),
 			(wx.ACCEL_SHIFT,  wx.WXK_DELETE, wx.ID_CUT)])
 		self.SetAcceleratorTable(aTable)
+	
+
+	def __createTrayIcon (self):
+		self.icon = wx.EmptyIcon()
+		self.icon.CopyFromBitmap(wx.Bitmap(os.path.join (self.imagesDir, "outwiker_16.png"), wx.BITMAP_TYPE_ANY))
+
+		self.taskBarIcon = wx.TaskBarIcon()
+
+		try:
+			self.taskBarIcon.SetIcon(self.icon)
+			self.taskBarIcon.Bind(wx.EVT_TASKBAR_LEFT_DOWN, self.OnTrayLeftClick)
+		except:
+			# Фиг его знает, как отреагирует ОС, у которой нет трея
+			pass
+	
+
+	def OnTrayLeftClick (self, event):
+		self.Show ()
+		self.Iconize (False)
 	
 
 	def __enableGui (self):
@@ -453,6 +480,7 @@ class MainWindow(wx.Frame):
 		self.mainToolbar.Realize()
 		# end wxGlade
 
+
 	def __do_layout(self):
 		# begin wxGlade: MainWindow.__do_layout
 		mainSizer = wx.FlexGridSizer(2, 1, 0, 0)
@@ -482,6 +510,11 @@ class MainWindow(wx.Frame):
 				Controller.instance().onWikiClose (self.wikiroot)
 			self._saveParams()
 			self.pagePanel.Close()
+
+			# Удалить иконку из трея
+			if self.taskBarIcon.IsIconInstalled():
+				self.taskBarIcon.RemoveIcon()
+
 			self.Destroy()
 		else:
 			event.Veto()
@@ -703,6 +736,23 @@ class MainWindow(wx.Frame):
 	def onOpenReadOnly(self, event): # wxGlade: MainWindow.<event_handler>
 		wikiroot = core.commands.openWikiWithDialog (self, self.wikiroot, readonly=True)
 		self._openLoadedWiki(wikiroot)
+
+
+	def onPreferences(self, event): # wxGlade: MainWindow.<event_handler>
+		dlg = PrefDialog (self)
+
+		if dlg.ShowModal() == wx.ID_OK:
+			pass
+
+		dlg.Destroy()
+	
+
+	def OnMinimize (self, event):
+		try:
+			if self.IsIconized() and wx.GetApp().config.getbool (u"General", u"MinimizeToTray"):
+				self.Hide()
+		except:
+			pass
 
 # end of class MainWindow
 
