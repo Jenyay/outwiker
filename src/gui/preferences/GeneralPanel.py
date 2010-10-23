@@ -32,7 +32,8 @@ class GeneralPanel(wx.ScrolledWindow):
 	def __set_properties(self):
 		# begin wxGlade: GeneralPanel.__set_properties
 		self.SetSize((502, 402))
-		self.SetScrollRate(10, 10)
+		self.SetFocus()
+		self.SetScrollRate(0, 0)
 		# end wxGlade
 
 

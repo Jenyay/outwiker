@@ -33,6 +33,7 @@ class PrefDialog(wx.Dialog):
 		# begin wxGlade: PrefDialog.__set_properties
 		self.SetTitle("Preferences")
 		self.SetSize((700, 500))
+		self.treeBook.SetMinSize((300, 400))
 		# end wxGlade
 
 
@@ -47,13 +48,14 @@ class PrefDialog(wx.Dialog):
 		# end wxGlade
 		
 		self._createOkCancelButtons(main_sizer)
+		self.Layout()
 	
 
 	def __createPages (self):
 		"""
 		Создать страницы окна настроек
 		"""
-		self.generalPage = GeneralPanel.GeneralPanel (self)
+		self.generalPage = GeneralPanel.GeneralPanel (self.treeBook)
 
 		self.treeBook.AddPage (None, u"Interface")
 		self.treeBook.AddSubPage (self.generalPage, u"General")
@@ -127,6 +129,7 @@ class PrefDialog(wx.Dialog):
 			return
 
 		selectedPage.LoadState()
+		selectedPage.SetFocus()
 
 
 # end of class PrefDialog
