@@ -157,19 +157,19 @@ class MainWindow(wx.Frame):
 		# Tool Bar
 		self.mainToolbar = wx.ToolBar(self, -1, style=wx.TB_HORIZONTAL|wx.TB_FLAT|wx.TB_DOCKABLE)
 		self.SetToolBar(self.mainToolbar)
-		self.mainToolbar.AddLabelTool(self.ID_NEW, u"New…", wx.Bitmap("images/new.png", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, u"Create new wiki…", "")
-		self.mainToolbar.AddLabelTool(self.ID_OPEN, u"Open…", wx.Bitmap("images/open.png", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, u"Open wiki…", "")
-		self.mainToolbar.AddLabelTool(self.ID_SAVE, "Save", wx.Bitmap("images/save.png", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, "Save wiki", "")
+		self.mainToolbar.AddLabelTool(self.ID_NEW, u"New…", wx.Bitmap(os.path.join (self.imagesDir, "new.png"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, u"Create new wiki…", "")
+		self.mainToolbar.AddLabelTool(self.ID_OPEN, u"Open…", wx.Bitmap(os.path.join (self.imagesDir, "open.png"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, u"Open wiki…", "")
+		self.mainToolbar.AddLabelTool(self.ID_SAVE, "Save", wx.Bitmap(os.path.join (self.imagesDir, "save.png"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, "Save wiki", "")
 		self.mainToolbar.AddSeparator()
-		self.mainToolbar.AddLabelTool(self.ID_RELOAD, "Reload", wx.Bitmap("images/reload.png", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, "Reload wiki", "")
+		self.mainToolbar.AddLabelTool(self.ID_RELOAD, "Reload", wx.Bitmap(os.path.join (self.imagesDir, "reload.png"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, "Reload wiki", "")
 		self.mainToolbar.AddSeparator()
-		self.mainToolbar.AddLabelTool(self.ID_ADDPAGE, u"Add sibling page…", wx.Bitmap("images/sibling.ico", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, u"Add sibling page…", "")
-		self.mainToolbar.AddLabelTool(self.ID_ADDCHILD, u"Add child Page…", wx.Bitmap("images/child.ico", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, u"Add child Page…", "")
-		self.mainToolbar.AddLabelTool(self.ID_REMOVE_PAGE, "Remove page", wx.Bitmap("images/remove.ico", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, u"Remove page…", "")
+		self.mainToolbar.AddLabelTool(self.ID_ADDPAGE, u"Add sibling page…", wx.Bitmap(os.path.join (self.imagesDir, "sibling.ico"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, u"Add sibling page…", "")
+		self.mainToolbar.AddLabelTool(self.ID_ADDCHILD, u"Add child Page…", wx.Bitmap(os.path.join (self.imagesDir, "child.ico"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, u"Add child Page…", "")
+		self.mainToolbar.AddLabelTool(self.ID_REMOVE_PAGE, "Remove page", wx.Bitmap(os.path.join (self.imagesDir, "remove.ico"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, u"Remove page…", "")
 		self.mainToolbar.AddSeparator()
-		self.mainToolbar.AddLabelTool(self.ID_ATTACH, u"Attach files…", wx.Bitmap("images/attach.png", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, u"Attach files…", "")
-		self.mainToolbar.AddLabelTool(self.ID_EDIT, "Edit page", wx.Bitmap("images/edit.png", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, "Edit page's properties", "")
-		self.mainToolbar.AddLabelTool(self.ID_GLOBAL_SEARCH, u"Global search…", wx.Bitmap("images/global_search.png", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, u"Global search…", "")
+		self.mainToolbar.AddLabelTool(self.ID_ATTACH, u"Attach files…", wx.Bitmap(os.path.join (self.imagesDir, "attach.png"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, u"Attach files…", "")
+		self.mainToolbar.AddLabelTool(self.ID_EDIT, "Edit page", wx.Bitmap(os.path.join (self.imagesDir, "edit.png"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, "Edit page's properties", "")
+		self.mainToolbar.AddLabelTool(self.ID_GLOBAL_SEARCH, u"Global search…", wx.Bitmap(os.path.join (self.imagesDir, "global_search.png"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, u"Global search…", "")
 		self.mainToolbar.AddSeparator()
 		# Tool Bar end
 		self.tree = WikiTree(self.leftPane, -1)
@@ -219,6 +219,8 @@ class MainWindow(wx.Frame):
 		self.__setMenuBitmaps()
 		
 		self.Bind (wx.EVT_CLOSE, self.onClose)
+		self.Bind (wx.EVT_ICONIZE, self.OnMinimize)
+
 		self.Bind (wx.EVT_IDLE, self.onIdle)
 		#self._hideElements()
 
@@ -226,6 +228,7 @@ class MainWindow(wx.Frame):
 
 		self.SetDropTarget (self._dropTarget)
 		self.__enableGui()
+		self. __createTrayIcon()
 
 		self.minPaneSize = 30
 		self.splitter.SetMinimumPaneSize (self.minPaneSize)
@@ -238,6 +241,25 @@ class MainWindow(wx.Frame):
 			(wx.ACCEL_SHIFT,  wx.WXK_INSERT, wx.ID_PASTE),
 			(wx.ACCEL_SHIFT,  wx.WXK_DELETE, wx.ID_CUT)])
 		self.SetAcceleratorTable(aTable)
+	
+
+	def __createTrayIcon (self):
+		self.icon = wx.EmptyIcon()
+		self.icon.CopyFromBitmap(wx.Bitmap(os.path.join (self.imagesDir, "outwiker_16.png"), wx.BITMAP_TYPE_ANY))
+
+		self.taskBarIcon = wx.TaskBarIcon()
+
+		try:
+			self.taskBarIcon.SetIcon(self.icon)
+			self.taskBarIcon.Bind(wx.EVT_TASKBAR_LEFT_DOWN, self.OnTrayLeftClick)
+		except:
+			# Фиг его знает, как отреагирует ОС, у которой нет трея
+			pass
+	
+
+	def OnTrayLeftClick (self, event):
+		self.Show ()
+		self.Iconize (False)
 	
 
 	def __enableGui (self):
@@ -452,11 +474,12 @@ class MainWindow(wx.Frame):
 		# begin wxGlade: MainWindow.__set_properties
 		self.SetTitle("OutWiker")
 		_icon = wx.EmptyIcon()
-		_icon.CopyFromBitmap(wx.Bitmap("images/icon.ico", wx.BITMAP_TYPE_ANY))
+		_icon.CopyFromBitmap(wx.Bitmap(os.path.join (self.imagesDir, "icon.ico"), wx.BITMAP_TYPE_ANY))
 		self.SetIcon(_icon)
 		self.SetSize((800, 680))
 		self.mainToolbar.Realize()
 		# end wxGlade
+
 
 	def __do_layout(self):
 		# begin wxGlade: MainWindow.__do_layout
@@ -487,6 +510,11 @@ class MainWindow(wx.Frame):
 				Controller.instance().onWikiClose (self.wikiroot)
 			self._saveParams()
 			self.pagePanel.Close()
+
+			# Удалить иконку из трея
+			if self.taskBarIcon.IsIconInstalled():
+				self.taskBarIcon.RemoveIcon()
+
 			self.Destroy()
 		else:
 			event.Veto()
@@ -717,6 +745,14 @@ class MainWindow(wx.Frame):
 			pass
 
 		dlg.Destroy()
+	
+
+	def OnMinimize (self, event):
+		try:
+			if self.IsIconized() and wx.GetApp().config.getbool (u"General", u"MinimizeToTray"):
+				self.Hide()
+		except:
+			pass
 
 # end of class MainWindow
 
