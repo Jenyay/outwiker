@@ -18,7 +18,7 @@ class GeneralPanel(wx.ScrolledWindow):
 		kwds["style"] = wx.TAB_TRAVERSAL
 		wx.ScrolledWindow.__init__(self, *args, **kwds)
 		self.minimizeCheckBox = wx.CheckBox(self, -1, "Minimize to tray")
-		self.history_label = wx.StaticText(self, -1, "Recent files history length")
+		self.history_label = wx.StaticText(self, -1, "Recent files history length (apply after restart)")
 		self.historySpin = wx.SpinCtrl(self, -1, "5", min=0, max=20, style=wx.SP_ARROW_KEYS|wx.TE_PROCESS_ENTER|wx.TE_PROCESS_TAB|wx.TE_AUTO_URL)
 		self.autoopenCheckBox = wx.CheckBox(self, -1, "Automatically open the recent file")
 
@@ -31,6 +31,7 @@ class GeneralPanel(wx.ScrolledWindow):
 
 	def __set_properties(self):
 		# begin wxGlade: GeneralPanel.__set_properties
+		self.SetSize((502, 402))
 		self.SetScrollRate(10, 10)
 		# end wxGlade
 
@@ -48,7 +49,6 @@ class GeneralPanel(wx.ScrolledWindow):
 		main_sizer.Add(history_size, 1, wx.EXPAND, 0)
 		main_sizer.Add(self.autoopenCheckBox, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
 		self.SetSizer(main_sizer)
-		main_sizer.Fit(self)
 		main_sizer.AddGrowableCol(0)
 		# end wxGlade
 	
@@ -57,7 +57,24 @@ class GeneralPanel(wx.ScrolledWindow):
 		"""
 		Загрузить состояние страницы из конфига
 		"""
-		# Сворачивание окна в трей
+		self.__loadTrayOptions()
+		self.__loadRecentOptions()
+
+	
+	def __loadRecentOptions (self):
+		"""
+		Опции, связанные с последними открытыми файлами
+		"""
+		try:
+			self.historySpin.SetValue (self.config.getint (u"RecentWiki", u"maxcount"))
+		except:
+			pass
+	
+
+	def __loadTrayOptions (self):
+		"""
+		Опции для сворачивания окна в трей
+		"""
 		try:
 			self.minimizeCheckBox.SetValue (self.config.getbool (u"General", u"MinimizeToTray"))
 		except:
@@ -68,7 +85,8 @@ class GeneralPanel(wx.ScrolledWindow):
 		"""
 		Сохранить состояние страницы в конфиг
 		"""
-		self.config.set (u"General", u"MinimizeToTray", self.minimizeCheckBox.IsChecked())
+		self.config.set (u"General", u"MinimizeToTray", self.minimizeCheckBox.IsChecked() )
+		self.config.set (u"RecentWiki", u"maxcount", self.historySpin.GetValue () )
 
 # end of class GeneralPanel
 

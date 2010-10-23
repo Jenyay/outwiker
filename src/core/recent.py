@@ -17,58 +17,53 @@ class RecentWiki (object):
 
 	
 	def _load (self):
-		try:
-			self._maxlen = self._config.getint (self._sectionName, "maxcount")
-		except:
-			self._maxlen = 5
-
 		# Сохраненные пути
-		self._pathes = []
+		self._recentes = []
 
 		try:
-			for n in range (self._maxlen):
+			for n in range (self.maxlen):
 				param = self._paramTemplate % (n + 1)
 				path = self._config.get (self._sectionName, param)
 
-				self._pathes.append (path)
+				self._recentes.append (path)
 		except:
 			pass
 
 
 	def _save (self):
-		#self._config.remove_section (self._sectionName)
-		self._config.set (self._sectionName, "maxcount", self._maxlen)
-
-		for n in range (len (self._pathes) ):
+		for n in range (len (self._recentes) ):
 			param = self._paramTemplate % (n + 1)
-			self._config.set (self._sectionName, param, self._pathes[n])
+			self._config.set (self._sectionName, param, self._recentes[n])
 
 
 	def add (self, path):
-		if path in self._pathes:
-			self._pathes.remove (path)
+		if path in self._recentes:
+			self._recentes.remove (path)
 
-		self._pathes.insert (0, path)
+		self._recentes.insert (0, path)
 
-		if len (self._pathes) > self._maxlen:
-			del self._pathes[self._maxlen:]
-			#print self._pathes
-
+		if len (self._recentes) > self.maxlen:
+			del self._recentes[self.maxlen:]
 
 		self._save()
 
 	
 	def __len__ (self):
-		return len (self._pathes)
+		return len (self._recentes)
 
 
 	def __getitem__ (self, index):
-		return self._pathes[index]
+		return self._recentes[index]
 
 
 	@property
 	def maxlen (self):
-		return self._maxlen
+		try:
+			_maxlen = self._config.getint (self._sectionName, "maxcount")
+		except:
+			_maxlen = 5
+
+		return _maxlen
 
 
 
