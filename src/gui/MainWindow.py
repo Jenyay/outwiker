@@ -23,7 +23,7 @@ from gui.preferences.PrefDialog import PrefDialog
 
 # end wxGlade
 
-version = "1.0 beta 3"
+version = "1.0"
 
 class MainWindow(wx.Frame):
 	def makeId (self):
@@ -219,7 +219,7 @@ class MainWindow(wx.Frame):
 		self.__setMenuBitmaps()
 		
 		self.Bind (wx.EVT_CLOSE, self.onClose)
-		self.Bind (wx.EVT_ICONIZE, self.OnMinimize)
+		self.Bind (wx.EVT_ICONIZE, self.onIconize)
 
 		self.Bind (wx.EVT_IDLE, self.onIdle)
 		#self._hideElements()
@@ -248,18 +248,11 @@ class MainWindow(wx.Frame):
 		self.icon.CopyFromBitmap(wx.Bitmap(os.path.join (self.imagesDir, "outwiker_16.png"), wx.BITMAP_TYPE_ANY))
 
 		self.taskBarIcon = wx.TaskBarIcon()
+		self.taskBarIcon.Bind(wx.EVT_TASKBAR_LEFT_DOWN, self.OnTrayLeftClick)
 
-		try:
-			self.taskBarIcon.SetIcon(self.icon)
-			self.taskBarIcon.Bind(wx.EVT_TASKBAR_LEFT_DOWN, self.OnTrayLeftClick)
-		except:
-			# Фиг его знает, как отреагирует ОС, у которой нет трея
-			pass
-	
 
 	def OnTrayLeftClick (self, event):
-		self.Show ()
-		self.Iconize (False)
+		self.__restoreWindow()
 	
 
 	def __enableGui (self):
@@ -511,13 +504,19 @@ class MainWindow(wx.Frame):
 			self._saveParams()
 			self.pagePanel.Close()
 
-			# Удалить иконку из трея
-			if self.taskBarIcon.IsIconInstalled():
-				self.taskBarIcon.RemoveIcon()
+			self.__removeTrayIcon()
 
 			self.Destroy()
 		else:
 			event.Veto()
+	
+
+	def __removeTrayIcon (self):
+		"""
+		Удалить иконку из трея
+		"""
+		if self.taskBarIcon.IsIconInstalled():
+			self.taskBarIcon.RemoveIcon()
 
 
 	def onTreeUpdate (self, sender):
@@ -747,12 +746,32 @@ class MainWindow(wx.Frame):
 		dlg.Destroy()
 	
 
-	def OnMinimize (self, event):
+	def onIconize (self, event):
+		if self.IsIconized():
+			# Окно свернули
+			self.__minimizeWindow ()
+
+
+	def __restoreWindow (self):
+		self.Show ()
+		self.Iconize (False)
+		self.__removeTrayIcon()
+
+
+	def __minimizeWindow (self):
+		"""
+		Свернуть окно
+		"""
 		try:
-			if self.IsIconized() and wx.GetApp().config.getbool (u"General", u"MinimizeToTray"):
-				self.Hide()
+			minimize = wx.GetApp().config.getbool (u"General", u"MinimizeToTray")
 		except:
-			pass
+			return
+
+		if minimize:
+			# В трей добавим иконку, а окно спрячем
+			self.taskBarIcon.SetIcon(self.icon)
+			self.Hide()
+		
 
 # end of class MainWindow
 
