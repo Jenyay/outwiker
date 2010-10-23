@@ -14,6 +14,7 @@ import core.commands
 from core.recent import RecentWiki
 import pages.search.searchpage
 import core.system
+from gui.preferences.PrefDialog import PrefDialog
 
 # begin wxGlade: dependencies
 # end wxGlade
@@ -48,6 +49,7 @@ class MainWindow(wx.Frame):
 		self.ID_GLOBAL_SEARCH = wx.NewId()
 		self.ID_RENAME = wx.NewId()
 		self.ID_HELP = wx.NewId()
+		self.ID_PREFERENCES = wx.NewId()
 
 
 	def __init__(self, *args, **kwds):
@@ -119,6 +121,8 @@ class MainWindow(wx.Frame):
 		wxglade_tmp_menu.Append(wx.ID_CUT, "Cu&t\tCtrl+X", "", wx.ITEM_NORMAL)
 		wxglade_tmp_menu.Append(wx.ID_COPY, "&Copy\tCtrl+C", "", wx.ITEM_NORMAL)
 		wxglade_tmp_menu.Append(wx.ID_PASTE, "&Paste\tCtrl+V", "", wx.ITEM_NORMAL)
+		wxglade_tmp_menu.AppendSeparator()
+		wxglade_tmp_menu.Append(self.ID_PREFERENCES, "Pr&eferences...\tCtrl+F8", "", wx.ITEM_NORMAL)
 		self.mainMenu.Append(wxglade_tmp_menu, "&Edit")
 		wxglade_tmp_menu = wx.Menu()
 		wxglade_tmp_menu.Append(self.ID_ADDPAGE, u"Add &sibling page…\tCtrl+T", "", wx.ITEM_NORMAL)
@@ -153,19 +157,19 @@ class MainWindow(wx.Frame):
 		# Tool Bar
 		self.mainToolbar = wx.ToolBar(self, -1, style=wx.TB_HORIZONTAL|wx.TB_FLAT|wx.TB_DOCKABLE)
 		self.SetToolBar(self.mainToolbar)
-		self.mainToolbar.AddLabelTool(self.ID_NEW, u"New…", wx.Bitmap(os.path.join (self.imagesDir, "new.png"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, u"Create new wiki…", "")
-		self.mainToolbar.AddLabelTool(self.ID_OPEN, u"Open…", wx.Bitmap(os.path.join (self.imagesDir, "open.png"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, u"Open wiki…", "")
-		self.mainToolbar.AddLabelTool(self.ID_SAVE, "Save", wx.Bitmap(os.path.join (self.imagesDir, "save.png"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, "Save wiki", "")
+		self.mainToolbar.AddLabelTool(self.ID_NEW, u"New…", wx.Bitmap("images/new.png", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, u"Create new wiki…", "")
+		self.mainToolbar.AddLabelTool(self.ID_OPEN, u"Open…", wx.Bitmap("images/open.png", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, u"Open wiki…", "")
+		self.mainToolbar.AddLabelTool(self.ID_SAVE, "Save", wx.Bitmap("images/save.png", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, "Save wiki", "")
 		self.mainToolbar.AddSeparator()
-		self.mainToolbar.AddLabelTool(self.ID_RELOAD, "Reload", wx.Bitmap(os.path.join (self.imagesDir, "reload.png"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, "Reload wiki", "")
+		self.mainToolbar.AddLabelTool(self.ID_RELOAD, "Reload", wx.Bitmap("images/reload.png", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, "Reload wiki", "")
 		self.mainToolbar.AddSeparator()
-		self.mainToolbar.AddLabelTool(self.ID_ADDPAGE, u"Add sibling page…", wx.Bitmap(os.path.join (self.imagesDir, "sibling.ico"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, u"Add sibling page…", "")
-		self.mainToolbar.AddLabelTool(self.ID_ADDCHILD, u"Add child Page…", wx.Bitmap(os.path.join (self.imagesDir, "child.ico"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, u"Add child Page…", "")
-		self.mainToolbar.AddLabelTool(self.ID_REMOVE_PAGE, "Remove page", wx.Bitmap(os.path.join (self.imagesDir, "remove.ico"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, u"Remove page…", "")
+		self.mainToolbar.AddLabelTool(self.ID_ADDPAGE, u"Add sibling page…", wx.Bitmap("images/sibling.ico", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, u"Add sibling page…", "")
+		self.mainToolbar.AddLabelTool(self.ID_ADDCHILD, u"Add child Page…", wx.Bitmap("images/child.ico", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, u"Add child Page…", "")
+		self.mainToolbar.AddLabelTool(self.ID_REMOVE_PAGE, "Remove page", wx.Bitmap("images/remove.ico", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, u"Remove page…", "")
 		self.mainToolbar.AddSeparator()
-		self.mainToolbar.AddLabelTool(self.ID_ATTACH, u"Attach files…", wx.Bitmap(os.path.join (self.imagesDir, "attach.png"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, u"Attach files…", "")
-		self.mainToolbar.AddLabelTool(self.ID_EDIT, "Edit page", wx.Bitmap(os.path.join (self.imagesDir, "edit.png"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, "Edit page's properties", "")
-		self.mainToolbar.AddLabelTool(self.ID_GLOBAL_SEARCH, u"Global search…", wx.Bitmap(os.path.join (self.imagesDir, "global_search.png"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, u"Global search…", "")
+		self.mainToolbar.AddLabelTool(self.ID_ATTACH, u"Attach files…", wx.Bitmap("images/attach.png", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, u"Attach files…", "")
+		self.mainToolbar.AddLabelTool(self.ID_EDIT, "Edit page", wx.Bitmap("images/edit.png", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, "Edit page's properties", "")
+		self.mainToolbar.AddLabelTool(self.ID_GLOBAL_SEARCH, u"Global search…", wx.Bitmap("images/global_search.png", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, u"Global search…", "")
 		self.mainToolbar.AddSeparator()
 		# Tool Bar end
 		self.tree = WikiTree(self.leftPane, -1)
@@ -185,6 +189,7 @@ class MainWindow(wx.Frame):
 		self.Bind(wx.EVT_MENU, self.onStdEvent, id=wx.ID_CUT)
 		self.Bind(wx.EVT_MENU, self.onStdEvent, id=wx.ID_COPY)
 		self.Bind(wx.EVT_MENU, self.onStdEvent, id=wx.ID_PASTE)
+		self.Bind(wx.EVT_MENU, self.onPreferences, id=self.ID_PREFERENCES)
 		self.Bind(wx.EVT_MENU, self.onAddSiblingPage, id=self.ID_ADDPAGE)
 		self.Bind(wx.EVT_MENU, self.onAddChildPage, id=self.ID_ADDCHILD)
 		self.Bind(wx.EVT_MENU, self.onRename, id=self.ID_RENAME)
@@ -447,7 +452,7 @@ class MainWindow(wx.Frame):
 		# begin wxGlade: MainWindow.__set_properties
 		self.SetTitle("OutWiker")
 		_icon = wx.EmptyIcon()
-		_icon.CopyFromBitmap(wx.Bitmap(os.path.join (self.imagesDir, "icon.ico"), wx.BITMAP_TYPE_ANY))
+		_icon.CopyFromBitmap(wx.Bitmap("images/icon.ico", wx.BITMAP_TYPE_ANY))
 		self.SetIcon(_icon)
 		self.SetSize((800, 680))
 		self.mainToolbar.Realize()
@@ -703,6 +708,15 @@ class MainWindow(wx.Frame):
 	def onOpenReadOnly(self, event): # wxGlade: MainWindow.<event_handler>
 		wikiroot = core.commands.openWikiWithDialog (self, self.wikiroot, readonly=True)
 		self._openLoadedWiki(wikiroot)
+
+
+	def onPreferences(self, event): # wxGlade: MainWindow.<event_handler>
+		dlg = PrefDialog (self)
+
+		if dlg.ShowModal() == wx.ID_OK:
+			pass
+
+		dlg.Destroy()
 
 # end of class MainWindow
 
