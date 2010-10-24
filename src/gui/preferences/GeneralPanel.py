@@ -66,10 +66,18 @@ class GeneralPanel(wx.ScrolledWindow):
 		"""
 		Опции, связанные с последними открытыми файлами
 		"""
+
+		# Длина истории последних открытых файлов
 		try:
 			self.historySpin.SetValue (self.config.getint (u"RecentWiki", u"maxcount"))
 		except:
 			pass
+
+		try:
+			self.autoopenCheckBox.SetValue (self.config.getbool (u"RecentWiki", u"AutoOpen"))
+		except:
+			pass
+
 	
 
 	def __loadTrayOptions (self):
@@ -88,6 +96,7 @@ class GeneralPanel(wx.ScrolledWindow):
 		"""
 		self.config.set (u"General", u"MinimizeToTray", self.minimizeCheckBox.IsChecked() )
 		self.config.set (u"RecentWiki", u"maxcount", self.historySpin.GetValue () )
+		self.config.set (u"RecentWiki", u"AutoOpen", self.autoopenCheckBox.IsChecked() )
 
 # end of class GeneralPanel
 

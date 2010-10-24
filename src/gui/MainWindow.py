@@ -290,8 +290,11 @@ class MainWindow(wx.Frame):
 
 			if len (sys.argv) > 1:
 				self._openFromCommandLine()
-	
+			else:
+				# Открыть последний открытый файл (если установлена соответствующая опция)
+				self.openWiki (self.recentWiki[0])
 
+	
 	def _openFromCommandLine (self):
 		"""
 		Открыть вики, путь до которой передан в командной строке
@@ -622,11 +625,6 @@ class MainWindow(wx.Frame):
 			parentpage = currPage.parent
 
 		core.commands.createPageWithDialog (self, parentpage)
-
-		#page = core.commands.createPageWithDialog (self, parentpage)
-
-		#if page != None:
-		#	self.wikiroot.selectedPage = page
 
 	
 	def onAddChildPage(self, event): # wxGlade: MainWindow.<event_handler>
