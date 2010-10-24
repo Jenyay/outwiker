@@ -57,13 +57,14 @@ class PrefDialog(wx.Dialog):
 		"""
 		self.generalPage = GeneralPanel.GeneralPanel (self.treeBook)
 
-		self.treeBook.AddPage (None, u"Interface")
+		self.treeBook.AddPage (self.generalPage, u"Interface")
 		self.treeBook.AddSubPage (self.generalPage, u"General")
 		self.treeBook.AddSubPage (None, u"Editor")
 
 		self.treeBook.AddPage (None, u"Pages")
 
 		self.treeBook.ExpandNode (0)
+		self.treeBook.SetSelection (0)
 	
 
 	def _createOkCancelButtons (self, sizer):

@@ -18,6 +18,7 @@ class GeneralPanel(wx.ScrolledWindow):
 		kwds["style"] = wx.TAB_TRAVERSAL
 		wx.ScrolledWindow.__init__(self, *args, **kwds)
 		self.minimizeCheckBox = wx.CheckBox(self, -1, "Minimize to tray")
+		self.startIconizedCheckBox = wx.CheckBox(self, -1, "Start with main window iconized")
 		self.history_label = wx.StaticText(self, -1, "Recent files history length (apply after restart)")
 		self.historySpin = wx.SpinCtrl(self, -1, "5", min=0, max=20, style=wx.SP_ARROW_KEYS|wx.TE_PROCESS_ENTER|wx.TE_PROCESS_TAB|wx.TE_AUTO_URL)
 		self.autoopenCheckBox = wx.CheckBox(self, -1, "Automatically open the recent file")
@@ -31,7 +32,7 @@ class GeneralPanel(wx.ScrolledWindow):
 
 	def __set_properties(self):
 		# begin wxGlade: GeneralPanel.__set_properties
-		self.SetSize((502, 402))
+		self.SetSize((506, 406))
 		self.SetFocus()
 		self.SetScrollRate(0, 0)
 		# end wxGlade
@@ -42,6 +43,7 @@ class GeneralPanel(wx.ScrolledWindow):
 		main_sizer = wx.FlexGridSizer(3, 1, 0, 0)
 		history_size = wx.FlexGridSizer(1, 2, 0, 0)
 		main_sizer.Add(self.minimizeCheckBox, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
+		main_sizer.Add(self.startIconizedCheckBox, 0, wx.ALL, 2)
 		history_size.Add(self.history_label, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
 		history_size.Add(self.historySpin, 0, wx.ALL|wx.ALIGN_RIGHT, 2)
 		history_size.AddGrowableRow(0)
@@ -73,6 +75,7 @@ class GeneralPanel(wx.ScrolledWindow):
 		except:
 			pass
 
+		# Открывать последнюю вики при запуске?
 		try:
 			self.autoopenCheckBox.SetValue (self.config.getbool (u"RecentWiki", u"AutoOpen"))
 		except:
@@ -84,8 +87,15 @@ class GeneralPanel(wx.ScrolledWindow):
 		"""
 		Опции для сворачивания окна в трей
 		"""
+		# Сворачивать в трей?
 		try:
 			self.minimizeCheckBox.SetValue (self.config.getbool (u"General", u"MinimizeToTray"))
+		except:
+			pass
+
+		# Запускаться свернутым?
+		try:
+			self.startIconizedCheckBox.SetValue (self.config.getbool (u"General", u"StartIconized"))
 		except:
 			pass
 
@@ -94,6 +104,7 @@ class GeneralPanel(wx.ScrolledWindow):
 		"""
 		Сохранить состояние страницы в конфиг
 		"""
+		self.config.set (u"General", u"StartIconized", self.startIconizedCheckBox.IsChecked() )
 		self.config.set (u"General", u"MinimizeToTray", self.minimizeCheckBox.IsChecked() )
 		self.config.set (u"RecentWiki", u"maxcount", self.historySpin.GetValue () )
 		self.config.set (u"RecentWiki", u"AutoOpen", self.autoopenCheckBox.IsChecked() )

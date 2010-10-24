@@ -287,12 +287,40 @@ class MainWindow(wx.Frame):
 			self.firstEvent = False
 			self._loadParams()
 			self._loadRecentWiki()
+			self.__iconizeAfterStart ()
 
 			if len (sys.argv) > 1:
 				self._openFromCommandLine()
 			else:
 				# Открыть последний открытый файл (если установлена соответствующая опция)
-				self.openWiki (self.recentWiki[0])
+				self.__openRecentWiki ()
+
+	
+
+	def __openRecentWiki (self):
+		"""
+		Открыть последнюю вики, если установлена соответствующая опция
+		"""
+		try:
+			openRecent = wx.GetApp().getConfig().getbool (u"RecentWiki", u"AutoOpen")
+		except:
+			return
+
+		if openRecent and len (self.recentWiki) > 0:
+			self.openWiki (self.recentWiki[0])
+
+
+	def __iconizeAfterStart (self):
+		"""
+		Свернуться при запуске, если установлена соответствующая опция
+		"""
+		try:
+			iconize = wx.GetApp().getConfig().getbool (u"General", u"StartIconized")
+		except:
+			return
+
+		if iconize:
+			self.Iconize(True)
 
 	
 	def _openFromCommandLine (self):
