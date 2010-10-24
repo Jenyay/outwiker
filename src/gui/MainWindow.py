@@ -407,8 +407,6 @@ class MainWindow(wx.Frame):
 
 			xpos = config.getint (self._configSection, "xpos")
 			ypos = config.getint (self._configSection, "ypos")
-
-			sash = config.getint (self._configSection, "sash")
 		except Exception as e:
 			width = self.defaultWidth
 			height = self.defaultHeiht
@@ -424,12 +422,18 @@ class MainWindow(wx.Frame):
 			# Координаты окна
 			xpos = (dx - width) / 2
 			ypos = (dy - height) / 2
-
-			# Ширина дерева
-			sash = self.defaultSash
 		
 		self.SetSize ( (width, height) )
 		self.SetPosition ( (xpos, ypos) )
+		self.__loadSashPosition()
+	
+
+	def __loadSashPosition (self):
+		try:
+			sash = wx.GetApp().getConfig().getint (self._configSection, "sash")
+		except:
+			sash = self.defaultSash
+
 		self.splitter.SetSashPosition (sash)
 
 	
@@ -448,9 +452,16 @@ class MainWindow(wx.Frame):
 			config.set (self._configSection, "xpos", xpos)
 			config.set (self._configSection, "ypos", ypos)
 
-			config.set (self._configSection, "sash", self.splitter.GetSashPosition())
+			self.__saveSashPosition()
 		except Exception as e:
 			wx.MessageBox (u"Can't save config\n" + unicode (e), u"Error", wx.ICON_ERROR | wx.OK)
+	
+
+	def __saveSashPosition(self):
+		"""
+		Сохранить положение перетаскиваемой линии между деревом и заметкой
+		"""
+		wx.GetApp().getConfig().set (self._configSection, "sash", self.splitter.GetSashPosition())
 
 	
 	def _hideElements (self):
@@ -751,11 +762,17 @@ class MainWindow(wx.Frame):
 			# Окно свернули
 			self.__minimizeWindow ()
 
+			try:
+				self.__saveSashPosition()
+			except Exception as e:
+				wx.MessageBox (u"Can't save config\n" + unicode (e), u"Error", wx.ICON_ERROR | wx.OK)
+
 
 	def __restoreWindow (self):
 		self.Show ()
 		self.Iconize (False)
 		self.__removeTrayIcon()
+		self.__loadSashPosition()
 
 
 	def __minimizeWindow (self):
