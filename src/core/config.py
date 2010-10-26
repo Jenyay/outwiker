@@ -20,7 +20,7 @@ def getConfigPath (dirname, fname):
 	if os.path.exists (someDir):
 		path = someDir
 	else:
-		homeDir = os.path.join (os.path.expanduser("~"), dirname)
+		homeDir = os.path.join (unicode (os.path.expanduser("~"), core.system.getOS().filesEncoding), dirname)
 		if not os.path.exists (homeDir):
 			os.mkdir (homeDir)
 
