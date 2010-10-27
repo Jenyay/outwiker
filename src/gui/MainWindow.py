@@ -50,6 +50,7 @@ class MainWindow(wx.Frame):
 		self.ID_RENAME = wx.NewId()
 		self.ID_HELP = wx.NewId()
 		self.ID_PREFERENCES = wx.NewId()
+		self.ID_RESTORE = wx.NewId()
 
 
 	def __init__(self, *args, **kwds):
@@ -220,6 +221,7 @@ class MainWindow(wx.Frame):
 		
 		self.Bind (wx.EVT_CLOSE, self.onClose)
 		self.Bind (wx.EVT_ICONIZE, self.onIconize)
+		self.Bind (wx.EVT_MENU, self.onRestore, id=self.ID_RESTORE)
 
 		self.Bind (wx.EVT_IDLE, self.onIdle)
 		#self._hideElements()
@@ -243,16 +245,36 @@ class MainWindow(wx.Frame):
 		self.SetAcceleratorTable(aTable)
 	
 
+	def onRestore (self, event):
+		self.__restoreWindow()
+	
+
+	def __createTrayMenu (self, taskBarIcon):
+		self.trayMenu = wx.Menu()
+		self.trayMenu.Append (self.ID_RESTORE, u"Restore")
+		self.trayMenu.Append (self.ID_EXIT, u"Exit")
+
+		self.taskBarIcon.Bind(wx.EVT_MENU, self.onRestore, id=self.ID_RESTORE)
+		self.taskBarIcon.Bind(wx.EVT_MENU, self.onExit, id=self.ID_EXIT)
+
+
 	def __createTrayIcon (self):
 		self.icon = wx.EmptyIcon()
 		self.icon.CopyFromBitmap(wx.Bitmap(os.path.join (self.imagesDir, "outwiker_16.png"), wx.BITMAP_TYPE_ANY))
 
 		self.taskBarIcon = wx.TaskBarIcon()
-		self.taskBarIcon.Bind(wx.EVT_TASKBAR_LEFT_DOWN, self.OnTrayLeftClick)
+		self.taskBarIcon.Bind (wx.EVT_TASKBAR_LEFT_DOWN, self.OnTrayLeftClick)
+		self.taskBarIcon.Bind (wx.EVT_TASKBAR_RIGHT_DOWN, self.OnTrayRightClick)
+
+		self.__createTrayMenu(self.taskBarIcon)
 
 
 	def OnTrayLeftClick (self, event):
 		self.__restoreWindow()
+
+
+	def OnTrayRightClick (self, event):
+		self.taskBarIcon.PopupMenu (self.trayMenu)
 	
 
 	def __enableGui (self):
