@@ -4,6 +4,7 @@
 import wx
 
 import GeneralPanel
+import EditorPanel
 from core.exceptions import PreferencesException
 
 # begin wxGlade: dependencies
@@ -56,10 +57,11 @@ class PrefDialog(wx.Dialog):
 		Создать страницы окна настроек
 		"""
 		self.generalPage = GeneralPanel.GeneralPanel (self.treeBook)
+		self.editorPage = EditorPanel.EditorPanel (self.treeBook)
 
 		self.treeBook.AddPage (self.generalPage, u"Interface")
 		self.treeBook.AddSubPage (self.generalPage, u"General")
-		self.treeBook.AddSubPage (None, u"Editor")
+		self.treeBook.AddSubPage (self.editorPage, u"Editor")
 
 		self.treeBook.AddPage (None, u"Pages")
 

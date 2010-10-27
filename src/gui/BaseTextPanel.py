@@ -156,6 +156,26 @@ class BaseTextPanel (wx.Panel):
 				"")
 
 		self.mainWindow.mainToolbar.Realize()
+	
+
+	def _setMarginWidth (self, editor):
+		"""
+		Установить размер левой области, где пишутся номера строк в зависимости от шрифта
+		"""
+		try:
+			linenumbers = wx.GetApp().getConfig().getbool (u"General", u"ShowLineNumbers")
+			fontSize = wx.GetApp().getConfig().getint (u"Font", u"Size")
+		except:
+			linenumbers = False
+			fontSize = 10
+
+		if linenumbers:
+			width = int (35.0 / 10.0 * fontSize)
+			editor.SetMarginWidth (0, width)
+		else:
+			editor.SetMarginWidth (0, 0)
+
+		editor.SetMarginWidth (1, 0)
 
 
 	def onSearch (self, event):

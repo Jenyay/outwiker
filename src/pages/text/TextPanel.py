@@ -27,6 +27,7 @@ class TextPanel (BaseTextPanel):
 		self.textEditor.textCtrl.SetText (self._currentpage.content)
 		self.textEditor.textCtrl.EmptyUndoBuffer()
 		self.textEditor.textCtrl.SetReadOnly (page.readonly)
+		self._setMarginWidth (self.textEditor.textCtrl)
 	
 
 	def __layout (self):

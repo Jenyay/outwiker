@@ -60,6 +60,8 @@ class HtmlPanel(BaseTextPanel):
 		self.HCount = 6
 		self.toolsId = {}
 
+		self._setMarginWidth (self.codeWindow.textCtrl)
+
 	
 	def onClose (self, event):
 		#self.removeHtml()
@@ -370,7 +372,7 @@ class HtmlPagePanel (HtmlPanel):
 			file hidden image"
 
 		self.codeWindow.textCtrl.SetKeyWords (0, tags + attributes)
-
+	
 
 	def loadStyles (self):
 		"""
