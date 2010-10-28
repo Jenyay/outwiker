@@ -497,13 +497,14 @@ class MainWindow(wx.Frame):
 		config = wx.GetApp().getConfig()
 
 		try:
-			(width, height) = self.GetSizeTuple()
-			config.set (self._configSection, "width", width)
-			config.set (self._configSection, "height", height)
+			if not self.IsIconized():
+				(width, height) = self.GetSizeTuple()
+				config.set (self._configSection, "width", width)
+				config.set (self._configSection, "height", height)
 
-			(xpos, ypos) = self.GetPositionTuple()
-			config.set (self._configSection, "xpos", xpos)
-			config.set (self._configSection, "ypos", ypos)
+				(xpos, ypos) = self.GetPositionTuple()
+				config.set (self._configSection, "xpos", xpos)
+				config.set (self._configSection, "ypos", ypos)
 
 			self.__saveSashPosition()
 		except Exception as e:
