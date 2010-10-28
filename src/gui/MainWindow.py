@@ -563,7 +563,13 @@ class MainWindow(wx.Frame):
 
 
 	def onClose (self, event):
-		if wx.MessageBox (u"Really exit?", u"Exit", wx.YES_NO  | wx.ICON_QUESTION ) == wx.YES:
+		try:
+			askBeforeExit = wx.GetApp().getConfig().getbool (u"General", u"AskBeforeExit")
+		except:
+			askBeforeExit = True
+
+		if (not askBeforeExit or 
+				wx.MessageBox (u"Really exit?", u"Exit", wx.YES_NO  | wx.ICON_QUESTION ) == wx.YES):
 			if self.wikiroot != None:
 				Controller.instance().onWikiClose (self.wikiroot)
 			self._saveParams()
