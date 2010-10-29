@@ -90,6 +90,7 @@ class MainWindow(wx.Frame):
 		self.defaultSash = 200
 
 		Controller.instance().onTreeUpdate += self.onTreeUpdate
+		Controller.instance().onPageSelect += self.onPageSelect
 		Controller.instance().onBookmarksChanged += self.onBookmarksChanged
 		
 		# Ссылка на корень открытой в данный момент вики
@@ -243,6 +244,23 @@ class MainWindow(wx.Frame):
 			(wx.ACCEL_SHIFT,  wx.WXK_INSERT, wx.ID_PASTE),
 			(wx.ACCEL_SHIFT,  wx.WXK_DELETE, wx.ID_CUT)])
 		self.SetAcceleratorTable(aTable)
+	
+
+	def onPageSelect (self, newpage):
+		try:
+			template =  wx.GetApp().getConfig().get (u"MainWindow", u"Title")
+		except:
+			template = u"{file} - OutWiker"
+
+		if self.wikiroot == None:
+			self.SetTitle (u"OutWiker")
+			return
+
+		pageTitle = u"" if newpage == None else newpage.title
+		filename = os.path.basename (self.wikiroot.path)
+
+		result = template.replace ("{file}", filename).replace ("{page}", pageTitle)
+		self.SetTitle (result)
 	
 
 	def onRestore (self, event):
