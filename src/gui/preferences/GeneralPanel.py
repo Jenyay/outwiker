@@ -27,11 +27,11 @@ class GeneralPanel(wx.ScrolledWindow):
 		self.history_label = wx.StaticText(self, -1, "Recent files history length (apply after restart)")
 		self.historySpin = wx.SpinCtrl(self, -1, "5", min=0, max=20, style=wx.SP_ARROW_KEYS|wx.TE_PROCESS_ENTER|wx.TE_PROCESS_TAB|wx.TE_AUTO_URL)
 		self.autoopenCheckBox = wx.CheckBox(self, -1, "Automatically open the recent file")
+		self.static_line_1 = wx.StaticLine(self, -1)
 		self.titleFormatLabel = wx.StaticText(self, -1, "Main window title format")
 		self.titleFormatText = wx.TextCtrl(self, -1, "")
 		self.macrosLabel = wx.StaticText(self, -1, "Macros for title:\n{file} - open wiki file name\n{page} - open page title")
 		self.static_line_3 = wx.StaticLine(self, -1)
-		self.static_line_1 = wx.StaticLine(self, -1)
 
 		self.__set_properties()
 		self.__do_layout()
@@ -42,7 +42,7 @@ class GeneralPanel(wx.ScrolledWindow):
 
 	def __set_properties(self):
 		# begin wxGlade: GeneralPanel.__set_properties
-		self.SetSize((508, 408))
+		self.SetSize((510, 410))
 		self.SetFocus()
 		self.SetScrollRate(0, 0)
 		self.askBeforeExitCheckBox.SetValue(1)
@@ -51,7 +51,7 @@ class GeneralPanel(wx.ScrolledWindow):
 
 	def __do_layout(self):
 		# begin wxGlade: GeneralPanel.__do_layout
-		main_sizer = wx.FlexGridSizer(9, 1, 0, 0)
+		main_sizer = wx.FlexGridSizer(10, 1, 0, 0)
 		grid_sizer_2 = wx.FlexGridSizer(1, 2, 0, 0)
 		history_size = wx.FlexGridSizer(1, 2, 0, 0)
 		main_sizer.Add(self.minimizeCheckBox, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
@@ -65,13 +65,13 @@ class GeneralPanel(wx.ScrolledWindow):
 		history_size.AddGrowableCol(1)
 		main_sizer.Add(history_size, 1, wx.EXPAND, 0)
 		main_sizer.Add(self.autoopenCheckBox, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
+		main_sizer.Add(self.static_line_1, 0, wx.EXPAND, 0)
 		grid_sizer_2.Add(self.titleFormatLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
 		grid_sizer_2.Add(self.titleFormatText, 0, wx.ALL|wx.EXPAND, 2)
 		grid_sizer_2.AddGrowableCol(1)
 		main_sizer.Add(grid_sizer_2, 1, wx.EXPAND, 0)
 		main_sizer.Add(self.macrosLabel, 0, wx.ALL, 2)
 		main_sizer.Add(self.static_line_3, 0, wx.EXPAND, 0)
-		main_sizer.Add(self.static_line_1, 0, wx.EXPAND, 0)
 		self.SetSizer(main_sizer)
 		main_sizer.AddGrowableCol(0)
 		# end wxGlade
