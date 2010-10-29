@@ -60,11 +60,12 @@ class HtmlPanel(BaseTextPanel):
 		self.HCount = 6
 		self.toolsId = {}
 
-		self._setMarginWidth (self.codeWindow.textCtrl)
+	
+	def onEditorConfigChange (self):
+		self.codeWindow.setDefaultSettings()
 
 	
 	def onClose (self, event):
-		#self.removeHtml()
 		BaseTextPanel.Close (self)
 
 

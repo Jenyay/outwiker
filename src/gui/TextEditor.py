@@ -8,6 +8,7 @@ from wx.stc import StyledTextCtrl
 
 from gui.LocalSearchPanel import LocalSearchPanel, LocalSearcher
 import core.system
+from core.controller import Controller
 
 # begin wxGlade: dependencies
 # end wxGlade
@@ -40,8 +41,12 @@ class TextEditor(wx.Panel):
 		self.textCtrl.Bind(wx.EVT_MENU, self.onPasteToEditor, id = wx.ID_PASTE)
 		self.textCtrl.Bind(wx.EVT_MENU, self.onUndo, id = wx.ID_UNDO)
 		self.textCtrl.Bind(wx.EVT_MENU, self.onRedo, id = wx.ID_REDO)
-		#wx.EVT_CHAR(self, self.OnChar_ImeWorkaround)
 		self.textCtrl.Bind (wx.EVT_CHAR, self.OnChar_ImeWorkaround)
+		#self.Bind (wx.EVT_CLOSE, self.OnClose)
+
+
+	#def OnClose (self, event):
+	#	print "1111"
 
 	
 	def onCopyFromEditor (self, event):
@@ -100,6 +105,28 @@ class TextEditor(wx.Panel):
 		self.textCtrl.CmdKeyClear (ord ("R"), wx.stc.STC_SCMOD_CTRL | wx.stc.STC_SCMOD_SHIFT)
 		self.textCtrl.SetWrapMode (wx.stc.STC_WRAP_WORD)
 		self.textCtrl.SetWrapVisualFlags (wx.stc.STC_WRAPVISUALFLAG_END)
+
+		self._setMarginWidth (self.textCtrl)
+	
+
+	def _setMarginWidth (self, editor):
+		"""
+		Установить размер левой области, где пишутся номера строк в зависимости от шрифта
+		"""
+		try:
+			linenumbers = wx.GetApp().getConfig().getbool (u"General", u"ShowLineNumbers")
+			fontSize = wx.GetApp().getConfig().getint (u"Font", u"Size")
+		except:
+			linenumbers = False
+			fontSize = 10
+
+		if linenumbers:
+			width = int (35.0 / 10.0 * fontSize)
+			editor.SetMarginWidth (0, width)
+			editor.SetMarginWidth (1, 5)
+		else:
+			editor.SetMarginWidth (0, 0)
+			editor.SetMarginWidth (1, 0)
 	
 
 	def calcByteLen(self, text):

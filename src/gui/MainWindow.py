@@ -92,6 +92,7 @@ class MainWindow(wx.Frame):
 		Controller.instance().onTreeUpdate += self.onTreeUpdate
 		Controller.instance().onPageSelect += self.onPageSelect
 		Controller.instance().onBookmarksChanged += self.onBookmarksChanged
+		Controller.instance().onMainWindowConfigChange += self.onMainWindowConfigChange
 		
 		# Ссылка на корень открытой в данный момент вики
 		self.wikiroot = None
@@ -247,6 +248,10 @@ class MainWindow(wx.Frame):
 	
 
 	def onPageSelect (self, newpage):
+		self.__updateTitle()
+	
+
+	def __updateTitle (self):
 		try:
 			template =  wx.GetApp().getConfig().get (u"MainWindow", u"Title")
 		except:
@@ -256,7 +261,7 @@ class MainWindow(wx.Frame):
 			self.SetTitle (u"OutWiker")
 			return
 
-		pageTitle = u"" if newpage == None else newpage.title
+		pageTitle = u"" if self.wikiroot.selectedPage == None else self.wikiroot.selectedPage.title
 		filename = os.path.basename (self.wikiroot.path)
 
 		result = template.replace ("{file}", filename).replace ("{page}", pageTitle)
@@ -606,6 +611,10 @@ class MainWindow(wx.Frame):
 		"""
 		if self.taskBarIcon.IsIconInstalled():
 			self.taskBarIcon.RemoveIcon()
+
+
+	def onMainWindowConfigChange (self):
+		self.__updateTitle()
 
 
 	def onTreeUpdate (self, sender):

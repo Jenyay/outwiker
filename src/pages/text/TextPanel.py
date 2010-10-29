@@ -21,13 +21,16 @@ class TextPanel (BaseTextPanel):
 
 		self.Bind (wx.EVT_CLOSE, self.onClose)
 		self.page = page
+
+	
+	def onEditorConfigChange (self):
+		self.textEditor.setDefaultSettings()
 	
 
 	def UpdateView (self, page):
 		self.textEditor.textCtrl.SetText (self._currentpage.content)
 		self.textEditor.textCtrl.EmptyUndoBuffer()
 		self.textEditor.textCtrl.SetReadOnly (page.readonly)
-		self._setMarginWidth (self.textEditor.textCtrl)
 	
 
 	def __layout (self):

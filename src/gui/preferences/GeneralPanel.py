@@ -3,6 +3,9 @@
 
 import wx
 
+import ConfigElements
+from core.controller import Controller
+
 # begin wxGlade: dependencies
 # end wxGlade
 
@@ -87,59 +90,49 @@ class GeneralPanel(wx.ScrolledWindow):
 		Опции, связанные с последними открытыми файлами
 		"""
 		# Длина истории последних открытых файлов
-		try:
-			self.historySpin.SetValue (self.config.getint (u"RecentWiki", u"maxcount"))
-		except:
-			pass
+		self.historyLength = ConfigElements.IntegerOptions (u"RecentWiki", u"maxcount",
+				self.config, self.historySpin, 10, 0, 30)
 
 		# Открывать последнюю вики при запуске?
-		try:
-			self.autoopenCheckBox.SetValue (self.config.getbool (u"RecentWiki", u"AutoOpen"))
-		except:
-			pass
+		self.autoopen = ConfigElements.BooleanOptions (u"RecentWiki", u"AutoOpen",
+				self.config, self.autoopenCheckBox, False)
 
-		# Формат заголовка страницы
-		try:
-			self.titleFormatText.SetValue (self.config.get (u"MainWindow", u"Title"))
-		except:
-			self.titleFormatText.SetValue (u"")
-	
 
 	def __loadGeneralOptions (self):
 		"""
 		Опции для сворачивания окна в трей
 		"""
 		# Сворачивать в трей?
-		try:
-			self.minimizeCheckBox.SetValue (self.config.getbool (u"General", u"MinimizeToTray"))
-		except:
-			pass
+		self.minimizeToTray = ConfigElements.BooleanOptions (u"General", u"MinimizeToTray",
+				self.config, self.minimizeCheckBox, True)
 
 		# Запускаться свернутым?
-		try:
-			self.startIconizedCheckBox.SetValue (self.config.getbool (u"General", u"StartIconized"))
-		except:
-			pass
+		self.startIconized = ConfigElements.BooleanOptions (u"General", u"StartIconized",
+				self.config, self.startIconizedCheckBox, False)
 
 		# Задавать вопрос перед выходом из программы?
-		try:
-			self.askBeforeExitCheckBox.SetValue (self.config.getbool (u"General", u"AskBeforeExit"))
-		except:
-			pass
+		self.askBeforeExit = ConfigElements.BooleanOptions (u"General", u"AskBeforeExit",
+				self.config, self.askBeforeExitCheckBox, True)
+
+		# Формат заголовка страницы
+		self.titleFormat = ConfigElements.StringOptions (u"MainWindow", u"Title", 
+				self.config, self.titleFormatText,
+				u"{page} - {file} - OutWiker")
 
 
 	def Save(self):
 		"""
 		Сохранить состояние страницы в конфиг
 		"""
-		self.config.set (u"General", u"StartIconized", self.startIconizedCheckBox.IsChecked() )
-		self.config.set (u"General", u"MinimizeToTray", self.minimizeCheckBox.IsChecked() )
-		self.config.set (u"General", u"AskBeforeExit", self.askBeforeExitCheckBox.IsChecked() )
+		self.startIconized.save()
+		self.minimizeToTray.save()
+		self.askBeforeExit.save()
+		self.historyLength.save()
+		self.autoopen.save()
 
-		self.config.set (u"RecentWiki", u"maxcount", self.historySpin.GetValue () )
-		self.config.set (u"RecentWiki", u"AutoOpen", self.autoopenCheckBox.IsChecked() )
-
-		self.config.set (u"MainWindow", u"Title", self.titleFormatText.GetValue ())
+		if self.titleFormat.isValueChanged():
+			self.titleFormat.save()
+			Controller.instance().onMainWindowConfigChange()
 
 # end of class GeneralPanel
 

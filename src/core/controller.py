@@ -70,6 +70,14 @@ class Controller(object):
 		# htmlView - окно, где будет представлен HTML
 		self.onHtmlRenderingEnd = Event()
 
+		# Изменение настроек редактора
+		# Параметры: нет
+		self.onEditorConfigChange = Event()
+
+		# Изменение настроек главного окна
+		# Параметры: нет
+		self.onMainWindowConfigChange = Event()
+
 		# Копировать в буфер обмена
 		#self.onClipboardCopy = Event()
 		
