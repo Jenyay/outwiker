@@ -172,10 +172,11 @@ class BaseTextPanel (wx.Panel):
 		if linenumbers:
 			width = int (35.0 / 10.0 * fontSize)
 			editor.SetMarginWidth (0, width)
+			editor.SetMarginWidth (1, 5)
 		else:
 			editor.SetMarginWidth (0, 0)
+			editor.SetMarginWidth (1, 0)
 
-		editor.SetMarginWidth (1, 0)
 
 
 	def onSearch (self, event):
