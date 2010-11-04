@@ -75,16 +75,13 @@ class MainWindow(wx.Frame):
 		# Ключ - id, значение - путь до страницы вики
 		self._bookmarksId = {}
 
-		# Секция конфига, где будут храниться все настройки для главного окна
-		self._configSection = "MainWindow"
-
 		# Флаг, который отмечает, что пришло первое событие onIdle.
 		# Используется для определения момента, когда окно только загрузилось
 		self.firstEvent = True
 
 		# Размеры окна по умолчанию
-		self.defaultWidth = 800
-		self.defaultHeiht = 680
+		#self.defaultWidth = 800
+		#self.defaultHeiht = 680
 
 		# Ширина дерева по умолчанию
 		self.defaultSash = 200
@@ -252,10 +249,7 @@ class MainWindow(wx.Frame):
 	
 
 	def __updateTitle (self):
-		try:
-			template =  wx.GetApp().getConfig().get (u"MainWindow", u"Title")
-		except:
-			template = u"{file} - OutWiker"
+		template = wx.GetApp().getConfig().titleFormatOption.value
 
 		if self.wikiroot == None:
 			self.SetTitle (u"OutWiker")
@@ -346,10 +340,7 @@ class MainWindow(wx.Frame):
 		"""
 		Открыть последнюю вики, если установлена соответствующая опция
 		"""
-		try:
-			openRecent = wx.GetApp().getConfig().getbool (u"RecentWiki", u"AutoOpen")
-		except:
-			return
+		openRecent = wx.GetApp().getConfig().historyLengthOption.value
 
 		if openRecent and len (self.recentWiki) > 0:
 			self.openWiki (self.recentWiki[0])
@@ -359,10 +350,7 @@ class MainWindow(wx.Frame):
 		"""
 		Свернуться при запуске, если установлена соответствующая опция
 		"""
-		try:
-			iconize = wx.GetApp().getConfig().getbool (u"General", u"StartIconized")
-		except:
-			return
+		iconize = wx.GetApp().getConfig().startIconizedOption.value
 
 		if iconize:
 			self.Iconize(True)
@@ -476,28 +464,12 @@ class MainWindow(wx.Frame):
 		"""
 		config = wx.GetApp().getConfig()
 		self._showElements()
-		
-		try:
-			width = config.getint (self._configSection, "width")
-			height = config.getint (self._configSection, "height")
 
-			xpos = config.getint (self._configSection, "xpos")
-			ypos = config.getint (self._configSection, "ypos")
-		except Exception as e:
-			width = self.defaultWidth
-			height = self.defaultHeiht
-			(dx, dy) = wx.GetDisplaySize()
+		width = config.WidthOption.value
+		height = config.HeightOption.value
 
-			# Чтобы окно умещалось на экране
-			if dx < width:
-				width = dx
-
-			if dy < height:
-				height = dy
-
-			# Координаты окна
-			xpos = (dx - width) / 2
-			ypos = (dy - height) / 2
+		xpos = config.XPosOption.value
+		ypos = config.YPosOption.value
 		
 		self.SetSize ( (width, height) )
 		self.SetPosition ( (xpos, ypos) )
@@ -505,12 +477,7 @@ class MainWindow(wx.Frame):
 	
 
 	def __loadSashPosition (self):
-		try:
-			sash = wx.GetApp().getConfig().getint (self._configSection, "sash")
-		except:
-			sash = self.defaultSash
-
-		self.splitter.SetSashPosition (sash)
+		self.splitter.SetSashPosition (wx.GetApp().getConfig().SashPositionOption.value)
 
 	
 	def _saveParams (self):
@@ -522,12 +489,12 @@ class MainWindow(wx.Frame):
 		try:
 			if not self.IsIconized():
 				(width, height) = self.GetSizeTuple()
-				config.set (self._configSection, "width", width)
-				config.set (self._configSection, "height", height)
+				config.WidthOption.value = width
+				config.HeightOption.value = height
 
 				(xpos, ypos) = self.GetPositionTuple()
-				config.set (self._configSection, "xpos", xpos)
-				config.set (self._configSection, "ypos", ypos)
+				config.XPosOption.value = xpos
+				config.YPosOption.value = ypos
 
 			self.__saveSashPosition()
 		except Exception as e:
@@ -538,7 +505,7 @@ class MainWindow(wx.Frame):
 		"""
 		Сохранить положение перетаскиваемой линии между деревом и заметкой
 		"""
-		wx.GetApp().getConfig().set (self._configSection, "sash", self.splitter.GetSashPosition())
+		wx.GetApp().getConfig().SashPositionOption.value = self.splitter.GetSashPosition()
 
 	
 	def _hideElements (self):
@@ -586,10 +553,7 @@ class MainWindow(wx.Frame):
 
 
 	def onClose (self, event):
-		try:
-			askBeforeExit = wx.GetApp().getConfig().getbool (u"General", u"AskBeforeExit")
-		except:
-			askBeforeExit = True
+		askBeforeExit = wx.GetApp().getConfig().askBeforeExitOption.value
 
 		if (not askBeforeExit or 
 				wx.MessageBox (u"Really exit?", u"Exit", wx.YES_NO  | wx.ICON_QUESTION ) == wx.YES):
@@ -861,12 +825,7 @@ class MainWindow(wx.Frame):
 		"""
 		Свернуть окно
 		"""
-		try:
-			minimize = wx.GetApp().config.getbool (u"General", u"MinimizeToTray")
-		except:
-			return
-
-		if minimize:
+		if wx.GetApp().config.minimizeOption.value:
 			# В трей добавим иконку, а окно спрячем
 			self.taskBarIcon.SetIcon(self.icon)
 			self.Hide()

@@ -6,7 +6,7 @@
 import os
 import wx
 
-from core.config import Config, getConfigPath
+from core.config import GeneralConfig, getConfigPath
 import core.system
 
 from gui.MainWindow import MainWindow
@@ -16,7 +16,7 @@ class OutWiker(wx.App):
 		wx.App.__init__ (self, *args, **kwds)
 
 		self._configFileName = getConfigPath (u".outwiker", u"outwiker.ini")
-		self.config = Config(self._configFileName)
+		self.config = GeneralConfig (self._configFileName)
 
 	
 	def getConfig (self):

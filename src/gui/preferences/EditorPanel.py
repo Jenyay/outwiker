@@ -5,6 +5,7 @@ import wx
 
 import ConfigElements
 from core.controller import Controller
+from core.config import StringOption, BooleanOption, IntegerOption
 
 # begin wxGlade: dependencies
 # end wxGlade
@@ -53,12 +54,10 @@ class EditorPanel(wx.Panel):
 
 	def LoadState(self):
 		# Размер шрифта
-		self.fontSize = ConfigElements.IntegerElement (u"Font", u"size",
-				self.config, self.fontSizeSpin, 10, 1, 30)
+		self.fontSize = ConfigElements.IntegerElement (self.config.fontSizeOption, self.fontSizeSpin, 1, 30)
 
 		# Показывать ли номера строк?
-		self.lineNumbers = ConfigElements.BooleanElement (u"General", u"ShowLineNumbers",
-				self.config, self.lineNumbersCheckBox, False)
+		self.lineNumbers = ConfigElements.BooleanElement (self.config.lineNumbersOption, self.lineNumbersCheckBox)
 	
 
 	def Save (self):

@@ -5,6 +5,7 @@ import wx
 
 import ConfigElements
 from core.controller import Controller
+from core.config import StringOption, BooleanOption, IntegerOption
 
 # begin wxGlade: dependencies
 # end wxGlade
@@ -90,12 +91,10 @@ class GeneralPanel(wx.ScrolledWindow):
 		Опции, связанные с последними открытыми файлами
 		"""
 		# Длина истории последних открытых файлов
-		self.historyLength = ConfigElements.IntegerElement (u"RecentWiki", u"maxcount",
-				self.config, self.historySpin, 10, 0, 30)
+		self.historyLength = ConfigElements.IntegerElement (self.config.historyLengthOption, self.historySpin, 0, 30)
 
 		# Открывать последнюю вики при запуске?
-		self.autoopen = ConfigElements.BooleanElement (u"RecentWiki", u"AutoOpen",
-				self.config, self.autoopenCheckBox, False)
+		self.autoopen = ConfigElements.BooleanElement (self.config.autoopenOption, self.autoopenCheckBox)
 
 
 	def __loadGeneralOptions (self):
@@ -103,21 +102,16 @@ class GeneralPanel(wx.ScrolledWindow):
 		Опции для сворачивания окна в трей
 		"""
 		# Сворачивать в трей?
-		self.minimizeToTray = ConfigElements.BooleanElement (u"General", u"MinimizeToTray",
-				self.config, self.minimizeCheckBox, True)
+		self.minimizeToTray = ConfigElements.BooleanElement (self.config.minimizeOption, self.minimizeCheckBox)
 
 		# Запускаться свернутым?
-		self.startIconized = ConfigElements.BooleanElement (u"General", u"StartIconized",
-				self.config, self.startIconizedCheckBox, False)
+		self.startIconized = ConfigElements.BooleanElement (self.config.startIconizedOption, self.startIconizedCheckBox)
 
 		# Задавать вопрос перед выходом из программы?
-		self.askBeforeExit = ConfigElements.BooleanElement (u"General", u"AskBeforeExit",
-				self.config, self.askBeforeExitCheckBox, True)
+		self.askBeforeExit = ConfigElements.BooleanElement (self.config.askBeforeExitOption, self.askBeforeExitCheckBox)
 
 		# Формат заголовка страницы
-		self.titleFormat = ConfigElements.StringElement (u"MainWindow", u"Title", 
-				self.config, self.titleFormatText,
-				u"{page} - {file} - OutWiker")
+		self.titleFormat = ConfigElements.StringElement (self.config.titleFormatOption, self.titleFormatText)
 
 
 	def Save(self):

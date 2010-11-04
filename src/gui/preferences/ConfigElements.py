@@ -1,38 +1,19 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 """
-Классы для взаимодействия конфига и Гуя
+Классы для взаимодействия конфига и GUI
 """
 
 class StringElement (object):
-	def __init__ (self, section, param, config, control, defaultValue):
+	def __init__ (self, option, control):
 		"""
-		section - секция для параметра конфига
-		param - имя параметра конфига
-		config - экземпляр класса core.Config
-		control - экземпляр интерфейсного элемента. Для текстовых параметров - wx.TextCtrl
+		Элемент для строковой настрйоки.
+		Элемент управления - TextCtrl
+		option - опция из core.config
 		defaultValue - значение по умолчанию
 		"""
-		self.section = section
-		self.param = param
-		self.defaultValue = defaultValue
-		self.config = config
+		self.option = option
 		self.control = control
-
-		# Указатель на последнее возникшее исключение
-		# Т.к. как правило исключения игнорируются, то это поле используется для отладкиы
-		self.error = None
-
-		self.loadParam (config)
-
-
-	def loadParam (self, config):
-		try:
-			self.value = self._getValue()
-		except Exception as e:
-			self.error = e
-			self.value = self.defaultValue
-
 		self._updateGUI()
 
 
@@ -40,12 +21,11 @@ class StringElement (object):
 		"""
 		Изменилось ли значение в интерфейсном элементе
 		"""
-		return self._getGuiValue() != self.value
+		return self._getGuiValue() != self.option.value
 
 
 	def save (self):
-		if self.isValueChanged():
-			self._saveValue()
+		self.option.value = self._getGuiValue()
 
 
 	def _getGuiValue (self):
@@ -56,22 +36,12 @@ class StringElement (object):
 		return self.control.GetValue()
 
 
-	def _getValue (self):
-		"""
-		Получить значение. В производных классах этот метод переопределяется
-		"""
-		return self.config.get (self.section, self.param)
-
-
 	def _updateGUI (self):
 		"""
 		Обновить интерфейсный элемент. В производных классах этот метод переопределяется
 		"""
-		self.control.SetValue (self.value)
+		self.control.SetValue (self.option.value)
 
-	
-	def _saveValue (self):
-		self.config.set (self.section, self.param, self._getGuiValue() )
 	
 
 class BooleanElement (StringElement):
@@ -79,8 +49,8 @@ class BooleanElement (StringElement):
 	Булевская настройка.
 	Элемент управления - wx.CheckBox
 	"""
-	def __init__ (self, section, param, config, control, defaultValue):
-		StringElement.__init__ (self, section, param, config, control, defaultValue)
+	def __init__ (self, option, control):
+		StringElement.__init__ (self, option, control)
 
 
 	def _getGuiValue (self):
@@ -91,25 +61,12 @@ class BooleanElement (StringElement):
 		return self.control.IsChecked()
 
 
-	def _getValue (self):
-		"""
-		Получить значение. В производных классах этот метод переопределяется
-		"""
-		return self.config.getbool (self.section, self.param)
-
 
 class IntegerElement (StringElement):
 	"""
 	Настройка для целых чисел.
 	Элемент управления - wx.SpinCtrl
 	"""
-	def __init__ (self, section, param, config, control, defaultValue, minValue, maxValue):
-		StringElement.__init__ (self, section, param, config, control, defaultValue)
+	def __init__ (self, option, control, minValue, maxValue):
+		StringElement.__init__ (self, option, control)
 		self.control.SetRange (minValue, maxValue)
-
-
-	def _getValue (self):
-		"""
-		Получить значение. В производных классах этот метод переопределяется
-		"""
-		return self.config.getint (self.section, self.param)

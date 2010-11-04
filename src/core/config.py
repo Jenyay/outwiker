@@ -172,3 +172,32 @@ class IntegerOption (StringOption):
 		Получить значение. В производных классах этот метод переопределяется
 		"""
 		return self.config.getint (self.section, self.param)
+
+
+
+class GeneralConfig (Config):
+	"""
+	Класс для хранения основных настроек
+	"""
+	def __init__ (self, fname, readonly=False):
+		Config.__init__ (self, fname, readonly)
+
+		# Список последних открытых файлов
+		self.historyLengthOption = IntegerOption (self, u"RecentWiki", u"maxcount", 5)
+		self.autoopenOption = BooleanOption (self, u"RecentWiki", u"AutoOpen", False)
+
+		self.minimizeOption = BooleanOption (self, u"General", u"MinimizeToTray", True)
+		self.startIconizedOption = BooleanOption (self, u"General", u"StartIconized", False)
+		self.askBeforeExitOption = BooleanOption (self, u"General", u"AskBeforeExit", True)
+
+		# Редактор
+		self.lineNumbersOption = BooleanOption (self, u"General", u"ShowLineNumbers", False)
+		self.fontSizeOption = IntegerOption (self, u"Font", u"size", 10)
+
+		# Главное окно
+		self.titleFormatOption = StringOption (self, u"MainWindow", u"Title", u"{page} - {file} - OutWiker")
+		self.WidthOption = IntegerOption (self, u"MainWindow", u"width", 800)
+		self.HeightOption = IntegerOption (self, u"MainWindow", u"height", 680)
+		self.XPosOption = IntegerOption (self, u"MainWindow", u"xpos", 0)
+		self.YPosOption = IntegerOption (self, u"MainWindow", u"ypos", 0)
+		self.SashPositionOption = IntegerOption (self, u"MainWindow", u"sash", 200)
