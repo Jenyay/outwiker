@@ -11,6 +11,7 @@ import shutil
 
 from core.config import Config, getConfigPath
 import core.system
+import core.config
 
 
 class ConfigTest (unittest.TestCase):
@@ -117,3 +118,84 @@ class ConfigTest (unittest.TestCase):
 		if os.path.exists (homeDir):
 			shutil.rmtree (homeDir)
 
+
+class ConfigOptionsTest (unittest.TestCase):
+	def setUp (self):
+		self.path = u"../test/testconfig.ini"
+
+		# Создадим небольшой файл настроек
+		with open (self.path, "wb") as fp:
+			fp.write (u"[Test]\n")
+			fp.write (u"intval=100\n")
+			fp.write (u"boolval=True\n")
+			fp.write (u"strval=тест\n".encode ("utf-8"))
+
+		self.config = core.config.Config (self.path)
+	
+
+	def tearDown (self):
+		os.remove (self.path)
+		pass
+	
+
+	# Строковые опции
+	def testStringOpt1 (self):
+		opt = core.config.StringOption (self.config, u"Test", u"strval", "defaultval")
+		self.assertEqual (opt.value, u"тест")
+
+
+	def testStringOpt2 (self):
+		opt = core.config.StringOption (self.config, u"Test", u"strval2", "defaultval")
+		self.assertEqual (opt.value, u"defaultval")
+
+
+	def testStringOpt3 (self):
+		opt = core.config.StringOption (self.config, u"Test", u"strval3", "defaultval")
+		opt.value = u"проверка"
+
+		newconfig = core.config.Config (self.path)
+		newopt = core.config.StringOption (newconfig, u"Test", u"strval3", "defaultval")
+
+		self.assertEqual (newopt.value, u"проверка")
+	
+
+	# Целочисленные опции
+	def testIntOpt1 (self):
+		opt = core.config.IntegerOption (self.config, u"Test", u"intval", 777)
+		self.assertEqual (opt.value, 100)
+
+
+	def testIntOpt2 (self):
+		opt = core.config.IntegerOption (self.config, u"Test", u"intval2", 777)
+		self.assertEqual (opt.value, 777)
+
+
+	def testIntOpt3 (self):
+		opt = core.config.IntegerOption (self.config, u"Test", u"intval3", 777)
+		opt.value = 666
+
+		newconfig = core.config.Config (self.path)
+		newopt = core.config.IntegerOption (newconfig, u"Test", u"intval3", 888)
+
+		self.assertEqual (newopt.value, 666)
+	
+
+	# Булевы опции
+	def testBoolOpt1 (self):
+		opt = core.config.BooleanOption (self.config, u"Test", u"Boolval", False)
+		self.assertEqual (opt.value, True)
+
+
+	def testBoolOpt2 (self):
+		opt = core.config.BooleanOption (self.config, u"Test", u"Boolval2", False)
+		self.assertEqual (opt.value, False)
+
+
+	def testBoolOpt3 (self):
+		opt = core.config.BooleanOption (self.config, u"Test", u"Boolval3", False)
+		opt.value = True
+
+		newconfig = core.config.Config (self.path)
+		newopt = core.config.BooleanOption (newconfig, u"Test", u"Boolval3", False)
+
+		self.assertEqual (newopt.value, True)

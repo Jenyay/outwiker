@@ -16,7 +16,7 @@ from test.utils import removeWiki
 from test.event import EventTest, EventsTest
 from test.factory import FactorySelectorTest
 from test.invalidwiki import InvalidWikiTest
-from test.config import ConfigTest
+from test.config import ConfigTest, ConfigOptionsTest
 from test.recent import RecentWikiTest
 from test.search import SearcherTest, TagsListTest, SearchPageTest
 from test.localsearch import LocalSearchTest

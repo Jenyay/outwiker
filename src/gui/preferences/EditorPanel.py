@@ -53,11 +53,11 @@ class EditorPanel(wx.Panel):
 
 	def LoadState(self):
 		# Размер шрифта
-		self.fontSize = ConfigElements.IntegerOptions (u"Font", u"size",
+		self.fontSize = ConfigElements.IntegerElement (u"Font", u"size",
 				self.config, self.fontSizeSpin, 10, 1, 30)
 
 		# Показывать ли номера строк?
-		self.lineNumbers = ConfigElements.BooleanOptions (u"General", u"ShowLineNumbers",
+		self.lineNumbers = ConfigElements.BooleanElement (u"General", u"ShowLineNumbers",
 				self.config, self.lineNumbersCheckBox, False)
 	
 

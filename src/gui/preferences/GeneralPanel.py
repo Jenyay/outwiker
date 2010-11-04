@@ -90,11 +90,11 @@ class GeneralPanel(wx.ScrolledWindow):
 		Опции, связанные с последними открытыми файлами
 		"""
 		# Длина истории последних открытых файлов
-		self.historyLength = ConfigElements.IntegerOptions (u"RecentWiki", u"maxcount",
+		self.historyLength = ConfigElements.IntegerElement (u"RecentWiki", u"maxcount",
 				self.config, self.historySpin, 10, 0, 30)
 
 		# Открывать последнюю вики при запуске?
-		self.autoopen = ConfigElements.BooleanOptions (u"RecentWiki", u"AutoOpen",
+		self.autoopen = ConfigElements.BooleanElement (u"RecentWiki", u"AutoOpen",
 				self.config, self.autoopenCheckBox, False)
 
 
@@ -103,19 +103,19 @@ class GeneralPanel(wx.ScrolledWindow):
 		Опции для сворачивания окна в трей
 		"""
 		# Сворачивать в трей?
-		self.minimizeToTray = ConfigElements.BooleanOptions (u"General", u"MinimizeToTray",
+		self.minimizeToTray = ConfigElements.BooleanElement (u"General", u"MinimizeToTray",
 				self.config, self.minimizeCheckBox, True)
 
 		# Запускаться свернутым?
-		self.startIconized = ConfigElements.BooleanOptions (u"General", u"StartIconized",
+		self.startIconized = ConfigElements.BooleanElement (u"General", u"StartIconized",
 				self.config, self.startIconizedCheckBox, False)
 
 		# Задавать вопрос перед выходом из программы?
-		self.askBeforeExit = ConfigElements.BooleanOptions (u"General", u"AskBeforeExit",
+		self.askBeforeExit = ConfigElements.BooleanElement (u"General", u"AskBeforeExit",
 				self.config, self.askBeforeExitCheckBox, True)
 
 		# Формат заголовка страницы
-		self.titleFormat = ConfigElements.StringOptions (u"MainWindow", u"Title", 
+		self.titleFormat = ConfigElements.StringElement (u"MainWindow", u"Title", 
 				self.config, self.titleFormatText,
 				u"{page} - {file} - OutWiker")
 

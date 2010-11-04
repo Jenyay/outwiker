@@ -90,3 +90,85 @@ class Config (object):
 	def has_section (self, section):
 		section_encoded = section.encode ("utf-8")
 		return self.__config.has_section (section_encoded)
+
+
+class StringOption (object):
+	def __init__ (self, config, section, param, defaultValue):
+		"""
+		section - секция для параметра конфига
+		param - имя параметра конфига
+		config - экземпляр класса core.Config
+		defaultValue - значение по умолчанию
+		"""
+		self.section = section
+		self.param = param
+		self.defaultValue = defaultValue
+		self.config = config
+
+		# Указатель на последнее возникшее исключение
+		# Т.к. как правило исключения игнорируются, то это поле используется для отладкиы
+		self.error = None
+
+		self.loadParam (config)
+
+
+	def loadParam (self, config):
+		try:
+			self.val = self._loadValue()
+		except Exception as e:
+			self.error = e
+			self.val = self.defaultValue
+
+
+	def _loadValue (self):
+		"""
+		Получить значение. В производных классах этот метод переопределяется
+		"""
+		return self.config.get (self.section, self.param)
+
+
+	def _saveValue (self):
+		self.config.set (self.section, self.param, self.val)
+	
+
+	@property
+	def value (self):
+		return self.val
+
+
+	@value.setter
+	def value (self, val):
+		self.val = val
+		self._saveValue()
+	
+
+class BooleanOption (StringOption):
+	"""
+	Булевская настройка.
+	Элемент управления - wx.CheckBox
+	"""
+	def __init__ (self, config, section, param, defaultValue):
+		StringOption.__init__ (self, config, section, param, defaultValue)
+
+
+	def _loadValue (self):
+		"""
+		Получить значение. В производных классах этот метод переопределяется
+		"""
+		return self.config.getbool (self.section, self.param)
+
+
+class IntegerOption (StringOption):
+	"""
+	Настройка для целых чисел.
+	Элемент управления - wx.SpinCtrl
+	"""
+	def __init__ (self, config, section, param, defaultValue):
+		StringOption.__init__ (self, config, section, param, defaultValue)
+
+
+	def _loadValue (self):
+		"""
+		Получить значение. В производных классах этот метод переопределяется
+		"""
+		return self.config.getint (self.section, self.param)

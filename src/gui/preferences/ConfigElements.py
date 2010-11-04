@@ -4,7 +4,7 @@
 Классы для взаимодействия конфига и Гуя
 """
 
-class StringOptions (object):
+class StringElement (object):
 	def __init__ (self, section, param, config, control, defaultValue):
 		"""
 		section - секция для параметра конфига
@@ -74,13 +74,13 @@ class StringOptions (object):
 		self.config.set (self.section, self.param, self._getGuiValue() )
 	
 
-class BooleanOptions (StringOptions):
+class BooleanElement (StringElement):
 	"""
 	Булевская настройка.
 	Элемент управления - wx.CheckBox
 	"""
 	def __init__ (self, section, param, config, control, defaultValue):
-		StringOptions.__init__ (self, section, param, config, control, defaultValue)
+		StringElement.__init__ (self, section, param, config, control, defaultValue)
 
 
 	def _getGuiValue (self):
@@ -98,13 +98,13 @@ class BooleanOptions (StringOptions):
 		return self.config.getbool (self.section, self.param)
 
 
-class IntegerOptions (StringOptions):
+class IntegerElement (StringElement):
 	"""
 	Настройка для целых чисел.
 	Элемент управления - wx.SpinCtrl
 	"""
 	def __init__ (self, section, param, config, control, defaultValue, minValue, maxValue):
-		StringOptions.__init__ (self, section, param, config, control, defaultValue)
+		StringElement.__init__ (self, section, param, config, control, defaultValue)
 		self.control.SetRange (minValue, maxValue)
 
 
