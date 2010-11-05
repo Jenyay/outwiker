@@ -42,13 +42,8 @@ class TextEditor(wx.Panel):
 		self.textCtrl.Bind(wx.EVT_MENU, self.onUndo, id = wx.ID_UNDO)
 		self.textCtrl.Bind(wx.EVT_MENU, self.onRedo, id = wx.ID_REDO)
 		self.textCtrl.Bind (wx.EVT_CHAR, self.OnChar_ImeWorkaround)
-		#self.Bind (wx.EVT_CLOSE, self.OnClose)
 
 
-	#def OnClose (self, event):
-	#	print "1111"
-
-	
 	def onCopyFromEditor (self, event):
 		self.textCtrl.Copy()
 
@@ -99,6 +94,7 @@ class TextEditor(wx.Panel):
 
 		style = "size:%d" % size
 		self.textCtrl.StyleSetSpec (wx.stc.STC_STYLE_DEFAULT, style)
+		#self.textCtrl.StyleSetFaceName (wx.stc.STC_STYLE_DEFAULT, "Arial")
 		
 		# Заблокируем горячую клавишу Ctrl+D, чтобы использовать ее как добавление закладки
 		self.textCtrl.CmdKeyClear (ord ("D"), wx.stc.STC_SCMOD_CTRL)
@@ -113,13 +109,6 @@ class TextEditor(wx.Panel):
 		"""
 		Установить размер левой области, где пишутся номера строк в зависимости от шрифта
 		"""
-		#try:
-		#	linenumbers = wx.GetApp().getConfig().getbool (u"General", u"ShowLineNumbers")
-		#	fontSize = wx.GetApp().getConfig().getint (u"Font", u"Size")
-		#except:
-		#	linenumbers = False
-		#	fontSize = 10
-
 		linenumbers =  wx.GetApp().getConfig().lineNumbersOption.value
 		fontSize = wx.GetApp().getConfig().fontSizeOption.value
 
