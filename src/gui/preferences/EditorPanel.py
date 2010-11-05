@@ -19,8 +19,7 @@ class EditorPanel(wx.Panel):
 		# begin wxGlade: EditorPanel.__init__
 		kwds["style"] = wx.TAB_TRAVERSAL
 		wx.Panel.__init__(self, *args, **kwds)
-		self.fontSizeLabel = wx.StaticText(self, -1, "Font size")
-		self.fontSizeSpin = wx.SpinCtrl(self, -1, "10", min=1, max=30)
+		self.fontPicker = wx.FontPickerCtrl(self, -1)
 		self.lineNumbersCheckBox = wx.CheckBox(self, -1, "Show line numbers")
 
 		self.__set_properties()
@@ -38,13 +37,7 @@ class EditorPanel(wx.Panel):
 	def __do_layout(self):
 		# begin wxGlade: EditorPanel.__do_layout
 		mainSizer = wx.FlexGridSizer(2, 1, 0, 0)
-		grid_sizer_1 = wx.FlexGridSizer(1, 2, 0, 0)
-		grid_sizer_1.Add(self.fontSizeLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
-		grid_sizer_1.Add(self.fontSizeSpin, 0, wx.ALL|wx.ALIGN_RIGHT, 2)
-		grid_sizer_1.AddGrowableRow(0)
-		grid_sizer_1.AddGrowableCol(0)
-		grid_sizer_1.AddGrowableCol(1)
-		mainSizer.Add(grid_sizer_1, 1, wx.EXPAND, 0)
+		mainSizer.Add(self.fontPicker, 1, wx.EXPAND, 0)
 		mainSizer.Add(self.lineNumbersCheckBox, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
 		self.SetSizer(mainSizer)
 		mainSizer.Fit(self)
@@ -53,21 +46,35 @@ class EditorPanel(wx.Panel):
 
 
 	def LoadState(self):
-		# Размер шрифта
-		self.fontSize = ConfigElements.IntegerElement (self.config.fontSizeOption, self.fontSizeSpin, 1, 30)
-
 		# Показывать ли номера строк?
 		self.lineNumbers = ConfigElements.BooleanElement (self.config.lineNumbersOption, self.lineNumbersCheckBox)
+
+		fontSize = wx.GetApp().getConfig().fontEditorOption.size.value
+		fontFaceName = wx.GetApp().getConfig().fontEditorOption.faceName.value
+		fontIsBold = wx.GetApp().getConfig().fontEditorOption.bold.value
+		fontIsItalic = wx.GetApp().getConfig().fontEditorOption.italic.value
+
+		font = wx.Font (fontSize, wx.FONTFAMILY_DEFAULT, 
+				wx.FONTSTYLE_ITALIC if fontIsItalic else wx.FONTSTYLE_NORMAL, 
+				wx.FONTWEIGHT_BOLD if fontIsBold else wx.FONTWEIGHT_NORMAL, 
+				False,
+				fontFaceName,
+				wx.FONTENCODING_DEFAULT)
+
+		self.fontPicker.SetSelectedFont (font)
 	
 
 	def Save (self):
-		generateEvent = self.fontSize.isValueChanged() or self.lineNumbers.isValueChanged()
-
-		self.fontSize.save()
+		config = wx.GetApp().getConfig()
 		self.lineNumbers.save()
 
-		if generateEvent:
-			Controller.instance().onEditorConfigChange()
+		newFont = self.fontPicker.GetSelectedFont()
+		config.fontEditorOption.size.value = newFont.GetPointSize()
+		config.fontEditorOption.faceName.value = newFont.GetFaceName()
+		config.fontEditorOption.bold.value = newFont.GetWeight() == wx.FONTWEIGHT_BOLD
+		config.fontEditorOption.italic.value = newFont.GetStyle() == wx.FONTSTYLE_ITALIC
+
+		Controller.instance().onEditorConfigChange()
 
 
 # end of class EditorPanel

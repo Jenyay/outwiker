@@ -84,17 +84,18 @@ class TextEditor(wx.Panel):
 		"""
 		Установить шрифт по умолчанию в контрол StyledTextCtrl
 		"""
-		size = 10
-		config = wx.GetApp().getConfig()
+		size = wx.GetApp().getConfig().fontEditorOption.size.value
+		faceName = wx.GetApp().getConfig().fontEditorOption.faceName.value
+		isBold = wx.GetApp().getConfig().fontEditorOption.bold.value
+		isItalic = wx.GetApp().getConfig().fontEditorOption.italic.value
 
-		try:
-			size = config.getint (TextEditor._fontConfigSection, "size")
-		except:
-			config.set (TextEditor._fontConfigSection, "size", size)
+		#style = "size:%d" % size
+		#self.textCtrl.StyleSetSpec (wx.stc.STC_STYLE_DEFAULT, style)
 
-		style = "size:%d" % size
-		self.textCtrl.StyleSetSpec (wx.stc.STC_STYLE_DEFAULT, style)
-		#self.textCtrl.StyleSetFaceName (wx.stc.STC_STYLE_DEFAULT, "Arial")
+		self.textCtrl.StyleSetSize (wx.stc.STC_STYLE_DEFAULT, size)
+		self.textCtrl.StyleSetFaceName (wx.stc.STC_STYLE_DEFAULT, faceName)
+		self.textCtrl.StyleSetBold (wx.stc.STC_STYLE_DEFAULT, isBold)
+		self.textCtrl.StyleSetItalic (wx.stc.STC_STYLE_DEFAULT, isItalic)
 		
 		# Заблокируем горячую клавишу Ctrl+D, чтобы использовать ее как добавление закладки
 		self.textCtrl.CmdKeyClear (ord ("D"), wx.stc.STC_SCMOD_CTRL)
@@ -110,7 +111,7 @@ class TextEditor(wx.Panel):
 		Установить размер левой области, где пишутся номера строк в зависимости от шрифта
 		"""
 		linenumbers =  wx.GetApp().getConfig().lineNumbersOption.value
-		fontSize = wx.GetApp().getConfig().fontSizeOption.value
+		fontSize = wx.GetApp().getConfig().fontEditorOption.size.value
 
 		if linenumbers:
 			width = int (35.0 / 10.0 * fontSize)

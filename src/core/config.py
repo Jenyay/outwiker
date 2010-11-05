@@ -140,7 +140,7 @@ class StringOption (object):
 	def value (self, val):
 		self.val = val
 		self._saveValue()
-	
+
 
 class BooleanOption (StringOption):
 	"""
@@ -174,6 +174,23 @@ class IntegerOption (StringOption):
 		return self.config.getint (self.section, self.param)
 
 
+class FontOption (object):
+	def __init__ (self, config, 
+			faceNameOption, 
+			sizeOption,
+			isBoldOption,
+			isItalicOption):
+		"""
+		faceNameOption - экземепляр класса StringOption, где хранится значение начертания шрифта
+		sizeOption - экземпляр класса IntegerOption, где хранится размер шрифта
+		isBoldOption, isItalicOption - экземпляры класса BooleanOption
+		"""
+		self.faceName = faceNameOption
+		self.size = sizeOption
+		self.bold = isBoldOption
+		self.italic = isItalicOption
+
+
 
 class GeneralConfig (Config):
 	"""
@@ -192,7 +209,13 @@ class GeneralConfig (Config):
 
 		# Редактор
 		self.lineNumbersOption = BooleanOption (self, u"General", u"ShowLineNumbers", False)
-		self.fontSizeOption = IntegerOption (self, u"Font", u"size", 10)
+		
+		fontSizeOption = IntegerOption (self, u"Font", u"size", 10)
+		fontFaceNameOption = StringOption (self, u"Font", u"FaceName", "")
+		fontIsBold = BooleanOption (self, "Font", "bold", False)
+		fontIsItalic = BooleanOption (self, "Font", "italic", False)
+
+		self.fontEditorOption = FontOption (self, fontFaceNameOption, fontSizeOption, fontIsBold, fontIsItalic)
 
 		# Главное окно
 		self.titleFormatOption = StringOption (self, u"MainWindow", u"Title", u"{page} - {file} - OutWiker")
