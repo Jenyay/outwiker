@@ -113,12 +113,15 @@ class TextEditor(wx.Panel):
 		"""
 		Установить размер левой области, где пишутся номера строк в зависимости от шрифта
 		"""
-		try:
-			linenumbers = wx.GetApp().getConfig().getbool (u"General", u"ShowLineNumbers")
-			fontSize = wx.GetApp().getConfig().getint (u"Font", u"Size")
-		except:
-			linenumbers = False
-			fontSize = 10
+		#try:
+		#	linenumbers = wx.GetApp().getConfig().getbool (u"General", u"ShowLineNumbers")
+		#	fontSize = wx.GetApp().getConfig().getint (u"Font", u"Size")
+		#except:
+		#	linenumbers = False
+		#	fontSize = 10
+
+		linenumbers =  wx.GetApp().getConfig().lineNumbersOption.value
+		fontSize = wx.GetApp().getConfig().fontSizeOption.value
 
 		if linenumbers:
 			width = int (35.0 / 10.0 * fontSize)
@@ -138,17 +141,6 @@ class TextEditor(wx.Panel):
 		"""Преобразовать позицию в символах в позицию в байтах"""
 		return len(self.encoder (text[: pos] )[0] )
 
-
-	#def mbcsDec(self, input, errors="strict"):
-	#	if isinstance(input, unicode):
-	#		print "Unicode"
-	#		return input, len(input)
-	#	else:
-	#		print "Not Unicode"
-	#		#print core.system.getOS().inputEncoding
-	#		
-	#		return self._mbcsDec(input, errors)
-	
 
 	def createCoders (self):
 		encoding = core.system.getOS().inputEncoding
@@ -174,13 +166,7 @@ class TextEditor(wx.Panel):
 			evt.Skip()
 			return
 
-		#unichar = self.mbcsDec(chr(key))[0]
 		unichar = unichr(evt.GetUnicodeKey())
-
-		#print chr(key)
-		#print unichar
-		#print key
-		#print self.mbcsEnc (unichar, "replace")
 
 		self.textCtrl.ReplaceSelection(self.mbcsEnc (unichar, "replace")[0])
 
