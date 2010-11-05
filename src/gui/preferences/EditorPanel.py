@@ -49,30 +49,14 @@ class EditorPanel(wx.Panel):
 		# Показывать ли номера строк?
 		self.lineNumbers = ConfigElements.BooleanElement (self.config.lineNumbersOption, self.lineNumbersCheckBox)
 
-		fontSize = wx.GetApp().getConfig().fontEditorOption.size.value
-		fontFaceName = wx.GetApp().getConfig().fontEditorOption.faceName.value
-		fontIsBold = wx.GetApp().getConfig().fontEditorOption.bold.value
-		fontIsItalic = wx.GetApp().getConfig().fontEditorOption.italic.value
-
-		font = wx.Font (fontSize, wx.FONTFAMILY_DEFAULT, 
-				wx.FONTSTYLE_ITALIC if fontIsItalic else wx.FONTSTYLE_NORMAL, 
-				wx.FONTWEIGHT_BOLD if fontIsBold else wx.FONTWEIGHT_NORMAL, 
-				False,
-				fontFaceName,
-				wx.FONTENCODING_DEFAULT)
-
-		self.fontPicker.SetSelectedFont (font)
+		# Шрифт для редактора
+		self.fontEditor = ConfigElements.FontElement (wx.GetApp().getConfig().fontEditorOption, self.fontPicker)
 	
 
 	def Save (self):
 		config = wx.GetApp().getConfig()
 		self.lineNumbers.save()
-
-		newFont = self.fontPicker.GetSelectedFont()
-		config.fontEditorOption.size.value = newFont.GetPointSize()
-		config.fontEditorOption.faceName.value = newFont.GetFaceName()
-		config.fontEditorOption.bold.value = newFont.GetWeight() == wx.FONTWEIGHT_BOLD
-		config.fontEditorOption.italic.value = newFont.GetStyle() == wx.FONTSTYLE_ITALIC
+		self.fontEditor.save()
 
 		Controller.instance().onEditorConfigChange()
 
