@@ -143,9 +143,9 @@ class BaseTextPanel (wx.Panel):
 
 		self.searchMenu = wx.Menu()
 
-		self.searchMenu.Append (self.ID_SEARCH, u"Search…\tCtrl+F", "", wx.ITEM_NORMAL)
-		self.searchMenu.Append (self.ID_SEARCH_NEXT, u"Find next\tF3", "", wx.ITEM_NORMAL)
-		self.searchMenu.Append (self.ID_SEARCH_PREV, u"Find previous\tShift+F3", "", wx.ITEM_NORMAL)
+		self.searchMenu.Append (self.ID_SEARCH, _(u"Search…\tCtrl+F"), "", wx.ITEM_NORMAL)
+		self.searchMenu.Append (self.ID_SEARCH_NEXT, _(u"Find next\tF3"), "", wx.ITEM_NORMAL)
+		self.searchMenu.Append (self.ID_SEARCH_PREV, _(u"Find previous\tShift+F3"), "", wx.ITEM_NORMAL)
 		
 		self.mainWindow.mainMenu.Insert (self.searchMenuIndex, self.searchMenu, "&Search")
 
@@ -156,11 +156,11 @@ class BaseTextPanel (wx.Panel):
 
 	def _addToolsItems (self):
 		self.mainWindow.mainToolbar.AddLabelTool(self.ID_SEARCH, 
-				u"Search", 
+				_(u"Search"),
 				wx.Bitmap(os.path.join (self.imagesDir, "local_search.png"), wx.BITMAP_TYPE_ANY), 
 				wx.NullBitmap, 
 				wx.ITEM_NORMAL, 
-				u"Search", 
+				_(u"Search"),
 				"")
 
 		self.mainWindow.mainToolbar.Realize()

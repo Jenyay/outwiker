@@ -28,11 +28,11 @@ class CreatePageDialog(wx.Dialog):
 		# begin wxGlade: CreatePageDialog.__init__
 		kwds["style"] = wx.DEFAULT_DIALOG_STYLE|wx.RESIZE_BORDER|wx.THICK_FRAME
 		wx.Dialog.__init__(self, *args, **kwds)
-		self.label_1 = wx.StaticText(self, -1, "Title")
+		self.label_1 = wx.StaticText(self, -1, _("Title"))
 		self.titleTextCtrl = wx.TextCtrl(self, -1, "")
-		self.label_2 = wx.StaticText(self, -1, "Tags (comma separated)")
+		self.label_2 = wx.StaticText(self, -1, _("Tags (comma separated)"))
 		self.tagsTextCtrl = wx.TextCtrl(self, -1, "")
-		self.label_3 = wx.StaticText(self, -1, "Page type")
+		self.label_3 = wx.StaticText(self, -1, _("Page type"))
 		self.comboType = wx.ComboBox(self, -1, choices=[], style=wx.CB_DROPDOWN|wx.CB_DROPDOWN|wx.CB_READONLY)
 		self.iconsList = wx.ListCtrl(self, -1, style=wx.LC_ICON|wx.LC_AUTOARRANGE|wx.LC_SINGLE_SEL|wx.FULL_REPAINT_ON_RESIZE)
 
@@ -63,7 +63,7 @@ class CreatePageDialog(wx.Dialog):
 
 		# Для изменения страницы
 		if currentPage != None:
-			self.SetTitle(u"Edit page properties")
+			self.SetTitle(_(u"Edit page properties"))
 			self._prepareForChange (currentPage)
 
 		self.Bind (wx.EVT_BUTTON, self.onOk, self.btnOk)
@@ -71,18 +71,18 @@ class CreatePageDialog(wx.Dialog):
 
 	def onOk (self, event):
 		if not self.testPageTitle (self.pageTitle):
-			wx.MessageBox (u"Invalid page title", u"Error", wx.ICON_ERROR | wx.OK)
+			wx.MessageBox (_(u"Invalid page title"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 			return
 
 		if self.currentPage != None \
 				and not self.currentPage.canRename (self.pageTitle):
-			wx.MessageBox (u"Can't rename page when page with that title already exists", u"Error", wx.ICON_ERROR | wx.OK)
+			wx.MessageBox (_(u"Can't rename page when page with that title already exists"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 			return
 
 		if self.currentPage == None and \
 				self.parentPage != None and \
 				not RootWikiPage.testDublicate(self.parentPage, self.pageTitle):
-			wx.MessageBox (u"A page with this title already exists", u"Error", wx.ICON_ERROR | wx.OK)
+			wx.MessageBox (_(u"A page with this title already exists"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 			return
 
 		event.Skip()
@@ -118,7 +118,7 @@ class CreatePageDialog(wx.Dialog):
 		icon = currentPage.icon
 		if icon != None:
 			index = self.icons.Add (wx.Bitmap (icon) )
-			selItem = self.iconsList.InsertImageStringItem (len (self.iconsDict) - 1, u"current icon", index)
+			selItem = self.iconsList.InsertImageStringItem (len (self.iconsDict) - 1, _(u"Current icon"), index)
 			self.iconsList.SetItemState (selItem, wx.LIST_STATE_SELECTED, wx.LIST_STATE_SELECTED)
 			self.iconsDict[selItem] = icon
 	
@@ -185,7 +185,7 @@ class CreatePageDialog(wx.Dialog):
 
 	def __set_properties(self):
 		# begin wxGlade: CreatePageDialog.__set_properties
-		self.SetTitle("Create Page")
+		self.SetTitle(_("Create Page"))
 		self.SetSize((500, 350))
 		self.titleTextCtrl.SetMinSize((350,-1))
 		self.tagsTextCtrl.SetMinSize((250, -1))

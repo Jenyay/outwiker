@@ -107,69 +107,69 @@ class MainWindow(wx.Frame):
 		# Menu Bar
 		self.mainMenu = wx.MenuBar()
 		self.fileMenu = wx.Menu()
-		self.fileMenu.Append(self.ID_NEW, "&New\tCtrl+N", "", wx.ITEM_NORMAL)
-		self.fileMenu.Append(self.ID_OPEN, u"&Open…\tCtrl+O", "", wx.ITEM_NORMAL)
-		self.fileMenu.Append(self.ID_OPEN_READONLY, "Open &Read-only...\tCtrl+Shift+O", "", wx.ITEM_NORMAL)
-		self.fileMenu.Append(self.ID_SAVE, "&Save\tCtrl+S", "", wx.ITEM_NORMAL)
-		self.fileMenu.Append(self.ID_EXIT, u"&Exit…\tAlt+F4", "", wx.ITEM_NORMAL)
+		self.fileMenu.Append(self.ID_NEW, _("&New\tCtrl+N"), "", wx.ITEM_NORMAL)
+		self.fileMenu.Append(self.ID_OPEN, _(u"&Open…\tCtrl+O"), "", wx.ITEM_NORMAL)
+		self.fileMenu.Append(self.ID_OPEN_READONLY, _("Open &Read-only...\tCtrl+Shift+O"), "", wx.ITEM_NORMAL)
+		self.fileMenu.Append(self.ID_SAVE, _("&Save\tCtrl+S"), "", wx.ITEM_NORMAL)
+		self.fileMenu.Append(self.ID_EXIT, _(u"&Exit…\tAlt+F4"), "", wx.ITEM_NORMAL)
 		self.fileMenu.AppendSeparator()
-		self.mainMenu.Append(self.fileMenu, "&File")
+		self.mainMenu.Append(self.fileMenu, _("&File"))
 		wxglade_tmp_menu = wx.Menu()
-		wxglade_tmp_menu.Append(wx.ID_UNDO, "&Undo\tCtrl+Z", "", wx.ITEM_NORMAL)
-		wxglade_tmp_menu.Append(wx.ID_REDO, "&Redo\tCtrl+Y", "", wx.ITEM_NORMAL)
+		wxglade_tmp_menu.Append(wx.ID_UNDO, _("&Undo\tCtrl+Z"), "", wx.ITEM_NORMAL)
+		wxglade_tmp_menu.Append(wx.ID_REDO, _("&Redo\tCtrl+Y"), "", wx.ITEM_NORMAL)
 		wxglade_tmp_menu.AppendSeparator()
-		wxglade_tmp_menu.Append(wx.ID_CUT, "Cu&t\tCtrl+X", "", wx.ITEM_NORMAL)
-		wxglade_tmp_menu.Append(wx.ID_COPY, "&Copy\tCtrl+C", "", wx.ITEM_NORMAL)
-		wxglade_tmp_menu.Append(wx.ID_PASTE, "&Paste\tCtrl+V", "", wx.ITEM_NORMAL)
+		wxglade_tmp_menu.Append(wx.ID_CUT, _("Cu&t\tCtrl+X"), "", wx.ITEM_NORMAL)
+		wxglade_tmp_menu.Append(wx.ID_COPY, _("&Copy\tCtrl+C"), "", wx.ITEM_NORMAL)
+		wxglade_tmp_menu.Append(wx.ID_PASTE, _("&Paste\tCtrl+V"), "", wx.ITEM_NORMAL)
 		wxglade_tmp_menu.AppendSeparator()
-		wxglade_tmp_menu.Append(self.ID_PREFERENCES, "Pr&eferences...\tCtrl+F8", "", wx.ITEM_NORMAL)
-		self.mainMenu.Append(wxglade_tmp_menu, "&Edit")
+		wxglade_tmp_menu.Append(self.ID_PREFERENCES, _("Pr&eferences...\tCtrl+F8"), "", wx.ITEM_NORMAL)
+		self.mainMenu.Append(wxglade_tmp_menu, _("&Edit"))
 		wxglade_tmp_menu = wx.Menu()
-		wxglade_tmp_menu.Append(self.ID_ADDPAGE, u"Add &sibling page…\tCtrl+T", "", wx.ITEM_NORMAL)
-		wxglade_tmp_menu.Append(self.ID_ADDCHILD, u"Add &child Page…\tCtrl+Shift+T", "", wx.ITEM_NORMAL)
+		wxglade_tmp_menu.Append(self.ID_ADDPAGE, _(u"Add &sibling page…\tCtrl+T"), "", wx.ITEM_NORMAL)
+		wxglade_tmp_menu.Append(self.ID_ADDCHILD, _(u"Add &child Page…\tCtrl+Shift+T"), "", wx.ITEM_NORMAL)
 		wxglade_tmp_menu.AppendSeparator()
-		wxglade_tmp_menu.Append(self.ID_RENAME, "Rename page\tF2", "", wx.ITEM_NORMAL)
-		wxglade_tmp_menu.Append(self.ID_REMOVE_PAGE, u"Remove page…\tCtrl+Shift+Del", "", wx.ITEM_NORMAL)
-		wxglade_tmp_menu.Append(self.ID_EDIT, u"Edit page…\tCtrl+E", "", wx.ITEM_NORMAL)
-		self.mainMenu.Append(wxglade_tmp_menu, "&Tree")
+		wxglade_tmp_menu.Append(self.ID_RENAME, _("Rename page\tF2"), "", wx.ITEM_NORMAL)
+		wxglade_tmp_menu.Append(self.ID_REMOVE_PAGE, _(u"Remove page…\tCtrl+Shift+Del"), "", wx.ITEM_NORMAL)
+		wxglade_tmp_menu.Append(self.ID_EDIT, _(u"Edit page…\tCtrl+E"), "", wx.ITEM_NORMAL)
+		self.mainMenu.Append(wxglade_tmp_menu, _("&Tree"))
 		self.toolsMenu = wx.Menu()
-		self.toolsMenu.Append(self.ID_GLOBAL_SEARCH, u"&Global search…\tCtrl+Shift+F", "", wx.ITEM_NORMAL)
-		self.toolsMenu.Append(self.ID_ATTACH, u"&Attach Files…\tCtrl+Alt+A", "", wx.ITEM_NORMAL)
+		self.toolsMenu.Append(self.ID_GLOBAL_SEARCH, _(u"&Global search…\tCtrl+Shift+F"), "", wx.ITEM_NORMAL)
+		self.toolsMenu.Append(self.ID_ATTACH, _(u"&Attach Files…\tCtrl+Alt+A"), "", wx.ITEM_NORMAL)
 		self.toolsMenu.AppendSeparator()
-		self.toolsMenu.Append(self.ID_COPY_TITLE, "Copy page's title to clipboard\tCtrl+Shift+D", "", wx.ITEM_NORMAL)
-		self.toolsMenu.Append(self.ID_COPYPATH, "Copy &page's path to clipboard\tCtrl+Shift+P", "", wx.ITEM_NORMAL)
-		self.toolsMenu.Append(self.ID_COPY_ATTACH_PATH, "Copy a&ttaches path to clipboard\tCtrl+Shift+A", "", wx.ITEM_NORMAL)
-		self.toolsMenu.Append(self.ID_COPY_LINK, "Copy page link to clipboard\tCtrl+Shift+L", "", wx.ITEM_NORMAL)
+		self.toolsMenu.Append(self.ID_COPY_TITLE, _("Copy page's title to clipboard\tCtrl+Shift+D"), "", wx.ITEM_NORMAL)
+		self.toolsMenu.Append(self.ID_COPYPATH, _("Copy &page's path to clipboard\tCtrl+Shift+P"), "", wx.ITEM_NORMAL)
+		self.toolsMenu.Append(self.ID_COPY_ATTACH_PATH, _("Copy a&ttaches path to clipboard\tCtrl+Shift+A"), "", wx.ITEM_NORMAL)
+		self.toolsMenu.Append(self.ID_COPY_LINK, _("Copy page link to clipboard\tCtrl+Shift+L"), "", wx.ITEM_NORMAL)
 		self.toolsMenu.AppendSeparator()
-		self.toolsMenu.Append(self.ID_RELOAD, "Reload wiki\tCtrl+R", "", wx.ITEM_NORMAL)
-		self.mainMenu.Append(self.toolsMenu, "T&ools")
+		self.toolsMenu.Append(self.ID_RELOAD, _("Reload wiki\tCtrl+R"), "", wx.ITEM_NORMAL)
+		self.mainMenu.Append(self.toolsMenu, _("T&ools"))
 		self.bookmarksMenu = wx.Menu()
-		self.bookmarksMenu.Append(self.ID_ADDBOOKMARK, "Add/Remove Bookmark\tCtrl+D", "", wx.ITEM_NORMAL)
+		self.bookmarksMenu.Append(self.ID_ADDBOOKMARK, _("Add/Remove Bookmark\tCtrl+D"), "", wx.ITEM_NORMAL)
 		self.bookmarksMenu.AppendSeparator()
-		self.mainMenu.Append(self.bookmarksMenu, "Bookmarks")
+		self.mainMenu.Append(self.bookmarksMenu, _("Bookmarks"))
 		wxglade_tmp_menu = wx.Menu()
-		wxglade_tmp_menu.Append(self.ID_HELP, "Help\tF1", "", wx.ITEM_NORMAL)
-		wxglade_tmp_menu.Append(self.ID_ABOUT, u"&About…\tCtrl+F1", "", wx.ITEM_NORMAL)
-		self.mainMenu.Append(wxglade_tmp_menu, "&Help")
+		wxglade_tmp_menu.Append(self.ID_HELP, _("Help\tF1"), "", wx.ITEM_NORMAL)
+		wxglade_tmp_menu.Append(self.ID_ABOUT, _(u"&About…\tCtrl+F1"), "", wx.ITEM_NORMAL)
+		self.mainMenu.Append(wxglade_tmp_menu, _("&Help"))
 		self.SetMenuBar(self.mainMenu)
 		# Menu Bar end
 		
 		# Tool Bar
 		self.mainToolbar = wx.ToolBar(self, -1, style=wx.TB_HORIZONTAL|wx.TB_FLAT|wx.TB_DOCKABLE)
 		self.SetToolBar(self.mainToolbar)
-		self.mainToolbar.AddLabelTool(self.ID_NEW, u"New…", wx.Bitmap(os.path.join (self.imagesDir, "new.png"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, u"Create new wiki…", "")
-		self.mainToolbar.AddLabelTool(self.ID_OPEN, u"Open…", wx.Bitmap(os.path.join (self.imagesDir, "open.png"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, u"Open wiki…", "")
-		self.mainToolbar.AddLabelTool(self.ID_SAVE, "Save", wx.Bitmap(os.path.join (self.imagesDir, "save.png"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, "Save wiki", "")
+		self.mainToolbar.AddLabelTool(self.ID_NEW, _(u"New…"), wx.Bitmap("images/new.png", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _(u"Create new wiki…"), "")
+		self.mainToolbar.AddLabelTool(self.ID_OPEN, _(u"Open…"), wx.Bitmap("images/open.png", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _(u"Open wiki…"), "")
+		self.mainToolbar.AddLabelTool(self.ID_SAVE, _("Save"), wx.Bitmap("images/save.png", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _("Save wiki"), "")
 		self.mainToolbar.AddSeparator()
-		self.mainToolbar.AddLabelTool(self.ID_RELOAD, "Reload", wx.Bitmap(os.path.join (self.imagesDir, "reload.png"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, "Reload wiki", "")
+		self.mainToolbar.AddLabelTool(self.ID_RELOAD, _("Reload"), wx.Bitmap("images/reload.png", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _("Reload wiki"), "")
 		self.mainToolbar.AddSeparator()
-		self.mainToolbar.AddLabelTool(self.ID_ADDPAGE, u"Add sibling page…", wx.Bitmap(os.path.join (self.imagesDir, "sibling.ico"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, u"Add sibling page…", "")
-		self.mainToolbar.AddLabelTool(self.ID_ADDCHILD, u"Add child Page…", wx.Bitmap(os.path.join (self.imagesDir, "child.ico"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, u"Add child Page…", "")
-		self.mainToolbar.AddLabelTool(self.ID_REMOVE_PAGE, "Remove page", wx.Bitmap(os.path.join (self.imagesDir, "remove.ico"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, u"Remove page…", "")
+		self.mainToolbar.AddLabelTool(self.ID_ADDPAGE, _(u"Add sibling page…"), wx.Bitmap("images/sibling.ico", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _(u"Add sibling page…"), "")
+		self.mainToolbar.AddLabelTool(self.ID_ADDCHILD, _(u"Add child Page…"), wx.Bitmap("images/child.ico", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _(u"Add child Page…"), "")
+		self.mainToolbar.AddLabelTool(self.ID_REMOVE_PAGE, _("Remove page"), wx.Bitmap("images/remove.ico", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _(u"Remove page…"), "")
 		self.mainToolbar.AddSeparator()
-		self.mainToolbar.AddLabelTool(self.ID_ATTACH, u"Attach files…", wx.Bitmap(os.path.join (self.imagesDir, "attach.png"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, u"Attach files…", "")
-		self.mainToolbar.AddLabelTool(self.ID_EDIT, "Edit page", wx.Bitmap(os.path.join (self.imagesDir, "edit.png"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, "Edit page's properties", "")
-		self.mainToolbar.AddLabelTool(self.ID_GLOBAL_SEARCH, u"Global search…", wx.Bitmap(os.path.join (self.imagesDir, "global_search.png"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, u"Global search…", "")
+		self.mainToolbar.AddLabelTool(self.ID_ATTACH, _(u"Attach files…"), wx.Bitmap("images/attach.png", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _(u"Attach files…"), "")
+		self.mainToolbar.AddLabelTool(self.ID_EDIT, _("Edit page"), wx.Bitmap("images/edit.png", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _("Edit page's properties"), "")
+		self.mainToolbar.AddLabelTool(self.ID_GLOBAL_SEARCH, _(u"Global search…"), wx.Bitmap("images/global_search.png", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _(u"Global search…"), "")
 		self.mainToolbar.AddSeparator()
 		# Tool Bar end
 		self.tree = WikiTree(self.leftPane, -1)
@@ -268,8 +268,8 @@ class MainWindow(wx.Frame):
 
 	def __createTrayMenu (self, taskBarIcon):
 		self.trayMenu = wx.Menu()
-		self.trayMenu.Append (self.ID_RESTORE, u"Restore")
-		self.trayMenu.Append (self.ID_EXIT, u"Exit")
+		self.trayMenu.Append (self.ID_RESTORE, _(u"Restore"))
+		self.trayMenu.Append (self.ID_EXIT, _(u"Exit"))
 
 		self.taskBarIcon.Bind(wx.EVT_MENU, self.onRestore, id=self.ID_RESTORE)
 		self.taskBarIcon.Bind(wx.EVT_MENU, self.onExit, id=self.ID_EXIT)
@@ -367,7 +367,7 @@ class MainWindow(wx.Frame):
 		try:
 			wikiroot = WikiDocument.load (fname)
 		except IOError:
-			wx.MessageBox (u"Can't load wiki '%s'" % self._recentId[event.Id], u"Error", wx.ICON_ERROR | wx.OK)
+			wx.MessageBox (_(u"Can't load wiki '%s'") % self._recentId[event.Id], _(u"Error"), wx.ICON_ERROR | wx.OK)
 			return
 
 		self._openLoadedWiki(wikiroot)
@@ -443,7 +443,7 @@ class MainWindow(wx.Frame):
 			wikiroot = core.commands.openWiki (path, readonly)
 			self._openLoadedWiki(wikiroot)
 		except IOError:
-			wx.MessageBox (u"Can't load wiki '%s'" % path, u"Error", wx.ICON_ERROR | wx.OK)
+			wx.MessageBox (_(u"Can't load wiki '%s'") % path, _(u"Error"), wx.ICON_ERROR | wx.OK)
 
 		finally:
 			Controller.instance().onEndTreeUpdate(self.wikiroot)
@@ -498,7 +498,8 @@ class MainWindow(wx.Frame):
 
 			self.__saveSashPosition()
 		except Exception as e:
-			wx.MessageBox (u"Can't save config\n" + unicode (e), u"Error", wx.ICON_ERROR | wx.OK)
+			wx.MessageBox (_(u"Can't save config\n%s") % (unicode (e)), 
+					_(u"Error"), wx.ICON_ERROR | wx.OK)
 	
 
 	def __saveSashPosition(self):
@@ -520,9 +521,9 @@ class MainWindow(wx.Frame):
 
 	def __set_properties(self):
 		# begin wxGlade: MainWindow.__set_properties
-		self.SetTitle("OutWiker")
+		self.SetTitle(_("OutWiker"))
 		_icon = wx.EmptyIcon()
-		_icon.CopyFromBitmap(wx.Bitmap(os.path.join (self.imagesDir, "icon.ico"), wx.BITMAP_TYPE_ANY))
+		_icon.CopyFromBitmap(wx.Bitmap("images/icon.ico", wx.BITMAP_TYPE_ANY))
 		self.SetIcon(_icon)
 		self.SetSize((800, 680))
 		self.mainToolbar.Realize()
@@ -556,7 +557,7 @@ class MainWindow(wx.Frame):
 		askBeforeExit = wx.GetApp().getConfig().askBeforeExitOption.value
 
 		if (not askBeforeExit or 
-				wx.MessageBox (u"Really exit?", u"Exit", wx.YES_NO  | wx.ICON_QUESTION ) == wx.YES):
+				wx.MessageBox (_(u"Really exit?"), _(u"Exit"), wx.YES_NO  | wx.ICON_QUESTION ) == wx.YES):
 			if self.wikiroot != None:
 				Controller.instance().onWikiClose (self.wikiroot)
 			self._saveParams()
@@ -640,8 +641,8 @@ class MainWindow(wx.Frame):
 			Controller.instance().onWikiClose (self.wikiroot)
 			Controller.instance().onStartTreeUpdate(self.wikiroot)
 
-			if (wx.MessageBox (u"Save current page before reload?", 
-				u"Save?", 
+			if (wx.MessageBox (_(u"Save current page before reload?"), 
+				_(u"Save?"), 
 				wx.YES_NO  | wx.ICON_QUESTION ) == wx.NO):
 				self.pagePanel.destroyWithoutSave()
 			else:
@@ -650,7 +651,7 @@ class MainWindow(wx.Frame):
 			try:
 				wikiroot = core.commands.openWiki (self.wikiroot.path)
 			except IOError:
-				wx.MessageBox (u"Can't load wiki '%s'" % self._recentId[event.Id], u"Error", wx.ICON_ERROR | wx.OK)
+				wx.MessageBox (_(u"Can't load wiki '%s'") % self._recentId[event.Id], _(u"Error"), wx.ICON_ERROR | wx.OK)
 				return
 			finally:
 				Controller.instance().onEndTreeUpdate(self.wikiroot)
@@ -695,10 +696,10 @@ class MainWindow(wx.Frame):
 
 	def onAbout(self, event): # wxGlade: MainWindow.<event_handler>
 		info = wx.AboutDialogInfo()
-		info.AddDeveloper (u"Ilin E.V. (aka Jenyay)")
-		info.SetCopyright (u"(c) 2010 Ilin E.V. (aka Jenyay)")
+		info.AddDeveloper (_(u"Ilin E.V. (aka Jenyay)") )
+		info.SetCopyright (_(u"(c) 2010 Ilin E.V. (aka Jenyay)") )
 		info.SetName (u"OutWiker")
-		info.SetDescription (u"Outliner + personal wiki = OutWiker")
+		info.SetDescription _( (u"Outliner + personal wiki = OutWiker") )
 
 		# Version:
 		info.SetVersion (version)
@@ -760,13 +761,13 @@ class MainWindow(wx.Frame):
 	def onGlobalSearch(self, event): # wxGlade: MainWindow.<event_handler>
 		if self.wikiroot != None:
 			if self.wikiroot.readonly:
-				wx.MessageBox (u"Wiki is opened as read-only", u"Error", wx.ICON_ERROR | wx.OK)
+				wx.MessageBox (_(u"Wiki is opened as read-only"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 				return
 			else:
 				try:
 					pages.search.searchpage.GlobalSearch.create (self.wikiroot)
 				except IOError:
-					wx.MessageBox (u"Can't create page", u"Error", wx.ICON_ERROR | wx.OK)
+					wx.MessageBox (_(u"Can't create page"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 
 
 	def onStdEvent(self, event): # wxGlade: MainWindow.<event_handler>
@@ -811,7 +812,7 @@ class MainWindow(wx.Frame):
 			try:
 				self.__saveSashPosition()
 			except Exception as e:
-				wx.MessageBox (u"Can't save config\n" + unicode (e), u"Error", wx.ICON_ERROR | wx.OK)
+				wx.MessageBox (_(u"Can't save config\n%s") % (unicode (e)), _(u"Error"), wx.ICON_ERROR | wx.OK)
 
 
 	def __restoreWindow (self):

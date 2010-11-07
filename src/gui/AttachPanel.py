@@ -22,10 +22,10 @@ class AttachPanel(wx.Panel):
 		kwds["style"] = wx.TAB_TRAVERSAL
 		wx.Panel.__init__(self, *args, **kwds)
 		self.attachList = wx.ListCtrl(self, -1, style=wx.LC_LIST|wx.SUNKEN_BORDER)
-		self.addBtn = wx.Button(self, -1, u"Attach files…")
-		self.removeBtn = wx.Button(self, -1, u"Remove files…")
-		self.pasteBtn = wx.Button(self, -1, "Paste")
-		self.openBtn = wx.Button(self, -1, "Execute files")
+		self.addBtn = wx.Button(self, -1, _(u"Attach files…"))
+		self.removeBtn = wx.Button(self, -1, _(u"Remove files…"))
+		self.pasteBtn = wx.Button(self, -1, _("Paste"))
+		self.openBtn = wx.Button(self, -1, _("Execute files"))
 
 		self.__set_properties()
 		self.__do_layout()
@@ -111,14 +111,14 @@ class AttachPanel(wx.Panel):
 
 	def onRemove(self, event): # wxGlade: AttachPanel.<event_handler>
 		if self.currentPage != None:
-			if wx.MessageBox (u"Remove selected files?", 
-					u"Error", 
+			if wx.MessageBox (_(u"Remove selected files?"), 
+					_(u"Error)",
 					wx.YES_NO  | wx.ICON_QUESTION ) == wx.YES:
 				files = self.getSelectedFiles ()
 				try:
 					self.currentPage.removeAttach (files)
 				except IOError as e:
-					wx.MessageBox (unicode (e), u"Error", wx.ICON_ERROR | wx.OK)
+					wx.MessageBox (unicode (e), _(u"Error"), wx.ICON_ERROR | wx.OK)
 
 
 	def onPaste(self, event): # wxGlade: AttachPanel.<event_handler>
@@ -138,8 +138,8 @@ class AttachPanel(wx.Panel):
 				try:
 					core.system.getOS().startFile (fullpath)
 				except OSError:
-					text = u"Can't execute file '%s'" % file
-					wx.MessageBox (text, u"Error", wx.ICON_ERROR | wx.OK)
+					text = _(u"Can't execute file '%s'") % file
+					wx.MessageBox (text, _(u"Error"), wx.ICON_ERROR | wx.OK)
 
 # end of class AttachPanel
 

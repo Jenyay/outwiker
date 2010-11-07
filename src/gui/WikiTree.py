@@ -251,19 +251,19 @@ class WikiTree(wx.Panel):
 
 	def __createPopupMenu (self):
 		self.popupMenu = wx.Menu ()
-		self.popupMenu.Append (self.ID_ADD_CHILD, u"Add child page...")
-		self.popupMenu.Append (self.ID_ADD_SIBLING, u"Add sibling page...")
-		self.popupMenu.Append (self.ID_RENAME, u"Rename")
-		self.popupMenu.Append (self.ID_REMOVE, u"Remove...")
+		self.popupMenu.Append (self.ID_ADD_CHILD, _(u"Add child page..."))
+		self.popupMenu.Append (self.ID_ADD_SIBLING, _(u"Add sibling page..."))
+		self.popupMenu.Append (self.ID_RENAME, _(u"Rename"))
+		self.popupMenu.Append (self.ID_REMOVE, _(u"Remove..."))
 		self.popupMenu.AppendSeparator()
 		
-		self.popupMenu.Append (self.ID_COPY_TITLE, u"Copy page's title to clipboard")
-		self.popupMenu.Append (self.ID_COPY_PATH, u"Copy page's path to clipboard")
-		self.popupMenu.Append (self.ID_COPY_ATTACH_PATH, u"Copy attaches path to clipboard")
-		self.popupMenu.Append (self.ID_COPY_LINK, u"Copy page link to clipboard")
+		self.popupMenu.Append (self.ID_COPY_TITLE, _(u"Copy page's title to clipboard"))
+		self.popupMenu.Append (self.ID_COPY_PATH, _(u"Copy page's path to clipboard"))
+		self.popupMenu.Append (self.ID_COPY_ATTACH_PATH, _(u"Copy attaches path to clipboard"))
+		self.popupMenu.Append (self.ID_COPY_LINK, _(u"Copy page link to clipboard"))
 		self.popupMenu.AppendSeparator()
 
-		self.popupMenu.Append (self.ID_PROPERTIES, u"Properties...")
+		self.popupMenu.Append (self.ID_PROPERTIES, _(u"Properties..."))
 	
 
 	def onRename (self, event):
@@ -338,10 +338,10 @@ class WikiTree(wx.Panel):
 			page.root.selectedPage = page
 
 		except core.exceptions.DublicateTitle:
-			wx.MessageBox (u"Can't move page when page with that title already exists", u"Error", wx.ICON_ERROR | wx.OK)
+			wx.MessageBox (_(u"Can't move page when page with that title already exists"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 
 		except OSError as e:
-			wx.MessageBox (u"Can't rename page\n" + unicode (e), u"Error", wx.ICON_ERROR | wx.OK)
+			wx.MessageBox (_(u"Can't rename page\n%s") % unicode (e), _(u"Error"), wx.ICON_ERROR | wx.OK)
 
 
 	def onStartTreeUpdate (self, root):

@@ -34,7 +34,7 @@ class CurrentPagePanel(wx.Panel):
 		wx.Panel.__init__(self, *args, **kwds)
 		self.bookmarkBitmap = wx.BitmapButton(self, -1, wx.Bitmap(os.path.join (self.imagesDir, "star_gray.png"), wx.BITMAP_TYPE_ANY))
 		self.titleLabel = wx.StaticText(self, -1, "")
-		self.tagsLabel = wx.StaticText(self, -1, "[]")
+		self.tagsLabel = wx.StaticText(self, -1, _("[]"))
 		self.attachPAnel = AttachPanel(self, -1)
 
 		self.__set_properties()

@@ -223,7 +223,7 @@ class EditorSearchPanel (LocalSearchPanel):
 			self.editor.SetSelection (self.editPanel.calcBytePos (text, result.position), 
 					self.editPanel.calcBytePos (text, result.position + len (result.phrase)) )
 		else:
-			self.resultLabel.SetLabel (u"Not found")
+			self.resultLabel.SetLabel (_(u"Not found"))
 
 			#self.editor.SetFocus()
 
