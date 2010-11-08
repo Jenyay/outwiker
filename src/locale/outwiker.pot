@@ -310,9 +310,7 @@ msgstr ""
 
 #: gui/MainWindow.py:501 gui/MainWindow.py:815
 #, python-format
-msgid ""
-"Can't save config\n"
-"%s"
+msgid "Can't save config\n%s"
 msgstr ""
 
 #: gui/MainWindow.py:524

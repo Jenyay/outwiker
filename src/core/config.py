@@ -13,9 +13,6 @@ def getConfigPath (dirname, fname):
 	1. Если в папке с программой есть файл настроек, то вернуть путь до него
 	2. Иначе настройки будут храниться в домашней поддиректории. При этом создать директорию .outwiker в домашней директории.
 	"""
-	#fname = u"outwiker.ini"
-	#dirname = u".outwiker"
-
 	someDir = os.path.join (core.system.getCurrentDir(), fname)
 	if os.path.exists (someDir):
 		path = someDir
@@ -198,6 +195,7 @@ class GeneralConfig (Config):
 	"""
 	def __init__ (self, fname, readonly=False):
 		Config.__init__ (self, fname, readonly)
+		self.languageOption = StringOption (self, u"General", u"language", u"en")
 
 		# Список последних открытых файлов
 		self.historyLengthOption = IntegerOption (self, u"RecentWiki", u"maxcount", 5)

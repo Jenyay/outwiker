@@ -699,7 +699,7 @@ class MainWindow(wx.Frame):
 		info.AddDeveloper (_(u"Ilin E.V. (aka Jenyay)") )
 		info.SetCopyright (_(u"(c) 2010 Ilin E.V. (aka Jenyay)") )
 		info.SetName (u"OutWiker")
-		info.SetDescription _( (u"Outliner + personal wiki = OutWiker") )
+		info.SetDescription (_(u"Outliner + personal wiki = OutWiker") )
 
 		# Version:
 		info.SetVersion (version)
