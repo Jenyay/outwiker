@@ -188,8 +188,8 @@ class WikiPagePanel (HtmlPanel):
 		self._addTool (self.pageToolsMenu, 
 				"ID_THUMB", 
 				lambda event: self._turnText (u'%thumb%', u'%%'), 
-				u'Thumbnail\tCtrl+M', 
-				u'Thumbnail', 
+				_(u'Thumbnail\tCtrl+M'), 
+				_(u'Thumbnail'), 
 				os.path.join (self.imagesDir, "images.png"))
 
 		self._addTool (self.pageToolsMenu, 
@@ -202,8 +202,8 @@ class WikiPagePanel (HtmlPanel):
 		self._addTool (self.pageToolsMenu, 
 				"ID_HORLINE", 
 				lambda event: self._replaceText (u'----'), 
-				_(u"Horisontal line\tCtrl+H"), 
-				_(u"Horisontal line"), 
+				_(u"Horizontal line\tCtrl+H"), 
+				_(u"Horizontal line"), 
 				os.path.join (self.imagesDir, "text_horizontalrule.png"))
 
 	
@@ -220,7 +220,7 @@ class WikiPagePanel (HtmlPanel):
 		self.__addListTools()
 		self.__addOtherTools()
 
-		mainWindow.mainMenu.Insert (mainWindow.mainMenu.GetMenuCount() - 1, self.pageToolsMenu, "&Wiki")
+		mainWindow.mainMenu.Insert (mainWindow.mainMenu.GetMenuCount() - 1, self.pageToolsMenu, _(u"&Wiki") )
 		mainWindow.mainToolbar.Realize()
 		self.HtmlView.SetSelection (1)
 

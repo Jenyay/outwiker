@@ -48,7 +48,7 @@ class HtmlPanel(BaseTextPanel):
 		self.HtmlView = wx.Notebook(self, -1, style=wx.NB_BOTTOM)
 		self.previewPane = wx.Panel(self.HtmlView, -1)
 		self.htmlPane = wx.Panel(self.HtmlView, -1)
-		self.codeWindow = TextEditor (self.htmlPane, -1)
+		self.codeWindow = TextEditor(self.htmlPane, -1)
 		self.htmlWindow = HtmlView(self.previewPane, -1)
 
 		self.__set_properties()
@@ -105,8 +105,8 @@ class HtmlPanel(BaseTextPanel):
 		self.previewPane.SetSizer(grid_sizer_9)
 		grid_sizer_9.AddGrowableRow(0)
 		grid_sizer_9.AddGrowableCol(0)
-		self.HtmlView.AddPage(self.htmlPane, "HTML")
-		self.HtmlView.AddPage(self.previewPane, "Preview")
+		self.HtmlView.AddPage(self.htmlPane, _("HTML"))
+		self.HtmlView.AddPage(self.previewPane, _("Preview"))
 		grid_sizer_7.Add(self.HtmlView, 1, wx.EXPAND, 0)
 		self.SetSizer(grid_sizer_7)
 		grid_sizer_7.Fit(self)
@@ -578,8 +578,8 @@ class HtmlPagePanel (HtmlPanel):
 		self._addTool (self.pageToolsMenu, 
 				"ID_HORLINE", 
 				lambda event: self._replaceText (u'<hr>'), 
-				_(u"Horisontal line\tCtrl+H"), 
-				_(u"Horisontal line (<hr>)"), 
+				_(u"Horizontal line\tCtrl+H"), 
+				_(u"Horizontal line (<hr>)"), 
 				os.path.join (self.imagesDir, "text_horizontalrule.png"))
 
 
@@ -596,7 +596,7 @@ class HtmlPagePanel (HtmlPanel):
 		self.__addListTools()
 		self.__addOtherTools()
 
-		mainWindow.mainMenu.Insert (mainWindow.mainMenu.GetMenuCount() - 1, self.pageToolsMenu, "H&tml")
+		mainWindow.mainMenu.Insert (mainWindow.mainMenu.GetMenuCount() - 1, self.pageToolsMenu, _(u"H&tml"))
 		mainWindow.mainToolbar.Realize()
 		self.HtmlView.SetSelection (1)
 

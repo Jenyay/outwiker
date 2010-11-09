@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-08 10:46+0300\n"
+"POT-Creation-Date: 2010-11-09 22:03+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 
 #: gui/AttachPanel.py:25
-#: gui/MainWindow.py:170
+#: gui/MainWindow.py:166
 msgid "Attach files…"
 msgstr "Прикрепить файлы..."
 
@@ -42,15 +42,32 @@ msgstr "Удалить выбранные файлы?"
 #: gui/CreatePageDialog.py:79
 #: gui/CreatePageDialog.py:85
 #: gui/htmlview.py:82
-#: gui/MainWindow.py:370
-#: gui/MainWindow.py:446
-#: gui/MainWindow.py:502
-#: gui/MainWindow.py:654
-#: gui/MainWindow.py:764
-#: gui/MainWindow.py:770
-#: gui/MainWindow.py:815
+#: gui/MainWindow.py:366
+#: gui/MainWindow.py:442
+#: gui/MainWindow.py:498
+#: gui/MainWindow.py:650
+#: gui/MainWindow.py:760
+#: gui/MainWindow.py:766
+#: gui/MainWindow.py:811
 #: gui/WikiTree.py:341
 #: gui/WikiTree.py:344
+#: pages/html/HtmlPanel.py:175
+#: pages/wiki/wikipanel.py:245
+#: core/commands.py:27
+#: core/commands.py:45
+#: core/commands.py:66
+#: core/commands.py:69
+#: core/commands.py:82
+#: core/commands.py:101
+#: core/commands.py:112
+#: core/commands.py:124
+#: core/commands.py:126
+#: core/commands.py:136
+#: core/commands.py:210
+#: core/commands.py:257
+#: core/commands.py:267
+#: core/commands.py:270
+#: core/commands.py:272
 msgid "Error"
 msgstr "Ошибка"
 
@@ -72,6 +89,10 @@ msgstr "Найти далее\tF3"
 #: gui/BaseTextPanel.py:148
 msgid "Find previous\tShift+F3"
 msgstr "Найти выше\tShift+F3"
+
+#: gui/BaseTextPanel.py:150
+msgid "&Search"
+msgstr "&Поиск"
 
 #: gui/BaseTextPanel.py:159
 #: gui/BaseTextPanel.py:163
@@ -118,212 +139,212 @@ msgstr "Создать страницу"
 msgid "[]"
 msgstr "[]"
 
-#: gui/MainWindow.py:110
+#: gui/MainWindow.py:106
 msgid "&New\tCtrl+N"
 msgstr "&Создать\tCtrl+N"
 
-#: gui/MainWindow.py:111
+#: gui/MainWindow.py:107
 msgid "&Open…\tCtrl+O"
 msgstr "&Открыть…\tCtrl+O"
 
-#: gui/MainWindow.py:112
+#: gui/MainWindow.py:108
 msgid "Open &Read-only...\tCtrl+Shift+O"
 msgstr "Открыть только для &чтения...\tCtrl+Shift+O"
 
-#: gui/MainWindow.py:113
+#: gui/MainWindow.py:109
 msgid "&Save\tCtrl+S"
 msgstr "&Сохранить\tCtrl+S"
 
-#: gui/MainWindow.py:114
+#: gui/MainWindow.py:110
 msgid "&Exit…\tAlt+F4"
 msgstr "В&ыход…\tAlt+F4"
 
-#: gui/MainWindow.py:116
+#: gui/MainWindow.py:112
 msgid "&File"
 msgstr "&Файл"
 
-#: gui/MainWindow.py:118
+#: gui/MainWindow.py:114
 msgid "&Undo\tCtrl+Z"
 msgstr "&Отменить\tCtrl+Z"
 
-#: gui/MainWindow.py:119
+#: gui/MainWindow.py:115
 msgid "&Redo\tCtrl+Y"
 msgstr "&Вернуть\tCtrl+Y"
 
-#: gui/MainWindow.py:121
+#: gui/MainWindow.py:117
 msgid "Cu&t\tCtrl+X"
 msgstr "В&ырезать\tCtrl+X"
 
-#: gui/MainWindow.py:122
+#: gui/MainWindow.py:118
 msgid "&Copy\tCtrl+C"
 msgstr "&Копировать\tCtrl+C"
 
-#: gui/MainWindow.py:123
+#: gui/MainWindow.py:119
 msgid "&Paste\tCtrl+V"
 msgstr "&Вставить\tCtrl+V"
 
-#: gui/MainWindow.py:125
+#: gui/MainWindow.py:121
 msgid "Pr&eferences...\tCtrl+F8"
 msgstr "&Настройки...\tCtrl+F8"
 
-#: gui/MainWindow.py:126
+#: gui/MainWindow.py:122
 msgid "&Edit"
 msgstr "&Редактирование"
 
-#: gui/MainWindow.py:128
+#: gui/MainWindow.py:124
 msgid "Add &sibling page…\tCtrl+T"
 msgstr "Добавить страницу того же уровня…\tCtrl+T"
 
-#: gui/MainWindow.py:129
+#: gui/MainWindow.py:125
 msgid "Add &child Page…\tCtrl+Shift+T"
 msgstr "Добавить дочернюю страницу…\tCtrl+Shift+T"
 
-#: gui/MainWindow.py:131
+#: gui/MainWindow.py:127
 msgid "Rename page\tF2"
 msgstr "Переименовать страницу\tF2"
 
-#: gui/MainWindow.py:132
+#: gui/MainWindow.py:128
 msgid "Remove page…\tCtrl+Shift+Del"
 msgstr "Удалить страницу…\tCtrl+Shift+Del"
 
-#: gui/MainWindow.py:133
+#: gui/MainWindow.py:129
 msgid "Edit page…\tCtrl+E"
 msgstr "Редактировать страницу…\tCtrl+E"
 
-#: gui/MainWindow.py:134
+#: gui/MainWindow.py:130
 msgid "&Tree"
 msgstr "&Дерево"
 
-#: gui/MainWindow.py:136
+#: gui/MainWindow.py:132
 msgid "&Global search…\tCtrl+Shift+F"
 msgstr "&Глобальный поиск…\tCtrl+Shift+F"
 
-#: gui/MainWindow.py:137
+#: gui/MainWindow.py:133
 msgid "&Attach Files…\tCtrl+Alt+A"
 msgstr "&Прикрепить файлы…\tCtrl+Alt+A"
 
-#: gui/MainWindow.py:139
+#: gui/MainWindow.py:135
 msgid "Copy page's title to clipboard\tCtrl+Shift+D"
 msgstr "Копировать заголовок страницы в буфер обмена\tCtrl+Shift+D"
 
-#: gui/MainWindow.py:140
+#: gui/MainWindow.py:136
 msgid "Copy &page's path to clipboard\tCtrl+Shift+P"
 msgstr "Копировать путь до страницы в буфер обмена\tCtrl+Shift+P"
 
-#: gui/MainWindow.py:141
+#: gui/MainWindow.py:137
 msgid "Copy a&ttaches path to clipboard\tCtrl+Shift+A"
 msgstr "Копировать путь до прикрепленных файлов в буфер обмена\tCtrl+Shift+A"
 
-#: gui/MainWindow.py:142
+#: gui/MainWindow.py:138
 msgid "Copy page link to clipboard\tCtrl+Shift+L"
 msgstr "Копировать ссылку на страницу в буфер обмена"
 
-#: gui/MainWindow.py:144
+#: gui/MainWindow.py:140
 msgid "Reload wiki\tCtrl+R"
-msgstr "Перезагрузить вики\rCtrl+R"
+msgstr "Перезагрузить вики\tCtrl+R"
 
-#: gui/MainWindow.py:145
+#: gui/MainWindow.py:141
 msgid "T&ools"
 msgstr "&Инструменты"
 
-#: gui/MainWindow.py:147
+#: gui/MainWindow.py:143
 msgid "Add/Remove Bookmark\tCtrl+D"
 msgstr "Добавить/удалить закладку\tCtrl+D"
 
-#: gui/MainWindow.py:149
-msgid "Bookmarks"
-msgstr "Закладки"
+#: gui/MainWindow.py:145
+msgid "&Bookmarks"
+msgstr "&Закладки"
 
-#: gui/MainWindow.py:151
+#: gui/MainWindow.py:147
 msgid "Help\tF1"
 msgstr "Помощь\tF1"
 
-#: gui/MainWindow.py:152
+#: gui/MainWindow.py:148
 msgid "&About…\tCtrl+F1"
 msgstr "&О программе...\tCtrl+F1"
 
-#: gui/MainWindow.py:153
+#: gui/MainWindow.py:149
 msgid "&Help"
-msgstr "&Помощь"
+msgstr "П&омощь"
 
-#: gui/MainWindow.py:160
+#: gui/MainWindow.py:156
 msgid "New…"
 msgstr "Создать..."
 
-#: gui/MainWindow.py:160
+#: gui/MainWindow.py:156
 msgid "Create new wiki…"
 msgstr "Создать новую вики..."
 
-#: gui/MainWindow.py:161
+#: gui/MainWindow.py:157
 msgid "Open…"
 msgstr "Открыть..."
 
-#: gui/MainWindow.py:161
+#: gui/MainWindow.py:157
 msgid "Open wiki…"
 msgstr "Открыть вики..."
 
-#: gui/MainWindow.py:162
+#: gui/MainWindow.py:158
 msgid "Save"
 msgstr "Сохранить"
 
-#: gui/MainWindow.py:162
+#: gui/MainWindow.py:158
 msgid "Save wiki"
 msgstr "Сохранить вики"
 
-#: gui/MainWindow.py:164
+#: gui/MainWindow.py:160
 msgid "Reload"
 msgstr "Перезагрузить"
 
-#: gui/MainWindow.py:164
+#: gui/MainWindow.py:160
 msgid "Reload wiki"
 msgstr "Перезагрузить вики"
 
-#: gui/MainWindow.py:166
+#: gui/MainWindow.py:162
 msgid "Add sibling page…"
 msgstr "Добавить страницу того же уровня вложенности"
 
-#: gui/MainWindow.py:167
+#: gui/MainWindow.py:163
 msgid "Add child Page…"
 msgstr "Добавить дочернюю страницу"
 
-#: gui/MainWindow.py:168
+#: gui/MainWindow.py:164
 msgid "Remove page"
 msgstr "Удалить страницу"
 
-#: gui/MainWindow.py:168
+#: gui/MainWindow.py:164
 msgid "Remove page…"
 msgstr "Удалить страницу..."
 
-#: gui/MainWindow.py:171
+#: gui/MainWindow.py:167
 msgid "Edit page"
 msgstr "Редактировать страницу"
 
-#: gui/MainWindow.py:171
+#: gui/MainWindow.py:167
 msgid "Edit page's properties"
 msgstr "Редактировать свойства страницы"
 
-#: gui/MainWindow.py:172
+#: gui/MainWindow.py:168
 msgid "Global search…"
 msgstr "Глобальный поиск..."
 
-#: gui/MainWindow.py:271
+#: gui/MainWindow.py:267
 msgid "Restore"
 msgstr "Восстановить"
 
-#: gui/MainWindow.py:272
-#: gui/MainWindow.py:560
+#: gui/MainWindow.py:268
+#: gui/MainWindow.py:556
 msgid "Exit"
 msgstr "Выход"
 
-#: gui/MainWindow.py:370
-#: gui/MainWindow.py:446
-#: gui/MainWindow.py:654
+#: gui/MainWindow.py:366
+#: gui/MainWindow.py:442
+#: gui/MainWindow.py:650
 #, python-format
 msgid "Can't load wiki '%s'"
 msgstr "Невозможно загрузить вики '%s'"
 
-#: gui/MainWindow.py:501
-#: gui/MainWindow.py:815
+#: gui/MainWindow.py:497
+#: gui/MainWindow.py:811
 #, python-format
 msgid ""
 "Can't save config\n"
@@ -332,35 +353,48 @@ msgstr ""
 "Невозможно сохранить настройки\n"
 "%s"
 
-#: gui/MainWindow.py:524
+#: gui/MainWindow.py:520
 msgid "OutWiker"
 msgstr "OutWiker"
 
-#: gui/MainWindow.py:560
+#: gui/MainWindow.py:556
 msgid "Really exit?"
 msgstr "Действительно выйти?"
 
-#: gui/MainWindow.py:644
+#: gui/MainWindow.py:640
 msgid "Save current page before reload?"
 msgstr "Сохранить текущую страницу перед перезагрузкой?"
 
-#: gui/MainWindow.py:645
+#: gui/MainWindow.py:641
 msgid "Save?"
 msgstr "Сохранить?"
 
-#: gui/MainWindow.py:699
+#: gui/MainWindow.py:695
 msgid "Ilin E.V. (aka Jenyay)"
 msgstr "Ильин Е. В. (aka Jenyay)"
 
-#: gui/MainWindow.py:700
+#: gui/MainWindow.py:696
 msgid "(c) 2010 Ilin E.V. (aka Jenyay)"
 msgstr "(c) 2010 Ильин Е. В. (aka Jenyay)"
 
-#: gui/MainWindow.py:764
+#: gui/MainWindow.py:698
+msgid "Outliner + personal wiki = OutWiker"
+msgstr "Outliner + персональная вики = OutWiker"
+
+#: gui/MainWindow.py:760
+#: core/commands.py:27
+#: core/commands.py:45
+#: core/commands.py:82
+#: core/commands.py:112
+#: core/commands.py:126
+#: core/commands.py:136
+#: core/commands.py:257
+#: core/commands.py:272
 msgid "Wiki is opened as read-only"
 msgstr "Вики открыта только для чтения"
 
-#: gui/MainWindow.py:770
+#: gui/MainWindow.py:766
+#: core/commands.py:158
 msgid "Can't create page"
 msgstr "Невозможно создать страницу"
 
@@ -433,6 +467,7 @@ msgid "Properties..."
 msgstr "Свойства..."
 
 #: gui/WikiTree.py:341
+#: core/commands.py:267
 msgid "Can't move page when page with that title already exists"
 msgstr "Невозможно переместить страницу, так как страница с таким именем уже существует"
 
@@ -444,4 +479,324 @@ msgid ""
 msgstr ""
 "Невозможно переименовать страницу\n"
 "'%s'"
+
+#: pages/html/HtmlPanel.py:108
+msgid "HTML"
+msgstr "HTML"
+
+#: pages/html/HtmlPanel.py:109
+msgid "Preview"
+msgstr "Предпросмотр"
+
+#: pages/html/HtmlPanel.py:166
+msgid "Page rendered. Please wait..."
+msgstr "Страница подготавливается. Пожалуйста, подождите..."
+
+#: pages/html/HtmlPanel.py:175
+msgid "Can't save HTML-file"
+msgstr "Невозможно сохранить HTML-файл"
+
+#: pages/html/HtmlPanel.py:201
+msgid "Code / Preview\tF5"
+msgstr "Код / Просмотр\tF5"
+
+#: pages/html/HtmlPanel.py:202
+msgid "Code / Preview"
+msgstr "Код / Просмотр"
+
+#: pages/html/HtmlPanel.py:418
+#: pages/wiki/wikipanel.py:32
+msgid "Bold\tCtrl+B"
+msgstr "Полужирный\tCtrl+B"
+
+#: pages/html/HtmlPanel.py:419
+msgid "Bold (<b>...</b>)"
+msgstr "Полужирный (<b>...</b>)"
+
+#: pages/html/HtmlPanel.py:425
+#: pages/wiki/wikipanel.py:39
+msgid "Italic\tCtrl+I"
+msgstr "Курсив\tCtrl+I"
+
+#: pages/html/HtmlPanel.py:426
+msgid "Italic (<i>...</i>)"
+msgstr "Курсив (<i>...</i>)"
+
+#: pages/html/HtmlPanel.py:432
+#: pages/wiki/wikipanel.py:53
+msgid "Underline\tCtrl+U"
+msgstr "Подчёркивание\tCtrl+U"
+
+#: pages/html/HtmlPanel.py:433
+msgid "Underline (<u>...</u>)"
+msgstr "Подчеркивание (<u>...</u>)"
+
+#: pages/html/HtmlPanel.py:439
+#: pages/wiki/wikipanel.py:60
+msgid "Subscript\tCtrl+="
+msgstr "Нижний индекс\tCtrl+="
+
+#: pages/html/HtmlPanel.py:440
+msgid "Subscript (<sub> ... </sub>)"
+msgstr "Нижний индекс (<sub> ... </sub>)"
+
+#: pages/html/HtmlPanel.py:446
+#: pages/wiki/wikipanel.py:68
+msgid "Superscript\tCtrl++"
+msgstr "Верхний индекс\tCtrl++"
+
+#: pages/html/HtmlPanel.py:447
+msgid "Superscript (<sup> ... </sup>)"
+msgstr "Верхний индекс (<sup> ... </sup>)"
+
+#: pages/html/HtmlPanel.py:455
+msgid "Center align\tCtrl+Shift+C"
+msgstr "Выравнивание по центру\tCtrl+Shift+C"
+
+#: pages/html/HtmlPanel.py:456
+#: pages/wiki/wikipanel.py:78
+msgid "Center align"
+msgstr "Выравнивание по центру"
+
+#: pages/html/HtmlPanel.py:462
+#: pages/html/HtmlPanel.py:463
+#: pages/wiki/wikipanel.py:85
+msgid "Right align"
+msgstr "Выравнивание по правому краю"
+
+#: pages/html/HtmlPanel.py:474
+msgid "Table\tCtrl+Q"
+msgstr "Таблица\tCtrl+Q"
+
+#: pages/html/HtmlPanel.py:475
+msgid "Table (<table>...</table>)"
+msgstr "Таблица (<table>...</table>)"
+
+#: pages/html/HtmlPanel.py:481
+msgid "Table row\tCtrl+W"
+msgstr "Строка таблицы\tCtrl+W"
+
+#: pages/html/HtmlPanel.py:482
+msgid "Table row (<tr>...</tr>)"
+msgstr "Строка таблицы (<tr>...</tr>)"
+
+#: pages/html/HtmlPanel.py:489
+msgid "Table cell\tCtrl+Y"
+msgstr "Ячейка таблицы\tCtrl+Y"
+
+#: pages/html/HtmlPanel.py:490
+msgid "Table cell (<td>...</td>)"
+msgstr "Ячейка таблицы (<td>...</td>)"
+
+#: pages/html/HtmlPanel.py:501
+#: pages/wiki/wikipanel.py:125
+msgid "Bullets list\tCtrl+G"
+msgstr "Ненумерованный список\tCtrl+G"
+
+#: pages/html/HtmlPanel.py:502
+msgid "Bullets list (<ul>...</ul>)"
+msgstr "Ненумерованный список (<ul>...</ul>)"
+
+#: pages/html/HtmlPanel.py:508
+#: pages/wiki/wikipanel.py:132
+msgid "Numbers list\tCtrl+J"
+msgstr "Нумерованный список\tCtrl+J"
+
+#: pages/html/HtmlPanel.py:509
+msgid "Numbers list (<ul>...</ul>)"
+msgstr "Нумерованный список (<ul>...</ul>)"
+
+#: pages/html/HtmlPanel.py:520
+#: pages/wiki/wikipanel.py:144
+msgid "H1\tCtrl+1"
+msgstr "H1\tCtrl+1"
+
+#: pages/html/HtmlPanel.py:521
+msgid "H1 (<h1>...</h1>)"
+msgstr "H1 (<h1>...</h1>)"
+
+#: pages/html/HtmlPanel.py:527
+#: pages/wiki/wikipanel.py:151
+msgid "H2\tCtrl+2"
+msgstr "H2\tCtrl+2"
+
+#: pages/html/HtmlPanel.py:528
+msgid "H2 (<h2>...</h2>)"
+msgstr "H2 (<h2>...</h2>)"
+
+#: pages/html/HtmlPanel.py:534
+#: pages/wiki/wikipanel.py:158
+msgid "H3\tCtrl+3"
+msgstr "H3\tCtrl+3"
+
+#: pages/html/HtmlPanel.py:535
+msgid "H3 (<h3>...</h3>)"
+msgstr "H3 (<h3>...</h3>)"
+
+#: pages/html/HtmlPanel.py:541
+#: pages/wiki/wikipanel.py:165
+msgid "H4\tCtrl+4"
+msgstr "H4\tCtrl+4"
+
+#: pages/html/HtmlPanel.py:542
+msgid "H4 (<h4>...</h4>)"
+msgstr "H4 (<h4>...</h4>)"
+
+#: pages/html/HtmlPanel.py:548
+#: pages/wiki/wikipanel.py:172
+msgid "H5\tCtrl+5"
+msgstr "H5\tCtrl+5"
+
+#: pages/html/HtmlPanel.py:549
+msgid "H5 (<h5>...</h5>)"
+msgstr "H5 (<h5>...</h5>)"
+
+#: pages/html/HtmlPanel.py:555
+#: pages/wiki/wikipanel.py:179
+msgid "H6\tCtrl+6"
+msgstr "H6\tCtrl+6"
+
+#: pages/html/HtmlPanel.py:556
+msgid "H6 (<h6>...</h6>)"
+msgstr "H6 (<h6>...</h6>)"
+
+#: pages/html/HtmlPanel.py:574
+#: pages/wiki/wikipanel.py:198
+msgid "Link\tCtrl+L"
+msgstr "Ссылка\tCtrl+L"
+
+#: pages/html/HtmlPanel.py:581
+#: pages/wiki/wikipanel.py:205
+msgid "Horizontal line\tCtrl+H"
+msgstr "Горизонтальная линия\tCtrl+H"
+
+#: pages/html/HtmlPanel.py:582
+msgid "Horizontal line (<hr>)"
+msgstr "Горизонтальная линия (<hr>)"
+
+#: pages/html/HtmlPanel.py:599
+msgid "H&tml"
+msgstr "H&TML"
+
+#: pages/wiki/wikipanel.py:22
+msgid "Wiki"
+msgstr "Вики"
+
+#: pages/wiki/wikipanel.py:33
+msgid "Bold"
+msgstr "Полужирный"
+
+#: pages/wiki/wikipanel.py:40
+msgid "Italic"
+msgstr "Курсив"
+
+#: pages/wiki/wikipanel.py:46
+msgid "Bold italic\tCtrl+Shift+I"
+msgstr "Полужирный курсив\tCtrl+Shift+I"
+
+#: pages/wiki/wikipanel.py:47
+msgid "Bold italic"
+msgstr "Полужирный курсив"
+
+#: pages/wiki/wikipanel.py:54
+msgid "Underline"
+msgstr "Подчёркивание"
+
+#: pages/wiki/wikipanel.py:61
+msgid "Subscript"
+msgstr "Нижний индекс"
+
+#: pages/wiki/wikipanel.py:69
+msgid "Superscript"
+msgstr "Верхний индекс"
+
+#: pages/wiki/wikipanel.py:77
+msgid "Center align\tCtrl+Alt+C"
+msgstr "Выровнять по центру\tCtrl+Alt+C"
+
+#: pages/wiki/wikipanel.py:84
+msgid "Right align\tCtrl+ALT+R"
+msgstr "Выровнять по правому краю\tCtrl+ALT+R"
+
+#: pages/wiki/wikipanel.py:126
+msgid "Bullets list"
+msgstr "Ненумерованный список"
+
+#: pages/wiki/wikipanel.py:133
+msgid "Numbers list"
+msgstr "Нумерованный список"
+
+#: pages/wiki/wikipanel.py:145
+msgid "H1"
+msgstr "H1"
+
+#: pages/wiki/wikipanel.py:152
+msgid "H2"
+msgstr "H2"
+
+#: pages/wiki/wikipanel.py:159
+msgid "H3"
+msgstr "H3"
+
+#: pages/wiki/wikipanel.py:166
+msgid "H4"
+msgstr "H4"
+
+#: pages/wiki/wikipanel.py:173
+msgid "H5"
+msgstr "H5"
+
+#: pages/wiki/wikipanel.py:180
+msgid "H6"
+msgstr "H6"
+
+#: pages/wiki/wikipanel.py:191
+msgid "Thumbnail\tCtrl+M"
+msgstr "Миниатюра\tCtrl+M"
+
+#: pages/wiki/wikipanel.py:192
+msgid "Thumbnail"
+msgstr "Миниатюра"
+
+#: pages/wiki/wikipanel.py:206
+msgid "Horizontal line"
+msgstr "Горизонтальная линия"
+
+#: pages/wiki/wikipanel.py:223
+msgid "&Wiki"
+msgstr "&Вики"
+
+#: pages/wiki/wikipanel.py:245
+msgid "Can't save page hash\n"
+msgstr "Невозможно сохранить хэш страницы\n"
+
+#: core/commands.py:54
+#, python-format
+msgid "File '%s' exists already"
+msgstr "Файл '%s' уже существует"
+
+#: core/commands.py:101
+msgid "Can't rename page\n"
+msgstr "Невозможно переименовать страницу\n"
+
+#: core/commands.py:115
+#, python-format
+msgid "Remove page '%s' and all subpages?"
+msgstr "Удалить страницу '%s' и все дочерние страницы?"
+
+#: core/commands.py:117
+msgid "Remove page?"
+msgstr "Удалить страницу?"
+
+#: core/commands.py:124
+msgid "Can't remove page"
+msgstr "Невозможно удалить страницу"
+
+#: core/commands.py:210
+msgid "Can't open clipboard"
+msgstr "Невозможно открыть буфер обмена"
+
+#: core/commands.py:270
+msgid "Can't move page"
+msgstr "Невозможно переместить страницу"
 
