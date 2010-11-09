@@ -19,7 +19,7 @@ class WikiPagePanel (HtmlPanel):
 		self._configSection = u"wiki"
 		self._hashKey = u"md5_hash"
 
-		self.HtmlView.SetPageText (0, u"Wiki")
+		self.HtmlView.SetPageText (0, _(u"Wiki"))
 
 
 	def __addFontTools (self):
@@ -29,44 +29,44 @@ class WikiPagePanel (HtmlPanel):
 		self._addTool (self.pageToolsMenu, 
 				"ID_BOLD", 
 				lambda event: self._turnText (u"'''", u"'''"), 
-				u"Bold\tCtrl+B", 
-				u"Bold", 
+				_(u"Bold\tCtrl+B"), 
+				_(u"Bold"), 
 				os.path.join (self.imagesDir, "text_bold.png"))
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_ITALIC", 
 				lambda event: self._turnText (u"''", u"''"), 
-				u"Italic\tCtrl+I", 
-				u"Italic", 
+				_(u"Italic\tCtrl+I"), 
+				_(u"Italic"), 
 				os.path.join (self.imagesDir, "text_italic.png"))
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_BOLD_ITALIC", 
 				lambda event: self._turnText (u"''''", u"''''"), 
-				u"Bold italic\tCtrl+Shift+I", 
-				u"Bold italic", 
+				_(u"Bold italic\tCtrl+Shift+I"), 
+				_(u"Bold italic"), 
 				os.path.join (self.imagesDir, "text_bold_italic.png"))
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_UNDERLINE", 
 				lambda event: self._turnText (u"{+", u"+}"), 
-				u"Underline\tCtrl+U", 
-				u"Underline", 
+				_(u"Underline\tCtrl+U"), 
+				_(u"Underline"), 
 				os.path.join (self.imagesDir, "text_underline.png"))
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_SUBSCRIPT", 
 				lambda event: self._turnText (u"'_", u"_'"), 
-				u"Subscript\tCtrl+=", 
-				u"Subscript", 
+				_(u"Subscript\tCtrl+="), 
+				_(u"Subscript"), 
 				os.path.join (self.imagesDir, "text_subscript.png"))
 
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_SUPERSCRIPT", 
 				lambda event: self._turnText (u"'^", u"^'"), 
-				u"Superscript\tCtrl++", 
-				u"Superscript", 
+				_(u"Superscript\tCtrl++"), 
+				_(u"Superscript"), 
 				os.path.join (self.imagesDir, "text_superscript.png"))
 	
 
@@ -74,15 +74,15 @@ class WikiPagePanel (HtmlPanel):
 		self._addTool (self.pageToolsMenu, 
 				"ID_ALIGN_CENTER", 
 				lambda event: self._turnText (u"%center%", u""), 
-				u"Center align\tCtrl+Alt+C", 
-				u"Center align", 
+				_(u"Center align\tCtrl+Alt+C"), 
+				_(u"Center align"), 
 				os.path.join (self.imagesDir, "text_align_center.png"))
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_ALIGN_RIGHT", 
 				lambda event: self._turnText (u"%right%", u""), 
-				u"Right align\tCtrl+ALT+R", 
-				u"Right align", 
+				_(u"Right align\tCtrl+ALT+R"), 
+				_(u"Right align"), 
 				os.path.join (self.imagesDir, "text_align_right.png"))
 	
 
@@ -122,15 +122,15 @@ class WikiPagePanel (HtmlPanel):
 		self._addTool (self.pageToolsMenu, 
 				"ID_MARK_LIST", 
 				lambda event: self._turnList (u'', u'', u'*', u''), 
-				u"Bullets list\tCtrl+G", 
-				u"Bullets list", 
+				_(u"Bullets list\tCtrl+G"), 
+				_(u"Bullets list"), 
 				os.path.join (self.imagesDir, "text_list_bullets.png"))
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_NUMBER_LIST", 
 				lambda event: self._turnList (u'', u'', u'#', u''), 
-				u"Numbers list\tCtrl+J", 
-				u"Numbers list", 
+				_(u"Numbers list\tCtrl+J"), 
+				_(u"Numbers list"), 
 				os.path.join (self.imagesDir, "text_list_numbers.png"))
 	
 
@@ -141,43 +141,43 @@ class WikiPagePanel (HtmlPanel):
 		self._addTool (self.pageToolsMenu, 
 				"ID_H1", 
 				lambda event: self._turnText (u"\n!! ", u""), 
-				u"H1\tCtrl+1", 
-				u"H1", 
+				_(u"H1\tCtrl+1"), 
+				_(u"H1"), 
 				os.path.join (self.imagesDir, "text_heading_1.png"))
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_H2", 
 				lambda event: self._turnText (u"!!! ", u""), 
-				u"H2\tCtrl+2", 
-				u"H2", 
+				_(u"H2\tCtrl+2"), 
+				_(u"H2"), 
 				os.path.join (self.imagesDir, "text_heading_2.png"))
 		
 		self._addTool (self.pageToolsMenu, 
 				"ID_H3", 
 				lambda event: self._turnText (u"!!!! ", u""), 
-				u"H3\tCtrl+3", 
-				u"H3", 
+				_(u"H3\tCtrl+3"), 
+				_(u"H3"), 
 				os.path.join (self.imagesDir, "text_heading_3.png"))
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_H4", 
 				lambda event: self._turnText (u"!!!!! ", u""), 
-				u"H4\tCtrl+4", 
-				u"H4", 
+				_(u"H4\tCtrl+4"), 
+				_(u"H4"), 
 				os.path.join (self.imagesDir, "text_heading_4.png"))
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_H5", 
 				lambda event: self._turnText (u"!!!!!! ", u""), 
-				u"H5\tCtrl+5", 
-				u"H5", 
+				_(u"H5\tCtrl+5"), 
+				_(u"H5"), 
 				os.path.join (self.imagesDir, "text_heading_5.png"))
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_H6", 
 				lambda event: self._turnText (u"!!!!!!! ", u""), 
-				u"H6\tCtrl+6", 
-				u"H6", 
+				_(u"H6\tCtrl+6"), 
+				_(u"H6"), 
 				os.path.join (self.imagesDir, "text_heading_6.png"))
 	
 
@@ -195,15 +195,15 @@ class WikiPagePanel (HtmlPanel):
 		self._addTool (self.pageToolsMenu, 
 				"ID_LINK", 
 				lambda event: self._turnText (u'[[', u']]'), 
-				u"Link\tCtrl+L", 
+				_(u"Link\tCtrl+L"), 
 				u'Link', 
 				os.path.join (self.imagesDir, "link.png"))
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_HORLINE", 
 				lambda event: self._replaceText (u'----'), 
-				u"Horisontal line\tCtrl+H", 
-				u"Horisontal line", 
+				_(u"Horisontal line\tCtrl+H"), 
+				_(u"Horisontal line"), 
 				os.path.join (self.imagesDir, "text_horizontalrule.png"))
 
 	
@@ -242,7 +242,7 @@ class WikiPagePanel (HtmlPanel):
 			config = Config (os.path.join (page.path, RootWikiPage.pageConfig))
 			config.set (self._configSection, self._hashKey, hash)
 		except Exception as e:
-			wx.MessageBox (u"Can't save page hash\n" + str(e), u"Error", wx.OK  | wx.ICON_ERROR)
+			wx.MessageBox (_(u"Can't save page hash\n") + str(e), _(u"Error"), wx.OK  | wx.ICON_ERROR)
 
 
 	def __getFullContent (self, page):

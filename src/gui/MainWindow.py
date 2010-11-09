@@ -79,10 +79,6 @@ class MainWindow(wx.Frame):
 		# Используется для определения момента, когда окно только загрузилось
 		self.firstEvent = True
 
-		# Размеры окна по умолчанию
-		#self.defaultWidth = 800
-		#self.defaultHeiht = 680
-
 		# Ширина дерева по умолчанию
 		self.defaultSash = 200
 
