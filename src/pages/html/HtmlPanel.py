@@ -48,7 +48,7 @@ class HtmlPanel(BaseTextPanel):
 		self.HtmlView = wx.Notebook(self, -1, style=wx.NB_BOTTOM)
 		self.previewPane = wx.Panel(self.HtmlView, -1)
 		self.htmlPane = wx.Panel(self.HtmlView, -1)
-		self.codeWindow = TextEditor (self.htmlPane, -1)
+		self.codeWindow = TextEditor(self.htmlPane, -1)
 		self.htmlWindow = HtmlView(self.previewPane, -1)
 
 		self.__set_properties()
@@ -105,8 +105,8 @@ class HtmlPanel(BaseTextPanel):
 		self.previewPane.SetSizer(grid_sizer_9)
 		grid_sizer_9.AddGrowableRow(0)
 		grid_sizer_9.AddGrowableCol(0)
-		self.HtmlView.AddPage(self.htmlPane, "HTML")
-		self.HtmlView.AddPage(self.previewPane, "Preview")
+		self.HtmlView.AddPage(self.htmlPane, _("HTML"))
+		self.HtmlView.AddPage(self.previewPane, _("Preview"))
 		grid_sizer_7.Add(self.HtmlView, 1, wx.EXPAND, 0)
 		self.SetSizer(grid_sizer_7)
 		grid_sizer_7.Fit(self)
@@ -163,7 +163,7 @@ class HtmlPanel(BaseTextPanel):
 		"""
 		assert self._currentpage != None
 
-		core.commands.setStatusText (u"Page rendered. Please wait.")
+		core.commands.setStatusText (_(u"Page rendered. Please wait...") )
 		Controller.instance().onHtmlRenderingBegin (self._currentpage, self.htmlWindow)
 
 		path = self.getHtmlPath (self._currentpage)
@@ -172,7 +172,7 @@ class HtmlPanel(BaseTextPanel):
 			self.generateHtml (self._currentpage, path)
 			self.htmlWindow.LoadPage (path)
 		except IOError:
-			wx.MessageBox (u"Can not save HTML-file", u"Error", wx.ICON_ERROR | wx.OK)
+			wx.MessageBox (_(u"Can't save HTML-file"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 
 		core.commands.setStatusText (u"")
 		Controller.instance().onHtmlRenderingEnd (self._currentpage, self.htmlWindow)
@@ -198,8 +198,8 @@ class HtmlPanel(BaseTextPanel):
 		self._addTool (self.pageToolsMenu, 
 				"ID_RENDER", 
 				self.__switchView, 
-				u"Code / Preview\tF5", 
-				u"Code / Preview", 
+				_(u"Code / Preview\tF5"), 
+				_(u"Code / Preview"), 
 				os.path.join (self.imagesDir, "render.png"),
 				True)
 
@@ -415,36 +415,36 @@ class HtmlPagePanel (HtmlPanel):
 		self._addTool (self.pageToolsMenu, 
 				"ID_BOLD", 
 				lambda event: self._turnText (u"<b>", u"</b>"), 
-				u"Bold\tCtrl+B", 
-				u"Bold (<b>...</b>)", 
+				_(u"Bold\tCtrl+B"), 
+				_(u"Bold (<b>...</b>)"), 
 				os.path.join (self.imagesDir, "text_bold.png"))
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_ITALIC", 
 				lambda event: self._turnText (u"<i>", u"</i>"), 
-				u"Italic\tCtrl+I", 
-				u"Italic (<i>...</i>)", 
+				_(u"Italic\tCtrl+I"), 
+				_(u"Italic (<i>...</i>)"), 
 				os.path.join (self.imagesDir, "text_italic.png"))
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_UNDERLINE", 
 				lambda event: self._turnText (u"<u>", u"</u>"), 
-				u"Underline\tCtrl+U", 
-				u"Underline (<u>...</u>)", 
+				_(u"Underline\tCtrl+U"), 
+				_(u"Underline (<u>...</u>)"), 
 				os.path.join (self.imagesDir, "text_underline.png"))
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_SUBSCRIPT", 
 				lambda event: self._turnText (u"<SUB>", u"</SUB>"), 
-				u"Subscript\tCtrl+=", 
-				u"Subscript (<sub> ... </sub>)", 
+				_(u"Subscript\tCtrl+="), 
+				_(u"Subscript (<sub> ... </sub>)"), 
 				os.path.join (self.imagesDir, "text_subscript.png"))
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_SUPERSCRIPT", 
 				lambda event: self._turnText (u"<SUP>", u"</SUP>"), 
-				u"Superscript\tCtrl++", 
-				u"Superscript (<sup> ... </sup>)", 
+				_(u"Superscript\tCtrl++"), 
+				_(u"Superscript (<sup> ... </sup>)"), 
 				os.path.join (self.imagesDir, "text_superscript.png"))
 
 	
@@ -452,15 +452,15 @@ class HtmlPagePanel (HtmlPanel):
 		self._addTool (self.pageToolsMenu, 
 				"ID_ALIGN_CENTER", 
 				lambda event: self._turnText (u'<DIV ALIGN="CENTER">', u'</DIV>'), 
-				u"Center align\tCtrl+Shift+C", 
-				u"Center align", 
+				_(u"Center align\tCtrl+Shift+C"), 
+				_(u"Center align"), 
 				os.path.join (self.imagesDir, "text_align_center.png"))
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_ALIGN_RIGHT", 
 				lambda event: self._turnText (u'<DIV ALIGN="RIGHT">', u'</DIV>'), 
-				u"Right align", 
-				u"Right align", 
+				_(u"Right align"), 
+				_(u"Right align"), 
 				os.path.join (self.imagesDir, "text_align_right.png"))
 	
 
@@ -471,23 +471,23 @@ class HtmlPagePanel (HtmlPanel):
 		self._addTool (self.pageToolsMenu, 
 				"ID_TABLE", 
 				lambda event: self._turnText (u'<table>', u'</table>'), 
-				u"Table\tCtrl+Q", 
-				u"Table (<table>...</table>)", 
+				_(u"Table\tCtrl+Q"), 
+				_(u"Table (<table>...</table>)"), 
 				os.path.join (self.imagesDir, "table.png"))
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_TABLE_TR", 
 				lambda event: self._turnText (u'<tr>',u'</tr>'), 
-				u"Table row\tCtrl+W", 
-				u"Table row (<tr>...</tr>)", 
+				_(u"Table row\tCtrl+W"), 
+				_(u"Table row (<tr>...</tr>)"), 
 				os.path.join (self.imagesDir, "table_insert_row.png"))
 
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_TABLE_TD", 
 				lambda event: self._turnText (u'<td>', u'</td>'), 
-				u"Table cell\tCtrl+Y", 
-				u"Table cell (<td>...</td>)", 
+				_(u"Table cell\tCtrl+Y"), 
+				_(u"Table cell (<td>...</td>)"), 
 				os.path.join (self.imagesDir, "table_insert_cell.png"))
 
 	
@@ -498,15 +498,15 @@ class HtmlPagePanel (HtmlPanel):
 		self._addTool (self.pageToolsMenu, 
 				"ID_MARK_LIST", 
 				lambda event: self._turnList (u'<ul>\n', u'</ul>', u'<li>', u'</li>'), 
-				u"Bullets list\tCtrl+G", 
-				u"Bullets list (<ul>...</ul>)", 
+				_(u"Bullets list\tCtrl+G"), 
+				_(u"Bullets list (<ul>...</ul>)"), 
 				os.path.join (self.imagesDir, "text_list_bullets.png"))
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_NUMBER_LIST", 
 				lambda event: self._turnList (u'<ol>\n', u'</ol>', u'<li>', u'</li>'), 
-				u"Numbers list\tCtrl+J", 
-				u"Numbers list (<ul>...</ul>)", 
+				_(u"Numbers list\tCtrl+J"), 
+				_(u"Numbers list (<ul>...</ul>)"), 
 				os.path.join (self.imagesDir, "text_list_numbers.png"))
 	
 
@@ -517,43 +517,43 @@ class HtmlPagePanel (HtmlPanel):
 		self._addTool (self.pageToolsMenu, 
 				"ID_H1", 
 				lambda event: self._turnText (u"<h1>", u"</h1>"), 
-				u"H1\tCtrl+1", 
-				u"H1 (<h1>...</h1>)", 
+				_(u"H1\tCtrl+1"), 
+				_(u"H1 (<h1>...</h1>)"), 
 				os.path.join (self.imagesDir, "text_heading_1.png"))
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_H2", 
 				lambda event: self._turnText (u"<h2>", u"</h2>"), 
-				u"H2\tCtrl+2", 
-				u"H2 (<h2>...</h2>)", 
+				_(u"H2\tCtrl+2"), 
+				_(u"H2 (<h2>...</h2>)"), 
 				os.path.join (self.imagesDir, "text_heading_2.png"))
 		
 		self._addTool (self.pageToolsMenu, 
 				"ID_H3", 
 				lambda event: self._turnText (u"<h3>", u"</h3>"), 
-				u"H3\tCtrl+3", 
-				u"H3 (<h3>...</h3>)", 
+				_(u"H3\tCtrl+3"), 
+				_(u"H3 (<h3>...</h3>)"), 
 				os.path.join (self.imagesDir, "text_heading_3.png"))
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_H4", 
 				lambda event: self._turnText (u"<h4>", u"</h4>"), 
-				u"H4\tCtrl+4", 
-				u"H4 (<h4>...</h4>)", 
+				_(u"H4\tCtrl+4"), 
+				_(u"H4 (<h4>...</h4>)"), 
 				os.path.join (self.imagesDir, "text_heading_4.png"))
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_H5", 
 				lambda event: self._turnText (u"<h5>", u"</h5>"), 
-				u"H5\tCtrl+5", 
-				u"H5 (<h5>...</h5>)", 
+				_(u"H5\tCtrl+5"), 
+				_(u"H5 (<h5>...</h5>)"), 
 				os.path.join (self.imagesDir, "text_heading_5.png"))
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_H6", 
 				lambda event: self._turnText (u"<h6>", u"</h6>"), 
-				u"H6\tCtrl+6", 
-				u"H6 (<h6>...</h6>)", 
+				_(u"H6\tCtrl+6"), 
+				_(u"H6 (<h6>...</h6>)"), 
 				os.path.join (self.imagesDir, "text_heading_6.png"))
 	
 
@@ -571,15 +571,15 @@ class HtmlPagePanel (HtmlPanel):
 		self._addTool (self.pageToolsMenu, 
 				"ID_LINK", 
 				lambda event: self._turnText (u'<a href="">', u'</a>'), 
-				u"Link\tCtrl+L", 
+				_(u"Link\tCtrl+L"), 
 				u'Link (<a href="...">...</a>)', 
 				os.path.join (self.imagesDir, "link.png"))
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_HORLINE", 
 				lambda event: self._replaceText (u'<hr>'), 
-				u"Horisontal line\tCtrl+H", 
-				u"Horisontal line (<hr>)", 
+				_(u"Horizontal line\tCtrl+H"), 
+				_(u"Horizontal line (<hr>)"), 
 				os.path.join (self.imagesDir, "text_horizontalrule.png"))
 
 
@@ -596,7 +596,7 @@ class HtmlPagePanel (HtmlPanel):
 		self.__addListTools()
 		self.__addOtherTools()
 
-		mainWindow.mainMenu.Insert (mainWindow.mainMenu.GetMenuCount() - 1, self.pageToolsMenu, "H&tml")
+		mainWindow.mainMenu.Insert (mainWindow.mainMenu.GetMenuCount() - 1, self.pageToolsMenu, _(u"H&tml"))
 		mainWindow.mainToolbar.Realize()
 		self.HtmlView.SetSelection (1)
 

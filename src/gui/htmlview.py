@@ -78,8 +78,8 @@ class HtmlView (wx.html.HtmlWindow):
 				try:
 					core.system.getOS().startFile (file)
 				except OSError:
-					text = u"Can't execute file '%s'" % file
-					wx.MessageBox (text, u"Error", wx.ICON_ERROR | wx.OK)
+					text = _(u"Can't execute file '%s'") % file
+					wx.MessageBox (text, _(u"Error"), wx.ICON_ERROR | wx.OK)
 
 	
 
@@ -125,5 +125,5 @@ class HtmlView (wx.html.HtmlWindow):
 		try:
 			core.system.getOS().startFile (href)
 		except OSError:
-			text = u"Can't execute file '%s'" % href
+			text = _(u"Can't execute file '%s'") % (href)
 			wx.MessageBox (text, "Error", wx.ICON_ERROR | wx.OK)

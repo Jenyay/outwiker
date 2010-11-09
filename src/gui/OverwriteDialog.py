@@ -15,12 +15,12 @@ class OverwriteDialog(wx.Dialog):
 		# begin wxGlade: OverwriteDialog.__init__
 		kwds["style"] = wx.DEFAULT_DIALOG_STYLE
 		wx.Dialog.__init__(self, *args, **kwds)
-		self.textLabel = wx.StaticText(self, -1, "Overwrite file?", style=wx.ALIGN_CENTRE)
-		self.overwrite = wx.Button(self, -1, "Overwrite")
-		self.overwriteAll = wx.Button(self, -1, "Overwrite all")
-		self.button_1 = wx.Button(self, -1, "Skip")
-		self.skipAll = wx.Button(self, -1, "Skip all")
-		self.cancel = wx.Button(self, -1, "Cancel")
+		self.textLabel = wx.StaticText(self, -1, _("Overwrite file?"), style=wx.ALIGN_CENTRE)
+		self.overwrite = wx.Button(self, -1, _("Overwrite"))
+		self.overwriteAll = wx.Button(self, -1, _("Overwrite all"))
+		self.button_1 = wx.Button(self, -1, _("Skip"))
+		self.skipAll = wx.Button(self, -1, _("Skip all"))
+		self.cancel = wx.Button(self, -1, _("Cancel"))
 
 		self.__set_properties()
 		self.__do_layout()
@@ -42,7 +42,7 @@ class OverwriteDialog(wx.Dialog):
 
 	def __set_properties(self):
 		# begin wxGlade: OverwriteDialog.__set_properties
-		self.SetTitle("Overwrite Files")
+		self.SetTitle(_("Overwrite Files"))
 		# end wxGlade
 
 	def __do_layout(self):
