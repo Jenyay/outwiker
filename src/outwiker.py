@@ -16,8 +16,6 @@ class OutWiker(wx.App):
 	def __init__(self, *args, **kwds):
 		self._configFileName = getConfigPath (u".outwiker", u"outwiker.ini")
 		self.config = GeneralConfig (self._configFileName)
-		self.__initLocale()
-
 		wx.App.__init__ (self, *args, **kwds)
 
 
@@ -52,6 +50,8 @@ class OutWiker(wx.App):
 
 
 	def OnInit(self):
+		self.__initLocale()
+
 		from gui.MainWindow import MainWindow
 		wx.InitAllImageHandlers()
 		mainWnd = MainWindow(None, -1, "")
