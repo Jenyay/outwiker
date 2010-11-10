@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-09 22:03+0300\n"
+"POT-Creation-Date: 2010-11-10 09:50+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -677,6 +677,38 @@ msgstr "Horizontal line (<hr>)"
 #: pages/html/HtmlPanel.py:599
 msgid "H&tml"
 msgstr "H&tml"
+
+#: pages/search/searchpage.py:52
+msgid "# Search"
+msgstr "# Search"
+
+#: pages/search/SearchPanel.py:34
+msgid "Search words: "
+msgstr "Search words: "
+
+#: pages/search/SearchPanel.py:36
+msgid "Tags: "
+msgstr "Tags: "
+
+#: pages/search/SearchPanel.py:38
+msgid "Tags"
+msgstr "Tags"
+
+#: pages/search/SearchPanel.py:38
+msgid "Any tag"
+msgstr "Any tag"
+
+#: pages/search/SearchPanel.py:38
+msgid "All tags"
+msgstr "All tags"
+
+#: pages/search/SearchPanel.py:39
+msgid "Clear all tags"
+msgstr "Clear all tags"
+
+#: pages/search/SearchPanel.py:40
+msgid "Find"
+msgstr "Find"
 
 #: pages/wiki/wikipanel.py:22
 msgid "Wiki"

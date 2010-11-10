@@ -31,13 +31,13 @@ class SearchPanel(wx.Panel):
 		# begin wxGlade: SearchPanel.__init__
 		kwds["style"] = wx.TAB_TRAVERSAL
 		wx.Panel.__init__(self, *args, **kwds)
-		self.wordsLabel = wx.StaticText(self, -1, "Search words: ")
+		self.wordsLabel = wx.StaticText(self, -1, _(u"Search words: "))
 		self.wordsTextCtrl = wx.TextCtrl(self, -1, "")
-		self.tagsLabel = wx.StaticText(self, -1, "Tags: ")
+		self.tagsLabel = wx.StaticText(self, -1, _(u"Tags: "))
 		self.tagsList = wx.CheckListBox(self, -1, choices=[])
-		self.tagsStrategy = wx.RadioBox(self, -1, "Tags", choices=["Any tag", "All tags"], majorDimension=0, style=wx.RA_SPECIFY_ROWS)
-		self.clearTagsBtn = wx.Button(self, -1, "Clear all tags")
-		self.searchBtn = wx.Button(self, -1, "Find")
+		self.tagsStrategy = wx.RadioBox(self, -1, _(u"Tags"), choices=[_(u"Any tag"), _(u"All tags")], majorDimension=0, style=wx.RA_SPECIFY_ROWS)
+		self.clearTagsBtn = wx.Button(self, -1, _(u"Clear all tags"))
+		self.searchBtn = wx.Button(self, -1, _(u"Find"))
 		self.resultWindow = HtmlView(self, -1)
 
 		self.__set_properties()

@@ -4,6 +4,8 @@
 """
 Классы для глобального поиска по вики
 """
+import os.path
+import core.system
 
 #from searchpage import SearchWikiPage, SearchPageFactory
 #import searchpage
@@ -176,7 +178,8 @@ class HtmlReport (object):
 		"""
 		Оформление для одного тега
 		"""
-		result = "<img src='images/tag.png'/>" + tag
+		path = os.path.join (core.system.getImagesDir(), "tag.png")
+		result = "<img src='%s'/>%s" % (path, tag)
 		return result
 
 

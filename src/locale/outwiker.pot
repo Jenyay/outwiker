@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-09 22:03+0300\n"
+"POT-Creation-Date: 2010-11-10 09:50+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -621,6 +621,38 @@ msgstr ""
 
 #: pages/html/HtmlPanel.py:599
 msgid "H&tml"
+msgstr ""
+
+#: pages/search/searchpage.py:52
+msgid "# Search"
+msgstr ""
+
+#: pages/search/SearchPanel.py:34
+msgid "Search words: "
+msgstr ""
+
+#: pages/search/SearchPanel.py:36
+msgid "Tags: "
+msgstr ""
+
+#: pages/search/SearchPanel.py:38
+msgid "Tags"
+msgstr ""
+
+#: pages/search/SearchPanel.py:38
+msgid "Any tag"
+msgstr ""
+
+#: pages/search/SearchPanel.py:38
+msgid "All tags"
+msgstr ""
+
+#: pages/search/SearchPanel.py:39
+msgid "Clear all tags"
+msgstr ""
+
+#: pages/search/SearchPanel.py:40
+msgid "Find"
 msgstr ""
 
 #: pages/wiki/wikipanel.py:22

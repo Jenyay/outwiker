@@ -17,6 +17,7 @@ cp -r "../src/gui" $outwiker_dir
 cp -r "../src/help" $outwiker_dir
 cp -r "../src/images" $outwiker_dir
 cp -r "../src/libs" $outwiker_dir
+cp -r "../src/locale" $outwiker_dir
 cp -r "../src/pages" $outwiker_dir
 cp "../src/outwiker.py" $outwiker_dir
 cp "../src/copyright" $outwiker_dir

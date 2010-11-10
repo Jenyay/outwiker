@@ -49,7 +49,7 @@ class SearchPageFactory (object):
 
 
 class GlobalSearch (object):
-	pageTitle = u"# Search"
+	pageTitle = _(u"# Search")
 
 	@staticmethod
 	def create (root, phrase = u"", tags = [], strategy = AllTagsSearchStrategy):
