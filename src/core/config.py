@@ -1,9 +1,95 @@
 #!/usr/bin/env python
-# -*- coding: UTF-8 -*-
+# -*- coding: utf8 -*-
 
 import ConfigParser
 import os
 import core.system
+
+
+class MyConfigParser (ConfigParser.ConfigParser):
+	def __init__ (self, defaults=None, dict_type=dict):
+		ConfigParser.ConfigParser.__init__ (self, defaults, dict_type)
+	
+
+	def _read(self, fp, fpname):
+		"""Parse a sectioned setup file.
+
+		The sections in setup file contains a title line at the top,
+		indicated by a name in square brackets (`[]'), plus key/value
+		options lines, indicated by `name: value' format lines.
+		Continuations are represented by an embedded newline then
+		leading whitespace.  Blank lines, lines beginning with a '#',
+		and just about everything else are ignored.
+		"""
+		cursect = None							# None, or a dictionary
+		optname = None
+		lineno = 0
+		e = None								  # None, or an exception
+		while True:
+			line = fp.readline()
+			if not line:
+				break
+			lineno = lineno + 1
+			# comment or blank line?
+			if line.strip() == '' or line[0] in '#;':
+				continue
+			if line.split(None, 1)[0].lower() == 'rem' and line[0] in "rR":
+				# no leading whitespace
+				continue
+			# continuation line?
+			if line[0].isspace() and cursect is not None and optname:
+				value = line.strip()
+				if value:
+					cursect[optname] = "%s\n%s" % (cursect[optname], value)
+			# a section header or option header?
+			else:
+				# is it a section header?
+				mo = self.SECTCRE.match(line)
+				if mo:
+					sectname = mo.group('header')
+					if sectname in self._sections:
+						cursect = self._sections[sectname]
+					elif sectname == ConfigParser.DEFAULTSECT:			# Тут добавил "ConfigParser."
+						cursect = self._defaults
+					else:
+						cursect = self._dict()
+						cursect['__name__'] = sectname
+						self._sections[sectname] = cursect
+					# So sections can't start with a continuation line
+					optname = None
+				# no section header in the file?
+				elif cursect is None:
+					raise MissingSectionHeaderError(fpname, lineno, line)
+				# an option line?
+				else:
+					mo = self.OPTCRE.match(line)
+					if mo:
+						optname, vi, optval = mo.group('option', 'vi', 'value')
+						if vi in ('=', ':') and ';' in optval:
+							# ';' is a comment delimiter only if it follows
+							# a spacing character
+							pos = optval.find(';')
+							if pos != -1 and optval[pos-1].isspace():
+								optval = optval[:pos]
+
+						# !!! Из-за этой строки проблемы с тегами, кончиющимися на "Р"
+						#optval = optval.strip()
+						# allow empty values
+						if optval == '""':
+							optval = ''
+						optname = self.optionxform(optname.rstrip())
+						cursect[optname] = optval
+					else:
+						# a non-fatal parsing error occurred.  set up the
+						# exception but keep going. the exception will be
+						# raised at the end of the file and will contain a
+						# list of all bogus lines
+						if not e:
+							e = ParsingError(fpname)
+						e.append(lineno, repr(line))
+		# if any parsing errors occurred, raise an exception
+		if e:
+			raise e
 
 
 def getConfigPath (dirname, fname):
@@ -36,7 +122,12 @@ class Config (object):
 		"""
 		self.readonly = readonly
 		self.fname = fname
-		self.__config = ConfigParser.ConfigParser()
+		self.__config = MyConfigParser()
+
+		#fp = open (self.fname)
+		#tmp = fp.readlines()
+		#print tmp
+
 		self.__config.read (self.fname)
 	
 
@@ -44,11 +135,11 @@ class Config (object):
 		if self.readonly:
 			return False
 
-		section_encoded = section.encode ("utf-8")
+		section_encoded = section.encode ("utf8")
 		if not self.__config.has_section (section_encoded):
 			self.__config.add_section (section_encoded)
 
-		self.__config.set (section_encoded, param.encode ("utf-8"), unicode (value).encode ("utf-8"))
+		self.__config.set (section_encoded, param.encode ("utf8"), unicode (value).encode ("utf8"))
 
 		return self.save()
 
@@ -64,20 +155,23 @@ class Config (object):
 	
 	
 	def get (self, section, param):
-		return unicode (self.__config.get (section.encode ("utf-8"), param.encode ("utf-8")), "utf-8")
+		val = self.__config.get (section.encode ("utf8"), param.encode ("utf8"))
+		#print repr (val)
+		return unicode (val, "utf8", "replace")
+		#return unicode (val, "utf8")
 
 	
 	def getint (self, section, param):
-		return int (self.__config.get (section.encode ("utf-8"), param.encode ("utf-8")))
+		return int (self.__config.get (section.encode ("utf8"), param.encode ("utf8")))
 
 	def getbool (self, section, param):
-		val = self.__config.get (section.encode ("utf-8"), param.encode ("utf-8"))
+		val = self.__config.get (section.encode ("utf8"), param.encode ("utf8"))
 
 		return True if val.strip().lower() == "true" else False
 
 
 	def remove_section (self, section):
-		section_encoded = section.encode ("utf-8")
+		section_encoded = section.encode ("utf8")
 		result1 = self.__config.remove_section (section_encoded)
 		result2 = self.save()
 
@@ -85,7 +179,7 @@ class Config (object):
 
 
 	def has_section (self, section):
-		section_encoded = section.encode ("utf-8")
+		section_encoded = section.encode ("utf8")
 		return self.__config.has_section (section_encoded)
 
 
