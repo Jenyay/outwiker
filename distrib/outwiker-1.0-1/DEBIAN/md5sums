@@ -163,12 +163,12 @@ c0e355b6c0906231f335ec44b306abe4  /home/jenyay/soft/outwiker/trunk/distrib/outwi
 7190aeb1bdfbc67c412305bb153cf1e0  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/help/help_rus/Пользователям/FAQ/__page.opt
 55a687e848244b76f8d8249b111df860  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/help/help_rus/Пользователям/FAQ/__icon.png
 3f5bfe3c13a6b40a896dbbd6ef4bf6c5  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/copyright
-1767400485d2f74b92342444797940a8  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/outwiker.py
+998bcdc6d4aa5665d9ff24820207db61  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/outwiker.py
 d41d8cd98f00b204e9800998ecf8427e  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/libs/__init__.py
 953743ecb6c1dbd97778e09a7006518c  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/libs/pyparsing.py
-bfecfedf1e57279b604a5b5c71bbb162  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/core/search.py
+b950cf4d7f3bda63a2e6cb4f22a3a785  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/core/search.py
 417a79e01d77e325b3543fc59b0311e8  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/core/tree.py
-e2d883c66133d5b6508c1a8a11857dd2  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/core/config.py
+c3fabf0b5462f0bc3147de5a353c6def  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/core/config.py
 d41d8cd98f00b204e9800998ecf8427e  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/core/__init__.py
 fb74977de46b0fc66919826088a5b1a5  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/core/system.py
 220c9a7193bd1b3c7470b329e0509e5c  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/core/bookmarks.py
