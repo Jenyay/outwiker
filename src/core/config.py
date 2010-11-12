@@ -122,11 +122,7 @@ class Config (object):
 		"""
 		self.readonly = readonly
 		self.fname = fname
-		self.__config = MyConfigParser()
-
-		#fp = open (self.fname)
-		#tmp = fp.readlines()
-		#print tmp
+		self.__config = ConfigParser.ConfigParser()
 
 		self.__config.read (self.fname)
 	
@@ -156,9 +152,7 @@ class Config (object):
 	
 	def get (self, section, param):
 		val = self.__config.get (section.encode ("utf8"), param.encode ("utf8"))
-		#print repr (val)
 		return unicode (val, "utf8", "replace")
-		#return unicode (val, "utf8")
 
 	
 	def getint (self, section, param):

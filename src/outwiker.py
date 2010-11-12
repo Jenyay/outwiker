@@ -14,8 +14,6 @@ import core.system
 
 class OutWiker(wx.App):
 	def __init__(self, *args, **kwds):
-		self._configFileName = getConfigPath (u".outwiker", u"outwiker.ini")
-		self.config = GeneralConfig (self._configFileName)
 		wx.App.__init__ (self, *args, **kwds)
 
 
@@ -23,26 +21,26 @@ class OutWiker(wx.App):
 		# Кусок кода взят отсюда - http://wiki.wxpython.org/Internationalization
 		language = self.config.languageOption.value
 
-		locales = {
-			u"en" : (wx.LANGUAGE_ENGLISH, u"en_US.UTF-8"),
-			u"ru" : (wx.LANGUAGE_RUSSIAN, u"ru_RU.UTF-8"),
-			}
+		#locales = {
+		#	u"en" : (wx.LANGUAGE_ENGLISH, u"en_US.UTF-8"),
+		#	u"ru" : (wx.LANGUAGE_RUSSIAN, u"ru_RU.UTF-8"),
+		#	}
 
-		try:
-			mylocale = wx.Locale (locales[language][0], wx.LOCALE_LOAD_DEFAULT)
-		except KeyError:
-			mylocale = wx.Locale (locales[u"en"][0], wx.LOCALE_LOAD_DEFAULT)
+		#try:
+		#	self.mylocale = wx.Locale (locales[language][0], wx.LOCALE_LOAD_DEFAULT)
+		#except KeyError:
+		#	self.mylocale = wx.Locale (locales[u"en"][0], wx.LOCALE_LOAD_DEFAULT)
 
 		langdir = os.path.join (core.system.getCurrentDir(), u'locale')
-		Lang = gettext.translation(u'outwiker', langdir, languages=[language])
-		Lang.install(unicode=1)
+		lang = gettext.translation(u'outwiker', langdir, languages=[language])
+		lang.install(unicode=1)
 
-		if platform.system() == 'Linux':
-			try:
-				# to get some language settings to display properly:
-				os.environ['LANG'] = locales[language][1]
-			except (ValueError, KeyError):
-				pass
+		#if platform.system() == 'Linux':
+		#	try:
+		#		# to get some language settings to display properly:
+		#		os.environ['LANG'] = locales[language][1]
+		#	except (ValueError, KeyError):
+		#		pass
 
 	
 	def getConfig (self):
@@ -50,6 +48,8 @@ class OutWiker(wx.App):
 
 
 	def OnInit(self):
+		self._configFileName = getConfigPath (u".outwiker", u"outwiker.ini")
+		self.config = GeneralConfig (self._configFileName)
 		self.__initLocale()
 
 		from gui.MainWindow import MainWindow
