@@ -10,6 +10,7 @@ import wx
 
 from core.config import GeneralConfig, getConfigPath
 import core.system
+import core.i18n
 
 
 class OutWiker(wx.App):
@@ -20,16 +21,12 @@ class OutWiker(wx.App):
 	def __initLocale (self):
 		language = self.config.languageOption.value
 
-		langdir = os.path.join (core.system.getCurrentDir(), u'locale')
 		try:
-			lang = gettext.translation(u'outwiker', langdir, languages=[language])
+			core.i18n.init_i18n (language)
 		except IOError:
-			lang = gettext.translation(u'outwiker', langdir, languages=["en"])
 			wx.MessageBox (u"Can't load language: %s" % language, u"Error", wx.ICON_ERROR | wx.OK) 
 
-		lang.install(unicode=1)
 
-	
 	def getConfig (self):
 		return self.config
 

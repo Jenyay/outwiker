@@ -20,7 +20,7 @@ class EditorPanel(wx.Panel):
 		kwds["style"] = wx.TAB_TRAVERSAL
 		wx.Panel.__init__(self, *args, **kwds)
 		self.fontPicker = wx.FontPickerCtrl(self, -1)
-		self.lineNumbersCheckBox = wx.CheckBox(self, -1, "Show line numbers")
+		self.lineNumbersCheckBox = wx.CheckBox(self, -1, _("Show line numbers"))
 
 		self.__set_properties()
 		self.__do_layout()

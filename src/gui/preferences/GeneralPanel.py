@@ -6,6 +6,7 @@ import wx
 import ConfigElements
 from core.controller import Controller
 from core.config import StringOption, BooleanOption, IntegerOption
+import core.i18n
 
 # begin wxGlade: dependencies
 # end wxGlade
@@ -21,18 +22,20 @@ class GeneralPanel(wx.ScrolledWindow):
 		# begin wxGlade: GeneralPanel.__init__
 		kwds["style"] = wx.TAB_TRAVERSAL
 		wx.ScrolledWindow.__init__(self, *args, **kwds)
-		self.minimizeCheckBox = wx.CheckBox(self, -1, "Minimize to tray")
-		self.startIconizedCheckBox = wx.CheckBox(self, -1, "Start with main window iconized")
-		self.askBeforeExitCheckBox = wx.CheckBox(self, -1, "Ask before exit")
+		self.minimizeCheckBox = wx.CheckBox(self, -1, _("Minimize to tray"))
+		self.startIconizedCheckBox = wx.CheckBox(self, -1, _("Start with main window iconized"))
+		self.askBeforeExitCheckBox = wx.CheckBox(self, -1, _("Ask before exit"))
 		self.static_line_2 = wx.StaticLine(self, -1)
-		self.history_label = wx.StaticText(self, -1, "Recent files history length (apply after restart)")
+		self.history_label = wx.StaticText(self, -1, _("Recent files history length (apply after restart)"))
 		self.historySpin = wx.SpinCtrl(self, -1, "5", min=0, max=20, style=wx.SP_ARROW_KEYS|wx.TE_PROCESS_ENTER|wx.TE_PROCESS_TAB|wx.TE_AUTO_URL)
-		self.autoopenCheckBox = wx.CheckBox(self, -1, "Automatically open the recent file")
+		self.autoopenCheckBox = wx.CheckBox(self, -1, _("Automatically open the recent file"))
 		self.static_line_1 = wx.StaticLine(self, -1)
-		self.titleFormatLabel = wx.StaticText(self, -1, "Main window title format")
+		self.titleFormatLabel = wx.StaticText(self, -1, _("Main window title format"))
 		self.titleFormatText = wx.TextCtrl(self, -1, "")
-		self.macrosLabel = wx.StaticText(self, -1, "Macros for title:\n{file} - open wiki file name\n{page} - open page title")
+		self.macrosLabel = wx.StaticText(self, -1, _("Macros for title:\n{file} - open wiki file name\n{page} - open page title"))
 		self.static_line_3 = wx.StaticLine(self, -1)
+		self.langLabel = wx.StaticText(self, -1, _("Language (restart required)"))
+		self.langCombo = wx.ComboBox(self, -1, choices=[], style=wx.CB_DROPDOWN|wx.CB_DROPDOWN|wx.CB_READONLY)
 
 		self.__set_properties()
 		self.__do_layout()
@@ -47,12 +50,14 @@ class GeneralPanel(wx.ScrolledWindow):
 		self.SetFocus()
 		self.SetScrollRate(0, 0)
 		self.askBeforeExitCheckBox.SetValue(1)
+		self.langCombo.SetMinSize((130, -1))
 		# end wxGlade
 
 
 	def __do_layout(self):
 		# begin wxGlade: GeneralPanel.__do_layout
 		main_sizer = wx.FlexGridSizer(10, 1, 0, 0)
+		grid_sizer_1 = wx.FlexGridSizer(1, 2, 0, 0)
 		grid_sizer_2 = wx.FlexGridSizer(1, 2, 0, 0)
 		history_size = wx.FlexGridSizer(1, 2, 0, 0)
 		main_sizer.Add(self.minimizeCheckBox, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
@@ -73,6 +78,12 @@ class GeneralPanel(wx.ScrolledWindow):
 		main_sizer.Add(grid_sizer_2, 1, wx.EXPAND, 0)
 		main_sizer.Add(self.macrosLabel, 0, wx.ALL, 2)
 		main_sizer.Add(self.static_line_3, 0, wx.EXPAND, 0)
+		grid_sizer_1.Add(self.langLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
+		grid_sizer_1.Add(self.langCombo, 0, wx.ALL|wx.ALIGN_RIGHT|wx.ALIGN_CENTER_VERTICAL, 2)
+		grid_sizer_1.AddGrowableRow(0)
+		grid_sizer_1.AddGrowableCol(0)
+		grid_sizer_1.AddGrowableCol(1)
+		main_sizer.Add(grid_sizer_1, 1, wx.EXPAND, 0)
 		self.SetSizer(main_sizer)
 		main_sizer.AddGrowableCol(0)
 		# end wxGlade
@@ -113,6 +124,28 @@ class GeneralPanel(wx.ScrolledWindow):
 		# Формат заголовка страницы
 		self.titleFormat = ConfigElements.StringElement (self.config.titleFormatOption, self.titleFormatText)
 
+		self.__loadLanguages()
+	
+
+	def __loadLanguages (self):
+		languages = core.i18n.getLanguages()
+		languages.sort()
+
+		self.langCombo.AppendItems (languages)
+
+		currlang = self.config.languageOption.value
+
+		try:
+			currindex = languages.index (currlang)
+			self.langCombo.SetSelection (currindex)
+		except ValueError:
+			try:
+				# Индекс для английского языка
+				enindex = languages.index (u"en")
+				self.langCombo.SetSelection (enindex)
+			except ValueError:
+				pass
+
 
 	def Save(self):
 		"""
@@ -123,10 +156,20 @@ class GeneralPanel(wx.ScrolledWindow):
 		self.askBeforeExit.save()
 		self.historyLength.save()
 		self.autoopen.save()
+		self.__saveLanguage()
 
 		if self.titleFormat.isValueChanged():
 			self.titleFormat.save()
 			Controller.instance().onMainWindowConfigChange()
+	
+
+	def __saveLanguage (self):
+		index = self.langCombo.GetSelection()
+		if index == wx.NOT_FOUND:
+			return
+
+		lang = self.langCombo.GetString (index)
+		self.config.languageOption.value = lang
 
 # end of class GeneralPanel
 

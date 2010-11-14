@@ -32,7 +32,7 @@ class PrefDialog(wx.Dialog):
 
 	def __set_properties(self):
 		# begin wxGlade: PrefDialog.__set_properties
-		self.SetTitle("Preferences")
+		self.SetTitle(_("Preferences"))
 		self.SetSize((700, 500))
 		self.treeBook.SetMinSize((300, 400))
 		# end wxGlade
