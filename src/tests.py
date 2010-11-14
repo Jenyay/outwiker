@@ -33,5 +33,6 @@ if __name__ == '__main__':
 	from test.parser import ParserTest
 	from test.htmlimprover_test import HtmlImproverTest
 	from test.wikiloading_readonly import ReadonlyLoadTest, ReadonlyChangeTest
+	from test.i18n import I18nTest
 
 	unittest.main()
