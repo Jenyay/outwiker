@@ -19,6 +19,7 @@ class EditorPanel(wx.Panel):
 		# begin wxGlade: EditorPanel.__init__
 		kwds["style"] = wx.TAB_TRAVERSAL
 		wx.Panel.__init__(self, *args, **kwds)
+		self.fontLabel = wx.StaticText(self, -1, _("Font"))
 		self.fontPicker = wx.FontPickerCtrl(self, -1)
 		self.lineNumbersCheckBox = wx.CheckBox(self, -1, _("Show line numbers"))
 
@@ -37,7 +38,12 @@ class EditorPanel(wx.Panel):
 	def __do_layout(self):
 		# begin wxGlade: EditorPanel.__do_layout
 		mainSizer = wx.FlexGridSizer(2, 1, 0, 0)
-		mainSizer.Add(self.fontPicker, 1, wx.EXPAND, 0)
+		grid_sizer_3 = wx.FlexGridSizer(1, 2, 0, 0)
+		grid_sizer_3.Add(self.fontLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
+		grid_sizer_3.Add(self.fontPicker, 1, wx.ALL|wx.EXPAND|wx.ALIGN_CENTER_VERTICAL, 2)
+		grid_sizer_3.AddGrowableRow(0)
+		grid_sizer_3.AddGrowableCol(1)
+		mainSizer.Add(grid_sizer_3, 1, wx.EXPAND, 0)
 		mainSizer.Add(self.lineNumbersCheckBox, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
 		self.SetSizer(mainSizer)
 		mainSizer.Fit(self)

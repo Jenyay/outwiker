@@ -26,7 +26,7 @@ class GeneralPanel(wx.ScrolledWindow):
 		self.startIconizedCheckBox = wx.CheckBox(self, -1, _("Start with main window iconized"))
 		self.askBeforeExitCheckBox = wx.CheckBox(self, -1, _("Ask before exit"))
 		self.static_line_2 = wx.StaticLine(self, -1)
-		self.history_label = wx.StaticText(self, -1, _("Recent files history length (apply after restart)"))
+		self.history_label = wx.StaticText(self, -1, _("Recent files history length (restart required)"))
 		self.historySpin = wx.SpinCtrl(self, -1, "5", min=0, max=20, style=wx.SP_ARROW_KEYS|wx.TE_PROCESS_ENTER|wx.TE_PROCESS_TAB|wx.TE_AUTO_URL)
 		self.autoopenCheckBox = wx.CheckBox(self, -1, _("Automatically open the recent file"))
 		self.static_line_1 = wx.StaticLine(self, -1)
@@ -46,7 +46,7 @@ class GeneralPanel(wx.ScrolledWindow):
 
 	def __set_properties(self):
 		# begin wxGlade: GeneralPanel.__set_properties
-		self.SetSize((510, 410))
+		self.SetSize((512, 412))
 		self.SetFocus()
 		self.SetScrollRate(0, 0)
 		self.askBeforeExitCheckBox.SetValue(1)

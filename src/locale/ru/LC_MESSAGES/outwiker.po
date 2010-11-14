@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-10 09:50+0300\n"
+"POT-Creation-Date: 2010-11-14 20:13+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -480,13 +480,75 @@ msgstr ""
 "Невозможно переименовать страницу\n"
 "'%s'"
 
+#: gui/preferences/EditorPanel.py:22
+msgid "Font"
+msgstr "Шрифт"
+
+#: gui/preferences/EditorPanel.py:24
+msgid "Show line numbers"
+msgstr "Показывать номера строк"
+
+#: gui/preferences/GeneralPanel.py:25
+msgid "Minimize to tray"
+msgstr "Сворачивать в трэй"
+
+#: gui/preferences/GeneralPanel.py:26
+msgid "Start with main window iconized"
+msgstr "При запуске сворачивать в трэй"
+
+#: gui/preferences/GeneralPanel.py:27
+msgid "Ask before exit"
+msgstr "Спрашивать подтверждение перед выходом"
+
+#: gui/preferences/GeneralPanel.py:29
+msgid "Recent files history length (restart required)"
+msgstr "Длина истории открытых файлов (требуется перезапуск)"
+
+#: gui/preferences/GeneralPanel.py:31
+msgid "Automatically open the recent file"
+msgstr "При запуске открывать последний открытый файл"
+
+#: gui/preferences/GeneralPanel.py:33
+msgid "Main window title format"
+msgstr "Формат заголовка главного окна"
+
+#: gui/preferences/GeneralPanel.py:35
+msgid ""
+"Macros for title:\n"
+"{file} - open wiki file name\n"
+"{page} - open page title"
+msgstr ""
+"Подстановки для заголовка:\n"
+"{file} - имя файла открытой вики\n"
+"{page} - заголовок открытой страницы"
+
+#: gui/preferences/GeneralPanel.py:37
+msgid "Language (restart required)"
+msgstr "Язык (требуется перезапуск)"
+
+#: gui/preferences/PrefDialog.py:35
+msgid "Preferences"
+msgstr "Параметры"
+
+#: gui/preferences/PrefDialog.py:62
+msgid "Interface"
+msgstr "Интерфейс"
+
+#: gui/preferences/PrefDialog.py:63
+msgid "General"
+msgstr "Общие"
+
+#: gui/preferences/PrefDialog.py:64
+msgid "Editor"
+msgstr "Редактор"
+
 #: pages/html/HtmlPanel.py:108
 msgid "HTML"
 msgstr "HTML"
 
 #: pages/html/HtmlPanel.py:109
 msgid "Preview"
-msgstr "Предпросмотр"
+msgstr "Просмотр"
 
 #: pages/html/HtmlPanel.py:166
 msgid "Page rendered. Please wait..."

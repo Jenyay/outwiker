@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-10 09:50+0300\n"
+"POT-Creation-Date: 2010-11-14 20:13+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -479,6 +479,68 @@ msgid ""
 msgstr ""
 "Can't rename page\n"
 "%s"
+
+#: gui/preferences/EditorPanel.py:22
+msgid "Font"
+msgstr "Font"
+
+#: gui/preferences/EditorPanel.py:24
+msgid "Show line numbers"
+msgstr "Attach files…"
+
+#: gui/preferences/GeneralPanel.py:25
+msgid "Minimize to tray"
+msgstr "Minimize to tray"
+
+#: gui/preferences/GeneralPanel.py:26
+msgid "Start with main window iconized"
+msgstr "Start with main window iconized"
+
+#: gui/preferences/GeneralPanel.py:27
+msgid "Ask before exit"
+msgstr "Ask before exit"
+
+#: gui/preferences/GeneralPanel.py:29
+msgid "Recent files history length (restart required)"
+msgstr "Recent files history length (restart required)"
+
+#: gui/preferences/GeneralPanel.py:31
+msgid "Automatically open the recent file"
+msgstr "Automatically open the recent file"
+
+#: gui/preferences/GeneralPanel.py:33
+msgid "Main window title format"
+msgstr "Main window title format"
+
+#: gui/preferences/GeneralPanel.py:35
+msgid ""
+"Macros for title:\n"
+"{file} - open wiki file name\n"
+"{page} - open page title"
+msgstr ""
+"Macros for title:\n"
+"{file} - open wiki file name\n"
+"{page} - open page title"
+
+#: gui/preferences/GeneralPanel.py:37
+msgid "Language (restart required)"
+msgstr "Language (restart required)"
+
+#: gui/preferences/PrefDialog.py:35
+msgid "Preferences"
+msgstr "Preferences"
+
+#: gui/preferences/PrefDialog.py:62
+msgid "Interface"
+msgstr "Interface"
+
+#: gui/preferences/PrefDialog.py:63
+msgid "General"
+msgstr "General"
+
+#: gui/preferences/PrefDialog.py:64
+msgid "Editor"
+msgstr "Editor"
 
 #: pages/html/HtmlPanel.py:108
 msgid "HTML"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-10 09:50+0300\n"
+"POT-Creation-Date: 2010-11-14 20:13+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -440,6 +440,65 @@ msgstr ""
 msgid ""
 "Can't rename page\n"
 "%s"
+msgstr ""
+
+#: gui/preferences/EditorPanel.py:22
+msgid "Font"
+msgstr ""
+
+#: gui/preferences/EditorPanel.py:24
+msgid "Show line numbers"
+msgstr ""
+
+#: gui/preferences/GeneralPanel.py:25
+msgid "Minimize to tray"
+msgstr ""
+
+#: gui/preferences/GeneralPanel.py:26
+msgid "Start with main window iconized"
+msgstr ""
+
+#: gui/preferences/GeneralPanel.py:27
+msgid "Ask before exit"
+msgstr ""
+
+#: gui/preferences/GeneralPanel.py:29
+msgid "Recent files history length (restart required)"
+msgstr ""
+
+#: gui/preferences/GeneralPanel.py:31
+msgid "Automatically open the recent file"
+msgstr ""
+
+#: gui/preferences/GeneralPanel.py:33
+msgid "Main window title format"
+msgstr ""
+
+#: gui/preferences/GeneralPanel.py:35
+msgid ""
+"Macros for title:\n"
+"{file} - open wiki file name\n"
+"{page} - open page title"
+msgstr ""
+
+#: gui/preferences/GeneralPanel.py:37
+msgid "Language (restart required)"
+msgstr ""
+
+#: gui/preferences/PrefDialog.py:35
+msgid "Preferences"
+msgstr ""
+
+#: gui/preferences/PrefDialog.py:62
+msgid "Interface"
+msgstr ""
+
+#: gui/preferences/PrefDialog.py:63
+msgid "General"
+msgstr ""
+
+#: gui/preferences/PrefDialog.py:64
+msgid "Editor"
 msgstr ""
 
 #: pages/html/HtmlPanel.py:108

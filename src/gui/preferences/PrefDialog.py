@@ -59,11 +59,11 @@ class PrefDialog(wx.Dialog):
 		self.generalPage = GeneralPanel.GeneralPanel (self.treeBook)
 		self.editorPage = EditorPanel.EditorPanel (self.treeBook)
 
-		self.treeBook.AddPage (self.generalPage, u"Interface")
-		self.treeBook.AddSubPage (self.generalPage, u"General")
-		self.treeBook.AddSubPage (self.editorPage, u"Editor")
+		self.treeBook.AddPage (self.generalPage, _(u"Interface"))
+		self.treeBook.AddSubPage (self.generalPage, _(u"General"))
+		self.treeBook.AddSubPage (self.editorPage, _(u"Editor"))
 
-		self.treeBook.AddPage (None, u"Pages")
+		#self.treeBook.AddPage (None, _(u"Pages"))
 
 		self.treeBook.ExpandNode (0)
 		self.treeBook.SetSelection (0)
