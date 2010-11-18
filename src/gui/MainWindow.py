@@ -15,6 +15,7 @@ from core.recent import RecentWiki
 import pages.search.searchpage
 import core.system
 from gui.preferences.PrefDialog import PrefDialog
+from gui.about import AboutDialog
 
 # begin wxGlade: dependencies
 # end wxGlade
@@ -691,20 +692,24 @@ class MainWindow(wx.Frame):
 			core.commands.attachFilesWithDialog (self, self.wikiroot.selectedPage)
 
 	def onAbout(self, event): # wxGlade: MainWindow.<event_handler>
-		info = wx.AboutDialogInfo()
-		info.AddDeveloper (_(u"Ilin E.V. (aka Jenyay)") )
-		info.SetCopyright (_(u"(c) 2010 Ilin E.V. (aka Jenyay)") )
-		info.SetName (u"OutWiker")
-		info.SetDescription (_(u"Outliner + personal wiki = OutWiker") )
+		#info = wx.AboutDialogInfo()
+		#info.AddDeveloper (_(u"Ilin E.V. (aka Jenyay)") )
+		#info.SetCopyright (_(u"(c) 2010 Ilin E.V. (aka Jenyay)") )
+		#info.SetName (u"OutWiker")
+		#info.SetDescription (_(u"Outliner + personal wiki = OutWiker") )
 
-		# Version:
-		info.SetVersion (version)
-		info.SetWebSite ("http://jenyay.net")
-		#icon = wx.Icon(os.path.join (os.path.dirname(sys.argv[0]),
-		#								os.path.join (self.imagesDir, "texgui.ico")), wx.BITMAP_TYPE_ICO)
-		#info.SetIcon (icon)
-		
-		wx.AboutBox(info)
+		## Version:
+		#info.SetVersion (version)
+		#info.SetWebSite ("http://jenyay.net")
+		##icon = wx.Icon(os.path.join (os.path.dirname(sys.argv[0]),
+		##								os.path.join (self.imagesDir, "texgui.ico")), wx.BITMAP_TYPE_ICO)
+		##info.SetIcon (icon)
+		#
+		#wx.AboutBox(info)
+		dlg = AboutDialog (self)
+		dlg.ShowModal()
+		dlg.Destroy()
+
 
 	def onExit(self, event): # wxGlade: MainWindow.<event_handler>
 		self.Close()

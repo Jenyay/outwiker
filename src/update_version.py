@@ -16,7 +16,7 @@ except ValueError, e:
 	print e
 	exit(1)
 
-result = "%s\n%d\n%s\n" % (version, revision, status)
+result = "%s\n%d\n%s\n" % (version, revision + 1, status)
 print result
 
 with open (fname, "w") as fp:

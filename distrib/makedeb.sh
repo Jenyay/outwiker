@@ -22,6 +22,7 @@ cp -r "../src/pages" $outwiker_dir
 cp "../src/outwiker.py" $outwiker_dir
 cp "../src/copyright" $outwiker_dir
 cp "../src/README" $outwiker_dir
+cp "../src/version.txt" $outwiker_dir
 
 # Удалить файлы *.pyc, *.wxg, *.py~, *.wxg~ 
 find . -name *.pyc -type f -print | xargs rm 
