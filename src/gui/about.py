@@ -33,7 +33,7 @@ class AboutDialog(wx.Dialog):
 		self.label_8 = wx.StaticText(self.donatePane, -1, _("WebMoney (WMR):"))
 		self.wmrTextCtrl = wx.TextCtrl(self.donatePane, -1, _("R356551209135"), style=wx.TE_READONLY)
 		self.label_10 = wx.StaticText(self.donatePane, -1, _("WebMoney (WMZ)"))
-		self.wmzTextCtrl = wx.TextCtrl(self.donatePane, -1, "")
+		self.wmzTextCtrl = wx.TextCtrl(self.donatePane, -1, _("Z427584680984"))
 		self.label_9 = wx.StaticText(self.donatePane, -1, _("Yandex.Money"))
 		self.yandexTextCtrl = wx.TextCtrl(self.donatePane, -1, _("41001580829031"), style=wx.TE_READONLY)
 		self.okButton = wx.Button(self, wx.OK, _("OK"))

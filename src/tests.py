@@ -34,5 +34,6 @@ if __name__ == '__main__':
 	from test.htmlimprover_test import HtmlImproverTest
 	from test.wikiloading_readonly import ReadonlyLoadTest, ReadonlyChangeTest
 	from test.i18n import I18nTest
+	from test.version import VersionTest, StatusTest
 
 	unittest.main()
