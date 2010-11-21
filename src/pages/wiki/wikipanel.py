@@ -85,7 +85,7 @@ class WikiPagePanel (HtmlPanel):
 	def _showHtmlCode (self, path):
 		try:
 			with open (path) as fp:
-				text = fp.read()
+				text = unicode (fp.read(), "utf8")
 
 				self.htmlCodeWindow.textCtrl.SetReadOnly (False)
 				self.htmlCodeWindow.textCtrl.SetText (text)
