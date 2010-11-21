@@ -123,3 +123,22 @@ class VersionTest(unittest.TestCase):
 		self.assertTrue (Version (2, 2, 4) <= Version (2, 6, 3))
 		self.assertTrue (Version (1, 2, 3, status=StatusSet.ALPHA) <= Version (1, 2, 3, status=StatusSet.BETA))
 		self.assertTrue (Version (1, 2, 3, status=StatusSet.BETA) <= Version (2, 2, 3, status=StatusSet.ALPHA))
+	
+
+	def testParse1 (self):
+		self.assertTrue (Version.parse ("1") == Version (1))
+
+
+	def testParse2 (self):
+		self.assertTrue (Version.parse ("1.2.3") == Version (1, 2, 3), str (Version.parse ("1.2.3")))
+
+	
+	def testParse3 (self):
+		self.assertTrue (Version.parse ("1.2.3 beta") == Version (1, 2, 3, status=StatusSet.BETA))
+		self.assertTrue (Version.parse (" 1.2.3 dev") == Version (1, 2, 3, status=StatusSet.DEV))
+		self.assertTrue (Version.parse ("1.2.3  stable ") == Version (1, 2, 3, status=StatusSet.STABLE))
+	
+
+	def testParse4 (self):
+		self.assertRaises (ValueError, Version.parse, "abyrvalg")
+		self.assertRaises (ValueError, Version.parse, ".10.2.0")

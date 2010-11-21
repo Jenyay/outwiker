@@ -5,16 +5,18 @@
 Классы для работы с версией программы
 """
 
+import re
+
 
 class Status (object):
-	def __init__ (self, name, weight):
+	def __init__ (self, name, number):
 		"""
 		Класс для нецифровых обозначений версий (альфа, бета и т.д.)
 		name - название версии
 		weight - "вес" версии. Чем это значение больше, тем более "зрелая" версия
 		"""
 		self.name = name
-		self.number = weight
+		self.number = number
 	
 
 	def __eq__ (self, other):
@@ -45,7 +47,6 @@ class StatusSet (object):
 	"""
 	Набор стандартных статусов
 	"""
-
 	DEV = Status ("dev", 0)
 	NIGHTLY = Status ("nightly", 1)
 
@@ -114,3 +115,37 @@ class Version (object):
 
 		# Отбросим первую точку
 		return result.strip()[1:]
+
+
+	@staticmethod
+	def parseStatus (string):
+		result = None
+		items = dir (StatusSet)
+
+		for item_name in items:
+			item = getattr (StatusSet, item_name)
+
+			if isinstance (item, Status) and item.name.lower() == string.lower():
+				result = item
+				break
+
+		return result
+
+
+	@staticmethod
+	def parse (string):
+		"""
+		Создать версию по строке
+		"""
+		regex = "^\s*(?P<major>\d+)(?P<minor>(\.\d+)*)(?P<status>.+)?"
+		m = re.match (regex, string, re.IGNORECASE)
+		if not m:
+			raise ValueError
+
+		major = int (m.group ("major"))
+		minors = [int(minor) for minor in m.group ("minor").split(".") if len (minor.strip()) > 0] if m.group ("minor") != None else []
+
+		status = Version.parseStatus (m.group("status").strip()) if m.group("status") != None else None
+
+		return Version (major, *minors, status=status) if status else Version (major, *minors)
+
