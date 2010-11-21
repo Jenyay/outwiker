@@ -5,12 +5,16 @@ import wx
 import os
 import hashlib
 
+import core.commands
 from pages.html.HtmlPanel import HtmlPanel
 from gui.BaseTextPanel import BaseTextPanel
 from wikiparser import Parser
 from core.config import Config
 from core.tree import RootWikiPage
 from pages.wiki.htmlimprover import HtmlImprover
+from gui.HtmlTextEditor import HtmlTextEditor
+from core.controller import Controller
+
 
 class WikiPagePanel (HtmlPanel):
 	def __init__ (self, *args, **kwds):
@@ -19,7 +23,70 @@ class WikiPagePanel (HtmlPanel):
 		self._configSection = u"wiki"
 		self._hashKey = u"md5_hash"
 
-		self.HtmlView.SetPageText (0, _(u"Wiki"))
+		self.notebook.SetPageText (0, _(u"Wiki"))
+
+		htmlSizer = wx.FlexGridSizer(1, 1, 0, 0)
+		htmlSizer.AddGrowableRow(0)
+		htmlSizer.AddGrowableCol(0)
+
+		# Панель для вкладки с кодом HTML
+		self.htmlCodePane = wx.Panel(self.notebook, -1)
+		self.htmlCodePane.SetSizer(htmlSizer)
+
+		# Окно для прсомотра кода HTML
+		self.htmlCodeWindow = HtmlTextEditor(self.htmlCodePane, -1)
+		self.htmlCodeWindow.textCtrl.SetReadOnly (True)
+		htmlSizer.Add(self.htmlCodeWindow, 1, wx.TOP|wx.BOTTOM|wx.EXPAND, 2)
+		
+		self.notebook.AddPage (self.htmlCodePane, _("HTML"))
+		self.Layout()
+	
+
+	def onTabChanged(self, event): # wxGlade: HtmlPanel.<event_handler>
+		if self._currentpage == None:
+			return
+
+		if event.GetSelection() == 0:
+			self._onSwitchToCode()
+		elif event.GetSelection() == 1:
+			self._onSwitchToPreview()
+		elif event.GetSelection() == 2:
+			self._onSwitchCodeHtml()
+
+
+	def _onSwitchCodeHtml (self):
+		assert self._currentpage != None
+
+		self.Save()
+		core.commands.setStatusText (_(u"Page rendered. Please wait...") )
+		Controller.instance().onHtmlRenderingBegin (self._currentpage, self.htmlWindow)
+
+		path = self.getHtmlPath (self._currentpage)
+		self.currentHtmlFile = path
+		try:
+			self.generateHtml (self._currentpage, path)
+		except IOError:
+			wx.MessageBox (_(u"Can't save HTML-file"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+
+		self._showHtmlCode(path)
+
+		core.commands.setStatusText (u"")
+		Controller.instance().onHtmlRenderingEnd (self._currentpage, self.htmlWindow)
+
+		self.htmlCodeWindow.SetFocus()
+		self.htmlCodeWindow.Update()
+
+
+	def _showHtmlCode (self, path):
+		try:
+			with open (path) as fp:
+				text = fp.read()
+
+				self.htmlCodeWindow.textCtrl.SetReadOnly (False)
+				self.htmlCodeWindow.textCtrl.SetText (text)
+				self.htmlCodeWindow.textCtrl.SetReadOnly (True)
+		except IOError:
+			wx.MessageBox (_(u"Can't load HTML-file"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 
 
 	def __addFontTools (self):
@@ -222,7 +289,7 @@ class WikiPagePanel (HtmlPanel):
 
 		mainWindow.mainMenu.Insert (mainWindow.mainMenu.GetMenuCount() - 1, self.pageToolsMenu, _(u"&Wiki") )
 		mainWindow.mainToolbar.Realize()
-		self.HtmlView.SetSelection (1)
+		self.notebook.SetSelection (1)
 
 	
 	def _getOldHash (self, page):

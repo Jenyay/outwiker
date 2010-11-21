@@ -11,7 +11,7 @@ from core.controller import Controller
 from gui.BaseTextPanel import BaseTextPanel
 import core.system
 from gui.htmlview import HtmlView
-from gui.TextEditor import TextEditor
+from gui.HtmlTextEditor import HtmlTextEditor
 import core.commands
 
 # begin wxGlade: dependencies
@@ -45,16 +45,16 @@ class HtmlPanel(BaseTextPanel):
 		# begin wxGlade: HtmlPanel.__init__
 		kwds["style"] = wx.TAB_TRAVERSAL
 		wx.Panel.__init__(self, *args, **kwds)
-		self.HtmlView = wx.Notebook(self, -1, style=wx.NB_BOTTOM)
-		self.previewPane = wx.Panel(self.HtmlView, -1)
-		self.htmlPane = wx.Panel(self.HtmlView, -1)
-		self.codeWindow = TextEditor(self.htmlPane, -1)
+		self.notebook = wx.Notebook(self, -1, style=wx.NB_BOTTOM)
+		self.previewPane = wx.Panel(self.notebook, -1)
+		self.htmlPane = wx.Panel(self.notebook, -1)
+		self.codeWindow = HtmlTextEditor(self.htmlPane, -1)
 		self.htmlWindow = HtmlView(self.previewPane, -1)
 
 		self.__set_properties()
 		self.__do_layout()
 
-		self.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED, self.onTabChanged, self.HtmlView)
+		self.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED, self.onTabChanged, self.notebook)
 		# end wxGlade
 
 		self.HCount = 6
@@ -105,9 +105,9 @@ class HtmlPanel(BaseTextPanel):
 		self.previewPane.SetSizer(grid_sizer_9)
 		grid_sizer_9.AddGrowableRow(0)
 		grid_sizer_9.AddGrowableCol(0)
-		self.HtmlView.AddPage(self.htmlPane, _("HTML"))
-		self.HtmlView.AddPage(self.previewPane, _("Preview"))
-		grid_sizer_7.Add(self.HtmlView, 1, wx.EXPAND, 0)
+		self.notebook.AddPage(self.htmlPane, _("HTML"))
+		self.notebook.AddPage(self.previewPane, _("Preview"))
+		grid_sizer_7.Add(self.notebook, 1, wx.EXPAND, 0)
 		self.SetSizer(grid_sizer_7)
 		grid_sizer_7.Fit(self)
 		grid_sizer_7.AddGrowableRow(0)
@@ -146,15 +146,28 @@ class HtmlPanel(BaseTextPanel):
 			return
 
 		if event.GetSelection() == 1:
-			self.Save()
-			self._enableTools (self.pageToolsMenu, False)
-			self.htmlWindow.SetFocus()
-			self.htmlWindow.Update()
-			self.__showHtml()
+			self._onSwitchToPreview()
 		else:
-			#self.removeHtml()
-			self.codeWindow.SetFocus()
-			self._enableTools (self.pageToolsMenu, True)
+			self._onSwitchToCode()
+	
+
+	def _onSwitchToCode (self):
+		"""
+		Обработка события при переключении на код страницы
+		"""
+		self.codeWindow.SetFocus()
+		self._enableTools (self.pageToolsMenu, True)
+
+	
+	def _onSwitchToPreview (self):
+		"""
+		Обработка события при переключении на просмотр страницы
+		"""
+		self.Save()
+		self._enableTools (self.pageToolsMenu, False)
+		self.htmlWindow.SetFocus()
+		self.htmlWindow.Update()
+		self.__showHtml()
 	
 
 	def __showHtml (self):
@@ -170,9 +183,10 @@ class HtmlPanel(BaseTextPanel):
 		self.currentHtmlFile = path
 		try:
 			self.generateHtml (self._currentpage, path)
-			self.htmlWindow.LoadPage (path)
 		except IOError:
 			wx.MessageBox (_(u"Can't save HTML-file"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+
+		self.htmlWindow.LoadPage (path)
 
 		core.commands.setStatusText (u"")
 		Controller.instance().onHtmlRenderingEnd (self._currentpage, self.htmlWindow)
@@ -208,10 +222,10 @@ class HtmlPanel(BaseTextPanel):
 		if self._currentpage == None:
 			return
 
-		if self.HtmlView.GetSelection() == 0:
-			self.HtmlView.SetSelection (1)
+		if self.notebook.GetSelection() == 0:
+			self.notebook.SetSelection (1)
 		else:
-			self.HtmlView.SetSelection (0)
+			self.notebook.SetSelection (0)
 
 
 	def _addTool (self, menu, idstring, func, menuText, buttonText, image, alwaysEnabled = False):
@@ -304,108 +318,6 @@ class HtmlPanel(BaseTextPanel):
 class HtmlPagePanel (HtmlPanel):
 	def __init__ (self, *args, **kwds):
 		HtmlPanel.__init__ (self, *args, **kwds)
-
-		self._htmlStylesSection = "HtmlStyles"
-		self.setupHtmlStyles()
-	
-
-	def setupHtmlStyles (self):
-		# Значения по умолчанию для стилей
-		stylesdefault = {
-				wx.stc.STC_H_TAG: "fore:#000080,bold",
-				wx.stc.STC_H_TAGUNKNOWN: "fore:#FF0000",
-				wx.stc.STC_H_ATTRIBUTE: "fore:#008080",
-				wx.stc.STC_H_ATTRIBUTEUNKNOWN: "fore:#FF0000",
-				wx.stc.STC_H_NUMBER: "fore:#000000",
-				wx.stc.STC_H_DOUBLESTRING: "fore:#0000FF",
-				wx.stc.STC_H_SINGLESTRING: "fore:#0000FF",
-				wx.stc.STC_H_COMMENT: "fore:#12B535"
-				}
-
-		# Устанавливаемые стили
-		styles = {}
-		
-		try:
-			styles = self.loadStyles()
-		except:
-			styles = stylesdefault
-			self.saveStyles(styles)
-		
-		self.codeWindow.textCtrl.SetLexer (wx.stc.STC_LEX_HTML)
-		self.codeWindow.textCtrl.StyleClearAll()
-
-		for key in styles.keys():
-			self.codeWindow.textCtrl.StyleSetSpec (key, styles[key])
-
-		tags = u"a abbr acronym address applet area b base basefont \
-			bdo big blockquote body br button caption center \
-			cite code col colgroup dd del dfn dir div dl dt em \
-			fieldset font form frame frameset h1 h2 h3 h4 h5 h6 \
-			head hr html i iframe img input ins isindex kbd label \
-			legend li link map menu meta noframes noscript \
-			object ol optgroup option p param pre q s samp \
-			script select small span strike strong style sub sup \
-			table tbody td textarea tfoot th thead title tr tt u ul \
-			var xml xmlns"
-
-
-		attributes = u"abbr accept-charset accept accesskey action align alink \
-			alt archive axis background bgcolor border \
-			cellpadding cellspacing char charoff charset checked cite \
-			class classid clear codebase codetype color cols colspan \
-			compact content coords \
-			data datafld dataformatas datapagesize datasrc datetime \
-			declare defer dir disabled enctype event \
-			face for frame frameborder \
-			headers height href hreflang hspace http-equiv \
-			id ismap label lang language leftmargin link longdesc \
-			marginwidth marginheight maxlength media method multiple \
-			name nohref noresize noshade nowrap \
-			object onblur onchange onclick ondblclick onfocus \
-			onkeydown onkeypress onkeyup onload onmousedown \
-			onmousemove onmouseover onmouseout onmouseup \
-			onreset onselect onsubmit onunload \
-			profile prompt readonly rel rev rows rowspan rules \
-			scheme scope selected shape size span src standby start style \
-			summary tabindex target text title topmargin type usemap \
-			valign value valuetype version vlink vspace width \
-			text password checkbox radio submit reset \
-			file hidden image"
-
-		self.codeWindow.textCtrl.SetKeyWords (0, tags + attributes)
-	
-
-	def loadStyles (self):
-		"""
-		Загрузить стили из конфига
-		"""
-		config = wx.GetApp().getConfig()
-
-		styles = {}
-
-		styles[wx.stc.STC_H_TAG] = config.get (self._htmlStylesSection, "tag")
-		styles[wx.stc.STC_H_TAGUNKNOWN] = config.get (self._htmlStylesSection, "tag_unknoun")
-		styles[wx.stc.STC_H_ATTRIBUTE] = config.get (self._htmlStylesSection, "attribute")
-		styles[wx.stc.STC_H_ATTRIBUTEUNKNOWN] = config.get (self._htmlStylesSection, "attribute_unknown")
-		styles[wx.stc.STC_H_NUMBER] = config.get (self._htmlStylesSection, "number")
-		styles[wx.stc.STC_H_DOUBLESTRING] = config.get (self._htmlStylesSection, "doublestring")
-		styles[wx.stc.STC_H_SINGLESTRING] = config.get (self._htmlStylesSection, "singlestring")
-		styles[wx.stc.STC_H_COMMENT] = config.get (self._htmlStylesSection, "comment")
-
-		return styles
-
-	
-	def saveStyles (self, styles):
-		config = wx.GetApp().getConfig()
-
-		config.set (self._htmlStylesSection, "tag", styles[wx.stc.STC_H_TAG])
-		config.set (self._htmlStylesSection, "tag_unknoun", styles[wx.stc.STC_H_TAGUNKNOWN])
-		config.set (self._htmlStylesSection, "attribute", styles[wx.stc.STC_H_ATTRIBUTE])
-		config.set (self._htmlStylesSection, "attribute_unknown", styles[wx.stc.STC_H_ATTRIBUTEUNKNOWN])
-		config.set (self._htmlStylesSection, "number", styles[wx.stc.STC_H_NUMBER])
-		config.set (self._htmlStylesSection, "doublestring", styles[wx.stc.STC_H_DOUBLESTRING])
-		config.set (self._htmlStylesSection, "singlestring", styles[wx.stc.STC_H_SINGLESTRING])
-		config.set (self._htmlStylesSection, "comment", styles[wx.stc.STC_H_COMMENT])
 
 
 	def __addFontTools (self):
@@ -598,7 +510,7 @@ class HtmlPagePanel (HtmlPanel):
 
 		mainWindow.mainMenu.Insert (mainWindow.mainMenu.GetMenuCount() - 1, self.pageToolsMenu, _(u"H&tml"))
 		mainWindow.mainToolbar.Realize()
-		self.HtmlView.SetSelection (1)
+		self.notebook.SetSelection (1)
 
 	
 	def generateHtml (self, page, path):
