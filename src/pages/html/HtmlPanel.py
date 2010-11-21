@@ -48,7 +48,7 @@ class HtmlPanel(BaseTextPanel):
 		self.notebook = wx.Notebook(self, -1, style=wx.NB_BOTTOM)
 		self.previewPane = wx.Panel(self.notebook, -1)
 		self.htmlPane = wx.Panel(self.notebook, -1)
-		self.codeWindow = HtmlTextEditor(self.htmlPane, -1)
+		self.codeWindow = self.GetTextEditor()
 		self.htmlWindow = HtmlView(self.previewPane, -1)
 
 		self.__set_properties()
@@ -59,6 +59,10 @@ class HtmlPanel(BaseTextPanel):
 
 		self.HCount = 6
 		self.toolsId = {}
+	
+
+	def GetTextEditor(self):
+		return HtmlTextEditor (self.htmlPane)
 
 	
 	def onEditorConfigChange (self):

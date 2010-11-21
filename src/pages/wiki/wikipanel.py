@@ -6,6 +6,7 @@ import os
 import hashlib
 
 import core.commands
+from gui.TextEditor import TextEditor
 from pages.html.HtmlPanel import HtmlPanel
 from gui.BaseTextPanel import BaseTextPanel
 from wikiparser import Parser
@@ -40,6 +41,10 @@ class WikiPagePanel (HtmlPanel):
 		
 		self.notebook.AddPage (self.htmlCodePane, _("HTML"))
 		self.Layout()
+	
+
+	def GetTextEditor(self):
+		return TextEditor (self.htmlPane)
 	
 
 	def onTabChanged(self, event): # wxGlade: HtmlPanel.<event_handler>
