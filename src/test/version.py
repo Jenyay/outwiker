@@ -3,27 +3,57 @@
 
 import unittest
 
-from core.version import Version, Status
+from core.version import Version, Status, StatusSet
+
 
 class StatusTest (unittest.TestCase):
 	def setUp (self):
 		pass
 
 
-	def test1 (self):
-		self.assertEqual (Status ("dev") == Status ("dev"))
-		self.assertEqual (Status ("beta") == Status ("beta"))
-		self.assertEqual (Status ("beta") > Status ("alpha"))
-		self.assertEqual (Status ("beta") < Status ("stable"))
+	def testEqual (self):
+		self.assertTrue (StatusSet.DEV == StatusSet.DEV)
+		self.assertTrue (StatusSet.BETA == StatusSet.BETA)
+	
 
-		self.assertEqual (Status ("dev") < Status ("alpha"))
-		self.assertEqual (Status ("alpha") < Status ("alpha2"))
-		self.assertEqual (Status ("alpha2") < Status ("beta"))
-		self.assertEqual (Status ("beta") < Status ("beta2"))
-		self.assertEqual (Status ("beta2") < Status ("RC"))
-		self.assertEqual (Status ("RC") < Status ("RC2"))
-		self.assertEqual (Status ("RC2") < Status ("stable"))
+	def testNotEqual (self):
+		self.assertTrue (StatusSet.DEV != StatusSet.BETA)
+		self.assertTrue (StatusSet.STABLE != StatusSet.BETA)
+	
 
+	def testCustomCompare (self):
+		self.assertTrue (StatusSet.DEV > Status ("custom", -1))
+		self.assertTrue (StatusSet.BETA < Status ("custom", 10000))
+
+		self.assertTrue (StatusSet.DEV >= Status ("custom", -1))
+		self.assertTrue (StatusSet.BETA <= Status ("custom", 10000))
+	
+
+	def testLess (self):
+		self.assertTrue (StatusSet.BETA < StatusSet.STABLE)
+		self.assertTrue (StatusSet.DEV < StatusSet.ALPHA)
+		self.assertTrue (StatusSet.ALPHA < StatusSet.ALPHA2)
+		self.assertTrue (StatusSet.ALPHA2 < StatusSet.BETA)
+		self.assertTrue (StatusSet.BETA < StatusSet.BETA2)
+		self.assertTrue (StatusSet.BETA2 < StatusSet.RC)
+		self.assertTrue (StatusSet.RC < StatusSet.RC2)
+		self.assertTrue (StatusSet.RC2 < StatusSet.STABLE)
+
+
+	def testLessEqual (self):
+		self.assertTrue (StatusSet.BETA <= StatusSet.STABLE)
+		self.assertTrue (StatusSet.DEV <= StatusSet.ALPHA)
+		self.assertTrue (StatusSet.ALPHA <= StatusSet.ALPHA2)
+		self.assertTrue (StatusSet.ALPHA2 <= StatusSet.BETA)
+		self.assertTrue (StatusSet.BETA <= StatusSet.BETA2)
+		self.assertTrue (StatusSet.BETA2 <= StatusSet.RC)
+		self.assertTrue (StatusSet.RC <= StatusSet.RC2)
+		self.assertTrue (StatusSet.RC2 <= StatusSet.STABLE)
+
+
+	def testGreatEqual (self):
+		self.assertTrue (StatusSet.BETA >= StatusSet.ALPHA)
+		self.assertTrue (StatusSet.ALPHA >= StatusSet.DEV)
 
 
 class VersionTest(unittest.TestCase):
@@ -42,54 +72,54 @@ class VersionTest(unittest.TestCase):
 	
 
 	def testToString3 (self):
-		ver = Version (1, 0, 6, status="beta")
+		ver = Version (1, 0, 6, status=StatusSet.BETA)
 		self.assertEqual (str(ver), "1.0.6 beta")
 	
 
 	def testToString4 (self):
-		ver = Version (1)
-		self.assertEqual (str(ver), "1")
-	
+		ver = Version (1, 0, 6)
+		self.assertEqual (str(ver), "1.0.6")
 
-	def testCompare1 (self):
+
+	def testCompareEqual (self):
 		self.assertTrue (Version (1) == Version (1))
-		self.assertTrue (Version (2) > Version (1))
-		self.assertTrue (Version (2) >= Version (1))
-		self.assertTrue (Version (1, 1) > Version (1))
-		self.assertTrue (Version (1, 1) >= Version (1))
-
-		self.assertTrue (Version (2, 1) < Version (2, 2))
-		self.assertTrue (Version (2, 1) <= Version (2, 2))
-
-		self.assertTrue (Version (1, 0, 10) > Version (1, 0))
-		self.assertTrue (Version (1, 0, 2) > Version (1, 0, 1))
-		
-		self.assertTrue (Version (1, 0) < Version (1, 0, 10))
-		self.assertTrue (Version (1, 0, 1) < Version (1, 0, 2))
-
-
-	def testCompare3 (self):
-		self.assertTrue (Version (1, 0) == Version (1))
+		self.assertTrue (Version (1, 2, 3) == Version (1, 2, 3))
+		self.assertTrue (Version (1, 2, 3, status=StatusSet.BETA) == Version (1, 2, 3, status=StatusSet.BETA))
 	
 
-	def testCompareStatus (self):
-		self.assertTrue (Version (1, status="beta") == Version (1, status="beta"))
-		self.assertTrue (Version (1, 2, 3, status="beta") == Version (1, 2, 3, status="beta"))
+	def testCompareNotEqual (self):
+		self.assertTrue (Version (1) != Version (2))
+		self.assertTrue (Version (1, 2, 3) != Version (1, 2, 4))
+		self.assertTrue (Version (1, 2, 3, status=StatusSet.BETA) != Version (1, 2, 3, status=StatusSet.ALPHA))
+	
 
-		self.assertTrue (Version (1, status="alpha") < Version (1, status="beta"))
-		self.assertTrue (Version (1, status="alpha") <= Version (1, status="beta"))
-		self.assertTrue (Version (1, status="RC") > Version (1, status="beta"))
-		self.assertTrue (Version (1, status="RC") >= Version (1, status="beta"))
+	def testCompareGreat (self):
+		self.assertTrue (Version (2) > Version (1))
+		self.assertTrue (Version (1, 2, 4) > Version (1, 2, 3))
+		self.assertTrue (Version (2, 2, 4) > Version (1, 2, 3))
+		self.assertTrue (Version (1, 2, 3, status=StatusSet.STABLE) > Version (1, 2, 3, status=StatusSet.BETA))
+		self.assertTrue (Version (2, 2, 3, status=StatusSet.ALPHA) > Version (1, 2, 3, status=StatusSet.BETA) )
 
-		self.assertTrue (Version (1, 1, status="alpha") > Version (1, status="stable"))
-		self.assertTrue (Version (1, 1, status="alpha") >= Version (1, status="stable"))
-		self.assertTrue (Version (1, 1, status="alpha") > Version (1, 0, status="stable"))
-		self.assertTrue (Version (1, 1, status="alpha") >= Version (1, 0, status="stable"))
+	
+	def testCompareGreatEqual (self):
+		self.assertTrue (Version (2) >= Version (1))
+		self.assertTrue (Version (1, 2, 4) >= Version (1, 2, 3))
+		self.assertTrue (Version (2, 2, 4) >= Version (1, 2, 3))
+		self.assertTrue (Version (1, 2, 3, status=StatusSet.STABLE) >= Version (1, 2, 3, status=StatusSet.BETA))
+		self.assertTrue (Version (2, 2, 3, status=StatusSet.ALPHA) >= Version (1, 2, 3, status=StatusSet.BETA) )
 
-		self.assertTrue (Version (1, status="stable") < Version (1, 1, status="alpha"))
-		self.assertTrue (Version (1, status="stable") <= Version (1, 1, status="alpha"))
-		self.assertTrue (Version (1, 0, status="stable") < Version (1, 1, status="alpha"))
-		self.assertTrue (Version (1, 0, status="stable") < Version (1, 1, status="alpha"))
+	
+	def testCompareLess (self):
+		self.assertTrue (Version (1) < Version (2))
+		self.assertTrue (Version (1, 2, 2) < Version (1, 2, 3))
+		self.assertTrue (Version (2, 2, 4) < Version (2, 6, 3))
+		self.assertTrue (Version (1, 2, 3, status=StatusSet.ALPHA) < Version (1, 2, 3, status=StatusSet.BETA))
+		self.assertTrue (Version (1, 2, 3, status=StatusSet.BETA) < Version (2, 2, 3, status=StatusSet.ALPHA))
+	
 
-
-
+	def testCompareLessEqual (self):
+		self.assertTrue (Version (1) <= Version (2))
+		self.assertTrue (Version (1, 2, 2) <= Version (1, 2, 3))
+		self.assertTrue (Version (2, 2, 4) <= Version (2, 6, 3))
+		self.assertTrue (Version (1, 2, 3, status=StatusSet.ALPHA) <= Version (1, 2, 3, status=StatusSet.BETA))
+		self.assertTrue (Version (1, 2, 3, status=StatusSet.BETA) <= Version (2, 2, 3, status=StatusSet.ALPHA))

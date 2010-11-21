@@ -5,48 +5,112 @@
 Классы для работы с версией программы
 """
 
+
 class Status (object):
+	def __init__ (self, name, weight):
+		"""
+		Класс для нецифровых обозначений версий (альфа, бета и т.д.)
+		name - название версии
+		weight - "вес" версии. Чем это значение больше, тем более "зрелая" версия
+		"""
+		self.name = name
+		self.number = weight
+	
+
+	def __eq__ (self, other):
+		return self.number == other.number
+
+
+	def __ne__ (self, other):
+		return not self.__eq__ (other)
+
+
+	def __lt__ (self, other):
+		return self.number < other.number
+
+
+	def __le__ (self, other):
+		return self.__lt__ (other) or self.__eq__ (other)
+
+	
+	def __gt__ (self, other):
+		return self.number > other.number
+
+
+	def __ge__ (self, other):
+		return self.__gt__ (other) or self.__eq__ (other)
+
+
+class StatusSet (object):
 	"""
-	Статус программы: альфа, бета и т.д.
+	Набор стандартных статусов
 	"""
-	def __init__ (self, status):
-		self.__createStatuses()
-		self.status = status
 
+	DEV = Status ("dev", 0)
+	NIGHTLY = Status ("nightly", 1)
 
-	def __createStatuses (self):
-		self.statset = dict()
+	PREALPHA = Status ("prealpha", 100)
+	ALPHA = Status ("alpha", 110)
+	ALPHA2 = Status ("alpha2", 120)
+	ALPHA3 = Status ("alpha3", 130)
+	ALPHA4 = Status ("alpha4", 140)
+	ALPHA5 = Status ("alpha5", 150)
 
-		self.statset["dev"] = 0
-		self.statset["nightly"] = 1
+	PREBETA = Status ("prebeta", 200)
+	BETA = Status ("beta", 210)
+	BETA2 = Status ("beta2", 220)
+	BETA3 = Status ("beta3", 230)
+	BETA4 = Status ("beta4", 240)
+	BETA5 = Status ("beta5", 250)
 
-		self.statset["prealpha"] = 10
-		self.statset["alpha"] = 20
-		self.statset["alpha2"] = 21
-		self.statset["alpha3"] = 22
-		self.statset["alpha4"] = 23
-		self.statset["alpha5"] = 24
+	PRERC = Status ("preRC", 300)
+	RC = Status ("RC", 310)
+	RC2 = Status ("RC2", 320)
+	RC3 = Status ("RC3", 330)
+	RC4 = Status ("RC4", 340)
+	RC5 = Status ("RC5", 350)
 
-		self.statset["prebeta"] = 29
-		self.statset["beta"] = 30
-		self.statset["beta2"] = 31
-		self.statset["beta3"] = 32
-		self.statset["beta4"] = 33
-		self.statset["beta5"] = 34
+	RELEASE = Status ("release", 400)
+	STABLE = Status ("stable", 500)
 
-		self.statset["preRC"] = 39
-		self.statset["RC"] = 40
-		self.statset["RC2"] = 41
-		self.statset["RC3"] = 42
-		self.statset["RC4"] = 43
-		self.statset["RC5"] = 44
-
-		self.statset["release"] = 100
-		self.statset["stable"] = 1000
-
+	def __init__ (self):
+		pass
 
 
 class Version (object):
 	def __init__ (self, major, *args, **kwargs):
-		self._vertion = [major]
-		self.status = u""
+		self.NONSTATUS = Status (u"", 10000)
+		self.version = [major] + [int (arg) for arg in args]
+		self.status = kwargs["status"] if "status" in kwargs else self.NONSTATUS
+	
+
+	def __eq__ (self, other):
+		return self.status == other.status and self.version == other.version
+
+
+	def __nq__ (self, other):
+		return not self.__eq__ (other)
+
+
+	def __lt__ (self, other):
+		return self.version < other.version or (self.version == other.version and self.status < other.status)
+
+
+	def __le__ (self, other):
+		return self.__lt__ (other) or self.__eq__ (other)
+
+	
+	def __gt__ (self, other):
+		return self.version > other.version or (self.version == other.version and self.status > other.status)
+
+
+	def __ge__ (self, other):
+		return self.__gt__ (other) or self.__eq__ (other)
+
+
+	def __str__ (self):
+		result = reduce (lambda x, y: str(x) + "." + str(y), self.version, "")
+		result += " " + self.status.name
+
+		# Отбросим первую точку
+		return result.strip()[1:]
