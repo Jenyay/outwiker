@@ -24,7 +24,6 @@ from gui.about import AboutDialog
 
 # end wxGlade
 
-version = "1.0"
 
 class MainWindow(wx.Frame):
 	def makeId (self):
@@ -692,21 +691,8 @@ class MainWindow(wx.Frame):
 			core.commands.attachFilesWithDialog (self, self.wikiroot.selectedPage)
 
 	def onAbout(self, event): # wxGlade: MainWindow.<event_handler>
-		#info = wx.AboutDialogInfo()
-		#info.AddDeveloper (_(u"Ilin E.V. (aka Jenyay)") )
-		#info.SetCopyright (_(u"(c) 2010 Ilin E.V. (aka Jenyay)") )
-		#info.SetName (u"OutWiker")
-		#info.SetDescription (_(u"Outliner + personal wiki = OutWiker") )
-
-		## Version:
-		#info.SetVersion (version)
-		#info.SetWebSite ("http://jenyay.net")
-		##icon = wx.Icon(os.path.join (os.path.dirname(sys.argv[0]),
-		##								os.path.join (self.imagesDir, "texgui.ico")), wx.BITMAP_TYPE_ICO)
-		##info.SetIcon (icon)
-		#
-		#wx.AboutBox(info)
-		dlg = AboutDialog (self)
+		version = core.commands.getCurrentVersion()
+		dlg = AboutDialog (version, self)
 		dlg.ShowModal()
 		dlg.Destroy()
 

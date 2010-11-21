@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-14 20:13+0300\n"
+"POT-Creation-Date: 2010-11-21 18:57+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -13,6 +13,100 @@ msgstr ""
 "X-Poedit-Language: Russian\n"
 "X-Poedit-Country: RUSSIAN FEDERATION\n"
 "X-Poedit-SourceCharset: utf-8\n"
+
+#: gui/about.py:20
+#: gui/MainWindow.py:520
+msgid "OutWiker"
+msgstr "OutWiker"
+
+#: gui/about.py:21
+msgid "Version:"
+msgstr "Версия:"
+
+#: gui/about.py:23
+msgid "Author: Ilin Eugeniy (aka Jenyay)"
+msgstr "Автор: Евгений Ильин (aka Jenyay)"
+
+#: gui/about.py:24
+msgid "License: GPL 3"
+msgstr "Лицензия: GPL 3"
+
+#: gui/about.py:25
+msgid "My site:"
+msgstr "Мой сайт:"
+
+#: gui/about.py:26
+msgid "http://jenyay.net"
+msgstr "http://jenyay.net"
+
+#: gui/about.py:27
+msgid "OutWiker's page:"
+msgstr "Страница программы"
+
+#: gui/about.py:28
+msgid "http://jenyay.net/Soft/Outwiker"
+msgstr "http://jenyay.net/Soft/Outwiker"
+
+#: gui/about.py:29
+msgid "Twitter:"
+msgstr "Twitter:"
+
+#: gui/about.py:30
+msgid "@jenyay"
+msgstr "@jenyay"
+
+#: gui/about.py:30
+msgid "http://twitter.com/#!/jenyay"
+msgstr "http://twitter.com/#!/jenyay"
+
+#: gui/about.py:31
+msgid "E-mail:"
+msgstr "Почта:"
+
+#: gui/about.py:32
+msgid "jenyay.ilin@gmail.com"
+msgstr "jenyay.ilin@gmail.com"
+
+#: gui/about.py:32
+msgid "mailto:jenyay.ilin@gmail.com"
+msgstr "mailto:jenyay.ilin@gmail.com"
+
+#: gui/about.py:33
+msgid "WebMoney (WMR):"
+msgstr "WebMoney (WMR):"
+
+#: gui/about.py:34
+msgid "R356551209135"
+msgstr "R356551209135"
+
+#: gui/about.py:35
+msgid "WebMoney (WMZ)"
+msgstr "WebMoney (WMZ)"
+
+#: gui/about.py:36
+msgid "Z427584680984"
+msgstr "Z427584680984"
+
+#: gui/about.py:37
+msgid "Yandex.Money"
+msgstr "Яндекс.Деньги"
+
+#: gui/about.py:38
+msgid "41001580829031"
+msgstr "41001580829031"
+
+#: gui/about.py:39
+msgid "OK"
+msgstr "OK"
+
+#: gui/about.py:53
+#: gui/about.py:103
+msgid "About"
+msgstr "О программе"
+
+#: gui/about.py:104
+msgid "Donate"
+msgstr "Donate"
 
 #: gui/AttachPanel.py:25
 #: gui/MainWindow.py:166
@@ -46,28 +140,30 @@ msgstr "Удалить выбранные файлы?"
 #: gui/MainWindow.py:442
 #: gui/MainWindow.py:498
 #: gui/MainWindow.py:650
-#: gui/MainWindow.py:760
-#: gui/MainWindow.py:766
-#: gui/MainWindow.py:811
+#: gui/MainWindow.py:751
+#: gui/MainWindow.py:757
+#: gui/MainWindow.py:802
 #: gui/WikiTree.py:341
 #: gui/WikiTree.py:344
 #: pages/html/HtmlPanel.py:175
 #: pages/wiki/wikipanel.py:245
-#: core/commands.py:27
-#: core/commands.py:45
-#: core/commands.py:66
+#: core/commands.py:30
+#: core/commands.py:48
 #: core/commands.py:69
-#: core/commands.py:82
-#: core/commands.py:101
-#: core/commands.py:112
-#: core/commands.py:124
-#: core/commands.py:126
-#: core/commands.py:136
-#: core/commands.py:210
-#: core/commands.py:257
-#: core/commands.py:267
+#: core/commands.py:72
+#: core/commands.py:85
+#: core/commands.py:104
+#: core/commands.py:115
+#: core/commands.py:127
+#: core/commands.py:129
+#: core/commands.py:139
+#: core/commands.py:213
+#: core/commands.py:260
 #: core/commands.py:270
-#: core/commands.py:272
+#: core/commands.py:273
+#: core/commands.py:275
+#: core/commands.py:295
+#: core/commands.py:303
 msgid "Error"
 msgstr "Ошибка"
 
@@ -344,7 +440,7 @@ msgid "Can't load wiki '%s'"
 msgstr "Невозможно загрузить вики '%s'"
 
 #: gui/MainWindow.py:497
-#: gui/MainWindow.py:811
+#: gui/MainWindow.py:802
 #, python-format
 msgid ""
 "Can't save config\n"
@@ -352,10 +448,6 @@ msgid ""
 msgstr ""
 "Невозможно сохранить настройки\n"
 "%s"
-
-#: gui/MainWindow.py:520
-msgid "OutWiker"
-msgstr "OutWiker"
 
 #: gui/MainWindow.py:556
 msgid "Really exit?"
@@ -369,32 +461,20 @@ msgstr "Сохранить текущую страницу перед перез
 msgid "Save?"
 msgstr "Сохранить?"
 
-#: gui/MainWindow.py:695
-msgid "Ilin E.V. (aka Jenyay)"
-msgstr "Ильин Е. В. (aka Jenyay)"
-
-#: gui/MainWindow.py:696
-msgid "(c) 2010 Ilin E.V. (aka Jenyay)"
-msgstr "(c) 2010 Ильин Е. В. (aka Jenyay)"
-
-#: gui/MainWindow.py:698
-msgid "Outliner + personal wiki = OutWiker"
-msgstr "Outliner + персональная вики = OutWiker"
-
-#: gui/MainWindow.py:760
-#: core/commands.py:27
-#: core/commands.py:45
-#: core/commands.py:82
-#: core/commands.py:112
-#: core/commands.py:126
-#: core/commands.py:136
-#: core/commands.py:257
-#: core/commands.py:272
+#: gui/MainWindow.py:751
+#: core/commands.py:30
+#: core/commands.py:48
+#: core/commands.py:85
+#: core/commands.py:115
+#: core/commands.py:129
+#: core/commands.py:139
+#: core/commands.py:260
+#: core/commands.py:275
 msgid "Wiki is opened as read-only"
 msgstr "Вики открыта только для чтения"
 
-#: gui/MainWindow.py:766
-#: core/commands.py:158
+#: gui/MainWindow.py:757
+#: core/commands.py:161
 msgid "Can't create page"
 msgstr "Невозможно создать страницу"
 
@@ -467,7 +547,7 @@ msgid "Properties..."
 msgstr "Свойства..."
 
 #: gui/WikiTree.py:341
-#: core/commands.py:267
+#: core/commands.py:270
 msgid "Can't move page when page with that title already exists"
 msgstr "Невозможно переместить страницу, так как страница с таким именем уже существует"
 
@@ -864,33 +944,47 @@ msgstr "&Вики"
 msgid "Can't save page hash\n"
 msgstr "Невозможно сохранить хэш страницы\n"
 
-#: core/commands.py:54
+#: core/commands.py:57
 #, python-format
 msgid "File '%s' exists already"
 msgstr "Файл '%s' уже существует"
 
-#: core/commands.py:101
+#: core/commands.py:104
 msgid "Can't rename page\n"
 msgstr "Невозможно переименовать страницу\n"
 
-#: core/commands.py:115
+#: core/commands.py:118
 #, python-format
 msgid "Remove page '%s' and all subpages?"
 msgstr "Удалить страницу '%s' и все дочерние страницы?"
 
-#: core/commands.py:117
+#: core/commands.py:120
 msgid "Remove page?"
 msgstr "Удалить страницу?"
 
-#: core/commands.py:124
+#: core/commands.py:127
 msgid "Can't remove page"
 msgstr "Невозможно удалить страницу"
 
-#: core/commands.py:210
+#: core/commands.py:213
 msgid "Can't open clipboard"
 msgstr "Невозможно открыть буфер обмена"
 
-#: core/commands.py:270
+#: core/commands.py:273
 msgid "Can't move page"
 msgstr "Невозможно переместить страницу"
+
+#: core/commands.py:295
+#, python-format
+msgid "Can't open file %s"
+msgstr "Ошибка открытия файла %s"
+
+#: core/commands.py:303
+msgid "Can't parse version"
+msgstr "Ошибка разбора версии"
+
+#~ msgid "(c) 2010 Ilin E.V. (aka Jenyay)"
+#~ msgstr "(c) 2010 Ильин Е. В. (aka Jenyay)"
+#~ msgid "Outliner + personal wiki = OutWiker"
+#~ msgstr "Outliner + персональная вики = OutWiker"
 

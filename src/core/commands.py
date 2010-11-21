@@ -10,12 +10,15 @@ import shutil
 
 import wx
 
-from gui.CreatePageDialog import CreatePageDialog
-from core.tree import WikiDocument
 import core.exceptions
+import core.system
+import core.version
+
+from core.tree import WikiDocument
 from core.controller import Controller
 from core.tree import RootWikiPage
 from gui.OverwriteDialog import OverwriteDialog
+from gui.CreatePageDialog import CreatePageDialog
 
 def attachFilesWithDialog (parent, page):
 	"""
@@ -279,3 +282,25 @@ def setStatusText (text, index = 0):
 	index - номер ячейки статусбара
 	"""
 	wx.GetApp().GetTopWindow().statusbar.SetStatusText (text, index)
+
+
+def getCurrentVersion ():
+	fname = "version.txt"
+	path = os.path.join (core.system.getCurrentDir(), fname)
+
+	try:
+		with open (path) as fp:
+			lines = fp.readlines()
+	except IOError, e:
+		wx.MessageBox (_(u"Can't open file %s") % fname, _(u"Error"), wx.ICON_ERROR | wx.OK)
+		return
+
+	version_str = "%s.%s %s" % (lines[0].strip(), lines[1].strip(), lines[2].strip())
+
+	try:
+		version = core.version.Version.parse (version_str)
+	except ValueError:
+		wx.MessageBox (_(u"Can't parse version"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+		version = core.version.Version(0, 0)
+
+	return version

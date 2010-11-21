@@ -10,7 +10,7 @@ import wx
 
 
 class AboutDialog(wx.Dialog):
-	def __init__(self, *args, **kwds):
+	def __init__(self, currversion, *args, **kwds):
 		# begin wxGlade: AboutDialog.__init__
 		kwds["style"] = wx.DEFAULT_DIALOG_STYLE|wx.RESIZE_BORDER|wx.THICK_FRAME
 		wx.Dialog.__init__(self, *args, **kwds)
@@ -43,6 +43,10 @@ class AboutDialog(wx.Dialog):
 
 		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.OK)
 		# end wxGlade
+
+		self.currversion = currversion
+		self.versionLabel.SetLabel (str (self.currversion))
+
 
 	def __set_properties(self):
 		# begin wxGlade: AboutDialog.__set_properties

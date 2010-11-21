@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-14 20:13+0300\n"
+"POT-Creation-Date: 2010-11-21 18:57+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,98 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: gui/about.py:20 gui/MainWindow.py:520
+msgid "OutWiker"
+msgstr ""
+
+#: gui/about.py:21
+msgid "Version:"
+msgstr ""
+
+#: gui/about.py:23
+msgid "Author: Ilin Eugeniy (aka Jenyay)"
+msgstr ""
+
+#: gui/about.py:24
+msgid "License: GPL 3"
+msgstr ""
+
+#: gui/about.py:25
+msgid "My site:"
+msgstr ""
+
+#: gui/about.py:26
+msgid "http://jenyay.net"
+msgstr ""
+
+#: gui/about.py:27
+msgid "OutWiker's page:"
+msgstr ""
+
+#: gui/about.py:28
+msgid "http://jenyay.net/Soft/Outwiker"
+msgstr ""
+
+#: gui/about.py:29
+msgid "Twitter:"
+msgstr ""
+
+#: gui/about.py:30
+msgid "@jenyay"
+msgstr ""
+
+#: gui/about.py:30
+msgid "http://twitter.com/#!/jenyay"
+msgstr ""
+
+#: gui/about.py:31
+msgid "E-mail:"
+msgstr ""
+
+#: gui/about.py:32
+msgid "jenyay.ilin@gmail.com"
+msgstr ""
+
+#: gui/about.py:32
+msgid "mailto:jenyay.ilin@gmail.com"
+msgstr ""
+
+#: gui/about.py:33
+msgid "WebMoney (WMR):"
+msgstr ""
+
+#: gui/about.py:34
+msgid "R356551209135"
+msgstr ""
+
+#: gui/about.py:35
+msgid "WebMoney (WMZ)"
+msgstr ""
+
+#: gui/about.py:36
+msgid "Z427584680984"
+msgstr ""
+
+#: gui/about.py:37
+msgid "Yandex.Money"
+msgstr ""
+
+#: gui/about.py:38
+msgid "41001580829031"
+msgstr ""
+
+#: gui/about.py:39
+msgid "OK"
+msgstr ""
+
+#: gui/about.py:53 gui/about.py:103
+msgid "About"
+msgstr ""
+
+#: gui/about.py:104
+msgid "Donate"
+msgstr ""
 
 #: gui/AttachPanel.py:25 gui/MainWindow.py:166
 msgid "Attach files…"
@@ -41,14 +133,14 @@ msgstr ""
 #: gui/CreatePageDialog.py:74 gui/CreatePageDialog.py:79
 #: gui/CreatePageDialog.py:85 gui/htmlview.py:82 gui/MainWindow.py:366
 #: gui/MainWindow.py:442 gui/MainWindow.py:498 gui/MainWindow.py:650
-#: gui/MainWindow.py:760 gui/MainWindow.py:766 gui/MainWindow.py:811
+#: gui/MainWindow.py:751 gui/MainWindow.py:757 gui/MainWindow.py:802
 #: gui/WikiTree.py:341 gui/WikiTree.py:344 pages/html/HtmlPanel.py:175
-#: pages/wiki/wikipanel.py:245 core/commands.py:27 core/commands.py:45
-#: core/commands.py:66 core/commands.py:69 core/commands.py:82
-#: core/commands.py:101 core/commands.py:112 core/commands.py:124
-#: core/commands.py:126 core/commands.py:136 core/commands.py:210
-#: core/commands.py:257 core/commands.py:267 core/commands.py:270
-#: core/commands.py:272
+#: pages/wiki/wikipanel.py:245 core/commands.py:30 core/commands.py:48
+#: core/commands.py:69 core/commands.py:72 core/commands.py:85
+#: core/commands.py:104 core/commands.py:115 core/commands.py:127
+#: core/commands.py:129 core/commands.py:139 core/commands.py:213
+#: core/commands.py:260 core/commands.py:270 core/commands.py:273
+#: core/commands.py:275 core/commands.py:295 core/commands.py:303
 msgid "Error"
 msgstr ""
 
@@ -318,15 +410,11 @@ msgstr ""
 msgid "Can't load wiki '%s'"
 msgstr ""
 
-#: gui/MainWindow.py:497 gui/MainWindow.py:811
+#: gui/MainWindow.py:497 gui/MainWindow.py:802
 #, python-format
 msgid ""
 "Can't save config\n"
 "%s"
-msgstr ""
-
-#: gui/MainWindow.py:520
-msgid "OutWiker"
 msgstr ""
 
 #: gui/MainWindow.py:556
@@ -341,25 +429,13 @@ msgstr ""
 msgid "Save?"
 msgstr ""
 
-#: gui/MainWindow.py:695
-msgid "Ilin E.V. (aka Jenyay)"
-msgstr ""
-
-#: gui/MainWindow.py:696
-msgid "(c) 2010 Ilin E.V. (aka Jenyay)"
-msgstr ""
-
-#: gui/MainWindow.py:698
-msgid "Outliner + personal wiki = OutWiker"
-msgstr ""
-
-#: gui/MainWindow.py:760 core/commands.py:27 core/commands.py:45
-#: core/commands.py:82 core/commands.py:112 core/commands.py:126
-#: core/commands.py:136 core/commands.py:257 core/commands.py:272
+#: gui/MainWindow.py:751 core/commands.py:30 core/commands.py:48
+#: core/commands.py:85 core/commands.py:115 core/commands.py:129
+#: core/commands.py:139 core/commands.py:260 core/commands.py:275
 msgid "Wiki is opened as read-only"
 msgstr ""
 
-#: gui/MainWindow.py:766 core/commands.py:158
+#: gui/MainWindow.py:757 core/commands.py:161
 msgid "Can't create page"
 msgstr ""
 
@@ -431,7 +507,7 @@ msgstr ""
 msgid "Properties..."
 msgstr ""
 
-#: gui/WikiTree.py:341 core/commands.py:267
+#: gui/WikiTree.py:341 core/commands.py:270
 msgid "Can't move page when page with that title already exists"
 msgstr ""
 
@@ -806,32 +882,41 @@ msgstr ""
 msgid "Can't save page hash\n"
 msgstr ""
 
-#: core/commands.py:54
+#: core/commands.py:57
 #, python-format
 msgid "File '%s' exists already"
 msgstr ""
 
-#: core/commands.py:101
+#: core/commands.py:104
 msgid "Can't rename page\n"
 msgstr ""
 
-#: core/commands.py:115
+#: core/commands.py:118
 #, python-format
 msgid "Remove page '%s' and all subpages?"
 msgstr ""
 
-#: core/commands.py:117
+#: core/commands.py:120
 msgid "Remove page?"
 msgstr ""
 
-#: core/commands.py:124
+#: core/commands.py:127
 msgid "Can't remove page"
 msgstr ""
 
-#: core/commands.py:210
+#: core/commands.py:213
 msgid "Can't open clipboard"
 msgstr ""
 
-#: core/commands.py:270
+#: core/commands.py:273
 msgid "Can't move page"
+msgstr ""
+
+#: core/commands.py:295
+#, python-format
+msgid "Can't open file %s"
+msgstr ""
+
+#: core/commands.py:303
+msgid "Can't parse version"
 msgstr ""
