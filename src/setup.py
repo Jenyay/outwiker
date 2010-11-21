@@ -1,6 +1,6 @@
 from cx_Freeze import setup, Executable
 
-includefiles = ['images', 'msvcr90.dll', 'Microsoft.VC90.CRT.manifest', 'help', 'locale']
+includefiles = ['images', 'msvcr90.dll', 'Microsoft.VC90.CRT.manifest', 'help', 'locale', 'version.txt']
 includes = []
 excludes = []
 packages = []
