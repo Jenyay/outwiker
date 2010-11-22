@@ -294,6 +294,15 @@ class WikiPagePanel (HtmlPanel):
 		self.pageToolsMenu = wx.Menu()
 
 		self._addRenderTools()
+
+		self._addTool (self.pageToolsMenu, 
+				"ID_HTMLCODE", 
+				self.__openHtmlCode, 
+				_(u"HTML Code\tShift+F5"), 
+				_(u"HTML Code"), 
+				os.path.join (self.imagesDir, "html.png"),
+				True)
+
 		self.__addFontTools()
 		self.__addAlignTools()
 		self.__addHTools()
@@ -304,6 +313,11 @@ class WikiPagePanel (HtmlPanel):
 		mainWindow.mainMenu.Insert (mainWindow.mainMenu.GetMenuCount() - 1, self.pageToolsMenu, _(u"&Wiki") )
 		mainWindow.mainToolbar.Realize()
 		self.notebook.SetSelection (1)
+	
+
+	def __openHtmlCode (self, event):
+		if self.notebook.GetPageCount() >= 3:
+			self.notebook.SetSelection (2)
 
 	
 	def _getOldHash (self, page):
