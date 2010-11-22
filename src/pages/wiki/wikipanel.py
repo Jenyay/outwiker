@@ -45,6 +45,15 @@ class WikiPagePanel (HtmlPanel):
 
 	def GetTextEditor(self):
 		return TextEditor (self.htmlPane)
+
+
+	def GetSearchPanel (self):
+		if self.notebook.GetSelection() == 0:
+			return self.codeWindow.searchPanel
+		elif self.notebook.GetSelection() == 2:
+			return self.htmlCodeWindow.searchPanel
+
+		return None
 	
 
 	def onTabChanged(self, event): # wxGlade: HtmlPanel.<event_handler>

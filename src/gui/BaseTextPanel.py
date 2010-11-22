@@ -167,12 +167,18 @@ class BaseTextPanel (wx.Panel):
 	
 
 	def onSearch (self, event):
-		self.GetSearchPanel().startSearch()
+		panel = self.GetSearchPanel()
+		if panel != None:
+			panel.startSearch()
 
 
 	def onSearchNext (self, event):
-		self.GetSearchPanel().nextSearch()
+		panel = self.GetSearchPanel()
+		if panel != None:
+			panel.nextSearch()
 
 
 	def onSearchPrev (self, event):
-		self.GetSearchPanel().prevSearch()
+		panel = self.GetSearchPanel()
+		if panel != None:
+			panel.prevSearch()

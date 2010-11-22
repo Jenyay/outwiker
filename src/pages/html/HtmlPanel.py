@@ -204,7 +204,10 @@ class HtmlPanel(BaseTextPanel):
 	
 
 	def GetSearchPanel (self):
-		return self.codeWindow.searchPanel
+		if self.notebook.GetSelection() == 0:
+			return self.codeWindow.searchPanel
+
+		return None
 
 
 	def _removeTool (self, id):
