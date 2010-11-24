@@ -48,6 +48,11 @@ class SearchPageFactory (object):
 		return panel
 
 
+	@staticmethod
+	def getPrefPanels (parent):
+		return []
+
+
 class GlobalSearch (object):
 	pageTitle = _(u"# Search")
 

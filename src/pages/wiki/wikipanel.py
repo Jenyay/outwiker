@@ -15,6 +15,8 @@ from core.tree import RootWikiPage
 from pages.wiki.htmlimprover import HtmlImprover
 from gui.HtmlTextEditor import HtmlTextEditor
 from core.controller import Controller
+#from wikipage import WikiPageFactory
+import wikipage
 
 
 class WikiPagePanel (HtmlPanel):
@@ -30,17 +32,23 @@ class WikiPagePanel (HtmlPanel):
 		htmlSizer.AddGrowableRow(0)
 		htmlSizer.AddGrowableCol(0)
 
-		# Панель для вкладки с кодом HTML
-		self.htmlCodePane = wx.Panel(self.notebook, -1)
-		self.htmlCodePane.SetSizer(htmlSizer)
-
-		# Окно для прсомотра кода HTML
-		self.htmlCodeWindow = HtmlTextEditor(self.htmlCodePane, -1)
-		self.htmlCodeWindow.textCtrl.SetReadOnly (True)
-		htmlSizer.Add(self.htmlCodeWindow, 1, wx.TOP|wx.BOTTOM|wx.EXPAND, 2)
+		self.__createHtmlCodePanel(htmlSizer)
 		
-		self.notebook.AddPage (self.htmlCodePane, _("HTML"))
 		self.Layout()
+	
+
+	def __createHtmlCodePanel (self, parentSizer):
+		if wikipage.WikiPageFactory.showHtmlCodeOptions.value:
+			# Панель для вкладки с кодом HTML
+			self.htmlCodePane = wx.Panel(self.notebook, -1)
+			self.htmlCodePane.SetSizer(parentSizer)
+
+			# Окно для просмотра получившегося кода HTML
+			self.htmlCodeWindow = HtmlTextEditor(self.htmlCodePane, -1)
+			self.htmlCodeWindow.textCtrl.SetReadOnly (True)
+			parentSizer.Add(self.htmlCodeWindow, 1, wx.TOP|wx.BOTTOM|wx.EXPAND, 2)
+			
+			self.notebook.AddPage (self.htmlCodePane, _("HTML"))
 	
 
 	def GetTextEditor(self):
@@ -311,17 +319,16 @@ class WikiPagePanel (HtmlPanel):
 
 		self.pageToolsMenu = wx.Menu()
 
+		if wikipage.WikiPageFactory.showHtmlCodeOptions.value:
+			self._addTool (self.pageToolsMenu, 
+					"ID_HTMLCODE", 
+					self.__openHtmlCode, 
+					_(u"HTML Code\tShift+F5"), 
+					_(u"HTML Code"), 
+					os.path.join (self.imagesDir, "html.png"),
+					True)
+
 		self._addRenderTools()
-
-		self._addTool (self.pageToolsMenu, 
-				"ID_HTMLCODE", 
-				self.__openHtmlCode, 
-				_(u"HTML Code\tShift+F5"), 
-				_(u"HTML Code"), 
-				os.path.join (self.imagesDir, "html.png"),
-				True)
-
-		self.pageToolsMenu.AppendSeparator()
 
 		self.__addFontTools()
 		self.__addAlignTools()

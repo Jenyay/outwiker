@@ -5,7 +5,6 @@ import wx
 
 import ConfigElements
 from core.controller import Controller
-from core.config import StringOption, BooleanOption, IntegerOption
 
 # begin wxGlade: dependencies
 # end wxGlade
@@ -60,7 +59,6 @@ class EditorPanel(wx.Panel):
 	
 
 	def Save (self):
-		config = wx.GetApp().getConfig()
 		self.lineNumbers.save()
 		self.fontEditor.save()
 

@@ -31,6 +31,7 @@ class HtmlPageFactory (object):
 		page = HtmlWikiPage.create (parent, path, title, HtmlPageFactory.type, tags)
 		return page
 
+
 	@staticmethod
 	def getPageView (page, parent):
 		"""
@@ -40,3 +41,8 @@ class HtmlPageFactory (object):
 		panel.page = page
 
 		return panel
+
+
+	@staticmethod
+	def getPrefPanels (parent):
+		return []

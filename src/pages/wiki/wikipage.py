@@ -6,8 +6,13 @@
 
 import os.path
 
+import wx
+
 from core.tree import WikiPage
 from wikipanel import WikiPagePanel
+import WikiPreferences
+from core.config import BooleanOption
+
 
 class WikiWikiPage (WikiPage):
 	"""
@@ -19,6 +24,9 @@ class WikiWikiPage (WikiPage):
 
 class WikiPageFactory (object):
 	type = u"wiki"
+
+	# Настройки
+	showHtmlCodeOptions = BooleanOption (wx.GetApp().getConfig(), "Wiki", "ShowHtmlCode", True)
 
 	def __init__ (self):
 		pass
@@ -40,3 +48,14 @@ class WikiPageFactory (object):
 		panel.page = page
 
 		return panel
+
+
+	@staticmethod
+	def getPrefPanels (parent):
+		"""
+		Вернуть список кортежей ("название", Панель)
+		"""
+		generalPanel = WikiPreferences.WikiPrefGeneralPanel (parent)
+
+		return [ ( _("General"), generalPanel ) ]
+

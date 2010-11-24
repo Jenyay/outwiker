@@ -6,6 +6,7 @@ import wx
 import GeneralPanel
 import EditorPanel
 from core.exceptions import PreferencesException
+from core.factory import FactorySelector
 
 # begin wxGlade: dependencies
 # end wxGlade
@@ -63,10 +64,32 @@ class PrefDialog(wx.Dialog):
 		self.treeBook.AddSubPage (self.generalPage, _(u"General"))
 		self.treeBook.AddSubPage (self.editorPage, _(u"Editor"))
 
-		#self.treeBook.AddPage (None, _(u"Pages"))
+		self._createPagesForPages()
 
 		self.treeBook.ExpandNode (0)
 		self.treeBook.SetSelection (0)
+	
+
+	def _createPagesForPages (self):
+		"""
+		Создать страницы настроек для типов страниц
+		"""
+
+		# Индекс последней добавленной страницы
+		pageindex = 1
+		for factory in FactorySelector.factories:
+			pages = factory.getPrefPanels(self.treeBook)
+
+			if len (pages) > 0:
+				pageindex += 1
+				self.treeBook.AddPage (pages[0][1], factory.type)
+
+				for page in pages:
+					pageindex += 1
+					self.treeBook.AddSubPage (page[1], page[0])
+
+				self.treeBook.ExpandNode (pageindex)
+
 	
 
 	def _createOkCancelButtons (self, sizer):

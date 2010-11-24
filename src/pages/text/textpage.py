@@ -40,3 +40,8 @@ class TextPageFactory (object):
 		"""
 		return TextPanel (page, parent)
 
+
+	@staticmethod
+	def getPrefPanels (parent):
+		return []
+
