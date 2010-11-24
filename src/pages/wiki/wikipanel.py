@@ -87,6 +87,7 @@ class WikiPagePanel (HtmlPanel):
 		core.commands.setStatusText (u"")
 		Controller.instance().onHtmlRenderingEnd (self._currentpage, self.htmlWindow)
 
+		self._enableTools (self.pageToolsMenu, False)
 		self.htmlCodeWindow.SetFocus()
 		self.htmlCodeWindow.Update()
 
@@ -165,6 +166,23 @@ class WikiPagePanel (HtmlPanel):
 				_(u"Right align\tCtrl+ALT+R"), 
 				_(u"Right align"), 
 				os.path.join (self.imagesDir, "text_align_right.png"))
+	
+
+	def __addFormatTools (self):
+		self._addTool (self.pageToolsMenu, 
+				"ID_PREFORMAT", 
+				lambda event: self._turnText (u"[@", u"@]"), 
+				_(u"Preformat [@...@]"), 
+				_(u"Preformat [@...@]"), 
+				None)
+
+		self._addTool (self.pageToolsMenu, 
+				"ID_NONFORMAT", 
+				lambda event: self._turnText (u"[=", u"=]"), 
+				_(u"Preformat [=...=]"), 
+				_(u"Preformat [=...=]"), 
+				None)
+
 	
 
 	def __addTableTools (self):
@@ -303,12 +321,15 @@ class WikiPagePanel (HtmlPanel):
 				os.path.join (self.imagesDir, "html.png"),
 				True)
 
+		self.pageToolsMenu.AppendSeparator()
+
 		self.__addFontTools()
 		self.__addAlignTools()
 		self.__addHTools()
 		self.__addTableTools()
 		self.__addListTools()
 		self.__addOtherTools()
+		self.__addFormatTools()
 
 		mainWindow.mainMenu.Insert (mainWindow.mainMenu.GetMenuCount() - 1, self.pageToolsMenu, _(u"&Wiki") )
 		mainWindow.mainToolbar.Realize()

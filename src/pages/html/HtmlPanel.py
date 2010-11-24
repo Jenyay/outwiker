@@ -199,7 +199,8 @@ class HtmlPanel(BaseTextPanel):
 	def _enableTools (self, menu, enable):
 		for key in self.toolsId:
 			if not self.toolsId[key].alwaysEnabled:
-				self.mainWindow.mainToolbar.EnableTool (self.toolsId[key].id, enable)
+				if self.mainWindow.mainToolbar.FindById (self.toolsId[key].id) != None:
+					self.mainWindow.mainToolbar.EnableTool (self.toolsId[key].id, enable)
 				menu.Enable (self.toolsId[key].id, enable)
 	
 
@@ -211,7 +212,8 @@ class HtmlPanel(BaseTextPanel):
 
 
 	def _removeTool (self, id):
-		self.mainWindow.mainToolbar.DeleteTool (id)
+		if self.mainWindow.mainToolbar.FindById (id) != None:
+			self.mainWindow.mainToolbar.DeleteTool (id)
 		self.mainWindow.Unbind(wx.EVT_MENU, id=id)
 
 
@@ -223,6 +225,8 @@ class HtmlPanel(BaseTextPanel):
 				_(u"Code / Preview"), 
 				os.path.join (self.imagesDir, "render.png"),
 				True)
+
+		self.pageToolsMenu.AppendSeparator()
 
 
 	def __switchView (self, event):
@@ -252,13 +256,14 @@ class HtmlPanel(BaseTextPanel):
 		menu.Append (id, menuText, "", wx.ITEM_NORMAL)
 		self.mainWindow.Bind(wx.EVT_MENU, func, id = id)
 
-		self.mainWindow.mainToolbar.AddLabelTool(id, 
-				buttonText, 
-				wx.Bitmap(image, wx.BITMAP_TYPE_ANY), 
-				wx.NullBitmap, 
-				wx.ITEM_NORMAL, 
-				buttonText, 
-				"")
+		if image != None and len (image) != 0:
+			self.mainWindow.mainToolbar.AddLabelTool(id, 
+					buttonText, 
+					wx.Bitmap(image, wx.BITMAP_TYPE_ANY), 
+					wx.NullBitmap, 
+					wx.ITEM_NORMAL, 
+					buttonText, 
+					"")
 	
 
 	def removeGui (self):
