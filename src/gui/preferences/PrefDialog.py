@@ -76,19 +76,23 @@ class PrefDialog(wx.Dialog):
 		"""
 
 		# Индекс последней добавленной страницы
-		pageindex = 1
+		pageindex = 2
 		for factory in FactorySelector.factories:
 			pages = factory.getPrefPanels(self.treeBook)
 
 			if len (pages) > 0:
 				pageindex += 1
+
+				# Номер страницы, которую надо будет развернуть
+				expandindex = pageindex
+
 				self.treeBook.AddPage (pages[0][1], factory.type)
 
 				for page in pages:
 					pageindex += 1
 					self.treeBook.AddSubPage (page[1], page[0])
 
-				self.treeBook.ExpandNode (pageindex)
+				self.treeBook.ExpandNode (expandindex)
 
 	
 
