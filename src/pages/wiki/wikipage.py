@@ -6,12 +6,11 @@
 
 import os.path
 
-import wx
-
 from core.tree import WikiPage
 from wikipanel import WikiPagePanel
 import WikiPreferences
 from core.config import BooleanOption
+from core.application import Application
 
 
 class WikiWikiPage (WikiPage):
@@ -31,7 +30,7 @@ class WikiPageFactory (object):
 
 
 	# Настройки
-	showHtmlCodeOptions = BooleanOption (wx.GetApp().getConfig(), "Wiki", "ShowHtmlCode", True)
+	showHtmlCodeOptions = BooleanOption (Application.config, "Wiki", "ShowHtmlCode", True)
 
 	def __init__ (self):
 		pass

@@ -5,6 +5,7 @@
 import wx
 
 import gui.TextEditor
+from core.application import Application
 
 class HtmlTextEditor (gui.TextEditor.TextEditor):
 	def __init__(self, *args, **kwds):
@@ -84,7 +85,7 @@ class HtmlTextEditor (gui.TextEditor.TextEditor):
 		"""
 		Загрузить стили из конфига
 		"""
-		config = wx.GetApp().getConfig()
+		config = Application.config
 
 		styles = {}
 
@@ -101,7 +102,7 @@ class HtmlTextEditor (gui.TextEditor.TextEditor):
 
 	
 	def saveStyles (self, styles):
-		config = wx.GetApp().getConfig()
+		config = Application.config
 
 		config.set (self._htmlStylesSection, "tag", styles[wx.stc.STC_H_TAG])
 		config.set (self._htmlStylesSection, "tag_unknoun", styles[wx.stc.STC_H_TAGUNKNOWN])

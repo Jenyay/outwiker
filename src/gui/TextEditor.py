@@ -9,6 +9,7 @@ from wx.stc import StyledTextCtrl
 from gui.LocalSearchPanel import LocalSearchPanel, LocalSearcher
 import core.system
 from core.controller import Controller
+from core.application import Application
 
 # begin wxGlade: dependencies
 # end wxGlade
@@ -84,10 +85,10 @@ class TextEditor(wx.Panel):
 		"""
 		Установить шрифт по умолчанию в контрол StyledTextCtrl
 		"""
-		size = wx.GetApp().getConfig().fontEditorOption.size.value
-		faceName = wx.GetApp().getConfig().fontEditorOption.faceName.value
-		isBold = wx.GetApp().getConfig().fontEditorOption.bold.value
-		isItalic = wx.GetApp().getConfig().fontEditorOption.italic.value
+		size = Application.config.fontEditorOption.size.value
+		faceName = Application.config.fontEditorOption.faceName.value
+		isBold = Application.config.fontEditorOption.bold.value
+		isItalic = Application.config.fontEditorOption.italic.value
 
 		#style = "size:%d" % size
 		#self.textCtrl.StyleSetSpec (wx.stc.STC_STYLE_DEFAULT, style)
@@ -110,8 +111,8 @@ class TextEditor(wx.Panel):
 		"""
 		Установить размер левой области, где пишутся номера строк в зависимости от шрифта
 		"""
-		linenumbers =  wx.GetApp().getConfig().lineNumbersOption.value
-		fontSize = wx.GetApp().getConfig().fontEditorOption.size.value
+		linenumbers =  Application.config.lineNumbersOption.value
+		fontSize = Application.config.fontEditorOption.size.value
 
 		if linenumbers:
 			width = int (35.0 / 10.0 * fontSize)

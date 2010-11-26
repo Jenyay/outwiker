@@ -16,6 +16,7 @@ import pages.search.searchpage
 import core.system
 from gui.preferences.PrefDialog import PrefDialog
 from gui.about import AboutDialog
+from core.application import Application
 
 # begin wxGlade: dependencies
 # end wxGlade
@@ -245,7 +246,7 @@ class MainWindow(wx.Frame):
 	
 
 	def __updateTitle (self):
-		template = wx.GetApp().getConfig().titleFormatOption.value
+		template = Application.config.titleFormatOption.value
 
 		if self.wikiroot == None:
 			self.SetTitle (u"OutWiker")
@@ -336,7 +337,7 @@ class MainWindow(wx.Frame):
 		"""
 		Открыть последнюю вики, если установлена соответствующая опция
 		"""
-		openRecent = wx.GetApp().getConfig().historyLengthOption.value
+		openRecent = Application.config.historyLengthOption.value
 
 		if openRecent and len (self.recentWiki) > 0:
 			self.openWiki (self.recentWiki[0])
@@ -346,7 +347,7 @@ class MainWindow(wx.Frame):
 		"""
 		Свернуться при запуске, если установлена соответствующая опция
 		"""
-		iconize = wx.GetApp().getConfig().startIconizedOption.value
+		iconize = Application.config.startIconizedOption.value
 
 		if iconize:
 			self.Iconize(True)
@@ -373,7 +374,7 @@ class MainWindow(wx.Frame):
 		self._removeMenuItemsById (self.fileMenu, self._recentId.keys())
 		self._recentId = {}
 
-		self.recentWiki = RecentWiki (wx.GetApp().getConfig())
+		self.recentWiki = RecentWiki (Application.config)
 
 		self._recentId = {}
 
@@ -458,7 +459,7 @@ class MainWindow(wx.Frame):
 		"""
 		Загрузить параметры из конфига
 		"""
-		config = wx.GetApp().getConfig()
+		config = Application.config
 		self._showElements()
 
 		width = config.WidthOption.value
@@ -473,14 +474,14 @@ class MainWindow(wx.Frame):
 	
 
 	def __loadSashPosition (self):
-		self.splitter.SetSashPosition (wx.GetApp().getConfig().SashPositionOption.value)
+		self.splitter.SetSashPosition (Application.config.SashPositionOption.value)
 
 	
 	def _saveParams (self):
 		"""
 		Сохранить параметры в конфиг
 		"""
-		config = wx.GetApp().getConfig()
+		config = Application.config
 
 		try:
 			if not self.IsIconized():
@@ -502,7 +503,7 @@ class MainWindow(wx.Frame):
 		"""
 		Сохранить положение перетаскиваемой линии между деревом и заметкой
 		"""
-		wx.GetApp().getConfig().SashPositionOption.value = self.splitter.GetSashPosition()
+		Application.config.SashPositionOption.value = self.splitter.GetSashPosition()
 
 	
 	def _hideElements (self):
@@ -550,7 +551,7 @@ class MainWindow(wx.Frame):
 
 
 	def onClose (self, event):
-		askBeforeExit = wx.GetApp().getConfig().askBeforeExitOption.value
+		askBeforeExit = Application.config.askBeforeExitOption.value
 
 		if (not askBeforeExit or 
 				wx.MessageBox (_(u"Really exit?"), _(u"Exit"), wx.YES_NO  | wx.ICON_QUESTION ) == wx.YES):
@@ -813,7 +814,7 @@ class MainWindow(wx.Frame):
 		"""
 		Свернуть окно
 		"""
-		if wx.GetApp().config.minimizeOption.value:
+		if Application.config.minimizeOption.value:
 			# В трей добавим иконку, а окно спрячем
 			self.taskBarIcon.SetIcon(self.icon)
 			self.Hide()

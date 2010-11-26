@@ -7,6 +7,7 @@ import ConfigElements
 from core.controller import Controller
 from core.config import StringOption, BooleanOption, IntegerOption
 import core.i18n
+from core.application import Application
 
 # begin wxGlade: dependencies
 # end wxGlade
@@ -17,8 +18,6 @@ import core.i18n
 
 class GeneralPanel(wx.ScrolledWindow):
 	def __init__(self, *args, **kwds):
-		self.config = wx.GetApp().config
-
 		# begin wxGlade: GeneralPanel.__init__
 		kwds["style"] = wx.TAB_TRAVERSAL
 		wx.ScrolledWindow.__init__(self, *args, **kwds)
@@ -102,10 +101,10 @@ class GeneralPanel(wx.ScrolledWindow):
 		Опции, связанные с последними открытыми файлами
 		"""
 		# Длина истории последних открытых файлов
-		self.historyLength = ConfigElements.IntegerElement (self.config.historyLengthOption, self.historySpin, 0, 30)
+		self.historyLength = ConfigElements.IntegerElement (Application.config.historyLengthOption, self.historySpin, 0, 30)
 
 		# Открывать последнюю вики при запуске?
-		self.autoopen = ConfigElements.BooleanElement (self.config.autoopenOption, self.autoopenCheckBox)
+		self.autoopen = ConfigElements.BooleanElement (Application.config.autoopenOption, self.autoopenCheckBox)
 
 
 	def __loadGeneralOptions (self):
@@ -113,16 +112,16 @@ class GeneralPanel(wx.ScrolledWindow):
 		Опции для сворачивания окна в трей
 		"""
 		# Сворачивать в трей?
-		self.minimizeToTray = ConfigElements.BooleanElement (self.config.minimizeOption, self.minimizeCheckBox)
+		self.minimizeToTray = ConfigElements.BooleanElement (Application.config.minimizeOption, self.minimizeCheckBox)
 
 		# Запускаться свернутым?
-		self.startIconized = ConfigElements.BooleanElement (self.config.startIconizedOption, self.startIconizedCheckBox)
+		self.startIconized = ConfigElements.BooleanElement (Application.config.startIconizedOption, self.startIconizedCheckBox)
 
 		# Задавать вопрос перед выходом из программы?
-		self.askBeforeExit = ConfigElements.BooleanElement (self.config.askBeforeExitOption, self.askBeforeExitCheckBox)
+		self.askBeforeExit = ConfigElements.BooleanElement (Application.config.askBeforeExitOption, self.askBeforeExitCheckBox)
 
 		# Формат заголовка страницы
-		self.titleFormat = ConfigElements.StringElement (self.config.titleFormatOption, self.titleFormatText)
+		self.titleFormat = ConfigElements.StringElement (Application.config.titleFormatOption, self.titleFormatText)
 
 		self.__loadLanguages()
 	
@@ -133,7 +132,7 @@ class GeneralPanel(wx.ScrolledWindow):
 
 		self.langCombo.AppendItems (languages)
 
-		currlang = self.config.languageOption.value
+		currlang = Application.config.languageOption.value
 
 		try:
 			currindex = languages.index (currlang)
@@ -169,7 +168,7 @@ class GeneralPanel(wx.ScrolledWindow):
 			return
 
 		lang = self.langCombo.GetString (index)
-		self.config.languageOption.value = lang
+		Application.config.languageOption.value = lang
 
 # end of class GeneralPanel
 
