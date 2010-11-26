@@ -32,23 +32,27 @@ class WikiPagePanel (HtmlPanel):
 		htmlSizer.AddGrowableRow(0)
 		htmlSizer.AddGrowableCol(0)
 
-		self.__createHtmlCodePanel(htmlSizer)
+		# Номер вкладки с кодом HTML. -1, если вкладки нет
+		self.htmlcodePageIndex = -1
+
+		if wikipage.WikiPageFactory.showHtmlCodeOptions.value:
+			self.htmlcodePageIndex = self.__createHtmlCodePanel(htmlSizer)
 		
 		self.Layout()
 	
 
 	def __createHtmlCodePanel (self, parentSizer):
-		if wikipage.WikiPageFactory.showHtmlCodeOptions.value:
-			# Панель для вкладки с кодом HTML
-			self.htmlCodePane = wx.Panel(self.notebook, -1)
-			self.htmlCodePane.SetSizer(parentSizer)
+		# Панель для вкладки с кодом HTML
+		self.htmlCodePane = wx.Panel(self.notebook, -1)
+		self.htmlCodePane.SetSizer(parentSizer)
 
-			# Окно для просмотра получившегося кода HTML
-			self.htmlCodeWindow = HtmlTextEditor(self.htmlCodePane, -1)
-			self.htmlCodeWindow.textCtrl.SetReadOnly (True)
-			parentSizer.Add(self.htmlCodeWindow, 1, wx.TOP|wx.BOTTOM|wx.EXPAND, 2)
-			
-			self.notebook.AddPage (self.htmlCodePane, _("HTML"))
+		# Окно для просмотра получившегося кода HTML
+		self.htmlCodeWindow = HtmlTextEditor(self.htmlCodePane, -1)
+		self.htmlCodeWindow.textCtrl.SetReadOnly (True)
+		parentSizer.Add(self.htmlCodeWindow, 1, wx.TOP|wx.BOTTOM|wx.EXPAND, 2)
+		
+		self.notebook.AddPage (self.htmlCodePane, _("HTML"))
+		return self.notebook.GetPageCount () - 1
 	
 
 	def GetTextEditor(self):
@@ -56,9 +60,9 @@ class WikiPagePanel (HtmlPanel):
 
 
 	def GetSearchPanel (self):
-		if self.notebook.GetSelection() == 0:
+		if self.notebook.GetSelection() == self.codePageIndex:
 			return self.codeWindow.searchPanel
-		elif self.notebook.GetSelection() == 2:
+		elif self.notebook.GetSelection() == self.htmlcodePageIndex:
 			return self.htmlCodeWindow.searchPanel
 
 		return None
@@ -68,11 +72,11 @@ class WikiPagePanel (HtmlPanel):
 		if self._currentpage == None:
 			return
 
-		if event.GetSelection() == 0:
+		if event.GetSelection() == self.codePageIndex:
 			self._onSwitchToCode()
-		elif event.GetSelection() == 1:
+		elif event.GetSelection() == self.resultPageIndex:
 			self._onSwitchToPreview()
-		elif event.GetSelection() == 2:
+		elif event.GetSelection() == self.htmlcodePageIndex:
 			self._onSwitchCodeHtml()
 
 
@@ -340,12 +344,12 @@ class WikiPagePanel (HtmlPanel):
 
 		mainWindow.mainMenu.Insert (mainWindow.mainMenu.GetMenuCount() - 1, self.pageToolsMenu, _(u"&Wiki") )
 		mainWindow.mainToolbar.Realize()
-		self.notebook.SetSelection (1)
+		self.notebook.SetSelection (self.resultPageIndex)
 	
 
 	def __openHtmlCode (self, event):
-		if self.notebook.GetPageCount() >= 3:
-			self.notebook.SetSelection (2)
+		if self.htmlcodePageIndex != -1:
+			self.notebook.SetSelection (self.htmlcodePageIndex)
 
 	
 	def _getOldHash (self, page):

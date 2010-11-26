@@ -40,6 +40,10 @@ class HtmlPanel(BaseTextPanel):
 		self._htmlFile = "__content.html"
 		self.currentHtmlFile = None
 
+		# Номера страниц-вкладок
+		self.codePageIndex = 0
+		self.resultPageIndex = 1
+
 		self.imagesDir = core.system.getImagesDir()
 
 		# begin wxGlade: HtmlPanel.__init__
@@ -59,7 +63,7 @@ class HtmlPanel(BaseTextPanel):
 
 		self.HCount = 6
 		self.toolsId = {}
-	
+
 
 	def GetTextEditor(self):
 		return HtmlTextEditor (self.htmlPane)
@@ -149,7 +153,7 @@ class HtmlPanel(BaseTextPanel):
 		if self._currentpage == None:
 			return
 
-		if event.GetSelection() == 1:
+		if event.GetSelection() == self.resultPageIndex:
 			self._onSwitchToPreview()
 		else:
 			self._onSwitchToCode()
@@ -205,7 +209,7 @@ class HtmlPanel(BaseTextPanel):
 	
 
 	def GetSearchPanel (self):
-		if self.notebook.GetSelection() == 0:
+		if self.notebook.GetSelection() == self.codePageIndex:
 			return self.codeWindow.searchPanel
 
 		return None
@@ -233,10 +237,10 @@ class HtmlPanel(BaseTextPanel):
 		if self._currentpage == None:
 			return
 
-		if self.notebook.GetSelection() == 0:
-			self.notebook.SetSelection (1)
+		if self.notebook.GetSelection() == self.codePageIndex:
+			self.notebook.SetSelection (self.resultPageIndex)
 		else:
-			self.notebook.SetSelection (0)
+			self.notebook.SetSelection (self.codePageIndex)
 
 
 	def _addTool (self, menu, idstring, func, menuText, buttonText, image, alwaysEnabled = False):
@@ -522,7 +526,7 @@ class HtmlPagePanel (HtmlPanel):
 
 		mainWindow.mainMenu.Insert (mainWindow.mainMenu.GetMenuCount() - 1, self.pageToolsMenu, _(u"H&tml"))
 		mainWindow.mainToolbar.Realize()
-		self.notebook.SetSelection (1)
+		self.notebook.SetSelection (self.resultPageIndex)
 
 	
 	def generateHtml (self, page, path):
