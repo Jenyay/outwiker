@@ -26,6 +26,9 @@ class SearchWikiPage (WikiPage):
 class SearchPageFactory (object):
 	type = u"search"
 
+	# Название страницы, показываемое пользователю
+	title = _(u"Search Page")
+
 	def __init__ (self):
 		pass
 

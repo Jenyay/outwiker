@@ -20,6 +20,9 @@ class HtmlWikiPage (WikiPage):
 class HtmlPageFactory (object):
 	type = u"html"
 
+	# Название страницы, показываемое пользователю
+	title = _(u"HTML Page")
+
 	def __init__ (self):
 		pass
 

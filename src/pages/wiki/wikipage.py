@@ -23,13 +23,19 @@ class WikiWikiPage (WikiPage):
 
 
 class WikiPageFactory (object):
+	# Обрабатываемый этой фабрикой тип страниц
 	type = u"wiki"
+
+	# Название страницы, показываемое пользователю
+	title = _(u"Wiki Page")
+
 
 	# Настройки
 	showHtmlCodeOptions = BooleanOption (wx.GetApp().getConfig(), "Wiki", "ShowHtmlCode", True)
 
 	def __init__ (self):
 		pass
+
 
 	@staticmethod
 	def create (parent, title, tags):
@@ -38,6 +44,7 @@ class WikiPageFactory (object):
 		path = os.path.join (parent.path, title)
 		page = WikiWikiPage.create (parent, path, title, WikiPageFactory.type, tags)
 		return page
+
 
 	@staticmethod
 	def getPageView (page, parent):
@@ -53,7 +60,8 @@ class WikiPageFactory (object):
 	@staticmethod
 	def getPrefPanels (parent):
 		"""
-		Вернуть список кортежей ("название", Панель)
+		Получить список панелей для окна настроек
+		Возвращает список кортежей ("название", Панель)
 		"""
 		generalPanel = WikiPreferences.WikiPrefGeneralPanel (parent)
 

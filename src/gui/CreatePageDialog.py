@@ -128,7 +128,6 @@ class CreatePageDialog(wx.Dialog):
 		Установить тип страницы в диалоге
 		"""
 		n = 0
-		items = self.comboType.GetItems()
 		for factory in core.factory.FactorySelector.factories:
 			if factory.type == core.factory.FactorySelector.getFactory(currentPage).type:
 				self.comboType.SetSelection (n)
@@ -241,7 +240,7 @@ class CreatePageDialog(wx.Dialog):
 	def _fillComboType (self):
 		self.comboType.Clear()
 		for factory in core.factory.FactorySelector.factories:
-			self.comboType.Append (factory.type, factory)
+			self.comboType.Append (factory.title, factory)
 
 		if not self.comboType.IsEmpty():
 			self.comboType.SetSelection (0)

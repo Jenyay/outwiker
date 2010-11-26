@@ -20,6 +20,9 @@ class TextWikiPage (WikiPage):
 class TextPageFactory (object):
 	type = u"text"
 
+	# Название страницы, показываемое пользователю
+	title = _(u"Text Page")
+
 	def __init__ (self):
 		pass
 

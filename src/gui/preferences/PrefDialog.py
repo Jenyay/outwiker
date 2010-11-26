@@ -86,7 +86,7 @@ class PrefDialog(wx.Dialog):
 				# Номер страницы, которую надо будет развернуть
 				expandindex = pageindex
 
-				self.treeBook.AddPage (pages[0][1], factory.type)
+				self.treeBook.AddPage (pages[0][1], factory.title)
 
 				for page in pages:
 					pageindex += 1
