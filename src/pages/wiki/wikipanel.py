@@ -344,8 +344,9 @@ class WikiPagePanel (HtmlPanel):
 
 		mainWindow.mainMenu.Insert (mainWindow.mainMenu.GetMenuCount() - 1, self.pageToolsMenu, _(u"&Wiki") )
 		mainWindow.mainToolbar.Realize()
-		self.notebook.SetSelection (self.resultPageIndex)
-	
+
+		self._openDefaultPage()
+
 
 	def __openHtmlCode (self, event):
 		if self.htmlcodePageIndex != -1:
@@ -363,8 +364,6 @@ class WikiPagePanel (HtmlPanel):
 
 
 	def _saveHash (self, page, hash):
-		#print hash
-
 		try:
 			config = Config (os.path.join (page.path, RootWikiPage.pageConfig))
 			config.set (self._configSection, self._hashKey, hash)

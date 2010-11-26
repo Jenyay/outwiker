@@ -147,6 +147,16 @@ class HtmlPanel(BaseTextPanel):
 				os.remove (self.currentHtmlFile)
 			except OSError:
 				pass
+	
+
+	def _openDefaultPage(self):
+		assert self._currentpage != None
+
+		if len (self._currentpage.content) > 0:
+			self.notebook.SetSelection (self.resultPageIndex)
+		else:
+			self.notebook.SetSelection (self.codePageIndex)
+			self.codeWindow.textCtrl.SetFocus()
 
 
 	def onTabChanged(self, event): # wxGlade: HtmlPanel.<event_handler>
@@ -163,8 +173,8 @@ class HtmlPanel(BaseTextPanel):
 		"""
 		Обработка события при переключении на код страницы
 		"""
-		self.codeWindow.SetFocus()
 		self._enableTools (self.pageToolsMenu, True)
+		self.codeWindow.textCtrl.SetFocus()
 
 	
 	def _onSwitchToPreview (self):
@@ -526,9 +536,10 @@ class HtmlPagePanel (HtmlPanel):
 
 		mainWindow.mainMenu.Insert (mainWindow.mainMenu.GetMenuCount() - 1, self.pageToolsMenu, _(u"H&tml"))
 		mainWindow.mainToolbar.Realize()
-		self.notebook.SetSelection (self.resultPageIndex)
 
-	
+		self._openDefaultPage()
+
+
 	def generateHtml (self, page, path):
 		if page.readonly and os.path.exists (path):
 			# Если страница открыта только для чтения и html-файл уже существует, то покажем его
