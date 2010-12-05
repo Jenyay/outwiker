@@ -27,15 +27,15 @@ class WikiPagePanel (HtmlPanel):
 
 		self.notebook.SetPageText (0, _(u"Wiki"))
 
-		htmlSizer = wx.FlexGridSizer(1, 1, 0, 0)
-		htmlSizer.AddGrowableRow(0)
-		htmlSizer.AddGrowableCol(0)
+		self.htmlSizer = wx.FlexGridSizer(1, 1, 0, 0)
+		self.htmlSizer.AddGrowableRow(0)
+		self.htmlSizer.AddGrowableCol(0)
 
 		# Номер вкладки с кодом HTML. -1, если вкладки нет
 		self.htmlcodePageIndex = -1
 
 		if wikipage.WikiPageFactory.showHtmlCodeOptions.value:
-			self.htmlcodePageIndex = self.__createHtmlCodePanel(htmlSizer)
+			self.htmlcodePageIndex = self.__createHtmlCodePanel(self.htmlSizer)
 		
 		self.Layout()
 	
@@ -322,14 +322,14 @@ class WikiPagePanel (HtmlPanel):
 
 		self.pageToolsMenu = wx.Menu()
 
-		if wikipage.WikiPageFactory.showHtmlCodeOptions.value:
-			self._addTool (self.pageToolsMenu, 
-					"ID_HTMLCODE", 
-					self.__openHtmlCode, 
-					_(u"HTML Code\tShift+F5"), 
-					_(u"HTML Code"), 
-					os.path.join (self.imagesDir, "html.png"),
-					True)
+		#if wikipage.WikiPageFactory.showHtmlCodeOptions.value:
+		self._addTool (self.pageToolsMenu, 
+				"ID_HTMLCODE", 
+				self.__openHtmlCode, 
+				_(u"HTML Code\tShift+F5"), 
+				_(u"HTML Code"), 
+				os.path.join (self.imagesDir, "html.png"),
+				True)
 
 		self._addRenderTools()
 
@@ -348,8 +348,10 @@ class WikiPagePanel (HtmlPanel):
 
 
 	def __openHtmlCode (self, event):
-		if self.htmlcodePageIndex != -1:
-			self.notebook.SetSelection (self.htmlcodePageIndex)
+		if self.htmlcodePageIndex == -1:
+			self.htmlcodePageIndex = self.__createHtmlCodePanel(self.htmlSizer)
+
+		self.notebook.SetSelection (self.htmlcodePageIndex)
 
 	
 	def _getOldHash (self, page):
