@@ -4,8 +4,8 @@
 
 import wx
 
-from gui.preferences.ConfigElements import BooleanElement
-#from wikipage import WikiPageFactory
+from gui.preferences.ConfigElements import BooleanElement, IntegerElement
+from core.application import Application
 import wikipage
 
 # begin wxGlade: extracode
@@ -19,6 +19,8 @@ class WikiPrefGeneralPanel(wx.Panel):
 		kwds["style"] = wx.TAB_TRAVERSAL
 		wx.Panel.__init__(self, *args, **kwds)
 		self.htmlCodeCheckbox = wx.CheckBox(self, -1, _("Show HTML Code Tab"))
+		self.thumbSizeLabel = wx.StaticText(self, -1, _("Thumbnail Size"))
+		self.thumbSize = wx.SpinCtrl(self, -1, "250", min=1, max=10000)
 
 		self.__set_properties()
 		self.__do_layout()
@@ -32,7 +34,14 @@ class WikiPrefGeneralPanel(wx.Panel):
 	def __do_layout(self):
 		# begin wxGlade: WikiPrefGeneralPanel.__do_layout
 		mainSizer = wx.FlexGridSizer(2, 1, 0, 0)
+		grid_sizer_1 = wx.FlexGridSizer(1, 2, 0, 0)
 		mainSizer.Add(self.htmlCodeCheckbox, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
+		grid_sizer_1.Add(self.thumbSizeLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
+		grid_sizer_1.Add(self.thumbSize, 0, wx.ALL|wx.EXPAND, 2)
+		grid_sizer_1.AddGrowableRow(0)
+		grid_sizer_1.AddGrowableCol(0)
+		grid_sizer_1.AddGrowableCol(1)
+		mainSizer.Add(grid_sizer_1, 1, wx.EXPAND, 0)
 		self.SetSizer(mainSizer)
 		mainSizer.Fit(self)
 		mainSizer.AddGrowableCol(0)
@@ -41,18 +50,22 @@ class WikiPrefGeneralPanel(wx.Panel):
 
 	def LoadState(self):
 		# Показывать ли вкладку с кодом HTML?
-		self.showHtmlCode = BooleanElement (wikipage.WikiPageFactory.showHtmlCodeOptions, self.htmlCodeCheckbox)
+		self.showHtmlCodeOption = BooleanElement (wikipage.WikiPageFactory.showHtmlCodeOptions, self.htmlCodeCheckbox)
+
+		# Размер превьюшек по умолчанию
+		self.thumbSizeOption = IntegerElement (wikipage.WikiPageFactory.thumbSizeOptions, self.thumbSize, 1, 10000)
 	
 
 	def Save (self):
-		changed = self.showHtmlCode.isValueChanged()
+		changed = self.showHtmlCodeOption.isValueChanged()
 
-		self.showHtmlCode.save()
+		self.showHtmlCodeOption.save()
+		self.thumbSizeOption.save()
 
 		if changed:
-			currpage = wx.GetApp().GetTopWindow().wikiroot.selectedPage
-			wx.GetApp().GetTopWindow().wikiroot.selectedPage = None
-			wx.GetApp().GetTopWindow().wikiroot.selectedPage = currpage
+			currpage = Application.wikiroot.selectedPage
+			Application.wikiroot.selectedPage = None
+			Application.wikiroot.selectedPage = currpage
 
 # end of class WikiPrefGeneralPanel
 

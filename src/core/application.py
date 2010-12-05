@@ -6,6 +6,7 @@ import gettext
 from core.config import GeneralConfig, getConfigPath
 import core.i18n
 
+
 class Application (object):
 	def __init__ (self, configFilename):
 		pass
@@ -15,6 +16,7 @@ class Application (object):
 	def init (configFilename):
 		Application.config = GeneralConfig (configFilename)
 		Application.__initLocale()
+		Application.wikiroot = None
 
 
 	@staticmethod

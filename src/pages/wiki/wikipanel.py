@@ -15,7 +15,6 @@ from core.tree import RootWikiPage
 from pages.wiki.htmlimprover import HtmlImprover
 from gui.HtmlTextEditor import HtmlTextEditor
 from core.controller import Controller
-#from wikipage import WikiPageFactory
 import wikipage
 
 
@@ -386,7 +385,7 @@ class WikiPagePanel (HtmlPanel):
 		if os.path.exists (path) and (hash == old_hash or page.readonly):
 			return path
 
-		parser = Parser (page)
+		parser = Parser (page, wikipage.WikiPageFactory.thumbSizeOptions.value)
 
 		text = HtmlImprover.run (parser.toCompleteHtml (page.content) )
 

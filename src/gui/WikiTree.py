@@ -145,9 +145,6 @@ class WikiTree(wx.Panel):
 		self.__saveItemState (item)
 
 
-	#def onWikiClose (self, wikiroot):
-	#	self.saveTreeState()
-
 	def saveTreeState (self):
 		"""
 		Сохранить для каждой страницы развернутость ее узла в дереве

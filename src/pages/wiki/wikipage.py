@@ -9,7 +9,7 @@ import os.path
 from core.tree import WikiPage
 from wikipanel import WikiPagePanel
 import WikiPreferences
-from core.config import BooleanOption
+from core.config import BooleanOption, IntegerOption
 from core.application import Application
 
 
@@ -30,7 +30,12 @@ class WikiPageFactory (object):
 
 
 	# Настройки
+	# Показывать вкладку с HTML-кодом?
 	showHtmlCodeOptions = BooleanOption (Application.config, "Wiki", "ShowHtmlCode", True)
+
+	# Размер превьюшек по умолчанию
+	thumbSizeOptions = IntegerOption (Application.config, "Wiki", "ThumbSize", 250)
+
 
 	def __init__ (self):
 		pass
