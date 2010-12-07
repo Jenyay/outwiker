@@ -17,6 +17,7 @@ import core.system
 from gui.preferences.PrefDialog import PrefDialog
 from gui.about import AboutDialog
 from core.application import Application
+from gui.trayicon import OutwikerTrayIcon
 
 # begin wxGlade: dependencies
 # end wxGlade
@@ -260,33 +261,16 @@ class MainWindow(wx.Frame):
 		self.__restoreWindow()
 	
 
-	def __createTrayMenu (self, taskBarIcon):
-		self.trayMenu = wx.Menu()
-		self.trayMenu.Append (self.ID_RESTORE, _(u"Restore"))
-		self.trayMenu.Append (self.ID_EXIT, _(u"Exit"))
-
-		self.taskBarIcon.Bind(wx.EVT_MENU, self.onRestore, id=self.ID_RESTORE)
-		self.taskBarIcon.Bind(wx.EVT_MENU, self.onExit, id=self.ID_EXIT)
-
-
 	def __createTrayIcon (self):
-		self.icon = wx.EmptyIcon()
-		self.icon.CopyFromBitmap(wx.Bitmap(os.path.join (self.imagesDir, "outwiker_16.png"), wx.BITMAP_TYPE_ANY))
-
-		self.taskBarIcon = wx.TaskBarIcon()
+		self.taskBarIcon = OutwikerTrayIcon()
 		self.taskBarIcon.Bind (wx.EVT_TASKBAR_LEFT_DOWN, self.OnTrayLeftClick)
-		self.taskBarIcon.Bind (wx.EVT_TASKBAR_RIGHT_DOWN, self.OnTrayRightClick)
-
-		self.__createTrayMenu(self.taskBarIcon)
+		self.taskBarIcon.Bind(wx.EVT_MENU, self.onRestore, id=self.taskBarIcon.ID_RESTORE)
+		self.taskBarIcon.Bind(wx.EVT_MENU, self.onExit, id=self.taskBarIcon.ID_EXIT)
 
 
 	def OnTrayLeftClick (self, event):
 		self.__restoreWindow()
 
-
-	def OnTrayRightClick (self, event):
-		self.taskBarIcon.PopupMenu (self.trayMenu)
-	
 
 	def __enableGui (self):
 		"""
@@ -302,6 +286,7 @@ class MainWindow(wx.Frame):
 		for toolId in self.disabledTools:
 			if self.mainToolbar.FindById (toolId) != None:
 				self.mainToolbar.EnableTool (toolId, enabled)
+
 	
 	def __enableMenu (self, enabled):
 		for toolId in self.disabledTools:
@@ -813,7 +798,7 @@ class MainWindow(wx.Frame):
 		"""
 		if Application.config.minimizeOption.value:
 			# В трей добавим иконку, а окно спрячем
-			self.taskBarIcon.SetIcon(self.icon)
+			self.taskBarIcon.ShowIcon()
 			self.Hide()
 		
 
