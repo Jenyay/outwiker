@@ -812,9 +812,9 @@ class DropFilesTarget (wx.FileDropTarget):
 	
 	
 	def OnDropFiles (self, x, y, files):
-		if (self._mainWindow.wikiroot != None and
-				self._mainWindow.wikiroot.selectedPage != None):
+		if (Application.wikiroot != None and
+				Application.wikiroot.selectedPage != None):
 			core.commands.attachFiles (self._mainWindow, 
-						self._mainWindow.wikiroot.selectedPage, 
+						Application.wikiroot.selectedPage, 
 						files)
 			return True

@@ -66,8 +66,6 @@ class CreatePageDialog(wx.Dialog):
 			self.SetTitle(_(u"Edit page properties"))
 			self._prepareForChange (currentPage)
 
-		self.Bind (wx.EVT_BUTTON, self.onOk, self.btnOk)
-
 
 	def onOk (self, event):
 		if not self.testPageTitle (self.pageTitle):
@@ -175,7 +173,6 @@ class CreatePageDialog(wx.Dialog):
 			self.icons.Add (bitmap)
 			item = self.iconsList.InsertImageStringItem (index, fname, index)
 			self.iconsDict[item] = fullpath
-			#print item
 
 			index += 1
 		
@@ -217,22 +214,16 @@ class CreatePageDialog(wx.Dialog):
 		# end wxGlade
 	
 		self._createOkCancelButtons (grid_sizer_1)
+		self.titleTextCtrl.SetFocus()
 	
 
 	def _createOkCancelButtons (self, sizer):
 		# Создание кнопок Ok/Cancel
-		buttonsSizer = wx.StdDialogButtonSizer ()
+		buttonsSizer = self.CreateButtonSizer (wx.OK | wx.CANCEL)
 		sizer.AddSpacer(0)
 		sizer.Add (buttonsSizer, 1, wx.ALIGN_RIGHT | wx.ALL, border = 2)
+		self.Bind (wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
 
-		self.btnOk = wx.Button (self, wx.ID_OK)
-		self.btnCancel = wx.Button (self, wx.ID_CANCEL)
-
-		buttonsSizer.Add (self.btnOk)
-		buttonsSizer.Add (self.btnCancel)
-
-		#self.Bind (wx.EVT_BUTTON, self.onOk, self.btnOk)
-		
 		sizer.Fit(self)
 		self.Layout()
 

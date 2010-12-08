@@ -36,12 +36,10 @@ class AboutDialog(wx.Dialog):
 		self.wmzTextCtrl = wx.TextCtrl(self.donatePane, -1, _("Z427584680984"))
 		self.label_9 = wx.StaticText(self.donatePane, -1, _("Yandex.Money"))
 		self.yandexTextCtrl = wx.TextCtrl(self.donatePane, -1, _("41001580829031"), style=wx.TE_READONLY)
-		self.okButton = wx.Button(self, wx.OK, _("OK"))
+		self.okButton = wx.Button(self, wx.ID_OK, "")
 
 		self.__set_properties()
 		self.__do_layout()
-
-		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.OK)
 		# end wxGlade
 
 		self.currversion = currversion
@@ -52,6 +50,8 @@ class AboutDialog(wx.Dialog):
 		# begin wxGlade: AboutDialog.__set_properties
 		self.SetTitle(_("About"))
 		self.titleLabel.SetFont(wx.Font(15, wx.DEFAULT, wx.NORMAL, wx.NORMAL, 0, ""))
+		self.okButton.SetFocus()
+		self.okButton.SetDefault()
 		# end wxGlade
 
 	def __do_layout(self):
@@ -111,9 +111,6 @@ class AboutDialog(wx.Dialog):
 		self.Layout()
 		self.Centre()
 		# end wxGlade
-
-	def onOk(self, event): # wxGlade: AboutDialog.<event_handler>
-		self.Close()
 
 # end of class AboutDialog
 

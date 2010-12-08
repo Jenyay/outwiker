@@ -20,7 +20,7 @@ class OverwriteDialog(wx.Dialog):
 		self.overwriteAll = wx.Button(self, -1, _("Overwrite all"))
 		self.button_1 = wx.Button(self, -1, _("Skip"))
 		self.skipAll = wx.Button(self, -1, _("Skip all"))
-		self.cancel = wx.Button(self, -1, _("Cancel"))
+		self.cancel = wx.Button(self, wx.ID_CANCEL, _("&Cancel"))
 
 		self.__set_properties()
 		self.__do_layout()
@@ -29,8 +29,9 @@ class OverwriteDialog(wx.Dialog):
 		self.Bind(wx.EVT_BUTTON, self.onOverwriteAll, self.overwriteAll)
 		self.Bind(wx.EVT_BUTTON, self.onSkip, self.button_1)
 		self.Bind(wx.EVT_BUTTON, self.onSkipAll, self.skipAll)
-		self.Bind(wx.EVT_BUTTON, self.onCancel, self.cancel)
 		# end wxGlade
+
+		#self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)
 
 		self.ID_OVERWRITE = 1
 		self.ID_SKIP = 2
@@ -39,10 +40,14 @@ class OverwriteDialog(wx.Dialog):
 		# чтобы не показывать диалог после выбора "... all"
 		self.flag = 0
 
+		self.SetEscapeId (wx.ID_CANCEL)
+
 
 	def __set_properties(self):
 		# begin wxGlade: OverwriteDialog.__set_properties
 		self.SetTitle(_("Overwrite Files"))
+		self.overwrite.SetFocus()
+		self.overwrite.SetDefault()
 		# end wxGlade
 
 	def __do_layout(self):
@@ -93,8 +98,8 @@ class OverwriteDialog(wx.Dialog):
 		self.EndModal (self.ID_SKIP)
 
 	
-	def onCancel(self, event): # wxGlade: OverwriteDialog.<event_handler>
-		self.EndModal (wx.ID_CANCEL)
+	#def onCancel(self, event): # wxGlade: OverwriteDialog.<event_handler>
+	#	self.EndModal (wx.ID_CANCEL)
 
 # end of class OverwriteDialog
 
