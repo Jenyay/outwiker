@@ -32,7 +32,7 @@ class CurrentPagePanel(wx.Panel):
 		# begin wxGlade: CurrentPagePanel.__init__
 		kwds["style"] = wx.TAB_TRAVERSAL
 		wx.Panel.__init__(self, *args, **kwds)
-		self.bookmarkButton = wx.BitmapButton(self, -1, wx.Bitmap("images/star_gray.png", wx.BITMAP_TYPE_ANY))
+		self.bookmarkButton = wx.BitmapButton(self, -1, wx.Bitmap(os.path.join (self.imagesDir, "star_gray.png"), wx.BITMAP_TYPE_ANY))
 		self.titleLabel = wx.StaticText(self, -1, "")
 		self.tagsLabel = wx.StaticText(self, -1, _("[]"))
 		self.attachPAnel = AttachPanel(self, -1)

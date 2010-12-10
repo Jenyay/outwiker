@@ -334,7 +334,7 @@ bb6d3c6dd2b1182ca4877d05f7e67a91  /home/jenyay/soft/outwiker/trunk/distrib/outwi
 40793a50b306da7b85b476bf3d228bea  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/images/text_heading_6.png
 461b99941833c307b4a21fb300b6677b  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/images/table.png
 1da6b28fc4098f08fa12ef47a84796e6  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/gui/trayicon.py
-d0038a02156713110075de7c5e8a83f2  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/gui/LocalSearchPanel.py
+808c579fd68e2fd3e2d9924a3bfac16f  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/gui/LocalSearchPanel.py
 5b3af941fe26d5f028325607fc9805f8  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/gui/about.py
 779098e4aa6300fc6038c69dc82fbb81  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/gui/outwiker.py
 2762f57f3181116e9790d3ba6dc250a8  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/gui/CreatePageDialog.py
@@ -370,7 +370,7 @@ c8ca219ff43a2fb1dea67de2582123af  /home/jenyay/soft/outwiker/trunk/distrib/outwi
 fbd3929a893b147ae0940d48d533e023  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/gui/images/open.png
 bb6d3c6dd2b1182ca4877d05f7e67a91  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/gui/images/save.png
 0cb6ac9aed7870ceb807c612072d8762  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/gui/images/attach.png
-fb7f2383957e8c39d6f69c257f2e5390  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/gui/CurrentPagePanel.py
+6f8e1adde721c19635286793c133f67a  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/gui/CurrentPagePanel.py
 14b008ea1f04512acd2eaa9e1af25e5c  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/gui/htmlview.py
 5567d613d4055a473481d420080f6cd2  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/usr/share/applications/outwiker.desktop
 1eeeebb93148be138037ab514d32b00d  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/usr/share/pixmaps/outwiker.png

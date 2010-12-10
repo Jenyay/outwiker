@@ -22,8 +22,8 @@ class LocalSearchPanel(wx.Panel):
 		kwds["style"] = wx.TAB_TRAVERSAL
 		wx.Panel.__init__(self, *args, **kwds)
 		self.phraseTextCtrl = wx.TextCtrl(self, -1, "")
-		self.nextSearchBtn = wx.BitmapButton(self, -1, wx.Bitmap("images/arrow_down.png", wx.BITMAP_TYPE_ANY))
-		self.prevSearchBtn = wx.BitmapButton(self, -1, wx.Bitmap("images/arrow_up.png", wx.BITMAP_TYPE_ANY))
+		self.nextSearchBtn = wx.BitmapButton(self, -1, wx.Bitmap(os.path.join (self.imagesDir, "arrow_down.png"), wx.BITMAP_TYPE_ANY))
+		self.prevSearchBtn = wx.BitmapButton(self, -1, wx.Bitmap(os.path.join (self.imagesDir, "arrow_up.png"), wx.BITMAP_TYPE_ANY))
 		self.resultLabel = wx.StaticText(self, -1, "")
 
 		self.__set_properties()
