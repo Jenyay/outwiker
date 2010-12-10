@@ -373,10 +373,20 @@ class WikiPagePanel (HtmlPanel):
 
 
 	def __getFullContent (self, page):
+		"""
+		Получить контент для расчета контрольной суммы, по которой определяется, нужно ли обновлять страницу
+		"""
+		# Текст страницы
 		result = page.content.encode ("unicode_escape")
+
+		# Список прикрепленных файлов
 		for fname in page.attachment:
 			result += fname.encode ("unicode_escape")
 			result += unicode (os.stat (fname).st_mtime)
+
+		# Настройки, касающиеся вида вики-страницы
+		result += str (wikipage.WikiPageFactory.showAttachInsteadBlankOptions.value)
+		result += str (wikipage.WikiPageFactory.thumbSizeOptions.value)
 		return result
 
 	
@@ -389,7 +399,10 @@ class WikiPagePanel (HtmlPanel):
 
 		parser = Parser (page, wikipage.WikiPageFactory.thumbSizeOptions.value)
 
-		text = HtmlImprover.run (parser.toCompleteHtml (page.content) )
+		content = page.content if (len (page.content) > 0 or
+				not wikipage.WikiPageFactory.showAttachInsteadBlankOptions.value) else self.__generateAttachList (page)
+
+		text = HtmlImprover.run (parser.toCompleteHtml (content) )
 
 		with open (path, "wb") as fp:
 			fp.write (text.encode ("utf-8"))
@@ -397,6 +410,19 @@ class WikiPagePanel (HtmlPanel):
 		self._saveHash (page, hash)
 
 		return path
+
+
+	def __generateAttachList (self, page):
+		"""
+		Сгенерировать список прикрепленных файлов.
+		Используется в случае, если текст страницы пустой
+		"""
+		files = [os.path.basename (path) for path in page.attachment]
+		files.sort()
+
+		result = reduce (lambda res, path: res + "Attach:%s\n" % path, files, u"")
+
+		return result
 
 
 	def removeGui (self):

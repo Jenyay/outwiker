@@ -21,6 +21,7 @@ class WikiPrefGeneralPanel(wx.Panel):
 		self.htmlCodeCheckbox = wx.CheckBox(self, -1, _("Show HTML Code Tab"))
 		self.thumbSizeLabel = wx.StaticText(self, -1, _("Thumbnail Size"))
 		self.thumbSize = wx.SpinCtrl(self, -1, "250", min=1, max=10000)
+		self.showAttachInsteadBlank = wx.CheckBox(self, -1, _("Show Attachments Instead Blank page"))
 
 		self.__set_properties()
 		self.__do_layout()
@@ -28,7 +29,7 @@ class WikiPrefGeneralPanel(wx.Panel):
 
 	def __set_properties(self):
 		# begin wxGlade: WikiPrefGeneralPanel.__set_properties
-		pass
+		self.showAttachInsteadBlank.SetValue(1)
 		# end wxGlade
 
 	def __do_layout(self):
@@ -38,9 +39,11 @@ class WikiPrefGeneralPanel(wx.Panel):
 		mainSizer.Add(self.htmlCodeCheckbox, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
 		grid_sizer_1.Add(self.thumbSizeLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
 		grid_sizer_1.Add(self.thumbSize, 0, wx.ALL|wx.EXPAND, 2)
+		grid_sizer_1.Add(self.showAttachInsteadBlank, 0, 0, 0)
 		grid_sizer_1.AddGrowableRow(0)
 		grid_sizer_1.AddGrowableCol(0)
 		grid_sizer_1.AddGrowableCol(1)
+		grid_sizer_1.AddGrowableCol(2)
 		mainSizer.Add(grid_sizer_1, 1, wx.EXPAND, 0)
 		self.SetSizer(mainSizer)
 		mainSizer.Fit(self)
@@ -54,13 +57,19 @@ class WikiPrefGeneralPanel(wx.Panel):
 
 		# Размер превьюшек по умолчанию
 		self.thumbSizeOption = IntegerElement (wikipage.WikiPageFactory.thumbSizeOptions, self.thumbSize, 1, 10000)
-	
+
+		self.showAttachInsteadBlankOption = BooleanElement (wikipage.WikiPageFactory.showAttachInsteadBlankOptions, 
+				self.showAttachInsteadBlank)
+
 
 	def Save (self):
-		changed = self.showHtmlCodeOption.isValueChanged()
+		changed = self.showHtmlCodeOption.isValueChanged() or \
+			self.thumbSizeOption.isValueChanged() or \
+			self.showAttachInsteadBlankOption.isValueChanged()
 
 		self.showHtmlCodeOption.save()
 		self.thumbSizeOption.save()
+		self.showAttachInsteadBlankOption.save()
 
 		if changed:
 			currpage = Application.wikiroot.selectedPage

@@ -68,6 +68,8 @@ class PrefDialog(wx.Dialog):
 
 		self.treeBook.ExpandNode (0)
 		self.treeBook.SetSelection (0)
+
+		self.generalPage.minimizeCheckBox.SetFocus()
 	
 
 	def _createPagesForPages (self):
@@ -100,19 +102,12 @@ class PrefDialog(wx.Dialog):
 		"""
 		Создать кнопки Ok / Cancel
 		"""
-		buttonsSizer = wx.StdDialogButtonSizer ()
+		buttonsSizer = self.CreateButtonSizer (wx.OK | wx.CANCEL)
 		sizer.AddSpacer(0)
 		sizer.Add (buttonsSizer, 1, wx.ALIGN_RIGHT | wx.ALL, border = 2)
 
-		self.btnOk = wx.Button (self, wx.ID_OK)
-		self.btnCancel = wx.Button (self, wx.ID_CANCEL)
-
-		buttonsSizer.Add (self.btnOk)
-		buttonsSizer.Add (self.btnCancel)
-
-		self.Bind (wx.EVT_BUTTON, self.onOk, self.btnOk)
+		self.Bind (wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
 		
-		#sizer.Fit(self)
 		self.Layout()
 	
 

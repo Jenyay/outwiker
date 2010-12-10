@@ -28,13 +28,15 @@ class WikiPageFactory (object):
 	# Название страницы, показываемое пользователю
 	title = _(u"Wiki Page")
 
-
 	# Настройки
 	# Показывать вкладку с HTML-кодом?
 	showHtmlCodeOptions = BooleanOption (Application.config, "Wiki", "ShowHtmlCode", True)
 
 	# Размер превьюшек по умолчанию
 	thumbSizeOptions = IntegerOption (Application.config, "Wiki", "ThumbSize", 250)
+	
+	# Показывать список прикрепленных файлов вместо пустой страницы?
+	showAttachInsteadBlankOptions = BooleanOption (Application.config, "Wiki", "ShowAttachInsteadBlank", True)
 
 
 	def __init__ (self):
