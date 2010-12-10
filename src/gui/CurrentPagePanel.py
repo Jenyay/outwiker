@@ -32,7 +32,7 @@ class CurrentPagePanel(wx.Panel):
 		# begin wxGlade: CurrentPagePanel.__init__
 		kwds["style"] = wx.TAB_TRAVERSAL
 		wx.Panel.__init__(self, *args, **kwds)
-		self.bookmarkBitmap = wx.BitmapButton(self, -1, wx.Bitmap(os.path.join (self.imagesDir, "star_gray.png"), wx.BITMAP_TYPE_ANY))
+		self.bookmarkButton = wx.BitmapButton(self, -1, wx.Bitmap("images/star_gray.png", wx.BITMAP_TYPE_ANY))
 		self.titleLabel = wx.StaticText(self, -1, "")
 		self.tagsLabel = wx.StaticText(self, -1, _("[]"))
 		self.attachPAnel = AttachPanel(self, -1)
@@ -40,7 +40,7 @@ class CurrentPagePanel(wx.Panel):
 		self.__set_properties()
 		self.__do_layout()
 
-		self.Bind(wx.EVT_BUTTON, self.onBookmark, self.bookmarkBitmap)
+		self.Bind(wx.EVT_BUTTON, self.onBookmark, self.bookmarkButton)
 		# end wxGlade
 
 		self.currentPage = None
@@ -79,11 +79,14 @@ class CurrentPagePanel(wx.Panel):
 
 	def updateBookmarkBtn (self):
 		imagePath = self.grayStarImage
+		tooltip = _(u"Add to Bookmarks")
 
 		if self.currentPage != None and self.currentPage.root.bookmarks.pageMarked (self.currentPage):
 			imagePath = self.goldStarImage
+			tooltip = _(u"Remove from Bookmarks")
 
-		self.bookmarkBitmap.SetBitmapLabel (wx.Bitmap(imagePath, wx.BITMAP_TYPE_ANY))
+		self.bookmarkButton.SetBitmapLabel (wx.Bitmap(imagePath, wx.BITMAP_TYPE_ANY))
+		self.bookmarkButton.SetToolTipString (tooltip)
 
 
 	def onBookmarksChanged (self, bookmarks):
@@ -125,7 +128,7 @@ class CurrentPagePanel(wx.Panel):
 	
 	def __set_properties(self):
 		# begin wxGlade: CurrentPagePanel.__set_properties
-		self.bookmarkBitmap.SetSize(self.bookmarkBitmap.GetBestSize())
+		self.bookmarkButton.SetSize(self.bookmarkButton.GetBestSize())
 		self.titleLabel.SetFont(wx.Font(14, wx.DEFAULT, wx.NORMAL, wx.NORMAL, 0, "MS Shell Dlg 2"))
 		self.tagsLabel.SetFont(wx.Font(12, wx.MODERN, wx.ITALIC, wx.NORMAL, 0, ""))
 		self.attachPAnel.SetMinSize((-1, 150))
@@ -138,7 +141,7 @@ class CurrentPagePanel(wx.Panel):
 		attachSizer = wx.FlexGridSizer(1, 1, 0, 0)
 		contentSizer = wx.FlexGridSizer(1, 1, 0, 0)
 		titleSizer = wx.FlexGridSizer(1, 3, 0, 0)
-		titleSizer.Add(self.bookmarkBitmap, 0, 0, 0)
+		titleSizer.Add(self.bookmarkButton, 0, 0, 0)
 		titleSizer.Add(self.titleLabel, 0, wx.ALL|wx.EXPAND|wx.ALIGN_CENTER_VERTICAL, 2)
 		titleSizer.Add(self.tagsLabel, 0, wx.ALL|wx.EXPAND|wx.ALIGN_CENTER_VERTICAL, 2)
 		mainSizer.Add(titleSizer, 1, wx.EXPAND, 0)
