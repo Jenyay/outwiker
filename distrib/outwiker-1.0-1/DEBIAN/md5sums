@@ -4,7 +4,7 @@ c0d763e9bc95156ddf875e3b6390cd2e  /home/jenyay/soft/outwiker/trunk/distrib/outwi
 d41d8cd98f00b204e9800998ecf8427e  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/pages/wiki/__init__.py
 213f40aa65646b43e81174015555d413  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/pages/wiki/wikiparser.py
 37953c4b540bc091ef0b3006ac04ef92  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/pages/wiki/WikiPreferences.py
-373d41848781e62b10311ff062ce3e72  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/pages/wiki/wikipanel.py
+d7e050d053bbec7e5d743eacb442649f  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/pages/wiki/wikipanel.py
 d41d8cd98f00b204e9800998ecf8427e  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/pages/__init__.py
 c7f091d637a4cc16460fc16d17fb40a4  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/pages/text/textpage.py
 f9ca28825b1c89b3d843ea0cb4bc0ac9  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/pages/text/TextPanel.py
@@ -165,7 +165,7 @@ c0e355b6c0906231f335ec44b306abe4  /home/jenyay/soft/outwiker/trunk/distrib/outwi
 55a687e848244b76f8d8249b111df860  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/help/help_rus/Пользователям/FAQ/__icon.png
 3f5bfe3c13a6b40a896dbbd6ef4bf6c5  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/copyright
 8d731b2b555d4eb8cf70e2150a757397  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/outwiker.py
-914418fa78418b54932a46d80a0506dc  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/version.txt
+ef1a722b1e1fe61a08752e36c9cf7026  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/version.txt
 d41d8cd98f00b204e9800998ecf8427e  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/libs/__init__.py
 953743ecb6c1dbd97778e09a7006518c  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/libs/pyparsing.py
 b950cf4d7f3bda63a2e6cb4f22a3a785  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/core/search.py

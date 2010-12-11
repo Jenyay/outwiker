@@ -420,7 +420,7 @@ class WikiPagePanel (HtmlPanel):
 		files = [os.path.basename (path) for path in page.attachment]
 		files.sort()
 
-		result = reduce (lambda res, path: res + "Attach:%s\n" % path, files, u"")
+		result = reduce (lambda res, path: res + "[[%s -> Attach:%s]]\n" % (path, path), files, u"")
 
 		return result
 
