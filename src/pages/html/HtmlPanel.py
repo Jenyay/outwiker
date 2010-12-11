@@ -152,7 +152,7 @@ class HtmlPanel(BaseTextPanel):
 	def _openDefaultPage(self):
 		assert self._currentpage != None
 
-		if len (self._currentpage.content) > 0:
+		if len (self._currentpage.content) > 0 or len (self._currentpage.attachment) > 0:
 			self.notebook.SetSelection (self.resultPageIndex)
 		else:
 			self.notebook.SetSelection (self.codePageIndex)
