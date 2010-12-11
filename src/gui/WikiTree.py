@@ -111,6 +111,19 @@ class WikiTree(wx.Panel):
 		# Сворачивание/разворачивание элементов
 		self.treeCtrl.Bind (wx.EVT_TREE_ITEM_COLLAPSED, self.onTreeStateChanged)
 		self.treeCtrl.Bind (wx.EVT_TREE_ITEM_EXPANDED, self.onTreeStateChanged)
+
+		self.treeCtrl.Bind (wx.EVT_TREE_ITEM_ACTIVATED, self.onTreeItemActivated)
+	
+
+	def onTreeItemActivated (self, event):
+		"""
+		"""
+		item = event.GetItem()
+		if not item.IsOk():
+			return
+
+		page = self.treeCtrl.GetItemData (item).GetData()
+		core.commands.editPage (self, page)
 		
 
 	def BindPopupMenuEvents (self):
