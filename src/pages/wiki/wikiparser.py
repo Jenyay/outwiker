@@ -348,9 +348,9 @@ class Parser (object):
 	
 
 	def __getUrlToken (self):
-		token =  Regex ("([0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}|(((news|telnet|nttp|file|http|ftp|https)://)|(www|ftp)[-A-Za-z0-9]*\\.)[-A-Za-z0-9\\.]+)(:[0-9]*)?(/[-A-Za-z0-9_\\$\\.\\+\\!\\*\\(\\):@&=\\?/~\\#\\%]*)?", re.IGNORECASE)
+		token =  Regex ("([0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}|(((news|telnet|nttp|file|http|ftp|https)://)|(www|ftp)\\.)[-A-Za-z0-9\\.]+[-A-Za-z0-9]+)(:[0-9]*)?(/([-A-Za-z0-9_,\\$\\.\\+\\!\\*\\(\\):@&=\\?/~\\#\\%]*[-A-Za-z0-9_\\$\\+\\!\\*\\(\\):@&=\\?/~\\#\\%])?)?", re.IGNORECASE)
 
-		token.setParseAction(self.__convertToLink)
+		token.setParseAction(self.__convertToUrlLink)
 		return token
 
 
@@ -706,6 +706,24 @@ class Parser (object):
 			return self.__convertLinkLine (t[0])
 
 		return self.__convertEmptyLink (t[0])
+
+
+	def __convertToUrlLink (self, s, l, t):
+		"""
+		Преобразовать ссылку на инетрнет-адрес
+		"""
+		if (not t[0].startswith ("http://") and
+				not t[0].startswith ("ftp://") and
+				not t[0].startswith ("news://") and
+				not t[0].startswith ("gopher://") and
+				not t[0].startswith ("telnet://") and
+				not t[0].startswith ("nttp://") and
+				not t[0].startswith ("file://") and
+				not t[0].startswith ("https://")
+				):
+			return self.__getUrlTag ("http://" + t[0], t[0])
+
+		return self.__getUrlTag (t[0], t[0])
 
 
 	def __convertThumb (self, s, l, t):

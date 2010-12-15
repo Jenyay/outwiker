@@ -2,7 +2,7 @@ e6e5fc6486e10f67e6d56fb5954d9224  /home/jenyay/soft/outwiker/trunk/distrib/outwi
 755ece2f334d4c8fb27b00a3fb495bc6  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/pages/wiki/htmlimprover.py
 c0d763e9bc95156ddf875e3b6390cd2e  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/pages/wiki/wikipage.py
 d41d8cd98f00b204e9800998ecf8427e  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/pages/wiki/__init__.py
-213f40aa65646b43e81174015555d413  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/pages/wiki/wikiparser.py
+095e9d5d66819fb728c2f64da5a7632d  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/pages/wiki/wikiparser.py
 37953c4b540bc091ef0b3006ac04ef92  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/pages/wiki/WikiPreferences.py
 d7e050d053bbec7e5d743eacb442649f  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/pages/wiki/wikipanel.py
 d41d8cd98f00b204e9800998ecf8427e  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/pages/__init__.py
@@ -17,8 +17,8 @@ ff965e2c23d4083f8f2fd8ef0e8af4da  /home/jenyay/soft/outwiker/trunk/distrib/outwi
 a40c2c5a338cf0b9cedfd0f24c74ba8b  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/pages/search/searchpage.py
 d41d8cd98f00b204e9800998ecf8427e  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/pages/search/__init__.py
 f6ccec31aee0aa5380e42c74459a5a23  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/pages/search/app.py
-352d33e8143e00155db5915082c1858e  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/locale/ru/LC_MESSAGES/outwiker.mo
-0b91c18ea7fc5e4e57419b1725f2ee7a  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/locale/ru/LC_MESSAGES/outwiker.po
+f375214cc7f308b1fe23f87d03165371  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/locale/ru/LC_MESSAGES/outwiker.mo
+99e911cae467cbee1bda993473b64d3a  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/locale/ru/LC_MESSAGES/outwiker.po
 21d0b0b9dd34c70b9d764311a6efbd8a  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/locale/outwiker.pot
 283acb6bca339b6786dde3ae933d4576  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/locale/en/LC_MESSAGES/outwiker.mo
 17bd3186d69079a65825a25328b24490  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/locale/en/LC_MESSAGES/outwiker.po
@@ -42,10 +42,10 @@ af6e9921c6ebce4094b93db7ca6a6d6f  /home/jenyay/soft/outwiker/trunk/distrib/outwi
 d41d8cd98f00b204e9800998ecf8427e  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/help/help_rus/# Search/__page.text
 a3d272cd213fc2b182871a11cfcd9c2c  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/help/help_rus/# Search/__page.opt
 530887306aa20d3aaf2b5c6191bdaf72  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/help/help_rus/# Search/__icon.png
-2a84722dc5c37b90af9ce21e7856cf29  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/help/help_rus/__page.opt
-47e6d3ba899ff87aa8bd42b811c00115  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/help/help_rus/О программе и контакты/История версий/__page.text
-a6d9aa0f42229eaf674762a9a303e9e2  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/help/help_rus/О программе и контакты/История версий/__content.html
-b23c05ea4c4451296ac80a6b68dee320  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/help/help_rus/О программе и контакты/История версий/__page.opt
+125868b968e4cdb9f49530da50cc626f  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/help/help_rus/__page.opt
+827f555958f83f4f1920a5311f4c7c18  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/help/help_rus/О программе и контакты/История версий/__page.text
+8d0a085b9bae1368507f88b385263b46  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/help/help_rus/О программе и контакты/История версий/__content.html
+66be7e5af059749b9fe9718d030e0cdd  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/help/help_rus/О программе и контакты/История версий/__page.opt
 55a687e848244b76f8d8249b111df860  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/help/help_rus/О программе и контакты/История версий/__icon.png
 2d6b7a15fbdc1fee0937448171d30f43  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/help/help_rus/О программе и контакты/__page.text
 ec49924009b1d1450c91182c8e6c9073  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/help/help_rus/О программе и контакты/__content.html
@@ -148,9 +148,9 @@ df90b91fad18f134c1d32150c44b2b2f  /home/jenyay/soft/outwiker/trunk/distrib/outwi
 6d1b2113d2f3ad184fa81504284a2ed1  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/help/help_rus/Пользователям/Типы страниц/__content.html
 f762bb0b70ec236cfb99d3cab7f31870  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/help/help_rus/Пользователям/Типы страниц/__page.opt
 55a687e848244b76f8d8249b111df860  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/help/help_rus/Пользователям/Типы страниц/__icon.png
-31bfb1d459aad6c72010bf05a11d2c9f  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/help/help_rus/Пользователям/Горячие клавиши/__page.text
-7e1537afd53b2e9c6223555462a85a51  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/help/help_rus/Пользователям/Горячие клавиши/__content.html
-8c87b281078c40af00fff281512e34e0  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/help/help_rus/Пользователям/Горячие клавиши/__page.opt
+d2c084f163c6ad01423e44066f54e572  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/help/help_rus/Пользователям/Горячие клавиши/__page.text
+ad30ce50a49b99539d8795c4d94164a4  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/help/help_rus/Пользователям/Горячие клавиши/__content.html
+1cc1bbedc632a0f599dca6b809cf3811  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/help/help_rus/Пользователям/Горячие клавиши/__page.opt
 55a687e848244b76f8d8249b111df860  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/help/help_rus/Пользователям/Горячие клавиши/__icon.png
 ba1d86227a5fc326ca54549dc347113a  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/help/help_rus/Пользователям/Особенности программы/__page.text
 4dd57c3e29149ee0b88682e1002354c4  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/help/help_rus/Пользователям/Особенности программы/__content.html
@@ -165,7 +165,7 @@ c0e355b6c0906231f335ec44b306abe4  /home/jenyay/soft/outwiker/trunk/distrib/outwi
 55a687e848244b76f8d8249b111df860  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/help/help_rus/Пользователям/FAQ/__icon.png
 3f5bfe3c13a6b40a896dbbd6ef4bf6c5  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/copyright
 8d731b2b555d4eb8cf70e2150a757397  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/outwiker.py
-9fd4d65b385c903cf8d629d457111fa3  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/version.txt
+48f0f2610ee200d07b0acd20f9891855  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/version.txt
 d41d8cd98f00b204e9800998ecf8427e  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/libs/__init__.py
 953743ecb6c1dbd97778e09a7006518c  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/libs/pyparsing.py
 b950cf4d7f3bda63a2e6cb4f22a3a785  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.0-1/opt/outwiker/core/search.py

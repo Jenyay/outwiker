@@ -584,11 +584,11 @@ msgstr "Показывать номера строк"
 
 #: gui/preferences/GeneralPanel.py:24
 msgid "Minimize to tray"
-msgstr "Сворачивать в трэй"
+msgstr "Сворачивать в трей"
 
 #: gui/preferences/GeneralPanel.py:25
 msgid "Start with main window iconized"
-msgstr "При запуске сворачивать в трэй"
+msgstr "При запуске сворачивать в трей"
 
 #: gui/preferences/GeneralPanel.py:26
 msgid "Ask before exit"

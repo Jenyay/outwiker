@@ -140,7 +140,7 @@ class ParserTest (unittest.TestCase):
 		result = u'бла-бла-бла \n<A HREF="%s">%s</A> бла-бла-бла\nбла-бла-бла' % (self.url2, self.url2)
 
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
-
+	
 
 	def testCommentLink1 (self):
 		comment = u"Ссылко"
@@ -894,4 +894,87 @@ sdfsdf || centered || right aligned||
 		result = u'<A HREF="http://example.com/">http://example.com/</A>,'
 
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+	
 
+	def testUrlParse2 (self):
+		text = u"http://example.com/."
+		result = u'<A HREF="http://example.com/">http://example.com/</A>.'
+
+		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+	def testUrlParse3 (self):
+		text = u"http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz),"
+		result = u'<A HREF="http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)">http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)</A>,'
+
+		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+	
+
+	def testUrlParse4 (self):
+		text = u"http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)."
+		result = u'<A HREF="http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)">http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)</A>.'
+
+		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+	
+
+	def testUrlParse5 (self):
+		text = u"http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/,"
+		result = u'<A HREF="http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/">http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/</A>,'
+
+		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+	
+	def testUrlParse6 (self):
+		text = u"http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/."
+		result = u'<A HREF="http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/">http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/</A>.'
+
+		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+	def testUrlParse7 (self):
+		text = u"http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/"
+		result = u'<A HREF="http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/">http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/</A>'
+
+		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+	
+	def testUrlParse8 (self):
+		text = u"http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/"
+		result = u'<A HREF="http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/">http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/</A>'
+
+		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+	
+
+	def testUrlParse9 (self):
+		text = u"www.jenyay.net"
+		result = u'<A HREF="http://www.jenyay.net">www.jenyay.net</A>'
+
+		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+	
+
+	def testUrlParse10 (self):
+		text = u"www.jenyay.net,"
+		result = u'<A HREF="http://www.jenyay.net">www.jenyay.net</A>,'
+
+		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+	def testUrlParse11 (self):
+		text = u"www.jenyay.net."
+		result = u'<A HREF="http://www.jenyay.net">www.jenyay.net</A>.'
+
+		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+	def testUrlParse12 (self):
+		text = u"www.jenyay.net/"
+		result = u'<A HREF="http://www.jenyay.net/">www.jenyay.net/</A>'
+
+		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+	def testUrlParse9 (self):
+		text = u"ftp.jenyay.net"
+		result = u'<A HREF="http://ftp.jenyay.net">ftp.jenyay.net</A>'
+
+		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
