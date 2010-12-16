@@ -365,7 +365,9 @@ class MainWindow(wx.Frame):
 			path = self.recentWiki[n]
 			self._recentId[id] = path
 
-			self.fileMenu.Append (id, path, "", wx.ITEM_NORMAL)
+			title = path if n + 1 > 9 else u"&{n}. {path}".format (n=n + 1, path=path)
+
+			self.fileMenu.Append (id, title, "", wx.ITEM_NORMAL)
 			
 			self.Bind(wx.EVT_MENU, self.onRecent, id=id)
 	

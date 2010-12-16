@@ -291,35 +291,35 @@ msgstr "&Копировать\tCtrl+C"
 
 #: gui/MainWindow.py:118
 msgid "&Paste\tCtrl+V"
-msgstr "&Вставить\tCtrl+V"
+msgstr "В&ставить\tCtrl+V"
 
 #: gui/MainWindow.py:120
 msgid "Pr&eferences...\tCtrl+F8"
-msgstr "&Настройки...\tCtrl+F8"
+msgstr "&Параметры...\tCtrl+F8"
 
 #: gui/MainWindow.py:121
 msgid "&Edit"
-msgstr "&Редактирование"
+msgstr "&Правка"
 
 #: gui/MainWindow.py:123
 msgid "Add &sibling page…\tCtrl+T"
-msgstr "Добавить страницу того же уровня…\tCtrl+T"
+msgstr "Добавить &страницу того же уровня…\tCtrl+T"
 
 #: gui/MainWindow.py:124
 msgid "Add &child Page…\tCtrl+Shift+T"
-msgstr "Добавить дочернюю страницу…\tCtrl+Shift+T"
+msgstr "Добавить &дочернюю страницу…\tCtrl+Shift+T"
 
 #: gui/MainWindow.py:126
 msgid "Rename page\tF2"
-msgstr "Переименовать страницу\tF2"
+msgstr "&Переименовать страницу\tF2"
 
 #: gui/MainWindow.py:127
 msgid "Remove page…\tCtrl+Shift+Del"
-msgstr "Удалить страницу…\tCtrl+Shift+Del"
+msgstr "&Удалить страницу…\tCtrl+Shift+Del"
 
 #: gui/MainWindow.py:128
 msgid "Edit page…\tCtrl+E"
-msgstr "Редактировать страницу…\tCtrl+E"
+msgstr "&Редактировать страницу…\tCtrl+E"
 
 #: gui/MainWindow.py:129
 msgid "&Tree"
@@ -327,31 +327,31 @@ msgstr "&Дерево"
 
 #: gui/MainWindow.py:131
 msgid "&Global search…\tCtrl+Shift+F"
-msgstr "&Глобальный поиск…\tCtrl+Shift+F"
+msgstr "Глобальный &поиск…\tCtrl+Shift+F"
 
 #: gui/MainWindow.py:132
 msgid "&Attach Files…\tCtrl+Alt+A"
-msgstr "&Прикрепить файлы…\tCtrl+Alt+A"
+msgstr "Прикрепить &файлы…\tCtrl+Alt+A"
 
 #: gui/MainWindow.py:134
 msgid "Copy page's title to clipboard\tCtrl+Shift+D"
-msgstr "Копировать заголовок страницы в буфер обмена\tCtrl+Shift+D"
+msgstr "Копировать &заголовок страницы в буфер обмена\tCtrl+Shift+D"
 
 #: gui/MainWindow.py:135
 msgid "Copy &page's path to clipboard\tCtrl+Shift+P"
-msgstr "Копировать путь до страницы в буфер обмена\tCtrl+Shift+P"
+msgstr "Копировать путь до &страницы в буфер обмена\tCtrl+Shift+P"
 
 #: gui/MainWindow.py:136
 msgid "Copy a&ttaches path to clipboard\tCtrl+Shift+A"
-msgstr "Копировать путь до прикрепленных файлов в буфер обмена\tCtrl+Shift+A"
+msgstr "Копировать путь до п&рикрепленных файлов в буфер обмена\tCtrl+Shift+A"
 
 #: gui/MainWindow.py:137
 msgid "Copy page link to clipboard\tCtrl+Shift+L"
-msgstr "Копировать ссылку на страницу в буфер обмена"
+msgstr "Копировать ссы&лку на страницу в буфер обмена"
 
 #: gui/MainWindow.py:139
 msgid "Reload wiki\tCtrl+R"
-msgstr "Перезагрузить вики\tCtrl+R"
+msgstr "П&ерезагрузить вики\tCtrl+R"
 
 #: gui/MainWindow.py:140
 msgid "T&ools"
@@ -359,7 +359,7 @@ msgstr "&Инструменты"
 
 #: gui/MainWindow.py:142
 msgid "Add/Remove Bookmark\tCtrl+D"
-msgstr "Добавить/удалить закладку\tCtrl+D"
+msgstr "&Добавить/удалить закладку\tCtrl+D"
 
 #: gui/MainWindow.py:144
 msgid "&Bookmarks"
@@ -367,7 +367,7 @@ msgstr "&Закладки"
 
 #: gui/MainWindow.py:146
 msgid "Help\tF1"
-msgstr "Помощь\tF1"
+msgstr "&Помощь\tF1"
 
 #: gui/MainWindow.py:147
 msgid "&About…\tCtrl+F1"
@@ -375,7 +375,7 @@ msgstr "&О программе...\tCtrl+F1"
 
 #: gui/MainWindow.py:148
 msgid "&Help"
-msgstr "П&омощь"
+msgstr "&Справка"
 
 #: gui/MainWindow.py:155
 msgid "New…"
