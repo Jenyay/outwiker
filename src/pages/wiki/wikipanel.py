@@ -402,7 +402,7 @@ class WikiPagePanel (HtmlPanel):
 		content = page.content if (len (page.content) > 0 or
 				not wikipage.WikiPageFactory.showAttachInsteadBlankOptions.value) else self.__generateAttachList (page)
 
-		text = HtmlImprover.run (parser.toCompleteHtml (content) )
+		text = HtmlImprover.run (parser.toHtml (content) )
 
 		with open (path, "wb") as fp:
 			fp.write (text.encode ("utf-8"))

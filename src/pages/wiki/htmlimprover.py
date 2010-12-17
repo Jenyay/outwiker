@@ -19,27 +19,78 @@ class HtmlImprover (object):
 		"""
 		Сделать HTML более читаемым
 		"""
-		result = HtmlImprover.ireplace (text, "<p>", "\n\n<p>")
-		result = HtmlImprover.ireplace (result, "<br>", "\n<br>")
-		result = HtmlImprover.ireplace (result, "<br/>", "\n<br/>")
+		template = u"<HTML><HEAD><META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/></HEAD><BODY>\n<P>{body}</P>\n</BODY></HTML>"
 
-		result = HtmlImprover.ireplace (result, "<html>", "<html>\n")
-		result = HtmlImprover.ireplace (result, "</html>", "\n</html>")
+		result = template.format (body = HtmlImprover.__improveText (text))
+
+		return result
+
+
+	@staticmethod
+	def __improveText (text):
+		result = text.replace ("\r\n", "\n")
+		result = HtmlImprover.__replaceEndlines (result)
+
+		result = HtmlImprover.ireplace (result, "<P>", "</P>\n\n<P>")
+		result = HtmlImprover.ireplace (result, "<BR>", "\n<BR>")
+		result = HtmlImprover.ireplace (result, "<BR/>", "\n<BR/>")
+
+		result = HtmlImprover.ireplace (result, "<HTML>", "<HTML>\n")
+		result = HtmlImprover.ireplace (result, "</HTML>", "\n</HTML>")
 		
-		result = HtmlImprover.ireplace (result, "<head>", "<head>\n")
-		result = HtmlImprover.ireplace (result, "</head>", "\n</head>")
+		result = HtmlImprover.ireplace (result, "<HEAD>", "<HEAD>\n")
+		result = HtmlImprover.ireplace (result, "</HEAD>", "\n</HEAD>")
 		
-		result = HtmlImprover.ireplace (result, "<body>", "\n<body>\n")
-		result = HtmlImprover.ireplace (result, "</body>", "\n</body>")
+		result = HtmlImprover.ireplace (result, "<BODY>", "\n<BODY>\n")
+		result = HtmlImprover.ireplace (result, "</BODY>", "\n</BODY>")
 		
-		result = HtmlImprover.ireplace (result, "<li>", "\n<li>")
-		result = HtmlImprover.ireplace (result, "<ul>", "\n<ul>")
-		result = HtmlImprover.ireplace (result, "</ul>", "\n</ul>")
-		result = HtmlImprover.ireplace (result, "<ol>", "\n<ol>")
-		result = HtmlImprover.ireplace (result, "</ol>", "\n</ol>")
+		result = HtmlImprover.ireplace (result, "<LI>", "\n<LI>")
+		result = HtmlImprover.ireplace (result, "<UL>", "\n<UL>")
+		result = HtmlImprover.ireplace (result, "</UL>", "\n</UL>")
+		result = HtmlImprover.ireplace (result, "<OL>", "\n<OL>")
+		result = HtmlImprover.ireplace (result, "</OL>", "\n</OL>")
 		
-		result = HtmlImprover.ireplace (result, "<pre>", "\n<pre>")
-		#result = HtmlImprover.ireplace (result, "</pre>", "\n</pre>")
+		result = HtmlImprover.ireplace (result, "<PRE>", "\n<PRE>")
+
+		return result
+
+	
+	@staticmethod
+	def __replaceEndlines (text):
+		"""
+		Заменить переводы строк, но не трогать текст внутри <PRE>...</PRE>
+		"""
+		text_lower = text.lower()
+
+		starttag = "<pre>"
+		endtag = "</pre>"
+
+		# Разобьем строку по <pre>
+		part1 = text_lower.split (starttag)
+
+		# Подстроки разобьем по </pre>
+		parts2 = [item.split (endtag) for item in part1]
+
+		# Склеим части в один массив
+		parts = reduce (lambda x, y: x + y, parts2, [])
+
+		# В четных элементах массива заменим переводы строк, а нечетные оставим как есть
+		# Строки берем из исходного текста с учетом пропущенных в массиве тегов <pre> и </pre>
+		result = u""
+		index = 0
+
+		for n in range (len (parts)):
+			item = text[index: index + len (parts[n]) ]
+			if n % 2 == 0:
+				item = item.replace ("\n\n", "<P>")
+				item = item.replace ("\n", "<BR>")
+				item = item.replace ("<BR><LI>", "<LI>")
+				index += len (parts[n]) + len (starttag)
+			else:
+				item = "<PRE>" + item + "</PRE>"
+				index += len (parts[n]) + len (endtag)
+
+			result += item
 
 		return result
 
