@@ -10,16 +10,12 @@ class HtmlImprover (object):
 		pass
 
 
-	#@staticmethod
-	#def run (text):
-	#	return HtmlImprover.improveHtml (text)
-
 	@staticmethod
 	def run (text):
 		"""
 		Сделать HTML более читаемым
 		"""
-		template = u"<HTML><HEAD><META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/></HEAD><BODY>\n<P>{body}</P>\n</BODY></HTML>"
+		template = u"<HTML>\n<HEAD>\n<META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>\n</HEAD>\n<BODY>\n<P>{body}</P>\n</BODY>\n</HTML>"
 
 		result = template.format (body = HtmlImprover.__improveText (text))
 
@@ -35,15 +31,6 @@ class HtmlImprover (object):
 		result = HtmlImprover.ireplace (result, "<BR>", "\n<BR>")
 		result = HtmlImprover.ireplace (result, "<BR/>", "\n<BR/>")
 
-		result = HtmlImprover.ireplace (result, "<HTML>", "<HTML>\n")
-		result = HtmlImprover.ireplace (result, "</HTML>", "\n</HTML>")
-		
-		result = HtmlImprover.ireplace (result, "<HEAD>", "<HEAD>\n")
-		result = HtmlImprover.ireplace (result, "</HEAD>", "\n</HEAD>")
-		
-		result = HtmlImprover.ireplace (result, "<BODY>", "\n<BODY>\n")
-		result = HtmlImprover.ireplace (result, "</BODY>", "\n</BODY>")
-		
 		result = HtmlImprover.ireplace (result, "<LI>", "\n<LI>")
 		result = HtmlImprover.ireplace (result, "<UL>", "\n<UL>")
 		result = HtmlImprover.ireplace (result, "</UL>", "\n</UL>")

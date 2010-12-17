@@ -12,7 +12,7 @@ from gui.BaseTextPanel import BaseTextPanel
 from wikiparser import Parser
 from core.config import Config
 from core.tree import RootWikiPage
-from pages.wiki.htmlimprover import HtmlImprover
+from core.htmlimprover import HtmlImprover
 from gui.HtmlTextEditor import HtmlTextEditor
 from core.controller import Controller
 import wikipage
