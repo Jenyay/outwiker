@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-10 21:30+0300\n"
+"POT-Creation-Date: 2010-12-17 21:33+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: gui/about.py:20 gui/MainWindow.py:503
+#: gui/about.py:20 gui/MainWindow.py:505
 msgid "OutWiker"
 msgstr ""
 
@@ -128,9 +128,9 @@ msgstr ""
 #: gui/AttachPanel.py:115 gui/AttachPanel.py:121 gui/AttachPanel.py:142
 #: gui/CreatePageDialog.py:72 gui/CreatePageDialog.py:77
 #: gui/CreatePageDialog.py:83 gui/htmlview.py:82 gui/MainWindow.py:349
-#: gui/MainWindow.py:425 gui/MainWindow.py:481 gui/MainWindow.py:633
-#: gui/MainWindow.py:734 gui/MainWindow.py:740 gui/MainWindow.py:785
-#: gui/WikiTree.py:338 gui/WikiTree.py:341 pages/html/HtmlPanel.py:205
+#: gui/MainWindow.py:427 gui/MainWindow.py:483 gui/MainWindow.py:635
+#: gui/MainWindow.py:736 gui/MainWindow.py:742 gui/MainWindow.py:787
+#: gui/WikiTree.py:351 gui/WikiTree.py:354 pages/html/HtmlPanel.py:205
 #: pages/wiki/wikipanel.py:94 pages/wiki/wikipanel.py:115
 #: pages/wiki/wikipanel.py:372 core/commands.py:30 core/commands.py:48
 #: core/commands.py:69 core/commands.py:72 core/commands.py:85
@@ -275,23 +275,23 @@ msgid "&Edit"
 msgstr ""
 
 #: gui/MainWindow.py:123
-msgid "Add &sibling page…\tCtrl+T"
+msgid "Add &Sibling Page…\tCtrl+T"
 msgstr ""
 
 #: gui/MainWindow.py:124
-msgid "Add &child Page…\tCtrl+Shift+T"
+msgid "Add &Child Page…\tCtrl+Shift+T"
 msgstr ""
 
 #: gui/MainWindow.py:126
-msgid "Rename page\tF2"
+msgid "Re&name Page\tF2"
 msgstr ""
 
 #: gui/MainWindow.py:127
-msgid "Remove page…\tCtrl+Shift+Del"
+msgid "Rem&ove Page…\tCtrl+Shift+Del"
 msgstr ""
 
 #: gui/MainWindow.py:128
-msgid "Edit page…\tCtrl+E"
+msgid "&Edit Page Properties…\tCtrl+E"
 msgstr ""
 
 #: gui/MainWindow.py:129
@@ -299,7 +299,7 @@ msgid "&Tree"
 msgstr ""
 
 #: gui/MainWindow.py:131
-msgid "&Global search…\tCtrl+Shift+F"
+msgid "&Global Search…\tCtrl+Shift+F"
 msgstr ""
 
 #: gui/MainWindow.py:132
@@ -307,23 +307,23 @@ msgid "&Attach Files…\tCtrl+Alt+A"
 msgstr ""
 
 #: gui/MainWindow.py:134
-msgid "Copy page's title to clipboard\tCtrl+Shift+D"
+msgid "Copy Page &Title to Clipboard\tCtrl+Shift+D"
 msgstr ""
 
 #: gui/MainWindow.py:135
-msgid "Copy &page's path to clipboard\tCtrl+Shift+P"
+msgid "Copy &Page Path to Clipboard\tCtrl+Shift+P"
 msgstr ""
 
 #: gui/MainWindow.py:136
-msgid "Copy a&ttaches path to clipboard\tCtrl+Shift+A"
+msgid "Copy Atta&ches Path to Clipboard\tCtrl+Shift+A"
 msgstr ""
 
 #: gui/MainWindow.py:137
-msgid "Copy page link to clipboard\tCtrl+Shift+L"
+msgid "Copy Page &Link to Clipboard\tCtrl+Shift+L"
 msgstr ""
 
 #: gui/MainWindow.py:139
-msgid "Reload wiki\tCtrl+R"
+msgid "&Reload Wiki...\tCtrl+R"
 msgstr ""
 
 #: gui/MainWindow.py:140
@@ -331,7 +331,7 @@ msgid "T&ools"
 msgstr ""
 
 #: gui/MainWindow.py:142
-msgid "Add/Remove Bookmark\tCtrl+D"
+msgid "&Add/Remove Bookmark\tCtrl+D"
 msgstr ""
 
 #: gui/MainWindow.py:144
@@ -339,7 +339,7 @@ msgid "&Bookmarks"
 msgstr ""
 
 #: gui/MainWindow.py:146
-msgid "Help\tF1"
+msgid "&Help\tF1"
 msgstr ""
 
 #: gui/MainWindow.py:147
@@ -410,41 +410,41 @@ msgstr ""
 msgid "Global search…"
 msgstr ""
 
-#: gui/MainWindow.py:349 gui/MainWindow.py:425 gui/MainWindow.py:633
+#: gui/MainWindow.py:349 gui/MainWindow.py:427 gui/MainWindow.py:635
 #, python-format
 msgid "Can't load wiki '%s'"
 msgstr ""
 
-#: gui/MainWindow.py:480 gui/MainWindow.py:785
+#: gui/MainWindow.py:482 gui/MainWindow.py:787
 #, python-format
 msgid ""
 "Can't save config\n"
 "%s"
 msgstr ""
 
-#: gui/MainWindow.py:539
+#: gui/MainWindow.py:541
 msgid "Really exit?"
 msgstr ""
 
-#: gui/MainWindow.py:539 gui/trayicon.py:28
+#: gui/MainWindow.py:541 gui/trayicon.py:28
 msgid "Exit"
 msgstr ""
 
-#: gui/MainWindow.py:623
+#: gui/MainWindow.py:625
 msgid "Save current page before reload?"
 msgstr ""
 
-#: gui/MainWindow.py:624
+#: gui/MainWindow.py:626
 msgid "Save?"
 msgstr ""
 
-#: gui/MainWindow.py:734 core/commands.py:30 core/commands.py:48
+#: gui/MainWindow.py:736 core/commands.py:30 core/commands.py:48
 #: core/commands.py:85 core/commands.py:115 core/commands.py:129
 #: core/commands.py:139 core/commands.py:260 core/commands.py:275
 msgid "Wiki is opened as read-only"
 msgstr ""
 
-#: gui/MainWindow.py:740 core/commands.py:161
+#: gui/MainWindow.py:742 core/commands.py:161
 msgid "Can't create page"
 msgstr ""
 
@@ -484,47 +484,47 @@ msgstr ""
 msgid "Restore"
 msgstr ""
 
-#: gui/WikiTree.py:251
-msgid "Add child page..."
+#: gui/WikiTree.py:264
+msgid "Add Child Page..."
 msgstr ""
 
-#: gui/WikiTree.py:252
-msgid "Add sibling page..."
+#: gui/WikiTree.py:265
+msgid "Add Sibling Page..."
 msgstr ""
 
-#: gui/WikiTree.py:253
+#: gui/WikiTree.py:266
 msgid "Rename"
 msgstr ""
 
-#: gui/WikiTree.py:254
+#: gui/WikiTree.py:267
 msgid "Remove..."
 msgstr ""
 
-#: gui/WikiTree.py:257
-msgid "Copy page's title to clipboard"
+#: gui/WikiTree.py:270
+msgid "Copy Page Title to Clipboard"
 msgstr ""
 
-#: gui/WikiTree.py:258
-msgid "Copy page's path to clipboard"
+#: gui/WikiTree.py:271
+msgid "Copy Page Path to Clipboard"
 msgstr ""
 
-#: gui/WikiTree.py:259
-msgid "Copy attaches path to clipboard"
+#: gui/WikiTree.py:272
+msgid "Copy Attaches Path to Clipboard"
 msgstr ""
 
-#: gui/WikiTree.py:260
-msgid "Copy page link to clipboard"
+#: gui/WikiTree.py:273
+msgid "Copy Page Link to Clipboard"
 msgstr ""
 
-#: gui/WikiTree.py:263
-msgid "Properties..."
+#: gui/WikiTree.py:276
+msgid "Edit Page Properties..."
 msgstr ""
 
-#: gui/WikiTree.py:338 core/commands.py:270
+#: gui/WikiTree.py:351 core/commands.py:270
 msgid "Can't move page when page with that title already exists"
 msgstr ""
 
-#: gui/WikiTree.py:341
+#: gui/WikiTree.py:354
 #, python-format
 msgid ""
 "Can't rename page\n"
@@ -582,7 +582,7 @@ msgstr ""
 msgid "Interface"
 msgstr ""
 
-#: gui/preferences/PrefDialog.py:64 pages/wiki/wikipage.py:72
+#: gui/preferences/PrefDialog.py:64 pages/wiki/wikipage.py:74
 msgid "General"
 msgstr ""
 
@@ -937,6 +937,10 @@ msgstr ""
 
 #: pages/wiki/WikiPreferences.py:22
 msgid "Thumbnail Size"
+msgstr ""
+
+#: pages/wiki/WikiPreferences.py:24
+msgid "Show Attachments Instead Blank page"
 msgstr ""
 
 #: core/commands.py:57

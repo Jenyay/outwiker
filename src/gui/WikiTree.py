@@ -261,19 +261,19 @@ class WikiTree(wx.Panel):
 
 	def __createPopupMenu (self):
 		self.popupMenu = wx.Menu ()
-		self.popupMenu.Append (self.ID_ADD_CHILD, _(u"Add child page..."))
-		self.popupMenu.Append (self.ID_ADD_SIBLING, _(u"Add sibling page..."))
+		self.popupMenu.Append (self.ID_ADD_CHILD, _(u"Add Child Page..."))
+		self.popupMenu.Append (self.ID_ADD_SIBLING, _(u"Add Sibling Page..."))
 		self.popupMenu.Append (self.ID_RENAME, _(u"Rename"))
 		self.popupMenu.Append (self.ID_REMOVE, _(u"Remove..."))
 		self.popupMenu.AppendSeparator()
 		
-		self.popupMenu.Append (self.ID_COPY_TITLE, _(u"Copy page's title to clipboard"))
-		self.popupMenu.Append (self.ID_COPY_PATH, _(u"Copy page's path to clipboard"))
-		self.popupMenu.Append (self.ID_COPY_ATTACH_PATH, _(u"Copy attaches path to clipboard"))
-		self.popupMenu.Append (self.ID_COPY_LINK, _(u"Copy page link to clipboard"))
+		self.popupMenu.Append (self.ID_COPY_TITLE, _(u"Copy Page Title to Clipboard"))
+		self.popupMenu.Append (self.ID_COPY_PATH, _(u"Copy Page Path to Clipboard"))
+		self.popupMenu.Append (self.ID_COPY_ATTACH_PATH, _(u"Copy Attaches Path to Clipboard"))
+		self.popupMenu.Append (self.ID_COPY_LINK, _(u"Copy Page Link to Clipboard"))
 		self.popupMenu.AppendSeparator()
 
-		self.popupMenu.Append (self.ID_PROPERTIES, _(u"Properties..."))
+		self.popupMenu.Append (self.ID_PROPERTIES, _(u"Edit Page Properties..."))
 	
 
 	def onRename (self, event):

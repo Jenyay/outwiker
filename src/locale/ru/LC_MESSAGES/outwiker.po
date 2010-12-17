@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-10 21:30+0300\n"
+"POT-Creation-Date: 2010-12-17 21:33+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 
 #: gui/about.py:20
-#: gui/MainWindow.py:503
+#: gui/MainWindow.py:505
 msgid "OutWiker"
 msgstr "OutWiker"
 
@@ -133,14 +133,14 @@ msgstr "Удалить выбранные файлы?"
 #: gui/CreatePageDialog.py:83
 #: gui/htmlview.py:82
 #: gui/MainWindow.py:349
-#: gui/MainWindow.py:425
-#: gui/MainWindow.py:481
-#: gui/MainWindow.py:633
-#: gui/MainWindow.py:734
-#: gui/MainWindow.py:740
-#: gui/MainWindow.py:785
-#: gui/WikiTree.py:338
-#: gui/WikiTree.py:341
+#: gui/MainWindow.py:427
+#: gui/MainWindow.py:483
+#: gui/MainWindow.py:635
+#: gui/MainWindow.py:736
+#: gui/MainWindow.py:742
+#: gui/MainWindow.py:787
+#: gui/WikiTree.py:351
+#: gui/WikiTree.py:354
 #: pages/html/HtmlPanel.py:205
 #: pages/wiki/wikipanel.py:94
 #: pages/wiki/wikipanel.py:115
@@ -302,31 +302,31 @@ msgid "&Edit"
 msgstr "&Правка"
 
 #: gui/MainWindow.py:123
-msgid "Add &sibling page…\tCtrl+T"
+msgid "Add &Sibling Page…\tCtrl+T"
 msgstr "Добавить &страницу того же уровня…\tCtrl+T"
 
 #: gui/MainWindow.py:124
-msgid "Add &child Page…\tCtrl+Shift+T"
+msgid "Add &Child Page…\tCtrl+Shift+T"
 msgstr "Добавить &дочернюю страницу…\tCtrl+Shift+T"
 
 #: gui/MainWindow.py:126
-msgid "Rename page\tF2"
+msgid "Re&name Page\tF2"
 msgstr "&Переименовать страницу\tF2"
 
 #: gui/MainWindow.py:127
-msgid "Remove page…\tCtrl+Shift+Del"
+msgid "Rem&ove Page…\tCtrl+Shift+Del"
 msgstr "&Удалить страницу…\tCtrl+Shift+Del"
 
 #: gui/MainWindow.py:128
-msgid "Edit page…\tCtrl+E"
-msgstr "&Редактировать страницу…\tCtrl+E"
+msgid "&Edit Page Properties…\tCtrl+E"
+msgstr "&Редактировать свойства страницы…\tCtrl+E"
 
 #: gui/MainWindow.py:129
 msgid "&Tree"
 msgstr "&Дерево"
 
 #: gui/MainWindow.py:131
-msgid "&Global search…\tCtrl+Shift+F"
+msgid "&Global Search…\tCtrl+Shift+F"
 msgstr "Глобальный &поиск…\tCtrl+Shift+F"
 
 #: gui/MainWindow.py:132
@@ -334,31 +334,31 @@ msgid "&Attach Files…\tCtrl+Alt+A"
 msgstr "Прикрепить &файлы…\tCtrl+Alt+A"
 
 #: gui/MainWindow.py:134
-msgid "Copy page's title to clipboard\tCtrl+Shift+D"
+msgid "Copy Page &Title to Clipboard\tCtrl+Shift+D"
 msgstr "Копировать &заголовок страницы в буфер обмена\tCtrl+Shift+D"
 
 #: gui/MainWindow.py:135
-msgid "Copy &page's path to clipboard\tCtrl+Shift+P"
+msgid "Copy &Page Path to Clipboard\tCtrl+Shift+P"
 msgstr "Копировать путь до &страницы в буфер обмена\tCtrl+Shift+P"
 
 #: gui/MainWindow.py:136
-msgid "Copy a&ttaches path to clipboard\tCtrl+Shift+A"
+msgid "Copy Atta&ches Path to Clipboard\tCtrl+Shift+A"
 msgstr "Копировать путь до п&рикрепленных файлов в буфер обмена\tCtrl+Shift+A"
 
 #: gui/MainWindow.py:137
-msgid "Copy page link to clipboard\tCtrl+Shift+L"
-msgstr "Копировать ссы&лку на страницу в буфер обмена"
+msgid "Copy Page &Link to Clipboard\tCtrl+Shift+L"
+msgstr "Копировать ссы&лку на страницу в буфер обмена\tCtrl+Shift+L"
 
 #: gui/MainWindow.py:139
-msgid "Reload wiki\tCtrl+R"
-msgstr "П&ерезагрузить вики\tCtrl+R"
+msgid "&Reload Wiki...\tCtrl+R"
+msgstr "П&ерезагрузить вики...\tCtrl+R"
 
 #: gui/MainWindow.py:140
 msgid "T&ools"
 msgstr "&Инструменты"
 
 #: gui/MainWindow.py:142
-msgid "Add/Remove Bookmark\tCtrl+D"
+msgid "&Add/Remove Bookmark\tCtrl+D"
 msgstr "&Добавить/удалить закладку\tCtrl+D"
 
 #: gui/MainWindow.py:144
@@ -366,7 +366,7 @@ msgid "&Bookmarks"
 msgstr "&Закладки"
 
 #: gui/MainWindow.py:146
-msgid "Help\tF1"
+msgid "&Help\tF1"
 msgstr "&Помощь\tF1"
 
 #: gui/MainWindow.py:147
@@ -438,14 +438,14 @@ msgid "Global search…"
 msgstr "Глобальный поиск..."
 
 #: gui/MainWindow.py:349
-#: gui/MainWindow.py:425
-#: gui/MainWindow.py:633
+#: gui/MainWindow.py:427
+#: gui/MainWindow.py:635
 #, python-format
 msgid "Can't load wiki '%s'"
 msgstr "Невозможно загрузить вики '%s'"
 
-#: gui/MainWindow.py:480
-#: gui/MainWindow.py:785
+#: gui/MainWindow.py:482
+#: gui/MainWindow.py:787
 #, python-format
 msgid ""
 "Can't save config\n"
@@ -454,24 +454,24 @@ msgstr ""
 "Невозможно сохранить настройки\n"
 "%s"
 
-#: gui/MainWindow.py:539
+#: gui/MainWindow.py:541
 msgid "Really exit?"
 msgstr "Действительно выйти?"
 
-#: gui/MainWindow.py:539
+#: gui/MainWindow.py:541
 #: gui/trayicon.py:28
 msgid "Exit"
 msgstr "Выход"
 
-#: gui/MainWindow.py:623
+#: gui/MainWindow.py:625
 msgid "Save current page before reload?"
 msgstr "Сохранить текущую страницу перед перезагрузкой?"
 
-#: gui/MainWindow.py:624
+#: gui/MainWindow.py:626
 msgid "Save?"
 msgstr "Сохранить?"
 
-#: gui/MainWindow.py:734
+#: gui/MainWindow.py:736
 #: core/commands.py:30
 #: core/commands.py:48
 #: core/commands.py:85
@@ -483,7 +483,7 @@ msgstr "Сохранить?"
 msgid "Wiki is opened as read-only"
 msgstr "Вики открыта только для чтения"
 
-#: gui/MainWindow.py:740
+#: gui/MainWindow.py:742
 #: core/commands.py:161
 msgid "Can't create page"
 msgstr "Невозможно создать страницу"
@@ -524,48 +524,48 @@ msgstr "Не найдено"
 msgid "Restore"
 msgstr "Восстановить"
 
-#: gui/WikiTree.py:251
-msgid "Add child page..."
+#: gui/WikiTree.py:264
+msgid "Add Child Page..."
 msgstr "Добавить дочернюю страницу..."
 
-#: gui/WikiTree.py:252
-msgid "Add sibling page..."
+#: gui/WikiTree.py:265
+msgid "Add Sibling Page..."
 msgstr "Добавить страницу того же уровня..."
 
-#: gui/WikiTree.py:253
+#: gui/WikiTree.py:266
 msgid "Rename"
 msgstr "Переименовать"
 
-#: gui/WikiTree.py:254
+#: gui/WikiTree.py:267
 msgid "Remove..."
 msgstr "Удалить..."
 
-#: gui/WikiTree.py:257
-msgid "Copy page's title to clipboard"
+#: gui/WikiTree.py:270
+msgid "Copy Page Title to Clipboard"
 msgstr "Копировать заголовок страницы в буфер обмена"
 
-#: gui/WikiTree.py:258
-msgid "Copy page's path to clipboard"
+#: gui/WikiTree.py:271
+msgid "Copy Page Path to Clipboard"
 msgstr "Копировать путь до страницы в буфер обмена"
 
-#: gui/WikiTree.py:259
-msgid "Copy attaches path to clipboard"
+#: gui/WikiTree.py:272
+msgid "Copy Attaches Path to Clipboard"
 msgstr "Копировать путь до прикрепленных файлов в буфер обмена"
 
-#: gui/WikiTree.py:260
-msgid "Copy page link to clipboard"
+#: gui/WikiTree.py:273
+msgid "Copy Page Link to Clipboard"
 msgstr "Копировать ссылку на страницу в буфер обмена"
 
-#: gui/WikiTree.py:263
-msgid "Properties..."
-msgstr "Свойства..."
+#: gui/WikiTree.py:276
+msgid "Edit Page Properties..."
+msgstr "Редактировать свойства страницы..."
 
-#: gui/WikiTree.py:338
+#: gui/WikiTree.py:351
 #: core/commands.py:270
 msgid "Can't move page when page with that title already exists"
 msgstr "Невозможно переместить страницу, так как страница с таким именем уже существует"
 
-#: gui/WikiTree.py:341
+#: gui/WikiTree.py:354
 #, python-format
 msgid ""
 "Can't rename page\n"
@@ -629,7 +629,7 @@ msgid "Interface"
 msgstr "Интерфейс"
 
 #: gui/preferences/PrefDialog.py:64
-#: pages/wiki/wikipage.py:72
+#: pages/wiki/wikipage.py:74
 msgid "General"
 msgstr "Общие"
 
@@ -1008,6 +1008,10 @@ msgstr "Показывать вкладку с кодом HTML"
 msgid "Thumbnail Size"
 msgstr "Размер миниатюр"
 
+#: pages/wiki/WikiPreferences.py:24
+msgid "Show Attachments Instead Blank page"
+msgstr "Показывать прикрепленные файлы вместо пустой страницы"
+
 #: core/commands.py:57
 #, python-format
 msgid "File '%s' exists already"
@@ -1047,6 +1051,8 @@ msgstr "Ошибка открытия файла %s"
 msgid "Can't parse version"
 msgstr "Ошибка разбора версии"
 
+#~ msgid "Properties..."
+#~ msgstr "Свойства..."
 #~ msgid "OK"
 #~ msgstr "OK"
 #~ msgid "(c) 2010 Ilin E.V. (aka Jenyay)"

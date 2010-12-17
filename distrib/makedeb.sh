@@ -36,3 +36,6 @@ md5deep -r "$DIR_NAME/usr" >> "$DIR_NAME/DEBIAN/md5sums"
 
 # Сборка пакета 
 fakeroot dpkg-deb --build "$DIR_NAME"
+
+# Установим пакет
+sudo dpkg -i "$DIR_NAME.deb"
