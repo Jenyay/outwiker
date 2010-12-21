@@ -422,7 +422,7 @@ class MainWindow(wx.Frame):
 				Controller.instance().onWikiClose (Application.wikiroot)
 			
 			wikiroot = core.commands.openWiki (path, readonly)
-			self._openLoadedWiki(wikiroot)
+			self._openLoadedWiki(wikiroot, addToRecent = not readonly)
 		except IOError:
 			wx.MessageBox (_(u"Can't load wiki '%s'") % path, _(u"Error"), wx.ICON_ERROR | wx.OK)
 
@@ -597,14 +597,16 @@ class MainWindow(wx.Frame):
 		self._openLoadedWiki(wikiroot)
 	
 
-	def _openLoadedWiki (self, wikiroot):
+	def _openLoadedWiki (self, wikiroot, addToRecent=True):
 		"""
 		Обновить окно после того как загрузили вики
 		"""
 		if wikiroot != None:
 			Application.wikiroot = wikiroot
-			self.recentWiki.add (wikiroot.path)
-			self._loadRecentWiki()
+
+			if addToRecent:
+				self.recentWiki.add (wikiroot.path)
+				self._loadRecentWiki()
 			self.__enableGui()
 
 
@@ -764,7 +766,7 @@ class MainWindow(wx.Frame):
 
 	def onOpenReadOnly(self, event): # wxGlade: MainWindow.<event_handler>
 		wikiroot = core.commands.openWikiWithDialog (self, Application.wikiroot, readonly=True)
-		self._openLoadedWiki(wikiroot)
+		self._openLoadedWiki(wikiroot, addToRecent=False)
 
 
 	def onPreferences(self, event): # wxGlade: MainWindow.<event_handler>
