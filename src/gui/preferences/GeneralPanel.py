@@ -130,6 +130,7 @@ class GeneralPanel(wx.ScrolledWindow):
 		languages = core.i18n.getLanguages()
 		languages.sort()
 
+		self.langCombo.Clear ()
 		self.langCombo.AppendItems (languages)
 
 		currlang = Application.config.languageOption.value

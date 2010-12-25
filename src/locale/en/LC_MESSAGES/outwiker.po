@@ -4,7 +4,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-12-17 21:33+0300\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
+"Last-Translator: \n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -580,7 +580,7 @@ msgstr "Font"
 
 #: gui/preferences/EditorPanel.py:24
 msgid "Show line numbers"
-msgstr "Attach files…"
+msgstr "Show line numbers"
 
 #: gui/preferences/GeneralPanel.py:24
 msgid "Minimize to tray"
@@ -933,7 +933,7 @@ msgstr "Right align\tCtrl+ALT+R"
 #: pages/wiki/wikipanel.py:186
 #: pages/wiki/wikipanel.py:187
 msgid "Preformat [@...@]"
-msgstr "OutWiker"
+msgstr "Preformat [@...@]"
 
 #: pages/wiki/wikipanel.py:193
 #: pages/wiki/wikipanel.py:194
@@ -1010,7 +1010,7 @@ msgstr "Thumbnail Size"
 
 #: pages/wiki/WikiPreferences.py:24
 msgid "Show Attachments Instead Blank page"
-msgstr "OutWiker"
+msgstr "Show Attachments Instead Blank page"
 
 #: core/commands.py:57
 #, python-format
