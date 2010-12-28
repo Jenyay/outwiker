@@ -4,8 +4,8 @@
 import subprocess
 
 fname = "version.txt"
-version = "1.0.0"
-status = "release"
+version = "1.1.0"
+status = "dev"
 
 p = subprocess.Popen(["bzr", "revno"], stdout=subprocess.PIPE)
 stdout, stderr = p.communicate()
