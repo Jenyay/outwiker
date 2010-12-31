@@ -15,26 +15,31 @@ from core.controller import Controller
 from core.factory import FactorySelector
 import core.commands
 from core.tree import RootWikiPage
+import core.system
 
 class AttachPanel(wx.Panel):
 	def __init__(self, *args, **kwds):
+		self.ID_ATTACH = wx.NewId()
+		self.ID_REMOVE = wx.NewId()
+		self.ID_PASTE = wx.NewId()
+		self.ID_EXECUTE = wx.NewId()
+
+		#self.__createToolBar()
+
 		# begin wxGlade: AttachPanel.__init__
 		kwds["style"] = wx.TAB_TRAVERSAL
 		wx.Panel.__init__(self, *args, **kwds)
+		self.toolbar = self.__createToolBar(self, -1)
 		self.attachList = wx.ListCtrl(self, -1, style=wx.LC_LIST|wx.SUNKEN_BORDER)
-		self.addBtn = wx.Button(self, -1, _(u"Attach files…"))
-		self.removeBtn = wx.Button(self, -1, _(u"Remove files…"))
-		self.pasteBtn = wx.Button(self, -1, _("Paste"))
-		self.openBtn = wx.Button(self, -1, _("Execute files"))
 
 		self.__set_properties()
 		self.__do_layout()
-
-		self.Bind(wx.EVT_BUTTON, self.onAttach, self.addBtn)
-		self.Bind(wx.EVT_BUTTON, self.onRemove, self.removeBtn)
-		self.Bind(wx.EVT_BUTTON, self.onPaste, self.pasteBtn)
-		self.Bind(wx.EVT_BUTTON, self.onOpen, self.openBtn)
 		# end wxGlade
+
+		self.Bind(wx.EVT_MENU, self.onAttach, id=self.ID_ATTACH)
+		self.Bind(wx.EVT_MENU, self.onRemove, id=self.ID_REMOVE)
+		self.Bind(wx.EVT_MENU, self.onPaste, id=self.ID_PASTE)
+		self.Bind(wx.EVT_MENU, self.onOpen, id=self.ID_EXECUTE)
 
 		self.currentPage = None
 
@@ -42,6 +47,53 @@ class AttachPanel(wx.Panel):
 		Controller.instance().onPageUpdate += self.onPageUpdate
 
 		self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.onPaste, self.attachList)
+	
+
+	def __createToolBar (self, parent, id):
+		imagesDir = core.system.getImagesDir()
+
+		toolbar = wx.ToolBar (parent, id, style=wx.TB_DOCKABLE)
+
+		toolbar.AddLabelTool(self.ID_ATTACH, 
+				_(u"Attach Files..."), 
+				wx.Bitmap(os.path.join (imagesDir, "attach.png"),
+					wx.BITMAP_TYPE_ANY),
+				wx.NullBitmap, 
+				wx.ITEM_NORMAL,
+				_(u"Attach Files..."), 
+				"")
+
+		toolbar.AddLabelTool(self.ID_REMOVE, 
+				_(u"Remove Files..."), 
+				wx.Bitmap(os.path.join (imagesDir, "delete.png"),
+					wx.BITMAP_TYPE_ANY),
+				wx.NullBitmap, 
+				wx.ITEM_NORMAL,
+				_(u"Remove Files..."), 
+				"")
+
+		toolbar.AddSeparator()
+
+		toolbar.AddLabelTool(self.ID_PASTE, 
+				_(u"Paste"), 
+				wx.Bitmap(os.path.join (imagesDir, "paste.png"),
+					wx.BITMAP_TYPE_ANY),
+				wx.NullBitmap, 
+				wx.ITEM_NORMAL,
+				_(u"Paste"), 
+				"")
+
+		toolbar.AddLabelTool(self.ID_EXECUTE, 
+				_(u"Execute"), 
+				wx.Bitmap(os.path.join (imagesDir, "execute.png"),
+					wx.BITMAP_TYPE_ANY),
+				wx.NullBitmap, 
+				wx.ITEM_NORMAL,
+				_(u"Execute"), 
+				"")
+
+		toolbar.Realize()
+		return toolbar
 
 
 	def __set_properties(self):
@@ -51,19 +103,21 @@ class AttachPanel(wx.Panel):
 
 	def __do_layout(self):
 		# begin wxGlade: AttachPanel.__do_layout
-		attachSizer_copy = wx.FlexGridSizer(1, 2, 0, 0)
+		attachSizer_copy = wx.FlexGridSizer(2, 1, 0, 0)
 		buttonsSizer_copy = wx.BoxSizer(wx.VERTICAL)
+		attachSizer_copy.Add(self.toolbar, 1, wx.EXPAND, 0)
 		attachSizer_copy.Add(self.attachList, 1, wx.ALL|wx.EXPAND, 2)
-		buttonsSizer_copy.Add(self.addBtn, 0, wx.ALL|wx.EXPAND, 2)
-		buttonsSizer_copy.Add(self.removeBtn, 0, wx.ALL|wx.EXPAND, 2)
-		buttonsSizer_copy.Add(self.pasteBtn, 0, wx.ALL|wx.EXPAND, 2)
-		buttonsSizer_copy.Add(self.openBtn, 0, wx.ALL|wx.EXPAND, 2)
 		attachSizer_copy.Add(buttonsSizer_copy, 1, wx.EXPAND, 0)
 		self.SetSizer(attachSizer_copy)
 		attachSizer_copy.Fit(self)
-		attachSizer_copy.AddGrowableRow(0)
+		attachSizer_copy.AddGrowableRow(1)
 		attachSizer_copy.AddGrowableCol(0)
 		# end wxGlade
+
+		attachSizer_copy.Fit(self)
+		self.SetAutoLayout(True)
+
+		#attachSizer_copy.Add (self.toolbar, 1, wx.ALL|wx.EXPAND, 2)
 
 
 	def onPageSelect (self, page):
