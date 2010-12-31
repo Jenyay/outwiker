@@ -5,6 +5,7 @@ import os.path
 import sys
 
 import wx
+import wx.aui
 
 from core.controller import Controller
 from core.tree import WikiDocument, RootWikiPage
@@ -96,9 +97,6 @@ class MainWindow(wx.Frame):
 		# begin wxGlade: MainWindow.__init__
 		kwds["style"] = wx.DEFAULT_FRAME_STYLE
 		wx.Frame.__init__(self, *args, **kwds)
-		self.splitter = wx.SplitterWindow(self, -1, style=wx.SP_3D|wx.SP_BORDER|wx.SP_LIVE_UPDATE)
-		self.rightPane = wx.Panel(self.splitter, -1)
-		self.leftPane = wx.Panel(self.splitter, -1)
 		
 		# Menu Bar
 		self.mainMenu = wx.MenuBar()
@@ -153,24 +151,22 @@ class MainWindow(wx.Frame):
 		# Tool Bar
 		self.mainToolbar = wx.ToolBar(self, -1, style=wx.TB_HORIZONTAL|wx.TB_FLAT|wx.TB_DOCKABLE)
 		self.SetToolBar(self.mainToolbar)
-		self.mainToolbar.AddLabelTool(self.ID_NEW, _(u"New…"), wx.Bitmap(os.path.join (self.imagesDir, "new.png"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _(u"Create new wiki…"), "")
-		self.mainToolbar.AddLabelTool(self.ID_OPEN, _(u"Open…"), wx.Bitmap(os.path.join (self.imagesDir, "open.png"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _(u"Open wiki…"), "")
-		self.mainToolbar.AddLabelTool(self.ID_SAVE, _("Save"), wx.Bitmap(os.path.join (self.imagesDir, "save.png"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _("Save wiki"), "")
+		self.mainToolbar.AddLabelTool(self.ID_NEW, _(u"New…"), wx.Bitmap("images/new.png", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _(u"Create new wiki…"), "")
+		self.mainToolbar.AddLabelTool(self.ID_OPEN, _(u"Open…"), wx.Bitmap("images/open.png", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _(u"Open wiki…"), "")
+		self.mainToolbar.AddLabelTool(self.ID_SAVE, _("Save"), wx.Bitmap("images/save.png", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _("Save wiki"), "")
 		self.mainToolbar.AddSeparator()
-		self.mainToolbar.AddLabelTool(self.ID_RELOAD, _("Reload"), wx.Bitmap(os.path.join (self.imagesDir, "reload.png"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _("Reload wiki"), "")
+		self.mainToolbar.AddLabelTool(self.ID_RELOAD, _("Reload"), wx.Bitmap("images/reload.png", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _("Reload wiki"), "")
 		self.mainToolbar.AddSeparator()
-		self.mainToolbar.AddLabelTool(self.ID_ADDPAGE, _(u"Add sibling page…"), wx.Bitmap(os.path.join (self.imagesDir, "sibling.ico"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _(u"Add sibling page…"), "")
-		self.mainToolbar.AddLabelTool(self.ID_ADDCHILD, _(u"Add child Page…"), wx.Bitmap(os.path.join (self.imagesDir, "child.ico"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _(u"Add child Page…"), "")
-		self.mainToolbar.AddLabelTool(self.ID_REMOVE_PAGE, _("Remove page"), wx.Bitmap(os.path.join (self.imagesDir, "remove.ico"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _(u"Remove page…"), "")
+		self.mainToolbar.AddLabelTool(self.ID_ADDPAGE, _(u"Add sibling page…"), wx.Bitmap("images/sibling.ico", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _(u"Add sibling page…"), "")
+		self.mainToolbar.AddLabelTool(self.ID_ADDCHILD, _(u"Add child Page…"), wx.Bitmap("images/child.ico", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _(u"Add child Page…"), "")
+		self.mainToolbar.AddLabelTool(self.ID_REMOVE_PAGE, _("Remove page"), wx.Bitmap("images/remove.ico", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _(u"Remove page…"), "")
 		self.mainToolbar.AddSeparator()
-		self.mainToolbar.AddLabelTool(self.ID_ATTACH, _(u"Attach files…"), wx.Bitmap(os.path.join (self.imagesDir, "attach.png"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _(u"Attach files…"), "")
-		self.mainToolbar.AddLabelTool(self.ID_EDIT, _("Edit page"), wx.Bitmap(os.path.join (self.imagesDir, "edit.png"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _("Edit page's properties"), "")
-		self.mainToolbar.AddLabelTool(self.ID_GLOBAL_SEARCH, _(u"Global search…"), wx.Bitmap(os.path.join (self.imagesDir, "global_search.png"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _(u"Global search…"), "")
+		self.mainToolbar.AddLabelTool(self.ID_ATTACH, _(u"Attach files…"), wx.Bitmap("images/attach.png", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _(u"Attach files…"), "")
+		self.mainToolbar.AddLabelTool(self.ID_EDIT, _("Edit page"), wx.Bitmap("images/edit.png", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _("Edit page's properties"), "")
+		self.mainToolbar.AddLabelTool(self.ID_GLOBAL_SEARCH, _(u"Global search…"), wx.Bitmap("images/global_search.png", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _(u"Global search…"), "")
 		self.mainToolbar.AddSeparator()
 		# Tool Bar end
-		self.tree = WikiTree(self.leftPane, -1)
-		self.pagePanel = CurrentPagePanel(self.rightPane, -1)
-		self.attachPanel = AttachPanel(self.rightPane, -1)
+		self.mainPanel = wx.Panel(self, -1)
 		self.statusbar = wx.StatusBar(self, -1)
 
 		self.__set_properties()
@@ -213,6 +209,17 @@ class MainWindow(wx.Frame):
 		self.Bind(wx.EVT_TOOL, self.onGlobalSearch, id=self.ID_GLOBAL_SEARCH)
 		# end wxGlade
 
+		self.auiManager = wx.aui.AuiManager(self.mainPanel)
+
+		self.tree = WikiTree(self.mainPanel, -1)
+		self.pagePanel = CurrentPagePanel(self.mainPanel, -1)
+		self.attachPanel = AttachPanel (self.mainPanel, -1)
+
+		self.auiManager.AddPane(self.tree, wx.LEFT, _('Notes') )
+		self.auiManager.AddPane(self.pagePanel, wx.CENTER)
+		self.auiManager.AddPane(self.attachPanel, wx.BOTTOM, _('Attaches') )
+		self.auiManager.Update()
+
 		self.__setMenuBitmaps()
 		
 		self.Bind (wx.EVT_CLOSE, self.onClose)
@@ -229,7 +236,6 @@ class MainWindow(wx.Frame):
 		self. __createTrayIcon()
 
 		self.minPaneSize = 30
-		self.splitter.SetMinimumPaneSize (self.minPaneSize)
 
 		self.statusbar.SetFieldsCount(1)
 		self.pagePanel.Disable()
@@ -456,13 +462,8 @@ class MainWindow(wx.Frame):
 		
 		self.SetSize ( (width, height) )
 		self.SetPosition ( (xpos, ypos) )
-		self.__loadSashPosition()
 	
 
-	def __loadSashPosition (self):
-		self.splitter.SetSashPosition (Application.config.SashPositionOption.value)
-
-	
 	def _saveParams (self):
 		"""
 		Сохранить параметры в конфиг
@@ -479,19 +480,11 @@ class MainWindow(wx.Frame):
 				config.XPosOption.value = xpos
 				config.YPosOption.value = ypos
 
-			self.__saveSashPosition()
 		except Exception as e:
 			wx.MessageBox (_(u"Can't save config\n%s") % (unicode (e)), 
 					_(u"Error"), wx.ICON_ERROR | wx.OK)
 	
 
-	def __saveSashPosition(self):
-		"""
-		Сохранить положение перетаскиваемой линии между деревом и заметкой
-		"""
-		Application.config.SashPositionOption.value = self.splitter.GetSashPosition()
-
-	
 	def _hideElements (self):
 		pass
 		self.tree.Hide()
@@ -506,7 +499,7 @@ class MainWindow(wx.Frame):
 		# begin wxGlade: MainWindow.__set_properties
 		self.SetTitle(_("OutWiker"))
 		_icon = wx.EmptyIcon()
-		_icon.CopyFromBitmap(wx.Bitmap(os.path.join (self.imagesDir, "icon.ico"), wx.BITMAP_TYPE_ANY))
+		_icon.CopyFromBitmap(wx.Bitmap("images/icon.ico", wx.BITMAP_TYPE_ANY))
 		self.SetIcon(_icon)
 		self.SetSize((800, 680))
 		self.mainToolbar.Realize()
@@ -516,19 +509,7 @@ class MainWindow(wx.Frame):
 	def __do_layout(self):
 		# begin wxGlade: MainWindow.__do_layout
 		mainSizer = wx.FlexGridSizer(2, 1, 0, 0)
-		rightSizer = wx.FlexGridSizer(2, 1, 0, 0)
-		treeSizer = wx.FlexGridSizer(1, 1, 0, 0)
-		treeSizer.Add(self.tree, 1, wx.EXPAND|wx.FIXED_MINSIZE, 0)
-		self.leftPane.SetSizer(treeSizer)
-		treeSizer.AddGrowableRow(0)
-		treeSizer.AddGrowableCol(0)
-		rightSizer.Add(self.pagePanel, 1, wx.EXPAND, 0)
-		rightSizer.Add(self.attachPanel, 1, wx.EXPAND, 0)
-		self.rightPane.SetSizer(rightSizer)
-		rightSizer.AddGrowableRow(0)
-		rightSizer.AddGrowableCol(0)
-		self.splitter.SplitVertically(self.leftPane, self.rightPane, 181)
-		mainSizer.Add(self.splitter, 1, wx.EXPAND, 0)
+		mainSizer.Add(self.mainPanel, 1, wx.EXPAND, 0)
 		mainSizer.Add(self.statusbar, 1, wx.EXPAND, 0)
 		self.SetSizer(mainSizer)
 		mainSizer.AddGrowableRow(0)
@@ -549,6 +530,7 @@ class MainWindow(wx.Frame):
 
 			self.__removeTrayIcon()
 
+			self.auiManager.UnInit()
 			self.Destroy()
 		else:
 			event.Veto()
@@ -786,17 +768,11 @@ class MainWindow(wx.Frame):
 			# Окно свернули
 			self.__minimizeWindow ()
 
-			try:
-				self.__saveSashPosition()
-			except Exception as e:
-				wx.MessageBox (_(u"Can't save config\n%s") % (unicode (e)), _(u"Error"), wx.ICON_ERROR | wx.OK)
-
 
 	def __restoreWindow (self):
 		self.Show ()
 		self.Iconize (False)
 		self.__removeTrayIcon()
-		self.__loadSashPosition()
 
 
 	def __minimizeWindow (self):
