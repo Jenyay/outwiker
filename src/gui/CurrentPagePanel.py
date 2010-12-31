@@ -15,7 +15,6 @@ from core.controller import Controller
 from core.factory import FactorySelector
 import core.commands
 from core.tree import RootWikiPage
-from gui.AttachPanel import AttachPanel
 from core.search import TagsList
 import core.system
 
@@ -35,7 +34,6 @@ class CurrentPagePanel(wx.Panel):
 		self.bookmarkButton = wx.BitmapButton(self, -1, wx.Bitmap(os.path.join (self.imagesDir, "star_gray.png"), wx.BITMAP_TYPE_ANY))
 		self.titleLabel = wx.StaticText(self, -1, "")
 		self.tagsLabel = wx.StaticText(self, -1, _("[]"))
-		self.attachPAnel = AttachPanel(self, -1)
 
 		self.__set_properties()
 		self.__do_layout()
@@ -131,27 +129,22 @@ class CurrentPagePanel(wx.Panel):
 		self.bookmarkButton.SetSize(self.bookmarkButton.GetBestSize())
 		self.titleLabel.SetFont(wx.Font(14, wx.DEFAULT, wx.NORMAL, wx.NORMAL, 0, "MS Shell Dlg 2"))
 		self.tagsLabel.SetFont(wx.Font(12, wx.MODERN, wx.ITALIC, wx.NORMAL, 0, ""))
-		self.attachPAnel.SetMinSize((-1, 150))
 		# end wxGlade
 
 
 	def __do_layout(self):
 		# begin wxGlade: CurrentPagePanel.__do_layout
 		mainSizer = wx.FlexGridSizer(3, 1, 0, 0)
-		attachSizer = wx.FlexGridSizer(1, 1, 0, 0)
 		contentSizer = wx.FlexGridSizer(1, 1, 0, 0)
 		titleSizer = wx.FlexGridSizer(1, 3, 0, 0)
 		titleSizer.Add(self.bookmarkButton, 0, 0, 0)
 		titleSizer.Add(self.titleLabel, 0, wx.ALL|wx.EXPAND|wx.ALIGN_CENTER_VERTICAL, 2)
 		titleSizer.Add(self.tagsLabel, 0, wx.ALL|wx.EXPAND|wx.ALIGN_CENTER_VERTICAL, 2)
+		titleSizer.AddGrowableCol(1)
 		mainSizer.Add(titleSizer, 1, wx.EXPAND, 0)
 		contentSizer.AddGrowableRow(0)
 		contentSizer.AddGrowableCol(0)
 		mainSizer.Add(contentSizer, 1, wx.EXPAND, 0)
-		attachSizer.Add(self.attachPAnel, 1, wx.EXPAND, 0)
-		attachSizer.AddGrowableRow(0)
-		attachSizer.AddGrowableCol(0)
-		mainSizer.Add(attachSizer, 1, wx.EXPAND, 0)
 		self.SetSizer(mainSizer)
 		mainSizer.Fit(self)
 		mainSizer.AddGrowableRow(1)

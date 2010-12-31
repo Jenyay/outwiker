@@ -18,6 +18,7 @@ from gui.preferences.PrefDialog import PrefDialog
 from gui.about import AboutDialog
 from core.application import Application
 from gui.trayicon import OutwikerTrayIcon
+from gui.AttachPanel import AttachPanel
 
 # begin wxGlade: dependencies
 # end wxGlade
@@ -169,6 +170,7 @@ class MainWindow(wx.Frame):
 		# Tool Bar end
 		self.tree = WikiTree(self.leftPane, -1)
 		self.pagePanel = CurrentPagePanel(self.rightPane, -1)
+		self.attachPanel = AttachPanel(self.rightPane, -1)
 		self.statusbar = wx.StatusBar(self, -1)
 
 		self.__set_properties()
@@ -514,13 +516,14 @@ class MainWindow(wx.Frame):
 	def __do_layout(self):
 		# begin wxGlade: MainWindow.__do_layout
 		mainSizer = wx.FlexGridSizer(2, 1, 0, 0)
-		rightSizer = wx.FlexGridSizer(1, 1, 0, 0)
+		rightSizer = wx.FlexGridSizer(2, 1, 0, 0)
 		treeSizer = wx.FlexGridSizer(1, 1, 0, 0)
 		treeSizer.Add(self.tree, 1, wx.EXPAND|wx.FIXED_MINSIZE, 0)
 		self.leftPane.SetSizer(treeSizer)
 		treeSizer.AddGrowableRow(0)
 		treeSizer.AddGrowableCol(0)
 		rightSizer.Add(self.pagePanel, 1, wx.EXPAND, 0)
+		rightSizer.Add(self.attachPanel, 1, wx.EXPAND, 0)
 		self.rightPane.SetSizer(rightSizer)
 		rightSizer.AddGrowableRow(0)
 		rightSizer.AddGrowableCol(0)
