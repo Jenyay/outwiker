@@ -20,6 +20,7 @@ from gui.about import AboutDialog
 from core.application import Application
 from gui.trayicon import OutwikerTrayIcon
 from gui.AttachPanel import AttachPanel
+import core.config
 
 # begin wxGlade: dependencies
 # end wxGlade
@@ -211,14 +212,17 @@ class MainWindow(wx.Frame):
 
 		self.auiManager = wx.aui.AuiManager(self.mainPanel)
 
-		self.tree = WikiTree(self.mainPanel, -1)
 		self.pagePanel = CurrentPagePanel(self.mainPanel, -1)
 		self.attachPanel = AttachPanel (self.mainPanel, -1)
 
-		self.auiManager.AddPane(self.tree, wx.LEFT, _('Notes') )
+		self.tree = self.__createTree (self.auiManager)
+
 		self.auiManager.AddPane(self.pagePanel, wx.CENTER)
 		self.auiManager.AddPane(self.attachPanel, wx.BOTTOM, _('Attaches') )
 		self.auiManager.Update()
+
+		self.tree.SetMinSize ((Application.config.treeWidthOption.value, Application.config.treeHeightOption.value))
+
 
 		self.__setMenuBitmaps()
 		
@@ -227,7 +231,6 @@ class MainWindow(wx.Frame):
 		self.Bind (wx.EVT_MENU, self.onRestore, id=self.ID_RESTORE)
 
 		self.Bind (wx.EVT_IDLE, self.onIdle)
-		#self._hideElements()
 
 		self._dropTarget = DropFilesTarget (self)
 
@@ -245,7 +248,49 @@ class MainWindow(wx.Frame):
 			(wx.ACCEL_SHIFT,  wx.WXK_INSERT, wx.ID_PASTE),
 			(wx.ACCEL_SHIFT,  wx.WXK_DELETE, wx.ID_CUT)])
 		self.SetAcceleratorTable(aTable)
-	
+
+
+	def __createTree (self, auiManager):
+		config = Application.config
+		tree = WikiTree(self.mainPanel, -1)
+		
+		treePane = self.__loadPaneInfo (Application.config, "treepane")
+		if treePane == None:
+			treePane = wx.LEFT
+
+		auiManager.AddPane(tree, 
+				treePane, 
+				_('Notes') )
+
+		return tree
+
+
+	def __loadPaneInfo (self, config, param):
+		"""
+		Загрузить из конфига и вернуть информацию о dockable-панели (AuiPaneInfo)
+		"""
+		paneOption = core.config.StringOption (config, "MainWindow", param, "")
+		string_info = paneOption.value
+
+		if len (string_info) == 0:
+			return
+
+		pane = wx.aui.AuiPaneInfo()
+		try:
+			self.auiManager.LoadPaneInfo (string_info, pane)
+		except Exception, e:
+			return
+
+		return pane
+
+
+	def __savePaneInfo (self, config, param, paneInfo):
+		"""
+		Сохранить в конфиг информацию о dockable-панели (AuiPaneInfo)
+		"""
+		string_info = self.auiManager.SavePaneInfo (paneInfo)
+		config.set ("MainWindow", param, string_info)
+
 
 	def onPageSelect (self, newpage):
 		self.__updateTitle()
@@ -480,7 +525,10 @@ class MainWindow(wx.Frame):
 				config.XPosOption.value = xpos
 				config.YPosOption.value = ypos
 
-		except Exception as e:
+			self.__savePaneInfo (config, "TreePane", self.auiManager.GetPane (self.tree))
+			config.treeWidthOption.value = self.tree.GetSizeTuple()[0]
+			config.treeHeightOption.value = self.tree.GetSizeTuple()[1]
+		except Exception, e:
 			wx.MessageBox (_(u"Can't save config\n%s") % (unicode (e)), 
 					_(u"Error"), wx.ICON_ERROR | wx.OK)
 	
@@ -733,7 +781,6 @@ class MainWindow(wx.Frame):
 		if not self.stdEventLoop:
 			self.stdEventLoop = True
 			target = wx.Window.FindFocus()
-			#print target
 			target.ProcessEvent (event)
 		self.stdEventLoop = False
 

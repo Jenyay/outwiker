@@ -94,15 +94,15 @@ class Config (object):
 class StringOption (object):
 	def __init__ (self, config, section, param, defaultValue):
 		"""
+		config - экземпляр класса core.Config
 		section - секция для параметра конфига
 		param - имя параметра конфига
-		config - экземпляр класса core.Config
 		defaultValue - значение по умолчанию
 		"""
+		self.config = config
 		self.section = section
 		self.param = param
 		self.defaultValue = defaultValue
-		self.config = config
 
 		# Указатель на последнее возникшее исключение
 		# Т.к. как правило исключения игнорируются, то это поле используется для отладкиы
@@ -223,4 +223,7 @@ class GeneralConfig (Config):
 		self.HeightOption = IntegerOption (self, u"MainWindow", u"height", 680)
 		self.XPosOption = IntegerOption (self, u"MainWindow", u"xpos", 0)
 		self.YPosOption = IntegerOption (self, u"MainWindow", u"ypos", 0)
-		self.SashPositionOption = IntegerOption (self, u"MainWindow", u"sash", 200)
+
+		# Панель с деревом
+		self.treeWidthOption = core.config.IntegerOption (self, u"MainWindow", u"TreeWidth", 250)
+		self.treeHeightOption = core.config.IntegerOption (self, u"MainWindow", u"TreeHeight", 250)
