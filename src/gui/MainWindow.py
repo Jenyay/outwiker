@@ -5,6 +5,7 @@ import os.path
 import sys
 
 import wx
+import wx.aui
 
 from core.controller import Controller
 from core.tree import WikiDocument, RootWikiPage
@@ -19,6 +20,7 @@ from gui.about import AboutDialog
 from core.application import Application
 from gui.trayicon import OutwikerTrayIcon
 from gui.AttachPanel import AttachPanel
+import core.config
 
 # begin wxGlade: dependencies
 # end wxGlade
@@ -96,9 +98,6 @@ class MainWindow(wx.Frame):
 		# begin wxGlade: MainWindow.__init__
 		kwds["style"] = wx.DEFAULT_FRAME_STYLE
 		wx.Frame.__init__(self, *args, **kwds)
-		self.splitter = wx.SplitterWindow(self, -1, style=wx.SP_3D|wx.SP_BORDER|wx.SP_LIVE_UPDATE)
-		self.rightPane = wx.Panel(self.splitter, -1)
-		self.leftPane = wx.Panel(self.splitter, -1)
 		
 		# Menu Bar
 		self.mainMenu = wx.MenuBar()
@@ -153,24 +152,22 @@ class MainWindow(wx.Frame):
 		# Tool Bar
 		self.mainToolbar = wx.ToolBar(self, -1, style=wx.TB_HORIZONTAL|wx.TB_FLAT|wx.TB_DOCKABLE)
 		self.SetToolBar(self.mainToolbar)
-		self.mainToolbar.AddLabelTool(self.ID_NEW, _(u"New…"), wx.Bitmap(os.path.join (self.imagesDir, "new.png"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _(u"Create new wiki…"), "")
-		self.mainToolbar.AddLabelTool(self.ID_OPEN, _(u"Open…"), wx.Bitmap(os.path.join (self.imagesDir, "open.png"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _(u"Open wiki…"), "")
-		self.mainToolbar.AddLabelTool(self.ID_SAVE, _("Save"), wx.Bitmap(os.path.join (self.imagesDir, "save.png"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _("Save wiki"), "")
+		self.mainToolbar.AddLabelTool(self.ID_NEW, _(u"New…"), wx.Bitmap("images/new.png", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _(u"Create new wiki…"), "")
+		self.mainToolbar.AddLabelTool(self.ID_OPEN, _(u"Open…"), wx.Bitmap("images/open.png", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _(u"Open wiki…"), "")
+		self.mainToolbar.AddLabelTool(self.ID_SAVE, _("Save"), wx.Bitmap("images/save.png", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _("Save wiki"), "")
 		self.mainToolbar.AddSeparator()
-		self.mainToolbar.AddLabelTool(self.ID_RELOAD, _("Reload"), wx.Bitmap(os.path.join (self.imagesDir, "reload.png"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _("Reload wiki"), "")
+		self.mainToolbar.AddLabelTool(self.ID_RELOAD, _("Reload"), wx.Bitmap("images/reload.png", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _("Reload wiki"), "")
 		self.mainToolbar.AddSeparator()
-		self.mainToolbar.AddLabelTool(self.ID_ADDPAGE, _(u"Add sibling page…"), wx.Bitmap(os.path.join (self.imagesDir, "sibling.ico"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _(u"Add sibling page…"), "")
-		self.mainToolbar.AddLabelTool(self.ID_ADDCHILD, _(u"Add child Page…"), wx.Bitmap(os.path.join (self.imagesDir, "child.ico"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _(u"Add child Page…"), "")
-		self.mainToolbar.AddLabelTool(self.ID_REMOVE_PAGE, _("Remove page"), wx.Bitmap(os.path.join (self.imagesDir, "remove.ico"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _(u"Remove page…"), "")
+		self.mainToolbar.AddLabelTool(self.ID_ADDPAGE, _(u"Add sibling page…"), wx.Bitmap("images/sibling.ico", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _(u"Add sibling page…"), "")
+		self.mainToolbar.AddLabelTool(self.ID_ADDCHILD, _(u"Add child Page…"), wx.Bitmap("images/child.ico", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _(u"Add child Page…"), "")
+		self.mainToolbar.AddLabelTool(self.ID_REMOVE_PAGE, _("Remove page"), wx.Bitmap("images/remove.ico", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _(u"Remove page…"), "")
 		self.mainToolbar.AddSeparator()
-		self.mainToolbar.AddLabelTool(self.ID_ATTACH, _(u"Attach files…"), wx.Bitmap(os.path.join (self.imagesDir, "attach.png"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _(u"Attach files…"), "")
-		self.mainToolbar.AddLabelTool(self.ID_EDIT, _("Edit page"), wx.Bitmap(os.path.join (self.imagesDir, "edit.png"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _("Edit page's properties"), "")
-		self.mainToolbar.AddLabelTool(self.ID_GLOBAL_SEARCH, _(u"Global search…"), wx.Bitmap(os.path.join (self.imagesDir, "global_search.png"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _(u"Global search…"), "")
+		self.mainToolbar.AddLabelTool(self.ID_ATTACH, _(u"Attach files…"), wx.Bitmap("images/attach.png", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _(u"Attach files…"), "")
+		self.mainToolbar.AddLabelTool(self.ID_EDIT, _("Edit page"), wx.Bitmap("images/edit.png", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _("Edit page's properties"), "")
+		self.mainToolbar.AddLabelTool(self.ID_GLOBAL_SEARCH, _(u"Global search…"), wx.Bitmap("images/global_search.png", wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _(u"Global search…"), "")
 		self.mainToolbar.AddSeparator()
 		# Tool Bar end
-		self.tree = WikiTree(self.leftPane, -1)
-		self.pagePanel = CurrentPagePanel(self.rightPane, -1)
-		self.attachPanel = AttachPanel(self.rightPane, -1)
+		self.mainPanel = wx.Panel(self, -1)
 		self.statusbar = wx.StatusBar(self, -1)
 
 		self.__set_properties()
@@ -213,23 +210,28 @@ class MainWindow(wx.Frame):
 		self.Bind(wx.EVT_TOOL, self.onGlobalSearch, id=self.ID_GLOBAL_SEARCH)
 		# end wxGlade
 
+		self.auiManager = wx.aui.AuiManager(self.mainPanel)
+
+		self.tree = WikiTree(self.mainPanel, -1)
+		self.pagePanel = CurrentPagePanel(self.mainPanel, -1)
+		self.attachPanel = AttachPanel (self.mainPanel, -1)
+
+		self.__initAuiManager (self.auiManager)
+
 		self.__setMenuBitmaps()
 		
 		self.Bind (wx.EVT_CLOSE, self.onClose)
 		self.Bind (wx.EVT_ICONIZE, self.onIconize)
 		self.Bind (wx.EVT_MENU, self.onRestore, id=self.ID_RESTORE)
-
 		self.Bind (wx.EVT_IDLE, self.onIdle)
-		#self._hideElements()
+
+		self.mainPanel.Bind (wx.EVT_CLOSE, self.onMainPanelClose)
 
 		self._dropTarget = DropFilesTarget (self)
 
 		self.SetDropTarget (self._dropTarget)
 		self.__enableGui()
 		self. __createTrayIcon()
-
-		self.minPaneSize = 30
-		self.splitter.SetMinimumPaneSize (self.minPaneSize)
 
 		self.statusbar.SetFieldsCount(1)
 		self.pagePanel.Disable()
@@ -240,6 +242,100 @@ class MainWindow(wx.Frame):
 			(wx.ACCEL_SHIFT,  wx.WXK_DELETE, wx.ID_CUT)])
 		self.SetAcceleratorTable(aTable)
 	
+
+	def onMainPanelClose (self, event):
+		self.tree.Close()
+		self.pagePanel.Close()
+		self.attachPanel.Close()
+		
+		self.mainPanel.Destroy()
+
+
+	def __initAuiManager(self, auiManager):
+		self.__initTreePane (self.auiManager)
+		self.__initAttachesPane (self.auiManager)
+
+		auiManager.AddPane(self.pagePanel, wx.CENTER)
+		auiManager.Update()
+
+		self.tree.SetMinSize ((Application.config.treeWidthOption.value, 
+			Application.config.treeHeightOption.value))
+		
+		self.attachPanel.SetMinSize ((Application.config.attachesWidthOption.value, 
+			Application.config.attachesHeightOption.value))
+		
+
+	def __initTreePane (self, auiManager):
+		"""
+		Загрузить настройки окошка с деревом
+		"""
+		config = Application.config
+		
+		pane = self.__loadPaneInfo (config.treePaneOption)
+
+		if pane == None:
+			pane = wx.aui.AuiPaneInfo().Name(("treePane")).Caption(_("Notes")).Gripper(False).CaptionVisible(True).Layer(2).Position(0).CloseButton(False).MaximizeButton(False).Left().Dock()
+
+		# Из-за глюка http://trac.wxwidgets.org/ticket/12422 придется пока отказаться от плавающих панелек
+		pane.Dock()
+		auiManager.AddPane(self.tree, pane, _('Notes') )
+	
+
+	def __initAttachesPane (self, auiManager):
+		"""
+		Загрузить настройки окошка с прикрепленными файлами
+		"""
+		config = Application.config
+		
+		pane = self.__loadPaneInfo (config.attachesPaneOption)
+
+		if pane == None:
+			pane = wx.aui.AuiPaneInfo().Name("attachesPane").Caption(_("Attaches")).Gripper(False).CaptionVisible(True).Layer(1).Position(0).CloseButton(False).MaximizeButton(False).Bottom().Dock()
+
+		# Из-за глюка http://trac.wxwidgets.org/ticket/12422 придется пока отказаться от плавающих панелек
+		pane.Dock()
+		auiManager.AddPane(self.attachPanel, pane, _('Attaches') )
+	
+
+	def __loadPaneInfo (self, param):
+		"""
+		Загрузить из конфига и вернуть информацию о dockable-панели (AuiPaneInfo)
+		"""
+		string_info = param.value
+
+		if len (string_info) == 0:
+			return
+
+		pane = wx.aui.AuiPaneInfo()
+		try:
+			self.auiManager.LoadPaneInfo (string_info, pane)
+		except Exception, e:
+			return
+
+		return pane
+
+
+	def __savePaneInfo (self, param, paneInfo):
+		"""
+		Сохранить в конфиг информацию о dockable-панели (AuiPaneInfo)
+		"""
+		string_info = self.auiManager.SavePaneInfo (paneInfo)
+		param.value = string_info
+
+
+	def __savePanesParams (self):
+		"""
+		Сохранить параметры панелей
+		"""
+		self.__savePaneInfo (Application.config.treePaneOption, self.auiManager.GetPane (self.tree))
+		self.__savePaneInfo (Application.config.attachesPaneOption, self.auiManager.GetPane (self.attachPanel))
+		
+		Application.config.treeWidthOption.value = self.tree.GetSizeTuple()[0]
+		Application.config.treeHeightOption.value = self.tree.GetSizeTuple()[1]
+			
+		Application.config.attachesWidthOption.value = self.attachPanel.GetSizeTuple()[0]
+		Application.config.attachesHeightOption.value = self.attachPanel.GetSizeTuple()[1]
+
 
 	def onPageSelect (self, newpage):
 		self.__updateTitle()
@@ -446,7 +542,7 @@ class MainWindow(wx.Frame):
 		Загрузить параметры из конфига
 		"""
 		config = Application.config
-		self._showElements()
+		self.Freeze()
 
 		width = config.WidthOption.value
 		height = config.HeightOption.value
@@ -456,14 +552,11 @@ class MainWindow(wx.Frame):
 		
 		self.SetSize ( (width, height) )
 		self.SetPosition ( (xpos, ypos) )
-		self.__loadSashPosition()
+
+		self.Thaw()
 	
 
-	def __loadSashPosition (self):
-		self.splitter.SetSashPosition (Application.config.SashPositionOption.value)
-
-	
-	def _saveParams (self):
+	def __saveParams (self):
 		"""
 		Сохранить параметры в конфиг
 		"""
@@ -479,34 +572,17 @@ class MainWindow(wx.Frame):
 				config.XPosOption.value = xpos
 				config.YPosOption.value = ypos
 
-			self.__saveSashPosition()
-		except Exception as e:
+				self.__savePanesParams()
+		except Exception, e:
 			wx.MessageBox (_(u"Can't save config\n%s") % (unicode (e)), 
 					_(u"Error"), wx.ICON_ERROR | wx.OK)
 	
-
-	def __saveSashPosition(self):
-		"""
-		Сохранить положение перетаскиваемой линии между деревом и заметкой
-		"""
-		Application.config.SashPositionOption.value = self.splitter.GetSashPosition()
-
-	
-	def _hideElements (self):
-		pass
-		self.tree.Hide()
-		self.pagePanel.Hide()
-
-	def _showElements (self):
-		self.tree.Show()
-		self.pagePanel.Show()
-
 
 	def __set_properties(self):
 		# begin wxGlade: MainWindow.__set_properties
 		self.SetTitle(_("OutWiker"))
 		_icon = wx.EmptyIcon()
-		_icon.CopyFromBitmap(wx.Bitmap(os.path.join (self.imagesDir, "icon.ico"), wx.BITMAP_TYPE_ANY))
+		_icon.CopyFromBitmap(wx.Bitmap("images/icon.ico", wx.BITMAP_TYPE_ANY))
 		self.SetIcon(_icon)
 		self.SetSize((800, 680))
 		self.mainToolbar.Realize()
@@ -516,19 +592,7 @@ class MainWindow(wx.Frame):
 	def __do_layout(self):
 		# begin wxGlade: MainWindow.__do_layout
 		mainSizer = wx.FlexGridSizer(2, 1, 0, 0)
-		rightSizer = wx.FlexGridSizer(2, 1, 0, 0)
-		treeSizer = wx.FlexGridSizer(1, 1, 0, 0)
-		treeSizer.Add(self.tree, 1, wx.EXPAND|wx.FIXED_MINSIZE, 0)
-		self.leftPane.SetSizer(treeSizer)
-		treeSizer.AddGrowableRow(0)
-		treeSizer.AddGrowableCol(0)
-		rightSizer.Add(self.pagePanel, 1, wx.EXPAND, 0)
-		rightSizer.Add(self.attachPanel, 1, wx.EXPAND, 0)
-		self.rightPane.SetSizer(rightSizer)
-		rightSizer.AddGrowableRow(0)
-		rightSizer.AddGrowableCol(0)
-		self.splitter.SplitVertically(self.leftPane, self.rightPane, 181)
-		mainSizer.Add(self.splitter, 1, wx.EXPAND, 0)
+		mainSizer.Add(self.mainPanel, 1, wx.EXPAND, 0)
 		mainSizer.Add(self.statusbar, 1, wx.EXPAND, 0)
 		self.SetSizer(mainSizer)
 		mainSizer.AddGrowableRow(0)
@@ -544,8 +608,11 @@ class MainWindow(wx.Frame):
 				wx.MessageBox (_(u"Really exit?"), _(u"Exit"), wx.YES_NO  | wx.ICON_QUESTION ) == wx.YES):
 			if Application.wikiroot != None:
 				Controller.instance().onWikiClose (Application.wikiroot)
-			self._saveParams()
-			self.pagePanel.Close()
+
+			self.__saveParams()
+
+			self.auiManager.UnInit()
+			self.mainPanel.Close()
 
 			self.__removeTrayIcon()
 
@@ -572,11 +639,6 @@ class MainWindow(wx.Frame):
 		"""
 		Application.wikiroot = sender.root
 		self._loadBookmarks()
-
-		if Application.wikiroot == None:
-			self._hideElements()
-		else:
-			self._showElements()
 
 
 	def onNew(self, event): # wxGlade: MainWindow.<event_handler>
@@ -652,7 +714,7 @@ class MainWindow(wx.Frame):
 		if Application.wikiroot == None:
 			return
 
-		currPage = self.tree.selectedPage
+		currPage = Application.wikiroot.selectedPage
 
 		if currPage == None or currPage.parent == None:
 			parentpage = Application.wikiroot
@@ -669,7 +731,8 @@ class MainWindow(wx.Frame):
 		if Application.wikiroot == None:
 			return
 
-		currPage = self.tree.selectedPage
+		currPage = Application.wikiroot.selectedPage
+
 		if currPage == None:
 			currPage = Application.wikiroot
 
@@ -751,7 +814,6 @@ class MainWindow(wx.Frame):
 		if not self.stdEventLoop:
 			self.stdEventLoop = True
 			target = wx.Window.FindFocus()
-			#print target
 			target.ProcessEvent (event)
 		self.stdEventLoop = False
 
@@ -786,17 +848,11 @@ class MainWindow(wx.Frame):
 			# Окно свернули
 			self.__minimizeWindow ()
 
-			try:
-				self.__saveSashPosition()
-			except Exception as e:
-				wx.MessageBox (_(u"Can't save config\n%s") % (unicode (e)), _(u"Error"), wx.ICON_ERROR | wx.OK)
-
 
 	def __restoreWindow (self):
 		self.Show ()
 		self.Iconize (False)
 		self.__removeTrayIcon()
-		self.__loadSashPosition()
 
 
 	def __minimizeWindow (self):
