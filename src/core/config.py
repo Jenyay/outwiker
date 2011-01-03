@@ -227,7 +227,9 @@ class GeneralConfig (Config):
 		# Панель с деревом
 		self.treeWidthOption = core.config.IntegerOption (self, u"MainWindow", u"TreeWidth", 250)
 		self.treeHeightOption = core.config.IntegerOption (self, u"MainWindow", u"TreeHeight", 250)
+		self.treePaneOption = core.config.StringOption (self, u"MainWindow", u"TreePane", "")
 
 		# Панель с прикрепленными файлами
 		self.attachesWidthOption = core.config.IntegerOption (self, u"MainWindow", u"AttachesWidth", 250)
 		self.attachesHeightOption = core.config.IntegerOption (self, u"MainWindow", u"AttachesHeight", 150)
+		self.attachesPaneOption = core.config.StringOption (self, u"MainWindow", u"AttachesPane", "")

@@ -223,16 +223,15 @@ class MainWindow(wx.Frame):
 		self.Bind (wx.EVT_CLOSE, self.onClose)
 		self.Bind (wx.EVT_ICONIZE, self.onIconize)
 		self.Bind (wx.EVT_MENU, self.onRestore, id=self.ID_RESTORE)
-
 		self.Bind (wx.EVT_IDLE, self.onIdle)
+
+		self.mainPanel.Bind (wx.EVT_CLOSE, self.onMainPanelClose)
 
 		self._dropTarget = DropFilesTarget (self)
 
 		self.SetDropTarget (self._dropTarget)
 		self.__enableGui()
 		self. __createTrayIcon()
-
-		self.minPaneSize = 30
 
 		self.statusbar.SetFieldsCount(1)
 		self.pagePanel.Disable()
@@ -242,6 +241,14 @@ class MainWindow(wx.Frame):
 			(wx.ACCEL_SHIFT,  wx.WXK_INSERT, wx.ID_PASTE),
 			(wx.ACCEL_SHIFT,  wx.WXK_DELETE, wx.ID_CUT)])
 		self.SetAcceleratorTable(aTable)
+	
+
+	def onMainPanelClose (self, event):
+		self.tree.Close()
+		self.pagePanel.Close()
+		self.attachPanel.Close()
+		
+		self.mainPanel.Destroy()
 
 
 	def __initAuiManager(self, auiManager):
@@ -249,7 +256,6 @@ class MainWindow(wx.Frame):
 		self.__initAttachesPane (self.auiManager)
 
 		auiManager.AddPane(self.pagePanel, wx.CENTER)
-		#auiManager.AddPane(self.attachPanel, wx.BOTTOM, _('Attaches') )
 		auiManager.Update()
 
 		self.tree.SetMinSize ((Application.config.treeWidthOption.value, 
@@ -265,7 +271,8 @@ class MainWindow(wx.Frame):
 		"""
 		config = Application.config
 		
-		pane = self.__loadPaneInfo (Application.config, "TreePane")
+		pane = self.__loadPaneInfo (config.treePaneOption)
+
 		if pane == None:
 			pane = wx.aui.AuiPaneInfo().Name(("treePane")).Caption(_("Notes")).Gripper(False).CaptionVisible(True).Layer(2).Position(0).CloseButton(False).MaximizeButton(False).Left().Dock()
 
@@ -280,7 +287,8 @@ class MainWindow(wx.Frame):
 		"""
 		config = Application.config
 		
-		pane = self.__loadPaneInfo (Application.config, "AttachesPane")
+		pane = self.__loadPaneInfo (config.attachesPaneOption)
+
 		if pane == None:
 			pane = wx.aui.AuiPaneInfo().Name("attachesPane").Caption(_("Attaches")).Gripper(False).CaptionVisible(True).Layer(1).Position(0).CloseButton(False).MaximizeButton(False).Bottom().Dock()
 
@@ -289,12 +297,11 @@ class MainWindow(wx.Frame):
 		auiManager.AddPane(self.attachPanel, pane, _('Attaches') )
 	
 
-	def __loadPaneInfo (self, config, param):
+	def __loadPaneInfo (self, param):
 		"""
 		Загрузить из конфига и вернуть информацию о dockable-панели (AuiPaneInfo)
 		"""
-		paneOption = core.config.StringOption (config, "MainWindow", param, "")
-		string_info = paneOption.value
+		string_info = param.value
 
 		if len (string_info) == 0:
 			return
@@ -303,18 +310,31 @@ class MainWindow(wx.Frame):
 		try:
 			self.auiManager.LoadPaneInfo (string_info, pane)
 		except Exception, e:
-			print e
 			return
 
 		return pane
 
 
-	def __savePaneInfo (self, config, param, paneInfo):
+	def __savePaneInfo (self, param, paneInfo):
 		"""
 		Сохранить в конфиг информацию о dockable-панели (AuiPaneInfo)
 		"""
 		string_info = self.auiManager.SavePaneInfo (paneInfo)
-		config.set ("MainWindow", param, string_info)
+		param.value = string_info
+
+
+	def __savePanesParams (self):
+		"""
+		Сохранить параметры панелей
+		"""
+		self.__savePaneInfo (Application.config.treePaneOption, self.auiManager.GetPane (self.tree))
+		self.__savePaneInfo (Application.config.attachesPaneOption, self.auiManager.GetPane (self.attachPanel))
+		
+		Application.config.treeWidthOption.value = self.tree.GetSizeTuple()[0]
+		Application.config.treeHeightOption.value = self.tree.GetSizeTuple()[1]
+			
+		Application.config.attachesWidthOption.value = self.attachPanel.GetSizeTuple()[0]
+		Application.config.attachesHeightOption.value = self.attachPanel.GetSizeTuple()[1]
 
 
 	def onPageSelect (self, newpage):
@@ -523,7 +543,6 @@ class MainWindow(wx.Frame):
 		"""
 		config = Application.config
 		self.Freeze()
-		self._showElements()
 
 		width = config.WidthOption.value
 		height = config.HeightOption.value
@@ -537,7 +556,7 @@ class MainWindow(wx.Frame):
 		self.Thaw()
 	
 
-	def _saveParams (self):
+	def __saveParams (self):
 		"""
 		Сохранить параметры в конфиг
 		"""
@@ -553,28 +572,11 @@ class MainWindow(wx.Frame):
 				config.XPosOption.value = xpos
 				config.YPosOption.value = ypos
 
-			self.__savePaneInfo (config, "TreePane", self.auiManager.GetPane (self.tree))
-			self.__savePaneInfo (config, "AttachesPane", self.auiManager.GetPane (self.attachPanel))
-			
-			config.treeWidthOption.value = self.tree.GetSizeTuple()[0]
-			config.treeHeightOption.value = self.tree.GetSizeTuple()[1]
-			
-			config.attachesWidthOption.value = self.attachPanel.GetSizeTuple()[0]
-			config.attachesHeightOption.value = self.attachPanel.GetSizeTuple()[1]
+				self.__savePanesParams()
 		except Exception, e:
 			wx.MessageBox (_(u"Can't save config\n%s") % (unicode (e)), 
 					_(u"Error"), wx.ICON_ERROR | wx.OK)
 	
-
-	def _hideElements (self):
-		pass
-		self.tree.Hide()
-		self.pagePanel.Hide()
-
-	def _showElements (self):
-		self.tree.Show()
-		self.pagePanel.Show()
-
 
 	def __set_properties(self):
 		# begin wxGlade: MainWindow.__set_properties
@@ -607,14 +609,10 @@ class MainWindow(wx.Frame):
 			if Application.wikiroot != None:
 				Controller.instance().onWikiClose (Application.wikiroot)
 
-			self._saveParams()
+			self.__saveParams()
 
 			self.auiManager.UnInit()
-
-			self.tree.Close()
-			self.pagePanel.Close()
-			self.attachPanel.Close()
-			self.mainPanel.Destroy()
+			self.mainPanel.Close()
 
 			self.__removeTrayIcon()
 
@@ -641,11 +639,6 @@ class MainWindow(wx.Frame):
 		"""
 		Application.wikiroot = sender.root
 		self._loadBookmarks()
-
-		if Application.wikiroot == None:
-			self._hideElements()
-		else:
-			self._showElements()
 
 
 	def onNew(self, event): # wxGlade: MainWindow.<event_handler>
@@ -721,7 +714,7 @@ class MainWindow(wx.Frame):
 		if Application.wikiroot == None:
 			return
 
-		currPage = self.tree.selectedPage
+		currPage = Application.wikiroot.selectedPage
 
 		if currPage == None or currPage.parent == None:
 			parentpage = Application.wikiroot
@@ -738,7 +731,8 @@ class MainWindow(wx.Frame):
 		if Application.wikiroot == None:
 			return
 
-		currPage = self.tree.selectedPage
+		currPage = Application.wikiroot.selectedPage
+
 		if currPage == None:
 			currPage = Application.wikiroot
 
