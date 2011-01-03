@@ -212,17 +212,11 @@ class MainWindow(wx.Frame):
 
 		self.auiManager = wx.aui.AuiManager(self.mainPanel)
 
+		self.tree = WikiTree(self.mainPanel, -1)
 		self.pagePanel = CurrentPagePanel(self.mainPanel, -1)
 		self.attachPanel = AttachPanel (self.mainPanel, -1)
 
-		self.tree = self.__createTree (self.auiManager)
-
-		self.auiManager.AddPane(self.pagePanel, wx.CENTER)
-		self.auiManager.AddPane(self.attachPanel, wx.BOTTOM, _('Attaches') )
-		self.auiManager.Update()
-
-		self.tree.SetMinSize ((Application.config.treeWidthOption.value, Application.config.treeHeightOption.value))
-
+		self.__initAuiManager (self.auiManager)
 
 		self.__setMenuBitmaps()
 		
@@ -250,20 +244,50 @@ class MainWindow(wx.Frame):
 		self.SetAcceleratorTable(aTable)
 
 
-	def __createTree (self, auiManager):
-		config = Application.config
-		tree = WikiTree(self.mainPanel, -1)
+	def __initAuiManager(self, auiManager):
+		self.__initTreePane (self.auiManager)
+		self.__initAttachesPane (self.auiManager)
+
+		auiManager.AddPane(self.pagePanel, wx.CENTER)
+		#auiManager.AddPane(self.attachPanel, wx.BOTTOM, _('Attaches') )
+		auiManager.Update()
+
+		self.tree.SetMinSize ((Application.config.treeWidthOption.value, 
+			Application.config.treeHeightOption.value))
 		
-		treePane = self.__loadPaneInfo (Application.config, "treepane")
-		if treePane == None:
-			treePane = wx.LEFT
+		self.attachPanel.SetMinSize ((Application.config.attachesWidthOption.value, 
+			Application.config.attachesHeightOption.value))
+		
 
-		auiManager.AddPane(tree, 
-				treePane, 
-				_('Notes') )
+	def __initTreePane (self, auiManager):
+		"""
+		Загрузить настройки окошка с деревом
+		"""
+		config = Application.config
+		
+		pane = self.__loadPaneInfo (Application.config, "TreePane")
+		if pane == None:
+			pane = wx.aui.AuiPaneInfo().Name(("treePane")).Caption(_("Notes")).Gripper(False).CaptionVisible(True).Layer(2).Position(0).CloseButton(False).MaximizeButton(False).Left().Dock()
 
-		return tree
+		# Из-за глюка http://trac.wxwidgets.org/ticket/12422 придется пока отказаться от плавающих панелек
+		pane.Dock()
+		auiManager.AddPane(self.tree, pane, _('Notes') )
+	
 
+	def __initAttachesPane (self, auiManager):
+		"""
+		Загрузить настройки окошка с прикрепленными файлами
+		"""
+		config = Application.config
+		
+		pane = self.__loadPaneInfo (Application.config, "AttachesPane")
+		if pane == None:
+			pane = wx.aui.AuiPaneInfo().Name("attachesPane").Caption(_("Attaches")).Gripper(False).CaptionVisible(True).Layer(1).Position(0).CloseButton(False).MaximizeButton(False).Bottom().Dock()
+
+		# Из-за глюка http://trac.wxwidgets.org/ticket/12422 придется пока отказаться от плавающих панелек
+		pane.Dock()
+		auiManager.AddPane(self.attachPanel, pane, _('Attaches') )
+	
 
 	def __loadPaneInfo (self, config, param):
 		"""
@@ -279,6 +303,7 @@ class MainWindow(wx.Frame):
 		try:
 			self.auiManager.LoadPaneInfo (string_info, pane)
 		except Exception, e:
+			print e
 			return
 
 		return pane
@@ -497,6 +522,7 @@ class MainWindow(wx.Frame):
 		Загрузить параметры из конфига
 		"""
 		config = Application.config
+		self.Freeze()
 		self._showElements()
 
 		width = config.WidthOption.value
@@ -507,6 +533,8 @@ class MainWindow(wx.Frame):
 		
 		self.SetSize ( (width, height) )
 		self.SetPosition ( (xpos, ypos) )
+
+		self.Thaw()
 	
 
 	def _saveParams (self):
@@ -526,8 +554,13 @@ class MainWindow(wx.Frame):
 				config.YPosOption.value = ypos
 
 			self.__savePaneInfo (config, "TreePane", self.auiManager.GetPane (self.tree))
+			self.__savePaneInfo (config, "AttachesPane", self.auiManager.GetPane (self.attachPanel))
+			
 			config.treeWidthOption.value = self.tree.GetSizeTuple()[0]
 			config.treeHeightOption.value = self.tree.GetSizeTuple()[1]
+			
+			config.attachesWidthOption.value = self.attachPanel.GetSizeTuple()[0]
+			config.attachesHeightOption.value = self.attachPanel.GetSizeTuple()[1]
 		except Exception, e:
 			wx.MessageBox (_(u"Can't save config\n%s") % (unicode (e)), 
 					_(u"Error"), wx.ICON_ERROR | wx.OK)
@@ -573,12 +606,18 @@ class MainWindow(wx.Frame):
 				wx.MessageBox (_(u"Really exit?"), _(u"Exit"), wx.YES_NO  | wx.ICON_QUESTION ) == wx.YES):
 			if Application.wikiroot != None:
 				Controller.instance().onWikiClose (Application.wikiroot)
+
 			self._saveParams()
+
+			self.auiManager.UnInit()
+
+			self.tree.Close()
 			self.pagePanel.Close()
+			self.attachPanel.Close()
+			self.mainPanel.Destroy()
 
 			self.__removeTrayIcon()
 
-			self.auiManager.UnInit()
 			self.Destroy()
 		else:
 			event.Veto()
