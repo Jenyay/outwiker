@@ -223,6 +223,7 @@ class GeneralConfig (Config):
 		self.HeightOption = IntegerOption (self, u"MainWindow", u"height", 680)
 		self.XPosOption = IntegerOption (self, u"MainWindow", u"xpos", 0)
 		self.YPosOption = IntegerOption (self, u"MainWindow", u"ypos", 0)
+		self.FullscreenOption = BooleanOption (self, u"MainWindow", u"fullscreen", False)
 
 		# Панель с деревом
 		self.treeWidthOption = core.config.IntegerOption (self, u"MainWindow", u"TreeWidth", 250)

@@ -87,9 +87,6 @@ class MainWindow(wx.Frame):
 		# Используется для определения момента, когда окно только загрузилось
 		self.firstEvent = True
 
-		# Находимся ли мы в данный момент в режиме fullscreen?
-		self.fullscreenMode = False
-
 		Controller.instance().onTreeUpdate += self.onTreeUpdate
 		Controller.instance().onPageSelect += self.onPageSelect
 		Controller.instance().onBookmarksChanged += self.onBookmarksChanged
@@ -228,12 +225,10 @@ class MainWindow(wx.Frame):
 		self.auiManager = wx.aui.AuiManager(self.mainPanel)
 
 		self.tree = WikiTree(self.mainPanel, -1)
-		
 		self.pagePanel = CurrentPagePanel(self.mainPanel, -1)
 		self.attachPanel = AttachPanel (self.mainPanel, -1)
 
 		self.__initAuiManager (self.auiManager)
-		self.__updateViewMenu()
 
 		self.__setMenuBitmaps()
 		
@@ -434,9 +429,10 @@ class MainWindow(wx.Frame):
 	def onIdle (self, event):
 		if self.firstEvent:
 			self.firstEvent = False
-			self._loadParams()
+			self.__loadMainWindowParams()
 			self._loadRecentWiki()
 			self.__iconizeAfterStart ()
+			self.__setFullscreen(Application.config.FullscreenOption.value)
 
 			if len (sys.argv) > 1:
 				self._openFromCommandLine()
@@ -460,9 +456,7 @@ class MainWindow(wx.Frame):
 		"""
 		Свернуться при запуске, если установлена соответствующая опция
 		"""
-		iconize = Application.config.startIconizedOption.value
-
-		if iconize:
+		if Application.config.startIconizedOption.value:
 			self.Iconize(True)
 
 	
@@ -570,7 +564,7 @@ class MainWindow(wx.Frame):
 			Application.wikiroot.selectedPage = Application.wikiroot[subpath]
 	
 
-	def _loadParams(self):
+	def __loadMainWindowParams(self):
 		"""
 		Загрузить параметры из конфига
 		"""
@@ -583,8 +577,7 @@ class MainWindow(wx.Frame):
 		xpos = config.XPosOption.value
 		ypos = config.YPosOption.value
 		
-		self.SetSize ( (width, height) )
-		self.SetPosition ( (xpos, ypos) )
+		self.SetDimensions (xpos, ypos, width, height, sizeFlags=wx.SIZE_FORCE)
 
 		self.Thaw()
 	
@@ -597,13 +590,16 @@ class MainWindow(wx.Frame):
 
 		try:
 			if not self.IsIconized():
-				(width, height) = self.GetSizeTuple()
-				config.WidthOption.value = width
-				config.HeightOption.value = height
+				if not self.IsFullScreen():
+					(width, height) = self.GetSizeTuple()
+					config.WidthOption.value = width
+					config.HeightOption.value = height
 
-				(xpos, ypos) = self.GetPositionTuple()
-				config.XPosOption.value = xpos
-				config.YPosOption.value = ypos
+					(xpos, ypos) = self.GetPositionTuple()
+					config.XPosOption.value = xpos
+					config.YPosOption.value = ypos
+
+				config.FullscreenOption.value = self.IsFullScreen()
 
 				self.__savePanesParams()
 		except Exception, e:
@@ -927,18 +923,34 @@ class MainWindow(wx.Frame):
 
 
 	def onFullscreen(self, event): # wxGlade: MainWindow.<event_handler>
-		self.fullscreenMode = not self.fullscreenMode
+		self.__setFullscreen(not self.IsFullScreen())
 
-		if self.fullscreenMode:
-			self.__savePanesSize()
-			self.auiManager.GetPane (self.attachPanel).Hide()
-			self.auiManager.GetPane (self.tree).Hide()
-			self.auiManager.Update()
+
+	def __setFullscreen (self, fullscreen):
+		"""
+		Установить параметры в зависимости от режима fullscreen
+		"""
+		if fullscreen:
+			self.__toFullscreen()
 		else:
-			self.auiManager.GetPane (self.attachPanel).Show()
-			self.auiManager.GetPane (self.tree).Show()
-			self.__loadPanesSize ()
+			self.__fromFullscreen()
 
+
+	def __toFullscreen(self):
+		self.__savePanesSize()
+		self.ShowFullScreen(True, wx.FULLSCREEN_NOTOOLBAR | wx.FULLSCREEN_NOBORDER | wx.FULLSCREEN_NOCAPTION)
+		self.auiManager.GetPane (self.attachPanel).Hide()
+		self.auiManager.GetPane (self.tree).Hide()
+		self.auiManager.Update()
+		self.__updateViewMenu()
+
+
+	def __fromFullscreen (self):
+		self.__loadMainWindowParams()
+		self.ShowFullScreen(False)
+		self.auiManager.GetPane (self.attachPanel).Show()
+		self.auiManager.GetPane (self.tree).Show()
+		self.__loadPanesSize ()
 		self.__updateViewMenu()
 
 	
@@ -955,7 +967,7 @@ class MainWindow(wx.Frame):
 	def __updateViewMenu (self):
 		self.viewNotes.Check (self.auiManager.GetPane (self.tree).IsShown())
 		self.viewAttaches.Check (self.auiManager.GetPane (self.attachPanel).IsShown())
-		self.viewFullscreen.Check (self.fullscreenMode)
+		self.viewFullscreen.Check (self.IsFullScreen())
 
 
 # end of class MainWindow
