@@ -428,7 +428,7 @@ class WikiTree(wx.Panel):
 	
 	def __set_properties(self):
 		# begin wxGlade: WikiTree.__set_properties
-		self.SetSize((200, 250))
+		self.SetSize((252, 256))
 		# end wxGlade
 
 	def __do_layout(self):
