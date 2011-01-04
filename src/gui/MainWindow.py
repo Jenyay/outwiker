@@ -56,6 +56,9 @@ class MainWindow(wx.Frame):
 		self.ID_HELP = wx.NewId()
 		self.ID_PREFERENCES = wx.NewId()
 		self.ID_RESTORE = wx.NewId()
+		self.ID_VIEW_TREE = wx.NewId()
+		self.ID_VIEW_ATTACHES = wx.NewId()
+		self.ID_VIEW_FULLSCREEN = wx.NewId()
 
 
 	def __init__(self, *args, **kwds):
@@ -83,9 +86,6 @@ class MainWindow(wx.Frame):
 		# Флаг, который отмечает, что пришло первое событие onIdle.
 		# Используется для определения момента, когда окно только загрузилось
 		self.firstEvent = True
-
-		# Ширина дерева по умолчанию
-		self.defaultSash = 200
 
 		Controller.instance().onTreeUpdate += self.onTreeUpdate
 		Controller.instance().onPageSelect += self.onPageSelect
@@ -143,6 +143,15 @@ class MainWindow(wx.Frame):
 		self.bookmarksMenu.AppendSeparator()
 		self.mainMenu.Append(self.bookmarksMenu, _("&Bookmarks"))
 		wxglade_tmp_menu = wx.Menu()
+		self.viewNotes = wx.MenuItem(wxglade_tmp_menu, self.ID_VIEW_TREE, _("Notes &Tree"), "", wx.ITEM_CHECK)
+		wxglade_tmp_menu.AppendItem(self.viewNotes)
+		self.viewAttaches = wx.MenuItem(wxglade_tmp_menu, self.ID_VIEW_ATTACHES, _("Attaches"), "", wx.ITEM_CHECK)
+		wxglade_tmp_menu.AppendItem(self.viewAttaches)
+		wxglade_tmp_menu.AppendSeparator()
+		self.viewFullscreen = wx.MenuItem(wxglade_tmp_menu, self.ID_VIEW_FULLSCREEN, _("Fullscreen\tF11"), "", wx.ITEM_CHECK)
+		wxglade_tmp_menu.AppendItem(self.viewFullscreen)
+		self.mainMenu.Append(wxglade_tmp_menu, _("&View"))
+		wxglade_tmp_menu = wx.Menu()
 		wxglade_tmp_menu.Append(self.ID_HELP, _("&Help\tF1"), "", wx.ITEM_NORMAL)
 		wxglade_tmp_menu.Append(self.ID_ABOUT, _(u"&About…\tCtrl+F1"), "", wx.ITEM_NORMAL)
 		self.mainMenu.Append(wxglade_tmp_menu, _("&Help"))
@@ -197,6 +206,9 @@ class MainWindow(wx.Frame):
 		self.Bind(wx.EVT_MENU, self.onCopyLink, id=self.ID_COPY_LINK)
 		self.Bind(wx.EVT_MENU, self.onReload, id=self.ID_RELOAD)
 		self.Bind(wx.EVT_MENU, self.onBookmark, id=self.ID_ADDBOOKMARK)
+		self.Bind(wx.EVT_MENU, self.onViewTree, self.viewNotes)
+		self.Bind(wx.EVT_MENU, self.onViewAttaches, self.viewAttaches)
+		self.Bind(wx.EVT_MENU, self.onFullscreen, self.viewFullscreen)
 		self.Bind(wx.EVT_MENU, self.onHelp, id=self.ID_HELP)
 		self.Bind(wx.EVT_MENU, self.onAbout, id=self.ID_ABOUT)
 		self.Bind(wx.EVT_TOOL, self.onNew, id=self.ID_NEW)
@@ -252,18 +264,13 @@ class MainWindow(wx.Frame):
 
 
 	def __initAuiManager(self, auiManager):
-		self.__initTreePane (self.auiManager)
+		self.__initPagePane (self.auiManager)
 		self.__initAttachesPane (self.auiManager)
+		self.__initTreePane (self.auiManager)
 
-		auiManager.AddPane(self.pagePanel, wx.CENTER)
+		auiManager.SetDockSizeConstraint (0.8, 0.8)
 		auiManager.Update()
 
-		self.tree.SetMinSize ((Application.config.treeWidthOption.value, 
-			Application.config.treeHeightOption.value))
-		
-		self.attachPanel.SetMinSize ((Application.config.attachesWidthOption.value, 
-			Application.config.attachesHeightOption.value))
-		
 
 	def __initTreePane (self, auiManager):
 		"""
@@ -278,7 +285,11 @@ class MainWindow(wx.Frame):
 
 		# Из-за глюка http://trac.wxwidgets.org/ticket/12422 придется пока отказаться от плавающих панелек
 		pane.Dock()
-		auiManager.AddPane(self.tree, pane, _('Notes') )
+
+		pane.BestSize ((Application.config.treeWidthOption.value, 
+			Application.config.treeHeightOption.value))
+		
+		auiManager.AddPane(self.tree, pane)
 	
 
 	def __initAttachesPane (self, auiManager):
@@ -295,6 +306,17 @@ class MainWindow(wx.Frame):
 		# Из-за глюка http://trac.wxwidgets.org/ticket/12422 придется пока отказаться от плавающих панелек
 		pane.Dock()
 		auiManager.AddPane(self.attachPanel, pane, _('Attaches') )
+	
+
+	def __initPagePane (self, auiManager):
+		"""
+		Загрузить настройки окошка с видом текущей страницы
+		"""
+		config = Application.config
+		
+		pane = wx.aui.AuiPaneInfo().Name("pagePane").Gripper(False).CaptionVisible(False).Layer(0).Position(0).CloseButton(False).MaximizeButton(False).Center().Dock()
+
+		auiManager.AddPane(self.pagePanel, pane)
 	
 
 	def __loadPaneInfo (self, param):
@@ -329,7 +351,13 @@ class MainWindow(wx.Frame):
 		"""
 		self.__savePaneInfo (Application.config.treePaneOption, self.auiManager.GetPane (self.tree))
 		self.__savePaneInfo (Application.config.attachesPaneOption, self.auiManager.GetPane (self.attachPanel))
-		
+		self.__savePanesSize()
+	
+
+	def __savePanesSize (self):
+		"""
+		Сохранить размеры панелей
+		"""
 		Application.config.treeWidthOption.value = self.tree.GetSizeTuple()[0]
 		Application.config.treeHeightOption.value = self.tree.GetSizeTuple()[1]
 			
@@ -401,9 +429,10 @@ class MainWindow(wx.Frame):
 	def onIdle (self, event):
 		if self.firstEvent:
 			self.firstEvent = False
-			self._loadParams()
+			self.__loadMainWindowParams()
 			self._loadRecentWiki()
 			self.__iconizeAfterStart ()
+			self.__setFullscreen(Application.config.FullscreenOption.value)
 
 			if len (sys.argv) > 1:
 				self._openFromCommandLine()
@@ -427,9 +456,7 @@ class MainWindow(wx.Frame):
 		"""
 		Свернуться при запуске, если установлена соответствующая опция
 		"""
-		iconize = Application.config.startIconizedOption.value
-
-		if iconize:
+		if Application.config.startIconizedOption.value:
 			self.Iconize(True)
 
 	
@@ -537,7 +564,7 @@ class MainWindow(wx.Frame):
 			Application.wikiroot.selectedPage = Application.wikiroot[subpath]
 	
 
-	def _loadParams(self):
+	def __loadMainWindowParams(self):
 		"""
 		Загрузить параметры из конфига
 		"""
@@ -550,8 +577,7 @@ class MainWindow(wx.Frame):
 		xpos = config.XPosOption.value
 		ypos = config.YPosOption.value
 		
-		self.SetSize ( (width, height) )
-		self.SetPosition ( (xpos, ypos) )
+		self.SetDimensions (xpos, ypos, width, height, sizeFlags=wx.SIZE_FORCE)
 
 		self.Thaw()
 	
@@ -564,13 +590,16 @@ class MainWindow(wx.Frame):
 
 		try:
 			if not self.IsIconized():
-				(width, height) = self.GetSizeTuple()
-				config.WidthOption.value = width
-				config.HeightOption.value = height
+				if not self.IsFullScreen():
+					(width, height) = self.GetSizeTuple()
+					config.WidthOption.value = width
+					config.HeightOption.value = height
 
-				(xpos, ypos) = self.GetPositionTuple()
-				config.XPosOption.value = xpos
-				config.YPosOption.value = ypos
+					(xpos, ypos) = self.GetPositionTuple()
+					config.XPosOption.value = xpos
+					config.YPosOption.value = ypos
+
+				config.FullscreenOption.value = self.IsFullScreen()
 
 				self.__savePanesParams()
 		except Exception, e:
@@ -864,6 +893,82 @@ class MainWindow(wx.Frame):
 			self.taskBarIcon.ShowIcon()
 			self.Hide()
 		
+
+	def onViewTree(self, event): # wxGlade: MainWindow.<event_handler>
+		pane = self.auiManager.GetPane (self.tree)
+
+		self.__savePanesSize()
+
+		if pane.IsShown():
+			pane.Hide()
+		else:
+			pane.Show()
+
+		self.__loadPanesSize ()
+		self.__updateViewMenu()
+
+
+	def onViewAttaches(self, event): # wxGlade: MainWindow.<event_handler>
+		pane = self.auiManager.GetPane (self.attachPanel)
+
+		self.__savePanesSize()
+
+		if pane.IsShown():
+			pane.Hide()
+		else:
+			pane.Show()
+
+		self.__loadPanesSize ()
+		self.__updateViewMenu()
+
+
+	def onFullscreen(self, event): # wxGlade: MainWindow.<event_handler>
+		self.__setFullscreen(not self.IsFullScreen())
+
+
+	def __setFullscreen (self, fullscreen):
+		"""
+		Установить параметры в зависимости от режима fullscreen
+		"""
+		if fullscreen:
+			self.__toFullscreen()
+		else:
+			self.__fromFullscreen()
+
+
+	def __toFullscreen(self):
+		self.__savePanesSize()
+		self.ShowFullScreen(True, wx.FULLSCREEN_NOTOOLBAR | wx.FULLSCREEN_NOBORDER | wx.FULLSCREEN_NOCAPTION)
+		self.auiManager.GetPane (self.attachPanel).Hide()
+		self.auiManager.GetPane (self.tree).Hide()
+		self.auiManager.Update()
+		self.__updateViewMenu()
+
+
+	def __fromFullscreen (self):
+		self.__loadMainWindowParams()
+		self.ShowFullScreen(False)
+		self.auiManager.GetPane (self.attachPanel).Show()
+		self.auiManager.GetPane (self.tree).Show()
+		self.__loadPanesSize ()
+		self.__updateViewMenu()
+
+	
+	def __loadPanesSize (self):
+		self.auiManager.GetPane (self.attachPanel).BestSize ((Application.config.attachesWidthOption.value, 
+			Application.config.attachesHeightOption.value))
+
+		self.auiManager.GetPane (self.tree).BestSize ((Application.config.treeWidthOption.value, 
+			Application.config.treeHeightOption.value))
+
+		self.auiManager.Update()
+	
+
+	def __updateViewMenu (self):
+		self.viewNotes.Check (self.auiManager.GetPane (self.tree).IsShown())
+		self.viewAttaches.Check (self.auiManager.GetPane (self.attachPanel).IsShown())
+		self.viewFullscreen.Check (self.IsFullScreen())
+
 
 # end of class MainWindow
 
