@@ -229,6 +229,7 @@ class MainWindow(wx.Frame):
 		self.attachPanel = AttachPanel (self.mainPanel, -1)
 
 		self.__initAuiManager (self.auiManager)
+		self.auiManager.Bind (wx.aui.EVT_AUI_PANE_CLOSE, self.onPaneClose)
 
 		self.__setMenuBitmaps()
 		
@@ -271,6 +272,14 @@ class MainWindow(wx.Frame):
 		auiManager.SetDockSizeConstraint (0.8, 0.8)
 		auiManager.Update()
 
+	
+	def onPaneClose (self, event):
+		if event.GetPane().name == self.auiManager.GetPane (self.tree).name:
+			self.viewNotes.Check (False)
+		elif event.GetPane().name == self.auiManager.GetPane (self.attachPanel).name:
+			self.viewAttaches.Check (False)
+
+
 
 	def __initTreePane (self, auiManager):
 		"""
@@ -281,10 +290,11 @@ class MainWindow(wx.Frame):
 		pane = self.__loadPaneInfo (config.treePaneOption)
 
 		if pane == None:
-			pane = wx.aui.AuiPaneInfo().Name(("treePane")).Caption(_("Notes")).Gripper(False).CaptionVisible(True).Layer(2).Position(0).CloseButton(False).MaximizeButton(False).Left().Dock()
+			pane = wx.aui.AuiPaneInfo().Name(("treePane")).Caption(_("Notes")).Gripper(False).CaptionVisible(True).Layer(2).Position(0).CloseButton(True).MaximizeButton(False).Left().Dock()
 
 		# Из-за глюка http://trac.wxwidgets.org/ticket/12422 придется пока отказаться от плавающих панелек
 		pane.Dock()
+		pane.CloseButton()
 
 		pane.BestSize ((Application.config.treeWidthOption.value, 
 			Application.config.treeHeightOption.value))
@@ -301,10 +311,12 @@ class MainWindow(wx.Frame):
 		pane = self.__loadPaneInfo (config.attachesPaneOption)
 
 		if pane == None:
-			pane = wx.aui.AuiPaneInfo().Name("attachesPane").Caption(_("Attaches")).Gripper(False).CaptionVisible(True).Layer(1).Position(0).CloseButton(False).MaximizeButton(False).Bottom().Dock()
+			pane = wx.aui.AuiPaneInfo().Name("attachesPane").Caption(_("Attaches")).Gripper(False).CaptionVisible(True).Layer(1).Position(0).CloseButton(True).MaximizeButton(False).Bottom().Dock()
 
 		# Из-за глюка http://trac.wxwidgets.org/ticket/12422 придется пока отказаться от плавающих панелек
 		pane.Dock()
+		pane.CloseButton()
+
 		auiManager.AddPane(self.attachPanel, pane, _('Attaches') )
 	
 
