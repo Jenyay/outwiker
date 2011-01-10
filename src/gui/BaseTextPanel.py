@@ -166,19 +166,28 @@ class BaseTextPanel (wx.Panel):
 		self.mainWindow.mainToolbar.Realize()
 	
 
+	def _showSearchPanel (self, panel):
+		if not panel.IsShown():
+			panel.Show()
+			panel.GetParent().Layout()
+
+
 	def onSearch (self, event):
 		panel = self.GetSearchPanel()
 		if panel != None:
+			self._showSearchPanel (panel)
 			panel.startSearch()
 
 
 	def onSearchNext (self, event):
 		panel = self.GetSearchPanel()
 		if panel != None:
+			self._showSearchPanel (panel)
 			panel.nextSearch()
 
 
 	def onSearchPrev (self, event):
 		panel = self.GetSearchPanel()
 		if panel != None:
+			self._showSearchPanel (panel)
 			panel.prevSearch()

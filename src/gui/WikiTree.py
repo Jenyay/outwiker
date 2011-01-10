@@ -428,7 +428,7 @@ class WikiTree(wx.Panel):
 	
 	def __set_properties(self):
 		# begin wxGlade: WikiTree.__set_properties
-		self.SetSize((252, 256))
+		pass
 		# end wxGlade
 
 	def __do_layout(self):
@@ -436,6 +436,7 @@ class WikiTree(wx.Panel):
 		mainSizer = wx.FlexGridSizer(1, 1, 0, 0)
 		mainSizer.Add(self.treeCtrl, 1, wx.EXPAND, 0)
 		self.SetSizer(mainSizer)
+		mainSizer.Fit(self)
 		mainSizer.AddGrowableRow(0)
 		mainSizer.AddGrowableCol(0)
 		# end wxGlade

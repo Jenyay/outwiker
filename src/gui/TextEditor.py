@@ -43,6 +43,7 @@ class TextEditor(wx.Panel):
 		self.textCtrl.Bind(wx.EVT_MENU, self.onUndo, id = wx.ID_UNDO)
 		self.textCtrl.Bind(wx.EVT_MENU, self.onRedo, id = wx.ID_REDO)
 		self.textCtrl.Bind (wx.EVT_CHAR, self.OnChar_ImeWorkaround)
+		self.textCtrl.Bind (wx.EVT_KEY_DOWN, self.onKeyDown)
 
 
 	def onCopyFromEditor (self, event):
@@ -79,6 +80,9 @@ class TextEditor(wx.Panel):
 		mainSizer.AddGrowableRow(0)
 		mainSizer.AddGrowableCol(0)
 		# end wxGlade
+
+		self.searchPanel.Hide()
+		self.Layout()
 	
 
 	def setDefaultSettings (self):
@@ -139,6 +143,15 @@ class TextEditor(wx.Panel):
 		self._mbcsDec = codecs.getdecoder(encoding)
 		self.mbcsEnc = codecs.getencoder(encoding)
 		self.encoder = codecs.getencoder("utf-8")
+	
+
+	def onKeyDown (self, event):
+		key = event.GetKeyCode()
+
+		if key == wx.WXK_ESCAPE:
+			self.searchPanel.Close()
+
+		event.Skip()
 
 
 	def OnChar_ImeWorkaround(self, evt):
@@ -147,6 +160,7 @@ class TextEditor(wx.Panel):
 		Основа кода взята из Wikidpad (WikiTxtCtrl.py -> OnChar_ImeWorkaround)
 		"""
 		key = evt.GetKeyCode()
+
 
 		# Return if this doesn't seem to be a real character input
 		if evt.ControlDown() or (0 < key < 32):

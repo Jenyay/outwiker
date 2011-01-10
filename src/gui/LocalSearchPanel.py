@@ -21,6 +21,7 @@ class LocalSearchPanel(wx.Panel):
 		# begin wxGlade: LocalSearchPanel.__init__
 		kwds["style"] = wx.TAB_TRAVERSAL
 		wx.Panel.__init__(self, *args, **kwds)
+		self.closeButton = wx.BitmapButton(self, -1, wx.Bitmap(os.path.join (self.imagesDir, "close-button.png"), wx.BITMAP_TYPE_ANY))
 		self.phraseTextCtrl = wx.TextCtrl(self, -1, "")
 		self.nextSearchBtn = wx.BitmapButton(self, -1, wx.Bitmap(os.path.join (self.imagesDir, "arrow_down.png"), wx.BITMAP_TYPE_ANY))
 		self.prevSearchBtn = wx.BitmapButton(self, -1, wx.Bitmap(os.path.join (self.imagesDir, "arrow_up.png"), wx.BITMAP_TYPE_ANY))
@@ -29,6 +30,7 @@ class LocalSearchPanel(wx.Panel):
 		self.__set_properties()
 		self.__do_layout()
 
+		self.Bind(wx.EVT_BUTTON, self.onCloseClick, self.closeButton)
 		self.Bind(wx.EVT_TEXT_ENTER, self.onNextSearch, self.phraseTextCtrl)
 		self.Bind(wx.EVT_TEXT, self.onTextEnter, self.phraseTextCtrl)
 		self.Bind(wx.EVT_BUTTON, self.onNextSearch, self.nextSearchBtn)
@@ -38,9 +40,13 @@ class LocalSearchPanel(wx.Panel):
 		self.nextSearchBtn.SetToolTipString (_(u"Find Next") )
 		self.prevSearchBtn.SetToolTipString (_(u"Find Previous") )
 
+		self.Bind (wx.EVT_CLOSE, self.onClose)
+		self.phraseTextCtrl.Bind (wx.EVT_KEY_DOWN, self.onKeyDown)
+
 
 	def __set_properties(self):
 		# begin wxGlade: LocalSearchPanel.__set_properties
+		self.closeButton.SetSize(self.closeButton.GetBestSize())
 		self.phraseTextCtrl.SetMinSize((250, -1))
 		self.nextSearchBtn.SetSize(self.nextSearchBtn.GetBestSize())
 		self.prevSearchBtn.SetSize(self.prevSearchBtn.GetBestSize())
@@ -48,7 +54,8 @@ class LocalSearchPanel(wx.Panel):
 
 	def __do_layout(self):
 		# begin wxGlade: LocalSearchPanel.__do_layout
-		mainSizer = wx.FlexGridSizer(1, 4, 0, 0)
+		mainSizer = wx.FlexGridSizer(1, 5, 0, 0)
+		mainSizer.Add(self.closeButton, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
 		mainSizer.Add(self.phraseTextCtrl, 0, wx.ALL|wx.EXPAND|wx.ALIGN_CENTER_VERTICAL, 2)
 		mainSizer.Add(self.nextSearchBtn, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
 		mainSizer.Add(self.prevSearchBtn, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
@@ -56,7 +63,7 @@ class LocalSearchPanel(wx.Panel):
 		self.SetSizer(mainSizer)
 		mainSizer.Fit(self)
 		mainSizer.AddGrowableRow(0)
-		mainSizer.AddGrowableCol(0)
+		mainSizer.AddGrowableCol(1)
 		mainSizer.AddGrowableCol(3)
 		# end wxGlade
 	
@@ -97,6 +104,23 @@ class LocalSearchPanel(wx.Panel):
 	def enterSearchPhrase (self):
 		pass
 	
+
+	def onClose(self, event): # wxGlade: LocalSearchPanel.<event_handler>
+		self.Hide()
+		self.GetParent().Layout()
+	
+
+	def onKeyDown (self, event):
+		key = event.GetKeyCode()
+
+		if key == wx.WXK_ESCAPE:
+			self.Close()
+
+		event.Skip()
+
+
+	def onCloseClick(self, event): # wxGlade: LocalSearchPanel.<event_handler>
+		self.Close()
 
 # end of class LocalSearchPanel
 
