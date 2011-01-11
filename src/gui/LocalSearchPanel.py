@@ -64,7 +64,7 @@ class LocalSearchPanel(wx.Panel):
 		mainSizer.Fit(self)
 		mainSizer.AddGrowableRow(0)
 		mainSizer.AddGrowableCol(1)
-		mainSizer.AddGrowableCol(3)
+		mainSizer.AddGrowableCol(4)
 		# end wxGlade
 	
 
