@@ -33,6 +33,7 @@ if __name__ == '__main__':
 	from test.wikiloading_readonly import ReadonlyLoadTest, ReadonlyChangeTest
 	from test.i18n import I18nTest
 	from test.version import VersionTest, StatusTest
+	from test.pageorder import PageOrderTest
 
 
 	unittest.main()
