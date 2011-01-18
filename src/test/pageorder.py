@@ -7,7 +7,7 @@
 import shutil
 import unittest
 
-from core.tree import RootWikiPage, WikiDocument
+from core.tree import RootWikiPage, WikiDocument, WikiPage
 from pages.text.textpage import TextPageFactory
 from core.event import Event
 from core.controller import Controller
@@ -322,3 +322,101 @@ class PageOrderTest (unittest.TestCase):
 
 		self.assertEqual (self.orderUpdateCount, 1)
 		self.assertEqual (self.orderUpdateSender, self.rootwiki[u"Страница 1"])
+	
+
+	def testLoading1 (self):
+		TextPageFactory.create (self.rootwiki, u"Страница 0", [])
+		TextPageFactory.create (self.rootwiki, u"Страница 1", [])
+		TextPageFactory.create (self.rootwiki, u"Страница 2", [])
+		TextPageFactory.create (self.rootwiki, u"Страница 3", [])
+
+		wikiroot = WikiDocument.load (self.path)
+
+		self.assertEqual (wikiroot[u"Страница 0"].order, 0)
+		self.assertEqual (wikiroot[u"Страница 1"].order, 1)
+		self.assertEqual (wikiroot[u"Страница 2"].order, 2)
+		self.assertEqual (wikiroot[u"Страница 3"].order, 3)
+	
+
+	def testLoading2 (self):
+		TextPageFactory.create (self.rootwiki, u"Страница 0", [])
+		TextPageFactory.create (self.rootwiki, u"Страница 1", [])
+		TextPageFactory.create (self.rootwiki, u"Страница 2", [])
+		TextPageFactory.create (self.rootwiki, u"Страница 3", [])
+
+		self.rootwiki[u"Страница 0"] += 1
+
+		wikiroot = WikiDocument.load (self.path)
+
+		self.assertEqual (wikiroot[u"Страница 1"].order, 0)
+		self.assertEqual (wikiroot[u"Страница 0"].order, 1)
+		self.assertEqual (wikiroot[u"Страница 2"].order, 2)
+		self.assertEqual (wikiroot[u"Страница 3"].order, 3)
+	
+
+	def testLoading3 (self):
+		TextPageFactory.create (self.rootwiki, u"Страница 0", [])
+		TextPageFactory.create (self.rootwiki, u"Страница 1", [])
+		TextPageFactory.create (self.rootwiki, u"Страница 2", [])
+		TextPageFactory.create (self.rootwiki, u"Страница 3", [])
+
+		self.rootwiki[u"Страница 0"] += 1
+		self.rootwiki[u"Страница 3"] += 1
+
+		wikiroot = WikiDocument.load (self.path)
+
+		self.assertEqual (wikiroot[u"Страница 1"].order, 0)
+		self.assertEqual (wikiroot[u"Страница 0"].order, 1)
+		self.assertEqual (wikiroot[u"Страница 3"].order, 2)
+		self.assertEqual (wikiroot[u"Страница 2"].order, 3)
+	
+
+	def testLoadingOldVersion1 (self):
+		"""
+		Тест на чтение вики старой версии, когда еще не было параметра order
+		"""
+		TextPageFactory.create (self.rootwiki, u"Страница 1", [])
+		TextPageFactory.create (self.rootwiki, u"Страница 0", [])
+		TextPageFactory.create (self.rootwiki, u"Страница 3", [])
+		TextPageFactory.create (self.rootwiki, u"Страница 2", [])
+
+		# Удалим параметры order
+		self.rootwiki[u"Страница 0"].params.remove_option (WikiPage.sectionGeneral, WikiPage.paramOrder)
+		self.rootwiki[u"Страница 1"].params.remove_option (WikiPage.sectionGeneral, WikiPage.paramOrder)
+		self.rootwiki[u"Страница 2"].params.remove_option (WikiPage.sectionGeneral, WikiPage.paramOrder)
+		self.rootwiki[u"Страница 3"].params.remove_option (WikiPage.sectionGeneral, WikiPage.paramOrder)
+
+		wikiroot = WikiDocument.load (self.path)
+
+		self.assertEqual (wikiroot[u"Страница 0"].order, 0)
+		self.assertEqual (wikiroot[u"Страница 1"].order, 1)
+		self.assertEqual (wikiroot[u"Страница 2"].order, 2)
+		self.assertEqual (wikiroot[u"Страница 3"].order, 3)
+	
+
+	def testLoadingOldVersion2 (self):
+		"""
+		Тест на чтение вики старой версии, когда еще не было параметра order
+		"""
+		TextPageFactory.create (self.rootwiki, u"Страница 1", [])
+		TextPageFactory.create (self.rootwiki, u"Страница 0", [])
+		TextPageFactory.create (self.rootwiki, u"Страница 3", [])
+		TextPageFactory.create (self.rootwiki, u"Страница 2", [])
+
+		self.rootwiki[u"Страница 0"] = 0
+		self.rootwiki[u"Страница 1"] = 1
+		self.rootwiki[u"Страница 2"] = 3
+		self.rootwiki[u"Страница 3"] = 2
+
+		# Удалим параметры order
+		self.rootwiki[u"Страница 0"].params.remove_option (WikiPage.sectionGeneral, WikiPage.paramOrder)
+		self.rootwiki[u"Страница 1"].params.remove_option (WikiPage.sectionGeneral, WikiPage.paramOrder)
+		self.rootwiki[u"Страница 2"].params.remove_option (WikiPage.sectionGeneral, WikiPage.paramOrder)
+		self.rootwiki[u"Страница 3"].params.remove_option (WikiPage.sectionGeneral, WikiPage.paramOrder)
+
+		wikiroot = WikiDocument.load (self.path)
+
+		self.assertEqual (wikiroot[u"Страница 0"].order, 0)
+		self.assertEqual (wikiroot[u"Страница 1"].order, 1)
+		self.assertEqual (wikiroot[u"Страница 2"].order, 2)
+		self.assertEqual (wikiroot[u"Страница 3"].order, 3)

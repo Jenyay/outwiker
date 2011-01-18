@@ -229,6 +229,11 @@ class WikiPage (RootWikiPage):
 	"""
 	Страница в дереве.
 	"""
+	sectionGeneral = u"General"
+	paramTags = u"tags"
+	paramType = u"type"
+	paramOrder = u"order"
+
 
 	def __init__(self, path, title, parent, readonly = False):
 		"""
@@ -462,7 +467,7 @@ class WikiPage (RootWikiPage):
 		"""
 		Загрузить параметры страницы
 		"""
-		self._type = self._params.get ("General", "type")
+		self._type = self._params.get (WikiPage.sectionGeneral, WikiPage.paramType)
 
 		# Теги страницы
 		self._tags = self._getTags (self._params)
@@ -509,7 +514,7 @@ class WikiPage (RootWikiPage):
 			text = u""
 
 		with open (os.path.join (self.path, RootWikiPage.contentFile), "w") as fp:
-			fp.write (text.encode ("utf-8"))
+			fp.write (text.encode ("utf8"))
 
 		self._saveOptions ()
 
@@ -518,13 +523,13 @@ class WikiPage (RootWikiPage):
 		"""
 		Сохранить настройки
 		"""
-		self._params.set (u"General", u"type", self.type)
+		self._params.set (WikiPage.sectionGeneral, WikiPage.paramType, self.type)
 
 		tags = reduce (lambda full, tag: full + ", " + tag, self._tags, "")
 
 		# Удалим начальные ", "
 		tags = tags[2: ]
-		self._params.set (u"General", u"tags", tags)
+		self._params.set (WikiPage.sectionGeneral, WikiPage.paramTags, tags)
 
 
 	@staticmethod
@@ -561,14 +566,11 @@ class WikiPage (RootWikiPage):
 		Выделить теги из строки конфигурационного файла
 		"""
 		try:
-			tagsString = configParser.get ("General", "tags")
+			tagsString = configParser.get (WikiPage.sectionGeneral, WikiPage.paramTags)
 		except ConfigParser.NoOptionError:
 			return []
 
 		tags = TagsList.parseTagsList (tagsString)
-
-		#tags = [tag.strip() for tag in tagsString.split (",") 
-				#if len (tag.strip()) > 0]
 
 		return tags
 
@@ -586,7 +588,7 @@ class WikiPage (RootWikiPage):
 		except IOError:
 			pass
 		
-		return unicode (text, "utf-8")
+		return unicode (text, "utf8")
 
 
 	@content.setter
@@ -597,7 +599,7 @@ class WikiPage (RootWikiPage):
 		path = os.path.join (self.path, RootWikiPage.contentFile)
 
 		with open (path, "wb") as fp:
-			fp.write (text.encode ("utf-8"))
+			fp.write (text.encode ("utf8"))
 
 		Controller.instance().onPageUpdate(self)
 	
