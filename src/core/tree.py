@@ -22,6 +22,9 @@ class RootWikiPage (object):
 	attachDir = u"__attach"
 	iconName = u"__icon"
 
+	sectionGeneral = u"General"
+	paramOrder = u"order"
+
 	def __init__(self, path, readonly=False):
 		"""
 		Constructor.
@@ -145,12 +148,41 @@ class RootWikiPage (object):
 				try:
 					page = WikiPage.load (fullpath, self, self.readonly)
 				except Exception as e:
-					#raise
 					continue
 
 				result.append (page)
 
+		result.sort (RootWikiPage._sortFunction)
+
 		return result
+
+
+	def _sortChildren (self):
+		self._children.sort (RootWikiPage._sortFunction)
+		self._saveChildrenParams()
+
+
+	@staticmethod
+	def _sortFunction (page1, page2):
+		try:
+			orderpage1 = page1.getParameter (RootWikiPage.sectionGeneral, RootWikiPage.paramOrder)
+			orderpage2 = page2.getParameter (RootWikiPage.sectionGeneral, RootWikiPage.paramOrder)
+		except Exception:
+			# Если хотя бы у одной страницы не указан порядок, то сравнивать страницы только по заголовкам
+			orderpage1 = -1
+			orderpage2 = -1
+
+		if orderpage1 > orderpage2:
+			return 1
+		elif orderpage1 < orderpage2:
+			return -1
+
+		if page1.title.lower() > page2.title.lower():
+			return 1
+		elif page1.title.lower() < page2.title.lower():
+			return -1
+
+		return 0
 
 
 	@staticmethod
@@ -159,6 +191,37 @@ class RootWikiPage (object):
 		Проверить заголовок страницы на то, что в родителе нет страницы с таким заголовком
 		"""
 		return parent[title] == None
+
+
+	def _changeChildOrder (self, page, neworder):
+		"""
+		Изменить порядок дочерних элементов
+		Дочернюю страницу page переместить на уровень neworder
+		"""
+		self._children.index (page)
+		self.removeFromChildren (page)
+		self._children.insert (neworder, page)
+		self._saveChildrenParams()
+	
+
+	def _saveChildrenParams (self):
+		for child in self._children:
+			child.save()
+	
+
+	def addToChildren (self, page):
+		"""
+		Добавить страницу к дочерним страницам
+		"""
+		self._children.append (page)
+		self._children.sort (RootWikiPage._sortFunction)
+	
+
+	def removeFromChildren (self, page):
+		"""
+		Удалить страницу из дочерних страниц
+		"""
+		self._children.remove (page)
 	
 
 class WikiDocument (RootWikiPage):
@@ -229,10 +292,8 @@ class WikiPage (RootWikiPage):
 	"""
 	Страница в дереве.
 	"""
-	sectionGeneral = u"General"
 	paramTags = u"tags"
 	paramType = u"type"
-	paramOrder = u"order"
 
 
 	def __init__(self, path, title, parent, readonly = False):
@@ -247,8 +308,32 @@ class WikiPage (RootWikiPage):
 		RootWikiPage.__init__ (self, path, readonly)
 		self._title = title
 		self._parent = parent
-		parent._children.append (self)
 
+
+	@property
+	def order (self):
+		"""
+		Вернуть индекс страницы в списке дочерних страниц
+		"""
+		return self.parent.children.index (self)
+
+
+	@order.setter
+	def order (self, neworder):
+		"""
+		Изменить положение страницы (порядок)
+		"""
+		realorder = neworder
+
+		if realorder < 0:
+			realorder = 0
+
+		if realorder >= len (self.parent.children):
+			realorder = len (self.parent.children) - 1
+
+		self.parent._changeChildOrder (self, realorder)
+		Controller.instance().onPageOrderChange (self)
+	
 
 	@property
 	def title (self):
@@ -332,8 +417,8 @@ class WikiPage (RootWikiPage):
 			raise core.exceptions.TreeException
 
 		self._parent = newparent
-		oldparent._children.remove (self)
-		newparent._children.append (self)
+		oldparent.removeFromChildren (self)
+		newparent.addToChildren (self)
 		
 		WikiPage.__renamePaths (self, newpath)
 
@@ -467,7 +552,7 @@ class WikiPage (RootWikiPage):
 		"""
 		Загрузить параметры страницы
 		"""
-		self._type = self._params.get (WikiPage.sectionGeneral, WikiPage.paramType)
+		self._type = self._params.get (RootWikiPage.sectionGeneral, WikiPage.paramType)
 
 		# Теги страницы
 		self._tags = self._getTags (self._params)
@@ -487,7 +572,7 @@ class WikiPage (RootWikiPage):
 		try:
 			page._load ()
 		except Exception:
-			parent._children.remove (page)
+			#parent.removeFromChildren (page)
 			raise
 
 		return page
@@ -523,13 +608,23 @@ class WikiPage (RootWikiPage):
 		"""
 		Сохранить настройки
 		"""
-		self._params.set (WikiPage.sectionGeneral, WikiPage.paramType, self.type)
+		# Тип
+		self._params.set (RootWikiPage.sectionGeneral, WikiPage.paramType, self.type)
 
+		#Теги
+		self._saveTags()
+
+		# Порядок страницы
+		self._params.set (RootWikiPage.sectionGeneral, RootWikiPage.paramOrder, self.order)
+
+
+
+	def _saveTags (self):
 		tags = reduce (lambda full, tag: full + ", " + tag, self._tags, "")
 
 		# Удалим начальные ", "
 		tags = tags[2: ]
-		self._params.set (WikiPage.sectionGeneral, WikiPage.paramTags, tags)
+		self._params.set (RootWikiPage.sectionGeneral, WikiPage.paramTags, tags)
 
 
 	@staticmethod
@@ -541,11 +636,12 @@ class WikiPage (RootWikiPage):
 			raise core.exceptions.ReadonlyException
 
 		page = WikiPage (path, title, parent)
+		parent.addToChildren (page)
 
 		try:
 			page._create (title, type, tags)
 		except Exception:
-			parent._children.remove (page)
+			parent.removeFromChildren (page)
 			raise
 
 		return page
@@ -566,7 +662,7 @@ class WikiPage (RootWikiPage):
 		Выделить теги из строки конфигурационного файла
 		"""
 		try:
-			tagsString = configParser.get (WikiPage.sectionGeneral, WikiPage.paramTags)
+			tagsString = configParser.get (RootWikiPage.sectionGeneral, WikiPage.paramTags)
 		except ConfigParser.NoOptionError:
 			return []
 
@@ -658,7 +754,7 @@ class WikiPage (RootWikiPage):
 	
 
 	def _removePageFromTree (self, page):
-		page.parent._children.remove (page)
+		page.parent.removeFromChildren (page)
 		Controller.instance().onPageRemove (page)
 
 		for child in page.children:

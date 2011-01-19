@@ -86,6 +86,16 @@ class Config (object):
 		return result1 and result2
 
 
+	def remove_option (self, section, option):
+		section_encoded = section.encode ("utf8")
+		option_encoded = option.encode ("utf8")
+
+		result1 = self.__config.remove_option (section_encoded, option_encoded)
+		result2 = self.save()
+
+		return result1 and result2
+
+
 	def has_section (self, section):
 		section_encoded = section.encode ("utf8")
 		return self.__config.has_section (section_encoded)

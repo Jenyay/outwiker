@@ -78,6 +78,10 @@ class Controller(object):
 		# Параметры: нет
 		self.onMainWindowConfigChange = Event()
 
+		# Изменение порядка страниц
+		# Параметры: page - страница, положение которой изменили
+		self.onPageOrderChange = Event()
+
 		# Копировать в буфер обмена
 		#self.onClipboardCopy = Event()
 		
