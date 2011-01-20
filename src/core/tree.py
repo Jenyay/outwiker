@@ -153,6 +153,8 @@ class RootWikiPage (object):
 				result.append (page)
 
 		result.sort (RootWikiPage._sortFunction)
+		#for item in result:
+		#	print item.title.encode ("866") + "    " + str (item.getParameter (RootWikiPage.sectionGeneral, RootWikiPage.paramOrder))
 
 		return result
 
@@ -165,8 +167,8 @@ class RootWikiPage (object):
 	@staticmethod
 	def _sortFunction (page1, page2):
 		try:
-			orderpage1 = page1.getParameter (RootWikiPage.sectionGeneral, RootWikiPage.paramOrder)
-			orderpage2 = page2.getParameter (RootWikiPage.sectionGeneral, RootWikiPage.paramOrder)
+			orderpage1 = int (page1.getParameter (RootWikiPage.sectionGeneral, RootWikiPage.paramOrder))
+			orderpage2 = int (page2.getParameter (RootWikiPage.sectionGeneral, RootWikiPage.paramOrder))
 		except Exception:
 			# Если хотя бы у одной страницы не указан порядок, то сравнивать страницы только по заголовкам
 			orderpage1 = -1

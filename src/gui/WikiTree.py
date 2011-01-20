@@ -478,11 +478,11 @@ class WikiTree(wx.Panel):
 		"""
 		self._pageCache[parentPage] = parentItem
 
-		children = [child for child in parentPage.children]
+		#children = [child for child in parentPage.children]
 		#children.sort (self._sort)
 
 		for child in parentPage.children:
-			#print child.title.encode ("866")
+			#print child.title.encode ("866") + "    " + str (child.order)
 			item = self.treeCtrl.AppendItem (parentItem, child.title, data = wx.TreeItemData(child) )
 			icon = child.icon
 
