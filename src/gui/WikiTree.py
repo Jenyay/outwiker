@@ -80,6 +80,7 @@ class WikiTree(wx.Panel):
 		Подписка на события контроллера
 		"""
 		Controller.instance().onTreeUpdate += self.onTreeUpdate
+		Controller.instance().onPageOrderChange += self.onPageOrderChange
 		Controller.instance().onPageSelect += self.onPageSelect
 
 		Controller.instance().onStartTreeUpdate += self.onStartTreeUpdate
@@ -409,6 +410,14 @@ class WikiTree(wx.Panel):
 			page.root.selectedPage = page
 	
 
+	def onPageOrderChange (self, sender):
+		"""
+		Изменение порядка страниц
+		"""
+		#TODO: Обновлять только одну ветвь без всего дерева
+		self.treeUpdate (sender.root)
+	
+
 	@property
 	def selectedPage (self):
 		item = self.treeCtrl.GetSelection ()
@@ -470,9 +479,9 @@ class WikiTree(wx.Panel):
 		self._pageCache[parentPage] = parentItem
 
 		children = [child for child in parentPage.children]
-		children.sort (self._sort)
+		#children.sort (self._sort)
 
-		for child in children:
+		for child in parentPage.children:
 			#print child.title.encode ("866")
 			item = self.treeCtrl.AppendItem (parentItem, child.title, data = wx.TreeItemData(child) )
 			icon = child.icon
@@ -491,19 +500,19 @@ class WikiTree(wx.Panel):
 			self.appendChildren (child, item)
 	
 
-	def _sort (self, page1, page2):
-		"""
-		Функция для сортировки страниц по алфавиту
-		"""
-		assert page1 != None
-		assert page2 != None
+	#def _sort (self, page1, page2):
+	#	"""
+	#	Функция для сортировки страниц по алфавиту
+	#	"""
+	#	assert page1 != None
+	#	assert page2 != None
 
-		if page1.title.lower() > page2.title.lower():
-			return 1
-		elif page1.title.lower() < page2.title.lower():
-			return -1
+	#	if page1.title.lower() > page2.title.lower():
+	#		return 1
+	#	elif page1.title.lower() < page2.title.lower():
+	#		return -1
 
-		return 0
+	#	return 0
 
 # end of class WikiTree
 

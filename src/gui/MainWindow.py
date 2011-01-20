@@ -59,6 +59,8 @@ class MainWindow(wx.Frame):
 		self.ID_VIEW_TREE = wx.NewId()
 		self.ID_VIEW_ATTACHES = wx.NewId()
 		self.ID_VIEW_FULLSCREEN = wx.NewId()
+		self.ID_MOVE_PAGE_UP = wx.NewId()
+		self.ID_MOVE_PAGE_DOWN = wx.NewId()
 
 
 	def __init__(self, *args, **kwds):
@@ -122,6 +124,9 @@ class MainWindow(wx.Frame):
 		wxglade_tmp_menu = wx.Menu()
 		wxglade_tmp_menu.Append(self.ID_ADDPAGE, _(u"Add &Sibling Page…\tCtrl+T"), "", wx.ITEM_NORMAL)
 		wxglade_tmp_menu.Append(self.ID_ADDCHILD, _(u"Add &Child Page…\tCtrl+Shift+T"), "", wx.ITEM_NORMAL)
+		wxglade_tmp_menu.AppendSeparator()
+		wxglade_tmp_menu.Append(self.ID_MOVE_PAGE_UP, _("Move Page Up\tCtrl+Shift+Up"), "", wx.ITEM_NORMAL)
+		wxglade_tmp_menu.Append(self.ID_MOVE_PAGE_DOWN, _("Move Page Down\tCtrl+Shift+Down"), "", wx.ITEM_NORMAL)
 		wxglade_tmp_menu.AppendSeparator()
 		wxglade_tmp_menu.Append(self.ID_RENAME, _("Re&name Page\tF2"), "", wx.ITEM_NORMAL)
 		wxglade_tmp_menu.Append(self.ID_REMOVE_PAGE, _(u"Rem&ove Page…\tCtrl+Shift+Del"), "", wx.ITEM_NORMAL)
@@ -195,6 +200,8 @@ class MainWindow(wx.Frame):
 		self.Bind(wx.EVT_MENU, self.onPreferences, id=self.ID_PREFERENCES)
 		self.Bind(wx.EVT_MENU, self.onAddSiblingPage, id=self.ID_ADDPAGE)
 		self.Bind(wx.EVT_MENU, self.onAddChildPage, id=self.ID_ADDCHILD)
+		self.Bind(wx.EVT_MENU, self.onMovePageUp, id=self.ID_MOVE_PAGE_UP)
+		self.Bind(wx.EVT_MENU, self.onMovePageDown, id=self.ID_MOVE_PAGE_DOWN)
 		self.Bind(wx.EVT_MENU, self.onRename, id=self.ID_RENAME)
 		self.Bind(wx.EVT_MENU, self.onRemovePage, id=self.ID_REMOVE_PAGE)
 		self.Bind(wx.EVT_MENU, self.onEditPage, id=self.ID_EDIT)
@@ -981,6 +988,15 @@ class MainWindow(wx.Frame):
 		self.viewAttaches.Check (self.auiManager.GetPane (self.attachPanel).IsShown())
 		self.viewFullscreen.Check (self.IsFullScreen())
 
+
+	def onMovePageUp(self, event): # wxGlade: MainWindow.<event_handler>
+		if Application.wikiroot != None and Application.wikiroot.selectedPage != None:
+			Application.wikiroot.selectedPage.order -= 1
+
+
+	def onMovePageDown(self, event): # wxGlade: MainWindow.<event_handler>
+		if Application.wikiroot != None and Application.wikiroot.selectedPage != None:
+			Application.wikiroot.selectedPage.order += 1
 
 # end of class MainWindow
 
