@@ -415,8 +415,6 @@ class WikiTree(wx.Panel):
 		"""
 		Изменение порядка страниц
 		"""
-		#TODO: Обновлять только одну ветвь без всего дерева
-		#self.treeUpdate (sender.root)
 		self._updatePage (sender)
 	
 
@@ -537,6 +535,7 @@ class WikiTree(wx.Panel):
 		"""
 		# Отпишемся от обновлений страниц, чтобы не изменять выбранную страницу
 		self._unbindUpdateEvents()
+		self.treeCtrl.Freeze()
 
 		self._removePageItem (page)
 		item = self.insertChild (page, self._pageCache[page.parent])
@@ -545,6 +544,7 @@ class WikiTree(wx.Panel):
 			# Если обновляем выбранную страницу
 			self.treeCtrl.SelectItem (item)
 
+		self.treeCtrl.Thaw()
 		self._bindUpdateEvents()
 	
 
