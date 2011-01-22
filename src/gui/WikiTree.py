@@ -165,8 +165,6 @@ class WikiTree(wx.Panel):
 		"""
 		for (page, itemid) in self._pageCache.iteritems():
 			if page.parent != None:
-				#expanded = self.treeCtrl.IsExpanded (itemid)
-				#page.params.set (self.pageOptionsSection, self.pageOptionExpand, str (expanded))
 				self.__saveItemState (itemid)
 	
 
@@ -178,21 +176,17 @@ class WikiTree(wx.Panel):
 		page.params.set (self.pageOptionsSection, self.pageOptionExpand, str (expanded))
 
 
-	def loadTreeState (self):
-		"""
-		Восстановить развернутость дерева
-		"""
-		for (page, itemid) in self._pageCache.iteritems():
-			if page.parent != None:
-				try:
-					expanded = page.params.getbool (self.pageOptionsSection, self.pageOptionExpand)
-				except ConfigParser.NoSectionError:
-					continue
-				except ConfigParser.NoOptionError:
-					continue
+	def _loadExpandState (self, page):
+		if page.parent != None:
+			try:
+				expanded = page.params.getbool (self.pageOptionsSection, self.pageOptionExpand)
+			except ConfigParser.NoSectionError:
+				return
+			except ConfigParser.NoOptionError:
+				return
 
-				if expanded:
-					self.treeCtrl.Expand (itemid)
+			if expanded:
+				self.treeCtrl.Expand (self._pageCache[page])
 
 
 	def onRemove (self, event):
@@ -356,17 +350,24 @@ class WikiTree(wx.Panel):
 
 
 	def onStartTreeUpdate (self, root):
+		self._unbindUpdateEvents()
+	
+
+	def _unbindUpdateEvents (self):
 		Controller.instance().onTreeUpdate -= self.onTreeUpdate
 		Controller.instance().onPageSelect -= self.onPageSelect
 		self.Unbind (wx.EVT_TREE_SEL_CHANGED, handler = self.onSelChanged)
 
 	
 	def onEndTreeUpdate (self, root):
+		self._bindUpdateEvents()
+		self.treeUpdate (root)
+
+
+	def _bindUpdateEvents (self):
 		Controller.instance().onTreeUpdate += self.onTreeUpdate
 		Controller.instance().onPageSelect += self.onPageSelect
 		self.Bind (wx.EVT_TREE_SEL_CHANGED, self.onSelChanged)
-
-		self.treeUpdate (root)
 
 	
 	def onBeginDrag (self, event):
@@ -415,7 +416,16 @@ class WikiTree(wx.Panel):
 		Изменение порядка страниц
 		"""
 		#TODO: Обновлять только одну ветвь без всего дерева
-		self.treeUpdate (sender.root)
+		#self.treeUpdate (sender.root)
+		self._updatePage (sender)
+	
+
+	def moveBranch (self, page):
+		"""
+		Переместить узел, связанный со страницей в новое положение без обновления всего дерева
+		"""
+		item = self._pageCache[page]
+		parentItem = self._pageCache[page.parent]
 	
 
 	@property
@@ -467,53 +477,76 @@ class WikiTree(wx.Panel):
 			self.appendChildren (rootPage, rootItem)
 			self.selectedPage = rootPage.selectedPage
 
-			self.loadTreeState()
-
 		self.Bind (wx.EVT_TREE_SEL_CHANGED, self.onSelChanged)
 	
 
 	def appendChildren (self, parentPage, parentItem):
 		"""
 		Добавить детей в дерево
+		parentPage - родительская страница, куда добавляем дочерние страницы
+		parentItem - родительский элемент дерева, куда добавляем дочерние элементы
 		"""
 		self._pageCache[parentPage] = parentItem
 
-		#children = [child for child in parentPage.children]
-		#children.sort (self._sort)
-
 		for child in parentPage.children:
-			#print child.title.encode ("866") + "    " + str (child.order)
-			item = self.treeCtrl.AppendItem (parentItem, child.title, data = wx.TreeItemData(child) )
-			icon = child.icon
+			self.insertChild (child, parentItem)
 
-			if icon != None:
-				image = wx.Bitmap (icon)
-				image.SetHeight (self.iconHeight)
-				imageId = self.imagelist.Add (image)
-			else:
-				imageId = self.defaultImageId
-				
-			self.treeCtrl.SetItemImage (item, imageId)
-			
-			#print self.treeCtrl.GetItemText (item).encode ("866")
-			#print self.treeCtrl.GetItemData (item).GetData().title.encode("866")
-			self.appendChildren (child, item)
+		self._loadExpandState (parentPage)
 	
 
-	#def _sort (self, page1, page2):
-	#	"""
-	#	Функция для сортировки страниц по алфавиту
-	#	"""
-	#	assert page1 != None
-	#	assert page2 != None
+	def insertChild (self, child, parentItem):
+		"""
+		Вставить одну дочерниюю страницу (child) в ветвь, 
+		где родителем является элемент parentItem
+		"""
+		item = self.treeCtrl.InsertItemBefore (parentItem, 
+				child.order, 
+				child.title, 
+				data = wx.TreeItemData(child) )
 
-	#	if page1.title.lower() > page2.title.lower():
-	#		return 1
-	#	elif page1.title.lower() < page2.title.lower():
-	#		return -1
+		icon = child.icon
 
-	#	return 0
+		if icon != None:
+			image = wx.Bitmap (icon)
+			image.SetHeight (self.iconHeight)
+			imageId = self.imagelist.Add (image)
+		else:
+			imageId = self.defaultImageId
+			
+		self.treeCtrl.SetItemImage (item, imageId)
+
+		self.appendChildren (child, item)
+
+		return item
+	
+
+	def _removePageItem (self, page):
+		"""
+		Удалить элемент, соответствующий странице
+		"""
+		item = self._pageCache[page]
+		assert item != None
+
+		del self._pageCache[page]
+		self.treeCtrl.Delete (item)
+
+
+	def _updatePage (self, page):
+		"""
+		Обновить страницу (удалить из списка и добавить снова)
+		"""
+		# Отпишемся от обновлений страниц, чтобы не изменять выбранную страницу
+		self._unbindUpdateEvents()
+
+		self._removePageItem (page)
+		item = self.insertChild (page, self._pageCache[page.parent])
+
+		if page.root.selectedPage == page:
+			# Если обновляем выбранную страницу
+			self.treeCtrl.SelectItem (item)
+
+		self._bindUpdateEvents()
+	
 
 # end of class WikiTree
-
 
