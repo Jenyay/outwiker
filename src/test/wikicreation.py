@@ -550,7 +550,6 @@ class RemovePagesTest (unittest.TestCase):
 		self.assertEqual (len (self.rootwiki), 2)
 		self.assertEqual (self.rootwiki[u"Страница 6"], None)
 		self.assertTrue (page6.isRemoved)
-		self.assertEqual (self.treeUpdateCount, 1)
 		self.assertEqual (self.pageRemoveCount, 1)
 
 		# Удаляем подстраницу
@@ -563,7 +562,6 @@ class RemovePagesTest (unittest.TestCase):
 		self.assertEqual (self.rootwiki[u"Страница 2/Страница 3/Страница 4"], None)
 		self.assertTrue (page3.isRemoved)
 		self.assertTrue (page4.isRemoved)
-		self.assertEqual (self.treeUpdateCount, 2)
 		self.assertEqual (self.pageRemoveCount, 3)
 		
 		Controller.instance().onTreeUpdate -= self.onTreeUpdate
