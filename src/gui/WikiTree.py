@@ -82,6 +82,7 @@ class WikiTree(wx.Panel):
 		Controller.instance().onTreeUpdate += self.onTreeUpdate
 		Controller.instance().onPageOrderChange += self.onPageOrderChange
 		Controller.instance().onPageSelect += self.onPageSelect
+		Controller.instance().onPageRemove += self.onPageRemove
 
 		Controller.instance().onStartTreeUpdate += self.onStartTreeUpdate
 		Controller.instance().onEndTreeUpdate += self.onEndTreeUpdate
@@ -114,6 +115,10 @@ class WikiTree(wx.Panel):
 		self.treeCtrl.Bind (wx.EVT_TREE_ITEM_EXPANDED, self.onTreeStateChanged)
 
 		self.treeCtrl.Bind (wx.EVT_TREE_ITEM_ACTIVATED, self.onTreeItemActivated)
+	
+
+	def onPageRemove (self, page):
+		self._removePageItem (page)
 	
 
 	def onTreeItemActivated (self, event):
@@ -523,8 +528,6 @@ class WikiTree(wx.Panel):
 		Удалить элемент, соответствующий странице
 		"""
 		item = self._pageCache[page]
-		assert item != None
-
 		del self._pageCache[page]
 		self.treeCtrl.Delete (item)
 

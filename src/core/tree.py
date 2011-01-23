@@ -752,15 +752,16 @@ class WikiPage (RootWikiPage):
 
 			self.root.selectedPage = newselpage
 		
-		Controller.instance().onTreeUpdate(self.root)
+		#Controller.instance().onTreeUpdate(self.root)
 	
 
 	def _removePageFromTree (self, page):
 		page.parent.removeFromChildren (page)
-		Controller.instance().onPageRemove (page)
 
 		for child in page.children:
 			page._removePageFromTree (child)
+
+		Controller.instance().onPageRemove (page)
 
 
 	@property
