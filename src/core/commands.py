@@ -19,6 +19,8 @@ from core.controller import Controller
 from core.tree import RootWikiPage
 from gui.OverwriteDialog import OverwriteDialog
 from gui.CreatePageDialog import CreatePageDialog
+from core.application import Application
+
 
 def attachFilesWithDialog (parent, page):
 	"""
@@ -130,6 +132,41 @@ def removePage (page):
 		finally:
 			Controller.instance().onEndTreeUpdate(root)
 
+
+def createSiblingPage (parentwnd):
+	"""
+	Создать страницу, находящуюся на том же уровне, что и текущая страница
+	parentwnd - окно, которое будет родителем для диалога создания страницы
+	"""
+	if Application.wikiroot == None:
+		wx.MessageBox (_(u"Wiki is not open"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+		return
+
+	currPage = Application.wikiroot.selectedPage
+
+	if currPage == None or currPage.parent == None:
+		parentpage = Application.wikiroot
+	else:
+		parentpage = currPage.parent
+
+	createPageWithDialog (parentwnd, parentpage)
+
+
+def createChildPage (parentwnd):
+	"""
+	Создать страницу, которая будет дочерней к текущей странице
+	parentwnd - окно, которое будет родителем для диалога создания страницы
+	"""
+	if Application.wikiroot == None:
+		return
+
+	currPage = Application.wikiroot.selectedPage
+
+	if currPage == None:
+		currPage = Application.wikiroot
+
+	createPageWithDialog (parentwnd, currPage)
+	
 
 def createPageWithDialog (parentwnd, parentpage):
 	"""
@@ -304,3 +341,13 @@ def getCurrentVersion ():
 		version = core.version.Version(0, 0)
 
 	return version
+
+
+def moveCurrentPageUp ():
+	if Application.wikiroot != None and Application.wikiroot.selectedPage != None:
+			Application.wikiroot.selectedPage.order -= 1
+
+
+def moveCurrentPageDown ():
+	if Application.wikiroot != None and Application.wikiroot.selectedPage != None:
+			Application.wikiroot.selectedPage.order += 1

@@ -17,29 +17,36 @@ from core.controller import Controller
 import core.exceptions
 import core.commands
 import core.system
+from core.application import Application
 
 
 class WikiTree(wx.Panel):
 	def __init__(self, *args, **kwds):
-		# begin wxGlade: WikiTree.__init__
-		kwds["style"] = wx.TAB_TRAVERSAL
-		wx.Panel.__init__(self, *args, **kwds)
-		self.treeCtrl = wx.TreeCtrl(self, -1, style=wx.TR_HAS_BUTTONS|wx.TR_NO_LINES|wx.TR_LINES_AT_ROOT|wx.TR_EDIT_LABELS|wx.TR_HIDE_ROOT|wx.TR_DEFAULT_STYLE|wx.SUNKEN_BORDER)
-
-		self.__set_properties()
-		self.__do_layout()
-		# end wxGlade
-
 		self.ID_ADD_CHILD = wx.NewId()
 		self.ID_ADD_SIBLING = wx.NewId()
 		self.ID_RENAME = wx.NewId()
 		self.ID_REMOVE = wx.NewId()
 		self.ID_PROPERTIES = wx.NewId()
+		self.ID_MOVE_UP = wx.NewId()
+		self.ID_MOVE_DOWN = wx.NewId()
+		self.ID_ADD_SIBLING_PAGE = wx.NewId()
+		self.ID_ADD_CHILD_PAGE = wx.NewId()
+		self.ID_REMOVE_PAGE = wx.NewId()
 		
 		self.ID_COPY_PATH = wx.NewId()
 		self.ID_COPY_ATTACH_PATH = wx.NewId()
 		self.ID_COPY_TITLE = wx.NewId()
 		self.ID_COPY_LINK = wx.NewId()
+
+		# begin wxGlade: WikiTree.__init__
+		kwds["style"] = wx.TAB_TRAVERSAL
+		wx.Panel.__init__(self, *args, **kwds)
+		self.toolbar = self.getToolbar(self, -1)
+		self.treeCtrl = wx.TreeCtrl(self, -1, style=wx.TR_HAS_BUTTONS|wx.TR_NO_LINES|wx.TR_LINES_AT_ROOT|wx.TR_EDIT_LABELS|wx.TR_HIDE_ROOT|wx.TR_DEFAULT_STYLE|wx.SUNKEN_BORDER)
+
+		self.__set_properties()
+		self.__do_layout()
+		# end wxGlade
 
 		self.defaultIcon = os.path.join (core.system.getImagesDir(), "page.png")
 		self.iconHeight = 16
@@ -115,7 +122,34 @@ class WikiTree(wx.Panel):
 		self.treeCtrl.Bind (wx.EVT_TREE_ITEM_EXPANDED, self.onTreeStateChanged)
 
 		self.treeCtrl.Bind (wx.EVT_TREE_ITEM_ACTIVATED, self.onTreeItemActivated)
-	
+
+		self.Bind(wx.EVT_MENU, self.onMoveUp, id=self.ID_MOVE_UP)
+		self.Bind(wx.EVT_MENU, self.onMoveDown, id=self.ID_MOVE_DOWN)
+		self.Bind(wx.EVT_MENU, self.onAddSiblingPage, id=self.ID_ADD_SIBLING_PAGE)
+		self.Bind(wx.EVT_MENU, self.onAddChildPage, id=self.ID_ADD_CHILD_PAGE)
+		self.Bind(wx.EVT_MENU, self.onRemovePage, id=self.ID_REMOVE_PAGE)
+
+
+	def onAddSiblingPage (self, event):
+		core.commands.createSiblingPage (self)
+
+
+	def onAddChildPage (self, event):
+		core.commands.createChildPage (self)
+
+
+	def onRemovePage (self, event):
+		if Application.wikiroot != None and Application.wikiroot.selectedPage != None:
+			core.commands.removePage (Application.wikiroot.selectedPage)
+
+
+	def onMoveUp (self, event):
+		core.commands.moveCurrentPageUp()
+
+
+	def onMoveDown (self, event):
+		core.commands.moveCurrentPageDown()
+
 
 	def onPageRemove (self, page):
 		self._removePageItem (page)
@@ -450,16 +484,16 @@ class WikiTree(wx.Panel):
 	
 	def __set_properties(self):
 		# begin wxGlade: WikiTree.__set_properties
-		pass
+		self.SetSize((254, 258))
 		# end wxGlade
 
 	def __do_layout(self):
 		# begin wxGlade: WikiTree.__do_layout
 		mainSizer = wx.FlexGridSizer(1, 1, 0, 0)
+		mainSizer.Add(self.toolbar, 1, wx.EXPAND, 0)
 		mainSizer.Add(self.treeCtrl, 1, wx.EXPAND, 0)
 		self.SetSizer(mainSizer)
-		mainSizer.Fit(self)
-		mainSizer.AddGrowableRow(0)
+		mainSizer.AddGrowableRow(1)
 		mainSizer.AddGrowableCol(0)
 		# end wxGlade
 	
@@ -549,6 +583,66 @@ class WikiTree(wx.Panel):
 
 		self.treeCtrl.Thaw()
 		self._bindUpdateEvents()
+	
+
+	def getToolbar (self, parent, id):
+		imagesDir = core.system.getImagesDir()
+
+		toolbar = wx.ToolBar (parent, id, style=wx.TB_DOCKABLE)
+
+		toolbar.AddLabelTool(self.ID_MOVE_UP, 
+				_(u"Move Page Up..."), 
+				wx.Bitmap(os.path.join (imagesDir, "arrow_up.png"),
+					wx.BITMAP_TYPE_ANY),
+				wx.NullBitmap, 
+				wx.ITEM_NORMAL,
+				_(u"Move Page Up..."), 
+				"")
+
+
+		toolbar.AddLabelTool(self.ID_MOVE_DOWN, 
+				_(u"Move Page Down..."), 
+				wx.Bitmap(os.path.join (imagesDir, "arrow_down.png"),
+					wx.BITMAP_TYPE_ANY),
+				wx.NullBitmap, 
+				wx.ITEM_NORMAL,
+				_(u"Move Page Down..."), 
+				"")
+
+		toolbar.AddSeparator()
+
+
+		toolbar.AddLabelTool(self.ID_ADD_SIBLING_PAGE,
+				_(u"Add Sibling Page..."), 
+				wx.Bitmap(os.path.join (imagesDir, "sibling.ico"),
+					wx.BITMAP_TYPE_ANY),
+				wx.NullBitmap, 
+				wx.ITEM_NORMAL,
+				_(u"Add Sibling Page..."), 
+				"")
+
+		toolbar.AddLabelTool(self.ID_ADD_CHILD_PAGE,
+				_(u"Add Child Page..."), 
+				wx.Bitmap(os.path.join (imagesDir, "child.ico"),
+					wx.BITMAP_TYPE_ANY),
+				wx.NullBitmap, 
+				wx.ITEM_NORMAL,
+				_(u"Add Child Page..."), 
+				"")
+
+		toolbar.AddLabelTool(self.ID_REMOVE_PAGE,
+				_(u"Remove Page..."), 
+				wx.Bitmap(os.path.join (imagesDir, "remove.ico"),
+					wx.BITMAP_TYPE_ANY),
+				wx.NullBitmap, 
+				wx.ITEM_NORMAL,
+				_(u"Remove Page..."), 
+				"")
+
+		toolbar.AddSeparator()
+
+		toolbar.Realize()
+		return toolbar
 	
 
 # end of class WikiTree

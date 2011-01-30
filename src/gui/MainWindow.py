@@ -169,12 +169,7 @@ class MainWindow(wx.Frame):
 		self.mainToolbar.AddLabelTool(self.ID_NEW, _(u"New…"), wx.Bitmap(os.path.join (self.imagesDir, "new.png"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _(u"Create new wiki…"), "")
 		self.mainToolbar.AddLabelTool(self.ID_OPEN, _(u"Open…"), wx.Bitmap(os.path.join (self.imagesDir, "open.png"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _(u"Open wiki…"), "")
 		self.mainToolbar.AddLabelTool(self.ID_SAVE, _("Save"), wx.Bitmap(os.path.join (self.imagesDir, "save.png"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _("Save wiki"), "")
-		self.mainToolbar.AddSeparator()
 		self.mainToolbar.AddLabelTool(self.ID_RELOAD, _("Reload"), wx.Bitmap(os.path.join (self.imagesDir, "reload.png"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _("Reload wiki"), "")
-		self.mainToolbar.AddSeparator()
-		self.mainToolbar.AddLabelTool(self.ID_ADDPAGE, _(u"Add sibling page…"), wx.Bitmap(os.path.join (self.imagesDir, "sibling.ico"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _(u"Add sibling page…"), "")
-		self.mainToolbar.AddLabelTool(self.ID_ADDCHILD, _(u"Add child Page…"), wx.Bitmap(os.path.join (self.imagesDir, "child.ico"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _(u"Add child Page…"), "")
-		self.mainToolbar.AddLabelTool(self.ID_REMOVE_PAGE, _("Remove page"), wx.Bitmap(os.path.join (self.imagesDir, "remove.ico"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _(u"Remove page…"), "")
 		self.mainToolbar.AddSeparator()
 		self.mainToolbar.AddLabelTool(self.ID_ATTACH, _(u"Attach files…"), wx.Bitmap(os.path.join (self.imagesDir, "attach.png"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _(u"Attach files…"), "")
 		self.mainToolbar.AddLabelTool(self.ID_EDIT, _("Edit page"), wx.Bitmap(os.path.join (self.imagesDir, "edit.png"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _("Edit page's properties"), "")
@@ -221,9 +216,6 @@ class MainWindow(wx.Frame):
 		self.Bind(wx.EVT_TOOL, self.onNew, id=self.ID_NEW)
 		self.Bind(wx.EVT_TOOL, self.onOpen, id=self.ID_OPEN)
 		self.Bind(wx.EVT_TOOL, self.onReload, id=self.ID_RELOAD)
-		self.Bind(wx.EVT_TOOL, self.onAddSiblingPage, id=self.ID_ADDPAGE)
-		self.Bind(wx.EVT_TOOL, self.onAddChildPage, id=self.ID_ADDCHILD)
-		self.Bind(wx.EVT_TOOL, self.onRemovePage, id=self.ID_REMOVE_PAGE)
 		self.Bind(wx.EVT_TOOL, self.onAttach, id=self.ID_ATTACH)
 		self.Bind(wx.EVT_TOOL, self.onEditPage, id=self.ID_EDIT)
 		self.Bind(wx.EVT_TOOL, self.onGlobalSearch, id=self.ID_GLOBAL_SEARCH)
@@ -759,32 +751,14 @@ class MainWindow(wx.Frame):
 		"""
 		Создание страницы на уровне текущей страницы
 		"""
-		if Application.wikiroot == None:
-			return
-
-		currPage = Application.wikiroot.selectedPage
-
-		if currPage == None or currPage.parent == None:
-			parentpage = Application.wikiroot
-		else:
-			parentpage = currPage.parent
-
-		core.commands.createPageWithDialog (self, parentpage)
+		core.commands.createSiblingPage (self)
 
 	
 	def onAddChildPage(self, event): # wxGlade: MainWindow.<event_handler>
 		"""
 		Создание дочерней страницы
 		"""
-		if Application.wikiroot == None:
-			return
-
-		currPage = Application.wikiroot.selectedPage
-
-		if currPage == None:
-			currPage = Application.wikiroot
-
-		core.commands.createPageWithDialog (self, currPage)
+		core.commands.createChildPage (self)
 
 
 	def onAttach(self, event): # wxGlade: MainWindow.<event_handler>
@@ -990,13 +964,12 @@ class MainWindow(wx.Frame):
 
 
 	def onMovePageUp(self, event): # wxGlade: MainWindow.<event_handler>
-		if Application.wikiroot != None and Application.wikiroot.selectedPage != None:
-			Application.wikiroot.selectedPage.order -= 1
+		core.commands.moveCurrentPageUp()
 
 
 	def onMovePageDown(self, event): # wxGlade: MainWindow.<event_handler>
-		if Application.wikiroot != None and Application.wikiroot.selectedPage != None:
-			Application.wikiroot.selectedPage.order += 1
+		core.commands.moveCurrentPageDown()
+		
 
 # end of class MainWindow
 
