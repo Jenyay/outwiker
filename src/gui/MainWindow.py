@@ -661,6 +661,7 @@ class MainWindow(wx.Frame):
 			self.mainPanel.Close()
 
 			self.__removeTrayIcon()
+			self.Unbind (wx.EVT_ACTIVATE)
 
 			self.Destroy()
 		else:
