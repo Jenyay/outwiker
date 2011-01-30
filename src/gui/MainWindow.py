@@ -236,6 +236,7 @@ class MainWindow(wx.Frame):
 		self.Bind (wx.EVT_ICONIZE, self.onIconize)
 		self.Bind (wx.EVT_MENU, self.onRestore, id=self.ID_RESTORE)
 		self.Bind (wx.EVT_IDLE, self.onIdle)
+		self.Bind (wx.EVT_ACTIVATE, self.onActivate)
 
 		self.mainPanel.Bind (wx.EVT_CLOSE, self.onMainPanelClose)
 
@@ -253,6 +254,11 @@ class MainWindow(wx.Frame):
 			(wx.ACCEL_SHIFT,  wx.WXK_INSERT, wx.ID_PASTE),
 			(wx.ACCEL_SHIFT,  wx.WXK_DELETE, wx.ID_CUT)])
 		self.SetAcceleratorTable(aTable)
+
+
+	def onActivate (self, event):
+		if not event.GetActive():
+			self.pagePanel.Save()
 	
 
 	def onMainPanelClose (self, event):
@@ -718,11 +724,6 @@ class MainWindow(wx.Frame):
 	def onSave(self, event): # wxGlade: MainWindow.<event_handler>
 		self.pagePanel.Save()
 
-
-	def onSaveAs(self, event): # wxGlade: MainWindow.<event_handler>
-		print "Event handler `onSaveAs' not implemented"
-		event.Skip()
-	
 
 	def onReload(self, event): # wxGlade: MainWindow.<event_handler>
 		if Application.wikiroot != None:
