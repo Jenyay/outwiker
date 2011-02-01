@@ -590,31 +590,29 @@ class WikiTree(wx.Panel):
 
 		toolbar = wx.ToolBar (parent, id, style=wx.TB_HORIZONTAL|wx.TB_FLAT|wx.TB_DOCKABLE)
 
-		toolbar.AddLabelTool(self.ID_MOVE_UP, 
-				_(u"Move Page Up..."), 
-				wx.Bitmap(os.path.join (imagesDir, "arrow_up.png"),
-					wx.BITMAP_TYPE_ANY),
-				wx.NullBitmap, 
-				wx.ITEM_NORMAL,
-				_(u"Move Page Up..."), 
-				"")
-
-
 		toolbar.AddLabelTool(self.ID_MOVE_DOWN, 
 				_(u"Move Page Down..."), 
-				wx.Bitmap(os.path.join (imagesDir, "arrow_down.png"),
+				wx.Bitmap(os.path.join (imagesDir, "move_down.png"),
 					wx.BITMAP_TYPE_ANY),
 				wx.NullBitmap, 
 				wx.ITEM_NORMAL,
 				_(u"Move Page Down..."), 
 				"")
 
+		toolbar.AddLabelTool(self.ID_MOVE_UP, 
+				_(u"Move Page Up..."), 
+				wx.Bitmap(os.path.join (imagesDir, "move_up.png"),
+					wx.BITMAP_TYPE_ANY),
+				wx.NullBitmap, 
+				wx.ITEM_NORMAL,
+				_(u"Move Page Up..."), 
+				"")
 		toolbar.AddSeparator()
 
 
 		toolbar.AddLabelTool(self.ID_ADD_SIBLING_PAGE,
 				_(u"Add Sibling Page..."), 
-				wx.Bitmap(os.path.join (imagesDir, "sibling.ico"),
+				wx.Bitmap(os.path.join (imagesDir, "node-insert-next.png"),
 					wx.BITMAP_TYPE_ANY),
 				wx.NullBitmap, 
 				wx.ITEM_NORMAL,
@@ -623,7 +621,7 @@ class WikiTree(wx.Panel):
 
 		toolbar.AddLabelTool(self.ID_ADD_CHILD_PAGE,
 				_(u"Add Child Page..."), 
-				wx.Bitmap(os.path.join (imagesDir, "child.ico"),
+				wx.Bitmap(os.path.join (imagesDir, "node-insert-child.png"),
 					wx.BITMAP_TYPE_ANY),
 				wx.NullBitmap, 
 				wx.ITEM_NORMAL,
@@ -632,7 +630,7 @@ class WikiTree(wx.Panel):
 
 		toolbar.AddLabelTool(self.ID_REMOVE_PAGE,
 				_(u"Remove Page..."), 
-				wx.Bitmap(os.path.join (imagesDir, "remove.ico"),
+				wx.Bitmap(os.path.join (imagesDir, "node-delete.png"),
 					wx.BITMAP_TYPE_ANY),
 				wx.NullBitmap, 
 				wx.ITEM_NORMAL,
