@@ -168,7 +168,7 @@ class AttachPanel(wx.Panel):
 			files = self.getSelectedFiles ()
 
 			if wx.MessageBox (_(u"Remove selected files?"), 
-					_(u"Error"),
+					_(u"Remove files?"),
 					wx.YES_NO  | wx.ICON_QUESTION) == wx.YES:
 				try:
 					self.currentPage.removeAttach (files)
