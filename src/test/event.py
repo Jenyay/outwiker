@@ -170,8 +170,6 @@ class EventsTest (unittest.TestCase):
 		self.setUp()
 
 		TextPageFactory.create (rootwiki, u"Страница 1", [])
-		self.assertTrue(self.isTreeUpdate)
-		self.assertEqual (self.treeUpdateSender, rootwiki[u"Страница 1"])
 		
 		self.assertTrue(self.isPageCreate)
 		self.assertEqual (self.pageCreateSender, rootwiki[u"Страница 1"])
@@ -180,8 +178,6 @@ class EventsTest (unittest.TestCase):
 		self.setUp()
 
 		TextPageFactory.create (rootwiki, u"Страница 2", [])
-		self.assertTrue(self.isTreeUpdate)
-		self.assertEqual (self.treeUpdateSender, rootwiki[u"Страница 2"])
 
 		self.assertTrue(self.isPageCreate)
 		self.assertEqual (self.pageCreateSender, rootwiki[u"Страница 2"])
@@ -190,8 +186,6 @@ class EventsTest (unittest.TestCase):
 		self.setUp()
 
 		TextPageFactory.create (rootwiki[u"Страница 2"], u"Страница 3", [])
-		self.assertTrue(self.isTreeUpdate)
-		self.assertEqual (self.treeUpdateSender, rootwiki[u"Страница 2/Страница 3"])
 
 		self.assertTrue(self.isPageCreate)
 		self.assertEqual (self.pageCreateSender, rootwiki[u"Страница 2/Страница 3"])

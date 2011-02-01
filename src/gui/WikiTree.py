@@ -87,6 +87,7 @@ class WikiTree(wx.Panel):
 		Подписка на события контроллера
 		"""
 		Controller.instance().onTreeUpdate += self.onTreeUpdate
+		Controller.instance().onPageCreate += self.onPageCreate
 		Controller.instance().onPageOrderChange += self.onPageOrderChange
 		Controller.instance().onPageSelect += self.onPageSelect
 		Controller.instance().onPageRemove += self.onPageRemove
@@ -128,6 +129,14 @@ class WikiTree(wx.Panel):
 		self.Bind(wx.EVT_MENU, self.onAddSiblingPage, id=self.ID_ADD_SIBLING_PAGE)
 		self.Bind(wx.EVT_MENU, self.onAddChildPage, id=self.ID_ADD_CHILD_PAGE)
 		self.Bind(wx.EVT_MENU, self.onRemovePage, id=self.ID_REMOVE_PAGE)
+
+
+	def onPageCreate (self, newpage):
+		"""
+		Обработка создания страницы
+		"""
+		parentItem = self._pageCache[newpage.parent]
+		self.insertChild (newpage, parentItem)
 
 
 	def onAddSiblingPage (self, event):
@@ -394,7 +403,9 @@ class WikiTree(wx.Panel):
 
 	def _unbindUpdateEvents (self):
 		Controller.instance().onTreeUpdate -= self.onTreeUpdate
+		Controller.instance().onPageCreate -= self.onPageCreate
 		Controller.instance().onPageSelect -= self.onPageSelect
+		Controller.instance().onPageOrderChange -= self.onPageOrderChange
 		self.Unbind (wx.EVT_TREE_SEL_CHANGED, handler = self.onSelChanged)
 
 	
@@ -405,7 +416,9 @@ class WikiTree(wx.Panel):
 
 	def _bindUpdateEvents (self):
 		Controller.instance().onTreeUpdate += self.onTreeUpdate
+		Controller.instance().onPageCreate += self.onPageCreate
 		Controller.instance().onPageSelect += self.onPageSelect
+		Controller.instance().onPageOrderChange += self.onPageOrderChange
 		self.Bind (wx.EVT_TREE_SEL_CHANGED, self.onSelChanged)
 
 	

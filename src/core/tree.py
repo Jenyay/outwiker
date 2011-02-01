@@ -656,7 +656,7 @@ class WikiPage (RootWikiPage):
 		
 		self.save()
 		Controller.instance().onPageCreate(self)
-		Controller.instance().onTreeUpdate(self)
+		#Controller.instance().onTreeUpdate(self)
 	
 
 	def _getTags (self, configParser):
