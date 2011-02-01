@@ -21,10 +21,19 @@ class OutWiker(wx.App):
 
 		from gui.MainWindow import MainWindow
 		wx.InitAllImageHandlers()
-		mainWnd = MainWindow(None, -1, "")
-		self.SetTopWindow(mainWnd)
-		mainWnd.Show()
+		self.mainWnd = MainWindow(None, -1, "")
+		self.SetTopWindow (self.mainWnd)
+		self.mainWnd.Show()
+
+		self.Bind (wx.EVT_ACTIVATE_APP, self.onActivate)
+
 		return 1
+
+
+	def onActivate (self, event):
+		if not event.GetActive():
+			#print "onActivate"
+			self.mainWnd.SaveCurrentPage()
 
 # end of class OutWiker
 

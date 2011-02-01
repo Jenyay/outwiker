@@ -588,7 +588,7 @@ class WikiTree(wx.Panel):
 	def getToolbar (self, parent, id):
 		imagesDir = core.system.getImagesDir()
 
-		toolbar = wx.ToolBar (parent, id, style=wx.TB_DOCKABLE)
+		toolbar = wx.ToolBar (parent, id, style=wx.TB_HORIZONTAL|wx.TB_FLAT|wx.TB_DOCKABLE)
 
 		toolbar.AddLabelTool(self.ID_MOVE_UP, 
 				_(u"Move Page Up..."), 

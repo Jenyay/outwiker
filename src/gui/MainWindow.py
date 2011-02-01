@@ -236,7 +236,6 @@ class MainWindow(wx.Frame):
 		self.Bind (wx.EVT_ICONIZE, self.onIconize)
 		self.Bind (wx.EVT_MENU, self.onRestore, id=self.ID_RESTORE)
 		self.Bind (wx.EVT_IDLE, self.onIdle)
-		self.Bind (wx.EVT_ACTIVATE, self.onActivate)
 
 		self.mainPanel.Bind (wx.EVT_CLOSE, self.onMainPanelClose)
 
@@ -256,15 +255,20 @@ class MainWindow(wx.Frame):
 		self.SetAcceleratorTable(aTable)
 
 
-	def onActivate (self, event):
-		if not event.GetActive():
+	def SaveCurrentPage (self):
+		if self.pagePanel != None:
 			self.pagePanel.Save()
 	
 
 	def onMainPanelClose (self, event):
 		self.tree.Close()
+		self.tree = None
+
 		self.pagePanel.Close()
+		self.pagePanel = None
+
 		self.attachPanel.Close()
+		self.attachPanel = None
 		
 		self.mainPanel.Destroy()
 
@@ -661,7 +665,6 @@ class MainWindow(wx.Frame):
 			self.mainPanel.Close()
 
 			self.__removeTrayIcon()
-			self.Unbind (wx.EVT_ACTIVATE)
 
 			self.Destroy()
 		else:
