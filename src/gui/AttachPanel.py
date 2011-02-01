@@ -122,21 +122,21 @@ class AttachPanel(wx.Panel):
 
 	def onPageSelect (self, page):
 		self.currentPage = page
-		self.updateAttachments (page)
+		self.updateAttachments ()
 
 
 	def onPageUpdate (self, page):
 		if self.currentPage != None and self.currentPage == page:
-			self.updateAttachments (page)
+			self.updateAttachments ()
 
 
-	def updateAttachments (self, page):
+	def updateAttachments (self):
 		"""
 		Обновить список прикрепленных файлов
 		"""
 		self.attachList.ClearAll()
-		if page != None:
-			files = page.attachment
+		if self.currentPage != None:
+			files = self.currentPage.attachment
 			files.reverse()
 
 			for fname in files:
@@ -167,6 +167,8 @@ class AttachPanel(wx.Panel):
 		if self.currentPage != None:
 			files = self.getSelectedFiles ()
 
+			Controller.instance().onPageUpdate -= self.onPageUpdate
+
 			if wx.MessageBox (_(u"Remove selected files?"), 
 					_(u"Remove files?"),
 					wx.YES_NO  | wx.ICON_QUESTION) == wx.YES:
@@ -174,6 +176,10 @@ class AttachPanel(wx.Panel):
 					self.currentPage.removeAttach (files)
 				except IOError as e:
 					wx.MessageBox (unicode (e), _(u"Error"), wx.ICON_ERROR | wx.OK)
+
+				self.updateAttachments ()
+
+			Controller.instance().onPageUpdate += self.onPageUpdate
 	
 
 	def onPaste(self, event): # wxGlade: AttachPanel.<event_handler>

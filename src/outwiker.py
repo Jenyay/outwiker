@@ -32,7 +32,6 @@ class OutWiker(wx.App):
 
 	def onActivate (self, event):
 		if not event.GetActive():
-			#print "onActivate"
 			self.mainWnd.SaveCurrentPage()
 
 # end of class OutWiker
