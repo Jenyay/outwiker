@@ -165,15 +165,16 @@ class AttachPanel(wx.Panel):
 
 	def onRemove(self, event): # wxGlade: AttachPanel.<event_handler>
 		if self.currentPage != None:
+			files = self.getSelectedFiles ()
+
 			if wx.MessageBox (_(u"Remove selected files?"), 
 					_(u"Error"),
-					wx.YES_NO  | wx.ICON_QUESTION ) == wx.YES:
-				files = self.getSelectedFiles ()
+					wx.YES_NO  | wx.ICON_QUESTION) == wx.YES:
 				try:
 					self.currentPage.removeAttach (files)
 				except IOError as e:
 					wx.MessageBox (unicode (e), _(u"Error"), wx.ICON_ERROR | wx.OK)
-
+	
 
 	def onPaste(self, event): # wxGlade: AttachPanel.<event_handler>
 		"""
