@@ -56,7 +56,7 @@ class AboutDialog(wx.Dialog):
 
 	def __do_layout(self):
 		# begin wxGlade: AboutDialog.__do_layout
-		main_sizer = wx.FlexGridSizer(4, 1, 0, 0)
+		main_sizer = wx.FlexGridSizer(4, 1, 4, 0)
 		grid_sizer_7 = wx.FlexGridSizer(3, 2, 0, 0)
 		grid_sizer_2 = wx.FlexGridSizer(6, 1, 0, 0)
 		grid_sizer_6 = wx.FlexGridSizer(1, 2, 0, 0)
@@ -103,7 +103,7 @@ class AboutDialog(wx.Dialog):
 		self.notebook.AddPage(self.aboutPane, _("About"))
 		self.notebook.AddPage(self.donatePane, _("Donate"))
 		main_sizer.Add(self.notebook, 1, wx.ALL|wx.EXPAND, 2)
-		main_sizer.Add(self.okButton, 0, wx.ALL|wx.ALIGN_RIGHT, 2)
+		main_sizer.Add(self.okButton, 0, wx.ALL|wx.ALIGN_RIGHT|wx.ALIGN_CENTER_VERTICAL, 8)
 		self.SetSizer(main_sizer)
 		main_sizer.Fit(self)
 		main_sizer.AddGrowableRow(2)
