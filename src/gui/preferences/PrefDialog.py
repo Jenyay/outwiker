@@ -42,7 +42,7 @@ class PrefDialog(wx.Dialog):
 	def __do_layout(self):
 		# begin wxGlade: PrefDialog.__do_layout
 		main_sizer = wx.FlexGridSizer(2, 1, 0, 0)
-		main_sizer.Add(self.treeBook, 1, wx.EXPAND, 0)
+		main_sizer.Add(self.treeBook, 1, wx.ALL|wx.EXPAND, 4)
 		self.SetSizer(main_sizer)
 		main_sizer.AddGrowableRow(0)
 		main_sizer.AddGrowableCol(0)
@@ -104,7 +104,7 @@ class PrefDialog(wx.Dialog):
 		"""
 		buttonsSizer = self.CreateButtonSizer (wx.OK | wx.CANCEL)
 		sizer.AddSpacer(0)
-		sizer.Add (buttonsSizer, 1, wx.ALIGN_RIGHT | wx.ALL, border = 2)
+		sizer.Add (buttonsSizer, 1, wx.ALIGN_RIGHT | wx.ALL, border = 8)
 
 		self.Bind (wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
 		
