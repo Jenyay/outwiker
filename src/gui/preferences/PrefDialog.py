@@ -104,7 +104,7 @@ class PrefDialog(wx.Dialog):
 		"""
 		buttonsSizer = self.CreateButtonSizer (wx.OK | wx.CANCEL)
 		sizer.AddSpacer(0)
-		sizer.Add (buttonsSizer, 1, wx.ALIGN_RIGHT | wx.ALL, border = 8)
+		sizer.Add (buttonsSizer, 1, wx.ALIGN_RIGHT | wx.ALL, border = 4)
 
 		self.Bind (wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
 		
