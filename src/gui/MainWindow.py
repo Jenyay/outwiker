@@ -492,7 +492,7 @@ class MainWindow(wx.Frame):
 		try:
 			wikiroot = WikiDocument.load (fname)
 		except IOError:
-			wx.MessageBox (_(u"Can't load wiki '%s'") % self._recentId[event.Id], _(u"Error"), wx.ICON_ERROR | wx.OK)
+			core.commands.MessageBox (_(u"Can't load wiki '%s'") % self._recentId[event.Id], _(u"Error"), wx.ICON_ERROR | wx.OK)
 			return
 
 		self._openLoadedWiki(wikiroot)
@@ -570,7 +570,7 @@ class MainWindow(wx.Frame):
 			wikiroot = core.commands.openWiki (path, readonly)
 			self._openLoadedWiki(wikiroot, addToRecent = not readonly)
 		except IOError:
-			wx.MessageBox (_(u"Can't load wiki '%s'") % path, _(u"Error"), wx.ICON_ERROR | wx.OK)
+			core.commands.MessageBox (_(u"Can't load wiki '%s'") % path, _(u"Error"), wx.ICON_ERROR | wx.OK)
 
 		finally:
 			Controller.instance().onEndTreeUpdate(Application.wikiroot)
@@ -624,7 +624,7 @@ class MainWindow(wx.Frame):
 
 				self.__savePanesParams()
 		except Exception, e:
-			wx.MessageBox (_(u"Can't save config\n%s") % (unicode (e)), 
+			core.commands.MessageBox (_(u"Can't save config\n%s") % (unicode (e)), 
 					_(u"Error"), wx.ICON_ERROR | wx.OK)
 	
 
@@ -655,7 +655,7 @@ class MainWindow(wx.Frame):
 		askBeforeExit = Application.config.askBeforeExitOption.value
 
 		if (not askBeforeExit or 
-				wx.MessageBox (_(u"Really exit?"), _(u"Exit"), wx.YES_NO  | wx.ICON_QUESTION ) == wx.YES):
+				core.commands.MessageBox (_(u"Really exit?"), _(u"Exit"), wx.YES_NO  | wx.ICON_QUESTION ) == wx.YES):
 			if Application.wikiroot != None:
 				Controller.instance().onWikiClose (Application.wikiroot)
 
@@ -734,7 +734,7 @@ class MainWindow(wx.Frame):
 			Controller.instance().onWikiClose (Application.wikiroot)
 			Controller.instance().onStartTreeUpdate(Application.wikiroot)
 
-			if (wx.MessageBox (_(u"Save current page before reload?"), 
+			if (core.commands.MessageBox (_(u"Save current page before reload?"), 
 				_(u"Save?"), 
 				wx.YES_NO  | wx.ICON_QUESTION ) == wx.NO):
 				self.pagePanel.destroyWithoutSave()
@@ -744,7 +744,7 @@ class MainWindow(wx.Frame):
 			try:
 				wikiroot = core.commands.openWiki (Application.wikiroot.path)
 			except IOError:
-				wx.MessageBox (_(u"Can't load wiki '%s'") % self._recentId[event.Id], _(u"Error"), wx.ICON_ERROR | wx.OK)
+				core.commands.MessageBox (_(u"Can't load wiki '%s'") % self._recentId[event.Id], _(u"Error"), wx.ICON_ERROR | wx.OK)
 				return
 			finally:
 				Controller.instance().onEndTreeUpdate(Application.wikiroot)
@@ -828,13 +828,13 @@ class MainWindow(wx.Frame):
 	def onGlobalSearch(self, event): # wxGlade: MainWindow.<event_handler>
 		if Application.wikiroot != None:
 			if Application.wikiroot.readonly:
-				wx.MessageBox (_(u"Wiki is opened as read-only"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+				core.commands.MessageBox (_(u"Wiki is opened as read-only"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 				return
 			else:
 				try:
 					pages.search.searchpage.GlobalSearch.create (Application.wikiroot)
 				except IOError:
-					wx.MessageBox (_(u"Can't create page"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+					core.commands.MessageBox (_(u"Can't create page"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 
 
 	def onStdEvent(self, event): # wxGlade: MainWindow.<event_handler>

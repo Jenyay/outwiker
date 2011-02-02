@@ -22,6 +22,17 @@ from gui.CreatePageDialog import CreatePageDialog
 from core.application import Application
 
 
+def MessageBox (*args, **kwargs):
+	"""
+	Замена стандартного MessageBox. Перед показом диалога отключает приложение от события EVT_ACTIVATE_APP.
+	"""
+	wx.GetApp().unbindActivateApp()
+	result = wx.MessageBox (*args, **kwargs)
+	wx.GetApp().bindActivateApp()
+
+	return result
+
+
 def attachFilesWithDialog (parent, page):
 	"""
 	Вызвать диалог для приаттачивания файлов к странице
@@ -29,7 +40,7 @@ def attachFilesWithDialog (parent, page):
 	page -- страница, куда прикрепляем файлы
 	"""
 	if page.readonly:
-		wx.MessageBox (_(u"Wiki is opened as read-only"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+		MessageBox (_(u"Wiki is opened as read-only"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 		return
 
 	dlg = wx.FileDialog (parent, style = wx.FD_OPEN | wx.FD_FILE_MUST_EXIST | wx.FD_MULTIPLE)
@@ -47,7 +58,7 @@ def attachFiles (parent, page, files):
 	Прикрепить файлы к странице с диалогом о перезаписи при необходимости
 	"""
 	if page.readonly:
-		wx.MessageBox (_(u"Wiki is opened as read-only"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+		MessageBox (_(u"Wiki is opened as read-only"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 		return
 
 	oldAttaches = [os.path.basename (fname).lower() for fname in page.attachment]
@@ -68,10 +79,10 @@ def attachFiles (parent, page, files):
 			page.attach ([fname])
 		except IOError:
 			text = u'Can\'t attach file "%s"' % (fname)
-			wx.MessageBox (text, _(u"Error"), wx.ICON_ERROR | wx.OK)
+			MessageBox (text, _(u"Error"), wx.ICON_ERROR | wx.OK)
 		except shutil.Error:
 			text = u'Can\'t attach file "%s"' % (fname)
-			wx.MessageBox (text, _(u"Error"), wx.ICON_ERROR | wx.OK)
+			MessageBox (text, _(u"Error"), wx.ICON_ERROR | wx.OK)
 
 	overwriteDialog.Destroy()
 
@@ -84,7 +95,7 @@ def editPage (parentWnd, currentPage):
 	currentPage -- страница для редактирования
 	"""
 	if currentPage.readonly:
-		wx.MessageBox (_(u"Wiki is opened as read-only"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+		MessageBox (_(u"Wiki is opened as read-only"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 		return
 
 	dlg = CreatePageDialog.CreateForEdit (currentPage, parentWnd)
@@ -103,7 +114,7 @@ def editPage (parentWnd, currentPage):
 			try:
 				currentPage.title = dlg.pageTitle
 			except OSError as e:
-				wx.MessageBox (_(u"Can't rename page\n") + unicode (e), _(u"Error"), wx.ICON_ERROR | wx.OK)
+				MessageBox (_(u"Can't rename page\n") + unicode (e), _(u"Error"), wx.ICON_ERROR | wx.OK)
 
 			currentPage.root.selectedPage = currentPage
 		finally:
@@ -114,21 +125,21 @@ def editPage (parentWnd, currentPage):
 
 def removePage (page):
 	if page.readonly:
-		wx.MessageBox (_(u"Wiki is opened as read-only"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+		MessageBox (_(u"Wiki is opened as read-only"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 		return
 
 	text = _(u"Remove page '%s' and all subpages?") % (page.title)
 
-	if wx.MessageBox (text, _(u"Remove page?"), wx.YES_NO  | wx.ICON_QUESTION) == wx.YES:
+	if MessageBox (text, _(u"Remove page?"), wx.YES_NO  | wx.ICON_QUESTION) == wx.YES:
 		root = page.root
 		Controller.instance().onStartTreeUpdate(root)
 
 		try:
 			page.remove()
 		except IOError:
-			wx.MessageBox (_(u"Can't remove page"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+			MessageBox (_(u"Can't remove page"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 		except core.exceptions.ReadonlyException:
-			wx.MessageBox (_(u"Wiki is opened as read-only"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+			MessageBox (_(u"Wiki is opened as read-only"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 		finally:
 			Controller.instance().onEndTreeUpdate(root)
 
@@ -139,7 +150,7 @@ def createSiblingPage (parentwnd):
 	parentwnd - окно, которое будет родителем для диалога создания страницы
 	"""
 	if Application.wikiroot == None:
-		wx.MessageBox (_(u"Wiki is not open"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+		MessageBox (_(u"Wiki is not open"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 		return
 
 	currPage = Application.wikiroot.selectedPage
@@ -173,7 +184,7 @@ def createPageWithDialog (parentwnd, parentpage):
 	Показать диалог настроек и создать страницу
 	"""
 	if parentpage.readonly:
-		wx.MessageBox (_(u"Wiki is opened as read-only"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+		MessageBox (_(u"Wiki is opened as read-only"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 		return
 	
 	dlg = CreatePageDialog.CreateForCreate (parentpage, parentwnd)
@@ -195,7 +206,7 @@ def createPageWithDialog (parentwnd, parentpage):
 			page.root.selectedPage = page
 
 		except OSError, IOError:
-			wx.MessageBox (_(u"Can't create page"), "Error", wx.ICON_ERROR | wx.OK)
+			MessageBox (_(u"Can't create page"), "Error", wx.ICON_ERROR | wx.OK)
 		finally:
 			Controller.instance().onEndTreeUpdate(parentpage.root)
 
@@ -247,7 +258,7 @@ def openWiki (path, readonly=False):
 
 def copyTextToClipboard (text):
 	if not wx.TheClipboard.Open():
-		wx.MessageBox (_(u"Can't open clipboard"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+		MessageBox (_(u"Can't open clipboard"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 		return
 
 	data = wx.TextDataObject (text)
@@ -294,7 +305,7 @@ def movePage (page, newParent):
 	Сделать страницу page ребенком newParent
 	"""
 	if page.readonly:
-		wx.MessageBox (_(u"Wiki is opened as read-only"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+		MessageBox (_(u"Wiki is opened as read-only"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 		return
 
 	assert page != None
@@ -304,12 +315,12 @@ def movePage (page, newParent):
 		page.moveTo (newParent)
 	except core.exceptions.DublicateTitle:
 		# Невозможно переместить из-за дублирования имен
-		wx.MessageBox (_(u"Can't move page when page with that title already exists"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+		MessageBox (_(u"Can't move page when page with that title already exists"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 	except core.exceptions.TreeException:
 		# Невозможно переместить по другой причине
-		wx.MessageBox (_(u"Can't move page"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+		MessageBox (_(u"Can't move page"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 	except core.exceptions.ReadonlyException:
-		wx.MessageBox (_(u"Wiki is opened as read-only"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+		MessageBox (_(u"Wiki is opened as read-only"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 
 
 def setStatusText (text, index = 0):
@@ -329,7 +340,7 @@ def getCurrentVersion ():
 		with open (path) as fp:
 			lines = fp.readlines()
 	except IOError, e:
-		wx.MessageBox (_(u"Can't open file %s") % fname, _(u"Error"), wx.ICON_ERROR | wx.OK)
+		MessageBox (_(u"Can't open file %s") % fname, _(u"Error"), wx.ICON_ERROR | wx.OK)
 		return
 
 	version_str = "%s.%s %s" % (lines[0].strip(), lines[1].strip(), lines[2].strip())
@@ -337,7 +348,7 @@ def getCurrentVersion ():
 	try:
 		version = core.version.Version.parse (version_str)
 	except ValueError:
-		wx.MessageBox (_(u"Can't parse version"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+		MessageBox (_(u"Can't parse version"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 		version = core.version.Version(0, 0)
 
 	return version

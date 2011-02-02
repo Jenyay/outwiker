@@ -26,5 +26,4 @@ class Application (object):
 		try:
 			core.i18n.init_i18n (language)
 		except IOError, e:
-			#wx.MessageBox (u"Can't load language: %s" % language, u"Error", wx.ICON_ERROR | wx.OK) 
 			print u"Can't load language: %s" % language

@@ -8,6 +8,7 @@ import wx
 from core.search import TagsList
 import core.system
 from core.tree import RootWikiPage
+import core.commands
 
 # begin wxGlade: dependencies
 # end wxGlade
@@ -69,18 +70,18 @@ class CreatePageDialog(wx.Dialog):
 
 	def onOk (self, event):
 		if not self.testPageTitle (self.pageTitle):
-			wx.MessageBox (_(u"Invalid page title"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+			core.commands.MessageBox (_(u"Invalid page title"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 			return
 
 		if self.currentPage != None \
 				and not self.currentPage.canRename (self.pageTitle):
-			wx.MessageBox (_(u"Can't rename page when page with that title already exists"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+			core.commands.MessageBox (_(u"Can't rename page when page with that title already exists"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 			return
 
 		if self.currentPage == None and \
 				self.parentPage != None and \
 				not RootWikiPage.testDublicate(self.parentPage, self.pageTitle):
-			wx.MessageBox (_(u"A page with this title already exists"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+			core.commands.MessageBox (_(u"A page with this title already exists"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 			return
 
 		event.Skip()

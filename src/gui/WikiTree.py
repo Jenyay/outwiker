@@ -391,10 +391,10 @@ class WikiTree(wx.Panel):
 			page.root.selectedPage = page
 
 		except core.exceptions.DublicateTitle:
-			wx.MessageBox (_(u"Can't move page when page with that title already exists"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+			core.commands.MessageBox (_(u"Can't move page when page with that title already exists"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 
 		except OSError as e:
-			wx.MessageBox (_(u"Can't rename page\n%s") % unicode (e), _(u"Error"), wx.ICON_ERROR | wx.OK)
+			core.commands.MessageBox (_(u"Can't rename page\n%s") % unicode (e), _(u"Error"), wx.ICON_ERROR | wx.OK)
 
 
 	def onStartTreeUpdate (self, root):

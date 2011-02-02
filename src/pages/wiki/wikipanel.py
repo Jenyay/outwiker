@@ -91,7 +91,7 @@ class WikiPagePanel (HtmlPanel):
 		try:
 			self.generateHtml (self._currentpage, path)
 		except IOError:
-			wx.MessageBox (_(u"Can't save HTML-file"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+			core.commands.MessageBox (_(u"Can't save HTML-file"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 
 		self._showHtmlCode(path)
 
@@ -112,7 +112,7 @@ class WikiPagePanel (HtmlPanel):
 				self.htmlCodeWindow.textCtrl.SetText (text)
 				self.htmlCodeWindow.textCtrl.SetReadOnly (True)
 		except IOError:
-			wx.MessageBox (_(u"Can't load HTML-file"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+			core.commands.MessageBox (_(u"Can't load HTML-file"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 
 
 	def __addFontTools (self):
@@ -369,7 +369,7 @@ class WikiPagePanel (HtmlPanel):
 			config = Config (os.path.join (page.path, RootWikiPage.pageConfig))
 			config.set (self._configSection, self._hashKey, hash)
 		except Exception as e:
-			wx.MessageBox (_(u"Can't save page hash\n") + str(e), _(u"Error"), wx.OK  | wx.ICON_ERROR)
+			core.commands.MessageBox (_(u"Can't save page hash\n") + str(e), _(u"Error"), wx.OK  | wx.ICON_ERROR)
 
 
 	def __getFullContent (self, page):

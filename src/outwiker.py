@@ -25,9 +25,23 @@ class OutWiker(wx.App):
 		self.SetTopWindow (self.mainWnd)
 		self.mainWnd.Show()
 
-		self.Bind (wx.EVT_ACTIVATE_APP, self.onActivate)
+		self.bindActivateApp()
 
 		return 1
+
+
+	def bindActivateApp (self):
+		"""
+		Подключиться к событию при потере фокуса приложением
+		"""
+		self.Bind (wx.EVT_ACTIVATE_APP, self.onActivate)
+
+
+	def unbindActivateApp (self):
+		"""
+		Отключиться от события при потере фокуса приложением
+		"""
+		self.Unbind (wx.EVT_ACTIVATE_APP)
 
 
 	def onActivate (self, event):

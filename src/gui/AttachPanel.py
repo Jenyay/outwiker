@@ -167,20 +167,16 @@ class AttachPanel(wx.Panel):
 		if self.currentPage != None:
 			files = self.getSelectedFiles ()
 
-			Controller.instance().onPageUpdate -= self.onPageUpdate
-
-			if wx.MessageBox (_(u"Remove selected files?"), 
+			if core.commands.MessageBox (_(u"Remove selected files?"), 
 					_(u"Remove files?"),
 					wx.YES_NO  | wx.ICON_QUESTION) == wx.YES:
 				try:
 					self.currentPage.removeAttach (files)
 				except IOError as e:
-					wx.MessageBox (unicode (e), _(u"Error"), wx.ICON_ERROR | wx.OK)
+					core.commands.MessageBox (unicode (e), _(u"Error"), wx.ICON_ERROR | wx.OK)
 
 				self.updateAttachments ()
 
-			Controller.instance().onPageUpdate += self.onPageUpdate
-	
 
 	def onPaste(self, event): # wxGlade: AttachPanel.<event_handler>
 		"""
@@ -200,7 +196,7 @@ class AttachPanel(wx.Panel):
 					core.system.getOS().startFile (fullpath)
 				except OSError:
 					text = _(u"Can't execute file '%s'") % file
-					wx.MessageBox (text, _(u"Error"), wx.ICON_ERROR | wx.OK)
+					core.commands.MessageBox (text, _(u"Error"), wx.ICON_ERROR | wx.OK)
 
 # end of class AttachPanel
 

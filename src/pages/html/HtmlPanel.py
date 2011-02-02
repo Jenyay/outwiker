@@ -203,7 +203,7 @@ class HtmlPanel(BaseTextPanel):
 		try:
 			self.generateHtml (self._currentpage, path)
 		except IOError:
-			wx.MessageBox (_(u"Can't save HTML-file"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+			core.commands.MessageBox (_(u"Can't save HTML-file"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 
 		self.htmlWindow.LoadPage (path)
 
