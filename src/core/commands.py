@@ -169,6 +169,7 @@ def createChildPage (parentwnd):
 	parentwnd - окно, которое будет родителем для диалога создания страницы
 	"""
 	if Application.wikiroot == None:
+		MessageBox (_(u"Wiki is not open"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 		return
 
 	currPage = Application.wikiroot.selectedPage
@@ -355,10 +356,18 @@ def getCurrentVersion ():
 
 
 def moveCurrentPageUp ():
-	if Application.wikiroot != None and Application.wikiroot.selectedPage != None:
+	if Application.wikiroot == None:
+		MessageBox (_(u"Wiki is not open"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+		return
+
+	if Application.wikiroot.selectedPage != None:
 			Application.wikiroot.selectedPage.order -= 1
 
 
 def moveCurrentPageDown ():
-	if Application.wikiroot != None and Application.wikiroot.selectedPage != None:
+	if Application.wikiroot == None:
+		MessageBox (_(u"Wiki is not open"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+		return
+
+	if Application.wikiroot.selectedPage != None:
 			Application.wikiroot.selectedPage.order += 1

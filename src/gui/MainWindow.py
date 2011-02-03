@@ -246,7 +246,6 @@ class MainWindow(wx.Frame):
 		self. __createTrayIcon()
 
 		self.statusbar.SetFieldsCount(1)
-		self.pagePanel.Disable()
 
 		aTable = wx.AcceleratorTable([
 			(wx.ACCEL_CTRL,  wx.WXK_INSERT, wx.ID_COPY),
@@ -426,7 +425,10 @@ class MainWindow(wx.Frame):
 		enabled = Application.wikiroot != None
 		self.__enableTools (enabled)
 		self.__enableMenu (enabled)
-		self.pagePanel.Enable()
+		self.pagePanel.Enable(enabled)
+		self.tree.Enable(enabled)
+		self.attachPanel.Enable(enabled)
+
 
 	
 	def __enableTools (self, enabled):
