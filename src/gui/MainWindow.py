@@ -469,7 +469,7 @@ class MainWindow(wx.Frame):
 		"""
 		Открыть последнюю вики, если установлена соответствующая опция
 		"""
-		openRecent = Application.config.historyLengthOption.value
+		openRecent = Application.config.autoopenOption.value
 
 		if openRecent and len (self.recentWiki) > 0:
 			self.openWiki (self.recentWiki[0])
