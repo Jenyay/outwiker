@@ -325,6 +325,9 @@ class WikiPage (RootWikiPage):
 		"""
 		Изменить положение страницы (порядок)
 		"""
+		if self.readonly:
+			raise core.exceptions.ReadonlyException
+
 		realorder = neworder
 
 		if realorder < 0:

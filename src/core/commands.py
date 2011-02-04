@@ -305,9 +305,9 @@ def movePage (page, newParent):
 	"""
 	Сделать страницу page ребенком newParent
 	"""
-	if page.readonly:
-		MessageBox (_(u"Wiki is opened as read-only"), _(u"Error"), wx.ICON_ERROR | wx.OK)
-		return
+	#if page.readonly:
+	#	MessageBox (_(u"Wiki is opened as read-only"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+	#	return
 
 	assert page != None
 	assert newParent != None
@@ -356,18 +356,32 @@ def getCurrentVersion ():
 
 
 def moveCurrentPageUp ():
+	"""
+	Переместить текущую страницу на одну позицию вверх
+	"""
 	if Application.wikiroot == None:
 		MessageBox (_(u"Wiki is not open"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 		return
 
 	if Application.wikiroot.selectedPage != None:
+		try:
 			Application.wikiroot.selectedPage.order -= 1
+		except core.exceptions.ReadonlyException:
+			MessageBox (_(u"Wiki is opened as read-only"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+			return
 
 
 def moveCurrentPageDown ():
+	"""
+	Переместить текущую страницу на одну позицию вниз
+	"""
 	if Application.wikiroot == None:
 		MessageBox (_(u"Wiki is not open"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 		return
 
 	if Application.wikiroot.selectedPage != None:
+		try:
 			Application.wikiroot.selectedPage.order += 1
+		except core.exceptions.ReadonlyException:
+			MessageBox (_(u"Wiki is opened as read-only"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+			return

@@ -341,3 +341,12 @@ class ReadonlyChangeTest (unittest.TestCase):
 			self.fail()
 
 		self.assertTrue (self.wiki[u"Страница 2/Страница 3"] != None)
+	
+
+	def testOrder1 (self):
+		try:
+			self.wiki[u"Страница 1"].order += 2
+		except ReadonlyException:
+			pass
+		else:
+			self.fail()
