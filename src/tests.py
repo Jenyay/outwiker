@@ -34,6 +34,7 @@ if __name__ == '__main__':
 	from test.i18n import I18nTest
 	from test.version import VersionTest, StatusTest
 	from test.pageorder import PageOrderTest
+	from test.commands import CommandsTest
 
 
 	unittest.main()

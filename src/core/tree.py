@@ -152,7 +152,7 @@ class RootWikiPage (object):
 
 				result.append (page)
 
-		result.sort (RootWikiPage._sortFunction)
+		result.sort (RootWikiPage.sortFunction)
 		#for item in result:
 		#	print item.title.encode ("866") + "    " + str (item.getParameter (RootWikiPage.sectionGeneral, RootWikiPage.paramOrder))
 
@@ -160,12 +160,15 @@ class RootWikiPage (object):
 
 
 	def _sortChildren (self):
-		self._children.sort (RootWikiPage._sortFunction)
+		self._children.sort (RootWikiPage.sortFunction)
 		self._saveChildrenParams()
 
 
 	@staticmethod
-	def _sortFunction (page1, page2):
+	def sortFunction (page1, page2):
+		"""
+		Функция для сортировки страниц с учетом order
+		"""
 		try:
 			orderpage1 = int (page1.getParameter (RootWikiPage.sectionGeneral, RootWikiPage.paramOrder))
 			orderpage2 = int (page2.getParameter (RootWikiPage.sectionGeneral, RootWikiPage.paramOrder))
@@ -179,6 +182,14 @@ class RootWikiPage (object):
 		elif orderpage1 < orderpage2:
 			return -1
 
+		return RootWikiPage.sortAlphabeticalFunction (page1, page2)
+
+
+	@staticmethod
+	def sortAlphabeticalFunction (page1, page2):
+		"""
+		Функция для сортировки страниц по алфавиту
+		"""
 		if page1.title.lower() > page2.title.lower():
 			return 1
 		elif page1.title.lower() < page2.title.lower():
@@ -216,7 +227,7 @@ class RootWikiPage (object):
 		Добавить страницу к дочерним страницам
 		"""
 		self._children.append (page)
-		self._children.sort (RootWikiPage._sortFunction)
+		self._children.sort (RootWikiPage.sortFunction)
 	
 
 	def removeFromChildren (self, page):

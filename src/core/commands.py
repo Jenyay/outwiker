@@ -385,3 +385,42 @@ def moveCurrentPageDown ():
 		except core.exceptions.ReadonlyException:
 			MessageBox (_(u"Wiki is opened as read-only"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 			return
+
+
+def sortChildrenAlphabeticalGUI ():
+	"""
+	Команда для сортировки дочерних страниц текущей страницы по алфавиту
+	"""
+	if Application.wikiroot == None:
+		MessageBox (_(u"Wiki is not open"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+		return
+
+	if Application.wikiroot.selectedPage != None:
+		sortChildrenAlphabetical (Application.wikiroot.selectedPage)
+
+
+def sortSiblingsAlphabeticalGUI ():
+	"""
+	Команда для сортировки по алфавиту того же уровня, на котором мы сейчас находимся
+	"""
+	if Application.wikiroot == None:
+		MessageBox (_(u"Wiki is not open"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+		return
+
+	if Application.wikiroot.selectedPage != None:
+		sortChildrenAlphabetical (Application.wikiroot.selectedPage.parent)
+
+
+def sortChildrenAlphabetical(parentPage):
+	"""
+	Отсортировать дочерние страницы по алфавиту
+	"""
+	children = parentPage.children
+	children.sort (RootWikiPage.sortAlphabeticalFunction)
+
+	Controller.instance().onStartTreeUpdate (parentPage.root)
+
+	for n in range (len (children) ):
+		children[n].order = n
+
+	Controller.instance().onEndTreeUpdate (parentPage.root)

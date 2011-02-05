@@ -61,6 +61,8 @@ class MainWindow(wx.Frame):
 		self.ID_VIEW_FULLSCREEN = wx.NewId()
 		self.ID_MOVE_PAGE_UP = wx.NewId()
 		self.ID_MOVE_PAGE_DOWN = wx.NewId()
+		self.ID_SORT_CHILDREN_ALPHABETICAL = wx.NewId()
+		self.ID_SORT_SIBLINGS_ALPHABETICAL = wx.NewId()
 
 
 	def __init__(self, *args, **kwds):
@@ -130,6 +132,10 @@ class MainWindow(wx.Frame):
 		wxglade_tmp_menu.AppendSeparator()
 		wxglade_tmp_menu.Append(self.ID_RENAME, _("Re&name Page\tF2"), "", wx.ITEM_NORMAL)
 		wxglade_tmp_menu.Append(self.ID_REMOVE_PAGE, _(u"Rem&ove Page…\tCtrl+Shift+Del"), "", wx.ITEM_NORMAL)
+		wxglade_tmp_menu.AppendSeparator()
+		wxglade_tmp_menu.Append(self.ID_SORT_CHILDREN_ALPHABETICAL, _("Sort Children Pages Alphabetical"), "", wx.ITEM_NORMAL)
+		wxglade_tmp_menu.Append(self.ID_SORT_SIBLINGS_ALPHABETICAL, _("Sort Siblings Pages Alphabetical"), "", wx.ITEM_NORMAL)
+		wxglade_tmp_menu.AppendSeparator()
 		wxglade_tmp_menu.Append(self.ID_EDIT, _(u"&Edit Page Properties…\tCtrl+E"), "", wx.ITEM_NORMAL)
 		self.mainMenu.Append(wxglade_tmp_menu, _("&Tree"))
 		self.toolsMenu = wx.Menu()
@@ -199,6 +205,8 @@ class MainWindow(wx.Frame):
 		self.Bind(wx.EVT_MENU, self.onMovePageDown, id=self.ID_MOVE_PAGE_DOWN)
 		self.Bind(wx.EVT_MENU, self.onRename, id=self.ID_RENAME)
 		self.Bind(wx.EVT_MENU, self.onRemovePage, id=self.ID_REMOVE_PAGE)
+		self.Bind(wx.EVT_MENU, self.onSortChildrenAlphabetical, id=self.ID_SORT_CHILDREN_ALPHABETICAL)
+		self.Bind(wx.EVT_MENU, self.onSortSiblingAlphabetical, id=self.ID_SORT_SIBLINGS_ALPHABETICAL)
 		self.Bind(wx.EVT_MENU, self.onEditPage, id=self.ID_EDIT)
 		self.Bind(wx.EVT_MENU, self.onGlobalSearch, id=self.ID_GLOBAL_SEARCH)
 		self.Bind(wx.EVT_MENU, self.onAttach, id=self.ID_ATTACH)
@@ -977,6 +985,13 @@ class MainWindow(wx.Frame):
 	def onMovePageDown(self, event): # wxGlade: MainWindow.<event_handler>
 		core.commands.moveCurrentPageDown()
 		
+
+	def onSortChildrenAlphabetical(self, event): # wxGlade: MainWindow.<event_handler>
+		core.commands.sortChildrenAlphabeticalGUI()
+
+
+	def onSortSiblingAlphabetical(self, event): # wxGlade: MainWindow.<event_handler>
+		core.commands.sortSiblingsAlphabeticalGUI()
 
 # end of class MainWindow
 
