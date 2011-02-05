@@ -99,6 +99,7 @@ class BaseTextPanel (wx.Panel):
 		"""
 		Application.onAttachmentPaste -= self.onAttachmentPaste
 		Application.onEditorConfigChange -= self.onEditorConfigChange
+		Application.onForceSave -= self.onForceSave
 
 		self.Save()
 		self.Destroy()
