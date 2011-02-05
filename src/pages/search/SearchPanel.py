@@ -51,7 +51,7 @@ class SearchPanel(wx.Panel):
 	
 
 	def onClose (self, event):
-		self.save()
+		self.Save()
 
 
 	def updatePageInfo (self):
@@ -95,7 +95,7 @@ class SearchPanel(wx.Panel):
 		self.wordsTextCtrl.SetValue (phrase)
 	
 
-	def save (self):
+	def Save (self):
 		"""
 		Сохранить настройки страницы
 		"""
@@ -183,7 +183,7 @@ class SearchPanel(wx.Panel):
 	def onFind(self, event): # wxGlade: SearchPanel.<event_handler>
 		assert self._page != None
 		
-		self.save()
+		self.Save()
 
 		phrase = self.wordsTextCtrl.GetValue ()
 		tags = self._getSearchTags()
