@@ -262,11 +262,6 @@ class MainWindow(wx.Frame):
 		self.SetAcceleratorTable(aTable)
 
 
-	def SaveCurrentPage (self):
-		if self.pagePanel != None:
-			self.pagePanel.Save()
-	
-
 	def onMainPanelClose (self, event):
 		self.tree.Close()
 		self.tree = None

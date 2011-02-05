@@ -46,6 +46,11 @@ class BaseTextPanel (wx.Panel):
 
 		Controller.instance().onAttachmentPaste += self.onAttachmentPaste
 		Controller.instance().onEditorConfigChange += self.onEditorConfigChange
+		Controller.instance().onForceSave += self.onForceSave
+
+
+	def onForceSave (self):
+		self.Save()
 
 	
 	def onEditorConfigChange (self):

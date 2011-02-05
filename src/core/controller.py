@@ -82,6 +82,11 @@ class Controller(object):
 		# Параметры: page - страница, положение которой изменили
 		self.onPageOrderChange = Event()
 
+		# Событие на принудительное сохранение состояния страницы
+		# Например, при потере фокуса приложением.
+		# Параметры: нет
+		self.onForceSave = Event()
+
 		# Копировать в буфер обмена
 		#self.onClipboardCopy = Event()
 		
