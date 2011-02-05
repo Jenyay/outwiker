@@ -7,7 +7,6 @@ import sys
 import wx
 import wx.aui
 
-from core.controller import Controller
 from core.tree import WikiDocument, RootWikiPage
 from WikiTree import WikiTree
 from gui.CurrentPagePanel import CurrentPagePanel
@@ -91,10 +90,10 @@ class MainWindow(wx.Frame):
 		# Используется для определения момента, когда окно только загрузилось
 		self.firstEvent = True
 
-		Controller.instance().onTreeUpdate += self.onTreeUpdate
-		Controller.instance().onPageSelect += self.onPageSelect
-		Controller.instance().onBookmarksChanged += self.onBookmarksChanged
-		Controller.instance().onMainWindowConfigChange += self.onMainWindowConfigChange
+		Application.onTreeUpdate += self.onTreeUpdate
+		Application.onPageSelect += self.onPageSelect
+		Application.onBookmarksChanged += self.onBookmarksChanged
+		Application.onMainWindowConfigChange += self.onMainWindowConfigChange
 		
 		# Путь к директории с программой/скриптом
 		self.imagesDir = core.system.getImagesDir()
@@ -566,11 +565,11 @@ class MainWindow(wx.Frame):
 
 
 	def openWiki (self, path, readonly=False):
-		Controller.instance().onStartTreeUpdate(Application.wikiroot)
+		Application.onStartTreeUpdate(Application.wikiroot)
 		
 		try:
 			if Application.wikiroot != None:
-				Controller.instance().onWikiClose (Application.wikiroot)
+				Application.onWikiClose (Application.wikiroot)
 			
 			wikiroot = core.commands.openWiki (path, readonly)
 			self._openLoadedWiki(wikiroot, addToRecent = not readonly)
@@ -578,7 +577,7 @@ class MainWindow(wx.Frame):
 			core.commands.MessageBox (_(u"Can't load wiki '%s'") % path, _(u"Error"), wx.ICON_ERROR | wx.OK)
 
 		finally:
-			Controller.instance().onEndTreeUpdate(Application.wikiroot)
+			Application.onEndTreeUpdate(Application.wikiroot)
 
 
 	
@@ -662,7 +661,7 @@ class MainWindow(wx.Frame):
 		if (not askBeforeExit or 
 				core.commands.MessageBox (_(u"Really exit?"), _(u"Exit"), wx.YES_NO  | wx.ICON_QUESTION ) == wx.YES):
 			if Application.wikiroot != None:
-				Controller.instance().onWikiClose (Application.wikiroot)
+				Application.onWikiClose (Application.wikiroot)
 
 			self.__saveParams()
 
@@ -701,7 +700,7 @@ class MainWindow(wx.Frame):
 
 		if dlg.ShowModal() == wx.ID_OK:
 			if Application.wikiroot != None:
-				Controller.instance().onWikiClose (Application.wikiroot)
+				Application.onWikiClose (Application.wikiroot)
 
 			Application.wikiroot = WikiDocument.create (dlg.GetPath ())
 			Application.wikiroot.selectedPage = None
@@ -736,8 +735,8 @@ class MainWindow(wx.Frame):
 
 	def onReload(self, event): # wxGlade: MainWindow.<event_handler>
 		if Application.wikiroot != None:
-			Controller.instance().onWikiClose (Application.wikiroot)
-			Controller.instance().onStartTreeUpdate(Application.wikiroot)
+			Application.onWikiClose (Application.wikiroot)
+			Application.onStartTreeUpdate(Application.wikiroot)
 
 			if (core.commands.MessageBox (_(u"Save current page before reload?"), 
 				_(u"Save?"), 
@@ -752,7 +751,7 @@ class MainWindow(wx.Frame):
 				core.commands.MessageBox (_(u"Can't load wiki '%s'") % self._recentId[event.Id], _(u"Error"), wx.ICON_ERROR | wx.OK)
 				return
 			finally:
-				Controller.instance().onEndTreeUpdate(Application.wikiroot)
+				Application.onEndTreeUpdate(Application.wikiroot)
 
 			self._openLoadedWiki (Application.wikiroot)
 

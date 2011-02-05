@@ -14,8 +14,8 @@ from core.config import Config
 from core.tree import RootWikiPage
 from core.htmlimprover import HtmlImprover
 from gui.HtmlTextEditor import HtmlTextEditor
-from core.controller import Controller
 import wikipage
+from core.application import Application
 
 
 class WikiPagePanel (HtmlPanel):
@@ -84,7 +84,7 @@ class WikiPagePanel (HtmlPanel):
 
 		self.Save()
 		core.commands.setStatusText (_(u"Page rendered. Please wait...") )
-		Controller.instance().onHtmlRenderingBegin (self._currentpage, self.htmlWindow)
+		Application.onHtmlRenderingBegin (self._currentpage, self.htmlWindow)
 
 		path = self.getHtmlPath (self._currentpage)
 		self.currentHtmlFile = path
@@ -96,7 +96,7 @@ class WikiPagePanel (HtmlPanel):
 		self._showHtmlCode(path)
 
 		core.commands.setStatusText (u"")
-		Controller.instance().onHtmlRenderingEnd (self._currentpage, self.htmlWindow)
+		Application.onHtmlRenderingEnd (self._currentpage, self.htmlWindow)
 
 		self._enableTools (self.pageToolsMenu, False)
 		self.htmlCodeWindow.SetFocus()

@@ -9,12 +9,9 @@ from core.tree import RootWikiPage, WikiDocument
 from core.exceptions import ReadonlyException
 from pages.text.textpage import TextPageFactory
 from core.event import Event
-from core.controller import Controller
 from core.factory import FactorySelector
 from test.utils import removeWiki
-from test.utils import removeWiki
 
-from test.utils import removeWiki
 
 class ReadonlyLoadTest (unittest.TestCase):
 	"""

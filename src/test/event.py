@@ -13,8 +13,8 @@ from core.tree import RootWikiPage, WikiDocument
 from pages.text.textpage import TextPageFactory
 from pages.html.htmlpage import HtmlPageFactory
 from core.event import Event
-from core.controller import Controller
 from core.factory import FactorySelector
+from core.application import Application
 from test.utils import removeWiki
 
 
@@ -129,7 +129,7 @@ class EventsTest (unittest.TestCase):
 
 	def testLoad (self):
 		path = u"../test/samplewiki"
-		Controller.instance().onTreeUpdate += self.treeUpdate
+		Application.onTreeUpdate += self.treeUpdate
 
 		self.assertFalse(self.isTreeUpdate)
 		root = WikiDocument.load (path)
@@ -139,7 +139,7 @@ class EventsTest (unittest.TestCase):
 		self.assertEqual (self.treeUpdateCount, 1)
 
 		# Отключимся от события и проверим, что оно больше не вызывается
-		Controller.instance().onTreeUpdate -= self.treeUpdate
+		Application.onTreeUpdate -= self.treeUpdate
 		self.isTreeUpdate = False
 		self.treeUpdateSender = None
 
@@ -150,8 +150,8 @@ class EventsTest (unittest.TestCase):
 
 
 	def testCreate (self):
-		Controller.instance().onTreeUpdate += self.treeUpdate
-		Controller.instance().onPageCreate += self.pageCreate
+		Application.onTreeUpdate += self.treeUpdate
+		Application.onPageCreate += self.pageCreate
 
 		path = u"../test/testwiki"
 		removeWiki (path)
@@ -190,15 +190,15 @@ class EventsTest (unittest.TestCase):
 		self.assertTrue(self.isPageCreate)
 		self.assertEqual (self.pageCreateSender, rootwiki[u"Страница 2/Страница 3"])
 
-		Controller.instance().onTreeUpdate -= self.treeUpdate
-		Controller.instance().onPageCreate -= self.pageCreate
+		Application.onTreeUpdate -= self.treeUpdate
+		Application.onPageCreate -= self.pageCreate
 
 
 	def testUpdateContent (self):
 		"""
 		Тест на срабатывание событий при обновлении контента
 		"""
-		Controller.instance().onPageUpdate += self.pageUpdate
+		Application.onPageUpdate += self.pageUpdate
 
 		path = u"../test/testwiki"
 		removeWiki (path)
@@ -217,14 +217,14 @@ class EventsTest (unittest.TestCase):
 		self.assertTrue(self.isPageUpdate)
 		self.assertEqual (self.pageUpdateSender, rootwiki[u"Страница 1"])
 
-		Controller.instance().onPageUpdate -= self.pageUpdate
+		Application.onPageUpdate -= self.pageUpdate
 
 
 	def testUpdateTags (self):
 		"""
 		Тест на срабатывание событий при обновлении меток (тегов)
 		"""
-		Controller.instance().onPageUpdate += self.pageUpdate
+		Application.onPageUpdate += self.pageUpdate
 
 		path = u"../test/testwiki"
 		removeWiki (path)
@@ -243,15 +243,15 @@ class EventsTest (unittest.TestCase):
 		self.assertTrue(self.isPageUpdate)
 		self.assertEqual (self.pageUpdateSender, rootwiki[u"Страница 1"])
 
-		Controller.instance().onPageUpdate -= self.pageUpdate
+		Application.onPageUpdate -= self.pageUpdate
 
 
 	def testUpdateIcon (self):
 		"""
 		Тест на срабатывание событий при обновлении иконки
 		"""
-		Controller.instance().onPageUpdate += self.pageUpdate
-		Controller.instance().onTreeUpdate += self.treeUpdate
+		Application.onPageUpdate += self.pageUpdate
+		Application.onTreeUpdate += self.treeUpdate
 
 		path = u"../test/testwiki"
 		removeWiki (path)
@@ -273,12 +273,12 @@ class EventsTest (unittest.TestCase):
 		self.assertTrue (self.isTreeUpdate)
 		self.assertEqual (self.treeUpdateSender, rootwiki[u"Страница 1"])
 
-		Controller.instance().onPageUpdate -= self.pageUpdate
-		Controller.instance().onTreeUpdate -= self.treeUpdate
+		Application.onPageUpdate -= self.pageUpdate
+		Application.onTreeUpdate -= self.treeUpdate
 
 
 	def testPageSelectCreate (self):
-		Controller.instance().onPageSelect += self.pageSelect
+		Application.onPageSelect += self.pageSelect
 
 		path = u"../test/testwiki"
 		removeWiki (path)
@@ -304,11 +304,11 @@ class EventsTest (unittest.TestCase):
 		self.assertEqual (self.pageSelectSender, rootwiki[u"Страница 2/Страница 3"])
 		self.assertEqual (self.pageSelectCount, 2)
 
-		Controller.instance().onPageSelect -= self.pageSelect
+		Application.onPageSelect -= self.pageSelect
 
 
 	def testPageSelectLoad (self):
-		Controller.instance().onPageSelect += self.pageSelect
+		Application.onPageSelect += self.pageSelect
 
 		path = u"../test/testwiki"
 		removeWiki (path)
@@ -337,4 +337,4 @@ class EventsTest (unittest.TestCase):
 		self.assertEqual (self.pageSelectSender, document[u"Страница 2/Страница 3"])
 		self.assertEqual (self.pageSelectCount, 2)
 
-		Controller.instance().onPageSelect -= self.pageSelect
+		Application.onPageSelect -= self.pageSelect

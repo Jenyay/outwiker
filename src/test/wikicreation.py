@@ -13,8 +13,8 @@ from core.tree import RootWikiPage, WikiDocument
 from pages.text.textpage import TextPageFactory
 from pages.html.htmlpage import HtmlPageFactory
 from core.event import Event
-from core.controller import Controller
 from core.factory import FactorySelector
+from core.application import Application
 from test.utils import removeWiki
 import core.exceptions
 
@@ -47,7 +47,7 @@ class TextPageAttachmentTest (unittest.TestCase):
 	def testEvent (self):
 		self.pageUpdateCount = 0
 
-		Controller.instance().onPageUpdate += self.onPageUpdate
+		Application.onPageUpdate += self.onPageUpdate
 
 		page1 = u"Страница 1"
 		page3 = u"Страница 2/Страница 3"
@@ -68,7 +68,7 @@ class TextPageAttachmentTest (unittest.TestCase):
 		self.assertEqual (self.pageUpdateCount, 2)
 		self.assertEqual (self.pageUpdateSender, self.rootwiki[page3])
 
-		Controller.instance().onPageUpdate -= self.onPageUpdate
+		Application.onPageUpdate -= self.onPageUpdate
 
 
 	def onPageUpdate (self, sender):
@@ -89,7 +89,7 @@ class TextPageAttachmentTest (unittest.TestCase):
 		self.rootwiki[page1].attach (fullFilesPath)
 		self.rootwiki[page3].attach ( [fullFilesPath[0], fullFilesPath[1] ] )
 
-		Controller.instance().onPageUpdate += self.onPageUpdate
+		Application.onPageUpdate += self.onPageUpdate
 
 		self.rootwiki[page1].removeAttach ([files[0]])
 
@@ -104,7 +104,7 @@ class TextPageAttachmentTest (unittest.TestCase):
 		self.assertEqual (self.pageUpdateCount, 2)
 		self.assertEqual (self.pageUpdateSender, self.rootwiki[page3])
 		
-		Controller.instance().onPageUpdate -= self.onPageUpdate
+		Application.onPageUpdate -= self.onPageUpdate
 
 	
 	def testInvalidRemoveAttaches (self):
@@ -466,7 +466,7 @@ class BookmarksTest (unittest.TestCase):
 	
 
 	def testBookmarkEvent (self):
-		Controller.instance().onBookmarksChanged += self.onBookmark
+		Application.onBookmarksChanged += self.onBookmark
 
 		self.rootwiki.bookmarks.add (self.rootwiki[u"Страница 1"])
 		self.assertEqual (self.bookmarkCount, 1)
@@ -541,8 +541,8 @@ class RemovePagesTest (unittest.TestCase):
 
 	
 	def testRemove1 (self):
-		Controller.instance().onTreeUpdate += self.onTreeUpdate
-		Controller.instance().onPageRemove += self.onPageRemove
+		Application.onTreeUpdate += self.onTreeUpdate
+		Application.onPageRemove += self.onPageRemove
 
 		# Удаляем страницу из корня
 		page6 = self.rootwiki[u"Страница 6"]
@@ -564,8 +564,8 @@ class RemovePagesTest (unittest.TestCase):
 		self.assertTrue (page4.isRemoved)
 		self.assertEqual (self.pageRemoveCount, 3)
 		
-		Controller.instance().onTreeUpdate -= self.onTreeUpdate
-		Controller.instance().onPageRemove -= self.onPageRemove
+		Application.onTreeUpdate -= self.onTreeUpdate
+		Application.onPageRemove -= self.onPageRemove
 	
 
 	def testIsRemoved (self):

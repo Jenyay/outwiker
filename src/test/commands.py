@@ -4,7 +4,7 @@
 import unittest
 
 import core.commands
-from core.controller import Controller
+from core.application import Application
 from test.utils import removeWiki
 from core.tree import RootWikiPage, WikiDocument
 from pages.text.textpage import TextPageFactory
@@ -76,11 +76,11 @@ class CommandsTest(unittest.TestCase):
 	
 
 	def testSortAlphabeticalEvent1 (self):
-		Controller.instance().onEndTreeUpdate += self.onEndTreeUpdate
+		Application.onEndTreeUpdate += self.onEndTreeUpdate
 
 		core.commands.sortChildrenAlphabetical (self.rootwiki)
 
-		Controller.instance().onEndTreeUpdate -= self.onEndTreeUpdate
+		Application.onEndTreeUpdate -= self.onEndTreeUpdate
 
 		self.assertEqual (1, self.treeUpdateCount)
 		self.assertEqual (self.rootwiki, self.treeUpdateSender)

@@ -3,7 +3,7 @@
 
 import ConfigParser
 
-from core.controller import Controller
+from core.application import Application
 
 class Bookmarks (object):
 	"""
@@ -22,8 +22,8 @@ class Bookmarks (object):
 		# Страницы в закладках
 		self.__pages = self._load()
 
-		Controller.instance().onPageRemove += self.onPageRemove
-		Controller.instance().onPageRename += self.onPageRename
+		Application.onPageRemove += self.onPageRemove
+		Application.onPageRename += self.onPageRename
 
 	
 	def onPageRemove (self, page):
@@ -78,7 +78,7 @@ class Bookmarks (object):
 
 		self.__pages.append (page.subpath)
 		self.save()
-		Controller.instance().onBookmarksChanged (self)
+		Application.onBookmarksChanged (self)
 	
 
 	def save (self):
@@ -91,7 +91,7 @@ class Bookmarks (object):
 
 	def remove (self, page):
 		self.__pages.remove (page.subpath)
-		Controller.instance().onBookmarksChanged (self)
+		Application.onBookmarksChanged (self)
 		self.save()
 	
 

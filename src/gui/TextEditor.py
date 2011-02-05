@@ -8,7 +8,6 @@ from wx.stc import StyledTextCtrl
 
 from gui.LocalSearchPanel import LocalSearchPanel, LocalSearcher
 import core.system
-from core.controller import Controller
 from core.application import Application
 
 # begin wxGlade: dependencies

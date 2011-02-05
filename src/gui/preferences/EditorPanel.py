@@ -4,7 +4,6 @@
 import wx
 
 import ConfigElements
-from core.controller import Controller
 from core.application import Application
 
 # begin wxGlade: dependencies
@@ -62,7 +61,7 @@ class EditorPanel(wx.Panel):
 		self.lineNumbers.save()
 		self.fontEditor.save()
 
-		Controller.instance().onEditorConfigChange()
+		Application.onEditorConfigChange()
 
 
 # end of class EditorPanel
