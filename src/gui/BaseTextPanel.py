@@ -7,8 +7,9 @@ import os
 import wx
 
 from core.tree import RootWikiPage
-from core.controller import Controller
 import core.system
+from core.application import Application
+
 
 class BaseTextPanel (wx.Panel):
 	"""
@@ -44,9 +45,9 @@ class BaseTextPanel (wx.Panel):
 		self.searchMenuIndex = 2
 		self.imagesDir = core.system.getImagesDir()
 
-		Controller.instance().onAttachmentPaste += self.onAttachmentPaste
-		Controller.instance().onEditorConfigChange += self.onEditorConfigChange
-		Controller.instance().onForceSave += self.onForceSave
+		Application.onAttachmentPaste += self.onAttachmentPaste
+		Application.onEditorConfigChange += self.onEditorConfigChange
+		Application.onForceSave += self.onForceSave
 
 
 	def onForceSave (self):
@@ -96,8 +97,8 @@ class BaseTextPanel (wx.Panel):
 		Закрытие панели. 
 		Вызывать вручную!!!
 		"""
-		Controller.instance().onAttachmentPaste -= self.onAttachmentPaste
-		Controller.instance().onEditorConfigChange -= self.onEditorConfigChange
+		Application.onAttachmentPaste -= self.onAttachmentPaste
+		Application.onEditorConfigChange -= self.onEditorConfigChange
 
 		self.Save()
 		self.Destroy()

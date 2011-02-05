@@ -11,7 +11,7 @@ import wx
 
 # end wxGlade
 
-from core.controller import Controller
+from core.application import Application
 from core.factory import FactorySelector
 import core.commands
 from core.tree import RootWikiPage
@@ -43,9 +43,9 @@ class CurrentPagePanel(wx.Panel):
 
 		self.currentPage = None
 
-		Controller.instance().onPageSelect += self.onPageSelect
-		Controller.instance().onPageUpdate += self.onPageUpdate
-		Controller.instance().onBookmarksChanged += self.onBookmarksChanged
+		Application.onPageSelect += self.onPageSelect
+		Application.onPageUpdate += self.onPageUpdate
+		Application.onBookmarksChanged += self.onBookmarksChanged
 
 		self.Bind (wx.EVT_CLOSE, self.onClose)
 

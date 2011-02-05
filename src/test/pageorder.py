@@ -10,8 +10,8 @@ import unittest
 from core.tree import RootWikiPage, WikiDocument, WikiPage
 from pages.text.textpage import TextPageFactory
 from core.event import Event
-from core.controller import Controller
 from core.factory import FactorySelector
+from core.application import Application
 from test.utils import removeWiki
 
 class PageOrderTest (unittest.TestCase):
@@ -28,11 +28,11 @@ class PageOrderTest (unittest.TestCase):
 		removeWiki (self.path)
 
 		self.rootwiki = WikiDocument.create (self.path)
-		Controller.instance().onPageOrderChange += self.onPageOrder
+		Application.onPageOrderChange += self.onPageOrder
 
 	
 	def tearDown(self):
-		Controller.instance().onPageOrderChange -= self.onPageOrder
+		Application.onPageOrderChange -= self.onPageOrder
 		removeWiki (self.path)
 	
 

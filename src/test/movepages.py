@@ -12,8 +12,8 @@ import unittest
 from core.tree import RootWikiPage, WikiDocument
 from pages.text.textpage import TextPageFactory
 from core.event import Event
-from core.controller import Controller
 from test.utils import removeWiki
+from core.application import Application
 import core.exceptions
 
 
@@ -51,7 +51,7 @@ class MoveTest (unittest.TestCase):
 	
 	def test1 (self):
 		self.treeUpdateCount = 0
-		Controller.instance().onTreeUpdate += self.onTreeUpdate
+		Application.onTreeUpdate += self.onTreeUpdate
 
 		self.wiki[u"Страница 1/Страница 5"].moveTo (self.wiki)
 
@@ -64,7 +64,7 @@ class MoveTest (unittest.TestCase):
 		self.assertEqual (self.wiki[u"Страница 5"].parent, self.wiki)
 		self.assertEqual (self.wiki[u"Страница 5"].subpath, u"Страница 5")
 
-		Controller.instance().onTreeUpdate += self.onTreeUpdate
+		Application.onTreeUpdate += self.onTreeUpdate
 
 
 	def test2 (self):

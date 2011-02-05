@@ -8,8 +8,8 @@ import unittest
 from core.tree import RootWikiPage, WikiDocument
 from pages.text.textpage import TextPageFactory
 from core.event import Event
-from core.controller import Controller
 from core.factory import FactorySelector
+from core.application import Application
 from test.utils import removeWiki
 
 class WikiPagesTest(unittest.TestCase):
@@ -167,7 +167,7 @@ class TextPageAttachmentTest (unittest.TestCase):
 	def testEvent (self):
 		self.pageUpdateCount = 0
 
-		Controller.instance().onPageUpdate += self.onPageUpdate
+		Application.onPageUpdate += self.onPageUpdate
 
 		page1 = u"Страница 1"
 		page3 = u"Страница 2/Страница 3"
@@ -188,7 +188,7 @@ class TextPageAttachmentTest (unittest.TestCase):
 		self.assertEqual (self.pageUpdateCount, 2)
 		self.assertEqual (self.pageUpdateSender, self.rootwiki[page3])
 
-		Controller.instance().onPageUpdate -= self.onPageUpdate
+		Application.onPageUpdate -= self.onPageUpdate
 
 
 	def onPageUpdate (self, sender):

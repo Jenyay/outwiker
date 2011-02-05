@@ -5,7 +5,7 @@ import os.path
 import ConfigParser
 import shutil
 
-from controller import Controller
+from core.application import Application
 from core.config import Config
 from core.bookmarks import Bookmarks
 from core.search import TagsList
@@ -255,7 +255,7 @@ class WikiDocument (RootWikiPage):
 		"""
 		result = WikiDocument(path, readonly)
 		result._children = result.getChildren()
-		Controller.instance().onTreeUpdate(result)
+		Application.onTreeUpdate(result)
 		return result
 
 
@@ -266,7 +266,7 @@ class WikiDocument (RootWikiPage):
 		"""
 		root = WikiDocument (path)
 		root.save()
-		Controller.instance().onTreeUpdate(root)
+		Application.onTreeUpdate(root)
 
 		return root
 
@@ -283,7 +283,7 @@ class WikiDocument (RootWikiPage):
 					WikiDocument.paramHistory,
 					page.subpath)
 
-		Controller.instance().onPageSelect(self._selectedPage)
+		Application.onPageSelect(self._selectedPage)
 		self.save()
 	
 
@@ -348,7 +348,7 @@ class WikiPage (RootWikiPage):
 			realorder = len (self.parent.children) - 1
 
 		self.parent._changeChildOrder (self, realorder)
-		Controller.instance().onPageOrderChange (self)
+		Application.onPageOrderChange (self)
 	
 
 	@property
@@ -384,8 +384,8 @@ class WikiPage (RootWikiPage):
 					WikiDocument.paramHistory,
 					self.subpath)
 
-		Controller.instance().onPageRename (self, oldsubpath)
-		Controller.instance().onTreeUpdate (self)
+		Application.onPageRename (self, oldsubpath)
+		Application.onTreeUpdate (self)
 	
 
 	def canRename (self, newtitle):
@@ -443,7 +443,7 @@ class WikiPage (RootWikiPage):
 					WikiDocument.paramHistory,
 					self.subpath)
 
-		Controller.instance().onTreeUpdate (self)
+		Application.onTreeUpdate (self)
 
 
 	@property
@@ -471,8 +471,8 @@ class WikiPage (RootWikiPage):
 		if iconpath != newpath:
 			shutil.copyfile (iconpath, newpath)
 
-		Controller.instance().onPageUpdate (self)
-		Controller.instance().onTreeUpdate (self)
+		Application.onPageUpdate (self)
+		Application.onTreeUpdate (self)
 
 		return newpath
 
@@ -489,7 +489,7 @@ class WikiPage (RootWikiPage):
 
 		self._tags = tags[:]
 		self.save()
-		Controller.instance().onPageUpdate(self)
+		Application.onPageUpdate(self)
 
 
 	@property
@@ -532,7 +532,7 @@ class WikiPage (RootWikiPage):
 		for fname in files:
 			shutil.copy (fname, attachPath)
 
-		Controller.instance().onPageUpdate (self)
+		Application.onPageUpdate (self)
 	
 
 	def removeAttach (self, files):
@@ -549,10 +549,10 @@ class WikiPage (RootWikiPage):
 			try:
 				os.remove (path)
 			except OSError:
-				Controller.instance().onPageUpdate (self)
+				Application.onPageUpdate (self)
 				raise IOError (u"Can't remove %s" % fname)
 
-		Controller.instance().onPageUpdate (self)
+		Application.onPageUpdate (self)
 
 
 	def _getIcon (self):
@@ -669,8 +669,8 @@ class WikiPage (RootWikiPage):
 		self._type = type
 		
 		self.save()
-		Controller.instance().onPageCreate(self)
-		#Controller.instance().onTreeUpdate(self)
+		Application.onPageCreate(self)
+		#Application.onTreeUpdate(self)
 	
 
 	def _getTags (self, configParser):
@@ -713,7 +713,7 @@ class WikiPage (RootWikiPage):
 		with open (path, "wb") as fp:
 			fp.write (text.encode ("utf8"))
 
-		Controller.instance().onPageUpdate(self)
+		Application.onPageUpdate(self)
 	
 
 	@property
@@ -766,7 +766,7 @@ class WikiPage (RootWikiPage):
 
 			self.root.selectedPage = newselpage
 		
-		#Controller.instance().onTreeUpdate(self.root)
+		#Application.onTreeUpdate(self.root)
 	
 
 	def _removePageFromTree (self, page):
@@ -775,7 +775,7 @@ class WikiPage (RootWikiPage):
 		for child in page.children:
 			page._removePageFromTree (child)
 
-		Controller.instance().onPageRemove (page)
+		Application.onPageRemove (page)
 
 
 	@property

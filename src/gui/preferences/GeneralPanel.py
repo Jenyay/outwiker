@@ -4,7 +4,6 @@
 import wx
 
 import ConfigElements
-from core.controller import Controller
 from core.config import StringOption, BooleanOption, IntegerOption
 import core.i18n
 from core.application import Application
@@ -160,7 +159,7 @@ class GeneralPanel(wx.ScrolledWindow):
 
 		if self.titleFormat.isValueChanged():
 			self.titleFormat.save()
-			Controller.instance().onMainWindowConfigChange()
+			Application.onMainWindowConfigChange()
 	
 
 	def __saveLanguage (self):

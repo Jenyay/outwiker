@@ -13,7 +13,6 @@ from core.tree import RootWikiPage, WikiDocument
 from pages.text.textpage import TextPageFactory
 from pages.html.htmlpage import HtmlPageFactory
 from core.event import Event
-from core.controller import Controller
 from core.factory import FactorySelector
 
 

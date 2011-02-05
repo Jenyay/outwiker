@@ -7,7 +7,7 @@ from abc import ABCMeta, abstractmethod
 
 import wx
 
-from core.controller import Controller
+from core.application import Application
 from gui.BaseTextPanel import BaseTextPanel
 import core.system
 from gui.htmlview import HtmlView
@@ -196,7 +196,7 @@ class HtmlPanel(BaseTextPanel):
 		assert self._currentpage != None
 
 		core.commands.setStatusText (_(u"Page rendered. Please wait...") )
-		Controller.instance().onHtmlRenderingBegin (self._currentpage, self.htmlWindow)
+		Application.onHtmlRenderingBegin (self._currentpage, self.htmlWindow)
 
 		path = self.getHtmlPath (self._currentpage)
 		self.currentHtmlFile = path
@@ -208,7 +208,7 @@ class HtmlPanel(BaseTextPanel):
 		self.htmlWindow.LoadPage (path)
 
 		core.commands.setStatusText (u"")
-		Controller.instance().onHtmlRenderingEnd (self._currentpage, self.htmlWindow)
+		Application.onHtmlRenderingEnd (self._currentpage, self.htmlWindow)
 	
 
 	def _enableTools (self, menu, enable):

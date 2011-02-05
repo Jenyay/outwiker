@@ -7,9 +7,6 @@
 import os.path
 import core.system
 
-#from searchpage import SearchWikiPage, SearchPageFactory
-#import searchpage
-
 class AllTagsSearchStrategy (object):
 	"""
 	Стратегия проверки тегов, когда все теги должны быть найдены

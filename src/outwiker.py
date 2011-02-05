@@ -8,7 +8,6 @@ import wx
 
 from core.config import GeneralConfig, getConfigPath
 from core.application import Application
-from core.controller import Controller
 
 
 class OutWiker(wx.App):
@@ -47,7 +46,7 @@ class OutWiker(wx.App):
 
 	def onActivate (self, event):
 		if not event.GetActive():
-			Controller.instance().onForceSave()
+			Application.onForceSave()
 
 
 # end of class OutWiker

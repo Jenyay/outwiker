@@ -13,7 +13,7 @@ import wx
 
 # end wxGlade
 
-from core.controller import Controller
+from core.application import Application
 import core.exceptions
 import core.commands
 import core.system
@@ -78,27 +78,27 @@ class WikiTree(wx.Panel):
 		self.pageOptionExpand = "Expand"
 
 		self.BindGuiEvents()
-		self.BindControllerEvents()
+		self.BindApplicationEvents()
 		self.BindPopupMenuEvents()
 
 
-	def BindControllerEvents(self):
+	def BindApplicationEvents(self):
 		"""
 		Подписка на события контроллера
 		"""
-		Controller.instance().onTreeUpdate += self.onTreeUpdate
-		Controller.instance().onPageCreate += self.onPageCreate
-		Controller.instance().onPageOrderChange += self.onPageOrderChange
-		Controller.instance().onPageSelect += self.onPageSelect
-		Controller.instance().onPageRemove += self.onPageRemove
+		Application.onTreeUpdate += self.onTreeUpdate
+		Application.onPageCreate += self.onPageCreate
+		Application.onPageOrderChange += self.onPageOrderChange
+		Application.onPageSelect += self.onPageSelect
+		Application.onPageRemove += self.onPageRemove
 
-		Controller.instance().onStartTreeUpdate += self.onStartTreeUpdate
-		Controller.instance().onEndTreeUpdate += self.onEndTreeUpdate
-		#Controller.instance().onWikiClose += self.onWikiClose
+		Application.onStartTreeUpdate += self.onStartTreeUpdate
+		Application.onEndTreeUpdate += self.onEndTreeUpdate
+		#Application.onWikiClose += self.onWikiClose
 		
 		# События, связанные с рендерингом страниц
-		Controller.instance().onHtmlRenderingBegin += self.onHtmlRenderingBegin
-		Controller.instance().onHtmlRenderingEnd += self.onHtmlRenderingEnd
+		Application.onHtmlRenderingBegin += self.onHtmlRenderingBegin
+		Application.onHtmlRenderingEnd += self.onHtmlRenderingEnd
 	
 
 	def BindGuiEvents (self):
@@ -402,10 +402,10 @@ class WikiTree(wx.Panel):
 	
 
 	def _unbindUpdateEvents (self):
-		Controller.instance().onTreeUpdate -= self.onTreeUpdate
-		Controller.instance().onPageCreate -= self.onPageCreate
-		Controller.instance().onPageSelect -= self.onPageSelect
-		Controller.instance().onPageOrderChange -= self.onPageOrderChange
+		Application.onTreeUpdate -= self.onTreeUpdate
+		Application.onPageCreate -= self.onPageCreate
+		Application.onPageSelect -= self.onPageSelect
+		Application.onPageOrderChange -= self.onPageOrderChange
 		self.Unbind (wx.EVT_TREE_SEL_CHANGED, handler = self.onSelChanged)
 
 	
@@ -415,10 +415,10 @@ class WikiTree(wx.Panel):
 
 
 	def _bindUpdateEvents (self):
-		Controller.instance().onTreeUpdate += self.onTreeUpdate
-		Controller.instance().onPageCreate += self.onPageCreate
-		Controller.instance().onPageSelect += self.onPageSelect
-		Controller.instance().onPageOrderChange += self.onPageOrderChange
+		Application.onTreeUpdate += self.onTreeUpdate
+		Application.onPageCreate += self.onPageCreate
+		Application.onPageSelect += self.onPageSelect
+		Application.onPageOrderChange += self.onPageOrderChange
 		self.Bind (wx.EVT_TREE_SEL_CHANGED, self.onSelChanged)
 
 	

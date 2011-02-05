@@ -15,7 +15,6 @@ import core.system
 import core.version
 
 from core.tree import WikiDocument
-from core.controller import Controller
 from core.tree import RootWikiPage
 from gui.OverwriteDialog import OverwriteDialog
 from gui.CreatePageDialog import CreatePageDialog
@@ -102,7 +101,7 @@ def editPage (parentWnd, currentPage):
 	page = None
 
 	if dlg.ShowModal() == wx.ID_OK:
-		Controller.instance().onStartTreeUpdate(currentPage.root)
+		Application.onStartTreeUpdate(currentPage.root)
 
 		try:
 			factory = dlg.selectedFactory
@@ -118,7 +117,7 @@ def editPage (parentWnd, currentPage):
 
 			currentPage.root.selectedPage = currentPage
 		finally:
-			Controller.instance().onEndTreeUpdate(currentPage.root)
+			Application.onEndTreeUpdate(currentPage.root)
 
 	dlg.Destroy()
 
@@ -132,7 +131,7 @@ def removePage (page):
 
 	if MessageBox (text, _(u"Remove page?"), wx.YES_NO  | wx.ICON_QUESTION) == wx.YES:
 		root = page.root
-		Controller.instance().onStartTreeUpdate(root)
+		Application.onStartTreeUpdate(root)
 
 		try:
 			page.remove()
@@ -141,7 +140,7 @@ def removePage (page):
 		except core.exceptions.ReadonlyException:
 			MessageBox (_(u"Wiki is opened as read-only"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 		finally:
-			Controller.instance().onEndTreeUpdate(root)
+			Application.onEndTreeUpdate(root)
 
 
 def createSiblingPage (parentwnd):
@@ -196,7 +195,7 @@ def createPageWithDialog (parentwnd, parentpage):
 		title = dlg.pageTitle
 		tags = dlg.tags
 
-		Controller.instance().onStartTreeUpdate(parentpage.root)
+		Application.onStartTreeUpdate(parentpage.root)
 
 		try:
 			page = factory.create (parentpage, title, tags)
@@ -209,7 +208,7 @@ def createPageWithDialog (parentwnd, parentpage):
 		except OSError, IOError:
 			MessageBox (_(u"Can't create page"), "Error", wx.ICON_ERROR | wx.OK)
 		finally:
-			Controller.instance().onEndTreeUpdate(parentpage.root)
+			Application.onEndTreeUpdate(parentpage.root)
 
 	dlg.Destroy()
 
@@ -230,16 +229,16 @@ def openWikiWithDialog (parent, oldWikiRoot, readonly=False):
 
 	if dialog.ShowModal() == wx.ID_OK:
 		if oldWikiRoot != None:
-			Controller.instance().onWikiClose (oldWikiRoot)
+			Application.onWikiClose (oldWikiRoot)
 	
-		Controller.instance().onStartTreeUpdate(oldWikiRoot)
+		Application.onStartTreeUpdate(oldWikiRoot)
 
 		try:
 			fullpath = dialog.GetPath()
 			path = os.path.dirname(fullpath)
 			wikiroot = openWiki (path, readonly)
 		finally:
-			Controller.instance().onEndTreeUpdate(wikiroot)
+			Application.onEndTreeUpdate(wikiroot)
 
 	dialog.Destroy()
 
@@ -418,9 +417,9 @@ def sortChildrenAlphabetical(parentPage):
 	children = parentPage.children
 	children.sort (RootWikiPage.sortAlphabeticalFunction)
 
-	Controller.instance().onStartTreeUpdate (parentPage.root)
+	Application.onStartTreeUpdate (parentPage.root)
 
 	for n in range (len (children) ):
 		children[n].order = n
 
-	Controller.instance().onEndTreeUpdate (parentPage.root)
+	Application.onEndTreeUpdate (parentPage.root)

@@ -11,7 +11,8 @@ import wx
 
 # end wxGlade
 
-from core.controller import Controller
+
+from core.application import Application
 from core.factory import FactorySelector
 import core.commands
 from core.tree import RootWikiPage
@@ -43,8 +44,8 @@ class AttachPanel(wx.Panel):
 
 		self.currentPage = None
 
-		Controller.instance().onPageSelect += self.onPageSelect
-		Controller.instance().onPageUpdate += self.onPageUpdate
+		Application.onPageSelect += self.onPageSelect
+		Application.onPageUpdate += self.onPageUpdate
 
 		self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.onPaste, self.attachList)
 	
@@ -183,7 +184,7 @@ class AttachPanel(wx.Panel):
 		Сгенерировать сообщение о том, что пользователь хочет вставить ссылку на приаттаченные файлы
 		"""
 		files = self.getSelectedFiles ()
-		Controller.instance().onAttachmentPaste (files)
+		Application.onAttachmentPaste (files)
 
 
 	def onOpen(self, event): # wxGlade: AttachPanel.<event_handler>

@@ -10,8 +10,8 @@ from core.tree import WikiPage
 from core.search import AllTagsSearchStrategy, AnyTagSearchStrategy, TagsList
 
 from SearchPanel import SearchPanel
-from core.controller import Controller
 import core.system
+from core.application import Application
 
 paramsSection = u"Search"
 
@@ -99,7 +99,7 @@ def getPhrase (page):
 
 def setPhrase (page, phrase):
 	page.setParameter (paramsSection, u"phrase", phrase)
-	Controller.instance().onPageUpdate (page)
+	Application.onPageUpdate (page)
 
 
 def getTags (page):
@@ -120,7 +120,7 @@ def getTags (page):
 def setTags (page, tags):
 	tags_str = TagsList.getTagsString (tags)
 	page.setParameter (paramsSection, u"tags", tags_str)
-	Controller.instance().onPageUpdate (page)
+	Application.onPageUpdate (page)
 
 
 def getStrategy (page):
@@ -145,4 +145,4 @@ def setStrategy (page, strategy):
 		strategyCode = 0
 
 	page.setParameter (paramsSection, u"strategy", strategyCode)
-	Controller.instance().onPageUpdate (page)
+	Application.onPageUpdate (page)
