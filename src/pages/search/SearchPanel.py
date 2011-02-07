@@ -8,6 +8,7 @@ import wx
 import pages.search.searchpage
 from core.search import Searcher, HtmlReport, TagsList, AllTagsSearchStrategy, AnyTagSearchStrategy
 from gui.htmlview import HtmlView
+from core.application import Application
 
 # begin wxGlade: dependencies
 # end wxGlade
@@ -48,9 +49,14 @@ class SearchPanel(wx.Panel):
 		# end wxGlade
 
 		self.Bind (wx.EVT_CLOSE, self.onClose)
+		Application.onForceSave += self.onForceSave
 	
 
 	def onClose (self, event):
+		self.Save()
+
+
+	def onForceSave (self):
 		self.Save()
 
 
