@@ -170,12 +170,18 @@ class CreatePageDialog(wx.Dialog):
 		index = 1
 		for fname in files:
 			fullpath = os.path.join (self.iconspath, fname)
-			bitmap = wx.Bitmap (fullpath)
-			self.icons.Add (bitmap)
-			item = self.iconsList.InsertImageStringItem (index, fname, index)
-			self.iconsDict[item] = fullpath
 
-			index += 1
+			if wx.Image.CanRead (fullpath):
+				bitmap = wx.Bitmap (fullpath)
+
+				# Считаем, что, если если уж CanRead вернул True, то Bitmap должен создаться без проблем
+				assert bitmap.IsOk()
+
+				self.icons.Add (bitmap)
+				item = self.iconsList.InsertImageStringItem (index, fname, index)
+				self.iconsDict[item] = fullpath
+
+				index += 1
 		
 		self.iconsList.SetItemState (firstItem, wx.LIST_STATE_SELECTED, wx.LIST_STATE_SELECTED)
 
