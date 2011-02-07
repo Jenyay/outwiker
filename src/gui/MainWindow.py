@@ -730,7 +730,7 @@ class MainWindow(wx.Frame):
 
 
 	def onSave(self, event): # wxGlade: MainWindow.<event_handler>
-		Application.ForceSave()
+		Application.onForceSave()
 
 
 	def onReload(self, event): # wxGlade: MainWindow.<event_handler>
