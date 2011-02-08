@@ -54,6 +54,7 @@ class SearchPanel(wx.Panel):
 
 	def onClose (self, event):
 		self.Save()
+		Application.onForceSave -= self.onForceSave
 
 
 	def onForceSave (self):
