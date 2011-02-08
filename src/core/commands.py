@@ -32,15 +32,28 @@ def MessageBox (*args, **kwargs):
 	return result
 
 
+def testreadonly (func):
+	"""
+	Декоратор для отлавливания исключения core.exceptions.ReadonlyException
+	"""
+	def readOnlyWrap (*args, **kwargs):
+		try:
+			func (*args, **kwargs)
+		except core.exceptions.ReadonlyException:
+			MessageBox (_(u"Wiki is opened as read-only"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+
+	return readOnlyWrap
+
+
+@testreadonly
 def attachFilesWithDialog (parent, page):
 	"""
 	Вызвать диалог для приаттачивания файлов к странице
-	parent -- родительское окно
-	page -- страница, куда прикрепляем файлы
+	parent - родительское окно
+	page - страница, куда прикрепляем файлы
 	"""
 	if page.readonly:
-		MessageBox (_(u"Wiki is opened as read-only"), _(u"Error"), wx.ICON_ERROR | wx.OK)
-		return
+		raise core.exceptions.ReadonlyException
 
 	dlg = wx.FileDialog (parent, style = wx.FD_OPEN | wx.FD_FILE_MUST_EXIST | wx.FD_MULTIPLE)
 
@@ -52,13 +65,15 @@ def attachFilesWithDialog (parent, page):
 	dlg.Destroy()
 
 
+@testreadonly
 def attachFiles (parent, page, files):
 	"""
 	Прикрепить файлы к странице с диалогом о перезаписи при необходимости
+	parent - родительское окно
+	page - страница, куда прикрепляем файлы
 	"""
 	if page.readonly:
-		MessageBox (_(u"Wiki is opened as read-only"), _(u"Error"), wx.ICON_ERROR | wx.OK)
-		return
+		raise core.exceptions.ReadonlyException
 
 	oldAttaches = [os.path.basename (fname).lower() for fname in page.attachment]
 
@@ -87,15 +102,15 @@ def attachFiles (parent, page, files):
 
 
 
+@testreadonly
 def editPage (parentWnd, currentPage):
 	"""
 	Вызвать диалог для редактирования страницы
-	parentWnd -- родительское окно
-	currentPage -- страница для редактирования
+	parentWnd - родительское окно
+	currentPage - страница для редактирования
 	"""
 	if currentPage.readonly:
-		MessageBox (_(u"Wiki is opened as read-only"), _(u"Error"), wx.ICON_ERROR | wx.OK)
-		return
+		raise core.exceptions.ReadonlyException
 
 	dlg = CreatePageDialog.CreateForEdit (currentPage, parentWnd)
 	page = None
@@ -122,10 +137,10 @@ def editPage (parentWnd, currentPage):
 	dlg.Destroy()
 
 
+@testreadonly
 def removePage (page):
 	if page.readonly:
-		MessageBox (_(u"Wiki is opened as read-only"), _(u"Error"), wx.ICON_ERROR | wx.OK)
-		return
+		raise core.exceptions.ReadonlyException
 
 	text = _(u"Remove page '%s' and all subpages?") % (page.title)
 
@@ -137,8 +152,6 @@ def removePage (page):
 			page.remove()
 		except IOError:
 			MessageBox (_(u"Can't remove page"), _(u"Error"), wx.ICON_ERROR | wx.OK)
-		except core.exceptions.ReadonlyException:
-			MessageBox (_(u"Wiki is opened as read-only"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 		finally:
 			Application.onEndTreeUpdate(root)
 
@@ -179,13 +192,13 @@ def createChildPage (parentwnd):
 	createPageWithDialog (parentwnd, currPage)
 	
 
+@testreadonly
 def createPageWithDialog (parentwnd, parentpage):
 	"""
 	Показать диалог настроек и создать страницу
 	"""
 	if parentpage.readonly:
-		MessageBox (_(u"Wiki is opened as read-only"), _(u"Error"), wx.ICON_ERROR | wx.OK)
-		return
+		raise core.exceptions.ReadonlyException
 	
 	dlg = CreatePageDialog.CreateForCreate (parentpage, parentwnd)
 	page = None
@@ -300,14 +313,11 @@ def copyTitleToClipboard (page):
 	copyTextToClipboard (page.title)
 
 
+@testreadonly
 def movePage (page, newParent):
 	"""
 	Сделать страницу page ребенком newParent
 	"""
-	#if page.readonly:
-	#	MessageBox (_(u"Wiki is opened as read-only"), _(u"Error"), wx.ICON_ERROR | wx.OK)
-	#	return
-
 	assert page != None
 	assert newParent != None
 
@@ -319,8 +329,6 @@ def movePage (page, newParent):
 	except core.exceptions.TreeException:
 		# Невозможно переместить по другой причине
 		MessageBox (_(u"Can't move page"), _(u"Error"), wx.ICON_ERROR | wx.OK)
-	except core.exceptions.ReadonlyException:
-		MessageBox (_(u"Wiki is opened as read-only"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 
 
 def setStatusText (text, index = 0):
@@ -354,6 +362,7 @@ def getCurrentVersion ():
 	return version
 
 
+@testreadonly
 def moveCurrentPageUp ():
 	"""
 	Переместить текущую страницу на одну позицию вверх
@@ -363,13 +372,10 @@ def moveCurrentPageUp ():
 		return
 
 	if Application.wikiroot.selectedPage != None:
-		try:
-			Application.wikiroot.selectedPage.order -= 1
-		except core.exceptions.ReadonlyException:
-			MessageBox (_(u"Wiki is opened as read-only"), _(u"Error"), wx.ICON_ERROR | wx.OK)
-			return
+		Application.wikiroot.selectedPage.order -= 1
 
 
+@testreadonly
 def moveCurrentPageDown ():
 	"""
 	Переместить текущую страницу на одну позицию вниз
@@ -379,13 +385,10 @@ def moveCurrentPageDown ():
 		return
 
 	if Application.wikiroot.selectedPage != None:
-		try:
-			Application.wikiroot.selectedPage.order += 1
-		except core.exceptions.ReadonlyException:
-			MessageBox (_(u"Wiki is opened as read-only"), _(u"Error"), wx.ICON_ERROR | wx.OK)
-			return
+		Application.wikiroot.selectedPage.order += 1
 
 
+@testreadonly
 def sortChildrenAlphabeticalGUI ():
 	"""
 	Команда для сортировки дочерних страниц текущей страницы по алфавиту
@@ -398,6 +401,7 @@ def sortChildrenAlphabeticalGUI ():
 		sortChildrenAlphabetical (Application.wikiroot.selectedPage)
 
 
+@testreadonly
 def sortSiblingsAlphabeticalGUI ():
 	"""
 	Команда для сортировки по алфавиту того же уровня, на котором мы сейчас находимся
@@ -419,7 +423,21 @@ def sortChildrenAlphabetical(parentPage):
 
 	Application.onStartTreeUpdate (parentPage.root)
 
-	for n in range (len (children) ):
-		children[n].order = n
+	try:
+		for n in range (len (children) ):
+			children[n].order = n
+	finally:
+		Application.onEndTreeUpdate (parentPage.root)
 
-	Application.onEndTreeUpdate (parentPage.root)
+
+@testreadonly
+def renamePage (page, newtitle):
+	try:
+		page.title = newtitle
+		page.root.selectedPage = page
+
+	except core.exceptions.DublicateTitle:
+		core.commands.MessageBox (_(u"Can't move page when page with that title already exists"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+
+	except OSError as e:
+		core.commands.MessageBox (_(u"Can't rename page\n%s") % unicode (e), _(u"Error"), wx.ICON_ERROR | wx.OK)

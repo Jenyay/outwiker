@@ -386,15 +386,7 @@ class WikiTree(wx.Panel):
 		# Не доверяем переименовывать элементы системе
 		event.Veto()
 
-		try:
-			page.title = label
-			page.root.selectedPage = page
-
-		except core.exceptions.DublicateTitle:
-			core.commands.MessageBox (_(u"Can't move page when page with that title already exists"), _(u"Error"), wx.ICON_ERROR | wx.OK)
-
-		except OSError as e:
-			core.commands.MessageBox (_(u"Can't rename page\n%s") % unicode (e), _(u"Error"), wx.ICON_ERROR | wx.OK)
+		core.commands.renamePage (page, label)
 
 
 	def onStartTreeUpdate (self, root):
