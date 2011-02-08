@@ -88,7 +88,7 @@ class MainWindow(wx.Frame):
 
 		# Флаг, который отмечает, что пришло первое событие onIdle.
 		# Используется для определения момента, когда окно только загрузилось
-		self.firstEvent = True
+		#self.firstEvent = True
 
 		Application.onTreeUpdate += self.onTreeUpdate
 		Application.onPageSelect += self.onPageSelect
@@ -234,6 +234,7 @@ class MainWindow(wx.Frame):
 		self.pagePanel = CurrentPagePanel(self.mainPanel, -1)
 		self.attachPanel = AttachPanel (self.mainPanel, -1)
 
+		self.__loadMainWindowParams()
 		self.__initAuiManager (self.auiManager)
 		self.auiManager.Bind (wx.aui.EVT_AUI_PANE_CLOSE, self.onPaneClose)
 
@@ -242,7 +243,7 @@ class MainWindow(wx.Frame):
 		self.Bind (wx.EVT_CLOSE, self.onClose)
 		self.Bind (wx.EVT_ICONIZE, self.onIconize)
 		self.Bind (wx.EVT_MENU, self.onRestore, id=self.ID_RESTORE)
-		self.Bind (wx.EVT_IDLE, self.onIdle)
+		#self.Bind (wx.EVT_IDLE, self.onIdle)
 
 		self.mainPanel.Bind (wx.EVT_CLOSE, self.onMainPanelClose)
 
@@ -259,6 +260,16 @@ class MainWindow(wx.Frame):
 			(wx.ACCEL_SHIFT,  wx.WXK_INSERT, wx.ID_PASTE),
 			(wx.ACCEL_SHIFT,  wx.WXK_DELETE, wx.ID_CUT)])
 		self.SetAcceleratorTable(aTable)
+
+		self._loadRecentWiki()
+		self.__iconizeAfterStart ()
+		self.__setFullscreen(Application.config.FullscreenOption.value)
+
+		if len (sys.argv) > 1:
+			self._openFromCommandLine()
+		else:
+			# Открыть последний открытый файл (если установлена соответствующая опция)
+			self.__openRecentWiki ()
 
 
 	def onMainPanelClose (self, event):
@@ -451,19 +462,19 @@ class MainWindow(wx.Frame):
 		newItem.SetBitmap (newBitmap)
 
 
-	def onIdle (self, event):
-		if self.firstEvent:
-			self.firstEvent = False
-			self.__loadMainWindowParams()
-			self._loadRecentWiki()
-			self.__iconizeAfterStart ()
-			self.__setFullscreen(Application.config.FullscreenOption.value)
+	#def onIdle (self, event):
+	#	if self.firstEvent:
+	#		self.firstEvent = False
+			#self.__loadMainWindowParams()
+			#self._loadRecentWiki()
+			#self.__iconizeAfterStart ()
+			#self.__setFullscreen(Application.config.FullscreenOption.value)
 
-			if len (sys.argv) > 1:
-				self._openFromCommandLine()
-			else:
-				# Открыть последний открытый файл (если установлена соответствующая опция)
-				self.__openRecentWiki ()
+			#if len (sys.argv) > 1:
+			#	self._openFromCommandLine()
+			#else:
+			#	# Открыть последний открытый файл (если установлена соответствующая опция)
+			#	self.__openRecentWiki ()
 
 	
 
@@ -604,6 +615,7 @@ class MainWindow(wx.Frame):
 		
 		self.SetDimensions (xpos, ypos, width, height, sizeFlags=wx.SIZE_FORCE)
 
+		self.Layout()
 		self.Thaw()
 	
 
@@ -638,7 +650,6 @@ class MainWindow(wx.Frame):
 		_icon = wx.EmptyIcon()
 		_icon.CopyFromBitmap(wx.Bitmap(os.path.join (self.imagesDir, "icon.ico"), wx.BITMAP_TYPE_ANY))
 		self.SetIcon(_icon)
-		self.SetSize((800, 680))
 		self.mainToolbar.Realize()
 		# end wxGlade
 
@@ -649,6 +660,7 @@ class MainWindow(wx.Frame):
 		mainSizer.Add(self.mainPanel, 1, wx.EXPAND, 0)
 		mainSizer.Add(self.statusbar, 1, wx.EXPAND, 0)
 		self.SetSizer(mainSizer)
+		mainSizer.Fit(self)
 		mainSizer.AddGrowableRow(0)
 		mainSizer.AddGrowableCol(0)
 		self.Layout()
