@@ -829,16 +829,13 @@ class MainWindow(wx.Frame):
 			core.commands.removePage (Application.wikiroot.selectedPage)
 
 
+	@core.commands.testreadonly
 	def onGlobalSearch(self, event): # wxGlade: MainWindow.<event_handler>
 		if Application.wikiroot != None:
-			if Application.wikiroot.readonly:
-				core.commands.MessageBox (_(u"Wiki is opened as read-only"), _(u"Error"), wx.ICON_ERROR | wx.OK)
-				return
-			else:
-				try:
-					pages.search.searchpage.GlobalSearch.create (Application.wikiroot)
-				except IOError:
-					core.commands.MessageBox (_(u"Can't create page"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+			try:
+				pages.search.searchpage.GlobalSearch.create (Application.wikiroot)
+			except IOError:
+				core.commands.MessageBox (_(u"Can't create page"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 
 
 	def onStdEvent(self, event): # wxGlade: MainWindow.<event_handler>
