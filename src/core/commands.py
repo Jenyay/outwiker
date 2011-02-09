@@ -229,7 +229,7 @@ def createPageWithDialog (parentwnd, parentpage):
 	return page
 
 
-def openWikiWithDialog (parent, oldWikiRoot, readonly=False):
+def openWikiWithDialog (parent, readonly=False):
 	"""
 	Показать диалог открытия вики и вернуть открытую wiki
 	parent -- родительское окно
@@ -241,17 +241,9 @@ def openWikiWithDialog (parent, oldWikiRoot, readonly=False):
 			style = wx.FD_OPEN | wx.FD_FILE_MUST_EXIST)
 
 	if dialog.ShowModal() == wx.ID_OK:
-		if oldWikiRoot != None:
-			Application.onWikiClose (oldWikiRoot)
-	
-		Application.onStartTreeUpdate(oldWikiRoot)
-
-		try:
-			fullpath = dialog.GetPath()
-			path = os.path.dirname(fullpath)
-			wikiroot = openWiki (path, readonly)
-		finally:
-			Application.onEndTreeUpdate(wikiroot)
+		fullpath = dialog.GetPath()
+		path = os.path.dirname(fullpath)
+		wikiroot = openWiki (path, readonly)
 
 	dialog.Destroy()
 
@@ -259,14 +251,28 @@ def openWikiWithDialog (parent, oldWikiRoot, readonly=False):
 
 
 def openWiki (path, readonly=False):
-	wikiroot = WikiDocument.load (path, readonly)
+	Application.wikiroot = None
+	Application.onStartTreeUpdate(None)
 
-	if wikiroot.lastViewedPage != None:
-		wikiroot.selectedPage = wikiroot[wikiroot.lastViewedPage]
-	else:
-		wikiroot.selectedPage = None
+	try:
+		# Загрузить вики
+		Application.wikiroot = WikiDocument.load (path, readonly)
 
-	return wikiroot
+		# Открыть последнюю открытую страницу
+		if Application.wikiroot.lastViewedPage != None:
+			Application.wikiroot.selectedPage = Application.wikiroot[Application.wikiroot.lastViewedPage]
+		else:
+			Application.wikiroot.selectedPage = None
+
+		Application.onWikiOpen (Application.wikiroot)
+	except IOError:
+			core.commands.MessageBox (_(u"Can't load wiki '%s'") % path, 
+					_(u"Error"), 
+					wx.ICON_ERROR | wx.OK)
+	finally:
+			Application.onEndTreeUpdate(Application.wikiroot)
+
+	return Application.wikiroot
 
 
 def copyTextToClipboard (text):
