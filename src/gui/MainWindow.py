@@ -475,7 +475,7 @@ class MainWindow(wx.Frame):
 		openRecent = Application.config.autoopenOption.value
 
 		if openRecent and len (self.recentWiki) > 0:
-			self.openWiki (self.recentWiki[0])
+			core.commands.openWiki (self.recentWiki[0])
 
 
 	def __iconizeAfterStart (self):
@@ -490,12 +490,11 @@ class MainWindow(wx.Frame):
 		"""
 		Открыть вики, путь до которой передан в командной строке
 		"""
-		# TODO: Проверить
 		fname = unicode (sys.argv[1], core.system.getOS().filesEncoding)
 		if not os.path.isdir (fname):
 			fname = os.path.split (fname)[0]
 
-		self.openWiki (fname)
+		core.commands.openWiki (fname)
 
 	
 	def _updateRecentMenu (self):
@@ -558,24 +557,11 @@ class MainWindow(wx.Frame):
 
 	def onRecent (self, event):
 		"""
-		Выбор меню с недавно открытыми файлами
+		Выбор пункта меню с недавно открытыми файлами
 		"""
-		self.openWiki (self._recentId[event.Id])
+		core.commands.openWiki (self._recentId[event.Id])
 
 
-	def openWiki (self, path, readonly=False):
-		Application.onStartTreeUpdate(Application.wikiroot)
-		
-		try:
-			wikiroot = core.commands.openWiki (path, readonly)
-		except IOError:
-			core.commands.MessageBox (_(u"Can't load wiki '%s'") % path, _(u"Error"), wx.ICON_ERROR | wx.OK)
-
-		finally:
-			Application.onEndTreeUpdate(Application.wikiroot)
-
-
-	
 	def onSelectBookmark (self, event):
 		subpath = self._bookmarksId[event.Id]
 		page = Application.wikiroot[subpath]
@@ -700,7 +686,7 @@ class MainWindow(wx.Frame):
 
 
 	def onOpen(self, event): # wxGlade: MainWindow.<event_handler>
-		wikiroot = core.commands.openWikiWithDialog (self)
+		core.commands.openWikiWithDialog (self)
 	
 
 	def _openLoadedWiki (self, wikiroot):
@@ -719,6 +705,7 @@ class MainWindow(wx.Frame):
 
 	def onReload(self, event): # wxGlade: MainWindow.<event_handler>
 		if Application.wikiroot != None:
+			# TODO: Проверить, нужна ли эта строка
 			Application.onStartTreeUpdate(Application.wikiroot)
 
 			if (core.commands.MessageBox (_(u"Save current page before reload?"), 
@@ -728,13 +715,7 @@ class MainWindow(wx.Frame):
 			else:
 				self.pagePanel.destroyPageView()
 				
-			try:
-				wikiroot = core.commands.openWiki (Application.wikiroot.path)
-			except IOError:
-				core.commands.MessageBox (_(u"Can't load wiki '%s'") % self._recentId[event.Id], _(u"Error"), wx.ICON_ERROR | wx.OK)
-				return
-			finally:
-				Application.onEndTreeUpdate(Application.wikiroot)
+			core.commands.openWiki (Application.wikiroot.path)
 
 
 	def onAddSiblingPage(self, event): # wxGlade: MainWindow.<event_handler>
@@ -835,11 +816,11 @@ class MainWindow(wx.Frame):
 		help_dir = u"help"
 		current_help = "help_rus"
 		path = os.path.join (core.system.getCurrentDir(), help_dir, current_help)
-		self.openWiki (path, readonly=True)
+		core.commands.openWiki (path, readonly=True)
 
 
 	def onOpenReadOnly(self, event): # wxGlade: MainWindow.<event_handler>
-		wikiroot = core.commands.openWikiWithDialog (self, readonly=True)
+		core.commands.openWikiWithDialog (self, readonly=True)
 
 
 	def onPreferences(self, event): # wxGlade: MainWindow.<event_handler>

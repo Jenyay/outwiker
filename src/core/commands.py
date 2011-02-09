@@ -241,14 +241,9 @@ def openWikiWithDialog (parent, readonly=False):
 			style = wx.FD_OPEN | wx.FD_FILE_MUST_EXIST)
 
 	if dialog.ShowModal() == wx.ID_OK:
-		Application.onStartTreeUpdate(None)
-
-		try:
-			fullpath = dialog.GetPath()
-			path = os.path.dirname(fullpath)
-			wikiroot = openWiki (path, readonly)
-		finally:
-			Application.onEndTreeUpdate(wikiroot)
+		fullpath = dialog.GetPath()
+		path = os.path.dirname(fullpath)
+		wikiroot = openWiki (path, readonly)
 
 	dialog.Destroy()
 
@@ -257,15 +252,25 @@ def openWikiWithDialog (parent, readonly=False):
 
 def openWiki (path, readonly=False):
 	Application.wikiroot = None
+	Application.onStartTreeUpdate(None)
 
-	Application.wikiroot = WikiDocument.load (path, readonly)
+	try:
+		# Загрузить вики
+		Application.wikiroot = WikiDocument.load (path, readonly)
 
-	if Application.wikiroot.lastViewedPage != None:
-		Application.wikiroot.selectedPage = Application.wikiroot[Application.wikiroot.lastViewedPage]
-	else:
-		Application.wikiroot.selectedPage = None
+		# Открыть последнюю открытую страницу
+		if Application.wikiroot.lastViewedPage != None:
+			Application.wikiroot.selectedPage = Application.wikiroot[Application.wikiroot.lastViewedPage]
+		else:
+			Application.wikiroot.selectedPage = None
 
-	Application.onWikiOpen (Application.wikiroot)
+		Application.onWikiOpen (Application.wikiroot)
+	except IOError:
+			core.commands.MessageBox (_(u"Can't load wiki '%s'") % path, 
+					_(u"Error"), 
+					wx.ICON_ERROR | wx.OK)
+	finally:
+			Application.onEndTreeUpdate(Application.wikiroot)
 
 	return Application.wikiroot
 
