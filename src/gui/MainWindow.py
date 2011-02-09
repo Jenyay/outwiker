@@ -228,6 +228,8 @@ class MainWindow(wx.Frame):
 		self.Bind(wx.EVT_TOOL, self.onGlobalSearch, id=self.ID_GLOBAL_SEARCH)
 		# end wxGlade
 
+		Application.onWikiOpen += self.onWikiOpen
+
 		self.auiManager = wx.aui.AuiManager(self.mainPanel)
 
 		self.tree = WikiTree(self.mainPanel, -1)
@@ -261,7 +263,7 @@ class MainWindow(wx.Frame):
 			(wx.ACCEL_SHIFT,  wx.WXK_DELETE, wx.ID_CUT)])
 		self.SetAcceleratorTable(aTable)
 
-		self._loadRecentWiki()
+		self._updateRecentMenu()
 		self.__iconizeAfterStart ()
 		self.__setFullscreen(Application.config.FullscreenOption.value)
 
@@ -270,6 +272,10 @@ class MainWindow(wx.Frame):
 		else:
 			# Открыть последний открытый файл (если установлена соответствующая опция)
 			self.__openRecentWiki ()
+
+	
+	def onWikiOpen (self, wikiroot):
+		self._openLoadedWiki (wikiroot)
 
 
 	def onMainPanelClose (self, event):
@@ -462,22 +468,6 @@ class MainWindow(wx.Frame):
 		newItem.SetBitmap (newBitmap)
 
 
-	#def onIdle (self, event):
-	#	if self.firstEvent:
-	#		self.firstEvent = False
-			#self.__loadMainWindowParams()
-			#self._loadRecentWiki()
-			#self.__iconizeAfterStart ()
-			#self.__setFullscreen(Application.config.FullscreenOption.value)
-
-			#if len (sys.argv) > 1:
-			#	self._openFromCommandLine()
-			#else:
-			#	# Открыть последний открытый файл (если установлена соответствующая опция)
-			#	self.__openRecentWiki ()
-
-	
-
 	def __openRecentWiki (self):
 		"""
 		Открыть последнюю вики, если установлена соответствующая опция
@@ -500,20 +490,18 @@ class MainWindow(wx.Frame):
 		"""
 		Открыть вики, путь до которой передан в командной строке
 		"""
+		# TODO: Проверить
 		fname = unicode (sys.argv[1], core.system.getOS().filesEncoding)
 		if not os.path.isdir (fname):
 			fname = os.path.split (fname)[0]
 
-		try:
-			wikiroot = WikiDocument.load (fname)
-		except IOError:
-			core.commands.MessageBox (_(u"Can't load wiki '%s'") % self._recentId[event.Id], _(u"Error"), wx.ICON_ERROR | wx.OK)
-			return
-
-		self._openLoadedWiki(wikiroot)
+		self.openWiki (fname)
 
 	
-	def _loadRecentWiki (self):
+	def _updateRecentMenu (self):
+		"""
+		Обновление меню со списком последних открытых вики
+		"""
 		self._removeMenuItemsById (self.fileMenu, self._recentId.keys())
 		self._recentId = {}
 
@@ -579,11 +567,7 @@ class MainWindow(wx.Frame):
 		Application.onStartTreeUpdate(Application.wikiroot)
 		
 		try:
-			if Application.wikiroot != None:
-				Application.onWikiClose (Application.wikiroot)
-			
 			wikiroot = core.commands.openWiki (path, readonly)
-			self._openLoadedWiki(wikiroot, addToRecent = not readonly)
 		except IOError:
 			core.commands.MessageBox (_(u"Can't load wiki '%s'") % path, _(u"Error"), wx.ICON_ERROR | wx.OK)
 
@@ -672,9 +656,6 @@ class MainWindow(wx.Frame):
 
 		if (not askBeforeExit or 
 				core.commands.MessageBox (_(u"Really exit?"), _(u"Exit"), wx.YES_NO  | wx.ICON_QUESTION ) == wx.YES):
-			if Application.wikiroot != None:
-				Application.onWikiClose (Application.wikiroot)
-
 			self.__saveParams()
 
 			self.auiManager.UnInit()
@@ -711,34 +692,25 @@ class MainWindow(wx.Frame):
 		dlg = wx.FileDialog (self, style = wx.FD_SAVE)
 
 		if dlg.ShowModal() == wx.ID_OK:
-			if Application.wikiroot != None:
-				Application.onWikiClose (Application.wikiroot)
-
 			Application.wikiroot = WikiDocument.create (dlg.GetPath ())
+			Application.onWikiOpen (Application.wikiroot)
 			Application.wikiroot.selectedPage = None
-			self.recentWiki.add (Application.wikiroot.path)
-			self._loadRecentWiki()
 
 		dlg.Destroy()
-		self.__enableGui()
 
 
 	def onOpen(self, event): # wxGlade: MainWindow.<event_handler>
-		wikiroot = core.commands.openWikiWithDialog (self, Application.wikiroot)
-		self._openLoadedWiki(wikiroot)
+		wikiroot = core.commands.openWikiWithDialog (self)
 	
 
-	def _openLoadedWiki (self, wikiroot, addToRecent=True):
+	def _openLoadedWiki (self, wikiroot):
 		"""
 		Обновить окно после того как загрузили вики
 		"""
-		if wikiroot != None:
-			Application.wikiroot = wikiroot
-
-			if addToRecent:
-				self.recentWiki.add (wikiroot.path)
-				self._loadRecentWiki()
-			self.__enableGui()
+		if wikiroot != None and not wikiroot.readonly:
+			self.recentWiki.add (wikiroot.path)
+			self._updateRecentMenu()
+		self.__enableGui()
 
 
 	def onSave(self, event): # wxGlade: MainWindow.<event_handler>
@@ -747,7 +719,6 @@ class MainWindow(wx.Frame):
 
 	def onReload(self, event): # wxGlade: MainWindow.<event_handler>
 		if Application.wikiroot != None:
-			Application.onWikiClose (Application.wikiroot)
 			Application.onStartTreeUpdate(Application.wikiroot)
 
 			if (core.commands.MessageBox (_(u"Save current page before reload?"), 
@@ -764,8 +735,6 @@ class MainWindow(wx.Frame):
 				return
 			finally:
 				Application.onEndTreeUpdate(Application.wikiroot)
-
-			self._openLoadedWiki (Application.wikiroot)
 
 
 	def onAddSiblingPage(self, event): # wxGlade: MainWindow.<event_handler>
@@ -870,8 +839,7 @@ class MainWindow(wx.Frame):
 
 
 	def onOpenReadOnly(self, event): # wxGlade: MainWindow.<event_handler>
-		wikiroot = core.commands.openWikiWithDialog (self, Application.wikiroot, readonly=True)
-		self._openLoadedWiki(wikiroot, addToRecent=False)
+		wikiroot = core.commands.openWikiWithDialog (self, readonly=True)
 
 
 	def onPreferences(self, event): # wxGlade: MainWindow.<event_handler>

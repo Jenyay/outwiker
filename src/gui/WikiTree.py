@@ -94,7 +94,6 @@ class WikiTree(wx.Panel):
 
 		Application.onStartTreeUpdate += self.onStartTreeUpdate
 		Application.onEndTreeUpdate += self.onEndTreeUpdate
-		#Application.onWikiClose += self.onWikiClose
 		
 		# События, связанные с рендерингом страниц
 		Application.onHtmlRenderingBegin += self.onHtmlRenderingBegin

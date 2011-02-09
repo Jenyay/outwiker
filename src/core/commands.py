@@ -229,7 +229,7 @@ def createPageWithDialog (parentwnd, parentpage):
 	return page
 
 
-def openWikiWithDialog (parent, oldWikiRoot, readonly=False):
+def openWikiWithDialog (parent, readonly=False):
 	"""
 	Показать диалог открытия вики и вернуть открытую wiki
 	parent -- родительское окно
@@ -241,10 +241,7 @@ def openWikiWithDialog (parent, oldWikiRoot, readonly=False):
 			style = wx.FD_OPEN | wx.FD_FILE_MUST_EXIST)
 
 	if dialog.ShowModal() == wx.ID_OK:
-		if oldWikiRoot != None:
-			Application.onWikiClose (oldWikiRoot)
-	
-		Application.onStartTreeUpdate(oldWikiRoot)
+		Application.onStartTreeUpdate(None)
 
 		try:
 			fullpath = dialog.GetPath()
@@ -259,14 +256,18 @@ def openWikiWithDialog (parent, oldWikiRoot, readonly=False):
 
 
 def openWiki (path, readonly=False):
-	wikiroot = WikiDocument.load (path, readonly)
+	Application.wikiroot = None
 
-	if wikiroot.lastViewedPage != None:
-		wikiroot.selectedPage = wikiroot[wikiroot.lastViewedPage]
+	Application.wikiroot = WikiDocument.load (path, readonly)
+
+	if Application.wikiroot.lastViewedPage != None:
+		Application.wikiroot.selectedPage = Application.wikiroot[Application.wikiroot.lastViewedPage]
 	else:
-		wikiroot.selectedPage = None
+		Application.wikiroot.selectedPage = None
 
-	return wikiroot
+	Application.onWikiOpen (Application.wikiroot)
+
+	return Application.wikiroot
 
 
 def copyTextToClipboard (text):

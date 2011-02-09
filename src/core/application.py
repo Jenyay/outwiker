@@ -26,6 +26,10 @@ class Application (object):
 		"""
 		Создать статические члены для событий
 		"""
+		# Открытие вики
+		# Параметр: root - корень новой вики (возможно, None)
+		Application.onWikiOpen = Event()
+
 		# Обновление страницы
 		# Параметры: sender
 		Application.onPageUpdate = Event()
@@ -66,10 +70,6 @@ class Application (object):
 		# Параметры: root - корень дерева
 		Application.onEndTreeUpdate = Event()
 
-		# Вызывается перед тем, как закрыть открытую вики или открыть другую вики
-		# Параметры: root - корень дерева
-		Application.onWikiClose = Event()
-		
 		# Начало рендеринга HTML
 		# Параметры: 
 		# page - страница, которую рендерят
