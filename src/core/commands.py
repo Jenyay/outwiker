@@ -276,6 +276,25 @@ def openWiki (path, readonly=False):
 	return Application.wikiroot
 
 
+def createNewWiki (parentwnd):
+	"""
+	Создать новую вики
+	parentwnd - окно-владелец диалога выбора файла
+	"""
+	dlg = wx.FileDialog (parentwnd, style = wx.FD_SAVE)
+
+	if dlg.ShowModal() == wx.ID_OK:
+		try:
+			Application.wikiroot = WikiDocument.create (dlg.GetPath ())
+			Application.wikiroot.selectedPage = None
+		except (IOError, OSError) as e:
+			# TODO: проверить под Windows
+			core.commands.MessageBox (_(u"Can't create wiki\n") + unicode (str (e), "utf8"),
+					_(u"Error"), wx.OK | wx.ICON_ERROR)
+
+	dlg.Destroy()
+
+
 def copyTextToClipboard (text):
 	if not wx.TheClipboard.Open():
 		MessageBox (_(u"Can't open clipboard"), _(u"Error"), wx.ICON_ERROR | wx.OK)

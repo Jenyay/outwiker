@@ -681,18 +681,11 @@ class MainWindow(wx.Frame):
 		"""
 		Событие при обновлении дерева
 		"""
-		#Application.wikiroot = sender.root
 		self._loadBookmarks()
 
 
 	def onNew(self, event): # wxGlade: MainWindow.<event_handler>
-		dlg = wx.FileDialog (self, style = wx.FD_SAVE)
-
-		if dlg.ShowModal() == wx.ID_OK:
-			Application.wikiroot = WikiDocument.create (dlg.GetPath ())
-			Application.wikiroot.selectedPage = None
-
-		dlg.Destroy()
+		core.commands.createNewWiki(self)
 
 
 	def onOpen(self, event): # wxGlade: MainWindow.<event_handler>
