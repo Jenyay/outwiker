@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
+from core.application import Application
+
+
 class RecentWiki (object):
 	"""
 	Класс для хранения списка последних открытых вики
@@ -14,6 +17,13 @@ class RecentWiki (object):
 		self._paramTemplate = u"Path_%d"
 
 		self._load()
+
+		#Application.onWikiOpen += self.onWikiOpen
+
+
+	def onWikiOpen (self, wikiroot):
+		if wikiroot != None and not wikiroot.readonly:
+			self.add (wikiroot.path)
 
 	
 	def _load (self):
