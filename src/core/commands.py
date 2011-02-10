@@ -19,6 +19,7 @@ from core.tree import RootWikiPage
 from gui.OverwriteDialog import OverwriteDialog
 from gui.CreatePageDialog import CreatePageDialog
 from core.application import Application
+from gui.about import AboutDialog
 
 
 def MessageBox (*args, **kwargs):
@@ -467,3 +468,31 @@ def renamePage (page, newtitle):
 
 	except OSError as e:
 		core.commands.MessageBox (_(u"Can't rename page\n%s") % unicode (e), _(u"Error"), wx.ICON_ERROR | wx.OK)
+
+
+def showAboutDialog (parent):
+	version = getCurrentVersion()
+	dlg = AboutDialog (version, parent)
+	dlg.ShowModal()
+	dlg.Destroy()
+
+
+def openHelp ():
+	help_dir = u"help"
+	current_help = "help_rus"
+	path = os.path.join (core.system.getCurrentDir(), help_dir, current_help)
+	core.commands.openWiki (path, readonly=True)
+
+
+def reloadWiki (mainWnd):
+	"""
+	Перезагрузить вики
+	mainWnd - указатель на главное окно. Нужно, чтобы сообщить ему о необходимости удалить панель с текущей страницей
+	"""
+	if Application.wikiroot != None:
+		save = (core.commands.MessageBox (_(u"Save current page before reload?"), 
+			_(u"Save?"), wx.YES_NO  | wx.ICON_QUESTION ) == wx.YES)
+
+		mainWnd.destroyPagePanel (save)
+		
+		core.commands.openWiki (Application.wikiroot.path)
