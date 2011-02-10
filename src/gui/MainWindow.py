@@ -72,7 +72,9 @@ class MainWindow(wx.Frame):
 				self.ID_COPYPATH, self.ID_COPY_ATTACH_PATH, self.ID_COPY_LINK,
 				self.ID_COPY_TITLE, self.ID_BOOKMARKS, self.ID_ADDBOOKMARK,
 				self.ID_EDIT, self.ID_REMOVE_PAGE, self.ID_GLOBAL_SEARCH,
-				wx.ID_UNDO, wx.ID_REDO, wx.ID_CUT, wx.ID_COPY, wx.ID_PASTE]
+				wx.ID_UNDO, wx.ID_REDO, wx.ID_CUT, wx.ID_COPY, wx.ID_PASTE,
+				self.ID_SORT_SIBLINGS_ALPHABETICAL, self.ID_SORT_CHILDREN_ALPHABETICAL,
+				self.ID_MOVE_PAGE_UP, self.ID_MOVE_PAGE_DOWN, self.ID_RENAME]
 
 		# Флаг, обозначающий, что в цикле обработки стандартных сообщений 
 		# вроде копирования в буфер обмена сообщение вернулось обратно
