@@ -402,7 +402,7 @@ class WikiTree(wx.Panel):
 	
 	def onEndTreeUpdate (self, root):
 		self._bindUpdateEvents()
-		self.treeUpdate (root)
+		self.treeUpdate (Application.wikiroot)
 
 
 	def _bindUpdateEvents (self):

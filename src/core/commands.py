@@ -251,26 +251,29 @@ def openWikiWithDialog (parent, readonly=False):
 
 
 def openWiki (path, readonly=False):
-	Application.wikiroot = None
+	wikiroot = None
+
+	#Application.wikiroot = None
 	Application.onStartTreeUpdate(None)
 
 	try:
 		# Загрузить вики
-		Application.wikiroot = WikiDocument.load (path, readonly)
+		wikiroot = WikiDocument.load (path, readonly)
 
 		# Открыть последнюю открытую страницу
-		if Application.wikiroot.lastViewedPage != None:
-			Application.wikiroot.selectedPage = Application.wikiroot[Application.wikiroot.lastViewedPage]
+		if wikiroot.lastViewedPage != None:
+			wikiroot.selectedPage = wikiroot[wikiroot.lastViewedPage]
 		else:
-			Application.wikiroot.selectedPage = None
+			wikiroot.selectedPage = None
 
+		Application.wikiroot = wikiroot
 		Application.onWikiOpen (Application.wikiroot)
 	except IOError:
-			core.commands.MessageBox (_(u"Can't load wiki '%s'") % path, 
-					_(u"Error"), 
-					wx.ICON_ERROR | wx.OK)
+		core.commands.MessageBox (_(u"Can't load wiki '%s'") % path, 
+				_(u"Error"), 
+				wx.ICON_ERROR | wx.OK)
 	finally:
-			Application.onEndTreeUpdate(Application.wikiroot)
+		Application.onEndTreeUpdate(wikiroot)
 
 	return Application.wikiroot
 

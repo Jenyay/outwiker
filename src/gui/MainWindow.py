@@ -275,7 +275,13 @@ class MainWindow(wx.Frame):
 
 	
 	def onWikiOpen (self, wikiroot):
-		self._openLoadedWiki (wikiroot)
+		"""
+		Обновить окно после того как загрузили вики
+		"""
+		if wikiroot != None and not wikiroot.readonly:
+			self.recentWiki.add (wikiroot.path)
+			self._updateRecentMenu()
+		self.__enableGui()
 
 
 	def onMainPanelClose (self, event):
@@ -504,6 +510,8 @@ class MainWindow(wx.Frame):
 		self._removeMenuItemsById (self.fileMenu, self._recentId.keys())
 		self._recentId = {}
 
+		# TODO: Рефакторинг
+		# Сделать класс RecentWiki изменяемым
 		self.recentWiki = RecentWiki (Application.config)
 
 		self._recentId = {}
@@ -688,16 +696,6 @@ class MainWindow(wx.Frame):
 	def onOpen(self, event): # wxGlade: MainWindow.<event_handler>
 		core.commands.openWikiWithDialog (self)
 	
-
-	def _openLoadedWiki (self, wikiroot):
-		"""
-		Обновить окно после того как загрузили вики
-		"""
-		if wikiroot != None and not wikiroot.readonly:
-			self.recentWiki.add (wikiroot.path)
-			self._updateRecentMenu()
-		self.__enableGui()
-
 
 	def onSave(self, event): # wxGlade: MainWindow.<event_handler>
 		Application.onForceSave()
