@@ -8,119 +8,123 @@ import core.i18n
 from core.event import Event
 
 
-class Application (object):
-	def __init__ (self, configFilename):
-		pass
+class ApplicationParams (object):
+	def __init__ (self):
+		# Открытая в данный момент wiki
+		self._wikiroot = None
+		self.config = None
+		self.__createEvents()
 
 	
-	@staticmethod
-	def init (configFilename):
-		Application.config = GeneralConfig (configFilename)
-		Application.__initLocale()
-		Application.__createEvents()
-		Application._wikiroot = None
+	def init (self, configFilename):
+		"""
+		Инициализировать конфиг и локаль
+		"""
+		self.config = GeneralConfig (configFilename)
+		self.__initLocale()
 
 
-	@staticmethod
-	def getWikiroot ():
-		return Application._wikiroot
+	@property
+	def wikiroot (self):
+		return self._wikiroot
 
 
-	@staticmethod
-	def setWikiroot (value):
-		Application.onWikiClose (Application._wikiroot)
-		Application._wikiroot = value
-		Application.onWikiOpen (Application._wikiroot)
-	
+	@wikiroot.setter
+	def wikiroot (self, value):
+		self.onWikiClose (self._wikiroot)
+		self._wikiroot = value
+		self.onWikiOpen (self._wikiroot)
 
-	@staticmethod
-	def __createEvents ():
+
+	def __createEvents (self):
 		"""
 		Создать статические члены для событий
 		"""
 		# Открытие вики
 		# Параметр: root - корень новой вики (возможно, None)
-		Application.onWikiOpen = Event()
+		self.onWikiOpen = Event()
 
 		# Закрытие вики
 		# Параметр: root - корень закрываемой вики (возможно, None)
-		Application.onWikiClose = Event()
+		self.onWikiClose = Event()
 
 		# Обновление страницы
 		# Параметры: sender
-		Application.onPageUpdate = Event()
+		self.onPageUpdate = Event()
 
 		# Создание страницы
 		# Параметры: sender
-		Application.onPageCreate = Event()
+		self.onPageCreate = Event()
 
 		# Обновление дерева
 		# Параметры: sender - из-за кого обновляется дерево
-		Application.onTreeUpdate = Event()
+		self.onTreeUpdate = Event()
 		
 		# Выбор новой страницы
 		# Параметры: новая выбранная страница
-		Application.onPageSelect = Event()
+		self.onPageSelect = Event()
 
 		# Пользователь хочет скопировать выбранные файлы в страницу
 		# Параметры: fnames - выбранные имена файлов (basename без путей)
-		Application.onAttachmentPaste = Event()
+		self.onAttachmentPaste = Event()
 
 		# Изменение списка закладок
 		# Параметр - экземпляр класса Bookmarks
-		Application.onBookmarksChanged = Event()
+		self.onBookmarksChanged = Event()
 
 		# Удаленеи страницы
 		# Параметр - удаленная страница
-		Application.onPageRemove = Event()
+		self.onPageRemove = Event()
 
 		# Переименование страницы.
 		# Параметры: page - переименованная страница, oldSubpath - старый относительный путь до страницы
-		Application.onPageRename = Event()
+		self.onPageRename = Event()
 
 		# Начало сложного обновления дерева
 		# Параметры: root - корень дерева
-		Application.onStartTreeUpdate = Event()
+		self.onStartTreeUpdate = Event()
 
 		# Конец сложного обновления дерева
 		# Параметры: root - корень дерева
-		Application.onEndTreeUpdate = Event()
+		self.onEndTreeUpdate = Event()
 
 		# Начало рендеринга HTML
 		# Параметры: 
 		# page - страница, которую рендерят
 		# htmlView - окно, где будет представлен HTML
-		Application.onHtmlRenderingBegin = Event()
+		self.onHtmlRenderingBegin = Event()
 		
 		# Завершение рендеринга HTML
 		# Параметры: 
 		# page - страница, которую рендерят
 		# htmlView - окно, где будет представлен HTML
-		Application.onHtmlRenderingEnd = Event()
+		self.onHtmlRenderingEnd = Event()
 
 		# Изменение настроек редактора
 		# Параметры: нет
-		Application.onEditorConfigChange = Event()
+		self.onEditorConfigChange = Event()
 
 		# Изменение настроек главного окна
 		# Параметры: нет
-		Application.onMainWindowConfigChange = Event()
+		self.onMainWindowConfigChange = Event()
 
 		# Изменение порядка страниц
 		# Параметры: page - страница, положение которой изменили
-		Application.onPageOrderChange = Event()
+		self.onPageOrderChange = Event()
 
 		# Событие на принудительное сохранение состояния страницы
 		# Например, при потере фокуса приложением.
 		# Параметры: нет
-		Application.onForceSave = Event()
+		self.onForceSave = Event()
 
 
-	@staticmethod
-	def __initLocale ():
-		language = Application.config.languageOption.value
+	def __initLocale (self):
+		language = self.config.languageOption.value
 
 		try:
 			core.i18n.init_i18n (language)
 		except IOError, e:
 			print u"Can't load language: %s" % language
+
+
+Application = ApplicationParams()

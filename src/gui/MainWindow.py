@@ -420,12 +420,12 @@ class MainWindow(wx.Frame):
 	def __updateTitle (self):
 		template = Application.config.titleFormatOption.value
 
-		if Application.getWikiroot() == None:
+		if Application.wikiroot == None:
 			self.SetTitle (u"OutWiker")
 			return
 
-		pageTitle = u"" if Application.getWikiroot().selectedPage == None else Application.getWikiroot().selectedPage.title
-		filename = os.path.basename (Application.getWikiroot().path)
+		pageTitle = u"" if Application.wikiroot.selectedPage == None else Application.wikiroot.selectedPage.title
+		filename = os.path.basename (Application.wikiroot.path)
 
 		result = template.replace ("{file}", filename).replace ("{page}", pageTitle)
 		self.SetTitle (result)
@@ -450,7 +450,7 @@ class MainWindow(wx.Frame):
 		"""
 		Проверить открыта ли вики и включить или выключить кнопки на панели
 		"""
-		enabled = Application.getWikiroot() != None
+		enabled = Application.wikiroot != None
 		self.__enableTools (enabled)
 		self.__enableMenu (enabled)
 		self.pagePanel.Enable(enabled)
@@ -535,10 +535,10 @@ class MainWindow(wx.Frame):
 		self._removeMenuItemsById (self.bookmarksMenu, self._bookmarksId.keys())
 		self._bookmarksId = {}
 
-		if Application.getWikiroot() != None:
-			for n in range (len (Application.getWikiroot().bookmarks)):
+		if Application.wikiroot != None:
+			for n in range (len (Application.wikiroot.bookmarks)):
 				id = wx.NewId()
-				page = Application.getWikiroot().bookmarks[n]
+				page = Application.wikiroot.bookmarks[n]
 				if page == None:
 					continue
 
@@ -575,10 +575,10 @@ class MainWindow(wx.Frame):
 
 	def onSelectBookmark (self, event):
 		subpath = self._bookmarksId[event.Id]
-		page = Application.getWikiroot()[subpath]
+		page = Application.wikiroot[subpath]
 
 		if page != None:
-			Application.getWikiroot().selectedPage = Application.getWikiroot()[subpath]
+			Application.wikiroot.selectedPage = Application.wikiroot[subpath]
 	
 
 	def __loadMainWindowParams(self):
@@ -689,8 +689,8 @@ class MainWindow(wx.Frame):
 		dlg = wx.FileDialog (self, style = wx.FD_SAVE)
 
 		if dlg.ShowModal() == wx.ID_OK:
-			Application.setWikiroot (WikiDocument.create (dlg.GetPath ()) )
-			Application.getWikiroot().selectedPage = None
+			Application.wikiroot = WikiDocument.create (dlg.GetPath ())
+			Application.wikiroot.selectedPage = None
 
 		dlg.Destroy()
 
@@ -704,9 +704,9 @@ class MainWindow(wx.Frame):
 
 
 	def onReload(self, event): # wxGlade: MainWindow.<event_handler>
-		if Application.getWikiroot() != None:
+		if Application.wikiroot != None:
 			# TODO: Проверить, нужна ли эта строка
-			Application.onStartTreeUpdate(Application.getWikiroot())
+			Application.onStartTreeUpdate(Application.wikiroot)
 
 			if (core.commands.MessageBox (_(u"Save current page before reload?"), 
 				_(u"Save?"), 
@@ -715,7 +715,7 @@ class MainWindow(wx.Frame):
 			else:
 				self.pagePanel.destroyPageView()
 				
-			core.commands.openWiki (Application.getWikiroot().path)
+			core.commands.openWiki (Application.wikiroot.path)
 
 
 	def onAddSiblingPage(self, event): # wxGlade: MainWindow.<event_handler>
@@ -733,8 +733,8 @@ class MainWindow(wx.Frame):
 
 
 	def onAttach(self, event): # wxGlade: MainWindow.<event_handler>
-		if Application.getWikiroot() != None and Application.getWikiroot().selectedPage != None:
-			core.commands.attachFilesWithDialog (self, Application.getWikiroot().selectedPage)
+		if Application.wikiroot != None and Application.wikiroot.selectedPage != None:
+			core.commands.attachFilesWithDialog (self, Application.wikiroot.selectedPage)
 
 	def onAbout(self, event): # wxGlade: MainWindow.<event_handler>
 		version = core.commands.getCurrentVersion()
@@ -748,23 +748,23 @@ class MainWindow(wx.Frame):
 
 
 	def onCopyPath(self, event): # wxGlade: MainWindow.<event_handler>
-		if Application.getWikiroot() != None and Application.getWikiroot().selectedPage != None:
-			core.commands.copyPathToClipboard (Application.getWikiroot().selectedPage)
+		if Application.wikiroot != None and Application.wikiroot.selectedPage != None:
+			core.commands.copyPathToClipboard (Application.wikiroot.selectedPage)
 
 
 	def onCopyAttaches(self, event): # wxGlade: MainWindow.<event_handler>
-		if Application.getWikiroot() != None and Application.getWikiroot().selectedPage != None:
-			core.commands.copyAttachPathToClipboard (Application.getWikiroot().selectedPage)
+		if Application.wikiroot != None and Application.wikiroot.selectedPage != None:
+			core.commands.copyAttachPathToClipboard (Application.wikiroot.selectedPage)
 
 	
 	def onCopyLink(self, event): # wxGlade: MainWindow.<event_handler>
-		if Application.getWikiroot() != None and Application.getWikiroot().selectedPage != None:
-			core.commands.copyLinkToClipboard (Application.getWikiroot().selectedPage)
+		if Application.wikiroot != None and Application.wikiroot.selectedPage != None:
+			core.commands.copyLinkToClipboard (Application.wikiroot.selectedPage)
 
 	
 	def onCopyTitle(self, event): # wxGlade: MainWindow.<event_handler>
-		if Application.getWikiroot() != None and Application.getWikiroot().selectedPage != None:
-			core.commands.copyTitleToClipboard (Application.getWikiroot().selectedPage)
+		if Application.wikiroot != None and Application.wikiroot.selectedPage != None:
+			core.commands.copyTitleToClipboard (Application.wikiroot.selectedPage)
 	
 
 	def onBookmarksChanged (self, event):
@@ -772,30 +772,30 @@ class MainWindow(wx.Frame):
 
 
 	def onBookmark(self, event): # wxGlade: MainWindow.<event_handler>
-		if Application.getWikiroot() != None and Application.getWikiroot().selectedPage != None:
-			selectedPage = Application.getWikiroot().selectedPage
+		if Application.wikiroot != None and Application.wikiroot.selectedPage != None:
+			selectedPage = Application.wikiroot.selectedPage
 
-			if not Application.getWikiroot().bookmarks.pageMarked (selectedPage):
-				Application.getWikiroot().bookmarks.add (Application.getWikiroot().selectedPage)
+			if not Application.wikiroot.bookmarks.pageMarked (selectedPage):
+				Application.wikiroot.bookmarks.add (Application.wikiroot.selectedPage)
 			else:
-				Application.getWikiroot().bookmarks.remove (Application.getWikiroot().selectedPage)
+				Application.wikiroot.bookmarks.remove (Application.wikiroot.selectedPage)
 
 
 	def onEditPage(self, event): # wxGlade: MainWindow.<event_handler>
-		if Application.getWikiroot() != None and Application.getWikiroot().selectedPage != None:
-			core.commands.editPage (self, Application.getWikiroot().selectedPage)
+		if Application.wikiroot != None and Application.wikiroot.selectedPage != None:
+			core.commands.editPage (self, Application.wikiroot.selectedPage)
 
 
 	def onRemovePage(self, event): # wxGlade: MainWindow.<event_handler>
-		if Application.getWikiroot() != None and Application.getWikiroot().selectedPage != None:
-			core.commands.removePage (Application.getWikiroot().selectedPage)
+		if Application.wikiroot != None and Application.wikiroot.selectedPage != None:
+			core.commands.removePage (Application.wikiroot.selectedPage)
 
 
 	@core.commands.testreadonly
 	def onGlobalSearch(self, event): # wxGlade: MainWindow.<event_handler>
-		if Application.getWikiroot() != None:
+		if Application.wikiroot != None:
 			try:
-				pages.search.searchpage.GlobalSearch.create (Application.getWikiroot())
+				pages.search.searchpage.GlobalSearch.create (Application.wikiroot)
 			except IOError:
 				core.commands.MessageBox (_(u"Can't create page"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 
@@ -955,9 +955,9 @@ class DropFilesTarget (wx.FileDropTarget):
 	
 	
 	def OnDropFiles (self, x, y, files):
-		if (Application.getWikiroot() != None and
-				Application.getWikiroot().selectedPage != None):
+		if (Application.wikiroot != None and
+				Application.wikiroot.selectedPage != None):
 			core.commands.attachFiles (self._mainWindow, 
-						Application.getWikiroot().selectedPage, 
+						Application.wikiroot.selectedPage, 
 						files)
 			return True

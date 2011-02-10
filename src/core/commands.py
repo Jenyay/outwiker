@@ -161,14 +161,14 @@ def createSiblingPage (parentwnd):
 	Создать страницу, находящуюся на том же уровне, что и текущая страница
 	parentwnd - окно, которое будет родителем для диалога создания страницы
 	"""
-	if Application.getWikiroot() == None:
+	if Application.wikiroot == None:
 		MessageBox (_(u"Wiki is not open"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 		return
 
-	currPage = Application.getWikiroot().selectedPage
+	currPage = Application.wikiroot.selectedPage
 
 	if currPage == None or currPage.parent == None:
-		parentpage = Application.getWikiroot()
+		parentpage = Application.wikiroot
 	else:
 		parentpage = currPage.parent
 
@@ -180,14 +180,14 @@ def createChildPage (parentwnd):
 	Создать страницу, которая будет дочерней к текущей странице
 	parentwnd - окно, которое будет родителем для диалога создания страницы
 	"""
-	if Application.getWikiroot() == None:
+	if Application.wikiroot == None:
 		MessageBox (_(u"Wiki is not open"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 		return
 
-	currPage = Application.getWikiroot().selectedPage
+	currPage = Application.wikiroot.selectedPage
 
 	if currPage == None:
-		currPage = Application.getWikiroot()
+		currPage = Application.wikiroot
 
 	createPageWithDialog (parentwnd, currPage)
 	
@@ -265,7 +265,7 @@ def openWiki (path, readonly=False):
 		else:
 			wikiroot.selectedPage = None
 
-		Application.setWikiroot (wikiroot)
+		Application.wikiroot = wikiroot
 	except IOError:
 		core.commands.MessageBox (_(u"Can't load wiki '%s'") % path, 
 				_(u"Error"), 
@@ -273,7 +273,7 @@ def openWiki (path, readonly=False):
 	finally:
 		Application.onEndTreeUpdate(wikiroot)
 
-	return Application.getWikiroot()
+	return Application.wikiroot
 
 
 def copyTextToClipboard (text):
@@ -374,12 +374,12 @@ def moveCurrentPageUp ():
 	"""
 	Переместить текущую страницу на одну позицию вверх
 	"""
-	if Application.getWikiroot() == None:
+	if Application.wikiroot == None:
 		MessageBox (_(u"Wiki is not open"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 		return
 
-	if Application.getWikiroot().selectedPage != None:
-		Application.getWikiroot().selectedPage.order -= 1
+	if Application.wikiroot.selectedPage != None:
+		Application.wikiroot.selectedPage.order -= 1
 
 
 @testreadonly
@@ -387,12 +387,12 @@ def moveCurrentPageDown ():
 	"""
 	Переместить текущую страницу на одну позицию вниз
 	"""
-	if Application.getWikiroot() == None:
+	if Application.wikiroot == None:
 		MessageBox (_(u"Wiki is not open"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 		return
 
-	if Application.getWikiroot().selectedPage != None:
-		Application.getWikiroot().selectedPage.order += 1
+	if Application.wikiroot.selectedPage != None:
+		Application.wikiroot.selectedPage.order += 1
 
 
 @testreadonly
@@ -400,12 +400,12 @@ def sortChildrenAlphabeticalGUI ():
 	"""
 	Команда для сортировки дочерних страниц текущей страницы по алфавиту
 	"""
-	if Application.getWikiroot() == None:
+	if Application.wikiroot == None:
 		MessageBox (_(u"Wiki is not open"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 		return
 
-	if Application.getWikiroot().selectedPage != None:
-		sortChildrenAlphabetical (Application.getWikiroot().selectedPage)
+	if Application.wikiroot.selectedPage != None:
+		sortChildrenAlphabetical (Application.wikiroot.selectedPage)
 
 
 @testreadonly
@@ -413,12 +413,12 @@ def sortSiblingsAlphabeticalGUI ():
 	"""
 	Команда для сортировки по алфавиту того же уровня, на котором мы сейчас находимся
 	"""
-	if Application.getWikiroot() == None:
+	if Application.wikiroot == None:
 		MessageBox (_(u"Wiki is not open"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 		return
 
-	if Application.getWikiroot().selectedPage != None:
-		sortChildrenAlphabetical (Application.getWikiroot().selectedPage.parent)
+	if Application.wikiroot.selectedPage != None:
+		sortChildrenAlphabetical (Application.wikiroot.selectedPage.parent)
 
 
 def sortChildrenAlphabetical(parentPage):
