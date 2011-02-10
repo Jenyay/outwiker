@@ -18,7 +18,19 @@ class Application (object):
 		Application.config = GeneralConfig (configFilename)
 		Application.__initLocale()
 		Application.__createEvents()
-		Application.wikiroot = None
+		Application._wikiroot = None
+
+
+	@staticmethod
+	def getWikiroot ():
+		return Application._wikiroot
+
+
+	@staticmethod
+	def setWikiroot (value):
+		Application.onWikiClose (Application._wikiroot)
+		Application._wikiroot = value
+		Application.onWikiOpen (Application._wikiroot)
 	
 
 	@staticmethod
@@ -29,6 +41,10 @@ class Application (object):
 		# Открытие вики
 		# Параметр: root - корень новой вики (возможно, None)
 		Application.onWikiOpen = Event()
+
+		# Закрытие вики
+		# Параметр: root - корень закрываемой вики (возможно, None)
+		Application.onWikiClose = Event()
 
 		# Обновление страницы
 		# Параметры: sender
