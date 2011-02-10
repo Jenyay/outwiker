@@ -147,8 +147,8 @@ class WikiTree(wx.Panel):
 
 
 	def onRemovePage (self, event):
-		if Application.wikiroot != None and Application.wikiroot.selectedPage != None:
-			core.commands.removePage (Application.wikiroot.selectedPage)
+		if Application.getWikiroot() != None and Application.getWikiroot().selectedPage != None:
+			core.commands.removePage (Application.getWikiroot().selectedPage)
 
 
 	def onMoveUp (self, event):
@@ -402,7 +402,7 @@ class WikiTree(wx.Panel):
 	
 	def onEndTreeUpdate (self, root):
 		self._bindUpdateEvents()
-		self.treeUpdate (Application.wikiroot)
+		self.treeUpdate (Application.getWikiroot())
 
 
 	def _bindUpdateEvents (self):

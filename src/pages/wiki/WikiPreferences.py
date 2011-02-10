@@ -72,9 +72,9 @@ class WikiPrefGeneralPanel(wx.Panel):
 		self.showAttachInsteadBlankOption.save()
 
 		if changed:
-			currpage = Application.wikiroot.selectedPage
-			Application.wikiroot.selectedPage = None
-			Application.wikiroot.selectedPage = currpage
+			currpage = Application.getWikiroot().selectedPage
+			Application.getWikiroot().selectedPage = None
+			Application.getWikiroot().selectedPage = currpage
 
 # end of class WikiPrefGeneralPanel
 

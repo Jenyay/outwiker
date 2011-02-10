@@ -161,14 +161,14 @@ def createSiblingPage (parentwnd):
 	Создать страницу, находящуюся на том же уровне, что и текущая страница
 	parentwnd - окно, которое будет родителем для диалога создания страницы
 	"""
-	if Application.wikiroot == None:
+	if Application.getWikiroot() == None:
 		MessageBox (_(u"Wiki is not open"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 		return
 
-	currPage = Application.wikiroot.selectedPage
+	currPage = Application.getWikiroot().selectedPage
 
 	if currPage == None or currPage.parent == None:
-		parentpage = Application.wikiroot
+		parentpage = Application.getWikiroot()
 	else:
 		parentpage = currPage.parent
 
@@ -180,14 +180,14 @@ def createChildPage (parentwnd):
 	Создать страницу, которая будет дочерней к текущей странице
 	parentwnd - окно, которое будет родителем для диалога создания страницы
 	"""
-	if Application.wikiroot == None:
+	if Application.getWikiroot() == None:
 		MessageBox (_(u"Wiki is not open"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 		return
 
-	currPage = Application.wikiroot.selectedPage
+	currPage = Application.getWikiroot().selectedPage
 
 	if currPage == None:
-		currPage = Application.wikiroot
+		currPage = Application.getWikiroot()
 
 	createPageWithDialog (parentwnd, currPage)
 	
@@ -253,7 +253,6 @@ def openWikiWithDialog (parent, readonly=False):
 def openWiki (path, readonly=False):
 	wikiroot = None
 
-	#Application.wikiroot = None
 	Application.onStartTreeUpdate(None)
 
 	try:
@@ -266,8 +265,7 @@ def openWiki (path, readonly=False):
 		else:
 			wikiroot.selectedPage = None
 
-		Application.wikiroot = wikiroot
-		Application.onWikiOpen (Application.wikiroot)
+		Application.setWikiroot (wikiroot)
 	except IOError:
 		core.commands.MessageBox (_(u"Can't load wiki '%s'") % path, 
 				_(u"Error"), 
@@ -275,7 +273,7 @@ def openWiki (path, readonly=False):
 	finally:
 		Application.onEndTreeUpdate(wikiroot)
 
-	return Application.wikiroot
+	return Application.getWikiroot()
 
 
 def copyTextToClipboard (text):
@@ -376,12 +374,12 @@ def moveCurrentPageUp ():
 	"""
 	Переместить текущую страницу на одну позицию вверх
 	"""
-	if Application.wikiroot == None:
+	if Application.getWikiroot() == None:
 		MessageBox (_(u"Wiki is not open"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 		return
 
-	if Application.wikiroot.selectedPage != None:
-		Application.wikiroot.selectedPage.order -= 1
+	if Application.getWikiroot().selectedPage != None:
+		Application.getWikiroot().selectedPage.order -= 1
 
 
 @testreadonly
@@ -389,12 +387,12 @@ def moveCurrentPageDown ():
 	"""
 	Переместить текущую страницу на одну позицию вниз
 	"""
-	if Application.wikiroot == None:
+	if Application.getWikiroot() == None:
 		MessageBox (_(u"Wiki is not open"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 		return
 
-	if Application.wikiroot.selectedPage != None:
-		Application.wikiroot.selectedPage.order += 1
+	if Application.getWikiroot().selectedPage != None:
+		Application.getWikiroot().selectedPage.order += 1
 
 
 @testreadonly
@@ -402,12 +400,12 @@ def sortChildrenAlphabeticalGUI ():
 	"""
 	Команда для сортировки дочерних страниц текущей страницы по алфавиту
 	"""
-	if Application.wikiroot == None:
+	if Application.getWikiroot() == None:
 		MessageBox (_(u"Wiki is not open"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 		return
 
-	if Application.wikiroot.selectedPage != None:
-		sortChildrenAlphabetical (Application.wikiroot.selectedPage)
+	if Application.getWikiroot().selectedPage != None:
+		sortChildrenAlphabetical (Application.getWikiroot().selectedPage)
 
 
 @testreadonly
@@ -415,12 +413,12 @@ def sortSiblingsAlphabeticalGUI ():
 	"""
 	Команда для сортировки по алфавиту того же уровня, на котором мы сейчас находимся
 	"""
-	if Application.wikiroot == None:
+	if Application.getWikiroot() == None:
 		MessageBox (_(u"Wiki is not open"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 		return
 
-	if Application.wikiroot.selectedPage != None:
-		sortChildrenAlphabetical (Application.wikiroot.selectedPage.parent)
+	if Application.getWikiroot().selectedPage != None:
+		sortChildrenAlphabetical (Application.getWikiroot().selectedPage.parent)
 
 
 def sortChildrenAlphabetical(parentPage):
