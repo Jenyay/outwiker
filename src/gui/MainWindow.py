@@ -15,7 +15,6 @@ from core.recent import RecentWiki
 import pages.search.searchpage
 import core.system
 from gui.preferences.PrefDialog import PrefDialog
-from gui.about import AboutDialog
 from core.application import Application
 from gui.trayicon import OutwikerTrayIcon
 from gui.AttachPanel import AttachPanel
@@ -239,7 +238,7 @@ class MainWindow(wx.Frame):
 		self.attachPanel = AttachPanel (self.mainPanel, -1)
 
 		self.__loadMainWindowParams()
-		self.__initAuiManager (self.auiManager)
+		self.__initAuiManager ()
 		self.auiManager.Bind (wx.aui.EVT_AUI_PANE_CLOSE, self.onPaneClose)
 
 		self.__setMenuBitmaps()
@@ -267,7 +266,7 @@ class MainWindow(wx.Frame):
 
 		self._updateRecentMenu()
 		self.__iconizeAfterStart ()
-		self.__setFullscreen(Application.config.FullscreenOption.value)
+		self.setFullscreen(Application.config.FullscreenOption.value)
 
 		if len (sys.argv) > 1:
 			self._openFromCommandLine()
@@ -283,6 +282,7 @@ class MainWindow(wx.Frame):
 		if wikiroot != None and not wikiroot.readonly:
 			self.recentWiki.add (wikiroot.path)
 			self._updateRecentMenu()
+
 		self.__enableGui()
 		self._loadBookmarks()
 
@@ -300,13 +300,13 @@ class MainWindow(wx.Frame):
 		self.mainPanel.Destroy()
 
 
-	def __initAuiManager(self, auiManager):
+	def __initAuiManager(self):
 		self.__initPagePane (self.auiManager)
 		self.__initAttachesPane (self.auiManager)
 		self.__initTreePane (self.auiManager)
 
-		auiManager.SetDockSizeConstraint (0.8, 0.8)
-		auiManager.Update()
+		self.auiManager.SetDockSizeConstraint (0.8, 0.8)
+		self.auiManager.Update()
 
 	
 	def onPaneClose (self, event):
@@ -314,7 +314,6 @@ class MainWindow(wx.Frame):
 			self.viewNotes.Check (False)
 		elif event.GetPane().name == self.auiManager.GetPane (self.attachPanel).name:
 			self.viewAttaches.Check (False)
-
 
 
 	def __initTreePane (self, auiManager):
@@ -681,18 +680,11 @@ class MainWindow(wx.Frame):
 		"""
 		Событие при обновлении дерева
 		"""
-		#Application.wikiroot = sender.root
 		self._loadBookmarks()
 
 
 	def onNew(self, event): # wxGlade: MainWindow.<event_handler>
-		dlg = wx.FileDialog (self, style = wx.FD_SAVE)
-
-		if dlg.ShowModal() == wx.ID_OK:
-			Application.wikiroot = WikiDocument.create (dlg.GetPath ())
-			Application.wikiroot.selectedPage = None
-
-		dlg.Destroy()
+		core.commands.createNewWiki(self)
 
 
 	def onOpen(self, event): # wxGlade: MainWindow.<event_handler>
@@ -704,18 +696,18 @@ class MainWindow(wx.Frame):
 
 
 	def onReload(self, event): # wxGlade: MainWindow.<event_handler>
-		if Application.wikiroot != None:
-			# TODO: Проверить, нужна ли эта строка
-			Application.onStartTreeUpdate(Application.wikiroot)
+		core.commands.reloadWiki (self)
+	
 
-			if (core.commands.MessageBox (_(u"Save current page before reload?"), 
-				_(u"Save?"), 
-				wx.YES_NO  | wx.ICON_QUESTION ) == wx.NO):
-				self.pagePanel.destroyWithoutSave()
-			else:
-				self.pagePanel.destroyPageView()
-				
-			core.commands.openWiki (Application.wikiroot.path)
+	def destroyPagePanel (self, save):
+		"""
+		Уничтожить панель с текущей страницей.
+		save - надо ли предварительно сохранить страницу?
+		"""
+		if save:
+			self.pagePanel.destroyPageView()
+		else:
+			self.pagePanel.destroyWithoutSave()
 
 
 	def onAddSiblingPage(self, event): # wxGlade: MainWindow.<event_handler>
@@ -737,10 +729,7 @@ class MainWindow(wx.Frame):
 			core.commands.attachFilesWithDialog (self, Application.wikiroot.selectedPage)
 
 	def onAbout(self, event): # wxGlade: MainWindow.<event_handler>
-		version = core.commands.getCurrentVersion()
-		dlg = AboutDialog (version, self)
-		dlg.ShowModal()
-		dlg.Destroy()
+		core.commands.showAboutDialog (self)
 
 
 	def onExit(self, event): # wxGlade: MainWindow.<event_handler>
@@ -813,10 +802,7 @@ class MainWindow(wx.Frame):
 
 
 	def onHelp(self, event): # wxGlade: MainWindow.<event_handler>
-		help_dir = u"help"
-		current_help = "help_rus"
-		path = os.path.join (core.system.getCurrentDir(), help_dir, current_help)
-		core.commands.openWiki (path, readonly=True)
+		core.commands.openHelp()
 
 
 	def onOpenReadOnly(self, event): # wxGlade: MainWindow.<event_handler>
@@ -825,10 +811,7 @@ class MainWindow(wx.Frame):
 
 	def onPreferences(self, event): # wxGlade: MainWindow.<event_handler>
 		dlg = PrefDialog (self)
-
-		if dlg.ShowModal() == wx.ID_OK:
-			pass
-
+		dlg.ShowModal()
 		dlg.Destroy()
 	
 
@@ -855,7 +838,14 @@ class MainWindow(wx.Frame):
 		
 
 	def onViewTree(self, event): # wxGlade: MainWindow.<event_handler>
-		pane = self.auiManager.GetPane (self.tree)
+		self.showHideTree()
+	
+
+	def __showHidePane (self, control):
+		"""
+		Показать / скрыть pane с некоторым контролом
+		"""
+		pane = self.auiManager.GetPane (control)
 
 		self.__savePanesSize()
 
@@ -866,27 +856,31 @@ class MainWindow(wx.Frame):
 
 		self.__loadPanesSize ()
 		self.__updateViewMenu()
+	
+
+	def showHideTree (self):
+		"""
+		Показать/спарятать дерево с заметками
+		"""
+		self.__showHidePane (self.tree)
+
+	
+	def showHideAttaches (self):
+		"""
+		Показать/спарятать дерево с заметками
+		"""
+		self.__showHidePane (self.attachPanel)
 
 
 	def onViewAttaches(self, event): # wxGlade: MainWindow.<event_handler>
-		pane = self.auiManager.GetPane (self.attachPanel)
-
-		self.__savePanesSize()
-
-		if pane.IsShown():
-			pane.Hide()
-		else:
-			pane.Show()
-
-		self.__loadPanesSize ()
-		self.__updateViewMenu()
+		self.showHideAttaches()
 
 
 	def onFullscreen(self, event): # wxGlade: MainWindow.<event_handler>
-		self.__setFullscreen(not self.IsFullScreen())
+		self.setFullscreen(not self.IsFullScreen())
 
 
-	def __setFullscreen (self, fullscreen):
+	def setFullscreen (self, fullscreen):
 		"""
 		Установить параметры в зависимости от режима fullscreen
 		"""
