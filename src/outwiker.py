@@ -8,7 +8,6 @@ import wx
 
 from core.config import GeneralConfig, getConfigPath
 from core.application import Application
-from gui.trayicon import OutwikerTrayIcon
 
 
 class OutWiker(wx.App):
@@ -54,7 +53,4 @@ class OutWiker(wx.App):
 
 if __name__ == "__main__":
 	outwiker = OutWiker(0)
-
-	#trayicon = OutwikerTrayIcon (outwiker.mainWnd)
 	outwiker.MainLoop()
-	#trayicon.removeTrayIcon()
