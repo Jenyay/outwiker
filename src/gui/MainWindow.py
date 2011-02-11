@@ -267,7 +267,8 @@ class MainWindow(wx.Frame):
 			# Открыть последний открытый файл (если установлена соответствующая опция)
 			self.__openRecentWiki ()
 
-		self.__createTrayIcon()
+		self.taskBarIcon = OutwikerTrayIcon(self)
+		#self.__createTrayIcon()
 
 	
 	def onWikiOpen (self, wikiroot):
@@ -425,8 +426,8 @@ class MainWindow(wx.Frame):
 		self.SetTitle (result)
 	
 
-	def __createTrayIcon (self):
-		self.taskBarIcon = OutwikerTrayIcon(self)
+	#def __createTrayIcon (self):
+	#	self.taskBarIcon = OutwikerTrayIcon(self)
 
 
 	def __enableGui (self):
