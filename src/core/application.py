@@ -34,6 +34,17 @@ class ApplicationParams (object):
 		self.onWikiClose (self._wikiroot)
 		self._wikiroot = value
 		self.onWikiOpen (self._wikiroot)
+	
+
+	@property
+	def selectedPage (self):
+		"""
+		Вернуть текущую страницу или None, если страница не выбрана или вики не открыта
+		"""
+		if self._wikiroot == None:
+			return None
+
+		return self._wikiroot.selectedPage
 
 
 	def __createEvents (self):
