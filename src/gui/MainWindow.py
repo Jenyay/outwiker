@@ -634,8 +634,7 @@ class MainWindow(wx.Frame):
 			self.auiManager.UnInit()
 			self.mainPanel.Close()
 
-			self.taskBarIcon.removeTrayIcon()
-
+			self.taskBarIcon.Destroy()
 			self.Destroy()
 		else:
 			event.Veto()

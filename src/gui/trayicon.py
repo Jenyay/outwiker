@@ -23,12 +23,23 @@ class OutwikerTrayIcon (wx.TaskBarIcon):
 		self.icon = wx.EmptyIcon()
 		self.icon.CopyFromBitmap(wx.Bitmap(os.path.join (core.system.getImagesDir(), "outwiker_16.png"), wx.BITMAP_TYPE_ANY))
 
+		self.__bind()
+
+		self.initMainWnd()
+	
+
+	def __bind (self):
 		self.Bind (wx.EVT_TASKBAR_LEFT_DOWN, self.OnTrayLeftClick)
 		self.Bind(wx.EVT_MENU, self.onExit, id=self.ID_EXIT)
 		self.Bind(wx.EVT_MENU, self.onRestore, id=self.ID_RESTORE)
 		self.mainWnd.Bind (wx.EVT_ICONIZE, self.onIconize)
+	
 
-		self.initMainWnd()
+	def __unbind (self):
+		self.Unbind (wx.EVT_TASKBAR_LEFT_DOWN, handler = self.OnTrayLeftClick)
+		self.Unbind(wx.EVT_MENU, handler = self.onExit, id=self.ID_EXIT)
+		self.Unbind(wx.EVT_MENU, handler = self.onRestore, id=self.ID_RESTORE)
+		self.mainWnd.Unbind (wx.EVT_ICONIZE, handler = self.onIconize)
 
 
 	def initMainWnd (self):
@@ -86,6 +97,11 @@ class OutwikerTrayIcon (wx.TaskBarIcon):
 		trayMenu.Append (self.ID_EXIT, _(u"Exit"))
 
 		return trayMenu
+
+
+	def Destroy (self):
+		self.removeTrayIcon()
+		self.__unbind()
 
 
 	def ShowIcon (self):
