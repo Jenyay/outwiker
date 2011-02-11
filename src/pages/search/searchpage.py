@@ -6,12 +6,13 @@
 
 import os.path
 
-from core.tree import WikiPage
+from core.tree import WikiPage, createPage
 from core.search import AllTagsSearchStrategy, AnyTagSearchStrategy, TagsList
 
 from SearchPanel import SearchPanel
 import core.system
 from core.application import Application
+import core.exceptions
 
 paramsSection = u"Search"
 
@@ -19,8 +20,8 @@ class SearchWikiPage (WikiPage):
 	"""
 	Класс HTML-страниц
 	"""
-	def __init__ (self, path, subpath, create = False):
-		WikiPage.__init__ (self, path, subpath, create = False)
+	def __init__ (self, path, title, parent, readonly = False):
+		WikiPage.__init__ (self, path, title, parent, readonly)
 	
 
 	@staticmethod
@@ -40,11 +41,10 @@ class SearchPageFactory (object):
 
 	@staticmethod
 	def create (parent, title, tags):
-		assert not title.startswith ("__")
-
-		path = os.path.join (parent.path, title)
-		page = SearchWikiPage.create (parent, path, title, SearchWikiPage.getType(), tags)
-		return page
+		"""
+		Создать страницу. Вызывать этот метод вместо конструктора
+		"""
+		return createPage (SearchWikiPage, parent, title, tags)
 
 
 	@staticmethod

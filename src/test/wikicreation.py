@@ -10,8 +10,12 @@ import shutil
 import unittest
 
 from core.tree import RootWikiPage, WikiDocument
-from pages.text.textpage import TextPageFactory
-from pages.html.htmlpage import HtmlPageFactory
+
+from pages.text.textpage import TextPageFactory, TextWikiPage
+from pages.html.htmlpage import HtmlPageFactory, HtmlWikiPage
+from pages.search.searchpage import SearchPageFactory, SearchWikiPage
+from pages.wiki.wikipage import WikiPageFactory, WikiWikiPage
+
 from core.event import Event
 from core.factory import FactorySelector
 from core.application import Application
@@ -228,6 +232,20 @@ class TextPageCreationTest(unittest.TestCase):
 
 	def tearDown(self):
 		removeWiki (self.path)
+	
+
+	def testTypeCreation (self):
+		textPage = TextPageFactory.create (self.rootwiki, u"Текстовая страница", [])
+		self.assertEqual (TextWikiPage, type(textPage))
+
+		wikiPage = WikiPageFactory.create (self.rootwiki, u"Вики-страница", [])
+		self.assertEqual (WikiWikiPage, type(wikiPage))
+
+		htmlPage = HtmlPageFactory.create (self.rootwiki, u"HTML-страница", [])
+		self.assertEqual (HtmlWikiPage, type(htmlPage))
+
+		searchPage = SearchPageFactory.create (self.rootwiki, u"Поисковая страница", [])
+		self.assertEqual (SearchWikiPage, type(searchPage))
 
 
 	def testIcon (self):

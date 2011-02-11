@@ -22,15 +22,15 @@ class FactorySelector (object):
 		pass
 
 	@staticmethod
-	def getFactory (page):
+	def getFactory (pageType):
 		"""
-		Найти фабрику, которая работает с переданной страницей (со страницей данного типа).
+		Найти фабрику, которая работает с переданным типом страницы (со страницей данного типа).
 		Или вернуть фабрику по умолчанию
 		"""
 		selFactory = FactorySelector.defaultFactory
 
 		for factory in FactorySelector.factories:
-			if page.type == factory.type:
+			if pageType == factory.type:
 				selFactory = factory
 				break
 

@@ -6,15 +6,17 @@
 
 import os.path
 
-from core.tree import WikiPage
+from core.tree import WikiPage, createPage
 from pages.text.TextPanel import TextPanel
+import core.exceptions
+
 
 class TextWikiPage (WikiPage):
 	"""
 	Класс HTML-страниц
 	"""
-	def __init__(self, path, title, parent):
-		WikiPage.__init__ (self, path, title, parent)
+	def __init__(self, path, title, parent, readonly = False):
+		WikiPage.__init__ (self, path, title, parent, readonly)
 	
 
 	@staticmethod
@@ -34,11 +36,11 @@ class TextPageFactory (object):
 
 	@staticmethod
 	def create (parent, title, tags):
-		assert not title.startswith ("__")
+		"""
+		Создать страницу. Вызывать этот метод вместо конструктора
+		"""
+		return createPage (TextWikiPage, parent, title, tags)
 
-		path = os.path.join (parent.path, title)
-		page = TextWikiPage.create (parent, path, title, TextWikiPage.getType(), tags)
-		return page
 
 
 	@staticmethod

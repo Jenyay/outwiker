@@ -76,7 +76,6 @@ class PrefDialog(wx.Dialog):
 		"""
 		Создать страницы настроек для типов страниц
 		"""
-
 		# Индекс последней добавленной страницы
 		pageindex = 2
 		for factory in FactorySelector.factories:

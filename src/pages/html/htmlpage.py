@@ -6,15 +6,16 @@
 
 import os.path
 
-from core.tree import WikiPage
+from core.tree import WikiPage, createPage
 from HtmlPanel import HtmlPagePanel
+import core.exceptions
 
 class HtmlWikiPage (WikiPage):
 	"""
 	Класс HTML-страниц
 	"""
-	def __init__ (self, path, subpath, create = False):
-		WikiPage.__init__ (self, path, subpath, create = False)
+	def __init__ (self, path, title, parent, readonly = False):
+		WikiPage.__init__ (self, path, title, parent, readonly)
 	
 	@staticmethod
 	def getType ():
@@ -30,13 +31,13 @@ class HtmlPageFactory (object):
 	def __init__ (self):
 		pass
 
+
 	@staticmethod
 	def create (parent, title, tags):
-		assert not title.startswith ("__")
-
-		path = os.path.join (parent.path, title)
-		page = HtmlWikiPage.create (parent, path, title, HtmlWikiPage.getType(), tags)
-		return page
+		"""
+		Создать страницу. Вызывать этот метод вместо конструктора
+		"""
+		return createPage (HtmlWikiPage, parent, title, tags)
 
 
 	@staticmethod

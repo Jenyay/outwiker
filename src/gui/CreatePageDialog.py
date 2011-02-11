@@ -128,7 +128,7 @@ class CreatePageDialog(wx.Dialog):
 		"""
 		n = 0
 		for factory in core.factory.FactorySelector.factories:
-			if factory.type == core.factory.FactorySelector.getFactory(currentPage).type:
+			if factory.type == core.factory.FactorySelector.getFactory(currentPage.type).type:
 				self.comboType.SetSelection (n)
 				self.comboType.Disable ()
 				break

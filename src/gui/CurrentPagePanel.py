@@ -96,7 +96,7 @@ class CurrentPagePanel(wx.Panel):
 		Обновить вид страницы
 		"""
 		if page != None:
-			factory = FactorySelector.getFactory (page)
+			factory = FactorySelector.getFactory (page.type)
 			self.pageView = factory.getPageView (page, self)
 
 			assert self.pageView != None

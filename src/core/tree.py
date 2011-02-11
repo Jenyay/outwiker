@@ -12,6 +12,27 @@ from core.search import TagsList
 import core.exceptions
 
 
+def createPage (pageType, parent, title, tags):
+	"""
+	Создать страницу по ее типу
+	"""
+	if parent.readonly:
+		raise core.exceptions.ReadonlyException
+
+	path = os.path.join (parent.path, title)
+
+	page = pageType (path, title, parent)
+	parent.addToChildren (page)
+
+	try:
+		page.initAfterCreating (pageType.getType(), tags)
+	except Exception:
+		parent.removeFromChildren (page)
+		raise
+
+	return page
+
+
 class RootWikiPage (object):
 	"""
 	Класс для корня вики
@@ -37,11 +58,12 @@ class RootWikiPage (object):
 		self._children = []
 		self.readonly = readonly
 
-		self._params = self._readParams(self.readonly)
+		self._params = RootWikiPage._readParams(self.path, self.readonly)
 
 	
-	def _readParams (self, readonly=False):
-		return Config (os.path.join (self.path, RootWikiPage.pageConfig), readonly)
+	@staticmethod
+	def _readParams (path, readonly=False):
+		return Config (os.path.join (path, RootWikiPage.pageConfig), readonly)
 
 
 	@property
@@ -308,6 +330,10 @@ class WikiPage (RootWikiPage):
 	paramTags = u"tags"
 	paramType = u"type"
 
+	@staticmethod
+	def getType ():
+		return u"base"
+
 
 	def __init__(self, path, title, parent, readonly = False):
 		"""
@@ -400,7 +426,7 @@ class WikiPage (RootWikiPage):
 		"""
 		oldPath = page.path
 		page._path = newPath
-		page._params = page._readParams()
+		page._params = RootWikiPage._readParams(page.path)
 
 		for child in page.children:
 			newChildPath = child.path.replace (oldPath, newPath, 1)
@@ -564,9 +590,9 @@ class WikiPage (RootWikiPage):
 				return os.path.join (self.path, file)
 	
 
-	def _load (self):
+	def initAfterLoading (self):
 		"""
-		Загрузить параметры страницы
+		Инициализировать после загрузки (загрузить параметры страницы)
 		"""
 		self._type = self._params.get (RootWikiPage.sectionGeneral, WikiPage.paramType)
 
@@ -583,8 +609,9 @@ class WikiPage (RootWikiPage):
 		Использовать этот метод вместо конструктора, когда надо загрузить страницу
 		"""
 		title = os.path.basename(path)
+		params = RootWikiPage._readParams(path, readonly)
 		page = WikiPage (path, title, parent, readonly)
-		page._load ()
+		page.initAfterLoading ()
 
 		return page
 
@@ -638,28 +665,10 @@ class WikiPage (RootWikiPage):
 		self._params.set (RootWikiPage.sectionGeneral, WikiPage.paramTags, tags)
 
 
-	@staticmethod
-	def create (parent, path, title, type, tags):
+	def initAfterCreating (self, type, tags):
 		"""
-		Создать страницу. Вызывать этот метод вместо конструктора
+		Инициализация после создания
 		"""
-		if parent.readonly:
-			raise core.exceptions.ReadonlyException
-
-		page = WikiPage (path, title, parent)
-		parent.addToChildren (page)
-
-		try:
-			page._create (title, type, tags)
-		except Exception:
-			parent.removeFromChildren (page)
-			raise
-
-		return page
-
-
-	def _create (self, title, type, tags):
-		self._title = title
 		self._tags = tags[:]
 		self._type = type
 		

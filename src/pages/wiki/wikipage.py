@@ -6,19 +6,20 @@
 
 import os.path
 
-from core.tree import WikiPage
+from core.tree import WikiPage, createPage
 from wikipanel import WikiPagePanel
 import WikiPreferences
 from core.config import BooleanOption, IntegerOption
 from core.application import Application
+import core.exceptions
 
 
 class WikiWikiPage (WikiPage):
 	"""
 	Класс wiki-страниц
 	"""
-	def __init__ (self, path, subpath, create = False):
-		WikiPage.__init__ (self, path, subpath, create = False)
+	def __init__ (self, path, title, parent, readonly = False):
+		WikiPage.__init__ (self, path, title, parent, readonly)
 	
 
 	@staticmethod
@@ -50,11 +51,10 @@ class WikiPageFactory (object):
 
 	@staticmethod
 	def create (parent, title, tags):
-		assert not title.startswith ("__")
-
-		path = os.path.join (parent.path, title)
-		page = WikiWikiPage.create (parent, path, title, WikiWikiPage.getType(), tags)
-		return page
+		"""
+		Создать страницу. Вызывать этот метод вместо конструктора
+		"""
+		return createPage (WikiWikiPage, parent, title, tags)
 
 
 	@staticmethod

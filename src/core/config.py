@@ -3,7 +3,9 @@
 
 import ConfigParser
 import os
+
 import core.system
+#from core.tree import WikiPage, RootWikiPage
 
 
 def getConfigPath (dirname, fname):
@@ -199,6 +201,15 @@ class FontOption (object):
 		self.bold = isBoldOption
 		self.italic = isItalicOption
 
+
+#class PageConfig (Config):
+#	"""
+#	Класс для хранения настроек страниц
+#	"""
+#	def __init__ (self, fname, readonly=False):
+#		Config.__init__ (self, fname, readonly)
+#
+#		self.typeOption = StringOption (self, RootWikiPage.sectionGeneral, WikiPage.paramType, u"")
 
 
 class GeneralConfig (Config):
