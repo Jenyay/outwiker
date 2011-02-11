@@ -23,7 +23,7 @@ class OutWiker(wx.App):
 		wx.InitAllImageHandlers()
 		self.mainWnd = MainWindow(None, -1, "")
 		self.SetTopWindow (self.mainWnd)
-		self.mainWnd.Show()
+		#self.mainWnd.Show()
 
 		self.bindActivateApp()
 
