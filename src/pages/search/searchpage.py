@@ -21,10 +21,15 @@ class SearchWikiPage (WikiPage):
 	"""
 	def __init__ (self, path, subpath, create = False):
 		WikiPage.__init__ (self, path, subpath, create = False)
+	
+
+	@staticmethod
+	def getType ():
+		return u"search"
 
 
 class SearchPageFactory (object):
-	type = u"search"
+	type = SearchWikiPage.getType()
 
 	# Название страницы, показываемое пользователю
 	title = _(u"Search Page")
@@ -32,13 +37,15 @@ class SearchPageFactory (object):
 	def __init__ (self):
 		pass
 
+
 	@staticmethod
 	def create (parent, title, tags):
 		assert not title.startswith ("__")
 
 		path = os.path.join (parent.path, title)
-		page = SearchWikiPage.create (parent, path, title, SearchPageFactory.type, tags)
+		page = SearchWikiPage.create (parent, path, title, SearchWikiPage.getType(), tags)
 		return page
+
 
 	@staticmethod
 	def getPageView (page, parent):

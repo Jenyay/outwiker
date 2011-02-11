@@ -24,7 +24,7 @@ class FactorySelector (object):
 	@staticmethod
 	def getFactory (page):
 		"""
-		Найти фабрику, которая работает с переданной страницей (до страницей данного типа).
+		Найти фабрику, которая работает с переданной страницей (со страницей данного типа).
 		Или вернуть фабрику по умолчанию
 		"""
 		selFactory = FactorySelector.defaultFactory

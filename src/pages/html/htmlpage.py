@@ -15,10 +15,14 @@ class HtmlWikiPage (WikiPage):
 	"""
 	def __init__ (self, path, subpath, create = False):
 		WikiPage.__init__ (self, path, subpath, create = False)
+	
+	@staticmethod
+	def getType ():
+		return u"html"
 
 
 class HtmlPageFactory (object):
-	type = u"html"
+	type = HtmlWikiPage.getType()
 
 	# Название страницы, показываемое пользователю
 	title = _(u"HTML Page")
@@ -31,7 +35,7 @@ class HtmlPageFactory (object):
 		assert not title.startswith ("__")
 
 		path = os.path.join (parent.path, title)
-		page = HtmlWikiPage.create (parent, path, title, HtmlPageFactory.type, tags)
+		page = HtmlWikiPage.create (parent, path, title, HtmlWikiPage.getType(), tags)
 		return page
 
 

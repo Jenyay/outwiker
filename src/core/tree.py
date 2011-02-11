@@ -584,12 +584,7 @@ class WikiPage (RootWikiPage):
 		"""
 		title = os.path.basename(path)
 		page = WikiPage (path, title, parent, readonly)
-
-		try:
-			page._load ()
-		except Exception:
-			#parent.removeFromChildren (page)
-			raise
+		page._load ()
 
 		return page
 
@@ -670,7 +665,6 @@ class WikiPage (RootWikiPage):
 		
 		self.save()
 		Application.onPageCreate(self)
-		#Application.onTreeUpdate(self)
 	
 
 	def _getTags (self, configParser):

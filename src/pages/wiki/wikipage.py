@@ -19,11 +19,16 @@ class WikiWikiPage (WikiPage):
 	"""
 	def __init__ (self, path, subpath, create = False):
 		WikiPage.__init__ (self, path, subpath, create = False)
+	
+
+	@staticmethod
+	def getType ():
+		return u"wiki"
 
 
 class WikiPageFactory (object):
 	# Обрабатываемый этой фабрикой тип страниц
-	type = u"wiki"
+	type = WikiWikiPage.getType()
 
 	# Название страницы, показываемое пользователю
 	title = _(u"Wiki Page")
@@ -48,7 +53,7 @@ class WikiPageFactory (object):
 		assert not title.startswith ("__")
 
 		path = os.path.join (parent.path, title)
-		page = WikiWikiPage.create (parent, path, title, WikiPageFactory.type, tags)
+		page = WikiWikiPage.create (parent, path, title, WikiWikiPage.getType(), tags)
 		return page
 
 

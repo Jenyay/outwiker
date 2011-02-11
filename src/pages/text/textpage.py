@@ -15,10 +15,15 @@ class TextWikiPage (WikiPage):
 	"""
 	def __init__(self, path, title, parent):
 		WikiPage.__init__ (self, path, title, parent)
+	
+
+	@staticmethod
+	def getType ():
+		return u"text"
 
 
 class TextPageFactory (object):
-	type = u"text"
+	type = TextWikiPage.getType()
 
 	# Название страницы, показываемое пользователю
 	title = _(u"Text Page")
@@ -32,7 +37,7 @@ class TextPageFactory (object):
 		assert not title.startswith ("__")
 
 		path = os.path.join (parent.path, title)
-		page = TextWikiPage.create (parent, path, title, TextPageFactory.type, tags)
+		page = TextWikiPage.create (parent, path, title, TextWikiPage.getType(), tags)
 		return page
 
 
