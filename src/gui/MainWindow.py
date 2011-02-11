@@ -53,7 +53,6 @@ class MainWindow(wx.Frame):
 		self.ID_RENAME = wx.NewId()
 		self.ID_HELP = wx.NewId()
 		self.ID_PREFERENCES = wx.NewId()
-		self.ID_RESTORE = wx.NewId()
 		self.ID_VIEW_TREE = wx.NewId()
 		self.ID_VIEW_ATTACHES = wx.NewId()
 		self.ID_VIEW_FULLSCREEN = wx.NewId()
@@ -244,17 +243,12 @@ class MainWindow(wx.Frame):
 		self.__setMenuBitmaps()
 		
 		self.Bind (wx.EVT_CLOSE, self.onClose)
-		self.Bind (wx.EVT_ICONIZE, self.onIconize)
-		self.Bind (wx.EVT_MENU, self.onRestore, id=self.ID_RESTORE)
-		#self.Bind (wx.EVT_IDLE, self.onIdle)
-
 		self.mainPanel.Bind (wx.EVT_CLOSE, self.onMainPanelClose)
 
 		self._dropTarget = DropFilesTarget (self)
 
 		self.SetDropTarget (self._dropTarget)
 		self.__enableGui()
-		self. __createTrayIcon()
 
 		self.statusbar.SetFieldsCount(1)
 
@@ -265,7 +259,6 @@ class MainWindow(wx.Frame):
 		self.SetAcceleratorTable(aTable)
 
 		self._updateRecentMenu()
-		self.__iconizeAfterStart ()
 		self.setFullscreen(Application.config.FullscreenOption.value)
 
 		if len (sys.argv) > 1:
@@ -273,6 +266,9 @@ class MainWindow(wx.Frame):
 		else:
 			# Открыть последний открытый файл (если установлена соответствующая опция)
 			self.__openRecentWiki ()
+
+		self.taskBarIcon = OutwikerTrayIcon(self)
+		#self.__createTrayIcon()
 
 	
 	def onWikiOpen (self, wikiroot):
@@ -430,19 +426,8 @@ class MainWindow(wx.Frame):
 		self.SetTitle (result)
 	
 
-	def onRestore (self, event):
-		self.__restoreWindow()
-	
-
-	def __createTrayIcon (self):
-		self.taskBarIcon = OutwikerTrayIcon()
-		self.taskBarIcon.Bind (wx.EVT_TASKBAR_LEFT_DOWN, self.OnTrayLeftClick)
-		self.taskBarIcon.Bind(wx.EVT_MENU, self.onRestore, id=self.taskBarIcon.ID_RESTORE)
-		self.taskBarIcon.Bind(wx.EVT_MENU, self.onExit, id=self.taskBarIcon.ID_EXIT)
-
-
-	def OnTrayLeftClick (self, event):
-		self.__restoreWindow()
+	#def __createTrayIcon (self):
+	#	self.taskBarIcon = OutwikerTrayIcon(self)
 
 
 	def __enableGui (self):
@@ -486,14 +471,6 @@ class MainWindow(wx.Frame):
 			core.commands.openWiki (self.recentWiki[0])
 
 
-	def __iconizeAfterStart (self):
-		"""
-		Свернуться при запуске, если установлена соответствующая опция
-		"""
-		if Application.config.startIconizedOption.value:
-			self.Iconize(True)
-
-	
 	def _openFromCommandLine (self):
 		"""
 		Открыть вики, путь до которой передан в командной строке
@@ -657,20 +634,12 @@ class MainWindow(wx.Frame):
 			self.auiManager.UnInit()
 			self.mainPanel.Close()
 
-			self.__removeTrayIcon()
+			self.taskBarIcon.removeTrayIcon()
 
 			self.Destroy()
 		else:
 			event.Veto()
 	
-
-	def __removeTrayIcon (self):
-		"""
-		Удалить иконку из трея
-		"""
-		if self.taskBarIcon.IsIconInstalled():
-			self.taskBarIcon.RemoveIcon()
-
 
 	def onMainWindowConfigChange (self):
 		self.__updateTitle()
@@ -814,28 +783,6 @@ class MainWindow(wx.Frame):
 		dlg.ShowModal()
 		dlg.Destroy()
 	
-
-	def onIconize (self, event):
-		if self.IsIconized():
-			# Окно свернули
-			self.__minimizeWindow ()
-
-
-	def __restoreWindow (self):
-		self.Show ()
-		self.Iconize (False)
-		self.__removeTrayIcon()
-
-
-	def __minimizeWindow (self):
-		"""
-		Свернуть окно
-		"""
-		if Application.config.minimizeOption.value:
-			# В трей добавим иконку, а окно спрячем
-			self.taskBarIcon.ShowIcon()
-			self.Hide()
-		
 
 	def onViewTree(self, event): # wxGlade: MainWindow.<event_handler>
 		self.showHideTree()
