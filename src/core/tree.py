@@ -6,7 +6,7 @@ import ConfigParser
 import shutil
 
 from core.application import Application
-from core.config import Config
+from core.config import PageConfig
 from core.bookmarks import Bookmarks
 from core.search import TagsList
 import core.exceptions
@@ -64,7 +64,7 @@ class RootWikiPage (object):
 	
 	@staticmethod
 	def _readParams (path, readonly=False):
-		return Config (os.path.join (path, RootWikiPage.pageConfig), readonly)
+		return PageConfig (os.path.join (path, RootWikiPage.pageConfig), readonly)
 
 
 	@property
@@ -611,7 +611,11 @@ class WikiPage (RootWikiPage):
 		"""
 		title = os.path.basename(path)
 		params = RootWikiPage._readParams(path, readonly)
-		page = WikiPage (path, title, parent, readonly)
+
+		# Получим тип страницы по параметрам
+		pageType = core.factory.FactorySelector.getFactory(params.typeOption).getPageType()
+
+		page = pageType (path, title, parent, readonly)
 		page.initAfterLoading ()
 
 		return page

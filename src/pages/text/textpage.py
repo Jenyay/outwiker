@@ -25,7 +25,13 @@ class TextWikiPage (WikiPage):
 
 
 class TextPageFactory (object):
-	type = TextWikiPage.getType()
+	@staticmethod
+	def getPageType():
+		return TextWikiPage
+
+	@staticmethod
+	def getTypeString ():
+		return TextPageFactory.getPageType().getType()
 
 	# Название страницы, показываемое пользователю
 	title = _(u"Text Page")
@@ -39,7 +45,7 @@ class TextPageFactory (object):
 		"""
 		Создать страницу. Вызывать этот метод вместо конструктора
 		"""
-		return createPage (TextWikiPage, parent, title, tags)
+		return createPage (TextPageFactory.getPageType(), parent, title, tags)
 
 
 

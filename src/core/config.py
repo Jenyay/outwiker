@@ -202,14 +202,14 @@ class FontOption (object):
 		self.italic = isItalicOption
 
 
-#class PageConfig (Config):
-#	"""
-#	Класс для хранения настроек страниц
-#	"""
-#	def __init__ (self, fname, readonly=False):
-#		Config.__init__ (self, fname, readonly)
-#
-#		self.typeOption = StringOption (self, RootWikiPage.sectionGeneral, WikiPage.paramType, u"")
+class PageConfig (Config):
+	"""
+	Класс для хранения настроек страниц
+	"""
+	def __init__ (self, fname, readonly=False):
+		Config.__init__ (self, fname, readonly)
+
+		self.typeOption = StringOption (self, u"General", u"type", u"")
 
 
 class GeneralConfig (Config):

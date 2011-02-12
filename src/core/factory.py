@@ -30,7 +30,7 @@ class FactorySelector (object):
 		selFactory = FactorySelector.defaultFactory
 
 		for factory in FactorySelector.factories:
-			if pageType == factory.type:
+			if pageType == factory.getTypeString():
 				selFactory = factory
 				break
 

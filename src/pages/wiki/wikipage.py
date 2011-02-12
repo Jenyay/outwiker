@@ -28,8 +28,14 @@ class WikiWikiPage (WikiPage):
 
 
 class WikiPageFactory (object):
-	# Обрабатываемый этой фабрикой тип страниц
-	type = WikiWikiPage.getType()
+	@staticmethod
+	def getPageType():
+		return WikiWikiPage
+
+	# Обрабатываемый этой фабрикой тип страниц (имеется в виду тип, описываемый строкой)
+	@staticmethod
+	def getTypeString ():
+		return WikiPageFactory.getPageType().getType()
 
 	# Название страницы, показываемое пользователю
 	title = _(u"Wiki Page")
@@ -54,7 +60,11 @@ class WikiPageFactory (object):
 		"""
 		Создать страницу. Вызывать этот метод вместо конструктора
 		"""
-		return createPage (WikiWikiPage, parent, title, tags)
+		return createPage (WikiPageFactory.getPageType(), parent, title, tags)
+
+
+	#@staticmethod
+	#def load (path, parent, readonly):
 
 
 	@staticmethod

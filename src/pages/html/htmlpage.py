@@ -23,7 +23,13 @@ class HtmlWikiPage (WikiPage):
 
 
 class HtmlPageFactory (object):
-	type = HtmlWikiPage.getType()
+	@staticmethod
+	def getPageType():
+		return HtmlWikiPage
+
+	@staticmethod
+	def getTypeString ():
+		return HtmlPageFactory.getPageType().getType()
 
 	# Название страницы, показываемое пользователю
 	title = _(u"HTML Page")
@@ -37,7 +43,7 @@ class HtmlPageFactory (object):
 		"""
 		Создать страницу. Вызывать этот метод вместо конструктора
 		"""
-		return createPage (HtmlWikiPage, parent, title, tags)
+		return createPage (HtmlPageFactory.getPageType(), parent, title, tags)
 
 
 	@staticmethod

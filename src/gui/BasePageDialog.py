@@ -53,9 +53,7 @@ class BasePageDialog(wx.Dialog):
 		self.iconsDict = {}
 		self.makeIconsList()
 
-		if parentPage.parent != None:
-			tags = TagsList.getTagsString (parentPage.tags)
-			self.tagsTextCtrl.SetValue (tags)
+		
 
 
 	def testPageTitle (self, title):

@@ -41,7 +41,6 @@ class HtmlView (wx.html.HtmlWindow):
 	
 	def onCopyFromHtml(self, event):
 		text = self.SelectionToText()
-		#print text
 		if len(text) == 0:
 			return
 

@@ -30,7 +30,13 @@ class SearchWikiPage (WikiPage):
 
 
 class SearchPageFactory (object):
-	type = SearchWikiPage.getType()
+	@staticmethod
+	def getPageType():
+		return SearchWikiPage
+
+	@staticmethod
+	def getTypeString ():
+		return SearchPageFactory.getPageType().getType()
 
 	# Название страницы, показываемое пользователю
 	title = _(u"Search Page")
@@ -44,7 +50,7 @@ class SearchPageFactory (object):
 		"""
 		Создать страницу. Вызывать этот метод вместо конструктора
 		"""
-		return createPage (SearchWikiPage, parent, title, tags)
+		return createPage (SearchPageFactory.getPageType(), parent, title, tags)
 
 
 	@staticmethod
@@ -82,7 +88,7 @@ class GlobalSearch (object):
 			if page == None:
 				page = SearchPageFactory.create (root, title, [])
 				page.icon = os.path.join (imagesDir, "global_search.png")
-			elif page.type != SearchPageFactory.type:
+			elif page.type != SearchPageFactory.getTypeString():
 				number += 1
 				title = u"%s %d" % (GlobalSearch.pageTitle, number)
 				page = None

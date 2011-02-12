@@ -21,7 +21,7 @@ def editPage (parentWnd, currentPage):
 	if currentPage.readonly:
 		raise core.exceptions.ReadonlyException
 
-	dlg = EditPageDialog (currentPage.parent, currentPage, parent = parentWnd)
+	dlg = EditPageDialog (currentPage, currentPage.parent, parent = parentWnd)
 	page = None
 
 	if dlg.ShowModal() == wx.ID_OK:
@@ -122,6 +122,10 @@ def createChildPage (parentwnd):
 class CreatePageDialog (BasePageDialog):
 	def __init__ (self, parentPage = None, *args, **kwds):
 		BasePageDialog.__init__ (self, parentPage, *args, **kwds)
+
+		if parentPage.parent != None:
+			tags = TagsList.getTagsString (parentPage.tags)
+			self.tagsTextCtrl.SetValue (tags)
 	
 
 	def onOk (self, event):
@@ -146,7 +150,7 @@ class EditPageDialog (BasePageDialog):
 
 		self.SetTitle(_(u"Edit page properties"))
 		self._prepareForChange (currentPage)
-	
+
 
 	def _prepareForChange (self, currentPage):
 		"""
@@ -176,7 +180,7 @@ class EditPageDialog (BasePageDialog):
 		"""
 		n = 0
 		for factory in core.factory.FactorySelector.factories:
-			if factory.type == core.factory.FactorySelector.getFactory(currentPage.type).type:
+			if factory.getTypeString() == core.factory.FactorySelector.getFactory(currentPage.type).getTypeString():
 				self.comboType.SetSelection (n)
 				self.comboType.Disable ()
 				break

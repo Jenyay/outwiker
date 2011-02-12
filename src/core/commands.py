@@ -14,10 +14,8 @@ import core.exceptions
 import core.system
 import core.version
 
-from core.tree import WikiDocument
-from core.tree import RootWikiPage
+from core.tree import WikiDocument, RootWikiPage
 from gui.OverwriteDialog import OverwriteDialog
-#from gui.CreatePageDialog import CreatePageDialog
 from core.application import Application
 from gui.about import AboutDialog
 
@@ -102,42 +100,6 @@ def attachFiles (parent, page, files):
 	overwriteDialog.Destroy()
 
 
-
-#@testreadonly
-#def editPage (parentWnd, currentPage):
-#	"""
-#	Вызвать диалог для редактирования страницы
-#	parentWnd - родительское окно
-#	currentPage - страница для редактирования
-#	"""
-#	if currentPage.readonly:
-#		raise core.exceptions.ReadonlyException
-#
-#	dlg = CreatePageDialog.CreateForEdit (currentPage, parentWnd)
-#	page = None
-#
-#	if dlg.ShowModal() == wx.ID_OK:
-#		Application.onStartTreeUpdate(currentPage.root)
-#
-#		try:
-#			factory = dlg.selectedFactory
-#			tags = dlg.tags
-#
-#			currentPage.tags = dlg.tags
-#			currentPage.icon = dlg.icon
-#
-#			try:
-#				currentPage.title = dlg.pageTitle
-#			except OSError as e:
-#				MessageBox (_(u"Can't rename page\n") + unicode (e), _(u"Error"), wx.ICON_ERROR | wx.OK)
-#
-#			currentPage.root.selectedPage = currentPage
-#		finally:
-#			Application.onEndTreeUpdate(currentPage.root)
-#
-#	dlg.Destroy()
-
-
 @testreadonly
 def removePage (page):
 	if page.readonly:
@@ -156,78 +118,6 @@ def removePage (page):
 		finally:
 			Application.onEndTreeUpdate(root)
 
-
-#def createSiblingPage (parentwnd):
-#	"""
-#	Создать страницу, находящуюся на том же уровне, что и текущая страница
-#	parentwnd - окно, которое будет родителем для диалога создания страницы
-#	"""
-#	if Application.wikiroot == None:
-#		MessageBox (_(u"Wiki is not open"), _(u"Error"), wx.ICON_ERROR | wx.OK)
-#		return
-#
-#	currPage = Application.wikiroot.selectedPage
-#
-#	if currPage == None or currPage.parent == None:
-#		parentpage = Application.wikiroot
-#	else:
-#		parentpage = currPage.parent
-#
-#	createPageWithDialog (parentwnd, parentpage)
-
-
-#def createChildPage (parentwnd):
-#	"""
-#	Создать страницу, которая будет дочерней к текущей странице
-#	parentwnd - окно, которое будет родителем для диалога создания страницы
-#	"""
-#	if Application.wikiroot == None:
-#		MessageBox (_(u"Wiki is not open"), _(u"Error"), wx.ICON_ERROR | wx.OK)
-#		return
-#
-#	currPage = Application.wikiroot.selectedPage
-#
-#	if currPage == None:
-#		currPage = Application.wikiroot
-#
-#	createPageWithDialog (parentwnd, currPage)
-	
-
-#@testreadonly
-#def createPageWithDialog (parentwnd, parentpage):
-#	"""
-#	Показать диалог настроек и создать страницу
-#	"""
-#	if parentpage.readonly:
-#		raise core.exceptions.ReadonlyException
-#	
-#	dlg = CreatePageDialog.CreateForCreate (parentpage, parentwnd)
-#	page = None
-#
-#	if dlg.ShowModal() == wx.ID_OK:
-#		factory = dlg.selectedFactory
-#		title = dlg.pageTitle
-#		tags = dlg.tags
-#
-#		Application.onStartTreeUpdate(parentpage.root)
-#
-#		try:
-#			page = factory.create (parentpage, title, tags)
-#			
-#			assert page != None
-#
-#			page.icon = dlg.icon
-#			page.root.selectedPage = page
-#
-#		except OSError, IOError:
-#			MessageBox (_(u"Can't create page"), "Error", wx.ICON_ERROR | wx.OK)
-#		finally:
-#			Application.onEndTreeUpdate(parentpage.root)
-#
-#	dlg.Destroy()
-#
-#
-#	return page
 
 
 def openWikiWithDialog (parent, readonly=False):
