@@ -1,0 +1,10 @@
+[Search]
+strategy = 0
+tags = 
+phrase = 
+
+[General]
+type = search
+order = 2
+tags = тест
+
