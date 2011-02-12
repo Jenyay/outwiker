@@ -180,7 +180,7 @@ class EditPageDialog (BasePageDialog):
 		"""
 		n = 0
 		for factory in core.factory.FactorySelector.factories:
-			if factory.getTypeString() == core.factory.FactorySelector.getFactory(currentPage.type).getTypeString():
+			if factory.getTypeString() == core.factory.FactorySelector.getFactory(currentPage.getTypeString()).getTypeString():
 				self.comboType.SetSelection (n)
 				self.comboType.Disable ()
 				break

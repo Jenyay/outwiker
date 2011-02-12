@@ -21,8 +21,8 @@ class FactorySelectorTest (unittest.TestCase):
 		self.root = WikiDocument.load (self.path)
 
 	def testSelection (self):
-		self.assertEqual (FactorySelector.getFactory (self.root [u"Страница 1"].type), HtmlPageFactory)
-		self.assertEqual (FactorySelector.getFactory (self.root [u"Страница 1/Страница 2"].type), TextPageFactory)
-		self.assertEqual (FactorySelector.getFactory (self.root [u"Еще одна страница"].type), TextPageFactory)
+		self.assertEqual (FactorySelector.getFactory (self.root [u"Страница 1"].getTypeString()), HtmlPageFactory)
+		self.assertEqual (FactorySelector.getFactory (self.root [u"Страница 1/Страница 2"].getTypeString()), TextPageFactory)
+		self.assertEqual (FactorySelector.getFactory (self.root [u"Еще одна страница"].getTypeString()), TextPageFactory)
 
 

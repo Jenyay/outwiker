@@ -10,7 +10,6 @@ from core.config import PageConfig
 from core.bookmarks import Bookmarks
 from core.search import TagsList
 import core.exceptions
-#import core.factory
 
 
 def createPage (pageType, parent, title, tags):
@@ -26,7 +25,7 @@ def createPage (pageType, parent, title, tags):
 	parent.addToChildren (page)
 
 	try:
-		page.initAfterCreating (pageType.getType(), tags)
+		page.initAfterCreating (tags)
 	except Exception:
 		parent.removeFromChildren (page)
 		raise
@@ -176,8 +175,6 @@ class RootWikiPage (object):
 				result.append (page)
 
 		result.sort (RootWikiPage.sortFunction)
-		#for item in result:
-		#	print item.title.encode ("866") + "    " + str (item.getParameter (RootWikiPage.sectionGeneral, RootWikiPage.paramOrder))
 
 		return result
 
@@ -332,7 +329,7 @@ class WikiPage (RootWikiPage):
 	paramType = u"type"
 
 	@staticmethod
-	def getType ():
+	def getTypeString ():
 		return u"base"
 
 
@@ -474,11 +471,6 @@ class WikiPage (RootWikiPage):
 
 
 	@property
-	def type (self):
-		return self._type
-
-
-	@property
 	def icon (self):
 		return self._getIcon()
 
@@ -595,8 +587,6 @@ class WikiPage (RootWikiPage):
 		"""
 		Инициализировать после загрузки (загрузить параметры страницы)
 		"""
-		self._type = self._params.get (RootWikiPage.sectionGeneral, WikiPage.paramType)
-
 		# Теги страницы
 		self._tags = self._getTags (self._params)
 
@@ -613,7 +603,7 @@ class WikiPage (RootWikiPage):
 		params = RootWikiPage._readParams(path, readonly)
 
 		# Получим тип страницы по параметрам
-		pageType = core.factory.FactorySelector.getFactory(params.typeOption).getPageType()
+		pageType = core.factory.FactorySelector.getFactory(params.typeOption.value).getPageType()
 
 		page = pageType (path, title, parent, readonly)
 		page.initAfterLoading ()
@@ -652,7 +642,7 @@ class WikiPage (RootWikiPage):
 		Сохранить настройки
 		"""
 		# Тип
-		self._params.set (RootWikiPage.sectionGeneral, WikiPage.paramType, self.type)
+		self._params.typeOption.value = self.getTypeString()
 
 		#Теги
 		self._saveTags()
@@ -670,13 +660,11 @@ class WikiPage (RootWikiPage):
 		self._params.set (RootWikiPage.sectionGeneral, WikiPage.paramTags, tags)
 
 
-	def initAfterCreating (self, type, tags):
+	def initAfterCreating (self, tags):
 		"""
 		Инициализация после создания
 		"""
 		self._tags = tags[:]
-		self._type = type
-		
 		self.save()
 		Application.onPageCreate(self)
 	

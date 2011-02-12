@@ -18,7 +18,7 @@ class HtmlWikiPage (WikiPage):
 		WikiPage.__init__ (self, path, title, parent, readonly)
 	
 	@staticmethod
-	def getType ():
+	def getTypeString ():
 		return u"html"
 
 
@@ -29,7 +29,7 @@ class HtmlPageFactory (object):
 
 	@staticmethod
 	def getTypeString ():
-		return HtmlPageFactory.getPageType().getType()
+		return HtmlPageFactory.getPageType().getTypeString()
 
 	# Название страницы, показываемое пользователю
 	title = _(u"HTML Page")

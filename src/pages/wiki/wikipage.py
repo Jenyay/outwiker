@@ -23,7 +23,7 @@ class WikiWikiPage (WikiPage):
 	
 
 	@staticmethod
-	def getType ():
+	def getTypeString ():
 		return u"wiki"
 
 
@@ -35,7 +35,7 @@ class WikiPageFactory (object):
 	# Обрабатываемый этой фабрикой тип страниц (имеется в виду тип, описываемый строкой)
 	@staticmethod
 	def getTypeString ():
-		return WikiPageFactory.getPageType().getType()
+		return WikiPageFactory.getPageType().getTypeString()
 
 	# Название страницы, показываемое пользователю
 	title = _(u"Wiki Page")

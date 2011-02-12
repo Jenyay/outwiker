@@ -13,14 +13,14 @@ import core.exceptions
 
 class TextWikiPage (WikiPage):
 	"""
-	Класс HTML-страниц
+	Класс текстовых страниц
 	"""
 	def __init__(self, path, title, parent, readonly = False):
 		WikiPage.__init__ (self, path, title, parent, readonly)
 	
 
 	@staticmethod
-	def getType ():
+	def getTypeString ():
 		return u"text"
 
 
@@ -31,7 +31,7 @@ class TextPageFactory (object):
 
 	@staticmethod
 	def getTypeString ():
-		return TextPageFactory.getPageType().getType()
+		return TextPageFactory.getPageType().getTypeString()
 
 	# Название страницы, показываемое пользователю
 	title = _(u"Text Page")

@@ -6,10 +6,16 @@ import shutil
 import unittest
 
 from core.tree import RootWikiPage, WikiDocument
-from pages.text.textpage import TextPageFactory
+
+from pages.text.textpage import TextPageFactory, TextWikiPage
+from pages.wiki.wikipage import WikiPageFactory, WikiWikiPage
+from pages.html.htmlpage import HtmlPageFactory, HtmlWikiPage
+from pages.search.searchpage import SearchPageFactory, SearchWikiPage
+
 from core.event import Event
 from core.application import Application
 from test.utils import removeWiki
+
 
 class WikiPagesTest(unittest.TestCase):
 	"""
@@ -18,11 +24,10 @@ class WikiPagesTest(unittest.TestCase):
 	def setUp(self):
 		self.path = u"../test/samplewiki"
 		self.root = WikiDocument.load (self.path)
-		#print self.root
 
 
 	def testLoadWiki(self):
-		self.assertEqual ( len (self.root), 4, "Pages count == 4")
+		self.assertEqual ( len (self.root), 5, "Pages count == 5")
 
 
 	def testPagesAccess (self):
@@ -37,6 +42,27 @@ class WikiPagesTest(unittest.TestCase):
 		self.assertEqual (self.root[u"Страница 1"][u"Страница 2"].title, u"Страница 2")
 
 		self.assertEqual (self.root[u"Страница 111"], None)
+	
+
+	def testPageType1 (self):
+		self.assertEqual (type (self.root[u"Типы страниц/HTML-страница"]), HtmlWikiPage)
+		self.assertEqual (type (self.root[u"Типы страниц/wiki-страница"]), WikiWikiPage)
+		self.assertEqual (type (self.root[u"Типы страниц/Страница поиска"]), SearchWikiPage)
+		self.assertEqual (type (self.root[u"Типы страниц/Текстовая страница"]), TextWikiPage)
+	
+
+	def testPageType2 (self):
+		self.assertEqual (self.root[u"Типы страниц/HTML-страница"].getTypeString(), 
+				HtmlWikiPage.getTypeString())
+
+		self.assertEqual (self.root[u"Типы страниц/wiki-страница"].getTypeString(), 
+				WikiWikiPage.getTypeString())
+
+		self.assertEqual (self.root[u"Типы страниц/Страница поиска"].getTypeString(), 
+				SearchWikiPage.getTypeString())
+
+		self.assertEqual (self.root[u"Типы страниц/Текстовая страница"].getTypeString(), 
+				TextWikiPage.getTypeString())
 
 
 	def testPagesParent (self):
@@ -83,11 +109,11 @@ class WikiPagesTest(unittest.TestCase):
 
 
 	def testTypes (self):
-		self.assertEqual (self.root[u"Страница 1"].type, "html")
-		self.assertEqual (self.root[u"Страница 1/Страница 2"].type, "text")
-		self.assertEqual (self.root[u"Страница 3"].type, "html")
-		self.assertEqual (self.root[u"page 4"].type, "text")
-		self.assertEqual (self.root[u"Страница 1/Страница 2/Страница 5"].type, "text")
+		self.assertEqual (self.root[u"Страница 1"].getTypeString(), "html")
+		self.assertEqual (self.root[u"Страница 1/Страница 2"].getTypeString(), "text")
+		self.assertEqual (self.root[u"Страница 3"].getTypeString(), "html")
+		self.assertEqual (self.root[u"page 4"].getTypeString(), "text")
+		self.assertEqual (self.root[u"Страница 1/Страница 2/Страница 5"].getTypeString(), "text")
 
 
 	def testChildren (self):
