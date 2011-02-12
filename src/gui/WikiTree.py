@@ -18,7 +18,7 @@ import core.exceptions
 import core.commands
 import core.system
 from core.application import Application
-import gui.CreatePageDialog
+import gui.pagedialog
 
 
 class WikiTree(wx.Panel):
@@ -140,11 +140,11 @@ class WikiTree(wx.Panel):
 
 
 	def onAddSiblingPage (self, event):
-		gui.CreatePageDialog.createSiblingPage (self)
+		gui.pagedialog.createSiblingPage (self)
 
 
 	def onAddChildPage (self, event):
-		gui.CreatePageDialog.createChildPage (self)
+		gui.pagedialog.createChildPage (self)
 
 
 	def onRemovePage (self, event):
@@ -172,7 +172,7 @@ class WikiTree(wx.Panel):
 			return
 
 		page = self.treeCtrl.GetItemData (item).GetData()
-		gui.CreatePageDialog.editPage (self, page)
+		gui.pagedialog.editPage (self, page)
 		
 
 	def BindPopupMenuEvents (self):
@@ -333,7 +333,7 @@ class WikiTree(wx.Panel):
 		page = self.treeCtrl.GetItemData (self.popupItem).GetData()
 		assert page != None
 
-		gui.CreatePageDialog.createPageWithDialog (self, page)
+		gui.pagedialog.createPageWithDialog (self, page)
 
 	
 	def onAddSibling (self, event):
@@ -344,7 +344,7 @@ class WikiTree(wx.Panel):
 		assert page != None
 		assert page.parent != None
 
-		gui.CreatePageDialog.createPageWithDialog (self, page.parent)
+		gui.pagedialog.createPageWithDialog (self, page.parent)
 
 	
 	def onProperties (self, event):
@@ -354,7 +354,7 @@ class WikiTree(wx.Panel):
 		page = self.treeCtrl.GetItemData (self.popupItem).GetData()
 		assert page != None
 
-		gui.CreatePageDialog.editPage (self, page)
+		gui.pagedialog.editPage (self, page)
 	
 
 	def onItemMenu (self, event):
