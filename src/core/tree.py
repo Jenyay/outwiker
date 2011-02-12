@@ -10,6 +10,7 @@ from core.config import Config
 from core.bookmarks import Bookmarks
 from core.search import TagsList
 import core.exceptions
+#import core.factory
 
 
 def createPage (pageType, parent, title, tags):

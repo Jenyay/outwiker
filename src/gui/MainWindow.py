@@ -19,6 +19,7 @@ from core.application import Application
 from gui.trayicon import OutwikerTrayIcon
 from gui.AttachPanel import AttachPanel
 import core.config
+import gui.CreatePageDialog
 
 # begin wxGlade: dependencies
 # end wxGlade
@@ -677,14 +678,14 @@ class MainWindow(wx.Frame):
 		"""
 		Создание страницы на уровне текущей страницы
 		"""
-		core.commands.createSiblingPage (self)
+		gui.CreatePageDialog.createSiblingPage (self)
 
 	
 	def onAddChildPage(self, event): # wxGlade: MainWindow.<event_handler>
 		"""
 		Создание дочерней страницы
 		"""
-		core.commands.createChildPage (self)
+		gui.CreatePageDialog.createChildPage (self)
 
 
 	def onAttach(self, event): # wxGlade: MainWindow.<event_handler>
