@@ -12,27 +12,6 @@ from core.search import TagsList
 import core.exceptions
 
 
-def createPage (pageType, parent, title, tags):
-	"""
-	Создать страницу по ее типу
-	"""
-	if parent.readonly:
-		raise core.exceptions.ReadonlyException
-
-	path = os.path.join (parent.path, title)
-
-	page = pageType (path, title, parent)
-	parent.addToChildren (page)
-
-	try:
-		page.initAfterCreating (tags)
-	except Exception:
-		parent.removeFromChildren (page)
-		raise
-
-	return page
-
-
 class RootWikiPage (object):
 	"""
 	Класс для корня вики
@@ -273,10 +252,17 @@ class WikiDocument (RootWikiPage):
 		Загрузить корневую страницу вики.
 		Использовать этот метод вместо конструктора
 		"""
-		result = WikiDocument(path, readonly)
-		result._children = result.getChildren()
-		Application.onTreeUpdate(result)
-		return result
+		root = WikiDocument(path, readonly)
+		root.loadChildren()
+		Application.onTreeUpdate(root)
+		return root
+
+
+	def loadChildren (self):
+		"""
+		Интерфейс для загрузки дочерних страниц
+		"""
+		self._children = self.getChildren()
 
 
 	@staticmethod
@@ -599,13 +585,13 @@ class WikiPage (RootWikiPage):
 		Загрузить страницу.
 		Использовать этот метод вместо конструктора, когда надо загрузить страницу
 		"""
-		#import core.factoryselector
+		from core.factoryselector import FactorySelector
 
 		title = os.path.basename(path)
 		params = RootWikiPage._readParams(path, readonly)
 
 		# Получим тип страницы по параметрам
-		pageType = core.factoryselector.FactorySelector.getFactory(params.typeOption.value).getPageType()
+		pageType = FactorySelector.getFactory(params.typeOption.value).getPageType()
 
 		page = pageType (path, title, parent, readonly)
 		page.initAfterLoading ()

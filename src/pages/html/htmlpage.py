@@ -6,9 +6,9 @@
 
 import os.path
 
-from core.tree import WikiPage, createPage
+from core.tree import WikiPage
 from HtmlPanel import HtmlPagePanel
-import core.exceptions
+from core.factory import PageFactory
 
 class HtmlWikiPage (WikiPage):
 	"""
@@ -22,7 +22,7 @@ class HtmlWikiPage (WikiPage):
 		return u"html"
 
 
-class HtmlPageFactory (object):
+class HtmlPageFactory (PageFactory):
 	@staticmethod
 	def getPageType():
 		return HtmlWikiPage
@@ -43,7 +43,7 @@ class HtmlPageFactory (object):
 		"""
 		Создать страницу. Вызывать этот метод вместо конструктора
 		"""
-		return createPage (HtmlPageFactory.getPageType(), parent, title, tags)
+		return PageFactory.createPage (HtmlPageFactory.getPageType(), parent, title, tags)
 
 
 	@staticmethod

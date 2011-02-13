@@ -6,12 +6,12 @@
 
 import os.path
 
-from core.tree import WikiPage, createPage
+from core.tree import WikiPage
 from wikipanel import WikiPagePanel
 import WikiPreferences
 from core.config import BooleanOption, IntegerOption
 from core.application import Application
-import core.exceptions
+from core.factory import PageFactory
 
 
 class WikiWikiPage (WikiPage):
@@ -27,7 +27,7 @@ class WikiWikiPage (WikiPage):
 		return u"wiki"
 
 
-class WikiPageFactory (object):
+class WikiPageFactory (PageFactory):
 	@staticmethod
 	def getPageType():
 		return WikiWikiPage
@@ -60,7 +60,7 @@ class WikiPageFactory (object):
 		"""
 		Создать страницу. Вызывать этот метод вместо конструктора
 		"""
-		return createPage (WikiPageFactory.getPageType(), parent, title, tags)
+		return PageFactory.createPage (WikiPageFactory.getPageType(), parent, title, tags)
 
 
 	#@staticmethod

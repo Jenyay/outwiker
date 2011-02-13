@@ -6,9 +6,9 @@
 
 import os.path
 
-from core.tree import WikiPage, createPage
+from core.tree import WikiPage
 from pages.text.TextPanel import TextPanel
-import core.exceptions
+from core.factory import PageFactory
 
 
 class TextWikiPage (WikiPage):
@@ -24,7 +24,7 @@ class TextWikiPage (WikiPage):
 		return u"text"
 
 
-class TextPageFactory (object):
+class TextPageFactory (PageFactory):
 	@staticmethod
 	def getPageType():
 		return TextWikiPage
@@ -45,7 +45,7 @@ class TextPageFactory (object):
 		"""
 		Создать страницу. Вызывать этот метод вместо конструктора
 		"""
-		return createPage (TextPageFactory.getPageType(), parent, title, tags)
+		return PageFactory.createPage (TextPageFactory.getPageType(), parent, title, tags)
 
 
 

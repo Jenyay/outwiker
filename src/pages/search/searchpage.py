@@ -6,13 +6,13 @@
 
 import os.path
 
-from core.tree import WikiPage, createPage
+from core.tree import WikiPage
 from core.search import AllTagsSearchStrategy, AnyTagSearchStrategy, TagsList
 
 from SearchPanel import SearchPanel
 import core.system
 from core.application import Application
-import core.exceptions
+from core.factory import PageFactory
 
 paramsSection = u"Search"
 
@@ -29,7 +29,7 @@ class SearchWikiPage (WikiPage):
 		return u"search"
 
 
-class SearchPageFactory (object):
+class SearchPageFactory (PageFactory):
 	@staticmethod
 	def getPageType():
 		return SearchWikiPage
@@ -50,7 +50,7 @@ class SearchPageFactory (object):
 		"""
 		Создать страницу. Вызывать этот метод вместо конструктора
 		"""
-		return createPage (SearchPageFactory.getPageType(), parent, title, tags)
+		return PageFactory.createPage (SearchPageFactory.getPageType(), parent, title, tags)
 
 
 	@staticmethod
