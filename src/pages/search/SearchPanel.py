@@ -81,7 +81,7 @@ class SearchPanel(wx.Panel):
 		list_items = [u"%s (%d)" % (tag, len (self._allTags[tag] ) ) for tag in self._allTags ]
 		self.tagsList.InsertItems (list_items, 0)
 
-		tags = pages.search.searchpage.getTags (self._page)
+		tags = self._page.searchTags
 
 		# Поставим галки, где нужно
 		n = 0
@@ -91,15 +91,13 @@ class SearchPanel(wx.Panel):
 			n += 1
 
 		# Установим стратегию поиска по тегам
-		strategy = pages.search.searchpage.getStrategy (self._page)
-		strategyIndex = self._strategyList.index (strategy)
+		strategyIndex = self._strategyList.index (self._page.strategy)
 
 		self.tagsStrategy.SetSelection(strategyIndex)
 
 		
 	def updateSearchPhrase (self):
-		phrase = pages.search.searchpage.getPhrase (self._page)
-		self.wordsTextCtrl.SetValue (phrase)
+		self.wordsTextCtrl.SetValue (self._page.phrase)
 	
 
 	def Save (self):
@@ -116,16 +114,14 @@ class SearchPanel(wx.Panel):
 		"""
 		Сохранить искомую фразу в настройки страницы
 		"""
-		phrase = self.wordsTextCtrl.GetValue()
-		pages.search.searchpage.setPhrase (self._page, phrase)
+		self._page.phrase = self.wordsTextCtrl.GetValue()
 	
 
 	def _saveSearchTags (self):
 		"""
 		Сохранить искомые теги в настройке страницы
 		"""
-		tags = self._getSearchTags()
-		pages.search.searchpage.setTags (self._page, tags)
+		self._page.searchTags = self._getSearchTags()
 	
 
 	def _saveSearchTagsStrategy (self):
@@ -133,8 +129,7 @@ class SearchPanel(wx.Panel):
 		Сохранить стратегию поиска по тегам (все теги или любой тег)
 		"""
 		strategyIndex = self.tagsStrategy.GetSelection()
-		strategy = self._strategyList[strategyIndex]
-		pages.search.searchpage.setStrategy (self._page, strategy)
+		self._page.strategy = self._strategyList[strategyIndex]
 
 
 	@property
@@ -195,9 +190,7 @@ class SearchPanel(wx.Panel):
 		phrase = self.wordsTextCtrl.GetValue ()
 		tags = self._getSearchTags()
 
-		strategy = pages.search.searchpage.getStrategy(self._page)
-
-		searcher = Searcher (phrase, tags, strategy)
+		searcher = Searcher (phrase, tags, self._page.strategy)
 		resultPages = searcher.find (self.page.root)
 
 		self._saveResults (resultPages)

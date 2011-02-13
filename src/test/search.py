@@ -14,6 +14,7 @@ from test.utils import removeWiki
 from core.tree import WikiDocument
 from pages.text.textpage import TextPageFactory
 
+
 class SearcherTest(unittest.TestCase):
 	def setUp(self):
 		# Здесь будет создаваться вики
@@ -247,9 +248,9 @@ class SearchPageTest (unittest.TestCase):
 
 		self.assertTrue (page != None)
 		self.assertEqual (self.rootwiki.selectedPage, page)
-		self.assertEqual (pages.search.searchpage.getPhrase(page), u"")
-		self.assertEqual (len (pages.search.searchpage.getTags(page) ), 0)
-		self.assertEqual (pages.search.searchpage.getStrategy(page), AllTagsSearchStrategy)
+		self.assertEqual (page.phrase, u"")
+		self.assertEqual (len (page.searchTags ), 0)
+		self.assertEqual (page.strategy, AllTagsSearchStrategy)
 	
 
 	def testCreateSearchTagsPage (self):
@@ -258,11 +259,11 @@ class SearchPageTest (unittest.TestCase):
 
 		self.assertTrue (page != None)
 		self.assertEqual (self.rootwiki.selectedPage, page)
-		self.assertEqual (pages.search.searchpage.getPhrase(page), u"")
-		self.assertEqual (len (pages.search.searchpage.getTags(page)), 2)
-		self.assertTrue (u"Метка 1" in pages.search.searchpage.getTags (page) )
-		self.assertTrue (u"Метка 2" in pages.search.searchpage.getTags (page))
-		self.assertEqual (pages.search.searchpage.getStrategy (page), AllTagsSearchStrategy)
+		self.assertEqual (page.phrase, u"")
+		self.assertEqual (len (page.searchTags), 2)
+		self.assertTrue (u"Метка 1" in page.searchTags )
+		self.assertTrue (u"Метка 2" in page.searchTags)
+		self.assertEqual (page.strategy, AllTagsSearchStrategy)
 	
 
 	def testCreateSearchPhrasePage (self):
@@ -271,9 +272,9 @@ class SearchPageTest (unittest.TestCase):
 
 		self.assertTrue (page != None)
 		self.assertEqual (self.rootwiki.selectedPage, page)
-		self.assertEqual (pages.search.searchpage.getPhrase (page), u"декабрь")
-		self.assertEqual (len (pages.search.searchpage.getTags (page)), 0)
-		self.assertEqual (pages.search.searchpage.getStrategy (page), AllTagsSearchStrategy)
+		self.assertEqual (page.phrase, u"декабрь")
+		self.assertEqual (len (page.searchTags), 0)
+		self.assertEqual (page.strategy, AllTagsSearchStrategy)
 
 	
 	def testCreateSearchAllPage (self):
@@ -286,11 +287,11 @@ class SearchPageTest (unittest.TestCase):
 
 		self.assertTrue (page != None)
 		self.assertEqual (self.rootwiki.selectedPage, page)
-		self.assertEqual (pages.search.searchpage.getPhrase (page), u"декабрь")
-		self.assertEqual (len (pages.search.searchpage.getTags (page)), 2)
-		self.assertTrue (u"Метка 1" in pages.search.searchpage.getTags (page))
-		self.assertTrue (u"Метка 2" in pages.search.searchpage.getTags (page))
-		self.assertEqual (pages.search.searchpage.getStrategy (page), AllTagsSearchStrategy)
+		self.assertEqual (page.phrase, u"декабрь")
+		self.assertEqual (len (page.searchTags), 2)
+		self.assertTrue (u"Метка 1" in page.searchTags)
+		self.assertTrue (u"Метка 2" in page.searchTags)
+		self.assertEqual (page.strategy, AllTagsSearchStrategy)
 	
 
 	def testLoadSearchPage (self):
@@ -303,11 +304,11 @@ class SearchPageTest (unittest.TestCase):
 		page = wiki[GlobalSearch.pageTitle]
 
 		self.assertTrue (page != None)
-		self.assertEqual (pages.search.searchpage.getPhrase (page), u"декабрь")
-		self.assertEqual (len (pages.search.searchpage.getTags (page)), 2)
-		self.assertTrue (u"Метка 1" in pages.search.searchpage.getTags (page))
-		self.assertTrue (u"Метка 2" in pages.search.searchpage.getTags (page))
-		self.assertEqual (pages.search.searchpage.getStrategy (page), AllTagsSearchStrategy)
+		self.assertEqual (page.phrase, u"декабрь")
+		self.assertEqual (len (page.searchTags), 2)
+		self.assertTrue (u"Метка 1" in page.searchTags)
+		self.assertTrue (u"Метка 2" in page.searchTags)
+		self.assertEqual (page.strategy, AllTagsSearchStrategy)
 	
 
 	def testManySearchPages1 (self):
@@ -323,11 +324,11 @@ class SearchPageTest (unittest.TestCase):
 
 		self.assertEqual (wiki[GlobalSearch.pageTitle + u" 2"], None)
 		self.assertTrue (page != None)
-		self.assertEqual (pages.search.searchpage.getPhrase (page), u"декабрь")
-		self.assertEqual (len (pages.search.searchpage.getTags (page)), 2)
-		self.assertTrue (u"Метка 1" in pages.search.searchpage.getTags (page))
-		self.assertTrue (u"Метка 2" in pages.search.searchpage.getTags (page))
-		self.assertEqual (pages.search.searchpage.getStrategy (page), AllTagsSearchStrategy)
+		self.assertEqual (page.phrase, u"декабрь")
+		self.assertEqual (len (page.searchTags), 2)
+		self.assertTrue (u"Метка 1" in page.searchTags)
+		self.assertTrue (u"Метка 2" in page.searchTags)
+		self.assertEqual (page.strategy, AllTagsSearchStrategy)
 	
 
 	def testManySearchPages2 (self):
@@ -343,11 +344,11 @@ class SearchPageTest (unittest.TestCase):
 
 		self.assertTrue (page != None)
 		#self.assertEqual (wiki.selectedPage, page)
-		self.assertEqual (pages.search.searchpage.getPhrase (page), u"декабрь")
-		self.assertEqual (len (pages.search.searchpage.getTags (page)), 2)
-		self.assertTrue (u"Метка 1" in pages.search.searchpage.getTags (page))
-		self.assertTrue (u"Метка 2" in pages.search.searchpage.getTags (page))
-		self.assertEqual (pages.search.searchpage.getStrategy (page), AllTagsSearchStrategy)
+		self.assertEqual (page.phrase, u"декабрь")
+		self.assertEqual (len (page.searchTags), 2)
+		self.assertTrue (u"Метка 1" in page.searchTags)
+		self.assertTrue (u"Метка 2" in page.searchTags)
+		self.assertEqual (page.strategy, AllTagsSearchStrategy)
 	
 
 	def testManySearchPages3 (self):
@@ -366,9 +367,9 @@ class SearchPageTest (unittest.TestCase):
 
 		self.assertTrue (page != None)
 		#self.assertEqual (wiki.selectedPage, page)
-		self.assertEqual (pages.search.searchpage.getPhrase (page), u"декабрь")
-		self.assertEqual (len (pages.search.searchpage.getTags (page)), 2)
-		self.assertTrue (u"Метка 1" in pages.search.searchpage.getTags (page))
-		self.assertTrue (u"Метка 2" in pages.search.searchpage.getTags (page))
-		self.assertEqual (pages.search.searchpage.getStrategy (page), AllTagsSearchStrategy)
+		self.assertEqual (page.phrase, u"декабрь")
+		self.assertEqual (len (page.searchTags), 2)
+		self.assertTrue (u"Метка 1" in page.searchTags)
+		self.assertTrue (u"Метка 2" in page.searchTags)
+		self.assertEqual (page.strategy, AllTagsSearchStrategy)
 
