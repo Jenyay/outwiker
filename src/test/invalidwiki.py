@@ -13,7 +13,6 @@ from core.tree import RootWikiPage, WikiDocument
 from pages.text.textpage import TextPageFactory
 from pages.html.htmlpage import HtmlPageFactory
 from core.event import Event
-from core.factory import FactorySelector
 
 
 path = u"../test/invalidwiki"

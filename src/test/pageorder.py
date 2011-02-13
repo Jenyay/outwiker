@@ -10,7 +10,6 @@ import unittest
 from core.tree import RootWikiPage, WikiDocument, WikiPage
 from pages.text.textpage import TextPageFactory
 from core.event import Event
-from core.factory import FactorySelector
 from core.application import Application
 from test.utils import removeWiki
 

@@ -6,7 +6,7 @@ import wx
 import GeneralPanel
 import EditorPanel
 from core.exceptions import PreferencesException
-from core.factory import FactorySelector
+from core.factoryselector import FactorySelector
 
 # begin wxGlade: dependencies
 # end wxGlade

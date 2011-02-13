@@ -14,7 +14,6 @@ from pages.html.htmlpage import HtmlPageFactory, HtmlWikiPage
 from pages.search.searchpage import SearchPageFactory, SearchWikiPage
 
 from core.event import Event
-from core.factory import FactorySelector
 from test.utils import removeWiki
 
 

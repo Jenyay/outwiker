@@ -13,7 +13,7 @@ from core.tree import RootWikiPage, WikiDocument
 from pages.text.textpage import TextPageFactory
 from pages.html.htmlpage import HtmlPageFactory
 from core.event import Event
-from core.factory import FactorySelector
+from core.factoryselector import FactorySelector
 
 class FactorySelectorTest (unittest.TestCase):
 	def setUp (self):

@@ -599,11 +599,13 @@ class WikiPage (RootWikiPage):
 		Загрузить страницу.
 		Использовать этот метод вместо конструктора, когда надо загрузить страницу
 		"""
+		#import core.factoryselector
+
 		title = os.path.basename(path)
 		params = RootWikiPage._readParams(path, readonly)
 
 		# Получим тип страницы по параметрам
-		pageType = core.factory.FactorySelector.getFactory(params.typeOption.value).getPageType()
+		pageType = core.factoryselector.FactorySelector.getFactory(params.typeOption.value).getPageType()
 
 		page = pageType (path, title, parent, readonly)
 		page.initAfterLoading ()

@@ -12,7 +12,7 @@ import wx
 # end wxGlade
 
 from core.application import Application
-from core.factory import FactorySelector
+from core.factoryselector import FactorySelector
 import core.commands
 from core.tree import RootWikiPage
 from core.search import TagsList

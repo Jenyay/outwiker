@@ -13,7 +13,6 @@ import wx
 
 
 from core.application import Application
-from core.factory import FactorySelector
 import core.commands
 from core.tree import RootWikiPage
 import core.system

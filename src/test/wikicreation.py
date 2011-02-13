@@ -17,7 +17,6 @@ from pages.search.searchpage import SearchPageFactory, SearchWikiPage
 from pages.wiki.wikipage import WikiPageFactory, WikiWikiPage
 
 from core.event import Event
-from core.factory import FactorySelector
 from core.application import Application
 from test.utils import removeWiki
 import core.exceptions

@@ -6,7 +6,7 @@ import os
 import wx
 
 import core.system
-import core.factory
+from core.factoryselector import FactorySelector
 from core.search import TagsList
 
 # begin wxGlade: dependencies
@@ -153,7 +153,7 @@ class BasePageDialog(wx.Dialog):
 	
 	def _fillComboType (self):
 		self.comboType.Clear()
-		for factory in core.factory.FactorySelector.factories:
+		for factory in FactorySelector.factories:
 			self.comboType.Append (factory.title, factory)
 
 		if not self.comboType.IsEmpty():

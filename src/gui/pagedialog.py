@@ -8,7 +8,7 @@ from core.tree import RootWikiPage
 import core.commands
 from core.application import Application
 from gui.BasePageDialog import BasePageDialog
-import core.factory
+from core.factoryselector import FactorySelector
 
 
 @core.commands.testreadonly
@@ -179,8 +179,8 @@ class EditPageDialog (BasePageDialog):
 		Установить тип страницы в диалоге
 		"""
 		n = 0
-		for factory in core.factory.FactorySelector.factories:
-			if factory.getTypeString() == core.factory.FactorySelector.getFactory(currentPage.getTypeString()).getTypeString():
+		for factory in FactorySelector.factories:
+			if factory.getTypeString() == FactorySelector.getFactory(currentPage.getTypeString()).getTypeString():
 				self.comboType.SetSelection (n)
 				self.comboType.Disable ()
 				break
