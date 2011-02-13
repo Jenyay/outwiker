@@ -29,6 +29,7 @@ find . -name *.pyc -type f -print | xargs rm
 find . -name *.py~ -type f -print | xargs rm 
 find . -name *.wxg -type f -print | xargs rm 
 find . -name *.wxg~ -type f -print | xargs rm 
+find . -name *.~1~ -type f -print | xargs rm 
 
 # Создание файла с контрольными суммами 
 md5deep -r "$DIR_NAME/opt" > "$DIR_NAME/DEBIAN/md5sums"
