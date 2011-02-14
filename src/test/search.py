@@ -372,4 +372,87 @@ class SearchPageTest (unittest.TestCase):
 		self.assertTrue (u"Метка 1" in page.searchTags)
 		self.assertTrue (u"Метка 2" in page.searchTags)
 		self.assertEqual (page.strategy, AllTagsSearchStrategy)
+	
 
+	def testSetPhrase (self):
+		"""
+		Тест на то, что сохраняется искомая фраза
+		"""
+		page = GlobalSearch.create (self.rootwiki)
+
+		self.assertEqual (page.phrase, u"")
+		self.assertEqual (page.searchTags, [])
+
+		# Поменяем параметры через свойства
+		page.phrase = u"Абырвалг"
+		self.assertEqual (page.phrase, u"Абырвалг")
+
+		# Загрузим вики и прочитаем установленные параметры
+		wiki = WikiDocument.load (self.path)
+		searchPage = wiki[GlobalSearch.pageTitle]
+
+		self.assertTrue (searchPage != None)
+		self.assertEqual (searchPage.phrase, u"Абырвалг")
+
+	
+	def testSetTags (self):
+		"""
+		Тест на то, что сохраняется искомая фраза
+		"""
+		page = GlobalSearch.create (self.rootwiki)
+
+		self.assertEqual (page.phrase, u"")
+		self.assertEqual (page.searchTags, [])
+
+		# Поменяем параметры через свойства
+		page.searchTags = [u"тег1", u"тег2"]
+		self.assertEqual (page.searchTags, [u"тег1", u"тег2"])
+
+		# Загрузим вики и прочитаем установленные параметры
+		wiki = WikiDocument.load (self.path)
+		searchPage = wiki[GlobalSearch.pageTitle]
+
+		self.assertTrue (searchPage != None)
+		self.assertEqual (searchPage.searchTags, [u"тег1", u"тег2"])
+	
+
+	def testSetStrategy1 (self):
+		"""
+		Тест на то, что сохраняется искомая фраза
+		"""
+		page = GlobalSearch.create (self.rootwiki)
+
+		self.assertEqual (page.phrase, u"")
+		self.assertEqual (page.searchTags, [])
+
+		# Поменяем параметры через свойства
+		page.strategy = AllTagsSearchStrategy
+		self.assertEqual (page.strategy, AllTagsSearchStrategy)
+
+		# Загрузим вики и прочитаем установленные параметры
+		wiki = WikiDocument.load (self.path)
+		searchPage = wiki[GlobalSearch.pageTitle]
+
+		self.assertTrue (searchPage != None)
+		self.assertEqual (searchPage.strategy, AllTagsSearchStrategy)
+	
+
+	def testSetStrategy2 (self):
+		"""
+		Тест на то, что сохраняется искомая фраза
+		"""
+		page = GlobalSearch.create (self.rootwiki)
+
+		self.assertEqual (page.phrase, u"")
+		self.assertEqual (page.searchTags, [])
+
+		# Поменяем параметры через свойства
+		page.strategy = AnyTagSearchStrategy
+		self.assertEqual (page.strategy, AnyTagSearchStrategy)
+
+		# Загрузим вики и прочитаем установленные параметры
+		wiki = WikiDocument.load (self.path)
+		searchPage = wiki[GlobalSearch.pageTitle]
+
+		self.assertTrue (searchPage != None)
+		self.assertEqual (searchPage.strategy, AnyTagSearchStrategy)

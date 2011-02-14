@@ -15,7 +15,6 @@ from core.application import Application
 from core.factory import PageFactory
 from core.exceptions import ReadonlyException
 
-paramsSection = u"Search"
 
 class SearchWikiPage (WikiPage):
 	"""
@@ -23,6 +22,8 @@ class SearchWikiPage (WikiPage):
 	"""
 	def __init__ (self, path, title, parent, readonly = False):
 		WikiPage.__init__ (self, path, title, parent, readonly)
+
+		self.paramsSection = u"Search"
 
 		# Искомая фраза
 		self._phrase = self._getPhrase()
@@ -45,7 +46,7 @@ class SearchWikiPage (WikiPage):
 		"""
 		phrase = u""
 		try:
-			phrase = self.getParameter (paramsSection, u"phrase")
+			phrase = self.getParameter (self.paramsSection, u"phrase")
 		except:
 			pass
 
@@ -65,7 +66,7 @@ class SearchWikiPage (WikiPage):
 		self._phrase = phrase
 
 		try:
-			self.setParameter (paramsSection, u"phrase", phrase)
+			self.setParameter (self.paramsSection, u"phrase", phrase)
 		except ReadonlyException:
 			# Ничего страшного, если поисковая фраза не сохранится
 			pass
@@ -80,7 +81,7 @@ class SearchWikiPage (WikiPage):
 		tags_str = u""
 
 		try:
-			tags_str = self.getParameter (paramsSection, "tags")
+			tags_str = self.getParameter (self.paramsSection, "tags")
 		except:
 			pass
 
@@ -102,7 +103,7 @@ class SearchWikiPage (WikiPage):
 		tags_str = TagsList.getTagsString (tags)
 
 		try:
-			self.setParameter (paramsSection, u"tags", tags_str)
+			self.setParameter (self.paramsSection, u"tags", tags_str)
 		except:
 			# Ну не сохранятся искомые теги, ничего страшного
 			pass
@@ -113,7 +114,7 @@ class SearchWikiPage (WikiPage):
 	def _getStrategy (self):
 		strategy = 0
 		try:
-			strategy = int (self.getParameter (paramsSection, u"strategy"))
+			strategy = int (self.getParameter (self.paramsSection, u"strategy"))
 		except:
 			pass
 
@@ -142,7 +143,7 @@ class SearchWikiPage (WikiPage):
 		self._strategy = strategy
 
 		try:
-			self.setParameter (paramsSection, u"strategy", strategyCode)
+			self.setParameter (self.paramsSection, u"strategy", strategyCode)
 		except ReadonlyException:
 			# Ничего страшного
 			pass
