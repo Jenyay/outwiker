@@ -226,6 +226,7 @@ class GeneralConfig (Config):
 
 		self.minimizeOption = BooleanOption (self, u"General", u"MinimizeToTray", True)
 		self.startIconizedOption = BooleanOption (self, u"General", u"StartIconized", False)
+		self.alwaysShowTrayIconOption = BooleanOption (self, u"General", u"AlwaysShowTrayIcon", False)
 		self.askBeforeExitOption = BooleanOption (self, u"General", u"AskBeforeExit", True)
 
 		# Редактор

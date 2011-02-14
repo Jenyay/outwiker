@@ -22,6 +22,7 @@ class GeneralPanel(wx.ScrolledWindow):
 		wx.ScrolledWindow.__init__(self, *args, **kwds)
 		self.minimizeCheckBox = wx.CheckBox(self, -1, _("Minimize to tray"))
 		self.startIconizedCheckBox = wx.CheckBox(self, -1, _("Start with main window iconized"))
+		self.alwaysInTrayCheckBox = wx.CheckBox(self, -1, _("Always show tray icon"))
 		self.askBeforeExitCheckBox = wx.CheckBox(self, -1, _("Ask before exit"))
 		self.static_line_2 = wx.StaticLine(self, -1)
 		self.history_label = wx.StaticText(self, -1, _("Recent files history length (restart required)"))
@@ -44,7 +45,7 @@ class GeneralPanel(wx.ScrolledWindow):
 
 	def __set_properties(self):
 		# begin wxGlade: GeneralPanel.__set_properties
-		self.SetSize((512, 412))
+		self.SetSize((514, 414))
 		self.SetFocus()
 		self.SetScrollRate(0, 0)
 		self.askBeforeExitCheckBox.SetValue(1)
@@ -60,6 +61,7 @@ class GeneralPanel(wx.ScrolledWindow):
 		history_size = wx.FlexGridSizer(1, 2, 0, 0)
 		main_sizer.Add(self.minimizeCheckBox, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
 		main_sizer.Add(self.startIconizedCheckBox, 0, wx.ALL, 2)
+		main_sizer.Add(self.alwaysInTrayCheckBox, 0, wx.ALL, 2)
 		main_sizer.Add(self.askBeforeExitCheckBox, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
 		main_sizer.Add(self.static_line_2, 0, wx.EXPAND, 0)
 		history_size.Add(self.history_label, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
@@ -113,6 +115,9 @@ class GeneralPanel(wx.ScrolledWindow):
 		# Сворачивать в трей?
 		self.minimizeToTray = ConfigElements.BooleanElement (Application.config.minimizeOption, self.minimizeCheckBox)
 
+		# Всегда показывать иконку в трее
+		self.alwaysInTray = ConfigElements.BooleanElement (Application.config.alwaysShowTrayIconOption, self.alwaysInTrayCheckBox)
+
 		# Запускаться свернутым?
 		self.startIconized = ConfigElements.BooleanElement (Application.config.startIconizedOption, self.startIconizedCheckBox)
 
@@ -157,7 +162,8 @@ class GeneralPanel(wx.ScrolledWindow):
 		self.autoopen.save()
 		self.__saveLanguage()
 
-		if self.titleFormat.isValueChanged():
+		if self.titleFormat.isValueChanged() or self.alwaysInTray.isValueChanged():
+			self.alwaysInTray.save()
 			self.titleFormat.save()
 			Application.onMainWindowConfigChange()
 	

@@ -269,6 +269,7 @@ class MainWindow(wx.Frame):
 			self.__openRecentWiki ()
 
 		self.taskBarIcon = OutwikerTrayIcon(self)
+		self.__updateTitle()
 
 	
 	def onWikiOpen (self, wikiroot):
@@ -638,6 +639,7 @@ class MainWindow(wx.Frame):
 
 	def onMainWindowConfigChange (self):
 		self.__updateTitle()
+		self.taskBarIcon.updateTrayIcon()
 
 
 	def onTreeUpdate (self, sender):
