@@ -9,6 +9,7 @@ import core.commands
 from core.application import Application
 from gui.BasePageDialog import BasePageDialog
 from core.factoryselector import FactorySelector
+from core.config import StringOption
 
 
 @core.commands.testreadonly
@@ -123,6 +124,11 @@ class CreatePageDialog (BasePageDialog):
 	def __init__ (self, parentPage = None, *args, **kwds):
 		BasePageDialog.__init__ (self, parentPage, *args, **kwds)
 
+		# Опция для хранения типа страницы, которая была создана последней
+		self.lastCreatedPageType = StringOption (Application.config, u"General", u"LastCreatedPageType", u"wiki")
+
+		self._setComboPageType(self.lastCreatedPageType.value)
+
 		if parentPage.parent != None:
 			tags = TagsList.getTagsString (parentPage.tags)
 			self.tagsTextCtrl.SetValue (tags)
@@ -138,6 +144,7 @@ class CreatePageDialog (BasePageDialog):
 			core.commands.MessageBox (_(u"A page with this title already exists"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 			return
 
+		self.lastCreatedPageType.value = self.selectedFactory.getTypeString()
 		event.Skip()
 
 
@@ -163,7 +170,8 @@ class EditPageDialog (BasePageDialog):
 		self.titleTextCtrl.SetValue (currentPage.title)
 
 		# Установить тип страницы
-		self._setPageType(currentPage)
+		self._setComboPageType(currentPage.getTypeString())
+		self.comboType.Disable ()
 
 		# Добавить текущую иконку
 		icon = currentPage.icon
@@ -173,19 +181,6 @@ class EditPageDialog (BasePageDialog):
 			self.iconsList.SetItemState (selItem, wx.LIST_STATE_SELECTED, wx.LIST_STATE_SELECTED)
 			self.iconsDict[selItem] = icon
 
-
-	def _setPageType (self, currentPage):
-		"""
-		Установить тип страницы в диалоге
-		"""
-		n = 0
-		for factory in FactorySelector.factories:
-			if factory.getTypeString() == FactorySelector.getFactory(currentPage.getTypeString()).getTypeString():
-				self.comboType.SetSelection (n)
-				self.comboType.Disable ()
-				break
-			n += 1
-	
 
 	def onOk (self, event):
 		if not self.testPageTitle (self.pageTitle):

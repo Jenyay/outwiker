@@ -158,6 +158,18 @@ class BasePageDialog(wx.Dialog):
 
 		if not self.comboType.IsEmpty():
 			self.comboType.SetSelection (0)
+	
+
+	def _setComboPageType (self, pageTypeString):
+		"""
+		Установить тип страницы в диалоге по строке, описывающей тип страницы
+		"""
+		n = 0
+		for factory in FactorySelector.factories:
+			if factory.getTypeString() == FactorySelector.getFactory(pageTypeString).getTypeString():
+				self.comboType.SetSelection (n)
+				break
+			n += 1
 
 
 	@property
