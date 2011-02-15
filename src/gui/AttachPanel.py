@@ -34,6 +34,8 @@ class AttachPanel(wx.Panel):
 
 		self.__set_properties()
 		self.__do_layout()
+
+		self.Bind(wx.EVT_LIST_BEGIN_DRAG, self.onBeginDrag, self.attachList)
 		# end wxGlade
 
 		self.Bind(wx.EVT_MENU, self.onAttach, id=self.ID_ATTACH)
@@ -197,6 +199,18 @@ class AttachPanel(wx.Panel):
 				except OSError:
 					text = _(u"Can't execute file '%s'") % file
 					core.commands.MessageBox (text, _(u"Error"), wx.ICON_ERROR | wx.OK)
+
+
+	def onBeginDrag(self, event): # wxGlade: AttachPanel.<event_handler>
+		data = wx.FileDataObject()
+
+		for fname in self.getSelectedFiles():
+			data.AddFile (os.path.join (self.currentPage.path, RootWikiPage.attachDir, fname) )
+
+		dragSource = wx.DropSource (self)
+		dragSource.SetData(data)
+		result = dragSource.DoDragDrop ()
+		
 
 # end of class AttachPanel
 
