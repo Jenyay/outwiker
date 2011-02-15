@@ -340,9 +340,9 @@ fc804ff01e33c34756e865a07fa3e384  /home/jenyay/soft/outwiker/trunk/distrib/outwi
 44049b49349387fb282b54fbc1cd745c  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.1.0-1/opt/outwiker/locale/outwiker.pot
 c900ec4cbc6f7b8b4086f03464b6313d  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.1.0-1/opt/outwiker/locale/en/LC_MESSAGES/outwiker.po
 4c7dad9f5ba71f7fe046115570b358b6  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.1.0-1/opt/outwiker/locale/en/LC_MESSAGES/outwiker.mo
-54186fbbeb2ef0fd4df5ab42114f4abf  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.1.0-1/opt/outwiker/version.txt
+00583f2dc7b05659fb24586f621365c3  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.1.0-1/opt/outwiker/version.txt
 e6e5fc6486e10f67e6d56fb5954d9224  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.1.0-1/opt/outwiker/README
-988d758b16b73bd07607f2f5a1f8571a  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.1.0-1/opt/outwiker/gui/trayicon.py
+f28cdec67009122472e41ae72c8f1d11  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.1.0-1/opt/outwiker/gui/trayicon.py
 3623c759ed212e2204c3e8949c21dd42  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.1.0-1/opt/outwiker/gui/OverwriteDialog.py
 e75cadb0a1396651dc5b415159c07285  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.1.0-1/opt/outwiker/gui/BaseTextPanel.py
 fcc15666f87497fb3db3de5b485d9435  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.1.0-1/opt/outwiker/gui/BasePageDialog.py
@@ -377,7 +377,7 @@ bb6d3c6dd2b1182ca4877d05f7e67a91  /home/jenyay/soft/outwiker/trunk/distrib/outwi
 d41d8cd98f00b204e9800998ecf8427e  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.1.0-1/opt/outwiker/gui/__init__.py
 f646eea3adca9c3e86feb3d344fd79f4  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.1.0-1/opt/outwiker/gui/LocalSearchPanel.py
 561c1efebb1253a6ba90ac247ce939f8  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.1.0-1/opt/outwiker/gui/AttachPanel.py
-d6cd11a16054ff1b3cabcbcf6ebc75ee  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.1.0-1/opt/outwiker/gui/MainWindow.py
+124f138602c412dbb75d2035d623cc2c  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.1.0-1/opt/outwiker/gui/MainWindow.py
 84bfa22f0dedf5720fce39efbd97417f  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.1.0-1/opt/outwiker/gui/about.py
 329166759a54d0f1946c3e773db277e9  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.1.0-1/opt/outwiker/gui/htmlview.py
 b56100de45c71734ffd1798876cf0f20  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.1.0-1/opt/outwiker/gui/WikiTree.py

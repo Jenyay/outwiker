@@ -49,6 +49,7 @@ class OutwikerTrayIcon (wx.TaskBarIcon):
 		self.Bind(wx.EVT_MENU, self.onExit, id=self.ID_EXIT)
 		self.Bind(wx.EVT_MENU, self.onRestore, id=self.ID_RESTORE)
 		self.mainWnd.Bind (wx.EVT_ICONIZE, self.onIconize)
+		Application.onMainWindowConfigChange += self.onMainWindowConfigChange
 	
 
 	def __unbind (self):
@@ -56,6 +57,11 @@ class OutwikerTrayIcon (wx.TaskBarIcon):
 		self.Unbind(wx.EVT_MENU, handler = self.onExit, id=self.ID_EXIT)
 		self.Unbind(wx.EVT_MENU, handler = self.onRestore, id=self.ID_RESTORE)
 		self.mainWnd.Unbind (wx.EVT_ICONIZE, handler = self.onIconize)
+		Application.onMainWindowConfigChange -= self.onMainWindowConfigChange
+	
+
+	def onMainWindowConfigChange (self):
+		self.updateTrayIcon()
 
 
 	def initMainWnd (self):

@@ -639,7 +639,6 @@ class MainWindow(wx.Frame):
 
 	def onMainWindowConfigChange (self):
 		self.__updateTitle()
-		self.taskBarIcon.updateTrayIcon()
 
 
 	def onTreeUpdate (self, sender):
