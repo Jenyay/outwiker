@@ -21,7 +21,7 @@ class GeneralPanel(wx.ScrolledWindow):
 		kwds["style"] = wx.TAB_TRAVERSAL
 		wx.ScrolledWindow.__init__(self, *args, **kwds)
 		self.minimizeCheckBox = wx.CheckBox(self, -1, _("Minimize to tray"))
-		self.startIconizedCheckBox = wx.CheckBox(self, -1, _("Start with main window iconized"))
+		self.startIconizedCheckBox = wx.CheckBox(self, -1, _("Start iconized"))
 		self.alwaysInTrayCheckBox = wx.CheckBox(self, -1, _("Always show tray icon"))
 		self.askBeforeExitCheckBox = wx.CheckBox(self, -1, _("Ask before exit"))
 		self.static_line_2 = wx.StaticLine(self, -1)
@@ -38,9 +38,12 @@ class GeneralPanel(wx.ScrolledWindow):
 
 		self.__set_properties()
 		self.__do_layout()
+
+		self.Bind(wx.EVT_CHECKBOX, self.onMinimizeToTray, self.minimizeCheckBox)
 		# end wxGlade
 
 		self.LoadState()
+		self.updateCheckState()
 
 
 	def __set_properties(self):
@@ -175,6 +178,20 @@ class GeneralPanel(wx.ScrolledWindow):
 
 		lang = self.langCombo.GetString (index)
 		Application.config.languageOption.value = lang
+
+	def onMinimizeToTray(self, event): # wxGlade: GeneralPanel.<event_handler>
+		self.updateCheckState()
+	
+
+	def updateCheckState (self):
+		"""
+		Обновить стостояния чекбоксов
+		"""
+		if not self.minimizeCheckBox.IsChecked():
+			self.startIconizedCheckBox.SetValue(False)
+			self.startIconizedCheckBox.Disable()
+		else:
+			self.startIconizedCheckBox.Enable()
 
 # end of class GeneralPanel
 
