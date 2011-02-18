@@ -18,29 +18,6 @@ import core.commands
 from core.tree import RootWikiPage
 import core.system
 
-class MyFileDataObject (wx.PyDataObjectSimple):
-	"""
-	Класс данных для перетаскивания файлов. Использовать вместо wx.FileDataObject, который по сути не работает с Unicode
-	"""
-	def __init__ (self):
-		wx.PyDataObjectSimple.__init__ (self, wx.DataFormat (wx.DF_FILENAME))
-		self._fnames = []
-
-	def AddFile (self, fname):
-		self._fnames.append (fname)
-
-	def GetDataHere (self):
-		result = ""
-		for fname in self._fnames:
-			result += u"file:%s\r\n" % (fname)
-		
-		# Преобразуем в строку
-		return result.strip().encode("utf8")
-
-	def GetDataSize (self):
-		return len (self.GetDataHere())
-
-
 
 class AttachPanel(wx.Panel):
 	def __init__(self, *args, **kwds):
@@ -227,7 +204,7 @@ class AttachPanel(wx.Panel):
 
 
 	def onBeginDrag(self, event): # wxGlade: AttachPanel.<event_handler>
-		data = MyFileDataObject()
+		data = core.system.getOS().dragFileDataObject()
 
 		for fname in self.getSelectedFiles():
 			data.AddFile (os.path.join (self.currentPage.path, RootWikiPage.attachDir, fname) )
