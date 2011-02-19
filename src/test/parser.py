@@ -19,7 +19,7 @@ class testApp(wx.App):
 class ParserTest (unittest.TestCase):
 	def setUp(self):
 		self.app = testApp()
-		self.encoding = "866"
+		self.encoding = "utf8"
 
 		self.filesPath = u"../test/samplefiles/"
 
@@ -51,8 +51,8 @@ class ParserTest (unittest.TestCase):
 		
 		files = [u"accept.png", u"add.png", u"anchor.png", u"filename.tmp", 
 				u"файл с пробелами.tmp", u"картинка с пробелами.png", 
-				"image.jpg", "image.jpeg", "image.png", "image.tif", "image.tiff", "image.gif",
-				"image_01.JPG"]
+				u"image.jpg", u"image.jpeg", u"image.png", u"image.tif", u"image.tiff", u"image.gif",
+				u"image_01.JPG", u"dir", u"dir.xxx"]
 
 		fullFilesPath = [os.path.join (self.filesPath, fname) for fname in files]
 
@@ -304,6 +304,26 @@ class ParserTest (unittest.TestCase):
 		result = u'бла-бла-бла \n<IMG SRC="__attach/%s"> бла-бла-бла\nбла-бла-бла' % (fname)
 
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+	def testAttach13 (self):
+		fname = u"dir.xxx"
+		text = u"бла-бла-бла \nAttach:%s бла-бла-бла\nбла-бла-бла" % (fname)
+		result = u'бла-бла-бла \n<A HREF="__attach/%s">%s</A> бла-бла-бла\nбла-бла-бла' % (fname, fname)
+
+		self.assertEqual (self.parser.toHtml (text), 
+				result, 
+				self.parser.toHtml (text).encode (self.encoding) + "\n" + result.encode (self.encoding))
+	
+
+	def testAttach14 (self):
+		fname = u"dir"
+		text = u"бла-бла-бла \nAttach:%s бла-бла-бла\nбла-бла-бла" % (fname)
+		result = u'бла-бла-бла \n<A HREF="__attach/%s">%s</A> бла-бла-бла\nбла-бла-бла' % (fname, fname)
+
+		self.assertEqual (self.parser.toHtml (text), 
+				result, 
+				self.parser.toHtml (text).encode (self.encoding) + "\n" + result.encode (self.encoding))
 	
 
 	def testImage1 (self):

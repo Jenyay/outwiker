@@ -524,7 +524,7 @@ class WikiPage (RootWikiPage):
 	def attach (self, files):
 		"""
 		Прикрепить файл к странице
-		files -- список файлов, которые надо прикрепить
+		files -- список файлов (или папок), которые надо прикрепить
 		"""
 		if self.readonly:
 			raise core.exceptions.ReadonlyException
@@ -534,8 +534,12 @@ class WikiPage (RootWikiPage):
 		if not os.path.exists (attachPath):
 			os.mkdir (attachPath)
 
-		for fname in files:
-			shutil.copy (fname, attachPath)
+		for name in files:
+			if os.path.isdir (name):
+				basename = os.path.basename (name)
+				shutil.copytree (name, os.path.join (attachPath, basename) )
+			else:
+				shutil.copy (name, attachPath)
 
 		Application.onPageUpdate (self)
 	
