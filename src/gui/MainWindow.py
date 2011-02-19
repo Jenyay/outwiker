@@ -248,7 +248,6 @@ class MainWindow(wx.Frame):
 
 		self._dropTarget = DropFilesTarget (self)
 
-		self.SetDropTarget (self._dropTarget)
 		self.__enableGui()
 
 		self.statusbar.SetFieldsCount(1)
@@ -282,6 +281,7 @@ class MainWindow(wx.Frame):
 
 		self.__enableGui()
 		self._loadBookmarks()
+		self.__updateTitle()
 
 
 	def onMainPanelClose (self, event):
@@ -889,6 +889,7 @@ class DropFilesTarget (wx.FileDropTarget):
 	def __init__ (self, mainWindow):
 		wx.FileDropTarget.__init__ (self)
 		self._mainWindow = mainWindow
+		self._mainWindow.SetDropTarget (self)
 	
 	
 	def OnDropFiles (self, x, y, files):
