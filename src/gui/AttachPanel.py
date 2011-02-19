@@ -59,21 +59,21 @@ class AttachPanel(wx.Panel):
 		toolbar = wx.ToolBar (parent, id, style=wx.TB_DOCKABLE)
 
 		toolbar.AddLabelTool(self.ID_ATTACH, 
-				_(u"Attach Files..."), 
+				_(u"Attach Files…"), 
 				wx.Bitmap(os.path.join (imagesDir, "attach.png"),
 					wx.BITMAP_TYPE_ANY),
 				wx.NullBitmap, 
 				wx.ITEM_NORMAL,
-				_(u"Attach Files..."), 
+				_(u"Attach Files…"), 
 				"")
 
 		toolbar.AddLabelTool(self.ID_REMOVE, 
-				_(u"Remove Files..."), 
+				_(u"Remove Files…"), 
 				wx.Bitmap(os.path.join (imagesDir, "delete.png"),
 					wx.BITMAP_TYPE_ANY),
 				wx.NullBitmap, 
 				wx.ITEM_NORMAL,
-				_(u"Remove Files..."), 
+				_(u"Remove Files…"), 
 				"")
 
 		toolbar.AddSeparator()

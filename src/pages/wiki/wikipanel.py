@@ -83,7 +83,7 @@ class WikiPagePanel (HtmlPanel):
 		assert self._currentpage != None
 
 		self.Save()
-		core.commands.setStatusText (_(u"Page rendered. Please wait...") )
+		core.commands.setStatusText (_(u"Page rendered. Please wait…") )
 		Application.onHtmlRenderingBegin (self._currentpage, self.htmlWindow)
 
 		path = self.getHtmlPath (self._currentpage)
@@ -183,15 +183,15 @@ class WikiPagePanel (HtmlPanel):
 		self._addTool (self.pageToolsMenu, 
 				"ID_PREFORMAT", 
 				lambda event: self._turnText (u"[@", u"@]"), 
-				_(u"Preformat [@...@]"), 
-				_(u"Preformat [@...@]"), 
+				_(u"Preformat [@…@]"), 
+				_(u"Preformat [@…@]"), 
 				None)
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_NONFORMAT", 
 				lambda event: self._turnText (u"[=", u"=]"), 
-				_(u"Preformat [=...=]"), 
-				_(u"Preformat [=...=]"), 
+				_(u"Preformat [=…=]"), 
+				_(u"Preformat [=…=]"), 
 				None)
 
 	
@@ -204,14 +204,14 @@ class WikiPagePanel (HtmlPanel):
 		#		self.toolsId["ID_TABLE"], 
 		#		lambda event: self._turnText (u'<table>', u'</table>'), 
 		#		u"Table\tCtrl+Q", 
-		#		u"Table (<table>...</table>)", 
+		#		u"Table (<table>…</table>)", 
 		#		os.path.join (self.imagesDir, "table.png"))
 
 		#self._addTool (self.pageToolsMenu, 
 		#		self.toolsId["ID_TABLE_TR"], 
 		#		lambda event: self._turnText (u'<tr>',u'</tr>'), 
 		#		u"Table row\tCtrl+W", 
-		#		u"Table row (<tr>...</tr>)", 
+		#		u"Table row (<tr>…</tr>)", 
 		#		os.path.join (self.imagesDir, "table_insert_row.png"))
 
 
@@ -219,7 +219,7 @@ class WikiPagePanel (HtmlPanel):
 		#		self.toolsId["ID_TABLE_TD"], 
 		#		lambda event: self._turnText (u'<td>', u'</td>'), 
 		#		u"Table cell\tCtrl+Y", 
-		#		u"Table cell (<td>...</td>)", 
+		#		u"Table cell (<td>…</td>)", 
 		#		os.path.join (self.imagesDir, "table_insert_cell.png"))
 
 		pass

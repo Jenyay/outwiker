@@ -304,10 +304,10 @@ class WikiTree(wx.Panel):
 
 	def __createPopupMenu (self):
 		self.popupMenu = wx.Menu ()
-		self.popupMenu.Append (self.ID_ADD_CHILD, _(u"Add Child Page..."))
-		self.popupMenu.Append (self.ID_ADD_SIBLING, _(u"Add Sibling Page..."))
+		self.popupMenu.Append (self.ID_ADD_CHILD, _(u"Add Child Page…"))
+		self.popupMenu.Append (self.ID_ADD_SIBLING, _(u"Add Sibling Page…"))
 		self.popupMenu.Append (self.ID_RENAME, _(u"Rename"))
-		self.popupMenu.Append (self.ID_REMOVE, _(u"Remove..."))
+		self.popupMenu.Append (self.ID_REMOVE, _(u"Remove…"))
 		self.popupMenu.AppendSeparator()
 		
 		self.popupMenu.Append (self.ID_COPY_TITLE, _(u"Copy Page Title to Clipboard"))
@@ -316,7 +316,7 @@ class WikiTree(wx.Panel):
 		self.popupMenu.Append (self.ID_COPY_LINK, _(u"Copy Page Link to Clipboard"))
 		self.popupMenu.AppendSeparator()
 
-		self.popupMenu.Append (self.ID_PROPERTIES, _(u"Edit Page Properties..."))
+		self.popupMenu.Append (self.ID_PROPERTIES, _(u"Edit Page Properties…"))
 	
 
 	def onRename (self, event):
@@ -596,50 +596,50 @@ class WikiTree(wx.Panel):
 		toolbar = wx.ToolBar (parent, id, style=wx.TB_HORIZONTAL|wx.TB_FLAT|wx.TB_DOCKABLE)
 
 		toolbar.AddLabelTool(self.ID_MOVE_DOWN, 
-				_(u"Move Page Down..."), 
+				_(u"Move Page Down"), 
 				wx.Bitmap(os.path.join (imagesDir, "move_down.png"),
 					wx.BITMAP_TYPE_ANY),
 				wx.NullBitmap, 
 				wx.ITEM_NORMAL,
-				_(u"Move Page Down..."), 
+				_(u"Move Page Down"), 
 				"")
 
 		toolbar.AddLabelTool(self.ID_MOVE_UP, 
-				_(u"Move Page Up..."), 
+				_(u"Move Page Up"), 
 				wx.Bitmap(os.path.join (imagesDir, "move_up.png"),
 					wx.BITMAP_TYPE_ANY),
 				wx.NullBitmap, 
 				wx.ITEM_NORMAL,
-				_(u"Move Page Up..."), 
+				_(u"Move Page Up"), 
 				"")
 		toolbar.AddSeparator()
 
 
 		toolbar.AddLabelTool(self.ID_ADD_SIBLING_PAGE,
-				_(u"Add Sibling Page..."), 
+				_(u"Add Sibling Page…"), 
 				wx.Bitmap(os.path.join (imagesDir, "node-insert-next.png"),
 					wx.BITMAP_TYPE_ANY),
 				wx.NullBitmap, 
 				wx.ITEM_NORMAL,
-				_(u"Add Sibling Page..."), 
+				_(u"Add Sibling Page…"), 
 				"")
 
 		toolbar.AddLabelTool(self.ID_ADD_CHILD_PAGE,
-				_(u"Add Child Page..."), 
+				_(u"Add Child Page…"), 
 				wx.Bitmap(os.path.join (imagesDir, "node-insert-child.png"),
 					wx.BITMAP_TYPE_ANY),
 				wx.NullBitmap, 
 				wx.ITEM_NORMAL,
-				_(u"Add Child Page..."), 
+				_(u"Add Child Page…"), 
 				"")
 
 		toolbar.AddLabelTool(self.ID_REMOVE_PAGE,
-				_(u"Remove Page..."), 
+				_(u"Remove Page…"), 
 				wx.Bitmap(os.path.join (imagesDir, "node-delete.png"),
 					wx.BITMAP_TYPE_ANY),
 				wx.NullBitmap, 
 				wx.ITEM_NORMAL,
-				_(u"Remove Page..."), 
+				_(u"Remove Page…"), 
 				"")
 
 		toolbar.AddSeparator()
