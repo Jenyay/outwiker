@@ -586,8 +586,22 @@ class WikiTree(wx.Panel):
 			# Если обновляем выбранную страницу
 			self.treeCtrl.SelectItem (item)
 
+		self.__scrollToCurrentPage()
 		self.treeCtrl.Thaw()
 		self._bindUpdateEvents()
+	
+
+	def __scrollToCurrentPage (self):
+		"""
+		Если текущая страницавылезла за пределы видимости, то прокрутить к ней
+		"""
+		selectedPage = Application.selectedPage
+		if selectedPage == None:
+			return
+
+		item = self._pageCache[selectedPage]
+		if not self.treeCtrl.IsVisible (item):
+			self.treeCtrl.ScrollTo (item)
 	
 
 	def getToolbar (self, parent, id):
