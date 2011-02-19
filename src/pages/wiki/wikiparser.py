@@ -745,14 +745,16 @@ class Parser (object):
 
 		fname = t["fname"]
 
-		path = os.path.join (self.page.path, RootWikiPage.attachDir, self.thumbsDir)
+		attachPath = self.page.getAttachPath()
+
+		path = os.path.join (attachPath, self.thumbsDir)
 		if not os.path.exists (path):
 			try:
 				os.mkdir (path)
 			except:
 				return u"<b>Can't create folder %s</b>" % path
 
-		path_src = os.path.join (self.page.path, RootWikiPage.attachDir, fname)
+		path_src = os.path.join (attachPath, fname)
 
 		fname_res = self.thumbsTemplate % ("width", width, fname)
 
@@ -760,7 +762,7 @@ class Parser (object):
 		if fname_res.lower().endswith (".gif"):
 			fname_res = fname_res.replace (".gif", ".png")
 
-		path_res = os.path.join (self.page.path, RootWikiPage.attachDir, self.thumbsDir, fname_res)
+		path_res = os.path.join (attachPath, self.thumbsDir, fname_res)
 
 		try:
 			self.__makeThumbByWidth (path_src, width, path_res)
@@ -782,15 +784,16 @@ class Parser (object):
 			return u"<b>Height error</b>"
 
 		fname = t["fname"]
+		attachPath = self.page.getAttachPath()
 
-		path = os.path.join (self.page.path, RootWikiPage.attachDir, self.thumbsDir)
+		path = os.path.join (attachPath, self.thumbsDir)
 		if not os.path.exists (path):
 			try:
 				os.mkdir (path)
 			except:
 				return u"<b>Can't create folder %s</b>" % path
 
-		path_src = os.path.join (self.page.path, RootWikiPage.attachDir, fname)
+		path_src = os.path.join (attachPath, fname)
 
 		fname_res = self.thumbsTemplate % ("height", height, fname)
 
@@ -798,7 +801,7 @@ class Parser (object):
 		if fname_res.lower().endswith (".gif"):
 			fname_res = fname_res.replace (".gif", ".png")
 
-		path_res = os.path.join (self.page.path, RootWikiPage.attachDir, self.thumbsDir, fname_res)
+		path_res = os.path.join (attachPath, self.thumbsDir, fname_res)
 
 		try:
 			self.__makeThumbByHeight (path_src, height, path_res)
@@ -816,14 +819,16 @@ class Parser (object):
 	def __convertThumbDefault (self, s, l, t):
 		fname = t["fname"]
 
-		path = os.path.join (self.page.path, RootWikiPage.attachDir, self.thumbsDir)
+		attachPath = self.page.getAttachPath()
+
+		path = os.path.join (attachPath, self.thumbsDir)
 		if not os.path.exists (path):
 			try:
 				os.mkdir (path)
 			except:
 				return u"<b>Can't create folder %s</b>" % path
 
-		path_src = os.path.join (self.page.path, RootWikiPage.attachDir, fname)
+		path_src = os.path.join (attachPath, fname)
 
 		fname_res = self.thumbsTemplate % ("maxsize", self.maxSizeThumb, fname)
 
@@ -831,7 +836,7 @@ class Parser (object):
 		if fname_res.lower().endswith (".gif"):
 			fname_res = fname_res.replace (".gif", ".png")
 
-		path_res = os.path.join (self.page.path, RootWikiPage.attachDir, self.thumbsDir, fname_res)
+		path_res = os.path.join (attachPath, self.thumbsDir, fname_res)
 
 		try:
 			self.__makeThumbByMaxSize (path_src, self.maxSizeThumb, path_res)
@@ -854,14 +859,16 @@ class Parser (object):
 
 		fname = t["fname"]
 
-		path = os.path.join (self.page.path, RootWikiPage.attachDir, self.thumbsDir)
+		attachPath = self.page.getAttachPath()
+
+		path = os.path.join (attachPath, self.thumbsDir)
 		if not os.path.exists (path):
 			try:
 				os.mkdir (path)
 			except:
 				return u"<b>Can't create folder %s</b>" % path
 
-		path_src = os.path.join (self.page.path, RootWikiPage.attachDir, fname)
+		path_src = os.path.join (attachPath, fname)
 
 		fname_res = self.thumbsTemplate % ("maxsize", maxsize, fname)
 
@@ -869,7 +876,7 @@ class Parser (object):
 		if fname_res.lower().endswith (".gif"):
 			fname_res = fname_res.replace (".gif", ".png")
 
-		path_res = os.path.join (self.page.path, RootWikiPage.attachDir, self.thumbsDir, fname_res)
+		path_res = os.path.join (attachPath, self.thumbsDir, fname_res)
 
 		try:
 			self.__makeThumbByMaxSize (path_src, maxsize, path_res)

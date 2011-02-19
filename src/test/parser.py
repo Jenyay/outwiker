@@ -481,7 +481,7 @@ class ParserTest (unittest.TestCase):
 
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-		path = os.path.join (self.rootwiki[u"Страница 2"].path, RootWikiPage.attachDir, "__thumb/th_width_100_image.jpg")
+		path = os.path.join (self.rootwiki[u"Страница 2"].getAttachPath(), "__thumb/th_width_100_image.jpg")
 		self.assertTrue (os.path.exists (path), path.encode (self.encoding))
 	
 
@@ -491,7 +491,7 @@ class ParserTest (unittest.TestCase):
 
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-		path = os.path.join (self.rootwiki[u"Страница 2"].path, RootWikiPage.attachDir, "__thumb/th_width_100_image.jpg")
+		path = os.path.join (self.rootwiki[u"Страница 2"].getAttachPath(), "__thumb/th_width_100_image.jpg")
 		self.assertTrue (os.path.exists (path), path.encode (self.encoding))
 	
 
@@ -501,7 +501,7 @@ class ParserTest (unittest.TestCase):
 
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-		path = os.path.join (self.rootwiki[u"Страница 2"].path, RootWikiPage.attachDir, "__thumb/th_width_100_image.jpeg")
+		path = os.path.join (self.rootwiki[u"Страница 2"].getAttachPath(), "__thumb/th_width_100_image.jpeg")
 		self.assertTrue (os.path.exists (path), path.encode (self.encoding))
 
 	
@@ -511,7 +511,7 @@ class ParserTest (unittest.TestCase):
 
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-		path = os.path.join (self.rootwiki[u"Страница 2"].path, RootWikiPage.attachDir, "__thumb/th_width_100_image.png")
+		path = os.path.join (self.rootwiki[u"Страница 2"].getAttachPath(), "__thumb/th_width_100_image.png")
 		self.assertTrue (os.path.exists (path), path.encode (self.encoding))
 	
 
@@ -521,7 +521,7 @@ class ParserTest (unittest.TestCase):
 
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-		path = os.path.join (self.rootwiki[u"Страница 2"].path, RootWikiPage.attachDir, "__thumb/th_width_100_image.png")
+		path = os.path.join (self.rootwiki[u"Страница 2"].getAttachPath(), "__thumb/th_width_100_image.png")
 		self.assertTrue (os.path.exists (path), path.encode (self.encoding))
 	
 
@@ -531,7 +531,7 @@ class ParserTest (unittest.TestCase):
 
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-		path = os.path.join (self.rootwiki[u"Страница 2"].path, RootWikiPage.attachDir, "__thumb/th_height_100_image.jpg")
+		path = os.path.join (self.rootwiki[u"Страница 2"].getAttachPath(), "__thumb/th_height_100_image.jpg")
 		self.assertTrue (os.path.exists (path), path.encode (self.encoding))
 
 	
@@ -541,7 +541,7 @@ class ParserTest (unittest.TestCase):
 
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-		path = os.path.join (self.rootwiki[u"Страница 2"].path, RootWikiPage.attachDir, "__thumb/th_height_100_image.jpg")
+		path = os.path.join (self.rootwiki[u"Страница 2"].getAttachPath(), "__thumb/th_height_100_image.jpg")
 		self.assertTrue (os.path.exists (path), path.encode (self.encoding))
 
 
@@ -551,7 +551,7 @@ class ParserTest (unittest.TestCase):
 
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-		path = os.path.join (self.rootwiki[u"Страница 2"].path, RootWikiPage.attachDir, "__thumb/th_height_100_image.jpeg")
+		path = os.path.join (self.rootwiki[u"Страница 2"].getAttachPath(), "__thumb/th_height_100_image.jpeg")
 		self.assertTrue (os.path.exists (path), path.encode (self.encoding))
 
 	
@@ -561,7 +561,7 @@ class ParserTest (unittest.TestCase):
 
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-		path = os.path.join (self.rootwiki[u"Страница 2"].path, RootWikiPage.attachDir, "__thumb/th_height_100_image.png")
+		path = os.path.join (self.rootwiki[u"Страница 2"].getAttachPath(), "__thumb/th_height_100_image.png")
 		self.assertTrue (os.path.exists (path), path.encode (self.encoding))
 	
 
@@ -571,7 +571,7 @@ class ParserTest (unittest.TestCase):
 
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-		path = os.path.join (self.rootwiki[u"Страница 2"].path, RootWikiPage.attachDir, "__thumb/th_height_100_image.png")
+		path = os.path.join (self.rootwiki[u"Страница 2"].getAttachPath(), "__thumb/th_height_100_image.png")
 		self.assertTrue (os.path.exists (path), path.encode (self.encoding))
 	
 
@@ -581,7 +581,7 @@ class ParserTest (unittest.TestCase):
 
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-		path = os.path.join (self.rootwiki[u"Страница 2"].path, RootWikiPage.attachDir, "__thumb/th_maxsize_250_image.jpg")
+		path = os.path.join (self.rootwiki[u"Страница 2"].getAttachPath(), "__thumb/th_maxsize_250_image.jpg")
 		self.assertTrue (os.path.exists (path), path.encode (self.encoding))
 
 	
@@ -591,7 +591,7 @@ class ParserTest (unittest.TestCase):
 
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-		path = os.path.join (self.rootwiki[u"Страница 2"].path, RootWikiPage.attachDir, "__thumb/th_maxsize_250_image.jpeg")
+		path = os.path.join (self.rootwiki[u"Страница 2"].getAttachPath(), "__thumb/th_maxsize_250_image.jpeg")
 		self.assertTrue (os.path.exists (path), path.encode (self.encoding))
 
 
@@ -601,7 +601,7 @@ class ParserTest (unittest.TestCase):
 
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-		path = os.path.join (self.rootwiki[u"Страница 2"].path, RootWikiPage.attachDir, "__thumb/th_maxsize_250_image.png")
+		path = os.path.join (self.rootwiki[u"Страница 2"].getAttachPath(), "__thumb/th_maxsize_250_image.png")
 		self.assertTrue (os.path.exists (path), path.encode (self.encoding))
 
 	
@@ -611,7 +611,7 @@ class ParserTest (unittest.TestCase):
 
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-		path = os.path.join (self.rootwiki[u"Страница 2"].path, RootWikiPage.attachDir, "__thumb/th_maxsize_250_image.png")
+		path = os.path.join (self.rootwiki[u"Страница 2"].getAttachPath(), "__thumb/th_maxsize_250_image.png")
 		self.assertTrue (os.path.exists (path), path.encode (self.encoding))
 	
 
@@ -621,7 +621,7 @@ class ParserTest (unittest.TestCase):
 
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-		path = os.path.join (self.rootwiki[u"Страница 2"].path, RootWikiPage.attachDir, "__thumb/th_maxsize_300_image.jpg")
+		path = os.path.join (self.rootwiki[u"Страница 2"].getAttachPath(), "__thumb/th_maxsize_300_image.jpg")
 		self.assertTrue (os.path.exists (path), path.encode (self.encoding))
 
 
@@ -631,7 +631,7 @@ class ParserTest (unittest.TestCase):
 
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-		path = os.path.join (self.rootwiki[u"Страница 2"].path, RootWikiPage.attachDir, "__thumb/th_maxsize_300_image.jpg")
+		path = os.path.join (self.rootwiki[u"Страница 2"].getAttachPath(), "__thumb/th_maxsize_300_image.jpg")
 		self.assertTrue (os.path.exists (path), path.encode (self.encoding))
 
 	
@@ -641,7 +641,7 @@ class ParserTest (unittest.TestCase):
 
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-		path = os.path.join (self.rootwiki[u"Страница 2"].path, RootWikiPage.attachDir, "__thumb/th_maxsize_300_image.png")
+		path = os.path.join (self.rootwiki[u"Страница 2"].getAttachPath(), "__thumb/th_maxsize_300_image.png")
 		self.assertTrue (os.path.exists (path), path.encode (self.encoding))
 
 
@@ -651,7 +651,7 @@ class ParserTest (unittest.TestCase):
 
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-		path = os.path.join (self.rootwiki[u"Страница 2"].path, RootWikiPage.attachDir, "__thumb/th_maxsize_300_image.png")
+		path = os.path.join (self.rootwiki[u"Страница 2"].getAttachPath(), "__thumb/th_maxsize_300_image.png")
 		self.assertTrue (os.path.exists (path), path.encode (self.encoding))
 	
 

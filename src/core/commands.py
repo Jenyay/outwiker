@@ -205,13 +205,13 @@ def copyPathToClipboard (page):
 	copyTextToClipboard (page.path)
 
 
+# TODO: Сделать тест
 def copyAttachPathToClipboard (page):
 	"""
 	Копировать путь до папки с прикрепленными файлами в буфер обмена
 	"""
 	assert page != None
-	path = os.path.join (page.path, RootWikiPage.attachDir)
-	copyTextToClipboard (path)
+	copyTextToClipboard (page.getAttachPath())
 
 
 def copyLinkToClipboard (page):

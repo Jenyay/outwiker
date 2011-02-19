@@ -236,6 +236,13 @@ class RootWikiPage (object):
 		self._children.remove (page)
 	
 
+	def getAttachPath (self):
+		"""
+		Возвращает путь до страницы с прикрепленными файлами
+		"""
+		return os.path.join (self.path, RootWikiPage.attachDir)
+	
+
 class WikiDocument (RootWikiPage):
 	sectionHistory = u"History"
 	paramHistory = u"LastViewedPage"
@@ -511,7 +518,7 @@ class WikiPage (RootWikiPage):
 		Найти все приаттаченные файлы
 		Пути до файлов полные
 		"""
-		path = os.path.join (self.path, RootWikiPage.attachDir)
+		path = self.getAttachPath()
 
 		if not os.path.exists (path):
 			return []
@@ -529,7 +536,7 @@ class WikiPage (RootWikiPage):
 		if self.readonly:
 			raise core.exceptions.ReadonlyException
 
-		attachPath = os.path.join (self.path, RootWikiPage.attachDir)
+		attachPath = self.getAttachPath()
 		
 		if not os.path.exists (attachPath):
 			os.mkdir (attachPath)
@@ -551,7 +558,7 @@ class WikiPage (RootWikiPage):
 		if self.readonly:
 			raise core.exceptions.ReadonlyException
 
-		attachPath = os.path.join (self.path, RootWikiPage.attachDir)
+		attachPath = self.getAttachPath()
 
 		for fname in files:
 			path = os.path.join (attachPath, fname)
@@ -613,8 +620,10 @@ class WikiPage (RootWikiPage):
 		if not os.path.exists (self.path):
 			os.mkdir (self.path)
 
-		attachPath = os.path.join (self.path, RootWikiPage.attachDir)
+		attachPath = self.getAttachPath()
 
+		# Закомментарить эти две строки, если не хотим, 
+		# чтобы папка __attach создавалась при создании страницы
 		if not os.path.exists (attachPath):
 			os.mkdir (attachPath)
 
@@ -627,7 +636,7 @@ class WikiPage (RootWikiPage):
 			fp.write (text.encode ("utf8"))
 
 		self._saveOptions ()
-
+	
 
 	def _saveOptions (self):
 		"""

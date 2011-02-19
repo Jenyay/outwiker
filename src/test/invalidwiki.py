@@ -54,7 +54,7 @@ class InvalidWikiTest (unittest.TestCase):
 		self.assertEqual (len (wiki[u"Страница без аттачей"].attachment), 3)
 
 		# Удалим прикрепленные файлы
-		attachPath = os.path.join (wiki[u"Страница без аттачей"].path, RootWikiPage.attachDir)
+		attachPath = wiki[u"Страница без аттачей"].getAttachPath()
 		shutil.rmtree (attachPath)
 	
 

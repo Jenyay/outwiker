@@ -296,7 +296,7 @@ class TextPageAttachmentTest (unittest.TestCase):
 		pageSubpath -- путь до страницы
 		fnames -- имена файлов
 		"""
-		attachPath = os.path.join (wiki[pageSubpath].path, RootWikiPage.attachDir)
+		attachPath = os.path.join (wiki[pageSubpath].getAttachPath())
 		result = [os.path.join (attachPath, fname) for fname in fnames]
 
 		return result

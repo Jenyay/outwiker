@@ -195,7 +195,7 @@ class AttachPanel(wx.Panel):
 			files = self.getSelectedFiles()
 
 			for file in files:
-				fullpath = os.path.join (self.currentPage.path, RootWikiPage.attachDir, file)
+				fullpath = os.path.join (self.currentPage.getAttachPath(), file)
 				try:
 					core.system.getOS().startFile (fullpath)
 				except OSError:
@@ -207,7 +207,7 @@ class AttachPanel(wx.Panel):
 		data = core.system.getOS().dragFileDataObject()
 
 		for fname in self.getSelectedFiles():
-			data.AddFile (os.path.join (self.currentPage.path, RootWikiPage.attachDir, fname) )
+			data.AddFile (os.path.join (self.currentPage.getAttachPath(), fname) )
 
 		dragSource = wx.DropSource (self)
 		dragSource.SetData(data)
