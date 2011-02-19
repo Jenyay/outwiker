@@ -233,6 +233,26 @@ class TextPageCreationTest(unittest.TestCase):
 		removeWiki (self.path)
 	
 
+	def testAttach1 (self):
+		# Получить путь до прикрепленных файлов, не создавая ее
+		path = self.rootwiki[u"Страница 2"].getAttachPath()
+		# Вложенных файлов еще нет, поэтому нет и папки
+		self.assertFalse (os.path.exists (path))
+	
+
+	def testAttach2 (self):
+		# Получить путь до прикрепленных файлов, не создавая ее
+		path = self.rootwiki[u"Страница 2"].getAttachPath(create=False)
+		# Вложенных файлов еще нет, поэтому нет и папки
+		self.assertFalse (os.path.exists (path))
+
+	def testAttach3 (self):
+		# Получить путь до прикрепленных файлов, создав ее
+		path = self.rootwiki[u"Страница 2"].getAttachPath(create=True)
+		# Вложенных файлов еще нет, поэтому нет и папки
+		self.assertTrue (os.path.exists (path))
+	
+
 	def testTypeCreation (self):
 		textPage = TextPageFactory.create (self.rootwiki, u"Текстовая страница", [])
 		self.assertEqual (TextWikiPage, type(textPage))

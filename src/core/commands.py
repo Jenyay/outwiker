@@ -211,7 +211,7 @@ def copyAttachPathToClipboard (page):
 	Копировать путь до папки с прикрепленными файлами в буфер обмена
 	"""
 	assert page != None
-	copyTextToClipboard (page.getAttachPath())
+	copyTextToClipboard (page.getAttachPath(create=True))
 
 
 def copyLinkToClipboard (page):

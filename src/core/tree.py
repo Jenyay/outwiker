@@ -236,11 +236,17 @@ class RootWikiPage (object):
 		self._children.remove (page)
 	
 
-	def getAttachPath (self):
+	def getAttachPath (self, create=False):
 		"""
 		Возвращает путь до страницы с прикрепленными файлами
+		create - создать папку для прикрепленных файлов, если она еще не создана?
 		"""
-		return os.path.join (self.path, RootWikiPage.attachDir)
+		path = os.path.join (self.path, RootWikiPage.attachDir)
+
+		if create and not os.path.exists(path):
+			os.mkdir (path)
+
+		return path
 	
 
 class WikiDocument (RootWikiPage):
@@ -624,8 +630,8 @@ class WikiPage (RootWikiPage):
 
 		# Закомментарить эти две строки, если не хотим, 
 		# чтобы папка __attach создавалась при создании страницы
-		if not os.path.exists (attachPath):
-			os.mkdir (attachPath)
+		#if not os.path.exists (attachPath):
+		#	os.mkdir (attachPath)
 
 		try:
 			text = self.content
