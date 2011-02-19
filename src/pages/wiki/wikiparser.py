@@ -547,6 +547,38 @@ class Parser (object):
 	def __convertToImage (self, s, l, t):
 		return u'<IMG SRC="%s">' % t[0]
 
+
+	def sortByLength (self, fname1, fname2):
+		"""
+		Функция для сортировки имен по длине имени
+		"""
+		if len (fname1) > len (fname2):
+			return 1
+		elif len (fname1) < len (fname2):
+			return -1
+
+		return 0
+
+
+	def __getImageAttachTokens (self):
+		"""
+		Создать элементы из прикрепленных файлов.
+		Отдельно картинки, отдельно все файлы
+		"""
+		attachesImages = []
+
+		attaches = self.page.attachment
+		attaches.sort (self.sortByLength, reverse=True)
+
+		for attach in attaches:
+			if self.__isImage (attach):
+				fname = os.path.basename (attach)
+				attach_token = self.__attachString + Literal (fname)
+				attach_token.setParseAction (replaceWith (self.__getReplaceForImageAttach (fname) ) )
+				attachesImages.append (attach_token)
+
+		return attachesImages
+
 	
 	def __getNotImageAttachTokens (self):
 		"""
@@ -556,6 +588,7 @@ class Parser (object):
 		attachesAll = []
 
 		attaches = self.page.attachment
+		attaches.sort (self.sortByLength, reverse=True)
 
 		for attach in attaches:
 			if not self.__isImage (attach):
@@ -582,25 +615,6 @@ class Parser (object):
 		return tokens
 
 
-	def __getImageAttachTokens (self):
-		"""
-		Создать элементы из прикрепленных файлов.
-		Отдельно картинки, отдельно все файлы
-		"""
-		attachesImages = []
-
-		attaches = self.page.attachment
-
-		for attach in attaches:
-			if self.__isImage (attach):
-				fname = os.path.basename (attach)
-				attach_token = self.__attachString + Literal (fname)
-				attach_token.setParseAction (replaceWith (self.__getReplaceForImageAttach (fname) ) )
-				attachesImages.append (attach_token)
-
-		return attachesImages
-
-	
 	def __isImage (self, fname):
 		images_ext = [".png", ".bmp", ".gif", ".tif", ".tiff", ".jpg", ".jpeg"]
 

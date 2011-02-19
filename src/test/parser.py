@@ -52,7 +52,7 @@ class ParserTest (unittest.TestCase):
 		files = [u"accept.png", u"add.png", u"anchor.png", u"filename.tmp", 
 				u"файл с пробелами.tmp", u"картинка с пробелами.png", 
 				u"image.jpg", u"image.jpeg", u"image.png", u"image.tif", u"image.tiff", u"image.gif",
-				u"image_01.JPG", u"dir", u"dir.xxx"]
+				u"image_01.JPG", u"dir", u"dir.xxx", u"dir.png"]
 
 		fullFilesPath = [os.path.join (self.filesPath, fname) for fname in files]
 
@@ -324,6 +324,14 @@ class ParserTest (unittest.TestCase):
 		self.assertEqual (self.parser.toHtml (text), 
 				result, 
 				self.parser.toHtml (text).encode (self.encoding) + "\n" + result.encode (self.encoding))
+	
+
+	def testAttach15 (self):
+		fname = u"dir.png"
+		text = u"бла-бла-бла \nAttach:%s бла-бла-бла\nбла-бла-бла" % (fname)
+		result = u'бла-бла-бла \n<IMG SRC="__attach/%s"> бла-бла-бла\nбла-бла-бла' % (fname)
+
+		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 	
 
 	def testImage1 (self):
