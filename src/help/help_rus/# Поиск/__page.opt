@@ -1,12 +1,13 @@
 [Search]
-phrase = 
 tags = 
 strategy = 1
+phrase = 
 
 [Tree]
 expand = False
 
 [General]
 type = search
+order = 0
 tags = 
 
