@@ -231,6 +231,7 @@ class GeneralConfig (Config):
 
 		# Редактор
 		self.lineNumbersOption = BooleanOption (self, u"General", u"ShowLineNumbers", False)
+		self.tabWidthOption = IntegerOption (self, u"General", u"TabWidth", 4)
 		
 		fontSizeOption = IntegerOption (self, u"Font", u"size", 10)
 		fontFaceNameOption = StringOption (self, u"Font", u"FaceName", "")

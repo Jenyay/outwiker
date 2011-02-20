@@ -21,6 +21,8 @@ class EditorPanel(wx.Panel):
 		self.fontLabel = wx.StaticText(self, -1, _("Font"))
 		self.fontPicker = wx.FontPickerCtrl(self, -1)
 		self.lineNumbersCheckBox = wx.CheckBox(self, -1, _("Show line numbers"))
+		self.tabWidthLabel = wx.StaticText(self, -1, _("Tab width"))
+		self.tabWidthSpin = wx.SpinCtrl(self, -1, "4", min=1, max=100, style=wx.SP_ARROW_KEYS|wx.TE_AUTO_URL)
 
 		self.__set_properties()
 		self.__do_layout()
@@ -36,6 +38,7 @@ class EditorPanel(wx.Panel):
 	def __do_layout(self):
 		# begin wxGlade: EditorPanel.__do_layout
 		mainSizer = wx.FlexGridSizer(2, 1, 0, 0)
+		grid_sizer_4 = wx.FlexGridSizer(1, 2, 0, 0)
 		grid_sizer_3 = wx.FlexGridSizer(1, 2, 0, 0)
 		grid_sizer_3.Add(self.fontLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
 		grid_sizer_3.Add(self.fontPicker, 1, wx.ALL|wx.EXPAND|wx.ALIGN_CENTER_VERTICAL, 2)
@@ -43,6 +46,10 @@ class EditorPanel(wx.Panel):
 		grid_sizer_3.AddGrowableCol(1)
 		mainSizer.Add(grid_sizer_3, 1, wx.EXPAND, 0)
 		mainSizer.Add(self.lineNumbersCheckBox, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
+		grid_sizer_4.Add(self.tabWidthLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
+		grid_sizer_4.Add(self.tabWidthSpin, 0, wx.ALL|wx.ALIGN_RIGHT|wx.ALIGN_CENTER_VERTICAL, 2)
+		grid_sizer_4.AddGrowableCol(1)
+		mainSizer.Add(grid_sizer_4, 1, wx.EXPAND, 0)
 		self.SetSizer(mainSizer)
 		mainSizer.Fit(self)
 		mainSizer.AddGrowableCol(0)
@@ -55,11 +62,15 @@ class EditorPanel(wx.Panel):
 
 		# Шрифт для редактора
 		self.fontEditor = ConfigElements.FontElement (Application.config.fontEditorOption, self.fontPicker)
+
+		# Размер табуляции
+		self.tabWidth = ConfigElements.IntegerElement (Application.config.tabWidthOption, self.tabWidthSpin, 1, 100)
 	
 
 	def Save (self):
 		self.lineNumbers.save()
 		self.fontEditor.save()
+		self.tabWidth.save()
 
 		Application.onEditorConfigChange()
 

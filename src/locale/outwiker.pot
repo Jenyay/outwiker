@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-02-19 11:28+0300\n"
+"POT-Creation-Date: 2011-02-20 18:19+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -121,15 +121,12 @@ msgstr ""
 msgid "Execute"
 msgstr ""
 
-#: gui/AttachPanel.py:174
-msgid "Remove selected files?"
-msgstr ""
-
 #: gui/AttachPanel.py:175
-msgid "Remove files?"
+msgid "You did not select a file to remove"
 msgstr ""
 
-#: gui/AttachPanel.py:180 gui/AttachPanel.py:203 gui/htmlview.py:81
+#: gui/AttachPanel.py:176 gui/AttachPanel.py:186 gui/AttachPanel.py:198
+#: gui/AttachPanel.py:211 gui/AttachPanel.py:221 gui/htmlview.py:81
 #: gui/MainWindow.py:598 gui/MainWindow.py:754 gui/pagedialog.py:41
 #: gui/pagedialog.py:93 gui/pagedialog.py:112 gui/pagedialog.py:139
 #: gui/pagedialog.py:144 gui/pagedialog.py:187 gui/pagedialog.py:192
@@ -144,7 +141,23 @@ msgstr ""
 msgid "Error"
 msgstr ""
 
-#: gui/AttachPanel.py:202 gui/htmlview.py:80 gui/htmlview.py:127
+#: gui/AttachPanel.py:180
+msgid "Remove selected files?"
+msgstr ""
+
+#: gui/AttachPanel.py:181
+msgid "Remove files?"
+msgstr ""
+
+#: gui/AttachPanel.py:197
+msgid "You did not select a file to paste"
+msgstr ""
+
+#: gui/AttachPanel.py:210
+msgid "You did not select a file to execute"
+msgstr ""
+
+#: gui/AttachPanel.py:220 gui/htmlview.py:80 gui/htmlview.py:127
 #, python-format
 msgid "Can't execute file '%s'"
 msgstr ""
@@ -493,7 +506,7 @@ msgstr ""
 msgid "Can't rename page when page with that title already exists"
 msgstr ""
 
-#: gui/TextEditor.py:240
+#: gui/TextEditor.py:241
 msgid "Not found"
 msgstr ""
 
@@ -501,11 +514,11 @@ msgstr ""
 msgid "Restore"
 msgstr ""
 
-#: gui/WikiTree.py:307 gui/WikiTree.py:628 gui/WikiTree.py:633
+#: gui/WikiTree.py:307 gui/WikiTree.py:642 gui/WikiTree.py:647
 msgid "Add Child Page…"
 msgstr ""
 
-#: gui/WikiTree.py:308 gui/WikiTree.py:619 gui/WikiTree.py:624
+#: gui/WikiTree.py:308 gui/WikiTree.py:633 gui/WikiTree.py:638
 msgid "Add Sibling Page…"
 msgstr ""
 
@@ -537,15 +550,15 @@ msgstr ""
 msgid "Edit Page Properties…"
 msgstr ""
 
-#: gui/WikiTree.py:599 gui/WikiTree.py:604
+#: gui/WikiTree.py:613 gui/WikiTree.py:618
 msgid "Move Page Down"
 msgstr ""
 
-#: gui/WikiTree.py:608 gui/WikiTree.py:613
+#: gui/WikiTree.py:622 gui/WikiTree.py:627
 msgid "Move Page Up"
 msgstr ""
 
-#: gui/WikiTree.py:637 gui/WikiTree.py:642
+#: gui/WikiTree.py:651 gui/WikiTree.py:656
 msgid "Remove Page…"
 msgstr ""
 
@@ -555,6 +568,10 @@ msgstr ""
 
 #: gui/preferences/EditorPanel.py:23
 msgid "Show line numbers"
+msgstr ""
+
+#: gui/preferences/EditorPanel.py:24
+msgid "Tab width"
 msgstr ""
 
 #: gui/preferences/GeneralPanel.py:23

@@ -108,6 +108,7 @@ class TextEditor(wx.Panel):
 		self.textCtrl.SetWrapVisualFlags (wx.stc.STC_WRAPVISUALFLAG_END)
 
 		self._setMarginWidth (self.textCtrl)
+		self.textCtrl.SetTabWidth (Application.config.tabWidthOption.value)
 	
 
 	def _setMarginWidth (self, editor):

@@ -172,7 +172,7 @@ class AttachPanel(wx.Panel):
 			files = self.getSelectedFiles ()
 
 			if len (files) == 0:
-				core.commands.MessageBox (_(u"Files is not selected"), 
+				core.commands.MessageBox (_(u"You did not select a file to remove"), 
 					_(u"Error"),
 					wx.OK  | wx.ICON_ERROR)
 				return
@@ -194,7 +194,7 @@ class AttachPanel(wx.Panel):
 		"""
 		files = self.getSelectedFiles ()
 		if len (files) == 0:
-			core.commands.MessageBox (_(u"Files is not selected"), 
+			core.commands.MessageBox (_(u"You did not select a file to paste"), 
 				_(u"Error"),
 				wx.OK  | wx.ICON_ERROR)
 			return
@@ -207,7 +207,7 @@ class AttachPanel(wx.Panel):
 			files = self.getSelectedFiles()
 
 			if len (files) == 0:
-				core.commands.MessageBox (_(u"Files is not selected"), 
+				core.commands.MessageBox (_(u"You did not select a file to execute"), 
 					_(u"Error"),
 					wx.OK  | wx.ICON_ERROR)
 				return
