@@ -123,7 +123,7 @@ class TextEditor(wx.Panel):
 			editor.SetMarginWidth (1, 5)
 		else:
 			editor.SetMarginWidth (0, 0)
-			editor.SetMarginWidth (1, 0)
+			editor.SetMarginWidth (1, 8)
 	
 
 	def calcByteLen(self, text):
