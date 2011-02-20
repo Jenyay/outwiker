@@ -43,7 +43,7 @@ class AttachPanel(wx.Panel):
 		self.Bind(wx.EVT_MENU, self.onAttach, id=self.ID_ATTACH)
 		self.Bind(wx.EVT_MENU, self.onRemove, id=self.ID_REMOVE)
 		self.Bind(wx.EVT_MENU, self.onPaste, id=self.ID_PASTE)
-		self.Bind(wx.EVT_MENU, self.onOpen, id=self.ID_EXECUTE)
+		self.Bind(wx.EVT_MENU, self.onExecute, id=self.ID_EXECUTE)
 
 		self.currentPage = None
 
@@ -162,14 +162,20 @@ class AttachPanel(wx.Panel):
 		return files
 
 
-	def onAttach(self, event): # wxGlade: AttachPanel.<event_handler>
+	def onAttach(self, event):
 		if self.currentPage != None:
 			core.commands.attachFilesWithDialog (self, self.currentPage)
 
 
-	def onRemove(self, event): # wxGlade: AttachPanel.<event_handler>
+	def onRemove(self, event):
 		if self.currentPage != None:
 			files = self.getSelectedFiles ()
+
+			if len (files) == 0:
+				core.commands.MessageBox (_(u"Files is not selected"), 
+					_(u"Error"),
+					wx.OK  | wx.ICON_ERROR)
+				return
 
 			if core.commands.MessageBox (_(u"Remove selected files?"), 
 					_(u"Remove files?"),
@@ -182,17 +188,29 @@ class AttachPanel(wx.Panel):
 				self.updateAttachments ()
 
 
-	def onPaste(self, event): # wxGlade: AttachPanel.<event_handler>
+	def onPaste(self, event):
 		"""
 		Сгенерировать сообщение о том, что пользователь хочет вставить ссылку на приаттаченные файлы
 		"""
 		files = self.getSelectedFiles ()
+		if len (files) == 0:
+			core.commands.MessageBox (_(u"Files is not selected"), 
+				_(u"Error"),
+				wx.OK  | wx.ICON_ERROR)
+			return
+
 		Application.onAttachmentPaste (files)
 
 
-	def onOpen(self, event): # wxGlade: AttachPanel.<event_handler>
+	def onExecute(self, event):
 		if self.currentPage != None:
 			files = self.getSelectedFiles()
+
+			if len (files) == 0:
+				core.commands.MessageBox (_(u"Files is not selected"), 
+					_(u"Error"),
+					wx.OK  | wx.ICON_ERROR)
+				return
 
 			for file in files:
 				fullpath = os.path.join (self.currentPage.getAttachPath(), file)
