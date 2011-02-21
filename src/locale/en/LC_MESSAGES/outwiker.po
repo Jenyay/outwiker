@@ -257,7 +257,7 @@ msgstr "&Open…\tCtrl+O"
 
 #: gui/MainWindow.py:111
 msgid "Open &Read-only…\tCtrl+Shift+O"
-msgstr "OutWiker"
+msgstr "Open &Read-only…\tCtrl+Shift+O"
 
 #: gui/MainWindow.py:112
 msgid "&Save\tCtrl+S"
@@ -558,7 +558,7 @@ msgstr "Restore"
 #: gui/WikiTree.py:642
 #: gui/WikiTree.py:647
 msgid "Add Child Page…"
-msgstr "OutWiker"
+msgstr "Add Child Page…"
 
 #: gui/WikiTree.py:308
 #: gui/WikiTree.py:633
