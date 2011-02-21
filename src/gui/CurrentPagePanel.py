@@ -153,12 +153,6 @@ class CurrentPagePanel(wx.Panel):
 
 		self.contentSizer = contentSizer
 
-		#if self.pageView != None:
-		#	contentSizer.Add (self.pageView, 1, wx.EXPAND, 0)
-
-		#self.Layout()
-		#self.GetParent().Layout()
-
 
 	def destroyPageView (self):
 		"""
@@ -167,11 +161,8 @@ class CurrentPagePanel(wx.Panel):
 		if self.pageView != None:
 			self.contentSizer.Detach (self.pageView)
 			self.pageView.Hide()
-			self.pageView.removeGui()
 			self.pageView.Close()
-			#self.pageView.Destroy()
 			self.pageView = None
-			#self.__do_layout()
 
 	
 	def destroyWithoutSave (self):
@@ -181,11 +172,9 @@ class CurrentPagePanel(wx.Panel):
 		"""
 		if self.pageView != None:
 			self.contentSizer.Detach (self.pageView)
-			#self.pageView.Destroy()
-			self.pageView.removeGui()
 			self.pageView.Hide()
+			self.pageView.CloseWithoutSave()
 			self.pageView = None
-			#self.__do_layout()
 	
 
 	def Save (self):

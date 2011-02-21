@@ -97,11 +97,16 @@ class BaseTextPanel (wx.Panel):
 		Закрытие панели. 
 		Вызывать вручную!!!
 		"""
-		Application.onAttachmentPaste -= self.onAttachmentPaste
-		Application.onEditorConfigChange -= self.onEditorConfigChange
-		Application.onForceSave -= self.onForceSave
-
+		self.Clear()
 		self.Save()
+		self.Destroy()
+	
+
+	def CloseWithoutSave (self):
+		"""
+		Закрытие панели без сохранения. 
+		"""
+		self.Clear()
 		self.Destroy()
 	
 
@@ -125,6 +130,17 @@ class BaseTextPanel (wx.Panel):
 
 		self._addMenuItems ()
 		self._addToolsItems ()
+
+
+	def Clear (self):
+		"""
+		Убрать за собой
+		"""
+		Application.onAttachmentPaste -= self.onAttachmentPaste
+		Application.onEditorConfigChange -= self.onEditorConfigChange
+		Application.onForceSave -= self.onForceSave
+
+		self.removeGui()
 
 
 	def removeGui (self):
