@@ -160,7 +160,6 @@ class CurrentPagePanel(wx.Panel):
 		"""
 		if self.pageView != None:
 			self.contentSizer.Detach (self.pageView)
-			self.pageView.Hide()
 			self.pageView.Close()
 			self.pageView = None
 
@@ -172,7 +171,6 @@ class CurrentPagePanel(wx.Panel):
 		"""
 		if self.pageView != None:
 			self.contentSizer.Detach (self.pageView)
-			self.pageView.Hide()
 			self.pageView.CloseWithoutSave()
 			self.pageView = None
 	
