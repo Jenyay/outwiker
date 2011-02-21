@@ -54,7 +54,15 @@ class SearchPanel(wx.Panel):
 
 	def onClose (self, event):
 		self.Save()
+		self.CloseWithoutSave()
+	
+
+	def CloseWithoutSave (self):
+		"""
+		Закрытие панели без сохранения. 
+		"""
 		Application.onForceSave -= self.onForceSave
+		self.Destroy()
 
 
 	def onForceSave (self):
