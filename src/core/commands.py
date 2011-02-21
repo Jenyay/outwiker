@@ -380,9 +380,11 @@ def reloadWiki (mainWnd):
 	mainWnd - указатель на главное окно. Нужно, чтобы сообщить ему о необходимости удалить панель с текущей страницей
 	"""
 	if Application.wikiroot != None:
-		save = (core.commands.MessageBox (_(u"Save current page before reload?"), 
-			_(u"Save?"), wx.YES_NO  | wx.ICON_QUESTION ) == wx.YES)
+		result = (core.commands.MessageBox (_(u"Save current page before reload?"), 
+			_(u"Save?"), wx.YES_NO | wx.CANCEL  | wx.ICON_QUESTION ))
 
-		mainWnd.destroyPagePanel (save)
-		
+		if result == wx.CANCEL:
+			return
+
+		mainWnd.destroyPagePanel (result == wx.YES)
 		core.commands.openWiki (Application.wikiroot.path)
