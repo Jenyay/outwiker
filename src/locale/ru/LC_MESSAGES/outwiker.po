@@ -41,7 +41,7 @@ msgstr "http://jenyay.net"
 
 #: gui/about.py:27
 msgid "OutWiker's page:"
-msgstr "Страница программы"
+msgstr "Страница программы:"
 
 #: gui/about.py:28
 msgid "http://jenyay.net/Soft/Outwiker"
