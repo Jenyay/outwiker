@@ -3,10 +3,13 @@
 
 import re
 import os
-import wx
 
 from libs.pyparsing import QuotedString, Regex, Empty, Literal, replaceWith, LineStart, LineEnd, OneOrMore, ZeroOrMore, NotAny, Or, Optional, StringEnd
 from core.tree import RootWikiPage
+
+from core.wxthumbmaker import WxThumbmaker
+from core.thumbexception import ThumbException
+
 
 def replaceBreakes (text):
 	lineBrake = u"[[<<]]"
@@ -21,13 +24,13 @@ def noConvert (s, l, t):
 	return t[0]
 
 
-class ThumbException (Exception):
-	def __init__ (self, value):
-		self.value = value
-
-
-	def __str__(self):
-		return self.value
+#class ThumbException (Exception):
+#	def __init__ (self, value):
+#		self.value = value
+#
+#
+#	def __str__(self):
+#		return self.value
 
 
 
@@ -213,6 +216,7 @@ class Parser (object):
 		# Имя файла превьюшки: th_height_100_fname
 		self.thumbsTemplate = "th_%s_%d_%s"
 
+		self.thumbmaker = WxThumbmaker()
 		self.thumbsDir = "__thumb"
 		self._configSection = u"Wikiparser"
 		self.maxsizeThumbDefault = 250
@@ -779,7 +783,7 @@ class Parser (object):
 		path_res = os.path.join (attachPath, self.thumbsDir, fname_res)
 
 		try:
-			self.__makeThumbByWidth (path_src, width, path_res)
+			self.thumbmaker.thumbByWidth (path_src, width, path_res)
 
 		except ThumbException as e:
 			return u"<B>" + e.value + u"</B>"
@@ -818,7 +822,7 @@ class Parser (object):
 		path_res = os.path.join (attachPath, self.thumbsDir, fname_res)
 
 		try:
-			self.__makeThumbByHeight (path_src, height, path_res)
+			self.thumbmaker.thumbByHeight (path_src, height, path_res)
 
 		except ThumbException as e:
 			return u"<B>" + e.value + u"</B>"
@@ -853,7 +857,7 @@ class Parser (object):
 		path_res = os.path.join (attachPath, self.thumbsDir, fname_res)
 
 		try:
-			self.__makeThumbByMaxSize (path_src, self.maxSizeThumb, path_res)
+			self.thumbmaker.thumbByMaxSize (path_src, self.maxSizeThumb, path_res)
 		
 		except ThumbException as e:
 			return u"<B>" + e.value + u"</B>"
@@ -893,7 +897,7 @@ class Parser (object):
 		path_res = os.path.join (attachPath, self.thumbsDir, fname_res)
 
 		try:
-			self.__makeThumbByMaxSize (path_src, maxsize, path_res)
+			self.thumbmaker.thumbByMaxSize (path_src, maxsize, path_res)
 		
 		except ThumbException as e:
 			return u"<B>" + e.value + u"</B>"
@@ -904,75 +908,6 @@ class Parser (object):
 		return '<A HREF="%s/%s"><IMG SRC="%s/%s/%s"></A>' % (RootWikiPage.attachDir, fname, 
 				RootWikiPage.attachDir, self.thumbsDir, fname_res)
 
-
-	def __makeThumbByWidth (self, fname_src, width_res, fname_res):
-		"""
-		Создать превьюшку определенной ширины
-		"""
-		if not os.path.exists (fname_src):
-			raise ThumbException (u"Error: %s not found" % os.path.basename (fname_src) )
-
-		image_src = wx.Image (fname_src)
-		width_src = image_src.GetWidth()
-		height_src = image_src.GetHeight()
-
-		scale = float (width_res) / float (width_src)
-		height_res = int (height_src * scale)
-
-		image_src.Rescale (width_res, height_res, wx.IMAGE_QUALITY_HIGH)
-		image_src.SaveFile (fname_res, self.__getImageType (fname_res) )
-	
-
-	def __makeThumbByHeight (self, fname_src, height_res, fname_res):
-		"""
-		Создать превьюшку определенной высоты
-		"""
-		if not os.path.exists (fname_src):
-			raise ThumbException (u"Error: %s not found" % os.path.basename (fname_src) )
-
-		image_src = wx.Image (fname_src)
-		width_src = image_src.GetWidth()
-		height_src = image_src.GetHeight()
-
-		scale = float (height_res) / float (height_src)
-		width_res = int (width_src * scale)
-
-		image_src.Rescale (width_res, height_res, wx.IMAGE_QUALITY_HIGH)
-		image_src.SaveFile (fname_res, self.__getImageType (fname_res) )
-	
-
-	def __makeThumbByMaxSize (self, fname_src, maxsize_res, fname_res):
-		"""
-		Создать превьюшку с заданным максимальным размером
-		"""
-		if not os.path.exists (fname_src):
-			raise ThumbException (u"Error: %s not found" % os.path.basename (fname_src) )
-
-		image_src = wx.Image (fname_src)
-
-		width_src = image_src.GetWidth()
-		height_src = image_src.GetHeight()
-
-		if width_src > height_src:
-			self.__makeThumbByWidth (fname_src, maxsize_res, fname_res)
-		else:
-			self.__makeThumbByHeight (fname_src, maxsize_res, fname_res)
-
-	
-
-	def __getImageType (self, fname):
-		if fname.lower().endswith (".jpg") or fname.lower().endswith (".jpeg"):
-			return wx.BITMAP_TYPE_JPEG
-
-		if fname.lower().endswith (".bmp"):
-			return wx.BITMAP_TYPE_BMP
-
-		if fname.lower().endswith (".png"):
-			return wx.BITMAP_TYPE_PNG
-
-		if fname.lower().endswith (".tif") or fname.lower().endswith (".tiff"):
-			return wx.BITMAP_TYPE_TIF
-	
 
 	def __convertPreformat (self, s, l, t):
 		return u"<PRE>" + t[0] + u"</PRE>"

@@ -35,6 +35,7 @@ if __name__ == '__main__':
 	from test.version import VersionTest, StatusTest
 	from test.pageorder import PageOrderTest
 	from test.commands import CommandsTest
+	from test.wxthumbmaker import WxThumbmakerTest
 
 
 	unittest.main()
