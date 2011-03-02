@@ -4,21 +4,14 @@
 import os
 import unittest
 
-import wx
-
 from core.tree import RootWikiPage, WikiDocument
 from pages.wiki.wikiparser import Parser
 from pages.wiki.wikipage import WikiPageFactory
 from test.utils import removeWiki
 
-class testApp(wx.App):
-	def __init__(self, *args, **kwds):
-		wx.App.__init__ (self, *args, **kwds)
-
 
 class ParserTest (unittest.TestCase):
 	def setUp(self):
-		self.app = testApp()
 		self.encoding = "utf8"
 
 		self.filesPath = u"../test/samplefiles/"

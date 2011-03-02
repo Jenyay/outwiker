@@ -5,39 +5,19 @@ import os
 import os.path
 import unittest
 
-import wx
-
 from core.wxthumbmaker import WxThumbmaker
 from core.thumbexception import ThumbException
-
-
-class testApp(wx.App):
-	def __init__(self, *args, **kwds):
-		wx.App.__init__ (self, *args, **kwds)
-
-app = testApp()
+from test.utils import getImageSize
 
 
 class WxThumbmakerTest (unittest.TestCase):
 	"""
-	Тесты для создателя превьюшек с помощью wx
+	Тесты для создателя превьюшек с помощью WxThumbmaker
 	"""
 
 	def setUp (self):
 		pass
 	
-
-	def getImageSize (self, fname):
-		"""
-		Получить размер картинки. 
-		Возвращает кортеж (ширина, высота)
-		"""
-		image = wx.Image (fname)
-		width = image.GetWidth()
-		height = image.GetHeight()
-
-		return (width, height)
-
 
 	def testWxThumbWidthJpeg (self):
 		self.fname_in = "../test/images/first.jpg"
@@ -51,7 +31,7 @@ class WxThumbmakerTest (unittest.TestCase):
 		newheight = 182
 
 		self.thumbmaker.thumbByWidth (self.fname_in, newwidth, self.fname_out)
-		(width, height) = self.getImageSize (self.fname_out)
+		(width, height) = getImageSize (self.fname_out)
 
 		self.assertEqual (width, newwidth)
 		self.assertEqual (height, newheight)
@@ -72,7 +52,7 @@ class WxThumbmakerTest (unittest.TestCase):
 		newheight = 215
 
 		self.thumbmaker.thumbByWidth (self.fname_in, newwidth, self.fname_out)
-		(width, height) = self.getImageSize (self.fname_out)
+		(width, height) = getImageSize (self.fname_out)
 
 		self.assertEqual (width, newwidth)
 		self.assertEqual (height, newheight)
@@ -93,7 +73,7 @@ class WxThumbmakerTest (unittest.TestCase):
 		newheight = 215
 
 		self.thumbmaker.thumbByWidth (self.fname_in, newwidth, self.fname_out)
-		(width, height) = self.getImageSize (self.fname_out)
+		(width, height) = getImageSize (self.fname_out)
 
 		self.assertEqual (width, newwidth)
 		self.assertEqual (height, newheight)
@@ -114,7 +94,7 @@ class WxThumbmakerTest (unittest.TestCase):
 		newheight = 215
 
 		self.thumbmaker.thumbByWidth (self.fname_in, newwidth, self.fname_out)
-		(width, height) = self.getImageSize (self.fname_out)
+		(width, height) = getImageSize (self.fname_out)
 
 		self.assertEqual (width, newwidth)
 		self.assertEqual (height, newheight)
@@ -135,7 +115,7 @@ class WxThumbmakerTest (unittest.TestCase):
 		newwidth = 246
 
 		self.thumbmaker.thumbByHeight (self.fname_in, newheight, self.fname_out)
-		(width, height) = self.getImageSize (self.fname_out)
+		(width, height) = getImageSize (self.fname_out)
 
 		self.assertEqual (width, newwidth)
 		self.assertEqual (height, newheight)
@@ -156,7 +136,7 @@ class WxThumbmakerTest (unittest.TestCase):
 		newwidth = 246
 
 		self.thumbmaker.thumbByHeight (self.fname_in, newheight, self.fname_out)
-		(width, height) = self.getImageSize (self.fname_out)
+		(width, height) = getImageSize (self.fname_out)
 
 		self.assertEqual (width, newwidth)
 		self.assertEqual (height, newheight)
@@ -179,7 +159,7 @@ class WxThumbmakerTest (unittest.TestCase):
 		newheight = 182
 
 		self.thumbmaker.thumbByMaxSize (self.fname_in, newsize, self.fname_out)
-		(width, height) = self.getImageSize (self.fname_out)
+		(width, height) = getImageSize (self.fname_out)
 
 		self.assertEqual (width, newwidth)
 		self.assertEqual (height, newheight)
@@ -202,7 +182,7 @@ class WxThumbmakerTest (unittest.TestCase):
 		newheight = 250
 
 		self.thumbmaker.thumbByMaxSize (self.fname_in, newsize, self.fname_out)
-		(width, height) = self.getImageSize (self.fname_out)
+		(width, height) = getImageSize (self.fname_out)
 
 		self.assertEqual (width, newwidth)
 		self.assertEqual (height, newheight)

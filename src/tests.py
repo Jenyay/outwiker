@@ -6,12 +6,21 @@ Unit-тесты
 """
 import gettext
 import os
+
+import wx
+
 import core.system
 from core.application import Application
 
 Application.init ("../test/testconfig.ini")
 
 if __name__ == '__main__':
+	class testApp(wx.App):
+		def __init__(self, *args, **kwds):
+			wx.App.__init__ (self, *args, **kwds)
+
+	app = testApp()
+
 	import unittest
 
 	from test.wikiloading import WikiPagesTest, SubWikiTest
@@ -36,6 +45,7 @@ if __name__ == '__main__':
 	from test.pageorder import PageOrderTest
 	from test.commands import CommandsTest
 	from test.wxthumbmaker import WxThumbmakerTest
+	from test.wikithumbmaker import WikiThumbmakerTest
 
 
 	unittest.main()
