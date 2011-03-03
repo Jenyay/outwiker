@@ -9,6 +9,7 @@ from core.tree import RootWikiPage
 
 from core.wxthumbmaker import WxThumbmaker
 from core.thumbexception import ThumbException
+from pages.wiki.pagethumbmaker import PageThumbmaker
 
 
 def replaceBreakes (text):
@@ -202,15 +203,9 @@ class ListParser (object):
 class Parser (object):
 	def __init__ (self, page, maxSizeThumb = 250):
 		self.page = page
+		self.maxSizeThumb = maxSizeThumb
 
-		# Имя файла превьюшки: th_width_200_fname
-		# Имя файла превьюшки: th_height_100_fname
-		self.thumbsTemplate = "th_%s_%d_%s"
-
-		self.thumbmaker = WxThumbmaker()
-		self.thumbsDir = "__thumb"
-		self._configSection = u"Wikiparser"
-		self.maxsizeThumbDefault = 250
+		self.thumbmaker = PageThumbmaker()
 		
 		self.__attachString = u"Attach:"
 		self.heading1_Regex = "^!!\s+(?P<title>.*)$"
@@ -245,8 +240,6 @@ class Parser (object):
 		self.noFormatEnd = "=]"
 		self.horLineRegEx = "----+"
 
-		self.maxSizeThumb = maxSizeThumb
-		
 		self.__createFontTokens()
 		self.__createAdHocTokens()
 
@@ -527,12 +520,6 @@ class Parser (object):
 		return __divTransform
 
 	
-	def __getThumbsWidth (self):
-		result = Regex (r"""% *?(thumb +)?width *?= *?(?P<width>\d+) *?(px)? *?% *?Attach:(?P<fname>.*?\.(jpe?g|bmp|gif|tiff?|png)) *?%%""")
-		result.setParseAction (self.__convertThumbWidth)
-		return result
-
-
 	def __getThumbsToken (self):
 		result = Regex (r"""% *?(((thumb +)?width *?= *?(?P<width>\d+) *?(px)?)|((thumb +)?height *?= *?(?P<height>\d+) *?(px)?)|((thumb +)?maxsize *?= *?(?P<maxsize>\d+) *?(px)?)|(thumb *?)) *?% *?Attach:(?P<fname>.*?\.(jpe?g|bmp|gif|tiff?|png)) *?%%""")
 		result.setParseAction (self.__convertThumb)
@@ -737,167 +724,41 @@ class Parser (object):
 
 	def __convertThumb (self, s, l, t):
 		if t["width"] != None:
-			return self.__convertThumbWidth (s, l, t)
+			try:
+				size = int (t["width"])
+			except ValueError:
+				return _(u"<b>Width error</b>")
+
+			func = self.thumbmaker.createThumbByWidth
+
 		elif t["height"] != None:
-			return self.__convertThumbHeight (s, l, t)
+			try:
+				size = int (t["height"])
+			except ValueError:
+				return u"<b>Height error</b>"
+
+			func = self.thumbmaker.createThumbByHeight
+
 		elif t["maxsize"] != None:
-			return self.__convertThumbMaxSize (s, l, t)
+			try:
+				size = int (t["maxsize"])
+			except ValueError:
+				return u"<b>Maxsize error</b>"
+
+			func = self.thumbmaker.createThumbByMaxSize
+
 		else:
-			return self.__convertThumbDefault (s, l, t)
-
-
-	def __convertThumbWidth (self, s, l, t):
-		try:
-			width = int (t["width"])
-		except ValueError:
-			return u"<b>Width error</b>"
+			size = self.maxSizeThumb
+			func = self.thumbmaker.createThumbByMaxSize
 
 		fname = t["fname"]
 
-		attachPath = self.page.getAttachPath()
-
-		path = os.path.join (attachPath, self.thumbsDir)
-		if not os.path.exists (path):
-			try:
-				os.mkdir (path)
-			except:
-				return u"<b>Can't create folder %s</b>" % path
-
-		path_src = os.path.join (attachPath, fname)
-
-		fname_res = self.thumbsTemplate % ("width", width, fname)
-
-		# wx не умеет сохранять в GIF, поэтому преобразуем в PNG
-		if fname_res.lower().endswith (".gif"):
-			fname_res = fname_res.replace (".gif", ".png")
-
-		path_res = os.path.join (attachPath, self.thumbsDir, fname_res)
-
 		try:
-			self.thumbmaker.thumbByWidth (path_src, width, path_res)
-
-		except ThumbException as e:
-			return u"<B>" + e.value + u"</B>"
-
+			thumb = func (self.page, fname, size)
 		except Exception as e:
-			return u"<B>" + repr (e) + u"</B>"
+			return _(u"<b>Can't create thumbnail: \n%s</b>" % repr (e))
 
-		return u'<A HREF="%s/%s"><IMG SRC="%s/%s/%s"></A>' % (RootWikiPage.attachDir, fname, 
-				RootWikiPage.attachDir, self.thumbsDir, fname_res)
-
-
-	def __convertThumbHeight (self, s, l, t):
-		try:
-			height = int (t["height"])
-		except ValueError:
-			return u"<b>Height error</b>"
-
-		fname = t["fname"]
-		attachPath = self.page.getAttachPath()
-
-		path = os.path.join (attachPath, self.thumbsDir)
-		if not os.path.exists (path):
-			try:
-				os.mkdir (path)
-			except:
-				return u"<b>Can't create folder %s</b>" % path
-
-		path_src = os.path.join (attachPath, fname)
-
-		fname_res = self.thumbsTemplate % ("height", height, fname)
-
-		# wx не умеет сохранять в GIF, поэтому преобразуем в PNG
-		if fname_res.lower().endswith (".gif"):
-			fname_res = fname_res.replace (".gif", ".png")
-
-		path_res = os.path.join (attachPath, self.thumbsDir, fname_res)
-
-		try:
-			self.thumbmaker.thumbByHeight (path_src, height, path_res)
-
-		except ThumbException as e:
-			return u"<B>" + e.value + u"</B>"
-
-		except Exception as e:
-			return u"<B>" + unicode (e) + u"</B>"
-
-		return '<A HREF="%s/%s"><IMG SRC="%s/%s/%s"></A>' % (RootWikiPage.attachDir, fname, 
-				RootWikiPage.attachDir, self.thumbsDir, fname_res)
-	
-
-	def __convertThumbDefault (self, s, l, t):
-		fname = t["fname"]
-
-		attachPath = self.page.getAttachPath()
-
-		path = os.path.join (attachPath, self.thumbsDir)
-		if not os.path.exists (path):
-			try:
-				os.mkdir (path)
-			except:
-				return u"<b>Can't create folder %s</b>" % path
-
-		path_src = os.path.join (attachPath, fname)
-
-		fname_res = self.thumbsTemplate % ("maxsize", self.maxSizeThumb, fname)
-
-		# wx не умеет сохранять в GIF, поэтому преобразуем в PNG
-		if fname_res.lower().endswith (".gif"):
-			fname_res = fname_res.replace (".gif", ".png")
-
-		path_res = os.path.join (attachPath, self.thumbsDir, fname_res)
-
-		try:
-			self.thumbmaker.thumbByMaxSize (path_src, self.maxSizeThumb, path_res)
-		
-		except ThumbException as e:
-			return u"<B>" + e.value + u"</B>"
-
-		except Exception as e:
-			return u"<B>" + unicode (e) + u"</B>"
-
-		return '<A HREF="%s/%s"><IMG SRC="%s/%s/%s"></A>' % (RootWikiPage.attachDir, fname, 
-				RootWikiPage.attachDir, self.thumbsDir, fname_res)
-	
-
-	def __convertThumbMaxSize (self, s, l, t):
-		try:
-			maxsize = int (t["maxsize"])
-		except ValueError:
-			return u"<b>Maxsize error</b>"
-
-		fname = t["fname"]
-
-		attachPath = self.page.getAttachPath()
-
-		path = os.path.join (attachPath, self.thumbsDir)
-		if not os.path.exists (path):
-			try:
-				os.mkdir (path)
-			except:
-				return u"<b>Can't create folder %s</b>" % path
-
-		path_src = os.path.join (attachPath, fname)
-
-		fname_res = self.thumbsTemplate % ("maxsize", maxsize, fname)
-
-		# wx не умеет сохранять в GIF, поэтому преобразуем в PNG
-		if fname_res.lower().endswith (".gif"):
-			fname_res = fname_res.replace (".gif", ".png")
-
-		path_res = os.path.join (attachPath, self.thumbsDir, fname_res)
-
-		try:
-			self.thumbmaker.thumbByMaxSize (path_src, maxsize, path_res)
-		
-		except ThumbException as e:
-			return u"<B>" + e.value + u"</B>"
-
-		except Exception as e:
-			return u"<B>" + unicode (e) + u"</B>"
-
-		return '<A HREF="%s/%s"><IMG SRC="%s/%s/%s"></A>' % (RootWikiPage.attachDir, fname, 
-				RootWikiPage.attachDir, self.thumbsDir, fname_res)
+		return u'<A HREF="%s/%s"><IMG SRC="%s"></A>' % (RootWikiPage.attachDir, fname, thumb)
 
 
 	def __convertPreformat (self, s, l, t):

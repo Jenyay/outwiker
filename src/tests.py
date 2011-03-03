@@ -19,7 +19,7 @@ if __name__ == '__main__':
 		def __init__(self, *args, **kwds):
 			wx.App.__init__ (self, *args, **kwds)
 
-	app = testApp()
+	app = testApp(redirect=False)
 
 	import unittest
 
@@ -45,7 +45,7 @@ if __name__ == '__main__':
 	from test.pageorder import PageOrderTest
 	from test.commands import CommandsTest
 	from test.wxthumbmaker import WxThumbmakerTest
-	from test.wikithumbmaker import WikiThumbmakerTest
+	from test.pagethumbmaker import PageThumbmakerTest
 
 
 	unittest.main()
