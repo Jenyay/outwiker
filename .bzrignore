@@ -15,3 +15,4 @@ distrib/outwiker-*/opt/outwiker
 distrib/exe.win32-2.6
 doc/todo.tsk.lock
 doc/todo.tsk.lock.*
+test/*.profile
