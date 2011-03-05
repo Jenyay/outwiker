@@ -9,7 +9,7 @@ import core.commands
 from gui.TextEditor import TextEditor
 from pages.html.HtmlPanel import HtmlPanel
 from gui.BaseTextPanel import BaseTextPanel
-from wikiparser import Parser
+from parser.wikiparser import Parser
 from core.config import Config
 from core.tree import RootWikiPage
 from core.htmlimprover import HtmlImprover

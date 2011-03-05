@@ -5,7 +5,7 @@ import os
 import cProfile
 
 from core.tree import RootWikiPage, WikiDocument
-from pages.wiki.wikiparser import Parser
+from pages.wiki.parser.wikiparser import Parser
 from pages.wiki.wikipage import WikiPageFactory
 from test.utils import removeWiki
 

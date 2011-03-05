@@ -21,7 +21,7 @@ def wikiparserProfile ():
 	cProfile.run('pparser.run()', profile_fname)
 
 	stats = pstats.Stats(profile_fname)
-	stats.strip_dirs().sort_stats('cumulative').print_stats()
+	stats.strip_dirs().sort_stats('cumulative').print_stats(10)
 
 
 if __name__ == "__main__":

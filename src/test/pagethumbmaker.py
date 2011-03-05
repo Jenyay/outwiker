@@ -5,7 +5,7 @@ import os
 import os.path
 import unittest
 
-from pages.wiki.pagethumbmaker import PageThumbmaker
+from pages.wiki.parser.pagethumbmaker import PageThumbmaker
 from core.tree import RootWikiPage, WikiDocument
 from pages.text.textpage import TextPageFactory
 from test.utils import removeWiki, getImageSize

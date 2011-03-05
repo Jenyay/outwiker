@@ -9,7 +9,7 @@ from core.tree import RootWikiPage
 
 from pages.wiki.parser.tokenthumbnail import ThumbnailFactory
 from pages.wiki.parser.listparser import ListParser
-from pages.wiki.parser.utils import noConvert, replaceBreakes
+from pages.wiki.parser.utils import noConvert, replaceBreakes, concatenate
 
 
 
@@ -84,53 +84,53 @@ class Parser (object):
 		self.list = self.__getListToken ()
 
 
-		self.wikiMarkup = self.link | \
-				self.boldItalicSubscripted | \
-				self.boldItalicSuperscripted | \
-				self.boldSubscripted | \
-				self.boldSuperscripted | \
-				self.italicSubscripted | \
-				self.italicSuperscripted | \
-				self.subscript | \
-				self.superscript | \
-				self.boldItalicized | \
-				self.bolded | \
-				self.italicized | \
-				self.code |\
-				self.preformat | \
-				self.noformat | \
-				self.urlImage | \
-				self.url | \
-				self.thumb | \
-				self.underlined | \
-				self.horline | \
-				self.centerAlign | \
-				self.rightAlign | \
-				self.list | \
-				self.table
+		self.wikiMarkup = (self.link |
+				self.boldItalicSubscripted |
+				self.boldItalicSuperscripted |
+				self.boldSubscripted |
+				self.boldSuperscripted |
+				self.italicSubscripted |
+				self.italicSuperscripted |
+				self.subscript |
+				self.superscript |
+				self.boldItalicized |
+				self.bolded |
+				self.italicized |
+				self.code |
+				self.preformat |
+				self.noformat |
+				self.urlImage |
+				self.url |
+				self.thumb |
+				self.underlined |
+				self.horline |
+				self.centerAlign |
+				self.rightAlign |
+				self.list |
+				self.table |
+				self.attachesImage |
+				self.attachesNotImage |
+				self.headings
+				)
 
 
 		# Нотация для ссылок
-		self.linkMarkup = self.boldItalicSubscripted | \
-				self.boldItalicSuperscripted | \
-				self.boldSubscripted | \
-				self.boldSuperscripted | \
-				self.italicSubscripted | \
-				self.italicSuperscripted | \
-				self.subscript | \
-				self.superscript | \
-				self.boldItalicized | \
-				self.bolded | \
-				self.italicized | \
-				self.urlImage | \
-				self.underlined
+		self.linkMarkup = (self.boldItalicSubscripted |
+				self.boldItalicSuperscripted |
+				self.boldSubscripted |
+				self.boldSuperscripted |
+				self.italicSubscripted |
+				self.italicSuperscripted |
+				self.subscript |
+				self.superscript |
+				self.boldItalicized |
+				self.bolded |
+				self.italicized |
+				self.urlImage |
+				self.underlined |
+				self.attachesImage
+				)
 
-		self.__addTokens (self.attachesImage, self.wikiMarkup)
-		self.__addTokens (self.attachesImage, self.listItemMarkup)
-		self.__addTokens (self.attachesImage, self.linkMarkup)
-		self.__addTokens (self.attachesNotImage, self.wikiMarkup)
-		self.__addTokens (self.attachesNotImage, self.listItemMarkup)
-		self.__addTokens (self.headings, self.wikiMarkup)
 
 	
 	def __getHorLineToken (self):
@@ -171,33 +171,28 @@ class Parser (object):
 
 
 	def __getListToken (self):
-		self.listItemMarkup = self.link | \
-				self.boldItalicized | \
-				self.bolded | \
-				self.italicized | \
-				self.code |\
-				self.preformat | \
-				self.noformat | \
-				self.urlImage | \
-				self.url | \
-				self.thumb | \
-				self.underlined | \
-				self.subscript | \
-				self.superscript 
+		self.listItemMarkup = (self.link |
+				self.boldItalicized |
+				self.bolded |
+				self.italicized |
+				self.code |
+				self.preformat |
+				self.noformat |
+				self.urlImage |
+				self.url |
+				self.thumb |
+				self.underlined |
+				self.subscript |
+				self.superscript |
+				self.attachesImage |
+				self.attachesNotImage
+				)
 
 		allListsParams = [ListParams (self.unorderList, u"<UL>", u"</UL>"), ListParams (self.orderList, u"<OL>", u"</OL>")]
 
 		self.listParser = ListParser (allListsParams, self.listItemMarkup)
 
 		return self.listParser.getListToken()
-
-
-	def __addTokens (self, tokenList, srcToken):
-		"""
-		Добавить токены из списка tokenList к srcToken
-		"""
-		for token in tokenList:
-			srcToken |= token
 
 
 	def __getTableToken (self):
@@ -375,7 +370,7 @@ class Parser (object):
 				attach_token.setParseAction (replaceWith (self.__getReplaceForImageAttach (fname) ) )
 				attachesImages.append (attach_token)
 
-		return attachesImages
+		return concatenate (attachesImages)
 
 	
 	def __getNotImageAttachTokens (self):
@@ -395,7 +390,7 @@ class Parser (object):
 				attach.setParseAction (replaceWith (self.__getReplaceForAttach (fname) ) )
 				attachesAll.append (attach)
 
-		return attachesAll
+		return concatenate (attachesAll)
 
 
 	def __getHeadingTokens (self):
@@ -410,7 +405,7 @@ class Parser (object):
 		tokens.append (Regex (self.heading5_Regex, re.MULTILINE).setParseAction(self.__convertToHeading("<H5>","</H5>") ) )
 		tokens.append (Regex (self.heading6_Regex, re.MULTILINE).setParseAction(self.__convertToHeading("<H6>","</H6>") ) )
 
-		return tokens
+		return concatenate (tokens)
 
 
 	def __isImage (self, fname):

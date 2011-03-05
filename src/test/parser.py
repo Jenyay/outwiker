@@ -5,7 +5,7 @@ import os
 import unittest
 
 from core.tree import RootWikiPage, WikiDocument
-from pages.wiki.wikiparser import Parser
+from pages.wiki.parser.wikiparser import Parser
 from pages.wiki.wikipage import WikiPageFactory
 from test.utils import removeWiki
 
@@ -56,6 +56,15 @@ class ParserTest (unittest.TestCase):
 	def tearDown(self):
 		removeWiki (self.path)
 		#pass
+	
+
+	def testParseWithoutAttaches (self):
+		pagetitle = u"Страница 666"
+		
+		WikiPageFactory.create (self.rootwiki, pagetitle, [])
+		parser = Parser(self.rootwiki[pagetitle], maxSizeThumb = 250)
+
+		parser.toHtml (u"Attach:bla-bla-bla")
 
 
 	def testBold (self):

@@ -4,7 +4,7 @@
 from libs.pyparsing import Regex
 
 from core.thumbexception import ThumbException
-from pages.wiki.pagethumbmaker import PageThumbmaker
+from pagethumbmaker import PageThumbmaker
 from core.tree import RootWikiPage
 
 
