@@ -28,3 +28,14 @@ def concatenate (tokenlist):
 		result |= token
 
 	return result
+
+
+def convertToHTML (opening, closing, parser):
+	"""
+	opening - открывающийся тег(и)
+	closing - закрывающийся тег(и)
+	parser - парсер, у которого берется токен wikiMarkup для преобразования содержимого между тегами
+	"""
+	def conversionParseAction(s,l,t):
+		return opening + parser.wikiMarkup.transformString (t[0]) + closing
+	return conversionParseAction

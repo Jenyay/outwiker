@@ -7,9 +7,13 @@ import os
 from libs.pyparsing import QuotedString, Regex, Empty, Literal, replaceWith, LineStart, LineEnd, OneOrMore, ZeroOrMore, NotAny, Or, Optional, StringEnd
 from core.tree import RootWikiPage
 
-from pages.wiki.parser.tokenthumbnail import ThumbnailFactory
-from pages.wiki.parser.listparser import ListParser
-from pages.wiki.parser.utils import noConvert, replaceBreakes, concatenate
+from tokenfonts import FontsFactory
+from tokennoformat import NoFormatFactory
+from tokenpreformat import PreFormatFactory
+from tokenthumbnail import ThumbnailFactory
+from tokenheading import HeadingFactory
+from listparser import ListParser
+from utils import noConvert, replaceBreakes, concatenate, convertToHTML
 
 
 
@@ -29,21 +33,11 @@ class Parser (object):
 		self.page = page
 		self.maxSizeThumb = maxSizeThumb
 
-		self.__attachString = u"Attach:"
-		self.heading1_Regex = "^!!\s+(?P<title>.*)$"
-		self.heading2_Regex = "^!!!\s+(?P<title>.*)$"
-		self.heading3_Regex = "^!!!!\s+(?P<title>.*)$"
-		self.heading4_Regex = "^!!!!!\s+(?P<title>.*)$"
-		self.heading5_Regex = "^!!!!!!\s+(?P<title>.*)$"
-		self.heading6_Regex = "^!!!!!!!\s+(?P<title>.*)$"
-		self.codeStart = "@@"
-		self.codeEnd = "@@"
+		self.attachString = u"Attach:"
 		self.superscriptStart = "'^"
 		self.superscriptEnd = "^'"
 		self.subscriptStart = "'_"
 		self.subscriptEnd = "_'"
-		self.underlineStart = "{+"
-		self.underlineEnd = "+}"
 		self.boldItalicStart = "''''"
 		self.boldItalicEnd = "''''"
 		self.boldStart = "'''"
@@ -56,25 +50,21 @@ class Parser (object):
 		self.centerRegex = "% *?center *?%(?P<text>.*?)(?P<end>(\n\n)|\Z)"
 		self.linkStart = "[["
 		self.linkEnd = "]]"
-		self.preFormatStart = "[@"
-		self.preFormatEnd = "@]"
-		self.noFormatStart = "[="
-		self.noFormatEnd = "=]"
 		self.horLineRegEx = "----+"
 
 		self.__createFontTokens()
 		self.__createAdHocTokens()
 
 		# Заголовки
-		self.headings = self.__getHeadingTokens()
+		self.headings = HeadingFactory.make(self)
+		self.thumb = ThumbnailFactory.make(self)
+		self.noformat = NoFormatFactory.make(self)
+		self.preformat = PreFormatFactory.make (self)
 
-		self.noformat = self.__getNoFormatToken()
-		self.preformat = self.__getPreformatToken()
 		self.horline = self.__getHorLineToken()
 		self.link = self.__getLinkToken()
 		self.centerAlign = self.__getCenterAlignToken ()
 		self.rightAlign = self.__getRightrAlignToken ()
-		self.thumb = ThumbnailFactory.make(self)
 		self.table = self.__getTableToken ()
 		self.url = self.__getUrlToken ()
 		self.urlImage = self.__getUrlImageToken ()
@@ -136,14 +126,6 @@ class Parser (object):
 	def __getHorLineToken (self):
 		return Regex(self.horLineRegEx).setParseAction (self.__convertToText ("<HR>"))
 	
-
-	def __getNoFormatToken (self):
-		return QuotedString(self.noFormatStart, endQuoteChar = self.noFormatEnd, multiline = True).setParseAction(noConvert)
-	
-
-	def __getPreformatToken (self):
-		return QuotedString(self.preFormatStart, endQuoteChar = self.preFormatEnd, multiline = True).setParseAction(self.__convertPreformat)
-
 
 	def __getLinkToken (self):
 		return QuotedString(self.linkStart, endQuoteChar = self.linkEnd, multiline = True).setParseAction(self.__convertToLink)
@@ -258,33 +240,13 @@ class Parser (object):
 	
 
 	def __createFontTokens (self):
-		self.italicized = QuotedString (self.italicStart, 
-				endQuoteChar = self.italicEnd, 
-				multiline = True).setParseAction(self.__convertToHTML("<I>","</I>"))
-
-		self.bolded = QuotedString (self.boldStart, 
-				endQuoteChar = self.boldEnd, 
-				multiline = True).setParseAction(self.__convertToHTML("<B>","</B>"))
-
-		self.boldItalicized = QuotedString (self.boldItalicStart, 
-				endQuoteChar = self.boldItalicEnd, 
-				multiline = True).setParseAction(self.__convertToHTML("<B><I>","</I></B>"))
-
-		self.underlined = QuotedString (self.underlineStart, 
-				endQuoteChar = self.underlineEnd, 
-				multiline = True).setParseAction(self.__convertToHTML("<U>","</U>"))
-
-		self.subscript = QuotedString (self.subscriptStart, 
-				endQuoteChar = self.subscriptEnd, 
-				multiline = True).setParseAction(self.__convertToHTML("<SUB>","</SUB>"))
-
-		self.superscript = QuotedString (self.superscriptStart, 
-				endQuoteChar = self.superscriptEnd, 
-				multiline = True).setParseAction(self.__convertToHTML("<SUP>","</SUP>"))
-
-		self.code = QuotedString (self.codeStart, 
-				endQuoteChar = self.codeEnd, 
-				multiline = True).setParseAction(self.__convertToHTML("<CODE>","</CODE>"))
+		self.italicized = FontsFactory.makeItalic (self)
+		self.bolded = FontsFactory.makeBold (self)
+		self.boldItalicized = FontsFactory.makeBoldItalic (self)
+		self.underlined = FontsFactory.makeUnderline (self)
+		self.subscript = FontsFactory.makeSubscript (self)
+		self.superscript = FontsFactory.makeSuperscript (self)
+		self.code = FontsFactory.makeCode (self)
 	
 
 	def __createAdHocTokens (self):
@@ -293,39 +255,39 @@ class Parser (object):
 		"""
 		self.boldSubscripted = QuotedString (self.boldStart, 
 				endQuoteChar = self.subscriptEnd + self.boldEnd, 
-				multiline = True).setParseAction(self.__convertToHtmlAdHoc("<B>", 
+				multiline = True).setParseAction(self.convertToHTMLAdHoc("<B>", 
 					"</B>",
 					suffix = self.subscriptEnd))
 
 
 		self.boldSuperscripted = QuotedString (self.boldStart, 
 				endQuoteChar = self.superscriptEnd + self.boldEnd, 
-				multiline = True).setParseAction(self.__convertToHtmlAdHoc("<B>", 
+				multiline = True).setParseAction(self.convertToHTMLAdHoc("<B>", 
 					"</B>",
 					suffix = self.superscriptEnd))
 
 		self.italicSubscripted = QuotedString (self.italicStart, 
 				endQuoteChar = self.subscriptEnd + self.italicEnd, 
-				multiline = True).setParseAction(self.__convertToHtmlAdHoc("<I>", 
+				multiline = True).setParseAction(self.convertToHTMLAdHoc("<I>", 
 					"</I>",
 					suffix = self.subscriptEnd))
 
 
 		self.italicSuperscripted = QuotedString (self.italicStart, 
 				endQuoteChar = self.superscriptEnd + self.italicEnd, 
-				multiline = True).setParseAction(self.__convertToHtmlAdHoc("<I>", 
+				multiline = True).setParseAction(self.convertToHTMLAdHoc("<I>", 
 					"</I>",
 					suffix = self.superscriptEnd))
 
 		self.boldItalicSubscripted = QuotedString (self.boldItalicStart, 
 				endQuoteChar = self.subscriptEnd + self.boldItalicEnd, 
-				multiline = True).setParseAction(self.__convertToHtmlAdHoc("<B><I>", 
+				multiline = True).setParseAction(self.convertToHTMLAdHoc("<B><I>", 
 					"</I></B>",
 					suffix = self.subscriptEnd))
 
 		self.boldItalicSuperscripted = QuotedString (self.boldItalicStart, 
 				endQuoteChar = self.superscriptEnd + self.boldItalicEnd, 
-				multiline = True).setParseAction(self.__convertToHtmlAdHoc("<B><I>", 
+				multiline = True).setParseAction(self.convertToHTMLAdHoc("<B><I>", 
 					"</I></B>",
 					suffix = self.superscriptEnd))
 
@@ -366,7 +328,7 @@ class Parser (object):
 		for attach in attaches:
 			if self.__isImage (attach):
 				fname = os.path.basename (attach)
-				attach_token = self.__attachString + Literal (fname)
+				attach_token = self.attachString + Literal (fname)
 				attach_token.setParseAction (replaceWith (self.__getReplaceForImageAttach (fname) ) )
 				attachesImages.append (attach_token)
 
@@ -386,26 +348,11 @@ class Parser (object):
 		for attach in attaches:
 			if not self.__isImage (attach):
 				fname = os.path.basename (attach)
-				attach = self.__attachString + Literal (fname)
+				attach = self.attachString + Literal (fname)
 				attach.setParseAction (replaceWith (self.__getReplaceForAttach (fname) ) )
 				attachesAll.append (attach)
 
 		return concatenate (attachesAll)
-
-
-	def __getHeadingTokens (self):
-		"""
-		Токены для заголовков H1 - H6
-		"""
-		tokens = []
-		tokens.append (Regex (self.heading1_Regex, re.MULTILINE).setParseAction(self.__convertToHeading("<H1>","</H1>") ) )
-		tokens.append (Regex (self.heading2_Regex, re.MULTILINE).setParseAction(self.__convertToHeading("<H2>","</H2>") ) )
-		tokens.append (Regex (self.heading3_Regex, re.MULTILINE).setParseAction(self.__convertToHeading("<H3>","</H3>") ) )
-		tokens.append (Regex (self.heading4_Regex, re.MULTILINE).setParseAction(self.__convertToHeading("<H4>","</H4>") ) )
-		tokens.append (Regex (self.heading5_Regex, re.MULTILINE).setParseAction(self.__convertToHeading("<H5>","</H5>") ) )
-		tokens.append (Regex (self.heading6_Regex, re.MULTILINE).setParseAction(self.__convertToHeading("<H6>","</H6>") ) )
-
-		return concatenate (tokens)
 
 
 	def __isImage (self, fname):
@@ -418,13 +365,18 @@ class Parser (object):
 		return False
 		
 
-	def __convertToHTML (self, opening, closing):
-		def conversionParseAction(s,l,t):
-			return opening + self.wikiMarkup.transformString (t[0]) + closing
-		return conversionParseAction
+	#def convertToHTML (self, opening, closing, parser):
+	#	"""
+	#	opening - открывающийся тег(и)
+	#	closing - закрывающийся тег(и)
+	#	parser - парсер, у которого берется токен wikiMarkup для преобразования содержимого между тегами
+	#	"""
+	#	def conversionParseAction(s,l,t):
+	#		return opening + parser.wikiMarkup.transformString (t[0]) + closing
+	#	return conversionParseAction
 
 
-	def __convertToHtmlAdHoc(self, opening, closing, prefix=u"", suffix=u""):
+	def convertToHTMLAdHoc(self, opening, closing, prefix=u"", suffix=u""):
 		"""
 		Преобразование в HTML для отдельный случаев, когда надо добавить в начало или конец обрабатываемой строки префикс или суффикс
 		"""
@@ -439,12 +391,6 @@ class Parser (object):
 		return conversionParseAction
 
 
-	def __convertToHeading (self, opening, closing):
-		def conversionParseAction(s,l,t):
-			return opening + t["title"] + closing
-		return conversionParseAction
-
-	
 	def __convertLinkArrow (self, text):
 		"""
 		Преобразовать ссылки в виде [[comment -> url]]
@@ -469,8 +415,8 @@ class Parser (object):
 		"""
 		Подготовить адрес для ссылки. Если ссылка - прикрепленный файл, то создать путь до него
 		"""
-		if url.strip().startswith (self.__attachString):
-			return url.strip().replace (self.__attachString, RootWikiPage.attachDir + "/", 1)
+		if url.strip().startswith (self.attachString):
+			return url.strip().replace (self.attachString, RootWikiPage.attachDir + "/", 1)
 
 		return url
 
@@ -485,15 +431,15 @@ class Parser (object):
 		"""
 		textStrip = text.strip()
 
-		if textStrip.startswith (self.__attachString) and self.__isImage (textStrip):
+		if textStrip.startswith (self.attachString) and self.__isImage (textStrip):
 			# Ссылка на прикрепленную картинку
-			url = textStrip.replace (self.__attachString, RootWikiPage.attachDir + "/", 1)
+			url = textStrip.replace (self.attachString, RootWikiPage.attachDir + "/", 1)
 			comment = self.linkMarkup.transformString (text.strip())
 
-		elif textStrip.startswith (self.__attachString):
+		elif textStrip.startswith (self.attachString):
 			# Ссылка на прикрепление, но не картинку
-			url = textStrip.replace (self.__attachString, RootWikiPage.attachDir + "/", 1)
-			comment = textStrip.replace (self.__attachString, "")
+			url = textStrip.replace (self.attachString, RootWikiPage.attachDir + "/", 1)
+			comment = textStrip.replace (self.attachString, "")
 
 		else:
 			# Ссылка не на прикрепление
@@ -533,8 +479,8 @@ class Parser (object):
 		return self.__getUrlTag (t[0], t[0])
 
 
-	def __convertPreformat (self, s, l, t):
-		return u"<PRE>" + t[0] + u"</PRE>"
+	#def __convertPreformat (self, s, l, t):
+	#	return u"<PRE>" + t[0] + u"</PRE>"
 
 
 	def __getReplaceForAttach (self, fname):

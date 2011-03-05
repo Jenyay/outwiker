@@ -14,8 +14,7 @@ class ThumbnailFactory (object):
 	"""
 	@staticmethod
 	def make (parser):
-		thumb = ThumbnailToken(parser)
-		return thumb.getToken()
+		return ThumbnailToken(parser).getToken()
 
 
 class ThumbnailToken (object):
