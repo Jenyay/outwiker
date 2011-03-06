@@ -38,7 +38,7 @@ class TableToken (object):
 		leftAlign = toks["text"][-1] in " \t"
 		
 		# Условие в скобках связано с тем, что первый пробел попадает 
-		# или не попадает в токен в зависимости от того, первая ячейка в строке или первая ячейка в строке или нет
+		# или не попадает в токен в зависимости от того, первая ячейка в строке или нет
 		rightAlign = loc > 0 and (s[loc - 1] in " \t" or s[loc] in " \t")
 
 		align = u''
@@ -62,8 +62,8 @@ class TableToken (object):
 			lastindex = len (t)
 
 		result = u"<TR>"
-		for n in range (1, lastindex):
-			result += t[n]
+		for element in t[1: lastindex]:
+			result += element
 
 		result += "</TR>"
 
@@ -72,8 +72,8 @@ class TableToken (object):
 
 	def __convertTable (self, s, l, t):
 		result = u"<TABLE %s>" % t[0][2:].strip()
-		for n in range (2, len (t)):
-			result += t[n]
+		for element in t[2:]:
+			result += element
 
 		result += "</TABLE>"
 
