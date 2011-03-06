@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-import re
-
 from libs.pyparsing import Regex
 
 

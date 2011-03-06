@@ -39,3 +39,13 @@ def convertToHTML (opening, closing, parser):
 	def conversionParseAction(s,l,t):
 		return opening + parser.wikiMarkup.transformString (t[0]) + closing
 	return conversionParseAction
+
+
+def isImage (fname):
+	images_ext = [".png", ".bmp", ".gif", ".tif", ".tiff", ".jpg", ".jpeg"]
+
+	for ext in images_ext:
+		if fname.lower().endswith (ext):
+			return True
+
+	return False

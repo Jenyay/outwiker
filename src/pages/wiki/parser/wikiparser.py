@@ -4,7 +4,7 @@
 import re
 import os
 
-from libs.pyparsing import QuotedString, Regex, Literal, replaceWith, LineStart, LineEnd, OneOrMore, Or, Optional
+from libs.pyparsing import Regex, Literal, replaceWith, LineStart, LineEnd, OneOrMore, Optional
 from core.tree import RootWikiPage
 
 from tokenfonts import FontsFactory
@@ -14,9 +14,11 @@ from tokenthumbnail import ThumbnailFactory
 from tokenheading import HeadingFactory
 from tokenadhoc import AdHocFactory
 from tokenhorline import HorLineFactory
+from tokenlink import LinkFactory
+from tokenalign import CenterAlignFactory, RightAlignFactory
 
 from listparser import ListParser
-from utils import noConvert, replaceBreakes, concatenate, convertToHTML
+from utils import noConvert, replaceBreakes, concatenate, convertToHTML, isImage
 
 
 
@@ -39,10 +41,6 @@ class Parser (object):
 		self.attachString = u"Attach:"
 		self.unorderList = "*"
 		self.orderList = "#"
-		self.rightRegex = "% *?right *?%(?P<text>.*?)(?P<end>(\n\n)|\Z)"
-		self.centerRegex = "% *?center *?%(?P<text>.*?)(?P<end>(\n\n)|\Z)"
-		self.linkStart = "[["
-		self.linkEnd = "]]"
 
 		self.__createFontTokens()
 
@@ -51,10 +49,10 @@ class Parser (object):
 		self.noformat = NoFormatFactory.make(self)
 		self.preformat = PreFormatFactory.make (self)
 		self.horline = HorLineFactory.make(self)
+		self.link = LinkFactory.make (self)
+		self.centerAlign = CenterAlignFactory.make(self)
+		self.rightAlign = RightAlignFactory.make (self)
 
-		self.link = self.__getLinkToken()
-		self.centerAlign = self.__getCenterAlignToken ()
-		self.rightAlign = self.__getRightrAlignToken ()
 		self.table = self.__getTableToken ()
 		self.url = self.__getUrlToken ()
 		self.urlImage = self.__getUrlImageToken ()
@@ -104,18 +102,6 @@ class Parser (object):
 				)
 
 
-	
-	def __getLinkToken (self):
-		return QuotedString(self.linkStart, endQuoteChar = self.linkEnd, multiline = True).setParseAction(self.__convertToLink)
-	
-
-	def __getCenterAlignToken (self):
-		return Regex (self.centerRegex, re.MULTILINE | re.DOTALL | re.IGNORECASE).setParseAction(self.__align ("CENTER") )
-
-
-	def __getRightrAlignToken (self):
-		return Regex(self.rightRegex, re.MULTILINE | re.DOTALL | re.IGNORECASE).setParseAction(self.__align ("RIGHT") )
-	
 
 	def __getUrlToken (self):
 		token =  Regex ("([0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}|(((news|telnet|nttp|file|http|ftp|https)://)|(www|ftp)\\.)[-A-Za-z0-9\\.]+[-A-Za-z0-9]+)(:[0-9]*)?(/([-A-Za-z0-9_,\\$\\.\\+\\!\\*\\(\\):@&=\\?/~\\#\\%]*[-A-Za-z0-9_\\$\\+\\!\\*\\(\\):@&=\\?/~\\#\\%])?)?", re.IGNORECASE)
@@ -226,13 +212,6 @@ class Parser (object):
 		self.code = FontsFactory.makeCode (self)
 	
 
-	def __align (self, align):
-		def __divTransform (s, l, t):
-			return u'<DIV ALIGN="' + align + '">' + self.wikiMarkup.transformString (t["text"]) + '</DIV>' + t["end"]
-
-		return __divTransform
-
-	
 	def __convertToImage (self, s, l, t):
 		return u'<IMG SRC="%s">' % t[0]
 
@@ -260,7 +239,7 @@ class Parser (object):
 		attaches.sort (self.sortByLength, reverse=True)
 
 		for attach in attaches:
-			if self.__isImage (attach):
+			if isImage (attach):
 				fname = os.path.basename (attach)
 				attach_token = self.attachString + Literal (fname)
 				attach_token.setParseAction (replaceWith (self.__getReplaceForImageAttach (fname) ) )
@@ -280,7 +259,7 @@ class Parser (object):
 		attaches.sort (self.sortByLength, reverse=True)
 
 		for attach in attaches:
-			if not self.__isImage (attach):
+			if not isImage (attach):
 				fname = os.path.basename (attach)
 				attach = self.attachString + Literal (fname)
 				attach.setParseAction (replaceWith (self.__getReplaceForAttach (fname) ) )
@@ -289,93 +268,8 @@ class Parser (object):
 		return concatenate (attachesAll)
 
 
-	def __isImage (self, fname):
-		images_ext = [".png", ".bmp", ".gif", ".tif", ".tiff", ".jpg", ".jpeg"]
-
-		for ext in images_ext:
-			if fname.lower().endswith (ext):
-				return True
-
-		return False
-		
-
-	def convertToHTMLAdHoc(self, opening, closing, prefix=u"", suffix=u""):
-		"""
-		Преобразование в HTML для отдельный случаев, когда надо добавить в начало или конец обрабатываемой строки префикс или суффикс
-		"""
-		def conversionParseAction(s,l,t):
-			return opening + self.wikiMarkup.transformString (prefix + t[0] + suffix) + closing
-		return conversionParseAction
-
-
-	def __convertLinkArrow (self, text):
-		"""
-		Преобразовать ссылки в виде [[comment -> url]]
-		"""
-		comment, url = text.split ("->")
-		realurl = self.__prepareUrl (url)
-
-		return self.__getUrlTag (realurl, comment)
-
-
-	def __convertLinkLine (self, text):
-		"""
-		Преобразовать ссылки в виде [[url | comment]]
-		"""
-		url, comment = text.split ("|")
-		realurl = self.__prepareUrl (url)
-
-		return self.__getUrlTag (realurl, comment)
-
-
-	def __prepareUrl (self, url):
-		"""
-		Подготовить адрес для ссылки. Если ссылка - прикрепленный файл, то создать путь до него
-		"""
-		if url.strip().startswith (self.attachString):
-			return url.strip().replace (self.attachString, RootWikiPage.attachDir + "/", 1)
-
-		return url
-
-
 	def __getUrlTag (self, url, comment):
 		return '<A HREF="%s">%s</A>' % (url.strip(), self.linkMarkup.transformString (comment.strip()) )
-
-
-	def __convertEmptyLink (self, text):
-		"""
-		Преобразовать ссылки в виде [[link]]
-		"""
-		textStrip = text.strip()
-
-		if textStrip.startswith (self.attachString) and self.__isImage (textStrip):
-			# Ссылка на прикрепленную картинку
-			url = textStrip.replace (self.attachString, RootWikiPage.attachDir + "/", 1)
-			comment = self.linkMarkup.transformString (text.strip())
-
-		elif textStrip.startswith (self.attachString):
-			# Ссылка на прикрепление, но не картинку
-			url = textStrip.replace (self.attachString, RootWikiPage.attachDir + "/", 1)
-			comment = textStrip.replace (self.attachString, "")
-
-		else:
-			# Ссылка не на прикрепление
-			url = text.strip()
-			comment = self.linkMarkup.transformString (text.strip())
-
-		return '<A HREF="%s">%s</A>' % (url, comment)
-
-
-	def __convertToLink (self, s, l, t):
-		"""
-		Преобразовать ссылку
-		"""
-		if "->" in t[0]:
-			return self.__convertLinkArrow (t[0])
-		elif "|" in t[0]:
-			return self.__convertLinkLine (t[0])
-
-		return self.__convertEmptyLink (t[0])
 
 
 	def __convertToUrlLink (self, s, l, t):
