@@ -1,12 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-import re
-import os
-
-from libs.pyparsing import Regex, Literal, replaceWith, LineStart, LineEnd, OneOrMore, Optional
-from core.tree import RootWikiPage
-
 from tokenfonts import FontsFactory
 from tokennoformat import NoFormatFactory
 from tokenpreformat import PreFormatFactory
@@ -20,21 +14,7 @@ from tokentable import TableFactory
 from tokenurl import UrlFactory
 from tokenurlimage import UrlImageFactory
 from tokenattach import NotImageAttachFactory, ImageAttachFactory
-
-from listparser import ListParser
-from utils import noConvert, replaceBreakes, concatenate, convertToHTML, isImage
-
-
-
-class ListParams (object):
-	"""
-	Параметры списков в парсере
-	"""
-	def __init__ (self, symbol, startTag, endTag):
-		self.symbol = symbol
-		self.startTag = startTag
-		self.endTag = endTag
-
+from tokenlist import ListFactory
 
 
 class Parser (object):
@@ -42,11 +22,13 @@ class Parser (object):
 		self.page = page
 		self.maxSizeThumb = maxSizeThumb
 
-		self.unorderList = "*"
-		self.orderList = "#"
-
-		self.__createFontTokens()
-
+		self.italicized = FontsFactory.makeItalic (self)
+		self.bolded = FontsFactory.makeBold (self)
+		self.boldItalicized = FontsFactory.makeBoldItalic (self)
+		self.underlined = FontsFactory.makeUnderline (self)
+		self.subscript = FontsFactory.makeSubscript (self)
+		self.superscript = FontsFactory.makeSuperscript (self)
+		self.code = FontsFactory.makeCode (self)
 		self.headings = HeadingFactory.make(self)
 		self.thumb = ThumbnailFactory.make(self)
 		self.noformat = NoFormatFactory.make(self)
@@ -61,6 +43,7 @@ class Parser (object):
 		self.attachesNotImage = NotImageAttachFactory.make (self)
 		self.attachesImage = ImageAttachFactory.make (self)
 		self.adhoctokens = AdHocFactory.make(self)
+		self.lists = ListFactory.make (self)
 
 		self.listItemMarkup = (self.link |
 				self.boldItalicized |
@@ -79,7 +62,6 @@ class Parser (object):
 				self.attachesNotImage
 				)
 
-		self.list = self.__getListToken ()
 
 		self.wikiMarkup = (self.link |
 				self.adhoctokens |
@@ -98,7 +80,7 @@ class Parser (object):
 				self.horline |
 				self.centerAlign |
 				self.rightAlign |
-				self.list |
+				self.lists |
 				self.table |
 				self.attachesImage |
 				self.attachesNotImage |
@@ -119,25 +101,9 @@ class Parser (object):
 				)
 
 
-	def __getListToken (self):
-		allListsParams = [ListParams (self.unorderList, u"<UL>", u"</UL>"), ListParams (self.orderList, u"<OL>", u"</OL>")]
-		self.listParser = ListParser (allListsParams, self.listItemMarkup)
-		return self.listParser.getListToken()
-
-
-	def __createFontTokens (self):
-		self.italicized = FontsFactory.makeItalic (self)
-		self.bolded = FontsFactory.makeBold (self)
-		self.boldItalicized = FontsFactory.makeBoldItalic (self)
-		self.underlined = FontsFactory.makeUnderline (self)
-		self.subscript = FontsFactory.makeSubscript (self)
-		self.superscript = FontsFactory.makeSuperscript (self)
-		self.code = FontsFactory.makeCode (self)
-	
-
 	def toHtml (self, text):
 		"""
-		Сгенерить HTML без заголовков тима <HTML> и т.п.
+		Сгенерить HTML без заголовков типа <HTML> и т.п.
 		"""
 		text = text.replace ("\\\n", "")
 		return self.wikiMarkup.transformString(text)

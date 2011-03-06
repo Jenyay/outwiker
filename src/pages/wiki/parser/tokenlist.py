@@ -4,14 +4,33 @@
 from libs.pyparsing import Regex, LineStart, LineEnd, OneOrMore
 from pages.wiki.parser.utils import noConvert, replaceBreakes
 
+class ListFactory (object):
+	@staticmethod
+	def make (parser):
+		return ListToken (parser).getToken()
 
-class ListParser (object):
+
+class ListParams (object):
+	"""
+	Параметры списков в парсере
+	"""
+	def __init__ (self, symbol, startTag, endTag):
+		self.symbol = symbol
+		self.startTag = startTag
+		self.endTag = endTag
+
+
+class ListToken (object):
 	"""
 	Класс для разбора списков
 	"""
-	def __init__ (self, allListsParams, listItemMarkup):
-		self.allListsParams = allListsParams
-		self.listItemMarkup = listItemMarkup
+	unorderList = "*"
+	orderList = "#"
+
+	def __init__ (self, parser):
+		self.allListsParams = [ListParams (ListToken.unorderList, u"<UL>", u"</UL>"), 
+				ListParams (ListToken.orderList, u"<OL>", u"</OL>")]
+		self.parser = parser
 
 
 	def __addDeeperLevel (self, depth, item, currItem):
@@ -49,7 +68,7 @@ class ListParser (object):
 		result += self.__getStartListTag(item[0], self.allListsParams)
 		currItem.append (item[0])
 
-		result += self.__getListItemTag (item, level, self.listItemMarkup)
+		result += self.__getListItemTag (item, level)
 
 		return result
 
@@ -71,19 +90,19 @@ class ListParser (object):
 
 			if level == currLevel and len (currItem) > 0 and item[0] == currItem[-1]:
 				# Новый элемент в текущем списке
-				result += self.__getListItemTag (item, level, self.listItemMarkup)
+				result += self.__getListItemTag (item, level)
 
 			elif level > currLevel:
 				# Более глубокий уровень
 				result += self.__addDeeperLevel (level - currLevel, item, currItem)
-				result += self.__getListItemTag (item, level, self.listItemMarkup)
+				result += self.__getListItemTag (item, level)
 
 			elif level < currLevel:
 				# Более высокий уровень, но тот же тип списка
 				result += self.__closeLists (currLevel - level, currItem)
 
 				if item[0] == currItem[-1]:
-					result += self.__getListItemTag (item, level, self.listItemMarkup)
+					result += self.__getListItemTag (item, level)
 				else:
 					result += self.__closeListStartList (level, item, currItem)
 
@@ -101,7 +120,7 @@ class ListParser (object):
 		return result
 
 
-	def getListToken (self):
+	def getToken (self):
 		regex = "(?P<level>["
 
 		for param in self.allListsParams:
@@ -143,9 +162,9 @@ class ListParser (object):
 		return level
 
 
-	def __getListItemTag (self, item, level, listItemMarkup):
+	def __getListItemTag (self, item, level):
 		text = (item[level:]).strip()
-		itemText = listItemMarkup.transformString (replaceBreakes (text) )
+		itemText = self.parser.listItemMarkup.transformString (replaceBreakes (text) )
 
 		return u"<LI>%s</LI>" % (itemText)
 	
