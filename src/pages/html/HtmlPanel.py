@@ -4,6 +4,7 @@
 import os
 import re
 from abc import ABCMeta, abstractmethod
+import cgi
 
 import wx
 
@@ -340,6 +341,12 @@ class HtmlPanel(BaseTextPanel):
 		self.codeWindow.textCtrl.ReplaceSelection (text)
 
 
+	def _escapeHtml (self, event):
+		selText = self.codeWindow.textCtrl.GetSelectedText()
+		text = cgi.escape (selText, quote=True)
+		self.codeWindow.textCtrl.ReplaceSelection (text)
+
+
 # end of class HtmlPanel
 
 class HtmlPagePanel (HtmlPanel):
@@ -520,6 +527,15 @@ class HtmlPagePanel (HtmlPanel):
 				_(u"Horizontal line\tCtrl+H"), 
 				_(u"Horizontal line (<hr>)"), 
 				os.path.join (self.imagesDir, "text_horizontalrule.png"))
+
+		self.pageToolsMenu.AppendSeparator()
+
+		self._addTool (self.pageToolsMenu, 
+				"ID_ESCAPEHTML", 
+				self._escapeHtml, 
+				_(u"Convert HTML Symbols"), 
+				_(u"Convert HTML Symbols"), 
+				None)
 
 
 	def initGui (self, mainWindow):

@@ -192,8 +192,8 @@ class WikiPagePanel (HtmlPanel):
 		self._addTool (self.pageToolsMenu, 
 				"ID_NONFORMAT", 
 				lambda event: self._turnText (u"[=", u"=]"), 
-				_(u"Preformat [=…=]"), 
-				_(u"Preformat [=…=]"), 
+				_(u"Non-parsed [=…=]"), 
+				_(u"Non-parsed [=…=]"), 
 				None)
 
 	
@@ -318,6 +318,15 @@ class WikiPagePanel (HtmlPanel):
 				_(u"Horizontal line"), 
 				os.path.join (self.imagesDir, "text_horizontalrule.png"))
 
+		self.pageToolsMenu.AppendSeparator()
+
+		self._addTool (self.pageToolsMenu, 
+				"ID_ESCAPEHTML", 
+				self._escapeHtml, 
+				_(u"Convert HTML Symbols"), 
+				_(u"Convert HTML Symbols"), 
+				None)
+
 	
 	def initGui (self, mainWindow):
 		BaseTextPanel.initGui (self, mainWindow)
@@ -339,8 +348,8 @@ class WikiPagePanel (HtmlPanel):
 		self.__addHTools()
 		self.__addTableTools()
 		self.__addListTools()
-		self.__addOtherTools()
 		self.__addFormatTools()
+		self.__addOtherTools()
 
 		mainWindow.mainMenu.Insert (mainWindow.mainMenu.GetMenuCount() - 1, self.pageToolsMenu, _(u"&Wiki") )
 		mainWindow.mainToolbar.Realize()
