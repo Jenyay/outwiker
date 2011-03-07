@@ -45,4 +45,4 @@ class UrlToken (object):
 
 
 	def __getUrlTag (self, url, comment):
-		return '<A HREF="%s">%s</A>' % (url.strip(), self.parser.linkMarkup.transformString (comment.strip()) )
+		return '<A HREF="%s">%s</A>' % (url.strip(), self.parser.parseLinkMarkup (comment.strip()) )

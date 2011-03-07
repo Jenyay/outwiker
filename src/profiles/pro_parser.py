@@ -8,6 +8,7 @@ from core.tree import RootWikiPage, WikiDocument
 from pages.wiki.parser.wikiparser import Parser
 from pages.wiki.wikipage import WikiPageFactory
 from test.utils import removeWiki
+from core.application import Application
 
 
 class ParseSample (object):
@@ -22,7 +23,7 @@ class ParseSample (object):
 
 		self.__createWiki()
 
-		self.parser = Parser(self.testPage, maxSizeThumb = 250)
+		self.parser = Parser(self.testPage, Application.config)
 	
 
 	def __createWiki (self):

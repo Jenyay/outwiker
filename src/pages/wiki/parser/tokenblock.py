@@ -15,5 +15,5 @@ class BlockToken (object):
 		closing - закрывающийся тег(и)
 		"""
 		def conversionParseAction(s,l,t):
-			return opening + self.parser.wikiMarkup.transformString (t[0]) + closing
+			return opening + self.parser.parseWikiMarkup (t[0]) + closing
 		return conversionParseAction

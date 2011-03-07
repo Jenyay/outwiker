@@ -50,7 +50,7 @@ class TableToken (object):
 		elif rightAlign:
 			align = u' ALIGN="RIGHT"'
 
-		result = u'<TD%s>%s</TD>' % (align, self.parser.wikiMarkup.transformString (replaceBreakes (text.strip() ) ) )
+		result = u'<TD%s>%s</TD>' % (align, self.parser.parseWikiMarkup (replaceBreakes (text.strip() ) ) )
 
 		return result
 

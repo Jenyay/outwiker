@@ -6,6 +6,7 @@ from libs.pyparsing import Regex
 from core.thumbexception import ThumbException
 from pagethumbmaker import PageThumbmaker
 from core.tree import RootWikiPage
+from ..wikiconfig import WikiConfig
 
 
 class ThumbnailFactory (object):
@@ -58,7 +59,8 @@ class ThumbnailToken (object):
 			func = self.thumbmaker.createThumbByMaxSize
 
 		else:
-			size = self.parser.maxSizeThumb
+			config = WikiConfig (self.parser.config)
+			size = config.thumbSizeOptions.value
 			func = self.thumbmaker.createThumbByMaxSize
 
 		fname = t["fname"]

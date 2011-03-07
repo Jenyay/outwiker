@@ -14,8 +14,8 @@ from core.config import Config
 from core.tree import RootWikiPage
 from core.htmlimprover import HtmlImprover
 from gui.HtmlTextEditor import HtmlTextEditor
-import wikipage
 from core.application import Application
+from wikiconfig import WikiConfig
 
 
 class WikiPagePanel (HtmlPanel):
@@ -34,7 +34,9 @@ class WikiPagePanel (HtmlPanel):
 		# Номер вкладки с кодом HTML. -1, если вкладки нет
 		self.htmlcodePageIndex = -1
 
-		if wikipage.WikiPageFactory.showHtmlCodeOptions.value:
+		self.config = WikiConfig (Application.config)
+
+		if self.config.showHtmlCodeOptions.value:
 			self.htmlcodePageIndex = self.__createHtmlCodePanel(self.htmlSizer)
 		
 		self.Layout()
@@ -322,7 +324,6 @@ class WikiPagePanel (HtmlPanel):
 
 		self.pageToolsMenu = wx.Menu()
 
-		#if wikipage.WikiPageFactory.showHtmlCodeOptions.value:
 		self._addTool (self.pageToolsMenu, 
 				"ID_HTMLCODE", 
 				self.__openHtmlCode, 
@@ -385,8 +386,8 @@ class WikiPagePanel (HtmlPanel):
 			result += unicode (os.stat (fname).st_mtime)
 
 		# Настройки, касающиеся вида вики-страницы
-		result += str (wikipage.WikiPageFactory.showAttachInsteadBlankOptions.value)
-		result += str (wikipage.WikiPageFactory.thumbSizeOptions.value)
+		result += str (self.config.showAttachInsteadBlankOptions.value)
+		result += str (self.config.thumbSizeOptions.value)
 		return result
 
 	
@@ -397,10 +398,10 @@ class WikiPagePanel (HtmlPanel):
 		if os.path.exists (path) and (hash == old_hash or page.readonly):
 			return path
 
-		parser = Parser (page, wikipage.WikiPageFactory.thumbSizeOptions.value)
+		parser = Parser (page, Application.config)
 
 		content = page.content if (len (page.content) > 0 or
-				not wikipage.WikiPageFactory.showAttachInsteadBlankOptions.value) else self.__generateAttachList (page)
+				not self.config.showAttachInsteadBlankOptions.value) else self.__generateAttachList (page)
 
 		text = HtmlImprover.run (parser.toHtml (content) )
 

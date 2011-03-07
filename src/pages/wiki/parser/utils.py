@@ -34,10 +34,10 @@ def convertToHTML (opening, closing, parser):
 	"""
 	opening - открывающийся тег(и)
 	closing - закрывающийся тег(и)
-	parser - парсер, у которого берется токен wikiMarkup для преобразования содержимого между тегами
+	parser - парсер, у которого есть метод parseWikiMarkup()
 	"""
 	def conversionParseAction(s,l,t):
-		return opening + parser.wikiMarkup.transformString (t[0]) + closing
+		return opening + parser.parseWikiMarkup (t[0]) + closing
 	return conversionParseAction
 
 

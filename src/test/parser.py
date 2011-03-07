@@ -8,6 +8,7 @@ from core.tree import RootWikiPage, WikiDocument
 from pages.wiki.parser.wikiparser import Parser
 from pages.wiki.wikipage import WikiPageFactory
 from test.utils import removeWiki
+from core.application import Application
 
 
 class ParserTest (unittest.TestCase):
@@ -24,7 +25,7 @@ class ParserTest (unittest.TestCase):
 
 		self.__createWiki()
 		
-		self.parser = Parser(self.testPage, maxSizeThumb = 250)
+		self.parser = Parser(self.testPage, Application.config)
 	
 
 	def __createWiki (self):
@@ -62,7 +63,7 @@ class ParserTest (unittest.TestCase):
 		pagetitle = u"Страница 666"
 		
 		WikiPageFactory.create (self.rootwiki, pagetitle, [])
-		parser = Parser(self.rootwiki[pagetitle], maxSizeThumb = 250)
+		parser = Parser(self.rootwiki[pagetitle], Application.config)
 
 		parser.toHtml (u"Attach:bla-bla-bla")
 

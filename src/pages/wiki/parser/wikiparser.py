@@ -18,9 +18,9 @@ from tokenlist import ListFactory
 
 
 class Parser (object):
-	def __init__ (self, page, maxSizeThumb = 250):
+	def __init__ (self, page, config):
 		self.page = page
-		self.maxSizeThumb = maxSizeThumb
+		self.config = config
 
 		self.italicized = FontsFactory.makeItalic (self)
 		self.bolded = FontsFactory.makeBold (self)
@@ -106,5 +106,17 @@ class Parser (object):
 		Сгенерить HTML без заголовков типа <HTML> и т.п.
 		"""
 		text = text.replace ("\\\n", "")
-		return self.wikiMarkup.transformString(text)
+		return self.parseWikiMarkup(text)
+
+
+	def parseWikiMarkup (self, text):
+		return self.wikiMarkup.transformString (text)
+
+
+	def parseListItemMarkup (self, text):
+		return self.listItemMarkup.transformString (text)
+
+
+	def parseLinkMarkup (self, text):
+		return self.linkMarkup.transformString (text)
 

@@ -28,7 +28,7 @@ class AlignToken (object):
 
 	def _align (self, align):
 		def __divTransform (s, l, t):
-			return u'<DIV ALIGN="' + align + '">' + self.parser.wikiMarkup.transformString (t["text"]) + '</DIV>' + t["end"]
+			return u'<DIV ALIGN="' + align + '">' + self.parser.parseWikiMarkup (t["text"]) + '</DIV>' + t["end"]
 
 		return __divTransform
 

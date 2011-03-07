@@ -164,7 +164,7 @@ class ListToken (object):
 
 	def __getListItemTag (self, item, level):
 		text = (item[level:]).strip()
-		itemText = self.parser.listItemMarkup.transformString (replaceBreakes (text) )
+		itemText = self.parser.parseListItemMarkup (replaceBreakes (text) )
 
 		return u"<LI>%s</LI>" % (itemText)
 	

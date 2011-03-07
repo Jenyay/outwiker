@@ -4,13 +4,9 @@
 Необходимые классы для создания страниц с HTML
 """
 
-import os.path
-
 from core.tree import WikiPage
 from wikipanel import WikiPagePanel
 import WikiPreferences
-from core.config import BooleanOption, IntegerOption
-from core.application import Application
 from core.factory import PageFactory
 
 
@@ -40,16 +36,6 @@ class WikiPageFactory (PageFactory):
 	# Название страницы, показываемое пользователю
 	title = _(u"Wiki Page")
 
-	# Настройки
-	# Показывать вкладку с HTML-кодом?
-	showHtmlCodeOptions = BooleanOption (Application.config, "Wiki", "ShowHtmlCode", True)
-
-	# Размер превьюшек по умолчанию
-	thumbSizeOptions = IntegerOption (Application.config, "Wiki", "ThumbSize", 250)
-	
-	# Показывать список прикрепленных файлов вместо пустой страницы?
-	showAttachInsteadBlankOptions = BooleanOption (Application.config, "Wiki", "ShowAttachInsteadBlank", True)
-
 
 	def __init__ (self):
 		pass
@@ -61,10 +47,6 @@ class WikiPageFactory (PageFactory):
 		Создать страницу. Вызывать этот метод вместо конструктора
 		"""
 		return PageFactory.createPage (WikiPageFactory.getPageType(), parent, title, tags)
-
-
-	#@staticmethod
-	#def load (path, parent, readonly):
 
 
 	@staticmethod

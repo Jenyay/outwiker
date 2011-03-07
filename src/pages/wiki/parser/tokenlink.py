@@ -74,7 +74,7 @@ class LinkToken (object):
 
 
 	def __getUrlTag (self, url, comment):
-		return '<A HREF="%s">%s</A>' % (url.strip(), self.parser.linkMarkup.transformString (comment.strip()) )
+		return '<A HREF="%s">%s</A>' % (url.strip(), self.parser.parseLinkMarkup (comment.strip()) )
 
 
 	def __convertEmptyLink (self, text):
@@ -86,7 +86,7 @@ class LinkToken (object):
 		if textStrip.startswith (AttachToken.attachString) and isImage (textStrip):
 			# Ссылка на прикрепленную картинку
 			url = textStrip.replace (AttachToken.attachString, RootWikiPage.attachDir + "/", 1)
-			comment = self.parser.linkMarkup.transformString (text.strip())
+			comment = self.parser.parseLinkMarkup (text.strip())
 
 		elif textStrip.startswith (AttachToken.attachString):
 			# Ссылка на прикрепление, но не картинку
@@ -96,6 +96,6 @@ class LinkToken (object):
 		else:
 			# Ссылка не на прикрепление
 			url = text.strip()
-			comment = self.parser.linkMarkup.transformString (text.strip())
+			comment = self.parser.parseLinkMarkup (text.strip())
 
 		return '<A HREF="%s">%s</A>' % (url, comment)

@@ -6,6 +6,7 @@ import wx
 
 from gui.preferences.ConfigElements import BooleanElement, IntegerElement
 from core.application import Application
+from wikiconfig import WikiConfig
 import wikipage
 
 # begin wxGlade: extracode
@@ -26,6 +27,9 @@ class WikiPrefGeneralPanel(wx.Panel):
 		self.__set_properties()
 		self.__do_layout()
 		# end wxGlade
+
+		self.config = WikiConfig (Application.config)
+
 
 	def __set_properties(self):
 		# begin wxGlade: WikiPrefGeneralPanel.__set_properties
@@ -53,12 +57,12 @@ class WikiPrefGeneralPanel(wx.Panel):
 
 	def LoadState(self):
 		# Показывать ли вкладку с кодом HTML?
-		self.showHtmlCodeOption = BooleanElement (wikipage.WikiPageFactory.showHtmlCodeOptions, self.htmlCodeCheckbox)
+		self.showHtmlCodeOption = BooleanElement (self.config.showHtmlCodeOptions, self.htmlCodeCheckbox)
 
 		# Размер превьюшек по умолчанию
-		self.thumbSizeOption = IntegerElement (wikipage.WikiPageFactory.thumbSizeOptions, self.thumbSize, 1, 10000)
+		self.thumbSizeOption = IntegerElement (self.config.thumbSizeOptions, self.thumbSize, 1, 10000)
 
-		self.showAttachInsteadBlankOption = BooleanElement (wikipage.WikiPageFactory.showAttachInsteadBlankOptions, 
+		self.showAttachInsteadBlankOption = BooleanElement (self.config.showAttachInsteadBlankOptions, 
 				self.showAttachInsteadBlank)
 
 
