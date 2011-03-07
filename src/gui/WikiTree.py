@@ -310,10 +310,10 @@ class WikiTree(wx.Panel):
 		self.popupMenu.Append (self.ID_REMOVE, _(u"Remove…"))
 		self.popupMenu.AppendSeparator()
 		
-		self.popupMenu.Append (self.ID_COPY_TITLE, _(u"Copy Page Title to Clipboard"))
-		self.popupMenu.Append (self.ID_COPY_PATH, _(u"Copy Page Path to Clipboard"))
-		self.popupMenu.Append (self.ID_COPY_ATTACH_PATH, _(u"Copy Attaches Path to Clipboard"))
-		self.popupMenu.Append (self.ID_COPY_LINK, _(u"Copy Page Link to Clipboard"))
+		self.popupMenu.Append (self.ID_COPY_TITLE, _(u"Copy Page Title"))
+		self.popupMenu.Append (self.ID_COPY_PATH, _(u"Copy Page Path"))
+		self.popupMenu.Append (self.ID_COPY_ATTACH_PATH, _(u"Copy Attaches Path"))
+		self.popupMenu.Append (self.ID_COPY_LINK, _(u"Copy Page Link"))
 		self.popupMenu.AppendSeparator()
 
 		self.popupMenu.Append (self.ID_PROPERTIES, _(u"Edit Page Properties…"))
