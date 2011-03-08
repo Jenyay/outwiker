@@ -3,9 +3,10 @@
 
 import gettext
 
-from core.config import GeneralConfig, getConfigPath
+from core.config import Config, getConfigPath
 import core.i18n
 from core.event import Event
+from gui.guiconfig import GeneralGuiConfig
 
 
 class ApplicationParams (object):
@@ -20,7 +21,7 @@ class ApplicationParams (object):
 		"""
 		Инициализировать конфиг и локаль
 		"""
-		self.config = GeneralConfig (configFilename)
+		self.config = Config (configFilename)
 		self.__initLocale()
 
 
@@ -130,7 +131,8 @@ class ApplicationParams (object):
 
 
 	def __initLocale (self):
-		language = self.config.languageOption.value
+		generalConfig = GeneralGuiConfig (self.config)
+		language = generalConfig.languageOption.value
 
 		try:
 			core.i18n.init_i18n (language)

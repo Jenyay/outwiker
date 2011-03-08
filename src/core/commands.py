@@ -192,7 +192,10 @@ def copyTextToClipboard (text):
 		return
 
 	data = wx.TextDataObject (text)
-	wx.TheClipboard.SetData(data)
+
+	if not wx.TheClipboard.SetData(data):
+		MessageBox (_(u"Can't copy text to clipboard"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+
 	wx.TheClipboard.Flush()
 	wx.TheClipboard.Close()
 

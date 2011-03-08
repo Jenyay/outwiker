@@ -6,7 +6,7 @@ import gettext
 
 import wx
 
-from core.config import GeneralConfig, getConfigPath
+from core.config import getConfigPath
 from core.application import Application
 
 

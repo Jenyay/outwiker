@@ -32,7 +32,7 @@ if __name__ == '__main__':
 	from test.event import EventTest, EventsTest
 	from test.factory import FactorySelectorTest
 	from test.invalidwiki import InvalidWikiTest
-	from test.config import ConfigTest, ConfigOptionsTest
+	from test.config import ConfigTest, ConfigOptionsTest, TrayConfigTest, EditorConfigTest
 	from test.recent import RecentWikiTest
 	from test.search import SearcherTest, TagsListTest, SearchPageTest
 	from test.localsearch import LocalSearchTest

@@ -7,6 +7,7 @@ import wx
 
 import core.system
 from core.application import Application
+from guiconfig import TrayConfig
 
 
 class OutwikerTrayIcon (wx.TaskBarIcon):
@@ -16,6 +17,7 @@ class OutwikerTrayIcon (wx.TaskBarIcon):
 	def __init__ (self, mainWnd):
 		wx.TaskBarIcon.__init__ (self)
 		self.mainWnd = mainWnd
+		self.config = TrayConfig (Application.config)
 
 		self.ID_RESTORE = wx.NewId()
 		self.ID_EXIT = wx.NewId()
@@ -33,12 +35,12 @@ class OutwikerTrayIcon (wx.TaskBarIcon):
 		"""
 		Показать или скрыть иконку в трее в зависимости от настроек
 		"""
-		if Application.config.alwaysShowTrayIconOption.value:
+		if self.config.alwaysShowTrayIconOption.value:
 			# Если установлена эта опция, то иконку показываем всегда
 			self.ShowTrayIcon()
 			return
 
-		if Application.config.minimizeOption.value and self.mainWnd.IsIconized():
+		if self.config.minimizeOption.value and self.mainWnd.IsIconized():
 			self.ShowTrayIcon()
 		else:
 			self.removeTrayIcon()
@@ -65,7 +67,7 @@ class OutwikerTrayIcon (wx.TaskBarIcon):
 
 
 	def initMainWnd (self):
-		if Application.config.startIconizedOption.value:
+		if self.config.startIconizedOption.value:
 			self.__iconizeWindow()
 		else:
 			self.mainWnd.Show()
@@ -81,7 +83,7 @@ class OutwikerTrayIcon (wx.TaskBarIcon):
 		"""
 		Свернуть окно
 		"""
-		if Application.config.minimizeOption.value:
+		if self.config.minimizeOption.value:
 			# В трей добавим иконку, а окно спрячем
 			self.ShowTrayIcon()
 			self.mainWnd.Hide()
@@ -106,7 +108,7 @@ class OutwikerTrayIcon (wx.TaskBarIcon):
 	def __restoreMainWindow (self):
 		self.mainWnd.Show ()
 		self.mainWnd.Iconize (False)
-		if not Application.config.alwaysShowTrayIconOption.value:
+		if not self.config.alwaysShowTrayIconOption.value:
 			self.removeTrayIcon()
 
 	

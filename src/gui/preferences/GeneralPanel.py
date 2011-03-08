@@ -7,6 +7,7 @@ import ConfigElements
 from core.config import StringOption, BooleanOption, IntegerOption
 import core.i18n
 from core.application import Application
+from gui.guiconfig import TrayConfig, GeneralGuiConfig, MainWindowConfig
 
 # begin wxGlade: dependencies
 # end wxGlade
@@ -41,6 +42,10 @@ class GeneralPanel(wx.ScrolledWindow):
 
 		self.Bind(wx.EVT_CHECKBOX, self.onMinimizeToTray, self.minimizeCheckBox)
 		# end wxGlade
+
+		self.trayConfig = TrayConfig (Application.config)
+		self.generalConfig = GeneralGuiConfig (Application.config)
+		self.mainWindowConfig = MainWindowConfig (Application.config)
 
 		self.LoadState()
 		self.updateCheckState()
@@ -105,10 +110,10 @@ class GeneralPanel(wx.ScrolledWindow):
 		Опции, связанные с последними открытыми файлами
 		"""
 		# Длина истории последних открытых файлов
-		self.historyLength = ConfigElements.IntegerElement (Application.config.historyLengthOption, self.historySpin, 0, 30)
+		self.historyLength = ConfigElements.IntegerElement (self.generalConfig.historyLengthOption, self.historySpin, 0, 30)
 
 		# Открывать последнюю вики при запуске?
-		self.autoopen = ConfigElements.BooleanElement (Application.config.autoopenOption, self.autoopenCheckBox)
+		self.autoopen = ConfigElements.BooleanElement (self.generalConfig.autoopenOption, self.autoopenCheckBox)
 
 
 	def __loadGeneralOptions (self):
@@ -116,19 +121,19 @@ class GeneralPanel(wx.ScrolledWindow):
 		Опции для сворачивания окна в трей
 		"""
 		# Сворачивать в трей?
-		self.minimizeToTray = ConfigElements.BooleanElement (Application.config.minimizeOption, self.minimizeCheckBox)
+		self.minimizeToTray = ConfigElements.BooleanElement (self.trayConfig.minimizeOption, self.minimizeCheckBox)
 
 		# Всегда показывать иконку в трее
-		self.alwaysInTray = ConfigElements.BooleanElement (Application.config.alwaysShowTrayIconOption, self.alwaysInTrayCheckBox)
+		self.alwaysInTray = ConfigElements.BooleanElement (self.trayConfig.alwaysShowTrayIconOption, self.alwaysInTrayCheckBox)
 
 		# Запускаться свернутым?
-		self.startIconized = ConfigElements.BooleanElement (Application.config.startIconizedOption, self.startIconizedCheckBox)
+		self.startIconized = ConfigElements.BooleanElement (self.trayConfig.startIconizedOption, self.startIconizedCheckBox)
 
 		# Задавать вопрос перед выходом из программы?
-		self.askBeforeExit = ConfigElements.BooleanElement (Application.config.askBeforeExitOption, self.askBeforeExitCheckBox)
+		self.askBeforeExit = ConfigElements.BooleanElement (self.generalConfig.askBeforeExitOption, self.askBeforeExitCheckBox)
 
 		# Формат заголовка страницы
-		self.titleFormat = ConfigElements.StringElement (Application.config.titleFormatOption, self.titleFormatText)
+		self.titleFormat = ConfigElements.StringElement (self.mainWindowConfig.titleFormatOption, self.titleFormatText)
 
 		self.__loadLanguages()
 	
@@ -140,7 +145,7 @@ class GeneralPanel(wx.ScrolledWindow):
 		self.langCombo.Clear ()
 		self.langCombo.AppendItems (languages)
 
-		currlang = Application.config.languageOption.value
+		currlang = self.generalConfig.languageOption.value
 
 		try:
 			currindex = languages.index (currlang)
@@ -177,7 +182,7 @@ class GeneralPanel(wx.ScrolledWindow):
 			return
 
 		lang = self.langCombo.GetString (index)
-		Application.config.languageOption.value = lang
+		self.generalConfig.languageOption.value = lang
 
 	def onMinimizeToTray(self, event): # wxGlade: GeneralPanel.<event_handler>
 		self.updateCheckState()

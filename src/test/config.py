@@ -6,12 +6,15 @@
 
 import unittest
 import os
+import os.path
 import ConfigParser
 import shutil
 
 from core.config import Config, getConfigPath
 import core.system
 import core.config
+
+from gui.guiconfig import TrayConfig, EditorConfig
 
 
 class ConfigTest (unittest.TestCase):
@@ -135,7 +138,6 @@ class ConfigOptionsTest (unittest.TestCase):
 
 	def tearDown (self):
 		os.remove (self.path)
-		pass
 	
 
 	# Строковые опции
@@ -157,6 +159,27 @@ class ConfigOptionsTest (unittest.TestCase):
 		newopt = core.config.StringOption (newconfig, u"Test", u"strval3", "defaultval")
 
 		self.assertEqual (newopt.value, u"проверка")
+
+
+	def testStringOpt4 (self):
+		opt = core.config.StringOption (self.config, u"Test", u"strval3", "defaultval")
+		newopt = core.config.StringOption (self.config, u"Test", u"strval3", "defaultval")
+
+		opt.value = u"проверка"
+
+		self.assertEqual (newopt.value, u"проверка")
+	
+
+	#def testStringOpt5 (self):
+	#	# Не выполняется, но вроде и не нужно
+	#	opt = core.config.StringOption (self.config, u"Test", u"strval3", "defaultval")
+
+	#	newconfig = core.config.Config (self.path)
+	#	newopt = core.config.StringOption (newconfig, u"Test", u"strval3", "defaultval")
+
+	#	opt.value = u"проверка"
+
+	#	self.assertEqual (newopt.value, u"проверка")
 	
 
 	# Целочисленные опции
@@ -180,6 +203,15 @@ class ConfigOptionsTest (unittest.TestCase):
 		self.assertEqual (newopt.value, 666)
 	
 
+	def testIntOpt4 (self):
+		opt = core.config.IntegerOption (self.config, u"Test", u"intval3", 777)
+		newopt = core.config.IntegerOption (self.config, u"Test", u"intval3", 888)
+
+		opt.value = 666
+
+		self.assertEqual (newopt.value, 666)
+	
+
 	# Булевы опции
 	def testBoolOpt1 (self):
 		opt = core.config.BooleanOption (self.config, u"Test", u"Boolval", False)
@@ -199,3 +231,91 @@ class ConfigOptionsTest (unittest.TestCase):
 		newopt = core.config.BooleanOption (newconfig, u"Test", u"Boolval3", False)
 
 		self.assertEqual (newopt.value, True)
+	
+
+	def testBoolOpt4 (self):
+		opt = core.config.BooleanOption (self.config, u"Test", u"Boolval3", False)
+		newopt = core.config.BooleanOption (self.config, u"Test", u"Boolval3", False)
+
+		opt.value = True
+
+		self.assertEqual (newopt.value, True)
+	
+
+
+
+class TrayConfigTest (unittest.TestCase):
+	def setUp (self):
+		self.path = u"../test/testconfig.ini"
+		self.config = core.config.Config (self.path)
+
+		self.trayConfig = TrayConfig (self.config)
+	
+
+	def tearDown (self):
+		if os.path.exists (self.path):
+			os.remove (self.path)
+
+
+	def testDefault (self):
+		self.assertEqual (self.trayConfig.minimizeOption.value, True)
+		self.assertEqual (self.trayConfig.startIconizedOption.value, False)
+		self.assertEqual (self.trayConfig.alwaysShowTrayIconOption.value, False)
+	
+
+	def testChange (self):
+		newConfig = TrayConfig (self.config)
+
+		newConfig.minimizeOption.value = False
+		self.assertEqual (self.trayConfig.minimizeOption.value, False)
+
+		newConfig.startIconizedOption.value = True
+		self.assertEqual (self.trayConfig.startIconizedOption.value, True)
+
+		newConfig.alwaysShowTrayIconOption.value = True
+		self.assertEqual (self.trayConfig.alwaysShowTrayIconOption.value, True)
+
+
+
+class EditorConfigTest (unittest.TestCase):
+	def setUp (self):
+		self.path = u"../test/testconfig.ini"
+		self.config = core.config.Config (self.path)
+
+		self.editorConfig = EditorConfig (self.config)
+	
+
+	def tearDown (self):
+		if os.path.exists (self.path):
+			os.remove (self.path)
+	
+
+	def testDefault (self):
+		self.assertEqual (self.editorConfig.lineNumbersOption.value, False)
+		self.assertEqual (self.editorConfig.tabWidthOption.value, 4)
+		self.assertEqual (self.editorConfig.fontSizeOption.value, 10)
+		self.assertEqual (self.editorConfig.fontFaceNameOption.value, "")
+		self.assertEqual (self.editorConfig.fontIsBold.value, False)
+		self.assertEqual (self.editorConfig.fontIsItalic.value, False)
+
+
+	def testChange (self):
+		newConfig = EditorConfig (self.config)
+
+		newConfig.lineNumbersOption.value = True
+		self.assertEqual (self.editorConfig.lineNumbersOption.value, True)
+
+		newConfig.tabWidthOption.value = 8
+		self.assertEqual (self.editorConfig.tabWidthOption.value, 8)
+
+		newConfig.fontSizeOption.value = 12
+		self.assertEqual (self.editorConfig.fontSizeOption.value, 12)
+
+		newConfig.fontFaceNameOption.value = "Arial"
+		self.assertEqual (self.editorConfig.fontFaceNameOption.value, "Arial")
+
+		newConfig.fontIsBold.value = True
+		self.assertEqual (self.editorConfig.fontIsBold.value, True)
+
+		newConfig.fontIsItalic.value = True
+		self.assertEqual (self.editorConfig.fontIsItalic.value, True)

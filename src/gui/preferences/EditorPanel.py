@@ -5,6 +5,8 @@ import wx
 
 import ConfigElements
 from core.application import Application
+from gui.guiconfig import EditorConfig
+from core.config import FontOption
 
 # begin wxGlade: dependencies
 # end wxGlade
@@ -27,6 +29,7 @@ class EditorPanel(wx.Panel):
 		self.__set_properties()
 		self.__do_layout()
 		# end wxGlade
+		self.config = EditorConfig (Application.config)
 
 		self.LoadState()
 
@@ -58,13 +61,18 @@ class EditorPanel(wx.Panel):
 
 	def LoadState(self):
 		# Показывать ли номера строк?
-		self.lineNumbers = ConfigElements.BooleanElement (Application.config.lineNumbersOption, self.lineNumbersCheckBox)
+		self.lineNumbers = ConfigElements.BooleanElement (self.config.lineNumbersOption, self.lineNumbersCheckBox)
 
 		# Шрифт для редактора
-		self.fontEditor = ConfigElements.FontElement (Application.config.fontEditorOption, self.fontPicker)
+		fontOption = FontOption (self.config.fontFaceNameOption, 
+				self.config.fontSizeOption, 
+				self.config.fontIsBold, 
+				self.config.fontIsItalic)
+
+		self.fontEditor = ConfigElements.FontElement (fontOption, self.fontPicker)
 
 		# Размер табуляции
-		self.tabWidth = ConfigElements.IntegerElement (Application.config.tabWidthOption, self.tabWidthSpin, 1, 100)
+		self.tabWidth = ConfigElements.IntegerElement (self.config.tabWidthOption, self.tabWidthSpin, 1, 100)
 	
 
 	def Save (self):

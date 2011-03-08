@@ -20,6 +20,7 @@ from gui.trayicon import OutwikerTrayIcon
 from gui.AttachPanel import AttachPanel
 import core.config
 import gui.pagedialog
+from guiconfig import MainWindowConfig, TreeConfig, AttachConfig, GeneralGuiConfig
 
 # begin wxGlade: dependencies
 # end wxGlade
@@ -75,6 +76,12 @@ class MainWindow(wx.Frame):
 				self.ID_SORT_SIBLINGS_ALPHABETICAL, self.ID_SORT_CHILDREN_ALPHABETICAL,
 				self.ID_MOVE_PAGE_UP, self.ID_MOVE_PAGE_DOWN, self.ID_RENAME]
 
+
+		self.mainWindowConfig = MainWindowConfig (Application.config)
+		self.treeConfig = TreeConfig (Application.config)
+		self.attachConfig = AttachConfig (Application.config)
+		self.generalConfig = GeneralGuiConfig (Application.config)
+
 		# Флаг, обозначающий, что в цикле обработки стандартных сообщений 
 		# вроде копирования в буфер обмена сообщение вернулось обратно
 		self.stdEventLoop = False
@@ -86,10 +93,6 @@ class MainWindow(wx.Frame):
 		# Идентификаторы для пунктов меню для открытия закладок
 		# Ключ - id, значение - путь до страницы вики
 		self._bookmarksId = {}
-
-		# Флаг, который отмечает, что пришло первое событие onIdle.
-		# Используется для определения момента, когда окно только загрузилось
-		#self.firstEvent = True
 
 		Application.onTreeUpdate += self.onTreeUpdate
 		Application.onPageSelect += self.onPageSelect
@@ -258,7 +261,7 @@ class MainWindow(wx.Frame):
 		self.SetAcceleratorTable(aTable)
 
 		self._updateRecentMenu()
-		self.setFullscreen(Application.config.FullscreenOption.value)
+		self.setFullscreen(self.mainWindowConfig.FullscreenOption.value)
 
 		if len (sys.argv) > 1:
 			self._openFromCommandLine()
@@ -316,9 +319,7 @@ class MainWindow(wx.Frame):
 		"""
 		Загрузить настройки окошка с деревом
 		"""
-		config = Application.config
-		
-		pane = self.__loadPaneInfo (config.treePaneOption)
+		pane = self.__loadPaneInfo (self.treeConfig.treePaneOption)
 
 		if pane == None:
 			pane = wx.aui.AuiPaneInfo().Name(("treePane")).Caption(_("Notes")).Gripper(False).CaptionVisible(True).Layer(2).Position(0).CloseButton(True).MaximizeButton(False).Left().Dock()
@@ -327,8 +328,8 @@ class MainWindow(wx.Frame):
 		pane.Dock()
 		pane.CloseButton()
 
-		pane.BestSize ((Application.config.treeWidthOption.value, 
-			Application.config.treeHeightOption.value))
+		pane.BestSize ((self.treeConfig.treeWidthOption.value, 
+			self.treeConfig.treeHeightOption.value))
 		
 		auiManager.AddPane(self.tree, pane)
 	
@@ -337,9 +338,7 @@ class MainWindow(wx.Frame):
 		"""
 		Загрузить настройки окошка с прикрепленными файлами
 		"""
-		config = Application.config
-		
-		pane = self.__loadPaneInfo (config.attachesPaneOption)
+		pane = self.__loadPaneInfo (self.attachConfig.attachesPaneOption)
 
 		if pane == None:
 			pane = wx.aui.AuiPaneInfo().Name("attachesPane").Caption(_("Attaches")).Gripper(False).CaptionVisible(True).Layer(1).Position(0).CloseButton(True).MaximizeButton(False).Bottom().Dock()
@@ -355,8 +354,6 @@ class MainWindow(wx.Frame):
 		"""
 		Загрузить настройки окошка с видом текущей страницы
 		"""
-		config = Application.config
-		
 		pane = wx.aui.AuiPaneInfo().Name("pagePane").Gripper(False).CaptionVisible(False).Layer(0).Position(0).CloseButton(False).MaximizeButton(False).Center().Dock()
 
 		auiManager.AddPane(self.pagePanel, pane)
@@ -392,8 +389,8 @@ class MainWindow(wx.Frame):
 		"""
 		Сохранить параметры панелей
 		"""
-		self.__savePaneInfo (Application.config.treePaneOption, self.auiManager.GetPane (self.tree))
-		self.__savePaneInfo (Application.config.attachesPaneOption, self.auiManager.GetPane (self.attachPanel))
+		self.__savePaneInfo (self.treeConfig.treePaneOption, self.auiManager.GetPane (self.tree))
+		self.__savePaneInfo (self.attachConfig.attachesPaneOption, self.auiManager.GetPane (self.attachPanel))
 		self.__savePanesSize()
 	
 
@@ -401,11 +398,11 @@ class MainWindow(wx.Frame):
 		"""
 		Сохранить размеры панелей
 		"""
-		Application.config.treeWidthOption.value = self.tree.GetSizeTuple()[0]
-		Application.config.treeHeightOption.value = self.tree.GetSizeTuple()[1]
+		self.treeConfig.treeWidthOption.value = self.tree.GetSizeTuple()[0]
+		self.treeConfig.treeHeightOption.value = self.tree.GetSizeTuple()[1]
 			
-		Application.config.attachesWidthOption.value = self.attachPanel.GetSizeTuple()[0]
-		Application.config.attachesHeightOption.value = self.attachPanel.GetSizeTuple()[1]
+		self.attachConfig.attachesWidthOption.value = self.attachPanel.GetSizeTuple()[0]
+		self.attachConfig.attachesHeightOption.value = self.attachPanel.GetSizeTuple()[1]
 
 
 	def onPageSelect (self, newpage):
@@ -413,7 +410,7 @@ class MainWindow(wx.Frame):
 	
 
 	def __updateTitle (self):
-		template = Application.config.titleFormatOption.value
+		template = self.mainWindowConfig.titleFormatOption.value
 
 		if Application.wikiroot == None:
 			self.SetTitle (u"OutWiker")
@@ -461,7 +458,7 @@ class MainWindow(wx.Frame):
 		"""
 		Открыть последнюю вики, если установлена соответствующая опция
 		"""
-		openRecent = Application.config.autoopenOption.value
+		openRecent = self.generalConfig.autoopenOption.value
 
 		if openRecent and len (self.recentWiki) > 0:
 			core.commands.openWiki (self.recentWiki[0])
@@ -557,14 +554,14 @@ class MainWindow(wx.Frame):
 		"""
 		Загрузить параметры из конфига
 		"""
-		config = Application.config
+		#config = Application.config
 		self.Freeze()
 
-		width = config.WidthOption.value
-		height = config.HeightOption.value
+		width = self.mainWindowConfig.WidthOption.value
+		height = self.mainWindowConfig.HeightOption.value
 
-		xpos = config.XPosOption.value
-		ypos = config.YPosOption.value
+		xpos = self.mainWindowConfig.XPosOption.value
+		ypos = self.mainWindowConfig.YPosOption.value
 		
 		self.SetDimensions (xpos, ypos, width, height, sizeFlags=wx.SIZE_FORCE)
 
@@ -576,20 +573,20 @@ class MainWindow(wx.Frame):
 		"""
 		Сохранить параметры в конфиг
 		"""
-		config = Application.config
+		#config = Application.config
 
 		try:
 			if not self.IsIconized():
 				if not self.IsFullScreen():
 					(width, height) = self.GetSizeTuple()
-					config.WidthOption.value = width
-					config.HeightOption.value = height
+					self.mainWindowConfig.WidthOption.value = width
+					self.mainWindowConfig.HeightOption.value = height
 
 					(xpos, ypos) = self.GetPositionTuple()
-					config.XPosOption.value = xpos
-					config.YPosOption.value = ypos
+					self.mainWindowConfig.XPosOption.value = xpos
+					self.mainWindowConfig.YPosOption.value = ypos
 
-				config.FullscreenOption.value = self.IsFullScreen()
+				self.mainWindowConfig.FullscreenOption.value = self.IsFullScreen()
 
 				self.__savePanesParams()
 		except Exception, e:
@@ -621,7 +618,7 @@ class MainWindow(wx.Frame):
 
 
 	def onClose (self, event):
-		askBeforeExit = Application.config.askBeforeExitOption.value
+		askBeforeExit = self.generalConfig.askBeforeExitOption.value
 
 		if (not askBeforeExit or 
 				core.commands.MessageBox (_(u"Really exit?"), _(u"Exit"), wx.YES_NO  | wx.ICON_QUESTION ) == wx.YES):
@@ -851,11 +848,11 @@ class MainWindow(wx.Frame):
 
 	
 	def __loadPanesSize (self):
-		self.auiManager.GetPane (self.attachPanel).BestSize ((Application.config.attachesWidthOption.value, 
-			Application.config.attachesHeightOption.value))
+		self.auiManager.GetPane (self.attachPanel).BestSize ((self.attachConfig.attachesWidthOption.value, 
+			self.attachConfig.attachesHeightOption.value))
 
-		self.auiManager.GetPane (self.tree).BestSize ((Application.config.treeWidthOption.value, 
-			Application.config.treeHeightOption.value))
+		self.auiManager.GetPane (self.tree).BestSize ((self.treeConfig.treeWidthOption.value, 
+			self.treeConfig.treeHeightOption.value))
 
 		self.auiManager.Update()
 	

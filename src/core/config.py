@@ -144,6 +144,7 @@ class StringOption (object):
 
 	@property
 	def value (self):
+		self.loadParam (self.config)
 		return self.val
 
 
@@ -186,7 +187,7 @@ class IntegerOption (StringOption):
 
 
 class FontOption (object):
-	def __init__ (self, config, 
+	def __init__ (self, 
 			faceNameOption, 
 			sizeOption,
 			isBoldOption,
@@ -211,49 +212,3 @@ class PageConfig (Config):
 
 		self.typeOption = StringOption (self, u"General", u"type", u"")
 
-
-class GeneralConfig (Config):
-	"""
-	Класс для хранения основных настроек
-	"""
-	def __init__ (self, fname, readonly=False):
-		Config.__init__ (self, fname, readonly)
-		self.languageOption = StringOption (self, u"General", u"language", u"en")
-
-		# Список последних открытых файлов
-		self.historyLengthOption = IntegerOption (self, u"RecentWiki", u"maxcount", 5)
-		self.autoopenOption = BooleanOption (self, u"RecentWiki", u"AutoOpen", False)
-
-		self.minimizeOption = BooleanOption (self, u"General", u"MinimizeToTray", True)
-		self.startIconizedOption = BooleanOption (self, u"General", u"StartIconized", False)
-		self.alwaysShowTrayIconOption = BooleanOption (self, u"General", u"AlwaysShowTrayIcon", False)
-		self.askBeforeExitOption = BooleanOption (self, u"General", u"AskBeforeExit", True)
-
-		# Редактор
-		self.lineNumbersOption = BooleanOption (self, u"General", u"ShowLineNumbers", False)
-		self.tabWidthOption = IntegerOption (self, u"General", u"TabWidth", 4)
-		
-		fontSizeOption = IntegerOption (self, u"Font", u"size", 10)
-		fontFaceNameOption = StringOption (self, u"Font", u"FaceName", "")
-		fontIsBold = BooleanOption (self, "Font", "bold", False)
-		fontIsItalic = BooleanOption (self, "Font", "italic", False)
-
-		self.fontEditorOption = FontOption (self, fontFaceNameOption, fontSizeOption, fontIsBold, fontIsItalic)
-
-		# Главное окно
-		self.titleFormatOption = StringOption (self, u"MainWindow", u"Title", u"{page} - {file} - OutWiker")
-		self.WidthOption = IntegerOption (self, u"MainWindow", u"width", 800)
-		self.HeightOption = IntegerOption (self, u"MainWindow", u"height", 680)
-		self.XPosOption = IntegerOption (self, u"MainWindow", u"xpos", 0)
-		self.YPosOption = IntegerOption (self, u"MainWindow", u"ypos", 0)
-		self.FullscreenOption = BooleanOption (self, u"MainWindow", u"fullscreen", False)
-
-		# Панель с деревом
-		self.treeWidthOption = core.config.IntegerOption (self, u"MainWindow", u"TreeWidth", 250)
-		self.treeHeightOption = core.config.IntegerOption (self, u"MainWindow", u"TreeHeight", 250)
-		self.treePaneOption = core.config.StringOption (self, u"MainWindow", u"TreePane", "")
-
-		# Панель с прикрепленными файлами
-		self.attachesWidthOption = core.config.IntegerOption (self, u"MainWindow", u"AttachesWidth", 250)
-		self.attachesHeightOption = core.config.IntegerOption (self, u"MainWindow", u"AttachesHeight", 150)
-		self.attachesPaneOption = core.config.StringOption (self, u"MainWindow", u"AttachesPane", "")

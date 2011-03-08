@@ -9,6 +9,7 @@ from wx.stc import StyledTextCtrl
 from gui.LocalSearchPanel import LocalSearchPanel, LocalSearcher
 import core.system
 from core.application import Application
+from guiconfig import EditorConfig
 
 # begin wxGlade: dependencies
 # end wxGlade
@@ -32,6 +33,8 @@ class TextEditor(wx.Panel):
 		# end wxGlade
 
 		self.createCoders()
+
+		self.config = EditorConfig (Application.config)
 
 		self.setDefaultSettings()
 		self.searchPanel.setEditor (self, self.textCtrl)
@@ -88,10 +91,10 @@ class TextEditor(wx.Panel):
 		"""
 		Установить шрифт по умолчанию в контрол StyledTextCtrl
 		"""
-		size = Application.config.fontEditorOption.size.value
-		faceName = Application.config.fontEditorOption.faceName.value
-		isBold = Application.config.fontEditorOption.bold.value
-		isItalic = Application.config.fontEditorOption.italic.value
+		size = self.config.fontSizeOption.value
+		faceName = self.config.fontFaceNameOption.value
+		isBold = self.config.fontIsBold.value
+		isItalic = self.config.fontIsItalic.value
 
 		#style = "size:%d" % size
 		#self.textCtrl.StyleSetSpec (wx.stc.STC_STYLE_DEFAULT, style)
@@ -108,15 +111,15 @@ class TextEditor(wx.Panel):
 		self.textCtrl.SetWrapVisualFlags (wx.stc.STC_WRAPVISUALFLAG_END)
 
 		self._setMarginWidth (self.textCtrl)
-		self.textCtrl.SetTabWidth (Application.config.tabWidthOption.value)
+		self.textCtrl.SetTabWidth (self.config.tabWidthOption.value)
 	
 
 	def _setMarginWidth (self, editor):
 		"""
 		Установить размер левой области, где пишутся номера строк в зависимости от шрифта
 		"""
-		linenumbers =  Application.config.lineNumbersOption.value
-		fontSize = Application.config.fontEditorOption.size.value
+		linenumbers =  self.config.lineNumbersOption.value
+		fontSize = self.config.fontSizeOption.value
 
 		if linenumbers:
 			width = int (35.0 / 10.0 * fontSize)
