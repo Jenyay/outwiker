@@ -120,15 +120,15 @@ class StringOption (object):
 		# Т.к. как правило исключения игнорируются, то это поле используется для отладкиы
 		self.error = None
 
-		self.loadParam (config)
 
-
-	def loadParam (self, config):
+	def _loadParam (self):
 		try:
-			self.val = self._loadValue()
+			val = self._loadValue()
 		except Exception as e:
 			self.error = e
-			self.val = self.defaultValue
+			val = self.defaultValue
+
+		return val
 
 
 	def _loadValue (self):
@@ -138,20 +138,14 @@ class StringOption (object):
 		return self.config.get (self.section, self.param)
 
 
-	def _saveValue (self):
-		self.config.set (self.section, self.param, self.val)
-	
-
 	@property
 	def value (self):
-		self.loadParam (self.config)
-		return self.val
+		return self._loadParam ()
 
 
 	@value.setter
 	def value (self, val):
-		self.val = val
-		self._saveValue()
+		self.config.set (self.section, self.param, val)
 
 
 class BooleanOption (StringOption):
