@@ -303,6 +303,7 @@ class MainWindow(wx.Frame):
 		self.__initPagePane (self.auiManager)
 		self.__initAttachesPane (self.auiManager)
 		self.__initTreePane (self.auiManager)
+		self.__loadPanesSize ()
 
 		self.auiManager.SetDockSizeConstraint (0.8, 0.8)
 		self.auiManager.Update()
@@ -403,6 +404,10 @@ class MainWindow(wx.Frame):
 			
 		self.attachConfig.attachesWidthOption.value = self.attachPanel.GetSizeTuple()[0]
 		self.attachConfig.attachesHeightOption.value = self.attachPanel.GetSizeTuple()[1]
+		
+		#print "save:"
+		#print self.attachConfig.attachesWidthOption.value
+		#print self.attachConfig.attachesHeightOption.value
 
 
 	def onPageSelect (self, newpage):
