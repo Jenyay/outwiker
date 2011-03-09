@@ -83,19 +83,13 @@ class LinkToken (object):
 		"""
 		textStrip = text.strip()
 
-		if textStrip.startswith (AttachToken.attachString) and isImage (textStrip):
-			# Ссылка на прикрепленную картинку
-			url = textStrip.replace (AttachToken.attachString, RootWikiPage.attachDir + "/", 1)
-			comment = self.parser.parseLinkMarkup (text.strip())
-
-		elif textStrip.startswith (AttachToken.attachString):
-			# Ссылка на прикрепление, но не картинку
+		if textStrip.startswith (AttachToken.attachString):
+			# Ссылка на прикрепление
 			url = textStrip.replace (AttachToken.attachString, RootWikiPage.attachDir + "/", 1)
 			comment = textStrip.replace (AttachToken.attachString, "")
-
 		else:
 			# Ссылка не на прикрепление
 			url = text.strip()
-			comment = self.parser.parseLinkMarkup (text.strip())
+			comment = text.strip()
 
 		return '<A HREF="%s">%s</A>' % (url, comment)

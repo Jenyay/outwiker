@@ -13,7 +13,7 @@ from core.application import Application
 
 class ParserTest (unittest.TestCase):
 	def setUp(self):
-		self.encoding = "866"
+		self.encoding = "utf8"
 
 		self.filesPath = u"../test/samplefiles/"
 
@@ -150,6 +150,15 @@ class ParserTest (unittest.TestCase):
 		result = u'бла-бла-бла \n<A HREF="%s">%s</A> бла-бла-бла\nбла-бла-бла' % (self.url2, self.url2)
 
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+	def testLink3 (self):
+		url = "http://jenyay.net/social/feed.png"
+
+		text = u"бла-бла-бла \n[[%s]] бла-бла-бла\nбла-бла-бла" % (url)
+		result = u'бла-бла-бла \n<A HREF="%s">%s</A> бла-бла-бла\nбла-бла-бла' % (url, url)
+
+		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 	
 
 	def testCommentLink1 (self):
@@ -272,7 +281,7 @@ class ParserTest (unittest.TestCase):
 	def testAttach07 (self):
 		fname = u"accept.png"
 		text = u"бла-бла-бла \n[[Attach:%s]] бла-бла-бла\nбла-бла-бла" % (fname)
-		result = u'бла-бла-бла \n<A HREF="__attach/%s"><IMG SRC="__attach/%s"></A> бла-бла-бла\nбла-бла-бла' % (fname, fname)
+		result = u'бла-бла-бла \n<A HREF="__attach/%s">%s</A> бла-бла-бла\nбла-бла-бла' % (fname, fname)
 
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
