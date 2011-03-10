@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 from libs.pyparsing import Regex, LineStart, LineEnd, OneOrMore
-from pages.wiki.parser.utils import noConvert, replaceBreakes
+from pages.wiki.parser.utils import noConvert
 
 class ListFactory (object):
 	@staticmethod
@@ -164,7 +164,7 @@ class ListToken (object):
 
 	def __getListItemTag (self, item, level):
 		text = (item[level:]).strip()
-		itemText = self.parser.parseListItemMarkup (replaceBreakes (text) )
+		itemText = self.parser.parseListItemMarkup (text)
 
 		return u"<LI>%s</LI>" % (itemText)
 	

@@ -2,7 +2,6 @@
 # -*- coding: UTF-8 -*-
 
 from libs.pyparsing import Regex, OneOrMore, Optional, LineEnd, LineStart
-from utils import replaceBreakes
 
 
 class TableFactory (object):
@@ -50,7 +49,7 @@ class TableToken (object):
 		elif rightAlign:
 			align = u' ALIGN="RIGHT"'
 
-		result = u'<TD%s>%s</TD>' % (align, self.parser.parseWikiMarkup (replaceBreakes (text.strip() ) ) )
+		result = u'<TD%s>%s</TD>' % (align, self.parser.parseWikiMarkup (text.strip() ) )
 
 		return result
 

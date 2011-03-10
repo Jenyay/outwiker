@@ -891,10 +891,11 @@ class ParserTest (unittest.TestCase):
 ||left aligned \\
 sdfsdf || centered || right aligned||
 ||left aligned [[<<]] dsfsdf || centered || right aligned||
-||left aligned \\\\\\ sdfsdfsdf || centered || right aligned||
+||left aligned [[&lt;&lt;]] dsfsdf || centered || right aligned||
+||left aligned [[<<]][[<<]] sdfsdfsdf || centered || right aligned||
 """
 		
-		result = u'''<TABLE border=1 width=350><TR><TD ALIGN="LEFT">left aligned sdfsdf</TD><TD ALIGN="CENTER">centered</TD><TD ALIGN="RIGHT">right aligned</TD></TR><TR><TD ALIGN="LEFT">left aligned \n dsfsdf</TD><TD ALIGN="CENTER">centered</TD><TD ALIGN="RIGHT">right aligned</TD></TR><TR><TD ALIGN="LEFT">left aligned \n\n sdfsdfsdf</TD><TD ALIGN="CENTER">centered</TD><TD ALIGN="RIGHT">right aligned</TD></TR></TABLE>'''
+		result = u'''<TABLE border=1 width=350><TR><TD ALIGN="LEFT">left aligned sdfsdf</TD><TD ALIGN="CENTER">centered</TD><TD ALIGN="RIGHT">right aligned</TD></TR><TR><TD ALIGN="LEFT">left aligned <BR> dsfsdf</TD><TD ALIGN="CENTER">centered</TD><TD ALIGN="RIGHT">right aligned</TD></TR><TR><TD ALIGN="LEFT">left aligned <BR> dsfsdf</TD><TD ALIGN="CENTER">centered</TD><TD ALIGN="RIGHT">right aligned</TD></TR><TR><TD ALIGN="LEFT">left aligned <BR><BR> sdfsdfsdf</TD><TD ALIGN="CENTER">centered</TD><TD ALIGN="RIGHT">right aligned</TD></TR></TABLE>'''
 	
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
@@ -1058,3 +1059,53 @@ sdfsdf || centered || right aligned||
 		result = u'<A HREF="http://ftp.jenyay.net">ftp.jenyay.net</A>'
 
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+	def testLineBreak1 (self):
+		text = u"Строка 1[[<<]]Строка 2"
+		result_right = u"Строка 1<BR>Строка 2"
+		result = self.parser.toHtml (text)
+
+		self.assertEqual (result, result_right, result)
+	
+
+	def testLineBreak2 (self):
+		text = u"Строка 1[[&lt;&lt;]]Строка 2"
+		result_right = u"Строка 1<BR>Строка 2"
+		result = self.parser.toHtml (text)
+
+		self.assertEqual (result, result_right, result)
+
+
+	def testLineBreak3 (self):
+		text = u"Строка 1\\\nСтрока 2"
+		result_right = u"Строка 1Строка 2"
+		result = self.parser.toHtml (text)
+
+		self.assertEqual (result, result_right, result)
+
+	
+	def testLineBreak4 (self):
+		text = ur"""# Первый элемент списка.
+# Второй элемент списка [[<<]]Вторая строка второго элемента списка.
+# Третий элемент списка [[<<]][[<<]] Вторая строка третьего элемента списка после двух отступов.
+# Четвертый элемент списка."""
+
+		result_right = ur"""<OL><LI>Первый элемент списка.</LI><LI>Второй элемент списка <BR>Вторая строка второго элемента списка.</LI><LI>Третий элемент списка <BR><BR> Вторая строка третьего элемента списка после двух отступов.</LI><LI>Четвертый элемент списка.</LI></OL>"""
+		result = self.parser.toHtml (text)
+
+		self.assertEqual (result, result_right, result)
+
+
+	def testLineBreak5 (self):
+		text = ur"""|| border=1
+||Первая строка||
+||Вторая строка [[<<]]продолжение второй строки||
+||Третья строка [[<<]][[<<]] Продолжение третьей строки ||
+||Четвертая \
+строка ||"""
+
+		result_right = ur"""<TABLE border=1><TR><TD>Первая строка</TD></TR><TR><TD>Вторая строка <BR>продолжение второй строки</TD></TR><TR><TD ALIGN="LEFT">Третья строка <BR><BR> Продолжение третьей строки</TD></TR><TR><TD ALIGN="LEFT">Четвертая строка</TD></TR></TABLE>"""
+		result = self.parser.toHtml (text)
+
+		self.assertEqual (result, result_right, result)
