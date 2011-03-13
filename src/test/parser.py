@@ -3,12 +3,14 @@
 
 import os
 import unittest
+import hashlib
 
-from core.tree import RootWikiPage, WikiDocument
+from core.tree import WikiDocument
 from pages.wiki.parser.wikiparser import Parser
 from pages.wiki.wikipage import WikiPageFactory
 from test.utils import removeWiki
 from core.application import Application
+from pages.wiki.texconfig import TexConfig
 
 
 class ParserTest (unittest.TestCase):
@@ -1109,3 +1111,23 @@ sdfsdf || centered || right aligned||
 		result = self.parser.toHtml (text)
 
 		self.assertEqual (result, result_right, result)
+
+
+	def testTex1 (self):
+		texconfig = TexConfig (self.parser.config)
+		texconfig.mimeTexPath.value = "mimetex"
+
+		eqn = "y = f(x)"
+		text = "{$ %s $}" % (eqn)
+
+		fname = u"eqn_{0}.gif".format (hashlib.md5 (eqn).hexdigest())
+		path = os.path.join (u"__attach", "__thumb", fname)
+
+		result_right = u'<IMG SRC="{0}">'.format (path)
+
+		result = self.parser.toHtml (text)
+
+		self.assertEqual (result_right, result, result)
+
+		full_path = os.path.join (self.parser.page.path, path)
+		self.assertTrue (os.path.exists (full_path), full_path )

@@ -16,6 +16,7 @@ from tokenurlimage import UrlImageFactory
 from tokenattach import NotImageAttachFactory, ImageAttachFactory
 from tokenlist import ListFactory
 from tokenlinebreak import LineBreakFactory
+from tokentex import TexFactory
 
 
 class Parser (object):
@@ -46,6 +47,7 @@ class Parser (object):
 		self.adhoctokens = AdHocFactory.make(self)
 		self.lists = ListFactory.make (self)
 		self.lineBreak = LineBreakFactory.make (self)
+		self.tex = TexFactory.make (self)
 
 		self.listItemMarkup = (self.lineBreak |
 				self.link |
@@ -62,7 +64,8 @@ class Parser (object):
 				self.subscript |
 				self.superscript |
 				self.attachesImage |
-				self.attachesNotImage
+				self.attachesNotImage |
+				self.tex
 				)
 
 
@@ -88,7 +91,8 @@ class Parser (object):
 				self.table |
 				self.attachesImage |
 				self.attachesNotImage |
-				self.headings
+				self.headings |
+				self.tex
 				)
 
 
@@ -101,7 +105,8 @@ class Parser (object):
 				self.italicized |
 				self.urlImage |
 				self.underlined |
-				self.attachesImage
+				self.attachesImage | 
+				self.tex
 				)
 
 
