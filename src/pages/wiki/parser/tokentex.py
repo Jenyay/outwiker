@@ -10,9 +10,6 @@ from libs.pyparsing import QuotedString
 from core.tree import RootWikiPage
 from core.system import getOS
 
-from ..texconfig import TexConfig
-
-
 class TexFactory (object):
 	@staticmethod
 	def make (parser):
@@ -80,6 +77,6 @@ class TexToken (object):
 
 		p = subprocess.Popen([mimeTexPath.encode (currentOS.filesEncoding), 
 			"-f", fname_eqn.encode (currentOS.filesEncoding), 
-			"-e", fname_image.encode (currentOS.filesEncoding)], shell=True)
+			"-e", fname_image.encode (currentOS.filesEncoding)], shell=currentOS.useShellPipe)
 
 		p.communicate()

@@ -54,6 +54,14 @@ class Windows (object):
 		return os.path.join (getCurrentDir(), "tools\\mimetex\\mimetex.exe")
 
 
+	@property
+	def useShellPipe (self):
+		"""
+		Значение параметра shell при создании класса Popen
+		"""
+		return True
+
+
 class Unix (object):
 	def __init__ (self):
 		pass
@@ -118,6 +126,14 @@ class Unix (object):
 		Путь по умолчанию до mimeTex
 		"""
 		return "mimetex"
+
+
+	@property
+	def useShellPipe (self):
+		"""
+		Значение параметра shell при создании класса Popen
+		"""
+		return False
 
 
 def getOS ():
