@@ -4,9 +4,11 @@
 import hashlib
 import os
 import os.path
+import subprocess
 
 from libs.pyparsing import QuotedString
 from core.tree import RootWikiPage
+from core.system import getOS
 
 from ..texconfig import TexConfig
 
@@ -26,7 +28,7 @@ class TexToken (object):
 
 	def __init__ (self, parser):
 		self.parser = parser
-		self.tempFname = "__eqn.tex"
+		self.tempFname = "__temp.tmp"
 
 
 	def getToken (self):
@@ -71,16 +73,13 @@ class TexToken (object):
 		return result
 
 
-	def makeTexImage (self, eqn_fname, fname):
-		texconfig = TexConfig (self.parser.config)
-		mimeTexPath = texconfig.mimeTexPath.value
+	def makeTexImage (self, fname_eqn, fname_image):
+		currentOS = getOS()
 
-		path = u'"{mimetex}" -f "{eqn_fname}" -e "{fname_out}" {params}'.format (mimetex=mimeTexPath, 
-				eqn_fname=eqn_fname, 
-				fname_out=fname,
-				params="")
+		mimeTexPath = currentOS.mimeTexPathDefault
 
-		# TODO: Проверить как это работает в винде
-		pipe = os.popen(path.encode ("utf8"))
-		pipe.read()
-		pipe.close()
+		p = subprocess.Popen([mimeTexPath.encode (currentOS.filesEncoding), 
+			"-f", fname_eqn.encode (currentOS.filesEncoding), 
+			"-e", fname_image.encode (currentOS.filesEncoding)], shell=True)
+
+		p.communicate()

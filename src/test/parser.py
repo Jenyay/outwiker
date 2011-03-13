@@ -10,7 +10,6 @@ from pages.wiki.parser.wikiparser import Parser
 from pages.wiki.wikipage import WikiPageFactory
 from test.utils import removeWiki
 from core.application import Application
-from pages.wiki.texconfig import TexConfig
 
 
 class ParserTest (unittest.TestCase):
@@ -1114,8 +1113,8 @@ sdfsdf || centered || right aligned||
 
 
 	def testTex1 (self):
-		texconfig = TexConfig (self.parser.config)
-		texconfig.mimeTexPath.value = "mimetex"
+		#texconfig = TexConfig (self.parser.config)
+		#texconfig.mimeTexPath.value = core.system.getOS().mimeTexPathDefault
 
 		eqn = "y = f(x)"
 		text = "{$ %s $}" % (eqn)

@@ -5,6 +5,7 @@
 """
 
 import os
+import os.path
 import sys
 import locale
 
@@ -42,6 +43,15 @@ class Windows (object):
 		Под Linux'ом wx.FileDataObject не правильно работает с Unicode
 		"""
 		return wx.FileDataObject
+
+
+	@property
+	def mimeTexPathDefault (self):
+		"""
+		Путь по умолчанию до mimeTex
+		"""
+		#return "tools\\mimetex\\mimetex.exe"
+		return os.path.join (getCurrentDir(), "tools\\mimetex\\mimetex.exe")
 
 
 class Unix (object):
@@ -100,6 +110,14 @@ class Unix (object):
 				return len (self.GetDataHere())
 
 		return GtkFileDataObject
+
+
+	@property
+	def mimeTexPathDefault (self):
+		"""
+		Путь по умолчанию до mimeTex
+		"""
+		return "mimetex"
 
 
 def getOS ():

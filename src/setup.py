@@ -20,7 +20,7 @@ def getCurrentVersion ():
 
 	return version_str
 
-includefiles = ['images', 'msvcr90.dll', 'Microsoft.VC90.CRT.manifest', 'help', 'locale', 'version.txt']
+includefiles = ['images', 'msvcr90.dll', 'Microsoft.VC90.CRT.manifest', 'help', 'locale', 'version.txt', 'tools']
 includes = []
 excludes = []
 packages = []

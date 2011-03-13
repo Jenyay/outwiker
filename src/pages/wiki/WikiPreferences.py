@@ -7,7 +7,6 @@ import wx
 from gui.preferences.ConfigElements import BooleanElement, IntegerElement, StringElement
 from core.application import Application
 from wikiconfig import WikiConfig
-from texconfig import TexConfig
 import wikipage
 
 # begin wxGlade: extracode
@@ -24,16 +23,12 @@ class WikiPrefGeneralPanel(wx.Panel):
 		self.showAttachInsteadBlank = wx.CheckBox(self, -1, _("Show Attachments Instead Blank page"))
 		self.thumbSizeLabel = wx.StaticText(self, -1, _("Thumbnail Size"))
 		self.thumbSize = wx.SpinCtrl(self, -1, "250", min=1, max=10000)
-		self.texPathLabel = wx.StaticText(self, -1, _("MimeTex path"))
-		self.texPathTextCtrl = wx.TextCtrl(self, -1, "")
-		self.findTexButton = wx.Button(self, -1, _("..."))
 
 		self.__set_properties()
 		self.__do_layout()
 		# end wxGlade
 
 		self.config = WikiConfig (Application.config)
-		self.texconfig = TexConfig (Application.config)
 
 
 	def __set_properties(self):
@@ -43,8 +38,7 @@ class WikiPrefGeneralPanel(wx.Panel):
 
 	def __do_layout(self):
 		# begin wxGlade: WikiPrefGeneralPanel.__do_layout
-		mainSizer = wx.FlexGridSizer(2, 1, 0, 0)
-		texSizer = wx.FlexGridSizer(1, 3, 0, 0)
+		mainSizer = wx.FlexGridSizer(3, 1, 0, 0)
 		grid_sizer_1 = wx.FlexGridSizer(1, 2, 0, 0)
 		mainSizer.Add(self.htmlCodeCheckbox, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
 		mainSizer.Add(self.showAttachInsteadBlank, 0, wx.ALL, 2)
@@ -55,11 +49,6 @@ class WikiPrefGeneralPanel(wx.Panel):
 		grid_sizer_1.AddGrowableCol(1)
 		grid_sizer_1.AddGrowableCol(2)
 		mainSizer.Add(grid_sizer_1, 1, wx.EXPAND, 0)
-		texSizer.Add(self.texPathLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
-		texSizer.Add(self.texPathTextCtrl, 0, wx.ALL|wx.EXPAND, 2)
-		texSizer.Add(self.findTexButton, 0, wx.ALL|wx.ALIGN_RIGHT|wx.ALIGN_CENTER_VERTICAL, 2)
-		texSizer.AddGrowableCol(1)
-		mainSizer.Add(texSizer, 1, wx.EXPAND, 0)
 		self.SetSizer(mainSizer)
 		mainSizer.Fit(self)
 		mainSizer.AddGrowableCol(0)
@@ -77,9 +66,6 @@ class WikiPrefGeneralPanel(wx.Panel):
 		self.showAttachInsteadBlankOption = BooleanElement (self.config.showAttachInsteadBlankOptions, 
 				self.showAttachInsteadBlank)
 
-		# Путь до mimeTex
-		self.texPathOption = StringElement (self.texconfig.mimeTexPath, self.texPathTextCtrl)
-
 
 	def Save (self):
 		changed = (self.showHtmlCodeOption.isValueChanged() or
@@ -89,7 +75,6 @@ class WikiPrefGeneralPanel(wx.Panel):
 		self.showHtmlCodeOption.save()
 		self.thumbSizeOption.save()
 		self.showAttachInsteadBlankOption.save()
-		self.texPathOption.save()
 
 		if changed:
 			currpage = Application.wikiroot.selectedPage
