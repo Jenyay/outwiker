@@ -18,6 +18,8 @@ from tokenlist import ListFactory
 from tokenlinebreak import LineBreakFactory
 from tokentex import TexFactory
 
+from ..thumbnails import Thumbnails
+
 
 class Parser (object):
 	def __init__ (self, page, config):
@@ -114,6 +116,9 @@ class Parser (object):
 		"""
 		Сгенерить HTML без заголовков типа <HTML> и т.п.
 		"""
+		thumb = Thumbnails (self.page)
+		thumb.clearDir()
+
 		text = text.replace ("\\\n", "")
 		return self.parseWikiMarkup(text)
 

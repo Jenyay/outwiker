@@ -10,6 +10,7 @@ from pages.wiki.parser.wikiparser import Parser
 from pages.wiki.wikipage import WikiPageFactory
 from test.utils import removeWiki
 from core.application import Application
+from pages.wiki.thumbnails import Thumbnails
 
 
 class ParserTest (unittest.TestCase):
@@ -1120,7 +1121,7 @@ sdfsdf || centered || right aligned||
 		text = "{$ %s $}" % (eqn)
 
 		fname = u"eqn_{0}.gif".format (hashlib.md5 (eqn).hexdigest())
-		path = os.path.join (u"__attach", "__thumb", fname)
+		path = os.path.join (Thumbnails.getRelativeThumbDir(), fname)
 
 		result_right = u'<IMG SRC="{0}">'.format (path)
 
@@ -1130,3 +1131,61 @@ sdfsdf || centered || right aligned||
 
 		full_path = os.path.join (self.parser.page.path, path)
 		self.assertTrue (os.path.exists (full_path), full_path )
+
+
+	def testThumbnails1 (self):
+		thumb = Thumbnails (self.parser.page)
+		thumbDir = thumb.getThumbPath (create=False)
+
+		self.assertEqual (thumbDir, 
+				os.path.join (self.parser.page.getAttachPath(), Thumbnails.thumbDir ),
+				thumbDir)
+
+
+	def testThumbnails2 (self):
+		thumb = Thumbnails (self.parser.page)
+		thumbDir = thumb.getThumbPath (create=False)
+
+		self.assertFalse (os.path.exists (thumbDir))
+
+
+	def testThumbnails3 (self):
+		thumb = Thumbnails (self.parser.page)
+		thumbDir = thumb.getThumbPath (create=True)
+
+		self.assertTrue (os.path.exists (thumbDir))
+
+
+	def testThumbnailsClear1 (self):
+		thumb = Thumbnails (self.parser.page)
+		thumb.clearDir ()
+
+		self.assertFalse (os.path.exists (thumb.getThumbPath (create=False)))
+
+	
+	def testThumbnailsClear2 (self):
+		thumb = Thumbnails (self.parser.page)
+		
+		eqn = "y = f(x)"
+
+		text = "{$ %s $}" % (eqn)
+		self.parser.toHtml (text)
+
+		self.assertFalse (len (os.listdir (thumb.getThumbPath (False) ) ) == 0)
+
+		thumb.clearDir()
+
+		self.assertEqual (len (os.listdir (thumb.getThumbPath (False) ) ), 0 )
+
+	
+	def testThumbnailsClear3 (self):
+		thumb = Thumbnails (self.parser.page)
+		
+		eqn1 = "y = f(x)"
+		eqn2 = "y = f_2(x)"
+
+		self.parser.toHtml ("{$ %s $}" % (eqn1))
+		self.assertEqual (len (os.listdir (thumb.getThumbPath (False) ) ), 2 )
+
+		self.parser.toHtml ("{$ %s $}" % (eqn2))
+		self.assertEqual (len (os.listdir (thumb.getThumbPath (False) ) ), 2 )
