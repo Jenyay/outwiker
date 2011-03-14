@@ -9,6 +9,7 @@ from pages.wiki.parser.pagethumbmaker import PageThumbmaker
 from core.tree import RootWikiPage, WikiDocument
 from pages.text.textpage import TextPageFactory
 from test.utils import removeWiki, getImageSize
+from pages.wiki.thumbnails import Thumbnails
 
 
 class PageThumbmakerTest (unittest.TestCase):
@@ -30,12 +31,6 @@ class PageThumbmakerTest (unittest.TestCase):
 
 	def tearDown(self):
 		removeWiki (self.path)
-	
-
-	def testThumbDir (self):
-		page = self.rootwiki[u"Страница 1"]
-
-		self.assertEqual (self.thumbmaker.getThumbPath (page), os.path.join (page.getAttachPath(), self.thumbmaker.thumbsDir) )
 	
 
 	def testThumbByWidthJpeg (self):
