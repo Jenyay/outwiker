@@ -11,6 +11,7 @@ from pages.wiki.wikipage import WikiPageFactory
 from test.utils import removeWiki
 from core.application import Application
 from pages.wiki.thumbnails import Thumbnails
+from pages.wiki.texrender import getTexRender
 
 
 class ParserTest (unittest.TestCase):
@@ -1114,13 +1115,13 @@ sdfsdf || centered || right aligned||
 
 
 	def testTex1 (self):
-		#texconfig = TexConfig (self.parser.config)
-		#texconfig.mimeTexPath.value = core.system.getOS().mimeTexPathDefault
+		thumb = Thumbnails (self.parser.page)
+		texrender = getTexRender(thumb.getThumbPath (True))
 
 		eqn = "y = f(x)"
 		text = "{$ %s $}" % (eqn)
 
-		fname = u"eqn_{0}.gif".format (hashlib.md5 (eqn).hexdigest())
+		fname = texrender.getImageName (eqn)
 		path = os.path.join (Thumbnails.getRelativeThumbDir(), fname)
 
 		result_right = u'<IMG SRC="{0}">'.format (path)
@@ -1133,59 +1134,82 @@ sdfsdf || centered || right aligned||
 		self.assertTrue (os.path.exists (full_path), full_path )
 
 
-	def testThumbnails1 (self):
+	def testTex2 (self):
 		thumb = Thumbnails (self.parser.page)
-		thumbDir = thumb.getThumbPath (create=False)
+		texrender = getTexRender(thumb.getThumbPath (True))
 
-		self.assertEqual (thumbDir, 
-				os.path.join (self.parser.page.getAttachPath(), Thumbnails.thumbDir ),
-				thumbDir)
-
-
-	def testThumbnails2 (self):
-		thumb = Thumbnails (self.parser.page)
-		thumbDir = thumb.getThumbPath (create=False)
-
-		self.assertFalse (os.path.exists (thumbDir))
-
-
-	def testThumbnails3 (self):
-		thumb = Thumbnails (self.parser.page)
-		thumbDir = thumb.getThumbPath (create=True)
-
-		self.assertTrue (os.path.exists (thumbDir))
-
-
-	def testThumbnailsClear1 (self):
-		thumb = Thumbnails (self.parser.page)
-		thumb.clearDir ()
-
-		self.assertFalse (os.path.exists (thumb.getThumbPath (create=False)))
-
-	
-	def testThumbnailsClear2 (self):
-		thumb = Thumbnails (self.parser.page)
-		
-		eqn = "y = f(x)"
-
-		text = "{$ %s $}" % (eqn)
-		self.parser.toHtml (text)
-
-		self.assertFalse (len (os.listdir (thumb.getThumbPath (False) ) ) == 0)
-
-		thumb.clearDir()
-
-		self.assertEqual (len (os.listdir (thumb.getThumbPath (False) ) ), 0 )
-
-	
-	def testThumbnailsClear3 (self):
-		thumb = Thumbnails (self.parser.page)
-		
 		eqn1 = "y = f(x)"
-		eqn2 = "y = f_2(x)"
+		eqn2 = "y = e^x"
+		eqn3 = "y = \sum_{i=0}\pi"
 
-		self.parser.toHtml ("{$ %s $}" % (eqn1))
-		self.assertEqual (len (os.listdir (thumb.getThumbPath (False) ) ), 2 )
+		text = u"""бла-бла-бла
+* бла-бла-бла {$ %s $} 1111
+* бла-бла-бла {$ %s $} 222
+* бла-бла-бла {$ %s $} 333""" % (eqn1, eqn2, eqn3)
 
-		self.parser.toHtml ("{$ %s $}" % (eqn2))
-		self.assertEqual (len (os.listdir (thumb.getThumbPath (False) ) ), 2 )
+		fname1 = texrender.getImageName (eqn1)
+		fname2 = texrender.getImageName (eqn2)
+		fname3 = texrender.getImageName (eqn3)
+
+		path1 = os.path.join (Thumbnails.getRelativeThumbDir(), fname1)
+		path2 = os.path.join (Thumbnails.getRelativeThumbDir(), fname2)
+		path3 = os.path.join (Thumbnails.getRelativeThumbDir(), fname3)
+
+		result_right = u'''бла-бла-бла
+<UL><LI>бла-бла-бла <IMG SRC="{path1}"> 1111</LI><LI>бла-бла-бла <IMG SRC="{path2}"> 222</LI><LI>бла-бла-бла <IMG SRC="{path3}"> 333</LI></UL>'''.format (**locals())
+
+
+		result = self.parser.toHtml (text)
+
+		self.assertEqual (result_right, result, result)
+
+		full_path1 = os.path.join (self.parser.page.path, path1)
+		full_path2 = os.path.join (self.parser.page.path, path2)
+		full_path3 = os.path.join (self.parser.page.path, path3)
+
+		self.assertTrue (os.path.exists (full_path1), full_path1)
+		self.assertTrue (os.path.exists (full_path2), full_path2)
+		self.assertTrue (os.path.exists (full_path3), full_path3)
+
+
+	def testTex3 (self):
+		thumb = Thumbnails (self.parser.page)
+		texrender = getTexRender(thumb.getThumbPath (True))
+
+		eqn = "y = f(x)"
+		text = "[[{$ %s $} -> http://jenyay.net]]" % (eqn)
+
+		fname = texrender.getImageName (eqn)
+		path = os.path.join (Thumbnails.getRelativeThumbDir(), fname)
+
+		result_right = u'<A HREF="http://jenyay.net"><IMG SRC="{0}"></A>'.format (path)
+
+		result = self.parser.toHtml (text)
+
+		self.assertEqual (result_right, result, result)
+
+		full_path = os.path.join (self.parser.page.path, path)
+		self.assertTrue (os.path.exists (full_path), full_path )
+
+
+	def testTex4 (self):
+		thumb = Thumbnails (self.parser.page)
+		texrender = getTexRender(thumb.getThumbPath (True))
+
+		eqn = "y = f(x)"
+		text = "[[http://jenyay.net | {$ %s $}]]" % (eqn)
+
+		fname = texrender.getImageName (eqn)
+		path = os.path.join (Thumbnails.getRelativeThumbDir(), fname)
+
+		result_right = u'<A HREF="http://jenyay.net"><IMG SRC="{0}"></A>'.format (path)
+
+		result = self.parser.toHtml (text)
+
+		self.assertEqual (result_right, result, result)
+
+		full_path = os.path.join (self.parser.page.path, path)
+		self.assertTrue (os.path.exists (full_path), full_path )
+
+
+	

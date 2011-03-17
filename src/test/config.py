@@ -19,8 +19,12 @@ from gui.guiconfig import TrayConfig, EditorConfig
 
 class ConfigTest (unittest.TestCase):
 	def setUp (self):
-		self.path = u"test/testconfig.ini"
+		self.path = u"../test/testconfig.ini"
 
+		if os.path.exists (self.path):
+			os.remove (self.path)
+
+	def tearDown (self):
 		if os.path.exists (self.path):
 			os.remove (self.path)
 

@@ -27,7 +27,7 @@ class Thumbnails (object):
 		Получить полный путь до папки с превьюшками
 		create - нужно ли создавать директорию, если ее еще нет
 		"""
-		path = os.path.join (self.page.getAttachPath(), Thumbnails.thumbDir)
+		path = os.path.join (self.page.getAttachPath(create=create), Thumbnails.thumbDir)
 
 		if create and not os.path.exists (path):
 			os.mkdir (path)

@@ -45,22 +45,6 @@ class Windows (object):
 		return wx.FileDataObject
 
 
-	@property
-	def mimeTexPathDefault (self):
-		"""
-		Путь по умолчанию до mimeTex
-		"""
-		#return "tools\\mimetex\\mimetex.exe"
-		return os.path.join (getCurrentDir(), "tools\\mimetex\\mimetex.exe")
-
-
-	@property
-	def useShellPipe (self):
-		"""
-		Значение параметра shell при создании класса Popen
-		"""
-		return True
-
 
 class Unix (object):
 	def __init__ (self):
@@ -119,21 +103,6 @@ class Unix (object):
 
 		return GtkFileDataObject
 
-
-	@property
-	def mimeTexPathDefault (self):
-		"""
-		Путь по умолчанию до mimeTex
-		"""
-		return "mimetex"
-
-
-	@property
-	def useShellPipe (self):
-		"""
-		Значение параметра shell при создании класса Popen
-		"""
-		return False
 
 
 def getOS ():
