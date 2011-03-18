@@ -53,7 +53,7 @@ class TexToken (object):
 			return _(u"<B>Can't create imege file</B>")
 		
 		image_path = os.path.join (Thumbnails.getRelativeThumbDir(), image_fname)
-		result = u'<IMG SRC="{image}">'.format (image=image_path)
+		result = u'<IMG ALIGN="CENTER" SRC="{image}">'.format (image=image_path)
 
 		return result
 
