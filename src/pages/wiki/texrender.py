@@ -33,6 +33,8 @@ class MimeTex (object):
 		# Имя временного файла
 		self.tempFname = "__temp.tmp"
 
+		self.fontsize = 3
+
 	
 	def makeImage (self, eqn):
 		"""
@@ -53,7 +55,8 @@ class MimeTex (object):
 
 		p = subprocess.Popen([mimeTexPath.encode (currentOS.filesEncoding), 
 			"-f", temp_path.encode (currentOS.filesEncoding), 
-			"-e", image_path.encode (currentOS.filesEncoding)], shell=self.useShellPipe)
+			"-e", image_path.encode (currentOS.filesEncoding),
+			"-s", str (self.fontsize)], shell=self.useShellPipe)
 
 		p.communicate()
 		return imageName
@@ -72,7 +75,7 @@ class MimeTexWindows (MimeTex):
 	"""
 	@property
 	def mimeTexPath (self):
-		os.path.join (getCurrentDir(), "tools\\mimetex\\mimetex.exe")
+		return os.path.join (getCurrentDir(), "tools\\mimetex\\mimetex.exe")
 
 	
 	@property
