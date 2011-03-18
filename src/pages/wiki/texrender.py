@@ -83,7 +83,7 @@ class MimeTexWindows (MimeTex):
 		"""
 		Значение параметра shell при создании класса Popen
 		"""
-		return False
+		return True
 
 
 
