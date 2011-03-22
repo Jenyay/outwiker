@@ -138,7 +138,7 @@ class MainWindow(wx.Frame):
 		wxglade_tmp_menu.Append(self.ID_RENAME, _("Re&name Page\tF2"), "", wx.ITEM_NORMAL)
 		wxglade_tmp_menu.Append(self.ID_REMOVE_PAGE, _(u"Rem&ove Page…\tCtrl+Shift+Del"), "", wx.ITEM_NORMAL)
 		wxglade_tmp_menu.AppendSeparator()
-		wxglade_tmp_menu.Append(self.ID_EDIT, _(u"&Edit Page Properties…\tCtrl+E"), "", wx.ITEM_NORMAL)
+		wxglade_tmp_menu.Append(self.ID_EDIT, _(u"Pag&e Properties…\tCtrl+E"), "", wx.ITEM_NORMAL)
 		self.mainMenu.Append(wxglade_tmp_menu, _("&Tree"))
 		self.toolsMenu = wx.Menu()
 		self.toolsMenu.Append(self.ID_GLOBAL_SEARCH, _(u"&Global Search…\tCtrl+Shift+F"), "", wx.ITEM_NORMAL)
@@ -180,7 +180,6 @@ class MainWindow(wx.Frame):
 		self.mainToolbar.AddLabelTool(self.ID_RELOAD, _("Reload"), wx.Bitmap(os.path.join (self.imagesDir, "reload.png"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _("Reload wiki"), "")
 		self.mainToolbar.AddSeparator()
 		self.mainToolbar.AddLabelTool(self.ID_ATTACH, _(u"Attach files…"), wx.Bitmap(os.path.join (self.imagesDir, "attach.png"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _(u"Attach files…"), "")
-		self.mainToolbar.AddLabelTool(self.ID_EDIT, _("Edit page"), wx.Bitmap(os.path.join (self.imagesDir, "edit.png"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _("Edit page's properties"), "")
 		self.mainToolbar.AddLabelTool(self.ID_GLOBAL_SEARCH, _(u"Global search…"), wx.Bitmap(os.path.join (self.imagesDir, "global_search.png"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _(u"Global search…"), "")
 		self.mainToolbar.AddSeparator()
 		# Tool Bar end
@@ -227,7 +226,6 @@ class MainWindow(wx.Frame):
 		self.Bind(wx.EVT_TOOL, self.onOpen, id=self.ID_OPEN)
 		self.Bind(wx.EVT_TOOL, self.onReload, id=self.ID_RELOAD)
 		self.Bind(wx.EVT_TOOL, self.onAttach, id=self.ID_ATTACH)
-		self.Bind(wx.EVT_TOOL, self.onEditPage, id=self.ID_EDIT)
 		self.Bind(wx.EVT_TOOL, self.onGlobalSearch, id=self.ID_GLOBAL_SEARCH)
 		# end wxGlade
 
@@ -738,7 +736,7 @@ class MainWindow(wx.Frame):
 
 	def onEditPage(self, event): # wxGlade: MainWindow.<event_handler>
 		if Application.selectedPage != None:
-			core.commands.editPage (self, Application.wikiroot.selectedPage)
+			gui.pagedialog.editPage (self, Application.selectedPage)
 
 
 	def onRemovePage(self, event): # wxGlade: MainWindow.<event_handler>

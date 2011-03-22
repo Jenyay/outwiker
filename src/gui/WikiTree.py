@@ -27,7 +27,8 @@ class WikiTree(wx.Panel):
 		self.ID_ADD_SIBLING = wx.NewId()
 		self.ID_RENAME = wx.NewId()
 		self.ID_REMOVE = wx.NewId()
-		self.ID_PROPERTIES = wx.NewId()
+		self.ID_PROPERTIES_BUTTON = wx.NewId()
+		self.ID_PROPERTIES_POPUP = wx.NewId()
 		self.ID_MOVE_UP = wx.NewId()
 		self.ID_MOVE_DOWN = wx.NewId()
 		self.ID_ADD_SIBLING_PAGE = wx.NewId()
@@ -129,6 +130,13 @@ class WikiTree(wx.Panel):
 		self.Bind(wx.EVT_MENU, self.onAddSiblingPage, id=self.ID_ADD_SIBLING_PAGE)
 		self.Bind(wx.EVT_MENU, self.onAddChildPage, id=self.ID_ADD_CHILD_PAGE)
 		self.Bind(wx.EVT_MENU, self.onRemovePage, id=self.ID_REMOVE_PAGE)
+		
+		self.Bind(wx.EVT_MENU, self.onPropertiesButton, id=self.ID_PROPERTIES_BUTTON)
+
+
+	def onPropertiesButton (self, event):
+		if Application.selectedPage != None:
+			gui.pagedialog.editPage (self, Application.selectedPage)
 
 
 	def onPageCreate (self, newpage):
@@ -189,7 +197,7 @@ class WikiTree(wx.Panel):
 		self.Bind(wx.EVT_MENU, self.onCopyAttachPath, id=self.ID_COPY_ATTACH_PATH)
 		self.Bind(wx.EVT_MENU, self.onCopyLink, id=self.ID_COPY_LINK)
 
-		self.Bind(wx.EVT_MENU, self.onProperties, id=self.ID_PROPERTIES)
+		self.Bind(wx.EVT_MENU, self.onPropertiesPopup, id=self.ID_PROPERTIES_POPUP)
 	
 
 	def onHtmlRenderingBegin (self, page, htmlView):
@@ -316,7 +324,7 @@ class WikiTree(wx.Panel):
 		self.popupMenu.Append (self.ID_COPY_LINK, _(u"Copy Page Link"))
 		self.popupMenu.AppendSeparator()
 
-		self.popupMenu.Append (self.ID_PROPERTIES, _(u"Edit Page Properties…"))
+		self.popupMenu.Append (self.ID_PROPERTIES_POPUP, _(u"Properties…"))
 	
 
 	def onRename (self, event):
@@ -347,7 +355,7 @@ class WikiTree(wx.Panel):
 		gui.pagedialog.createPageWithDialog (self, page.parent)
 
 	
-	def onProperties (self, event):
+	def onPropertiesPopup (self, event):
 		assert self.popupItem != None
 		assert self.popupItem.IsOk()
 
@@ -657,6 +665,16 @@ class WikiTree(wx.Panel):
 				"")
 
 		toolbar.AddSeparator()
+
+		toolbar.AddLabelTool(self.ID_PROPERTIES_BUTTON,
+				_(u"Page Properties…"), 
+				wx.Bitmap(os.path.join (imagesDir, "edit.png"),
+					wx.BITMAP_TYPE_ANY),
+				wx.NullBitmap, 
+				wx.ITEM_NORMAL,
+				_(u"Page Properties…"), 
+				"")
+
 
 		toolbar.Realize()
 		return toolbar
