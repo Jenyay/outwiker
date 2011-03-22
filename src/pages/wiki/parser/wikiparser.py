@@ -17,6 +17,7 @@ from tokenattach import NotImageAttachFactory, ImageAttachFactory
 from tokenlist import ListFactory
 from tokenlinebreak import LineBreakFactory
 from tokentex import TexFactory
+from tokencommand import CommandFactory
 
 from ..thumbnails import Thumbnails
 
@@ -25,6 +26,11 @@ class Parser (object):
 	def __init__ (self, page, config):
 		self.page = page
 		self.config = config
+
+		# Команды, обрабатывает парсер.
+		# Формат команд: (:name params... :) content... (:nameend:)
+		# Ключ - имя команды, значение - экземпляр класса команды
+		self.commands = {}
 
 		self.italicized = FontsFactory.makeItalic (self)
 		self.bolded = FontsFactory.makeBold (self)
@@ -50,6 +56,7 @@ class Parser (object):
 		self.lists = ListFactory.make (self)
 		self.lineBreak = LineBreakFactory.make (self)
 		self.tex = TexFactory.make (self)
+		self.command = CommandFactory.make (self)
 
 		self.listItemMarkup = (self.lineBreak |
 				self.link |
@@ -67,7 +74,8 @@ class Parser (object):
 				self.superscript |
 				self.attachesImage |
 				self.attachesNotImage |
-				self.tex
+				self.tex |
+				self.command
 				)
 
 
@@ -94,7 +102,8 @@ class Parser (object):
 				self.attachesImage |
 				self.attachesNotImage |
 				self.headings |
-				self.tex
+				self.tex |
+				self.command
 				)
 
 
@@ -134,3 +143,6 @@ class Parser (object):
 	def parseLinkMarkup (self, text):
 		return self.linkMarkup.transformString (text)
 
+
+	def addCommand (self, command):
+		self.commands[command.name] = command

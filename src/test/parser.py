@@ -12,6 +12,7 @@ from test.utils import removeWiki
 from core.application import Application
 from pages.wiki.thumbnails import Thumbnails
 from pages.wiki.texrender import getTexRender
+from pages.wiki.parser.commandtest import TestCommand
 
 
 class ParserTest (unittest.TestCase):
@@ -1212,4 +1213,77 @@ sdfsdf || centered || right aligned||
 		self.assertTrue (os.path.exists (full_path), full_path )
 
 
-	
+	def testCommandTest1 (self):
+		self.parser.addCommand (TestCommand (self.parser))
+		text = u"""(: test Параметр1 Параметр2=2 Параметр3=3 :)
+Текст внутри
+команды
+(:testend:)"""
+
+		result_right = u"""Command name: test
+params: Параметр1 Параметр2=2 Параметр3=3
+content: Текст внутри
+команды"""
+
+		result = self.parser.toHtml (text)
+		self.assertEqual (result_right, result, result)
+
+
+	def testCommandTest2 (self):
+		command = TestCommand (self.parser)
+		params = u"Параметр1 Параметр2=2 Параметр3=3"
+		content = u"""Текст внутри
+команды"""
+
+		self.assertEqual (command.name, u"test")
+
+		result = command.execute (params, content)
+		result_right = u"""Command name: test
+params: Параметр1 Параметр2=2 Параметр3=3
+content: Текст внутри
+команды"""
+
+		self.assertEqual (result_right, result, result)
+
+
+	def testCommandTest3 (self):
+		self.parser.addCommand (TestCommand (self.parser))
+		text = u"""(: test Параметр1 Параметр2=2 Параметр3=3 :)"""
+
+		result_right = u"""Command name: test
+params: Параметр1 Параметр2=2 Параметр3=3
+content: """
+
+		result = self.parser.toHtml (text)
+		self.assertEqual (result_right, result, result)
+
+
+	def testCommandTest4 (self):
+		self.parser.addCommand (TestCommand (self.parser))
+		text = u"""(:test:)"""
+
+		result_right = u"""Command name: test
+params: 
+content: """
+
+		result = self.parser.toHtml (text)
+		self.assertEqual (result_right, result, result)
+
+
+
+	def testInvalidCommandTest (self):
+		text = u"""(: testblabla Параметр1 Параметр2=2 Параметр3=3 :)
+Текст внутри
+команды
+(:testend:)"""
+
+		result_right = u"""(: testblabla Параметр1 Параметр2=2 Параметр3=3 :)
+Текст внутри
+команды
+(:testend:)"""
+
+		result = self.parser.toHtml (text)
+		self.assertEqual (result_right, result, result)
+
+
+
