@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-07 20:35+0300\n"
+"POT-Creation-Date: 2011-03-23 22:19+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -154,16 +154,17 @@ msgstr "You did not select a file to remove"
 #: core/commands.py:162
 #: core/commands.py:184
 #: core/commands.py:191
-#: core/commands.py:245
+#: core/commands.py:197
 #: core/commands.py:248
-#: core/commands.py:268
-#: core/commands.py:276
-#: core/commands.py:288
-#: core/commands.py:301
-#: core/commands.py:314
-#: core/commands.py:327
-#: core/commands.py:357
+#: core/commands.py:251
+#: core/commands.py:271
+#: core/commands.py:279
+#: core/commands.py:291
+#: core/commands.py:304
+#: core/commands.py:317
+#: core/commands.py:330
 #: core/commands.py:360
+#: core/commands.py:363
 msgid "Error"
 msgstr "Error"
 
@@ -247,213 +248,205 @@ msgstr "Find Next"
 msgid "Find Previous"
 msgstr "Find Previous"
 
-#: gui/MainWindow.py:109
+#: gui/MainWindow.py:112
 msgid "&New\tCtrl+N"
 msgstr "&New\tCtrl+N"
 
-#: gui/MainWindow.py:110
+#: gui/MainWindow.py:113
 msgid "&Open…\tCtrl+O"
 msgstr "&Open…\tCtrl+O"
 
-#: gui/MainWindow.py:111
+#: gui/MainWindow.py:114
 msgid "Open &Read-only…\tCtrl+Shift+O"
 msgstr "Open &Read-only…\tCtrl+Shift+O"
 
-#: gui/MainWindow.py:112
+#: gui/MainWindow.py:115
 msgid "&Save\tCtrl+S"
 msgstr "&Save\tCtrl+S"
 
-#: gui/MainWindow.py:113
+#: gui/MainWindow.py:116
 msgid "&Exit…\tAlt+F4"
 msgstr "&Exit…\tAlt+F4"
 
-#: gui/MainWindow.py:115
+#: gui/MainWindow.py:118
 msgid "&File"
 msgstr "&File"
 
-#: gui/MainWindow.py:117
+#: gui/MainWindow.py:120
 msgid "&Undo\tCtrl+Z"
 msgstr "&Undo\tCtrl+Z"
 
-#: gui/MainWindow.py:118
+#: gui/MainWindow.py:121
 msgid "&Redo\tCtrl+Y"
 msgstr "&Redo\tCtrl+Y"
 
-#: gui/MainWindow.py:120
+#: gui/MainWindow.py:123
 msgid "Cu&t\tCtrl+X"
 msgstr "Cu&t\tCtrl+X"
 
-#: gui/MainWindow.py:121
+#: gui/MainWindow.py:124
 msgid "&Copy\tCtrl+C"
 msgstr "&Copy\tCtrl+C"
 
-#: gui/MainWindow.py:122
+#: gui/MainWindow.py:125
 msgid "&Paste\tCtrl+V"
 msgstr "&Paste\tCtrl+V"
 
-#: gui/MainWindow.py:124
+#: gui/MainWindow.py:127
 msgid "Pr&eferences…\tCtrl+F8"
 msgstr "Pr&eferences…\tCtrl+F8"
 
-#: gui/MainWindow.py:125
+#: gui/MainWindow.py:128
 msgid "&Edit"
 msgstr "&Edit"
 
-#: gui/MainWindow.py:127
+#: gui/MainWindow.py:130
 msgid "Add &Sibling Page…\tCtrl+T"
 msgstr "Add &Sibling Page…\tCtrl+T"
 
-#: gui/MainWindow.py:128
+#: gui/MainWindow.py:131
 msgid "Add &Child Page…\tCtrl+Shift+T"
 msgstr "Add &Child Page…\tCtrl+Shift+T"
 
-#: gui/MainWindow.py:130
+#: gui/MainWindow.py:133
 msgid "Move Page Up\tCtrl+Shift+Up"
 msgstr "Move Page Up\tCtrl+Shift+Up"
 
-#: gui/MainWindow.py:131
+#: gui/MainWindow.py:134
 msgid "Move Page Down\tCtrl+Shift+Down"
 msgstr "Move Page Down\tCtrl+Shift+Down"
 
-#: gui/MainWindow.py:132
+#: gui/MainWindow.py:135
 msgid "Sort Children Pages Alphabetical"
 msgstr "Sort Children Pages Alphabetical"
 
-#: gui/MainWindow.py:133
+#: gui/MainWindow.py:136
 msgid "Sort Siblings Pages Alphabetical"
 msgstr "Sort Siblings Pages Alphabetical"
 
-#: gui/MainWindow.py:135
+#: gui/MainWindow.py:138
 msgid "Re&name Page\tF2"
 msgstr "Re&name Page\tF2"
 
-#: gui/MainWindow.py:136
+#: gui/MainWindow.py:139
 msgid "Rem&ove Page…\tCtrl+Shift+Del"
 msgstr "Rem&ove Page…\tCtrl+Shift+Del"
 
-#: gui/MainWindow.py:138
-msgid "&Edit Page Properties…\tCtrl+E"
-msgstr "&Edit Page Properties…\tCtrl+E"
+#: gui/MainWindow.py:141
+msgid "Pag&e Properties…\tCtrl+E"
+msgstr "Pag&e Properties…\tCtrl+E"
 
-#: gui/MainWindow.py:139
+#: gui/MainWindow.py:142
 msgid "&Tree"
 msgstr "&Tree"
 
-#: gui/MainWindow.py:141
+#: gui/MainWindow.py:144
 msgid "&Global Search…\tCtrl+Shift+F"
 msgstr "&Global Search…\tCtrl+Shift+F"
 
-#: gui/MainWindow.py:142
+#: gui/MainWindow.py:145
 msgid "&Attach Files…\tCtrl+Alt+A"
 msgstr "&Attach Files…\tCtrl+Alt+A"
 
-#: gui/MainWindow.py:144
+#: gui/MainWindow.py:147
 msgid "Copy Page &Title\tCtrl+Shift+D"
 msgstr "Copy Page &Title\tCtrl+Shift+D"
 
-#: gui/MainWindow.py:145
+#: gui/MainWindow.py:148
 msgid "Copy &Page Path\tCtrl+Shift+P"
 msgstr "Copy &Page Path\tCtrl+Shift+P"
 
-#: gui/MainWindow.py:146
+#: gui/MainWindow.py:149
 msgid "Copy Atta&ches Path\tCtrl+Shift+A"
 msgstr "Copy Atta&ches Path\tCtrl+Shift+A"
 
-#: gui/MainWindow.py:147
+#: gui/MainWindow.py:150
 msgid "Copy Page &Link\tCtrl+Shift+L"
 msgstr "Copy Page &Link\tCtrl+Shift+L"
 
-#: gui/MainWindow.py:149
+#: gui/MainWindow.py:152
 msgid "&Reload Wiki…\tCtrl+R"
 msgstr "&Reload Wiki…\tCtrl+R"
 
-#: gui/MainWindow.py:150
+#: gui/MainWindow.py:153
 msgid "T&ools"
 msgstr "T&ools"
 
-#: gui/MainWindow.py:152
+#: gui/MainWindow.py:155
 msgid "&Add/Remove Bookmark\tCtrl+D"
 msgstr "&Add/Remove Bookmark\tCtrl+D"
 
-#: gui/MainWindow.py:154
+#: gui/MainWindow.py:157
 msgid "&Bookmarks"
 msgstr "&Bookmarks"
 
-#: gui/MainWindow.py:156
+#: gui/MainWindow.py:159
 msgid "Notes &Tree"
 msgstr "Notes &Tree"
 
-#: gui/MainWindow.py:158
-#: gui/MainWindow.py:345
-#: gui/MainWindow.py:351
+#: gui/MainWindow.py:161
+#: gui/MainWindow.py:343
+#: gui/MainWindow.py:349
 msgid "Attaches"
 msgstr "Attaches"
 
-#: gui/MainWindow.py:161
+#: gui/MainWindow.py:164
 msgid "Fullscreen\tF11"
 msgstr "Fullscreen\tF11"
 
-#: gui/MainWindow.py:163
+#: gui/MainWindow.py:166
 msgid "&View"
 msgstr "&View"
 
-#: gui/MainWindow.py:165
+#: gui/MainWindow.py:168
 msgid "&Help\tF1"
 msgstr "&Help\tF1"
 
-#: gui/MainWindow.py:166
+#: gui/MainWindow.py:169
 msgid "&About…\tCtrl+F1"
 msgstr "&About…\tCtrl+F1"
 
-#: gui/MainWindow.py:167
+#: gui/MainWindow.py:170
 msgid "&Help"
 msgstr "&Help"
 
-#: gui/MainWindow.py:174
+#: gui/MainWindow.py:177
 msgid "New…"
 msgstr "New…"
 
-#: gui/MainWindow.py:174
+#: gui/MainWindow.py:177
 msgid "Create new wiki…"
 msgstr "Create new wiki…"
 
-#: gui/MainWindow.py:175
+#: gui/MainWindow.py:178
 msgid "Open…"
 msgstr "Open…"
 
-#: gui/MainWindow.py:175
+#: gui/MainWindow.py:178
 msgid "Open wiki…"
 msgstr "Open wiki…"
 
-#: gui/MainWindow.py:176
+#: gui/MainWindow.py:179
 msgid "Save"
 msgstr "Save"
 
-#: gui/MainWindow.py:176
+#: gui/MainWindow.py:179
 msgid "Save wiki"
 msgstr "Save wiki"
 
-#: gui/MainWindow.py:177
+#: gui/MainWindow.py:180
 msgid "Reload"
 msgstr "Reload"
 
-#: gui/MainWindow.py:177
+#: gui/MainWindow.py:180
 msgid "Reload wiki"
 msgstr "Reload wiki"
 
-#: gui/MainWindow.py:179
+#: gui/MainWindow.py:182
 msgid "Attach files…"
 msgstr "Attach files…"
 
-#: gui/MainWindow.py:180
-msgid "Edit page"
-msgstr "Edit page"
-
-#: gui/MainWindow.py:180
-msgid "Edit page's properties"
-msgstr "Edit page's properties"
-
-#: gui/MainWindow.py:181
+#: gui/MainWindow.py:183
 msgid "Global search…"
 msgstr "Global search…"
 
@@ -475,7 +468,7 @@ msgid "Really exit?"
 msgstr "Really exit?"
 
 #: gui/MainWindow.py:627
-#: gui/trayicon.py:120
+#: gui/trayicon.py:122
 msgid "Exit"
 msgstr "Exit"
 
@@ -518,10 +511,10 @@ msgstr "Can't rename page\n"
 
 #: gui/pagedialog.py:93
 #: gui/pagedialog.py:112
-#: core/commands.py:288
-#: core/commands.py:301
-#: core/commands.py:314
-#: core/commands.py:327
+#: core/commands.py:291
+#: core/commands.py:304
+#: core/commands.py:317
+#: core/commands.py:330
 msgid "Wiki is not open"
 msgstr "Wiki is not open"
 
@@ -546,110 +539,115 @@ msgstr "Current icon"
 msgid "Can't rename page when page with that title already exists"
 msgstr "Can't rename page when page with that title already exists"
 
-#: gui/TextEditor.py:241
+#: gui/TextEditor.py:244
 msgid "Not found"
 msgstr "Not found"
 
-#: gui/trayicon.py:119
+#: gui/trayicon.py:121
 msgid "Restore"
 msgstr "Restore"
 
-#: gui/WikiTree.py:307
-#: gui/WikiTree.py:642
-#: gui/WikiTree.py:647
+#: gui/WikiTree.py:315
+#: gui/WikiTree.py:650
+#: gui/WikiTree.py:655
 msgid "Add Child Page…"
 msgstr "Add Child Page…"
 
-#: gui/WikiTree.py:308
-#: gui/WikiTree.py:633
-#: gui/WikiTree.py:638
+#: gui/WikiTree.py:316
+#: gui/WikiTree.py:641
+#: gui/WikiTree.py:646
 msgid "Add Sibling Page…"
 msgstr "Add Sibling Page…"
 
-#: gui/WikiTree.py:309
+#: gui/WikiTree.py:317
 msgid "Rename"
 msgstr "Rename"
 
-#: gui/WikiTree.py:310
+#: gui/WikiTree.py:318
 msgid "Remove…"
 msgstr "Remove…"
 
-#: gui/WikiTree.py:313
+#: gui/WikiTree.py:321
 msgid "Copy Page Title"
 msgstr "Copy Page Title"
 
-#: gui/WikiTree.py:314
+#: gui/WikiTree.py:322
 msgid "Copy Page Path"
 msgstr "Copy Page Path"
 
-#: gui/WikiTree.py:315
+#: gui/WikiTree.py:323
 msgid "Copy Attaches Path"
 msgstr "Copy Attaches Path"
 
-#: gui/WikiTree.py:316
+#: gui/WikiTree.py:324
 msgid "Copy Page Link"
 msgstr "Copy Page Link"
 
-#: gui/WikiTree.py:319
-msgid "Edit Page Properties…"
-msgstr "Edit Page Properties…"
+#: gui/WikiTree.py:327
+msgid "Properties…"
+msgstr "Properties…"
 
-#: gui/WikiTree.py:613
-#: gui/WikiTree.py:618
+#: gui/WikiTree.py:621
+#: gui/WikiTree.py:626
 msgid "Move Page Down"
 msgstr "Move Page Down"
 
-#: gui/WikiTree.py:622
-#: gui/WikiTree.py:627
+#: gui/WikiTree.py:630
+#: gui/WikiTree.py:635
 msgid "Move Page Up"
 msgstr "Move Page Up"
 
-#: gui/WikiTree.py:651
-#: gui/WikiTree.py:656
+#: gui/WikiTree.py:659
+#: gui/WikiTree.py:664
 msgid "Remove Page…"
 msgstr "Remove Page…"
 
-#: gui/preferences/EditorPanel.py:21
+#: gui/WikiTree.py:670
+#: gui/WikiTree.py:675
+msgid "Page Properties…"
+msgstr "Page Properties…"
+
+#: gui/preferences/EditorPanel.py:23
 msgid "Font"
 msgstr "Font"
 
-#: gui/preferences/EditorPanel.py:23
+#: gui/preferences/EditorPanel.py:25
 msgid "Show line numbers"
 msgstr "Show line numbers"
 
-#: gui/preferences/EditorPanel.py:24
+#: gui/preferences/EditorPanel.py:26
 msgid "Tab width"
 msgstr "Tab width"
 
-#: gui/preferences/GeneralPanel.py:23
+#: gui/preferences/GeneralPanel.py:24
 msgid "Minimize to tray"
 msgstr "Minimize to tray"
 
-#: gui/preferences/GeneralPanel.py:24
+#: gui/preferences/GeneralPanel.py:25
 msgid "Start iconized"
 msgstr "Start iconized"
 
-#: gui/preferences/GeneralPanel.py:25
+#: gui/preferences/GeneralPanel.py:26
 msgid "Always show tray icon"
 msgstr "Always show tray icon"
 
-#: gui/preferences/GeneralPanel.py:26
+#: gui/preferences/GeneralPanel.py:27
 msgid "Ask before exit"
 msgstr "Ask before exit"
 
-#: gui/preferences/GeneralPanel.py:28
+#: gui/preferences/GeneralPanel.py:29
 msgid "Recent files history length (restart required)"
 msgstr "Recent files history length (restart required)"
 
-#: gui/preferences/GeneralPanel.py:30
+#: gui/preferences/GeneralPanel.py:31
 msgid "Automatically open the recent file"
 msgstr "Automatically open the recent file"
 
-#: gui/preferences/GeneralPanel.py:32
+#: gui/preferences/GeneralPanel.py:33
 msgid "Main window title format"
 msgstr "Main window title format"
 
-#: gui/preferences/GeneralPanel.py:34
+#: gui/preferences/GeneralPanel.py:35
 msgid ""
 "Macros for title:\n"
 "{file} - open wiki file name\n"
@@ -659,7 +657,7 @@ msgstr ""
 "{file} - open wiki file name\n"
 "{page} - open page title"
 
-#: gui/preferences/GeneralPanel.py:36
+#: gui/preferences/GeneralPanel.py:37
 msgid "Language (restart required)"
 msgstr "Language (restart required)"
 
@@ -1097,25 +1095,29 @@ msgstr "Can't create wiki\n"
 msgid "Can't open clipboard"
 msgstr "Can't open clipboard"
 
-#: core/commands.py:245
-#: core/commands.py:357
+#: core/commands.py:197
+msgid "Can't copy text to clipboard"
+msgstr "Can't copy text to clipboard"
+
+#: core/commands.py:248
+#: core/commands.py:360
 msgid "Can't move page when page with that title already exists"
 msgstr "Can't move page when page with that title already exists"
 
-#: core/commands.py:248
+#: core/commands.py:251
 msgid "Can't move page"
 msgstr "Can't move page"
 
-#: core/commands.py:268
+#: core/commands.py:271
 #, python-format
 msgid "Can't open file %s"
 msgstr "Can't open file %s"
 
-#: core/commands.py:276
+#: core/commands.py:279
 msgid "Can't parse version"
 msgstr "Can't parse version"
 
-#: core/commands.py:360
+#: core/commands.py:363
 #, python-format
 msgid ""
 "Can't rename page\n"
@@ -1124,14 +1126,18 @@ msgstr ""
 "Can't rename page\n"
 "%s"
 
-#: core/commands.py:383
+#: core/commands.py:386
 msgid "Save current page before reload?"
 msgstr "Save current page before reload?"
 
-#: core/commands.py:384
+#: core/commands.py:387
 msgid "Save?"
 msgstr "Save?"
 
+#~ msgid "Edit page"
+#~ msgstr "Edit page"
+#~ msgid "Edit page's properties"
+#~ msgstr "Edit page's properties"
 #~ msgid "Preformat [=…=]"
 #~ msgstr "Preformat [=…=]"
 #~ msgid "Files is not selected"
@@ -1146,8 +1152,6 @@ msgstr "Save?"
 #~ msgstr "Remove..."
 #~ msgid "Remove Page..."
 #~ msgstr "Remove Page..."
-#~ msgid "Properties..."
-#~ msgstr "Properties..."
 #~ msgid "OK"
 #~ msgstr "OK"
 #~ msgid "(c) 2010 Ilin E.V. (aka Jenyay)"
