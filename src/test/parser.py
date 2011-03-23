@@ -1270,6 +1270,42 @@ content: """
 		self.assertEqual (result_right, result, result)
 
 
+	def testCommandTest4 (self):
+		self.parser.addCommand (TestCommand (self.parser))
+		text = u"""(: test Параметр1 Параметр2=2 Параметр3=3 :)"""
+
+		result_right = u"""Command name: test
+params: Параметр1 Параметр2=2 Параметр3=3
+content: """
+
+		result = self.parser.toHtml (text)
+		self.assertEqual (result_right, result, result)
+
+
+	def testCommandTest4 (self):
+		self.parser.addCommand (TestCommand (self.parser))
+		text = u"""(: test Параметр1 Параметр2=2 Параметр3=3 :)
+Текст внутри
+команды
+(:testend:)
+
+(: test Параметры :)
+Контент
+(:testend:)"""
+
+		result_right = u"""Command name: test
+params: Параметр1 Параметр2=2 Параметр3=3
+content: Текст внутри
+команды
+
+Command name: test
+params: Параметры
+content: Контент"""
+
+		result = self.parser.toHtml (text)
+		self.assertEqual (result_right, result, result)
+
+
 
 	def testInvalidCommandTest (self):
 		text = u"""(: testblabla Параметр1 Параметр2=2 Параметр3=3 :)

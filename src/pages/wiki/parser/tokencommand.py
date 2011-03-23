@@ -13,13 +13,25 @@ class CommandFactory (object):
 
 
 class CommandToken (object):
+	"""
+	Токен для обработки команд вида (:commandname params... :) content (:commandnameend:)
+	Команда может состоять только из первой скобки (:commandname params... :)
+	Параметры (params...) необязательны
+
+	Этот токен находит в тексте команду, а затем в парсере ищет обработчика данной команды. 
+	Если обработчика нет, возвращается исходный текст команды
+	"""
 	def __init__ (self, parser):
 		self.parser = parser
 
 	def getToken (self):
-		reg = r"""\(:\s*(?P<name>\w+)\s*(?P<params>.*?)\s*:\)((?P<content>.*?)\(:\s*(?P=name)end\s*:\))?"""
-		#reg = r"""\(:\s*(?P<name>\w+)\s*(?P<params>.*?)\s*:\)(?P<content>.*?)\(:\s*(?P=name)end\s*:\)"""
-		return Regex (reg, flags=re.MULTILINE | re.DOTALL | re.IGNORECASE).setParseAction (self.execute)
+		reg = r"""\(:\s*(?P<name>\w+)    # Имя команды "(:name"
+			\s*(?P<params>.*?)\s*:\)     # Параметры команды "params... :)"
+		((?P<content>.*?)                # Контент между (:name:) и (:nameend:)
+		\(:\s*(?P=name)end\s*:\))?       # Конец команды "(:nameend:)"
+		"""
+
+		return Regex (reg, flags=re.MULTILINE | re.DOTALL | re.IGNORECASE | re.VERBOSE).setParseAction (self.execute)
 
 
 	def execute (self, s, l, t):
