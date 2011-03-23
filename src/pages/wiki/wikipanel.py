@@ -9,7 +9,7 @@ import core.commands
 from gui.TextEditor import TextEditor
 from pages.html.HtmlPanel import HtmlPanel
 from gui.BaseTextPanel import BaseTextPanel
-from parser.wikiparser import Parser
+from parserfactory import ParserFactory
 from core.config import Config
 from core.tree import RootWikiPage
 from core.htmlimprover import HtmlImprover
@@ -407,7 +407,8 @@ class WikiPagePanel (HtmlPanel):
 		if os.path.exists (path) and (hash == old_hash or page.readonly):
 			return path
 
-		parser = Parser (page, Application.config)
+		factory = ParserFactory ()
+		parser = factory.make(page, Application.config)
 
 		content = page.content if (len (page.content) > 0 or
 				not self.config.showAttachInsteadBlankOptions.value) else self.__generateAttachList (page)

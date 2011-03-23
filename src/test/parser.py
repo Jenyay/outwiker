@@ -13,6 +13,7 @@ from core.application import Application
 from pages.wiki.thumbnails import Thumbnails
 from pages.wiki.texrender import getTexRender
 from pages.wiki.parser.commandtest import TestCommand
+from pages.wiki.parserfactory import ParserFactory
 
 
 class ParserTest (unittest.TestCase):
@@ -29,7 +30,8 @@ class ParserTest (unittest.TestCase):
 
 		self.__createWiki()
 		
-		self.parser = Parser(self.testPage, Application.config)
+		factory = ParserFactory()
+		self.parser = factory.make (self.testPage, Application.config)
 	
 
 	def __createWiki (self):
@@ -1303,6 +1305,35 @@ params: Параметры
 content: Контент"""
 
 		result = self.parser.toHtml (text)
+		self.assertEqual (result_right, result, result)
+
+
+	def testCommandTest5 (self):
+		factory = ParserFactory ()
+		factory.appendCommand (TestCommand)
+
+		parser = factory.make (self.testPage, Application.config)
+
+		
+		text = u"""(: test Параметр1 Параметр2=2 Параметр3=3 :)
+Текст внутри
+команды
+(:testend:)
+
+(: test Параметры :)
+Контент
+(:testend:)"""
+
+		result_right = u"""Command name: test
+params: Параметр1 Параметр2=2 Параметр3=3
+content: Текст внутри
+команды
+
+Command name: test
+params: Параметры
+content: Контент"""
+
+		result = parser.toHtml (text)
 		self.assertEqual (result_right, result, result)
 
 

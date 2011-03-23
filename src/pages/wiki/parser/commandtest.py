@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
+from command import Command
 
-class TestCommand:
+class TestCommand (Command):
 	"""
 	Тестовая команда. Обрабатывает команды вида (:test params... :) content (:testend:)
 	В результате выводит текст:
@@ -14,7 +15,7 @@ class TestCommand:
 		"""
 		parser - экземпляр парсера
 		"""
-		self.parser = parser
+		Command.__init__ (self, parser)
 
 	
 	@property
