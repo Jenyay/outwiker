@@ -10,7 +10,6 @@ from pages.wiki.parser.wikiparser import Parser
 from pages.wiki.wikipage import WikiPageFactory
 from test.utils import removeWiki
 from core.application import Application
-from pages.wiki.parser.commandtest import TestCommand
 from pages.wiki.parser.command import Command
 from pages.wiki.parserfactory import ParserFactory
 
@@ -20,13 +19,6 @@ class WikiCommandsTest (unittest.TestCase):
 		self.encoding = "utf8"
 
 		self.filesPath = u"../test/samplefiles/"
-
-		self.url1 = u"http://example.com"
-		self.url2 = u"http://jenyay.net/Photo/Nature?action=imgtpl&G=1&upname=tsaritsyno_01.jpg"
-
-		self.pagelinks = [u"Страница 1", u"/Страница 1", u"/Страница 2/Страница 3"]
-		self.pageComments = [u"Страницо 1", u"Страницо 1", u"Страницо 3"]
-
 		self.__createWiki()
 		
 		factory = ParserFactory()
@@ -43,10 +35,7 @@ class WikiCommandsTest (unittest.TestCase):
 		WikiPageFactory.create (self.rootwiki, u"Страница 2", [])
 		self.testPage = self.rootwiki[u"Страница 2"]
 		
-		files = [u"accept.png", u"add.png", u"anchor.png", u"filename.tmp", 
-				u"файл с пробелами.tmp", u"картинка с пробелами.png", 
-				u"image.jpg", u"image.jpeg", u"image.png", u"image.tif", u"image.tiff", u"image.gif",
-				u"image_01.JPG", u"dir", u"dir.xxx", u"dir.png"]
+		files = [u"text_utf8.txt", u"text_utf8.txt2", u"image.gif", u"текст_utf8.txt"]
 
 		fullFilesPath = [os.path.join (self.filesPath, fname) for fname in files]
 
@@ -79,3 +68,4 @@ class WikiCommandsTest (unittest.TestCase):
 		params = Command.parseParams (params_text)
 
 		self.assertEqual (len (params), 0)
+

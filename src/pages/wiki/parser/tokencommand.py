@@ -28,8 +28,7 @@ class CommandToken (object):
 		reg = r"""\(:\s*(?P<name>\w+)    # Имя команды "(:name"
 			\s*(?P<params>.*?)\s*:\)     # Параметры команды "params... :)"
 		((?P<content>.*?)                # Контент между (:name:) и (:nameend:)
-		\(:\s*(?P=name)end\s*:\))?       # Конец команды "(:nameend:)"
-		"""
+		\(:\s*(?P=name)end\s*:\))?       # Конец команды "(:nameend:)" """
 
 		return Regex (reg, flags=re.MULTILINE | re.DOTALL | re.IGNORECASE | re.VERBOSE).setParseAction (self.execute)
 

@@ -30,6 +30,7 @@ class AttachToken (object):
 		self.parser = parser
 	
 
+	# TODO: Вынести в отдельный модуль
 	def sortByLength (self, fname1, fname2):
 		"""
 		Функция для сортировки имен по длине имени

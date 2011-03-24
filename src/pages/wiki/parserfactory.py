@@ -2,6 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 from parser.wikiparser import Parser
+from parser.commandinclude import IncludeCommand
 
 class ParserFactory (object):
 	"""
@@ -9,7 +10,7 @@ class ParserFactory (object):
 	"""
 	def __init__ (self):
 		# Список типов команд. Экземпляры команд создаются при заполнении командами парсера
-		self.commands = []
+		self.commands = [IncludeCommand]
 
 
 	def make (self, page, config):
