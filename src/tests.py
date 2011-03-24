@@ -47,6 +47,7 @@ if __name__ == '__main__':
 	from test.wxthumbmaker import WxThumbmakerTest
 	from test.pagethumbmaker import PageThumbmakerTest
 	from test.thumbnails import ThumbnailsTest
+	from test.wikicommands import WikiCommandsTest
 
 
 	unittest.main()

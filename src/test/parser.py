@@ -40,13 +40,7 @@ class ParserTest (unittest.TestCase):
 		removeWiki (self.path)
 
 		self.rootwiki = WikiDocument.create (self.path)
-
-		#WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
 		WikiPageFactory.create (self.rootwiki, u"Страница 2", [])
-		#WikiPageFactory.create (self.rootwiki[u"Страница 2"], u"Страница 3", [])
-		#WikiPageFactory.create (self.rootwiki[u"Страница 2/Страница 3"], u"Страница 4", [])
-		#WikiPageFactory.create (self.rootwiki[u"Страница 1"], u"Страница 5", [])
-
 		self.testPage = self.rootwiki[u"Страница 2"]
 		
 		files = [u"accept.png", u"add.png", u"anchor.png", u"filename.tmp", 
@@ -62,7 +56,6 @@ class ParserTest (unittest.TestCase):
 
 	def tearDown(self):
 		removeWiki (self.path)
-		#pass
 	
 
 	def testParseWithoutAttaches (self):
