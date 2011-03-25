@@ -35,7 +35,7 @@ class WikiIncludeCommandTest (unittest.TestCase):
 		WikiPageFactory.create (self.rootwiki, u"Страница 2", [])
 		self.testPage = self.rootwiki[u"Страница 2"]
 		
-		files = [u"text_utf8.txt", u"text_utf8.txt2", u"image.gif", u"текст_utf8.txt"]
+		files = [u"text_utf8.txt", u"text_utf8.txt2", u"image.gif", u"текст_utf8.txt", u"text_1251.txt"]
 
 		fullFilesPath = [os.path.join (self.filesPath, fname) for fname in files]
 
@@ -125,6 +125,45 @@ class WikiIncludeCommandTest (unittest.TestCase):
 		self.assertEqual (result, result_right, result)
 
 
+	def testIncludeCommand7 (self):
+		text = u"""бла-бла-бла
+(:include Attach:text_1251.txt encoding=cp1251 :)"""
+
+		result_right = u"""бла-бла-бла
+Это текст
+в кодировке 1251
+"""
+
+		result = self.parser.toHtml (text)
+		self.assertEqual (result, result_right, result)
+
+
+	def testIncludeCommand8 (self):
+		text = u"""бла-бла-бла
+(:include Attach:text_1251.txt encoding = "cp1251" :)"""
+
+		result_right = u"""бла-бла-бла
+Это текст
+в кодировке 1251
+"""
+
+		result = self.parser.toHtml (text)
+		self.assertEqual (result, result_right, result)
+
+
+	def testIncludeCommand9 (self):
+		text = u"""бла-бла-бла
+(:include Attach:text_1251.txt encoding="cp1251" :)"""
+
+		result_right = u"""бла-бла-бла
+Это текст
+в кодировке 1251
+"""
+
+		result = self.parser.toHtml (text)
+		self.assertEqual (result, result_right, result)
+
+
 	def testIncludeCommandInvalid1 (self):
 		text = u"""бла-бла-бла(:include Attach:text_utf8_1.txt :)"""
 
@@ -137,7 +176,16 @@ class WikiIncludeCommandTest (unittest.TestCase):
 	def testIncludeCommandInvalid2 (self):
 		text = u"""бла-бла-бла(:include Attach:image.gif :)"""
 
-		result_right = u"""бла-бла-бла""" + _(u"<B>UnicodeDecodeError in file image.gif</B>")
+		result_right = u"""бла-бла-бла""" + _(u"<B>Encoding error in file image.gif</B>")
+
+		result = self.parser.toHtml (text)
+		self.assertEqual (result, result_right, result)
+
+
+	def testIncludeCommandInvalid3 (self):
+		text = u"""бла-бла-бла(:include Attach:image.gif encoding=base64 :)"""
+
+		result_right = u"""бла-бла-бла""" + _(u"<B>Encoding error in file image.gif</B>")
 
 		result = self.parser.toHtml (text)
 		self.assertEqual (result, result_right, result)

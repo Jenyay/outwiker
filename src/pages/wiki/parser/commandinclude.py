@@ -7,6 +7,12 @@ from command import Command
 from core.tree import RootWikiPage
 
 class IncludeCommand (Command):
+	"""
+	Команда для вставки в текст страницы текста прикрепленного файла
+	Синтаксис: (:include Attach:fname [params...] :)
+	params - необязательные параметры:
+		encoding="xxx" - указывает кодировку прикрепленного файла
+	"""
 	def __init__ (self, parser):
 		"""
 		parser - экземпляр парсера
@@ -27,33 +33,48 @@ class IncludeCommand (Command):
 		Запустить команду на выполнение. 
 		Метод возвращает текст, который будет вставлен на место команды в вики-нотации
 		"""
-		path = self._getAttach (params)
+		(path, params_tail) = self._getAttach (params)
 		if path == None:
 			return u""
 
+		params_dict = Command.parseParams (params_tail)
+		encoding = self._getEncoding (params_dict)
+
 		try:
 			with open (path) as fp:
-				text = unicode (fp.read (), "utf8")
+				text = unicode (fp.read (), encoding)
 		except IOError:
 			return _(u"<B>Can't open file %s</B>" % path)
-		except UnicodeDecodeError:
-			return _(u"<B>UnicodeDecodeError in file %s</B>" % os.path.basename (path) )
+		except ValueError:
+			return _(u"<B>Encoding error in file %s</B>" % os.path.basename (path) )
+		except TypeError:
+			return _(u"<B>Encoding error in file %s</B>" % os.path.basename (path) )
 
 		return text
 
 
+	def _getEncoding (self, params_dict):
+		encoding = u"utf8"
+		if "encoding" in params_dict:
+			encoding = params_dict["encoding"]
+
+		return encoding
+
+
+
 	def _getAttach (self, params):
 		"""
-		Возвращает имя прикрепленного файла, который хотим вставить на страницу
+		Возвращает имя прикрепленного файла, который хотим вставить на страницу и хвост параметров после имени файла
 		"""
 		attach_begin = "Attach:"
 		params_end = None
+		params_tail = params
 
 		# Выделим конец строки после Attach:
 		if params.startswith (attach_begin):
 			params_end = params[len (attach_begin) :]
 		else:
-			return None
+			return (None, params_tail)
 
 		attaches = self.parser.page.attachment
 		attaches.sort (IncludeCommand.sortByLength, reverse=True)
@@ -63,9 +84,10 @@ class IncludeCommand (Command):
 		for fname in attaches:
 			if params_end.startswith (os.path.basename (fname)):
 				path = fname
+				params_tail = params_end[len (os.path.basename (fname)) :]
 				break
 
-		return path
+		return (path, params_tail)
 
 	
 	# TODO: Вынести в отдельный модуль
