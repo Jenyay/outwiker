@@ -2,6 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 import os.path
+import cgi
 
 from command import Command
 from core.tree import RootWikiPage
@@ -12,6 +13,8 @@ class IncludeCommand (Command):
 	Синтаксис: (:include Attach:fname [params...] :)
 	params - необязательные параметры:
 		encoding="xxx" - указывает кодировку прикрепленного файла
+		htmlescape - заменить символы <, > и т.п. на их HTML-аналоги (&lt;, &gt; и т.п.)
+		wikiparse - содержимое прикрепленного файла предварительно нужно пропустить через википарсер
 	"""
 	def __init__ (self, parser):
 		"""
@@ -42,7 +45,8 @@ class IncludeCommand (Command):
 
 		try:
 			with open (path) as fp:
-				text = unicode (fp.read (), encoding)
+				# Почему-то в конце всегда оказывается перевод строки
+				text = unicode (fp.read (), encoding).rstrip()
 		except IOError:
 			return _(u"<B>Can't open file %s</B>" % path)
 		except ValueError:
@@ -50,7 +54,22 @@ class IncludeCommand (Command):
 		except TypeError:
 			return _(u"<B>Encoding error in file %s</B>" % os.path.basename (path) )
 
-		return text
+		return self._postprocessText (text, params_dict)
+
+
+	def _postprocessText (self, text, params_dict):
+		"""
+		Выполнить манипуляции согласно настройкам с прочитанным текстом
+		"""
+		result = text
+
+		if "htmlescape" in params_dict:
+			result = cgi.escape (text)
+
+		if "wikiparse" in params_dict:
+			result = self.parser.parseWikiMarkup (result)
+
+		return result
 
 
 	def _getEncoding (self, params_dict):

@@ -35,7 +35,9 @@ class WikiIncludeCommandTest (unittest.TestCase):
 		WikiPageFactory.create (self.rootwiki, u"Страница 2", [])
 		self.testPage = self.rootwiki[u"Страница 2"]
 		
-		files = [u"text_utf8.txt", u"text_utf8.txt2", u"image.gif", u"текст_utf8.txt", u"text_1251.txt"]
+		files = [u"text_utf8.txt", u"text_utf8.txt2", u"image.gif", 
+				u"текст_utf8.txt", u"text_1251.txt", u"html.txt", 
+				u"html_1251.txt", u"wiki.txt"]
 
 		fullFilesPath = [os.path.join (self.filesPath, fname) for fname in files]
 
@@ -53,8 +55,7 @@ class WikiIncludeCommandTest (unittest.TestCase):
 
 		result_right = u"""бла-бла-бла
 Текст в 
-кодировке UTF-8
-"""
+кодировке UTF-8"""
 
 		result = self.parser.toHtml (text)
 		self.assertEqual (result, result_right, result)
@@ -66,8 +67,7 @@ class WikiIncludeCommandTest (unittest.TestCase):
 
 		result_right = u"""бла-бла-бла
 Текст в 
-кодировке UTF-8
-"""
+кодировке UTF-8"""
 
 		result = self.parser.toHtml (text)
 		self.assertEqual (result, result_right, result)
@@ -79,8 +79,7 @@ class WikiIncludeCommandTest (unittest.TestCase):
 
 		result_right = u"""бла-бла-бла
 Текст2 в 
-кодировке UTF-8
-"""
+кодировке UTF-8"""
 
 		result = self.parser.toHtml (text)
 		self.assertEqual (result, result_right, result)
@@ -92,8 +91,7 @@ class WikiIncludeCommandTest (unittest.TestCase):
 
 		result_right = u"""бла-бла-бла
 Текст2 в 
-кодировке UTF-8
-"""
+кодировке UTF-8"""
 
 		result = self.parser.toHtml (text)
 		self.assertEqual (result, result_right, result)
@@ -105,8 +103,7 @@ class WikiIncludeCommandTest (unittest.TestCase):
 
 		result_right = u"""бла-бла-бла
 Текст в 
-кодировке UTF-8
-"""
+кодировке UTF-8"""
 
 		result = self.parser.toHtml (text)
 		self.assertEqual (result, result_right, result)
@@ -118,8 +115,7 @@ class WikiIncludeCommandTest (unittest.TestCase):
 
 		result_right = u"""бла-бла-бла
 Текст в 
-кодировке UTF-8
-"""
+кодировке UTF-8"""
 
 		result = self.parser.toHtml (text)
 		self.assertEqual (result, result_right, result)
@@ -131,8 +127,7 @@ class WikiIncludeCommandTest (unittest.TestCase):
 
 		result_right = u"""бла-бла-бла
 Это текст
-в кодировке 1251
-"""
+в кодировке 1251"""
 
 		result = self.parser.toHtml (text)
 		self.assertEqual (result, result_right, result)
@@ -144,8 +139,7 @@ class WikiIncludeCommandTest (unittest.TestCase):
 
 		result_right = u"""бла-бла-бла
 Это текст
-в кодировке 1251
-"""
+в кодировке 1251"""
 
 		result = self.parser.toHtml (text)
 		self.assertEqual (result, result_right, result)
@@ -157,8 +151,34 @@ class WikiIncludeCommandTest (unittest.TestCase):
 
 		result_right = u"""бла-бла-бла
 Это текст
-в кодировке 1251
-"""
+в кодировке 1251"""
+
+		result = self.parser.toHtml (text)
+		self.assertEqual (result, result_right, result)
+
+
+	def testIncludeCommand10 (self):
+		text = u"""бла-бла-бла (:include Attach:html.txt htmlescape:)"""
+
+		result_right = u"""бла-бла-бла &lt;B&gt;Это текст с HTML-тегами&lt;/B&gt;"""
+
+		result = self.parser.toHtml (text)
+		self.assertEqual (result, result_right, result)
+
+
+	def testIncludeCommand11 (self):
+		text = u"""бла-бла-бла (:include Attach:html_1251.txt htmlescape encoding="cp1251":)"""
+
+		result_right = u"""бла-бла-бла &lt;B&gt;Это текст с HTML-тегами&lt;/B&gt;"""
+
+		result = self.parser.toHtml (text)
+		self.assertEqual (result, result_right, result)
+		
+
+	def testIncludeCommand12 (self):
+		text = u"""бла-бла-бла (:include Attach:wiki.txt wikiparse:)"""
+
+		result_right = u"""бла-бла-бла <B>Этот текст содержит вики-нотацию</B>"""
 
 		result = self.parser.toHtml (text)
 		self.assertEqual (result, result_right, result)
