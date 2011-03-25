@@ -35,7 +35,7 @@ class WikiChildListCommandTest (unittest.TestCase):
 
 		WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
 		WikiPageFactory.create (self.rootwiki[u"Страница 1"], u"Страница 2", [])
-		WikiPageFactory.create (self.rootwiki[u"Страница 1"], u"Страница 3", [])
+		WikiPageFactory.create (self.rootwiki[u"Страница 1"], u"СТРАНИЦА 3", [])
 		WikiPageFactory.create (self.rootwiki[u"Страница 1"], u"Страница 4", [])
 
 		self.testPage = self.rootwiki[u"Страница 1"]
@@ -50,7 +50,7 @@ class WikiChildListCommandTest (unittest.TestCase):
 		result = command.execute ("", "")
 
 		result_right = u"""<A HREF="Страница 2">Страница 2</A>
-<A HREF="Страница 3">Страница 3</A>
+<A HREF="СТРАНИЦА 3">СТРАНИЦА 3</A>
 <A HREF="Страница 4">Страница 4</A>"""
 
 		self.assertEqual (result_right, result, result)
@@ -62,7 +62,60 @@ class WikiChildListCommandTest (unittest.TestCase):
 		result = self.parser.toHtml (text)
 
 		result_right = u"""<A HREF="Страница 2">Страница 2</A>
-<A HREF="Страница 3">Страница 3</A>
+<A HREF="СТРАНИЦА 3">СТРАНИЦА 3</A>
 <A HREF="Страница 4">Страница 4</A>"""
 
 		self.assertEqual (result_right, result, result)
+
+
+	def test3 (self):
+		text = u"(:childlist:)"
+		self.rootwiki[u"Страница 1/Страница 4"].order = 0
+
+		result = self.parser.toHtml (text)
+
+		result_right = u"""<A HREF="Страница 4">Страница 4</A>
+<A HREF="Страница 2">Страница 2</A>
+<A HREF="СТРАНИЦА 3">СТРАНИЦА 3</A>"""
+
+		self.assertEqual (result_right, result, result)
+
+
+	def test4 (self):
+		text = u"(:childlist sort=name:)"
+		self.rootwiki[u"Страница 1/Страница 4"].order = 0
+
+		result = self.parser.toHtml (text)
+
+		result_right = u"""<A HREF="Страница 2">Страница 2</A>
+<A HREF="СТРАНИЦА 3">СТРАНИЦА 3</A>
+<A HREF="Страница 4">Страница 4</A>"""
+
+		self.assertEqual (result_right, result, result)
+
+
+	def test5 (self):
+		text = u"(:childlist sort=descendname:)"
+		self.rootwiki[u"Страница 1/Страница 4"].order = 0
+
+		result = self.parser.toHtml (text)
+
+		result_right = u"""<A HREF="Страница 4">Страница 4</A>
+<A HREF="СТРАНИЦА 3">СТРАНИЦА 3</A>
+<A HREF="Страница 2">Страница 2</A>"""
+
+		self.assertEqual (result_right, result, result)
+
+
+	def test6 (self):
+		text = u"(:childlist sort=descendorder:)"
+		self.rootwiki[u"Страница 1/Страница 4"].order = 0
+
+		result = self.parser.toHtml (text)
+
+		result_right = u"""<A HREF="СТРАНИЦА 3">СТРАНИЦА 3</A>
+<A HREF="Страница 2">Страница 2</A>
+<A HREF="Страница 4">Страница 4</A>"""
+
+		self.assertEqual (result_right, result, result)
+

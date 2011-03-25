@@ -21,6 +21,14 @@ class SimpleView (object):
 
 
 class ChildListCommand (Command):
+	"""
+	Команда для вставки списка дочерних команд. 
+	Синтсаксис: (:childlist [params...]:)
+	Параметры:
+		sort=name - сортировка по имени
+		sort=descendname - сортировка по имени в обратном направлении
+		sort=descendorder - сортировка по положению страницы в обратном порядке
+	"""
 	def __init__ (self, parser):
 		Command.__init__ (self, parser)
 
@@ -30,4 +38,35 @@ class ChildListCommand (Command):
 
 
 	def execute (self, params, content):
-		return SimpleView.make (self.parser.page.children, self.parser, params)
+		params_dict = Command.parseParams (params)
+
+		children = self.parser.page.children
+		self._sortChildren (children, params_dict)
+
+		return SimpleView.make (children, self.parser, params)
+
+
+	@staticmethod
+	def _sortByName (page1, page2):
+		if page1.title.lower() > page2.title.lower():
+			return 1
+		elif page1.title.lower() < page2.title.lower():
+			return -1
+		return 0
+
+
+	def _sortChildren (self, children, params_dict):
+		"""
+		Отсортировать дочерние страницы, если нужно
+		"""
+		if "sort" not in params_dict:
+			return
+
+		sort = params_dict["sort"].lower()
+
+		if sort == "name":
+			children.sort (ChildListCommand._sortByName)
+		if sort == "descendname":
+			children.sort (ChildListCommand._sortByName, reverse=True)
+		if sort == "descendorder":
+			children.reverse()
