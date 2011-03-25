@@ -3,6 +3,7 @@
 
 from parser.wikiparser import Parser
 from parser.commandinclude import IncludeCommand
+from parser.commandchildlist import ChildListCommand
 
 class ParserFactory (object):
 	"""
@@ -10,7 +11,7 @@ class ParserFactory (object):
 	"""
 	def __init__ (self):
 		# Список типов команд. Экземпляры команд создаются при заполнении командами парсера
-		self.commands = [IncludeCommand]
+		self.commands = [IncludeCommand, ChildListCommand]
 
 
 	def make (self, page, config):
