@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
+import traceback
+
 from tokenfonts import FontsFactory
 from tokennoformat import NoFormatFactory
 from tokenpreformat import PreFormatFactory
@@ -26,6 +28,7 @@ class Parser (object):
 	def __init__ (self, page, config):
 		self.page = page
 		self.config = config
+		self.error_template = u"<B>{error}</B>"
 
 		# Команды, обрабатывает парсер.
 		# Формат команд: (:name params... :) content... (:nameend:)
@@ -133,15 +136,24 @@ class Parser (object):
 
 
 	def parseWikiMarkup (self, text):
-		return self.wikiMarkup.transformString (text)
+		try:
+			return self.wikiMarkup.transformString (text)
+		except Exception, e:
+			return self.error_template.format (error = traceback.format_exc())
 
 
 	def parseListItemMarkup (self, text):
-		return self.listItemMarkup.transformString (text)
+		try:
+			return self.listItemMarkup.transformString (text)
+		except Exception, e:
+			return self.error_template.format (error = traceback.format_exc())
 
 
 	def parseLinkMarkup (self, text):
-		return self.linkMarkup.transformString (text)
+		try:
+			return self.linkMarkup.transformString (text)
+		except Exception, e:
+			return self.error_template.format (error = traceback.format_exc())
 
 
 	def addCommand (self, command):

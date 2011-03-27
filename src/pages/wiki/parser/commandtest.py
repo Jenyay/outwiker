@@ -39,3 +39,26 @@ params: {params}
 content: {content}""".format (params=params_result.strip(), content=content_result.strip())
 
 		return result
+
+
+class ExceptionCommand (Command):
+	"""
+	Тестовая команда, которая бросает исключение Exception
+	"""
+	def __init__ (self, parser):
+		"""
+		parser - экземпляр парсера
+		"""
+		Command.__init__ (self, parser)
+
+	
+	@property
+	def name (self):
+		"""
+		Возвращает имя команды, которую обрабатывает класс
+		"""
+		return u"exception"
+
+
+	def execute (self, params, content):
+		raise Exception

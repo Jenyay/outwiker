@@ -12,7 +12,7 @@ from test.utils import removeWiki
 from core.application import Application
 from pages.wiki.thumbnails import Thumbnails
 from pages.wiki.texrender import getTexRender
-from pages.wiki.parser.commandtest import TestCommand
+from pages.wiki.parser.commandtest import TestCommand, ExceptionCommand
 from pages.wiki.parserfactory import ParserFactory
 
 
@@ -1346,4 +1346,14 @@ content: Контент"""
 		self.assertEqual (result_right, result, result)
 
 
+	def testExceptionCommand (self):
+		factory = ParserFactory ()
+		factory.appendCommand (ExceptionCommand)
 
+		parser = factory.make (self.testPage, Application.config)
+
+		text = u"""(:exception:)"""
+
+		result = parser.toHtml(text)
+		# Исключение не должно бросаться, а должно быть выведено в результирующий текст
+		self.assertTrue ("Exception" in result, result)
