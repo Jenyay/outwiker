@@ -48,8 +48,9 @@ if __name__ == '__main__':
 	from test.pagethumbmaker import PageThumbmakerTest
 	from test.thumbnails import ThumbnailsTest
 	from test.wikicommands import WikiCommandsTest
-	from test.wikiincludecommand import WikiIncludeCommandTest
-	from test.wikichildlistcommand import WikiChildListCommandTest
+	from test.wikicommandinclude import WikiIncludeCommandTest
+	from test.wikicommandbloggers import WikiBloggersCommandTest
+	from test.wikicommandchildlist import WikiChildListCommandTest
 
 
 	unittest.main()

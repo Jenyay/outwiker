@@ -190,7 +190,7 @@ c82711c8975f3f084e3c035e60c9469d  /home/jenyay/soft/outwiker/trunk/distrib/outwi
 a42fe04896ee6fbe474f5b0c5ae77668  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.2.0-1/opt/outwiker/pages/wiki/wikipanel.py
 d41d8cd98f00b204e9800998ecf8427e  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.2.0-1/opt/outwiker/pages/wiki/__init__.py
 a3c17cb8369d59a4cb8502831d55ff63  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.2.0-1/opt/outwiker/pages/wiki/wikipage.py
-ec2ec46d0366befd9384fc980a8abf1c  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.2.0-1/opt/outwiker/pages/wiki/parserfactory.py
+816ee74367f93f85c6adb7be00850b6f  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.2.0-1/opt/outwiker/pages/wiki/parserfactory.py
 84d779d904a06051dde4dfa68246821f  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.2.0-1/opt/outwiker/pages/wiki/parser/tokenpreformat.py
 2ae2c88e3a2ce614323a0b09359bf425  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.2.0-1/opt/outwiker/pages/wiki/parser/tokenlinebreak.py
 8953dcb14362ea1d64088386d7e2d4af  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.2.0-1/opt/outwiker/pages/wiki/parser/wikiparser.py
@@ -203,6 +203,7 @@ ea5da2f2af04694c4cae13f74442d85b  /home/jenyay/soft/outwiker/trunk/distrib/outwi
 86d72870dfa4a8577ebbda82bd96cde8  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.2.0-1/opt/outwiker/pages/wiki/parser/tokenthumbnail.py
 21720a3c8e9b713a442834b2b3f92c2b  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.2.0-1/opt/outwiker/pages/wiki/parser/tokenhorline.py
 8a0921c6b45052c46bc3a513d21be095  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.2.0-1/opt/outwiker/pages/wiki/parser/pagethumbmaker.py
+a64eb36ada71a2b4d4b8ad32531a4664  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.2.0-1/opt/outwiker/pages/wiki/parser/commandbloggers.py
 c08f00a0779e24923186a34ce198bd1e  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.2.0-1/opt/outwiker/pages/wiki/parser/tokenattach.py
 25edd73c85f5edfba86a393b7cafb4d5  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.2.0-1/opt/outwiker/pages/wiki/parser/tokentable.py
 d41d8cd98f00b204e9800998ecf8427e  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.2.0-1/opt/outwiker/pages/wiki/parser/__init__.py
@@ -389,7 +390,7 @@ fc804ff01e33c34756e865a07fa3e384  /home/jenyay/soft/outwiker/trunk/distrib/outwi
 3d16ecd4585bd095f1f75a630d357fc0  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.2.0-1/opt/outwiker/locale/outwiker.pot
 73c1b072a29a3cb361089c18ecd1cc01  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.2.0-1/opt/outwiker/locale/en/LC_MESSAGES/outwiker.po
 b4f6b0d665f2dd2b8af0dace40831924  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.2.0-1/opt/outwiker/locale/en/LC_MESSAGES/outwiker.mo
-8eaa84865b283fb0da26d9e2885b79fe  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.2.0-1/opt/outwiker/version.txt
+e65f09a071d06b41645a34374a773dff  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.2.0-1/opt/outwiker/version.txt
 e6e5fc6486e10f67e6d56fb5954d9224  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.2.0-1/opt/outwiker/README
 9d3ff10fa6f9774e66be13762ce5cedb  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.2.0-1/opt/outwiker/gui/trayicon.py
 3623c759ed212e2204c3e8949c21dd42  /home/jenyay/soft/outwiker/trunk/distrib/outwiker-1.2.0-1/opt/outwiker/gui/OverwriteDialog.py
