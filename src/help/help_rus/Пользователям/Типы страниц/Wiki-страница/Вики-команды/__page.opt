@@ -4,5 +4,5 @@ expand = True
 [General]
 type = wiki
 order = 7
-tags = пользователям, wiki
+tags = пользователям, wiki, команды
 
