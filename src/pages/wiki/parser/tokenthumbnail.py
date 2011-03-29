@@ -5,7 +5,7 @@ from libs.pyparsing import Regex
 
 from core.thumbexception import ThumbException
 from pagethumbmaker import PageThumbmaker
-from core.tree import RootWikiPage
+from core.attachment import Attachment
 from ..wikiconfig import WikiConfig
 
 
@@ -74,4 +74,4 @@ class ThumbnailToken (object):
 		except IOError as e:
 			return _(u"<b>Can't create thumbnail: \n%s</b>" % repr (e))
 
-		return u'<A HREF="%s/%s"><IMG SRC="%s"></A>' % (RootWikiPage.attachDir, fname, thumb)
+		return u'<A HREF="%s/%s"><IMG SRC="%s"></A>' % (Attachment.attachDir, fname, thumb)

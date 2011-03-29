@@ -6,7 +6,7 @@ import os
 
 import wx
 
-from core.tree import RootWikiPage
+from core.attachment import Attachment
 import core.system
 from core.application import Application
 
@@ -114,7 +114,7 @@ class BaseTextPanel (wx.Panel):
 		count = len (fnames)
 
 		for n in range (count):
-			text += RootWikiPage.attachDir + "/" + fnames[n]
+			text += Attachment.attachDir + "/" + fnames[n]
 			if n != count -1:
 				text += "\n"
 

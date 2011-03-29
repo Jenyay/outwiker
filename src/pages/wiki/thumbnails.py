@@ -4,7 +4,7 @@
 import os
 import os.path
 
-from core.tree import RootWikiPage
+from core.attachment import Attachment
 
 
 class Thumbnails (object):
@@ -19,7 +19,7 @@ class Thumbnails (object):
 	
 	@staticmethod
 	def getRelativeThumbDir ():
-		return os.path.join (RootWikiPage.attachDir, Thumbnails.thumbDir)
+		return os.path.join (Attachment.attachDir, Thumbnails.thumbDir)
 
 
 	def getThumbPath (self, create):

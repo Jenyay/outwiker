@@ -5,7 +5,7 @@ import os.path
 
 from libs.pyparsing import replaceWith, Literal
 
-from core.tree import RootWikiPage
+from core.attachment import Attachment
 
 from utils import concatenate, isImage
 
@@ -73,7 +73,7 @@ class NotImageAttachToken (AttachToken):
 		"""
 		Получить строку для замены ссылкой на прикрепленный файл
 		"""
-		return '<A HREF="%s/%s">%s</A>' % (RootWikiPage.attachDir, fname, fname)
+		return '<A HREF="%s/%s">%s</A>' % (Attachment.attachDir, fname, fname)
 
 
 
@@ -106,4 +106,4 @@ class ImageAttachToken (AttachToken):
 		"""
 		Получить строку для замены ссылкой на прикрепленный файл
 		"""
-		return '<IMG SRC="%s/%s">' % (RootWikiPage.attachDir, fname)
+		return '<IMG SRC="%s/%s">' % (Attachment.attachDir, fname)

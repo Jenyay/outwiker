@@ -5,11 +5,12 @@ import os.path
 import ConfigParser
 import shutil
 
-from core.application import Application
-from core.config import PageConfig
-from core.bookmarks import Bookmarks
-from core.search import TagsList
+from application import Application
+from config import PageConfig
+from bookmarks import Bookmarks
+from search import TagsList
 import core.exceptions
+from attachment import Attachment
 
 
 class RootWikiPage (object):
@@ -19,7 +20,6 @@ class RootWikiPage (object):
 
 	pageConfig = u"__page.opt"
 	contentFile = u"__page.text"
-	attachDir = u"__attach"
 	iconName = u"__icon"
 
 	sectionGeneral = u"General"
@@ -236,17 +236,13 @@ class RootWikiPage (object):
 		self._children.remove (page)
 	
 
+	# TODO: Избавиться от этого метода
 	def getAttachPath (self, create=False):
 		"""
 		Возвращает путь до страницы с прикрепленными файлами
 		create - создать папку для прикрепленных файлов, если она еще не создана?
 		"""
-		path = os.path.join (self.path, RootWikiPage.attachDir)
-
-		if create and not os.path.exists(path):
-			os.mkdir (path)
-
-		return path
+		return Attachment(self).getAttachPath (create)
 	
 
 class WikiDocument (RootWikiPage):
@@ -510,6 +506,7 @@ class WikiPage (RootWikiPage):
 		Application.onPageUpdate(self)
 
 
+	# TODO: Избавиться
 	@property
 	def attachment (self):
 		"""
@@ -519,6 +516,7 @@ class WikiPage (RootWikiPage):
 		return self._getAttachments()
 
 
+	# TODO: Избавиться
 	def _getAttachments(self):
 		"""
 		Найти все приаттаченные файлы
@@ -534,6 +532,7 @@ class WikiPage (RootWikiPage):
 		return result
 
 
+	# TODO: Избавиться
 	def attach (self, files):
 		"""
 		Прикрепить файл к странице
@@ -557,6 +556,7 @@ class WikiPage (RootWikiPage):
 		Application.onPageUpdate (self)
 	
 
+	# TODO: Избавиться
 	def removeAttach (self, files):
 		"""
 		Удалить прикрепленные файлы
@@ -626,10 +626,9 @@ class WikiPage (RootWikiPage):
 		if not os.path.exists (self.path):
 			os.mkdir (self.path)
 
-		attachPath = self.getAttachPath()
-
-		# Закомментарить эти две строки, если не хотим, 
+		# Закомментарить эти три строки, если не хотим, 
 		# чтобы папка __attach создавалась при создании страницы
+		#attachPath = self.getAttachPath()
 		#if not os.path.exists (attachPath):
 		#	os.mkdir (attachPath)
 

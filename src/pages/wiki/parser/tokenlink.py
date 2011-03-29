@@ -7,7 +7,7 @@ from libs.pyparsing import QuotedString
 
 from tokenattach import AttachToken
 from utils import isImage
-from core.tree import RootWikiPage
+from core.attachment import Attachment
 
 
 class LinkFactory (object):
@@ -68,7 +68,7 @@ class LinkToken (object):
 		Подготовить адрес для ссылки. Если ссылка - прикрепленный файл, то создать путь до него
 		"""
 		if url.strip().startswith (AttachToken.attachString):
-			return url.strip().replace (AttachToken.attachString, RootWikiPage.attachDir + "/", 1)
+			return url.strip().replace (AttachToken.attachString, Attachment.attachDir + "/", 1)
 
 		return url
 
@@ -85,7 +85,7 @@ class LinkToken (object):
 
 		if textStrip.startswith (AttachToken.attachString):
 			# Ссылка на прикрепление
-			url = textStrip.replace (AttachToken.attachString, RootWikiPage.attachDir + "/", 1)
+			url = textStrip.replace (AttachToken.attachString, Attachment.attachDir + "/", 1)
 			comment = textStrip.replace (AttachToken.attachString, "")
 		else:
 			# Ссылка не на прикрепление
