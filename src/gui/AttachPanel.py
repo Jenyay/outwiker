@@ -15,8 +15,8 @@ import wx
 
 from core.application import Application
 import core.commands
-from core.tree import RootWikiPage
 import core.system
+from core.attachment import Attachment
 
 
 class AttachPanel(wx.Panel):
@@ -140,7 +140,7 @@ class AttachPanel(wx.Panel):
 		"""
 		self.attachList.ClearAll()
 		if self.currentPage != None:
-			files = self.currentPage.attachment
+			files = Attachment (self.currentPage).attachmentFull
 			files.reverse()
 
 			for fname in files:
@@ -213,7 +213,7 @@ class AttachPanel(wx.Panel):
 				return
 
 			for file in files:
-				fullpath = os.path.join (self.currentPage.getAttachPath(), file)
+				fullpath = os.path.join (Attachment (self.currentPage).getAttachPath(), file)
 				try:
 					core.system.getOS().startFile (fullpath)
 				except OSError:
@@ -225,7 +225,7 @@ class AttachPanel(wx.Panel):
 		data = core.system.getOS().dragFileDataObject()
 
 		for fname in self.getSelectedFiles():
-			data.AddFile (os.path.join (self.currentPage.getAttachPath(), fname) )
+			data.AddFile (os.path.join (Attachment (self.currentPage).getAttachPath(), fname) )
 
 		dragSource = wx.DropSource (self)
 		dragSource.SetData(data)

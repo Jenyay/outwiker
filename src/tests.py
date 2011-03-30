@@ -25,7 +25,7 @@ if __name__ == '__main__':
 
 	from test.wikiloading import WikiPagesTest, SubWikiTest
 
-	from test.wikicreation import TextPageAttachmentTest, TextPageCreationTest, \
+	from test.wikicreation import TextPageCreationTest, \
 			ConfigPagesTest, BookmarksTest, RemovePagesTest, RenameTest
 
 	from test.utils import removeWiki

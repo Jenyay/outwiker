@@ -48,6 +48,7 @@ class Attachment (object):
 			return []
 
 		result = [os.path.join (path, fname) for fname in os.listdir (path)]
+		result.sort()
 
 		return result
 

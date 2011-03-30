@@ -5,11 +5,14 @@ import os
 import unittest
 import hashlib
 
+from utils import removeWiki
+
 from core.tree import WikiDocument
+from core.attachment import Attachment
+from core.application import Application
+
 from pages.wiki.parser.wikiparser import Parser
 from pages.wiki.wikipage import WikiPageFactory
-from test.utils import removeWiki
-from core.application import Application
 from pages.wiki.thumbnails import Thumbnails
 from pages.wiki.texrender import getTexRender
 from pages.wiki.parser.commandtest import TestCommand, ExceptionCommand
@@ -49,6 +52,8 @@ class ParserTest (unittest.TestCase):
 				u"image_01.JPG", u"dir", u"dir.xxx", u"dir.png"]
 
 		fullFilesPath = [os.path.join (self.filesPath, fname) for fname in files]
+
+		self.attach_page2 = Attachment (self.rootwiki[u"Страница 2"])
 
 		# Прикрепим к двум страницам файлы
 		self.testPage.attach (fullFilesPath)
@@ -509,7 +514,7 @@ class ParserTest (unittest.TestCase):
 
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-		path = os.path.join (self.rootwiki[u"Страница 2"].getAttachPath(), "__thumb/th_width_100_image.jpg")
+		path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_width_100_image.jpg")
 		self.assertTrue (os.path.exists (path), path.encode (self.encoding))
 	
 
@@ -521,7 +526,7 @@ class ParserTest (unittest.TestCase):
 
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-		path = os.path.join (self.rootwiki[u"Страница 2"].getAttachPath(), "__thumb/th_width_100_image.jpg")
+		path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_width_100_image.jpg")
 		self.assertTrue (os.path.exists (path), path.encode (self.encoding))
 	
 
@@ -533,7 +538,7 @@ class ParserTest (unittest.TestCase):
 
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-		path = os.path.join (self.rootwiki[u"Страница 2"].getAttachPath(), "__thumb/th_width_100_image.jpeg")
+		path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_width_100_image.jpeg")
 		self.assertTrue (os.path.exists (path), path.encode (self.encoding))
 
 	
@@ -545,7 +550,7 @@ class ParserTest (unittest.TestCase):
 
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-		path = os.path.join (self.rootwiki[u"Страница 2"].getAttachPath(), "__thumb/th_width_100_image.png")
+		path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_width_100_image.png")
 		self.assertTrue (os.path.exists (path), path.encode (self.encoding))
 	
 
@@ -557,7 +562,7 @@ class ParserTest (unittest.TestCase):
 
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-		path = os.path.join (self.rootwiki[u"Страница 2"].getAttachPath(), "__thumb/th_width_100_image.png")
+		path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_width_100_image.png")
 		self.assertTrue (os.path.exists (path), path.encode (self.encoding))
 	
 
@@ -569,7 +574,7 @@ class ParserTest (unittest.TestCase):
 
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-		path = os.path.join (self.rootwiki[u"Страница 2"].getAttachPath(), "__thumb/th_height_100_image.jpg")
+		path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_height_100_image.jpg")
 		self.assertTrue (os.path.exists (path), path.encode (self.encoding))
 
 	
@@ -581,7 +586,7 @@ class ParserTest (unittest.TestCase):
 
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-		path = os.path.join (self.rootwiki[u"Страница 2"].getAttachPath(), "__thumb/th_height_100_image.jpg")
+		path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_height_100_image.jpg")
 		self.assertTrue (os.path.exists (path), path.encode (self.encoding))
 
 
@@ -593,7 +598,7 @@ class ParserTest (unittest.TestCase):
 
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-		path = os.path.join (self.rootwiki[u"Страница 2"].getAttachPath(), "__thumb/th_height_100_image.jpeg")
+		path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_height_100_image.jpeg")
 		self.assertTrue (os.path.exists (path), path.encode (self.encoding))
 
 	
@@ -604,7 +609,7 @@ class ParserTest (unittest.TestCase):
 
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-		path = os.path.join (self.rootwiki[u"Страница 2"].getAttachPath(), "__thumb/th_height_100_image.png")
+		path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_height_100_image.png")
 		self.assertTrue (os.path.exists (path), path.encode (self.encoding))
 	
 
@@ -616,7 +621,7 @@ class ParserTest (unittest.TestCase):
 
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-		path = os.path.join (self.rootwiki[u"Страница 2"].getAttachPath(), "__thumb/th_height_100_image.png")
+		path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_height_100_image.png")
 		self.assertTrue (os.path.exists (path), path.encode (self.encoding))
 	
 
@@ -628,7 +633,7 @@ class ParserTest (unittest.TestCase):
 
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-		path = os.path.join (self.rootwiki[u"Страница 2"].getAttachPath(), "__thumb/th_maxsize_250_image.jpg")
+		path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_maxsize_250_image.jpg")
 		self.assertTrue (os.path.exists (path), path.encode (self.encoding))
 
 	
@@ -639,7 +644,7 @@ class ParserTest (unittest.TestCase):
 
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-		path = os.path.join (self.rootwiki[u"Страница 2"].getAttachPath(), "__thumb/th_maxsize_250_image.jpeg")
+		path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_maxsize_250_image.jpeg")
 		self.assertTrue (os.path.exists (path), path.encode (self.encoding))
 
 
@@ -650,7 +655,7 @@ class ParserTest (unittest.TestCase):
 
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-		path = os.path.join (self.rootwiki[u"Страница 2"].getAttachPath(), "__thumb/th_maxsize_250_image.png")
+		path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_maxsize_250_image.png")
 		self.assertTrue (os.path.exists (path), path.encode (self.encoding))
 
 	
@@ -662,7 +667,7 @@ class ParserTest (unittest.TestCase):
 
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-		path = os.path.join (self.rootwiki[u"Страница 2"].getAttachPath(), "__thumb/th_maxsize_250_image.png")
+		path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_maxsize_250_image.png")
 		self.assertTrue (os.path.exists (path), path.encode (self.encoding))
 	
 
@@ -674,7 +679,7 @@ class ParserTest (unittest.TestCase):
 
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-		path = os.path.join (self.rootwiki[u"Страница 2"].getAttachPath(), "__thumb/th_maxsize_300_image.jpg")
+		path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_maxsize_300_image.jpg")
 		self.assertTrue (os.path.exists (path), path.encode (self.encoding))
 
 
@@ -686,7 +691,7 @@ class ParserTest (unittest.TestCase):
 
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-		path = os.path.join (self.rootwiki[u"Страница 2"].getAttachPath(), "__thumb/th_maxsize_300_image.jpg")
+		path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_maxsize_300_image.jpg")
 		self.assertTrue (os.path.exists (path), path.encode (self.encoding))
 
 	
@@ -698,7 +703,7 @@ class ParserTest (unittest.TestCase):
 
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-		path = os.path.join (self.rootwiki[u"Страница 2"].getAttachPath(), "__thumb/th_maxsize_300_image.png")
+		path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_maxsize_300_image.png")
 		self.assertTrue (os.path.exists (path), path.encode (self.encoding))
 
 
@@ -710,7 +715,7 @@ class ParserTest (unittest.TestCase):
 
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-		path = os.path.join (self.rootwiki[u"Страница 2"].getAttachPath(), "__thumb/th_maxsize_300_image.png")
+		path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_maxsize_300_image.png")
 		self.assertTrue (os.path.exists (path), path.encode (self.encoding))
 	
 

@@ -507,32 +507,6 @@ class WikiPage (RootWikiPage):
 
 
 	# TODO: Избавиться
-	@property
-	def attachment (self):
-		"""
-		Возвращает список прикрепленных файлов.
-		Пути до файлов полные
-		"""
-		return self._getAttachments()
-
-
-	# TODO: Избавиться
-	def _getAttachments(self):
-		"""
-		Найти все приаттаченные файлы
-		Пути до файлов полные
-		"""
-		path = self.getAttachPath()
-
-		if not os.path.exists (path):
-			return []
-
-		result = [os.path.join (path, fname) for fname in os.listdir (path)]
-
-		return result
-
-
-	# TODO: Избавиться
 	def attach (self, files):
 		"""
 		Прикрепить файл к странице

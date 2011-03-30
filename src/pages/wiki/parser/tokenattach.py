@@ -56,7 +56,7 @@ class NotImageAttachToken (AttachToken):
 		"""
 		attachesAll = []
 
-		attaches = self.parser.page.attachment
+		attaches = Attachment (self.parser.page).attachmentFull
 		attaches.sort (self.sortByLength, reverse=True)
 
 		for attach in attaches:
@@ -89,7 +89,7 @@ class ImageAttachToken (AttachToken):
 		"""
 		attachesImages = []
 
-		attaches = self.parser.page.attachment
+		attaches = Attachment (self.parser.page).attachmentFull
 		attaches.sort (self.sortByLength, reverse=True)
 
 		for attach in attaches:

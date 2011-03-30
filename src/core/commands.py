@@ -14,10 +14,11 @@ import core.exceptions
 import core.system
 import core.version
 
-from core.tree import WikiDocument, RootWikiPage
+from tree import WikiDocument, RootWikiPage
 from gui.OverwriteDialog import OverwriteDialog
-from core.application import Application
+from application import Application
 from gui.about import AboutDialog
+from attachment import Attachment
 
 
 def MessageBox (*args, **kwargs):
@@ -74,7 +75,7 @@ def attachFiles (parent, page, files):
 	if page.readonly:
 		raise core.exceptions.ReadonlyException
 
-	oldAttaches = [os.path.basename (fname).lower() for fname in page.attachment]
+	oldAttaches = [os.path.basename (fname).lower() for fname in Attachment (page).attachmentFull]
 
 	overwriteDialog = OverwriteDialog (parent)
 
@@ -214,7 +215,7 @@ def copyAttachPathToClipboard (page):
 	Копировать путь до папки с прикрепленными файлами в буфер обмена
 	"""
 	assert page != None
-	copyTextToClipboard (page.getAttachPath(create=True))
+	copyTextToClipboard (Attachment(page).getAttachPath(create=True))
 
 
 def copyLinkToClipboard (page):

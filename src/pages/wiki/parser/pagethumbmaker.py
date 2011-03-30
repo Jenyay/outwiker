@@ -4,8 +4,8 @@
 import os.path
 
 from core.wxthumbmaker import WxThumbmaker
-from core.tree import RootWikiPage
 from ..thumbnails import Thumbnails
+from core.attachment import Attachment
 
 
 class PageThumbmaker (object):
@@ -29,7 +29,7 @@ class PageThumbmaker (object):
 		thumb = Thumbnails (page)
 		path_thumbdir = thumb.getThumbPath (True)
 
-		path_src = os.path.join (page.getAttachPath(), fname)
+		path_src = os.path.join (Attachment (page).getAttachPath(), fname)
 
 		# Имя файла для превьюшки
 		fname_res = self.thumbsTemplate % (file_prefix, size, fname)

@@ -11,6 +11,7 @@ from core.tree import WikiDocument
 from pages.wiki.parser.wikiparser import Parser
 from pages.wiki.wikipage import WikiPageFactory
 from core.application import Application
+from core.attachment import Attachment
 
 
 class ThumbnailsTest (unittest.TestCase):
@@ -48,7 +49,7 @@ class ThumbnailsTest (unittest.TestCase):
 		thumbDir = thumb.getThumbPath (create=False)
 
 		self.assertEqual (thumbDir, 
-				os.path.join (self.parser.page.getAttachPath(), Thumbnails.thumbDir ),
+				os.path.join (Attachment (self.parser.page).getAttachPath(), Thumbnails.thumbDir ),
 				thumbDir)
 
 
@@ -106,7 +107,7 @@ class ThumbnailsTest (unittest.TestCase):
 		thumbDir = thumb.getThumbPath (create=False)
 
 		self.assertEqual (thumbDir, 
-				os.path.join (self.parser.page.getAttachPath(), Thumbnails.thumbDir ),
+				os.path.join (Attachment (self.parser.page).getAttachPath(), Thumbnails.thumbDir ),
 				thumbDir)
 
 

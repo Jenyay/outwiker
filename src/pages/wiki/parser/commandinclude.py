@@ -5,7 +5,7 @@ import os.path
 import cgi
 
 from command import Command
-from core.tree import RootWikiPage
+from core.attachment import Attachment
 
 class IncludeCommand (Command):
 	"""
@@ -95,7 +95,7 @@ class IncludeCommand (Command):
 		else:
 			return (None, params_tail)
 
-		attaches = self.parser.page.attachment
+		attaches = Attachment (self.parser.page).attachmentFull
 		attaches.sort (IncludeCommand.sortByLength, reverse=True)
 
 		path = None

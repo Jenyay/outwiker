@@ -6,15 +6,17 @@ import os
 import hashlib
 
 import core.commands
-from gui.TextEditor import TextEditor
-from pages.html.HtmlPanel import HtmlPanel
-from gui.BaseTextPanel import BaseTextPanel
-from parserfactory import ParserFactory
 from core.config import Config
 from core.tree import RootWikiPage
 from core.htmlimprover import HtmlImprover
-from gui.HtmlTextEditor import HtmlTextEditor
 from core.application import Application
+from core.attachment import Attachment
+
+from gui.TextEditor import TextEditor
+from gui.BaseTextPanel import BaseTextPanel
+from gui.HtmlTextEditor import HtmlTextEditor
+from pages.html.HtmlPanel import HtmlPanel
+from parserfactory import ParserFactory
 from wikiconfig import WikiConfig
 
 
@@ -390,7 +392,7 @@ class WikiPagePanel (HtmlPanel):
 		result = page.content.encode ("unicode_escape")
 
 		# Список прикрепленных файлов
-		for fname in page.attachment:
+		for fname in Attachment (page).attachmentFull:
 			result += fname.encode ("unicode_escape")
 			result += unicode (os.stat (fname).st_mtime)
 
@@ -428,7 +430,7 @@ class WikiPagePanel (HtmlPanel):
 		Сгенерировать список прикрепленных файлов.
 		Используется в случае, если текст страницы пустой
 		"""
-		files = [os.path.basename (path) for path in page.attachment]
+		files = [os.path.basename (path) for path in Attachment (page).attachmentFull]
 		files.sort()
 
 		result = reduce (lambda res, path: res + "[[%s -> Attach:%s]]\n" % (path, path), files, u"")

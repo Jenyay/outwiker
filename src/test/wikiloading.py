@@ -5,6 +5,9 @@ import os.path
 import shutil
 import unittest
 
+from core.event import Event
+from core.application import Application
+from core.attachment import Attachment
 from core.tree import RootWikiPage, WikiDocument
 
 from pages.text.textpage import TextPageFactory, TextWikiPage
@@ -12,8 +15,6 @@ from pages.wiki.wikipage import WikiPageFactory, WikiWikiPage
 from pages.html.htmlpage import HtmlPageFactory, HtmlWikiPage
 from pages.search.searchpage import SearchPageFactory, SearchWikiPage
 
-from core.event import Event
-from core.application import Application
 from test.utils import removeWiki
 
 
@@ -238,22 +239,20 @@ class TextPageAttachmentTest (unittest.TestCase):
 		wiki = WikiDocument.load (self.path)
 
 		# Проверим, что файлы прикрепились к тем страницам, куда прикрепляли
-		self.assertEqual (len (wiki[page1].attachment), 3)
-		self.assertEqual (len (wiki[page3].attachment), 2)
-		self.assertEqual (len (wiki[u"Страница 2"].attachment), 0)
+		self.assertEqual (len (Attachment (wiki[page1]).attachmentFull), 3)
+		self.assertEqual (len (Attachment (wiki[page3]).attachmentFull), 2)
+		self.assertEqual (len (Attachment (wiki[u"Страница 2"]).attachmentFull), 0)
 
 		# Проверим пути до прикрепленных файлов
 		attachPathPage1 = TextPageAttachmentTest.getFullAttachPath (wiki, page1, files)
 		attachPathPage3 = TextPageAttachmentTest.getFullAttachPath (wiki, page3, files)
 
-		#print attachPathPage1
-		#print wiki[page1].attachment
-		self.assertTrue (attachPathPage1[0] in wiki[page1].attachment)
-		self.assertTrue (attachPathPage1[1] in wiki[page1].attachment)
-		self.assertTrue (attachPathPage1[2] in wiki[page1].attachment)
+		self.assertTrue (attachPathPage1[0] in Attachment (wiki[page1]).attachmentFull)
+		self.assertTrue (attachPathPage1[1] in Attachment (wiki[page1]).attachmentFull)
+		self.assertTrue (attachPathPage1[2] in Attachment (wiki[page1]).attachmentFull)
 		
-		self.assertTrue (attachPathPage3[0] in wiki[page3].attachment)
-		self.assertTrue (attachPathPage3[1] in wiki[page3].attachment)
+		self.assertTrue (attachPathPage3[0] in Attachment (wiki[page3]).attachmentFull)
+		self.assertTrue (attachPathPage3[1] in Attachment (wiki[page3]).attachmentFull)
 
 
 	def testAttach2 (self):
@@ -270,22 +269,20 @@ class TextPageAttachmentTest (unittest.TestCase):
 		self.rootwiki[page3].attach ( [fullFilesPath[0], fullFilesPath[1] ] )
 
 		# Проверим, что файлы прикрепились к тем страницам, куда прикрепляли
-		self.assertEqual (len (self.rootwiki[page1].attachment), 3)
-		self.assertEqual (len (self.rootwiki[page3].attachment), 2)
-		self.assertEqual (len (self.rootwiki[u"Страница 2"].attachment), 0)
+		self.assertEqual (len (Attachment (self.rootwiki[page1]).attachmentFull), 3)
+		self.assertEqual (len (Attachment (self.rootwiki[page3]).attachmentFull), 2)
+		self.assertEqual (len (Attachment (self.rootwiki[u"Страница 2"]).attachmentFull), 0)
 
 		# Проверим пути до прикрепленных файлов
 		attachPathPage1 = TextPageAttachmentTest.getFullAttachPath (self.rootwiki, page1, files)
 		attachPathPage3 = TextPageAttachmentTest.getFullAttachPath (self.rootwiki, page3, files)
 
-		#print attachPathPage1
-		#print wiki[page1].attachment
-		self.assertTrue (attachPathPage1[0] in self.rootwiki[page1].attachment)
-		self.assertTrue (attachPathPage1[1] in self.rootwiki[page1].attachment)
-		self.assertTrue (attachPathPage1[2] in self.rootwiki[page1].attachment)
+		self.assertTrue (attachPathPage1[0] in Attachment (self.rootwiki[page1]).attachmentFull)
+		self.assertTrue (attachPathPage1[1] in Attachment (self.rootwiki[page1]).attachmentFull)
+		self.assertTrue (attachPathPage1[2] in Attachment (self.rootwiki[page1]).attachmentFull)
 		
-		self.assertTrue (attachPathPage3[0] in self.rootwiki[page3].attachment)
-		self.assertTrue (attachPathPage3[1] in self.rootwiki[page3].attachment)
+		self.assertTrue (attachPathPage3[0] in Attachment (self.rootwiki[page3]).attachmentFull)
+		self.assertTrue (attachPathPage3[1] in Attachment (self.rootwiki[page3]).attachmentFull)
 
 
 	@staticmethod
@@ -296,7 +293,7 @@ class TextPageAttachmentTest (unittest.TestCase):
 		pageSubpath -- путь до страницы
 		fnames -- имена файлов
 		"""
-		attachPath = os.path.join (wiki[pageSubpath].getAttachPath())
+		attachPath = os.path.join (Attachment (wiki[pageSubpath]).getAttachPath())
 		result = [os.path.join (attachPath, fname) for fname in fnames]
 
 		return result

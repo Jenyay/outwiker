@@ -13,6 +13,7 @@ from core.tree import RootWikiPage, WikiDocument
 from pages.text.textpage import TextPageFactory
 from pages.html.htmlpage import HtmlPageFactory
 from core.event import Event
+from core.attachment import Attachment
 
 
 path = u"../test/invalidwiki"
@@ -37,7 +38,7 @@ class InvalidWikiTest (unittest.TestCase):
 		"""
 		wiki = WikiDocument.load (path)
 		page = wiki[u"Страница без аттачей"]
-		self.assertEqual ( len (page.attachment), 0)
+		self.assertEqual ( len (Attachment (page).attachmentFull), 0)
 
 	
 	def testEmptyAttaches2 (self):
@@ -51,10 +52,10 @@ class InvalidWikiTest (unittest.TestCase):
 		wiki = WikiDocument.load (path)
 		wiki[u"Страница без аттачей"].attach (attaches)
 
-		self.assertEqual (len (wiki[u"Страница без аттачей"].attachment), 3)
+		self.assertEqual (len (Attachment (wiki[u"Страница без аттачей"]).attachmentFull), 3)
 
 		# Удалим прикрепленные файлы
-		attachPath = wiki[u"Страница без аттачей"].getAttachPath()
+		attachPath = Attachment (wiki[u"Страница без аттачей"]).getAttachPath()
 		shutil.rmtree (attachPath)
 	
 

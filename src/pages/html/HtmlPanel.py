@@ -8,13 +8,15 @@ import cgi
 
 import wx
 
-from core.application import Application
-from gui.BaseTextPanel import BaseTextPanel
 import core.system
+import core.commands
+from core.application import Application
+from core.attachment import Attachment
+from core.htmlimprover import HtmlImprover
+
+from gui.BaseTextPanel import BaseTextPanel
 from gui.htmlview import HtmlView
 from gui.HtmlTextEditor import HtmlTextEditor
-import core.commands
-from core.htmlimprover import HtmlImprover
 
 # begin wxGlade: dependencies
 # end wxGlade
@@ -154,7 +156,7 @@ class HtmlPanel(BaseTextPanel):
 	def _openDefaultPage(self):
 		assert self._currentpage != None
 
-		if len (self._currentpage.content) > 0 or len (self._currentpage.attachment) > 0:
+		if len (self._currentpage.content) > 0 or len (Attachment (self._currentpage).attachmentFull) > 0:
 			self.notebook.SetSelection (self.resultPageIndex)
 		else:
 			self.notebook.SetSelection (self.codePageIndex)
