@@ -181,7 +181,7 @@ class AttachPanel(wx.Panel):
 					_(u"Remove files?"),
 					wx.YES_NO  | wx.ICON_QUESTION) == wx.YES:
 				try:
-					self.currentPage.removeAttach (files)
+					Attachment (self.currentPage).removeAttach (files)
 				except IOError as e:
 					core.commands.MessageBox (unicode (e), _(u"Error"), wx.ICON_ERROR | wx.OK)
 

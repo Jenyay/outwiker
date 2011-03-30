@@ -7,13 +7,14 @@ import unittest
 
 from core.tree import RootWikiPage, WikiDocument
 from core.exceptions import ReadonlyException
+from core.event import Event
+from core.attachment import Attachment
 
 from pages.text.textpage import TextPageFactory, TextWikiPage
 from pages.wiki.wikipage import WikiPageFactory, WikiWikiPage
 from pages.html.htmlpage import HtmlPageFactory, HtmlWikiPage
 from pages.search.searchpage import SearchPageFactory, SearchWikiPage
 
-from core.event import Event
 from test.utils import removeWiki
 
 
@@ -283,7 +284,7 @@ class ReadonlyChangeTest (unittest.TestCase):
 
 	def testRemoveAttach1 (self):
 		try:
-			self.wiki[u"Страница 4"].removeAttach (u"add.png")
+			Attachment (self.wiki[u"Страница 4"]).removeAttach (u"add.png")
 		except ReadonlyException:
 			pass
 		else:
@@ -292,7 +293,7 @@ class ReadonlyChangeTest (unittest.TestCase):
 
 	def testRemoveAttach2 (self):
 		try:
-			self.wiki[u"Страница 1/Страница 5"].removeAttach (u"anchor.png")
+			Attachment (self.wiki[u"Страница 1/Страница 5"]).removeAttach (u"anchor.png")
 		except ReadonlyException:
 			pass
 		else:

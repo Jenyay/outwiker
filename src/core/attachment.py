@@ -59,7 +59,7 @@ class Attachment (object):
 		files -- список файлов (или папок), которые надо прикрепить
 		"""
 		if self.page.readonly:
-			raise core.exceptions.ReadonlyException
+			raise exceptions.ReadonlyException
 
 		attachPath = self.getAttachPath(True)
 
@@ -78,7 +78,7 @@ class Attachment (object):
 		Удалить прикрепленные файлы
 		"""
 		if self.page.readonly:
-			raise core.exceptions.ReadonlyException
+			raise exceptions.ReadonlyException
 
 		attachPath = self.getAttachPath(True)
 

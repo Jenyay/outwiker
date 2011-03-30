@@ -530,27 +530,6 @@ class WikiPage (RootWikiPage):
 		Application.onPageUpdate (self)
 	
 
-	# TODO: Избавиться
-	def removeAttach (self, files):
-		"""
-		Удалить прикрепленные файлы
-		"""
-		if self.readonly:
-			raise core.exceptions.ReadonlyException
-
-		attachPath = self.getAttachPath()
-
-		for fname in files:
-			path = os.path.join (attachPath, fname)
-			try:
-				os.remove (path)
-			except OSError:
-				Application.onPageUpdate (self)
-				raise IOError (u"Can't remove %s" % fname)
-
-		Application.onPageUpdate (self)
-
-
 	def _getIcon (self):
 		files = os.listdir (self.path)
 
