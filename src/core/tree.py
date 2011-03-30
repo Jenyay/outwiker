@@ -10,7 +10,6 @@ from config import PageConfig
 from bookmarks import Bookmarks
 from search import TagsList
 import core.exceptions
-from attachment import Attachment
 
 
 class RootWikiPage (object):
@@ -234,15 +233,6 @@ class RootWikiPage (object):
 		Удалить страницу из дочерних страниц
 		"""
 		self._children.remove (page)
-	
-
-	# TODO: Избавиться от этого метода
-	def getAttachPath (self, create=False):
-		"""
-		Возвращает путь до страницы с прикрепленными файлами
-		create - создать папку для прикрепленных файлов, если она еще не создана?
-		"""
-		return Attachment(self).getAttachPath (create)
 	
 
 class WikiDocument (RootWikiPage):
@@ -506,30 +496,6 @@ class WikiPage (RootWikiPage):
 		Application.onPageUpdate(self)
 
 
-	# TODO: Избавиться
-	def attach (self, files):
-		"""
-		Прикрепить файл к странице
-		files -- список файлов (или папок), которые надо прикрепить
-		"""
-		if self.readonly:
-			raise core.exceptions.ReadonlyException
-
-		attachPath = self.getAttachPath()
-		
-		if not os.path.exists (attachPath):
-			os.mkdir (attachPath)
-
-		for name in files:
-			if os.path.isdir (name):
-				basename = os.path.basename (name)
-				shutil.copytree (name, os.path.join (attachPath, basename) )
-			else:
-				shutil.copy (name, attachPath)
-
-		Application.onPageUpdate (self)
-	
-
 	def _getIcon (self):
 		files = os.listdir (self.path)
 
@@ -578,12 +544,6 @@ class WikiPage (RootWikiPage):
 
 		if not os.path.exists (self.path):
 			os.mkdir (self.path)
-
-		# Закомментарить эти три строки, если не хотим, 
-		# чтобы папка __attach создавалась при создании страницы
-		#attachPath = self.getAttachPath()
-		#if not os.path.exists (attachPath):
-		#	os.mkdir (attachPath)
 
 		try:
 			text = self.content

@@ -90,7 +90,7 @@ def attachFiles (parent, page, files):
 				break
 		
 		try:
-			page.attach ([fname])
+			Attachment (page).attach ([fname])
 		except IOError:
 			text = u'Can\'t attach file "%s"' % (fname)
 			MessageBox (text, _(u"Error"), wx.ICON_ERROR | wx.OK)

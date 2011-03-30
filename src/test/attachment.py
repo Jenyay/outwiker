@@ -234,3 +234,86 @@ class AttachmentTest (unittest.TestCase):
 		self.assertRaises (IOError, attach.removeAttach, files)
 		self.assertRaises (IOError, attach.removeAttach, [u"dir_111"])
 
+
+	def testSortByName (self):
+		files = [u"add.png", u"Anchor.png", 
+				u"image2.png", u"image.png", 
+				u"add.png2", u"файл с пробелами.tmp", 
+				u"filename"]
+
+		fullFilesPath = [os.path.join (u"../test/samplefiles/for_sort", fname) for fname in files]
+
+		attach = Attachment (self.page)
+		attach.attach (fullFilesPath)
+
+		attach2 = Attachment (self.page)
+		files_list = [os.path.basename (fname) for fname in attach2.attachmentFull]
+		files_list.sort (Attachment.sortByName)
+
+		self.assertEqual (files_list[0], u"add.png")
+		self.assertEqual (files_list[1], u"add.png2")
+		self.assertEqual (files_list[2], u"Anchor.png")
+		self.assertEqual (files_list[3], u"filename")
+		self.assertEqual (files_list[4], u"image.png")
+		self.assertEqual (files_list[5], u"image2.png")
+		self.assertEqual (files_list[6], u"файл с пробелами.tmp")
+
+
+	def testSortByExt (self):
+		files = [u"add.png", u"Anchor.png", 
+				u"image2.png", u"image.png", 
+				u"add.png2", u"файл с пробелами.tmp", 
+				u"filename"]
+
+		fullFilesPath = [os.path.join (u"../test/samplefiles/for_sort", fname) for fname in files]
+
+		attach = Attachment (self.page)
+		attach.attach (fullFilesPath)
+
+		attach2 = Attachment (self.page)
+		files_list = [os.path.basename (fname) for fname in attach2.attachmentFull]
+		files_list.sort (Attachment.sortByExt)
+
+		self.assertEqual (files_list[0], u"filename")
+		self.assertEqual (files_list[1], u"add.png")
+		self.assertEqual (files_list[2], u"Anchor.png")
+		self.assertEqual (files_list[3], u"image.png")
+		self.assertEqual (files_list[4], u"image2.png")
+		self.assertEqual (files_list[5], u"add.png2")
+		self.assertEqual (files_list[6], u"файл с пробелами.tmp")
+
+
+	def testSortByDate (self):
+		files = [u"add.png", u"Anchor.png", 
+				u"image2.png", u"image.png", 
+				u"add.png2", u"файл с пробелами.tmp", 
+				u"filename"]
+
+		fullFilesPath = [os.path.join (u"../test/samplefiles/for_sort", fname) for fname in files]
+
+
+		attach = Attachment (self.page)
+		attach.attach (fullFilesPath)
+
+		files_list = attach.attachmentFull
+		files_list.sort (Attachment.sortByName)
+
+		os.utime (files_list[3], (1000000000, 1000000000))
+		os.utime (files_list[0], (1000000000, 2000000000))
+		os.utime (files_list[2], (1000000000, 3000000000))
+		os.utime (files_list[6], (1000000000, 4000000000))
+		os.utime (files_list[4], (1000000000, 5000000000))
+		os.utime (files_list[5], (1000000000, 6000000000))
+		os.utime (files_list[1], (1000000000, 7000000000))
+
+		attach2 = Attachment (self.page)
+		files_list2 = attach.attachmentFull
+		files_list2.sort (Attachment.sortByDate)
+
+		self.assertEqual (files_list2[0], files_list[3])
+		self.assertEqual (files_list2[1], files_list[0])
+		self.assertEqual (files_list2[2], files_list[2])
+		self.assertEqual (files_list2[3], files_list[6])
+		self.assertEqual (files_list2[4], files_list[4])
+		self.assertEqual (files_list2[5], files_list[5])
+		self.assertEqual (files_list2[6], files_list[1])

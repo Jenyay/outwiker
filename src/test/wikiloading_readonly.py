@@ -173,8 +173,8 @@ class ReadonlyChangeTest (unittest.TestCase):
 
 		fullFilesPath = [os.path.join (filesPath, fname) for fname in files]
 
-		wiki[u"Страница 4"].attach (fullFilesPath)
-		wiki[u"Страница 1/Страница 5"].attach (fullFilesPath)
+		Attachment (wiki[u"Страница 4"]).attach (fullFilesPath)
+		Attachment (wiki[u"Страница 1/Страница 5"]).attach (fullFilesPath)
 
 		self.wiki = WikiDocument.load (self.path, readonly=True)
 	
@@ -261,7 +261,7 @@ class ReadonlyChangeTest (unittest.TestCase):
 
 			fullFilesPath = [os.path.join (filesPath, fname) for fname in files]
 
-			self.wiki[u"Страница 1"].attach (fullFilesPath)
+			Attachment (self.wiki[u"Страница 1"]).attach (fullFilesPath)
 		except ReadonlyException:
 			pass
 		else:
@@ -275,7 +275,7 @@ class ReadonlyChangeTest (unittest.TestCase):
 
 			fullFilesPath = [os.path.join (filesPath, fname) for fname in files]
 
-			self.wiki[u"Страница 2/Страница 3"].attach (fullFilesPath)
+			Attachment (self.wiki[u"Страница 2/Страница 3"]).attach (fullFilesPath)
 		except ReadonlyException:
 			pass
 		else:

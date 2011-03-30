@@ -56,7 +56,7 @@ class ParserTest (unittest.TestCase):
 		self.attach_page2 = Attachment (self.rootwiki[u"Страница 2"])
 
 		# Прикрепим к двум страницам файлы
-		self.testPage.attach (fullFilesPath)
+		Attachment (self.testPage).attach (fullFilesPath)
 	
 
 	def tearDown(self):

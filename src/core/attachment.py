@@ -48,7 +48,6 @@ class Attachment (object):
 			return []
 
 		result = [os.path.join (path, fname) for fname in os.listdir (path)]
-		result.sort()
 
 		return result
 
@@ -94,3 +93,55 @@ class Attachment (object):
 				raise IOError (u"Can't remove %s" % fname)
 
 		Application.onPageUpdate (self.page)
+
+
+	@staticmethod
+	def sortByName (fname1, fname2):
+		"""
+		Метод для сортировки файлов по имени
+		"""
+		fname1_lower = fname1.lower()
+		fname2_lower = fname2.lower()
+
+		if fname1_lower > fname2_lower:
+			return 1
+		elif fname1_lower < fname2_lower:
+			return -1
+		return 0
+
+
+	@staticmethod
+	def sortByExt (fname1, fname2):
+		"""
+		Метод для сортировки файлов по расширению
+		"""
+		(root1, ext1) = os.path.splitext (os.path.basename (fname1).lower())
+		(root2, ext2) = os.path.splitext (os.path.basename (fname2).lower())
+
+		if ext1 > ext2:
+			return 1
+		elif ext1 < ext2:
+			return -1
+		
+		if root1 > root2:
+			return 1
+		elif root1 < root2:
+			return -1
+
+		return 0
+
+
+	@staticmethod
+	def sortByDate (fname1, fname2):
+		"""
+		Метод для сортировки файлов по дате. 
+		Пути до файлов должны быть полные
+		"""
+		stat1 = os.stat (fname1)
+		stat2 = os.stat (fname2)
+
+		if stat1.st_mtime > stat2.st_mtime:
+			return 1
+		elif stat1.st_mtime < stat2.st_mtime:
+			return -1
+		return 0

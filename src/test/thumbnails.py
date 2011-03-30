@@ -114,7 +114,7 @@ class ThumbnailsTest (unittest.TestCase):
 	def testThumbnails2_attach (self):
 		fname = u"accept.png"
 		attachPath = os.path.join (self.filesPath, fname)
-		self.parser.page.attach ([attachPath])
+		Attachment (self.parser.page).attach ([attachPath])
 
 		thumb = Thumbnails (self.parser.page)
 		thumbDir = thumb.getThumbPath (create=False)
@@ -125,7 +125,7 @@ class ThumbnailsTest (unittest.TestCase):
 	def testThumbnails3_attach (self):
 		fname = u"accept.png"
 		attachPath = os.path.join (self.filesPath, fname)
-		self.parser.page.attach ([attachPath])
+		Attachment (self.parser.page).attach ([attachPath])
 
 		thumb = Thumbnails (self.parser.page)
 		thumbDir = thumb.getThumbPath (create=True)
@@ -136,7 +136,7 @@ class ThumbnailsTest (unittest.TestCase):
 	def testThumbnailsClear1_attach (self):
 		fname = u"accept.png"
 		attachPath = os.path.join (self.filesPath, fname)
-		self.parser.page.attach ([attachPath])
+		Attachment (self.parser.page).attach ([attachPath])
 
 		thumb = Thumbnails (self.parser.page)
 		thumb.clearDir ()
@@ -147,7 +147,7 @@ class ThumbnailsTest (unittest.TestCase):
 	def testThumbnailsClear2_attach (self):
 		fname = u"accept.png"
 		attachPath = os.path.join (self.filesPath, fname)
-		self.parser.page.attach ([attachPath])
+		Attachment (self.parser.page).attach ([attachPath])
 
 		thumb = Thumbnails (self.parser.page)
 		
@@ -166,7 +166,7 @@ class ThumbnailsTest (unittest.TestCase):
 	def testThumbnailsClear3_attach (self):
 		fname = u"accept.png"
 		attachPath = os.path.join (self.filesPath, fname)
-		self.parser.page.attach ([attachPath])
+		Attachment (self.parser.page).attach ([attachPath])
 
 		thumb = Thumbnails (self.parser.page)
 		

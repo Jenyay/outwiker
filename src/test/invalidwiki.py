@@ -9,11 +9,11 @@ import os.path
 import shutil
 import unittest
 
+from core.event import Event
+from core.attachment import Attachment
 from core.tree import RootWikiPage, WikiDocument
 from pages.text.textpage import TextPageFactory
 from pages.html.htmlpage import HtmlPageFactory
-from core.event import Event
-from core.attachment import Attachment
 
 
 path = u"../test/invalidwiki"
@@ -50,7 +50,7 @@ class InvalidWikiTest (unittest.TestCase):
 		attaches = [os.path.join (filesPath, fname) for fname in files]
 
 		wiki = WikiDocument.load (path)
-		wiki[u"Страница без аттачей"].attach (attaches)
+		Attachment (wiki[u"Страница без аттачей"]).attach (attaches)
 
 		self.assertEqual (len (Attachment (wiki[u"Страница без аттачей"]).attachmentFull), 3)
 

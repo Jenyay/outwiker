@@ -5,11 +5,12 @@ import os
 import os.path
 import unittest
 
-from pages.wiki.parser.pagethumbmaker import PageThumbmaker
+from core.attachment import Attachment
 from core.tree import RootWikiPage, WikiDocument
+from pages.wiki.parser.pagethumbmaker import PageThumbmaker
 from pages.text.textpage import TextPageFactory
-from test.utils import removeWiki, getImageSize
 from pages.wiki.thumbnails import Thumbnails
+from utils import removeWiki, getImageSize
 
 
 class PageThumbmakerTest (unittest.TestCase):
@@ -39,7 +40,7 @@ class PageThumbmakerTest (unittest.TestCase):
 		fname_in = "first.jpg"
 		page = self.rootwiki[u"Страница 1"]
 
-		page.attach ([os.path.join (images_dir, fname_in) ] )
+		Attachment (page).attach ([os.path.join (images_dir, fname_in) ] )
 
 		newwidth = 250
 		newheight = 182
@@ -60,7 +61,7 @@ class PageThumbmakerTest (unittest.TestCase):
 		fname_in = "outwiker_1.1.0_02.png"
 		page = self.rootwiki[u"Страница 1"]
 
-		page.attach ([os.path.join (images_dir, fname_in) ] )
+		Attachment (page).attach ([os.path.join (images_dir, fname_in) ] )
 
 		newwidth = 250
 		newheight = 215
@@ -81,7 +82,7 @@ class PageThumbmakerTest (unittest.TestCase):
 		fname_in = "first.jpg"
 		page = self.rootwiki[u"Страница 1"]
 
-		page.attach ([os.path.join (images_dir, fname_in) ] )
+		Attachment (page).attach ([os.path.join (images_dir, fname_in) ] )
 
 		newwidth = 249
 		newheight = 182
@@ -102,7 +103,7 @@ class PageThumbmakerTest (unittest.TestCase):
 		fname_in = "outwiker_1.1.0_02.png"
 		page = self.rootwiki[u"Страница 1"]
 
-		page.attach ([os.path.join (images_dir, fname_in) ] )
+		Attachment (page).attach ([os.path.join (images_dir, fname_in) ] )
 
 		newwidth = 249
 		newheight = 215
@@ -123,7 +124,7 @@ class PageThumbmakerTest (unittest.TestCase):
 		fname_in = "first.jpg"
 		page = self.rootwiki[u"Страница 1"]
 
-		page.attach ([os.path.join (images_dir, fname_in) ] )
+		Attachment (page).attach ([os.path.join (images_dir, fname_in) ] )
 
 		maxsize = 250
 
@@ -146,7 +147,7 @@ class PageThumbmakerTest (unittest.TestCase):
 		fname_in = "first_vertical.jpeg"
 		page = self.rootwiki[u"Страница 1"]
 
-		page.attach ([os.path.join (images_dir, fname_in) ] )
+		Attachment (page).attach ([os.path.join (images_dir, fname_in) ] )
 
 		maxsize = 250
 
@@ -169,7 +170,7 @@ class PageThumbmakerTest (unittest.TestCase):
 		fname_in = "outwiker_1.1.0_02.png"
 		page = self.rootwiki[u"Страница 1"]
 
-		page.attach ([os.path.join (images_dir, fname_in) ] )
+		Attachment (page).attach ([os.path.join (images_dir, fname_in) ] )
 
 		maxsize = 250
 

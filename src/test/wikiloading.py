@@ -204,12 +204,12 @@ class TextPageAttachmentTest (unittest.TestCase):
 		fullFilesPath = [os.path.join (filesPath, fname) for fname in files]
 
 		# Прикрепим к двум страницам файлы
-		self.rootwiki[page1].attach (fullFilesPath)
+		Attachment (self.rootwiki[page1]).attach (fullFilesPath)
 		
 		self.assertEqual (self.pageUpdateCount, 1)
 		self.assertEqual (self.pageUpdateSender, self.rootwiki[page1])
 
-		self.rootwiki[page3].attach ( [fullFilesPath[0], fullFilesPath[1] ] )
+		Attachment (self.rootwiki[page3]).attach ( [fullFilesPath[0], fullFilesPath[1] ] )
 		
 		self.assertEqual (self.pageUpdateCount, 2)
 		self.assertEqual (self.pageUpdateSender, self.rootwiki[page3])
@@ -232,8 +232,8 @@ class TextPageAttachmentTest (unittest.TestCase):
 		fullFilesPath = [os.path.join (filesPath, fname) for fname in files]
 
 		# Прикрепим к двум страницам файлы
-		self.rootwiki[page1].attach (fullFilesPath)
-		self.rootwiki[page3].attach ( [fullFilesPath[0], fullFilesPath[1] ] )
+		Attachment (self.rootwiki[page1]).attach (fullFilesPath)
+		Attachment (self.rootwiki[page3]).attach ( [fullFilesPath[0], fullFilesPath[1] ] )
 
 		# Заново загрузим вики
 		wiki = WikiDocument.load (self.path)
@@ -265,8 +265,8 @@ class TextPageAttachmentTest (unittest.TestCase):
 		fullFilesPath = [os.path.join (filesPath, fname) for fname in files]
 
 		# Прикрепим к двум страницам файлы
-		self.rootwiki[page1].attach (fullFilesPath)
-		self.rootwiki[page3].attach ( [fullFilesPath[0], fullFilesPath[1] ] )
+		Attachment (self.rootwiki[page1]).attach (fullFilesPath)
+		Attachment (self.rootwiki[page3]).attach ( [fullFilesPath[0], fullFilesPath[1] ] )
 
 		# Проверим, что файлы прикрепились к тем страницам, куда прикрепляли
 		self.assertEqual (len (Attachment (self.rootwiki[page1]).attachmentFull), 3)

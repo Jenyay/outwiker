@@ -6,13 +6,13 @@ import unittest
 import hashlib
 
 from core.tree import WikiDocument
+from core.application import Application
 from pages.wiki.parser.wikiparser import Parser
 from pages.wiki.wikipage import WikiPageFactory
-from test.utils import removeWiki
-from core.application import Application
 from pages.wiki.parser.command import Command
 from pages.wiki.parserfactory import ParserFactory
 from pages.wiki.parser.commandbloggers import LjUserCommand, LjCommunityCommand
+from utils import removeWiki
 
 
 class WikiBloggersCommandTest (unittest.TestCase):
@@ -36,13 +36,6 @@ class WikiBloggersCommandTest (unittest.TestCase):
 		WikiPageFactory.create (self.rootwiki, u"Страница 2", [])
 		self.testPage = self.rootwiki[u"Страница 2"]
 		
-		files = []
-
-		fullFilesPath = [os.path.join (self.filesPath, fname) for fname in files]
-
-		# Прикрепим к двум страницам файлы
-		self.testPage.attach (fullFilesPath)
-	
 
 	def tearDown(self):
 		removeWiki (self.path)

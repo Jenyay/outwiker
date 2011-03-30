@@ -5,10 +5,11 @@ import os
 import cProfile
 
 from core.tree import RootWikiPage, WikiDocument
+from core.application import Application
+from core.attachment import Attachment
 from pages.wiki.parser.wikiparser import Parser
 from pages.wiki.wikipage import WikiPageFactory
 from test.utils import removeWiki
-from core.application import Application
 
 
 class ParseSample (object):
@@ -45,7 +46,7 @@ class ParseSample (object):
 		fullFilesPath = [os.path.join (self.filesPath, fname) for fname in files]
 
 		# Прикрепим к двум страницам файлы
-		self.testPage.attach (fullFilesPath)
+		Attachment (self.testPage).attach (fullFilesPath)
 
 	
 	def run (self):
