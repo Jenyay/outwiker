@@ -94,7 +94,7 @@ class AttachmentTest (unittest.TestCase):
 		Application.onPageUpdate -= self.onPageUpdate
 
 
-	def testAttach1 (self):
+	def testAttachFull1 (self):
 		attach = Attachment (self.page)
 		attach.attach (self.fullFilesPath)
 
@@ -109,7 +109,7 @@ class AttachmentTest (unittest.TestCase):
 			self.assertTrue (os.path.exists (path))
 
 
-	def testAttach2 (self):
+	def testAttachFull2 (self):
 		attach = Attachment (self.page)
 		attach2 = Attachment (self.page)
 
@@ -124,7 +124,7 @@ class AttachmentTest (unittest.TestCase):
 			self.assertTrue (os.path.basename (path) in attachBasenames, path)
 
 
-	def testAttach3 (self):
+	def testAttachFull3 (self):
 		attach = Attachment (self.page)
 
 		attach.attach (self.fullFilesPath)
@@ -137,6 +137,18 @@ class AttachmentTest (unittest.TestCase):
 
 		for path in self.fullFilesPath:
 			self.assertTrue (os.path.basename (path) in attachBasenames, path)
+
+
+	def testAttachBasename (self):
+		attach = Attachment (self.page)
+		attach.attach (self.fullFilesPath)
+
+		self.assertEqual (len (attach.attachmentBasename), len (self.files))
+
+		attachBasenames = attach.attachmentBasename
+
+		for fname in self.files:
+			self.assertTrue (fname in attachBasenames, fname)
 
 
 	def testRemoveAttachesEvent (self):

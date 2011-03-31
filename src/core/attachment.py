@@ -52,6 +52,19 @@ class Attachment (object):
 		return result
 
 
+	@property
+	def attachmentBasename (self):
+		"""
+		Возвращает список прикрепленных файлов (только имена файлов без путей).
+		"""
+		path = self.getAttachPath()
+
+		if not os.path.exists (path):
+			return []
+
+		return os.listdir (path)
+
+
 	def attach (self, files):
 		"""
 		Прикрепить файл к странице

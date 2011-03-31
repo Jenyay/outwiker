@@ -141,7 +141,7 @@ class AttachPanel(wx.Panel):
 		self.attachList.ClearAll()
 		if self.currentPage != None:
 			files = Attachment (self.currentPage).attachmentFull
-			files.reverse()
+			files.sort(Attachment.sortByName, reverse=True)
 
 			for fname in files:
 				if not os.path.basename(fname).startswith("__") or not os.path.isdir (fname):
