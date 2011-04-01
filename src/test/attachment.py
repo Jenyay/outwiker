@@ -311,12 +311,12 @@ class AttachmentTest (unittest.TestCase):
 		files_list.sort (Attachment.sortByName)
 
 		os.utime (files_list[3], (1000000000, 1000000000))
-		os.utime (files_list[0], (1000000000, 2000000000))
-		os.utime (files_list[2], (1000000000, 3000000000))
-		os.utime (files_list[6], (1000000000, 4000000000))
-		os.utime (files_list[4], (1000000000, 5000000000))
-		os.utime (files_list[5], (1000000000, 6000000000))
-		os.utime (files_list[1], (1000000000, 7000000000))
+		os.utime (files_list[0], (1000000000, 1100000000))
+		os.utime (files_list[2], (1000000000, 1200000000))
+		os.utime (files_list[6], (1000000000, 1300000000))
+		os.utime (files_list[4], (1000000000, 1400000000))
+		os.utime (files_list[5], (1000000000, 1500000000))
+		os.utime (files_list[1], (1000000000, 1600000000))
 
 		attach2 = Attachment (self.page)
 		files_list2 = attach.attachmentFull
