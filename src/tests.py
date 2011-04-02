@@ -25,8 +25,8 @@ if __name__ == '__main__':
 
 	from test.wikiloading import WikiPagesTest, SubWikiTest
 
-	from test.wikicreation import TextPageCreationTest, \
-			ConfigPagesTest, BookmarksTest, RemovePagesTest, RenameTest
+	from test.wikicreation import TextPageCreationTest, \\\\
+			ConfigPagesTest, BookmarksTest, RemovePagesTest
 
 	from test.utils import removeWiki
 	from test.event import EventTest, EventsTest
@@ -52,6 +52,7 @@ if __name__ == '__main__':
 	from test.wikicommandbloggers import WikiBloggersCommandTest
 	from test.wikicommandchildlist import WikiChildListCommandTest
 	from test.attachment import AttachmentTest
+	from test.renametest import RenameTest
 
 
 	unittest.main()
