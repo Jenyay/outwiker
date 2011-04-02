@@ -158,3 +158,12 @@ class Attachment (object):
 		elif stat1.st_mtime < stat2.st_mtime:
 			return -1
 		return 0
+
+
+	def getFullPath (self, fname, create=False):
+		"""
+		Возвращает полный путь до прикрепленного файла с именем fname.
+		Файл fname не обязательно должен существовать.
+		create - нужно ли создавать папку __attach, если ее еще не существует?
+		"""
+		return os.path.join (self.getAttachPath(create), fname)

@@ -329,3 +329,36 @@ class AttachmentTest (unittest.TestCase):
 		self.assertEqual (files_list2[4], files_list[4])
 		self.assertEqual (files_list2[5], files_list[5])
 		self.assertEqual (files_list2[6], files_list[1])
+	
+
+	def testGetFullPath1 (self):
+		attach = Attachment (self.page)
+		fname = u"Имя файла.ext"
+
+		path_full = attach.getFullPath (fname, create=False)
+		path_right = os.path.join (attach.getAttachPath(), fname)
+
+		self.assertFalse (os.path.exists (attach.getAttachPath()))
+		self.assertEqual (path_full, path_right)
+
+
+	def testGetFullPath2 (self):
+		attach = Attachment (self.page)
+		fname = u"Имя файла.ext"
+
+		path_full = attach.getFullPath (fname)
+		path_right = os.path.join (attach.getAttachPath(), fname)
+
+		self.assertFalse (os.path.exists (attach.getAttachPath()))
+		self.assertEqual (path_full, path_right)
+
+
+	def testGetFullPath3 (self):
+		attach = Attachment (self.page)
+		fname = u"Имя файла.ext"
+
+		path_full = attach.getFullPath (fname, create=True)
+		path_right = os.path.join (attach.getAttachPath(), fname)
+
+		self.assertTrue (os.path.exists (attach.getAttachPath()))
+		self.assertEqual (path_full, path_right)

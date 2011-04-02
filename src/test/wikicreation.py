@@ -8,6 +8,7 @@
 import os.path
 import shutil
 import unittest
+import stat
 
 from core.tree import RootWikiPage, WikiDocument
 
@@ -624,3 +625,20 @@ class RenameTest (unittest.TestCase):
 		self.assertEqual (page2.tags[0], u"тег 1")
 		self.assertEqual (page3.tags[0], u"тег 2")
 		self.assertEqual (page4.tags[0], u"тег 3")
+
+
+	def testRenameError (self):
+		page = self.rootwiki[u"Страница 2"]
+		attach = Attachment (page)
+		path = attach.getAttachPath (True)
+		os.chmod (page.path, stat.S_IREAD)
+
+		try:
+			page.title = u"Новое имя"
+		except IOError:
+			pass
+		else:
+			self.fail()
+		finally:
+			os.chmod (page.path, stat.S_IWRITE | stat.S_IREAD | stat.S_IRWXU)
+
