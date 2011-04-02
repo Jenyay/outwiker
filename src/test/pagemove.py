@@ -9,12 +9,13 @@ import os.path
 import shutil
 import unittest
 
-from core.tree import RootWikiPage, WikiDocument
-from pages.text.textpage import TextPageFactory
-from core.event import Event
-from test.utils import removeWiki
-from core.application import Application
 import core.exceptions
+from core.application import Application
+from core.tree import RootWikiPage, WikiDocument
+from core.attachment import Attachment
+
+from pages.text.textpage import TextPageFactory
+from test.utils import removeWiki
 
 
 class MoveTest (unittest.TestCase):
@@ -70,6 +71,9 @@ class MoveTest (unittest.TestCase):
 	def test2 (self):
 		self.wiki[u"Страница 1"].moveTo (self.wiki[u"Страница 2/Страница 3"])
 
+		self.assertEqual (self.wiki[u"Страница 1"], None )
+		self.assertTrue (os.path.exists (os.path.join (self.wiki[u"Страница 2/Страница 3"].path, u"Страница 1") ) )
+
 		self.assertEqual (len (self.wiki[u"Страница 2/Страница 3"]), 2)
 		self.assertEqual (len (self.wiki), 2)
 		self.assertEqual (self.wiki[u"Страница 2/Страница 3/Страница 1"].title, u"Страница 1")
@@ -80,4 +84,41 @@ class MoveTest (unittest.TestCase):
 	
 	def test3 (self):
 		self.assertRaises (core.exceptions.DublicateTitle, self.wiki[u"Страница 2/Страница 3/Страница 4"].moveTo, self.wiki)
+
+
+	def testMoveInvalid (self):
+		"""
+		А что, если кто-то блокирует папку с заметкой?
+		"""
+		page = self.wiki[u"Страница 1"]
+		attachname = u"add.png"
+
+		attach = Attachment (page)
+		attach.attach ([os.path.join (u"../test/samplefiles", attachname)])
+
+		# Откроем на запись файл в папке с вложениями, чтобы нельзя было переместить папку
+		with open (attach.getFullPath (u"lock.tmp", True), "w"):
+			try:
+				page.moveTo (self.wiki[u"Страница 2/Страница 3"])
+			except core.exceptions.TreeException:
+				# Если не удалось переместить страницу
+				self.assertEqual (self.wiki[u"Страница 2/Страница 3/Страница 1"], None)
+				self.assertNotEqual (self.wiki[u"Страница 1"], None)
+				self.assertEqual (len (self.wiki[u"Страница 2/Страница 3"]), 1)
+
+				self.assertTrue (os.path.exists (page.path))
+				self.assertFalse (os.path.exists (os.path.join (self.wiki[u"Страница 2/Страница 3"].path, u"Страница 1") ) )
+
+				self.assertTrue (os.path.exists (attach.getFullPath (attachname) ) )
+			else:
+				# А если страницу переместить удалось, то проверим, что она действительно перенеслась
+				self.assertEqual (self.wiki[u"Страница 1"], None )
+				self.assertTrue (os.path.exists (os.path.join (self.wiki[u"Страница 2/Страница 3"].path, u"Страница 1") ) )
+
+				self.assertEqual (len (self.wiki[u"Страница 2/Страница 3"]), 2)
+				self.assertEqual (len (self.wiki), 2)
+				self.assertEqual (self.wiki[u"Страница 2/Страница 3/Страница 1"].title, u"Страница 1")
+				self.assertEqual (self.wiki[u"Страница 2/Страница 3/Страница 1/Страница 5"].title, u"Страница 5")
+				self.assertEqual (self.wiki[u"Страница 2/Страница 3/Страница 1"].subpath, u"Страница 2/Страница 3/Страница 1")
+				self.assertEqual (self.wiki[u"Страница 2/Страница 3/Страница 1/Страница 5"].subpath, u"Страница 2/Страница 3/Страница 1/Страница 5")
 

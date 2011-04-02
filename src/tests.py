@@ -24,10 +24,7 @@ if __name__ == '__main__':
 	import unittest
 
 	from test.wikiloading import WikiPagesTest, SubWikiTest
-
-	from test.wikicreation import TextPageCreationTest, \\\\
-			ConfigPagesTest, BookmarksTest, RemovePagesTest
-
+	from test.wikicreation import TextPageCreationTest, ConfigPagesTest, BookmarksTest
 	from test.utils import removeWiki
 	from test.event import EventTest, EventsTest
 	from test.factory import FactorySelectorTest
@@ -36,7 +33,7 @@ if __name__ == '__main__':
 	from test.recent import RecentWikiTest
 	from test.search import SearcherTest, TagsListTest, SearchPageTest
 	from test.localsearch import LocalSearchTest
-	from test.movepages import MoveTest
+	from test.pagemove import MoveTest
 	from test.parser import ParserTest
 	from test.htmlimprover_test import HtmlImproverTest
 	from test.wikiloading_readonly import ReadonlyLoadTest, ReadonlyChangeTest
@@ -52,7 +49,8 @@ if __name__ == '__main__':
 	from test.wikicommandbloggers import WikiBloggersCommandTest
 	from test.wikicommandchildlist import WikiChildListCommandTest
 	from test.attachment import AttachmentTest
-	from test.renametest import RenameTest
+	from test.pagerename import RenameTest
+	from test.pageremove import RemovePagesTest
 
 
 	unittest.main()

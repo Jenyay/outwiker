@@ -436,9 +436,17 @@ class WikiPage (RootWikiPage):
 		# Новый путь для страницы
 		newpath = os.path.join (newparent.path, self.title)
 
+		# Временное имя папки.
+		# Сначала попробуем переименовать папку во временную, 
+		# а потом уже ее переместим в нужное место с нужным именем
+		tempname = self._getTempName (oldpath)
+
 		try:
-			shutil.move (oldpath, newpath)
+			os.renames (oldpath, tempname)
+			shutil.move (tempname, newpath)
 		except shutil.Error:
+			raise core.exceptions.TreeException
+		except OSError:
 			raise core.exceptions.TreeException
 
 		self._parent = newparent
@@ -453,6 +461,26 @@ class WikiPage (RootWikiPage):
 					self.subpath)
 
 		Application.onTreeUpdate (self)
+
+	
+	def _getTempName (self, pagepath):
+		"""
+		Найти уникальное имя для перемещаемой страницы.
+		При перемещении сначала пробуем переименовать папку со страницей, а потом уже перемещать
+		pagepath - текущий путь до страницы
+
+		Метод возвращает полный путь
+		"""
+		(path, title) = os.path.split (pagepath)
+		template = u"__{title}_{number}"
+		number = 0
+		newname = template.format (title=title, number=number)
+
+		while (os.path.exists (os.path.join (path, newname) ) ):
+			number += 1
+			newname = template.format (title=title, number=number)
+
+		return os.path.join (path, newname)
 
 
 	@property
