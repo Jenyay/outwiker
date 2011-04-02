@@ -1125,7 +1125,7 @@ sdfsdf || centered || right aligned||
 		fname = texrender.getImageName (eqn)
 		path = os.path.join (Thumbnails.getRelativeThumbDir(), fname)
 
-		result_right = u'<IMG ALIGN="CENTER" SRC="{0}">'.format (path)
+		result_right = u'<IMG SRC="{0}">'.format (path)
 
 		result = self.parser.toHtml (text)
 
@@ -1157,7 +1157,7 @@ sdfsdf || centered || right aligned||
 		path3 = os.path.join (Thumbnails.getRelativeThumbDir(), fname3)
 
 		result_right = u'''бла-бла-бла
-<UL><LI>бла-бла-бла <IMG ALIGN="CENTER" SRC="{path1}"> 1111</LI><LI>бла-бла-бла <IMG ALIGN="CENTER" SRC="{path2}"> 222</LI><LI>бла-бла-бла <IMG ALIGN="CENTER" SRC="{path3}"> 333</LI></UL>'''.format (**locals())
+<UL><LI>бла-бла-бла <IMG SRC="{path1}"> 1111</LI><LI>бла-бла-бла <IMG SRC="{path2}"> 222</LI><LI>бла-бла-бла <IMG SRC="{path3}"> 333</LI></UL>'''.format (**locals())
 
 
 		result = self.parser.toHtml (text)
@@ -1183,7 +1183,7 @@ sdfsdf || centered || right aligned||
 		fname = texrender.getImageName (eqn)
 		path = os.path.join (Thumbnails.getRelativeThumbDir(), fname)
 
-		result_right = u'<A HREF="http://jenyay.net"><IMG ALIGN="CENTER" SRC="{0}"></A>'.format (path)
+		result_right = u'<A HREF="http://jenyay.net"><IMG SRC="{0}"></A>'.format (path)
 
 		result = self.parser.toHtml (text)
 
@@ -1203,7 +1203,7 @@ sdfsdf || centered || right aligned||
 		fname = texrender.getImageName (eqn)
 		path = os.path.join (Thumbnails.getRelativeThumbDir(), fname)
 
-		result_right = u'<A HREF="http://jenyay.net"><IMG ALIGN="CENTER" SRC="{0}"></A>'.format (path)
+		result_right = u'<A HREF="http://jenyay.net"><IMG SRC="{0}"></A>'.format (path)
 
 		result = self.parser.toHtml (text)
 
