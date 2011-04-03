@@ -6,6 +6,8 @@ import wx.html
 
 import core.system
 import core.commands
+from core.application import Application
+
 
 class HtmlView (wx.html.HtmlWindow):
 	"""
@@ -22,6 +24,7 @@ class HtmlView (wx.html.HtmlWindow):
 		self.Bind (wx.EVT_MENU, self.onCopyFromHtml, id = wx.ID_CUT)
 		self.Bind (wx.EVT_ENTER_WINDOW, self.onMouseEnter)
 		self.Bind (wx.EVT_MOTION, self.onMouseMove)
+		#self.Bind (wx.EVT_CLOSE, self.onClose)
 	
 
 	def onCellHover (self, event):

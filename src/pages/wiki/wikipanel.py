@@ -6,7 +6,7 @@ import os
 import hashlib
 
 import core.commands
-from core.config import Config
+from core.config import Config, StringOption
 from core.tree import RootWikiPage
 from core.htmlimprover import HtmlImprover
 from core.application import Application
@@ -26,7 +26,7 @@ class WikiPagePanel (HtmlPanel):
 
 		self._configSection = u"wiki"
 		self._hashKey = u"md5_hash"
-
+		
 		self.notebook.SetPageText (0, _(u"Wiki"))
 
 		self.htmlSizer = wx.FlexGridSizer(1, 1, 0, 0)
@@ -366,24 +366,6 @@ class WikiPagePanel (HtmlPanel):
 		self.notebook.SetSelection (self.htmlcodePageIndex)
 
 	
-	def _getOldHash (self, page):
-		try:
-			config = Config (os.path.join (page.path, RootWikiPage.pageConfig))
-			old_hash = config.get (self._configSection, self._hashKey)
-		except:
-			old_hash = ""
-
-		return old_hash
-
-
-	def _saveHash (self, page, hash):
-		try:
-			config = Config (os.path.join (page.path, RootWikiPage.pageConfig))
-			config.set (self._configSection, self._hashKey, hash)
-		except Exception as e:
-			core.commands.MessageBox (_(u"Can't save page hash\n") + str(e), _(u"Error"), wx.OK  | wx.ICON_ERROR)
-
-
 	def __getFullContent (self, page):
 		"""
 		Получить контент для расчета контрольной суммы, по которой определяется, нужно ли обновлять страницу
@@ -396,6 +378,7 @@ class WikiPagePanel (HtmlPanel):
 		attachlist.sort (Attachment.sortByName)
 
 		for fname in attachlist:
+			# TODO: Учесть файлы во вложенных директориях
 			if not os.path.isdir (fname) or not os.path.basename (fname).startswith ("__"):
 				# Пропустим директории, которые начинаются с __
 				result += fname.encode ("unicode_escape")
@@ -408,10 +391,12 @@ class WikiPagePanel (HtmlPanel):
 
 	
 	def generateHtml (self, page, path):
-		hash = hashlib.md5(self.__getFullContent (page) ).hexdigest()
-		old_hash = self._getOldHash(page)
+		hashoption = StringOption (Config (os.path.join (page.path, RootWikiPage.pageConfig)),
+				self._configSection, self._hashKey, u"")
 
-		if os.path.exists (path) and (hash == old_hash or page.readonly):
+		hash = hashlib.md5(self.__getFullContent (page) ).hexdigest()
+
+		if os.path.exists (path) and (hash == hashoption.value or page.readonly):
 			#print "Cached"
 			return path
 
@@ -421,14 +406,14 @@ class WikiPagePanel (HtmlPanel):
 		parser = factory.make(page, Application.config)
 
 		content = page.content if (len (page.content) > 0 or
-				not self.config.showAttachInsteadBlankOptions.value) else self.__generateAttachList (page)
+			not self.config.showAttachInsteadBlankOptions.value) else self.__generateAttachList (page)
 
 		text = HtmlImprover.run (parser.toHtml (content) )
 
 		with open (path, "wb") as fp:
 			fp.write (text.encode ("utf-8"))
 
-		self._saveHash (page, hash)
+		hashoption.value = hash
 
 		return path
 

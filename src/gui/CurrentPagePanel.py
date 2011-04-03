@@ -53,7 +53,7 @@ class CurrentPagePanel(wx.Panel):
 	def onClose (self, event):
 		if self.pageView != None:
 			self.pageView.removeGui ()
-			self.pageView.Close()
+			self.pageView.ClosePanel()
 		self.Destroy()
 
 
@@ -160,7 +160,7 @@ class CurrentPagePanel(wx.Panel):
 		"""
 		if self.pageView != None:
 			self.contentSizer.Detach (self.pageView)
-			self.pageView.Close()
+			self.pageView.ClosePanel()
 			self.pageView = None
 
 	
