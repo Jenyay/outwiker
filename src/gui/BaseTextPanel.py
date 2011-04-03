@@ -92,7 +92,7 @@ class BaseTextPanel (wx.Panel):
 
 
 
-	def ClosePanel (self):
+	def Close (self):
 		"""
 		Закрытие панели. 
 		Вызывать вручную!!!
@@ -106,7 +106,7 @@ class BaseTextPanel (wx.Panel):
 		Закрытие панели без сохранения. 
 		"""
 		self.Clear()
-		self.Close()
+		wx.Panel.Close (self)
 		self.Destroy()
 	
 
