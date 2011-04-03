@@ -392,9 +392,14 @@ class WikiPagePanel (HtmlPanel):
 		result = page.content.encode ("unicode_escape")
 
 		# Список прикрепленных файлов
-		for fname in Attachment (page).attachmentFull:
-			result += fname.encode ("unicode_escape")
-			result += unicode (os.stat (fname).st_mtime)
+		attachlist = Attachment (page).attachmentFull
+		attachlist.sort (Attachment.sortByName)
+
+		for fname in attachlist:
+			if not os.path.isdir (fname) or not os.path.basename (fname).startswith ("__"):
+				# Пропустим директории, которые начинаются с __
+				result += fname.encode ("unicode_escape")
+				result += unicode (os.stat (fname).st_mtime)
 
 		# Настройки, касающиеся вида вики-страницы
 		result += str (self.config.showAttachInsteadBlankOptions.value)
@@ -407,7 +412,10 @@ class WikiPagePanel (HtmlPanel):
 		old_hash = self._getOldHash(page)
 
 		if os.path.exists (path) and (hash == old_hash or page.readonly):
+			#print "Cached"
 			return path
+
+		#print "Not cached"
 
 		factory = ParserFactory ()
 		parser = factory.make(page, Application.config)
