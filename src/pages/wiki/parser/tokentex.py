@@ -1,14 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-import hashlib
 import os
 import os.path
-import subprocess
 
 from libs.pyparsing import QuotedString
 from core.tree import RootWikiPage
-from core.system import getOS
 from ..texrender import getTexRender
 from ..thumbnails import Thumbnails
 
@@ -37,7 +34,6 @@ class TexToken (object):
 
 	def makeTexEquation (self, s, l, t):
 		eqn = t[0].strip()
-
 		thumb = Thumbnails(self.parser.page)
 
 		try:

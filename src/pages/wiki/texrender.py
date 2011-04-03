@@ -48,7 +48,8 @@ class MimeTex (object):
 		image_path = os.path.join (self.thumb_path, imageName)
 
 		with open (temp_path, "w") as fp:
-			fp.write (eqn)
+			#fp.write (eqn.encode("1251"))
+			fp.write (eqn.encode("utf8"))
 
 		# mimeTexPath нужно определить в производных классах
 		mimeTexPath = self.mimeTexPath
@@ -63,7 +64,7 @@ class MimeTex (object):
 
 
 	def getImageName (self, eqn):
-		md5 = hashlib.md5 (eqn).hexdigest()
+		md5 = hashlib.md5 (eqn.encode("utf8")).hexdigest()
 		fname = u"eqn_{0}.gif".format (md5)
 		return fname
 
