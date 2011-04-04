@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-import os
 import unittest
-import hashlib
 
 from core.tree import WikiDocument
 from core.application import Application

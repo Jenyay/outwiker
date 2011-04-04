@@ -54,6 +54,7 @@ if __name__ == '__main__':
 	from test.attachment import AttachmentTest
 	from test.pagerename import RenameTest
 	from test.pageremove import RemovePagesTest
+	from test.wikihtmlgenerator import WikiHtmlGeneratorTest
 
 
 	unittest.main()
