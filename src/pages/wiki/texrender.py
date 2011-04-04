@@ -47,6 +47,10 @@ class MimeTex (object):
 		imageName = self.getImageName (eqn)
 		image_path = os.path.join (self.thumb_path, imageName)
 
+		if os.path.exists (image_path):
+			# Если такой файл уже есть, значит еще раз геренить такую формулу не надо
+			return imageName
+
 		with open (temp_path, "w") as fp:
 			#fp.write (eqn.encode("1251"))
 			fp.write (eqn.encode("utf8"))

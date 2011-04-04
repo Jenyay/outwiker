@@ -111,6 +111,9 @@ class BaseTextPanel (wx.Panel):
 	
 
 	def _getAttachString (self, fnames):
+		"""
+		Функция возвращает текст, который будет вставлен на страницу при вставке выбранных прикрепленных файлов из панели вложений
+		"""
 		text = ""
 		count = len (fnames)
 

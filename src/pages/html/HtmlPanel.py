@@ -130,7 +130,7 @@ class HtmlPanel(BaseTextPanel):
 
 
 	@abstractmethod
-	def generateHtml (self, page, path):
+	def generateHtml (self, page):
 		pass
 
 
@@ -189,10 +189,10 @@ class HtmlPanel(BaseTextPanel):
 		self._enableTools (self.pageToolsMenu, False)
 		self.htmlWindow.SetFocus()
 		self.htmlWindow.Update()
-		self.__showHtml()
+		self._showHtml()
 	
 
-	def __showHtml (self):
+	def _showHtml (self):
 		"""
 		Подготовить и показать HTML текущей страницы
 		"""
@@ -201,14 +201,13 @@ class HtmlPanel(BaseTextPanel):
 		core.commands.setStatusText (_(u"Page rendered. Please wait…") )
 		Application.onHtmlRenderingBegin (self._currentpage, self.htmlWindow)
 
-		path = self.getHtmlPath (self._currentpage)
-		self.currentHtmlFile = path
 		try:
-			self.generateHtml (self._currentpage, path)
+			self.currentHtmlFile = self.generateHtml (self._currentpage)
+			self.htmlWindow.LoadPage (self.currentHtmlFile)
 		except IOError:
 			core.commands.MessageBox (_(u"Can't save HTML-file"), _(u"Error"), wx.ICON_ERROR | wx.OK)
-
-		self.htmlWindow.LoadPage (path)
+		except OSError:
+			core.commands.MessageBox (_(u"Can't save HTML-file"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 
 		core.commands.setStatusText (u"")
 		Application.onHtmlRenderingEnd (self._currentpage, self.htmlWindow)
@@ -559,7 +558,9 @@ class HtmlPagePanel (HtmlPanel):
 		self._openDefaultPage()
 
 
-	def generateHtml (self, page, path):
+	def generateHtml (self, page):
+		path = self.getHtmlPath (page)
+
 		if page.readonly and os.path.exists (path):
 			# Если страница открыта только для чтения и html-файл уже существует, то покажем его
 			return path

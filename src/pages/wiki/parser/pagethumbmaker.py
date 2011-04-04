@@ -40,11 +40,14 @@ class PageThumbmaker (object):
 
 		path_res = os.path.join (path_thumbdir, fname_res)
 
-		# Возможно исключение ThumbException
-		func (path_src, size, path_res)
-
 		# Путь, относительный к корню страницы
 		relative_path = os.path.join (Thumbnails.getRelativeThumbDir(), fname_res)
+
+		if os.path.exists (path_res):
+			return relative_path
+
+		# Возможно исключение ThumbException
+		func (path_src, size, path_res)
 
 		return relative_path
 

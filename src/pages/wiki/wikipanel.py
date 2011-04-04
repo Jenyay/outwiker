@@ -18,6 +18,7 @@ from gui.HtmlTextEditor import HtmlTextEditor
 from pages.html.HtmlPanel import HtmlPanel
 from parserfactory import ParserFactory
 from wikiconfig import WikiConfig
+from htmlgenerator import HtmlGenerator
 
 
 class WikiPagePanel (HtmlPanel):
@@ -90,14 +91,13 @@ class WikiPagePanel (HtmlPanel):
 		core.commands.setStatusText (_(u"Page rendered. Please wait…") )
 		Application.onHtmlRenderingBegin (self._currentpage, self.htmlWindow)
 
-		path = self.getHtmlPath (self._currentpage)
-		self.currentHtmlFile = path
 		try:
-			self.generateHtml (self._currentpage, path)
+			self.currentHtmlFile = self.generateHtml (self._currentpage)
+			self._showHtmlCode(self.currentHtmlFile)
 		except IOError:
 			core.commands.MessageBox (_(u"Can't save HTML-file"), _(u"Error"), wx.ICON_ERROR | wx.OK)
-
-		self._showHtmlCode(path)
+		except OSError:
+			core.commands.MessageBox (_(u"Can't save HTML-file"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 
 		core.commands.setStatusText (u"")
 		Application.onHtmlRenderingEnd (self._currentpage, self.htmlWindow)
@@ -116,6 +116,8 @@ class WikiPagePanel (HtmlPanel):
 				self.htmlCodeWindow.textCtrl.SetText (text)
 				self.htmlCodeWindow.textCtrl.SetReadOnly (True)
 		except IOError:
+			core.commands.MessageBox (_(u"Can't load HTML-file"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+		except OSError:
 			core.commands.MessageBox (_(u"Can't load HTML-file"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 
 
@@ -366,69 +368,9 @@ class WikiPagePanel (HtmlPanel):
 		self.notebook.SetSelection (self.htmlcodePageIndex)
 
 	
-	def __getFullContent (self, page):
-		"""
-		Получить контент для расчета контрольной суммы, по которой определяется, нужно ли обновлять страницу
-		"""
-		# Текст страницы
-		result = page.content.encode ("unicode_escape")
-
-		# Список прикрепленных файлов
-		attachlist = Attachment (page).attachmentFull
-		attachlist.sort (Attachment.sortByName)
-
-		for fname in attachlist:
-			# TODO: Учесть файлы во вложенных директориях
-			if not os.path.isdir (fname) or not os.path.basename (fname).startswith ("__"):
-				# Пропустим директории, которые начинаются с __
-				result += fname.encode ("unicode_escape")
-				result += unicode (os.stat (fname).st_mtime)
-
-		# Настройки, касающиеся вида вики-страницы
-		result += str (self.config.showAttachInsteadBlankOptions.value)
-		result += str (self.config.thumbSizeOptions.value)
-		return result
-
-	
-	def generateHtml (self, page, path):
-		hashoption = StringOption (Config (os.path.join (page.path, RootWikiPage.pageConfig)),
-				self._configSection, self._hashKey, u"")
-
-		hash = hashlib.md5(self.__getFullContent (page) ).hexdigest()
-
-		if os.path.exists (path) and (hash == hashoption.value or page.readonly):
-			#print "Cached"
-			return path
-
-		#print "Not cached"
-
-		factory = ParserFactory ()
-		parser = factory.make(page, Application.config)
-
-		content = page.content if (len (page.content) > 0 or
-			not self.config.showAttachInsteadBlankOptions.value) else self.__generateAttachList (page)
-
-		text = HtmlImprover.run (parser.toHtml (content) )
-
-		with open (path, "wb") as fp:
-			fp.write (text.encode ("utf-8"))
-
-		hashoption.value = hash
-
-		return path
-
-
-	def __generateAttachList (self, page):
-		"""
-		Сгенерировать список прикрепленных файлов.
-		Используется в случае, если текст страницы пустой
-		"""
-		files = [os.path.basename (path) for path in Attachment (page).attachmentFull]
-		files.sort()
-
-		result = reduce (lambda res, path: res + "[[%s -> Attach:%s]]\n" % (path, path), files, u"")
-
-		return result
+	def generateHtml (self, page):
+		generator = HtmlGenerator (page)
+		return generator.makeHtml()
 
 
 	def removeGui (self):
@@ -437,6 +379,11 @@ class WikiPagePanel (HtmlPanel):
 
 	
 	def _getAttachString (self, fnames):
+		"""
+		Функция возвращает текст, который будет вставлен на страницу при вставке выбранных прикрепленных файлов из панели вложений
+
+		Перегрузка метода из BaseTextPanel
+		"""
 		text = ""
 		count = len (fnames)
 
