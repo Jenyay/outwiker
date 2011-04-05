@@ -44,25 +44,22 @@ class Attachment (object):
 		"""
 		path = self.getAttachPath()
 
-		if not os.path.exists (path):
-			return []
-
-		result = [os.path.join (path, fname) for fname in os.listdir (path)]
-
-		return result
+		return [os.path.join (path, fname) for fname in self.getAttachRelative()]
 
 
-	@property
-	def attachmentBasename (self):
+	def getAttachRelative (self, dirname="."):
 		"""
-		Возвращает список прикрепленных файлов (только имена файлов без путей).
+		Возвращает список прикрепленных файлов (только имена файлов без путей относительно директории dirname).
+		dirname - поддиректория в __attach, где хотим получить список файлов
 		"""
 		path = self.getAttachPath()
 
 		if not os.path.exists (path):
 			return []
 
-		return os.listdir (path)
+		fullpath = os.path.join (path, dirname)
+
+		return os.listdir (fullpath)
 
 
 	def attach (self, files):

@@ -143,9 +143,9 @@ class AttachmentTest (unittest.TestCase):
 		attach = Attachment (self.page)
 		attach.attach (self.fullFilesPath)
 
-		self.assertEqual (len (attach.attachmentBasename), len (self.files))
+		self.assertEqual (len (attach.getAttachRelative()), len (self.files))
 
-		attachBasenames = attach.attachmentBasename
+		attachBasenames = attach.getAttachRelative()
 
 		for fname in self.files:
 			self.assertTrue (fname in attachBasenames, fname)
@@ -362,3 +362,49 @@ class AttachmentTest (unittest.TestCase):
 
 		self.assertTrue (os.path.exists (attach.getAttachPath()))
 		self.assertEqual (path_full, path_right)
+
+
+	def testGetAttachRelative1 (self):
+		attach = Attachment (self.page)
+		attach.attach (self.fullFilesPath)
+
+		attach_right = set (self.files)
+
+		attach_names = set (attach.getAttachRelative())
+		self.assertEqual (attach_right, attach_names)
+
+
+	def testGetAttachRelative2 (self):
+		attach = Attachment (self.page)
+		attach_right = set ([])
+
+		attach_names = set (attach.getAttachRelative())
+		self.assertEqual (attach_right, attach_names)
+
+
+	def testGetAttachRelative3 (self):
+		attach = Attachment (self.page)
+		attach.attach (self.fullFilesPath)
+
+		attach_right = set (self.files)
+
+		attach_names = set (attach.getAttachRelative())
+		self.assertEqual (attach_right, attach_names)
+
+
+	def testGetAttachRelative4 (self):
+		attach = Attachment (self.page)
+		attach.attach (self.fullFilesPath)
+
+		attach_right = set ([u"attach.png"])
+
+		attach_names = set (attach.getAttachRelative(u"dir"))
+		self.assertEqual (attach_right, attach_names)
+
+
+	def testGetAttachRelative5 (self):
+		attach = Attachment (self.page)
+		attach.attach (self.fullFilesPath)
+
+		self.assertRaises (OSError, attach.getAttachRelative, "invaliddir")
+
