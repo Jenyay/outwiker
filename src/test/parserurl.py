@@ -131,3 +131,10 @@ class ParserUrlTest (unittest.TestCase):
 		result = u'<A HREF="http://ftp.jenyay.net">ftp.jenyay.net</A>'
 
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+	
+	def testUrlParse10 (self):
+		text = u"http://rapidshare.com/#!download|514l34|373912473|ansys_hfss_12.1_with_fix.part1.rar|100431"
+		result = u'<A HREF="http://rapidshare.com/#!download|514l34|373912473|ansys_hfss_12.1_with_fix.part1.rar|100431">http://rapidshare.com/#!download|514l34|373912473|ansys_hfss_12.1_with_fix.part1.rar|100431</A>'
+
+		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))

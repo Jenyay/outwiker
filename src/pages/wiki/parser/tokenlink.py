@@ -57,7 +57,7 @@ class LinkToken (object):
 		"""
 		Преобразовать ссылки в виде [[url | comment]]
 		"""
-		url, comment = text.split ("|")
+		url, comment = text.rsplit ("|", 1)
 		realurl = self.__prepareUrl (url)
 
 		return self.__getUrlTag (realurl, comment)
