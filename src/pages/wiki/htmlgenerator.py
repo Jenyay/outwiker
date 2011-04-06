@@ -80,24 +80,40 @@ class HtmlGenerator (object):
 		"""
 		Получить контент для расчета контрольной суммы, по которой определяется, нужно ли обновлять страницу
 		"""
-		# Текст страницы
-		result = self.page.content.encode ("unicode_escape")
+		# Здесь накапливаем список интересующих строк (по которым определяем изменилась страница или нет)
+		content = []
+		content.append (self.page.content.encode ("unicode_escape"))
+		self.__getDirContent (self.page, content)
 
-		# Список прикрепленных файлов
-		attachlist = Attachment (self.page).attachmentFull
+		# Настройки, касающиеся вида вики-страницы
+		content.append (str (self.config.showAttachInsteadBlankOptions.value))
+		content.append (str (self.config.thumbSizeOptions.value))
+
+		return u"".join (content)
+
+
+	def __getDirContent (self, page, filescontent, dirname="."):
+		"""
+		Сформировать строку для расчета хеша по данным вложенной поддиректории dirname (путь относительно __attach)
+		page - страница, для которой собираем список вложений
+		filescontent - список, содержащий строки, описывающие вложенные файлы
+		"""
+		attach = Attachment (page)
+		attachroot = attach.getAttachPath()
+
+		attachlist = attach.getAttachRelative (dirname)
 		attachlist.sort (Attachment.sortByName)
 
 		for fname in attachlist:
-			# TODO: Учесть файлы во вложенных директориях
-			if not os.path.isdir (fname) or not os.path.basename (fname).startswith ("__"):
-				# Пропустим директории, которые начинаются с __
-				result += fname.encode ("unicode_escape")
-				result += unicode (os.stat (fname).st_mtime)
+			fullpath = os.path.join (attachroot, dirname, fname)
 
-		# Настройки, касающиеся вида вики-страницы
-		result += str (self.config.showAttachInsteadBlankOptions.value)
-		result += str (self.config.thumbSizeOptions.value)
-		return result
+			# Пропустим директории, которые начинаются с __
+			if not os.path.isdir (fname) or not fname.startswith ("__"):
+				filescontent.append (fname.encode ("unicode_escape"))
+				filescontent.append (unicode (os.stat (fullpath).st_mtime))
+
+				if os.path.isdir (fullpath):
+					self.__getDirContent (page, filescontent, os.path.join (dirname, fname))
 
 	
 	def __generateAttachList (self):

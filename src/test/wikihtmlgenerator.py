@@ -27,7 +27,7 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
 		factory = ParserFactory()
 		self.parser = factory.make (self.testPage, Application.config)
 
-		files = [u"image.jpg"]
+		files = [u"image.jpg", u"dir"]
 
 		fullFilesPath = [os.path.join (self.filesPath, fname) for fname in files]
 
@@ -134,3 +134,33 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
 
 		self.assertEqual (ftime5, ftime6)
 
+
+	def testCacheSubdir (self):
+		attach = Attachment (self.testPage)
+
+		# Только создали страницу, кешировать нельзя
+		generator = HtmlGenerator (self.testPage)
+		self.assertFalse (generator.canReadFromCache())
+
+		generator.makeHtml ()
+		# После того, как один раз сгенерили страницу, если ничего не изменилось, можно кешировать
+		self.assertTrue (generator.canReadFromCache())
+
+		# Добавим файл в dir
+		with open (os.path.join (attach.getAttachPath(), "dir", "temp.tmp"), "w" ) as fp:
+			fp.write ("bla-bla-bla")
+
+		self.assertFalse (generator.canReadFromCache())
+
+		# Добавим еще одну вложенную директорию
+		subdir = os.path.join (attach.getAttachPath(), "dir", "subdir")
+		os.mkdir (subdir)
+		self.assertFalse (generator.canReadFromCache())
+
+		generator.makeHtml ()
+
+		# Добавим файл в dir/subdir
+		with open (os.path.join (subdir, "temp2.tmp"), "w" ) as fp:
+			fp.write ("bla-bla-bla")
+
+		self.assertFalse (generator.canReadFromCache())
