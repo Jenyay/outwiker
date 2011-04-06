@@ -689,12 +689,23 @@ class WikiPage (RootWikiPage):
 		if self.readonly:
 			raise core.exceptions.ReadonlyException
 
-		self._removePageFromTree (self)
+		oldpath = self.path
+		tempname = self._getTempName (oldpath)
 
 		try:
-			shutil.rmtree (self.path)
+			os.renames (oldpath, tempname)
+			shutil.rmtree (tempname)
+		except shutil.Error:
+			raise IOError
 		except OSError:
 			raise IOError
+
+		#try:
+		#	shutil.rmtree (self.path)
+		#except OSError:
+		#	raise IOError
+
+		self._removePageFromTree (self)
 
 		# Если выбранная страница была удалена
 		if self.root.selectedPage != None and self.root.selectedPage.isRemoved:

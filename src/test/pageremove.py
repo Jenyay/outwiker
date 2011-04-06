@@ -2,8 +2,10 @@
 # -*- coding: UTF-8 -*-
 
 import unittest
+import os.path
 
 from core.tree import RootWikiPage, WikiDocument
+from core.attachment import Attachment
 
 from pages.text.textpage import TextPageFactory, TextWikiPage
 
@@ -143,3 +145,51 @@ class RemovePagesTest (unittest.TestCase):
 		self.assertFalse (self.rootwiki.bookmarks.pageMarked (page2))
 		self.assertFalse (self.rootwiki.bookmarks.pageMarked (page3))
 		self.assertFalse (self.rootwiki.bookmarks.pageMarked (page4))
+
+
+	def testRemoveError1 (self):
+		page = self.rootwiki[u"Страница 2"]
+		pagepath = page.path
+
+		attach = Attachment (page)
+		attachname = u"add.png"
+		attach.attach ([os.path.join (u"../test/samplefiles", attachname)])
+
+		with open (attach.getFullPath ("111.txt", True), "w") as fp:
+			try:
+				page.remove()
+			except IOError:
+				self.assertTrue (os.path.exists (pagepath) )
+				self.assertNotEqual (self.rootwiki[u"Страница 2"], None)
+				self.assertTrue (os.path.exists (self.rootwiki[u"Страница 2"].path) )
+				self.assertEqual (len (self.rootwiki), 3)
+				self.assertNotEqual (self.rootwiki[u"Страница 2/Страница 3"], None)
+				self.assertNotEqual (self.rootwiki[u"Страница 2/Страница 3/Страница 4"], None)
+			else:
+				self.assertEqual (self.rootwiki[u"Страница 2"], None)
+				self.assertFalse (os.path.exists (pagepath) )
+
+
+	def testRemoveError2 (self):
+		page1 = self.rootwiki[u"Страница 2"]
+		page2 = self.rootwiki[u"Страница 2/Страница 3"]
+
+		pagepath = page1.path
+
+		attach2 = Attachment (page2)
+		attachname = u"add.png"
+		attach2.attach ([os.path.join (u"../test/samplefiles", attachname)])
+
+		with open (attach2.getFullPath ("111.txt", True), "w") as fp:
+			try:
+				page1.remove()
+			except IOError:
+				self.assertTrue (os.path.exists (pagepath) )
+				self.assertNotEqual (self.rootwiki[u"Страница 2"], None)
+				self.assertTrue (os.path.exists (self.rootwiki[u"Страница 2"].path) )
+				self.assertEqual (len (self.rootwiki), 3)
+				self.assertNotEqual (self.rootwiki[u"Страница 2/Страница 3"], None)
+				self.assertNotEqual (self.rootwiki[u"Страница 2/Страница 3/Страница 4"], None)
+			else:
+				self.assertEqual (self.rootwiki[u"Страница 2"], None)
+				self.assertFalse (os.path.exists (pagepath) )
