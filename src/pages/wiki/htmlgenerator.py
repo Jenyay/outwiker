@@ -109,11 +109,15 @@ class HtmlGenerator (object):
 
 			# Пропустим директории, которые начинаются с __
 			if not os.path.isdir (fname) or not fname.startswith ("__"):
-				filescontent.append (fname.encode ("unicode_escape"))
-				filescontent.append (unicode (os.stat (fullpath).st_mtime))
+				try:
+					filescontent.append (fname.encode ("unicode_escape"))
+					filescontent.append (unicode (os.stat (fullpath).st_mtime))
 
-				if os.path.isdir (fullpath):
-					self.__getDirContent (page, filescontent, os.path.join (dirname, fname))
+					if os.path.isdir (fullpath):
+						self.__getDirContent (page, filescontent, os.path.join (dirname, fname))
+				except OSError:
+					# Если есть проблемы с доступом к файлу, то здесь на это не будем обращать внимания
+					pass
 
 	
 	def __generateAttachList (self):
