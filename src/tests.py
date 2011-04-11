@@ -51,6 +51,7 @@ if __name__ == '__main__':
 	from test.wikicommandinclude import WikiIncludeCommandTest
 	from test.wikicommandbloggers import WikiBloggersCommandTest
 	from test.wikicommandchildlist import WikiChildListCommandTest
+	from test.wikicommandattachlist import WikiAttachListCommandTest
 	from test.attachment import AttachmentTest
 	from test.pagerename import RenameTest
 	from test.pageremove import RemovePagesTest
