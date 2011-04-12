@@ -19,7 +19,6 @@ class TextPanel (BaseTextPanel):
 
 		self.__layout()
 
-		self.Bind (wx.EVT_CLOSE, self.onClose)
 		self.page = page
 
 	
@@ -49,10 +48,6 @@ class TextPanel (BaseTextPanel):
 		self.textEditor.textCtrl.AddText (text)
 		self.textEditor.textCtrl.SetFocus()
 
-
-	def onClose (self, event):
-		BaseTextPanel.Close (self)
-	
 
 	def GetContentFromGui (self):
 		return  self.textEditor.textCtrl.GetText()
