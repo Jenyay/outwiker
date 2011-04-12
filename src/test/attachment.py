@@ -322,13 +322,82 @@ class AttachmentTest (unittest.TestCase):
 		files_list2 = attach.attachmentFull
 		files_list2.sort (Attachment.sortByDate)
 
-		self.assertEqual (files_list2[0], files_list[3])
-		self.assertEqual (files_list2[1], files_list[0])
-		self.assertEqual (files_list2[2], files_list[2])
-		self.assertEqual (files_list2[3], files_list[6])
-		self.assertEqual (files_list2[4], files_list[4])
-		self.assertEqual (files_list2[5], files_list[5])
-		self.assertEqual (files_list2[6], files_list[1])
+		for n in range (1, len (files)):
+			self.assertTrue (os.stat (files_list2[n - 1]).st_mtime <=
+					os.stat (files_list2[n]).st_mtime)
+
+
+	def testSortByDateRelative (self):
+		files = [u"add.png", u"Anchor.png", 
+				u"image2.png", u"image.png", 
+				u"add.png2", u"файл с пробелами.tmp", 
+				u"filename"]
+
+		fullFilesPath = [os.path.join (u"../test/samplefiles/for_sort", fname) for fname in files]
+
+
+		attach = Attachment (self.page)
+		attach.attach (fullFilesPath)
+
+		files_list = attach.attachmentFull
+		files_list.sort (Attachment.sortByName)
+
+		os.utime (files_list[3], (1000000000, 1000000000))
+		os.utime (files_list[0], (1000000000, 1100000000))
+		os.utime (files_list[2], (1000000000, 1200000000))
+		os.utime (files_list[6], (1000000000, 1300000000))
+		os.utime (files_list[4], (1000000000, 1400000000))
+		os.utime (files_list[5], (1000000000, 1500000000))
+		os.utime (files_list[1], (1000000000, 1600000000))
+
+		attach2 = Attachment (self.page)
+		files_list2 = attach.getAttachRelative()
+		files_list2.sort (attach2.sortByDateRelative)
+
+		for n in range (1, len (files)):
+			self.assertTrue (os.stat (attach2.getFullPath (files_list2[n - 1] ) ).st_mtime <=
+					os.stat (attach2.getFullPath (files_list2[n]) ).st_mtime)
+
+
+	def testSortBySize (self):
+		files = [u"add.png", u"Anchor.png", 
+				u"image2.png", u"image.png", 
+				u"add.png2", u"файл с пробелами.tmp", 
+				u"filename"]
+
+		fullFilesPath = [os.path.join (u"../test/samplefiles/for_sort", fname) for fname in files]
+
+		attach = Attachment (self.page)
+		attach.attach (fullFilesPath)
+		attach.attach ([os.path.join (u"../test/samplefiles", "dir")])
+
+		attach2 = Attachment (self.page)
+		files_list = attach2.attachmentFull
+		files_list.sort (Attachment.sortBySize)
+
+		for n in range (1, len (files_list)):
+			self.assertTrue (os.stat (files_list[n - 1]).st_size <= os.stat (files_list[n]).st_size )
+
+
+	def testSortBySizeRelative (self):
+		files = [u"add.png", u"Anchor.png", 
+				u"image2.png", u"image.png", 
+				u"add.png2", u"файл с пробелами.tmp", 
+				u"filename"]
+
+		fullFilesPath = [os.path.join (u"../test/samplefiles/for_sort", fname) for fname in files]
+
+		attach = Attachment (self.page)
+		attach.attach (fullFilesPath)
+		attach.attach ([os.path.join (u"../test/samplefiles", "dir")])
+
+		attach2 = Attachment (self.page)
+		files_list = attach2.getAttachRelative()
+		files_list.sort (attach2.sortBySizeRelative)
+
+		for n in range (1, len (files_list)):
+			self.assertTrue (os.stat (attach2.getFullPath (files_list[n - 1]) ).st_size <= 
+					os.stat (attach2.getFullPath (files_list[n]) ).st_size )
 	
 
 	def testGetFullPath1 (self):

@@ -6,13 +6,16 @@ import os.path
 import unittest
 
 from core.tree import WikiDocument
-from pages.wiki.parser.wikiparser import Parser
-from pages.wiki.wikipage import WikiPageFactory
-from test.utils import removeWiki
 from core.application import Application
+from core.attachment import Attachment
+
+from pages.wiki.parser.wikiparser import Parser
 from pages.wiki.parser.commandattachlist import AttachListCommand
 from pages.wiki.parserfactory import ParserFactory
-from core.attachment import Attachment
+from pages.wiki.thumbnails import Thumbnails
+from pages.wiki.wikipage import WikiPageFactory
+
+from test.utils import removeWiki
 
 
 
@@ -55,7 +58,7 @@ class WikiAttachListCommandTest (unittest.TestCase):
 		attachdir = u"__attach"
 		template = u'<A HREF="{path}">{title}</A>\n'
 
-		result_right = u"".join ([template.format (path = os.path.join (attachdir, name), title=title) 
+		result_right = u"".join ([template.format (path = os.path.join (attachdir, name).replace ("\\", "/"), title=title) 
 			for (name, title) in zip (names, titles) ] ).rstrip()
 
 		result = cmd.execute (u"", u"")
@@ -72,7 +75,28 @@ class WikiAttachListCommandTest (unittest.TestCase):
 		attachdir = u"__attach"
 		template = u'<A HREF="{path}">{title}</A>\n'
 
-		result_right = u"".join ([template.format (path = os.path.join (attachdir, name), title=title) 
+		result_right = u"".join ([template.format (path = os.path.join (attachdir, name).replace ("\\", "/"), title=title) 
+			for (name, title) in zip (names, titles) ] ).rstrip()
+
+		result = self.parser.toHtml (text)
+
+		self.assertEqual (result_right, result)
+
+
+	def testParse2 (self):
+		# Тест на то, что игнорируется директория __thumb
+		thumb = Thumbnails (self.testPage)
+		thumb.getThumbPath (True)
+
+		text = u"(:attachlist:)"
+
+		titles = [u"[dir]", u"[for_sort]", u"add.png", u"anchor.png", u"image.jpg", u"файл с пробелами.tmp"]
+		names = [u"dir", u"for_sort", u"add.png", u"anchor.png", u"image.jpg", u"файл с пробелами.tmp"]
+
+		attachdir = u"__attach"
+		template = u'<A HREF="{path}">{title}</A>\n'
+
+		result_right = u"".join ([template.format (path = os.path.join (attachdir, name).replace ("\\", "/"), title=title) 
 			for (name, title) in zip (names, titles) ] ).rstrip()
 
 		result = self.parser.toHtml (text)
@@ -88,7 +112,7 @@ class WikiAttachListCommandTest (unittest.TestCase):
 		attachdir = u"__attach"
 		template = u'<A HREF="{path}">{title}</A>\n'
 
-		result_right = u"".join ([template.format (path = os.path.join (attachdir, name), title=title) 
+		result_right = u"".join ([template.format (path = os.path.join (attachdir, name).replace ("\\", "/"), title=title) 
 			for (name, title) in zip (names, titles) ] ).rstrip()
 
 		result = cmd.execute (u"sort=name", u"")
@@ -105,7 +129,7 @@ class WikiAttachListCommandTest (unittest.TestCase):
 		attachdir = u"__attach"
 		template = u'<A HREF="{path}">{title}</A>\n'
 
-		result_right = u"".join ([template.format (path = os.path.join (attachdir, name), title=title) 
+		result_right = u"".join ([template.format (path = os.path.join (attachdir, name).replace ("\\", "/"), title=title) 
 			for (name, title) in zip (names, titles) ] ).rstrip()
 
 		result = self.parser.toHtml (text)
@@ -121,7 +145,7 @@ class WikiAttachListCommandTest (unittest.TestCase):
 		attachdir = u"__attach"
 		template = u'<A HREF="{path}">{title}</A>\n'
 
-		result_right = u"".join ([template.format (path = os.path.join (attachdir, name), title=title) 
+		result_right = u"".join ([template.format (path = os.path.join (attachdir, name).replace ("\\", "/"), title=title) 
 			for (name, title) in zip (names, titles) ] ).rstrip()
 
 		result = cmd.execute (u"sort=descendname", u"")
@@ -138,7 +162,7 @@ class WikiAttachListCommandTest (unittest.TestCase):
 		attachdir = u"__attach"
 		template = u'<A HREF="{path}">{title}</A>\n'
 
-		result_right = u"".join ([template.format (path = os.path.join (attachdir, name), title=title) 
+		result_right = u"".join ([template.format (path = os.path.join (attachdir, name).replace ("\\", "/"), title=title) 
 			for (name, title) in zip (names, titles) ] ).rstrip()
 
 		result = self.parser.toHtml (text)
@@ -155,7 +179,7 @@ class WikiAttachListCommandTest (unittest.TestCase):
 		attachdir = u"__attach"
 		template = u'<A HREF="{path}">{title}</A>\n'
 
-		result_right = u"".join ([template.format (path = os.path.join (attachdir, name), title=title) 
+		result_right = u"".join ([template.format (path = os.path.join (attachdir, name).replace ("\\", "/"), title=title) 
 			for (name, title) in zip (names, titles) ] ).rstrip()
 
 		result = self.parser.toHtml (text)
@@ -172,7 +196,41 @@ class WikiAttachListCommandTest (unittest.TestCase):
 		attachdir = u"__attach"
 		template = u'<A HREF="{path}">{title}</A>\n'
 
-		result_right = u"".join ([template.format (path = os.path.join (attachdir, name), title=title) 
+		result_right = u"".join ([template.format (path = os.path.join (attachdir, name).replace ("\\", "/"), title=title) 
+			for (name, title) in zip (names, titles) ] ).rstrip()
+
+		result = self.parser.toHtml (text)
+
+		self.assertEqual (result_right, result)
+
+
+	def testParseSortBySize (self):
+		text = u"(:attachlist sort=size:)"
+
+		titles = [u"[dir]", u"[for_sort]", u"файл с пробелами.tmp", u"anchor.png", u"add.png", u"image.jpg"]
+		names = [u"dir", u"for_sort", u"файл с пробелами.tmp", u"anchor.png", u"add.png", u"image.jpg"]
+
+		attachdir = u"__attach"
+		template = u'<A HREF="{path}">{title}</A>\n'
+
+		result_right = u"".join ([template.format (path = os.path.join (attachdir, name).replace ("\\", "/"), title=title) 
+			for (name, title) in zip (names, titles) ] ).rstrip()
+
+		result = self.parser.toHtml (text)
+
+		self.assertEqual (result_right, result)
+
+
+	def testParseSortDescendSize (self):
+		text = u"(:attachlist sort=descendsize:)"
+
+		titles = [u"[for_sort]", u"[dir]", u"image.jpg", u"add.png", u"anchor.png", u"файл с пробелами.tmp"]
+		names = [u"for_sort", u"dir", u"image.jpg", u"add.png", u"anchor.png", u"файл с пробелами.tmp"]
+
+		attachdir = u"__attach"
+		template = u'<A HREF="{path}">{title}</A>\n'
+
+		result_right = u"".join ([template.format (path = os.path.join (attachdir, name).replace ("\\", "/"), title=title) 
 			for (name, title) in zip (names, titles) ] ).rstrip()
 
 		result = self.parser.toHtml (text)
