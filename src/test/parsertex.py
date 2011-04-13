@@ -145,6 +145,15 @@ class ParserTexTest (unittest.TestCase):
 		self.assertTrue (os.path.exists (full_path), full_path )
 
 
+	def testTex5 (self):
+		text = u"{$ $}"
+		result_right = u''
+
+		result = self.parser.toHtml (text)
+
+		self.assertEqual (result_right, result, result)
+
+
 	def testTexRussian (self):
 		thumb = Thumbnails (self.parser.page)
 		texrender = getTexRender(thumb.getThumbPath (True))

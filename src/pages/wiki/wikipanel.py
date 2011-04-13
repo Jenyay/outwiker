@@ -312,7 +312,7 @@ class WikiPagePanel (HtmlPanel):
 				"ID_LINK", 
 				lambda event: self._turnText (u'[[', u']]'), 
 				_(u"Link\tCtrl+L"), 
-				u'Link', 
+				_(u'Link'), 
 				os.path.join (self.imagesDir, "link.png"))
 
 		self._addTool (self.pageToolsMenu, 
@@ -321,6 +321,13 @@ class WikiPagePanel (HtmlPanel):
 				_(u"Horizontal line\tCtrl+H"), 
 				_(u"Horizontal line"), 
 				os.path.join (self.imagesDir, "text_horizontalrule.png"))
+
+		self._addTool (self.pageToolsMenu, 
+				"ID_EQUATION", 
+				lambda event: self._turnText (u'{$', u'$}'), 
+				_(u"Equation\tCtrl+Q"), 
+				_(u'Equation'), 
+				os.path.join (self.imagesDir, "equation.png"))
 
 		self.pageToolsMenu.AppendSeparator()
 

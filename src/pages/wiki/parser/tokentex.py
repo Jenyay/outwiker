@@ -34,6 +34,9 @@ class TexToken (object):
 
 	def makeTexEquation (self, s, l, t):
 		eqn = t[0].strip()
+		if len (eqn) == 0:
+			return u""
+
 		thumb = Thumbnails(self.parser.page)
 
 		try:
