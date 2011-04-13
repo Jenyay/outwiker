@@ -2,7 +2,7 @@
 md5_hash = 2239cb886cbafe8c4996327c0e1f2ad6
 
 [Tree]
-expand = True
+expand = False
 
 [General]
 type = wiki
