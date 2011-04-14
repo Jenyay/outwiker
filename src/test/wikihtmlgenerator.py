@@ -146,6 +146,33 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
 		self.assertEqual (ftime5, ftime6)
 
 
+	def testCacheEmpty1 (self):
+		emptycontent = EmptyContent (Application.config)
+		self.testPage.content = u""
+
+		# Только создали страницу, кешировать нельзя
+		generator = HtmlGenerator (self.testPage)
+		self.assertFalse (generator.canReadFromCache())
+		generator.makeHtml ()
+
+		# Страница пустая, изменился шаблон для путой записи
+		emptycontent.content = u"1111"
+		self.assertFalse (generator.canReadFromCache())
+		generator.makeHtml ()
+
+		# Изменилось содержимое страницы
+		self.testPage.content = u"Бла-бла-бла"
+		self.assertFalse (generator.canReadFromCache())
+		generator.makeHtml ()
+
+		self.assertTrue (generator.canReadFromCache())
+		generator.makeHtml ()
+
+		# Изменился шаблон страницы, но страница уже не пустая
+		emptycontent.content = u"2222"
+		self.assertTrue (generator.canReadFromCache())
+
+
 	def testCacheSubdir (self):
 		attach = Attachment (self.testPage)
 

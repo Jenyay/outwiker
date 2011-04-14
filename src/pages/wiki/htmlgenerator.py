@@ -87,12 +87,20 @@ class HtmlGenerator (object):
 		"""
 		# Здесь накапливаем список интересующих строк (по которым определяем изменилась страница или нет)
 		content = []
-		content.append (self.page.content.encode ("unicode_escape"))
+
+		pagecontent = self.page.content.encode ("unicode_escape")
+		content.append (pagecontent)
+
 		self.__getDirContent (self.page, content)
 
 		# Настройки, касающиеся вида вики-страницы
 		content.append (str (self.config.showAttachInsteadBlankOptions.value))
 		content.append (str (self.config.thumbSizeOptions.value))
+
+		if len (self.page.content) == 0:
+			# Если страница пустая, то проверим настройку, отвечающую за шаблон пустой страницы
+			emptycontent = EmptyContent (Application.config)
+			content.append (emptycontent.content.encode ("unicode_escape"))
 
 		return u"".join (content)
 

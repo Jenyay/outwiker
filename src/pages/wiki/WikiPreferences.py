@@ -7,7 +7,7 @@ import wx
 from gui.preferences.ConfigElements import BooleanElement, IntegerElement, StringElement
 from core.application import Application
 from wikiconfig import WikiConfig
-import wikipage
+from emptycontent import EmptyContent
 
 # begin wxGlade: extracode
 # end wxGlade
@@ -22,6 +22,8 @@ class WikiPrefGeneralPanel(wx.Panel):
 		self.htmlCodeCheckbox = wx.CheckBox(self, -1, _("Show HTML Code Tab"))
 		self.thumbSizeLabel = wx.StaticText(self, -1, _("Thumbnail Size"))
 		self.thumbSize = wx.SpinCtrl(self, -1, "250", min=1, max=10000)
+		self.label_1 = wx.StaticText(self, -1, _("Template for empty page"))
+		self.emptyTplTextCtrl = wx.TextCtrl(self, -1, "", style=wx.TE_MULTILINE|wx.HSCROLL|wx.TE_LINEWRAP|wx.TE_WORDWRAP)
 
 		self.__set_properties()
 		self.__do_layout()
@@ -37,7 +39,7 @@ class WikiPrefGeneralPanel(wx.Panel):
 
 	def __do_layout(self):
 		# begin wxGlade: WikiPrefGeneralPanel.__do_layout
-		mainSizer = wx.FlexGridSizer(2, 1, 0, 0)
+		mainSizer = wx.FlexGridSizer(4, 1, 0, 0)
 		grid_sizer_1 = wx.FlexGridSizer(1, 2, 0, 0)
 		mainSizer.Add(self.htmlCodeCheckbox, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
 		grid_sizer_1.Add(self.thumbSizeLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
@@ -47,8 +49,11 @@ class WikiPrefGeneralPanel(wx.Panel):
 		grid_sizer_1.AddGrowableCol(1)
 		grid_sizer_1.AddGrowableCol(2)
 		mainSizer.Add(grid_sizer_1, 1, wx.EXPAND, 0)
+		mainSizer.Add(self.label_1, 0, wx.ALL, 4)
+		mainSizer.Add(self.emptyTplTextCtrl, 0, wx.ALL|wx.EXPAND, 4)
 		self.SetSizer(mainSizer)
 		mainSizer.Fit(self)
+		mainSizer.AddGrowableRow(3)
 		mainSizer.AddGrowableCol(0)
 		# end wxGlade
 	
@@ -60,6 +65,10 @@ class WikiPrefGeneralPanel(wx.Panel):
 		# Размер превьюшек по умолчанию
 		self.thumbSizeOption = IntegerElement (self.config.thumbSizeOptions, self.thumbSize, 1, 10000)
 
+		# Шаблон для пустых страниц
+		emptycontent = EmptyContent (Application.config)
+		self.emptyTplTextCtrl.SetValue (emptycontent.content)
+
 
 	def Save (self):
 		changed = (self.showHtmlCodeOption.isValueChanged() or
@@ -67,6 +76,9 @@ class WikiPrefGeneralPanel(wx.Panel):
 
 		self.showHtmlCodeOption.save()
 		self.thumbSizeOption.save()
+		
+		emptycontent = EmptyContent (Application.config)
+		emptycontent.content = self.emptyTplTextCtrl.GetValue()
 
 		if changed:
 			currpage = Application.wikiroot.selectedPage
