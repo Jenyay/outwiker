@@ -6,20 +6,28 @@ import os.path
 import unittest
 import time
 
-
 from core.tree import WikiDocument
 from core.attachment import Attachment
 from core.application import Application
+from core.config import Config
+
 from pages.wiki.parser.wikiparser import Parser
 from pages.wiki.wikipage import WikiPageFactory
 from pages.wiki.parserfactory import ParserFactory
 from pages.wiki.htmlgenerator import HtmlGenerator
+from pages.wiki.emptycontent import EmptyContent
+
 from utils import removeWiki
 
 
 class WikiHtmlGeneratorTest (unittest.TestCase):
 	def setUp(self):
 		self.encoding = "866"
+#
+#		self.configpath = u"../test/testconfig.ini"
+#
+#		if os.path.exists (self.configpath):
+#			os.remove (self.configpath)
 
 		self.filesPath = u"../test/samplefiles/"
 		self.__createWiki()
@@ -56,6 +64,9 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
 
 	def tearDown(self):
 		removeWiki (self.path)
+
+		#if os.path.exists (self.configpath):
+		#	os.remove (self.configpath)
 
 
 	def test1 (self):
@@ -164,3 +175,43 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
 			fp.write ("bla-bla-bla")
 
 		self.assertFalse (generator.canReadFromCache())
+
+
+	def testEmpty1 (self):
+		#config = Config (self.configpath)
+		text = u"бла-бла-бла"
+
+		content = EmptyContent (Application.config)
+		content.content = text
+
+		# Очистим содержимое, чтобы использовать EmptyContent
+		self.testPage.content = u""
+
+		generator = HtmlGenerator (self.testPage)
+		htmlpath = generator.makeHtml()
+
+		# Проверим, что в результирующем файле есть содержимое text
+		with open (htmlpath) as fp:
+			result = unicode (fp.read(), "utf8")
+
+		self.assertTrue (text in result)
+
+
+	def testEmpty2 (self):
+		#config = Config (self.configpath)
+		text = u"(:attachlist:)"
+
+		content = EmptyContent (Application.config)
+		content.content = text
+
+		# Очистим содержимое, чтобы использовать EmptyContent
+		self.testPage.content = u""
+
+		generator = HtmlGenerator (self.testPage)
+		htmlpath = generator.makeHtml()
+
+		# Проверим, что в результирующем файле есть содержимое text
+		with open (htmlpath) as fp:
+			result = unicode (fp.read(), "utf8")
+
+		self.assertTrue (u"image.jpg" in result)

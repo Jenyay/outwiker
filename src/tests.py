@@ -61,17 +61,18 @@ if __name__ == '__main__':
 	from test.pagethumbmaker import PageThumbmakerTest
 	from test.thumbnails import ThumbnailsTest
 	from test.htmlimprover_test import HtmlImproverTest
-	from test.wikihtmlgenerator import WikiHtmlGeneratorTest	
+	from test.wikihtmlgenerator import WikiHtmlGeneratorTest
 
 	from test.utils import removeWiki
 	from test.event import EventTest, EventsTest
 	from test.config import ConfigTest, ConfigOptionsTest, TrayConfigTest, EditorConfigTest
 	from test.recent import RecentWikiTest
 	from test.search import SearcherTest, TagsListTest, SearchPageTest
-	from test.localsearch import LocalSearchTest	
+	from test.localsearch import LocalSearchTest
 	from test.i18n import I18nTest
 	from test.version import VersionTest, StatusTest
 	from test.commands import CommandsTest
+	from test.emptycontent import EmptyContentTest
 
 
 	unittest.main()

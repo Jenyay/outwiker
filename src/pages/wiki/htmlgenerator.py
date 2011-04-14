@@ -11,6 +11,7 @@ from core.attachment import Attachment
 from core.tree import RootWikiPage
 from parserfactory import ParserFactory
 from wikiconfig import WikiConfig
+from emptycontent import EmptyContent
 
 
 class HtmlGenerator (object):
@@ -35,8 +36,7 @@ class HtmlGenerator (object):
 		factory = ParserFactory ()
 		parser = factory.make(self.page, Application.config)
 
-		content = self.page.content if (len (self.page.content) > 0 or
-			not self.config.showAttachInsteadBlankOptions.value) else self.__generateAttachList ()
+		content = self.page.content if len (self.page.content) > 0 else self._generateEmptyContent (parser)
 
 		text = HtmlImprover.run (parser.toHtml (content) )
 
@@ -49,6 +49,11 @@ class HtmlGenerator (object):
 		hashoption.value = self.getHash()
 
 		return path
+
+
+	def _generateEmptyContent (self, parser):
+		content = EmptyContent (Application.config)
+		return parser.toHtml (content.content)
 
 
 	def getHash (self):
@@ -118,16 +123,3 @@ class HtmlGenerator (object):
 				except OSError:
 					# Если есть проблемы с доступом к файлу, то здесь на это не будем обращать внимания
 					pass
-
-	
-	def __generateAttachList (self):
-		"""
-		Сгенерировать список прикрепленных файлов.
-		Используется в случае, если текст страницы пустой
-		"""
-		files = [os.path.basename (path) for path in Attachment (self.page).attachmentFull]
-		files.sort()
-
-		result = reduce (lambda res, path: res + "[[%s -> Attach:%s]]\n" % (path, path), files, u"")
-
-		return result
