@@ -41,9 +41,9 @@ class WikiBloggersCommandTest (unittest.TestCase):
 
 	def testLjUserCommand1 (self):
 		command = LjUserCommand (self.parser)
-		params = "jenyay_test"
+		params = "a_str"
 
-		result_right =u"""<span class='ljuser ljuser-name_jenyay_test' lj:user='jenyay_test' style='white-space:nowrap'><a href='http://jenyay-test.livejournal.com/profile'><img src='http://l-stat.livejournal.com/img/userinfo.gif?v=2' alt='[info]' width='17' height='17' style='vertical-align: bottom; border: 0; padding-right: 1px;'/></a><a href='http://jenyay-test.livejournal.com/'><b>jenyay_test</b></a></span>"""
+		result_right =u"""<span class='ljuser ljuser-name_a_str' lj:user='a_str' style='white-space:nowrap'><a href='http://a-str.livejournal.com/profile'><img src='http://l-stat.livejournal.com/img/userinfo.gif?v=3' alt='[info]' width='17' height='17' style='vertical-align: bottom; border: 0; padding-right: 1px;'/></a><a href='http://a-str.livejournal.com/'><b>a_str</b></a></span>"""
 
 		result = command.execute (params, u"")
 
@@ -51,9 +51,9 @@ class WikiBloggersCommandTest (unittest.TestCase):
 
 
 	def testLjUserCommand2 (self):
-		text = u"(:ljuser jenyay_test:)"
+		text = u"(:ljuser a_str:)"
 
-		result_right = u"""<span class='ljuser ljuser-name_jenyay_test' lj:user='jenyay_test' style='white-space:nowrap'><a href='http://jenyay-test.livejournal.com/profile'><img src='http://l-stat.livejournal.com/img/userinfo.gif?v=2' alt='[info]' width='17' height='17' style='vertical-align: bottom; border: 0; padding-right: 1px;'/></a><a href='http://jenyay-test.livejournal.com/'><b>jenyay_test</b></a></span>"""
+		result_right = u"""<span class='ljuser ljuser-name_a_str' lj:user='a_str' style='white-space:nowrap'><a href='http://a-str.livejournal.com/profile'><img src='http://l-stat.livejournal.com/img/userinfo.gif?v=3' alt='[info]' width='17' height='17' style='vertical-align: bottom; border: 0; padding-right: 1px;'/></a><a href='http://a-str.livejournal.com/'><b>a_str</b></a></span>"""
 
 		result = self.parser.toHtml (text)
 		self.assertEqual (result, result_right)
@@ -61,9 +61,9 @@ class WikiBloggersCommandTest (unittest.TestCase):
 
 	def testLjCommunityCommand1 (self):
 		command = LjCommunityCommand (self.parser)
-		params = "ljournalist"
+		params = "american_gangst"
 
-		result_right =u"""<span class='ljuser ljuser-name_ljournalist' lj:user='ljournalist' style='white-space:nowrap'><a href='http://community.livejournal.com/ljournalist/profile'><img src='http://l-stat.livejournal.com/img/community.gif?v=2' alt='[info]' width='16' height='16' style='vertical-align: bottom; border: 0; padding-right: 1px;'/></a><a href='http://community.livejournal.com/ljournalist/'><b>ljournalist</b></a></span>"""
+		result_right =u"""<span class='ljuser ljuser-name_american_gangst' lj:user='american_gangst' style='white-space:nowrap'><a href='http://american-gangst.livejournal.com/profile'><img src='http://l-stat.livejournal.com/img/community.gif?v=3' alt='[info]' width='16' height='16' style='vertical-align: bottom; border: 0; padding-right: 1px;'/></a><a href='http://american-gangst.livejournal.com/'><b>american_gangst</b></a></span>"""
 
 		result = command.execute (params, u"")
 
@@ -71,9 +71,9 @@ class WikiBloggersCommandTest (unittest.TestCase):
 
 
 	def testLjCommunityCommand2 (self):
-		text = u"(:ljcomm ljournalist:)"
+		text = u"(:ljcomm american_gangst:)"
 
-		result_right = u"""<span class='ljuser ljuser-name_ljournalist' lj:user='ljournalist' style='white-space:nowrap'><a href='http://community.livejournal.com/ljournalist/profile'><img src='http://l-stat.livejournal.com/img/community.gif?v=2' alt='[info]' width='16' height='16' style='vertical-align: bottom; border: 0; padding-right: 1px;'/></a><a href='http://community.livejournal.com/ljournalist/'><b>ljournalist</b></a></span>"""
+		result_right = u"""<span class='ljuser ljuser-name_american_gangst' lj:user='american_gangst' style='white-space:nowrap'><a href='http://american-gangst.livejournal.com/profile'><img src='http://l-stat.livejournal.com/img/community.gif?v=3' alt='[info]' width='16' height='16' style='vertical-align: bottom; border: 0; padding-right: 1px;'/></a><a href='http://american-gangst.livejournal.com/'><b>american_gangst</b></a></span>"""
 
 		result = self.parser.toHtml (text)
 		self.assertEqual (result, result_right)

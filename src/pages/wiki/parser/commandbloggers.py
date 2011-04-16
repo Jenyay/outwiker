@@ -1,43 +1,59 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
+from abc import ABCMeta, abstractproperty
 from command import Command
 
 
-class LjUserCommand (Command):
+class LjCommand (Command):
+	__metaclass__ = ABCMeta
+
+	def __init__ (self, parser):
+		Command.__init__ (self, parser)
+
+
+	@abstractproperty
+	def template (self):
+		pass
+
+
+	def execute (self, params, content):
+		name = params
+		return self.template.format (name=name, name_correct=name.replace ("_", "-"))
+
+
+class LjUserCommand (LjCommand):
 	"""
 	Команда для вставки ссылки на пользователя ЖЖ
 	Синтсаксис: (:ljuser name:)
 	"""
 	def __init__ (self, parser):
-		Command.__init__ (self, parser)
-		self.template = u"""<span class='ljuser ljuser-name_{username}' lj:user='{username}' style='white-space:nowrap'><a href='http://{username_corrent}.livejournal.com/profile'><img src='http://l-stat.livejournal.com/img/userinfo.gif?v=2' alt='[info]' width='17' height='17' style='vertical-align: bottom; border: 0; padding-right: 1px;'/></a><a href='http://{username_corrent}.livejournal.com/'><b>{username}</b></a></span>"""
+		LjCommand.__init__ (self, parser)
+
+
+	@property
+	def template (self):
+		return u"""<span class='ljuser ljuser-name_{name}' lj:user='{name}' style='white-space:nowrap'><a href='http://{name_correct}.livejournal.com/profile'><img src='http://l-stat.livejournal.com/img/userinfo.gif?v=3' alt='[info]' width='17' height='17' style='vertical-align: bottom; border: 0; padding-right: 1px;'/></a><a href='http://{name_correct}.livejournal.com/'><b>{name}</b></a></span>"""
 
 	@property
 	def name (self):
 		return u"ljuser"
 
 
-	def execute (self, params, content):
-		username = params
-		username_corrent = params.replace ("_", "-")
-		return self.template.format (username=username, username_corrent=username_corrent)
-
-
-class LjCommunityCommand (Command):
+class LjCommunityCommand (LjCommand):
 	"""
 	Команда для вставки ссылки на пользователя ЖЖ
-	Синтсаксис: (:ljuser name:)
+	Синтсаксис: (:ljcomm name:)
 	"""
 	def __init__ (self, parser):
-		Command.__init__ (self, parser)
-		self.template = u"""<span class='ljuser ljuser-name_{community}' lj:user='{community}' style='white-space:nowrap'><a href='http://community.livejournal.com/{community}/profile'><img src='http://l-stat.livejournal.com/img/community.gif?v=2' alt='[info]' width='16' height='16' style='vertical-align: bottom; border: 0; padding-right: 1px;'/></a><a href='http://community.livejournal.com/{community}/'><b>{community}</b></a></span>"""
+		LjCommand.__init__ (self, parser)
+
+
+	@property
+	def template (self):
+		return u"""<span class='ljuser ljuser-name_{name}' lj:user='{name}' style='white-space:nowrap'><a href='http://{name_correct}.livejournal.com/profile'><img src='http://l-stat.livejournal.com/img/community.gif?v=3' alt='[info]' width='16' height='16' style='vertical-align: bottom; border: 0; padding-right: 1px;'/></a><a href='http://{name_correct}.livejournal.com/'><b>{name}</b></a></span>"""
+
 
 	@property
 	def name (self):
 		return u"ljcomm"
-
-
-	def execute (self, params, content):
-		community = params
-		return self.template.format (community=community)
