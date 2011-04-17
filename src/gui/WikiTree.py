@@ -44,7 +44,7 @@ class WikiTree(wx.Panel):
 		kwds["style"] = wx.TAB_TRAVERSAL
 		wx.Panel.__init__(self, *args, **kwds)
 		self.toolbar = self.getToolbar(self, -1)
-		self.treeCtrl = wx.TreeCtrl(self, -1, style=wx.TR_HAS_BUTTONS|wx.TR_LINES_AT_ROOT|wx.TR_EDIT_LABELS|wx.TR_ROW_LINES|wx.TR_DEFAULT_STYLE|wx.SUNKEN_BORDER)
+		self.treeCtrl = wx.TreeCtrl(self, -1, style=wx.TR_HAS_BUTTONS|wx.TR_NO_LINES|wx.TR_LINES_AT_ROOT|wx.TR_EDIT_LABELS|wx.TR_DEFAULT_STYLE|wx.SUNKEN_BORDER)
 
 		self.__set_properties()
 		self.__do_layout()
@@ -498,7 +498,7 @@ class WikiTree(wx.Panel):
 	
 	def __set_properties(self):
 		# begin wxGlade: WikiTree.__set_properties
-		self.SetSize((254, 258))
+		self.SetSize((256, 260))
 		# end wxGlade
 
 	def __do_layout(self):

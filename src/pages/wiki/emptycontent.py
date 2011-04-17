@@ -10,12 +10,7 @@ class EmptyContent (object):
 	"""
 	def __init__ (self, config):
 		self.config = config
-		self.contentDefault = _(u"""!!! Attachment
-(:attachlist:)
-----
-!!! Child pages
-(:childlist:)
-""")
+		self.contentDefault = _(u"""!!! Attachment\n(:attachlist:)\n----\n!!! Child pages\n(:childlist:)""")
 		self.configSecton = u"Wiki"
 		self.configParam = u"EmptyContent"
 		self.option = StringOption (self.config, self.configSecton, self.configParam, self.contentDefault)
