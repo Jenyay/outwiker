@@ -440,6 +440,10 @@ class WikiPage (RootWikiPage):
 		if self._parent == newparent:
 			return
 
+		if newparent == self:
+			# Нельзя быть родителем самого себя
+			return
+
 		# Проверка на то, что в новом родителе нет записи с таким же заголовком
 		if newparent[self.title] != None:
 			raise core.exceptions.DublicateTitle

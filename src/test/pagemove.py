@@ -86,6 +86,13 @@ class MoveTest (unittest.TestCase):
 		self.assertRaises (core.exceptions.DublicateTitle, self.wiki[u"Страница 2/Страница 3/Страница 4"].moveTo, self.wiki)
 
 
+	def testMoveSelf (self):
+		self.wiki[u"Страница 1"].moveTo (self.wiki[u"Страница 1"])
+
+		self.assertNotEqual (self.wiki[u"Страница 1"], None)
+		self.assertEqual (len (self.wiki), 3)
+
+
 	def testMoveInvalid (self):
 		"""
 		А что, если кто-то блокирует папку с заметкой?
