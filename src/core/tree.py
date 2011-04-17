@@ -112,6 +112,9 @@ class RootWikiPage (object):
 		"""
 		Получить нужную страницу по относительному пути в дереве
 		"""
+		if path == "/":
+			return self
+
 		# Разделим путь по составным частям
 		titles = path.split ("/")
 		page = self
@@ -267,6 +270,11 @@ class WikiDocument (RootWikiPage):
 		"""
 		root = WikiDocument(path, readonly)
 		root.loadChildren()
+
+		lastvieved = root.lastViewedPage
+		if lastvieved != None:
+			root.selectedPage = root[lastvieved]
+
 		Application.onTreeUpdate(root)
 		return root
 
@@ -293,14 +301,22 @@ class WikiDocument (RootWikiPage):
 	def selectedPage (self):
 		return self._selectedPage
 
+
 	@selectedPage.setter
 	def selectedPage (self, page):
-		self._selectedPage = page
+		subpath = "/"
 
-		if page != None and not self.readonly:
+		if isinstance (page, type(self)) or page == None:
+			# Экземпляр класса WikiDocument выбирать нельзя
+			self._selectedPage = None
+		else:
+			self._selectedPage = page
+			subpath = page.subpath
+
+		if not self.readonly:
 			self.setParameter (WikiDocument.sectionHistory, 
-					WikiDocument.paramHistory,
-					page.subpath)
+				WikiDocument.paramHistory,
+				subpath)
 
 		Application.onPageSelect(self._selectedPage)
 		self.save()
@@ -310,14 +326,28 @@ class WikiDocument (RootWikiPage):
 	def lastViewedPage (self):
 		try:
 			subpath = self.getParameter (WikiDocument.sectionHistory, 
-					WikiDocument.paramHistory)
+				WikiDocument.paramHistory)
 			return subpath
 		except ConfigParser.NoSectionError:
 			pass
 		except ConfigParser.NoOptionError:
 			pass
 
-	
+
+	@property
+	def subpath (self):
+		return u"/"
+
+
+	@property
+	def title (self):
+		return os.path.basename (self.path)
+
+
+	@staticmethod
+	def getTypeString ():
+		return u"document"
+
 
 
 class WikiPage (RootWikiPage):
@@ -527,10 +557,10 @@ class WikiPage (RootWikiPage):
 		return newpath
 
 
-
 	@property
 	def tags (self):
 		return self._tags
+
 
 	@tags.setter
 	def tags (self, tags):

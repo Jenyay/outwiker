@@ -150,13 +150,6 @@ def openWiki (path, readonly=False):
 	try:
 		# Загрузить вики
 		wikiroot = WikiDocument.load (path, readonly)
-
-		# Открыть последнюю открытую страницу
-		if wikiroot.lastViewedPage != None:
-			wikiroot.selectedPage = wikiroot[wikiroot.lastViewedPage]
-		else:
-			wikiroot.selectedPage = None
-
 		Application.wikiroot = wikiroot
 	except IOError:
 		core.commands.MessageBox (_(u"Can't load wiki '%s'") % path, 

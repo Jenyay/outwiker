@@ -43,6 +43,7 @@ class WikiPagesTest(unittest.TestCase):
 		self.assertEqual (self.root[u"Страница 1"][u"Страница 2"].title, u"Страница 2")
 
 		self.assertEqual (self.root[u"Страница 111"], None)
+		self.assertEqual (self.root[u"/"], self.root)
 	
 
 	def testPageType1 (self):

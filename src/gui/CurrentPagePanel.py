@@ -115,7 +115,11 @@ class CurrentPagePanel(wx.Panel):
 			title = "%s" % (page.title)
 			self.titleLabel.SetLabel (title)
 
-			tags = "[%s]" % TagsList.getTagsString (page.tags)
+			if hasattr (page, "tags"):
+				tags = u"[%s]" % TagsList.getTagsString (page.tags)
+			else:
+				tags = u"[]"
+
 			self.tagsLabel.SetLabel (tags)
 
 			self.updateBookmarkBtn()

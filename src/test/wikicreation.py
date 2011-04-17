@@ -160,20 +160,18 @@ class TextPageCreationTest(unittest.TestCase):
 		subpath = wiki.getParameter (section, param)
 		self.assertEqual (subpath, u"Страница 2/Страница 3")
 
-		# Прверим, что параметр сохраняется в файл
+		# Проверим, что параметр сохраняется в файл
 		wiki2 = WikiDocument.load (self.path)
 
 		subpath = wiki2.getParameter (section, param)
 		self.assertEqual (subpath, u"Страница 2/Страница 3")
 
 	
-	def testLastViewedPage1 (self):
+	def testLastViewedPage2 (self):
 		"""
 		Тест на то, что в настройках корня сохраняется ссылка на последнюю просмотренную страницу
 		"""
 		wiki = WikiDocument.load (self.path)
-		section = u"History"
-		param = u"LastViewedPage"
 
 		self.assertEqual (wiki.lastViewedPage, None)
 
@@ -185,11 +183,38 @@ class TextPageCreationTest(unittest.TestCase):
 		subpath = wiki.lastViewedPage
 		self.assertEqual (subpath, u"Страница 2/Страница 3")
 
-		# Прверим, что параметр сохраняется в файл
+		# Проверим, что параметр сохраняется в файл
 		wiki2 = WikiDocument.load (self.path)
 
 		subpath = wiki2.lastViewedPage
 		self.assertEqual (subpath, u"Страница 2/Страница 3")
+
+
+	def testLastViewedPage3 (self):
+		"""
+		Тест на то, что в настройках корня сохраняется ссылка на последнюю просмотренную страницу
+		"""
+		self.rootwiki.selectedPage = self.rootwiki[u"Страница 2/Страница 3"]
+
+		self.rootwiki.selectedPage = self.rootwiki
+
+		# Проверим, что параметр сохраняется в файл
+		wiki2 = WikiDocument.load (self.path)
+
+		#subpath = wiki2.lastViewedPage
+		self.assertEqual (wiki2.selectedPage, None)
+
+
+	def testSelection1 (self):
+		self.rootwiki.selectedPage = self.rootwiki[u"Страница 2/Страница 3"]
+		self.assertEqual (self.rootwiki.selectedPage, self.rootwiki[u"Страница 2/Страница 3"])
+
+
+	def testSelection2 (self):
+		self.rootwiki.selectedPage = self.rootwiki[u"Страница 2/Страница 3"]
+		wiki2 = WikiDocument.load (self.path)
+
+		self.assertEqual (wiki2.selectedPage, wiki2[u"Страница 2/Страница 3"])
 
 
 
