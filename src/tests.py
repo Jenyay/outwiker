@@ -71,7 +71,7 @@ if __name__ == '__main__':
 	from test.localsearch import LocalSearchTest
 	from test.i18n import I18nTest
 	from test.version import VersionTest, StatusTest
-	from test.commands import CommandsTest
+	from test.treesort import TreeSortTest
 	from test.emptycontent import EmptyContentTest
 
 

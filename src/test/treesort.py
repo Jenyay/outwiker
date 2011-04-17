@@ -3,14 +3,13 @@
 
 import unittest
 
-import core.commands
 from core.application import Application
 from test.utils import removeWiki
 from core.tree import RootWikiPage, WikiDocument
 from pages.text.textpage import TextPageFactory
 
 
-class CommandsTest(unittest.TestCase):
+class TreeSortTest(unittest.TestCase):
 	def setUp(self):
 		# Количество срабатываний особытий при обновлении страницы
 		self.treeUpdateCount = 0
@@ -45,7 +44,7 @@ class CommandsTest(unittest.TestCase):
 		"""
 		Сортировка записей по алфавиту
 		"""
-		core.commands.sortChildrenAlphabetical (self.rootwiki)
+		self.rootwiki.sortChildrenAlphabetical ()
 
 		children = self.rootwiki.children
 
@@ -63,7 +62,7 @@ class CommandsTest(unittest.TestCase):
 		"""
 		Сортировка записей по алфавиту
 		"""
-		core.commands.sortChildrenAlphabetical (self.rootwiki)
+		self.rootwiki.sortChildrenAlphabetical ()
 
 		self.assertEqual (0, self.rootwiki[u"Страница 1"].order)
 		self.assertEqual (1, self.rootwiki[u"Страница 2"].order)
@@ -78,7 +77,7 @@ class CommandsTest(unittest.TestCase):
 	def testSortAlphabeticalEvent1 (self):
 		Application.onEndTreeUpdate += self.onEndTreeUpdate
 
-		core.commands.sortChildrenAlphabetical (self.rootwiki)
+		self.rootwiki.sortChildrenAlphabetical ()
 
 		Application.onEndTreeUpdate -= self.onEndTreeUpdate
 

@@ -319,7 +319,8 @@ def sortChildrenAlphabeticalGUI ():
 		return
 
 	if Application.wikiroot.selectedPage != None:
-		sortChildrenAlphabetical (Application.wikiroot.selectedPage)
+		#sortChildrenAlphabetical (Application.wikiroot.selectedPage)
+		Application.wikiroot.selectedPage.sortChildrenAlphabetical ()
 
 
 @testreadonly
@@ -332,23 +333,7 @@ def sortSiblingsAlphabeticalGUI ():
 		return
 
 	if Application.wikiroot.selectedPage != None:
-		sortChildrenAlphabetical (Application.wikiroot.selectedPage.parent)
-
-
-def sortChildrenAlphabetical(parentPage):
-	"""
-	Отсортировать дочерние страницы по алфавиту
-	"""
-	children = parentPage.children
-	children.sort (RootWikiPage.sortAlphabeticalFunction)
-
-	Application.onStartTreeUpdate (parentPage.root)
-
-	try:
-		for n in range (len (children) ):
-			children[n].order = n
-	finally:
-		Application.onEndTreeUpdate (parentPage.root)
+		Application.wikiroot.selectedPage.parent.sortChildrenAlphabetical ()
 
 
 @testreadonly

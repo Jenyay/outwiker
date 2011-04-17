@@ -157,9 +157,9 @@ class RootWikiPage (object):
 		return result
 
 
-	def _sortChildren (self):
-		self._children.sort (RootWikiPage.sortFunction)
-		self._saveChildrenParams()
+	#def _sortChildren (self):
+	#	self._children.sort (RootWikiPage.sortFunction)
+	#	self._saveChildrenParams()
 
 
 	@staticmethod
@@ -196,6 +196,19 @@ class RootWikiPage (object):
 		return 0
 
 
+	def sortChildrenAlphabetical(self):
+		"""
+		Отсортировать дочерние страницы по алфавиту
+		"""
+		self._children.sort (RootWikiPage.sortAlphabeticalFunction)
+		#self._children.sort (RootWikiPage.sortAlphabeticalFunction, reverse=True)
+
+		Application.onStartTreeUpdate (self.root)
+		self._saveChildrenParams()
+		Application.onEndTreeUpdate (self.root)
+
+
+
 	@staticmethod
 	def testDublicate (parent, title):
 		"""
@@ -209,11 +222,12 @@ class RootWikiPage (object):
 		Изменить порядок дочерних элементов
 		Дочернюю страницу page переместить на уровень neworder
 		"""
-		self._children.index (page)
-		self.removeFromChildren (page)
-		self._children.insert (neworder, page)
-		self._saveChildrenParams()
-	
+		oldorder = self._children.index (page)
+		if oldorder != neworder:
+			self.removeFromChildren (page)
+			self._children.insert (neworder, page)
+			self._saveChildrenParams()
+
 
 	def _saveChildrenParams (self):
 		for child in self._children:

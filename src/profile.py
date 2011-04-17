@@ -7,6 +7,7 @@ import pstats
 import wx
 
 from core.application import Application
+from outwiker import OutWiker
 
 def wikiparserProfile ():
 	import profiles.pro_parser
@@ -24,6 +25,18 @@ def wikiparserProfile ():
 	stats.strip_dirs().sort_stats('cumulative').print_stats(10)
 
 
+def outwikerProfile ():
+	global outwiker
+	outwiker = OutWiker(0)
+	profile_fname = "../test/outwiker.profile"
+
+	cProfile.run('outwiker.MainLoop()', profile_fname)
+
+	stats = pstats.Stats(profile_fname)
+	#stats.strip_dirs().sort_stats('calls').print_stats(30)
+	stats.strip_dirs().sort_stats('cumulative').print_stats(30)
+
+
 if __name__ == "__main__":
 	Application.init ("../test/testconfig.ini")
 
@@ -33,4 +46,5 @@ if __name__ == "__main__":
 
 	app = testApp(redirect=False)
 
-	wikiparserProfile()
+	#wikiparserProfile()
+	outwikerProfile ()
