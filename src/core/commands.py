@@ -312,8 +312,9 @@ def sortChildrenAlphabeticalGUI ():
 		return
 
 	if Application.wikiroot.selectedPage != None:
-		#sortChildrenAlphabetical (Application.wikiroot.selectedPage)
 		Application.wikiroot.selectedPage.sortChildrenAlphabetical ()
+	else:
+		Application.wikiroot.sortChildrenAlphabetical ()
 
 
 @testreadonly
