@@ -150,6 +150,17 @@ class WikiPagesTest(unittest.TestCase):
 				u"Страница 1/Страница 2/Страница 5")
 
 
+	def testIsChild1 (self):
+		self.assertTrue (self.root.isChild (self.root[u"Страница 1"]) )
+
+
+	def testIsChild2 (self):
+		self.assertTrue (self.root.isChild (self.root) )
+
+
+	def testIsChild3 (self):
+		self.assertTrue (self.root[u"Страница 1"].isChild (self.root[u"Страница 1/Страница 2/Страница 5"]) )
+
 
 class SubWikiTest (unittest.TestCase):
 	"""

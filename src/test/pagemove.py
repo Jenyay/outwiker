@@ -83,13 +83,37 @@ class MoveTest (unittest.TestCase):
 
 	
 	def test3 (self):
-		self.assertRaises (core.exceptions.DublicateTitle, self.wiki[u"Страница 2/Страница 3/Страница 4"].moveTo, self.wiki)
+		self.assertRaises (core.exceptions.DublicateTitle, 
+				self.wiki[u"Страница 2/Страница 3/Страница 4"].moveTo, 
+				self.wiki)
 
 
-	def testMoveSelf (self):
-		self.wiki[u"Страница 1"].moveTo (self.wiki[u"Страница 1"])
+	def testMoveToSelf (self):
+		self.assertRaises (core.exceptions.TreeException, 
+				self.wiki[u"Страница 1"].moveTo, 
+				self.wiki[u"Страница 1"])
 
 		self.assertNotEqual (self.wiki[u"Страница 1"], None)
+		self.assertEqual (len (self.wiki), 3)
+
+
+	def testMoveToChild1 (self):
+		#self.wiki[u"Страница 2"].moveTo (self.wiki[u"Страница 2/Страница 3"])
+		self.assertRaises (core.exceptions.TreeException, 
+				self.wiki[u"Страница 2"].moveTo, 
+				self.wiki[u"Страница 2/Страница 3"])
+
+		self.assertNotEqual (self.wiki[u"Страница 2"], None)
+		self.assertEqual (len (self.wiki), 3)
+
+
+	def testMoveToChild2 (self):
+		#self.wiki[u"Страница 2"].moveTo (self.wiki[u"Страница 2/Страница 3/Страница 4"])
+		self.assertRaises (core.exceptions.TreeException, 
+				self.wiki[u"Страница 2"].moveTo, 
+				self.wiki[u"Страница 2/Страница 3/Страница 4"])
+
+		self.assertNotEqual (self.wiki[u"Страница 2"], None)
 		self.assertEqual (len (self.wiki), 3)
 
 

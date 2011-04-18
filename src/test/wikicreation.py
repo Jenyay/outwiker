@@ -217,6 +217,31 @@ class TextPageCreationTest(unittest.TestCase):
 		self.assertEqual (wiki2.selectedPage, wiki2[u"Страница 2/Страница 3"])
 
 
+	def testSelection3 (self):
+		self.rootwiki.selectedPage = None
+		wiki2 = WikiDocument.load (self.path)
+
+		self.assertEqual (wiki2.selectedPage, None)
+
+
+	def testSelection4 (self):
+		self.rootwiki.selectedPage = self.rootwiki[u"Страница 2/Страница 3"]
+		self.rootwiki[u"Страница 2/Страница 3"].remove()
+
+		wiki2 = WikiDocument.load (self.path)
+
+		self.assertEqual (wiki2.selectedPage, wiki2[u"Страница 2"])
+
+
+	def testSelection5 (self):
+		self.rootwiki.selectedPage = self.rootwiki[u"Страница 2/Страница 3"]
+		self.rootwiki[u"Страница 2"].remove()
+
+		wiki2 = WikiDocument.load (self.path)
+
+		self.assertEqual (wiki2.selectedPage, None)
+
+
 
 class ConfigPagesTest (unittest.TestCase):
 	"""

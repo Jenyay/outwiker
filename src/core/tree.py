@@ -160,11 +160,6 @@ class RootWikiPage (object):
 		return result
 
 
-	#def _sortChildren (self):
-	#	self._children.sort (RootWikiPage.sortFunction)
-	#	self._saveChildrenParams()
-
-
 	@staticmethod
 	def sortFunction (page1, page2):
 		"""
@@ -250,7 +245,18 @@ class RootWikiPage (object):
 		Удалить страницу из дочерних страниц
 		"""
 		self._children.remove (page)
-	
+
+
+	def isChild (self, page):
+		"""
+		Проверить, является ли page дочерней (вложенной) страницей для self
+		"""
+		# Возможно, лучше было бы использовать subpath вместо path, 
+		# чтобы не зависеть от способа хранения страниц,
+		# но тогда надо учесть, что корень имеет subpath - "/"
+		return page.path.startswith (self.path)
+
+
 
 class WikiDocument (RootWikiPage):
 	sectionHistory = u"History"
@@ -470,9 +476,9 @@ class WikiPage (RootWikiPage):
 		if self._parent == newparent:
 			return
 
-		if newparent == self:
-			# Нельзя быть родителем самого себя
-			return
+		if self.isChild (newparent):
+			# Нельзя быть родителем своего родителя (предка)
+			raise core.exceptions.TreeException
 
 		# Проверка на то, что в новом родителе нет записи с таким же заголовком
 		if newparent[self.title] != None:
