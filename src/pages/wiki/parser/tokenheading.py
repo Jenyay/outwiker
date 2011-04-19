@@ -9,12 +9,13 @@ from libs.pyparsing import Regex
 class HeadingFactory (object):
 	@staticmethod
 	def make (parser):
-		return HeadingToken().getToken()
+		return HeadingToken(parser).getToken()
 
 
 class HeadingToken (object):
-	def __init__ (self):
+	def __init__ (self, parser):
 		self.heading_Regex = "^(?P<header>!!+)\s+(?P<title>.*)$"
+		self.parser = parser
 
 
 	def getToken (self):
@@ -24,12 +25,7 @@ class HeadingToken (object):
 		return Regex (self.heading_Regex, re.MULTILINE).setParseAction(self.convertToHeading)
 
 
-	def convertToHeading (s, l, t):
+	def convertToHeading (self, s, l, t):
 		level = len (t["header"]) - 1
-		return u"<H%d>%s</H%d>" % (level, t["title"], level)
-
-
-	def __convertToHeading (self, opening, closing):
-		def conversionParseAction(s,l,t):
-			return opening + t["title"] + closing
-		return conversionParseAction
+		content = self.parser.parseHeadingMarkup (t["title"])
+		return u"<H{level}>{content}</H{level}>".format (level=level, content=content)

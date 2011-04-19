@@ -17,7 +17,7 @@ from pages.wiki.parserfactory import ParserFactory
 
 class ParserHeadingTest (unittest.TestCase):
 	def setUp(self):
-		self.encoding = "utf8"
+		self.encoding = "866"
 
 		self.filesPath = u"../test/samplefiles/"
 
@@ -126,3 +126,116 @@ class ParserHeadingTest (unittest.TestCase):
 		result = u'бла-бла-бла \nкхм !!!!!!! Заголовок бла-бла-бла\nбла-бла-бла'
 
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+	def testHeaderItalic1 (self):
+		text = u"бла-бла-бла \n!! Заголовок ''бла-бла-бла''\nбла-бла-бла"
+		result = u'бла-бла-бла \n<H1>Заголовок <I>бла-бла-бла</I></H1>\nбла-бла-бла'
+
+		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+	def testHeaderItalic2 (self):
+		text = u"бла-бла-бла \n!!! Заголовок ''бла-бла-бла''\nбла-бла-бла"
+		result = u'бла-бла-бла \n<H2>Заголовок <I>бла-бла-бла</I></H2>\nбла-бла-бла'
+
+		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+	def testHeaderBold1 (self):
+		text = u"бла-бла-бла \n!! Заголовок '''бла-бла-бла'''\nбла-бла-бла"
+		result = u'бла-бла-бла \n<H1>Заголовок <B>бла-бла-бла</B></H1>\nбла-бла-бла'
+
+		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+	def testHeaderBold2 (self):
+		text = u"бла-бла-бла \n!!! Заголовок '''бла-бла-бла'''\nбла-бла-бла"
+		result = u'бла-бла-бла \n<H2>Заголовок <B>бла-бла-бла</B></H2>\nбла-бла-бла'
+
+		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+	def testHeaderBoldSubscript (self):
+		text = u"бла-бла-бла \n!!! Заголовок ''''_бла-бла-бла_''''\nбла-бла-бла"
+		result = u'бла-бла-бла \n<H2>Заголовок <B><SUB>бла-бла-бла</SUB></B></H2>\nбла-бла-бла'
+
+		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+	def testHeaderBoldSuperscript (self):
+		text = u"бла-бла-бла \n!!! Заголовок ''''^бла-бла-бла^''''\nбла-бла-бла"
+		result = u'бла-бла-бла \n<H2>Заголовок <B><SUP>бла-бла-бла</SUP></B></H2>\nбла-бла-бла'
+
+		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+	def testHeaderItalicSubscript (self):
+		text = u"бла-бла-бла \n!!! Заголовок '''_бла-бла-бла_'''\nбла-бла-бла"
+		result = u'бла-бла-бла \n<H2>Заголовок <I><SUB>бла-бла-бла</SUB></I></H2>\nбла-бла-бла'
+
+		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+	def testHeaderItalicSuperscript (self):
+		text = u"бла-бла-бла \n!!! Заголовок '''^бла-бла-бла^'''\nбла-бла-бла"
+		result = u'бла-бла-бла \n<H2>Заголовок <I><SUP>бла-бла-бла</SUP></I></H2>\nбла-бла-бла'
+
+		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+	def testHeaderBoldItalicSubscript (self):
+		text = u"бла-бла-бла \n!!! Заголовок '''''_бла-бла-бла_'''''\nбла-бла-бла"
+		result = u'бла-бла-бла \n<H2>Заголовок <B><I><SUB>бла-бла-бла</SUB></I></B></H2>\nбла-бла-бла'
+
+		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+	def testHeaderBoldItalicSuperscript (self):
+		text = u"бла-бла-бла \n!!! Заголовок '''''^бла-бла-бла^'''''\nбла-бла-бла"
+		result = u'бла-бла-бла \n<H2>Заголовок <B><I><SUP>бла-бла-бла</SUP></I></B></H2>\nбла-бла-бла'
+
+		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+	def testHeaderSubscript (self):
+		text = u"бла-бла-бла \n!!! Заголовок '_бла-бла-бла_'\nбла-бла-бла"
+		result = u'бла-бла-бла \n<H2>Заголовок <SUB>бла-бла-бла</SUB></H2>\nбла-бла-бла'
+
+		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+	def testHeaderSuperscript (self):
+		text = u"бла-бла-бла \n!!! Заголовок '^бла-бла-бла^'\nбла-бла-бла"
+		result = u'бла-бла-бла \n<H2>Заголовок <SUP>бла-бла-бла</SUP></H2>\nбла-бла-бла'
+
+		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+	def testHeaderUnderline (self):
+		text = u"бла-бла-бла \n!!! Заголовок {+бла-бла-бла+}\nбла-бла-бла"
+		result = u'бла-бла-бла \n<H2>Заголовок <U>бла-бла-бла</U></H2>\nбла-бла-бла'
+
+		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+	def testHeaderNoFormat (self):
+		text = u"бла-бла-бла \n!!! Заголовок [={+бла-бла-бла+}=]\nбла-бла-бла"
+		result = u'бла-бла-бла \n<H2>Заголовок {+бла-бла-бла+}</H2>\nбла-бла-бла'
+
+		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+	def testHeaderLjUser (self):
+		text = u"бла-бла-бла \n!!! Заголовок (:ljuser jenyay:)\nбла-бла-бла"
+
+		result = u"бла-бла-бла \n<H2>Заголовок <span class='ljuser ljuser-name_jenyay' lj:user='jenyay' style='white-space:nowrap'><a href='http://jenyay.livejournal.com/profile'><img src='http://l-stat.livejournal.com/img/userinfo.gif?v=3' alt='[info]' width='17' height='17' style='vertical-align: bottom; border: 0; padding-right: 1px;'/></a><a href='http://jenyay.livejournal.com/'><b>jenyay</b></a></span></H2>\nбла-бла-бла"
+
+		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+	def testHeaderTex (self):
+		text = u"бла-бла-бла \n!!! Заголовок {$e^x$}\nбла-бла-бла"
+		result_parse = self.parser.toHtml (text)
+
+		self.assertTrue (result_parse.startswith (u'бла-бла-бла \n<H2>Заголовок <IMG SRC="__attach\\__thumb\\eqn_') )
