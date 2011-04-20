@@ -17,3 +17,4 @@ doc/todo.tsk.lock
 doc/todo.tsk.lock.*
 test/*.profile
 distrib/tests
+distrib/outwiker-*/DEBIAN/md5sums
