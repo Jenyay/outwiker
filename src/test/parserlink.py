@@ -177,7 +177,7 @@ class ParserLinkTest (unittest.TestCase):
 	def testTexLinks1 (self):
 		for link in self.pagelinks:
 			text = u"бла-бла-бла \n[[%s | {$e^x$} ]] бла-бла-бла\nбла-бла-бла" % (link)
-			result_begin = u'бла-бла-бла \n<A HREF="%s"><IMG SRC="__attach\__thumb\eqn_' % (link)
+			result_begin = u'бла-бла-бла \n<A HREF="%s"><IMG SRC="__attach/__thumb/eqn_' % (link)
 
 			self.assertTrue (self.parser.toHtml (text).startswith (result_begin) )
 
@@ -185,7 +185,7 @@ class ParserLinkTest (unittest.TestCase):
 	def testTexLinks2 (self):
 		for link in self.pagelinks:
 			text = u"бла-бла-бла \n[[{$e^x$} -> %s]] бла-бла-бла\nбла-бла-бла" % (link)
-			result_begin = u'бла-бла-бла \n<A HREF="%s"><IMG SRC="__attach\__thumb\eqn_' % (link)
+			result_begin = u'бла-бла-бла \n<A HREF="%s"><IMG SRC="__attach/__thumb/eqn_' % (link)
 
 			self.assertTrue (self.parser.toHtml (text).startswith (result_begin) )
 	

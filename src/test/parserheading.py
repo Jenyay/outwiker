@@ -238,4 +238,4 @@ class ParserHeadingTest (unittest.TestCase):
 		text = u"бла-бла-бла \n!!! Заголовок {$e^x$}\nбла-бла-бла"
 		result_parse = self.parser.toHtml (text)
 
-		self.assertTrue (result_parse.startswith (u'бла-бла-бла \n<H2>Заголовок <IMG SRC="__attach\\__thumb\\eqn_') )
+		self.assertTrue (result_parse.startswith (u'бла-бла-бла \n<H2>Заголовок <IMG SRC="__attach/__thumb/eqn_') )
