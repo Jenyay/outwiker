@@ -44,6 +44,7 @@ class CurrentPagePanel(wx.Panel):
 		self.currentPage = None
 
 		Application.onPageSelect += self.onPageSelect
+		Application.onPageRename += self.onPageRename
 		Application.onPageUpdate += self.onPageUpdate
 		Application.onBookmarksChanged += self.onBookmarksChanged
 
@@ -51,10 +52,19 @@ class CurrentPagePanel(wx.Panel):
 
 	
 	def onClose (self, event):
+		Application.onPageSelect -= self.onPageSelect
+		Application.onPageRename -= self.onPageRename
+		Application.onPageUpdate -= self.onPageUpdate
+		Application.onBookmarksChanged -= self.onBookmarksChanged
+
 		if self.pageView != None:
 			self.pageView.removeGui ()
 			self.pageView.Close()
 		self.Destroy()
+
+
+	def onPageRename (self, page, oldsubpath):
+		self.onPageUpdate (page)
 
 
 	def onPageSelect (self, page):
@@ -72,6 +82,7 @@ class CurrentPagePanel(wx.Panel):
 
 	def onPageUpdate (self, page):
 		if self.currentPage != None and self.currentPage == page:
+			#self.onPageSelect (page)
 			self.updatePageInfo (page)
 	
 

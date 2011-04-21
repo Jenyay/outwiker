@@ -334,7 +334,7 @@ def sortSiblingsAlphabeticalGUI ():
 def renamePage (page, newtitle):
 	try:
 		page.title = newtitle
-		page.root.selectedPage = page
+		#page.root.selectedPage = page
 
 	except core.exceptions.DublicateTitle:
 		core.commands.MessageBox (_(u"Can't move page when page with that title already exists"), _(u"Error"), wx.ICON_ERROR | wx.OK)

@@ -79,6 +79,7 @@ class HtmlPanel(BaseTextPanel):
 	
 	def onClose (self, event):
 		self.htmlWindow.Close()
+		pass
 
 
 	def onAttachmentPaste (self, fnames):
