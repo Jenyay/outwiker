@@ -428,7 +428,7 @@ class WikiPage (RootWikiPage):
 			return
 
 		# Проверка на дубликат страниц, а также на то, что в заголовке страницы
-		# может меняться только регинстр букв
+		# может меняться только регистр букв
 		if not self.canRename(newtitle):
 			raise core.exceptions.DublicateTitle
 
