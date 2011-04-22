@@ -69,6 +69,10 @@ class SearchPanel(wx.Panel):
 		self.Save()
 
 
+	def UpdateView (self, page):
+		pass
+
+
 	def updatePageInfo (self):
 		"""
 		Обновить интерфейс, чтобы он соответствовал настройкам страницы
