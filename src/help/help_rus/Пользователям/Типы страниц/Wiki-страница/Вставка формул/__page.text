@@ -5,3 +5,15 @@ Wiki-страницы позволяют вставлять формулы в ф
 Формулы располагаются между скобками [={$ ... $}=]. Например, команда [={$ y = \bigsum_{i=-\infty}^{\infty}a_i $}=] выведет следующую формулу:
 
 %center% {$ y = \bigsum_{i=-\infty}^{\infty}a_i $}
+
+Также можно использовать команду \fontN, где N (от 1 до 5) условно обозначает размер шрифта, чем N больше, тем шрифт крупнее.
+
+||border width=600
+|| Формула || Результат ||
+|| [={$ y = \bigsum_{i=-\infty}^{\infty}a_i $}=][[<<]]Размер по умолчанию (\font3) || {$ y = \bigsum_{i=-\infty}^{\infty}a_i $} ||
+|| [={$ \font1 y = \bigsum_{i=-\infty}^{\infty}a_i $}=] || {$ \font1 y = \bigsum_{i=-\infty}^{\infty}a_i $} ||
+|| [={$ \font2 y = \bigsum_{i=-\infty}^{\infty}a_i $}=] || {$ \font2 y = \bigsum_{i=-\infty}^{\infty}a_i $} ||
+|| [={$ \font3 y = \bigsum_{i=-\infty}^{\infty}a_i $}=] || {$ \font3 y = \bigsum_{i=-\infty}^{\infty}a_i $} ||
+|| [={$ \font4 y = \bigsum_{i=-\infty}^{\infty}a_i $}=] || {$ \font4 y = \bigsum_{i=-\infty}^{\infty}a_i $} ||
+|| [={$ \font5 y = \bigsum_{i=-\infty}^{\infty}a_i $}=] || {$ \font5 y = \bigsum_{i=-\infty}^{\infty}a_i $} ||
+
