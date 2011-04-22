@@ -6,8 +6,9 @@ import os
 
 import wx
 
-from core.attachment import Attachment
 import core.system
+import core.commands
+from core.attachment import Attachment
 from core.application import Application
 
 
@@ -66,6 +67,14 @@ class BaseTextPanel (wx.Panel):
 	@page.setter
 	def page (self, page):
 		self._currentpage = page
+
+		if not os.path.exists (page.path):
+			core.commands.MessageBox (
+					_(u"Page %s not found. It is recommended to update the wiki") % self.page.title,
+					_("Error"), wx.OR | wx.ICON_ERROR )
+			#core.commands.openWiki (Application.wikiroot.path)
+			return
+
 		self.UpdateView (page)
 	
 
@@ -73,6 +82,13 @@ class BaseTextPanel (wx.Panel):
 		"""
 		Сохранить страницу
 		"""
+		if not os.path.exists (self.page.path):
+			# Похоже, страница удалена вручную
+			core.commands.MessageBox (_(u"Page %s not found. It is recommended to update the wiki") % self.page.title,
+					_("Error"), wx.OR | wx.ICON_ERROR )
+			#core.commands.openWiki (Application.wikiroot.path)
+			return
+
 		if self.page != None and not self.page.isRemoved and not self.page.readonly:
 			self.page.content = self.GetContentFromGui()
 	

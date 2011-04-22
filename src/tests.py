@@ -26,6 +26,7 @@ if __name__ == '__main__':
 	from test.treeloading import WikiPagesTest, SubWikiTest
 	from test.treeloading_readonly import ReadonlyLoadTest, ReadonlyChangeTest
 	from test.treecreation import TextPageCreationTest
+	from test.treemanualedit import ManualEditTest
 	from test.bookmarks import BookmarksTest
 	from test.treeconfigpages import ConfigPagesTest
 	from test.invalidwiki import InvalidWikiTest

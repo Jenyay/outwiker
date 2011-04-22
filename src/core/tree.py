@@ -707,6 +707,9 @@ class WikiPage (RootWikiPage):
 		if self.readonly:
 			raise core.exceptions.ReadonlyException
 
+		#if not os.path.exists (self.path):
+		#	self.save()
+
 		if text != self.content:
 			path = os.path.join (self.path, RootWikiPage.contentFile)
 
