@@ -23,9 +23,11 @@ if __name__ == '__main__':
 
 	import unittest
 
-	from test.wikiloading import WikiPagesTest, SubWikiTest
-	from test.wikiloading_readonly import ReadonlyLoadTest, ReadonlyChangeTest
-	from test.wikicreation import TextPageCreationTest, ConfigPagesTest, BookmarksTest
+	from test.treeloading import WikiPagesTest, SubWikiTest
+	from test.treeloading_readonly import ReadonlyLoadTest, ReadonlyChangeTest
+	from test.treecreation import TextPageCreationTest
+	from test.bookmarks import BookmarksTest
+	from test.treeconfigpages import ConfigPagesTest
 	from test.invalidwiki import InvalidWikiTest
 	from test.factory import FactorySelectorTest
 

@@ -574,9 +574,10 @@ class WikiPage (RootWikiPage):
 		if self.readonly:
 			raise core.exceptions.ReadonlyException
 
-		self._tags = tags[:]
-		self.save()
-		Application.onPageUpdate(self)
+		if self._tags != tags:
+			self._tags = tags[:]
+			self.save()
+			Application.onPageUpdate(self)
 
 
 	def _getIcon (self):

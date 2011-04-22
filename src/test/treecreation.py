@@ -30,6 +30,7 @@ class TextPageCreationTest(unittest.TestCase):
 		# Здесь будет создаваться вики
 		self.path = u"../test/testwiki"
 		removeWiki (self.path)
+		self.eventcount = 0
 
 		self.rootwiki = WikiDocument.create (self.path)
 
@@ -52,7 +53,37 @@ class TextPageCreationTest(unittest.TestCase):
 
 	def tearDown(self):
 		removeWiki (self.path)
-	
+
+
+	def onPageUpdate (self, page):
+		self.eventcount += 1
+
+
+	def testEventChangeContent (self):
+		Application.onPageUpdate += self.onPageUpdate
+
+		self.rootwiki[u"Страница 1"].content = u"тарам-там-там"
+		self.assertEqual (self.eventcount, 1)
+
+		# То же самое содержимое
+		self.rootwiki[u"Страница 1"].content = u"тарам-там-там"
+		self.assertEqual (self.eventcount, 1)
+
+		Application.onPageUpdate -= self.onPageUpdate
+
+
+	def testEventChangeTags (self):
+		Application.onPageUpdate += self.onPageUpdate
+
+		self.rootwiki[u"Страница 1"].tags = [u"метка 1", u"метка 2", u"метка 4"]
+		self.assertEqual (self.eventcount, 1)
+
+		# То же самое содержимое
+		self.rootwiki[u"Страница 1"].tags = [u"метка 1", u"метка 2", u"метка 4"]
+		self.assertEqual (self.eventcount, 1)
+
+		Application.onPageUpdate -= self.onPageUpdate
+
 
 	def testAttach1 (self):
 		# Получить путь до прикрепленных файлов, не создавая ее
@@ -240,181 +271,4 @@ class TextPageCreationTest(unittest.TestCase):
 		wiki2 = WikiDocument.load (self.path)
 
 		self.assertEqual (wiki2.selectedPage, None)
-
-
-
-class ConfigPagesTest (unittest.TestCase):
-	"""
-	Тесты, связанные с настройками страниц и вики в целом
-	"""
-	def setUp(self):
-		# Здесь будет создаваться вики
-		self.path = u"../test/testwiki"
-		removeWiki (self.path)
-
-		self.rootwiki = WikiDocument.create (self.path)
-
-		TextPageFactory.create (self.rootwiki, u"Страница 1", [])
-		TextPageFactory.create (self.rootwiki, u"Страница 2", [])
-		TextPageFactory.create (self.rootwiki[u"Страница 2"], u"Страница 3", [])
-		TextPageFactory.create (self.rootwiki[u"Страница 2/Страница 3"], u"Страница 4", [])
-
-		TextPageFactory.create (self.rootwiki[u"Страница 1"], u"Страница 5", [])
-
-
-	def testSetRootParams (self):
-		self.rootwiki.setParameter (u"TestSection_1", u"value1", u"Значение 1")
-
-		self.assertEqual (self.rootwiki.getParameter (u"TestSection_1", u"value1"), u"Значение 1")
-
-		# Прочитаем вики и проверим установленный параметр
-		wiki = WikiDocument.create (self.path)
-		self.assertEqual (wiki.getParameter (u"TestSection_1", u"value1"), u"Значение 1")
-
-
-	def testSetPageParams (self):
-		self.rootwiki[u"Страница 1"].setParameter (u"TestSection_1", u"value1", u"Значение 1")
-
-		self.assertEqual (self.rootwiki[u"Страница 1"].getParameter (u"TestSection_1", u"value1"), 
-				u"Значение 1")
-
-		# Прочитаем вики и проверим установленный параметр
-		wiki = WikiDocument.load (self.path)
-		self.assertEqual (wiki[u"Страница 1"].getParameter (u"TestSection_1", u"value1"), 
-				u"Значение 1")
-
-
-	def testSubwikiParams (self):
-		"""
-		Проверка того, что установка параметров страницы как полноценной вики не портит исходные параметры
-		"""
-		self.rootwiki[u"Страница 1"].setParameter (u"TestSection_1", u"value1", u"Значение 1")
-
-		path = os.path.join (self.path, u"Страница 1")
-		subwiki = WikiDocument.load (path)
-		
-		self.assertEqual (subwiki.getParameter (u"TestSection_1", u"value1"), u"Значение 1")
-
-		# Добавим новый параметр
-		subwiki.setParameter (u"TestSection_2", u"value2", u"Значение 2")
-		
-		self.assertEqual (subwiki.getParameter (u"TestSection_1", u"value1"), u"Значение 1")
-		self.assertEqual (subwiki.getParameter (u"TestSection_2", u"value2"), u"Значение 2")
-
-		# На всякий случай прочитаем вики еще раз
-		wiki = WikiDocument.load (self.path)
-		
-		self.assertEqual (wiki[u"Страница 1"].getParameter (u"TestSection_1", u"value1"), 
-				u"Значение 1")
-		
-		self.assertEqual (wiki[u"Страница 1"].getParameter (u"TestSection_2", u"value2"), 
-				u"Значение 2")
-
-
-class BookmarksTest (unittest.TestCase):
-	def setUp(self):
-		# Здесь будет создаваться вики
-		self.path = u"../test/testwiki"
-		removeWiki (self.path)
-
-		self.rootwiki = WikiDocument.create (self.path)
-
-		TextPageFactory.create (self.rootwiki, u"Страница 1", [])
-		TextPageFactory.create (self.rootwiki, u"Страница 2", [])
-		TextPageFactory.create (self.rootwiki[u"Страница 2"], u"Страница 3", [])
-		TextPageFactory.create (self.rootwiki[u"Страница 2/Страница 3"], u"Страница 4", [])
-		TextPageFactory.create (self.rootwiki[u"Страница 1"], u"Страница 5", [])
-
-		self.bookmarkCount = 0
-		self.bookmarkSender = None
-
-
-	def onBookmark (self, bookmarks):
-		self.bookmarkCount += 1
-		self.bookmarkSender = bookmarks
-	
-
-	def testAddToBookmarks (self):
-		# По умолчанию закладок нет
-		self.assertEqual (len (self.rootwiki.bookmarks), 0)
-
-		self.rootwiki.bookmarks.add (self.rootwiki[u"Страница 1"])
-
-		self.assertEqual (len (self.rootwiki.bookmarks), 1)
-		self.assertEqual (self.rootwiki.bookmarks[0].title, u"Страница 1")
-
-		# Проверим, что закладки сохраняются в конфиг
-		wiki = WikiDocument.load (self.path)
-
-		self.assertEqual (len (wiki.bookmarks), 1)
-		self.assertEqual (wiki.bookmarks[0].title, u"Страница 1")
-	
-
-	def testManyBookmarks (self):
-		self.rootwiki.bookmarks.add (self.rootwiki[u"Страница 1"])
-		self.rootwiki.bookmarks.add (self.rootwiki[u"Страница 2"])
-		self.rootwiki.bookmarks.add (self.rootwiki[u"Страница 2/Страница 3"])
-
-		self.assertEqual (len (self.rootwiki.bookmarks), 3)
-		self.assertEqual (self.rootwiki.bookmarks[0].subpath, u"Страница 1")
-		self.assertEqual (self.rootwiki.bookmarks[1].subpath, u"Страница 2")
-		self.assertEqual (self.rootwiki.bookmarks[2].subpath, u"Страница 2/Страница 3")
-	
-
-	def testRemoveBookmarks (self):
-		self.rootwiki.bookmarks.add (self.rootwiki[u"Страница 1"])
-		self.rootwiki.bookmarks.add (self.rootwiki[u"Страница 2"])
-		self.rootwiki.bookmarks.add (self.rootwiki[u"Страница 2/Страница 3"])
-
-		self.rootwiki.bookmarks.remove (self.rootwiki[u"Страница 2"])
-
-		self.assertEqual (len (self.rootwiki.bookmarks), 2)
-		self.assertEqual (self.rootwiki.bookmarks[0].subpath, u"Страница 1")
-		self.assertEqual (self.rootwiki.bookmarks[1].subpath, u"Страница 2/Страница 3")
-	
-
-	def testBookmarkEvent (self):
-		Application.onBookmarksChanged += self.onBookmark
-
-		self.rootwiki.bookmarks.add (self.rootwiki[u"Страница 1"])
-		self.assertEqual (self.bookmarkCount, 1)
-		self.assertEqual (self.bookmarkSender, self.rootwiki.bookmarks)
-
-		self.rootwiki.bookmarks.add (self.rootwiki[u"Страница 2"])
-		self.assertEqual (self.bookmarkCount, 2)
-		self.assertEqual (self.bookmarkSender, self.rootwiki.bookmarks)
-
-
-		self.rootwiki.bookmarks.remove (self.rootwiki[u"Страница 2"])
-		self.assertEqual (self.bookmarkCount, 3)
-		self.assertEqual (self.bookmarkSender, self.rootwiki.bookmarks)
-	
-
-	def testPageInBookmarks (self):
-		self.rootwiki.bookmarks.add (self.rootwiki[u"Страница 1"])
-		self.rootwiki.bookmarks.add (self.rootwiki[u"Страница 2"])
-		self.rootwiki.bookmarks.add (self.rootwiki[u"Страница 2/Страница 3"])
-
-		self.assertEqual (self.rootwiki.bookmarks.pageMarked (self.rootwiki[u"Страница 1"]), 
-				True)
-
-		self.assertEqual (self.rootwiki.bookmarks.pageMarked (self.rootwiki[u"Страница 2/Страница 3"]),
-				True)
-
-		self.assertEqual (self.rootwiki.bookmarks.pageMarked (self.rootwiki[u"Страница 1/Страница 5"]), 
-				False)
-	
-
-	def testCloneBookmarks (self):
-		"""
-		Тест на повторное добавление одной и той же страницы
-		"""
-		self.rootwiki.bookmarks.add (self.rootwiki[u"Страница 1"])
-		self.rootwiki.bookmarks.add (self.rootwiki[u"Страница 1"])
-
-		self.assertEqual (len (self.rootwiki.bookmarks), 1)
-		self.assertEqual (self.rootwiki.bookmarks[0].title, u"Страница 1")
-
-
-
 
