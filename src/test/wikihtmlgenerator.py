@@ -23,11 +23,6 @@ from utils import removeWiki
 class WikiHtmlGeneratorTest (unittest.TestCase):
 	def setUp(self):
 		self.encoding = "866"
-#
-#		self.configpath = u"../test/testconfig.ini"
-#
-#		if os.path.exists (self.configpath):
-#			os.remove (self.configpath)
 
 		self.filesPath = u"../test/samplefiles/"
 		self.__createWiki()
@@ -64,9 +59,6 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
 
 	def tearDown(self):
 		removeWiki (self.path)
-
-		#if os.path.exists (self.configpath):
-		#	os.remove (self.configpath)
 
 
 	def test1 (self):
@@ -144,6 +136,31 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
 		ftime6 = os.stat(path).st_mtime
 
 		self.assertEqual (ftime5, ftime6)
+
+
+	def testCacheRename (self):
+		# Только создали страницу, кешировать нельзя
+		generator = HtmlGenerator (self.testPage)
+		self.assertFalse (generator.canReadFromCache())
+
+		generator.makeHtml ()
+		# После того, как один раз сгенерили страницу, если ничего не изменилось, можно кешировать
+		self.assertTrue (generator.canReadFromCache())
+
+		self.testPage.content = u"бла-бла-бла"
+
+		# Изменили содержимое страницы, опять нельзя кешировать
+		self.assertFalse (generator.canReadFromCache())
+		generator.makeHtml ()
+		self.assertTrue (generator.canReadFromCache())
+
+		# Изменили заголовок
+		self.testPage.title = u"Новый заголовок"
+
+		# Добавим файл
+		self.assertFalse (generator.canReadFromCache())
+		generator.makeHtml ()
+		self.assertTrue (generator.canReadFromCache())
 
 
 	def testCacheEmpty1 (self):

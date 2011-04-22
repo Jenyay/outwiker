@@ -88,6 +88,10 @@ class HtmlGenerator (object):
 		# Здесь накапливаем список интересующих строк (по которым определяем изменилась страница или нет)
 		content = []
 
+		# Заголовок страницы
+		content.append (self.page.title.encode ("unicode_escape"))
+
+		# Содержимое
 		pagecontent = self.page.content.encode ("unicode_escape")
 		content.append (pagecontent)
 

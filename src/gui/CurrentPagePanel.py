@@ -64,10 +64,7 @@ class CurrentPagePanel(wx.Panel):
 
 
 	def onPageRename (self, page, oldsubpath):
-		#self.onPageUpdate (page)
-		if self.currentPage != None and self.currentPage == page:
-			self.updatePageInfo (page)
-			self.pageView.UpdateView(self.currentPage)
+		self.onPageUpdate (page)
 
 
 	def onPageSelect (self, page):
@@ -85,7 +82,6 @@ class CurrentPagePanel(wx.Panel):
 
 	def onPageUpdate (self, page):
 		if self.currentPage != None and self.currentPage == page:
-			#self.onPageSelect (page)
 			self.updatePageInfo (page)
 	
 
