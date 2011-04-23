@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-22 15:55+0400\n"
+"POT-Creation-Date: 2011-04-23 11:21+0400\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -259,8 +259,8 @@ msgid "Find Previous"
 msgstr "Найти предыдущий"
 
 #: gui/MainWindow.py:112
-msgid "&New\tCtrl+N"
-msgstr "&Создать\tCtrl+N"
+msgid "&New…\tCtrl+N"
+msgstr "&Создать…\tCtrl+N"
 
 #: gui/MainWindow.py:113
 msgid "&Open…\tCtrl+O"

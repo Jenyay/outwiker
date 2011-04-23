@@ -109,7 +109,7 @@ class MainWindow(wx.Frame):
 		# Menu Bar
 		self.mainMenu = wx.MenuBar()
 		self.fileMenu = wx.Menu()
-		self.fileMenu.Append(self.ID_NEW, _("&New\tCtrl+N"), "", wx.ITEM_NORMAL)
+		self.fileMenu.Append(self.ID_NEW, _(u"&New…\tCtrl+N"), "", wx.ITEM_NORMAL)
 		self.fileMenu.Append(self.ID_OPEN, _(u"&Open…\tCtrl+O"), "", wx.ITEM_NORMAL)
 		self.fileMenu.Append(self.ID_OPEN_READONLY, _(u"Open &Read-only…\tCtrl+Shift+O"), "", wx.ITEM_NORMAL)
 		self.fileMenu.Append(self.ID_SAVE, _("&Save\tCtrl+S"), "", wx.ITEM_NORMAL)
