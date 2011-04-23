@@ -120,11 +120,7 @@ class PrefDialog(wx.Dialog):
 	
 
 	def __saveCurrentPage (self):
-		selectedPageIndex = self.treeBook.GetSelection()
-		if selectedPageIndex == wx.NOT_FOUND:
-			return
-
-		selectedPage = self.treeBook.GetPage (selectedPageIndex)
+		selectedPage = self.treeBook.GetCurrentPage()
 
 		if selectedPage == None:
 			return
