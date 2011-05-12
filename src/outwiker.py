@@ -4,6 +4,9 @@
 
 import gettext
 
+import wxversion
+wxversion.select("2.8")
+
 import wx
 
 from core.config import getConfigPath

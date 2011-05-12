@@ -261,6 +261,8 @@ class MainWindow(wx.Frame):
 		self._updateRecentMenu()
 		self.setFullscreen(self.mainWindowConfig.FullscreenOption.value)
 
+		self.Show()
+
 		if len (sys.argv) > 1:
 			self._openFromCommandLine()
 		else:

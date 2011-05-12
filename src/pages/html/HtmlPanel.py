@@ -15,7 +15,8 @@ from core.attachment import Attachment
 from core.htmlimprover import HtmlImprover
 
 from gui.BaseTextPanel import BaseTextPanel
-from gui.htmlrenderwx import HtmlRenderWX
+#from gui.htmlrenderwx import HtmlRenderWX
+from gui.htmlrenderfactory import getHtmlRender
 from gui.HtmlTextEditor import HtmlTextEditor
 
 # begin wxGlade: dependencies
@@ -57,7 +58,8 @@ class HtmlPanel(BaseTextPanel):
 		self.previewPane = wx.Panel(self.notebook, -1)
 		self.htmlPane = wx.Panel(self.notebook, -1)
 		self.codeWindow = self.GetTextEditor()
-		self.htmlWindow = HtmlRenderWX(self.previewPane, -1)
+		self.htmlWindow = getHtmlRender (self.previewPane)
+		#self.htmlWindow = HtmlRenderWX(self.previewPane)
 
 		self.__set_properties()
 		self.__do_layout()
