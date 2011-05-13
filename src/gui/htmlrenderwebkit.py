@@ -63,8 +63,9 @@ class HtmlRenderWebKit(wx.Panel):
 		self._currentPage = None
 
 		self.canOpenUrl = False                # Можно ли открывать ссылки
-		self.ctrl.connect("navigation-policy-decision-requested",
-                    self._onNavigate)
+
+		self.ctrl.connect("navigation-policy-decision-requested", self._onNavigate)
+		self.ctrl.connect("hovering-over-link", self._onHoveredOverLink)
 
 
 	# Some basic usefull methods
@@ -87,6 +88,45 @@ class HtmlRenderWebKit(wx.Panel):
 		self._currentPage = value
 
 
+	def identifyUri (self, href):
+		"""
+		Определить тип ссылки и вернуть кортеж (url, page, filename)
+		"""
+		if self.__isUrl (href):
+			return (href, None, None)
+
+		href_clear = self._removeFileProtokol (href)
+
+		page = self.__findWikiPage (href_clear)
+		filename = self.__findFile (href_clear)
+
+		return (None, page, filename)
+
+
+	def _onHoveredOverLink (self, view, title, uri):
+		if uri == None:
+			core.commands.setStatusText (u"")
+			return
+
+		href = urllib.unquote (unicode (uri, "utf8") )
+
+		(url, page, filename) = self.identifyUri (href)
+
+		if url != None:
+			core.commands.setStatusText (url)
+			return
+
+		if page != None:
+			core.commands.setStatusText (page.subpath)
+			return
+
+		if filename != None:
+			core.commands.setStatusText (filename)
+			return
+
+		core.commands.setStatusText (u"")
+
+
 	def _onNavigate (self, view, frame, request, action, decision):
 		if self.canOpenUrl:
 			return False
@@ -100,24 +140,20 @@ class HtmlRenderWebKit(wx.Panel):
 		"""
 		Клик по ссылке
 		"""
-		if self.__isUrl (href):
-			self.openUrl (href)
-		else:
-			href_clear = self._removeFileProtokol (href)
+		(url, page, filename) = self.identifyUri (href)
 
-			page = self.__findWikiPage (href_clear)
-			filename = self.__findFile (href_clear)
+		if url != None:
+			self.openUrl (url)
 
-			if page != None:
-				self._currentPage.root.selectedPage = page
-			elif filename != None:
-				print filename
+		elif page != None:
+			self._currentPage.root.selectedPage = page
 
-				try:
-					core.system.getOS().startFile (filename)
-				except OSError:
-					text = _(u"Can't execute file '%s'") % filename
-					core.commands.MessageBox (text, _(u"Error"), wx.ICON_ERROR | wx.OK)
+		elif filename != None:
+			try:
+				core.system.getOS().startFile (filename)
+			except OSError:
+				text = _(u"Can't execute file '%s'") % filename
+				core.commands.MessageBox (text, _(u"Error"), wx.ICON_ERROR | wx.OK)
 
 
 	def _removeFileProtokol (self, href):
