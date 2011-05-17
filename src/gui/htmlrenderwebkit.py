@@ -63,14 +63,17 @@ class HtmlRenderWebKit(wx.Panel):
 		self._currentPage = None
 
 		self.canOpenUrl = False                # Можно ли открывать ссылки
+		self.currentUri = None                 # Текущая открытая страница
 
 		self.ctrl.connect("navigation-policy-decision-requested", self._onNavigate)
 		self.ctrl.connect("hovering-over-link", self._onHoveredOverLink)
+		#self.ctrl.connect("populate-popup", self._on_populate_popup)
 
+		self.Bind (wx.EVT_MENU, self.onCopyFromHtml, id = wx.ID_COPY)
+		self.Bind (wx.EVT_MENU, self.onCopyFromHtml, id = wx.ID_CUT)
 
-	# Some basic usefull methods
-	#def SetEditable(self, editable=True):
-	#	self.ctrl.set_editable(editable)
+		self.ctrl.set_zoom_level (0.8)
+
 
 	def LoadPage (self, fname):
 		self.canOpenUrl = True
@@ -86,6 +89,18 @@ class HtmlRenderWebKit(wx.Panel):
 	@page.setter
 	def page (self, value):
 		self._currentPage = value
+
+
+	def onCopyFromHtml(self, event):
+		self.ctrl.copy_clipboard ()
+		event.Skip()
+
+
+	#def _on_populate_popup (self, view, menu):
+	#	for i in menu.get_children():
+	#		action = i.get_children()[0].get_label()
+	#		print i.get_children()[0]["id"]
+
 
 
 	def identifyUri (self, href):
@@ -128,10 +143,15 @@ class HtmlRenderWebKit(wx.Panel):
 
 
 	def _onNavigate (self, view, frame, request, action, decision):
-		if self.canOpenUrl:
+		href = unicode (urllib.unquote (request.get_uri()), "utf8")
+		curr_href = self.ctrl.get_main_frame().get_uri()
+
+		if self.canOpenUrl or href == curr_href:
+			# Если вызов uri осуществляется из программы или это запрос на обновление, то 
+			# разрешить обработать запрос компоненту 
 			return False
 		else:
-			href = unicode (urllib.unquote (request.get_uri()), "utf8")
+			self.currentUri = request.get_uri()
 			self._onLinkClicked (href)
 			return True
 
