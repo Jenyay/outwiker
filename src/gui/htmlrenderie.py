@@ -56,9 +56,9 @@ class HtmlRenderIE (wx.Panel):
 
 	def _removeFileProtokol (self, href):
 		"""
-		Так как WebKit к адресу без протокола прибавляет file://, то избавимся от этой надписи
+		Избавиться от протокола file:///, то избавимся от этой надписи
 		"""
-		fileprotocol = u"file://"
+		fileprotocol = u"file:///"
 		if href.startswith (fileprotocol):
 			return href[len (fileprotocol): ]
 
@@ -67,7 +67,7 @@ class HtmlRenderIE (wx.Panel):
 
 	def BeforeNavigate2(self, this, pDisp, URL, Flags, TargetFrameName, PostData, Headers, Cancel):
 		href = URL[0]
-		curr_href = self.render.locationurl
+		curr_href = urllib.unquote ( self._removeFileProtokol (self.render.locationurl) ).replace ("/", "\\")
 
 		if self.canOpenUrl or href == curr_href:
 			Cancel[0] = False
