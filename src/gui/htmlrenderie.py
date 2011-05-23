@@ -31,13 +31,35 @@ class HtmlRenderIE (wx.Panel):
 
 		self._currentPage = None
 
-		#self.render.Bind (wx.html.EVT_HTML_LINK_CLICKED, self.onLinkClicked)
-		#self.render.Bind (wx.html.EVT_HTML_CELL_HOVER, self.onCellHover)
-		#self.render.Bind (wx.EVT_ENTER_WINDOW, self.onMouseEnter)
-		#self.render.Bind (wx.EVT_MOTION, self.onMouseMove)
+		self.Bind (wx.EVT_MENU, self.onCopyFromHtml, id = wx.ID_COPY)
+		self.Bind (wx.EVT_MENU, self.onCopyFromHtml, id = wx.ID_CUT)
 
-		#self.Bind (wx.EVT_MENU, self.onCopyFromHtml, id = wx.ID_COPY)
-		#self.Bind (wx.EVT_MENU, self.onCopyFromHtml, id = wx.ID_CUT)
+
+	def StatusTextChange(self, status):
+		if len (status) != 0:
+			href = urllib.unquote ( self._removeFileProtokol (status) ).replace ("/", "\\")
+
+			(url, page, filename) = self.identifyUri (href)
+
+			if page != None:
+				core.commands.setStatusText (page.subpath)
+			elif filename != None:
+				core.commands.setStatusText (filename)
+			else:
+				core.commands.setStatusText (status)
+		else:
+			core.commands.setStatusText (status)
+
+
+	def onCopyFromHtml(self, event):
+		document = self.render.document
+		selection = document.selection
+
+		if selection != None:
+			selrange = selection.createRange()
+			if selrange != None:
+				core.commands.copyTextToClipboard (selrange.text)
+				event.Skip()
 
 
 	def __layout (self):
