@@ -38,9 +38,13 @@ A last note is that for get a handle of a window in X, the window must be
 the wx.Frame before use this WKHtmlWindow class.
 
 '''
-class HtmlRenderWebKit(wx.Panel):
+
+from .htmlrender import HtmlRender
+
+
+class HtmlRenderWebKit(HtmlRender):
 	def __init__(self, parent):
-		wx.Panel.__init__(self, parent)
+		HtmlRender.__init__(self, parent)
 
 		# Here is where we do the "magic" to embed webkit into wxGTK.
 		whdl = self.GetHandle()
@@ -60,8 +64,6 @@ class HtmlRenderWebKit(wx.Panel):
 
 		scrolled_window.show_all()
 
-		self._currentPage = None
-
 		self.canOpenUrl = False                # Можно ли открывать ссылки
 		self.currentUri = None                 # Текущая открытая страница
 
@@ -72,23 +74,13 @@ class HtmlRenderWebKit(wx.Panel):
 		self.Bind (wx.EVT_MENU, self.onCopyFromHtml, id = wx.ID_COPY)
 		self.Bind (wx.EVT_MENU, self.onCopyFromHtml, id = wx.ID_CUT)
 
-		self.ctrl.set_zoom_level (0.8)
+		#self.ctrl.set_zoom_level (0.8)
 
 
 	def LoadPage (self, fname):
 		self.canOpenUrl = True
 		self.ctrl.load_uri("file://{0}".format (fname) )
 		self.canOpenUrl = False
-
-
-	@property
-	def page (self):
-		return self._currentPage
-
-
-	@page.setter
-	def page (self, value):
-		self._currentPage = value
 
 
 	def onCopyFromHtml(self, event):
@@ -107,7 +99,7 @@ class HtmlRenderWebKit(wx.Panel):
 		"""
 		Определить тип ссылки и вернуть кортеж (url, page, filename)
 		"""
-		if self.__isUrl (href):
+		if self._isUrl (href):
 			return (href, None, None)
 
 		href_clear = self._removeFileProtokol (href)
@@ -187,14 +179,6 @@ class HtmlRenderWebKit(wx.Panel):
 		return href
 
 	
-
-	def __isUrl (self, href):
-		return href.lower().startswith ("http://") or \
-				href.lower().startswith ("https://") or \
-				href.lower().startswith ("ftp://") or \
-				href.lower().startswith ("mailto:")
-	
-
 	def __findFile (self, href):
 		path = os.path.join (self._currentPage.path, href)
 		if os.path.exists (path):
@@ -224,14 +208,3 @@ class HtmlRenderWebKit(wx.Panel):
 				newSelectedPage = self._currentPage.root[subpath]
 
 		return newSelectedPage
-		
-
-	def openUrl (self, href):
-		"""
-		Открыть ссылку в браузере (или почтовый адрес в почтовике)
-		"""
-		try:
-			core.system.getOS().startFile (href)
-		except OSError:
-			text = _(u"Can't execute file '%s'") % (href)
-			core.commands.MessageBox (text, "Error", wx.ICON_ERROR | wx.OK)
