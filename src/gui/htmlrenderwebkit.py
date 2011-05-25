@@ -83,6 +83,14 @@ class HtmlRenderWebKit(HtmlRender):
 		self.canOpenUrl = False
 
 
+	def SetPage (self, htmltext, basepath):
+		self.canOpenUrl = True
+		path = "file://" + urllib.quote (basepath.encode ("utf8")) + "/"
+
+		self.ctrl.load_string (htmltext, "text/html", "utf8", path)
+		self.canOpenUrl = False
+
+
 	def onCopyFromHtml(self, event):
 		self.ctrl.copy_clipboard ()
 		event.Skip()

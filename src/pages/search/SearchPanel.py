@@ -5,11 +5,13 @@ import ConfigParser
 
 import wx
 
-import pages.search.searchpage
-from core.search import Searcher, HtmlReport, TagsList, AllTagsSearchStrategy, AnyTagSearchStrategy
-#from gui.htmlview import HtmlView
-from gui.htmlrenderwx import HtmlRenderWX
 from core.application import Application
+#import core.system
+import pages.search.searchpage
+from core.search import Searcher, TagsList, AllTagsSearchStrategy, AnyTagSearchStrategy
+from .htmlreport import HtmlReport
+from gui.htmlrenderwx import HtmlRenderWX
+from gui.htmlrenderfactory import getHtmlRender
 
 # begin wxGlade: dependencies
 # end wxGlade
@@ -40,8 +42,8 @@ class SearchPanel(wx.Panel):
 		self.tagsStrategy = wx.RadioBox(self, -1, _(u"Tags"), choices=[_(u"Any tag"), _(u"All tags")], majorDimension=0, style=wx.RA_SPECIFY_ROWS)
 		self.clearTagsBtn = wx.Button(self, -1, _(u"Clear all tags"))
 		self.searchBtn = wx.Button(self, -1, _(u"Find"))
-		self.resultWindow = HtmlRenderWX(self)
-		#self.resultWindow = HtmlView(self, -1)
+		self.resultWindow = getHtmlRender (self)
+		#self.resultWindow = HtmlRenderWX(self)
 
 		self.__set_properties()
 		self.__do_layout()
@@ -227,8 +229,9 @@ class SearchPanel(wx.Panel):
 	
 
 	def _showResults (self, resultPages):
-		html = HtmlReport.generate (resultPages)
-		self.resultWindow.SetPage (html)
+		htmltext = HtmlReport.generate (resultPages)
+		#self.resultWindow.SetPage (htmltext, core.system.getCurrentDir())
+		self.resultWindow.SetPage (htmltext, self.page.path)
 	
 
 	def _saveResults (self, resultPages):

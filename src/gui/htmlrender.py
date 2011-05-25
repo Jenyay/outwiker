@@ -28,6 +28,15 @@ class HtmlRender (wx.Panel):
 		pass
 
 
+	def SetPage (self, htmltext, basepath):
+		"""
+		Загрузить страницу из строки
+		htmltext - текст страницы
+		basepath - путь до папки, относительно которой ищутся локальные ресурсы (картинки)
+		"""
+		pass
+
+
 	@property
 	def page (self):
 		return self._currentPage
