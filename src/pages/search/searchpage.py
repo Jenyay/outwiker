@@ -5,7 +5,7 @@
 """
 
 import os.path
-import shutil
+#import shutil
 
 from core.tree import WikiPage
 from core.search import AllTagsSearchStrategy, AnyTagSearchStrategy, TagsList
@@ -221,9 +221,9 @@ class GlobalSearch (object):
 		page.strategy = strategy
 
 		# Скопируем картинку для тегов
-		if not page.readonly:
-			tagiconpath = os.path.join (core.system.getImagesDir(), "tag.png")
-			shutil.copy (tagiconpath, os.path.join (page.path, "__tag.png") )
+		#if not page.readonly:
+		#	tagiconpath = os.path.join (core.system.getImagesDir(), "tag.png")
+		#	shutil.copy (tagiconpath, os.path.join (page.path, "__tag.png") )
 
 		page.root.selectedPage = page
 

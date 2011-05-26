@@ -14,7 +14,7 @@ from core.application import Application
 
 class HtmlRenderIE (wx.Panel):
 	"""
-	Класс для рендеринга HTML с использованием wxWebKit под Windows (http://wxwebkit.kosoftworks.com/)
+	Класс для рендеринга HTML с использованием движка IE под Windows
 	"""
 	def __init__ (self, parent, *args, **kwds):
 		wx.Panel.__init__ (self, parent, *args, **kwds)
@@ -33,6 +33,17 @@ class HtmlRenderIE (wx.Panel):
 
 		self.Bind (wx.EVT_MENU, self.onCopyFromHtml, id = wx.ID_COPY)
 		self.Bind (wx.EVT_MENU, self.onCopyFromHtml, id = wx.ID_CUT)
+
+
+	def SetPage (self, htmltext, basepath):
+		"""
+		Загрузить страницу из строки
+		htmltext - текст страницы
+		basepath - путь, относительно которого отсчитываются относительные пути (НЕ ИСПОЛЬЗУЕТСЯ!!!)
+		"""
+		self.canOpenUrl = True
+		self.render.LoadString (htmltext)
+		self.canOpenUrl = False
 
 
 	def StatusTextChange(self, status):

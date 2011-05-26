@@ -230,7 +230,6 @@ class SearchPanel(wx.Panel):
 
 	def _showResults (self, resultPages):
 		htmltext = HtmlReport.generate (resultPages)
-		#self.resultWindow.SetPage (htmltext, core.system.getCurrentDir())
 		self.resultWindow.SetPage (htmltext, self.page.path)
 	
 

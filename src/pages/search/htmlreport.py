@@ -55,11 +55,16 @@ class HtmlReport (object):
 		"""
 		Создать список тегов для страницы
 		"""
-		result = u""
+		result = "<FONT SIZE='-1'>" + _(u"Tags: ")
 		for tag in page.tags:
 			result += HtmlReport.generageTagView (tag) + u", "
 
-		return result [: -2]
+		if result.endswith (", "):
+			result = result [: -2]
+
+		result += "</FONT>"
+
+		return result
 
 
 	@staticmethod
@@ -67,5 +72,5 @@ class HtmlReport (object):
 		"""
 		Оформление для одного тега
 		"""
-		result = "<img src='__tag.png'/>%s" % (tag)
-		return result
+		#result = "<img src='__tag.png'/>%s" % (tag)
+		return tag
