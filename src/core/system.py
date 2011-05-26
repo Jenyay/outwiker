@@ -117,3 +117,6 @@ def getCurrentDir ():
 
 def getImagesDir ():
 	return os.path.join (getCurrentDir(), "images")
+
+def getTemplatesDir ():
+	return os.path.join (getCurrentDir(), "templates")

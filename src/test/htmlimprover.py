@@ -9,21 +9,14 @@ class HtmlImproverTest (unittest.TestCase):
 	def test1 (self):
 		src = ur"""<H2>Attach links</H2><P>Attach:file.odt<BR><A HREF="__attach/file.odt">file.odt</A><BR><A HREF="__attach/file.odt">alternative text</A><BR><A HREF="__attach/file with spaces.pdf">file with spaces.pdf</A><P><H2>Images</H2>"""
 
-		expectedResult = ur"""<HTML>
-<HEAD>
-<META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>
-</HEAD>
-<BODY>
-<P><H2>Attach links</H2></P>
+		expectedResult = ur"""<H2>Attach links</H2></P>
 
 <P>Attach:file.odt
 <BR><A HREF="__attach/file.odt">file.odt</A>
 <BR><A HREF="__attach/file.odt">alternative text</A>
 <BR><A HREF="__attach/file with spaces.pdf">file with spaces.pdf</A></P>
 
-<P><H2>Images</H2></P>
-</BODY>
-</HTML>"""
+<P><H2>Images</H2>"""
 
 		result = HtmlImprover.run (src)
 		self.assertEqual (expectedResult, result, result)
@@ -32,12 +25,7 @@ class HtmlImproverTest (unittest.TestCase):
 	def test2 (self):
 		src = ur"""<UL><LI>Несортированный список. Элемент 1</LI><LI>Несортированный список. Элемент 2</LI><LI>Несортированный список. Элемент 3</LI><OL><LI>Вложенный сортированный список. Элемент 1</LI><LI>Вложенный сортированный список. Элемент 2</LI><LI>Вложенный сортированный список. Элемент 3</LI><LI>Вложенный сортированный список. Элемент 4</LI><UL><LI>Совсем вложенный сортированный список. Элемент 1</LI><LI>Совсем вложенный сортированный список. Элемент 2</LI></UL><LI>Вложенный сортированный список. Элемент 5</LI></OL><UL><LI>Вложенный несортированный список. Элемент 1</LI></UL></UL>"""
 
-		expectedResult = ur"""<HTML>
-<HEAD>
-<META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>
-</HEAD>
-<BODY>
-<P>
+		expectedResult = ur"""
 <UL>
 <LI>Несортированный список. Элемент 1</LI>
 <LI>Несортированный список. Элемент 2</LI>
@@ -56,9 +44,7 @@ class HtmlImproverTest (unittest.TestCase):
 <UL>
 <LI>Вложенный несортированный список. Элемент 1</LI>
 </UL>
-</UL></P>
-</BODY>
-</HTML>"""
+</UL>"""
 
 		result = HtmlImprover.run (src)
 		self.assertEqual (expectedResult, result, result)
@@ -74,12 +60,7 @@ class HtmlImproverTest (unittest.TestCase):
 
 вапвапвап вапваапва</PRE><P>sdfsdf sdfsdf<BR>sdfsdf<BR>sdf sdfsdf sdf"""
 
-		expectedResult = ur"""<HTML>
-<HEAD>
-<META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>
-</HEAD>
-<BODY>
-<P>qweqweqw qweqwe
+		expectedResult = ur"""qweqweqw qweqwe
 <BR>qwewqeqwe wqe</P>
 
 <P>qweqweqw qwe qweqwe
@@ -94,9 +75,7 @@ class HtmlImproverTest (unittest.TestCase):
 
 <P>sdfsdf sdfsdf
 <BR>sdfsdf
-<BR>sdf sdfsdf sdf</P>
-</BODY>
-</HTML>"""
+<BR>sdf sdfsdf sdf"""
 
 		result = HtmlImprover.run (src)
 		self.assertEqual (expectedResult, result, result)

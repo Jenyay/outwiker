@@ -63,8 +63,9 @@ if __name__ == '__main__':
 	from test.wxthumbmaker import WxThumbmakerTest
 	from test.pagethumbmaker import PageThumbmakerTest
 	from test.thumbnails import ThumbnailsTest
-	from test.htmlimprover_test import HtmlImproverTest
+	from test.htmlimprover import HtmlImproverTest
 	from test.wikihtmlgenerator import WikiHtmlGeneratorTest
+	from test.htmltemplate import HtmlTemplateTest
 
 	from test.utils import removeWiki
 	from test.event import EventTest, EventsTest

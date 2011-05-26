@@ -6,12 +6,14 @@ import hashlib
 
 from core.config import Config, StringOption
 from core.htmlimprover import HtmlImprover
+from core.htmltemplate import HtmlTemplate
 from core.application import Application
 from core.attachment import Attachment
 from core.tree import RootWikiPage
 from parserfactory import ParserFactory
 from wikiconfig import WikiConfig
 from emptycontent import EmptyContent
+from core.system import getTemplatesDir
 
 
 class HtmlGenerator (object):
@@ -38,10 +40,13 @@ class HtmlGenerator (object):
 
 		content = self.page.content if len (self.page.content) > 0 else self._generateEmptyContent (parser)
 
+		tpl = HtmlTemplate (os.path.join (getTemplatesDir(), "html") )
 		text = HtmlImprover.run (parser.toHtml (content) )
+		result = tpl.substitute (content=text)
+
 
 		with open (path, "wb") as fp:
-			fp.write (text.encode ("utf-8"))
+			fp.write (result.encode ("utf-8"))
 
 		hashoption = StringOption (Config (os.path.join (self.page.path, RootWikiPage.pageConfig)),
 				self._configSection, self._hashKey, u"")

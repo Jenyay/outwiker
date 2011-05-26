@@ -1,25 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-"""
-Класс для более наглядного оформления кода HTML после вики-парсера
-"""
-
 class HtmlImprover (object):
-	def __init__ (self):
-		pass
-
-
+	"""
+	Класс, который делает HTML более читаемым (где надо, расставляет переводы строк)
+	"""
 	@staticmethod
 	def run (text):
 		"""
 		Сделать HTML более читаемым
 		"""
-		template = u"<HTML>\n<HEAD>\n<META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>\n</HEAD>\n<BODY>\n<P>{body}</P>\n</BODY>\n</HTML>"
-
-		result = template.format (body = HtmlImprover.__improveText (text))
-
-		return result
+		return HtmlImprover.__improveText (text)
 
 
 	@staticmethod

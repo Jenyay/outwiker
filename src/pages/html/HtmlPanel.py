@@ -13,11 +13,12 @@ import core.commands
 from core.application import Application
 from core.attachment import Attachment
 from core.htmlimprover import HtmlImprover
+from core.htmltemplate import HtmlTemplate
 
 from gui.BaseTextPanel import BaseTextPanel
-#from gui.htmlrenderwx import HtmlRenderWX
 from gui.htmlrenderfactory import getHtmlRender
 from gui.HtmlTextEditor import HtmlTextEditor
+from core.system import getTemplatesDir
 
 # begin wxGlade: dependencies
 # end wxGlade
@@ -568,11 +569,14 @@ class HtmlPagePanel (HtmlPanel):
 			# Если страница открыта только для чтения и html-файл уже существует, то покажем его
 			return path
 
+		tpl = HtmlTemplate (os.path.join (getTemplatesDir(), "html") )
 		text = HtmlImprover.run (page.content)
 		text = re.sub ("\n<BR>\n(<li>)|(<LI>)", "\n<LI>", text)
 
+		result = tpl.substitute (content=text)
+
 		with open (path, "wb") as fp:
-			fp.write (text.encode ("utf-8"))
+			fp.write (result.encode ("utf-8"))
 
 		return path
 
