@@ -25,6 +25,8 @@ class HtmlTemplateTest(unittest.TestCase):
 			font-size:14px;
 			font-family:Verdana;
 		}
+
+		img{border:none}
 	</STYLE>
 </HEAD>
 
@@ -52,6 +54,8 @@ class HtmlTemplateTest(unittest.TestCase):
 			font-size:14px;
 			font-family:Verdana;
 		}
+
+		img{border:none}
 	</STYLE>
 </HEAD>
 
@@ -98,6 +102,8 @@ class HtmlTemplateTest(unittest.TestCase):
 			font-size:14px;
 			font-family:Verdana;
 		}
+
+		img{border:none}
 	</STYLE>
 </HEAD>
 
