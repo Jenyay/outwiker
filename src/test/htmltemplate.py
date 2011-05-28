@@ -21,7 +21,7 @@ class HtmlTemplateTest(unittest.TestCase):
 	<META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>
 
 	<STYLE type="text/css">
-		body {
+		body, div, p, table {
 			font-size:14px;
 			font-family:Verdana;
 		}
@@ -50,7 +50,7 @@ class HtmlTemplateTest(unittest.TestCase):
 	<META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>
 
 	<STYLE type="text/css">
-		body {
+		body, div, p, table {
 			font-size:14px;
 			font-family:Verdana;
 		}
@@ -98,7 +98,7 @@ class HtmlTemplateTest(unittest.TestCase):
 	<META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>
 
 	<STYLE type="text/css">
-		body {
+		body, div, p, table {
 			font-size:14px;
 			font-family:Verdana;
 		}
