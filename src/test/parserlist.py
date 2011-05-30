@@ -53,6 +53,13 @@ class ParserListTest (unittest.TestCase):
 		result = u'бла-бла-бла \n\n<UL><LI><B>Строка 1</B></LI><LI><I>Строка 2</I></LI><LI>Строка 3</LI></UL>бла-бла-бла'
 
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+	def testUnorderListStrike (self):
+		text = u"бла-бла-бла \n\n*{-Строка 1-}\n* {-Строка 2-}\n* Строка 3\nбла-бла-бла"
+		result = u'бла-бла-бла \n\n<UL><LI><STRIKE>Строка 1</STRIKE></LI><LI><STRIKE>Строка 2</STRIKE></LI><LI>Строка 3</LI></UL>бла-бла-бла'
+
+		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 	
 
 	def testOrderList1 (self):
@@ -65,6 +72,13 @@ class ParserListTest (unittest.TestCase):
 	def testOrderList2 (self):
 		text = u"бла-бла-бла \n\n#'''Строка 1'''\n# ''Строка 2''\n# Строка 3\nбла-бла-бла"
 		result = u'бла-бла-бла \n\n<OL><LI><B>Строка 1</B></LI><LI><I>Строка 2</I></LI><LI>Строка 3</LI></OL>бла-бла-бла'
+
+		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+	def testOrderListStrike (self):
+		text = u"бла-бла-бла \n\n#{-Строка 1-}\n# {-Строка 2-}\n# Строка 3\nбла-бла-бла"
+		result = u'бла-бла-бла \n\n<OL><LI><STRIKE>Строка 1</STRIKE></LI><LI><STRIKE>Строка 2</STRIKE></LI><LI>Строка 3</LI></OL>бла-бла-бла'
 
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 	

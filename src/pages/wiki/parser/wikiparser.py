@@ -39,6 +39,7 @@ class Parser (object):
 		self.bolded = FontsFactory.makeBold (self)
 		self.boldItalicized = FontsFactory.makeBoldItalic (self)
 		self.underlined = FontsFactory.makeUnderline (self)
+		self.strike = FontsFactory.makeStrike (self)
 		self.subscript = FontsFactory.makeSubscript (self)
 		self.superscript = FontsFactory.makeSuperscript (self)
 		self.code = FontsFactory.makeCode (self)
@@ -73,6 +74,7 @@ class Parser (object):
 				self.url |
 				self.thumb |
 				self.underlined |
+				self.strike |
 				self.subscript |
 				self.superscript |
 				self.attachesImage |
@@ -97,6 +99,7 @@ class Parser (object):
 				self.url |
 				self.thumb |
 				self.underlined |
+				self.strike |
 				self.horline |
 				self.centerAlign |
 				self.rightAlign |
@@ -118,6 +121,7 @@ class Parser (object):
 				self.italicized |
 				self.urlImage |
 				self.underlined |
+				self.strike |
 				self.attachesImage | 
 				self.tex |
 				self.command |
@@ -132,6 +136,7 @@ class Parser (object):
 				self.bolded |
 				self.italicized |
 				self.underlined |
+				self.strike |
 				self.tex |
 				self.command |
 				self.noformat

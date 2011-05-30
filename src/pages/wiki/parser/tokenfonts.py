@@ -42,6 +42,14 @@ class FontsFactory (object):
 
 
 	@staticmethod
+	def makeStrike (parser):
+		"""
+		Создать токен для зачеркнутого шрифта
+		"""
+		return StrikeToken(parser).getToken()
+
+
+	@staticmethod
 	def makeSubscript (parser):
 		"""
 		Создать токен для нижнего индекса
@@ -132,6 +140,23 @@ class UnderlineToken (BlockToken):
 		return QuotedString (UnderlineToken.underlineStart, 
 				endQuoteChar = UnderlineToken.underlineEnd, 
 				multiline = True).setParseAction(self.convertToHTML("<U>","</U>"))
+
+
+class StrikeToken (BlockToken):
+	"""
+	Токен для курсива
+	"""
+	strikeStart = "{-"
+	strikeEnd = "-}"
+
+	def __init__ (self, parser):
+		BlockToken.__init__ (self, parser)
+
+
+	def getToken (self):
+		return QuotedString (StrikeToken.strikeStart, 
+				endQuoteChar = StrikeToken.strikeEnd, 
+				multiline = True).setParseAction(self.convertToHTML("<STRIKE>","</STRIKE>"))
 
 
 

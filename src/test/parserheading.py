@@ -219,6 +219,13 @@ class ParserHeadingTest (unittest.TestCase):
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
 
+	def testHeaderStrike (self):
+		text = u"бла-бла-бла \n!!! Заголовок {-бла-бла-бла-}\nбла-бла-бла"
+		result = u'бла-бла-бла \n<H2>Заголовок <STRIKE>бла-бла-бла</STRIKE></H2>\nбла-бла-бла'
+
+		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
 	def testHeaderNoFormat (self):
 		text = u"бла-бла-бла \n!!! Заголовок [={+бла-бла-бла+}=]\nбла-бла-бла"
 		result = u'бла-бла-бла \n<H2>Заголовок {+бла-бла-бла+}</H2>\nбла-бла-бла'

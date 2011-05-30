@@ -154,6 +154,13 @@ class WikiPagePanel (HtmlPanel):
 				os.path.join (self.imagesDir, "text_underline.png"))
 
 		self._addTool (self.pageToolsMenu, 
+				"ID_STRIKE", 
+				lambda event: self._turnText (u"{-", u"-}"), 
+				_(u"Strikethrough\tCtrl+K"), 
+				_(u"Strikethrough"), 
+				os.path.join (self.imagesDir, "text_strikethrough.png"))
+
+		self._addTool (self.pageToolsMenu, 
 				"ID_SUBSCRIPT", 
 				lambda event: self._turnText (u"'_", u"_'"), 
 				_(u"Subscript\tCtrl+="), 

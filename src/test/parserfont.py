@@ -74,6 +74,20 @@ class ParserFontTest (unittest.TestCase):
 		result = u'бла-бла-бла \nкхм <U> это подчеркивание</U> %% бла-бла-бла\nбла-бла-бла'
 
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+	def testStrike (self):
+		text = u'бла-бла-бла \nкхм {-это зачеркнутый текст-} %% бла-бла-бла\nбла-бла-бла'
+		result = u'бла-бла-бла \nкхм <STRIKE>это зачеркнутый текст</STRIKE> %% бла-бла-бла\nбла-бла-бла'
+
+		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+	def testStrikeUnderline (self):
+		text = u'бла-бла-бла \nкхм {-{+это зачеркнутый подчеркнутый текст+}-} %% бла-бла-бла\nбла-бла-бла'
+		result = u'бла-бла-бла \nкхм <STRIKE><U>это зачеркнутый подчеркнутый текст</U></STRIKE> %% бла-бла-бла\nбла-бла-бла'
+
+		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 	
 
 	def testSuperscript (self):

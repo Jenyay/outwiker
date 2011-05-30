@@ -148,6 +148,22 @@ class ParserLinkTest (unittest.TestCase):
 		result = u'бла-бла-бла \n<A HREF="%s">%s</A> бла-бла-бла\nбла-бла-бла' % (self.url1, self.url1)
 
 		self.assertEqual (self.parser.toHtml (text), result)
+
+
+	def testStrikeLink1 (self):
+		comment = u"Ссылко"
+		text = u"бла-бла-бла \n[[{-%s-} -> %s]] бла-бла-бла\nбла-бла-бла" % (comment, self.url2)
+		result = u'бла-бла-бла \n<A HREF="%s"><STRIKE>%s</STRIKE></A> бла-бла-бла\nбла-бла-бла' % (self.url2, comment)
+
+		self.assertEqual (self.parser.toHtml (text), result)
+
+
+	def testStrikeLink2 (self):
+		comment = u"Ссылко"
+		text = u"бла-бла-бла \n[[%s | {-%s-}]] бла-бла-бла\nбла-бла-бла" % (self.url2, comment)
+		result = u'бла-бла-бла \n<A HREF="%s"><STRIKE>%s</STRIKE></A> бла-бла-бла\nбла-бла-бла' % (self.url2, comment)
+
+		self.assertEqual (self.parser.toHtml (text), result)
 	
 
 	def testPageLinks (self):

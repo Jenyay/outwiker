@@ -385,6 +385,13 @@ class HtmlPagePanel (HtmlPanel):
 				os.path.join (self.imagesDir, "text_underline.png"))
 
 		self._addTool (self.pageToolsMenu, 
+				"ID_STRIKE", 
+				lambda event: self._turnText (u"<strike>", u"</strike>"), 
+				_(u"Strikethrough\tCtrl+K"), 
+				_(u"Strikethrough (<strike>…</strike>)"), 
+				os.path.join (self.imagesDir, "text_strikethrough.png"))
+
+		self._addTool (self.pageToolsMenu, 
 				"ID_SUBSCRIPT", 
 				lambda event: self._turnText (u"<SUB>", u"</SUB>"), 
 				_(u"Subscript\tCtrl+="), 
