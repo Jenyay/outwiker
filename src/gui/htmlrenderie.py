@@ -7,17 +7,18 @@ import urllib
 import wx
 import wx.lib.iewin
 
+from .htmlrender import HtmlRender
 import core.system
 import core.commands
 from core.application import Application
 
 
-class HtmlRenderIE (wx.Panel):
+class HtmlRenderIE (HtmlRender):
 	"""
 	Класс для рендеринга HTML с использованием движка IE под Windows
 	"""
-	def __init__ (self, parent, *args, **kwds):
-		wx.Panel.__init__ (self, parent, *args, **kwds)
+	def __init__ (self, parent):
+		HtmlRender.__init__ (self, parent)
 
 		self.render = wx.lib.iewin.IEHtmlWindow (self)
 
@@ -28,8 +29,6 @@ class HtmlRenderIE (wx.Panel):
 		self.currentUri = None                 # Текущая открытая страница
 
 		self.__layout()
-
-		self._currentPage = None
 
 		self.Bind (wx.EVT_MENU, self.onCopyFromHtml, id = wx.ID_COPY)
 		self.Bind (wx.EVT_MENU, self.onCopyFromHtml, id = wx.ID_CUT)
@@ -114,7 +113,7 @@ class HtmlRenderIE (wx.Panel):
 		"""
 		Определить тип ссылки и вернуть кортеж (url, page, filename)
 		"""
-		if self.__isUrl (href):
+		if self._isUrl (href):
 			return (href, None, None)
 
 		page = self.__findWikiPage (href)
@@ -143,22 +142,6 @@ class HtmlRenderIE (wx.Panel):
 				core.commands.MessageBox (text, _(u"Error"), wx.ICON_ERROR | wx.OK)
 
 
-	@property
-	def page (self):
-		return self._currentPage
-
-
-	@page.setter
-	def page (self, value):
-		self._currentPage = value
-	
-
-	def __isUrl (self, href):
-		return href.lower().startswith ("http://") or \
-				href.lower().startswith ("https://") or \
-				href.lower().startswith ("ftp://") or \
-				href.lower().startswith ("mailto:")
-	
 
 	def __findFile (self, href):
 		path = os.path.join (self._currentPage.path, href)
@@ -191,14 +174,3 @@ class HtmlRenderIE (wx.Panel):
 				newSelectedPage = self._currentPage.root[subpath]
 
 		return newSelectedPage
-		
-
-	def openUrl (self, href):
-		"""
-		Открыть ссылку в браузере (или почтовый адрес в почтовике)
-		"""
-		try:
-			core.system.getOS().startFile (href)
-		except OSError:
-			text = _(u"Can't execute file '%s'") % (href)
-			core.commands.MessageBox (text, "Error", wx.ICON_ERROR | wx.OK)
