@@ -45,6 +45,19 @@ class EditorConfig (object):
 		self.fontIsItalic = BooleanOption (self.config, "Font", "italic", False)
 
 
+class HtmlRenderConfig (object):
+	"""
+	Класс для хранения настроек HTML-рендера
+	"""
+	def __init__ (self, config):
+		self.config = config
+
+		self.fontSizeOption = IntegerOption (self.config, u"HTML", u"FontSize", 10)
+		self.fontFaceNameOption = StringOption (self.config, u"HTML", u"FontFaceName", "Verdana")
+		self.fontIsBold = BooleanOption (self.config, "HTML", "FontBold", False)
+		self.fontIsItalic = BooleanOption (self.config, "HTML", "FontItalic", False)
+
+
 
 class MainWindowConfig (object):
 	"""

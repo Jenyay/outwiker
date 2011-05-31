@@ -14,6 +14,7 @@ from parserfactory import ParserFactory
 from wikiconfig import WikiConfig
 from emptycontent import EmptyContent
 from core.system import getTemplatesDir
+from gui.guiconfig import HtmlRenderConfig
 
 
 class HtmlGenerator (object):
@@ -23,6 +24,7 @@ class HtmlGenerator (object):
 	def __init__ (self, page):
 		self.page = page
 		self.config = WikiConfig (Application.config)
+		self.htmlrenderconfig = HtmlRenderConfig (Application.config)
 
 		self.resultName = u"__content.html"
 		self._configSection = u"wiki"
@@ -105,6 +107,10 @@ class HtmlGenerator (object):
 		# Настройки, касающиеся вида вики-страницы
 		content.append (str (self.config.showAttachInsteadBlankOptions.value))
 		content.append (str (self.config.thumbSizeOptions.value))
+
+		# Настройки отображения HTML-страницы
+		content.append (str (self.htmlrenderconfig.fontSizeOption.value) )
+		content.append (str (self.htmlrenderconfig.fontFaceNameOption.value) )
 
 		if len (self.page.content) == 0:
 			# Если страница пустая, то проверим настройку, отвечающую за шаблон пустой страницы

@@ -4,6 +4,9 @@
 from string import Template
 import os.path
 
+from gui.guiconfig import HtmlRenderConfig
+from core.application import Application
+
 
 class HtmlTemplate (object):
 	"""
@@ -16,8 +19,10 @@ class HtmlTemplate (object):
 		Основной шаблон должен иметь имя template.html, 
 		содержание которого оформлено в стиле, описанном в http://docs.python.org/library/string.html#template-strings
 		"""
-		self.fontsize = 14
-		self.fontfamily = u"Verdana"
+		self.config = HtmlRenderConfig (Application.config)
+
+		self.fontsize = self.config.fontSizeOption.value
+		self.fontfamily = self.config.fontFaceNameOption.value
 
 		tpl_fname = u"template.html"
 		tpl_path = os.path.join (path, tpl_fname)

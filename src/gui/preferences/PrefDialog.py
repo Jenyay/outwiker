@@ -5,6 +5,7 @@ import wx
 
 import GeneralPanel
 import EditorPanel
+import HtmlRenderPanel
 from core.exceptions import PreferencesException
 from core.factoryselector import FactorySelector
 
@@ -59,10 +60,12 @@ class PrefDialog(wx.Dialog):
 		"""
 		self.generalPage = GeneralPanel.GeneralPanel (self.treeBook)
 		self.editorPage = EditorPanel.EditorPanel (self.treeBook)
+		self.htmlRenderPage = HtmlRenderPanel.HtmlRenderPanel (self.treeBook)
 
 		self.treeBook.AddPage (self.generalPage, _(u"Interface"))
 		self.treeBook.AddSubPage (self.generalPage, _(u"General"))
 		self.treeBook.AddSubPage (self.editorPage, _(u"Editor"))
+		self.treeBook.AddSubPage (self.htmlRenderPage, _(u"Preview"))
 
 		self._createPagesForPages()
 
@@ -77,7 +80,7 @@ class PrefDialog(wx.Dialog):
 		Создать страницы настроек для типов страниц
 		"""
 		# Индекс последней добавленной страницы
-		pageindex = 2
+		pageindex = 3
 		for factory in FactorySelector.factories:
 			pages = factory.getPrefPanels(self.treeBook)
 
