@@ -1,10 +1,20 @@
 <HTML>
 <HEAD>
-<META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>
+	<META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>
+
+	<STYLE type="text/css">
+		body, div, p, table {
+			font-size:14px;
+			font-family:Verdana;
+		}
+
+		img{border:none}
+	</STYLE>
 </HEAD>
+
 <BODY>
 <P>
-<BR><TABLE border=1><TR><TD ALIGN="CENTER"><B>Синтаксис</B></TD><TD ALIGN="CENTER"><B>Результат</B></TD><TD ALIGN="CENTER"><B>Комментарий</B></TD></TR><TR><TD ALIGN="LEFT">''Курсив''</TD><TD ALIGN="LEFT"><I>Курсив</I></TD><TD ALIGN="CENTER">-</TD></TR><TR><TD ALIGN="LEFT">'''Полужирный шрифт'''</TD><TD ALIGN="LEFT"><B>Полужирный шрифт</B></TD><TD ALIGN="CENTER">-</TD></TR><TR><TD ALIGN="LEFT">''''Полужирный курсив''''</TD><TD ALIGN="LEFT"><B><I>Полужирный курсив</I></B></TD><TD ALIGN="CENTER">-</TD></TR><TR><TD ALIGN="LEFT">@@Моноширинный шрифт@@</TD><TD ALIGN="LEFT"><CODE>Моноширинный шрифт</CODE></TD><TD ALIGN="CENTER">Текст обрамляется тегом &lt;CODE&gt;...&lt;/CODE&gt;</TD></TR><TR><TD ALIGN="LEFT">'^Верхний индекс^'</TD><TD ALIGN="LEFT"><SUP>Верхний индекс</SUP></TD><TD ALIGN="CENTER">Для сравнения: обычный шрифт <SUP>Верхний индекс</SUP></TD></TR><TR><TD ALIGN="LEFT">'_Нижний индекс_'</TD><TD ALIGN="LEFT"><SUB>Нижний индекс</SUB></TD><TD ALIGN="CENTER">Для сравнения: обычный шрифт <SUB>Нижний индекс</SUB></TD></TR><TR><TD ALIGN="LEFT">{+Подчеркнутый текст+}</TD><TD ALIGN="LEFT"><U>Подчеркнутый текст</U></TD><TD ALIGN="CENTER">-</TD></TR><TR><TD ALIGN="LEFT">[@Неформатируемый '''текст''' @]</TD><TD ALIGN="LEFT">
+<BR><TABLE border=1><TR><TD ALIGN="CENTER"><B>Синтаксис</B></TD><TD ALIGN="CENTER"><B>Результат</B></TD><TD ALIGN="CENTER"><B>Комментарий</B></TD></TR><TR><TD ALIGN="LEFT">''Курсив''</TD><TD ALIGN="LEFT"><I>Курсив</I></TD><TD ALIGN="CENTER">-</TD></TR><TR><TD ALIGN="LEFT">'''Полужирный шрифт'''</TD><TD ALIGN="LEFT"><B>Полужирный шрифт</B></TD><TD ALIGN="CENTER">-</TD></TR><TR><TD ALIGN="LEFT">''''Полужирный курсив''''</TD><TD ALIGN="LEFT"><B><I>Полужирный курсив</I></B></TD><TD ALIGN="CENTER">-</TD></TR><TR><TD ALIGN="LEFT">@@Моноширинный шрифт@@</TD><TD ALIGN="LEFT"><CODE>Моноширинный шрифт</CODE></TD><TD ALIGN="CENTER">Текст обрамляется тегом &lt;CODE&gt;...&lt;/CODE&gt;</TD></TR><TR><TD ALIGN="LEFT">'^Верхний индекс^'</TD><TD ALIGN="LEFT"><SUP>Верхний индекс</SUP></TD><TD ALIGN="CENTER">Для сравнения: обычный шрифт <SUP>Верхний индекс</SUP></TD></TR><TR><TD ALIGN="LEFT">'_Нижний индекс_'</TD><TD ALIGN="LEFT"><SUB>Нижний индекс</SUB></TD><TD ALIGN="CENTER">Для сравнения: обычный шрифт <SUB>Нижний индекс</SUB></TD></TR><TR><TD ALIGN="LEFT">{+Подчеркнутый текст+}</TD><TD ALIGN="LEFT"><U>Подчеркнутый текст</U></TD><TD ALIGN="CENTER">-</TD></TR><TR><TD ALIGN="LEFT">{-Зачеркнутый текст-}</TD><TD ALIGN="LEFT"><STRIKE>Зачеркнутый текст</STRIKE></TD><TD ALIGN="CENTER">-</TD></TR><TR><TD ALIGN="LEFT">[@Неформатируемый '''текст''' @]</TD><TD ALIGN="LEFT">
 <PRE>Неформатируемый '''текст''' </PRE></TD><TD ALIGN="CENTER">Внутри скобок не происходит замена спец. символов вики-нотации, текст обрамляется тегом &lt;PRE&gt;...&lt;/PRE&gt;</TD></TR><TR><TD ALIGN="LEFT">
 <PRE>[=Неформатируемый '''текст''' =]</PRE></TD><TD ALIGN="LEFT">Неформатируемый '''текст''' </TD><TD ALIGN="CENTER">Внутри скобок не происходит замена спец. символов вики-нотации</TD></TR><TR><TD ALIGN="LEFT">----</TD><TD ALIGN="CENTER"><HR></TD><TD ALIGN="CENTER">Горизонтальная линия</TD></TR></TABLE></P>
 
@@ -27,9 +37,9 @@
 
 <P>или</P>
 
-<P><TABLE border=1><TR><TD>Первая строка</TD></TR><TR><TD>Вторая строка 
-<BR>продолжение второй строки</TD></TR><TR><TD ALIGN="LEFT">Третья строка 
+<P><TABLE border=1><TR><TD>Первая строка</TD><TD ALIGN="CENTER">бла-бла-бла</TD></TR><TR><TD>Вторая строка 
+<BR>продолжение второй строки</TD><TD ALIGN="CENTER">бла-бла-бла</TD></TR><TR><TD ALIGN="LEFT">Третья строка 
 <BR>
-<BR> Продолжение третьей строки</TD></TR><TR><TD ALIGN="LEFT">Четвертая строка</TD></TR></TABLE></P>
+<BR> Продолжение третьей строки</TD><TD ALIGN="CENTER">бла-бла-бла</TD></TR><TR><TD ALIGN="LEFT">Четвертая строка</TD><TD ALIGN="CENTER">бла-бла-бла</TD></TR></TABLE></P>
 </BODY>
 </HTML>
