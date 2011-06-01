@@ -24,6 +24,7 @@ class ParserLinkTest (unittest.TestCase):
 
 		self.url1 = u"http://example.com"
 		self.url2 = u"http://jenyay.net/Photo/Nature?action=imgtpl&G=1&upname=tsaritsyno_01.jpg"
+		self.urlimage = u"http://example.com/image.png"
 
 		self.pagelinks = [u"Страница 1", u"/Страница 1", u"/Страница 2/Страница 3"]
 		self.pageComments = [u"Страницо 1", u"Страницо 1", u"Страницо 3"]
@@ -49,8 +50,6 @@ class ParserLinkTest (unittest.TestCase):
 				u"image_01.JPG", u"dir", u"dir.xxx", u"dir.png"]
 
 		fullFilesPath = [os.path.join (self.filesPath, fname) for fname in files]
-
-		self.attach_page2 = Attachment (self.rootwiki[u"Страница 2"])
 
 		# Прикрепим к двум страницам файлы
 		Attachment (self.testPage).attach (fullFilesPath)
@@ -226,3 +225,229 @@ class ParserLinkTest (unittest.TestCase):
 			result = u'бла-бла-бла \n<A HREF="%s">%s</A> бла-бла-бла\nбла-бла-бла' % (link, comment)
 
 			self.assertEqual (self.parser.toHtml (text), result)
+
+
+	def testLinkSubscript1 (self):
+		comment = u"Ссылко"
+		text = u"бла-бла-бла \n[[%s | '_%s_']] бла-бла-бла\nбла-бла-бла" % (self.url2, comment)
+		result = u'бла-бла-бла \n<A HREF="%s"><SUB>%s</SUB></A> бла-бла-бла\nбла-бла-бла' % (self.url2, comment)
+
+		self.assertEqual (self.parser.toHtml (text), result)
+
+
+	def testLinkSubscript2 (self):
+		comment = u"Ссылко"
+		text = u"бла-бла-бла \n[['_%s_' -> %s]] бла-бла-бла\nбла-бла-бла" % (comment, self.url2)
+		result = u'бла-бла-бла \n<A HREF="%s"><SUB>%s</SUB></A> бла-бла-бла\nбла-бла-бла' % (self.url2, comment)
+
+		self.assertEqual (self.parser.toHtml (text), result)
+
+
+	def testLinkSuperscript1 (self):
+		comment = u"Ссылко"
+		text = u"бла-бла-бла \n[[%s | '^%s^']] бла-бла-бла\nбла-бла-бла" % (self.url2, comment)
+		result = u'бла-бла-бла \n<A HREF="%s"><SUP>%s</SUP></A> бла-бла-бла\nбла-бла-бла' % (self.url2, comment)
+
+		self.assertEqual (self.parser.toHtml (text), result)
+
+
+	def testLinkSuperscript2 (self):
+		comment = u"Ссылко"
+		text = u"бла-бла-бла \n[['^%s^' -> %s]] бла-бла-бла\nбла-бла-бла" % (comment, self.url2)
+		result = u'бла-бла-бла \n<A HREF="%s"><SUP>%s</SUP></A> бла-бла-бла\nбла-бла-бла' % (self.url2, comment)
+
+		self.assertEqual (self.parser.toHtml (text), result)
+
+
+	def testLinkBoldItalic1 (self):
+		comment = u"Ссылко"
+		text = u"бла-бла-бла \n[[%s | ''''%s'''']] бла-бла-бла\nбла-бла-бла" % (self.url2, comment)
+		result = u'бла-бла-бла \n<A HREF="%s"><B><I>%s</I></B></A> бла-бла-бла\nбла-бла-бла' % (self.url2, comment)
+
+		self.assertEqual (self.parser.toHtml (text), result)
+
+
+	def testLinkBoldItalic2 (self):
+		comment = u"Ссылко"
+		text = u"бла-бла-бла \n[[''''%s'''' -> %s]] бла-бла-бла\nбла-бла-бла" % (comment, self.url2)
+		result = u'бла-бла-бла \n<A HREF="%s"><B><I>%s</I></B></A> бла-бла-бла\nбла-бла-бла' % (self.url2, comment)
+
+		self.assertEqual (self.parser.toHtml (text), result)
+
+
+	def testLinkBold1 (self):
+		comment = u"Ссылко"
+		text = u"бла-бла-бла \n[[%s | '''%s''']] бла-бла-бла\nбла-бла-бла" % (self.url2, comment)
+		result = u'бла-бла-бла \n<A HREF="%s"><B>%s</B></A> бла-бла-бла\nбла-бла-бла' % (self.url2, comment)
+
+		self.assertEqual (self.parser.toHtml (text), result)
+
+
+	def testLinkBold2 (self):
+		comment = u"Ссылко"
+		text = u"бла-бла-бла \n[['''%s''' -> %s]] бла-бла-бла\nбла-бла-бла" % (comment, self.url2)
+		result = u'бла-бла-бла \n<A HREF="%s"><B>%s</B></A> бла-бла-бла\nбла-бла-бла' % (self.url2, comment)
+
+		self.assertEqual (self.parser.toHtml (text), result)
+
+
+	def testLinkItalic1 (self):
+		comment = u"Ссылко"
+		text = u"бла-бла-бла \n[[%s | ''%s'']] бла-бла-бла\nбла-бла-бла" % (self.url2, comment)
+		result = u'бла-бла-бла \n<A HREF="%s"><I>%s</I></A> бла-бла-бла\nбла-бла-бла' % (self.url2, comment)
+
+		self.assertEqual (self.parser.toHtml (text), result)
+
+
+	def testLinkItalic2 (self):
+		comment = u"Ссылко"
+		text = u"бла-бла-бла \n[[''%s'' -> %s]] бла-бла-бла\nбла-бла-бла" % (comment, self.url2)
+		result = u'бла-бла-бла \n<A HREF="%s"><I>%s</I></A> бла-бла-бла\nбла-бла-бла' % (self.url2, comment)
+
+		self.assertEqual (self.parser.toHtml (text), result)
+
+
+	def testUrlImage1 (self):
+		comment = u"Ссылко"
+		text = u"бла-бла-бла \n[[%s]] бла-бла-бла\nбла-бла-бла" % (self.urlimage)
+		result = u'бла-бла-бла \n<A HREF="%s">%s</A> бла-бла-бла\nбла-бла-бла' % (self.urlimage, self.urlimage)
+
+		self.assertEqual (self.parser.toHtml (text), result)
+
+
+	def testUrlImage2 (self):
+		comment = u"Ссылко"
+		text = u"бла-бла-бла \n[[%s -> %s]] бла-бла-бла\nбла-бла-бла" % (comment, self.urlimage)
+		result = u'бла-бла-бла \n<A HREF="%s">%s</A> бла-бла-бла\nбла-бла-бла' % (self.urlimage, comment)
+
+		self.assertEqual (self.parser.toHtml (text), result)
+
+
+	def testUrlImage3 (self):
+		comment = u"Ссылко"
+		text = u"бла-бла-бла \n[[%s -> %s]] бла-бла-бла\nбла-бла-бла" % (self.urlimage, self.url2)
+		result = u'бла-бла-бла \n<A HREF="%s"><IMG SRC="%s"></A> бла-бла-бла\nбла-бла-бла' % (self.url2, self.urlimage)
+
+		self.assertEqual (self.parser.toHtml (text), result)
+
+
+	def testUrlImage4 (self):
+		comment = u"Ссылко"
+		text = u"бла-бла-бла \n[[%s | %s]] бла-бла-бла\nбла-бла-бла" % (self.url2, self.urlimage)
+		result = u'бла-бла-бла \n<A HREF="%s"><IMG SRC="%s"></A> бла-бла-бла\nбла-бла-бла' % (self.url2, self.urlimage)
+
+		self.assertEqual (self.parser.toHtml (text), result)
+
+
+	def testLinkUnderline1 (self):
+		comment = u"Ссылко"
+		text = u"бла-бла-бла \n[[%s | {+%s+}]] бла-бла-бла\nбла-бла-бла" % (self.url2, comment)
+		result = u'бла-бла-бла \n<A HREF="%s"><U>%s</U></A> бла-бла-бла\nбла-бла-бла' % (self.url2, comment)
+
+		self.assertEqual (self.parser.toHtml (text), result)
+
+
+	def testLinkUnderline2 (self):
+		comment = u"Ссылко"
+		text = u"бла-бла-бла \n[[{+%s+} -> %s]] бла-бла-бла\nбла-бла-бла" % (comment, self.url2)
+		result = u'бла-бла-бла \n<A HREF="%s"><U>%s</U></A> бла-бла-бла\nбла-бла-бла' % (self.url2, comment)
+
+		self.assertEqual (self.parser.toHtml (text), result)
+
+
+	def testAdHoc1 (self):
+		comment = u"Ссылко"
+		text = u"бла-бла-бла \n[[%s | ''''_%s_'''']] бла-бла-бла\nбла-бла-бла" % (self.url2, comment)
+		result = u'бла-бла-бла \n<A HREF="%s"><B><SUB>%s</SUB></B></A> бла-бла-бла\nбла-бла-бла' % (self.url2, comment)
+
+		self.assertEqual (self.parser.toHtml (text), result)
+
+
+	def testAdHoc2 (self):
+		comment = u"Ссылко"
+		text = u"бла-бла-бла \n[[ ''''_%s_'''' -> %s]] бла-бла-бла\nбла-бла-бла" % (comment, self.url2)
+		result = u'бла-бла-бла \n<A HREF="%s"><B><SUB>%s</SUB></B></A> бла-бла-бла\nбла-бла-бла' % (self.url2, comment)
+
+		self.assertEqual (self.parser.toHtml (text), result)
+
+
+	def testAdHoc3 (self):
+		comment = u"Ссылко"
+		text = u"бла-бла-бла \n[[%s | ''''^%s^'''']] бла-бла-бла\nбла-бла-бла" % (self.url2, comment)
+		result = u'бла-бла-бла \n<A HREF="%s"><B><SUP>%s</SUP></B></A> бла-бла-бла\nбла-бла-бла' % (self.url2, comment)
+
+		self.assertEqual (self.parser.toHtml (text), result)
+
+
+	def testAdHoc4 (self):
+		comment = u"Ссылко"
+		text = u"бла-бла-бла \n[[ ''''^%s^'''' -> %s]] бла-бла-бла\nбла-бла-бла" % (comment, self.url2)
+		result = u'бла-бла-бла \n<A HREF="%s"><B><SUP>%s</SUP></B></A> бла-бла-бла\nбла-бла-бла' % (self.url2, comment)
+
+		self.assertEqual (self.parser.toHtml (text), result)
+
+
+	def testAdHoc5 (self):
+		comment = u"Ссылко"
+		text = u"бла-бла-бла \n[[%s | '''_%s_''']] бла-бла-бла\nбла-бла-бла" % (self.url2, comment)
+		result = u'бла-бла-бла \n<A HREF="%s"><I><SUB>%s</SUB></I></A> бла-бла-бла\nбла-бла-бла' % (self.url2, comment)
+
+		self.assertEqual (self.parser.toHtml (text), result)
+
+
+	def testAdHoc6 (self):
+		comment = u"Ссылко"
+		text = u"бла-бла-бла \n[[ '''_%s_''' -> %s]] бла-бла-бла\nбла-бла-бла" % (comment, self.url2)
+		result = u'бла-бла-бла \n<A HREF="%s"><I><SUB>%s</SUB></I></A> бла-бла-бла\nбла-бла-бла' % (self.url2, comment)
+
+		self.assertEqual (self.parser.toHtml (text), result)
+
+
+	def testAdHoc7 (self):
+		comment = u"Ссылко"
+		text = u"бла-бла-бла \n[[%s | '''^%s^''']] бла-бла-бла\nбла-бла-бла" % (self.url2, comment)
+		result = u'бла-бла-бла \n<A HREF="%s"><I><SUP>%s</SUP></I></A> бла-бла-бла\nбла-бла-бла' % (self.url2, comment)
+
+		self.assertEqual (self.parser.toHtml (text), result)
+
+
+	def testAdHoc8 (self):
+		comment = u"Ссылко"
+		text = u"бла-бла-бла \n[[ '''^%s^''' -> %s]] бла-бла-бла\nбла-бла-бла" % (comment, self.url2)
+		result = u'бла-бла-бла \n<A HREF="%s"><I><SUP>%s</SUP></I></A> бла-бла-бла\nбла-бла-бла' % (self.url2, comment)
+
+		self.assertEqual (self.parser.toHtml (text), result)
+
+
+	def testAdHoc9 (self):
+		comment = u"Ссылко"
+		text = u"бла-бла-бла \n[[%s | ''''%s'''']] бла-бла-бла\nбла-бла-бла" % (self.url2, comment)
+		result = u'бла-бла-бла \n<A HREF="%s"><B><I>%s</I></B></A> бла-бла-бла\nбла-бла-бла' % (self.url2, comment)
+
+		self.assertEqual (self.parser.toHtml (text), result)
+
+
+	def testAdHoc10 (self):
+		comment = u"Ссылко"
+		text = u"бла-бла-бла \n[[ ''''%s'''' -> %s]] бла-бла-бла\nбла-бла-бла" % (comment, self.url2)
+		result = u'бла-бла-бла \n<A HREF="%s"><B><I>%s</I></B></A> бла-бла-бла\nбла-бла-бла' % (self.url2, comment)
+
+		self.assertEqual (self.parser.toHtml (text), result)
+
+
+	def testAdHoc11 (self):
+		comment = u"Ссылко"
+		text = u"бла-бла-бла \n[[%s | ''''%s'''']] бла-бла-бла\nбла-бла-бла" % (self.url2, comment)
+		result = u'бла-бла-бла \n<A HREF="%s"><B><I>%s</I></B></A> бла-бла-бла\nбла-бла-бла' % (self.url2, comment)
+
+		self.assertEqual (self.parser.toHtml (text), result)
+
+
+	def testAdHoc12 (self):
+		comment = u"Ссылко"
+		text = u"бла-бла-бла \n[[ ''''%s'''' -> %s]] бла-бла-бла\nбла-бла-бла" % (comment, self.url2)
+		result = u'бла-бла-бла \n<A HREF="%s"><B><I>%s</I></B></A> бла-бла-бла\nбла-бла-бла' % (self.url2, comment)
+
+		self.assertEqual (self.parser.toHtml (text), result)
+
+

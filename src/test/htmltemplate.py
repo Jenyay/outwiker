@@ -22,7 +22,7 @@ class HtmlTemplateTest(unittest.TestCase):
 
 	<STYLE type="text/css">
 		body, div, p, table {
-			font-size:14px;
+			font-size:10pt;
 			font-family:Verdana;
 		}
 
@@ -51,7 +51,7 @@ class HtmlTemplateTest(unittest.TestCase):
 
 	<STYLE type="text/css">
 		body, div, p, table {
-			font-size:14px;
+			font-size:10pt;
 			font-family:Verdana;
 		}
 
@@ -99,7 +99,7 @@ class HtmlTemplateTest(unittest.TestCase):
 
 	<STYLE type="text/css">
 		body, div, p, table {
-			font-size:14px;
+			font-size:10pt;
 			font-family:Verdana;
 		}
 
