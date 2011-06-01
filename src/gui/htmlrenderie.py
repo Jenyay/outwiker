@@ -35,7 +35,7 @@ class HtmlRenderIE (HtmlRender):
 
 
 	def Print (self):
-		pass
+		self.render.Print (True)
 
 
 	def SetPage (self, htmltext, basepath):
