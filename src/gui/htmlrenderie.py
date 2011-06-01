@@ -34,6 +34,10 @@ class HtmlRenderIE (HtmlRender):
 		self.Bind (wx.EVT_MENU, self.onCopyFromHtml, id = wx.ID_CUT)
 
 
+	def Print (self):
+		pass
+
+
 	def SetPage (self, htmltext, basepath):
 		"""
 		Загрузить страницу из строки

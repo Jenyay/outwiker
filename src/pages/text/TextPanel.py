@@ -22,6 +22,10 @@ class TextPanel (BaseTextPanel):
 		self.page = page
 
 	
+	def Print (self):
+		pass
+
+	
 	def onEditorConfigChange (self):
 		self.textEditor.setDefaultSettings()
 	

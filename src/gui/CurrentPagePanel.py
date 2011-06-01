@@ -50,6 +50,11 @@ class CurrentPagePanel(wx.Panel):
 
 		self.Bind (wx.EVT_CLOSE, self.onClose)
 
+
+	def Print (self):
+		if self.currentPage != None and self.pageView != None:
+			self.pageView.Print()
+
 	
 	def onClose (self, event):
 		Application.onPageSelect -= self.onPageSelect

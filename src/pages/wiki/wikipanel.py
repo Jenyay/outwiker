@@ -43,6 +43,10 @@ class WikiPagePanel (HtmlPanel):
 			self.htmlcodePageIndex = self.__createHtmlCodePanel(self.htmlSizer)
 		
 		self.Layout()
+
+
+	def Print (self):
+		self.htmlWindow.Print()
 	
 
 	def __createHtmlCodePanel (self, parentSizer):

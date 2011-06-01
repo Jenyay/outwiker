@@ -54,6 +54,10 @@ class SearchPanel(wx.Panel):
 
 		self.Bind (wx.EVT_CLOSE, self.onClose)
 		Application.onForceSave += self.onForceSave
+
+
+	def Print (self):
+		self.resultWindow.Print()
 	
 
 	def onClose (self, event):

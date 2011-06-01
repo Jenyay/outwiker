@@ -73,8 +73,12 @@ class HtmlRenderWebKit(HtmlRender):
 
 		self.Bind (wx.EVT_MENU, self.onCopyFromHtml, id = wx.ID_COPY)
 		self.Bind (wx.EVT_MENU, self.onCopyFromHtml, id = wx.ID_CUT)
+		
 
 		#self.ctrl.set_zoom_level (0.8)
+
+	def Print (self):
+		self.ctrl.get_main_frame().print_()
 
 
 	def LoadPage (self, fname):

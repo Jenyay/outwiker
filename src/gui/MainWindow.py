@@ -113,6 +113,7 @@ class MainWindow(wx.Frame):
 		self.fileMenu.Append(self.ID_OPEN, _(u"&Open…\tCtrl+O"), "", wx.ITEM_NORMAL)
 		self.fileMenu.Append(self.ID_OPEN_READONLY, _(u"Open &Read-only…\tCtrl+Shift+O"), "", wx.ITEM_NORMAL)
 		self.fileMenu.Append(self.ID_SAVE, _("&Save\tCtrl+S"), "", wx.ITEM_NORMAL)
+		self.fileMenu.Append(wx.ID_PRINT, _("&Print\tCtrl+P"), "", wx.ITEM_NORMAL)
 		self.fileMenu.Append(self.ID_EXIT, _(u"&Exit…\tAlt+F4"), "", wx.ITEM_NORMAL)
 		self.fileMenu.AppendSeparator()
 		self.mainMenu.Append(self.fileMenu, _("&File"))
@@ -193,6 +194,7 @@ class MainWindow(wx.Frame):
 		self.Bind(wx.EVT_MENU, self.onOpen, id=self.ID_OPEN)
 		self.Bind(wx.EVT_MENU, self.onOpenReadOnly, id=self.ID_OPEN_READONLY)
 		self.Bind(wx.EVT_MENU, self.onSave, id=self.ID_SAVE)
+		self.Bind(wx.EVT_MENU, self.onPrint, id=wx.ID_PRINT)
 		self.Bind(wx.EVT_MENU, self.onExit, id=self.ID_EXIT)
 		self.Bind(wx.EVT_MENU, self.onStdEvent, id=wx.ID_UNDO)
 		self.Bind(wx.EVT_MENU, self.onStdEvent, id=wx.ID_REDO)
@@ -595,7 +597,7 @@ class MainWindow(wx.Frame):
 
 				self.__savePanesParams()
 		except Exception, e:
-			core.commands.MessageBox (_(u"Can't save config\n%s") % (unicode (e)), 
+			core.commands.MessageBox (_(u"Can't save config\n%s") % (unicode (e)),
 					_(u"Error"), wx.ICON_ERROR | wx.OK)
 	
 
@@ -882,6 +884,10 @@ class MainWindow(wx.Frame):
 
 	def onSortSiblingAlphabetical(self, event): # wxGlade: MainWindow.<event_handler>
 		core.commands.sortSiblingsAlphabeticalGUI()
+
+
+	def onPrint(self, event): # wxGlade: MainWindow.<event_handler>
+		self.pagePanel.Print()
 
 # end of class MainWindow
 
