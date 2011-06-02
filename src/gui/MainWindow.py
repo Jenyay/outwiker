@@ -649,6 +649,7 @@ class MainWindow(wx.Frame):
 		Событие при обновлении дерева
 		"""
 		self._loadBookmarks()
+		self.__updateTitle()
 
 
 	def onNew(self, event): # wxGlade: MainWindow.<event_handler>
