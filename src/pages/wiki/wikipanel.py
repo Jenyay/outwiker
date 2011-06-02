@@ -358,7 +358,7 @@ class WikiPagePanel (HtmlPanel):
 		self._addTool (self.pageToolsMenu, 
 				"ID_HTMLCODE", 
 				self.__openHtmlCode, 
-				_(u"HTML Code\tShift+F5"), 
+				_(u"HTML Code\tShift+F4"), 
 				_(u"HTML Code"), 
 				os.path.join (self.imagesDir, "html.png"),
 				True)

@@ -246,7 +246,7 @@ class HtmlPanel(BaseTextPanel):
 		self._addTool (self.pageToolsMenu, 
 				"ID_RENDER", 
 				self.__switchView, 
-				_(u"Code / Preview\tF5"), 
+				_(u"Code / Preview\tF4"), 
 				_(u"Code / Preview"), 
 				os.path.join (self.imagesDir, "render.png"),
 				True)
