@@ -6,11 +6,11 @@ import urllib
 
 import wx
 
-import gobject
-gobject.threads_init()
+#import gobject
+#gobject.threads_init()
 
-import pygtk
-pygtk.require('2.0')
+#import pygtk
+#pygtk.require('2.0')
 import gtk, gtk.gdk
 
 # pywebkitgtk (http://code.google.com/p/pywebkitgtk/)

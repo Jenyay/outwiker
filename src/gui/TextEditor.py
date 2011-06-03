@@ -13,8 +13,6 @@ from gui.LocalSearchPanel import LocalSearchPanel, LocalSearcher
 import core.system
 from core.application import Application
 from guiconfig import EditorConfig
-from core.htmltemplate import HtmlTemplate
-from core.system import getTemplatesDir
 
 # begin wxGlade: dependencies
 # end wxGlade
@@ -56,27 +54,49 @@ class TextEditor(wx.Panel):
 	def Print (self):
 		text = self.textCtrl.GetText()
 		text = cgi.escape (text, True)
-		#text = text.replace ("\r\n", "\n")
 		text = text.replace ("\n\n", "<P>")
 		text = text.replace ("\n", "<BR>")
 
-		print text
+		normalFont = u"Arial"
+		fixedFont = u"Courier New"
 
-		tpl = HtmlTemplate (os.path.join (getTemplatesDir(), "html") )
-		result = tpl.substitute (content=text)
+		tpl = ur"""<HTML>
+<HEAD>
+	<META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>
+</HEAD>
+
+<BODY>
+{content}
+</BODY>
+</HTML>"""
+
+		result = tpl.format (content=text)
 
 		printout = wx.html.HtmlPrintout()
 		printout.SetHtmlText(result)
-		printout.SetFonts("Arial", "Courier New")
+		printout.SetFonts(normalFont, fixedFont)
+		printout.SetMargins (20.0, 20.0, 20.0, 20.0, 5.0)
 
-		data = wx.PrintData()
-		data.SetPaperId(wx.PAPER_A4)
+		pd = wx.PrintData()
+		pd.SetPaperId(wx.PAPER_A4)
+		pd.SetOrientation (wx.PORTRAIT)
 
-		pdd = wx.PrintDialogData(data)
+		pdd = wx.PrintDialogData (pd)
 		pdd.SetAllPages(True)
+		pdd.EnableSelection (False)
 
 		printer = wx.Printer(pdd)
 		printer.Print(self, printout, True)
+
+		if printer.GetLastError() == wx.PRINTER_ERROR:
+			core.commands.MessageBox (_(u"Printing error"), _("Error"), wx.OK | wx.ICON_ERROR, self)
+
+		#if dlg.ShowModal() == wx.ID_OK:
+		#	pdd = wx.PrintDialogData(dlg.GetPrintDialogData())
+		#	#pdd.SetAllPages(True)
+
+		#	printer = wx.Printer(pdd)
+		#	printer.Print(self, printout, False)
 
 
 	def onCopyFromEditor (self, event):
