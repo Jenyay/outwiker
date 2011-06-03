@@ -23,7 +23,7 @@ class TextPanel (BaseTextPanel):
 
 	
 	def Print (self):
-		pass
+		self.textEditor.Print()
 
 	
 	def onEditorConfigChange (self):
