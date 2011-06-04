@@ -248,6 +248,22 @@ class TextEditor(wx.Panel):
 		text = cgi.escape (selText, quote=True)
 		self.textCtrl.ReplaceSelection (text)
 
+
+	def SetReadOnly (self, readonly):
+		self.textCtrl.SetReadOnly (readonly)
+
+
+	def GetText(self):
+		return self.textCtrl.GetText()
+
+
+	def SetText (self, text):
+		self.textCtrl.SetText (text)
+
+
+	def EmptyUndoBuffer (self):
+		self.textCtrl.EmptyUndoBuffer()
+
 # end of class TextEditor
 
 

@@ -47,9 +47,8 @@ class HtmlPanel(BaseTextPanel):
 		kwds["style"] = wx.TAB_TRAVERSAL
 		wx.Panel.__init__(self, *args, **kwds)
 		self.notebook = wx.Notebook(self, -1, style=wx.NB_BOTTOM)
-		self.previewPane = wx.Panel(self.notebook, -1)
 		self.codeEditor = self.GetTextEditor()(self.notebook)
-		self.htmlWindow = getHtmlRender (self.previewPane)
+		self.htmlWindow = getHtmlRender (self.notebook)
 
 		self.__do_layout()
 
@@ -84,30 +83,29 @@ class HtmlPanel(BaseTextPanel):
 	
 	def UpdateView (self, page):
 		self.htmlWindow.page = self._currentpage
-		self.codeEditor.textCtrl.SetText (self._currentpage.content)
-		self.codeEditor.textCtrl.EmptyUndoBuffer()
-		self.codeEditor.textCtrl.SetReadOnly (page.readonly)
+		self.codeEditor.SetText (self._currentpage.content)
+		self.codeEditor.EmptyUndoBuffer()
+		self.codeEditor.SetReadOnly (page.readonly)
 
 
 	def GetContentFromGui(self):
-		return self.codeEditor.textCtrl.GetText()
+		return self.codeEditor.GetText()
 	
 	
 	def __do_layout(self):
 		grid_sizer_7 = wx.FlexGridSizer(1, 1, 0, 0)
 		grid_sizer_9 = wx.FlexGridSizer(1, 1, 0, 0)
-		grid_sizer_8 = wx.FlexGridSizer(1, 1, 0, 0)
 		grid_sizer_9.Add(self.htmlWindow, 1, wx.EXPAND, 0)
-		self.previewPane.SetSizer(grid_sizer_9)
 		grid_sizer_9.AddGrowableRow(0)
 		grid_sizer_9.AddGrowableCol(0)
 		self.notebook.AddPage(self.codeEditor, _("HTML"))
-		self.notebook.AddPage(self.previewPane, _("Preview"))
+		self.notebook.AddPage(self.htmlWindow, _("Preview"))
 		grid_sizer_7.Add(self.notebook, 1, wx.EXPAND, 0)
-		self.SetSizer(grid_sizer_7)
 		grid_sizer_7.Fit(self)
 		grid_sizer_7.AddGrowableRow(0)
 		grid_sizer_7.AddGrowableCol(0)
+
+		self.SetSizer(grid_sizer_7)
 
 		self.Bind (wx.EVT_CLOSE, self.onClose)
 

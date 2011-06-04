@@ -31,9 +31,9 @@ class TextPanel (BaseTextPanel):
 	
 
 	def UpdateView (self, page):
-		self.textEditor.textCtrl.SetText (self._currentpage.content)
-		self.textEditor.textCtrl.EmptyUndoBuffer()
-		self.textEditor.textCtrl.SetReadOnly (page.readonly)
+		self.textEditor.SetText (self._currentpage.content)
+		self.textEditor.EmptyUndoBuffer()
+		self.textEditor.SetReadOnly (page.readonly)
 	
 
 	def __layout (self):
@@ -49,12 +49,12 @@ class TextPanel (BaseTextPanel):
 
 	def onAttachmentPaste (self, fnames):
 		text = self._getAttachString (fnames)
-		self.textEditor.textCtrl.AddText (text)
-		self.textEditor.textCtrl.SetFocus()
+		self.textEditor.AddText (text)
+		self.textEditor.SetFocus()
 
 
 	def GetContentFromGui (self):
-		return  self.textEditor.textCtrl.GetText()
+		return  self.textEditor.GetText()
 
 
 	def GetSearchPanel (self):

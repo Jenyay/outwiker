@@ -50,16 +50,12 @@ class WikiPagePanel (HtmlPanel):
 	
 
 	def __createHtmlCodePanel (self, parentSizer):
-		# Панель для вкладки с кодом HTML
-		self.htmlCodePane = wx.Panel(self.notebook, -1)
-		self.htmlCodePane.SetSizer(parentSizer)
-
 		# Окно для просмотра получившегося кода HTML
-		self.htmlCodeWindow = HtmlTextEditor(self.htmlCodePane, -1)
-		self.htmlCodeWindow.textCtrl.SetReadOnly (True)
+		self.htmlCodeWindow = HtmlTextEditor(self.notebook, -1)
+		self.htmlCodeWindow.SetReadOnly (True)
 		parentSizer.Add(self.htmlCodeWindow, 1, wx.TOP|wx.BOTTOM|wx.EXPAND, 2)
 		
-		self.notebook.AddPage (self.htmlCodePane, _("HTML"))
+		self.notebook.AddPage (self.htmlCodeWindow, _("HTML"))
 		return self.notebook.GetPageCount () - 1
 	
 
@@ -116,9 +112,9 @@ class WikiPagePanel (HtmlPanel):
 			with open (path) as fp:
 				text = unicode (fp.read(), "utf8")
 
-				self.htmlCodeWindow.textCtrl.SetReadOnly (False)
-				self.htmlCodeWindow.textCtrl.SetText (text)
-				self.htmlCodeWindow.textCtrl.SetReadOnly (True)
+				self.htmlCodeWindow.SetReadOnly (False)
+				self.htmlCodeWindow.SetText (text)
+				self.htmlCodeWindow.SetReadOnly (True)
 		except IOError:
 			core.commands.MessageBox (_(u"Can't load HTML-file"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 		except OSError:
