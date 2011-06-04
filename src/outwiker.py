@@ -12,15 +12,7 @@ import wx
 
 from core.config import getConfigPath
 from core.application import Application
-
-if os.name != "nt":
-	# Активируем pygkt под Linux
-	import gobject
-	gobject.threads_init()
-
-	import pygtk
-	pygtk.require('2.0')
-	import gtk, gtk.gdk
+from core.system import getOS
 
 
 class OutWiker(wx.App):
@@ -65,5 +57,6 @@ class OutWiker(wx.App):
 # end of class OutWiker
 
 if __name__ == "__main__":
+	getOS().init()
 	outwiker = OutWiker(0)
 	outwiker.MainLoop()

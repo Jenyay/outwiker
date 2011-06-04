@@ -16,6 +16,10 @@ class Windows (object):
 		pass
 
 
+	def init (self):
+		pass
+
+
 	def startFile (self, path):
 		"""
 		Запустить программу по умолчанию для path
@@ -49,6 +53,19 @@ class Windows (object):
 class Unix (object):
 	def __init__ (self):
 		pass
+
+
+	def init (self):
+		"""
+		Активировать дополнительные библиотеки, в частности, pyGTK
+		"""
+		import gobject
+		gobject.threads_init()
+
+		import pygtk
+		pygtk.require('2.0')
+		import gtk, gtk.gdk
+
 
 	def startFile (self, path):
 		"""
