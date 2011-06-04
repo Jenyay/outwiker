@@ -8,11 +8,11 @@ import cgi
 import wx
 from wx.stc import StyledTextCtrl
 
-from gui.LocalSearchPanel import LocalSearchPanel, LocalSearcher
 import core.system
 from core.application import Application
 from guiconfig import EditorConfig
 from core.textprinter import TextPrinter
+from .editorsearchpanel import EditorSearchPanel
 
 # begin wxGlade: dependencies
 # end wxGlade
@@ -107,9 +107,6 @@ class TextEditor(wx.Panel):
 		isBold = self.config.fontIsBold.value
 		isItalic = self.config.fontIsItalic.value
 
-		#style = "size:%d" % size
-		#self.textCtrl.StyleSetSpec (wx.stc.STC_STYLE_DEFAULT, style)
-
 		self.textCtrl.StyleSetSize (wx.stc.STC_STYLE_DEFAULT, size)
 		self.textCtrl.StyleSetFaceName (wx.stc.STC_STYLE_DEFAULT, faceName)
 		self.textCtrl.StyleSetBold (wx.stc.STC_STYLE_DEFAULT, isBold)
@@ -189,161 +186,68 @@ class TextEditor(wx.Panel):
 
 		self.textCtrl.ReplaceSelection(self.mbcsEnc (unichar, "replace")[0])
 
+
+	def AddText (self, text):
+		self.textCtrl.AddText (text)
+
+
+	def replaceText (self, text):
+		self.textCtrl.ReplaceSelection (text)
+
+
+	def turnText (self, lefttext, righttext):
+		selText = self.textCtrl.GetSelectedText()
+		newtext = lefttext + selText + righttext
+		self.textCtrl.ReplaceSelection (newtext)
+
+		if len (selText) == 0:
+			"""
+			Если не оборачиваем текст, а делаем пустой тег, то поместим каретку до закрывающегося тега
+			"""
+			currPos = self.textCtrl.GetSelectionEnd()
+			len_bytes = self.calcByteLen (righttext)
+
+			newPos = currPos - len_bytes
+
+			self.textCtrl.SetSelection (newPos, newPos)
+
+
+	def turnList (self, start, end, itemStart, itemEnd):
+		"""
+		Создать список
+		"""
+		selText = self.textCtrl.GetSelectedText()
+		items = filter (lambda item: len (item.strip()) > 0, selText.split ("\n") )
+
+		# Собираем все элементы
+		if len (items) > 0:
+			itemsList = reduce (lambda result, item: result + itemStart + item.strip() + itemEnd + "\n", items, u"")
+		else:
+			itemsList = itemStart + itemEnd + "\n"
+
+		result = start + itemsList + end
+
+		if len (end) == 0:
+			# Если нет завершающего тега (как в викинотации), 
+			# то не нужен перевод строки у последнего элемента
+			result = result[: -1]
+
+		self.textCtrl.ReplaceSelection (result)
+
+		if len (items) == 0:
+			endText = u"%s\n%s" % (itemEnd, end)
+			len_bytes = self.calcByteLen (endText)
+
+			currPos = self.textCtrl.GetSelectionEnd()
+			newPos = currPos - len_bytes
+			self.textCtrl.SetSelection (newPos, newPos)
+
+
+	def escapeHtml (self, event):
+		selText = self.textCtrl.GetSelectedText()
+		text = cgi.escape (selText, quote=True)
+		self.textCtrl.ReplaceSelection (text)
+
 # end of class TextEditor
 
 
-class EditorSearchPanel (LocalSearchPanel):
-	def __init__ (self, *args, **kwds):
-		LocalSearchPanel.__init__ (self, *args, **kwds)
-	
-		self.editPanel = None
-		self.editor = None
-
-
-	def nextSearch (self):
-		"""
-		Искать следующее вхождение фразы
-		"""
-		self.searchTo (self.findNext)
-		self.editor.SetFocus()
-
-
-	def prevSearch (self):
-		"""
-		Искать предыдущее вхождение фразы
-		"""
-		self.searchTo (self.findPrev)
-		self.editor.SetFocus()
-	
-
-	def startSearch (self):
-		"""
-		Начать поиск
-		"""
-		text = self.editor.GetSelectedText()
-
-		self.phraseTextCtrl.SetValue (text)
-		self.phraseTextCtrl.SetSelection (-1, -1)
-		self.phraseTextCtrl.SetFocus ()
-	
-
-	def enterSearchPhrase (self):
-		self.searchTo (self.findNextOnEnter)
-	
-
-	def searchTo (self, direction):
-		"""
-		Поиск фразы в нужном направлении (вперед / назад)
-		direction - функция, которая ищет текст в нужном направлении (findNext / findPrev)
-		"""
-		assert self.editor != None
-
-		text = self.editor.GetText()
-		phrase = self.phraseTextCtrl.GetValue ()
-
-		if len (phrase) == 0:
-			self.phraseTextCtrl.SetFocus ()
-			#self.startSearch()
-			return
-
-		result = direction (text, phrase)
-		if result != None:
-			self.resultLabel.SetLabel (u"")
-			self.editor.SetSelection (self.editPanel.calcBytePos (text, result.position), 
-					self.editPanel.calcBytePos (text, result.position + len (result.phrase)) )
-		else:
-			self.resultLabel.SetLabel (_(u"Not found"))
-
-			#self.editor.SetFocus()
-
-	
-	def findNext (self, text, phrase):
-		"""
-		Найти следующее вхождение
-		"""
-		searcher = LocalSearcher (text, phrase)
-
-		currpos = self.getCurrPosChars()
-
-		result = None
-
-		for currResult in searcher.result:
-			if currResult.position >= currpos:
-				result = currResult
-				break
-
-		if result == None and len (searcher.result) > 0:
-			result = searcher.result[0]
-
-		return result
-
-
-	def findPrev (self, text, phrase):
-		"""
-		Найти предыдущее вхождение
-		"""
-		searcher = LocalSearcher (text, phrase)
-
-		currpos = self.getStartSelectionChars()
-
-		result = None
-
-		for currResult in searcher.result:
-			if currResult.position < currpos:
-				result = currResult
-				#break
-
-		if result == None and len (searcher.result) > 0:
-			result = searcher.result[-1]
-
-		return result
-
-
-	def findNextOnEnter (self, text, phrase):
-		"""
-		Найти следующее вхождение, но начиная с начала выделения текста
-		"""
-		searcher = LocalSearcher (text, phrase)
-
-		currpos = self.getStartSelectionChars()
-
-		result = None
-
-		for currResult in searcher.result:
-			if currResult.position >= currpos:
-				result = currResult
-				break
-
-		if result == None and len (searcher.result) > 0:
-			result = searcher.result[0]
-
-		return result
-
-
-	def getCurrPosChars (self):
-		"""
-		Посчитать текущее положение каретки в символах
-		"""
-		# Текущая позиция в байтах
-		currpos_bytes = self.editor.GetCurrentPos()
-		text_left = self.editor.GetTextRange (0, currpos_bytes)
-
-		currpos_chars = len (text_left)
-
-		return currpos_chars
-
-
-	def getStartSelectionChars (self):
-		"""
-		Получить позицию начала выделенного текста в символах
-		"""
-		startsel_bytes = self.editor.GetSelectionStart()
-		text_left = self.editor.GetTextRange (0, startsel_bytes)
-		currpos = len (text_left)
-		return currpos
-
-
-	def setEditor (self, editPanel, editor):
-		self.editPanel = editPanel
-		self.editor = editor
-	

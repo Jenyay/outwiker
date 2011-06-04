@@ -64,12 +64,12 @@ class WikiPagePanel (HtmlPanel):
 	
 
 	def GetTextEditor(self):
-		return TextEditor (self.htmlPane)
+		return TextEditor
 
 
 	def GetSearchPanel (self):
 		if self.notebook.GetSelection() == self.codePageIndex:
-			return self.codeWindow.searchPanel
+			return self.codeEditor().searchPanel
 		elif self.notebook.GetSelection() == self.htmlcodePageIndex:
 			return self.htmlCodeWindow.searchPanel
 
@@ -131,42 +131,42 @@ class WikiPagePanel (HtmlPanel):
 		"""
 		self._addTool (self.pageToolsMenu, 
 				"ID_BOLD", 
-				lambda event: self._turnText (u"'''", u"'''"), 
+				lambda event: self.codeEditor.turnText (u"'''", u"'''"), 
 				_(u"Bold\tCtrl+B"), 
 				_(u"Bold"), 
 				os.path.join (self.imagesDir, "text_bold.png"))
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_ITALIC", 
-				lambda event: self._turnText (u"''", u"''"), 
+				lambda event: self.codeEditor.turnText (u"''", u"''"), 
 				_(u"Italic\tCtrl+I"), 
 				_(u"Italic"), 
 				os.path.join (self.imagesDir, "text_italic.png"))
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_BOLD_ITALIC", 
-				lambda event: self._turnText (u"''''", u"''''"), 
+				lambda event: self.codeEditor.turnText (u"''''", u"''''"), 
 				_(u"Bold italic\tCtrl+Shift+I"), 
 				_(u"Bold italic"), 
 				os.path.join (self.imagesDir, "text_bold_italic.png"))
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_UNDERLINE", 
-				lambda event: self._turnText (u"{+", u"+}"), 
+				lambda event: self.codeEditor.turnText (u"{+", u"+}"), 
 				_(u"Underline\tCtrl+U"), 
 				_(u"Underline"), 
 				os.path.join (self.imagesDir, "text_underline.png"))
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_STRIKE", 
-				lambda event: self._turnText (u"{-", u"-}"), 
+				lambda event: self.codeEditor.turnText (u"{-", u"-}"), 
 				_(u"Strikethrough\tCtrl+K"), 
 				_(u"Strikethrough"), 
 				os.path.join (self.imagesDir, "text_strikethrough.png"))
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_SUBSCRIPT", 
-				lambda event: self._turnText (u"'_", u"_'"), 
+				lambda event: self.codeEditor.turnText (u"'_", u"_'"), 
 				_(u"Subscript\tCtrl+="), 
 				_(u"Subscript"), 
 				os.path.join (self.imagesDir, "text_subscript.png"))
@@ -174,7 +174,7 @@ class WikiPagePanel (HtmlPanel):
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_SUPERSCRIPT", 
-				lambda event: self._turnText (u"'^", u"^'"), 
+				lambda event: self.codeEditor.turnText (u"'^", u"^'"), 
 				_(u"Superscript\tCtrl++"), 
 				_(u"Superscript"), 
 				os.path.join (self.imagesDir, "text_superscript.png"))
@@ -183,14 +183,14 @@ class WikiPagePanel (HtmlPanel):
 	def __addAlignTools (self):
 		self._addTool (self.pageToolsMenu, 
 				"ID_ALIGN_CENTER", 
-				lambda event: self._turnText (u"%center%", u""), 
+				lambda event: self.codeEditor.turnText (u"%center%", u""), 
 				_(u"Center align\tCtrl+Alt+C"), 
 				_(u"Center align"), 
 				os.path.join (self.imagesDir, "text_align_center.png"))
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_ALIGN_RIGHT", 
-				lambda event: self._turnText (u"%right%", u""), 
+				lambda event: self.codeEditor.turnText (u"%right%", u""), 
 				_(u"Right align\tCtrl+ALT+R"), 
 				_(u"Right align"), 
 				os.path.join (self.imagesDir, "text_align_right.png"))
@@ -199,14 +199,14 @@ class WikiPagePanel (HtmlPanel):
 	def __addFormatTools (self):
 		self._addTool (self.pageToolsMenu, 
 				"ID_PREFORMAT", 
-				lambda event: self._turnText (u"[@", u"@]"), 
+				lambda event: self.codeEditor.turnText (u"[@", u"@]"), 
 				_(u"Preformat [@…@]"), 
 				_(u"Preformat [@…@]"), 
 				None)
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_NONFORMAT", 
-				lambda event: self._turnText (u"[=", u"=]"), 
+				lambda event: self.codeEditor.turnText (u"[=", u"=]"), 
 				_(u"Non-parsed [=…=]"), 
 				_(u"Non-parsed [=…=]"), 
 				None)
@@ -219,14 +219,14 @@ class WikiPagePanel (HtmlPanel):
 		"""
 		#self._addTool (self.pageToolsMenu, 
 		#		self.toolsId["ID_TABLE"], 
-		#		lambda event: self._turnText (u'<table>', u'</table>'), 
+		#		lambda event: self.codeEditor.turnText (u'<table>', u'</table>'), 
 		#		u"Table\tCtrl+Q", 
 		#		u"Table (<table>…</table>)", 
 		#		os.path.join (self.imagesDir, "table.png"))
 
 		#self._addTool (self.pageToolsMenu, 
 		#		self.toolsId["ID_TABLE_TR"], 
-		#		lambda event: self._turnText (u'<tr>',u'</tr>'), 
+		#		lambda event: self.codeEditor.turnText (u'<tr>',u'</tr>'), 
 		#		u"Table row\tCtrl+W", 
 		#		u"Table row (<tr>…</tr>)", 
 		#		os.path.join (self.imagesDir, "table_insert_row.png"))
@@ -234,7 +234,7 @@ class WikiPagePanel (HtmlPanel):
 
 		#self._addTool (self.pageToolsMenu, 
 		#		self.toolsId["ID_TABLE_TD"], 
-		#		lambda event: self._turnText (u'<td>', u'</td>'), 
+		#		lambda event: self.codeEditor.turnText (u'<td>', u'</td>'), 
 		#		u"Table cell\tCtrl+Y", 
 		#		u"Table cell (<td>…</td>)", 
 		#		os.path.join (self.imagesDir, "table_insert_cell.png"))
@@ -248,14 +248,14 @@ class WikiPagePanel (HtmlPanel):
 		"""
 		self._addTool (self.pageToolsMenu, 
 				"ID_MARK_LIST", 
-				lambda event: self._turnList (u'', u'', u'*', u''), 
+				lambda event: self.codeEditor.turnList (u'', u'', u'*', u''), 
 				_(u"Bullets list\tCtrl+G"), 
 				_(u"Bullets list"), 
 				os.path.join (self.imagesDir, "text_list_bullets.png"))
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_NUMBER_LIST", 
-				lambda event: self._turnList (u'', u'', u'#', u''), 
+				lambda event: self.codeEditor.turnList (u'', u'', u'#', u''), 
 				_(u"Numbers list\tCtrl+J"), 
 				_(u"Numbers list"), 
 				os.path.join (self.imagesDir, "text_list_numbers.png"))
@@ -267,42 +267,42 @@ class WikiPagePanel (HtmlPanel):
 		"""
 		self._addTool (self.pageToolsMenu, 
 				"ID_H1", 
-				lambda event: self._turnText (u"\n!! ", u""), 
+				lambda event: self.codeEditor.turnText (u"\n!! ", u""), 
 				_(u"H1\tCtrl+1"), 
 				_(u"H1"), 
 				os.path.join (self.imagesDir, "text_heading_1.png"))
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_H2", 
-				lambda event: self._turnText (u"!!! ", u""), 
+				lambda event: self.codeEditor.turnText (u"!!! ", u""), 
 				_(u"H2\tCtrl+2"), 
 				_(u"H2"), 
 				os.path.join (self.imagesDir, "text_heading_2.png"))
 		
 		self._addTool (self.pageToolsMenu, 
 				"ID_H3", 
-				lambda event: self._turnText (u"!!!! ", u""), 
+				lambda event: self.codeEditor.turnText (u"!!!! ", u""), 
 				_(u"H3\tCtrl+3"), 
 				_(u"H3"), 
 				os.path.join (self.imagesDir, "text_heading_3.png"))
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_H4", 
-				lambda event: self._turnText (u"!!!!! ", u""), 
+				lambda event: self.codeEditor.turnText (u"!!!!! ", u""), 
 				_(u"H4\tCtrl+4"), 
 				_(u"H4"), 
 				os.path.join (self.imagesDir, "text_heading_4.png"))
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_H5", 
-				lambda event: self._turnText (u"!!!!!! ", u""), 
+				lambda event: self.codeEditor.turnText (u"!!!!!! ", u""), 
 				_(u"H5\tCtrl+5"), 
 				_(u"H5"), 
 				os.path.join (self.imagesDir, "text_heading_5.png"))
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_H6", 
-				lambda event: self._turnText (u"!!!!!!! ", u""), 
+				lambda event: self.codeEditor.turnText (u"!!!!!!! ", u""), 
 				_(u"H6\tCtrl+6"), 
 				_(u"H6"), 
 				os.path.join (self.imagesDir, "text_heading_6.png"))
@@ -314,28 +314,28 @@ class WikiPagePanel (HtmlPanel):
 		"""
 		self._addTool (self.pageToolsMenu, 
 				"ID_THUMB", 
-				lambda event: self._turnText (u'%thumb%', u'%%'), 
+				lambda event: self.codeEditor.turnText (u'%thumb%', u'%%'), 
 				_(u'Thumbnail\tCtrl+M'), 
 				_(u'Thumbnail'), 
 				os.path.join (self.imagesDir, "images.png"))
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_LINK", 
-				lambda event: self._turnText (u'[[', u']]'), 
+				lambda event: self.codeEditor.turnText (u'[[', u']]'), 
 				_(u"Link\tCtrl+L"), 
 				_(u'Link'), 
 				os.path.join (self.imagesDir, "link.png"))
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_HORLINE", 
-				lambda event: self._replaceText (u'----'), 
+				lambda event: self.codeEditor.replaceText (u'----'), 
 				_(u"Horizontal line\tCtrl+H"), 
 				_(u"Horizontal line"), 
 				os.path.join (self.imagesDir, "text_horizontalrule.png"))
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_EQUATION", 
-				lambda event: self._turnText (u'{$', u'$}'), 
+				lambda event: self.codeEditor.turnText (u'{$', u'$}'), 
 				_(u"Equation\tCtrl+Q"), 
 				_(u'Equation'), 
 				os.path.join (self.imagesDir, "equation.png"))
@@ -344,7 +344,7 @@ class WikiPagePanel (HtmlPanel):
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_ESCAPEHTML", 
-				self._escapeHtml, 
+				self.codeEditor.escapeHtml, 
 				_(u"Convert HTML Symbols"), 
 				_(u"Convert HTML Symbols"), 
 				None)

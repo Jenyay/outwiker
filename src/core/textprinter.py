@@ -79,6 +79,13 @@ class TextPrinter (object):
 		pd = self._getPrintData()
 		pdd = self._getPrintDialogData (pd)
 
+		# По-хорошему, надо было бы примерно таким образом (еще учесть предпросмотр), но под Linux'ом падает libgnomeprint
+		#dlg = wx.PrintDialog (self.parent, None)
+		#if dlg.ShowModal () == wx.ID_OK:
+		#	pdd_new = dlg.GetPrintDialogData()
+		#	printer = wx.Printer(pdd_new)
+		#	printer.Print(self.parent, printout, False)
+
 		printer = wx.Printer(pdd)
 		printer.Print(self.parent, printout, True)
 
