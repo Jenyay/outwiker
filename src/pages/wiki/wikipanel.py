@@ -61,7 +61,7 @@ class WikiPagePanel (HtmlPanel):
 
 	def GetSearchPanel (self):
 		if self.notebook.GetSelection() == self.codePageIndex:
-			return self.codeEditor().searchPanel
+			return self.codeEditor.searchPanel
 		elif self.notebook.GetSelection() == self.htmlcodePageIndex:
 			return self.htmlCodeWindow.searchPanel
 
