@@ -45,10 +45,6 @@ class WikiPagePanel (HtmlPanel):
 		self.Layout()
 
 
-	def Print (self):
-		self.htmlWindow.Print()
-	
-
 	def __createHtmlCodePanel (self, parentSizer):
 		# Окно для просмотра получившегося кода HTML
 		self.htmlCodeWindow = HtmlTextEditor(self.notebook, -1)

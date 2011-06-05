@@ -54,12 +54,13 @@ class HtmlPanel(BaseTextPanel):
 
 		self.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED, self.onTabChanged, self.notebook)
 
-		self.HCount = 6
 		self.toolsId = {}
 
 
 	def Print (self):
-		pass
+		currpanel = self.notebook.GetCurrentPage()
+		if currpanel != None:
+			currpanel.Print()
 
 
 	def GetTextEditor(self):
@@ -279,9 +280,6 @@ class HtmlPanel(BaseTextPanel):
 class HtmlPagePanel (HtmlPanel):
 	def __init__ (self, *args, **kwds):
 		HtmlPanel.__init__ (self, *args, **kwds)
-
-	def Print (self):
-		self.htmlWindow.Print()
 
 
 	def __addFontTools (self):
