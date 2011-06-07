@@ -58,6 +58,20 @@ class HtmlRenderConfig (object):
 		self.fontIsItalic = BooleanOption (self.config, "HTML", "FontItalic", False)
 
 
+class TextPrintConfig (object):
+	"""
+	Класс для хранения настроек печати текста
+	"""
+	def __init__ (self, config):
+		self.config = config
+
+		# Настройки обычного шрифта
+		self.fontFaceNameOption = StringOption (self.config, u"Print", u"FontFaceName", "Arial")
+		self.fontSizeOption = IntegerOption (self.config, u"Print", u"FontSize", 10)
+		self.fontIsBold = BooleanOption (self.config, "Print", "FontBold", False)
+		self.fontIsItalic = BooleanOption (self.config, "Print", "FontItalic", False)
+
+
 
 class MainWindowConfig (object):
 	"""

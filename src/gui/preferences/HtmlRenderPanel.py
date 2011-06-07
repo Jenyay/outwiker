@@ -34,7 +34,7 @@ class HtmlRenderPanel(wx.Panel):
 
 	def __set_properties(self):
 		# begin wxGlade: HtmlRenderPanel.__set_properties
-		pass
+		self.SetSize((309, 199))
 		# end wxGlade
 
 
@@ -47,7 +47,6 @@ class HtmlRenderPanel(wx.Panel):
 		grid_sizer_5.AddGrowableCol(1)
 		mainSizer.Add(grid_sizer_5, 1, wx.EXPAND, 0)
 		self.SetSizer(mainSizer)
-		mainSizer.Fit(self)
 		mainSizer.AddGrowableCol(0)
 		# end wxGlade
 

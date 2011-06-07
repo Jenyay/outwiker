@@ -35,7 +35,7 @@ class EditorPanel(wx.Panel):
 
 	def __set_properties(self):
 		# begin wxGlade: EditorPanel.__set_properties
-		pass
+		self.SetSize((404, 254))
 		# end wxGlade
 
 	def __do_layout(self):
@@ -54,7 +54,6 @@ class EditorPanel(wx.Panel):
 		grid_sizer_4.AddGrowableCol(1)
 		mainSizer.Add(grid_sizer_4, 1, wx.EXPAND, 0)
 		self.SetSizer(mainSizer)
-		mainSizer.Fit(self)
 		mainSizer.AddGrowableCol(0)
 		# end wxGlade
 

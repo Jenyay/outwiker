@@ -7,6 +7,8 @@ import wx
 import wx.html
 
 import core.commands
+from core.application import Application
+from gui.guiconfig import TextPrintConfig
 
 
 class TextPrinter (object):
@@ -16,8 +18,10 @@ class TextPrinter (object):
 	def __init__ (self, parent):
 		self.parent = parent
 
-		self.normalFont = u"Arial"
-		self.fixedFont = u"Courier New"
+		self.config = TextPrintConfig (Application.config)
+
+		self.normalFont = self.config.fontFaceNameOption.value
+		self.monoFont = self.config.fontFaceNameOption.value
 
 		# Поля на странице: верхнее, нижнее, левое, правое, расстояние между шапкой/подвалом и текстом в мм
 		self.margins = (20.0, 20.0, 20.0, 20.0, 5.0)
@@ -47,7 +51,7 @@ class TextPrinter (object):
 
 	def _getPrintout (self, htmltext):
 		printout = wx.html.HtmlPrintout()
-		printout.SetFonts(self.normalFont, self.fixedFont)
+		printout.SetFonts(self.normalFont, self.monoFont)
 		printout.SetMargins (self.margins[0], self.margins[1], self.margins[2], self.margins[3], self.margins[4])
 		printout.SetHtmlText(htmltext)
 		return printout
