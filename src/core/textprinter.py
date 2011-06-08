@@ -24,7 +24,16 @@ class TextPrinter (object):
 		self.monoFont = self.config.fontFaceNameOption.value
 
 		# Поля на странице: верхнее, нижнее, левое, правое, расстояние между шапкой/подвалом и текстом в мм
-		self.margins = (20.0, 20.0, 20.0, 20.0, 5.0)
+		headerspace = 0.0
+
+		self.margins = (self.config.marginTop.value, 
+				self.config.marginBottom.value, 
+				self.config.marginLeft.value, 
+				self.config.marginRight.value, 
+				headerspace)
+
+
+		self.paperId = self.config.paperId.value
 
 		self.htmltemplate = ur"""<HTML>
 <HEAD>
@@ -62,7 +71,7 @@ class TextPrinter (object):
 		Получить параметры печати (страницы) по умолчанию
 		"""
 		pd = wx.PrintData()
-		pd.SetPaperId(wx.PAPER_A4)
+		pd.SetPaperId(self.paperId)
 		pd.SetOrientation (wx.PORTRAIT)
 		return pd
 

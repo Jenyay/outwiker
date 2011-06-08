@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
+import wx
+
 from core.config import StringOption, BooleanOption, IntegerOption
 
 class GeneralGuiConfig (object):
@@ -70,6 +72,12 @@ class TextPrintConfig (object):
 		self.fontSizeOption = IntegerOption (self.config, u"Print", u"FontSize", 10)
 		self.fontIsBold = BooleanOption (self.config, "Print", "FontBold", False)
 		self.fontIsItalic = BooleanOption (self.config, "Print", "FontItalic", False)
+
+		self.paperId = IntegerOption (self.config, u"Print", u"PaperId", wx.PAPER_A4)
+		self.marginTop = IntegerOption (self.config, u"Print", u"MarginTop", 20)
+		self.marginBottom = IntegerOption (self.config, u"Print", u"MarginBottom", 20)
+		self.marginLeft = IntegerOption (self.config, u"Print", u"MarginLeft", 20)
+		self.marginRight = IntegerOption (self.config, u"Print", u"MarginRight", 20)
 
 
 

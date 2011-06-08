@@ -56,8 +56,28 @@ class TextPrintPanel(wx.Panel):
 		# end wxGlade
 
 	def onPageOptions(self, event): # wxGlade: TextPrintPanel.<event_handler>
-		print "Event handler `onPageOptions' not implemented!"
-		event.Skip()
+		pd = wx.PrintData ()
+		psdd = wx.PageSetupDialogData (pd)
+
+		psdd.SetMarginTopLeft (wx.Point (self.config.marginLeft.value, self.config.marginTop.value) )
+		psdd.SetMarginBottomRight (wx.Point (self.config.marginRight.value, self.config.marginBottom.value) )
+		psdd.SetPaperId (self.config.paperId.value)
+
+		dlg = wx.PageSetupDialog (self, psdd)
+
+		if dlg.ShowModal() == wx.ID_OK:
+			psdd_new = dlg.GetPageSetupData()
+
+			marginLeftTop = psdd_new.GetMarginTopLeft()
+			marginRightBottom = psdd_new.GetMarginBottomRight()
+
+			self.config.marginLeft.value = marginLeftTop[0]
+			self.config.marginTop.value = marginLeftTop[1]
+
+			self.config.marginRight.value = marginRightBottom[0]
+			self.config.marginBottom.value = marginRightBottom[1]
+
+			self.config.paperId.value = psdd_new.GetPaperId()
 
 
 	def LoadState(self):
