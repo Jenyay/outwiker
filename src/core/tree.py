@@ -428,7 +428,7 @@ class WikiPage (RootWikiPage):
 		WikiPage.__renamePaths (self, newpath)
 
 		if self.root.selectedPage == self:
-			self._params.lastViewedPageOption.value = self.subpath
+			self.root.params.lastViewedPageOption.value = self.subpath
 
 		Application.onPageRename (self, oldsubpath)
 		#Application.onPageUpdate (self)
@@ -498,7 +498,7 @@ class WikiPage (RootWikiPage):
 		WikiPage.__renamePaths (self, newpath)
 
 		if self.root.selectedPage == self:
-			self._params.lastViewedPageOption.value = self.subpath
+			self.root.params.lastViewedPageOption.value = self.subpath
 
 		Application.onTreeUpdate (self)
 
