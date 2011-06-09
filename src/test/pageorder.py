@@ -12,6 +12,7 @@ from pages.text.textpage import TextPageFactory
 from core.event import Event
 from core.application import Application
 from test.utils import removeWiki
+from core.config import PageConfig
 
 class PageOrderTest (unittest.TestCase):
 	"""
@@ -425,10 +426,10 @@ class PageOrderTest (unittest.TestCase):
 		TextPageFactory.create (self.rootwiki, u"Страница 2", [])
 
 		# Удалим параметры order
-		self.rootwiki[u"Страница 0"].params.remove_option (WikiPage.sectionGeneral, WikiPage.paramOrder)
-		self.rootwiki[u"Страница 1"].params.remove_option (WikiPage.sectionGeneral, WikiPage.paramOrder)
-		self.rootwiki[u"Страница 2"].params.remove_option (WikiPage.sectionGeneral, WikiPage.paramOrder)
-		self.rootwiki[u"Страница 3"].params.remove_option (WikiPage.sectionGeneral, WikiPage.paramOrder)
+		self.rootwiki[u"Страница 0"].params.remove_option (PageConfig.sectionName, PageConfig.orderParamName)
+		self.rootwiki[u"Страница 1"].params.remove_option (PageConfig.sectionName, PageConfig.orderParamName)
+		self.rootwiki[u"Страница 2"].params.remove_option (PageConfig.sectionName, PageConfig.orderParamName)
+		self.rootwiki[u"Страница 3"].params.remove_option (PageConfig.sectionName, PageConfig.orderParamName)
 
 		wikiroot = WikiDocument.load (self.path)
 
@@ -448,10 +449,10 @@ class PageOrderTest (unittest.TestCase):
 		TextPageFactory.create (self.rootwiki, u"Страница 2", [])
 
 		# Удалим параметры order
-		self.rootwiki[u"Страница 0"].params.remove_option (WikiPage.sectionGeneral, WikiPage.paramOrder)
-		self.rootwiki[u"Страница 1"].params.remove_option (WikiPage.sectionGeneral, WikiPage.paramOrder)
-		self.rootwiki[u"Страница 2"].params.remove_option (WikiPage.sectionGeneral, WikiPage.paramOrder)
-		self.rootwiki[u"Страница 3"].params.remove_option (WikiPage.sectionGeneral, WikiPage.paramOrder)
+		self.rootwiki[u"Страница 0"].params.remove_option (PageConfig.sectionName, PageConfig.orderParamName)
+		self.rootwiki[u"Страница 1"].params.remove_option (PageConfig.sectionName, PageConfig.orderParamName)
+		self.rootwiki[u"Страница 2"].params.remove_option (PageConfig.sectionName, PageConfig.orderParamName)
+		self.rootwiki[u"Страница 3"].params.remove_option (PageConfig.sectionName, PageConfig.orderParamName)
 
 		wikiroot = WikiDocument.load (self.path)
 

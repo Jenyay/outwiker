@@ -22,7 +22,6 @@ class RootWikiPage (object):
 	iconName = u"__icon"
 
 	sectionGeneral = u"General"
-	paramOrder = u"order"
 
 	def __init__(self, path, readonly=False):
 		"""
@@ -165,11 +164,12 @@ class RootWikiPage (object):
 		"""
 		Функция для сортировки страниц с учетом order
 		"""
-		try:
-			orderpage1 = int (page1.getParameter (RootWikiPage.sectionGeneral, RootWikiPage.paramOrder))
-			orderpage2 = int (page2.getParameter (RootWikiPage.sectionGeneral, RootWikiPage.paramOrder))
-		except Exception:
-			# Если хотя бы у одной страницы не указан порядок, то сравнивать страницы только по заголовкам
+
+		orderpage1 = page1.params.orderOption.value
+		orderpage2 = page2.params.orderOption.value
+
+		# Если еще не установили порядок страницы (значение по умолчанию: -1)
+		if orderpage1 == -1 or orderpage2 == -1:
 			orderpage1 = -1
 			orderpage2 = -1
 
@@ -651,7 +651,7 @@ class WikiPage (RootWikiPage):
 		self._saveTags()
 
 		# Порядок страницы
-		self._params.set (RootWikiPage.sectionGeneral, RootWikiPage.paramOrder, self.order)
+		self._params.orderOption.value = self.order
 
 
 

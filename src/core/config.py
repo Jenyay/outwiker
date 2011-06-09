@@ -201,8 +201,13 @@ class PageConfig (Config):
 	"""
 	Класс для хранения настроек страниц
 	"""
+	sectionName = u"General"
+	orderParamName = u"order"
+
+
 	def __init__ (self, fname, readonly=False):
 		Config.__init__ (self, fname, readonly)
 
-		self.typeOption = StringOption (self, u"General", u"type", u"")
+		self.typeOption = StringOption (self, PageConfig.sectionName, u"type", u"")
+		self.orderOption = IntegerOption (self, PageConfig.sectionName, PageConfig.orderParamName, -1)
 
