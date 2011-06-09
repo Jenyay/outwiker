@@ -15,6 +15,7 @@ import core.system
 from core.application import Application
 from core.factory import PageFactory
 from core.exceptions import ReadonlyException
+from core.config import StringOption, IntegerOption
 
 
 class SearchWikiPage (WikiPage):
@@ -25,9 +26,12 @@ class SearchWikiPage (WikiPage):
 		WikiPage.__init__ (self, path, title, parent, readonly)
 
 		self.paramsSection = u"Search"
+		self.phraseOption = StringOption (self.params, self.paramsSection, u"phrase", u"")
+		self.tagsOption = StringOption (self.params, self.paramsSection, u"tags", u"")
+		self.strategyOption = IntegerOption (self.params, self.paramsSection, u"strategy", 0)
 
 		# Искомая фраза
-		self._phrase = self._getPhrase()
+		self._phrase = self.phraseOption.value
 
 		# Теги, по которым осуществляется поиск (не путать с тегами, установленными для данной страницы)
 		self._searchTags = self._getSearchTags()
@@ -36,22 +40,10 @@ class SearchWikiPage (WikiPage):
 		self._strategy = self._getStrategy()
 
 
+
 	@staticmethod
 	def getTypeString ():
 		return u"search"
-
-	
-	def _getPhrase (self):
-		"""
-		Возвращает искомую фразу
-		"""
-		phrase = u""
-		try:
-			phrase = self.getParameter (self.paramsSection, u"phrase")
-		except:
-			pass
-
-		return phrase
 
 	
 	@property
@@ -67,7 +59,7 @@ class SearchWikiPage (WikiPage):
 		self._phrase = phrase
 
 		try:
-			self.setParameter (self.paramsSection, u"phrase", phrase)
+			self.phraseOption.value = phrase
 		except ReadonlyException:
 			# Ничего страшного, если поисковая фраза не сохранится
 			pass
@@ -79,14 +71,7 @@ class SearchWikiPage (WikiPage):
 		"""
 		Загрузить список тегов из настроек страницы
 		"""
-		tags_str = u""
-
-		try:
-			tags_str = self.getParameter (self.paramsSection, "tags")
-		except:
-			pass
-
-		tags = TagsList.parseTagsList (tags_str)
+		tags = TagsList.parseTagsList (self.tagsOption.value)
 		return tags
 
 
@@ -104,8 +89,8 @@ class SearchWikiPage (WikiPage):
 		tags_str = TagsList.getTagsString (tags)
 
 		try:
-			self.setParameter (self.paramsSection, u"tags", tags_str)
-		except:
+			self.tagsOption.value = tags_str
+		except ReadonlyException:
 			# Ну не сохранятся искомые теги, ничего страшного
 			pass
 
@@ -113,13 +98,7 @@ class SearchWikiPage (WikiPage):
 	
 
 	def _getStrategy (self):
-		strategy = 0
-		try:
-			strategy = int (self.getParameter (self.paramsSection, u"strategy"))
-		except:
-			pass
-
-		return self._strategyByCode(strategy)
+		return self._strategyByCode (self.strategyOption.value)
 	
 
 	def _strategyByCode (self, code):
@@ -144,7 +123,7 @@ class SearchWikiPage (WikiPage):
 		self._strategy = strategy
 
 		try:
-			self.setParameter (self.paramsSection, u"strategy", strategyCode)
+			self.strategyOption.value = strategyCode
 		except ReadonlyException:
 			# Ничего страшного
 			pass
