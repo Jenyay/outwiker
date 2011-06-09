@@ -204,10 +204,10 @@ class PageConfig (Config):
 	sectionName = u"General"
 	orderParamName = u"order"
 
-
 	def __init__ (self, fname, readonly=False):
 		Config.__init__ (self, fname, readonly)
 
 		self.typeOption = StringOption (self, PageConfig.sectionName, u"type", u"")
 		self.orderOption = IntegerOption (self, PageConfig.sectionName, PageConfig.orderParamName, -1)
+		self.lastViewedPageOption = StringOption (self,u"History", u"LastViewedPage", u"")
 

@@ -259,9 +259,6 @@ class RootWikiPage (object):
 
 
 class WikiDocument (RootWikiPage):
-	sectionHistory = u"History"
-	paramHistory = u"LastViewedPage"
-
 	def __init__ (self, path, readonly = False):
 		RootWikiPage.__init__ (self, path, readonly)
 		self._selectedPage = None
@@ -320,9 +317,7 @@ class WikiDocument (RootWikiPage):
 			subpath = page.subpath
 
 		if not self.readonly:
-			self.setParameter (WikiDocument.sectionHistory, 
-				WikiDocument.paramHistory,
-				subpath)
+			self._params.lastViewedPageOption.value = subpath
 
 		Application.onPageSelect(self._selectedPage)
 		self.save()
@@ -330,14 +325,8 @@ class WikiDocument (RootWikiPage):
 
 	@property
 	def lastViewedPage (self):
-		try:
-			subpath = self.getParameter (WikiDocument.sectionHistory, 
-				WikiDocument.paramHistory)
-			return subpath
-		except ConfigParser.NoSectionError:
-			pass
-		except ConfigParser.NoOptionError:
-			pass
+		subpath = self._params.lastViewedPageOption.value
+		return subpath if len (subpath) != 0 else None
 
 
 	@property
@@ -439,9 +428,7 @@ class WikiPage (RootWikiPage):
 		WikiPage.__renamePaths (self, newpath)
 
 		if self.root.selectedPage == self:
-			self.root.setParameter (WikiDocument.sectionHistory, 
-					WikiDocument.paramHistory,
-					self.subpath)
+			self._params.lastViewedPageOption.value = self.subpath
 
 		Application.onPageRename (self, oldsubpath)
 		#Application.onPageUpdate (self)
@@ -511,9 +498,7 @@ class WikiPage (RootWikiPage):
 		WikiPage.__renamePaths (self, newpath)
 
 		if self.root.selectedPage == self:
-			self.root.setParameter (WikiDocument.sectionHistory, 
-					WikiDocument.paramHistory,
-					self.subpath)
+			self._params.lastViewedPageOption.value = self.subpath
 
 		Application.onTreeUpdate (self)
 
