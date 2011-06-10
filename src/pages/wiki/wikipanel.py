@@ -356,7 +356,7 @@ class WikiPagePanel (HtmlPanel):
 				True)
 
 		self._addRenderTools()
-
+		self.__addCommandsTools()
 		self.__addFontTools()
 		self.__addAlignTools()
 		self.__addHTools()
@@ -365,10 +365,55 @@ class WikiPagePanel (HtmlPanel):
 		self.__addFormatTools()
 		self.__addOtherTools()
 
-		mainWindow.mainMenu.Insert (mainWindow.mainMenu.GetMenuCount() - 1, self.pageToolsMenu, _(u"&Wiki") )
+		mainWindow.mainMenu.Insert (mainWindow.mainMenu.GetMenuCount() - 1, 
+				self.pageToolsMenu, 
+				_(u"&Wiki") )
+
 		mainWindow.mainToolbar.Realize()
 
 		self._openDefaultPage()
+
+
+	def __addCommandsTools (self):
+		self.commandsMenu = wx.Menu()
+		self.pageToolsMenu.AppendSubMenu (self.commandsMenu, _(u"Commands"))
+
+		self._addTool (self.commandsMenu, 
+				"ID_LJUSER", 
+				lambda event: self.codeEditor.turnText (u"(:ljuser ", u":)"), 
+				_(u"Livejournal User (:ljuser ...:)"), 
+				_(u"Livejournal User (:ljuser ...:)"), 
+				None)
+
+		self._addTool (self.commandsMenu, 
+				"ID_LJCOMM", 
+				lambda event: self.codeEditor.turnText (u"(:ljcomm ", u":)"), 
+				_(u"Livejournal Community (:ljcomm ...:)"), 
+				_(u"Livejournal Community (:ljcomm ...:)"), 
+				None)
+
+
+		self._addTool (self.commandsMenu, 
+				"ID_ATTACHLIST", 
+				lambda event: self.codeEditor.replaceText (u"(:attachlist:)"), 
+				_(u"Attachment (:attachlist:)"), 
+				_(u"Attachment (:attachlist:)"), 
+				None)
+
+		self._addTool (self.commandsMenu, 
+				"ID_CHILDLIST", 
+				lambda event: self.codeEditor.replaceText (u"(:childlist:)"), 
+				_(u"Children (:childlist:)"), 
+				_(u"Children (:childlist:)"), 
+				None)
+
+
+		self._addTool (self.commandsMenu, 
+				"ID_INCLUDE", 
+				lambda event: self.codeEditor.turnText (u"(:include ", u":)"), 
+				_(u"Include (:include ...:)"), 
+				_(u"Include (:include ...:)"), 
+				None)
 
 
 	def __openHtmlCode (self, event):
