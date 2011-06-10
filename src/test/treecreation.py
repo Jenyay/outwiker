@@ -15,6 +15,7 @@ from pages.html.htmlpage import HtmlPageFactory, HtmlWikiPage
 from pages.search.searchpage import SearchPageFactory, SearchWikiPage
 from pages.wiki.wikipage import WikiPageFactory, WikiWikiPage
 from core.attachment import Attachment
+from core.config import StringOption
 
 from core.event import Event
 from core.application import Application
@@ -183,19 +184,19 @@ class TextPageCreationTest(unittest.TestCase):
 		section = u"History"
 		param = u"LastViewedPage"
 
+		subpath = StringOption (wiki.params, section, param, u"")
+
 		wiki.selectedPage = wiki[u"Страница 1"]
-		subpath = wiki.getParameter (section, param)
-		self.assertEqual (subpath, u"Страница 1")
+		self.assertEqual (subpath.value, u"Страница 1")
 
 		wiki.selectedPage = wiki[u"Страница 2/Страница 3"]
-		subpath = wiki.getParameter (section, param)
-		self.assertEqual (subpath, u"Страница 2/Страница 3")
+		self.assertEqual (subpath.value, u"Страница 2/Страница 3")
 
 		# Проверим, что параметр сохраняется в файл
 		wiki2 = WikiDocument.load (self.path)
 
-		subpath = wiki2.getParameter (section, param)
-		self.assertEqual (subpath, u"Страница 2/Страница 3")
+		subpath2 = StringOption (wiki2.params, section, param, u"")
+		self.assertEqual (subpath2.value, u"Страница 2/Страница 3")
 
 	
 	def testLastViewedPage2 (self):

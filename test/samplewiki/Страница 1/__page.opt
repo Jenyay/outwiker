@@ -1,11 +1,8 @@
-[General]
-type = html
-tags = Тест, test, двойной тег
-
 [Section1]
 param2 = 125
 param1 = абырвалг
 
-[History]
-lastviewedpage = /
+[General]
+type = html
+tags = Тест, test, двойной тег
 

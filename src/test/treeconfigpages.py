@@ -9,10 +9,9 @@ import os.path
 import unittest
 
 from core.tree import RootWikiPage, WikiDocument
-
+from core.config import StringOption
 from pages.text.textpage import TextPageFactory
-
-from test.utils import removeWiki
+from .utils import removeWiki
 
 
 class ConfigPagesTest (unittest.TestCase):
@@ -35,49 +34,59 @@ class ConfigPagesTest (unittest.TestCase):
 
 
 	def testSetRootParams (self):
-		self.rootwiki.setParameter (u"TestSection_1", u"value1", u"Значение 1")
+		param = StringOption (self.rootwiki.params, u"TestSection_1", u"value1", u"")
+		param.value = u"Значение 1"
 
-		self.assertEqual (self.rootwiki.getParameter (u"TestSection_1", u"value1"), u"Значение 1")
+		self.assertEqual (param.value, u"Значение 1")
 
 		# Прочитаем вики и проверим установленный параметр
 		wiki = WikiDocument.create (self.path)
-		self.assertEqual (wiki.getParameter (u"TestSection_1", u"value1"), u"Значение 1")
+
+		param_new = StringOption (wiki.params, u"TestSection_1", u"value1", u"")
+		self.assertEqual (param_new.value, u"Значение 1")
 
 
 	def testSetPageParams (self):
-		self.rootwiki[u"Страница 1"].setParameter (u"TestSection_1", u"value1", u"Значение 1")
+		param = StringOption (self.rootwiki[u"Страница 1"].params, u"TestSection_1", u"value1", u"")
+		param.value = u"Значение 1"
 
-		self.assertEqual (self.rootwiki[u"Страница 1"].getParameter (u"TestSection_1", u"value1"), 
-				u"Значение 1")
+		param2 = StringOption (self.rootwiki[u"Страница 1"].params, u"TestSection_1", u"value1", u"")
+		self.assertEqual (param.value, u"Значение 1")
+		self.assertEqual (param2.value, u"Значение 1")
 
 		# Прочитаем вики и проверим установленный параметр
 		wiki = WikiDocument.load (self.path)
-		self.assertEqual (wiki[u"Страница 1"].getParameter (u"TestSection_1", u"value1"), 
-				u"Значение 1")
+		param3 = StringOption (wiki[u"Страница 1"].params, u"TestSection_1", u"value1", u"")
+
+		self.assertEqual (param3.value, u"Значение 1")
 
 
 	def testSubwikiParams (self):
 		"""
 		Проверка того, что установка параметров страницы как полноценной вики не портит исходные параметры
 		"""
-		self.rootwiki[u"Страница 1"].setParameter (u"TestSection_1", u"value1", u"Значение 1")
+		param = StringOption (self.rootwiki[u"Страница 1"].params, u"TestSection_1", u"value1", u"")
+		param.value = u"Значение 1"
 
 		path = os.path.join (self.path, u"Страница 1")
 		subwiki = WikiDocument.load (path)
 		
-		self.assertEqual (subwiki.getParameter (u"TestSection_1", u"value1"), u"Значение 1")
+		subwikiparam = StringOption (subwiki.params, u"TestSection_1", u"value1", u"")
+		self.assertEqual (subwikiparam.value, u"Значение 1")
 
 		# Добавим новый параметр
-		subwiki.setParameter (u"TestSection_2", u"value2", u"Значение 2")
+		subwikiparam1 = StringOption (subwiki.params, u"TestSection_1", u"value1", u"")
+		subwikiparam2 = StringOption (subwiki.params, u"TestSection_2", u"value2", u"")
+		subwikiparam2.value = u"Значение 2"
 		
-		self.assertEqual (subwiki.getParameter (u"TestSection_1", u"value1"), u"Значение 1")
-		self.assertEqual (subwiki.getParameter (u"TestSection_2", u"value2"), u"Значение 2")
+		self.assertEqual (subwikiparam1.value, u"Значение 1")
+		self.assertEqual (subwikiparam2.value, u"Значение 2")
 
 		# На всякий случай прочитаем вики еще раз
 		wiki = WikiDocument.load (self.path)
+
+		wikiparam1 = StringOption (wiki[u"Страница 1"].params, u"TestSection_1", u"value1", u"")
+		wikiparam2 = StringOption (wiki[u"Страница 1"].params, u"TestSection_2", u"value2", u"")
 		
-		self.assertEqual (wiki[u"Страница 1"].getParameter (u"TestSection_1", u"value1"), 
-				u"Значение 1")
-		
-		self.assertEqual (wiki[u"Страница 1"].getParameter (u"TestSection_2", u"value2"), 
-				u"Значение 2")
+		self.assertEqual (wikiparam1.value, u"Значение 1")
+		self.assertEqual (wikiparam2.value, u"Значение 2")

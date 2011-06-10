@@ -9,6 +9,7 @@ from core.event import Event
 from core.application import Application
 from core.attachment import Attachment
 from core.tree import RootWikiPage, WikiDocument
+from core.config import StringOption
 
 from pages.text.textpage import TextPageFactory, TextWikiPage
 from pages.wiki.wikipage import WikiPageFactory, WikiWikiPage
@@ -134,8 +135,11 @@ class WikiPagesTest(unittest.TestCase):
 
 
 	def testParams (self):
-		self.assertEqual (self.root[u"Страница 1"].getParameter (u"General", u"type"), u"html")
-		self.assertEqual (self.root[u"Страница 1"].getParameter (u"General", u"tags"), u"Тест, test, двойной тег")
+		typeOption = StringOption (self.root[u"Страница 1"].params, u"General", u"type", u"")
+		tagsOption = StringOption (self.root[u"Страница 1"].params, u"General", u"tags", u"")
+
+		self.assertEqual (typeOption.value, u"html")
+		self.assertEqual (tagsOption.value, u"Тест, test, двойной тег")
 		
 
 	def testGetRoot (self):

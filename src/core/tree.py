@@ -75,24 +75,6 @@ class RootWikiPage (object):
 		return result
 
 
-	def getParameter (self, section, param):
-		"""
-		Получить значение параметра param из секции section
-		"""
-		return self._params.get (section, param)
-
-
-	def setParameter (self, section, param, value):
-		"""
-		Установить значение параметра param секции section в value
-		"""
-		if self.readonly:
-			return False
-
-		self._params.set (section, param, value)
-		return True
-
-
 	def save (self):
 		if self.readonly:
 			return
