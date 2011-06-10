@@ -148,6 +148,10 @@ class StringOption (object):
 		self.config.set (self.section, self.param, val)
 
 
+	def remove_option (self):
+		self.config.remove_option (self.section, self.param)
+
+
 class BooleanOption (StringOption):
 	"""
 	Булевская настройка.

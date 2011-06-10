@@ -174,18 +174,6 @@ class ConfigOptionsTest (unittest.TestCase):
 		self.assertEqual (newopt.value, u"проверка")
 	
 
-	#def testStringOpt5 (self):
-	#	# Не выполняется, но вроде и не нужно
-	#	opt = core.config.StringOption (self.config, u"Test", u"strval3", "defaultval")
-
-	#	newconfig = core.config.Config (self.path)
-	#	newopt = core.config.StringOption (newconfig, u"Test", u"strval3", "defaultval")
-
-	#	opt.value = u"проверка"
-
-	#	self.assertEqual (newopt.value, u"проверка")
-	
-
 	# Целочисленные опции
 	def testIntOpt1 (self):
 		opt = core.config.IntegerOption (self.config, u"Test", u"intval", 777)
@@ -244,6 +232,27 @@ class ConfigOptionsTest (unittest.TestCase):
 		opt.value = True
 
 		self.assertEqual (newopt.value, True)
+
+
+	def testRemoveOption1 (self):
+		opt = core.config.StringOption (self.config, u"Test", u"strval", u"Значение по умолчанию")
+		self.assertEqual (opt.value, u"тест")
+
+		opt.remove_option()
+		self.assertEqual (opt.value, u"Значение по умолчанию")
+
+
+	def testRemoveOption2 (self):
+		opt = core.config.StringOption (self.config, u"Test", u"strval", u"Значение по умолчанию")
+		opt.remove_option()
+
+		opt2 = core.config.StringOption (self.config, u"Test", u"strval", u"Значение по умолчанию")
+		self.assertEqual (opt2.value, u"Значение по умолчанию")
+
+
+	def testRemoveOption3 (self):
+		opt = core.config.StringOption (self.config, u"Test", u"invalid", u"Значение по умолчанию")
+		opt.remove_option()
 	
 
 
