@@ -365,7 +365,8 @@ class WikiTree(wx.Panel):
 		page = self.treeCtrl.GetItemData (self.popupItem).GetData()
 		assert page != None
 
-		gui.pagedialog.editPage (self, page)
+		if page.parent != None:
+			gui.pagedialog.editPage (self, page)
 	
 
 	def onItemMenu (self, event):
