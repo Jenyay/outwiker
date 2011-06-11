@@ -87,7 +87,7 @@ class ParserAlignTest (unittest.TestCase):
 	
 	def testCenter5 (self):
 		text = u"бла-бла-бла \n\n% center %Attach:accept.png\n\nбла-бла-бла\nбла-бла-бла"
-		result = u'бла-бла-бла \n\n<DIV ALIGN="CENTER"><IMG SRC="__attach/accept.png"></DIV>\n\nбла-бла-бла\nбла-бла-бла'
+		result = u'бла-бла-бла \n\n<DIV ALIGN="CENTER"><IMG SRC="__attach/accept.png"/></DIV>\n\nбла-бла-бла\nбла-бла-бла'
 
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 	

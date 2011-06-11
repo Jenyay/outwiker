@@ -22,11 +22,6 @@ class ParserTexTest (unittest.TestCase):
 	def setUp(self):
 		self.encoding = "utf8"
 
-		self.filesPath = u"../test/samplefiles/"
-
-		self.url1 = u"http://example.com"
-		self.url2 = u"http://jenyay.net/Photo/Nature?action=imgtpl&G=1&upname=tsaritsyno_01.jpg"
-
 		self.__createWiki()
 		
 		factory = ParserFactory()
@@ -57,7 +52,7 @@ class ParserTexTest (unittest.TestCase):
 		fname = texrender.getImageName (eqn)
 		path = os.path.join (Thumbnails.getRelativeThumbDir(), fname)
 
-		result_right = u'<IMG SRC="{0}">'.format (path.replace ("\\", "/"))
+		result_right = u'<IMG SRC="{0}"/>'.format (path.replace ("\\", "/"))
 
 		result = self.parser.toHtml (text)
 
@@ -89,7 +84,7 @@ class ParserTexTest (unittest.TestCase):
 		path3 = os.path.join (Thumbnails.getRelativeThumbDir(), fname3)
 
 		result_right = u'''бла-бла-бла
-<UL><LI>бла-бла-бла <IMG SRC="{path1}"> 1111</LI><LI>бла-бла-бла <IMG SRC="{path2}"> 222</LI><LI>бла-бла-бла <IMG SRC="{path3}"> 333</LI></UL>'''.format (path1=path1.replace ("\\", "/"), 
+<UL><LI>бла-бла-бла <IMG SRC="{path1}"/> 1111</LI><LI>бла-бла-бла <IMG SRC="{path2}"/> 222</LI><LI>бла-бла-бла <IMG SRC="{path3}"/> 333</LI></UL>'''.format (path1=path1.replace ("\\", "/"), 
 		path2=path2.replace ("\\", "/"),
 		path3=path3.replace ("\\", "/"))
 
@@ -117,7 +112,7 @@ class ParserTexTest (unittest.TestCase):
 		fname = texrender.getImageName (eqn)
 		path = os.path.join (Thumbnails.getRelativeThumbDir(), fname)
 
-		result_right = u'<A HREF="http://jenyay.net"><IMG SRC="{0}"></A>'.format (path.replace ("\\", "/"))
+		result_right = u'<A HREF="http://jenyay.net"><IMG SRC="{0}"/></A>'.format (path.replace ("\\", "/"))
 
 		result = self.parser.toHtml (text)
 
@@ -137,7 +132,7 @@ class ParserTexTest (unittest.TestCase):
 		fname = texrender.getImageName (eqn)
 		path = os.path.join (Thumbnails.getRelativeThumbDir(), fname)
 
-		result_right = u'<A HREF="http://jenyay.net"><IMG SRC="{0}"></A>'.format (path.replace ("\\", "/"))
+		result_right = u'<A HREF="http://jenyay.net"><IMG SRC="{0}"/></A>'.format (path.replace ("\\", "/"))
 
 		result = self.parser.toHtml (text)
 
@@ -166,7 +161,7 @@ class ParserTexTest (unittest.TestCase):
 		fname = texrender.getImageName (eqn)
 		path = os.path.join (Thumbnails.getRelativeThumbDir(), fname)
 
-		result_right = u'<IMG SRC="{0}">'.format (path.replace ("\\", "/"))
+		result_right = u'<IMG SRC="{0}"/>'.format (path.replace ("\\", "/"))
 
 		result = self.parser.toHtml (text)
 

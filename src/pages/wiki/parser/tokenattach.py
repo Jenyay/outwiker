@@ -106,4 +106,4 @@ class ImageAttachToken (AttachToken):
 		"""
 		Получить строку для замены ссылкой на прикрепленный файл
 		"""
-		return '<IMG SRC="%s/%s">' % (Attachment.attachDir, fname)
+		return '<IMG SRC="%s/%s"/>' % (Attachment.attachDir, fname)

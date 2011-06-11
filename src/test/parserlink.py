@@ -326,7 +326,7 @@ class ParserLinkTest (unittest.TestCase):
 	def testUrlImage3 (self):
 		comment = u"Ссылко"
 		text = u"бла-бла-бла \n[[%s -> %s]] бла-бла-бла\nбла-бла-бла" % (self.urlimage, self.url2)
-		result = u'бла-бла-бла \n<A HREF="%s"><IMG SRC="%s"></A> бла-бла-бла\nбла-бла-бла' % (self.url2, self.urlimage)
+		result = u'бла-бла-бла \n<A HREF="%s"><IMG SRC="%s"/></A> бла-бла-бла\nбла-бла-бла' % (self.url2, self.urlimage)
 
 		self.assertEqual (self.parser.toHtml (text), result)
 
@@ -334,7 +334,7 @@ class ParserLinkTest (unittest.TestCase):
 	def testUrlImage4 (self):
 		comment = u"Ссылко"
 		text = u"бла-бла-бла \n[[%s | %s]] бла-бла-бла\nбла-бла-бла" % (self.url2, self.urlimage)
-		result = u'бла-бла-бла \n<A HREF="%s"><IMG SRC="%s"></A> бла-бла-бла\nбла-бла-бла' % (self.url2, self.urlimage)
+		result = u'бла-бла-бла \n<A HREF="%s"><IMG SRC="%s"/></A> бла-бла-бла\nбла-бла-бла' % (self.url2, self.urlimage)
 
 		self.assertEqual (self.parser.toHtml (text), result)
 

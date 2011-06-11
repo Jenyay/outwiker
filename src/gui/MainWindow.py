@@ -280,8 +280,13 @@ class MainWindow(wx.Frame):
 		Обновить окно после того как загрузили вики
 		"""
 		if wikiroot != None and not wikiroot.readonly:
-			self.recentWiki.add (wikiroot.path)
-			self._updateRecentMenu()
+			try:
+				self.recentWiki.add (wikiroot.path)
+				self._updateRecentMenu()
+			except IOError as e:
+				core.commands.MessageBox (
+						_(u"Can't add wiki to recent list.\nCan't save config.\n%s") % (unicode (e)),
+						_(u"Error"), wx.ICON_ERROR | wx.OK)
 
 		self.__enableGui()
 		self._loadBookmarks()

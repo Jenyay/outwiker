@@ -68,7 +68,7 @@ class ParserAttachTest (unittest.TestCase):
 	def testAttach02 (self):
 		fname = u"accept.png"
 		text = u"бла-бла-бла \nAttach:%s бла-бла-бла\nбла-бла-бла" % (fname)
-		result = u'бла-бла-бла \n<IMG SRC="__attach/%s"> бла-бла-бла\nбла-бла-бла' % (fname)
+		result = u'бла-бла-бла \n<IMG SRC="__attach/%s"/> бла-бла-бла\nбла-бла-бла' % (fname)
 
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 	
@@ -100,7 +100,7 @@ class ParserAttachTest (unittest.TestCase):
 	def testAttach06 (self):
 		fname = u"картинка с пробелами.png"
 		text = u"бла-бла-бла \nAttach:%s бла-бла-бла\nбла-бла-бла" % (fname)
-		result = u'бла-бла-бла \n<IMG SRC="__attach/%s"> бла-бла-бла\nбла-бла-бла' % (fname)
+		result = u'бла-бла-бла \n<IMG SRC="__attach/%s"/> бла-бла-бла\nбла-бла-бла' % (fname)
 
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
@@ -147,7 +147,7 @@ class ParserAttachTest (unittest.TestCase):
 	def testAttach12 (self):
 		fname = u"image_01.JPG"
 		text = u"бла-бла-бла \nAttach:%s бла-бла-бла\nбла-бла-бла" % (fname)
-		result = u'бла-бла-бла \n<IMG SRC="__attach/%s"> бла-бла-бла\nбла-бла-бла' % (fname)
+		result = u'бла-бла-бла \n<IMG SRC="__attach/%s"/> бла-бла-бла\nбла-бла-бла' % (fname)
 
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
@@ -175,6 +175,6 @@ class ParserAttachTest (unittest.TestCase):
 	def testAttach15 (self):
 		fname = u"dir.png"
 		text = u"бла-бла-бла \nAttach:%s бла-бла-бла\nбла-бла-бла" % (fname)
-		result = u'бла-бла-бла \n<IMG SRC="__attach/%s"> бла-бла-бла\nбла-бла-бла' % (fname)
+		result = u'бла-бла-бла \n<IMG SRC="__attach/%s"/> бла-бла-бла\nбла-бла-бла' % (fname)
 
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))

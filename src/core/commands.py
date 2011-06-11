@@ -146,7 +146,7 @@ def openWiki (path, readonly=False):
 	wikiroot = None
 
 	Application.onStartTreeUpdate(None)
-
+	
 	try:
 		# Загрузить вики
 		wikiroot = WikiDocument.load (path, readonly)
