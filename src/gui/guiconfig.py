@@ -55,9 +55,11 @@ class HtmlRenderConfig (object):
 		self.config = config
 
 		self.fontSizeOption = IntegerOption (self.config, u"HTML", u"FontSize", 10)
-		self.fontFaceNameOption = StringOption (self.config, u"HTML", u"FontFaceName", "Verdana")
+		self.fontFaceNameOption = StringOption (self.config, u"HTML", u"FontFaceName", u"Verdana")
 		self.fontIsBold = BooleanOption (self.config, "HTML", "FontBold", False)
 		self.fontIsItalic = BooleanOption (self.config, "HTML", "FontItalic", False)
+
+		self.userStyleOption = StringOption (self.config, u"HTML", u"UserStyle", u"")
 
 
 class TextPrintConfig (object):

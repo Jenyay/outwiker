@@ -23,6 +23,7 @@ class HtmlTemplate (object):
 
 		self.fontsize = self.config.fontSizeOption.value
 		self.fontfamily = self.config.fontFaceNameOption.value
+		self.userStyle = self.config.userStyleOption.value
 
 		tpl_fname = u"template.html"
 		tpl_path = os.path.join (path, tpl_fname)
@@ -34,4 +35,5 @@ class HtmlTemplate (object):
 	def substitute (self, content):
 		return self.template.substitute (content=content, 
 				fontsize=self.fontsize,
-				fontfamily = self.fontfamily)
+				fontfamily = self.fontfamily,
+				userstyle = self.userStyle)

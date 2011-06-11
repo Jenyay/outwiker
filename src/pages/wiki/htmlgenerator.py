@@ -111,6 +111,7 @@ class HtmlGenerator (object):
 		# Настройки отображения HTML-страницы
 		content.append (str (self.htmlrenderconfig.fontSizeOption.value) )
 		content.append (str (self.htmlrenderconfig.fontFaceNameOption.value) )
+		content.append (str (self.htmlrenderconfig.userStyleOption.value) )
 
 		if len (self.page.content) == 0:
 			# Если страница пустая, то проверим настройку, отвечающую за шаблон пустой страницы

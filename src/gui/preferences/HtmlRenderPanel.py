@@ -6,7 +6,7 @@ import wx
 import ConfigElements
 from core.application import Application
 from gui.guiconfig import HtmlRenderConfig
-from core.config import FontOption
+from core.config import FontOption, StringOption
 
 # begin wxGlade: dependencies
 # end wxGlade
@@ -22,6 +22,8 @@ class HtmlRenderPanel(wx.Panel):
 		wx.Panel.__init__(self, *args, **kwds)
 		self.fontLabel = wx.StaticText(self, -1, _("Font"))
 		self.fontPicker = wx.FontPickerCtrl(self, -1)
+		self.userStyleLabel = wx.StaticText(self, -1, _("Additional styles (CSS):"))
+		self.userStyleTextBox = wx.TextCtrl(self, -1, "", style=wx.TE_PROCESS_ENTER|wx.TE_MULTILINE|wx.HSCROLL|wx.TE_LINEWRAP|wx.TE_WORDWRAP)
 
 		self.__set_properties()
 		self.__do_layout()
@@ -34,19 +36,22 @@ class HtmlRenderPanel(wx.Panel):
 
 	def __set_properties(self):
 		# begin wxGlade: HtmlRenderPanel.__set_properties
-		self.SetSize((309, 199))
+		self.SetSize((415, 257))
 		# end wxGlade
 
 
 	def __do_layout(self):
 		# begin wxGlade: HtmlRenderPanel.__do_layout
 		mainSizer = wx.FlexGridSizer(1, 1, 0, 0)
-		grid_sizer_5 = wx.FlexGridSizer(1, 2, 0, 0)
-		grid_sizer_5.Add(self.fontLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
-		grid_sizer_5.Add(self.fontPicker, 1, wx.EXPAND, 0)
-		grid_sizer_5.AddGrowableCol(1)
-		mainSizer.Add(grid_sizer_5, 1, wx.EXPAND, 0)
+		fontSizer = wx.FlexGridSizer(1, 2, 0, 0)
+		fontSizer.Add(self.fontLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
+		fontSizer.Add(self.fontPicker, 1, wx.EXPAND, 0)
+		fontSizer.AddGrowableCol(1)
+		mainSizer.Add(fontSizer, 1, wx.EXPAND, 0)
+		mainSizer.Add(self.userStyleLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
+		mainSizer.Add(self.userStyleTextBox, 0, wx.ALL|wx.EXPAND, 2)
 		self.SetSizer(mainSizer)
+		mainSizer.AddGrowableRow(2)
 		mainSizer.AddGrowableCol(0)
 		# end wxGlade
 
@@ -60,9 +65,12 @@ class HtmlRenderPanel(wx.Panel):
 
 		self.fontEditor = ConfigElements.FontElement (fontOption, self.fontPicker)
 
+		self.userStyle = ConfigElements.StringElement (self.config.userStyleOption, self.userStyleTextBox)
+
 
 	def Save (self):
 		self.fontEditor.save()
+		self.userStyle.save()
 
 		#Application.onEditorConfigChange()
 
