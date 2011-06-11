@@ -79,6 +79,9 @@ class WikiTree(wx.Panel):
 		# Имя опции для сохранения развернутости страницы
 		self.pageOptionExpand = "Expand"
 
+		self.normalItemColor = wx.Color (0, 0, 0)
+		self.readOnlyItemColor = wx.Color (180, 180, 180)
+
 		self.BindGuiEvents()
 		self.BindApplicationEvents()
 		self.BindPopupMenuEvents()
@@ -528,6 +531,8 @@ class WikiTree(wx.Panel):
 					data = wx.TreeItemData (rootPage),
 					image = self.defaultImageId)
 
+			self.treeCtrl.SetItemTextColour (rootItem, self.normalItemColor if not rootPage.readonly else self.readOnlyItemColor)
+
 			self.appendChildren (rootPage, rootItem)
 			self.selectedPage = rootPage.selectedPage
 			self.treeCtrl.Expand (rootItem)
@@ -544,7 +549,8 @@ class WikiTree(wx.Panel):
 		self._pageCache[parentPage] = parentItem
 
 		for child in parentPage.children:
-			self.insertChild (child, parentItem)
+			item = self.insertChild (child, parentItem)
+			self.treeCtrl.SetItemTextColour (item, self.normalItemColor if not child.readonly else self.readOnlyItemColor)
 
 		self._loadExpandState (parentPage)
 	

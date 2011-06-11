@@ -1,7 +1,19 @@
 <HTML>
 <HEAD>
-<META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>
+	<META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>
+
+	<STYLE type="text/css">
+		body, div, p, table {
+			font-size:10pt;
+			font-family:Verdana;
+		}
+
+		img{border:none}
+
+		
+	</STYLE>
 </HEAD>
+
 <BODY>
 <P><H1>Общий обзор папок</H1></P>
 
@@ -9,7 +21,7 @@
 
 <P>После получения исходников, будут созданы следующие папки:</P>
 
-<P><DIV ALIGN="CENTER"><IMG SRC="__attach/folders_outwiker.png"></DIV></P>
+<P><DIV ALIGN="CENTER"><IMG SRC="__attach/folders_outwiker.png"/></DIV></P>
 
 <P>
 <UL>
@@ -32,7 +44,7 @@
 <LI>Тестирование и отладка. Эти пакеты не нужны конечному пользователю, но они содержат скрипты модульных тестов и скрипты, используемые для других нужд разработчика, в частности, скрипты для профилирования (замера скорости выполнения отдельных частей программы).</LI>
 <LI>Дополнительные ресурсы, такие как картинки, используемые в программе и файлы справки.</LI>
 </UL>
-<BR><DIV ALIGN="CENTER"> <IMG SRC="__attach/folders_src.png"></DIV></P>
+<BR><DIV ALIGN="CENTER"> <IMG SRC="__attach/folders_src.png"/></DIV></P>
 
 <P>Теперь подробнее рассмотрим пакеты движка программы.</P>
 
@@ -40,7 +52,7 @@
 
 <P>К пакетам движка программы относятся пакеты (папки) <B>core</B>, <B>pages</B>, <B>gui</B> и <B>libs</B> (см. следующий рисунок).</P>
 
-<P><DIV ALIGN="CENTER"><IMG SRC="__attach/modules_src.png"></DIV></P>
+<P><DIV ALIGN="CENTER"><IMG SRC="__attach/modules_src.png"/></DIV></P>
 
 <P>Пакет <I>core</I> содержит основные модули, которые составляют "сердце" программы. Именно здесь содержатся все основные классы для работы с деревом заметок, настройками, поиском страниц, закладками и т.п. Именно модули из <I>core</I> в основном тестируются модульными тестами (кроме модуля <I>commands.py</I>). Здесь собраны модули, максимально абстрагированные от интерфейса программы. </P>
 
