@@ -79,9 +79,6 @@ class WikiTree(wx.Panel):
 		# Имя опции для сохранения развернутости страницы
 		self.pageOptionExpand = "Expand"
 
-		self.normalItemColor = wx.Color (0, 0, 0)
-		self.readOnlyItemColor = wx.Color (180, 180, 180)
-
 		self.BindGuiEvents()
 		self.BindApplicationEvents()
 		self.BindPopupMenuEvents()
@@ -532,7 +529,7 @@ class WikiTree(wx.Panel):
 					data = wx.TreeItemData (rootPage),
 					image = self.defaultImageId)
 
-			self.treeCtrl.SetItemTextColour (rootItem, self.normalItemColor if not rootPage.readonly else self.readOnlyItemColor)
+			self._mountItem (rootItem, rootPage)
 
 			self.appendChildren (rootPage, rootItem)
 			self.selectedPage = rootPage.selectedPage
@@ -551,9 +548,21 @@ class WikiTree(wx.Panel):
 
 		for child in parentPage.children:
 			item = self.insertChild (child, parentItem)
-			self.treeCtrl.SetItemTextColour (item, self.normalItemColor if not child.readonly else self.readOnlyItemColor)
+			self._mountItem (item, child)
 
 		self._loadExpandState (parentPage)
+
+
+	def _mountItem (self, treeitem, page):
+		"""
+		Оформить элемент дерева в зависимости от настроек страницы (например, пометить только для чтения)
+		"""
+		if page.readonly:
+			#font = self.treeCtrl.GetItemFont (treeitem)
+			font = wx.SystemSettings.GetFont (wx.SYS_DEFAULT_GUI_FONT)
+			font.SetStyle (wx.FONTSTYLE_ITALIC)
+			self.treeCtrl.SetItemFont (treeitem, font)
+
 	
 
 	def insertChild (self, child, parentItem):
