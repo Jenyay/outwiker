@@ -53,7 +53,12 @@ class HtmlGenerator (object):
 		hashoption = StringOption (Config (os.path.join (self.page.path, RootWikiPage.pageConfig)),
 				self._configSection, self._hashKey, u"")
 
-		hashoption.value = self.getHash()
+		try:
+			hashoption.value = self.getHash()
+		except IOError:
+			# Не самая страшная потеря, если не сохранится хэш.
+			# Максимум, что грозит пользователю, каждый раз генерить старницу
+			pass
 
 		return path
 

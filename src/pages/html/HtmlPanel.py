@@ -186,10 +186,15 @@ class HtmlPanel(BaseTextPanel):
 		try:
 			self.currentHtmlFile = self.generateHtml (self._currentpage)
 			self.htmlWindow.LoadPage (self.currentHtmlFile)
-		except IOError:
-			core.commands.MessageBox (_(u"Can't save HTML-file"), _(u"Error"), wx.ICON_ERROR | wx.OK)
-		except OSError:
-			core.commands.MessageBox (_(u"Can't save HTML-file"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+		except IOError as e:
+			# TODO: Проверить под Windows
+			core.commands.MessageBox (_(u"Can't save file %s") % (unicode (e.filename)), 
+					_(u"Error"), 
+					wx.ICON_ERROR | wx.OK)
+		except OSError as e:
+			core.commands.MessageBox (_(u"Can't save HTML-file\n\n%s") % (unicode (e)), 
+					_(u"Error"), 
+					wx.ICON_ERROR | wx.OK)
 
 		core.commands.setStatusText (u"")
 		Application.onHtmlRenderingEnd (self._currentpage, self.htmlWindow)

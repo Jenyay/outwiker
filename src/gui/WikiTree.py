@@ -19,6 +19,7 @@ import core.exceptions
 import core.commands
 import core.system
 import gui.pagedialog
+from core.config import BooleanOption
 
 
 class WikiTree(wx.Panel):
@@ -215,21 +216,18 @@ class WikiTree(wx.Panel):
 		self.__saveItemState (item)
 
 
-	def saveTreeState (self):
-		"""
-		Сохранить для каждой страницы развернутость ее узла в дереве
-		"""
-		for (page, itemid) in self._pageCache.iteritems():
-			if page.parent != None:
-				self.__saveItemState (itemid)
-	
-
 	def __saveItemState (self, itemid):
 		assert itemid.IsOk()
 
 		page = self.treeCtrl.GetItemData (itemid).GetData()
 		expanded = self.treeCtrl.IsExpanded (itemid)
-		page.params.set (self.pageOptionsSection, self.pageOptionExpand, str (expanded))
+		expandedOption = BooleanOption (page.params, self.pageOptionsSection, self.pageOptionExpand, False)
+
+		try:
+			expandedOption.value = expanded
+		except IOError as e:
+			core.commands.MessageBox (_(u"Can't save page options\n%s") % (unicode (e)),
+					_(u"Error"), wx.ICON_ERROR | wx.OK)
 
 
 	def _loadExpandState (self, page):
@@ -517,6 +515,11 @@ class WikiTree(wx.Panel):
 		Обновить дерево
 		"""
 		self.Unbind (wx.EVT_TREE_SEL_CHANGED, handler = self.onSelChanged)
+
+		# Так как мы сами будем сворачивать/разворачивать узлы дерева, 
+		# на эти события реагировать не надо пока строится дерево
+		self.treeCtrl.Unbind (wx.EVT_TREE_ITEM_COLLAPSED, handler = self.onTreeStateChanged)
+		self.treeCtrl.Unbind (wx.EVT_TREE_ITEM_EXPANDED, handler = self.onTreeStateChanged)
 		
 		self.treeCtrl.DeleteAllItems()
 		self.imagelist.RemoveAll()
@@ -536,6 +539,8 @@ class WikiTree(wx.Panel):
 			self.treeCtrl.Expand (rootItem)
 
 		self.Bind (wx.EVT_TREE_SEL_CHANGED, self.onSelChanged)
+		self.treeCtrl.Bind (wx.EVT_TREE_ITEM_COLLAPSED, self.onTreeStateChanged)
+		self.treeCtrl.Bind (wx.EVT_TREE_ITEM_EXPANDED, self.onTreeStateChanged)
 	
 
 	def appendChildren (self, parentPage, parentItem):

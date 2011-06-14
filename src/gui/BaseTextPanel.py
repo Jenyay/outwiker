@@ -90,7 +90,13 @@ class BaseTextPanel (wx.Panel):
 			return
 
 		if self.page != None and not self.page.isRemoved and not self.page.readonly:
-			self.page.content = self.GetContentFromGui()
+			try:
+				self.page.content = self.GetContentFromGui()
+			except IOError as e:
+				# TODO: Проверить под Windows
+				core.commands.MessageBox (_(u"Can't save file %s") % (unicode (e.filename)), 
+					_(u"Error"), 
+					wx.ICON_ERROR | wx.OK)
 	
 
 	def UpdateView (self, page):
