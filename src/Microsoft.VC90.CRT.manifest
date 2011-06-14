@@ -9,5 +9,5 @@
         processorArchitecture="x86"
         publicKeyToken="1fc8b3b9a1e18e3b"
     />
-    <file name="msvcr90.dll" /> <file name="msvcp90.dll" /> <file name="msvcm90.dll" />
+    <file name="msvcr90.dll" /> <file name="msvcp90.dll" />
 </assembly>
