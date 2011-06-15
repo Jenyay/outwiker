@@ -87,7 +87,6 @@ class HtmlRenderIE (HtmlRender):
 	def LoadPage (self, fname):
 		self.canOpenUrl = True
 		self.render.Navigate (fname)
-		self.canOpenUrl = False
 
 
 	def _removeFileProtokol (self, href):
@@ -107,6 +106,7 @@ class HtmlRenderIE (HtmlRender):
 
 		if self.canOpenUrl or href == curr_href:
 			Cancel[0] = False
+			self.canOpenUrl = False
 		else:
 			Cancel[0] = True
 			self.currentUri = href
