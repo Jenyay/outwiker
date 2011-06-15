@@ -58,12 +58,12 @@ class MimeTex (object):
 		# mimeTexPath нужно определить в производных классах
 		mimeTexPath = self.mimeTexPath
 
-		p = subprocess.Popen([mimeTexPath.encode (currentOS.filesEncoding), 
+		args = [mimeTexPath.encode (currentOS.filesEncoding), 
 			"-f", temp_path.encode (currentOS.filesEncoding), 
 			"-e", image_path.encode (currentOS.filesEncoding),
-			"-s", str (self.fontsize)], shell=self.useShellPipe)
+			"-s", str (self.fontsize)]
 
-		p.communicate()
+		self.run (args)
 		return imageName
 
 
@@ -91,6 +91,17 @@ class MimeTexWindows (MimeTex):
 		return True
 
 
+	def run (self, args):
+		"""
+		Вызов MimeTex
+		"""
+		STARTF_USESHOWWINDOW = 1
+		startupinfo = subprocess.STARTUPINFO()
+		startupinfo.dwFlags |= STARTF_USESHOWWINDOW
+		
+		p = subprocess.Popen(args, startupinfo=startupinfo, shell=False)
+		p.communicate()
+
 
 class MimeTexLinux (MimeTex):
 	"""
@@ -107,3 +118,10 @@ class MimeTexLinux (MimeTex):
 		Значение параметра shell при создании класса Popen
 		"""
 		return False
+
+	def run (self, args):
+		"""
+		Вызов MimeTex
+		"""
+		p = subprocess.Popen(args, shell=False)
+		p.communicate()
