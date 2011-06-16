@@ -4,6 +4,7 @@
 
 import gettext
 import os
+import os.path
 
 #import wxversion
 #wxversion.select("2.8")
@@ -17,22 +18,32 @@ from core.system import getOS
 
 class OutWiker(wx.App):
 	def __init__(self, *args, **kwds):
+		self.configDir = u".outwiker"
+		self.configFileName = u"outwiker.ini"
+		self.logFileName = u"outwiker.log"
+
 		wx.App.__init__ (self, *args, **kwds)
 
 
 	def OnInit(self):
-		self._configFileName = getConfigPath (u".outwiker", u"outwiker.ini")
+		self._configFileName = getConfigPath (self.configDir, self.configFileName)
 		Application.init(self._configFileName)
+
+		# Закоментировать следующую строку, если не надо выводить strout/strerr в лог-файл
+		self.RedirectStdio (self.getLogFileName (self._configFileName))
 
 		from gui.MainWindow import MainWindow
 		wx.InitAllImageHandlers()
 		self.mainWnd = MainWindow(None, -1, "")
 		self.SetTopWindow (self.mainWnd)
-		#self.mainWnd.Show()
-
+		
 		self.bindActivateApp()
 
 		return 1
+
+
+	def getLogFileName (self, configFileName):
+		return os.path.join (os.path.split (configFileName)[0], self.logFileName)
 
 
 	def bindActivateApp (self):
@@ -58,5 +69,5 @@ class OutWiker(wx.App):
 
 if __name__ == "__main__":
 	getOS().init()
-	outwiker = OutWiker(0)
+	outwiker = OutWiker(False)
 	outwiker.MainLoop()

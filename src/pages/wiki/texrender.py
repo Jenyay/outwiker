@@ -22,7 +22,7 @@ def getTexRender (thumb_path):
 class MimeTex (object):
 	"""
 	Базовый класс для рендеринга формул
-	В производных классах нужно опеределить свойства mimeTexPath, useShellPipe
+	В производных классах нужно опеределить свойства mimeTexPath
 	"""
 	def __init__ (self, thumb_path):
 		"""
@@ -83,14 +83,6 @@ class MimeTexWindows (MimeTex):
 		return os.path.join (getCurrentDir(), "tools\\mimetex\\mimetex.exe")
 
 	
-	@property
-	def useShellPipe (self):
-		"""
-		Значение параметра shell при создании класса Popen
-		"""
-		return True
-
-
 	def run (self, args):
 		"""
 		Вызов MimeTex
@@ -111,13 +103,6 @@ class MimeTexLinux (MimeTex):
 	def mimeTexPath (self):
 		return "mimetex"
 
-
-	@property
-	def useShellPipe (self):
-		"""
-		Значение параметра shell при создании класса Popen
-		"""
-		return False
 
 	def run (self, args):
 		"""
