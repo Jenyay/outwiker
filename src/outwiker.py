@@ -5,6 +5,7 @@
 import gettext
 import os
 import os.path
+import sys
 
 #import wxversion
 #wxversion.select("2.8")
@@ -29,8 +30,10 @@ class OutWiker(wx.App):
 		self._configFileName = getConfigPath (self.configDir, self.configFileName)
 		Application.init(self._configFileName)
 
-		# Закоментировать следующую строку, если не надо выводить strout/strerr в лог-файл
-		self.RedirectStdio (self.getLogFileName (self._configFileName))
+		# Если программа запускается в виде exe-шника, то перенаправить вывод ошибок в лог
+		if sys.argv[0].endswith (u".exe"):
+			# Закоментировать следующую строку, если не надо выводить strout/strerr в лог-файл
+			self.RedirectStdio (self.getLogFileName (self._configFileName))
 
 		from gui.MainWindow import MainWindow
 		wx.InitAllImageHandlers()
