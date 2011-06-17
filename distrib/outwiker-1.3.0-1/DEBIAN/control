@@ -4,7 +4,7 @@ Section: office
 Priority: optional
 Maintainer: Eugeniy Ilin (aka Jenyay) <jenyay.ilin@gmail.com>
 Architecture: all
-Installed-Size: 1984
+Installed-Size: 3339
 Depends: python (>=2.6), python-wxgtk2.8, python-wxversion, mimetex, python-webkit-dev, libgnomeprint2.2-0, libgnomeprintui2.2-0
 Homepage: http://jenyay.net/Soft/Outwiker
 Description: Outliner and personal wiki

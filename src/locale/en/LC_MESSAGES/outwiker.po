@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-11 09:30+0400\n"
+"POT-Creation-Date: 2011-06-17 20:17+0400\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -135,6 +135,7 @@ msgstr "You did not select a file to remove"
 #: gui/AttachPanel.py:221
 #: gui/BaseTextPanel.py:74
 #: gui/BaseTextPanel.py:88
+#: gui/BaseTextPanel.py:98
 #: gui/htmlrenderie.py:146
 #: gui/htmlrenderwebkit.py:180
 #: gui/htmlrenderwx.py:106
@@ -148,12 +149,13 @@ msgstr "You did not select a file to remove"
 #: gui/pagedialog.py:144
 #: gui/pagedialog.py:187
 #: gui/pagedialog.py:192
-#: pages/html/HtmlPanel.py:190
+#: gui/WikiTree.py:230
 #: pages/html/HtmlPanel.py:192
-#: pages/wiki/wikipanel.py:94
+#: pages/html/HtmlPanel.py:196
 #: pages/wiki/wikipanel.py:96
-#: pages/wiki/wikipanel.py:115
-#: pages/wiki/wikipanel.py:117
+#: pages/wiki/wikipanel.py:100
+#: pages/wiki/wikipanel.py:120
+#: pages/wiki/wikipanel.py:122
 #: core/commands.py:43
 #: core/commands.py:96
 #: core/commands.py:99
@@ -224,24 +226,31 @@ msgstr "Create Page"
 msgid "Page %s not found. It is recommended to update the wiki"
 msgstr "Page %s not found. It is recommended to update the wiki"
 
-#: gui/BaseTextPanel.py:188
+#: gui/BaseTextPanel.py:97
+#: pages/html/HtmlPanel.py:191
+#: pages/wiki/wikipanel.py:95
+#, python-format
+msgid "Can't save file %s"
+msgstr "Can't save file %s"
+
+#: gui/BaseTextPanel.py:194
 msgid "Search…\tCtrl+F"
 msgstr "Search…\tCtrl+F"
 
-#: gui/BaseTextPanel.py:189
+#: gui/BaseTextPanel.py:195
 msgid "Find next\tF3"
 msgstr "Find next\tF3"
 
-#: gui/BaseTextPanel.py:190
+#: gui/BaseTextPanel.py:196
 msgid "Find previous\tShift+F3"
 msgstr "Find previous\tShift+F3"
 
-#: gui/BaseTextPanel.py:192
+#: gui/BaseTextPanel.py:198
 msgid "&Search"
 msgstr "&Search"
 
-#: gui/BaseTextPanel.py:201
-#: gui/BaseTextPanel.py:205
+#: gui/BaseTextPanel.py:207
+#: gui/BaseTextPanel.py:211
 msgid "Search"
 msgstr "Search"
 
@@ -579,63 +588,72 @@ msgstr "Can't rename page when page with that title already exists"
 msgid "Restore"
 msgstr "Restore"
 
-#: gui/WikiTree.py:315
-#: gui/WikiTree.py:655
-#: gui/WikiTree.py:660
+#: gui/WikiTree.py:229
+#, python-format
+msgid ""
+"Can't save page options\n"
+"%s"
+msgstr ""
+"Can't save page options\n"
+"%s"
+
+#: gui/WikiTree.py:313
+#: gui/WikiTree.py:676
+#: gui/WikiTree.py:681
 msgid "Add Child Page…"
 msgstr "Add Child Page…"
 
-#: gui/WikiTree.py:316
-#: gui/WikiTree.py:646
-#: gui/WikiTree.py:651
+#: gui/WikiTree.py:314
+#: gui/WikiTree.py:667
+#: gui/WikiTree.py:672
 msgid "Add Sibling Page…"
 msgstr "Add Sibling Page…"
 
-#: gui/WikiTree.py:317
+#: gui/WikiTree.py:315
 msgid "Rename"
 msgstr "Rename"
 
-#: gui/WikiTree.py:318
+#: gui/WikiTree.py:316
 msgid "Remove…"
 msgstr "Remove…"
 
-#: gui/WikiTree.py:321
+#: gui/WikiTree.py:319
 msgid "Copy Page Title"
 msgstr "Copy Page Title"
 
-#: gui/WikiTree.py:322
+#: gui/WikiTree.py:320
 msgid "Copy Page Path"
 msgstr "Copy Page Path"
 
-#: gui/WikiTree.py:323
+#: gui/WikiTree.py:321
 msgid "Copy Attaches Path"
 msgstr "Copy Attaches Path"
 
-#: gui/WikiTree.py:324
+#: gui/WikiTree.py:322
 msgid "Copy Page Link"
 msgstr "Copy Page Link"
 
-#: gui/WikiTree.py:327
+#: gui/WikiTree.py:325
 msgid "Properties…"
 msgstr "Properties…"
 
-#: gui/WikiTree.py:626
-#: gui/WikiTree.py:631
+#: gui/WikiTree.py:647
+#: gui/WikiTree.py:652
 msgid "Move Page Down"
 msgstr "Move Page Down"
 
-#: gui/WikiTree.py:635
-#: gui/WikiTree.py:640
+#: gui/WikiTree.py:656
+#: gui/WikiTree.py:661
 msgid "Move Page Up"
 msgstr "Move Page Up"
 
-#: gui/WikiTree.py:664
-#: gui/WikiTree.py:669
+#: gui/WikiTree.py:685
+#: gui/WikiTree.py:690
 msgid "Remove Page…"
 msgstr "Remove Page…"
 
-#: gui/WikiTree.py:675
-#: gui/WikiTree.py:680
+#: gui/WikiTree.py:696
+#: gui/WikiTree.py:701
 msgid "Page Properties…"
 msgstr "Page Properties…"
 
@@ -695,6 +713,10 @@ msgstr ""
 msgid "Language (restart required)"
 msgstr "Language (restart required)"
 
+#: gui/preferences/HtmlRenderPanel.py:25
+msgid "Additional styles (CSS):"
+msgstr "Additional styles (CSS):"
+
 #: gui/preferences/PrefDialog.py:38
 msgid "Preferences"
 msgstr "Preferences"
@@ -743,208 +765,213 @@ msgstr "HTML"
 msgid "Page rendered. Please wait…"
 msgstr "Page rendered. Please wait…"
 
-#: pages/html/HtmlPanel.py:190
-#: pages/html/HtmlPanel.py:192
-#: pages/wiki/wikipanel.py:94
-#: pages/wiki/wikipanel.py:96
-msgid "Can't save HTML-file"
-msgstr "Can't save HTML-file"
+#: pages/html/HtmlPanel.py:195
+#: pages/wiki/wikipanel.py:99
+#, python-format
+msgid ""
+"Can't save HTML-file\n"
+"\n"
+"%s"
+msgstr ""
+"Can't save HTML-file\n"
+"\n"
+"%s"
 
-#: pages/html/HtmlPanel.py:223
+#: pages/html/HtmlPanel.py:228
 msgid "Code / Preview\tF4"
 msgstr "Code / Preview\tF4"
 
-#: pages/html/HtmlPanel.py:224
+#: pages/html/HtmlPanel.py:229
 msgid "Code / Preview"
 msgstr "Code / Preview"
 
-#: pages/html/HtmlPanel.py:292
-#: pages/wiki/wikipanel.py:127
+#: pages/html/HtmlPanel.py:297
+#: pages/wiki/wikipanel.py:132
 msgid "Bold\tCtrl+B"
 msgstr "Bold\tCtrl+B"
 
-#: pages/html/HtmlPanel.py:293
+#: pages/html/HtmlPanel.py:298
 msgid "Bold (<b>…</b>)"
 msgstr "Bold (<b>…</b>)"
 
-#: pages/html/HtmlPanel.py:299
-#: pages/wiki/wikipanel.py:134
+#: pages/html/HtmlPanel.py:304
+#: pages/wiki/wikipanel.py:139
 msgid "Italic\tCtrl+I"
 msgstr "Italic\tCtrl+I"
 
-#: pages/html/HtmlPanel.py:300
+#: pages/html/HtmlPanel.py:305
 msgid "Italic (<i>…</i>)"
 msgstr "Italic (<i>…</i>)"
 
-#: pages/html/HtmlPanel.py:306
-#: pages/wiki/wikipanel.py:148
+#: pages/html/HtmlPanel.py:311
+#: pages/wiki/wikipanel.py:153
 msgid "Underline\tCtrl+U"
 msgstr "Underline\tCtrl+U"
 
-#: pages/html/HtmlPanel.py:307
+#: pages/html/HtmlPanel.py:312
 msgid "Underline (<u>…</u>)"
 msgstr "Underline (<u>…</u>)"
 
-#: pages/html/HtmlPanel.py:313
-#: pages/wiki/wikipanel.py:155
+#: pages/html/HtmlPanel.py:318
+#: pages/wiki/wikipanel.py:160
 msgid "Strikethrough\tCtrl+K"
 msgstr "Strikethrough\tCtrl+K"
 
-#: pages/html/HtmlPanel.py:314
+#: pages/html/HtmlPanel.py:319
 msgid "Strikethrough (<strike>…</strike>)"
 msgstr "Strikethrough (<strike>…</strike>)"
 
-#: pages/html/HtmlPanel.py:320
-#: pages/wiki/wikipanel.py:162
+#: pages/html/HtmlPanel.py:325
+#: pages/wiki/wikipanel.py:167
 msgid "Subscript\tCtrl+="
 msgstr "Subscript\tCtrl+="
 
-#: pages/html/HtmlPanel.py:321
+#: pages/html/HtmlPanel.py:326
 msgid "Subscript (<sub>…</sub>)"
 msgstr "Subscript (<sub>…</sub>)"
 
-#: pages/html/HtmlPanel.py:327
-#: pages/wiki/wikipanel.py:170
+#: pages/html/HtmlPanel.py:332
+#: pages/wiki/wikipanel.py:175
 msgid "Superscript\tCtrl++"
 msgstr "Superscript\tCtrl++"
 
-#: pages/html/HtmlPanel.py:328
+#: pages/html/HtmlPanel.py:333
 msgid "Superscript (<sup>…</sup>)"
 msgstr "Superscript (<sup>…</sup>)"
 
-#: pages/html/HtmlPanel.py:336
+#: pages/html/HtmlPanel.py:341
 msgid "Center align\tCtrl+Shift+C"
 msgstr "Center align\tCtrl+Shift+C"
 
-#: pages/html/HtmlPanel.py:337
-#: pages/wiki/wikipanel.py:180
+#: pages/html/HtmlPanel.py:342
+#: pages/wiki/wikipanel.py:185
 msgid "Center align"
 msgstr "Center align"
 
-#: pages/html/HtmlPanel.py:343
-#: pages/html/HtmlPanel.py:344
-#: pages/wiki/wikipanel.py:187
+#: pages/html/HtmlPanel.py:348
+#: pages/html/HtmlPanel.py:349
+#: pages/wiki/wikipanel.py:192
 msgid "Right align"
 msgstr "Right align"
 
-#: pages/html/HtmlPanel.py:355
+#: pages/html/HtmlPanel.py:360
 msgid "Table\tCtrl+Q"
 msgstr "Table\tCtrl+Q"
 
-#: pages/html/HtmlPanel.py:356
+#: pages/html/HtmlPanel.py:361
 msgid "Table (<table>…</table>)"
 msgstr "Table (<table>…</table>)"
 
-#: pages/html/HtmlPanel.py:362
+#: pages/html/HtmlPanel.py:367
 msgid "Table row\tCtrl+W"
 msgstr "Table row\tCtrl+W"
 
-#: pages/html/HtmlPanel.py:363
+#: pages/html/HtmlPanel.py:368
 msgid "Table row (<tr>…</tr>)"
 msgstr "Table row (<tr>…</tr>)"
 
-#: pages/html/HtmlPanel.py:370
+#: pages/html/HtmlPanel.py:375
 msgid "Table cell\tCtrl+Y"
 msgstr "Table cell\tCtrl+Y"
 
-#: pages/html/HtmlPanel.py:371
+#: pages/html/HtmlPanel.py:376
 msgid "Table cell (<td>…</td>)"
 msgstr "Table cell (<td>…</td>)"
 
-#: pages/html/HtmlPanel.py:382
-#: pages/wiki/wikipanel.py:244
+#: pages/html/HtmlPanel.py:387
+#: pages/wiki/wikipanel.py:249
 msgid "Bullets list\tCtrl+G"
 msgstr "Bullets list\tCtrl+G"
 
-#: pages/html/HtmlPanel.py:383
+#: pages/html/HtmlPanel.py:388
 msgid "Bullets list (<ul>…</ul>)"
 msgstr "Bullets list (<ul>…</ul>)"
 
-#: pages/html/HtmlPanel.py:389
-#: pages/wiki/wikipanel.py:251
+#: pages/html/HtmlPanel.py:394
+#: pages/wiki/wikipanel.py:256
 msgid "Numbers list\tCtrl+J"
 msgstr "Numbers list\tCtrl+J"
 
-#: pages/html/HtmlPanel.py:390
+#: pages/html/HtmlPanel.py:395
 msgid "Numbers list (<ul>…</ul>)"
 msgstr "Numbers list (<ul>…</ul>)"
 
-#: pages/html/HtmlPanel.py:401
-#: pages/wiki/wikipanel.py:263
+#: pages/html/HtmlPanel.py:406
+#: pages/wiki/wikipanel.py:268
 msgid "H1\tCtrl+1"
 msgstr "H1\tCtrl+1"
 
-#: pages/html/HtmlPanel.py:402
+#: pages/html/HtmlPanel.py:407
 msgid "H1 (<h1>…</h1>)"
 msgstr "H1 (<h1>…</h1>)"
 
-#: pages/html/HtmlPanel.py:408
-#: pages/wiki/wikipanel.py:270
+#: pages/html/HtmlPanel.py:413
+#: pages/wiki/wikipanel.py:275
 msgid "H2\tCtrl+2"
 msgstr "H2\tCtrl+2"
 
-#: pages/html/HtmlPanel.py:409
+#: pages/html/HtmlPanel.py:414
 msgid "H2 (<h2>…</h2>)"
 msgstr "H2 (<h2>…</h2>)"
 
-#: pages/html/HtmlPanel.py:415
-#: pages/wiki/wikipanel.py:277
+#: pages/html/HtmlPanel.py:420
+#: pages/wiki/wikipanel.py:282
 msgid "H3\tCtrl+3"
 msgstr "H3\tCtrl+3"
 
-#: pages/html/HtmlPanel.py:416
+#: pages/html/HtmlPanel.py:421
 msgid "H3 (<h3>…</h3>)"
 msgstr "H3 (<h3>…</h3>)"
 
-#: pages/html/HtmlPanel.py:422
-#: pages/wiki/wikipanel.py:284
+#: pages/html/HtmlPanel.py:427
+#: pages/wiki/wikipanel.py:289
 msgid "H4\tCtrl+4"
 msgstr "H4\tCtrl+4"
 
-#: pages/html/HtmlPanel.py:423
+#: pages/html/HtmlPanel.py:428
 msgid "H4 (<h4>…</h4>)"
 msgstr "H4 (<h4>…</h4>)"
 
-#: pages/html/HtmlPanel.py:429
-#: pages/wiki/wikipanel.py:291
+#: pages/html/HtmlPanel.py:434
+#: pages/wiki/wikipanel.py:296
 msgid "H5\tCtrl+5"
 msgstr "H5\tCtrl+5"
 
-#: pages/html/HtmlPanel.py:430
+#: pages/html/HtmlPanel.py:435
 msgid "H5 (<h5>…</h5>)"
 msgstr "H5 (<h5>…</h5>)"
 
-#: pages/html/HtmlPanel.py:436
-#: pages/wiki/wikipanel.py:298
+#: pages/html/HtmlPanel.py:441
+#: pages/wiki/wikipanel.py:303
 msgid "H6\tCtrl+6"
 msgstr "H6\tCtrl+6"
 
-#: pages/html/HtmlPanel.py:437
+#: pages/html/HtmlPanel.py:442
 msgid "H6 (<h6>…</h6>)"
 msgstr "H6 (<h6>…</h6>)"
 
-#: pages/html/HtmlPanel.py:455
-#: pages/wiki/wikipanel.py:317
+#: pages/html/HtmlPanel.py:460
+#: pages/wiki/wikipanel.py:322
 msgid "Link\tCtrl+L"
 msgstr "Link\tCtrl+L"
 
-#: pages/html/HtmlPanel.py:462
-#: pages/wiki/wikipanel.py:324
+#: pages/html/HtmlPanel.py:467
+#: pages/wiki/wikipanel.py:329
 msgid "Horizontal line\tCtrl+H"
 msgstr "Horizontal line\tCtrl+H"
 
-#: pages/html/HtmlPanel.py:463
+#: pages/html/HtmlPanel.py:468
 msgid "Horizontal line (<hr>)"
 msgstr "Horizontal line (<hr>)"
 
-#: pages/html/HtmlPanel.py:471
-#: pages/html/HtmlPanel.py:472
-#: pages/wiki/wikipanel.py:340
-#: pages/wiki/wikipanel.py:341
+#: pages/html/HtmlPanel.py:476
+#: pages/html/HtmlPanel.py:477
+#: pages/wiki/wikipanel.py:345
+#: pages/wiki/wikipanel.py:346
 msgid "Convert HTML Symbols"
 msgstr "Convert HTML Symbols"
 
-#: pages/html/HtmlPanel.py:489
+#: pages/html/HtmlPanel.py:494
 msgid "H&tml"
 msgstr "H&tml"
 
@@ -1011,155 +1038,155 @@ msgstr "Wiki Page"
 msgid "Wiki"
 msgstr "Wiki"
 
-#: pages/wiki/wikipanel.py:115
-#: pages/wiki/wikipanel.py:117
+#: pages/wiki/wikipanel.py:120
+#: pages/wiki/wikipanel.py:122
 msgid "Can't load HTML-file"
 msgstr "Can't load HTML-file"
 
-#: pages/wiki/wikipanel.py:128
+#: pages/wiki/wikipanel.py:133
 msgid "Bold"
 msgstr "Bold"
 
-#: pages/wiki/wikipanel.py:135
+#: pages/wiki/wikipanel.py:140
 msgid "Italic"
 msgstr "Italic"
 
-#: pages/wiki/wikipanel.py:141
+#: pages/wiki/wikipanel.py:146
 msgid "Bold italic\tCtrl+Shift+I"
 msgstr "Bold italic\tCtrl+Shift+I"
 
-#: pages/wiki/wikipanel.py:142
+#: pages/wiki/wikipanel.py:147
 msgid "Bold italic"
 msgstr "Bold italic"
 
-#: pages/wiki/wikipanel.py:149
+#: pages/wiki/wikipanel.py:154
 msgid "Underline"
 msgstr "Underline"
 
-#: pages/wiki/wikipanel.py:156
+#: pages/wiki/wikipanel.py:161
 msgid "Strikethrough"
 msgstr "Strikethrough"
 
-#: pages/wiki/wikipanel.py:163
+#: pages/wiki/wikipanel.py:168
 msgid "Subscript"
 msgstr "Subscript"
 
-#: pages/wiki/wikipanel.py:171
+#: pages/wiki/wikipanel.py:176
 msgid "Superscript"
 msgstr "Superscript"
 
-#: pages/wiki/wikipanel.py:179
+#: pages/wiki/wikipanel.py:184
 msgid "Center align\tCtrl+Alt+C"
 msgstr "Center align\tCtrl+Alt+C"
 
-#: pages/wiki/wikipanel.py:186
+#: pages/wiki/wikipanel.py:191
 msgid "Right align\tCtrl+ALT+R"
 msgstr "Right align\tCtrl+ALT+R"
 
-#: pages/wiki/wikipanel.py:195
-#: pages/wiki/wikipanel.py:196
+#: pages/wiki/wikipanel.py:200
+#: pages/wiki/wikipanel.py:201
 msgid "Preformat [@…@]"
 msgstr "Preformat [@…@]"
 
-#: pages/wiki/wikipanel.py:202
-#: pages/wiki/wikipanel.py:203
+#: pages/wiki/wikipanel.py:207
+#: pages/wiki/wikipanel.py:208
 msgid "Non-parsed [=…=]"
 msgstr "Non-parsed [=…=]"
 
-#: pages/wiki/wikipanel.py:245
+#: pages/wiki/wikipanel.py:250
 msgid "Bullets list"
 msgstr "Bullets list"
 
-#: pages/wiki/wikipanel.py:252
+#: pages/wiki/wikipanel.py:257
 msgid "Numbers list"
 msgstr "Numbers list"
 
-#: pages/wiki/wikipanel.py:264
+#: pages/wiki/wikipanel.py:269
 msgid "H1"
 msgstr "H1"
 
-#: pages/wiki/wikipanel.py:271
+#: pages/wiki/wikipanel.py:276
 msgid "H2"
 msgstr "H2"
 
-#: pages/wiki/wikipanel.py:278
+#: pages/wiki/wikipanel.py:283
 msgid "H3"
 msgstr "H3"
 
-#: pages/wiki/wikipanel.py:285
+#: pages/wiki/wikipanel.py:290
 msgid "H4"
 msgstr "H4"
 
-#: pages/wiki/wikipanel.py:292
+#: pages/wiki/wikipanel.py:297
 msgid "H5"
 msgstr "H5"
 
-#: pages/wiki/wikipanel.py:299
+#: pages/wiki/wikipanel.py:304
 msgid "H6"
 msgstr "H6"
 
-#: pages/wiki/wikipanel.py:310
+#: pages/wiki/wikipanel.py:315
 msgid "Thumbnail\tCtrl+M"
 msgstr "Thumbnail\tCtrl+M"
 
-#: pages/wiki/wikipanel.py:311
+#: pages/wiki/wikipanel.py:316
 msgid "Thumbnail"
 msgstr "Thumbnail"
 
-#: pages/wiki/wikipanel.py:318
+#: pages/wiki/wikipanel.py:323
 msgid "Link"
 msgstr "Link"
 
-#: pages/wiki/wikipanel.py:325
+#: pages/wiki/wikipanel.py:330
 msgid "Horizontal line"
 msgstr "Horizontal line"
 
-#: pages/wiki/wikipanel.py:331
+#: pages/wiki/wikipanel.py:336
 msgid "Equation\tCtrl+Q"
 msgstr "Equation\tCtrl+Q"
 
-#: pages/wiki/wikipanel.py:332
+#: pages/wiki/wikipanel.py:337
 msgid "Equation"
 msgstr "Equation"
 
-#: pages/wiki/wikipanel.py:353
+#: pages/wiki/wikipanel.py:358
 msgid "HTML Code\tShift+F4"
 msgstr "HTML Code\tShift+F4"
 
-#: pages/wiki/wikipanel.py:354
+#: pages/wiki/wikipanel.py:359
 msgid "HTML Code"
 msgstr "HTML Code"
 
-#: pages/wiki/wikipanel.py:370
+#: pages/wiki/wikipanel.py:375
 msgid "&Wiki"
 msgstr "&Wiki"
 
-#: pages/wiki/wikipanel.py:379
+#: pages/wiki/wikipanel.py:384
 msgid "Commands"
 msgstr "Commands"
 
-#: pages/wiki/wikipanel.py:384
-#: pages/wiki/wikipanel.py:385
+#: pages/wiki/wikipanel.py:389
+#: pages/wiki/wikipanel.py:390
 msgid "Livejournal User (:ljuser ...:)"
 msgstr "Livejournal User (:ljuser ...:)"
 
-#: pages/wiki/wikipanel.py:391
-#: pages/wiki/wikipanel.py:392
+#: pages/wiki/wikipanel.py:396
+#: pages/wiki/wikipanel.py:397
 msgid "Livejournal Community (:ljcomm ...:)"
 msgstr "Livejournal Community (:ljcomm ...:)"
 
-#: pages/wiki/wikipanel.py:399
-#: pages/wiki/wikipanel.py:400
+#: pages/wiki/wikipanel.py:404
+#: pages/wiki/wikipanel.py:405
 msgid "Attachment (:attachlist:)"
 msgstr "Attachment (:attachlist:)"
 
-#: pages/wiki/wikipanel.py:406
-#: pages/wiki/wikipanel.py:407
+#: pages/wiki/wikipanel.py:411
+#: pages/wiki/wikipanel.py:412
 msgid "Children (:childlist:)"
 msgstr "Children (:childlist:)"
 
-#: pages/wiki/wikipanel.py:414
-#: pages/wiki/wikipanel.py:415
+#: pages/wiki/wikipanel.py:419
+#: pages/wiki/wikipanel.py:420
 msgid "Include (:include ...:)"
 msgstr "Include (:include ...:)"
 
@@ -1253,8 +1280,6 @@ msgstr "Save?"
 msgid "Printing error"
 msgstr "Printing error"
 
-#~ msgid "Can't save page hash\n"
-#~ msgstr "Can't save page hash\n"
 #~ msgid "Show Attachments Instead Blank page"
 #~ msgstr "Show Attachments Instead Blank page"
 #~ msgid "Edit page"
