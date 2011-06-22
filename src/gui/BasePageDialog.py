@@ -179,11 +179,11 @@ class BasePageDialog(wx.Dialog):
 
 	@property
 	def pageTitle (self):
-		return self.titleTextCtrl.GetValue()
+		return self.titleTextCtrl.GetValue().strip()
 
 	@property
 	def tags (self):
-		tagsString = self.tagsTextCtrl.GetValue()
+		tagsString = self.tagsTextCtrl.GetValue().strip()
 		tags = TagsList.parseTagsList (tagsString)
 		return tags
 

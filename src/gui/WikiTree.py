@@ -385,7 +385,7 @@ class WikiTree(wx.Panel):
 			return
 
 		# Новый заголовок
-		label = event.GetLabel()
+		label = event.GetLabel().strip()
 
 		item = event.GetItem()
 		page = self.treeCtrl.GetItemData (item).GetData()
