@@ -31,7 +31,8 @@ class OutWiker(wx.App):
 		Application.init(self._configFileName)
 
 		# Если программа запускается в виде exe-шника, то перенаправить вывод ошибок в лог
-		if sys.argv[0].endswith (u".exe"):
+		exepath = unicode (sys.argv[0], getOS().filesEncoding)
+		if exepath.endswith (u".exe"):
 			# Закоментировать следующую строку, если не надо выводить strout/strerr в лог-файл
 			self.RedirectStdio (self.getLogFileName (self._configFileName))
 
