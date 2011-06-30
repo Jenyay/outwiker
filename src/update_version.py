@@ -4,7 +4,7 @@
 import subprocess
 
 fname = "version.txt"
-version = "1.3.0"
+version = "1.3.1"
 status = ""
 
 p = subprocess.Popen(["bzr", "revno"], stdout=subprocess.PIPE)

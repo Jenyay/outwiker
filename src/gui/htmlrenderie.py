@@ -51,7 +51,7 @@ class HtmlRenderIE (HtmlRender):
 
 	def StatusTextChange(self, status):
 		if len (status) != 0:
-			href = urllib.unquote ( self._removeFileProtokol (status) ).replace ("/", "\\")
+			href = self.__cleanUpUrl (status)
 
 			(url, page, filename) = self.identifyUri (href)
 
@@ -89,6 +89,35 @@ class HtmlRenderIE (HtmlRender):
 		self.render.Navigate (fname)
 
 
+	def __cleanUpUrl (self, href):
+		"""
+		Почистить ссылку. Убрать file:/// и about:blank
+		"""
+		result = self._removeFileProtokol (href)
+		#result = self.__removeAboutBlank (result)
+		result = urllib.unquote (result)
+		result = result.replace ("/", u"\\")
+
+		return result
+
+
+	def __removeAboutBlank (self, href):
+		"""
+		Удалить about: и about:blank из начала адреса
+		"""
+		about_full = u"about:blank"
+		about_short = u"about:"
+
+		result = href
+		if result.startswith (about_full):
+			result = result[len (about_full): ]
+
+		elif result.startswith (about_short):
+			result = result[len (about_short): ]
+
+		return result
+
+
 	def _removeFileProtokol (self, href):
 		"""
 		Избавиться от протокола file:///, то избавимся от этой надписи
@@ -102,7 +131,8 @@ class HtmlRenderIE (HtmlRender):
 
 	def BeforeNavigate2(self, this, pDisp, URL, Flags, TargetFrameName, PostData, Headers, Cancel):
 		href = URL[0]
-		curr_href = urllib.unquote ( self._removeFileProtokol (self.render.locationurl) ).replace ("/", "\\")
+		#href = self.__cleanUpUrl (URL[0])
+		curr_href = self.__cleanUpUrl (self.render.locationurl)
 
 		if self.canOpenUrl or href == curr_href:
 			Cancel[0] = False
@@ -163,10 +193,13 @@ class HtmlRenderIE (HtmlRender):
 
 		if subpath.startswith (self._currentPage.path):
 			subpath = subpath[len (self._currentPage.path) + 1: ].replace ("\\", "/")
-		elif subpath[1] == ":":
+		elif len (subpath) > 1 and subpath[1] == ":":
 			subpath = subpath[2:].replace ("\\", "/")
 
-		if subpath[0] == "/":
+		if subpath.startswith ("about:"):
+			subpath = self.__removeAboutBlank (subpath).replace ("\\", "/")
+		
+		if len (subpath) > 0 and subpath[0] == "/":
 			# Поиск страниц осуществляем только с корня
 			newSelectedPage = self._currentPage.root[subpath[1:] ]
 		else:
