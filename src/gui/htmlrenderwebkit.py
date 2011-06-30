@@ -2,6 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 import os
+import os.path
 import urllib
 
 import wx
@@ -75,15 +76,20 @@ class HtmlRenderWebKit(HtmlRender):
 		self.Bind (wx.EVT_MENU, self.onCopyFromHtml, id = wx.ID_CUT)
 		
 
-		#self.ctrl.set_zoom_level (0.8)
-
 	def Print (self):
 		self.ctrl.get_main_frame().print_()
 
 
 	def LoadPage (self, fname):
 		self.canOpenUrl = True
-		self.ctrl.load_uri("file://{0}".format (fname) )
+
+		try:
+			with open (fname) as fp:
+				text = fp.read()
+		except IOError:
+			text = _(u"Can't read file %s") % (fname)
+
+		self.SetPage (text, os.path.dirname (fname))
 		self.canOpenUrl = False
 
 
@@ -127,7 +133,7 @@ class HtmlRenderWebKit(HtmlRender):
 			core.commands.setStatusText (u"")
 			return
 
-		href = urllib.unquote (unicode (uri, "utf8") )
+		href = unicode (urllib.unquote (uri), "utf8")
 
 		(url, page, filename) = self.identifyUri (href)
 

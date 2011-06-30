@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-17 20:17+0400\n"
+"POT-Creation-Date: 2011-06-30 22:33+0400\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -136,8 +136,8 @@ msgstr "You did not select a file to remove"
 #: gui/BaseTextPanel.py:74
 #: gui/BaseTextPanel.py:88
 #: gui/BaseTextPanel.py:98
-#: gui/htmlrenderie.py:146
-#: gui/htmlrenderwebkit.py:180
+#: gui/htmlrenderie.py:176
+#: gui/htmlrenderwebkit.py:186
 #: gui/htmlrenderwx.py:106
 #: gui/MainWindow.py:289
 #: gui/MainWindow.py:606
@@ -195,9 +195,9 @@ msgid "You did not select a file to execute"
 msgstr "You did not select a file to execute"
 
 #: gui/AttachPanel.py:220
-#: gui/htmlrenderie.py:145
+#: gui/htmlrenderie.py:175
 #: gui/htmlrender.py:64
-#: gui/htmlrenderwebkit.py:179
+#: gui/htmlrenderwebkit.py:185
 #: gui/htmlrenderwx.py:105
 #: gui/htmlrenderwx.py:152
 #, python-format
@@ -269,6 +269,11 @@ msgstr "Remove from Bookmarks"
 #: gui/editorsearchpanel.py:67
 msgid "Not found"
 msgstr "Not found"
+
+#: gui/htmlrenderwebkit.py:90
+#, python-format
+msgid "Can't read file %s"
+msgstr "Can't read file %s"
 
 #: gui/LocalSearchPanel.py:40
 msgid "Find Next"

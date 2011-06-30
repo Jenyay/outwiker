@@ -767,7 +767,9 @@ class MainWindow(wx.Frame):
 		if not self.stdEventLoop:
 			self.stdEventLoop = True
 			target = wx.Window.FindFocus()
-			target.ProcessEvent (event)
+
+			if target != None:
+				target.ProcessEvent (event)
 		self.stdEventLoop = False
 
 
