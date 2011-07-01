@@ -11,6 +11,7 @@ from .htmlrender import HtmlRender
 import core.system
 import core.commands
 from core.application import Application
+from core.commands import MessageBox
 
 
 class HtmlRenderIE (HtmlRender):
@@ -160,7 +161,9 @@ class HtmlRenderIE (HtmlRender):
 		"""
 		Клик по ссылке
 		"""
-		(url, page, filename) = self.identifyUri (href)
+		#MessageBox (href)
+
+		(url, page, filename) = self.identifyUri (urllib.unquote (href) )
 
 		if url != None:
 			self.openUrl (url)
