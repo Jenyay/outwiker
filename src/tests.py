@@ -77,6 +77,7 @@ if __name__ == '__main__':
 	from test.version import VersionTest, StatusTest
 	from test.treesort import TreeSortTest
 	from test.emptycontent import EmptyContentTest
+	from test.mainid import MainIdTest
 
 
 	unittest.main()
