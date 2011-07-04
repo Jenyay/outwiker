@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-
-
 import os.path
 import sys
 
@@ -56,10 +54,7 @@ class MainWindow(wx.Frame):
 		# Ключ - id, значение - путь до страницы вики
 		self._bookmarksId = {}
 
-		Application.onTreeUpdate += self.onTreeUpdate
-		Application.onPageSelect += self.onPageSelect
-		Application.onBookmarksChanged += self.onBookmarksChanged
-		Application.onMainWindowConfigChange += self.onMainWindowConfigChange
+		self.__bindAppEvents()
 		
 		# Путь к директории с программой/скриптом
 		self.imagesDir = core.system.getImagesDir()
@@ -71,7 +66,8 @@ class MainWindow(wx.Frame):
 		self.mainMenu = MainMenu()
 		self.SetMenuBar(self.mainMenu)
 		# Menu Bar end
-		
+
+
 		# Tool Bar
 		self.mainToolbar = wx.ToolBar(self, -1, style=wx.TB_HORIZONTAL|wx.TB_FLAT|wx.TB_DOCKABLE)
 		self.SetToolBar(self.mainToolbar)
@@ -83,54 +79,16 @@ class MainWindow(wx.Frame):
 		self.mainToolbar.AddLabelTool(MainId.ID_ATTACH, _(u"Attach files…"), wx.Bitmap(os.path.join (self.imagesDir, "attach.png"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _(u"Attach files…"), "")
 		self.mainToolbar.AddLabelTool(MainId.ID_GLOBAL_SEARCH, _(u"Global search…"), wx.Bitmap(os.path.join (self.imagesDir, "global_search.png"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _(u"Global search…"), "")
 		self.mainToolbar.AddSeparator()
+		self.mainToolbar.Realize()
 		# Tool Bar end
+
 		self.mainPanel = wx.Panel(self, -1)
 		self.statusbar = wx.StatusBar(self, -1)
 
 		self.__set_properties()
 		self.__do_layout()
 
-		self.Bind(wx.EVT_MENU, self.onNew, id=MainId.ID_NEW)
-		self.Bind(wx.EVT_MENU, self.onOpen, id=MainId.ID_OPEN)
-		self.Bind(wx.EVT_MENU, self.onOpenReadOnly, id=MainId.ID_OPEN_READONLY)
-		self.Bind(wx.EVT_MENU, self.onSave, id=MainId.ID_SAVE)
-		self.Bind(wx.EVT_MENU, self.onPrint, id=wx.ID_PRINT)
-		self.Bind(wx.EVT_MENU, self.onExit, id=MainId.ID_EXIT)
-		self.Bind(wx.EVT_MENU, self.onStdEvent, id=wx.ID_UNDO)
-		self.Bind(wx.EVT_MENU, self.onStdEvent, id=wx.ID_REDO)
-		self.Bind(wx.EVT_MENU, self.onStdEvent, id=wx.ID_CUT)
-		self.Bind(wx.EVT_MENU, self.onStdEvent, id=wx.ID_COPY)
-		self.Bind(wx.EVT_MENU, self.onStdEvent, id=wx.ID_PASTE)
-		self.Bind(wx.EVT_MENU, self.onPreferences, id=MainId.ID_PREFERENCES)
-		self.Bind(wx.EVT_MENU, self.onAddSiblingPage, id=MainId.ID_ADDPAGE)
-		self.Bind(wx.EVT_MENU, self.onAddChildPage, id=MainId.ID_ADDCHILD)
-		self.Bind(wx.EVT_MENU, self.onMovePageUp, id=MainId.ID_MOVE_PAGE_UP)
-		self.Bind(wx.EVT_MENU, self.onMovePageDown, id=MainId.ID_MOVE_PAGE_DOWN)
-		self.Bind(wx.EVT_MENU, self.onSortChildrenAlphabetical, id=MainId.ID_SORT_CHILDREN_ALPHABETICAL)
-		self.Bind(wx.EVT_MENU, self.onSortSiblingAlphabetical, id=MainId.ID_SORT_SIBLINGS_ALPHABETICAL)
-		self.Bind(wx.EVT_MENU, self.onRename, id=MainId.ID_RENAME)
-		self.Bind(wx.EVT_MENU, self.onRemovePage, id=MainId.ID_REMOVE_PAGE)
-		self.Bind(wx.EVT_MENU, self.onEditPage, id=MainId.ID_EDIT)
-		self.Bind(wx.EVT_MENU, self.onGlobalSearch, id=MainId.ID_GLOBAL_SEARCH)
-		self.Bind(wx.EVT_MENU, self.onAttach, id=MainId.ID_ATTACH)
-		self.Bind(wx.EVT_MENU, self.onCopyTitle, id=MainId.ID_COPY_TITLE)
-		self.Bind(wx.EVT_MENU, self.onCopyPath, id=MainId.ID_COPYPATH)
-		self.Bind(wx.EVT_MENU, self.onCopyAttaches, id=MainId.ID_COPY_ATTACH_PATH)
-		self.Bind(wx.EVT_MENU, self.onCopyLink, id=MainId.ID_COPY_LINK)
-		self.Bind(wx.EVT_MENU, self.onReload, id=MainId.ID_RELOAD)
-		self.Bind(wx.EVT_MENU, self.onBookmark, id=MainId.ID_ADDBOOKMARK)
-		self.Bind(wx.EVT_MENU, self.onViewTree, self.mainMenu.viewNotes)
-		self.Bind(wx.EVT_MENU, self.onViewAttaches, self.mainMenu.viewAttaches)
-		self.Bind(wx.EVT_MENU, self.onFullscreen, self.mainMenu.viewFullscreen)
-		self.Bind(wx.EVT_MENU, self.onHelp, id=MainId.ID_HELP)
-		self.Bind(wx.EVT_MENU, self.onAbout, id=MainId.ID_ABOUT)
-		self.Bind(wx.EVT_TOOL, self.onNew, id=MainId.ID_NEW)
-		self.Bind(wx.EVT_TOOL, self.onOpen, id=MainId.ID_OPEN)
-		self.Bind(wx.EVT_TOOL, self.onReload, id=MainId.ID_RELOAD)
-		self.Bind(wx.EVT_TOOL, self.onAttach, id=MainId.ID_ATTACH)
-		self.Bind(wx.EVT_TOOL, self.onGlobalSearch, id=MainId.ID_GLOBAL_SEARCH)
-
-		Application.onWikiOpen += self.onWikiOpen
+		self.__bindGuiEvents()
 
 		self.auiManager = wx.aui.AuiManager(self.mainPanel)
 
@@ -140,10 +98,10 @@ class MainWindow(wx.Frame):
 
 		self.__loadMainWindowParams()
 		self.__initAuiManager ()
-		self.auiManager.Bind (wx.aui.EVT_AUI_PANE_CLOSE, self.onPaneClose)
+		self.auiManager.Bind (wx.aui.EVT_AUI_PANE_CLOSE, self.__onPaneClose)
 
-		self.Bind (wx.EVT_CLOSE, self.onClose)
-		self.mainPanel.Bind (wx.EVT_CLOSE, self.onMainPanelClose)
+		self.Bind (wx.EVT_CLOSE, self.__onClose)
+		self.mainPanel.Bind (wx.EVT_CLOSE, self.__onMainPanelClose)
 
 		self._dropTarget = DropFilesTarget (self)
 
@@ -157,13 +115,13 @@ class MainWindow(wx.Frame):
 			(wx.ACCEL_SHIFT,  wx.WXK_DELETE, wx.ID_CUT)])
 		self.SetAcceleratorTable(aTable)
 
-		self._updateRecentMenu()
+		self.__updateRecentMenu()
 		self.setFullscreen(self.mainWindowConfig.FullscreenOption.value)
 
 		self.Show()
 
 		if len (sys.argv) > 1:
-			self._openFromCommandLine()
+			self.__openFromCommandLine()
 		else:
 			# Открыть последний открытый файл (если установлена соответствующая опция)
 			self.__openRecentWiki ()
@@ -171,26 +129,82 @@ class MainWindow(wx.Frame):
 		self.taskBarIcon = OutwikerTrayIcon(self)
 		self.__updateTitle()
 
+
+	def __bindAppEvents (self):
+		"""
+		Подписаться на события из Application
+		"""
+		Application.onTreeUpdate += self.__onTreeUpdate
+		Application.onPageSelect += self.__onPageSelect
+		Application.onBookmarksChanged += self.__onBookmarksChanged
+		Application.onMainWindowConfigChange += self.__onMainWindowConfigChange
+		Application.onWikiOpen += self.__onWikiOpen
+
+
+	def __bindGuiEvents (self):
+		"""
+		Подписаться на события меню, кнопок и т.п.
+		"""
+		self.Bind(wx.EVT_MENU, self.__onNew, id=MainId.ID_NEW)
+		self.Bind(wx.EVT_MENU, self.__onOpen, id=MainId.ID_OPEN)
+		self.Bind(wx.EVT_MENU, self.__onOpenReadOnly, id=MainId.ID_OPEN_READONLY)
+		self.Bind(wx.EVT_MENU, self.__onSave, id=MainId.ID_SAVE)
+		self.Bind(wx.EVT_MENU, self.__onPrint, id=wx.ID_PRINT)
+		self.Bind(wx.EVT_MENU, self.__onExit, id=MainId.ID_EXIT)
+		self.Bind(wx.EVT_MENU, self.__onStdEvent, id=wx.ID_UNDO)
+		self.Bind(wx.EVT_MENU, self.__onStdEvent, id=wx.ID_REDO)
+		self.Bind(wx.EVT_MENU, self.__onStdEvent, id=wx.ID_CUT)
+		self.Bind(wx.EVT_MENU, self.__onStdEvent, id=wx.ID_COPY)
+		self.Bind(wx.EVT_MENU, self.__onStdEvent, id=wx.ID_PASTE)
+		self.Bind(wx.EVT_MENU, self.__onPreferences, id=MainId.ID_PREFERENCES)
+		self.Bind(wx.EVT_MENU, self.__onAddSiblingPage, id=MainId.ID_ADDPAGE)
+		self.Bind(wx.EVT_MENU, self.__onAddChildPage, id=MainId.ID_ADDCHILD)
+		self.Bind(wx.EVT_MENU, self.__onMovePageUp, id=MainId.ID_MOVE_PAGE_UP)
+		self.Bind(wx.EVT_MENU, self.__onMovePageDown, id=MainId.ID_MOVE_PAGE_DOWN)
+		self.Bind(wx.EVT_MENU, self.__onSortChildrenAlphabetical, id=MainId.ID_SORT_CHILDREN_ALPHABETICAL)
+		self.Bind(wx.EVT_MENU, self.__onSortSiblingAlphabetical, id=MainId.ID_SORT_SIBLINGS_ALPHABETICAL)
+		self.Bind(wx.EVT_MENU, self.__onRename, id=MainId.ID_RENAME)
+		self.Bind(wx.EVT_MENU, self.__onRemovePage, id=MainId.ID_REMOVE_PAGE)
+		self.Bind(wx.EVT_MENU, self.__onEditPage, id=MainId.ID_EDIT)
+		self.Bind(wx.EVT_MENU, self.__onGlobalSearch, id=MainId.ID_GLOBAL_SEARCH)
+		self.Bind(wx.EVT_MENU, self.__onAttach, id=MainId.ID_ATTACH)
+		self.Bind(wx.EVT_MENU, self.__onCopyTitle, id=MainId.ID_COPY_TITLE)
+		self.Bind(wx.EVT_MENU, self.__onCopyPath, id=MainId.ID_COPYPATH)
+		self.Bind(wx.EVT_MENU, self.__onCopyAttaches, id=MainId.ID_COPY_ATTACH_PATH)
+		self.Bind(wx.EVT_MENU, self.__onCopyLink, id=MainId.ID_COPY_LINK)
+		self.Bind(wx.EVT_MENU, self.__onReload, id=MainId.ID_RELOAD)
+		self.Bind(wx.EVT_MENU, self.__onBookmark, id=MainId.ID_ADDBOOKMARK)
+		self.Bind(wx.EVT_MENU, self.__onViewTree, self.mainMenu.viewNotes)
+		self.Bind(wx.EVT_MENU, self.__onViewAttaches, self.mainMenu.viewAttaches)
+		self.Bind(wx.EVT_MENU, self.__onFullscreen, self.mainMenu.viewFullscreen)
+		self.Bind(wx.EVT_MENU, self.__onHelp, id=MainId.ID_HELP)
+		self.Bind(wx.EVT_MENU, self.__onAbout, id=MainId.ID_ABOUT)
+		self.Bind(wx.EVT_TOOL, self.__onNew, id=MainId.ID_NEW)
+		self.Bind(wx.EVT_TOOL, self.__onOpen, id=MainId.ID_OPEN)
+		self.Bind(wx.EVT_TOOL, self.__onReload, id=MainId.ID_RELOAD)
+		self.Bind(wx.EVT_TOOL, self.__onAttach, id=MainId.ID_ATTACH)
+		self.Bind(wx.EVT_TOOL, self.__onGlobalSearch, id=MainId.ID_GLOBAL_SEARCH)
+
 	
-	def onWikiOpen (self, wikiroot):
+	def __onWikiOpen (self, wikiroot):
 		"""
 		Обновить окно после того как загрузили вики
 		"""
 		if wikiroot != None and not wikiroot.readonly:
 			try:
 				self.recentWiki.add (wikiroot.path)
-				self._updateRecentMenu()
+				self.__updateRecentMenu()
 			except IOError as e:
 				core.commands.MessageBox (
 						_(u"Can't add wiki to recent list.\nCan't save config.\n%s") % (unicode (e)),
 						_(u"Error"), wx.ICON_ERROR | wx.OK)
 
 		self.__enableGui()
-		self._loadBookmarks()
+		self.__loadBookmarks()
 		self.__updateTitle()
 
 
-	def onMainPanelClose (self, event):
+	def __onMainPanelClose (self, event):
 		self.tree.Close()
 		self.tree = None
 
@@ -213,7 +227,7 @@ class MainWindow(wx.Frame):
 		self.auiManager.Update()
 
 	
-	def onPaneClose (self, event):
+	def __onPaneClose (self, event):
 		if event.GetPane().name == self.auiManager.GetPane (self.tree).name:
 			self.mainMenu.viewNotes.Check (False)
 		elif event.GetPane().name == self.auiManager.GetPane (self.attachPanel).name:
@@ -309,12 +323,8 @@ class MainWindow(wx.Frame):
 		self.attachConfig.attachesWidthOption.value = self.attachPanel.GetSizeTuple()[0]
 		self.attachConfig.attachesHeightOption.value = self.attachPanel.GetSizeTuple()[1]
 		
-		#print "save:"
-		#print self.attachConfig.attachesWidthOption.value
-		#print self.attachConfig.attachesHeightOption.value
 
-
-	def onPageSelect (self, newpage):
+	def __onPageSelect (self, newpage):
 		self.__updateTitle()
 	
 
@@ -344,7 +354,6 @@ class MainWindow(wx.Frame):
 		self.attachPanel.Enable(enabled)
 
 
-	
 	def __enableTools (self, enabled):
 		for toolId in self.disabledTools:
 			if self.mainToolbar.FindById (toolId) != None:
@@ -367,7 +376,7 @@ class MainWindow(wx.Frame):
 			core.commands.openWiki (self.recentWiki[0])
 
 
-	def _openFromCommandLine (self):
+	def __openFromCommandLine (self):
 		"""
 		Открыть вики, путь до которой передан в командной строке
 		"""
@@ -378,11 +387,11 @@ class MainWindow(wx.Frame):
 		core.commands.openWiki (fname)
 
 	
-	def _updateRecentMenu (self):
+	def __updateRecentMenu (self):
 		"""
 		Обновление меню со списком последних открытых вики
 		"""
-		self._removeMenuItemsById (self.mainMenu.fileMenu, self._recentId.keys())
+		self.__removeMenuItemsById (self.mainMenu.fileMenu, self._recentId.keys())
 		self._recentId = {}
 
 		# TODO: Рефакторинг
@@ -400,11 +409,11 @@ class MainWindow(wx.Frame):
 
 			self.mainMenu.fileMenu.Append (id, title, "", wx.ITEM_NORMAL)
 			
-			self.Bind(wx.EVT_MENU, self.onRecent, id=id)
+			self.Bind(wx.EVT_MENU, self.__onRecent, id=id)
 	
 
-	def _loadBookmarks (self):
-		self._removeMenuItemsById (self.mainMenu.bookmarksMenu, self._bookmarksId.keys())
+	def __loadBookmarks (self):
+		self.__removeMenuItemsById (self.mainMenu.bookmarksMenu, self._bookmarksId.keys())
 		self._bookmarksId = {}
 
 		if Application.wikiroot != None:
@@ -426,10 +435,10 @@ class MainWindow(wx.Frame):
 					label = page.title
 
 				self.mainMenu.bookmarksMenu.Append (id, label, "", wx.ITEM_NORMAL)
-				self.Bind(wx.EVT_MENU, self.onSelectBookmark, id=id)
+				self.Bind(wx.EVT_MENU, self.__onSelectBookmark, id=id)
 
 
-	def _removeMenuItemsById (self, menu, keys):
+	def __removeMenuItemsById (self, menu, keys):
 		"""
 		Удалить все элементы меню по идентификаторам
 		"""
@@ -438,14 +447,14 @@ class MainWindow(wx.Frame):
 			self.Unbind (wx.EVT_MENU, id = key)
 
 
-	def onRecent (self, event):
+	def __onRecent (self, event):
 		"""
 		Выбор пункта меню с недавно открытыми файлами
 		"""
 		core.commands.openWiki (self._recentId[event.Id])
 
 
-	def onSelectBookmark (self, event):
+	def __onSelectBookmark (self, event):
 		subpath = self._bookmarksId[event.Id]
 		page = Application.wikiroot[subpath]
 
@@ -503,7 +512,6 @@ class MainWindow(wx.Frame):
 		_icon.CopyFromBitmap(wx.Bitmap(os.path.join (self.imagesDir, "icon.ico"), wx.BITMAP_TYPE_ANY))
 		self.SetIcon(_icon)
 		self.SetSize((400, 402))
-		self.mainToolbar.Realize()
 
 
 	def __do_layout(self):
@@ -516,7 +524,7 @@ class MainWindow(wx.Frame):
 		self.Layout()
 
 
-	def onClose (self, event):
+	def __onClose (self, event):
 		askBeforeExit = self.generalConfig.askBeforeExitOption.value
 
 		if (not askBeforeExit or 
@@ -532,31 +540,31 @@ class MainWindow(wx.Frame):
 			event.Veto()
 	
 
-	def onMainWindowConfigChange (self):
+	def __onMainWindowConfigChange (self):
 		self.__updateTitle()
 
 
-	def onTreeUpdate (self, sender):
+	def __onTreeUpdate (self, sender):
 		"""
 		Событие при обновлении дерева
 		"""
-		self._loadBookmarks()
+		self.__loadBookmarks()
 		self.__updateTitle()
 
 
-	def onNew(self, event): 
+	def __onNew(self, event): 
 		core.commands.createNewWiki(self)
 
 
-	def onOpen(self, event):
+	def __onOpen(self, event):
 		core.commands.openWikiWithDialog (self)
 	
 
-	def onSave(self, event):
+	def __onSave(self, event):
 		Application.onForceSave()
 
 
-	def onReload(self, event):
+	def __onReload(self, event):
 		core.commands.reloadWiki (self)
 	
 
@@ -571,57 +579,57 @@ class MainWindow(wx.Frame):
 			self.pagePanel.destroyWithoutSave()
 
 
-	def onAddSiblingPage(self, event):
+	def __onAddSiblingPage(self, event):
 		"""
 		Создание страницы на уровне текущей страницы
 		"""
 		gui.pagedialog.createSiblingPage (self)
 
 	
-	def onAddChildPage(self, event):
+	def __onAddChildPage(self, event):
 		"""
 		Создание дочерней страницы
 		"""
 		gui.pagedialog.createChildPage (self)
 
 
-	def onAttach(self, event):
+	def __onAttach(self, event):
 		if Application.selectedPage != None:
 			core.commands.attachFilesWithDialog (self, Application.wikiroot.selectedPage)
 
-	def onAbout(self, event):
+	def __onAbout(self, event):
 		core.commands.showAboutDialog (self)
 
 
-	def onExit(self, event):
+	def __onExit(self, event):
 		self.Close()
 
 
-	def onCopyPath(self, event):
+	def __onCopyPath(self, event):
 		if Application.selectedPage != None:
 			core.commands.copyPathToClipboard (Application.wikiroot.selectedPage)
 
 
-	def onCopyAttaches(self, event):
+	def __onCopyAttaches(self, event):
 		if Application.selectedPage != None:
 			core.commands.copyAttachPathToClipboard (Application.wikiroot.selectedPage)
 
 	
-	def onCopyLink(self, event):
+	def __onCopyLink(self, event):
 		if Application.selectedPage != None:
 			core.commands.copyLinkToClipboard (Application.wikiroot.selectedPage)
 
 	
-	def onCopyTitle(self, event):
+	def __onCopyTitle(self, event):
 		if Application.selectedPage != None:
 			core.commands.copyTitleToClipboard (Application.wikiroot.selectedPage)
 	
 
-	def onBookmarksChanged (self, event):
-		self._loadBookmarks()
+	def __onBookmarksChanged (self, event):
+		self.__loadBookmarks()
 
 
-	def onBookmark(self, event):
+	def __onBookmark(self, event):
 		if Application.selectedPage != None:
 			selectedPage = Application.wikiroot.selectedPage
 
@@ -631,18 +639,18 @@ class MainWindow(wx.Frame):
 				Application.wikiroot.bookmarks.remove (Application.wikiroot.selectedPage)
 
 
-	def onEditPage(self, event):
+	def __onEditPage(self, event):
 		if Application.selectedPage != None:
 			gui.pagedialog.editPage (self, Application.selectedPage)
 
 
-	def onRemovePage(self, event):
+	def __onRemovePage(self, event):
 		if Application.selectedPage != None:
 			core.commands.removePage (Application.wikiroot.selectedPage)
 
 
 	@core.commands.testreadonly
-	def onGlobalSearch(self, event):
+	def __onGlobalSearch(self, event):
 		if Application.wikiroot != None:
 			try:
 				pages.search.searchpage.GlobalSearch.create (Application.wikiroot)
@@ -650,7 +658,7 @@ class MainWindow(wx.Frame):
 				core.commands.MessageBox (_(u"Can't create page"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 
 
-	def onStdEvent(self, event):
+	def __onStdEvent(self, event):
 		if not self.stdEventLoop:
 			self.stdEventLoop = True
 			target = wx.Window.FindFocus()
@@ -660,25 +668,25 @@ class MainWindow(wx.Frame):
 		self.stdEventLoop = False
 
 
-	def onRename(self, event):
+	def __onRename(self, event):
 		self.tree.beginRename()
 
 
-	def onHelp(self, event):
+	def __onHelp(self, event):
 		core.commands.openHelp()
 
 
-	def onOpenReadOnly(self, event):
+	def __onOpenReadOnly(self, event):
 		core.commands.openWikiWithDialog (self, readonly=True)
 
 
-	def onPreferences(self, event):
+	def __onPreferences(self, event):
 		dlg = PrefDialog (self)
 		dlg.ShowModal()
 		dlg.Destroy()
 	
 
-	def onViewTree(self, event):
+	def __onViewTree(self, event):
 		self.showHideTree()
 	
 
@@ -713,11 +721,11 @@ class MainWindow(wx.Frame):
 		self.__showHidePane (self.attachPanel)
 
 
-	def onViewAttaches(self, event):
+	def __onViewAttaches(self, event):
 		self.showHideAttaches()
 
 
-	def onFullscreen(self, event):
+	def __onFullscreen(self, event):
 		self.setFullscreen(not self.IsFullScreen())
 
 
@@ -765,23 +773,23 @@ class MainWindow(wx.Frame):
 		self.mainMenu.viewFullscreen.Check (self.IsFullScreen())
 
 
-	def onMovePageUp(self, event):
+	def __onMovePageUp(self, event):
 		core.commands.moveCurrentPageUp()
 
 
-	def onMovePageDown(self, event):
+	def __onMovePageDown(self, event):
 		core.commands.moveCurrentPageDown()
 		
 
-	def onSortChildrenAlphabetical(self, event):
+	def __onSortChildrenAlphabetical(self, event):
 		core.commands.sortChildrenAlphabeticalGUI()
 
 
-	def onSortSiblingAlphabetical(self, event):
+	def __onSortSiblingAlphabetical(self, event):
 		core.commands.sortSiblingsAlphabeticalGUI()
 
 
-	def onPrint(self, event):
+	def __onPrint(self, event):
 		self.pagePanel.Print()
 
 # end of class MainWindow
