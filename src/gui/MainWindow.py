@@ -8,21 +8,25 @@ import wx
 import wx.aui
 
 from core.tree import WikiDocument, RootWikiPage
-from WikiTree import WikiTree
-from gui.CurrentPagePanel import CurrentPagePanel
-import core.commands
-from core.recent import RecentWiki
-import pages.search.searchpage
-import core.system
-from gui.preferences.PrefDialog import PrefDialog
-from core.application import Application
-from gui.trayicon import OutwikerTrayIcon
-from gui.AttachPanel import AttachPanel
 import core.config
-import gui.pagedialog
+import core.commands
+import core.system
+from core.application import Application
+from core.recent import RecentWiki
+from core.application import Application
+
+from WikiTree import WikiTree
+import pages.search.searchpage
 from guiconfig import MainWindowConfig, TreeConfig, AttachConfig, GeneralGuiConfig
+
 from .mainid import MainId
-from mainmenu import MainMenu
+from .CurrentPagePanel import CurrentPagePanel
+from .mainmenu import MainMenu
+from .maintoolbar import MainToolBar
+import pagedialog
+from .trayicon import OutwikerTrayIcon
+from .AttachPanel import AttachPanel
+from .preferences.PrefDialog import PrefDialog
 
 
 class MainWindow(wx.Frame):
@@ -62,25 +66,8 @@ class MainWindow(wx.Frame):
 		kwds["style"] = wx.DEFAULT_FRAME_STYLE
 		wx.Frame.__init__(self, *args, **kwds)
 		
-		# Menu Bar
-		self.mainMenu = MainMenu()
-		self.SetMenuBar(self.mainMenu)
-		# Menu Bar end
-
-
-		# Tool Bar
-		self.mainToolbar = wx.ToolBar(self, -1, style=wx.TB_HORIZONTAL|wx.TB_FLAT|wx.TB_DOCKABLE)
-		self.SetToolBar(self.mainToolbar)
-		self.mainToolbar.AddLabelTool(MainId.ID_NEW, _(u"New…"), wx.Bitmap(os.path.join (self.imagesDir, "new.png"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _(u"Create new wiki…"), "")
-		self.mainToolbar.AddLabelTool(MainId.ID_OPEN, _(u"Open…"), wx.Bitmap(os.path.join (self.imagesDir, "open.png"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _(u"Open wiki…"), "")
-		self.mainToolbar.AddLabelTool(MainId.ID_SAVE, _("Save"), wx.Bitmap(os.path.join (self.imagesDir, "save.png"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _("Save wiki"), "")
-		self.mainToolbar.AddLabelTool(MainId.ID_RELOAD, _("Reload"), wx.Bitmap(os.path.join (self.imagesDir, "reload.png"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _("Reload wiki"), "")
-		self.mainToolbar.AddSeparator()
-		self.mainToolbar.AddLabelTool(MainId.ID_ATTACH, _(u"Attach files…"), wx.Bitmap(os.path.join (self.imagesDir, "attach.png"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _(u"Attach files…"), "")
-		self.mainToolbar.AddLabelTool(MainId.ID_GLOBAL_SEARCH, _(u"Global search…"), wx.Bitmap(os.path.join (self.imagesDir, "global_search.png"), wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, _(u"Global search…"), "")
-		self.mainToolbar.AddSeparator()
-		self.mainToolbar.Realize()
-		# Tool Bar end
+		self.__createMenu()
+		self.__createToolBar()
 
 		self.mainPanel = wx.Panel(self, -1)
 		self.statusbar = wx.StatusBar(self, -1)
@@ -128,6 +115,16 @@ class MainWindow(wx.Frame):
 
 		self.taskBarIcon = OutwikerTrayIcon(self)
 		self.__updateTitle()
+
+
+	def __createMenu (self):
+		self.mainMenu = MainMenu()
+		self.SetMenuBar(self.mainMenu)
+
+
+	def __createToolBar (self):
+		self.mainToolbar = MainToolBar (self, -1, style=wx.TB_HORIZONTAL|wx.TB_FLAT|wx.TB_DOCKABLE)
+		self.SetToolBar(self.mainToolbar)
 
 
 	def __bindAppEvents (self):
