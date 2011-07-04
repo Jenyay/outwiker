@@ -23,7 +23,7 @@ from .mainid import MainId
 from .CurrentPagePanel import CurrentPagePanel
 from .mainmenu import MainMenu
 from .maintoolbar import MainToolBar
-import pagedialog
+from .pagedialog import createSiblingPage, createChildPage, editPage
 from .trayicon import OutwikerTrayIcon
 from .AttachPanel import AttachPanel
 from .preferences.PrefDialog import PrefDialog
@@ -31,6 +31,9 @@ from .preferences.PrefDialog import PrefDialog
 
 class MainWindow(wx.Frame):
 	def __init__(self, *args, **kwds):
+		kwds["style"] = wx.DEFAULT_FRAME_STYLE
+		wx.Frame.__init__(self, *args, **kwds)
+
 		self.disabledTools = [MainId.ID_SAVE, MainId.ID_RELOAD, 
 				MainId.ID_ADDPAGE, MainId.ID_ADDCHILD, MainId.ID_ATTACH, 
 				MainId.ID_COPYPATH, MainId.ID_COPY_ATTACH_PATH, MainId.ID_COPY_LINK,
@@ -63,38 +66,25 @@ class MainWindow(wx.Frame):
 		# Путь к директории с программой/скриптом
 		self.imagesDir = core.system.getImagesDir()
 
-		kwds["style"] = wx.DEFAULT_FRAME_STYLE
-		wx.Frame.__init__(self, *args, **kwds)
-		
+		self.mainPanel = wx.Panel(self, -1)
+
+		self.__do_layout()
+		self.__loadMainWindowParams()
+		self.__setIcon()
+
+		self.__createAuiPanes (self.mainPanel)
 		self.__createMenu()
 		self.__createToolBar()
-
-		self.mainPanel = wx.Panel(self, -1)
-		self.statusbar = wx.StatusBar(self, -1)
-
-		self.__set_properties()
-		self.__do_layout()
+		self.__createStatusBar()
 
 		self.__bindGuiEvents()
-
-		self.auiManager = wx.aui.AuiManager(self.mainPanel)
-
-		self.tree = WikiTree(self.mainPanel, -1)
-		self.pagePanel = CurrentPagePanel(self.mainPanel, -1)
-		self.attachPanel = AttachPanel (self.mainPanel, -1)
-
-		self.__loadMainWindowParams()
-		self.__initAuiManager ()
-		self.auiManager.Bind (wx.aui.EVT_AUI_PANE_CLOSE, self.__onPaneClose)
-
 		self.Bind (wx.EVT_CLOSE, self.__onClose)
 		self.mainPanel.Bind (wx.EVT_CLOSE, self.__onMainPanelClose)
 
-		self._dropTarget = DropFilesTarget (self)
+		self._dropTarget = DropFilesTarget (self.attachPanel)
 
 		self.__enableGui()
 
-		self.statusbar.SetFieldsCount(1)
 
 		aTable = wx.AcceleratorTable([
 			(wx.ACCEL_CTRL,  wx.WXK_INSERT, wx.ID_COPY),
@@ -115,6 +105,12 @@ class MainWindow(wx.Frame):
 
 		self.taskBarIcon = OutwikerTrayIcon(self)
 		self.__updateTitle()
+
+
+	def __createStatusBar (self):
+		self.statusbar = wx.StatusBar(self, -1)
+		self.statusbar.SetFieldsCount(1)
+		self.SetStatusBar (self.statusbar)
 
 
 	def __createMenu (self):
@@ -214,7 +210,13 @@ class MainWindow(wx.Frame):
 		self.mainPanel.Destroy()
 
 
-	def __initAuiManager(self):
+	def __createAuiPanes(self, parent):
+		self.auiManager = wx.aui.AuiManager(parent)
+
+		self.tree = WikiTree(parent, -1)
+		self.pagePanel = CurrentPagePanel(parent, -1)
+		self.attachPanel = AttachPanel (parent, -1)
+
 		self.__initPagePane (self.auiManager)
 		self.__initAttachesPane (self.auiManager)
 		self.__initTreePane (self.auiManager)
@@ -222,6 +224,8 @@ class MainWindow(wx.Frame):
 
 		self.auiManager.SetDockSizeConstraint (0.8, 0.8)
 		self.auiManager.Update()
+
+		self.auiManager.Bind (wx.aui.EVT_AUI_PANE_CLOSE, self.__onPaneClose)
 
 	
 	def __onPaneClose (self, event):
@@ -463,7 +467,6 @@ class MainWindow(wx.Frame):
 		"""
 		Загрузить параметры из конфига
 		"""
-		#config = Application.config
 		self.Freeze()
 
 		width = self.mainWindowConfig.WidthOption.value
@@ -482,8 +485,6 @@ class MainWindow(wx.Frame):
 		"""
 		Сохранить параметры в конфиг
 		"""
-		#config = Application.config
-
 		try:
 			if not self.IsIconized():
 				if not self.IsFullScreen():
@@ -503,18 +504,15 @@ class MainWindow(wx.Frame):
 					_(u"Error"), wx.ICON_ERROR | wx.OK)
 	
 
-	def __set_properties(self):
-		self.SetTitle(_("OutWiker"))
+	def __setIcon (self):
 		_icon = wx.EmptyIcon()
 		_icon.CopyFromBitmap(wx.Bitmap(os.path.join (self.imagesDir, "icon.ico"), wx.BITMAP_TYPE_ANY))
 		self.SetIcon(_icon)
-		self.SetSize((400, 402))
 
 
 	def __do_layout(self):
-		mainSizer = wx.FlexGridSizer(2, 1, 0, 0)
+		mainSizer = wx.FlexGridSizer(1, 1, 0, 0)
 		mainSizer.Add(self.mainPanel, 1, wx.EXPAND, 0)
-		mainSizer.Add(self.statusbar, 1, wx.EXPAND, 0)
 		self.SetSizer(mainSizer)
 		mainSizer.AddGrowableRow(0)
 		mainSizer.AddGrowableCol(0)
@@ -580,14 +578,14 @@ class MainWindow(wx.Frame):
 		"""
 		Создание страницы на уровне текущей страницы
 		"""
-		gui.pagedialog.createSiblingPage (self)
+		createSiblingPage (self)
 
 	
 	def __onAddChildPage(self, event):
 		"""
 		Создание дочерней страницы
 		"""
-		gui.pagedialog.createChildPage (self)
+		createChildPage (self)
 
 
 	def __onAttach(self, event):
@@ -638,7 +636,7 @@ class MainWindow(wx.Frame):
 
 	def __onEditPage(self, event):
 		if Application.selectedPage != None:
-			gui.pagedialog.editPage (self, Application.selectedPage)
+			editPage (self, Application.selectedPage)
 
 
 	def __onRemovePage(self, event):
