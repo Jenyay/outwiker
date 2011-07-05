@@ -13,6 +13,7 @@ from core.application import Application
 from guiconfig import EditorConfig
 from core.textprinter import TextPrinter
 from .editorsearchpanel import EditorSearchPanel
+from .mainid import MainId
 
 # begin wxGlade: dependencies
 # end wxGlade
@@ -42,11 +43,11 @@ class TextEditor(wx.Panel):
 		self.setDefaultSettings()
 		self.searchPanel.setEditor (self, self.textCtrl)
 		
-		self.textCtrl.Bind(wx.EVT_MENU, self.onCopyFromEditor, id = wx.ID_COPY)
-		self.textCtrl.Bind(wx.EVT_MENU, self.onCutFromEditor, id = wx.ID_CUT)
-		self.textCtrl.Bind(wx.EVT_MENU, self.onPasteToEditor, id = wx.ID_PASTE)
-		self.textCtrl.Bind(wx.EVT_MENU, self.onUndo, id = wx.ID_UNDO)
-		self.textCtrl.Bind(wx.EVT_MENU, self.onRedo, id = wx.ID_REDO)
+		self.textCtrl.Bind(wx.EVT_MENU, self.onCopyFromEditor, id = MainId.ID_COPY)
+		self.textCtrl.Bind(wx.EVT_MENU, self.onCutFromEditor, id = MainId.ID_CUT)
+		self.textCtrl.Bind(wx.EVT_MENU, self.onPasteToEditor, id = MainId.ID_PASTE)
+		self.textCtrl.Bind(wx.EVT_MENU, self.onUndo, id = MainId.ID_UNDO)
+		self.textCtrl.Bind(wx.EVT_MENU, self.onRedo, id = MainId.ID_REDO)
 		self.textCtrl.Bind (wx.EVT_CHAR, self.OnChar_ImeWorkaround)
 		self.textCtrl.Bind (wx.EVT_KEY_DOWN, self.onKeyDown)
 

@@ -27,22 +27,13 @@ from .pagedialog import createSiblingPage, createChildPage, editPage
 from .trayicon import OutwikerTrayIcon
 from .AttachPanel import AttachPanel
 from .preferences.PrefDialog import PrefDialog
+from .mainwndcontroller import MainWndController
 
 
 class MainWindow(wx.Frame):
 	def __init__(self, *args, **kwds):
 		kwds["style"] = wx.DEFAULT_FRAME_STYLE
 		wx.Frame.__init__(self, *args, **kwds)
-
-		# Идентификаторы пунктов меню и кнопок, которые надо задизаблить, если не открыта вики
-		self.disabledTools = [MainId.ID_SAVE, MainId.ID_RELOAD, 
-				MainId.ID_ADDPAGE, MainId.ID_ADDCHILD, MainId.ID_ATTACH, 
-				MainId.ID_COPYPATH, MainId.ID_COPY_ATTACH_PATH, MainId.ID_COPY_LINK,
-				MainId.ID_COPY_TITLE, MainId.ID_BOOKMARKS, MainId.ID_ADDBOOKMARK,
-				MainId.ID_EDIT, MainId.ID_REMOVE_PAGE, MainId.ID_GLOBAL_SEARCH,
-				wx.ID_UNDO, wx.ID_REDO, wx.ID_CUT, wx.ID_COPY, wx.ID_PASTE,
-				MainId.ID_SORT_SIBLINGS_ALPHABETICAL, MainId.ID_SORT_CHILDREN_ALPHABETICAL,
-				MainId.ID_MOVE_PAGE_UP, MainId.ID_MOVE_PAGE_DOWN, MainId.ID_RENAME]
 
 
 		self.mainWindowConfig = MainWindowConfig (Application.config)
@@ -76,13 +67,14 @@ class MainWindow(wx.Frame):
 
 		self._dropTarget = DropFilesTarget (self.attachPanel)
 
-		self.__enableGui()
+		self.controller = MainWndController (self)
 
 		self.__createAcceleratorTable()
 
 		self.__updateRecentMenu()
 		self.setFullscreen(self.mainWindowConfig.FullscreenOption.value)
 		self.__setIcon()
+		self.SetTitle (u"OutWiker")
 
 		self.Show()
 
@@ -93,7 +85,6 @@ class MainWindow(wx.Frame):
 			self.__openRecentWiki ()
 
 		self.taskBarIcon = OutwikerTrayIcon(self)
-		self.__updateTitle()
 
 
 	def __createAcceleratorTable (self):
@@ -128,9 +119,7 @@ class MainWindow(wx.Frame):
 		Подписаться на события из Application
 		"""
 		Application.onTreeUpdate += self.__onTreeUpdate
-		Application.onPageSelect += self.__onPageSelect
 		Application.onBookmarksChanged += self.__onBookmarksChanged
-		Application.onMainWindowConfigChange += self.__onMainWindowConfigChange
 		Application.onWikiOpen += self.__onWikiOpen
 
 
@@ -144,11 +133,11 @@ class MainWindow(wx.Frame):
 		self.Bind(wx.EVT_MENU, self.__onSave, id=MainId.ID_SAVE)
 		self.Bind(wx.EVT_MENU, self.__onPrint, id=wx.ID_PRINT)
 		self.Bind(wx.EVT_MENU, self.__onExit, id=MainId.ID_EXIT)
-		self.Bind(wx.EVT_MENU, self.__onStdEvent, id=wx.ID_UNDO)
-		self.Bind(wx.EVT_MENU, self.__onStdEvent, id=wx.ID_REDO)
-		self.Bind(wx.EVT_MENU, self.__onStdEvent, id=wx.ID_CUT)
-		self.Bind(wx.EVT_MENU, self.__onStdEvent, id=wx.ID_COPY)
-		self.Bind(wx.EVT_MENU, self.__onStdEvent, id=wx.ID_PASTE)
+		self.Bind(wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_UNDO)
+		self.Bind(wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_REDO)
+		self.Bind(wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_CUT)
+		self.Bind(wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_COPY)
+		self.Bind(wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_PASTE)
 		self.Bind(wx.EVT_MENU, self.__onPreferences, id=MainId.ID_PREFERENCES)
 		self.Bind(wx.EVT_MENU, self.__onAddSiblingPage, id=MainId.ID_ADDPAGE)
 		self.Bind(wx.EVT_MENU, self.__onAddChildPage, id=MainId.ID_ADDCHILD)
@@ -192,9 +181,9 @@ class MainWindow(wx.Frame):
 						_(u"Can't add wiki to recent list.\nCan't save config.\n%s") % (unicode (e)),
 						_(u"Error"), wx.ICON_ERROR | wx.OK)
 
-		self.__enableGui()
+		self.controller.enableGui()
 		self.__loadBookmarks()
-		self.__updateTitle()
+		self.controller.updateTitle()
 
 
 	def __createAuiPanes(self, parent):
@@ -312,48 +301,6 @@ class MainWindow(wx.Frame):
 		self.attachConfig.attachesHeightOption.value = self.attachPanel.GetSizeTuple()[1]
 		
 
-	def __onPageSelect (self, newpage):
-		self.__updateTitle()
-	
-
-	def __updateTitle (self):
-		template = self.mainWindowConfig.titleFormatOption.value
-
-		if Application.wikiroot == None:
-			self.SetTitle (u"OutWiker")
-			return
-
-		pageTitle = u"" if Application.wikiroot.selectedPage == None else Application.wikiroot.selectedPage.title
-		filename = os.path.basename (Application.wikiroot.path)
-
-		result = template.replace ("{file}", filename).replace ("{page}", pageTitle)
-		self.SetTitle (result)
-	
-
-	def __enableGui (self):
-		"""
-		Проверить открыта ли вики и включить или выключить кнопки на панели
-		"""
-		enabled = Application.wikiroot != None
-		self.__enableTools (enabled)
-		self.__enableMenu (enabled)
-		self.pagePanel.Enable(enabled)
-		self.tree.Enable(enabled)
-		self.attachPanel.Enable(enabled)
-
-
-	def __enableTools (self, enabled):
-		for toolId in self.disabledTools:
-			if self.mainToolbar.FindById (toolId) != None:
-				self.mainToolbar.EnableTool (toolId, enabled)
-
-	
-	def __enableMenu (self, enabled):
-		for toolId in self.disabledTools:
-			if self.mainMenu.FindItemById (toolId) != None:
-				self.mainMenu.Enable (toolId, enabled)
-
-
 	def __openRecentWiki (self):
 		"""
 		Открыть последнюю вики, если установлена соответствующая опция
@@ -415,10 +362,10 @@ class MainWindow(wx.Frame):
 				self._bookmarksId[id] = subpath
 
 				# Найдем родителя
-				parent = page.parent
+				parentPage = page.parent
 
-				if parent.parent != None:
-					label = "%s [%s]" % (page.title, parent.subpath)
+				if parentPage.parent != None:
+					label = "%s [%s]" % (page.title, parentPage.subpath)
 				else:
 					label = page.title
 
@@ -523,16 +470,12 @@ class MainWindow(wx.Frame):
 			event.Veto()
 	
 
-	def __onMainWindowConfigChange (self):
-		self.__updateTitle()
-
-
 	def __onTreeUpdate (self, sender):
 		"""
 		Событие при обновлении дерева
 		"""
 		self.__loadBookmarks()
-		self.__updateTitle()
+		self.controller.updateTitle()
 
 
 	def __onNew(self, event): 

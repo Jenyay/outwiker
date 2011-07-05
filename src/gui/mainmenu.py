@@ -54,12 +54,12 @@ class MainMenu (wx.MenuBar):
 
 	def createEditMenu (self):
 		editMenu = wx.Menu()
-		editMenu.Append(wx.ID_UNDO, _("&Undo\tCtrl+Z"), "", wx.ITEM_NORMAL)
-		editMenu.Append(wx.ID_REDO, _("&Redo\tCtrl+Y"), "", wx.ITEM_NORMAL)
+		editMenu.Append(MainId.ID_UNDO, _("&Undo\tCtrl+Z"), "", wx.ITEM_NORMAL)
+		editMenu.Append(MainId.ID_REDO, _("&Redo\tCtrl+Y"), "", wx.ITEM_NORMAL)
 		editMenu.AppendSeparator()
-		editMenu.Append(wx.ID_CUT, _("Cu&t\tCtrl+X"), "", wx.ITEM_NORMAL)
-		editMenu.Append(wx.ID_COPY, _("&Copy\tCtrl+C"), "", wx.ITEM_NORMAL)
-		editMenu.Append(wx.ID_PASTE, _("&Paste\tCtrl+V"), "", wx.ITEM_NORMAL)
+		editMenu.Append(MainId.ID_CUT, _("Cu&t\tCtrl+X"), "", wx.ITEM_NORMAL)
+		editMenu.Append(MainId.ID_COPY, _("&Copy\tCtrl+C"), "", wx.ITEM_NORMAL)
+		editMenu.Append(MainId.ID_PASTE, _("&Paste\tCtrl+V"), "", wx.ITEM_NORMAL)
 		editMenu.AppendSeparator()
 		editMenu.Append(MainId.ID_PREFERENCES, _(u"Pr&eferences…\tCtrl+F8"), "", wx.ITEM_NORMAL)
 
