@@ -34,6 +34,7 @@ class MainWindow(wx.Frame):
 		kwds["style"] = wx.DEFAULT_FRAME_STYLE
 		wx.Frame.__init__(self, *args, **kwds)
 
+		# Идентификаторы пунктов меню и кнопок, которые надо задизаблить, если не открыта вики
 		self.disabledTools = [MainId.ID_SAVE, MainId.ID_RELOAD, 
 				MainId.ID_ADDPAGE, MainId.ID_ADDCHILD, MainId.ID_ATTACH, 
 				MainId.ID_COPYPATH, MainId.ID_COPY_ATTACH_PATH, MainId.ID_COPY_LINK,
@@ -50,8 +51,8 @@ class MainWindow(wx.Frame):
 		self.generalConfig = GeneralGuiConfig (Application.config)
 
 		# Флаг, обозначающий, что в цикле обработки стандартных сообщений 
-		# вроде копирования в буфер обмена сообщение вернулось обратно
-		self.stdEventLoop = False
+		# (например, копирования в буфер обмена) сообщение вернулось обратно
+		self.__stdEventLoop = False
 
 		# Идентификаторы для пунктов меню последних открытых вики
 		# Ключ - id, значение - путь до вики
@@ -63,37 +64,25 @@ class MainWindow(wx.Frame):
 
 		self.__bindAppEvents()
 		
-		# Путь к директории с программой/скриптом
-		self.imagesDir = core.system.getImagesDir()
-
-		self.mainPanel = wx.Panel(self, -1)
-
-		self.__do_layout()
 		self.__loadMainWindowParams()
-		self.__setIcon()
 
-		self.__createAuiPanes (self.mainPanel)
+		self.__createAuiPanes (self)
 		self.__createMenu()
 		self.__createToolBar()
 		self.__createStatusBar()
 
 		self.__bindGuiEvents()
 		self.Bind (wx.EVT_CLOSE, self.__onClose)
-		self.mainPanel.Bind (wx.EVT_CLOSE, self.__onMainPanelClose)
 
 		self._dropTarget = DropFilesTarget (self.attachPanel)
 
 		self.__enableGui()
 
-
-		aTable = wx.AcceleratorTable([
-			(wx.ACCEL_CTRL,  wx.WXK_INSERT, wx.ID_COPY),
-			(wx.ACCEL_SHIFT,  wx.WXK_INSERT, wx.ID_PASTE),
-			(wx.ACCEL_SHIFT,  wx.WXK_DELETE, wx.ID_CUT)])
-		self.SetAcceleratorTable(aTable)
+		self.__createAcceleratorTable()
 
 		self.__updateRecentMenu()
 		self.setFullscreen(self.mainWindowConfig.FullscreenOption.value)
+		self.__setIcon()
 
 		self.Show()
 
@@ -105,6 +94,17 @@ class MainWindow(wx.Frame):
 
 		self.taskBarIcon = OutwikerTrayIcon(self)
 		self.__updateTitle()
+
+
+	def __createAcceleratorTable (self):
+		"""
+		Создать горячие клавиши, которые не попали в меню
+		"""
+		aTable = wx.AcceleratorTable([
+			(wx.ACCEL_CTRL,  wx.WXK_INSERT, wx.ID_COPY),
+			(wx.ACCEL_SHIFT,  wx.WXK_INSERT, wx.ID_PASTE),
+			(wx.ACCEL_SHIFT,  wx.WXK_DELETE, wx.ID_CUT)])
+		self.SetAcceleratorTable(aTable)
 
 
 	def __createStatusBar (self):
@@ -195,19 +195,6 @@ class MainWindow(wx.Frame):
 		self.__enableGui()
 		self.__loadBookmarks()
 		self.__updateTitle()
-
-
-	def __onMainPanelClose (self, event):
-		self.tree.Close()
-		self.tree = None
-
-		self.pagePanel.Close()
-		self.pagePanel = None
-
-		self.attachPanel.Close()
-		self.attachPanel = None
-		
-		self.mainPanel.Destroy()
 
 
 	def __createAuiPanes(self, parent):
@@ -505,18 +492,11 @@ class MainWindow(wx.Frame):
 	
 
 	def __setIcon (self):
-		_icon = wx.EmptyIcon()
-		_icon.CopyFromBitmap(wx.Bitmap(os.path.join (self.imagesDir, "icon.ico"), wx.BITMAP_TYPE_ANY))
-		self.SetIcon(_icon)
+		icon = wx.EmptyIcon()
+		icon.CopyFromBitmap(wx.Bitmap(os.path.join (core.system.getImagesDir(), "icon.ico"), 
+			wx.BITMAP_TYPE_ANY))
 
-
-	def __do_layout(self):
-		mainSizer = wx.FlexGridSizer(1, 1, 0, 0)
-		mainSizer.Add(self.mainPanel, 1, wx.EXPAND, 0)
-		self.SetSizer(mainSizer)
-		mainSizer.AddGrowableRow(0)
-		mainSizer.AddGrowableCol(0)
-		self.Layout()
+		self.SetIcon(icon)
 
 
 	def __onClose (self, event):
@@ -527,8 +507,16 @@ class MainWindow(wx.Frame):
 			self.__saveParams()
 
 			self.auiManager.UnInit()
-			self.mainPanel.Close()
 
+			self.tree.Close()
+			self.tree = None
+
+			self.pagePanel.Close()
+			self.pagePanel = None
+
+			self.attachPanel.Close()
+			self.attachPanel = None
+			
 			self.taskBarIcon.Destroy()
 			self.Destroy()
 		else:
@@ -654,13 +642,13 @@ class MainWindow(wx.Frame):
 
 
 	def __onStdEvent(self, event):
-		if not self.stdEventLoop:
-			self.stdEventLoop = True
+		if not self.__stdEventLoop:
+			self.__stdEventLoop = True
 			target = wx.Window.FindFocus()
 
 			if target != None:
 				target.ProcessEvent (event)
-		self.stdEventLoop = False
+		self.__stdEventLoop = False
 
 
 	def __onRename(self, event):
