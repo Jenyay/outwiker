@@ -12,7 +12,7 @@ from pages.wiki.parser.wikiparser import Parser
 from pages.wiki.wikipage import WikiPageFactory
 from pages.wiki.parser.command import Command
 from pages.wiki.parserfactory import ParserFactory
-from utils import removeWiki
+from test.utils import removeWiki
 
 
 class WikiCommandsTest (unittest.TestCase):

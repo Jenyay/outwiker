@@ -5,7 +5,7 @@ import os
 import unittest
 import hashlib
 
-from utils import removeWiki
+from test.utils import removeWiki
 
 from core.tree import WikiDocument
 from core.attachment import Attachment

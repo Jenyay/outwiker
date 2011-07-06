@@ -38,27 +38,27 @@ if __name__ == '__main__':
 	from test.pageremove import RemovePagesTest
 	from test.pageorder import PageOrderTest
 
-	from test.parserfont import ParserFontTest
-	from test.parserformat import ParserFormatTest
-	from test.parsermisc import ParserMiscTest
-	from test.parserlink import ParserLinkTest
-	from test.parserattach import ParserAttachTest
-	from test.parserimages import ParserImagesTest
-	from test.parserheading import ParserHeadingTest
-	from test.parserthumb import ParserThumbTest
-	from test.parseralign import ParserAlignTest
-	from test.parserlist import ParserListTest
-	from test.parsertable import ParserTableTest
-	from test.parseradhoc import ParserAdHocTest
-	from test.parserurl import ParserUrlTest
-	from test.parsertex import ParserTexTest
-	from test.parserlinebreak import ParserLineBreakTest
+	from test.parsertests.parserfont import ParserFontTest
+	from test.parsertests.parserformat import ParserFormatTest
+	from test.parsertests.parsermisc import ParserMiscTest
+	from test.parsertests.parserlink import ParserLinkTest
+	from test.parsertests.parserattach import ParserAttachTest
+	from test.parsertests.parserimages import ParserImagesTest
+	from test.parsertests.parserheading import ParserHeadingTest
+	from test.parsertests.parserthumb import ParserThumbTest
+	from test.parsertests.parseralign import ParserAlignTest
+	from test.parsertests.parserlist import ParserListTest
+	from test.parsertests.parsertable import ParserTableTest
+	from test.parsertests.parseradhoc import ParserAdHocTest
+	from test.parsertests.parserurl import ParserUrlTest
+	from test.parsertests.parsertex import ParserTexTest
+	from test.parsertests.parserlinebreak import ParserLineBreakTest
 
-	from test.wikicommands import WikiCommandsTest
-	from test.wikicommandinclude import WikiIncludeCommandTest
-	from test.wikicommandbloggers import WikiBloggersCommandTest
-	from test.wikicommandchildlist import WikiChildListCommandTest
-	from test.wikicommandattachlist import WikiAttachListCommandTest
+	from test.parsertests.wikicommands import WikiCommandsTest
+	from test.parsertests.wikicommandinclude import WikiIncludeCommandTest
+	from test.parsertests.wikicommandbloggers import WikiBloggersCommandTest
+	from test.parsertests.wikicommandchildlist import WikiChildListCommandTest
+	from test.parsertests.wikicommandattachlist import WikiAttachListCommandTest
 
 	from test.wxthumbmaker import WxThumbmakerTest
 	from test.pagethumbmaker import PageThumbmakerTest
@@ -77,9 +77,9 @@ if __name__ == '__main__':
 	from test.version import VersionTest, StatusTest
 	from test.treesort import TreeSortTest
 	from test.emptycontent import EmptyContentTest
-	from test.mainid import MainIdTest
 
-	from test.mainwnd import MainWndTest
+	from test.guitests.mainid import MainIdTest
+	from test.guitests.mainwnd import MainWndTest
 
 
 	#f = open('tests.log', "w")

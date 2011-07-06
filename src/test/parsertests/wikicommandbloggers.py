@@ -10,7 +10,7 @@ from pages.wiki.wikipage import WikiPageFactory
 from pages.wiki.parser.command import Command
 from pages.wiki.parserfactory import ParserFactory
 from pages.wiki.parser.commandbloggers import LjUserCommand, LjCommunityCommand
-from utils import removeWiki
+from test.utils import removeWiki
 
 
 class WikiBloggersCommandTest (unittest.TestCase):
