@@ -35,10 +35,22 @@ class MainWndController (object):
 		"""
 		Начальные установки для главного окна
 		"""
+		self.__bindAppEvents()
+		self.enableGui()
+
+
+	def destroy (self):
+		self.__unbindAppEvents()
+
+
+	def __bindAppEvents (self):
 		Application.onPageSelect += self.__onPageSelect
 		Application.onMainWindowConfigChange += self.__onMainWindowConfigChange
 
-		self.enableGui()
+
+	def __unbindAppEvents (self):
+		Application.onPageSelect -= self.__onPageSelect
+		Application.onMainWindowConfigChange -= self.__onMainWindowConfigChange
 	
 
 	###################################################

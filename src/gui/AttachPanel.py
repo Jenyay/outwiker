@@ -44,13 +44,27 @@ class AttachPanel(wx.Panel):
 		self.Bind(wx.EVT_MENU, self.onRemove, id=self.ID_REMOVE)
 		self.Bind(wx.EVT_MENU, self.onPaste, id=self.ID_PASTE)
 		self.Bind(wx.EVT_MENU, self.onExecute, id=self.ID_EXECUTE)
+		self.Bind (wx.EVT_CLOSE, self.onClose)
 
 		self.currentPage = None
 
+		self.__bindAppEvents()
+
+		self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.onPaste, self.attachList)
+
+
+	def __bindAppEvents (self):
 		Application.onPageSelect += self.onPageSelect
 		Application.onPageUpdate += self.onPageUpdate
 
-		self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.onPaste, self.attachList)
+	
+	def __unbindAppEvents (self):
+		Application.onPageSelect -= self.onPageSelect
+		Application.onPageUpdate -= self.onPageUpdate
+
+
+	def onClose (self, event):
+		self.__unbindAppEvents()
 	
 
 	def __createToolBar (self, parent, id):

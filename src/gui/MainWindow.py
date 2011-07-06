@@ -11,7 +11,6 @@ from core.tree import WikiDocument, RootWikiPage
 import core.config
 import core.commands
 import core.system
-from core.application import Application
 from core.recent import RecentWiki
 from core.application import Application
 
@@ -121,6 +120,15 @@ class MainWindow(wx.Frame):
 		Application.onTreeUpdate += self.__onTreeUpdate
 		Application.onBookmarksChanged += self.__onBookmarksChanged
 		Application.onWikiOpen += self.__onWikiOpen
+
+
+	def __unbindAppEvents (self):
+		"""
+		Подписаться на события из Application
+		"""
+		Application.onTreeUpdate -= self.__onTreeUpdate
+		Application.onBookmarksChanged -= self.__onBookmarksChanged
+		Application.onWikiOpen -= self.__onWikiOpen
 
 
 	def __bindGuiEvents (self):
@@ -463,8 +471,13 @@ class MainWindow(wx.Frame):
 
 			self.attachPanel.Close()
 			self.attachPanel = None
+
+			self.statusbar.Close()
 			
 			self.taskBarIcon.Destroy()
+			self.controller.destroy()
+			self.__unbindAppEvents()
+
 			self.Destroy()
 		else:
 			event.Veto()

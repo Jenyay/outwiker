@@ -101,6 +101,24 @@ class WikiTree(wx.Panel):
 		# События, связанные с рендерингом страниц
 		Application.onHtmlRenderingBegin += self.onHtmlRenderingBegin
 		Application.onHtmlRenderingEnd += self.onHtmlRenderingEnd
+
+
+	def UnBindApplicationEvents(self):
+		"""
+		Отписка от событий контроллера
+		"""
+		Application.onTreeUpdate -= self.onTreeUpdate
+		Application.onPageCreate -= self.onPageCreate
+		Application.onPageOrderChange -= self.onPageOrderChange
+		Application.onPageSelect -= self.onPageSelect
+		Application.onPageRemove -= self.onPageRemove
+
+		Application.onStartTreeUpdate -= self.onStartTreeUpdate
+		Application.onEndTreeUpdate -= self.onEndTreeUpdate
+		
+		# События, связанные с рендерингом страниц
+		Application.onHtmlRenderingBegin -= self.onHtmlRenderingBegin
+		Application.onHtmlRenderingEnd -= self.onHtmlRenderingEnd
 	
 
 	def BindGuiEvents (self):
@@ -133,6 +151,12 @@ class WikiTree(wx.Panel):
 		self.Bind(wx.EVT_MENU, self.onRemovePage, id=self.ID_REMOVE_PAGE)
 		
 		self.Bind(wx.EVT_MENU, self.onPropertiesButton, id=self.ID_PROPERTIES_BUTTON)
+
+		self.Bind (wx.EVT_CLOSE, self.onClose)
+
+
+	def onClose (self, event):
+		self.UnBindApplicationEvents()
 
 
 	def onPropertiesButton (self, event):

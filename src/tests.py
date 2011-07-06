@@ -79,5 +79,10 @@ if __name__ == '__main__':
 	from test.emptycontent import EmptyContentTest
 	from test.mainid import MainIdTest
 
+	from test.mainwnd import MainWndTest
 
+
+	#f = open('tests.log', "w")
+	#runner = unittest.TextTestRunner(f)
+	#unittest.main(testRunner=runner)
 	unittest.main()
