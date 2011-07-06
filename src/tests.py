@@ -15,11 +15,7 @@ from core.application import Application
 Application.init ("../test/testconfig.ini")
 
 if __name__ == '__main__':
-	class testApp(wx.App):
-		def __init__(self, *args, **kwds):
-			wx.App.__init__ (self, *args, **kwds)
-
-	app = testApp(redirect=False)
+	app = wx.PySimpleApp(redirect=False)
 
 	import unittest
 

@@ -1,0 +1,30 @@
+DIR_NAME=outwiker-1.3.2-1
+outwiker_dir=../distrib/$(DIR_NAME)/opt/outwiker/
+
+deb:
+	rm -r $(outwiker_dir)
+	mkdir $(outwiker_dir)
+	# Скопируем нужные файлы из исходников
+	cp -r "core" $(outwiker_dir)
+	cp -r "gui" $(outwiker_dir)
+	cp -r "help" $(outwiker_dir)
+	cp -r "images" $(outwiker_dir)
+	cp -r "libs" $(outwiker_dir)
+	cp -r "locale" $(outwiker_dir)
+	cp -r "pages" $(outwiker_dir)
+	cp -r "templates" $(outwiker_dir)
+	cp "outwiker.py" $(outwiker_dir)
+	cp "copyright" $(outwiker_dir)
+	cp "README" $(outwiker_dir)
+	cp "version.txt" $(outwiker_dir)
+	# Удалить файлы *.pyc, *.wxg, *.py~, *.wxg~ 
+	find . -name *.pyc -type f -print | xargs rm
+	find . -name *.py~ -type f -print | xargs rm
+	find . -name *.wxg -type f -print | xargs rm
+	find . -name *.wxg~ -type f -print | xargs rm
+	find . -name *.~1~ -type f -print | xargs rm
+	# Создание файла с контрольными суммами 
+	md5deep -r "$(DIR_NAME)/opt" > "$(DIR_NAME)/DEBIAN/md5sums"
+	md5deep -r "$(DIR_NAME)/usr" >> "$(DIR_NAME)/DEBIAN/md5sums"
+	# Сборка пакета 
+	fakeroot dpkg-deb --build "$(DIR_NAME)"
