@@ -74,9 +74,13 @@ class OutwikerTrayIcon (wx.TaskBarIcon):
 	
 
 	def onIconize (self, event):
-		if self.mainWnd.IsIconized():
+		if event.Iconized():
 			# Окно свернули
 			self.__iconizeWindow ()
+		else:
+			self.__restoreMainWindow()
+
+		self.updateTrayIcon()
 	
 
 	def __iconizeWindow (self):
