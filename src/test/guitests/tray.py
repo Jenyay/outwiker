@@ -35,13 +35,19 @@ class TrayNormalTest(BaseMainWndTest):
 		self.wnd.taskBarIcon.config.alwaysShowTrayIconOption.value = False
 		self.wnd.taskBarIcon.config.startIconizedOption.value = False
 		Application.onMainWindowConfigChange()
+		#self._processEvents()
 
 		self.wnd.Iconize(True)
 		self._processEvents()
 
-		self.assertTrue (self.wnd.IsIconized())
 		self.assertFalse (self.wnd.IsShown())
 		self.assertTrue (self.wnd.taskBarIcon.IsIconInstalled())
+
+		self.wnd.taskBarIcon.restoreWindow()
+		self._processEvents()
+
+		self.assertTrue (self.wnd.IsShown())
+		self.assertFalse (self.wnd.taskBarIcon.IsIconInstalled())
 
 
 	def testTrayMinimize2 (self):
@@ -49,11 +55,17 @@ class TrayNormalTest(BaseMainWndTest):
 		self.wnd.taskBarIcon.config.alwaysShowTrayIconOption.value = False
 		self.wnd.taskBarIcon.config.startIconizedOption.value = False
 		Application.onMainWindowConfigChange()
+		#self._processEvents()
 
 		self.wnd.Iconize(True)
 		self._processEvents()
 
-		self.assertTrue (self.wnd.IsIconized())
+		self.assertTrue (self.wnd.IsShown())
+		self.assertFalse (self.wnd.taskBarIcon.IsIconInstalled())
+
+		self.wnd.taskBarIcon.restoreWindow()
+		self._processEvents()
+
 		self.assertTrue (self.wnd.IsShown())
 		self.assertFalse (self.wnd.taskBarIcon.IsIconInstalled())
 
@@ -64,19 +76,24 @@ class TrayNormalTest(BaseMainWndTest):
 		self.wnd.taskBarIcon.config.startIconizedOption.value = False
 
 		Application.onMainWindowConfigChange()
+		#self._processEvents()
 
 		self.wnd.Show()
 		self.wnd.Iconize(False)
 		self._processEvents()
 
-		self.assertFalse (self.wnd.IsIconized())
 		self.assertTrue (self.wnd.IsShown())
 		self.assertTrue (self.wnd.taskBarIcon.IsIconInstalled())
 
 		self.wnd.Iconize(True)
 		self._processEvents()
 
-		self.assertFalse (self.wnd.IsIconized())
+		self.assertTrue (self.wnd.IsShown())
+		self.assertTrue (self.wnd.taskBarIcon.IsIconInstalled())
+
+		self.wnd.taskBarIcon.restoreWindow()
+		#self._processEvents()
+
 		self.assertTrue (self.wnd.IsShown())
 		self.assertTrue (self.wnd.taskBarIcon.IsIconInstalled())
 
@@ -87,19 +104,24 @@ class TrayNormalTest(BaseMainWndTest):
 		self.wnd.taskBarIcon.config.startIconizedOption.value = False
 
 		Application.onMainWindowConfigChange()
+		#self._processEvents()
 
 		self.wnd.Show()
 		self.wnd.Iconize(False)
 		self._processEvents()
 
-		self.assertFalse (self.wnd.IsIconized())
 		self.assertTrue (self.wnd.IsShown())
 		self.assertTrue (self.wnd.taskBarIcon.IsIconInstalled())
 
 		self.wnd.Iconize(True)
 		self._processEvents()
 
-		self.assertFalse (self.wnd.IsIconized())
+		self.assertTrue (self.wnd.IsShown())
+		self.assertTrue (self.wnd.taskBarIcon.IsIconInstalled())
+
+		self.wnd.taskBarIcon.restoreWindow()
+		self._processEvents()
+
 		self.assertTrue (self.wnd.IsShown())
 		self.assertTrue (self.wnd.taskBarIcon.IsIconInstalled())
 
@@ -118,17 +140,65 @@ class TrayIconizedTest (BaseMainWndTest):
 		self.wnd.taskBarIcon.config.alwaysShowTrayIconOption.value = False
 	
 		Application.onMainWindowConfigChange()
-
 		self._processEvents()
 
 		self.assertTrue (self.wnd.IsIconized())
 		self.assertFalse (self.wnd.IsShown())
 		self.assertTrue (self.wnd.taskBarIcon.IsIconInstalled())
 
-		self.wnd.Show()
-		self.wnd.Iconize(False)
+		self.wnd.taskBarIcon.restoreWindow()
+		#self._processEvents()
+
+		self.assertTrue (self.wnd.IsShown())
+		self.assertFalse (self.wnd.taskBarIcon.IsIconInstalled())
+
+
+	def testStartMinimize2 (self):
+		self.wnd.taskBarIcon.config.minimizeOption.value = True
+		self.wnd.taskBarIcon.config.alwaysShowTrayIconOption.value = True
+	
+		Application.onMainWindowConfigChange()
+		self._processEvents()
+
+		self.assertFalse (self.wnd.IsShown())
+		self.assertTrue (self.wnd.taskBarIcon.IsIconInstalled())
+
+		self.wnd.taskBarIcon.restoreWindow()
+		#self._processEvents()
+
+		self.assertTrue (self.wnd.IsShown())
+		self.assertTrue (self.wnd.taskBarIcon.IsIconInstalled())
+
+
+	def testStartMinimize3 (self):
+		self.wnd.taskBarIcon.config.minimizeOption.value = False
+		self.wnd.taskBarIcon.config.alwaysShowTrayIconOption.value = True
+	
+		Application.onMainWindowConfigChange()
 		self._processEvents()
 
 		self.assertTrue (self.wnd.IsShown())
-		self.assertFalse (self.wnd.IsIconized())
+		self.assertTrue (self.wnd.taskBarIcon.IsIconInstalled())
+
+		self.wnd.taskBarIcon.restoreWindow()
+		#self._processEvents()
+
+		self.assertTrue (self.wnd.IsShown())
+		self.assertTrue (self.wnd.taskBarIcon.IsIconInstalled())
+
+
+	def testStartMinimize4 (self):
+		self.wnd.taskBarIcon.config.minimizeOption.value = False
+		self.wnd.taskBarIcon.config.alwaysShowTrayIconOption.value = False
+	
+		Application.onMainWindowConfigChange()
+		#self._processEvents()
+
+		self.assertTrue (self.wnd.IsShown())
+		self.assertFalse (self.wnd.taskBarIcon.IsIconInstalled())
+
+		self.wnd.taskBarIcon.restoreWindow()
+		#self._processEvents()
+
+		self.assertTrue (self.wnd.IsShown())
 		self.assertFalse (self.wnd.taskBarIcon.IsIconInstalled())

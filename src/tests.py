@@ -16,6 +16,8 @@ Application.init ("../test/testconfig.ini")
 
 if __name__ == '__main__':
 	app = wx.PySimpleApp(redirect=False)
+	loop = wx.EventLoop()
+	wx.EventLoop.SetActive(loop)
 
 	import unittest
 

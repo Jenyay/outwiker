@@ -16,9 +16,13 @@ class BaseMainWndTest(unittest.TestCase):
 		Обработать накопившиеся сообщения
 		"""
 		count = 0
-		while self.eventloop.Pending():
+
+		loop = wx.EventLoop.GetActive()
+		app = wx.GetApp()
+		
+		while app.Pending():
 			count += 1
-			self.eventloop.Dispatch()
+			app.Dispatch()
 
 		return count
 
@@ -29,11 +33,6 @@ class BaseMainWndTest(unittest.TestCase):
 
 		self.wnd = MainWindow (None, -1, "")
 		#wx.GetApp().SetTopWindow (self.wnd)
-
-		self.oldloop = wx.EventLoop.GetActive()
-		self.eventloop = wx.EventLoop()
-		wx.EventLoop.SetActive(self.eventloop)
-
 		#self._processEvents()
 
 
@@ -41,7 +40,3 @@ class BaseMainWndTest(unittest.TestCase):
 		self.wnd.Close()
 		self.wnd.Hide()
 		self._processEvents()
-
-		# Вызовем обработчик простоя, чтобы удалилось окно self.wnd
-		#wx.GetApp().ProcessIdle()
-		wx.EventLoop.SetActive(self.oldloop)

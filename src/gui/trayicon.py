@@ -78,7 +78,7 @@ class OutwikerTrayIcon (wx.TaskBarIcon):
 			# Окно свернули
 			self.__iconizeWindow ()
 		else:
-			self.__restoreMainWindow()
+			self.restoreWindow()
 
 		self.updateTrayIcon()
 	
@@ -102,14 +102,14 @@ class OutwikerTrayIcon (wx.TaskBarIcon):
 
 
 	def onRestore (self, event):
-		self.__restoreMainWindow()
+		self.restoreWindow()
 
 
 	def OnTrayLeftClick (self, event):
-		self.__restoreMainWindow()
+		self.restoreWindow()
 	
 
-	def __restoreMainWindow (self):
+	def restoreWindow (self):
 		self.mainWnd.Show ()
 		self.mainWnd.Iconize (False)
 		if not self.config.alwaysShowTrayIconOption.value:
