@@ -448,7 +448,7 @@ class MainWindow(wx.Frame):
 
 	def __setIcon (self):
 		icon = wx.EmptyIcon()
-		icon.CopyFromBitmap(wx.Bitmap(os.path.join (core.system.getImagesDir(), "icon.ico"), 
+		icon.CopyFromBitmap(wx.Bitmap(os.path.join (core.system.getImagesDir(), "outwiker.ico"), 
 			wx.BITMAP_TYPE_ANY))
 
 		self.SetIcon(icon)
