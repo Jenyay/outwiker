@@ -3,7 +3,10 @@
 
 import os.path
 
+import wx
+
 from core.application import Application
+from .bookmarkscontroller import BookmarksController
 from .mainid import MainId
 
 
@@ -28,6 +31,9 @@ class MainWndController (object):
 				MainId.ID_SORT_SIBLINGS_ALPHABETICAL, MainId.ID_SORT_CHILDREN_ALPHABETICAL,
 				MainId.ID_MOVE_PAGE_UP, MainId.ID_MOVE_PAGE_DOWN, MainId.ID_RENAME]
 
+		self.bookmarks = BookmarksController (self)
+
+
 		self.init()
 
 
@@ -36,21 +42,60 @@ class MainWndController (object):
 		Начальные установки для главного окна
 		"""
 		self.__bindAppEvents()
-		self.enableGui()
 
 
 	def destroy (self):
 		self.__unbindAppEvents()
 
 
+	@property
+	def mainWindow (self):
+		return self.parent
+
+
+	@property
+	def mainMenu (self):
+		return self.mainWindow.mainMenu
+
+
+	def removeMenuItemsById (self, menu, keys):
+		"""
+		Удалить все элементы меню по идентификаторам
+		"""
+		for key in keys:
+			menu.Delete (key)
+			self.mainWindow.Unbind (wx.EVT_MENU, id = key)
+
+
+
 	def __bindAppEvents (self):
 		Application.onPageSelect += self.__onPageSelect
 		Application.onMainWindowConfigChange += self.__onMainWindowConfigChange
+		Application.onBookmarksChanged += self.__onBookmarksChanged
+		Application.onTreeUpdate += self.__onTreeUpdate
 
 
 	def __unbindAppEvents (self):
 		Application.onPageSelect -= self.__onPageSelect
 		Application.onMainWindowConfigChange -= self.__onMainWindowConfigChange
+		Application.onBookmarksChanged -= self.__onBookmarksChanged
+		Application.onTreeUpdate -= self.__onTreeUpdate
+
+
+	def __onBookmarksChanged (self, event):
+		self.bookmarks.updateBookmarks()
+
+
+	def __onTreeUpdate (self, sender):
+		"""
+		Событие при обновлении дерева
+		"""
+		self.updateBookmarks()
+		self.updateTitle()
+
+
+	def updateBookmarks (self):
+		self.bookmarks.updateBookmarks()
 	
 
 	###################################################
@@ -83,21 +128,21 @@ class MainWndController (object):
 
 		self.__enableTools (enabled)
 		self.__enableMenu (enabled)
-		self.parent.pagePanel.Enable(enabled)
-		self.parent.tree.Enable(enabled)
-		self.parent.attachPanel.Enable(enabled)
+		self.mainWindow.pagePanel.Enable(enabled)
+		self.mainWindow.tree.Enable(enabled)
+		self.mainWindow.attachPanel.Enable(enabled)
 
 
 	def __enableTools (self, enabled):
 		for toolId in self.disabledTools:
-			if self.parent.mainToolbar.FindById (toolId) != None:
-				self.parent.mainToolbar.EnableTool (toolId, enabled)
+			if self.mainWindow.mainToolbar.FindById (toolId) != None:
+				self.mainWindow.mainToolbar.EnableTool (toolId, enabled)
 
 	
 	def __enableMenu (self, enabled):
 		for toolId in self.disabledTools:
-			if self.parent.mainMenu.FindItemById (toolId) != None:
-				self.parent.mainMenu.Enable (toolId, enabled)
+			if self.mainMenu.FindItemById (toolId) != None:
+				self.mainMenu.Enable (toolId, enabled)
 	#
 	###################################################
 
@@ -106,14 +151,32 @@ class MainWndController (object):
 		"""
 		Обновить заголовок главного окна в зависимости от шаблона и текущей страницы
 		"""
-		template = self.parent.mainWindowConfig.titleFormatOption.value
+		template = self.mainWindow.mainWindowConfig.titleFormatOption.value
 
 		if Application.wikiroot == None:
-			self.parent.SetTitle (u"OutWiker")
+			self.mainWindow.SetTitle (u"OutWiker")
 			return
 
 		pageTitle = u"" if Application.wikiroot.selectedPage == None else Application.wikiroot.selectedPage.title
 		filename = os.path.basename (Application.wikiroot.path)
 
 		result = template.replace ("{file}", filename).replace ("{page}", pageTitle)
-		self.parent.SetTitle (result)
+		self.mainWindow.SetTitle (result)
+
+
+	def loadMainWindowParams(self):
+		"""
+		Загрузить параметры из конфига
+		"""
+		self.mainWindow.Freeze()
+
+		width = self.mainWindow.mainWindowConfig.WidthOption.value
+		height = self.mainWindow.mainWindowConfig.HeightOption.value
+
+		xpos = self.mainWindow.mainWindowConfig.XPosOption.value
+		ypos = self.mainWindow.mainWindowConfig.YPosOption.value
+		
+		self.mainWindow.SetDimensions (xpos, ypos, width, height, sizeFlags=wx.SIZE_FORCE)
+
+		self.mainWindow.Layout()
+		self.mainWindow.Thaw()

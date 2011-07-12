@@ -48,32 +48,31 @@ class MainWindow(wx.Frame):
 		# Ключ - id, значение - путь до вики
 		self._recentId = {}
 
-		# Идентификаторы для пунктов меню для открытия закладок
-		# Ключ - id, значение - путь до страницы вики
-		self._bookmarksId = {}
+		self.__setIcon()
+		self.SetTitle (u"OutWiker")
 
 		self.__bindAppEvents()
 		
-		self.__loadMainWindowParams()
-
-		self.__createAuiPanes (self)
 		self.__createMenu()
 		self.__createToolBar()
 		self.__createStatusBar()
+
+		self.controller = MainWndController (self)
+		self.controller.loadMainWindowParams()
+
+		self.__createAuiPanes (self)
 
 		self.__bindGuiEvents()
 		self.Bind (wx.EVT_CLOSE, self.__onClose)
 
 		self._dropTarget = DropFilesTarget (self.attachPanel)
 
-		self.controller = MainWndController (self)
+		self.controller.enableGui()
 
 		self.__createAcceleratorTable()
 
 		self.__updateRecentMenu()
 		self.setFullscreen(self.mainWindowConfig.FullscreenOption.value)
-		self.__setIcon()
-		self.SetTitle (u"OutWiker")
 
 		self.Show()
 
@@ -117,8 +116,6 @@ class MainWindow(wx.Frame):
 		"""
 		Подписаться на события из Application
 		"""
-		Application.onTreeUpdate += self.__onTreeUpdate
-		Application.onBookmarksChanged += self.__onBookmarksChanged
 		Application.onWikiOpen += self.__onWikiOpen
 
 
@@ -126,8 +123,6 @@ class MainWindow(wx.Frame):
 		"""
 		Подписаться на события из Application
 		"""
-		Application.onTreeUpdate -= self.__onTreeUpdate
-		Application.onBookmarksChanged -= self.__onBookmarksChanged
 		Application.onWikiOpen -= self.__onWikiOpen
 
 
@@ -163,7 +158,6 @@ class MainWindow(wx.Frame):
 		self.Bind(wx.EVT_MENU, self.__onCopyAttaches, id=MainId.ID_COPY_ATTACH_PATH)
 		self.Bind(wx.EVT_MENU, self.__onCopyLink, id=MainId.ID_COPY_LINK)
 		self.Bind(wx.EVT_MENU, self.__onReload, id=MainId.ID_RELOAD)
-		self.Bind(wx.EVT_MENU, self.__onBookmark, id=MainId.ID_ADDBOOKMARK)
 		self.Bind(wx.EVT_MENU, self.__onViewTree, self.mainMenu.viewNotes)
 		self.Bind(wx.EVT_MENU, self.__onViewAttaches, self.mainMenu.viewAttaches)
 		self.Bind(wx.EVT_MENU, self.__onFullscreen, self.mainMenu.viewFullscreen)
@@ -190,7 +184,7 @@ class MainWindow(wx.Frame):
 						_(u"Error"), wx.ICON_ERROR | wx.OK)
 
 		self.controller.enableGui()
-		self.__loadBookmarks()
+		self.controller.updateBookmarks()
 		self.controller.updateTitle()
 
 
@@ -334,7 +328,7 @@ class MainWindow(wx.Frame):
 		"""
 		Обновление меню со списком последних открытых вики
 		"""
-		self.__removeMenuItemsById (self.mainMenu.fileMenu, self._recentId.keys())
+		self.controller.removeMenuItemsById (self.mainMenu.fileMenu, self._recentId.keys())
 		self._recentId = {}
 
 		# TODO: Рефакторинг
@@ -355,41 +349,6 @@ class MainWindow(wx.Frame):
 			self.Bind(wx.EVT_MENU, self.__onRecent, id=id)
 	
 
-	def __loadBookmarks (self):
-		self.__removeMenuItemsById (self.mainMenu.bookmarksMenu, self._bookmarksId.keys())
-		self._bookmarksId = {}
-
-		if Application.wikiroot != None:
-			for n in range (len (Application.wikiroot.bookmarks)):
-				id = wx.NewId()
-				page = Application.wikiroot.bookmarks[n]
-				if page == None:
-					continue
-
-				subpath = page.subpath
-				self._bookmarksId[id] = subpath
-
-				# Найдем родителя
-				parentPage = page.parent
-
-				if parentPage.parent != None:
-					label = "%s [%s]" % (page.title, parentPage.subpath)
-				else:
-					label = page.title
-
-				self.mainMenu.bookmarksMenu.Append (id, label, "", wx.ITEM_NORMAL)
-				self.Bind(wx.EVT_MENU, self.__onSelectBookmark, id=id)
-
-
-	def __removeMenuItemsById (self, menu, keys):
-		"""
-		Удалить все элементы меню по идентификаторам
-		"""
-		for key in keys:
-			menu.Delete (key)
-			self.Unbind (wx.EVT_MENU, id = key)
-
-
 	def __onRecent (self, event):
 		"""
 		Выбор пункта меню с недавно открытыми файлами
@@ -397,31 +356,6 @@ class MainWindow(wx.Frame):
 		core.commands.openWiki (self._recentId[event.Id])
 
 
-	def __onSelectBookmark (self, event):
-		subpath = self._bookmarksId[event.Id]
-		page = Application.wikiroot[subpath]
-
-		if page != None:
-			Application.wikiroot.selectedPage = Application.wikiroot[subpath]
-	
-
-	def __loadMainWindowParams(self):
-		"""
-		Загрузить параметры из конфига
-		"""
-		self.Freeze()
-
-		width = self.mainWindowConfig.WidthOption.value
-		height = self.mainWindowConfig.HeightOption.value
-
-		xpos = self.mainWindowConfig.XPosOption.value
-		ypos = self.mainWindowConfig.YPosOption.value
-		
-		self.SetDimensions (xpos, ypos, width, height, sizeFlags=wx.SIZE_FORCE)
-
-		self.Layout()
-		self.Thaw()
-	
 
 	def __saveParams (self):
 		"""
@@ -482,14 +416,6 @@ class MainWindow(wx.Frame):
 		else:
 			event.Veto()
 	
-
-	def __onTreeUpdate (self, sender):
-		"""
-		Событие при обновлении дерева
-		"""
-		self.__loadBookmarks()
-		self.controller.updateTitle()
-
 
 	def __onNew(self, event): 
 		core.commands.createNewWiki(self)
@@ -563,20 +489,6 @@ class MainWindow(wx.Frame):
 		if Application.selectedPage != None:
 			core.commands.copyTitleToClipboard (Application.wikiroot.selectedPage)
 	
-
-	def __onBookmarksChanged (self, event):
-		self.__loadBookmarks()
-
-
-	def __onBookmark(self, event):
-		if Application.selectedPage != None:
-			selectedPage = Application.wikiroot.selectedPage
-
-			if not Application.wikiroot.bookmarks.pageMarked (selectedPage):
-				Application.wikiroot.bookmarks.add (Application.wikiroot.selectedPage)
-			else:
-				Application.wikiroot.bookmarks.remove (Application.wikiroot.selectedPage)
-
 
 	def __onEditPage(self, event):
 		if Application.selectedPage != None:
@@ -688,7 +600,7 @@ class MainWindow(wx.Frame):
 
 
 	def __fromFullscreen (self):
-		self.__loadMainWindowParams()
+		self.controller.loadMainWindowParams()
 		self.ShowFullScreen(False)
 		self.auiManager.GetPane (self.attachPanel).Show()
 		self.auiManager.GetPane (self.tree).Show()
