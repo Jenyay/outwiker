@@ -21,7 +21,7 @@ class RecentWikiTest (unittest.TestCase):
 			os.remove (self.path)
 
 	
-	def testAdd (self):
+	def testAdd1 (self):
 		config = Config (self.path)
 		recent = RecentWiki (config)
 
@@ -41,6 +41,24 @@ class RecentWikiTest (unittest.TestCase):
 		self.assertEqual (recent[0], "path3")
 		self.assertEqual (recent[1], "path2")
 		self.assertEqual (recent[2], "path1")
+
+
+	def testAdd2 (self):
+		config = Config (self.path)
+		recent = RecentWiki (config)
+
+		self.assertEqual (len (recent), 0)
+
+		recent.add ("path1")
+		recent.add ("path2")
+		recent.add ("path3")
+
+		recent2 = RecentWiki (config)
+
+		self.assertEqual (len (recent2), 3)
+		self.assertEqual (recent2[0], "path3")
+		self.assertEqual (recent2[1], "path2")
+		self.assertEqual (recent2[2], "path1")
 	
 
 	def testSave (self):

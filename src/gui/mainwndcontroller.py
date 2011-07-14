@@ -8,6 +8,7 @@ import wx
 from core.application import Application
 from .bookmarkscontroller import BookmarksController
 from .mainid import MainId
+import core.commands
 
 
 class MainWndController (object):
@@ -30,6 +31,10 @@ class MainWndController (object):
 				MainId.ID_UNDO, MainId.ID_REDO, MainId.ID_CUT, MainId.ID_COPY, MainId.ID_PASTE,
 				MainId.ID_SORT_SIBLINGS_ALPHABETICAL, MainId.ID_SORT_CHILDREN_ALPHABETICAL,
 				MainId.ID_MOVE_PAGE_UP, MainId.ID_MOVE_PAGE_DOWN, MainId.ID_RENAME]
+
+		# Идентификаторы для пунктов меню последних открытых вики
+		# Ключ - id, значение - путь до вики
+		self._recentId = {}
 
 		self.bookmarks = BookmarksController (self)
 
@@ -73,6 +78,7 @@ class MainWndController (object):
 		Application.onMainWindowConfigChange += self.__onMainWindowConfigChange
 		Application.onBookmarksChanged += self.__onBookmarksChanged
 		Application.onTreeUpdate += self.__onTreeUpdate
+		Application.onWikiOpen += self.__onWikiOpen
 
 
 	def __unbindAppEvents (self):
@@ -80,6 +86,7 @@ class MainWndController (object):
 		Application.onMainWindowConfigChange -= self.__onMainWindowConfigChange
 		Application.onBookmarksChanged -= self.__onBookmarksChanged
 		Application.onTreeUpdate -= self.__onTreeUpdate
+		Application.onWikiOpen -= self.__onWikiOpen
 
 
 	def __onBookmarksChanged (self, event):
@@ -90,6 +97,24 @@ class MainWndController (object):
 		"""
 		Событие при обновлении дерева
 		"""
+		self.updateBookmarks()
+		self.updateTitle()
+
+
+	def __onWikiOpen (self, wikiroot):
+		"""
+		Обновить окно после того как загрузили вики
+		"""
+		if wikiroot != None and not wikiroot.readonly:
+			try:
+				Application.recentWiki.add (wikiroot.path)
+				self.updateRecentMenu()
+			except IOError as e:
+				core.commands.MessageBox (
+						_(u"Can't add wiki to recent list.\nCan't save config.\n%s") % (unicode (e)),
+						_(u"Error"), wx.ICON_ERROR | wx.OK)
+
+		self.enableGui()
 		self.updateBookmarks()
 		self.updateTitle()
 
@@ -180,3 +205,35 @@ class MainWndController (object):
 
 		self.mainWindow.Layout()
 		self.mainWindow.Thaw()
+
+
+	###################################################
+	# Список последних открытых вики
+	#
+	def updateRecentMenu (self):
+		"""
+		Обновление меню со списком последних открытых вики
+		"""
+		self.removeMenuItemsById (self.mainMenu.fileMenu, self._recentId.keys())
+		self._recentId = {}
+
+		for n in range (len (Application.recentWiki)):
+			id = wx.NewId()
+			path = Application.recentWiki[n]
+			self._recentId[id] = path
+
+			title = path if n + 1 > 9 else u"&{n}. {path}".format (n=n+1, path=path)
+
+			self.mainMenu.fileMenu.Append (id, title, "", wx.ITEM_NORMAL)
+			
+			self.mainWindow.Bind(wx.EVT_MENU, self.__onRecent, id=id)
+	
+
+	def __onRecent (self, event):
+		"""
+		Выбор пункта меню с недавно открытыми файлами
+		"""
+		core.commands.openWiki (self._recentId[event.Id])
+
+	#
+	###################################################

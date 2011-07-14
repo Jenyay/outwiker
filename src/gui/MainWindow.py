@@ -11,12 +11,11 @@ from core.tree import WikiDocument, RootWikiPage
 import core.config
 import core.commands
 import core.system
-from core.recent import RecentWiki
 from core.application import Application
 
-from WikiTree import WikiTree
+from .WikiTree import WikiTree
 import pages.search.searchpage
-from guiconfig import MainWindowConfig, TreeConfig, AttachConfig, GeneralGuiConfig
+from .guiconfig import MainWindowConfig, TreeConfig, AttachConfig, GeneralGuiConfig
 
 from .mainid import MainId
 from .CurrentPagePanel import CurrentPagePanel
@@ -34,7 +33,6 @@ class MainWindow(wx.Frame):
 		kwds["style"] = wx.DEFAULT_FRAME_STYLE
 		wx.Frame.__init__(self, *args, **kwds)
 
-
 		self.mainWindowConfig = MainWindowConfig (Application.config)
 		self.treeConfig = TreeConfig (Application.config)
 		self.attachConfig = AttachConfig (Application.config)
@@ -44,15 +42,9 @@ class MainWindow(wx.Frame):
 		# (например, копирования в буфер обмена) сообщение вернулось обратно
 		self.__stdEventLoop = False
 
-		# Идентификаторы для пунктов меню последних открытых вики
-		# Ключ - id, значение - путь до вики
-		self._recentId = {}
-
 		self.__setIcon()
 		self.SetTitle (u"OutWiker")
 
-		self.__bindAppEvents()
-		
 		self.__createMenu()
 		self.__createToolBar()
 		self.__createStatusBar()
@@ -63,25 +55,13 @@ class MainWindow(wx.Frame):
 		self.__createAuiPanes (self)
 
 		self.__bindGuiEvents()
-		self.Bind (wx.EVT_CLOSE, self.__onClose)
 
 		self._dropTarget = DropFilesTarget (self.attachPanel)
-
 		self.controller.enableGui()
-
 		self.__createAcceleratorTable()
-
-		self.__updateRecentMenu()
+		self.controller.updateRecentMenu()
 		self.setFullscreen(self.mainWindowConfig.FullscreenOption.value)
-
 		self.Show()
-
-		if len (sys.argv) > 1:
-			self.__openFromCommandLine()
-		else:
-			# Открыть последний открытый файл (если установлена соответствующая опция)
-			self.__openRecentWiki ()
-
 		self.taskBarIcon = OutwikerTrayIcon(self)
 
 
@@ -110,20 +90,6 @@ class MainWindow(wx.Frame):
 	def __createToolBar (self):
 		self.mainToolbar = MainToolBar (self, -1, style=wx.TB_HORIZONTAL|wx.TB_FLAT|wx.TB_DOCKABLE)
 		self.SetToolBar(self.mainToolbar)
-
-
-	def __bindAppEvents (self):
-		"""
-		Подписаться на события из Application
-		"""
-		Application.onWikiOpen += self.__onWikiOpen
-
-
-	def __unbindAppEvents (self):
-		"""
-		Подписаться на события из Application
-		"""
-		Application.onWikiOpen -= self.__onWikiOpen
 
 
 	def __bindGuiEvents (self):
@@ -168,26 +134,9 @@ class MainWindow(wx.Frame):
 		self.Bind(wx.EVT_TOOL, self.__onReload, id=MainId.ID_RELOAD)
 		self.Bind(wx.EVT_TOOL, self.__onAttach, id=MainId.ID_ATTACH)
 		self.Bind(wx.EVT_TOOL, self.__onGlobalSearch, id=MainId.ID_GLOBAL_SEARCH)
+		self.Bind (wx.EVT_CLOSE, self.__onClose)
 
 	
-	def __onWikiOpen (self, wikiroot):
-		"""
-		Обновить окно после того как загрузили вики
-		"""
-		if wikiroot != None and not wikiroot.readonly:
-			try:
-				self.recentWiki.add (wikiroot.path)
-				self.__updateRecentMenu()
-			except IOError as e:
-				core.commands.MessageBox (
-						_(u"Can't add wiki to recent list.\nCan't save config.\n%s") % (unicode (e)),
-						_(u"Error"), wx.ICON_ERROR | wx.OK)
-
-		self.controller.enableGui()
-		self.controller.updateBookmarks()
-		self.controller.updateTitle()
-
-
 	def __createAuiPanes(self, parent):
 		self.auiManager = wx.aui.AuiManager(parent)
 
@@ -301,62 +250,8 @@ class MainWindow(wx.Frame):
 			
 		self.attachConfig.attachesWidthOption.value = self.attachPanel.GetSizeTuple()[0]
 		self.attachConfig.attachesHeightOption.value = self.attachPanel.GetSizeTuple()[1]
-		
-
-	def __openRecentWiki (self):
-		"""
-		Открыть последнюю вики, если установлена соответствующая опция
-		"""
-		openRecent = self.generalConfig.autoopenOption.value
-
-		if openRecent and len (self.recentWiki) > 0:
-			core.commands.openWiki (self.recentWiki[0])
-
-
-	def __openFromCommandLine (self):
-		"""
-		Открыть вики, путь до которой передан в командной строке
-		"""
-		fname = unicode (sys.argv[1], core.system.getOS().filesEncoding)
-		if not os.path.isdir (fname):
-			fname = os.path.split (fname)[0]
-
-		core.commands.openWiki (fname)
 
 	
-	def __updateRecentMenu (self):
-		"""
-		Обновление меню со списком последних открытых вики
-		"""
-		self.controller.removeMenuItemsById (self.mainMenu.fileMenu, self._recentId.keys())
-		self._recentId = {}
-
-		# TODO: Рефакторинг
-		# Сделать класс RecentWiki изменяемым
-		self.recentWiki = RecentWiki (Application.config)
-
-		self._recentId = {}
-
-		for n in range (len (self.recentWiki)):
-			id = wx.NewId()
-			path = self.recentWiki[n]
-			self._recentId[id] = path
-
-			title = path if n + 1 > 9 else u"&{n}. {path}".format (n=n + 1, path=path)
-
-			self.mainMenu.fileMenu.Append (id, title, "", wx.ITEM_NORMAL)
-			
-			self.Bind(wx.EVT_MENU, self.__onRecent, id=id)
-	
-
-	def __onRecent (self, event):
-		"""
-		Выбор пункта меню с недавно открытыми файлами
-		"""
-		core.commands.openWiki (self._recentId[event.Id])
-
-
-
 	def __saveParams (self):
 		"""
 		Сохранить параметры в конфиг
@@ -410,7 +305,7 @@ class MainWindow(wx.Frame):
 			
 			self.taskBarIcon.Destroy()
 			self.controller.destroy()
-			self.__unbindAppEvents()
+			#self.__unbindAppEvents()
 
 			self.Destroy()
 		else:

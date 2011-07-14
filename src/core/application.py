@@ -3,10 +3,11 @@
 
 import gettext
 
-from core.config import Config, getConfigPath
+from .config import Config, getConfigPath
 import core.i18n
-from core.event import Event
+from .event import Event
 from gui.guiconfig import GeneralGuiConfig
+from .recent import RecentWiki
 
 
 class ApplicationParams (object):
@@ -14,6 +15,7 @@ class ApplicationParams (object):
 		# Открытая в данный момент wiki
 		self._wikiroot = None
 		self.config = None
+		self.recentWiki = None
 		self.__createEvents()
 
 	
@@ -22,6 +24,7 @@ class ApplicationParams (object):
 		Инициализировать конфиг и локаль
 		"""
 		self.config = Config (configFilename)
+		self.recentWiki = RecentWiki (self.config)
 		self.__initLocale()
 
 
