@@ -34,6 +34,10 @@ class BookmarksTest (unittest.TestCase):
 		self.bookmarkSender = None
 
 
+	def tearDown (self):
+		removeWiki (self.path)
+
+
 	def onBookmark (self, bookmarks):
 		self.bookmarkCount += 1
 		self.bookmarkSender = bookmarks

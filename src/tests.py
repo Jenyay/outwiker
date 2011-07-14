@@ -79,6 +79,7 @@ if __name__ == '__main__':
 	from test.guitests.mainid import MainIdTest
 	from test.guitests.mainwnd import MainWndTest
 	#from test.guitests.tray import TrayNormalTest#, TrayIconizedTest
+	from test.guitests.bookmarks import BookmarksGuiTest
 
 
 	#f = open('tests.log', "w")
