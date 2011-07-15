@@ -21,7 +21,7 @@ if __name__ == '__main__':
 
 	import unittest
 
-	from test.treeloading import WikiPagesTest, SubWikiTest
+	from test.treeloading import WikiPagesTest, SubWikiTest, TextPageAttachmentTest
 	from test.treeloading_readonly import ReadonlyLoadTest, ReadonlyChangeTest
 	from test.treecreation import TextPageCreationTest
 	from test.treemanualedit import ManualEditTest
@@ -80,6 +80,7 @@ if __name__ == '__main__':
 	from test.guitests.mainwnd import MainWndTest
 	#from test.guitests.tray import TrayNormalTest#, TrayIconizedTest
 	from test.guitests.bookmarks import BookmarksGuiTest
+	from test.guitests.tree import TreeTest
 
 
 	#f = open('tests.log', "w")

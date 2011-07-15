@@ -27,17 +27,9 @@ class RemovePagesTest (unittest.TestCase):
 		TextPageFactory.create (self.rootwiki[u"Страница 1"], u"Страница 5", [])
 		TextPageFactory.create (self.rootwiki, u"Страница 6", [])
 
-		self.treeUpdateCount = 0
 		self.pageRemoveCount = 0
 
 
-	def onTreeUpdate (self, bookmarks):
-		"""
-		Обработка события при удалении страницы (обновление дерева)
-		"""
-		self.treeUpdateCount += 1
-
-	
 	def onPageRemove (self, bookmarks):
 		"""
 		Обработка события при удалении страницы
@@ -46,7 +38,6 @@ class RemovePagesTest (unittest.TestCase):
 
 	
 	def testRemove1 (self):
-		Application.onTreeUpdate += self.onTreeUpdate
 		Application.onPageRemove += self.onPageRemove
 
 		# Удаляем страницу из корня
@@ -69,7 +60,6 @@ class RemovePagesTest (unittest.TestCase):
 		self.assertTrue (page4.isRemoved)
 		self.assertEqual (self.pageRemoveCount, 3)
 		
-		Application.onTreeUpdate -= self.onTreeUpdate
 		Application.onPageRemove -= self.onPageRemove
 	
 

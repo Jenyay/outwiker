@@ -121,7 +121,7 @@ content: """
 		self.assertEqual (result_right, result, result)
 
 
-	def testCommandTest4 (self):
+	def testCommandTest5 (self):
 		self.parser.addCommand (TestCommand (self.parser))
 		text = u"""(: test Параметр1 Параметр2=2 Параметр3=3 :)"""
 
@@ -133,7 +133,7 @@ content: """
 		self.assertEqual (result_right, result, result)
 
 
-	def testCommandTest4 (self):
+	def testCommandTest6 (self):
 		self.parser.addCommand (TestCommand (self.parser))
 		text = u"""(: test Параметр1 Параметр2=2 Параметр3=3 :)
 Текст внутри
@@ -157,7 +157,7 @@ content: Контент"""
 		self.assertEqual (result_right, result, result)
 
 
-	def testCommandTest5 (self):
+	def testCommandTest7 (self):
 		factory = ParserFactory ()
 		factory.appendCommand (TestCommand)
 

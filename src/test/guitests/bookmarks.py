@@ -1,10 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-import unittest
-
-import wx
-
 from basemainwnd import BaseMainWndTest
 from core.tree import RootWikiPage, WikiDocument
 from pages.text.textpage import TextPageFactory

@@ -53,6 +53,10 @@ class ManualEditTest(unittest.TestCase):
 		removeWiki (self.path)
 
 
+	def __changeContent (self, page, newcontent):
+		page.content = newcontent
+
+
 	def testContentRenamedPage (self):
 		page = self.rootwiki[u"Страница 1"]
 
@@ -60,15 +64,8 @@ class ManualEditTest(unittest.TestCase):
 		newpath = os.path.join (page.root.path, newtitle)
 
 		os.renames (page.path, newpath)
-		try:
-			page.content = u"bla-bla-bla"
-		except IOError:
-			pass
-		else:
-			self.fail()
 
-		#self.assertTrue (os.path.exists (page.path))
-		#self.assertEqual (self.rootwiki[u"Страница 1"], page)
+		self.assertRaises (IOError, self.__changeContent, page, u"bla-bla-bla")
 
 
 	def testTagsRenamedPage (self):

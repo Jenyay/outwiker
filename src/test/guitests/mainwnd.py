@@ -1,10 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-import unittest
-
-import wx
-
 from core.application import Application
 from gui.MainWindow import MainWindow
 from gui.guiconfig import MainWindowConfig
