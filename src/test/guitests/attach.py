@@ -26,8 +26,6 @@ class AttachPanelTest (BaseMainWndTest):
 		TextPageFactory.create (self.wikiroot, u"Страница 1", [])
 		TextPageFactory.create (self.wikiroot, u"Страница 2", [])
 		TextPageFactory.create (self.wikiroot[u"Страница 2"], u"Страница 3", [])
-		TextPageFactory.create (self.wikiroot[u"Страница 2/Страница 3"], u"Страница 4", [])
-		TextPageFactory.create (self.wikiroot[u"Страница 1"], u"Страница 5", [])
 
 		self.page = self.wikiroot[u"Страница 2/Страница 3"]
 
@@ -133,4 +131,30 @@ class AttachPanelTest (BaseMainWndTest):
 		self.assertEqual (self.wnd.attachPanel.attachList.GetItemCount(), 0)
 
 
+	def testReloading (self):
+		attach = Attachment (self.page)
+		attach.attach (self.fullFilesPath)
 
+		self.wikiroot.selectedPage = self.page
+		Application.wikiroot = self.wikiroot
+
+		self.assertEqual (self.wnd.attachPanel.attachList.GetItemCount(), len (self.fullFilesPath))
+
+		# Создадим другую независимую вики
+		newpath = u"../test/testwiki2"
+		newwikiroot = WikiDocument.create (newpath)
+
+		TextPageFactory.create (newwikiroot, u"Новая страница 1", [])
+		TextPageFactory.create (newwikiroot, u"Новая страница 2", [])
+
+		filesPath = u"../test/samplefiles/"
+		newfiles = [u"accept.png", u"add.png", u"anchor.png"]
+		newfullFilesPath = [os.path.join (filesPath, fname) for fname in newfiles]	
+
+		newattach = Attachment (newwikiroot[u"Новая страница 1"])
+		newattach.attach (newfullFilesPath)
+		newwikiroot.selectedPage = newwikiroot[u"Новая страница 1"]
+		Application.wikiroot = newwikiroot
+		self.assertEqual (self.wnd.attachPanel.attachList.GetItemCount(), len (newfullFilesPath))
+
+		removeWiki (newpath)

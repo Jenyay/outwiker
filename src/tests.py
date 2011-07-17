@@ -82,6 +82,7 @@ if __name__ == '__main__':
 	from test.guitests.bookmarks import BookmarksGuiTest
 	from test.guitests.tree import TreeTest
 	from test.guitests.attach import AttachPanelTest
+	from test.guitests.pagepanel import PagePanelTest
 
 
 	#f = open('tests.log', "w")
