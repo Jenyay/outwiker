@@ -168,8 +168,9 @@ class WikiTree(wx.Panel):
 		"""
 		Обработка создания страницы
 		"""
-		parentItem = self._pageCache[newpage.parent]
-		self.insertChild (newpage, parentItem)
+		if newpage.parent in self._pageCache:
+			parentItem = self._pageCache[newpage.parent]
+			self.insertChild (newpage, parentItem)
 
 
 	def onAddSiblingPage (self, event):

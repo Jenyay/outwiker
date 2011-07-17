@@ -36,8 +36,20 @@ class ApplicationParams (object):
 	@wikiroot.setter
 	def wikiroot (self, value):
 		self.onWikiClose (self._wikiroot)
+
+		if self._wikiroot != None:
+			self._wikiroot.onPageSelect -= self.onPageSelected
+
 		self._wikiroot = value
+
+		if self._wikiroot != None:
+			self._wikiroot.onPageSelect += self.onPageSelected
+
 		self.onWikiOpen (self._wikiroot)
+
+
+	def onPageSelected (self, page):
+		self.onPageSelect (page)
 	
 
 	@property

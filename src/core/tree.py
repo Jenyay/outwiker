@@ -5,10 +5,11 @@ import os.path
 import ConfigParser
 import shutil
 
-from application import Application
-from config import PageConfig
-from bookmarks import Bookmarks
-from search import TagsList
+from .application import Application
+from .config import PageConfig
+from .bookmarks import Bookmarks
+from .search import TagsList
+from .event import Event
 import core.exceptions
 
 
@@ -246,6 +247,10 @@ class WikiDocument (RootWikiPage):
 		self._selectedPage = None
 		self.bookmarks = Bookmarks (self, self._params)
 
+		# Выбор новой страницы
+		# Параметры: новая выбранная страница
+		self.onPageSelect = Event()
+
 
 	@staticmethod
 	def load(path, readonly = False):
@@ -301,7 +306,7 @@ class WikiDocument (RootWikiPage):
 		if not self.readonly:
 			self._params.lastViewedPageOption.value = subpath
 
-		Application.onPageSelect(self._selectedPage)
+		self.root.onPageSelect(self._selectedPage)
 		self.save()
 	
 

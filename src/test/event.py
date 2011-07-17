@@ -86,6 +86,9 @@ class EventTest (unittest.TestCase):
 
 class EventsTest (unittest.TestCase):
 	def setUp (self):
+		Application.wikiroot = None
+		self.path = u"../test/testwiki"
+
 		self.isPageUpdate = False
 		self.isPageCreate = False
 		self.isTreeUpdate = False
@@ -102,8 +105,8 @@ class EventsTest (unittest.TestCase):
 		self.pageSelectCount = 0
 
 	def tearDown(self):
-		path = u"../test/testwiki"
-		removeWiki (path)
+		Application.wikiroot = None
+		removeWiki (self.path)
 
 	def pageUpdate (self, sender):
 		self.isPageUpdate = True
@@ -152,15 +155,14 @@ class EventsTest (unittest.TestCase):
 		Application.onTreeUpdate += self.treeUpdate
 		Application.onPageCreate += self.pageCreate
 
-		path = u"../test/testwiki"
-		removeWiki (path)
+		removeWiki (self.path)
 
 		self.assertFalse(self.isTreeUpdate)
 		self.assertFalse(self.isPageUpdate)
 		self.assertFalse(self.isPageCreate)
 
 		# Создаем вики
-		rootwiki = WikiDocument.create (path)
+		rootwiki = WikiDocument.create (self.path)
 
 		self.assertTrue(self.isTreeUpdate)
 		self.assertEqual (self.treeUpdateSender, rootwiki)
@@ -199,15 +201,14 @@ class EventsTest (unittest.TestCase):
 		"""
 		Application.onPageUpdate += self.pageUpdate
 
-		path = u"../test/testwiki"
-		removeWiki (path)
+		removeWiki (self.path)
 
 		self.assertFalse(self.isTreeUpdate)
 		self.assertFalse(self.isPageUpdate)
 		self.assertFalse(self.isPageCreate)
 
 		# Создаем вики
-		rootwiki = WikiDocument.create (path)
+		rootwiki = WikiDocument.create (self.path)
 		TextPageFactory.create (rootwiki, u"Страница 1", [])
 
 		# Изменим содержимое страницы
@@ -225,15 +226,14 @@ class EventsTest (unittest.TestCase):
 		"""
 		Application.onPageUpdate += self.pageUpdate
 
-		path = u"../test/testwiki"
-		removeWiki (path)
+		removeWiki (self.path)
 
 		self.assertFalse(self.isTreeUpdate)
 		self.assertFalse(self.isPageUpdate)
 		self.assertFalse(self.isPageCreate)
 
 		# Создаем вики
-		rootwiki = WikiDocument.create (path)
+		rootwiki = WikiDocument.create (self.path)
 		TextPageFactory.create (rootwiki, u"Страница 1", [])
 
 		# Изменим содержимое страницы
@@ -252,15 +252,14 @@ class EventsTest (unittest.TestCase):
 		Application.onPageUpdate += self.pageUpdate
 		Application.onTreeUpdate += self.treeUpdate
 
-		path = u"../test/testwiki"
-		removeWiki (path)
+		removeWiki (self.path)
 
 		self.assertFalse(self.isTreeUpdate)
 		self.assertFalse(self.isPageUpdate)
 		self.assertFalse(self.isPageCreate)
 
 		# Создаем вики
-		rootwiki = WikiDocument.create (path)
+		rootwiki = WikiDocument.create (self.path)
 		TextPageFactory.create (rootwiki, u"Страница 1", [])
 
 		# Изменим содержимое страницы
@@ -279,13 +278,14 @@ class EventsTest (unittest.TestCase):
 	def testPageSelectCreate (self):
 		Application.onPageSelect += self.pageSelect
 
-		path = u"../test/testwiki"
-		removeWiki (path)
+		removeWiki (self.path)
 
-		rootwiki = WikiDocument.create (path)
+		rootwiki = WikiDocument.create (self.path)
 		TextPageFactory.create (rootwiki, u"Страница 1", [])
 		TextPageFactory.create (rootwiki, u"Страница 2", [])
 		TextPageFactory.create (rootwiki[u"Страница 2"], u"Страница 3", [])
+
+		Application.wikiroot = rootwiki
 
 		self.assertEqual (rootwiki.selectedPage, None)
 
@@ -306,19 +306,38 @@ class EventsTest (unittest.TestCase):
 		Application.onPageSelect -= self.pageSelect
 
 
-	def testPageSelectLoad (self):
+	def testPageSelectCreateNoEvent (self):
 		Application.onPageSelect += self.pageSelect
 
-		path = u"../test/testwiki"
-		removeWiki (path)
+		removeWiki (self.path)
 
-		rootwiki = WikiDocument.create (path)
+		rootwiki = WikiDocument.create (self.path)
 		TextPageFactory.create (rootwiki, u"Страница 1", [])
 		TextPageFactory.create (rootwiki, u"Страница 2", [])
 		TextPageFactory.create (rootwiki[u"Страница 2"], u"Страница 3", [])
 
+		Application.wikiroot = rootwiki
 
-		document = WikiDocument.load (path)
+		self.assertEqual (rootwiki.selectedPage, None)
+
+		rootwiki.selectedPage = rootwiki[u"Страница 1"]
+		
+		self.assertEqual (rootwiki.selectedPage, rootwiki[u"Страница 1"])
+		self.assertEqual (self.isPageSelect, True)
+
+
+	def testPageSelectLoad (self):
+		Application.onPageSelect += self.pageSelect
+
+		removeWiki (self.path)
+
+		rootwiki = WikiDocument.create (self.path)
+		TextPageFactory.create (rootwiki, u"Страница 1", [])
+		TextPageFactory.create (rootwiki, u"Страница 2", [])
+		TextPageFactory.create (rootwiki[u"Страница 2"], u"Страница 3", [])
+
+		document = WikiDocument.load (self.path)
+		Application.wikiroot = document
 
 		self.assertEqual (document.selectedPage, None)
 

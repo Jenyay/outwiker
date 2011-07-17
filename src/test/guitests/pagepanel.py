@@ -66,3 +66,25 @@ class PagePanelTest (BaseMainWndTest):
 
 		self.wikiroot.selectedPage = None
 		self.assertEqual (None, self.wnd.pagePanel.pageView)
+
+
+	def testLoadSelected (self):
+		# Открытие вики с уже выбранной страницей
+		self.wikiroot.selectedPage = self.wikiroot[u"Текстовая страница"]
+
+		Application.wikiroot = self.wikiroot
+		self.assertEqual (TextPanel, type (self.wnd.pagePanel.pageView))
+
+
+	def testReload (self):
+		Application.wikiroot = self.wikiroot
+		self.wikiroot.selectedPage = self.wikiroot[u"Текстовая страница"]
+		self.assertEqual (TextPanel, type (self.wnd.pagePanel.pageView))
+
+		# "Закроем" вики
+		Application.wikiroot = None
+		self.assertEqual (None, self.wnd.pagePanel.pageView)
+
+		# Откроем ее еще раз
+		Application.wikiroot = self.wikiroot
+		self.assertEqual (TextPanel, type (self.wnd.pagePanel.pageView))

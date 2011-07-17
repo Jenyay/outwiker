@@ -41,8 +41,7 @@ class CurrentPagePanel(wx.Panel):
 		self.Bind(wx.EVT_BUTTON, self.onBookmark, self.bookmarkButton)
 		# end wxGlade
 
-		self.currentPage = None
-
+		Application.onWikiOpen += self.onWikiOpen
 		Application.onPageSelect += self.onPageSelect
 		Application.onPageRename += self.onPageRename
 		Application.onPageUpdate += self.onPageUpdate
@@ -52,11 +51,12 @@ class CurrentPagePanel(wx.Panel):
 
 
 	def Print (self):
-		if self.currentPage != None and self.pageView != None:
+		if Application.selectedPage != None and self.pageView != None:
 			self.pageView.Print()
 
 	
 	def onClose (self, event):
+		Application.onWikiOpen -= self.onWikiOpen
 		Application.onPageSelect -= self.onPageSelect
 		Application.onPageRename -= self.onPageRename
 		Application.onPageUpdate -= self.onPageUpdate
@@ -72,6 +72,10 @@ class CurrentPagePanel(wx.Panel):
 		self.onPageUpdate (page)
 
 
+	def onWikiOpen (self, root):
+		self.onPageSelect (root.selectedPage if root != None else None)
+
+
 	def onPageSelect (self, page):
 		"""
 		Событие при выборе страницы
@@ -79,14 +83,13 @@ class CurrentPagePanel(wx.Panel):
 		self.Freeze()
 		self.destroyPageView()
 
-		self.currentPage = page
 		self.updatePageInfo (page)
 		self.updatePageView (page)
 		self.Thaw()
 
 
 	def onPageUpdate (self, page):
-		if self.currentPage != None and self.currentPage == page:
+		if Application.selectedPage != None and Application.selectedPage == page:
 			self.updatePageInfo (page)
 	
 
@@ -94,7 +97,7 @@ class CurrentPagePanel(wx.Panel):
 		imagePath = self.grayStarImage
 		tooltip = _(u"Add to Bookmarks")
 
-		if self.currentPage != None and self.currentPage.root.bookmarks.pageMarked (self.currentPage):
+		if Application.selectedPage != None and Application.selectedPage.root.bookmarks.pageMarked (Application.selectedPage):
 			imagePath = self.goldStarImage
 			tooltip = _(u"Remove from Bookmarks")
 
@@ -203,11 +206,11 @@ class CurrentPagePanel(wx.Panel):
 
 
 	def onBookmark(self, event): # wxGlade: CurrentPagePanel.<event_handler>
-		if self.currentPage != None:
-			if not self.currentPage.root.bookmarks.pageMarked (self.currentPage):
-				self.currentPage.root.bookmarks.add (self.currentPage)
+		if Application.selectedPage != None:
+			if not Application.selectedPage.root.bookmarks.pageMarked (Application.selectedPage):
+				Application.selectedPage.root.bookmarks.add (Application.selectedPage)
 			else:
-				self.currentPage.root.bookmarks.remove (self.currentPage)
+				Application.selectedPage.root.bookmarks.remove (Application.selectedPage)
 
 
 # end of class CurrentPagePanel

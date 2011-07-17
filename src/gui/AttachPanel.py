@@ -46,8 +46,6 @@ class AttachPanel(wx.Panel):
 		self.Bind(wx.EVT_MENU, self.onExecute, id=self.ID_EXECUTE)
 		self.Bind (wx.EVT_CLOSE, self.onClose)
 
-		self.currentPage = None
-
 		self.__bindAppEvents()
 
 		self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.onPaste, self.attachList)
@@ -63,7 +61,6 @@ class AttachPanel(wx.Panel):
 		Application.onPageSelect -= self.onPageSelect
 		Application.onPageUpdate -= self.onPageUpdate
 		Application.onWikiOpen -= self.onWikiOpen
-
 
 
 	def onClose (self, event):
@@ -138,24 +135,17 @@ class AttachPanel(wx.Panel):
 		attachSizer_copy.Fit(self)
 		self.SetAutoLayout(True)
 
-		#attachSizer_copy.Add (self.toolbar, 1, wx.ALL|wx.EXPAND, 2)
-
 
 	def onWikiOpen (self, wiki):
-		self.currentPage = None
-		if wiki != None:
-			self.currentPage = wiki.selectedPage
-
 		self.updateAttachments()
 
 
 	def onPageSelect (self, page):
-		self.currentPage = page
 		self.updateAttachments ()
 
 
 	def onPageUpdate (self, page):
-		if self.currentPage != None and self.currentPage == page:
+		if Application.selectedPage != None and Application.selectedPage == page:
 			self.updateAttachments ()
 
 
@@ -165,8 +155,8 @@ class AttachPanel(wx.Panel):
 		"""
 		self.attachList.Freeze()
 		self.attachList.ClearAll()
-		if self.currentPage != None:
-			files = Attachment (self.currentPage).attachmentFull
+		if Application.selectedPage != None:
+			files = Attachment (Application.selectedPage).attachmentFull
 			files.sort(Attachment.sortByName, reverse=True)
 
 
@@ -192,12 +182,12 @@ class AttachPanel(wx.Panel):
 
 
 	def onAttach(self, event):
-		if self.currentPage != None:
-			core.commands.attachFilesWithDialog (self, self.currentPage)
+		if Application.selectedPage != None:
+			core.commands.attachFilesWithDialog (self, Application.selectedPage)
 
 
 	def onRemove(self, event):
-		if self.currentPage != None:
+		if Application.selectedPage != None:
 			files = self.getSelectedFiles ()
 
 			if len (files) == 0:
@@ -210,7 +200,7 @@ class AttachPanel(wx.Panel):
 					_(u"Remove files?"),
 					wx.YES_NO  | wx.ICON_QUESTION) == wx.YES:
 				try:
-					Attachment (self.currentPage).removeAttach (files)
+					Attachment (Application.selectedPage).removeAttach (files)
 				except IOError as e:
 					core.commands.MessageBox (unicode (e), _(u"Error"), wx.ICON_ERROR | wx.OK)
 
@@ -232,7 +222,7 @@ class AttachPanel(wx.Panel):
 
 
 	def onExecute(self, event):
-		if self.currentPage != None:
+		if Application.selectedPage != None:
 			files = self.getSelectedFiles()
 
 			if len (files) == 0:
@@ -242,7 +232,7 @@ class AttachPanel(wx.Panel):
 				return
 
 			for file in files:
-				fullpath = os.path.join (Attachment (self.currentPage).getAttachPath(), file)
+				fullpath = os.path.join (Attachment (Application.selectedPage).getAttachPath(), file)
 				try:
 					core.system.getOS().startFile (fullpath)
 				except OSError:
@@ -254,7 +244,7 @@ class AttachPanel(wx.Panel):
 		data = core.system.getOS().dragFileDataObject()
 
 		for fname in self.getSelectedFiles():
-			data.AddFile (os.path.join (Attachment (self.currentPage).getAttachPath(), fname) )
+			data.AddFile (os.path.join (Attachment (Application.selectedPage).getAttachPath(), fname) )
 
 		dragSource = wx.DropSource (self)
 		dragSource.SetData(data)

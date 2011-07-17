@@ -131,6 +131,16 @@ class AttachPanelTest (BaseMainWndTest):
 		self.assertEqual (self.wnd.attachPanel.attachList.GetItemCount(), 0)
 
 
+	def testAttach8 (self):
+		# Не подключаем к Application созданную вики. Панель не должна реагировать на прикрепленные файлы
+		self.wikiroot.selectedPage = self.page
+
+		attach = Attachment (self.page)
+		attach.attach (self.fullFilesPath)
+
+		self.assertEqual (self.wnd.attachPanel.attachList.GetItemCount(), 0)
+
+
 	def testReloading (self):
 		attach = Attachment (self.page)
 		attach.attach (self.fullFilesPath)
@@ -154,7 +164,10 @@ class AttachPanelTest (BaseMainWndTest):
 		newattach = Attachment (newwikiroot[u"Новая страница 1"])
 		newattach.attach (newfullFilesPath)
 		newwikiroot.selectedPage = newwikiroot[u"Новая страница 1"]
+
 		Application.wikiroot = newwikiroot
 		self.assertEqual (self.wnd.attachPanel.attachList.GetItemCount(), len (newfullFilesPath))
 
+		Application.wikiroot.selectedPage = None
+		Application.wikiroot = None
 		removeWiki (newpath)
