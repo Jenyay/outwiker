@@ -17,6 +17,7 @@ class RemovePagesTest (unittest.TestCase):
 	def setUp (self):
 		self.path = u"../test/testwiki"
 		removeWiki (self.path)
+		Application.wikiroot = None
 
 		self.rootwiki = WikiDocument.create (self.path)
 

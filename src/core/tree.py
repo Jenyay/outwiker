@@ -251,6 +251,10 @@ class WikiDocument (RootWikiPage):
 		# Параметры: новая выбранная страница
 		self.onPageSelect = Event()
 
+		# Обновление дерева
+		# Параметры: sender - из-за кого обновляется дерево
+		self.onTreeUpdate = Event()
+
 
 	@staticmethod
 	def load(path, readonly = False):
@@ -265,7 +269,7 @@ class WikiDocument (RootWikiPage):
 		if lastvieved != None:
 			root.selectedPage = root[lastvieved]
 
-		Application.onTreeUpdate(root)
+		root.onTreeUpdate(root)
 		return root
 
 
@@ -283,7 +287,7 @@ class WikiDocument (RootWikiPage):
 		"""
 		root = WikiDocument (path)
 		root.save()
-		Application.onTreeUpdate(root)
+		root.onTreeUpdate(root)
 
 		return root
 
@@ -418,8 +422,7 @@ class WikiPage (RootWikiPage):
 			self.root.params.lastViewedPageOption.value = self.subpath
 
 		Application.onPageRename (self, oldsubpath)
-		#Application.onPageUpdate (self)
-		Application.onTreeUpdate (self)
+		self.root.onTreeUpdate (self)
 	
 
 	def canRename (self, newtitle):
@@ -487,7 +490,7 @@ class WikiPage (RootWikiPage):
 		if self.root.selectedPage == self:
 			self.root.params.lastViewedPageOption.value = self.subpath
 
-		Application.onTreeUpdate (self)
+		self.root.onTreeUpdate (self)
 
 	
 	def _getTempName (self, pagepath):
@@ -531,7 +534,7 @@ class WikiPage (RootWikiPage):
 			shutil.copyfile (iconpath, newpath)
 
 		Application.onPageUpdate (self)
-		Application.onTreeUpdate (self)
+		self.root.onTreeUpdate (self)
 
 		return newpath
 
@@ -732,11 +735,6 @@ class WikiPage (RootWikiPage):
 		except OSError:
 			raise IOError
 
-		#try:
-		#	shutil.rmtree (self.path)
-		#except OSError:
-		#	raise IOError
-
 		self._removePageFromTree (self)
 
 		# Если выбранная страница была удалена
@@ -752,8 +750,6 @@ class WikiPage (RootWikiPage):
 
 			self.root.selectedPage = newselpage
 		
-		#Application.onTreeUpdate(self.root)
-	
 
 	def _removePageFromTree (self, page):
 		page.parent.removeFromChildren (page)

@@ -38,18 +38,24 @@ class ApplicationParams (object):
 		self.onWikiClose (self._wikiroot)
 
 		if self._wikiroot != None:
-			self._wikiroot.onPageSelect -= self.onPageSelected
+			self._wikiroot.onPageSelect -= self.__onPageSelected
+			self._wikiroot.onTreeUpdate -= self.__onTreeUpdated
 
 		self._wikiroot = value
 
 		if self._wikiroot != None:
-			self._wikiroot.onPageSelect += self.onPageSelected
+			self._wikiroot.onPageSelect += self.__onPageSelected
+			self._wikiroot.onTreeUpdate += self.__onTreeUpdated
 
 		self.onWikiOpen (self._wikiroot)
 
 
-	def onPageSelected (self, page):
+	def __onPageSelected (self, page):
 		self.onPageSelect (page)
+
+
+	def __onTreeUpdated (self, sender):
+		self.onTreeUpdate (sender)
 	
 
 	@property

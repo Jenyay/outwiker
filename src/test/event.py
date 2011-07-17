@@ -136,19 +136,11 @@ class EventsTest (unittest.TestCase):
 		self.assertFalse(self.isTreeUpdate)
 		root = WikiDocument.load (path)
 
-		self.assertTrue (self.isTreeUpdate)
-		self.assertEqual (self.treeUpdateSender, root)
-		self.assertEqual (self.treeUpdateCount, 1)
-
-		# Отключимся от события и проверим, что оно больше не вызывается
-		Application.onTreeUpdate -= self.treeUpdate
-		self.isTreeUpdate = False
-		self.treeUpdateSender = None
-
-		root = WikiDocument.load (path)
-
 		self.assertFalse (self.isTreeUpdate)
 		self.assertEqual (self.treeUpdateSender, None)
+		self.assertEqual (self.treeUpdateCount, 0)
+
+		Application.onTreeUpdate -= self.treeUpdate
 
 
 	def testCreate (self):
@@ -164,8 +156,10 @@ class EventsTest (unittest.TestCase):
 		# Создаем вики
 		rootwiki = WikiDocument.create (self.path)
 
-		self.assertTrue(self.isTreeUpdate)
-		self.assertEqual (self.treeUpdateSender, rootwiki)
+		self.assertFalse(self.isTreeUpdate)
+		self.assertEqual (self.treeUpdateSender, None)
+
+		Application.wikiroot = rootwiki
 
 		# Создаем страницу верхнего уровня (не считая корня)
 		self.setUp()
@@ -261,6 +255,42 @@ class EventsTest (unittest.TestCase):
 		# Создаем вики
 		rootwiki = WikiDocument.create (self.path)
 		TextPageFactory.create (rootwiki, u"Страница 1", [])
+
+		Application.wikiroot = rootwiki
+
+		# Изменим содержимое страницы
+		rootwiki[u"Страница 1"].icon = "../test/images/feed.gif"
+		
+		self.assertTrue (self.isPageUpdate)
+		self.assertEqual (self.pageUpdateSender, rootwiki[u"Страница 1"])
+		
+		self.assertTrue (self.isTreeUpdate)
+		self.assertEqual (self.treeUpdateSender, rootwiki[u"Страница 1"])
+
+		Application.onPageUpdate -= self.pageUpdate
+		Application.onTreeUpdate -= self.treeUpdate
+
+
+	def testUpdateIconNoEvent (self):
+		"""
+		Тест на НЕсрабатывание событий при обновлении иконки, если не устанолен Application.wikiroot
+		"""
+		Application.wikiroot = None
+
+		Application.onPageUpdate += self.pageUpdate
+		Application.onTreeUpdate += self.treeUpdate
+
+		removeWiki (self.path)
+
+		self.assertFalse(self.isTreeUpdate)
+		self.assertFalse(self.isPageUpdate)
+		self.assertFalse(self.isPageCreate)
+
+		# Создаем вики
+		rootwiki = WikiDocument.create (self.path)
+		TextPageFactory.create (rootwiki, u"Страница 1", [])
+
+		Application.wikiroot = rootwiki
 
 		# Изменим содержимое страницы
 		rootwiki[u"Страница 1"].icon = "../test/images/feed.gif"

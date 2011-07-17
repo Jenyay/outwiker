@@ -76,7 +76,7 @@ if __name__ == '__main__':
 	from test.treesort import TreeSortTest
 	from test.emptycontent import EmptyContentTest
 
-	#from test.guitests.tray import TrayNormalTest#, TrayIconizedTest
+	##from test.guitests.tray import TrayNormalTest#, TrayIconizedTest
 	from test.guitests.mainid import MainIdTest
 	from test.guitests.mainwnd import MainWndTest
 	from test.guitests.bookmarks import BookmarksGuiTest

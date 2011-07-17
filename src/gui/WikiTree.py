@@ -89,6 +89,7 @@ class WikiTree(wx.Panel):
 		"""
 		Подписка на события контроллера
 		"""
+		Application.onWikiOpen += self.onWikiOpen
 		Application.onTreeUpdate += self.onTreeUpdate
 		Application.onPageCreate += self.onPageCreate
 		Application.onPageOrderChange += self.onPageOrderChange
@@ -107,6 +108,7 @@ class WikiTree(wx.Panel):
 		"""
 		Отписка от событий контроллера
 		"""
+		Application.onWikiOpen += self.onWikiOpen
 		Application.onTreeUpdate -= self.onTreeUpdate
 		Application.onPageCreate -= self.onPageCreate
 		Application.onPageOrderChange -= self.onPageOrderChange
@@ -119,6 +121,10 @@ class WikiTree(wx.Panel):
 		# События, связанные с рендерингом страниц
 		Application.onHtmlRenderingBegin -= self.onHtmlRenderingBegin
 		Application.onHtmlRenderingEnd -= self.onHtmlRenderingEnd
+
+
+	def onWikiOpen (self, root):
+		self.treeUpdate (root)
 	
 
 	def BindGuiEvents (self):

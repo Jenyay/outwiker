@@ -48,11 +48,11 @@ class TreeTest (BaseMainWndTest):
 
 	def testAddPage (self):
 		tree = self.wnd.tree.treeCtrl
-		rootitem = tree.GetRootItem()
 
 		Application.wikiroot = self.wikiroot
 
 		TextPageFactory.create (self.wikiroot, u"Страница 1", [])
+		rootitem = tree.GetRootItem()
 		childitem, cookie = tree.GetFirstChild (rootitem)
 	
 		self.assertEqual (tree.GetChildrenCount (rootitem), 1)
@@ -64,7 +64,6 @@ class TreeTest (BaseMainWndTest):
 
 	def testAddMorePages (self):
 		tree = self.wnd.tree.treeCtrl
-		rootitem = tree.GetRootItem()
 
 		Application.wikiroot = self.wikiroot
 
@@ -74,6 +73,7 @@ class TreeTest (BaseMainWndTest):
 		TextPageFactory.create (self.wikiroot[u"Страница 2/Страница 3"], u"Страница 4", [])
 		TextPageFactory.create (self.wikiroot[u"Страница 1"], u"Страница 5", [])
 	
+		rootitem = tree.GetRootItem()
 		self.assertEqual (tree.GetChildrenCount (rootitem, True), 5)
 		self.assertEqual (tree.GetChildrenCount (rootitem, False), 2)
 
@@ -95,7 +95,6 @@ class TreeTest (BaseMainWndTest):
 
 	def testRemovePage (self):
 		tree = self.wnd.tree.treeCtrl
-		rootitem = tree.GetRootItem()
 
 		Application.wikiroot = self.wikiroot
 
@@ -105,6 +104,7 @@ class TreeTest (BaseMainWndTest):
 		TextPageFactory.create (self.wikiroot[u"Страница 2/Страница 3"], u"Страница 4", [])
 		TextPageFactory.create (self.wikiroot[u"Страница 1"], u"Страница 5", [])
 	
+		rootitem = tree.GetRootItem()
 		self.assertEqual (tree.GetChildrenCount (rootitem, True), 5)
 		self.assertEqual (tree.GetChildrenCount (rootitem, False), 2)
 
@@ -154,7 +154,6 @@ class TreeTest (BaseMainWndTest):
 
 	def testOrder (self):
 		tree = self.wnd.tree.treeCtrl
-		rootitem = tree.GetRootItem()
 
 		Application.wikiroot = self.wikiroot
 
@@ -166,6 +165,7 @@ class TreeTest (BaseMainWndTest):
 
 		self.wikiroot[u"Страница 2"].order -= 1
 
+		rootitem = tree.GetRootItem()
 		page2Item, cookie = tree.GetFirstChild (rootitem)
 
 		self.assertEqual (tree.GetChildrenCount (page2Item, True), 2)
