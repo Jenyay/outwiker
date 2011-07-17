@@ -7,7 +7,7 @@ import wx
 
 from core.application import Application
 from gui.MainWindow import MainWindow
-from gui.guiconfig import GeneralGuiConfig, TrayConfig
+from gui.guiconfig import TrayConfig
 from .basemainwnd import BaseMainWndTest
 
 

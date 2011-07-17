@@ -81,6 +81,7 @@ if __name__ == '__main__':
 	#from test.guitests.tray import TrayNormalTest#, TrayIconizedTest
 	from test.guitests.bookmarks import BookmarksGuiTest
 	from test.guitests.tree import TreeTest
+	from test.guitests.attach import AttachPanelTest
 
 
 	#f = open('tests.log', "w")

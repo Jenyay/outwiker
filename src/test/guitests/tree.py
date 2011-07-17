@@ -179,3 +179,25 @@ class TreeTest (BaseMainWndTest):
 		self.assertEqual (tree.GetChildrenCount (page3Item, False), 1)
 		self.assertEqual (tree.GetItemData(page3Item).GetData(), self.wikiroot[u"Страница 2/Страница 3"])
 		self.assertEqual (tree.GetItemText (page3Item), u"Страница 3")
+
+
+	def testRename (self):
+		tree = self.wnd.tree.treeCtrl
+		Application.wikiroot = self.wikiroot
+
+		TextPageFactory.create (self.wikiroot, u"Страница 1", [])
+		TextPageFactory.create (self.wikiroot, u"Страница 2", [])
+		TextPageFactory.create (self.wikiroot[u"Страница 2"], u"Страница 3", [])
+		TextPageFactory.create (self.wikiroot[u"Страница 2/Страница 3"], u"Страница 4", [])
+		TextPageFactory.create (self.wikiroot[u"Страница 1"], u"Страница 5", [])
+
+		self.wikiroot[u"Страница 2"].title = u"Переименованная страница"
+
+		rootitem = tree.GetRootItem()
+		firstItem, cookie = tree.GetFirstChild (rootitem)
+		newPageItem = tree.GetNextSibling (firstItem)
+
+		self.assertEqual (tree.GetChildrenCount (newPageItem, True), 2)
+		self.assertEqual (tree.GetChildrenCount (newPageItem, False), 1)
+		self.assertEqual (tree.GetItemData(newPageItem).GetData(), self.wikiroot[u"Переименованная страница"])
+		self.assertEqual (tree.GetItemText (newPageItem), u"Переименованная страница")

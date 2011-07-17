@@ -56,11 +56,14 @@ class AttachPanel(wx.Panel):
 	def __bindAppEvents (self):
 		Application.onPageSelect += self.onPageSelect
 		Application.onPageUpdate += self.onPageUpdate
+		Application.onWikiOpen += self.onWikiOpen
 
 	
 	def __unbindAppEvents (self):
 		Application.onPageSelect -= self.onPageSelect
 		Application.onPageUpdate -= self.onPageUpdate
+		Application.onWikiOpen -= self.onWikiOpen
+
 
 
 	def onClose (self, event):
@@ -138,6 +141,14 @@ class AttachPanel(wx.Panel):
 		#attachSizer_copy.Add (self.toolbar, 1, wx.ALL|wx.EXPAND, 2)
 
 
+	def onWikiOpen (self, wiki):
+		self.currentPage = None
+		if wiki != None:
+			self.currentPage = wiki.selectedPage
+
+		self.updateAttachments()
+
+
 	def onPageSelect (self, page):
 		self.currentPage = page
 		self.updateAttachments ()
@@ -152,14 +163,18 @@ class AttachPanel(wx.Panel):
 		"""
 		Обновить список прикрепленных файлов
 		"""
+		self.attachList.Freeze()
 		self.attachList.ClearAll()
 		if self.currentPage != None:
 			files = Attachment (self.currentPage).attachmentFull
 			files.sort(Attachment.sortByName, reverse=True)
 
+
 			for fname in files:
 				if not os.path.basename(fname).startswith("__") or not os.path.isdir (fname):
 					self.attachList.InsertImageStringItem (0, os.path.basename (fname), 0)
+
+		self.attachList.Thaw()
 
 
 	def getSelectedFiles (self):
