@@ -133,9 +133,6 @@ class TreeTest (BaseMainWndTest):
 		TextPageFactory.create (self.wikiroot[u"Страница 2/Страница 3"], u"Страница 4", [])
 		TextPageFactory.create (self.wikiroot[u"Страница 1"], u"Страница 5", [])
 
-		selItem = tree.GetSelection()
-		self.assertEqual (tree.GetItemData(selItem).GetData(), self.wikiroot)
-
 		#---
 		self.wikiroot.selectedPage = self.wikiroot[u"Страница 1"]
 

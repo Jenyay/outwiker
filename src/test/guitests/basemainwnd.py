@@ -32,7 +32,7 @@ class BaseMainWndTest(unittest.TestCase):
 		generalConfig.askBeforeExitOption.value = False
 
 		self.wnd = MainWindow (None, -1, "")
-		#wx.GetApp().SetTopWindow (self.wnd)
+		wx.GetApp().SetTopWindow (self.wnd)
 		#self._processEvents()
 
 

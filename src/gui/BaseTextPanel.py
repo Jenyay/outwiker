@@ -178,6 +178,7 @@ class BaseTextPanel (wx.Panel):
 		self.mainWindow.Unbind(wx.EVT_MENU, id=self.ID_SEARCH_NEXT)
 		self.mainWindow.Unbind(wx.EVT_MENU, id=self.ID_SEARCH_PREV)
 
+		assert self.mainWindow.mainMenu.GetMenuCount() >= 3
 		self.mainWindow.mainMenu.Remove (self.searchMenuIndex)
 		
 		self.mainWindow.mainToolbar.DeleteTool (self.ID_SEARCH)
