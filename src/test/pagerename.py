@@ -9,6 +9,7 @@ from core.tree import RootWikiPage, WikiDocument
 
 from pages.text.textpage import TextPageFactory, TextWikiPage
 from core.attachment import Attachment
+from core.application import Application
 
 from test.utils import removeWiki
 import core.exceptions
@@ -29,6 +30,18 @@ class RenameTest (unittest.TestCase):
 		TextPageFactory.create (self.rootwiki, u"Страница 6", [])
 
 		self.treeUpdateCount = 0
+		self.eventSender = None
+
+		Application.wikiroot = None
+
+
+	def __onPageRename (self, page, oldSubpath):
+		self.treeUpdateCount += 1
+		self.eventSender = page
+
+
+	def tearDown (self):
+		Application.wikiroot = None
 
 	
 	def testRename1 (self):
@@ -40,6 +53,32 @@ class RenameTest (unittest.TestCase):
 		self.assertEqual (page.subpath, u"Страница 1 new")
 		self.assertEqual (self.rootwiki[u"Страница 1"], None)
 		self.assertTrue (os.path.exists (self.rootwiki[u"Страница 1 new"].path))
+
+
+	def testEvent (self):
+		Application.onPageRename += self.__onPageRename
+		Application.wikiroot = self.rootwiki
+
+		page = self.rootwiki[u"Страница 1"]
+		page.title = u"Страница 1 new"
+
+		self.assertEqual (self.treeUpdateCount, 1)
+		self.assertEqual (self.eventSender, self.rootwiki[u"Страница 1 new"])
+		self.assertEqual (self.eventSender, page)
+
+		Application.onPageRename -= self.__onPageRename
+
+
+	def testNoEvent (self):
+		Application.onPageRename += self.__onPageRename
+
+		page = self.rootwiki[u"Страница 1"]
+		page.title = u"Страница 1 new"
+
+		self.assertEqual (self.treeUpdateCount, 0)
+		self.assertEqual (self.eventSender, None)
+
+		Application.onPageRename -= self.__onPageRename
 
 	
 	def testInvalidRename (self):

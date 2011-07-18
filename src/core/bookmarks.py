@@ -23,7 +23,7 @@ class Bookmarks (object):
 		self.__pages = self._load()
 
 		Application.onPageRemove += self.onPageRemove
-		Application.onPageRename += self.onPageRename
+		wikiroot.onPageRename += self.onPageRename
 
 	
 	def onPageRemove (self, page):

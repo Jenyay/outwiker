@@ -244,8 +244,8 @@ class WikiDocument (RootWikiPage):
 	def __init__ (self, path, readonly = False):
 		RootWikiPage.__init__ (self, path, readonly)
 		self._selectedPage = None
-		self.bookmarks = Bookmarks (self, self._params)
 		self.__createEvents()
+		self.bookmarks = Bookmarks (self, self._params)
 
 
 	def __createEvents (self):
@@ -268,6 +268,14 @@ class WikiDocument (RootWikiPage):
 		# Обновление страницы
 		# Параметры: sender
 		self.onPageUpdate = Event()
+
+		# Изменение порядка страниц
+		# Параметры: page - страница, положение которой изменили
+		self.onPageOrderChange = Event()
+
+		# Переименование страницы.
+		# Параметры: page - переименованная страница, oldSubpath - старый относительный путь до страницы
+		self.onPageRename = Event()
 
 
 	@staticmethod
@@ -401,7 +409,7 @@ class WikiPage (RootWikiPage):
 			realorder = len (self.parent.children) - 1
 
 		self.parent._changeChildOrder (self, realorder)
-		Application.onPageOrderChange (self)
+		self.root.onPageOrderChange (self)
 	
 
 	@property
@@ -435,7 +443,7 @@ class WikiPage (RootWikiPage):
 		if self.root.selectedPage == self:
 			self.root.params.lastViewedPageOption.value = self.subpath
 
-		Application.onPageRename (self, oldsubpath)
+		self.root.onPageRename (self, oldsubpath)
 		self.root.onTreeUpdate (self)
 	
 
