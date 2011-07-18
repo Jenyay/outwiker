@@ -182,11 +182,10 @@ class RootWikiPage (object):
 		Отсортировать дочерние страницы по алфавиту
 		"""
 		self._children.sort (RootWikiPage.sortAlphabeticalFunction)
-		#self._children.sort (RootWikiPage.sortAlphabeticalFunction, reverse=True)
 
-		Application.onStartTreeUpdate (self.root)
+		self.root.onStartTreeUpdate (self.root)
 		self._saveChildrenParams()
-		Application.onEndTreeUpdate (self.root)
+		self.root.onEndTreeUpdate (self.root)
 
 
 
@@ -254,6 +253,14 @@ class WikiDocument (RootWikiPage):
 		# Обновление дерева
 		# Параметры: sender - из-за кого обновляется дерево
 		self.onTreeUpdate = Event()
+
+		# Начало сложного обновления дерева
+		# Параметры: root - корень дерева
+		self.onStartTreeUpdate = Event()
+
+		# Конец сложного обновления дерева
+		# Параметры: root - корень дерева
+		self.onEndTreeUpdate = Event()
 
 
 	@staticmethod

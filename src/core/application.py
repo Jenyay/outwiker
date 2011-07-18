@@ -40,12 +40,16 @@ class ApplicationParams (object):
 		if self._wikiroot != None:
 			self._wikiroot.onPageSelect -= self.__onPageSelected
 			self._wikiroot.onTreeUpdate -= self.__onTreeUpdated
+			self._wikiroot.onStartTreeUpdate -= self.__onStartTreeUpdate
+			self._wikiroot.onEndTreeUpdate -= self.__onEndTreeUpdate
 
 		self._wikiroot = value
 
 		if self._wikiroot != None:
 			self._wikiroot.onPageSelect += self.__onPageSelected
 			self._wikiroot.onTreeUpdate += self.__onTreeUpdated
+			self._wikiroot.onStartTreeUpdate += self.__onStartTreeUpdate
+			self._wikiroot.onEndTreeUpdate += self.__onEndTreeUpdate
 
 		self.onWikiOpen (self._wikiroot)
 
@@ -56,6 +60,14 @@ class ApplicationParams (object):
 
 	def __onTreeUpdated (self, sender):
 		self.onTreeUpdate (sender)
+
+	
+	def __onStartTreeUpdate (self, root):
+		self.onStartTreeUpdate (root)
+
+
+	def __onEndTreeUpdate (self, root):
+		self.onEndTreeUpdate (root)
 	
 
 	@property
