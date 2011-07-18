@@ -149,7 +149,7 @@ class TreeTest (BaseMainWndTest):
 		self.assertEqual (tree.GetItemData(selItem).GetData(), self.wikiroot[u"Страница 2/Страница 3"])
 
 
-	def testOrder (self):
+	def testOrder1 (self):
 		tree = self.wnd.tree.treeCtrl
 
 		Application.wikiroot = self.wikiroot
@@ -161,6 +161,46 @@ class TreeTest (BaseMainWndTest):
 		TextPageFactory.create (self.wikiroot[u"Страница 1"], u"Страница 5", [])
 
 		self.wikiroot[u"Страница 2"].order -= 1
+
+		rootitem = tree.GetRootItem()
+		page2Item, cookie = tree.GetFirstChild (rootitem)
+
+		self.assertEqual (tree.GetChildrenCount (page2Item, True), 2)
+		self.assertEqual (tree.GetChildrenCount (page2Item, False), 1)
+		self.assertEqual (tree.GetItemData(page2Item).GetData(), self.wikiroot[u"Страница 2"])
+		self.assertEqual (tree.GetItemText (page2Item), u"Страница 2")
+
+		page3Item, cookie = tree.GetFirstChild (page2Item)
+
+		self.assertEqual (tree.GetChildrenCount (page3Item, True), 1)
+		self.assertEqual (tree.GetChildrenCount (page3Item, False), 1)
+		self.assertEqual (tree.GetItemData(page3Item).GetData(), self.wikiroot[u"Страница 2/Страница 3"])
+		self.assertEqual (tree.GetItemText (page3Item), u"Страница 3")
+
+
+	def testOrder2 (self):
+		tree = self.wnd.tree.treeCtrl
+
+		TextPageFactory.create (self.wikiroot, u"Страница 1", [])
+		TextPageFactory.create (self.wikiroot, u"Страница 2", [])
+		TextPageFactory.create (self.wikiroot[u"Страница 2"], u"Страница 3", [])
+		TextPageFactory.create (self.wikiroot[u"Страница 2/Страница 3"], u"Страница 4", [])
+		TextPageFactory.create (self.wikiroot[u"Страница 1"], u"Страница 5", [])
+
+		Application.wikiroot = self.wikiroot
+		Application.wikiroot.selectedPage = self.wikiroot[u"Страница 2"]
+
+		selItem = tree.GetSelection()
+		self.assertEqual (tree.GetItemData(selItem).GetData(), self.wikiroot[u"Страница 2"])
+		self.assertEqual (tree.GetItemData(selItem).GetData(), self.wikiroot[u"Страница 2"])
+		self.assertEqual (self.wikiroot.selectedPage, self.wikiroot[u"Страница 2"])
+
+		Application.wikiroot.selectedPage.order -= 1
+
+		selItem = tree.GetSelection()
+		self.assertEqual (tree.GetItemData(selItem).GetData(), self.wikiroot[u"Страница 2"])
+		self.assertEqual (tree.GetItemData(selItem).GetData(), self.wikiroot[u"Страница 2"])
+		self.assertEqual (self.wikiroot.selectedPage, self.wikiroot[u"Страница 2"])
 
 		rootitem = tree.GetRootItem()
 		page2Item, cookie = tree.GetFirstChild (rootitem)

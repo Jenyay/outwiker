@@ -80,8 +80,8 @@ class WikiTree(wx.Panel):
 		# Имя опции для сохранения развернутости страницы
 		self.pageOptionExpand = "Expand"
 
-		self.BindGuiEvents()
 		self.BindApplicationEvents()
+		self.BindGuiEvents()
 		self.BindPopupMenuEvents()
 
 
@@ -108,7 +108,7 @@ class WikiTree(wx.Panel):
 		"""
 		Отписка от событий контроллера
 		"""
-		Application.onWikiOpen += self.onWikiOpen
+		Application.onWikiOpen -= self.onWikiOpen
 		Application.onTreeUpdate -= self.onTreeUpdate
 		Application.onPageCreate -= self.onPageCreate
 		Application.onPageOrderChange -= self.onPageOrderChange
@@ -193,7 +193,9 @@ class WikiTree(wx.Panel):
 
 
 	def onMoveUp (self, event):
+		#print Application.selectedPage.title
 		core.commands.moveCurrentPageUp()
+		#print Application.selectedPage.title
 
 
 	def onMoveDown (self, event):
@@ -545,7 +547,7 @@ class WikiTree(wx.Panel):
 		"""
 		Обновить дерево
 		"""
-		self.Unbind (wx.EVT_TREE_SEL_CHANGED, handler = self.onSelChanged)
+		#self.Unbind (wx.EVT_TREE_SEL_CHANGED, handler = self.onSelChanged)
 
 		# Так как мы сами будем сворачивать/разворачивать узлы дерева, 
 		# на эти события реагировать не надо пока строится дерево
@@ -569,7 +571,7 @@ class WikiTree(wx.Panel):
 			self.selectedPage = rootPage.selectedPage
 			self.treeCtrl.Expand (rootItem)
 
-		self.Bind (wx.EVT_TREE_SEL_CHANGED, self.onSelChanged)
+		#self.Bind (wx.EVT_TREE_SEL_CHANGED, self.onSelChanged)
 		self.treeCtrl.Bind (wx.EVT_TREE_ITEM_COLLAPSED, self.onTreeStateChanged)
 		self.treeCtrl.Bind (wx.EVT_TREE_ITEM_EXPANDED, self.onTreeStateChanged)
 	
@@ -640,12 +642,22 @@ class WikiTree(wx.Panel):
 		"""
 		Обновить страницу (удалить из списка и добавить снова)
 		"""
+		#print page.title
+		#print page.root.selectedPage.title
+
 		# Отпишемся от обновлений страниц, чтобы не изменять выбранную страницу
 		self._unbindUpdateEvents()
 		self.treeCtrl.Freeze()
 
 		self._removePageItem (page)
+
+		#print page.title
+		#print page.root.selectedPage.title
+
 		item = self.insertChild (page, self._pageCache[page.parent])
+
+		#print page.title
+		#print page.root.selectedPage.title
 
 		if page.root.selectedPage == page:
 			# Если обновляем выбранную страницу
