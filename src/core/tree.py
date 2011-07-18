@@ -245,7 +245,10 @@ class WikiDocument (RootWikiPage):
 		RootWikiPage.__init__ (self, path, readonly)
 		self._selectedPage = None
 		self.bookmarks = Bookmarks (self, self._params)
+		self.__createEvents()
 
+
+	def __createEvents (self):
 		# Выбор новой страницы
 		# Параметры: новая выбранная страница
 		self.onPageSelect = Event()
