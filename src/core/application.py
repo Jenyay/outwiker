@@ -50,6 +50,7 @@ class ApplicationParams (object):
 
 	def __bindWikiEvents (self, wiki):
 		wiki.onPageSelect += self.__onPageSelected
+		wiki.onPageUpdate += self.__onPageUpdated
 		wiki.onTreeUpdate += self.__onTreeUpdated
 		wiki.onStartTreeUpdate += self.__onStartTreeUpdate
 		wiki.onEndTreeUpdate += self.__onEndTreeUpdate
@@ -57,9 +58,18 @@ class ApplicationParams (object):
 
 	def __unbindWikiEvents (self, wiki):
 		wiki.onPageSelect -= self.__onPageSelected
+		wiki.onPageUpdate -= self.__onPageUpdated
 		wiki.onTreeUpdate -= self.__onTreeUpdated
 		wiki.onStartTreeUpdate -= self.__onStartTreeUpdate
 		wiki.onEndTreeUpdate -= self.__onEndTreeUpdate
+
+
+	########################################
+	# Перенаправление событий от страниц
+	#
+
+	def __onPageUpdated (self, page):
+		self.onPageUpdate (page)
 
 
 	def __onPageSelected (self, page):
@@ -76,6 +86,9 @@ class ApplicationParams (object):
 
 	def __onEndTreeUpdate (self, root):
 		self.onEndTreeUpdate (root)
+
+	#
+	########################################
 	
 
 	@property

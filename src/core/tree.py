@@ -265,6 +265,10 @@ class WikiDocument (RootWikiPage):
 		# Параметры: root - корень дерева
 		self.onEndTreeUpdate = Event()
 
+		# Обновление страницы
+		# Параметры: sender
+		self.onPageUpdate = Event()
+
 
 	@staticmethod
 	def load(path, readonly = False):
@@ -543,7 +547,7 @@ class WikiPage (RootWikiPage):
 		if iconpath != newpath:
 			shutil.copyfile (iconpath, newpath)
 
-		Application.onPageUpdate (self)
+		self.root.onPageUpdate (self)
 		self.root.onTreeUpdate (self)
 
 		return newpath
@@ -562,7 +566,7 @@ class WikiPage (RootWikiPage):
 		if self._tags != tags:
 			self._tags = tags[:]
 			self.save()
-			Application.onPageUpdate(self)
+			self.root.onPageUpdate(self)
 
 
 	def _getIcon (self):
@@ -701,7 +705,7 @@ class WikiPage (RootWikiPage):
 			with open (path, "wb") as fp:
 				fp.write (text.encode ("utf8"))
 
-			Application.onPageUpdate(self)
+			self.root.onPageUpdate(self)
 	
 
 	@property

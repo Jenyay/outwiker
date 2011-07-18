@@ -104,6 +104,8 @@ class EventsTest (unittest.TestCase):
 		self.treeUpdateCount = 0
 		self.pageSelectCount = 0
 
+		Application.wikiroot = None
+
 	def tearDown(self):
 		Application.wikiroot = None
 		removeWiki (self.path)
@@ -189,9 +191,37 @@ class EventsTest (unittest.TestCase):
 		Application.onPageCreate -= self.pageCreate
 
 
-	def testUpdateContent (self):
+	def testUpdateContentEvent (self):
 		"""
 		Тест на срабатывание событий при обновлении контента
+		"""
+		Application.onPageUpdate += self.pageUpdate
+
+		removeWiki (self.path)
+
+		self.assertFalse(self.isTreeUpdate)
+		self.assertFalse(self.isPageUpdate)
+		self.assertFalse(self.isPageCreate)
+
+		# Создаем вики
+		rootwiki = WikiDocument.create (self.path)
+		TextPageFactory.create (rootwiki, u"Страница 1", [])
+
+		Application.wikiroot = rootwiki
+
+		# Изменим содержимое страницы
+		rootwiki[u"Страница 1"].content = "1111"
+		
+		self.assertTrue(self.isPageUpdate)
+		self.assertEqual (self.pageUpdateSender, rootwiki[u"Страница 1"])
+
+		Application.onPageUpdate -= self.pageUpdate
+		Application.wikiroot = None
+
+
+	def testUpdateContentNoEvent (self):
+		"""
+		Тест на НЕсрабатывание событий при обновлении контента
 		"""
 		Application.onPageUpdate += self.pageUpdate
 
@@ -208,13 +238,40 @@ class EventsTest (unittest.TestCase):
 		# Изменим содержимое страницы
 		rootwiki[u"Страница 1"].content = "1111"
 		
+		self.assertFalse(self.isPageUpdate)
+		self.assertEqual (self.pageUpdateSender, None)
+
+		Application.onPageUpdate -= self.pageUpdate
+
+
+	def testUpdateTagsEvent (self):
+		"""
+		Тест на срабатывание событий при обновлении меток (тегов)
+		"""
+		Application.onPageUpdate += self.pageUpdate
+
+		removeWiki (self.path)
+
+		self.assertFalse(self.isTreeUpdate)
+		self.assertFalse(self.isPageUpdate)
+		self.assertFalse(self.isPageCreate)
+
+		# Создаем вики
+		rootwiki = WikiDocument.create (self.path)
+		TextPageFactory.create (rootwiki, u"Страница 1", [])
+
+		Application.wikiroot = rootwiki
+
+		# Изменим содержимое страницы
+		rootwiki[u"Страница 1"].tags = ["test"]
+		
 		self.assertTrue(self.isPageUpdate)
 		self.assertEqual (self.pageUpdateSender, rootwiki[u"Страница 1"])
 
 		Application.onPageUpdate -= self.pageUpdate
 
 
-	def testUpdateTags (self):
+	def testUpdateTagsNoEvent (self):
 		"""
 		Тест на срабатывание событий при обновлении меток (тегов)
 		"""
@@ -233,8 +290,8 @@ class EventsTest (unittest.TestCase):
 		# Изменим содержимое страницы
 		rootwiki[u"Страница 1"].tags = ["test"]
 		
-		self.assertTrue(self.isPageUpdate)
-		self.assertEqual (self.pageUpdateSender, rootwiki[u"Страница 1"])
+		self.assertFalse(self.isPageUpdate)
+		self.assertEqual (self.pageUpdateSender, None)
 
 		Application.onPageUpdate -= self.pageUpdate
 
