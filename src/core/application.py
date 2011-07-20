@@ -13,7 +13,10 @@ from .recent import RecentWiki
 class ApplicationParams (object):
 	def __init__ (self):
 		# Открытая в данный момент wiki
-		self._wikiroot = None
+		self.__wikiroot = None
+
+		# Главное окно приложения
+		self.__mainWindow = None
 		self.config = None
 		self.recentWiki = None
 		self.__createEvents()
@@ -30,22 +33,32 @@ class ApplicationParams (object):
 
 	@property
 	def wikiroot (self):
-		return self._wikiroot
+		return self.__wikiroot
 
 
 	@wikiroot.setter
 	def wikiroot (self, value):
-		self.onWikiClose (self._wikiroot)
+		self.onWikiClose (self.__wikiroot)
 
-		if self._wikiroot != None:
-			self.__unbindWikiEvents (self._wikiroot)
+		if self.__wikiroot != None:
+			self.__unbindWikiEvents (self.__wikiroot)
 
-		self._wikiroot = value
+		self.__wikiroot = value
 
-		if self._wikiroot != None:
-			self.__bindWikiEvents (self._wikiroot)
+		if self.__wikiroot != None:
+			self.__bindWikiEvents (self.__wikiroot)
 
-		self.onWikiOpen (self._wikiroot)
+		self.onWikiOpen (self.__wikiroot)
+
+
+	@property
+	def mainWindow (self):
+		return self.__mainWindow
+
+
+	@mainWindow.setter
+	def mainWindow (self, value):
+		self.__mainWindow = value
 
 
 	def __bindWikiEvents (self, wiki):
@@ -79,10 +92,10 @@ class ApplicationParams (object):
 		"""
 		Вернуть текущую страницу или None, если страница не выбрана или вики не открыта
 		"""
-		if self._wikiroot == None:
+		if self.__wikiroot == None:
 			return None
 
-		return self._wikiroot.selectedPage
+		return self.__wikiroot.selectedPage
 
 
 	def __createEvents (self):

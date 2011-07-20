@@ -251,7 +251,7 @@ def setStatusText (text, index = 0):
 	text - текст
 	index - номер ячейки статусбара
 	"""
-	wx.GetApp().GetTopWindow().statusbar.SetStatusText (text, index)
+	Application.mainWindow.statusbar.SetStatusText (text, index)
 
 
 def getCurrentVersion ():
