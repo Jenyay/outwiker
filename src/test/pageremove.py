@@ -29,6 +29,11 @@ class RemovePagesTest (unittest.TestCase):
 		TextPageFactory.create (self.rootwiki, u"Страница 6", [])
 
 		self.pageRemoveCount = 0
+		Application.wikiroot = None
+
+
+	def tearDown (self):
+		Application.wikiroot = None
 
 
 	def onPageRemove (self, bookmarks):
@@ -40,6 +45,7 @@ class RemovePagesTest (unittest.TestCase):
 	
 	def testRemove1 (self):
 		Application.onPageRemove += self.onPageRemove
+		Application.wikiroot = self.rootwiki
 
 		# Удаляем страницу из корня
 		page6 = self.rootwiki[u"Страница 6"]
@@ -61,6 +67,20 @@ class RemovePagesTest (unittest.TestCase):
 		self.assertTrue (page4.isRemoved)
 		self.assertEqual (self.pageRemoveCount, 3)
 		
+		Application.onPageRemove -= self.onPageRemove
+
+
+	def testRemoveNoEvent (self):
+		Application.onPageRemove += self.onPageRemove
+
+		# Удаляем страницу из корня
+		page6 = self.rootwiki[u"Страница 6"]
+		page6.remove()
+		self.assertEqual (len (self.rootwiki), 2)
+		self.assertEqual (self.rootwiki[u"Страница 6"], None)
+		self.assertTrue (page6.isRemoved)
+		self.assertEqual (self.pageRemoveCount, 0)
+
 		Application.onPageRemove -= self.onPageRemove
 	
 

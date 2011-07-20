@@ -145,7 +145,7 @@ class EventsTest (unittest.TestCase):
 		Application.onTreeUpdate -= self.treeUpdate
 
 
-	def testCreate (self):
+	def testCreateEvent (self):
 		Application.onTreeUpdate += self.treeUpdate
 		Application.onPageCreate += self.pageCreate
 
@@ -164,7 +164,8 @@ class EventsTest (unittest.TestCase):
 		Application.wikiroot = rootwiki
 
 		# Создаем страницу верхнего уровня (не считая корня)
-		self.setUp()
+		self.isPageCreate = False
+		self.pageCreateSender = None
 
 		TextPageFactory.create (rootwiki, u"Страница 1", [])
 		
@@ -172,7 +173,8 @@ class EventsTest (unittest.TestCase):
 		self.assertEqual (self.pageCreateSender, rootwiki[u"Страница 1"])
 
 		# Создаем еще одну страницу
-		self.setUp()
+		self.isPageCreate = False
+		self.pageCreateSender = None
 
 		TextPageFactory.create (rootwiki, u"Страница 2", [])
 
@@ -180,7 +182,8 @@ class EventsTest (unittest.TestCase):
 		self.assertEqual (self.pageCreateSender, rootwiki[u"Страница 2"])
 
 		# Создаем подстраницу
-		self.setUp()
+		self.isPageCreate = False
+		self.pageCreateSender = None
 
 		TextPageFactory.create (rootwiki[u"Страница 2"], u"Страница 3", [])
 
@@ -189,6 +192,32 @@ class EventsTest (unittest.TestCase):
 
 		Application.onTreeUpdate -= self.treeUpdate
 		Application.onPageCreate -= self.pageCreate
+
+
+	def testCreateNoEvent (self):
+		Application.onTreeUpdate += self.treeUpdate
+		Application.onPageCreate += self.pageCreate
+
+		removeWiki (self.path)
+
+		self.assertFalse(self.isTreeUpdate)
+		self.assertFalse(self.isPageUpdate)
+		self.assertFalse(self.isPageCreate)
+
+		# Создаем вики
+		rootwiki = WikiDocument.create (self.path)
+
+		self.assertFalse(self.isTreeUpdate)
+		self.assertEqual (self.treeUpdateSender, None)
+
+		# Создаем страницу верхнего уровня (не считая корня)
+		self.isPageCreate = False
+		self.pageCreateSender = None
+
+		TextPageFactory.create (rootwiki, u"Страница 1", [])
+		
+		self.assertFalse(self.isPageCreate)
+		self.assertEqual (self.pageCreateSender, None)
 
 
 	def testUpdateContentEvent (self):

@@ -5,7 +5,6 @@ import os.path
 import ConfigParser
 import shutil
 
-from .application import Application
 from .config import PageConfig
 from .bookmarks import Bookmarks
 from .search import TagsList
@@ -276,6 +275,14 @@ class WikiDocument (RootWikiPage):
 		# Переименование страницы.
 		# Параметры: page - переименованная страница, oldSubpath - старый относительный путь до страницы
 		self.onPageRename = Event()
+
+		# Создание страницы
+		# Параметры: sender
+		self.onPageCreate = Event()
+
+		# Удаленеи страницы
+		# Параметр - удаленная страница
+		self.onPageRemove = Event()
 
 
 	@staticmethod
@@ -666,7 +673,7 @@ class WikiPage (RootWikiPage):
 		"""
 		self._tags = tags[:]
 		self.save()
-		Application.onPageCreate(self)
+		self.root.onPageCreate(self)
 	
 
 	def _getTags (self, configParser):
@@ -779,7 +786,7 @@ class WikiPage (RootWikiPage):
 		for child in page.children:
 			page._removePageFromTree (child)
 
-		Application.onPageRemove (page)
+		self.root.onPageRemove (page)
 
 
 	@property

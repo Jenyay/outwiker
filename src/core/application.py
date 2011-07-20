@@ -56,6 +56,8 @@ class ApplicationParams (object):
 		wiki.onEndTreeUpdate += self.onEndTreeUpdate
 		wiki.onPageOrderChange += self.onPageOrderChange
 		wiki.onPageRename += self.onPageRename
+		wiki.onPageCreate += self.onPageCreate
+		wiki.onPageRemove += self.onPageRemove
 
 
 	def __unbindWikiEvents (self, wiki):
@@ -66,6 +68,8 @@ class ApplicationParams (object):
 		wiki.onEndTreeUpdate -= self.onEndTreeUpdate
 		wiki.onPageOrderChange -= self.onPageOrderChange
 		wiki.onPageRename -= self.onPageRename
+		wiki.onPageCreate -= self.onPageCreate
+		wiki.onPageRemove -= self.onPageRemove
 
 
 	@property

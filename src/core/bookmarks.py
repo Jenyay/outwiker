@@ -22,7 +22,7 @@ class Bookmarks (object):
 		# Страницы в закладках
 		self.__pages = self._load()
 
-		Application.onPageRemove += self.onPageRemove
+		wikiroot.onPageRemove += self.onPageRemove
 		wikiroot.onPageRename += self.onPageRename
 
 	
@@ -36,9 +36,6 @@ class Bookmarks (object):
 	
 
 	def onPageRename (self, page, oldSubpath):
-		#if oldSubpath in self.__pages:
-			#self.__pages[self.__pages.index (oldSubpath)] = page.subpath
-
 		for n in range (len (self.__pages)):
 			subpath = self.__pages[n]
 			if subpath.startswith (oldSubpath):
