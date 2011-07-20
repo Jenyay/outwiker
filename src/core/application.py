@@ -49,58 +49,24 @@ class ApplicationParams (object):
 
 
 	def __bindWikiEvents (self, wiki):
-		wiki.onPageSelect += self.__onPageSelected
-		wiki.onPageUpdate += self.__onPageUpdated
-		wiki.onTreeUpdate += self.__onTreeUpdated
-		wiki.onStartTreeUpdate += self.__onStartTreeUpdate
-		wiki.onEndTreeUpdate += self.__onEndTreeUpdate
-		wiki.onPageOrderChange += self.__onPageOrderChanged
-		wiki.onPageRename += self.__onPageRenamed
+		wiki.onPageSelect += self.onPageSelect
+		wiki.onPageUpdate += self.onPageUpdate
+		wiki.onTreeUpdate += self.onTreeUpdate
+		wiki.onStartTreeUpdate += self.onStartTreeUpdate
+		wiki.onEndTreeUpdate += self.onEndTreeUpdate
+		wiki.onPageOrderChange += self.onPageOrderChange
+		wiki.onPageRename += self.onPageRename
 
 
 	def __unbindWikiEvents (self, wiki):
-		wiki.onPageSelect -= self.__onPageSelected
-		wiki.onPageUpdate -= self.__onPageUpdated
-		wiki.onTreeUpdate -= self.__onTreeUpdated
-		wiki.onStartTreeUpdate -= self.__onStartTreeUpdate
-		wiki.onEndTreeUpdate -= self.__onEndTreeUpdate
-		wiki.onPageOrderChange -= self.__onPageOrderChanged
-		wiki.onPageRename -= self.__onPageRenamed
+		wiki.onPageSelect -= self.onPageSelect
+		wiki.onPageUpdate -= self.onPageUpdate
+		wiki.onTreeUpdate -= self.onTreeUpdate
+		wiki.onStartTreeUpdate -= self.onStartTreeUpdate
+		wiki.onEndTreeUpdate -= self.onEndTreeUpdate
+		wiki.onPageOrderChange -= self.onPageOrderChange
+		wiki.onPageRename -= self.onPageRename
 
-
-	########################################
-	# Перенаправление событий от страниц
-	#
-	def __onPageRenamed (self, page, oldSubpath):
-		self.onPageRename (page, oldSubpath)
-
-
-	def __onPageOrderChanged (self, page):
-		self.onPageOrderChange (page)
-
-
-	def __onPageUpdated (self, page):
-		self.onPageUpdate (page)
-
-
-	def __onPageSelected (self, page):
-		self.onPageSelect (page)
-
-
-	def __onTreeUpdated (self, sender):
-		self.onTreeUpdate (sender)
-
-	
-	def __onStartTreeUpdate (self, root):
-		self.onStartTreeUpdate (root)
-
-
-	def __onEndTreeUpdate (self, root):
-		self.onEndTreeUpdate (root)
-
-	#
-	########################################
-	
 
 	@property
 	def selectedPage (self):
