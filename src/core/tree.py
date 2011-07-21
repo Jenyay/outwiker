@@ -544,13 +544,16 @@ class WikiPage (RootWikiPage):
 
 	@property
 	def icon (self):
-		return self._getIcon()
+		icons = self._getIconFiles()
+		return icons[0] if len (icons) > 0 else None
 
 
 	@icon.setter
 	def icon (self, iconpath):
 		if self.readonly:
 			raise core.exceptions.ReadonlyException
+
+		self._removeOldIcons()
 
 		name = os.path.basename (iconpath)
 		dot = name.rfind (".")
@@ -566,6 +569,11 @@ class WikiPage (RootWikiPage):
 		self.root.onTreeUpdate (self)
 
 		return newpath
+
+
+	def _removeOldIcons (self):
+		for fname in self._getIconFiles():
+			os.remove (fname)
 
 
 	@property
@@ -584,13 +592,14 @@ class WikiPage (RootWikiPage):
 			self.root.onPageUpdate(self)
 
 
-	def _getIcon (self):
+	def _getIconFiles (self):
 		files = os.listdir (self.path)
 
-		for file in files:
-			if (file.startswith (RootWikiPage.iconName) and
-					not os.path.isdir (file)):
-				return os.path.join (self.path, file)
+		icons = [os.path.join (self.path, fname) for fname in files 
+				if (fname.startswith (RootWikiPage.iconName) and
+					not os.path.isdir (fname))]
+
+		return icons
 	
 
 	def initAfterLoading (self):
