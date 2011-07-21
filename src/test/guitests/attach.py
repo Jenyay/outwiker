@@ -43,7 +43,7 @@ class AttachPanelTest (BaseMainWndTest):
 	def testEmpty (self):
 		self.assertNotEqual (None, self.wnd.attachPanel)
 		self.assertNotEqual (None, self.wnd.attachPanel.attachList)
-		self.assertNotEqual (None, self.wnd.attachPanel.toolbar)
+		self.assertNotEqual (None, self.wnd.attachPanel.toolBar)
 		self.assertEqual (0, self.wnd.attachPanel.attachList.GetItemCount())
 
 

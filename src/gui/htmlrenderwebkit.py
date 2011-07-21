@@ -68,12 +68,12 @@ class HtmlRenderWebKit(HtmlRender):
 		self.canOpenUrl = False                # Можно ли открывать ссылки
 		self.currentUri = None                 # Текущая открытая страница
 
-		self.ctrl.connect("navigation-policy-decision-requested", self._onNavigate)
-		self.ctrl.connect("hovering-over-link", self._onHoveredOverLink)
+		self.ctrl.connect("navigation-policy-decision-requested", self.__onNavigate)
+		self.ctrl.connect("hovering-over-link", self.__onHoveredOverLink)
 		#self.ctrl.connect("populate-popup", self._on_populate_popup)
 
-		self.Bind (wx.EVT_MENU, self.onCopyFromHtml, id = wx.ID_COPY)
-		self.Bind (wx.EVT_MENU, self.onCopyFromHtml, id = wx.ID_CUT)
+		self.Bind (wx.EVT_MENU, self.__onCopyFromHtml, id = wx.ID_COPY)
+		self.Bind (wx.EVT_MENU, self.__onCopyFromHtml, id = wx.ID_CUT)
 		
 
 	def Print (self):
@@ -101,7 +101,7 @@ class HtmlRenderWebKit(HtmlRender):
 		self.canOpenUrl = False
 
 
-	def onCopyFromHtml(self, event):
+	def __onCopyFromHtml(self, event):
 		self.ctrl.copy_clipboard ()
 		event.Skip()
 
@@ -113,14 +113,14 @@ class HtmlRenderWebKit(HtmlRender):
 
 
 
-	def identifyUri (self, href):
+	def __identifyUri (self, href):
 		"""
 		Определить тип ссылки и вернуть кортеж (url, page, filename)
 		"""
 		if self._isUrl (href):
 			return (href, None, None)
 
-		href_clear = self._removeFileProtokol (href)
+		href_clear = self.__removeFileProtokol (href)
 
 		page = self.__findWikiPage (href_clear)
 		filename = self.__findFile (href_clear)
@@ -128,14 +128,14 @@ class HtmlRenderWebKit(HtmlRender):
 		return (None, page, filename)
 
 
-	def _onHoveredOverLink (self, view, title, uri):
+	def __onHoveredOverLink (self, view, title, uri):
 		if uri == None:
 			core.commands.setStatusText (u"")
 			return
 
 		href = unicode (urllib.unquote (uri), "utf8")
 
-		(url, page, filename) = self.identifyUri (href)
+		(url, page, filename) = self.__identifyUri (href)
 
 		if url != None:
 			core.commands.setStatusText (url)
@@ -152,7 +152,7 @@ class HtmlRenderWebKit(HtmlRender):
 		core.commands.setStatusText (u"")
 
 
-	def _onNavigate (self, view, frame, request, action, decision):
+	def __onNavigate (self, view, frame, request, action, decision):
 		href = unicode (urllib.unquote (request.get_uri()), "utf8")
 		curr_href = self.ctrl.get_main_frame().get_uri()
 
@@ -162,15 +162,15 @@ class HtmlRenderWebKit(HtmlRender):
 			return False
 		else:
 			self.currentUri = request.get_uri()
-			self._onLinkClicked (href)
+			self.__onLinkClicked (href)
 			return True
 
 
-	def _onLinkClicked (self, href):
+	def __onLinkClicked (self, href):
 		"""
 		Клик по ссылке
 		"""
-		(url, page, filename) = self.identifyUri (href)
+		(url, page, filename) = self.__identifyUri (href)
 
 		if url != None:
 			self.openUrl (url)
@@ -186,7 +186,7 @@ class HtmlRenderWebKit(HtmlRender):
 				core.commands.MessageBox (text, _(u"Error"), wx.ICON_ERROR | wx.OK)
 
 
-	def _removeFileProtokol (self, href):
+	def __removeFileProtokol (self, href):
 		"""
 		Так как WebKit к адресу без протокола прибавляет file://, то избавимся от этой надписи
 		"""
