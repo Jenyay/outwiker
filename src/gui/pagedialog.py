@@ -38,7 +38,7 @@ def editPage (parentWnd, currentPage):
 			try:
 				currentPage.title = dlg.pageTitle
 			except OSError as e:
-				MessageBox (_(u"Can't rename page\n") + unicode (e), _(u"Error"), wx.ICON_ERROR | wx.OK)
+				core.commands.MessageBox (_(u"Can't rename page\n") + unicode (e), _(u"Error"), wx.ICON_ERROR | wx.OK)
 
 			currentPage.root.selectedPage = currentPage
 		finally:
@@ -74,7 +74,7 @@ def createPageWithDialog (parentwnd, parentpage):
 			page.root.selectedPage = page
 
 		except OSError, IOError:
-			MessageBox (_(u"Can't create page"), "Error", wx.ICON_ERROR | wx.OK)
+			core.commands.MessageBox (_(u"Can't create page"), "Error", wx.ICON_ERROR | wx.OK)
 		finally:
 			Application.onEndTreeUpdate(parentpage.root)
 
@@ -90,7 +90,7 @@ def createSiblingPage (parentwnd):
 	parentwnd - окно, которое будет родителем для диалога создания страницы
 	"""
 	if Application.wikiroot == None:
-		MessageBox (_(u"Wiki is not open"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+		core.commands.MessageBox (_(u"Wiki is not open"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 		return
 
 	currPage = Application.wikiroot.selectedPage
@@ -109,7 +109,7 @@ def createChildPage (parentwnd):
 	parentwnd - окно, которое будет родителем для диалога создания страницы
 	"""
 	if Application.wikiroot == None:
-		MessageBox (_(u"Wiki is not open"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+		core.commands.MessageBox (_(u"Wiki is not open"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 		return
 
 	currPage = Application.wikiroot.selectedPage
@@ -139,8 +139,8 @@ class CreatePageDialog (BasePageDialog):
 			core.commands.MessageBox (_(u"Invalid page title"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 			return
 
-		if self.parentPage != None and \
-				not RootWikiPage.testDublicate(self.parentPage, self.pageTitle):
+		if (self.parentPage != None and
+				not RootWikiPage.testDublicate(self.parentPage, self.pageTitle)):
 			core.commands.MessageBox (_(u"A page with this title already exists"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 			return
 
