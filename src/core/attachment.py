@@ -25,7 +25,7 @@ class Attachment (object):
 	
 	def getAttachPath (self, create=False):
 		"""
-		Возвращает путь до страницы с прикрепленными файлами
+		Возвращает путь до папки с прикрепленными файлами
 		create - создать папку для прикрепленных файлов, если она еще не создана?
 		"""
 		path = os.path.join (self.page.path, Attachment.attachDir)

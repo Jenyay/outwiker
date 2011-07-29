@@ -31,8 +31,8 @@ class HtmlRenderIE (HtmlRender):
 
 		self.__layout()
 
-		self.Bind (wx.EVT_MENU, self.onCopyFromHtml, id = wx.ID_COPY)
-		self.Bind (wx.EVT_MENU, self.onCopyFromHtml, id = wx.ID_CUT)
+		self.Bind (wx.EVT_MENU, self.__onCopyFromHtml, id = wx.ID_COPY)
+		self.Bind (wx.EVT_MENU, self.__onCopyFromHtml, id = wx.ID_CUT)
 
 
 	def Print (self):
@@ -54,7 +54,8 @@ class HtmlRenderIE (HtmlRender):
 		if len (status) != 0:
 			href = self.__cleanUpUrl (status)
 
-			(url, page, filename) = self.identifyUri (href)
+			#identifier = UriIdentifier ()
+			(url, page, filename) = self.__identifyUri (href)
 
 			if page != None:
 				core.commands.setStatusText (page.subpath)
@@ -66,7 +67,7 @@ class HtmlRenderIE (HtmlRender):
 			core.commands.setStatusText (status)
 
 
-	def onCopyFromHtml(self, event):
+	def __onCopyFromHtml(self, event):
 		document = self.render.document
 		selection = document.selection
 
@@ -94,32 +95,14 @@ class HtmlRenderIE (HtmlRender):
 		"""
 		Почистить ссылку. Убрать file:/// и about:blank
 		"""
-		result = self._removeFileProtokol (href)
-		#result = self.__removeAboutBlank (result)
+		result = self.__removeFileProtokol (href)
 		result = urllib.unquote (result)
 		result = result.replace ("/", u"\\")
 
 		return result
 
 
-	def __removeAboutBlank (self, href):
-		"""
-		Удалить about: и about:blank из начала адреса
-		"""
-		about_full = u"about:blank"
-		about_short = u"about:"
-
-		result = href
-		if result.startswith (about_full):
-			result = result[len (about_full): ]
-
-		elif result.startswith (about_short):
-			result = result[len (about_short): ]
-
-		return result
-
-
-	def _removeFileProtokol (self, href):
+	def __removeFileProtokol (self, href):
 		"""
 		Избавиться от протокола file:///, то избавимся от этой надписи
 		"""
@@ -130,9 +113,9 @@ class HtmlRenderIE (HtmlRender):
 		return href
 
 
-	def BeforeNavigate2(self, this, pDisp, URL, Flags, TargetFrameName, PostData, Headers, Cancel):
+	def BeforeNavigate2 (self, this, pDisp, URL, Flags, 
+			TargetFrameName, PostData, Headers, Cancel):
 		href = URL[0]
-		#href = self.__cleanUpUrl (URL[0])
 		curr_href = self.__cleanUpUrl (self.render.locationurl)
 
 		if self.canOpenUrl or href == curr_href:
@@ -141,29 +124,23 @@ class HtmlRenderIE (HtmlRender):
 		else:
 			Cancel[0] = True
 			self.currentUri = href
-			self._onLinkClicked (href)
+			self.__onLinkClicked (href)
 
 
-	def identifyUri (self, href):
+	def __identifyUri (self, href):
 		"""
 		Определить тип ссылки и вернуть кортеж (url, page, filename)
 		"""
-		if self._isUrl (href):
-			return (href, None, None)
-
-		page = self.__findWikiPage (href)
-		filename = self.__findFile (href)
-
-		return (None, page, filename)
+		identifier = UriIdentifier (self._currentPage)
+		return identifier.identify (href)
 
 
-	def _onLinkClicked (self, href):
+	def __onLinkClicked (self, href):
 		"""
 		Клик по ссылке
 		"""
-		#MessageBox (href)
-
-		(url, page, filename) = self.identifyUri (urllib.unquote (href) )
+		#identifier = UriIdentifier ()
+		(url, page, filename) = self.__identifyUri (urllib.unquote (href) )
 
 		if url != None:
 			self.openUrl (url)
@@ -180,10 +157,26 @@ class HtmlRenderIE (HtmlRender):
 
 
 
-	def __findFile (self, href):
-		path = os.path.join (self._currentPage.path, href)
-		if os.path.exists (path):
-			return path
+class UriIdentifier (object):
+	"""
+	Класс для идентификации ссылок. На что ссылки
+	"""
+	def __init__ (self, currentpage):
+		self._currentPage = currentpage
+
+
+	def identify (self, href):
+		"""
+		Определить тип ссылки и вернуть кортеж (url, page, filename)
+		"""
+		#print href
+		if self._isUrl (href):
+			return (href, None, None)
+
+		page = self.__findWikiPage (href)
+		filename = self.__findFile (href)
+
+		return (None, page, filename)
 
 
 	def __findWikiPage (self, subpath):
@@ -214,3 +207,35 @@ class HtmlRenderIE (HtmlRender):
 				newSelectedPage = self._currentPage.root[subpath]
 
 		return newSelectedPage
+
+
+	def __findFile (self, href):
+		#path = os.path.join (self._currentPage.path, href)
+		#if os.path.exists (path):
+		if os.path.exists (href):
+			return href
+
+
+	def _isUrl (self, href):
+		return href.lower().startswith ("http://") or \
+				href.lower().startswith ("https://") or \
+				href.lower().startswith ("ftp://") or \
+				href.lower().startswith ("mailto:")
+
+
+	def __removeAboutBlank (self, href):
+		"""
+		Удалить about: и about:blank из начала адреса
+		"""
+		about_full = u"about:blank"
+		about_short = u"about:"
+
+		result = href
+		if result.startswith (about_full):
+			result = result[len (about_full): ]
+
+		elif result.startswith (about_short):
+			result = result[len (about_short): ]
+
+		return result
+

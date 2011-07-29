@@ -83,6 +83,7 @@ if __name__ == '__main__':
 	from test.guitests.attach import AttachPanelTest
 	from test.guitests.tree import TreeTest
 	from test.guitests.pagepanel import PagePanelTest
+	from test.guitests.uriidentifiers import WindowsUriIdentifierTest
 
 
 	#f = open('tests.log', "w")
