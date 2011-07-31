@@ -106,7 +106,10 @@ class OutwikerTrayIcon (wx.TaskBarIcon):
 
 
 	def OnTrayLeftClick (self, event):
-		self.restoreWindow()
+		if self.mainWnd.IsIconized():
+			self.restoreWindow()
+		else:
+			self.mainWnd.Iconize()
 	
 
 	def restoreWindow (self):
