@@ -10,7 +10,7 @@ from core.attachment import Attachment
 from core.application import Application
 from test.utils import removeWiki
 
-import gui.htmlrenderie
+from gui.htmlcontrollerie import UriIdentifier
 
 
 class WindowsUriIdentifierTest (unittest.TestCase):
@@ -54,7 +54,7 @@ class WindowsUriIdentifierTest (unittest.TestCase):
 		"""
 		Тест на распознавание адресов, начинающихся с http
 		"""
-		identifier = gui.htmlrenderie.UriIdentifier (self.rootwiki[u"Страница 1"])
+		identifier = UriIdentifier (self.rootwiki[u"Страница 1"])
 		(url, page, filename) = identifier.identify (u"http://jenyay.net")
 
 		self.assertEqual (url, u"http://jenyay.net")
@@ -66,7 +66,7 @@ class WindowsUriIdentifierTest (unittest.TestCase):
 		"""
 		Тест на распознавание адресов, начинающихся с https
 		"""
-		identifier = gui.htmlrenderie.UriIdentifier (self.rootwiki[u"Страница 1"])
+		identifier = UriIdentifier (self.rootwiki[u"Страница 1"])
 		(url, page, filename) = identifier.identify (u"https://jenyay.net")
 
 		self.assertEqual (url, u"https://jenyay.net")
@@ -78,7 +78,7 @@ class WindowsUriIdentifierTest (unittest.TestCase):
 		"""
 		Тест на распознавание адресов, начинающихся с ftp
 		"""
-		identifier = gui.htmlrenderie.UriIdentifier (self.rootwiki[u"Страница 1"])
+		identifier = UriIdentifier (self.rootwiki[u"Страница 1"])
 		(url, page, filename) = identifier.identify (u"ftp://jenyay.net")
 
 		self.assertEqual (url, u"ftp://jenyay.net")
@@ -90,7 +90,7 @@ class WindowsUriIdentifierTest (unittest.TestCase):
 		"""
 		Тест на распознавание адресов, начинающихся с mailto
 		"""
-		identifier = gui.htmlrenderie.UriIdentifier (self.rootwiki[u"Страница 1"])
+		identifier = UriIdentifier (self.rootwiki[u"Страница 1"])
 		(url, page, filename) = identifier.identify (u"mailto://jenyay.net")
 
 		self.assertEqual (url, u"mailto://jenyay.net")
@@ -102,7 +102,7 @@ class WindowsUriIdentifierTest (unittest.TestCase):
 		"""
 		Тест на распознавание ссылок на страницы по полному пути в вики
 		"""
-		identifier = gui.htmlrenderie.UriIdentifier (self.rootwiki[u"Страница 1"])
+		identifier = UriIdentifier (self.rootwiki[u"Страница 1"])
 		(url, page, filename) = identifier.identify (u"/Страница 1/Страница 2/Страница 3")
 
 		self.assertEqual (url, None)
@@ -114,7 +114,7 @@ class WindowsUriIdentifierTest (unittest.TestCase):
 		"""
 		Тест на распознавание ссылок на страницы, когда движок IE считает, что это ссылка на файл
 		"""
-		identifier = gui.htmlrenderie.UriIdentifier (self.rootwiki[u"Страница 1"])
+		identifier = UriIdentifier (self.rootwiki[u"Страница 1"])
 		(url, page, filename) = identifier.identify (u"x:\\Страница 1\\Страница 2\\Страница 3")
 
 		self.assertEqual (url, None)
@@ -127,7 +127,7 @@ class WindowsUriIdentifierTest (unittest.TestCase):
 		Тест на распознавание ссылок на страницы, когда движок IE считает, что это ссылка на файл. 
 		В пути есть символ "#"
 		"""
-		identifier = gui.htmlrenderie.UriIdentifier (self.rootwiki[u"Страница 1"])
+		identifier = UriIdentifier (self.rootwiki[u"Страница 1"])
 		(url, page, filename) = identifier.identify (u"x:\\Страница 1\\Страница 2\\Страница 3\\# Страница 4")
 
 		self.assertEqual (url, None)
@@ -142,7 +142,7 @@ class WindowsUriIdentifierTest (unittest.TestCase):
 		wikipage = self.rootwiki[u"Страница 1"]
 		path = os.path.join (wikipage.path, u"Страница 2").replace ("/", "\\")
 
-		identifier = gui.htmlrenderie.UriIdentifier (wikipage)
+		identifier = UriIdentifier (wikipage)
 
 		(url, page, filename) = identifier.identify (path)
 
@@ -156,9 +156,9 @@ class WindowsUriIdentifierTest (unittest.TestCase):
 		Тест на распознавание ссылок на вложенные файлы
 		"""
 		wikipage = self.rootwiki[u"Страница 1"]
-		path = os.path.join (Attachment (wikipage).getAttachPath (), u"accept.png").replace ("/", "\\")
+		path = os.path.join (Attachment (wikipage).getAttachPath (), u"accept.png")
 
-		identifier = gui.htmlrenderie.UriIdentifier (wikipage)
+		identifier = UriIdentifier (wikipage)
 
 		(url, page, filename) = identifier.identify (path)
 
