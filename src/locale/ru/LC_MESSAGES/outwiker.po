@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-30 22:33+0400\n"
+"POT-Creation-Date: 2011-07-31 19:33+0400\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -15,7 +15,6 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 
 #: gui/about.py:20
-#: gui/MainWindow.py:611
 msgid "OutWiker"
 msgstr "OutWiker"
 
@@ -104,44 +103,49 @@ msgstr "О программе"
 msgid "Donate"
 msgstr "Donate"
 
-#: gui/AttachPanel.py:62
-#: gui/AttachPanel.py:67
+#: gui/AttachPanel.py:76
+#: gui/AttachPanel.py:81
 msgid "Attach Files…"
 msgstr "Прикрепить файлы…"
 
-#: gui/AttachPanel.py:71
-#: gui/AttachPanel.py:76
+#: gui/AttachPanel.py:85
+#: gui/AttachPanel.py:90
 msgid "Remove Files…"
 msgstr "Удалить файлы…"
 
-#: gui/AttachPanel.py:82
-#: gui/AttachPanel.py:87
+#: gui/AttachPanel.py:96
+#: gui/AttachPanel.py:101
 msgid "Paste"
 msgstr "Вставить"
 
-#: gui/AttachPanel.py:91
-#: gui/AttachPanel.py:96
+#: gui/AttachPanel.py:105
+#: gui/AttachPanel.py:110
 msgid "Execute"
 msgstr "Запустить"
 
-#: gui/AttachPanel.py:175
+#: gui/AttachPanel.py:115
+#: gui/AttachPanel.py:120
+msgid "Refresh"
+msgstr "Обновить"
+
+#: gui/AttachPanel.py:200
 msgid "You did not select a file to remove"
 msgstr "Вы не выбрали файл(ы) для удаления"
 
-#: gui/AttachPanel.py:176
-#: gui/AttachPanel.py:186
-#: gui/AttachPanel.py:198
+#: gui/AttachPanel.py:201
 #: gui/AttachPanel.py:211
-#: gui/AttachPanel.py:221
+#: gui/AttachPanel.py:223
+#: gui/AttachPanel.py:240
+#: gui/AttachPanel.py:250
 #: gui/BaseTextPanel.py:74
 #: gui/BaseTextPanel.py:88
 #: gui/BaseTextPanel.py:98
-#: gui/htmlrenderie.py:176
-#: gui/htmlrenderwebkit.py:186
+#: gui/htmlrenderie.py:157
+#: gui/htmlrenderwebkit.py:179
 #: gui/htmlrenderwx.py:106
-#: gui/MainWindow.py:289
-#: gui/MainWindow.py:606
-#: gui/MainWindow.py:763
+#: gui/MainWindow.py:275
+#: gui/MainWindow.py:404
+#: gui/mainwndcontroller.py:115
 #: gui/pagedialog.py:41
 #: gui/pagedialog.py:93
 #: gui/pagedialog.py:112
@@ -149,7 +153,7 @@ msgstr "Вы не выбрали файл(ы) для удаления"
 #: gui/pagedialog.py:144
 #: gui/pagedialog.py:187
 #: gui/pagedialog.py:192
-#: gui/WikiTree.py:230
+#: gui/WikiTree.py:252
 #: pages/html/HtmlPanel.py:192
 #: pages/html/HtmlPanel.py:196
 #: pages/wiki/wikipanel.py:96
@@ -178,26 +182,26 @@ msgstr "Вы не выбрали файл(ы) для удаления"
 msgid "Error"
 msgstr "Ошибка"
 
-#: gui/AttachPanel.py:180
+#: gui/AttachPanel.py:205
 msgid "Remove selected files?"
 msgstr "Удалить выбранные файлы?"
 
-#: gui/AttachPanel.py:181
+#: gui/AttachPanel.py:206
 msgid "Remove files?"
 msgstr "Удалить файлы?"
 
-#: gui/AttachPanel.py:197
+#: gui/AttachPanel.py:222
 msgid "You did not select a file to paste"
 msgstr "Вы не выбрали файл(ы) для вставки"
 
-#: gui/AttachPanel.py:210
+#: gui/AttachPanel.py:239
 msgid "You did not select a file to execute"
 msgstr "Вы не выбрали файл(ы) для запуска"
 
-#: gui/AttachPanel.py:220
-#: gui/htmlrenderie.py:175
+#: gui/AttachPanel.py:249
+#: gui/htmlrenderie.py:156
 #: gui/htmlrender.py:64
-#: gui/htmlrenderwebkit.py:185
+#: gui/htmlrenderwebkit.py:178
 #: gui/htmlrenderwx.py:105
 #: gui/htmlrenderwx.py:152
 #, python-format
@@ -233,36 +237,36 @@ msgstr "Страница %s не найдена. Рекомендуется пе
 msgid "Can't save file %s"
 msgstr "Ошибка записи в файл %s"
 
-#: gui/BaseTextPanel.py:194
+#: gui/BaseTextPanel.py:195
 msgid "Search…\tCtrl+F"
 msgstr "Поиск…\tCtrl+F"
 
-#: gui/BaseTextPanel.py:195
+#: gui/BaseTextPanel.py:196
 msgid "Find next\tF3"
 msgstr "Найти далее\tF3"
 
-#: gui/BaseTextPanel.py:196
+#: gui/BaseTextPanel.py:197
 msgid "Find previous\tShift+F3"
 msgstr "Найти выше\tShift+F3"
 
-#: gui/BaseTextPanel.py:198
+#: gui/BaseTextPanel.py:199
 msgid "&Search"
 msgstr "&Поиск"
 
-#: gui/BaseTextPanel.py:207
-#: gui/BaseTextPanel.py:211
+#: gui/BaseTextPanel.py:208
+#: gui/BaseTextPanel.py:212
 msgid "Search"
 msgstr "Поиск"
 
-#: gui/CurrentPagePanel.py:36
+#: gui/CurrentPagePanel.py:28
 msgid "[]"
 msgstr "[]"
 
-#: gui/CurrentPagePanel.py:95
+#: gui/CurrentPagePanel.py:89
 msgid "Add to Bookmarks"
 msgstr "Добавить в закладки"
 
-#: gui/CurrentPagePanel.py:99
+#: gui/CurrentPagePanel.py:93
 msgid "Remove from Bookmarks"
 msgstr "Удалить из закладок"
 
@@ -283,213 +287,242 @@ msgstr "Найти далее"
 msgid "Find Previous"
 msgstr "Найти предыдущий"
 
-#: gui/MainWindow.py:112
-msgid "&New…\tCtrl+N"
-msgstr "&Создать…\tCtrl+N"
-
-#: gui/MainWindow.py:113
-msgid "&Open…\tCtrl+O"
-msgstr "&Открыть…\tCtrl+O"
-
-#: gui/MainWindow.py:114
-msgid "Open &Read-only…\tCtrl+Shift+O"
-msgstr "Открыть только для &чтения…\tCtrl+Shift+O"
-
-#: gui/MainWindow.py:115
-msgid "&Save\tCtrl+S"
-msgstr "&Сохранить\tCtrl+S"
-
-#: gui/MainWindow.py:116
-msgid "&Print\tCtrl+P"
-msgstr "&Печать\tCtrl+P"
-
-#: gui/MainWindow.py:117
-msgid "&Exit…\tAlt+F4"
-msgstr "В&ыход…\tAlt+F4"
-
-#: gui/MainWindow.py:119
+#: gui/mainmenu.py:21
 msgid "&File"
 msgstr "&Файл"
 
-#: gui/MainWindow.py:121
-msgid "&Undo\tCtrl+Z"
-msgstr "&Отменить\tCtrl+Z"
-
-#: gui/MainWindow.py:122
-msgid "&Redo\tCtrl+Y"
-msgstr "&Вернуть\tCtrl+Y"
-
-#: gui/MainWindow.py:124
-msgid "Cu&t\tCtrl+X"
-msgstr "В&ырезать\tCtrl+X"
-
-#: gui/MainWindow.py:125
-msgid "&Copy\tCtrl+C"
-msgstr "&Копировать\tCtrl+C"
-
-#: gui/MainWindow.py:126
-msgid "&Paste\tCtrl+V"
-msgstr "В&ставить\tCtrl+V"
-
-#: gui/MainWindow.py:128
-msgid "Pr&eferences…\tCtrl+F8"
-msgstr "&Параметры…\tCtrl+F8"
-
-#: gui/MainWindow.py:129
+#: gui/mainmenu.py:24
 msgid "&Edit"
 msgstr "&Правка"
 
-#: gui/MainWindow.py:131
-msgid "Add &Sibling Page…\tCtrl+T"
-msgstr "Добавить &страницу того же уровня…\tCtrl+T"
-
-#: gui/MainWindow.py:132
-msgid "Add &Child Page…\tCtrl+Shift+T"
-msgstr "Добавить &дочернюю страницу…\tCtrl+Shift+T"
-
-#: gui/MainWindow.py:134
-msgid "Move Page Up\tCtrl+Shift+Up"
-msgstr "Переместить страницу вверх\tCtrl+Shift+Up"
-
-#: gui/MainWindow.py:135
-msgid "Move Page Down\tCtrl+Shift+Down"
-msgstr "Переместить страницу вниз\tCtrl+Shift+Down"
-
-#: gui/MainWindow.py:136
-msgid "Sort Children Pages Alphabetical"
-msgstr "Упорядочить дочерние страницы по алфавиту"
-
-#: gui/MainWindow.py:137
-msgid "Sort Siblings Pages Alphabetical"
-msgstr "Упорядочить страницы данного уровня по алфавиту"
-
-#: gui/MainWindow.py:139
-msgid "Re&name Page\tF2"
-msgstr "&Переименовать страницу\tF2"
-
-#: gui/MainWindow.py:140
-msgid "Rem&ove Page…\tCtrl+Shift+Del"
-msgstr "&Удалить страницу…\tCtrl+Shift+Del"
-
-#: gui/MainWindow.py:142
-msgid "Pag&e Properties…\tCtrl+E"
-msgstr "Свойства ст&раницы…\tCtrl+E"
-
-#: gui/MainWindow.py:143
+#: gui/mainmenu.py:27
 msgid "&Tree"
 msgstr "&Дерево"
 
-#: gui/MainWindow.py:145
-msgid "&Global Search…\tCtrl+Shift+F"
-msgstr "Глобальный &поиск…\tCtrl+Shift+F"
-
-#: gui/MainWindow.py:146
-msgid "&Attach Files…\tCtrl+Alt+A"
-msgstr "Прикрепить &файлы…\tCtrl+Alt+A"
-
-#: gui/MainWindow.py:148
-msgid "Copy Page &Title\tCtrl+Shift+D"
-msgstr "Копировать &заголовок страницы\tCtrl+Shift+D"
-
-#: gui/MainWindow.py:149
-msgid "Copy &Page Path\tCtrl+Shift+P"
-msgstr "Копировать путь до &страницы\tCtrl+Shift+P"
-
-#: gui/MainWindow.py:150
-msgid "Copy Atta&ches Path\tCtrl+Shift+A"
-msgstr "Копировать путь до п&рикрепленных файлов\tCtrl+Shift+A"
-
-#: gui/MainWindow.py:151
-msgid "Copy Page &Link\tCtrl+Shift+L"
-msgstr "Копировать ссы&лку на страницу\tCtrl+Shift+L"
-
-#: gui/MainWindow.py:153
-msgid "&Reload Wiki…\tCtrl+R"
-msgstr "П&ерезагрузить вики…\tCtrl+R"
-
-#: gui/MainWindow.py:154
+#: gui/mainmenu.py:30
 msgid "T&ools"
 msgstr "&Инструменты"
 
-#: gui/MainWindow.py:156
-msgid "&Add/Remove Bookmark\tCtrl+D"
-msgstr "&Добавить/удалить закладку\tCtrl+D"
-
-#: gui/MainWindow.py:158
+#: gui/mainmenu.py:33
 msgid "&Bookmarks"
 msgstr "&Закладки"
 
-#: gui/MainWindow.py:160
-msgid "Notes &Tree"
-msgstr "&Дерево заметок"
-
-#: gui/MainWindow.py:162
-#: gui/MainWindow.py:352
-#: gui/MainWindow.py:358
-msgid "Attaches"
-msgstr "Прикрепленные файлы"
-
-#: gui/MainWindow.py:165
-msgid "Fullscreen\tF11"
-msgstr "Полноэкранный режим\tF11"
-
-#: gui/MainWindow.py:167
+#: gui/mainmenu.py:36
 msgid "&View"
 msgstr "&Вид"
 
-#: gui/MainWindow.py:169
-msgid "&Help\tF1"
-msgstr "&Помощь\tF1"
-
-#: gui/MainWindow.py:170
-msgid "&About…\tCtrl+F1"
-msgstr "&О программе…\tCtrl+F1"
-
-#: gui/MainWindow.py:171
+#: gui/mainmenu.py:39
 msgid "&Help"
 msgstr "&Справка"
 
-#: gui/MainWindow.py:178
+#: gui/mainmenu.py:44
+msgid "&New…\tCtrl+N"
+msgstr "&Создать…\tCtrl+N"
+
+#: gui/mainmenu.py:45
+msgid "&Open…\tCtrl+O"
+msgstr "&Открыть…\tCtrl+O"
+
+#: gui/mainmenu.py:46
+msgid "Open &Read-only…\tCtrl+Shift+O"
+msgstr "Открыть только для &чтения…\tCtrl+Shift+O"
+
+#: gui/mainmenu.py:47
+msgid "&Save\tCtrl+S"
+msgstr "&Сохранить\tCtrl+S"
+
+#: gui/mainmenu.py:48
+msgid "&Print\tCtrl+P"
+msgstr "&Печать\tCtrl+P"
+
+#: gui/mainmenu.py:49
+msgid "&Exit…\tAlt+F4"
+msgstr "В&ыход…\tAlt+F4"
+
+#: gui/mainmenu.py:57
+msgid "&Undo\tCtrl+Z"
+msgstr "&Отменить\tCtrl+Z"
+
+#: gui/mainmenu.py:58
+msgid "&Redo\tCtrl+Y"
+msgstr "&Вернуть\tCtrl+Y"
+
+#: gui/mainmenu.py:60
+msgid "Cu&t\tCtrl+X"
+msgstr "В&ырезать\tCtrl+X"
+
+#: gui/mainmenu.py:61
+msgid "&Copy\tCtrl+C"
+msgstr "&Копировать\tCtrl+C"
+
+#: gui/mainmenu.py:62
+msgid "&Paste\tCtrl+V"
+msgstr "В&ставить\tCtrl+V"
+
+#: gui/mainmenu.py:64
+msgid "Pr&eferences…\tCtrl+F8"
+msgstr "&Параметры…\tCtrl+F8"
+
+#: gui/mainmenu.py:71
+msgid "Add &Sibling Page…\tCtrl+T"
+msgstr "Добавить &страницу того же уровня…\tCtrl+T"
+
+#: gui/mainmenu.py:72
+msgid "Add &Child Page…\tCtrl+Shift+T"
+msgstr "Добавить &дочернюю страницу…\tCtrl+Shift+T"
+
+#: gui/mainmenu.py:74
+msgid "Move Page Up\tCtrl+Shift+Up"
+msgstr "Переместить страницу вверх\tCtrl+Shift+Up"
+
+#: gui/mainmenu.py:75
+msgid "Move Page Down\tCtrl+Shift+Down"
+msgstr "Переместить страницу вниз\tCtrl+Shift+Down"
+
+#: gui/mainmenu.py:76
+msgid "Sort Children Pages Alphabetical"
+msgstr "Упорядочить дочерние страницы по алфавиту"
+
+#: gui/mainmenu.py:77
+msgid "Sort Siblings Pages Alphabetical"
+msgstr "Упорядочить страницы данного уровня по алфавиту"
+
+#: gui/mainmenu.py:79
+msgid "Re&name Page\tF2"
+msgstr "&Переименовать страницу\tF2"
+
+#: gui/mainmenu.py:80
+msgid "Rem&ove Page…\tCtrl+Shift+Del"
+msgstr "&Удалить страницу…\tCtrl+Shift+Del"
+
+#: gui/mainmenu.py:82
+msgid "Pag&e Properties…\tCtrl+E"
+msgstr "Свойства ст&раницы…\tCtrl+E"
+
+#: gui/mainmenu.py:89
+msgid "&Global Search…\tCtrl+Shift+F"
+msgstr "Глобальный &поиск…\tCtrl+Shift+F"
+
+#: gui/mainmenu.py:90
+msgid "&Attach Files…\tCtrl+Alt+A"
+msgstr "Прикрепить &файлы…\tCtrl+Alt+A"
+
+#: gui/mainmenu.py:92
+msgid "Copy Page &Title\tCtrl+Shift+D"
+msgstr "Копировать &заголовок страницы\tCtrl+Shift+D"
+
+#: gui/mainmenu.py:93
+msgid "Copy &Page Path\tCtrl+Shift+P"
+msgstr "Копировать путь до &страницы\tCtrl+Shift+P"
+
+#: gui/mainmenu.py:94
+msgid "Copy Atta&ches Path\tCtrl+Shift+A"
+msgstr "Копировать путь до п&рикрепленных файлов\tCtrl+Shift+A"
+
+#: gui/mainmenu.py:95
+msgid "Copy Page &Link\tCtrl+Shift+L"
+msgstr "Копировать ссы&лку на страницу\tCtrl+Shift+L"
+
+#: gui/mainmenu.py:97
+msgid "&Reload Wiki…\tCtrl+R"
+msgstr "П&ерезагрузить вики…\tCtrl+R"
+
+#: gui/mainmenu.py:104
+msgid "&Add/Remove Bookmark\tCtrl+D"
+msgstr "&Добавить/удалить закладку\tCtrl+D"
+
+#: gui/mainmenu.py:112
+msgid "Notes &Tree"
+msgstr "&Дерево заметок"
+
+#: gui/mainmenu.py:115
+#: gui/MainWindow.py:191
+#: gui/MainWindow.py:197
+msgid "Attaches"
+msgstr "Прикрепленные файлы"
+
+#: gui/mainmenu.py:119
+msgid "Fullscreen\tF11"
+msgstr "Полноэкранный режим\tF11"
+
+#: gui/mainmenu.py:127
+msgid "&Help\tF1"
+msgstr "&Помощь\tF1"
+
+#: gui/mainmenu.py:128
+msgid "&About…\tCtrl+F1"
+msgstr "&О программе…\tCtrl+F1"
+
+#: gui/maintoolbar.py:18
 msgid "New…"
 msgstr "Создать…"
 
-#: gui/MainWindow.py:178
+#: gui/maintoolbar.py:22
 msgid "Create new wiki…"
 msgstr "Создать новую вики…"
 
-#: gui/MainWindow.py:179
+#: gui/maintoolbar.py:25
 msgid "Open…"
 msgstr "Открыть…"
 
-#: gui/MainWindow.py:179
+#: gui/maintoolbar.py:29
 msgid "Open wiki…"
 msgstr "Открыть вики…"
 
-#: gui/MainWindow.py:180
+#: gui/maintoolbar.py:33
 msgid "Save"
 msgstr "Сохранить"
 
-#: gui/MainWindow.py:180
+#: gui/maintoolbar.py:37
 msgid "Save wiki"
 msgstr "Сохранить вики"
 
-#: gui/MainWindow.py:181
+#: gui/maintoolbar.py:41
 msgid "Reload"
 msgstr "Перезагрузить"
 
-#: gui/MainWindow.py:181
+#: gui/maintoolbar.py:45
 msgid "Reload wiki"
 msgstr "Перезагрузить вики"
 
-#: gui/MainWindow.py:183
+#: gui/maintoolbar.py:51
+#: gui/maintoolbar.py:55
 msgid "Attach files…"
 msgstr "Прикрепить файлы…"
 
-#: gui/MainWindow.py:184
+#: gui/maintoolbar.py:58
+#: gui/maintoolbar.py:62
 msgid "Global search…"
 msgstr "Глобальный поиск…"
 
-#: gui/MainWindow.py:288
+#: gui/MainWindow.py:172
+msgid "Notes"
+msgstr "Заметки"
+
+#: gui/MainWindow.py:274
+#, python-format
+msgid ""
+"Can't save config\n"
+"%s"
+msgstr ""
+"Невозможно сохранить настройки\n"
+"%s"
+
+#: gui/MainWindow.py:290
+msgid "Really exit?"
+msgstr "Действительно выйти?"
+
+#: gui/MainWindow.py:290
+#: gui/trayicon.py:126
+msgid "Exit"
+msgstr "Выход"
+
+#: gui/MainWindow.py:404
+#: gui/pagedialog.py:77
+msgid "Can't create page"
+msgstr "Невозможно создать страницу"
+
+#: gui/mainwndcontroller.py:114
 #, python-format
 msgid ""
 "Can't add wiki to recent list.\n"
@@ -499,33 +532,6 @@ msgstr ""
 "Ошибка сохранения списка последних открытых вики.\n"
 "Невозможно сохранить настройки.\n"
 "%s"
-
-#: gui/MainWindow.py:333
-msgid "Notes"
-msgstr "Заметки"
-
-#: gui/MainWindow.py:605
-#, python-format
-msgid ""
-"Can't save config\n"
-"%s"
-msgstr ""
-"Невозможно сохранить настройки\n"
-"%s"
-
-#: gui/MainWindow.py:636
-msgid "Really exit?"
-msgstr "Действительно выйти?"
-
-#: gui/MainWindow.py:636
-#: gui/trayicon.py:122
-msgid "Exit"
-msgstr "Выход"
-
-#: gui/MainWindow.py:763
-#: gui/pagedialog.py:77
-msgid "Can't create page"
-msgstr "Невозможно создать страницу"
 
 #: gui/OverwriteDialog.py:18
 msgid "Overwrite file?"
@@ -589,11 +595,11 @@ msgstr "Текущая иконка"
 msgid "Can't rename page when page with that title already exists"
 msgstr "Невозможно переименовать страницу, так как страница с таким заголовком уже существует"
 
-#: gui/trayicon.py:121
+#: gui/trayicon.py:125
 msgid "Restore"
 msgstr "Восстановить"
 
-#: gui/WikiTree.py:229
+#: gui/WikiTree.py:251
 #, python-format
 msgid ""
 "Can't save page options\n"
@@ -602,63 +608,63 @@ msgstr ""
 "Невозможно сохранить хэш страницы\n"
 "%s"
 
-#: gui/WikiTree.py:313
-#: gui/WikiTree.py:676
-#: gui/WikiTree.py:681
+#: gui/WikiTree.py:335
+#: gui/WikiTree.py:696
+#: gui/WikiTree.py:701
 msgid "Add Child Page…"
 msgstr "Добавить дочернюю страницу…"
 
-#: gui/WikiTree.py:314
-#: gui/WikiTree.py:667
-#: gui/WikiTree.py:672
+#: gui/WikiTree.py:336
+#: gui/WikiTree.py:687
+#: gui/WikiTree.py:692
 msgid "Add Sibling Page…"
 msgstr "Добавить страницу того же уровня…"
 
-#: gui/WikiTree.py:315
+#: gui/WikiTree.py:337
 msgid "Rename"
 msgstr "Переименовать"
 
-#: gui/WikiTree.py:316
+#: gui/WikiTree.py:338
 msgid "Remove…"
 msgstr "Удалить…"
 
-#: gui/WikiTree.py:319
+#: gui/WikiTree.py:341
 msgid "Copy Page Title"
 msgstr "Копировать заголовок страницы"
 
-#: gui/WikiTree.py:320
+#: gui/WikiTree.py:342
 msgid "Copy Page Path"
 msgstr "Копировать путь до страницы"
 
-#: gui/WikiTree.py:321
+#: gui/WikiTree.py:343
 msgid "Copy Attaches Path"
 msgstr "Копировать путь до прикрепленных файлов"
 
-#: gui/WikiTree.py:322
+#: gui/WikiTree.py:344
 msgid "Copy Page Link"
 msgstr "Копировать ссылку на страницу"
 
-#: gui/WikiTree.py:325
+#: gui/WikiTree.py:347
 msgid "Properties…"
 msgstr "Свойства..."
 
-#: gui/WikiTree.py:647
-#: gui/WikiTree.py:652
+#: gui/WikiTree.py:667
+#: gui/WikiTree.py:672
 msgid "Move Page Down"
 msgstr "Переместить страницу вниз"
 
-#: gui/WikiTree.py:656
-#: gui/WikiTree.py:661
+#: gui/WikiTree.py:676
+#: gui/WikiTree.py:681
 msgid "Move Page Up"
 msgstr "Переместить страницу вверх"
 
-#: gui/WikiTree.py:685
-#: gui/WikiTree.py:690
+#: gui/WikiTree.py:705
+#: gui/WikiTree.py:710
 msgid "Remove Page…"
 msgstr "Удалить страницу…"
 
-#: gui/WikiTree.py:696
-#: gui/WikiTree.py:701
+#: gui/WikiTree.py:716
+#: gui/WikiTree.py:721
 msgid "Page Properties…"
 msgstr "Свойства страницы…"
 

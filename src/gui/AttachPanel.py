@@ -5,7 +5,6 @@ import os.path
 
 import wx
 
-
 from core.application import Application
 import core.commands
 import core.system
@@ -18,6 +17,7 @@ class AttachPanel(wx.Panel):
 		self.ID_REMOVE = wx.NewId()
 		self.ID_PASTE = wx.NewId()
 		self.ID_EXECUTE = wx.NewId()
+		self.ID_REFRESH = wx.NewId()
 
 		kwds["style"] = wx.TAB_TRAVERSAL
 		wx.Panel.__init__(self, *args, **kwds)
@@ -33,6 +33,7 @@ class AttachPanel(wx.Panel):
 		self.Bind(wx.EVT_MENU, self.__onRemove, id=self.ID_REMOVE)
 		self.Bind(wx.EVT_MENU, self.__onPaste, id=self.ID_PASTE)
 		self.Bind(wx.EVT_MENU, self.__onExecute, id=self.ID_EXECUTE)
+		self.Bind(wx.EVT_MENU, self.__onRefresh, id=self.ID_REFRESH)
 		self.Bind (wx.EVT_CLOSE, self.__onClose)
 
 		self.__bindAppEvents()
@@ -107,6 +108,16 @@ class AttachPanel(wx.Panel):
 				wx.NullBitmap, 
 				wx.ITEM_NORMAL,
 				_(u"Execute"), 
+				"")
+
+
+		toolbar.AddLabelTool(self.ID_REFRESH, 
+				_(u"Refresh"), 
+				wx.Bitmap(os.path.join (imagesDir, "reload.png"),
+					wx.BITMAP_TYPE_ANY),
+				wx.NullBitmap, 
+				wx.ITEM_NORMAL,
+				_(u"Refresh"), 
 				"")
 
 		toolbar.Realize()
@@ -214,6 +225,10 @@ class AttachPanel(wx.Panel):
 			return
 
 		Application.onAttachmentPaste (files)
+
+
+	def __onRefresh (self, event):
+		self.updateAttachments()
 
 
 	def __onExecute(self, event):
