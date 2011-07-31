@@ -20,6 +20,7 @@ import webkit
 import core.system
 import core.commands
 from core.application import Application
+from .htmlcontrollerwebkit import UriIdentifierWebKit
 
 '''
 As far as I know (I may be wrong), a wx.Panel is "composed" by a GtkPizza
@@ -66,7 +67,6 @@ class HtmlRenderWebKit(HtmlRender):
 		scrolled_window.show_all()
 
 		self.canOpenUrl = False                # Можно ли открывать ссылки
-		self.currentUri = None                 # Текущая открытая страница
 
 		self.ctrl.connect("navigation-policy-decision-requested", self.__onNavigate)
 		self.ctrl.connect("hovering-over-link", self.__onHoveredOverLink)
@@ -117,15 +117,9 @@ class HtmlRenderWebKit(HtmlRender):
 		"""
 		Определить тип ссылки и вернуть кортеж (url, page, filename)
 		"""
-		if self._isUrl (href):
-			return (href, None, None)
-
-		href_clear = self.__removeFileProtokol (href)
-
-		page = self.__findWikiPage (href_clear)
-		filename = self.__findFile (href_clear)
-
-		return (None, page, filename)
+		#print href
+		identifier = UriIdentifierWebKit (self._currentPage)
+		return identifier.identify (href)
 
 
 	def __onHoveredOverLink (self, view, title, uri):
@@ -161,7 +155,6 @@ class HtmlRenderWebKit(HtmlRender):
 			# разрешить обработать запрос компоненту 
 			return False
 		else:
-			self.currentUri = request.get_uri()
 			self.__onLinkClicked (href)
 			return True
 
@@ -184,45 +177,3 @@ class HtmlRenderWebKit(HtmlRender):
 			except OSError:
 				text = _(u"Can't execute file '%s'") % filename
 				core.commands.MessageBox (text, _(u"Error"), wx.ICON_ERROR | wx.OK)
-
-
-	def __removeFileProtokol (self, href):
-		"""
-		Так как WebKit к адресу без протокола прибавляет file://, то избавимся от этой надписи
-		"""
-		fileprotocol = u"file://"
-		if href.startswith (fileprotocol):
-			return href[len (fileprotocol): ]
-
-		return href
-
-	
-	def __findFile (self, href):
-		path = os.path.join (self._currentPage.path, href)
-		if os.path.exists (path):
-			return path
-
-
-	def __findWikiPage (self, subpath):
-		"""
-		Попытка найти страницу вики, если ссылка, на которую щелкнули не интернетная (http, ftp, mailto)
-		"""
-		assert self._currentPage != None
-
-		newSelectedPage = None
-
-		if subpath.startswith (self._currentPage.path):
-			subpath = subpath[len (self._currentPage.path) + 1: ]
-
-		if subpath[0] == "/":
-			# Поиск страниц осуществляем только с корня
-			newSelectedPage = self._currentPage.root[subpath[1:] ]
-		else:
-			# Сначала попробуем найти вложенные страницы с таким subpath
-			newSelectedPage = self._currentPage[subpath]
-
-			if newSelectedPage == None:
-				# Если страница не найдена, попробуем поискать, начиная с корня
-				newSelectedPage = self._currentPage.root[subpath]
-
-		return newSelectedPage
