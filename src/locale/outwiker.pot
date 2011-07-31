@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-31 19:33+0400\n"
+"POT-Creation-Date: 2011-07-31 21:12+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -465,7 +465,7 @@ msgstr ""
 msgid "Really exit?"
 msgstr ""
 
-#: gui/MainWindow.py:290 gui/trayicon.py:126
+#: gui/MainWindow.py:290 gui/trayicon.py:129
 msgid "Exit"
 msgstr ""
 
@@ -538,7 +538,7 @@ msgstr ""
 msgid "Can't rename page when page with that title already exists"
 msgstr ""
 
-#: gui/trayicon.py:125
+#: gui/trayicon.py:128
 msgid "Restore"
 msgstr ""
 
@@ -765,16 +765,19 @@ msgstr ""
 msgid "Superscript (<sup>…</sup>)"
 msgstr ""
 
-#: pages/html/HtmlPanel.py:341
-msgid "Center align\tCtrl+Shift+C"
+#: pages/html/HtmlPanel.py:341 pages/wiki/wikipanel.py:184
+msgid "Center align\tCtrl+Alt+C"
 msgstr ""
 
 #: pages/html/HtmlPanel.py:342 pages/wiki/wikipanel.py:185
 msgid "Center align"
 msgstr ""
 
-#: pages/html/HtmlPanel.py:348 pages/html/HtmlPanel.py:349
-#: pages/wiki/wikipanel.py:192
+#: pages/html/HtmlPanel.py:348
+msgid "Right align\tCtrl+Alt+R"
+msgstr ""
+
+#: pages/html/HtmlPanel.py:349 pages/wiki/wikipanel.py:192
 msgid "Right align"
 msgstr ""
 
@@ -878,12 +881,28 @@ msgstr ""
 msgid "Horizontal line (<hr>)"
 msgstr ""
 
-#: pages/html/HtmlPanel.py:476 pages/html/HtmlPanel.py:477
+#: pages/html/HtmlPanel.py:475
+msgid "Code\tCtrl+Alt+D"
+msgstr ""
+
+#: pages/html/HtmlPanel.py:476
+msgid "Code (<code>…</code>)"
+msgstr ""
+
+#: pages/html/HtmlPanel.py:483
+msgid "Quote\tCtrl+Alt+Q"
+msgstr ""
+
+#: pages/html/HtmlPanel.py:484
+msgid "Quote (<blockquote>…</blockquote>)"
+msgstr ""
+
+#: pages/html/HtmlPanel.py:493 pages/html/HtmlPanel.py:494
 #: pages/wiki/wikipanel.py:345 pages/wiki/wikipanel.py:346
 msgid "Convert HTML Symbols"
 msgstr ""
 
-#: pages/html/HtmlPanel.py:494
+#: pages/html/HtmlPanel.py:511
 msgid "H&tml"
 msgstr ""
 
@@ -978,10 +997,6 @@ msgstr ""
 
 #: pages/wiki/wikipanel.py:176
 msgid "Superscript"
-msgstr ""
-
-#: pages/wiki/wikipanel.py:184
-msgid "Center align\tCtrl+Alt+C"
 msgstr ""
 
 #: pages/wiki/wikipanel.py:191

@@ -338,14 +338,14 @@ class HtmlPagePanel (HtmlPanel):
 		self._addTool (self.pageToolsMenu, 
 				"ID_ALIGN_CENTER", 
 				lambda event: self.codeEditor.turnText (u'<DIV ALIGN="CENTER">', u'</DIV>'), 
-				_(u"Center align\tCtrl+Shift+C"), 
+				_(u"Center align\tCtrl+Alt+C"), 
 				_(u"Center align"), 
 				os.path.join (self.imagesDir, "text_align_center.png"))
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_ALIGN_RIGHT", 
 				lambda event: self.codeEditor.turnText (u'<DIV ALIGN="RIGHT">', u'</DIV>'), 
-				_(u"Right align"), 
+				_(u"Right align\tCtrl+Alt+R"), 
 				_(u"Right align"), 
 				os.path.join (self.imagesDir, "text_align_right.png"))
 	
@@ -467,6 +467,23 @@ class HtmlPagePanel (HtmlPanel):
 				_(u"Horizontal line\tCtrl+H"), 
 				_(u"Horizontal line (<hr>)"), 
 				os.path.join (self.imagesDir, "text_horizontalrule.png"))
+
+
+		self._addTool (self.pageToolsMenu, 
+				"ID_CODE", 
+				lambda event: self.codeEditor.turnText (u"<CODE>", u"</CODE>"), 
+				_(u"Code\tCtrl+Alt+D"), 
+				_(u"Code (<code>…</code>)"), 
+				os.path.join (self.imagesDir, "code.png"))
+
+
+		self._addTool (self.pageToolsMenu, 
+				"ID_BLOCKQUOTE", 
+				lambda event: self.codeEditor.turnText (u"<BLOCKQUOTE>", u"</BLOCKQUOTE>"), 
+				_(u"Quote\tCtrl+Alt+Q"), 
+				_(u"Quote (<blockquote>…</blockquote>)"), 
+				os.path.join (self.imagesDir, "quote.png"))
+
 
 		self.pageToolsMenu.AppendSeparator()
 

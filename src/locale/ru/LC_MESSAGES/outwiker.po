@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-31 19:33+0400\n"
+"POT-Creation-Date: 2011-07-31 21:12+0400\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -513,7 +513,7 @@ msgid "Really exit?"
 msgstr "Действительно выйти?"
 
 #: gui/MainWindow.py:290
-#: gui/trayicon.py:126
+#: gui/trayicon.py:129
 msgid "Exit"
 msgstr "Выход"
 
@@ -595,7 +595,7 @@ msgstr "Текущая иконка"
 msgid "Can't rename page when page with that title already exists"
 msgstr "Невозможно переименовать страницу, так как страница с таким заголовком уже существует"
 
-#: gui/trayicon.py:125
+#: gui/trayicon.py:128
 msgid "Restore"
 msgstr "Восстановить"
 
@@ -851,8 +851,9 @@ msgid "Superscript (<sup>…</sup>)"
 msgstr "Верхний индекс (<sup>…</sup>)"
 
 #: pages/html/HtmlPanel.py:341
-msgid "Center align\tCtrl+Shift+C"
-msgstr "Выравнивание по центру\tCtrl+Shift+C"
+#: pages/wiki/wikipanel.py:184
+msgid "Center align\tCtrl+Alt+C"
+msgstr "Выровнять по центру\tCtrl+Alt+C"
 
 #: pages/html/HtmlPanel.py:342
 #: pages/wiki/wikipanel.py:185
@@ -860,6 +861,9 @@ msgid "Center align"
 msgstr "Выравнивание по центру"
 
 #: pages/html/HtmlPanel.py:348
+msgid "Right align\tCtrl+Alt+R"
+msgstr "Right align\tCtrl+Alt+R"
+
 #: pages/html/HtmlPanel.py:349
 #: pages/wiki/wikipanel.py:192
 msgid "Right align"
@@ -975,14 +979,30 @@ msgstr "Горизонтальная линия\tCtrl+H"
 msgid "Horizontal line (<hr>)"
 msgstr "Горизонтальная линия (<hr>)"
 
+#: pages/html/HtmlPanel.py:475
+msgid "Code\tCtrl+Alt+D"
+msgstr "Код\tCtrl+Alt+D"
+
 #: pages/html/HtmlPanel.py:476
-#: pages/html/HtmlPanel.py:477
+msgid "Code (<code>…</code>)"
+msgstr "Код (<code>…</code>)"
+
+#: pages/html/HtmlPanel.py:483
+msgid "Quote\tCtrl+Alt+Q"
+msgstr "Цитирование\tCtrl+Alt+Q"
+
+#: pages/html/HtmlPanel.py:484
+msgid "Quote (<blockquote>…</blockquote>)"
+msgstr "Цитирование (<blockquote>…</blockquote>)"
+
+#: pages/html/HtmlPanel.py:493
+#: pages/html/HtmlPanel.py:494
 #: pages/wiki/wikipanel.py:345
 #: pages/wiki/wikipanel.py:346
 msgid "Convert HTML Symbols"
 msgstr "Преобразовать символы в HTML"
 
-#: pages/html/HtmlPanel.py:494
+#: pages/html/HtmlPanel.py:511
 msgid "H&tml"
 msgstr "H&TML"
 
@@ -1085,10 +1105,6 @@ msgstr "Нижний индекс"
 #: pages/wiki/wikipanel.py:176
 msgid "Superscript"
 msgstr "Верхний индекс"
-
-#: pages/wiki/wikipanel.py:184
-msgid "Center align\tCtrl+Alt+C"
-msgstr "Выровнять по центру\tCtrl+Alt+C"
 
 #: pages/wiki/wikipanel.py:191
 msgid "Right align\tCtrl+ALT+R"
@@ -1291,6 +1307,8 @@ msgstr "Сохранить?"
 msgid "Printing error"
 msgstr "Ошибка печати"
 
+#~ msgid "Center align\tCtrl+Shift+C"
+#~ msgstr "Выравнивание по центру\tCtrl+Shift+C"
 #~ msgid "Show Attachments Instead Blank page"
 #~ msgstr "Показывать прикрепленные файлы вместо пустой страницы"
 #~ msgid "Edit page"
