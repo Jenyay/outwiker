@@ -27,7 +27,7 @@ class OutwikerTrayIcon (wx.TaskBarIcon):
 
 		self.__bind()
 
-		self.initMainWnd()
+		self.__initMainWnd()
 		self.updateTrayIcon()
 	
 
@@ -47,33 +47,33 @@ class OutwikerTrayIcon (wx.TaskBarIcon):
 	
 
 	def __bind (self):
-		self.Bind (wx.EVT_TASKBAR_LEFT_DOWN, self.OnTrayLeftClick)
-		self.Bind(wx.EVT_MENU, self.onExit, id=self.ID_EXIT)
-		self.Bind(wx.EVT_MENU, self.onRestore, id=self.ID_RESTORE)
-		self.mainWnd.Bind (wx.EVT_ICONIZE, self.onIconize)
-		Application.onMainWindowConfigChange += self.onMainWindowConfigChange
+		self.Bind (wx.EVT_TASKBAR_LEFT_DOWN, self.__OnTrayLeftClick)
+		self.Bind(wx.EVT_MENU, self.__onExit, id=self.ID_EXIT)
+		self.Bind(wx.EVT_MENU, self.__onRestore, id=self.ID_RESTORE)
+		self.mainWnd.Bind (wx.EVT_ICONIZE, self.__onIconize)
+		Application.onMainWindowConfigChange += self.__onMainWindowConfigChange
 	
 
 	def __unbind (self):
-		self.Unbind (wx.EVT_TASKBAR_LEFT_DOWN, handler = self.OnTrayLeftClick)
-		self.Unbind(wx.EVT_MENU, handler = self.onExit, id=self.ID_EXIT)
-		self.Unbind(wx.EVT_MENU, handler = self.onRestore, id=self.ID_RESTORE)
-		self.mainWnd.Unbind (wx.EVT_ICONIZE, handler = self.onIconize)
-		Application.onMainWindowConfigChange -= self.onMainWindowConfigChange
+		self.Unbind (wx.EVT_TASKBAR_LEFT_DOWN, handler = self.__OnTrayLeftClick)
+		self.Unbind(wx.EVT_MENU, handler = self.__onExit, id=self.ID_EXIT)
+		self.Unbind(wx.EVT_MENU, handler = self.__onRestore, id=self.ID_RESTORE)
+		self.mainWnd.Unbind (wx.EVT_ICONIZE, handler = self.__onIconize)
+		Application.onMainWindowConfigChange -= self.__onMainWindowConfigChange
 	
 
-	def onMainWindowConfigChange (self):
+	def __onMainWindowConfigChange (self):
 		self.updateTrayIcon()
 
 
-	def initMainWnd (self):
+	def __initMainWnd (self):
 		if self.config.startIconizedOption.value:
 			self.__iconizeWindow()
 		else:
 			self.mainWnd.Show()
 	
 
-	def onIconize (self, event):
+	def __onIconize (self, event):
 		if event.Iconized():
 			# Окно свернули
 			self.__iconizeWindow ()
@@ -101,11 +101,11 @@ class OutwikerTrayIcon (wx.TaskBarIcon):
 			self.RemoveIcon()
 
 
-	def onRestore (self, event):
+	def __onRestore (self, event):
 		self.restoreWindow()
 
 
-	def OnTrayLeftClick (self, event):
+	def __OnTrayLeftClick (self, event):
 		if self.mainWnd.IsIconized():
 			self.restoreWindow()
 		else:
@@ -119,7 +119,7 @@ class OutwikerTrayIcon (wx.TaskBarIcon):
 			self.removeTrayIcon()
 
 	
-	def onExit (self, event):
+	def __onExit (self, event):
 		self.mainWnd.Close()
 
 
