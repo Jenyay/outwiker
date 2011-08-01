@@ -249,7 +249,6 @@ class UriIdentifierWebKitTest (UriIdentifierTest):
 		self.assertEqual (page, self.rootwiki[u"Страница 2/Страница 3/# Страница 4"])
 		self.assertEqual (page, currentpage[u"Страница 3/# Страница 4"])
 		self.assertNotEqual (None, page)
-		self.assertEqual (filename, None)
 
 
 	def testAttachment1 (self):
