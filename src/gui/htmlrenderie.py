@@ -12,7 +12,7 @@ import core.system
 import core.commands
 from core.application import Application
 from core.commands import MessageBox
-from .htmlcontrollerie import UriIdentifier
+from .htmlcontrollerie import UriIdentifierIE
 
 
 class HtmlRenderIE (HtmlRender):
@@ -132,7 +132,7 @@ class HtmlRenderIE (HtmlRender):
 		"""
 		Определить тип ссылки и вернуть кортеж (url, page, filename)
 		"""
-		identifier = UriIdentifier (self._currentPage)
+		identifier = UriIdentifierIE (self._currentPage)
 		return identifier.identify (href)
 
 

@@ -10,7 +10,7 @@ from core.attachment import Attachment
 from core.application import Application
 from test.utils import removeWiki
 
-from gui.htmlcontrollerie import UriIdentifier
+from gui.htmlcontrollerie import UriIdentifierIE
 from gui.htmlcontrollerwebkit import UriIdentifierWebKit
 
 
@@ -20,13 +20,14 @@ class UriIdentifierTest (unittest.TestCase):
 	"""
 	def setUp(self):
 		# Здесь будет создаваться вики
-		self.path = u"../test/testwiki"
+		self.path = os.path.realpath (u"../test/testwiki")
 		removeWiki (self.path)
 
 		self.rootwiki = WikiDocument.create (self.path)
 
 		# - Страница 1
 		#   - # Страница 5
+		#   - Страница 6
 		# - Страница 2
 		#   - Страница 3
 		#     - # Страница 4
@@ -35,6 +36,7 @@ class UriIdentifierTest (unittest.TestCase):
 		TextPageFactory.create (self.rootwiki[u"Страница 2"], u"Страница 3", [])
 		TextPageFactory.create (self.rootwiki[u"Страница 2/Страница 3"], u"# Страница 4", [])
 		TextPageFactory.create (self.rootwiki[u"Страница 1"], u"# Страница 5", [])
+		TextPageFactory.create (self.rootwiki[u"Страница 1"], u"Страница 6", [])
 
 		filesPath = u"../test/samplefiles/"
 		self.files = [u"accept.png", u"add.png", u"anchor.png", u"файл с пробелами.tmp", u"dir"]
@@ -60,7 +62,7 @@ class UriIdentifierIETest (UriIdentifierTest):
 		"""
 		Тест на распознавание адресов, начинающихся с http
 		"""
-		identifier = UriIdentifier (self.rootwiki[u"Страница 1"])
+		identifier = UriIdentifierIE (self.rootwiki[u"Страница 1"])
 		(url, page, filename) = identifier.identify (u"http://jenyay.net")
 
 		self.assertEqual (url, u"http://jenyay.net")
@@ -72,7 +74,7 @@ class UriIdentifierIETest (UriIdentifierTest):
 		"""
 		Тест на распознавание адресов, начинающихся с https
 		"""
-		identifier = UriIdentifier (self.rootwiki[u"Страница 1"])
+		identifier = UriIdentifierIE (self.rootwiki[u"Страница 1"])
 		(url, page, filename) = identifier.identify (u"https://jenyay.net")
 
 		self.assertEqual (url, u"https://jenyay.net")
@@ -84,7 +86,7 @@ class UriIdentifierIETest (UriIdentifierTest):
 		"""
 		Тест на распознавание адресов, начинающихся с ftp
 		"""
-		identifier = UriIdentifier (self.rootwiki[u"Страница 1"])
+		identifier = UriIdentifierIE (self.rootwiki[u"Страница 1"])
 		(url, page, filename) = identifier.identify (u"ftp://jenyay.net")
 
 		self.assertEqual (url, u"ftp://jenyay.net")
@@ -96,7 +98,7 @@ class UriIdentifierIETest (UriIdentifierTest):
 		"""
 		Тест на распознавание адресов, начинающихся с mailto
 		"""
-		identifier = UriIdentifier (self.rootwiki[u"Страница 1"])
+		identifier = UriIdentifierIE (self.rootwiki[u"Страница 1"])
 		(url, page, filename) = identifier.identify (u"mailto://jenyay.net")
 
 		self.assertEqual (url, u"mailto://jenyay.net")
@@ -104,40 +106,16 @@ class UriIdentifierIETest (UriIdentifierTest):
 		self.assertEqual (filename, None)
 
 
-	def testFullPageLink1 (self):
-		"""
-		Тест на распознавание ссылок на страницы по полному пути в вики
-		"""
-		identifier = UriIdentifier (self.rootwiki[u"Страница 1"])
-		(url, page, filename) = identifier.identify (u"/Страница 1/Страница 2/Страница 3")
-
-		self.assertEqual (url, None)
-		self.assertEqual (page, self.rootwiki[u"/Страница 1/Страница 2/Страница 3"])
-		self.assertEqual (filename, None)
-
-
 	def testFullPageLink2 (self):
 		"""
 		Тест на распознавание ссылок на страницы, когда движок IE считает, что это ссылка на файл
 		"""
-		identifier = UriIdentifier (self.rootwiki[u"Страница 1"])
-		(url, page, filename) = identifier.identify (u"x:\\Страница 1\\Страница 2\\Страница 3")
+		identifier = UriIdentifierIE (self.rootwiki[u"Страница 1"])
+		(url, page, filename) = identifier.identify (u"x:\\Страница 2\\Страница 3\\# Страница 4")
 
 		self.assertEqual (url, None)
-		self.assertEqual (page, self.rootwiki[u"/Страница 1/Страница 2/Страница 3"])
-		self.assertEqual (filename, None)
-
-
-	def testFullPageLink3 (self):
-		"""
-		Тест на распознавание ссылок на страницы, когда движок IE считает, что это ссылка на файл. 
-		В пути есть символ "#"
-		"""
-		identifier = UriIdentifier (self.rootwiki[u"Страница 1"])
-		(url, page, filename) = identifier.identify (u"x:\\Страница 1\\Страница 2\\Страница 3\\# Страница 4")
-
-		self.assertEqual (url, None)
-		self.assertEqual (page, self.rootwiki[u"/Страница 1/Страница 2/Страница 3/# Страница 4"])
+		self.assertEqual (page, self.rootwiki[u"Страница 2/Страница 3/# Страница 4"])
+		self.assertNotEqual (None, page)
 		self.assertEqual (filename, None)
 
 
@@ -146,15 +124,16 @@ class UriIdentifierIETest (UriIdentifierTest):
 		Тест на распознавание ссылок на подстраницы, когда движок IE считает, что это ссылка на файл. 
 		"""
 		wikipage = self.rootwiki[u"Страница 1"]
-		path = os.path.join (wikipage.path, u"Страница 2").replace ("/", "\\")
+		path = os.path.join (wikipage.path, u"Страница 6")
+		#print path
 
-		identifier = UriIdentifier (wikipage)
+		identifier = UriIdentifierIE (wikipage)
 
 		(url, page, filename) = identifier.identify (path)
 
 		self.assertEqual (url, None)
-		self.assertEqual (page, wikipage[u"Страница 2"])
-		self.assertEqual (filename, None)
+		self.assertEqual (page, wikipage[u"Страница 6"])
+		self.assertNotEqual (None, page)
 
 
 	def testAttachment1 (self):
@@ -164,7 +143,7 @@ class UriIdentifierIETest (UriIdentifierTest):
 		wikipage = self.rootwiki[u"Страница 1"]
 		path = os.path.join (Attachment (wikipage).getAttachPath (), u"accept.png")
 
-		identifier = UriIdentifier (wikipage)
+		identifier = UriIdentifierIE (wikipage)
 
 		(url, page, filename) = identifier.identify (path)
 
@@ -225,27 +204,16 @@ class UriIdentifierWebKitTest (UriIdentifierTest):
 		self.assertEqual (filename, None)
 
 
-	def testFullPageLink1 (self):
-		"""
-		Тест на распознавание ссылок на страницы по полному пути в вики
-		"""
-		identifier = UriIdentifierWebKit (self.rootwiki[u"Страница 1"])
-		(url, page, filename) = identifier.identify (u"/Страница 1/Страница 2/Страница 3")
-
-		self.assertEqual (url, None)
-		self.assertEqual (page, self.rootwiki[u"/Страница 1/Страница 2/Страница 3"])
-		self.assertEqual (filename, None)
-
-
 	def testFullPageLink2 (self):
 		"""
 		Тест на распознавание ссылок на страницы по полному пути в вики
 		"""
 		identifier = UriIdentifierWebKit (self.rootwiki[u"Страница 1"])
-		(url, page, filename) = identifier.identify (u"file:///Страница 2/Страница 3/Страница 4")
+		(url, page, filename) = identifier.identify (u"file:///Страница 2/Страница 3/# Страница 4")
 
 		self.assertEqual (url, None)
-		self.assertEqual (page, self.rootwiki[u"/Страница 2/Страница 3/Страница 4"])
+		self.assertEqual (page, self.rootwiki[u"Страница 2/Страница 3/# Страница 4"])
+		self.assertNotEqual (None, page)
 		self.assertEqual (filename, None)
 
 
@@ -255,29 +223,32 @@ class UriIdentifierWebKitTest (UriIdentifierTest):
 		"""
 		currentpage = self.rootwiki[u"Страница 1"]
 		identifier = UriIdentifierWebKit (currentpage)
-		link = u"file://{0}".format (os.path.join (currentpage.path, u"Страница 5") )
+		link = u"file://{0}".format (os.path.join (currentpage.path, u"Страница 6") )
 
 		(url, page, filename) = identifier.identify (link)
 
 		self.assertEqual (url, None)
-		self.assertEqual (page, currentpage[u"Страница 5"])
-		self.assertEqual (page, self.rootwiki[u"/Страница 1/Страница 5"])
-		self.assertEqual (filename, None)
+		self.assertEqual (page, currentpage[u"Страница 6"])
+		self.assertEqual (page, self.rootwiki[u"Страница 1/Страница 6"])
+		self.assertNotEqual (None, page)
 
 
 	def testRelativePageLink2 (self):
 		"""
 		При относительной ссылке на вложенную страницу WebKit считает, что ссылаемся на папку страницы
 		"""
-		currentpage = self.rootwiki[u"Страница 1"]
+		currentpage = self.rootwiki[u"Страница 2"]
 		identifier = UriIdentifierWebKit (currentpage)
 		link = u"file://{0}".format (os.path.join (currentpage.path, 
-			u"Страница 2", u"Страница 3", u"Страница 4") )
+			u"Страница 3", u"# Страница 4") )
+		#print link
 
 		(url, page, filename) = identifier.identify (link)
 
 		self.assertEqual (url, None)
-		self.assertEqual (page, self.rootwiki[u"/Страница 2/Страница 3/Страница 4"])
+		self.assertEqual (page, self.rootwiki[u"Страница 2/Страница 3/# Страница 4"])
+		self.assertEqual (page, currentpage[u"Страница 3/# Страница 4"])
+		self.assertNotEqual (None, page)
 		self.assertEqual (filename, None)
 
 

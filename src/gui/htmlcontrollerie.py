@@ -4,7 +4,7 @@
 import os.path
 
 
-class UriIdentifier (object):
+class UriIdentifierIE (object):
 	"""
 	Класс для идентификации ссылок. На что ссылки
 	"""
@@ -38,6 +38,7 @@ class UriIdentifier (object):
 			subpath = subpath[len (self._currentPage.path) + 1: ].replace ("\\", "/")
 		elif len (subpath) > 1 and subpath[1] == ":":
 			subpath = subpath[2:].replace ("\\", "/")
+			#print subpath
 
 		if subpath.startswith ("about:"):
 			subpath = self.__removeAboutBlank (subpath).replace ("\\", "/")
@@ -57,8 +58,6 @@ class UriIdentifier (object):
 
 
 	def __findFile (self, href):
-		#path = os.path.join (self._currentPage.path, href)
-		#if os.path.exists (path):
 		if os.path.exists (href):
 			return href
 
