@@ -28,7 +28,6 @@ class HtmlRenderIE (HtmlRender):
 		self.render.AddEventSink(self)
 
 		self.canOpenUrl = False                # Можно ли открывать ссылки
-		self.currentUri = None                 # Текущая открытая страница
 
 		self.__layout()
 
@@ -56,12 +55,14 @@ class HtmlRenderIE (HtmlRender):
 			href = self.__cleanUpUrl (status)
 
 			#identifier = UriIdentifier ()
-			(url, page, filename) = self.__identifyUri (href)
+			(url, page, filename, anchor) = self.__identifyUri (href)
 
 			if page != None:
 				core.commands.setStatusText (page.subpath)
 			elif filename != None:
 				core.commands.setStatusText (filename)
+			elif anchor != None:
+				core.commands.setStatusText (anchor)
 			else:
 				core.commands.setStatusText (status)
 		else:
@@ -119,12 +120,13 @@ class HtmlRenderIE (HtmlRender):
 		href = URL[0]
 		curr_href = self.__cleanUpUrl (self.render.locationurl)
 
+		#print href
+
 		if self.canOpenUrl or href == curr_href:
 			Cancel[0] = False
 			self.canOpenUrl = False
 		else:
 			Cancel[0] = True
-			self.currentUri = href
 			self.__onLinkClicked (href)
 
 
@@ -142,7 +144,7 @@ class HtmlRenderIE (HtmlRender):
 		"""
 		Клик по ссылке
 		"""
-		(url, page, filename) = self.__identifyUri (self.__cleanUpUrl (href) )
+		(url, page, filename, anchor) = self.__identifyUri (self.__cleanUpUrl (href) )
 		#(url, page, filename) = self.__identifyUri (urllib.unquote (href) )
 
 		if url != None:
@@ -157,3 +159,6 @@ class HtmlRenderIE (HtmlRender):
 			except OSError:
 				text = _(u"Can't execute file '%s'") % filename
 				core.commands.MessageBox (text, _(u"Error"), wx.ICON_ERROR | wx.OK)
+
+		elif anchor != None:
+			self.LoadPage (href)

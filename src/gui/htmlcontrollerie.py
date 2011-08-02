@@ -14,22 +14,23 @@ class UriIdentifierIE (object):
 		contentfile - имя файла (полный путь), который загружен в HTML-рендер
 		"""
 		self._currentPage = currentpage
-		self._contentfile = contentfile
+		self._contentfile = self.__removeAnchor (contentfile, self._currentPage)
 
 
 	def identify (self, href):
 		"""
-		Определить тип ссылки и вернуть кортеж (url, page, filename)
+		Определить тип ссылки и вернуть кортеж (url, page, filename, anchor)
 		"""
 		#print href
 		#print self._contentfile
 		if self._isUrl (href):
-			return (href, None, None)
+			return (href, None, None, None)
 
 		page = self.__findWikiPage (href)
 		filename = self.__findFile (href)
+		anchor = self.__findAnchor (href)
 
-		return (None, page, filename)
+		return (None, page, filename, anchor)
 
 
 	def __findWikiPage (self, subpath):
@@ -99,12 +100,33 @@ class UriIdentifierIE (object):
 		return result
 
 
+	def __removeAnchor (self, href, currentpage):
+		"""
+		Удалить якорь из адреса текущей загруженной страницы
+		То есть из x:\\bla-bla-bla\\__content.html#anchor сделать x:\\bla-bla-bla\\__content.html
+		"""
+		assert currentpage != None
+
+		result = href
+
+		if (href.startswith (currentpage.path) and
+				len (href) > len (currentpage.path)):
+
+			# Если после полного пути до страницы есть символ #
+			index = href.find ("#")
+			if index != -1 and index >= len (currentpage.path):
+				result = href[:index]
+
+		return result
+
+
 	def __findAnchor (self, href):
 		"""
 		Проверить, а не указывает ли href на якорь
 		"""
 		anchor = None
 		if (href.startswith (self._contentfile) and
+				len (href) > len (self._contentfile) and
 				href[len (self._contentfile)] == "#"):
 			anchor = href[len (self._contentfile):]
 

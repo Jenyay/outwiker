@@ -73,11 +73,12 @@ class UriIdentifierIETest (UriIdentifierTest):
 		contentfile = self._getContentFile (currentpage)
 
 		identifier = UriIdentifierIE (currentpage, contentfile)
-		(url, page, filename) = identifier.identify (u"http://jenyay.net")
+		(url, page, filename, anchor) = identifier.identify (u"http://jenyay.net")
 
 		self.assertEqual (url, u"http://jenyay.net")
 		self.assertEqual (page, None)
 		self.assertEqual (filename, None)
+		self.assertEqual (anchor, None)
 
 
 	def testFindUriHttps (self):
@@ -89,11 +90,12 @@ class UriIdentifierIETest (UriIdentifierTest):
 
 		identifier = UriIdentifierIE (currentpage, contentfile)
 
-		(url, page, filename) = identifier.identify (u"https://jenyay.net")
+		(url, page, filename, anchor) = identifier.identify (u"https://jenyay.net")
 
 		self.assertEqual (url, u"https://jenyay.net")
 		self.assertEqual (page, None)
 		self.assertEqual (filename, None)
+		self.assertEqual (anchor, None)
 
 
 	def testFindUriFtp (self):
@@ -105,11 +107,12 @@ class UriIdentifierIETest (UriIdentifierTest):
 
 		identifier = UriIdentifierIE (currentpage, contentfile)
 
-		(url, page, filename) = identifier.identify (u"ftp://jenyay.net")
+		(url, page, filename, anchor) = identifier.identify (u"ftp://jenyay.net")
 
 		self.assertEqual (url, u"ftp://jenyay.net")
 		self.assertEqual (page, None)
 		self.assertEqual (filename, None)
+		self.assertEqual (anchor, None)
 
 
 	def testFindUriMailto (self):
@@ -121,11 +124,12 @@ class UriIdentifierIETest (UriIdentifierTest):
 
 		identifier = UriIdentifierIE (currentpage, contentfile)
 
-		(url, page, filename) = identifier.identify (u"mailto://jenyay.net")
+		(url, page, filename, anchor) = identifier.identify (u"mailto://jenyay.net")
 
 		self.assertEqual (url, u"mailto://jenyay.net")
 		self.assertEqual (page, None)
 		self.assertEqual (filename, None)
+		self.assertEqual (anchor, None)
 
 
 	def testFullPageLink2 (self):
@@ -137,12 +141,13 @@ class UriIdentifierIETest (UriIdentifierTest):
 
 		identifier = UriIdentifierIE (currentpage, contentfile)
 
-		(url, page, filename) = identifier.identify (u"x:\\Страница 2\\Страница 3\\# Страница 4")
+		(url, page, filename, anchor) = identifier.identify (u"x:\\Страница 2\\Страница 3\\# Страница 4")
 
 		self.assertEqual (url, None)
 		self.assertEqual (page, self.rootwiki[u"Страница 2/Страница 3/# Страница 4"])
 		self.assertNotEqual (None, page)
 		self.assertEqual (filename, None)
+		self.assertEqual (anchor, None)
 
 
 	def testSubpath1 (self):
@@ -155,11 +160,12 @@ class UriIdentifierIETest (UriIdentifierTest):
 
 		identifier = UriIdentifierIE (wikipage, contentfile)
 
-		(url, page, filename) = identifier.identify (path)
+		(url, page, filename, anchor) = identifier.identify (path)
 
 		self.assertEqual (url, None)
 		self.assertEqual (page, wikipage[u"Страница 6"])
 		self.assertNotEqual (None, page)
+		self.assertEqual (anchor, None)
 
 
 	def testSubpath2 (self):
@@ -174,12 +180,34 @@ class UriIdentifierIETest (UriIdentifierTest):
 
 		identifier = UriIdentifierIE (wikipage, contentfile)
 
-		(url, page, filename) = identifier.identify (path)
+		(url, page, filename, anchor) = identifier.identify (path)
 		#print page
 
 		self.assertEqual (url, None)
 		self.assertEqual (page, wikipage[u"# Страница 5"])
 		self.assertNotEqual (None, page)
+		self.assertEqual (anchor, u"# Страница 5")
+
+
+	def testAnchor (self):
+		"""
+		Тест на распознавание ссылок на подстраницы, когда движок IE считает, что это ссылка на якорь
+		"""
+		wikipage = self.rootwiki[u"Страница 1"]
+		contentfile = self._getContentFile (wikipage)
+
+		path = u"".join ([self._getContentFile (wikipage), u"# Страница 666"])
+		#print path
+
+		identifier = UriIdentifierIE (wikipage, contentfile)
+
+		(url, page, filename, anchor) = identifier.identify (path)
+		#print page
+
+		self.assertEqual (url, None)
+		self.assertEqual (None, page)
+		self.assertEqual (anchor, u"# Страница 666")
+
 
 
 	def testAttachment1 (self):
@@ -192,12 +220,13 @@ class UriIdentifierIETest (UriIdentifierTest):
 
 		identifier = UriIdentifierIE (wikipage, contentfile)
 
-		(url, page, filename) = identifier.identify (path)
+		(url, page, filename, anchor) = identifier.identify (path)
 
 		self.assertEqual (url, None)
 		self.assertEqual (page, None)
 		self.assertEqual (filename, path)
 		self.assertNotEqual (None, path)
+		self.assertEqual (anchor, None)
 
 
 class UriIdentifierWebKitTest (UriIdentifierTest):
