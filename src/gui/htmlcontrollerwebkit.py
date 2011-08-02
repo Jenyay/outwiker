@@ -7,8 +7,47 @@ class UriIdentifierWebKit (object):
 	"""
 	Класс для идентификации ссылок. На что ссылки
 	"""
-	def __init__ (self, currentpage):
+	def __init__ (self, currentpage, basepath):
+		"""
+		currentpage - страница, которая в данный момент открыта
+		basepath - базовый путь для HTML-рендера
+		"""
 		self._currentPage = currentpage
+		self._contentpath = self.__removeAnchor (basepath, self._currentPage)
+
+
+	def __removeAnchor (self, href, currentpage):
+		"""
+		Удалить якорь из адреса текущей загруженной страницы
+		То есть из /bla-bla-bla/#anchor сделать /bla-bla-bla/
+		"""
+		assert currentpage != None
+
+		result = self.__removeFileProtokol (href)
+
+		if (result.startswith (currentpage.path) and
+				len (result) > len (currentpage.path)):
+
+			# Если после полного пути до страницы есть символ #
+			index = result.find ("#")
+			if index != -1 and index >= len (currentpage.path):
+				result = result[:index]
+
+		return result
+
+
+	def __findAnchor (self, href):
+		"""
+		Проверить, а не указывает ли href на якорь
+		"""
+		anchor = None
+
+		if (href.startswith (self._contentpath) and
+				len (href) > len (self._contentpath) and
+				href[len (self._contentpath)] == "#"):
+			anchor = href[len (self._contentpath):]
+
+		return anchor
 
 
 	def identify (self, href):
@@ -17,14 +56,15 @@ class UriIdentifierWebKit (object):
 		"""
 		#print href
 		if self._isUrl (href):
-			return (href, None, None)
+			return (href, None, None, None)
 
 		href_clear = self.__removeFileProtokol (href)
 
 		page = self.__findWikiPage (href_clear)
 		filename = self.__findFile (href_clear)
+		anchor = self.__findAnchor (href_clear)
 
-		return (None, page, filename)
+		return (None, page, filename, anchor)
 
 
 	def __removeFileProtokol (self, href):

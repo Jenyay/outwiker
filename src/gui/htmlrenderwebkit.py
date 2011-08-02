@@ -117,8 +117,12 @@ class HtmlRenderWebKit(HtmlRender):
 		"""
 		Определить тип ссылки и вернуть кортеж (url, page, filename)
 		"""
+		basepath = unicode (self.ctrl.get_main_frame().get_uri(), "utf8")
+		identifier = UriIdentifierWebKit (self._currentPage, basepath)
+
+		#print basepath
 		#print href
-		identifier = UriIdentifierWebKit (self._currentPage)
+
 		return identifier.identify (href)
 
 
@@ -129,7 +133,7 @@ class HtmlRenderWebKit(HtmlRender):
 
 		href = unicode (urllib.unquote (uri), "utf8")
 
-		(url, page, filename) = self.__identifyUri (href)
+		(url, page, filename, anchor) = self.__identifyUri (href)
 
 		if url != None:
 			core.commands.setStatusText (url)
@@ -141,6 +145,10 @@ class HtmlRenderWebKit(HtmlRender):
 
 		if filename != None:
 			core.commands.setStatusText (filename)
+			return
+
+		if anchor != None:
+			core.commands.setStatusText (anchor)
 			return
 
 		core.commands.setStatusText (u"")
@@ -155,15 +163,17 @@ class HtmlRenderWebKit(HtmlRender):
 			# разрешить обработать запрос компоненту 
 			return False
 		else:
-			self.__onLinkClicked (href)
-			return True
+			return self.__onLinkClicked (href)
 
 
 	def __onLinkClicked (self, href):
 		"""
 		Клик по ссылке
+		Возвращает False, если обрабатывать ссылку разрешить компоненту, 
+		в противном случае - True
 		"""
-		(url, page, filename) = self.__identifyUri (href)
+		#print href
+		(url, page, filename, anchor) = self.__identifyUri (href)
 
 		if url != None:
 			self.openUrl (url)
@@ -177,3 +187,8 @@ class HtmlRenderWebKit(HtmlRender):
 			except OSError:
 				text = _(u"Can't execute file '%s'") % filename
 				core.commands.MessageBox (text, _(u"Error"), wx.ICON_ERROR | wx.OK)
+
+		elif anchor != None:
+			return False
+
+		return True
