@@ -8,8 +8,13 @@ class UriIdentifierIE (object):
 	"""
 	Класс для идентификации ссылок. На что ссылки
 	"""
-	def __init__ (self, currentpage):
+	def __init__ (self, currentpage, contentfile):
+		"""
+		currentpage - страница, которая в данный момент открыта
+		contentfile - имя файла (полный путь), который загружен в HTML-рендер
+		"""
 		self._currentPage = currentpage
+		self._contentfile = contentfile
 
 
 	def identify (self, href):
@@ -17,6 +22,7 @@ class UriIdentifierIE (object):
 		Определить тип ссылки и вернуть кортеж (url, page, filename)
 		"""
 		#print href
+		#print self._contentfile
 		if self._isUrl (href):
 			return (href, None, None)
 
@@ -33,6 +39,13 @@ class UriIdentifierIE (object):
 		assert self._currentPage != None
 
 		newSelectedPage = None
+
+		# Проверим, вдруг IE посчитал, что это не ссылка, а якорь
+		# В этом случае ссылка будет выглядеть, как x:\...\{contentfile}#link
+		anchor = self.__findAnchor (subpath)
+		if anchor != None and self._currentPage[anchor] != None:
+			return self._currentPage[anchor]
+
 
 		if subpath.startswith (self._currentPage.path):
 			subpath = subpath[len (self._currentPage.path) + 1: ].replace ("\\", "/")
@@ -85,3 +98,14 @@ class UriIdentifierIE (object):
 
 		return result
 
+
+	def __findAnchor (self, href):
+		"""
+		Проверить, а не указывает ли href на якорь
+		"""
+		anchor = None
+		if (href.startswith (self._contentfile) and
+				href[len (self._contentfile)] == "#"):
+			anchor = href[len (self._contentfile):]
+
+		return anchor

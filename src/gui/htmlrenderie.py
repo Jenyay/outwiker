@@ -132,7 +132,9 @@ class HtmlRenderIE (HtmlRender):
 		"""
 		Определить тип ссылки и вернуть кортеж (url, page, filename)
 		"""
-		identifier = UriIdentifierIE (self._currentPage)
+		identifier = UriIdentifierIE (self._currentPage, 
+			self.__cleanUpUrl (self.render.locationurl) )
+
 		return identifier.identify (href)
 
 
@@ -140,8 +142,8 @@ class HtmlRenderIE (HtmlRender):
 		"""
 		Клик по ссылке
 		"""
-		#identifier = UriIdentifier ()
-		(url, page, filename) = self.__identifyUri (urllib.unquote (href) )
+		(url, page, filename) = self.__identifyUri (self.__cleanUpUrl (href) )
+		#(url, page, filename) = self.__identifyUri (urllib.unquote (href) )
 
 		if url != None:
 			self.openUrl (url)

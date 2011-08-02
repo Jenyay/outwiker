@@ -5,7 +5,7 @@ import os.path
 import unittest
 
 from core.tree import RootWikiPage, WikiDocument
-from pages.text.textpage import TextPageFactory, TextWikiPage
+from pages.wiki.wikipage import WikiPageFactory, WikiWikiPage
 from core.attachment import Attachment
 from core.application import Application
 from test.utils import removeWiki
@@ -31,12 +31,12 @@ class UriIdentifierTest (unittest.TestCase):
 		# - Страница 2
 		#   - Страница 3
 		#     - # Страница 4
-		TextPageFactory.create (self.rootwiki, u"Страница 1", [])
-		TextPageFactory.create (self.rootwiki, u"Страница 2", [])
-		TextPageFactory.create (self.rootwiki[u"Страница 2"], u"Страница 3", [])
-		TextPageFactory.create (self.rootwiki[u"Страница 2/Страница 3"], u"# Страница 4", [])
-		TextPageFactory.create (self.rootwiki[u"Страница 1"], u"# Страница 5", [])
-		TextPageFactory.create (self.rootwiki[u"Страница 1"], u"Страница 6", [])
+		WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
+		WikiPageFactory.create (self.rootwiki, u"Страница 2", [])
+		WikiPageFactory.create (self.rootwiki[u"Страница 2"], u"Страница 3", [])
+		WikiPageFactory.create (self.rootwiki[u"Страница 2/Страница 3"], u"# Страница 4", [])
+		WikiPageFactory.create (self.rootwiki[u"Страница 1"], u"# Страница 5", [])
+		WikiPageFactory.create (self.rootwiki[u"Страница 1"], u"Страница 6", [])
 
 		filesPath = u"../test/samplefiles/"
 		self.files = [u"accept.png", u"add.png", u"anchor.png", u"файл с пробелами.tmp", u"dir"]
@@ -53,6 +53,13 @@ class UriIdentifierTest (unittest.TestCase):
 		removeWiki (self.path)
 
 
+	def _getContentFile (self, page):
+		"""
+		Возвращает путь до файла __content.html
+		"""
+		return os.path.join (page.path, u"__content.html")
+
+
 
 class UriIdentifierIETest (UriIdentifierTest):
 	"""
@@ -62,7 +69,10 @@ class UriIdentifierIETest (UriIdentifierTest):
 		"""
 		Тест на распознавание адресов, начинающихся с http
 		"""
-		identifier = UriIdentifierIE (self.rootwiki[u"Страница 1"])
+		currentpage = self.rootwiki[u"Страница 1"]
+		contentfile = self._getContentFile (currentpage)
+
+		identifier = UriIdentifierIE (currentpage, contentfile)
 		(url, page, filename) = identifier.identify (u"http://jenyay.net")
 
 		self.assertEqual (url, u"http://jenyay.net")
@@ -74,7 +84,11 @@ class UriIdentifierIETest (UriIdentifierTest):
 		"""
 		Тест на распознавание адресов, начинающихся с https
 		"""
-		identifier = UriIdentifierIE (self.rootwiki[u"Страница 1"])
+		currentpage = self.rootwiki[u"Страница 1"]
+		contentfile = self._getContentFile (currentpage)
+
+		identifier = UriIdentifierIE (currentpage, contentfile)
+
 		(url, page, filename) = identifier.identify (u"https://jenyay.net")
 
 		self.assertEqual (url, u"https://jenyay.net")
@@ -86,7 +100,11 @@ class UriIdentifierIETest (UriIdentifierTest):
 		"""
 		Тест на распознавание адресов, начинающихся с ftp
 		"""
-		identifier = UriIdentifierIE (self.rootwiki[u"Страница 1"])
+		currentpage = self.rootwiki[u"Страница 1"]
+		contentfile = self._getContentFile (currentpage)
+
+		identifier = UriIdentifierIE (currentpage, contentfile)
+
 		(url, page, filename) = identifier.identify (u"ftp://jenyay.net")
 
 		self.assertEqual (url, u"ftp://jenyay.net")
@@ -98,7 +116,11 @@ class UriIdentifierIETest (UriIdentifierTest):
 		"""
 		Тест на распознавание адресов, начинающихся с mailto
 		"""
-		identifier = UriIdentifierIE (self.rootwiki[u"Страница 1"])
+		currentpage = self.rootwiki[u"Страница 1"]
+		contentfile = self._getContentFile (currentpage)
+
+		identifier = UriIdentifierIE (currentpage, contentfile)
+
 		(url, page, filename) = identifier.identify (u"mailto://jenyay.net")
 
 		self.assertEqual (url, u"mailto://jenyay.net")
@@ -110,7 +132,11 @@ class UriIdentifierIETest (UriIdentifierTest):
 		"""
 		Тест на распознавание ссылок на страницы, когда движок IE считает, что это ссылка на файл
 		"""
-		identifier = UriIdentifierIE (self.rootwiki[u"Страница 1"])
+		currentpage = self.rootwiki[u"Страница 1"]
+		contentfile = self._getContentFile (currentpage)
+
+		identifier = UriIdentifierIE (currentpage, contentfile)
+
 		(url, page, filename) = identifier.identify (u"x:\\Страница 2\\Страница 3\\# Страница 4")
 
 		self.assertEqual (url, None)
@@ -125,9 +151,9 @@ class UriIdentifierIETest (UriIdentifierTest):
 		"""
 		wikipage = self.rootwiki[u"Страница 1"]
 		path = os.path.join (wikipage.path, u"Страница 6")
-		#print path
+		contentfile = self._getContentFile (wikipage)
 
-		identifier = UriIdentifierIE (wikipage)
+		identifier = UriIdentifierIE (wikipage, contentfile)
 
 		(url, page, filename) = identifier.identify (path)
 
@@ -136,20 +162,42 @@ class UriIdentifierIETest (UriIdentifierTest):
 		self.assertNotEqual (None, page)
 
 
+	def testSubpath2 (self):
+		"""
+		Тест на распознавание ссылок на подстраницы, когда движок IE считает, что это ссылка на якорь
+		"""
+		wikipage = self.rootwiki[u"Страница 1"]
+		contentfile = self._getContentFile (wikipage)
+
+		path = u"".join ([self._getContentFile (wikipage), u"# Страница 5"])
+		#print path
+
+		identifier = UriIdentifierIE (wikipage, contentfile)
+
+		(url, page, filename) = identifier.identify (path)
+		#print page
+
+		self.assertEqual (url, None)
+		self.assertEqual (page, wikipage[u"# Страница 5"])
+		self.assertNotEqual (None, page)
+
+
 	def testAttachment1 (self):
 		"""
 		Тест на распознавание ссылок на вложенные файлы
 		"""
 		wikipage = self.rootwiki[u"Страница 1"]
+		contentfile = self._getContentFile (wikipage)
 		path = os.path.join (Attachment (wikipage).getAttachPath (), u"accept.png")
 
-		identifier = UriIdentifierIE (wikipage)
+		identifier = UriIdentifierIE (wikipage, contentfile)
 
 		(url, page, filename) = identifier.identify (path)
 
 		self.assertEqual (url, None)
 		self.assertEqual (page, None)
 		self.assertEqual (filename, path)
+		self.assertNotEqual (None, path)
 
 
 class UriIdentifierWebKitTest (UriIdentifierTest):
