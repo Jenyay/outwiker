@@ -149,7 +149,7 @@ def openWiki (path, readonly=False):
 	
 	try:
 		# Загрузить вики
-		wikiroot = WikiDocument.load (path, readonly)
+		wikiroot = WikiDocument.load (os.path.realpath (path), readonly)
 		Application.wikiroot = wikiroot
 	except IOError:
 		core.commands.MessageBox (_(u"Can't load wiki '%s'") % path, 
