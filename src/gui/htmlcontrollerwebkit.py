@@ -2,8 +2,9 @@
 # -*- coding: UTF-8 -*-
 
 import os.path
+from .htmlcontroller import UriIdentifier
 
-class UriIdentifierWebKit (object):
+class UriIdentifierWebKit (UriIdentifier):
 	"""
 	Класс для идентификации ссылок. На что ссылки
 	"""
@@ -12,11 +13,10 @@ class UriIdentifierWebKit (object):
 		currentpage - страница, которая в данный момент открыта
 		basepath - базовый путь для HTML-рендера
 		"""
-		self._currentPage = currentpage
-		self._contentpath = self.__removeAnchor (basepath, self._currentPage)
+		UriIdentifier.__init__ (self, currentpage, basepath)
 
 
-	def __removeAnchor (self, href, currentpage):
+	def _removeAnchor (self, href, currentpage):
 		"""
 		Удалить якорь из адреса текущей загруженной страницы
 		То есть из /bla-bla-bla/#anchor сделать /bla-bla-bla/
@@ -36,35 +36,8 @@ class UriIdentifierWebKit (object):
 		return result
 
 
-	def __findAnchor (self, href):
-		"""
-		Проверить, а не указывает ли href на якорь
-		"""
-		anchor = None
-
-		if (href.startswith (self._contentpath) and
-				len (href) > len (self._contentpath) and
-				href[len (self._contentpath)] == "#"):
-			anchor = href[len (self._contentpath):]
-
-		return anchor
-
-
-	def identify (self, href):
-		"""
-		Определить тип ссылки и вернуть кортеж (url, page, filename)
-		"""
-		#print href
-		if self._isUrl (href):
-			return (href, None, None, None)
-
-		href_clear = self.__removeFileProtokol (href)
-
-		page = self.__findWikiPage (href_clear)
-		filename = self.__findFile (href_clear)
-		anchor = self.__findAnchor (href_clear)
-
-		return (None, page, filename, anchor)
+	def _prepareHref (self, href):
+		return self.__removeFileProtokol (href)
 
 
 	def __removeFileProtokol (self, href):
@@ -78,7 +51,7 @@ class UriIdentifierWebKit (object):
 		return href
 
 
-	def __findWikiPage (self, href):
+	def _findWikiPage (self, href):
 		"""
 		Попытка найти страницу вики, если ссылка, на которую щелкнули не интернетная (http, ftp, mailto)
 		"""
@@ -101,15 +74,3 @@ class UriIdentifierWebKit (object):
 				newSelectedPage = self._currentPage.root[href]
 
 		return newSelectedPage
-
-
-	def _isUrl (self, href):
-		return href.lower().startswith ("http://") or \
-				href.lower().startswith ("https://") or \
-				href.lower().startswith ("ftp://") or \
-				href.lower().startswith ("mailto:")
-
-
-	def __findFile (self, href):
-		if os.path.exists (href):
-			return href

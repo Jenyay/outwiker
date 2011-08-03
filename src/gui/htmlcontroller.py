@@ -43,7 +43,7 @@ class UriIdentifier (object):
 	@abstractmethod
 	def _prepareHref (self, href):
 		"""
-		Обработать ссылку, если требуется
+		Подготовить ссылку к распознаванию, удалить file:// в начале
 		"""
 		pass
 
@@ -62,14 +62,6 @@ class UriIdentifier (object):
 		"""
 		if os.path.exists (href):
 			return href
-
-
-	@abstractmethod
-	def _findWikiPage (self, subpath):
-		"""
-		Попытка найти страницу вики
-		"""
-		pass
 
 
 	@abstractmethod
