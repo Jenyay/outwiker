@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-31 21:12+0400\n"
+"POT-Creation-Date: 2011-08-03 10:20+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -131,8 +131,8 @@ msgstr ""
 
 #: gui/AttachPanel.py:201 gui/AttachPanel.py:211 gui/AttachPanel.py:223
 #: gui/AttachPanel.py:240 gui/AttachPanel.py:250 gui/BaseTextPanel.py:74
-#: gui/BaseTextPanel.py:88 gui/BaseTextPanel.py:98 gui/htmlrenderie.py:157
-#: gui/htmlrenderwebkit.py:179 gui/htmlrenderwx.py:106 gui/MainWindow.py:275
+#: gui/BaseTextPanel.py:88 gui/BaseTextPanel.py:98 gui/htmlrenderie.py:161
+#: gui/htmlrenderwebkit.py:189 gui/htmlrenderwx.py:106 gui/MainWindow.py:275
 #: gui/MainWindow.py:404 gui/mainwndcontroller.py:115 gui/pagedialog.py:41
 #: gui/pagedialog.py:93 gui/pagedialog.py:112 gui/pagedialog.py:139
 #: gui/pagedialog.py:144 gui/pagedialog.py:187 gui/pagedialog.py:192
@@ -164,8 +164,8 @@ msgstr ""
 msgid "You did not select a file to execute"
 msgstr ""
 
-#: gui/AttachPanel.py:249 gui/htmlrenderie.py:156 gui/htmlrender.py:64
-#: gui/htmlrenderwebkit.py:178 gui/htmlrenderwx.py:105 gui/htmlrenderwx.py:152
+#: gui/AttachPanel.py:249 gui/htmlrenderie.py:160 gui/htmlrender.py:64
+#: gui/htmlrenderwebkit.py:188 gui/htmlrenderwx.py:105 gui/htmlrenderwx.py:152
 #, python-format
 msgid "Can't execute file '%s'"
 msgstr ""
@@ -869,40 +869,60 @@ msgstr ""
 msgid "H6 (<h6>…</h6>)"
 msgstr ""
 
+#: pages/html/HtmlPanel.py:453
+msgid "Image\tCtrl+M"
+msgstr ""
+
+#: pages/html/HtmlPanel.py:454
+msgid "Image (<img src=\"…\"/>"
+msgstr ""
+
 #: pages/html/HtmlPanel.py:460 pages/wiki/wikipanel.py:322
 msgid "Link\tCtrl+L"
 msgstr ""
 
-#: pages/html/HtmlPanel.py:467 pages/wiki/wikipanel.py:329
-msgid "Horizontal line\tCtrl+H"
+#: pages/html/HtmlPanel.py:461
+msgid "Link (<a href=\"…\">…</a>)"
 msgstr ""
 
 #: pages/html/HtmlPanel.py:468
+msgid "Anchor\tCtrl+Alt+L"
+msgstr ""
+
+#: pages/html/HtmlPanel.py:469
+msgid "Anchor (<a name=\"…\">…</a>)"
+msgstr ""
+
+#: pages/html/HtmlPanel.py:476 pages/wiki/wikipanel.py:329
+msgid "Horizontal line\tCtrl+H"
+msgstr ""
+
+#: pages/html/HtmlPanel.py:477
 msgid "Horizontal line (<hr>)"
 msgstr ""
 
-#: pages/html/HtmlPanel.py:475
+#: pages/html/HtmlPanel.py:484
 msgid "Code\tCtrl+Alt+D"
 msgstr ""
 
-#: pages/html/HtmlPanel.py:476
+#: pages/html/HtmlPanel.py:485
 msgid "Code (<code>…</code>)"
 msgstr ""
 
-#: pages/html/HtmlPanel.py:483
+#: pages/html/HtmlPanel.py:492
 msgid "Quote\tCtrl+Alt+Q"
 msgstr ""
 
-#: pages/html/HtmlPanel.py:484
+#: pages/html/HtmlPanel.py:493
 msgid "Quote (<blockquote>…</blockquote>)"
 msgstr ""
 
-#: pages/html/HtmlPanel.py:493 pages/html/HtmlPanel.py:494
+#: pages/html/HtmlPanel.py:502 pages/html/HtmlPanel.py:503
 #: pages/wiki/wikipanel.py:345 pages/wiki/wikipanel.py:346
 msgid "Convert HTML Symbols"
 msgstr ""
 
-#: pages/html/HtmlPanel.py:511
+#: pages/html/HtmlPanel.py:520
 msgid "H&tml"
 msgstr ""
 

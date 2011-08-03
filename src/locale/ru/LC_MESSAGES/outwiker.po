@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-31 21:12+0400\n"
+"POT-Creation-Date: 2011-08-03 10:20+0400\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -140,8 +140,8 @@ msgstr "Вы не выбрали файл(ы) для удаления"
 #: gui/BaseTextPanel.py:74
 #: gui/BaseTextPanel.py:88
 #: gui/BaseTextPanel.py:98
-#: gui/htmlrenderie.py:157
-#: gui/htmlrenderwebkit.py:179
+#: gui/htmlrenderie.py:161
+#: gui/htmlrenderwebkit.py:189
 #: gui/htmlrenderwx.py:106
 #: gui/MainWindow.py:275
 #: gui/MainWindow.py:404
@@ -199,9 +199,9 @@ msgid "You did not select a file to execute"
 msgstr "Вы не выбрали файл(ы) для запуска"
 
 #: gui/AttachPanel.py:249
-#: gui/htmlrenderie.py:156
+#: gui/htmlrenderie.py:160
 #: gui/htmlrender.py:64
-#: gui/htmlrenderwebkit.py:178
+#: gui/htmlrenderwebkit.py:188
 #: gui/htmlrenderwx.py:105
 #: gui/htmlrenderwx.py:152
 #, python-format
@@ -862,7 +862,7 @@ msgstr "Выравнивание по центру"
 
 #: pages/html/HtmlPanel.py:348
 msgid "Right align\tCtrl+Alt+R"
-msgstr "Right align\tCtrl+Alt+R"
+msgstr "Выравнивание по правому краю\tCtrl+Alt+R"
 
 #: pages/html/HtmlPanel.py:349
 #: pages/wiki/wikipanel.py:192
@@ -965,44 +965,64 @@ msgstr "H6\tCtrl+6"
 msgid "H6 (<h6>…</h6>)"
 msgstr "H6 (<h6>…</h6>)"
 
+#: pages/html/HtmlPanel.py:453
+msgid "Image\tCtrl+M"
+msgstr "Картинка\tCtrl+M"
+
+#: pages/html/HtmlPanel.py:454
+msgid "Image (<img src=\"…\"/>"
+msgstr "Картинка (<img src=\"…\"/>"
+
 #: pages/html/HtmlPanel.py:460
 #: pages/wiki/wikipanel.py:322
 msgid "Link\tCtrl+L"
 msgstr "Ссылка\tCtrl+L"
 
-#: pages/html/HtmlPanel.py:467
+#: pages/html/HtmlPanel.py:461
+msgid "Link (<a href=\"…\">…</a>)"
+msgstr "Ссылка (<a href=\"…\">…</a>)"
+
+#: pages/html/HtmlPanel.py:468
+msgid "Anchor\tCtrl+Alt+L"
+msgstr "Якорь\tCtrl+Alt+L"
+
+#: pages/html/HtmlPanel.py:469
+msgid "Anchor (<a name=\"…\">…</a>)"
+msgstr "Якорь (<a name=\"…\">…</a>)"
+
+#: pages/html/HtmlPanel.py:476
 #: pages/wiki/wikipanel.py:329
 msgid "Horizontal line\tCtrl+H"
 msgstr "Горизонтальная линия\tCtrl+H"
 
-#: pages/html/HtmlPanel.py:468
+#: pages/html/HtmlPanel.py:477
 msgid "Horizontal line (<hr>)"
 msgstr "Горизонтальная линия (<hr>)"
 
-#: pages/html/HtmlPanel.py:475
+#: pages/html/HtmlPanel.py:484
 msgid "Code\tCtrl+Alt+D"
 msgstr "Код\tCtrl+Alt+D"
 
-#: pages/html/HtmlPanel.py:476
+#: pages/html/HtmlPanel.py:485
 msgid "Code (<code>…</code>)"
 msgstr "Код (<code>…</code>)"
 
-#: pages/html/HtmlPanel.py:483
+#: pages/html/HtmlPanel.py:492
 msgid "Quote\tCtrl+Alt+Q"
 msgstr "Цитирование\tCtrl+Alt+Q"
 
-#: pages/html/HtmlPanel.py:484
+#: pages/html/HtmlPanel.py:493
 msgid "Quote (<blockquote>…</blockquote>)"
 msgstr "Цитирование (<blockquote>…</blockquote>)"
 
-#: pages/html/HtmlPanel.py:493
-#: pages/html/HtmlPanel.py:494
+#: pages/html/HtmlPanel.py:502
+#: pages/html/HtmlPanel.py:503
 #: pages/wiki/wikipanel.py:345
 #: pages/wiki/wikipanel.py:346
 msgid "Convert HTML Symbols"
 msgstr "Преобразовать символы в HTML"
 
-#: pages/html/HtmlPanel.py:511
+#: pages/html/HtmlPanel.py:520
 msgid "H&tml"
 msgstr "H&TML"
 

@@ -321,14 +321,14 @@ class HtmlPagePanel (HtmlPanel):
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_SUBSCRIPT", 
-				lambda event: self.codeEditor.turnText (u"<SUB>", u"</SUB>"), 
+				lambda event: self.codeEditor.turnText (u"<sub>", u"</sub>"), 
 				_(u"Subscript\tCtrl+="), 
 				_(u"Subscript (<sub>…</sub>)"), 
 				os.path.join (self.imagesDir, "text_subscript.png"))
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_SUPERSCRIPT", 
-				lambda event: self.codeEditor.turnText (u"<SUP>", u"</SUP>"), 
+				lambda event: self.codeEditor.turnText (u"<sup>", u"</sup>"), 
 				_(u"Superscript\tCtrl++"), 
 				_(u"Superscript (<sup>…</sup>)"), 
 				os.path.join (self.imagesDir, "text_superscript.png"))
@@ -337,14 +337,14 @@ class HtmlPagePanel (HtmlPanel):
 	def __addAlignTools (self):
 		self._addTool (self.pageToolsMenu, 
 				"ID_ALIGN_CENTER", 
-				lambda event: self.codeEditor.turnText (u'<DIV ALIGN="CENTER">', u'</DIV>'), 
+				lambda event: self.codeEditor.turnText (u'<div align="center">', u'</div>'), 
 				_(u"Center align\tCtrl+Alt+C"), 
 				_(u"Center align"), 
 				os.path.join (self.imagesDir, "text_align_center.png"))
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_ALIGN_RIGHT", 
-				lambda event: self.codeEditor.turnText (u'<DIV ALIGN="RIGHT">', u'</DIV>'), 
+				lambda event: self.codeEditor.turnText (u'<div align="right">', u'</div>'), 
 				_(u"Right align\tCtrl+Alt+R"), 
 				_(u"Right align"), 
 				os.path.join (self.imagesDir, "text_align_right.png"))
@@ -450,16 +450,25 @@ class HtmlPagePanel (HtmlPanel):
 		self._addTool (self.pageToolsMenu, 
 				"ID_IMAGE", 
 				lambda event: self.codeEditor.turnText (u'<img src="', u'"/>'), 
-				u'Image\tCtrl+M', 
-				u'Image (<img src="…"/>', 
+				_(u'Image\tCtrl+M'), 
+				_(u'Image (<img src="…"/>'), 
 				os.path.join (self.imagesDir, "image.png"))
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_LINK", 
 				lambda event: self.codeEditor.turnText (u'<a href="">', u'</a>'), 
 				_(u"Link\tCtrl+L"), 
-				u'Link (<a href="…">…</a>)', 
+				_(u'Link (<a href="…">…</a>)'), 
 				os.path.join (self.imagesDir, "link.png"))
+
+
+		self._addTool (self.pageToolsMenu, 
+				"ID_ANCHOR", 
+				lambda event: self.codeEditor.turnText (u'<a name="', u'"></a>'), 
+				_(u"Anchor\tCtrl+Alt+L"), 
+				_(u'Anchor (<a name="…">…</a>)'), 
+				os.path.join (self.imagesDir, "anchor.png"))
+
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_HORLINE", 
@@ -471,7 +480,7 @@ class HtmlPagePanel (HtmlPanel):
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_CODE", 
-				lambda event: self.codeEditor.turnText (u"<CODE>", u"</CODE>"), 
+				lambda event: self.codeEditor.turnText (u"<code>", u"</code>"), 
 				_(u"Code\tCtrl+Alt+D"), 
 				_(u"Code (<code>…</code>)"), 
 				os.path.join (self.imagesDir, "code.png"))
@@ -479,7 +488,7 @@ class HtmlPagePanel (HtmlPanel):
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_BLOCKQUOTE", 
-				lambda event: self.codeEditor.turnText (u"<BLOCKQUOTE>", u"</BLOCKQUOTE>"), 
+				lambda event: self.codeEditor.turnText (u"<blockquote>", u"</blockquote>"), 
 				_(u"Quote\tCtrl+Alt+Q"), 
 				_(u"Quote (<blockquote>…</blockquote>)"), 
 				os.path.join (self.imagesDir, "quote.png"))
