@@ -95,7 +95,7 @@ class HtmlRenderIE (HtmlRender):
 
 	def __cleanUpUrl (self, href):
 		"""
-		Почистить ссылку. Убрать file:/// и about:blank
+		Почистить ссылку, убрать file:///
 		"""
 		result = self.__removeFileProtokol (href)
 		result = urllib.unquote (result)

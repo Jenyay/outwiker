@@ -3,39 +3,31 @@
 
 import os.path
 
+from .htmlcontroller import UriIdentifier
 
-class UriIdentifierIE (object):
+
+class UriIdentifierIE (UriIdentifier):
 	"""
 	Класс для идентификации ссылок. На что ссылки
 	"""
-	def __init__ (self, currentpage, contentfile):
+	def __init__ (self, currentpage, basepath):
 		"""
 		currentpage - страница, которая в данный момент открыта
-		contentfile - имя файла (полный путь), который загружен в HTML-рендер
+		basepath - базовый путь для HTML-рендера
 		"""
-		self._currentPage = currentpage
-		self._contentfile = self.__removeAnchor (contentfile, self._currentPage)
+		UriIdentifier.__init__ (self, currentpage, basepath)
 
 
-	def identify (self, href):
+	def _prepareHref (self, href):
 		"""
-		Определить тип ссылки и вернуть кортеж (url, page, filename, anchor)
+		Обработать ссылку, если требуется
 		"""
-		#print href
-		#print self._contentfile
-		if self._isUrl (href):
-			return (href, None, None, None)
-
-		page = self.__findWikiPage (href)
-		filename = self.__findFile (href)
-		anchor = self.__findAnchor (href)
-
-		return (None, page, filename, anchor)
+		return href
 
 
-	def __findWikiPage (self, subpath):
+	def _findWikiPage (self, subpath):
 		"""
-		Попытка найти страницу вики, если ссылка, на которую щелкнули не интернетная (http, ftp, mailto)
+		Попытка найти страницу вики
 		"""
 		assert self._currentPage != None
 
@@ -43,7 +35,7 @@ class UriIdentifierIE (object):
 
 		# Проверим, вдруг IE посчитал, что это не ссылка, а якорь
 		# В этом случае ссылка будет выглядеть, как x:\...\{contentfile}#link
-		anchor = self.__findAnchor (subpath)
+		anchor = self._findAnchor (subpath)
 		if anchor != None and self._currentPage[anchor] != None:
 			return self._currentPage[anchor]
 
@@ -71,18 +63,6 @@ class UriIdentifierIE (object):
 		return newSelectedPage
 
 
-	def __findFile (self, href):
-		if os.path.exists (href):
-			return href
-
-
-	def _isUrl (self, href):
-		return href.lower().startswith ("http://") or \
-				href.lower().startswith ("https://") or \
-				href.lower().startswith ("ftp://") or \
-				href.lower().startswith ("mailto:")
-
-
 	def __removeAboutBlank (self, href):
 		"""
 		Удалить about: и about:blank из начала адреса
@@ -100,7 +80,7 @@ class UriIdentifierIE (object):
 		return result
 
 
-	def __removeAnchor (self, href, currentpage):
+	def _removeAnchor (self, href, currentpage):
 		"""
 		Удалить якорь из адреса текущей загруженной страницы
 		То есть из x:\\bla-bla-bla\\__content.html#anchor сделать x:\\bla-bla-bla\\__content.html
@@ -109,25 +89,12 @@ class UriIdentifierIE (object):
 
 		result = href
 
-		if (href.startswith (currentpage.path) and
-				len (href) > len (currentpage.path)):
+		if (result.startswith (currentpage.path) and
+				len (result) > len (currentpage.path)):
 
 			# Если после полного пути до страницы есть символ #
-			index = href.find ("#")
+			index = result.find ("#")
 			if index != -1 and index >= len (currentpage.path):
-				result = href[:index]
+				result = result[:index]
 
 		return result
-
-
-	def __findAnchor (self, href):
-		"""
-		Проверить, а не указывает ли href на якорь
-		"""
-		anchor = None
-		if (href.startswith (self._contentfile) and
-				len (href) > len (self._contentfile) and
-				href[len (self._contentfile)] == "#"):
-			anchor = href[len (self._contentfile):]
-
-		return anchor
