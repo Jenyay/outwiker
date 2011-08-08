@@ -131,7 +131,12 @@ class HtmlRenderWebKit(HtmlRender):
 			core.commands.setStatusText (u"")
 			return
 
-		href = unicode (urllib.unquote (uri), "utf8")
+		try:
+			href = unicode (urllib.unquote (uri), "utf8")
+		except UnicodeDecodeError:
+			#print uri
+			core.commands.setStatusText (u"")
+			return
 
 		(url, page, filename, anchor) = self.__identifyUri (href)
 
@@ -155,7 +160,12 @@ class HtmlRenderWebKit(HtmlRender):
 
 
 	def __onNavigate (self, view, frame, request, action, decision):
-		href = unicode (urllib.unquote (request.get_uri()), "utf8")
+		try:
+			href = unicode (urllib.unquote (request.get_uri()), "utf8")
+		except UnicodeDecodeError:
+			#print request.get_uri()
+			return True
+
 		curr_href = self.ctrl.get_main_frame().get_uri()
 
 		if self.canOpenUrl or href == curr_href:
@@ -172,7 +182,6 @@ class HtmlRenderWebKit(HtmlRender):
 		Возвращает False, если обрабатывать ссылку разрешить компоненту, 
 		в противном случае - True
 		"""
-		#print href
 		(url, page, filename, anchor) = self.__identifyUri (href)
 
 		if url != None:
