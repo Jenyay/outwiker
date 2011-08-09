@@ -89,8 +89,8 @@ class UriIdentifier (object):
 		"""
 		Является ли href ссылкой на интернет?
 		"""
-		return href.lower().startswith ("http://") or \
-				href.lower().startswith ("https://") or \
-				href.lower().startswith ("ftp://") or \
+		return href.lower().startswith ("http:") or \
+				href.lower().startswith ("https:") or \
+				href.lower().startswith ("ftp:") or \
 				href.lower().startswith ("mailto:")
 

@@ -52,10 +52,7 @@ class HtmlRenderIE (HtmlRender):
 
 	def StatusTextChange(self, status):
 		if len (status) != 0:
-			href = self.__cleanUpUrl (status)
-
-			#identifier = UriIdentifier ()
-			(url, page, filename, anchor) = self.__identifyUri (href)
+			(url, page, filename, anchor) = self.__identifyUri (status)
 
 			if page != None:
 				core.commands.setStatusText (page.subpath)
@@ -134,18 +131,19 @@ class HtmlRenderIE (HtmlRender):
 		"""
 		Определить тип ссылки и вернуть кортеж (url, page, filename)
 		"""
+		href_clear = self.__cleanUpUrl (href)
+
 		identifier = UriIdentifierIE (self._currentPage, 
 			self.__cleanUpUrl (self.render.locationurl) )
 
-		return identifier.identify (href)
+		return identifier.identify (href_clear)
 
 
 	def __onLinkClicked (self, href):
 		"""
 		Клик по ссылке
 		"""
-		(url, page, filename, anchor) = self.__identifyUri (self.__cleanUpUrl (href) )
-		#(url, page, filename) = self.__identifyUri (urllib.unquote (href) )
+		(url, page, filename, anchor) = self.__identifyUri (href)
 
 		if url != None:
 			self.openUrl (url)
