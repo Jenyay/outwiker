@@ -39,6 +39,9 @@ class BaseTextPanel (wx.Panel):
 		self.mainWindow = None
 		self.searchMenu = None
 
+		# Создан (инициализирован) ли GUI (панели, меню и т.п.)
+		self._guiInitialized = False
+
 		self.ID_SEARCH = wx.NewId()
 		self.ID_SEARCH_NEXT = wx.NewId()
 		self.ID_SEARCH_PREV = wx.NewId()
@@ -155,10 +158,13 @@ class BaseTextPanel (wx.Panel):
 		"""
 		Добавить элементы управления в главное окно
 		"""
-		self.mainWindow = mainWindow
+		if not self._guiInitialized:
+			self.mainWindow = mainWindow
 
-		self._addMenuItems ()
-		self._addToolsItems ()
+			self._addMenuItems ()
+			self._addToolsItems ()
+
+			self._guiInitialized = True
 
 
 	def Clear (self):

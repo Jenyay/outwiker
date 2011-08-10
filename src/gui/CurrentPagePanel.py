@@ -106,8 +106,10 @@ class CurrentPagePanel(wx.Panel):
 		if type (self.__currentPage) != type (page):
 			self.destroyPageView()
 			self.__createPageView(page)
-		elif self.pageView != None:
+
+		if self.pageView != None:
 			self.pageView.page = page
+			self.pageView.initGui(Application.mainWindow)
 
 		self.__currentPage = page
 
@@ -118,14 +120,15 @@ class CurrentPagePanel(wx.Panel):
 		"""
 		if page != None:
 			factory = FactorySelector.getFactory (page.getTypeString())
-			self.pageView = factory.getPageView (page, self)
+			self.pageView = factory.getPageView (self)
+			self.pageView.page = page
 
 			assert self.pageView != None
 
 			self.contentSizer.Add (self.pageView, 1, wx.EXPAND, 0)
 			self.Layout()
 
-			self.pageView.initGui(Application.mainWindow)
+			#self.pageView.initGui(Application.mainWindow)
 
 
 	def __updatePageInfo (self, page):

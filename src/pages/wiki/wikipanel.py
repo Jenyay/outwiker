@@ -348,33 +348,34 @@ class WikiPagePanel (HtmlPanel):
 
 	
 	def initGui (self, mainWindow):
-		BaseTextPanel.initGui (self, mainWindow)
+		if not self._guiInitialized:
+			BaseTextPanel.initGui (self, mainWindow)
 
-		self.pageToolsMenu = wx.Menu()
+			self.pageToolsMenu = wx.Menu()
 
-		self._addTool (self.pageToolsMenu, 
-				"ID_HTMLCODE", 
-				self.__openHtmlCode, 
-				_(u"HTML Code\tShift+F4"), 
-				_(u"HTML Code"), 
-				os.path.join (self.imagesDir, "html.png"),
-				True)
+			self._addTool (self.pageToolsMenu, 
+					"ID_HTMLCODE", 
+					self.__openHtmlCode, 
+					_(u"HTML Code\tShift+F4"), 
+					_(u"HTML Code"), 
+					os.path.join (self.imagesDir, "html.png"),
+					True)
 
-		self._addRenderTools()
-		self.__addCommandsTools()
-		self.__addFontTools()
-		self.__addAlignTools()
-		self.__addHTools()
-		self.__addTableTools()
-		self.__addListTools()
-		self.__addFormatTools()
-		self.__addOtherTools()
+			self._addRenderTools()
+			self.__addCommandsTools()
+			self.__addFontTools()
+			self.__addAlignTools()
+			self.__addHTools()
+			self.__addTableTools()
+			self.__addListTools()
+			self.__addFormatTools()
+			self.__addOtherTools()
 
-		mainWindow.mainMenu.Insert (mainWindow.mainMenu.GetMenuCount() - 1, 
-				self.pageToolsMenu, 
-				_(u"&Wiki") )
+			mainWindow.mainMenu.Insert (mainWindow.mainMenu.GetMenuCount() - 1, 
+					self.pageToolsMenu, 
+					_(u"&Wiki") )
 
-		mainWindow.mainToolbar.Realize()
+			mainWindow.mainToolbar.Realize()
 
 		self._openDefaultPage()
 

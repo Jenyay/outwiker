@@ -156,12 +156,11 @@ class SearchPageFactory (PageFactory):
 
 
 	@staticmethod
-	def getPageView (page, parent):
+	def getPageView (parent):
 		"""
 		Вернуть контрол, который будет отображать и редактировать страницу
 		"""
 		panel = SearchPanel (parent)
-		panel.page = page
 
 		return panel
 

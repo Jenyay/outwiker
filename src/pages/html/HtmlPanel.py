@@ -88,6 +88,7 @@ class HtmlPanel(BaseTextPanel):
 		self.codeEditor.EmptyUndoBuffer()
 		self.codeEditor.SetReadOnly (page.readonly)
 		self._showHtml()
+		#self._openDefaultPage()
 
 
 	def GetContentFromGui(self):
@@ -506,20 +507,21 @@ class HtmlPagePanel (HtmlPanel):
 
 
 	def initGui (self, mainWindow):
-		BaseTextPanel.initGui (self, mainWindow)
+		if not self._guiInitialized:
+			BaseTextPanel.initGui (self, mainWindow)
 
-		self.pageToolsMenu = wx.Menu()
-		
-		self._addRenderTools()
-		self.__addFontTools()
-		self.__addAlignTools()
-		self.__addHTools()
-		self.__addTableTools()
-		self.__addListTools()
-		self.__addOtherTools()
+			self.pageToolsMenu = wx.Menu()
+			
+			self._addRenderTools()
+			self.__addFontTools()
+			self.__addAlignTools()
+			self.__addHTools()
+			self.__addTableTools()
+			self.__addListTools()
+			self.__addOtherTools()
 
-		mainWindow.mainMenu.Insert (mainWindow.mainMenu.GetMenuCount() - 1, self.pageToolsMenu, _(u"H&tml"))
-		mainWindow.mainToolbar.Realize()
+			mainWindow.mainMenu.Insert (mainWindow.mainMenu.GetMenuCount() - 1, self.pageToolsMenu, _(u"H&tml"))
+			mainWindow.mainToolbar.Realize()
 
 		self._openDefaultPage()
 

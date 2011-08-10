@@ -47,12 +47,11 @@ class HtmlPageFactory (PageFactory):
 
 
 	@staticmethod
-	def getPageView (page, parent):
+	def getPageView (parent):
 		"""
 		Вернуть контрол, который будет отображать и редактировать страницу
 		"""
 		panel = HtmlPagePanel (parent)
-		panel.page = page
 
 		return panel
 
