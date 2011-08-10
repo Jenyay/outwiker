@@ -98,6 +98,7 @@ class SearchPanel(wx.Panel):
 		assert self._page != None
 
 		# заполним список тегов
+		self.tagsList.Clear()
 		list_items = [u"%s (%d)" % (tag, len (self._allTags[tag] ) ) for tag in self._allTags ]
 		self.tagsList.InsertItems (list_items, 0)
 
@@ -158,6 +159,7 @@ class SearchPanel(wx.Panel):
 
 	@page.setter
 	def page (self, value):
+		self.Save()
 		self._page = value
 		self.resultWindow.page = value
 		self._allTags = TagsList (self._page.root)

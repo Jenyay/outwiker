@@ -66,6 +66,7 @@ class BaseTextPanel (wx.Panel):
 
 	@page.setter
 	def page (self, page):
+		self.Save()
 		self._currentpage = page
 
 		if not os.path.exists (page.path):
@@ -82,6 +83,9 @@ class BaseTextPanel (wx.Panel):
 		"""
 		Сохранить страницу
 		"""
+		if self.page == None:
+			return
+
 		if not os.path.exists (self.page.path) and not self.page.isRemoved:
 			# Похоже, страница удалена вручную
 			core.commands.MessageBox (_(u"Page %s not found. It is recommended to update the wiki") % self.page.title,

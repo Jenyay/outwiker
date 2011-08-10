@@ -15,6 +15,7 @@ import core.system
 class CurrentPagePanel(wx.Panel):
 	def __init__(self, *args, **kwds):
 		self.pageView = None
+		self.__currentPage = None
 
 		self.imagesDir = core.system.getImagesDir()
 		
@@ -72,10 +73,8 @@ class CurrentPagePanel(wx.Panel):
 		Событие при выборе страницы
 		"""
 		self.Freeze()
-		self.destroyPageView()
-
-		self.__updatePageInfo (page)
 		self.__updatePageView (page)
+		self.__updatePageInfo (page)
 		self.Thaw()
 
 
@@ -104,6 +103,19 @@ class CurrentPagePanel(wx.Panel):
 		"""
 		Обновить вид страницы
 		"""
+		if type (self.__currentPage) != type (page):
+			self.destroyPageView()
+			self.__createPageView(page)
+		elif self.pageView != None:
+			self.pageView.page = page
+
+		self.__currentPage = page
+
+
+	def __createPageView (self, page):
+		"""
+		Создать панель просмотра для страницы
+		"""
 		if page != None:
 			factory = FactorySelector.getFactory (page.getTypeString())
 			self.pageView = factory.getPageView (page, self)
@@ -111,7 +123,6 @@ class CurrentPagePanel(wx.Panel):
 			assert self.pageView != None
 
 			self.contentSizer.Add (self.pageView, 1, wx.EXPAND, 0)
-			#self.contentSizer.Layout()
 			self.Layout()
 
 			self.pageView.initGui(Application.mainWindow)
@@ -183,6 +194,7 @@ class CurrentPagePanel(wx.Panel):
 			self.contentSizer.Detach (self.pageView)
 			self.pageView.CloseWithoutSave()
 			self.pageView = None
+			self.__currentPage = None
 	
 
 	def Save (self):

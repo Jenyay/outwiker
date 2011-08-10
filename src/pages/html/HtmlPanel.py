@@ -87,6 +87,7 @@ class HtmlPanel(BaseTextPanel):
 		self.codeEditor.SetText (self._currentpage.content)
 		self.codeEditor.EmptyUndoBuffer()
 		self.codeEditor.SetReadOnly (page.readonly)
+		self._showHtml()
 
 
 	def GetContentFromGui(self):
@@ -145,7 +146,7 @@ class HtmlPanel(BaseTextPanel):
 			self.codeEditor.SetFocus()
 
 
-	def onTabChanged(self, event): 
+	def onTabChanged(self, event):
 		if self._currentpage == None:
 			return
 
