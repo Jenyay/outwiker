@@ -2,6 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 import os
+import cgi
 import unittest
 import hashlib
 
@@ -84,7 +85,7 @@ class ParserLinkTest (unittest.TestCase):
 
 	def testLink2 (self):
 		text = u"бла-бла-бла \n[[%s]] бла-бла-бла\nбла-бла-бла" % (self.url2)
-		result = u'бла-бла-бла \n<A HREF="%s">%s</A> бла-бла-бла\nбла-бла-бла' % (self.url2, self.url2)
+		result = u'бла-бла-бла \n<A HREF="%s">%s</A> бла-бла-бла\nбла-бла-бла' % (self.url2, cgi.escape (self.url2) )
 
 		self.assertEqual (self.parser.toHtml (text), result)
 
@@ -147,6 +148,20 @@ class ParserLinkTest (unittest.TestCase):
 	def testCommentLink5 (self):
 		text = u"бла-бла-бла \n[[%s -> %s]] бла-бла-бла\nбла-бла-бла" % (self.url1, self.url1)
 		result = u'бла-бла-бла \n<A HREF="%s">%s</A> бла-бла-бла\nбла-бла-бла' % (self.url1, self.url1)
+
+		self.assertEqual (self.parser.toHtml (text), result)
+
+
+	def testCommentLink6 (self):
+		text = u"бла-бла-бла \n[[Комментарий с <, > и & -> %s]] бла-бла-бла\nбла-бла-бла" % (self.url1)
+		result = u'бла-бла-бла \n<A HREF="%s">Комментарий с &lt;, &gt; и &amp;</A> бла-бла-бла\nбла-бла-бла' % (self.url1)
+
+		self.assertEqual (self.parser.toHtml (text), result)
+
+
+	def testCommentLink7 (self):
+		text = u"бла-бла-бла \n[[%s | Комментарий с <, > и &]] бла-бла-бла\nбла-бла-бла" % (self.url1)
+		result = u'бла-бла-бла \n<A HREF="%s">Комментарий с &lt;, &gt; и &amp;</A> бла-бла-бла\nбла-бла-бла' % (self.url1)
 
 		self.assertEqual (self.parser.toHtml (text), result)
 

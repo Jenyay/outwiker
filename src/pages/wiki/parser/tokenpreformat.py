@@ -31,5 +31,4 @@ class PreFormatToken (object):
 	
 	
 	def __convertPreformat (self, s, l, t):
-		#return u"<PRE>" + t[0] + u"</PRE>"
 		return u"<PRE>" + cgi.escape (t[0], True) + u"</PRE>"

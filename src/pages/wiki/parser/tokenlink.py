@@ -2,6 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 import re
+import cgi
 
 from libs.pyparsing import QuotedString
 
@@ -50,7 +51,7 @@ class LinkToken (object):
 		comment, url = text.split ("->")
 		realurl = self.__prepareUrl (url)
 
-		return self.__getUrlTag (realurl, comment)
+		return self.__getUrlTag (realurl, cgi.escape (comment) )
 
 
 	def __convertLinkLine (self, text):
@@ -60,7 +61,7 @@ class LinkToken (object):
 		url, comment = text.rsplit ("|", 1)
 		realurl = self.__prepareUrl (url)
 
-		return self.__getUrlTag (realurl, comment)
+		return self.__getUrlTag (realurl, cgi.escape (comment) )
 
 
 	def __prepareUrl (self, url):
@@ -99,4 +100,4 @@ class LinkToken (object):
 			url = text.strip()
 			comment = text.strip()
 
-		return '<A HREF="%s">%s</A>' % (url, comment)
+		return '<A HREF="%s">%s</A>' % (url, cgi.escape (comment) )
