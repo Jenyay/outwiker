@@ -323,6 +323,15 @@ class WikiPagePanel (HtmlPanel):
 				_(u'Link'), 
 				os.path.join (self.imagesDir, "link.png"))
 
+
+		self._addTool (self.pageToolsMenu, 
+				"ID_ANCHOR", 
+				lambda event: self.codeEditor.turnText (u'[[#', u']]'), 
+				_(u"Anchor\tCtrl+Alt+L"), 
+				_(u'Anchor'), 
+				os.path.join (self.imagesDir, "anchor.png"))
+
+
 		self._addTool (self.pageToolsMenu, 
 				"ID_HORLINE", 
 				lambda event: self.codeEditor.replaceText (u'----'), 

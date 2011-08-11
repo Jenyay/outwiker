@@ -1,7 +1,7 @@
 [Search]
-strategy = 1
-tags = 
 phrase = 
+tags = 
+strategy = 1
 
 [Tree]
 expand = False
