@@ -87,6 +87,13 @@ class LinkToken (object):
 			# Ссылка на прикрепление
 			url = textStrip.replace (AttachToken.attachString, Attachment.attachDir + "/", 1)
 			comment = textStrip.replace (AttachToken.attachString, "")
+
+		elif (textStrip.startswith ("#") and 
+				self.parser.page != None and
+				self.parser.page[textStrip] == None):
+			# Ссылка начинается на #, но сложенных страниц с таким именем нет,
+			# значит это якорь
+			return '<A NAME="%s"></A>' % (textStrip[1:])
 		else:
 			# Ссылка не на прикрепление
 			url = text.strip()

@@ -42,6 +42,8 @@ class ParserLinkTest (unittest.TestCase):
 
 		self.rootwiki = WikiDocument.create (self.path)
 		WikiPageFactory.create (self.rootwiki, u"Страница 2", [])
+		WikiPageFactory.create (self.rootwiki[u"Страница 2"], u"#Страница3", [])
+		WikiPageFactory.create (self.rootwiki[u"Страница 2"], u"# Страница 4", [])
 		self.testPage = self.rootwiki[u"Страница 2"]
 		
 		files = [u"accept.png", u"add.png", u"anchor.png", u"filename.tmp", 
@@ -171,6 +173,46 @@ class ParserLinkTest (unittest.TestCase):
 			result = u'бла-бла-бла \n<A HREF="%s">%s</A> бла-бла-бла\nбла-бла-бла' % (link, link)
 
 			self.assertEqual (self.parser.toHtml (text), result)
+
+
+	def testPageLinkSharp1 (self):
+		"""
+		Проверка ссылок на страницы с #
+		"""
+		text = u"бла-бла-бла \n[[#Страница3]] бла-бла-бла\nбла-бла-бла"
+		result = u'бла-бла-бла \n<A HREF="#Страница3">#Страница3</A> бла-бла-бла\nбла-бла-бла'
+
+		self.assertEqual (self.parser.toHtml (text), result)
+
+
+	def testPageLinkSharp2 (self):
+		"""
+		Проверка ссылок на страницы с #
+		"""
+		text = u"бла-бла-бла \n[[# Страница 4]] бла-бла-бла\nбла-бла-бла"
+		result = u'бла-бла-бла \n<A HREF="# Страница 4"># Страница 4</A> бла-бла-бла\nбла-бла-бла'
+
+		self.assertEqual (self.parser.toHtml (text), result)
+
+
+	def testAnchor1 (self):
+		"""
+		Проверка создания якорей
+		"""
+		text = u"бла-бла-бла \n[[#anchor]] бла-бла-бла\nбла-бла-бла"
+		result = u'бла-бла-бла \n<A NAME="anchor"></A> бла-бла-бла\nбла-бла-бла'
+
+		self.assertEqual (self.parser.toHtml (text), result)
+
+
+	def testAnchor2 (self):
+		"""
+		Проверка создания якорей
+		"""
+		text = u"бла-бла-бла \n[[#якорь]] бла-бла-бла\nбла-бла-бла"
+		result = u'бла-бла-бла \n<A NAME="якорь"></A> бла-бла-бла\nбла-бла-бла'
+
+		self.assertEqual (self.parser.toHtml (text), result)
 
 
 	def testNoFormatLinks1 (self):
