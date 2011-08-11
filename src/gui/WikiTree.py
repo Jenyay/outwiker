@@ -459,8 +459,10 @@ class WikiTree(wx.Panel):
 
 			# Будущий родитель для страницы
 			if endDragItem.IsOk():
+				#self.treeCtrl.Expand (endDragItem)
 				newParent = self.treeCtrl.GetItemData (endDragItem).GetData()
 				core.commands.movePage (draggedPage, newParent)
+				self.treeCtrl.Expand (self._pageCache[newParent])
 
 		self.dragItem = None
 
