@@ -232,11 +232,13 @@ class RootWikiPage (object):
 		"""
 		Проверить, является ли page дочерней (вложенной) страницей для self
 		"""
-		# Возможно, лучше было бы использовать subpath вместо path, 
-		# чтобы не зависеть от способа хранения страниц,
-		# но тогда надо учесть, что корень имеет subpath - "/"
-		return page.path.startswith (self.path)
+		currentpage = page
+		while currentpage != None:
+			if currentpage == self:
+				return True
+			currentpage = currentpage.parent
 
+		return False
 
 
 class WikiDocument (RootWikiPage):
