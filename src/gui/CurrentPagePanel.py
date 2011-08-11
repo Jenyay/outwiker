@@ -103,14 +103,16 @@ class CurrentPagePanel(wx.Panel):
 		"""
 		Обновить вид страницы
 		"""
+		# Если новая страница имеет другой тип, то удалить старое представление и создать новое
 		if type (self.__currentPage) != type (page):
 			self.destroyPageView()
 			self.__createPageView(page)
 
+		# Если представление создано, то загрузим в него новую страницу
 		if self.pageView != None:
 			self.pageView.page = page
-			self.pageView.initGui(Application.mainWindow)
 
+		# Запомнить страницу, чтобы потом можно было бы сравнивать ее тип с новой страницей
 		self.__currentPage = page
 
 
@@ -127,8 +129,6 @@ class CurrentPagePanel(wx.Panel):
 
 			self.contentSizer.Add (self.pageView, 1, wx.EXPAND, 0)
 			self.Layout()
-
-			#self.pageView.initGui(Application.mainWindow)
 
 
 	def __updatePageInfo (self, page):
@@ -186,6 +186,7 @@ class CurrentPagePanel(wx.Panel):
 			self.contentSizer.Detach (self.pageView)
 			self.pageView.Close()
 			self.pageView = None
+			self.__currentPage = None
 
 	
 	def destroyWithoutSave (self):

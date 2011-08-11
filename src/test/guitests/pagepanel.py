@@ -33,9 +33,16 @@ class PagePanelTest (BaseMainWndTest):
 		self.wikiroot = WikiDocument.create (self.path)
 
 		TextPageFactory.create (self.wikiroot, u"Текстовая страница", [])
+		TextPageFactory.create (self.wikiroot, u"Текстовая страница 2", [])
+
 		HtmlPageFactory.create (self.wikiroot, u"HTML-страница", [])
+		HtmlPageFactory.create (self.wikiroot, u"HTML-страница 2", [])
+
 		WikiPageFactory.create (self.wikiroot, u"Викистраница", [])
+		WikiPageFactory.create (self.wikiroot, u"Викистраница 2", [])
+
 		SearchPageFactory.create (self.wikiroot, u"Поисковая страница", [])
+		SearchPageFactory.create (self.wikiroot, u"Поисковая страница 2", [])
 
 
 	def tearDown (self):
@@ -66,6 +73,70 @@ class PagePanelTest (BaseMainWndTest):
 
 		self.wikiroot.selectedPage = None
 		self.assertEqual (None, self.wnd.pagePanel.pageView)
+
+
+	def testSelectTextTypes (self):
+		"""
+		Проверка на то, что при выборе страницы того же типа контрол не пересоздается, а данные загружаются в старый
+		"""
+		Application.wikiroot = self.wikiroot
+
+		self.wikiroot.selectedPage = self.wikiroot[u"Текстовая страница"]
+		currentView = self.wnd.pagePanel.pageView
+
+		self.assertNotEqual (None, currentView)
+		self.assertEqual (TextPanel, type (currentView))
+
+		self.wikiroot.selectedPage = self.wikiroot[u"Текстовая страница 2"]
+		self.assertEqual (currentView, self.wnd.pagePanel.pageView)
+
+
+	def testSelectHtmlTypes (self):
+		"""
+		Проверка на то, что при выборе страницы того же типа контрол не пересоздается, а данные загружаются в старый
+		"""
+		Application.wikiroot = self.wikiroot
+
+		self.wikiroot.selectedPage = self.wikiroot[u"HTML-страница"]
+		currentView = self.wnd.pagePanel.pageView
+
+		self.assertNotEqual (None, currentView)
+		self.assertEqual (HtmlPagePanel, type (currentView))
+
+		self.wikiroot.selectedPage = self.wikiroot[u"HTML-страница 2"]
+		self.assertEqual (currentView, self.wnd.pagePanel.pageView)
+
+
+	def testSelectWikiTypes (self):
+		"""
+		Проверка на то, что при выборе страницы того же типа контрол не пересоздается, а данные загружаются в старый
+		"""
+		Application.wikiroot = self.wikiroot
+
+		self.wikiroot.selectedPage = self.wikiroot[u"Викистраница"]
+		currentView = self.wnd.pagePanel.pageView
+
+		self.assertNotEqual (None, currentView)
+		self.assertEqual (WikiPagePanel, type (currentView))
+
+		self.wikiroot.selectedPage = self.wikiroot[u"Викистраница 2"]
+		self.assertEqual (currentView, self.wnd.pagePanel.pageView)
+
+
+	def testSelectSearchTypes (self):
+		"""
+		Проверка на то, что при выборе страницы того же типа контрол не пересоздается, а данные загружаются в старый
+		"""
+		Application.wikiroot = self.wikiroot
+
+		self.wikiroot.selectedPage = self.wikiroot[u"Поисковая страница"]
+		currentView = self.wnd.pagePanel.pageView
+
+		self.assertNotEqual (None, currentView)
+		self.assertEqual (SearchPanel, type (currentView))
+
+		self.wikiroot.selectedPage = self.wikiroot[u"Поисковая страница 2"]
+		self.assertEqual (currentView, self.wnd.pagePanel.pageView)
 
 
 	def testLoadSelected (self):

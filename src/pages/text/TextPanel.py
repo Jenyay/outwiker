@@ -13,10 +13,7 @@ class TextPanel (BaseTextPanel):
 	"""
 
 	def __init__ (self, parent, *args, **kwds):
-		BaseTextPanel.__init__ (self, *args, **kwds)
-
-		kwds["style"] = wx.TAB_TRAVERSAL
-		wx.Panel.__init__(self, parent, *args, **kwds)
+		BaseTextPanel.__init__ (self, parent, *args, **kwds)
 
 		self.__layout()
 

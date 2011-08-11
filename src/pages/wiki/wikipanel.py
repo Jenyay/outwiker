@@ -22,8 +22,8 @@ from htmlgenerator import HtmlGenerator
 
 
 class WikiPagePanel (HtmlPanel):
-	def __init__ (self, *args, **kwds):
-		HtmlPanel.__init__ (self, *args, **kwds)
+	def __init__ (self, parent, *args, **kwds):
+		HtmlPanel.__init__ (self, parent, *args, **kwds)
 
 		self._configSection = u"wiki"
 		self._hashKey = u"md5_hash"
@@ -347,9 +347,11 @@ class WikiPagePanel (HtmlPanel):
 				None)
 
 	
-	def initGui (self, mainWindow):
+	def initGui (self):
 		if not self._guiInitialized:
-			BaseTextPanel.initGui (self, mainWindow)
+			BaseTextPanel.initGui (self)
+
+			assert self.mainWindow != None
 
 			self.pageToolsMenu = wx.Menu()
 
@@ -371,11 +373,11 @@ class WikiPagePanel (HtmlPanel):
 			self.__addFormatTools()
 			self.__addOtherTools()
 
-			mainWindow.mainMenu.Insert (mainWindow.mainMenu.GetMenuCount() - 1, 
+			self.mainWindow.mainMenu.Insert (self.mainWindow.mainMenu.GetMenuCount() - 1, 
 					self.pageToolsMenu, 
 					_(u"&Wiki") )
 
-			mainWindow.mainToolbar.Realize()
+			self.mainWindow.mainToolbar.Realize()
 
 		self._openDefaultPage()
 

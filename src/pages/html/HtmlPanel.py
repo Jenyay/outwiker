@@ -33,8 +33,9 @@ class ToolsInfo (object):
 class HtmlPanel(BaseTextPanel):
 	__metaclass__ = ABCMeta
 	
-	def __init__(self, *args, **kwds):
-		BaseTextPanel.__init__ (self, *args, **kwds)
+	def __init__(self, parent, *args, **kwds):
+		BaseTextPanel.__init__ (self, parent, *args, **kwds)
+
 		self._htmlFile = "__content.html"
 		self.currentHtmlFile = None
 
@@ -44,8 +45,6 @@ class HtmlPanel(BaseTextPanel):
 
 		self.imagesDir = core.system.getImagesDir()
 
-		kwds["style"] = wx.TAB_TRAVERSAL
-		wx.Panel.__init__(self, *args, **kwds)
 		self.notebook = wx.Notebook(self, -1, style=wx.NB_BOTTOM)
 		self.codeEditor = self.GetTextEditor()(self.notebook)
 		self.htmlWindow = getHtmlRender (self.notebook)
@@ -285,8 +284,8 @@ class HtmlPanel(BaseTextPanel):
 # end of class HtmlPanel
 
 class HtmlPagePanel (HtmlPanel):
-	def __init__ (self, *args, **kwds):
-		HtmlPanel.__init__ (self, *args, **kwds)
+	def __init__ (self, parent, *args, **kwds):
+		HtmlPanel.__init__ (self, parent, *args, **kwds)
 
 
 	def __addFontTools (self):
@@ -506,9 +505,11 @@ class HtmlPagePanel (HtmlPanel):
 				None)
 
 
-	def initGui (self, mainWindow):
+	def initGui (self):
 		if not self._guiInitialized:
-			BaseTextPanel.initGui (self, mainWindow)
+			BaseTextPanel.initGui (self)
+
+			assert self.mainWindow != None
 
 			self.pageToolsMenu = wx.Menu()
 			
@@ -520,8 +521,8 @@ class HtmlPagePanel (HtmlPanel):
 			self.__addListTools()
 			self.__addOtherTools()
 
-			mainWindow.mainMenu.Insert (mainWindow.mainMenu.GetMenuCount() - 1, self.pageToolsMenu, _(u"H&tml"))
-			mainWindow.mainToolbar.Realize()
+			self.mainWindow.mainMenu.Insert (self.mainWindow.mainMenu.GetMenuCount() - 1, self.pageToolsMenu, _(u"H&tml"))
+			self.mainWindow.mainToolbar.Realize()
 
 		self._openDefaultPage()
 

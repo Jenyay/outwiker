@@ -10,9 +10,10 @@ import core.system
 import core.commands
 from core.attachment import Attachment
 from core.application import Application
+from .basepagepanel import BasePagePanel
 
 
-class BaseTextPanel (wx.Panel):
+class BaseTextPanel (BasePagePanel):
 	"""
 	Базовый класс для представления текстовых страниц и им подобных (где есть текстовый редактор)
 	"""
@@ -34,8 +35,9 @@ class BaseTextPanel (wx.Panel):
 		pass
 
 	
-	def __init__ (self, *args, **kwds):
-		self._currentpage = None
+	def __init__ (self, parent, *args, **kwds):
+		BasePagePanel.__init__ (self, parent, *args, **kwds)
+
 		self.mainWindow = None
 		self.searchMenu = None
 
@@ -62,26 +64,6 @@ class BaseTextPanel (wx.Panel):
 		pass
 	
 
-	@property
-	def page (self):
-		return self._currentpage
-
-
-	@page.setter
-	def page (self, page):
-		self.Save()
-		self._currentpage = page
-
-		if not os.path.exists (page.path):
-			core.commands.MessageBox (
-					_(u"Page %s not found. It is recommended to update the wiki") % self.page.title,
-					_("Error"), wx.OR | wx.ICON_ERROR )
-			#core.commands.openWiki (Application.wikiroot.path)
-			return
-
-		self.UpdateView (page)
-	
-
 	def Save (self):
 		"""
 		Сохранить страницу
@@ -93,7 +75,6 @@ class BaseTextPanel (wx.Panel):
 			# Похоже, страница удалена вручную
 			core.commands.MessageBox (_(u"Page %s not found. It is recommended to update the wiki") % self.page.title,
 					_("Error"), wx.OR | wx.ICON_ERROR )
-			#core.commands.openWiki (Application.wikiroot.path)
 			return
 
 		if self.page != None and not self.page.isRemoved and not self.page.readonly:
@@ -104,39 +85,6 @@ class BaseTextPanel (wx.Panel):
 				core.commands.MessageBox (_(u"Can't save file %s") % (unicode (e.filename)), 
 					_(u"Error"), 
 					wx.ICON_ERROR | wx.OK)
-	
-
-	def UpdateView (self, page):
-		"""
-		Обновление страницы
-		"""
-		pass
-
-
-	def onAttachmentPaste (self, fnames):
-		"""
-		Пользователь хочет вставить ссылки на приаттаченные файлы
-		"""
-		pass
-
-
-
-	def Close (self):
-		"""
-		Закрытие панели. 
-		Вызывать вручную!!!
-		"""
-		self.Save()
-		self.CloseWithoutSave()
-	
-
-	def CloseWithoutSave (self):
-		"""
-		Закрытие панели без сохранения. 
-		"""
-		self.Clear()
-		wx.Panel.Close (self)
-		self.Destroy()
 	
 
 	def _getAttachString (self, fnames):
@@ -154,12 +102,12 @@ class BaseTextPanel (wx.Panel):
 		return text
 
 	
-	def initGui (self, mainWindow):
+	def initGui (self):
 		"""
 		Добавить элементы управления в главное окно
 		"""
 		if not self._guiInitialized:
-			self.mainWindow = mainWindow
+			self.mainWindow = Application.mainWindow
 
 			self._addMenuItems ()
 			self._addToolsItems ()
