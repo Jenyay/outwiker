@@ -151,6 +151,8 @@ class CurrentPagePanel(wx.Panel):
 			self.titleLabel.SetLabel (u"")
 			self.tagsLabel.SetLabel (u"[]")
 
+		self.Layout()
+
 	
 	def __set_properties(self):
 		self.bookmarkButton.SetSize(self.bookmarkButton.GetBestSize())

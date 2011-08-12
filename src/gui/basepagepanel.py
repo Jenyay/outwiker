@@ -71,13 +71,6 @@ class BasePagePanel (wx.Panel):
 		pass
 
 
-	def initGui (self):
-		"""
-		Добавить элементы управления в главное окно
-		"""
-		pass
-
-
 	def removeGui (self):
 		"""
 		Убрать за собой элементы управления
@@ -103,7 +96,6 @@ class BasePagePanel (wx.Panel):
 			return
 
 		self.UpdateView (page)
-		self.initGui()
 
 
 	def Close (self):

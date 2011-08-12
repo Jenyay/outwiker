@@ -38,11 +38,8 @@ class BaseTextPanel (BasePagePanel):
 	def __init__ (self, parent, *args, **kwds):
 		BasePagePanel.__init__ (self, parent, *args, **kwds)
 
-		self.mainWindow = None
+		self.mainWindow = Application.mainWindow
 		self.searchMenu = None
-
-		# Создан (инициализирован) ли GUI (панели, меню и т.п.)
-		self._guiInitialized = False
 
 		self.ID_SEARCH = wx.NewId()
 		self.ID_SEARCH_NEXT = wx.NewId()
@@ -50,6 +47,9 @@ class BaseTextPanel (BasePagePanel):
 
 		self.searchMenuIndex = 2
 		self.imagesDir = core.system.getImagesDir()
+
+		self._addMenuItems ()
+		self._addToolsItems ()
 
 		Application.onAttachmentPaste += self.onAttachmentPaste
 		Application.onEditorConfigChange += self.onEditorConfigChange
@@ -102,19 +102,6 @@ class BaseTextPanel (BasePagePanel):
 		return text
 
 	
-	def initGui (self):
-		"""
-		Добавить элементы управления в главное окно
-		"""
-		if not self._guiInitialized:
-			self.mainWindow = Application.mainWindow
-
-			self._addMenuItems ()
-			self._addToolsItems ()
-
-			self._guiInitialized = True
-
-
 	def Clear (self):
 		"""
 		Убрать за собой

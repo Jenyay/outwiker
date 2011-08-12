@@ -87,7 +87,7 @@ class HtmlPanel(BaseTextPanel):
 		self.codeEditor.EmptyUndoBuffer()
 		self.codeEditor.SetReadOnly (page.readonly)
 		self._showHtml()
-		#self._openDefaultPage()
+		self._openDefaultPage()
 
 
 	def GetContentFromGui(self):
@@ -286,6 +286,27 @@ class HtmlPanel(BaseTextPanel):
 class HtmlPagePanel (HtmlPanel):
 	def __init__ (self, parent, *args, **kwds):
 		HtmlPanel.__init__ (self, parent, *args, **kwds)
+		self.__createCustomTools()
+
+
+	def __createCustomTools (self):
+		"""
+		Создать кнопки и меню для данного типа страниц
+		"""
+		assert self.mainWindow != None
+
+		self.pageToolsMenu = wx.Menu()
+		
+		self._addRenderTools()
+		self.__addFontTools()
+		self.__addAlignTools()
+		self.__addHTools()
+		self.__addTableTools()
+		self.__addListTools()
+		self.__addOtherTools()
+
+		self.mainWindow.mainMenu.Insert (self.mainWindow.mainMenu.GetMenuCount() - 1, self.pageToolsMenu, _(u"H&tml"))
+		self.mainWindow.mainToolbar.Realize()
 
 
 	def __addFontTools (self):
@@ -503,28 +524,6 @@ class HtmlPagePanel (HtmlPanel):
 				_(u"Convert HTML Symbols"), 
 				_(u"Convert HTML Symbols"), 
 				None)
-
-
-	def initGui (self):
-		if not self._guiInitialized:
-			BaseTextPanel.initGui (self)
-
-			assert self.mainWindow != None
-
-			self.pageToolsMenu = wx.Menu()
-			
-			self._addRenderTools()
-			self.__addFontTools()
-			self.__addAlignTools()
-			self.__addHTools()
-			self.__addTableTools()
-			self.__addListTools()
-			self.__addOtherTools()
-
-			self.mainWindow.mainMenu.Insert (self.mainWindow.mainMenu.GetMenuCount() - 1, self.pageToolsMenu, _(u"H&tml"))
-			self.mainWindow.mainToolbar.Realize()
-
-		self._openDefaultPage()
 
 
 	def generateHtml (self, page):

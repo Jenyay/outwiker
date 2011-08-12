@@ -39,6 +39,8 @@ class WikiPagePanel (HtmlPanel):
 
 		self.config = WikiConfig (Application.config)
 
+		self.__createCustomTools()
+
 		if self.config.showHtmlCodeOptions.value:
 			self.htmlcodePageIndex = self.__createHtmlCodePanel(self.htmlSizer)
 		
@@ -355,42 +357,37 @@ class WikiPagePanel (HtmlPanel):
 				_(u"Convert HTML Symbols"), 
 				None)
 
+
+	def __createCustomTools (self):
+		assert self.mainWindow != None
+
+		self.pageToolsMenu = wx.Menu()
+
+		self._addTool (self.pageToolsMenu, 
+				"ID_HTMLCODE", 
+				self.__openHtmlCode, 
+				_(u"HTML Code\tShift+F4"), 
+				_(u"HTML Code"), 
+				os.path.join (self.imagesDir, "html.png"),
+				True)
+
+		self._addRenderTools()
+		self.__addCommandsTools()
+		self.__addFontTools()
+		self.__addAlignTools()
+		self.__addHTools()
+		self.__addTableTools()
+		self.__addListTools()
+		self.__addFormatTools()
+		self.__addOtherTools()
+
+		self.mainWindow.mainMenu.Insert (self.mainWindow.mainMenu.GetMenuCount() - 1, 
+				self.pageToolsMenu, 
+				_(u"&Wiki") )
+
+		self.mainWindow.mainToolbar.Realize()
+
 	
-	def initGui (self):
-		if not self._guiInitialized:
-			BaseTextPanel.initGui (self)
-
-			assert self.mainWindow != None
-
-			self.pageToolsMenu = wx.Menu()
-
-			self._addTool (self.pageToolsMenu, 
-					"ID_HTMLCODE", 
-					self.__openHtmlCode, 
-					_(u"HTML Code\tShift+F4"), 
-					_(u"HTML Code"), 
-					os.path.join (self.imagesDir, "html.png"),
-					True)
-
-			self._addRenderTools()
-			self.__addCommandsTools()
-			self.__addFontTools()
-			self.__addAlignTools()
-			self.__addHTools()
-			self.__addTableTools()
-			self.__addListTools()
-			self.__addFormatTools()
-			self.__addOtherTools()
-
-			self.mainWindow.mainMenu.Insert (self.mainWindow.mainMenu.GetMenuCount() - 1, 
-					self.pageToolsMenu, 
-					_(u"&Wiki") )
-
-			self.mainWindow.mainToolbar.Realize()
-
-		self._openDefaultPage()
-
-
 	def __addCommandsTools (self):
 		self.commandsMenu = wx.Menu()
 		self.pageToolsMenu.AppendSubMenu (self.commandsMenu, _(u"Commands"))
