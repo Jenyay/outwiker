@@ -8,91 +8,8 @@ import wx
 import core.system
 from core.factoryselector import FactorySelector
 from core.search import TagsList
+from .iconlistctrl import IconListCtrl
 
-
-class IconListCtrl (wx.Panel):
-	"""
-	Класс для представления списка иконок
-	"""
-	def __init__ (self, parent):
-		wx.Panel.__init__ (self, parent)
-		self.imagesDir = core.system.getImagesDir()
-		self.iconspath = os.path.join (self.imagesDir, "iconset")
-		self.defaultIcon = os.path.join (self.imagesDir, "page.png")
-
-		self.iconsList = wx.ListCtrl(self, -1, style=wx.LC_ICON|wx.LC_AUTOARRANGE|wx.LC_SINGLE_SEL|wx.FULL_REPAINT_ON_RESIZE)
-
-		self.icons = wx.ImageList (16, 16)
-		self.iconsList.AssignImageList (self.icons, wx.IMAGE_LIST_NORMAL)
-
-		# Словарь, с помощью которого можно найти путь к файлу по элементу списка
-		# Ключ - элемент списка, значение - путь к файлу
-		self.iconsDict = {}
-		self.makeIconsList()
-
-		self.__layout ()
-
-	
-	def makeIconsList (self):
-		self.iconsList.ClearAll()
-		self.icons.RemoveAll()
-		self.iconsDict = {}
-
-		# Иконка по умолчанию
-		self.icons.Add (wx.Bitmap (self.defaultIcon) )
-		firstItem = self.iconsList.InsertImageStringItem (0, u"page.png", 0)
-		self.iconsDict[firstItem] = self.defaultIcon
-		self.iconsDict[-1] = self.defaultIcon
-
-		files = [fname for fname in os.listdir (self.iconspath)]
-		files.sort()
-
-		index = 1
-		for fname in files:
-			fullpath = os.path.join (self.iconspath, fname)
-
-			if wx.Image.CanRead (fullpath):
-				bitmap = wx.Bitmap (fullpath)
-
-				# Считаем, что, если если уж CanRead вернул True, то Bitmap должен создаться без проблем
-				assert bitmap.IsOk()
-
-				self.icons.Add (bitmap)
-				item = self.iconsList.InsertImageStringItem (index, fname, index)
-				self.iconsDict[item] = fullpath
-
-				index += 1
-		
-		self.iconsList.SetItemState (firstItem, wx.LIST_STATE_SELECTED, wx.LIST_STATE_SELECTED)
-
-
-	def __layout (self):
-		sizer = wx.FlexGridSizer (1, 1)
-		sizer.AddGrowableRow (0)
-		sizer.AddGrowableCol (0)
-		sizer.Add(self.iconsList, 0, wx.ALL|wx.EXPAND)
-		self.SetSizer (sizer)
-
-
-	@property
-	def icon (self):
-		item = self.iconsList.GetNextItem (-1, state = wx.LIST_STATE_SELECTED)
-		return self.iconsDict[item]
-
-
-	def addCurrentIcon (self, icon):
-		"""
-		Добавить иконку и сделать ее выбранной по умолчанию
-		"""
-		assert icon != None
-
-		index = self.icons.Add (wx.Bitmap (icon) )
-		selItem = self.iconsList.InsertImageStringItem (len (self.iconsDict) - 1, _(u"Current icon"), index)
-		self.iconsList.SetItemState (selItem, wx.LIST_STATE_SELECTED, wx.LIST_STATE_SELECTED)
-		self.iconsDict[selItem] = icon
-
-
-#----------------------------------------------
 
 class BasePageDialog(wx.Dialog):
 	def __init__(self, parentPage = None, *args, **kwds):
@@ -107,6 +24,7 @@ class BasePageDialog(wx.Dialog):
 		self.tagsTextCtrl = wx.TextCtrl(self, -1, "")
 		self.label_3 = wx.StaticText(self, -1, _("Page type"))
 		self.comboType = wx.ComboBox(self, -1, choices=[], style=wx.CB_DROPDOWN|wx.CB_DROPDOWN|wx.CB_READONLY)
+		self.label_icon = wx.StaticText(self, -1, _("Icon"))
 		self.iconsList = IconListCtrl (self)
 
 		self.__set_properties()
@@ -137,7 +55,7 @@ class BasePageDialog(wx.Dialog):
 		self.iconsList.SetMinSize((500, 200))
 
 	def __do_layout(self):
-		grid_sizer_1 = wx.FlexGridSizer(5, 1, 0, 0)
+		grid_sizer_1 = wx.FlexGridSizer(6, 1, 0, 0)
 		grid_sizer_4 = wx.FlexGridSizer(1, 2, 0, 0)
 		grid_sizer_3 = wx.FlexGridSizer(1, 2, 0, 0)
 		grid_sizer_2 = wx.FlexGridSizer(1, 2, 0, 0)
@@ -153,9 +71,10 @@ class BasePageDialog(wx.Dialog):
 		grid_sizer_4.Add(self.comboType, 0, wx.ALL|wx.EXPAND, 4)
 		grid_sizer_4.AddGrowableCol(1)
 		grid_sizer_1.Add(grid_sizer_4, 1, wx.EXPAND, 0)
+		grid_sizer_1.Add(self.label_icon, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 4)
 		grid_sizer_1.Add(self.iconsList, 1, wx.ALL|wx.EXPAND, 2)
 		self.SetSizer(grid_sizer_1)
-		grid_sizer_1.AddGrowableRow(3)
+		grid_sizer_1.AddGrowableRow(4)
 		grid_sizer_1.AddGrowableCol(0)
 		self.Layout()
 	
