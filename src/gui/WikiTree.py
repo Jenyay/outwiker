@@ -91,8 +91,8 @@ class WikiTree(wx.Panel):
 		Application.onEndTreeUpdate += self.__onEndTreeUpdate
 		
 		# События, связанные с рендерингом страниц
-		Application.onHtmlRenderingBegin += self.__onHtmlRenderingBegin
-		Application.onHtmlRenderingEnd += self.__onHtmlRenderingEnd
+		#Application.onHtmlRenderingBegin += self.__onHtmlRenderingBegin
+		#Application.onHtmlRenderingEnd += self.__onHtmlRenderingEnd
 
 
 	def __UnBindApplicationEvents(self):
@@ -110,8 +110,8 @@ class WikiTree(wx.Panel):
 		Application.onEndTreeUpdate -= self.__onEndTreeUpdate
 		
 		# События, связанные с рендерингом страниц
-		Application.onHtmlRenderingBegin -= self.__onHtmlRenderingBegin
-		Application.onHtmlRenderingEnd -= self.__onHtmlRenderingEnd
+		#Application.onHtmlRenderingBegin -= self.__onHtmlRenderingBegin
+		#Application.onHtmlRenderingEnd -= self.__onHtmlRenderingEnd
 
 
 	def __onWikiOpen (self, root):
@@ -227,13 +227,15 @@ class WikiTree(wx.Panel):
 		self.Bind(wx.EVT_MENU, self.__onPropertiesPopup, id=self.ID_PROPERTIES_POPUP)
 	
 
-	def __onHtmlRenderingBegin (self, page, htmlView):
-		self.treeCtrl.Disable()
-		self.treeCtrl.Update()
+	#def __onHtmlRenderingBegin (self, page, htmlView):
+		#self.treeCtrl.Disable()
+		#self.treeCtrl.Update()
+		#pass
 
 	
-	def __onHtmlRenderingEnd (self, page, htmlView):
-		self.treeCtrl.Enable()
+	#def __onHtmlRenderingEnd (self, page, htmlView):
+		#self.treeCtrl.Enable()
+		#pass
 
 
 	def __onTreeStateChanged (self, event):
