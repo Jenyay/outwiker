@@ -555,6 +555,9 @@ class WikiPage (RootWikiPage):
 		if self.readonly:
 			raise core.exceptions.ReadonlyException
 
+		if os.path.abspath (self.icon) == os.path.abspath (iconpath):
+			return
+
 		self._removeOldIcons()
 
 		name = os.path.basename (iconpath)
