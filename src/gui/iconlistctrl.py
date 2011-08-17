@@ -151,10 +151,7 @@ class IconListCtrl (wx.ScrolledWindow):
 			button.SetPosition ((currx, curry))
 			currx += buttonWidth + self.margin
 
-		#self.SetVirtualSize( (self.ClientSize[0], curry + self.cellHeight + self.margin) )
-
 		self.SetScrollbars (self.cellWidth, self.cellHeight, 1, rowcount + 1)
-		#self.Scroll(0, 0)
 
 
 	@property
