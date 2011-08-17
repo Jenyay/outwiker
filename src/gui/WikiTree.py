@@ -169,6 +169,12 @@ class WikiTree(wx.Panel):
 			parentItem = self._pageCache[newpage.parent]
 			self.__insertChild (newpage, parentItem)
 
+			assert newpage in self._pageCache
+			item = self._pageCache[newpage]
+			assert item.IsOk()
+
+			self.treeCtrl.Expand (item)
+
 
 	def __onAddSiblingPage (self, event):
 		gui.pagedialog.createSiblingPage (self)
@@ -184,9 +190,7 @@ class WikiTree(wx.Panel):
 
 
 	def __onMoveUp (self, event):
-		#print Application.selectedPage.title
 		core.commands.moveCurrentPageUp()
-		#print Application.selectedPage.title
 
 
 	def __onMoveDown (self, event):
@@ -459,7 +463,6 @@ class WikiTree(wx.Panel):
 
 			# Будущий родитель для страницы
 			if endDragItem.IsOk():
-				#self.treeCtrl.Expand (endDragItem)
 				newParent = self.treeCtrl.GetItemData (endDragItem).GetData()
 				core.commands.movePage (draggedPage, newParent)
 				self.treeCtrl.Expand (self._pageCache[newParent])
