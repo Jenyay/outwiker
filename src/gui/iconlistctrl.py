@@ -77,11 +77,11 @@ class IconListCtrl (wx.ScrolledWindow):
 		self.defaultIcon = os.path.join (self.imagesDir, "page.png")
 
 		# Иконка по умолчанию
-		self.defalultImage = u"page.png"
+		self.defalultImage = u"_page.png"
 
 		self.__updateList()
 
-		self.SetFocus()
+		#self.SetFocus()
 		self.Bind (wx.EVT_SIZE, self.onSize)
 
 	
@@ -106,9 +106,9 @@ class IconListCtrl (wx.ScrolledWindow):
 
 			if fname == self.defalultImage:
 				button.selected = True
-				button.SetFocus()
 
 		self.__layout()
+		self.__selectedButton.SetFocus()
 
 
 	def __addButton (self, fname):
@@ -126,7 +126,7 @@ class IconListCtrl (wx.ScrolledWindow):
 		for button in self.buttons:
 			if button.GetId() == event.GetId():
 				button.selected = True
-				self.SetFocus()
+				button.SetFocus()
 			else:
 				button.selected = False
 
@@ -153,9 +153,8 @@ class IconListCtrl (wx.ScrolledWindow):
 
 		#self.SetVirtualSize( (self.ClientSize[0], curry + self.cellHeight + self.margin) )
 
-		#self.SetFocus()
 		self.SetScrollbars (self.cellWidth, self.cellHeight, 1, rowcount + 1)
-		self.Scroll(0, 0)
+		#self.Scroll(0, 0)
 
 
 	@property
