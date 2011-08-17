@@ -176,10 +176,7 @@ class EditPageDialog (BasePageDialog):
 		# Добавить текущую иконку
 		icon = currentPage.icon
 		if icon != None:
-			index = self.icons.Add (wx.Bitmap (icon) )
-			selItem = self.iconsList.InsertImageStringItem (len (self.iconsDict) - 1, _(u"Current icon"), index)
-			self.iconsList.SetItemState (selItem, wx.LIST_STATE_SELECTED, wx.LIST_STATE_SELECTED)
-			self.iconsDict[selItem] = icon
+			self.iconsList.addCurrentIcon (icon)
 
 
 	def onOk (self, event):
