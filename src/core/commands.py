@@ -352,7 +352,7 @@ def showAboutDialog (parent):
 
 def openHelp ():
 	help_dir = u"help"
-	current_help = "help_rus"
+	current_help = _("help_en")
 	path = os.path.join (core.system.getCurrentDir(), help_dir, current_help)
 	core.commands.openWiki (path, readonly=True)
 

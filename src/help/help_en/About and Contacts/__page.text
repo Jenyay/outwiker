@@ -1,0 +1,20 @@
+<h1>OutWiker</h1>
+<h3>Version 1.3.2</h3>
+OutWiker is designed to store notes in a tree. Such programs are called "outliner", personal wiki, or tree-like editors. I long to pick up a similar program available, but eventually decided to make my outliner in the form in which it seems to me the most convenient to use. 
+
+OutWiker difference from other similar programs is tree of notes keep in the form of directories on disk. Also the page can be attached any number of files. OutWiker can contain pages of different types, currently supports two types of pages: plain text and HTML, but in future the number of types of pages will increase..
+
+Program page - <a href="http://jenyay.net/Soft/Outwiker">http://jenyay.net/Soft/Outwiker</a>
+
+<h2>Contact</h2>
+Author: Eugeniy Ilin (aka Jenyay)
+
+My site - <a href="http://jenyay.net/">http://jenyay.net</a>
+Twitter - <a href="http://twitter.com/jenyay">@jenyay</a>
+e-mail: <a href="mailto:jenyay.ilin@gmail.com">jenyay.ilin@gmail.com</a>
+
+
+<h2>Thanks</h2>
+The program uses the free icons taken from sites <a class='urllink' href='http://www.famfamfam.com/lab/icons/silk/'>famfamfam.com</a> and <a class='urllink' href='http://p.yusukekamiyamane.com/'>yusukekamiyamane.com</a>. Thanks to the authors of those sites. Will be extremely helpful.
+
+To render the formulas used <a href="http://www.forkosh.com/mimetex.html">mimeTeX</a>.

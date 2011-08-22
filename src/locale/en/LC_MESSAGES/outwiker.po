@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-17 19:11+0400\n"
+"POT-Creation-Date: 2011-08-22 16:34+0400\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -146,14 +146,14 @@ msgstr "You did not select a file to remove"
 #: gui/MainWindow.py:275
 #: gui/MainWindow.py:404
 #: gui/mainwndcontroller.py:115
-#: gui/pagedialog.py:41
-#: gui/pagedialog.py:93
-#: gui/pagedialog.py:112
-#: gui/pagedialog.py:139
-#: gui/pagedialog.py:144
-#: gui/pagedialog.py:184
-#: gui/pagedialog.py:189
-#: gui/WikiTree.py:252
+#: gui/pagedialog.py:38
+#: gui/pagedialog.py:84
+#: gui/pagedialog.py:103
+#: gui/pagedialog.py:130
+#: gui/pagedialog.py:135
+#: gui/pagedialog.py:175
+#: gui/pagedialog.py:180
+#: gui/WikiTree.py:258
 #: pages/html/HtmlPanel.py:193
 #: pages/html/HtmlPanel.py:197
 #: pages/wiki/wikipanel.py:98
@@ -522,7 +522,7 @@ msgid "Exit"
 msgstr "Exit"
 
 #: gui/MainWindow.py:404
-#: gui/pagedialog.py:77
+#: gui/pagedialog.py:70
 msgid "Can't create page"
 msgstr "Can't create page"
 
@@ -565,12 +565,12 @@ msgstr "&Cancel"
 msgid "Overwrite Files"
 msgstr "Overwrite Files"
 
-#: gui/pagedialog.py:41
+#: gui/pagedialog.py:38
 msgid "Can't rename page\n"
 msgstr "Can't rename page\n"
 
-#: gui/pagedialog.py:93
-#: gui/pagedialog.py:112
+#: gui/pagedialog.py:84
+#: gui/pagedialog.py:103
 #: core/commands.py:285
 #: core/commands.py:298
 #: core/commands.py:311
@@ -578,20 +578,20 @@ msgstr "Can't rename page\n"
 msgid "Wiki is not open"
 msgstr "Wiki is not open"
 
-#: gui/pagedialog.py:139
-#: gui/pagedialog.py:184
+#: gui/pagedialog.py:130
+#: gui/pagedialog.py:175
 msgid "Invalid page title"
 msgstr "Invalid page title"
 
-#: gui/pagedialog.py:144
+#: gui/pagedialog.py:135
 msgid "A page with this title already exists"
 msgstr "A page with this title already exists"
 
-#: gui/pagedialog.py:158
+#: gui/pagedialog.py:149
 msgid "Edit page properties"
 msgstr "Edit page properties"
 
-#: gui/pagedialog.py:188
+#: gui/pagedialog.py:179
 msgid "Can't rename page when page with that title already exists"
 msgstr "Can't rename page when page with that title already exists"
 
@@ -599,7 +599,7 @@ msgstr "Can't rename page when page with that title already exists"
 msgid "Restore"
 msgstr "Restore"
 
-#: gui/WikiTree.py:251
+#: gui/WikiTree.py:257
 #, python-format
 msgid ""
 "Can't save page options\n"
@@ -608,63 +608,63 @@ msgstr ""
 "Can't save page options\n"
 "%s"
 
-#: gui/WikiTree.py:335
-#: gui/WikiTree.py:698
+#: gui/WikiTree.py:341
 #: gui/WikiTree.py:703
+#: gui/WikiTree.py:708
 msgid "Add Child Page…"
 msgstr "Add Child Page…"
 
-#: gui/WikiTree.py:336
-#: gui/WikiTree.py:689
+#: gui/WikiTree.py:342
 #: gui/WikiTree.py:694
+#: gui/WikiTree.py:699
 msgid "Add Sibling Page…"
 msgstr "Add Sibling Page…"
 
-#: gui/WikiTree.py:337
+#: gui/WikiTree.py:343
 msgid "Rename"
 msgstr "Rename"
 
-#: gui/WikiTree.py:338
+#: gui/WikiTree.py:344
 msgid "Remove…"
 msgstr "Remove…"
 
-#: gui/WikiTree.py:341
+#: gui/WikiTree.py:347
 msgid "Copy Page Title"
 msgstr "Copy Page Title"
 
-#: gui/WikiTree.py:342
+#: gui/WikiTree.py:348
 msgid "Copy Page Path"
 msgstr "Copy Page Path"
 
-#: gui/WikiTree.py:343
+#: gui/WikiTree.py:349
 msgid "Copy Attaches Path"
 msgstr "Copy Attaches Path"
 
-#: gui/WikiTree.py:344
+#: gui/WikiTree.py:350
 msgid "Copy Page Link"
 msgstr "Copy Page Link"
 
-#: gui/WikiTree.py:347
+#: gui/WikiTree.py:353
 msgid "Properties…"
 msgstr "Properties…"
 
-#: gui/WikiTree.py:669
 #: gui/WikiTree.py:674
+#: gui/WikiTree.py:679
 msgid "Move Page Down"
 msgstr "Move Page Down"
 
-#: gui/WikiTree.py:678
 #: gui/WikiTree.py:683
+#: gui/WikiTree.py:688
 msgid "Move Page Up"
 msgstr "Move Page Up"
 
-#: gui/WikiTree.py:707
 #: gui/WikiTree.py:712
+#: gui/WikiTree.py:717
 msgid "Remove Page…"
 msgstr "Remove Page…"
 
-#: gui/WikiTree.py:718
 #: gui/WikiTree.py:723
+#: gui/WikiTree.py:728
 msgid "Page Properties…"
 msgstr "Page Properties…"
 
@@ -1319,6 +1319,10 @@ msgid ""
 msgstr ""
 "Can't rename page\n"
 "%s"
+
+#: core/commands.py:355
+msgid "help_en"
+msgstr "help_en"
 
 #: core/commands.py:366
 msgid "Save current page before reload?"

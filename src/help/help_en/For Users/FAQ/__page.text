@@ -1,0 +1,8 @@
+!! Часто задаваемые вопросы (ЧаВо)
+
+'''У меня не запускается программа под Windows. Что делать?'''
+
+Попробуйте установить [[http://www.microsoft.com/downloads/details.aspx?familyid=9b2da534-3e03-4391-8a4d-074b9f2bc1bf&displaylang=en | MS Visual C++ 2008 Redistributable Package]].
+
+
+
