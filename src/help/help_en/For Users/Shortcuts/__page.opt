@@ -6,5 +6,6 @@ expand = False
 
 [General]
 type = wiki
+order = 1
 tags = пользователям
 

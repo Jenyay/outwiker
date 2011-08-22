@@ -1,8 +1,15 @@
-!! Часто задаваемые вопросы (ЧаВо)
+!! Frequently asked questions (FAQ)
 
-'''У меня не запускается программа под Windows. Что делать?'''
+!!!! OutWiker does not run under Windows. What should I do?
 
-Попробуйте установить [[http://www.microsoft.com/downloads/details.aspx?familyid=9b2da534-3e03-4391-8a4d-074b9f2bc1bf&displaylang=en | MS Visual C++ 2008 Redistributable Package]].
+Try to install [[http://www.microsoft.com/downloads/details.aspx?familyid=9b2da534-3e03-4391-8a4d-074b9f2bc1bf&displaylang=en | MS Visual C++ 2008 Redistributable Package]].If you install the library did not help, write to the author on [[http://jenyay.net/Soft/Outwiker | program page]] or write to e-mail [[mailto:jenyay.ilin@gmail.com | jenyay.ilin@gmail.com]] with a full error text.
 
 
+!!!! It may be better to make the program to keep notes in one file?
 
+Keeping notes in a tree - the main feature, for which the program was conceived. This does not mean that someday I will not do add the setting for the choice of ways to store your notes, but soon it'll hardly.
+
+
+!!!! Will there be a visual editor for the pages?
+
+There are thought to make a separate page type format RichTextFormat with the visual editor. Do not rule out the possibility that there will be a visual editor for HTML-pages. But on any dates I can not yet speak.
