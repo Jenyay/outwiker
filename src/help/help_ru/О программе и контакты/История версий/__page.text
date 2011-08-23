@@ -1,17 +1,15 @@
 !!! 1.3.2
 
+* Исправления в переводе на русский язык.
 
 !!! 1.3.1 (03.07.2011)
 
-''* Под Windows исправлена ошибка, из-за которой не работали ссылки на странице поиска.
-* Под Linux исправлена ошибка, из-за которой не открывались страницы, если в пути до них был символ '#'.''
-
-* On Windows, fixed the error due to which the links do not work on the search page.
-* On Linux, fixed the error, because of which did not open the page, if the path to them was the '#'.
+* Под Windows исправлена ошибка, из-за которой не работали ссылки на странице поиска.
+* Под Linux исправлена ошибка, из-за которой не открывались страницы, если в пути до них был символ '#'.
 
 !!! 1.3.0.384 (26.06.2011)
 
-''* Теперь в качестве HTML-рендера под Windows используется движок Internet Explorer, под Linux - WebKit.
+* Теперь в качестве HTML-рендера под Windows используется движок Internet Explorer, под Linux - WebKit.
 * Добавлена возможность печати заметок и их исходного текста.
 * Добавлен новый вики-тег [={-...-}=] для зачеркнутого текста.
 * Добавлена кнопка для зачеркнутого текста на HTML-странице.
@@ -23,25 +21,12 @@
 * Под Windows программа теперь должна работать без установки MS Visual C++ 2008 Redistributable Package.
 * При запуске программы под Windows с помощью exe-шника ошибки будут выводиться в файл outwiker.log, который будет создан в той же папке, где расположен файл настроек outwiker.ini.
 * Исправлены ошибки, возникавщие при попытке открыть вики, если для какой-то из заметок нет прав на запись.
-* Исправлена ошибка, из-за которой под Windows не работал рендеринг формул, если программа была установлена в директорию, содержащей пробелы.''
+* Исправлена ошибка, из-за которой под Windows не работал рендеринг формул, если программа была установлена в директорию, содержащей пробелы.
 
-* Now, as HTML-rendering engine is used Internet Explorer for Windows version, WebKit for Linux version.
-* Added ability to print notes and their source code.
-* Added a new wiki tag [={-...-}=] for the strikethrough text.
-* Added a button to strikethrough text on a HTML-page.
-* Ability to set the font size when browsing through your notes.
-* Ability to install additional CSS styles for notes.
-* Changing the shortcut key for switching between code and viewing on the F4.
-* Added menu items to the wiki commands [=(:...:)=].
-* Pages that are open in "read only", are italics.
-* On Windows, the program should now work without install MS Visual C + + 2008 Redistributable Package.
-* If you run Windows programs using the exe then error will be output to a file outwiker.log, which will be created in the same folder where the file settings outwiker.ini.
-* Fixed error when trying to open wikis, if for some of the notes is not writable.
-* Fixed a bug which caused the Windows did not work rendering of formulas, if the OutWiker was installed in a directory containing spaces.
 
 !!! 1.2.0.322 (24.04.2011)
 
-''* Для вики-страниц добавлена возможность ввода формул в нотации TeX (для рендеринга используется mimeTex).
+* Для вики-страниц добавлена возможность ввода формул в нотации TeX (для рендеринга используется mimeTex).
 * Ссылка на картинку в виде [= [[Attach:xxx.png]] =] или [=[[http://.../xxx.png]]=] в вики-страницах вставляет только ссылку на картинку, а не саму картинку.
 * Добавлена вики-команда [=(:childlist:)=] для вставки списка дочерних заметок.
 * Добавлена вики-команда [=(:attachlist:)=]для вставки списка прикрепленных файлов
@@ -59,32 +44,12 @@
 * Исправлены ошибки, связанные с удалением и перемещением заметок, которые нельзя удалить/переместить из-за блокировки их директорий.
 * Исправлены ошибка, возникавшая при попытке сохранить страницу, директорию которой удалили вручную во время работы программы.
 * Исправлено падение программы под Linux при переименовании страницы, содержащей картинки, загружаемые из интернета.
-* Другие небольшие исправления и рефакторинг кода (особенно вики-парсера).''
-
-* For wiki added the ability to enter formulas in the TeX notation (used mimeTex).
-* Link to image in [= [[Attach: xxx.png]] =] or [= [[http://.../xxx.png]] =] on the wiki pages only inserts a link to an image and not the picture itself.
-* Added a wiki command [= (: childlist:) =] to insert a list of child notes.
-* Added a wiki command [= (: attachlist:) =] to insert a list of attached files
-* Added a wiki command [= (: include:) =] for the contents of attached files.
-* Added a wiki commands to insert links to users Livejournal.com (command [= (: ljuser :)=]) on LiveJournal Community (command [= (: ljcomm :)=]).
-* The menu function is added to convert special characters HTML (<,>, etc.) in their HTML representation.
-* Inside the operator [= [@ ... @] =] When parsing the wiki notation symbols "<" replaced by "&lt;", and ">" - on "&gt;".
-* Added ability to specify a template for a blank wiki page (see Configuration).
-* From the wiki notation removed the \\\, as it completely replaces the command [=[[<<]]=] (line break).
-* The tree now shows the root note.
-* Sort pages alphabetically was accelerated.
-* Improved recognition of the links in a wiki page.
-* Improved caching of a wiki page.
-* In the title (!!, !!!!, Etc.) can now be used and some other elements of the wiki notation (bold, italics, etc, formulas and wiki commands [=(:. ..:)=]).
-* Fixed bugs related to deleting and moving the notes that you can not delete / move due to blockage of their directories.
-* Fixed an error that occurred when trying to save the page, the directory is removed by hand during the program.
-* Fixed a crash program under Linux if you rename a page containing images that are downloaded from internet.
-* Other minor fixes and refactoring.
+* Другие небольшие исправления и рефакторинг кода (особенно вики-парсера).
 
 
 !!! 1.1.0.218 (23.02.2011)
 
-''* Переделан интерфейс главного окна. Теперь можно перемещать и закрывать панели с деревом заметок и вложенными файлами.
+* Переделан интерфейс главного окна. Теперь можно перемещать и закрывать панели с деревом заметок и вложенными файлами.
 * Добавлена возможность изменения порядка следования заметок в дереве (горячие клавиши Ctrl+Shift+Up / Ctrl+Shift+Down).
 * Добавлена возможность принудительной сортировки записей по алфавиту.
 * Добавлен полноэкранный режим.
@@ -96,26 +61,12 @@
 * Теперь при создании страницы директория __attach для вложенных файлов не создается. Она создается при первой необходимости.
 * Уменьшено моргание главного окна при различных действиях.
 * Исправления ошибок.
-* Мелкие исправления в интерфейсе.''
-
-* Rebuild the interface of the main window. Now it is possible to move and to close the panel with wood notes and attachments.
-* Added ability to change the order of notes in the tree (shortcut Ctrl + Shift + Up / Ctrl + Shift + Down).
-* Added ability to sort the entries forced the alphabetally.
-* Added full screen mode.
-* Auto-save notes when you switch to another application.
-* Added ability to drag files from the windows of investment in other programs.
-* New option: Always show icon in system tray.
-* New option: the size of tabs in the editor.
-* Now when you create a page, type of page is selected by default pages created last time.
-* Now when you create a page directory __attach are not created. It is created when the first necessity.
-* Reduced blinking of the main window for different actions.
-* Bug fixes.
-* Minor fixes in the interface.
+* Мелкие исправления в интерфейсе.
 
 
 !!! 1.0.0.108 release (25.12.2010)
 
-''* Добавлено окно настроек.
+* Добавлено окно настроек.
 * Добавлена поддержка многоязычности (теперь в программе есть русский и английский интерфейс).
 * Добавлена возможность сворачивания в трей (в том числе и при запуске).
 * Добавлена возможность автоматического открытия последней вики при запуске программы.
@@ -132,46 +83,21 @@
 * Улучшено распознавание интернет-адресов в вики-нотации.
 * Двойной клик по заметке в дереве открывает диалог со свойствами заметки.
 * Вики-файлы, открытые в режиме "только для чтения" теперь не попадают в список последних открытых файлов.
-* Различные мелкие исправления и улучшения в интерфейсе.''
-
-* Added preferences window.
-* Added support for multiple languages ​​(now program has English and Russian interface).
-* Added ability to minimize to tray.
-* Added ability to automatically open the last time opened wiki at startup.
-* Added ability to disable the question before exiting the program.
-* Added ability to set the font for the editor.
-* Added ability to turn line numbering in the editor window.
-* New option: default size for thumbnails of images on wiki pages.
-* Added tab to view the HTML code for a wiki page.
-* Blank pages are opened by default on the tab for editing.
-* If the page is blank, then tab to view a list of attached files (this feature can be disabled)
-* New option: main window title. By default, there contain the name of the wiki and open the current page.
-* New window "About", added tab "Donate".
-* Fixed a bug related to storing the settings in the profile with Russian letters.
-* Improved detection of Internet addresses in a wiki notation.
-* Double click on the note in the tree to open a dialog with the properties of the page.
-* Wiki files, which was opened in "read only" do not added to the list of recently opened files.
-* Various minor bug fixes and interface improvements.
+* Различные мелкие исправления и улучшения в интерфейсе.
 
 
 !!! 1.0 beta 3 (20.10.2010)
 
-''* Добавлен режим открытия вики "только для чтения". Теперь справка открывается именно в этом режиме.
+* Добавлен режим открытия вики "только для чтения". Теперь справка открывается именно в этом режиме.
 * Добавлена возможность хранить настройки в папке профиля, а не в папке с программой (непортабельный режим).
 * Устранено моргание окна при переключении страниц.
 * Исходники перенесены с github на launchpad.net (https://launchpad.net/outwiker). Теперь вместо git используется Bazaar.
-* Исправление нескольких ошибок в вики-парсере.''
-
-* Added a open mode "read only". Help now opens in this mode.
-* The ability to store settings in your profile folder, not in the folder with the program (non-portable mode).
-* Fixed blinking while switching windows pages.
-* Source moved from github to launchpad.net (https://launchpad.net/outwiker). Now, instead git using Bazaar.
-* Fix a few bugs in the wiki parser.
+* Исправление нескольких ошибок в вики-парсере.
 
 
 !!! 1.0 beta 2 (22.08.2010)
 
-''* Добавлена возможность перемещения страниц по дереву.
+* Добавлена возможность перемещения страниц по дереву.
 * Добавлена возможность переименования страниц без вызова диалога свойств страницы.
 * Добавлено контекстное меню для дерева заметок.
 * Относительные пути для ссылок на страницы теперь регистронезависимы.
@@ -181,24 +107,12 @@
 * Теперь дерево заметок сохраняет свое состояние (раскрыт узел или закрыт).
 * Добавлена статусная панель, на которой показывается текст ссылки при наведении на нее курсора.
 * В программе теперь используются абсолютные пути до папок, поэтому при запуске программы из ихсходников рабочей папкой не обязательно должна быть папка с исходниками.
-* Исправления ошибок и глюков.''
-
-* Added ability to move pages in the tree.
-* Added ability to rename pages without to call the page properties dialog.
-* Added context menu for the tree notes.
-* The relative path to pages for links are now case-insensitive.
-* Changing the shortcut key to switch between the code and view (it was F2, became F5).
-* If the attached file with a name that already exists among the attached files, the dialog is shown with the question "What should I do?"
-* Folder with thumbnails of images __thumb now is not shown in the attachments.
-* Now, tree notes, saves its state (expanded or closed site).
-* Added a status panel that shows the link text when the mouse cursor on it.
-* The program now uses absolute paths to folders, so when you run out of source working directory need not be a folder with the source.
-* Fixed bugs.
+* Исправления ошибок и глюков.
 
 
 !!! 1.0 beta 1 (18.07.2010)
 
-''* Новый тип страниц - страница в нотации wiki.
+* Новый тип страниц - страница в нотации wiki.
 * Добавлена справка по программе.
 * Добавлен пункт меню для копирования ссылки на страницу в буфер обмена.
 * Добавлена возможность открывать вики, передавая путь в командной строке.
@@ -208,64 +122,33 @@
 * Перед перезагрузкой вики теперь программа спрашивает, хотите ли вы сохранить текущую страницу.
 * Добавлен пункт меню Edit (Undo/Redo/Cut/Copy/Paste).
 * Исправлено копирование в буфер обмена из режима просмотра HTML.
-* Мелкие исправления и улучшения.''
-
-* A new type of page - the page in a wiki notation.
-* Added information about the program.
-* Added menu item to copy to the clipboard the link to the page.
-* Added ability to open wiki, passing the path to the command line.
-* Added hot key and menu item to switch between the code and view.
-* The toolbar buttons are added to align the text to HTML (center, left justified, etc.)
-* The menu item to copy the title page to the clipboard.
-* Before you restart the wiki is now the program asks whether you want to save the current page.
-* Added menu item Edit (Undo / Redo / Cut / Copy / Paste).
-* Fixed copying to clipboard from the view HTML.
-* Minor fixes and improvements.
+* Мелкие исправления и улучшения.
 
 
 !!! 1.0 alpha 3 (08.06.2010)
 
-''* Добавлена возможность поиска по странице.
+* Добавлена возможность поиска по странице.
 * Кнопки для основных тегов на странице HTML.
 * Добавлена возможность создания ссылок на прикрепленные файлы.
 * Добавлена кнопка для сброса флажков со всех тегов при глобальном поиске.
 * Добавлены новые иконки для страниц.
 * Добавлена возможность прикреплять файлы к странице, перетащив их в окно программы.
 * Улучшен вывод списков на HTML-страницах.
-* Исправлены некоторые баги.''
-
-* Added ability to search by page.
-* The buttons for the main tags page HTML.
-* Added ability to create links to attached files.
-* Added a button to clear checkboxes from all tags in the global search.
-* Added new icons for the pages.
-* Added ability to attach files to the page by dragging and dropping them into the program.
-* Improved output lists in HTML-pages.
-* Fixed some bugs.
+* Исправлены некоторые баги.
 
 
 !!! 1.0 alpha 2 (19.05.2010)
 
-''* Возможность удаления и переименования страниц.
+* Возможность удаления и переименования страниц.
 * Глобальный поиск по тексту заметок и по тегам. 
 * Добавлен новый тип страниц - поиск (search).
 * Добавлена возможность запуска прикрепленных файлов.
 * Добавлена возможность создания ссылок между страницами.
 * Страницы в дереве теперь всегда сортируются по алфавиту.
 * Устранены некоторые глюки.
-* Несущественные изменения в интерфейсе.''
+* Несущественные изменения в интерфейсе.
 
-* Ability to delete and rename pages.
-* The global search for text and tags.
-* Added a new page type - search page.
-* Added ability to run attached files.
-* Added ability to create links between pages.
-* Pages in the tree are now always sorted alphabetically.
-* Fixed some bugs.
-* Minor interface changes.
 
 !!! 1.0 alpha 1 (04.05.2010)
 
-''* Первая публичная версия. Реализованы основные возможности.''
-
-* First public version.
+* Первая публичная версия. Реализованы основные возможности.
