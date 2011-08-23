@@ -6,5 +6,6 @@ expand = True
 
 [General]
 type = wiki
-tags = пользователям, wiki
+order = 3
+tags = for users, wiki
 

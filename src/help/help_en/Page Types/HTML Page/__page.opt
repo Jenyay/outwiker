@@ -6,5 +6,6 @@ expand = False
 
 [General]
 type = html
-tags = пользователям
+order = 0
+tags = for users
 

@@ -1,5 +1,5 @@
 [wiki]
-md5_hash = ee1686264a5c10a44ad5cf1ac31f3740
+md5_hash = 106b8f06bf6c1b3943a62525e5c12e7b
 
 [Tree]
 expand = False
@@ -7,5 +7,5 @@ expand = False
 [General]
 type = wiki
 order = 2
-tags = пользователям, wiki
+tags = for users, wiki
 

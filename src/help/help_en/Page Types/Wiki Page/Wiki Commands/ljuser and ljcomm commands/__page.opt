@@ -1,8 +1,8 @@
 [wiki]
-md5_hash = 0bf1e2763af815548600fe866d0a6f87
+md5_hash = d8f124ba2651c99fc396d2acee0f703f
 
 [General]
 type = wiki
-order = 2
-tags = пользователям, wiki, команды
+order = 3
+tags = for users, wiki, commands
 

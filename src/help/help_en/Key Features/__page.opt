@@ -7,5 +7,5 @@ expand = True
 [General]
 type = wiki
 order = 2
-tags = пользователям
+tags = for users
 

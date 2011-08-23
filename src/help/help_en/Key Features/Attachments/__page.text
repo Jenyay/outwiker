@@ -1,12 +1,14 @@
 <i>Работа с прикрепленными файлами - это одна из основных особенностей программы OutWiker. Все прикрепленные к заметке файлы хранятся в поддиректории __attach директории с заметкой. Чтобы прикрепить новые файлы, достаточно их скопировать в эту поддиректорию. Одной из целей, которая ставилась при разработке, это возможность вставки прикрепленных картинок в код страницы.</i>
 
-All files, which attached to note, keep in __attach directory inside the note directory. Enough files copy in to __attache directory, that files attach.
+Working with attachments - this is one of the main features of the program OutWiker. All files which attached to note keep in __attach directory inside the note directory. Enough files copy in to __attache directory, that files attach. One of the goals, which was put into the design, it is possible to insert the attached images in the page code.
 
-<i>Например:</i>
+<i>for example:</i>
 
 <img src="__attach/cat.jpg">
 
-<i>Для работы с прикрепленными файлами внизу страницы предусмотрена специальная панель. С ее помощью можно:</i>
+<i>Для работы с прикрепленными файлами предусмотрена специальная панель. С ее помощью можно:</i>
+
+To work with attachments there is the special panel. By means of the panel you can:
 
 <i><ul>
 <li>Прикреплять новые файлы (кнопка "Attach Files")</li>
@@ -14,3 +16,10 @@ All files, which attached to note, keep in __attach directory inside the note di
 <li>Вставлять путь до прикрепленного файла, например, "__attach/cat.jpg" (кнопка "Paste")</li>
 <li>Запускать прикрепленныей файлы (кнопка "Execute files")</li>
 </ul></i>
+
+<ul>
+<li>To attach new files ("Attach Files" button).</li>
+<li>To remove attached files ("Remove Files…" button).</li>
+<li>To paste the path to the attached file, e.g., "__attach/cat.jpg" ("Paste" button).</li>
+<li>To execute attached files ("Execute files" button).</li>
+</ul>

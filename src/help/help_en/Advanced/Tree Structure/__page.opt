@@ -1,10 +1,11 @@
 [wiki]
-md5_hash = a296baa8477ac1ff8060c23127380064
+md5_hash = 16f890fa484565008f02b34a78f0a60f
 
 [Tree]
 expand = False
 
 [General]
 type = wiki
-tags = продвинутым пользователям
+order = 3
+tags = advanced
 
