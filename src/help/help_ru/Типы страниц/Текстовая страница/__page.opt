@@ -3,5 +3,6 @@ expand = False
 
 [General]
 type = html
+order = 2
 tags = пользователям
 

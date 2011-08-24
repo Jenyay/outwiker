@@ -1,12 +1,22 @@
-Одним из типов страниц, поддерживаемый OutWiker'ом являются страницы, содержащие HTML-код. На данный момент под Windows для показа HTML-страниц используется движок Internet Explorer, а под Linux - WebKit.
+<i>Одним из типов страниц, поддерживаемый OutWiker'ом являются страницы, содержащие HTML-код. На данный момент под Windows для показа HTML-страниц используется движок Internet Explorer, а под Linux - WebKit.</i>
 
-В отличие от обычного HTML-кода, OutWiker учитывает перевод строк. Так, одиночный перевод строки заменяется на тег &lt;BR&gt;, а двойной перевод строки заменяется на &lt;P&gt;
+One of page types are supported OutWiker, was pages with a HTML code. At the moment for Windows to display HTML pages using Internet Explorer engine, and for Linux - WebKit.
 
-На панель инструментов HTML-страницы вынесены кнопки для добавления некоторых наиболее часто используемых тегов.
+<i>В отличие от стандартного HTML-кода, OutWiker учитывает перевод строк. Так, одиночный перевод строки заменяется на тег &lt;BR&gt;, а двойной перевод строки заменяется на &lt;P&gt;</i>
 
-На странице возможны ссылки на прикрепленные файлы. Примеры смотрите ниже.
+In contrast to standard HTML code, OutWiker change lines breaks. Thus, a single line break is replaced by the tag &lt;BR&gt;, a double line break is replaced by &lt;P&gt;.
 
-Скриншоты примера страниц:
+<i>На панель инструментов HTML-страницы вынесены кнопки для добавления некоторых наиболее часто используемых тегов.</i>
+
+The toolbar has buttons for adding some of the most frequently used tags.
+
+<i>Есть возможность добавлять ссылки на другие страницы.</i>
+
+It is possible to add links to other pages.
+
+<i>Скриншоты примера страниц:</i>
+
+Screenshot examples of pages:
 
 <table border=0 width=100%>
 <tr><td align=center><a href="__attach/outwiker_1.0_alpha_3_htmlcode_win.png"><img src="__attach/outwiker_1.0_alpha_3_htmlcode_win_small.png"/></a></td><td align=center><a href="__attach/outwiker_1.0_alpha_3_html_win.png"><img src="__attach/outwiker_1.0_alpha_3_html_win_small.png"/></a></td></tr>

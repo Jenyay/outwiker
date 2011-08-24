@@ -14,30 +14,45 @@
 </HEAD>
 
 <BODY>
-<P><H2>Назначение и синтаксис команды (:attachlist:)</H2></P>
+<P><H2><I>Назначение и синтаксис команды (:attachlist:)</I></H2>
+<BR><H2>Purpose and syntax  (: attachlist:)  command</H2></P>
 
-<P>Команда (:attachlist:) предназначена для вставки в вики-страницу списка прикрепленных файлов:</P>
+<P><I>Команда (:attachlist:) предназначена для вставки в вики-страницу списка прикрепленных файлов:</I></P>
+
+<P> (: attachlist:)  command is designed to be inserted into a wiki page list of attachments:</P>
 
 <P>(:attachlist [params...]:)</P>
 
-<P>Дополнительно в команде (:attachlist:) может быть использован параметр <I>sort</I>, который указывает порядок сортировки файлов. Параметр <I>sort</I> может принимать следующие значения:</P>
+<P><I>Дополнительно в команде (:attachlist:) может быть использован параметр </I>sort<I>, который указывает порядок сортировки файлов. Параметр </I>sort<I> может принимать следующие значения:</I></P>
+
+<P>Additionally, the command  (: attachlist:)  can be used <I>sort</I> parameter, which specifies the sort order of files. <I>Sort</I> parameter can be the following:</P>
 
 <P>
 <UL>
 <LI><I>name</I> - прикрепленные файлы будут отсортированы по именам (это равносильно использованию команды (:attachlist:) без параметров);</LI>
+<LI><I>name</I> - attached files will be sorted by name (this is equivalent to command  (: attachlist:)  without parameters);</LI>
 <LI><I>descendname</I> - прикрепленные файлы будут отсортированы по именам в обратном порядке;</LI>
+<LI><I>descendname</I> - the attached files will be sorted by name in descending order;</LI>
 <LI><I>ext</I> - прикрепленные файлы будут отсортированы по расширениям;</LI>
+<LI><I>ext</I> - the attached files will be sorted by extension;</LI>
 <LI><I>descendext</I> - прикрепленные файлы будут отсортированы по расширениям в обратном порядке;</LI>
+<LI><I>descendext</I> - the attached files will be sorted by extension in descending order;</LI>
 <LI><I>size</I> - прикрепленные файлы будут отсортированы по их размеру;</LI>
+<LI><I>size</I> - the attached files will be sorted by size;</LI>
 <LI><I>descendext</I> - прикрепленные файлы будут отсортированы по их размеру в обратном порядке;</LI>
+<LI><I>descendext</I> - the attached files will be sorted by size in descending order;</LI>
 <LI><I>date</I> - прикрепленные файлы будут отсортированы по дате их последней модификации;</LI>
+<LI><I>date</I> - the attached files will be sorted by their date of last modification;</LI>
 <LI><I>descendext</I> - прикрепленные файлы будут отсортированы по дате их последней модификации в обратном порядке;</LI>
+<LI><I>descendext</I> - the attached files will be sorted by their date of last modification in descending order;</LI>
 </UL>
-<BR><H2>Примеры</H2></P>
+<BR><H2>Examples</H2></P>
 
-<P>У данной страницы имеется четыре дочерние страницы, следующая таблица показывает результат работы команды (:attachlist:) с различными значениями параметра <I>sort</I>:</P>
+<P><I>У данной страницы имеется пять вложенных файлов, следующая таблица показывает результат работы команды (:attachlist:) с различными значениями параметра </I>sort<I>:</I></P>
 
-<P><TABLE width=850 border=1><TR><TD ALIGN="CENTER"><B>Команда</B></TD><TD ALIGN="CENTER">(:attachlist:)</TD><TD ALIGN="CENTER">(:attachlist sort=ext:)</TD><TD ALIGN="CENTER">(:attachlist sort=descendext:)</TD><TD ALIGN="CENTER">(:attachlist sort=size:)</TD></TR><TR><TD ALIGN="CENTER"><B>Результат</B></TD><TD ALIGN="CENTER"><A HREF="__attach/anchor.png">anchor.png</A>
+<P>At current page there are five attached files, the following table shows the output of the command  (:attachlist:)  with different values ​​of the parameter <I>sort</I>:</P>
+
+<P><TABLE width=850 border=1><TR><TD ALIGN="CENTER"><B>Command</B></TD><TD ALIGN="CENTER">(:attachlist:)</TD><TD ALIGN="CENTER">(:attachlist sort=ext:)</TD><TD ALIGN="CENTER">(:attachlist sort=descendext:)</TD><TD ALIGN="CENTER">(:attachlist sort=size:)</TD></TR><TR><TD ALIGN="CENTER"><B>Result</B></TD><TD ALIGN="CENTER"><A HREF="__attach/anchor.png">anchor.png</A>
 <BR><A HREF="__attach/first.jpg">first.jpg</A>
 <BR><A HREF="__attach/image.gif">image.gif</A>
 <BR><A HREF="__attach/image.jpg">image.jpg</A>

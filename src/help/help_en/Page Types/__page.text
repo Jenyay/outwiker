@@ -1,1 +1,3 @@
-Программа OutWiker поддерживает несколько типов страниц и я надеюсь, что со временем количество типов страниц будет увеличиваться. В данный момент поддерживаются следующие типы: [[Текстовая страница]], [[HTML-страница]], [[Wiki-страница]] и [[Страница поиска]].
+''Программа OutWiker поддерживает несколько типов страниц и со временем количество типов страниц будет увеличиваться. В данный момент поддерживаются следующие типы: [[Text Page]], [[HTML Page]], [[Wiki Page]] и [[Search Page]].''
+
+OutWiker supports several types of pages and in the course of time the number of page types will increase. Currently supported are the following page types: [[Text Page]], [[HTML Page]], [[Wiki Page]] и [[Search Page]].

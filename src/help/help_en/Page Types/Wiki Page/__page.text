@@ -1,3 +1,9 @@
-Другим типом страниц, поддерживаемых OutWiker'ом являются страницы в вики-нотации. На этих страницах по-прежнему можно использовать HTML, но в первую очередь эти страницы рассчитаны на синтаксис, напоминающий (но не точно копирующий) нотацию, которая используется в [[pmWiki -> http://pmwiki.org/]].
+''Другим типом страниц, поддерживаемых OutWiker'ом являются страницы в вики-нотации. На этих страницах по-прежнему можно использовать HTML, но в первую очередь эти страницы рассчитаны на синтаксис, напоминающий (но не точно копирующий) нотацию, которая используется в [[pmWiki -> http://pmwiki.org/]].''
 
-Синтаксис вики-нотации описывается во вложенных заметках.
+Another type of page that supports OutWiker, are the pages in the wiki notation. On these pages, you can still use HTML, but above all these pages are designed for syntax resembled of (but not exactly copying) a notation that is used in [[pmWiki -> http://pmwiki.org/]].
+
+''Синтаксис вики-нотации описывается во вложенных заметках:''
+
+The notation wiki syntax is described in nested notes:
+
+(:childlist:)

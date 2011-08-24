@@ -1,23 +1,25 @@
-В таблице приведены примеры оформления ссылок на адреса в интернете и на другие страницы дерева.
+''В таблице приведены примеры оформления ссылок на адреса в интернете и на другие страницы дерева.''
+
+The following table shows examples of links to the Internet address and to other pages in the tree.
  
-!!! Ссылки
+!!! Links
 
 || border=1
-|| '''Синтаксис''' || '''Результат''' || '''Комментарий''' ||
-||[=http://example.com=]||http://example.com||Ссылка на адрес в интернете||
-||[=[[http://example.com]]=]||[[http://example.com]]||Ссылка на адрес в интернете||
-||[=[[Пример ссылки -> http://example.com]]=]||[[Пример ссылки -> http://example.com]]||Ссылка на адрес в интернете с заданным текстом||
-||[=[[http://example.com | Пример ссылки]]=]||[[http://example.com | Пример ссылки]]||Ссылка на адрес в интернете с заданным текстом||
-||[=[[Пользователям/FAQ]]=]||[[Пользователям/FAQ]]||Ссылка страницу дерева||
-||[=[[Пользователям/FAQ | FAQ]]=]||[[Пользователям/FAQ | FAQ]]||Ссылка страницу дерева с комментарием||
-||[=[[FAQ->Пользователям/FAQ]]=]||[[FAQ->Пользователям/FAQ]]||Ссылка страницу дерева с комментарием||
-||[=http://jenyay.net/utils/small_image.jpg=]||http://jenyay.net/utils/small_image.jpg||Картинка из интернета||
-||[=[[http://jenyay.net/utils/small_image.jpg]]=]||[[http://jenyay.net/utils/small_image.jpg]]||Ссылка на картинку из интернета||
+|| '''Syntax''' || '''Result''' || '''Comment''' ||
+||[=http://example.com=]||http://example.com||A link to the Internet address||
+||[=[[http://example.com]]=]||[[http://example.com]]||A link to the Internet address||
+||[=[[Link sample -> http://example.com]]=]||[[Link sample -> http://example.com]]||A link to the Internet address with a comment||
+||[=[[http://example.com | Link sample]]=]||[[http://example.com | Link sample]]||A link to the Internet address with a comment||
+||[=[[/Page Types/Wiki Page/Links]]=]||[[/Page Types/Wiki Page/Links]]||A link to tree page||
+||[=[[/Page Types/Wiki Page/Links | Page link]]=]||[[/Page Types/Wiki Page/Links | Page link]]||A link to tree page with a comment||
+||[=[[FAQ->Пользователям/FAQ]]=]||[[FAQ->Пользователям/FAQ]]||A link to tree page with a comment||
+||[=http://jenyay.net/utils/small_image.jpg=]||http://jenyay.net/utils/small_image.jpg||A picture from the Internet||
+||[=[[http://jenyay.net/utils/small_image.jpg]]=]||[[http://jenyay.net/utils/small_image.jpg]]||A link to picture from the Internet||
 
-!!! Якоря
+!!! Anchors
 
 || border=1
-|| '''Синтаксис''' || '''Результат''' || '''Комментарий''' ||
-||[=[[#anchor]]=]||Якорь с именем #anchor [[#anchor]]||Результирующий HTML-код: &lt;A NAME=&quot;#anchor&quot;&gt;&lt;/A&gt;||
-||[=[[#anchor | Ссылка на якорь]]=]||[[#anchor | Ссылка на якорь]]||Ссылка на якорь с именем anchor||
-||[=[[Ссылка на якорь -> #anchor]]=]||[[#anchor | Ссылка на якорь]]||Ссылка на якорь с именем anchor||
+|| '''Syntax''' || '''Result''' || '''Comment''' ||
+||[=[[#anchor]]=]||Anchor "#anchor" [[#anchor]]||HTML code: &lt;A NAME=&quot;#anchor&quot;&gt;&lt;/A&gt;||
+||[=[[#anchor | A link to the anchor]]=]||[[#anchor | A link to the anchor]]||A link to the anchor "#anchor"||
+||[=[[ link to the anchor -> #anchor]]=]||[[#anchor | A link to the anchor]]||A link to the anchor "#anchor"||

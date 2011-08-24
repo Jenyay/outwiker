@@ -15,32 +15,63 @@
 
 <BODY>
 <P>
-<BR><TABLE border=1><TR><TD ALIGN="CENTER"><B>Синтаксис</B></TD><TD ALIGN="CENTER"><B>Результат</B></TD><TD ALIGN="CENTER"><B>Комментарий</B></TD></TR><TR><TD ALIGN="LEFT">''Курсив''</TD><TD ALIGN="LEFT"><I>Курсив</I></TD><TD ALIGN="CENTER">-</TD></TR><TR><TD ALIGN="LEFT">'''Полужирный шрифт'''</TD><TD ALIGN="LEFT"><B>Полужирный шрифт</B></TD><TD ALIGN="CENTER">-</TD></TR><TR><TD ALIGN="LEFT">''''Полужирный курсив''''</TD><TD ALIGN="LEFT"><B><I>Полужирный курсив</I></B></TD><TD ALIGN="CENTER">-</TD></TR><TR><TD ALIGN="LEFT">@@Моноширинный шрифт@@</TD><TD ALIGN="LEFT"><CODE>Моноширинный шрифт</CODE></TD><TD ALIGN="CENTER">Текст обрамляется тегом &lt;CODE&gt;...&lt;/CODE&gt;</TD></TR><TR><TD ALIGN="LEFT">'^Верхний индекс^'</TD><TD ALIGN="LEFT"><SUP>Верхний индекс</SUP></TD><TD ALIGN="CENTER">Для сравнения: обычный шрифт <SUP>Верхний индекс</SUP></TD></TR><TR><TD ALIGN="LEFT">'_Нижний индекс_'</TD><TD ALIGN="LEFT"><SUB>Нижний индекс</SUB></TD><TD ALIGN="CENTER">Для сравнения: обычный шрифт <SUB>Нижний индекс</SUB></TD></TR><TR><TD ALIGN="LEFT">{+Подчеркнутый текст+}</TD><TD ALIGN="LEFT"><U>Подчеркнутый текст</U></TD><TD ALIGN="CENTER">-</TD></TR><TR><TD ALIGN="LEFT">{-Зачеркнутый текст-}</TD><TD ALIGN="LEFT"><STRIKE>Зачеркнутый текст</STRIKE></TD><TD ALIGN="CENTER">-</TD></TR><TR><TD ALIGN="LEFT">[@Неформатируемый '''текст''' @]</TD><TD ALIGN="LEFT">
-<PRE>Неформатируемый '''текст''' </PRE></TD><TD ALIGN="CENTER">Внутри скобок не происходит замена спец. символов вики-нотации, текст обрамляется тегом &lt;PRE&gt;...&lt;/PRE&gt;</TD></TR><TR><TD ALIGN="LEFT">
-<PRE>[=Неформатируемый '''текст''' =]</PRE></TD><TD ALIGN="LEFT">Неформатируемый '''текст''' </TD><TD ALIGN="CENTER">Внутри скобок не происходит замена спец. символов вики-нотации</TD></TR><TR><TD ALIGN="LEFT">----</TD><TD ALIGN="CENTER"><HR></TD><TD ALIGN="CENTER">Горизонтальная линия</TD></TR></TABLE></P>
+<BR><TABLE border=1><TR><TD ALIGN="CENTER"><B>Syntax</B></TD><TD ALIGN="CENTER"><B>Result</B></TD><TD ALIGN="CENTER"><B>Comment</B></TD></TR><TR><TD ALIGN="LEFT">''Italic''</TD><TD ALIGN="LEFT"><I>Italic</I></TD><TD ALIGN="CENTER">-</TD></TR><TR><TD ALIGN="LEFT">'''Bold'''</TD><TD ALIGN="LEFT"><B>Bold</B></TD><TD ALIGN="CENTER">-</TD></TR><TR><TD ALIGN="LEFT">''''Bold Italic''''</TD><TD ALIGN="LEFT"><B><I>Bold Italic</I></B></TD><TD ALIGN="CENTER">-</TD></TR><TR><TD ALIGN="LEFT">@@Monospaced font@@</TD><TD ALIGN="LEFT"><CODE>Monospaced font</CODE></TD><TD ALIGN="CENTER">The text is enclosed by tag &lt;CODE&gt;...&lt;/CODE&gt;</TD></TR><TR><TD ALIGN="LEFT">'^Superscript^'</TD><TD ALIGN="LEFT"><SUP>Superscript</SUP></TD><TD ALIGN="CENTER">For comparison: normal font <SUP>Superscript</SUP></TD></TR><TR><TD ALIGN="LEFT">'_Subscript_'</TD><TD ALIGN="LEFT"><SUB>Subscript</SUB></TD><TD ALIGN="CENTER">For comparison: normal font <SUB>Subscript</SUB></TD></TR><TR><TD ALIGN="LEFT">{+Underlined+}</TD><TD ALIGN="LEFT"><U>Underlined</U></TD><TD ALIGN="CENTER">-</TD></TR><TR><TD ALIGN="LEFT">{-Strikethrough-}</TD><TD ALIGN="LEFT"><STRIKE>Strikethrough</STRIKE></TD><TD ALIGN="CENTER">-</TD></TR><TR><TD ALIGN="LEFT">[@Preformated '''text'''@]</TD><TD ALIGN="LEFT">
+<PRE>Preformated '''text'''</PRE></TD><TD ALIGN="CENTER"><I>Внутри скобок не происходит замена символов вики-нотации, текст обрамляется тегом &lt;PRE&gt;...&lt;/PRE&gt;</I>
+<BR>
+<BR>Within the brackets, there is no substitute symbols wiki notation, text is enclosed by tag &lt;PRE&gt;...&lt;/PRE&gt;</TD></TR><TR><TD ALIGN="LEFT">
+<PRE>[=Nonformated '''text'''=]</PRE></TD><TD ALIGN="LEFT">Nonformated '''text'''</TD><TD ALIGN="CENTER"><I>Внутри скобок не происходит замена спец. символов вики-нотации</I>
+<BR>
+<BR>Within the brackets, there is no substitute symbols wiki notation</TD></TR><TR><TD ALIGN="LEFT">----</TD><TD ALIGN="CENTER"><HR></TD><TD ALIGN="CENTER">Horisontal line</TD></TR></TABLE></P>
 
-<P>Существуют команды, связанные с переносом строк. Например, символ <B>\</B> в конце строки обозначает, что строка продолжается на следующей строке и перенос в этом месте делать не надо. Например:</P>
+<P><I>Существуют команды, связанные с переносом строк. Например, символ "\" в конце строки обозначает, что строка продолжается на следующей строке и перенос в этом месте делать не надо. Например:</I></P>
 
-<P>Это длинная строка, которая продолжается на следующей строке</P>
+<P>There are commands to linebreak. Thus, the symbol "\" at the end of the line indicates that the line continues on the next line and break at this point to do. For example:</P>
 
-<P>Команда <B>[[&lt;&lt;]]</B> обозначает, что на этом месте должен быть перенос строки. Эта команда работает в списках и таблицах, так как в них перенос строки обозначает создание нового элемента списка или новой строки таблицы. Например:</P>
+<P><I>Это длинная строка, которая продолжается на следующей строке</I></P>
+
+<P>This is a long line, which continues on the next line</P>
+
+<P><I>Команда </I>'[[&lt;&lt;]]<B> обозначает, что на этом месте должен быть перенос строки. Эта команда работает в списках и таблицах, так как в них перенос строки обозначает создание нового элемента списка или новой строки таблицы. Например:''</P>
+
+<P>Command </B>[[<<]]''' indicates that this place should be a line break. This command works on lists and tables, as they have a line break indicates a new list item or a new row. For example:</P>
+
+<P>commands:</P>
+
+<P>
+<BR># The first list item.
+<BR># The second list item [[<<]]The second line of the second list item.
+<BR># The third list item [[<<]][[<<]] The second line of the third list item after two indents.
+<BR># The fourth list item.</P>
+
+<P>
+<BR>result:</P>
 
 <P>
 <OL>
-<LI>Первый элемент списка.</LI>
-<LI>Второй элемент списка 
-<BR>Вторая строка второго элемента списка.</LI>
-<LI>Третий элемент списка 
+<LI>The first list item.</LI>
+<LI>The second list item 
+<BR>The second line of the second list item.</LI>
+<LI>The third list item 
 <BR>
-<BR> Вторая строка третьего элемента списка после двух отступов.</LI>
-<LI>Четвертый элемент списка.</LI>
+<BR> The second line of the third list item after two indents.</LI>
+<LI>The fourth list item.</LI>
 </OL></P>
 
-<P>или</P>
+<P>or command:</P>
 
-<P><TABLE border=1><TR><TD>Первая строка</TD><TD ALIGN="CENTER">бла-бла-бла</TD></TR><TR><TD>Вторая строка 
-<BR>продолжение второй строки</TD><TD ALIGN="CENTER">бла-бла-бла</TD></TR><TR><TD ALIGN="LEFT">Третья строка 
+<P>
+<BR>|| border=1
+<BR>||The forst line || bla-bla-bla ||
+<BR>||The second line [[<<]]the continuation of the second line || bla-bla-bla ||
+<BR>||The third line [[<<]][[<<]] the continuation of the third line || bla-bla-bla ||
+<BR>||The fourth line || bla-bla-bla ||</P>
+
+<P>
+<BR>result:</P>
+
+<P><TABLE border=1><TR><TD ALIGN="LEFT">The forst line</TD><TD ALIGN="CENTER">bla-bla-bla</TD></TR><TR><TD ALIGN="LEFT">The second line 
+<BR>the continuation of the second line</TD><TD ALIGN="CENTER">bla-bla-bla</TD></TR><TR><TD ALIGN="LEFT">The third line 
 <BR>
-<BR> Продолжение третьей строки</TD><TD ALIGN="CENTER">бла-бла-бла</TD></TR><TR><TD ALIGN="LEFT">Четвертая строка</TD><TD ALIGN="CENTER">бла-бла-бла</TD></TR></TABLE></P>
+<BR> the continuation of the third line</TD><TD ALIGN="CENTER">bla-bla-bla</TD></TR><TR><TD ALIGN="LEFT">The fourth line</TD><TD ALIGN="CENTER">bla-bla-bla</TD></TR></TABLE></P>
 </BODY>
 </HTML>
