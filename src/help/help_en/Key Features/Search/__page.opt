@@ -1,5 +1,9 @@
 [wiki]
+<<<<<<< TREE
+md5_hash = a12fad7ec6299cc98d4f3007e3b14a45
+=======
 md5_hash = 7739d29a1cbf3799272e98329a8eabbb
+>>>>>>> MERGE-SOURCE
 
 [Tree]
 expand = False

@@ -14,38 +14,50 @@
 </HEAD>
 
 <BODY>
-<P><H2>Назначение и синтаксис команды (:childlist:)</H2></P>
+<P><H2>Назначение и синтаксис команды (:childlist:)</H2>
+<BR><H2>Purpose and syntax (:childlist:) command</H2></P>
 
-<P>Команда (:childlist:) предназначена для вставки в вики-страницу списка дочерних страниц:</P>
+<P><I>Команда (:childlist:) предназначена для вставки в вики-страницу списка дочерних страниц:</I></P>
+
+<P>Command  (: childlist:)  is designed to be inserted into a wiki page list of nested pages:</P>
 
 <P>(:childlist [params...]:)</P>
 
-<P>Дополнительно в команде (:childlist:) может быть использован параметр <I>sort</I>, который указывает порядок сортировки. Параметр <I>sort</I> может принимать следующие значения:</P>
+<P><I>В команде (:childlist:) может быть использован параметр </I>sort<I>, который указывает порядок сортировки. Параметр </I>sort<I> может принимать следующие значения:</I></P>
+
+<P>In the (:childlist:) command can be used <I>sort</I> parameter, which specifies the sort order. Parameter <I>sort</I> can be the following:</P>
 
 <P>
 <UL>
 <LI><I>name</I> - дочерние страницы в выводимом списке будут отсортированы по алфавиту;</LI>
+<LI><I>name</I> - page names in the list will be sortet alphabetally;</LI>
 <LI><I>descendname</I> - дочерние страницы в выводимом списке будут отсортированы по алфавиту в обратном порядке;</LI>
+<LI><I>descendname</I> - page names in the list will be sortet alphabetally in descend order;</LI>
 <LI><I>descendorder</I> - дочерние страницы в выводимом списке будут иметь порядок, противоположный порядку следования страниц в дереве.</LI>
+<LI><I>descendorder</I> - page names in the list will be sorted as in the tree, but opposite order.</LI>
 </UL>
-<BR>Если параметр <I>sort</I> не указан, то страницы в списке будут выводиться в том же порядке, как они расположены в дереве.</P>
+<BR><I>Если параметр </I>sort<I> не указан, то страницы в списке будут выводиться в том же порядке, как они расположены в дереве.</I></P>
 
-<P><H2>Примеры</H2></P>
+<P>If <I>sort</I> parameter is not specified, then page names in the list will be sorted as in the tree.</P>
 
-<P>У данной страницы имеются четыре дочерние страницы, следующая таблица показывает результат работы команды (:childlist:) с различными значениями параметра <I>sort</I>:</P>
+<P><H2>Examples</H2></P>
 
-<P><TABLE width=850 border=1><TR><TD ALIGN="CENTER"><B>Команда</B></TD><TD ALIGN="CENTER">(:childlist:)</TD><TD ALIGN="CENTER">(:childlist sort=name:)</TD><TD ALIGN="CENTER">(:childlist sort=descendname:)</TD><TD ALIGN="CENTER">(:childlist sort=descendorder:)</TD></TR><TR><TD ALIGN="CENTER"><B>Результат</B></TD><TD ALIGN="CENTER"><A HREF="Страница 4">Страница 4</A>
-<BR><A HREF="Страница 2">Страница 2</A>
-<BR><A HREF="Страница 3">Страница 3</A>
-<BR><A HREF="Страница 1">Страница 1</A></TD><TD ALIGN="CENTER"><A HREF="Страница 1">Страница 1</A>
-<BR><A HREF="Страница 2">Страница 2</A>
-<BR><A HREF="Страница 3">Страница 3</A>
-<BR><A HREF="Страница 4">Страница 4</A></TD><TD ALIGN="CENTER"><A HREF="Страница 4">Страница 4</A>
-<BR><A HREF="Страница 3">Страница 3</A>
-<BR><A HREF="Страница 2">Страница 2</A>
-<BR><A HREF="Страница 1">Страница 1</A></TD><TD ALIGN="CENTER"><A HREF="Страница 1">Страница 1</A>
-<BR><A HREF="Страница 3">Страница 3</A>
-<BR><A HREF="Страница 2">Страница 2</A>
-<BR><A HREF="Страница 4">Страница 4</A></TD></TR></TABLE></P>
+<P><I>У данной страницы имеются четыре дочерние страницы, следующая таблица показывает результат работы команды (:childlist:) с различными значениями параметра </I>sort<I>:</I></P>
+
+<P>In this page there are four child pages. The following table shows the output of the command  (: childlist:)  with different values ​​of the <I>sort</I> parameter:</P>
+
+<P><TABLE width=850 border=1><TR><TD ALIGN="CENTER"><B>Command</B></TD><TD ALIGN="CENTER">(:childlist:)</TD><TD ALIGN="CENTER">(:childlist sort=name:)</TD><TD ALIGN="CENTER">(:childlist sort=descendname:)</TD><TD ALIGN="CENTER">(:childlist sort=descendorder:)</TD></TR><TR><TD ALIGN="CENTER"><B>Result</B></TD><TD ALIGN="CENTER"><A HREF="page 4">page 4</A>
+<BR><A HREF="page 2">page 2</A>
+<BR><A HREF="page 3">page 3</A>
+<BR><A HREF="page 1">page 1</A></TD><TD ALIGN="CENTER"><A HREF="page 1">page 1</A>
+<BR><A HREF="page 2">page 2</A>
+<BR><A HREF="page 3">page 3</A>
+<BR><A HREF="page 4">page 4</A></TD><TD ALIGN="CENTER"><A HREF="page 4">page 4</A>
+<BR><A HREF="page 3">page 3</A>
+<BR><A HREF="page 2">page 2</A>
+<BR><A HREF="page 1">page 1</A></TD><TD ALIGN="CENTER"><A HREF="page 1">page 1</A>
+<BR><A HREF="page 3">page 3</A>
+<BR><A HREF="page 2">page 2</A>
+<BR><A HREF="page 4">page 4</A></TD></TR></TABLE></P>
 </BODY>
 </HTML>

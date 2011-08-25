@@ -1,9 +1,18 @@
+<<<<<<< TREE
+%center% %thumb width=450%Attach:search_big.png%%
+
+''Поиск в программе сделан в виде отдельного типи страниц, которые могут располагатсья в дереве где угодно. Создавать страницу поиска можно точно так же, как и другие страницы, но есть и упрощенный способ создания, о котором рассказу чуть позже. Такое представление поиска может быть удобно, если вы часто ищите одни и те же фразы. Теперь можно создать несколько страниц для каждого поиска и програма будет запоминать что именно вы искали с каждой такой страницы.''
+
+
+
+=======
 %center%%thumb width=450%Attach:search_big.png%%
 
 ''Поиск в программе реализован в виде отдельного типа страниц, которые могут располагатьcя в дереве где угодно. Создавать страницу поиска можно точно так же, как и другие страницы, но есть и упрощенный способ создания, о котором рассказу чуть позже. Такое представление поиска может быть удобно, если вы часто ищите одни и те же фразы. Теперь можно создать несколько страниц для каждого поиска и програvма будет запоминать что именно вы искали с каждой такой страницы.''
 
 Search in the program is implemented as a separate type of pages that can be placed in a tree anywhere. Search page is created in the same way as the other pages, but there is an easier way to create, on which the tell later. Such a search representation can be useful if you often look for the same phrase. You can create multiple pages for each search phrase and the program will remember what you're looking for with each of these pages.
 
+>>>>>>> MERGE-SOURCE
 ''Искать можно как по содержимому страницы, так и по тегам. Если не вводить искомую фразу, то поиск будет осуществляться только по тегам, причем можно выбирать, страница должна содержать все отмеченные теги или хотя бы один из них.''
 
 You can search both by the contents page, and by tag. If you do not enter the search phrase, the search will be carried out only on the tags, and you can choose the page should contain all the marked tag or at least one of them.

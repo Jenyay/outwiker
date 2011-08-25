@@ -2,7 +2,7 @@
 expand = False
 
 [General]
-type = html
+type = text
 order = 2
 tags = for users
 

@@ -14,61 +14,78 @@
 </HEAD>
 
 <BODY>
-<P><H2>Назначение и синтаксис команды (:include:)</H2></P>
+<P><H2><I>Назначение и синтаксис команды (:include:)</I></H2></P>
+
+<P><H2>Purpose and syntax (:include:) command</H2></P>
 
 <P>Команда (:include:) предназначена для вставки в вики-страницу содержимого прикрепленных файлов. Общий синтаксис команды выглядит следующим образом:</P>
 
+<P>Command (:include:) is designed to be inserted into a wiki page content attachments. General syntax is as follows:</P>
+
 <P>(:include Attach:filename [params...]:)</P>
 
-<P>Здесь <I>filename</I> - это имя прикрепленного файла, а параметры команды рассмотрены в следующем разделе</P>
+<P><I>Здесь </I>filename<I> - это имя прикрепленного файла, а параметры команды рассмотрены в следующем разделе</I></P>
 
-<P><H2>Параметры команды </H2></P>
+<P>Here <I>filename</I> is the name of the attached file, and params of the command shown in the next section.</P>
 
-<P>Команда (:include:) может принимать следующие параметры:</P>
+<P><H2>Params of the command (:include:)</H2></P>
+
+<P><I>Команда (:include:) может принимать следующие параметры:</I></P>
+
+<P>(:include:) command can take follow values:</P>
 
 <P>
 <UL>
 <LI><I>encoding</I></LI>
 <LI><I>htmlescape</I></LI>
 <LI><I>wikiparse</I></LI>
-</UL></P>
+</UL>
+<BR><H3>encoding</H3>
+<BR><I>Параметр </I>encoding<I> указывает кодировку вставляемого текста. OutWiker не может самостоятельно определить кодировку файла, по умолчанию считается, что используется кодировка UTF-8.</I></P>
 
-<P>Эти параметры описаны в следующих разделах.</P>
+<P><I>Encoding</I> parameter indicates the encoding of the included text. OutWiker can not determine file encoding, by default, it is considered that uses UTF-8.</P>
 
-<P><H3>encoding</H3>
-<BR>Параметр <I>encoding</I> Указывает кодировку вставляемого текста. OutWiker не может самостоятельно определить кодировку файла, по умолчанию считается, что используется кодировка UTF-8.</P>
+<P><I>Если нужно вставить файл <A HREF="__attach/text_utf8.txt">text_utf8.txt</A> в кодировке UTF-8, то достаточно написать</I></P>
 
-<P>Если нужно вставить файл <A HREF="__attach/text_utf8.txt">text_utf8.txt</A> в кодировке UTF-8, то достаточно написать</P>
+<P>If you want to include the file <A HREF="__attach/text_utf8.txt">text_utf8.txt</A> in the UTF-8, it suffices to write</P>
 
 <P>(:include Attach:text_utf8.txt:)</P>
 
-<P>В результате мы получим:</P>
+<P>Result:</P>
 
 <P>Текст в 
 <BR>кодировке UTF-8</P>
 
-<P>Для того же файла кодировку можно указать в явном виде:</P>
+<P><I>Для того же файла кодировку можно указать в явном виде:</I></P>
+
+<P>For the same file encoding can be specified explicitly:</P>
 
 <P>(:include Attach:text_utf8.txt encoding=utf8 :)</P>
 
-<P>Для вставки файла <A HREF="__attach/text_1251.txt">text_1251.txt</A> в кодировке cp1251 команда будет выглядеть следующим образом:</P>
+<P><I>Для вставки файла <A HREF="__attach/text_1251.txt">text_1251.txt</A> в кодировке cp1251 команда будет выглядеть следующим образом:</I></P>
+
+<P>To insert a file <A HREF="__attach/text_1251.txt">text_1251.txt</A> with encoding cp1251 command will look like this:</P>
 
 <P>(:include Attach:text_1251.txt encoding=cp1251:)</P>
 
-<P>В результате ее выполнения мы увидим:</P>
+<P>Result:</P>
 
 <P>Это текст
 <BR>в кодировке 1251</P>
 
-<P>Если мы забудем указать нужную кодировку, то получим ошибку. Например, команда</P>
+<P><I>Если мы забудем указать нужную кодировку, то получим ошибку. Например, команда</I></P>
+
+<P>If you forget to specify the encoding, you get an error. Example:</P>
 
 <P>(:include Attach:text_1251.txt:)</P>
 
-<P>Выдаст следующий текст:</P>
+<P>Result:</P>
 
 <P><B>Encoding error in file text_1251.txt</B></P>
 
-<P>Полный список поддерживаемый кодировок довольно обширный, его можно найти на <A HREF="http://docs.python.org/library/codecs.html#standard-encodings">этой странице</A> справки по языку Python, перечислим наиболее используемые кодировки (одна и та же кодировка может иметь несколько названий):</P>
+<P><I>Полный список поддерживаемый кодировок довольно обширный, его можно найти на <A HREF="http://docs.python.org/library/codecs.html#standard-encodings">этой странице</A> справки по языку Python, перечислим наиболее используемые кодировки (одна и та же кодировка может иметь несколько названий):</I></P>
+
+<P>Full list of supported encodings is extensive, it can be found at <A HREF="http://docs.python.org/library/codecs.html#standard-encodings">this page</A> of help in Python, we list the most commonly used encoding (one and the same code can have multiple names):</P>
 
 <P>
 <UL>
@@ -81,51 +98,75 @@
 <LI>mac_cyrillic, maccyrillic;</LI>
 <LI>cp866, 866, IBM866;</LI>
 </UL>
-<BR><H3>htmlescape</H3></P>
+<BR><H3>htmlescape</H3></P>
 
-<P>Параметр <I>htmlescape</I> указывает команде, что в прочитанном тексте из файла необходимо заменить символы &lt;, &gt; и &amp; соответственно на &amp;lt;, &amp;gt; и &amp;amp;. Это особенно полезно для вставки исходных текстов программы из прикрепленных файлов.</P>
+<P><I>Параметр </I>htmlescape<I> указывает команде, что в прочитанном тексте из файла необходимо заменить символы &lt;, &gt; и &amp; соответственно на &amp;lt;, &amp;gt; и &amp;amp;. Это особенно полезно для вставки исходных текстов программы из прикрепленных файлов.</I></P>
 
-<P>Например, команда</P>
+<P>Parameter <I>htmlescape</I> tells the command that in the text read from a file, replace the characters &lt;,&gt; and &amp; respectively, &amp;lt;, &amp;gt;, and &amp;amp;. This is particularly useful for inserting the source program from the attached files.</P>
+
+<P><I>Например, команда</I></P>
+
+<P>For example, the command</P>
 
 <P>(:include Attach:html.txt:)</P>
 
-<P>Выведет текст полужирным шрифтом:</P>
+<P><I>выведет текст полужирным шрифтом:</I></P>
+
+<P>displays text in bold type:</P>
 
 <P><B>Это текст с HTML-тегами</B></P>
 
-<P>А при добавлении параметра <I>htmlescape</I>: </P>
+<P><I>А при добавлении параметра </I>htmlescape<I>: </I></P>
+
+<P>And when you add a parameter<I>htmlescape</I>:</P>
 
 <P>(:include Attach:html.txt htmlescape:)</P>
 
-<P>будет выведен код HTML:</P>
+<P><I>будет выведен код HTML:</I></P>
+
+<P>will display the HTML code:</P>
 
 <P>&lt;B&gt;Это текст с HTML-тегами&lt;/B&gt;</P>
 
 <P>
-<BR><H3>wikiparse</H3></P>
+<BR><H3>wikiparse</H3></P>
 
-<P>Параметр <I>wikiparse</I> указывает команде, что содержимое вставляемого файла предварительно необходимо пропустить через вики-парсер, то есть, что прикрепленный файл содержит вики-нотацию, которую необходимо разобрать.</P>
+<P><I>Параметр </I>wikiparse<I> указывает команде, что содержимое вставляемого файла предварительно необходимо пропустить через вики-парсер, то есть, что прикрепленный файл содержит вики-нотацию, которую необходимо разобрать.</I></P>
 
-<P>Например, команда</P>
+<P><I>Wikiparse</I> parameter tells the command that file is inserted, you must first pass through the wiki parser, that is, that the attached file contains a wiki notation that must be dismantled.</P>
+
+<P><I>Например, команда:</I></P>
+
+<P>For example, the command:</P>
 
 <P>(:include Attach:wiki.txt:)</P>
 
-<P>выведет следующий текст:</P>
+<P><I>выведет следующий текст:</I></P>
+
+<P>displays follow text:</P>
 
 <P>'''Этот текст содержит вики-нотацию'''</P>
 
-<P>А с параметром <I>wikiparse</I>:</P>
+<P><I>А с параметром </I>wikiparse<I>:</I></P>
+
+<P>But wish the <I>wikiparse</I> command:</P>
 
 <P>(:include Attach:wiki.txt wikiparse :)</P>
 
-<P>содержимое вики-нотации будет преобразовано в HTML:</P>
+<P><I>содержимое вики-нотации будет преобразовано в HTML:</I></P>
+
+<P>the wiki notation contents will be converted to HTML:</P>
 
 <P><B>Этот текст содержит вики-нотацию</B></P>
 
 <P><HR> 
-<BR>Если в команде (:include:) установлены одновременно параметры <I>htmlescape</I> и <I>wikiparse</I>, то сначала происходит замена символов HTML, а потом разбор вики-нотации.</P>
+<BR><I>Если в команде (:include:) установлены одновременно параметры </I>htmlescape<I> и </I>wikiparse<I>, то сначала происходит замена символов HTML, а потом разбор вики-нотации.</I></P>
 
-<P>Для вставки исходного текста программ удобно использовать следующий формат команды (:include:):</P>
+<P>If the command  (: include:)  installed at the same time <I>htmlescape</I> and <I>wikiparse</I> parameters, then the first is the replacement character HTML, and then parse the wiki notation.</P>
+
+<P><I>Для вставки исходного текста программ можно использовать следующий формат команды (:include:):</I></P>
+
+<P>To insert program source code can use the following command format (:include:):</P>
 
 <P>
 <PRE>

@@ -1,8 +1,10 @@
-Под Linux должны быть установлены следующие пакеты:
+''Под Linux должны быть установлены следующие пакеты:''
 
-* '''python''' (версии 2.6 или 2.7)
-* '''python-wxgtk2.8''' (реализация wxPython под Linux)
+Under Linux should be installed the following packages:
+
+* '''python''' (version 2.6 or 2.7)
+* '''python-wxgtk2.8'''
 * '''python-wxversion'''
 * '''python-webkit-dev'''
-* '''libgnomeprint2.2-0''', '''libgnomeprintui2.2-0''' (эти пакеты используются при печати текста, например, текстовых страниц, вики-нотацию или исходный текст страниц. Без этих пакетов печать будет работать, но будет проблема с печатью русских букв)
-* '''mimetex''' (без этого пакета не будет работать рендеринг формул)
+* '''libgnomeprint2.2-0''', '''libgnomeprintui2.2-0''' (These packets are used to print text, such as text pages, wiki notation or the original source page. Without this package printing will work, but there is a problem with the stamp of Russian letters)
+* '''mimetex''' (without this package will not work rendered formulas)
