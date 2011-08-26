@@ -200,7 +200,7 @@ class WikiPagePanel (HtmlPanel):
 				"ID_PREFORMAT", 
 				lambda event: self.codeEditor.turnText (u"[@", u"@]"), 
 				_(u"Preformat [@…@]\tCtrl+Alt+F"), 
-				_(u"Preformat [@…@]"), 
+				_(u"Preformat [@…@]"),
 				None)
 
 		self._addTool (self.pageToolsMenu, 
