@@ -509,6 +509,14 @@ class HtmlPagePanel (HtmlPanel):
 
 
 		self._addTool (self.pageToolsMenu, 
+				"ID_PREFORMAT", 
+				lambda event: self.codeEditor.turnText (u"<pre>", u"</pre>"), 
+				_(u"Preformat\tCtrl+Alt+F"), 
+				_(u"Preformat (<pre>…</pre>)"), 
+				None)
+
+
+		self._addTool (self.pageToolsMenu, 
 				"ID_BLOCKQUOTE", 
 				lambda event: self.codeEditor.turnText (u"<blockquote>", u"</blockquote>"), 
 				_(u"Quote\tCtrl+Alt+Q"), 

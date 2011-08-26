@@ -190,7 +190,7 @@ class WikiPagePanel (HtmlPanel):
 		self._addTool (self.pageToolsMenu, 
 				"ID_ALIGN_RIGHT", 
 				lambda event: self.codeEditor.turnText (u"%right%", u""), 
-				_(u"Right align\tCtrl+ALT+R"), 
+				_(u"Right align\tCtrl+Alt+R"), 
 				_(u"Right align"), 
 				os.path.join (self.imagesDir, "text_align_right.png"))
 	
@@ -199,7 +199,7 @@ class WikiPagePanel (HtmlPanel):
 		self._addTool (self.pageToolsMenu, 
 				"ID_PREFORMAT", 
 				lambda event: self.codeEditor.turnText (u"[@", u"@]"), 
-				_(u"Preformat [@…@]"), 
+				_(u"Preformat [@…@]\tCtrl+Alt+F"), 
 				_(u"Preformat [@…@]"), 
 				None)
 
@@ -340,6 +340,13 @@ class WikiPagePanel (HtmlPanel):
 				_(u"Horizontal line\tCtrl+H"), 
 				_(u"Horizontal line"), 
 				os.path.join (self.imagesDir, "text_horizontalrule.png"))
+
+		self._addTool (self.pageToolsMenu, 
+				"ID_LINEBREAK", 
+				lambda event: self.codeEditor.replaceText (u'[[<<]]'), 
+				_(u"Line break\tCtrl+Return"), 
+				_(u"Line break"), 
+				os.path.join (self.imagesDir, "linebreak.png"))
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_EQUATION", 
