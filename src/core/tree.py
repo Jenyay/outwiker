@@ -288,12 +288,35 @@ class WikiDocument (RootWikiPage):
 
 
 	@staticmethod
+	def clearConfigFile (path):
+		"""
+		Очистить файл __page.opt.
+		Используется в случае, если файл __page.opt испорчен
+		path - путь до вики (или до директории с файлом __page.opt, или включая этот файл)
+		"""
+		if path.endswith (RootWikiPage.pageConfig):
+			realpath = path
+		else:
+			realpath = os.path.join (path, RootWikiPage.pageConfig)
+
+		try:
+			fp = open (realpath, "w")
+			fp.close()
+		except IOError:
+			raise core.exceptions.ClearConfigError
+
+
+	@staticmethod
 	def load(path, readonly = False):
 		"""
 		Загрузить корневую страницу вики.
 		Использовать этот метод вместо конструктора
 		"""
-		root = WikiDocument(path, readonly)
+		try:
+			root = WikiDocument(path, readonly)
+		except ConfigParser.Error:
+			raise core.exceptions.RootFormatError
+
 		root.loadChildren()
 
 		lastvieved = root.lastViewedPage

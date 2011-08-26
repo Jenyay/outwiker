@@ -14,6 +14,8 @@ from core.attachment import Attachment
 from core.tree import RootWikiPage, WikiDocument
 from pages.text.textpage import TextPageFactory
 from pages.html.htmlpage import HtmlPageFactory
+from test.utils import removeWiki
+from core.exceptions import RootFormatError
 
 
 path = u"../test/invalidwiki"
@@ -21,7 +23,71 @@ path = u"../test/invalidwiki"
 class InvalidWikiTest (unittest.TestCase):
 	def setUp (self):
 		pass
-		
+
+
+	def testInvalidWikiRoot1 (self):
+		"""
+		Тест на обработку ошибки в файле __page.opt корня вики
+		"""
+		def __createInvalidWiki1 ():
+			# Здесь будет создаваться вики
+			path = u"../test/testwiki"
+			removeWiki (path)
+
+			rootwiki = WikiDocument.create (path)
+
+			TextPageFactory.create (rootwiki, u"Страница 1", [])
+			TextPageFactory.create (rootwiki[u"Страница 1"], u"Страница 2", [])
+
+			# Испортим файл __page.opt
+			with open (os.path.join (rootwiki.path, u"__page.opt"), "w") as fp:
+				fp.write (u"wsfsdf sdf sdfasdfdsf \nasfasdsadf")
+
+			return path
+
+		path = __createInvalidWiki1 ()
+		self.assertRaises (RootFormatError, WikiDocument.load, path)
+
+		# Сбросим файл __page.opt
+		WikiDocument.clearConfigFile (path)
+
+		# Теперь ошибок быть не должно
+		WikiDocument.load (path)
+
+		removeWiki (path)
+
+
+	def testInvalidWikiRoot2 (self):
+		"""
+		Тест на обработку ошибки в файле __page.opt корня вики
+		"""
+		def __createInvalidWiki2 ():
+			# Здесь будет создаваться вики
+			path = u"../test/testwiki"
+			removeWiki (path)
+
+			rootwiki = WikiDocument.create (path)
+
+			TextPageFactory.create (rootwiki, u"Страница 1", [])
+			TextPageFactory.create (rootwiki[u"Страница 1"], u"Страница 2", [])
+
+			# Испортим файл __page.opt
+			with open (os.path.join (rootwiki.path, u"__page.opt"), "w") as fp:
+				fp.write (u"[General]\naaa=xxx\n<<<<<<<<wsfsdf sdf sdfasdfdsf \nasfasdsadf")
+
+			return path
+
+		path = __createInvalidWiki2 ()
+		self.assertRaises (RootFormatError, WikiDocument.load, path)
+
+		# Сбросим файл __page.opt
+		WikiDocument.clearConfigFile (path)
+
+		# Теперь ошибок быть не должно
+		WikiDocument.load (path)
+
+		removeWiki (path)
+
 
 	def testNotPage (self):
 		"""
