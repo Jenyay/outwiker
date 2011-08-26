@@ -118,6 +118,10 @@ class HtmlGenerator (object):
 		content.append (str (self.htmlrenderconfig.fontFaceNameOption.value) )
 		content.append (str (self.htmlrenderconfig.userStyleOption.value) )
 
+		# Список подстраниц
+		for child in self.page.children:
+			content.append (str (child.title) + "\n")
+
 		if len (self.page.content) == 0:
 			# Если страница пустая, то проверим настройку, отвечающую за шаблон пустой страницы
 			emptycontent = EmptyContent (Application.config)
