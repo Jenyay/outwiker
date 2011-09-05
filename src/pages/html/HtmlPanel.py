@@ -83,9 +83,12 @@ class HtmlPanel(BaseTextPanel):
 	
 	def UpdateView (self, page):
 		self.htmlWindow.page = self._currentpage
+
+		self.codeEditor.SetReadOnly (False)
 		self.codeEditor.SetText (self._currentpage.content)
 		self.codeEditor.EmptyUndoBuffer()
 		self.codeEditor.SetReadOnly (page.readonly)
+
 		self._showHtml()
 		self._openDefaultPage()
 
