@@ -36,8 +36,8 @@ class UriIdentifierIE (UriIdentifier):
 		# Проверим, вдруг IE посчитал, что это не ссылка, а якорь
 		# В этом случае ссылка будет выглядеть, как x:\...\{contentfile}#link
 		anchor = self._findAnchor (subpath)
-		if anchor != None and self._currentPage[anchor] != None:
-			return self._currentPage[anchor]
+		if anchor != None and self._currentPage[anchor.replace("\\", "/")] != None:
+			return self._currentPage[anchor.replace("\\", "/")]
 
 
 		if subpath.startswith (self._currentPage.path):

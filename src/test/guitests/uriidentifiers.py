@@ -37,6 +37,7 @@ class UriIdentifierTest (unittest.TestCase):
 		WikiPageFactory.create (self.rootwiki[u"Страница 2/Страница 3"], u"# Страница 4", [])
 		WikiPageFactory.create (self.rootwiki[u"Страница 1"], u"# Страница 5", [])
 		WikiPageFactory.create (self.rootwiki[u"Страница 1"], u"Страница 6", [])
+		WikiPageFactory.create (self.rootwiki[u"Страница 1/# Страница 5"], u"Страница 7", [])
 
 		filesPath = u"../test/samplefiles/"
 		self.files = [u"accept.png", u"add.png", u"anchor.png", u"файл с пробелами.tmp", u"dir"]
@@ -186,6 +187,27 @@ class UriIdentifierIETest (UriIdentifierTest):
 		self.assertEqual (page, wikipage[u"# Страница 5"])
 		self.assertNotEqual (None, page)
 		self.assertEqual (anchor, u"# Страница 5")
+
+
+	def testSubpath3 (self):
+		"""
+		Тест на распознавание ссылок на подстраницы, когда движок IE считает, что это ссылка на якорь
+		"""
+		wikipage = self.rootwiki[u"Страница 1"]
+		contentfile = self._getContentFile (wikipage)
+
+		path = u"".join ([self._getContentFile (wikipage), u"# Страница 5", u"\\Страница 7"])
+		#print path
+
+		identifier = UriIdentifierIE (wikipage, contentfile)
+
+		(url, page, filename, anchor) = identifier.identify (path)
+		#print page
+
+		self.assertEqual (url, None)
+		self.assertEqual (page, wikipage[u"# Страница 5/Страница 7"])
+		self.assertNotEqual (None, page)
+		self.assertEqual (anchor, u"# Страница 5\\Страница 7")
 
 
 	def testAnchor (self):
