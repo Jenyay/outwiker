@@ -1,19 +1,9 @@
-''Каждая заметка расположена в своей отдельной папке, вложенные папки как раз и создают дерево. Все другие вложенные папки считаются вложенными заметками. Вот, например, как выглядит дерево заметок этой справки: Attach:tree.txt''
+Each note is stored in its own directory, subdirectories actually create a tree. All other subdirectory are sub-notes. For example, this reference is organized this way: Attach:tree.txt
 
-Each note is in its own directory, nested directory create a tree. All other sub-directory are nested notes. Here, for example, looks like wood notes, this reference: Attach:tree.txt
+Each directory and the root of tree contains a file ''__page.opt'', which stores the settings for individual notes (tag, page type, etc.). Also, in subdirectories there are files''__page.text'' - the contents of the notes (the format of this file depends on the type of page) and, possibly, ''__icon .*'' - an icon in any graphic format 16 × 16 pixels.
 
-''В каждой папке-заметке, как и в корне дерева, находится файл ''__page.opt'', в котором хранятся настройки отдельной заметки (теги, ее тип и т.д.). Кроме того во вложенных паках расположены файлы ''__page.text'' – собственно, содержимое заметки (формат этого файла зависит от типа страницы) и, возможно, ''__icon.*'' – иконка в любом графическом формате размером 16×16.''
+Each directory contains a subdirectory ''__attach'', which contains attached files, so to attach a file to a note, you just copy it the directory ''__attach''.
 
-Each directory and the root tree contains a file ''__page.opt'', which stores the settings for individual notes (tag, page type, etc.). In addition to nested directories are files''__page.text'' - the contents of the notes (the format of this file depends on the type of page) and, possibly, ''__icon .*'' - an icon in any graphic format 16 × 16 pixels.
-
-''В каждой папке-заметке есть вложенная папка ''__attach'', где располагаются прикрепленный файлы, поэтому для того, чтобы прикрепить файл к заметке, достаточно его скопировать в папку ''__attach''.''
-
-Each directory contains a subdirectory-note ''__attach'', which are attached files, so in order to attach a file to a note, it is enough to copy the directory ''__attach''.
-
-''Благодаря такой структуре возможно открывать каждую ветвь как отдельное дерево, только при этом надо учитывать, что корневой элемент древа не содержит самой заметки, а используется только как контейнер для вложенных страниц.''
-
-Due to this structure may open each branch as a separate tree, but at the same time we must remember that the root element of the tree itself does not contain a note and is only used as a container for nested pages.
-
-''Файлы и директории, созданные OutWiker'ом, начинаяются с двух символов подчеркивания.''
+Due to this structure you may open each branch as a separate tree, but at the same time you must remember, that the root element of the tree itself does not contain a note and is only used as a container for sub-pages.
 
 Files and directories created by OutWiker, begin with two underscores.

@@ -1,5 +1,3 @@
-''Для создания таблиц используется следующая нотация:''
-
 To create tables, use the following notation:
 
 [=
@@ -8,8 +6,6 @@ To create tables, use the following notation:
 || The first cell of the second row || The second cell of the second row || ... || The Last cell of the second row ||
 ...
 =]
-
-''Горизонтальное выравнивание ячеек таблицы задается пробелами перед и после текста ячеек. Это показано на следующем примере:''
 
 The horizontal alignment of table cells defined by spaces before and after the cells text. This is shown in the following example:
 

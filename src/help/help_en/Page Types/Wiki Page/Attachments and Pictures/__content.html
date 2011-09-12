@@ -16,65 +16,44 @@
 <BODY>
 <P><H2>Картинки </H2></P>
 
-<P><TABLE border=1><TR><TD ALIGN="CENTER"><B>Синтаксис</B></TD><TD ALIGN="CENTER"><B>Результат</B></TD><TD ALIGN="CENTER"><B>Комментарий</B></TD></TR><TR><TD ALIGN="CENTER">http://jenyay.net/small_image.jpg</TD><TD ALIGN="CENTER"><IMG SRC="http://jenyay.net/small_image.jpg"/></TD><TD ALIGN="CENTER">Insert a picture from the Internet</TD></TR><TR><TD ALIGN="CENTER">Attach:small_image.jpg</TD><TD ALIGN="CENTER"><IMG SRC="__attach/small_image.jpg"/></TD><TD ALIGN="CENTER">Insert an attached picture</TD></TR><TR><TD ALIGN="CENTER">[[http://jenyay.net | Attach:small_image.jpg]]</TD><TD ALIGN="CENTER"><A HREF="http://jenyay.net"><IMG SRC="__attach/small_image.jpg"/></A></TD><TD ALIGN="CENTER">Insert a link as a picture</TD></TR><TR><TD ALIGN="CENTER">[[/Page Types/Wiki Page/Attachments and Pictures | Attach:small_image.jpg]]</TD><TD ALIGN="CENTER"><A HREF="/Page Types/Wiki Page/Attachments and Pictures"><IMG SRC="__attach/small_image.jpg"/></A></TD><TD ALIGN="CENTER">Insert a page link as a picture</TD></TR><TR><TD ALIGN="CENTER">%thumb%Attach:image.jpg%%</TD><TD ALIGN="CENTER"><A HREF="__attach/image.jpg"><IMG SRC="__attach/__thumb/th_maxsize_250_image.jpg"/></A></TD><TD ALIGN="CENTER"><I>Вставить уменьшенную картинку со ссылкой на оригинал. 
-<BR>Уменьшенные копии картинок создаются в поддиректории __thumb директории с прикрепленными файлами</I>
+<P><TABLE border=1><TR><TD ALIGN="CENTER"><B>Синтаксис</B></TD><TD ALIGN="CENTER"><B>Результат</B></TD><TD ALIGN="CENTER"><B>Комментарий</B></TD></TR><TR><TD ALIGN="CENTER">http://jenyay.net/small_image.jpg</TD><TD ALIGN="CENTER"><IMG SRC="http://jenyay.net/small_image.jpg"/></TD><TD ALIGN="CENTER">Insert a picture from the Internet</TD></TR><TR><TD ALIGN="CENTER">Attach:small_image.jpg</TD><TD ALIGN="CENTER"><IMG SRC="__attach/small_image.jpg"/></TD><TD ALIGN="CENTER">Insert an attached picture</TD></TR><TR><TD ALIGN="CENTER">[[http://jenyay.net | Attach:small_image.jpg]]</TD><TD ALIGN="CENTER"><A HREF="http://jenyay.net"><IMG SRC="__attach/small_image.jpg"/></A></TD><TD ALIGN="CENTER">Insert a link as a picture</TD></TR><TR><TD ALIGN="CENTER">[[/Page Types/Wiki Page/Attachments and Pictures | Attach:small_image.jpg]]</TD><TD ALIGN="CENTER"><A HREF="/Page Types/Wiki Page/Attachments and Pictures"><IMG SRC="__attach/small_image.jpg"/></A></TD><TD ALIGN="CENTER">Insert a page link as a picture</TD></TR><TR><TD ALIGN="CENTER">%thumb%Attach:image.jpg%%</TD><TD ALIGN="CENTER"><A HREF="__attach/image.jpg"><IMG SRC="__attach/__thumb/th_maxsize_250_image.jpg"/></A></TD><TD ALIGN="CENTER">Insert the thumbnail as a link to the original picture.
+<BR>Thumbnails are created in a "__thumb" subdirectory within a attachments directory</TD></TR><TR><TD ALIGN="CENTER">%width=200%Attach:image.jpg%%</TD><TD ALIGN="CENTER"><A HREF="__attach/image.jpg"><IMG SRC="__attach/__thumb/th_width_200_image.jpg"/></A></TD><TD ALIGN="CENTER">Insert the thumbnail with a specified width as a link to the original picture.
 <BR>
-<BR>Insert the thumbnail as a link to the original picture.
-<BR>Thumbnails are created in a "__thumb" subdirectory within a attachments directory</TD></TR><TR><TD ALIGN="CENTER">%width=200%Attach:image.jpg%%</TD><TD ALIGN="CENTER"><A HREF="__attach/image.jpg"><IMG SRC="__attach/__thumb/th_width_200_image.jpg"/></A></TD><TD ALIGN="CENTER"><I>Вставить уменьшенную картинку с заданной шириной со ссылкой на оригинал.</I>
-<BR>
-<BR>Insert the thumbnail with a specified width as a link to the original picture.
-<BR>
-<BR>Thumbnails are created in a "__thumb" subdirectory within a attachments directory
-<BR>
-<BR>Возможные варианты команды: 
+<BR> Thumbnails are created in a "__thumb" subdirectory within a attachments directory
 <BR>
 <BR>Command variants: 
 <BR>
-<BR><I>%width=200px%Attach:image.jpg%%</I> 
+<BR> <I>%width=200px%Attach:image.jpg%%</I> 
 <BR>
 <BR>or 
 <BR>
-<BR><I>%thumb width=200%Attach:image.jpg%%</I> 
+<BR> <I>%thumb width=200%Attach:image.jpg%%</I> 
 <BR>
-<BR>Уменьшенные копии картинок создаются в поддиректории __thumb директории с прикрепленными файлами 
+<BR> Thumbnails are created in a "__thumb" subdirectory within a attachments directory</TD></TR><TR><TD ALIGN="CENTER">%height=200%Attach:image.jpg%%</TD><TD ALIGN="CENTER"><A HREF="__attach/image.jpg"><IMG SRC="__attach/__thumb/th_height_200_image.jpg"/></A></TD><TD ALIGN="CENTER">Insert the thumbnail with a specified height as a link to the original picture.
 <BR>
-<BR>Thumbnails are created in a "__thumb" subdirectory within a attachments directory</TD></TR><TR><TD ALIGN="CENTER">%height=200%Attach:image.jpg%%</TD><TD ALIGN="CENTER"><A HREF="__attach/image.jpg"><IMG SRC="__attach/__thumb/th_height_200_image.jpg"/></A></TD><TD ALIGN="CENTER">Вставить уменьшенную картинку с заданной высотой со ссылкой на оригинал.
-<BR>
-<BR>Insert the thumbnail with a specified height as a link to the original picture.
-<BR>
-<BR>Возможные варианты команды: 
-<BR>
-<BR>Command variants: 
+<BR> Command variants: 
 <BR>
 <BR><I>%height=200px%Attach:image.jpg%%</I> 
 <BR>
 <BR>или 
 <BR><I>%thumb height=200%Attach:image.jpg%%</I> 
 <BR>
-<BR>Уменьшенные копии картинок создаются в поддиректории __thumb директории с прикрепленными файлами 
-<BR>
-<BR>Thumbnails are created in a "__thumb" subdirectory within a attachments directory</TD></TR><TR><TD ALIGN="CENTER">%maxsize=200%Attach:image.jpg%%</TD><TD ALIGN="CENTER"><A HREF="__attach/image.jpg"><IMG SRC="__attach/__thumb/th_maxsize_200_image.jpg"/></A></TD><TD ALIGN="CENTER">Вставить уменьшенную картинку с заданным максимальным размером со ссылкой на оригинал.
-<BR>
-<BR>Insert the thumbnail with a specified max size as a link to the original picture.
-<BR>
-<BR>Возможные варианты команды: 
+<BR>Thumbnails are created in a "__thumb" subdirectory within a attachments directory</TD></TR><TR><TD ALIGN="CENTER">%maxsize=200%Attach:image.jpg%%</TD><TD ALIGN="CENTER"><A HREF="__attach/image.jpg"><IMG SRC="__attach/__thumb/th_maxsize_200_image.jpg"/></A></TD><TD ALIGN="CENTER">Insert the thumbnail with a specified max size as a link to the original picture.
 <BR>
 <BR>Command variants: 
 <BR>
 <BR><I>%maxsize=200px%Attach:image.jpg%%</I> 
 <BR>
-<BR>или 
+<BR>or 
 <BR>
 <BR><I>%thumb maxsize=200%Attach:image.jpg%%</I> 
 <BR>
-<BR>Уменьшенные копии картинок создаются в поддиректории __thumb директории с прикрепленными файлами 
-<BR>
 <BR>Thumbnails are created in a "__thumb" subdirectory within a attachments directory</TD></TR></TABLE>
-<BR><H2><I>Прикрепленные файлы других типов</I></H2>
+<BR><H2><I>Прикрепленные файлы других типов</I></H2>
 <BR><H2>Other attached files</H2></P>
 
 <P><TABLE border=1><TR><TD ALIGN="CENTER"><B>Syntax</B></TD><TD ALIGN="CENTER"><B>Result</B></TD><TD ALIGN="CENTER"><B>Comment</B></TD></TR><TR><TD ALIGN="CENTER">Attach:file.txt</TD><TD ALIGN="CENTER"><A HREF="__attach/file.txt">file.txt</A></TD><TD ALIGN="CENTER">Link to an attached file</TD></TR><TR><TD ALIGN="CENTER">[[Attach:file.txt]]</TD><TD ALIGN="CENTER"><A HREF="__attach/file.txt">file.txt</A></TD><TD ALIGN="CENTER">Link to an attached file. 
-<BR>Same as the previous variant.</TD></TR><TR><TD ALIGN="CENTER">Attach:small_image.jpg</TD><TD ALIGN="CENTER"><A HREF="__attach/small_image.jpg">small_image.jpg</A></TD><TD ALIGN="CENTER">Link to an attached picture</TD></TR><TR><TD ALIGN="RIGHT">[[Attach:file.txt | Attached file]]</TD><TD ALIGN="CENTER"><A HREF="__attach/file.txt">Прикрепленный файл</A></TD><TD ALIGN="CENTER">Link to an attached picture with a comment</TD></TR><TR><TD ALIGN="RIGHT">[[Attached file -> Attach:file.txt]]</TD><TD ALIGN="CENTER"><A HREF="__attach/file.txt">Прикрепленный файл</A></TD><TD ALIGN="CENTER">Link to an attached picture with a comment 
+<BR>Same as the previous variant.</TD></TR><TR><TD ALIGN="CENTER">Attach:small_image.jpg</TD><TD ALIGN="CENTER"><A HREF="__attach/small_image.jpg">small_image.jpg</A></TD><TD ALIGN="CENTER">Link to an attached picture</TD></TR><TR><TD ALIGN="RIGHT">[[Attach:file.txt | Attached file]]</TD><TD ALIGN="CENTER"><A HREF="__attach/file.txt">Attached file</A></TD><TD ALIGN="CENTER">Link to an attached file with a comment</TD></TR><TR><TD ALIGN="RIGHT">[[Attached file -> Attach:file.txt]]</TD><TD ALIGN="CENTER"><A HREF="__attach/file.txt">Attached file</A></TD><TD ALIGN="CENTER">Link to an attached picture with a comment 
 <BR>Same as the previous variant.</TD></TR></TABLE></P>
 </BODY>
 </HTML>

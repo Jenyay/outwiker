@@ -1,6 +1,4 @@
-''Программе через командную строку можно передавать путь до вики, которая будет открыта при запуске программы. Например:''
-
-Program through the command line you can pass the path to the wiki, which will be opened when the program starts. For example:
+You can pass the path to wiki, which will open at the program start, through the command line. For example:
 
 outwiker.exe "C:\temp\samplewiki"
 

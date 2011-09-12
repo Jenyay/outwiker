@@ -1,20 +1,12 @@
-!!! ''Назначение и синтаксис команды [=(:include:)=]''
-
 !!! Purpose and syntax [=(:include:)=] command
-
-Команда [=(:include:)=] предназначена для вставки в вики-страницу содержимого прикрепленных файлов. Общий синтаксис команды выглядит следующим образом:
 
 Command [=(:include:)=] is designed to be inserted into a wiki page content attachments. General syntax is as follows:
 
 [=(:include Attach:filename [params...]:)=]
 
-''Здесь ''filename'' - это имя прикрепленного файла, а параметры команды рассмотрены в следующем разделе''
-
 Here ''filename'' is the name of the attached file, and params of the command shown in the next section.
 
 !!! Params of the command [=(:include:)=]
-
-''Команда [=(:include:)=] может принимать следующие параметры:''
 
 [=(:include:)=] command can take follow values:
 
@@ -23,11 +15,7 @@ Here ''filename'' is the name of the attached file, and params of the command sh
 * ''wikiparse''
 
 !!!! encoding
-''Параметр ''encoding'' указывает кодировку вставляемого текста. OutWiker не может самостоятельно определить кодировку файла, по умолчанию считается, что используется кодировка UTF-8.''
-
 ''Encoding'' parameter indicates the encoding of the included text. OutWiker can not determine file encoding, by default, it is considered that uses UTF-8.
-
-''Если нужно вставить файл Attach:text_utf8.txt в кодировке UTF-8, то достаточно написать''
 
 If you want to include the file Attach:text_utf8.txt in the UTF-8, it suffices to write
 
@@ -37,13 +25,9 @@ Result:
 
 (:include Attach:text_utf8.txt:)
 
-''Для того же файла кодировку можно указать в явном виде:''
-
 For the same file encoding can be specified explicitly:
 
 [=(:include Attach:text_utf8.txt encoding=utf8 :)=]
-
-''Для вставки файла Attach:text_1251.txt в кодировке cp1251 команда будет выглядеть следующим образом:''
 
 To insert a file Attach:text_1251.txt with encoding cp1251 command will look like this:
 
@@ -53,8 +37,6 @@ Result:
 
 (:include Attach:text_1251.txt encoding=cp1251:)
 
-''Если мы забудем указать нужную кодировку, то получим ошибку. Например, команда''
-
 If you forget to specify the encoding, you get an error. Example:
 
 [=(:include Attach:text_1251.txt:)=]
@@ -62,8 +44,6 @@ If you forget to specify the encoding, you get an error. Example:
 Result:
 
 (:include Attach:text_1251.txt:)
-
-''Полный список поддерживаемый кодировок довольно обширный, его можно найти на [[http://docs.python.org/library/codecs.html#standard-encodings | этой странице]] справки по языку Python, перечислим наиболее используемые кодировки (одна и та же кодировка может иметь несколько названий):''
 
 Full list of supported encodings is extensive, it can be found at [[http://docs.python.org/library/codecs.html#standard-encodings | this page]] of help in Python, we list the most commonly used encoding (one and the same code can have multiple names):
 
@@ -78,29 +58,19 @@ Full list of supported encodings is extensive, it can be found at [[http://docs.
 
 !!!! htmlescape
 
-''Параметр ''htmlescape'' указывает команде, что в прочитанном тексте из файла необходимо заменить символы &lt;, &gt; и &amp; соответственно на &amp;lt;, &amp;gt; и &amp;amp;. Это особенно полезно для вставки исходных текстов программы из прикрепленных файлов.''
-
 Parameter ''htmlescape'' tells the command that in the text read from a file, replace the characters &lt;,&gt; and &amp; respectively, &amp;lt;, &amp;gt;, and &amp;amp;. This is particularly useful for inserting the source program from the attached files.
-
-''Например, команда''
 
 For example, the command
 
 [=(:include Attach:html.txt:)=]
 
-''выведет текст полужирным шрифтом:''
-
 displays text in bold type:
 
 (:include Attach:html.txt:)
 
-''А при добавлении параметра ''htmlescape'': ''
-
-And when you add a parameter''htmlescape'':
+And when you add a parameter ''htmlescape'':
 
 [=(:include Attach:html.txt htmlescape:)=]
-
-''будет выведен код HTML:''
 
 will display the HTML code:
 
@@ -109,40 +79,26 @@ will display the HTML code:
 
 !!!! wikiparse
 
-''Параметр ''wikiparse'' указывает команде, что содержимое вставляемого файла предварительно необходимо пропустить через вики-парсер, то есть, что прикрепленный файл содержит вики-нотацию, которую необходимо разобрать.''
-
 ''Wikiparse'' parameter tells the command that file is inserted, you must first pass through the wiki parser, that is, that the attached file contains a wiki notation that must be dismantled.
-
-''Например, команда:''
 
 For example, the command:
 
 [=(:include Attach:wiki.txt:)=]
 
-''выведет следующий текст:''
-
 displays follow text:
 
 (:include Attach:wiki.txt:)
 
-''А с параметром ''wikiparse'':''
-
 But wish the ''wikiparse'' command:
 
 [=(:include Attach:wiki.txt wikiparse :)=]
-
-''содержимое вики-нотации будет преобразовано в HTML:''
 
 the wiki notation contents will be converted to HTML:
 
 (:include Attach:wiki.txt wikiparse :)
 
 ---- 
-''Если в команде [=(:include:)=] установлены одновременно параметры ''htmlescape'' и ''wikiparse'', то сначала происходит замена символов HTML, а потом разбор вики-нотации.''
-
 If the command [= (: include:) =] installed at the same time ''htmlescape'' and ''wikiparse'' parameters, then the first is the replacement character HTML, and then parse the wiki notation.
-
-''Для вставки исходного текста программ можно использовать следующий формат команды [=(:include:)=]:''
 
 To insert program source code can use the following command format [=(:include:)=]:
 

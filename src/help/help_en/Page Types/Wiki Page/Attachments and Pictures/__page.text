@@ -11,39 +11,27 @@
 
 || [=[[/Page Types/Wiki Page/Attachments and Pictures | Attach:small_image.jpg]]=] || [[/Page Types/Wiki Page/Attachments and Pictures | Attach:small_image.jpg]] || Insert a page link as a picture ||
 
-|| [=%thumb%Attach:image.jpg%%=] || %thumb%Attach:image.jpg%% || ''Вставить уменьшенную картинку со ссылкой на оригинал. [[<<]]Уменьшенные копии картинок создаются в поддиректории __thumb директории с прикрепленными файлами''\
-[[<<]][[<<]]\
-Insert the thumbnail as a link to the original picture.[[<<]]Thumbnails are created in a "__thumb" subdirectory within a attachments directory ||
+|| [=%thumb%Attach:image.jpg%%=] || %thumb%Attach:image.jpg%% || Insert the thumbnail as a link to the original picture.[[<<]]Thumbnails are created in a "__thumb" subdirectory within a attachments directory ||
 
-|| [=%width=200%Attach:image.jpg%%=] || %width=200%Attach:image.jpg%% || ''Вставить уменьшенную картинку с заданной шириной со ссылкой на оригинал.''[[<<]][[<<]]\
-Insert the thumbnail with a specified width as a link to the original picture.[[<<]][[<<]]\
+|| [=%width=200%Attach:image.jpg%%=] || %width=200%Attach:image.jpg%% || Insert the thumbnail with a specified width as a link to the original picture.[[<<]][[<<]] \
 Thumbnails are created in a "__thumb" subdirectory within a attachments directory[[<<]][[<<]]\
-Возможные варианты команды: [[<<]][[<<]]\
-Command variants: [[<<]][[<<]]\
-''[=%width=200px%Attach:image.jpg%%=]'' [[<<]][[<<]]\
-or [[<<]][[<<]]\
-''[=%thumb width=200%Attach:image.jpg%%=]'' [[<<]][[<<]]\
-Уменьшенные копии картинок создаются в поддиректории __thumb директории с прикрепленными файлами [[<<]][[<<]]\
+Command variants: [[<<]][[<<]] \
+''[=%width=200px%Attach:image.jpg%%=]'' \
+[[<<]][[<<]]or [[<<]][[<<]] ''[=%thumb width=200%Attach:image.jpg%%=]'' [[<<]][[<<]] \
 Thumbnails are created in a "__thumb" subdirectory within a attachments directory ||
 
-|| [=%height=200%Attach:image.jpg%%=] || %height=200%Attach:image.jpg%% || Вставить уменьшенную картинку с заданной высотой со ссылкой на оригинал.[[<<]][[<<]]\
-Insert the thumbnail with a specified height as a link to the original picture.[[<<]][[<<]]\
-Возможные варианты команды: [[<<]][[<<]]\
+|| [=%height=200%Attach:image.jpg%%=] || %height=200%Attach:image.jpg%% || Insert the thumbnail with a specified height as a link to the original picture.[[<<]][[<<]] \
 Command variants: [[<<]][[<<]]\
 ''[=%height=200px%Attach:image.jpg%%=]'' [[<<]][[<<]]\
 или [[<<]]\
 ''[=%thumb height=200%Attach:image.jpg%%=]'' [[<<]][[<<]]\
-Уменьшенные копии картинок создаются в поддиректории __thumb директории с прикрепленными файлами [[<<]][[<<]]\
 Thumbnails are created in a "__thumb" subdirectory within a attachments directory ||
 
-|| [=%maxsize=200%Attach:image.jpg%%=] || %maxsize=200%Attach:image.jpg%% || Вставить уменьшенную картинку с заданным максимальным размером со ссылкой на оригинал.[[<<]][[<<]]\
-Insert the thumbnail with a specified max size as a link to the original picture.[[<<]][[<<]]\
-Возможные варианты команды: [[<<]][[<<]]\
+|| [=%maxsize=200%Attach:image.jpg%%=] || %maxsize=200%Attach:image.jpg%% || Insert the thumbnail with a specified max size as a link to the original picture.[[<<]][[<<]]\
 Command variants: [[<<]][[<<]]\
 ''[=%maxsize=200px%Attach:image.jpg%%=]'' [[<<]][[<<]]\
-или [[<<]][[<<]]\
+or [[<<]][[<<]]\
 ''[=%thumb maxsize=200%Attach:image.jpg%%=]'' [[<<]][[<<]]\
-Уменьшенные копии картинок создаются в поддиректории __thumb директории с прикрепленными файлами [[<<]][[<<]]\
 Thumbnails are created in a "__thumb" subdirectory within a attachments directory ||
 
 !!! ''Прикрепленные файлы других типов''
@@ -58,6 +46,6 @@ Thumbnails are created in a "__thumb" subdirectory within a attachments director
 
 || [=Attach:small_image.jpg=] || [[Attach:small_image.jpg]] || Link to an attached picture ||
 
-|| [=[[Attach:file.txt | Attached file]]=]|| [[Attach:file.txt | Прикрепленный файл]] || Link to an attached picture with a comment ||
+|| [=[[Attach:file.txt | Attached file]]=]|| [[Attach:file.txt | Attached file]] || Link to an attached file with a comment ||
 
-|| [=[[Attached file -> Attach:file.txt]]=]|| [[Прикрепленный файл -> Attach:file.txt]] || Link to an attached picture with a comment [[<<]]Same as the previous variant. ||
+|| [=[[Attached file -> Attach:file.txt]]=]|| [[Attached file -> Attach:file.txt]] || Link to an attached picture with a comment [[<<]]Same as the previous variant. ||

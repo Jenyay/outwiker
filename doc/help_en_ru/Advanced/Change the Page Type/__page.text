@@ -1,0 +1,27 @@
+''Если Вы хотите изменить тип страницы, то с данный момент это невозможно сделать через GUI, но так как все страницы хранятся в виде директорий и файлов, то тип страниц можно поменять вручную. Для этого необходимо:''
+
+If you want to change the page type, it is impossible to do with the GUI, but since all pages are stored as files and directories, the page type can be changed manually. To do this:
+
+# Открыть директорию страницы, тип которой нужно поменять
+# Открыть в текстовом редакторе файл ''__page.opt''
+# В разделе ''[General]'' поменять значение ''type'' на нужный тип
+# При необходимости перезагрузить дерево заметок с помощью кнопки ''Reload wiki''
+----
+
+# Open the directory page, the type of which you want to change
+# Open the file ''__page.opt'' in a text editor
+# In ''[General]'' section to change the ''type'' value to the needed type 
+# Restart the tree notes by clicking''Reload wiki'' if needed
+
+''В данный момент поддерживаются следующие типы страниц:''
+
+Currently supported are the following page types:
+
+* text - [[/Page Types/Text Page]]
+* html - [[/Page Types/HTML Page]], 
+* wiki - [[/Page Types/Wiki Page]] 
+* search - [[/Page Types/Search Page]]
+
+''<font color='#ff0000'>'''Изменять тип страниц надо осторожно, потому что для разных типов файлы ''__page.opt'' и ''__page.text'' могут использоваться по-разному.'''</font>''
+
+<font color='#ff0000'>'''Change the page type carefully, because for different page types files ''__page.opt''and''__page.text'' can be used in different ways.'''</font>

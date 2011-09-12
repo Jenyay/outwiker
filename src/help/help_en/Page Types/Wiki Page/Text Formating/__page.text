@@ -18,26 +18,17 @@
 
 ||[={-Strikethrough-}=] ||{-Strikethrough-} || - ||
 
-||[=[@Preformated '''text'''@]=] ||[@Preformated '''text'''@] || ''Внутри скобок не происходит замена символов вики-нотации, текст обрамляется тегом &lt;PRE&gt;...&lt;/PRE&gt;''[[<<]][[<<]]\
-Within the brackets, there is no substitute symbols wiki notation, text is enclosed by tag &lt;PRE&gt;...&lt;/PRE&gt; ||
+||[=[@Preformated '''text'''@]=] ||[@Preformated '''text'''@] || Within the brackets, there is no substitute symbols wiki notation, text is enclosed by tag &lt;PRE&gt;...&lt;/PRE&gt; ||
 
-||[@[=Nonformated '''text'''=]@] ||[=Nonformated '''text'''=] || ''Внутри скобок не происходит замена спец. символов вики-нотации''[[<<]][[<<]]\
-Within the brackets, there is no substitute symbols wiki notation ||
+||[@[=Nonformated '''text'''=]@] ||[=Nonformated '''text'''=] || Within the brackets, there is no substitute symbols wiki notation ||
 
 ||[=----=] || ---- || Horisontal line ||
 
 
-''Существуют команды, связанные с переносом строк. Например, символ "\" в конце строки обозначает, что строка продолжается на следующей строке и перенос в этом месте делать не надо. Например:''
-
 There are commands to linebreak. Thus, the symbol "\" at the end of the line indicates that the line continues on the next line and break at this point to do. For example:
-
-''Это длинная строка, \
-которая продолжается на следующей строке''
 
 This is a long line, \
 which continues on the next line
-
-''Команда '''[=[[&lt;&lt;]]=]''' обозначает, что на этом месте должен быть перенос строки. Эта команда работает в списках и таблицах, так как в них перенос строки обозначает создание нового элемента списка или новой строки таблицы. Например:''
 
 Command '''[=[[<<]]=]''' indicates that this place should be a line break. This command works on lists and tables, as they have a line break indicates a new list item or a new row. For example:
 
