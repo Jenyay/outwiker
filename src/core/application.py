@@ -3,17 +3,22 @@
 
 import gettext
 
-from core.config import Config, getConfigPath
+from .config import Config, getConfigPath
 import core.i18n
-from core.event import Event
+from .event import Event
 from gui.guiconfig import GeneralGuiConfig
+from .recent import RecentWiki
 
 
 class ApplicationParams (object):
 	def __init__ (self):
 		# Открытая в данный момент wiki
-		self._wikiroot = None
+		self.__wikiroot = None
+
+		# Главное окно приложения
+		self.__mainWindow = None
 		self.config = None
+		self.recentWiki = None
 		self.__createEvents()
 
 	
@@ -22,30 +27,75 @@ class ApplicationParams (object):
 		Инициализировать конфиг и локаль
 		"""
 		self.config = Config (configFilename)
+		self.recentWiki = RecentWiki (self.config)
 		self.__initLocale()
 
 
 	@property
 	def wikiroot (self):
-		return self._wikiroot
+		return self.__wikiroot
 
 
 	@wikiroot.setter
 	def wikiroot (self, value):
-		self.onWikiClose (self._wikiroot)
-		self._wikiroot = value
-		self.onWikiOpen (self._wikiroot)
-	
+		self.onWikiClose (self.__wikiroot)
+
+		if self.__wikiroot != None:
+			self.__unbindWikiEvents (self.__wikiroot)
+
+		self.__wikiroot = value
+
+		if self.__wikiroot != None:
+			self.__bindWikiEvents (self.__wikiroot)
+
+		self.onWikiOpen (self.__wikiroot)
+
+
+	@property
+	def mainWindow (self):
+		return self.__mainWindow
+
+
+	@mainWindow.setter
+	def mainWindow (self, value):
+		self.__mainWindow = value
+
+
+	def __bindWikiEvents (self, wiki):
+		wiki.onPageSelect += self.onPageSelect
+		wiki.onPageUpdate += self.onPageUpdate
+		wiki.onTreeUpdate += self.onTreeUpdate
+		wiki.onStartTreeUpdate += self.onStartTreeUpdate
+		wiki.onEndTreeUpdate += self.onEndTreeUpdate
+		wiki.onPageOrderChange += self.onPageOrderChange
+		wiki.onPageRename += self.onPageRename
+		wiki.onPageCreate += self.onPageCreate
+		wiki.onPageRemove += self.onPageRemove
+		wiki.bookmarks.onBookmarksChanged += self.onBookmarksChanged
+
+
+	def __unbindWikiEvents (self, wiki):
+		wiki.onPageSelect -= self.onPageSelect
+		wiki.onPageUpdate -= self.onPageUpdate
+		wiki.onTreeUpdate -= self.onTreeUpdate
+		wiki.onStartTreeUpdate -= self.onStartTreeUpdate
+		wiki.onEndTreeUpdate -= self.onEndTreeUpdate
+		wiki.onPageOrderChange -= self.onPageOrderChange
+		wiki.onPageRename -= self.onPageRename
+		wiki.onPageCreate -= self.onPageCreate
+		wiki.onPageRemove -= self.onPageRemove
+		wiki.bookmarks.onBookmarksChanged -= self.onBookmarksChanged
+
 
 	@property
 	def selectedPage (self):
 		"""
 		Вернуть текущую страницу или None, если страница не выбрана или вики не открыта
 		"""
-		if self._wikiroot == None:
+		if self.__wikiroot == None:
 			return None
 
-		return self._wikiroot.selectedPage
+		return self.__wikiroot.selectedPage
 
 
 	def __createEvents (self):

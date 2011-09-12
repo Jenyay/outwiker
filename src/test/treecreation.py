@@ -52,7 +52,16 @@ class TextPageCreationTest(unittest.TestCase):
 
 		self.rootwiki[u"Страница 2/Страница 3/Страница 4"].icon = "../test/images/feed.gif"
 
+		self.icons = ["../test/images/icon.gif", 
+				"../test/images/icon.png",
+				"../test/images/icon.jpg",
+				"../test/images/icon.ico"]
+
+		Application.wikiroot = None
+
+
 	def tearDown(self):
+		Application.wikiroot = None
 		removeWiki (self.path)
 
 
@@ -61,6 +70,7 @@ class TextPageCreationTest(unittest.TestCase):
 
 
 	def testEventChangeContent (self):
+		Application.wikiroot = self.rootwiki
 		Application.onPageUpdate += self.onPageUpdate
 
 		self.rootwiki[u"Страница 1"].content = u"тарам-там-там"
@@ -73,7 +83,17 @@ class TextPageCreationTest(unittest.TestCase):
 		Application.onPageUpdate -= self.onPageUpdate
 
 
+	def testNoEventChangeContent (self):
+		Application.onPageUpdate += self.onPageUpdate
+
+		self.rootwiki[u"Страница 1"].content = u"тарам-там-там"
+		self.assertEqual (self.eventcount, 0)
+		
+		Application.onPageUpdate -= self.onPageUpdate
+
+
 	def testEventChangeTags (self):
+		Application.wikiroot = self.rootwiki
 		Application.onPageUpdate += self.onPageUpdate
 
 		self.rootwiki[u"Страница 1"].tags = [u"метка 1", u"метка 2", u"метка 4"]
@@ -82,6 +102,15 @@ class TextPageCreationTest(unittest.TestCase):
 		# То же самое содержимое
 		self.rootwiki[u"Страница 1"].tags = [u"метка 1", u"метка 2", u"метка 4"]
 		self.assertEqual (self.eventcount, 1)
+
+		Application.onPageUpdate -= self.onPageUpdate
+
+
+	def testNoEventChangeTags (self):
+		Application.onPageUpdate += self.onPageUpdate
+
+		self.rootwiki[u"Страница 1"].tags = [u"метка 1", u"метка 2", u"метка 4"]
+		self.assertEqual (self.eventcount, 0)
 
 		Application.onPageUpdate -= self.onPageUpdate
 
@@ -124,6 +153,31 @@ class TextPageCreationTest(unittest.TestCase):
 		wiki = WikiDocument.load (self.path)
 		self.assertEqual (os.path.basename (wiki[u"Страница 2/Страница 3/Страница 4"].icon), 
 				"__icon.gif")
+
+
+	def testReplaceIcon (self):
+		wiki = WikiDocument.load (self.path)
+
+		wiki[u"Страница 1"].icon = self.icons[3]
+		self.assertEqual (os.path.basename (wiki[u"Страница 1"].icon), "__icon.ico")
+
+		wiki[u"Страница 1"].icon = self.icons[1]
+		self.assertEqual (os.path.basename (wiki[u"Страница 1"].icon), "__icon.png")
+
+		wiki[u"Страница 1"].icon = self.icons[0]
+		self.assertEqual (os.path.basename (wiki[u"Страница 1"].icon), "__icon.gif")
+
+		wiki[u"Страница 1"].icon = self.icons[2]
+		self.assertEqual (os.path.basename (wiki[u"Страница 1"].icon), "__icon.jpg")
+
+		wiki[u"Страница 1"].icon = self.icons[3]
+		self.assertEqual (os.path.basename (wiki[u"Страница 1"].icon), "__icon.ico")
+
+		wiki[u"Страница 1"].icon = self.icons[0]
+		self.assertEqual (os.path.basename (wiki[u"Страница 1"].icon), "__icon.gif")
+
+		wiki[u"Страница 1"].icon = self.icons[1]
+		self.assertEqual (os.path.basename (wiki[u"Страница 1"].icon), "__icon.png")
 
 
 	def testTags (self):

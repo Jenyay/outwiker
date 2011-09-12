@@ -1,0 +1,134 @@
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>
+
+	<STYLE type="text/css">
+		body, div, p, table {
+			font-size:10pt;
+			font-family:Verdana;
+		}
+
+		img{border:none}
+		
+	</STYLE>
+</HEAD>
+
+<BODY>
+<P><H2>Purpose and syntax (:include:) command</H2></P>
+
+<P>Command (:include:) is designed to be inserted into a wiki page content attachments. General syntax is as follows:</P>
+
+<P>(:include Attach:filename [params...]:)</P>
+
+<P>Here <I>filename</I> is the name of the attached file, and params of the command shown in the next section.</P>
+
+<P><H2>Params of the command (:include:)</H2></P>
+
+<P>(:include:) command can take follow values:</P>
+
+<P>
+<UL>
+<LI><I>encoding</I></LI>
+<LI><I>htmlescape</I></LI>
+<LI><I>wikiparse</I></LI>
+</UL>
+<BR><H3>encoding</H3>
+<BR><I>Encoding</I> parameter indicates the encoding of the included text. OutWiker can not determine file encoding, by default, it is considered that uses UTF-8.</P>
+
+<P>If you want to include the file <A HREF="__attach/text_utf8.txt">text_utf8.txt</A> in the UTF-8, it suffices to write</P>
+
+<P>(:include Attach:text_utf8.txt:)</P>
+
+<P>Result:</P>
+
+<P>Текст в 
+<BR>кодировке UTF-8</P>
+
+<P>For the same file encoding can be specified explicitly:</P>
+
+<P>(:include Attach:text_utf8.txt encoding=utf8 :)</P>
+
+<P>To insert a file <A HREF="__attach/text_1251.txt">text_1251.txt</A> with encoding cp1251 command will look like this:</P>
+
+<P>(:include Attach:text_1251.txt encoding=cp1251:)</P>
+
+<P>Result:</P>
+
+<P>Это текст
+<BR>в кодировке 1251</P>
+
+<P>If you forget to specify the encoding, you get an error. Example:</P>
+
+<P>(:include Attach:text_1251.txt:)</P>
+
+<P>Result:</P>
+
+<P><B>Encoding error in file text_1251.txt</B></P>
+
+<P>Full list of supported encodings is extensive, it can be found at <A HREF="http://docs.python.org/library/codecs.html#standard-encodings">this page</A> of help in Python, we list the most commonly used encoding (one and the same code can have multiple names):</P>
+
+<P>
+<UL>
+<LI>utf8, utf-8, utf_8, U8, UTF;</LI>
+<LI>cp1251, windows-1251;</LI>
+<LI>koi8_r;</LI>
+<LI>koi8_u;</LI>
+<LI>utf_32, utf-32, utf32;</LI>
+<LI>utf_16, utf-16, utf16;</LI>
+<LI>mac_cyrillic, maccyrillic;</LI>
+<LI>cp866, 866, IBM866;</LI>
+</UL>
+<BR><H3>htmlescape</H3></P>
+
+<P>Parameter <I>htmlescape</I> tells the command that in the text read from a file, replace the characters &lt;,&gt; and &amp; respectively, &amp;lt;, &amp;gt;, and &amp;amp;. This is particularly useful for inserting the source program from the attached files.</P>
+
+<P>For example, the command</P>
+
+<P>(:include Attach:html.txt:)</P>
+
+<P>displays text in bold type:</P>
+
+<P><B>Это текст с HTML-тегами</B></P>
+
+<P>And when you add a parameter <I>htmlescape</I>:</P>
+
+<P>(:include Attach:html.txt htmlescape:)</P>
+
+<P>will display the HTML code:</P>
+
+<P>&lt;B&gt;Это текст с HTML-тегами&lt;/B&gt;</P>
+
+<P>
+<BR><H3>wikiparse</H3></P>
+
+<P><I>Wikiparse</I> parameter tells the command that file is inserted, you must first pass through the wiki parser, that is, that the attached file contains a wiki notation that must be dismantled.</P>
+
+<P>For example, the command:</P>
+
+<P>(:include Attach:wiki.txt:)</P>
+
+<P>displays follow text:</P>
+
+<P>'''Этот текст содержит вики-нотацию'''</P>
+
+<P>But wish the <I>wikiparse</I> command:</P>
+
+<P>(:include Attach:wiki.txt wikiparse :)</P>
+
+<P>the wiki notation contents will be converted to HTML:</P>
+
+<P><B>Этот текст содержит вики-нотацию</B></P>
+
+<P><HR> 
+<BR>If the command  (: include:)  installed at the same time <I>htmlescape</I> and <I>wikiparse</I> parameters, then the first is the replacement character HTML, and then parse the wiki notation.</P>
+
+<P>To insert program source code can use the following command format (:include:):</P>
+
+<P>
+<PRE>
+&lt;PRE&gt;
+(:include Attach:filename htmlescape:)
+&lt;/PRE&gt;
+</PRE></P>
+</BODY>
+</HTML>

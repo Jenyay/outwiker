@@ -48,13 +48,14 @@ class TextPageFactory (PageFactory):
 		return PageFactory.createPage (TextPageFactory.getPageType(), parent, title, tags)
 
 
-
 	@staticmethod
-	def getPageView (page, parent):
+	def getPageView (parent):
 		"""
 		Вернуть контрол, котоырй будет отображать и редактировать страницу
 		"""
-		return TextPanel (page, parent)
+		panel = TextPanel (parent)
+
+		return panel
 
 
 	@staticmethod

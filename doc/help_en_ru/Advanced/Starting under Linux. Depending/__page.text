@@ -1,0 +1,10 @@
+''Под Linux должны быть установлены следующие пакеты:''
+
+When using Linux the following packages should be installed:
+
+* '''python''' (version 2.6 or 2.7)
+* '''python-wxgtk2.8'''
+* '''python-wxversion'''
+* '''python-webkit-dev'''
+* '''libgnomeprint2.2-0''', '''libgnomeprintui2.2-0''' (These packages are used to print text, such as text pages, wiki notation or the original source page. Without this package printing will work, but there is a problem with the Russian letters printing)
+* '''mimetex''' (without this package rendering formulas will not work)

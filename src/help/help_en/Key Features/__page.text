@@ -1,0 +1,14 @@
+* The base is stored as a directory tree on disk. 
+* Any number of files can be attached to each note. 
+* Pages can be of different types.
+* Attached images can be inserted into the HTML-page. 
+* HTML syntax highlighting.
+* Tags support.
+* Support for bookmarks.
+* Each tree branch can be opened as a separate wiki. 
+* Icons for notes. 
+* Cross-platform (Windows and Linux). 
+* Portability. Program all the settings can be stored in its directory. 
+* Open-source program.
+* The ability to create links between pages.
+* Global search on your notes and search by tags.

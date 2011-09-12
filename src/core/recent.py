@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-from core.application import Application
-
 
 class RecentWiki (object):
 	"""
@@ -17,8 +15,6 @@ class RecentWiki (object):
 		self._paramTemplate = u"Path_%d"
 
 		self._load()
-
-		#Application.onWikiOpen += self.onWikiOpen
 
 
 	def onWikiOpen (self, wikiroot):

@@ -1,0 +1,12 @@
+You can insert a link to another page in each note.
+Examples of links:
+
+The search of page begins at the root of the tree  - <a href="/Key Features/Search">/Key Features/Search</a>.
+
+The search of page begins from the current note, but as "Key Features" note does not exist, search begins from the root again - <a href="Key Features/Search">Key Features/Search</a>
+
+Link to the subpage (subnote): <a href="Nested Page">Nested Page</a>
+
+If a link begins with a forward slash (/Page 1/Page 2…), a search of this page begins from the tree root. If a initial forward slash does not exist (Page 1/Page 2…), then the program will search a page beginning from a current page, and if it's not found - then the search beging from the tree root again. If the page is not found - nothing happens.
+
+[[Wiki pages -> /Page Types/Wiki Page]] support its own [[link syntax -> /Page Types/Wiki Page/Links]].

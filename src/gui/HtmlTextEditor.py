@@ -7,6 +7,7 @@ import wx
 import gui.TextEditor
 from core.application import Application
 
+
 class HtmlTextEditor (gui.TextEditor.TextEditor):
 	def __init__(self, *args, **kwds):
 		gui.TextEditor.TextEditor.__init__(self, *args, **kwds)

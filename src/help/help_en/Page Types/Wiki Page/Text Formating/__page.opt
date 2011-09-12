@@ -1,0 +1,11 @@
+[wiki]
+md5_hash = aaa27545c130446074b19acfc4384054
+
+[Tree]
+expand = False
+
+[General]
+type = wiki
+order = 5
+tags = for users, wiki
+

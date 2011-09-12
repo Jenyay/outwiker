@@ -6,20 +6,16 @@ import wx
 from gui.TextEditor import TextEditor
 from gui.BaseTextPanel import BaseTextPanel
 
+
 class TextPanel (BaseTextPanel):
 	"""
 	Класс для представления текстовых страниц
 	"""
 
-	def __init__ (self, page, parent, *args, **kwds):
-		BaseTextPanel.__init__ (self, *args, **kwds)
-
-		kwds["style"] = wx.TAB_TRAVERSAL
-		wx.Panel.__init__(self, parent, *args, **kwds)
+	def __init__ (self, parent, *args, **kwds):
+		BaseTextPanel.__init__ (self, parent, *args, **kwds)
 
 		self.__layout()
-
-		self.page = page
 
 	
 	def Print (self):

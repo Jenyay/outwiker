@@ -1,0 +1,23 @@
+!!! Purpose and syntax [=(:ljuser:)=] and [=(:ljcomm:)=] commands
+
+The [=(:ljuser:)=] command is designed to insert a link to the users of http://livejournal.com, so that the link looks outwardly the same, as is customary in the livejournal.
+
+Similarly, the [=(:ljcomm:)=] command is designed to insert a link to the community at livejournal.
+
+The command syntax is as follows:
+
+[=(:ljuser username:)=]
+[=(:ljcomm commname:)=]
+
+Here,''username''- the name of the user of livejournal where you want to insert a link; ''ljcomm''- the name of the community of livejournal to which should insert a link.
+
+'''Note''' that the icon for the user and the community is downloaded from the Internet (from the website livejournal), which can slow down the display page using these commands. In addition, if developers will change the way Learn to these pictures, it will lead to the fact that the picture will not be displayed.
+
+!!! Examples
+
+The following table shows the operation of [= (: ljuser:) =] and [= (: ljcomm:) =] commands
+
+||border=1 width=400
+|| '''Command''' || '''Result''' ||
+|| [=(:ljuser jenyay:)=] || (:ljuser jenyay:) ||
+|| [=(:ljcomm ljournalist:)=] || (:ljcomm ljournalist:) ||

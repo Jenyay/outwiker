@@ -1,0 +1,25 @@
+''В таблице приведены примеры оформления ссылок на адреса в интернете и на другие страницы дерева.''
+
+The following table shows examples of links to the Internet address and to other pages in the tree.
+ 
+!!! Links
+
+|| border=1
+|| '''Syntax''' || '''Result''' || '''Comment''' ||
+||[=http://example.com=]||http://example.com||A link to the Internet address||
+||[=[[http://example.com]]=]||[[http://example.com]]||A link to the Internet address||
+||[=[[Link sample -> http://example.com]]=]||[[Link sample -> http://example.com]]||A link to the Internet address with a comment||
+||[=[[http://example.com | Link sample]]=]||[[http://example.com | Link sample]]||A link to the Internet address with a comment||
+||[=[[/Page Types/Wiki Page/Links]]=]||[[/Page Types/Wiki Page/Links]]||A link to tree page||
+||[=[[/Page Types/Wiki Page/Links | Page link]]=]||[[/Page Types/Wiki Page/Links | Page link]]||A link to tree page with a comment||
+||[=[[FAQ->Пользователям/FAQ]]=]||[[FAQ->Пользователям/FAQ]]||A link to tree page with a comment||
+||[=http://jenyay.net/utils/small_image.jpg=]||http://jenyay.net/utils/small_image.jpg||A picture from the Internet||
+||[=[[http://jenyay.net/utils/small_image.jpg]]=]||[[http://jenyay.net/utils/small_image.jpg]]||A link to picture from the Internet||
+
+!!! Anchors
+
+|| border=1
+|| '''Syntax''' || '''Result''' || '''Comment''' ||
+||[=[[#anchor]]=]||Anchor "#anchor" [[#anchor]]||HTML code: &lt;A NAME=&quot;#anchor&quot;&gt;&lt;/A&gt;||
+||[=[[#anchor | A link to the anchor]]=]||[[#anchor | A link to the anchor]]||A link to the anchor "#anchor"||
+||[=[[ link to the anchor -> #anchor]]=]||[[#anchor | A link to the anchor]]||A link to the anchor "#anchor"||

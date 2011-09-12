@@ -1,0 +1,15 @@
+[wiki]
+<<<<<<< TREE
+md5_hash = 9ca4de59d8f0fbb6d1bfe03ba4f9cacd
+=======
+md5_hash = c5fa94d18bdd2e045e35ab7ed1380529
+>>>>>>> MERGE-SOURCE
+
+[Tree]
+expand = False
+
+[General]
+type = wiki
+order = 2
+tags = пользователям
+

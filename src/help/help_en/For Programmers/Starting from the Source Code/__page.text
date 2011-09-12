@@ -1,0 +1,15 @@
+The program is open source and distributed under the GPL. Sources are located on the [[https://launchpad.net/outwiker | launchpad.net]].
+
+To get the latest version of the source code from the bazaar repository, execute the command:
+
+'''bzr branch lp:outwiker/trunk'''
+
+To run these commands, [[http://bazaar.canonical.com/en/ | Bazaar]] must be installed.
+
+To run the program from the source code, [[http://www.python.org/ | Python 2.6]] and [[http://wxpython.org/ | wxPython 2.8]] must be installed.
+
+To run the OutWiker program from source code, execute following command (in the ''src'' directory):
+
+'''python outwiker.py'''
+
+When you run the program under Linux, check out the dependencies [[depending -> / Advanced / Starting under Linux. Depending]]

@@ -1,0 +1,26 @@
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>
+
+	<STYLE type="text/css">
+		body, div, p, table {
+			font-size:10pt;
+			font-family:Verdana;
+		}
+
+		img{border:none}
+		
+	</STYLE>
+</HEAD>
+
+<BODY>
+<P>В таблице приведены примеры оформления ссылок на адреса в интернете и на другие страницы дерева.
+<BR> 
+<BR><H2>Ссылки</H2></P>
+
+<P><TABLE border=1><TR><TD ALIGN="CENTER"><B>Синтаксис</B></TD><TD ALIGN="CENTER"><B>Результат</B></TD><TD ALIGN="CENTER"><B>Комментарий</B></TD></TR><TR><TD>http://example.com</TD><TD><A HREF="http://example.com">http://example.com</A></TD><TD>Ссылка на адрес в интернете</TD></TR><TR><TD>[[http://example.com]]</TD><TD><A HREF="http://example.com">http://example.com</A></TD><TD>Ссылка на адрес в интернете</TD></TR><TR><TD>[[Пример ссылки -> http://example.com]]</TD><TD><A HREF="http://example.com">Пример ссылки</A></TD><TD>Ссылка на адрес в интернете с заданным текстом</TD></TR><TR><TD>[[http://example.com | Пример ссылки]]</TD><TD><A HREF="http://example.com">Пример ссылки</A></TD><TD>Ссылка на адрес в интернете с заданным текстом</TD></TR><TR><TD>[[Пользователям/FAQ]]</TD><TD><A HREF="Пользователям/FAQ">Пользователям/FAQ</A></TD><TD>Ссылка на страницу дерева</TD></TR><TR><TD>[[Пользователям/FAQ | FAQ]]</TD><TD><A HREF="Пользователям/FAQ">FAQ</A></TD><TD>Ссылка на страницу дерева с комментарием</TD></TR><TR><TD>[[FAQ->Пользователям/FAQ]]</TD><TD><A HREF="Пользователям/FAQ">FAQ</A></TD><TD>Ссылка на страницу дерева с комментарием</TD></TR><TR><TD>http://jenyay.net/utils/small_image.jpg</TD><TD><IMG SRC="http://jenyay.net/utils/small_image.jpg"/></TD><TD>Картинка из интернета</TD></TR><TR><TD>[[http://jenyay.net/utils/small_image.jpg]]</TD><TD><A HREF="http://jenyay.net/utils/small_image.jpg">http://jenyay.net/utils/small_image.jpg</A></TD><TD>Ссылка на картинку из интернета</TD></TR></TABLE>
+<BR><H2>Якоря</H2></P>
+
+<P><TABLE border=1><TR><TD ALIGN="CENTER"><B>Синтаксис</B></TD><TD ALIGN="CENTER"><B>Результат</B></TD><TD ALIGN="CENTER"><B>Комментарий</B></TD></TR><TR><TD>[[#anchor]]</TD><TD>Якорь с именем #anchor <A NAME="anchor"></A></TD><TD>Результирующий HTML-код: &lt;A NAME=&quot;#anchor&quot;&gt;&lt;/A&gt;</TD></TR><TR><TD>[[#anchor | Ссылка на якорь]]</TD><TD><A HREF="#anchor">Ссылка на якорь</A></TD><TD>Ссылка на якорь с именем anchor</TD></TR><TR><TD>[[Ссылка на якорь -> #anchor]]</TD><TD><A HREF="#anchor">Ссылка на якорь</A></TD><TD>Ссылка на якорь с именем anchor</TD></TR></TABLE></P>
+</BODY>
+</HTML>

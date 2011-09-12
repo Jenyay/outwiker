@@ -1,0 +1,13 @@
+Одним из типов страниц, поддерживаемый OutWiker'ом, являются страницы, содержащие HTML-код. На данный момент под Windows для показа HTML-страниц используется движок Internet Explorer, а под Linux - WebKit.
+
+В отличие от стандартного HTML-кода, OutWiker учитывает перевод строк. Так, одиночный перевод строки заменяется на тег &lt;BR&gt;, а двойной перевод строки заменяется на &lt;P&gt;
+
+На панель инструментов HTML-страницы вынесены кнопки для добавления некоторых наиболее часто используемых тегов.
+
+На странице возможны ссылки на прикрепленные файлы. Примеры смотрите ниже.
+
+Скриншоты примера страниц:
+
+<table border=0 width=100%>
+<tr><td align=center><a href="__attach/outwiker_1.0_alpha_3_htmlcode_win.png"><img src="__attach/outwiker_1.0_alpha_3_htmlcode_win_small.png"/></a></td><td align=center><a href="__attach/outwiker_1.0_alpha_3_html_win.png"><img src="__attach/outwiker_1.0_alpha_3_html_win_small.png"/></a></td></tr>
+</table>

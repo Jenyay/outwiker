@@ -22,8 +22,8 @@ from htmlgenerator import HtmlGenerator
 
 
 class WikiPagePanel (HtmlPanel):
-	def __init__ (self, *args, **kwds):
-		HtmlPanel.__init__ (self, *args, **kwds)
+	def __init__ (self, parent, *args, **kwds):
+		HtmlPanel.__init__ (self, parent, *args, **kwds)
 
 		self._configSection = u"wiki"
 		self._hashKey = u"md5_hash"
@@ -38,6 +38,8 @@ class WikiPagePanel (HtmlPanel):
 		self.htmlcodePageIndex = -1
 
 		self.config = WikiConfig (Application.config)
+
+		self.__createCustomTools()
 
 		if self.config.showHtmlCodeOptions.value:
 			self.htmlcodePageIndex = self.__createHtmlCodePanel(self.htmlSizer)
@@ -188,7 +190,7 @@ class WikiPagePanel (HtmlPanel):
 		self._addTool (self.pageToolsMenu, 
 				"ID_ALIGN_RIGHT", 
 				lambda event: self.codeEditor.turnText (u"%right%", u""), 
-				_(u"Right align\tCtrl+ALT+R"), 
+				_(u"Right align\tCtrl+Alt+R"), 
 				_(u"Right align"), 
 				os.path.join (self.imagesDir, "text_align_right.png"))
 	
@@ -197,8 +199,8 @@ class WikiPagePanel (HtmlPanel):
 		self._addTool (self.pageToolsMenu, 
 				"ID_PREFORMAT", 
 				lambda event: self.codeEditor.turnText (u"[@", u"@]"), 
-				_(u"Preformat [@…@]"), 
-				_(u"Preformat [@…@]"), 
+				_(u"Preformat [@…@]\tCtrl+Alt+F"), 
+				_(u"Preformat [@…@]"),
 				None)
 
 		self._addTool (self.pageToolsMenu, 
@@ -323,12 +325,28 @@ class WikiPagePanel (HtmlPanel):
 				_(u'Link'), 
 				os.path.join (self.imagesDir, "link.png"))
 
+
+		self._addTool (self.pageToolsMenu, 
+				"ID_ANCHOR", 
+				lambda event: self.codeEditor.turnText (u'[[#', u']]'), 
+				_(u"Anchor\tCtrl+Alt+L"), 
+				_(u'Anchor'), 
+				os.path.join (self.imagesDir, "anchor.png"))
+
+
 		self._addTool (self.pageToolsMenu, 
 				"ID_HORLINE", 
 				lambda event: self.codeEditor.replaceText (u'----'), 
 				_(u"Horizontal line\tCtrl+H"), 
 				_(u"Horizontal line"), 
 				os.path.join (self.imagesDir, "text_horizontalrule.png"))
+
+		self._addTool (self.pageToolsMenu, 
+				"ID_LINEBREAK", 
+				lambda event: self.codeEditor.replaceText (u'[[<<]]'), 
+				_(u"Line break\tCtrl+Return"), 
+				_(u"Line break"), 
+				os.path.join (self.imagesDir, "linebreak.png"))
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_EQUATION", 
@@ -346,9 +364,9 @@ class WikiPagePanel (HtmlPanel):
 				_(u"Convert HTML Symbols"), 
 				None)
 
-	
-	def initGui (self, mainWindow):
-		BaseTextPanel.initGui (self, mainWindow)
+
+	def __createCustomTools (self):
+		assert self.mainWindow != None
 
 		self.pageToolsMenu = wx.Menu()
 
@@ -370,15 +388,13 @@ class WikiPagePanel (HtmlPanel):
 		self.__addFormatTools()
 		self.__addOtherTools()
 
-		mainWindow.mainMenu.Insert (mainWindow.mainMenu.GetMenuCount() - 1, 
+		self.mainWindow.mainMenu.Insert (self.mainWindow.mainMenu.GetMenuCount() - 1, 
 				self.pageToolsMenu, 
 				_(u"&Wiki") )
 
-		mainWindow.mainToolbar.Realize()
+		self.mainWindow.mainToolbar.Realize()
 
-		self._openDefaultPage()
-
-
+	
 	def __addCommandsTools (self):
 		self.commandsMenu = wx.Menu()
 		self.pageToolsMenu.AppendSubMenu (self.commandsMenu, _(u"Commands"))

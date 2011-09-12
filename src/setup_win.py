@@ -32,5 +32,5 @@ setup(
 	version = getCurrentVersion(),
 	description = "Wiki + Outliner",
 	options = {'build_exe': {'excludes':excludes, 'packages':packages, 'include_files':includefiles}},
-	executables = [Executable("outwiker.py", base = 'Win32GUI', icon = "images/icon.ico")])
+	executables = [Executable("outwiker.py", base = 'Win32GUI', icon = "images/outwiker.ico")])
 

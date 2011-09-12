@@ -5,10 +5,10 @@ import os.path
 import ConfigParser
 import shutil
 
-from application import Application
-from config import PageConfig
-from bookmarks import Bookmarks
-from search import TagsList
+from .config import PageConfig
+from .bookmarks import Bookmarks
+from .search import TagsList
+from .event import Event
 import core.exceptions
 
 
@@ -181,11 +181,10 @@ class RootWikiPage (object):
 		Отсортировать дочерние страницы по алфавиту
 		"""
 		self._children.sort (RootWikiPage.sortAlphabeticalFunction)
-		#self._children.sort (RootWikiPage.sortAlphabeticalFunction, reverse=True)
 
-		Application.onStartTreeUpdate (self.root)
+		self.root.onStartTreeUpdate (self.root)
 		self._saveChildrenParams()
-		Application.onEndTreeUpdate (self.root)
+		self.root.onEndTreeUpdate (self.root)
 
 
 
@@ -233,18 +232,78 @@ class RootWikiPage (object):
 		"""
 		Проверить, является ли page дочерней (вложенной) страницей для self
 		"""
-		# Возможно, лучше было бы использовать subpath вместо path, 
-		# чтобы не зависеть от способа хранения страниц,
-		# но тогда надо учесть, что корень имеет subpath - "/"
-		return page.path.startswith (self.path)
+		currentpage = page
+		while currentpage != None:
+			if currentpage == self:
+				return True
+			currentpage = currentpage.parent
 
+		return False
 
 
 class WikiDocument (RootWikiPage):
 	def __init__ (self, path, readonly = False):
 		RootWikiPage.__init__ (self, path, readonly)
 		self._selectedPage = None
+		self.__createEvents()
 		self.bookmarks = Bookmarks (self, self._params)
+
+
+	def __createEvents (self):
+		# Выбор новой страницы
+		# Параметры: новая выбранная страница
+		self.onPageSelect = Event()
+
+		# Обновление дерева
+		# Параметры: sender - из-за кого обновляется дерево
+		self.onTreeUpdate = Event()
+
+		# Начало сложного обновления дерева
+		# Параметры: root - корень дерева
+		self.onStartTreeUpdate = Event()
+
+		# Конец сложного обновления дерева
+		# Параметры: root - корень дерева
+		self.onEndTreeUpdate = Event()
+
+		# Обновление страницы
+		# Параметры: sender
+		self.onPageUpdate = Event()
+
+		# Изменение порядка страниц
+		# Параметры: page - страница, положение которой изменили
+		self.onPageOrderChange = Event()
+
+		# Переименование страницы.
+		# Параметры: page - переименованная страница, oldSubpath - старый относительный путь до страницы
+		self.onPageRename = Event()
+
+		# Создание страницы
+		# Параметры: sender
+		self.onPageCreate = Event()
+
+		# Удаленеи страницы
+		# Параметр - удаленная страница
+		self.onPageRemove = Event()
+
+
+	@staticmethod
+	def clearConfigFile (path):
+		"""
+		Очистить файл __page.opt.
+		Используется в случае, если файл __page.opt испорчен
+		path - путь до вики (или до директории с файлом __page.opt, или включая этот файл)
+		"""
+		if path.endswith (RootWikiPage.pageConfig):
+			realpath = path
+		else:
+			realpath = os.path.join (path, RootWikiPage.pageConfig)
+
+		try:
+			fp = open (realpath, "w")
+			fp.close()
+		except IOError:
+			raise core.exceptions.ClearConfigError
 
 
 	@staticmethod
@@ -253,14 +312,18 @@ class WikiDocument (RootWikiPage):
 		Загрузить корневую страницу вики.
 		Использовать этот метод вместо конструктора
 		"""
-		root = WikiDocument(path, readonly)
+		try:
+			root = WikiDocument(path, readonly)
+		except ConfigParser.Error:
+			raise core.exceptions.RootFormatError
+
 		root.loadChildren()
 
 		lastvieved = root.lastViewedPage
 		if lastvieved != None:
 			root.selectedPage = root[lastvieved]
 
-		Application.onTreeUpdate(root)
+		root.onTreeUpdate(root)
 		return root
 
 
@@ -278,7 +341,7 @@ class WikiDocument (RootWikiPage):
 		"""
 		root = WikiDocument (path)
 		root.save()
-		Application.onTreeUpdate(root)
+		root.onTreeUpdate(root)
 
 		return root
 
@@ -301,7 +364,7 @@ class WikiDocument (RootWikiPage):
 		if not self.readonly:
 			self._params.lastViewedPageOption.value = subpath
 
-		Application.onPageSelect(self._selectedPage)
+		self.root.onPageSelect(self._selectedPage)
 		self.save()
 	
 
@@ -378,7 +441,7 @@ class WikiPage (RootWikiPage):
 			realorder = len (self.parent.children) - 1
 
 		self.parent._changeChildOrder (self, realorder)
-		Application.onPageOrderChange (self)
+		self.root.onPageOrderChange (self)
 	
 
 	@property
@@ -412,9 +475,8 @@ class WikiPage (RootWikiPage):
 		if self.root.selectedPage == self:
 			self.root.params.lastViewedPageOption.value = self.subpath
 
-		Application.onPageRename (self, oldsubpath)
-		#Application.onPageUpdate (self)
-		Application.onTreeUpdate (self)
+		self.root.onPageRename (self, oldsubpath)
+		self.root.onTreeUpdate (self)
 	
 
 	def canRename (self, newtitle):
@@ -482,7 +544,7 @@ class WikiPage (RootWikiPage):
 		if self.root.selectedPage == self:
 			self.root.params.lastViewedPageOption.value = self.subpath
 
-		Application.onTreeUpdate (self)
+		self.root.onTreeUpdate (self)
 
 	
 	def _getTempName (self, pagepath):
@@ -507,13 +569,19 @@ class WikiPage (RootWikiPage):
 
 	@property
 	def icon (self):
-		return self._getIcon()
+		icons = self._getIconFiles()
+		return icons[0] if len (icons) > 0 else None
 
 
 	@icon.setter
 	def icon (self, iconpath):
 		if self.readonly:
 			raise core.exceptions.ReadonlyException
+
+		if self.icon != None and os.path.abspath (self.icon) == os.path.abspath (iconpath):
+			return
+
+		self._removeOldIcons()
 
 		name = os.path.basename (iconpath)
 		dot = name.rfind (".")
@@ -525,10 +593,15 @@ class WikiPage (RootWikiPage):
 		if iconpath != newpath:
 			shutil.copyfile (iconpath, newpath)
 
-		Application.onPageUpdate (self)
-		Application.onTreeUpdate (self)
+		self.root.onPageUpdate (self)
+		self.root.onTreeUpdate (self)
 
 		return newpath
+
+
+	def _removeOldIcons (self):
+		for fname in self._getIconFiles():
+			os.remove (fname)
 
 
 	@property
@@ -544,16 +617,17 @@ class WikiPage (RootWikiPage):
 		if self._tags != tags:
 			self._tags = tags[:]
 			self.save()
-			Application.onPageUpdate(self)
+			self.root.onPageUpdate(self)
 
 
-	def _getIcon (self):
+	def _getIconFiles (self):
 		files = os.listdir (self.path)
 
-		for file in files:
-			if (file.startswith (RootWikiPage.iconName) and
-					not os.path.isdir (file)):
-				return os.path.join (self.path, file)
+		icons = [os.path.join (self.path, fname) for fname in files 
+				if (fname.startswith (RootWikiPage.iconName) and
+					not os.path.isdir (fname))]
+
+		return icons
 	
 
 	def initAfterLoading (self):
@@ -636,7 +710,7 @@ class WikiPage (RootWikiPage):
 		"""
 		self._tags = tags[:]
 		self.save()
-		Application.onPageCreate(self)
+		self.root.onPageCreate(self)
 	
 
 	def _getTags (self, configParser):
@@ -683,7 +757,7 @@ class WikiPage (RootWikiPage):
 			with open (path, "wb") as fp:
 				fp.write (text.encode ("utf8"))
 
-			Application.onPageUpdate(self)
+			self.root.onPageUpdate(self)
 	
 
 	@property
@@ -727,11 +801,6 @@ class WikiPage (RootWikiPage):
 		except OSError:
 			raise IOError
 
-		#try:
-		#	shutil.rmtree (self.path)
-		#except OSError:
-		#	raise IOError
-
 		self._removePageFromTree (self)
 
 		# Если выбранная страница была удалена
@@ -747,8 +816,6 @@ class WikiPage (RootWikiPage):
 
 			self.root.selectedPage = newselpage
 		
-		#Application.onTreeUpdate(self.root)
-	
 
 	def _removePageFromTree (self, page):
 		page.parent.removeFromChildren (page)
@@ -756,7 +823,7 @@ class WikiPage (RootWikiPage):
 		for child in page.children:
 			page._removePageFromTree (child)
 
-		Application.onPageRemove (page)
+		self.root.onPageRemove (page)
 
 
 	@property

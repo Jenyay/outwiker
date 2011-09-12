@@ -30,10 +30,12 @@ class PageOrderTest (unittest.TestCase):
 
 		self.rootwiki = WikiDocument.create (self.path)
 		Application.onPageOrderChange += self.onPageOrder
+		Application.wikiroot = None
 
 	
 	def tearDown(self):
 		Application.onPageOrderChange -= self.onPageOrder
+		Application.wikiroot = None
 		removeWiki (self.path)
 	
 
@@ -311,11 +313,26 @@ class PageOrderTest (unittest.TestCase):
 		TextPageFactory.create (self.rootwiki, u"Страница 3", [])
 		TextPageFactory.create (self.rootwiki, u"Страница 4", [])
 
+		Application.wikiroot = self.rootwiki
+
 		# Перемещаем вниз,хотя страница и так в самом низу
 		self.rootwiki[u"Страница 4"].order += 1
 
 		self.assertEqual (self.orderUpdateCount, 1)
 		self.assertEqual (self.orderUpdateSender, self.rootwiki[u"Страница 4"])
+
+
+	def testNoEventOrder1 (self):
+		TextPageFactory.create (self.rootwiki, u"Страница 1", [])
+		TextPageFactory.create (self.rootwiki, u"Страница 2", [])
+		TextPageFactory.create (self.rootwiki, u"Страница 3", [])
+		TextPageFactory.create (self.rootwiki, u"Страница 4", [])
+
+		# Перемещаем вниз,хотя страница и так в самом низу
+		self.rootwiki[u"Страница 4"].order += 1
+
+		self.assertEqual (self.orderUpdateCount, 0)
+		self.assertEqual (self.orderUpdateSender, None)
 	
 
 	def testEventOrder2 (self):
@@ -324,11 +341,26 @@ class PageOrderTest (unittest.TestCase):
 		TextPageFactory.create (self.rootwiki, u"Страница 3", [])
 		TextPageFactory.create (self.rootwiki, u"Страница 4", [])
 
+		Application.wikiroot = self.rootwiki
+
 		# Перемещаем вверх,хотя страница и так в самом верху
 		self.rootwiki[u"Страница 1"].order -= 1
 
 		self.assertEqual (self.orderUpdateCount, 1)
 		self.assertEqual (self.orderUpdateSender, self.rootwiki[u"Страница 1"])
+
+
+	def testNoEventOrder2 (self):
+		TextPageFactory.create (self.rootwiki, u"Страница 1", [])
+		TextPageFactory.create (self.rootwiki, u"Страница 2", [])
+		TextPageFactory.create (self.rootwiki, u"Страница 3", [])
+		TextPageFactory.create (self.rootwiki, u"Страница 4", [])
+
+		# Перемещаем вверх,хотя страница и так в самом верху
+		self.rootwiki[u"Страница 1"].order -= 1
+
+		self.assertEqual (self.orderUpdateCount, 0)
+		self.assertEqual (self.orderUpdateSender, None)
 	
 
 	def testEventOrder3 (self):
@@ -337,11 +369,26 @@ class PageOrderTest (unittest.TestCase):
 		TextPageFactory.create (self.rootwiki, u"Страница 3", [])
 		TextPageFactory.create (self.rootwiki, u"Страница 4", [])
 
+		Application.wikiroot = self.rootwiki
+
 		# Перемещаем вниз,хотя страница и так в самом низу
 		self.rootwiki[u"Страница 1"].order += 1
 
 		self.assertEqual (self.orderUpdateCount, 1)
 		self.assertEqual (self.orderUpdateSender, self.rootwiki[u"Страница 1"])
+
+
+	def testNoEventOrder3 (self):
+		TextPageFactory.create (self.rootwiki, u"Страница 1", [])
+		TextPageFactory.create (self.rootwiki, u"Страница 2", [])
+		TextPageFactory.create (self.rootwiki, u"Страница 3", [])
+		TextPageFactory.create (self.rootwiki, u"Страница 4", [])
+
+		# Перемещаем вниз,хотя страница и так в самом низу
+		self.rootwiki[u"Страница 1"].order += 1
+
+		self.assertEqual (self.orderUpdateCount, 0)
+		self.assertEqual (self.orderUpdateSender, None)
 	
 
 	def testEventOrder4 (self):
@@ -350,11 +397,26 @@ class PageOrderTest (unittest.TestCase):
 		TextPageFactory.create (self.rootwiki, u"Страница 3", [])
 		TextPageFactory.create (self.rootwiki, u"Страница 4", [])
 
+		Application.wikiroot = self.rootwiki
+
 		# Перемещаем вниз,хотя страница и так в самом низу
 		self.rootwiki[u"Страница 1"].order += 2
 
 		self.assertEqual (self.orderUpdateCount, 1)
 		self.assertEqual (self.orderUpdateSender, self.rootwiki[u"Страница 1"])
+
+
+	def testNoEventOrder4 (self):
+		TextPageFactory.create (self.rootwiki, u"Страница 1", [])
+		TextPageFactory.create (self.rootwiki, u"Страница 2", [])
+		TextPageFactory.create (self.rootwiki, u"Страница 3", [])
+		TextPageFactory.create (self.rootwiki, u"Страница 4", [])
+
+		# Перемещаем вниз,хотя страница и так в самом низу
+		self.rootwiki[u"Страница 1"].order += 2
+
+		self.assertEqual (self.orderUpdateCount, 0)
+		self.assertEqual (self.orderUpdateSender, None)
 
 
 	def testEventOrder5 (self):
@@ -363,11 +425,26 @@ class PageOrderTest (unittest.TestCase):
 		TextPageFactory.create (self.rootwiki, u"Страница 3", [])
 		TextPageFactory.create (self.rootwiki, u"Страница 4", [])
 
+		Application.wikiroot = self.rootwiki
+
 		# Перемещаем вниз,хотя страница и так в самом низу
 		self.rootwiki[u"Страница 1"].order = 2
 
 		self.assertEqual (self.orderUpdateCount, 1)
 		self.assertEqual (self.orderUpdateSender, self.rootwiki[u"Страница 1"])
+
+
+	def testNoEventOrder5 (self):
+		TextPageFactory.create (self.rootwiki, u"Страница 1", [])
+		TextPageFactory.create (self.rootwiki, u"Страница 2", [])
+		TextPageFactory.create (self.rootwiki, u"Страница 3", [])
+		TextPageFactory.create (self.rootwiki, u"Страница 4", [])
+
+		# Перемещаем вниз,хотя страница и так в самом низу
+		self.rootwiki[u"Страница 1"].order = 2
+
+		self.assertEqual (self.orderUpdateCount, 0)
+		self.assertEqual (self.orderUpdateSender, None)
 	
 
 	def testLoading1 (self):

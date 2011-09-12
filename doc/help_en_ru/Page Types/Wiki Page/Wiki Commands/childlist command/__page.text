@@ -1,0 +1,33 @@
+!!! Назначение и синтаксис команды [=(:childlist:)=]
+!!! Purpose and syntax [=(:childlist:)=] command
+
+''Команда [=(:childlist:)=] предназначена для вставки в вики-страницу списка дочерних страниц:''
+
+Command [= (: childlist:) =] is designed to be inserted into a wiki page list of nested pages:
+
+[=(:childlist [params...]:)=]
+
+''В команде [=(:childlist:)=] может быть использован параметр ''sort'', который указывает порядок сортировки. Параметр ''sort'' может принимать следующие значения:''
+
+In the [=(:childlist:)=] command can be used ''sort'' parameter, which specifies the sort order. Parameter ''sort'' can be the following:
+
+* ''name'' - дочерние страницы в выводимом списке будут отсортированы по алфавиту;
+* ''name'' - page names in the list will be sortet alphabetally;
+* ''descendname'' - дочерние страницы в выводимом списке будут отсортированы по алфавиту в обратном порядке;
+* ''descendname'' - page names in the list will be sortet alphabetally in descend order;
+* ''descendorder'' - дочерние страницы в выводимом списке будут иметь порядок, противоположный порядку следования страниц в дереве.
+* ''descendorder'' - page names in the list will be sorted as in the tree, but opposite order.
+
+''Если параметр ''sort'' не указан, то страницы в списке будут выводиться в том же порядке, как они расположены в дереве.''
+
+If ''sort'' parameter is not specified, then page names in the list will be sorted as in the tree.
+
+!!! Examples
+
+''У данной страницы имеются четыре дочерние страницы, следующая таблица показывает результат работы команды [=(:childlist:)=] с различными значениями параметра ''sort'':''
+
+In this page there are four child pages. The following table shows the output of the command [= (: childlist:) =] with different values ​​of the ''sort'' parameter:
+
+||width=850 border=1 
+|| '''Command''' || [=(:childlist:)=] || [=(:childlist sort=name:)=] || [=(:childlist sort=descendname:)=] || [=(:childlist sort=descendorder:)=] ||
+|| '''Result''' || (:childlist:) || (:childlist sort=name:) || (:childlist sort=descendname:) || (:childlist sort=descendorder:) ||

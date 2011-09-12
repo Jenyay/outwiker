@@ -10,9 +10,10 @@ import core.system
 import core.commands
 from core.attachment import Attachment
 from core.application import Application
+from .basepagepanel import BasePagePanel
 
 
-class BaseTextPanel (wx.Panel):
+class BaseTextPanel (BasePagePanel):
 	"""
 	Базовый класс для представления текстовых страниц и им подобных (где есть текстовый редактор)
 	"""
@@ -34,9 +35,10 @@ class BaseTextPanel (wx.Panel):
 		pass
 
 	
-	def __init__ (self, *args, **kwds):
-		self._currentpage = None
-		self.mainWindow = None
+	def __init__ (self, parent, *args, **kwds):
+		BasePagePanel.__init__ (self, parent, *args, **kwds)
+
+		self.mainWindow = Application.mainWindow
 		self.searchMenu = None
 
 		self.ID_SEARCH = wx.NewId()
@@ -45,6 +47,9 @@ class BaseTextPanel (wx.Panel):
 
 		self.searchMenuIndex = 2
 		self.imagesDir = core.system.getImagesDir()
+
+		self._addMenuItems ()
+		self._addToolsItems ()
 
 		Application.onAttachmentPaste += self.onAttachmentPaste
 		Application.onEditorConfigChange += self.onEditorConfigChange
@@ -59,34 +64,17 @@ class BaseTextPanel (wx.Panel):
 		pass
 	
 
-	@property
-	def page (self):
-		return self._currentpage
-
-
-	@page.setter
-	def page (self, page):
-		self._currentpage = page
-
-		if not os.path.exists (page.path):
-			core.commands.MessageBox (
-					_(u"Page %s not found. It is recommended to update the wiki") % self.page.title,
-					_("Error"), wx.OR | wx.ICON_ERROR )
-			#core.commands.openWiki (Application.wikiroot.path)
-			return
-
-		self.UpdateView (page)
-	
-
 	def Save (self):
 		"""
 		Сохранить страницу
 		"""
+		if self.page == None:
+			return
+
 		if not os.path.exists (self.page.path) and not self.page.isRemoved:
 			# Похоже, страница удалена вручную
 			core.commands.MessageBox (_(u"Page %s not found. It is recommended to update the wiki") % self.page.title,
 					_("Error"), wx.OR | wx.ICON_ERROR )
-			#core.commands.openWiki (Application.wikiroot.path)
 			return
 
 		if self.page != None and not self.page.isRemoved and not self.page.readonly:
@@ -97,39 +85,6 @@ class BaseTextPanel (wx.Panel):
 				core.commands.MessageBox (_(u"Can't save file %s") % (unicode (e.filename)), 
 					_(u"Error"), 
 					wx.ICON_ERROR | wx.OK)
-	
-
-	def UpdateView (self, page):
-		"""
-		Обновление страницы
-		"""
-		pass
-
-
-	def onAttachmentPaste (self, fnames):
-		"""
-		Пользователь хочет вставить ссылки на приаттаченные файлы
-		"""
-		pass
-
-
-
-	def Close (self):
-		"""
-		Закрытие панели. 
-		Вызывать вручную!!!
-		"""
-		self.Save()
-		self.CloseWithoutSave()
-	
-
-	def CloseWithoutSave (self):
-		"""
-		Закрытие панели без сохранения. 
-		"""
-		self.Clear()
-		wx.Panel.Close (self)
-		self.Destroy()
 	
 
 	def _getAttachString (self, fnames):
@@ -147,16 +102,6 @@ class BaseTextPanel (wx.Panel):
 		return text
 
 	
-	def initGui (self, mainWindow):
-		"""
-		Добавить элементы управления в главное окно
-		"""
-		self.mainWindow = mainWindow
-
-		self._addMenuItems ()
-		self._addToolsItems ()
-
-
 	def Clear (self):
 		"""
 		Убрать за собой
@@ -178,6 +123,7 @@ class BaseTextPanel (wx.Panel):
 		self.mainWindow.Unbind(wx.EVT_MENU, id=self.ID_SEARCH_NEXT)
 		self.mainWindow.Unbind(wx.EVT_MENU, id=self.ID_SEARCH_PREV)
 
+		assert self.mainWindow.mainMenu.GetMenuCount() >= 3
 		self.mainWindow.mainMenu.Remove (self.searchMenuIndex)
 		
 		self.mainWindow.mainToolbar.DeleteTool (self.ID_SEARCH)

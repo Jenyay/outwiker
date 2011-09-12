@@ -149,16 +149,66 @@ def openWiki (path, readonly=False):
 	
 	try:
 		# Загрузить вики
-		wikiroot = WikiDocument.load (path, readonly)
+		wikiroot = WikiDocument.load (os.path.realpath (path), readonly)
 		Application.wikiroot = wikiroot
 	except IOError:
-		core.commands.MessageBox (_(u"Can't load wiki '%s'") % path, 
-				_(u"Error"), 
-				wx.ICON_ERROR | wx.OK)
+		__canNotLoadWikiMessage (path)
+
+	except core.exceptions.RootFormatError:
+		__rootFormatErrorHandle(path, readonly)
+
 	finally:
 		Application.onEndTreeUpdate(wikiroot)
 
 	return Application.wikiroot
+
+
+def __rootFormatErrorHandle (path, readonly):
+	"""
+	Обработчик исключения core.exceptions.RootFormatError
+	"""
+	if readonly:
+		# Если вики открыт только для чтения, то нельзя изменять файлы
+		__canNotLoadWikiMessage (path)
+		return
+
+	if (__wantClearWikiOptions (path) != wx.YES):
+		return
+
+	# Обнулим файл __page.opt
+	WikiDocument.clearConfigFile (path)
+
+	# Попробуем открыть вики еще раз
+	try:
+		# Загрузить вики
+		wikiroot = WikiDocument.load (os.path.realpath (path), readonly)
+		Application.wikiroot = wikiroot
+	except IOError:
+		__canNotLoadWikiMessage (path)
+
+	except core.exceptions.RootFormatError:
+		__canNotLoadWikiMessage (path)
+
+	finally:
+		pass
+
+
+def __canNotLoadWikiMessage (path):
+	"""
+	Вывести сообщение о том, что невоможно открыть вики
+	"""
+	core.commands.MessageBox (_(u"Can't load wiki '%s'") % path, 
+				_(u"Error"), 
+				wx.ICON_ERROR | wx.OK)
+
+
+def __wantClearWikiOptions (path):
+	"""
+	Сообщение о том, хочет ли пользователь сбросить файл __page.opt
+	"""
+	return core.commands.MessageBox (_(u"Can't load wiki '%s'\nFile __page.opt is invalid.\nClear this file and load wiki?\nBookmarks will be lost") % path, 
+				_(u"__page.opt error"), 
+				wx.ICON_ERROR | wx.YES_NO)
 
 
 def createNewWiki (parentwnd):
@@ -251,7 +301,7 @@ def setStatusText (text, index = 0):
 	text - текст
 	index - номер ячейки статусбара
 	"""
-	wx.GetApp().GetTopWindow().statusbar.SetStatusText (text, index)
+	Application.mainWindow.statusbar.SetStatusText (text, index)
 
 
 def getCurrentVersion ():
@@ -352,7 +402,7 @@ def showAboutDialog (parent):
 
 def openHelp ():
 	help_dir = u"help"
-	current_help = "help_rus"
+	current_help = _("help_en")
 	path = os.path.join (core.system.getCurrentDir(), help_dir, current_help)
 	core.commands.openWiki (path, readonly=True)
 

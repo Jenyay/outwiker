@@ -1,0 +1,58 @@
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>
+
+	<STYLE type="text/css">
+		body, div, p, table {
+			font-size:10pt;
+			font-family:Verdana;
+		}
+
+		img{border:none}
+		
+	</STYLE>
+</HEAD>
+
+<BODY>
+<P><H2>Purpose and syntax  (:attachlist:)  command</H2></P>
+
+<P> (: attachlist:)  command is designed to be inserted into a wiki page list of attachments:</P>
+
+<P>(:attachlist [params...]:)</P>
+
+<P>Additionally, the command  (: attachlist:)  can be used <I>sort</I> parameter, which specifies the sort order of files. <I>Sort</I> parameter can be the following:</P>
+
+<P>
+<UL>
+<LI><I>name</I> - attached files will be sorted by name (this is equivalent to command  (: attachlist:)  without parameters);</LI>
+<LI><I>descendname</I> - the attached files will be sorted by name in descending order;</LI>
+<LI><I>ext</I> - the attached files will be sorted by extension;</LI>
+<LI><I>descendext</I> - the attached files will be sorted by extension in descending order;</LI>
+<LI><I>size</I> - the attached files will be sorted by size;</LI>
+<LI><I>descendext</I> - the attached files will be sorted by size in descending order;</LI>
+<LI><I>date</I> - the attached files will be sorted by their date of last modification;</LI>
+<LI><I>descendext</I> - the attached files will be sorted by their date of last modification in descending order;</LI>
+</UL>
+<BR><H2>Examples</H2></P>
+
+<P>At current page there are five attached files, the following table shows the output of the command  (:attachlist:)  with different values ​​of the parameter <I>sort</I>:</P>
+
+<P><TABLE width=850 border=1><TR><TD ALIGN="CENTER"><B>Command</B></TD><TD ALIGN="CENTER">(:attachlist:)</TD><TD ALIGN="CENTER">(:attachlist sort=ext:)</TD><TD ALIGN="CENTER">(:attachlist sort=descendext:)</TD><TD ALIGN="CENTER">(:attachlist sort=size:)</TD></TR><TR><TD ALIGN="CENTER"><B>Result</B></TD><TD ALIGN="CENTER"><A HREF="__attach/anchor.png">anchor.png</A>
+<BR><A HREF="__attach/first.jpg">first.jpg</A>
+<BR><A HREF="__attach/image.gif">image.gif</A>
+<BR><A HREF="__attach/image.jpg">image.jpg</A>
+<BR><A HREF="__attach/image.png">image.png</A></TD><TD ALIGN="CENTER"><A HREF="__attach/image.gif">image.gif</A>
+<BR><A HREF="__attach/first.jpg">first.jpg</A>
+<BR><A HREF="__attach/image.jpg">image.jpg</A>
+<BR><A HREF="__attach/anchor.png">anchor.png</A>
+<BR><A HREF="__attach/image.png">image.png</A></TD><TD ALIGN="CENTER"><A HREF="__attach/image.png">image.png</A>
+<BR><A HREF="__attach/anchor.png">anchor.png</A>
+<BR><A HREF="__attach/image.jpg">image.jpg</A>
+<BR><A HREF="__attach/first.jpg">first.jpg</A>
+<BR><A HREF="__attach/image.gif">image.gif</A></TD><TD ALIGN="CENTER"><A HREF="__attach/anchor.png">anchor.png</A>
+<BR><A HREF="__attach/first.jpg">first.jpg</A>
+<BR><A HREF="__attach/image.jpg">image.jpg</A>
+<BR><A HREF="__attach/image.gif">image.gif</A>
+<BR><A HREF="__attach/image.png">image.png</A></TD></TR></TABLE></P>
+</BODY>
+</HTML>

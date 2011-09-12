@@ -26,23 +26,18 @@ def editPage (parentWnd, currentPage):
 	page = None
 
 	if dlg.ShowModal() == wx.ID_OK:
-		Application.onStartTreeUpdate(currentPage.root)
+		factory = dlg.selectedFactory
+		tags = dlg.tags
+
+		currentPage.tags = dlg.tags
+		currentPage.icon = dlg.icon
 
 		try:
-			factory = dlg.selectedFactory
-			tags = dlg.tags
+			currentPage.title = dlg.pageTitle
+		except OSError as e:
+			core.commands.MessageBox (_(u"Can't rename page\n") + unicode (e), _(u"Error"), wx.ICON_ERROR | wx.OK)
 
-			currentPage.tags = dlg.tags
-			currentPage.icon = dlg.icon
-
-			try:
-				currentPage.title = dlg.pageTitle
-			except OSError as e:
-				MessageBox (_(u"Can't rename page\n") + unicode (e), _(u"Error"), wx.ICON_ERROR | wx.OK)
-
-			currentPage.root.selectedPage = currentPage
-		finally:
-			Application.onEndTreeUpdate(currentPage.root)
+		currentPage.root.selectedPage = currentPage
 
 	dlg.Destroy()
 
@@ -63,8 +58,6 @@ def createPageWithDialog (parentwnd, parentpage):
 		title = dlg.pageTitle
 		tags = dlg.tags
 
-		Application.onStartTreeUpdate(parentpage.root)
-
 		try:
 			page = factory.create (parentpage, title, tags)
 			
@@ -74,9 +67,7 @@ def createPageWithDialog (parentwnd, parentpage):
 			page.root.selectedPage = page
 
 		except OSError, IOError:
-			MessageBox (_(u"Can't create page"), "Error", wx.ICON_ERROR | wx.OK)
-		finally:
-			Application.onEndTreeUpdate(parentpage.root)
+			core.commands.MessageBox (_(u"Can't create page"), "Error", wx.ICON_ERROR | wx.OK)
 
 	dlg.Destroy()
 
@@ -90,7 +81,7 @@ def createSiblingPage (parentwnd):
 	parentwnd - окно, которое будет родителем для диалога создания страницы
 	"""
 	if Application.wikiroot == None:
-		MessageBox (_(u"Wiki is not open"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+		core.commands.MessageBox (_(u"Wiki is not open"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 		return
 
 	currPage = Application.wikiroot.selectedPage
@@ -109,7 +100,7 @@ def createChildPage (parentwnd):
 	parentwnd - окно, которое будет родителем для диалога создания страницы
 	"""
 	if Application.wikiroot == None:
-		MessageBox (_(u"Wiki is not open"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+		core.commands.MessageBox (_(u"Wiki is not open"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 		return
 
 	currPage = Application.wikiroot.selectedPage
@@ -139,8 +130,8 @@ class CreatePageDialog (BasePageDialog):
 			core.commands.MessageBox (_(u"Invalid page title"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 			return
 
-		if self.parentPage != None and \
-				not RootWikiPage.testDublicate(self.parentPage, self.pageTitle):
+		if (self.parentPage != None and
+				not RootWikiPage.testDublicate(self.parentPage, self.pageTitle)):
 			core.commands.MessageBox (_(u"A page with this title already exists"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 			return
 
@@ -176,10 +167,7 @@ class EditPageDialog (BasePageDialog):
 		# Добавить текущую иконку
 		icon = currentPage.icon
 		if icon != None:
-			index = self.icons.Add (wx.Bitmap (icon) )
-			selItem = self.iconsList.InsertImageStringItem (len (self.iconsDict) - 1, _(u"Current icon"), index)
-			self.iconsList.SetItemState (selItem, wx.LIST_STATE_SELECTED, wx.LIST_STATE_SELECTED)
-			self.iconsDict[selItem] = icon
+			self.iconsList.addCurrentIcon (icon)
 
 
 	def onOk (self, event):

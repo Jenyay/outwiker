@@ -86,6 +86,9 @@ class EventTest (unittest.TestCase):
 
 class EventsTest (unittest.TestCase):
 	def setUp (self):
+		Application.wikiroot = None
+		self.path = u"../test/testwiki"
+
 		self.isPageUpdate = False
 		self.isPageCreate = False
 		self.isTreeUpdate = False
@@ -101,9 +104,11 @@ class EventsTest (unittest.TestCase):
 		self.treeUpdateCount = 0
 		self.pageSelectCount = 0
 
+		Application.wikiroot = None
+
 	def tearDown(self):
-		path = u"../test/testwiki"
-		removeWiki (path)
+		Application.wikiroot = None
+		removeWiki (self.path)
 
 	def pageUpdate (self, sender):
 		self.isPageUpdate = True
@@ -133,40 +138,34 @@ class EventsTest (unittest.TestCase):
 		self.assertFalse(self.isTreeUpdate)
 		root = WikiDocument.load (path)
 
-		self.assertTrue (self.isTreeUpdate)
-		self.assertEqual (self.treeUpdateSender, root)
-		self.assertEqual (self.treeUpdateCount, 1)
-
-		# Отключимся от события и проверим, что оно больше не вызывается
-		Application.onTreeUpdate -= self.treeUpdate
-		self.isTreeUpdate = False
-		self.treeUpdateSender = None
-
-		root = WikiDocument.load (path)
-
 		self.assertFalse (self.isTreeUpdate)
 		self.assertEqual (self.treeUpdateSender, None)
+		self.assertEqual (self.treeUpdateCount, 0)
+
+		Application.onTreeUpdate -= self.treeUpdate
 
 
-	def testCreate (self):
+	def testCreateEvent (self):
 		Application.onTreeUpdate += self.treeUpdate
 		Application.onPageCreate += self.pageCreate
 
-		path = u"../test/testwiki"
-		removeWiki (path)
+		removeWiki (self.path)
 
 		self.assertFalse(self.isTreeUpdate)
 		self.assertFalse(self.isPageUpdate)
 		self.assertFalse(self.isPageCreate)
 
 		# Создаем вики
-		rootwiki = WikiDocument.create (path)
+		rootwiki = WikiDocument.create (self.path)
 
-		self.assertTrue(self.isTreeUpdate)
-		self.assertEqual (self.treeUpdateSender, rootwiki)
+		self.assertFalse(self.isTreeUpdate)
+		self.assertEqual (self.treeUpdateSender, None)
+
+		Application.wikiroot = rootwiki
 
 		# Создаем страницу верхнего уровня (не считая корня)
-		self.setUp()
+		self.isPageCreate = False
+		self.pageCreateSender = None
 
 		TextPageFactory.create (rootwiki, u"Страница 1", [])
 		
@@ -174,7 +173,8 @@ class EventsTest (unittest.TestCase):
 		self.assertEqual (self.pageCreateSender, rootwiki[u"Страница 1"])
 
 		# Создаем еще одну страницу
-		self.setUp()
+		self.isPageCreate = False
+		self.pageCreateSender = None
 
 		TextPageFactory.create (rootwiki, u"Страница 2", [])
 
@@ -182,7 +182,8 @@ class EventsTest (unittest.TestCase):
 		self.assertEqual (self.pageCreateSender, rootwiki[u"Страница 2"])
 
 		# Создаем подстраницу
-		self.setUp()
+		self.isPageCreate = False
+		self.pageCreateSender = None
 
 		TextPageFactory.create (rootwiki[u"Страница 2"], u"Страница 3", [])
 
@@ -193,22 +194,49 @@ class EventsTest (unittest.TestCase):
 		Application.onPageCreate -= self.pageCreate
 
 
-	def testUpdateContent (self):
-		"""
-		Тест на срабатывание событий при обновлении контента
-		"""
-		Application.onPageUpdate += self.pageUpdate
+	def testCreateNoEvent (self):
+		Application.onTreeUpdate += self.treeUpdate
+		Application.onPageCreate += self.pageCreate
 
-		path = u"../test/testwiki"
-		removeWiki (path)
+		removeWiki (self.path)
 
 		self.assertFalse(self.isTreeUpdate)
 		self.assertFalse(self.isPageUpdate)
 		self.assertFalse(self.isPageCreate)
 
 		# Создаем вики
-		rootwiki = WikiDocument.create (path)
+		rootwiki = WikiDocument.create (self.path)
+
+		self.assertFalse(self.isTreeUpdate)
+		self.assertEqual (self.treeUpdateSender, None)
+
+		# Создаем страницу верхнего уровня (не считая корня)
+		self.isPageCreate = False
+		self.pageCreateSender = None
+
 		TextPageFactory.create (rootwiki, u"Страница 1", [])
+		
+		self.assertFalse(self.isPageCreate)
+		self.assertEqual (self.pageCreateSender, None)
+
+
+	def testUpdateContentEvent (self):
+		"""
+		Тест на срабатывание событий при обновлении контента
+		"""
+		Application.onPageUpdate += self.pageUpdate
+
+		removeWiki (self.path)
+
+		self.assertFalse(self.isTreeUpdate)
+		self.assertFalse(self.isPageUpdate)
+		self.assertFalse(self.isPageCreate)
+
+		# Создаем вики
+		rootwiki = WikiDocument.create (self.path)
+		TextPageFactory.create (rootwiki, u"Страница 1", [])
+
+		Application.wikiroot = rootwiki
 
 		# Изменим содержимое страницы
 		rootwiki[u"Страница 1"].content = "1111"
@@ -217,30 +245,82 @@ class EventsTest (unittest.TestCase):
 		self.assertEqual (self.pageUpdateSender, rootwiki[u"Страница 1"])
 
 		Application.onPageUpdate -= self.pageUpdate
+		Application.wikiroot = None
 
 
-	def testUpdateTags (self):
+	def testUpdateContentNoEvent (self):
 		"""
-		Тест на срабатывание событий при обновлении меток (тегов)
+		Тест на НЕсрабатывание событий при обновлении контента
 		"""
 		Application.onPageUpdate += self.pageUpdate
 
-		path = u"../test/testwiki"
-		removeWiki (path)
+		removeWiki (self.path)
 
 		self.assertFalse(self.isTreeUpdate)
 		self.assertFalse(self.isPageUpdate)
 		self.assertFalse(self.isPageCreate)
 
 		# Создаем вики
-		rootwiki = WikiDocument.create (path)
+		rootwiki = WikiDocument.create (self.path)
 		TextPageFactory.create (rootwiki, u"Страница 1", [])
+
+		# Изменим содержимое страницы
+		rootwiki[u"Страница 1"].content = "1111"
+		
+		self.assertFalse(self.isPageUpdate)
+		self.assertEqual (self.pageUpdateSender, None)
+
+		Application.onPageUpdate -= self.pageUpdate
+
+
+	def testUpdateTagsEvent (self):
+		"""
+		Тест на срабатывание событий при обновлении меток (тегов)
+		"""
+		Application.onPageUpdate += self.pageUpdate
+
+		removeWiki (self.path)
+
+		self.assertFalse(self.isTreeUpdate)
+		self.assertFalse(self.isPageUpdate)
+		self.assertFalse(self.isPageCreate)
+
+		# Создаем вики
+		rootwiki = WikiDocument.create (self.path)
+		TextPageFactory.create (rootwiki, u"Страница 1", [])
+
+		Application.wikiroot = rootwiki
 
 		# Изменим содержимое страницы
 		rootwiki[u"Страница 1"].tags = ["test"]
 		
 		self.assertTrue(self.isPageUpdate)
 		self.assertEqual (self.pageUpdateSender, rootwiki[u"Страница 1"])
+
+		Application.onPageUpdate -= self.pageUpdate
+
+
+	def testUpdateTagsNoEvent (self):
+		"""
+		Тест на срабатывание событий при обновлении меток (тегов)
+		"""
+		Application.onPageUpdate += self.pageUpdate
+
+		removeWiki (self.path)
+
+		self.assertFalse(self.isTreeUpdate)
+		self.assertFalse(self.isPageUpdate)
+		self.assertFalse(self.isPageCreate)
+
+		# Создаем вики
+		rootwiki = WikiDocument.create (self.path)
+		TextPageFactory.create (rootwiki, u"Страница 1", [])
+
+		# Изменим содержимое страницы
+		rootwiki[u"Страница 1"].tags = ["test"]
+		
+		self.assertFalse(self.isPageUpdate)
+		self.assertEqual (self.pageUpdateSender, None)
 
 		Application.onPageUpdate -= self.pageUpdate
 
@@ -252,16 +332,51 @@ class EventsTest (unittest.TestCase):
 		Application.onPageUpdate += self.pageUpdate
 		Application.onTreeUpdate += self.treeUpdate
 
-		path = u"../test/testwiki"
-		removeWiki (path)
+		removeWiki (self.path)
 
 		self.assertFalse(self.isTreeUpdate)
 		self.assertFalse(self.isPageUpdate)
 		self.assertFalse(self.isPageCreate)
 
 		# Создаем вики
-		rootwiki = WikiDocument.create (path)
+		rootwiki = WikiDocument.create (self.path)
 		TextPageFactory.create (rootwiki, u"Страница 1", [])
+
+		Application.wikiroot = rootwiki
+
+		# Изменим содержимое страницы
+		rootwiki[u"Страница 1"].icon = "../test/images/feed.gif"
+		
+		self.assertTrue (self.isPageUpdate)
+		self.assertEqual (self.pageUpdateSender, rootwiki[u"Страница 1"])
+		
+		self.assertTrue (self.isTreeUpdate)
+		self.assertEqual (self.treeUpdateSender, rootwiki[u"Страница 1"])
+
+		Application.onPageUpdate -= self.pageUpdate
+		Application.onTreeUpdate -= self.treeUpdate
+
+
+	def testUpdateIconNoEvent (self):
+		"""
+		Тест на НЕсрабатывание событий при обновлении иконки, если не устанолен Application.wikiroot
+		"""
+		Application.wikiroot = None
+
+		Application.onPageUpdate += self.pageUpdate
+		Application.onTreeUpdate += self.treeUpdate
+
+		removeWiki (self.path)
+
+		self.assertFalse(self.isTreeUpdate)
+		self.assertFalse(self.isPageUpdate)
+		self.assertFalse(self.isPageCreate)
+
+		# Создаем вики
+		rootwiki = WikiDocument.create (self.path)
+		TextPageFactory.create (rootwiki, u"Страница 1", [])
+
+		Application.wikiroot = rootwiki
 
 		# Изменим содержимое страницы
 		rootwiki[u"Страница 1"].icon = "../test/images/feed.gif"
@@ -279,13 +394,14 @@ class EventsTest (unittest.TestCase):
 	def testPageSelectCreate (self):
 		Application.onPageSelect += self.pageSelect
 
-		path = u"../test/testwiki"
-		removeWiki (path)
+		removeWiki (self.path)
 
-		rootwiki = WikiDocument.create (path)
+		rootwiki = WikiDocument.create (self.path)
 		TextPageFactory.create (rootwiki, u"Страница 1", [])
 		TextPageFactory.create (rootwiki, u"Страница 2", [])
 		TextPageFactory.create (rootwiki[u"Страница 2"], u"Страница 3", [])
+
+		Application.wikiroot = rootwiki
 
 		self.assertEqual (rootwiki.selectedPage, None)
 
@@ -306,19 +422,38 @@ class EventsTest (unittest.TestCase):
 		Application.onPageSelect -= self.pageSelect
 
 
-	def testPageSelectLoad (self):
+	def testPageSelectCreateNoEvent (self):
 		Application.onPageSelect += self.pageSelect
 
-		path = u"../test/testwiki"
-		removeWiki (path)
+		removeWiki (self.path)
 
-		rootwiki = WikiDocument.create (path)
+		rootwiki = WikiDocument.create (self.path)
 		TextPageFactory.create (rootwiki, u"Страница 1", [])
 		TextPageFactory.create (rootwiki, u"Страница 2", [])
 		TextPageFactory.create (rootwiki[u"Страница 2"], u"Страница 3", [])
 
+		Application.wikiroot = rootwiki
 
-		document = WikiDocument.load (path)
+		self.assertEqual (rootwiki.selectedPage, None)
+
+		rootwiki.selectedPage = rootwiki[u"Страница 1"]
+		
+		self.assertEqual (rootwiki.selectedPage, rootwiki[u"Страница 1"])
+		self.assertEqual (self.isPageSelect, True)
+
+
+	def testPageSelectLoad (self):
+		Application.onPageSelect += self.pageSelect
+
+		removeWiki (self.path)
+
+		rootwiki = WikiDocument.create (self.path)
+		TextPageFactory.create (rootwiki, u"Страница 1", [])
+		TextPageFactory.create (rootwiki, u"Страница 2", [])
+		TextPageFactory.create (rootwiki[u"Страница 2"], u"Страница 3", [])
+
+		document = WikiDocument.load (self.path)
+		Application.wikiroot = document
 
 		self.assertEqual (document.selectedPage, None)
 

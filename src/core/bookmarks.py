@@ -3,7 +3,8 @@
 
 import ConfigParser
 
-from core.application import Application
+from .event import Event
+
 
 class Bookmarks (object):
 	"""
@@ -19,11 +20,15 @@ class Bookmarks (object):
 		self.configSection = u"Bookmarks"
 		self.configOptionTemplate = u"bookmark_%d"
 
+		# Изменение списка закладок
+		# Параметр - экземпляр класса Bookmarks
+		self.onBookmarksChanged = Event()
+
 		# Страницы в закладках
 		self.__pages = self._load()
 
-		Application.onPageRemove += self.onPageRemove
-		Application.onPageRename += self.onPageRename
+		wikiroot.onPageRemove += self.onPageRemove
+		wikiroot.onPageRename += self.onPageRename
 
 	
 	def onPageRemove (self, page):
@@ -36,9 +41,6 @@ class Bookmarks (object):
 	
 
 	def onPageRename (self, page, oldSubpath):
-		#if oldSubpath in self.__pages:
-			#self.__pages[self.__pages.index (oldSubpath)] = page.subpath
-
 		for n in range (len (self.__pages)):
 			subpath = self.__pages[n]
 			if subpath.startswith (oldSubpath):
@@ -78,7 +80,7 @@ class Bookmarks (object):
 
 		self.__pages.append (page.subpath)
 		self.save()
-		Application.onBookmarksChanged (self)
+		self.onBookmarksChanged (self)
 	
 
 	def save (self):
@@ -91,7 +93,7 @@ class Bookmarks (object):
 
 	def remove (self, page):
 		self.__pages.remove (page.subpath)
-		Application.onBookmarksChanged (self)
+		self.onBookmarksChanged (self)
 		self.save()
 	
 

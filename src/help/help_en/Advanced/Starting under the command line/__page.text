@@ -1,0 +1,7 @@
+You can pass the path to wiki, which will open at the program start, through the command line. For example:
+
+outwiker.exe "C:\temp\samplewiki"
+
+or 
+
+outwiker.exe "C:\temp\samplewiki\__page.opt"

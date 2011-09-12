@@ -1,0 +1,39 @@
+!!! ''Назначение и синтаксис команды [=(:attachlist:)=]''
+!!! Purpose and syntax [= (:attachlist:) =] command
+
+''Команда [=(:attachlist:)=] предназначена для вставки в вики-страницу списка прикрепленных файлов:''
+
+[= (: attachlist:) =] command is designed to be inserted into a wiki page list of attachments:
+
+[=(:attachlist [params...]:)=]
+
+''Дополнительно в команде [=(:attachlist:)=] может быть использован параметр ''sort'', который указывает порядок сортировки файлов. Параметр ''sort'' может принимать следующие значения:''
+
+Additionally, the command [= (: attachlist:) =] can be used ''sort'' parameter, which specifies the sort order of files. ''Sort'' parameter can be the following:
+
+* ''name'' - прикрепленные файлы будут отсортированы по именам (это равносильно использованию команды [=(:attachlist:)=] без параметров);
+* ''name'' - attached files will be sorted by name (this is equivalent to command [= (: attachlist:) =] without parameters);
+* ''descendname'' - прикрепленные файлы будут отсортированы по именам в обратном порядке;
+* ''descendname'' - the attached files will be sorted by name in descending order;
+* ''ext'' - прикрепленные файлы будут отсортированы по расширениям;
+* ''ext'' - the attached files will be sorted by extension;
+* ''descendext'' - прикрепленные файлы будут отсортированы по расширениям в обратном порядке;
+* ''descendext'' - the attached files will be sorted by extension in descending order;
+* ''size'' - прикрепленные файлы будут отсортированы по их размеру;
+* ''size'' - the attached files will be sorted by size;
+* ''descendext'' - прикрепленные файлы будут отсортированы по их размеру в обратном порядке;
+* ''descendext'' - the attached files will be sorted by size in descending order;
+* ''date'' - прикрепленные файлы будут отсортированы по дате их последней модификации;
+* ''date'' - the attached files will be sorted by their date of last modification;
+* ''descendext'' - прикрепленные файлы будут отсортированы по дате их последней модификации в обратном порядке;
+* ''descendext'' - the attached files will be sorted by their date of last modification in descending order;
+
+!!! Examples
+
+''У данной страницы имеется пять вложенных файлов, следующая таблица показывает результат работы команды [=(:attachlist:)=] с различными значениями параметра ''sort'':''
+
+At current page there are five attached files, the following table shows the output of the command [= (:attachlist:) =] with different values ​​of the parameter ''sort'':
+
+||width=850 border=1 
+|| '''Command''' || [=(:attachlist:)=] || [=(:attachlist sort=ext:)=] || [=(:attachlist sort=descendext:)=] || [=(:attachlist sort=size:)=] ||
+|| '''Result''' || (:attachlist:) || (:attachlist sort=ext:) || (:attachlist sort=descendext:) || (:attachlist sort=size:) ||

@@ -17,6 +17,7 @@ class RemovePagesTest (unittest.TestCase):
 	def setUp (self):
 		self.path = u"../test/testwiki"
 		removeWiki (self.path)
+		Application.wikiroot = None
 
 		self.rootwiki = WikiDocument.create (self.path)
 
@@ -27,17 +28,14 @@ class RemovePagesTest (unittest.TestCase):
 		TextPageFactory.create (self.rootwiki[u"Страница 1"], u"Страница 5", [])
 		TextPageFactory.create (self.rootwiki, u"Страница 6", [])
 
-		self.treeUpdateCount = 0
 		self.pageRemoveCount = 0
+		Application.wikiroot = None
 
 
-	def onTreeUpdate (self, bookmarks):
-		"""
-		Обработка события при удалении страницы (обновление дерева)
-		"""
-		self.treeUpdateCount += 1
+	def tearDown (self):
+		Application.wikiroot = None
 
-	
+
 	def onPageRemove (self, bookmarks):
 		"""
 		Обработка события при удалении страницы
@@ -46,8 +44,8 @@ class RemovePagesTest (unittest.TestCase):
 
 	
 	def testRemove1 (self):
-		Application.onTreeUpdate += self.onTreeUpdate
 		Application.onPageRemove += self.onPageRemove
+		Application.wikiroot = self.rootwiki
 
 		# Удаляем страницу из корня
 		page6 = self.rootwiki[u"Страница 6"]
@@ -69,7 +67,20 @@ class RemovePagesTest (unittest.TestCase):
 		self.assertTrue (page4.isRemoved)
 		self.assertEqual (self.pageRemoveCount, 3)
 		
-		Application.onTreeUpdate -= self.onTreeUpdate
+		Application.onPageRemove -= self.onPageRemove
+
+
+	def testRemoveNoEvent (self):
+		Application.onPageRemove += self.onPageRemove
+
+		# Удаляем страницу из корня
+		page6 = self.rootwiki[u"Страница 6"]
+		page6.remove()
+		self.assertEqual (len (self.rootwiki), 2)
+		self.assertEqual (self.rootwiki[u"Страница 6"], None)
+		self.assertTrue (page6.isRemoved)
+		self.assertEqual (self.pageRemoveCount, 0)
+
 		Application.onPageRemove -= self.onPageRemove
 	
 

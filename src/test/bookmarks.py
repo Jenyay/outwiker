@@ -32,6 +32,12 @@ class BookmarksTest (unittest.TestCase):
 
 		self.bookmarkCount = 0
 		self.bookmarkSender = None
+		Application.wikiroot = None
+
+
+	def tearDown (self):
+		Application.wikiroot = None
+		removeWiki (self.path)
 
 
 	def onBookmark (self, bookmarks):
@@ -80,6 +86,7 @@ class BookmarksTest (unittest.TestCase):
 
 	def testBookmarkEvent (self):
 		Application.onBookmarksChanged += self.onBookmark
+		Application.wikiroot = self.rootwiki
 
 		self.rootwiki.bookmarks.add (self.rootwiki[u"Страница 1"])
 		self.assertEqual (self.bookmarkCount, 1)
@@ -93,6 +100,23 @@ class BookmarksTest (unittest.TestCase):
 		self.rootwiki.bookmarks.remove (self.rootwiki[u"Страница 2"])
 		self.assertEqual (self.bookmarkCount, 3)
 		self.assertEqual (self.bookmarkSender, self.rootwiki.bookmarks)
+
+
+	def testBookmarkNoEvent (self):
+		Application.onBookmarksChanged += self.onBookmark
+
+		self.rootwiki.bookmarks.add (self.rootwiki[u"Страница 1"])
+		self.assertEqual (self.bookmarkCount, 0)
+		self.assertEqual (self.bookmarkSender, None)
+
+		self.rootwiki.bookmarks.add (self.rootwiki[u"Страница 2"])
+		self.assertEqual (self.bookmarkCount, 0)
+		self.assertEqual (self.bookmarkSender, None)
+
+
+		self.rootwiki.bookmarks.remove (self.rootwiki[u"Страница 2"])
+		self.assertEqual (self.bookmarkCount, 0)
+		self.assertEqual (self.bookmarkSender, None)
 	
 
 	def testPageInBookmarks (self):

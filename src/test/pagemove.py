@@ -39,10 +39,14 @@ class MoveTest (unittest.TestCase):
 		TextPageFactory.create (self.wiki[u"Страница 2/Страница 3"], u"Страница 4", [])
 		TextPageFactory.create (self.wiki[u"Страница 1"], u"Страница 5", [])
 		TextPageFactory.create (self.wiki, u"страница 4", [])
+		TextPageFactory.create (self.wiki, u"страница 444", [])
+
+		Application.wikiroot = None
 	
 
 	def tearDown(self):
 		removeWiki (self.path)
+		Application.wikiroot = None
 
 	
 	def onTreeUpdate (self, sender):
@@ -52,6 +56,8 @@ class MoveTest (unittest.TestCase):
 	
 	def test1 (self):
 		self.treeUpdateCount = 0
+		Application.wikiroot = self.wiki
+
 		Application.onTreeUpdate += self.onTreeUpdate
 
 		self.wiki[u"Страница 1/Страница 5"].moveTo (self.wiki)
@@ -59,7 +65,27 @@ class MoveTest (unittest.TestCase):
 		self.assertEqual (self.treeUpdateCount, 1)
 
 		self.assertEqual (len (self.wiki[u"Страница 1"]), 0)
-		self.assertEqual (len (self.wiki), 4)
+		self.assertEqual (len (self.wiki), 5)
+		self.assertEqual (self.wiki[u"Страница 5"].title, u"Страница 5")
+		self.assertEqual (self.wiki[u"Страница 5"].parent, self.wiki)
+		self.assertEqual (self.wiki[u"Страница 5"].parent, self.wiki)
+		self.assertEqual (self.wiki[u"Страница 5"].subpath, u"Страница 5")
+
+		Application.onTreeUpdate += self.onTreeUpdate
+
+
+	def testNoEvent (self):
+		self.treeUpdateCount = 0
+		Application.wikiroot = None
+
+		Application.onTreeUpdate += self.onTreeUpdate
+
+		self.wiki[u"Страница 1/Страница 5"].moveTo (self.wiki)
+
+		self.assertEqual (self.treeUpdateCount, 0)
+
+		self.assertEqual (len (self.wiki[u"Страница 1"]), 0)
+		self.assertEqual (len (self.wiki), 5)
 		self.assertEqual (self.wiki[u"Страница 5"].title, u"Страница 5")
 		self.assertEqual (self.wiki[u"Страница 5"].parent, self.wiki)
 		self.assertEqual (self.wiki[u"Страница 5"].parent, self.wiki)
@@ -75,7 +101,7 @@ class MoveTest (unittest.TestCase):
 		self.assertTrue (os.path.exists (os.path.join (self.wiki[u"Страница 2/Страница 3"].path, u"Страница 1") ) )
 
 		self.assertEqual (len (self.wiki[u"Страница 2/Страница 3"]), 2)
-		self.assertEqual (len (self.wiki), 2)
+		self.assertEqual (len (self.wiki), 3)
 		self.assertEqual (self.wiki[u"Страница 2/Страница 3/Страница 1"].title, u"Страница 1")
 		self.assertEqual (self.wiki[u"Страница 2/Страница 3/Страница 1/Страница 5"].title, u"Страница 5")
 		self.assertEqual (self.wiki[u"Страница 2/Страница 3/Страница 1"].subpath, u"Страница 2/Страница 3/Страница 1")
@@ -88,13 +114,22 @@ class MoveTest (unittest.TestCase):
 				self.wiki)
 
 
+	def test4 (self):
+		self.wiki[u"страница 4"].moveTo (self.wiki[u"страница 444"])
+
+		self.assertEqual (self.wiki[u"страница 4"], None )
+		self.assertTrue (os.path.exists (os.path.join (self.wiki[u"страница 444"].path, u"страница 4") ) )
+		self.assertEqual (len (self.wiki[u"страница 444"]), 1)
+		self.assertEqual (self.wiki[u"страница 444/страница 4"].title, u"страница 4")
+
+
 	def testMoveToSelf (self):
 		self.assertRaises (core.exceptions.TreeException, 
 				self.wiki[u"Страница 1"].moveTo, 
 				self.wiki[u"Страница 1"])
 
 		self.assertNotEqual (self.wiki[u"Страница 1"], None)
-		self.assertEqual (len (self.wiki), 3)
+		self.assertEqual (len (self.wiki), 4)
 
 
 	def testMoveToChild1 (self):
@@ -104,7 +139,7 @@ class MoveTest (unittest.TestCase):
 				self.wiki[u"Страница 2/Страница 3"])
 
 		self.assertNotEqual (self.wiki[u"Страница 2"], None)
-		self.assertEqual (len (self.wiki), 3)
+		self.assertEqual (len (self.wiki), 4)
 
 
 	def testMoveToChild2 (self):
@@ -114,7 +149,7 @@ class MoveTest (unittest.TestCase):
 				self.wiki[u"Страница 2/Страница 3/Страница 4"])
 
 		self.assertNotEqual (self.wiki[u"Страница 2"], None)
-		self.assertEqual (len (self.wiki), 3)
+		self.assertEqual (len (self.wiki), 4)
 
 
 	def testMoveInvalid (self):
@@ -147,7 +182,7 @@ class MoveTest (unittest.TestCase):
 				self.assertTrue (os.path.exists (os.path.join (self.wiki[u"Страница 2/Страница 3"].path, u"Страница 1") ) )
 
 				self.assertEqual (len (self.wiki[u"Страница 2/Страница 3"]), 2)
-				self.assertEqual (len (self.wiki), 2)
+				self.assertEqual (len (self.wiki), 3)
 				self.assertEqual (self.wiki[u"Страница 2/Страница 3/Страница 1"].title, u"Страница 1")
 				self.assertEqual (self.wiki[u"Страница 2/Страница 3/Страница 1/Страница 5"].title, u"Страница 5")
 				self.assertEqual (self.wiki[u"Страница 2/Страница 3/Страница 1"].subpath, u"Страница 2/Страница 3/Страница 1")

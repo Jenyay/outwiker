@@ -1,0 +1,109 @@
+!!! Purpose and syntax [=(:include:)=] command
+
+Command [=(:include:)=] is designed to be inserted into a wiki page content attachments. General syntax is as follows:
+
+[=(:include Attach:filename [params...]:)=]
+
+Here ''filename'' is the name of the attached file, and params of the command shown in the next section.
+
+!!! Params of the command [=(:include:)=]
+
+[=(:include:)=] command can take follow values:
+
+* ''encoding''
+* ''htmlescape''
+* ''wikiparse''
+
+!!!! encoding
+''Encoding'' parameter indicates the encoding of the included text. OutWiker can not determine file encoding, by default, it is considered that uses UTF-8.
+
+If you want to include the file Attach:text_utf8.txt in the UTF-8, it suffices to write
+
+[=(:include Attach:text_utf8.txt:)=]
+
+Result:
+
+(:include Attach:text_utf8.txt:)
+
+For the same file encoding can be specified explicitly:
+
+[=(:include Attach:text_utf8.txt encoding=utf8 :)=]
+
+To insert a file Attach:text_1251.txt with encoding cp1251 command will look like this:
+
+[=(:include Attach:text_1251.txt encoding=cp1251:)=]
+
+Result:
+
+(:include Attach:text_1251.txt encoding=cp1251:)
+
+If you forget to specify the encoding, you get an error. Example:
+
+[=(:include Attach:text_1251.txt:)=]
+
+Result:
+
+(:include Attach:text_1251.txt:)
+
+Full list of supported encodings is extensive, it can be found at [[http://docs.python.org/library/codecs.html#standard-encodings | this page]] of help in Python, we list the most commonly used encoding (one and the same code can have multiple names):
+
+* utf8, utf-8, utf_8, U8, UTF;
+* cp1251, windows-1251;
+* koi8_r;
+* koi8_u;
+* utf_32, utf-32, utf32;
+* utf_16, utf-16, utf16;
+* mac_cyrillic, maccyrillic;
+* cp866, 866, IBM866;
+
+!!!! htmlescape
+
+Parameter ''htmlescape'' tells the command that in the text read from a file, replace the characters &lt;,&gt; and &amp; respectively, &amp;lt;, &amp;gt;, and &amp;amp;. This is particularly useful for inserting the source program from the attached files.
+
+For example, the command
+
+[=(:include Attach:html.txt:)=]
+
+displays text in bold type:
+
+(:include Attach:html.txt:)
+
+And when you add a parameter ''htmlescape'':
+
+[=(:include Attach:html.txt htmlescape:)=]
+
+will display the HTML code:
+
+(:include Attach:html.txt htmlescape:)
+
+
+!!!! wikiparse
+
+''Wikiparse'' parameter tells the command that file is inserted, you must first pass through the wiki parser, that is, that the attached file contains a wiki notation that must be dismantled.
+
+For example, the command:
+
+[=(:include Attach:wiki.txt:)=]
+
+displays follow text:
+
+(:include Attach:wiki.txt:)
+
+But wish the ''wikiparse'' command:
+
+[=(:include Attach:wiki.txt wikiparse :)=]
+
+the wiki notation contents will be converted to HTML:
+
+(:include Attach:wiki.txt wikiparse :)
+
+---- 
+If the command [= (: include:) =] installed at the same time ''htmlescape'' and ''wikiparse'' parameters, then the first is the replacement character HTML, and then parse the wiki notation.
+
+To insert program source code can use the following command format [=(:include:)=]:
+
+[@
+<PRE>
+(:include Attach:filename htmlescape:)
+</PRE>
+@]

@@ -221,6 +221,25 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
 		self.assertFalse (generator.canReadFromCache())
 
 
+	def testCacheSubpages (self):
+		"""
+		Проверка кэширования при добавлении новых подстраниц
+		"""
+		# Только создали страницу, кешировать нельзя
+		generator = HtmlGenerator (self.testPage)
+		self.assertFalse (generator.canReadFromCache())
+
+		generator.makeHtml ()
+		self.assertTrue (generator.canReadFromCache())
+
+		# Добавляем новую подстраницу
+		WikiPageFactory.create (self.testPage, u"Подстраница 1", [])
+		self.assertFalse (generator.canReadFromCache())
+
+		generator.makeHtml ()
+		self.assertTrue (generator.canReadFromCache())
+
+
 	def testEmpty1 (self):
 		#config = Config (self.configpath)
 		text = u"бла-бла-бла"

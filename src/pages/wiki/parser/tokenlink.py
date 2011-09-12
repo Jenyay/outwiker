@@ -2,6 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 import re
+import cgi
 
 from libs.pyparsing import QuotedString
 
@@ -50,7 +51,7 @@ class LinkToken (object):
 		comment, url = text.split ("->")
 		realurl = self.__prepareUrl (url)
 
-		return self.__getUrlTag (realurl, comment)
+		return self.__getUrlTag (realurl, cgi.escape (comment) )
 
 
 	def __convertLinkLine (self, text):
@@ -60,7 +61,7 @@ class LinkToken (object):
 		url, comment = text.rsplit ("|", 1)
 		realurl = self.__prepareUrl (url)
 
-		return self.__getUrlTag (realurl, comment)
+		return self.__getUrlTag (realurl, cgi.escape (comment) )
 
 
 	def __prepareUrl (self, url):
@@ -87,9 +88,16 @@ class LinkToken (object):
 			# Ссылка на прикрепление
 			url = textStrip.replace (AttachToken.attachString, Attachment.attachDir + "/", 1)
 			comment = textStrip.replace (AttachToken.attachString, "")
+
+		elif (textStrip.startswith ("#") and 
+				self.parser.page != None and
+				self.parser.page[textStrip] == None):
+			# Ссылка начинается на #, но сложенных страниц с таким именем нет,
+			# значит это якорь
+			return '<A NAME="%s"></A>' % (textStrip[1:])
 		else:
 			# Ссылка не на прикрепление
 			url = text.strip()
 			comment = text.strip()
 
-		return '<A HREF="%s">%s</A>' % (url, comment)
+		return '<A HREF="%s">%s</A>' % (url, cgi.escape (comment) )

@@ -20,6 +20,7 @@ import webkit
 import core.system
 import core.commands
 from core.application import Application
+from .htmlcontrollerwebkit import UriIdentifierWebKit
 
 '''
 As far as I know (I may be wrong), a wx.Panel is "composed" by a GtkPizza
@@ -66,14 +67,13 @@ class HtmlRenderWebKit(HtmlRender):
 		scrolled_window.show_all()
 
 		self.canOpenUrl = False                # Можно ли открывать ссылки
-		self.currentUri = None                 # Текущая открытая страница
 
-		self.ctrl.connect("navigation-policy-decision-requested", self._onNavigate)
-		self.ctrl.connect("hovering-over-link", self._onHoveredOverLink)
+		self.ctrl.connect("navigation-policy-decision-requested", self.__onNavigate)
+		self.ctrl.connect("hovering-over-link", self.__onHoveredOverLink)
 		#self.ctrl.connect("populate-popup", self._on_populate_popup)
 
-		self.Bind (wx.EVT_MENU, self.onCopyFromHtml, id = wx.ID_COPY)
-		self.Bind (wx.EVT_MENU, self.onCopyFromHtml, id = wx.ID_CUT)
+		self.Bind (wx.EVT_MENU, self.__onCopyFromHtml, id = wx.ID_COPY)
+		self.Bind (wx.EVT_MENU, self.__onCopyFromHtml, id = wx.ID_CUT)
 		
 
 	def Print (self):
@@ -101,7 +101,7 @@ class HtmlRenderWebKit(HtmlRender):
 		self.canOpenUrl = False
 
 
-	def onCopyFromHtml(self, event):
+	def __onCopyFromHtml(self, event):
 		self.ctrl.copy_clipboard ()
 		event.Skip()
 
@@ -113,29 +113,32 @@ class HtmlRenderWebKit(HtmlRender):
 
 
 
-	def identifyUri (self, href):
+	def __identifyUri (self, href):
 		"""
 		Определить тип ссылки и вернуть кортеж (url, page, filename)
 		"""
-		if self._isUrl (href):
-			return (href, None, None)
+		basepath = unicode (self.ctrl.get_main_frame().get_uri(), "utf8")
+		identifier = UriIdentifierWebKit (self._currentPage, basepath)
 
-		href_clear = self._removeFileProtokol (href)
+		#print basepath
+		#print href
 
-		page = self.__findWikiPage (href_clear)
-		filename = self.__findFile (href_clear)
-
-		return (None, page, filename)
+		return identifier.identify (href)
 
 
-	def _onHoveredOverLink (self, view, title, uri):
+	def __onHoveredOverLink (self, view, title, uri):
 		if uri == None:
 			core.commands.setStatusText (u"")
 			return
 
-		href = unicode (urllib.unquote (uri), "utf8")
+		try:
+			href = unicode (urllib.unquote (uri), "utf8")
+		except UnicodeDecodeError:
+			#print uri
+			core.commands.setStatusText (u"")
+			return
 
-		(url, page, filename) = self.identifyUri (href)
+		(url, page, filename, anchor) = self.__identifyUri (href)
 
 		if url != None:
 			core.commands.setStatusText (url)
@@ -149,11 +152,20 @@ class HtmlRenderWebKit(HtmlRender):
 			core.commands.setStatusText (filename)
 			return
 
+		if anchor != None:
+			core.commands.setStatusText (anchor)
+			return
+
 		core.commands.setStatusText (u"")
 
 
-	def _onNavigate (self, view, frame, request, action, decision):
-		href = unicode (urllib.unquote (request.get_uri()), "utf8")
+	def __onNavigate (self, view, frame, request, action, decision):
+		try:
+			href = unicode (urllib.unquote (request.get_uri()), "utf8")
+		except UnicodeDecodeError:
+			#print request.get_uri()
+			return True
+
 		curr_href = self.ctrl.get_main_frame().get_uri()
 
 		if self.canOpenUrl or href == curr_href:
@@ -161,16 +173,16 @@ class HtmlRenderWebKit(HtmlRender):
 			# разрешить обработать запрос компоненту 
 			return False
 		else:
-			self.currentUri = request.get_uri()
-			self._onLinkClicked (href)
-			return True
+			return self.__onLinkClicked (href)
 
 
-	def _onLinkClicked (self, href):
+	def __onLinkClicked (self, href):
 		"""
 		Клик по ссылке
+		Возвращает False, если обрабатывать ссылку разрешить компоненту, 
+		в противном случае - True
 		"""
-		(url, page, filename) = self.identifyUri (href)
+		(url, page, filename, anchor) = self.__identifyUri (href)
 
 		if url != None:
 			self.openUrl (url)
@@ -185,44 +197,7 @@ class HtmlRenderWebKit(HtmlRender):
 				text = _(u"Can't execute file '%s'") % filename
 				core.commands.MessageBox (text, _(u"Error"), wx.ICON_ERROR | wx.OK)
 
+		elif anchor != None:
+			return False
 
-	def _removeFileProtokol (self, href):
-		"""
-		Так как WebKit к адресу без протокола прибавляет file://, то избавимся от этой надписи
-		"""
-		fileprotocol = u"file://"
-		if href.startswith (fileprotocol):
-			return href[len (fileprotocol): ]
-
-		return href
-
-	
-	def __findFile (self, href):
-		path = os.path.join (self._currentPage.path, href)
-		if os.path.exists (path):
-			return path
-
-
-	def __findWikiPage (self, subpath):
-		"""
-		Попытка найти страницу вики, если ссылка, на которую щелкнули не интернетная (http, ftp, mailto)
-		"""
-		assert self._currentPage != None
-
-		newSelectedPage = None
-
-		if subpath.startswith (self._currentPage.path):
-			subpath = subpath[len (self._currentPage.path) + 1: ]
-
-		if subpath[0] == "/":
-			# Поиск страниц осуществляем только с корня
-			newSelectedPage = self._currentPage.root[subpath[1:] ]
-		else:
-			# Сначала попробуем найти вложенные страницы с таким subpath
-			newSelectedPage = self._currentPage[subpath]
-
-			if newSelectedPage == None:
-				# Если страница не найдена, попробуем поискать, начиная с корня
-				newSelectedPage = self._currentPage.root[subpath]
-
-		return newSelectedPage
+		return True

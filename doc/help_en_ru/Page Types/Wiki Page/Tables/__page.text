@@ -1,0 +1,26 @@
+''Для создания таблиц используется следующая нотация:''
+
+To create tables, use the following notation:
+
+[=
+|| Table params (tag &lt;TABLE&gt; attributes): border, width etc
+|| The first cell of the first row || The Second cell of the first row || ... || The Last cell of the first row ||
+|| The first cell of the second row || The second cell of the second row || ... || The Last cell of the second row ||
+...
+=]
+
+''Горизонтальное выравнивание ячеек таблицы задается пробелами перед и после текста ячеек. Это показано на следующем примере:''
+
+The horizontal alignment of table cells defined by spaces before and after the cells text. This is shown in the following example:
+
+Table code:
+
+[=
+|| border=1 width=100%
+||Left align || Center align || Right align||
+=]
+
+Result:
+
+|| border=1 width=100%
+||Left align || Center align || Right align||

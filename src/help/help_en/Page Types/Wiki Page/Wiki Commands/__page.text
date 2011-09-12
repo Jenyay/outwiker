@@ -1,0 +1,29 @@
+!!! Command syntax
+
+In addition to the notation described in the previous sections, wiki also support the so-called wiki commands, syntax is as follows:
+
+[=
+(:commandname [params...] :)
+[content...]
+(:commandnameend:)
+=]
+
+Here ''commandname'' - the name of the command, and ''params'' and ''content'' - optional elements that establish some kind of command options and text, to which the command, respectively.
+
+Some teams do not want to''content'', in this case the command may be written as follows:
+
+[= (:commandname [params...] :) =]
+
+If you do not use any parameters, then:
+
+(:commandname:)
+
+!!! Params
+
+The parameters format can be different for different commands, but mostly we use the following format:
+
+param1 param2 = value1 param3 = "value 3" param4 = 'value 4' param5
+
+Parameters are separated by spaces, some options have value, and some simply enumerated. Options without values ​​can be regarded as flags: is set or not. 
+
+If the value contains letters, digits and underscores only, those values ​​can not surround quotes, otherwise the parameters need to be quoted.

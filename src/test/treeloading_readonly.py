@@ -186,50 +186,44 @@ class ReadonlyChangeTest (unittest.TestCase):
 	def tearDown(self):
 		removeWiki (self.path)
 
-	
-	def testMoveTo (self):
-		try:
-			self.wiki[u"Страница 1/Страница 5"].moveTo (self.wiki)
-		except ReadonlyException:
-			pass
-		else:
-			self.fail()
+
+	def __changeTitle (self, page, newtitle):
+		page.title = newtitle
+
+
+	def __changeTags (self, page, newtags):
+		page.tags = newtags
+
+
+	def __changeIcon (self, page, newicon):
+		page.icon = newicon
+
+	def __changeContent (self, page, newcontent):
+		page.content = newcontent
+
+
+	def __changeOrder (self, page, neworder):
+		page.order = neworder
 
 	
+	def testMoveTo (self):
+		self.assertRaises (ReadonlyException, self.wiki[u"Страница 1/Страница 5"].moveTo, self.wiki)
+
+
 	def testChangeTitle1 (self):
-		try:
-			self.wiki[u"Страница 1"].title = u"Страница 666"
-		except ReadonlyException:
-			pass
-		else:
-			self.fail()
+		self.assertRaises (ReadonlyException, self.__changeTitle, self.wiki[u"Страница 1"], u"Страница 666")
 
 
 	def testChangeTitle2 (self):
-		try:
-			self.wiki[u"Страница 2/Страница 3"].title = u"Страница 666"
-		except ReadonlyException:
-			pass
-		else:
-			self.fail()
+		self.assertRaises (ReadonlyException, self.__changeTitle, self.wiki[u"Страница 2/Страница 3"], u"Страница 666")
 	
 
 	def testChangeTags1 (self):
-		try:
-			self.wiki[u"Страница 1"].tags = ["111", "222"]
-		except ReadonlyException:
-			pass
-		else:
-			self.fail()
+		self.assertRaises (ReadonlyException, self.__changeTags, self.wiki[u"Страница 1"], ["111", "222"])
 
 
 	def testChangeTags2 (self):
-		try:
-			self.wiki[u"Страница 2/Страница 3"].tags = ["111", "222"]
-		except ReadonlyException:
-			pass
-		else:
-			self.fail()
+		self.assertRaises (ReadonlyException, self.__changeTags, self.wiki[u"Страница 2/Страница 3"], ["111", "222"])
 	
 
 	def testSetParameter1 (self):
@@ -243,103 +237,53 @@ class ReadonlyChangeTest (unittest.TestCase):
 
 	
 	def testChangeIcon1 (self):
-		try:
-			self.wiki[u"Страница 1"].icon = "../test/images/feed.gif"
-		except ReadonlyException:
-			pass
-		else:
-			self.fail()
+		self.assertRaises (ReadonlyException, self.__changeIcon, self.wiki[u"Страница 1"], u"../test/images/feed.gif")
 
 
 	def testChangeIcon2 (self):
-		try:
-			self.wiki[u"Страница 2/Страница 3"].icon = "../test/images/feed.gif"
-		except ReadonlyException:
-			pass
-		else:
-			self.fail()
+		self.assertRaises (ReadonlyException, self.__changeIcon, self.wiki[u"Страница 2/Страница 3"], u"../test/images/feed.gif")
 
 
 	def testAttach1 (self):
-		try:
-			filesPath = u"../test/samplefiles/"
-			files = [u"accept.png", u"add.png", u"anchor.png"]
+		filesPath = u"../test/samplefiles/"
+		files = [u"accept.png", u"add.png", u"anchor.png"]
 
-			fullFilesPath = [os.path.join (filesPath, fname) for fname in files]
+		fullFilesPath = [os.path.join (filesPath, fname) for fname in files]
 
-			Attachment (self.wiki[u"Страница 1"]).attach (fullFilesPath)
-		except ReadonlyException:
-			pass
-		else:
-			self.fail()
+		self.assertRaises (ReadonlyException, Attachment (self.wiki[u"Страница 1"]).attach, fullFilesPath)
 	
 
 	def testAttach2 (self):
-		try:
-			filesPath = u"../test/samplefiles/"
-			files = [u"accept.png", u"add.png", u"anchor.png"]
+		filesPath = u"../test/samplefiles/"
+		files = [u"accept.png", u"add.png", u"anchor.png"]
 
-			fullFilesPath = [os.path.join (filesPath, fname) for fname in files]
+		fullFilesPath = [os.path.join (filesPath, fname) for fname in files]
 
-			Attachment (self.wiki[u"Страница 2/Страница 3"]).attach (fullFilesPath)
-		except ReadonlyException:
-			pass
-		else:
-			self.fail()
+		self.assertRaises (ReadonlyException, Attachment (self.wiki[u"Страница 2/Страница 3"]).attach, fullFilesPath)
 	
 
 	def testRemoveAttach1 (self):
-		try:
-			Attachment (self.wiki[u"Страница 4"]).removeAttach (u"add.png")
-		except ReadonlyException:
-			pass
-		else:
-			self.fail()
+		self.assertRaises (ReadonlyException, Attachment (self.wiki[u"Страница 4"]).removeAttach, u"add.png")
 	
 
 	def testRemoveAttach2 (self):
-		try:
-			Attachment (self.wiki[u"Страница 1/Страница 5"]).removeAttach (u"anchor.png")
-		except ReadonlyException:
-			pass
-		else:
-			self.fail()
+		self.assertRaises (ReadonlyException, Attachment (self.wiki[u"Страница 1/Страница 5"]).removeAttach, u"anchor.png")
 	
 
 	def testCreate1 (self):
-		try:
-			TextPageFactory.create (self.wiki[u"Страница 1"], u"Страница 666", [])
-		except ReadonlyException:
-			pass
-		else:
-			self.fail()
+		self.assertRaises (ReadonlyException, TextPageFactory.create, self.wiki[u"Страница 1"], u"Страница 666", [])
 
 
-	def testCreate1 (self):
-		try:
-			TextPageFactory.create (self.wiki[u"Страница 2/Страница 3"], u"Страница 666", [])
-		except ReadonlyException:
-			pass
-		else:
-			self.fail()
-	
+	def testCreate2 (self):
+		self.assertRaises (ReadonlyException, TextPageFactory.create, self.wiki[u"Страница 2/Страница 3"], u"Страница 666", [])
+
 
 	def testChangeContent1 (self):
-		try:
-			self.wiki[u"Страница 1"].content = u"бла-бла-бла"
-		except ReadonlyException:
-			pass
-		else:
-			self.fail()
+		self.assertRaises (ReadonlyException, self.__changeContent, self.wiki[u"Страница 1"], u"бла-бла-бла")
 	
 
 	def testChangeContent2 (self):
-		try:
-			self.wiki[u"Страница 2/Страница 3"].content = u"бла-бла-бла"
-		except ReadonlyException:
-			pass
-		else:
-			self.fail()
+		self.assertRaises (ReadonlyException, self.__changeContent, self.wiki[u"Страница 2/Страница 3"], u"бла-бла-бла")
 	
 
 	def testSelectedPage1 (self):
@@ -351,31 +295,15 @@ class ReadonlyChangeTest (unittest.TestCase):
 
 	
 	def testRemove1 (self):
-		try:
-			self.wiki[u"Страница 1"].remove()
-		except ReadonlyException:
-			pass
-		else:
-			self.fail()
-
-		self.assertTrue (self.wiki[u"Страница 1"] != None)
+		self.assertRaises (ReadonlyException, self.wiki[u"Страница 1"].remove)
+		self.assertNotEqual (self.wiki[u"Страница 1"], None)
 
 
 	def testRemove2 (self):
-		try:
-			self.wiki[u"Страница 2/Страница 3"].remove()
-		except ReadonlyException:
-			pass
-		else:
-			self.fail()
-
-		self.assertTrue (self.wiki[u"Страница 2/Страница 3"] != None)
+		self.assertRaises (ReadonlyException, self.wiki[u"Страница 2/Страница 3"].remove)
+		self.assertNotEqual (self.wiki[u"Страница 2/Страница 3"], None)
 	
 
 	def testOrder1 (self):
-		try:
-			self.wiki[u"Страница 1"].order += 2
-		except ReadonlyException:
-			pass
-		else:
-			self.fail()
+		self.assertRaises (ReadonlyException, self.__changeOrder, self.wiki[u"Страница 1"], 3)
+

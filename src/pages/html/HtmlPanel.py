@@ -33,8 +33,9 @@ class ToolsInfo (object):
 class HtmlPanel(BaseTextPanel):
 	__metaclass__ = ABCMeta
 	
-	def __init__(self, *args, **kwds):
-		BaseTextPanel.__init__ (self, *args, **kwds)
+	def __init__(self, parent, *args, **kwds):
+		BaseTextPanel.__init__ (self, parent, *args, **kwds)
+
 		self._htmlFile = "__content.html"
 		self.currentHtmlFile = None
 
@@ -44,8 +45,6 @@ class HtmlPanel(BaseTextPanel):
 
 		self.imagesDir = core.system.getImagesDir()
 
-		kwds["style"] = wx.TAB_TRAVERSAL
-		wx.Panel.__init__(self, *args, **kwds)
 		self.notebook = wx.Notebook(self, -1, style=wx.NB_BOTTOM)
 		self.codeEditor = self.GetTextEditor()(self.notebook)
 		self.htmlWindow = getHtmlRender (self.notebook)
@@ -84,9 +83,14 @@ class HtmlPanel(BaseTextPanel):
 	
 	def UpdateView (self, page):
 		self.htmlWindow.page = self._currentpage
+
+		self.codeEditor.SetReadOnly (False)
 		self.codeEditor.SetText (self._currentpage.content)
 		self.codeEditor.EmptyUndoBuffer()
 		self.codeEditor.SetReadOnly (page.readonly)
+
+		self._showHtml()
+		self._openDefaultPage()
 
 
 	def GetContentFromGui(self):
@@ -145,7 +149,7 @@ class HtmlPanel(BaseTextPanel):
 			self.codeEditor.SetFocus()
 
 
-	def onTabChanged(self, event): 
+	def onTabChanged(self, event):
 		if self._currentpage == None:
 			return
 
@@ -283,8 +287,29 @@ class HtmlPanel(BaseTextPanel):
 # end of class HtmlPanel
 
 class HtmlPagePanel (HtmlPanel):
-	def __init__ (self, *args, **kwds):
-		HtmlPanel.__init__ (self, *args, **kwds)
+	def __init__ (self, parent, *args, **kwds):
+		HtmlPanel.__init__ (self, parent, *args, **kwds)
+		self.__createCustomTools()
+
+
+	def __createCustomTools (self):
+		"""
+		Создать кнопки и меню для данного типа страниц
+		"""
+		assert self.mainWindow != None
+
+		self.pageToolsMenu = wx.Menu()
+		
+		self._addRenderTools()
+		self.__addFontTools()
+		self.__addAlignTools()
+		self.__addHTools()
+		self.__addTableTools()
+		self.__addListTools()
+		self.__addOtherTools()
+
+		self.mainWindow.mainMenu.Insert (self.mainWindow.mainMenu.GetMenuCount() - 1, self.pageToolsMenu, _(u"H&tml"))
+		self.mainWindow.mainToolbar.Realize()
 
 
 	def __addFontTools (self):
@@ -321,14 +346,14 @@ class HtmlPagePanel (HtmlPanel):
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_SUBSCRIPT", 
-				lambda event: self.codeEditor.turnText (u"<SUB>", u"</SUB>"), 
+				lambda event: self.codeEditor.turnText (u"<sub>", u"</sub>"), 
 				_(u"Subscript\tCtrl+="), 
 				_(u"Subscript (<sub>…</sub>)"), 
 				os.path.join (self.imagesDir, "text_subscript.png"))
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_SUPERSCRIPT", 
-				lambda event: self.codeEditor.turnText (u"<SUP>", u"</SUP>"), 
+				lambda event: self.codeEditor.turnText (u"<sup>", u"</sup>"), 
 				_(u"Superscript\tCtrl++"), 
 				_(u"Superscript (<sup>…</sup>)"), 
 				os.path.join (self.imagesDir, "text_superscript.png"))
@@ -337,15 +362,15 @@ class HtmlPagePanel (HtmlPanel):
 	def __addAlignTools (self):
 		self._addTool (self.pageToolsMenu, 
 				"ID_ALIGN_CENTER", 
-				lambda event: self.codeEditor.turnText (u'<DIV ALIGN="CENTER">', u'</DIV>'), 
-				_(u"Center align\tCtrl+Shift+C"), 
+				lambda event: self.codeEditor.turnText (u'<div align="center">', u'</div>'), 
+				_(u"Center align\tCtrl+Alt+C"), 
 				_(u"Center align"), 
 				os.path.join (self.imagesDir, "text_align_center.png"))
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_ALIGN_RIGHT", 
-				lambda event: self.codeEditor.turnText (u'<DIV ALIGN="RIGHT">', u'</DIV>'), 
-				_(u"Right align"), 
+				lambda event: self.codeEditor.turnText (u'<div align="right">', u'</div>'), 
+				_(u"Right align\tCtrl+Alt+R"), 
 				_(u"Right align"), 
 				os.path.join (self.imagesDir, "text_align_right.png"))
 	
@@ -450,16 +475,25 @@ class HtmlPagePanel (HtmlPanel):
 		self._addTool (self.pageToolsMenu, 
 				"ID_IMAGE", 
 				lambda event: self.codeEditor.turnText (u'<img src="', u'"/>'), 
-				u'Image\tCtrl+M', 
-				u'Image (<img src="…"/>', 
+				_(u'Image\tCtrl+M'), 
+				_(u'Image (<img src="…"/>'), 
 				os.path.join (self.imagesDir, "image.png"))
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_LINK", 
 				lambda event: self.codeEditor.turnText (u'<a href="">', u'</a>'), 
 				_(u"Link\tCtrl+L"), 
-				u'Link (<a href="…">…</a>)', 
+				_(u'Link (<a href="…">…</a>)'), 
 				os.path.join (self.imagesDir, "link.png"))
+
+
+		self._addTool (self.pageToolsMenu, 
+				"ID_ANCHOR", 
+				lambda event: self.codeEditor.turnText (u'<a name="', u'"></a>'), 
+				_(u"Anchor\tCtrl+Alt+L"), 
+				_(u'Anchor (<a name="…">…</a>)'), 
+				os.path.join (self.imagesDir, "anchor.png"))
+
 
 		self._addTool (self.pageToolsMenu, 
 				"ID_HORLINE", 
@@ -467,6 +501,31 @@ class HtmlPagePanel (HtmlPanel):
 				_(u"Horizontal line\tCtrl+H"), 
 				_(u"Horizontal line (<hr>)"), 
 				os.path.join (self.imagesDir, "text_horizontalrule.png"))
+
+
+		self._addTool (self.pageToolsMenu, 
+				"ID_CODE", 
+				lambda event: self.codeEditor.turnText (u"<code>", u"</code>"), 
+				_(u"Code\tCtrl+Alt+D"), 
+				_(u"Code (<code>…</code>)"), 
+				os.path.join (self.imagesDir, "code.png"))
+
+
+		self._addTool (self.pageToolsMenu, 
+				"ID_PREFORMAT", 
+				lambda event: self.codeEditor.turnText (u"<pre>", u"</pre>"), 
+				_(u"Preformat\tCtrl+Alt+F"), 
+				_(u"Preformat (<pre>…</pre>)"), 
+				None)
+
+
+		self._addTool (self.pageToolsMenu, 
+				"ID_BLOCKQUOTE", 
+				lambda event: self.codeEditor.turnText (u"<blockquote>", u"</blockquote>"), 
+				_(u"Quote\tCtrl+Alt+Q"), 
+				_(u"Quote (<blockquote>…</blockquote>)"), 
+				os.path.join (self.imagesDir, "quote.png"))
+
 
 		self.pageToolsMenu.AppendSeparator()
 
@@ -476,25 +535,6 @@ class HtmlPagePanel (HtmlPanel):
 				_(u"Convert HTML Symbols"), 
 				_(u"Convert HTML Symbols"), 
 				None)
-
-
-	def initGui (self, mainWindow):
-		BaseTextPanel.initGui (self, mainWindow)
-
-		self.pageToolsMenu = wx.Menu()
-		
-		self._addRenderTools()
-		self.__addFontTools()
-		self.__addAlignTools()
-		self.__addHTools()
-		self.__addTableTools()
-		self.__addListTools()
-		self.__addOtherTools()
-
-		mainWindow.mainMenu.Insert (mainWindow.mainMenu.GetMenuCount() - 1, self.pageToolsMenu, _(u"H&tml"))
-		mainWindow.mainToolbar.Realize()
-
-		self._openDefaultPage()
 
 
 	def generateHtml (self, page):

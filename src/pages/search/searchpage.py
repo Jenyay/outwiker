@@ -26,12 +26,10 @@ class SearchWikiPage (WikiPage):
 		WikiPage.__init__ (self, path, title, parent, readonly)
 
 		self.paramsSection = u"Search"
-		self.phraseOption = StringOption (self.params, self.paramsSection, u"phrase", u"")
-		self.tagsOption = StringOption (self.params, self.paramsSection, u"tags", u"")
-		self.strategyOption = IntegerOption (self.params, self.paramsSection, u"strategy", 0)
+		phraseOption = StringOption (self.params, self.paramsSection, u"phrase", u"")
 
 		# Искомая фраза
-		self._phrase = self.phraseOption.value
+		self._phrase = phraseOption.value
 
 		# Теги, по которым осуществляется поиск (не путать с тегами, установленными для данной страницы)
 		self._searchTags = self._getSearchTags()
@@ -58,8 +56,9 @@ class SearchWikiPage (WikiPage):
 		"""
 		self._phrase = phrase
 
+		phraseOption = StringOption (self.params, self.paramsSection, u"phrase", u"")
 		try:
-			self.phraseOption.value = phrase
+			phraseOption.value = phrase
 		except ReadonlyException:
 			# Ничего страшного, если поисковая фраза не сохранится
 			pass
@@ -71,7 +70,8 @@ class SearchWikiPage (WikiPage):
 		"""
 		Загрузить список тегов из настроек страницы
 		"""
-		tags = TagsList.parseTagsList (self.tagsOption.value)
+		tagsOption = StringOption (self.params, self.paramsSection, u"tags", u"")
+		tags = TagsList.parseTagsList (tagsOption.value)
 		return tags
 
 
@@ -88,8 +88,10 @@ class SearchWikiPage (WikiPage):
 		self._searchTags = tags
 		tags_str = TagsList.getTagsString (tags)
 
+		tagsOption = StringOption (self.params, self.paramsSection, u"tags", u"")
+
 		try:
-			self.tagsOption.value = tags_str
+			tagsOption.value = tags_str
 		except ReadonlyException:
 			# Ну не сохранятся искомые теги, ничего страшного
 			pass
@@ -98,7 +100,8 @@ class SearchWikiPage (WikiPage):
 	
 
 	def _getStrategy (self):
-		return self._strategyByCode (self.strategyOption.value)
+		strategyOption = IntegerOption (self.params, self.paramsSection, u"strategy", 0)
+		return self._strategyByCode (strategyOption.value)
 	
 
 	def _strategyByCode (self, code):
@@ -121,9 +124,10 @@ class SearchWikiPage (WikiPage):
 			strategyCode = 0
 
 		self._strategy = strategy
+		strategyOption = IntegerOption (self.params, self.paramsSection, u"strategy", 0)
 
 		try:
-			self.strategyOption.value = strategyCode
+			strategyOption.value = strategyCode
 		except ReadonlyException:
 			# Ничего страшного
 			pass
@@ -156,12 +160,11 @@ class SearchPageFactory (PageFactory):
 
 
 	@staticmethod
-	def getPageView (page, parent):
+	def getPageView (parent):
 		"""
 		Вернуть контрол, который будет отображать и редактировать страницу
 		"""
 		panel = SearchPanel (parent)
-		panel.page = page
 
 		return panel
 
