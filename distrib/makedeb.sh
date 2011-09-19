@@ -1,6 +1,6 @@
 #!/bin/sh
 
-DIR_NAME="outwiker-1.3.2-1"
+DIR_NAME="outwiker-1.4.0-1"
 
 outwiker_dir="$DIR_NAME/opt/outwiker/"
 
