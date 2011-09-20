@@ -21,13 +21,15 @@ from core.system import getTemplatesDir
 
 
 class ToolsInfo (object):
-	def __init__ (self, id, alwaysEnabled):
+	def __init__ (self, id, alwaysEnabled, menu):
 		"""
 		id - идентификатор
 		alwaysEnabled - кнопка всегда активна?
+		menu - меню, куда добавляем новый пункт
 		"""
 		self.id = id
 		self.alwaysEnabled = alwaysEnabled
+		self.menu = menu
 
 
 class HtmlPanel(BaseTextPanel):
@@ -72,7 +74,6 @@ class HtmlPanel(BaseTextPanel):
 	
 	def onClose (self, event):
 		self.htmlWindow.Close()
-		pass
 
 
 	def onAttachmentPaste (self, fnames):
@@ -247,7 +248,14 @@ class HtmlPanel(BaseTextPanel):
 			self.notebook.SetSelection (self.codePageIndex)
 
 
-	def _addTool (self, menu, idstring, func, menuText, buttonText, image, alwaysEnabled = False):
+	def _addTool (self, 
+			menu, 
+			idstring, 
+			func, 
+			menuText, 
+			buttonText, 
+			image, 
+			alwaysEnabled = False):
 		"""
 		Добавить пункт меню и кнопку на панель
 		menu -- меню для добавления элемента
@@ -258,8 +266,10 @@ class HtmlPanel(BaseTextPanel):
 		image -- имя файла с картинкой
 		disableOnView -- дизаблить кнопку при переключении на просмотр результата
 		"""
+		assert idstring not in self.toolsId
+
 		id = wx.NewId()
-		self.toolsId[idstring] = ToolsInfo (id, alwaysEnabled)
+		self.toolsId[idstring] = ToolsInfo (id, alwaysEnabled, menu)
 
 		menu.Append (id, menuText, "", wx.ITEM_NORMAL)
 		self.mainWindow.Bind(wx.EVT_MENU, func, id = id)
@@ -272,16 +282,64 @@ class HtmlPanel(BaseTextPanel):
 					wx.ITEM_NORMAL, 
 					buttonText, 
 					"")
+
+
+	def _addCheckTool (self, 
+			menu, 
+			idstring, 
+			func, 
+			menuText, 
+			buttonText, 
+			image, 
+			alwaysEnabled = False):
+		"""
+		Добавить пункт меню с галкой и залипающую кнопку на панель
+		menu -- меню для добавления элемента
+		id -- идентификатор меню и кнопки
+		func -- обработчик
+		menuText -- название пунта меню
+		buttonText -- подсказка для кнопки
+		image -- имя файла с картинкой
+		disableOnView -- дизаблить кнопку при переключении на просмотр результата
+		"""
+		assert idstring not in self.toolsId
+
+		id = wx.NewId()
+		self.toolsId[idstring] = ToolsInfo (id, alwaysEnabled, menu)
+
+		menu.AppendCheckItem (id, menuText, "")
+		self.mainWindow.Bind(wx.EVT_MENU, func, id = id)
+
+		if image != None and len (image) != 0:
+			self.mainWindow.mainToolbar.AddCheckTool(id, 
+					wx.Bitmap(image, wx.BITMAP_TYPE_ANY), 
+					wx.NullBitmap, 
+					buttonText)
+
+
+	def _checkTools (self, idstring, checked):
+		"""
+		Активировать/деактивировать залипающие элементы управления
+		idstring - строка, описывающая элементы управления
+		checked - устанавливаемое состояние
+		"""
+		assert idstring in self.toolsId
+		assert self.mainWindow != None
+
+		tools = self.toolsId[idstring]
+
+		if tools.menu != None:
+			tools.menu.Check (tools.id, checked)
+
+		self.mainWindow.mainToolbar.ToggleTool (tools.id, checked)
 	
 
 	def removeGui (self):
-		BaseTextPanel.removeGui (self)
-
 		for key in self.toolsId.keys ():
 			self._removeTool (self.toolsId[key].id)
 
+		BaseTextPanel.removeGui (self)
 
-	
 
 
 # end of class HtmlPanel
@@ -290,6 +348,51 @@ class HtmlPagePanel (HtmlPanel):
 	def __init__ (self, parent, *args, **kwds):
 		HtmlPanel.__init__ (self, parent, *args, **kwds)
 		self.__createCustomTools()
+
+		Application.onPageUpdate += self.__onPageUpdate
+
+
+	def onClose (self, event):
+		Application.onPageUpdate -= self.__onPageUpdate
+		HtmlPanel.onClose (self, event)
+
+
+	def __onPageUpdate (self, sender):
+		if sender == self._currentpage:
+			self.__updatePageConfigTools()
+			self._showHtml()
+
+
+	def UpdateView (self, page):
+		self.__updatePageConfigTools()
+		HtmlPanel.UpdateView (self, page)
+
+
+	def __createPageConfigTools (self):
+		"""
+		Создать кнопки и пункты меню, отображающие настройки страницы
+		"""
+		self._addCheckTool (self.pageToolsMenu, 
+				"ID_AUTOLINEWRAP", 
+				self.__onAutoLineWrap, 
+				_(u"Auto Line Wrap"), 
+				_(u"Auto Line Wrap"), 
+				os.path.join (self.imagesDir, "linewrap.png"),
+				alwaysEnabled = True)
+
+		self.__updatePageConfigTools()
+
+
+	def __updatePageConfigTools (self):
+		if self._currentpage != None:
+			self._checkTools ("ID_AUTOLINEWRAP", self._currentpage.autoLineWrap)
+
+
+	def __onAutoLineWrap (self, event):
+		if self._currentpage != None:
+			self._currentpage.autoLineWrap = event.Checked()
+			self.__updatePageConfigTools()
+			#self._showHtml()
 
 
 	def __createCustomTools (self):
@@ -300,6 +403,7 @@ class HtmlPagePanel (HtmlPanel):
 
 		self.pageToolsMenu = wx.Menu()
 		
+		self.__createPageConfigTools ()
 		self._addRenderTools()
 		self.__addFontTools()
 		self.__addAlignTools()
@@ -545,8 +649,12 @@ class HtmlPagePanel (HtmlPanel):
 			return path
 
 		tpl = HtmlTemplate (os.path.join (getTemplatesDir(), "html") )
-		text = HtmlImprover.run (page.content)
-		text = re.sub ("\n<BR>\n(<li>)|(<LI>)", "\n<LI>", text)
+
+		if page.autoLineWrap:
+			text = HtmlImprover.run (page.content)
+			text = re.sub ("\n<BR>\n(<li>)|(<LI>)", "\n<LI>", text)
+		else:
+			text = page.content
 
 		result = tpl.substitute (content=text)
 

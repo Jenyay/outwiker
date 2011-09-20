@@ -64,6 +64,7 @@ if __name__ == '__main__':
 	from test.htmlimprover import HtmlImproverTest
 	from test.wikihtmlgenerator import WikiHtmlGeneratorTest
 	from test.htmltemplate import HtmlTemplateTest
+	from test.htmlpages import HtmlPagesTest
 
 	from test.utils import removeWiki
 	from test.event import EventTest, EventsTest

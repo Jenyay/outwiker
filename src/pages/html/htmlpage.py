@@ -6,9 +6,11 @@
 
 import os.path
 
+from core.config import BooleanOption
 from core.tree import WikiPage
-from HtmlPanel import HtmlPagePanel
 from core.factory import PageFactory
+from HtmlPanel import HtmlPagePanel
+
 
 class HtmlWikiPage (WikiPage):
 	"""
@@ -16,6 +18,29 @@ class HtmlWikiPage (WikiPage):
 	"""
 	def __init__ (self, path, title, parent, readonly = False):
 		WikiPage.__init__ (self, path, title, parent, readonly)
+
+		self.__autoLineWrapSection = u"General"
+		self.__autoLineWrapParam = u"LineWrap"
+
+	
+	@property
+	def autoLineWrap (self):
+		"""
+		Добавлять ли теги <BR> и <P> вместо разрывов строк?
+		"""
+		option = BooleanOption (self.params, self.__autoLineWrapSection, self.__autoLineWrapParam, True)
+		return option.value
+
+
+	@autoLineWrap.setter
+	def autoLineWrap (self, value):
+		"""
+		Добавлять ли теги <BR> и <P> вместо разрывов строк?
+		"""
+		option = BooleanOption (self.params, self.__autoLineWrapSection, self.__autoLineWrapParam, True)
+		option.value = value
+		self.root.onPageUpdate (self)
+
 	
 	@staticmethod
 	def getTypeString ():
