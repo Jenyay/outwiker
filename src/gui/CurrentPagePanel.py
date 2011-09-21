@@ -55,7 +55,7 @@ class CurrentPagePanel(wx.Panel):
 		Application.onBookmarksChanged -= self.__onBookmarksChanged
 
 		if self.pageView != None:
-			self.pageView.removeGui ()
+			#self.pageView.removeGui ()
 			self.pageView.Close()
 		self.Destroy()
 
