@@ -16,7 +16,7 @@ class PluginTestEmpty2 (object):
 
 	@property
 	def name (self):
-		return u"TestEmpty1"
+		return u"TestEmpty2"
 
 	
 	@property
