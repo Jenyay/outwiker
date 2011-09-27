@@ -5,14 +5,13 @@ import os
 import os.path
 import sys
 
-from core.application import Application
-
-
 class PluginsLoader (object):
 	"""
 	Класс для загрузки плагинов
 	"""
-	def __init__ (self):
+	def __init__ (self, application):
+		self.__application = application
+
 		self.__plugins = []
 
 		# Пути, где ищутся плагины
@@ -23,12 +22,17 @@ class PluginsLoader (object):
 
 
 	def load (self, dirlist):
+		"""
+		Загрузить плагины из указанных директорий.
+		Каждый вызов метода load() добавляет плагины в список загруженных плагинов, не очищая его
+		dirlist - список директорий, где могут располагаться плагины. Каждый плагин расположен в своей поддиректории
+		"""
 		assert dirlist != None
 
 		for currentDir in dirlist:
 			dirPackets = os.listdir (currentDir)
 
-			# Добавить путь до currenddir в sys.path
+			# Добавить путь до currentDir в sys.path
 			fullpath = os.path.abspath (currentDir)
 			if fullpath not in sys.path:
 				sys.path.insert (0, fullpath)
@@ -44,65 +48,73 @@ class PluginsLoader (object):
 		"""
 		Попытаться импортировать пакеты
 		baseDir - директория, где расположены пакеты
-		dirPackagesList - список директорий, возможно являющихся пакетами
+		dirPackagesList - список директорий (только имена директорий), возможно являющихся пакетами
 		"""
 		assert dirPackagesList != None
 
-		extension = ".py"
-
 		modules = []
 
-		for packageDir in dirPackagesList:
-			packagePath = os.path.join (baseDir, packageDir)
+		for packageName in dirPackagesList:
+			packagePath = os.path.join (baseDir, packageName)
 
 			# Проверить, что это директория
 			if os.path.isdir (packagePath):
 				# Переберем все файлы внутри packagePath и попытаемся их импортировать
-				for filename in os.listdir (packagePath):
-					if filename.endswith (extension) and filename != "__init__.py":
-						try:
-							# Попытаться импортировать модуль
-							modulename = packageDir + "." + filename[: -len (extension)]
-							package = __import__ (modulename)
-						except ImportError:
-							continue
-
-						modules.append (getattr (package, filename[: -len (extension)]) )
+				for fileName in os.listdir (packagePath):
+					module = self.__importSingleModule (packageName, fileName)
+					if module != None:
+						modules.append (module)
 
 		return modules
 
 
+	def __importSingleModule (self, packageName, fileName):
+		"""
+		Импортировать один модуль по имени пакета и файла с модулем
+		"""
+		extension = ".py"
+
+		# Проверим, что файл может быть модулем
+		if fileName.endswith (extension) and fileName != "__init__.py":
+			modulename = fileName[: -len (extension)]
+			try:
+				# Попытаться импортировать модуль
+				package = __import__ (packageName + "." + modulename)
+				return getattr (package, modulename)
+			except ImportError:
+				# Ну не шмогли импортировать, тогда этот модуль игнорируем
+				pass
+
+		return None
+
+
 	def __loadPlugins (self, modules):
+		"""
+		Найти классы плагинов и создать их экземпляры
+		"""
 		assert modules != None
 
 		for module in modules:
 			for name in dir (module):
 				if name.startswith (self.__pluginsStartName):
 					obj = getattr (module, name)
-					if not issubclass (obj, object):
+					if not issubclass (obj, object) or not self.__testPlugin (obj):
 						continue
-					
+
 					try:
-						plugin = obj (Application, os.path.dirname (module.__file__) )
+						plugin = obj (self.__application)
 					except BaseException:
 						continue
 
-					if self.__testPlugin (plugin):
-						self.__plugins.append (plugin)
+					self.__plugins.append (plugin)
 
 	
-	def __testPlugin (self, plugin):
+	def __testPlugin (self, pluginType):
 		"""
 		Проверка на то, что плагин удовлетворяет всем накладываемым требованиям - имеет все нужные свойства
 		"""
-		try:
-			plugin.name
-			plugin.version
-			plugin.description
-		except AttributeError:
-			return False
-
-		return True
+		attrib = dir (pluginType)
+		return "name" in attrib and "version" in attrib and "description" in attrib
 
 
 	def __len__ (self):

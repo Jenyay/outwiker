@@ -5,10 +5,9 @@ class PluginTestInvalid4 (object):
 	"""
 	Плагин с ошибкой. В конструкторе возникает исключение
 	"""
-	def __init__ (self, application, plugindir):
+	def __init__ (self, application):
 		"""
 		application - экземпляр класса core.application.ApplicationParams
-		plugindir - путь, откуда загружен плагин
 		"""
 		self.application = application
 		raise IOError

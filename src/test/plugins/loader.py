@@ -5,6 +5,7 @@ import unittest
 import os.path
 
 from core.pluginsloader import PluginsLoader
+from core.application import Application
 
 
 class PluginsLoaderTest(unittest.TestCase):
@@ -13,19 +14,20 @@ class PluginsLoaderTest(unittest.TestCase):
 
 
 	def testEmpty (self):
-		loader = PluginsLoader()
+		loader = PluginsLoader(Application)
 		self.assertEqual (len (loader), 0)
 
 
 	def testLoad (self):
 		dirlist = [u"../plugins/testempty1", u"../plugins/testempty2"]
-		loader = PluginsLoader()
+		loader = PluginsLoader(Application)
 		loader.load (dirlist)
 
 		self.assertEqual (len (loader), 2)
 		self.assertEqual (loader[0].name, u"TestEmpty1")
 		self.assertEqual (loader[0].version, u"0.1")
 		self.assertEqual (loader[0].description, u"This plugin is empty")
+		self.assertEqual (loader[0].application, Application)
 
 		self.assertEqual (loader[1].name, u"TestEmpty2")
 		self.assertEqual (loader[1].version, u"0.1")
@@ -41,7 +43,7 @@ class PluginsLoaderTest(unittest.TestCase):
 				u"../plugins/testempty1", 
 				u"../plugins/testempty2"]
 
-		loader = PluginsLoader()
+		loader = PluginsLoader(Application)
 		loader.load (dirlist)
 
 		self.assertEqual (len (loader), 2)

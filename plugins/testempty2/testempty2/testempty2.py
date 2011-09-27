@@ -2,10 +2,9 @@
 # -*- coding: UTF-8 -*-
 
 class PluginTestEmpty2 (object):
-	def __init__ (self, application, plugindir):
+	def __init__ (self, application):
 		"""
 		application - экземпляр класса core.application.ApplicationParams
-		plugindir - путь, откуда загружен плагин	
 		"""
 		self.application = application
 
