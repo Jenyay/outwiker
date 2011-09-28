@@ -86,6 +86,7 @@ if __name__ == '__main__':
 	from test.guitests.pagepanel import PagePanelTest
 
 	from test.plugins.loader import PluginsLoaderTest
+	from test.plugins.testwikicommand import PluginWikiCommandTest
 
 	if os.name == "nt":
 		from test.guitests.uriidentifiers import UriIdentifierIETest

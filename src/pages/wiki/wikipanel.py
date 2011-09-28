@@ -16,7 +16,6 @@ from gui.TextEditor import TextEditor
 from gui.BaseTextPanel import BaseTextPanel
 from gui.HtmlTextEditor import HtmlTextEditor
 from pages.html.HtmlPanel import HtmlPanel
-from parserfactory import ParserFactory
 from wikiconfig import WikiConfig
 from htmlgenerator import HtmlGenerator
 

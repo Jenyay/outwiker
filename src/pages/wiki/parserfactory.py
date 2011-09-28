@@ -6,6 +6,8 @@ from parser.commandinclude import IncludeCommand
 from parser.commandchildlist import ChildListCommand
 from parser.commandattachlist import AttachListCommand
 from parser.commandbloggers import LjUserCommand, LjCommunityCommand
+from core.application import Application
+
 
 class ParserFactory (object):
 	"""
@@ -13,7 +15,7 @@ class ParserFactory (object):
 	"""
 	def __init__ (self):
 		# Список типов команд. Экземпляры команд создаются при заполнении командами парсера
-		self.commands = [IncludeCommand, ChildListCommand, LjUserCommand, LjCommunityCommand, AttachListCommand]
+		self.__commands = [IncludeCommand, ChildListCommand, LjUserCommand, LjCommunityCommand, AttachListCommand]
 
 
 	def make (self, page, config):
@@ -24,6 +26,8 @@ class ParserFactory (object):
 		"""
 		parser = Parser (page, config)
 		self._addCommands (parser)
+		Application.onWikiParserPrepare (parser)
+
 		return parser
 
 
@@ -31,12 +35,12 @@ class ParserFactory (object):
 		"""
 		Добавить тип команды
 		"""
-		self.commands.append (commandType)
+		self.__commands.append (commandType)
 
 
 	def _addCommands (self, parser):
 		"""
-		Добавить команды из self.commands в парсер
+		Добавить команды из self.__commands в парсер
 		"""
-		for command in self.commands:
+		for command in self.__commands:
 			parser.addCommand (command (parser))

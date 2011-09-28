@@ -13,9 +13,6 @@ class PluginDebug (object):
 
 		self.__createMenu()
 
-		print _(u"Debug Plugin initialized")
-
-
 
 	def __createMenu (self):
 		self.menu = wx.Menu (u"")

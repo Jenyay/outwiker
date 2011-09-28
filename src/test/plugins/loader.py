@@ -33,6 +33,9 @@ class PluginsLoaderTest(unittest.TestCase):
 		self.assertEqual (loader[1].version, u"0.1")
 		self.assertEqual (loader[1].description, u"This plugin is empty")
 
+		loader.clear()
+		self.assertEqual (len (loader), 0)
+
 
 	def testLoadInvalid (self):
 		dirlist = [u"../plugins/testinvalid",            # Нет такой директории
@@ -43,12 +46,13 @@ class PluginsLoaderTest(unittest.TestCase):
 				u"../plugins/testinvalid5",
 				u"../plugins/testinvalid6",
 				u"../plugins/testempty1", 
-				u"../plugins/testempty2"]
+				u"../plugins/testempty2",
+				u"../plugins/testwikicommand"]
 
 		loader = PluginsLoader(Application)
 		loader.load (dirlist)
 
-		self.assertEqual (len (loader), 2)
+		self.assertEqual (len (loader), 3)
 		self.assertEqual (loader[0].name, u"TestEmpty1")
 		self.assertEqual (loader[0].version, u"0.1")
 		self.assertEqual (loader[0].description, u"This plugin is empty")
@@ -56,4 +60,7 @@ class PluginsLoaderTest(unittest.TestCase):
 		self.assertEqual (loader[1].name, u"TestEmpty2")
 		self.assertEqual (loader[1].version, u"0.1")
 		self.assertEqual (loader[1].description, u"This plugin is empty")
+
+		self.assertEqual (loader[2].name, u"TestWikiCommand")
+		self.assertEqual (loader[2].version, u"0.1")
 

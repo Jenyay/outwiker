@@ -181,6 +181,10 @@ class ApplicationParams (object):
 		# Параметры: нет
 		self.onForceSave = Event()
 
+		# Событие вызывается после создания википарсера (Parser), но до его использования
+		# Параметры: экземпляр Parser
+		self.onWikiParserPrepare = Event ()
+
 
 	def __initLocale (self):
 		generalConfig = GeneralGuiConfig (self.config)

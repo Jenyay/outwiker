@@ -45,6 +45,16 @@ class PluginsLoader (object):
 				self.__loadPlugins (modules)
 
 
+	def clear (self):
+		"""
+		Уничтожить все загруженные плагины
+		"""
+		for plugin in self.__plugins:
+			plugin.destroy()
+
+		self.__plugins = []
+
+
 	def __importModules (self, baseDir, dirPackagesList):
 		"""
 		Попытаться импортировать пакеты
