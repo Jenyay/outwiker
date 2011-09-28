@@ -5,7 +5,6 @@ import ConfigParser
 import os
 
 import core.system
-#from core.tree import WikiPage, RootWikiPage
 
 
 def getConfigPath (dirname, fname):
