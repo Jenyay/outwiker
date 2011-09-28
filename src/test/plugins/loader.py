@@ -35,11 +35,13 @@ class PluginsLoaderTest(unittest.TestCase):
 
 
 	def testLoadInvalid (self):
-		dirlist = [u"../plugins/testinvalid1",
+		dirlist = [u"../plugins/testinvalid",            # Нет такой директории
+				u"../plugins/testinvalid1",
 				u"../plugins/testinvalid2",
 				u"../plugins/testinvalid3",
 				u"../plugins/testinvalid4",
 				u"../plugins/testinvalid5",
+				u"../plugins/testinvalid6",
 				u"../plugins/testempty1", 
 				u"../plugins/testempty2"]
 

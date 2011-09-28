@@ -25,4 +25,11 @@ class PluginTestInvalid3 (object):
 	def description (self):
 		return _(u"This plugin is empty")
 
+
+	def destroy (self):
+		"""
+		Уничтожение (выгрузка) плагина. Здесь плагин должен отписаться от всех событий
+		"""
+		pass
+
 	#############################################

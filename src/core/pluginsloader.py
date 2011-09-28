@@ -30,18 +30,19 @@ class PluginsLoader (object):
 		assert dirlist != None
 
 		for currentDir in dirlist:
-			dirPackets = os.listdir (currentDir)
+			if os.path.exists (currentDir):
+				dirPackets = os.listdir (currentDir)
 
-			# Добавить путь до currentDir в sys.path
-			fullpath = os.path.abspath (currentDir)
-			if fullpath not in sys.path:
-				sys.path.insert (0, fullpath)
+				# Добавить путь до currentDir в sys.path
+				fullpath = os.path.abspath (currentDir)
+				if fullpath not in sys.path:
+					sys.path.insert (0, fullpath)
 
-			# Все поддиректории попытаемся открыть как пакеты
-			modules = self.__importModules (currentDir, dirPackets)
+				# Все поддиректории попытаемся открыть как пакеты
+				modules = self.__importModules (currentDir, dirPackets)
 
-			# Загрузим классы плагинов из модулей
-			self.__loadPlugins (modules)
+				# Загрузим классы плагинов из модулей
+				self.__loadPlugins (modules)
 
 
 	def __importModules (self, baseDir, dirPackagesList):
@@ -114,7 +115,7 @@ class PluginsLoader (object):
 		Проверка на то, что плагин удовлетворяет всем накладываемым требованиям - имеет все нужные свойства
 		"""
 		attrib = dir (pluginType)
-		return "name" in attrib and "version" in attrib and "description" in attrib
+		return "name" in attrib and "version" in attrib and "description" in attrib and "destroy" in attrib
 
 
 	def __len__ (self):

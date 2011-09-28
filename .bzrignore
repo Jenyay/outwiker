@@ -21,3 +21,4 @@ distrib/outwiker-*/DEBIAN/md5sums
 src/.coverage
 src/htmlcov
 src/tests.log
+src/plugins/*

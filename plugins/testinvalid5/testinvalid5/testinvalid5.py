@@ -1,16 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-class PluginTestInvalid4 (object):
+class PluginTestInvalid5 (object):
 	"""
-	Плагин с ошибкой. В конструкторе возникает исключение
+	Плагин с ошибкой - нет файла __init__.py
 	"""
 	def __init__ (self, application):
 		"""
 		application - экземпляр класса core.application.ApplicationParams
 		"""
 		self.application = application
-		raise IOError
 
 
 	#############################################
@@ -19,7 +18,7 @@ class PluginTestInvalid4 (object):
 
 	@property
 	def name (self):
-		return u"TestInvalid4"
+		return u"TestEmpty1"
 
 	
 	@property

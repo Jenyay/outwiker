@@ -13,7 +13,7 @@ import wx
 
 from core.config import getConfigPath
 from core.application import Application
-from core.system import getOS
+from core.system import getOS, getPluginsDirList
 from core.starter import Starter
 
 
@@ -42,6 +42,7 @@ class OutWiker(wx.App):
 		self.mainWnd = MainWindow(None, -1, "")
 		self.SetTopWindow (self.mainWnd)
 		Application.mainWindow = self.mainWnd
+		Application.plugins.load (getPluginsDirList())
 
 		self.bindActivateApp()
 

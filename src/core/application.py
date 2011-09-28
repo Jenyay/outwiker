@@ -3,11 +3,12 @@
 
 import gettext
 
-from .config import Config, getConfigPath
 import core.i18n
+from .config import Config, getConfigPath
 from .event import Event
-from gui.guiconfig import GeneralGuiConfig
 from .recent import RecentWiki
+from .pluginsloader import PluginsLoader
+from gui.guiconfig import GeneralGuiConfig
 
 
 class ApplicationParams (object):
@@ -19,6 +20,7 @@ class ApplicationParams (object):
 		self.__mainWindow = None
 		self.config = None
 		self.recentWiki = None
+		self.plugins = PluginsLoader (self)
 		self.__createEvents()
 
 	

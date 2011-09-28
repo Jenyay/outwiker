@@ -128,6 +128,7 @@ def getOS ():
 	else:
 		return Unix()
 
+
 def getCurrentDir ():
 	return unicode (os.path.dirname (sys.argv[0]), getOS().filesEncoding)
 
@@ -135,5 +136,10 @@ def getCurrentDir ():
 def getImagesDir ():
 	return os.path.join (getCurrentDir(), "images")
 
+
 def getTemplatesDir ():
 	return os.path.join (getCurrentDir(), "templates")
+
+
+def getPluginsDirList ():
+	return [os.path.join (getCurrentDir(), "plugins")]
