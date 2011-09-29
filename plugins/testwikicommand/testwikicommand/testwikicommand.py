@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-from pages.wiki.parser.commandtest import TestCommand
-
+from .commandtest import TestCommand
 
 class PluginTestWikiCommand (object):
 	"""
