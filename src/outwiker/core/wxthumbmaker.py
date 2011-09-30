@@ -5,7 +5,7 @@ import os.path
 
 import wx
 
-from core.thumbexception import ThumbException
+from .thumbexception import ThumbException
 
 
 class WxThumbmaker (object):

@@ -3,7 +3,7 @@
 
 import gettext
 
-import core.i18n
+from .i18n import init_i18n
 from .config import Config, getConfigPath
 from .event import Event
 from .recent import RecentWiki
@@ -191,7 +191,7 @@ class ApplicationParams (object):
 		language = generalConfig.languageOption.value
 
 		try:
-			core.i18n.init_i18n (language)
+			init_i18n (language)
 		except IOError, e:
 			print u"Can't load language: %s" % language
 

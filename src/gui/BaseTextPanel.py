@@ -6,10 +6,10 @@ import os
 
 import wx
 
-import core.system
-import core.commands
-from core.attachment import Attachment
-from core.application import Application
+import outwiker.core.system
+import outwiker.core.commands
+from outwiker.core.attachment import Attachment
+from outwiker.core.application import Application
 from .basepagepanel import BasePagePanel
 
 
@@ -46,7 +46,7 @@ class BaseTextPanel (BasePagePanel):
 		self.ID_SEARCH_PREV = wx.NewId()
 
 		self.searchMenuIndex = 2
-		self.imagesDir = core.system.getImagesDir()
+		self.imagesDir = outwiker.core.system.getImagesDir()
 
 		self._addMenuItems ()
 		self._addToolsItems ()
@@ -73,7 +73,7 @@ class BaseTextPanel (BasePagePanel):
 
 		if not os.path.exists (self.page.path) and not self.page.isRemoved:
 			# Похоже, страница удалена вручную
-			core.commands.MessageBox (_(u"Page %s not found. It is recommended to update the wiki") % self.page.title,
+			outwiker.core.commands.MessageBox (_(u"Page %s not found. It is recommended to update the wiki") % self.page.title,
 					_("Error"), wx.OR | wx.ICON_ERROR )
 			return
 
@@ -82,7 +82,7 @@ class BaseTextPanel (BasePagePanel):
 				self.page.content = self.GetContentFromGui()
 			except IOError as e:
 				# TODO: Проверить под Windows
-				core.commands.MessageBox (_(u"Can't save file %s") % (unicode (e.filename)), 
+				outwiker.core.commands.MessageBox (_(u"Can't save file %s") % (unicode (e.filename)), 
 					_(u"Error"), 
 					wx.ICON_ERROR | wx.OK)
 	

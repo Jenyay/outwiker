@@ -5,12 +5,12 @@ import wx
 import os
 import hashlib
 
-import core.commands
-from core.config import Config, StringOption
-from core.tree import RootWikiPage
-from core.htmlimprover import HtmlImprover
-from core.application import Application
-from core.attachment import Attachment
+from outwiker.core.commands import MessageBox, setStatusText
+from outwiker.core.config import Config, StringOption
+from outwiker.core.tree import RootWikiPage
+from outwiker.core.htmlimprover import HtmlImprover
+from outwiker.core.application import Application
+from outwiker.core.attachment import Attachment
 
 from gui.TextEditor import TextEditor
 from gui.BaseTextPanel import BaseTextPanel
@@ -85,7 +85,7 @@ class WikiPagePanel (HtmlPanel):
 		assert self._currentpage != None
 
 		self.Save()
-		core.commands.setStatusText (_(u"Page rendered. Please wait…") )
+		setStatusText (_(u"Page rendered. Please wait…") )
 		Application.onHtmlRenderingBegin (self._currentpage, self.htmlWindow)
 
 		try:
@@ -93,15 +93,15 @@ class WikiPagePanel (HtmlPanel):
 			self._showHtmlCode(self.currentHtmlFile)
 		except IOError as e:
 			# TODO: Проверить под Windows
-			core.commands.MessageBox (_(u"Can't save file %s") % (unicode (e.filename)), 
+			MessageBox (_(u"Can't save file %s") % (unicode (e.filename)), 
 					_(u"Error"), 
 					wx.ICON_ERROR | wx.OK)
 		except OSError as e:
-			core.commands.MessageBox (_(u"Can't save HTML-file\n\n%s") % (unicode (e)), 
+			MessageBox (_(u"Can't save HTML-file\n\n%s") % (unicode (e)), 
 					_(u"Error"), 
 					wx.ICON_ERROR | wx.OK)
 
-		core.commands.setStatusText (u"")
+		setStatusText (u"")
 		Application.onHtmlRenderingEnd (self._currentpage, self.htmlWindow)
 
 		self._enableTools (self.pageToolsMenu, False)
@@ -118,9 +118,9 @@ class WikiPagePanel (HtmlPanel):
 				self.htmlCodeWindow.SetText (text)
 				self.htmlCodeWindow.SetReadOnly (True)
 		except IOError:
-			core.commands.MessageBox (_(u"Can't load HTML-file"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+			MessageBox (_(u"Can't load HTML-file"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 		except OSError:
-			core.commands.MessageBox (_(u"Can't load HTML-file"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+			MessageBox (_(u"Can't load HTML-file"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 
 
 	def __addFontTools (self):

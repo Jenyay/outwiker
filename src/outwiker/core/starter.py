@@ -4,9 +4,9 @@
 import sys
 import os.path
 
-from core.application import Application
+from .application import Application
 from gui.guiconfig import GeneralGuiConfig
-import core.commands
+from .commands import openWiki
 
 
 class Starter (object):
@@ -33,7 +33,7 @@ class Starter (object):
 		openRecent = self.generalConfig.autoopenOption.value
 
 		if openRecent and len (Application.recentWiki) > 0:
-			core.commands.openWiki (Application.recentWiki[0])
+			openWiki (Application.recentWiki[0])
 
 
 	def __openFromCommandLine (self):
@@ -44,4 +44,4 @@ class Starter (object):
 		if not os.path.isdir (fname):
 			fname = os.path.split (fname)[0]
 
-		core.commands.openWiki (fname)
+		openWiki (fname)

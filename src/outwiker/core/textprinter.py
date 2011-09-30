@@ -6,8 +6,8 @@ import cgi
 import wx
 import wx.html
 
-import core.commands
-from core.application import Application
+from .commands import MessageBox
+from .application import Application
 from gui.guiconfig import TextPrintConfig
 
 
@@ -103,4 +103,4 @@ class TextPrinter (object):
 		printer.Print(self.parent, printout, True)
 
 		if printer.GetLastError() == wx.PRINTER_ERROR:
-			core.commands.MessageBox (_(u"Printing error"), _("Error"), wx.OK | wx.ICON_ERROR, self.parent)
+			MessageBox (_(u"Printing error"), _("Error"), wx.OK | wx.ICON_ERROR, self.parent)

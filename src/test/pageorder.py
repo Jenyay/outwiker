@@ -7,13 +7,13 @@
 import shutil
 import unittest
 
-from core.tree import RootWikiPage, WikiDocument, WikiPage
+from outwiker.core.tree import RootWikiPage, WikiDocument, WikiPage
 from pages.text.textpage import TextPageFactory
-from core.event import Event
-from core.application import Application
+from outwiker.core.event import Event
+from outwiker.core.application import Application
 from test.utils import removeWiki
-from core.config import PageConfig
-from core.config import IntegerOption
+from outwiker.core.config import PageConfig
+from outwiker.core.config import IntegerOption
 
 class PageOrderTest (unittest.TestCase):
 	"""

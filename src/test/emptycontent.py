@@ -5,7 +5,7 @@ import unittest
 import os
 import os.path
 
-from core.config import Config
+from outwiker.core.config import Config
 from pages.wiki.emptycontent import EmptyContent
 
 

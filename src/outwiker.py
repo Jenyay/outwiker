@@ -11,10 +11,10 @@ import sys
 
 import wx
 
-from core.config import getConfigPath
-from core.application import Application
-from core.system import getOS, getPluginsDirList
-from core.starter import Starter
+from outwiker.core.config import getConfigPath
+from outwiker.core.application import Application
+from outwiker.core.system import getOS, getPluginsDirList
+from outwiker.core.starter import Starter
 
 
 class OutWiker(wx.App):

@@ -5,10 +5,11 @@ import os
 import os.path
 import gettext
 
-import core.system
+from .system import getCurrentDir
+
 
 def init_i18n (language):
-	langdir = os.path.join (core.system.getCurrentDir(), u'locale')
+	langdir = os.path.join (getCurrentDir(), u'locale')
 
 	try:
 		lang = gettext.translation(u'outwiker', langdir, languages=[language])
@@ -43,7 +44,7 @@ def getLanguages ():
 	"""
 	Получить список всех языков, находящихся в папке locale
 	"""
-	langdir = os.path.join (core.system.getCurrentDir(), u'locale')
+	langdir = os.path.join (getCurrentDir(), u'locale')
 
 	languages = []
 	for folder in os.listdir (langdir):

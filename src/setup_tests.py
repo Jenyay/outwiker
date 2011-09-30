@@ -1,17 +1,19 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-from cx_Freeze import setup, Executable
 import os
 
-import core.system
+from cx_Freeze import setup, Executable
+
+from outwiker.core.system import getCurrentDir
+
 
 def getCurrentVersion ():
 	"""
 	Получить текущую версию для файла
 	"""
 	fname = "version.txt"
-	path = os.path.join (core.system.getCurrentDir(), fname)
+	path = os.path.join (getCurrentDir(), fname)
 
 	with open (path) as fp:
 		lines = fp.readlines()

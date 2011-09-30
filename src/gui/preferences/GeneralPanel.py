@@ -4,9 +4,9 @@
 import wx
 
 import ConfigElements
-from core.config import StringOption, BooleanOption, IntegerOption
-import core.i18n
-from core.application import Application
+from outwiker.core.config import StringOption, BooleanOption, IntegerOption
+import outwiker.core.i18n
+from outwiker.core.application import Application
 from gui.guiconfig import TrayConfig, GeneralGuiConfig, MainWindowConfig
 
 # begin wxGlade: dependencies
@@ -139,7 +139,7 @@ class GeneralPanel(wx.ScrolledWindow):
 	
 
 	def __loadLanguages (self):
-		languages = core.i18n.getLanguages()
+		languages = outwiker.core.i18n.getLanguages()
 		languages.sort()
 
 		self.langCombo.Clear ()

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-from core.config import StringOption
+from outwiker.core.config import StringOption
 
 
 class EmptyContent (object):

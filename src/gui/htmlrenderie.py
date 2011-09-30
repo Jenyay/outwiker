@@ -8,10 +8,10 @@ import wx
 import wx.lib.iewin
 
 from .htmlrender import HtmlRender
-import core.system
-import core.commands
-from core.application import Application
-from core.commands import MessageBox
+import outwiker.core.system
+import outwiker.core.commands
+from outwiker.core.application import Application
+from outwiker.core.commands import MessageBox
 from .htmlcontrollerie import UriIdentifierIE
 
 
@@ -55,15 +55,15 @@ class HtmlRenderIE (HtmlRender):
 			(url, page, filename, anchor) = self.__identifyUri (status)
 
 			if page != None:
-				core.commands.setStatusText (page.subpath)
+				outwiker.core.commands.setStatusText (page.subpath)
 			elif filename != None:
-				core.commands.setStatusText (filename)
+				outwiker.core.commands.setStatusText (filename)
 			elif anchor != None:
-				core.commands.setStatusText (anchor)
+				outwiker.core.commands.setStatusText (anchor)
 			else:
-				core.commands.setStatusText (status)
+				outwiker.core.commands.setStatusText (status)
 		else:
-			core.commands.setStatusText (status)
+			outwiker.core.commands.setStatusText (status)
 
 
 	def __onCopyFromHtml(self, event):
@@ -73,7 +73,7 @@ class HtmlRenderIE (HtmlRender):
 		if selection != None:
 			selrange = selection.createRange()
 			if selrange != None:
-				core.commands.copyTextToClipboard (selrange.text)
+				outwiker.core.commands.copyTextToClipboard (selrange.text)
 				event.Skip()
 
 
@@ -153,10 +153,10 @@ class HtmlRenderIE (HtmlRender):
 
 		elif filename != None:
 			try:
-				core.system.getOS().startFile (filename)
+				outwiker.core.system.getOS().startFile (filename)
 			except OSError:
 				text = _(u"Can't execute file '%s'") % filename
-				core.commands.MessageBox (text, _(u"Error"), wx.ICON_ERROR | wx.OK)
+				outwiker.core.commands.MessageBox (text, _(u"Error"), wx.ICON_ERROR | wx.OK)
 
 		elif anchor != None:
 			self.LoadPage (href)

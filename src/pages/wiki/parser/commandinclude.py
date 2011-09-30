@@ -5,7 +5,7 @@ import os.path
 import cgi
 
 from command import Command
-from core.attachment import Attachment
+from outwiker.core.attachment import Attachment
 
 class IncludeCommand (Command):
 	"""

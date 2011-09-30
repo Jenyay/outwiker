@@ -9,7 +9,7 @@ from .config import PageConfig
 from .bookmarks import Bookmarks
 from .search import TagsList
 from .event import Event
-import core.exceptions
+from .exceptions import ClearConfigError, RootFormatError, DublicateTitle, ReadonlyException, TreeException
 
 
 class RootWikiPage (object):
@@ -303,7 +303,7 @@ class WikiDocument (RootWikiPage):
 			fp = open (realpath, "w")
 			fp.close()
 		except IOError:
-			raise core.exceptions.ClearConfigError
+			raise ClearConfigError
 
 
 	@staticmethod
@@ -315,7 +315,7 @@ class WikiDocument (RootWikiPage):
 		try:
 			root = WikiDocument(path, readonly)
 		except ConfigParser.Error:
-			raise core.exceptions.RootFormatError
+			raise RootFormatError
 
 		root.loadChildren()
 
@@ -409,7 +409,7 @@ class WikiPage (RootWikiPage):
 		path -- путь до страницы
 		"""
 		if not RootWikiPage.testDublicate(parent, title):
-			raise core.exceptions.DublicateTitle
+			raise DublicateTitle
 
 		RootWikiPage.__init__ (self, path, readonly)
 		self._title = title
@@ -430,7 +430,7 @@ class WikiPage (RootWikiPage):
 		Изменить положение страницы (порядок)
 		"""
 		if self.readonly:
-			raise core.exceptions.ReadonlyException
+			raise ReadonlyException
 
 		realorder = neworder
 
@@ -452,7 +452,7 @@ class WikiPage (RootWikiPage):
 	@title.setter
 	def title (self, newtitle):
 		if self.readonly:
-			raise core.exceptions.ReadonlyException
+			raise ReadonlyException
 
 		oldtitle = self.title
 		oldpath = self.path
@@ -464,7 +464,7 @@ class WikiPage (RootWikiPage):
 		# Проверка на дубликат страниц, а также на то, что в заголовке страницы
 		# может меняться только регистр букв
 		if not self.canRename(newtitle):
-			raise core.exceptions.DublicateTitle
+			raise DublicateTitle
 
 		newpath = os.path.join (os.path.dirname (oldpath), newtitle)
 		os.renames (oldpath, newpath)
@@ -503,18 +503,18 @@ class WikiPage (RootWikiPage):
 		Переместить запись к другому родителю
 		"""
 		if self.readonly:
-			raise core.exceptions.ReadonlyException
+			raise ReadonlyException
 
 		if self._parent == newparent:
 			return
 
 		if self.isChild (newparent):
 			# Нельзя быть родителем своего родителя (предка)
-			raise core.exceptions.TreeException
+			raise TreeException
 
 		# Проверка на то, что в новом родителе нет записи с таким же заголовком
 		if newparent[self.title] != None:
-			raise core.exceptions.DublicateTitle
+			raise DublicateTitle
 
 		oldpath = self.path
 		oldparent = self.parent
@@ -531,9 +531,9 @@ class WikiPage (RootWikiPage):
 			os.renames (oldpath, tempname)
 			shutil.move (tempname, newpath)
 		except shutil.Error:
-			raise core.exceptions.TreeException
+			raise TreeException
 		except OSError:
-			raise core.exceptions.TreeException
+			raise TreeException
 
 		self._parent = newparent
 		oldparent.removeFromChildren (self)
@@ -576,7 +576,7 @@ class WikiPage (RootWikiPage):
 	@icon.setter
 	def icon (self, iconpath):
 		if self.readonly:
-			raise core.exceptions.ReadonlyException
+			raise ReadonlyException
 
 		if self.icon != None and os.path.abspath (self.icon) == os.path.abspath (iconpath):
 			return
@@ -612,7 +612,7 @@ class WikiPage (RootWikiPage):
 	@tags.setter
 	def tags (self, tags):
 		if self.readonly:
-			raise core.exceptions.ReadonlyException
+			raise ReadonlyException
 
 		if self._tags != tags:
 			self._tags = tags[:]
@@ -646,7 +646,7 @@ class WikiPage (RootWikiPage):
 		Загрузить страницу.
 		Использовать этот метод вместо конструктора, когда надо загрузить страницу
 		"""
-		from core.factoryselector import FactorySelector
+		from .factoryselector import FactorySelector
 
 		title = os.path.basename(path)
 		params = RootWikiPage._readParams(path, readonly)
@@ -746,10 +746,7 @@ class WikiPage (RootWikiPage):
 	@content.setter
 	def content (self, text):
 		if self.readonly:
-			raise core.exceptions.ReadonlyException
-
-		#if not os.path.exists (self.path):
-		#	self.save()
+			raise ReadonlyException
 
 		if text != self.content:
 			path = os.path.join (self.path, RootWikiPage.contentFile)
@@ -788,7 +785,7 @@ class WikiPage (RootWikiPage):
 		Удалить страницу
 		"""
 		if self.readonly:
-			raise core.exceptions.ReadonlyException
+			raise ReadonlyException
 
 		oldpath = self.path
 		tempname = self._getTempName (oldpath)

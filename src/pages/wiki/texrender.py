@@ -6,7 +6,7 @@ import os.path
 import subprocess
 import hashlib
 
-from core.system import getOS, getCurrentDir
+from outwiker.core.system import getOS, getCurrentDir
 
 
 def getTexRender (thumb_path):

@@ -9,11 +9,11 @@ import os.path
 import shutil
 import unittest
 
-from core.tree import RootWikiPage, WikiDocument
+from outwiker.core.tree import RootWikiPage, WikiDocument
 from pages.text.textpage import TextPageFactory
 from pages.html.htmlpage import HtmlPageFactory
-from core.event import Event
-from core.factoryselector import FactorySelector
+from outwiker.core.event import Event
+from outwiker.core.factoryselector import FactorySelector
 
 class FactorySelectorTest (unittest.TestCase):
 	def setUp (self):

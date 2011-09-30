@@ -9,10 +9,10 @@ import os.path
 import shutil
 import unittest
 
-import core.exceptions
-from core.application import Application
-from core.tree import RootWikiPage, WikiDocument
-from core.attachment import Attachment
+from outwiker.core.exceptions import DublicateTitle, TreeException
+from outwiker.core.application import Application
+from outwiker.core.tree import RootWikiPage, WikiDocument
+from outwiker.core.attachment import Attachment
 
 from pages.text.textpage import TextPageFactory
 from test.utils import removeWiki
@@ -109,7 +109,7 @@ class MoveTest (unittest.TestCase):
 
 	
 	def test3 (self):
-		self.assertRaises (core.exceptions.DublicateTitle, 
+		self.assertRaises (DublicateTitle, 
 				self.wiki[u"Страница 2/Страница 3/Страница 4"].moveTo, 
 				self.wiki)
 
@@ -124,7 +124,7 @@ class MoveTest (unittest.TestCase):
 
 
 	def testMoveToSelf (self):
-		self.assertRaises (core.exceptions.TreeException, 
+		self.assertRaises (TreeException, 
 				self.wiki[u"Страница 1"].moveTo, 
 				self.wiki[u"Страница 1"])
 
@@ -134,7 +134,7 @@ class MoveTest (unittest.TestCase):
 
 	def testMoveToChild1 (self):
 		#self.wiki[u"Страница 2"].moveTo (self.wiki[u"Страница 2/Страница 3"])
-		self.assertRaises (core.exceptions.TreeException, 
+		self.assertRaises (TreeException, 
 				self.wiki[u"Страница 2"].moveTo, 
 				self.wiki[u"Страница 2/Страница 3"])
 
@@ -144,7 +144,7 @@ class MoveTest (unittest.TestCase):
 
 	def testMoveToChild2 (self):
 		#self.wiki[u"Страница 2"].moveTo (self.wiki[u"Страница 2/Страница 3/Страница 4"])
-		self.assertRaises (core.exceptions.TreeException, 
+		self.assertRaises (TreeException, 
 				self.wiki[u"Страница 2"].moveTo, 
 				self.wiki[u"Страница 2/Страница 3/Страница 4"])
 
@@ -166,7 +166,7 @@ class MoveTest (unittest.TestCase):
 		with open (attach.getFullPath (u"lock.tmp", True), "w"):
 			try:
 				page.moveTo (self.wiki[u"Страница 2/Страница 3"])
-			except core.exceptions.TreeException:
+			except TreeException:
 				# Если не удалось переместить страницу
 				self.assertEqual (self.wiki[u"Страница 2/Страница 3/Страница 1"], None)
 				self.assertNotEqual (self.wiki[u"Страница 1"], None)

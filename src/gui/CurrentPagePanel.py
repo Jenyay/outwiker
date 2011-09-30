@@ -4,12 +4,12 @@
 import os.path
 import wx
 
-from core.application import Application
-from core.factoryselector import FactorySelector
-import core.commands
-from core.tree import RootWikiPage
-from core.search import TagsList
-import core.system
+from outwiker.core.application import Application
+from outwiker.core.factoryselector import FactorySelector
+import outwiker.core.commands
+from outwiker.core.tree import RootWikiPage
+from outwiker.core.search import TagsList
+import outwiker.core.system
 
 
 class CurrentPagePanel(wx.Panel):
@@ -17,7 +17,7 @@ class CurrentPagePanel(wx.Panel):
 		self.pageView = None
 		self.__currentPage = None
 
-		self.imagesDir = core.system.getImagesDir()
+		self.imagesDir = outwiker.core.system.getImagesDir()
 		
 		self.grayStarImage = os.path.join (self.imagesDir, "star_gray.png")
 		self.goldStarImage = os.path.join (self.imagesDir, "star.png")

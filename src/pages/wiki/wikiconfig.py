@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-from core.config import BooleanOption, IntegerOption
+from outwiker.core.config import BooleanOption, IntegerOption
 
 class WikiConfig (object):
 	"""

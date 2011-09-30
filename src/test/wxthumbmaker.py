@@ -5,8 +5,8 @@ import os
 import os.path
 import unittest
 
-from core.wxthumbmaker import WxThumbmaker
-from core.thumbexception import ThumbException
+from outwiker.core.wxthumbmaker import WxThumbmaker
+from outwiker.core.thumbexception import ThumbException
 from test.utils import getImageSize
 
 

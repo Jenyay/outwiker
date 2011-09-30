@@ -5,7 +5,7 @@
 Классы для глобального поиска по вики
 """
 import os.path
-import core.system
+
 
 class AllTagsSearchStrategy (object):
 	"""

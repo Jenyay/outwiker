@@ -3,9 +3,9 @@
 
 import os.path
 
-from core.wxthumbmaker import WxThumbmaker
+from outwiker.core.wxthumbmaker import WxThumbmaker
 from ..thumbnails import Thumbnails
-from core.attachment import Attachment
+from outwiker.core.attachment import Attachment
 
 
 class PageThumbmaker (object):

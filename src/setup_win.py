@@ -4,14 +4,14 @@
 from cx_Freeze import setup, Executable
 import os
 
-import core.system
+import outwiker.core.system
 
 def getCurrentVersion ():
 	"""
 	Получить текущую версию для файла
 	"""
 	fname = "version.txt"
-	path = os.path.join (core.system.getCurrentDir(), fname)
+	path = os.path.join (outwiker.core.system.getCurrentDir(), fname)
 
 	with open (path) as fp:
 		lines = fp.readlines()

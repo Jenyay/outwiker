@@ -5,7 +5,7 @@ import codecs
 import os.path
 
 import wx
-import core.system
+from outwiker.core.system import getImagesDir
 
 # begin wxGlade: dependencies
 # end wxGlade
@@ -16,7 +16,7 @@ import core.system
 
 class LocalSearchPanel(wx.Panel):
 	def __init__(self, *args, **kwds):
-		self.imagesDir = core.system.getImagesDir()
+		self.imagesDir = getImagesDir()
 
 		# begin wxGlade: LocalSearchPanel.__init__
 		kwds["style"] = wx.TAB_TRAVERSAL

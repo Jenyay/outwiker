@@ -4,10 +4,10 @@
 import os.path
 import unittest
 
-from core.tree import RootWikiPage, WikiDocument
+from outwiker.core.tree import RootWikiPage, WikiDocument
 
 from pages.html.htmlpage import HtmlPageFactory, HtmlWikiPage
-from core.application import Application
+from outwiker.core.application import Application
 from test.utils import removeWiki
 
 

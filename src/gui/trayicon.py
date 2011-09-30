@@ -5,8 +5,8 @@ import os
 
 import wx
 
-import core.system
-from core.application import Application
+import outwiker.core.system
+from outwiker.core.application import Application
 from guiconfig import TrayConfig
 
 
@@ -23,7 +23,7 @@ class OutwikerTrayIcon (wx.TaskBarIcon):
 		self.ID_EXIT = wx.NewId()
 
 		self.icon = wx.EmptyIcon()
-		self.icon.CopyFromBitmap(wx.Bitmap(os.path.join (core.system.getImagesDir(), "outwiker_16x16.png"), wx.BITMAP_TYPE_ANY))
+		self.icon.CopyFromBitmap(wx.Bitmap(os.path.join (outwiker.core.system.getImagesDir(), "outwiker_16x16.png"), wx.BITMAP_TYPE_ANY))
 
 		self.__bind()
 

@@ -7,17 +7,16 @@ import cgi
 
 import wx
 
-import core.system
-import core.commands
-from core.application import Application
-from core.attachment import Attachment
-from core.htmlimprover import HtmlImprover
-from core.htmltemplate import HtmlTemplate
+from outwiker.core.commands import MessageBox, setStatusText
+from outwiker.core.application import Application
+from outwiker.core.attachment import Attachment
+from outwiker.core.htmlimprover import HtmlImprover
+from outwiker.core.htmltemplate import HtmlTemplate
+from outwiker.core.system import getTemplatesDir, getImagesDir
 
 from gui.BaseTextPanel import BaseTextPanel
 from gui.htmlrenderfactory import getHtmlRender
 from gui.HtmlTextEditor import HtmlTextEditor
-from core.system import getTemplatesDir
 
 
 class ToolsInfo (object):
@@ -45,7 +44,7 @@ class HtmlPanel(BaseTextPanel):
 		self.codePageIndex = 0
 		self.resultPageIndex = 1
 
-		self.imagesDir = core.system.getImagesDir()
+		self.imagesDir = getImagesDir()
 
 		self.notebook = wx.Notebook(self, -1, style=wx.NB_BOTTOM)
 		self.codeEditor = self.GetTextEditor()(self.notebook)
@@ -185,7 +184,7 @@ class HtmlPanel(BaseTextPanel):
 		"""
 		assert self._currentpage != None
 
-		core.commands.setStatusText (_(u"Page rendered. Please wait…") )
+		setStatusText (_(u"Page rendered. Please wait…") )
 		Application.onHtmlRenderingBegin (self._currentpage, self.htmlWindow)
 
 		try:
@@ -193,15 +192,15 @@ class HtmlPanel(BaseTextPanel):
 			self.htmlWindow.LoadPage (self.currentHtmlFile)
 		except IOError as e:
 			# TODO: Проверить под Windows
-			core.commands.MessageBox (_(u"Can't save file %s") % (unicode (e.filename)), 
+			MessageBox (_(u"Can't save file %s") % (unicode (e.filename)), 
 					_(u"Error"), 
 					wx.ICON_ERROR | wx.OK)
 		except OSError as e:
-			core.commands.MessageBox (_(u"Can't save HTML-file\n\n%s") % (unicode (e)), 
+			MessageBox (_(u"Can't save HTML-file\n\n%s") % (unicode (e)), 
 					_(u"Error"), 
 					wx.ICON_ERROR | wx.OK)
 
-		core.commands.setStatusText (u"")
+		setStatusText (u"")
 		Application.onHtmlRenderingEnd (self._currentpage, self.htmlWindow)
 	
 

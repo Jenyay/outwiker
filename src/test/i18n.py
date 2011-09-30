@@ -4,7 +4,7 @@
 import os.path
 import unittest
 
-import core.i18n
+import outwiker.core.i18n
 
 
 class I18nTest(unittest.TestCase):
@@ -12,7 +12,7 @@ class I18nTest(unittest.TestCase):
 		self.path = "../test/locale"
 
 	def testGetLang (self):
-		langs = core.i18n.getLanguages()
+		langs = outwiker.core.i18n.getLanguages()
 		self.assertEqual (len (langs), 2)
 		index1 = langs.index ("ru")
 		index2 = langs.index ("en")
@@ -21,7 +21,7 @@ class I18nTest(unittest.TestCase):
 	
 
 	def testIsLang (self):
-		self.assertTrue (core.i18n.isLangDir (self.path, "ru") )
-		self.assertFalse (core.i18n.isLangDir (self.path, "test") )
-		self.assertTrue (core.i18n.isLangDir (self.path, "test2") )
+		self.assertTrue (outwiker.core.i18n.isLangDir (self.path, "ru") )
+		self.assertFalse (outwiker.core.i18n.isLangDir (self.path, "test") )
+		self.assertTrue (outwiker.core.i18n.isLangDir (self.path, "test2") )
 

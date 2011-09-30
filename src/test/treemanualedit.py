@@ -9,15 +9,11 @@ import os.path
 import os
 import unittest
 
-from core.tree import WikiDocument
-
+from outwiker.core.tree import WikiDocument
+from outwiker.core.attachment import Attachment
+from outwiker.core.application import Application
 from pages.text.textpage import TextPageFactory, TextWikiPage
-from core.attachment import Attachment
-
-from core.event import Event
-from core.application import Application
 from test.utils import removeWiki
-import core.exceptions
 
 
 class ManualEditTest(unittest.TestCase):

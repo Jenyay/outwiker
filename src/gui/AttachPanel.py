@@ -5,10 +5,10 @@ import os.path
 
 import wx
 
-from core.application import Application
-import core.commands
-import core.system
-from core.attachment import Attachment
+from outwiker.core.application import Application
+import outwiker.core.commands
+import outwiker.core.system
+from outwiker.core.attachment import Attachment
 
 
 class AttachPanel(wx.Panel):
@@ -68,7 +68,7 @@ class AttachPanel(wx.Panel):
 	
 
 	def __createToolBar (self, parent, id):
-		imagesDir = core.system.getImagesDir()
+		imagesDir = outwiker.core.system.getImagesDir()
 
 		toolbar = wx.ToolBar (parent, id, style=wx.TB_DOCKABLE)
 
@@ -189,7 +189,7 @@ class AttachPanel(wx.Panel):
 
 	def __onAttach(self, event):
 		if Application.selectedPage != None:
-			core.commands.attachFilesWithDialog (self, Application.selectedPage)
+			outwiker.core.commands.attachFilesWithDialog (self, Application.selectedPage)
 
 
 	def __onRemove(self, event):
@@ -197,18 +197,18 @@ class AttachPanel(wx.Panel):
 			files = self.__getSelectedFiles ()
 
 			if len (files) == 0:
-				core.commands.MessageBox (_(u"You did not select a file to remove"), 
+				outwiker.core.commands.MessageBox (_(u"You did not select a file to remove"), 
 					_(u"Error"),
 					wx.OK  | wx.ICON_ERROR)
 				return
 
-			if core.commands.MessageBox (_(u"Remove selected files?"), 
+			if outwiker.core.commands.MessageBox (_(u"Remove selected files?"), 
 					_(u"Remove files?"),
 					wx.YES_NO  | wx.ICON_QUESTION) == wx.YES:
 				try:
 					Attachment (Application.selectedPage).removeAttach (files)
 				except IOError as e:
-					core.commands.MessageBox (unicode (e), _(u"Error"), wx.ICON_ERROR | wx.OK)
+					outwiker.core.commands.MessageBox (unicode (e), _(u"Error"), wx.ICON_ERROR | wx.OK)
 
 				self.updateAttachments ()
 
@@ -219,7 +219,7 @@ class AttachPanel(wx.Panel):
 		"""
 		files = self.__getSelectedFiles ()
 		if len (files) == 0:
-			core.commands.MessageBox (_(u"You did not select a file to paste"), 
+			outwiker.core.commands.MessageBox (_(u"You did not select a file to paste"), 
 				_(u"Error"),
 				wx.OK  | wx.ICON_ERROR)
 			return
@@ -236,7 +236,7 @@ class AttachPanel(wx.Panel):
 			files = self.__getSelectedFiles()
 
 			if len (files) == 0:
-				core.commands.MessageBox (_(u"You did not select a file to execute"), 
+				outwiker.core.commands.MessageBox (_(u"You did not select a file to execute"), 
 					_(u"Error"),
 					wx.OK  | wx.ICON_ERROR)
 				return
@@ -244,14 +244,14 @@ class AttachPanel(wx.Panel):
 			for file in files:
 				fullpath = os.path.join (Attachment (Application.selectedPage).getAttachPath(), file)
 				try:
-					core.system.getOS().startFile (fullpath)
+					outwiker.core.system.getOS().startFile (fullpath)
 				except OSError:
 					text = _(u"Can't execute file '%s'") % file
-					core.commands.MessageBox (text, _(u"Error"), wx.ICON_ERROR | wx.OK)
+					outwiker.core.commands.MessageBox (text, _(u"Error"), wx.ICON_ERROR | wx.OK)
 
 
 	def __onBeginDrag(self, event):
-		data = core.system.getOS().dragFileDataObject()
+		data = outwiker.core.system.getOS().dragFileDataObject()
 
 		for fname in self.__getSelectedFiles():
 			data.AddFile (os.path.join (Attachment (Application.selectedPage).getAttachPath(), fname) )

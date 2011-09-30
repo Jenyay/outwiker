@@ -5,7 +5,7 @@ from string import Template
 import os.path
 
 from gui.guiconfig import HtmlRenderConfig
-from core.application import Application
+from .application import Application
 
 
 class HtmlTemplate (object):

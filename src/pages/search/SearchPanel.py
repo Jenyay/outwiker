@@ -5,9 +5,9 @@ import ConfigParser
 
 import wx
 
-from core.application import Application
+from outwiker.core.application import Application
 import pages.search.searchpage
-from core.search import Searcher, TagsList, AllTagsSearchStrategy, AnyTagSearchStrategy
+from outwiker.core.search import Searcher, TagsList, AllTagsSearchStrategy, AnyTagSearchStrategy
 from .htmlreport import HtmlReport
 from gui.htmlrenderfactory import getHtmlRender
 from gui.basepagepanel import BasePagePanel

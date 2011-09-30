@@ -9,8 +9,7 @@ import os
 
 import wx
 
-import core.system
-from core.application import Application
+from outwiker.core.application import Application
 
 Application.init ("../test/testconfig.ini")
 

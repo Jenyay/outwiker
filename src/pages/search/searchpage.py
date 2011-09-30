@@ -7,15 +7,15 @@
 import os.path
 #import shutil
 
-from core.tree import WikiPage
-from core.search import AllTagsSearchStrategy, AnyTagSearchStrategy, TagsList
+from outwiker.core.tree import WikiPage
+from outwiker.core.search import AllTagsSearchStrategy, AnyTagSearchStrategy, TagsList
+from outwiker.core.system import getImagesDir
+from outwiker.core.application import Application
+from outwiker.core.factory import PageFactory
+from outwiker.core.exceptions import ReadonlyException
+from outwiker.core.config import StringOption, IntegerOption
 
 from SearchPanel import SearchPanel
-import core.system
-from core.application import Application
-from core.factory import PageFactory
-from core.exceptions import ReadonlyException
-from core.config import StringOption, IntegerOption
 
 
 class SearchWikiPage (WikiPage):
@@ -186,7 +186,7 @@ class GlobalSearch (object):
 		number = 1
 		page = None
 
-		imagesDir = core.system.getImagesDir()
+		imagesDir = getImagesDir()
 
 		while page == None:
 			page = root[title]
@@ -204,7 +204,7 @@ class GlobalSearch (object):
 
 		# Скопируем картинку для тегов
 		#if not page.readonly:
-		#	tagiconpath = os.path.join (core.system.getImagesDir(), "tag.png")
+		#	tagiconpath = os.path.join (getImagesDir(), "tag.png")
 		#	shutil.copy (tagiconpath, os.path.join (page.path, "__tag.png") )
 
 		page.root.selectedPage = page

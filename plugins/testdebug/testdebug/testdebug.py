@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 import wx
-from core.commands import MessageBox
+from outwiker.core.commands import MessageBox
 
 
 class PluginDebug (object):

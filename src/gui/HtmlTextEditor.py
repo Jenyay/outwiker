@@ -5,7 +5,7 @@
 import wx
 
 import gui.TextEditor
-from core.application import Application
+from outwiker.core.application import Application
 
 
 class HtmlTextEditor (gui.TextEditor.TextEditor):

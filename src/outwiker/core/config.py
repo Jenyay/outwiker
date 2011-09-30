@@ -4,7 +4,7 @@
 import ConfigParser
 import os
 
-import core.system
+from .system import getCurrentDir, getOS
 
 
 def getConfigPath (dirname, fname):
@@ -14,11 +14,11 @@ def getConfigPath (dirname, fname):
 	1. Если в папке с программой есть файл настроек, то вернуть путь до него
 	2. Иначе настройки будут храниться в домашней поддиректории. При этом создать директорию .outwiker в домашней директории.
 	"""
-	someDir = os.path.join (core.system.getCurrentDir(), fname)
+	someDir = os.path.join (getCurrentDir(), fname)
 	if os.path.exists (someDir):
 		path = someDir
 	else:
-		homeDir = os.path.join (unicode (os.path.expanduser("~"), core.system.getOS().filesEncoding), dirname)
+		homeDir = os.path.join (unicode (os.path.expanduser("~"), getOS().filesEncoding), dirname)
 		if not os.path.exists (homeDir):
 			os.mkdir (homeDir)
 

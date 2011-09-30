@@ -6,10 +6,10 @@ import os.path
 import unittest
 import time
 
-from core.tree import WikiDocument
-from core.attachment import Attachment
-from core.application import Application
-from core.config import Config
+from outwiker.core.tree import WikiDocument
+from outwiker.core.attachment import Attachment
+from outwiker.core.application import Application
+from outwiker.core.config import Config
 
 from pages.wiki.parser.wikiparser import Parser
 from pages.wiki.wikipage import WikiPageFactory

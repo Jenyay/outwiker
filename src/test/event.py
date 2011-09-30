@@ -9,11 +9,11 @@ import os.path
 import shutil
 import unittest
 
-from core.tree import RootWikiPage, WikiDocument
+from outwiker.core.tree import RootWikiPage, WikiDocument
 from pages.text.textpage import TextPageFactory
 from pages.html.htmlpage import HtmlPageFactory
-from core.event import Event
-from core.application import Application
+from outwiker.core.event import Event
+from outwiker.core.application import Application
 from test.utils import removeWiki
 
 

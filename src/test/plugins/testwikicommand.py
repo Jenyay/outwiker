@@ -4,9 +4,9 @@
 import unittest
 import os.path
 
-from core.pluginsloader import PluginsLoader
-from core.application import Application
-from core.tree import WikiDocument
+from outwiker.core.pluginsloader import PluginsLoader
+from outwiker.core.application import Application
+from outwiker.core.tree import WikiDocument
 from pages.wiki.wikipage import WikiPageFactory
 from pages.wiki.parserfactory import ParserFactory
 from test.utils import removeWiki

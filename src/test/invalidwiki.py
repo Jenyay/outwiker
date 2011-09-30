@@ -9,13 +9,13 @@ import os.path
 import shutil
 import unittest
 
-from core.event import Event
-from core.attachment import Attachment
-from core.tree import RootWikiPage, WikiDocument
+from outwiker.core.event import Event
+from outwiker.core.attachment import Attachment
+from outwiker.core.tree import RootWikiPage, WikiDocument
 from pages.text.textpage import TextPageFactory
 from pages.html.htmlpage import HtmlPageFactory
 from test.utils import removeWiki
-from core.exceptions import RootFormatError
+from outwiker.core.exceptions import RootFormatError
 
 
 path = u"../test/invalidwiki"

@@ -5,7 +5,7 @@ import os
 import os.path
 
 from libs.pyparsing import QuotedString
-from core.tree import RootWikiPage
+from outwiker.core.tree import RootWikiPage
 from ..texrender import getTexRender
 from ..thumbnails import Thumbnails
 

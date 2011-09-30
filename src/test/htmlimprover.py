@@ -3,7 +3,7 @@
 
 import unittest
 
-from core.htmlimprover import HtmlImprover
+from outwiker.core.htmlimprover import HtmlImprover
 
 class HtmlImproverTest (unittest.TestCase):
 	def test1 (self):

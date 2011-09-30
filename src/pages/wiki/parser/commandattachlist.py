@@ -4,7 +4,7 @@
 import os.path
 
 from command import Command
-from core.attachment import Attachment
+from outwiker.core.attachment import Attachment
 
 class SimpleView (object):
 	"""

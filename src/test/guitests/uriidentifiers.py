@@ -4,10 +4,10 @@
 import os.path
 import unittest
 
-from core.tree import RootWikiPage, WikiDocument
+from outwiker.core.tree import RootWikiPage, WikiDocument
 from pages.wiki.wikipage import WikiPageFactory, WikiWikiPage
-from core.attachment import Attachment
-from core.application import Application
+from outwiker.core.attachment import Attachment
+from outwiker.core.application import Application
 from test.utils import removeWiki
 
 from gui.htmlcontrollerie import UriIdentifierIE

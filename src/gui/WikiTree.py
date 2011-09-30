@@ -7,12 +7,12 @@ import ConfigParser
 
 import wx
 
-from core.application import Application
-import core.exceptions
-import core.commands
-import core.system
+from outwiker.core.application import Application
+import outwiker.core.exceptions
+import outwiker.core.commands
+import outwiker.core.system
 import gui.pagedialog
-from core.config import BooleanOption
+from outwiker.core.config import BooleanOption
 
 
 class WikiTree(wx.Panel):
@@ -42,7 +42,7 @@ class WikiTree(wx.Panel):
 		self.__set_properties()
 		self.__do_layout()
 
-		self.defaultIcon = os.path.join (core.system.getImagesDir(), "page.png")
+		self.defaultIcon = os.path.join (outwiker.core.system.getImagesDir(), "page.png")
 		self.iconHeight = 16
 
 		self.defaultBitmap = wx.Bitmap (self.defaultIcon)
@@ -186,15 +186,15 @@ class WikiTree(wx.Panel):
 
 	def __onRemovePage (self, event):
 		if Application.wikiroot != None and Application.wikiroot.selectedPage != None:
-			core.commands.removePage (Application.wikiroot.selectedPage)
+			outwiker.core.commands.removePage (Application.wikiroot.selectedPage)
 
 
 	def __onMoveUp (self, event):
-		core.commands.moveCurrentPageUp()
+		outwiker.core.commands.moveCurrentPageUp()
 
 
 	def __onMoveDown (self, event):
-		core.commands.moveCurrentPageDown()
+		outwiker.core.commands.moveCurrentPageDown()
 
 
 	def __onPageRemove (self, page):
@@ -254,7 +254,7 @@ class WikiTree(wx.Panel):
 		try:
 			expandedOption.value = expanded
 		except IOError as e:
-			core.commands.MessageBox (_(u"Can't save page options\n%s") % (unicode (e)),
+			outwiker.core.commands.MessageBox (_(u"Can't save page options\n%s") % (unicode (e)),
 					_(u"Error"), wx.ICON_ERROR | wx.OK)
 
 
@@ -281,7 +281,7 @@ class WikiTree(wx.Panel):
 		page = self.treeCtrl.GetItemData (self.popupItem).GetData()
 		assert page != None
 
-		core.commands.removePage (page)
+		outwiker.core.commands.removePage (page)
 
 
 	def __onCopyLink (self, event):
@@ -294,7 +294,7 @@ class WikiTree(wx.Panel):
 		page = self.treeCtrl.GetItemData (self.popupItem).GetData()
 		assert page != None
 
-		core.commands.copyLinkToClipboard (page)
+		outwiker.core.commands.copyLinkToClipboard (page)
 
 	
 	def __onCopyTitle (self, event):
@@ -307,7 +307,7 @@ class WikiTree(wx.Panel):
 		page = self.treeCtrl.GetItemData (self.popupItem).GetData()
 		assert page != None
 
-		core.commands.copyTitleToClipboard (page)
+		outwiker.core.commands.copyTitleToClipboard (page)
 
 	
 	def __onCopyPath (self, event):
@@ -320,7 +320,7 @@ class WikiTree(wx.Panel):
 		page = self.treeCtrl.GetItemData (self.popupItem).GetData()
 		assert page != None
 
-		core.commands.copyPathToClipboard (page)
+		outwiker.core.commands.copyPathToClipboard (page)
 
 
 	def __onCopyAttachPath (self, event):
@@ -333,7 +333,7 @@ class WikiTree(wx.Panel):
 		page = self.treeCtrl.GetItemData (self.popupItem).GetData()
 		assert page != None
 
-		core.commands.copyAttachPathToClipboard (page)
+		outwiker.core.commands.copyAttachPathToClipboard (page)
 
 
 	def __createPopupMenu (self):
@@ -421,7 +421,7 @@ class WikiTree(wx.Panel):
 		# Не доверяем переименовывать элементы системе
 		event.Veto()
 
-		core.commands.renamePage (page, label)
+		outwiker.core.commands.renamePage (page, label)
 
 
 	def __onStartTreeUpdate (self, root):
@@ -466,7 +466,7 @@ class WikiTree(wx.Panel):
 			# Будущий родитель для страницы
 			if endDragItem.IsOk():
 				newParent = self.treeCtrl.GetItemData (endDragItem).GetData()
-				core.commands.movePage (draggedPage, newParent)
+				outwiker.core.commands.movePage (draggedPage, newParent)
 				self.treeCtrl.Expand (self._pageCache[newParent])
 
 		self.dragItem = None
@@ -666,7 +666,7 @@ class WikiTree(wx.Panel):
 	
 
 	def __getToolbar (self, parent, id):
-		imagesDir = core.system.getImagesDir()
+		imagesDir = outwiker.core.system.getImagesDir()
 
 		toolbar = wx.ToolBar (parent, id, style=wx.TB_HORIZONTAL|wx.TB_FLAT|wx.TB_DOCKABLE)
 

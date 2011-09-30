@@ -6,7 +6,7 @@ from parser.commandinclude import IncludeCommand
 from parser.commandchildlist import ChildListCommand
 from parser.commandattachlist import AttachListCommand
 from parser.commandbloggers import LjUserCommand, LjCommunityCommand
-from core.application import Application
+from outwiker.core.application import Application
 
 
 class ParserFactory (object):

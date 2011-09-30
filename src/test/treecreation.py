@@ -8,19 +8,16 @@
 import os.path
 import unittest
 
-from core.tree import RootWikiPage, WikiDocument
-
+from outwiker.core.tree import RootWikiPage, WikiDocument
+from outwiker.core.attachment import Attachment
+from outwiker.core.config import StringOption
+from outwiker.core.application import Application
+from outwiker.core.exceptions import DublicateTitle
 from pages.text.textpage import TextPageFactory, TextWikiPage
 from pages.html.htmlpage import HtmlPageFactory, HtmlWikiPage
 from pages.search.searchpage import SearchPageFactory, SearchWikiPage
 from pages.wiki.wikipage import WikiPageFactory, WikiWikiPage
-from core.attachment import Attachment
-from core.config import StringOption
-
-from core.event import Event
-from core.application import Application
 from test.utils import removeWiki
-import core.exceptions
 
 
 class TextPageCreationTest(unittest.TestCase):
@@ -208,10 +205,10 @@ class TextPageCreationTest(unittest.TestCase):
 	
 
 	def testInvalidPageName2 (self):
-		self.assertRaises (core.exceptions.DublicateTitle, 
+		self.assertRaises (DublicateTitle, 
 				TextPageFactory.create, self.rootwiki, u"страНица 1", [])
 
-		self.assertRaises (core.exceptions.DublicateTitle, 
+		self.assertRaises (DublicateTitle, 
 				TextPageFactory.create, self.rootwiki[u"Страница 1"], u"страНица 5", [])
 
 

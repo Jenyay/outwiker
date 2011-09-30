@@ -5,11 +5,11 @@ import os.path
 import shutil
 import unittest
 
-from core.tree import RootWikiPage, WikiDocument
-from core.exceptions import ReadonlyException
-from core.event import Event
-from core.attachment import Attachment
-from core.config import StringOption
+from outwiker.core.tree import RootWikiPage, WikiDocument
+from outwiker.core.exceptions import ReadonlyException
+from outwiker.core.event import Event
+from outwiker.core.attachment import Attachment
+from outwiker.core.config import StringOption
 
 from pages.text.textpage import TextPageFactory, TextWikiPage
 from pages.wiki.wikipage import WikiPageFactory, WikiWikiPage

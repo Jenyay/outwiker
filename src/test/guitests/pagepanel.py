@@ -3,8 +3,8 @@
 
 
 from basemainwnd import BaseMainWndTest
-from core.tree import RootWikiPage, WikiDocument
-from core.application import Application
+from outwiker.core.tree import RootWikiPage, WikiDocument
+from outwiker.core.application import Application
 from test.utils import removeWiki
 
 from pages.text.textpage import TextPageFactory

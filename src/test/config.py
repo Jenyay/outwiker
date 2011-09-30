@@ -10,9 +10,9 @@ import os.path
 import ConfigParser
 import shutil
 
-from core.config import Config, getConfigPath
-import core.system
-import core.config
+from outwiker.core.config import Config, getConfigPath
+from outwiker.core.system import getCurrentDir
+import outwiker.core.config
 
 from gui.guiconfig import TrayConfig, EditorConfig
 
@@ -80,7 +80,7 @@ class ConfigTest (unittest.TestCase):
 		dirname = u".outwiker_test"
 		fname = u"outwiker_test.ini"
 
-		programDir = core.system.getCurrentDir()
+		programDir = getCurrentDir()
 		localPath = os.path.join (programDir, fname)
 
 		# Создадим файл рядом с запускаемым файлом
@@ -102,7 +102,7 @@ class ConfigTest (unittest.TestCase):
 		dirname = u".outwiker_test"
 		fname = u"outwiker_test.ini"
 
-		programDir = core.system.getCurrentDir()
+		programDir = getCurrentDir()
 		localPath = os.path.join (programDir, fname)
 
 		# На всякий случай проверим, что файла в локальной папке нет, иначе удалим его
@@ -137,7 +137,7 @@ class ConfigOptionsTest (unittest.TestCase):
 			fp.write (u"boolval=True\n")
 			fp.write (u"strval=тест\n".encode ("utf-8"))
 
-		self.config = core.config.Config (self.path)
+		self.config = outwiker.core.config.Config (self.path)
 	
 
 	def tearDown (self):
@@ -146,28 +146,28 @@ class ConfigOptionsTest (unittest.TestCase):
 
 	# Строковые опции
 	def testStringOpt1 (self):
-		opt = core.config.StringOption (self.config, u"Test", u"strval", "defaultval")
+		opt = outwiker.core.config.StringOption (self.config, u"Test", u"strval", "defaultval")
 		self.assertEqual (opt.value, u"тест")
 
 
 	def testStringOpt2 (self):
-		opt = core.config.StringOption (self.config, u"Test", u"strval2", "defaultval")
+		opt = outwiker.core.config.StringOption (self.config, u"Test", u"strval2", "defaultval")
 		self.assertEqual (opt.value, u"defaultval")
 
 
 	def testStringOpt3 (self):
-		opt = core.config.StringOption (self.config, u"Test", u"strval3", "defaultval")
+		opt = outwiker.core.config.StringOption (self.config, u"Test", u"strval3", "defaultval")
 		opt.value = u"проверка"
 
-		newconfig = core.config.Config (self.path)
-		newopt = core.config.StringOption (newconfig, u"Test", u"strval3", "defaultval")
+		newconfig = outwiker.core.config.Config (self.path)
+		newopt = outwiker.core.config.StringOption (newconfig, u"Test", u"strval3", "defaultval")
 
 		self.assertEqual (newopt.value, u"проверка")
 
 
 	def testStringOpt4 (self):
-		opt = core.config.StringOption (self.config, u"Test", u"strval3", "defaultval")
-		newopt = core.config.StringOption (self.config, u"Test", u"strval3", "defaultval")
+		opt = outwiker.core.config.StringOption (self.config, u"Test", u"strval3", "defaultval")
+		newopt = outwiker.core.config.StringOption (self.config, u"Test", u"strval3", "defaultval")
 
 		opt.value = u"проверка"
 
@@ -176,28 +176,28 @@ class ConfigOptionsTest (unittest.TestCase):
 
 	# Целочисленные опции
 	def testIntOpt1 (self):
-		opt = core.config.IntegerOption (self.config, u"Test", u"intval", 777)
+		opt = outwiker.core.config.IntegerOption (self.config, u"Test", u"intval", 777)
 		self.assertEqual (opt.value, 100)
 
 
 	def testIntOpt2 (self):
-		opt = core.config.IntegerOption (self.config, u"Test", u"intval2", 777)
+		opt = outwiker.core.config.IntegerOption (self.config, u"Test", u"intval2", 777)
 		self.assertEqual (opt.value, 777)
 
 
 	def testIntOpt3 (self):
-		opt = core.config.IntegerOption (self.config, u"Test", u"intval3", 777)
+		opt = outwiker.core.config.IntegerOption (self.config, u"Test", u"intval3", 777)
 		opt.value = 666
 
-		newconfig = core.config.Config (self.path)
-		newopt = core.config.IntegerOption (newconfig, u"Test", u"intval3", 888)
+		newconfig = outwiker.core.config.Config (self.path)
+		newopt = outwiker.core.config.IntegerOption (newconfig, u"Test", u"intval3", 888)
 
 		self.assertEqual (newopt.value, 666)
 	
 
 	def testIntOpt4 (self):
-		opt = core.config.IntegerOption (self.config, u"Test", u"intval3", 777)
-		newopt = core.config.IntegerOption (self.config, u"Test", u"intval3", 888)
+		opt = outwiker.core.config.IntegerOption (self.config, u"Test", u"intval3", 777)
+		newopt = outwiker.core.config.IntegerOption (self.config, u"Test", u"intval3", 888)
 
 		opt.value = 666
 
@@ -206,28 +206,28 @@ class ConfigOptionsTest (unittest.TestCase):
 
 	# Булевы опции
 	def testBoolOpt1 (self):
-		opt = core.config.BooleanOption (self.config, u"Test", u"Boolval", False)
+		opt = outwiker.core.config.BooleanOption (self.config, u"Test", u"Boolval", False)
 		self.assertEqual (opt.value, True)
 
 
 	def testBoolOpt2 (self):
-		opt = core.config.BooleanOption (self.config, u"Test", u"Boolval2", False)
+		opt = outwiker.core.config.BooleanOption (self.config, u"Test", u"Boolval2", False)
 		self.assertEqual (opt.value, False)
 
 
 	def testBoolOpt3 (self):
-		opt = core.config.BooleanOption (self.config, u"Test", u"Boolval3", False)
+		opt = outwiker.core.config.BooleanOption (self.config, u"Test", u"Boolval3", False)
 		opt.value = True
 
-		newconfig = core.config.Config (self.path)
-		newopt = core.config.BooleanOption (newconfig, u"Test", u"Boolval3", False)
+		newconfig = outwiker.core.config.Config (self.path)
+		newopt = outwiker.core.config.BooleanOption (newconfig, u"Test", u"Boolval3", False)
 
 		self.assertEqual (newopt.value, True)
 	
 
 	def testBoolOpt4 (self):
-		opt = core.config.BooleanOption (self.config, u"Test", u"Boolval3", False)
-		newopt = core.config.BooleanOption (self.config, u"Test", u"Boolval3", False)
+		opt = outwiker.core.config.BooleanOption (self.config, u"Test", u"Boolval3", False)
+		newopt = outwiker.core.config.BooleanOption (self.config, u"Test", u"Boolval3", False)
 
 		opt.value = True
 
@@ -235,7 +235,7 @@ class ConfigOptionsTest (unittest.TestCase):
 
 
 	def testRemoveOption1 (self):
-		opt = core.config.StringOption (self.config, u"Test", u"strval", u"Значение по умолчанию")
+		opt = outwiker.core.config.StringOption (self.config, u"Test", u"strval", u"Значение по умолчанию")
 		self.assertEqual (opt.value, u"тест")
 
 		opt.remove_option()
@@ -243,15 +243,15 @@ class ConfigOptionsTest (unittest.TestCase):
 
 
 	def testRemoveOption2 (self):
-		opt = core.config.StringOption (self.config, u"Test", u"strval", u"Значение по умолчанию")
+		opt = outwiker.core.config.StringOption (self.config, u"Test", u"strval", u"Значение по умолчанию")
 		opt.remove_option()
 
-		opt2 = core.config.StringOption (self.config, u"Test", u"strval", u"Значение по умолчанию")
+		opt2 = outwiker.core.config.StringOption (self.config, u"Test", u"strval", u"Значение по умолчанию")
 		self.assertEqual (opt2.value, u"Значение по умолчанию")
 
 
 	def testRemoveOption3 (self):
-		opt = core.config.StringOption (self.config, u"Test", u"invalid", u"Значение по умолчанию")
+		opt = outwiker.core.config.StringOption (self.config, u"Test", u"invalid", u"Значение по умолчанию")
 		opt.remove_option()
 	
 
@@ -260,7 +260,7 @@ class ConfigOptionsTest (unittest.TestCase):
 class TrayConfigTest (unittest.TestCase):
 	def setUp (self):
 		self.path = u"../test/testconfig.ini"
-		self.config = core.config.Config (self.path)
+		self.config = outwiker.core.config.Config (self.path)
 
 		self.trayConfig = TrayConfig (self.config)
 	
@@ -293,7 +293,7 @@ class TrayConfigTest (unittest.TestCase):
 class EditorConfigTest (unittest.TestCase):
 	def setUp (self):
 		self.path = u"../test/testconfig.ini"
-		self.config = core.config.Config (self.path)
+		self.config = outwiker.core.config.Config (self.path)
 
 		self.editorConfig = EditorConfig (self.config)
 	

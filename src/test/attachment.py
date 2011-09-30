@@ -4,11 +4,11 @@
 import unittest
 import os.path
 
-from core.attachment import Attachment
+from outwiker.core.attachment import Attachment
 from utils import removeWiki
-from core.tree import WikiDocument
+from outwiker.core.tree import WikiDocument
 from pages.text.textpage import TextPageFactory
-from core.application import Application
+from outwiker.core.application import Application
 
 
 

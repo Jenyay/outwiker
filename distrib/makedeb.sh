@@ -12,7 +12,7 @@ fi
 mkdir $outwiker_dir
 
 # Скопируем нужные файлы из исходников
-cp -r "../src/core" $outwiker_dir
+cp -r "../src/outwiker" $outwiker_dir
 cp -r "../src/gui" $outwiker_dir
 cp -r "../src/help" $outwiker_dir
 cp -r "../src/images" $outwiker_dir

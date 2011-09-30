@@ -8,11 +8,11 @@
 import os.path
 import unittest
 
-from core.tree import RootWikiPage, WikiDocument
+from outwiker.core.tree import RootWikiPage, WikiDocument
 
 from pages.text.textpage import TextPageFactory
 
-from core.application import Application
+from outwiker.core.application import Application
 from test.utils import removeWiki
 
 

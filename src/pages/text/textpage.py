@@ -6,9 +6,9 @@
 
 import os.path
 
-from core.tree import WikiPage
+from outwiker.core.tree import WikiPage
 from pages.text.TextPanel import TextPanel
-from core.factory import PageFactory
+from outwiker.core.factory import PageFactory
 
 
 class TextWikiPage (WikiPage):

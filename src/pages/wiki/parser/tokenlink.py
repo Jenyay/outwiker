@@ -8,7 +8,7 @@ from libs.pyparsing import QuotedString
 
 from tokenattach import AttachToken
 from utils import isImage
-from core.attachment import Attachment
+from outwiker.core.attachment import Attachment
 
 
 class LinkFactory (object):

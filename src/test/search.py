@@ -3,7 +3,7 @@
 
 import unittest
 
-from core.search import Searcher, TagsList, AllTagsSearchStrategy, \
+from outwiker.core.search import Searcher, TagsList, AllTagsSearchStrategy, \
 		AnyTagSearchStrategy
 
 from pages.search.searchpage import GlobalSearch
@@ -11,7 +11,7 @@ import pages.search.searchpage
 
 from pages.search.searchpage import SearchPageFactory, SearchWikiPage
 from test.utils import removeWiki
-from core.tree import WikiDocument
+from outwiker.core.tree import WikiDocument
 from pages.text.textpage import TextPageFactory
 
 

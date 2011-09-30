@@ -4,9 +4,9 @@
 import wx
 
 import ConfigElements
-from core.application import Application
+from outwiker.core.application import Application
 from gui.guiconfig import EditorConfig
-from core.config import FontOption
+from outwiker.core.config import FontOption
 
 # begin wxGlade: dependencies
 # end wxGlade

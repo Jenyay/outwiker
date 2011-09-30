@@ -7,11 +7,11 @@ import os.path
 
 from pages.wiki.thumbnails import Thumbnails
 from test.utils import removeWiki
-from core.tree import WikiDocument
+from outwiker.core.tree import WikiDocument
 from pages.wiki.parser.wikiparser import Parser
 from pages.wiki.wikipage import WikiPageFactory
-from core.application import Application
-from core.attachment import Attachment
+from outwiker.core.application import Application
+from outwiker.core.attachment import Attachment
 
 
 class ThumbnailsTest (unittest.TestCase):

@@ -3,16 +3,16 @@
 
 import wx
 
-from core.search import TagsList
-from core.tree import RootWikiPage
-import core.commands
-from core.application import Application
+from outwiker.core.search import TagsList
+from outwiker.core.tree import RootWikiPage
+import outwiker.core.commands
+from outwiker.core.application import Application
 from gui.BasePageDialog import BasePageDialog
-from core.factoryselector import FactorySelector
-from core.config import StringOption
+from outwiker.core.factoryselector import FactorySelector
+from outwiker.core.config import StringOption
 
 
-@core.commands.testreadonly
+@outwiker.core.commands.testreadonly
 def editPage (parentWnd, currentPage):
 	"""
 	Вызвать диалог для редактирования страницы
@@ -20,7 +20,7 @@ def editPage (parentWnd, currentPage):
 	currentPage - страница для редактирования
 	"""
 	if currentPage.readonly:
-		raise core.exceptions.ReadonlyException
+		raise outwiker.core.exceptions.ReadonlyException
 
 	dlg = EditPageDialog (currentPage, currentPage.parent, parent = parentWnd)
 	page = None
@@ -35,20 +35,20 @@ def editPage (parentWnd, currentPage):
 		try:
 			currentPage.title = dlg.pageTitle
 		except OSError as e:
-			core.commands.MessageBox (_(u"Can't rename page\n") + unicode (e), _(u"Error"), wx.ICON_ERROR | wx.OK)
+			outwiker.core.commands.MessageBox (_(u"Can't rename page\n") + unicode (e), _(u"Error"), wx.ICON_ERROR | wx.OK)
 
 		currentPage.root.selectedPage = currentPage
 
 	dlg.Destroy()
 
 
-@core.commands.testreadonly
+@outwiker.core.commands.testreadonly
 def createPageWithDialog (parentwnd, parentpage):
 	"""
 	Показать диалог настроек и создать страницу
 	"""
 	if parentpage.readonly:
-		raise core.exceptions.ReadonlyException
+		raise outwiker.core.exceptions.ReadonlyException
 	
 	dlg = CreatePageDialog (parentpage, parentwnd)
 	page = None
@@ -67,7 +67,7 @@ def createPageWithDialog (parentwnd, parentpage):
 			page.root.selectedPage = page
 
 		except OSError, IOError:
-			core.commands.MessageBox (_(u"Can't create page"), "Error", wx.ICON_ERROR | wx.OK)
+			outwiker.core.commands.MessageBox (_(u"Can't create page"), "Error", wx.ICON_ERROR | wx.OK)
 
 	dlg.Destroy()
 
@@ -81,7 +81,7 @@ def createSiblingPage (parentwnd):
 	parentwnd - окно, которое будет родителем для диалога создания страницы
 	"""
 	if Application.wikiroot == None:
-		core.commands.MessageBox (_(u"Wiki is not open"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+		outwiker.core.commands.MessageBox (_(u"Wiki is not open"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 		return
 
 	currPage = Application.wikiroot.selectedPage
@@ -100,7 +100,7 @@ def createChildPage (parentwnd):
 	parentwnd - окно, которое будет родителем для диалога создания страницы
 	"""
 	if Application.wikiroot == None:
-		core.commands.MessageBox (_(u"Wiki is not open"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+		outwiker.core.commands.MessageBox (_(u"Wiki is not open"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 		return
 
 	currPage = Application.wikiroot.selectedPage
@@ -127,12 +127,12 @@ class CreatePageDialog (BasePageDialog):
 
 	def onOk (self, event):
 		if not self.testPageTitle (self.pageTitle):
-			core.commands.MessageBox (_(u"Invalid page title"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+			outwiker.core.commands.MessageBox (_(u"Invalid page title"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 			return
 
 		if (self.parentPage != None and
 				not RootWikiPage.testDublicate(self.parentPage, self.pageTitle)):
-			core.commands.MessageBox (_(u"A page with this title already exists"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+			outwiker.core.commands.MessageBox (_(u"A page with this title already exists"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 			return
 
 		self.lastCreatedPageType.value = self.selectedFactory.getTypeString()
@@ -172,11 +172,11 @@ class EditPageDialog (BasePageDialog):
 
 	def onOk (self, event):
 		if not self.testPageTitle (self.pageTitle):
-			core.commands.MessageBox (_(u"Invalid page title"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+			outwiker.core.commands.MessageBox (_(u"Invalid page title"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 			return
 
 		if not self.currentPage.canRename (self.pageTitle):
-			core.commands.MessageBox (_(u"Can't rename page when page with that title already exists"), 
+			outwiker.core.commands.MessageBox (_(u"Can't rename page when page with that title already exists"), 
 					_(u"Error"), 
 					wx.ICON_ERROR | wx.OK)
 			return

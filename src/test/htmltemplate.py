@@ -4,9 +4,9 @@
 import os.path
 import unittest
 
-from core.htmltemplate import HtmlTemplate
-from core.system import getTemplatesDir
-from core.htmlimprover import HtmlImprover
+from outwiker.core.htmltemplate import HtmlTemplate
+from outwiker.core.system import getTemplatesDir
+from outwiker.core.htmlimprover import HtmlImprover
 
 
 class HtmlTemplateTest(unittest.TestCase):

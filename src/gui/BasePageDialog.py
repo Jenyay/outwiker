@@ -5,9 +5,8 @@ import os
 
 import wx
 
-import core.system
-from core.factoryselector import FactorySelector
-from core.search import TagsList
+from outwiker.core.factoryselector import FactorySelector
+from outwiker.core.search import TagsList
 from .iconlistctrl import IconListCtrl
 
 

@@ -4,8 +4,8 @@
 import unittest
 import os
 
-from core.config import Config
-from core.recent import RecentWiki
+from outwiker.core.config import Config
+from outwiker.core.recent import RecentWiki
 
 
 class RecentWikiTest (unittest.TestCase):

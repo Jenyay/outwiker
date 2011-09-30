@@ -6,7 +6,7 @@ import pstats
 
 import wx
 
-from core.application import Application
+from outwiker.core.application import Application
 from outwiker import OutWiker
 
 def wikiparserProfile ():

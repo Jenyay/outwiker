@@ -8,10 +8,10 @@ import cgi
 import wx
 from wx.stc import StyledTextCtrl
 
-import core.system
-from core.application import Application
+import outwiker.core.system
+from outwiker.core.application import Application
 from guiconfig import EditorConfig
-from core.textprinter import TextPrinter
+from outwiker.core.textprinter import TextPrinter
 from .editorsearchpanel import EditorSearchPanel
 from .mainid import MainId
 
@@ -150,7 +150,7 @@ class TextEditor(wx.Panel):
 
 
 	def createCoders (self):
-		encoding = core.system.getOS().inputEncoding
+		encoding = outwiker.core.system.getOS().inputEncoding
 
 		self._mbcsDec = codecs.getdecoder(encoding)
 		self.mbcsEnc = codecs.getencoder(encoding)

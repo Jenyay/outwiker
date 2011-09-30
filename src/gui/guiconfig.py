@@ -3,7 +3,7 @@
 
 import wx
 
-from core.config import StringOption, BooleanOption, IntegerOption
+from outwiker.core.config import StringOption, BooleanOption, IntegerOption
 
 class GeneralGuiConfig (object):
 	"""

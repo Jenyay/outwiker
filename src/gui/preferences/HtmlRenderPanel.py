@@ -4,9 +4,9 @@
 import wx
 
 import ConfigElements
-from core.application import Application
+from outwiker.core.application import Application
 from gui.guiconfig import HtmlRenderConfig
-from core.config import FontOption, StringOption
+from outwiker.core.config import FontOption, StringOption
 
 # begin wxGlade: dependencies
 # end wxGlade

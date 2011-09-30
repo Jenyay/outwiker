@@ -5,7 +5,7 @@ import os.path
 
 from libs.pyparsing import replaceWith, Literal
 
-from core.attachment import Attachment
+from outwiker.core.attachment import Attachment
 
 from utils import concatenate, isImage
 

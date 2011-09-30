@@ -6,7 +6,7 @@ import os.path
 import wx
 import wx.grid
 
-import core.system
+import outwiker.core.system
 
 
 class IconButton (wx.PyControl):
@@ -72,7 +72,7 @@ class IconListCtrl (wx.ScrolledWindow):
 		# Список картинок, которые хранятся в окне
 		self.buttons = []
 
-		self.imagesDir = core.system.getImagesDir()
+		self.imagesDir = outwiker.core.system.getImagesDir()
 		self.iconspath = os.path.join (self.imagesDir, "iconset")
 		self.defaultIcon = os.path.join (self.imagesDir, "page.png")
 

@@ -3,9 +3,9 @@
 
 from libs.pyparsing import Regex
 
-from core.thumbexception import ThumbException
+from outwiker.core.thumbexception import ThumbException
 from pagethumbmaker import PageThumbmaker
-from core.attachment import Attachment
+from outwiker.core.attachment import Attachment
 from ..wikiconfig import WikiConfig
 
 

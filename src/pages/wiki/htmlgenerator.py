@@ -4,16 +4,16 @@
 import os.path
 import hashlib
 
-from core.config import Config, StringOption
-from core.htmlimprover import HtmlImprover
-from core.htmltemplate import HtmlTemplate
-from core.application import Application
-from core.attachment import Attachment
-from core.tree import RootWikiPage
+from outwiker.core.config import Config, StringOption
+from outwiker.core.htmlimprover import HtmlImprover
+from outwiker.core.htmltemplate import HtmlTemplate
+from outwiker.core.application import Application
+from outwiker.core.attachment import Attachment
+from outwiker.core.tree import RootWikiPage
 from parserfactory import ParserFactory
 from wikiconfig import WikiConfig
 from emptycontent import EmptyContent
-from core.system import getTemplatesDir
+from outwiker.core.system import getTemplatesDir
 from gui.guiconfig import HtmlRenderConfig
 
 

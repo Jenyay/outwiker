@@ -3,7 +3,7 @@
 
 import os.path
 
-import core.exceptions
+from .exceptions import ReadonlyException
 
 class PageFactory (object):
 	"""
@@ -15,7 +15,7 @@ class PageFactory (object):
 		Создать страницу по ее типу
 		"""
 		if parent.readonly:
-			raise core.exceptions.ReadonlyException
+			raise ReadonlyException
 
 		path = os.path.join (parent.path, title)
 

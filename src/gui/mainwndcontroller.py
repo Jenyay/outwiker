@@ -5,10 +5,10 @@ import os.path
 
 import wx
 
-from core.application import Application
+from outwiker.core.application import Application
 from .bookmarkscontroller import BookmarksController
 from .mainid import MainId
-import core.commands
+import outwiker.core.commands
 
 
 class MainWndController (object):
@@ -110,7 +110,7 @@ class MainWndController (object):
 				Application.recentWiki.add (wikiroot.path)
 				self.updateRecentMenu()
 			except IOError as e:
-				core.commands.MessageBox (
+				outwiker.core.commands.MessageBox (
 						_(u"Can't add wiki to recent list.\nCan't save config.\n%s") % (unicode (e)),
 						_(u"Error"), wx.ICON_ERROR | wx.OK)
 
@@ -233,7 +233,7 @@ class MainWndController (object):
 		"""
 		Выбор пункта меню с недавно открытыми файлами
 		"""
-		core.commands.openWiki (self._recentId[event.Id])
+		outwiker.core.commands.openWiki (self._recentId[event.Id])
 
 	#
 	###################################################

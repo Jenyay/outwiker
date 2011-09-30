@@ -4,7 +4,7 @@
 import os
 import os.path
 
-from core.attachment import Attachment
+from outwiker.core.attachment import Attachment
 
 
 class Thumbnails (object):

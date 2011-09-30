@@ -5,11 +5,11 @@ import os
 import unittest
 import hashlib
 
-from core.tree import WikiDocument
+from outwiker.core.tree import WikiDocument
 from pages.wiki.parser.wikiparser import Parser
 from pages.wiki.wikipage import WikiPageFactory
 from test.utils import removeWiki
-from core.application import Application
+from outwiker.core.application import Application
 from pages.wiki.parser.commandchildlist import ChildListCommand
 from pages.wiki.parserfactory import ParserFactory
 

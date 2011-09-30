@@ -5,8 +5,8 @@ import os
 import os.path
 import unittest
 
-from core.attachment import Attachment
-from core.tree import RootWikiPage, WikiDocument
+from outwiker.core.attachment import Attachment
+from outwiker.core.tree import RootWikiPage, WikiDocument
 from pages.wiki.parser.pagethumbmaker import PageThumbmaker
 from pages.text.textpage import TextPageFactory
 from pages.wiki.thumbnails import Thumbnails

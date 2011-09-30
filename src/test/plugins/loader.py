@@ -4,8 +4,8 @@
 import unittest
 import os.path
 
-from core.pluginsloader import PluginsLoader
-from core.application import Application
+from outwiker.core.pluginsloader import PluginsLoader
+from outwiker.core.application import Application
 
 
 class PluginsLoaderTest(unittest.TestCase):

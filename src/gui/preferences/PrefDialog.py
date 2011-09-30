@@ -7,8 +7,8 @@ import GeneralPanel
 import EditorPanel
 import HtmlRenderPanel
 import TextPrintPanel
-from core.exceptions import PreferencesException
-from core.factoryselector import FactorySelector
+from outwiker.core.exceptions import PreferencesException
+from outwiker.core.factoryselector import FactorySelector
 
 # begin wxGlade: dependencies
 # end wxGlade
@@ -132,7 +132,7 @@ class PrefDialog(wx.Dialog):
 			return
 
 		# У страницы должен быть метод Save, который сохраняет настройки 
-		# или бросает исключение core.exceptions.PreferencesException
+		# или бросает исключение outwiker.core.exceptions.PreferencesException
 		selectedPage.Save()
 
 

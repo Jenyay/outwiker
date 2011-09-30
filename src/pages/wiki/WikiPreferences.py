@@ -5,7 +5,7 @@
 import wx
 
 from gui.preferences.ConfigElements import BooleanElement, IntegerElement, StringElement
-from core.application import Application
+from outwiker.core.application import Application
 from wikiconfig import WikiConfig
 from emptycontent import EmptyContent
 

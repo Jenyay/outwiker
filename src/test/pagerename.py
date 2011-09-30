@@ -5,14 +5,14 @@ import os.path
 import unittest
 import stat
 
-from core.tree import RootWikiPage, WikiDocument
 
 from pages.text.textpage import TextPageFactory, TextWikiPage
-from core.attachment import Attachment
-from core.application import Application
+from outwiker.core.attachment import Attachment
+from outwiker.core.application import Application
+from outwiker.core.exceptions import DublicateTitle
+from outwiker.core.tree import RootWikiPage, WikiDocument
 
 from test.utils import removeWiki
-import core.exceptions
 
 
 class RenameTest (unittest.TestCase):
@@ -85,7 +85,7 @@ class RenameTest (unittest.TestCase):
 		def rename (page, newtitle):
 			page.title = newtitle
 
-		self.assertRaises (core.exceptions.DublicateTitle, rename, 
+		self.assertRaises (DublicateTitle, rename, 
 				self.rootwiki[u"Страница 1"], u"СтраНица 6")
 	
 

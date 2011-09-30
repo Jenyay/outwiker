@@ -10,9 +10,10 @@ import shutil
 
 import wx
 
-import core.exceptions
-import core.system
-import core.version
+import outwiker.core.exceptions
+import outwiker.core.commands
+from .system import getCurrentDir
+from .version import Version
 
 from tree import WikiDocument, RootWikiPage
 from gui.OverwriteDialog import OverwriteDialog
@@ -34,12 +35,12 @@ def MessageBox (*args, **kwargs):
 
 def testreadonly (func):
 	"""
-	Декоратор для отлавливания исключения core.exceptions.ReadonlyException
+	Декоратор для отлавливания исключения outwiker.core.exceptions.ReadonlyException
 	"""
 	def readOnlyWrap (*args, **kwargs):
 		try:
 			func (*args, **kwargs)
-		except core.exceptions.ReadonlyException:
+		except outwiker.core.exceptions.ReadonlyException:
 			MessageBox (_(u"Wiki is opened as read-only"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 
 	return readOnlyWrap
@@ -53,7 +54,7 @@ def attachFilesWithDialog (parent, page):
 	page - страница, куда прикрепляем файлы
 	"""
 	if page.readonly:
-		raise core.exceptions.ReadonlyException
+		raise outwiker.core.exceptions.ReadonlyException
 
 	dlg = wx.FileDialog (parent, style = wx.FD_OPEN | wx.FD_FILE_MUST_EXIST | wx.FD_MULTIPLE)
 
@@ -73,7 +74,7 @@ def attachFiles (parent, page, files):
 	page - страница, куда прикрепляем файлы
 	"""
 	if page.readonly:
-		raise core.exceptions.ReadonlyException
+		raise outwiker.core.exceptions.ReadonlyException
 
 	oldAttaches = [os.path.basename (fname).lower() for fname in Attachment (page).attachmentFull]
 
@@ -104,7 +105,7 @@ def attachFiles (parent, page, files):
 @testreadonly
 def removePage (page):
 	if page.readonly:
-		raise core.exceptions.ReadonlyException
+		raise outwiker.core.exceptions.ReadonlyException
 
 	text = _(u"Remove page '%s' and all subpages?") % (page.title)
 
@@ -154,7 +155,7 @@ def openWiki (path, readonly=False):
 	except IOError:
 		__canNotLoadWikiMessage (path)
 
-	except core.exceptions.RootFormatError:
+	except outwiker.core.exceptions.RootFormatError:
 		__rootFormatErrorHandle(path, readonly)
 
 	finally:
@@ -165,7 +166,7 @@ def openWiki (path, readonly=False):
 
 def __rootFormatErrorHandle (path, readonly):
 	"""
-	Обработчик исключения core.exceptions.RootFormatError
+	Обработчик исключения outwiker.core.exceptions.RootFormatError
 	"""
 	if readonly:
 		# Если вики открыт только для чтения, то нельзя изменять файлы
@@ -186,7 +187,7 @@ def __rootFormatErrorHandle (path, readonly):
 	except IOError:
 		__canNotLoadWikiMessage (path)
 
-	except core.exceptions.RootFormatError:
+	except outwiker.core.exceptions.RootFormatError:
 		__canNotLoadWikiMessage (path)
 
 	finally:
@@ -197,7 +198,7 @@ def __canNotLoadWikiMessage (path):
 	"""
 	Вывести сообщение о том, что невоможно открыть вики
 	"""
-	core.commands.MessageBox (_(u"Can't load wiki '%s'") % path, 
+	outwiker.core.commands.MessageBox (_(u"Can't load wiki '%s'") % path, 
 				_(u"Error"), 
 				wx.ICON_ERROR | wx.OK)
 
@@ -206,7 +207,7 @@ def __wantClearWikiOptions (path):
 	"""
 	Сообщение о том, хочет ли пользователь сбросить файл __page.opt
 	"""
-	return core.commands.MessageBox (_(u"Can't load wiki '%s'\nFile __page.opt is invalid.\nClear this file and load wiki?\nBookmarks will be lost") % path, 
+	return outwiker.core.commands.MessageBox (_(u"Can't load wiki '%s'\nFile __page.opt is invalid.\nClear this file and load wiki?\nBookmarks will be lost") % path, 
 				_(u"__page.opt error"), 
 				wx.ICON_ERROR | wx.YES_NO)
 
@@ -224,7 +225,7 @@ def createNewWiki (parentwnd):
 			Application.wikiroot.selectedPage = None
 		except (IOError, OSError) as e:
 			# TODO: проверить под Windows
-			core.commands.MessageBox (_(u"Can't create wiki\n") + unicode (str (e), "utf8"),
+			outwiker.core.commands.MessageBox (_(u"Can't create wiki\n") + unicode (str (e), "utf8"),
 					_(u"Error"), wx.OK | wx.ICON_ERROR)
 
 	dlg.Destroy()
@@ -287,10 +288,10 @@ def movePage (page, newParent):
 
 	try:
 		page.moveTo (newParent)
-	except core.exceptions.DublicateTitle:
+	except outwiker.core.exceptions.DublicateTitle:
 		# Невозможно переместить из-за дублирования имен
 		MessageBox (_(u"Can't move page when page with that title already exists"), _(u"Error"), wx.ICON_ERROR | wx.OK)
-	except core.exceptions.TreeException:
+	except outwiker.core.exceptions.TreeException:
 		# Невозможно переместить по другой причине
 		MessageBox (_(u"Can't move page"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 
@@ -306,7 +307,7 @@ def setStatusText (text, index = 0):
 
 def getCurrentVersion ():
 	fname = "version.txt"
-	path = os.path.join (core.system.getCurrentDir(), fname)
+	path = os.path.join (outwiker.core.system.getCurrentDir(), fname)
 
 	try:
 		with open (path) as fp:
@@ -318,10 +319,10 @@ def getCurrentVersion ():
 	version_str = "%s.%s %s" % (lines[0].strip(), lines[1].strip(), lines[2].strip())
 
 	try:
-		version = core.version.Version.parse (version_str)
+		version = Version.parse (version_str)
 	except ValueError:
 		MessageBox (_(u"Can't parse version"), _(u"Error"), wx.ICON_ERROR | wx.OK)
-		version = core.version.Version(0, 0)
+		version = Version(0, 0)
 
 	return version
 
@@ -386,11 +387,11 @@ def renamePage (page, newtitle):
 		page.title = newtitle
 		#page.root.selectedPage = page
 
-	except core.exceptions.DublicateTitle:
-		core.commands.MessageBox (_(u"Can't move page when page with that title already exists"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+	except outwiker.core.exceptions.DublicateTitle:
+		outwiker.core.commands.MessageBox (_(u"Can't move page when page with that title already exists"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 
 	except OSError as e:
-		core.commands.MessageBox (_(u"Can't rename page\n%s") % unicode (e), _(u"Error"), wx.ICON_ERROR | wx.OK)
+		outwiker.core.commands.MessageBox (_(u"Can't rename page\n%s") % unicode (e), _(u"Error"), wx.ICON_ERROR | wx.OK)
 
 
 def showAboutDialog (parent):
@@ -403,8 +404,8 @@ def showAboutDialog (parent):
 def openHelp ():
 	help_dir = u"help"
 	current_help = _("help_en")
-	path = os.path.join (core.system.getCurrentDir(), help_dir, current_help)
-	core.commands.openWiki (path, readonly=True)
+	path = os.path.join (outwiker.core.system.getCurrentDir(), help_dir, current_help)
+	outwiker.core.commands.openWiki (path, readonly=True)
 
 
 def reloadWiki (mainWnd):
@@ -413,11 +414,11 @@ def reloadWiki (mainWnd):
 	mainWnd - указатель на главное окно. Нужно, чтобы сообщить ему о необходимости удалить панель с текущей страницей
 	"""
 	if Application.wikiroot != None:
-		result = (core.commands.MessageBox (_(u"Save current page before reload?"), 
+		result = (outwiker.core.commands.MessageBox (_(u"Save current page before reload?"), 
 			_(u"Save?"), wx.YES_NO | wx.CANCEL  | wx.ICON_QUESTION ))
 
 		if result == wx.CANCEL:
 			return
 
 		mainWnd.destroyPagePanel (result == wx.YES)
-		core.commands.openWiki (Application.wikiroot.path)
+		outwiker.core.commands.openWiki (Application.wikiroot.path)

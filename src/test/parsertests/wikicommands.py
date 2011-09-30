@@ -5,8 +5,8 @@ import os
 import unittest
 import hashlib
 
-from core.tree import WikiDocument
-from core.application import Application
+from outwiker.core.tree import WikiDocument
+from outwiker.core.application import Application
 from pages.wiki.parser.commandtest import TestCommand, ExceptionCommand
 from pages.wiki.parser.wikiparser import Parser
 from pages.wiki.wikipage import WikiPageFactory

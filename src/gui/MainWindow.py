@@ -7,11 +7,11 @@ import sys
 import wx
 import wx.aui
 
-from core.tree import WikiDocument, RootWikiPage
-import core.config
-import core.commands
-import core.system
-from core.application import Application
+from outwiker.core.tree import WikiDocument, RootWikiPage
+import outwiker.core.config
+import outwiker.core.commands
+import outwiker.core.system
+from outwiker.core.application import Application
 
 from .WikiTree import WikiTree
 import pages.search.searchpage
@@ -271,13 +271,13 @@ class MainWindow(wx.Frame):
 
 				self.__savePanesParams()
 		except Exception, e:
-			core.commands.MessageBox (_(u"Can't save config\n%s") % (unicode (e)),
+			outwiker.core.commands.MessageBox (_(u"Can't save config\n%s") % (unicode (e)),
 					_(u"Error"), wx.ICON_ERROR | wx.OK)
 	
 
 	def __setIcon (self):
 		icon = wx.EmptyIcon()
-		icon.CopyFromBitmap(wx.Bitmap(os.path.join (core.system.getImagesDir(), "outwiker.ico"), 
+		icon.CopyFromBitmap(wx.Bitmap(os.path.join (outwiker.core.system.getImagesDir(), "outwiker.ico"), 
 			wx.BITMAP_TYPE_ANY))
 
 		self.SetIcon(icon)
@@ -287,7 +287,7 @@ class MainWindow(wx.Frame):
 		askBeforeExit = self.generalConfig.askBeforeExitOption.value
 
 		if (not askBeforeExit or 
-				core.commands.MessageBox (_(u"Really exit?"), _(u"Exit"), wx.YES_NO  | wx.ICON_QUESTION ) == wx.YES):
+				outwiker.core.commands.MessageBox (_(u"Really exit?"), _(u"Exit"), wx.YES_NO  | wx.ICON_QUESTION ) == wx.YES):
 			self.__saveParams()
 
 			self.auiManager.UnInit()
@@ -313,11 +313,11 @@ class MainWindow(wx.Frame):
 	
 
 	def __onNew(self, event): 
-		core.commands.createNewWiki(self)
+		outwiker.core.commands.createNewWiki(self)
 
 
 	def __onOpen(self, event):
-		core.commands.openWikiWithDialog (self)
+		outwiker.core.commands.openWikiWithDialog (self)
 	
 
 	def __onSave(self, event):
@@ -325,7 +325,7 @@ class MainWindow(wx.Frame):
 
 
 	def __onReload(self, event):
-		core.commands.reloadWiki (self)
+		outwiker.core.commands.reloadWiki (self)
 	
 
 	def destroyPagePanel (self, save):
@@ -355,10 +355,10 @@ class MainWindow(wx.Frame):
 
 	def __onAttach(self, event):
 		if Application.selectedPage != None:
-			core.commands.attachFilesWithDialog (self, Application.wikiroot.selectedPage)
+			outwiker.core.commands.attachFilesWithDialog (self, Application.wikiroot.selectedPage)
 
 	def __onAbout(self, event):
-		core.commands.showAboutDialog (self)
+		outwiker.core.commands.showAboutDialog (self)
 
 
 	def __onExit(self, event):
@@ -367,22 +367,22 @@ class MainWindow(wx.Frame):
 
 	def __onCopyPath(self, event):
 		if Application.selectedPage != None:
-			core.commands.copyPathToClipboard (Application.wikiroot.selectedPage)
+			outwiker.core.commands.copyPathToClipboard (Application.wikiroot.selectedPage)
 
 
 	def __onCopyAttaches(self, event):
 		if Application.selectedPage != None:
-			core.commands.copyAttachPathToClipboard (Application.wikiroot.selectedPage)
+			outwiker.core.commands.copyAttachPathToClipboard (Application.wikiroot.selectedPage)
 
 	
 	def __onCopyLink(self, event):
 		if Application.selectedPage != None:
-			core.commands.copyLinkToClipboard (Application.wikiroot.selectedPage)
+			outwiker.core.commands.copyLinkToClipboard (Application.wikiroot.selectedPage)
 
 	
 	def __onCopyTitle(self, event):
 		if Application.selectedPage != None:
-			core.commands.copyTitleToClipboard (Application.wikiroot.selectedPage)
+			outwiker.core.commands.copyTitleToClipboard (Application.wikiroot.selectedPage)
 	
 
 	def __onEditPage(self, event):
@@ -392,16 +392,16 @@ class MainWindow(wx.Frame):
 
 	def __onRemovePage(self, event):
 		if Application.selectedPage != None:
-			core.commands.removePage (Application.wikiroot.selectedPage)
+			outwiker.core.commands.removePage (Application.wikiroot.selectedPage)
 
 
-	@core.commands.testreadonly
+	@outwiker.core.commands.testreadonly
 	def __onGlobalSearch(self, event):
 		if Application.wikiroot != None:
 			try:
 				pages.search.searchpage.GlobalSearch.create (Application.wikiroot)
 			except IOError:
-				core.commands.MessageBox (_(u"Can't create page"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+				outwiker.core.commands.MessageBox (_(u"Can't create page"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 
 
 	def __onStdEvent(self, event):
@@ -419,11 +419,11 @@ class MainWindow(wx.Frame):
 
 
 	def __onHelp(self, event):
-		core.commands.openHelp()
+		outwiker.core.commands.openHelp()
 
 
 	def __onOpenReadOnly(self, event):
-		core.commands.openWikiWithDialog (self, readonly=True)
+		outwiker.core.commands.openWikiWithDialog (self, readonly=True)
 
 
 	def __onPreferences(self, event):
@@ -520,19 +520,19 @@ class MainWindow(wx.Frame):
 
 
 	def __onMovePageUp(self, event):
-		core.commands.moveCurrentPageUp()
+		outwiker.core.commands.moveCurrentPageUp()
 
 
 	def __onMovePageDown(self, event):
-		core.commands.moveCurrentPageDown()
+		outwiker.core.commands.moveCurrentPageDown()
 		
 
 	def __onSortChildrenAlphabetical(self, event):
-		core.commands.sortChildrenAlphabeticalGUI()
+		outwiker.core.commands.sortChildrenAlphabeticalGUI()
 
 
 	def __onSortSiblingAlphabetical(self, event):
-		core.commands.sortSiblingsAlphabeticalGUI()
+		outwiker.core.commands.sortSiblingsAlphabeticalGUI()
 
 
 	def __onPrint(self, event):
@@ -551,7 +551,7 @@ class DropFilesTarget (wx.FileDropTarget):
 	def OnDropFiles (self, x, y, files):
 		if (Application.wikiroot != None and
 				Application.wikiroot.selectedPage != None):
-			core.commands.attachFiles (self._mainWindow, 
+			outwiker.core.commands.attachFiles (self._mainWindow, 
 						Application.wikiroot.selectedPage, 
 						files)
 			return True

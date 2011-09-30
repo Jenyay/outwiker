@@ -6,9 +6,9 @@ import os
 import wx
 import wx.html
 
-import core.system
-import core.commands
-from core.application import Application
+import outwiker.core.system
+import outwiker.core.commands
+from outwiker.core.application import Application
 
 
 class HtmlRenderWX (wx.Panel):
@@ -52,11 +52,11 @@ class HtmlRenderWX (wx.Panel):
 	def onCellHover (self, event):
 		cell = event.GetCell()
 		text = cell.GetLink().GetHref() if cell.GetLink() else u""
-		core.commands.setStatusText(text)
+		outwiker.core.commands.setStatusText(text)
 
 
 	def onMouseMove (self, event):
-		core.commands.setStatusText(u"")
+		outwiker.core.commands.setStatusText(u"")
 		event.Skip()
 
 
@@ -69,7 +69,7 @@ class HtmlRenderWX (wx.Panel):
 		if len(text) == 0:
 			return
 
-		core.commands.copyTextToClipboard(text)
+		outwiker.core.commands.copyTextToClipboard(text)
 		event.Skip()
 	
 
@@ -100,10 +100,10 @@ class HtmlRenderWX (wx.Panel):
 				self._currentPage.root.selectedPage = page
 			elif file != None:
 				try:
-					core.system.getOS().startFile (file)
+					outwiker.core.system.getOS().startFile (file)
 				except OSError:
 					text = _(u"Can't execute file '%s'") % file
-					core.commands.MessageBox (text, _(u"Error"), wx.ICON_ERROR | wx.OK)
+					outwiker.core.commands.MessageBox (text, _(u"Error"), wx.ICON_ERROR | wx.OK)
 
 	
 
@@ -147,7 +147,7 @@ class HtmlRenderWX (wx.Panel):
 		Открыть ссылку в браузере (или почтовый адрес в почтовике)
 		"""
 		try:
-			core.system.getOS().startFile (href)
+			outwiker.core.system.getOS().startFile (href)
 		except OSError:
 			text = _(u"Can't execute file '%s'") % (href)
-			core.commands.MessageBox (text, "Error", wx.ICON_ERROR | wx.OK)
+			outwiker.core.commands.MessageBox (text, "Error", wx.ICON_ERROR | wx.OK)

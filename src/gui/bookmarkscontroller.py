@@ -3,7 +3,7 @@
 
 import wx
 
-from core.application import Application
+from outwiker.core.application import Application
 from .mainid import MainId
 
 

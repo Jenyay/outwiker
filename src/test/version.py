@@ -3,7 +3,7 @@
 
 import unittest
 
-from core.version import Version, Status, StatusSet
+from outwiker.core.version import Version, Status, StatusSet
 
 
 class StatusTest (unittest.TestCase):

@@ -6,7 +6,7 @@ import os.path
 import wx
 
 from .mainid import MainId
-from core.system import getImagesDir
+from outwiker.core.system import getImagesDir
 
 
 class MainMenu (wx.MenuBar):

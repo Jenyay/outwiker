@@ -6,7 +6,7 @@ from abc import ABCMeta
 
 import wx
 
-import core
+import outwiker.core
 
 class HtmlRender (wx.Panel):
 	"""
@@ -59,7 +59,7 @@ class HtmlRender (wx.Panel):
 		Открыть ссылку в браузере (или почтовый адрес в почтовике)
 		"""
 		try:
-			core.system.getOS().startFile (href)
+			outwiker.core.system.getOS().startFile (href)
 		except OSError:
 			text = _(u"Can't execute file '%s'") % (href)
-			core.commands.MessageBox (text, "Error", wx.ICON_ERROR | wx.OK)
+			outwiker.core.commands.MessageBox (text, "Error", wx.ICON_ERROR | wx.OK)

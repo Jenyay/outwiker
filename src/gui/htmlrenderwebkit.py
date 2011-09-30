@@ -17,9 +17,9 @@ import gtk, gtk.gdk
 # pywebkitgtk (http://code.google.com/p/pywebkitgtk/)
 import webkit
 
-import core.system
-import core.commands
-from core.application import Application
+import outwiker.core.system
+import outwiker.core.commands
+from outwiker.core.application import Application
 from .htmlcontrollerwebkit import UriIdentifierWebKit
 
 '''
@@ -128,35 +128,35 @@ class HtmlRenderWebKit(HtmlRender):
 
 	def __onHoveredOverLink (self, view, title, uri):
 		if uri == None:
-			core.commands.setStatusText (u"")
+			outwiker.core.commands.setStatusText (u"")
 			return
 
 		try:
 			href = unicode (urllib.unquote (uri), "utf8")
 		except UnicodeDecodeError:
 			#print uri
-			core.commands.setStatusText (u"")
+			outwiker.core.commands.setStatusText (u"")
 			return
 
 		(url, page, filename, anchor) = self.__identifyUri (href)
 
 		if url != None:
-			core.commands.setStatusText (url)
+			outwiker.core.commands.setStatusText (url)
 			return
 
 		if page != None:
-			core.commands.setStatusText (page.subpath)
+			outwiker.core.commands.setStatusText (page.subpath)
 			return
 
 		if filename != None:
-			core.commands.setStatusText (filename)
+			outwiker.core.commands.setStatusText (filename)
 			return
 
 		if anchor != None:
-			core.commands.setStatusText (anchor)
+			outwiker.core.commands.setStatusText (anchor)
 			return
 
-		core.commands.setStatusText (u"")
+		outwiker.core.commands.setStatusText (u"")
 
 
 	def __onNavigate (self, view, frame, request, action, decision):
@@ -192,10 +192,10 @@ class HtmlRenderWebKit(HtmlRender):
 
 		elif filename != None:
 			try:
-				core.system.getOS().startFile (filename)
+				outwiker.core.system.getOS().startFile (filename)
 			except OSError:
 				text = _(u"Can't execute file '%s'") % filename
-				core.commands.MessageBox (text, _(u"Error"), wx.ICON_ERROR | wx.OK)
+				outwiker.core.commands.MessageBox (text, _(u"Error"), wx.ICON_ERROR | wx.OK)
 
 		elif anchor != None:
 			return False

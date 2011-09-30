@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-from core.application import Application
+from outwiker.core.application import Application
 from gui.MainWindow import MainWindow
 from gui.guiconfig import MainWindowConfig
-from core.tree import RootWikiPage, WikiDocument
+from outwiker.core.tree import RootWikiPage, WikiDocument
 from pages.text.textpage import TextPageFactory
 
 from .basemainwnd import BaseMainWndTest

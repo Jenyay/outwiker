@@ -4,10 +4,10 @@
 Необходимые классы для создания страниц с HTML
 """
 
-from core.tree import WikiPage
+from outwiker.core.tree import WikiPage
 from wikipanel import WikiPagePanel
 import WikiPreferences
-from core.factory import PageFactory
+from outwiker.core.factory import PageFactory
 
 
 class WikiWikiPage (WikiPage):
