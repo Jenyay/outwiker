@@ -12,8 +12,8 @@ import unittest
 from outwiker.core.event import Event
 from outwiker.core.attachment import Attachment
 from outwiker.core.tree import RootWikiPage, WikiDocument
-from pages.text.textpage import TextPageFactory
-from pages.html.htmlpage import HtmlPageFactory
+from outwiker.pages.text.textpage import TextPageFactory
+from outwiker.pages.html.htmlpage import HtmlPageFactory
 from test.utils import removeWiki
 from outwiker.core.exceptions import RootFormatError
 

@@ -5,13 +5,13 @@ import os.path
 import unittest
 
 from outwiker.core.tree import RootWikiPage, WikiDocument
-from pages.wiki.wikipage import WikiPageFactory, WikiWikiPage
+from outwiker.pages.wiki.wikipage import WikiPageFactory, WikiWikiPage
 from outwiker.core.attachment import Attachment
 from outwiker.core.application import Application
 from test.utils import removeWiki
 
-from gui.htmlcontrollerie import UriIdentifierIE
-from gui.htmlcontrollerwebkit import UriIdentifierWebKit
+from outwiker.gui.htmlcontrollerie import UriIdentifierIE
+from outwiker.gui.htmlcontrollerwebkit import UriIdentifierWebKit
 
 
 class UriIdentifierTest (unittest.TestCase):

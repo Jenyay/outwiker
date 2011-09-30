@@ -6,7 +6,7 @@ import os
 import os.path
 
 from outwiker.core.config import Config
-from pages.wiki.emptycontent import EmptyContent
+from outwiker.pages.wiki.emptycontent import EmptyContent
 
 
 class EmptyContentTest (unittest.TestCase):

@@ -11,11 +11,11 @@ from outwiker.core.attachment import Attachment
 from outwiker.core.application import Application
 from outwiker.core.config import Config
 
-from pages.wiki.parser.wikiparser import Parser
-from pages.wiki.wikipage import WikiPageFactory
-from pages.wiki.parserfactory import ParserFactory
-from pages.wiki.htmlgenerator import HtmlGenerator
-from pages.wiki.emptycontent import EmptyContent
+from outwiker.pages.wiki.parser.wikiparser import Parser
+from outwiker.pages.wiki.wikipage import WikiPageFactory
+from outwiker.pages.wiki.parserfactory import ParserFactory
+from outwiker.pages.wiki.htmlgenerator import HtmlGenerator
+from outwiker.pages.wiki.emptycontent import EmptyContent
 
 from utils import removeWiki
 

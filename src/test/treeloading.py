@@ -11,10 +11,10 @@ from outwiker.core.attachment import Attachment
 from outwiker.core.tree import RootWikiPage, WikiDocument
 from outwiker.core.config import StringOption
 
-from pages.text.textpage import TextPageFactory, TextWikiPage
-from pages.wiki.wikipage import WikiPageFactory, WikiWikiPage
-from pages.html.htmlpage import HtmlPageFactory, HtmlWikiPage
-from pages.search.searchpage import SearchPageFactory, SearchWikiPage
+from outwiker.pages.text.textpage import TextPageFactory, TextWikiPage
+from outwiker.pages.wiki.wikipage import WikiPageFactory, WikiWikiPage
+from outwiker.pages.html.htmlpage import HtmlPageFactory, HtmlWikiPage
+from outwiker.pages.search.searchpage import SearchPageFactory, SearchWikiPage
 
 from test.utils import removeWiki
 

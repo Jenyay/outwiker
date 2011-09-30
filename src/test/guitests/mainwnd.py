@@ -2,10 +2,10 @@
 # -*- coding: UTF-8 -*-
 
 from outwiker.core.application import Application
-from gui.MainWindow import MainWindow
-from gui.guiconfig import MainWindowConfig
+from outwiker.gui.MainWindow import MainWindow
+from outwiker.gui.guiconfig import MainWindowConfig
 from outwiker.core.tree import RootWikiPage, WikiDocument
-from pages.text.textpage import TextPageFactory
+from outwiker.pages.text.textpage import TextPageFactory
 
 from .basemainwnd import BaseMainWndTest
 from test.utils import removeWiki

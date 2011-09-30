@@ -6,7 +6,7 @@ import unittest
 
 from outwiker.core.tree import RootWikiPage, WikiDocument
 
-from pages.html.htmlpage import HtmlPageFactory, HtmlWikiPage
+from outwiker.pages.html.htmlpage import HtmlPageFactory, HtmlWikiPage
 from outwiker.core.application import Application
 from test.utils import removeWiki
 

@@ -8,7 +8,7 @@ import wx.html
 
 from .commands import MessageBox
 from .application import Application
-from gui.guiconfig import TextPrintConfig
+from outwiker.gui.guiconfig import TextPrintConfig
 
 
 class TextPrinter (object):

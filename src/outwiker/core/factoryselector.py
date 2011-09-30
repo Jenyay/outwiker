@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-from pages.text.textpage import TextPageFactory
-from pages.html.htmlpage import HtmlPageFactory
-from pages.search.searchpage import SearchPageFactory
-from pages.wiki.wikipage import WikiPageFactory
+from outwiker.pages.text.textpage import TextPageFactory
+from outwiker.pages.html.htmlpage import HtmlPageFactory
+from outwiker.pages.search.searchpage import SearchPageFactory
+from outwiker.pages.wiki.wikipage import WikiPageFactory
 
 
 class FactorySelector (object):

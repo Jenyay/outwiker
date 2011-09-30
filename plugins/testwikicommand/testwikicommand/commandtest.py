@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-from pages.wiki.parser.command import Command
+from outwiker.pages.wiki.parser.command import Command
 
 class TestCommand (Command):
 	"""

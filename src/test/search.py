@@ -6,13 +6,10 @@ import unittest
 from outwiker.core.search import Searcher, TagsList, AllTagsSearchStrategy, \
 		AnyTagSearchStrategy
 
-from pages.search.searchpage import GlobalSearch
-import pages.search.searchpage
-
-from pages.search.searchpage import SearchPageFactory, SearchWikiPage
+from outwiker.pages.search.searchpage import SearchPageFactory, SearchWikiPage, GlobalSearch
 from test.utils import removeWiki
 from outwiker.core.tree import WikiDocument
-from pages.text.textpage import TextPageFactory
+from outwiker.pages.text.textpage import TextPageFactory
 
 
 class SearcherTest(unittest.TestCase):

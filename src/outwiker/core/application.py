@@ -8,7 +8,7 @@ from .config import Config, getConfigPath
 from .event import Event
 from .recent import RecentWiki
 from .pluginsloader import PluginsLoader
-from gui.guiconfig import GeneralGuiConfig
+from outwiker.gui.guiconfig import GeneralGuiConfig
 
 
 class ApplicationParams (object):

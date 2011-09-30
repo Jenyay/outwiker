@@ -8,7 +8,7 @@ import shutil
 import unittest
 
 from outwiker.core.tree import RootWikiPage, WikiDocument, WikiPage
-from pages.text.textpage import TextPageFactory
+from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.core.event import Event
 from outwiker.core.application import Application
 from test.utils import removeWiki

@@ -7,9 +7,9 @@ import unittest
 
 from outwiker.core.attachment import Attachment
 from outwiker.core.tree import RootWikiPage, WikiDocument
-from pages.wiki.parser.pagethumbmaker import PageThumbmaker
-from pages.text.textpage import TextPageFactory
-from pages.wiki.thumbnails import Thumbnails
+from outwiker.pages.wiki.parser.pagethumbmaker import PageThumbmaker
+from outwiker.pages.text.textpage import TextPageFactory
+from outwiker.pages.wiki.thumbnails import Thumbnails
 from utils import removeWiki, getImageSize
 
 

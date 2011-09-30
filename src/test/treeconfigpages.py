@@ -10,7 +10,7 @@ import unittest
 
 from outwiker.core.tree import RootWikiPage, WikiDocument
 from outwiker.core.config import StringOption
-from pages.text.textpage import TextPageFactory
+from outwiker.pages.text.textpage import TextPageFactory
 from .utils import removeWiki
 
 

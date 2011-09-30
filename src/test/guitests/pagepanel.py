@@ -7,17 +7,17 @@ from outwiker.core.tree import RootWikiPage, WikiDocument
 from outwiker.core.application import Application
 from test.utils import removeWiki
 
-from pages.text.textpage import TextPageFactory
-from pages.text.TextPanel import TextPanel
+from outwiker.pages.text.textpage import TextPageFactory
+from outwiker.pages.text.TextPanel import TextPanel
 
-from pages.html.htmlpage import HtmlPageFactory
-from pages.html.HtmlPanel import HtmlPagePanel
+from outwiker.pages.html.htmlpage import HtmlPageFactory
+from outwiker.pages.html.HtmlPanel import HtmlPagePanel
 
-from pages.wiki.wikipage import WikiPageFactory
-from pages.wiki.wikipanel import WikiPagePanel
+from outwiker.pages.wiki.wikipage import WikiPageFactory
+from outwiker.pages.wiki.wikipanel import WikiPagePanel
 
-from pages.search.searchpage import SearchPageFactory
-from pages.search.SearchPanel import SearchPanel
+from outwiker.pages.search.searchpage import SearchPageFactory
+from outwiker.pages.search.SearchPanel import SearchPanel
 
 
 class PagePanelTest (BaseMainWndTest):

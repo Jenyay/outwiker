@@ -9,15 +9,15 @@ class MainIdTest (unittest.TestCase):
 	"""
 
 	def test1 (self):
-		from gui.mainid import MainId
+		from outwiker.gui.mainid import MainId
 		val1 = MainId.ID_ATTACH
 
-		from gui.mainid import MainId
+		from outwiker.gui.mainid import MainId
 		val2 = MainId.ID_ATTACH
 
 		self.assertEqual (val1, val2)
 
-		import gui.mainid
-		val3 = gui.mainid.MainId.ID_ATTACH
+		import outwiker.gui.mainid
+		val3 = outwiker.gui.mainid.MainId.ID_ATTACH
 		self.assertEqual (val2, val3)
 

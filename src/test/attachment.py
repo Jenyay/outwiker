@@ -7,7 +7,7 @@ import os.path
 from outwiker.core.attachment import Attachment
 from utils import removeWiki
 from outwiker.core.tree import WikiDocument
-from pages.text.textpage import TextPageFactory
+from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.core.application import Application
 
 

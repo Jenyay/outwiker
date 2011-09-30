@@ -10,9 +10,9 @@ from test.utils import removeWiki
 from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
 
-from pages.wiki.parser.wikiparser import Parser
-from pages.wiki.wikipage import WikiPageFactory
-from pages.wiki.parserfactory import ParserFactory
+from outwiker.pages.wiki.parser.wikiparser import Parser
+from outwiker.pages.wiki.wikipage import WikiPageFactory
+from outwiker.pages.wiki.parserfactory import ParserFactory
 
 
 class ParserFontTest (unittest.TestCase):

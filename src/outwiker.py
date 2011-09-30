@@ -36,7 +36,7 @@ class OutWiker(wx.App):
 			# Закоментировать следующую строку, если не надо выводить strout/strerr в лог-файл
 			self.RedirectStdio (self.getLogFileName (self._configFileName))
 
-		from gui.MainWindow import MainWindow
+		from outwiker.gui.MainWindow import MainWindow
 		
 		wx.InitAllImageHandlers()
 		self.mainWnd = MainWindow(None, -1, "")

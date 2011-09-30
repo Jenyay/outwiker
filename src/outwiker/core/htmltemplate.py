@@ -4,7 +4,7 @@
 from string import Template
 import os.path
 
-from gui.guiconfig import HtmlRenderConfig
+from outwiker.gui.guiconfig import HtmlRenderConfig
 from .application import Application
 
 

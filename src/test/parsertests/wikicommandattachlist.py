@@ -9,11 +9,11 @@ from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
 
-from pages.wiki.parser.wikiparser import Parser
-from pages.wiki.parser.commandattachlist import AttachListCommand
-from pages.wiki.parserfactory import ParserFactory
-from pages.wiki.thumbnails import Thumbnails
-from pages.wiki.wikipage import WikiPageFactory
+from outwiker.pages.wiki.parser.wikiparser import Parser
+from outwiker.pages.wiki.parser.commandattachlist import AttachListCommand
+from outwiker.pages.wiki.parserfactory import ParserFactory
+from outwiker.pages.wiki.thumbnails import Thumbnails
+from outwiker.pages.wiki.wikipage import WikiPageFactory
 
 from test.utils import removeWiki
 

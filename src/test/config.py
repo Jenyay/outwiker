@@ -14,7 +14,7 @@ from outwiker.core.config import Config, getConfigPath
 from outwiker.core.system import getCurrentDir
 import outwiker.core.config
 
-from gui.guiconfig import TrayConfig, EditorConfig
+from outwiker.gui.guiconfig import TrayConfig, EditorConfig
 
 
 class ConfigTest (unittest.TestCase):

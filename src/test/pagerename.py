@@ -6,7 +6,7 @@ import unittest
 import stat
 
 
-from pages.text.textpage import TextPageFactory, TextWikiPage
+from outwiker.pages.text.textpage import TextPageFactory, TextWikiPage
 from outwiker.core.attachment import Attachment
 from outwiker.core.application import Application
 from outwiker.core.exceptions import DublicateTitle

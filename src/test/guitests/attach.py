@@ -5,7 +5,7 @@ import os.path
 
 from basemainwnd import BaseMainWndTest
 from outwiker.core.tree import RootWikiPage, WikiDocument
-from pages.text.textpage import TextPageFactory
+from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.core.application import Application
 from test.utils import removeWiki
 from outwiker.core.attachment import Attachment

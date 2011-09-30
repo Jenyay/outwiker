@@ -13,12 +13,9 @@ mkdir $outwiker_dir
 
 # Скопируем нужные файлы из исходников
 cp -r "../src/outwiker" $outwiker_dir
-cp -r "../src/gui" $outwiker_dir
 cp -r "../src/help" $outwiker_dir
 cp -r "../src/images" $outwiker_dir
-cp -r "../src/libs" $outwiker_dir
 cp -r "../src/locale" $outwiker_dir
-cp -r "../src/pages" $outwiker_dir
 cp -r "../src/plugins" $outwiker_dir
 cp -r "../src/templates" $outwiker_dir
 cp "../src/outwiker.py" $outwiker_dir

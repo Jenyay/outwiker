@@ -7,8 +7,8 @@ import cProfile
 from outwiker.core.tree import RootWikiPage, WikiDocument
 from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
-from pages.wiki.parser.wikiparser import Parser
-from pages.wiki.wikipage import WikiPageFactory
+from outwiker.pages.wiki.parser.wikiparser import Parser
+from outwiker.pages.wiki.wikipage import WikiPageFactory
 from test.utils import removeWiki
 
 

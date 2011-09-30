@@ -10,8 +10,8 @@ import shutil
 import unittest
 
 from outwiker.core.tree import RootWikiPage, WikiDocument
-from pages.text.textpage import TextPageFactory
-from pages.html.htmlpage import HtmlPageFactory
+from outwiker.pages.text.textpage import TextPageFactory
+from outwiker.pages.html.htmlpage import HtmlPageFactory
 from outwiker.core.event import Event
 from outwiker.core.factoryselector import FactorySelector
 

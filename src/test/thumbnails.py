@@ -5,11 +5,11 @@ import unittest
 import os
 import os.path
 
-from pages.wiki.thumbnails import Thumbnails
+from outwiker.pages.wiki.thumbnails import Thumbnails
 from test.utils import removeWiki
 from outwiker.core.tree import WikiDocument
-from pages.wiki.parser.wikiparser import Parser
-from pages.wiki.wikipage import WikiPageFactory
+from outwiker.pages.wiki.parser.wikiparser import Parser
+from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
 

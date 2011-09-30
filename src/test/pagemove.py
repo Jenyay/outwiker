@@ -14,7 +14,7 @@ from outwiker.core.application import Application
 from outwiker.core.tree import RootWikiPage, WikiDocument
 from outwiker.core.attachment import Attachment
 
-from pages.text.textpage import TextPageFactory
+from outwiker.pages.text.textpage import TextPageFactory
 from test.utils import removeWiki
 
 

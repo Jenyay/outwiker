@@ -7,11 +7,11 @@ import hashlib
 
 from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
-from pages.wiki.parser.commandtest import TestCommand, ExceptionCommand
-from pages.wiki.parser.wikiparser import Parser
-from pages.wiki.wikipage import WikiPageFactory
-from pages.wiki.parser.command import Command
-from pages.wiki.parserfactory import ParserFactory
+from outwiker.pages.wiki.parser.commandtest import TestCommand, ExceptionCommand
+from outwiker.pages.wiki.parser.wikiparser import Parser
+from outwiker.pages.wiki.wikipage import WikiPageFactory
+from outwiker.pages.wiki.parser.command import Command
+from outwiker.pages.wiki.parserfactory import ParserFactory
 from test.utils import removeWiki
 
 

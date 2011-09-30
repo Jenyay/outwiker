@@ -7,8 +7,8 @@ import os.path
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.application import Application
 from outwiker.core.tree import WikiDocument
-from pages.wiki.wikipage import WikiPageFactory
-from pages.wiki.parserfactory import ParserFactory
+from outwiker.pages.wiki.wikipage import WikiPageFactory
+from outwiker.pages.wiki.parserfactory import ParserFactory
 from test.utils import removeWiki
 
 

@@ -16,9 +16,9 @@ from .system import getCurrentDir
 from .version import Version
 
 from tree import WikiDocument, RootWikiPage
-from gui.OverwriteDialog import OverwriteDialog
+from outwiker.gui.OverwriteDialog import OverwriteDialog
 from application import Application
-from gui.about import AboutDialog
+from outwiker.gui.about import AboutDialog
 from attachment import Attachment
 
 

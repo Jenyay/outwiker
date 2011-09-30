@@ -5,7 +5,7 @@ import sys
 import os.path
 
 from .application import Application
-from gui.guiconfig import GeneralGuiConfig
+from outwiker.gui.guiconfig import GeneralGuiConfig
 from .commands import openWiki
 
 

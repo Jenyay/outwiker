@@ -3,7 +3,7 @@
 
 import unittest
 
-from gui.LocalSearchPanel import LocalSearcher, SearchResult
+from outwiker.gui.LocalSearchPanel import LocalSearcher, SearchResult
 
 class LocalSearchTest(unittest.TestCase):
 	def setUp(self):

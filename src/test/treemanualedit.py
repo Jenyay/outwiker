@@ -12,7 +12,7 @@ import unittest
 from outwiker.core.tree import WikiDocument
 from outwiker.core.attachment import Attachment
 from outwiker.core.application import Application
-from pages.text.textpage import TextPageFactory, TextWikiPage
+from outwiker.pages.text.textpage import TextPageFactory, TextWikiPage
 from test.utils import removeWiki
 
 
