@@ -3,6 +3,7 @@
 DIR_NAME="outwiker-1.4.0-1"
 
 outwiker_dir="$DIR_NAME/opt/outwiker/"
+pyshared_dir="$DIR_NAME/usr/share/pyshared/"
 
 if [ -d $outwiker_dir ] ;
 then
@@ -11,14 +12,23 @@ fi
 
 mkdir $outwiker_dir
 
+
+if [ -d $pyshared_dir ] ;
+then
+	rm -r $pyshared_dir
+fi
+
+mkdir $pyshared_dir
+
+
 # Скопируем нужные файлы из исходников
-cp -r "../src/outwiker" $outwiker_dir
+cp -r "../src/outwiker" $pyshared_dir
 cp -r "../src/help" $outwiker_dir
 cp -r "../src/images" $outwiker_dir
 cp -r "../src/locale" $outwiker_dir
 cp -r "../src/plugins" $outwiker_dir
 cp -r "../src/templates" $outwiker_dir
-cp "../src/outwiker.py" $outwiker_dir
+cp "../src/runoutwiker.py" $outwiker_dir
 cp "../src/copyright" $outwiker_dir
 cp "../src/README" $outwiker_dir
 cp "../src/version.txt" $outwiker_dir
