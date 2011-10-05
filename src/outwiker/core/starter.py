@@ -7,6 +7,7 @@ import os.path
 from .application import Application
 from outwiker.gui.guiconfig import GeneralGuiConfig
 from .commands import openWiki
+from .system import getOS
 
 
 class Starter (object):
@@ -40,8 +41,11 @@ class Starter (object):
 		"""
 		Открыть вики, путь до которой передан в командной строке
 		"""
-		fname = unicode (sys.argv[1], core.system.getOS().filesEncoding)
-		if not os.path.isdir (fname):
-			fname = os.path.split (fname)[0]
+		fname = unicode (sys.argv[1], getOS().filesEncoding)
 
-		openWiki (fname)
+		if len (fname) > 0:
+			if not os.path.isdir (fname):
+				fname = os.path.split (fname)[0]
+			openWiki (fname)
+		else:
+			self.__openRecentWiki ()

@@ -2,8 +2,7 @@
 
 DIR_NAME="outwiker-1.4.0-1"
 
-outwiker_dir="$DIR_NAME/opt/outwiker/"
-pyshared_dir="$DIR_NAME/usr/share/pyshared/"
+outwiker_dir="$DIR_NAME/usr/share/outwiker/"
 
 if [ -d $outwiker_dir ] ;
 then
@@ -12,17 +11,8 @@ fi
 
 mkdir $outwiker_dir
 
-
-if [ -d $pyshared_dir ] ;
-then
-	rm -r $pyshared_dir
-fi
-
-mkdir $pyshared_dir
-
-
 # Скопируем нужные файлы из исходников
-cp -r "../src/outwiker" $pyshared_dir
+cp -r "../src/outwiker" $outwiker_dir
 cp -r "../src/help" $outwiker_dir
 cp -r "../src/images" $outwiker_dir
 cp -r "../src/locale" $outwiker_dir
@@ -41,8 +31,7 @@ find . -name *.wxg~ -type f -print | xargs rm
 find . -name *.~1~ -type f -print | xargs rm 
 
 # Создание файла с контрольными суммами 
-md5deep -r "$DIR_NAME/opt" > "$DIR_NAME/DEBIAN/md5sums"
-md5deep -r "$DIR_NAME/usr" >> "$DIR_NAME/DEBIAN/md5sums"
+md5deep -r "$DIR_NAME/usr" > "$DIR_NAME/DEBIAN/md5sums"
 
 # Сборка пакета 
 fakeroot dpkg-deb --build "$DIR_NAME"

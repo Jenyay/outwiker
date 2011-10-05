@@ -1,8 +1,12 @@
 #!/bin/sh
 
-echo "pyversions=2.6,2.7\n" > /usr/share/python-support/outwiker.public
-find /usr/share/pyshared/outwiker/ -type f >> /usr/share/python-support/outwiker.public
-update-python-modules outwiker.public
+echo "pyversions=2.6,2.7\n" > /usr/share/python-support/outwiker.private
+find /usr/share/outwiker/ -type f -name "*.py" >> /usr/share/python-support/outwiker.private
+# update-python-modules outwiker.private
+
+if which update-python-modules >/dev/null 2>&1; then
+	update-python-modules  outwiker.private
+fi
 
 set -e
 if [ "$1" = "configure" ] && [ -x "`which update-menus 2>/dev/null`" ] ; then

@@ -18,7 +18,7 @@ test/*.profile
 distrib/tests
 distrib/outwiker-*/DEBIAN/md5sums
 distrib/outwiker-*/opt/outwiker
-distrib/outwiker-*/usr/share/pyshared
+distrib/outwiker-*/usr/share/outwiker
 src/.coverage
 src/htmlcov
 src/tests.log

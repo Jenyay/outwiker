@@ -2,7 +2,7 @@
 Name=Outwiker
 GenericName=Outwiker
 Comment=Outliner and personal wiki
-Exec=python /opt/outwiker/runoutwiker.py %f
+Exec=outwiker %f
 Icon=outwiker
 Terminal=false
 Type=Application
