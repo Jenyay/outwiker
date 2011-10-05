@@ -32,6 +32,6 @@ setup(
 	name = "tests",
 	version = getCurrentVersion(),
 	description = "tests",
-	options = {'build_exe': {'excludes':excludes, 'packages':packages, 'include_files':includefiles}},
+	options = {'build_exe': {'excludes':excludes, 'packages':packages, 'include_files':includefiles, 'build_exe':'../distrib/tests_win'}},
 	executables = [Executable("tests.py", base = 'Console')])
 

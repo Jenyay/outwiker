@@ -40,6 +40,6 @@ setup(
 	name = "OutWiker",
 	version = getCurrentVersion(),
 	description = "Wiki + Outliner",
-	options = {'build_exe': {'excludes':excludes, 'packages':packages, 'include_files':includefiles}},
+	options = {'build_exe': {'excludes':excludes, 'packages':packages, 'include_files':includefiles, 'build_exe':'../distrib/outwiker_win'}},
 	executables = [Executable("runoutwiker.py", base = 'Win32GUI', icon = "images/outwiker.ico", targetName="outwiker.exe")])
 
