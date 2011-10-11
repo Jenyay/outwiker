@@ -108,6 +108,7 @@ class HtmlGenerator (object):
 		content.append (pagecontent)
 
 		self.__getDirContent (self.page, content)
+		content.append (self.__getPluginsList())
 
 		# Настройки, касающиеся вида вики-страницы
 		content.append (str (self.config.showAttachInsteadBlankOptions.value))
@@ -128,6 +129,20 @@ class HtmlGenerator (object):
 			content.append (emptycontent.content.encode ("unicode_escape"))
 
 		return u"".join (content)
+
+
+	def __getPluginsList (self):
+		"""
+		Создать список плагинов с учетом номеров версий
+		Возвращает строку
+		"""
+		if len (Application.plugins) == 0:
+			return u""
+
+		plugins = [plugin.name + plugin.version for plugin in Application.plugins]
+		plugins.sort()
+		result = reduce (lambda x, y: x + y, plugins)
+		return result
 
 
 	def __getDirContent (self, page, filescontent, dirname="."):

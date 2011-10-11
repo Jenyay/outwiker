@@ -278,3 +278,50 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
 			result = unicode (fp.read(), "utf8")
 
 		self.assertTrue (u"image.jpg" in result)
+
+
+	def testCacheLoadPlugins1 (self):
+		"""
+		Проверка на то, что при изменении списка установленных плагинов не работает кэширование
+		"""
+		# Только создали страницу, кешировать нельзя
+		generator = HtmlGenerator (self.testPage)
+		self.assertFalse (generator.canReadFromCache())
+
+		generator.makeHtml ()
+		# После того, как один раз сгенерили страницу, если ничего не изменилось, можно кешировать
+		self.assertTrue (generator.canReadFromCache())
+
+		# Загрузили плагин. Кэш не должен сработать
+		Application.plugins.load ([u"../plugins/testempty1"])
+		self.assertFalse (generator.canReadFromCache())
+
+		# Загрузили еще один плагин
+		Application.plugins.load ([u"../plugins/testempty2"])
+		self.assertFalse (generator.canReadFromCache())
+
+
+	def testCacheLoadPlugins2 (self):
+		"""
+		Проверка на то, что при изменении списка установленных плагинов не работает кэширование
+		"""
+		Application.plugins.clear()
+		Application.plugins.load ([u"../plugins/testempty1"])
+		Application.plugins.load ([u"../plugins/testempty2"])
+
+		# Только создали страницу, кешировать нельзя
+		generator = HtmlGenerator (self.testPage)
+		self.assertFalse (generator.canReadFromCache())
+
+		generator.makeHtml ()
+
+		Application.plugins.clear()
+
+		self.assertFalse (generator.canReadFromCache())
+		
+		# Перезагрузим плагины в другом порядке
+		Application.plugins.load ([u"../plugins/testempty1"])
+		Application.plugins.load ([u"../plugins/testempty2"])
+
+		self.assertEqual (len (Application.plugins), 2)
+		self.assertTrue (generator.canReadFromCache())
