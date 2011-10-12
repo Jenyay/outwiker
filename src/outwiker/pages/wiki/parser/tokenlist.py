@@ -3,6 +3,7 @@
 
 from outwiker.libs.pyparsing import Regex, LineStart, LineEnd, OneOrMore
 from outwiker.pages.wiki.parser.utils import noConvert
+import re
 
 class ListFactory (object):
 	@staticmethod
@@ -36,7 +37,7 @@ class ListToken (object):
 	def __addDeeperLevel (self, depth, item, currItem):
 		"""
 		Создать список более глубокого уровня
-		depth - разница между новым урвонем и текущим
+		depth - разница между новым уровнем и текущим
 		item - разобранный элемент строки
 		currItem - список вложенных списков (их первых символов для определения типа)
 		"""
@@ -77,6 +78,34 @@ class ListToken (object):
 		"""
 		Преобразовать список элементов списка в HTML-список (возможно, вложенный)
 		"""
+		splitItems = self.__splitLists (items)
+		lists = [self.__generateListForItems (currentItems) for currentItems in splitItems]
+
+		return u"".join (lists)
+
+
+	def __splitLists (self, items):
+		"""
+		Разделить массив items на несколько массивов по тем элементам, где в конце есть утроенные переводы строк
+		"""
+		# Массив массивов
+		splitItems = [[]]
+		for item in items:
+			if len (item.strip()) == 0:
+				continue
+
+			splitItems[-1].append (item)
+
+			procItem = item.replace ("\r\n", "\n")
+			if len (splitItems) == 0 or procItem.endswith ("\n\n\n"):
+				splitItems.append ([])
+
+
+		return splitItems
+
+
+
+	def __generateListForItems (self, items):
 		currLevel = 0
 		currItem = []
 
@@ -85,6 +114,7 @@ class ListToken (object):
 		for item in items:
 			if len (item.strip()) == 0:
 				continue
+			#print item
 
 			level = self.__getListLevel (item, self.allListsParams)
 
@@ -121,14 +151,14 @@ class ListToken (object):
 
 
 	def getToken (self):
-		regex = "(?P<level>["
+		regex = "^(?P<level>["
 
 		for param in self.allListsParams:
 			regex += param.symbol
 
-		regex += "]+) *(?P<item>.*)"
+		regex += "]+) *(?P<item>.*?)$[\r\n]*"
 
-		item =  LineStart() + Regex (regex).setParseAction (noConvert) + LineEnd()
+		item =  Regex (regex, re.MULTILINE).setParseAction (noConvert)
 
 		fullList = OneOrMore (item).setParseAction (self.__convertList)
 

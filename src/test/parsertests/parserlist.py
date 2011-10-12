@@ -127,3 +127,59 @@ class ParserListTest (unittest.TestCase):
 		result = u'<UL><LI>Строка 1</LI><LI>Строка 2</LI><UL><LI>Строка 3</LI></UL></UL><OL><LI>Строка 4</LI><LI>Строка 5</LI><LI>Строка 6</LI><LI>Строка 7</LI></OL>'
 
 		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+	def testManyUnorderList1 (self):
+		text = u"""бла-бла-бла
+		
+*Строка 1
+* Строка 2
+
+
+* Строка 3
+
+бла-бла-бла"""
+		result = u"""бла-бла-бла
+		
+<UL><LI>Строка 1</LI><LI>Строка 2</LI></UL><UL><LI>Строка 3</LI></UL>бла-бла-бла"""
+
+		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text))
+
+
+	
+	def testManyOrderList1 (self):
+		text = u"""бла-бла-бла
+		
+#Строка 1
+# Строка 2
+
+
+# Строка 3
+
+бла-бла-бла"""
+		result = u"""бла-бла-бла
+		
+<OL><LI>Строка 1</LI><LI>Строка 2</LI></OL><OL><LI>Строка 3</LI></OL>бла-бла-бла"""
+
+		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text))
+
+
+	def testManyUnorderList2 (self):
+		text = u"бла-бла-бла \n\n*Строка 1\n\n* Строка 2\n\n\n** Строка 3\nбла-бла-бла"
+		result = u'бла-бла-бла \n\n<UL><LI>Строка 1</LI><LI>Строка 2</LI></UL><UL><UL><LI>Строка 3</LI></UL></UL>бла-бла-бла'
+
+		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+	def testManyOrderList2 (self):
+		text = u"бла-бла-бла \n\n#Строка 1\n\n# Строка 2\n\n\n## Строка 3\nбла-бла-бла"
+		result = u'бла-бла-бла \n\n<OL><LI>Строка 1</LI><LI>Строка 2</LI></OL><OL><OL><LI>Строка 3</LI></OL></OL>бла-бла-бла'
+
+		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+	def testManyList1 (self):
+		text = u"бла-бла-бла \n\n#Строка 1\n\n# Строка 2\n\n\n** Строка 3\nбла-бла-бла"
+		result = u'бла-бла-бла \n\n<OL><LI>Строка 1</LI><LI>Строка 2</LI></OL><UL><UL><LI>Строка 3</LI></UL></UL>бла-бла-бла'
+
+		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
