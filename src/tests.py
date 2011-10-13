@@ -4,7 +4,6 @@
 """
 Unit-тесты
 """
-import gettext
 import os
 
 import wx

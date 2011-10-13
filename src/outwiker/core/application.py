@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 #-*- coding: utf-8 -*-
 
-import gettext
-
 from .i18n import init_i18n
 from .config import Config, getConfigPath
 from .event import Event

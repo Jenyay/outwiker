@@ -1,17 +1,44 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
+import os.path
+import gettext
+
 import wx
+
 from outwiker.core.commands import MessageBox
+from outwiker.gui.guiconfig import GeneralGuiConfig
 
 
 class PluginDebug (object):
 	def __init__ (self, application):
 		self.__application = application
 
+		try:
+			self.__init_i18n ()
+		except BaseException as e:
+			print e
+			raise
+
 		self.ID_PLUGINSLIST = wx.NewId()
 
 		self.__createMenu()
+
+
+	def __init_i18n (self):
+		langdir = os.path.join (os.path.dirname (__file__), u'locale')
+
+		generalConfig = GeneralGuiConfig (self.__application.config)
+		language = generalConfig.languageOption.value
+
+		global _
+
+		try:
+			lang = gettext.translation(u'testdebug', langdir, languages=[language])
+		except IOError:
+			lang = gettext.translation(u'testdebug', langdir, languages=["en"])
+
+		_ = lang.ugettext
 
 
 	def __createMenu (self):
