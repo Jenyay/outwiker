@@ -146,4 +146,4 @@ def getPluginsDirList ():
 
 
 def getDefaultLanguage ():
-	return locale.getdefaultlocale (locale.LC_ALL)[0]
+	return locale.getdefaultlocale ()[0]
