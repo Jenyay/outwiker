@@ -143,3 +143,7 @@ def getTemplatesDir ():
 
 def getPluginsDirList ():
 	return [os.path.join (getCurrentDir(), "plugins")]
+
+
+def getDefaultLanguage ():
+	return locale.getdefaultlocale (locale.LC_ALL)[0]
