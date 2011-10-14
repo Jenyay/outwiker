@@ -1,9 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
+import os
+
 import wx
 
 from outwiker.core.config import StringOption, BooleanOption, IntegerOption
+
 
 class GeneralGuiConfig (object):
 	"""
@@ -12,10 +15,33 @@ class GeneralGuiConfig (object):
 	def __init__ (self, config):
 		self.config = config
 
-		self.languageOption = StringOption (self.config, u"General", u"language", u"en")
+		self.languageOption = StringOption (self.config, u"General", u"language", self.__getDefaultLang())
 		self.askBeforeExitOption = BooleanOption (self.config, u"General", u"AskBeforeExit", True)
 		self.historyLengthOption = IntegerOption (self.config, u"RecentWiki", u"maxcount", 5)
 		self.autoopenOption = BooleanOption (self.config, u"RecentWiki", u"AutoOpen", False)
+
+
+	def __getDefaultLang (self):
+		"""
+		Получить язык по умолчанию
+		"""
+		langs = self.__getSystemLanguages ()
+		if len (langs) != 0:
+			return langs[0]
+
+		return "en"
+
+
+	def __getSystemLanguages (self):
+		"""
+		Получить список языков в системе (работает только под Linux)
+		"""
+		langs = []
+		langsStr = os.environ.get('LANGUAGE', None)
+		if langsStr:
+			langs += langsStr.split(":")
+
+		return langs
 
 
 class TrayConfig (object):

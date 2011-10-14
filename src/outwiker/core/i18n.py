@@ -6,18 +6,38 @@ import os.path
 import gettext
 
 from .system import getCurrentDir
+from outwiker.gui.guiconfig import GeneralGuiConfig
 
 
 def init_i18n (language):
 	langdir = os.path.join (getCurrentDir(), u'locale')
 
+	lang = loadLanguage (language, langdir, u"outwiker")
+	lang.install(unicode=1)
+
+
+def loadLanguage (language, langdir, domain):
+	"""
+	Загрузить язык из указанной директории
+	"""
+	gettext.bindtextdomain (domain, langdir)
+	gettext.textdomain (domain)
+
 	try:
-		lang = gettext.translation(u'outwiker', langdir, languages=[language])
-		lang.install(unicode=1)
+		lang = gettext.translation(domain, langdir, languages=[language])
 	except IOError:
-		lang = gettext.translation(u'outwiker', langdir, languages=["en"])
-		lang.install(unicode=1)
-		raise
+		lang = gettext.translation(domain, langdir, languages=["en"])
+		
+	return lang
+
+
+def getLanguageFromConfig (config):
+	"""
+	Прочитать настройку языка из конфига
+	"""
+	generalConfig = GeneralGuiConfig (config)
+	language = generalConfig.languageOption.value
+	return language
 
 
 def isLangDir (root, folder):

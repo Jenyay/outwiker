@@ -1,12 +1,11 @@
 #!/usr/bin/env python
 #-*- coding: utf-8 -*-
 
-from .i18n import init_i18n
+from .i18n import init_i18n, getLanguageFromConfig
 from .config import Config, getConfigPath
 from .event import Event
 from .recent import RecentWiki
 from .pluginsloader import PluginsLoader
-from outwiker.gui.guiconfig import GeneralGuiConfig
 
 
 class ApplicationParams (object):
@@ -185,12 +184,11 @@ class ApplicationParams (object):
 
 
 	def __initLocale (self):
-		generalConfig = GeneralGuiConfig (self.config)
-		language = generalConfig.languageOption.value
+		language = getLanguageFromConfig (self.config)
 
 		try:
 			init_i18n (language)
-		except IOError, e:
+		except IOError:
 			print u"Can't load language: %s" % language
 
 

@@ -7,7 +7,7 @@ import gettext
 import wx
 
 from outwiker.core.commands import MessageBox
-from outwiker.gui.guiconfig import GeneralGuiConfig
+from outwiker.core.i18n import getLanguageFromConfig
 
 
 class PluginDebug (object):
@@ -27,9 +27,7 @@ class PluginDebug (object):
 
 	def __init_i18n (self):
 		langdir = os.path.join (os.path.dirname (__file__), u'locale')
-
-		generalConfig = GeneralGuiConfig (self.__application.config)
-		language = generalConfig.languageOption.value
+		language =  getLanguageFromConfig (self.__application.config)
 
 		global _
 
