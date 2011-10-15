@@ -305,7 +305,6 @@ class MainWindow(wx.Frame):
 			
 			self.taskBarIcon.Destroy()
 			self.controller.destroy()
-			#self.__unbindAppEvents()
 
 			self.Destroy()
 		else:

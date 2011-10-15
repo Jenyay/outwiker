@@ -34,6 +34,7 @@ class OutWiker(wx.App):
 		if exepath.endswith (u".exe"):
 			# Закоментировать следующую строку, если не надо выводить strout/strerr в лог-файл
 			self.RedirectStdio (self.getLogFileName (self._configFileName))
+			pass
 
 		from outwiker.gui.MainWindow import MainWindow
 		
