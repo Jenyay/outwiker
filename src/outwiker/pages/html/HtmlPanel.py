@@ -163,6 +163,7 @@ class HtmlPanel(BaseTextPanel):
 		"""
 		Обработка события при переключении на код страницы
 		"""
+		self.checkForExternalEditAndSave()
 		self._enableTools (self.pageToolsMenu, True)
 		self.codeEditor.SetFocus()
 

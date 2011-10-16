@@ -7,6 +7,7 @@ import os.path
 import wx
 
 import outwiker.core.commands
+from outwiker.core.event import Event
 
 
 class BasePagePanel (wx.Panel):
@@ -20,6 +21,10 @@ class BasePagePanel (wx.Panel):
 		wx.Panel.__init__(self, parent, *args, **kwds)
 
 		self._currentpage = None
+
+		# Событие, срабатывающее, когда устанавливается новая страница
+		# Параметр: новая страница
+		self._onSetPage = Event ()
 
 
 	###############################################
@@ -60,9 +65,9 @@ class BasePagePanel (wx.Panel):
 	##################################################
 
 
-	###############################################################################################
+	#############################################################################################
 	# Методы, которые в базовом классе ничего не делают, но которые может понадобиться перегрузить
-	###############################################################################################
+	#############################################################################################
 
 	def onAttachmentPaste (self, fnames):
 		"""
@@ -95,6 +100,7 @@ class BasePagePanel (wx.Panel):
 					_("Error"), wx.OR | wx.ICON_ERROR )
 			return
 
+		self._onSetPage (page)
 		self.UpdateView (page)
 
 

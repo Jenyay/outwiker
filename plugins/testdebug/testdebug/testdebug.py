@@ -8,6 +8,7 @@ import wx
 
 from outwiker.core.commands import MessageBox
 from outwiker.core.i18n import getLanguageFromConfig
+from outwiker.gui.buttonsdialog import ButtonsDialog
 
 
 class PluginDebug (object):
@@ -21,6 +22,7 @@ class PluginDebug (object):
 			raise
 
 		self.ID_PLUGINSLIST = wx.NewId()
+		self.ID_BUTTONSDIALOG = wx.NewId()
 
 		self.__createMenu()
 
@@ -42,10 +44,23 @@ class PluginDebug (object):
 	def __createMenu (self):
 		self.menu = wx.Menu (u"")
 		self.menu.Append (self.ID_PLUGINSLIST, _(u"Plugins List"))
+		self.menu.Append (self.ID_BUTTONSDIALOG, _(u"ButtonsDialog"))
 
 		self.__application.mainWindow.mainMenu.Append (self.menu, _(u"Debug"))
 
 		self.__application.mainWindow.Bind(wx.EVT_MENU, self.__onPluginsList, id=self.ID_PLUGINSLIST)
+		self.__application.mainWindow.Bind(wx.EVT_MENU, self.__onButtonsDialog, id=self.ID_BUTTONSDIALOG)
+
+
+	def __onButtonsDialog (self, event):
+		buttons = [_(u"Button 1"), _(u"Button 2"), _(u"Button 3"), _(u"Cancel")]
+		with ButtonsDialog (self.__application.mainWindow, _(u"Message"), _(u"Caption"), buttons, default=0, cancel=3) as dlg:
+			result = dlg.ShowModal()
+
+			if result == wx.ID_CANCEL:
+				print u"Cancel"
+			else:
+				print result
 
 
 	def __onPluginsList (self, event):

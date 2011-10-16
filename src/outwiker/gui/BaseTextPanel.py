@@ -7,9 +7,10 @@ import os
 import wx
 
 import outwiker.core.system
-import outwiker.core.commands
+from outwiker.core.commands import MessageBox
 from outwiker.core.attachment import Attachment
 from outwiker.core.application import Application
+from outwiker.gui.buttonsdialog import ButtonsDialog
 from .basepagepanel import BasePagePanel
 
 
@@ -41,6 +42,14 @@ class BaseTextPanel (BasePagePanel):
 		self.mainWindow = Application.mainWindow
 		self.searchMenu = None
 
+		# Предыдущее сохраненное состояние. 
+		# Используется для выявления изменения страницы внешними средствами
+		self._oldContent = None
+
+		# Диалог, который показывается, если страница изменена сторонними программами.
+		# Используется для проверки того, что диалог уже показан и еще раз его показывать не надо
+		self.externalEditDialog = None
+
 		self.ID_SEARCH = wx.NewId()
 		self.ID_SEARCH_NEXT = wx.NewId()
 		self.ID_SEARCH_PREV = wx.NewId()
@@ -54,6 +63,16 @@ class BaseTextPanel (BasePagePanel):
 		Application.onAttachmentPaste += self.onAttachmentPaste
 		Application.onEditorConfigChange += self.onEditorConfigChange
 		Application.onForceSave += self.onForceSave
+
+		self._onSetPage += self.__onSetPage
+
+
+	def __onSetPage (self, page):
+		self.__updateOldContent()
+
+
+	def __updateOldContent (self):
+		self._oldContent = self.page.content
 
 
 	def onForceSave (self):
@@ -73,16 +92,80 @@ class BaseTextPanel (BasePagePanel):
 
 		if not os.path.exists (self.page.path) and not self.page.isRemoved:
 			# Похоже, страница удалена вручную
-			outwiker.core.commands.MessageBox (_(u"Page %s not found. It is recommended to update the wiki") % self.page.title,
+			MessageBox (_(u"Page %s not found. It is recommended to update the wiki") % self.page.title,
 					_("Error"), wx.OR | wx.ICON_ERROR )
 			return
 
-		if self.page != None and not self.page.isRemoved and not self.page.readonly:
+		self.checkForExternalEditAndSave()
+
+
+	def checkForExternalEditAndSave (self):
+		"""
+		Проверить, что страница не изменена внешними средствами
+		"""
+		if self._oldContent != None and self._oldContent != self.page.content:
+			# Старое содержимое не совпадает с содержимым страницы.
+			# Значит содержимое страницы кто-то изменил
+			self.__externalEdit()
+		else:
+			self._savePageContent(self.page)
+			self.__updateOldContent()
+
+
+	def __externalEdit (self):
+		"""
+		Спросить у пользователя, что делать, если страница изменилась внешними средствами
+		"""
+		if self.externalEditDialog == None:
+			result = self.__showExternalEditDialog()
+
+			if result == 0:
+				# Перезаписать
+				self._savePageContent(self.page)
+				self.__updateOldContent()
+			elif result == 1:
+				# Перезагрузить
+				self.__updateOldContent()
+				self.UpdateView(self.page)
+
+	
+	def __showExternalEditDialog (self):
+		"""
+		Показать диалог о том, что страница изменена сторонними программами и вернуть результат диалога:
+		0 - перезаписать
+		1 - перезагрузить
+		2 - ничего не делать
+		"""
+		buttons = [_(u"Overwrite"), _("Load"), _("Cancel")]
+
+		message = _(u"Page: %s.\nContent is changed of external program") % self.page.title
+		self.externalEditDialog = ButtonsDialog (self, 
+				message,
+				_(u"Owerwrite?"),
+				buttons,
+				default = 0,
+				cancel = 2)
+		
+		result = self.externalEditDialog.ShowModal()
+		self.externalEditDialog.Destroy()
+		self.externalEditDialog = None
+
+		return result
+
+
+	def _savePageContent (self, page):
+		"""
+		Сохранение содержимого страницы
+		"""
+		if (page != None and 
+				not page.isRemoved and 
+				not page.readonly and
+				page.content != self.GetContentFromGui()):
 			try:
-				self.page.content = self.GetContentFromGui()
+				page.content = self.GetContentFromGui()
 			except IOError as e:
 				# TODO: Проверить под Windows
-				outwiker.core.commands.MessageBox (_(u"Can't save file %s") % (unicode (e.filename)), 
+				MessageBox (_(u"Can't save file %s") % (unicode (e.filename)), 
 					_(u"Error"), 
 					wx.ICON_ERROR | wx.OK)
 	
@@ -109,6 +192,7 @@ class BaseTextPanel (BasePagePanel):
 		Application.onAttachmentPaste -= self.onAttachmentPaste
 		Application.onEditorConfigChange -= self.onEditorConfigChange
 		Application.onForceSave -= self.onForceSave
+		self._onSetPage -= self.__onSetPage
 
 		self.removeGui()
 

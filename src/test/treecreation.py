@@ -74,8 +74,8 @@ class TextPageCreationTest(unittest.TestCase):
 		self.assertEqual (self.eventcount, 1)
 
 		# То же самое содержимое
-		self.rootwiki[u"Страница 1"].content = u"тарам-там-там"
-		self.assertEqual (self.eventcount, 1)
+		#self.rootwiki[u"Страница 1"].content = u"тарам-там-там"
+		#self.assertEqual (self.eventcount, 1)
 
 		Application.onPageUpdate -= self.onPageUpdate
 

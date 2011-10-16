@@ -748,13 +748,13 @@ class WikiPage (RootWikiPage):
 		if self.readonly:
 			raise ReadonlyException
 
-		if text != self.content:
-			path = os.path.join (self.path, RootWikiPage.contentFile)
+		#if text != self.content:
+		path = os.path.join (self.path, RootWikiPage.contentFile)
 
-			with open (path, "wb") as fp:
-				fp.write (text.encode ("utf8"))
+		with open (path, "wb") as fp:
+			fp.write (text.encode ("utf8"))
 
-			self.root.onPageUpdate(self)
+		self.root.onPageUpdate(self)
 	
 
 	@property
