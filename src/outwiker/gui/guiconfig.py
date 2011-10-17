@@ -18,6 +18,10 @@ class GeneralGuiConfig (object):
 
 		self.languageOption = StringOption (self.config, u"General", u"language", getDefaultLanguage())
 		self.askBeforeExitOption = BooleanOption (self.config, u"General", u"AskBeforeExit", True)
+
+		# Интервал, через которое происходит автосохранение страницы. Если значение <= 0, значит автосохранение отключено
+		self.AutosaveIntervalOption = IntegerOption (self.config, u"General", u"AutosaveInterval", 5)
+
 		self.historyLengthOption = IntegerOption (self.config, u"RecentWiki", u"maxcount", 5)
 		self.autoopenOption = BooleanOption (self.config, u"RecentWiki", u"AutoOpen", False)
 
