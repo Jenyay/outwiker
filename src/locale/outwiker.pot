@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-16 21:36+0400\n"
+"POT-Creation-Date: 2011-10-17 22:21+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -647,42 +647,46 @@ msgstr ""
 msgid "Tab width"
 msgstr ""
 
-#: outwiker/gui/preferences/GeneralPanel.py:24
-msgid "Minimize to tray"
+#: outwiker/gui/preferences/GeneralPanel.py:50
+msgid "Autosave interval in seconds (0 - disabled)"
 msgstr ""
 
-#: outwiker/gui/preferences/GeneralPanel.py:25
-msgid "Start iconized"
-msgstr ""
-
-#: outwiker/gui/preferences/GeneralPanel.py:26
-msgid "Always show tray icon"
-msgstr ""
-
-#: outwiker/gui/preferences/GeneralPanel.py:27
+#: outwiker/gui/preferences/GeneralPanel.py:64
 msgid "Ask before exit"
 msgstr ""
 
-#: outwiker/gui/preferences/GeneralPanel.py:29
-msgid "Recent files history length (restart required)"
-msgstr ""
-
-#: outwiker/gui/preferences/GeneralPanel.py:31
+#: outwiker/gui/preferences/GeneralPanel.py:65
 msgid "Automatically open the recent file"
 msgstr ""
 
-#: outwiker/gui/preferences/GeneralPanel.py:33
-msgid "Main window title format"
+#: outwiker/gui/preferences/GeneralPanel.py:72
+msgid "Minimize to tray"
 msgstr ""
 
-#: outwiker/gui/preferences/GeneralPanel.py:35
+#: outwiker/gui/preferences/GeneralPanel.py:73
+msgid "Start iconized"
+msgstr ""
+
+#: outwiker/gui/preferences/GeneralPanel.py:74
+msgid "Always show tray icon"
+msgstr ""
+
+#: outwiker/gui/preferences/GeneralPanel.py:81
+msgid "Recent files history length (restart required)"
+msgstr ""
+
+#: outwiker/gui/preferences/GeneralPanel.py:95
 msgid ""
 "Macros for title:\n"
 "{file} - open wiki file name\n"
 "{page} - open page title"
 msgstr ""
 
-#: outwiker/gui/preferences/GeneralPanel.py:37
+#: outwiker/gui/preferences/GeneralPanel.py:97
+msgid "Main window title format"
+msgstr ""
+
+#: outwiker/gui/preferences/GeneralPanel.py:109
 msgid "Language (restart required)"
 msgstr ""
 

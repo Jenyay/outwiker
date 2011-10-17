@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-16 21:36+0400\n"
+"POT-Creation-Date: 2011-10-17 22:21+0400\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -704,35 +704,35 @@ msgstr "Show line numbers"
 msgid "Tab width"
 msgstr "Tab width"
 
-#: outwiker/gui/preferences/GeneralPanel.py:24
-msgid "Minimize to tray"
-msgstr "Minimize to tray"
+#: outwiker/gui/preferences/GeneralPanel.py:50
+msgid "Autosave interval in seconds (0 - disabled)"
+msgstr "Autosave interval in seconds (0 - disabled)"
 
-#: outwiker/gui/preferences/GeneralPanel.py:25
-msgid "Start iconized"
-msgstr "Start iconized"
-
-#: outwiker/gui/preferences/GeneralPanel.py:26
-msgid "Always show tray icon"
-msgstr "Always show tray icon"
-
-#: outwiker/gui/preferences/GeneralPanel.py:27
+#: outwiker/gui/preferences/GeneralPanel.py:64
 msgid "Ask before exit"
 msgstr "Ask before exit"
 
-#: outwiker/gui/preferences/GeneralPanel.py:29
-msgid "Recent files history length (restart required)"
-msgstr "Recent files history length (restart required)"
-
-#: outwiker/gui/preferences/GeneralPanel.py:31
+#: outwiker/gui/preferences/GeneralPanel.py:65
 msgid "Automatically open the recent file"
 msgstr "Automatically open the recent file"
 
-#: outwiker/gui/preferences/GeneralPanel.py:33
-msgid "Main window title format"
-msgstr "Main window title format"
+#: outwiker/gui/preferences/GeneralPanel.py:72
+msgid "Minimize to tray"
+msgstr "Minimize to tray"
 
-#: outwiker/gui/preferences/GeneralPanel.py:35
+#: outwiker/gui/preferences/GeneralPanel.py:73
+msgid "Start iconized"
+msgstr "Start iconized"
+
+#: outwiker/gui/preferences/GeneralPanel.py:74
+msgid "Always show tray icon"
+msgstr "Always show tray icon"
+
+#: outwiker/gui/preferences/GeneralPanel.py:81
+msgid "Recent files history length (restart required)"
+msgstr "Recent files history length (restart required)"
+
+#: outwiker/gui/preferences/GeneralPanel.py:95
 msgid ""
 "Macros for title:\n"
 "{file} - open wiki file name\n"
@@ -742,7 +742,11 @@ msgstr ""
 "{file} - open wiki file name\n"
 "{page} - open page title"
 
-#: outwiker/gui/preferences/GeneralPanel.py:37
+#: outwiker/gui/preferences/GeneralPanel.py:97
+msgid "Main window title format"
+msgstr "Main window title format"
+
+#: outwiker/gui/preferences/GeneralPanel.py:109
 msgid "Language (restart required)"
 msgstr "Language (restart required)"
 

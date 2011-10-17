@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-16 21:36+0400\n"
+"POT-Creation-Date: 2011-10-17 22:21+0400\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -702,35 +702,35 @@ msgstr "Показывать номера строк"
 msgid "Tab width"
 msgstr "Размер табуляции"
 
-#: outwiker/gui/preferences/GeneralPanel.py:24
-msgid "Minimize to tray"
-msgstr "Сворачивать в трей"
+#: outwiker/gui/preferences/GeneralPanel.py:50
+msgid "Autosave interval in seconds (0 - disabled)"
+msgstr "Интервал автосохранения (0 - отключено)"
 
-#: outwiker/gui/preferences/GeneralPanel.py:25
-msgid "Start iconized"
-msgstr "Запускаться свернутым в трей"
-
-#: outwiker/gui/preferences/GeneralPanel.py:26
-msgid "Always show tray icon"
-msgstr "Всегда показывать иконку в трее"
-
-#: outwiker/gui/preferences/GeneralPanel.py:27
+#: outwiker/gui/preferences/GeneralPanel.py:64
 msgid "Ask before exit"
 msgstr "Спрашивать подтверждение перед выходом"
 
-#: outwiker/gui/preferences/GeneralPanel.py:29
-msgid "Recent files history length (restart required)"
-msgstr "Длина истории открытых файлов (требуется перезапуск)"
-
-#: outwiker/gui/preferences/GeneralPanel.py:31
+#: outwiker/gui/preferences/GeneralPanel.py:65
 msgid "Automatically open the recent file"
 msgstr "При запуске открывать последний открытый файл"
 
-#: outwiker/gui/preferences/GeneralPanel.py:33
-msgid "Main window title format"
-msgstr "Формат заголовка главного окна"
+#: outwiker/gui/preferences/GeneralPanel.py:72
+msgid "Minimize to tray"
+msgstr "Сворачивать в трей"
 
-#: outwiker/gui/preferences/GeneralPanel.py:35
+#: outwiker/gui/preferences/GeneralPanel.py:73
+msgid "Start iconized"
+msgstr "Запускаться свернутым в трей"
+
+#: outwiker/gui/preferences/GeneralPanel.py:74
+msgid "Always show tray icon"
+msgstr "Всегда показывать иконку в трее"
+
+#: outwiker/gui/preferences/GeneralPanel.py:81
+msgid "Recent files history length (restart required)"
+msgstr "Длина истории открытых файлов (требуется перезапуск)"
+
+#: outwiker/gui/preferences/GeneralPanel.py:95
 msgid ""
 "Macros for title:\n"
 "{file} - open wiki file name\n"
@@ -740,7 +740,11 @@ msgstr ""
 "{file} - имя файла открытой вики\n"
 "{page} - заголовок открытой страницы"
 
-#: outwiker/gui/preferences/GeneralPanel.py:37
+#: outwiker/gui/preferences/GeneralPanel.py:97
+msgid "Main window title format"
+msgstr "Формат заголовка главного окна"
+
+#: outwiker/gui/preferences/GeneralPanel.py:109
 msgid "Language (restart required)"
 msgstr "Язык (требуется перезапуск)"
 

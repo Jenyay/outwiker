@@ -20,6 +20,7 @@ class GeneralPanel (wx.ScrolledWindow):
 		self.__createLanguageGui()
 		self.__createTrayGui()
 		self.__createMiscGui()
+		self.__createAutosaveGui()
 
 		self.__set_properties()
 		self.__do_layout()
@@ -40,6 +41,20 @@ class GeneralPanel (wx.ScrolledWindow):
 		self.SetScrollRate(0, 0)
 		self.askBeforeExitCheckBox.SetValue(1)
 		self.langCombo.SetMinSize((130, -1))
+
+
+	def __createAutosaveGui (self):
+		"""
+		Создать элементы, связанные с автосохранением
+		"""
+		autosaveLabel = wx.StaticText(self, -1, _("Autosave interval in seconds (0 - disabled)"))
+		self.autosaveSpin = wx.SpinCtrl(self, -1, "5", min=0, max=20, style=wx.SP_ARROW_KEYS|wx.TE_PROCESS_ENTER|wx.TE_PROCESS_TAB|wx.TE_AUTO_URL)
+		self.autosaveSizer = wx.FlexGridSizer(1, 2, 0, 0)
+		self.autosaveSizer.Add(autosaveLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
+		self.autosaveSizer.Add(self.autosaveSpin, 0, wx.ALL|wx.ALIGN_RIGHT, 2)
+		self.autosaveSizer.AddGrowableRow(0)
+		self.autosaveSizer.AddGrowableCol(0)
+		self.autosaveSizer.AddGrowableCol(1)
 
 
 	def __createMiscGui (self):
@@ -63,10 +78,10 @@ class GeneralPanel (wx.ScrolledWindow):
 		"""
 		Создать элементы интерфейса, связанные с историей открытых файлов
 		"""
-		self.history_label = wx.StaticText(self, -1, _("Recent files history length (restart required)"))
+		history_label = wx.StaticText(self, -1, _("Recent files history length (restart required)"))
 		self.historySpin = wx.SpinCtrl(self, -1, "5", min=0, max=20, style=wx.SP_ARROW_KEYS|wx.TE_PROCESS_ENTER|wx.TE_PROCESS_TAB|wx.TE_AUTO_URL)
 		self.historySizer = wx.FlexGridSizer(1, 2, 0, 0)
-		self.historySizer.Add(self.history_label, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
+		self.historySizer.Add(history_label, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
 		self.historySizer.Add(self.historySpin, 0, wx.ALL|wx.ALIGN_RIGHT, 2)
 		self.historySizer.AddGrowableRow(0)
 		self.historySizer.AddGrowableCol(0)
@@ -114,6 +129,7 @@ class GeneralPanel (wx.ScrolledWindow):
 		main_sizer.Add(self.startIconizedCheckBox, 0, wx.ALL, 2)
 		main_sizer.Add(self.alwaysInTrayCheckBox, 0, wx.ALL, 2)
 		main_sizer.Add(self.askBeforeExitCheckBox, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
+		main_sizer.Add (self.autosaveSizer, 1, wx.EXPAND, 0)
 
 		self.__addStaticLine(main_sizer)
 		main_sizer.Add(self.historySizer, 1, wx.EXPAND, 0)
@@ -167,6 +183,9 @@ class GeneralPanel (wx.ScrolledWindow):
 		# Формат заголовка страницы
 		self.titleFormat = ConfigElements.StringElement (self.mainWindowConfig.titleFormatOption, self.titleFormatText)
 
+		# Автосохранение
+		self.autosaveInterval = ConfigElements.IntegerElement (self.generalConfig.autosaveIntervalOption, self.autosaveSpin, 0, 3600)
+
 		self.__loadLanguages()
 	
 
@@ -200,6 +219,7 @@ class GeneralPanel (wx.ScrolledWindow):
 		self.askBeforeExit.save()
 		self.historyLength.save()
 		self.autoopen.save()
+		self.autosaveInterval.save()
 		self.__saveLanguage()
 
 		if self.titleFormat.isValueChanged() or self.alwaysInTray.isValueChanged():
