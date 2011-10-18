@@ -52,15 +52,17 @@ class ButtonsDialog (wx.Dialog):
 
 
 	def __do_layout(self):
-		sizer_1 = wx.BoxSizer(wx.VERTICAL)
+		sizer_1 = wx.FlexGridSizer(2, 1)
+		sizer_1.AddGrowableCol(0)
+
 		sizer_2 = wx.BoxSizer(wx.HORIZONTAL)
 
-		sizer_1.Add(self.__textLabel, 0, wx.ALL | wx.EXPAND | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_CENTER_HORIZONTAL, 4)
+		sizer_1.Add(self.__textLabel, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_CENTER_HORIZONTAL, 4)
 		
 		for button in self.__buttons:
 			sizer_2.Add(button, 0, wx.ALL, 2)
 
-		sizer_1.Add(sizer_2, 1, wx.EXPAND|wx.ALIGN_CENTER_HORIZONTAL, 0)
+		sizer_1.Add(sizer_2, 0, wx.ALIGN_CENTER_HORIZONTAL, 0)
 		self.SetSizer(sizer_1)
 		sizer_1.Fit(self)
 		self.Layout()

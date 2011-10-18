@@ -7,6 +7,7 @@ import wx
 
 from outwiker.core.application import Application
 from .bookmarkscontroller import BookmarksController
+from .autosavetimer import AutosaveTimer
 from .mainid import MainId
 import outwiker.core.commands
 
@@ -37,7 +38,7 @@ class MainWndController (object):
 		self._recentId = {}
 
 		self.bookmarks = BookmarksController (self)
-
+		self.__autosaveTimer = AutosaveTimer (Application)
 
 		self.init()
 

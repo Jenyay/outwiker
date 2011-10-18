@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-17 22:21+0400\n"
+"POT-Creation-Date: 2011-10-18 22:20+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -135,7 +135,7 @@ msgstr ""
 #: outwiker/gui/BaseTextPanel.py:96 outwiker/gui/BaseTextPanel.py:169
 #: outwiker/gui/htmlrenderie.py:159 outwiker/gui/htmlrenderwebkit.py:198
 #: outwiker/gui/htmlrenderwx.py:106 outwiker/gui/MainWindow.py:275
-#: outwiker/gui/MainWindow.py:403 outwiker/gui/mainwndcontroller.py:115
+#: outwiker/gui/MainWindow.py:403 outwiker/gui/mainwndcontroller.py:116
 #: outwiker/gui/pagedialog.py:38 outwiker/gui/pagedialog.py:84
 #: outwiker/gui/pagedialog.py:103 outwiker/gui/pagedialog.py:130
 #: outwiker/gui/pagedialog.py:135 outwiker/gui/pagedialog.py:175
@@ -218,9 +218,7 @@ msgstr ""
 
 #: outwiker/gui/BaseTextPanel.py:141
 #, python-format
-msgid ""
-"Page: %s.\n"
-"Content is changed of external program"
+msgid "Page \"%s\" is changed by the external program"
 msgstr ""
 
 #: outwiker/gui/BaseTextPanel.py:144
@@ -510,7 +508,7 @@ msgstr ""
 msgid "Can't create page"
 msgstr ""
 
-#: outwiker/gui/mainwndcontroller.py:114
+#: outwiker/gui/mainwndcontroller.py:115
 #, python-format
 msgid ""
 "Can't add wiki to recent list.\n"
@@ -655,38 +653,38 @@ msgstr ""
 msgid "Ask before exit"
 msgstr ""
 
-#: outwiker/gui/preferences/GeneralPanel.py:65
-msgid "Automatically open the recent file"
-msgstr ""
-
-#: outwiker/gui/preferences/GeneralPanel.py:72
+#: outwiker/gui/preferences/GeneralPanel.py:71
 msgid "Minimize to tray"
 msgstr ""
 
-#: outwiker/gui/preferences/GeneralPanel.py:73
+#: outwiker/gui/preferences/GeneralPanel.py:72
 msgid "Start iconized"
 msgstr ""
 
-#: outwiker/gui/preferences/GeneralPanel.py:74
+#: outwiker/gui/preferences/GeneralPanel.py:73
 msgid "Always show tray icon"
 msgstr ""
 
-#: outwiker/gui/preferences/GeneralPanel.py:81
+#: outwiker/gui/preferences/GeneralPanel.py:80
 msgid "Recent files history length (restart required)"
 msgstr ""
 
-#: outwiker/gui/preferences/GeneralPanel.py:95
+#: outwiker/gui/preferences/GeneralPanel.py:82
+msgid "Automatically open the recent file"
+msgstr ""
+
+#: outwiker/gui/preferences/GeneralPanel.py:96
 msgid ""
 "Macros for title:\n"
 "{file} - open wiki file name\n"
 "{page} - open page title"
 msgstr ""
 
-#: outwiker/gui/preferences/GeneralPanel.py:97
+#: outwiker/gui/preferences/GeneralPanel.py:98
 msgid "Main window title format"
 msgstr ""
 
-#: outwiker/gui/preferences/GeneralPanel.py:109
+#: outwiker/gui/preferences/GeneralPanel.py:110
 msgid "Language (restart required)"
 msgstr ""
 
@@ -694,29 +692,29 @@ msgstr ""
 msgid "Additional styles (CSS):"
 msgstr ""
 
-#: outwiker/gui/preferences/PrefDialog.py:38
+#: outwiker/gui/preferences/PrefDialog.py:41
 msgid "Preferences"
 msgstr ""
 
-#: outwiker/gui/preferences/PrefDialog.py:67
+#: outwiker/gui/preferences/PrefDialog.py:70
 msgid "Interface"
 msgstr ""
 
-#: outwiker/gui/preferences/PrefDialog.py:68
+#: outwiker/gui/preferences/PrefDialog.py:71
 #: outwiker/pages/wiki/wikipage.py:70
 msgid "General"
 msgstr ""
 
-#: outwiker/gui/preferences/PrefDialog.py:69
+#: outwiker/gui/preferences/PrefDialog.py:72
 msgid "Editor"
 msgstr ""
 
-#: outwiker/gui/preferences/PrefDialog.py:70
+#: outwiker/gui/preferences/PrefDialog.py:73
 #: outwiker/pages/html/HtmlPanel.py:107
 msgid "Preview"
 msgstr ""
 
-#: outwiker/gui/preferences/PrefDialog.py:71
+#: outwiker/gui/preferences/PrefDialog.py:74
 msgid "Text Printout"
 msgstr ""
 

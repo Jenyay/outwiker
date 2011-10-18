@@ -138,7 +138,7 @@ class BaseTextPanel (BasePagePanel):
 		"""
 		buttons = [_(u"Overwrite"), _("Load"), _("Cancel")]
 
-		message = _(u"Page: %s.\nContent is changed of external program") % self.page.title
+		message = _(u'Page "%s" is changed by the external program') % self.page.title
 		self.externalEditDialog = ButtonsDialog (self, 
 				message,
 				_(u"Owerwrite?"),

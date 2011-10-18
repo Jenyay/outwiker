@@ -48,7 +48,7 @@ class GeneralPanel (wx.ScrolledWindow):
 		Создать элементы, связанные с автосохранением
 		"""
 		autosaveLabel = wx.StaticText(self, -1, _("Autosave interval in seconds (0 - disabled)"))
-		self.autosaveSpin = wx.SpinCtrl(self, -1, "5", min=0, max=20, style=wx.SP_ARROW_KEYS|wx.TE_PROCESS_ENTER|wx.TE_PROCESS_TAB|wx.TE_AUTO_URL)
+		self.autosaveSpin = wx.SpinCtrl(self, -1, "3", min=0, max=20, style=wx.SP_ARROW_KEYS|wx.TE_PROCESS_ENTER|wx.TE_PROCESS_TAB|wx.TE_AUTO_URL)
 		self.autosaveSizer = wx.FlexGridSizer(1, 2, 0, 0)
 		self.autosaveSizer.Add(autosaveLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
 		self.autosaveSizer.Add(self.autosaveSpin, 0, wx.ALL|wx.ALIGN_RIGHT, 2)
