@@ -9,6 +9,7 @@ import HtmlRenderPanel
 import TextPrintPanel
 from outwiker.core.exceptions import PreferencesException
 from outwiker.core.factoryselector import FactorySelector
+from outwiker.core.application import Application
 
 # begin wxGlade: dependencies
 # end wxGlade
@@ -31,6 +32,8 @@ class PrefDialog(wx.Dialog):
 		self.__createPages()
 		self.treeBook.Bind (wx.EVT_TREEBOOK_PAGE_CHANGING, self.onPageChanging)
 		self.treeBook.Bind (wx.EVT_TREEBOOK_PAGE_CHANGED, self.onPageChanged)
+
+		Application.onPreferencesDialogOpen (self)
 
 
 	def __set_properties(self):
@@ -111,18 +114,25 @@ class PrefDialog(wx.Dialog):
 		sizer.AddSpacer(0)
 		sizer.Add (buttonsSizer, 1, wx.ALIGN_RIGHT | wx.ALL, border = 4)
 
-		self.Bind (wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
+		self.Bind (wx.EVT_BUTTON, self.__onOk, id=wx.ID_OK)
+		self.Bind (wx.EVT_BUTTON, self.__onCancel, id=wx.ID_CANCEL)
 		
 		self.Layout()
 	
 
-	def onOk (self, event):
+	def __onOk (self, event):
 		try:
 			self.__saveCurrentPage()
 		except PreferencesException:
 			pass
 
+		Application.onPreferencesDialogClose(self)
 		self.EndModal (wx.ID_OK)
+
+
+	def __onCancel (self, event):
+		Application.onPreferencesDialogClose(self)
+		self.EndModal(wx.ID_CANCEL)
 	
 
 	def __saveCurrentPage (self):

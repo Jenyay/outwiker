@@ -426,9 +426,8 @@ class MainWindow(wx.Frame):
 
 
 	def __onPreferences(self, event):
-		dlg = PrefDialog (self)
-		dlg.ShowModal()
-		dlg.Destroy()
+		with PrefDialog (self) as dlg:
+			dlg.ShowModal()
 	
 
 	def __onViewTree(self, event):

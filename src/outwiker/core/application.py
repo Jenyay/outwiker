@@ -182,6 +182,14 @@ class ApplicationParams (object):
 		# Параметры: экземпляр Parser
 		self.onWikiParserPrepare = Event ()
 
+		# Событие вызывается, когда создается диалог с настройками
+		# Параметры: экземпляр класса outwiker.gui.preferences.PrefDialog
+		self.onPreferencesDialogOpen = Event()
+
+		# Событие вызывается, когда закрывается диалог с настройками
+		# Параметры: экземпляр класса outwiker.gui.preferences.PrefDialog
+		self.onPreferencesDialogClose = Event()
+
 
 	def __initLocale (self):
 		language = getLanguageFromConfig (self.config)
