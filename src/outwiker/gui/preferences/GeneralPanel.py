@@ -15,12 +15,12 @@ class GeneralPanel (wx.ScrolledWindow):
 		kwds["style"] = wx.TAB_TRAVERSAL
 		wx.ScrolledWindow.__init__(self, *args, **kwds)
 
-		self.__createHistoryGui()
-		self.__createTitleFormatGui()
-		self.__createLanguageGui()
 		self.__createTrayGui()
 		self.__createMiscGui()
 		self.__createAutosaveGui()
+		self.__createHistoryGui()
+		self.__createTitleFormatGui()
+		self.__createLanguageGui()
 
 		self.__set_properties()
 		self.__do_layout()
@@ -62,7 +62,6 @@ class GeneralPanel (wx.ScrolledWindow):
 		Создать элементы интерфейса, которые не попали ни в какую другую категорию
 		"""
 		self.askBeforeExitCheckBox = wx.CheckBox(self, -1, _("Ask before exit"))
-		self.autoopenCheckBox = wx.CheckBox(self, -1, _("Automatically open the recent file"))
 
 
 	def __createTrayGui (self):
@@ -80,6 +79,8 @@ class GeneralPanel (wx.ScrolledWindow):
 		"""
 		history_label = wx.StaticText(self, -1, _("Recent files history length (restart required)"))
 		self.historySpin = wx.SpinCtrl(self, -1, "5", min=0, max=20, style=wx.SP_ARROW_KEYS|wx.TE_PROCESS_ENTER|wx.TE_PROCESS_TAB|wx.TE_AUTO_URL)
+		self.autoopenCheckBox = wx.CheckBox(self, -1, _("Automatically open the recent file"))
+
 		self.historySizer = wx.FlexGridSizer(1, 2, 0, 0)
 		self.historySizer.Add(history_label, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
 		self.historySizer.Add(self.historySpin, 0, wx.ALL|wx.ALIGN_RIGHT, 2)
@@ -225,7 +226,6 @@ class GeneralPanel (wx.ScrolledWindow):
 		if self.titleFormat.isValueChanged() or self.alwaysInTray.isValueChanged():
 			self.alwaysInTray.save()
 			self.titleFormat.save()
-			Application.onMainWindowConfigChange()
 	
 
 	def __saveLanguage (self):

@@ -67,7 +67,7 @@ class HtmlPanel(BaseTextPanel):
 		return HtmlTextEditor
 
 	
-	def onEditorConfigChange (self):
+	def onPreferencesDialogClose (self, prefDialog):
 		self.codeEditor.setDefaultSettings()
 
 	

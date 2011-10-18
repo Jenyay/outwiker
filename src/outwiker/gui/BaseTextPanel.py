@@ -61,7 +61,7 @@ class BaseTextPanel (BasePagePanel):
 		self._addToolsItems ()
 
 		Application.onAttachmentPaste += self.onAttachmentPaste
-		Application.onEditorConfigChange += self.onEditorConfigChange
+		Application.onPreferencesDialogClose += self.onPreferencesDialogClose
 		Application.onForceSave += self.onForceSave
 
 		self._onSetPage += self.__onSetPage
@@ -79,7 +79,7 @@ class BaseTextPanel (BasePagePanel):
 		self.Save()
 
 	
-	def onEditorConfigChange (self):
+	def onPreferencesDialogClose (self, prefDialog):
 		pass
 	
 
@@ -190,7 +190,7 @@ class BaseTextPanel (BasePagePanel):
 		Убрать за собой
 		"""
 		Application.onAttachmentPaste -= self.onAttachmentPaste
-		Application.onEditorConfigChange -= self.onEditorConfigChange
+		Application.onPreferencesDialogClose -= self.onPreferencesDialogClose
 		Application.onForceSave -= self.onForceSave
 		self._onSetPage -= self.__onSetPage
 

@@ -22,7 +22,7 @@ class TextPanel (BaseTextPanel):
 		self.textEditor.Print()
 
 	
-	def onEditorConfigChange (self):
+	def onPreferencesDialogClose (self, prefDialog):
 		self.textEditor.setDefaultSettings()
 	
 

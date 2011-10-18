@@ -79,8 +79,6 @@ class EditorPanel(wx.Panel):
 		self.fontEditor.save()
 		self.tabWidth.save()
 
-		Application.onEditorConfigChange()
-
 
 # end of class EditorPanel
 

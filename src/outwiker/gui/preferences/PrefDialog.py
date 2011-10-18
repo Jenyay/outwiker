@@ -33,7 +33,7 @@ class PrefDialog(wx.Dialog):
 		self.treeBook.Bind (wx.EVT_TREEBOOK_PAGE_CHANGING, self.onPageChanging)
 		self.treeBook.Bind (wx.EVT_TREEBOOK_PAGE_CHANGED, self.onPageChanged)
 
-		Application.onPreferencesDialogOpen (self)
+		Application.onPreferencesDialogCreate (self)
 
 
 	def __set_properties(self):

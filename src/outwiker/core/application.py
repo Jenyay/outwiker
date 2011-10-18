@@ -161,14 +161,6 @@ class ApplicationParams (object):
 		# htmlView - окно, где будет представлен HTML
 		self.onHtmlRenderingEnd = Event()
 
-		# Изменение настроек редактора
-		# Параметры: нет
-		self.onEditorConfigChange = Event()
-
-		# Изменение настроек главного окна
-		# Параметры: нет
-		self.onMainWindowConfigChange = Event()
-
 		# Изменение порядка страниц
 		# Параметры: page - страница, положение которой изменили
 		self.onPageOrderChange = Event()
@@ -184,7 +176,7 @@ class ApplicationParams (object):
 
 		# Событие вызывается, когда создается диалог с настройками
 		# Параметры: экземпляр класса outwiker.gui.preferences.PrefDialog
-		self.onPreferencesDialogOpen = Event()
+		self.onPreferencesDialogCreate = Event()
 
 		# Событие вызывается, когда закрывается диалог с настройками
 		# Параметры: экземпляр класса outwiker.gui.preferences.PrefDialog

@@ -72,7 +72,6 @@ class HtmlRenderPanel(wx.Panel):
 		self.fontEditor.save()
 		self.userStyle.save()
 
-		#Application.onEditorConfigChange()
 
 # end of class HtmlRenderPanel
 

@@ -34,7 +34,7 @@ class TrayNormalTest(BaseMainWndTest):
 		self.wnd.taskBarIcon.config.minimizeOption.value = True
 		self.wnd.taskBarIcon.config.alwaysShowTrayIconOption.value = False
 		self.wnd.taskBarIcon.config.startIconizedOption.value = False
-		Application.onMainWindowConfigChange()
+		Application.onPreferencesDialogClose(None)
 		#self._processEvents()
 
 		self.wnd.Iconize(True)
@@ -54,7 +54,7 @@ class TrayNormalTest(BaseMainWndTest):
 		self.wnd.taskBarIcon.config.minimizeOption.value = False
 		self.wnd.taskBarIcon.config.alwaysShowTrayIconOption.value = False
 		self.wnd.taskBarIcon.config.startIconizedOption.value = False
-		Application.onMainWindowConfigChange()
+		Application.onPreferencesDialogClose(None)
 		#self._processEvents()
 
 		self.wnd.Iconize(True)
@@ -75,7 +75,7 @@ class TrayNormalTest(BaseMainWndTest):
 		self.wnd.taskBarIcon.config.alwaysShowTrayIconOption.value = True
 		self.wnd.taskBarIcon.config.startIconizedOption.value = False
 
-		Application.onMainWindowConfigChange()
+		Application.onPreferencesDialogClose(None)
 		#self._processEvents()
 
 		self.wnd.Show()
@@ -103,7 +103,7 @@ class TrayNormalTest(BaseMainWndTest):
 		self.wnd.taskBarIcon.config.alwaysShowTrayIconOption.value = True
 		self.wnd.taskBarIcon.config.startIconizedOption.value = False
 
-		Application.onMainWindowConfigChange()
+		Application.onPreferencesDialogClose(None)
 		#self._processEvents()
 
 		self.wnd.Show()
@@ -139,7 +139,7 @@ class TrayIconizedTest (BaseMainWndTest):
 		self.wnd.taskBarIcon.config.minimizeOption.value = True
 		self.wnd.taskBarIcon.config.alwaysShowTrayIconOption.value = False
 	
-		Application.onMainWindowConfigChange()
+		Application.onPreferencesDialogClose(None)
 		self._processEvents()
 
 		self.assertTrue (self.wnd.IsIconized())
@@ -157,7 +157,7 @@ class TrayIconizedTest (BaseMainWndTest):
 		self.wnd.taskBarIcon.config.minimizeOption.value = True
 		self.wnd.taskBarIcon.config.alwaysShowTrayIconOption.value = True
 	
-		Application.onMainWindowConfigChange()
+		Application.onPreferencesDialogClose(None)
 		self._processEvents()
 
 		self.assertFalse (self.wnd.IsShown())
@@ -174,7 +174,7 @@ class TrayIconizedTest (BaseMainWndTest):
 		self.wnd.taskBarIcon.config.minimizeOption.value = False
 		self.wnd.taskBarIcon.config.alwaysShowTrayIconOption.value = True
 	
-		Application.onMainWindowConfigChange()
+		Application.onPreferencesDialogClose(None)
 		self._processEvents()
 
 		self.assertTrue (self.wnd.IsShown())
@@ -191,7 +191,7 @@ class TrayIconizedTest (BaseMainWndTest):
 		self.wnd.taskBarIcon.config.minimizeOption.value = False
 		self.wnd.taskBarIcon.config.alwaysShowTrayIconOption.value = False
 	
-		Application.onMainWindowConfigChange()
+		Application.onPreferencesDialogClose(None)
 		#self._processEvents()
 
 		self.assertTrue (self.wnd.IsShown())

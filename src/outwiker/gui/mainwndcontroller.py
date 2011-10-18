@@ -75,7 +75,7 @@ class MainWndController (object):
 
 	def __bindAppEvents (self):
 		Application.onPageSelect += self.__onPageSelect
-		Application.onMainWindowConfigChange += self.__onMainWindowConfigChange
+		Application.onPreferencesDialogClose += self.__onPreferencesDialogClose
 		Application.onBookmarksChanged += self.__onBookmarksChanged
 		Application.onTreeUpdate += self.__onTreeUpdate
 		Application.onWikiOpen += self.__onWikiOpen
@@ -83,7 +83,7 @@ class MainWndController (object):
 
 	def __unbindAppEvents (self):
 		Application.onPageSelect -= self.__onPageSelect
-		Application.onMainWindowConfigChange -= self.__onMainWindowConfigChange
+		Application.onPreferencesDialogClose -= self.__onPreferencesDialogClose
 		Application.onBookmarksChanged -= self.__onBookmarksChanged
 		Application.onTreeUpdate -= self.__onTreeUpdate
 		Application.onWikiOpen -= self.__onWikiOpen
@@ -133,7 +133,7 @@ class MainWndController (object):
 		self.updateTitle()
 
 
-	def __onMainWindowConfigChange (self):
+	def __onPreferencesDialogClose (self, prefDialog):
 		"""
 		Обработчик события изменения настроек главного окна
 		"""
