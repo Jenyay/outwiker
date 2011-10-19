@@ -153,6 +153,13 @@ class BaseTextPanel (BasePagePanel):
 		return result
 
 
+	def __stringsAreEqual (self, str1, str2):
+		"""
+		Сравнение двух строк
+		"""
+		return str1.replace ("\r\n", "\n") == str2.replace ("\r\n", "\n")
+
+
 	def _savePageContent (self, page):
 		"""
 		Сохранение содержимого страницы
@@ -160,7 +167,8 @@ class BaseTextPanel (BasePagePanel):
 		if (page != None and 
 				not page.isRemoved and 
 				not page.readonly and
-				page.content != self.GetContentFromGui()):
+				not self.__stringsAreEqual (page.content, self.GetContentFromGui() ) ):
+
 			try:
 				page.content = self.GetContentFromGui()
 			except IOError as e:
