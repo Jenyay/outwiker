@@ -15,10 +15,20 @@ class GeneralPanel (wx.ScrolledWindow):
 		kwds["style"] = wx.TAB_TRAVERSAL
 		wx.ScrolledWindow.__init__(self, *args, **kwds)
 
+		self.trayConfig = TrayConfig (Application.config)
+		self.generalConfig = GeneralGuiConfig (Application.config)
+		self.mainWindowConfig = MainWindowConfig (Application.config)
+
+		self.MIN_AUTOSAVE_INTERVAL = 0
+		self.MAX_AUTOSAVE_INTERVAL = 3600
+
+		self.MIN_HISTORY_LENGTH = 0
+		self.MAX_HISTORY_LENGTH = 30
+
 		self.__createTrayGui()
 		self.__createMiscGui()
-		self.__createAutosaveGui()
-		self.__createHistoryGui()
+		self.__createAutosaveGui(self.generalConfig)
+		self.__createHistoryGui(self.generalConfig)
 		self.__createTitleFormatGui()
 		self.__createLanguageGui()
 
@@ -27,28 +37,35 @@ class GeneralPanel (wx.ScrolledWindow):
 
 		self.Bind(wx.EVT_CHECKBOX, self.onMinimizeToTray, self.minimizeCheckBox)
 
-		self.trayConfig = TrayConfig (Application.config)
-		self.generalConfig = GeneralGuiConfig (Application.config)
-		self.mainWindowConfig = MainWindowConfig (Application.config)
-
 		self.LoadState()
 		self.updateCheckState()
 
 
 	def __set_properties(self):
-		self.SetSize((520, 420))
+		DEFAULT_WIDTH = 520
+		DEFAULT_HEIGHT = 420
+
+		self.SetSize((DEFAULT_WIDTH, DEFAULT_HEIGHT))
 		self.SetFocus()
 		self.SetScrollRate(0, 0)
 		self.askBeforeExitCheckBox.SetValue(1)
-		self.langCombo.SetMinSize((130, -1))
+
+		LANG_COMBO_WIDTH = 130
+		self.langCombo.SetMinSize((LANG_COMBO_WIDTH, -1))
 
 
-	def __createAutosaveGui (self):
+	def __createAutosaveGui (self, generalConfig):
 		"""
 		Создать элементы, связанные с автосохранением
 		"""
 		autosaveLabel = wx.StaticText(self, -1, _("Autosave interval in seconds (0 - disabled)"))
-		self.autosaveSpin = wx.SpinCtrl(self, -1, "3", min=0, max=20, style=wx.SP_ARROW_KEYS|wx.TE_PROCESS_ENTER|wx.TE_PROCESS_TAB|wx.TE_AUTO_URL)
+		self.autosaveSpin = wx.SpinCtrl(self, 
+				-1, 
+				str (generalConfig.DEFAULT_AUTOSAVE_INTERVAL), 
+				min=self.MIN_AUTOSAVE_INTERVAL, 
+				max=self.MAX_AUTOSAVE_INTERVAL, 
+				style=wx.SP_ARROW_KEYS|wx.TE_PROCESS_ENTER|wx.TE_PROCESS_TAB|wx.TE_AUTO_URL)
+
 		self.autosaveSizer = wx.FlexGridSizer(1, 2, 0, 0)
 		self.autosaveSizer.Add(autosaveLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
 		self.autosaveSizer.Add(self.autosaveSpin, 0, wx.ALL|wx.ALIGN_RIGHT, 2)
@@ -73,12 +90,18 @@ class GeneralPanel (wx.ScrolledWindow):
 		self.alwaysInTrayCheckBox = wx.CheckBox(self, -1, _("Always show tray icon"))
 
 
-	def __createHistoryGui (self):
+	def __createHistoryGui (self, generalConfig):
 		"""
 		Создать элементы интерфейса, связанные с историей открытых файлов
 		"""
 		history_label = wx.StaticText(self, -1, _("Recent files history length (restart required)"))
-		self.historySpin = wx.SpinCtrl(self, -1, "5", min=0, max=20, style=wx.SP_ARROW_KEYS|wx.TE_PROCESS_ENTER|wx.TE_PROCESS_TAB|wx.TE_AUTO_URL)
+		self.historySpin = wx.SpinCtrl(self, 
+				-1, 
+				str (generalConfig.DEFAULT_RECENT_WIKI_COUNT), 
+				min=self.MIN_HISTORY_LENGTH, 
+				max=self.MAX_HISTORY_LENGTH, 
+				style=wx.SP_ARROW_KEYS|wx.TE_PROCESS_ENTER|wx.TE_PROCESS_TAB|wx.TE_AUTO_URL)
+
 		self.autoopenCheckBox = wx.CheckBox(self, -1, _("Automatically open the recent file"))
 
 		self.historySizer = wx.FlexGridSizer(1, 2, 0, 0)
@@ -159,7 +182,10 @@ class GeneralPanel (wx.ScrolledWindow):
 		Опции, связанные с последними открытыми файлами
 		"""
 		# Длина истории последних открытых файлов
-		self.historyLength = ConfigElements.IntegerElement (self.generalConfig.historyLengthOption, self.historySpin, 0, 30)
+		self.historyLength = ConfigElements.IntegerElement (self.generalConfig.historyLengthOption, 
+				self.historySpin, 
+				self.MIN_HISTORY_LENGTH, 
+				self.MAX_HISTORY_LENGTH)
 
 		# Открывать последнюю вики при запуске?
 		self.autoopen = ConfigElements.BooleanElement (self.generalConfig.autoopenOption, self.autoopenCheckBox)
@@ -185,7 +211,10 @@ class GeneralPanel (wx.ScrolledWindow):
 		self.titleFormat = ConfigElements.StringElement (self.mainWindowConfig.titleFormatOption, self.titleFormatText)
 
 		# Автосохранение
-		self.autosaveInterval = ConfigElements.IntegerElement (self.generalConfig.autosaveIntervalOption, self.autosaveSpin, 0, 3600)
+		self.autosaveInterval = ConfigElements.IntegerElement (self.generalConfig.autosaveIntervalOption, 
+				self.autosaveSpin, 
+				self.MIN_AUTOSAVE_INTERVAL, 
+				self.MAX_AUTOSAVE_INTERVAL)
 
 		self.__loadLanguages()
 	
