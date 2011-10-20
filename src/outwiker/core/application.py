@@ -2,7 +2,7 @@
 #-*- coding: utf-8 -*-
 
 from .i18n import init_i18n, getLanguageFromConfig
-from .config import Config, getConfigPath
+from .config import Config
 from .event import Event
 from .recent import RecentWiki
 from .pluginsloader import PluginsLoader

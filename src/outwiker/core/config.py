@@ -2,29 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import ConfigParser
-import os
-
-from .system import getCurrentDir, getOS
-
-
-def getConfigPath (dirname, fname):
-	"""
-	Вернуть полный путь до файла настроек.
-	Поиск пути осуществляется следующим образом:
-	1. Если в папке с программой есть файл настроек, то вернуть путь до него
-	2. Иначе настройки будут храниться в домашней поддиректории. При этом создать директорию .outwiker в домашней директории.
-	"""
-	someDir = os.path.join (getCurrentDir(), fname)
-	if os.path.exists (someDir):
-		path = someDir
-	else:
-		homeDir = os.path.join (unicode (os.path.expanduser("~"), getOS().filesEncoding), dirname)
-		if not os.path.exists (homeDir):
-			os.mkdir (homeDir)
-
-		path = os.path.join (homeDir, fname)
-
-	return path
 
 
 class Config (object):

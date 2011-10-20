@@ -11,6 +11,18 @@ import locale
 
 import wx
 
+# Папки, используемые в программе
+IMAGES_DIR = u"images"
+STYLES_DIR = u"templates"
+PLUGINS_DIR = u"plugins"
+
+# Имя файла настроек по умолчанию
+DEFAULT_CONFIG_NAME = u"outwiker.ini"
+
+# Имя по умолчанию для папки с настройками в профиле пользователя
+DEFAULT_CONFIG_DIR = u".outwiker"
+
+
 class Windows (object):
 	def __init__ (self):
 		pass
@@ -133,16 +145,40 @@ def getCurrentDir ():
 	return unicode (os.path.dirname (sys.argv[0]), getOS().filesEncoding)
 
 
+def getConfigPath (dirname=DEFAULT_CONFIG_DIR, fname=DEFAULT_CONFIG_NAME):
+	"""
+	Вернуть полный путь до файла настроек.
+	Поиск пути осуществляется следующим образом:
+	1. Если в папке с программой есть файл настроек, то вернуть путь до него
+	2. Иначе настройки будут храниться в домашней поддиректории. При этом создать директорию .outwiker в домашней директории.
+	"""
+	someDir = os.path.join (getCurrentDir(), fname)
+	if os.path.exists (someDir):
+		path = someDir
+	else:
+		homeDir = os.path.join (unicode (os.path.expanduser("~"), getOS().filesEncoding), dirname)
+		if not os.path.exists (homeDir):
+			os.mkdir (homeDir)
+
+		path = os.path.join (homeDir, fname)
+
+	return path
+
+
 def getImagesDir ():
-	return os.path.join (getCurrentDir(), "images")
+	return os.path.join (getCurrentDir(), IMAGES_DIR)
 
 
 def getTemplatesDir ():
-	return os.path.join (getCurrentDir(), "templates")
+	return os.path.join (getCurrentDir(), STYLES_DIR)
 
 
-def getPluginsDirList ():
-	return [os.path.join (getCurrentDir(), "plugins")]
+def getPluginsDirList (dirname=DEFAULT_CONFIG_DIR, configname=DEFAULT_CONFIG_NAME):
+	"""
+	Возвращает список директорий, откуда должны грузиться плагины
+	Параметры, связанные с файлом настроек (dirname и configname) используются для нахождения папки с настройками
+	"""
+	return [os.path.join (getCurrentDir(), PLUGINS_DIR)]
 
 
 def getDefaultLanguage ():

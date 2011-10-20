@@ -10,8 +10,8 @@ import os.path
 import ConfigParser
 import shutil
 
-from outwiker.core.config import Config, getConfigPath
-from outwiker.core.system import getCurrentDir
+from outwiker.core.config import Config
+from outwiker.core.system import getCurrentDir, getConfigPath
 import outwiker.core.config
 
 from outwiker.gui.guiconfig import TrayConfig, EditorConfig

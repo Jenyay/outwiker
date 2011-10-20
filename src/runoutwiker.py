@@ -10,30 +10,27 @@ import sys
 
 import wx
 
-from outwiker.core.config import getConfigPath
 from outwiker.core.application import Application
-from outwiker.core.system import getOS, getPluginsDirList
+from outwiker.core.system import getOS, getPluginsDirList, getConfigPath
 from outwiker.core.starter import Starter
 
 
 class OutWiker(wx.App):
 	def __init__(self, *args, **kwds):
-		self.configDir = u".outwiker"
-		self.configFileName = u"outwiker.ini"
 		self.logFileName = u"outwiker.log"
 
 		wx.App.__init__ (self, *args, **kwds)
 
 
 	def OnInit(self):
-		self._configFileName = getConfigPath (self.configDir, self.configFileName)
-		Application.init(self._configFileName)
+		self._fullConfigPath = getConfigPath ()
+		Application.init(self._fullConfigPath)
 
 		# Если программа запускается в виде exe-шника, то перенаправить вывод ошибок в лог
 		exepath = unicode (sys.argv[0], getOS().filesEncoding)
 		if exepath.endswith (u".exe"):
 			# Закоментировать следующую строку, если не надо выводить strout/strerr в лог-файл
-			self.RedirectStdio (self.getLogFileName (self._configFileName))
+			self.RedirectStdio (self.getLogFileName (self._fullConfigPath))
 			pass
 
 		from outwiker.gui.MainWindow import MainWindow
@@ -52,8 +49,8 @@ class OutWiker(wx.App):
 		return 1
 
 
-	def getLogFileName (self, configFileName):
-		return os.path.join (os.path.split (configFileName)[0], self.logFileName)
+	def getLogFileName (self, configPath):
+		return os.path.join (os.path.split (configPath)[0], self.logFileName)
 
 
 	def bindActivateApp (self):
