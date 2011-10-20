@@ -160,6 +160,10 @@ def getConfigPath (dirname=DEFAULT_CONFIG_DIR, fname=DEFAULT_CONFIG_NAME):
 		if not os.path.exists (homeDir):
 			os.mkdir (homeDir)
 
+		pluginsDir = os.path.join (homeDir, PLUGINS_DIR)
+		if not os.path.exists (pluginsDir):
+			os.mkdir (pluginsDir)
+
 		path = os.path.join (homeDir, fname)
 
 	return path
@@ -178,7 +182,18 @@ def getPluginsDirList (dirname=DEFAULT_CONFIG_DIR, configname=DEFAULT_CONFIG_NAM
 	Возвращает список директорий, откуда должны грузиться плагины
 	Параметры, связанные с файлом настроек (dirname и configname) используются для нахождения папки с настройками
 	"""
-	return [os.path.join (getCurrentDir(), PLUGINS_DIR)]
+	# Директория "plugins" рядом с запускаемым файлом
+	programPluginsDir = os.path.join (getCurrentDir(), PLUGINS_DIR)
+
+	# Директория "plugins" рядом с файлом настроек
+	configdir = os.path.dirname (getConfigPath (dirname, configname))
+	pluginDir = os.path.join (configdir, PLUGINS_DIR)
+
+	dirlist = [programPluginsDir]
+	if os.path.abspath (programPluginsDir) != os.path.abspath (pluginDir):
+		dirlist.append (pluginDir)
+
+	return dirlist
 
 
 def getDefaultLanguage ():

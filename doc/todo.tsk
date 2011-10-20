@@ -396,7 +396,7 @@ IndexError: string index out of range
 <task completiondate="2011-06-14 21:33:41.320140" id="84488016:1306862315.29" percentageComplete="100" priority="8" startdate="2011-05-31 21:18:00" status="1" subject="Ошибка при попытке открытия вики, если некоторые страницы недоступны для записи" />
 <task id="87101354-f8e4-11e0-90e0-00112fd2b1f8" priority="7" startdate="2011-10-17 21:22:00" status="1" subject="Вынести настройки, связанные с иконкой в трее в отдельную страницу" />
 <task completiondate="2011-06-30 22:42:23.825491" id="87163920:1309457797.29" percentageComplete="100" priority="8" startdate="2011-06-30 22:16:00" status="1" subject="Ошибка открытия страниц с путями, содержащими # под Linux" />
-<task id="8d362904-f433-11e0-9b1c-00112fd2b1f8" priority="7" startdate="2011-10-11 22:05:00" status="1" subject="Возможность хранить плагины в папке .outwiker/plugins" />
+<task completiondate="2011-10-20 22:25:22.743939" id="8d362904-f433-11e0-9b1c-00112fd2b1f8" percentageComplete="100" priority="7" startdate="2011-10-11 22:05:00" status="1" subject="Возможность хранить плагины в папке .outwiker/plugins" />
 <task expandedContexts="('taskviewer',)" id="93001488:1307768924.15" priority="5" startdate="2011-06-11 09:08:00" status="1" subject="Диалог для вставки команды (:childlist:)" />
 <task completiondate="2011-05-30 22:05:12.240225" id="96435088:1306260832.07" percentageComplete="100" priority="8" startdate="2011-05-24 22:13:00" status="1" subject="Кнопка для зачеркнутого текста на HTML-странице" />
 <task expandedContexts="('taskviewer',)" id="96938256:1306260214.04" priority="6" startdate="2011-05-24 22:03:00" status="1" subject="Возможность выбора шаблона для страниц" />
