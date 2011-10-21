@@ -26,6 +26,7 @@ class WikiPagePanel (HtmlPanel):
 
 		self._configSection = u"wiki"
 		self._hashKey = u"md5_hash"
+		self.__WIKI_MENU_INDEX = 7
 		
 		self.notebook.SetPageText (0, _(u"Wiki"))
 
@@ -387,7 +388,7 @@ class WikiPagePanel (HtmlPanel):
 		self.__addFormatTools()
 		self.__addOtherTools()
 
-		self.mainWindow.mainMenu.Insert (self.mainWindow.mainMenu.GetMenuCount() - 1, 
+		self.mainWindow.mainMenu.Insert (self.__WIKI_MENU_INDEX, 
 				self.pageToolsMenu, 
 				_(u"&Wiki") )
 
@@ -450,7 +451,7 @@ class WikiPagePanel (HtmlPanel):
 
 	def removeGui (self):
 		HtmlPanel.removeGui (self)
-		self.mainWindow.mainMenu.Remove (self.mainWindow.mainMenu.GetMenuCount() - 2)
+		self.mainWindow.mainMenu.Remove (self.__WIKI_MENU_INDEX - 1)
 
 	
 	def _getAttachString (self, fnames):

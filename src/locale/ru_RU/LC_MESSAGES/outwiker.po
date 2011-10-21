@@ -4,7 +4,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-10-18 22:20+0400\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
+"Last-Translator: \n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -702,7 +702,7 @@ msgstr "Размер табуляции"
 
 #: outwiker/gui/preferences/GeneralPanel.py:50
 msgid "Autosave interval in seconds (0 - disabled)"
-msgstr "Интервал автосохранения (0 - отключено)"
+msgstr "Интервал автосохранения в секундах (0 - отключено)"
 
 #: outwiker/gui/preferences/GeneralPanel.py:64
 msgid "Ask before exit"
@@ -1398,46 +1398,34 @@ msgstr "Ошибка печати"
 
 #~ msgid "Right align\tCtrl+ALT+R"
 #~ msgstr "Выровнять по правому краю\tCtrl+ALT+R"
-
 #~ msgid "Current icon"
 #~ msgstr "Текущая иконка"
-
 #~ msgid "Center align\tCtrl+Shift+C"
 #~ msgstr "Выравнивание по центру\tCtrl+Shift+C"
-
 #~ msgid "Show Attachments Instead Blank page"
 #~ msgstr "Показывать прикрепленные файлы вместо пустой страницы"
-
 #~ msgid "Edit page"
 #~ msgstr "Редактировать страницу"
-
 #~ msgid "Edit page's properties"
 #~ msgstr "Редактировать свойства страницы"
-
 #~ msgid "Preformat [=…=]"
 #~ msgstr "Форматирование [=…=]"
-
 #~ msgid "Attach Files..."
 #~ msgstr "Прикрепить файлы..."
-
 #~ msgid "Add Child Page..."
 #~ msgstr "Добавить дочернюю страницу..."
-
 #~ msgid "Add Sibling Page..."
 #~ msgstr "Добавить страницу того же уровня..."
-
 #~ msgid "Remove..."
 #~ msgstr "Удалить..."
 
 #, fuzzy
 #~ msgid "Remove Page..."
 #~ msgstr "Удалить страницу"
-
 #~ msgid "OK"
 #~ msgstr "OK"
-
 #~ msgid "(c) 2010 Ilin E.V. (aka Jenyay)"
 #~ msgstr "(c) 2010 Ильин Е. В. (aka Jenyay)"
-
 #~ msgid "Outliner + personal wiki = OutWiker"
 #~ msgstr "Outliner + персональная вики = OutWiker"
+

@@ -347,6 +347,8 @@ class HtmlPanel(BaseTextPanel):
 class HtmlPagePanel (HtmlPanel):
 	def __init__ (self, parent, *args, **kwds):
 		HtmlPanel.__init__ (self, parent, *args, **kwds)
+
+		self.__HTML_MENU_INDEX = 7
 		self.__createCustomTools()
 
 		Application.onPageUpdate += self.__onPageUpdate
@@ -412,7 +414,8 @@ class HtmlPagePanel (HtmlPanel):
 		self.__addListTools()
 		self.__addOtherTools()
 
-		self.mainWindow.mainMenu.Insert (self.mainWindow.mainMenu.GetMenuCount() - 1, self.pageToolsMenu, _(u"H&tml"))
+
+		self.mainWindow.mainMenu.Insert (self.__HTML_MENU_INDEX, self.pageToolsMenu, _(u"H&tml"))
 		self.mainWindow.mainToolbar.Realize()
 
 
@@ -666,4 +669,4 @@ class HtmlPagePanel (HtmlPanel):
 
 	def removeGui (self):
 		HtmlPanel.removeGui (self)
-		self.mainWindow.mainMenu.Remove (self.mainWindow.mainMenu.GetMenuCount() - 2)
+		self.mainWindow.mainMenu.Remove (self.__HTML_MENU_INDEX - 1)
