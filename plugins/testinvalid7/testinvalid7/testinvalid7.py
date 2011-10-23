@@ -1,15 +1,21 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-class PluginTestInvalid6 (object):
+
+class PluginInvalid7 (object):
 	"""
-	Плагин с ошибкой - нет метода destroy
+	Плагин с ошибкой, потому что не производный от Plugin
 	"""
+
 	def __init__ (self, application):
 		"""
 		application - экземпляр класса core.application.ApplicationParams
 		"""
-		self.application = application
+
+
+	@property
+	def application (self):
+		return self._application
 
 
 	#############################################
@@ -29,5 +35,12 @@ class PluginTestInvalid6 (object):
 	@property
 	def version (self):
 		return u"0.1"
+
+
+	def destroy (self):
+		"""
+		Уничтожение (выгрузка) плагина. Здесь плагин должен отписаться от всех событий
+		"""
+		pass
 
 	#############################################

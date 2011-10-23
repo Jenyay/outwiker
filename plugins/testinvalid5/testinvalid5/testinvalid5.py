@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-class PluginTestInvalid5 (object):
+from outwiker.core.pluginbase import Plugin
+
+
+class PluginTestInvalid5 (Plugin):
 	"""
 	Плагин с ошибкой - нет файла __init__.py
 	"""
@@ -9,7 +12,7 @@ class PluginTestInvalid5 (object):
 		"""
 		application - экземпляр класса core.application.ApplicationParams
 		"""
-		self.application = application
+		Plugin.__init__ (self, application)
 
 
 	#############################################

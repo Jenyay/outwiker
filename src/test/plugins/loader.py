@@ -45,6 +45,7 @@ class PluginsLoaderTest(unittest.TestCase):
 				u"../plugins/testinvalid4",
 				u"../plugins/testinvalid5",
 				u"../plugins/testinvalid6",
+				u"../plugins/testinvalid7",
 				u"../plugins/testempty1", 
 				u"../plugins/testempty2",
 				u"../plugins/testwikicommand"]

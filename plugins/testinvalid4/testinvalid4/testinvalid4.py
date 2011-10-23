@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-class PluginTestInvalid4 (object):
+from outwiker.core.pluginbase import Plugin
+
+
+class PluginTestInvalid4 (Plugin):
 	"""
 	Плагин с ошибкой. В конструкторе возникает исключение
 	"""
@@ -9,7 +12,7 @@ class PluginTestInvalid4 (object):
 		"""
 		application - экземпляр класса core.application.ApplicationParams
 		"""
-		self.application = application
+		Plugin.__init__ (self, application)
 		raise IOError
 
 

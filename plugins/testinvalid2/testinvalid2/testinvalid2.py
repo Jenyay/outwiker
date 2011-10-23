@@ -1,7 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-class PluginTestInvalid2 (object):
+from outwiker.core.pluginbase import Plugin
+
+
+
+class PluginTestInvalid2 (Plugin):
 	"""
 	Плагин с ошибкой - нет свойства description
 	"""
@@ -9,7 +13,7 @@ class PluginTestInvalid2 (object):
 		"""
 		application - экземпляр класса core.application.ApplicationParams
 		"""
-		self.application = application
+		Plugin.__init__ (self, application)
 
 
 	#############################################

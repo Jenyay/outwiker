@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-class PluginTestInvalid3 (object):
+from outwiker.core.pluginbase import Plugin
+
+
+class PluginTestInvalid3 (Plugin):
 	"""
 	Плагин с ошибкой - нет свойства version
 	"""
@@ -9,7 +12,7 @@ class PluginTestInvalid3 (object):
 		"""
 		application - экземпляр класса core.application.ApplicationParams
 		"""
-		self.application = application
+		Plugin.__init__ (self, application)
 
 
 	#############################################

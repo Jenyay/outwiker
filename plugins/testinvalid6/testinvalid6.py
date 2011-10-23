@@ -4,9 +4,9 @@
 from outwiker.core.pluginbase import Plugin
 
 
-class PluginTestInvalid1 (Plugin):
+class PluginTestInvalid6 (Plugin):
 	"""
-	Плагин с ошибкой - нет свойства name
+	Плагин с ошибкой - нет метода destroy
 	"""
 	def __init__ (self, application):
 		"""
@@ -20,6 +20,11 @@ class PluginTestInvalid1 (Plugin):
 	#############################################
 
 	@property
+	def name (self):
+		return u"TestEmpty1"
+
+	
+	@property
 	def description (self):
 		return _(u"This plugin is empty")
 
@@ -27,12 +32,5 @@ class PluginTestInvalid1 (Plugin):
 	@property
 	def version (self):
 		return u"0.1"
-
-
-	def destroy (self):
-		"""
-		Уничтожение (выгрузка) плагина. Здесь плагин должен отписаться от всех событий
-		"""
-		pass
 
 	#############################################

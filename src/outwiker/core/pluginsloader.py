@@ -5,6 +5,9 @@ import os
 import os.path
 import sys
 
+from .pluginbase import Plugin
+
+
 class PluginsLoader (object):
 	"""
 	Класс для загрузки плагинов
@@ -109,7 +112,7 @@ class PluginsLoader (object):
 			for name in dir (module):
 				if name.startswith (self.__pluginsStartName):
 					obj = getattr (module, name)
-					if not issubclass (obj, object) or not self.__testPlugin (obj):
+					if not issubclass (obj, Plugin):
 						continue
 
 					try:
@@ -120,14 +123,6 @@ class PluginsLoader (object):
 					self.__plugins.append (plugin)
 
 	
-	def __testPlugin (self, pluginType):
-		"""
-		Проверка на то, что плагин удовлетворяет всем накладываемым требованиям - имеет все нужные свойства
-		"""
-		attrib = dir (pluginType)
-		return "name" in attrib and "version" in attrib and "description" in attrib and "destroy" in attrib
-
-
 	def __len__ (self):
 		return len (self.__plugins)
 

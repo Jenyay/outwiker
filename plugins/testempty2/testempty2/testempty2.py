@@ -1,12 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-class PluginTestEmpty2 (object):
+from outwiker.core.pluginbase import Plugin
+
+
+class PluginTestEmpty2 (Plugin):
 	def __init__ (self, application):
 		"""
 		application - экземпляр класса core.application.ApplicationParams
 		"""
-		self.application = application
+		Plugin.__init__ (self, application)
 
 
 	#############################################

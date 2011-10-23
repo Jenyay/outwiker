@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
+from outwiker.core.pluginbase import Plugin
+
 from .commandtest import TestCommand
 
-class PluginTestWikiCommand (object):
+class PluginTestWikiCommand (Plugin):
 	"""
 	Плагин, добавляющий обработку команды TestCommand в википарсер
 	"""
@@ -11,9 +13,9 @@ class PluginTestWikiCommand (object):
 		"""
 		application - экземпляр класса core.application.ApplicationParams
 		"""
-		self.__application = application
+		Plugin.__init__ (self, application)
 
-		self.__application.onWikiParserPrepare += self.__onWikiParserPrepare
+		self._application.onWikiParserPrepare += self.__onWikiParserPrepare
 
 
 	def __onWikiParserPrepare (self, parser):
@@ -43,6 +45,6 @@ class PluginTestWikiCommand (object):
 		"""
 		Уничтожение (выгрузка) плагина. Здесь плагин должен отписаться от всех событий
 		"""
-		self.__application.onWikiParserPrepare -= self.__onWikiParserPrepare
+		self._application.onWikiParserPrepare -= self.__onWikiParserPrepare
 
 	#############################################
