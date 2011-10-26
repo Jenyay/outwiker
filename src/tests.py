@@ -55,6 +55,7 @@ if __name__ == '__main__':
 	from test.parsertests.wikicommandbloggers import WikiBloggersCommandTest
 	from test.parsertests.wikicommandchildlist import WikiChildListCommandTest
 	from test.parsertests.wikicommandattachlist import WikiAttachListCommandTest
+	from test.parsertests.wikicommandcounter import WikiCounterCommandTest
 
 	from test.wxthumbmaker import WxThumbmakerTest
 	from test.pagethumbmaker import PageThumbmakerTest
