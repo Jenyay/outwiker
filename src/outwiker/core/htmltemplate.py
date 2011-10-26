@@ -32,8 +32,9 @@ class HtmlTemplate (object):
 			self.template = Template (unicode (fp.read().strip(), "utf8") )
 
 
-	def substitute (self, content):
+	def substitute (self, content, userhead=u""):
 		return self.template.substitute (content=content, 
 				fontsize=self.fontsize,
 				fontfamily = self.fontfamily,
-				userstyle = self.userStyle)
+				userstyle = self.userStyle,
+				userhead=userhead)

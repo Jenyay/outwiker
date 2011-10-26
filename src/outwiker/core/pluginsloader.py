@@ -117,7 +117,9 @@ class PluginsLoader (object):
 
 					try:
 						plugin = obj (self.__application)
-					except BaseException:
+					except BaseException as e:
+						#print str (obj)
+						#print e
 						continue
 
 					self.__plugins.append (plugin)

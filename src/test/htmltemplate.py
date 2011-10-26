@@ -29,6 +29,7 @@ class HtmlTemplateTest(unittest.TestCase):
 		img{border:none}
 		
 	</STYLE>
+	
 </HEAD>
 
 <BODY>
@@ -59,6 +60,7 @@ class HtmlTemplateTest(unittest.TestCase):
 		img{border:none}
 		
 	</STYLE>
+	
 </HEAD>
 
 <BODY>
@@ -108,6 +110,7 @@ class HtmlTemplateTest(unittest.TestCase):
 		img{border:none}
 		
 	</STYLE>
+	
 </HEAD>
 
 <BODY>
