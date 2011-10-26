@@ -30,13 +30,13 @@ class MainToolBar (wx.ToolBar):
 				_(u"Open wiki…"), 
 				"")
 
-		self.AddLabelTool(MainId.ID_SAVE, 
-				_("Save"), 
-				wx.Bitmap(os.path.join (self.imagesDir, "save.png"), wx.BITMAP_TYPE_ANY), 
-				wx.NullBitmap, 
-				wx.ITEM_NORMAL, 
-				_("Save wiki"), 
-				"")
+		#self.AddLabelTool(MainId.ID_SAVE, 
+		#		_("Save"), 
+		#		wx.Bitmap(os.path.join (self.imagesDir, "save.png"), wx.BITMAP_TYPE_ANY), 
+		#		wx.NullBitmap, 
+		#		wx.ITEM_NORMAL, 
+		#		_("Save wiki"), 
+		#		"")
 
 		self.AddLabelTool(MainId.ID_RELOAD, 
 				_("Reload"), 
