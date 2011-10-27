@@ -67,9 +67,16 @@ class CommandSource (Command):
 
 		lang = params_dict[langParam] if langParam in params_dict else langDefault
 
+		# Стиль для общего div
+		highlightStyle = u'.highlight {border-style: solid; border-color: gray; border-width: 1px; background-color: #eee}'
+		sourceStyle = HtmlFormatter().get_style_defs()
+
+		styleTemplate = u"<STYLE>{0}</STYLE>"
+
 		if not self.__styleAppend:
-			styles = u"<STYLE>{0}</STYLE>".format (HtmlFormatter().get_style_defs())
-			self.parser.appendToHead (styles)
+			self.parser.appendToHead (styleTemplate.format (sourceStyle))
+			self.parser.appendToHead (styleTemplate.format (highlightStyle))
+
 			self.__styleAppend = True
 
 		try:
