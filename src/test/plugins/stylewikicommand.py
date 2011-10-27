@@ -16,7 +16,7 @@ from test.utils import removeWiki
 
 class WikiStyleCommandTest (unittest.TestCase):
 	def setUp(self):
-		self.encoding = "utf8"
+		self.encoding = "866"
 
 		self.filesPath = u"../test/samplefiles/"
 		self.__createWiki()
@@ -115,6 +115,6 @@ body {font-size: 10px}
 
 	def __readFile (self, path):
 		with open (path) as fp:
-			result = fp.read()
+			result = unicode (fp.read(), "utf8")
 
 		return result
