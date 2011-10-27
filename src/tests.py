@@ -86,7 +86,8 @@ if __name__ == '__main__':
 
 	from test.plugins.loader import PluginsLoaderTest
 	from test.plugins.testwikicommand import PluginWikiCommandTest
-	from test.plugins.stylewikicommand import WikiStyleCommandTest
+	from test.plugins.style import StylePluginTest
+	from test.plugins.source import SourcePluginTest
 
 	if os.name == "nt":
 		from test.guitests.uriidentifiers import UriIdentifierIETest

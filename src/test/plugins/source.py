@@ -14,14 +14,15 @@ from outwiker.pages.wiki.htmlgenerator import HtmlGenerator
 from test.utils import removeWiki
 
 
-class WikiStyleCommandTest (unittest.TestCase):
+class SourcePluginTest (unittest.TestCase):
 	def setUp(self):
 		self.encoding = "866"
+		self.maxDiff = None
 
 		self.filesPath = u"../test/samplefiles/"
 		self.__createWiki()
 
-		dirlist = [u"../plugins/style"]
+		dirlist = [u"../plugins/source"]
 
 		self.loader = PluginsLoader(Application)
 		self.loader.load (dirlist)
@@ -49,68 +50,63 @@ class WikiStyleCommandTest (unittest.TestCase):
 		self.assertEqual ( len (self.loader), 1)
 
 
-	def testStyleContentParse (self):
-		text = u"""Бла-бла-бла
-(:style:)
-body {font-size: 33px}
-(:styleend:)
-бла-бла-бла
-"""
+	def testFullHtmlPython (self):
+		text = u'''(:source lang="python" tabwidth=4:)
+import os
 
-		validResult = u"""Бла-бла-бла
+# Комментарий
+def hello (count):
+	"""
+	Hello world
+	"""
+	for i in range (10):
+		print "Hello world!!!"
+(:sourceend:)
+'''
 
-бла-бла-бла
-"""
-		styleresult = u"<STYLE>body {font-size: 33px}</STYLE>"
-
-		result = self.parser.toHtml (text)
-		self.assertEqual (result, validResult)
-		self.assertTrue (styleresult in self.parser.head)
-
-
-	def testFullHtml (self):
-		text = u"""Бла-бла-бла
-(:style:)
-body {font-size: 33px}
-(:styleend:)
-бла-бла-бла
-"""
 		self.testPage.content = text
 
 		generator = HtmlGenerator (self.testPage)
 		htmlpath = generator.makeHtml ()
 		result = self.__readFile (htmlpath)
 
-		validStyle = u"<STYLE>body {font-size: 33px}</STYLE>"
+		innerString1 = u".go { color: #808080 } /* Generic.Output */"
+		innerString2 = u'<span class="k">print</span> <span class="s">&quot;Hello world!!!&quot;</span>'
+		innerString3 = u'<span class="kn">import</span> <span class="nn">os</span>'
+		
+		self.assertTrue (innerString1 in result)
+		self.assertTrue (innerString2 in result)
+		self.assertTrue (innerString3 in result)
 
-		self.assertTrue (validStyle in result, result)
 
+	def testFullHtmlInvalidLang (self):
+		text = u'''(:source lang="qqq" tabwidth=4:)
+import os
 
-	def testFullHtml2 (self):
-		text = u"""Бла-бла-бла
-(:style:)
-body {font-size: 33px}
-(:styleend:)
+# Комментарий
+def hello (count):
+	"""
+	Hello world
+	"""
+	for i in range (10):
+		print "Hello world!!!"
+(:sourceend:)
+'''
 
-sdfsdf sdf
-
-(:style:)
-body {font-size: 10px}
-(:styleend:)
-
-бла-бла-бла
-"""
 		self.testPage.content = text
 
 		generator = HtmlGenerator (self.testPage)
 		htmlpath = generator.makeHtml ()
 		result = self.__readFile (htmlpath)
 
-		validStyle1 = u"<STYLE>body {font-size: 33px}</STYLE>"
-		validStyle2 = u"<STYLE>body {font-size: 10px}</STYLE>"
-
-		self.assertTrue (validStyle1 in result, result)
-		self.assertTrue (validStyle2 in result, result)
+		innerString1 = u".go { color: #808080 } /* Generic.Output */"
+		innerString2 = u'print &quot;Hello world!!!&quot;'
+		innerString3 = u'def hello (count):'
+		
+		self.assertTrue (innerString1 in result)
+		self.assertTrue (innerString2 in result)
+		self.assertTrue (innerString3 in result)
+		self.assertFalse (u"(:source" in result)
 
 
 	def __readFile (self, path):
