@@ -11,15 +11,14 @@ class PluginTestEmpty1 (Plugin):
 		"""
 		Plugin.__init__ (self, application)
 
-
 	@property
 	def application (self):
 		return self._application
 
 
-	#############################################
-	# Свойства, которые необходимо определить
-	#############################################
+	###################################################
+	# Свойства и методы, которые необходимо определить
+	###################################################
 
 	@property
 	def name (self):
@@ -34,6 +33,10 @@ class PluginTestEmpty1 (Plugin):
 	@property
 	def version (self):
 		return u"0.1"
+
+	
+	def initialize(self):
+		pass
 
 
 	def destroy (self):

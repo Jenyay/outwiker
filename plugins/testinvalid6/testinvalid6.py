@@ -23,6 +23,10 @@ class PluginTestInvalid6 (Plugin):
 	def name (self):
 		return u"TestEmpty1"
 
+
+	def initialize(self):
+		pass
+
 	
 	@property
 	def description (self):

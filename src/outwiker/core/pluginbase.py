@@ -34,6 +34,15 @@ class Plugin (object):
 
 
 	@abstractmethod
+	def initialize (self):
+		"""
+		Этот метод вызывается, когда плагин прошел все проверки.
+		Именно здесь плагин может начинать влиять на программу
+		"""
+		pass
+
+
+	@abstractmethod
 	def destroy (self):
 		pass
 

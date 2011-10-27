@@ -20,6 +20,10 @@ class PluginTestInvalid2 (Plugin):
 	# Свойства, которые необходимо определить
 	#############################################
 
+	def initialize(self):
+		pass
+
+
 	@property
 	def name (self):
 		return u"TestInvalid2"

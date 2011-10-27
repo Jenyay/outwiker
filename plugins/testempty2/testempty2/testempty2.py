@@ -12,9 +12,9 @@ class PluginTestEmpty2 (Plugin):
 		Plugin.__init__ (self, application)
 
 
-	#############################################
-	# Свойства, которые необходимо определить
-	#############################################
+	###################################################
+	# Свойства и методы, которые необходимо определить
+	###################################################
 
 	@property
 	def name (self):
@@ -29,6 +29,11 @@ class PluginTestEmpty2 (Plugin):
 	@property
 	def version (self):
 		return u"0.1"
+
+
+	def initialize(self):
+		pass
+
 
 
 	def destroy (self):

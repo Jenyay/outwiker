@@ -16,19 +16,6 @@ class PluginDebug (Plugin):
 	def __init__ (self, application):
 		Plugin.__init__ (self, application)
 
-		#self._application = application
-
-		try:
-			self.__init_i18n ()
-		except BaseException as e:
-			print e
-			raise
-
-		self.ID_PLUGINSLIST = wx.NewId()
-		self.ID_BUTTONSDIALOG = wx.NewId()
-
-		self.__createMenu()
-
 
 	def __init_i18n (self):
 		langdir = os.path.join (os.path.dirname (__file__), u'locale')
@@ -71,9 +58,10 @@ class PluginDebug (Plugin):
 		MessageBox (u"".join (pluginslist), _(u"Plugins List"))
 
 
-	#############################################
-	# Свойства, которые необходимо определить
-	#############################################
+	###################################################
+	# Свойства и методы, которые необходимо определить
+	###################################################
+
 
 	@property
 	def name (self):
@@ -88,6 +76,19 @@ class PluginDebug (Plugin):
 	@property
 	def version (self):
 		return u"0.1"
+
+
+	def initialize(self):
+		try:
+			self.__init_i18n ()
+		except BaseException as e:
+			print e
+			raise
+
+		self.ID_PLUGINSLIST = wx.NewId()
+		self.ID_BUTTONSDIALOG = wx.NewId()
+
+		self.__createMenu()
 
 
 	def destroy (self):

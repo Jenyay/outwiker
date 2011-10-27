@@ -110,19 +110,43 @@ class PluginsLoader (object):
 
 		for module in modules:
 			for name in dir (module):
-				if name.startswith (self.__pluginsStartName):
-					obj = getattr (module, name)
-					if not issubclass (obj, Plugin):
-						continue
+				self.__createObject (module, name)
 
-					try:
-						plugin = obj (self.__application)
-					except BaseException as e:
-						#print str (obj)
-						#print e
-						continue
 
-					self.__plugins.append (plugin)
+	def __createObject (self, module, name):
+		"""
+		Попытаться загрузить класс, возможно, это плагин
+
+		module - модуль, откуда загружается класс
+		name - имя класса потенциального плагина
+		"""
+		if name.startswith (self.__pluginsStartName):
+			obj = getattr (module, name)
+			if obj == Plugin or not issubclass (obj, Plugin):
+				return
+
+			try:
+				plugin = obj (self.__application)
+			except BaseException as e:
+				print str (obj)
+				print e
+				return
+
+			if self.__isNewPlugin (plugin.name):
+				plugin.initialize()
+				self.__plugins.append (plugin)
+
+
+	def __isNewPlugin (self, pluginname):
+		"""
+		Проверка того, что плагин с таким именем еще не был загружен
+		newplugin - плагин, который надо проверить
+		"""
+		for plugin in self.__plugins:
+			if plugin.name == pluginname:
+				return False
+
+		return True
 
 	
 	def __len__ (self):

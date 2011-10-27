@@ -19,7 +19,7 @@ class PluginsLoaderTest(unittest.TestCase):
 
 
 	def testLoad (self):
-		dirlist = [u"../plugins/testempty1", u"../plugins/testempty2"]
+		dirlist = [u"../plugins/testempty1", u"../plugins/testempty2", u"../plugins/testempty2"]
 		loader = PluginsLoader(Application)
 		loader.load (dirlist)
 
@@ -48,6 +48,7 @@ class PluginsLoaderTest(unittest.TestCase):
 				u"../plugins/testinvalid7",
 				u"../plugins/testempty1", 
 				u"../plugins/testempty2",
+				u"../plugins/testempty2",                # Ссылка на плагин testempty посторияется еще раз
 				u"../plugins/testwikicommand"]
 
 		loader = PluginsLoader(Application)

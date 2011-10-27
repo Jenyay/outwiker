@@ -16,16 +16,14 @@ class PluginTestWikiCommand (Plugin):
 		"""
 		Plugin.__init__ (self, application)
 
-		self._application.onWikiParserPrepare += self.__onWikiParserPrepare
-
 
 	def __onWikiParserPrepare (self, parser):
 		parser.addCommand (CommandCounter (parser))
 
 
-	#############################################
-	# Свойства, которые необходимо определить
-	#############################################
+	###################################################
+	# Свойства и методы, которые необходимо определить
+	###################################################
 
 	@property
 	def name (self):
@@ -40,6 +38,10 @@ class PluginTestWikiCommand (Plugin):
 	@property
 	def version (self):
 		return u"0.1"
+
+
+	def initialize(self):
+		self._application.onWikiParserPrepare += self.__onWikiParserPrepare
 
 
 	def destroy (self):

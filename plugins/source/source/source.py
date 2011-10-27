@@ -17,22 +17,15 @@ class PluginSourceCommand (Plugin):
 		"""
 		Plugin.__init__ (self, application)
 
-		cmd_folder = os.path.dirname(os.path.abspath(__file__))
-		if cmd_folder not in sys.path:
-			sys.path.insert(0, cmd_folder)
-		
-
-		self._application.onWikiParserPrepare += self.__onWikiParserPrepare
-
-
+	
 	def __onWikiParserPrepare (self, parser):
 		from .commandsource import CommandSource
 		parser.addCommand (CommandSource (parser))
 
 
-	#############################################
-	# Свойства, которые необходимо определить
-	#############################################
+	###################################################
+	# Свойства и методы, которые необходимо определить
+	###################################################
 
 	@property
 	def name (self):
@@ -41,12 +34,20 @@ class PluginSourceCommand (Plugin):
 	
 	@property
 	def description (self):
-		return _(u"Add command (:source:) in wiki parser")
+		return u"Add command (:source:) in wiki parser"
 
 
 	@property
 	def version (self):
-		return u"0.1"
+		return u"1.0"
+
+
+	def initialize(self):
+		cmd_folder = os.path.dirname(os.path.abspath(__file__))
+		if cmd_folder not in sys.path:
+			sys.path.insert(0, cmd_folder)
+
+		self._application.onWikiParserPrepare += self.__onWikiParserPrepare
 
 
 	def destroy (self):

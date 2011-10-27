@@ -15,7 +15,6 @@ class PluginTestWikiCommand (Plugin):
 		"""
 		Plugin.__init__ (self, application)
 
-		self._application.onWikiParserPrepare += self.__onWikiParserPrepare
 
 
 	def __onWikiParserPrepare (self, parser):
@@ -23,8 +22,12 @@ class PluginTestWikiCommand (Plugin):
 
 
 	#############################################
-	# Свойства, которые необходимо определить
+	# Свойства и методы, которые необходимо определить
 	#############################################
+
+	def initialize(self):
+		self._application.onWikiParserPrepare += self.__onWikiParserPrepare
+
 
 	@property
 	def name (self):
