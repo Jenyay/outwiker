@@ -49,7 +49,7 @@ class WikiStyleCommandTest (unittest.TestCase):
 		self.assertEqual ( len (self.loader), 1)
 
 
-	def testStyleContent (self):
+	def testStyleContentParse (self):
 		text = u"""Бла-бла-бла
 (:style:)
 body {font-size: 33px}
@@ -61,9 +61,11 @@ body {font-size: 33px}
 
 бла-бла-бла
 """
+		styleresult = u"<STYLE>body {font-size: 33px}</STYLE>"
 
 		result = self.parser.toHtml (text)
 		self.assertEqual (result, validResult)
+		self.assertTrue (styleresult in self.parser.head)
 
 
 	def testFullHtml (self):
@@ -82,6 +84,33 @@ body {font-size: 33px}
 		validStyle = u"<STYLE>body {font-size: 33px}</STYLE>"
 
 		self.assertTrue (validStyle in result, result)
+
+
+	def testFullHtml2 (self):
+		text = u"""Бла-бла-бла
+(:style:)
+body {font-size: 33px}
+(:styleend:)
+
+sdfsdf sdf
+
+(:style:)
+body {font-size: 10px}
+(:styleend:)
+
+бла-бла-бла
+"""
+		self.testPage.content = text
+
+		generator = HtmlGenerator (self.testPage)
+		htmlpath = generator.makeHtml ()
+		result = self.__readFile (htmlpath)
+
+		validStyle1 = u"<STYLE>body {font-size: 33px}</STYLE>"
+		validStyle2 = u"<STYLE>body {font-size: 10px}</STYLE>"
+
+		self.assertTrue (validStyle1 in result, result)
+		self.assertTrue (validStyle2 in result, result)
 
 
 	def __readFile (self, path):

@@ -11,9 +11,7 @@ from outwiker.core.attachment import Attachment
 from outwiker.core.application import Application
 from outwiker.core.config import Config
 
-from outwiker.pages.wiki.parser.wikiparser import Parser
 from outwiker.pages.wiki.wikipage import WikiPageFactory
-from outwiker.pages.wiki.parserfactory import ParserFactory
 from outwiker.pages.wiki.htmlgenerator import HtmlGenerator
 from outwiker.pages.wiki.emptycontent import EmptyContent
 
@@ -27,9 +25,6 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
 		self.filesPath = u"../test/samplefiles/"
 		self.__createWiki()
 		
-		factory = ParserFactory()
-		self.parser = factory.make (self.testPage, Application.config)
-
 		files = [u"image.jpg", u"dir"]
 
 		fullFilesPath = [os.path.join (self.filesPath, fname) for fname in files]

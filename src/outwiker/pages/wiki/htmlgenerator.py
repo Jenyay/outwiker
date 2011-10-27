@@ -44,7 +44,8 @@ class HtmlGenerator (object):
 
 		tpl = HtmlTemplate (os.path.join (getTemplatesDir(), "html") )
 		text = HtmlImprover.run (parser.toHtml (content) )
-		result = tpl.substitute (content=text)
+		head = parser.head
+		result = tpl.substitute (content=text, userhead=head)
 
 
 		with open (path, "wb") as fp:

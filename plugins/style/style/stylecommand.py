@@ -32,4 +32,7 @@ class StyleCommand (Command):
 		Запустить команду на выполнение. 
 		Метод возвращает текст, который будет вставлен на место команды в вики-нотации
 		"""
+		template = u"<STYLE>{0}</STYLE>"
+		header = template.format (content.strip())
+		self.parser.appendToHead (header)
 		return u""

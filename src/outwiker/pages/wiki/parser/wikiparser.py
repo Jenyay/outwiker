@@ -30,6 +30,9 @@ class Parser (object):
 		self.config = config
 		self.error_template = u"<B>{error}</B>"
 
+		# Массив строк, которые надо добавить в заголовок страницы
+		self.__headers = []
+
 		# Команды, обрабатывает парсер.
 		# Формат команд: (:name params... :) content... (:nameend:)
 		# Ключ - имя команды, значение - экземпляр класса команды
@@ -141,6 +144,21 @@ class Parser (object):
 				self.command |
 				self.noformat
 				)
+
+
+	@property
+	def head (self):
+		"""
+		Свойство возвращает строку из добавленных заголовочных элементов (то, что должно быть внутри тега <HEAD>...</HEAD>)
+		"""
+		return u"\n".join (self.__headers)
+
+
+	def appendToHead (self, header):
+		"""
+		Добавить строку в заголовок
+		"""
+		self.__headers.append (header)
 
 
 	def toHtml (self, text):
