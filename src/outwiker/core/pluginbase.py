@@ -2,6 +2,9 @@
 # -*- coding: UTF-8 -*-
 
 from abc import ABCMeta, abstractmethod, abstractproperty
+import gettext
+
+from outwiker.core.i18n import getLanguageFromConfig
 
 
 class Plugin (object):
@@ -12,6 +15,22 @@ class Plugin (object):
 
 	def __init__ (self, application):
 		self._application = application
+
+
+	def _init_i18n (self, domain, langdir):
+		"""
+		Инициализация интернационализации
+		domain - домен в файлах перевода
+		langdir - путь до папки с переводами
+		"""
+		language = getLanguageFromConfig (self._application.config)
+
+		try:
+			lang = gettext.translation(domain, langdir, languages=[language])
+		except IOError:
+			lang = gettext.translation(domain, langdir, languages=["en"])
+
+		return lang.ugettext
 
 
 	###################################################

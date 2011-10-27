@@ -2,12 +2,10 @@
 # -*- coding: UTF-8 -*-
 
 import os.path
-import gettext
 
 import wx
 
 from outwiker.core.commands import MessageBox
-from outwiker.core.i18n import getLanguageFromConfig
 from outwiker.gui.buttonsdialog import ButtonsDialog
 from outwiker.core.pluginbase import Plugin
 
@@ -15,20 +13,6 @@ from outwiker.core.pluginbase import Plugin
 class PluginDebug (Plugin):
 	def __init__ (self, application):
 		Plugin.__init__ (self, application)
-
-
-	def __init_i18n (self):
-		langdir = os.path.join (os.path.dirname (__file__), u'locale')
-		language =  getLanguageFromConfig (self._application.config)
-
-		global _
-
-		try:
-			lang = gettext.translation(u'testdebug', langdir, languages=[language])
-		except IOError:
-			lang = gettext.translation(u'testdebug', langdir, languages=["en"])
-
-		_ = lang.ugettext
 
 
 	def __createMenu (self):
@@ -79,8 +63,13 @@ class PluginDebug (Plugin):
 
 
 	def initialize(self):
+		domain = u"testdebug"
+
+		langdir = os.path.join (os.path.dirname (__file__), "locale")
+		global _
+
 		try:
-			self.__init_i18n ()
+			_ = self._init_i18n (domain, langdir)
 		except BaseException as e:
 			print e
 			raise
