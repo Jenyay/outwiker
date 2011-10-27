@@ -219,8 +219,8 @@ class _automodule(types.ModuleType):
         raise AttributeError(name)
 
 
-oldmod = sys.modules['pygments.lexers']
-newmod = _automodule('pygments.lexers')
-newmod.__dict__.update(oldmod.__dict__)
-sys.modules['pygments.lexers'] = newmod
-del newmod.newmod, newmod.oldmod, newmod.sys, newmod.types
+#oldmod = sys.modules['pygments.lexers']
+#newmod = _automodule('pygments.lexers')
+#newmod.__dict__.update(oldmod.__dict__)
+#sys.modules['pygments.lexers'] = newmod
+#del newmod.newmod, newmod.oldmod, newmod.sys, newmod.types
