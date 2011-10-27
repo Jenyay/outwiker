@@ -3,6 +3,12 @@
 
 from outwiker.pages.wiki.parser.command import Command
 
+from pygments import highlight
+from pygments.lexers import get_lexer_by_name
+from pygments.formatters import HtmlFormatter
+from pygments.lexers import ClassNotFound
+
+
 class CommandSource (Command):
 	"""
 	Команда source для оформления исходных текстов программ
@@ -21,6 +27,9 @@ class CommandSource (Command):
 		parser - экземпляр парсера
 		"""
 		Command.__init__ (self, parser)
+
+		# Добавлены ли стили в заголовок
+		self.__styleAppend = False
 
 	
 	@property
@@ -47,7 +56,31 @@ class CommandSource (Command):
 			tabwidth = DEFAULT_TABWIDTH
 
 		newcontent = content.replace ("\t", " " * tabwidth)
+		colortext = self.__colorize (params_dict, newcontent)
 
-		result = u"<CODE><PRE>{content}</PRE></CODE>".format (content=newcontent)
+		return colortext
+
+
+	def __colorize (self, params_dict, content):
+		langDefault = "text"
+		langParam = u"lang"
+
+		lang = params_dict[langParam] if langParam in params_dict else langDefault
+
+		if not self.__styleAppend:
+			styles = u"<STYLE>{0}</STYLE>".format (HtmlFormatter().get_style_defs())
+			self.parser.appendToHead (styles)
+			self.__styleAppend = True
+
+		try:
+			lexer = get_lexer_by_name(lang, stripall=True)
+		except ClassNotFound:
+			lexer = get_lexer_by_name(langDefault, stripall=True)
+
+		formatter = HtmlFormatter(linenos=False)
+		result = highlight(content, lexer, formatter)
+
+		result = result.replace ("\n</td>", "</td>")
 
 		return result
+		

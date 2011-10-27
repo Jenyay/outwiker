@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
+import os.path
+import sys
+
 from outwiker.core.pluginbase import Plugin
-from .commandsource import CommandSource
 
 
 class PluginSourceCommand (Plugin):
@@ -15,10 +17,16 @@ class PluginSourceCommand (Plugin):
 		"""
 		Plugin.__init__ (self, application)
 
+		cmd_folder = os.path.dirname(os.path.abspath(__file__))
+		if cmd_folder not in sys.path:
+			sys.path.insert(0, cmd_folder)
+		
+
 		self._application.onWikiParserPrepare += self.__onWikiParserPrepare
 
 
 	def __onWikiParserPrepare (self, parser):
+		from .commandsource import CommandSource
 		parser.addCommand (CommandSource (parser))
 
 
