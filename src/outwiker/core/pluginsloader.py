@@ -38,6 +38,8 @@ class PluginsLoader (object):
 
 				# Добавить путь до currentDir в sys.path
 				fullpath = os.path.abspath (currentDir)
+				# TODO: Разобратсья с Unicode в следующей строке. Икогда выскакивает предупреждение:
+				# ...\outwiker\core\pluginsloader.py:41: UnicodeWarning: Unicode equal comparison failed to convert both arguments to Unicode - interpreting them as being unequal
 				if fullpath not in sys.path:
 					sys.path.insert (0, fullpath)
 
