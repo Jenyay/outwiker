@@ -228,6 +228,57 @@ def hello (count):
 		self.assertFalse (u"(:source" in result)
 
 
+	def testManySource (self):
+		text = u'''(:source lang=python:)
+import os
+
+# Комментарий
+def hello (count):
+	"""
+	Hello world
+	"""
+	for i in range (10):
+		print "Hello world!!!"
+(:sourceend:)
+
+
+(:source:)
+import os
+
+# Комментарий
+def hello (count):
+	"""
+	Hello world
+	"""
+	for i in range (10):
+		print "Hello world!!!"
+(:sourceend:)
+'''
+
+		self.testPage.content = text
+
+		generator = HtmlGenerator (self.testPage)
+		htmlpath = generator.makeHtml ()
+		result = self.__readFile (htmlpath)
+
+		innerString1 = u".go { color: #808080 } /* Generic.Output */"
+		innerString2 = u'        print &quot;Hello world!!!&quot;'
+		innerString3 = u'def hello (count):'
+		innerString4 = u'       <span class="k">print</span> <span class="s">&quot;Hello world!!!&quot;</span>'
+		innerString5 = u'<span class="kn">import</span> <span class="nn">os</span>'
+		
+		self.assertTrue (innerString1 in result)
+	
+		# Проверка того, что стиль добавился только один раз
+		self.assertTrue (result.find (innerString1) == result.rfind (innerString1))
+
+		self.assertTrue (innerString2 in result)
+		self.assertTrue (innerString3 in result)
+		self.assertTrue (innerString4 in result)
+		self.assertTrue (innerString5 in result)
+		self.assertFalse (u"(:source" in result)
+
+
 	def __readFile (self, path):
 		with open (path) as fp:
 			result = unicode (fp.read(), "utf8")
