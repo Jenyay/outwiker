@@ -51,7 +51,7 @@ class SourcePluginTest (unittest.TestCase):
 
 
 	def testFullHtmlPython (self):
-		text = u'''(:source lang="python" tabwidth=4:)
+		text = u'''(:source lang="python" tabwidth=5:)
 import os
 
 # Комментарий
@@ -71,7 +71,66 @@ def hello (count):
 		result = self.__readFile (htmlpath)
 
 		innerString1 = u".go { color: #808080 } /* Generic.Output */"
-		innerString2 = u'<span class="k">print</span> <span class="s">&quot;Hello world!!!&quot;</span>'
+		innerString2 = u'          <span class="k">print</span> <span class="s">&quot;Hello world!!!&quot;</span>'
+		innerString3 = u'<span class="kn">import</span> <span class="nn">os</span>'
+		
+		self.assertTrue (innerString1 in result)
+		self.assertTrue (innerString2 in result)
+		self.assertTrue (innerString3 in result)
+
+
+	def testFullHtmlPython2 (self):
+		text = u'''(:source lang="python":)
+import os
+
+# Комментарий
+def hello (count):
+	"""
+	Hello world
+	"""
+	for i in range (10):
+		print "Hello world!!!"
+(:sourceend:)
+'''
+
+		self.testPage.content = text
+
+		generator = HtmlGenerator (self.testPage)
+		htmlpath = generator.makeHtml ()
+		result = self.__readFile (htmlpath)
+
+		innerString1 = u".go { color: #808080 } /* Generic.Output */"
+		innerString2 = u'       <span class="k">print</span> <span class="s">&quot;Hello world!!!&quot;</span>'
+		innerString3 = u'<span class="kn">import</span> <span class="nn">os</span>'
+		
+		self.assertTrue (innerString1 in result)
+		self.assertTrue (innerString2 in result)
+		self.assertTrue (innerString3 in result)
+
+
+	def testFullHtmlPython3 (self):
+		# Неправильный размер табуляции
+		text = u'''(:source lang="python" tabwidth="qqqqq":)
+import os
+
+# Комментарий
+def hello (count):
+	"""
+	Hello world
+	"""
+	for i in range (10):
+		print "Hello world!!!"
+(:sourceend:)
+'''
+
+		self.testPage.content = text
+
+		generator = HtmlGenerator (self.testPage)
+		htmlpath = generator.makeHtml ()
+		result = self.__readFile (htmlpath)
+
+		innerString1 = u".go { color: #808080 } /* Generic.Output */"
+		innerString2 = u'       <span class="k">print</span> <span class="s">&quot;Hello world!!!&quot;</span>'
 		innerString3 = u'<span class="kn">import</span> <span class="nn">os</span>'
 		
 		self.assertTrue (innerString1 in result)
@@ -100,7 +159,67 @@ def hello (count):
 		result = self.__readFile (htmlpath)
 
 		innerString1 = u".go { color: #808080 } /* Generic.Output */"
-		innerString2 = u'print &quot;Hello world!!!&quot;'
+		innerString2 = u'        print &quot;Hello world!!!&quot;'
+		innerString3 = u'def hello (count):'
+		
+		self.assertTrue (innerString1 in result)
+		self.assertTrue (innerString2 in result)
+		self.assertTrue (innerString3 in result)
+		self.assertFalse (u"(:source" in result)
+
+
+	def testFullHtmlText (self):
+		text = u'''(:source lang="text" tabwidth=4:)
+import os
+
+# Комментарий
+def hello (count):
+	"""
+	Hello world
+	"""
+	for i in range (10):
+		print "Hello world!!!"
+(:sourceend:)
+'''
+
+		self.testPage.content = text
+
+		generator = HtmlGenerator (self.testPage)
+		htmlpath = generator.makeHtml ()
+		result = self.__readFile (htmlpath)
+
+		innerString1 = u".go { color: #808080 } /* Generic.Output */"
+		innerString2 = u'        print &quot;Hello world!!!&quot;'
+		innerString3 = u'def hello (count):'
+		
+		self.assertTrue (innerString1 in result)
+		self.assertTrue (innerString2 in result)
+		self.assertTrue (innerString3 in result)
+		self.assertFalse (u"(:source" in result)
+
+
+	def testFullHtmlText2 (self):
+		text = u'''(:source:)
+import os
+
+# Комментарий
+def hello (count):
+	"""
+	Hello world
+	"""
+	for i in range (10):
+		print "Hello world!!!"
+(:sourceend:)
+'''
+
+		self.testPage.content = text
+
+		generator = HtmlGenerator (self.testPage)
+		htmlpath = generator.makeHtml ()
+		result = self.__readFile (htmlpath)
+
+		innerString1 = u".go { color: #808080 } /* Generic.Output */"
+		innerString2 = u'        print &quot;Hello world!!!&quot;'
 		innerString3 = u'def hello (count):'
 		
 		self.assertTrue (innerString1 in result)
