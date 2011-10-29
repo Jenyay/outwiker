@@ -144,6 +144,40 @@ class BooleanOption (StringOption):
 		return self.config.getbool (self.section, self.param)
 
 
+class ListOption (StringOption):
+	"""
+	Класс для хранения настроек в виде списка. По умолчанию элементы разделяются символом ";", но разделитель можно изменять
+	"""
+	def __init__ (self, config, section, param, defaultValue, separator=";"):
+		StringOption.__init__ (self, config, section, param, defaultValue)
+		self.__separator = separator
+
+
+	def _loadValue (self):
+		line = self.config.get (self.section, self.param)
+		# if line[-1] != self.__separator:
+		# 	line += self.__separator
+
+		items = line.split (self.__separator)
+
+		# Удалим последний пустой элемент
+		# if items[-1] == "":
+		# 	items.pop()
+
+		return items
+
+
+	@property
+	def value (self):
+		return self._loadParam ()
+
+
+	@value.setter
+	def value (self, val):
+		line = self.__separator.join (val)
+		self.config.set (self.section, self.param, line)
+
+
 class IntegerOption (StringOption):
 	"""
 	Настройка для целых чисел.
