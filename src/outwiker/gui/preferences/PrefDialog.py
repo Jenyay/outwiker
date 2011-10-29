@@ -7,6 +7,8 @@ import GeneralPanel
 import EditorPanel
 import HtmlRenderPanel
 import TextPrintPanel
+from pluginspanel import PluginsPanel
+
 from outwiker.core.exceptions import PreferencesException
 from outwiker.core.factoryselector import FactorySelector
 from outwiker.core.application import Application
@@ -39,7 +41,7 @@ class PrefDialog(wx.Dialog):
 	def __set_properties(self):
 		# begin wxGlade: PrefDialog.__set_properties
 		self.SetTitle(_("Preferences"))
-		self.SetSize((700, 500))
+		self.SetSize((800, 550))
 		self.treeBook.SetMinSize((300, 400))
 		# end wxGlade
 
@@ -66,12 +68,14 @@ class PrefDialog(wx.Dialog):
 		self.editorPage = EditorPanel.EditorPanel (self.treeBook)
 		self.htmlRenderPage = HtmlRenderPanel.HtmlRenderPanel (self.treeBook)
 		self.textPrintPage = TextPrintPanel.TextPrintPanel (self.treeBook)
+		self.pluginsPage = PluginsPanel (self.treeBook)
 
 		self.treeBook.AddPage (self.generalPage, _(u"Interface"))
 		self.treeBook.AddSubPage (self.generalPage, _(u"General"))
 		self.treeBook.AddSubPage (self.editorPage, _(u"Editor"))
 		self.treeBook.AddSubPage (self.htmlRenderPage, _(u"Preview"))
 		self.treeBook.AddSubPage (self.textPrintPage, _(u"Text Printout"))
+		self.treeBook.AddPage (self.pluginsPage, _(u"Plugins") )
 
 		self._createPagesForPages()
 
@@ -86,7 +90,7 @@ class PrefDialog(wx.Dialog):
 		Создать страницы настроек для типов страниц
 		"""
 		# Индекс последней добавленной страницы
-		pageindex = 4
+		pageindex = 5
 		for factory in FactorySelector.factories:
 			pages = factory.getPrefPanels(self.treeBook)
 
