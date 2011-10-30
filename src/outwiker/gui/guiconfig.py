@@ -5,7 +5,7 @@ import locale
 
 import wx
 
-from outwiker.core.config import StringOption, BooleanOption, IntegerOption
+from outwiker.core.config import StringOption, BooleanOption, IntegerOption, ListOption
 from outwiker.core.system import getDefaultLanguage
 
 
@@ -33,6 +33,24 @@ class GeneralGuiConfig (object):
 		# Открывать последнуюю открытую вики при старте?
 		self.DEFAULT_RECENT_AUTOOPEN = False
 		self.autoopenOption = BooleanOption (self.config, u"RecentWiki", u"AutoOpen", self.DEFAULT_RECENT_AUTOOPEN)
+
+
+class PluginsConfig (object):
+	"""
+	Класс для хранения настроек, связанных с плагинами
+	"""
+	def __init__ (self, config):
+		self.config = config
+
+		self.pluginsConfigSection = u"Plugins"
+		self.disabledPluginsParam = u"Disabled"
+
+		self.disabledPlugins = ListOption (self.config, 
+				self.pluginsConfigSection,
+				self.disabledPluginsParam,
+				[],
+				separator=u";")
+
 
 
 class TrayConfig (object):

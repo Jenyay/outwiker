@@ -13,6 +13,7 @@ from outwiker.core.pluginbase import Plugin
 class PluginDebug (Plugin):
 	def __init__ (self, application):
 		Plugin.__init__ (self, application)
+		self.__menuName = _(u"Debug")
 
 
 	def __createMenu (self):
@@ -20,7 +21,7 @@ class PluginDebug (Plugin):
 		self.menu.Append (self.ID_PLUGINSLIST, _(u"Plugins List"))
 		self.menu.Append (self.ID_BUTTONSDIALOG, _(u"ButtonsDialog"))
 
-		self._application.mainWindow.mainMenu.Append (self.menu, _(u"Debug"))
+		self._application.mainWindow.mainMenu.Append (self.menu, self.__menuName)
 
 		self._application.mainWindow.Bind(wx.EVT_MENU, self.__onPluginsList, id=self.ID_PLUGINSLIST)
 		self._application.mainWindow.Bind(wx.EVT_MENU, self.__onButtonsDialog, id=self.ID_BUTTONSDIALOG)
@@ -84,6 +85,12 @@ class PluginDebug (Plugin):
 		"""
 		Уничтожение (выгрузка) плагина. Здесь плагин должен отписаться от всех событий
 		"""
-		pass
+		self._application.mainWindow.Unbind(wx.EVT_MENU, handler=self.__onPluginsList, id=self.ID_PLUGINSLIST)
+		self._application.mainWindow.Unbind(wx.EVT_MENU, handler=self.__onButtonsDialog, id=self.ID_BUTTONSDIALOG)
+
+		index = self._application.mainWindow.mainMenu.FindMenu (self.__menuName)
+		assert index != wx.NOT_FOUND
+
+		index = self._application.mainWindow.mainMenu.Remove (index)
 
 	#############################################

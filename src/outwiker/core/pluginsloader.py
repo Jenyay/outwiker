@@ -6,6 +6,7 @@ import os.path
 import sys
 
 from .pluginbase import Plugin
+from outwiker.gui.guiconfig import PluginsConfig
 
 
 class PluginsLoader (object):
@@ -15,13 +16,66 @@ class PluginsLoader (object):
 	def __init__ (self, application):
 		self.__application = application
 
-		self.__plugins = []
+		# Словарь с загруженными плагинами
+		# Ключ - имя плагина
+		# Значение - экземпляр плагина
+		self.__plugins = {}
+
+		# Словарь с плагинами, которые были отключены пользователем
+		# Ключ - имя плагина
+		# Значение - экземпляр плагина
+		self.__disabledPlugins = {}
 
 		# Пути, где ищутся плагины
 		self.__dirlist = []
 
 		# Имя классов плагинов должно начинаться с "Plugins"
 		self.__pluginsStartName = "Plugin"
+
+
+	@property
+	def disabledPlugins (self):
+		"""
+		Возвращает список отключенных плагинов
+		"""
+		return self.__disabledPlugins
+
+
+	def updateDisableList (self):
+		options = PluginsConfig (self.__application.config)
+		
+		# Пройтись по включенным плагинам и отключить те, что попали в черный список
+		self.__disableEnabledPlugins (options.disabledPlugins.value)
+
+		# Пройтись по отключенным плагинам и включить те, что не попали в "черный список"
+		self.__enableDisabledPlugins (options.disabledPlugins.value)
+
+
+	def __disableEnabledPlugins (self, disableList):
+		"""
+		Отключить загруженные плагины, попавшие в "черный список" (disableList)
+		"""
+		for pluginname in disableList:
+			if pluginname in self.__plugins.keys():
+				self.__plugins[pluginname].destroy()
+
+				assert pluginname not in self.__disabledPlugins
+				self.__disabledPlugins[pluginname] = self.__plugins[pluginname]
+				del self.__plugins[pluginname]
+
+
+	def __enableDisabledPlugins (self, disableList):
+		"""
+		Включить отключенные плагины, если их больше нет в "черном списке"
+		"""
+		for plugin in self.__disabledPlugins.values():
+			if plugin.name not in disableList:
+				plugin.initialize ()
+
+				assert plugin.name not in self.__plugins
+				self.__plugins[plugin.name] = plugin
+
+				del self.__disabledPlugins[plugin.name]
 
 
 	def load (self, dirlist):
@@ -38,7 +92,7 @@ class PluginsLoader (object):
 
 				# Добавить путь до currentDir в sys.path
 				fullpath = os.path.abspath (currentDir)
-				# TODO: Разобратсья с Unicode в следующей строке. Икогда выскакивает предупреждение:
+				# TODO: Разобраться с Unicode в следующей строке. Икогда выскакивает предупреждение:
 				# ...\outwiker\core\pluginsloader.py:41: UnicodeWarning: Unicode equal comparison failed to convert both arguments to Unicode - interpreting them as being unequal
 				if fullpath not in sys.path:
 					sys.path.insert (0, fullpath)
@@ -54,10 +108,10 @@ class PluginsLoader (object):
 		"""
 		Уничтожить все загруженные плагины
 		"""
-		for plugin in self.__plugins:
+		for name, plugin in self.__plugins.items():
 			plugin.destroy()
 
-		self.__plugins = []
+		self.__plugins = {}
 
 
 	def __importModules (self, baseDir, dirPackagesList):
@@ -110,12 +164,14 @@ class PluginsLoader (object):
 		"""
 		assert modules != None
 
+		options = PluginsConfig (self.__application.config)
+
 		for module in modules:
 			for name in dir (module):
-				self.__createObject (module, name)
+				self.__createObject (module, name, options.disabledPlugins.value)
 
 
-	def __createObject (self, module, name):
+	def __createObject (self, module, name, disabledPlugins):
 		"""
 		Попытаться загрузить класс, возможно, это плагин
 
@@ -134,9 +190,14 @@ class PluginsLoader (object):
 				print e
 				return
 
-			if self.__isNewPlugin (plugin.name):
+			if not self.__isNewPlugin (plugin.name):
+				return
+
+			if plugin.name not in disabledPlugins:
 				plugin.initialize()
-				self.__plugins.append (plugin)
+				self.__plugins[plugin.name] = plugin
+			else:
+				self.__disabledPlugins[plugin.name] = plugin
 
 
 	def __isNewPlugin (self, pluginname):
@@ -144,16 +205,17 @@ class PluginsLoader (object):
 		Проверка того, что плагин с таким именем еще не был загружен
 		newplugin - плагин, который надо проверить
 		"""
-		for plugin in self.__plugins:
-			if plugin.name == pluginname:
-				return False
-
-		return True
+		return (pluginname not in self.__plugins and 
+				pluginname not in self.__disabledPlugins)
 
 	
 	def __len__ (self):
 		return len (self.__plugins)
 
 
-	def __getitem__ (self, index):
-		return self.__plugins[index]
+	def __getitem__ (self, pluginname):
+		return self.__plugins[pluginname]
+
+
+	def __iter__ (self):
+		return self.__plugins.itervalues()

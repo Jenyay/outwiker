@@ -10,6 +10,13 @@ class PluginTestEmpty1 (Plugin):
 		application - экземпляр класса core.application.ApplicationParams
 		"""
 		Plugin.__init__ (self, application)
+		self.__enabled = False
+
+	
+	@property
+	def enabled (self):
+		return self.__enabled
+
 
 	@property
 	def application (self):
@@ -36,13 +43,13 @@ class PluginTestEmpty1 (Plugin):
 
 	
 	def initialize(self):
-		pass
+		self.__enabled = True
 
 
 	def destroy (self):
 		"""
 		Уничтожение (выгрузка) плагина. Здесь плагин должен отписаться от всех событий
 		"""
-		pass
+		self.__enabled = False
 
 	#############################################

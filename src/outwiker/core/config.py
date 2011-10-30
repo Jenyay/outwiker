@@ -155,15 +155,7 @@ class ListOption (StringOption):
 
 	def _loadValue (self):
 		line = self.config.get (self.section, self.param)
-		# if line[-1] != self.__separator:
-		# 	line += self.__separator
-
 		items = line.split (self.__separator)
-
-		# Удалим последний пустой элемент
-		# if items[-1] == "":
-		# 	items.pop()
-
 		return items
 
 

@@ -5,6 +5,7 @@ import wx
 import wx.html
 
 from outwiker.core.application import Application
+from outwiker.gui.guiconfig import PluginsConfig
 #from outwiker.core.pluginbase import Plugin
 
 
@@ -93,7 +94,15 @@ class PluginsController (object):
 
 
 	def loadState (self):
-		# Заполним список плагинов
+		self.__owner.pluginsList.Clear()
+		self.__appendEnabledPlugins()
+		self.__appendDisabledPlugins()
+
+
+	def __appendEnabledPlugins (self):
+		"""
+		Добавить загруженные плагины в список
+		"""
 		for plugin in Application.plugins:
 			index = self.__owner.pluginsList.Append (plugin.name, plugin)
 			assert self.__owner.pluginsList.GetClientData (index) == plugin
@@ -101,5 +110,29 @@ class PluginsController (object):
 			self.__owner.pluginsList.Check (index)
 
 
+	def __appendDisabledPlugins (self):
+		"""
+		Добавить отключенные плагины в список
+		"""
+		for plugin in Application.plugins.disabledPlugins.values():
+			index = self.__owner.pluginsList.Append (plugin.name, plugin)
+			assert self.__owner.pluginsList.GetClientData (index) == plugin
+
+			self.__owner.pluginsList.Check (index, False)
+
+
 	def save (self):
-		pass
+		config = PluginsConfig (Application.config)
+		config.disabledPlugins.value = self.__getDisabledPlugins()
+		Application.plugins.updateDisableList()
+
+
+	def __getDisabledPlugins (self):
+		disabledList = []
+
+		for itemindex in range (self.__owner.pluginsList.GetCount()):
+			if not self.__owner.pluginsList.IsChecked (itemindex):
+				disabledList.append (self.__owner.pluginsList.GetClientData (itemindex).name)
+
+		return disabledList
+
