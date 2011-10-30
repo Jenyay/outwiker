@@ -25,7 +25,7 @@ class PluginsPanel (wx.Panel):
 		self.pluginsList.SetMinSize ((50, -1))
 
 		self.pluginsInfo = wx.html.HtmlWindow (self, style=wx.html.HW_SCROLLBAR_AUTO)
-		self.pluginsInfo.SetMinSize ((50, -1))
+		self.pluginsInfo.SetMinSize ((150, -1))
 
 		self.__layout()
 
@@ -57,13 +57,19 @@ class PluginsController (object):
 	def __init__ (self, pluginspanel):
 		self.__owner = pluginspanel
 
+		# Т.к. под виндой к элементам CheckListBox нельзя прикреплять пользовательские данные,
+		# придется их хранить отдельно.
+		# Ключ - имя плагина, оно же текст строки
+		# Значение - экземпляр плагина
+		self.__pluginsItems = {}
+
 		self.__owner.Bind (wx.EVT_LISTBOX, self.__onSelectItem, self.__owner.pluginsList)
 
 
 	def __onSelectItem (self, event):
 		htmlContent = u""
 		if event.IsSelection():
-			plugin = event.GetClientData()
+			plugin = self.__pluginsItems[event.GetString()]
 			assert plugin != None
 
 			htmlContent = self.__createPluginInfo (plugin)
@@ -94,6 +100,7 @@ class PluginsController (object):
 
 
 	def loadState (self):
+		self.__pluginsItems = {}
 		self.__owner.pluginsList.Clear()
 		self.__appendEnabledPlugins()
 		self.__appendDisabledPlugins()
@@ -104,10 +111,12 @@ class PluginsController (object):
 		Добавить загруженные плагины в список
 		"""
 		for plugin in Application.plugins:
-			index = self.__owner.pluginsList.Append (plugin.name, plugin)
-			assert self.__owner.pluginsList.GetClientData (index) == plugin
+			index = self.__owner.pluginsList.Append (plugin.name)
 
-			self.__owner.pluginsList.Check (index)
+			assert plugin.name not in self.__pluginsItems.keys()
+			self.__pluginsItems[plugin.name] = plugin
+
+			self.__owner.pluginsList.Check (index, True)
 
 
 	def __appendDisabledPlugins (self):
@@ -115,8 +124,10 @@ class PluginsController (object):
 		Добавить отключенные плагины в список
 		"""
 		for plugin in Application.plugins.disabledPlugins.values():
-			index = self.__owner.pluginsList.Append (plugin.name, plugin)
-			assert self.__owner.pluginsList.GetClientData (index) == plugin
+			index = self.__owner.pluginsList.Append (plugin.name)
+
+			assert plugin.name not in self.__pluginsItems.keys()
+			self.__pluginsItems[plugin.name] = plugin
 
 			self.__owner.pluginsList.Check (index, False)
 
@@ -132,7 +143,7 @@ class PluginsController (object):
 
 		for itemindex in range (self.__owner.pluginsList.GetCount()):
 			if not self.__owner.pluginsList.IsChecked (itemindex):
-				disabledList.append (self.__owner.pluginsList.GetClientData (itemindex).name)
+				disabledList.append (self.__pluginsItems[self.__owner.pluginsList.GetString (itemindex)].name)
 
 		return disabledList
 

@@ -13,7 +13,6 @@ from outwiker.core.pluginbase import Plugin
 class PluginDebug (Plugin):
 	def __init__ (self, application):
 		Plugin.__init__ (self, application)
-		self.__menuName = _(u"Debug")
 
 
 	def __createMenu (self):
@@ -78,6 +77,7 @@ class PluginDebug (Plugin):
 		self.ID_PLUGINSLIST = wx.NewId()
 		self.ID_BUTTONSDIALOG = wx.NewId()
 
+		self.__menuName = _(u"Debug")
 		self.__createMenu()
 
 
