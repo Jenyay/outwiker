@@ -34,7 +34,7 @@ class PluginStyle (Plugin):
 	
 	@property
 	def description (self):
-		return _(u"""Add command (:style:) to wiki parser.
+		return _(u"""Add command (:style:) to wiki parser. This command allow the setting of a user CSS style for a page.
 
 <B>Usage</B>:
 (:style:)
