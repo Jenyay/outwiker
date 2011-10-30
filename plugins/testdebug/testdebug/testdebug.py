@@ -72,7 +72,6 @@ class PluginDebug (Plugin):
 			_ = self._init_i18n (domain, langdir)
 		except BaseException as e:
 			print e
-			raise
 
 		self.ID_PLUGINSLIST = wx.NewId()
 		self.ID_BUTTONSDIALOG = wx.NewId()

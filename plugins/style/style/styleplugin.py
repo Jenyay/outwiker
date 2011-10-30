@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
+import os.path
+
 from outwiker.core.pluginbase import Plugin
 
 from .stylecommand import StyleCommand
@@ -32,13 +34,18 @@ class PluginStyle (Plugin):
 	
 	@property
 	def description (self):
-		return u"""Add command (:style:) in wiki parser.
-Usage:
+		return _(u"""Add command (:style:) to wiki parser.
 
+<B>Usage</B>:
 (:style:)
 styles
 (:styleend:)
-"""
+
+<B>Example:</B>
+(:style:)
+body {background-color: #EEE;}
+(:styleend:)
+""")
 
 
 	@property
@@ -47,6 +54,17 @@ styles
 
 
 	def initialize(self):
+		domain = u"style"
+
+		langdir = os.path.join (os.path.dirname (__file__), "locale")
+		global _
+
+		try:
+			_ = self._init_i18n (domain, langdir)
+		except BaseException as e:
+			print e
+			# raise
+
 		self._application.onWikiParserPrepare += self.__onWikiParserPrepare
 
 

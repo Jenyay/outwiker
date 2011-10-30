@@ -89,6 +89,7 @@ class PluginsController (object):
 <BODY>
 <H3>{name}</H3>
 <B>Version:</B> {version}<BR>
+<BR>
 <B>Description:</B> {description}
 </BODY>
 </HTML>""")

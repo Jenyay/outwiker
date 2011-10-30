@@ -21,7 +21,7 @@ distrib/outwiker-*/DEBIAN/md5sums
 distrib/outwiker-*/opt/outwiker
 distrib/outwiker-*/usr/share/outwiker
 distrib/*.zip
-src/.coverage
-src/htmlcov
+.coverage
+htmlcov
 src/tests.log
 src/plugins/*
