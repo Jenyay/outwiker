@@ -50,6 +50,18 @@ class SourcePluginTest (unittest.TestCase):
 		self.assertEqual ( len (self.loader), 1)
 
 
+	def testEmptyCommand (self):
+		text = u'''bla-bla-bla (:source:) bla-bla-bla'''
+
+		self.testPage.content = text
+
+		generator = HtmlGenerator (self.testPage)
+		htmlpath = generator.makeHtml ()
+		result = self.__readFile (htmlpath)
+
+		self.assertTrue (u"bla-bla-bla" in result)
+
+
 	def testFullHtmlPython (self):
 		text = u'''(:source lang="python" tabwidth=5:)
 import os

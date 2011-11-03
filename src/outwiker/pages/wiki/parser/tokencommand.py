@@ -41,6 +41,12 @@ class CommandToken (object):
 		params = t["params"]
 		content = t["content"]
 
+		if params == None:
+			params = u""
+
+		if content == None:
+			content = u""
+
 		try:
 			command = self.parser.commands[name]
 		except KeyError:
