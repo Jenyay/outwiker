@@ -2,8 +2,8 @@ deb:
 	cd distrib; sh makedeb.sh
 
 win:
-	python src\\setup_win.py build
-	7z a -r -tzip distrib\\outwiker_win32_unstable.zip distrib\\outwiker_win\\*.* distrib\\outwiker_win\\plugins
+	cd src; python setup_win.py build
+	cd distrib\\outwiker_win; 7z a ..\\outwiker_win32_unstable.zip .\\* .\plugins -r -aoa
 
 wintests:
 	python src\\setup_tests.py build
