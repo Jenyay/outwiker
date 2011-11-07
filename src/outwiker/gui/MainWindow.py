@@ -169,11 +169,12 @@ class MainWindow(wx.Frame):
 		pane = self.__loadPaneInfo (self.treeConfig.treePaneOption)
 
 		if pane == None:
-			pane = wx.aui.AuiPaneInfo().Name(("treePane")).Caption(_("Notes")).Gripper(False).CaptionVisible(True).Layer(2).Position(0).CloseButton(True).MaximizeButton(False).Left().Dock()
+			pane = wx.aui.AuiPaneInfo().Name(("treePane")).Caption(_(u"Notes")).Gripper(False).CaptionVisible(True).Layer(2).Position(0).CloseButton(True).MaximizeButton(False).Left().Dock()
 
 		# Из-за глюка http://trac.wxwidgets.org/ticket/12422 придется пока отказаться от плавающих панелек
 		pane.Dock()
 		pane.CloseButton()
+		pane.Caption(_(u"Notes"))
 
 		pane.BestSize ((self.treeConfig.treeWidthOption.value, 
 			self.treeConfig.treeHeightOption.value))
@@ -188,13 +189,14 @@ class MainWindow(wx.Frame):
 		pane = self.__loadPaneInfo (self.attachConfig.attachesPaneOption)
 
 		if pane == None:
-			pane = wx.aui.AuiPaneInfo().Name("attachesPane").Caption(_("Attaches")).Gripper(False).CaptionVisible(True).Layer(1).Position(0).CloseButton(True).MaximizeButton(False).Bottom().Dock()
+			pane = wx.aui.AuiPaneInfo().Name("attachesPane").Caption(_(u"Attaches")).Gripper(False).CaptionVisible(True).Layer(1).Position(0).CloseButton(True).MaximizeButton(False).Bottom().Dock()
 
 		# Из-за глюка http://trac.wxwidgets.org/ticket/12422 придется пока отказаться от плавающих панелек
 		pane.Dock()
 		pane.CloseButton()
+		pane.Caption(_(u"Attaches"))
 
-		auiManager.AddPane(self.attachPanel, pane, _('Attaches') )
+		auiManager.AddPane(self.attachPanel, pane, _(u"Attaches") )
 	
 
 	def __initPagePane (self, auiManager):
