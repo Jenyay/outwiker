@@ -6,7 +6,6 @@ import locale
 import wx
 
 from outwiker.core.config import StringOption, BooleanOption, IntegerOption, ListOption
-from outwiker.core.system import getDefaultLanguage
 
 
 class GeneralGuiConfig (object):
@@ -15,8 +14,6 @@ class GeneralGuiConfig (object):
 	"""
 	def __init__ (self, config):
 		self.config = config
-
-		self.languageOption = StringOption (self.config, u"General", u"language", getDefaultLanguage())
 
 		# Спрашивать подтверждение выхода?
 		self.DEFAULT_ASK_BEFORE_EXIT = True

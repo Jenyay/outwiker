@@ -194,7 +194,3 @@ def getPluginsDirList (dirname=DEFAULT_CONFIG_DIR, configname=DEFAULT_CONFIG_NAM
 		dirlist.append (pluginDir)
 
 	return dirlist
-
-
-def getDefaultLanguage ():
-	return locale.getdefaultlocale ()[0]

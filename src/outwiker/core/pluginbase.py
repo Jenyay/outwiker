@@ -4,7 +4,7 @@
 from abc import ABCMeta, abstractmethod, abstractproperty
 import gettext
 
-from outwiker.core.i18n import getLanguageFromConfig
+from outwiker.core.i18n import getLanguageFromConfig, loadLanguage
 
 
 class Plugin (object):
@@ -24,12 +24,7 @@ class Plugin (object):
 		langdir - путь до папки с переводами
 		"""
 		language = getLanguageFromConfig (self._application.config)
-
-		try:
-			lang = gettext.translation(domain, langdir, languages=[language])
-		except IOError:
-			lang = gettext.translation(domain, langdir, languages=["en"])
-
+		lang = loadLanguage (language, langdir, domain)
 		return lang.ugettext
 
 

@@ -7,6 +7,7 @@ import ConfigElements
 from outwiker.core.config import StringOption, BooleanOption, IntegerOption
 import outwiker.core.i18n
 from outwiker.core.application import Application
+from outwiker.core.i18n import I18nConfig
 from outwiker.gui.guiconfig import TrayConfig, GeneralGuiConfig, MainWindowConfig
 
 
@@ -18,12 +19,16 @@ class GeneralPanel (wx.ScrolledWindow):
 		self.trayConfig = TrayConfig (Application.config)
 		self.generalConfig = GeneralGuiConfig (Application.config)
 		self.mainWindowConfig = MainWindowConfig (Application.config)
+		self.i18nConfig = I18nConfig (Application.config)
 
 		self.MIN_AUTOSAVE_INTERVAL = 0
 		self.MAX_AUTOSAVE_INTERVAL = 3600
 
 		self.MIN_HISTORY_LENGTH = 0
 		self.MAX_HISTORY_LENGTH = 30
+
+		# Номер элемента при выборе "Авто" в списке языков
+		self.__autoIndex = 0
 
 		self.__createTrayGui()
 		self.__createMiscGui()
@@ -225,19 +230,18 @@ class GeneralPanel (wx.ScrolledWindow):
 
 		self.langCombo.Clear ()
 		self.langCombo.AppendItems (languages)
+		self.langCombo.Insert (_(u"Auto"), self.__autoIndex)
 
-		currlang = self.generalConfig.languageOption.value
+		currlang = self.i18nConfig.languageOption.value
 
 		try:
-			currindex = languages.index (currlang)
-			self.langCombo.SetSelection (currindex)
+			# "+1" за счет того, что добавляется пункт "Auto"
+			currindex = languages.index (currlang) + 1
 		except ValueError:
-			try:
-				# Индекс для английского языка
-				enindex = languages.index (u"en")
-				self.langCombo.SetSelection (enindex)
-			except ValueError:
-				pass
+			# Индекс для автоопределения языка
+			currindex = self.__autoIndex
+
+		self.langCombo.SetSelection (currindex)
 
 
 	def Save(self):
@@ -259,11 +263,14 @@ class GeneralPanel (wx.ScrolledWindow):
 
 	def __saveLanguage (self):
 		index = self.langCombo.GetSelection()
-		if index == wx.NOT_FOUND:
-			return
+		assert index != wx.NOT_FOUND
 
-		lang = self.langCombo.GetString (index)
-		self.generalConfig.languageOption.value = lang
+		if index == self.__autoIndex:
+			lang = outwiker.core.i18n.AUTO_LANGUAGE
+		else:
+			lang = self.langCombo.GetString (index)
+
+		self.i18nConfig.languageOption.value = lang
 
 
 	def onMinimizeToTray(self, event):

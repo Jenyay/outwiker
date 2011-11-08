@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-07 22:25+0400\n"
+"POT-Creation-Date: 2011-11-08 09:44+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -134,8 +134,8 @@ msgstr ""
 #: outwiker/gui/AttachPanel.py:250 outwiker/gui/basepagepanel.py:100
 #: outwiker/gui/BaseTextPanel.py:96 outwiker/gui/BaseTextPanel.py:177
 #: outwiker/gui/htmlrenderie.py:159 outwiker/gui/htmlrenderwebkit.py:198
-#: outwiker/gui/htmlrenderwx.py:106 outwiker/gui/MainWindow.py:275
-#: outwiker/gui/MainWindow.py:403 outwiker/gui/mainwndcontroller.py:116
+#: outwiker/gui/htmlrenderwx.py:106 outwiker/gui/MainWindow.py:277
+#: outwiker/gui/MainWindow.py:405 outwiker/gui/mainwndcontroller.py:116
 #: outwiker/gui/pagedialog.py:38 outwiker/gui/pagedialog.py:84
 #: outwiker/gui/pagedialog.py:103 outwiker/gui/pagedialog.py:130
 #: outwiker/gui/pagedialog.py:135 outwiker/gui/pagedialog.py:175
@@ -428,8 +428,8 @@ msgstr ""
 msgid "Notes &Tree"
 msgstr ""
 
-#: outwiker/gui/mainmenu.py:115 outwiker/gui/MainWindow.py:191
-#: outwiker/gui/MainWindow.py:197
+#: outwiker/gui/mainmenu.py:115 outwiker/gui/MainWindow.py:192
+#: outwiker/gui/MainWindow.py:197 outwiker/gui/MainWindow.py:199
 msgid "Attaches"
 msgstr ""
 
@@ -477,26 +477,26 @@ msgstr ""
 msgid "Global search…"
 msgstr ""
 
-#: outwiker/gui/MainWindow.py:172
+#: outwiker/gui/MainWindow.py:172 outwiker/gui/MainWindow.py:177
 msgid "Notes"
 msgstr ""
 
-#: outwiker/gui/MainWindow.py:274
+#: outwiker/gui/MainWindow.py:276
 #, python-format
 msgid ""
 "Can't save config\n"
 "%s"
 msgstr ""
 
-#: outwiker/gui/MainWindow.py:290
+#: outwiker/gui/MainWindow.py:292
 msgid "Really exit?"
 msgstr ""
 
-#: outwiker/gui/MainWindow.py:290 outwiker/gui/trayicon.py:128
+#: outwiker/gui/MainWindow.py:292 outwiker/gui/trayicon.py:128
 msgid "Exit"
 msgstr ""
 
-#: outwiker/gui/MainWindow.py:403 outwiker/gui/pagedialog.py:70
+#: outwiker/gui/MainWindow.py:405 outwiker/gui/pagedialog.py:70
 msgid "Can't create page"
 msgstr ""
 
@@ -637,47 +637,51 @@ msgstr ""
 msgid "Tab width"
 msgstr ""
 
-#: outwiker/gui/preferences/GeneralPanel.py:61
+#: outwiker/gui/preferences/GeneralPanel.py:66
 msgid "Autosave interval in seconds (0 - disabled)"
 msgstr ""
 
-#: outwiker/gui/preferences/GeneralPanel.py:81
+#: outwiker/gui/preferences/GeneralPanel.py:86
 msgid "Ask before exit"
 msgstr ""
 
-#: outwiker/gui/preferences/GeneralPanel.py:88
+#: outwiker/gui/preferences/GeneralPanel.py:93
 msgid "Minimize to tray"
 msgstr ""
 
-#: outwiker/gui/preferences/GeneralPanel.py:89
+#: outwiker/gui/preferences/GeneralPanel.py:94
 msgid "Start iconized"
 msgstr ""
 
-#: outwiker/gui/preferences/GeneralPanel.py:90
+#: outwiker/gui/preferences/GeneralPanel.py:95
 msgid "Always show tray icon"
 msgstr ""
 
-#: outwiker/gui/preferences/GeneralPanel.py:97
+#: outwiker/gui/preferences/GeneralPanel.py:102
 msgid "Recent files history length (restart required)"
 msgstr ""
 
-#: outwiker/gui/preferences/GeneralPanel.py:105
+#: outwiker/gui/preferences/GeneralPanel.py:110
 msgid "Automatically open the recent file"
 msgstr ""
 
-#: outwiker/gui/preferences/GeneralPanel.py:119
+#: outwiker/gui/preferences/GeneralPanel.py:124
 msgid ""
 "Macros for title:\n"
 "{file} - open wiki file name\n"
 "{page} - open page title"
 msgstr ""
 
-#: outwiker/gui/preferences/GeneralPanel.py:121
+#: outwiker/gui/preferences/GeneralPanel.py:126
 msgid "Main window title format"
 msgstr ""
 
-#: outwiker/gui/preferences/GeneralPanel.py:133
+#: outwiker/gui/preferences/GeneralPanel.py:138
 msgid "Language (restart required)"
+msgstr ""
+
+#: outwiker/gui/preferences/GeneralPanel.py:233
+msgid "Auto"
 msgstr ""
 
 #: outwiker/gui/preferences/HtmlRenderPanel.py:30
