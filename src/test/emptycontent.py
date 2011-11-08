@@ -10,13 +10,13 @@ from outwiker.pages.wiki.emptycontent import EmptyContent
 
 
 class EmptyContentTest (unittest.TestCase):
-	def setUp (self):
-		self.path = u"../test/testconfig.ini"
+    def setUp (self):
+        self.path = u"../test/testconfig.ini"
 
-		if os.path.exists (self.path):
-			os.remove (self.path)
+        if os.path.exists (self.path):
+            os.remove (self.path)
 
-		self.text = u"""Прикрепленные файлы:
+        self.text = u"""Прикрепленные файлы:
 (:attachlist:)
 ----
 Дочерние страницы:
@@ -24,48 +24,48 @@ class EmptyContentTest (unittest.TestCase):
 """
 
 
-	def tearDown (self):
-		if os.path.exists (self.path):
-			os.remove (self.path)
+    def tearDown (self):
+        if os.path.exists (self.path):
+            os.remove (self.path)
 
 
-	def test1 (self):
-		config = Config (self.path)
-		content = EmptyContent (config)
+    def test1 (self):
+        config = Config (self.path)
+        content = EmptyContent (config)
 
-		content.content = self.text
-		self.assertEqual (content.content, self.text)
-
-
-	def testDefault (self):
-		config = Config (self.path)
-		content = EmptyContent (config)
-
-		# Проверим, что есть какое-то непустое значение по умолчанию
-		self.assertNotEqual (len (content.content.strip()), 0)
+        content.content = self.text
+        self.assertEqual (content.content, self.text)
 
 
-	def testRead (self):
-		config = Config (self.path)
-		content1 = EmptyContent (config)
-		content2 = EmptyContent (config)
+    def testDefault (self):
+        config = Config (self.path)
+        content = EmptyContent (config)
 
-		content1.content = self.text
-
-		# Проверим, что есть какое-то непустое значение по умолчанию
-		self.assertEqual (content2.content, self.text)
-		self.assertEqual (content2.content, content1.content)
+        # Проверим, что есть какое-то непустое значение по умолчанию
+        self.assertNotEqual (len (content.content.strip()), 0)
 
 
-	def testRead2 (self):
-		config = Config (self.path)
-		content1 = EmptyContent (config)
+    def testRead (self):
+        config = Config (self.path)
+        content1 = EmptyContent (config)
+        content2 = EmptyContent (config)
 
-		content1.content = self.text
+        content1.content = self.text
 
-		content2 = EmptyContent (config)
+        # Проверим, что есть какое-то непустое значение по умолчанию
+        self.assertEqual (content2.content, self.text)
+        self.assertEqual (content2.content, content1.content)
 
-		# Проверим, что есть какое-то непустое значение по умолчанию
-		self.assertEqual (content2.content, self.text)
-		self.assertEqual (content2.content, content1.content)
+
+    def testRead2 (self):
+        config = Config (self.path)
+        content1 = EmptyContent (config)
+
+        content1.content = self.text
+
+        content2 = EmptyContent (config)
+
+        # Проверим, что есть какое-то непустое значение по умолчанию
+        self.assertEqual (content2.content, self.text)
+        self.assertEqual (content2.content, content1.content)
 

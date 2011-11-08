@@ -15,75 +15,75 @@ from emptycontent import EmptyContent
 
 
 class WikiPrefGeneralPanel(wx.Panel):
-	def __init__(self, *args, **kwds):
-		# begin wxGlade: WikiPrefGeneralPanel.__init__
-		kwds["style"] = wx.TAB_TRAVERSAL
-		wx.Panel.__init__(self, *args, **kwds)
-		self.htmlCodeCheckbox = wx.CheckBox(self, -1, _("Show HTML Code Tab"))
-		self.thumbSizeLabel = wx.StaticText(self, -1, _("Thumbnail Size"))
-		self.thumbSize = wx.SpinCtrl(self, -1, "250", min=1, max=10000)
-		self.label_1 = wx.StaticText(self, -1, _("Template for empty page"))
-		self.emptyTplTextCtrl = wx.TextCtrl(self, -1, "", style=wx.TE_MULTILINE|wx.HSCROLL|wx.TE_LINEWRAP|wx.TE_WORDWRAP)
+    def __init__(self, *args, **kwds):
+        # begin wxGlade: WikiPrefGeneralPanel.__init__
+        kwds["style"] = wx.TAB_TRAVERSAL
+        wx.Panel.__init__(self, *args, **kwds)
+        self.htmlCodeCheckbox = wx.CheckBox(self, -1, _("Show HTML Code Tab"))
+        self.thumbSizeLabel = wx.StaticText(self, -1, _("Thumbnail Size"))
+        self.thumbSize = wx.SpinCtrl(self, -1, "250", min=1, max=10000)
+        self.label_1 = wx.StaticText(self, -1, _("Template for empty page"))
+        self.emptyTplTextCtrl = wx.TextCtrl(self, -1, "", style=wx.TE_MULTILINE|wx.HSCROLL|wx.TE_LINEWRAP|wx.TE_WORDWRAP)
 
-		self.__set_properties()
-		self.__do_layout()
-		# end wxGlade
+        self.__set_properties()
+        self.__do_layout()
+        # end wxGlade
 
-		self.config = WikiConfig (Application.config)
-
-
-	def __set_properties(self):
-		# begin wxGlade: WikiPrefGeneralPanel.__set_properties
-		pass
-		# end wxGlade
-
-	def __do_layout(self):
-		# begin wxGlade: WikiPrefGeneralPanel.__do_layout
-		mainSizer = wx.FlexGridSizer(4, 1, 0, 0)
-		grid_sizer_1 = wx.FlexGridSizer(1, 2, 0, 0)
-		mainSizer.Add(self.htmlCodeCheckbox, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
-		grid_sizer_1.Add(self.thumbSizeLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
-		grid_sizer_1.Add(self.thumbSize, 0, wx.ALL|wx.EXPAND, 2)
-		grid_sizer_1.AddGrowableRow(0)
-		grid_sizer_1.AddGrowableCol(0)
-		grid_sizer_1.AddGrowableCol(1)
-		grid_sizer_1.AddGrowableCol(2)
-		mainSizer.Add(grid_sizer_1, 1, wx.EXPAND, 0)
-		mainSizer.Add(self.label_1, 0, wx.ALL, 4)
-		mainSizer.Add(self.emptyTplTextCtrl, 0, wx.ALL|wx.EXPAND, 4)
-		self.SetSizer(mainSizer)
-		mainSizer.Fit(self)
-		mainSizer.AddGrowableRow(3)
-		mainSizer.AddGrowableCol(0)
-		# end wxGlade
-	
-
-	def LoadState(self):
-		# Показывать ли вкладку с кодом HTML
-		self.showHtmlCodeOption = BooleanElement (self.config.showHtmlCodeOptions, self.htmlCodeCheckbox)
-
-		# Размер превьюшек по умолчанию
-		self.thumbSizeOption = IntegerElement (self.config.thumbSizeOptions, self.thumbSize, 1, 10000)
-
-		# Шаблон для пустых страниц
-		emptycontent = EmptyContent (Application.config)
-		self.emptyTplTextCtrl.SetValue (emptycontent.content)
+        self.config = WikiConfig (Application.config)
 
 
-	def Save (self):
-		changed = (self.showHtmlCodeOption.isValueChanged() or
-			self.thumbSizeOption.isValueChanged() )
+    def __set_properties(self):
+        # begin wxGlade: WikiPrefGeneralPanel.__set_properties
+        pass
+        # end wxGlade
 
-		self.showHtmlCodeOption.save()
-		self.thumbSizeOption.save()
-		
-		emptycontent = EmptyContent (Application.config)
-		emptycontent.content = self.emptyTplTextCtrl.GetValue()
+    def __do_layout(self):
+        # begin wxGlade: WikiPrefGeneralPanel.__do_layout
+        mainSizer = wx.FlexGridSizer(4, 1, 0, 0)
+        grid_sizer_1 = wx.FlexGridSizer(1, 2, 0, 0)
+        mainSizer.Add(self.htmlCodeCheckbox, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
+        grid_sizer_1.Add(self.thumbSizeLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
+        grid_sizer_1.Add(self.thumbSize, 0, wx.ALL|wx.EXPAND, 2)
+        grid_sizer_1.AddGrowableRow(0)
+        grid_sizer_1.AddGrowableCol(0)
+        grid_sizer_1.AddGrowableCol(1)
+        grid_sizer_1.AddGrowableCol(2)
+        mainSizer.Add(grid_sizer_1, 1, wx.EXPAND, 0)
+        mainSizer.Add(self.label_1, 0, wx.ALL, 4)
+        mainSizer.Add(self.emptyTplTextCtrl, 0, wx.ALL|wx.EXPAND, 4)
+        self.SetSizer(mainSizer)
+        mainSizer.Fit(self)
+        mainSizer.AddGrowableRow(3)
+        mainSizer.AddGrowableCol(0)
+        # end wxGlade
+    
 
-		if changed:
-			currpage = Application.wikiroot.selectedPage
-			Application.wikiroot.selectedPage = None
-			Application.wikiroot.selectedPage = currpage
+    def LoadState(self):
+        # Показывать ли вкладку с кодом HTML
+        self.showHtmlCodeOption = BooleanElement (self.config.showHtmlCodeOptions, self.htmlCodeCheckbox)
+
+        # Размер превьюшек по умолчанию
+        self.thumbSizeOption = IntegerElement (self.config.thumbSizeOptions, self.thumbSize, 1, 10000)
+
+        # Шаблон для пустых страниц
+        emptycontent = EmptyContent (Application.config)
+        self.emptyTplTextCtrl.SetValue (emptycontent.content)
+
+
+    def Save (self):
+        changed = (self.showHtmlCodeOption.isValueChanged() or
+            self.thumbSizeOption.isValueChanged() )
+
+        self.showHtmlCodeOption.save()
+        self.thumbSizeOption.save()
+        
+        emptycontent = EmptyContent (Application.config)
+        emptycontent.content = self.emptyTplTextCtrl.GetValue()
+
+        if changed:
+            currpage = Application.wikiroot.selectedPage
+            Application.wikiroot.selectedPage = None
+            Application.wikiroot.selectedPage = currpage
 
 # end of class WikiPrefGeneralPanel
 

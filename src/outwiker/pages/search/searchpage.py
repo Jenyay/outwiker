@@ -19,195 +19,195 @@ from SearchPanel import SearchPanel
 
 
 class SearchWikiPage (WikiPage):
-	"""
-	Класс HTML-страниц
-	"""
-	def __init__ (self, path, title, parent, readonly = False):
-		WikiPage.__init__ (self, path, title, parent, readonly)
+    """
+    Класс HTML-страниц
+    """
+    def __init__ (self, path, title, parent, readonly = False):
+        WikiPage.__init__ (self, path, title, parent, readonly)
 
-		self.paramsSection = u"Search"
-		phraseOption = StringOption (self.params, self.paramsSection, u"phrase", u"")
+        self.paramsSection = u"Search"
+        phraseOption = StringOption (self.params, self.paramsSection, u"phrase", u"")
 
-		# Искомая фраза
-		self._phrase = phraseOption.value
+        # Искомая фраза
+        self._phrase = phraseOption.value
 
-		# Теги, по которым осуществляется поиск (не путать с тегами, установленными для данной страницы)
-		self._searchTags = self._getSearchTags()
+        # Теги, по которым осуществляется поиск (не путать с тегами, установленными для данной страницы)
+        self._searchTags = self._getSearchTags()
 
-		# Стратегия для поиска
-		self._strategy = self._getStrategy()
-
-
-
-	@staticmethod
-	def getTypeString ():
-		return u"search"
-
-	
-	@property
-	def phrase (self):
-		return self._phrase
+        # Стратегия для поиска
+        self._strategy = self._getStrategy()
 
 
-	@phrase.setter
-	def phrase (self, phrase):
-		"""
-		Устанавливает искомую фразу
-		"""
-		self._phrase = phrase
 
-		phraseOption = StringOption (self.params, self.paramsSection, u"phrase", u"")
-		try:
-			phraseOption.value = phrase
-		except ReadonlyException:
-			# Ничего страшного, если поисковая фраза не сохранится
-			pass
+    @staticmethod
+    def getTypeString ():
+        return u"search"
 
-		Application.onPageUpdate (self)
-	
-
-	def _getSearchTags (self):
-		"""
-		Загрузить список тегов из настроек страницы
-		"""
-		tagsOption = StringOption (self.params, self.paramsSection, u"tags", u"")
-		tags = TagsList.parseTagsList (tagsOption.value)
-		return tags
+    
+    @property
+    def phrase (self):
+        return self._phrase
 
 
-	@property
-	def searchTags (self):
-		return self._searchTags
+    @phrase.setter
+    def phrase (self, phrase):
+        """
+        Устанавливает искомую фразу
+        """
+        self._phrase = phrase
+
+        phraseOption = StringOption (self.params, self.paramsSection, u"phrase", u"")
+        try:
+            phraseOption.value = phrase
+        except ReadonlyException:
+            # Ничего страшного, если поисковая фраза не сохранится
+            pass
+
+        Application.onPageUpdate (self)
+    
+
+    def _getSearchTags (self):
+        """
+        Загрузить список тегов из настроек страницы
+        """
+        tagsOption = StringOption (self.params, self.paramsSection, u"tags", u"")
+        tags = TagsList.parseTagsList (tagsOption.value)
+        return tags
 
 
-	@searchTags.setter
-	def searchTags (self, tags):
-		"""
-		Выбрать теги для поиска
-		"""
-		self._searchTags = tags
-		tags_str = TagsList.getTagsString (tags)
+    @property
+    def searchTags (self):
+        return self._searchTags
 
-		tagsOption = StringOption (self.params, self.paramsSection, u"tags", u"")
 
-		try:
-			tagsOption.value = tags_str
-		except ReadonlyException:
-			# Ну не сохранятся искомые теги, ничего страшного
-			pass
+    @searchTags.setter
+    def searchTags (self, tags):
+        """
+        Выбрать теги для поиска
+        """
+        self._searchTags = tags
+        tags_str = TagsList.getTagsString (tags)
 
-		Application.onPageUpdate (self)
-	
+        tagsOption = StringOption (self.params, self.paramsSection, u"tags", u"")
 
-	def _getStrategy (self):
-		strategyOption = IntegerOption (self.params, self.paramsSection, u"strategy", 0)
-		return self._strategyByCode (strategyOption.value)
-	
+        try:
+            tagsOption.value = tags_str
+        except ReadonlyException:
+            # Ну не сохранятся искомые теги, ничего страшного
+            pass
 
-	def _strategyByCode (self, code):
-		if code == 0:
-			return AnyTagSearchStrategy
-		else:
-			return AllTagsSearchStrategy
-	
+        Application.onPageUpdate (self)
+    
 
-	@property
-	def strategy (self):
-		return self._strategy
-	
+    def _getStrategy (self):
+        strategyOption = IntegerOption (self.params, self.paramsSection, u"strategy", 0)
+        return self._strategyByCode (strategyOption.value)
+    
 
-	@strategy.setter
-	def strategy (self, strategy):
-		if strategy == AllTagsSearchStrategy:
-			strategyCode = 1
-		else:
-			strategyCode = 0
+    def _strategyByCode (self, code):
+        if code == 0:
+            return AnyTagSearchStrategy
+        else:
+            return AllTagsSearchStrategy
+    
 
-		self._strategy = strategy
-		strategyOption = IntegerOption (self.params, self.paramsSection, u"strategy", 0)
+    @property
+    def strategy (self):
+        return self._strategy
+    
 
-		try:
-			strategyOption.value = strategyCode
-		except ReadonlyException:
-			# Ничего страшного
-			pass
+    @strategy.setter
+    def strategy (self, strategy):
+        if strategy == AllTagsSearchStrategy:
+            strategyCode = 1
+        else:
+            strategyCode = 0
 
-		Application.onPageUpdate (self)
+        self._strategy = strategy
+        strategyOption = IntegerOption (self.params, self.paramsSection, u"strategy", 0)
+
+        try:
+            strategyOption.value = strategyCode
+        except ReadonlyException:
+            # Ничего страшного
+            pass
+
+        Application.onPageUpdate (self)
 
 
 class SearchPageFactory (PageFactory):
-	@staticmethod
-	def getPageType():
-		return SearchWikiPage
+    @staticmethod
+    def getPageType():
+        return SearchWikiPage
 
-	@staticmethod
-	def getTypeString ():
-		return SearchPageFactory.getPageType().getTypeString()
+    @staticmethod
+    def getTypeString ():
+        return SearchPageFactory.getPageType().getTypeString()
 
-	# Название страницы, показываемое пользователю
-	title = _(u"Search Page")
+    # Название страницы, показываемое пользователю
+    title = _(u"Search Page")
 
-	def __init__ (self):
-		pass
-
-
-	@staticmethod
-	def create (parent, title, tags):
-		"""
-		Создать страницу. Вызывать этот метод вместо конструктора
-		"""
-		return PageFactory.createPage (SearchPageFactory.getPageType(), parent, title, tags)
+    def __init__ (self):
+        pass
 
 
-	@staticmethod
-	def getPageView (parent):
-		"""
-		Вернуть контрол, который будет отображать и редактировать страницу
-		"""
-		panel = SearchPanel (parent)
-
-		return panel
+    @staticmethod
+    def create (parent, title, tags):
+        """
+        Создать страницу. Вызывать этот метод вместо конструктора
+        """
+        return PageFactory.createPage (SearchPageFactory.getPageType(), parent, title, tags)
 
 
-	@staticmethod
-	def getPrefPanels (parent):
-		return []
+    @staticmethod
+    def getPageView (parent):
+        """
+        Вернуть контрол, который будет отображать и редактировать страницу
+        """
+        panel = SearchPanel (parent)
+
+        return panel
+
+
+    @staticmethod
+    def getPrefPanels (parent):
+        return []
 
 
 class GlobalSearch (object):
-	pageTitle = _(u"# Search")
+    pageTitle = _(u"# Search")
 
-	@staticmethod
-	def create (root, phrase = u"", tags = [], strategy = AllTagsSearchStrategy):
-		"""
-		Создать страницу с поиском. Если страница существует, то сделать ее активной
-		"""
-		title = GlobalSearch.pageTitle
-		number = 1
-		page = None
+    @staticmethod
+    def create (root, phrase = u"", tags = [], strategy = AllTagsSearchStrategy):
+        """
+        Создать страницу с поиском. Если страница существует, то сделать ее активной
+        """
+        title = GlobalSearch.pageTitle
+        number = 1
+        page = None
 
-		imagesDir = getImagesDir()
+        imagesDir = getImagesDir()
 
-		while page == None:
-			page = root[title]
-			if page == None:
-				page = SearchPageFactory.create (root, title, [])
-				page.icon = os.path.join (imagesDir, "global_search.png")
-			elif page.getTypeString() != SearchPageFactory.getTypeString():
-				number += 1
-				title = u"%s %d" % (GlobalSearch.pageTitle, number)
-				page = None
-		
-		page.phrase = phrase
-		page.searchTags = [tag for tag in tags]
-		page.strategy = strategy
+        while page == None:
+            page = root[title]
+            if page == None:
+                page = SearchPageFactory.create (root, title, [])
+                page.icon = os.path.join (imagesDir, "global_search.png")
+            elif page.getTypeString() != SearchPageFactory.getTypeString():
+                number += 1
+                title = u"%s %d" % (GlobalSearch.pageTitle, number)
+                page = None
+        
+        page.phrase = phrase
+        page.searchTags = [tag for tag in tags]
+        page.strategy = strategy
 
-		# Скопируем картинку для тегов
-		#if not page.readonly:
-		#	tagiconpath = os.path.join (getImagesDir(), "tag.png")
-		#	shutil.copy (tagiconpath, os.path.join (page.path, "__tag.png") )
+        # Скопируем картинку для тегов
+        #if not page.readonly:
+        #    tagiconpath = os.path.join (getImagesDir(), "tag.png")
+        #    shutil.copy (tagiconpath, os.path.join (page.path, "__tag.png") )
 
-		page.root.selectedPage = page
+        page.root.selectedPage = page
 
-		return page
+        return page
 

@@ -21,141 +21,141 @@ from outwiker.pages.search.SearchPanel import SearchPanel
 
 
 class PagePanelTest (BaseMainWndTest):
-	"""
-	Тесты окна со списком прикрепленных файлов
-	"""
-	def setUp (self):
-		BaseMainWndTest.setUp (self)
+    """
+    Тесты окна со списком прикрепленных файлов
+    """
+    def setUp (self):
+        BaseMainWndTest.setUp (self)
 
-		self.path = u"../test/testwiki"
-		removeWiki (self.path)
+        self.path = u"../test/testwiki"
+        removeWiki (self.path)
 
-		self.wikiroot = WikiDocument.create (self.path)
+        self.wikiroot = WikiDocument.create (self.path)
 
-		TextPageFactory.create (self.wikiroot, u"Текстовая страница", [])
-		TextPageFactory.create (self.wikiroot, u"Текстовая страница 2", [])
+        TextPageFactory.create (self.wikiroot, u"Текстовая страница", [])
+        TextPageFactory.create (self.wikiroot, u"Текстовая страница 2", [])
 
-		HtmlPageFactory.create (self.wikiroot, u"HTML-страница", [])
-		HtmlPageFactory.create (self.wikiroot, u"HTML-страница 2", [])
+        HtmlPageFactory.create (self.wikiroot, u"HTML-страница", [])
+        HtmlPageFactory.create (self.wikiroot, u"HTML-страница 2", [])
 
-		WikiPageFactory.create (self.wikiroot, u"Викистраница", [])
-		WikiPageFactory.create (self.wikiroot, u"Викистраница 2", [])
+        WikiPageFactory.create (self.wikiroot, u"Викистраница", [])
+        WikiPageFactory.create (self.wikiroot, u"Викистраница 2", [])
 
-		SearchPageFactory.create (self.wikiroot, u"Поисковая страница", [])
-		SearchPageFactory.create (self.wikiroot, u"Поисковая страница 2", [])
-
-
-	def tearDown (self):
-		BaseMainWndTest.tearDown (self)
-		Application.wikiroot = None
-		removeWiki (self.path)
+        SearchPageFactory.create (self.wikiroot, u"Поисковая страница", [])
+        SearchPageFactory.create (self.wikiroot, u"Поисковая страница 2", [])
 
 
-	def testEmpty (self):
-		Application.wikiroot = self.wikiroot
-		self.assertNotEqual (None, self.wnd.pagePanel)
-		self.assertEqual (None, self.wnd.pagePanel.pageView)
+    def tearDown (self):
+        BaseMainWndTest.tearDown (self)
+        Application.wikiroot = None
+        removeWiki (self.path)
 
 
-	def testSelect (self):
-		Application.wikiroot = self.wikiroot
-		self.wikiroot.selectedPage = self.wikiroot[u"Текстовая страница"]
-		self.assertEqual (TextPanel, type (self.wnd.pagePanel.pageView))
-
-		self.wikiroot.selectedPage = self.wikiroot[u"HTML-страница"]
-		self.assertEqual (HtmlPagePanel, type (self.wnd.pagePanel.pageView))
-
-		self.wikiroot.selectedPage = self.wikiroot[u"Викистраница"]
-		self.assertEqual (WikiPagePanel, type (self.wnd.pagePanel.pageView))
-
-		self.wikiroot.selectedPage = self.wikiroot[u"Поисковая страница"]
-		self.assertEqual (SearchPanel, type (self.wnd.pagePanel.pageView))
-
-		self.wikiroot.selectedPage = None
-		self.assertEqual (None, self.wnd.pagePanel.pageView)
+    def testEmpty (self):
+        Application.wikiroot = self.wikiroot
+        self.assertNotEqual (None, self.wnd.pagePanel)
+        self.assertEqual (None, self.wnd.pagePanel.pageView)
 
 
-	def testSelectTextTypes (self):
-		"""
-		Проверка на то, что при выборе страницы того же типа контрол не пересоздается, а данные загружаются в старый
-		"""
-		Application.wikiroot = self.wikiroot
+    def testSelect (self):
+        Application.wikiroot = self.wikiroot
+        self.wikiroot.selectedPage = self.wikiroot[u"Текстовая страница"]
+        self.assertEqual (TextPanel, type (self.wnd.pagePanel.pageView))
 
-		self.wikiroot.selectedPage = self.wikiroot[u"Текстовая страница"]
-		currentView = self.wnd.pagePanel.pageView
+        self.wikiroot.selectedPage = self.wikiroot[u"HTML-страница"]
+        self.assertEqual (HtmlPagePanel, type (self.wnd.pagePanel.pageView))
 
-		self.assertNotEqual (None, currentView)
-		self.assertEqual (TextPanel, type (currentView))
+        self.wikiroot.selectedPage = self.wikiroot[u"Викистраница"]
+        self.assertEqual (WikiPagePanel, type (self.wnd.pagePanel.pageView))
 
-		self.wikiroot.selectedPage = self.wikiroot[u"Текстовая страница 2"]
-		self.assertEqual (currentView, self.wnd.pagePanel.pageView)
+        self.wikiroot.selectedPage = self.wikiroot[u"Поисковая страница"]
+        self.assertEqual (SearchPanel, type (self.wnd.pagePanel.pageView))
 
-
-	def testSelectHtmlTypes (self):
-		"""
-		Проверка на то, что при выборе страницы того же типа контрол не пересоздается, а данные загружаются в старый
-		"""
-		Application.wikiroot = self.wikiroot
-
-		self.wikiroot.selectedPage = self.wikiroot[u"HTML-страница"]
-		currentView = self.wnd.pagePanel.pageView
-
-		self.assertNotEqual (None, currentView)
-		self.assertEqual (HtmlPagePanel, type (currentView))
-
-		self.wikiroot.selectedPage = self.wikiroot[u"HTML-страница 2"]
-		self.assertEqual (currentView, self.wnd.pagePanel.pageView)
+        self.wikiroot.selectedPage = None
+        self.assertEqual (None, self.wnd.pagePanel.pageView)
 
 
-	def testSelectWikiTypes (self):
-		"""
-		Проверка на то, что при выборе страницы того же типа контрол не пересоздается, а данные загружаются в старый
-		"""
-		Application.wikiroot = self.wikiroot
+    def testSelectTextTypes (self):
+        """
+        Проверка на то, что при выборе страницы того же типа контрол не пересоздается, а данные загружаются в старый
+        """
+        Application.wikiroot = self.wikiroot
 
-		self.wikiroot.selectedPage = self.wikiroot[u"Викистраница"]
-		currentView = self.wnd.pagePanel.pageView
+        self.wikiroot.selectedPage = self.wikiroot[u"Текстовая страница"]
+        currentView = self.wnd.pagePanel.pageView
 
-		self.assertNotEqual (None, currentView)
-		self.assertEqual (WikiPagePanel, type (currentView))
+        self.assertNotEqual (None, currentView)
+        self.assertEqual (TextPanel, type (currentView))
 
-		self.wikiroot.selectedPage = self.wikiroot[u"Викистраница 2"]
-		self.assertEqual (currentView, self.wnd.pagePanel.pageView)
-
-
-	def testSelectSearchTypes (self):
-		"""
-		Проверка на то, что при выборе страницы того же типа контрол не пересоздается, а данные загружаются в старый
-		"""
-		Application.wikiroot = self.wikiroot
-
-		self.wikiroot.selectedPage = self.wikiroot[u"Поисковая страница"]
-		currentView = self.wnd.pagePanel.pageView
-
-		self.assertNotEqual (None, currentView)
-		self.assertEqual (SearchPanel, type (currentView))
-
-		self.wikiroot.selectedPage = self.wikiroot[u"Поисковая страница 2"]
-		self.assertEqual (currentView, self.wnd.pagePanel.pageView)
+        self.wikiroot.selectedPage = self.wikiroot[u"Текстовая страница 2"]
+        self.assertEqual (currentView, self.wnd.pagePanel.pageView)
 
 
-	def testLoadSelected (self):
-		# Открытие вики с уже выбранной страницей
-		self.wikiroot.selectedPage = self.wikiroot[u"Текстовая страница"]
+    def testSelectHtmlTypes (self):
+        """
+        Проверка на то, что при выборе страницы того же типа контрол не пересоздается, а данные загружаются в старый
+        """
+        Application.wikiroot = self.wikiroot
 
-		Application.wikiroot = self.wikiroot
-		self.assertEqual (TextPanel, type (self.wnd.pagePanel.pageView))
+        self.wikiroot.selectedPage = self.wikiroot[u"HTML-страница"]
+        currentView = self.wnd.pagePanel.pageView
+
+        self.assertNotEqual (None, currentView)
+        self.assertEqual (HtmlPagePanel, type (currentView))
+
+        self.wikiroot.selectedPage = self.wikiroot[u"HTML-страница 2"]
+        self.assertEqual (currentView, self.wnd.pagePanel.pageView)
 
 
-	def testReload (self):
-		Application.wikiroot = self.wikiroot
-		self.wikiroot.selectedPage = self.wikiroot[u"Текстовая страница"]
-		self.assertEqual (TextPanel, type (self.wnd.pagePanel.pageView))
+    def testSelectWikiTypes (self):
+        """
+        Проверка на то, что при выборе страницы того же типа контрол не пересоздается, а данные загружаются в старый
+        """
+        Application.wikiroot = self.wikiroot
 
-		# "Закроем" вики
-		Application.wikiroot = None
-		self.assertEqual (None, self.wnd.pagePanel.pageView)
+        self.wikiroot.selectedPage = self.wikiroot[u"Викистраница"]
+        currentView = self.wnd.pagePanel.pageView
 
-		# Откроем ее еще раз
-		Application.wikiroot = self.wikiroot
-		self.assertEqual (TextPanel, type (self.wnd.pagePanel.pageView))
+        self.assertNotEqual (None, currentView)
+        self.assertEqual (WikiPagePanel, type (currentView))
+
+        self.wikiroot.selectedPage = self.wikiroot[u"Викистраница 2"]
+        self.assertEqual (currentView, self.wnd.pagePanel.pageView)
+
+
+    def testSelectSearchTypes (self):
+        """
+        Проверка на то, что при выборе страницы того же типа контрол не пересоздается, а данные загружаются в старый
+        """
+        Application.wikiroot = self.wikiroot
+
+        self.wikiroot.selectedPage = self.wikiroot[u"Поисковая страница"]
+        currentView = self.wnd.pagePanel.pageView
+
+        self.assertNotEqual (None, currentView)
+        self.assertEqual (SearchPanel, type (currentView))
+
+        self.wikiroot.selectedPage = self.wikiroot[u"Поисковая страница 2"]
+        self.assertEqual (currentView, self.wnd.pagePanel.pageView)
+
+
+    def testLoadSelected (self):
+        # Открытие вики с уже выбранной страницей
+        self.wikiroot.selectedPage = self.wikiroot[u"Текстовая страница"]
+
+        Application.wikiroot = self.wikiroot
+        self.assertEqual (TextPanel, type (self.wnd.pagePanel.pageView))
+
+
+    def testReload (self):
+        Application.wikiroot = self.wikiroot
+        self.wikiroot.selectedPage = self.wikiroot[u"Текстовая страница"]
+        self.assertEqual (TextPanel, type (self.wnd.pagePanel.pageView))
+
+        # "Закроем" вики
+        Application.wikiroot = None
+        self.assertEqual (None, self.wnd.pagePanel.pageView)
+
+        # Откроем ее еще раз
+        Application.wikiroot = self.wikiroot
+        self.assertEqual (TextPanel, type (self.wnd.pagePanel.pageView))

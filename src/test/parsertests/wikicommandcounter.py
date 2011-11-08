@@ -14,49 +14,49 @@ from test.utils import removeWiki
 
 
 class WikiCounterCommandTest (unittest.TestCase):
-	def setUp(self):
-		self.encoding = "utf8"
+    def setUp(self):
+        self.encoding = "utf8"
 
-		self.filesPath = u"../test/samplefiles/"
-		self.__createWiki()
+        self.filesPath = u"../test/samplefiles/"
+        self.__createWiki()
 
-		dirlist = [u"../plugins/testcounter"]
+        dirlist = [u"../plugins/testcounter"]
 
-		self.loader = PluginsLoader(Application)
-		self.loader.load (dirlist)
-		
-		self.factory = ParserFactory()
-		self.parser = self.factory.make (self.testPage, Application.config)
-	
+        self.loader = PluginsLoader(Application)
+        self.loader.load (dirlist)
+        
+        self.factory = ParserFactory()
+        self.parser = self.factory.make (self.testPage, Application.config)
+    
 
-	def __createWiki (self):
-		# Здесь будет создаваться вики
-		self.path = u"../test/testwiki"
-		removeWiki (self.path)
+    def __createWiki (self):
+        # Здесь будет создаваться вики
+        self.path = u"../test/testwiki"
+        removeWiki (self.path)
 
-		self.rootwiki = WikiDocument.create (self.path)
+        self.rootwiki = WikiDocument.create (self.path)
 
-		WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
-		self.testPage = self.rootwiki[u"Страница 1"]
-		
+        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
+        self.testPage = self.rootwiki[u"Страница 1"]
+        
 
-	def tearDown(self):
-		removeWiki (self.path)
-
-
-	def testPluginLoad (self):
-		self.assertEqual ( len (self.loader), 1)
+    def tearDown(self):
+        removeWiki (self.path)
 
 
-	def testCounter (self):
-		text = u"(:counter:) (:counter:)"
-		validResult = u"1 2"
+    def testPluginLoad (self):
+        self.assertEqual ( len (self.loader), 1)
 
-		result = self.parser.toHtml (text)
-		self.assertEqual (result, validResult)
 
-		# Проверим, что для нового парсера счетчик сбрасывается
-		parser2 = self.factory.make (self.testPage, Application.config)
+    def testCounter (self):
+        text = u"(:counter:) (:counter:)"
+        validResult = u"1 2"
 
-		result2 = parser2.toHtml (text)
-		self.assertEqual (result2, validResult)
+        result = self.parser.toHtml (text)
+        self.assertEqual (result, validResult)
+
+        # Проверим, что для нового парсера счетчик сбрасывается
+        parser2 = self.factory.make (self.testPage, Application.config)
+
+        result2 = parser2.toHtml (text)
+        self.assertEqual (result2, validResult)

@@ -14,172 +14,172 @@ from outwiker.core.config import StringOption
 
 @outwiker.core.commands.testreadonly
 def editPage (parentWnd, currentPage):
-	"""
-	Вызвать диалог для редактирования страницы
-	parentWnd - родительское окно
-	currentPage - страница для редактирования
-	"""
-	if currentPage.readonly:
-		raise outwiker.core.exceptions.ReadonlyException
+    """
+    Вызвать диалог для редактирования страницы
+    parentWnd - родительское окно
+    currentPage - страница для редактирования
+    """
+    if currentPage.readonly:
+        raise outwiker.core.exceptions.ReadonlyException
 
-	dlg = EditPageDialog (currentPage, currentPage.parent, parent = parentWnd)
-	page = None
+    dlg = EditPageDialog (currentPage, currentPage.parent, parent = parentWnd)
+    page = None
 
-	if dlg.ShowModal() == wx.ID_OK:
-		factory = dlg.selectedFactory
-		tags = dlg.tags
+    if dlg.ShowModal() == wx.ID_OK:
+        factory = dlg.selectedFactory
+        tags = dlg.tags
 
-		currentPage.tags = dlg.tags
-		currentPage.icon = dlg.icon
+        currentPage.tags = dlg.tags
+        currentPage.icon = dlg.icon
 
-		try:
-			currentPage.title = dlg.pageTitle
-		except OSError as e:
-			outwiker.core.commands.MessageBox (_(u"Can't rename page\n") + unicode (e), _(u"Error"), wx.ICON_ERROR | wx.OK)
+        try:
+            currentPage.title = dlg.pageTitle
+        except OSError as e:
+            outwiker.core.commands.MessageBox (_(u"Can't rename page\n") + unicode (e), _(u"Error"), wx.ICON_ERROR | wx.OK)
 
-		currentPage.root.selectedPage = currentPage
+        currentPage.root.selectedPage = currentPage
 
-	dlg.Destroy()
+    dlg.Destroy()
 
 
 @outwiker.core.commands.testreadonly
 def createPageWithDialog (parentwnd, parentpage):
-	"""
-	Показать диалог настроек и создать страницу
-	"""
-	if parentpage.readonly:
-		raise outwiker.core.exceptions.ReadonlyException
-	
-	dlg = CreatePageDialog (parentpage, parentwnd)
-	page = None
+    """
+    Показать диалог настроек и создать страницу
+    """
+    if parentpage.readonly:
+        raise outwiker.core.exceptions.ReadonlyException
+    
+    dlg = CreatePageDialog (parentpage, parentwnd)
+    page = None
 
-	if dlg.ShowModal() == wx.ID_OK:
-		factory = dlg.selectedFactory
-		title = dlg.pageTitle
-		tags = dlg.tags
+    if dlg.ShowModal() == wx.ID_OK:
+        factory = dlg.selectedFactory
+        title = dlg.pageTitle
+        tags = dlg.tags
 
-		try:
-			page = factory.create (parentpage, title, tags)
-			
-			assert page != None
+        try:
+            page = factory.create (parentpage, title, tags)
+            
+            assert page != None
 
-			page.icon = dlg.icon
-			page.root.selectedPage = page
+            page.icon = dlg.icon
+            page.root.selectedPage = page
 
-		except OSError, IOError:
-			outwiker.core.commands.MessageBox (_(u"Can't create page"), "Error", wx.ICON_ERROR | wx.OK)
+        except OSError, IOError:
+            outwiker.core.commands.MessageBox (_(u"Can't create page"), "Error", wx.ICON_ERROR | wx.OK)
 
-	dlg.Destroy()
+    dlg.Destroy()
 
 
-	return page
+    return page
 
 
 def createSiblingPage (parentwnd):
-	"""
-	Создать страницу, находящуюся на том же уровне, что и текущая страница
-	parentwnd - окно, которое будет родителем для диалога создания страницы
-	"""
-	if Application.wikiroot == None:
-		outwiker.core.commands.MessageBox (_(u"Wiki is not open"), _(u"Error"), wx.ICON_ERROR | wx.OK)
-		return
+    """
+    Создать страницу, находящуюся на том же уровне, что и текущая страница
+    parentwnd - окно, которое будет родителем для диалога создания страницы
+    """
+    if Application.wikiroot == None:
+        outwiker.core.commands.MessageBox (_(u"Wiki is not open"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+        return
 
-	currPage = Application.wikiroot.selectedPage
+    currPage = Application.wikiroot.selectedPage
 
-	if currPage == None or currPage.parent == None:
-		parentpage = Application.wikiroot
-	else:
-		parentpage = currPage.parent
+    if currPage == None or currPage.parent == None:
+        parentpage = Application.wikiroot
+    else:
+        parentpage = currPage.parent
 
-	createPageWithDialog (parentwnd, parentpage)
+    createPageWithDialog (parentwnd, parentpage)
 
 
 def createChildPage (parentwnd):
-	"""
-	Создать страницу, которая будет дочерней к текущей странице
-	parentwnd - окно, которое будет родителем для диалога создания страницы
-	"""
-	if Application.wikiroot == None:
-		outwiker.core.commands.MessageBox (_(u"Wiki is not open"), _(u"Error"), wx.ICON_ERROR | wx.OK)
-		return
+    """
+    Создать страницу, которая будет дочерней к текущей странице
+    parentwnd - окно, которое будет родителем для диалога создания страницы
+    """
+    if Application.wikiroot == None:
+        outwiker.core.commands.MessageBox (_(u"Wiki is not open"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+        return
 
-	currPage = Application.wikiroot.selectedPage
+    currPage = Application.wikiroot.selectedPage
 
-	if currPage == None:
-		currPage = Application.wikiroot
+    if currPage == None:
+        currPage = Application.wikiroot
 
-	createPageWithDialog (parentwnd, currPage)
+    createPageWithDialog (parentwnd, currPage)
 
 
 class CreatePageDialog (BasePageDialog):
-	def __init__ (self, parentPage = None, *args, **kwds):
-		BasePageDialog.__init__ (self, parentPage, *args, **kwds)
+    def __init__ (self, parentPage = None, *args, **kwds):
+        BasePageDialog.__init__ (self, parentPage, *args, **kwds)
 
-		# Опция для хранения типа страницы, которая была создана последней
-		self.lastCreatedPageType = StringOption (Application.config, u"General", u"LastCreatedPageType", u"wiki")
+        # Опция для хранения типа страницы, которая была создана последней
+        self.lastCreatedPageType = StringOption (Application.config, u"General", u"LastCreatedPageType", u"wiki")
 
-		self._setComboPageType(self.lastCreatedPageType.value)
+        self._setComboPageType(self.lastCreatedPageType.value)
 
-		if parentPage.parent != None:
-			tags = TagsList.getTagsString (parentPage.tags)
-			self.tagsTextCtrl.SetValue (tags)
-	
+        if parentPage.parent != None:
+            tags = TagsList.getTagsString (parentPage.tags)
+            self.tagsTextCtrl.SetValue (tags)
+    
 
-	def onOk (self, event):
-		if not self.testPageTitle (self.pageTitle):
-			outwiker.core.commands.MessageBox (_(u"Invalid page title"), _(u"Error"), wx.ICON_ERROR | wx.OK)
-			return
+    def onOk (self, event):
+        if not self.testPageTitle (self.pageTitle):
+            outwiker.core.commands.MessageBox (_(u"Invalid page title"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+            return
 
-		if (self.parentPage != None and
-				not RootWikiPage.testDublicate(self.parentPage, self.pageTitle)):
-			outwiker.core.commands.MessageBox (_(u"A page with this title already exists"), _(u"Error"), wx.ICON_ERROR | wx.OK)
-			return
+        if (self.parentPage != None and
+                not RootWikiPage.testDublicate(self.parentPage, self.pageTitle)):
+            outwiker.core.commands.MessageBox (_(u"A page with this title already exists"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+            return
 
-		self.lastCreatedPageType.value = self.selectedFactory.getTypeString()
-		event.Skip()
+        self.lastCreatedPageType.value = self.selectedFactory.getTypeString()
+        event.Skip()
 
 
 class EditPageDialog (BasePageDialog):
-	def __init__ (self, currentPage, parentPage = None, *args, **kwds):
-		BasePageDialog.__init__ (self, parentPage, *args, **kwds)
+    def __init__ (self, currentPage, parentPage = None, *args, **kwds):
+        BasePageDialog.__init__ (self, parentPage, *args, **kwds)
 
-		assert currentPage != None
-		self.currentPage = currentPage
+        assert currentPage != None
+        self.currentPage = currentPage
 
-		self.SetTitle(_(u"Edit page properties"))
-		self._prepareForChange (currentPage)
-
-
-	def _prepareForChange (self, currentPage):
-		"""
-		Подготовить диалог к редактированию свойств страницы
-		"""
-		tags = TagsList.getTagsString (currentPage.tags)
-		self.tagsTextCtrl.SetValue (tags)
-		
-		# Запретить изменять заголовок
-		self.titleTextCtrl.SetValue (currentPage.title)
-
-		# Установить тип страницы
-		self._setComboPageType(currentPage.getTypeString())
-		self.comboType.Disable ()
-
-		# Добавить текущую иконку
-		icon = currentPage.icon
-		if icon != None:
-			self.iconsList.addCurrentIcon (icon)
+        self.SetTitle(_(u"Edit page properties"))
+        self._prepareForChange (currentPage)
 
 
-	def onOk (self, event):
-		if not self.testPageTitle (self.pageTitle):
-			outwiker.core.commands.MessageBox (_(u"Invalid page title"), _(u"Error"), wx.ICON_ERROR | wx.OK)
-			return
+    def _prepareForChange (self, currentPage):
+        """
+        Подготовить диалог к редактированию свойств страницы
+        """
+        tags = TagsList.getTagsString (currentPage.tags)
+        self.tagsTextCtrl.SetValue (tags)
+        
+        # Запретить изменять заголовок
+        self.titleTextCtrl.SetValue (currentPage.title)
 
-		if not self.currentPage.canRename (self.pageTitle):
-			outwiker.core.commands.MessageBox (_(u"Can't rename page when page with that title already exists"), 
-					_(u"Error"), 
-					wx.ICON_ERROR | wx.OK)
-			return
+        # Установить тип страницы
+        self._setComboPageType(currentPage.getTypeString())
+        self.comboType.Disable ()
 
-		event.Skip()
+        # Добавить текущую иконку
+        icon = currentPage.icon
+        if icon != None:
+            self.iconsList.addCurrentIcon (icon)
+
+
+    def onOk (self, event):
+        if not self.testPageTitle (self.pageTitle):
+            outwiker.core.commands.MessageBox (_(u"Invalid page title"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+            return
+
+        if not self.currentPage.canRename (self.pageTitle):
+            outwiker.core.commands.MessageBox (_(u"Can't rename page when page with that title already exists"), 
+                    _(u"Error"), 
+                    wx.ICON_ERROR | wx.OK)
+            return
+
+        event.Skip()
 

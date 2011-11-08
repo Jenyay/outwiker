@@ -13,821 +13,821 @@ from .exceptions import ClearConfigError, RootFormatError, DublicateTitle, Reado
 
 
 class RootWikiPage (object):
-	"""
-	Класс для корня вики
-	"""
+    """
+    Класс для корня вики
+    """
 
-	pageConfig = u"__page.opt"
-	contentFile = u"__page.text"
-	iconName = u"__icon"
+    pageConfig = u"__page.opt"
+    contentFile = u"__page.text"
+    iconName = u"__icon"
 
-	sectionGeneral = u"General"
+    sectionGeneral = u"General"
 
-	def __init__(self, path, readonly=False):
-		"""
-		Constructor.
-		
-		path -- путь до страницы относительно корня дерева
-		"""
-		# Путь до страницы
-		self._path = path
-		self._parent = None
-		self._children = []
-		self.readonly = readonly
+    def __init__(self, path, readonly=False):
+        """
+        Constructor.
+        
+        path -- путь до страницы относительно корня дерева
+        """
+        # Путь до страницы
+        self._path = path
+        self._parent = None
+        self._children = []
+        self.readonly = readonly
 
-		self._params = RootWikiPage._readParams(self.path, self.readonly)
+        self._params = RootWikiPage._readParams(self.path, self.readonly)
 
-	
-	@staticmethod
-	def _readParams (path, readonly=False):
-		return PageConfig (os.path.join (path, RootWikiPage.pageConfig), readonly)
-
-
-	@property
-	def params (self):
-		return self._params
+    
+    @staticmethod
+    def _readParams (path, readonly=False):
+        return PageConfig (os.path.join (path, RootWikiPage.pageConfig), readonly)
 
 
-	@property
-	def path (self):
-		return self._path
-	
-
-	@property
-	def parent (self):
-		return self._parent
+    @property
+    def params (self):
+        return self._params
 
 
-	@property
-	def children (self):
-		return self._children[:]
+    @property
+    def path (self):
+        return self._path
+    
+
+    @property
+    def parent (self):
+        return self._parent
 
 
-	@property
-	def root (self):
-		"""
-		Найти корень дерева по странице
-		"""
-		result = self
-		while result.parent != None:
-			result = result.parent
-
-		return result
+    @property
+    def children (self):
+        return self._children[:]
 
 
-	def save (self):
-		if self.readonly:
-			return
+    @property
+    def root (self):
+        """
+        Найти корень дерева по странице
+        """
+        result = self
+        while result.parent != None:
+            result = result.parent
 
-		if not os.path.exists (self.path):
-			os.mkdir (self.path)
-
-		self._params.save()
-
-
-	def __len__ (self):
-		return len (self._children)
+        return result
 
 
-	def __getitem__ (self, path):
-		"""
-		Получить нужную страницу по относительному пути в дереве
-		"""
-		if path == "/":
-			return self
+    def save (self):
+        if self.readonly:
+            return
 
-		# Разделим путь по составным частям
-		titles = path.split ("/")
-		page = self
+        if not os.path.exists (self.path):
+            os.mkdir (self.path)
 
-		for title in titles:
-			found = False
-			for child in page.children:
-				if child.title.lower() == title.lower():
-					page = child
-					found = True
-
-			if not found:
-				page = None
-				break
-
-		return page
+        self._params.save()
 
 
-	def getChildren(self):
-		"""
-		Загрузить дочерние узлы
-		"""
-		try:
-			entries = os.listdir (self.path)
-		except OSError:
-			raise IOError
-
-		result = []
-
-		for name in entries:
-			fullpath = os.path.join (self.path, name)
-
-			if not name.startswith ("__") and os.path.isdir (fullpath):
-				try:
-					page = WikiPage.load (fullpath, self, self.readonly)
-				except Exception as e:
-					continue
-
-				result.append (page)
-
-		result.sort (RootWikiPage.sortFunction)
-
-		return result
+    def __len__ (self):
+        return len (self._children)
 
 
-	@staticmethod
-	def sortFunction (page1, page2):
-		"""
-		Функция для сортировки страниц с учетом order
-		"""
+    def __getitem__ (self, path):
+        """
+        Получить нужную страницу по относительному пути в дереве
+        """
+        if path == "/":
+            return self
 
-		orderpage1 = page1.params.orderOption.value
-		orderpage2 = page2.params.orderOption.value
+        # Разделим путь по составным частям
+        titles = path.split ("/")
+        page = self
 
-		# Если еще не установили порядок страницы (значение по умолчанию: -1)
-		if orderpage1 == -1 or orderpage2 == -1:
-			orderpage1 = -1
-			orderpage2 = -1
+        for title in titles:
+            found = False
+            for child in page.children:
+                if child.title.lower() == title.lower():
+                    page = child
+                    found = True
 
-		if orderpage1 > orderpage2:
-			return 1
-		elif orderpage1 < orderpage2:
-			return -1
+            if not found:
+                page = None
+                break
 
-		return RootWikiPage.sortAlphabeticalFunction (page1, page2)
-
-
-	@staticmethod
-	def sortAlphabeticalFunction (page1, page2):
-		"""
-		Функция для сортировки страниц по алфавиту
-		"""
-		if page1.title.lower() > page2.title.lower():
-			return 1
-		elif page1.title.lower() < page2.title.lower():
-			return -1
-
-		return 0
+        return page
 
 
-	def sortChildrenAlphabetical(self):
-		"""
-		Отсортировать дочерние страницы по алфавиту
-		"""
-		self._children.sort (RootWikiPage.sortAlphabeticalFunction)
+    def getChildren(self):
+        """
+        Загрузить дочерние узлы
+        """
+        try:
+            entries = os.listdir (self.path)
+        except OSError:
+            raise IOError
 
-		self.root.onStartTreeUpdate (self.root)
-		self._saveChildrenParams()
-		self.root.onEndTreeUpdate (self.root)
+        result = []
 
+        for name in entries:
+            fullpath = os.path.join (self.path, name)
 
+            if not name.startswith ("__") and os.path.isdir (fullpath):
+                try:
+                    page = WikiPage.load (fullpath, self, self.readonly)
+                except Exception as e:
+                    continue
 
-	@staticmethod
-	def testDublicate (parent, title):
-		"""
-		Проверить заголовок страницы на то, что в родителе нет страницы с таким заголовком
-		"""
-		return parent[title] == None
+                result.append (page)
 
+        result.sort (RootWikiPage.sortFunction)
 
-	def _changeChildOrder (self, page, neworder):
-		"""
-		Изменить порядок дочерних элементов
-		Дочернюю страницу page переместить на уровень neworder
-		"""
-		oldorder = self._children.index (page)
-		if oldorder != neworder:
-			self.removeFromChildren (page)
-			self._children.insert (neworder, page)
-			self._saveChildrenParams()
+        return result
 
 
-	def _saveChildrenParams (self):
-		for child in self._children:
-			child.save()
-	
+    @staticmethod
+    def sortFunction (page1, page2):
+        """
+        Функция для сортировки страниц с учетом order
+        """
 
-	def addToChildren (self, page):
-		"""
-		Добавить страницу к дочерним страницам
-		"""
-		self._children.append (page)
-		self._children.sort (RootWikiPage.sortFunction)
-	
+        orderpage1 = page1.params.orderOption.value
+        orderpage2 = page2.params.orderOption.value
 
-	def removeFromChildren (self, page):
-		"""
-		Удалить страницу из дочерних страниц
-		"""
-		self._children.remove (page)
+        # Если еще не установили порядок страницы (значение по умолчанию: -1)
+        if orderpage1 == -1 or orderpage2 == -1:
+            orderpage1 = -1
+            orderpage2 = -1
+
+        if orderpage1 > orderpage2:
+            return 1
+        elif orderpage1 < orderpage2:
+            return -1
+
+        return RootWikiPage.sortAlphabeticalFunction (page1, page2)
 
 
-	def isChild (self, page):
-		"""
-		Проверить, является ли page дочерней (вложенной) страницей для self
-		"""
-		currentpage = page
-		while currentpage != None:
-			if currentpage == self:
-				return True
-			currentpage = currentpage.parent
+    @staticmethod
+    def sortAlphabeticalFunction (page1, page2):
+        """
+        Функция для сортировки страниц по алфавиту
+        """
+        if page1.title.lower() > page2.title.lower():
+            return 1
+        elif page1.title.lower() < page2.title.lower():
+            return -1
 
-		return False
+        return 0
+
+
+    def sortChildrenAlphabetical(self):
+        """
+        Отсортировать дочерние страницы по алфавиту
+        """
+        self._children.sort (RootWikiPage.sortAlphabeticalFunction)
+
+        self.root.onStartTreeUpdate (self.root)
+        self._saveChildrenParams()
+        self.root.onEndTreeUpdate (self.root)
+
+
+
+    @staticmethod
+    def testDublicate (parent, title):
+        """
+        Проверить заголовок страницы на то, что в родителе нет страницы с таким заголовком
+        """
+        return parent[title] == None
+
+
+    def _changeChildOrder (self, page, neworder):
+        """
+        Изменить порядок дочерних элементов
+        Дочернюю страницу page переместить на уровень neworder
+        """
+        oldorder = self._children.index (page)
+        if oldorder != neworder:
+            self.removeFromChildren (page)
+            self._children.insert (neworder, page)
+            self._saveChildrenParams()
+
+
+    def _saveChildrenParams (self):
+        for child in self._children:
+            child.save()
+    
+
+    def addToChildren (self, page):
+        """
+        Добавить страницу к дочерним страницам
+        """
+        self._children.append (page)
+        self._children.sort (RootWikiPage.sortFunction)
+    
+
+    def removeFromChildren (self, page):
+        """
+        Удалить страницу из дочерних страниц
+        """
+        self._children.remove (page)
+
+
+    def isChild (self, page):
+        """
+        Проверить, является ли page дочерней (вложенной) страницей для self
+        """
+        currentpage = page
+        while currentpage != None:
+            if currentpage == self:
+                return True
+            currentpage = currentpage.parent
+
+        return False
 
 
 class WikiDocument (RootWikiPage):
-	def __init__ (self, path, readonly = False):
-		RootWikiPage.__init__ (self, path, readonly)
-		self._selectedPage = None
-		self.__createEvents()
-		self.bookmarks = Bookmarks (self, self._params)
+    def __init__ (self, path, readonly = False):
+        RootWikiPage.__init__ (self, path, readonly)
+        self._selectedPage = None
+        self.__createEvents()
+        self.bookmarks = Bookmarks (self, self._params)
 
 
-	def __createEvents (self):
-		# Выбор новой страницы
-		# Параметры: новая выбранная страница
-		self.onPageSelect = Event()
+    def __createEvents (self):
+        # Выбор новой страницы
+        # Параметры: новая выбранная страница
+        self.onPageSelect = Event()
 
-		# Обновление дерева
-		# Параметры: sender - из-за кого обновляется дерево
-		self.onTreeUpdate = Event()
+        # Обновление дерева
+        # Параметры: sender - из-за кого обновляется дерево
+        self.onTreeUpdate = Event()
 
-		# Начало сложного обновления дерева
-		# Параметры: root - корень дерева
-		self.onStartTreeUpdate = Event()
+        # Начало сложного обновления дерева
+        # Параметры: root - корень дерева
+        self.onStartTreeUpdate = Event()
 
-		# Конец сложного обновления дерева
-		# Параметры: root - корень дерева
-		self.onEndTreeUpdate = Event()
+        # Конец сложного обновления дерева
+        # Параметры: root - корень дерева
+        self.onEndTreeUpdate = Event()
 
-		# Обновление страницы
-		# Параметры: sender
-		self.onPageUpdate = Event()
+        # Обновление страницы
+        # Параметры: sender
+        self.onPageUpdate = Event()
 
-		# Изменение порядка страниц
-		# Параметры: page - страница, положение которой изменили
-		self.onPageOrderChange = Event()
+        # Изменение порядка страниц
+        # Параметры: page - страница, положение которой изменили
+        self.onPageOrderChange = Event()
 
-		# Переименование страницы.
-		# Параметры: page - переименованная страница, oldSubpath - старый относительный путь до страницы
-		self.onPageRename = Event()
+        # Переименование страницы.
+        # Параметры: page - переименованная страница, oldSubpath - старый относительный путь до страницы
+        self.onPageRename = Event()
 
-		# Создание страницы
-		# Параметры: sender
-		self.onPageCreate = Event()
+        # Создание страницы
+        # Параметры: sender
+        self.onPageCreate = Event()
 
-		# Удаленеи страницы
-		# Параметр - удаленная страница
-		self.onPageRemove = Event()
-
-
-	@staticmethod
-	def clearConfigFile (path):
-		"""
-		Очистить файл __page.opt.
-		Используется в случае, если файл __page.opt испорчен
-		path - путь до вики (или до директории с файлом __page.opt, или включая этот файл)
-		"""
-		if path.endswith (RootWikiPage.pageConfig):
-			realpath = path
-		else:
-			realpath = os.path.join (path, RootWikiPage.pageConfig)
-
-		try:
-			fp = open (realpath, "w")
-			fp.close()
-		except IOError:
-			raise ClearConfigError
+        # Удаленеи страницы
+        # Параметр - удаленная страница
+        self.onPageRemove = Event()
 
 
-	@staticmethod
-	def load(path, readonly = False):
-		"""
-		Загрузить корневую страницу вики.
-		Использовать этот метод вместо конструктора
-		"""
-		try:
-			root = WikiDocument(path, readonly)
-		except ConfigParser.Error:
-			raise RootFormatError
+    @staticmethod
+    def clearConfigFile (path):
+        """
+        Очистить файл __page.opt.
+        Используется в случае, если файл __page.opt испорчен
+        path - путь до вики (или до директории с файлом __page.opt, или включая этот файл)
+        """
+        if path.endswith (RootWikiPage.pageConfig):
+            realpath = path
+        else:
+            realpath = os.path.join (path, RootWikiPage.pageConfig)
 
-		root.loadChildren()
-
-		lastvieved = root.lastViewedPage
-		if lastvieved != None:
-			root.selectedPage = root[lastvieved]
-
-		root.onTreeUpdate(root)
-		return root
+        try:
+            fp = open (realpath, "w")
+            fp.close()
+        except IOError:
+            raise ClearConfigError
 
 
-	def loadChildren (self):
-		"""
-		Интерфейс для загрузки дочерних страниц
-		"""
-		self._children = self.getChildren()
+    @staticmethod
+    def load(path, readonly = False):
+        """
+        Загрузить корневую страницу вики.
+        Использовать этот метод вместо конструктора
+        """
+        try:
+            root = WikiDocument(path, readonly)
+        except ConfigParser.Error:
+            raise RootFormatError
+
+        root.loadChildren()
+
+        lastvieved = root.lastViewedPage
+        if lastvieved != None:
+            root.selectedPage = root[lastvieved]
+
+        root.onTreeUpdate(root)
+        return root
 
 
-	@staticmethod
-	def create (path):
-		"""
-		Создать корень для вики
-		"""
-		root = WikiDocument (path)
-		root.save()
-		root.onTreeUpdate(root)
-
-		return root
-
-	@property
-	def selectedPage (self):
-		return self._selectedPage
+    def loadChildren (self):
+        """
+        Интерфейс для загрузки дочерних страниц
+        """
+        self._children = self.getChildren()
 
 
-	@selectedPage.setter
-	def selectedPage (self, page):
-		subpath = "/"
+    @staticmethod
+    def create (path):
+        """
+        Создать корень для вики
+        """
+        root = WikiDocument (path)
+        root.save()
+        root.onTreeUpdate(root)
 
-		if isinstance (page, type(self)) or page == None:
-			# Экземпляр класса WikiDocument выбирать нельзя
-			self._selectedPage = None
-		else:
-			self._selectedPage = page
-			subpath = page.subpath
+        return root
 
-		if not self.readonly:
-			self._params.lastViewedPageOption.value = subpath
-
-		self.root.onPageSelect(self._selectedPage)
-		self.save()
-	
-
-	@property
-	def lastViewedPage (self):
-		subpath = self._params.lastViewedPageOption.value
-		return subpath if len (subpath) != 0 else None
+    @property
+    def selectedPage (self):
+        return self._selectedPage
 
 
-	@property
-	def subpath (self):
-		return u"/"
+    @selectedPage.setter
+    def selectedPage (self, page):
+        subpath = "/"
+
+        if isinstance (page, type(self)) or page == None:
+            # Экземпляр класса WikiDocument выбирать нельзя
+            self._selectedPage = None
+        else:
+            self._selectedPage = page
+            subpath = page.subpath
+
+        if not self.readonly:
+            self._params.lastViewedPageOption.value = subpath
+
+        self.root.onPageSelect(self._selectedPage)
+        self.save()
+    
+
+    @property
+    def lastViewedPage (self):
+        subpath = self._params.lastViewedPageOption.value
+        return subpath if len (subpath) != 0 else None
 
 
-	@property
-	def title (self):
-		return os.path.basename (self.path)
+    @property
+    def subpath (self):
+        return u"/"
 
 
-	@staticmethod
-	def getTypeString ():
-		return u"document"
+    @property
+    def title (self):
+        return os.path.basename (self.path)
+
+
+    @staticmethod
+    def getTypeString ():
+        return u"document"
 
 
 
 class WikiPage (RootWikiPage):
-	"""
-	Страница в дереве.
-	"""
-	paramTags = u"tags"
-	paramType = u"type"
-
-	@staticmethod
-	def getTypeString ():
-		return u"base"
-
-
-	def __init__(self, path, title, parent, readonly = False):
-		"""
-		Constructor.
-		
-		path -- путь до страницы
-		"""
-		if not RootWikiPage.testDublicate(parent, title):
-			raise DublicateTitle
-
-		RootWikiPage.__init__ (self, path, readonly)
-		self._title = title
-		self._parent = parent
-
-
-	@property
-	def order (self):
-		"""
-		Вернуть индекс страницы в списке дочерних страниц
-		"""
-		return self.parent.children.index (self)
-
-
-	@order.setter
-	def order (self, neworder):
-		"""
-		Изменить положение страницы (порядок)
-		"""
-		if self.readonly:
-			raise ReadonlyException
-
-		realorder = neworder
-
-		if realorder < 0:
-			realorder = 0
-
-		if realorder >= len (self.parent.children):
-			realorder = len (self.parent.children) - 1
-
-		self.parent._changeChildOrder (self, realorder)
-		self.root.onPageOrderChange (self)
-	
-
-	@property
-	def title (self):
-		return self._title
-
-	
-	@title.setter
-	def title (self, newtitle):
-		if self.readonly:
-			raise ReadonlyException
-
-		oldtitle = self.title
-		oldpath = self.path
-		oldsubpath = self.subpath
-
-		if oldtitle == newtitle:
-			return
-
-		# Проверка на дубликат страниц, а также на то, что в заголовке страницы
-		# может меняться только регистр букв
-		if not self.canRename(newtitle):
-			raise DublicateTitle
-
-		newpath = os.path.join (os.path.dirname (oldpath), newtitle)
-		os.renames (oldpath, newpath)
-		self._title = newtitle
-
-		WikiPage.__renamePaths (self, newpath)
-
-		if self.root.selectedPage == self:
-			self.root.params.lastViewedPageOption.value = self.subpath
-
-		self.root.onPageRename (self, oldsubpath)
-		self.root.onTreeUpdate (self)
-	
-
-	def canRename (self, newtitle):
-		return (self.title.lower() == newtitle.lower() or
-				self.parent[newtitle] == None)
-	
-
-	@staticmethod
-	def __renamePaths (page, newPath):
-		"""
-		Скорректировать пути после переименования страницы
-		"""
-		oldPath = page.path
-		page._path = newPath
-		page._params = RootWikiPage._readParams(page.path)
-
-		for child in page.children:
-			newChildPath = child.path.replace (oldPath, newPath, 1)
-			WikiPage.__renamePaths (child, newChildPath)
+    """
+    Страница в дереве.
+    """
+    paramTags = u"tags"
+    paramType = u"type"
+
+    @staticmethod
+    def getTypeString ():
+        return u"base"
+
+
+    def __init__(self, path, title, parent, readonly = False):
+        """
+        Constructor.
+        
+        path -- путь до страницы
+        """
+        if not RootWikiPage.testDublicate(parent, title):
+            raise DublicateTitle
+
+        RootWikiPage.__init__ (self, path, readonly)
+        self._title = title
+        self._parent = parent
+
+
+    @property
+    def order (self):
+        """
+        Вернуть индекс страницы в списке дочерних страниц
+        """
+        return self.parent.children.index (self)
+
+
+    @order.setter
+    def order (self, neworder):
+        """
+        Изменить положение страницы (порядок)
+        """
+        if self.readonly:
+            raise ReadonlyException
+
+        realorder = neworder
+
+        if realorder < 0:
+            realorder = 0
+
+        if realorder >= len (self.parent.children):
+            realorder = len (self.parent.children) - 1
+
+        self.parent._changeChildOrder (self, realorder)
+        self.root.onPageOrderChange (self)
+    
+
+    @property
+    def title (self):
+        return self._title
+
+    
+    @title.setter
+    def title (self, newtitle):
+        if self.readonly:
+            raise ReadonlyException
+
+        oldtitle = self.title
+        oldpath = self.path
+        oldsubpath = self.subpath
+
+        if oldtitle == newtitle:
+            return
+
+        # Проверка на дубликат страниц, а также на то, что в заголовке страницы
+        # может меняться только регистр букв
+        if not self.canRename(newtitle):
+            raise DublicateTitle
+
+        newpath = os.path.join (os.path.dirname (oldpath), newtitle)
+        os.renames (oldpath, newpath)
+        self._title = newtitle
+
+        WikiPage.__renamePaths (self, newpath)
+
+        if self.root.selectedPage == self:
+            self.root.params.lastViewedPageOption.value = self.subpath
+
+        self.root.onPageRename (self, oldsubpath)
+        self.root.onTreeUpdate (self)
+    
+
+    def canRename (self, newtitle):
+        return (self.title.lower() == newtitle.lower() or
+                self.parent[newtitle] == None)
+    
+
+    @staticmethod
+    def __renamePaths (page, newPath):
+        """
+        Скорректировать пути после переименования страницы
+        """
+        oldPath = page.path
+        page._path = newPath
+        page._params = RootWikiPage._readParams(page.path)
+
+        for child in page.children:
+            newChildPath = child.path.replace (oldPath, newPath, 1)
+            WikiPage.__renamePaths (child, newChildPath)
 
-	
-	def moveTo (self, newparent):
-		"""
-		Переместить запись к другому родителю
-		"""
-		if self.readonly:
-			raise ReadonlyException
+    
+    def moveTo (self, newparent):
+        """
+        Переместить запись к другому родителю
+        """
+        if self.readonly:
+            raise ReadonlyException
 
-		if self._parent == newparent:
-			return
+        if self._parent == newparent:
+            return
 
-		if self.isChild (newparent):
-			# Нельзя быть родителем своего родителя (предка)
-			raise TreeException
+        if self.isChild (newparent):
+            # Нельзя быть родителем своего родителя (предка)
+            raise TreeException
 
-		# Проверка на то, что в новом родителе нет записи с таким же заголовком
-		if newparent[self.title] != None:
-			raise DublicateTitle
+        # Проверка на то, что в новом родителе нет записи с таким же заголовком
+        if newparent[self.title] != None:
+            raise DublicateTitle
 
-		oldpath = self.path
-		oldparent = self.parent
+        oldpath = self.path
+        oldparent = self.parent
 
-		# Новый путь для страницы
-		newpath = os.path.join (newparent.path, self.title)
+        # Новый путь для страницы
+        newpath = os.path.join (newparent.path, self.title)
 
-		# Временное имя папки.
-		# Сначала попробуем переименовать папку во временную, 
-		# а потом уже ее переместим в нужное место с нужным именем
-		tempname = self._getTempName (oldpath)
+        # Временное имя папки.
+        # Сначала попробуем переименовать папку во временную, 
+        # а потом уже ее переместим в нужное место с нужным именем
+        tempname = self._getTempName (oldpath)
 
-		try:
-			os.renames (oldpath, tempname)
-			shutil.move (tempname, newpath)
-		except shutil.Error:
-			raise TreeException
-		except OSError:
-			raise TreeException
+        try:
+            os.renames (oldpath, tempname)
+            shutil.move (tempname, newpath)
+        except shutil.Error:
+            raise TreeException
+        except OSError:
+            raise TreeException
 
-		self._parent = newparent
-		oldparent.removeFromChildren (self)
-		newparent.addToChildren (self)
-		
-		WikiPage.__renamePaths (self, newpath)
+        self._parent = newparent
+        oldparent.removeFromChildren (self)
+        newparent.addToChildren (self)
+        
+        WikiPage.__renamePaths (self, newpath)
 
-		if self.root.selectedPage == self:
-			self.root.params.lastViewedPageOption.value = self.subpath
+        if self.root.selectedPage == self:
+            self.root.params.lastViewedPageOption.value = self.subpath
 
-		self.root.onTreeUpdate (self)
+        self.root.onTreeUpdate (self)
 
-	
-	def _getTempName (self, pagepath):
-		"""
-		Найти уникальное имя для перемещаемой страницы.
-		При перемещении сначала пробуем переименовать папку со страницей, а потом уже перемещать
-		pagepath - текущий путь до страницы
+    
+    def _getTempName (self, pagepath):
+        """
+        Найти уникальное имя для перемещаемой страницы.
+        При перемещении сначала пробуем переименовать папку со страницей, а потом уже перемещать
+        pagepath - текущий путь до страницы
 
-		Метод возвращает полный путь
-		"""
-		(path, title) = os.path.split (pagepath)
-		template = u"__{title}_{number}"
-		number = 0
-		newname = template.format (title=title, number=number)
+        Метод возвращает полный путь
+        """
+        (path, title) = os.path.split (pagepath)
+        template = u"__{title}_{number}"
+        number = 0
+        newname = template.format (title=title, number=number)
 
-		while (os.path.exists (os.path.join (path, newname) ) ):
-			number += 1
-			newname = template.format (title=title, number=number)
+        while (os.path.exists (os.path.join (path, newname) ) ):
+            number += 1
+            newname = template.format (title=title, number=number)
 
-		return os.path.join (path, newname)
+        return os.path.join (path, newname)
 
 
-	@property
-	def icon (self):
-		icons = self._getIconFiles()
-		return icons[0] if len (icons) > 0 else None
+    @property
+    def icon (self):
+        icons = self._getIconFiles()
+        return icons[0] if len (icons) > 0 else None
 
 
-	@icon.setter
-	def icon (self, iconpath):
-		if self.readonly:
-			raise ReadonlyException
+    @icon.setter
+    def icon (self, iconpath):
+        if self.readonly:
+            raise ReadonlyException
 
-		if self.icon != None and os.path.abspath (self.icon) == os.path.abspath (iconpath):
-			return
+        if self.icon != None and os.path.abspath (self.icon) == os.path.abspath (iconpath):
+            return
 
-		self._removeOldIcons()
+        self._removeOldIcons()
 
-		name = os.path.basename (iconpath)
-		dot = name.rfind (".")
-		extension = name[dot:]
+        name = os.path.basename (iconpath)
+        dot = name.rfind (".")
+        extension = name[dot:]
 
-		newname = RootWikiPage.iconName + extension
-		newpath = os.path.join (self.path, newname)
+        newname = RootWikiPage.iconName + extension
+        newpath = os.path.join (self.path, newname)
 
-		if iconpath != newpath:
-			shutil.copyfile (iconpath, newpath)
+        if iconpath != newpath:
+            shutil.copyfile (iconpath, newpath)
 
-		self.root.onPageUpdate (self)
-		self.root.onTreeUpdate (self)
+        self.root.onPageUpdate (self)
+        self.root.onTreeUpdate (self)
 
-		return newpath
+        return newpath
 
 
-	def _removeOldIcons (self):
-		for fname in self._getIconFiles():
-			os.remove (fname)
+    def _removeOldIcons (self):
+        for fname in self._getIconFiles():
+            os.remove (fname)
 
 
-	@property
-	def tags (self):
-		return self._tags
+    @property
+    def tags (self):
+        return self._tags
 
 
-	@tags.setter
-	def tags (self, tags):
-		if self.readonly:
-			raise ReadonlyException
+    @tags.setter
+    def tags (self, tags):
+        if self.readonly:
+            raise ReadonlyException
 
-		if self._tags != tags:
-			self._tags = tags[:]
-			self.save()
-			self.root.onPageUpdate(self)
+        if self._tags != tags:
+            self._tags = tags[:]
+            self.save()
+            self.root.onPageUpdate(self)
 
 
-	def _getIconFiles (self):
-		files = os.listdir (self.path)
+    def _getIconFiles (self):
+        files = os.listdir (self.path)
 
-		icons = [os.path.join (self.path, fname) for fname in files 
-				if (fname.startswith (RootWikiPage.iconName) and
-					not os.path.isdir (fname))]
+        icons = [os.path.join (self.path, fname) for fname in files 
+                if (fname.startswith (RootWikiPage.iconName) and
+                    not os.path.isdir (fname))]
 
-		return icons
-	
+        return icons
+    
 
-	def initAfterLoading (self):
-		"""
-		Инициализировать после загрузки (загрузить параметры страницы)
-		"""
-		# Теги страницы
-		self._tags = self._getTags (self._params)
+    def initAfterLoading (self):
+        """
+        Инициализировать после загрузки (загрузить параметры страницы)
+        """
+        # Теги страницы
+        self._tags = self._getTags (self._params)
 
-		self._children = self.getChildren ()
-	
+        self._children = self.getChildren ()
+    
 
-	@staticmethod
-	def load (path, parent, readonly = False):
-		"""
-		Загрузить страницу.
-		Использовать этот метод вместо конструктора, когда надо загрузить страницу
-		"""
-		from .factoryselector import FactorySelector
+    @staticmethod
+    def load (path, parent, readonly = False):
+        """
+        Загрузить страницу.
+        Использовать этот метод вместо конструктора, когда надо загрузить страницу
+        """
+        from .factoryselector import FactorySelector
 
-		title = os.path.basename(path)
-		params = RootWikiPage._readParams(path, readonly)
+        title = os.path.basename(path)
+        params = RootWikiPage._readParams(path, readonly)
 
-		# Получим тип страницы по параметрам
-		pageType = FactorySelector.getFactory(params.typeOption.value).getPageType()
+        # Получим тип страницы по параметрам
+        pageType = FactorySelector.getFactory(params.typeOption.value).getPageType()
 
-		page = pageType (path, title, parent, readonly)
-		page.initAfterLoading ()
+        page = pageType (path, title, parent, readonly)
+        page.initAfterLoading ()
 
-		return page
+        return page
 
 
-	def save (self):
-		"""
-		Сохранить страницу
-		"""
-		if self.readonly:
-			return
+    def save (self):
+        """
+        Сохранить страницу
+        """
+        if self.readonly:
+            return
 
-		if not os.path.exists (self.path):
-			os.mkdir (self.path)
+        if not os.path.exists (self.path):
+            os.mkdir (self.path)
 
-		try:
-			text = self.content
-		except IOError:
-			text = u""
+        try:
+            text = self.content
+        except IOError:
+            text = u""
 
-		with open (os.path.join (self.path, RootWikiPage.contentFile), "w") as fp:
-			fp.write (text.encode ("utf8"))
+        with open (os.path.join (self.path, RootWikiPage.contentFile), "w") as fp:
+            fp.write (text.encode ("utf8"))
 
-		self._saveOptions ()
-	
+        self._saveOptions ()
+    
 
-	def _saveOptions (self):
-		"""
-		Сохранить настройки
-		"""
-		# Тип
-		self._params.typeOption.value = self.getTypeString()
+    def _saveOptions (self):
+        """
+        Сохранить настройки
+        """
+        # Тип
+        self._params.typeOption.value = self.getTypeString()
 
-		#Теги
-		self._saveTags()
+        #Теги
+        self._saveTags()
 
-		# Порядок страницы
-		self._params.orderOption.value = self.order
+        # Порядок страницы
+        self._params.orderOption.value = self.order
 
 
 
-	def _saveTags (self):
-		tags = reduce (lambda full, tag: full + ", " + tag, self._tags, "")
+    def _saveTags (self):
+        tags = reduce (lambda full, tag: full + ", " + tag, self._tags, "")
 
-		# Удалим начальные ", "
-		tags = tags[2: ]
-		self._params.set (RootWikiPage.sectionGeneral, WikiPage.paramTags, tags)
+        # Удалим начальные ", "
+        tags = tags[2: ]
+        self._params.set (RootWikiPage.sectionGeneral, WikiPage.paramTags, tags)
 
 
-	def initAfterCreating (self, tags):
-		"""
-		Инициализация после создания
-		"""
-		self._tags = tags[:]
-		self.save()
-		self.root.onPageCreate(self)
-	
+    def initAfterCreating (self, tags):
+        """
+        Инициализация после создания
+        """
+        self._tags = tags[:]
+        self.save()
+        self.root.onPageCreate(self)
+    
 
-	def _getTags (self, configParser):
-		"""
-		Выделить теги из строки конфигурационного файла
-		"""
-		try:
-			tagsString = configParser.get (RootWikiPage.sectionGeneral, WikiPage.paramTags)
-		except ConfigParser.NoOptionError:
-			return []
+    def _getTags (self, configParser):
+        """
+        Выделить теги из строки конфигурационного файла
+        """
+        try:
+            tagsString = configParser.get (RootWikiPage.sectionGeneral, WikiPage.paramTags)
+        except ConfigParser.NoOptionError:
+            return []
 
-		tags = TagsList.parseTagsList (tagsString)
+        tags = TagsList.parseTagsList (tagsString)
 
-		return tags
+        return tags
 
-	
-	@property
-	def content(self):
-		"""
-		Прочитать файл-содержимое страницы
-		"""
-		text = ""
+    
+    @property
+    def content(self):
+        """
+        Прочитать файл-содержимое страницы
+        """
+        text = ""
 
-		try:
-			with open (os.path.join (self.path, RootWikiPage.contentFile)) as fp:
-				text = fp.read()
-		except IOError:
-			pass
-		
-		return unicode (text, "utf8")
+        try:
+            with open (os.path.join (self.path, RootWikiPage.contentFile)) as fp:
+                text = fp.read()
+        except IOError:
+            pass
+        
+        return unicode (text, "utf8")
 
 
-	@content.setter
-	def content (self, text):
-		if self.readonly:
-			raise ReadonlyException
+    @content.setter
+    def content (self, text):
+        if self.readonly:
+            raise ReadonlyException
 
-		#if text != self.content:
-		path = os.path.join (self.path, RootWikiPage.contentFile)
+        #if text != self.content:
+        path = os.path.join (self.path, RootWikiPage.contentFile)
 
-		with open (path, "wb") as fp:
-			fp.write (text.encode ("utf8"))
+        with open (path, "wb") as fp:
+            fp.write (text.encode ("utf8"))
 
-		self.root.onPageUpdate(self)
-	
+        self.root.onPageUpdate(self)
+    
 
-	@property
-	def textContent (self):
-		"""
-		Получить контент в текстовом виде.
-		Используется для поиска по страницам.
-		В большинстве случаев достаточно вернуть просто content
-		"""
-		return self.content
-	
+    @property
+    def textContent (self):
+        """
+        Получить контент в текстовом виде.
+        Используется для поиска по страницам.
+        В большинстве случаев достаточно вернуть просто content
+        """
+        return self.content
+    
 
-	@property
-	def subpath (self):
-		result = self.title
-		page = self.parent
+    @property
+    def subpath (self):
+        result = self.title
+        page = self.parent
 
-		while page.parent != None:
-			# Пока не дойдем до корня, у которого нет заголовка, и родитель - None
-			result = page.title + "/" + result
-			page = page.parent
+        while page.parent != None:
+            # Пока не дойдем до корня, у которого нет заголовка, и родитель - None
+            result = page.title + "/" + result
+            page = page.parent
 
-		return result
+        return result
 
 
-	def remove (self):
-		"""
-		Удалить страницу
-		"""
-		if self.readonly:
-			raise ReadonlyException
+    def remove (self):
+        """
+        Удалить страницу
+        """
+        if self.readonly:
+            raise ReadonlyException
 
-		oldpath = self.path
-		tempname = self._getTempName (oldpath)
+        oldpath = self.path
+        tempname = self._getTempName (oldpath)
 
-		try:
-			os.renames (oldpath, tempname)
-			shutil.rmtree (tempname)
-		except shutil.Error:
-			raise IOError
-		except OSError:
-			raise IOError
+        try:
+            os.renames (oldpath, tempname)
+            shutil.rmtree (tempname)
+        except shutil.Error:
+            raise IOError
+        except OSError:
+            raise IOError
 
-		self._removePageFromTree (self)
+        self._removePageFromTree (self)
 
-		# Если выбранная страница была удалена
-		if self.root.selectedPage != None and self.root.selectedPage.isRemoved:
-			# Новая выбранная страница взамен старой
-			newselpage = self.root.selectedPage
-			while newselpage.parent != None and newselpage.isRemoved:
-				newselpage = newselpage.parent
+        # Если выбранная страница была удалена
+        if self.root.selectedPage != None and self.root.selectedPage.isRemoved:
+            # Новая выбранная страница взамен старой
+            newselpage = self.root.selectedPage
+            while newselpage.parent != None and newselpage.isRemoved:
+                newselpage = newselpage.parent
 
-			# Если попали в корень дерева
-			if newselpage.parent == None:
-				newselpage = None
+            # Если попали в корень дерева
+            if newselpage.parent == None:
+                newselpage = None
 
-			self.root.selectedPage = newselpage
-		
+            self.root.selectedPage = newselpage
+        
 
-	def _removePageFromTree (self, page):
-		page.parent.removeFromChildren (page)
+    def _removePageFromTree (self, page):
+        page.parent.removeFromChildren (page)
 
-		for child in page.children:
-			page._removePageFromTree (child)
+        for child in page.children:
+            page._removePageFromTree (child)
 
-		self.root.onPageRemove (page)
+        self.root.onPageRemove (page)
 
 
-	@property
-	def isRemoved (self):
-		"""
-		Проверить, что страница удалена
-		"""
-		return self not in self.parent.children
-	
+    @property
+    def isRemoved (self):
+        """
+        Проверить, что страница удалена
+        """
+        return self not in self.parent.children
+    
 

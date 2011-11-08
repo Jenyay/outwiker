@@ -10,226 +10,226 @@ from outwiker.gui.guiconfig import PluginsConfig
 
 
 class PluginsLoaderTest(unittest.TestCase):
-	def setUp(self):
-		self.config = PluginsConfig (Application.config)
-		self.config.disabledPlugins.value = []
+    def setUp(self):
+        self.config = PluginsConfig (Application.config)
+        self.config.disabledPlugins.value = []
 
 
-	def tearDown (self):
-		self.config.disabledPlugins.value = []
+    def tearDown (self):
+        self.config.disabledPlugins.value = []
 
 
-	def testEmpty (self):
-		loader = PluginsLoader(Application)
-		self.assertEqual (len (loader), 0)
+    def testEmpty (self):
+        loader = PluginsLoader(Application)
+        self.assertEqual (len (loader), 0)
 
 
-	def testLoad (self):
-		dirlist = [u"../plugins/testempty1", u"../plugins/testempty2", u"../plugins/testempty2"]
-		loader = PluginsLoader(Application)
-		loader.load (dirlist)
+    def testLoad (self):
+        dirlist = [u"../plugins/testempty1", u"../plugins/testempty2", u"../plugins/testempty2"]
+        loader = PluginsLoader(Application)
+        loader.load (dirlist)
 
-		self.assertEqual (len (loader), 2)
-		self.assertEqual (loader[u"TestEmpty1"].name, u"TestEmpty1")
-		self.assertEqual (loader[u"TestEmpty1"].version, u"0.1")
-		self.assertEqual (loader[u"TestEmpty1"].description, u"This plugin is empty")
-		self.assertEqual (loader[u"TestEmpty1"].application, Application)
+        self.assertEqual (len (loader), 2)
+        self.assertEqual (loader[u"TestEmpty1"].name, u"TestEmpty1")
+        self.assertEqual (loader[u"TestEmpty1"].version, u"0.1")
+        self.assertEqual (loader[u"TestEmpty1"].description, u"This plugin is empty")
+        self.assertEqual (loader[u"TestEmpty1"].application, Application)
 
-		self.assertEqual (loader[u"TestEmpty2"].name, u"TestEmpty2")
-		self.assertEqual (loader[u"TestEmpty2"].version, u"0.1")
-		self.assertEqual (loader[u"TestEmpty2"].description, u"This plugin is empty")
+        self.assertEqual (loader[u"TestEmpty2"].name, u"TestEmpty2")
+        self.assertEqual (loader[u"TestEmpty2"].version, u"0.1")
+        self.assertEqual (loader[u"TestEmpty2"].description, u"This plugin is empty")
 
-		loader.clear()
-		self.assertEqual (len (loader), 0)
+        loader.clear()
+        self.assertEqual (len (loader), 0)
 
-		# Проверим, как работает итерация
-		for plugin in loader:
-			self.assertTrue (plugin == loader[u"TestEmpty1"] or plugin == loader[u"TestEmpty2"])
-
-
-	def testLoadInvalid (self):
-		dirlist = [u"../plugins/testinvalid",            # Нет такой директории
-				u"../plugins/testinvalid1",
-				u"../plugins/testinvalid2",
-				u"../plugins/testinvalid3",
-				u"../plugins/testinvalid4",
-				u"../plugins/testinvalid5",
-				u"../plugins/testinvalid6",
-				u"../plugins/testinvalid7",
-				u"../plugins/testempty1", 
-				u"../plugins/testempty2",
-				u"../plugins/testempty2",                # Ссылка на плагин testempty посторияется еще раз
-				u"../plugins/testwikicommand"]
-
-		loader = PluginsLoader(Application)
-		loader.load (dirlist)
-
-		self.assertEqual (len (loader), 3)
-		self.assertEqual (loader[u"TestEmpty1"].name, u"TestEmpty1")
-		self.assertEqual (loader[u"TestEmpty1"].version, u"0.1")
-		self.assertEqual (loader[u"TestEmpty1"].description, u"This plugin is empty")
-
-		self.assertEqual (loader[u"TestEmpty2"].name, u"TestEmpty2")
-		self.assertEqual (loader[u"TestEmpty2"].version, u"0.1")
-		self.assertEqual (loader[u"TestEmpty2"].description, u"This plugin is empty")
-
-		self.assertEqual (loader[u"TestWikiCommand"].name, u"TestWikiCommand")
-		self.assertEqual (loader[u"TestWikiCommand"].version, u"0.1")
+        # Проверим, как работает итерация
+        for plugin in loader:
+            self.assertTrue (plugin == loader[u"TestEmpty1"] or plugin == loader[u"TestEmpty2"])
 
 
-	def testDisabledPlugins (self):
-		# Добавим плагин TestEmpty1 в черный список
-		self.config.disabledPlugins.value = [u"TestEmpty1"]
+    def testLoadInvalid (self):
+        dirlist = [u"../plugins/testinvalid",            # Нет такой директории
+                u"../plugins/testinvalid1",
+                u"../plugins/testinvalid2",
+                u"../plugins/testinvalid3",
+                u"../plugins/testinvalid4",
+                u"../plugins/testinvalid5",
+                u"../plugins/testinvalid6",
+                u"../plugins/testinvalid7",
+                u"../plugins/testempty1", 
+                u"../plugins/testempty2",
+                u"../plugins/testempty2",                # Ссылка на плагин testempty посторияется еще раз
+                u"../plugins/testwikicommand"]
 
-		dirlist = [u"../plugins/testempty1", 
-				u"../plugins/testempty2",
-				u"../plugins/testwikicommand"]
+        loader = PluginsLoader(Application)
+        loader.load (dirlist)
 
-		loader = PluginsLoader(Application)
-		loader.load (dirlist)
+        self.assertEqual (len (loader), 3)
+        self.assertEqual (loader[u"TestEmpty1"].name, u"TestEmpty1")
+        self.assertEqual (loader[u"TestEmpty1"].version, u"0.1")
+        self.assertEqual (loader[u"TestEmpty1"].description, u"This plugin is empty")
 
-		self.assertEqual (len (loader), 2)
-		self.assertEqual (loader[u"TestEmpty2"].name, u"TestEmpty2")
-		self.assertEqual (loader[u"TestEmpty2"].version, u"0.1")
-		self.assertEqual (loader[u"TestEmpty2"].description, u"This plugin is empty")
+        self.assertEqual (loader[u"TestEmpty2"].name, u"TestEmpty2")
+        self.assertEqual (loader[u"TestEmpty2"].version, u"0.1")
+        self.assertEqual (loader[u"TestEmpty2"].description, u"This plugin is empty")
 
-		self.assertEqual (loader[u"TestWikiCommand"].name, u"TestWikiCommand")
-		self.assertEqual (loader[u"TestWikiCommand"].version, u"0.1")
-
-		self.assertEqual (len (loader.disabledPlugins), 1)
-		self.assertEqual (loader.disabledPlugins[u"TestEmpty1"].name, u"TestEmpty1")
-		self.assertEqual (loader.disabledPlugins[u"TestEmpty1"].version, u"0.1")
-		self.assertEqual (loader.disabledPlugins[u"TestEmpty1"].description, u"This plugin is empty")
-
-
-	def testOnOffPlugins1 (self):
-		# Тест на включение/выключение плагинов
-		dirlist = [u"../plugins/testempty1", 
-				u"../plugins/testempty2",
-				u"../plugins/testwikicommand"]
-
-		loader = PluginsLoader(Application)
-		loader.load (dirlist)
-
-		self.assertEqual (len (loader), 3)
-		self.assertEqual (len (loader.disabledPlugins), 0)
-
-		# Отключим плагин TestEmpty1
-		self.config.disabledPlugins.value = [u"TestEmpty1"]
-		loader.updateDisableList()
-		
-		self.assertEqual (len (loader), 2)
-		self.assertEqual (len (loader.disabledPlugins), 1)
-
-		self.assertEqual (loader[u"TestEmpty2"].name, u"TestEmpty2")
-		self.assertEqual (loader.disabledPlugins[u"TestEmpty1"].name, u"TestEmpty1")
+        self.assertEqual (loader[u"TestWikiCommand"].name, u"TestWikiCommand")
+        self.assertEqual (loader[u"TestWikiCommand"].version, u"0.1")
 
 
-	def testOnOffPlugins2 (self):
-		# Тест на включение/выключение плагинов
-		dirlist = [u"../plugins/testempty1", 
-				u"../plugins/testempty2",
-				u"../plugins/testwikicommand"]
+    def testDisabledPlugins (self):
+        # Добавим плагин TestEmpty1 в черный список
+        self.config.disabledPlugins.value = [u"TestEmpty1"]
 
-		loader = PluginsLoader(Application)
-		loader.load (dirlist)
+        dirlist = [u"../plugins/testempty1", 
+                u"../plugins/testempty2",
+                u"../plugins/testwikicommand"]
 
-		self.assertEqual (len (loader), 3)
-		self.assertEqual (len (loader.disabledPlugins), 0)
+        loader = PluginsLoader(Application)
+        loader.load (dirlist)
 
-		# Обновим черный список без изменений
-		loader.updateDisableList()
-		
-		self.assertEqual (len (loader), 3)
-		self.assertEqual (len (loader.disabledPlugins), 0)
+        self.assertEqual (len (loader), 2)
+        self.assertEqual (loader[u"TestEmpty2"].name, u"TestEmpty2")
+        self.assertEqual (loader[u"TestEmpty2"].version, u"0.1")
+        self.assertEqual (loader[u"TestEmpty2"].description, u"This plugin is empty")
 
+        self.assertEqual (loader[u"TestWikiCommand"].name, u"TestWikiCommand")
+        self.assertEqual (loader[u"TestWikiCommand"].version, u"0.1")
 
-	def testOnOffPlugins3 (self):
-		# Тест на включение/выключение плагинов
-		dirlist = [u"../plugins/testempty1", 
-				u"../plugins/testempty2",
-				u"../plugins/testwikicommand"]
-
-		loader = PluginsLoader(Application)
-		loader.load (dirlist)
-
-		self.assertEqual (len (loader), 3)
-		self.assertEqual (len (loader.disabledPlugins), 0)
-
-		# Добавим в черный список плагины, которые не существуют
-		self.config.disabledPlugins.value = [u"TestEmpty1111"]
-		loader.updateDisableList()
-		
-		self.assertEqual (len (loader), 3)
-		self.assertEqual (len (loader.disabledPlugins), 0)
+        self.assertEqual (len (loader.disabledPlugins), 1)
+        self.assertEqual (loader.disabledPlugins[u"TestEmpty1"].name, u"TestEmpty1")
+        self.assertEqual (loader.disabledPlugins[u"TestEmpty1"].version, u"0.1")
+        self.assertEqual (loader.disabledPlugins[u"TestEmpty1"].description, u"This plugin is empty")
 
 
-	def testOnOffPlugins4 (self):
-		# Тест на включение/выключение плагинов
-		dirlist = [u"../plugins/testempty1", 
-				u"../plugins/testempty2",
-				u"../plugins/testwikicommand"]
+    def testOnOffPlugins1 (self):
+        # Тест на включение/выключение плагинов
+        dirlist = [u"../plugins/testempty1", 
+                u"../plugins/testempty2",
+                u"../plugins/testwikicommand"]
 
-		# Сразу заблокируем все плагины
-		self.config.disabledPlugins.value = [u"TestEmpty1", u"TestEmpty2", u"TestWikiCommand"]
+        loader = PluginsLoader(Application)
+        loader.load (dirlist)
 
-		loader = PluginsLoader(Application)
-		loader.load (dirlist)
+        self.assertEqual (len (loader), 3)
+        self.assertEqual (len (loader.disabledPlugins), 0)
 
-		self.assertEqual (len (loader), 0)
-		self.assertEqual (len (loader.disabledPlugins), 3)
+        # Отключим плагин TestEmpty1
+        self.config.disabledPlugins.value = [u"TestEmpty1"]
+        loader.updateDisableList()
+        
+        self.assertEqual (len (loader), 2)
+        self.assertEqual (len (loader.disabledPlugins), 1)
 
-		# Обновим плагины без изменений
-		loader.updateDisableList()
-		
-		self.assertEqual (len (loader), 0)
-		self.assertEqual (len (loader.disabledPlugins), 3)
-
-
-	def testOnOffPlugins5 (self):
-		# Тест на включение/выключение плагинов
-		dirlist = [u"../plugins/testempty1", 
-				u"../plugins/testempty2",
-				u"../plugins/testwikicommand"]
-
-		# Сразу заблокируем все плагины
-		self.config.disabledPlugins.value = [u"TestEmpty1", u"TestEmpty2", u"TestWikiCommand"]
-
-		loader = PluginsLoader(Application)
-		loader.load (dirlist)
-
-		self.assertEqual (len (loader), 0)
-		self.assertEqual (len (loader.disabledPlugins), 3)
-
-		# Включим все плагины
-		self.config.disabledPlugins.value = []
-		loader.updateDisableList()
-		
-		self.assertEqual (len (loader), 3)
-		self.assertEqual (len (loader.disabledPlugins), 0)
+        self.assertEqual (loader[u"TestEmpty2"].name, u"TestEmpty2")
+        self.assertEqual (loader.disabledPlugins[u"TestEmpty1"].name, u"TestEmpty1")
 
 
-	def testOnOffPlugins6 (self):
-		# Тест на включение/выключение плагинов
-		dirlist = [u"../plugins/testempty1", 
-				u"../plugins/testempty2",
-				u"../plugins/testwikicommand"]
+    def testOnOffPlugins2 (self):
+        # Тест на включение/выключение плагинов
+        dirlist = [u"../plugins/testempty1", 
+                u"../plugins/testempty2",
+                u"../plugins/testwikicommand"]
 
-		loader = PluginsLoader(Application)
-		loader.load (dirlist)
+        loader = PluginsLoader(Application)
+        loader.load (dirlist)
 
-		self.assertEqual (len (loader), 3)
-		self.assertEqual (len (loader.disabledPlugins), 0)
-		self.assertTrue (loader[u"TestEmpty1"].enabled)
+        self.assertEqual (len (loader), 3)
+        self.assertEqual (len (loader.disabledPlugins), 0)
 
-		# Отключим плагин TestEmpty1
-		self.config.disabledPlugins.value = [u"TestEmpty1"]
-		loader.updateDisableList()
+        # Обновим черный список без изменений
+        loader.updateDisableList()
+        
+        self.assertEqual (len (loader), 3)
+        self.assertEqual (len (loader.disabledPlugins), 0)
 
-		self.assertFalse (loader.disabledPlugins[u"TestEmpty1"].enabled)
 
-		# Опять включим плагин TestEmpty1
-		self.config.disabledPlugins.value = []
-		loader.updateDisableList()
+    def testOnOffPlugins3 (self):
+        # Тест на включение/выключение плагинов
+        dirlist = [u"../plugins/testempty1", 
+                u"../plugins/testempty2",
+                u"../plugins/testwikicommand"]
 
-		self.assertTrue (loader[u"TestEmpty1"].enabled)
+        loader = PluginsLoader(Application)
+        loader.load (dirlist)
+
+        self.assertEqual (len (loader), 3)
+        self.assertEqual (len (loader.disabledPlugins), 0)
+
+        # Добавим в черный список плагины, которые не существуют
+        self.config.disabledPlugins.value = [u"TestEmpty1111"]
+        loader.updateDisableList()
+        
+        self.assertEqual (len (loader), 3)
+        self.assertEqual (len (loader.disabledPlugins), 0)
+
+
+    def testOnOffPlugins4 (self):
+        # Тест на включение/выключение плагинов
+        dirlist = [u"../plugins/testempty1", 
+                u"../plugins/testempty2",
+                u"../plugins/testwikicommand"]
+
+        # Сразу заблокируем все плагины
+        self.config.disabledPlugins.value = [u"TestEmpty1", u"TestEmpty2", u"TestWikiCommand"]
+
+        loader = PluginsLoader(Application)
+        loader.load (dirlist)
+
+        self.assertEqual (len (loader), 0)
+        self.assertEqual (len (loader.disabledPlugins), 3)
+
+        # Обновим плагины без изменений
+        loader.updateDisableList()
+        
+        self.assertEqual (len (loader), 0)
+        self.assertEqual (len (loader.disabledPlugins), 3)
+
+
+    def testOnOffPlugins5 (self):
+        # Тест на включение/выключение плагинов
+        dirlist = [u"../plugins/testempty1", 
+                u"../plugins/testempty2",
+                u"../plugins/testwikicommand"]
+
+        # Сразу заблокируем все плагины
+        self.config.disabledPlugins.value = [u"TestEmpty1", u"TestEmpty2", u"TestWikiCommand"]
+
+        loader = PluginsLoader(Application)
+        loader.load (dirlist)
+
+        self.assertEqual (len (loader), 0)
+        self.assertEqual (len (loader.disabledPlugins), 3)
+
+        # Включим все плагины
+        self.config.disabledPlugins.value = []
+        loader.updateDisableList()
+        
+        self.assertEqual (len (loader), 3)
+        self.assertEqual (len (loader.disabledPlugins), 0)
+
+
+    def testOnOffPlugins6 (self):
+        # Тест на включение/выключение плагинов
+        dirlist = [u"../plugins/testempty1", 
+                u"../plugins/testempty2",
+                u"../plugins/testwikicommand"]
+
+        loader = PluginsLoader(Application)
+        loader.load (dirlist)
+
+        self.assertEqual (len (loader), 3)
+        self.assertEqual (len (loader.disabledPlugins), 0)
+        self.assertTrue (loader[u"TestEmpty1"].enabled)
+
+        # Отключим плагин TestEmpty1
+        self.config.disabledPlugins.value = [u"TestEmpty1"]
+        loader.updateDisableList()
+
+        self.assertFalse (loader.disabledPlugins[u"TestEmpty1"].enabled)
+
+        # Опять включим плагин TestEmpty1
+        self.config.disabledPlugins.value = []
+        loader.updateDisableList()
+
+        self.assertTrue (loader[u"TestEmpty1"].enabled)

@@ -8,50 +8,50 @@ from outwiker.gui.BaseTextPanel import BaseTextPanel
 
 
 class TextPanel (BaseTextPanel):
-	"""
-	Класс для представления текстовых страниц
-	"""
+    """
+    Класс для представления текстовых страниц
+    """
 
-	def __init__ (self, parent, *args, **kwds):
-		BaseTextPanel.__init__ (self, parent, *args, **kwds)
+    def __init__ (self, parent, *args, **kwds):
+        BaseTextPanel.__init__ (self, parent, *args, **kwds)
 
-		self.__layout()
+        self.__layout()
 
-	
-	def Print (self):
-		self.textEditor.Print()
+    
+    def Print (self):
+        self.textEditor.Print()
 
-	
-	def onPreferencesDialogClose (self, prefDialog):
-		self.textEditor.setDefaultSettings()
-	
+    
+    def onPreferencesDialogClose (self, prefDialog):
+        self.textEditor.setDefaultSettings()
+    
 
-	def UpdateView (self, page):
-		self.textEditor.SetText (self._currentpage.content)
-		self.textEditor.EmptyUndoBuffer()
-		self.textEditor.SetReadOnly (page.readonly)
-	
+    def UpdateView (self, page):
+        self.textEditor.SetText (self._currentpage.content)
+        self.textEditor.EmptyUndoBuffer()
+        self.textEditor.SetReadOnly (page.readonly)
+    
 
-	def __layout (self):
-		self.textEditor = TextEditor(self, -1)
+    def __layout (self):
+        self.textEditor = TextEditor(self, -1)
 
-		mainSizer = wx.FlexGridSizer(1, 1, 0, 0)
-		mainSizer.Add(self.textEditor, 1, wx.EXPAND, 0)
-		self.SetSizer(mainSizer)
-		mainSizer.Fit(self)
-		mainSizer.AddGrowableRow(0)
-		mainSizer.AddGrowableCol(0)
-
-
-	def onAttachmentPaste (self, fnames):
-		text = self._getAttachString (fnames)
-		self.textEditor.AddText (text)
-		self.textEditor.SetFocus()
+        mainSizer = wx.FlexGridSizer(1, 1, 0, 0)
+        mainSizer.Add(self.textEditor, 1, wx.EXPAND, 0)
+        self.SetSizer(mainSizer)
+        mainSizer.Fit(self)
+        mainSizer.AddGrowableRow(0)
+        mainSizer.AddGrowableCol(0)
 
 
-	def GetContentFromGui (self):
-		return  self.textEditor.GetText()
+    def onAttachmentPaste (self, fnames):
+        text = self._getAttachString (fnames)
+        self.textEditor.AddText (text)
+        self.textEditor.SetFocus()
 
 
-	def GetSearchPanel (self):
-		return self.textEditor.searchPanel
+    def GetContentFromGui (self):
+        return  self.textEditor.GetText()
+
+
+    def GetSearchPanel (self):
+        return self.textEditor.searchPanel

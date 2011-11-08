@@ -17,42 +17,42 @@ from outwiker.pages.wiki.parserfactory import ParserFactory
 
 
 class ParserMiscTest (unittest.TestCase):
-	def setUp(self):
-		self.encoding = "utf8"
+    def setUp(self):
+        self.encoding = "utf8"
 
-		self.filesPath = u"../test/samplefiles/"
+        self.filesPath = u"../test/samplefiles/"
 
-		self.__createWiki()
-		
-		factory = ParserFactory()
-		self.parser = factory.make (self.testPage, Application.config)
-	
+        self.__createWiki()
+        
+        factory = ParserFactory()
+        self.parser = factory.make (self.testPage, Application.config)
+    
 
-	def __createWiki (self):
-		# Здесь будет создаваться вики
-		self.path = u"../test/testwiki"
-		removeWiki (self.path)
+    def __createWiki (self):
+        # Здесь будет создаваться вики
+        self.path = u"../test/testwiki"
+        removeWiki (self.path)
 
-		self.rootwiki = WikiDocument.create (self.path)
-		WikiPageFactory.create (self.rootwiki, u"Страница 2", [])
-		self.testPage = self.rootwiki[u"Страница 2"]
-		
+        self.rootwiki = WikiDocument.create (self.path)
+        WikiPageFactory.create (self.rootwiki, u"Страница 2", [])
+        self.testPage = self.rootwiki[u"Страница 2"]
+        
 
-	def tearDown(self):
-		removeWiki (self.path)
-
-
-	def testHorLine (self):
-		text = u"бла-бла-бла \nкхм ---- бла-бла-бла\nбла-бла-бла"
-		result = u'бла-бла-бла \nкхм <HR> бла-бла-бла\nбла-бла-бла'
-
-		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+    def tearDown(self):
+        removeWiki (self.path)
 
 
-	def testParseWithoutAttaches (self):
-		pagetitle = u"Страница 666"
-		
-		WikiPageFactory.create (self.rootwiki, pagetitle, [])
-		parser = Parser(self.rootwiki[pagetitle], Application.config)
+    def testHorLine (self):
+        text = u"бла-бла-бла \nкхм ---- бла-бла-бла\nбла-бла-бла"
+        result = u'бла-бла-бла \nкхм <HR> бла-бла-бла\nбла-бла-бла'
 
-		parser.toHtml (u"Attach:bla-bla-bla")
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testParseWithoutAttaches (self):
+        pagetitle = u"Страница 666"
+        
+        WikiPageFactory.create (self.rootwiki, pagetitle, [])
+        parser = Parser(self.rootwiki[pagetitle], Application.config)
+
+        parser.toHtml (u"Attach:bla-bla-bla")

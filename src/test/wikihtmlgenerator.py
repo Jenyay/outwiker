@@ -19,304 +19,304 @@ from utils import removeWiki
 
 
 class WikiHtmlGeneratorTest (unittest.TestCase):
-	def setUp(self):
-		self.encoding = "866"
+    def setUp(self):
+        self.encoding = "866"
 
-		self.filesPath = u"../test/samplefiles/"
-		self.__createWiki()
-		
-		files = [u"image.jpg", u"dir"]
+        self.filesPath = u"../test/samplefiles/"
+        self.__createWiki()
+        
+        files = [u"image.jpg", u"dir"]
 
-		fullFilesPath = [os.path.join (self.filesPath, fname) for fname in files]
+        fullFilesPath = [os.path.join (self.filesPath, fname) for fname in files]
 
-		self.attach_page2 = Attachment (self.rootwiki[u"Страница 2"])
+        self.attach_page2 = Attachment (self.rootwiki[u"Страница 2"])
 
-		# Прикрепим к двум страницам файлы
-		Attachment (self.testPage).attach (fullFilesPath)
+        # Прикрепим к двум страницам файлы
+        Attachment (self.testPage).attach (fullFilesPath)
 
-		self.wikitext = u"""Бла-бла-бла
+        self.wikitext = u"""Бла-бла-бла
 %thumb maxsize=250%Attach:image.jpg%%
 Бла-бла-бла"""
 
-		self.testPage.content = self.wikitext
-	
+        self.testPage.content = self.wikitext
+    
 
-	def __createWiki (self):
-		# Здесь будет создаваться вики
-		self.path = u"../test/testwiki"
-		removeWiki (self.path)
+    def __createWiki (self):
+        # Здесь будет создаваться вики
+        self.path = u"../test/testwiki"
+        removeWiki (self.path)
 
-		self.rootwiki = WikiDocument.create (self.path)
+        self.rootwiki = WikiDocument.create (self.path)
 
-		WikiPageFactory.create (self.rootwiki, u"Страница 2", [])
-		self.testPage = self.rootwiki[u"Страница 2"]
-		
+        WikiPageFactory.create (self.rootwiki, u"Страница 2", [])
+        self.testPage = self.rootwiki[u"Страница 2"]
+        
 
-	def tearDown(self):
-		removeWiki (self.path)
+    def tearDown(self):
+        removeWiki (self.path)
 
 
-	def test1 (self):
-		generator = HtmlGenerator (self.testPage)
-		htmlpath = generator.makeHtml ()
+    def test1 (self):
+        generator = HtmlGenerator (self.testPage)
+        htmlpath = generator.makeHtml ()
 
-		self.assertEqual (htmlpath, os.path.join (self.testPage.path, u"__content.html"))
-		self.assertTrue (os.path.exists (htmlpath))
+        self.assertEqual (htmlpath, os.path.join (self.testPage.path, u"__content.html"))
+        self.assertTrue (os.path.exists (htmlpath))
 
 
-	def testCache1 (self):
-		# Только создали страницу, кешировать нельзя
-		generator = HtmlGenerator (self.testPage)
-		self.assertFalse (generator.canReadFromCache())
+    def testCache1 (self):
+        # Только создали страницу, кешировать нельзя
+        generator = HtmlGenerator (self.testPage)
+        self.assertFalse (generator.canReadFromCache())
 
-		generator.makeHtml ()
-		# После того, как один раз сгенерили страницу, если ничего не изменилось, можно кешировать
-		self.assertTrue (generator.canReadFromCache())
+        generator.makeHtml ()
+        # После того, как один раз сгенерили страницу, если ничего не изменилось, можно кешировать
+        self.assertTrue (generator.canReadFromCache())
 
-		self.testPage.content = u"бла-бла-бла"
+        self.testPage.content = u"бла-бла-бла"
 
-		# Изменили содержимое страницы, опять нельзя кешировать
-		self.assertFalse (generator.canReadFromCache())
-		generator.makeHtml ()
-		self.assertTrue (generator.canReadFromCache())
+        # Изменили содержимое страницы, опять нельзя кешировать
+        self.assertFalse (generator.canReadFromCache())
+        generator.makeHtml ()
+        self.assertTrue (generator.canReadFromCache())
 
-		# Добавим файл
-		attach = Attachment (self.testPage)
-		attach.attach ([os.path.join (self.filesPath, u"add.png")])
+        # Добавим файл
+        attach = Attachment (self.testPage)
+        attach.attach ([os.path.join (self.filesPath, u"add.png")])
 
-		self.assertFalse (generator.canReadFromCache())
-		generator.makeHtml ()
-		self.assertTrue (generator.canReadFromCache())
+        self.assertFalse (generator.canReadFromCache())
+        generator.makeHtml ()
+        self.assertTrue (generator.canReadFromCache())
 
 
-	def testCache2 (self):
-		# Только создали страницу, кешировать нельзя
-		generator = HtmlGenerator (self.testPage)
+    def testCache2 (self):
+        # Только создали страницу, кешировать нельзя
+        generator = HtmlGenerator (self.testPage)
 
-		path = generator.makeHtml ()
-		ftime = os.stat(path).st_mtime
-		time.sleep (0.1)
+        path = generator.makeHtml ()
+        ftime = os.stat(path).st_mtime
+        time.sleep (0.1)
 
-		path2 = generator.makeHtml ()
-		ftime2 = os.stat(path).st_mtime
+        path2 = generator.makeHtml ()
+        ftime2 = os.stat(path).st_mtime
 
-		self.assertEqual (ftime, ftime2)
-		time.sleep (0.1)
+        self.assertEqual (ftime, ftime2)
+        time.sleep (0.1)
 
-		# Изменили содержимое страницы, опять нельзя кешировать
-		self.testPage.content = u"бла-бла-бла"
-		path3 = generator.makeHtml ()
-		ftime3 = os.stat(path).st_mtime
+        # Изменили содержимое страницы, опять нельзя кешировать
+        self.testPage.content = u"бла-бла-бла"
+        path3 = generator.makeHtml ()
+        ftime3 = os.stat(path).st_mtime
 
-		self.assertNotEqual (ftime2, ftime3)
-		time.sleep (0.1)
+        self.assertNotEqual (ftime2, ftime3)
+        time.sleep (0.1)
 
-		path4 = generator.makeHtml ()
-		ftime4 = os.stat(path).st_mtime
+        path4 = generator.makeHtml ()
+        ftime4 = os.stat(path).st_mtime
 
-		self.assertEqual (ftime3, ftime4)
-		time.sleep (0.1)
+        self.assertEqual (ftime3, ftime4)
+        time.sleep (0.1)
 
-		# Добавим файл
-		attach = Attachment (self.testPage)
-		attach.attach ([os.path.join (self.filesPath, u"add.png")])
+        # Добавим файл
+        attach = Attachment (self.testPage)
+        attach.attach ([os.path.join (self.filesPath, u"add.png")])
 
-		path5 = generator.makeHtml ()
-		ftime5 = os.stat(path).st_mtime
+        path5 = generator.makeHtml ()
+        ftime5 = os.stat(path).st_mtime
 
-		self.assertNotEqual (ftime4, ftime5)
-		time.sleep (0.1)
+        self.assertNotEqual (ftime4, ftime5)
+        time.sleep (0.1)
 
-		path6 = generator.makeHtml ()
-		ftime6 = os.stat(path).st_mtime
+        path6 = generator.makeHtml ()
+        ftime6 = os.stat(path).st_mtime
 
-		self.assertEqual (ftime5, ftime6)
+        self.assertEqual (ftime5, ftime6)
 
 
-	def testCacheRename (self):
-		# Только создали страницу, кешировать нельзя
-		generator = HtmlGenerator (self.testPage)
-		self.assertFalse (generator.canReadFromCache())
+    def testCacheRename (self):
+        # Только создали страницу, кешировать нельзя
+        generator = HtmlGenerator (self.testPage)
+        self.assertFalse (generator.canReadFromCache())
 
-		generator.makeHtml ()
-		# После того, как один раз сгенерили страницу, если ничего не изменилось, можно кешировать
-		self.assertTrue (generator.canReadFromCache())
+        generator.makeHtml ()
+        # После того, как один раз сгенерили страницу, если ничего не изменилось, можно кешировать
+        self.assertTrue (generator.canReadFromCache())
 
-		self.testPage.content = u"бла-бла-бла"
+        self.testPage.content = u"бла-бла-бла"
 
-		# Изменили содержимое страницы, опять нельзя кешировать
-		self.assertFalse (generator.canReadFromCache())
-		generator.makeHtml ()
-		self.assertTrue (generator.canReadFromCache())
+        # Изменили содержимое страницы, опять нельзя кешировать
+        self.assertFalse (generator.canReadFromCache())
+        generator.makeHtml ()
+        self.assertTrue (generator.canReadFromCache())
 
-		# Изменили заголовок
-		self.testPage.title = u"Новый заголовок"
+        # Изменили заголовок
+        self.testPage.title = u"Новый заголовок"
 
-		# Добавим файл
-		self.assertFalse (generator.canReadFromCache())
-		generator.makeHtml ()
-		self.assertTrue (generator.canReadFromCache())
+        # Добавим файл
+        self.assertFalse (generator.canReadFromCache())
+        generator.makeHtml ()
+        self.assertTrue (generator.canReadFromCache())
 
 
-	def testCacheEmpty1 (self):
-		emptycontent = EmptyContent (Application.config)
-		self.testPage.content = u""
+    def testCacheEmpty1 (self):
+        emptycontent = EmptyContent (Application.config)
+        self.testPage.content = u""
 
-		# Только создали страницу, кешировать нельзя
-		generator = HtmlGenerator (self.testPage)
-		self.assertFalse (generator.canReadFromCache())
-		generator.makeHtml ()
+        # Только создали страницу, кешировать нельзя
+        generator = HtmlGenerator (self.testPage)
+        self.assertFalse (generator.canReadFromCache())
+        generator.makeHtml ()
 
-		# Страница пустая, изменился шаблон для путой записи
-		emptycontent.content = u"1111"
-		self.assertFalse (generator.canReadFromCache())
-		generator.makeHtml ()
+        # Страница пустая, изменился шаблон для путой записи
+        emptycontent.content = u"1111"
+        self.assertFalse (generator.canReadFromCache())
+        generator.makeHtml ()
 
-		# Изменилось содержимое страницы
-		self.testPage.content = u"Бла-бла-бла"
-		self.assertFalse (generator.canReadFromCache())
-		generator.makeHtml ()
+        # Изменилось содержимое страницы
+        self.testPage.content = u"Бла-бла-бла"
+        self.assertFalse (generator.canReadFromCache())
+        generator.makeHtml ()
 
-		self.assertTrue (generator.canReadFromCache())
-		generator.makeHtml ()
+        self.assertTrue (generator.canReadFromCache())
+        generator.makeHtml ()
 
-		# Изменился шаблон страницы, но страница уже не пустая
-		emptycontent.content = u"2222"
-		self.assertTrue (generator.canReadFromCache())
+        # Изменился шаблон страницы, но страница уже не пустая
+        emptycontent.content = u"2222"
+        self.assertTrue (generator.canReadFromCache())
 
 
-	def testCacheSubdir (self):
-		attach = Attachment (self.testPage)
+    def testCacheSubdir (self):
+        attach = Attachment (self.testPage)
 
-		# Только создали страницу, кешировать нельзя
-		generator = HtmlGenerator (self.testPage)
-		self.assertFalse (generator.canReadFromCache())
+        # Только создали страницу, кешировать нельзя
+        generator = HtmlGenerator (self.testPage)
+        self.assertFalse (generator.canReadFromCache())
 
-		generator.makeHtml ()
-		# После того, как один раз сгенерили страницу, если ничего не изменилось, можно кешировать
-		self.assertTrue (generator.canReadFromCache())
+        generator.makeHtml ()
+        # После того, как один раз сгенерили страницу, если ничего не изменилось, можно кешировать
+        self.assertTrue (generator.canReadFromCache())
 
-		# Добавим файл в dir
-		with open (os.path.join (attach.getAttachPath(), "dir", "temp.tmp"), "w" ) as fp:
-			fp.write ("bla-bla-bla")
+        # Добавим файл в dir
+        with open (os.path.join (attach.getAttachPath(), "dir", "temp.tmp"), "w" ) as fp:
+            fp.write ("bla-bla-bla")
 
-		self.assertFalse (generator.canReadFromCache())
+        self.assertFalse (generator.canReadFromCache())
 
-		# Добавим еще одну вложенную директорию
-		subdir = os.path.join (attach.getAttachPath(), "dir", "subdir")
-		os.mkdir (subdir)
-		self.assertFalse (generator.canReadFromCache())
+        # Добавим еще одну вложенную директорию
+        subdir = os.path.join (attach.getAttachPath(), "dir", "subdir")
+        os.mkdir (subdir)
+        self.assertFalse (generator.canReadFromCache())
 
-		generator.makeHtml ()
+        generator.makeHtml ()
 
-		# Добавим файл в dir/subdir
-		with open (os.path.join (subdir, "temp2.tmp"), "w" ) as fp:
-			fp.write ("bla-bla-bla")
+        # Добавим файл в dir/subdir
+        with open (os.path.join (subdir, "temp2.tmp"), "w" ) as fp:
+            fp.write ("bla-bla-bla")
 
-		self.assertFalse (generator.canReadFromCache())
+        self.assertFalse (generator.canReadFromCache())
 
 
-	def testCacheSubpages (self):
-		"""
-		Проверка кэширования при добавлении новых подстраниц
-		"""
-		# Только создали страницу, кешировать нельзя
-		generator = HtmlGenerator (self.testPage)
-		self.assertFalse (generator.canReadFromCache())
+    def testCacheSubpages (self):
+        """
+        Проверка кэширования при добавлении новых подстраниц
+        """
+        # Только создали страницу, кешировать нельзя
+        generator = HtmlGenerator (self.testPage)
+        self.assertFalse (generator.canReadFromCache())
 
-		generator.makeHtml ()
-		self.assertTrue (generator.canReadFromCache())
+        generator.makeHtml ()
+        self.assertTrue (generator.canReadFromCache())
 
-		# Добавляем новую подстраницу
-		WikiPageFactory.create (self.testPage, u"Подстраница 1", [])
-		self.assertFalse (generator.canReadFromCache())
+        # Добавляем новую подстраницу
+        WikiPageFactory.create (self.testPage, u"Подстраница 1", [])
+        self.assertFalse (generator.canReadFromCache())
 
-		generator.makeHtml ()
-		self.assertTrue (generator.canReadFromCache())
+        generator.makeHtml ()
+        self.assertTrue (generator.canReadFromCache())
 
 
-	def testEmpty1 (self):
-		#config = Config (self.configpath)
-		text = u"бла-бла-бла"
+    def testEmpty1 (self):
+        #config = Config (self.configpath)
+        text = u"бла-бла-бла"
 
-		content = EmptyContent (Application.config)
-		content.content = text
+        content = EmptyContent (Application.config)
+        content.content = text
 
-		# Очистим содержимое, чтобы использовать EmptyContent
-		self.testPage.content = u""
+        # Очистим содержимое, чтобы использовать EmptyContent
+        self.testPage.content = u""
 
-		generator = HtmlGenerator (self.testPage)
-		htmlpath = generator.makeHtml()
+        generator = HtmlGenerator (self.testPage)
+        htmlpath = generator.makeHtml()
 
-		# Проверим, что в результирующем файле есть содержимое text
-		with open (htmlpath) as fp:
-			result = unicode (fp.read(), "utf8")
+        # Проверим, что в результирующем файле есть содержимое text
+        with open (htmlpath) as fp:
+            result = unicode (fp.read(), "utf8")
 
-		self.assertTrue (text in result)
+        self.assertTrue (text in result)
 
 
-	def testEmpty2 (self):
-		#config = Config (self.configpath)
-		text = u"(:attachlist:)"
+    def testEmpty2 (self):
+        #config = Config (self.configpath)
+        text = u"(:attachlist:)"
 
-		content = EmptyContent (Application.config)
-		content.content = text
+        content = EmptyContent (Application.config)
+        content.content = text
 
-		# Очистим содержимое, чтобы использовать EmptyContent
-		self.testPage.content = u""
+        # Очистим содержимое, чтобы использовать EmptyContent
+        self.testPage.content = u""
 
-		generator = HtmlGenerator (self.testPage)
-		htmlpath = generator.makeHtml()
+        generator = HtmlGenerator (self.testPage)
+        htmlpath = generator.makeHtml()
 
-		# Проверим, что в результирующем файле есть содержимое text
-		with open (htmlpath) as fp:
-			result = unicode (fp.read(), "utf8")
+        # Проверим, что в результирующем файле есть содержимое text
+        with open (htmlpath) as fp:
+            result = unicode (fp.read(), "utf8")
 
-		self.assertTrue (u"image.jpg" in result)
+        self.assertTrue (u"image.jpg" in result)
 
 
-	def testCacheLoadPlugins1 (self):
-		"""
-		Проверка на то, что при изменении списка установленных плагинов не работает кэширование
-		"""
-		# Только создали страницу, кешировать нельзя
-		generator = HtmlGenerator (self.testPage)
-		self.assertFalse (generator.canReadFromCache())
+    def testCacheLoadPlugins1 (self):
+        """
+        Проверка на то, что при изменении списка установленных плагинов не работает кэширование
+        """
+        # Только создали страницу, кешировать нельзя
+        generator = HtmlGenerator (self.testPage)
+        self.assertFalse (generator.canReadFromCache())
 
-		generator.makeHtml ()
-		# После того, как один раз сгенерили страницу, если ничего не изменилось, можно кешировать
-		self.assertTrue (generator.canReadFromCache())
+        generator.makeHtml ()
+        # После того, как один раз сгенерили страницу, если ничего не изменилось, можно кешировать
+        self.assertTrue (generator.canReadFromCache())
 
-		# Загрузили плагин. Кэш не должен сработать
-		Application.plugins.load ([u"../plugins/testempty1"])
-		self.assertFalse (generator.canReadFromCache())
+        # Загрузили плагин. Кэш не должен сработать
+        Application.plugins.load ([u"../plugins/testempty1"])
+        self.assertFalse (generator.canReadFromCache())
 
-		# Загрузили еще один плагин
-		Application.plugins.load ([u"../plugins/testempty2"])
-		self.assertFalse (generator.canReadFromCache())
+        # Загрузили еще один плагин
+        Application.plugins.load ([u"../plugins/testempty2"])
+        self.assertFalse (generator.canReadFromCache())
 
 
-	def testCacheLoadPlugins2 (self):
-		"""
-		Проверка на то, что при изменении списка установленных плагинов не работает кэширование
-		"""
-		Application.plugins.clear()
-		Application.plugins.load ([u"../plugins/testempty1"])
-		Application.plugins.load ([u"../plugins/testempty2"])
+    def testCacheLoadPlugins2 (self):
+        """
+        Проверка на то, что при изменении списка установленных плагинов не работает кэширование
+        """
+        Application.plugins.clear()
+        Application.plugins.load ([u"../plugins/testempty1"])
+        Application.plugins.load ([u"../plugins/testempty2"])
 
-		# Только создали страницу, кешировать нельзя
-		generator = HtmlGenerator (self.testPage)
-		self.assertFalse (generator.canReadFromCache())
+        # Только создали страницу, кешировать нельзя
+        generator = HtmlGenerator (self.testPage)
+        self.assertFalse (generator.canReadFromCache())
 
-		generator.makeHtml ()
+        generator.makeHtml ()
 
-		Application.plugins.clear()
+        Application.plugins.clear()
 
-		self.assertFalse (generator.canReadFromCache())
-		
-		# Перезагрузим плагины в другом порядке
-		Application.plugins.load ([u"../plugins/testempty1"])
-		Application.plugins.load ([u"../plugins/testempty2"])
+        self.assertFalse (generator.canReadFromCache())
+        
+        # Перезагрузим плагины в другом порядке
+        Application.plugins.load ([u"../plugins/testempty1"])
+        Application.plugins.load ([u"../plugins/testempty2"])
 
-		self.assertEqual (len (Application.plugins), 2)
-		self.assertTrue (generator.canReadFromCache())
+        self.assertEqual (len (Application.plugins), 2)
+        self.assertTrue (generator.canReadFromCache())

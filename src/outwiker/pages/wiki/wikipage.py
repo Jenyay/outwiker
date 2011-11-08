@@ -11,61 +11,61 @@ from outwiker.core.factory import PageFactory
 
 
 class WikiWikiPage (WikiPage):
-	"""
-	Класс wiki-страниц
-	"""
-	def __init__ (self, path, title, parent, readonly = False):
-		WikiPage.__init__ (self, path, title, parent, readonly)
-	
+    """
+    Класс wiki-страниц
+    """
+    def __init__ (self, path, title, parent, readonly = False):
+        WikiPage.__init__ (self, path, title, parent, readonly)
+    
 
-	@staticmethod
-	def getTypeString ():
-		return u"wiki"
+    @staticmethod
+    def getTypeString ():
+        return u"wiki"
 
 
 class WikiPageFactory (PageFactory):
-	@staticmethod
-	def getPageType():
-		return WikiWikiPage
+    @staticmethod
+    def getPageType():
+        return WikiWikiPage
 
-	# Обрабатываемый этой фабрикой тип страниц (имеется в виду тип, описываемый строкой)
-	@staticmethod
-	def getTypeString ():
-		return WikiPageFactory.getPageType().getTypeString()
+    # Обрабатываемый этой фабрикой тип страниц (имеется в виду тип, описываемый строкой)
+    @staticmethod
+    def getTypeString ():
+        return WikiPageFactory.getPageType().getTypeString()
 
-	# Название страницы, показываемое пользователю
-	title = _(u"Wiki Page")
-
-
-	def __init__ (self):
-		pass
+    # Название страницы, показываемое пользователю
+    title = _(u"Wiki Page")
 
 
-	@staticmethod
-	def create (parent, title, tags):
-		"""
-		Создать страницу. Вызывать этот метод вместо конструктора
-		"""
-		return PageFactory.createPage (WikiPageFactory.getPageType(), parent, title, tags)
+    def __init__ (self):
+        pass
 
 
-	@staticmethod
-	def getPageView (parent):
-		"""
-		Вернуть контрол, который будет отображать и редактировать страницу
-		"""
-		panel = WikiPagePanel (parent)
-
-		return panel
+    @staticmethod
+    def create (parent, title, tags):
+        """
+        Создать страницу. Вызывать этот метод вместо конструктора
+        """
+        return PageFactory.createPage (WikiPageFactory.getPageType(), parent, title, tags)
 
 
-	@staticmethod
-	def getPrefPanels (parent):
-		"""
-		Получить список панелей для окна настроек
-		Возвращает список кортежей ("название", Панель)
-		"""
-		generalPanel = WikiPreferences.WikiPrefGeneralPanel (parent)
+    @staticmethod
+    def getPageView (parent):
+        """
+        Вернуть контрол, который будет отображать и редактировать страницу
+        """
+        panel = WikiPagePanel (parent)
 
-		return [ ( _("General"), generalPanel ) ]
+        return panel
+
+
+    @staticmethod
+    def getPrefPanels (parent):
+        """
+        Получить список панелей для окна настроек
+        Возвращает список кортежей ("название", Панель)
+        """
+        generalPanel = WikiPreferences.WikiPrefGeneralPanel (parent)
+
+        return [ ( _("General"), generalPanel ) ]
 

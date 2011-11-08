@@ -5,44 +5,44 @@ from outwiker.core.pluginbase import Plugin
 
 
 class PluginTestInvalid4 (Plugin):
-	"""
-	Плагин с ошибкой. В конструкторе возникает исключение
-	"""
-	def __init__ (self, application):
-		"""
-		application - экземпляр класса core.application.ApplicationParams
-		"""
-		Plugin.__init__ (self, application)
-		raise IOError
+    """
+    Плагин с ошибкой. В конструкторе возникает исключение
+    """
+    def __init__ (self, application):
+        """
+        application - экземпляр класса core.application.ApplicationParams
+        """
+        Plugin.__init__ (self, application)
+        raise IOError
 
 
-	#############################################
-	# Свойства, которые необходимо определить
-	#############################################
+    #############################################
+    # Свойства, которые необходимо определить
+    #############################################
 
-	@property
-	def name (self):
-		return u"TestInvalid4"
-
-
-	def initialize(self):
-		pass
-
-	
-	@property
-	def description (self):
-		return _(u"This plugin is empty")
+    @property
+    def name (self):
+        return u"TestInvalid4"
 
 
-	@property
-	def version (self):
-		return u"0.1"
+    def initialize(self):
+        pass
+
+    
+    @property
+    def description (self):
+        return _(u"This plugin is empty")
 
 
-	def destroy (self):
-		"""
-		Уничтожение (выгрузка) плагина. Здесь плагин должен отписаться от всех событий
-		"""
-		pass
+    @property
+    def version (self):
+        return u"0.1"
 
-	#############################################
+
+    def destroy (self):
+        """
+        Уничтожение (выгрузка) плагина. Здесь плагин должен отписаться от всех событий
+        """
+        pass
+
+    #############################################

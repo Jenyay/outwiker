@@ -8,27 +8,27 @@ from utils import noConvert
 
 
 class PreFormatFactory (object):
-	"""
-	Фабрика для создания токена "без форматирования"ы
-	"""
-	@staticmethod
-	def make (parser):
-		return PreFormatToken(parser).getToken()
+    """
+    Фабрика для создания токена "без форматирования"ы
+    """
+    @staticmethod
+    def make (parser):
+        return PreFormatToken(parser).getToken()
 
 
 class PreFormatToken (object):
-	preFormatStart = "[@"
-	preFormatEnd = "@]"
+    preFormatStart = "[@"
+    preFormatEnd = "@]"
 
-	def __init__ (self, parser):
-		self.parser = parser
+    def __init__ (self, parser):
+        self.parser = parser
 
 
-	def getToken (self):
-		return QuotedString(PreFormatToken.preFormatStart, 
-				endQuoteChar = PreFormatToken.preFormatEnd, 
-				multiline = True).setParseAction(self.__convertPreformat)
-	
-	
-	def __convertPreformat (self, s, l, t):
-		return u"<PRE>" + cgi.escape (t[0], True) + u"</PRE>"
+    def getToken (self):
+        return QuotedString(PreFormatToken.preFormatStart, 
+                endQuoteChar = PreFormatToken.preFormatEnd, 
+                multiline = True).setParseAction(self.__convertPreformat)
+    
+    
+    def __convertPreformat (self, s, l, t):
+        return u"<PRE>" + cgi.escape (t[0], True) + u"</PRE>"

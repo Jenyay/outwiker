@@ -8,31 +8,31 @@ from outwiker.pages.wiki.wikipage import WikiPageFactory
 
 
 class FactorySelector (object):
-	"""
-	Класс, который выбирает нужную фабрику для каждой страницы
-	"""
-	factories = [WikiPageFactory, 
-			HtmlPageFactory, 
-			TextPageFactory, 
-			SearchPageFactory]
+    """
+    Класс, который выбирает нужную фабрику для каждой страницы
+    """
+    factories = [WikiPageFactory, 
+            HtmlPageFactory, 
+            TextPageFactory, 
+            SearchPageFactory]
 
-	defaultFactory = TextPageFactory
+    defaultFactory = TextPageFactory
 
-	def __init__ (self):
-		pass
+    def __init__ (self):
+        pass
 
-	@staticmethod
-	def getFactory (pageType):
-		"""
-		Найти фабрику, которая работает с переданным типом страницы (со страницей данного типа).
-		Или вернуть фабрику по умолчанию
-		"""
-		selFactory = FactorySelector.defaultFactory
+    @staticmethod
+    def getFactory (pageType):
+        """
+        Найти фабрику, которая работает с переданным типом страницы (со страницей данного типа).
+        Или вернуть фабрику по умолчанию
+        """
+        selFactory = FactorySelector.defaultFactory
 
-		for factory in FactorySelector.factories:
-			if pageType == factory.getTypeString():
-				selFactory = factory
-				break
+        for factory in FactorySelector.factories:
+            if pageType == factory.getTypeString():
+                selFactory = factory
+                break
 
-		return selFactory
+        return selFactory
 

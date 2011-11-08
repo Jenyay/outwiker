@@ -16,147 +16,147 @@ from .htmlcontrollerie import UriIdentifierIE
 
 
 class HtmlRenderIE (HtmlRender):
-	"""
-	Класс для рендеринга HTML с использованием движка IE под Windows
-	"""
-	def __init__ (self, parent):
-		HtmlRender.__init__ (self, parent)
+    """
+    Класс для рендеринга HTML с использованием движка IE под Windows
+    """
+    def __init__ (self, parent):
+        HtmlRender.__init__ (self, parent)
 
-		self.render = wx.lib.iewin.IEHtmlWindow (self)
+        self.render = wx.lib.iewin.IEHtmlWindow (self)
 
-		# Подпишемся на события IE
-		self.render.AddEventSink(self)
+        # Подпишемся на события IE
+        self.render.AddEventSink(self)
 
-		self.canOpenUrl = False                # Можно ли открывать ссылки
+        self.canOpenUrl = False                # Можно ли открывать ссылки
 
-		self.__layout()
+        self.__layout()
 
-		self.Bind (wx.EVT_MENU, self.__onCopyFromHtml, id = wx.ID_COPY)
-		self.Bind (wx.EVT_MENU, self.__onCopyFromHtml, id = wx.ID_CUT)
-
-
-	def Print (self):
-		self.render.Print (True)
+        self.Bind (wx.EVT_MENU, self.__onCopyFromHtml, id = wx.ID_COPY)
+        self.Bind (wx.EVT_MENU, self.__onCopyFromHtml, id = wx.ID_CUT)
 
 
-	def SetPage (self, htmltext, basepath):
-		"""
-		Загрузить страницу из строки
-		htmltext - текст страницы
-		basepath - путь, относительно которого отсчитываются относительные пути (НЕ ИСПОЛЬЗУЕТСЯ!!!)
-		"""
-		self.canOpenUrl = True
-		self.render.LoadString (htmltext)
-		self.canOpenUrl = False
+    def Print (self):
+        self.render.Print (True)
 
 
-	def StatusTextChange(self, status):
-		if len (status) != 0:
-			(url, page, filename, anchor) = self.__identifyUri (status)
-
-			if page != None:
-				outwiker.core.commands.setStatusText (page.subpath)
-			elif filename != None:
-				outwiker.core.commands.setStatusText (filename)
-			elif anchor != None:
-				outwiker.core.commands.setStatusText (anchor)
-			else:
-				outwiker.core.commands.setStatusText (status)
-		else:
-			outwiker.core.commands.setStatusText (status)
+    def SetPage (self, htmltext, basepath):
+        """
+        Загрузить страницу из строки
+        htmltext - текст страницы
+        basepath - путь, относительно которого отсчитываются относительные пути (НЕ ИСПОЛЬЗУЕТСЯ!!!)
+        """
+        self.canOpenUrl = True
+        self.render.LoadString (htmltext)
+        self.canOpenUrl = False
 
 
-	def __onCopyFromHtml(self, event):
-		document = self.render.document
-		selection = document.selection
+    def StatusTextChange(self, status):
+        if len (status) != 0:
+            (url, page, filename, anchor) = self.__identifyUri (status)
 
-		if selection != None:
-			selrange = selection.createRange()
-			if selrange != None:
-				outwiker.core.commands.copyTextToClipboard (selrange.text)
-				event.Skip()
-
-
-	def __layout (self):
-		self.box = wx.BoxSizer(wx.VERTICAL)
-		self.box.Add(self.render, 1, wx.EXPAND)
-
-		self.SetSizer(self.box)
-		self.Layout()
-
-	
-	def LoadPage (self, fname):
-		self.canOpenUrl = True
-		self.render.Navigate (fname)
+            if page != None:
+                outwiker.core.commands.setStatusText (page.subpath)
+            elif filename != None:
+                outwiker.core.commands.setStatusText (filename)
+            elif anchor != None:
+                outwiker.core.commands.setStatusText (anchor)
+            else:
+                outwiker.core.commands.setStatusText (status)
+        else:
+            outwiker.core.commands.setStatusText (status)
 
 
-	def __cleanUpUrl (self, href):
-		"""
-		Почистить ссылку, убрать file:///
-		"""
-		result = self.__removeFileProtokol (href)
-		result = urllib.unquote (result)
-		result = result.replace ("/", u"\\")
+    def __onCopyFromHtml(self, event):
+        document = self.render.document
+        selection = document.selection
 
-		return result
-
-
-	def __removeFileProtokol (self, href):
-		"""
-		Избавиться от протокола file:///, то избавимся от этой надписи
-		"""
-		fileprotocol = u"file:///"
-		if href.startswith (fileprotocol):
-			return href[len (fileprotocol): ]
-
-		return href
+        if selection != None:
+            selrange = selection.createRange()
+            if selrange != None:
+                outwiker.core.commands.copyTextToClipboard (selrange.text)
+                event.Skip()
 
 
-	def BeforeNavigate2 (self, this, pDisp, URL, Flags, 
-			TargetFrameName, PostData, Headers, Cancel):
-		href = URL[0]
-		curr_href = self.__cleanUpUrl (self.render.locationurl)
+    def __layout (self):
+        self.box = wx.BoxSizer(wx.VERTICAL)
+        self.box.Add(self.render, 1, wx.EXPAND)
 
-		#print href
+        self.SetSizer(self.box)
+        self.Layout()
 
-		if self.canOpenUrl or href == curr_href:
-			Cancel[0] = False
-			self.canOpenUrl = False
-		else:
-			Cancel[0] = True
-			self.__onLinkClicked (href)
+    
+    def LoadPage (self, fname):
+        self.canOpenUrl = True
+        self.render.Navigate (fname)
 
 
-	def __identifyUri (self, href):
-		"""
-		Определить тип ссылки и вернуть кортеж (url, page, filename)
-		"""
-		href_clear = self.__cleanUpUrl (href)
+    def __cleanUpUrl (self, href):
+        """
+        Почистить ссылку, убрать file:///
+        """
+        result = self.__removeFileProtokol (href)
+        result = urllib.unquote (result)
+        result = result.replace ("/", u"\\")
 
-		identifier = UriIdentifierIE (self._currentPage, 
-			self.__cleanUpUrl (self.render.locationurl) )
-
-		return identifier.identify (href_clear)
+        return result
 
 
-	def __onLinkClicked (self, href):
-		"""
-		Клик по ссылке
-		"""
-		(url, page, filename, anchor) = self.__identifyUri (href)
+    def __removeFileProtokol (self, href):
+        """
+        Избавиться от протокола file:///, то избавимся от этой надписи
+        """
+        fileprotocol = u"file:///"
+        if href.startswith (fileprotocol):
+            return href[len (fileprotocol): ]
 
-		if url != None:
-			self.openUrl (url)
+        return href
 
-		elif page != None:
-			self._currentPage.root.selectedPage = page
 
-		elif filename != None:
-			try:
-				outwiker.core.system.getOS().startFile (filename)
-			except OSError:
-				text = _(u"Can't execute file '%s'") % filename
-				outwiker.core.commands.MessageBox (text, _(u"Error"), wx.ICON_ERROR | wx.OK)
+    def BeforeNavigate2 (self, this, pDisp, URL, Flags, 
+            TargetFrameName, PostData, Headers, Cancel):
+        href = URL[0]
+        curr_href = self.__cleanUpUrl (self.render.locationurl)
 
-		elif anchor != None:
-			self.LoadPage (href)
+        #print href
+
+        if self.canOpenUrl or href == curr_href:
+            Cancel[0] = False
+            self.canOpenUrl = False
+        else:
+            Cancel[0] = True
+            self.__onLinkClicked (href)
+
+
+    def __identifyUri (self, href):
+        """
+        Определить тип ссылки и вернуть кортеж (url, page, filename)
+        """
+        href_clear = self.__cleanUpUrl (href)
+
+        identifier = UriIdentifierIE (self._currentPage, 
+            self.__cleanUpUrl (self.render.locationurl) )
+
+        return identifier.identify (href_clear)
+
+
+    def __onLinkClicked (self, href):
+        """
+        Клик по ссылке
+        """
+        (url, page, filename, anchor) = self.__identifyUri (href)
+
+        if url != None:
+            self.openUrl (url)
+
+        elif page != None:
+            self._currentPage.root.selectedPage = page
+
+        elif filename != None:
+            try:
+                outwiker.core.system.getOS().startFile (filename)
+            except OSError:
+                text = _(u"Can't execute file '%s'") % filename
+                outwiker.core.commands.MessageBox (text, _(u"Error"), wx.ICON_ERROR | wx.OK)
+
+        elif anchor != None:
+            self.LoadPage (href)

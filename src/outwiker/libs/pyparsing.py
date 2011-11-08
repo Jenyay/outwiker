@@ -136,10 +136,10 @@ else:
     unichr = chr
 
 if not _PY3K:
-	def _str2dict(strg):
-	    return dict( [(c,0) for c in strg] )
+    def _str2dict(strg):
+        return dict( [(c,0) for c in strg] )
 else:
-	_str2dict = set
+    _str2dict = set
 
 def _xml_escape(data):
     """Escape &, <, >, ", ', etc. in a string of data."""

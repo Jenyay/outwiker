@@ -10,80 +10,80 @@ from outwiker.gui.guiconfig import PluginsConfig
 
 
 class PluginsPanel (wx.Panel):
-	"""
-	Панель со списком установленных плагинов
-	"""
-	def __init__ (self, parent):
-		wx.Panel.__init__ (self, parent, style=wx.TAB_TRAVERSAL)
-		self.__createGui ()
+    """
+    Панель со списком установленных плагинов
+    """
+    def __init__ (self, parent):
+        wx.Panel.__init__ (self, parent, style=wx.TAB_TRAVERSAL)
+        self.__createGui ()
 
-		self.__controller = PluginsController (self)
-
-
-	def __createGui (self):
-		self.pluginsList = wx.CheckListBox (self, -1, style=wx.LB_SORT)
-		self.pluginsList.SetMinSize ((50, -1))
-
-		self.pluginsInfo = wx.html.HtmlWindow (self, style=wx.html.HW_SCROLLBAR_AUTO)
-		self.pluginsInfo.SetMinSize ((150, -1))
-
-		self.__layout()
-
-	
-	def __layout (self):
-		mainSizer = wx.FlexGridSizer (1, 2)
-		mainSizer.AddGrowableRow (0)
-		mainSizer.AddGrowableCol (0)
-		mainSizer.AddGrowableCol (1)
-		mainSizer.Add (self.pluginsList, flag=wx.EXPAND)
-		mainSizer.Add (self.pluginsInfo, flag=wx.EXPAND)
-
-		self.SetSizer (mainSizer)
+        self.__controller = PluginsController (self)
 
 
-	def LoadState(self):
-		self.__controller.loadState ()
+    def __createGui (self):
+        self.pluginsList = wx.CheckListBox (self, -1, style=wx.LB_SORT)
+        self.pluginsList.SetMinSize ((50, -1))
+
+        self.pluginsInfo = wx.html.HtmlWindow (self, style=wx.html.HW_SCROLLBAR_AUTO)
+        self.pluginsInfo.SetMinSize ((150, -1))
+
+        self.__layout()
+
+    
+    def __layout (self):
+        mainSizer = wx.FlexGridSizer (1, 2)
+        mainSizer.AddGrowableRow (0)
+        mainSizer.AddGrowableCol (0)
+        mainSizer.AddGrowableCol (1)
+        mainSizer.Add (self.pluginsList, flag=wx.EXPAND)
+        mainSizer.Add (self.pluginsInfo, flag=wx.EXPAND)
+
+        self.SetSizer (mainSizer)
 
 
-	def Save (self):
-		self.__controller.save()
+    def LoadState(self):
+        self.__controller.loadState ()
+
+
+    def Save (self):
+        self.__controller.save()
 
 
 
 class PluginsController (object):
-	"""
-	Контроллер, отвечающий за работу панели со списком плагинов
-	"""
-	def __init__ (self, pluginspanel):
-		self.__owner = pluginspanel
+    """
+    Контроллер, отвечающий за работу панели со списком плагинов
+    """
+    def __init__ (self, pluginspanel):
+        self.__owner = pluginspanel
 
-		# Т.к. под виндой к элементам CheckListBox нельзя прикреплять пользовательские данные,
-		# придется их хранить отдельно.
-		# Ключ - имя плагина, оно же текст строки
-		# Значение - экземпляр плагина
-		self.__pluginsItems = {}
+        # Т.к. под виндой к элементам CheckListBox нельзя прикреплять пользовательские данные,
+        # придется их хранить отдельно.
+        # Ключ - имя плагина, оно же текст строки
+        # Значение - экземпляр плагина
+        self.__pluginsItems = {}
 
-		self.__owner.Bind (wx.EVT_LISTBOX, self.__onSelectItem, self.__owner.pluginsList)
-
-
-	def __onSelectItem (self, event):
-		htmlContent = u""
-		if event.IsSelection():
-			plugin = self.__pluginsItems[event.GetString()]
-			assert plugin != None
-
-			htmlContent = self.__createPluginInfo (plugin)
-
-		self.__owner.pluginsInfo.SetPage (htmlContent)
+        self.__owner.Bind (wx.EVT_LISTBOX, self.__onSelectItem, self.__owner.pluginsList)
 
 
-	def __createPluginInfo (self, plugin):
-		assert plugin != None
-		#assert issubclass (plugin, Plugin)
+    def __onSelectItem (self, event):
+        htmlContent = u""
+        if event.IsSelection():
+            plugin = self.__pluginsItems[event.GetString()]
+            assert plugin != None
 
-		infoTemplate = _(u"""<HTML>
+            htmlContent = self.__createPluginInfo (plugin)
+
+        self.__owner.pluginsInfo.SetPage (htmlContent)
+
+
+    def __createPluginInfo (self, plugin):
+        assert plugin != None
+        #assert issubclass (plugin, Plugin)
+
+        infoTemplate = _(u"""<HTML>
 <HEAD>
-	<META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>
+    <META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>
 </HEAD>
 
 <BODY>
@@ -94,57 +94,57 @@ class PluginsController (object):
 </BODY>
 </HTML>""")
 
-		description = plugin.description.replace ("\n", "<BR>")
+        description = plugin.description.replace ("\n", "<BR>")
 
-		result = infoTemplate.format (name=plugin.name, version=plugin.version, description=description)
-		return result
-
-
-	def loadState (self):
-		self.__pluginsItems = {}
-		self.__owner.pluginsList.Clear()
-		self.__appendEnabledPlugins()
-		self.__appendDisabledPlugins()
+        result = infoTemplate.format (name=plugin.name, version=plugin.version, description=description)
+        return result
 
 
-	def __appendEnabledPlugins (self):
-		"""
-		Добавить загруженные плагины в список
-		"""
-		for plugin in Application.plugins:
-			index = self.__owner.pluginsList.Append (plugin.name)
-
-			assert plugin.name not in self.__pluginsItems.keys()
-			self.__pluginsItems[plugin.name] = plugin
-
-			self.__owner.pluginsList.Check (index, True)
+    def loadState (self):
+        self.__pluginsItems = {}
+        self.__owner.pluginsList.Clear()
+        self.__appendEnabledPlugins()
+        self.__appendDisabledPlugins()
 
 
-	def __appendDisabledPlugins (self):
-		"""
-		Добавить отключенные плагины в список
-		"""
-		for plugin in Application.plugins.disabledPlugins.values():
-			index = self.__owner.pluginsList.Append (plugin.name)
+    def __appendEnabledPlugins (self):
+        """
+        Добавить загруженные плагины в список
+        """
+        for plugin in Application.plugins:
+            index = self.__owner.pluginsList.Append (plugin.name)
 
-			assert plugin.name not in self.__pluginsItems.keys()
-			self.__pluginsItems[plugin.name] = plugin
+            assert plugin.name not in self.__pluginsItems.keys()
+            self.__pluginsItems[plugin.name] = plugin
 
-			self.__owner.pluginsList.Check (index, False)
-
-
-	def save (self):
-		config = PluginsConfig (Application.config)
-		config.disabledPlugins.value = self.__getDisabledPlugins()
-		Application.plugins.updateDisableList()
+            self.__owner.pluginsList.Check (index, True)
 
 
-	def __getDisabledPlugins (self):
-		disabledList = []
+    def __appendDisabledPlugins (self):
+        """
+        Добавить отключенные плагины в список
+        """
+        for plugin in Application.plugins.disabledPlugins.values():
+            index = self.__owner.pluginsList.Append (plugin.name)
 
-		for itemindex in range (self.__owner.pluginsList.GetCount()):
-			if not self.__owner.pluginsList.IsChecked (itemindex):
-				disabledList.append (self.__pluginsItems[self.__owner.pluginsList.GetString (itemindex)].name)
+            assert plugin.name not in self.__pluginsItems.keys()
+            self.__pluginsItems[plugin.name] = plugin
 
-		return disabledList
+            self.__owner.pluginsList.Check (index, False)
+
+
+    def save (self):
+        config = PluginsConfig (Application.config)
+        config.disabledPlugins.value = self.__getDisabledPlugins()
+        Application.plugins.updateDisableList()
+
+
+    def __getDisabledPlugins (self):
+        disabledList = []
+
+        for itemindex in range (self.__owner.pluginsList.GetCount()):
+            if not self.__owner.pluginsList.IsChecked (itemindex):
+                disabledList.append (self.__pluginsItems[self.__owner.pluginsList.GetString (itemindex)].name)
+
+        return disabledList
 

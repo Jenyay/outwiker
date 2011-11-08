@@ -10,49 +10,49 @@ from ..texrender import getTexRender
 from ..thumbnails import Thumbnails
 
 class TexFactory (object):
-	@staticmethod
-	def make (parser):
-		return TexToken(parser).getToken()
+    @staticmethod
+    def make (parser):
+        return TexToken(parser).getToken()
 
 
 class TexToken (object):
-	"""
-	Класс токена для разбора формул
-	"""
-	texStart = "{$"
-	texEnd = "$}"
+    """
+    Класс токена для разбора формул
+    """
+    texStart = "{$"
+    texEnd = "$}"
 
-	def __init__ (self, parser):
-		self.parser = parser
-
-
-	def getToken (self):
-		return QuotedString (TexToken.texStart, 
-				endQuoteChar = TexToken.texEnd, 
-				multiline = True).setParseAction(self.makeTexEquation)
+    def __init__ (self, parser):
+        self.parser = parser
 
 
-	def makeTexEquation (self, s, l, t):
-		eqn = t[0].strip()
-		if len (eqn) == 0:
-			return u""
+    def getToken (self):
+        return QuotedString (TexToken.texStart, 
+                endQuoteChar = TexToken.texEnd, 
+                multiline = True).setParseAction(self.makeTexEquation)
 
-		thumb = Thumbnails(self.parser.page)
 
-		try:
-			path = thumb.getThumbPath (True)
-		except IOError:
-			return _(u"<B>Can't create thumbnails directory</B>")
+    def makeTexEquation (self, s, l, t):
+        eqn = t[0].strip()
+        if len (eqn) == 0:
+            return u""
 
-		tex = getTexRender (path)
+        thumb = Thumbnails(self.parser.page)
 
-		try:
-			image_fname = tex.makeImage (eqn)
-		except IOError:
-			return _(u"<B>Can't create imege file</B>")
-		
-		image_path = os.path.join (Thumbnails.getRelativeThumbDir(), image_fname)
-		result = u'<IMG SRC="{image}"/>'.format (image=image_path.replace ("\\", "/"))
+        try:
+            path = thumb.getThumbPath (True)
+        except IOError:
+            return _(u"<B>Can't create thumbnails directory</B>")
 
-		return result
+        tex = getTexRender (path)
+
+        try:
+            image_fname = tex.makeImage (eqn)
+        except IOError:
+            return _(u"<B>Can't create imege file</B>")
+        
+        image_path = os.path.join (Thumbnails.getRelativeThumbDir(), image_fname)
+        result = u'<IMG SRC="{image}"/>'.format (image=image_path.replace ("\\", "/"))
+
+        return result
 

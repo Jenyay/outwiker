@@ -7,160 +7,160 @@ from tokenfonts import SubscriptToken, SuperscriptToken, BoldToken, ItalicToken,
 
 
 class AdHocFactory (object):
-	@staticmethod
-	def makeBoldSubscript (parser):
-		return BoldSubscriptToken(parser).getToken()
+    @staticmethod
+    def makeBoldSubscript (parser):
+        return BoldSubscriptToken(parser).getToken()
 
 
-	@staticmethod
-	def makeBoldSuperscript (parser):
-		return BoldSuperscriptToken(parser).getToken()
+    @staticmethod
+    def makeBoldSuperscript (parser):
+        return BoldSuperscriptToken(parser).getToken()
 
 
-	@staticmethod
-	def makeItalicSubscript (parser):
-		return ItalicSubscriptToken(parser).getToken()
+    @staticmethod
+    def makeItalicSubscript (parser):
+        return ItalicSubscriptToken(parser).getToken()
 
 
-	@staticmethod
-	def makeItalicSuperscript (parser):
-		return ItalicSuperscriptToken(parser).getToken()
+    @staticmethod
+    def makeItalicSuperscript (parser):
+        return ItalicSuperscriptToken(parser).getToken()
 
 
-	@staticmethod
-	def makeBoldItalicSubscript (parser):
-		return BoldItalicSubscriptToken(parser).getToken()
+    @staticmethod
+    def makeBoldItalicSubscript (parser):
+        return BoldItalicSubscriptToken(parser).getToken()
 
 
-	@staticmethod
-	def makeBoldItalicSuperscript (parser):
-		return BoldItalicSuperscriptToken(parser).getToken()
+    @staticmethod
+    def makeBoldItalicSuperscript (parser):
+        return BoldItalicSuperscriptToken(parser).getToken()
 
 
-	@staticmethod
-	def make(parser):
-		return (AdHocFactory.makeBoldItalicSubscript (parser) |
-				AdHocFactory.makeBoldItalicSuperscript (parser) |
-				AdHocFactory.makeBoldSubscript (parser) | 
-				AdHocFactory.makeBoldSuperscript (parser) | 
-				AdHocFactory.makeItalicSubscript (parser) | 
-				AdHocFactory.makeItalicSuperscript (parser)
-				)
+    @staticmethod
+    def make(parser):
+        return (AdHocFactory.makeBoldItalicSubscript (parser) |
+                AdHocFactory.makeBoldItalicSuperscript (parser) |
+                AdHocFactory.makeBoldSubscript (parser) | 
+                AdHocFactory.makeBoldSuperscript (parser) | 
+                AdHocFactory.makeItalicSubscript (parser) | 
+                AdHocFactory.makeItalicSuperscript (parser)
+                )
 
 
 
 class AdHocToken (object):
-	"""
-	Базовый класс для отдельных проблемных случаев при разборе вики-нотации
-	"""
-	def __init__ (self, parser):
-		self.parser = parser
+    """
+    Базовый класс для отдельных проблемных случаев при разборе вики-нотации
+    """
+    def __init__ (self, parser):
+        self.parser = parser
 
 
-	def convertToHTMLAdHoc(self, opening, closing, prefix=u"", suffix=u""):
-		"""
-		Преобразование в HTML для отдельный случаев, когда надо добавить в начало или конец обрабатываемой строки префикс или суффикс
-		"""
-		def conversionParseAction(s,l,t):
-			return opening + self.parser.parseWikiMarkup (prefix + t[0] + suffix) + closing
-		return conversionParseAction
+    def convertToHTMLAdHoc(self, opening, closing, prefix=u"", suffix=u""):
+        """
+        Преобразование в HTML для отдельный случаев, когда надо добавить в начало или конец обрабатываемой строки префикс или суффикс
+        """
+        def conversionParseAction(s,l,t):
+            return opening + self.parser.parseWikiMarkup (prefix + t[0] + suffix) + closing
+        return conversionParseAction
 
 
 class BoldSubscriptToken (AdHocToken):
-	"""
-	Токен для полужирного нижнего индекса
-	"""
-	def __init__ (self, parser):
-		AdHocToken.__init__ (self, parser)
+    """
+    Токен для полужирного нижнего индекса
+    """
+    def __init__ (self, parser):
+        AdHocToken.__init__ (self, parser)
 
 
-	def getToken (self):
-		return QuotedString (BoldToken.boldStart, 
-				endQuoteChar = SubscriptToken.subscriptEnd + BoldToken.boldEnd, 
-				multiline = True).setParseAction(
-						self.convertToHTMLAdHoc("<B>", 
-						"</B>",
-						suffix = SubscriptToken.subscriptEnd))
+    def getToken (self):
+        return QuotedString (BoldToken.boldStart, 
+                endQuoteChar = SubscriptToken.subscriptEnd + BoldToken.boldEnd, 
+                multiline = True).setParseAction(
+                        self.convertToHTMLAdHoc("<B>", 
+                        "</B>",
+                        suffix = SubscriptToken.subscriptEnd))
 
 
 
 class BoldSuperscriptToken (AdHocToken):
-	"""
-	Токен для полужирного верхнего индекса
-	"""
-	def __init__ (self, parser):
-		AdHocToken.__init__ (self, parser)
+    """
+    Токен для полужирного верхнего индекса
+    """
+    def __init__ (self, parser):
+        AdHocToken.__init__ (self, parser)
 
 
-	def getToken (self):
-		return QuotedString (BoldToken.boldStart, 
-				endQuoteChar = SuperscriptToken.superscriptEnd + BoldToken.boldEnd, 
-				multiline = True).setParseAction(self.convertToHTMLAdHoc("<B>", 
-					"</B>",
-					suffix = SuperscriptToken.superscriptEnd))
+    def getToken (self):
+        return QuotedString (BoldToken.boldStart, 
+                endQuoteChar = SuperscriptToken.superscriptEnd + BoldToken.boldEnd, 
+                multiline = True).setParseAction(self.convertToHTMLAdHoc("<B>", 
+                    "</B>",
+                    suffix = SuperscriptToken.superscriptEnd))
 
 
 class ItalicSubscriptToken (AdHocToken):
-	"""
-	Токен для курсивного нижнего индекса
-	"""
-	def __init__ (self, parser):
-		AdHocToken.__init__ (self, parser)
+    """
+    Токен для курсивного нижнего индекса
+    """
+    def __init__ (self, parser):
+        AdHocToken.__init__ (self, parser)
 
 
-	def getToken (self):
-		return QuotedString (ItalicToken.italicStart, 
-				endQuoteChar = SubscriptToken.subscriptEnd + ItalicToken.italicEnd, 
-				multiline = True).setParseAction(self.convertToHTMLAdHoc("<I>", 
-					"</I>",
-					suffix = SubscriptToken.subscriptEnd))
+    def getToken (self):
+        return QuotedString (ItalicToken.italicStart, 
+                endQuoteChar = SubscriptToken.subscriptEnd + ItalicToken.italicEnd, 
+                multiline = True).setParseAction(self.convertToHTMLAdHoc("<I>", 
+                    "</I>",
+                    suffix = SubscriptToken.subscriptEnd))
 
 
 
 class ItalicSuperscriptToken (AdHocToken):
-	"""
-	Токен для курсивного верхнего индекса
-	"""
-	def __init__ (self, parser):
-		AdHocToken.__init__ (self, parser)
+    """
+    Токен для курсивного верхнего индекса
+    """
+    def __init__ (self, parser):
+        AdHocToken.__init__ (self, parser)
 
 
-	def getToken (self):
-		return QuotedString (ItalicToken.italicStart, 
-				endQuoteChar = SuperscriptToken.superscriptEnd + ItalicToken.italicEnd, 
-				multiline = True).setParseAction(self.convertToHTMLAdHoc("<I>", 
-					"</I>",
-					suffix = SuperscriptToken.superscriptEnd))
+    def getToken (self):
+        return QuotedString (ItalicToken.italicStart, 
+                endQuoteChar = SuperscriptToken.superscriptEnd + ItalicToken.italicEnd, 
+                multiline = True).setParseAction(self.convertToHTMLAdHoc("<I>", 
+                    "</I>",
+                    suffix = SuperscriptToken.superscriptEnd))
 
 
 class BoldItalicSubscriptToken (AdHocToken):
-	"""
-	Токен для полужирного курсивного нижнего индекса
-	"""
-	def __init__ (self, parser):
-		AdHocToken.__init__ (self, parser)
+    """
+    Токен для полужирного курсивного нижнего индекса
+    """
+    def __init__ (self, parser):
+        AdHocToken.__init__ (self, parser)
 
 
-	def getToken (self):
-		return QuotedString (BoldItalicToken.boldItalicStart, 
-				endQuoteChar = SubscriptToken.subscriptEnd + BoldItalicToken.boldItalicEnd, 
-				multiline = True).setParseAction(self.convertToHTMLAdHoc("<B><I>", 
-					"</I></B>",
-					suffix = SubscriptToken.subscriptEnd))
+    def getToken (self):
+        return QuotedString (BoldItalicToken.boldItalicStart, 
+                endQuoteChar = SubscriptToken.subscriptEnd + BoldItalicToken.boldItalicEnd, 
+                multiline = True).setParseAction(self.convertToHTMLAdHoc("<B><I>", 
+                    "</I></B>",
+                    suffix = SubscriptToken.subscriptEnd))
 
 
 
 class BoldItalicSuperscriptToken (AdHocToken):
-	"""
-	Токен для полужирного курсивного нижнего индекса
-	"""
-	def __init__ (self, parser):
-		AdHocToken.__init__ (self, parser)
+    """
+    Токен для полужирного курсивного нижнего индекса
+    """
+    def __init__ (self, parser):
+        AdHocToken.__init__ (self, parser)
 
 
-	def getToken (self):
-		return QuotedString (BoldItalicToken.boldItalicStart, 
-				endQuoteChar = SuperscriptToken.superscriptEnd + BoldItalicToken.boldItalicEnd, 
-				multiline = True).setParseAction(self.convertToHTMLAdHoc("<B><I>", 
-					"</I></B>",
-					suffix = SuperscriptToken.superscriptEnd))
+    def getToken (self):
+        return QuotedString (BoldItalicToken.boldItalicStart, 
+                endQuoteChar = SuperscriptToken.superscriptEnd + BoldItalicToken.boldItalicEnd, 
+                multiline = True).setParseAction(self.convertToHTMLAdHoc("<B><I>", 
+                    "</I></B>",
+                    suffix = SuperscriptToken.superscriptEnd))

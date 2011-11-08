@@ -13,47 +13,47 @@ from test.utils import removeWiki
 
 
 class PluginWikiCommandTest(unittest.TestCase):
-	"""
-	Проверка плагина, добавляющего обработку команды TestCommand
-	"""
-	def setUp(self):
-		self.filesPath = u"../test/samplefiles/"
-		self.__createWiki()
+    """
+    Проверка плагина, добавляющего обработку команды TestCommand
+    """
+    def setUp(self):
+        self.filesPath = u"../test/samplefiles/"
+        self.__createWiki()
 
-		dirlist = [u"../plugins/testwikicommand"]
+        dirlist = [u"../plugins/testwikicommand"]
 
-		loader = PluginsLoader(Application)
-		loader.load (dirlist)
-		
-		factory = ParserFactory()
-		self.parser = factory.make (self.testPage, Application.config)
-	
+        loader = PluginsLoader(Application)
+        loader.load (dirlist)
+        
+        factory = ParserFactory()
+        self.parser = factory.make (self.testPage, Application.config)
+    
 
-	def __createWiki (self):
-		# Здесь будет создаваться вики
-		self.path = u"../test/testwiki"
-		removeWiki (self.path)
+    def __createWiki (self):
+        # Здесь будет создаваться вики
+        self.path = u"../test/testwiki"
+        removeWiki (self.path)
 
-		self.rootwiki = WikiDocument.create (self.path)
+        self.rootwiki = WikiDocument.create (self.path)
 
-		WikiPageFactory.create (self.rootwiki, u"Страница 2", [])
-		self.testPage = self.rootwiki[u"Страница 2"]
-		
+        WikiPageFactory.create (self.rootwiki, u"Страница 2", [])
+        self.testPage = self.rootwiki[u"Страница 2"]
+        
 
-	def tearDown(self):
-		removeWiki (self.path)
+    def tearDown(self):
+        removeWiki (self.path)
 
 
-	def testCommandTest (self):
-		text = u"""(: test Параметр1 Параметр2=2 Параметр3=3 :)
+    def testCommandTest (self):
+        text = u"""(: test Параметр1 Параметр2=2 Параметр3=3 :)
 Текст внутри
 команды
 (:testend:)"""
 
-		result_right = u"""Command name: test
+        result_right = u"""Command name: test
 params: Параметр1 Параметр2=2 Параметр3=3
 content: Текст внутри
 команды"""
 
-		result = self.parser.toHtml (text)
-		self.assertEqual (result_right, result, result)
+        result = self.parser.toHtml (text)
+        self.assertEqual (result_right, result, result)

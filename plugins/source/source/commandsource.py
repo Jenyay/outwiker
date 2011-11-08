@@ -10,84 +10,84 @@ from pygments.lexers import ClassNotFound
 
 
 class CommandSource (Command):
-	"""
-	Команда source для оформления исходных текстов программ
-	Использование:
+    """
+    Команда source для оформления исходных текстов программ
+    Использование:
 
-	(:source params)
-	Текст программы
-	(:sourceend:)
+    (:source params)
+    Текст программы
+    (:sourceend:)
 
-	Параметры:
-	tabwidth - размер табуляции
-	lang - язык программирования (пока не используется)
-	"""
-	def __init__ (self, parser):
-		"""
-		parser - экземпляр парсера
-		"""
-		Command.__init__ (self, parser)
+    Параметры:
+    tabwidth - размер табуляции
+    lang - язык программирования (пока не используется)
+    """
+    def __init__ (self, parser):
+        """
+        parser - экземпляр парсера
+        """
+        Command.__init__ (self, parser)
 
-		# Добавлены ли стили в заголовок
-		self.__styleAppend = False
+        # Добавлены ли стили в заголовок
+        self.__styleAppend = False
 
-	
-	@property
-	def name (self):
-		"""
-		Возвращает имя команды, которую обрабатывает класс
-		"""
-		return u"source"
-
-
-	def execute (self, params, content):
-		"""
-		Запустить команду на выполнение. 
-		Оформление исходных текстов
-		"""
-		params_dict = Command.parseParams (params)
-
-		DEFAULT_TABWIDTH = 4
-		PARAM_TABWIDTH = "tabwidth"
-
-		try:
-			tabwidth = int (params_dict[PARAM_TABWIDTH]) if PARAM_TABWIDTH in params_dict else DEFAULT_TABWIDTH
-		except ValueError:
-			tabwidth = DEFAULT_TABWIDTH
-
-		newcontent = content.replace ("\t", " " * tabwidth)
-		colortext = self.__colorize (params_dict, newcontent)
-
-		return colortext
+    
+    @property
+    def name (self):
+        """
+        Возвращает имя команды, которую обрабатывает класс
+        """
+        return u"source"
 
 
-	def __colorize (self, params_dict, content):
-		langDefault = "text"
-		langParam = u"lang"
+    def execute (self, params, content):
+        """
+        Запустить команду на выполнение. 
+        Оформление исходных текстов
+        """
+        params_dict = Command.parseParams (params)
 
-		lang = params_dict[langParam] if langParam in params_dict else langDefault
+        DEFAULT_TABWIDTH = 4
+        PARAM_TABWIDTH = "tabwidth"
 
-		# Стиль для общего div
-		highlightStyle = u'.highlight {border-style: solid; border-color: gray; border-width: 1px; background-color: #eee}'
-		sourceStyle = HtmlFormatter().get_style_defs()
+        try:
+            tabwidth = int (params_dict[PARAM_TABWIDTH]) if PARAM_TABWIDTH in params_dict else DEFAULT_TABWIDTH
+        except ValueError:
+            tabwidth = DEFAULT_TABWIDTH
 
-		styleTemplate = u"<STYLE>{0}</STYLE>"
+        newcontent = content.replace ("\t", " " * tabwidth)
+        colortext = self.__colorize (params_dict, newcontent)
 
-		if not self.__styleAppend:
-			self.parser.appendToHead (styleTemplate.format (sourceStyle))
-			self.parser.appendToHead (styleTemplate.format (highlightStyle))
+        return colortext
 
-			self.__styleAppend = True
 
-		try:
-			lexer = get_lexer_by_name(lang, stripall=True)
-		except ClassNotFound:
-			lexer = get_lexer_by_name(langDefault, stripall=True)
+    def __colorize (self, params_dict, content):
+        langDefault = "text"
+        langParam = u"lang"
 
-		formatter = HtmlFormatter(linenos=False)
-		result = highlight(content, lexer, formatter)
+        lang = params_dict[langParam] if langParam in params_dict else langDefault
 
-		result = result.replace ("\n</td>", "</td>")
+        # Стиль для общего div
+        highlightStyle = u'.highlight {border-style: solid; border-color: gray; border-width: 1px; background-color: #eee}'
+        sourceStyle = HtmlFormatter().get_style_defs()
 
-		return result
-		
+        styleTemplate = u"<STYLE>{0}</STYLE>"
+
+        if not self.__styleAppend:
+            self.parser.appendToHead (styleTemplate.format (sourceStyle))
+            self.parser.appendToHead (styleTemplate.format (highlightStyle))
+
+            self.__styleAppend = True
+
+        try:
+            lexer = get_lexer_by_name(lang, stripall=True)
+        except ClassNotFound:
+            lexer = get_lexer_by_name(langDefault, stripall=True)
+
+        formatter = HtmlFormatter(linenos=False)
+        result = highlight(content, lexer, formatter)
+
+        result = result.replace ("\n</td>", "</td>")
+
+        return result
+        
