@@ -5,6 +5,7 @@ import os.path
 import sys
 
 from outwiker.core.pluginbase import Plugin
+from outwiker.pages.wiki.wikipanel import WikiPagePanel
 
 
 class PluginSourceCommand (Plugin):
@@ -23,6 +24,24 @@ class PluginSourceCommand (Plugin):
         parser.addCommand (CommandSource (parser))
 
 
+    def __onPageViewCreate(self, page):
+        """Обработка события после создания представления страницы"""
+        assert self._application.mainWindow != None
+
+        if page.getTypeString() != u"wiki":
+            return
+
+        pageView = self._application.mainWindow.pagePanel.pageView
+        assert type (pageView) == WikiPagePanel
+
+        pageView.addTool (pageView.commandsMenu, 
+                "ID_SOURCE", 
+                lambda event: pageView.codeEditor.turnText (u'(:source lang="" tabwidth=4:)\n', u'\n(:sourceend:)'), 
+                _(u"Source Code (:source ...:)"), 
+                _(u"Source Code (:source ...:)"), 
+                None)
+
+
     ###################################################
     # Свойства и методы, которые необходимо определить
     ###################################################
@@ -31,7 +50,7 @@ class PluginSourceCommand (Plugin):
     def name (self):
         return u"Source"
 
-    
+
     @property
     def description (self):
         return _(u"""Add command (:source:) in wiki parser. This command highlight your source code.
@@ -58,7 +77,7 @@ if __name__ == "__main__":
 
     @property
     def version (self):
-        return u"1.0"
+        return u"1.1"
 
 
     def __initlocale (self):
@@ -82,6 +101,9 @@ if __name__ == "__main__":
             sys.path.insert(0, cmd_folder)
 
         self._application.onWikiParserPrepare += self.__onWikiParserPrepare
+        self._application.onPageViewCreate += self.__onPageViewCreate
+
+
 
 
     def destroy (self):
@@ -89,5 +111,6 @@ if __name__ == "__main__":
         Уничтожение (выгрузка) плагина. Здесь плагин должен отписаться от всех событий
         """
         self._application.onWikiParserPrepare -= self.__onWikiParserPrepare
+        self._application.onPageViewCreate -= self.__onPageViewCreate
 
     #############################################

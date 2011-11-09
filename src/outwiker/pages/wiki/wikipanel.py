@@ -27,7 +27,7 @@ class WikiPagePanel (HtmlPanel):
         self._configSection = u"wiki"
         self._hashKey = u"md5_hash"
         self.__WIKI_MENU_INDEX = 7
-        
+
         self.notebook.SetPageText (0, _(u"Wiki"))
 
         self.htmlSizer = wx.FlexGridSizer(1, 1, 0, 0)
@@ -43,8 +43,12 @@ class WikiPagePanel (HtmlPanel):
 
         if self.config.showHtmlCodeOptions.value:
             self.htmlcodePageIndex = self.__createHtmlCodePanel(self.htmlSizer)
-        
+
         self.Layout()
+
+    @property
+    def toolsMenu (self):
+        return self.__wikiMenu
 
 
     def __createHtmlCodePanel (self, parentSizer):
@@ -62,23 +66,25 @@ class WikiPagePanel (HtmlPanel):
 
 
     def GetSearchPanel (self):
-        if self.notebook.GetSelection() == self.codePageIndex:
+        if self.notebook.GetSelection() == self.CODE_PAGE_INDEX:
             return self.codeEditor.searchPanel
         elif self.notebook.GetSelection() == self.htmlcodePageIndex:
             return self.htmlCodeWindow.searchPanel
 
         return None
-    
+
 
     def onTabChanged(self, event): # wxGlade: HtmlPanel.<event_handler>
         if self._currentpage == None:
             return
 
-        if event.GetSelection() == self.codePageIndex:
+        if self.notebook.GetSelection() == self.CODE_PAGE_INDEX:
             self._onSwitchToCode()
-        elif event.GetSelection() == self.resultPageIndex:
+
+        elif self.notebook.GetSelection() == self.RESULT_PAGE_INDEX:
             self._onSwitchToPreview()
-        elif event.GetSelection() == self.htmlcodePageIndex:
+
+        elif self.notebook.GetSelection() == self.htmlcodePageIndex:
             self._onSwitchCodeHtml()
 
 
@@ -105,7 +111,7 @@ class WikiPagePanel (HtmlPanel):
         setStatusText (u"")
         Application.onHtmlRenderingEnd (self._currentpage, self.htmlWindow)
 
-        self._enableTools (self.pageToolsMenu, False)
+        self._enableAllTools ()
         self.htmlCodeWindow.SetFocus()
         self.htmlCodeWindow.Update()
 
@@ -128,42 +134,42 @@ class WikiPagePanel (HtmlPanel):
         """
         Добавить инструменты, связанные со шрифтами
         """
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.__wikiMenu, 
                 "ID_BOLD", 
                 lambda event: self.codeEditor.turnText (u"'''", u"'''"), 
                 _(u"Bold\tCtrl+B"), 
                 _(u"Bold"), 
                 os.path.join (self.imagesDir, "text_bold.png"))
 
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.__wikiMenu, 
                 "ID_ITALIC", 
                 lambda event: self.codeEditor.turnText (u"''", u"''"), 
                 _(u"Italic\tCtrl+I"), 
                 _(u"Italic"), 
                 os.path.join (self.imagesDir, "text_italic.png"))
 
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.__wikiMenu, 
                 "ID_BOLD_ITALIC", 
                 lambda event: self.codeEditor.turnText (u"''''", u"''''"), 
                 _(u"Bold italic\tCtrl+Shift+I"), 
                 _(u"Bold italic"), 
                 os.path.join (self.imagesDir, "text_bold_italic.png"))
 
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.__wikiMenu, 
                 "ID_UNDERLINE", 
                 lambda event: self.codeEditor.turnText (u"{+", u"+}"), 
                 _(u"Underline\tCtrl+U"), 
                 _(u"Underline"), 
                 os.path.join (self.imagesDir, "text_underline.png"))
 
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.__wikiMenu, 
                 "ID_STRIKE", 
                 lambda event: self.codeEditor.turnText (u"{-", u"-}"), 
                 _(u"Strikethrough\tCtrl+K"), 
                 _(u"Strikethrough"), 
                 os.path.join (self.imagesDir, "text_strikethrough.png"))
 
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.__wikiMenu, 
                 "ID_SUBSCRIPT", 
                 lambda event: self.codeEditor.turnText (u"'_", u"_'"), 
                 _(u"Subscript\tCtrl+="), 
@@ -171,7 +177,7 @@ class WikiPagePanel (HtmlPanel):
                 os.path.join (self.imagesDir, "text_subscript.png"))
 
 
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.__wikiMenu, 
                 "ID_SUPERSCRIPT", 
                 lambda event: self.codeEditor.turnText (u"'^", u"^'"), 
                 _(u"Superscript\tCtrl++"), 
@@ -180,14 +186,14 @@ class WikiPagePanel (HtmlPanel):
     
 
     def __addAlignTools (self):
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.__wikiMenu, 
                 "ID_ALIGN_CENTER", 
                 lambda event: self.codeEditor.turnText (u"%center%", u""), 
                 _(u"Center align\tCtrl+Alt+C"), 
                 _(u"Center align"), 
                 os.path.join (self.imagesDir, "text_align_center.png"))
 
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.__wikiMenu, 
                 "ID_ALIGN_RIGHT", 
                 lambda event: self.codeEditor.turnText (u"%right%", u""), 
                 _(u"Right align\tCtrl+Alt+R"), 
@@ -196,14 +202,14 @@ class WikiPagePanel (HtmlPanel):
     
 
     def __addFormatTools (self):
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.__wikiMenu, 
                 "ID_PREFORMAT", 
                 lambda event: self.codeEditor.turnText (u"[@", u"@]"), 
                 _(u"Preformat [@…@]\tCtrl+Alt+F"), 
                 _(u"Preformat [@…@]"),
                 None)
 
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.__wikiMenu, 
                 "ID_NONFORMAT", 
                 lambda event: self.codeEditor.turnText (u"[=", u"=]"), 
                 _(u"Non-parsed [=…=]"), 
@@ -216,14 +222,14 @@ class WikiPagePanel (HtmlPanel):
         """
         Добавить инструменты, связанные с таблицами
         """
-        #self._addTool (self.pageToolsMenu, 
+        #self.addTool (self.__wikiMenu, 
         #        self.toolsId["ID_TABLE"], 
         #        lambda event: self.codeEditor.turnText (u'<table>', u'</table>'), 
         #        u"Table\tCtrl+Q", 
         #        u"Table (<table>…</table>)", 
         #        os.path.join (self.imagesDir, "table.png"))
 
-        #self._addTool (self.pageToolsMenu, 
+        #self.addTool (self.__wikiMenu, 
         #        self.toolsId["ID_TABLE_TR"], 
         #        lambda event: self.codeEditor.turnText (u'<tr>',u'</tr>'), 
         #        u"Table row\tCtrl+W", 
@@ -231,7 +237,7 @@ class WikiPagePanel (HtmlPanel):
         #        os.path.join (self.imagesDir, "table_insert_row.png"))
 
 
-        #self._addTool (self.pageToolsMenu, 
+        #self.addTool (self.__wikiMenu, 
         #        self.toolsId["ID_TABLE_TD"], 
         #        lambda event: self.codeEditor.turnText (u'<td>', u'</td>'), 
         #        u"Table cell\tCtrl+Y", 
@@ -245,14 +251,14 @@ class WikiPagePanel (HtmlPanel):
         """
         Добавить инструменты, связанные со списками
         """
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.__wikiMenu, 
                 "ID_MARK_LIST", 
                 lambda event: self.codeEditor.turnList (u'', u'', u'*', u''), 
                 _(u"Bullets list\tCtrl+G"), 
                 _(u"Bullets list"), 
                 os.path.join (self.imagesDir, "text_list_bullets.png"))
 
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.__wikiMenu, 
                 "ID_NUMBER_LIST", 
                 lambda event: self.codeEditor.turnList (u'', u'', u'#', u''), 
                 _(u"Numbers list\tCtrl+J"), 
@@ -264,42 +270,42 @@ class WikiPagePanel (HtmlPanel):
         """
         Добавить инструменты для заголовочных тегов <H>
         """
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.__wikiMenu, 
                 "ID_H1", 
                 lambda event: self.codeEditor.turnText (u"\n!! ", u""), 
                 _(u"H1\tCtrl+1"), 
                 _(u"H1"), 
                 os.path.join (self.imagesDir, "text_heading_1.png"))
 
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.__wikiMenu, 
                 "ID_H2", 
                 lambda event: self.codeEditor.turnText (u"!!! ", u""), 
                 _(u"H2\tCtrl+2"), 
                 _(u"H2"), 
                 os.path.join (self.imagesDir, "text_heading_2.png"))
         
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.__wikiMenu, 
                 "ID_H3", 
                 lambda event: self.codeEditor.turnText (u"!!!! ", u""), 
                 _(u"H3\tCtrl+3"), 
                 _(u"H3"), 
                 os.path.join (self.imagesDir, "text_heading_3.png"))
 
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.__wikiMenu, 
                 "ID_H4", 
                 lambda event: self.codeEditor.turnText (u"!!!!! ", u""), 
                 _(u"H4\tCtrl+4"), 
                 _(u"H4"), 
                 os.path.join (self.imagesDir, "text_heading_4.png"))
 
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.__wikiMenu, 
                 "ID_H5", 
                 lambda event: self.codeEditor.turnText (u"!!!!!! ", u""), 
                 _(u"H5\tCtrl+5"), 
                 _(u"H5"), 
                 os.path.join (self.imagesDir, "text_heading_5.png"))
 
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.__wikiMenu, 
                 "ID_H6", 
                 lambda event: self.codeEditor.turnText (u"!!!!!!! ", u""), 
                 _(u"H6\tCtrl+6"), 
@@ -311,14 +317,14 @@ class WikiPagePanel (HtmlPanel):
         """
         Добавить остальные инструменты
         """
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.__wikiMenu, 
                 "ID_THUMB", 
                 lambda event: self.codeEditor.turnText (u'%thumb%', u'%%'), 
                 _(u'Thumbnail\tCtrl+M'), 
                 _(u'Thumbnail'), 
                 os.path.join (self.imagesDir, "images.png"))
 
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.__wikiMenu, 
                 "ID_LINK", 
                 lambda event: self.codeEditor.turnText (u'[[', u']]'), 
                 _(u"Link\tCtrl+L"), 
@@ -326,7 +332,7 @@ class WikiPagePanel (HtmlPanel):
                 os.path.join (self.imagesDir, "link.png"))
 
 
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.__wikiMenu, 
                 "ID_ANCHOR", 
                 lambda event: self.codeEditor.turnText (u'[[#', u']]'), 
                 _(u"Anchor\tCtrl+Alt+L"), 
@@ -334,30 +340,30 @@ class WikiPagePanel (HtmlPanel):
                 os.path.join (self.imagesDir, "anchor.png"))
 
 
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.__wikiMenu, 
                 "ID_HORLINE", 
                 lambda event: self.codeEditor.replaceText (u'----'), 
                 _(u"Horizontal line\tCtrl+H"), 
                 _(u"Horizontal line"), 
                 os.path.join (self.imagesDir, "text_horizontalrule.png"))
 
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.__wikiMenu, 
                 "ID_LINEBREAK", 
                 lambda event: self.codeEditor.replaceText (u'[[<<]]'), 
                 _(u"Line break\tCtrl+Return"), 
                 _(u"Line break"), 
                 os.path.join (self.imagesDir, "linebreak.png"))
 
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.__wikiMenu, 
                 "ID_EQUATION", 
                 lambda event: self.codeEditor.turnText (u'{$', u'$}'), 
                 _(u"Equation\tCtrl+Q"), 
                 _(u'Equation'), 
                 os.path.join (self.imagesDir, "equation.png"))
 
-        self.pageToolsMenu.AppendSeparator()
+        self.__wikiMenu.AppendSeparator()
 
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.__wikiMenu, 
                 "ID_ESCAPEHTML", 
                 self.codeEditor.escapeHtml, 
                 _(u"Convert HTML Symbols"), 
@@ -368,9 +374,9 @@ class WikiPagePanel (HtmlPanel):
     def __createCustomTools (self):
         assert self.mainWindow != None
 
-        self.pageToolsMenu = wx.Menu()
+        self.__wikiMenu = wx.Menu()
 
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.__wikiMenu, 
                 "ID_HTMLCODE", 
                 self.__openHtmlCode, 
                 _(u"HTML Code\tShift+F4"), 
@@ -389,24 +395,32 @@ class WikiPagePanel (HtmlPanel):
         self.__addOtherTools()
 
         self.mainWindow.mainMenu.Insert (self.__WIKI_MENU_INDEX, 
-                self.pageToolsMenu, 
+                self.__wikiMenu, 
                 _(u"&Wiki") )
 
         self.mainWindow.mainToolbar.Realize()
 
+
+    @property
+    def commandsMenu (self):
+        """
+        Свойство возвращает меню с вики-командами
+        """
+        return self.__commandsMenu
+
     
     def __addCommandsTools (self):
-        self.commandsMenu = wx.Menu()
-        self.pageToolsMenu.AppendSubMenu (self.commandsMenu, _(u"Commands"))
+        self.__commandsMenu = wx.Menu()
+        self.__wikiMenu.AppendSubMenu (self.commandsMenu, _(u"Commands"))
 
-        self._addTool (self.commandsMenu, 
+        self.addTool (self.commandsMenu, 
                 "ID_LJUSER", 
                 lambda event: self.codeEditor.turnText (u"(:ljuser ", u":)"), 
                 _(u"Livejournal User (:ljuser ...:)"), 
                 _(u"Livejournal User (:ljuser ...:)"), 
                 None)
 
-        self._addTool (self.commandsMenu, 
+        self.addTool (self.commandsMenu, 
                 "ID_LJCOMM", 
                 lambda event: self.codeEditor.turnText (u"(:ljcomm ", u":)"), 
                 _(u"Livejournal Community (:ljcomm ...:)"), 
@@ -414,14 +428,14 @@ class WikiPagePanel (HtmlPanel):
                 None)
 
 
-        self._addTool (self.commandsMenu, 
+        self.addTool (self.commandsMenu, 
                 "ID_ATTACHLIST", 
                 lambda event: self.codeEditor.replaceText (u"(:attachlist:)"), 
                 _(u"Attachment (:attachlist:)"), 
                 _(u"Attachment (:attachlist:)"), 
                 None)
 
-        self._addTool (self.commandsMenu, 
+        self.addTool (self.commandsMenu, 
                 "ID_CHILDLIST", 
                 lambda event: self.codeEditor.replaceText (u"(:childlist:)"), 
                 _(u"Children (:childlist:)"), 
@@ -429,7 +443,7 @@ class WikiPagePanel (HtmlPanel):
                 None)
 
 
-        self._addTool (self.commandsMenu, 
+        self.addTool (self.commandsMenu, 
                 "ID_INCLUDE", 
                 lambda event: self.codeEditor.turnText (u"(:include ", u":)"), 
                 _(u"Include (:include ...:)"), 

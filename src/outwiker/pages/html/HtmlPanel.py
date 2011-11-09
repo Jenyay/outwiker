@@ -2,7 +2,7 @@
 
 import os
 import re
-from abc import ABCMeta, abstractmethod
+from abc import ABCMeta, abstractmethod, abstractproperty
 import cgi
 
 import wx
@@ -41,8 +41,8 @@ class HtmlPanel(BaseTextPanel):
         self.currentHtmlFile = None
 
         # Номера страниц-вкладок
-        self.codePageIndex = 0
-        self.resultPageIndex = 1
+        self.CODE_PAGE_INDEX = 0
+        self.RESULT_PAGE_INDEX = 1
 
         self.imagesDir = getImagesDir()
 
@@ -55,6 +55,10 @@ class HtmlPanel(BaseTextPanel):
         self.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED, self.onTabChanged, self.notebook)
 
         self.toolsId = {}
+
+    @abstractproperty
+    def toolsMenu (self):
+        pass
 
 
     def Print (self):
@@ -143,9 +147,9 @@ class HtmlPanel(BaseTextPanel):
         assert self._currentpage != None
 
         if len (self._currentpage.content) > 0 or len (Attachment (self._currentpage).attachmentFull) > 0:
-            self.notebook.SetSelection (self.resultPageIndex)
+            self.notebook.SetSelection (self.RESULT_PAGE_INDEX)
         else:
-            self.notebook.SetSelection (self.codePageIndex)
+            self.notebook.SetSelection (self.CODE_PAGE_INDEX)
             self.codeEditor.SetFocus()
 
 
@@ -153,31 +157,42 @@ class HtmlPanel(BaseTextPanel):
         if self._currentpage == None:
             return
 
-        if event.GetSelection() == self.resultPageIndex:
+        if self.notebook.GetSelection() == self.RESULT_PAGE_INDEX:
             self._onSwitchToPreview()
         else:
             self._onSwitchToCode()
-    
+
+
+    @property
+    def _isEnabledTools (self):
+        """
+        Возвращает True, если инструменты (кнопки и меню) должны быть активны
+        """
+        assert self.notebook != None
+        assert self.notebook.GetSelection() != -1
+
+        return self.notebook.GetSelection() == self.CODE_PAGE_INDEX
+
 
     def _onSwitchToCode (self):
         """
         Обработка события при переключении на код страницы
         """
         self.checkForExternalEditAndSave()
-        self._enableTools (self.pageToolsMenu, True)
+        self._enableAllTools ()
         self.codeEditor.SetFocus()
 
-    
+
     def _onSwitchToPreview (self):
         """
         Обработка события при переключении на просмотр страницы
         """
         self.Save()
-        self._enableTools (self.pageToolsMenu, False)
+        self._enableAllTools ()
         self.htmlWindow.SetFocus()
         self.htmlWindow.Update()
         self._showHtml()
-    
+
 
     def _showHtml (self):
         """
@@ -205,16 +220,28 @@ class HtmlPanel(BaseTextPanel):
         Application.onHtmlRenderingEnd (self._currentpage, self.htmlWindow)
     
 
-    def _enableTools (self, menu, enable):
-        for key in self.toolsId:
-            if not self.toolsId[key].alwaysEnabled:
-                if self.mainWindow.mainToolbar.FindById (self.toolsId[key].id) != None:
-                    self.mainWindow.mainToolbar.EnableTool (self.toolsId[key].id, enable)
-                menu.Enable (self.toolsId[key].id, enable)
-    
+    def _enableAllTools (self):
+        """
+        Активировать или дезактивировать инструменты (пункты меню и кнопки) в зависимости от текущей выбранной вкладки
+        """
+        for tool in self.toolsId.values():
+            self._enableTool (tool)
+
+
+    def _enableTool (self, tool):
+        """
+        Активировать или дезактивировать один инструмент (пункт меню и кнопку)
+        """
+        enabled = self._isEnabledTools or tool.alwaysEnabled
+
+        tool.menu.Enable (tool.id, enabled)
+
+        if self.mainWindow.mainToolbar.FindById (tool.id) != None:
+            self.mainWindow.mainToolbar.EnableTool (tool.id, enabled)
+
 
     def GetSearchPanel (self):
-        if self.notebook.GetSelection() == self.codePageIndex:
+        if self.notebook.GetSelection() == self.CODE_PAGE_INDEX:
             return self.codeEditor.searchPanel
 
         return None
@@ -227,7 +254,7 @@ class HtmlPanel(BaseTextPanel):
 
 
     def _addRenderTools (self):
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.toolsMenu, 
                 "ID_RENDER", 
                 self.__switchView, 
                 _(u"Code / Preview\tF4"), 
@@ -235,20 +262,20 @@ class HtmlPanel(BaseTextPanel):
                 os.path.join (self.imagesDir, "render.png"),
                 True)
 
-        self.pageToolsMenu.AppendSeparator()
+        self.toolsMenu.AppendSeparator()
 
 
     def __switchView (self, event):
         if self._currentpage == None:
             return
 
-        if self.notebook.GetSelection() == self.codePageIndex:
-            self.notebook.SetSelection (self.resultPageIndex)
+        if self.notebook.GetSelection() == self.CODE_PAGE_INDEX:
+            self.notebook.SetSelection (self.RESULT_PAGE_INDEX)
         else:
-            self.notebook.SetSelection (self.codePageIndex)
+            self.notebook.SetSelection (self.CODE_PAGE_INDEX)
 
 
-    def _addTool (self, 
+    def addTool (self, 
             menu, 
             idstring, 
             func, 
@@ -283,8 +310,10 @@ class HtmlPanel(BaseTextPanel):
                     buttonText, 
                     "")
 
+        self._enableTool (self.toolsId[idstring])
 
-    def _addCheckTool (self, 
+
+    def addCheckTool (self, 
             menu, 
             idstring, 
             func, 
@@ -315,6 +344,8 @@ class HtmlPanel(BaseTextPanel):
                     wx.Bitmap(image, wx.BITMAP_TYPE_ANY), 
                     wx.NullBitmap, 
                     buttonText)
+
+        self._enableTool (self.toolsId[idstring])
 
 
     def _checkTools (self, idstring, checked):
@@ -354,6 +385,11 @@ class HtmlPagePanel (HtmlPanel):
         Application.onPageUpdate += self.__onPageUpdate
 
 
+    @property
+    def toolsMenu (self):
+        return self.__htmlMenu
+
+
     def onClose (self, event):
         Application.onPageUpdate -= self.__onPageUpdate
         HtmlPanel.onClose (self, event)
@@ -374,7 +410,7 @@ class HtmlPagePanel (HtmlPanel):
         """
         Создать кнопки и пункты меню, отображающие настройки страницы
         """
-        self._addCheckTool (self.pageToolsMenu, 
+        self.addCheckTool (self.__htmlMenu, 
                 "ID_AUTOLINEWRAP", 
                 self.__onAutoLineWrap, 
                 _(u"Auto Line Wrap"), 
@@ -403,7 +439,7 @@ class HtmlPagePanel (HtmlPanel):
         """
         assert self.mainWindow != None
 
-        self.pageToolsMenu = wx.Menu()
+        self.__htmlMenu = wx.Menu()
         
         self.__createPageConfigTools ()
         self._addRenderTools()
@@ -415,7 +451,7 @@ class HtmlPagePanel (HtmlPanel):
         self.__addOtherTools()
 
 
-        self.mainWindow.mainMenu.Insert (self.__HTML_MENU_INDEX, self.pageToolsMenu, _(u"H&tml"))
+        self.mainWindow.mainMenu.Insert (self.__HTML_MENU_INDEX, self.__htmlMenu, _(u"H&tml"))
         self.mainWindow.mainToolbar.Realize()
 
 
@@ -423,42 +459,42 @@ class HtmlPagePanel (HtmlPanel):
         """
         Добавить инструменты, связанные со шрифтами
         """
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.__htmlMenu, 
                 "ID_BOLD", 
                 lambda event: self.codeEditor.turnText (u"<b>", u"</b>"), 
                 _(u"Bold\tCtrl+B"), 
                 _(u"Bold (<b>…</b>)"), 
                 os.path.join (self.imagesDir, "text_bold.png"))
 
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.__htmlMenu, 
                 "ID_ITALIC", 
                 lambda event: self.codeEditor.turnText (u"<i>", u"</i>"), 
                 _(u"Italic\tCtrl+I"), 
                 _(u"Italic (<i>…</i>)"), 
                 os.path.join (self.imagesDir, "text_italic.png"))
 
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.__htmlMenu, 
                 "ID_UNDERLINE", 
                 lambda event: self.codeEditor.turnText (u"<u>", u"</u>"), 
                 _(u"Underline\tCtrl+U"), 
                 _(u"Underline (<u>…</u>)"), 
                 os.path.join (self.imagesDir, "text_underline.png"))
 
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.__htmlMenu, 
                 "ID_STRIKE", 
                 lambda event: self.codeEditor.turnText (u"<strike>", u"</strike>"), 
                 _(u"Strikethrough\tCtrl+K"), 
                 _(u"Strikethrough (<strike>…</strike>)"), 
                 os.path.join (self.imagesDir, "text_strikethrough.png"))
 
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.__htmlMenu, 
                 "ID_SUBSCRIPT", 
                 lambda event: self.codeEditor.turnText (u"<sub>", u"</sub>"), 
                 _(u"Subscript\tCtrl+="), 
                 _(u"Subscript (<sub>…</sub>)"), 
                 os.path.join (self.imagesDir, "text_subscript.png"))
 
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.__htmlMenu, 
                 "ID_SUPERSCRIPT", 
                 lambda event: self.codeEditor.turnText (u"<sup>", u"</sup>"), 
                 _(u"Superscript\tCtrl++"), 
@@ -467,14 +503,14 @@ class HtmlPagePanel (HtmlPanel):
 
     
     def __addAlignTools (self):
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.__htmlMenu, 
                 "ID_ALIGN_CENTER", 
                 lambda event: self.codeEditor.turnText (u'<div align="center">', u'</div>'), 
                 _(u"Center align\tCtrl+Alt+C"), 
                 _(u"Center align"), 
                 os.path.join (self.imagesDir, "text_align_center.png"))
 
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.__htmlMenu, 
                 "ID_ALIGN_RIGHT", 
                 lambda event: self.codeEditor.turnText (u'<div align="right">', u'</div>'), 
                 _(u"Right align\tCtrl+Alt+R"), 
@@ -486,14 +522,14 @@ class HtmlPagePanel (HtmlPanel):
         """
         Добавить инструменты, связанные с таблицами
         """
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.__htmlMenu, 
                 "ID_TABLE", 
                 lambda event: self.codeEditor.turnText (u'<table>', u'</table>'), 
                 _(u"Table\tCtrl+Q"), 
                 _(u"Table (<table>…</table>)"), 
                 os.path.join (self.imagesDir, "table.png"))
 
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.__htmlMenu, 
                 "ID_TABLE_TR", 
                 lambda event: self.codeEditor.turnText (u'<tr>',u'</tr>'), 
                 _(u"Table row\tCtrl+W"), 
@@ -501,7 +537,7 @@ class HtmlPagePanel (HtmlPanel):
                 os.path.join (self.imagesDir, "table_insert_row.png"))
 
 
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.__htmlMenu, 
                 "ID_TABLE_TD", 
                 lambda event: self.codeEditor.turnText (u'<td>', u'</td>'), 
                 _(u"Table cell\tCtrl+Y"), 
@@ -513,14 +549,14 @@ class HtmlPagePanel (HtmlPanel):
         """
         Добавить инструменты, связанные со списками
         """
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.__htmlMenu, 
                 "ID_MARK_LIST", 
                 lambda event: self.codeEditor.turnList (u'<ul>\n', u'</ul>', u'<li>', u'</li>'), 
                 _(u"Bullets list\tCtrl+G"), 
                 _(u"Bullets list (<ul>…</ul>)"), 
                 os.path.join (self.imagesDir, "text_list_bullets.png"))
 
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.__htmlMenu, 
                 "ID_NUMBER_LIST", 
                 lambda event: self.codeEditor.turnList (u'<ol>\n', u'</ol>', u'<li>', u'</li>'), 
                 _(u"Numbers list\tCtrl+J"), 
@@ -532,42 +568,42 @@ class HtmlPagePanel (HtmlPanel):
         """
         Добавить инструменты для заголовочных тегов <H>
         """
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.__htmlMenu, 
                 "ID_H1", 
                 lambda event: self.codeEditor.turnText (u"<h1>", u"</h1>"), 
                 _(u"H1\tCtrl+1"), 
                 _(u"H1 (<h1>…</h1>)"), 
                 os.path.join (self.imagesDir, "text_heading_1.png"))
 
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.__htmlMenu, 
                 "ID_H2", 
                 lambda event: self.codeEditor.turnText (u"<h2>", u"</h2>"), 
                 _(u"H2\tCtrl+2"), 
                 _(u"H2 (<h2>…</h2>)"), 
                 os.path.join (self.imagesDir, "text_heading_2.png"))
         
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.__htmlMenu, 
                 "ID_H3", 
                 lambda event: self.codeEditor.turnText (u"<h3>", u"</h3>"), 
                 _(u"H3\tCtrl+3"), 
                 _(u"H3 (<h3>…</h3>)"), 
                 os.path.join (self.imagesDir, "text_heading_3.png"))
 
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.__htmlMenu, 
                 "ID_H4", 
                 lambda event: self.codeEditor.turnText (u"<h4>", u"</h4>"), 
                 _(u"H4\tCtrl+4"), 
                 _(u"H4 (<h4>…</h4>)"), 
                 os.path.join (self.imagesDir, "text_heading_4.png"))
 
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.__htmlMenu, 
                 "ID_H5", 
                 lambda event: self.codeEditor.turnText (u"<h5>", u"</h5>"), 
                 _(u"H5\tCtrl+5"), 
                 _(u"H5 (<h5>…</h5>)"), 
                 os.path.join (self.imagesDir, "text_heading_5.png"))
 
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.__htmlMenu, 
                 "ID_H6", 
                 lambda event: self.codeEditor.turnText (u"<h6>", u"</h6>"), 
                 _(u"H6\tCtrl+6"), 
@@ -579,14 +615,14 @@ class HtmlPagePanel (HtmlPanel):
         """
         Добавить остальные инструменты
         """
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.__htmlMenu, 
                 "ID_IMAGE", 
                 lambda event: self.codeEditor.turnText (u'<img src="', u'"/>'), 
                 _(u'Image\tCtrl+M'), 
                 _(u'Image (<img src="…"/>'), 
                 os.path.join (self.imagesDir, "image.png"))
 
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.__htmlMenu, 
                 "ID_LINK", 
                 lambda event: self.codeEditor.turnText (u'<a href="">', u'</a>'), 
                 _(u"Link\tCtrl+L"), 
@@ -594,7 +630,7 @@ class HtmlPagePanel (HtmlPanel):
                 os.path.join (self.imagesDir, "link.png"))
 
 
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.__htmlMenu, 
                 "ID_ANCHOR", 
                 lambda event: self.codeEditor.turnText (u'<a name="', u'"></a>'), 
                 _(u"Anchor\tCtrl+Alt+L"), 
@@ -602,7 +638,7 @@ class HtmlPagePanel (HtmlPanel):
                 os.path.join (self.imagesDir, "anchor.png"))
 
 
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.__htmlMenu, 
                 "ID_HORLINE", 
                 lambda event: self.codeEditor.replaceText (u'<hr>'), 
                 _(u"Horizontal line\tCtrl+H"), 
@@ -610,7 +646,7 @@ class HtmlPagePanel (HtmlPanel):
                 os.path.join (self.imagesDir, "text_horizontalrule.png"))
 
 
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.__htmlMenu, 
                 "ID_CODE", 
                 lambda event: self.codeEditor.turnText (u"<code>", u"</code>"), 
                 _(u"Code\tCtrl+Alt+D"), 
@@ -618,7 +654,7 @@ class HtmlPagePanel (HtmlPanel):
                 os.path.join (self.imagesDir, "code.png"))
 
 
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.__htmlMenu, 
                 "ID_PREFORMAT", 
                 lambda event: self.codeEditor.turnText (u"<pre>", u"</pre>"), 
                 _(u"Preformat\tCtrl+Alt+F"), 
@@ -626,7 +662,7 @@ class HtmlPagePanel (HtmlPanel):
                 None)
 
 
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.__htmlMenu, 
                 "ID_BLOCKQUOTE", 
                 lambda event: self.codeEditor.turnText (u"<blockquote>", u"</blockquote>"), 
                 _(u"Quote\tCtrl+Alt+Q"), 
@@ -634,9 +670,9 @@ class HtmlPagePanel (HtmlPanel):
                 os.path.join (self.imagesDir, "quote.png"))
 
 
-        self.pageToolsMenu.AppendSeparator()
+        self.__htmlMenu.AppendSeparator()
 
-        self._addTool (self.pageToolsMenu, 
+        self.addTool (self.__htmlMenu, 
                 "ID_ESCAPEHTML", 
                 self.codeEditor.escapeHtml, 
                 _(u"Convert HTML Symbols"), 

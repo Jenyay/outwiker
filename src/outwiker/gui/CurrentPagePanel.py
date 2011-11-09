@@ -14,7 +14,7 @@ import outwiker.core.system
 
 class CurrentPagePanel(wx.Panel):
     def __init__(self, *args, **kwds):
-        self.pageView = None
+        self.__pageView = None
         self.__currentPage = None
 
         self.imagesDir = outwiker.core.system.getImagesDir()
@@ -42,9 +42,14 @@ class CurrentPagePanel(wx.Panel):
         self.Bind (wx.EVT_CLOSE, self.__onClose)
 
 
+    @property
+    def pageView (self):
+        return self.__pageView
+
+
     def Print (self):
-        if Application.selectedPage != None and self.pageView != None:
-            self.pageView.Print()
+        if Application.selectedPage != None and self.__pageView != None:
+            self.__pageView.Print()
 
     
     def __onClose (self, event):
@@ -54,9 +59,9 @@ class CurrentPagePanel(wx.Panel):
         Application.onPageUpdate -= self.__onPageUpdate
         Application.onBookmarksChanged -= self.__onBookmarksChanged
 
-        if self.pageView != None:
-            #self.pageView.removeGui ()
-            self.pageView.Close()
+        if self.__pageView != None:
+            #self.__pageView.removeGui ()
+            self.__pageView.Close()
         self.Destroy()
 
 
@@ -109,8 +114,8 @@ class CurrentPagePanel(wx.Panel):
             self.__createPageView(page)
 
         # Если представление создано, то загрузим в него новую страницу
-        if self.pageView != None:
-            self.pageView.page = page
+        if self.__pageView != None:
+            self.__pageView.page = page
 
         # Запомнить страницу, чтобы потом можно было бы сравнивать ее тип с новой страницей
         self.__currentPage = page
@@ -122,13 +127,14 @@ class CurrentPagePanel(wx.Panel):
         """
         if page != None:
             factory = FactorySelector.getFactory (page.getTypeString())
-            self.pageView = factory.getPageView (self)
-            self.pageView.page = page
+            self.__pageView = factory.getPageView (self)
+            self.__pageView.page = page
 
-            assert self.pageView != None
+            assert self.__pageView != None
 
-            self.contentSizer.Add (self.pageView, 1, wx.EXPAND, 0)
+            self.contentSizer.Add (self.__pageView, 1, wx.EXPAND, 0)
             self.Layout()
+            Application.onPageViewCreate (page)
 
 
     def __updatePageInfo (self, page):
@@ -184,10 +190,12 @@ class CurrentPagePanel(wx.Panel):
         """
         Уничтожить текущий контрол
         """
-        if self.pageView != None:
-            self.contentSizer.Detach (self.pageView)
-            self.pageView.Close()
-            self.pageView = None
+        if self.__pageView != None:
+            Application.onPageViewDestroy (self.__currentPage)
+
+            self.contentSizer.Detach (self.__pageView)
+            self.__pageView.Close()
+            self.__pageView = None
             self.__currentPage = None
 
     
@@ -196,10 +204,10 @@ class CurrentPagePanel(wx.Panel):
         Уничтожить панель без сохранения изменений.
         Нужно для перезагрузки вики
         """
-        if self.pageView != None:
-            self.contentSizer.Detach (self.pageView)
-            self.pageView.CloseWithoutSave()
-            self.pageView = None
+        if self.__pageView != None:
+            self.contentSizer.Detach (self.__pageView)
+            self.__pageView.CloseWithoutSave()
+            self.__pageView = None
             self.__currentPage = None
     
 
@@ -207,8 +215,8 @@ class CurrentPagePanel(wx.Panel):
         """
         Сохранить текущую страницу
         """
-        if self.pageView != None:
-            self.pageView.Save()
+        if self.__pageView != None:
+            self.__pageView.Save()
 
 
     def __onBookmark(self, event):

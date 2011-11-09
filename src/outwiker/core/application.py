@@ -154,7 +154,7 @@ class ApplicationParams (object):
         # page - страница, которую рендерят
         # htmlView - окно, где будет представлен HTML
         self.onHtmlRenderingBegin = Event()
-        
+
         # Завершение рендеринга HTML
         # Параметры: 
         # page - страница, которую рендерят
@@ -181,6 +181,14 @@ class ApplicationParams (object):
         # Событие вызывается, когда закрывается диалог с настройками
         # Параметры: экземпляр класса outwiker.gui.preferences.PrefDialog
         self.onPreferencesDialogClose = Event()
+
+        # Событие вызывается после (!) создания представления страницы в CurrentPagePanel
+        # Параметры: page - новая выбранная страница,
+        self.onPageViewCreate = Event()
+
+        # Событие вызывается перед (!) удалением представления страницы в CurrentPagePanel
+        # Параметры: page - текущая выбранная страница,
+        self.onPageViewDestroy = Event()
 
 
     def __initLocale (self):

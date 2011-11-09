@@ -45,7 +45,9 @@ class MainWindow(wx.Frame):
         self.__setIcon()
         self.SetTitle (u"OutWiker")
 
+        self.mainMenu = None
         self.__createMenu()
+
         self.__createToolBar()
         self.__createStatusBar()
 
