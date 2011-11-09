@@ -97,11 +97,11 @@ import os
 
 # Комментарий
 def hello (count):
-    """
-    Hello world
-    """
-    for i in range (10):
-        print "Hello world!!!"
+	"""
+	Hello world
+	"""
+	for i in range (10):
+		print "Hello world!!!"
 (:sourceend:)
 '''
 
@@ -127,11 +127,11 @@ import os
 
 # Комментарий
 def hello (count):
-    """
-    Hello world
-    """
-    for i in range (10):
-        print "Hello world!!!"
+	"""
+	Hello world
+	"""
+	for i in range (10):
+		print "Hello world!!!"
 (:sourceend:)
 '''
 
@@ -156,11 +156,11 @@ import os
 
 # Комментарий
 def hello (count):
-    """
-    Hello world
-    """
-    for i in range (10):
-        print "Hello world!!!"
+	"""
+	Hello world
+	"""
+	for i in range (10):
+		print "Hello world!!!"
 (:sourceend:)
 '''
 
@@ -186,11 +186,11 @@ import os
 
 # Комментарий
 def hello (count):
-    """
-    Hello world
-    """
-    for i in range (10):
-        print "Hello world!!!"
+	"""
+	Hello world
+	"""
+	for i in range (10):
+		print "Hello world!!!"
 (:sourceend:)
 '''
 
@@ -216,11 +216,11 @@ import os
 
 # Комментарий
 def hello (count):
-    """
-    Hello world
-    """
-    for i in range (10):
-        print "Hello world!!!"
+	"""
+	Hello world
+	"""
+	for i in range (10):
+		print "Hello world!!!"
 (:sourceend:)
 '''
 
@@ -246,11 +246,11 @@ import os
 
 # Комментарий
 def hello (count):
-    """
-    Hello world
-    """
-    for i in range (10):
-        print "Hello world!!!"
+	"""
+	Hello world
+	"""
+	for i in range (10):
+		print "Hello world!!!"
 (:sourceend:)
 
 
@@ -259,11 +259,11 @@ import os
 
 # Комментарий
 def hello (count):
-    """
-    Hello world
-    """
-    for i in range (10):
-        print "Hello world!!!"
+	"""
+	Hello world
+	"""
+	for i in range (10):
+		print "Hello world!!!"
 (:sourceend:)
 '''
 
