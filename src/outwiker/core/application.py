@@ -189,7 +189,7 @@ class ApplicationParams (object):
         # Событие вызывается перед (!) удалением представления страницы в CurrentPagePanel
         # Параметры: page - текущая выбранная страница,
         self.onPageViewDestroy = Event()
-
+        
 
     def __initLocale (self):
         language = getLanguageFromConfig (self.config)

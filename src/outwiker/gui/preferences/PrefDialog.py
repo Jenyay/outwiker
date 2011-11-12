@@ -14,6 +14,7 @@ from pluginspanel import PluginsPanel
 from outwiker.core.exceptions import PreferencesException
 from outwiker.core.factoryselector import FactorySelector
 from outwiker.core.application import Application
+from .preferencepanelinfo import PreferencePanelInfo
 
 
 class PrefDialog(wx.Dialog):
@@ -33,10 +34,30 @@ class PrefDialog(wx.Dialog):
         self.__pluginsPage = None
         self.__createPages()
 
-        self.__treeBook.Bind (wx.EVT_TREEBOOK_PAGE_CHANGING, self.onPageChanging)
-        self.__treeBook.Bind (wx.EVT_TREEBOOK_PAGE_CHANGED, self.onPageChanged)
+        self.__treeBook.Bind (wx.EVT_TREEBOOK_PAGE_CHANGING, self.__onPageChanging)
+        self.__treeBook.Bind (wx.EVT_TREEBOOK_PAGE_CHANGED, self.__onPageChanged)
 
         Application.onPreferencesDialogCreate (self)
+
+
+    def appendPreferenceGroup (self, groupname, panelsList):
+        """
+        Добавить группу настроек
+        groupname - имя группы
+        panels - массив экземпляров класса PreferencePanelInfo
+
+        Страница корня группы - первая страница в списке панелей.
+        Массив не должен быть пустым
+        """
+        assert len (panelsList) != 0
+        self.__treeBook.AddPage (panelsList[0].panel, groupname)
+
+        # Если всего одна страница в списке, то не будем добавлять вложенные страницы
+        if len (panelsList) > 1:
+            for panelInfo in panelsList:
+                self.__treeBook.AddSubPage (panelInfo.panel, panelInfo.name)
+
+        self.__expandAllPages()
 
 
     def __set_properties(self):
@@ -53,28 +74,39 @@ class PrefDialog(wx.Dialog):
         main_sizer.AddGrowableCol(0)
         self.Layout()
         
-        self._createOkCancelButtons(main_sizer)
+        self.__createOkCancelButtons(main_sizer)
         self.Layout()
     
 
-    def __createPages (self):
+    def __createInterfacePages (self):
         """
-        Создать страницы окна настроек
+        Создать страницы с подгруппой "Interface"
         """
         self.__generalPage = GeneralPanel.GeneralPanel (self.__treeBook)
         self.__editorPage = EditorPanel.EditorPanel (self.__treeBook)
         self.__htmlRenderPage = HtmlRenderPanel.HtmlRenderPanel (self.__treeBook)
         self.__textPrintPage = TextPrintPanel.TextPrintPanel (self.__treeBook)
-        self.__pluginsPage = PluginsPanel (self.__treeBook)
 
-        self.__treeBook.AddPage (self.__generalPage, _(u"Interface"))
-        self.__treeBook.AddSubPage (self.__generalPage, _(u"General"))
-        self.__treeBook.AddSubPage (self.__editorPage, _(u"Editor"))
-        self.__treeBook.AddSubPage (self.__htmlRenderPage, _(u"Preview"))
-        self.__treeBook.AddSubPage (self.__textPrintPage, _(u"Text Printout"))
+        interfacePanelsList = [PreferencePanelInfo (self.__generalPage, _(u"General")),
+                PreferencePanelInfo (self.__editorPage, _(u"Editor")),
+                PreferencePanelInfo (self.__htmlRenderPage, _(u"Preview")),
+                PreferencePanelInfo (self.__textPrintPage, _(u"Text Printout"))]
+
+        self.appendPreferenceGroup (_(u"Interface"), interfacePanelsList)
+
+
+    def __createPluginsPage (self):
+        self.__pluginsPage = PluginsPanel (self.__treeBook)
         self.__treeBook.AddPage (self.__pluginsPage, _(u"Plugins") )
 
-        self._createPagesForPages()
+
+    def __createPages (self):
+        """
+        Создать страницы окна настроек
+        """
+        self.__createInterfacePages()
+        self.__createPagesForPages()
+        self.__createPluginsPage()
 
         self.__expandAllPages()
         self.__treeBook.SetSelection (0)
@@ -82,7 +114,7 @@ class PrefDialog(wx.Dialog):
         self.__generalPage.minimizeCheckBox.SetFocus()
     
 
-    def _createPagesForPages (self):
+    def __createPagesForPages (self):
         """
         Создать страницы настроек для типов страниц
         """
@@ -91,10 +123,7 @@ class PrefDialog(wx.Dialog):
             panelsList = factory.getPrefPanels(self.__treeBook)
 
             if len (panelsList) > 0:
-                self.__treeBook.AddPage (panelsList[0].panel, factory.title)
-
-                for panelInfo in panelsList:
-                    self.__treeBook.AddSubPage (panelInfo.panel, panelInfo.name)
+                self.appendPreferenceGroup (factory.title, panelsList)
 
 
     def __expandAllPages (self):
@@ -105,7 +134,7 @@ class PrefDialog(wx.Dialog):
             self.__treeBook.ExpandNode (pageindex)
 
 
-    def _createOkCancelButtons (self, sizer):
+    def __createOkCancelButtons (self, sizer):
         """
         Создать кнопки Ok / Cancel
         """
@@ -145,14 +174,14 @@ class PrefDialog(wx.Dialog):
         selectedPage.Save()
 
 
-    def onPageChanging (self, event):
+    def __onPageChanging (self, event):
         try:
             self.__saveCurrentPage()
         except PreferencesException:
             event.Veto()
 
 
-    def onPageChanged (self, event):
+    def __onPageChanged (self, event):
         pageIndex = event.GetSelection()
 
         if pageIndex == wx.NOT_FOUND:
