@@ -40,6 +40,11 @@ class PrefDialog(wx.Dialog):
         Application.onPreferencesDialogCreate (self)
 
 
+    @property
+    def treeBook (self):
+        return self.__treeBook
+
+
     def appendPreferenceGroup (self, groupname, panelsList):
         """
         Добавить группу настроек

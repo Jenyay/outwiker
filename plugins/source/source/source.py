@@ -6,6 +6,8 @@ import sys
 
 from outwiker.core.pluginbase import Plugin
 from outwiker.pages.wiki.wikipanel import WikiPagePanel
+from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
+
 
 
 class PluginSourceCommand (Plugin):
@@ -17,11 +19,33 @@ class PluginSourceCommand (Plugin):
         application - экземпляр класса core.application.ApplicationParams
         """
         Plugin.__init__ (self, application)
+        self.__version = u"1.2"
+
+
+    def initialize(self):
+        self.__initlocale()
+
+        cmd_folder = os.path.dirname(os.path.abspath(__file__))
+        if cmd_folder not in sys.path:
+            sys.path.insert(0, cmd_folder)
+
+        self._application.onWikiParserPrepare += self.__onWikiParserPrepare
+        self._application.onPageViewCreate += self.__onPageViewCreate
+        self._application.onPreferencesDialogCreate += self.__onPreferencesDialogCreate
 
     
     def __onWikiParserPrepare (self, parser):
         from .commandsource import CommandSource
         parser.addCommand (CommandSource (parser))
+
+
+    def __onPreferencesDialogCreate (self, dialog):
+        from .preferencepanel import PreferencePanel
+        prefPanel = PreferencePanel (dialog.treeBook)
+
+        panelName = _(u"Source [Plugin]")
+        panelsList = [PreferencePanelInfo (prefPanel, panelName)]
+        dialog.appendPreferenceGroup (panelName, panelsList)
 
 
     def __onPageViewCreate(self, page):
@@ -41,10 +65,6 @@ class PluginSourceCommand (Plugin):
                 _(u"Source Code (:source ...:)"), 
                 None)
 
-
-    ###################################################
-    # Свойства и методы, которые необходимо определить
-    ###################################################
 
     @property
     def name (self):
@@ -77,7 +97,7 @@ if __name__ == "__main__":
 
     @property
     def version (self):
-        return u"1.1"
+        return self.__version
 
 
     def __initlocale (self):
@@ -92,25 +112,9 @@ if __name__ == "__main__":
             print e
 
 
-
-    def initialize(self):
-        self.__initlocale()
-
-        cmd_folder = os.path.dirname(os.path.abspath(__file__))
-        if cmd_folder not in sys.path:
-            sys.path.insert(0, cmd_folder)
-
-        self._application.onWikiParserPrepare += self.__onWikiParserPrepare
-        self._application.onPageViewCreate += self.__onPageViewCreate
-
-
-
-
     def destroy (self):
         """
         Уничтожение (выгрузка) плагина. Здесь плагин должен отписаться от всех событий
         """
         self._application.onWikiParserPrepare -= self.__onWikiParserPrepare
         self._application.onPageViewCreate -= self.__onPageViewCreate
-
-    #############################################
