@@ -87,17 +87,19 @@ class PrefDialog(wx.Dialog):
         Создать страницы настроек для типов страниц
         """
         for factory in FactorySelector.factories:
-            pages = factory.getPrefPanels(self.__treeBook)
+            # Список экземпляров класса PreferencePanelInfo
+            panelsList = factory.getPrefPanels(self.__treeBook)
 
-            if len (pages) > 0:
-                self.__treeBook.AddPage (pages[0][1], factory.title)
+            if len (panelsList) > 0:
+                self.__treeBook.AddPage (panelsList[0].panel, factory.title)
 
-                for page in pages:
-                    self.__treeBook.AddSubPage (page[1], page[0])
+                for panelInfo in panelsList:
+                    self.__treeBook.AddSubPage (panelInfo.panel, panelInfo.name)
 
 
     def __expandAllPages (self):
-        """Развернуть все узлы в дереве настроек
+        """
+        Развернуть все узлы в дереве настроек
         """
         for pageindex in range (self.__treeBook.GetPageCount()):
             self.__treeBook.ExpandNode (pageindex)

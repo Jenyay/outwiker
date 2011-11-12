@@ -8,6 +8,7 @@ from outwiker.core.tree import WikiPage
 from wikipanel import WikiPagePanel
 import WikiPreferences
 from outwiker.core.factory import PageFactory
+from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
 
 
 class WikiWikiPage (WikiPage):
@@ -67,5 +68,5 @@ class WikiPageFactory (PageFactory):
         """
         generalPanel = WikiPreferences.WikiPrefGeneralPanel (parent)
 
-        return [ ( _("General"), generalPanel ) ]
+        return [ PreferencePanelInfo (generalPanel, _(u"General") ) ]
 
