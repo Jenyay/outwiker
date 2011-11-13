@@ -8,6 +8,8 @@ from pygments.lexers import get_lexer_by_name
 from pygments.formatters import HtmlFormatter
 from pygments.lexers import ClassNotFound
 
+from .sourceconfig import SourceConfig
+
 
 class CommandSource (Command):
     """
@@ -22,11 +24,12 @@ class CommandSource (Command):
     tabwidth - размер табуляции
     lang - язык программирования (пока не используется)
     """
-    def __init__ (self, parser):
+    def __init__ (self, parser, config):
         """
         parser - экземпляр парсера
         """
         Command.__init__ (self, parser)
+        self.__config = SourceConfig (config)
 
         # Добавлены ли стили в заголовок
         self.__styleAppend = False
@@ -47,13 +50,13 @@ class CommandSource (Command):
         """
         params_dict = Command.parseParams (params)
 
-        DEFAULT_TABWIDTH = 4
-        PARAM_TABWIDTH = "tabwidth"
+        defaultTabWidth = self.__config.tabWidth.value
+        tabWidthParamName = "tabwidth"
 
         try:
-            tabwidth = int (params_dict[PARAM_TABWIDTH]) if PARAM_TABWIDTH in params_dict else DEFAULT_TABWIDTH
+            tabwidth = int (params_dict[tabWidthParamName]) if tabWidthParamName in params_dict else defaultTabWidth
         except ValueError:
-            tabwidth = DEFAULT_TABWIDTH
+            tabwidth = defaultTabWidth
 
         newcontent = content.replace ("\t", " " * tabwidth)
         colortext = self.__colorize (params_dict, newcontent)

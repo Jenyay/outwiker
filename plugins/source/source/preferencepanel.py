@@ -3,20 +3,26 @@
 
 import wx
 
+from outwiker.gui.preferences.ConfigElements import StringElement, IntegerElement
+from .sourceconfig import SourceConfig
+
+
 class PreferencePanel (wx.Panel):
     """
     Панель с настройками
     """
-    def __init__ (self, parent):
+    def __init__ (self, parent, config, lang):
+        """
+        parent - родитель панели (должен быть wx.Treebook)
+        config - настройки из plugin._application.config
+        lang - функция для локализации, созданная с помощью plugin._init_i18n
+        """
         wx.Panel.__init__ (self, parent, style=wx.TAB_TRAVERSAL)
 
-        self.DEFAULT_TAB_WIDTH = 4
-        self.MIN_TAB_WIDTH = 1
-        self.MAX_TAB_WIDTH = 50
-
-        self.DEFAULT_LANGUAGE = u""
+        self._ = lang
 
         self.__createGui()
+        self.__controller = PrefPanelController (self, config)
 
 
     def __createGui(self):
@@ -36,51 +42,58 @@ class PreferencePanel (wx.Panel):
         """
         Создать интерфейс, связанный с языком программирования по умолчанию
         """
-        languageLabel = wx.StaticText(self, -1, _("Default Programming Language"))
-        self.languageTextCtrl = wx.TextCtrl (self, -1, self.DEFAULT_LANGUAGE)
+        languageLabel = wx.StaticText(self, -1, self._(u"Default Programming Language"))
+        self.languageTextCtrl = wx.TextCtrl (self)
         self.languageTextCtrl.SetMinSize (wx.Size (100, -1))
 
-        mainSizer.Add (languageLabel, 
+        mainSizer.Add (
+                languageLabel, 
                 proportion=1,
                 flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                border=2)
+                border=2
+                )
 
-        mainSizer.Add (self.languageTextCtrl, 
+        mainSizer.Add (
+                self.languageTextCtrl, 
                 proportion=1,
                 flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT,
-                border=2)
+                border=2
+                )
 
 
     def __createTabWidthGui (self, mainSizer):
         """
         Создать интерфейс, связанный с размером табуляции
         """
-        tabWidthLabel = wx.StaticText(self, -1, _("Default Tab Width"))
-        self.tabWidthSpin = wx.SpinCtrl(self, 
-                -1, 
-                str (self.DEFAULT_TAB_WIDTH), 
-                min=self.MIN_TAB_WIDTH, 
-                max=self.MAX_TAB_WIDTH, 
-                style=wx.SP_ARROW_KEYS|wx.TE_AUTO_URL)
+        tabWidthLabel = wx.StaticText(self, -1, self._(u"Default Tab Width"))
+        self.tabWidthSpin = wx.SpinCtrl (
+                self, 
+                style=wx.SP_ARROW_KEYS|wx.TE_AUTO_URL
+                )
+        self.tabWidthSpin.SetMinSize (wx.Size (100, -1))
 
 
-        mainSizer.Add (tabWidthLabel, 
+        mainSizer.Add (
+                tabWidthLabel, 
                 proportion=1,
                 flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                border=2)
+                border=2
+                )
 
-        mainSizer.Add (self.tabWidthSpin, 
+        mainSizer.Add (
+                self.tabWidthSpin, 
                 proportion=1,
                 flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT,
-                border=2)
+                border=2
+                )
 
 
     def LoadState(self):
-        pass
+        self.__controller.loadState()
 
 
     def Save (self):
-        pass
+        self.__controller.save()
 
 
 
@@ -88,5 +101,28 @@ class PrefPanelController (object):
     """
     Контроллер для панели настроек
     """
-    def __init__ (self, owner):
+    def __init__ (self, owner, config):
         self.__owner = owner
+        self.__config = SourceConfig (config)
+
+        self.MIN_TAB_WIDTH = 1
+        self.MAX_TAB_WIDTH = 50
+
+
+    def loadState (self):
+        self.__tabWidthOption = IntegerElement (
+                self.__config.tabWidth, 
+                self.__owner.tabWidthSpin, 
+                self.MIN_TAB_WIDTH, 
+                self.MAX_TAB_WIDTH
+                )
+
+        self.__defaultLanguageOption = StringElement (
+                self.__config.defaultLanguage, 
+                self.__owner.languageTextCtrl
+                )
+
+
+    def save (self):
+        self.__tabWidthOption.save()
+        self.__defaultLanguageOption.save()

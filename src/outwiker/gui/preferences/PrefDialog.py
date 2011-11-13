@@ -67,7 +67,7 @@ class PrefDialog(wx.Dialog):
 
     def __set_properties(self):
         self.SetTitle(_("Preferences"))
-        self.SetSize((700, 500))
+        self.SetSize((750, 500))
         self.__treeBook.SetMinSize((300, 400))
 
 

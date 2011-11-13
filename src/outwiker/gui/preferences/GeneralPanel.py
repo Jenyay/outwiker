@@ -4,7 +4,6 @@
 import wx
 
 import ConfigElements
-from outwiker.core.config import StringOption, BooleanOption, IntegerOption
 import outwiker.core.i18n
 from outwiker.core.application import Application
 from outwiker.core.i18n import I18nConfig
@@ -187,13 +186,18 @@ class GeneralPanel (wx.ScrolledWindow):
         Опции, связанные с последними открытыми файлами
         """
         # Длина истории последних открытых файлов
-        self.historyLength = ConfigElements.IntegerElement (self.generalConfig.historyLengthOption, 
+        self.historyLength = ConfigElements.IntegerElement (
+                self.generalConfig.historyLengthOption, 
                 self.historySpin, 
                 self.MIN_HISTORY_LENGTH, 
-                self.MAX_HISTORY_LENGTH)
+                self.MAX_HISTORY_LENGTH
+                )
 
         # Открывать последнюю вики при запуске?
-        self.autoopen = ConfigElements.BooleanElement (self.generalConfig.autoopenOption, self.autoopenCheckBox)
+        self.autoopen = ConfigElements.BooleanElement (
+                self.generalConfig.autoopenOption, 
+                self.autoopenCheckBox
+                )
 
 
     def __loadGeneralOptions (self):
@@ -201,25 +205,42 @@ class GeneralPanel (wx.ScrolledWindow):
         Опции для сворачивания окна в трей
         """
         # Сворачивать в трей?
-        self.minimizeToTray = ConfigElements.BooleanElement (self.trayConfig.minimizeOption, self.minimizeCheckBox)
+        self.minimizeToTray = ConfigElements.BooleanElement (
+                self.trayConfig.minimizeOption, 
+                self.minimizeCheckBox
+                )
 
         # Всегда показывать иконку в трее
-        self.alwaysInTray = ConfigElements.BooleanElement (self.trayConfig.alwaysShowTrayIconOption, self.alwaysInTrayCheckBox)
+        self.alwaysInTray = ConfigElements.BooleanElement (
+                self.trayConfig.alwaysShowTrayIconOption, 
+                self.alwaysInTrayCheckBox
+                )
 
         # Запускаться свернутым?
-        self.startIconized = ConfigElements.BooleanElement (self.trayConfig.startIconizedOption, self.startIconizedCheckBox)
+        self.startIconized = ConfigElements.BooleanElement (
+                self.trayConfig.startIconizedOption, 
+                self.startIconizedCheckBox
+                )
 
         # Задавать вопрос перед выходом из программы?
-        self.askBeforeExit = ConfigElements.BooleanElement (self.generalConfig.askBeforeExitOption, self.askBeforeExitCheckBox)
+        self.askBeforeExit = ConfigElements.BooleanElement (
+                self.generalConfig.askBeforeExitOption, 
+                self.askBeforeExitCheckBox
+                )
 
         # Формат заголовка страницы
-        self.titleFormat = ConfigElements.StringElement (self.mainWindowConfig.titleFormatOption, self.titleFormatText)
+        self.titleFormat = ConfigElements.StringElement (
+                self.mainWindowConfig.titleFormatOption, 
+                self.titleFormatText
+                )
 
         # Автосохранение
-        self.autosaveInterval = ConfigElements.IntegerElement (self.generalConfig.autosaveIntervalOption, 
+        self.autosaveInterval = ConfigElements.IntegerElement (
+                self.generalConfig.autosaveIntervalOption, 
                 self.autosaveSpin, 
                 self.MIN_AUTOSAVE_INTERVAL, 
-                self.MAX_AUTOSAVE_INTERVAL)
+                self.MAX_AUTOSAVE_INTERVAL
+                )
 
         self.__loadLanguages()
     

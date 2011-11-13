@@ -3,7 +3,7 @@
 
 <tasks>
 <task id="0027bbd4-00b5-11e1-98e8-00112fd2b1f8" priority="8" startdate="2011-10-27 20:01:00" status="1" subject="Отвязать номер версии от номера ревизии" />
-<task id="098969ae-f5c3-11e0-841f-00112fd2b1f8" priority="8" startdate="2011-10-13 21:44:00" status="1" subject="Настройки плагинов" />
+<task completiondate="2011-11-13 20:54:19.522664" id="098969ae-f5c3-11e0-841f-00112fd2b1f8" percentageComplete="100" priority="8" startdate="2011-10-13 21:44:00" status="1" subject="Настройки плагинов" />
 <task completiondate="2011-10-12 22:40:38.136736" id="0b504968-e27e-11e0-bc23-00112fd2b1f8" percentageComplete="100" priority="7" startdate="2011-09-19 09:13:00" status="1" subject="При разборе списков на викистраницах считать, что две пустые строки обозначают начало нового списка" />
 <task id="0d30accf-012f-11e1-ad5e-00112fd2b1f8" priority="8" startdate="2011-10-28 10:35:00" status="1" subject="Проверить сравнение путей при загрузке плагинов (сравнение unicode-строк и обычных)" />
 <task completiondate="2011-06-10 23:45:34.461493" expandedContexts="('taskviewer',)" id="102866320:1306862368.02" percentageComplete="100" priority="7" startdate="2011-05-31 21:19:00" status="1" subject="Пункты меню для команд вики-нотации" />

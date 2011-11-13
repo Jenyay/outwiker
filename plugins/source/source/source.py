@@ -8,9 +8,10 @@ from outwiker.core.pluginbase import Plugin
 from outwiker.pages.wiki.wikipanel import WikiPagePanel
 from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
 
+from .sourceconfig import SourceConfig
 
 
-class PluginSourceCommand (Plugin):
+class PluginSource (Plugin):
     """
     Плагин, добавляющий обработку команды (:source:) в википарсер
     """
@@ -36,12 +37,12 @@ class PluginSourceCommand (Plugin):
     
     def __onWikiParserPrepare (self, parser):
         from .commandsource import CommandSource
-        parser.addCommand (CommandSource (parser))
+        parser.addCommand (CommandSource (parser, self._application.config))
 
 
     def __onPreferencesDialogCreate (self, dialog):
         from .preferencepanel import PreferencePanel
-        prefPanel = PreferencePanel (dialog.treeBook)
+        prefPanel = PreferencePanel (dialog.treeBook, self._application.config, _)
 
         panelName = _(u"Source [Plugin]")
         panelsList = [PreferencePanelInfo (prefPanel, panelName)]
@@ -55,15 +56,39 @@ class PluginSourceCommand (Plugin):
         if page.getTypeString() != u"wiki":
             return
 
+        pageView = self.__getPageView()
+
+        helpString = _(u"Source Code (:source ...:)")
+        pageView.addTool (pageView.commandsMenu, 
+                "ID_PLUGIN_SOURCE", 
+                self.__onInsertCommand, 
+                helpString, 
+                helpString, 
+                None)
+
+
+    def __getPageView (self):
+        """
+        Получить указатель на панель представления страницы
+        """
         pageView = self._application.mainWindow.pagePanel.pageView
         assert type (pageView) == WikiPagePanel
 
-        pageView.addTool (pageView.commandsMenu, 
-                "ID_SOURCE", 
-                lambda event: pageView.codeEditor.turnText (u'(:source lang="" tabwidth=4:)\n', u'\n(:sourceend:)'), 
-                _(u"Source Code (:source ...:)"), 
-                _(u"Source Code (:source ...:)"), 
-                None)
+        return pageView
+
+
+    def __onInsertCommand (self, event):
+        config = SourceConfig (self._application.config)
+
+        startCommand = u'(:source lang="{language}" tabwidth={tabwidth}:)\n'.format (
+                language=config.defaultLanguage.value,
+                tabwidth=config.tabWidth.value
+                )
+
+        endCommand = u'\n(:sourceend:)'
+
+        pageView = self.__getPageView()
+        pageView.codeEditor.turnText (startCommand, endCommand)
 
 
     @property
