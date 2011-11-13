@@ -16,8 +16,7 @@ from test.utils import removeWiki
 
 class SourcePluginTest (unittest.TestCase):
     def setUp(self):
-        self.encoding = "866"
-        self.maxDiff = None
+        self.__pluginname = u"Source"
 
         self.filesPath = u"../test/samplefiles/"
         self.__createWiki()
@@ -26,9 +25,17 @@ class SourcePluginTest (unittest.TestCase):
 
         self.loader = PluginsLoader(Application)
         self.loader.load (dirlist)
+        self.loader[self.__pluginname].config.tabWidth.value = 4
         
         self.factory = ParserFactory()
         self.parser = self.factory.make (self.testPage, Application.config)
+
+
+    def __readFile (self, path):
+        with open (path) as fp:
+            result = unicode (fp.read(), "utf8")
+
+        return result
     
 
     def __createWiki (self):
@@ -291,8 +298,63 @@ def hello (count):
         self.assertFalse (u"(:source" in result)
 
 
-    def __readFile (self, path):
-        with open (path) as fp:
-            result = unicode (fp.read(), "utf8")
+    def testConfigTabWidth(self):
+        text = u'''(:source:)
+import os
 
-        return result
+# Комментарий
+def hello (count):
+	"""
+	Hello world
+	"""
+	for i in range (10):
+		print "Hello world!!!"
+(:sourceend:)
+'''
+        self.loader[self.__pluginname].config.tabWidth.value = 10
+
+        self.testPage.content = text
+
+        generator = HtmlGenerator (self.testPage)
+        htmlpath = generator.makeHtml ()
+        result = self.__readFile (htmlpath)
+
+        innerString1 = u".go { color: #808080 } /* Generic.Output */"
+        innerString2 = u'          for i in range (10)'
+        innerString3 = u'def hello (count):'
+        
+        self.assertTrue (innerString1 in result)
+        self.assertTrue (innerString2 in result)
+        self.assertTrue (innerString3 in result)
+        self.assertFalse (u"(:source" in result)
+
+
+    def testConfigTabWidth2(self):
+        text = u'''(:source tabwidth=10:)
+import os
+
+# Комментарий
+def hello (count):
+	"""
+	Hello world
+	"""
+	for i in range (10):
+		print "Hello world!!!"
+(:sourceend:)
+'''
+        self.loader[self.__pluginname].config.tabWidth.value = 4
+
+        self.testPage.content = text
+
+        generator = HtmlGenerator (self.testPage)
+        htmlpath = generator.makeHtml ()
+        result = self.__readFile (htmlpath)
+
+        innerString1 = u".go { color: #808080 } /* Generic.Output */"
+        innerString2 = u'          for i in range (10)'
+        innerString3 = u'def hello (count):'
+        
+        self.assertTrue (innerString1 in result)
+        self.assertTrue (innerString2 in result)
+        self.assertTrue (innerString3 in result)
+        self.assertFalse (u"(:source" in result)

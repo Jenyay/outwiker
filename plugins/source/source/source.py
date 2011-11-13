@@ -77,8 +77,13 @@ class PluginSource (Plugin):
         return pageView
 
 
+    @property
+    def config (self):
+        return SourceConfig (self._application.config)
+
+
     def __onInsertCommand (self, event):
-        config = SourceConfig (self._application.config)
+        config = self.config
 
         startCommand = u'(:source lang="{language}" tabwidth={tabwidth}:)\n'.format (
                 language=config.defaultLanguage.value,
