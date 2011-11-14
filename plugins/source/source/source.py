@@ -20,7 +20,7 @@ class PluginSource (Plugin):
         application - экземпляр класса core.application.ApplicationParams
         """
         Plugin.__init__ (self, application)
-        self.__version = u"1.2"
+        self.__version = u"1.2.1"
 
 
     def initialize(self):
@@ -42,7 +42,7 @@ class PluginSource (Plugin):
 
     def __onPreferencesDialogCreate (self, dialog):
         from .preferencepanel import PreferencePanel
-        prefPanel = PreferencePanel (dialog.treeBook, self._application.config, _)
+        prefPanel = PreferencePanel (dialog.panelsParent, self._application.config, _)
 
         panelName = _(u"Source [Plugin]")
         panelsList = [PreferencePanelInfo (prefPanel, panelName)]

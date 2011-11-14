@@ -18,6 +18,9 @@ from .preferencepanelinfo import PreferencePanelInfo
 
 
 class PrefDialog(wx.Dialog):
+    """
+    Класс диалога настроек
+    """
     def __init__(self, *args, **kwds):
         kwds["style"] = wx.DEFAULT_DIALOG_STYLE|wx.RESIZE_BORDER|wx.THICK_FRAME
         wx.Dialog.__init__(self, *args, **kwds)
@@ -34,14 +37,19 @@ class PrefDialog(wx.Dialog):
         self.__pluginsPage = None
         self.__createPages()
 
-        self.__treeBook.Bind (wx.EVT_TREEBOOK_PAGE_CHANGING, self.__onPageChanging)
-        self.__treeBook.Bind (wx.EVT_TREEBOOK_PAGE_CHANGED, self.__onPageChanged)
+        # self.__treeBook.Bind (wx.EVT_TREEBOOK_PAGE_CHANGING, self.__onPageChanging)
+        # self.__treeBook.Bind (wx.EVT_TREEBOOK_PAGE_CHANGED, self.__onPageChanged)
 
         Application.onPreferencesDialogCreate (self)
 
+        self.__loadAllOptions()
+
 
     @property
-    def treeBook (self):
+    def panelsParent (self):
+        """
+        Возвращает указатель на дерево с панелями, который должен быть родителем для панелей с настройками
+        """
         return self.__treeBook
 
 
@@ -66,9 +74,31 @@ class PrefDialog(wx.Dialog):
 
 
     def __set_properties(self):
-        self.SetTitle(_("Preferences"))
-        self.SetSize((750, 500))
+        title = _("Preferences")
+        self.SetTitle(title)
+
+        width = 750
+        height = 500
+
+        self.SetSize((width, height))
         self.__treeBook.SetMinSize((300, 400))
+
+        self.__centerWindow()
+
+
+    def __centerWindow (self):
+        """
+        Расположить окно по центру родителя
+        """
+        selfWidth, selfHeight = self.GetSize()
+
+        parentWidth, parentHeight = self.GetParent().GetSize()
+        parentX, parentY = self.GetParent().GetPosition()
+
+        posX = parentX + (parentWidth - selfWidth) / 2
+        posY = parentY + (parentHeight - selfHeight) / 2
+
+        self.SetPosition ((posX, posY))
 
 
     def __do_layout(self):
@@ -117,6 +147,15 @@ class PrefDialog(wx.Dialog):
         self.__treeBook.SetSelection (0)
 
         self.__generalPage.minimizeCheckBox.SetFocus()
+
+
+    def __loadAllOptions (self):
+        """
+        Загрузить настройки для всех страниц
+        """
+        for pageIndex in range (self.__treeBook.GetPageCount()):
+            page = self.__treeBook.GetPage (pageIndex)
+            page.LoadState()
     
 
     def __createPagesForPages (self):
@@ -155,7 +194,8 @@ class PrefDialog(wx.Dialog):
 
     def __onOk (self, event):
         try:
-            self.__saveCurrentPage()
+            # self.__saveCurrentPage()
+            self.__saveAll()
         except PreferencesException:
             pass
 
@@ -179,11 +219,20 @@ class PrefDialog(wx.Dialog):
         selectedPage.Save()
 
 
-    def __onPageChanging (self, event):
-        try:
-            self.__saveCurrentPage()
-        except PreferencesException:
-            event.Veto()
+    def __saveAll (self):
+        """
+        Сохранить настройки для всех страниц
+        """
+        for pageIndex in range (self.__treeBook.GetPageCount()):
+            page = self.__treeBook.GetPage (pageIndex)
+            page.Save()
+
+
+    # def __onPageChanging (self, event):
+    #     try:
+    #         self.__saveCurrentPage()
+    #     except PreferencesException:
+    #         event.Veto()
 
 
     def __onPageChanged (self, event):
@@ -197,5 +246,5 @@ class PrefDialog(wx.Dialog):
         if selectedPage == None:
             return
 
-        selectedPage.LoadState()
+        # selectedPage.LoadState()
         selectedPage.SetFocus()
