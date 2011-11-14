@@ -475,7 +475,7 @@ Windows
 </task>
 <task id="db0f512e-ce29-11e0-b7b5-00112fd2b1f8" priority="7" startdate="2011-08-24 12:19:00" status="1" subject="При вставке элемента списка с помощью кнопки, курсор остается на начале строки" />
 <task id="dd247104-05dc-11e1-8566-00112fd2b1f8" priority="8" startdate="2011-11-03 09:29:00" status="1" subject="Не давать создавать заметки, содержащие \ и /" />
-<task id="df671e84-0632-11e1-a5b8-00112fd2b1f8" priority="7" startdate="2011-11-03 19:45:00" status="1" subject="Возможность копирования текста из окна описания плагинов" />
+<task id="df671e84-0632-11e1-a5b8-00112fd2b1f8" priority="5" startdate="2011-11-03 19:45:00" status="1" subject="Возможность копирования текста из окна описания плагинов с помощью Ctrl+C" />
 <task completiondate="2011-08-10 11:19:00.795369" id="ec2a3c6e-c320-11e0-9866-00112fd2b1f8" percentageComplete="100" priority="8" startdate="2011-08-10 11:18:00" status="1" subject="Уменьшить моргание при переключении страниц" />
 <task completiondate="2011-10-05 09:15:51.713782" expandedContexts="('taskviewer',)" id="ec760d3a-ef10-11e0-827d-00112fd2b1f8" percentageComplete="100" priority="8" startdate="2011-10-05 09:14:00" status="1" subject="Под Linux устанавливать OutWiker в /usr/, а не в /opt/" />
 <task completiondate="2011-08-26 10:58:42.645255" id="efbc221e-ce29-11e0-98e0-00112fd2b1f8" percentageComplete="100" priority="8" startdate="2011-08-24 12:20:00" status="1" subject="При кэшировании учитывать вложенные страницы" />

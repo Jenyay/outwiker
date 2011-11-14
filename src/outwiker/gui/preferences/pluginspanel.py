@@ -6,7 +6,8 @@ import wx.html
 
 from outwiker.core.application import Application
 from outwiker.gui.guiconfig import PluginsConfig
-#from outwiker.core.pluginbase import Plugin
+from outwiker.gui.htmlrenderfactory import getHtmlRender
+from outwiker.core.system import getCurrentDir
 
 
 class PluginsPanel (wx.Panel):
@@ -15,6 +16,8 @@ class PluginsPanel (wx.Panel):
     """
     def __init__ (self, parent):
         wx.Panel.__init__ (self, parent, style=wx.TAB_TRAVERSAL)
+        self.__htmlMinWidth = 150
+
         self.__createGui ()
 
         self.__controller = PluginsController (self)
@@ -24,21 +27,40 @@ class PluginsPanel (wx.Panel):
         self.pluginsList = wx.CheckListBox (self, -1, style=wx.LB_SORT)
         self.pluginsList.SetMinSize ((50, -1))
 
-        self.pluginsInfo = wx.html.HtmlWindow (self, style=wx.html.HW_SCROLLBAR_AUTO)
-        self.pluginsInfo.SetMinSize ((150, -1))
+        # Панель, которая потом заменится на HTML-рендер
+        self.__blankPanel = wx.Panel (self)
+        self.__blankPanel.SetMinSize ((self.__htmlMinWidth, -1))
+
+        self.__pluginsInfo = None
 
         self.__layout()
 
-    
-    def __layout (self):
-        mainSizer = wx.FlexGridSizer (1, 2)
-        mainSizer.AddGrowableRow (0)
-        mainSizer.AddGrowableCol (0)
-        mainSizer.AddGrowableCol (1)
-        mainSizer.Add (self.pluginsList, flag=wx.EXPAND)
-        mainSizer.Add (self.pluginsInfo, flag=wx.EXPAND)
 
-        self.SetSizer (mainSizer)
+    @property
+    def pluginsInfo (self):
+        if self.__pluginsInfo == None:
+            # Удалим пустую панель, а вместо нее добавим HTML-рендер
+            self.mainSizer.Remove (self.__blankPanel)
+            self.__blankPanel.Destroy()
+
+            self.__pluginsInfo = getHtmlRender (self)
+            self.__pluginsInfo.SetMinSize ((self.__htmlMinWidth, -1))
+
+            self.mainSizer.Add (self.__pluginsInfo, flag=wx.EXPAND)
+            self.Layout()
+
+        return self.__pluginsInfo
+
+
+    def __layout (self):
+        self.mainSizer = wx.FlexGridSizer (1, 2)
+        self.mainSizer.AddGrowableRow (0)
+        self.mainSizer.AddGrowableCol (0)
+        self.mainSizer.AddGrowableCol (1)
+        self.mainSizer.Add (self.pluginsList, flag=wx.EXPAND)
+        self.mainSizer.Add (self.__blankPanel, flag=wx.EXPAND)
+
+        self.SetSizer (self.mainSizer)
 
 
     def LoadState(self):
@@ -74,7 +96,7 @@ class PluginsController (object):
 
             htmlContent = self.__createPluginInfo (plugin)
 
-        self.__owner.pluginsInfo.SetPage (htmlContent)
+        self.__owner.pluginsInfo.SetPage (htmlContent, getCurrentDir())
 
 
     def __createPluginInfo (self, plugin):
