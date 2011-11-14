@@ -3,7 +3,7 @@
 
 import subprocess
 
-fname = "version.txt"
+fname = "src/version.txt"
 version = "1.4.0"
 status = "dev"
 
