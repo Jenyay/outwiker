@@ -54,7 +54,8 @@ class PluginDebug (Plugin):
     
     @property
     def description (self):
-        return _(u"Debug Plugin")
+        return _(u"""Debug Plugin
+<a href="http://jenyay.net">http://jenyay.net</a>""")
 
 
     @property

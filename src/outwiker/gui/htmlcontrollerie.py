@@ -29,7 +29,9 @@ class UriIdentifierIE (UriIdentifier):
         """
         Попытка найти страницу вики
         """
-        assert self._currentPage != None
+        # assert self._currentPage != None
+        if self._currentPage == None:
+            return None
 
         newSelectedPage = None
 
@@ -85,7 +87,10 @@ class UriIdentifierIE (UriIdentifier):
         Удалить якорь из адреса текущей загруженной страницы
         То есть из x:\\bla-bla-bla\\__content.html#anchor сделать x:\\bla-bla-bla\\__content.html
         """
-        assert currentpage != None
+        if currentpage == None:
+            return href
+
+        # assert currentpage != None
 
         result = href
 

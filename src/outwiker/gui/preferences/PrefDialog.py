@@ -46,7 +46,7 @@ class PrefDialog(wx.Dialog):
 
 
     @property
-    def panelsParent (self):
+    def treeBook (self):
         """
         Возвращает указатель на дерево с панелями, который должен быть родителем для панелей с настройками
         """
