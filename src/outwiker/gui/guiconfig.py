@@ -105,23 +105,49 @@ class HtmlRenderConfig (object):
     """
     Класс для хранения настроек HTML-рендера
     """
+    # Название секции в конфиге для настроек HTML
+    HTML_SECTION = u"Html"
+
+    FONT_FACE_NAME_PARAM = u"FontFaceName"
+    FONT_SIZE_PARAM = u"FontSize"
+    FONT_BOLD_PARAM = u"FontBold"
+    FONT_ITALIC_PARAM = u"FontItalic"
+    USER_STYLE_PARAM = u"UserStyle"
+
+    DEFAULT_FONT_SIZE = 10
+    DEFAULT_FONT_NAME = u"Verdana"
+    DEFAULT_FONT_BOLD = False
+    DEFAULT_FONT_ITALIC = False
+    DEFAULT_USER_STYLE = u""
+
     def __init__ (self, config):
         self.config = config
 
-        self.DEFAULT_FONT_SIZE = 10
-        self.fontSizeOption = IntegerOption (self.config, u"HTML", u"FontSize", self.DEFAULT_FONT_SIZE)
 
-        self.DEFAULT_FONT_NAME = u"Verdana"
-        self.fontFaceNameOption = StringOption (self.config, u"HTML", u"FontFaceName", self.DEFAULT_FONT_NAME)
+        self.fontSizeOption = IntegerOption (self.config, 
+                HtmlRenderConfig.HTML_SECTION, 
+                HtmlRenderConfig.FONT_SIZE_PARAM, 
+                HtmlRenderConfig.DEFAULT_FONT_SIZE)
 
-        self.DEFAULT_FONT_BOLD = False
-        self.fontIsBold = BooleanOption (self.config, "HTML", "FontBold", self.DEFAULT_FONT_BOLD)
+        self.fontFaceNameOption = StringOption (self.config, 
+                HtmlRenderConfig.HTML_SECTION, 
+                HtmlRenderConfig.FONT_FACE_NAME_PARAM, 
+                HtmlRenderConfig.DEFAULT_FONT_NAME)
 
-        self.DEFAULT_FONT_ITALIC = False
-        self.fontIsItalic = BooleanOption (self.config, "HTML", "FontItalic", self.DEFAULT_FONT_ITALIC)
+        self.fontIsBold = BooleanOption (self.config, 
+                HtmlRenderConfig.HTML_SECTION, 
+                HtmlRenderConfig.FONT_BOLD_PARAM, 
+                HtmlRenderConfig.DEFAULT_FONT_BOLD)
 
-        self.DEFAULT_USER_STYLE = u""
-        self.userStyleOption = StringOption (self.config, u"HTML", u"UserStyle", self.DEFAULT_USER_STYLE)
+        self.fontIsItalic = BooleanOption (self.config, 
+                HtmlRenderConfig.HTML_SECTION, 
+                HtmlRenderConfig.FONT_ITALIC_PARAM, 
+                HtmlRenderConfig.DEFAULT_FONT_ITALIC)
+
+        self.userStyleOption = StringOption (self.config, 
+                HtmlRenderConfig.HTML_SECTION, 
+                HtmlRenderConfig.USER_STYLE_PARAM, 
+                HtmlRenderConfig.DEFAULT_USER_STYLE)
 
 
 class TextPrintConfig (object):

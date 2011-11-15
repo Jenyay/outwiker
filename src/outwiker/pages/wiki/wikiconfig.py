@@ -7,14 +7,39 @@ class WikiConfig (object):
     """
     Класс, хранящий указатели на настройки, связанные с викиы
     """
+    # Секция конфига для параметров, связанных с викистраницей
+    WIKI_SECTION = u"Wiki"
+
+    # Имя параметра "Показывать ли код HTML?"
+    SHOW_HTML_CODE_PARAM = u"ShowHtmlCode"
+
+    # Имя параметра для размера превьюшек по умолчанию
+    THUMB_SIZE_PARAM = u"ThumbSize"
+
+    # Имя параметра, показывающего, надо ли выводить список прикрепленных файлов вместо пустой страницы
+    SHOW_ATTACH_BLANK_PARAM = u"ShowAttachInsteadBlank"
+
+    # Размер превьюшек по умолчанию
+    THUMB_SIZE_DEFAULT = 250
+
+
     def __init__ (self, config):
         self.config = config
 
         # Показывать вкладку с HTML-кодом?
-        self.showHtmlCodeOptions = BooleanOption (self.config, "Wiki", "ShowHtmlCode", True)
+        self.showHtmlCodeOptions = BooleanOption (self.config, 
+                WikiConfig.WIKI_SECTION, 
+                WikiConfig.SHOW_HTML_CODE_PARAM,
+                True)
 
         # Размер превьюшек по умолчанию
-        self.thumbSizeOptions = IntegerOption (self.config, "Wiki", "ThumbSize", 250)
+        self.thumbSizeOptions = IntegerOption (self.config, 
+                WikiConfig.WIKI_SECTION, 
+                WikiConfig.THUMB_SIZE_PARAM, 
+                WikiConfig.THUMB_SIZE_DEFAULT)
         
         # Показывать список прикрепленных файлов вместо пустой страницы?
-        self.showAttachInsteadBlankOptions = BooleanOption (self.config, "Wiki", "ShowAttachInsteadBlank", True)
+        self.showAttachInsteadBlankOptions = BooleanOption (self.config, 
+                WikiConfig.WIKI_SECTION, 
+                WikiConfig.SHOW_ATTACH_BLANK_PARAM, 
+                True)

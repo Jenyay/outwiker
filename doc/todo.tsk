@@ -395,7 +395,7 @@ IndexError: string index out of range
 </description>
 </task>
 <task completiondate="2011-10-27 19:58:28.108538" id="6dc7a6fa-00b4-11e1-9450-00112fd2b1f8" percentageComplete="100" priority="80" startdate="2011-10-27 19:57:00" status="1" subject="Викикоманда для раскраски кода" />
-<task id="6fa01c36-05dd-11e1-8566-00112fd2b1f8" priority="7" startdate="2011-11-03 09:34:00" status="1" subject="Полоски в дереве под Windows" />
+<task completiondate="2011-11-15 21:10:54.246192" id="6fa01c36-05dd-11e1-8566-00112fd2b1f8" percentageComplete="100" priority="7" startdate="2011-11-03 09:34:00" status="1" subject="Полоски в дереве под Windows" />
 <task completiondate="2011-02-08 09:09:00" expandedContexts="('taskviewer',)" id="70065680:1297145366.35" percentageComplete="100" priority="7" startdate="2011-02-08 09:09:00" status="1" subject="Запретить переименовывать страницы в режиме &quot;только для чтения&quot;" />
 <task expandedContexts="('taskviewer',)" id="70266128:1306778827.42" priority="7" startdate="2011-05-30 22:07:00" status="1" subject="Контекстное меню для прикрепленных файлов" />
 <task completiondate="2011-05-25 22:48:58.330504" expandedContexts="('taskviewer',)" id="70311888:1305221681.12" percentageComplete="100" priority="9" startdate="2011-05-12 21:34:00" status="1" subject="В качестве HTML-рендера использовать WebKit">

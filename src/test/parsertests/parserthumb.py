@@ -2,6 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 import os
+import os.path
 import unittest
 import hashlib
 
@@ -14,6 +15,7 @@ from outwiker.core.application import Application
 from outwiker.pages.wiki.parser.wikiparser import Parser
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
+from outwiker.pages.wiki.wikiconfig import WikiConfig
 
 
 class ParserThumbTest (unittest.TestCase):
@@ -28,6 +30,9 @@ class ParserThumbTest (unittest.TestCase):
         self.__createWiki()
         
         factory = ParserFactory()
+        self.__wikiconfig = WikiConfig (Application.config)
+        self.__wikiconfig.thumbSizeOptions.value = WikiConfig.THUMB_SIZE_DEFAULT
+
         self.parser = factory.make (self.testPage, Application.config)
     
 
@@ -54,6 +59,7 @@ class ParserThumbTest (unittest.TestCase):
     
 
     def tearDown(self):
+        self.__wikiconfig.thumbSizeOptions.value = WikiConfig.THUMB_SIZE_DEFAULT
         removeWiki (self.path)
 
 
@@ -267,4 +273,18 @@ class ParserThumbTest (unittest.TestCase):
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
         path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_maxsize_300_image.png")
+        self.assertTrue (os.path.exists (path), path.encode (self.encoding))
+
+
+    def testThumbGifDefaultThumb (self):
+        self.__wikiconfig.thumbSizeOptions.value = 333
+
+        text = u'бла-бла-бла \nкхм % thumb % Attach:image.gif %% бла-бла-бла\nбла-бла-бла'
+        path = os.path.join ("__attach", "__thumb", "th_maxsize_333_image.png")
+
+        result = u'бла-бла-бла \nкхм <A HREF="__attach/image.gif"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path = path.replace ("\\", "/"))
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+        path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_maxsize_333_image.png")
         self.assertTrue (os.path.exists (path), path.encode (self.encoding))

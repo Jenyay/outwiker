@@ -10,10 +10,12 @@ from outwiker.core.tree import WikiDocument
 from outwiker.core.attachment import Attachment
 from outwiker.core.application import Application
 from outwiker.core.config import Config
+from outwiker.gui.guiconfig import HtmlRenderConfig
 
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.htmlgenerator import HtmlGenerator
 from outwiker.pages.wiki.emptycontent import EmptyContent
+from outwiker.pages.wiki.wikiconfig import WikiConfig
 
 from utils import removeWiki
 
@@ -39,6 +41,20 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
 Бла-бла-бла"""
 
         self.testPage.content = self.wikitext
+        
+        self.__htmlconfig = HtmlRenderConfig (Application.config)
+        self.__setDefaultConfig()
+
+
+    def __setDefaultConfig (self):
+        # Установим размер превьюшки, не совпадающий с размером по умолчанию
+        Application.config.set (WikiConfig.WIKI_SECTION, 
+                WikiConfig.THUMB_SIZE_PARAM, 
+                WikiConfig.THUMB_SIZE_DEFAULT)
+
+        Application.config.set (HtmlRenderConfig.HTML_SECTION, 
+                HtmlRenderConfig.FONT_FACE_NAME_PARAM, 
+                HtmlRenderConfig.DEFAULT_FONT_NAME)
     
 
     def __createWiki (self):
@@ -53,6 +69,7 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
         
 
     def tearDown(self):
+        self.__setDefaultConfig()
         removeWiki (self.path)
 
 
@@ -236,7 +253,6 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
 
 
     def testEmpty1 (self):
-        #config = Config (self.configpath)
         text = u"бла-бла-бла"
 
         content = EmptyContent (Application.config)
@@ -256,7 +272,6 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
 
 
     def testEmpty2 (self):
-        #config = Config (self.configpath)
         text = u"(:attachlist:)"
 
         content = EmptyContent (Application.config)
@@ -320,3 +335,77 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
 
         self.assertEqual (len (Application.plugins), 2)
         self.assertTrue (generator.canReadFromCache())
+
+
+    def testConfigThumbSizeCache (self):
+        """
+        Тест на то, что на кэширование влияет изменение размера превьюшки по умолчанию
+        """
+        # Только создали страницу, кешировать нельзя
+        generator = HtmlGenerator (self.testPage)
+        self.assertFalse (generator.canReadFromCache())
+
+        generator.makeHtml ()
+        # После того, как один раз сгенерили страницу, если ничего не изменилось, можно кешировать
+        self.assertTrue (generator.canReadFromCache())
+
+        Application.config.set (WikiConfig.WIKI_SECTION, WikiConfig.THUMB_SIZE_PARAM, WikiConfig.THUMB_SIZE_DEFAULT + 100)
+
+        self.assertFalse (generator.canReadFromCache())
+        generator.makeHtml ()
+        self.assertTrue (generator.canReadFromCache())
+
+        Application.config.set (WikiConfig.WIKI_SECTION, WikiConfig.THUMB_SIZE_PARAM, u"Бла-бла-бла")
+        self.assertFalse (generator.canReadFromCache())
+
+        generator.makeHtml ()
+        Application.config.set (WikiConfig.WIKI_SECTION, WikiConfig.THUMB_SIZE_PARAM, WikiConfig.THUMB_SIZE_DEFAULT)
+        self.assertTrue (generator.canReadFromCache())
+
+
+    def testConfigFontNameCache (self):
+        """
+        Тест на то, что на кэширование влияет изменение размера превьюшки по умолчанию
+        """
+        # Только создали страницу, кешировать нельзя
+        generator = HtmlGenerator (self.testPage)
+        self.assertFalse (generator.canReadFromCache())
+
+        generator.makeHtml ()
+        # После того, как один раз сгенерили страницу, если ничего не изменилось, можно кешировать
+        self.assertTrue (generator.canReadFromCache())
+
+        Application.config.set (HtmlRenderConfig.HTML_SECTION, 
+                HtmlRenderConfig.FONT_FACE_NAME_PARAM, 
+                u"Бла-бла-бла")
+
+        self.assertFalse (generator.canReadFromCache())
+        generator.makeHtml ()
+        self.assertTrue (generator.canReadFromCache())
+
+
+    # def testFontNameInvalidEncoding (self):
+    #     """
+    #     Тест на то, что на кэширование влияет изменение размера превьюшки по умолчанию
+    #     """
+    #     Application.config.set (HtmlRenderConfig.HTML_SECTION, 
+    #             HtmlRenderConfig.FONT_FACE_NAME_PARAM, 
+    #             u"Arial")
+
+    #     # Только создали страницу, кешировать нельзя
+    #     generator = HtmlGenerator (self.testPage)
+    #     self.assertFalse (generator.canReadFromCache())
+
+    #     generator.makeHtml ()
+    #     # После того, как один раз сгенерили страницу, если ничего не изменилось, можно кешировать
+    #     self.assertTrue (generator.canReadFromCache())
+
+    #     fontname = u"Бла-бла-бла"
+
+    #     Application.config.set (HtmlRenderConfig.HTML_SECTION, 
+    #             HtmlRenderConfig.FONT_FACE_NAME_PARAM, 
+    #             fontname.encode ("cp1251"))
+
+    #     self.assertFalse (generator.canReadFromCache())
+    #     generator.makeHtml ()
+    #     self.assertTrue (generator.canReadFromCache())
