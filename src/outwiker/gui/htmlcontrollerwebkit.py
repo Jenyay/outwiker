@@ -21,7 +21,8 @@ class UriIdentifierWebKit (UriIdentifier):
         Удалить якорь из адреса текущей загруженной страницы
         То есть из /bla-bla-bla/#anchor сделать /bla-bla-bla/
         """
-        assert currentpage != None
+        if currentpage == None:
+            return href
 
         result = self.__removeFileProtokol (href)
 
