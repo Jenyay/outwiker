@@ -14,9 +14,9 @@ from outwiker.core.htmlimprover import HtmlImprover
 from outwiker.core.htmltemplate import HtmlTemplate
 from outwiker.core.system import getTemplatesDir, getImagesDir
 
-from outwiker.gui.BaseTextPanel import BaseTextPanel
+from outwiker.gui.basetextpanel import BaseTextPanel
 from outwiker.gui.htmlrenderfactory import getHtmlRender
-from outwiker.gui.HtmlTextEditor import HtmlTextEditor
+from outwiker.gui.htmltexteditor import HtmlTextEditor
 
 
 class ToolsInfo (object):

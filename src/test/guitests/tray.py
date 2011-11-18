@@ -6,7 +6,7 @@ import unittest
 import wx
 
 from outwiker.core.application import Application
-from outwiker.gui.MainWindow import MainWindow
+from outwiker.gui.mainwindow import MainWindow
 from outwiker.gui.guiconfig import TrayConfig
 from .basemainwnd import BaseMainWndTest
 

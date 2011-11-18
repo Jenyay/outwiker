@@ -15,7 +15,7 @@ from outwiker.core.factory import PageFactory
 from outwiker.core.exceptions import ReadonlyException
 from outwiker.core.config import StringOption, IntegerOption
 
-from SearchPanel import SearchPanel
+from .searchpanel import SearchPanel
 
 
 class SearchWikiPage (WikiPage):

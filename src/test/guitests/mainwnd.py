@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 from outwiker.core.application import Application
-from outwiker.gui.MainWindow import MainWindow
+from outwiker.gui.mainwindow import MainWindow
 from outwiker.gui.guiconfig import MainWindowConfig
 from outwiker.core.tree import RootWikiPage, WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory

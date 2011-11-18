@@ -9,7 +9,7 @@ import os.path
 from outwiker.core.config import BooleanOption
 from outwiker.core.tree import WikiPage
 from outwiker.core.factory import PageFactory
-from HtmlPanel import HtmlPagePanel
+from .htmlpanel import HtmlPagePanel
 
 
 class HtmlWikiPage (WikiPage):

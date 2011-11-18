@@ -6,7 +6,7 @@
 
 from outwiker.core.tree import WikiPage
 from wikipanel import WikiPagePanel
-import WikiPreferences
+from wikipreferences import WikiPrefGeneralPanel
 from outwiker.core.factory import PageFactory
 from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
 
@@ -66,7 +66,7 @@ class WikiPageFactory (PageFactory):
         Получить список панелей для окна настроек
         Возвращает список кортежей ("название", Панель)
         """
-        generalPanel = WikiPreferences.WikiPrefGeneralPanel (parent)
+        generalPanel = WikiPrefGeneralPanel (parent)
 
         return [ PreferencePanelInfo (generalPanel, _(u"General") ) ]
 

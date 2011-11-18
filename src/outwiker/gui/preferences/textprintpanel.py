@@ -3,7 +3,7 @@
 
 import wx
 
-import ConfigElements
+import configelements
 from outwiker.core.application import Application
 from outwiker.core.config import FontOption
 from outwiker.gui.guiconfig import TextPrintConfig
@@ -86,7 +86,7 @@ class TextPrintPanel(wx.Panel):
                 self.config.fontIsBold, 
                 self.config.fontIsItalic)
 
-        self.font = ConfigElements.FontElement (fontOption, self.fontPicker)
+        self.font = configelements.FontElement (fontOption, self.fontPicker)
 
 
     def Save (self):

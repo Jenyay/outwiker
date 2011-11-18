@@ -3,11 +3,11 @@
 
 import wx
 
+import outwiker.core.commands
+from .basepagedialog import BasePageDialog
 from outwiker.core.search import TagsList
 from outwiker.core.tree import RootWikiPage
-import outwiker.core.commands
 from outwiker.core.application import Application
-from outwiker.gui.BasePageDialog import BasePageDialog
 from outwiker.core.factoryselector import FactorySelector
 from outwiker.core.config import StringOption
 

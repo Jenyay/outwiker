@@ -4,7 +4,7 @@
 import wx
 
 from outwiker.gui.texteditor import TextEditor
-from outwiker.gui.BaseTextPanel import BaseTextPanel
+from outwiker.gui.basetextpanel import BaseTextPanel
 
 
 class TextPanel (BaseTextPanel):

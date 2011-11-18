@@ -13,18 +13,18 @@ import outwiker.core.commands
 import outwiker.core.system
 from outwiker.core.application import Application
 
-from .WikiTree import WikiTree
+from .wikitree import WikiTree
 import outwiker.pages.search.searchpage
 from .guiconfig import MainWindowConfig, TreeConfig, AttachConfig, GeneralGuiConfig
 
 from .mainid import MainId
-from .CurrentPagePanel import CurrentPagePanel
+from .currentpagepanel import CurrentPagePanel
 from .mainmenu import MainMenu
 from .maintoolbar import MainToolBar
 from .pagedialog import createSiblingPage, createChildPage, editPage
 from .trayicon import OutwikerTrayIcon
-from .AttachPanel import AttachPanel
-from .preferences.PrefDialog import PrefDialog
+from .attachpanel import AttachPanel
+from .preferences.prefdialog import PrefDialog
 from .mainwndcontroller import MainWndController
 
 

@@ -3,7 +3,7 @@
 
 import wx
 
-import ConfigElements
+import configelements
 from outwiker.core.application import Application
 from outwiker.gui.guiconfig import EditorConfig
 from outwiker.core.config import FontOption
@@ -73,7 +73,7 @@ class EditorPanel(wx.Panel):
 
     def LoadState(self):
         # Показывать ли номера строк?
-        self.lineNumbers = ConfigElements.BooleanElement (self.__config.lineNumbersOption, self.lineNumbersCheckBox)
+        self.lineNumbers = configelements.BooleanElement (self.__config.lineNumbersOption, self.lineNumbersCheckBox)
 
         # Шрифт для редактора
         fontOption = FontOption (self.__config.fontFaceNameOption, 
@@ -81,10 +81,10 @@ class EditorPanel(wx.Panel):
                 self.__config.fontIsBold, 
                 self.__config.fontIsItalic)
 
-        self.fontEditor = ConfigElements.FontElement (fontOption, self.fontPicker)
+        self.fontEditor = configelements.FontElement (fontOption, self.fontPicker)
 
         # Размер табуляции
-        self.tabWidth = ConfigElements.IntegerElement (self.__config.tabWidthOption, 
+        self.tabWidth = configelements.IntegerElement (self.__config.tabWidthOption, 
                 self.tabWidthSpin, 
                 self.MIN_TAB_WIDTH, 
                 self.MAX_TAB_WIDTH)

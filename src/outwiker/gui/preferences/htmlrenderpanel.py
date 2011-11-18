@@ -3,7 +3,7 @@
 
 import wx
 
-import ConfigElements
+import configelements
 from outwiker.core.application import Application
 from outwiker.gui.guiconfig import HtmlRenderConfig
 from outwiker.core.config import FontOption, StringOption
@@ -58,9 +58,9 @@ class HtmlRenderPanel(wx.Panel):
                 self.config.fontIsBold, 
                 self.config.fontIsItalic)
 
-        self.fontEditor = ConfigElements.FontElement (fontOption, self.fontPicker)
+        self.fontEditor = configelements.FontElement (fontOption, self.fontPicker)
 
-        self.userStyle = ConfigElements.StringElement (self.config.userStyleOption, self.userStyleTextBox)
+        self.userStyle = configelements.StringElement (self.config.userStyleOption, self.userStyleTextBox)
 
 
     def Save (self):

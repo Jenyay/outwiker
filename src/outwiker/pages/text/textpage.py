@@ -7,7 +7,7 @@
 import os.path
 
 from outwiker.core.tree import WikiPage
-from outwiker.pages.text.TextPanel import TextPanel
+from outwiker.pages.text.textpanel import TextPanel
 from outwiker.core.factory import PageFactory
 
 

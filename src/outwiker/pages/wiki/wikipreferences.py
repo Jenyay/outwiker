@@ -4,7 +4,7 @@
 
 import wx
 
-from outwiker.gui.preferences.ConfigElements import BooleanElement, IntegerElement, StringElement
+from outwiker.gui.preferences.configelements import BooleanElement, IntegerElement, StringElement
 from outwiker.core.application import Application
 from wikiconfig import WikiConfig
 from emptycontent import EmptyContent

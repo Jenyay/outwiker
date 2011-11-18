@@ -175,11 +175,11 @@ class ApplicationParams (object):
         self.onWikiParserPrepare = Event ()
 
         # Событие вызывается, когда создается диалог с настройками
-        # Параметры: экземпляр класса outwiker.gui.preferences.PrefDialog
+        # Параметры: экземпляр класса outwiker.gui.preferences.prefdialog.PrefDialog
         self.onPreferencesDialogCreate = Event()
 
         # Событие вызывается, когда закрывается диалог с настройками
-        # Параметры: экземпляр класса outwiker.gui.preferences.PrefDialog
+        # Параметры: экземпляр класса outwiker.gui.preferences.prefdialog.PrefDialog
         self.onPreferencesDialogClose = Event()
 
         # Событие вызывается после (!) создания представления страницы в CurrentPagePanel

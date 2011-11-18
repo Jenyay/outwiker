@@ -33,7 +33,7 @@ class OutWiker(wx.App):
             self.RedirectStdio (self.getLogFileName (self._fullConfigPath))
             pass
 
-        from outwiker.gui.MainWindow import MainWindow
+        from outwiker.gui.mainwindow import MainWindow
         
         wx.InitAllImageHandlers()
         self.mainWnd = MainWindow(None, -1, "")

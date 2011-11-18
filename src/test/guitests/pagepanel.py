@@ -8,16 +8,16 @@ from outwiker.core.application import Application
 from test.utils import removeWiki
 
 from outwiker.pages.text.textpage import TextPageFactory
-from outwiker.pages.text.TextPanel import TextPanel
+from outwiker.pages.text.textpanel import TextPanel
 
 from outwiker.pages.html.htmlpage import HtmlPageFactory
-from outwiker.pages.html.HtmlPanel import HtmlPagePanel
+from outwiker.pages.html.htmlpanel import HtmlPagePanel
 
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.wikipanel import WikiPagePanel
 
 from outwiker.pages.search.searchpage import SearchPageFactory
-from outwiker.pages.search.SearchPanel import SearchPanel
+from outwiker.pages.search.searchpanel import SearchPanel
 
 
 class PagePanelTest (BaseMainWndTest):

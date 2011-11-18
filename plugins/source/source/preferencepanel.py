@@ -3,7 +3,7 @@
 
 import wx
 
-from outwiker.gui.preferences.ConfigElements import StringElement, IntegerElement
+from outwiker.gui.preferences.configelements import StringElement, IntegerElement
 from .sourceconfig import SourceConfig
 
 

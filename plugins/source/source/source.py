@@ -20,7 +20,7 @@ class PluginSource (Plugin):
         application - экземпляр класса core.application.ApplicationParams
         """
         Plugin.__init__ (self, application)
-        self.__version = u"1.2"
+        self.__version = u"1.2.1"
 
 
     def initialize(self):

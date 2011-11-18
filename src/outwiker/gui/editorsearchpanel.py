@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-from .LocalSearchPanel import LocalSearchPanel, LocalSearcher
+from .localsearchpanel import LocalSearchPanel, LocalSearcher
 
 
 class EditorSearchPanel (LocalSearchPanel):

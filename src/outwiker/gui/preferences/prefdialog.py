@@ -5,10 +5,10 @@
 
 import wx
 
-import GeneralPanel
-import EditorPanel
-import HtmlRenderPanel
-import TextPrintPanel
+from generalpanel import GeneralPanel
+from editorpanel import EditorPanel
+from htmlrenderpanel import HtmlRenderPanel
+from textprintpanel import TextPrintPanel
 from pluginspanel import PluginsPanel
 
 from outwiker.core.exceptions import PreferencesException
@@ -117,10 +117,10 @@ class PrefDialog(wx.Dialog):
         """
         Создать страницы с подгруппой "Interface"
         """
-        self.__generalPage = GeneralPanel.GeneralPanel (self.__treeBook)
-        self.__editorPage = EditorPanel.EditorPanel (self.__treeBook)
-        self.__htmlRenderPage = HtmlRenderPanel.HtmlRenderPanel (self.__treeBook)
-        self.__textPrintPage = TextPrintPanel.TextPrintPanel (self.__treeBook)
+        self.__generalPage = GeneralPanel (self.__treeBook)
+        self.__editorPage = EditorPanel (self.__treeBook)
+        self.__htmlRenderPage = HtmlRenderPanel (self.__treeBook)
+        self.__textPrintPage = TextPrintPanel (self.__treeBook)
 
         interfacePanelsList = [PreferencePanelInfo (self.__generalPage, _(u"General")),
                 PreferencePanelInfo (self.__editorPage, _(u"Editor")),

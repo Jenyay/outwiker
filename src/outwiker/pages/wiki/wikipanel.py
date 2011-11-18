@@ -13,9 +13,9 @@ from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
 
 from outwiker.gui.texteditor import TextEditor
-from outwiker.gui.BaseTextPanel import BaseTextPanel
-from outwiker.gui.HtmlTextEditor import HtmlTextEditor
-from outwiker.pages.html.HtmlPanel import HtmlPanel
+from outwiker.gui.basetextpanel import BaseTextPanel
+from outwiker.gui.htmltexteditor import HtmlTextEditor
+from outwiker.pages.html.htmlpanel import HtmlPanel
 from wikiconfig import WikiConfig
 from htmlgenerator import HtmlGenerator
 
