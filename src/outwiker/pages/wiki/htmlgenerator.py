@@ -29,6 +29,7 @@ class HtmlGenerator (object):
         self.resultName = u"__content.html"
         self._configSection = u"wiki"
         self._hashKey = u"md5_hash"
+        self._unicodeEncoding = "unicode_escape"
 
 
     def makeHtml (self):
@@ -102,10 +103,10 @@ class HtmlGenerator (object):
         content = []
 
         # Заголовок страницы
-        content.append (self.page.title.encode ("unicode_escape"))
+        content.append (self.page.title.encode (self._unicodeEncoding))
 
         # Содержимое
-        pagecontent = self.page.content.encode ("unicode_escape")
+        pagecontent = self.page.content.encode (self._unicodeEncoding)
         content.append (pagecontent)
 
         self.__getDirContent (self.page, content)
@@ -117,17 +118,17 @@ class HtmlGenerator (object):
 
         # Настройки отображения HTML-страницы
         content.append (str (self.htmlrenderconfig.fontSizeOption.value) )
-        content.append (str (self.htmlrenderconfig.fontFaceNameOption.value) )
+        content.append (self.htmlrenderconfig.fontFaceNameOption.value.encode(self._unicodeEncoding) )
         content.append (str (self.htmlrenderconfig.userStyleOption.value) )
 
         # Список подстраниц
         for child in self.page.children:
-            content.append (child.title.encode ("unicode_escape") + "\n")
+            content.append (child.title.encode (self._unicodeEncoding) + "\n")
 
         if len (self.page.content) == 0:
             # Если страница пустая, то проверим настройку, отвечающую за шаблон пустой страницы
             emptycontent = EmptyContent (Application.config)
-            content.append (emptycontent.content.encode ("unicode_escape"))
+            content.append (emptycontent.content.encode (self._unicodeEncoding))
 
         return u"".join (content)
 
@@ -164,7 +165,7 @@ class HtmlGenerator (object):
             # Пропустим директории, которые начинаются с __
             if not os.path.isdir (fname) or not fname.startswith ("__"):
                 try:
-                    filescontent.append (fname.encode ("unicode_escape"))
+                    filescontent.append (fname.encode (self._unicodeEncoding))
                     filescontent.append (unicode (os.stat (fullpath).st_mtime))
 
                     if os.path.isdir (fullpath):
