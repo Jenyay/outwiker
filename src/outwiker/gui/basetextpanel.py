@@ -96,7 +96,8 @@ class BaseTextPanel (BasePagePanel):
                     _("Error"), wx.OR | wx.ICON_ERROR )
             return
 
-        self.checkForExternalEditAndSave()
+        if not self.page.isRemoved:
+            self.checkForExternalEditAndSave()
 
 
     def checkForExternalEditAndSave (self):
@@ -106,6 +107,10 @@ class BaseTextPanel (BasePagePanel):
         if self._oldContent != None and self._oldContent != self.page.content:
             # Старое содержимое не совпадает с содержимым страницы.
             # Значит содержимое страницы кто-то изменил
+
+            import traceback
+            traceback.print_stack()
+
             self.__externalEdit()
         else:
             self._savePageContent(self.page)
