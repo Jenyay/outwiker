@@ -107,10 +107,6 @@ class BaseTextPanel (BasePagePanel):
         if self._oldContent != None and self._oldContent != self.page.content:
             # Старое содержимое не совпадает с содержимым страницы.
             # Значит содержимое страницы кто-то изменил
-
-            import traceback
-            traceback.print_stack()
-
             self.__externalEdit()
         else:
             self._savePageContent(self.page)
