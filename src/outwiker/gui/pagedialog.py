@@ -148,6 +148,8 @@ class EditPageDialog (BasePageDialog):
 
         self.SetTitle(_(u"Edit page properties"))
         self._prepareForChange (currentPage)
+        self.titleTextCtrl.SetFocus()
+        self.titleTextCtrl.SetSelection (-1, -1)
 
 
     def _prepareForChange (self, currentPage):
