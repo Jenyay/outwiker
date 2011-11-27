@@ -32,15 +32,20 @@ class BasePageDialog(wx.Dialog):
         self.parentPage = parentPage
         self._fillComboType()
 
+        self.titleTextCtrl.SetFocus()
+
 
     def testPageTitle (self, title):
         """
         Возвращает True, если возможно создать страницу с таким заголовком
         """
-        if ("/" in title or 
-            "\\" in title or
-            title.startswith ("__") or
-            len (title.strip()) == 0):
+        striptitle = title.strip()
+
+        if ("/" in striptitle or 
+            "\\" in striptitle or
+            striptitle.startswith ("__") or
+            len (striptitle) == 0 or
+            striptitle == "."):
             return False
 
         return True
