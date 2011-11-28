@@ -465,7 +465,7 @@ class AttachmentTest (unittest.TestCase):
         attach = Attachment (self.page)
         attach.attach (self.fullFilesPath)
 
-        attach_right = set ([u"attach.png"])
+        attach_right = set ([u"attach.png", u"dir.xxx", u"subdir"])
 
         attach_names = set (attach.getAttachRelative(u"dir"))
         self.assertEqual (attach_right, attach_names)

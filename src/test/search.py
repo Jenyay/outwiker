@@ -2,6 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 import unittest
+import os.path
 
 from outwiker.core.search import Searcher, TagsList, AllTagsSearchStrategy, \
         AnyTagSearchStrategy
@@ -10,6 +11,7 @@ from outwiker.pages.search.searchpage import SearchPageFactory, SearchWikiPage, 
 from test.utils import removeWiki
 from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
+from outwiker.core.attachment import Attachment
 
 
 class SearcherTest(unittest.TestCase):
@@ -41,6 +43,15 @@ class SearcherTest(unittest.TestCase):
 
         self.rootwiki[u"Страница 2/Страница 3/Страница 4"].content = ur"2 Января. Фотографирован во время  улыбки при магнии. \
             Встал с постели и уверенно держался полчаса на задних лапах. Моего почти роста."
+
+
+        filesPath = u"../test/samplefiles/"
+        self.files = [u"accept.png", u"add.png", u"anchor.png", u"файл с пробелами.tmp", u"dir"]
+        self.fullFilesPath = [os.path.join (filesPath, fname) for fname in self.files]
+
+        Attachment (self.rootwiki[u"page 1"]).attach (self.fullFilesPath)
+        Attachment (self.rootwiki[u"Страница 2/Страница 3"]).attach (self.fullFilesPath[0:3])
+        Attachment (self.rootwiki[u"Страница 2"]).attach ([self.fullFilesPath[0]])
     
 
     def testSearchContentAll (self):
@@ -54,6 +65,111 @@ class SearcherTest(unittest.TestCase):
         self.assertTrue (self.rootwiki[u"page 1"] in pages)
         self.assertTrue (self.rootwiki[u"Страница 2"] in pages)
         self.assertTrue (self.rootwiki[u"Страница 2/Страница 3"] in pages)
+
+
+    def testSearchAttach1 (self):
+        phrase = u"accept"
+        tags = []
+
+        searcher = Searcher (phrase, tags, AllTagsSearchStrategy)
+        pages = searcher.find (self.rootwiki)
+
+        self.assertEqual (len (pages), 3)
+
+        self.assertTrue (self.rootwiki[u"page 1"] in pages)
+        self.assertTrue (self.rootwiki[u"Страница 2/Страница 3"] in pages)
+        self.assertTrue (self.rootwiki[u"Страница 2"] in pages)
+
+
+    def testSearchAttach2 (self):
+        phrase = u"anchor"
+        tags = []
+
+        searcher = Searcher (phrase, tags, AllTagsSearchStrategy)
+        pages = searcher.find (self.rootwiki)
+
+        self.assertEqual (len (pages), 2)
+
+        self.assertTrue (self.rootwiki[u"page 1"] in pages)
+        self.assertTrue (self.rootwiki[u"Страница 2/Страница 3"] in pages)
+
+
+    def teatDown (self):
+        if os.path.exists (self.path):
+            removeWiki (self.path)
+
+
+    def testSearchAttach3 (self):
+        phrase = u"файл с пробелами"
+        tags = []
+
+        searcher = Searcher (phrase, tags, AllTagsSearchStrategy)
+        pages = searcher.find (self.rootwiki)
+
+        self.assertEqual (len (pages), 1)
+
+        self.assertTrue (self.rootwiki[u"page 1"] in pages)
+
+
+    def testSearchAttach4 (self):
+        phrase = u"dir.xxx"
+        tags = []
+
+        searcher = Searcher (phrase, tags, AllTagsSearchStrategy)
+        pages = searcher.find (self.rootwiki)
+
+        self.assertEqual (len (pages), 1)
+
+        self.assertTrue (self.rootwiki[u"page 1"] in pages)
+
+
+    def testSearchAttach5 (self):
+        phrase = u"SubdIr2"
+        tags = []
+
+        searcher = Searcher (phrase, tags, AllTagsSearchStrategy)
+        pages = searcher.find (self.rootwiki)
+
+        self.assertEqual (len (pages), 1)
+
+        self.assertTrue (self.rootwiki[u"page 1"] in pages)
+
+
+    def testSearchAttach6 (self):
+        phrase = u"ApplicAtiOn.pY"
+        tags = []
+
+        searcher = Searcher (phrase, tags, AllTagsSearchStrategy)
+        pages = searcher.find (self.rootwiki)
+
+        self.assertEqual (len (pages), 1)
+
+        self.assertTrue (self.rootwiki[u"page 1"] in pages)
+
+
+    def testSearchTagsContent1 (self):
+        phrase = u"метка"
+        tags = []
+
+        searcher = Searcher (phrase, tags, AllTagsSearchStrategy)
+        pages = searcher.find (self.rootwiki)
+
+        self.assertEqual (len (pages), 5)
+
+
+    def testSearchTagsContent2 (self):
+        phrase = u"МеТкА 1"
+        tags = []
+
+        searcher = Searcher (phrase, tags, AllTagsSearchStrategy)
+        pages = searcher.find (self.rootwiki)
+
+        self.assertEqual (len (pages), 4)
+        self.assertTrue (self.rootwiki[u"page 1"] in pages)
+        self.assertTrue (self.rootwiki[u"Страница 2"] in pages)
+        self.assertTrue (self.rootwiki[u"Страница 2/Страница 3/Страница 4"] in pages)
+        self.assertTrue (self.rootwiki[u"page 1/page 5"] in pages)
+
 
     
     def testSearchContentAny (self):

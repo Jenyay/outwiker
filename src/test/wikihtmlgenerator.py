@@ -220,13 +220,13 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
         self.assertFalse (generator.canReadFromCache())
 
         # Добавим еще одну вложенную директорию
-        subdir = os.path.join (attach.getAttachPath(), "dir", "subdir")
+        subdir = os.path.join (attach.getAttachPath(), "dir", "subdir_2")
         os.mkdir (subdir)
         self.assertFalse (generator.canReadFromCache())
 
         generator.makeHtml ()
 
-        # Добавим файл в dir/subdir
+        # Добавим файл в dir/subdir_2
         with open (os.path.join (subdir, "temp2.tmp"), "w" ) as fp:
             fp.write ("bla-bla-bla")
 

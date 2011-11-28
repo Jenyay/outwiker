@@ -6,6 +6,8 @@
 """
 import os.path
 
+from outwiker.core.attachment import Attachment
+
 
 class AllTagsSearchStrategy (object):
     """
@@ -66,7 +68,7 @@ class Searcher (object):
 
         for page in root.children:
             if (self.tagsStrategy.testTags (self.tags, page) and 
-                    (self.testTitle (page) or self.testContent (page) ) ):
+                    self.__testFullContent(page) ):
                 result.append (page)
 
             result += self.find (page)
@@ -74,24 +76,17 @@ class Searcher (object):
         return result
 
 
-    #def testTags (self, page):
-    #    """
-    #    Вернуть True, если все искомые теги установлены и для page.
-    #    Также возвращает True, если список искомых тегов пуст
-    #    """
-    #    result = True
-
-    #    page_tags = [tag.lower() for tag in page.tags]
-
-    #    for tag in self.tags:
-    #        if tag not in page_tags:
-    #            result = False
-    #            break
-
-    #    return result
+    def __testFullContent (self, page):
+        """
+        Поиск искомого текста в разных частях заметки (содержимом, заголовке, тегах)
+        """
+        return (self.__testTitle (page) or 
+                self.__testContent (page) or 
+                self.__testTagsContent (page) or
+                self.__testAttachment (page) )
 
 
-    def testTitle (self, page):
+    def __testTitle (self, page):
         title = page.title.lower()
 
         if len (self.phrase) == 0 or self.phrase.lower() in title:
@@ -100,7 +95,7 @@ class Searcher (object):
         return False
 
 
-    def testContent (self, page):
+    def __testContent (self, page):
         """
         Проверить, что искомая фраза встречается в контексте страницы.
         Также возвращает True, если контент пуст
@@ -108,6 +103,33 @@ class Searcher (object):
         content = page.textContent.lower()
         if len (self.phrase) == 0 or self.phrase.lower() in content:
             return True
+
+        return False
+
+
+    def __testTagsContent (self, page):
+        """
+        Проверить, встречается ли в тексте меток искомая фраза
+        """
+        lowerPhrase = self.phrase.lower()
+        tags = filter (lambda tag: lowerPhrase in tag.lower(), page.tags)
+        return len (tags) != 0
+
+
+    def __testAttachment (self, page):
+        attach = Attachment (page)
+        if not os.path.exists (attach.getAttachPath()):
+            return False
+
+        lowerPhrase = self.phrase.lower()
+
+        for root, subfolders, files in os.walk(attach.getAttachPath()):
+            filterfiles = (filter (lambda fname: lowerPhrase in fname.lower(), files) )
+            filterdirs = (filter (lambda dirname: lowerPhrase in dirname.lower(), 
+                        subfolders))
+
+            if (len (filterfiles) != 0 or len (filterdirs) != 0 ):
+                return True
 
         return False
 
