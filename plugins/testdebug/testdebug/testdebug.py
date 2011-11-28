@@ -26,6 +26,36 @@ class PluginDebug (Plugin):
         self._application.mainWindow.Bind(wx.EVT_MENU, self.__onButtonsDialog, id=self.ID_BUTTONSDIALOG)
 
 
+    def __onTreePopupMenu (self, menu, page):
+        """
+        Событие срабатывает после создания всплывающего меню над деревом заметок
+        """
+        if page.getTypeString() == "wiki":
+            menu.Append (self.__ID_TREE_POPUP, _(u"Message For Wiki Page"))
+            menu.Bind(wx.EVT_MENU, 
+                    lambda event: MessageBox (_("Wiki Message"), _(u"This is wiki page")), 
+                    id=self.__ID_TREE_POPUP)
+
+        elif page.getTypeString() == "html":
+            menu.Append (self.__ID_TREE_POPUP, _(u"Message For HTML Page"))
+            menu.Bind(wx.EVT_MENU, 
+                    lambda event: MessageBox (_("HTML Message"), _(u"This is HTML page")), 
+                    id=self.__ID_TREE_POPUP)
+
+        elif page.getTypeString() == "text":
+            menu.Append (self.__ID_TREE_POPUP, _(u"Message For Text Page"))
+            menu.Bind(wx.EVT_MENU, 
+                    lambda event: MessageBox (_("Text Message"), _(u"This is Text page")), 
+                    id=self.__ID_TREE_POPUP)
+
+
+    def __onTrayPopupMenu (self, menu, tray):
+        menu.Insert (0, self.__ID_TRAY_POPUP, _(u"Tray Menu From Plugin"))
+        menu.Bind(wx.EVT_MENU, 
+                lambda event: MessageBox (_("Tray Icon"), _(u"This is tray icon")), 
+                id=self.__ID_TRAY_POPUP)
+
+
     def __onButtonsDialog (self, event):
         buttons = [_(u"Button 1"), _(u"Button 2"), _(u"Button 3"), _(u"Cancel")]
         with ButtonsDialog (self._application.mainWindow, _(u"Message"), _(u"Caption"), buttons, default=0, cancel=3) as dlg:
@@ -65,6 +95,8 @@ class PluginDebug (Plugin):
 
     def initialize(self):
         domain = u"testdebug"
+        self.__ID_TREE_POPUP = wx.NewId()
+        self.__ID_TRAY_POPUP = wx.NewId()
 
         langdir = os.path.join (os.path.dirname (__file__), "locale")
         global _
@@ -79,6 +111,9 @@ class PluginDebug (Plugin):
 
         self.__menuName = _(u"Debug")
         self.__createMenu()
+
+        self._application.onTreePopupMenu += self.__onTreePopupMenu
+        self._application.onTrayPopupMenu += self.__onTrayPopupMenu
 
 
     def destroy (self):

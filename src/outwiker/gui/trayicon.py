@@ -127,6 +127,8 @@ class OutwikerTrayIcon (wx.TaskBarIcon):
         trayMenu.Append (self.ID_RESTORE, _(u"Restore"))
         trayMenu.Append (self.ID_EXIT, _(u"Exit"))
 
+        Application.onTrayPopupMenu (trayMenu, self)
+
         return trayMenu
 
 

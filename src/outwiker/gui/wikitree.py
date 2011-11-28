@@ -65,8 +65,6 @@ class WikiTree(wx.Panel):
         # Словарь. Ключ - страница, значение - элемент дерева wx.TreeItemId
         self._pageCache = {}
 
-        self.__createPopupMenu()
-
         # Элемент, над которым показываем меню
         self.popupItem = None
 
@@ -342,20 +340,22 @@ class WikiTree(wx.Panel):
 
 
     def __createPopupMenu (self):
-        self.popupMenu = wx.Menu ()
-        self.popupMenu.Append (self.ID_ADD_CHILD, _(u"Add Child Page…"))
-        self.popupMenu.Append (self.ID_ADD_SIBLING, _(u"Add Sibling Page…"))
-        self.popupMenu.Append (self.ID_RENAME, _(u"Rename"))
-        self.popupMenu.Append (self.ID_REMOVE, _(u"Remove…"))
-        self.popupMenu.AppendSeparator()
+        popupMenu = wx.Menu ()
+        popupMenu.Append (self.ID_ADD_CHILD, _(u"Add Child Page…"))
+        popupMenu.Append (self.ID_ADD_SIBLING, _(u"Add Sibling Page…"))
+        popupMenu.Append (self.ID_RENAME, _(u"Rename"))
+        popupMenu.Append (self.ID_REMOVE, _(u"Remove…"))
+        popupMenu.AppendSeparator()
         
-        self.popupMenu.Append (self.ID_COPY_TITLE, _(u"Copy Page Title"))
-        self.popupMenu.Append (self.ID_COPY_PATH, _(u"Copy Page Path"))
-        self.popupMenu.Append (self.ID_COPY_ATTACH_PATH, _(u"Copy Attaches Path"))
-        self.popupMenu.Append (self.ID_COPY_LINK, _(u"Copy Page Link"))
-        self.popupMenu.AppendSeparator()
+        popupMenu.Append (self.ID_COPY_TITLE, _(u"Copy Page Title"))
+        popupMenu.Append (self.ID_COPY_PATH, _(u"Copy Page Path"))
+        popupMenu.Append (self.ID_COPY_ATTACH_PATH, _(u"Copy Attaches Path"))
+        popupMenu.Append (self.ID_COPY_LINK, _(u"Copy Page Link"))
+        popupMenu.AppendSeparator()
 
-        self.popupMenu.Append (self.ID_PROPERTIES_POPUP, _(u"Properties…"))
+        popupMenu.Append (self.ID_PROPERTIES_POPUP, _(u"Properties…"))
+
+        return popupMenu
     
 
     def __onRename (self, event):
@@ -402,7 +402,12 @@ class WikiTree(wx.Panel):
         if not self.popupItem.IsOk ():
             return
 
-        self.PopupMenu (self.popupMenu)
+        popupMenu = self.__createPopupMenu()
+
+        page = self.treeCtrl.GetItemData (self.popupItem).GetData()
+        Application.onTreePopupMenu (popupMenu, page)
+
+        self.PopupMenu (popupMenu)
     
 
     def beginRename (self):
