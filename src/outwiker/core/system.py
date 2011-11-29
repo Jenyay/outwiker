@@ -11,6 +11,9 @@ import locale
 
 import wx
 
+from .pagetitletester import WindowsPageTitleTester, LinuxPageTitleTester
+
+
 # Папки, используемые в программе
 IMAGES_DIR = u"images"
 STYLES_DIR = u"templates"
@@ -59,6 +62,11 @@ class Windows (object):
         Под Linux'ом wx.FileDataObject не правильно работает с Unicode
         """
         return wx.FileDataObject
+
+
+    @property
+    def pageTitleTester (self):
+        return WindowsPageTitleTester()
 
 
 
@@ -132,6 +140,10 @@ class Unix (object):
 
         return GtkFileDataObject
 
+
+    @property
+    def pageTitleTester (self):
+        return LinuxPageTitleTester()
 
 
 def getOS ():
