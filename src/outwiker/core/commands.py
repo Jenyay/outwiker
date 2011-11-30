@@ -437,7 +437,7 @@ def testPageTitle (title):
         return False
 
     except PageTitleWarning as warning:
-        text = u"{0}\nContinue?".format (warning.message)
+        text = _(u"{0}\nContinue?").format (warning.message)
 
         if (MessageBox (text, 
             _(u"The page title"), 

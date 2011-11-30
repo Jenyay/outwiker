@@ -91,7 +91,7 @@ class PluginDebug (Plugin):
 
     @property
     def version (self):
-        return u"0.1"
+        return u"0.2"
 
 
     def initialize(self):

@@ -51,7 +51,7 @@ body {background-color: #EEE;}
 
     @property
     def version (self):
-        return u"1.0"
+        return u"1.0.1"
 
 
     def initialize(self):
