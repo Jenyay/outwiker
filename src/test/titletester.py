@@ -3,7 +3,7 @@
 
 import unittest
 
-from outwiker.core.pagetitletester import WindowsPageTitleTester, LinuxPageTitleTester
+from outwiker.core.pagetitletester import WindowsPageTitleTester, LinuxPageTitleTester, PageTitleError, PageTitleWarning
 
 
 class PageTitleTesterTest (unittest.TestCase):
@@ -18,100 +18,89 @@ class PageTitleTesterTest (unittest.TestCase):
         title = u"Обычный нормальный заголовок %gg"
 
         tester = WindowsPageTitleTester()
-        self.assertEqual (tester.testForError (title), None)
-        self.assertEqual (tester.testForWarning (title), None)
+        tester.test (title)
 
 
     def testValidLinux (self):
         title = u"Обычный нормальный заголовок %gg"
 
         tester = LinuxPageTitleTester()
-        self.assertEqual (tester.testForError (title), None)
-        self.assertEqual (tester.testForWarning (title), None)
+        tester.test (title)
 
 
     def testDotWin (self):
         title = u" . "
-        validResult = u"Invalid Title"
 
         tester = WindowsPageTitleTester()
-        self.assertEqual (tester.testForError (title), validResult)
+        self.assertRaises (PageTitleError, tester.test, title)
 
 
     def testDotLinux (self):
         title = u" . "
-        validResult = u"Invalid Title"
 
         tester = LinuxPageTitleTester()
-        self.assertEqual (tester.testForError (title), validResult)
+        self.assertRaises (PageTitleError, tester.test, title)
 
 
     def testEmptyTitleWin (self):
         title = u""
-        validResult = u"Invalid Title"
 
         tester = WindowsPageTitleTester()
-        self.assertEqual (tester.testForError (title), validResult)
+        self.assertRaises (PageTitleError, tester.test, title)
 
 
     def testEmptyTitleLinux (self):
         title = u""
-        validResult = u"Invalid Title"
 
         tester = LinuxPageTitleTester()
-        self.assertEqual (tester.testForError (title), validResult)
+        self.assertRaises (PageTitleError, tester.test, title)
 
 
     def testSpaceTitleWin (self):
         title = u"  "
-        validResult = u"Invalid Title"
 
         tester = WindowsPageTitleTester()
-        self.assertEqual (tester.testForError (title), validResult)
+        self.assertRaises (PageTitleError, tester.test, title)
 
 
     def testSpaceTitleLinux (self):
         title = u"  "
-        validResult = u"Invalid Title"
 
         tester = LinuxPageTitleTester()
-        self.assertEqual (tester.testForError (title), validResult)
+        self.assertRaises (PageTitleError, tester.test, title)
 
 
     def testInvalidSymbolsWindows (self):
         invalidCharacters = u'><|?*/\\:"\0'
-        validResult = u"The title contains illegal characters"
 
         template = u"Бла-бла-бла {0} И еще текст"
         tester = WindowsPageTitleTester()
 
         for char in invalidCharacters:
             title = template.format (char)
-            self.assertEqual (tester.testForError (title), validResult)
+            self.assertRaises (PageTitleError, tester.test, title)
 
 
     def testInvalidSymbolsLinux (self):
         invalidCharacters = u'\0\\/'
-        validResult = u"The title contains illegal characters"
 
         template = u"Бла-бла-бла {0} И еще текст"
         tester = LinuxPageTitleTester()
 
         for char in invalidCharacters:
             title = template.format (char)
-            self.assertEqual (tester.testForError (title), validResult)
+            self.assertRaises (PageTitleError, tester.test, title)
 
 
     def testWarningSymbolsLinux (self):
         invalidCharacters = u'><|?*:"'
-        validResult = u"The title contains illegal characters for Windows"
 
         template = u"Бла-бла-бла {0} И еще текст"
         tester = LinuxPageTitleTester()
 
         for char in invalidCharacters:
             title = template.format (char)
-            self.assertEqual (tester.testForWarning (title), validResult)
+            self.assertRaises (PageTitleWarning, tester.test, title)
 
 
     def testWarningPercentWindows (self):
@@ -121,11 +110,10 @@ class PageTitleTesterTest (unittest.TestCase):
                 u"Заголовок %1f бла-бла-бла",
                 u"Заголовок %1F бла-бла-бла"
                 ]
-        validResult = u"Link to a page with this title is incorrect"
 
         tester = WindowsPageTitleTester()
         for title in titleList:
-            self.assertEqual (tester.testForWarning (title), validResult)
+            self.assertRaises (PageTitleWarning, tester.test, title)
 
 
     def testWarningPercentLinux (self):
@@ -135,8 +123,22 @@ class PageTitleTesterTest (unittest.TestCase):
                 u"Заголовок %1f бла-бла-бла",
                 u"Заголовок %1F бла-бла-бла"
                 ]
-        validResult = u"Link to a page with this title is incorrect"
 
         tester = LinuxPageTitleTester()
         for title in titleList:
-            self.assertEqual (tester.testForWarning (title), validResult)
+            self.assertRaises (PageTitleWarning, tester.test, title)
+
+
+    def testUnderlineLinux (self):
+        title = u"__Заголовок с подчеркиванием"
+
+        tester = LinuxPageTitleTester()
+        self.assertRaises (PageTitleError, tester.test, title)
+
+
+
+    def testUnderlineWindows (self):
+        title = u"__Заголовок с подчеркиванием"
+
+        tester = WindowsPageTitleTester()
+        self.assertRaises (PageTitleError, tester.test, title)
