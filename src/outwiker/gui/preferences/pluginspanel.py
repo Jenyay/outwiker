@@ -2,7 +2,6 @@
 # -*- coding: UTF-8 -*-
 
 import wx
-import wx.html
 
 from outwiker.core.application import Application
 from outwiker.gui.guiconfig import PluginsConfig

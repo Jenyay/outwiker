@@ -8,6 +8,7 @@ import wx
 from outwiker.core.commands import MessageBox
 from outwiker.gui.buttonsdialog import ButtonsDialog
 from outwiker.core.pluginbase import Plugin
+from outwiker.core.system import getOS
 
 
 class PluginDebug (Plugin):
@@ -98,7 +99,7 @@ class PluginDebug (Plugin):
         self.__ID_TREE_POPUP = wx.NewId()
         self.__ID_TRAY_POPUP = wx.NewId()
 
-        langdir = os.path.join (os.path.dirname (__file__), "locale")
+        langdir = unicode (os.path.join (os.path.dirname (__file__), "locale"), getOS().filesEncoding)
         global _
 
         try:

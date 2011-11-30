@@ -264,10 +264,19 @@ class MainWindow(wx.Frame):
             if not self.IsIconized():
                 if not self.IsFullScreen():
                     (width, height) = self.GetSizeTuple()
+                    (xpos, ypos) = self.GetPositionTuple()
+
+                    if xpos < 0:
+                        width += xpos
+                        xpos = 0
+
+                    if ypos < 0:
+                        height += ypos
+                        ypos = 0
+
                     self.mainWindowConfig.WidthOption.value = width
                     self.mainWindowConfig.HeightOption.value = height
 
-                    (xpos, ypos) = self.GetPositionTuple()
                     self.mainWindowConfig.XPosOption.value = xpos
                     self.mainWindowConfig.YPosOption.value = ypos
 

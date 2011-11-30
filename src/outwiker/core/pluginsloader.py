@@ -7,6 +7,7 @@ import sys
 
 from .pluginbase import Plugin
 from outwiker.gui.guiconfig import PluginsConfig
+from .system import getOS
 
 
 class PluginsLoader (object):
@@ -94,7 +95,10 @@ class PluginsLoader (object):
                 fullpath = os.path.abspath (currentDir)
                 # TODO: Разобраться с Unicode в следующей строке. Икогда выскакивает предупреждение:
                 # ...\outwiker\core\pluginsloader.py:41: UnicodeWarning: Unicode equal comparison failed to convert both arguments to Unicode - interpreting them as being unequal
-                if fullpath not in sys.path:
+
+                syspath = [unicode (item, getOS().filesEncoding) if type (item) != unicode else item for item in sys.path]
+
+                if fullpath not in syspath:
                     sys.path.insert (0, fullpath)
 
                 # Все поддиректории попытаемся открыть как пакеты

@@ -7,6 +7,7 @@ import sys
 from outwiker.core.pluginbase import Plugin
 from outwiker.pages.wiki.wikipanel import WikiPagePanel
 from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
+from outwiker.core.system import getOS
 
 from .sourceconfig import SourceConfig
 
@@ -26,8 +27,10 @@ class PluginSource (Plugin):
     def initialize(self):
         self.__initlocale()
 
-        cmd_folder = os.path.dirname(os.path.abspath(__file__))
-        if cmd_folder not in sys.path:
+        cmd_folder = unicode (os.path.dirname(os.path.abspath(__file__)), getOS().filesEncoding )
+        syspath = [unicode (item, getOS().filesEncoding) if type (item) != type(u"") else item for item in sys.path]
+
+        if cmd_folder not in syspath:
             sys.path.insert(0, cmd_folder)
 
         self._application.onWikiParserPrepare += self.__onWikiParserPrepare
@@ -133,7 +136,7 @@ if __name__ == "__main__":
     def __initlocale (self):
         domain = u"source"
 
-        langdir = os.path.join (os.path.dirname (__file__), "locale")
+        langdir = unicode (os.path.join (os.path.dirname (__file__), "locale"), getOS().filesEncoding)
         global _
 
         try:

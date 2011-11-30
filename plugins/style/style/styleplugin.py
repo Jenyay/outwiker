@@ -4,6 +4,7 @@
 import os.path
 
 from outwiker.core.pluginbase import Plugin
+from outwiker.core.system import getOS
 
 from .stylecommand import StyleCommand
 
@@ -56,7 +57,7 @@ body {background-color: #EEE;}
     def initialize(self):
         domain = u"style"
 
-        langdir = os.path.join (os.path.dirname (__file__), "locale")
+        langdir = unicode (os.path.join (os.path.dirname (__file__), "locale"), getOS().filesEncoding)
         global _
 
         try:
