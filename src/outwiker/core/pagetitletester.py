@@ -2,6 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 from abc import ABCMeta, abstractmethod
+import re
 
 
 class PageTitleError (BaseException):
@@ -35,7 +36,10 @@ class PageTitleTester (object):
         """
         Проверка на предупреждения, общие для всех систем
         """
-        pass
+        # Проверка, содержит ли имя выражение виде %xx, где x - 16-ричное число
+        regex = "%[0-9a-fA-F]{2}"
+        if re.search (regex, title, flags=re.IGNORECASE) != None:
+            raise PageTitleWarning ( _(u'The page title contains the expression "%xx". Links on this page may be invalid.') )
 
 
     def _testCommonErrors (self, title):

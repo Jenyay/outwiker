@@ -35,22 +35,6 @@ class BasePageDialog(wx.Dialog):
         self.titleTextCtrl.SetFocus()
 
 
-    def testPageTitle (self, title):
-        """
-        Возвращает True, если возможно создать страницу с таким заголовком
-        """
-        striptitle = title.strip()
-
-        if ("/" in striptitle or 
-            "\\" in striptitle or
-            striptitle.startswith ("__") or
-            len (striptitle) == 0 or
-            striptitle == "."):
-            return False
-
-        return True
-    
-
     def __set_properties(self):
         self.SetTitle(_("Create Page"))
         self.SetSize((500, 350))

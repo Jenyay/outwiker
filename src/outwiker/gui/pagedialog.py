@@ -10,6 +10,7 @@ from outwiker.core.tree import RootWikiPage
 from outwiker.core.application import Application
 from outwiker.core.factoryselector import FactorySelector
 from outwiker.core.config import StringOption
+from outwiker.core.commands import testPageTitle
 
 
 @outwiker.core.commands.testreadonly
@@ -126,8 +127,9 @@ class CreatePageDialog (BasePageDialog):
     
 
     def onOk (self, event):
-        if not self.testPageTitle (self.pageTitle):
-            outwiker.core.commands.MessageBox (_(u"Invalid page title"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+        if not testPageTitle (self.pageTitle):
+            self.titleTextCtrl.SetFocus()
+            self.titleTextCtrl.SetSelection (-1, -1)
             return
 
         if (self.parentPage != None and
@@ -173,8 +175,9 @@ class EditPageDialog (BasePageDialog):
 
 
     def onOk (self, event):
-        if not self.testPageTitle (self.pageTitle):
-            outwiker.core.commands.MessageBox (_(u"Invalid page title"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+        if not testPageTitle (self.pageTitle):
+            self.titleTextCtrl.SetFocus()
+            self.titleTextCtrl.SetSelection (-1, -1)
             return
 
         if not self.currentPage.canRename (self.pageTitle):

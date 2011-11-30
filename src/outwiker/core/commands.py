@@ -11,15 +11,15 @@ import shutil
 import wx
 
 import outwiker.core.exceptions
-import outwiker.core.commands
-from .system import getCurrentDir
+from .system import getCurrentDir, getOS
 from .version import Version
+from .tree import WikiDocument, RootWikiPage
+from .application import Application
+from .attachment import Attachment
+from .pagetitletester import PageTitleError, PageTitleWarning
 
-from tree import WikiDocument, RootWikiPage
 from outwiker.gui.overwritedialog import OverwriteDialog
-from application import Application
 from outwiker.gui.about import AboutDialog
-from attachment import Attachment
 
 
 def MessageBox (*args, **kwargs):
@@ -195,7 +195,7 @@ def __canNotLoadWikiMessage (path):
     """
     Вывести сообщение о том, что невоможно открыть вики
     """
-    outwiker.core.commands.MessageBox (_(u"Can't load wiki '%s'") % path, 
+    MessageBox (_(u"Can't load wiki '%s'") % path, 
                 _(u"Error"), 
                 wx.ICON_ERROR | wx.OK)
 
@@ -204,7 +204,7 @@ def __wantClearWikiOptions (path):
     """
     Сообщение о том, хочет ли пользователь сбросить файл __page.opt
     """
-    return outwiker.core.commands.MessageBox (_(u"Can't load wiki '%s'\nFile __page.opt is invalid.\nClear this file and load wiki?\nBookmarks will be lost") % path, 
+    return MessageBox (_(u"Can't load wiki '%s'\nFile __page.opt is invalid.\nClear this file and load wiki?\nBookmarks will be lost") % path, 
                 _(u"__page.opt error"), 
                 wx.ICON_ERROR | wx.YES_NO)
 
@@ -222,7 +222,7 @@ def createNewWiki (parentwnd):
             Application.wikiroot.selectedPage = None
         except (IOError, OSError) as e:
             # TODO: проверить под Windows
-            outwiker.core.commands.MessageBox (_(u"Can't create wiki\n") + unicode (str (e), "utf8"),
+            MessageBox (_(u"Can't create wiki\n") + unicode (str (e), "utf8"),
                     _(u"Error"), wx.OK | wx.ICON_ERROR)
 
     dlg.Destroy()
@@ -380,15 +380,17 @@ def sortSiblingsAlphabeticalGUI ():
 
 @testreadonly
 def renamePage (page, newtitle):
+    if not testPageTitle (newtitle):
+        return
+
     try:
         page.title = newtitle
-        #page.root.selectedPage = page
 
     except outwiker.core.exceptions.DublicateTitle:
-        outwiker.core.commands.MessageBox (_(u"Can't move page when page with that title already exists"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+        MessageBox (_(u"Can't move page when page with that title already exists"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 
     except OSError as e:
-        outwiker.core.commands.MessageBox (_(u"Can't rename page\n%s") % unicode (e), _(u"Error"), wx.ICON_ERROR | wx.OK)
+        MessageBox (_(u"Can't rename page\n%s") % unicode (e), _(u"Error"), wx.ICON_ERROR | wx.OK)
 
 
 def showAboutDialog (parent):
@@ -402,7 +404,7 @@ def openHelp ():
     help_dir = u"help"
     current_help = _("help_en")
     path = os.path.join (outwiker.core.system.getCurrentDir(), help_dir, current_help)
-    outwiker.core.commands.openWiki (path, readonly=True)
+    openWiki (path, readonly=True)
 
 
 def reloadWiki (mainWnd):
@@ -411,11 +413,37 @@ def reloadWiki (mainWnd):
     mainWnd - указатель на главное окно. Нужно, чтобы сообщить ему о необходимости удалить панель с текущей страницей
     """
     if Application.wikiroot != None:
-        result = (outwiker.core.commands.MessageBox (_(u"Save current page before reload?"), 
+        result = (MessageBox (_(u"Save current page before reload?"), 
             _(u"Save?"), wx.YES_NO | wx.CANCEL  | wx.ICON_QUESTION ))
 
         if result == wx.CANCEL:
             return
 
         mainWnd.destroyPagePanel (result == wx.YES)
-        outwiker.core.commands.openWiki (Application.wikiroot.path)
+        openWiki (Application.wikiroot.path)
+
+
+def testPageTitle (title):
+    """
+    Возвращает True, если можно создавать страницу с таким заголовком
+    """
+    tester = getOS().pageTitleTester
+
+    try:
+        tester.test (title)
+
+    except PageTitleError as error:
+        MessageBox (error.message, _(u"The invalid page title"), wx.OK | wx.ICON_ERROR)
+        return False
+
+    except PageTitleWarning as warning:
+        text = u"{0}\nContinue?".format (warning.message)
+
+        if (MessageBox (text, 
+            _(u"The page title"), 
+            wx.YES_NO | wx.ICON_QUESTION ) == wx.YES):
+            return True
+        else:
+            return False
+
+    return True
