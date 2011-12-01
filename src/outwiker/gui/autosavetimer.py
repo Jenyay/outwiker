@@ -46,7 +46,12 @@ class AutosaveTimer (wx.PyEvtHandler):
         """
         Этот метод вызывается, когда срабатывает таймер
         """
-        self.__application.onForceSave()
+        # Если приложение не активно, ничего не сохраняем, 
+        # потому что все-равно при неактивном окне заметка 
+        # не может измениться средствами outwiker'а.
+        # А при потере фокуса сохранение происходит и так.
+        if wx.GetApp().IsActive():
+            self.__application.onForceSave()
 
 
     def Destroy (self):

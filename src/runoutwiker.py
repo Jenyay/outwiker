@@ -68,8 +68,7 @@ class OutWiker(wx.App):
 
 
     def onActivate (self, event):
-        if not event.GetActive():
-            Application.onForceSave()
+        Application.onForceSave()
 
 
 # end of class OutWiker
