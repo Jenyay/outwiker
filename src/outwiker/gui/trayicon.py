@@ -112,10 +112,12 @@ class OutwikerTrayIcon (wx.TaskBarIcon):
     
 
     def restoreWindow (self):
-        self.mainWnd.Show ()
         self.mainWnd.Iconize (False)
+        self.mainWnd.Show ()
         if not self.config.alwaysShowTrayIconOption.value:
             self.removeTrayIcon()
+        self.mainWnd.Raise()
+        self.mainWnd.SetFocus()
 
     
     def __onExit (self, event):
