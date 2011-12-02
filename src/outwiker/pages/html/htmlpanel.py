@@ -86,15 +86,20 @@ class HtmlPanel(BaseTextPanel):
 
     
     def UpdateView (self, page):
-        self.htmlWindow.page = self._currentpage
+        self.Freeze()
 
-        self.codeEditor.SetReadOnly (False)
-        self.codeEditor.SetText (self._currentpage.content)
-        self.codeEditor.EmptyUndoBuffer()
-        self.codeEditor.SetReadOnly (page.readonly)
+        try:
+            self.htmlWindow.page = self._currentpage
 
-        self._showHtml()
-        self._openDefaultPage()
+            self.codeEditor.SetReadOnly (False)
+            self.codeEditor.SetText (self._currentpage.content)
+            self.codeEditor.EmptyUndoBuffer()
+            self.codeEditor.SetReadOnly (page.readonly)
+
+            self._showHtml()
+            self._openDefaultPage()
+        finally:
+            self.Thaw()
 
 
     def GetContentFromGui(self):
@@ -398,7 +403,8 @@ class HtmlPagePanel (HtmlPanel):
     def __onPageUpdate (self, sender):
         if sender == self._currentpage:
             self.__updatePageConfigTools()
-            self._showHtml()
+            if self.notebook.GetSelection() == self.RESULT_PAGE_INDEX:
+                self._showHtml()
 
 
     def UpdateView (self, page):
@@ -430,7 +436,6 @@ class HtmlPagePanel (HtmlPanel):
         if self._currentpage != None:
             self._currentpage.autoLineWrap = event.Checked()
             self.__updatePageConfigTools()
-            #self._showHtml()
 
 
     def __createCustomTools (self):

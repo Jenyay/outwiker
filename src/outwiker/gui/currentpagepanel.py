@@ -141,23 +141,26 @@ class CurrentPagePanel(wx.Panel):
         """
         Обновить информацию о странице
         """
-        if page != None:
-            title = "%s" % (page.title)
-            self.titleLabel.SetLabel (title)
+        self.Freeze()
+        try:
+            if page != None:
+                title = "%s" % (page.title)
+                self.titleLabel.SetLabel (title)
 
-            if hasattr (page, "tags"):
-                tags = u"[%s]" % TagsList.getTagsString (page.tags)
+                if hasattr (page, "tags"):
+                    tags = u"[%s]" % TagsList.getTagsString (page.tags)
+                else:
+                    tags = u"[]"
+
+                self.tagsLabel.SetLabel (tags)
+
+                self.__updateBookmarkBtn()
             else:
-                tags = u"[]"
-
-            self.tagsLabel.SetLabel (tags)
-
-            self.__updateBookmarkBtn()
-        else:
-            self.titleLabel.SetLabel (u"")
-            self.tagsLabel.SetLabel (u"[]")
-
-        self.Layout()
+                self.titleLabel.SetLabel (u"")
+                self.tagsLabel.SetLabel (u"[]")
+            self.Layout()
+        finally:
+            self.Thaw()
 
     
     def __set_properties(self):
