@@ -106,7 +106,7 @@ class HtmlRenderConfig (object):
     Класс для хранения настроек HTML-рендера
     """
     # Название секции в конфиге для настроек HTML
-    HTML_SECTION = u"Html"
+    HTML_SECTION = u"HTML"
 
     FONT_FACE_NAME_PARAM = u"FontFaceName"
     FONT_SIZE_PARAM = u"FontSize"
