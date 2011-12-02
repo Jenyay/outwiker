@@ -183,7 +183,7 @@ class RootWikiPage (object):
         self._children.sort (RootWikiPage.sortAlphabeticalFunction)
 
         self.root.onStartTreeUpdate (self.root)
-        self._saveChildrenParams()
+        self.saveChildrenParams()
         self.root.onEndTreeUpdate (self.root)
 
 
@@ -205,10 +205,10 @@ class RootWikiPage (object):
         if oldorder != neworder:
             self.removeFromChildren (page)
             self._children.insert (neworder, page)
-            self._saveChildrenParams()
+            self.saveChildrenParams()
 
 
-    def _saveChildrenParams (self):
+    def saveChildrenParams (self):
         for child in self._children:
             child.save()
     
@@ -219,6 +219,11 @@ class RootWikiPage (object):
         """
         self._children.append (page)
         self._children.sort (RootWikiPage.sortFunction)
+
+
+    # def _updateSiblingsOrder (self):
+    #     for page, order in zip (self.parent.children, range (len (self.parent.children) ) ):
+    #         page.params.orderOption.value = order
     
 
     def removeFromChildren (self, page):
@@ -710,6 +715,7 @@ class WikiPage (RootWikiPage):
         """
         self._tags = tags[:]
         self.save()
+        self.parent.saveChildrenParams()
         self.root.onPageCreate(self)
     
 

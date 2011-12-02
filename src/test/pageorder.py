@@ -177,6 +177,24 @@ class PageOrderTest (unittest.TestCase):
         self.assertEqual (self.rootwiki[u"Страница 3"].order, 2)
         self.assertEqual (self.rootwiki[u"Страница 5"].order, 3)
         self.assertEqual (self.rootwiki[u"Страница 6"].order, 4)
+
+
+    def testCreateOrder8 (self):
+        TextPageFactory.create (self.rootwiki, u"Плагины", [])
+        TextPageFactory.create (self.rootwiki, u"Абырвалг", [])
+        TextPageFactory.create (self.rootwiki, u"Тест", [])
+
+        self.assertEqual (self.rootwiki[u"Абырвалг"].order, 0)
+        self.assertEqual (self.rootwiki[u"Плагины"].order, 1)
+        self.assertEqual (self.rootwiki[u"Тест"].order, 2)
+
+        self.rootwiki[u"Абырвалг"].title = u"Ррррр"
+
+        wiki = WikiDocument.load (self.path)
+
+        self.assertEqual (wiki[u"Ррррр"].order, 0)
+        self.assertEqual (wiki[u"Плагины"].order, 1)
+        self.assertEqual (wiki[u"Тест"].order, 2)
     
 
     def testChangeOrder1 (self):
