@@ -1,9 +1,13 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
+import os.path
+
 import wx
 
 from outwiker.gui.preferences.configelements import StringElement, IntegerElement
+from outwiker.core.system import getOS
+
 from .sourceconfig import SourceConfig
 
 
@@ -43,8 +47,8 @@ class PreferencePanel (wx.Panel):
         Создать интерфейс, связанный с языком программирования по умолчанию
         """
         languageLabel = wx.StaticText(self, -1, self._(u"Default Programming Language"))
-        self.languageTextCtrl = wx.TextCtrl (self)
-        self.languageTextCtrl.SetMinSize (wx.Size (100, -1))
+        self.languageComboBox = wx.ComboBox (self, style=wx.CB_DROPDOWN | wx.CB_READONLY )
+        self.languageComboBox.SetMinSize (wx.Size (100, -1))
 
         mainSizer.Add (
                 languageLabel, 
@@ -54,7 +58,7 @@ class PreferencePanel (wx.Panel):
                 )
 
         mainSizer.Add (
-                self.languageTextCtrl, 
+                self.languageComboBox, 
                 proportion=1,
                 flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT,
                 border=2
@@ -109,6 +113,21 @@ class PrefPanelController (object):
         self.MAX_TAB_WIDTH = 50
 
 
+    def __getLangList (self):
+        """
+        Прочитать список поддерживаемых языков
+        """
+        fname = u"languages.txt"
+        cmd_folder = unicode (os.path.dirname(os.path.abspath(__file__)), getOS().filesEncoding )
+        fullpath = os.path.join (cmd_folder, fname)
+
+        try:
+            with open (fullpath) as fp:
+                return [item.strip() for item in fp.readlines()]
+        except IOError:
+            return [u"text"]
+
+
     def loadState (self):
         self.__tabWidthOption = IntegerElement (
                 self.__config.tabWidth, 
@@ -117,12 +136,17 @@ class PrefPanelController (object):
                 self.MAX_TAB_WIDTH
                 )
 
-        self.__defaultLanguageOption = StringElement (
-                self.__config.defaultLanguage, 
-                self.__owner.languageTextCtrl
-                )
+        languages = self.__getLangList()
+        self.__owner.languageComboBox.Clear()
+        self.__owner.languageComboBox.AppendItems (languages)
+
+        try:
+            selindex = languages.index (self.__config.defaultLanguage.value.lower().strip())
+            self.__owner.languageComboBox.SetSelection (selindex)
+        except ValueError:
+            self.__owner.languageComboBox.SetSelection (0)
 
 
     def save (self):
         self.__tabWidthOption.save()
-        self.__defaultLanguageOption.save()
+        self.__config.defaultLanguage.value = self.__owner.languageComboBox.GetValue()
