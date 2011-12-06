@@ -449,8 +449,8 @@ def testPageTitle (title):
     return True
 
 
-def isPageManualDelete (page):
+def pageExists (page):
     """
     Проверка на то, что страница была удалена сторонними средствами
     """
-    return not os.path.exists (page.path) and not page.isRemoved
+    return os.path.exists (page.path)

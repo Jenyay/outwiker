@@ -10,7 +10,7 @@ from outwiker.core.search import Searcher, TagsList, AllTagsSearchStrategy, AnyT
 from .htmlreport import HtmlReport
 from outwiker.gui.htmlrenderfactory import getHtmlRender
 from outwiker.gui.basepagepanel import BasePagePanel
-from outwiker.core.commands import isPageManualDelete
+from outwiker.core.commands import pageExists
 
 
 class SearchPanel(BasePagePanel):
@@ -96,7 +96,7 @@ class SearchPanel(BasePagePanel):
         """
         if (self.page != None and 
                 not self.page.isRemoved and
-                not isPageManualDelete (self.page) ):
+                pageExists (self.page) ):
             self._saveSearchPhrase()
             self._saveSearchTags()
             self._saveSearchTagsStrategy()

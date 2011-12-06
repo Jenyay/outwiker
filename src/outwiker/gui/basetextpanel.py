@@ -7,7 +7,7 @@ import os
 import wx
 
 import outwiker.core.system
-from outwiker.core.commands import MessageBox, openWiki, isPageManualDelete
+from outwiker.core.commands import MessageBox, openWiki, pageExists
 from outwiker.core.attachment import Attachment
 from outwiker.core.application import Application
 from outwiker.gui.buttonsdialog import ButtonsDialog
@@ -85,7 +85,7 @@ class BaseTextPanel (BasePagePanel):
         if self.page == None:
             return
 
-        if isPageManualDelete (self.page):
+        if not pageExists (self.page):
             return
 
         if not self.page.isRemoved:

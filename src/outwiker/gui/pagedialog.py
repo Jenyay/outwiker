@@ -10,7 +10,7 @@ from outwiker.core.tree import RootWikiPage
 from outwiker.core.application import Application
 from outwiker.core.factoryselector import FactorySelector
 from outwiker.core.config import StringOption
-from outwiker.core.commands import testPageTitle
+from outwiker.core.commands import testPageTitle, pageExists, MessageBox
 
 
 @outwiker.core.commands.testreadonly
@@ -22,6 +22,12 @@ def editPage (parentWnd, currentPage):
     """
     if currentPage.readonly:
         raise outwiker.core.exceptions.ReadonlyException
+
+    if not pageExists (currentPage):
+        MessageBox (_(u'Page "%s" not found') % currentPage.title,
+                _(u"Error"),
+                wx.OK  | wx.ICON_ERROR)
+        return
 
     dlg = EditPageDialog (currentPage, currentPage.parent, parent = parentWnd)
     page = None

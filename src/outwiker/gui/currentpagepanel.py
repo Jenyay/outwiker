@@ -6,7 +6,7 @@ import wx
 
 from outwiker.core.application import Application
 from outwiker.core.factoryselector import FactorySelector
-from outwiker.core.commands import isPageManualDelete, openWiki
+from outwiker.core.commands import pageExists, openWiki
 from outwiker.core.tree import RootWikiPage
 from outwiker.core.search import TagsList
 import outwiker.core.system
@@ -220,7 +220,7 @@ class CurrentPagePanel(wx.Panel):
         Сохранить текущую страницу
         """
         if self.__pageView != None:
-            if isPageManualDelete (Application.selectedPage):
+            if not pageExists (Application.selectedPage):
                 # Похоже, страница удалена вручную, перезагрузим вики
                 Application.selectedPage = None
                 openWiki (Application.wikiroot.path)
