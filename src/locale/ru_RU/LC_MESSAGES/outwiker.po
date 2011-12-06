@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-06 09:50+0400\n"
+"POT-Creation-Date: 2011-12-06 17:58+0400\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -137,7 +137,6 @@ msgstr "Вы не выбрали файл(ы) для удаления"
 #: outwiker/gui/attachpanel.py:223
 #: outwiker/gui/attachpanel.py:240
 #: outwiker/gui/attachpanel.py:250
-#: outwiker/gui/basepagepanel.py:100
 #: outwiker/gui/basetextpanel.py:170
 #: outwiker/gui/htmlrenderie.py:159
 #: outwiker/gui/htmlrenderwebkit.py:198
@@ -145,11 +144,12 @@ msgstr "Вы не выбрали файл(ы) для удаления"
 #: outwiker/gui/mainwindow.py:288
 #: outwiker/gui/mainwindow.py:416
 #: outwiker/gui/mainwndcontroller.py:116
-#: outwiker/gui/pagedialog.py:39
-#: outwiker/gui/pagedialog.py:85
-#: outwiker/gui/pagedialog.py:104
-#: outwiker/gui/pagedialog.py:137
-#: outwiker/gui/pagedialog.py:185
+#: outwiker/gui/pagedialog.py:28
+#: outwiker/gui/pagedialog.py:45
+#: outwiker/gui/pagedialog.py:91
+#: outwiker/gui/pagedialog.py:110
+#: outwiker/gui/pagedialog.py:143
+#: outwiker/gui/pagedialog.py:191
 #: outwiker/gui/wikitree.py:242
 #: outwiker/pages/html/htmlpanel.py:217
 #: outwiker/pages/html/htmlpanel.py:221
@@ -224,11 +224,6 @@ msgstr "Значок"
 #: outwiker/gui/basepagedialog.py:39
 msgid "Create Page"
 msgstr "Создать страницу"
-
-#: outwiker/gui/basepagepanel.py:99
-#, python-format
-msgid "Page \"%s\" not found. Wiki will be reload"
-msgstr "Страница \"%s\" не найдена. Вики будет перезагружена"
 
 #: outwiker/gui/basetextpanel.py:132
 #: outwiker/gui/overwritedialog.py:19
@@ -534,7 +529,7 @@ msgid "Exit"
 msgstr "Выход"
 
 #: outwiker/gui/mainwindow.py:416
-#: outwiker/gui/pagedialog.py:71
+#: outwiker/gui/pagedialog.py:77
 msgid "Can't create page"
 msgstr "Невозможно создать страницу"
 
@@ -573,12 +568,17 @@ msgstr "&Отмена"
 msgid "Overwrite Files"
 msgstr "Перезапись файлов"
 
-#: outwiker/gui/pagedialog.py:39
+#: outwiker/gui/pagedialog.py:27
+#, python-format
+msgid "Page \"%s\" not found"
+msgstr "Страница \"%s\" не найдена"
+
+#: outwiker/gui/pagedialog.py:45
 msgid "Can't rename page\n"
 msgstr "Невозможно переименовать страницу\n"
 
-#: outwiker/gui/pagedialog.py:85
-#: outwiker/gui/pagedialog.py:104
+#: outwiker/gui/pagedialog.py:91
+#: outwiker/gui/pagedialog.py:110
 #: outwiker/core/commands.py:333
 #: outwiker/core/commands.py:346
 #: outwiker/core/commands.py:359
@@ -586,15 +586,15 @@ msgstr "Невозможно переименовать страницу\n"
 msgid "Wiki is not open"
 msgstr "Вики не открыта"
 
-#: outwiker/gui/pagedialog.py:137
+#: outwiker/gui/pagedialog.py:143
 msgid "A page with this title already exists"
 msgstr "Страница с таким заголовком уже существует"
 
-#: outwiker/gui/pagedialog.py:151
+#: outwiker/gui/pagedialog.py:157
 msgid "Edit page properties"
 msgstr "Редактировать свойства страницы"
 
-#: outwiker/gui/pagedialog.py:184
+#: outwiker/gui/pagedialog.py:190
 msgid "Can't rename page when page with that title already exists"
 msgstr "Невозможно переименовать страницу, так как страница с таким заголовком уже существует"
 
