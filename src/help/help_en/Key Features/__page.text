@@ -1,4 +1,5 @@
 * The base is stored as a directory tree on disk. 
+* Plugins supporting.
 * Any number of files can be attached to each note. 
 * Pages can be of different types.
 * Attached images can be inserted into the HTML-page. 
