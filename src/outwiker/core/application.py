@@ -97,6 +97,12 @@ class ApplicationParams (object):
         return self.__wikiroot.selectedPage
 
 
+    @selectedPage.setter
+    def selectedPage (self, page):
+        if self.__wikiroot != None and self.__wikiroot.selectedPage != page:
+            self.__wikiroot.selectedPage = page
+
+
     def __createEvents (self):
         """
         Создать статические члены для событий

@@ -93,10 +93,6 @@ class WikiTree(wx.Panel):
         Application.onStartTreeUpdate += self.__onStartTreeUpdate
         Application.onEndTreeUpdate += self.__onEndTreeUpdate
         
-        # События, связанные с рендерингом страниц
-        #Application.onHtmlRenderingBegin += self.__onHtmlRenderingBegin
-        #Application.onHtmlRenderingEnd += self.__onHtmlRenderingEnd
-
 
     def __UnBindApplicationEvents(self):
         """
@@ -112,10 +108,6 @@ class WikiTree(wx.Panel):
         Application.onStartTreeUpdate -= self.__onStartTreeUpdate
         Application.onEndTreeUpdate -= self.__onEndTreeUpdate
         
-        # События, связанные с рендерингом страниц
-        #Application.onHtmlRenderingBegin -= self.__onHtmlRenderingBegin
-        #Application.onHtmlRenderingEnd -= self.__onHtmlRenderingEnd
-
 
     def __onWikiOpen (self, root):
         self.__treeUpdate (root)
@@ -229,17 +221,6 @@ class WikiTree(wx.Panel):
 
         self.Bind(wx.EVT_MENU, self.__onPropertiesPopup, id=self.ID_PROPERTIES_POPUP)
     
-
-    #def __onHtmlRenderingBegin (self, page, htmlView):
-        #self.treeCtrl.Disable()
-        #self.treeCtrl.Update()
-        #pass
-
-    
-    #def __onHtmlRenderingEnd (self, page, htmlView):
-        #self.treeCtrl.Enable()
-        #pass
-
 
     def __onTreeStateChanged (self, event):
         item = event.GetItem()
@@ -496,9 +477,7 @@ class WikiTree(wx.Panel):
 
 
     def __onSelChanged (self, event):
-        page = self.selectedPage
-        if page.root.selectedPage != page:
-            page.root.selectedPage = page
+        Application.selectedPage = self.selectedPage
     
 
     def __onPageOrderChange (self, sender):

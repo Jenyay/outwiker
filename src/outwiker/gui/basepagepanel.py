@@ -6,7 +6,7 @@ import os.path
 
 import wx
 
-import outwiker.core.commands
+from outwiker.core.commands import MessageBox
 from outwiker.core.event import Event
 
 
@@ -95,8 +95,8 @@ class BasePagePanel (wx.Panel):
         self._currentpage = page
 
         if not os.path.exists (page.path):
-            outwiker.core.commands.MessageBox (
-                    _(u"Page %s not found. It is recommended to update the wiki") % self.page.title,
+            MessageBox (
+                    _(u'Page "%s" not found. Wiki will be reload') % self.page.title,
                     _("Error"), wx.OR | wx.ICON_ERROR )
             return
 

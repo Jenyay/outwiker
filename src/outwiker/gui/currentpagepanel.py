@@ -6,7 +6,7 @@ import wx
 
 from outwiker.core.application import Application
 from outwiker.core.factoryselector import FactorySelector
-import outwiker.core.commands
+from outwiker.core.commands import isPageManualDelete, openWiki
 from outwiker.core.tree import RootWikiPage
 from outwiker.core.search import TagsList
 import outwiker.core.system
@@ -38,6 +38,7 @@ class CurrentPagePanel(wx.Panel):
         Application.onPageRename += self.__onPageRename
         Application.onPageUpdate += self.__onPageUpdate
         Application.onBookmarksChanged += self.__onBookmarksChanged
+        Application.onForceSave += self.__onForceSave
 
         self.Bind (wx.EVT_CLOSE, self.__onClose)
 
@@ -57,10 +58,10 @@ class CurrentPagePanel(wx.Panel):
         Application.onPageSelect -= self.__onPageSelect
         Application.onPageRename -= self.__onPageRename
         Application.onPageUpdate -= self.__onPageUpdate
+        Application.onForceSave -= self.__onForceSave
         Application.onBookmarksChanged -= self.__onBookmarksChanged
 
         if self.__pageView != None:
-            #self.__pageView.removeGui ()
             self.__pageView.Close()
         self.Destroy()
 
@@ -219,7 +220,17 @@ class CurrentPagePanel(wx.Panel):
         Сохранить текущую страницу
         """
         if self.__pageView != None:
+            if isPageManualDelete (Application.selectedPage):
+                # Похоже, страница удалена вручную, перезагрузим вики
+                Application.selectedPage = None
+                openWiki (Application.wikiroot.path)
+                return
+
             self.__pageView.Save()
+
+
+    def __onForceSave (self):
+        self.Save()
 
 
     def __onBookmark(self, event):

@@ -7,7 +7,7 @@ import os
 import wx
 
 import outwiker.core.system
-from outwiker.core.commands import MessageBox
+from outwiker.core.commands import MessageBox, openWiki, isPageManualDelete
 from outwiker.core.attachment import Attachment
 from outwiker.core.application import Application
 from outwiker.gui.buttonsdialog import ButtonsDialog
@@ -62,7 +62,6 @@ class BaseTextPanel (BasePagePanel):
 
         Application.onAttachmentPaste += self.onAttachmentPaste
         Application.onPreferencesDialogClose += self.onPreferencesDialogClose
-        Application.onForceSave += self.onForceSave
 
         self._onSetPage += self.__onSetPage
 
@@ -75,10 +74,6 @@ class BaseTextPanel (BasePagePanel):
         self._oldContent = self.page.content
 
 
-    def onForceSave (self):
-        self.Save()
-
-    
     def onPreferencesDialogClose (self, prefDialog):
         pass
     
@@ -90,10 +85,7 @@ class BaseTextPanel (BasePagePanel):
         if self.page == None:
             return
 
-        if not os.path.exists (self.page.path) and not self.page.isRemoved:
-            # Похоже, страница удалена вручную
-            MessageBox (_(u"Page %s not found. It is recommended to update the wiki") % self.page.title,
-                    _("Error"), wx.OR | wx.ICON_ERROR )
+        if isPageManualDelete (self.page):
             return
 
         if not self.page.isRemoved:
@@ -200,7 +192,6 @@ class BaseTextPanel (BasePagePanel):
         """
         Application.onAttachmentPaste -= self.onAttachmentPaste
         Application.onPreferencesDialogClose -= self.onPreferencesDialogClose
-        Application.onForceSave -= self.onForceSave
         self._onSetPage -= self.__onSetPage
 
         self.removeGui()

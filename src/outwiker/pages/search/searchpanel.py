@@ -10,6 +10,7 @@ from outwiker.core.search import Searcher, TagsList, AllTagsSearchStrategy, AnyT
 from .htmlreport import HtmlReport
 from outwiker.gui.htmlrenderfactory import getHtmlRender
 from outwiker.gui.basepagepanel import BasePagePanel
+from outwiker.core.commands import isPageManualDelete
 
 
 class SearchPanel(BasePagePanel):
@@ -40,20 +41,13 @@ class SearchPanel(BasePagePanel):
         self.Bind(wx.EVT_BUTTON, self.onClear, self.clearTagsBtn)
         self.Bind(wx.EVT_BUTTON, self.onFind, self.searchBtn)
 
-        #self.Bind (wx.EVT_CLOSE, self.onClose)
-        Application.onForceSave += self.onForceSave
-
 
     def Print (self):
         self.resultWindow.Print()
     
 
-    def onForceSave (self):
-        self.Save()
-
-
     def Clear (self):
-        Application.onForceSave -= self.onForceSave
+        pass
 
 
     def updatePageInfo (self):
@@ -100,7 +94,9 @@ class SearchPanel(BasePagePanel):
         """
         Сохранить настройки страницы
         """
-        if self.page != None and not self.page.isRemoved:
+        if (self.page != None and 
+                not self.page.isRemoved and
+                not isPageManualDelete (self.page) ):
             self._saveSearchPhrase()
             self._saveSearchTags()
             self._saveSearchTagsStrategy()
