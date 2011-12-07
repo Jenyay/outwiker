@@ -1,5 +1,5 @@
 <h1>OutWiker</h1>
-<h3>Version 1.3.2</h3>
+<h3>Version 1.4.0</h3>
 
 OutWiker is designed to store notes in a tree. Such programs are called "outliner", personal wiki, or tree-like editors. I spent a lot of time to pick up a similar program available, but eventually decided to make my own outliner which seems to be the most convenient in use for me. 
 
@@ -19,7 +19,10 @@ e-mail: <a href="mailto:jenyay.ilin@gmail.com">jenyay.ilin@gmail.com</a>
 
 The program uses some sets of free icons taken from sites <a class='urllink' href='http://www.famfamfam.com/lab/icons/silk/'>famfamfam.com</a> and <a class='urllink' href='http://p.yusukekamiyamane.com/'>yusukekamiyamane.com</a>. Many thanks to the authors of those sites. 
 
+
 Thanks Nabrodov Alexey (<a href="http://averr.in/">http://averr.in/</a>) for the program icon.
 Thanks Cheshkov Iliya (<a href="http://ilyuxaif.livejournal.com">http://ilyuxaif.livejournal.com</a>) for english help correction.
+Thanks Yury aka Cuprum (<a href="http://cuprum.name/">http://cuprum.name/</a>) for the icons of browsers and operating systems.
+Thanks <span class='ljuser ljuser-name_linda_kaioh' lj:user='linda_kaioh' style='white-space:nowrap'><a href='http://linda-kaioh.livejournal.com/profile'><img src='http://l-stat.livejournal.com/img/userinfo.gif?v=3' alt='[info]' width='17' height='17' style='vertical-align: bottom; border: 0; padding-right: 1px;'/></a><a href='http://linda-kaioh.livejournal.com/'><b>linda_kaioh</b></a></span> for the program testing.
 
 Rendering the formulas uses <a href="http://www.forkosh.com/mimetex.html">mimeTeX</a>.

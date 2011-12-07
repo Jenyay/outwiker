@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Outwiker
+GenericName=Outwiker
+Comment=Outliner and personal wiki
+Exec=outwiker %f
+Icon=outwiker
+Terminal=false
+Type=Application
+Categories=Office;Application;
+

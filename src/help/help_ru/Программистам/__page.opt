@@ -1,11 +1,11 @@
 [wiki]
-md5_hash = 5debe6e25e8ca31c280a97c481afdf70
+md5_hash = db3533e058e4052bb5c0597c8dd38131
 
 [Tree]
 expand = True
 
 [General]
 type = wiki
-order = 7
+order = 8
 tags = программистам
 

@@ -6,6 +6,6 @@ expand = True
 
 [General]
 type = wiki
-order = 6
+order = 7
 tags = продвинутым пользователям
 

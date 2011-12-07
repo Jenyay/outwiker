@@ -2,269 +2,289 @@
 # -*- coding: UTF-8 -*-
 
 import os
+import os.path
 import unittest
 import hashlib
 
 from test.utils import removeWiki
 
-from core.tree import WikiDocument
-from core.attachment import Attachment
-from core.application import Application
+from outwiker.core.tree import WikiDocument
+from outwiker.core.attachment import Attachment
+from outwiker.core.application import Application
 
-from pages.wiki.parser.wikiparser import Parser
-from pages.wiki.wikipage import WikiPageFactory
-from pages.wiki.parserfactory import ParserFactory
+from outwiker.pages.wiki.parser.wikiparser import Parser
+from outwiker.pages.wiki.wikipage import WikiPageFactory
+from outwiker.pages.wiki.parserfactory import ParserFactory
+from outwiker.pages.wiki.wikiconfig import WikiConfig
 
 
 class ParserThumbTest (unittest.TestCase):
-	def setUp(self):
-		self.encoding = "866"
+    def setUp(self):
+        self.encoding = "866"
 
-		self.filesPath = u"../test/samplefiles/"
+        self.filesPath = u"../test/samplefiles/"
 
-		self.pagelinks = [u"Страница 1", u"/Страница 1", u"/Страница 2/Страница 3"]
-		self.pageComments = [u"Страницо 1", u"Страницо 1", u"Страницо 3"]
+        self.pagelinks = [u"Страница 1", u"/Страница 1", u"/Страница 2/Страница 3"]
+        self.pageComments = [u"Страницо 1", u"Страницо 1", u"Страницо 3"]
 
-		self.__createWiki()
-		
-		factory = ParserFactory()
-		self.parser = factory.make (self.testPage, Application.config)
-	
+        self.__createWiki()
+        
+        factory = ParserFactory()
+        self.__wikiconfig = WikiConfig (Application.config)
+        self.__wikiconfig.thumbSizeOptions.value = WikiConfig.THUMB_SIZE_DEFAULT
 
-	def __createWiki (self):
-		# Здесь будет создаваться вики
-		self.path = u"../test/testwiki"
-		removeWiki (self.path)
+        self.parser = factory.make (self.testPage, Application.config)
+    
 
-		self.rootwiki = WikiDocument.create (self.path)
-		WikiPageFactory.create (self.rootwiki, u"Страница 2", [])
-		self.testPage = self.rootwiki[u"Страница 2"]
-		
-		files = [u"accept.png", u"add.png", u"anchor.png", u"filename.tmp", 
-				u"файл с пробелами.tmp", u"картинка с пробелами.png", 
-				u"image.jpg", u"image.jpeg", u"image.png", u"image.tif", u"image.tiff", u"image.gif",
-				u"image_01.JPG", u"dir", u"dir.xxx", u"dir.png"]
+    def __createWiki (self):
+        # Здесь будет создаваться вики
+        self.path = u"../test/testwiki"
+        removeWiki (self.path)
 
-		fullFilesPath = [os.path.join (self.filesPath, fname) for fname in files]
+        self.rootwiki = WikiDocument.create (self.path)
+        WikiPageFactory.create (self.rootwiki, u"Страница 2", [])
+        self.testPage = self.rootwiki[u"Страница 2"]
+        
+        files = [u"accept.png", u"add.png", u"anchor.png", u"filename.tmp", 
+                u"файл с пробелами.tmp", u"картинка с пробелами.png", 
+                u"image.jpg", u"image.jpeg", u"image.png", u"image.tif", u"image.tiff", u"image.gif",
+                u"image_01.JPG", u"dir", u"dir.xxx", u"dir.png"]
 
-		self.attach_page2 = Attachment (self.rootwiki[u"Страница 2"])
+        fullFilesPath = [os.path.join (self.filesPath, fname) for fname in files]
 
-		# Прикрепим к двум страницам файлы
-		Attachment (self.testPage).attach (fullFilesPath)
-	
+        self.attach_page2 = Attachment (self.rootwiki[u"Страница 2"])
 
-	def tearDown(self):
-		removeWiki (self.path)
+        # Прикрепим к двум страницам файлы
+        Attachment (self.testPage).attach (fullFilesPath)
+    
 
+    def tearDown(self):
+        self.__wikiconfig.thumbSizeOptions.value = WikiConfig.THUMB_SIZE_DEFAULT
+        removeWiki (self.path)
 
-	def testThumbWidthJpg (self):
-		text = u'бла-бла-бла \nкхм % width = 100 px % Attach:image.jpg %% бла-бла-бла\nбла-бла-бла'
-		path = os.path.join ("__attach", "__thumb", "th_width_100_image.jpg")
 
-		result = u'бла-бла-бла \nкхм <A HREF="__attach/image.jpg"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
+    def testThumbWidthJpg (self):
+        text = u'бла-бла-бла \nкхм % width = 100 px % Attach:image.jpg %% бла-бла-бла\nбла-бла-бла'
+        path = os.path.join ("__attach", "__thumb", "th_width_100_image.jpg")
 
-		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+        result = u'бла-бла-бла \nкхм <A HREF="__attach/image.jpg"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
 
-		path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_width_100_image.jpg")
-		self.assertTrue (os.path.exists (path), path.encode (self.encoding))
-	
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-	def testThumbWidthJpg2 (self):
-		text = u'бла-бла-бла \nкхм % thumb width = 100 px % Attach:image.jpg %% бла-бла-бла\nбла-бла-бла'
-		path = os.path.join ("__attach", "__thumb", "th_width_100_image.jpg")
+        path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_width_100_image.jpg")
+        self.assertTrue (os.path.exists (path), path.encode (self.encoding))
+    
 
-		result = u'бла-бла-бла \nкхм <A HREF="__attach/image.jpg"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
+    def testThumbWidthJpg2 (self):
+        text = u'бла-бла-бла \nкхм % thumb width = 100 px % Attach:image.jpg %% бла-бла-бла\nбла-бла-бла'
+        path = os.path.join ("__attach", "__thumb", "th_width_100_image.jpg")
 
-		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+        result = u'бла-бла-бла \nкхм <A HREF="__attach/image.jpg"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
 
-		path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_width_100_image.jpg")
-		self.assertTrue (os.path.exists (path), path.encode (self.encoding))
-	
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-	def testThumbWidthJpeg (self):
-		text = u'бла-бла-бла \nкхм % width = 100 px % Attach:image.jpeg %% бла-бла-бла\nбла-бла-бла'
-		path = os.path.join ("__attach", "__thumb", "th_width_100_image.jpeg")
+        path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_width_100_image.jpg")
+        self.assertTrue (os.path.exists (path), path.encode (self.encoding))
+    
 
-		result = u'бла-бла-бла \nкхм <A HREF="__attach/image.jpeg"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
+    def testThumbWidthJpeg (self):
+        text = u'бла-бла-бла \nкхм % width = 100 px % Attach:image.jpeg %% бла-бла-бла\nбла-бла-бла'
+        path = os.path.join ("__attach", "__thumb", "th_width_100_image.jpeg")
 
-		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+        result = u'бла-бла-бла \nкхм <A HREF="__attach/image.jpeg"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
 
-		path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_width_100_image.jpeg")
-		self.assertTrue (os.path.exists (path), path.encode (self.encoding))
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-	
-	def testThumbWidthGif (self):
-		text = u'бла-бла-бла \nкхм % width = 100 px % Attach:image.gif %% бла-бла-бла\nбла-бла-бла'
-		path = os.path.join ("__attach", "__thumb", "th_width_100_image.png")
+        path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_width_100_image.jpeg")
+        self.assertTrue (os.path.exists (path), path.encode (self.encoding))
 
-		result = u'бла-бла-бла \nкхм <A HREF="__attach/image.gif"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
+    
+    def testThumbWidthGif (self):
+        text = u'бла-бла-бла \nкхм % width = 100 px % Attach:image.gif %% бла-бла-бла\nбла-бла-бла'
+        path = os.path.join ("__attach", "__thumb", "th_width_100_image.png")
 
-		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+        result = u'бла-бла-бла \nкхм <A HREF="__attach/image.gif"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
 
-		path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_width_100_image.png")
-		self.assertTrue (os.path.exists (path), path.encode (self.encoding))
-	
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-	def testThumbWidthPng (self):
-		text = u'бла-бла-бла \nкхм % width = 100 px % Attach:image.png %% бла-бла-бла\nбла-бла-бла'
-		path = os.path.join ("__attach", "__thumb", "th_width_100_image.png")
+        path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_width_100_image.png")
+        self.assertTrue (os.path.exists (path), path.encode (self.encoding))
+    
 
-		result = u'бла-бла-бла \nкхм <A HREF="__attach/image.png"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
+    def testThumbWidthPng (self):
+        text = u'бла-бла-бла \nкхм % width = 100 px % Attach:image.png %% бла-бла-бла\nбла-бла-бла'
+        path = os.path.join ("__attach", "__thumb", "th_width_100_image.png")
 
-		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+        result = u'бла-бла-бла \nкхм <A HREF="__attach/image.png"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
 
-		path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_width_100_image.png")
-		self.assertTrue (os.path.exists (path), path.encode (self.encoding))
-	
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-	def testThumbHeightJpg (self):
-		text = u'бла-бла-бла \nкхм % height = 100 px % Attach:image.jpg %% бла-бла-бла\nбла-бла-бла'
-		path = os.path.join ("__attach", "__thumb", "th_height_100_image.jpg")
+        path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_width_100_image.png")
+        self.assertTrue (os.path.exists (path), path.encode (self.encoding))
+    
 
-		result = u'бла-бла-бла \nкхм <A HREF="__attach/image.jpg"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
+    def testThumbHeightJpg (self):
+        text = u'бла-бла-бла \nкхм % height = 100 px % Attach:image.jpg %% бла-бла-бла\nбла-бла-бла'
+        path = os.path.join ("__attach", "__thumb", "th_height_100_image.jpg")
 
-		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+        result = u'бла-бла-бла \nкхм <A HREF="__attach/image.jpg"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
 
-		path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_height_100_image.jpg")
-		self.assertTrue (os.path.exists (path), path.encode (self.encoding))
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-	
-	def testThumbHeightJpg2 (self):
-		text = u'бла-бла-бла \nкхм % thumb height = 100 px % Attach:image.jpg %% бла-бла-бла\nбла-бла-бла'
-		path = os.path.join ("__attach", "__thumb", "th_height_100_image.jpg")
+        path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_height_100_image.jpg")
+        self.assertTrue (os.path.exists (path), path.encode (self.encoding))
 
-		result = u'бла-бла-бла \nкхм <A HREF="__attach/image.jpg"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format(path=path.replace ("\\", "/"))
+    
+    def testThumbHeightJpg2 (self):
+        text = u'бла-бла-бла \nкхм % thumb height = 100 px % Attach:image.jpg %% бла-бла-бла\nбла-бла-бла'
+        path = os.path.join ("__attach", "__thumb", "th_height_100_image.jpg")
 
-		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+        result = u'бла-бла-бла \nкхм <A HREF="__attach/image.jpg"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format(path=path.replace ("\\", "/"))
 
-		path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_height_100_image.jpg")
-		self.assertTrue (os.path.exists (path), path.encode (self.encoding))
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
+        path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_height_100_image.jpg")
+        self.assertTrue (os.path.exists (path), path.encode (self.encoding))
 
-	def testThumbHeightJpeg (self):
-		text = u'бла-бла-бла \nкхм % height = 100 px % Attach:image.jpeg %% бла-бла-бла\nбла-бла-бла'
-		path = os.path.join ("__attach", "__thumb", "th_height_100_image.jpeg")
 
-		result = u'бла-бла-бла \nкхм <A HREF="__attach/image.jpeg"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
+    def testThumbHeightJpeg (self):
+        text = u'бла-бла-бла \nкхм % height = 100 px % Attach:image.jpeg %% бла-бла-бла\nбла-бла-бла'
+        path = os.path.join ("__attach", "__thumb", "th_height_100_image.jpeg")
 
-		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+        result = u'бла-бла-бла \nкхм <A HREF="__attach/image.jpeg"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
 
-		path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_height_100_image.jpeg")
-		self.assertTrue (os.path.exists (path), path.encode (self.encoding))
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-	
-	def testThumbHeightGif (self):
-		text = u'бла-бла-бла \nкхм % height = 100 px % Attach:image.gif %% бла-бла-бла\nбла-бла-бла'
-		path = os.path.join ("__attach", "__thumb", "th_height_100_image.png")
-		result = u'бла-бла-бла \nкхм <A HREF="__attach/image.gif"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
+        path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_height_100_image.jpeg")
+        self.assertTrue (os.path.exists (path), path.encode (self.encoding))
 
-		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+    
+    def testThumbHeightGif (self):
+        text = u'бла-бла-бла \nкхм % height = 100 px % Attach:image.gif %% бла-бла-бла\nбла-бла-бла'
+        path = os.path.join ("__attach", "__thumb", "th_height_100_image.png")
+        result = u'бла-бла-бла \nкхм <A HREF="__attach/image.gif"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
 
-		path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_height_100_image.png")
-		self.assertTrue (os.path.exists (path), path.encode (self.encoding))
-	
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-	def testThumbHeightPng (self):
-		text = u'бла-бла-бла \nкхм % height = 100 px % Attach:image.png %% бла-бла-бла\nбла-бла-бла'
-		path = os.path.join ("__attach", "__thumb", "th_height_100_image.png")
+        path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_height_100_image.png")
+        self.assertTrue (os.path.exists (path), path.encode (self.encoding))
+    
 
-		result = u'бла-бла-бла \nкхм <A HREF="__attach/image.png"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
+    def testThumbHeightPng (self):
+        text = u'бла-бла-бла \nкхм % height = 100 px % Attach:image.png %% бла-бла-бла\nбла-бла-бла'
+        path = os.path.join ("__attach", "__thumb", "th_height_100_image.png")
 
-		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+        result = u'бла-бла-бла \nкхм <A HREF="__attach/image.png"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
 
-		path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_height_100_image.png")
-		self.assertTrue (os.path.exists (path), path.encode (self.encoding))
-	
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-	def testThumbJpg (self):
-		text = u'бла-бла-бла \nкхм % thumb % Attach:image.jpg %% бла-бла-бла\nбла-бла-бла'
-		path = os.path.join ("__attach", "__thumb", "th_maxsize_250_image.jpg")
+        path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_height_100_image.png")
+        self.assertTrue (os.path.exists (path), path.encode (self.encoding))
+    
 
-		result = u'бла-бла-бла \nкхм <A HREF="__attach/image.jpg"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
+    def testThumbJpg (self):
+        text = u'бла-бла-бла \nкхм % thumb % Attach:image.jpg %% бла-бла-бла\nбла-бла-бла'
+        path = os.path.join ("__attach", "__thumb", "th_maxsize_250_image.jpg")
 
-		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+        result = u'бла-бла-бла \nкхм <A HREF="__attach/image.jpg"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
 
-		path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_maxsize_250_image.jpg")
-		self.assertTrue (os.path.exists (path), path.encode (self.encoding))
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-	
-	def testThumbJpeg (self):
-		text = u'бла-бла-бла \nкхм % thumb % Attach:image.jpeg %% бла-бла-бла\nбла-бла-бла'
-		path = os.path.join ("__attach", "__thumb", "th_maxsize_250_image.jpeg")
-		result = u'бла-бла-бла \nкхм <A HREF="__attach/image.jpeg"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
+        path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_maxsize_250_image.jpg")
+        self.assertTrue (os.path.exists (path), path.encode (self.encoding))
 
-		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+    
+    def testThumbJpeg (self):
+        text = u'бла-бла-бла \nкхм % thumb % Attach:image.jpeg %% бла-бла-бла\nбла-бла-бла'
+        path = os.path.join ("__attach", "__thumb", "th_maxsize_250_image.jpeg")
+        result = u'бла-бла-бла \nкхм <A HREF="__attach/image.jpeg"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
 
-		path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_maxsize_250_image.jpeg")
-		self.assertTrue (os.path.exists (path), path.encode (self.encoding))
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
+        path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_maxsize_250_image.jpeg")
+        self.assertTrue (os.path.exists (path), path.encode (self.encoding))
 
-	def testThumbPng (self):
-		text = u'бла-бла-бла \nкхм % thumb % Attach:image.png %% бла-бла-бла\nбла-бла-бла'
-		path = os.path.join ("__attach", "__thumb", "th_maxsize_250_image.png")
-		result = u'бла-бла-бла \nкхм <A HREF="__attach/image.png"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
 
-		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+    def testThumbPng (self):
+        text = u'бла-бла-бла \nкхм % thumb % Attach:image.png %% бла-бла-бла\nбла-бла-бла'
+        path = os.path.join ("__attach", "__thumb", "th_maxsize_250_image.png")
+        result = u'бла-бла-бла \nкхм <A HREF="__attach/image.png"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
 
-		path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_maxsize_250_image.png")
-		self.assertTrue (os.path.exists (path), path.encode (self.encoding))
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-	
-	def testThumbGif (self):
-		text = u'бла-бла-бла \nкхм % thumb % Attach:image.gif %% бла-бла-бла\nбла-бла-бла'
-		path = os.path.join ("__attach", "__thumb", "th_maxsize_250_image.png")
+        path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_maxsize_250_image.png")
+        self.assertTrue (os.path.exists (path), path.encode (self.encoding))
 
-		result = u'бла-бла-бла \nкхм <A HREF="__attach/image.gif"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path = path.replace ("\\", "/"))
+    
+    def testThumbGif (self):
+        text = u'бла-бла-бла \nкхм % thumb % Attach:image.gif %% бла-бла-бла\nбла-бла-бла'
+        path = os.path.join ("__attach", "__thumb", "th_maxsize_250_image.png")
 
-		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+        result = u'бла-бла-бла \nкхм <A HREF="__attach/image.gif"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path = path.replace ("\\", "/"))
 
-		path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_maxsize_250_image.png")
-		self.assertTrue (os.path.exists (path), path.encode (self.encoding))
-	
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-	def testThumbMaxSizeJpg (self):
-		text = u'бла-бла-бла \nкхм % maxsize = 300 % Attach:image.jpg %% бла-бла-бла\nбла-бла-бла'
-		path = os.path.join ("__attach", "__thumb", "th_maxsize_300_image.jpg")
+        path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_maxsize_250_image.png")
+        self.assertTrue (os.path.exists (path), path.encode (self.encoding))
+    
 
-		result = u'бла-бла-бла \nкхм <A HREF="__attach/image.jpg"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
+    def testThumbMaxSizeJpg (self):
+        text = u'бла-бла-бла \nкхм % maxsize = 300 % Attach:image.jpg %% бла-бла-бла\nбла-бла-бла'
+        path = os.path.join ("__attach", "__thumb", "th_maxsize_300_image.jpg")
 
-		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+        result = u'бла-бла-бла \nкхм <A HREF="__attach/image.jpg"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
 
-		path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_maxsize_300_image.jpg")
-		self.assertTrue (os.path.exists (path), path.encode (self.encoding))
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
+        path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_maxsize_300_image.jpg")
+        self.assertTrue (os.path.exists (path), path.encode (self.encoding))
 
-	def testThumbMaxSizeJpg2 (self):
-		text = u'бла-бла-бла \nкхм % maxsize = 300 % Attach:image.jpg %% бла-бла-бла\nбла-бла-бла'
-		path = os.path.join ("__attach", "__thumb", "th_maxsize_300_image.jpg")
 
-		result = u'бла-бла-бла \nкхм <A HREF="__attach/image.jpg"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
+    def testThumbMaxSizeJpg2 (self):
+        text = u'бла-бла-бла \nкхм % maxsize = 300 % Attach:image.jpg %% бла-бла-бла\nбла-бла-бла'
+        path = os.path.join ("__attach", "__thumb", "th_maxsize_300_image.jpg")
 
-		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+        result = u'бла-бла-бла \nкхм <A HREF="__attach/image.jpg"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
 
-		path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_maxsize_300_image.jpg")
-		self.assertTrue (os.path.exists (path), path.encode (self.encoding))
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-	
-	def testThumbMaxSizePng (self):
-		text = u'бла-бла-бла \nкхм % maxsize = 300 % Attach:image.png %% бла-бла-бла\nбла-бла-бла'
-		path = os.path.join ("__attach", "__thumb", "th_maxsize_300_image.png")
+        path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_maxsize_300_image.jpg")
+        self.assertTrue (os.path.exists (path), path.encode (self.encoding))
 
-		result = u'бла-бла-бла \nкхм <A HREF="__attach/image.png"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
+    
+    def testThumbMaxSizePng (self):
+        text = u'бла-бла-бла \nкхм % maxsize = 300 % Attach:image.png %% бла-бла-бла\nбла-бла-бла'
+        path = os.path.join ("__attach", "__thumb", "th_maxsize_300_image.png")
 
-		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+        result = u'бла-бла-бла \nкхм <A HREF="__attach/image.png"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
 
-		path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_maxsize_300_image.png")
-		self.assertTrue (os.path.exists (path), path.encode (self.encoding))
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
+        path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_maxsize_300_image.png")
+        self.assertTrue (os.path.exists (path), path.encode (self.encoding))
 
-	def testThumbMaxSizeGif (self):
-		text = u'бла-бла-бла \nкхм % maxsize = 300 % Attach:image.gif %% бла-бла-бла\nбла-бла-бла'
-		path = os.path.join ("__attach", "__thumb", "th_maxsize_300_image.png")
 
-		result = u'бла-бла-бла \nкхм <A HREF="__attach/image.gif"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
+    def testThumbMaxSizeGif (self):
+        text = u'бла-бла-бла \nкхм % maxsize = 300 % Attach:image.gif %% бла-бла-бла\nбла-бла-бла'
+        path = os.path.join ("__attach", "__thumb", "th_maxsize_300_image.png")
 
-		self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+        result = u'бла-бла-бла \nкхм <A HREF="__attach/image.gif"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
 
-		path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_maxsize_300_image.png")
-		self.assertTrue (os.path.exists (path), path.encode (self.encoding))
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+        path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_maxsize_300_image.png")
+        self.assertTrue (os.path.exists (path), path.encode (self.encoding))
+
+
+    def testThumbGifDefaultThumb (self):
+        self.__wikiconfig.thumbSizeOptions.value = 333
+
+        text = u'бла-бла-бла \nкхм % thumb % Attach:image.gif %% бла-бла-бла\nбла-бла-бла'
+        path = os.path.join ("__attach", "__thumb", "th_maxsize_333_image.png")
+
+        result = u'бла-бла-бла \nкхм <A HREF="__attach/image.gif"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path = path.replace ("\\", "/"))
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+        path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_maxsize_333_image.png")
+        self.assertTrue (os.path.exists (path), path.encode (self.encoding))

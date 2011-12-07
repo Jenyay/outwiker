@@ -1,4 +1,17 @@
-!!! 1.3.2
+!!! 1.4.0
+
+* Added plugins support.
+* Added timer autosave.
+* Added check for changing the text notes, third-party programs.
+* For HTML-pages added button for enable/disable automatic line break.
+* Linux version is now installed in /usr, but not in /opt. Now the program can be invoked from the console with the command ''outwiker''.
+* Improved handling of wiki syntax for lists.
+* Now search through the pages looking for search phrase in the filename of the attachment and title names.
+* Bug fixes and minor interface improvements.
+* The program is now being tested only under Python 2.7.
+
+
+!!! 1.3.2.496 (13.09.2011)
 
 * New interface for selecting icons.
 * Added new icon from [[http://www.famfamfam.com/lab/icons/silk | famfamfam.com]] and [[http://p.yusukekamiyamane.com/ | yusukekamiyamane.com]] sets.
@@ -18,7 +31,7 @@
 * Code refactoring.
 
 
-!!! 1.3.1 (03.07.2011)
+!!! 1.3.1.393 (03.07.2011)
 
 * On Windows, fixed the error due to which the links do not work on the search page.
 * On Linux, fixed the error, because of which did not open the page, if the path to them was the '#'.

@@ -1,8 +1,8 @@
 #!/bin/sh
 
-DIR_NAME="outwiker-1.3.2-1"
+DIR_NAME="outwiker-1.4.0-1"
 
-outwiker_dir="$DIR_NAME/opt/outwiker/"
+outwiker_dir="$DIR_NAME/usr/share/outwiker/"
 
 if [ -d $outwiker_dir ] ;
 then
@@ -12,17 +12,15 @@ fi
 mkdir $outwiker_dir
 
 # Скопируем нужные файлы из исходников
-cp -r "../src/core" $outwiker_dir
-cp -r "../src/gui" $outwiker_dir
+cp -r "../src/outwiker" $outwiker_dir
 cp -r "../src/help" $outwiker_dir
 cp -r "../src/images" $outwiker_dir
-cp -r "../src/libs" $outwiker_dir
 cp -r "../src/locale" $outwiker_dir
-cp -r "../src/pages" $outwiker_dir
+cp -r "../src/plugins" $outwiker_dir
 cp -r "../src/templates" $outwiker_dir
-cp "../src/outwiker.py" $outwiker_dir
-cp "../src/copyright" $outwiker_dir
-cp "../src/README" $outwiker_dir
+cp "../src/runoutwiker.py" $outwiker_dir
+cp "../copyright" $outwiker_dir
+cp "../README" $outwiker_dir
 cp "../src/version.txt" $outwiker_dir
 
 # Удалить файлы *.pyc, *.wxg, *.py~, *.wxg~ 
@@ -33,8 +31,7 @@ find . -name *.wxg~ -type f -print | xargs rm
 find . -name *.~1~ -type f -print | xargs rm 
 
 # Создание файла с контрольными суммами 
-md5deep -r "$DIR_NAME/opt" > "$DIR_NAME/DEBIAN/md5sums"
-md5deep -r "$DIR_NAME/usr" >> "$DIR_NAME/DEBIAN/md5sums"
+md5deep -r "$DIR_NAME/usr" > "$DIR_NAME/DEBIAN/md5sums"
 
 # Сборка пакета 
 fakeroot dpkg-deb --build "$DIR_NAME"
