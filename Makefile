@@ -27,6 +27,9 @@ install:
 	# cp "src/images/outwiker_64x64.png" $(DESTDIR)/usr/share/pixmaps/
 	cp "outwiker.desktop" $(DESTDIR)/usr/share/applications
 
+debsource: source
+	cd build/$(dirname)/debian; debuild -S
+
 deb: source
 	cd build/$(dirname)/debian; debuild
 
@@ -52,4 +55,4 @@ source: clean
 	rsync -avz --exclude=.bzr --exclude=distrib --exclude=build --exclude=*.pyc --exclude=*.dll --exclude=*.exe * build/$(dirname)/
 	cd build; tar -cvf $(origname) $(dirname)
 	gzip -f build/$(origname)
-	# cd build/$(dirname)/debian; debuild -S
+
