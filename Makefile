@@ -5,7 +5,7 @@ outwiker_dir=$(DESTDIR)/usr/share/outwiker/
 all:
 
 clean:
-	rm -rf build
+	rm -rf build/$(dirname)
 
 install:
 	mkdir -p $(outwiker_dir)

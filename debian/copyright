@@ -9,7 +9,7 @@ Upstream Author:
 
 Files: *
 Copyright:
-    2010, Eugeniy Ilin (aka Jenyay)
+    2011, Eugeniy Ilin (aka Jenyay)
 License: GPL3
 
 License: GPL3
@@ -24,7 +24,7 @@ License: GPL3
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with this package; if not, see .
+   along with this package; If not, see <http://www.gnu.org/licenses/>.
 
-On Debian systems, the complete text of the GNU General
-Public License can be found in 'http://www.gnu.org/licenses/gpl.html'.
+On Debian systems, the complete text of the GNU General Public License
+version 3 can be found in '/usr/share/common-licenses/GPL-3'.
