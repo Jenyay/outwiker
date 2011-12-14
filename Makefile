@@ -30,6 +30,9 @@ install:
 debsource: source
 	cd build/$(dirname)/debian; debuild -S
 
+debsourceinclude: source
+	cd build/$(dirname)/debian; debuild -S -sa
+
 deb: source
 	cd build/$(dirname)/debian; debuild
 
@@ -53,6 +56,10 @@ wintests:
 source: clean
 	mkdir -p build/$(dirname)
 	rsync -avz --exclude=.bzr --exclude=distrib --exclude=build --exclude=*.pyc --exclude=*.dll --exclude=*.exe * build/$(dirname)/
+
+orig: source
 	cd build; tar -cvf $(origname) $(dirname)
 	gzip -f build/$(origname)
+
+
 
