@@ -1,0 +1,8 @@
+#!/bin/sh 
+
+python updateversion.py
+
+sed -i 's/\r$//' src/version.txt
+{ read ver1; read ver2; } < src/version.txt
+
+dch -v "$ver1-$ver2"
