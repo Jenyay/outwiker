@@ -1,3 +1,9 @@
+outwiker (1.5.0-602) oneiric; urgency=low
+
+  * Переход к версии 1.5.0
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Fri, 16 Dec 2011 09:02:53 +0400
+
 outwiker (1.4.0-601) oneiric; urgency=low
 
   * Добавлена поддержка плагинов.
