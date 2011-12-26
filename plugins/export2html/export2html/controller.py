@@ -38,12 +38,22 @@ class Controller (object):
         print "__onBranchExport"
 
 
-    def initialize (self):
+    def __createMenu (self):
+        """
+        Создать меню, если есть главное окно
+        """
+        assert self.__application.mainWindow != None
+
         factory = ExportMenuFactory (self.__application.mainWindow.mainMenu)
         self.__exportMenu = factory.getExportMenu()
 
         if self.__exportMenu != None:
             self.__addExportItems (self.__exportMenu)
+
+
+    def initialize (self):
+        if self.__application.mainWindow != None:
+            self.__createMenu()
 
 
     def destroy (self):
