@@ -1,5 +1,9 @@
-sdklhf skd sdf
-'
-sdfsdfgdfg
-dfgdfgdg
-dgdg
+<p>
+	<div>
+		<img src="__attach/add.png">
+
+		А этот __attach/ содержится в тексте
+
+		<a href="__attach/wall1.gif">ссылка на файл</a>.
+	</div>
+</p>
