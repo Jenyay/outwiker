@@ -24,6 +24,7 @@ class Export2HtmlTest (unittest.TestCase):
         self.loader.load (dirlist)
 
         self.__removeTempDir()
+        os.mkdir (self.outputdir)
 
 
     def tearDown (self):
@@ -71,7 +72,7 @@ class Export2HtmlTest (unittest.TestCase):
         self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "__init__.py") ) )
         self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "source.py") ) )
         self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "add.png") ) )
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "memirial.gif") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "memorial.gif") ) )
         self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "wall.gif") ) )
         self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "image.tif") ) )
 
@@ -90,14 +91,15 @@ class Export2HtmlTest (unittest.TestCase):
         self.assertFalse (os.path.exists (os.path.join (self.outputdir, pagename, "__init__.py") ) )
         self.assertFalse (os.path.exists (os.path.join (self.outputdir, pagename, "source.py") ) )
         self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "add.png") ) )
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "memirial.gif") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "memorial.gif") ) )
         self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "wall.gif") ) )
         self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "image.tif") ) )
 
 
-    def testLinkChange (self):
+    def testLinkChangeHtml (self):
         """
-        Тест на то, что ссылки на прикрепленные файлы изменяютcя
+        Тест на то, что ссылки на прикрепленные файлы изменяютcя.
+        Проверка на HTML-странице
         """
 
         pagename = u"Страница 1"
@@ -110,11 +112,42 @@ class Export2HtmlTest (unittest.TestCase):
         text = u""
 
         with open (os.path.join (self.outputdir, pagename + ".html") ) as fp:
-            text = fp.read()
+            text = unicode (fp.read(), "utf8")
 
-        self.assertTrue (u'<img src="{pagename}/add.png">'.format (pagename=pagename) in text)
+        self.assertTrue (u'<img src="{pagename}/add.png" />'.format (pagename=pagename) in text)
         self.assertTrue (u'<a href="{pagename}/wall1.gif">ссылка на файл</a>.'.format (pagename=pagename) in text)
         self.assertTrue (u'А этот __attach/ содержится в тексте' in text)
+
+
+    def testLinkChangeWiki (self):
+        """
+        Тест на то, что ссылки на прикрепленные файлы изменяютcя.
+        Проверка на вики-странице
+        """
+
+        fullpagename = u"Типы страниц/wiki-страница"
+        pagename = u"wiki-страница"
+
+        self.loader[self.pluginname].exportPage (page=self.root[fullpagename], 
+                outdir = self.outputdir,
+                imagesonly=True,
+                ignoreerrors=False)
+
+        text = u""
+
+        with open (os.path.join (self.outputdir, pagename + ".html") ) as fp:
+            text = unicode (fp.read(), "utf8")
+
+        self.assertTrue (u'<img src="{pagename}/add.png" />'.format (pagename=pagename) in text)
+        self.assertTrue (u'<a href="{pagename}/wall1.gif">ссылка на файл</a>'.format (pagename=pagename) in text)
+        self.assertTrue (u'А этот __attach/ содержится в тексте' in text)
+
+
+    def testExportTextPage (self):
+        """
+        Экспорт текстовой страницы
+        """
+        raise NotImplementedError
 
 
     def testFileExists (self):
@@ -129,3 +162,16 @@ class Export2HtmlTest (unittest.TestCase):
         Тест на то, что директория с прикрепленными файлами уже существует
         """
         raise NotImplementedError
+
+
+    def testInvalidFormat (self):
+        """
+        Проверка на попытку экспортировать страницу, которая не может быть сохранена в HTML (страница поиска)
+        """
+        raise NotImplementedError
+
+
+    def testHtmlNotFound (self):
+        """
+        Проверка на случай, если нет сформированного HTML-а
+        """

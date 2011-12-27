@@ -10,8 +10,9 @@ class Controller (object):
     """
     Класс контроллера для интерфейса плагина
     """
-    def __init__ (self, application):
+    def __init__ (self, owner, application):
         self.__application = application
+        self.__owner = owner
 
         self.__exportMenu = None
 

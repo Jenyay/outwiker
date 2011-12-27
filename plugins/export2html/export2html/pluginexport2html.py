@@ -3,6 +3,7 @@
 
 from outwiker.core.pluginbase import Plugin
 from .controller import Controller
+from .exporter import Exporter
 
 
 class PluginExport2Html (Plugin):
@@ -11,7 +12,7 @@ class PluginExport2Html (Plugin):
         application - экземпляр класса core.application.ApplicationParams
         """
         Plugin.__init__ (self, application)
-        self.__controller = Controller (application)
+        self.__controller = Controller (self, application)
 
 
     @property
@@ -49,3 +50,12 @@ class PluginExport2Html (Plugin):
         self.__controller.destroy()
 
     #############################################
+
+
+    def exportPage (self, 
+            page,
+            outdir,
+            imagesonly,
+            ignoreerrors=False):
+        exporter = Exporter()
+        exporter.exportPage (page, outdir, imagesonly)
