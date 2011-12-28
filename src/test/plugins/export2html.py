@@ -50,7 +50,7 @@ class Export2HtmlTest (unittest.TestCase):
         self.loader[self.pluginname].exportPage (page=self.root[pagename], 
                 outdir = self.outputdir,
                 imagesonly=False,
-                ignoreerrors=False)
+                alwaysOverwrite=False)
 
         self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename + ".html") ) )
         self.assertTrue (os.path.isfile (os.path.join (self.outputdir, pagename + ".html") ) )
@@ -67,7 +67,7 @@ class Export2HtmlTest (unittest.TestCase):
         self.loader[self.pluginname].exportPage (page=self.root[pagename], 
                 outdir = self.outputdir,
                 imagesonly=False,
-                ignoreerrors=False)
+                alwaysOverwrite=False)
 
         self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "__init__.py") ) )
         self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "source.py") ) )
@@ -86,7 +86,7 @@ class Export2HtmlTest (unittest.TestCase):
         self.loader[self.pluginname].exportPage (page=self.root[pagename], 
                 outdir = self.outputdir,
                 imagesonly=True,
-                ignoreerrors=False)
+                alwaysOverwrite=False)
 
         self.assertFalse (os.path.exists (os.path.join (self.outputdir, pagename, "__init__.py") ) )
         self.assertFalse (os.path.exists (os.path.join (self.outputdir, pagename, "source.py") ) )
@@ -107,7 +107,7 @@ class Export2HtmlTest (unittest.TestCase):
         self.loader[self.pluginname].exportPage (page=self.root[pagename], 
                 outdir = self.outputdir,
                 imagesonly=True,
-                ignoreerrors=False)
+                alwaysOverwrite=False)
 
         text = u""
 
@@ -131,7 +131,7 @@ class Export2HtmlTest (unittest.TestCase):
         self.loader[self.pluginname].exportPage (page=self.root[fullpagename], 
                 outdir = self.outputdir,
                 imagesonly=True,
-                ignoreerrors=False)
+                alwaysOverwrite=False)
 
         text = u""
 
@@ -153,7 +153,7 @@ class Export2HtmlTest (unittest.TestCase):
         self.loader[self.pluginname].exportPage (page=self.root[fullpagename], 
                 outdir = self.outputdir,
                 imagesonly=False,
-                ignoreerrors=False)
+                alwaysOverwrite=False)
 
         self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename + ".html") ) )
         self.assertTrue (os.path.isfile (os.path.join (self.outputdir, pagename + ".html") ) )
@@ -171,7 +171,7 @@ class Export2HtmlTest (unittest.TestCase):
         self.loader[self.pluginname].exportPage (page=self.root[fullpagename], 
                 outdir = self.outputdir,
                 imagesonly=False,
-                ignoreerrors=False)
+                alwaysOverwrite=False)
 
         self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "__init__.py") ) )
         self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "source.py") ) )
@@ -192,7 +192,7 @@ class Export2HtmlTest (unittest.TestCase):
         self.loader[self.pluginname].exportPage (page=self.root[fullpagename], 
                 outdir = self.outputdir,
                 imagesonly=True,
-                ignoreerrors=False)
+                alwaysOverwrite=False)
 
         text = u""
 
@@ -214,7 +214,7 @@ class Export2HtmlTest (unittest.TestCase):
         self.loader[self.pluginname].exportPage (page=self.root[fullpagename], 
                 outdir = self.outputdir,
                 imagesonly=True,
-                ignoreerrors=False)
+                alwaysOverwrite=False)
 
         text = u""
 
@@ -227,7 +227,7 @@ class Export2HtmlTest (unittest.TestCase):
         self.assertTrue (u'</body>' in text)
         self.assertTrue (u'<pre>' in text)
         self.assertTrue (u'</pre>' in text)
-        self.assertTrue (u'Текстовая страница' in text)
+        self.assertTrue (u'<title>Текстовая страница</title>' in text)
 
 
     def testAttachesImagesExportTextPage (self):
@@ -240,7 +240,7 @@ class Export2HtmlTest (unittest.TestCase):
         self.loader[self.pluginname].exportPage (page=self.root[fullpagename], 
                 outdir = self.outputdir,
                 imagesonly=True,
-                ignoreerrors=False)
+                alwaysOverwrite=False)
 
         self.assertFalse (os.path.exists (os.path.join (self.outputdir, pagename, "__init__.py") ) )
         self.assertFalse (os.path.exists (os.path.join (self.outputdir, pagename, "source.py") ) )
@@ -258,26 +258,19 @@ class Export2HtmlTest (unittest.TestCase):
         self.loader[self.pluginname].exportPage (page=self.root[pagename], 
                 outdir = self.outputdir,
                 imagesonly=False,
-                ignoreerrors=False)
+                alwaysOverwrite=False)
 
         self.assertRaises (BaseException, 
                 self.loader[self.pluginname].exportPage, 
                 page=self.root[pagename], 
                 outdir = self.outputdir,
                 imagesonly=False,
-                ignoreerrors=False)
+                alwaysOverwrite=False)
 
         self.loader[self.pluginname].exportPage (page=self.root[pagename], 
                 outdir = self.outputdir,
                 imagesonly=False,
-                ignoreerrors=True)
-
-    
-    def testDirExists (self):
-        """
-        Тест на то, что директория с прикрепленными файлами уже существует
-        """
-        raise NotImplementedError
+                alwaysOverwrite=True)
 
 
     def testInvalidFormat (self):
@@ -291,15 +284,30 @@ class Export2HtmlTest (unittest.TestCase):
                 page=self.root[pagename], 
                 outdir = self.outputdir,
                 imagesonly=False,
-                ignoreerrors=False)
-
-        self.loader[self.pluginname].exportPage (page=self.root[pagename], 
-                outdir = self.outputdir,
-                imagesonly=False,
-                ignoreerrors=True)
+                alwaysOverwrite=False)
 
 
     def testHtmlNotFound (self):
         """
         Проверка на случай, если нет сформированного HTML-а
         """
+        pagename = u"Страница 1"
+
+        htmlname = u"__content.html"
+        tmpname = u"__tmp.html"
+
+        page = self.root[pagename]
+
+        srcname = os.path.join (page.path, htmlname)
+        newname = os.path.join (page.path, tmpname)
+
+        os.rename (srcname, newname)
+
+        self.assertRaises (BaseException, 
+                self.loader[self.pluginname].exportPage, 
+                page=page, 
+                outdir = self.outputdir,
+                imagesonly=False,
+                alwaysOverwrite=False)
+
+        os.rename (newname, srcname)

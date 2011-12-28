@@ -56,6 +56,5 @@ class PluginExport2Html (Plugin):
             page,
             outdir,
             imagesonly,
-            ignoreerrors=False):
-        exporter = Exporter()
-        exporter.exportPage (page, outdir, imagesonly, ignoreerrors)
+            alwaysOverwrite=False):
+        Exporter.exportPage (page, outdir, imagesonly, alwaysOverwrite)
