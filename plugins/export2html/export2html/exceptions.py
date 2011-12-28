@@ -13,10 +13,16 @@ class HtmlNotFoundError (Export2HtmlException):
     pass
 
 
-class FileExistsAlready (Export2HtmlException):
+class FileAlreadyExists (Export2HtmlException):
     """
     Срабатывает, если сохраняемый файл уже существует
     """
     pass
 
+
+class InvalidPageFormat (Export2HtmlException):
+    """
+    Срабатывает, если данную страницу невозможно преобразовать в HTML
+    """
+    pass
 

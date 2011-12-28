@@ -143,18 +143,134 @@ class Export2HtmlTest (unittest.TestCase):
         self.assertTrue (u'А этот __attach/ содержится в тексте' in text)
 
 
-    def testExportTextPage (self):
+    def testFilesExportTextPage (self):
         """
         Экспорт текстовой страницы
         """
-        raise NotImplementedError
+        fullpagename = u"Типы страниц/Текстовая страница"
+        pagename = u"Текстовая страница"
+
+        self.loader[self.pluginname].exportPage (page=self.root[fullpagename], 
+                outdir = self.outputdir,
+                imagesonly=False,
+                ignoreerrors=False)
+
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename + ".html") ) )
+        self.assertTrue (os.path.isfile (os.path.join (self.outputdir, pagename + ".html") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename) ) )
+        self.assertTrue (os.path.isdir (os.path.join (self.outputdir, pagename) ) )
+
+
+    def testAttachesExportTextPage (self):
+        """
+        Экспорт текстовой страницы
+        """
+        fullpagename = u"Типы страниц/Текстовая страница"
+        pagename = u"Текстовая страница"
+
+        self.loader[self.pluginname].exportPage (page=self.root[fullpagename], 
+                outdir = self.outputdir,
+                imagesonly=False,
+                ignoreerrors=False)
+
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "__init__.py") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "source.py") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "anchor.png") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "application.png") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "box.png") ) )
+
+
+    def testHtmlFromTextPage (self):
+        """
+        Тест на то, что ссылки на прикрепленные файлы изменяютcя.
+        Проверка на вики-странице
+        """
+
+        fullpagename = u"Типы страниц/Текстовая страница"
+        pagename = u"Текстовая страница"
+
+        self.loader[self.pluginname].exportPage (page=self.root[fullpagename], 
+                outdir = self.outputdir,
+                imagesonly=True,
+                ignoreerrors=False)
+
+        text = u""
+
+        with open (os.path.join (self.outputdir, pagename + ".html") ) as fp:
+            text = unicode (fp.read(), "utf8")
+
+        self.assertTrue (u'&lt;a href="http://jenyay.net"&gt;bla-bla-bla&lt;/a&gt;' in text)
+
+
+    def testTextTemplate (self):
+        """
+        Тест на то, что ссылки на прикрепленные файлы изменяютcя.
+        Проверка на вики-странице
+        """
+
+        fullpagename = u"Типы страниц/Текстовая страница"
+        pagename = u"Текстовая страница"
+
+        self.loader[self.pluginname].exportPage (page=self.root[fullpagename], 
+                outdir = self.outputdir,
+                imagesonly=True,
+                ignoreerrors=False)
+
+        text = u""
+
+        with open (os.path.join (self.outputdir, pagename + ".html") ) as fp:
+            text = unicode (fp.read(), "utf8")
+
+        self.assertTrue (u'<head>' in text)
+        self.assertTrue (u'</head>' in text)
+        self.assertTrue (u'<body>' in text)
+        self.assertTrue (u'</body>' in text)
+        self.assertTrue (u'<pre>' in text)
+        self.assertTrue (u'</pre>' in text)
+        self.assertTrue (u'Текстовая страница' in text)
+
+
+    def testAttachesImagesExportTextPage (self):
+        """
+        Экспорт текстовой страницы
+        """
+        fullpagename = u"Типы страниц/Текстовая страница"
+        pagename = u"Текстовая страница"
+
+        self.loader[self.pluginname].exportPage (page=self.root[fullpagename], 
+                outdir = self.outputdir,
+                imagesonly=True,
+                ignoreerrors=False)
+
+        self.assertFalse (os.path.exists (os.path.join (self.outputdir, pagename, "__init__.py") ) )
+        self.assertFalse (os.path.exists (os.path.join (self.outputdir, pagename, "source.py") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "anchor.png") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "application.png") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "box.png") ) )
 
 
     def testFileExists (self):
         """
         Тест на то, что создаваемый файл уже может существовать
         """
-        raise NotImplementedError
+        pagename = u"Страница 1"
+
+        self.loader[self.pluginname].exportPage (page=self.root[pagename], 
+                outdir = self.outputdir,
+                imagesonly=False,
+                ignoreerrors=False)
+
+        self.assertRaises (BaseException, 
+                self.loader[self.pluginname].exportPage, 
+                page=self.root[pagename], 
+                outdir = self.outputdir,
+                imagesonly=False,
+                ignoreerrors=False)
+
+        self.loader[self.pluginname].exportPage (page=self.root[pagename], 
+                outdir = self.outputdir,
+                imagesonly=False,
+                ignoreerrors=True)
 
     
     def testDirExists (self):
@@ -168,7 +284,19 @@ class Export2HtmlTest (unittest.TestCase):
         """
         Проверка на попытку экспортировать страницу, которая не может быть сохранена в HTML (страница поиска)
         """
-        raise NotImplementedError
+        pagename = u"Типы страниц/Страница поиска"
+
+        self.assertRaises (BaseException, 
+                self.loader[self.pluginname].exportPage, 
+                page=self.root[pagename], 
+                outdir = self.outputdir,
+                imagesonly=False,
+                ignoreerrors=False)
+
+        self.loader[self.pluginname].exportPage (page=self.root[pagename], 
+                outdir = self.outputdir,
+                imagesonly=False,
+                ignoreerrors=True)
 
 
     def testHtmlNotFound (self):

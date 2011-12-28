@@ -58,4 +58,4 @@ class PluginExport2Html (Plugin):
             imagesonly,
             ignoreerrors=False):
         exporter = Exporter()
-        exporter.exportPage (page, outdir, imagesonly)
+        exporter.exportPage (page, outdir, imagesonly, ignoreerrors)

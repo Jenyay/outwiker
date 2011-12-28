@@ -9,7 +9,7 @@ from outwiker.core.attachment import Attachment
 
 from BeautifulSoup import BeautifulSoup
 
-from .exceptions import HtmlNotFoundError
+from .exceptions import HtmlNotFoundError, FileAlreadyExists, InvalidPageFormat
 
 
 class Exporter (object):
@@ -24,17 +24,23 @@ class Exporter (object):
     def exportPage (self, 
             page,
             outdir,
-            imagesonly):
+            imagesonly,
+            ignoreerrors):
         assert page != None
+
+        func = None
 
         if page.getTypeString() == "html" or page.getTypeString() == "wiki":
             func = self.__exportHtml
         elif page.getTypeString() == "text":
             func = self.__exportText
         else:
-            return
+            if ignoreerrors:
+                return
+            else:
+                raise InvalidPageFormat (_(u"Invalid page format"))
 
-        func (page, outdir, imagesonly)
+        func (page, outdir, imagesonly, ignoreerrors)
 
 
     def __prepareContent (self, content, pagetitle):
@@ -61,7 +67,7 @@ class Exporter (object):
                 # print tag[attrib]
 
 
-    def __exportHtml (self, page, outdir, imagesonly):
+    def __exportHtml (self, page, outdir, imagesonly, ignoreerrors):
         assert (page.getTypeString() == "html" or 
                 page.getTypeString() == "wiki" )
 
@@ -70,12 +76,18 @@ class Exporter (object):
             with open (os.path.join (page.path, self.__htmlFileName) ) as fp:
                 content = unicode (fp.read(), "utf8")
         except IOError:
-            raise HtmlNotFoundError (_(u"{0} not found").format (self.__htmlFileName) )
+            if not ignoreerrors:
+                raise HtmlNotFoundError (_(u"{0} not found").format (self.__htmlFileName) )
+            else:
+                return
 
         changedContent = self.__prepareContent (content, page.title)
 
         exportfile = os.path.join (outdir, page.title + ".html")
         exportdir = os.path.join (outdir, page.title)
+
+        if not ignoreerrors and os.path.exists (exportfile):
+            raise FileAlreadyExists (_(u"File {0} already exists").format (exportfile) )
 
         with open (exportfile, "wb") as fp:
             fp.write (changedContent.encode ("utf8"))
@@ -106,6 +118,6 @@ class Exporter (object):
         return isimage
 
 
-    def __exportText (self, page, outdir, imagesonly):
+    def __exportText (self, page, outdir, imagesonly, ignoreerrors):
         assert page.getTypeString() == "text"
         pass
