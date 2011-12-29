@@ -32,10 +32,10 @@ class BaseExporter (object):
         with open (exportfile, "wb") as fp:
             fp.write (content.encode ("utf8"))
 
-        self.__exportAttaches (page, exportdir, imagesonly)
+        self.__exportAttaches (page, exportdir, imagesonly, alwaisOverwrite)
 
 
-    def __exportAttaches (self, page, exportdir, imagesonly):
+    def __exportAttaches (self, page, exportdir, imagesonly, alwaisOverwrite):
         """
         Экспортировать вложения
         """
@@ -47,7 +47,40 @@ class BaseExporter (object):
         for fname in attach.attachmentFull:
             if not imagesonly or self.__isImage (fname):
                 newpath = os.path.join (exportdir, os.path.basename (fname) )
-                shutil.copy (fname, newpath)
+                self.__checkForExists (newpath, alwaisOverwrite)
+                self.__copy (fname, newpath)
+
+
+    def __delete (self, path):
+        """
+        Удалить файл или директорию
+        """
+        if os.path.isdir (path):
+            shutil.rmtree (path)
+        else:
+            os.remove (path)
+
+
+    def __copy (self, src, dsc):
+        """
+        Скопировать файл или директорию
+        """
+        if os.path.isdir (src):
+            shutil.copytree (src, dsc)
+        else:
+            shutil.copy (src, dsc)
+
+
+    def __checkForExists (self, path, alwaisOverwrite):
+        """
+        Проверка на то, что файл существует.
+        Если alwaisOverwrite == True, то существующий файл удаляется, иначе бросается исключение
+        """
+        if os.path.exists (path):
+            if not alwaisOverwrite:
+                raise FileAlreadyExists (_(u"File {0} already exists").format (path) )
+            else:
+                self.__delete (path)
 
 
     def __isImage (self, fname):
