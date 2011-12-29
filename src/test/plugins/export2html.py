@@ -138,9 +138,27 @@ class Export2HtmlTest (unittest.TestCase):
         with open (os.path.join (self.outputdir, pagename + ".html") ) as fp:
             text = unicode (fp.read(), "utf8")
 
-        self.assertTrue (u'<img src="{pagename}/add.png" />'.format (pagename=pagename) in text)
-        self.assertTrue (u'<a href="{pagename}/wall1.gif">ссылка на файл</a>'.format (pagename=pagename) in text)
+        self.assertTrue (u'<img src="{pagename}/add.png" />'.format (pagename=pagename) in text.lower())
+        self.assertTrue (u'<a href="{pagename}/wall1.gif">ссылка на файл</a>'.format (pagename=pagename) in text.lower())
         self.assertTrue (u'А этот __attach/ содержится в тексте' in text)
+        self.assertTrue (u'<a href="{pagename}/image.jpg"><img src="{pagename}/__thumb/th_maxsize_250_image.jpg" /></a>'.format (pagename=pagename) in text.lower())
+
+
+
+    def testWikiPageThumb (self):
+        """
+        Проверка на то, что сохраняется папка __thumb
+        """
+        fullpagename = u"Типы страниц/wiki-страница"
+        pagename = u"wiki-страница"
+
+        self.loader[self.pluginname].exportPage (page=self.root[fullpagename], 
+                outdir = self.outputdir,
+                imagesonly=True,
+                alwaysOverwrite=False)
+
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "image.jpg") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "__thumb") ) )
 
 
     def testFilesExportTextPage (self):

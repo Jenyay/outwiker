@@ -14,7 +14,7 @@ class Exporter (object):
     def exportPage (page,
             outdir,
             imagesonly,
-            alwaisOverwrite):
+            alwaysOverwrite):
         assert page != None
 
         exporter = None
@@ -27,4 +27,4 @@ class Exporter (object):
             raise InvalidPageFormat (_(u"Invalid page format"))
 
         assert exporter != None
-        exporter.export (page, outdir, imagesonly, alwaisOverwrite)
+        exporter.export (page, outdir, imagesonly, alwaysOverwrite)

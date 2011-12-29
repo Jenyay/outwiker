@@ -7,6 +7,7 @@ from outwiker.core.commands import MessageBox
 
 from .exportmenu import ExportMenuFactory
 from .exceptions import FileAlreadyExists
+from .exportdialog import ExportDialog
 
 
 class Controller (object):
@@ -43,18 +44,16 @@ class Controller (object):
                     wx.OK | wx.ICON_ERROR )
             return
 
-
-        dlg = wx.DirDialog (self.__application.mainWindow)
+        dlg = ExportDialog (self.__application.mainWindow)
         if dlg.ShowModal() == wx.ID_OK:
+            pass
             try:
                 self.__owner.exportPage (self.__application.selectedPage,
-                        dlg.GetPath(),
-                        False,
-                        False)
-            except FileAlreadyExists, error:
-                return
+                        dlg.path,
+                        imagesonly=dlg.imagesOnly,
+                        alwaysOverwrite=dlg.overwrite)
             except BaseException, error:
-                print error
+                # print error
                 MessageBox (error.message, 
                     _(u"Error"),
                     wx.OK | wx.ICON_ERROR )

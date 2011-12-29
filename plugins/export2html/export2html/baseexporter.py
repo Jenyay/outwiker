@@ -91,4 +91,7 @@ class BaseExporter (object):
                 isimage = True
                 break
 
+        if os.path.basename (fname).lower() == u"__thumb":
+            isimage = True
+
         return isimage
