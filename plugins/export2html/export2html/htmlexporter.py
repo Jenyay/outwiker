@@ -13,31 +13,31 @@ class HtmlExporter (BaseExporter):
     """
     Класс для экспорта HTML- и викистраниц
     """
-    def export (self, page, outdir, imagesonly, alwaisOverwrite):
+    def export (self, outdir, imagesonly, alwaysOverwrite):
         """
         Экспорт HTML-страниц
         """
-        assert (page.getTypeString() == "html" or 
-                page.getTypeString() == "wiki" )
+        assert (self._page.getTypeString() == "html" or 
+                self._page.getTypeString() == "wiki" )
 
         self.__htmlFileName = u"__content.html"
 
         # Чтение файла с содержимым
         try:
-            with open (os.path.join (page.path, self.__htmlFileName) ) as fp:
+            with open (os.path.join (self._page.path, self.__htmlFileName) ) as fp:
                 content = unicode (fp.read(), "utf8")
         except IOError:
             raise HtmlNotFoundError (_(u"{0} not found").format (self.__htmlFileName) )
 
-        changedContent = self.__prepareHtmlContent (content, page.title)
-        exportname = page.title
+        changedContent = self.__prepareHtmlContent (content, self._page.title)
+        exportname = self._page.title
 
-        self._exportContent (page, 
+        self._exportContent (self._page, 
                 changedContent,
                 exportname,
                 outdir,
                 imagesonly,
-                alwaisOverwrite)
+                alwaysOverwrite)
 
 
     def __replaceAttaches (self, tags, attrib, pagetitle):

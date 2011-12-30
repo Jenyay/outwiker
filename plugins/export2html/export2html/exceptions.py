@@ -26,3 +26,9 @@ class InvalidPageFormat (Export2HtmlException):
     """
     pass
 
+
+class FolderNotExists (Export2HtmlException):
+    """
+    Срабатывает, если нет папки, куда надо сохранить страницу
+    """
+    pass

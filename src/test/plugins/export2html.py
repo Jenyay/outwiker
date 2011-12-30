@@ -47,8 +47,8 @@ class Export2HtmlTest (unittest.TestCase):
         """
         pagename = u"Страница 1"
 
-        self.loader[self.pluginname].exportPage (page=self.root[pagename], 
-                outdir = self.outputdir,
+        exporter = self.loader[self.pluginname].exporterFactory.getExporter (self.root[pagename])
+        exporter.export (outdir = self.outputdir,
                 imagesonly=False,
                 alwaysOverwrite=False)
 
@@ -63,9 +63,8 @@ class Export2HtmlTest (unittest.TestCase):
         Тест на то, что прикрепленные файлы копируются
         """
         pagename = u"Страница 1"
-
-        self.loader[self.pluginname].exportPage (page=self.root[pagename], 
-                outdir = self.outputdir,
+        exporter = self.loader[self.pluginname].exporterFactory.getExporter (self.root[pagename])
+        exporter.export (outdir = self.outputdir,
                 imagesonly=False,
                 alwaysOverwrite=False)
 
@@ -83,8 +82,8 @@ class Export2HtmlTest (unittest.TestCase):
         """
         pagename = u"Страница 1"
 
-        self.loader[self.pluginname].exportPage (page=self.root[pagename], 
-                outdir = self.outputdir,
+        exporter = self.loader[self.pluginname].exporterFactory.getExporter (self.root[pagename])
+        exporter.export (outdir = self.outputdir,
                 imagesonly=True,
                 alwaysOverwrite=False)
 
@@ -101,11 +100,10 @@ class Export2HtmlTest (unittest.TestCase):
         Тест на то, что ссылки на прикрепленные файлы изменяютcя.
         Проверка на HTML-странице
         """
-
         pagename = u"Страница 1"
 
-        self.loader[self.pluginname].exportPage (page=self.root[pagename], 
-                outdir = self.outputdir,
+        exporter = self.loader[self.pluginname].exporterFactory.getExporter (self.root[pagename])
+        exporter.export (outdir = self.outputdir,
                 imagesonly=True,
                 alwaysOverwrite=False)
 
@@ -124,12 +122,11 @@ class Export2HtmlTest (unittest.TestCase):
         Тест на то, что ссылки на прикрепленные файлы изменяютcя.
         Проверка на вики-странице
         """
-
         fullpagename = u"Типы страниц/wiki-страница"
         pagename = u"wiki-страница"
 
-        self.loader[self.pluginname].exportPage (page=self.root[fullpagename], 
-                outdir = self.outputdir,
+        exporter = self.loader[self.pluginname].exporterFactory.getExporter (self.root[fullpagename])
+        exporter.export (outdir = self.outputdir,
                 imagesonly=True,
                 alwaysOverwrite=False)
 
@@ -152,8 +149,8 @@ class Export2HtmlTest (unittest.TestCase):
         fullpagename = u"Типы страниц/wiki-страница"
         pagename = u"wiki-страница"
 
-        self.loader[self.pluginname].exportPage (page=self.root[fullpagename], 
-                outdir = self.outputdir,
+        exporter = self.loader[self.pluginname].exporterFactory.getExporter (self.root[fullpagename])
+        exporter.export (outdir = self.outputdir,
                 imagesonly=True,
                 alwaysOverwrite=False)
 
@@ -168,8 +165,8 @@ class Export2HtmlTest (unittest.TestCase):
         fullpagename = u"Типы страниц/Текстовая страница"
         pagename = u"Текстовая страница"
 
-        self.loader[self.pluginname].exportPage (page=self.root[fullpagename], 
-                outdir = self.outputdir,
+        exporter = self.loader[self.pluginname].exporterFactory.getExporter (self.root[fullpagename])
+        exporter.export (outdir = self.outputdir,
                 imagesonly=False,
                 alwaysOverwrite=False)
 
@@ -186,8 +183,8 @@ class Export2HtmlTest (unittest.TestCase):
         fullpagename = u"Типы страниц/Текстовая страница"
         pagename = u"Текстовая страница"
 
-        self.loader[self.pluginname].exportPage (page=self.root[fullpagename], 
-                outdir = self.outputdir,
+        exporter = self.loader[self.pluginname].exporterFactory.getExporter (self.root[fullpagename])
+        exporter.export (outdir = self.outputdir,
                 imagesonly=False,
                 alwaysOverwrite=False)
 
@@ -203,12 +200,11 @@ class Export2HtmlTest (unittest.TestCase):
         Тест на то, что ссылки на прикрепленные файлы изменяютcя.
         Проверка на вики-странице
         """
-
         fullpagename = u"Типы страниц/Текстовая страница"
         pagename = u"Текстовая страница"
 
-        self.loader[self.pluginname].exportPage (page=self.root[fullpagename], 
-                outdir = self.outputdir,
+        exporter = self.loader[self.pluginname].exporterFactory.getExporter (self.root[fullpagename])
+        exporter.export (outdir = self.outputdir,
                 imagesonly=True,
                 alwaysOverwrite=False)
 
@@ -225,12 +221,12 @@ class Export2HtmlTest (unittest.TestCase):
         Тест на то, что ссылки на прикрепленные файлы изменяютcя.
         Проверка на вики-странице
         """
-
         fullpagename = u"Типы страниц/Текстовая страница"
         pagename = u"Текстовая страница"
 
-        self.loader[self.pluginname].exportPage (page=self.root[fullpagename], 
-                outdir = self.outputdir,
+        exporter = self.loader[self.pluginname].exporterFactory.getExporter (self.root[fullpagename])
+
+        exporter.export (outdir = self.outputdir,
                 imagesonly=True,
                 alwaysOverwrite=False)
 
@@ -255,8 +251,8 @@ class Export2HtmlTest (unittest.TestCase):
         fullpagename = u"Типы страниц/Текстовая страница"
         pagename = u"Текстовая страница"
 
-        self.loader[self.pluginname].exportPage (page=self.root[fullpagename], 
-                outdir = self.outputdir,
+        exporter = self.loader[self.pluginname].exporterFactory.getExporter (self.root[fullpagename])
+        exporter.export (outdir = self.outputdir,
                 imagesonly=True,
                 alwaysOverwrite=False)
 
@@ -272,21 +268,19 @@ class Export2HtmlTest (unittest.TestCase):
         Тест на то, что создаваемый файл уже может существовать
         """
         pagename = u"Страница 1"
+        exporter = self.loader[self.pluginname].exporterFactory.getExporter (self.root[pagename])
 
-        self.loader[self.pluginname].exportPage (page=self.root[pagename], 
-                outdir = self.outputdir,
+        exporter.export (outdir = self.outputdir,
                 imagesonly=False,
                 alwaysOverwrite=False)
 
         self.assertRaises (BaseException, 
-                self.loader[self.pluginname].exportPage, 
-                page=self.root[pagename], 
+                exporter.export, 
                 outdir = self.outputdir,
                 imagesonly=False,
                 alwaysOverwrite=False)
 
-        self.loader[self.pluginname].exportPage (page=self.root[pagename], 
-                outdir = self.outputdir,
+        exporter.export (outdir = self.outputdir,
                 imagesonly=False,
                 alwaysOverwrite=True)
 
@@ -298,11 +292,8 @@ class Export2HtmlTest (unittest.TestCase):
         pagename = u"Типы страниц/Страница поиска"
 
         self.assertRaises (BaseException, 
-                self.loader[self.pluginname].exportPage, 
-                page=self.root[pagename], 
-                outdir = self.outputdir,
-                imagesonly=False,
-                alwaysOverwrite=False)
+                self.loader[self.pluginname].exporterFactory.getExporter, 
+                page=self.root[pagename])
 
 
     def testHtmlNotFound (self):
@@ -321,9 +312,10 @@ class Export2HtmlTest (unittest.TestCase):
 
         os.rename (srcname, newname)
 
+        exporter = self.loader[self.pluginname].exporterFactory.getExporter (self.root[pagename])
+
         self.assertRaises (BaseException, 
-                self.loader[self.pluginname].exportPage, 
-                page=page, 
+                exporter.export, 
                 outdir = self.outputdir,
                 imagesonly=False,
                 alwaysOverwrite=False)

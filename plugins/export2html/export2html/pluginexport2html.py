@@ -3,7 +3,7 @@
 
 from outwiker.core.pluginbase import Plugin
 from .controller import Controller
-from .exporter import Exporter
+from .exporterfactory import ExporterFactory
 
 
 class PluginExport2Html (Plugin):
@@ -52,9 +52,9 @@ class PluginExport2Html (Plugin):
     #############################################
 
 
-    def exportPage (self, 
-            page,
-            outdir,
-            imagesonly,
-            alwaysOverwrite=False):
-        Exporter.exportPage (page, outdir, imagesonly, alwaysOverwrite)
+    @property
+    def exporterFactory (self):
+        """
+        Возвращает класс Exporter, чтобы его можно было легче тестировать при загрузке плагина в реальном времени
+        """
+        return ExporterFactory

@@ -4,15 +4,27 @@
 import os
 import os.path
 import shutil
+from abc import ABCMeta, abstractmethod
 
 from outwiker.core.attachment import Attachment
-from .exceptions import FileAlreadyExists
+from .exceptions import FileAlreadyExists, FolderNotExists
 
 
 class BaseExporter (object):
     """
     Базовый класс для экспорта разных типов страниц
     """
+    __meta__ = ABCMeta
+
+    def __init__ (self, page):
+        self._page = page
+
+
+    @abstractmethod
+    def export (self, outdir, imagesonly, alwaisOverwrite):
+        pass
+
+
     def _exportContent (self, 
             page, 
             content, 
@@ -28,6 +40,9 @@ class BaseExporter (object):
 
         if not alwaisOverwrite and os.path.exists (exportfile):
             raise FileAlreadyExists (_(u"File {0} already exists").format (exportfile) )
+
+        if not os.path.exists (outdir):
+            raise FolderNotExists (_(u"Folder {0} not exists").format (outdir))
 
         with open (exportfile, "wb") as fp:
             fp.write (content.encode ("utf8"))

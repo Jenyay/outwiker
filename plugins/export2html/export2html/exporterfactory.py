@@ -6,25 +6,20 @@ from .htmlexporter import HtmlExporter
 from .textexporter import TextExporter
 
 
-class Exporter (object):
+class ExporterFactory (object):
     """
     Класс для экспорта страниц в HTML
     """
     @staticmethod
-    def exportPage (page,
-            outdir,
-            imagesonly,
-            alwaysOverwrite):
-        assert page != None
-
+    def getExporter (page):
         exporter = None
 
         if page.getTypeString() == "html" or page.getTypeString() == "wiki":
-            exporter = HtmlExporter()
+            exporter = HtmlExporter(page)
         elif page.getTypeString() == "text":
-            exporter = TextExporter()
+            exporter = TextExporter(page)
         else:
-            raise InvalidPageFormat (_(u"Invalid page format"))
+            raise InvalidPageFormat (_(u"Invalid page type"))
 
         assert exporter != None
-        exporter.export (page, outdir, imagesonly, alwaysOverwrite)
+        return exporter

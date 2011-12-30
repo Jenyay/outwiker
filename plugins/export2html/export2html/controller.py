@@ -6,8 +6,7 @@ import wx
 from outwiker.core.commands import MessageBox
 
 from .exportmenu import ExportMenuFactory
-from .exceptions import FileAlreadyExists
-from .exportdialog import ExportDialog
+from .exportpagedialog import ExportPageDialog
 
 
 class Controller (object):
@@ -44,21 +43,8 @@ class Controller (object):
                     wx.OK | wx.ICON_ERROR )
             return
 
-        dlg = ExportDialog (self.__application.mainWindow)
-        if dlg.ShowModal() == wx.ID_OK:
-            pass
-            try:
-                self.__owner.exportPage (self.__application.selectedPage,
-                        dlg.path,
-                        imagesonly=dlg.imagesOnly,
-                        alwaysOverwrite=dlg.overwrite)
-            except BaseException, error:
-                # print error
-                MessageBox (error.message, 
-                    _(u"Error"),
-                    wx.OK | wx.ICON_ERROR )
-                return
-
+        dlg = ExportPageDialog (self.__application.mainWindow, self.__application.selectedPage)
+        dlg.ShowModal()
 
 
     def __onBranchExport (self, event):

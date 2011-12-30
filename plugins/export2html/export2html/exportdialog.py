@@ -1,9 +1,13 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
+from abc import abstractmethod, ABCMeta
+
 import wx
 
 class ExportDialog (wx.Dialog):
+    __metaclass__ = ABCMeta
+
     def __init__ (self, parent):
         wx.Dialog.__init__ (self, parent, title=_(u"Export"), style=wx.DEFAULT_DIALOG_STYLE)
 
@@ -22,10 +26,12 @@ class ExportDialog (wx.Dialog):
 
         self.__overwriteCheckBox = wx.CheckBox (self, -1, _(u"Overwrite Existing Files"))
         self.__imagesOnlyCheckBox = wx.CheckBox (self, -1, _(u"Attaches. Save Only Images"))
+        self.__buttonsSizer = self.CreateButtonSizer (wx.OK | wx.CANCEL)
 
         self.__layout()
 
         self.Bind (wx.EVT_BUTTON, self.__onSelFolder, self.__selFolderButton)
+        self.Bind (wx.EVT_BUTTON, self._onOk, id=wx.ID_OK)
 
 
     @property
@@ -43,6 +49,11 @@ class ExportDialog (wx.Dialog):
         return self.__imagesOnlyCheckBox.GetValue()
 
 
+    @abstractmethod
+    def _onOk (self, event):
+        pass
+
+
     def __onSelFolder (self, event):
         dlg = wx.DirDialog (self)
         if dlg.ShowModal() == wx.ID_OK:
@@ -55,7 +66,6 @@ class ExportDialog (wx.Dialog):
         folderSizer.Add (self.__folderTextCtrl, flag=wx.EXPAND | wx.ALIGN_CENTER_VERTICAL)
         folderSizer.Add (self.__selFolderButton, flag=wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_LEFT)
 
-        buttonsSizer = self.CreateButtonSizer (wx.OK | wx.CANCEL)
 
         mainSizer = wx.FlexGridSizer (rows=0, cols=1)
         mainSizer.AddGrowableCol (0)
@@ -63,7 +73,7 @@ class ExportDialog (wx.Dialog):
         mainSizer.Add (folderSizer, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND, border=2)
         mainSizer.Add (self.__overwriteCheckBox, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
         mainSizer.Add (self.__imagesOnlyCheckBox, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
-        mainSizer.Add (buttonsSizer, flag=wx.ALL | wx.ALIGN_RIGHT, border=2)
+        mainSizer.Add (self.__buttonsSizer, flag=wx.ALL | wx.ALIGN_RIGHT, border=2)
 
         self.SetSizer (mainSizer)
         self.Fit()
