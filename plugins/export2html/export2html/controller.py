@@ -7,6 +7,8 @@ from outwiker.core.commands import MessageBox
 
 from .exportmenu import ExportMenuFactory
 from .exportpagedialog import ExportPageDialog
+from .exceptions import InvalidPageFormat
+from .exporterfactory import ExporterFactory
 
 
 class Controller (object):
@@ -43,7 +45,15 @@ class Controller (object):
                     wx.OK | wx.ICON_ERROR )
             return
 
-        dlg = ExportPageDialog (self.__application.mainWindow, self.__application.selectedPage)
+        try:
+            exporter = ExporterFactory.getExporter (self.__application.selectedPage)
+        except InvalidPageFormat, error:
+            MessageBox (_(u"This page type not support export to HTML"), 
+                    _(u"Error"),
+                    wx.OK | wx.ICON_ERROR )
+            return
+
+        dlg = ExportPageDialog (self.__application.mainWindow, exporter)
         dlg.ShowModal()
 
 
