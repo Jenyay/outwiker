@@ -13,7 +13,7 @@ from outwiker.core.application import Application
 class Export2HtmlTest (unittest.TestCase):
     def setUp(self):
         self.outputdir = "../test/temp"
-        self.pluginname = u"Export to HTML"
+        self.pluginname = u"Export2Html"
 
         self.path = u"../test/samplewiki"
         self.root = WikiDocument.load (self.path)

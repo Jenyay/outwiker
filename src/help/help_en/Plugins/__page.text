@@ -1,0 +1,5 @@
+Additional plugins can be found [[here -> http://jenyay.net/Outwiker/Plugins]].
+
+To install the plug-ins need to unzip the plugin archive to ''plugins'' folder next to the outwiker.exe or to .outwiker\plugins directory of the user (under Windows XP - C:\Documents and Settings\USERNAME\.outwiker\plugins, under Linux - ~/.outwiker/plugins).
+
+If you write your own plugin and you want it to be posted on the page of plugins, send it to email [[mailto: jenyay.ilin @ gmail.com | jenyay.ilin @ gmail.com]] with a detailed description. 
