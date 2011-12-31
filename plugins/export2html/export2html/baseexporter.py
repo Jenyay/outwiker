@@ -20,8 +20,13 @@ class BaseExporter (object):
         self._page = page
 
 
+    @property
+    def page (self):
+        return self._page
+
+
     @abstractmethod
-    def export (self, outdir, imagesonly, alwaisOverwrite):
+    def export (self, outdir, exportname, imagesonly, alwaisOverwrite):
         pass
 
 

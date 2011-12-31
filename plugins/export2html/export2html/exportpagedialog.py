@@ -20,6 +20,7 @@ class ExportPageDialog (ExportDialog):
     def _onOk (self, event):
         try:
             self.__exporter.export (self.path, 
+                    self.__exporter.page.title,
                     self.imagesOnly, 
                     self.overwrite)
 

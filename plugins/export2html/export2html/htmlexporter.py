@@ -13,7 +13,7 @@ class HtmlExporter (BaseExporter):
     """
     Класс для экспорта HTML- и викистраниц
     """
-    def export (self, outdir, imagesonly, alwaysOverwrite):
+    def export (self, outdir, exportname, imagesonly, alwaysOverwrite):
         """
         Экспорт HTML-страниц
         """
@@ -29,8 +29,7 @@ class HtmlExporter (BaseExporter):
         except IOError:
             raise HtmlNotFoundError (_(u"{0} not found").format (self.__htmlFileName) )
 
-        changedContent = self.__prepareHtmlContent (content, self._page.title)
-        exportname = self._page.title
+        changedContent = self.__prepareHtmlContent (content, exportname)
 
         self._exportContent (self._page, 
                 changedContent,
@@ -40,7 +39,7 @@ class HtmlExporter (BaseExporter):
                 alwaysOverwrite)
 
 
-    def __replaceAttaches (self, tags, attrib, pagetitle):
+    def __replaceAttaches (self, tags, attrib, exportname):
         """
         Заменить ссылки на папку __attach на новую папку с вложениями
         """
@@ -48,19 +47,19 @@ class HtmlExporter (BaseExporter):
 
         for tag in tags:
             if tag.has_key (attrib) and tag[attrib].startswith (self.__attachDir):
-                tag[attrib] = tag[attrib].replace (self.__attachDir, pagetitle, 1)
+                tag[attrib] = tag[attrib].replace (self.__attachDir, exportname, 1)
 
 
-    def __prepareHtmlContent (self, content, pagetitle):
+    def __prepareHtmlContent (self, content, exportname):
         """
         Заменить ссылки на прикрепленные файлы
         Используется при экспорте HTML-страниц
         """
         soup = BeautifulSoup (content)
         images = soup.findAll ("img")
-        self.__replaceAttaches (images, "src", pagetitle)
+        self.__replaceAttaches (images, "src", exportname)
 
         links = soup.findAll ("a")
-        self.__replaceAttaches (links, "href", pagetitle)
+        self.__replaceAttaches (links, "href", exportname)
 
         return unicode (soup.renderContents(), "utf8")

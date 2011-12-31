@@ -41,6 +41,13 @@ class Export2HtmlTest (unittest.TestCase):
         self.loader[self.pluginname]
 
 
+    def testExporterPage (self):
+        pagename = u"Страница 1"
+        exporter = self.loader[self.pluginname].exporterFactory.getExporter (self.root[pagename])
+
+        self.assertEqual (exporter.page, self.root[pagename])
+
+
     def testExportSinglePage (self):
         """
         Тест на создание файлов и страниц
@@ -49,6 +56,7 @@ class Export2HtmlTest (unittest.TestCase):
 
         exporter = self.loader[self.pluginname].exporterFactory.getExporter (self.root[pagename])
         exporter.export (outdir = self.outputdir,
+                exportname=pagename,
                 imagesonly=False,
                 alwaysOverwrite=False)
 
@@ -56,6 +64,25 @@ class Export2HtmlTest (unittest.TestCase):
         self.assertTrue (os.path.isfile (os.path.join (self.outputdir, pagename + ".html") ) )
         self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename) ) )
         self.assertTrue (os.path.isdir (os.path.join (self.outputdir, pagename) ) )
+
+
+    def testExportWithName (self):
+        """
+        Тест на то, что мы можем изменять имя файла и папки для экспорта
+        """
+        pagename = u"Страница 1"
+        exportname = u"Бла-бла-бла"
+
+        exporter = self.loader[self.pluginname].exporterFactory.getExporter (self.root[pagename])
+        exporter.export (outdir = self.outputdir,
+                exportname=exportname,
+                imagesonly=False,
+                alwaysOverwrite=False)
+
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, exportname + ".html") ) )
+        self.assertTrue (os.path.isfile (os.path.join (self.outputdir, exportname + ".html") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, exportname) ) )
+        self.assertTrue (os.path.isdir (os.path.join (self.outputdir, exportname) ) )
 
     
     def testAttachesSinglePage (self):
@@ -65,6 +92,7 @@ class Export2HtmlTest (unittest.TestCase):
         pagename = u"Страница 1"
         exporter = self.loader[self.pluginname].exporterFactory.getExporter (self.root[pagename])
         exporter.export (outdir = self.outputdir,
+                exportname=pagename,
                 imagesonly=False,
                 alwaysOverwrite=False)
 
@@ -84,6 +112,7 @@ class Export2HtmlTest (unittest.TestCase):
 
         exporter = self.loader[self.pluginname].exporterFactory.getExporter (self.root[pagename])
         exporter.export (outdir = self.outputdir,
+                exportname=pagename,
                 imagesonly=True,
                 alwaysOverwrite=False)
 
@@ -104,6 +133,7 @@ class Export2HtmlTest (unittest.TestCase):
 
         exporter = self.loader[self.pluginname].exporterFactory.getExporter (self.root[pagename])
         exporter.export (outdir = self.outputdir,
+                exportname=pagename,
                 imagesonly=True,
                 alwaysOverwrite=False)
 
@@ -117,6 +147,30 @@ class Export2HtmlTest (unittest.TestCase):
         self.assertTrue (u'А этот __attach/ содержится в тексте' in text)
 
 
+    def testLinkChangeHtmlWithName (self):
+        """
+        Тест на то, что ссылки на прикрепленные файлы изменяютcя.
+        Проверка на HTML-странице
+        """
+        pagename = u"Страница 1"
+        exportname = u"Бла-бла-бла"
+
+        exporter = self.loader[self.pluginname].exporterFactory.getExporter (self.root[pagename])
+        exporter.export (outdir = self.outputdir,
+                exportname=exportname,
+                imagesonly=True,
+                alwaysOverwrite=False)
+
+        text = u""
+
+        with open (os.path.join (self.outputdir, exportname + ".html") ) as fp:
+            text = unicode (fp.read(), "utf8")
+
+        self.assertTrue (u'<img src="{pagename}/add.png" />'.format (pagename=exportname) in text)
+        self.assertTrue (u'<a href="{pagename}/wall1.gif">ссылка на файл</a>.'.format (pagename=exportname) in text)
+        self.assertTrue (u'А этот __attach/ содержится в тексте' in text)
+
+
     def testLinkChangeWiki (self):
         """
         Тест на то, что ссылки на прикрепленные файлы изменяютcя.
@@ -127,6 +181,7 @@ class Export2HtmlTest (unittest.TestCase):
 
         exporter = self.loader[self.pluginname].exporterFactory.getExporter (self.root[fullpagename])
         exporter.export (outdir = self.outputdir,
+                exportname=pagename,
                 imagesonly=True,
                 alwaysOverwrite=False)
 
@@ -135,10 +190,37 @@ class Export2HtmlTest (unittest.TestCase):
         with open (os.path.join (self.outputdir, pagename + ".html") ) as fp:
             text = unicode (fp.read(), "utf8")
 
-        self.assertTrue (u'<img src="{pagename}/add.png" />'.format (pagename=pagename) in text.lower())
-        self.assertTrue (u'<a href="{pagename}/wall1.gif">ссылка на файл</a>'.format (pagename=pagename) in text.lower())
+        self.assertTrue (u'<img src="{pagename}/add.png" />'.format (pagename=pagename) in text)
+        self.assertTrue (u'<a href="{pagename}/wall1.gif">ссылка на файл</a>'.format (pagename=pagename) in text)
         self.assertTrue (u'А этот __attach/ содержится в тексте' in text)
-        self.assertTrue (u'<a href="{pagename}/image.jpg"><img src="{pagename}/__thumb/th_maxsize_250_image.jpg" /></a>'.format (pagename=pagename) in text.lower())
+        self.assertTrue (u'<a href="{pagename}/image.jpg"><img src="{pagename}/__thumb/th_maxsize_250_image.jpg" /></a>'.format (pagename=pagename) in text)
+
+
+    def testLinkChangeWikiWithName (self):
+        """
+        Тест на то, что ссылки на прикрепленные файлы изменяютcя.
+        Проверка на вики-странице
+        """
+        fullpagename = u"Типы страниц/wiki-страница"
+        pagename = u"wiki-страница"
+        exportname = u"Бла-бла-бла"
+
+        exporter = self.loader[self.pluginname].exporterFactory.getExporter (self.root[fullpagename])
+        exporter.export (outdir = self.outputdir,
+                exportname=exportname,
+                imagesonly=True,
+                alwaysOverwrite=False)
+
+        text = u""
+
+        with open (os.path.join (self.outputdir, exportname + ".html") ) as fp:
+            text = unicode (fp.read(), "utf8")
+
+        # print text
+        self.assertTrue (u'<img src="{pagename}/add.png" />'.format (pagename=exportname) in text)
+        self.assertTrue (u'<a href="{pagename}/wall1.gif">ссылка на файл</a>'.format (pagename=exportname) in text)
+        self.assertTrue (u'А этот __attach/ содержится в тексте' in text)
+        self.assertTrue (u'<a href="{pagename}/image.jpg"><img src="{pagename}/__thumb/th_maxsize_250_image.jpg" /></a>'.format (pagename=exportname) in text)
 
 
 
@@ -151,6 +233,7 @@ class Export2HtmlTest (unittest.TestCase):
 
         exporter = self.loader[self.pluginname].exporterFactory.getExporter (self.root[fullpagename])
         exporter.export (outdir = self.outputdir,
+                exportname=pagename,
                 imagesonly=True,
                 alwaysOverwrite=False)
 
@@ -167,6 +250,7 @@ class Export2HtmlTest (unittest.TestCase):
 
         exporter = self.loader[self.pluginname].exporterFactory.getExporter (self.root[fullpagename])
         exporter.export (outdir = self.outputdir,
+                exportname=pagename,
                 imagesonly=False,
                 alwaysOverwrite=False)
 
@@ -185,6 +269,7 @@ class Export2HtmlTest (unittest.TestCase):
 
         exporter = self.loader[self.pluginname].exporterFactory.getExporter (self.root[fullpagename])
         exporter.export (outdir = self.outputdir,
+                exportname=pagename,
                 imagesonly=False,
                 alwaysOverwrite=False)
 
@@ -205,6 +290,7 @@ class Export2HtmlTest (unittest.TestCase):
 
         exporter = self.loader[self.pluginname].exporterFactory.getExporter (self.root[fullpagename])
         exporter.export (outdir = self.outputdir,
+                exportname=pagename,
                 imagesonly=True,
                 alwaysOverwrite=False)
 
@@ -227,6 +313,7 @@ class Export2HtmlTest (unittest.TestCase):
         exporter = self.loader[self.pluginname].exporterFactory.getExporter (self.root[fullpagename])
 
         exporter.export (outdir = self.outputdir,
+                exportname=pagename,
                 imagesonly=True,
                 alwaysOverwrite=False)
 
@@ -253,6 +340,7 @@ class Export2HtmlTest (unittest.TestCase):
 
         exporter = self.loader[self.pluginname].exporterFactory.getExporter (self.root[fullpagename])
         exporter.export (outdir = self.outputdir,
+                exportname=pagename,
                 imagesonly=True,
                 alwaysOverwrite=False)
 
@@ -271,16 +359,19 @@ class Export2HtmlTest (unittest.TestCase):
         exporter = self.loader[self.pluginname].exporterFactory.getExporter (self.root[pagename])
 
         exporter.export (outdir = self.outputdir,
+                exportname=pagename,
                 imagesonly=False,
                 alwaysOverwrite=False)
 
         self.assertRaises (BaseException, 
                 exporter.export, 
                 outdir = self.outputdir,
+                exportname=pagename,
                 imagesonly=False,
                 alwaysOverwrite=False)
 
         exporter.export (outdir = self.outputdir,
+                exportname=pagename,
                 imagesonly=False,
                 alwaysOverwrite=True)
 
@@ -317,6 +408,7 @@ class Export2HtmlTest (unittest.TestCase):
         self.assertRaises (BaseException, 
                 exporter.export, 
                 outdir = self.outputdir,
+                exportname=pagename,
                 imagesonly=False,
                 alwaysOverwrite=False)
 

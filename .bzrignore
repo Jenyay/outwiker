@@ -25,3 +25,4 @@ distrib/*.zip
 htmlcov
 src/tests.log
 src/plugins/*
+.ropeproject

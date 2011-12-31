@@ -11,7 +11,7 @@ class TextExporter (BaseExporter):
     """
     Класс для экспорта текстовых страниц
     """
-    def export (self, outdir, imagesonly, alwaysOverwrite):
+    def export (self, outdir, exportname, imagesonly, alwaysOverwrite):
         """
         Экспортировать содержимое текстовой страницы
         Может бросить исключение IOError, если не найден файл с шаблоном
@@ -19,7 +19,6 @@ class TextExporter (BaseExporter):
         """
         assert self._page.getTypeString() == "text"
         template = self.__loadTemplate()
-        exportname = self._page.title
         content = self.__prepareTextContent (self._page.content)
         resultcontent = template.substitute (content=content, title=self._page.title)
 
