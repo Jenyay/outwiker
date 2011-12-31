@@ -2,8 +2,9 @@
 # -*- coding: UTF-8 -*-
 
 import os.path
+import re
 
-from BeautifulSoup import BeautifulSoup
+# from BeautifulSoup import BeautifulSoup
 
 from .exceptions import HtmlNotFoundError
 from .baseexporter import BaseExporter
@@ -46,15 +47,26 @@ class HtmlExporter (BaseExporter):
                 alwaysOverwrite)
 
 
-    def __replaceAttaches (self, tags, attrib, exportname):
+    def __replaceAttaches (self, content, tag, attrib, exportname):
         """
         Заменить ссылки на папку __attach на новую папку с вложениями
         """
-        self.__attachDir = "__attach"
+        __attachDir = "__attach"
+ 
+        tag_regex = """<\s*({tag})\s+
+            (.*?)
+            ({attrib})\s*=['"]{attach}(.*?)['"]
+            (.*?)
+            (/?)>
+            """.format (tag=tag, attrib=attrib, attach=__attachDir)
 
-        for tag in tags:
-            if tag.has_key (attrib) and tag[attrib].startswith (self.__attachDir):
-                tag[attrib] = tag[attrib].replace (self.__attachDir, exportname, 1)
+        regex = re.compile (tag_regex, re.IGNORECASE | re.MULTILINE | re.DOTALL | re.VERBOSE )
+
+        replace = u'<\\1 \\2\\3="{exportname}\\4"\\5\\6>'.format (exportname=exportname)
+        content = regex.sub (replace, content)
+
+        # for currenttag in tags:
+        return content
 
 
     def __prepareHtmlContent (self, content, exportname):
@@ -62,11 +74,16 @@ class HtmlExporter (BaseExporter):
         Заменить ссылки на прикрепленные файлы
         Используется при экспорте HTML-страниц
         """
-        soup = BeautifulSoup (content)
-        images = soup.findAll ("img")
-        self.__replaceAttaches (images, "src", exportname)
+        # soup = BeautifulSoup (content)
+        # images = soup.findAll ("img")
+        # self.__replaceAttaches (images, "src", exportname)
 
-        links = soup.findAll ("a")
-        self.__replaceAttaches (links, "href", exportname)
+        # links = soup.findAll ("a")
+        # self.__replaceAttaches (links, "href", exportname)
 
-        return unicode (soup.renderContents(), "utf8")
+        # return unicode (soup.renderContents(), "utf8")
+
+        content = self.__replaceAttaches (content, "a", "href", exportname)
+        content = self.__replaceAttaches (content, "img", "src", exportname)
+
+        return content
