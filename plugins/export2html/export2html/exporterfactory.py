@@ -14,6 +14,9 @@ class ExporterFactory (object):
     def getExporter (page):
         exporter = None
 
+        from .i18n import _
+        global _
+
         if page.getTypeString() == "html" or page.getTypeString() == "wiki":
             exporter = HtmlExporter(page)
         elif page.getTypeString() == "text":

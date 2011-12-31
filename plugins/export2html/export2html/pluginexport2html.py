@@ -10,8 +10,7 @@ from .controller import Controller
 from .exporterfactory import ExporterFactory
 from .branchexporter import BranchExporter
 
-# from .i18n import _
-import i18n
+from .i18n import _, set_
 
 
 class PluginExport2Html (Plugin):
@@ -34,7 +33,7 @@ class PluginExport2Html (Plugin):
 
     @property
     def name (self):
-        return u"Export to HTML"
+        return u"Export2Html"
 
     
     @property
@@ -64,11 +63,11 @@ class PluginExport2Html (Plugin):
         domain = u"export2html"
 
         langdir = unicode (os.path.join (os.path.dirname (__file__), "locale"), getOS().filesEncoding)
-        global _
 
         try:
+            global _
             _ = self._init_i18n (domain, langdir)
-            # print _
+            set_(_)
         except BaseException as e:
             print e
 

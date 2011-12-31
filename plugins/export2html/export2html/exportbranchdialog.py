@@ -17,6 +17,9 @@ class ExportBranchDialog (ExportDialog):
         ExportDialog.__init__ (self, parent)
         self.__rootpage = rootpage
 
+        from .i18n import _
+        global _
+
 
     def _onOk (self, event):
         exporter = BranchExporter (self.__rootpage)
@@ -28,5 +31,5 @@ class ExportBranchDialog (ExportDialog):
             MessageBox (u"\n".join (result), 
                 _(u"Errors List"),
                 wx.OK | wx.ICON_ERROR )
-
-        self.EndModal (wx.ID_OK)
+        else:
+            self.EndModal (wx.ID_OK)

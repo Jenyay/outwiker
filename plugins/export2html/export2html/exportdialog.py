@@ -9,6 +9,9 @@ class ExportDialog (wx.Dialog):
     __metaclass__ = ABCMeta
 
     def __init__ (self, parent):
+        from .i18n import _
+        global _
+
         wx.Dialog.__init__ (self, parent, title=_(u"Export"), style=wx.DEFAULT_DIALOG_STYLE)
 
         self.__SEL_FOLDER = wx.NewId()

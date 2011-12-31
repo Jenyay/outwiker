@@ -11,6 +11,13 @@ class TextExporter (BaseExporter):
     """
     Класс для экспорта текстовых страниц
     """
+    def __init__ (self, page):
+        BaseExporter.__init__ (self, page)
+
+        from .i18n import _
+        global _
+
+
     def export (self, outdir, exportname, imagesonly, alwaysOverwrite):
         """
         Экспортировать содержимое текстовой страницы

@@ -16,6 +16,9 @@ class ExportPageDialog (ExportDialog):
         ExportDialog.__init__ (self, parent)
         self.__exporter = exporter
 
+        from .i18n import _
+        global _
+
 
     def _onOk (self, event):
         try:
@@ -25,7 +28,7 @@ class ExportPageDialog (ExportDialog):
                     self.overwrite)
 
         except BaseException, error:
-            MessageBox (str(error), 
+            MessageBox (unicode(error), 
                 _(u"Error"),
                 wx.OK | wx.ICON_ERROR )
             return

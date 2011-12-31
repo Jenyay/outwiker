@@ -46,7 +46,7 @@ class BranchExporter (object):
                 exportname = self.__getExportName(root, page)
                 exporter.export (outdir, exportname, imagesonly, alwaysOverwrite)
             except BaseException, error:
-                self.__log.append (u"{0}: {1}".format (page.title, str (error) ) )
+                self.__log.append (u"{0}: {1}".format (page.title, unicode (error) ) )
 
         for child in page.children:
             self.__export (

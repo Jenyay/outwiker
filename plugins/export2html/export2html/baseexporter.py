@@ -19,6 +19,9 @@ class BaseExporter (object):
     def __init__ (self, page):
         self._page = page
 
+        from .i18n import _
+        global _
+
 
     @property
     def page (self):

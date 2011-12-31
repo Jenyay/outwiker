@@ -96,8 +96,8 @@ class Controller (object):
 
 
     def initialize (self):
-        # from .i18n import _
-        # global _
+        from .i18n import _
+        global _
 
         if self.__application.mainWindow != None:
             self.__createMenu()
