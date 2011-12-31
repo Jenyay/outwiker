@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+
 """Beautiful Soup
 Elixir and Tonic
 "The Screen-Scraper's Friend"

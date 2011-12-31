@@ -413,3 +413,86 @@ class Export2HtmlTest (unittest.TestCase):
                 alwaysOverwrite=False)
 
         os.rename (newname, srcname)
+
+
+    def testExportBranchFiles (self):
+        """
+        Экспорт дерева
+        """
+        pagename = u"Страница 1"
+        branchExporter = self.loader[self.pluginname].branchExporter (self.root[pagename])
+
+        result = branchExporter.export (
+                outdir=self.outputdir,
+                imagesonly=False,
+                alwaysOverwrite=False
+                )
+
+        self.assertEqual (len (result), 0)
+
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
+            pagename) ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
+            pagename + ".html") ) )
+
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
+            pagename + u"_Страница 2") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
+            pagename + u"_Страница 2.html") ) )
+
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
+            pagename + u"_Страница 2_Страница 5") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
+            pagename + u"_Страница 2_Страница 5.html") ) )
+
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
+            pagename + u"_Страница 2_Страница 6") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
+            pagename + u"_Страница 2_Страница 6.html") ) )
+
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
+            pagename + u"_Страница 2_Страница 6_Страница 7") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
+            pagename + u"_Страница 2_Страница 6_Страница 7.html") ) )
+
+
+    def testExportBranchRoot (self):
+        """
+        Экспорт, начиная с корня дерева
+        """
+        wikiname = u"samplewiki"
+        branchExporter = self.loader[self.pluginname].branchExporter (self.root)
+
+        result = branchExporter.export (
+                outdir=self.outputdir,
+                imagesonly=False,
+                alwaysOverwrite=False
+                )
+
+        self.assertEqual (len (result), 1)
+        self.assertTrue (u"Страница поиска" in result[0])
+
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
+            wikiname + u"_Страница 1") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
+            wikiname + u"_Страница 1.html") ) )
+
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
+            wikiname + u"_Страница 1_Страница 2") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
+            wikiname + u"_Страница 1_Страница 2.html") ) )
+
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
+            wikiname + u"_Страница 1_Страница 2_Страница 5") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
+            wikiname + u"_Страница 1_Страница 2_Страница 5.html") ) )
+
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
+            wikiname + u"_Страница 1_Страница 2_Страница 6") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
+            wikiname + u"_Страница 1_Страница 2_Страница 6.html") ) )
+
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
+            wikiname + u"_Страница 1_Страница 2_Страница 6_Страница 7") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
+            wikiname + u"_Страница 1_Страница 2_Страница 6_Страница 7.html") ) )

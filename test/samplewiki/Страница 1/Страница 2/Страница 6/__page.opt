@@ -1,0 +1,11 @@
+[General]
+type = wiki
+tags = test
+order = 1
+
+[wiki]
+md5_hash = bf2e8f7cf6c777f2b9d5bae2f7aee350
+
+[Tree]
+expand = True
+

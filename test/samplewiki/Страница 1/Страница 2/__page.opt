@@ -5,3 +5,7 @@ type = text
 [Section1]
 param1 = абырвалг_1
 param2 = 666
+
+[Tree]
+expand = True
+

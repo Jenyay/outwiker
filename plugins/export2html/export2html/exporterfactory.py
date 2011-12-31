@@ -19,7 +19,7 @@ class ExporterFactory (object):
         elif page.getTypeString() == "text":
             exporter = TextExporter(page)
         else:
-            raise InvalidPageFormat (_(u"Invalid page type"))
+            raise InvalidPageFormat (_(u"This page type not support export to HTML"))
 
         assert exporter != None
         return exporter

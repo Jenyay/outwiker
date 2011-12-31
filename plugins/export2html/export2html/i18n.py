@@ -1,0 +1,2 @@
+global _
+_ = None

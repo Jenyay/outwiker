@@ -6,3 +6,6 @@ param1 = абырвалг
 type = html
 tags = Тест, test, двойной тег
 
+[Tree]
+expand = True
+

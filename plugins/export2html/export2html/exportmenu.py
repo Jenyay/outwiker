@@ -3,6 +3,8 @@
 
 import wx
 
+# from .i18n import _
+
 class ExportMenuFactory (object):
     """
     Класс для поиска или создания пункта меню "Экспорт"
@@ -17,6 +19,8 @@ class ExportMenuFactory (object):
         self.__exportMenuPosition = 5
 
         self.EXPORT_ID = -1
+
+        # self._ = lang
 
 
     def __getFileMenu (self):

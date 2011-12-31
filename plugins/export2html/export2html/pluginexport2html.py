@@ -1,9 +1,17 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
+import os.path
+
 from outwiker.core.pluginbase import Plugin
+from outwiker.core.system import getOS
+
 from .controller import Controller
 from .exporterfactory import ExporterFactory
+from .branchexporter import BranchExporter
+
+# from .i18n import _
+import i18n
 
 
 class PluginExport2Html (Plugin):
@@ -36,10 +44,11 @@ class PluginExport2Html (Plugin):
 
     @property
     def version (self):
-        return u"0.1"
+        return u"1.0"
 
     
     def initialize(self):
+        self.__initlocale()
         self.__controller.initialize ()
 
 
@@ -51,6 +60,18 @@ class PluginExport2Html (Plugin):
 
     #############################################
 
+    def __initlocale (self):
+        domain = u"export2html"
+
+        langdir = unicode (os.path.join (os.path.dirname (__file__), "locale"), getOS().filesEncoding)
+        global _
+
+        try:
+            _ = self._init_i18n (domain, langdir)
+            # print _
+        except BaseException as e:
+            print e
+
 
     @property
     def exporterFactory (self):
@@ -58,3 +79,8 @@ class PluginExport2Html (Plugin):
         Возвращает класс Exporter, чтобы его можно было легче тестировать при загрузке плагина в реальном времени
         """
         return ExporterFactory
+
+
+    @property
+    def branchExporter (self):
+        return BranchExporter

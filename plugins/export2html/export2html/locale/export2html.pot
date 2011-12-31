@@ -1,0 +1,82 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-12-31 19:10+0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: baseexporter.py:47 baseexporter.py:101
+msgid "File {0} already exists"
+msgstr ""
+
+#: baseexporter.py:50
+msgid "Folder {0} not exists"
+msgstr ""
+
+#: controller.py:31
+msgid "Export Page To HTML..."
+msgstr ""
+
+#: controller.py:34
+msgid "Export Branch To HTML..."
+msgstr ""
+
+#: controller.py:44
+msgid "Please, select page"
+msgstr ""
+
+#: controller.py:45 controller.py:53 controller.py:66 exportpagedialog.py:29
+msgid "Error"
+msgstr ""
+
+#: controller.py:52 exporterfactory.py:22
+msgid "This page type not support export to HTML"
+msgstr ""
+
+#: controller.py:65
+msgid "Wiki is not open"
+msgstr ""
+
+#: exportbranchdialog.py:29
+msgid "Errors List"
+msgstr ""
+
+#: exportdialog.py:12 exportmenu.py:60 exportmenu.py:78
+msgid "Export"
+msgstr ""
+
+#: exportdialog.py:16
+msgid "Folder for Export:"
+msgstr ""
+
+#: exportdialog.py:27
+msgid "Overwrite Existing Files"
+msgstr ""
+
+#: exportdialog.py:28
+msgid "Attaches. Save Only Images"
+msgstr ""
+
+#: exportmenu.py:45 exportmenu.py:72
+msgid "File menu not found"
+msgstr ""
+
+#: htmlexporter.py:30
+msgid "{0} not found"
+msgstr ""
+
+#: pluginexport2html.py:35
+msgid "Export pages to HTML"
+msgstr ""

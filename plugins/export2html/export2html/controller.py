@@ -7,8 +7,10 @@ from outwiker.core.commands import MessageBox
 
 from .exportmenu import ExportMenuFactory
 from .exportpagedialog import ExportPageDialog
+from .exportbranchdialog import ExportBranchDialog
 from .exceptions import InvalidPageFormat
 from .exporterfactory import ExporterFactory
+# from .i18n import _
 
 
 class Controller (object):
@@ -18,6 +20,7 @@ class Controller (object):
     def __init__ (self, owner, application):
         self.__application = application
         self.__owner = owner
+        # self._ = None
 
         self.__exportMenu = None
 
@@ -26,6 +29,10 @@ class Controller (object):
 
 
     def __addExportItems (self, menu):
+        # print _
+        # print i18n._
+        # from .i18n import _
+
         self.__exportSingleItem = menu.Append (id=self.EXPORT_SINGLE,
                 text=_(u"Export Page To HTML..."))
 
@@ -58,7 +65,21 @@ class Controller (object):
 
 
     def __onBranchExport (self, event):
-        print "__onBranchExport"
+        assert self.__application.mainWindow != None
+
+        if self.__application.wikiroot == None:
+            MessageBox (_(u"Wiki is not open"), 
+                    _(u"Error"),
+                    wx.OK | wx.ICON_ERROR )
+            return
+
+        if self.__application.selectedPage == None:
+            root = self.__application.wikiroot
+        else:
+            root = self.__application.selectedPage
+
+        dlg = ExportBranchDialog (self.__application.mainWindow, root)
+        dlg.ShowModal()
 
 
     def __createMenu (self):
@@ -75,6 +96,9 @@ class Controller (object):
 
 
     def initialize (self):
+        # from .i18n import _
+        # global _
+
         if self.__application.mainWindow != None:
             self.__createMenu()
 
