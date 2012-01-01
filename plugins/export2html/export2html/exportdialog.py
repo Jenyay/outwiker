@@ -32,9 +32,26 @@ class ExportDialog (wx.Dialog):
         self.__buttonsSizer = self.CreateButtonSizer (wx.OK | wx.CANCEL)
 
         self.__layout()
+        self.__centerWindow()
 
         self.Bind (wx.EVT_BUTTON, self.__onSelFolder, self.__selFolderButton)
         self.Bind (wx.EVT_BUTTON, self._onOk, id=wx.ID_OK)
+
+    
+    def __centerWindow (self):
+        """
+        Расположить окно по центру родителя
+        """
+        selfWidth, selfHeight = self.GetSize()
+
+        parentWidth, parentHeight = self.GetParent().GetSize()
+        parentX, parentY = self.GetParent().GetPosition()
+
+        posX = parentX + (parentWidth - selfWidth) / 2
+        posY = parentY + (parentHeight - selfHeight) / 2
+
+        self.SetPosition ((posX, posY))
+    
 
 
     @property

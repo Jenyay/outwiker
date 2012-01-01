@@ -7,6 +7,7 @@ from outwiker.core.commands import MessageBox
 
 from .exportdialog import ExportDialog
 from .branchexporter import BranchExporter
+from .logdialog import LogDialog
 
 
 class ExportBranchDialog (ExportDialog):
@@ -28,8 +29,10 @@ class ExportBranchDialog (ExportDialog):
                 self.overwrite)
 
         if len (result) != 0:
-            MessageBox (u"\n".join (result), 
-                _(u"Errors List"),
-                wx.OK | wx.ICON_ERROR )
+            logdlg = LogDialog (self, result)
+            logdlg.ShowModal()
+            # MessageBox (u"\n".join (result), 
+            #     _(u"Errors List"),
+            #     wx.OK | wx.ICON_ERROR )
         else:
             self.EndModal (wx.ID_OK)
