@@ -87,15 +87,15 @@ class ExportDialog (wx.Dialog):
         folderSizer.Add (self.__selFolderButton, flag=wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_LEFT)
 
 
-        mainSizer = wx.FlexGridSizer (rows=0, cols=1)
-        mainSizer.AddGrowableCol (0)
-        mainSizer.Add (self.__folderLabel, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
-        mainSizer.Add (folderSizer, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND, border=2)
-        mainSizer.Add (self.__overwriteCheckBox, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
-        mainSizer.Add (self.__imagesOnlyCheckBox, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
-        mainSizer.Add (self.__buttonsSizer, flag=wx.ALL | wx.ALIGN_RIGHT, border=2)
+        self._mainSizer = wx.FlexGridSizer (rows=0, cols=1)
+        self._mainSizer.AddGrowableCol (0)
+        self._mainSizer.Add (self.__folderLabel, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
+        self._mainSizer.Add (folderSizer, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND, border=2)
+        self._mainSizer.Add (self.__overwriteCheckBox, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
+        self._mainSizer.Add (self.__imagesOnlyCheckBox, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
+        self._mainSizer.Add (self.__buttonsSizer, flag=wx.ALL | wx.ALIGN_RIGHT, border=2)
 
-        self.SetSizer (mainSizer)
+        self.SetSizer (self._mainSizer)
         self.Fit()
         self.Layout()
 

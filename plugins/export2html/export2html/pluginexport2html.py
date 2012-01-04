@@ -7,8 +7,7 @@ from outwiker.core.pluginbase import Plugin
 from outwiker.core.system import getOS
 
 from .controller import Controller
-from .exporterfactory import ExporterFactory
-from .branchexporter import BranchExporter
+from .tester import Tester
 
 from .i18n import _, set_
 
@@ -73,13 +72,8 @@ class PluginExport2Html (Plugin):
 
 
     @property
-    def exporterFactory (self):
+    def tester(self):
         """
-        Возвращает класс Exporter, чтобы его можно было легче тестировать при загрузке плагина в реальном времени
+        Возвращает экземпляр класса Tester, предназначеный для тестирования 
         """
-        return ExporterFactory
-
-
-    @property
-    def branchExporter (self):
-        return BranchExporter
+        return Tester()

@@ -402,7 +402,7 @@ IndexError: string index out of range
 <task id="7fa27330-34a0-11e1-8a32-00112fd2b1f8" startdate="2012-01-01 21:46:00" status="1" subject="index.html" />
 <task id="884e255e-34a0-11e1-a250-00112fd2b1f8" startdate="2012-01-01 21:46:00" status="1" subject="Исправлять ссылки на страницы" />
 <task id="d7d2c900-34a1-11e1-bf8e-00112fd2b1f8" startdate="2012-01-01 21:55:00" status="1" subject="Ссылки-теги на страницах" />
-<task id="de99f930-34a0-11e1-9fc5-00112fd2b1f8" startdate="2012-01-01 21:48:00" status="1" subject="Сокращенный вариант именования файлов" />
+<task completiondate="2012-01-04 22:11:16.421000" id="de99f930-34a0-11e1-9fc5-00112fd2b1f8" percentageComplete="100" startdate="2012-01-01 21:48:00" status="1" subject="Сокращенный вариант именования файлов" />
 </task>
 <task completiondate="2011-10-27 19:58:28.108538" id="6dc7a6fa-00b4-11e1-9450-00112fd2b1f8" percentageComplete="100" priority="80" startdate="2011-10-27 19:57:00" status="1" subject="Викикоманда для раскраски кода" />
 <task completiondate="2011-11-15 21:10:54.246192" id="6fa01c36-05dd-11e1-8566-00112fd2b1f8" percentageComplete="100" priority="7" startdate="2011-11-03 09:34:00" status="1" subject="Полоски в дереве под Windows" />

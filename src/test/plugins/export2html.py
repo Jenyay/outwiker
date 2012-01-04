@@ -22,6 +22,7 @@ class Export2HtmlTest (unittest.TestCase):
 
         self.loader = PluginsLoader(Application)
         self.loader.load (dirlist)
+        self.__tester = self.loader[self.pluginname].tester
 
         self.__removeTempDir()
         os.mkdir (self.outputdir)
@@ -43,7 +44,7 @@ class Export2HtmlTest (unittest.TestCase):
 
     def testExporterPage (self):
         pagename = u"Страница 1"
-        exporter = self.loader[self.pluginname].exporterFactory.getExporter (self.root[pagename])
+        exporter = self.__tester.exporterFactory.getExporter (self.root[pagename])
 
         self.assertEqual (exporter.page, self.root[pagename])
 
@@ -54,7 +55,7 @@ class Export2HtmlTest (unittest.TestCase):
         """
         pagename = u"Страница 1"
 
-        exporter = self.loader[self.pluginname].exporterFactory.getExporter (self.root[pagename])
+        exporter = self.__tester.exporterFactory.getExporter (self.root[pagename])
         exporter.export (outdir = self.outputdir,
                 exportname=pagename,
                 imagesonly=False,
@@ -73,7 +74,7 @@ class Export2HtmlTest (unittest.TestCase):
         pagename = u"Страница 1"
         exportname = u"Бла-бла-бла"
 
-        exporter = self.loader[self.pluginname].exporterFactory.getExporter (self.root[pagename])
+        exporter = self.__tester.exporterFactory.getExporter (self.root[pagename])
         exporter.export (outdir = self.outputdir,
                 exportname=exportname,
                 imagesonly=False,
@@ -90,7 +91,7 @@ class Export2HtmlTest (unittest.TestCase):
         Тест на то, что прикрепленные файлы копируются
         """
         pagename = u"Страница 1"
-        exporter = self.loader[self.pluginname].exporterFactory.getExporter (self.root[pagename])
+        exporter = self.__tester.exporterFactory.getExporter (self.root[pagename])
         exporter.export (outdir = self.outputdir,
                 exportname=pagename,
                 imagesonly=False,
@@ -110,7 +111,7 @@ class Export2HtmlTest (unittest.TestCase):
         """
         pagename = u"Страница 1"
 
-        exporter = self.loader[self.pluginname].exporterFactory.getExporter (self.root[pagename])
+        exporter = self.__tester.exporterFactory.getExporter (self.root[pagename])
         exporter.export (outdir = self.outputdir,
                 exportname=pagename,
                 imagesonly=True,
@@ -124,6 +125,14 @@ class Export2HtmlTest (unittest.TestCase):
         self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "image.tif") ) )
 
 
+    def __getFileContent (self, fname):
+        text = u""
+
+        with open (fname) as fp:
+            text = unicode (fp.read(), "utf8")
+        return text
+
+
     def testLinkChangeHtml (self):
         """
         Тест на то, что ссылки на прикрепленные файлы изменяютcя.
@@ -131,16 +140,13 @@ class Export2HtmlTest (unittest.TestCase):
         """
         pagename = u"Страница 1"
 
-        exporter = self.loader[self.pluginname].exporterFactory.getExporter (self.root[pagename])
+        exporter = self.__tester.exporterFactory.getExporter (self.root[pagename])
         exporter.export (outdir = self.outputdir,
                 exportname=pagename,
                 imagesonly=True,
                 alwaysOverwrite=False)
 
-        text = u""
-
-        with open (os.path.join (self.outputdir, pagename + ".html") ) as fp:
-            text = unicode (fp.read(), "utf8")
+        text = self.__getFileContent (os.path.join (self.outputdir, pagename + ".html"))
 
         self.assertTrue (u'<img src="{pagename}/add.png">'.format (pagename=pagename) in text)
         self.assertTrue (u'<a href="{pagename}/wall1.gif">ссылка на файл</a>.'.format (pagename=pagename) in text)
@@ -155,16 +161,13 @@ class Export2HtmlTest (unittest.TestCase):
         pagename = u"Страница 1"
         exportname = u"Бла-бла-бла"
 
-        exporter = self.loader[self.pluginname].exporterFactory.getExporter (self.root[pagename])
+        exporter = self.__tester.exporterFactory.getExporter (self.root[pagename])
         exporter.export (outdir = self.outputdir,
                 exportname=exportname,
                 imagesonly=True,
                 alwaysOverwrite=False)
 
-        text = u""
-
-        with open (os.path.join (self.outputdir, exportname + ".html") ) as fp:
-            text = unicode (fp.read(), "utf8")
+        text = self.__getFileContent (os.path.join (self.outputdir, exportname + ".html"))
 
         self.assertTrue (u'<img src="{pagename}/add.png">'.format (pagename=exportname) in text)
         self.assertTrue (u'<a href="{pagename}/wall1.gif">ссылка на файл</a>.'.format (pagename=exportname) in text)
@@ -179,16 +182,13 @@ class Export2HtmlTest (unittest.TestCase):
         fullpagename = u"Типы страниц/wiki-страница"
         pagename = u"wiki-страница"
 
-        exporter = self.loader[self.pluginname].exporterFactory.getExporter (self.root[fullpagename])
+        exporter = self.__tester.exporterFactory.getExporter (self.root[fullpagename])
         exporter.export (outdir = self.outputdir,
                 exportname=pagename,
                 imagesonly=True,
                 alwaysOverwrite=False)
 
-        text = u""
-
-        with open (os.path.join (self.outputdir, pagename + ".html") ) as fp:
-            text = unicode (fp.read(), "utf8")
+        text = self.__getFileContent (os.path.join (self.outputdir, pagename + ".html"))
 
         self.assertTrue (u'<IMG SRC="{pagename}/add.png"/>'.format (pagename=pagename) in text)
         self.assertTrue (u'<A HREF="{pagename}/wall1.gif">ссылка на файл</A>'.format (pagename=pagename) in text)
@@ -205,7 +205,7 @@ class Export2HtmlTest (unittest.TestCase):
         pagename = u"wiki-страница"
         exportname = u"Бла-бла-бла"
 
-        exporter = self.loader[self.pluginname].exporterFactory.getExporter (self.root[fullpagename])
+        exporter = self.__tester.exporterFactory.getExporter (self.root[fullpagename])
         exporter.export (outdir = self.outputdir,
                 exportname=exportname,
                 imagesonly=True,
@@ -230,7 +230,7 @@ class Export2HtmlTest (unittest.TestCase):
         fullpagename = u"Типы страниц/wiki-страница"
         pagename = u"wiki-страница"
 
-        exporter = self.loader[self.pluginname].exporterFactory.getExporter (self.root[fullpagename])
+        exporter = self.__tester.exporterFactory.getExporter (self.root[fullpagename])
         exporter.export (outdir = self.outputdir,
                 exportname=pagename,
                 imagesonly=True,
@@ -247,7 +247,7 @@ class Export2HtmlTest (unittest.TestCase):
         fullpagename = u"Типы страниц/Текстовая страница"
         pagename = u"Текстовая страница"
 
-        exporter = self.loader[self.pluginname].exporterFactory.getExporter (self.root[fullpagename])
+        exporter = self.__tester.exporterFactory.getExporter (self.root[fullpagename])
         exporter.export (outdir = self.outputdir,
                 exportname=pagename,
                 imagesonly=False,
@@ -266,7 +266,7 @@ class Export2HtmlTest (unittest.TestCase):
         fullpagename = u"Типы страниц/Текстовая страница"
         pagename = u"Текстовая страница"
 
-        exporter = self.loader[self.pluginname].exporterFactory.getExporter (self.root[fullpagename])
+        exporter = self.__tester.exporterFactory.getExporter (self.root[fullpagename])
         exporter.export (outdir = self.outputdir,
                 exportname=pagename,
                 imagesonly=False,
@@ -287,7 +287,7 @@ class Export2HtmlTest (unittest.TestCase):
         fullpagename = u"Типы страниц/Текстовая страница"
         pagename = u"Текстовая страница"
 
-        exporter = self.loader[self.pluginname].exporterFactory.getExporter (self.root[fullpagename])
+        exporter = self.__tester.exporterFactory.getExporter (self.root[fullpagename])
         exporter.export (outdir = self.outputdir,
                 exportname=pagename,
                 imagesonly=True,
@@ -309,7 +309,7 @@ class Export2HtmlTest (unittest.TestCase):
         fullpagename = u"Типы страниц/Текстовая страница"
         pagename = u"Текстовая страница"
 
-        exporter = self.loader[self.pluginname].exporterFactory.getExporter (self.root[fullpagename])
+        exporter = self.__tester.exporterFactory.getExporter (self.root[fullpagename])
 
         exporter.export (outdir = self.outputdir,
                 exportname=pagename,
@@ -337,7 +337,7 @@ class Export2HtmlTest (unittest.TestCase):
         fullpagename = u"Типы страниц/Текстовая страница"
         pagename = u"Текстовая страница"
 
-        exporter = self.loader[self.pluginname].exporterFactory.getExporter (self.root[fullpagename])
+        exporter = self.__tester.exporterFactory.getExporter (self.root[fullpagename])
         exporter.export (outdir = self.outputdir,
                 exportname=pagename,
                 imagesonly=True,
@@ -355,7 +355,7 @@ class Export2HtmlTest (unittest.TestCase):
         Тест на то, что создаваемый файл уже может существовать
         """
         pagename = u"Страница 1"
-        exporter = self.loader[self.pluginname].exporterFactory.getExporter (self.root[pagename])
+        exporter = self.__tester.exporterFactory.getExporter (self.root[pagename])
 
         exporter.export (outdir = self.outputdir,
                 exportname=pagename,
@@ -382,7 +382,7 @@ class Export2HtmlTest (unittest.TestCase):
         pagename = u"Типы страниц/Страница поиска"
 
         self.assertRaises (BaseException, 
-                self.loader[self.pluginname].exporterFactory.getExporter, 
+                self.__tester.exporterFactory.getExporter, 
                 page=self.root[pagename])
 
 
@@ -402,7 +402,7 @@ class Export2HtmlTest (unittest.TestCase):
 
         os.rename (srcname, newname)
 
-        exporter = self.loader[self.pluginname].exporterFactory.getExporter (self.root[pagename])
+        exporter = self.__tester.exporterFactory.getExporter (self.root[pagename])
 
         self.assertRaises (BaseException, 
                 exporter.export, 
@@ -419,7 +419,8 @@ class Export2HtmlTest (unittest.TestCase):
         Экспорт дерева
         """
         pagename = u"Страница 1"
-        branchExporter = self.loader[self.pluginname].branchExporter (self.root[pagename])
+        namegenerator = self.__tester.longNameGenerator (self.root[pagename])
+        branchExporter = self.__tester.branchExporter (self.root[pagename], namegenerator)
 
         result = branchExporter.export (
                 outdir=self.outputdir,
@@ -460,7 +461,8 @@ class Export2HtmlTest (unittest.TestCase):
         Экспорт, начиная с корня дерева
         """
         wikiname = u"samplewiki"
-        branchExporter = self.loader[self.pluginname].branchExporter (self.root)
+        namegenerator = self.__tester.longNameGenerator (self.root)
+        branchExporter = self.__tester.branchExporter (self.root, namegenerator)
 
         result = branchExporter.export (
                 outdir=self.outputdir,
@@ -495,3 +497,95 @@ class Export2HtmlTest (unittest.TestCase):
             wikiname + u"_Страница 1_Страница 2_Страница 6_Страница 7") ) )
         self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
             wikiname + u"_Страница 1_Страница 2_Страница 6_Страница 7.html") ) )
+
+
+    def testExportBranchFilesTitleNames (self):
+        """
+        Экспорт дерева с короткими именами
+        """
+        pagename = u"Страница 1"
+        namegenerator = self.__tester.titleNameGenerator (self.outputdir)
+        branchExporter = self.__tester.branchExporter (self.root[pagename], namegenerator)
+
+        result = branchExporter.export (
+                outdir=self.outputdir,
+                imagesonly=False,
+                alwaysOverwrite=False
+                )
+
+        self.assertEqual (len (result), 0, str (result) )
+
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
+            pagename) ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
+            pagename + ".html") ) )
+
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
+            u"Страница 2") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
+            u"Страница 2.html") ) )
+
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
+            u"Страница 2 (1)") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
+            u"Страница 2 (1).html") ) )
+
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
+            u"Страница 2 (2)") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
+            u"Страница 2 (2).html") ) )
+
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
+            u"Страница 5") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
+            u"Страница 5.html") ) )
+
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
+            u"Страница 6") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
+            u"Страница 6.html") ) )
+
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
+            u"Страница 7") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
+            u"Страница 7.html") ) )
+
+
+    def testBranchContentTitleNames1 (self):
+        """
+        Экспорт дерева с короткими именами
+        """
+        pagename = u"Страница 1"
+        namegenerator = self.__tester.titleNameGenerator (self.outputdir)
+        branchExporter = self.__tester.branchExporter (self.root[pagename], namegenerator)
+
+        result = branchExporter.export (
+                outdir=self.outputdir,
+                imagesonly=False,
+                alwaysOverwrite=False
+                )
+
+        text = self.__getFileContent (os.path.join (self.outputdir, u"Страница 2 (1).html"))
+
+        self.assertTrue (u'<IMG SRC="Страница 2 (1)/cake.png"/>' in text)
+        self.assertTrue (u'<A HREF="Страница 2 (1)/calendar.png">calendar.png</A>' in text)
+
+
+    def testBranchContentTitleNames2 (self):
+        """
+        Экспорт дерева с короткими именами
+        """
+        pagename = u"Страница 1"
+        namegenerator = self.__tester.titleNameGenerator (self.outputdir)
+        branchExporter = self.__tester.branchExporter (self.root[pagename], namegenerator)
+
+        result = branchExporter.export (
+                outdir=self.outputdir,
+                imagesonly=False,
+                alwaysOverwrite=False
+                )
+
+        text = self.__getFileContent (os.path.join (self.outputdir, u"Страница 2 (2).html"))
+
+        self.assertTrue (u'<IMG SRC="Страница 2 (2)/cd.png"/>' in text)
+        self.assertTrue (u'<A HREF="Страница 2 (2)/cd_go.png">cd_go.png</A>' in text)

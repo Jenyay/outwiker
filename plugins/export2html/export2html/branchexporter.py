@@ -8,11 +8,12 @@ from outwiker.core.tree import WikiDocument
 
 
 class BranchExporter (object):
-    def __init__ (self, startpage):
+    def __init__ (self, startpage, nameGenerator):
         self.__startpage = startpage
 
         # Список ошибок, возникших при экспорте
         self.__log = []
+        self.__nameGenerator = nameGenerator
 
 
     @property
@@ -32,7 +33,12 @@ class BranchExporter (object):
         return self.log
 
 
-    def __export (self, page, root, outdir, imagesonly, alwaysOverwrite):
+    def __export (self, 
+            page, 
+            root, 
+            outdir, 
+            imagesonly, 
+            alwaysOverwrite):
         """
         page - страница, начиная с которой надо начать экспортирование
         root - корневая страница, откуда началось общее экспортирование (для определения имени файлов)
@@ -43,7 +49,7 @@ class BranchExporter (object):
         if page.getTypeString() != WikiDocument.getTypeString():
             try:
                 exporter = ExporterFactory.getExporter (page)
-                exportname = self.__getExportName(root, page)
+                exportname = self.__nameGenerator.getName (page)
                 exporter.export (outdir, exportname, imagesonly, alwaysOverwrite)
             except BaseException, error:
                 self.__log.append (u"{0}: {1}".format (page.title, unicode (error) ) )
@@ -55,26 +61,3 @@ class BranchExporter (object):
                     outdir,
                     imagesonly,
                     alwaysOverwrite)
-
-
-    def __getExportName (self, root, page):
-        if root.getTypeString() == WikiDocument.getTypeString():
-            exportname = os.path.basename (root.path) + "_" + page.subpath.replace ("/", "_")
-        else:
-            if page == root:
-                exportname = page.title
-            else:
-                exportname = self.__getSubpathExportName(root, page)
-        return exportname
-
-
-    def __getSubpathExportName(self, root, page):
-        assert page.subpath.startswith (root.subpath)
-        exportname = page.subpath.replace (root.subpath, u"", 1)
-
-        assert len (exportname) > 0
-        if exportname[0] == "/":
-            exportname = exportname[1:]
-
-        exportname = root.title + "_" + exportname.replace ("/", "_")
-        return exportname
