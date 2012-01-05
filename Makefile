@@ -49,6 +49,8 @@ plugin:
 	cd plugins/testdebug; 7z a -r -aoa -xr!*.pyc ../../distrib/testdebug.zip ./* 
 	rm -f distrib/testcounter.zip
 	cd plugins/testcounter; 7z a -r -aoa -xr!*.pyc ../../distrib/testcounter.zip ./* 
+	rm -f distrib/export2html.zip
+	cd plugins/export2html; 7z a -r -aoa -xr!*.pyc ../../distrib/export2html.zip ./*
 
 wintests:
 	python src\\setup_tests.py build
