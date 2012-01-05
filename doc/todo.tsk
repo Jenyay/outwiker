@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?taskcoach release="1.2.31" tskversion="33"?>
+<?taskcoach release="1.3.3" tskversion="33"?>
 
 <tasks>
 <task completiondate="2011-11-14 21:22:09.922497" id="0027bbd4-00b5-11e1-98e8-00112fd2b1f8" percentageComplete="100" priority="8" startdate="2011-10-27 20:01:00" status="1" subject="Отвязать номер версии от номера ревизии" />
@@ -400,7 +400,7 @@ IndexError: string index out of range
 </task>
 <task expandedContexts="('taskviewer',)" id="6d237ec0-34a0-11e1-bf85-00112fd2b1f8" priority="8" startdate="2012-01-01 21:45:00" status="1" subject="Export2Html">
 <task id="7fa27330-34a0-11e1-8a32-00112fd2b1f8" startdate="2012-01-01 21:46:00" status="1" subject="index.html" />
-<task id="884e255e-34a0-11e1-a250-00112fd2b1f8" startdate="2012-01-01 21:46:00" status="1" subject="Исправлять ссылки на страницы" />
+<task completiondate="2012-01-05 20:58:56.040668" id="884e255e-34a0-11e1-a250-00112fd2b1f8" percentageComplete="100" startdate="2012-01-01 21:46:00" status="1" subject="Исправлять ссылки на страницы" />
 <task id="d7d2c900-34a1-11e1-bf8e-00112fd2b1f8" startdate="2012-01-01 21:55:00" status="1" subject="Ссылки-теги на страницах" />
 <task completiondate="2012-01-04 22:11:16.421000" id="de99f930-34a0-11e1-9fc5-00112fd2b1f8" percentageComplete="100" startdate="2012-01-01 21:48:00" status="1" subject="Сокращенный вариант именования файлов" />
 </task>

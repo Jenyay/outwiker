@@ -1,10 +1,10 @@
 [General]
 type = wiki
 tags = test
-order = 1
+order = 2
 
 [wiki]
-md5_hash = 1bd95a9a7f5e26dc819062412d17b5c8
+md5_hash = b8942a34e032112ebae163dcf6dfa860
 
 [Tree]
 expand = True

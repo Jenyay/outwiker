@@ -149,11 +149,18 @@ class Export2HtmlTest (unittest.TestCase):
         text = self.__getFileContent (os.path.join (self.outputdir, pagename + ".html"))
 
         self.assertTrue (u'<img src="{pagename}/add.png">'.format (pagename=pagename) in text)
+
         self.assertTrue (u'<img alt="Картинка" src="{pagename}/add.png" border="1">'.format (pagename=pagename) in text)
+
         self.assertTrue (u'<a href="{pagename}/wall1.gif">ссылка на файл</a>.'.format (pagename=pagename) in text)
+
         self.assertTrue (u'<a title="Это title" href="{pagename}/wall1.gif">ссылка на файл</a>.'.format (pagename=pagename) in text)
+
         self.assertTrue (u'<a href="{pagename}/wall1.gif" title="Это title">ссылка на файл</a>.'.format (pagename=pagename) in text)
+
         self.assertTrue (u'А этот __attach/ содержится в тексте' in text)
+
+        self.assertFalse (u'<img src="__attach/add.png">' in text)
 
 
     def testLinkChangeHtmlWithName (self):
@@ -592,3 +599,65 @@ class Export2HtmlTest (unittest.TestCase):
 
         self.assertTrue (u'<IMG SRC="Страница 2 (2)/cd.png"/>' in text)
         self.assertTrue (u'<A HREF="Страница 2 (2)/cd_go.png">cd_go.png</A>' in text)
+
+
+    def testLinkToPagesChangeHtmlLongNames (self):
+        """
+        Тест для проверки того, как исправляются ссылки на страницы
+        """
+        pagename = u"Страница 1"
+        namegenerator = self.__tester.longNameGenerator (self.root[pagename])
+        branchExporter = self.__tester.branchExporter (self.root[pagename], namegenerator)
+
+        result = branchExporter.export (
+                outdir=self.outputdir,
+                imagesonly=False,
+                alwaysOverwrite=False
+                )
+        
+        text =  self.__getFileContent (os.path.join (self.outputdir, u"Страница 1_Страница 2_Страница 6.html"))
+
+        self.assertTrue (u'<A HREF="/Типы страниц">/Типы страниц</A>' in text)
+
+        self.assertTrue (u'<A HREF="Страница 1_Страница 2_Страница 6_Страница 7_Страница 2.html">/Страница 1/Страница 2/Страница 6/Страница 7/Страница 2</A>' in text)
+
+        self.assertTrue (u'<A HREF="Страница 1_Страница 2_Страница 6_Страница 7_Страница 2.html">Страница 7/Страница 2</A>' in text)
+
+        self.assertTrue (u'<A HREF="Страница 1_Страница 2_Страница 6_Страница 7_Страница 2.html">Еще одна ссылка</A>' in text)
+
+        self.assertTrue (u'<A HREF="Страница 1_Страница 2_Страница 6_Страница 7.html">Страница 7</A>' in text)
+
+        self.assertTrue (u'<A HREF="Страница 1_Страница 2_Страница 6_Страница 7_Страница 2.html" title="бла-бла-бла">Ссылка на /Страница 1/Страница 2/Страница 6/Страница 7/Страница 2</A>' in text)
+
+        self.assertTrue (u'<A HREF="Страница 1_Страница 2_Страница 6_Страница 7.html" title="бла-бла-бла">Ссылка на Страницу 7</A>' in text)
+
+
+    def testLinkToPagesChangeHtmlTitleNames (self):
+        """
+        Тест для проверки того, как исправляются ссылки на страницы
+        """
+        pagename = u"Страница 1"
+        namegenerator = self.__tester.titleNameGenerator (self.outputdir)
+        branchExporter = self.__tester.branchExporter (self.root[pagename], namegenerator)
+
+        result = branchExporter.export (
+                outdir=self.outputdir,
+                imagesonly=False,
+                alwaysOverwrite=False
+                )
+        
+        text =  self.__getFileContent (os.path.join (self.outputdir, u"Страница 6.html"))
+
+        self.assertTrue (u'<A HREF="/Типы страниц">/Типы страниц</A>' in text)
+
+        self.assertTrue (u'<A HREF="Страница 2 (2).html">/Страница 1/Страница 2/Страница 6/Страница 7/Страница 2</A>' in text)
+
+        self.assertTrue (u'<A HREF="Страница 2 (2).html">Страница 7/Страница 2</A>' in text)
+
+        self.assertTrue (u'<A HREF="Страница 2 (2).html">Еще одна ссылка</A>' in text)
+
+        self.assertTrue (u'<A HREF="Страница 7.html">Страница 7</A>' in text)
+
+        self.assertTrue (u'<A HREF="Страница 2 (2).html" title="бла-бла-бла">Ссылка на /Страница 1/Страница 2/Страница 6/Страница 7/Страница 2</A>' in text)
+
+        self.assertTrue (u'<A HREF="Страница 7.html" title="бла-бла-бла">Ссылка на Страницу 7</A>' in text)

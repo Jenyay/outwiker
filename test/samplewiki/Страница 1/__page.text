@@ -10,5 +10,6 @@
 		<a title="Это title" href="__attach/wall1.gif">ссылка на файл</a>.
 
 		<a href="__attach/wall1.gif" title="Это title">ссылка на файл</a>.
+		<img src="__attach/add.png">
 	</div>
 </p>

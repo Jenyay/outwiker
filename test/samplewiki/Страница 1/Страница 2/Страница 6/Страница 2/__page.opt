@@ -1,8 +1,8 @@
 [General]
 type = wiki
 tags = test
-order = 0
+order = 1
 
 [wiki]
-md5_hash = 5c75e59d94e08cd66afb27bda4f40b89
+md5_hash = 0ee42d02b8778d436ee030fd24753715
 
