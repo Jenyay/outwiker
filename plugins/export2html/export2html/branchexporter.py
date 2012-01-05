@@ -15,6 +15,10 @@ class BranchExporter (object):
         self.__log = []
         self.__nameGenerator = nameGenerator
 
+        # Словарь, который сохраняет, как была названа каждая страница при экспорте
+        # Ключ - страница, значение - имя ее директории или файла (без расширения) после экспорта
+        self.__renames = {}
+
 
     @property
     def log (self):
@@ -23,6 +27,7 @@ class BranchExporter (object):
 
     def export (self, outdir, imagesonly, alwaysOverwrite):
         self.__log = []
+        self.__renames = {}
 
         self.__export (self.__startpage, 
                 self.__startpage, 
@@ -50,6 +55,8 @@ class BranchExporter (object):
             try:
                 exporter = ExporterFactory.getExporter (page)
                 exportname = self.__nameGenerator.getName (page)
+                self.__renames[page] = exportname
+
                 exporter.export (outdir, exportname, imagesonly, alwaysOverwrite)
             except BaseException, error:
                 self.__log.append (u"{0}: {1}".format (page.title, unicode (error) ) )

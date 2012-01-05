@@ -149,7 +149,10 @@ class Export2HtmlTest (unittest.TestCase):
         text = self.__getFileContent (os.path.join (self.outputdir, pagename + ".html"))
 
         self.assertTrue (u'<img src="{pagename}/add.png">'.format (pagename=pagename) in text)
+        self.assertTrue (u'<img alt="Картинка" src="{pagename}/add.png" border="1">'.format (pagename=pagename) in text)
         self.assertTrue (u'<a href="{pagename}/wall1.gif">ссылка на файл</a>.'.format (pagename=pagename) in text)
+        self.assertTrue (u'<a title="Это title" href="{pagename}/wall1.gif">ссылка на файл</a>.'.format (pagename=pagename) in text)
+        self.assertTrue (u'<a href="{pagename}/wall1.gif" title="Это title">ссылка на файл</a>.'.format (pagename=pagename) in text)
         self.assertTrue (u'А этот __attach/ содержится в тексте' in text)
 
 
