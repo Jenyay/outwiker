@@ -35,7 +35,13 @@ class ExportDialog (wx.Dialog):
         self.__centerWindow()
 
         self.Bind (wx.EVT_BUTTON, self.__onSelFolder, self.__selFolderButton)
-        self.Bind (wx.EVT_BUTTON, self._onOk, id=wx.ID_OK)
+        self.Bind (wx.EVT_BUTTON, self.__onOkPressed, id=wx.ID_OK)
+
+        self._setFocusDefault()
+
+
+    def _setFocusDefault (self):
+        self.__folderTextCtrl.SetFocus()
 
     
     def __centerWindow (self):
@@ -56,7 +62,7 @@ class ExportDialog (wx.Dialog):
 
     @property
     def path (self):
-        return self.__folderTextCtrl.GetValue()
+        return self.__folderTextCtrl.GetValue().strip()
 
 
     @property
@@ -69,8 +75,19 @@ class ExportDialog (wx.Dialog):
         return self.__imagesOnlyCheckBox.GetValue()
 
 
+    def __onOkPressed (self, event):
+        if len (self.path) == 0:
+            MessageBox (_(u"Please, select folder for export"), 
+                    _(u"Error"),
+                    wx.OK | wx.ICON_ERROR )
+            self._setFocusDefault()
+            return
+
+        self._onOk()
+
+
     @abstractmethod
-    def _onOk (self, event):
+    def _onOk(self):
         pass
 
 

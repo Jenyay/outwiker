@@ -20,7 +20,7 @@ class ExportPageDialog (ExportDialog):
         global _
 
 
-    def _onOk (self, event):
+    def _onOk (self):
         try:
             self.__exporter.export (self.path, 
                     self.__exporter.page.title,

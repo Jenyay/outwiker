@@ -43,7 +43,7 @@ class ExportBranchDialog (ExportDialog):
             return TitleNameGenerator (self.path)
 
 
-    def _onOk (self, event):
+    def _onOk (self):
         namegenerator = self.__getNameGenerator()
         exporter = BranchExporter (self.__rootpage, namegenerator)
 

@@ -62,6 +62,7 @@ class Controller (object):
 
         dlg = ExportPageDialog (self.__application.mainWindow, exporter)
         dlg.ShowModal()
+        dlg.Destroy()
 
 
     def __onBranchExport (self, event):
@@ -80,6 +81,7 @@ class Controller (object):
 
         dlg = ExportBranchDialog (self.__application.mainWindow, root)
         dlg.ShowModal()
+        dlg.Destroy()
 
 
     def __createMenu (self):
