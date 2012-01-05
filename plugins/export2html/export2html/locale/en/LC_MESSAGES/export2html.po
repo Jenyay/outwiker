@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Export2Html\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-31 19:10+0400\n"
-"PO-Revision-Date: 2011-12-31 19:12+0300\n"
+"POT-Creation-Date: 2012-01-05 13:53+0400\n"
+"PO-Revision-Date: 2012-01-05 13:53+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: jenyay.net <jenyay.ilin@gmail.com>\n"
 "Language: \n"
@@ -18,75 +18,79 @@ msgstr ""
 "X-Poedit-Language: English\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#: baseexporter.py:47
-#: baseexporter.py:101
+#: baseexporter.py:50
+#: baseexporter.py:104
 msgid "File {0} already exists"
 msgstr "File {0} already exists"
 
-#: baseexporter.py:50
+#: baseexporter.py:53
 msgid "Folder {0} not exists"
 msgstr "Folder {0} not exists"
 
-#: controller.py:31
+#: controller.py:37
 msgid "Export Page To HTML..."
 msgstr "Export Page To HTML..."
 
-#: controller.py:34
+#: controller.py:40
 msgid "Export Branch To HTML..."
 msgstr "Export Branch To HTML..."
 
-#: controller.py:44
+#: controller.py:50
 msgid "Please, select page"
 msgstr "Please, select page"
 
-#: controller.py:45
-#: controller.py:53
-#: controller.py:66
-#: exportpagedialog.py:29
+#: controller.py:51
+#: controller.py:59
+#: controller.py:72
+#: exportpagedialog.py:32
 msgid "Error"
 msgstr "Error"
 
-#: controller.py:52
-#: exporterfactory.py:22
+#: controller.py:58
+#: exporterfactory.py:25
 msgid "This page type not support export to HTML"
 msgstr "This page type not support export to HTML"
 
-#: controller.py:65
+#: controller.py:71
 msgid "Wiki is not open"
 msgstr "Wiki is not open"
 
-#: exportbranchdialog.py:29
-msgid "Errors List"
-msgstr "Errors List"
+#: exportbranchdialog.py:32
+msgid "Use long file names (include parent name)"
+msgstr "Use long file names (include parent name)"
 
-#: exportdialog.py:12
-#: exportmenu.py:60
-#: exportmenu.py:78
+#: exportdialog.py:15
+#: exportmenu.py:63
+#: exportmenu.py:81
 msgid "Export"
 msgstr "Export"
 
-#: exportdialog.py:16
+#: exportdialog.py:19
 msgid "Folder for Export:"
 msgstr "Folder for Export:"
 
-#: exportdialog.py:27
+#: exportdialog.py:30
 msgid "Overwrite Existing Files"
 msgstr "Overwrite Existing Files"
 
-#: exportdialog.py:28
+#: exportdialog.py:31
 msgid "Attaches. Save Only Images"
 msgstr "Attaches. Save Only Images"
 
-#: exportmenu.py:45
-#: exportmenu.py:72
+#: exportmenu.py:48
+#: exportmenu.py:75
 msgid "File menu not found"
 msgstr "File menu not found"
 
-#: htmlexporter.py:30
+#: htmlexporter.py:38
 msgid "{0} not found"
 msgstr "{0} not found"
 
-#: pluginexport2html.py:35
+#: logdialog.py:13
+msgid "Errors List"
+msgstr "Errors List"
+
+#: pluginexport2html.py:40
 msgid "Export pages to HTML"
 msgstr "Export pages to HTML"
 
