@@ -3,8 +3,6 @@
 
 import wx
 
-from outwiker.core.commands import MessageBox
-
 from .exportdialog import ExportDialog
 from .branchexporter import BranchExporter
 from .logdialog import LogDialog

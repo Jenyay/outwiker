@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Export2Html\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-05 13:53+0400\n"
-"PO-Revision-Date: 2012-01-05 13:53+0300\n"
+"POT-Creation-Date: 2012-01-05 21:55+0400\n"
+"PO-Revision-Date: 2012-01-05 21:55+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: jenyay.net <jenyay.ilin@gmail.com>\n"
 "Language: \n"
@@ -41,7 +41,8 @@ msgstr "Please, select page"
 
 #: controller.py:51
 #: controller.py:59
-#: controller.py:72
+#: controller.py:73
+#: exportdialog.py:81
 #: exportpagedialog.py:32
 msgid "Error"
 msgstr "Error"
@@ -51,7 +52,7 @@ msgstr "Error"
 msgid "This page type not support export to HTML"
 msgstr "This page type not support export to HTML"
 
-#: controller.py:71
+#: controller.py:72
 msgid "Wiki is not open"
 msgstr "Wiki is not open"
 
@@ -76,6 +77,10 @@ msgstr "Overwrite Existing Files"
 #: exportdialog.py:31
 msgid "Attaches. Save Only Images"
 msgstr "Attaches. Save Only Images"
+
+#: exportdialog.py:80
+msgid "Please, select folder for export"
+msgstr "Please, select folder for export"
 
 #: exportmenu.py:48
 #: exportmenu.py:75

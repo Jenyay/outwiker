@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
+from outwiker.core.commands import MessageBox
+
 from abc import abstractmethod, ABCMeta
 
 import wx
