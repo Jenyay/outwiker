@@ -94,7 +94,11 @@ class RootWikiPage (object):
         Получить нужную страницу по относительному пути в дереве
         """
         if path == "/":
-            return self
+            return self.root
+
+        # Если путь начинается с "/", то отсчет начнем от корня
+        if path[0] == "/":
+            return self.root[path[1:]]
 
         # Разделим путь по составным частям
         titles = path.split ("/")
