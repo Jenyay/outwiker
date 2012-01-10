@@ -7,7 +7,10 @@ import wx
 
 from outwiker.core.factoryselector import FactorySelector
 from outwiker.core.search import TagsList
+from outwiker.core.search import TagsList
+from outwiker.core.application import Application
 from .iconlistctrl import IconListCtrl
+from .tagspopup import TagsPopup
 
 
 class BasePageDialog(wx.Dialog):
@@ -16,6 +19,8 @@ class BasePageDialog(wx.Dialog):
         parentPage -- родительская страница (используется, если страницу нужно создавать, а не изменять)
         """
         self.__ID_TAGS_BUTTON = wx.NewId()
+        self.__tagsWidth = 350
+        self.__tagsHeight = 150
 
         kwds["style"] = wx.DEFAULT_DIALOG_STYLE|wx.RESIZE_BORDER|wx.THICK_FRAME
         wx.Dialog.__init__(self, *args, **kwds)
@@ -35,7 +40,36 @@ class BasePageDialog(wx.Dialog):
         self.parentPage = parentPage
         self._fillComboType()
 
+        self.__tagsCloud = TagsPopup (self)
+        self.__tagsCloud.SetSize ((self.__tagsWidth, self.__tagsHeight))
+        self.__fillTagsList()
+
         self.titleTextCtrl.SetFocus()
+
+        self.Bind(wx.EVT_BUTTON, self.__onShowTags, id=self.__ID_TAGS_BUTTON)
+
+
+    def __fillTagsList (self):
+        assert Application.wikiroot != None
+
+        tagslist = TagsList (Application.wikiroot)
+        for tagItem in tagslist:
+            self.__tagsCloud.addTag (tagItem, len (tagslist[tagItem]))
+
+
+    def __onShowTags (self, event):
+        if self.__tagsCloud.IsShown():
+            self.__tagsCloud.Hide()
+        else:
+            (buttonx, buttony) = self.tagsButton.GetPositionTuple()
+            (buttonw, buttonh) = self.tagsButton.GetSizeTuple()
+
+            (screenx, screeny) = self.ClientToScreenXY (buttonx + buttonw - self.__tagsWidth,
+                    buttony + buttonh)
+
+            self.__tagsCloud.SetPosition ((screenx, screeny))
+
+            self.__tagsCloud.Popup()
 
 
     def __set_properties(self):
