@@ -172,7 +172,7 @@ class EditPageDialog (BasePageDialog):
 
         # Установить тип страницы
         self._setComboPageType(currentPage.getTypeString())
-        self.comboType.Disable ()
+        self.typeCombo.Disable ()
 
         # Добавить текущую иконку
         icon = currentPage.icon

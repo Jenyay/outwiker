@@ -15,15 +15,18 @@ class BasePageDialog(wx.Dialog):
         """
         parentPage -- родительская страница (используется, если страницу нужно создавать, а не изменять)
         """
+        self.__ID_TAGS_BUTTON = wx.NewId()
+
         kwds["style"] = wx.DEFAULT_DIALOG_STYLE|wx.RESIZE_BORDER|wx.THICK_FRAME
         wx.Dialog.__init__(self, *args, **kwds)
-        self.label_1 = wx.StaticText(self, -1, _("Title"))
+        self.titleLabel = wx.StaticText(self, -1, _("Title"))
         self.titleTextCtrl = wx.TextCtrl(self, -1, "")
-        self.label_2 = wx.StaticText(self, -1, _("Tags (comma separated)"))
+        self.label_tags = wx.StaticText(self, -1, _("Tags (comma separated)"))
+        self.tagsButton = wx.Button (self, self.__ID_TAGS_BUTTON, u">>", style=wx.BU_EXACTFIT )
         self.tagsTextCtrl = wx.TextCtrl(self, -1, "")
-        self.label_3 = wx.StaticText(self, -1, _("Page type"))
-        self.comboType = wx.ComboBox(self, -1, choices=[], style=wx.CB_DROPDOWN|wx.CB_DROPDOWN|wx.CB_READONLY)
-        self.label_icon = wx.StaticText(self, -1, _("Icon"))
+        self.typeLabel = wx.StaticText(self, -1, _("Page type"))
+        self.typeCombo = wx.ComboBox(self, -1, choices=[], style=wx.CB_DROPDOWN|wx.CB_DROPDOWN|wx.CB_READONLY)
+        self.iconLabel = wx.StaticText(self, -1, _("Icon"))
         self.iconsList = IconListCtrl (self)
 
         self.__set_properties()
@@ -43,30 +46,34 @@ class BasePageDialog(wx.Dialog):
         self.iconsList.SetMinSize((500, 200))
 
     def __do_layout(self):
-        grid_sizer_1 = wx.FlexGridSizer(6, 1, 0, 0)
-        grid_sizer_4 = wx.FlexGridSizer(1, 2, 0, 0)
-        grid_sizer_3 = wx.FlexGridSizer(1, 2, 0, 0)
-        grid_sizer_2 = wx.FlexGridSizer(1, 2, 0, 0)
-        grid_sizer_2.Add(self.label_1, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 4)
-        grid_sizer_2.Add(self.titleTextCtrl, 0, wx.ALL|wx.EXPAND, 4)
-        grid_sizer_2.AddGrowableCol(1)
-        grid_sizer_1.Add(grid_sizer_2, 1, wx.EXPAND, 0)
-        grid_sizer_3.Add(self.label_2, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 4)
-        grid_sizer_3.Add(self.tagsTextCtrl, 0, wx.ALL|wx.EXPAND, 4)
-        grid_sizer_3.AddGrowableCol(1)
-        grid_sizer_1.Add(grid_sizer_3, 1, wx.EXPAND, 0)
-        grid_sizer_4.Add(self.label_3, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 4)
-        grid_sizer_4.Add(self.comboType, 0, wx.ALL|wx.EXPAND, 4)
-        grid_sizer_4.AddGrowableCol(1)
-        grid_sizer_1.Add(grid_sizer_4, 1, wx.EXPAND, 0)
-        grid_sizer_1.Add(self.label_icon, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 4)
-        grid_sizer_1.Add(self.iconsList, 1, wx.ALL|wx.EXPAND, 2)
-        self.SetSizer(grid_sizer_1)
-        grid_sizer_1.AddGrowableRow(4)
-        grid_sizer_1.AddGrowableCol(0)
+        titleSizer = wx.FlexGridSizer(1, 2, 0, 0)
+        titleSizer.Add(self.titleLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 4)
+        titleSizer.Add(self.titleTextCtrl, 0, wx.ALL|wx.EXPAND, 4)
+        titleSizer.AddGrowableCol(1)
+
+        tagsSizer = wx.FlexGridSizer(1, 3, 0, 0)
+        tagsSizer.Add(self.label_tags, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 4)
+        tagsSizer.Add(self.tagsTextCtrl, 0, wx.ALL|wx.EXPAND, 0)
+        tagsSizer.Add(self.tagsButton, 0, wx.ALIGN_CENTER_VERTICAL | wx.RIGHT, 4)
+        tagsSizer.AddGrowableCol(1)
+
+        typeSizer = wx.FlexGridSizer(1, 2, 0, 0)
+        typeSizer.Add(self.typeLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 4)
+        typeSizer.Add(self.typeCombo, 0, wx.ALL|wx.EXPAND, 4)
+        typeSizer.AddGrowableCol(1)
+
+        mainSizer = wx.FlexGridSizer(6, 1, 0, 0)
+        mainSizer.AddGrowableRow(4)
+        mainSizer.AddGrowableCol(0)
+        mainSizer.Add(titleSizer, 1, wx.EXPAND, 0)
+        mainSizer.Add(tagsSizer, 1, wx.EXPAND, 0)
+        mainSizer.Add(typeSizer, 1, wx.EXPAND, 0)
+        mainSizer.Add(self.iconLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 4)
+        mainSizer.Add(self.iconsList, 1, wx.ALL|wx.EXPAND, 2)
+        self._createOkCancelButtons (mainSizer)
+        self.SetSizer(mainSizer)
+
         self.Layout()
-    
-        self._createOkCancelButtons (grid_sizer_1)
         self.titleTextCtrl.SetFocus()
     
 
@@ -82,12 +89,12 @@ class BasePageDialog(wx.Dialog):
 
     
     def _fillComboType (self):
-        self.comboType.Clear()
+        self.typeCombo.Clear()
         for factory in FactorySelector.factories:
-            self.comboType.Append (factory.title, factory)
+            self.typeCombo.Append (factory.title, factory)
 
-        if not self.comboType.IsEmpty():
-            self.comboType.SetSelection (0)
+        if not self.typeCombo.IsEmpty():
+            self.typeCombo.SetSelection (0)
     
 
     def _setComboPageType (self, pageTypeString):
@@ -97,15 +104,15 @@ class BasePageDialog(wx.Dialog):
         n = 0
         for factory in FactorySelector.factories:
             if factory.getTypeString() == FactorySelector.getFactory(pageTypeString).getTypeString():
-                self.comboType.SetSelection (n)
+                self.typeCombo.SetSelection (n)
                 break
             n += 1
 
 
     @property
     def selectedFactory (self):
-        index = self.comboType.GetSelection()
-        return self.comboType.GetClientData (index)
+        index = self.typeCombo.GetSelection()
+        return self.typeCombo.GetClientData (index)
 
     @property
     def pageTitle (self):
