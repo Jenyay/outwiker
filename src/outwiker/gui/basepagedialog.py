@@ -2,6 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 import os
+import os.path
 
 import wx
 
@@ -9,8 +10,10 @@ from outwiker.core.factoryselector import FactorySelector
 from outwiker.core.search import TagsList
 from outwiker.core.search import TagsList
 from outwiker.core.application import Application
+from outwiker.core.system import getImagesDir
 from .iconlistctrl import IconListCtrl
 from .tagspopup import TagsPopup
+from .tagscloud import TagsCloud, EVT_TAG_CLICK
 
 
 class BasePageDialog(wx.Dialog):
@@ -22,16 +25,24 @@ class BasePageDialog(wx.Dialog):
         self.__tagsWidth = 350
         self.__tagsHeight = 150
 
+        self.__tagBitmap = wx.Bitmap (os.path.join (getImagesDir(), "tag.png"), 
+                wx.BITMAP_TYPE_PNG)
+
         kwds["style"] = wx.DEFAULT_DIALOG_STYLE|wx.RESIZE_BORDER|wx.THICK_FRAME
         wx.Dialog.__init__(self, *args, **kwds)
-        self.titleLabel = wx.StaticText(self, -1, _("Title"))
+        self.titleLabel = wx.StaticText(self, -1, _(u"Title"))
         self.titleTextCtrl = wx.TextCtrl(self, -1, "")
-        self.label_tags = wx.StaticText(self, -1, _("Tags (comma separated)"))
-        self.tagsButton = wx.Button (self, self.__ID_TAGS_BUTTON, u">>", style=wx.BU_EXACTFIT )
+        self.label_tags = wx.StaticText(self, -1, _(u"Tags (comma separated)"))
+
+        self.tagsButton = wx.BitmapButton (self, 
+                self.__ID_TAGS_BUTTON, 
+                self.__tagBitmap)
+
+        # self.tagsButton = wx.Button (self, self.__ID_TAGS_BUTTON, u">>", style=wx.BU_EXACTFIT )
         self.tagsTextCtrl = wx.TextCtrl(self, -1, "")
-        self.typeLabel = wx.StaticText(self, -1, _("Page type"))
+        self.typeLabel = wx.StaticText(self, -1, _(u"Page type"))
         self.typeCombo = wx.ComboBox(self, -1, choices=[], style=wx.CB_DROPDOWN|wx.CB_DROPDOWN|wx.CB_READONLY)
-        self.iconLabel = wx.StaticText(self, -1, _("Icon"))
+        self.iconLabel = wx.StaticText(self, -1, _(u"Icon"))
         self.iconsList = IconListCtrl (self)
 
         self.__set_properties()
@@ -42,11 +53,29 @@ class BasePageDialog(wx.Dialog):
 
         self.__tagsCloud = TagsPopup (self)
         self.__tagsCloud.SetSize ((self.__tagsWidth, self.__tagsHeight))
+        self.__tagsCloud.Bind (EVT_TAG_CLICK, self.__onTagClick)
+
         self.__fillTagsList()
 
         self.titleTextCtrl.SetFocus()
 
         self.Bind(wx.EVT_BUTTON, self.__onShowTags, id=self.__ID_TAGS_BUTTON)
+
+
+    def __onTagClick (self, event):
+        self.__addTagText (event.text)
+
+
+    def __addTagText (self, tagname):
+        currentText = self.tagsTextCtrl.GetValue().strip()
+        if currentText[-1] == ",":
+            newtext = currentText + " " + tagname
+        else:
+            newtext = currentText + ", " + tagname
+
+        self.tagsTextCtrl.SetValue (newtext)
+        self.tagsTextCtrl.SetFocus()
+        self.tagsTextCtrl.SetSelection (len (newtext), len (newtext))
 
 
     def __fillTagsList (self):
@@ -73,7 +102,7 @@ class BasePageDialog(wx.Dialog):
 
 
     def __set_properties(self):
-        self.SetTitle(_("Create Page"))
+        self.SetTitle(_(u"Create Page"))
         self.SetSize((500, 350))
         self.titleTextCtrl.SetMinSize((350,-1))
         self.tagsTextCtrl.SetMinSize((250, -1))

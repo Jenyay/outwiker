@@ -2,6 +2,10 @@
 # -*- coding: UTF-8 -*-
 
 import wx
+import  wx.lib.newevent
+
+TagClickEvent, EVT_TAG_CLICK = wx.lib.newevent.NewEvent()
+
 
 class TagsCloud (wx.ScrolledWindow):
     def __init__ (self, parent):
@@ -31,6 +35,8 @@ class TagsCloud (wx.ScrolledWindow):
         count - количество записей с данным тегов (используется при расчете размера надписи)
         """
         newlabel = wx.StaticText (self, -1, tag)
+        newlabel.Bind (wx.EVT_LEFT_DOWN, self.__tagClicked)
+
         newTag = Tag (tag, count, newlabel)
 
         self.__tags.append (newTag)
@@ -38,6 +44,11 @@ class TagsCloud (wx.ScrolledWindow):
 
         self.__formatLabel (newTag)
         self.layoutTags()
+
+
+    def __tagClicked (self, event):
+        event = TagClickEvent (text=event.GetEventObject().GetLabel())
+        wx.PostEvent(self, event)
 
 
     def __calcFontSize (self, tag):
@@ -69,7 +80,7 @@ class TagsCloud (wx.ScrolledWindow):
                 wx.FONTFAMILY_DEFAULT,
                 wx.FONTSTYLE_NORMAL,
                 wx.FONTWEIGHT_NORMAL,
-                underline=True)
+                underline=False)
 
         tag.label.SetFont (font)
         tag.label.SetForegroundColour (wx.Colour (0, 0, 255))
@@ -111,6 +122,7 @@ class TagsCloud (wx.ScrolledWindow):
         """
         Расположение тегов в окне
         """
+        self.Scroll (0, 0)
         # Метки, расположенные на текущей строке
         currentLine = []
 
