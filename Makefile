@@ -57,7 +57,7 @@ wintests:
 
 source: clean
 	mkdir -p build/$(dirname)
-	rsync -avz --exclude=.bzr --exclude=distrib --exclude=build --exclude=*.pyc --exclude=*.dll --exclude=*.exe * build/$(dirname)/
+	rsync -avz --exclude=.bzr --exclude=distrib --exclude=build --exclude=*.pyc --exclude=*.dll --exclude=*.exe * --exclude=src/.ropeproject build/$(dirname)/
 
 orig: source
 	cd build; tar -cvf $(origname) $(dirname)
