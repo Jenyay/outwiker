@@ -18,6 +18,7 @@ class TagsCloud (wx.ScrolledWindow):
 
         self.__minFontSize = 8
         self.__maxFontSize = 15
+        self.__normalFont = 10
 
         # Список классов Tag
         self.__tags = []
@@ -30,21 +31,80 @@ class TagsCloud (wx.ScrolledWindow):
         count - количество записей с данным тегов (используется при расчете размера надписи)
         """
         newlabel = wx.StaticText (self, -1, tag)
-        self.__formatLabel (newlabel)
+        newTag = Tag (tag, count, newlabel)
 
-        self.__tags.append (Tag (tag, count, newlabel) )
+        self.__tags.append (newTag)
         self.__tags.sort (self.__compareTags)
+
+        self.__formatLabel (newTag)
         self.layoutTags()
 
 
-    def __formatLabel (self, label):
-        font = wx.Font (10, 
+    def __calcFontSize (self, tag):
+        maxcount = self.__getMaxCount()
+        mincount = 1
+
+        if maxcount != 0:
+            size = int (self.__minFontSize + 
+                tag.count * (self.__maxFontSize - self.__minFontSize) / maxcount)
+        else:
+            size = self.__normalFont
+
+        return size
+
+
+    def __getMaxCount (self):
+        count = 0
+        for tag in self.__tags:
+            if tag.count > count:
+                count = tag.count
+
+        return count
+
+
+    def __formatLabel (self, tag):
+        fontsize = self.__calcFontSize (tag)
+
+        font = wx.Font (fontsize, 
                 wx.FONTFAMILY_DEFAULT,
                 wx.FONTSTYLE_NORMAL,
                 wx.FONTWEIGHT_NORMAL,
                 underline=True)
-        label.SetFont (font)
-        label.SetForegroundColour (wx.Colour (0, 0, 255))
+
+        tag.label.SetFont (font)
+        tag.label.SetForegroundColour (wx.Colour (0, 0, 255))
+
+
+    def __valignLineLabels (self, tags):
+        """
+        Выровнять по вертикали метки в одной строке
+        """
+        maxheight, maxindex = self.__getMaxHeight (tags)
+        if maxindex == -1:
+            return
+
+        centerY = tags[maxindex].label.GetPositionTuple()[1] + maxheight / 2
+
+        for tag in tags:
+            currx, curry = tag.label.GetPositionTuple()
+            height = tag.label.GetSizeTuple()[1]
+            tag.label.SetPosition ((currx, centerY - height / 2))
+
+
+    def __getMaxHeight (self, tags):
+        maxheight = 0
+        maxindex = -1
+
+        if len (tags) == 0:
+            return (maxheight, maxindex)
+
+        for tag, index in zip (tags, range (len (tags))):
+            height = tag.label.GetSizeTuple()[1]
+            if height > maxheight:
+                maxheight = height
+                maxindex = index
+
+        return (maxheight, maxindex)
 
 
     def layoutTags (self):
@@ -65,14 +125,10 @@ class TagsCloud (wx.ScrolledWindow):
             newRightBorder = currentx + tag.label.GetSizeTuple()[0]
 
             if newRightBorder > maxwidth and len (currentLine) != 0:
-                # TODO: Выровнять текущую строку
+                self.__valignLineLabels (currentLine)
 
                 currentx = self.__margin
-
-                # TODO:  Сдвиг по высоте рассчитывать с учетом 
-                # максимального размера метки по вертикали на линии
-
-                currenty += currentLine[0].label.GetSizeTuple()[1] + self.__space
+                currenty += self.__getMaxHeight (currentLine)[0] + self.__space
 
                 currentLine = []
                 linesCount += 1
@@ -86,10 +142,6 @@ class TagsCloud (wx.ScrolledWindow):
                     self.__tags[0].label.GetSizeTuple()[1] + self.__space,
                     0,
                     linesCount + 1)
-
-
-
-
 
 
     def __compareTags (self, tag1, tag2):
