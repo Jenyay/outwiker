@@ -2,14 +2,14 @@
 # -*- coding: UTF-8 -*-
 
 import wx
-import  wx.lib.newevent
+import wx.lib.newevent
 
 TagClickEvent, EVT_TAG_CLICK = wx.lib.newevent.NewEvent()
 
 
 class TagsCloud (wx.ScrolledWindow):
     def __init__ (self, parent):
-        wx.ScrolledWindow.__init__ (self, parent, style=wx.BORDER_SIMPLE)
+        wx.ScrolledWindow.__init__ (self, parent, style=wx.BORDER_THEME)
 
         self.SetScrollRate (0, 0)
         self.SetBackgroundColour (wx.Colour (255, 255, 255))
