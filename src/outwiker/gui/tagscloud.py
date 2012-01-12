@@ -27,6 +27,13 @@ class TagsCloud (wx.ScrolledWindow):
         # Список классов Tag
         self.__tags = []
 
+        # self.Bind (wx.EVT_MOUSEWHEEL, self.__onMouseWheel)
+
+
+    # def __onMouseWheel (self, event):
+    #     print event.GetWheelDelta()
+    #     self.ScrollWindow (event.GetWheelDelta(), 0)
+
 
     def addTag (self, tag, count):
         """
