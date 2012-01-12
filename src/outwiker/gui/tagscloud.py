@@ -49,7 +49,6 @@ class TagsCloud (wx.ScrolledWindow):
         self.__tags.append (newTag)
         self.__tags.sort (self.__compareTags)
 
-        self.__formatLabel (newTag)
         self.layoutTags()
 
 
@@ -141,6 +140,7 @@ class TagsCloud (wx.ScrolledWindow):
         maxwidth = self.GetClientSizeTuple()[0] - self.__margin
 
         for tag in self.__tags:
+            self.__formatLabel (tag)
             newRightBorder = currentx + tag.label.GetSizeTuple()[0]
 
             if newRightBorder > maxwidth and len (currentLine) != 0:
