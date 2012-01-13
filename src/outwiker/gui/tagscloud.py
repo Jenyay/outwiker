@@ -4,6 +4,8 @@
 import wx
 import wx.lib.newevent
 
+from outwiker.core.tagslist import TagsList
+
 TagClickEvent, EVT_TAG_CLICK = wx.lib.newevent.NewEvent()
 
 
@@ -25,14 +27,10 @@ class TagsCloud (wx.ScrolledWindow):
         self.__normalFont = 10
 
         # Список классов Tag
-        self.__tags = []
+        self.__tags = TagsList()
 
-        # self.Bind (wx.EVT_MOUSEWHEEL, self.__onMouseWheel)
-
-
-    # def __onMouseWheel (self, event):
-    #     print event.GetWheelDelta()
-    #     self.ScrollWindow (event.GetWheelDelta(), 0)
+        # Ключ - имя метки, значение - контрол, отображающий эту метку
+        self.__labels = {}
 
 
     def addTag (self, tag, count):
@@ -41,13 +39,13 @@ class TagsCloud (wx.ScrolledWindow):
         tag - название тега
         count - количество записей с данным тегов (используется при расчете размера надписи)
         """
+        # TODO: Проверить тег на уникальность
+
+        self.__tags.addTag (tag, count)
+
         newlabel = wx.StaticText (self, -1, tag)
         newlabel.Bind (wx.EVT_LEFT_DOWN, self.__tagClicked)
-
-        newTag = Tag (tag, count, newlabel)
-
-        self.__tags.append (newTag)
-        self.__tags.sort (self.__compareTags)
+        self.__labels[tag] = newlabel
 
         self.layoutTags()
 
@@ -57,66 +55,31 @@ class TagsCloud (wx.ScrolledWindow):
         wx.PostEvent(self, event)
 
 
-    def __calcFontSize (self, tag):
-        maxcount = self.__getMaxCount()
-        mincount = 1
-
-        if maxcount != 0:
-            size = int (self.__minFontSize + 
-                tag.count * (self.__maxFontSize - self.__minFontSize) / maxcount)
-        else:
-            size = self.__normalFont
-
-        return size
-
-
-    def __getMaxCount (self):
-        count = 0
-        for tag in self.__tags:
-            if tag.count > count:
-                count = tag.count
-
-        return count
-
-
-    def __formatLabel (self, tag):
-        fontsize = self.__calcFontSize (tag)
-
-        font = wx.Font (fontsize, 
-                wx.FONTFAMILY_DEFAULT,
-                wx.FONTSTYLE_NORMAL,
-                wx.FONTWEIGHT_NORMAL,
-                underline=False)
-
-        tag.label.SetFont (font)
-        tag.label.SetForegroundColour (wx.Colour (0, 0, 255))
-
-
-    def __valignLineLabels (self, tags):
+    def __valignLineLabels (self, labels):
         """
         Выровнять по вертикали метки в одной строке
         """
-        maxheight, maxindex = self.__getMaxHeight (tags)
+        maxheight, maxindex = self.__getMaxHeight (labels)
         if maxindex == -1:
             return
 
-        centerY = tags[maxindex].label.GetPositionTuple()[1] + maxheight / 2
+        centerY = labels[maxindex].GetPositionTuple()[1] + maxheight / 2
 
-        for tag in tags:
-            currx, curry = tag.label.GetPositionTuple()
-            height = tag.label.GetSizeTuple()[1]
-            tag.label.SetPosition ((currx, centerY - height / 2))
+        for label in labels:
+            currx, curry = label.GetPositionTuple()
+            height = label.GetSizeTuple()[1]
+            label.SetPosition ((currx, centerY - height / 2))
 
 
-    def __getMaxHeight (self, tags):
+    def __getMaxHeight (self, labels):
         maxheight = 0
         maxindex = -1
 
-        if len (tags) == 0:
+        if len (labels) == 0:
             return (maxheight, maxindex)
 
-        for tag, index in zip (tags, range (len (tags))):
-            height = tag.label.GetSizeTuple()[1]
+        for label, index in zip (labels, range (len (labels))):
+            height = label.GetSizeTuple()[1]
             if height > maxheight:
                 maxheight = height
                 maxindex = index
@@ -124,24 +87,64 @@ class TagsCloud (wx.ScrolledWindow):
         return (maxheight, maxindex)
 
 
+    def __calcSizeRatio (self, count):
+        maxcount = self.__tags.getMaxCount()
+        ratio = 1
+
+        if maxcount != 0:
+            ratio = count / maxcount
+
+        return ratio
+
+
+    def __setSizeLabels (self):
+        for tagname, count in self.__tags:
+            label = self.__labels[tagname]
+            ratio = self.__calcSizeRatio (count)
+            self.__formatLabel (label, ratio)
+
+
+    def __formatLabel (self, label, ratio):
+        fontsize = int (self.__minFontSize + ratio * (self.__maxFontSize - self.__minFontSize))
+
+        font = wx.Font (fontsize, 
+                wx.FONTFAMILY_DEFAULT,
+                wx.FONTSTYLE_NORMAL,
+                wx.FONTWEIGHT_NORMAL,
+                underline=False)
+
+        label.SetFont (font)
+        label.SetForegroundColour (wx.Colour (0, 0, 255))
+
+
     def layoutTags (self):
         """
         Расположение тегов в окне
         """
         self.Scroll (0, 0)
+        self.SetScrollbars (0, 0, 0, 0)
+
+        self.__setSizeLabels()
+
+        # Дважды перемещаем метки, чтобы учесть, что может появиться полоса прокрутки
+        self.__moveLabels()
+        self.__moveLabels()
+
+
+    def __moveLabels (self):
         # Метки, расположенные на текущей строке
         currentLine = []
 
         currentx = self.__margin
         currenty = self.__margin
 
-        linesCount = 0
+        linesCount = 1
 
         maxwidth = self.GetClientSizeTuple()[0] - self.__margin
 
-        for tag in self.__tags:
-            self.__formatLabel (tag)
-            newRightBorder = currentx + tag.label.GetSizeTuple()[0]
+        for tagname, count in self.__tags:
+            label = self.__labels[tagname]
+            newRightBorder = currentx + label.GetSizeTuple()[0]
 
             if newRightBorder > maxwidth and len (currentLine) != 0:
                 self.__valignLineLabels (currentLine)
@@ -152,57 +155,15 @@ class TagsCloud (wx.ScrolledWindow):
                 currentLine = []
                 linesCount += 1
 
-            tag.label.SetPosition ((currentx, currenty))
-            currentLine.append (tag)
-            currentx += tag.label.GetSizeTuple()[0] + self.__space
+            label.SetPosition ((currentx, currenty))
+            currentLine.append (label)
+            currentx += label.GetSizeTuple()[0] + self.__space
 
         if len (self.__tags) != 0:
+            commonheight = currenty + self.__space
+            lineheight = commonheight / linesCount
+
             self.SetScrollbars (0, 
-                    self.__tags[0].label.GetSizeTuple()[1] + self.__space,
+                    lineheight,
                     0,
-                    linesCount + 1)
-
-
-    def __compareTags (self, tag1, tag2):
-        """
-        Функция для сравнения экземпляров класса Tag
-        """
-        name1 = tag1.name.lower()
-        name2 = tag2.name.lower()
-
-        if name1 < name2:
-            return -1
-
-        if name1 > name2:
-            return 1
-
-        return 0
-
-
-
-
-class Tag (object):
-    def __init__ (self, name, count, label):
-        """
-        name - название метки
-        count - количество записей с такой меткой
-        label - контрол, отображающий данную метку
-        """
-        self.__name = name
-        self.__count = count
-        self.__label = label
-
-
-    @property
-    def name (self):
-        return self.__name
-
-    
-    @property
-    def count (self):
-        return self.__count
-
-
-    @property
-    def label (self):
-        return self.__label
+                    linesCount)
