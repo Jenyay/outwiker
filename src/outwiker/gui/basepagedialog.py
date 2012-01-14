@@ -8,7 +8,6 @@ import wx
 
 from outwiker.core.factoryselector import FactorySelector
 from outwiker.core.search import TagsList
-from outwiker.core.search import TagsList
 from outwiker.core.application import Application
 from outwiker.core.system import getImagesDir
 from .iconlistctrl import IconListCtrl
@@ -38,7 +37,6 @@ class BasePageDialog(wx.Dialog):
                 self.__ID_TAGS_BUTTON, 
                 self.__tagBitmap)
 
-        # self.tagsButton = wx.Button (self, self.__ID_TAGS_BUTTON, u">>", style=wx.BU_EXACTFIT )
         self.tagsTextCtrl = wx.TextCtrl(self, -1, "")
         self.typeLabel = wx.StaticText(self, -1, _(u"Page type"))
         self.typeCombo = wx.ComboBox(self, -1, choices=[], style=wx.CB_DROPDOWN|wx.CB_DROPDOWN|wx.CB_READONLY)
@@ -82,8 +80,7 @@ class BasePageDialog(wx.Dialog):
         assert Application.wikiroot != None
 
         tagslist = TagsList (Application.wikiroot)
-        for tagItem in tagslist:
-            self.__tagsCloud.addTag (tagItem, len (tagslist[tagItem]))
+        self.__tagsCloud.setTags (tagslist)
 
 
     def __onShowTags (self, event):

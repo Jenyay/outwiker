@@ -181,16 +181,6 @@ class TagsList (object):
         """
         Преобразовать строку тегов, разделенных запятой, в список
         """
-        #tagstr = tagsString
-
-        ## Отбросим кавычки, если они есть
-        #if len (tagstr) > 0 and tagstr[0] == '"':
-        #    tagstr = tagstr[0:]
-
-        #if len (tagstr) > 0 and tagstr[-1] == '"':
-        #    tagstr = tagstr[: -1]
-
-
         tags = [tag.strip() for tag in tagsString.split (",") 
                 if len (tag.strip()) > 0]
 
@@ -209,8 +199,6 @@ class TagsList (object):
             result += tags[n]
             if n != count - 1:
                 result += ", "
-
-        #result += '"'
 
         return result
 

@@ -4,7 +4,7 @@
 import wx
 import wx.lib.newevent
 
-from outwiker.core.tagslist import TagsList
+from .taglabel import TagLabel
 
 TagClickEvent, EVT_TAG_CLICK = wx.lib.newevent.NewEvent()
 
@@ -22,30 +22,26 @@ class TagsCloud (wx.ScrolledWindow):
         # Отступ между тегами
         self.__space = 10
 
-        self.__minFontSize = 8
-        self.__maxFontSize = 15
-        self.__normalFont = 10
-
-        # Список классов Tag
-        self.__tags = TagsList()
+        self.__tags = None
 
         # Ключ - имя метки, значение - контрол, отображающий эту метку
         self.__labels = {}
 
 
-    def addTag (self, tag, count):
+    def setTags (self, taglist):
         """
         Добавить тег в облако
-        tag - название тега
-        count - количество записей с данным тегов (используется при расчете размера надписи)
         """
-        # TODO: Проверить тег на уникальность
+        for label in self.__labels.values():
+            label.Unbind (wx.EVT_LEFT_DOWN, handler=self.__tagClicked)
+            label.Destroy()
 
-        self.__tags.addTag (tag, count)
+        self.__tags = taglist
 
-        newlabel = wx.StaticText (self, -1, tag)
-        newlabel.Bind (wx.EVT_LEFT_DOWN, self.__tagClicked)
-        self.__labels[tag] = newlabel
+        for tag in taglist:
+            newlabel = TagLabel(self, tag)
+            newlabel.Bind (wx.EVT_LEFT_DOWN, self.__tagClicked)
+            self.__labels[tag] = newlabel
 
         self.layoutTags()
 
@@ -87,8 +83,19 @@ class TagsCloud (wx.ScrolledWindow):
         return (maxheight, maxindex)
 
 
+    def __getMaxCount (self):
+        count = 0
+        for tag in self.__tags:
+            if len(self.__tags[tag]) > count:
+                count = len(self.__tags[tag])
+
+        return count
+
+
     def __calcSizeRatio (self, count):
-        maxcount = self.__tags.getMaxCount()
+        assert self.__tags != None
+
+        maxcount = self.__getMaxCount()
         ratio = 1
 
         if maxcount != 0:
@@ -98,23 +105,12 @@ class TagsCloud (wx.ScrolledWindow):
 
 
     def __setSizeLabels (self):
-        for tagname, count in self.__tags:
-            label = self.__labels[tagname]
+        for tagname in self.__tags:
+            count = len (self.__tags[tagname])
             ratio = self.__calcSizeRatio (count)
-            self.__formatLabel (label, ratio)
 
-
-    def __formatLabel (self, label, ratio):
-        fontsize = int (self.__minFontSize + ratio * (self.__maxFontSize - self.__minFontSize))
-
-        font = wx.Font (fontsize, 
-                wx.FONTFAMILY_DEFAULT,
-                wx.FONTSTYLE_NORMAL,
-                wx.FONTWEIGHT_NORMAL,
-                underline=False)
-
-        label.SetFont (font)
-        label.SetForegroundColour (wx.Colour (0, 0, 255))
+            label = self.__labels[tagname]
+            label.setRatio (ratio)
 
 
     def layoutTags (self):
@@ -142,7 +138,8 @@ class TagsCloud (wx.ScrolledWindow):
 
         maxwidth = self.GetClientSizeTuple()[0] - self.__margin
 
-        for tagname, count in self.__tags:
+        for tagname in self.__tags:
+            count = len (self.__tags[tagname])
             label = self.__labels[tagname]
             newRightBorder = currentx + label.GetSizeTuple()[0]
 
@@ -167,3 +164,4 @@ class TagsCloud (wx.ScrolledWindow):
                     lineheight,
                     0,
                     linesCount)
+

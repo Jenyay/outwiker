@@ -1,3 +1,9 @@
+outwiker (1.5.0-607) oneiric; urgency=low
+
+  * Рефакторинг облака тегов
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Sat, 14 Jan 2012 11:24:50 +0400
+
 outwiker (1.5.0-606) oneiric; urgency=low
 
   * Исправления в облаке меток

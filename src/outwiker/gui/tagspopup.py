@@ -25,8 +25,8 @@ class TagsPopup (wx.PopupTransientWindow):
         wx.PostEvent(self, event)
 
 
-    def addTag (self, tag, count):
-        self.__tagsCloud.addTag (tag, count)
+    def setTags (self, taglist):
+        self.__tagsCloud.setTags (taglist)
 
 
     def Popup (self):
