@@ -8,12 +8,14 @@ import os.path
 #import shutil
 
 from outwiker.core.tree import WikiPage
-from outwiker.core.search import AllTagsSearchStrategy, AnyTagSearchStrategy, TagsList
+from outwiker.core.search import AllTagsSearchStrategy, AnyTagSearchStrategy
 from outwiker.core.system import getImagesDir
 from outwiker.core.application import Application
 from outwiker.core.factory import PageFactory
 from outwiker.core.exceptions import ReadonlyException
 from outwiker.core.config import StringOption, IntegerOption
+from outwiker.core.tagslist import TagsList
+from outwiker.core.tagscommands import parseTagsList, getTagsString
 
 from .searchpanel import SearchPanel
 
@@ -71,7 +73,7 @@ class SearchWikiPage (WikiPage):
         Загрузить список тегов из настроек страницы
         """
         tagsOption = StringOption (self.params, self.paramsSection, u"tags", u"")
-        tags = TagsList.parseTagsList (tagsOption.value)
+        tags = parseTagsList (tagsOption.value)
         return tags
 
 
@@ -86,7 +88,7 @@ class SearchWikiPage (WikiPage):
         Выбрать теги для поиска
         """
         self._searchTags = tags
-        tags_str = TagsList.getTagsString (tags)
+        tags_str = getTagsString (tags)
 
         tagsOption = StringOption (self.params, self.paramsSection, u"tags", u"")
 

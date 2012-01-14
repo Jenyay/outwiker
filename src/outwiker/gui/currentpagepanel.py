@@ -8,7 +8,8 @@ from outwiker.core.application import Application
 from outwiker.core.factoryselector import FactorySelector
 from outwiker.core.commands import pageExists, openWiki
 from outwiker.core.tree import RootWikiPage
-from outwiker.core.search import TagsList
+from outwiker.core.tagslist import TagsList
+from outwiker.core.tagscommands import getTagsString
 import outwiker.core.system
 
 
@@ -149,7 +150,7 @@ class CurrentPagePanel(wx.Panel):
                 self.titleLabel.SetLabel (title)
 
                 if hasattr (page, "tags"):
-                    tags = u"[%s]" % TagsList.getTagsString (page.tags)
+                    tags = u"[%s]" % getTagsString (page.tags)
                 else:
                     tags = u"[]"
 

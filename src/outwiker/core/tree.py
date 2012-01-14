@@ -7,9 +7,10 @@ import shutil
 
 from .config import PageConfig
 from .bookmarks import Bookmarks
-from .search import TagsList
+from .tagslist import TagsList
 from .event import Event
 from .exceptions import ClearConfigError, RootFormatError, DublicateTitle, ReadonlyException, TreeException
+from .tagscommands import parseTagsList
 
 
 class RootWikiPage (object):
@@ -732,7 +733,7 @@ class WikiPage (RootWikiPage):
         except ConfigParser.NoOptionError:
             return []
 
-        tags = TagsList.parseTagsList (tagsString)
+        tags = parseTagsList (tagsString)
 
         return tags
 

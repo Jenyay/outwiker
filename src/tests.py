@@ -71,7 +71,7 @@ if __name__ == '__main__':
     from test.event import EventTest, EventsTest
     from test.config import ConfigTest, ConfigOptionsTest, TrayConfigTest, EditorConfigTest
     from test.recent import RecentWikiTest
-    from test.search import SearcherTest, TagsListTest, SearchPageTest
+    from test.search import SearcherTest, SearchPageTest
     from test.localsearch import LocalSearchTest
     from test.i18n import I18nTest
     from test.version import VersionTest, StatusTest

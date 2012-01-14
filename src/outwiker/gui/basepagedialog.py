@@ -7,9 +7,11 @@ import os.path
 import wx
 
 from outwiker.core.factoryselector import FactorySelector
-from outwiker.core.search import TagsList
+from outwiker.core.tagslist import TagsList
 from outwiker.core.application import Application
 from outwiker.core.system import getImagesDir
+from outwiker.core.tagscommands import parseTagsList
+
 from .iconlistctrl import IconListCtrl
 from .tagspopup import TagsPopup
 from .tagscloud import TagsCloud, EVT_TAG_CLICK
@@ -181,7 +183,7 @@ class BasePageDialog(wx.Dialog):
     @property
     def tags (self):
         tagsString = self.tagsTextCtrl.GetValue().strip()
-        tags = TagsList.parseTagsList (tagsString)
+        tags = parseTagsList (tagsString)
         return tags
 
     @property
