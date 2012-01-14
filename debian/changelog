@@ -1,3 +1,9 @@
+outwiker (1.5.0-606) oneiric; urgency=low
+
+  * Исправления в облаке меток
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Fri, 13 Jan 2012 20:01:47 +0400
+
 outwiker (1.5.0-605) oneiric; urgency=low
 
   * Теперь метки можно добавлять с помощью облака меток
