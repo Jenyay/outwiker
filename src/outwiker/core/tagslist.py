@@ -16,6 +16,11 @@ class TagsList (object):
 
         self._findTags (root)
 
+
+    @property
+    def tags (self):
+        return self._tags.keys()
+
     
     def _findTags (self, page):
         if page.parent != None:

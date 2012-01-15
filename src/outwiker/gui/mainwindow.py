@@ -15,7 +15,7 @@ from outwiker.core.application import Application
 
 from .wikitree import WikiTree
 import outwiker.pages.search.searchpage
-from .guiconfig import MainWindowConfig, TreeConfig, AttachConfig, GeneralGuiConfig
+from .guiconfig import MainWindowConfig, TreeConfig, AttachConfig, GeneralGuiConfig, TagsCloudConfig
 
 from .mainid import MainId
 from .currentpagepanel import CurrentPagePanel
@@ -26,6 +26,7 @@ from .trayicon import OutwikerTrayIcon
 from .attachpanel import AttachPanel
 from .preferences.prefdialog import PrefDialog
 from .mainwndcontroller import MainWndController
+from .tagscloudpanel import TagsCloudPanel
 
 
 class MainWindow(wx.Frame):
@@ -36,6 +37,7 @@ class MainWindow(wx.Frame):
         self.mainWindowConfig = MainWindowConfig (Application.config)
         self.treeConfig = TreeConfig (Application.config)
         self.attachConfig = AttachConfig (Application.config)
+        self.tagsCloudConfig = TagsCloudConfig (Application.config)
         self.generalConfig = GeneralGuiConfig (Application.config)
 
         # Флаг, обозначающий, что в цикле обработки стандартных сообщений 
@@ -145,10 +147,12 @@ class MainWindow(wx.Frame):
         self.tree = WikiTree(parent, -1)
         self.pagePanel = CurrentPagePanel(parent, -1)
         self.attachPanel = AttachPanel (parent, -1)
+        self.tagsCloudPanel = TagsCloudPanel (parent)
 
         self.__initPagePane (self.auiManager)
         self.__initAttachesPane (self.auiManager)
         self.__initTreePane (self.auiManager)
+        self.__initTagsCloudPane (self.auiManager)
         self.__loadPanesSize ()
 
         self.auiManager.SetDockSizeConstraint (0.8, 0.8)
@@ -162,6 +166,26 @@ class MainWindow(wx.Frame):
             self.mainMenu.viewNotes.Check (False)
         elif event.GetPane().name == self.auiManager.GetPane (self.attachPanel).name:
             self.mainMenu.viewAttaches.Check (False)
+
+
+    def __initTagsCloudPane (self, auiManager):
+        """
+        Загрузить настройки окна с облаком тегов
+        """
+        pane = self.__loadPaneInfo (self.tagsCloudConfig.pane)
+
+        if pane == None:
+            pane = wx.aui.AuiPaneInfo().Name(("TagsPane")).Caption(_(u"Tags")).Gripper(False).CaptionVisible(True).Layer(1).Position(1).CloseButton(True).MaximizeButton(False).Left().Dock()
+
+        # Из-за глюка http://trac.wxwidgets.org/ticket/12422 придется пока отказаться от плавающих панелек
+        pane.Dock()
+        pane.CloseButton()
+        pane.Caption(_(u"Tags"))
+
+        pane.BestSize ((self.tagsCloudConfig.width.value, 
+            self.tagsCloudConfig.height.value))
+
+        auiManager.AddPane(self.tagsCloudPanel, pane)
 
 
     def __initTreePane (self, auiManager):
@@ -240,8 +264,15 @@ class MainWindow(wx.Frame):
         """
         Сохранить параметры панелей
         """
-        self.__savePaneInfo (self.treeConfig.treePaneOption, self.auiManager.GetPane (self.tree))
-        self.__savePaneInfo (self.attachConfig.attachesPaneOption, self.auiManager.GetPane (self.attachPanel))
+        self.__savePaneInfo (self.treeConfig.treePaneOption, 
+                self.auiManager.GetPane (self.tree))
+
+        self.__savePaneInfo (self.attachConfig.attachesPaneOption, 
+                self.auiManager.GetPane (self.attachPanel))
+
+        self.__savePaneInfo (self.tagsCloudConfig.pane, 
+                self.auiManager.GetPane (self.tagsCloudPanel))
+
         self.__savePanesSize()
     
 
@@ -254,6 +285,9 @@ class MainWindow(wx.Frame):
             
         self.attachConfig.attachesWidthOption.value = self.attachPanel.GetSizeTuple()[0]
         self.attachConfig.attachesHeightOption.value = self.attachPanel.GetSizeTuple()[1]
+            
+        self.tagsCloudConfig.width.value = self.tagsCloudPanel.GetSizeTuple()[0]
+        self.tagsCloudConfig.height.value = self.tagsCloudPanel.GetSizeTuple()[1]
 
     
     def __saveParams (self):

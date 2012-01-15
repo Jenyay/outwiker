@@ -32,9 +32,7 @@ class TagsCloud (wx.ScrolledWindow):
         """
         Добавить тег в облако
         """
-        for label in self.__labels.values():
-            label.Unbind (wx.EVT_LEFT_DOWN, handler=self.__tagClicked)
-            label.Destroy()
+        self.clear()
 
         self.__tags = taglist
 
@@ -44,6 +42,15 @@ class TagsCloud (wx.ScrolledWindow):
             self.__labels[tag] = newlabel
 
         self.layoutTags()
+
+
+    def clear(self):
+        for label in self.__labels.values():
+            label.Unbind (wx.EVT_LEFT_DOWN, handler=self.__tagClicked)
+            label.Destroy()
+
+        self.__labels = {}
+        self.__tags = None
 
 
     def __tagClicked (self, event):

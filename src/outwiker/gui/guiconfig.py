@@ -250,3 +250,21 @@ class AttachConfig (object):
         self.DEFAULT_PANE_OPTIONS = u""
         self.attachesPaneOption = StringOption (self.config, u"MainWindow", u"AttachesPane", self.DEFAULT_PANE_OPTIONS)
 
+
+
+class TagsCloudConfig (object):
+    """
+    Класс для хранения настроек панели с облагом тегов
+    """
+    def __init__ (self, config):
+        self.config = config
+
+        self.DEFAULT_WIDTH = 250
+        self.width = IntegerOption (self.config, u"MainWindow", u"TagsCloudWidth", self.DEFAULT_WIDTH)
+
+        self.DEFAULT_HEIGHT = 170
+        self.height = IntegerOption (self.config, u"MainWindow", u"TagsCloudHeight", self.DEFAULT_HEIGHT)
+
+        # Параметры панели с деревом
+        self.DEFAULT_PANE_OPTIONS = ""
+        self.pane = StringOption (self.config, u"MainWindow", u"TagsCloudPane", self.DEFAULT_PANE_OPTIONS)
