@@ -3,20 +3,44 @@
 
 import wx
 
-from .tagscloud import TagsCloud
-from outwiker.core.application import Application
+from .tagscloud import TagsCloud, EVT_TAG_CLICK
+from .pagelist import EVT_PAGE_CLICK
+from .pagelistpopup import PageListPopup
 from outwiker.core.tagslist import TagsList
+from outwiker.core.tree import RootWikiPage
 
 
 class TagsCloudPanel (wx.Panel):
-    def __init__ (self, parent):
+    def __init__ (self, parent, application):
         wx.Panel.__init__ (self, parent)
+
+        self.__application = application
 
         self.__currentTags = None
         self.__tagscloud = TagsCloud (self)
+        self.__tagscloud.Bind (EVT_TAG_CLICK, self.__onTagClick)
+
+        self.__popupWidth = 300
+        self.__popupHeight = 200
+        self.__pageListPopup = PageListPopup (self)
+        self.__pageListPopup.SetSize ((self.__popupWidth, self.__popupHeight))
 
         self.__layout()
         self.__bindAppEvents()
+
+        self.Bind (EVT_PAGE_CLICK, self.__onPageClick)
+
+
+    def __onPageClick (self, event):
+        assert event.page != None
+        self.__application.selectedPage = event.page
+
+
+    def __onTagClick (self, event):
+        pages = self.__currentTags[event.text][:]
+        pages.sort (RootWikiPage.sortAlphabeticalFunction)
+        self.__pageListPopup.setPageList (pages)
+        self.__pageListPopup.Popup()
 
 
     def __layout (self):
@@ -28,15 +52,15 @@ class TagsCloudPanel (wx.Panel):
 
 
     def __bindAppEvents (self):
-        Application.onPageUpdate += self.__onPageUpdate
-        Application.onTreeUpdate += self.__onTreeUpdate
-        Application.onEndTreeUpdate += self.__onEndTreeUpdate
+        self.__application.onPageUpdate += self.__onPageUpdate
+        self.__application.onTreeUpdate += self.__onTreeUpdate
+        self.__application.onEndTreeUpdate += self.__onEndTreeUpdate
 
     
     def __unbindAppEvents (self):
-        Application.onPageUpdate -= self.__onPageUpdate
-        Application.onTreeUpdate -= self.__onTreeUpdate
-        Application.onEndTreeUpdate -= self.__onEndTreeUpdate
+        self.__application.onPageUpdate -= self.__onPageUpdate
+        self.__application.onTreeUpdate -= self.__onTreeUpdate
+        self.__application.onEndTreeUpdate -= self.__onEndTreeUpdate
 
 
     def __onTreeUpdate (self, sender):
@@ -72,11 +96,11 @@ class TagsCloudPanel (wx.Panel):
 
 
     def __update (self):
-        if Application.wikiroot == None:
+        if self.__application.wikiroot == None:
             self.__tagscloud.clear()
             return
 
-        tags = TagsList (Application.wikiroot)
+        tags = TagsList (self.__application.wikiroot)
 
         if not self.__isEqual (tags, self.__currentTags):
             self.__tagscloud.setTags (tags)

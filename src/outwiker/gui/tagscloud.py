@@ -11,7 +11,7 @@ TagClickEvent, EVT_TAG_CLICK = wx.lib.newevent.NewEvent()
 
 class TagsCloud (wx.ScrolledWindow):
     def __init__ (self, parent):
-        wx.ScrolledWindow.__init__ (self, parent, style=wx.BORDER_THEME)
+        super (TagsCloud, self).__init__ (parent, style=wx.BORDER_THEME)
 
         self.SetScrollRate (0, 0)
         self.SetBackgroundColour (wx.Colour (255, 255, 255))

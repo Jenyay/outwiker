@@ -147,7 +147,7 @@ class MainWindow(wx.Frame):
         self.tree = WikiTree(parent, -1)
         self.pagePanel = CurrentPagePanel(parent, -1)
         self.attachPanel = AttachPanel (parent, -1)
-        self.tagsCloudPanel = TagsCloudPanel (parent)
+        self.tagsCloudPanel = TagsCloudPanel (parent, Application)
 
         self.__initPagePane (self.auiManager)
         self.__initAttachesPane (self.auiManager)
