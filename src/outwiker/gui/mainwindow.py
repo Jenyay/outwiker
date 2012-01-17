@@ -175,7 +175,11 @@ class MainWindow(wx.Frame):
         pane = self.__loadPaneInfo (self.tagsCloudConfig.pane)
 
         if pane == None:
-            pane = wx.aui.AuiPaneInfo().Name(("TagsPane")).Caption(_(u"Tags")).Gripper(False).CaptionVisible(True).Layer(1).Position(1).CloseButton(True).MaximizeButton(False).Left().Dock()
+            treepane = auiManager.GetPane (self.tree)
+            layer = treepane.dock_layer
+            direction = treepane.dock_direction
+
+            pane = wx.aui.AuiPaneInfo().Name("TagsPane").Caption(_(u"Tags")).Gripper(False).CaptionVisible(True).Layer(layer).Position(1).CloseButton(True).MaximizeButton(False).Direction(direction).Dock()
 
         # Из-за глюка http://trac.wxwidgets.org/ticket/12422 придется пока отказаться от плавающих панелек
         pane.Dock()
@@ -195,7 +199,7 @@ class MainWindow(wx.Frame):
         pane = self.__loadPaneInfo (self.treeConfig.treePaneOption)
 
         if pane == None:
-            pane = wx.aui.AuiPaneInfo().Name(("treePane")).Caption(_(u"Notes")).Gripper(False).CaptionVisible(True).Layer(2).Position(0).CloseButton(True).MaximizeButton(False).Left().Dock()
+            pane = wx.aui.AuiPaneInfo().Name("treePane").Caption(_(u"Notes")).Gripper(False).CaptionVisible(True).Layer(2).Position(0).CloseButton(True).MaximizeButton(False).Left().Dock()
 
         # Из-за глюка http://trac.wxwidgets.org/ticket/12422 придется пока отказаться от плавающих панелек
         pane.Dock()
