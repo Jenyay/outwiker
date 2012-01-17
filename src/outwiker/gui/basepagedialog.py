@@ -68,7 +68,10 @@ class BasePageDialog(wx.Dialog):
 
     def __addTagText (self, tagname):
         currentText = self.tagsTextCtrl.GetValue().strip()
-        if currentText[-1] == ",":
+
+        if len (currentText) == 0:
+            newtext = tagname
+        elif currentText[-1] == ",":
             newtext = currentText + " " + tagname
         else:
             newtext = currentText + ", " + tagname

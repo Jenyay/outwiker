@@ -1,3 +1,15 @@
+outwiker (1.5.0-610) oneiric; urgency=low
+
+  * Исправлена ошибка в облаке тегов при добавлении тегов
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Tue, 17 Jan 2012 20:35:57 +0400
+
+outwiker (1.5.0-609) oneiric; urgency=low
+
+  * Исправления во всплывающем окне при клике на тег
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Tue, 17 Jan 2012 20:27:04 +0400
+
 outwiker (1.5.0-608) oneiric; urgency=low
 
   * Добавлено облако тегов в главное окно
