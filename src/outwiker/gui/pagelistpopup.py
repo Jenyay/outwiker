@@ -37,6 +37,7 @@ class PageListPopup (wx.PopupTransientWindow):
         self.Layout()
         self.SetPosition (self.__getBestPosition())
         super (PageListPopup, self).Popup ()
+        self.__pagelist.updateScroll()
 
 
     def __getBestPosition (self):

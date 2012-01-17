@@ -15,7 +15,7 @@ class PageList (wx.ScrolledWindow):
         self.__space = 4
 
         self.SetBackgroundColour (wx.Colour (255, 255, 255))
-        self.SetScrollRate (0, 0)
+        # self.SetScrollRate (0, 0)
 
         # Список отображаемых элементов
         self.__titleItems = []
@@ -23,35 +23,41 @@ class PageList (wx.ScrolledWindow):
         self.__sizer.AddGrowableCol (0)
 
         self.SetSizer (self.__sizer)
+        self.SetAutoLayout (True)
 
 
-    def __updateScroll (self):
+    def updateScroll (self):
         self.Scroll (0, 0)
         self.SetScrollbars (0, 0, 0, 0)
 
         count = len (self.__titleItems)
-        if count != 0:
-            virtualw, virtualh = self.GetVirtualSize()
-            clientw, clienth = self.GetClientSizeTuple()
+        if count > 1:
+            lastItemY = self.__titleItems[-1].GetPositionTuple()[1]
+            lastItemH = self.__titleItems[-1].GetPositionTuple()[1] - self.__titleItems[-2].GetPositionTuple()[1]
 
-            if virtualw < clientw:
-                pixelPerUnitX = 0
-                unitX = 0
-            else:
-                pixelPerUnitX = 10
-                unitX = (virtualw - clientw) / pixelPerUnitX
+            pixelPerUnitX = 5
+            unitX = (self.__getItemMaxWidth() + 2 * self.__space) / pixelPerUnitX + 1
 
-            if virtualh < clienth:
-                pixelPerUnitY = 0
-                unitY = 0
-            else:
-                pixelPerUnitY = self.__titleItems[0].GetSizeTuple()[1] + self.__space
-                unitY = (virtualh - clienth) / pixelPerUnitY + 1
+            pixelPerUnitY = (lastItemY + lastItemH) / len (self.__titleItems)
+            unitY = len (self.__titleItems) + 1
 
             self.SetScrollbars (pixelPerUnitX,
                     pixelPerUnitY,
                     unitX,
-                    unitY)
+                    unitY,
+                    0,
+                    0)
+
+            
+    def __getItemMaxWidth (self):
+        maxwidth = 0
+        for item in self.__titleItems:
+            width = item.GetBestSizeTuple()[0]
+            if width > maxwidth:
+                maxwidth = width
+
+        return maxwidth
+
 
 
     def clear (self):
@@ -63,8 +69,8 @@ class PageList (wx.ScrolledWindow):
             item.Destroy()
 
         self.__titleItems = []
-        self.__updateScroll()
         self.Layout()
+        self.updateScroll()
 
 
     def setPageList (self, pages):
@@ -79,8 +85,12 @@ class PageList (wx.ScrolledWindow):
             self.__titleItems.append (item)
             self.__sizer.Add (item, 0, flag=wx.EXPAND | wx.ALL, border=self.__space)
 
-        self.__updateScroll()
+        # print "-----"
+        # print self.__getItemMaxWidth()
         self.Layout()
+        # print self.__getItemMaxWidth()
+        # print "-----"
+        self.updateScroll()
 
 
 
