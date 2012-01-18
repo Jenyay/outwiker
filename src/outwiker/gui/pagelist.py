@@ -25,9 +25,14 @@ class PageList (wx.ScrolledWindow):
         self.SetSizer (self.__sizer)
         self.SetAutoLayout (True)
 
+        self.Bind (wx.EVT_SIZE, self.__onSize)
 
-    def updateScroll (self):
-        self.Scroll (0, 0)
+
+    def __onSize (self, event):
+        self.__updateScroll()
+
+
+    def __updateScroll (self):
         self.SetScrollbars (0, 0, 0, 0)
 
         count = len (self.__titleItems)
@@ -70,7 +75,7 @@ class PageList (wx.ScrolledWindow):
 
         self.__titleItems = []
         self.Layout()
-        self.updateScroll()
+        self.__updateScroll()
 
 
     def setPageList (self, pages):
@@ -85,12 +90,8 @@ class PageList (wx.ScrolledWindow):
             self.__titleItems.append (item)
             self.__sizer.Add (item, 0, flag=wx.EXPAND | wx.ALL, border=self.__space)
 
-        # print "-----"
-        # print self.__getItemMaxWidth()
         self.Layout()
-        # print self.__getItemMaxWidth()
-        # print "-----"
-        self.updateScroll()
+        self.__updateScroll()
 
 
 
@@ -98,15 +99,15 @@ class PageTitleItem (wx.Panel):
     def __init__ (self, parent, page):
         super (PageTitleItem, self).__init__ (parent)
         self.SetBackgroundColour (wx.Colour (255, 255, 255))
+        self.__page = page
 
         self.__color = wx.Colour (0, 0, 0)
         self.__fontSize = 10
         self.__propagationLevel = 15
 
         self.__label = wx.StaticText (self, -1, page.title)
-        self.__colorize (self.__label)
+        self.__formatItem (self.__label)
 
-        self.__page = page
 
         self.__label.Bind (wx.EVT_LEFT_DOWN, self.__pageClicked)
         self.Fit()
@@ -123,7 +124,7 @@ class PageTitleItem (wx.Panel):
         return self.__page
 
 
-    def __colorize (self, label):
+    def __formatItem (self, label):
         label.SetForegroundColour (self.__color)
 
         font = wx.Font (self.__fontSize, 
@@ -133,4 +134,5 @@ class PageTitleItem (wx.Panel):
                 underline=False)
 
         label.SetFont (font)
+        label.SetToolTipString (self.__page.subpath)
 

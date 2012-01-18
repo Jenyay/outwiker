@@ -27,6 +27,12 @@ class TagsCloud (wx.ScrolledWindow):
         # Ключ - имя метки, значение - контрол, отображающий эту метку
         self.__labels = {}
 
+        self.Bind (wx.EVT_SIZE, self.__onSize)
+
+
+    def __onSize (self, event):
+        self.__layoutTags()
+
 
     def setTags (self, taglist):
         """
@@ -41,7 +47,7 @@ class TagsCloud (wx.ScrolledWindow):
             newlabel.Bind (wx.EVT_LEFT_DOWN, self.__tagClicked)
             self.__labels[tag] = newlabel
 
-        self.layoutTags()
+        self.__layoutTags()
 
 
     def clear(self):
@@ -120,12 +126,14 @@ class TagsCloud (wx.ScrolledWindow):
             label.setRatio (ratio)
 
 
-    def layoutTags (self):
+    def __layoutTags (self):
         """
         Расположение тегов в окне
         """
-        self.Scroll (0, 0)
         self.SetScrollbars (0, 0, 0, 0)
+
+        if self.__tags == None:
+            return
 
         self.__setSizeLabels()
 

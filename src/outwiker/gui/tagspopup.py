@@ -31,5 +31,4 @@ class TagsPopup (wx.PopupTransientWindow):
 
     def Popup (self):
         self.Layout()
-        self.__tagsCloud.layoutTags()
         wx.PopupTransientWindow.Popup (self, self.__tagsCloud)
