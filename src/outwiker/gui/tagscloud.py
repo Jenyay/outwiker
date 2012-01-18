@@ -2,11 +2,8 @@
 # -*- coding: UTF-8 -*-
 
 import wx
-import wx.lib.newevent
 
 from .taglabel import TagLabel
-
-TagClickEvent, EVT_TAG_CLICK = wx.lib.newevent.NewEvent()
 
 
 class TagsCloud (wx.ScrolledWindow):
@@ -44,7 +41,6 @@ class TagsCloud (wx.ScrolledWindow):
 
         for tag in taglist:
             newlabel = TagLabel(self, tag)
-            newlabel.Bind (wx.EVT_LEFT_DOWN, self.__tagClicked)
             self.__labels[tag] = newlabel
 
         self.__layoutTags()
@@ -52,16 +48,10 @@ class TagsCloud (wx.ScrolledWindow):
 
     def clear(self):
         for label in self.__labels.values():
-            label.Unbind (wx.EVT_LEFT_DOWN, handler=self.__tagClicked)
             label.Destroy()
 
         self.__labels = {}
         self.__tags = None
-
-
-    def __tagClicked (self, event):
-        event = TagClickEvent (text=event.GetEventObject().GetLabel())
-        wx.PostEvent(self, event)
 
 
     def __valignLineLabels (self, labels):

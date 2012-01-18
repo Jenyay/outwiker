@@ -1,3 +1,9 @@
+outwiker (1.5.0-611) oneiric; urgency=low
+
+  * Улучшения во внешнем виде облака тегов и списка страниц
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Wed, 18 Jan 2012 22:20:38 +0400
+
 outwiker (1.5.0-610) oneiric; urgency=low
 
   * Исправлена ошибка в облаке тегов при добавлении тегов

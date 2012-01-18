@@ -2,19 +2,44 @@
 # -*- coding: UTF-8 -*-
 
 import wx
+import wx.lib.stattext
+import wx.lib.newevent
 
-class TagLabel (wx.StaticText):
+TagClickEvent, EVT_TAG_CLICK = wx.lib.newevent.NewEvent()
+
+
+class TagLabel (wx.HyperlinkCtrl):
     """
     Класс для представления одной метки
     """
     def __init__ (self, parent, title):
-        wx.StaticText.__init__ (self, parent, -1, title)
+        super (TagLabel, self).__init__ (parent, 
+                -1, 
+                title, 
+                title, 
+                style=wx.HL_ALIGN_CENTRE | wx.NO_BORDER)
+
+        self.__propagationLevel = 10
 
         self.__minFontSize = 8
         self.__maxFontSize = 15
-        self.__color = wx.Colour (0, 0, 255)
+        self.__normalBackgroundColor = wx.Colour (255, 255, 255)
 
-        self.SetForegroundColour (self.__color)
+        self.__format()
+
+
+        self.Bind (wx.EVT_HYPERLINK, self.__onMouseLeftDown)
+
+    def __format (self):
+        self.SetBackgroundColour(self.__normalBackgroundColor)
+        self.SetVisitedColour (self.GetNormalColour())
+
+
+    def __onMouseLeftDown (self, event):
+        newevent = TagClickEvent (text=self.GetLabel())
+        newevent.ResumePropagation (self.__propagationLevel)
+
+        wx.PostEvent(self, newevent)
 
 
     def setRatio (self, ratio):
@@ -31,4 +56,6 @@ class TagLabel (wx.StaticText):
                 underline=False)
 
         self.SetFont (font)
+        self.InvalidateBestSize()
+        self.SetSize (self.GetBestSize())
 

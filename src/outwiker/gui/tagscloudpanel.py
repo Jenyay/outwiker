@@ -3,7 +3,8 @@
 
 import wx
 
-from .tagscloud import TagsCloud, EVT_TAG_CLICK
+from .tagscloud import TagsCloud
+from .taglabel import EVT_TAG_CLICK
 from .pagelist import EVT_PAGE_CLICK
 from .pagelistpopup import PageListPopup
 from outwiker.core.tagslist import TagsList

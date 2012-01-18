@@ -98,18 +98,26 @@ class PageList (wx.ScrolledWindow):
 class PageTitleItem (wx.Panel):
     def __init__ (self, parent, page):
         super (PageTitleItem, self).__init__ (parent)
-        self.SetBackgroundColour (wx.Colour (255, 255, 255))
         self.__page = page
 
         self.__color = wx.Colour (0, 0, 0)
         self.__fontSize = 10
         self.__propagationLevel = 15
+        self.__backColor = wx.Colour (255, 255, 255)
 
-        self.__label = wx.StaticText (self, -1, page.title)
-        self.__formatItem (self.__label)
+        self.SetBackgroundColour (self.__backColor)
+
+        url = "/" + page.subpath
+        self.__label = wx.HyperlinkCtrl (self, 
+                -1, 
+                page.title, 
+                url, 
+                style=wx.HL_ALIGN_CENTRE | wx.NO_BORDER)
+
+        self.__formatLabel (self.__label)
 
 
-        self.__label.Bind (wx.EVT_LEFT_DOWN, self.__pageClicked)
+        self.__label.Bind (wx.EVT_HYPERLINK, self.__pageClicked)
         self.Fit()
 
 
@@ -124,9 +132,7 @@ class PageTitleItem (wx.Panel):
         return self.__page
 
 
-    def __formatItem (self, label):
-        label.SetForegroundColour (self.__color)
-
+    def __formatLabel (self, label):
         font = wx.Font (self.__fontSize, 
                 wx.FONTFAMILY_DEFAULT,
                 wx.FONTSTYLE_NORMAL,
@@ -134,5 +140,7 @@ class PageTitleItem (wx.Panel):
                 underline=False)
 
         label.SetFont (font)
-        label.SetToolTipString (self.__page.subpath)
+        label.SetToolTipString (self.__page.subpath.replace ("/", " / "))
+        label.SetBackgroundColour (self.__backColor)
+        label.SetVisitedColour (label.GetNormalColour())
 

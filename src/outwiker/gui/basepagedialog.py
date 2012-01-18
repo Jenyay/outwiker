@@ -14,7 +14,8 @@ from outwiker.core.tagscommands import parseTagsList
 
 from .iconlistctrl import IconListCtrl
 from .tagspopup import TagsPopup
-from .tagscloud import TagsCloud, EVT_TAG_CLICK
+from .tagscloud import TagsCloud
+from .taglabel import EVT_TAG_CLICK
 
 
 class BasePageDialog(wx.Dialog):
