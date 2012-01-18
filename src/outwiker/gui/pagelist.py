@@ -115,8 +115,6 @@ class PageTitleItem (wx.Panel):
                 style=wx.HL_ALIGN_CENTRE | wx.NO_BORDER)
 
         self.__formatLabel (self.__label)
-
-
         self.__label.Bind (wx.EVT_HYPERLINK, self.__pageClicked)
         self.Fit()
 
@@ -143,4 +141,5 @@ class PageTitleItem (wx.Panel):
         label.SetToolTipString (self.__page.subpath.replace ("/", " / "))
         label.SetBackgroundColour (self.__backColor)
         label.SetVisitedColour (label.GetNormalColour())
+        label.SetSize (label.GetBestSize())
 
