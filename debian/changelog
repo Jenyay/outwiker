@@ -1,3 +1,10 @@
+outwiker (1.5.0-612) oneiric; urgency=low
+
+  * Рефакторинг панели с тегами
+  * Исправлена ошибка в расчета размера тегов
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Thu, 19 Jan 2012 22:27:26 +0400
+
 outwiker (1.5.0-611) oneiric; urgency=low
 
   * Улучшения во внешнем виде облака тегов и списка страниц

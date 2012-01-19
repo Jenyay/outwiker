@@ -2,7 +2,6 @@
 # -*- coding: UTF-8 -*-
 
 import wx
-import wx.lib.stattext
 import wx.lib.newevent
 
 TagClickEvent, EVT_TAG_CLICK = wx.lib.newevent.NewEvent()

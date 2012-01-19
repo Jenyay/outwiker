@@ -102,7 +102,7 @@ class TagsCloud (wx.ScrolledWindow):
         ratio = 1
 
         if maxcount != 0:
-            ratio = count / maxcount
+            ratio = float(count) / maxcount
 
         return ratio
 
@@ -162,11 +162,11 @@ class TagsCloud (wx.ScrolledWindow):
             currentx += label.GetSizeTuple()[0] + self.__space
 
         if len (self.__tags) != 0:
-            commonheight = currenty + self.__space
+            commonheight = currenty + self.__getMaxHeight (currentLine)[0] + self.__space
             lineheight = commonheight / linesCount
 
             self.SetScrollbars (0, 
                     lineheight,
                     0,
-                    linesCount)
+                    linesCount + 1)
 
