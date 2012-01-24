@@ -37,6 +37,7 @@ class TagLabel (wx.HyperlinkCtrl):
             self.SetBackgroundColour(self.__normalBackgroundColor)
 
         self.SetVisitedColour (self.GetNormalColour())
+        self.Refresh()
 
 
     def __onMouseLeftDown (self, event):

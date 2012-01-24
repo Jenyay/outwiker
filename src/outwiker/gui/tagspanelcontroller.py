@@ -73,6 +73,7 @@ class TagsPanelController (object):
 
     def updateTags (self):
         if self.__application.wikiroot == None:
+            self.__tagsPanel.clearMarks()
             self.__tagsPanel.clearTags()
             return
 
@@ -89,4 +90,4 @@ class TagsPanelController (object):
 
         if self.__application.selectedPage != None:
             for tag in self.__application.selectedPage.tags:
-                self.__tagsPanel.mark (tag)            
+                self.__tagsPanel.mark (tag)

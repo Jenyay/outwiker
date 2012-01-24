@@ -45,7 +45,7 @@ class TagsPanelTest (unittest.TestCase):
         self.assertEqual (panel.marks, [])
 
 
-    def testSelectPage(self):
+    def testSelectPage1(self):
         application = ApplicationParams()
         application.wikiroot = self.wikiroot
         panel = FakeTagsPanel()
@@ -62,6 +62,19 @@ class TagsPanelTest (unittest.TestCase):
         self.assertTrue (u"тег 4" in panel.marks)
 
         self.wikiroot.selectedPage = None
+        self.assertEqual (panel.marks, [])
+
+
+    def testSelectPage2(self):
+        application = ApplicationParams()
+        application.wikiroot = self.wikiroot
+        panel = FakeTagsPanel()
+        controller = TagsPanelController (panel, application)
+
+        self.wikiroot.selectedPage = self.wikiroot[u"Страница 1"]
+        self.assertTrue (u"тег 1" in panel.marks)
+
+        application.wikiroot = None
         self.assertEqual (panel.marks, [])
 
 
