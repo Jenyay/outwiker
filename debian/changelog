@@ -1,3 +1,9 @@
+outwiker (1.5.0-613) oneiric; urgency=low
+
+  * Теперь в облаке тегов выделяются теги выделенной заметки
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Tue, 24 Jan 2012 09:46:08 +0400
+
 outwiker (1.5.0-612) oneiric; urgency=low
 
   * Рефакторинг панели с тегами

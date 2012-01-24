@@ -46,6 +46,22 @@ class TagsCloud (wx.ScrolledWindow):
         self.__layoutTags()
 
 
+    def mark (self, tag, marked=True):
+        """
+        Выделить метку
+        """
+        assert tag.lower().strip() in self.__labels.keys()
+        self.__labels[tag.lower().strip()].mark(marked)
+
+
+    def clearMarks (self):
+        """
+        Убрать все выделения с меток
+        """
+        for label in self.__labels.values():
+            label.mark (False)
+
+
     def clear(self):
         for label in self.__labels.values():
             label.Destroy()

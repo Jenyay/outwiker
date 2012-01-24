@@ -23,14 +23,19 @@ class TagLabel (wx.HyperlinkCtrl):
         self.__minFontSize = 8
         self.__maxFontSize = 15
         self.__normalBackgroundColor = wx.Colour (255, 255, 255)
+        self.__markedBackgroundColor = wx.Colour (250, 255, 36)
 
+        self.__isMarked = False
         self.__format()
-
-
         self.Bind (wx.EVT_HYPERLINK, self.__onMouseLeftDown)
 
+
     def __format (self):
-        self.SetBackgroundColour(self.__normalBackgroundColor)
+        if self.__isMarked:
+            self.SetBackgroundColour(self.__markedBackgroundColor)
+        else:
+            self.SetBackgroundColour(self.__normalBackgroundColor)
+
         self.SetVisitedColour (self.GetNormalColour())
 
 
@@ -57,4 +62,9 @@ class TagLabel (wx.HyperlinkCtrl):
         self.SetFont (font)
         self.InvalidateBestSize()
         self.SetSize (self.GetBestSize())
+
+
+    def mark (self, marked=True):
+        self.__isMarked = marked
+        self.__format()
 

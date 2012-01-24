@@ -34,6 +34,14 @@ class TagsCloudPanel (wx.Panel):
         self.__tagscloud.clear()
 
 
+    def clearMarks (self):
+        self.__tagscloud.clearMarks()
+
+
+    def mark (self, tag, marked=True):
+        self.__tagscloud.mark (tag, marked)
+
+
     def setTags (self, tags):
         self.__tagscloud.setTags (tags)
 

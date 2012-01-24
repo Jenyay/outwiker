@@ -40,6 +40,11 @@ class TagsPanelController (object):
         self.__application.onTreeUpdate += self.__onUpdate
         self.__application.onEndTreeUpdate += self.__onUpdate
         self.__application.onWikiOpen += self.__onUpdate
+        self.__application.onPageSelect += self.__onPageSelect
+
+
+    def __onPageSelect (self, page):
+        self.__markTags()
 
 
     def __onUpdate (self, sender):
@@ -76,3 +81,12 @@ class TagsPanelController (object):
         if not self.__isEqual (tags, self.__currentTags):
             self.__tagsPanel.setTags (tags)
             self.__currentTags = tags
+            self.__markTags()
+
+
+    def __markTags (self):
+        self.__tagsPanel.clearMarks()
+
+        if self.__application.selectedPage != None:
+            for tag in self.__application.selectedPage.tags:
+                self.__tagsPanel.mark (tag)            
