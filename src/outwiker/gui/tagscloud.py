@@ -35,6 +35,7 @@ class TagsCloud (wx.ScrolledWindow):
         """
         Добавить тег в облако
         """
+        oldy = self.GetScrollPos (wx.VERTICAL)
         self.clear()
 
         self.__tags = taglist
@@ -44,6 +45,7 @@ class TagsCloud (wx.ScrolledWindow):
             self.__labels[tag] = newlabel
 
         self.__layoutTags()
+        self.Scroll (-1, oldy)
 
 
     def mark (self, tag, marked=True):
@@ -58,13 +60,11 @@ class TagsCloud (wx.ScrolledWindow):
         """
         Убрать все выделения с меток
         """
-        for label in self.__labels.values():
-            label.mark (False)
+        map (lambda label: label.mark(False), self.__labels.values())
 
 
     def clear(self):
-        for label in self.__labels.values():
-            label.Destroy()
+        map (lambda label: label.Destroy(), self.__labels.values())
 
         self.__labels = {}
         self.__tags = None

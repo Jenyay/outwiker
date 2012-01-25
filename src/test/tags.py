@@ -6,7 +6,7 @@ import unittest
 from outwiker.core.tagslist import TagsList
 from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
-from outwiker.core.tagscommands import parseTagsList
+from outwiker.core.tagscommands import parseTagsList, appendTag, removeTag
 
 from .utils import removeWiki
 
@@ -47,3 +47,28 @@ class TagsListTest (unittest.TestCase):
         self.assertTrue (u"метка 1" in tags)
         self.assertTrue (u"Метка 2" in tags)
         self.assertTrue (u"метка 3" in tags)
+
+
+    def testAppendTag (self):
+        appendTag (self.rootwiki[u"Страница 2"], u"Метка 666")
+        self.assertTrue (u"Метка 666" in self.rootwiki[u"Страница 2"].tags)
+
+
+    def testRemoveTag (self):
+        self.assertTrue (u"Метка 3" in self.rootwiki[u"Страница 2"].tags)
+        removeTag (self.rootwiki[u"Страница 2"], u"Метка 3")
+        self.assertTrue (u"Метка 3" not in self.rootwiki[u"Страница 2"].tags)
+
+
+    def testRemoveNotExists (self):
+        self.assertTrue (u"Метка 333" not in self.rootwiki[u"Страница 2"].tags)
+        removeTag (self.rootwiki[u"Страница 2"], u"Метка 333")
+        self.assertTrue (u"Метка 333" not in self.rootwiki[u"Страница 2"].tags)
+
+
+    def testAppendExists (self):
+        appendTag (self.rootwiki[u"Страница 2"], u"Метка 1")
+        self.assertTrue (u"Метка 1" in self.rootwiki[u"Страница 2"].tags)
+
+        removeTag (self.rootwiki[u"Страница 2"], u"Метка 1")
+        self.assertTrue (u"Метка 1" not in self.rootwiki[u"Страница 2"].tags)

@@ -4,7 +4,8 @@
 import wx
 import wx.lib.newevent
 
-TagClickEvent, EVT_TAG_CLICK = wx.lib.newevent.NewEvent()
+TagLeftClickEvent, EVT_TAG_LEFT_CLICK = wx.lib.newevent.NewEvent()
+TagMiddleClickEvent, EVT_TAG_MIDDLE_CLICK = wx.lib.newevent.NewEvent()
 
 
 class TagLabel (wx.HyperlinkCtrl):
@@ -13,7 +14,7 @@ class TagLabel (wx.HyperlinkCtrl):
     """
     def __init__ (self, parent, title):
         super (TagLabel, self).__init__ (parent, 
-                -1, 
+                wx.ID_ANY, 
                 title, 
                 title, 
                 style=wx.HL_ALIGN_CENTRE | wx.NO_BORDER)
@@ -28,6 +29,7 @@ class TagLabel (wx.HyperlinkCtrl):
         self.__isMarked = False
         self.__format()
         self.Bind (wx.EVT_HYPERLINK, self.__onMouseLeftDown)
+        self.Bind (wx.EVT_MIDDLE_DOWN, self.__onMouseMiddleDown)
 
 
     def __format (self):
@@ -40,11 +42,18 @@ class TagLabel (wx.HyperlinkCtrl):
         self.Refresh()
 
 
-    def __onMouseLeftDown (self, event):
-        newevent = TagClickEvent (text=self.GetLabel())
-        newevent.ResumePropagation (self.__propagationLevel)
+    def __onMouseMiddleDown (self, event):
+        self.__sendTagEvent (TagMiddleClickEvent)
 
-        wx.PostEvent(self, newevent)
+
+    def __onMouseLeftDown (self, event):
+        self.__sendTagEvent (TagLeftClickEvent)
+
+
+    def __sendTagEvent (self, eventType):
+        newevent = eventType (text=self.GetLabel())
+        newevent.ResumePropagation (self.__propagationLevel)
+        wx.PostEvent(self.GetParent(), newevent)
 
 
     def setRatio (self, ratio):

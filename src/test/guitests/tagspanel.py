@@ -78,6 +78,22 @@ class TagsPanelTest (unittest.TestCase):
         self.assertEqual (panel.marks, [])
 
 
+    def testTagsChange (self):
+        application = ApplicationParams()
+        application.wikiroot = self.wikiroot
+        panel = FakeTagsPanel()
+        controller = TagsPanelController (panel, application)
+
+        self.wikiroot.selectedPage = self.wikiroot[u"Страница 1"]
+        self.assertTrue (u"тег 1" in panel.marks)
+
+        self.wikiroot[u"Страница 1"].tags = [u"тег 1", u"тег 2", u"тег 666"]
+        self.assertTrue (u"тег 1" in panel.marks)
+        self.assertTrue (u"тег 2" in panel.marks)
+        self.assertTrue (u"тег 666" in panel.marks)
+
+
+
     def testChangeTags (self):
         application = ApplicationParams()
         application.wikiroot = self.wikiroot

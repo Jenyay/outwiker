@@ -2,10 +2,11 @@
 # -*- coding: UTF-8 -*-
 
 from .pagelist import EVT_PAGE_CLICK
-from .taglabel import EVT_TAG_CLICK
+from .taglabel import EVT_TAG_LEFT_CLICK, EVT_TAG_MIDDLE_CLICK
 
 from outwiker.core.tagslist import TagsList
 from outwiker.core.tree import RootWikiPage
+from outwiker.core.tagscommands import removeTag, appendTag
 
 
 class TagsPanelController (object):
@@ -16,16 +17,33 @@ class TagsPanelController (object):
 
         self.__bindAppEvents()
         self.__tagsPanel.Bind (EVT_PAGE_CLICK, self.__onPageClick)
-        self.__tagsPanel.Bind (EVT_TAG_CLICK, self.__onTagClick)
+        self.__tagsPanel.Bind (EVT_TAG_LEFT_CLICK, self.__onTagLeftClick)
+        self.__tagsPanel.Bind (EVT_TAG_MIDDLE_CLICK, self.__onTagMiddleClick)
 
         self.updateTags()
 
 
-    def __onTagClick (self, event):
+    def __onTagLeftClick (self, event):
+        assert self.__currentTags != None
+
         pages = self.__currentTags[event.text][:]
         pages.sort (RootWikiPage.sortAlphabeticalFunction)
 
         self.__tagsPanel.showPopup(pages)
+
+
+    def __onTagMiddleClick (self, event):
+        """
+        Средний клик по тегу
+        """
+        selectedPage = self.__application.selectedPage
+        if selectedPage != None:
+            tag = event.text
+
+            if tag in selectedPage.tags:
+                removeTag (selectedPage, tag)
+            else:
+                appendTag (selectedPage, tag)
 
 
     def __onPageClick (self, event):

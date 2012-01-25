@@ -15,7 +15,7 @@ from outwiker.core.tagscommands import parseTagsList
 from .iconlistctrl import IconListCtrl
 from .tagspopup import TagsPopup
 from .tagscloud import TagsCloud
-from .taglabel import EVT_TAG_CLICK
+from .taglabel import EVT_TAG_LEFT_CLICK
 
 
 class BasePageDialog(wx.Dialog):
@@ -54,7 +54,7 @@ class BasePageDialog(wx.Dialog):
 
         self.__tagsCloud = TagsPopup (self)
         self.__tagsCloud.SetSize ((self.__tagsWidth, self.__tagsHeight))
-        self.__tagsCloud.Bind (EVT_TAG_CLICK, self.__onTagClick)
+        self.__tagsCloud.Bind (EVT_TAG_LEFT_CLICK, self.__onTagClick)
 
         self.__fillTagsList()
 

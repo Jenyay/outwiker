@@ -24,3 +24,21 @@ def getTagsString (tags):
             result += ", "
 
     return result
+
+
+def removeTag (page, tag):
+    """
+    Удалить тег из страницы
+    """
+    pageTags = page.tags[:]
+
+    while tag in pageTags:
+        pageTags.remove (tag)
+
+    page.tags = pageTags
+
+
+def appendTag (page, tag):
+    pageTags = page.tags[:]
+    pageTags.append (tag)
+    page.tags = pageTags
