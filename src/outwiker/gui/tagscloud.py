@@ -35,6 +35,7 @@ class TagsCloud (wx.ScrolledWindow):
         """
         Добавить тег в облако
         """
+        self.Freeze()
         oldy = self.GetScrollPos (wx.VERTICAL)
         self.clear()
 
@@ -46,6 +47,7 @@ class TagsCloud (wx.ScrolledWindow):
 
         self.__layoutTags()
         self.Scroll (-1, oldy)
+        self.Thaw()
 
 
     def mark (self, tag, marked=True):
