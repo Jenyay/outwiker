@@ -32,6 +32,7 @@ class MainId (object):
     ID_PREFERENCES = wx.ID_PROPERTIES
     ID_VIEW_TREE = wx.NewId()
     ID_VIEW_ATTACHES = wx.NewId()
+    ID_VIEW_TAGSCLOUD = wx.NewId()
     ID_VIEW_FULLSCREEN = wx.NewId()
     ID_MOVE_PAGE_UP = wx.NewId()
     ID_MOVE_PAGE_DOWN = wx.NewId()

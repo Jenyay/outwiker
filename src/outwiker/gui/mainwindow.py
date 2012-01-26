@@ -64,7 +64,7 @@ class MainWindow(wx.Frame):
         self.controller.enableGui()
         self.__createAcceleratorTable()
         self.controller.updateRecentMenu()
-        self.setFullscreen(self.mainWindowConfig.FullscreenOption.value)
+        # self.setFullscreen(self.mainWindowConfig.FullscreenOption.value)
         self.Show()
         self.taskBarIcon = OutwikerTrayIcon(self)
 
@@ -130,6 +130,7 @@ class MainWindow(wx.Frame):
         self.Bind(wx.EVT_MENU, self.__onReload, id=MainId.ID_RELOAD)
         self.Bind(wx.EVT_MENU, self.__onViewTree, self.mainMenu.viewNotes)
         self.Bind(wx.EVT_MENU, self.__onViewAttaches, self.mainMenu.viewAttaches)
+        self.Bind(wx.EVT_MENU, self.__onViewTagsCloud, self.mainMenu.viewTagsCloud)
         self.Bind(wx.EVT_MENU, self.__onFullscreen, self.mainMenu.viewFullscreen)
         self.Bind(wx.EVT_MENU, self.__onHelp, id=MainId.ID_HELP)
         self.Bind(wx.EVT_MENU, self.__onAbout, id=MainId.ID_ABOUT)
@@ -166,6 +167,8 @@ class MainWindow(wx.Frame):
             self.mainMenu.viewNotes.Check (False)
         elif event.GetPane().name == self.auiManager.GetPane (self.attachPanel).name:
             self.mainMenu.viewAttaches.Check (False)
+        elif event.GetPane().name == self.auiManager.GetPane (self.tagsCloudPanel).name:
+            self.mainMenu.viewTagsCloud.Check (False)
 
 
     def __initTagsCloudPane (self, auiManager):
@@ -516,6 +519,17 @@ class MainWindow(wx.Frame):
         self.__showHidePane (self.attachPanel)
 
 
+    def showHideTagsCloud (self):
+        """
+        Показать/спарятать окно с облаком тегов
+        """
+        self.__showHidePane (self.tagsCloudPanel)
+
+
+    def __onViewTagsCloud (self, event):
+        self.showHideTagsCloud()
+
+
     def __onViewAttaches(self, event):
         self.showHideAttaches()
 
@@ -539,6 +553,7 @@ class MainWindow(wx.Frame):
         self.ShowFullScreen(True, wx.FULLSCREEN_NOTOOLBAR | wx.FULLSCREEN_NOBORDER | wx.FULLSCREEN_NOCAPTION)
         self.auiManager.GetPane (self.attachPanel).Hide()
         self.auiManager.GetPane (self.tree).Hide()
+        self.auiManager.GetPane (self.tagsCloudPanel).Hide()
         self.auiManager.Update()
         self.__updateViewMenu()
 
@@ -548,6 +563,7 @@ class MainWindow(wx.Frame):
         self.ShowFullScreen(False)
         self.auiManager.GetPane (self.attachPanel).Show()
         self.auiManager.GetPane (self.tree).Show()
+        self.auiManager.GetPane (self.tagsCloudPanel).Show()
         self.__loadPanesSize ()
         self.__updateViewMenu()
 
@@ -565,6 +581,7 @@ class MainWindow(wx.Frame):
     def __updateViewMenu (self):
         self.mainMenu.viewNotes.Check (self.auiManager.GetPane (self.tree).IsShown())
         self.mainMenu.viewAttaches.Check (self.auiManager.GetPane (self.attachPanel).IsShown())
+        self.mainMenu.viewTagsCloud.Check (self.auiManager.GetPane (self.tagsCloudPanel).IsShown())
         self.mainMenu.viewFullscreen.Check (self.IsFullScreen())
 
 
