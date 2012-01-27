@@ -31,12 +31,12 @@ class TreeTest (BaseMainWndTest):
 
 
     def testTreeExists (self):
-        tree = self.wnd.tree.treeCtrl
+        tree = self.wnd.treePanel.treeCtrl
         self.assertNotEqual (tree, None)
 
     
     def testTreeLoadingEmpty (self):
-        tree = self.wnd.tree.treeCtrl
+        tree = self.wnd.treePanel.treeCtrl
 
         Application.wikiroot = self.wikiroot
 
@@ -47,7 +47,7 @@ class TreeTest (BaseMainWndTest):
 
 
     def testAddPage (self):
-        tree = self.wnd.tree.treeCtrl
+        tree = self.wnd.treePanel.treeCtrl
 
         Application.wikiroot = self.wikiroot
 
@@ -63,7 +63,7 @@ class TreeTest (BaseMainWndTest):
 
 
     def testAddMorePages (self):
-        tree = self.wnd.tree.treeCtrl
+        tree = self.wnd.treePanel.treeCtrl
 
         Application.wikiroot = self.wikiroot
 
@@ -94,7 +94,7 @@ class TreeTest (BaseMainWndTest):
 
 
     def testRemovePage (self):
-        tree = self.wnd.tree.treeCtrl
+        tree = self.wnd.treePanel.treeCtrl
 
         Application.wikiroot = self.wikiroot
 
@@ -122,7 +122,7 @@ class TreeTest (BaseMainWndTest):
 
 
     def testSelectedPage (self):
-        tree = self.wnd.tree.treeCtrl
+        tree = self.wnd.treePanel.treeCtrl
         rootitem = tree.GetRootItem()
 
         Application.wikiroot = self.wikiroot
@@ -150,7 +150,7 @@ class TreeTest (BaseMainWndTest):
 
 
     def testOrder1 (self):
-        tree = self.wnd.tree.treeCtrl
+        tree = self.wnd.treePanel.treeCtrl
 
         Application.wikiroot = self.wikiroot
 
@@ -179,7 +179,7 @@ class TreeTest (BaseMainWndTest):
 
 
     def testOrder2 (self):
-        tree = self.wnd.tree.treeCtrl
+        tree = self.wnd.treePanel.treeCtrl
 
         TextPageFactory.create (self.wikiroot, u"Страница 1", [])
         TextPageFactory.create (self.wikiroot, u"Страница 2", [])
@@ -219,7 +219,7 @@ class TreeTest (BaseMainWndTest):
 
 
     def testRename (self):
-        tree = self.wnd.tree.treeCtrl
+        tree = self.wnd.treePanel.treeCtrl
         Application.wikiroot = self.wikiroot
 
         TextPageFactory.create (self.wikiroot, u"Страница 1", [])

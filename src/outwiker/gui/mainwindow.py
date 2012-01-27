@@ -15,7 +15,7 @@ from outwiker.core.application import Application
 
 from .wikitree import WikiTree
 import outwiker.pages.search.searchpage
-from .guiconfig import MainWindowConfig, TreeConfig, AttachConfig, GeneralGuiConfig, TagsCloudConfig
+from .guiconfig import MainWindowConfig, TreeConfig, AttachConfig, GeneralGuiConfig
 
 from .mainid import MainId
 from .currentpagepanel import CurrentPagePanel
@@ -26,7 +26,7 @@ from .trayicon import OutwikerTrayIcon
 from .attachpanel import AttachPanel
 from .preferences.prefdialog import PrefDialog
 from .mainwndcontroller import MainWndController
-from .tagscloudpanel import TagsCloudPanel
+from outwiker.gui.mainpanes.tagscloudmainpane import TagsCloudMainPane
 
 
 class MainWindow(wx.Frame):
@@ -37,7 +37,6 @@ class MainWindow(wx.Frame):
         self.mainWindowConfig = MainWindowConfig (Application.config)
         self.treeConfig = TreeConfig (Application.config)
         self.attachConfig = AttachConfig (Application.config)
-        self.tagsCloudConfig = TagsCloudConfig (Application.config)
         self.generalConfig = GeneralGuiConfig (Application.config)
 
         # Флаг, обозначающий, что в цикле обработки стандартных сообщений 
@@ -65,6 +64,7 @@ class MainWindow(wx.Frame):
         self.__createAcceleratorTable()
         self.controller.updateRecentMenu()
         # self.setFullscreen(self.mainWindowConfig.FullscreenOption.value)
+        self.__updateViewMenu()
         self.Show()
         self.taskBarIcon = OutwikerTrayIcon(self)
 
@@ -145,10 +145,10 @@ class MainWindow(wx.Frame):
     def __createAuiPanes(self, parent):
         self.auiManager = wx.aui.AuiManager(parent)
 
-        self.tree = WikiTree(parent, -1)
+        self.treePanel = WikiTree(parent, -1)
         self.pagePanel = CurrentPagePanel(parent, -1)
         self.attachPanel = AttachPanel (parent, -1)
-        self.tagsCloudPanel = TagsCloudPanel (parent, Application)
+        self.tagsCloudPanel = TagsCloudMainPane (parent, self.auiManager, Application, self.mainMenu.viewTagsCloud)
 
         self.__initPagePane (self.auiManager)
         self.__initAttachesPane (self.auiManager)
@@ -163,11 +163,11 @@ class MainWindow(wx.Frame):
 
     
     def __onPaneClose (self, event):
-        if event.GetPane().name == self.auiManager.GetPane (self.tree).name:
+        if event.GetPane().name == self.auiManager.GetPane (self.treePanel).name:
             self.mainMenu.viewNotes.Check (False)
         elif event.GetPane().name == self.auiManager.GetPane (self.attachPanel).name:
             self.mainMenu.viewAttaches.Check (False)
-        elif event.GetPane().name == self.auiManager.GetPane (self.tagsCloudPanel).name:
+        elif event.GetPane().name == self.auiManager.GetPane (self.tagsCloudPanel.panel).name:
             self.mainMenu.viewTagsCloud.Check (False)
 
 
@@ -175,24 +175,8 @@ class MainWindow(wx.Frame):
         """
         Загрузить настройки окна с облаком тегов
         """
-        pane = self.__loadPaneInfo (self.tagsCloudConfig.pane)
-
-        if pane == None:
-            treepane = auiManager.GetPane (self.tree)
-            layer = treepane.dock_layer
-            direction = treepane.dock_direction
-
-            pane = wx.aui.AuiPaneInfo().Name("TagsPane").Caption(_(u"Tags")).Gripper(False).CaptionVisible(True).Layer(layer).Position(1).CloseButton(True).MaximizeButton(False).Direction(direction).Dock()
-
-        # Из-за глюка http://trac.wxwidgets.org/ticket/12422 придется пока отказаться от плавающих панелек
-        pane.Dock()
-        pane.CloseButton()
-        pane.Caption(_(u"Tags"))
-
-        pane.BestSize ((self.tagsCloudConfig.width.value, 
-            self.tagsCloudConfig.height.value))
-
-        auiManager.AddPane(self.tagsCloudPanel, pane)
+        pane = self.tagsCloudPanel.createPane()
+        auiManager.AddPane(self.tagsCloudPanel.panel, pane)
 
 
     def __initTreePane (self, auiManager):
@@ -212,7 +196,7 @@ class MainWindow(wx.Frame):
         pane.BestSize ((self.treeConfig.treeWidthOption.value, 
             self.treeConfig.treeHeightOption.value))
         
-        auiManager.AddPane(self.tree, pane)
+        auiManager.AddPane(self.treePanel, pane)
     
 
     def __initAttachesPane (self, auiManager):
@@ -272,14 +256,12 @@ class MainWindow(wx.Frame):
         Сохранить параметры панелей
         """
         self.__savePaneInfo (self.treeConfig.treePaneOption, 
-                self.auiManager.GetPane (self.tree))
+                self.auiManager.GetPane (self.treePanel))
 
         self.__savePaneInfo (self.attachConfig.attachesPaneOption, 
                 self.auiManager.GetPane (self.attachPanel))
 
-        self.__savePaneInfo (self.tagsCloudConfig.pane, 
-                self.auiManager.GetPane (self.tagsCloudPanel))
-
+        self.tagsCloudPanel.saveParams()
         self.__savePanesSize()
     
 
@@ -287,14 +269,11 @@ class MainWindow(wx.Frame):
         """
         Сохранить размеры панелей
         """
-        self.treeConfig.treeWidthOption.value = self.tree.GetSizeTuple()[0]
-        self.treeConfig.treeHeightOption.value = self.tree.GetSizeTuple()[1]
+        self.treeConfig.treeWidthOption.value = self.treePanel.GetSizeTuple()[0]
+        self.treeConfig.treeHeightOption.value = self.treePanel.GetSizeTuple()[1]
             
         self.attachConfig.attachesWidthOption.value = self.attachPanel.GetSizeTuple()[0]
         self.attachConfig.attachesHeightOption.value = self.attachPanel.GetSizeTuple()[1]
-            
-        self.tagsCloudConfig.width.value = self.tagsCloudPanel.GetSizeTuple()[0]
-        self.tagsCloudConfig.height.value = self.tagsCloudPanel.GetSizeTuple()[1]
 
     
     def __saveParams (self):
@@ -346,8 +325,8 @@ class MainWindow(wx.Frame):
 
             self.auiManager.UnInit()
 
-            self.tree.Close()
-            self.tree = None
+            self.treePanel.Close()
+            self.treePanel = None
 
             self.pagePanel.Close()
             self.pagePanel = None
@@ -468,7 +447,7 @@ class MainWindow(wx.Frame):
 
 
     def __onRename(self, event):
-        self.tree.beginRename()
+        self.treePanel.beginRename()
 
 
     def __onHelp(self, event):
@@ -509,7 +488,7 @@ class MainWindow(wx.Frame):
         """
         Показать/спарятать дерево с заметками
         """
-        self.__showHidePane (self.tree)
+        self.__showHidePane (self.treePanel)
 
     
     def showHideAttaches (self):
@@ -523,7 +502,7 @@ class MainWindow(wx.Frame):
         """
         Показать/спарятать окно с облаком тегов
         """
-        self.__showHidePane (self.tagsCloudPanel)
+        self.__showHidePane (self.tagsCloudPanel.panel)
 
 
     def __onViewTagsCloud (self, event):
@@ -552,8 +531,8 @@ class MainWindow(wx.Frame):
         self.__savePanesSize()
         self.ShowFullScreen(True, wx.FULLSCREEN_NOTOOLBAR | wx.FULLSCREEN_NOBORDER | wx.FULLSCREEN_NOCAPTION)
         self.auiManager.GetPane (self.attachPanel).Hide()
-        self.auiManager.GetPane (self.tree).Hide()
-        self.auiManager.GetPane (self.tagsCloudPanel).Hide()
+        self.auiManager.GetPane (self.treePanel).Hide()
+        self.auiManager.GetPane (self.tagsCloudPanel.panel).Hide()
         self.auiManager.Update()
         self.__updateViewMenu()
 
@@ -562,8 +541,8 @@ class MainWindow(wx.Frame):
         self.controller.loadMainWindowParams()
         self.ShowFullScreen(False)
         self.auiManager.GetPane (self.attachPanel).Show()
-        self.auiManager.GetPane (self.tree).Show()
-        self.auiManager.GetPane (self.tagsCloudPanel).Show()
+        self.auiManager.GetPane (self.treePanel).Show()
+        self.auiManager.GetPane (self.tagsCloudPanel.panel).Show()
         self.__loadPanesSize ()
         self.__updateViewMenu()
 
@@ -572,16 +551,16 @@ class MainWindow(wx.Frame):
         self.auiManager.GetPane (self.attachPanel).BestSize ((self.attachConfig.attachesWidthOption.value, 
             self.attachConfig.attachesHeightOption.value))
 
-        self.auiManager.GetPane (self.tree).BestSize ((self.treeConfig.treeWidthOption.value, 
+        self.auiManager.GetPane (self.treePanel).BestSize ((self.treeConfig.treeWidthOption.value, 
             self.treeConfig.treeHeightOption.value))
 
         self.auiManager.Update()
     
 
     def __updateViewMenu (self):
-        self.mainMenu.viewNotes.Check (self.auiManager.GetPane (self.tree).IsShown())
+        self.mainMenu.viewNotes.Check (self.auiManager.GetPane (self.treePanel).IsShown())
         self.mainMenu.viewAttaches.Check (self.auiManager.GetPane (self.attachPanel).IsShown())
-        self.mainMenu.viewTagsCloud.Check (self.auiManager.GetPane (self.tagsCloudPanel).IsShown())
+        self.mainMenu.viewTagsCloud.Check (self.auiManager.GetPane (self.tagsCloudPanel.panel).IsShown())
         self.mainMenu.viewFullscreen.Check (self.IsFullScreen())
 
 

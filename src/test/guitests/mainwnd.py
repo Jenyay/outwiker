@@ -34,7 +34,7 @@ class MainWndTest(BaseMainWndTest):
 
 
     def testProperties (self):
-        self.assertNotEqual (None, self.wnd.tree)
+        self.assertNotEqual (None, self.wnd.treePanel)
         self.assertNotEqual (None, self.wnd.pagePanel)
         self.assertNotEqual (None, self.wnd.attachPanel)
         self.assertNotEqual (None, self.wnd.mainMenu)
