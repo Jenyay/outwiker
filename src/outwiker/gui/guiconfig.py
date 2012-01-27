@@ -223,14 +223,14 @@ class TreeConfig (object):
         self.config = config
 
         self.DEFAULT_WIDTH = 250
-        self.treeWidthOption = IntegerOption (self.config, u"MainWindow", u"TreeWidth", self.DEFAULT_WIDTH)
+        self.width = IntegerOption (self.config, u"MainWindow", u"TreeWidth", self.DEFAULT_WIDTH)
 
         self.DEFAULT_HEIGHT = 250
-        self.treeHeightOption = IntegerOption (self.config, u"MainWindow", u"TreeHeight", self.DEFAULT_HEIGHT)
+        self.height = IntegerOption (self.config, u"MainWindow", u"TreeHeight", self.DEFAULT_HEIGHT)
 
         # Параметры панели с деревом
         self.DEFAULT_PANE_OPTIONS = ""
-        self.treePaneOption = StringOption (self.config, u"MainWindow", u"TreePane", self.DEFAULT_PANE_OPTIONS)
+        self.pane = StringOption (self.config, u"MainWindow", u"TreePane", self.DEFAULT_PANE_OPTIONS)
 
 
 
@@ -242,13 +242,13 @@ class AttachConfig (object):
         self.config = config
 
         self.DEFAULT_WIDTH = 250
-        self.attachesWidthOption = IntegerOption (self.config, u"MainWindow", u"AttachesWidth", self.DEFAULT_WIDTH)
+        self.width = IntegerOption (self.config, u"MainWindow", u"AttachesWidth", self.DEFAULT_WIDTH)
 
         self.DEFAULT_HEIGHT = 150
-        self.attachesHeightOption = IntegerOption (self.config, u"MainWindow", u"AttachesHeight", self.DEFAULT_HEIGHT)
+        self.height = IntegerOption (self.config, u"MainWindow", u"AttachesHeight", self.DEFAULT_HEIGHT)
 
         self.DEFAULT_PANE_OPTIONS = u""
-        self.attachesPaneOption = StringOption (self.config, u"MainWindow", u"AttachesPane", self.DEFAULT_PANE_OPTIONS)
+        self.pane = StringOption (self.config, u"MainWindow", u"AttachesPane", self.DEFAULT_PANE_OPTIONS)
 
 
 

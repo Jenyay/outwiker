@@ -156,7 +156,7 @@ class MainWndController (object):
         self.__enableMenu (enabled)
         self.mainWindow.pagePanel.Enable(enabled)
         self.mainWindow.treePanel.Enable(enabled)
-        self.mainWindow.attachPanel.Enable(enabled)
+        self.mainWindow.attachPanel.panel.Enable(enabled)
 
 
     def __enableTools (self, enabled):
