@@ -41,7 +41,7 @@ class TagsCloudMainPane (MainPane):
 
 
     def _getPaneDefault (self):
-        treepane = self._auiManager.GetPane (self._parent.treePanel)
+        treepane = self._auiManager.GetPane (self._parent.treePanel.panel)
         layer = treepane.dock_layer
         direction = treepane.dock_direction
         paneName = "TagsPane"
