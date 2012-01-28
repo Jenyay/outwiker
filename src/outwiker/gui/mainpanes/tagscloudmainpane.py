@@ -12,15 +12,15 @@ class TagsCloudMainPane (MainPane):
     """
     Класс для работы с панелью с облаком тегов в главном окне
     """
-    def createPanel (self):
+    def _createPanel (self):
         return TagsCloudPanel (self.parent, self.application)
 
 
-    def createConfig (self):
+    def _createConfig (self):
         return TagsCloudConfig (self.application.config)
 
 
-    def createPane (self):
+    def _createPane (self):
         """
         Создать класс с информацией о панели для auiManager
         """

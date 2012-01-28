@@ -22,8 +22,9 @@ class MainPane (object):
         self._auiManager = auiManager
         self._application = application
         self._menuItem = menuItem
-        self._panel = self.createPanel()
-        self._config = self.createConfig()
+        self._panel = self._createPanel()
+        self._config = self._createConfig()
+        self._pane = self._createPane()
 
 
     def _savePaneInfo (self, param, paneInfo):
@@ -52,6 +53,20 @@ class MainPane (object):
         return pane
 
 
+    def loadPaneSize (self):
+        self._auiManager.GetPane (self.panel).BestSize ((self.config.width.value, 
+            self.config.height.value))
+        self._auiManager.Update()
+
+
+    def show (self):
+        self._auiManager.GetPane (self.panel).Show()
+
+
+    def hide (self):
+        self._auiManager.GetPane (self.panel).Hide()
+
+
     def saveParams (self):
         self._savePaneInfo (self.config.pane, 
                 self._auiManager.GetPane (self.panel))
@@ -66,12 +81,12 @@ class MainPane (object):
 
 
     @abstractmethod
-    def createPanel(self):
+    def _createPanel(self):
         pass
 
 
     @abstractmethod
-    def createConfig (self):
+    def _createConfig (self):
         pass
 
 
@@ -99,4 +114,9 @@ class MainPane (object):
     @property
     def application (self):
         return self._application
+
+
+    @property
+    def pane (self):
+        return self._pane
 
