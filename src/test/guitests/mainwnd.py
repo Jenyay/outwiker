@@ -43,8 +43,6 @@ class MainWndTest(BaseMainWndTest):
         self.assertNotEqual (None, self.wnd.taskBarIcon)
 
         self.assertNotEqual (None, self.wnd.mainWindowConfig)
-        self.assertNotEqual (None, self.wnd.treeConfig)
-        self.assertNotEqual (None, self.wnd.attachConfig)
         self.assertNotEqual (None, self.wnd.generalConfig)
 
 

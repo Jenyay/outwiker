@@ -53,7 +53,7 @@ class PagePanelTest (BaseMainWndTest):
 
     def testEmpty (self):
         Application.wikiroot = self.wikiroot
-        self.assertNotEqual (None, self.wnd.pagePanel)
+        self.assertNotEqual (None, self.wnd.pagePanel.panel)
         self.assertEqual (None, self.wnd.pagePanel.pageView)
 
 

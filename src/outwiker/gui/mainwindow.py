@@ -17,7 +17,6 @@ import outwiker.pages.search.searchpage
 from .guiconfig import MainWindowConfig, GeneralGuiConfig
 
 from .mainid import MainId
-from .currentpagepanel import CurrentPagePanel
 from .mainmenu import MainMenu
 from .maintoolbar import MainToolBar
 from .pagedialog import createSiblingPage, createChildPage, editPage
@@ -27,6 +26,7 @@ from .mainwndcontroller import MainWndController
 from outwiker.gui.mainpanes.tagscloudmainpane import TagsCloudMainPane
 from outwiker.gui.mainpanes.attachmainpane import AttachMainPane
 from outwiker.gui.mainpanes.treemainpane import TreeMainPane
+from outwiker.gui.mainpanes.pagemainpane import PageMainPane
 
 
 class MainWindow(wx.Frame):
@@ -149,7 +149,11 @@ class MainWindow(wx.Frame):
                 Application, 
                 self.mainMenu.viewAttaches)
 
-        self.pagePanel = CurrentPagePanel(parent, -1)
+        self.pagePanel = PageMainPane (
+                parent, 
+                self.auiManager, 
+                Application, 
+                None)
 
         self.attachPanel = AttachMainPane (
                 parent, 
@@ -163,10 +167,6 @@ class MainWindow(wx.Frame):
                 Application, 
                 self.mainMenu.viewTagsCloud)
 
-        self.__initPagePane (self.auiManager)
-        self.__initAttachesPane (self.auiManager)
-        self.__initTreePane (self.auiManager)
-        self.__initTagsCloudPane (self.auiManager)
         self.__loadPanesSize ()
 
         self.auiManager.SetDockSizeConstraint (0.8, 0.8)
@@ -183,36 +183,6 @@ class MainWindow(wx.Frame):
         elif event.GetPane().name == self.auiManager.GetPane (self.tagsCloudPanel.panel).name:
             self.mainMenu.viewTagsCloud.Check (False)
 
-
-    def __initTagsCloudPane (self, auiManager):
-        """
-        Загрузить настройки окна с облаком тегов
-        """
-        auiManager.AddPane(self.tagsCloudPanel.panel, self.tagsCloudPanel.pane)
-
-
-    def __initTreePane (self, auiManager):
-        """
-        Загрузить настройки окошка с деревом
-        """
-        auiManager.AddPane(self.treePanel.panel, self.treePanel.pane)
-    
-
-    def __initAttachesPane (self, auiManager):
-        """
-        Загрузить настройки окошка с прикрепленными файлами
-        """
-        auiManager.AddPane(self.attachPanel.panel, self.attachPanel.pane)
-    
-
-    def __initPagePane (self, auiManager):
-        """
-        Загрузить настройки окошка с видом текущей страницы
-        """
-        pane = wx.aui.AuiPaneInfo().Name("pagePane").Gripper(False).CaptionVisible(False).Layer(0).Position(0).CloseButton(False).MaximizeButton(False).Center().Dock()
-
-        auiManager.AddPane(self.pagePanel, pane)
-    
 
     def __loadPaneInfo (self, param):
         """
@@ -290,14 +260,17 @@ class MainWindow(wx.Frame):
 
             self.auiManager.UnInit()
 
-            self.treePanel.panel.Close()
+            self.treePanel.close()
             self.treePanel = None
 
-            self.pagePanel.Close()
+            self.pagePanel.close()
             self.pagePanel = None
 
-            self.attachPanel.panel.Close()
+            self.attachPanel.close()
             self.attachPanel = None
+
+            self.tagsCloudPanel.close()
+            self.tagsCloudPanel = None
 
             self.statusbar.Close()
             
@@ -331,9 +304,9 @@ class MainWindow(wx.Frame):
         save - надо ли предварительно сохранить страницу?
         """
         if save:
-            self.pagePanel.destroyPageView()
+            self.pagePanel.panel.destroyPageView()
         else:
-            self.pagePanel.destroyWithoutSave()
+            self.pagePanel.panel.destroyWithoutSave()
 
 
     def __onAddSiblingPage(self, event):
@@ -412,7 +385,7 @@ class MainWindow(wx.Frame):
 
 
     def __onRename(self, event):
-        self.treePanel.panel.beginRename()
+        self.treePanel.beginRename()
 
 
     def __onHelp(self, event):
@@ -520,12 +493,14 @@ class MainWindow(wx.Frame):
         self.attachPanel.loadPaneSize()
         self.treePanel.loadPaneSize()
         self.tagsCloudPanel.loadPaneSize()
+        self.auiManager.Update()
 
 
     def __updateViewMenu (self):
-        self.mainMenu.viewNotes.Check (self.auiManager.GetPane (self.treePanel.panel).IsShown())
-        self.mainMenu.viewAttaches.Check (self.auiManager.GetPane (self.attachPanel.panel).IsShown())
-        self.mainMenu.viewTagsCloud.Check (self.auiManager.GetPane (self.tagsCloudPanel.panel).IsShown())
+        self.mainMenu.viewNotes.Check (self.treePanel.isShown())
+        self.mainMenu.viewAttaches.Check (self.attachPanel.isShown())
+        self.mainMenu.viewTagsCloud.Check (self.tagsCloudPanel.isShown())
+
         self.mainMenu.viewFullscreen.Check (self.IsFullScreen())
 
 
@@ -546,7 +521,7 @@ class MainWindow(wx.Frame):
 
 
     def __onPrint(self, event):
-        self.pagePanel.Print()
+        self.pagePanel.panel.Print()
 
 # end of class MainWindow
 

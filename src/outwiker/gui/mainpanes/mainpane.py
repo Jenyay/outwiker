@@ -24,7 +24,9 @@ class MainPane (object):
         self._menuItem = menuItem
         self._panel = self._createPanel()
         self._config = self._createConfig()
-        self._pane = self._createPane()
+
+        pane = self._createPane()
+        self._auiManager.AddPane(self._panel, pane)
 
 
     def _savePaneInfo (self, param, paneInfo):
@@ -54,17 +56,40 @@ class MainPane (object):
 
 
     def loadPaneSize (self):
-        self._auiManager.GetPane (self.panel).BestSize ((self.config.width.value, 
+        self.pane.BestSize ((self.config.width.value, 
             self.config.height.value))
-        self._auiManager.Update()
+        # self._auiManager.Update()
 
 
     def show (self):
-        self._auiManager.GetPane (self.panel).Show()
+        self.pane.Show()
 
 
     def hide (self):
-        self._auiManager.GetPane (self.panel).Hide()
+        self.pane.Hide()
+
+
+    def isShown (self):
+        return self.pane.IsShown()
+
+
+    def close (self):
+        self.panel.Close()
+
+
+    # def showHidePane (self):
+    #     """
+    #     Показать / скрыть pane
+    #     """
+    #     self.__savePanesParams()
+
+    #     if self.pane.IsShown():
+    #         self.pane.Hide()
+    #     else:
+    #         self.pane.Show()
+
+    #     self.__loadPanesSize ()
+    #     self.__updateViewMenu()
 
 
     def saveParams (self):
@@ -118,5 +143,5 @@ class MainPane (object):
 
     @property
     def pane (self):
-        return self._pane
+        return self._auiManager.GetPane (self.panel)
 
