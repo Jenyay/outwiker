@@ -23,6 +23,7 @@ from .pagedialog import createSiblingPage, createChildPage, editPage
 from .trayicon import OutwikerTrayIcon
 from .preferences.prefdialog import PrefDialog
 from .mainwndcontroller import MainWndController
+from .mainpanescontroller import MainPanesController
 from outwiker.gui.mainpanes.tagscloudmainpane import TagsCloudMainPane
 from outwiker.gui.mainpanes.attachmainpane import AttachMainPane
 from outwiker.gui.mainpanes.treemainpane import TreeMainPane
@@ -53,7 +54,10 @@ class MainWindow(wx.Frame):
         self.controller = MainWndController (self)
         self.controller.loadMainWindowParams()
 
-        self.__createAuiPanes (self)
+
+        self.auiManager = wx.aui.AuiManager(self)
+        self.__createAuiPanes ()
+        self.__panesController = MainPanesController (self, self.auiManager)
 
         self.__bindGuiEvents()
 
@@ -62,9 +66,35 @@ class MainWindow(wx.Frame):
         self.__createAcceleratorTable()
         self.controller.updateRecentMenu()
         # self.setFullscreen(self.mainWindowConfig.FullscreenOption.value)
-        self.__updateViewMenu()
+        self.__panesController.updateViewMenu()
         self.Show()
         self.taskBarIcon = OutwikerTrayIcon(self)
+
+
+    def __createAuiPanes(self):
+        self.treePanel = TreeMainPane (
+                self, 
+                self.auiManager, 
+                Application, 
+                self.mainMenu.viewNotes)
+
+        self.pagePanel = PageMainPane (
+                self, 
+                self.auiManager, 
+                Application, 
+                None)
+
+        self.attachPanel = AttachMainPane (
+                self, 
+                self.auiManager, 
+                Application, 
+                self.mainMenu.viewAttaches)
+
+        self.tagsCloudPanel = TagsCloudMainPane (
+                self, 
+                self.auiManager, 
+                Application, 
+                self.mainMenu.viewTagsCloud)
 
 
     def __createAcceleratorTable (self):
@@ -126,9 +156,6 @@ class MainWindow(wx.Frame):
         self.Bind(wx.EVT_MENU, self.__onCopyAttaches, id=MainId.ID_COPY_ATTACH_PATH)
         self.Bind(wx.EVT_MENU, self.__onCopyLink, id=MainId.ID_COPY_LINK)
         self.Bind(wx.EVT_MENU, self.__onReload, id=MainId.ID_RELOAD)
-        self.Bind(wx.EVT_MENU, self.__onViewTree, self.mainMenu.viewNotes)
-        self.Bind(wx.EVT_MENU, self.__onViewAttaches, self.mainMenu.viewAttaches)
-        self.Bind(wx.EVT_MENU, self.__onViewTagsCloud, self.mainMenu.viewTagsCloud)
         self.Bind(wx.EVT_MENU, self.__onFullscreen, self.mainMenu.viewFullscreen)
         self.Bind(wx.EVT_MENU, self.__onHelp, id=MainId.ID_HELP)
         self.Bind(wx.EVT_MENU, self.__onAbout, id=MainId.ID_ABOUT)
@@ -138,77 +165,6 @@ class MainWindow(wx.Frame):
         self.Bind(wx.EVT_TOOL, self.__onAttach, id=MainId.ID_ATTACH)
         self.Bind(wx.EVT_TOOL, self.__onGlobalSearch, id=MainId.ID_GLOBAL_SEARCH)
         self.Bind (wx.EVT_CLOSE, self.__onClose)
-
-    
-    def __createAuiPanes(self, parent):
-        self.auiManager = wx.aui.AuiManager(parent)
-
-        self.treePanel = TreeMainPane (
-                parent, 
-                self.auiManager, 
-                Application, 
-                self.mainMenu.viewAttaches)
-
-        self.pagePanel = PageMainPane (
-                parent, 
-                self.auiManager, 
-                Application, 
-                None)
-
-        self.attachPanel = AttachMainPane (
-                parent, 
-                self.auiManager, 
-                Application, 
-                self.mainMenu.viewAttaches)
-
-        self.tagsCloudPanel = TagsCloudMainPane (
-                parent, 
-                self.auiManager, 
-                Application, 
-                self.mainMenu.viewTagsCloud)
-
-        self.__loadPanesSize ()
-
-        self.auiManager.SetDockSizeConstraint (0.8, 0.8)
-        self.auiManager.Update()
-
-        self.auiManager.Bind (wx.aui.EVT_AUI_PANE_CLOSE, self.__onPaneClose)
-
-    
-    def __onPaneClose (self, event):
-        if event.GetPane().name == self.auiManager.GetPane (self.treePanel.panel).name:
-            self.mainMenu.viewNotes.Check (False)
-        elif event.GetPane().name == self.auiManager.GetPane (self.attachPanel.panel).name:
-            self.mainMenu.viewAttaches.Check (False)
-        elif event.GetPane().name == self.auiManager.GetPane (self.tagsCloudPanel.panel).name:
-            self.mainMenu.viewTagsCloud.Check (False)
-
-
-    def __loadPaneInfo (self, param):
-        """
-        Загрузить из конфига и вернуть информацию о dockable-панели (AuiPaneInfo)
-        """
-        string_info = param.value
-
-        if len (string_info) == 0:
-            return
-
-        pane = wx.aui.AuiPaneInfo()
-        try:
-            self.auiManager.LoadPaneInfo (string_info, pane)
-        except Exception, e:
-            return
-
-        return pane
-
-
-    def __savePanesParams (self):
-        """
-        Сохранить размеры панелей
-        """
-        self.treePanel.saveParams()
-        self.attachPanel.saveParams()
-        self.tagsCloudPanel.saveParams()
 
     
     def __saveParams (self):
@@ -237,7 +193,7 @@ class MainWindow(wx.Frame):
 
                 self.mainWindowConfig.FullscreenOption.value = self.IsFullScreen()
 
-                self.__savePanesParams()
+                self.__panesController.savePanesParams()
         except Exception, e:
             outwiker.core.commands.MessageBox (_(u"Can't save config\n%s") % (unicode (e)),
                     _(u"Error"), wx.ICON_ERROR | wx.OK)
@@ -260,20 +216,10 @@ class MainWindow(wx.Frame):
 
             self.auiManager.UnInit()
 
-            self.treePanel.close()
-            self.treePanel = None
-
             self.pagePanel.close()
-            self.pagePanel = None
-
-            self.attachPanel.close()
-            self.attachPanel = None
-
-            self.tagsCloudPanel.close()
-            self.tagsCloudPanel = None
+            self.__panesController.closePanes()
 
             self.statusbar.Close()
-            
             self.taskBarIcon.Destroy()
             self.controller.destroy()
 
@@ -401,56 +347,6 @@ class MainWindow(wx.Frame):
             dlg.ShowModal()
     
 
-    def __onViewTree(self, event):
-        self.showHideTree()
-    
-
-    def __showHidePane (self, control):
-        """
-        Показать / скрыть pane с некоторым контролом
-        """
-        pane = self.auiManager.GetPane (control)
-
-        self.__savePanesParams()
-
-        if pane.IsShown():
-            pane.Hide()
-        else:
-            pane.Show()
-
-        self.__loadPanesSize ()
-        self.__updateViewMenu()
-    
-
-    def showHideTree (self):
-        """
-        Показать/спарятать дерево с заметками
-        """
-        self.__showHidePane (self.treePanel.panel)
-
-    
-    def showHideAttaches (self):
-        """
-        Показать/спарятать дерево с заметками
-        """
-        self.__showHidePane (self.attachPanel.panel)
-
-
-    def showHideTagsCloud (self):
-        """
-        Показать/спарятать окно с облаком тегов
-        """
-        self.__showHidePane (self.tagsCloudPanel.panel)
-
-
-    def __onViewTagsCloud (self, event):
-        self.showHideTagsCloud()
-
-
-    def __onViewAttaches(self, event):
-        self.showHideAttaches()
-
-
     def __onFullscreen(self, event):
         self.setFullscreen(not self.IsFullScreen())
 
@@ -466,44 +362,22 @@ class MainWindow(wx.Frame):
 
 
     def __toFullscreen(self):
-        self.__savePanesParams()
+        self.__panesController.savePanesParams()
         self.ShowFullScreen(True, wx.FULLSCREEN_NOTOOLBAR | wx.FULLSCREEN_NOBORDER | wx.FULLSCREEN_NOCAPTION)
 
-        self.attachPanel.hide()
-        self.treePanel.hide()
-        self.tagsCloudPanel.hide()
-
-        self.auiManager.Update()
-        self.__updateViewMenu()
+        self.__panesController.hidePanes()
+        self.__panesController.updateViewMenu()
 
 
     def __fromFullscreen (self):
         self.controller.loadMainWindowParams()
         self.ShowFullScreen(False)
 
-        self.attachPanel.show()
-        self.treePanel.show()
-        self.tagsCloudPanel.show()
-
-        self.__loadPanesSize ()
-        self.__updateViewMenu()
+        self.__panesController.showPanes()
+        self.__panesController.loadPanesSize ()
+        self.__panesController.updateViewMenu()
 
     
-    def __loadPanesSize (self):
-        self.attachPanel.loadPaneSize()
-        self.treePanel.loadPaneSize()
-        self.tagsCloudPanel.loadPaneSize()
-        self.auiManager.Update()
-
-
-    def __updateViewMenu (self):
-        self.mainMenu.viewNotes.Check (self.treePanel.isShown())
-        self.mainMenu.viewAttaches.Check (self.attachPanel.isShown())
-        self.mainMenu.viewTagsCloud.Check (self.tagsCloudPanel.isShown())
-
-        self.mainMenu.viewFullscreen.Check (self.IsFullScreen())
-
-
     def __onMovePageUp(self, event):
         outwiker.core.commands.moveCurrentPageUp()
 

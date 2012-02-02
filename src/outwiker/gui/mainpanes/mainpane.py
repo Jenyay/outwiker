@@ -77,21 +77,6 @@ class MainPane (object):
         self.panel.Close()
 
 
-    # def showHidePane (self):
-    #     """
-    #     Показать / скрыть pane
-    #     """
-    #     self.__savePanesParams()
-
-    #     if self.pane.IsShown():
-    #         self.pane.Hide()
-    #     else:
-    #         self.pane.Show()
-
-    #     self.__loadPanesSize ()
-    #     self.__updateViewMenu()
-
-
     def saveParams (self):
         self._savePaneInfo (self.config.pane, 
                 self._auiManager.GetPane (self.panel))
