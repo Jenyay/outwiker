@@ -19,7 +19,10 @@ class TagsCloud (wx.ScrolledWindow):
         # Отступ между тегами
         self.__space = 10
 
-        self.__tags = None
+        # Шаг между строчками тегов
+        self.__stepy = 28
+
+        self.__tags = []
 
         # Ключ - имя метки, значение - контрол, отображающий эту метку
         self.__labels = {}
@@ -28,7 +31,8 @@ class TagsCloud (wx.ScrolledWindow):
 
 
     def __onSize (self, event):
-        self.__layoutTags()
+        # self.__layoutTags()
+        self.__moveLabels()
 
 
     def setTags (self, taglist):
@@ -69,23 +73,23 @@ class TagsCloud (wx.ScrolledWindow):
         map (lambda label: label.Destroy(), self.__labels.values())
 
         self.__labels = {}
-        self.__tags = None
+        self.__tags = []
 
 
-    def __valignLineLabels (self, labels):
-        """
-        Выровнять по вертикали метки в одной строке
-        """
-        maxheight, maxindex = self.__getMaxHeight (labels)
-        if maxindex == -1:
-            return
+    # def __valignLineLabels (self, labels):
+    #     """
+    #     Выровнять по вертикали метки в одной строке
+    #     """
+    #     maxheight, maxindex = self.__getMaxHeight (labels)
+    #     if maxindex == -1:
+    #         return
 
-        centerY = labels[maxindex].GetPositionTuple()[1] + maxheight / 2
+    #     centerY = labels[maxindex].GetPositionTuple()[1] + maxheight / 2
 
-        for label in labels:
-            currx, curry = label.GetPositionTuple()
-            height = label.GetSizeTuple()[1]
-            label.SetPosition ((currx, centerY - height / 2))
+    #     for label in labels:
+    #         currx, curry = label.GetPositionTuple()
+    #         height = label.GetSizeTuple()[1]
+    #         label.MoveXY (currx, centerY - height / 2)
 
 
     def __getMaxHeight (self, labels):
@@ -138,7 +142,7 @@ class TagsCloud (wx.ScrolledWindow):
         """
         Расположение тегов в окне
         """
-        self.SetScrollbars (0, 0, 0, 0)
+        # self.SetScrollbars (0, 0, 0, 0)
 
         if self.__tags == None:
             return
@@ -155,27 +159,30 @@ class TagsCloud (wx.ScrolledWindow):
         currentLine = []
 
         currentx = self.__margin
-        currenty = self.__margin
+        currenty = self.__margin + self.__stepy / 2
 
         linesCount = 1
 
         maxwidth = self.GetClientSizeTuple()[0] - self.__margin
 
         for tagname in self.__tags:
-            count = len (self.__tags[tagname])
             label = self.__labels[tagname]
             newRightBorder = currentx + label.GetSizeTuple()[0]
 
             if newRightBorder > maxwidth and len (currentLine) != 0:
-                self.__valignLineLabels (currentLine)
+                # self.__valignLineLabels (currentLine)
 
                 currentx = self.__margin
-                currenty += self.__getMaxHeight (currentLine)[0] + self.__space
+                # currenty += self.__getMaxHeight (currentLine)[0] + self.__space
+                currenty += self.__stepy
 
                 currentLine = []
                 linesCount += 1
 
-            label.SetPosition ((currentx, currenty))
+            label.MoveXY (currentx, currenty - label.GetSizeTuple()[1] / 2)
+            # label.MoveXY (currentx, currenty)
+            label.Refresh()
+
             currentLine.append (label)
             currentx += label.GetSizeTuple()[0] + self.__space
 
@@ -187,4 +194,3 @@ class TagsCloud (wx.ScrolledWindow):
                     lineheight,
                     0,
                     linesCount + 1)
-
