@@ -1,6 +1,7 @@
 outwiker (1.5.0-618) oneiric; urgency=low
 
   * Рефакторинг диалога создания/редактирования страниц
+  * Исправления в интерфейсе
 
  -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Mon, 06 Feb 2012 21:32:16 +0400
 
