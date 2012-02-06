@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?taskcoach release="1.3.6" tskversion="34"?>
+<?taskcoach release="1.3.7" tskversion="34"?>
 
 <tasks>
 <task completiondate="2011-11-14 21:22:09.922497" id="0027bbd4-00b5-11e1-98e8-00112fd2b1f8" percentageComplete="100" plannedstartdate="2011-10-27 20:01:00" priority="8" status="1" subject="Отвязать номер версии от номера ревизии" />
@@ -110,7 +110,7 @@
 <task expandedContexts="('prerequisiteviewerintaskeditor', 'prerequisiteviewerintaskeditor1', 'prerequisiteviewerintaskeditor2', 'prerequisiteviewerintaskeditor3', 'prerequisiteviewerintaskeditor4', 'prerequisiteviewerintaskeditor5', 'prerequisiteviewerintaskeditor6', 'prerequisiteviewerintaskeditor7', 'taskviewer')" id="195094188:1286954165.68" plannedstartdate="2010-10-13 11:16:00" status="1" subject="Страница-задача (или список задач)" />
 <task expandedContexts="('prerequisiteviewerintaskeditor', 'prerequisiteviewerintaskeditor1', 'prerequisiteviewerintaskeditor10', 'prerequisiteviewerintaskeditor2', 'prerequisiteviewerintaskeditor3', 'prerequisiteviewerintaskeditor4', 'prerequisiteviewerintaskeditor5', 'prerequisiteviewerintaskeditor6', 'prerequisiteviewerintaskeditor7', 'prerequisiteviewerintaskeditor8', 'prerequisiteviewerintaskeditor9', 'taskviewer')" id="195096492:1286953631.02" plannedstartdate="2010-10-13 11:07:00" status="1" subject="Выделять ссылки на страницы и на сайты" />
 <task expandedContexts="('prerequisiteviewerintaskeditor', 'prerequisiteviewerintaskeditor1', 'prerequisiteviewerintaskeditor2', 'prerequisiteviewerintaskeditor3', 'prerequisiteviewerintaskeditor4', 'taskviewer')" id="195122092:1286955494.0" plannedstartdate="2010-10-13 11:38:00" priority="1" status="1" subject="Возможность выбирать через контекстное меню в каком режиме открывать страницу" />
-<task expandedContexts="('taskviewer',)" id="195294796:1293565044.31" plannedstartdate="2010-12-28 22:37:00" priority="3" status="1" subject="Вынести все пакеты в модуль outwiker" />
+<task completiondate="2012-02-06 22:09:51.011869" expandedContexts="('taskviewer',)" id="195294796:1293565044.31" percentageComplete="100" plannedstartdate="2010-12-28 22:37:00" priority="3" status="1" subject="Вынести все пакеты в модуль outwiker" />
 <task completiondate="2011-03-09 22:03:34.274555" id="195632556:1293565218.93" percentageComplete="100" plannedstartdate="2010-12-28 22:40:00" priority="6" status="1" subject="Ссылка на картинку в виде [[Attach:xxx.png]]" />
 <task expandedContexts="('taskviewer',)" id="196230796:1293565151.24" plannedstartdate="2010-12-28 22:39:00" priority="7" status="1" subject="Экспорт в HTML" />
 <task completiondate="2010-10-29 21:25:00" expandedContexts="('prerequisiteviewerintaskeditor8', 'taskviewer')" id="196862284:1288203146.91" percentageComplete="100" plannedstartdate="2010-10-27 22:12:00" priority="5" status="1" subject="В заголовок окна писать имема открытого файла и страницы. Сделать строку настраиваемой" />

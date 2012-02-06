@@ -8,7 +8,6 @@ from outwiker.core.application import Application
 from outwiker.core.factoryselector import FactorySelector
 from outwiker.core.commands import pageExists, openWiki
 from outwiker.core.tree import RootWikiPage
-from outwiker.core.tagslist import TagsList
 from outwiker.core.tagscommands import getTagsString
 import outwiker.core.system
 
@@ -27,7 +26,6 @@ class CurrentPagePanel(wx.Panel):
         wx.Panel.__init__(self, *args, **kwds)
         self.bookmarkButton = wx.BitmapButton(self, -1, wx.Bitmap(os.path.join (self.imagesDir, "star_gray.png"), wx.BITMAP_TYPE_ANY))
         self.titleLabel = wx.StaticText(self, -1, "")
-        self.tagsLabel = wx.StaticText(self, -1, _("[]"))
 
         self.__set_properties()
         self.__do_layout()
@@ -149,17 +147,9 @@ class CurrentPagePanel(wx.Panel):
                 title = "%s" % (page.title)
                 self.titleLabel.SetLabel (title)
 
-                if hasattr (page, "tags"):
-                    tags = u"[%s]" % getTagsString (page.tags)
-                else:
-                    tags = u"[]"
-
-                self.tagsLabel.SetLabel (tags)
-
                 self.__updateBookmarkBtn()
             else:
                 self.titleLabel.SetLabel (u"")
-                self.tagsLabel.SetLabel (u"[]")
             self.Layout()
         finally:
             self.Thaw()
@@ -168,7 +158,6 @@ class CurrentPagePanel(wx.Panel):
     def __set_properties(self):
         self.bookmarkButton.SetSize(self.bookmarkButton.GetBestSize())
         self.titleLabel.SetFont(wx.Font(14, wx.DEFAULT, wx.NORMAL, wx.NORMAL, 0, "MS Shell Dlg 2"))
-        self.tagsLabel.SetFont(wx.Font(12, wx.MODERN, wx.ITALIC, wx.NORMAL, 0, ""))
 
 
     def __do_layout(self):
@@ -176,8 +165,12 @@ class CurrentPagePanel(wx.Panel):
         contentSizer = wx.FlexGridSizer(1, 1, 0, 0)
         titleSizer = wx.FlexGridSizer(1, 3, 0, 0)
         titleSizer.Add(self.bookmarkButton, 0, 0, 0)
-        titleSizer.Add(self.titleLabel, 0, wx.ALL|wx.EXPAND|wx.ALIGN_CENTER_VERTICAL, 2)
-        titleSizer.Add(self.tagsLabel, 0, wx.ALL|wx.EXPAND|wx.ALIGN_CENTER_VERTICAL, 2)
+
+        titleSizer.Add(self.titleLabel, 
+                0, 
+                wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_CENTER_HORIZONTAL, 
+                2)
+
         titleSizer.AddGrowableCol(1)
         mainSizer.Add(titleSizer, 1, wx.EXPAND, 0)
         contentSizer.AddGrowableRow(0)

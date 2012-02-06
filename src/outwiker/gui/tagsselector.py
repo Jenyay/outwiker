@@ -7,7 +7,6 @@ import wx
 
 from outwiker.core.system import getImagesDir
 from outwiker.core.tagscommands import getTagsString, parseTagsList
-# from .tagspopup import TagsPopup
 from .tagscloud import TagsCloud
 from .taglabel import EVT_TAG_LEFT_CLICK
 
@@ -18,7 +17,7 @@ class TagsSelector (wx.Panel):
 
         self.__ID_TAGS_BUTTON = wx.NewId()
         self.__tagsWidth = 350
-        self.__tagsHeight = 80
+        self.__tagsHeight = 150
 
         self.__tagBitmap = wx.Bitmap (os.path.join (getImagesDir(), "tag.png"), 
                 wx.BITMAP_TYPE_PNG)

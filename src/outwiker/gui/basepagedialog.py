@@ -42,7 +42,7 @@ class BasePageDialog(wx.Dialog):
         self.SetTitle(_(u"Create Page"))
         self.SetSize((500, 350))
         self.titleTextCtrl.SetMinSize((350,-1))
-        self.iconsList.SetMinSize((500, 200))
+        self.iconsList.SetMinSize((500, 150))
 
     def __do_layout(self):
         titleSizer = wx.FlexGridSizer(1, 2, 0, 0)
@@ -59,8 +59,8 @@ class BasePageDialog(wx.Dialog):
         mainSizer.AddGrowableRow(4)
         mainSizer.AddGrowableCol(0)
         mainSizer.Add(titleSizer, 1, wx.EXPAND, 0)
-        mainSizer.Add(self.tagsSelector, 1, wx.EXPAND, 0)
         mainSizer.Add(typeSizer, 1, wx.EXPAND, 0)
+        mainSizer.Add(self.tagsSelector, 1, wx.EXPAND, 0)
         mainSizer.Add(self.iconLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 4)
         mainSizer.Add(self.iconsList, 1, wx.ALL|wx.EXPAND, 2)
         self._createOkCancelButtons (mainSizer)
