@@ -7,6 +7,8 @@ import os.path
 import wx
 
 from outwiker.core.factoryselector import FactorySelector
+from outwiker.core.application import Application
+from outwiker.core.tagslist import TagsList
 from .iconlistctrl import IconListCtrl
 from .tagsselector import TagsSelector
 
@@ -31,6 +33,7 @@ class BasePageDialog(wx.Dialog):
 
         self.parentPage = parentPage
         self._fillComboType()
+        self._setTagsList()
 
         self.titleTextCtrl.SetFocus()
 
@@ -65,6 +68,13 @@ class BasePageDialog(wx.Dialog):
 
         self.Layout()
         self.titleTextCtrl.SetFocus()
+
+
+    def _setTagsList (self):
+        assert Application.wikiroot != None
+
+        tagslist = TagsList (Application.wikiroot)
+        self.tagsSelector.setTagsList (tagslist)
     
 
     def _createOkCancelButtons (self, sizer):
