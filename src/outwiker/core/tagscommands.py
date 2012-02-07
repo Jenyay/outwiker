@@ -30,10 +30,11 @@ def removeTag (page, tag):
     """
     Удалить тег из страницы
     """
-    pageTags = page.tags[:]
+    pageTags = [pagetag.lower() for pagetag in page.tags]
 
-    while tag in pageTags:
-        pageTags.remove (tag)
+    taglower = tag.lower()
+    while taglower in pageTags:
+        pageTags.remove (taglower)
 
     page.tags = pageTags
 
@@ -42,3 +43,12 @@ def appendTag (page, tag):
     pageTags = page.tags[:]
     pageTags.append (tag)
     page.tags = pageTags
+
+
+def tagBranch (parentPage, tags):
+    """
+    Добавить теги к ветке, начиная с родительской страницы
+    """
+    map (lambda tag: appendTag (parentPage, tag), tags)
+    map (lambda child: tagBranch (child, tags), parentPage.children)
+

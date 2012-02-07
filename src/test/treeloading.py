@@ -118,7 +118,7 @@ class WikiPagesTest(unittest.TestCase):
 
 
     def testTags (self):
-        self.assertTrue (u"Тест" in self.root[u"Страница 1"].tags)
+        self.assertTrue (u"тест" in self.root[u"Страница 1"].tags)
         self.assertTrue (u"test" in self.root[u"Страница 1"].tags, self.root[u"Страница 1"].tags)
         self.assertTrue (u"двойной тег" in self.root[u"Страница 1"].tags)
         self.assertEqual (len (self.root[u"Страница 1"].tags), 3)

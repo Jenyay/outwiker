@@ -6,7 +6,7 @@ import unittest
 from outwiker.core.tagslist import TagsList
 from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
-from outwiker.core.tagscommands import parseTagsList, appendTag, removeTag
+from outwiker.core.tagscommands import parseTagsList, appendTag, removeTag, tagBranch
 
 from .utils import removeWiki
 
@@ -51,24 +51,52 @@ class TagsListTest (unittest.TestCase):
 
     def testAppendTag (self):
         appendTag (self.rootwiki[u"Страница 2"], u"Метка 666")
-        self.assertTrue (u"Метка 666" in self.rootwiki[u"Страница 2"].tags)
+
+        self.assertEqual (len (self.rootwiki[u"Страница 2"].tags), 3)
+        self.assertTrue (u"Метка 666".lower() in self.rootwiki[u"Страница 2"].tags)
+        self.assertTrue (u"Метка 1".lower() in self.rootwiki[u"Страница 2"].tags)
+        self.assertTrue (u"Метка 3".lower() in self.rootwiki[u"Страница 2"].tags)
+
+
+    def testCopyTags (self):
+        self.assertEqual (len (self.rootwiki[u"page 1"].tags), 2)
+
+        appendTag (self.rootwiki[u"page 1"], u"Метка 1")
+
+        self.assertEqual (len (self.rootwiki[u"page 1"].tags), 2)
+
+
+    def testTagBranch (self):
+        tagBranch (self.rootwiki[u"Страница 2"], [u"Метка 111", u"Метка 222"])
+
+        self.assertEqual (len (self.rootwiki[u"Страница 2"].tags), 4)
+        self.assertEqual (len (self.rootwiki[u"Страница 2/Страница 3"].tags), 3)
+        self.assertEqual (len (self.rootwiki[u"Страница 2/Страница 3/Страница 4"].tags), 3)
+
+        self.assertTrue (u"Метка 111".lower() in self.rootwiki[u"Страница 2"].tags)
+        self.assertTrue (u"Метка 111".lower() in self.rootwiki[u"Страница 2/Страница 3"].tags)
+        self.assertTrue (u"Метка 111".lower() in self.rootwiki[u"Страница 2/Страница 3/Страница 4"].tags)
+
+        self.assertTrue (u"Метка 222".lower() in self.rootwiki[u"Страница 2"].tags)
+        self.assertTrue (u"Метка 222".lower() in self.rootwiki[u"Страница 2/Страница 3"].tags)
+        self.assertTrue (u"Метка 222".lower() in self.rootwiki[u"Страница 2/Страница 3/Страница 4"].tags)
 
 
     def testRemoveTag (self):
-        self.assertTrue (u"Метка 3" in self.rootwiki[u"Страница 2"].tags)
+        self.assertTrue (u"Метка 3".lower() in self.rootwiki[u"Страница 2"].tags)
         removeTag (self.rootwiki[u"Страница 2"], u"Метка 3")
-        self.assertTrue (u"Метка 3" not in self.rootwiki[u"Страница 2"].tags)
+        self.assertTrue (u"Метка 3".lower() not in self.rootwiki[u"Страница 2"].tags)
 
 
     def testRemoveNotExists (self):
-        self.assertTrue (u"Метка 333" not in self.rootwiki[u"Страница 2"].tags)
+        self.assertTrue (u"Метка 333".lower() not in self.rootwiki[u"Страница 2"].tags)
         removeTag (self.rootwiki[u"Страница 2"], u"Метка 333")
-        self.assertTrue (u"Метка 333" not in self.rootwiki[u"Страница 2"].tags)
+        self.assertTrue (u"Метка 333".lower() not in self.rootwiki[u"Страница 2"].tags)
 
 
     def testAppendExists (self):
         appendTag (self.rootwiki[u"Страница 2"], u"Метка 1")
-        self.assertTrue (u"Метка 1" in self.rootwiki[u"Страница 2"].tags)
+        self.assertTrue (u"Метка 1".lower() in self.rootwiki[u"Страница 2"].tags)
 
         removeTag (self.rootwiki[u"Страница 2"], u"Метка 1")
-        self.assertTrue (u"Метка 1" not in self.rootwiki[u"Страница 2"].tags)
+        self.assertTrue (u"Метка 1".lower() not in self.rootwiki[u"Страница 2"].tags)

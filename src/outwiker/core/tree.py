@@ -616,7 +616,7 @@ class WikiPage (RootWikiPage):
 
     @property
     def tags (self):
-        return self._tags
+        return [tag.lower() for tag in self._tags]
 
 
     @tags.setter
@@ -624,8 +624,13 @@ class WikiPage (RootWikiPage):
         if self.readonly:
             raise ReadonlyException
 
-        if self._tags != tags:
-            self._tags = tags[:]
+        lowertags = [tag.lower() for tag in tags]
+        # Избавимся от дубликатов
+        newtagset = set (lowertags)
+        newtags = list (newtagset)
+
+        if newtagset != set (self._tags):
+            self._tags = newtags
             self.save()
             self.root.onPageUpdate(self)
 
