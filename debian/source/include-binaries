@@ -25,3 +25,5 @@ test/samplewiki/Страница 1/Страница 2/Страница 6/Стр�
 test/samplewiki/Страница 1/Страница 2/Страница 6/Страница 7/__attach/css.png
 test/samplewiki/Страница 1/Страница 2/Страница 6/Страница 2/__icon.png
 test/samplewiki/Типы страниц/wiki-страница/__attach/add.png
+src/locale/en/LC_MESSAGES/outwiker.mo
+src/locale/ru_RU/LC_MESSAGES/outwiker.mo
