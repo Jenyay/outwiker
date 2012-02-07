@@ -1,3 +1,9 @@
+outwiker (1.5.0-619) oneiric; urgency=low
+
+  * Добавлена возможность добавлять метки ко целой ветке заметок
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Tue, 07 Feb 2012 22:25:45 +0400
+
 outwiker (1.5.0-618) oneiric; urgency=low
 
   * Рефакторинг диалога создания/редактирования страниц

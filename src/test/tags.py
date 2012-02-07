@@ -6,7 +6,7 @@ import unittest
 from outwiker.core.tagslist import TagsList
 from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
-from outwiker.core.tagscommands import parseTagsList, appendTag, removeTag, tagBranch
+from outwiker.core.tagscommands import parseTagsList, appendTag, removeTag, tagBranch, appendTagsList
 
 from .utils import removeWiki
 
@@ -54,6 +54,17 @@ class TagsListTest (unittest.TestCase):
 
         self.assertEqual (len (self.rootwiki[u"Страница 2"].tags), 3)
         self.assertTrue (u"Метка 666".lower() in self.rootwiki[u"Страница 2"].tags)
+        self.assertTrue (u"Метка 1".lower() in self.rootwiki[u"Страница 2"].tags)
+        self.assertTrue (u"Метка 3".lower() in self.rootwiki[u"Страница 2"].tags)
+
+
+    def testAppendTagsList (self):
+        appendTagsList (self.rootwiki[u"Страница 2"], [u"Метка 111", u"Метка 222", u"Метка 333"])
+
+        self.assertEqual (len (self.rootwiki[u"Страница 2"].tags), 5)
+        self.assertTrue (u"Метка 111".lower() in self.rootwiki[u"Страница 2"].tags)
+        self.assertTrue (u"Метка 222".lower() in self.rootwiki[u"Страница 2"].tags)
+        self.assertTrue (u"Метка 333".lower() in self.rootwiki[u"Страница 2"].tags)
         self.assertTrue (u"Метка 1".lower() in self.rootwiki[u"Страница 2"].tags)
         self.assertTrue (u"Метка 3".lower() in self.rootwiki[u"Страница 2"].tags)
 

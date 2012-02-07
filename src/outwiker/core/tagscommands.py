@@ -45,10 +45,17 @@ def appendTag (page, tag):
     page.tags = pageTags
 
 
+def appendTagsList (page, tagslist):
+    pageTags = page.tags[:]
+    pageTags.extend (tagslist)
+    page.tags = pageTags
+
+
 def tagBranch (parentPage, tags):
     """
     Добавить теги к ветке, начиная с родительской страницы
     """
-    map (lambda tag: appendTag (parentPage, tag), tags)
+    # map (lambda tag: appendTag (parentPage, tag), tags)
+    appendTagsList (parentPage, tags)
     map (lambda child: tagBranch (child, tags), parentPage.children)
 

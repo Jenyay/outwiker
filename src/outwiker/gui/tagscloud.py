@@ -39,6 +39,7 @@ class TagsCloud (wx.ScrolledWindow):
         """
         Добавить тег в облако
         """
+        # self.Scroll (0, 0)
         self.Freeze()
         oldy = self.GetScrollPos (wx.VERTICAL)
         self.clear()
@@ -156,6 +157,7 @@ class TagsCloud (wx.ScrolledWindow):
 
     def __moveLabels (self):
         # Метки, расположенные на текущей строке
+        self.SetScrollbars (0, 0, 0, 0)
         currentLine = []
 
         currentx = self.__margin

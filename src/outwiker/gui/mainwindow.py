@@ -164,6 +164,7 @@ class MainWindow(wx.Frame):
         self.Bind(wx.EVT_TOOL, self.__onReload, id=MainId.ID_RELOAD)
         self.Bind(wx.EVT_TOOL, self.__onAttach, id=MainId.ID_ATTACH)
         self.Bind(wx.EVT_TOOL, self.__onGlobalSearch, id=MainId.ID_GLOBAL_SEARCH)
+        self.Bind(wx.EVT_TOOL, self.__onAddTagsToBranch, id=MainId.ID_ADD_TAGS_TO_BRANCH)
         self.Bind (wx.EVT_CLOSE, self.__onClose)
 
     
@@ -396,6 +397,11 @@ class MainWindow(wx.Frame):
 
     def __onPrint(self, event):
         self.pagePanel.panel.Print()
+
+
+    def __onAddTagsToBranch (self, event):
+        if Application.selectedPage != None:
+            outwiker.core.commands.addTagsToBranch (Application.selectedPage, self)
 
 # end of class MainWindow
 

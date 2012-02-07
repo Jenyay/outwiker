@@ -43,3 +43,4 @@ class MainId (object):
     ID_CUT = wx.ID_CUT
     ID_COPY = wx.ID_COPY
     ID_PASTE = wx.ID_PASTE
+    ID_ADD_TAGS_TO_BRANCH = wx.NewId()

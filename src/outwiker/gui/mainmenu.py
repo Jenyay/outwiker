@@ -88,11 +88,16 @@ class MainMenu (wx.MenuBar):
         toolsMenu = wx.Menu()
         toolsMenu.Append(MainId.ID_GLOBAL_SEARCH, _(u"&Global Search…\tCtrl+Shift+F"), "", wx.ITEM_NORMAL)
         toolsMenu.Append(MainId.ID_ATTACH, _(u"&Attach Files…\tCtrl+Alt+A"), "", wx.ITEM_NORMAL)
+
         toolsMenu.AppendSeparator()
-        toolsMenu.Append(MainId.ID_COPY_TITLE, _("Copy Page &Title\tCtrl+Shift+D"), "", wx.ITEM_NORMAL)
-        toolsMenu.Append(MainId.ID_COPYPATH, _("Copy &Page Path\tCtrl+Shift+P"), "", wx.ITEM_NORMAL)
-        toolsMenu.Append(MainId.ID_COPY_ATTACH_PATH, _("Copy Atta&ches Path\tCtrl+Shift+A"), "", wx.ITEM_NORMAL)
-        toolsMenu.Append(MainId.ID_COPY_LINK, _("Copy Page &Link\tCtrl+Shift+L"), "", wx.ITEM_NORMAL)
+        toolsMenu.Append(MainId.ID_COPY_TITLE, _(u"Copy Page &Title\tCtrl+Shift+D"), "", wx.ITEM_NORMAL)
+        toolsMenu.Append(MainId.ID_COPYPATH, _(u"Copy &Page Path\tCtrl+Shift+P"), "", wx.ITEM_NORMAL)
+        toolsMenu.Append(MainId.ID_COPY_ATTACH_PATH, _(u"Copy Atta&ches Path\tCtrl+Shift+A"), "", wx.ITEM_NORMAL)
+        toolsMenu.Append(MainId.ID_COPY_LINK, _(u"Copy Page &Link\tCtrl+Shift+L"), "", wx.ITEM_NORMAL)
+
+        toolsMenu.AppendSeparator()
+        toolsMenu.Append (MainId.ID_ADD_TAGS_TO_BRANCH, _(u"Add Tags to Branch..."), "", wx.ITEM_NORMAL)
+
         toolsMenu.AppendSeparator()
         toolsMenu.Append(MainId.ID_RELOAD, _(u"&Reload Wiki…\tCtrl+R"), "", wx.ITEM_NORMAL)
 

@@ -17,9 +17,11 @@ from .tree import WikiDocument, RootWikiPage
 from .application import Application
 from .attachment import Attachment
 from .pagetitletester import PageTitleError, PageTitleWarning
+from .tagscommands import tagBranch
 
 from outwiker.gui.overwritedialog import OverwriteDialog
 from outwiker.gui.about import AboutDialog
+from outwiker.gui.addtagsdialog import AddTagsDialog
 
 
 def MessageBox (*args, **kwargs):
@@ -454,3 +456,23 @@ def pageExists (page):
     Проверка на то, что страница была удалена сторонними средствами
     """
     return os.path.exists (page.path)
+
+
+@testreadonly
+def addTagsToBranch (page, parent):
+    """
+    Добавит теги к ветке, начинающейся со страницы page. 
+    Теги к странице page тоже добавляются
+    """
+    dlg = AddTagsDialog (parent, Application)
+    if dlg.ShowModal() == wx.ID_OK:
+        Application.onStartTreeUpdate(page.root)
+
+        try:
+            tagBranch (page, dlg.tags)
+        finally:
+            Application.onEndTreeUpdate(page.root)
+
+    dlg.Destroy()
+        
+
