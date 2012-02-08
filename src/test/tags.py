@@ -6,7 +6,7 @@ import unittest
 from outwiker.core.tagslist import TagsList
 from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
-from outwiker.core.tagscommands import parseTagsList, appendTag, removeTag, tagBranch, appendTagsList
+from outwiker.core.tagscommands import parseTagsList, appendTag, removeTag, tagBranch, appendTagsList, removeTagsFromBranch
 
 from .utils import removeWiki
 
@@ -93,9 +93,15 @@ class TagsListTest (unittest.TestCase):
         self.assertTrue (u"Метка 222".lower() in self.rootwiki[u"Страница 2/Страница 3/Страница 4"].tags)
 
 
-    def testRemoveTag (self):
+    def testRemoveTag1 (self):
         self.assertTrue (u"Метка 3".lower() in self.rootwiki[u"Страница 2"].tags)
         removeTag (self.rootwiki[u"Страница 2"], u"Метка 3")
+        self.assertTrue (u"Метка 3".lower() not in self.rootwiki[u"Страница 2"].tags)
+
+
+    def testRemoveTag2 (self):
+        self.assertTrue (u"Метка 3".lower() in self.rootwiki[u"Страница 2"].tags)
+        removeTag (self.rootwiki[u"Страница 2"], u"МеТкА 3")
         self.assertTrue (u"Метка 3".lower() not in self.rootwiki[u"Страница 2"].tags)
 
 
@@ -111,3 +117,27 @@ class TagsListTest (unittest.TestCase):
 
         removeTag (self.rootwiki[u"Страница 2"], u"Метка 1")
         self.assertTrue (u"Метка 1".lower() not in self.rootwiki[u"Страница 2"].tags)
+
+
+    def testRemoveTagsFromBranch1 (self):
+        removeTagsFromBranch (self.rootwiki[u"Страница 2"], [u"Метка 1"])
+
+        self.assertEqual (len (self.rootwiki[u"Страница 2"].tags), 1)
+        self.assertTrue (u"метка 3" in self.rootwiki[u"Страница 2"].tags)
+
+        self.assertEqual (len (self.rootwiki[u"Страница 2/Страница 3"].tags), 1)
+        self.assertTrue (u"метка 2" in self.rootwiki[u"Страница 2/Страница 3"].tags)
+
+        self.assertEqual (len (self.rootwiki[u"Страница 2/Страница 3/Страница 4"].tags), 0)
+
+
+    def testRemoveTagsFromBranch2 (self):
+        removeTagsFromBranch (self.rootwiki[u"Страница 2"], [u"МеТкА 1", u"Метка 1000"])
+
+        self.assertEqual (len (self.rootwiki[u"Страница 2"].tags), 1)
+        self.assertTrue (u"метка 3" in self.rootwiki[u"Страница 2"].tags)
+
+        self.assertEqual (len (self.rootwiki[u"Страница 2/Страница 3"].tags), 1)
+        self.assertTrue (u"метка 2" in self.rootwiki[u"Страница 2/Страница 3"].tags)
+
+        self.assertEqual (len (self.rootwiki[u"Страница 2/Страница 3/Страница 4"].tags), 0)

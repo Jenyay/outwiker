@@ -7,9 +7,9 @@ from outwiker.core.tagslist import TagsList
 from .tagsselector import TagsSelector
 
 
-class AddTagsDialog (wx.Dialog):
+class TagsDialog (wx.Dialog):
     def __init__ (self, parent, application):
-        super (AddTagsDialog, self).__init__ (parent)
+        super (TagsDialog, self).__init__ (parent)
         self.__application = application
 
         self.__createControls()
@@ -33,7 +33,7 @@ class AddTagsDialog (wx.Dialog):
         mainSizer.AddGrowableCol (0)
 
         mainSizer.Add (self.__tagsSelector, 1, wx.EXPAND | wx.BORDER, 4)
-        mainSizer.Add (buttonsSizer, 1, wx.RIGHT | wx.BORDER, 4)
+        mainSizer.Add (buttonsSizer, 1, wx.ALIGN_RIGHT | wx.BORDER, 4)
 
         self.SetSizer (mainSizer)
         self.Fit()

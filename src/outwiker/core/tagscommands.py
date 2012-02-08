@@ -54,8 +54,21 @@ def appendTagsList (page, tagslist):
 def tagBranch (parentPage, tags):
     """
     Добавить теги к ветке, начиная с родительской страницы
+
+    parentPage - страница, с которой начинается ветка
+    tags - список тегов для добавления
     """
-    # map (lambda tag: appendTag (parentPage, tag), tags)
     appendTagsList (parentPage, tags)
     map (lambda child: tagBranch (child, tags), parentPage.children)
 
+
+def removeTagsFromBranch (parentPage, tags):
+    """
+    Удалить теги из ветки, начиная с родительской страницы
+
+    parentPage - страницы, с которой начинается ветка
+    tags - список тегов, которые надо удалить
+    """
+    map (lambda tag: removeTag (parentPage, tag), tags)
+    map (lambda child: removeTagsFromBranch (child, tags), parentPage.children)
+    

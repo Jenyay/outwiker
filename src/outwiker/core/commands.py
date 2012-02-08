@@ -17,11 +17,11 @@ from .tree import WikiDocument, RootWikiPage
 from .application import Application
 from .attachment import Attachment
 from .pagetitletester import PageTitleError, PageTitleWarning
-from .tagscommands import tagBranch
+from .tagscommands import tagBranch, removeTagsFromBranch
 
 from outwiker.gui.overwritedialog import OverwriteDialog
 from outwiker.gui.about import AboutDialog
-from outwiker.gui.addtagsdialog import AddTagsDialog
+from outwiker.gui.tagsdialog import TagsDialog
 
 
 def MessageBox (*args, **kwargs):
@@ -459,17 +459,38 @@ def pageExists (page):
 
 
 @testreadonly
-def addTagsToBranch (page, parent):
+def addTagsToBranchGui (page, parent):
     """
-    Добавит теги к ветке, начинающейся со страницы page. 
+    Добавить теги к ветке, начинающейся со страницы page. 
     Теги к странице page тоже добавляются
     """
-    dlg = AddTagsDialog (parent, Application)
+    dlg = TagsDialog (parent, Application)
+    dlg.SetTitle (_(u"Add Tags to Branch"))
+
     if dlg.ShowModal() == wx.ID_OK:
         Application.onStartTreeUpdate(page.root)
 
         try:
             tagBranch (page, dlg.tags)
+        finally:
+            Application.onEndTreeUpdate(page.root)
+
+    dlg.Destroy()
+
+
+@testreadonly
+def removeTagsFromBranchGui (page, parent):
+    """
+    Удалить теги из ветки, начинающейся со страницы page
+    """
+    dlg = TagsDialog (parent, Application)
+    dlg.SetTitle (_(u"Remove Tags from Branch"))
+
+    if dlg.ShowModal() == wx.ID_OK:
+        Application.onStartTreeUpdate(page.root)
+
+        try:
+            removeTagsFromBranch (page, dlg.tags)
         finally:
             Application.onEndTreeUpdate(page.root)
 

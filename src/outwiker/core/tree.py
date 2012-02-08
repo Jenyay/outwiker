@@ -616,7 +616,9 @@ class WikiPage (RootWikiPage):
 
     @property
     def tags (self):
-        return [tag.lower() for tag in self._tags]
+        result = [tag.lower() for tag in self._tags]
+        result.sort()
+        return result
 
 
     @tags.setter
