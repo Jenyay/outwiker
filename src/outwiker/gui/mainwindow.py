@@ -401,12 +401,22 @@ class MainWindow(wx.Frame):
 
 
     def __onAddTagsToBranch (self, event):
-        if Application.selectedPage != None:
+        if Application.wikiroot == None:
+            return
+
+        if Application.selectedPage == None:
+            outwiker.core.commands.addTagsToBranchGui (Application.wikiroot, self)
+        else:
             outwiker.core.commands.addTagsToBranchGui (Application.selectedPage, self)
 
 
     def __onRemoveTagsFromBranch (self, event):
-        if Application.selectedPage != None:
+        if Application.wikiroot == None:
+            return
+
+        if Application.selectedPage == None:
+            outwiker.core.commands.removeTagsFromBranchGui (Application.wikiroot, self)
+        else:
             outwiker.core.commands.removeTagsFromBranchGui (Application.selectedPage, self)
 
 # end of class MainWindow

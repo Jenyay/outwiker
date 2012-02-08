@@ -58,7 +58,8 @@ def tagBranch (parentPage, tags):
     parentPage - страница, с которой начинается ветка
     tags - список тегов для добавления
     """
-    appendTagsList (parentPage, tags)
+    if "tags" in dir (parentPage):
+        appendTagsList (parentPage, tags)
     map (lambda child: tagBranch (child, tags), parentPage.children)
 
 
@@ -69,6 +70,8 @@ def removeTagsFromBranch (parentPage, tags):
     parentPage - страницы, с которой начинается ветка
     tags - список тегов, которые надо удалить
     """
-    map (lambda tag: removeTag (parentPage, tag), tags)
+    if "tags" in dir (parentPage):
+        map (lambda tag: removeTag (parentPage, tag), tags)
+
     map (lambda child: removeTagsFromBranch (child, tags), parentPage.children)
     
