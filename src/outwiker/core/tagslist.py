@@ -1,9 +1,6 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-from .tagscommands import parseTagsList
-
-
 class TagsList (object):
     """
     Класс для хранения списка всех тегов в вики
@@ -41,7 +38,12 @@ class TagsList (object):
 
 
     def __getitem__ (self, tag):
-        return self._tags[tag.lower()]
+        try:
+            pages = self._tags[tag.lower()]
+        except KeyError:
+            pages = []
+
+        return pages
 
 
     def __iter__ (self):

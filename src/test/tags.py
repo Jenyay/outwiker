@@ -6,7 +6,7 @@ import unittest
 from outwiker.core.tagslist import TagsList
 from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
-from outwiker.core.tagscommands import parseTagsList, appendTag, removeTag, tagBranch, appendTagsList, removeTagsFromBranch
+from outwiker.core.tagscommands import parseTagsList, appendTag, removeTag, tagBranch, appendTagsList, removeTagsFromBranch, renameTag
 
 from .utils import removeWiki
 
@@ -172,3 +172,55 @@ class TagsListTest (unittest.TestCase):
         self.assertTrue (u"метка 2" in self.rootwiki[u"Страница 2/Страница 3"].tags)
 
         self.assertEqual (len (self.rootwiki[u"Страница 2/Страница 3/Страница 4"].tags), 0)
+
+
+    def testRemoveTagsEmpty (self):
+        removeTagsFromBranch (self.rootwiki, [])
+
+        self.assertEqual (len (self.rootwiki[u"page 1"].tags), 2)
+        self.assertEqual (len (self.rootwiki[u"page 1/page 5"].tags), 1)
+        self.assertEqual (len (self.rootwiki[u"Страница 2"].tags), 2)
+        self.assertEqual (len (self.rootwiki[u"Страница 2/Страница 3"].tags), 1)
+        self.assertEqual (len (self.rootwiki[u"Страница 2/Страница 3/Страница 4"].tags), 1)
+        
+
+
+    def testRenameTag (self):
+        renameTag (self.rootwiki, u"МеТкА 1", u"Черная метка")
+
+        tags = TagsList (self.rootwiki)
+
+        self.assertEqual (len (tags), 4)
+
+        self.assertEqual (len (tags[u"Метка 1"]), 0)
+        self.assertEqual (len (tags[u"Черная метка"]), 3)
+
+        self.assertTrue (self.rootwiki[u"page 1"] in tags[u"Черная метка"])
+        self.assertTrue (self.rootwiki[u"Страница 2"] in tags[u"Черная метка"])
+        self.assertTrue (self.rootwiki[u"Страница 2/Страница 3/Страница 4"] in tags[u"Черная метка"])
+
+
+    def testRenameTagBranch (self):
+        renameTag (self.rootwiki[u"Страница 2"], u"МеТкА 1", u"Черная метка")
+
+        tags = TagsList (self.rootwiki)
+
+        self.assertEqual (len (tags[u"Метка 1"]), 1)
+        self.assertEqual (len (tags[u"Черная метка"]), 2)
+
+        self.assertTrue (self.rootwiki[u"page 1"] in tags[u"Метка 1"])
+        self.assertTrue (self.rootwiki[u"Страница 2"] in tags[u"Черная метка"])
+        self.assertTrue (self.rootwiki[u"Страница 2/Страница 3/Страница 4"] in tags[u"Черная метка"])
+
+
+    def testRenameNotExists (self):
+        renameTag (self.rootwiki, u"МеТкА 666", u"Черная метка")
+
+        tags = TagsList (self.rootwiki)
+
+        self.assertEqual (len (tags[u"Метка 1"]), 3)
+        self.assertEqual (len (tags[u"Метка 666"]), 0)
+
+        self.assertTrue (self.rootwiki[u"page 1"] in tags[u"Метка 1"])
+        self.assertTrue (self.rootwiki[u"Страница 2"] in tags[u"Метка 1"])
+        self.assertTrue (self.rootwiki[u"Страница 2/Страница 3/Страница 4"] in tags[u"Метка 1"])
