@@ -98,6 +98,7 @@ class MainMenu (wx.MenuBar):
         toolsMenu.AppendSeparator()
         toolsMenu.Append (MainId.ID_ADD_TAGS_TO_BRANCH, _(u"Add Tags to Branch..."), "", wx.ITEM_NORMAL)
         toolsMenu.Append (MainId.ID_REMOVE_TAGS_FROM_BRANCH, _(u"Remove Tags from Branch..."), "", wx.ITEM_NORMAL)
+        toolsMenu.Append (MainId.ID_RENAME_TAG, _(u"Rename Tag..."), "", wx.ITEM_NORMAL)
 
         toolsMenu.AppendSeparator()
         toolsMenu.Append(MainId.ID_RELOAD, _(u"&Reload Wiki…\tCtrl+R"), "", wx.ITEM_NORMAL)

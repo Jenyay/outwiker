@@ -17,11 +17,13 @@ from .tree import WikiDocument, RootWikiPage
 from .application import Application
 from .attachment import Attachment
 from .pagetitletester import PageTitleError, PageTitleWarning
-from .tagscommands import tagBranch, removeTagsFromBranch
+from .tagscommands import tagBranch, removeTagsFromBranch, renameTag
+from .tagslist import TagsList
 
 from outwiker.gui.overwritedialog import OverwriteDialog
 from outwiker.gui.about import AboutDialog
 from outwiker.gui.tagsdialog import TagsDialog
+from outwiker.gui.renametagdialog import RenameTagDialog
 
 
 def MessageBox (*args, **kwargs):
@@ -497,3 +499,17 @@ def removeTagsFromBranchGui (page, parent):
     dlg.Destroy()
         
 
+@testreadonly
+def renameTagGui (wikiroot, parent):
+    tagslist = TagsList (wikiroot)
+
+    dlg = RenameTagDialog (parent, tagslist)
+    if dlg.ShowModal() == wx.ID_OK:
+        Application.onStartTreeUpdate(wikiroot)
+
+        try:
+            renameTag (wikiroot, dlg.oldTagName, dlg.newTagName)
+        finally:
+            Application.onEndTreeUpdate(wikiroot)
+
+    dlg.Destroy()

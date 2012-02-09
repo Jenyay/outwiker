@@ -166,6 +166,7 @@ class MainWindow(wx.Frame):
         self.Bind(wx.EVT_TOOL, self.__onGlobalSearch, id=MainId.ID_GLOBAL_SEARCH)
         self.Bind(wx.EVT_TOOL, self.__onAddTagsToBranch, id=MainId.ID_ADD_TAGS_TO_BRANCH)
         self.Bind(wx.EVT_TOOL, self.__onRemoveTagsFromBranch, id=MainId.ID_REMOVE_TAGS_FROM_BRANCH)
+        self.Bind(wx.EVT_TOOL, self.__onRenameTag, id=MainId.ID_RENAME_TAG)
         self.Bind (wx.EVT_CLOSE, self.__onClose)
 
     
@@ -418,6 +419,13 @@ class MainWindow(wx.Frame):
             outwiker.core.commands.removeTagsFromBranchGui (Application.wikiroot, self)
         else:
             outwiker.core.commands.removeTagsFromBranchGui (Application.selectedPage, self)
+
+
+    def __onRenameTag (self, event):
+        if Application.wikiroot != None:
+            outwiker.core.commands.renameTagGui (Application.wikiroot, self)
+            
+
 
 # end of class MainWindow
 

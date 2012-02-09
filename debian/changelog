@@ -1,3 +1,9 @@
+outwiker (1.5.0-621) oneiric; urgency=low
+
+  * Добавлена возможность переименования меток
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Thu, 09 Feb 2012 21:46:06 +0400
+
 outwiker (1.5.0-620) oneiric; urgency=low
 
   * Добавлена возможность удаления меток из ветки
