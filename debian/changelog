@@ -1,3 +1,9 @@
+outwiker (1.5.0-622) oneiric; urgency=low
+
+  * Ускорена работа с метками
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Fri, 10 Feb 2012 09:30:08 +0400
+
 outwiker (1.5.0-621) oneiric; urgency=low
 
   * Добавлена возможность переименования меток

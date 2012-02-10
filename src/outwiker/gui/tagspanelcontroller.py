@@ -20,6 +20,19 @@ class TagsPanelController (object):
         self.__tagsPanel.Bind (EVT_TAG_LEFT_CLICK, self.__onTagLeftClick)
         self.__tagsPanel.Bind (EVT_TAG_MIDDLE_CLICK, self.__onTagMiddleClick)
 
+        self.__application.onStartTreeUpdate += self.__onStartUpdate
+        self.__application.onEndTreeUpdate += self.__onEndUpdate
+        self.__application.onPageSelect += self.__onPageSelect
+
+        self.updateTags()
+
+
+    def __onStartUpdate (self, page):
+        self.__unbindAppEvents()
+
+
+    def __onEndUpdate (self, page):
+        self.__bindAppEvents()
         self.updateTags()
 
 
@@ -56,9 +69,15 @@ class TagsPanelController (object):
         self.__application.onPageRemove += self.__onUpdate
         self.__application.onPageCreate += self.__onUpdate
         self.__application.onTreeUpdate += self.__onUpdate
-        self.__application.onEndTreeUpdate += self.__onUpdate
         self.__application.onWikiOpen += self.__onUpdate
-        self.__application.onPageSelect += self.__onPageSelect
+
+
+    def __unbindAppEvents (self):
+        self.__application.onPageUpdate -= self.__onUpdate
+        self.__application.onPageRemove -= self.__onUpdate
+        self.__application.onPageCreate -= self.__onUpdate
+        self.__application.onTreeUpdate -= self.__onUpdate
+        self.__application.onWikiOpen -= self.__onUpdate
 
 
     def __onPageSelect (self, page):
