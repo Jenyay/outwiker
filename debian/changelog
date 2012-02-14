@@ -1,3 +1,9 @@
+outwiker (1.5.0-623) oneiric; urgency=low
+
+  * Подготовка к релизу. Дополнение в справке
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Tue, 14 Feb 2012 22:09:08 +0400
+
 outwiker (1.5.0-622) oneiric; urgency=low
 
   * Ускорена работа с метками

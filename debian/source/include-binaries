@@ -27,3 +27,13 @@ test/samplewiki/Страница 1/Страница 2/Страница 6/Стр�
 test/samplewiki/Типы страниц/wiki-страница/__attach/add.png
 src/locale/en/LC_MESSAGES/outwiker.mo
 src/locale/ru_RU/LC_MESSAGES/outwiker.mo
+src/help/help_ru/Основные возможности/Работа с метками/__attach/__thumb/th_width_500_mainwindow.png
+src/help/help_ru/Основные возможности/Работа с метками/__attach/__thumb/th_maxsize_250_pageproperties.png
+src/help/help_ru/Основные возможности/Работа с метками/__attach/__thumb/th_width_500_popup.png
+src/help/help_ru/Основные возможности/Работа с метками/__attach/__thumb/th_width_300_addtag.png
+src/help/help_ru/Основные возможности/Работа с метками/__attach/renametag.png
+src/help/help_ru/Основные возможности/Работа с метками/__attach/popup.png
+src/help/help_ru/Основные возможности/Работа с метками/__attach/addtag.png
+src/help/help_ru/Основные возможности/Работа с метками/__attach/pageproperties.png
+src/help/help_ru/Основные возможности/Работа с метками/__attach/mainwindow.png
+src/help/help_ru/Основные возможности/Работа с метками/__icon.png
