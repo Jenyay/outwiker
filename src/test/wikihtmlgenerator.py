@@ -54,7 +54,7 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
 
         Application.config.set (HtmlRenderConfig.HTML_SECTION, 
                 HtmlRenderConfig.FONT_FACE_NAME_PARAM, 
-                HtmlRenderConfig.DEFAULT_FONT_NAME)
+                HtmlRenderConfig.FONT_NAME_DEFAULT)
     
 
     def __createWiki (self):

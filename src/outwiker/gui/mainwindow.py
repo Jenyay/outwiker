@@ -63,7 +63,6 @@ class MainWindow(wx.Frame):
 
         self._dropTarget = DropFilesTarget (self.attachPanel.panel)
         self.controller.enableGui()
-        self.__createAcceleratorTable()
         self.controller.updateRecentMenu()
         # self.setFullscreen(self.mainWindowConfig.FullscreenOption.value)
         self.__panesController.updateViewMenu()
@@ -95,17 +94,6 @@ class MainWindow(wx.Frame):
                 self.auiManager, 
                 Application, 
                 self.mainMenu.viewTagsCloud)
-
-
-    def __createAcceleratorTable (self):
-        """
-        Создать горячие клавиши, которые не попали в меню
-        """
-        aTable = wx.AcceleratorTable([
-            (wx.ACCEL_CTRL,  wx.WXK_INSERT, wx.ID_COPY),
-            (wx.ACCEL_SHIFT,  wx.WXK_INSERT, wx.ID_PASTE),
-            (wx.ACCEL_SHIFT,  wx.WXK_DELETE, wx.ID_CUT)])
-        self.SetAcceleratorTable(aTable)
 
 
     def __createStatusBar (self):

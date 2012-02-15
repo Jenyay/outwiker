@@ -37,7 +37,7 @@ class EditorPanel(wx.Panel):
 
         self.tabWidthSpin = wx.SpinCtrl(self, 
                 -1, 
-                str (config.DEFAULT_TAB_WIDTH), 
+                str (config.TAB_WIDTH_DEFAULT), 
                 min=self.MIN_TAB_WIDTH, 
                 max=self.MAX_TAB_WIDTH, 
                 style=wx.SP_ARROW_KEYS|wx.TE_AUTO_URL)

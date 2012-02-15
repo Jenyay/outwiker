@@ -12,39 +12,64 @@ class GeneralGuiConfig (object):
     """
     Класс для хранения основных настроек
     """
+    GENERAL_SECTION = u"General"
+    RECENT_SECTION = u"RecentWiki"
+
+    ASK_BEFORE_EXIT_PARAM = u"AskBeforeExit"
+    ASK_BEFORE_EXIT_DEFAULT = True
+
+    AUTOSAVE_INTERVAL_PARAM = u"AutosaveInterval"
+    AUTOSAVE_INTERVAL_DEFAULT = 3
+
+    RECENT_WIKI_COUNT_PARAM = u"maxcount"
+    RECENT_WIKI_COUNT_DEFAULT = 5
+
+    RECENT_AUTOOPEN_PARAM = u"AutoOpen"
+    RECENT_AUTOOPEN_DEFAULT = False
+
+
     def __init__ (self, config):
         self.config = config
 
         # Спрашивать подтверждение выхода?
-        self.DEFAULT_ASK_BEFORE_EXIT = True
-        self.askBeforeExitOption = BooleanOption (self.config, u"General", u"AskBeforeExit", self.DEFAULT_ASK_BEFORE_EXIT)
+        self.askBeforeExitOption = BooleanOption (self.config, 
+                GeneralGuiConfig.GENERAL_SECTION, 
+                GeneralGuiConfig.ASK_BEFORE_EXIT_PARAM, 
+                GeneralGuiConfig.ASK_BEFORE_EXIT_DEFAULT)
 
         # Интервал, через которое происходит автосохранение страницы. Если значение <= 0, значит автосохранение отключено
-        self.DEFAULT_AUTOSAVE_INTERVAL = 3
-        self.autosaveIntervalOption = IntegerOption (self.config, u"General", u"AutosaveInterval", self.DEFAULT_AUTOSAVE_INTERVAL)
+        self.autosaveIntervalOption = IntegerOption (self.config, 
+                GeneralGuiConfig.GENERAL_SECTION, 
+                GeneralGuiConfig.AUTOSAVE_INTERVAL_PARAM, 
+                GeneralGuiConfig.AUTOSAVE_INTERVAL_DEFAULT)
 
         # Количество последних открытых вики
-        self.DEFAULT_RECENT_WIKI_COUNT = 5
-        self.historyLengthOption = IntegerOption (self.config, u"RecentWiki", u"maxcount", self.DEFAULT_RECENT_WIKI_COUNT)
+        self.historyLengthOption = IntegerOption (self.config, 
+                GeneralGuiConfig.RECENT_SECTION, 
+                GeneralGuiConfig.RECENT_WIKI_COUNT_PARAM, 
+                GeneralGuiConfig.RECENT_WIKI_COUNT_DEFAULT)
 
         # Открывать последнуюю открытую вики при старте?
-        self.DEFAULT_RECENT_AUTOOPEN = False
-        self.autoopenOption = BooleanOption (self.config, u"RecentWiki", u"AutoOpen", self.DEFAULT_RECENT_AUTOOPEN)
+        self.autoopenOption = BooleanOption (self.config, 
+                GeneralGuiConfig.RECENT_SECTION, 
+                GeneralGuiConfig.RECENT_AUTOOPEN_PARAM, 
+                GeneralGuiConfig.RECENT_AUTOOPEN_DEFAULT)
 
 
 class PluginsConfig (object):
     """
     Класс для хранения настроек, связанных с плагинами
     """
+
+    PLUGINS_SECTION = u"Plugins"
+    DISABLED_PARAM = u"Disabled"
+
     def __init__ (self, config):
         self.config = config
 
-        self.pluginsConfigSection = u"Plugins"
-        self.disabledPluginsParam = u"Disabled"
-
         self.disabledPlugins = ListOption (self.config, 
-                self.pluginsConfigSection,
-                self.disabledPluginsParam,
+                PluginsConfig.PLUGINS_SECTION,
+                PluginsConfig.DISABLED_PARAM,
                 [],
                 separator=u";")
 
@@ -54,20 +79,36 @@ class TrayConfig (object):
     """
     Класс для хранения настроек, связанных с иконками в трее
     """
+    MINIMIZE_TO_TRAY_PARAM = u"MinimizeToTray"
+    MINIMIZE_TO_TRAY_DEFAULT = True
+
+    START_ICONIZED_PARAM = u"StartIconized"
+    START_ICONIZED_DEFAULT = False
+
+    ALWAYS_SHOW_TRAY_ICON_PARAM = u"AlwaysShowTrayIcon"
+    ALWAYS_SHOW_TRAY_ICON_DEFAULT = False
+
+
     def __init__ (self, config):
         self.config = config
 
         # Сворачивать в трей?
-        self.DEFAULT_MINIMIZE_TO_TRAY = True
-        self.minimizeOption = BooleanOption (self.config, u"General", u"MinimizeToTray", self.DEFAULT_MINIMIZE_TO_TRAY)
+        self.minimizeOption = BooleanOption (self.config, 
+                GeneralGuiConfig.GENERAL_SECTION, 
+                TrayConfig.MINIMIZE_TO_TRAY_PARAM, 
+                TrayConfig.MINIMIZE_TO_TRAY_DEFAULT)
 
         # Запускаться свернутым?
-        self.DEFAULT_START_ICONIZED = False
-        self.startIconizedOption = BooleanOption (self.config, u"General", u"StartIconized", self.DEFAULT_START_ICONIZED)
+        self.startIconizedOption = BooleanOption (self.config, 
+                GeneralGuiConfig.GENERAL_SECTION, 
+                TrayConfig.START_ICONIZED_PARAM, 
+                TrayConfig.START_ICONIZED_DEFAULT)
 
         # Всегда показывать иконку в трее?
-        self.DEFAULT_ALWAYS_SHOW_TRAY_ICON = False
-        self.alwaysShowTrayIconOption = BooleanOption (self.config, u"General", u"AlwaysShowTrayIcon", self.DEFAULT_ALWAYS_SHOW_TRAY_ICON)
+        self.alwaysShowTrayIconOption = BooleanOption (self.config, 
+                GeneralGuiConfig.GENERAL_SECTION, 
+                TrayConfig.ALWAYS_SHOW_TRAY_ICON_PARAM, 
+                TrayConfig.ALWAYS_SHOW_TRAY_ICON_DEFAULT)
 
 
 
@@ -75,30 +116,63 @@ class EditorConfig (object):
     """
     Класс для хранения настроек редактора
     """
+    FONT_SECTION = u"Font"
+
+    SHOW_LINE_NUMBERS_SECTION = u"ShowLineNumbers"
+    SHOW_LINE_NUMBERS_DEFAULT = False
+
+    TAB_WIDTH_SECTION = u"TabWidth"
+    TAB_WIDTH_DEFAULT = 4
+
+    FONT_SIZE_SECTION = u"size"
+    FONT_SIZE_DEFAULT = 10
+
+    FONT_NAME_SECTION = u"FaceName"
+    FONT_NAME_DEFAULT = u""
+
+    FONT_BOLD_SECTION = u"bold"
+    FONT_BOLD_DEFAULT = False
+
+    FONT_ITALIC_SECTION = u"italic"
+    FONT_ITALIC_DEFAULT = False
+
+
     def __init__ (self, config):
         self.config = config
 
         # Показывать номера строк в редакторе?
-        self.DEFAULT_SHOW_LINE_NUMBERS = False
-        self.lineNumbersOption = BooleanOption (self.config, u"General", u"ShowLineNumbers", self.DEFAULT_SHOW_LINE_NUMBERS)
+        self.lineNumbersOption = BooleanOption (self.config, 
+                GeneralGuiConfig.GENERAL_SECTION, 
+                EditorConfig.SHOW_LINE_NUMBERS_SECTION, 
+                EditorConfig.SHOW_LINE_NUMBERS_DEFAULT)
 
         # Размер табуляции
-        self.DEFAULT_TAB_WIDTH = 4
-        self.tabWidthOption = IntegerOption (self.config, u"General", u"TabWidth", self.DEFAULT_TAB_WIDTH)
+        self.tabWidthOption = IntegerOption (self.config, 
+                GeneralGuiConfig.GENERAL_SECTION, 
+                EditorConfig.TAB_WIDTH_SECTION, 
+                EditorConfig.TAB_WIDTH_DEFAULT)
         
         # Размер шрифта
-        self.DEFAULT_FONT_SIZE = 10
-        self.fontSizeOption = IntegerOption (self.config, u"Font", u"size", self.DEFAULT_FONT_SIZE)
+        self.fontSizeOption = IntegerOption (self.config, 
+                EditorConfig.FONT_SECTION, 
+                EditorConfig.FONT_SIZE_SECTION, 
+                EditorConfig.FONT_SIZE_DEFAULT)
 
         # Начертание шрифта
-        self.DEFAULT_FONT_NAME = u""
-        self.fontFaceNameOption = StringOption (self.config, u"Font", u"FaceName", self.DEFAULT_FONT_NAME)
+        self.fontFaceNameOption = StringOption (self.config, 
+                EditorConfig.FONT_SECTION, 
+                EditorConfig.FONT_NAME_SECTION, 
+                EditorConfig.FONT_NAME_DEFAULT)
 
-        self.DEFAULT_FONT_BOLD = False
-        self.fontIsBold = BooleanOption (self.config, "Font", "bold", self.DEFAULT_FONT_BOLD)
+        self.fontIsBold = BooleanOption (self.config, 
+                EditorConfig.FONT_SECTION, 
+                EditorConfig.FONT_BOLD_SECTION, 
+                EditorConfig.FONT_BOLD_DEFAULT)
 
-        self.DEFAULT_FONT_ITALIC = False
-        self.fontIsItalic = BooleanOption (self.config, "Font", "italic", self.DEFAULT_FONT_ITALIC)
+        self.fontIsItalic = BooleanOption (self.config, 
+                EditorConfig.FONT_SECTION, 
+                EditorConfig.FONT_ITALIC_SECTION, 
+                EditorConfig.FONT_ITALIC_DEFAULT)
 
 
 class HtmlRenderConfig (object):
@@ -109,109 +183,188 @@ class HtmlRenderConfig (object):
     HTML_SECTION = u"HTML"
 
     FONT_FACE_NAME_PARAM = u"FontFaceName"
-    FONT_SIZE_PARAM = u"FontSize"
-    FONT_BOLD_PARAM = u"FontBold"
-    FONT_ITALIC_PARAM = u"FontItalic"
-    USER_STYLE_PARAM = u"UserStyle"
+    FONT_NAME_DEFAULT = u"Verdana"
 
-    DEFAULT_FONT_SIZE = 10
-    DEFAULT_FONT_NAME = u"Verdana"
-    DEFAULT_FONT_BOLD = False
-    DEFAULT_FONT_ITALIC = False
-    DEFAULT_USER_STYLE = u""
+    FONT_SIZE_PARAM = u"FontSize"
+    FONT_SIZE_DEFAULT = 10
+
+    FONT_BOLD_PARAM = u"FontBold"
+    FONT_BOLD_DEFAULT = False
+
+    FONT_ITALIC_PARAM = u"FontItalic"
+    FONT_ITALIC_DEFAULT = False
+
+    USER_STYLE_PARAM = u"UserStyle"
+    USER_STYLE_DEFAULT = u""
 
     def __init__ (self, config):
         self.config = config
 
-
         self.fontSizeOption = IntegerOption (self.config, 
                 HtmlRenderConfig.HTML_SECTION, 
                 HtmlRenderConfig.FONT_SIZE_PARAM, 
-                HtmlRenderConfig.DEFAULT_FONT_SIZE)
+                HtmlRenderConfig.FONT_SIZE_DEFAULT)
 
         self.fontFaceNameOption = StringOption (self.config, 
                 HtmlRenderConfig.HTML_SECTION, 
                 HtmlRenderConfig.FONT_FACE_NAME_PARAM, 
-                HtmlRenderConfig.DEFAULT_FONT_NAME)
+                HtmlRenderConfig.FONT_NAME_DEFAULT)
 
         self.fontIsBold = BooleanOption (self.config, 
                 HtmlRenderConfig.HTML_SECTION, 
                 HtmlRenderConfig.FONT_BOLD_PARAM, 
-                HtmlRenderConfig.DEFAULT_FONT_BOLD)
+                HtmlRenderConfig.FONT_BOLD_DEFAULT)
 
         self.fontIsItalic = BooleanOption (self.config, 
                 HtmlRenderConfig.HTML_SECTION, 
                 HtmlRenderConfig.FONT_ITALIC_PARAM, 
-                HtmlRenderConfig.DEFAULT_FONT_ITALIC)
+                HtmlRenderConfig.FONT_ITALIC_DEFAULT)
 
         self.userStyleOption = StringOption (self.config, 
                 HtmlRenderConfig.HTML_SECTION, 
                 HtmlRenderConfig.USER_STYLE_PARAM, 
-                HtmlRenderConfig.DEFAULT_USER_STYLE)
+                HtmlRenderConfig.USER_STYLE_DEFAULT)
 
 
 class TextPrintConfig (object):
     """
     Класс для хранения настроек печати текста
     """
+    PRINT_SECTION = u"Print"
+
+    FONT_NAME_SECTION = u"FontFaceName"
+    FONT_NAME_DEFAULT = u"Arial"
+
+    FONT_SIZE_SECTION = u"FontSize"
+    FONT_SIZE_DEFAULT = 10
+
+    FONT_BOLD_SECTION = u"FontBold"
+    FONT_BOLD_DEFAULT = False
+
+    FONT_ITALIC_SECTION = u"FontItalic"
+    FONT_ITALIC_DEFAULT = False
+
+    PAPPER_SIZE_SECTION = u"PaperId"
+    PAPPER_SIZE_DEFAULT = wx.PAPER_A4
+
+    MARGIN_TOP_SECTION = u"MarginTop"
+    MARGIN_TOP_DEFAULT = 20
+
+    MARGIN_BOTTOM_SECTION = u"MarginBottom"
+    MARGIN_BOTTOM_DEFAULT = 20
+
+    MARGIN_LEFT_SECTION = u"MarginLeft"
+    MARGIN_LEFT_DEFAULT = 20
+
+    MARGIN_RIGHT_SECTION = u"MarginRight"
+    MARGIN_RIGHT_DEFAULT = 20
+
     def __init__ (self, config):
         self.config = config
 
         # Настройки шрифта
-        self.DEFAULT_FONT_NAME = u"Arial"
-        self.fontFaceNameOption = StringOption (self.config, u"Print", u"FontFaceName", self.DEFAULT_FONT_NAME)
+        self.fontFaceNameOption = StringOption (self.config, 
+                TextPrintConfig.PRINT_SECTION, 
+                TextPrintConfig.FONT_NAME_SECTION, 
+                TextPrintConfig.FONT_NAME_DEFAULT)
 
-        self.DEFAULT_FONT_SIZE = 10
-        self.fontSizeOption = IntegerOption (self.config, u"Print", u"FontSize", self.DEFAULT_FONT_SIZE)
+        self.fontSizeOption = IntegerOption (self.config, 
+                TextPrintConfig.PRINT_SECTION, 
+                TextPrintConfig.FONT_SIZE_SECTION,
+                TextPrintConfig.FONT_SIZE_DEFAULT)
 
-        self.DEFAULT_FONT_BOLD = False
-        self.fontIsBold = BooleanOption (self.config, "Print", "FontBold", self.DEFAULT_FONT_BOLD)
+        self.fontIsBold = BooleanOption (self.config, 
+                TextPrintConfig.PRINT_SECTION, 
+                TextPrintConfig.FONT_BOLD_SECTION,
+                TextPrintConfig.FONT_BOLD_DEFAULT)
 
-        self.DEFAULT_FONT_ITALIC = False
-        self.fontIsItalic = BooleanOption (self.config, "Print", "FontItalic", self.DEFAULT_FONT_ITALIC)
+        self.fontIsItalic = BooleanOption (self.config, 
+                TextPrintConfig.PRINT_SECTION, 
+                TextPrintConfig.FONT_ITALIC_SECTION,
+                TextPrintConfig.FONT_ITALIC_DEFAULT)
 
+        self.paperId = IntegerOption (self.config, 
+                TextPrintConfig.PRINT_SECTION, 
+                TextPrintConfig.PAPPER_SIZE_SECTION,
+                TextPrintConfig.PAPPER_SIZE_DEFAULT)
 
-        self.DEFAULT_PAPPER_SIZE = wx.PAPER_A4
-        self.paperId = IntegerOption (self.config, u"Print", u"PaperId", self.DEFAULT_PAPPER_SIZE)
+        self.marginTop = IntegerOption (self.config, 
+                TextPrintConfig.PRINT_SECTION, 
+                TextPrintConfig.MARGIN_TOP_SECTION,
+                TextPrintConfig.MARGIN_TOP_DEFAULT)
 
-        self.DEFAULT_MARGIN_TOP = 20
-        self.marginTop = IntegerOption (self.config, u"Print", u"MarginTop", self.DEFAULT_MARGIN_TOP)
+        self.marginBottom = IntegerOption (self.config, 
+                TextPrintConfig.PRINT_SECTION, 
+                TextPrintConfig.MARGIN_BOTTOM_SECTION,
+                TextPrintConfig.MARGIN_BOTTOM_DEFAULT)
 
-        self.DEFAULT_MARGIN_BOTTOM = 20
-        self.marginBottom = IntegerOption (self.config, u"Print", u"MarginBottom", self.DEFAULT_MARGIN_BOTTOM)
-
-        self.DEFAULT_MARGIN_LEFT = 20
-        self.marginLeft = IntegerOption (self.config, u"Print", u"MarginLeft", self.DEFAULT_MARGIN_LEFT)
+        self.marginLeft = IntegerOption (self.config, 
+                TextPrintConfig.PRINT_SECTION, 
+                TextPrintConfig.MARGIN_LEFT_SECTION,
+                TextPrintConfig.MARGIN_LEFT_DEFAULT)
         
-        self.DEFAULT_MARGIN_RIGHT = 20
-        self.marginRight = IntegerOption (self.config, u"Print", u"MarginRight", self.DEFAULT_MARGIN_RIGHT)
-
+        self.marginRight = IntegerOption (self.config, 
+                TextPrintConfig.PRINT_SECTION, 
+                TextPrintConfig.MARGIN_RIGHT_SECTION,
+                TextPrintConfig.MARGIN_RIGHT_DEFAULT)
 
 
 class MainWindowConfig (object):
     """
     Класс для хранения настроек главного окна
     """
+    MAIN_WINDOW_SECTION = u"MainWindow"
+
+    TITLE_FORMAT_SECTION = u"Title"
+    TITLE_FORMAT_DEFAULT = u"{page} - {file} - OutWiker"
+
+    WIDTH_SECTION = u"width"
+    WIDTH_DEFAULT = 800
+
+    HEIGHT_SECTION = u"height"
+    HEIGHT_DEFAULT = 680
+
+    XPOS_SECTION = u"xpos"
+    XPOS_DEFAULT = 0
+
+    YPOS_SECTION = u"ypos"
+    YPOS_DEFAULT = 0
+
+    FULLSCREEN_SECTION = u"fullscreen"
+    FULLSCREEN_DEFAULT = False
+
     def __init__ (self, config):
         self.config = config
 
-        self.DEFAULT_TITLE_FORMAT = u"{page} - {file} - OutWiker"
-        self.titleFormatOption = StringOption (self.config, u"MainWindow", u"Title", self.DEFAULT_TITLE_FORMAT)
+        self.titleFormatOption = StringOption (self.config, 
+                MainWindowConfig.MAIN_WINDOW_SECTION, 
+                self.TITLE_FORMAT_SECTION,
+                self.TITLE_FORMAT_DEFAULT)
 
-        self.DEFAULT_WIDTH = 800
-        self.WidthOption = IntegerOption (self.config, u"MainWindow", u"width", self.DEFAULT_WIDTH)
+        self.WidthOption = IntegerOption (self.config, 
+                MainWindowConfig.MAIN_WINDOW_SECTION, 
+                self.WIDTH_SECTION,
+                self.WIDTH_DEFAULT)
 
-        self.DEFAULT_HEIGHT = 680
-        self.HeightOption = IntegerOption (self.config, u"MainWindow", u"height", self.DEFAULT_HEIGHT)
+        self.HeightOption = IntegerOption (self.config, 
+                MainWindowConfig.MAIN_WINDOW_SECTION, 
+                self.HEIGHT_SECTION,
+                self.HEIGHT_DEFAULT)
 
-        self.DEFAULT_XPOS = 0
-        self.XPosOption = IntegerOption (self.config, u"MainWindow", u"xpos", self.DEFAULT_XPOS)
+        self.XPosOption = IntegerOption (self.config, 
+                MainWindowConfig.MAIN_WINDOW_SECTION, 
+                self.XPOS_SECTION,
+                self.XPOS_DEFAULT)
 
-        self.DEFAULT_YPOS = 0
-        self.YPosOption = IntegerOption (self.config, u"MainWindow", u"ypos", self.DEFAULT_YPOS)
+        self.YPosOption = IntegerOption (self.config, 
+                MainWindowConfig.MAIN_WINDOW_SECTION, 
+                self.YPOS_SECTION,
+                self.YPOS_DEFAULT)
 
-        self.DEFAULT_FULLSCREEN = False
-        self.FullscreenOption = BooleanOption (self.config, u"MainWindow", u"fullscreen", self.DEFAULT_FULLSCREEN)
+        self.FullscreenOption = BooleanOption (self.config, 
+                MainWindowConfig.MAIN_WINDOW_SECTION, 
+                self.FULLSCREEN_SECTION,
+                self.FULLSCREEN_DEFAULT)
 
 
 
@@ -219,18 +372,33 @@ class TreeConfig (object):
     """
     Класс для хранения настроек панели с деревом
     """
+    WIDTH_SECTION = u"TreeWidth"
+    WIDTH_DEFAULT = 250
+
+    HEIGHT_SECTION = u"TreeHeight"
+    HEIGHT_DEFAULT = 250
+
+    PANE_OPTIONS_SECTION = u"TreePane"
+    PANE_OPTIONS_DEFAULT = ""
+
     def __init__ (self, config):
         self.config = config
 
-        self.DEFAULT_WIDTH = 250
-        self.width = IntegerOption (self.config, u"MainWindow", u"TreeWidth", self.DEFAULT_WIDTH)
+        self.width = IntegerOption (self.config, 
+                MainWindowConfig.MAIN_WINDOW_SECTION, 
+                TreeConfig.WIDTH_SECTION,
+                TreeConfig.WIDTH_DEFAULT)
 
-        self.DEFAULT_HEIGHT = 250
-        self.height = IntegerOption (self.config, u"MainWindow", u"TreeHeight", self.DEFAULT_HEIGHT)
+        self.height = IntegerOption (self.config, 
+                MainWindowConfig.MAIN_WINDOW_SECTION, 
+                TreeConfig.HEIGHT_SECTION,
+                TreeConfig.HEIGHT_DEFAULT)
 
         # Параметры панели с деревом
-        self.DEFAULT_PANE_OPTIONS = ""
-        self.pane = StringOption (self.config, u"MainWindow", u"TreePane", self.DEFAULT_PANE_OPTIONS)
+        self.pane = StringOption (self.config, 
+                MainWindowConfig.MAIN_WINDOW_SECTION, 
+                TreeConfig.PANE_OPTIONS_SECTION,
+                TreeConfig.PANE_OPTIONS_DEFAULT)
 
 
 
@@ -238,17 +406,32 @@ class AttachConfig (object):
     """
     Класс для хранения настроек панели с вложенными файлами
     """
+    WIDTH_SECTION = u"AttachesWidth"
+    WIDTH_DEFAULT = 250
+
+    HEIGHT_SECTION = u"AttachesHeight"
+    HEIGHT_DEFAULT = 150
+
+    PANE_OPTIONS_SECTION = u"AttachesPane"
+    PANE_OPTIONS_DEFAULT = u""
+
     def __init__ (self, config):
         self.config = config
 
-        self.DEFAULT_WIDTH = 250
-        self.width = IntegerOption (self.config, u"MainWindow", u"AttachesWidth", self.DEFAULT_WIDTH)
+        self.width = IntegerOption (self.config, 
+                MainWindowConfig.MAIN_WINDOW_SECTION, 
+                self.WIDTH_SECTION,
+                self.WIDTH_DEFAULT)
 
-        self.DEFAULT_HEIGHT = 150
-        self.height = IntegerOption (self.config, u"MainWindow", u"AttachesHeight", self.DEFAULT_HEIGHT)
+        self.height = IntegerOption (self.config, 
+                MainWindowConfig.MAIN_WINDOW_SECTION, 
+                self.HEIGHT_SECTION,
+                self.HEIGHT_DEFAULT)
 
-        self.DEFAULT_PANE_OPTIONS = u""
-        self.pane = StringOption (self.config, u"MainWindow", u"AttachesPane", self.DEFAULT_PANE_OPTIONS)
+        self.pane = StringOption (self.config, 
+                MainWindowConfig.MAIN_WINDOW_SECTION, 
+                self.PANE_OPTIONS_SECTION,
+                self.PANE_OPTIONS_DEFAULT)
 
 
 
@@ -256,15 +439,30 @@ class TagsCloudConfig (object):
     """
     Класс для хранения настроек панели с облагом тегов
     """
+    WIDTH_SECTION = u"TagsCloudWidth"
+    WIDTH_DEFAULT = 250
+
+    HEIGHT_SECTION = u"TagsCloudHeight"
+    HEIGHT_DEFAULT = 170
+
+    PANE_OPTIONS_SECTION = u"TagsCloudPane"
+    PANE_OPTIONS_DEFAULT = ""
+
     def __init__ (self, config):
         self.config = config
 
-        self.DEFAULT_WIDTH = 250
-        self.width = IntegerOption (self.config, u"MainWindow", u"TagsCloudWidth", self.DEFAULT_WIDTH)
+        self.width = IntegerOption (self.config, 
+                MainWindowConfig.MAIN_WINDOW_SECTION, 
+                self.WIDTH_SECTION,
+                self.WIDTH_DEFAULT)
 
-        self.DEFAULT_HEIGHT = 170
-        self.height = IntegerOption (self.config, u"MainWindow", u"TagsCloudHeight", self.DEFAULT_HEIGHT)
+        self.height = IntegerOption (self.config, 
+                MainWindowConfig.MAIN_WINDOW_SECTION, 
+                self.HEIGHT_SECTION,
+                self.HEIGHT_DEFAULT)
 
         # Параметры панели с деревом
-        self.DEFAULT_PANE_OPTIONS = ""
-        self.pane = StringOption (self.config, u"MainWindow", u"TagsCloudPane", self.DEFAULT_PANE_OPTIONS)
+        self.pane = StringOption (self.config, 
+                MainWindowConfig.MAIN_WINDOW_SECTION, 
+                self.PANE_OPTIONS_SECTION,
+                self.PANE_OPTIONS_DEFAULT)

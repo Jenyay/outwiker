@@ -41,6 +41,18 @@ class MainWndController (object):
         self.__autosaveTimer = AutosaveTimer (Application)
 
         self.init()
+        self.__createAcceleratorTable()
+
+
+    def __createAcceleratorTable (self):
+        """
+        Создать горячие клавиши, которые не попали в меню
+        """
+        aTable = wx.AcceleratorTable([
+            (wx.ACCEL_CTRL,  wx.WXK_INSERT, wx.ID_COPY),
+            (wx.ACCEL_SHIFT,  wx.WXK_INSERT, wx.ID_PASTE),
+            (wx.ACCEL_SHIFT,  wx.WXK_DELETE, wx.ID_CUT)])
+        self.parent.SetAcceleratorTable(aTable)
 
 
     def init (self):

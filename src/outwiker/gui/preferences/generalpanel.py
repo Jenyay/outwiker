@@ -65,7 +65,7 @@ class GeneralPanel (wx.ScrolledWindow):
         autosaveLabel = wx.StaticText(self, -1, _("Autosave interval in seconds (0 - disabled)"))
         self.autosaveSpin = wx.SpinCtrl(self, 
                 -1, 
-                str (generalConfig.DEFAULT_AUTOSAVE_INTERVAL), 
+                str (generalConfig.AUTOSAVE_INTERVAL_DEFAULT), 
                 min=self.MIN_AUTOSAVE_INTERVAL, 
                 max=self.MAX_AUTOSAVE_INTERVAL, 
                 style=wx.SP_ARROW_KEYS|wx.TE_PROCESS_ENTER|wx.TE_PROCESS_TAB|wx.TE_AUTO_URL)
@@ -101,7 +101,7 @@ class GeneralPanel (wx.ScrolledWindow):
         history_label = wx.StaticText(self, -1, _("Recent files history length (restart required)"))
         self.historySpin = wx.SpinCtrl(self, 
                 -1, 
-                str (generalConfig.DEFAULT_RECENT_WIKI_COUNT), 
+                str (generalConfig.RECENT_WIKI_COUNT_DEFAULT), 
                 min=self.MIN_HISTORY_LENGTH, 
                 max=self.MAX_HISTORY_LENGTH, 
                 style=wx.SP_ARROW_KEYS|wx.TE_PROCESS_ENTER|wx.TE_PROCESS_TAB|wx.TE_AUTO_URL)
