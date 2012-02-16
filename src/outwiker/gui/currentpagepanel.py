@@ -10,6 +10,7 @@ from outwiker.core.commands import pageExists, openWiki
 from outwiker.core.tree import RootWikiPage
 from outwiker.core.tagscommands import getTagsString
 import outwiker.core.system
+from .pagedialog import editPage
 
 
 class CurrentPagePanel(wx.Panel):
@@ -31,6 +32,8 @@ class CurrentPagePanel(wx.Panel):
         self.__do_layout()
 
         self.Bind(wx.EVT_BUTTON, self.__onBookmark, self.bookmarkButton)
+        self.titleLabel.Bind (wx.EVT_LEFT_DCLICK, self.__onTitleDoubleClick)
+        self.Bind (wx.EVT_LEFT_DCLICK, self.__onTitleDoubleClick)
 
         Application.onWikiOpen += self.__onWikiOpen
         Application.onPageSelect += self.__onPageSelect
@@ -40,6 +43,11 @@ class CurrentPagePanel(wx.Panel):
         Application.onForceSave += self.__onForceSave
 
         self.Bind (wx.EVT_CLOSE, self.__onClose)
+
+
+    def __onTitleDoubleClick (self, event):
+        if Application.selectedPage != None:
+            editPage (self, Application.selectedPage)
 
 
     @property
