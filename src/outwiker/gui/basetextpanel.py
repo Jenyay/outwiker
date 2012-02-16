@@ -62,15 +62,8 @@ class BaseTextPanel (BasePagePanel):
 
         Application.onAttachmentPaste += self.onAttachmentPaste
         Application.onPreferencesDialogClose += self.onPreferencesDialogClose
-        # Application.onPageUpdate += self.onPageUpdate
 
         self._onSetPage += self.__onSetPage
-
-
-    # def onPageUpdate (self, page):
-    #     print "qqq"
-    #     if page == Application.selectedPage:
-    #         self.UpdateView(page)
 
 
     def __onSetPage (self, page):
@@ -211,10 +204,6 @@ class BaseTextPanel (BasePagePanel):
         assert self.mainWindow != None
         assert self.mainWindow.mainMenu.GetMenuCount() >= 3
         assert self.searchMenu != None
-
-        #import traceback
-        #traceback.print_stack()
-        #print 
 
         self.mainWindow.Unbind(wx.EVT_MENU, id=self.ID_SEARCH)
         self.mainWindow.Unbind(wx.EVT_MENU, id=self.ID_SEARCH_NEXT)

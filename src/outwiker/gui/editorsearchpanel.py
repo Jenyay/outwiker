@@ -5,6 +5,8 @@ from .localsearchpanel import LocalSearchPanel, LocalSearcher
 
 
 class EditorSearchPanel (LocalSearchPanel):
+    _recentSearch = u""
+
     def __init__ (self, *args, **kwds):
         LocalSearchPanel.__init__ (self, *args, **kwds)
     
@@ -32,12 +34,16 @@ class EditorSearchPanel (LocalSearchPanel):
         """
         Начать поиск
         """
-        text = self.editor.GetSelectedText()
+        phrase = self.editor.GetSelectedText()
 
-        self.phraseTextCtrl.SetValue (text)
+        if len (phrase) == 0:
+            phrase = EditorSearchPanel._recentSearch
+            self.phraseTextCtrl.SetValue (phrase)
+
+        self.phraseTextCtrl.SetValue (phrase)
         self.phraseTextCtrl.SetSelection (-1, -1)
         self.phraseTextCtrl.SetFocus ()
-    
+
 
     def enterSearchPhrase (self):
         self.searchTo (self.findNextOnEnter)
@@ -53,10 +59,16 @@ class EditorSearchPanel (LocalSearchPanel):
         text = self.editor.GetText()
         phrase = self.phraseTextCtrl.GetValue ()
 
-        if len (phrase) == 0:
+        if (len (phrase) == 0 and 
+                len (EditorSearchPanel._recentSearch) == 0):
             self.phraseTextCtrl.SetFocus ()
-            #self.startSearch()
             return
+
+        if len (phrase) == 0:
+            phrase = EditorSearchPanel._recentSearch
+            self.phraseTextCtrl.SetValue (phrase)
+
+        EditorSearchPanel._recentSearch = phrase
 
         result = direction (text, phrase)
         if result != None:
@@ -65,8 +77,6 @@ class EditorSearchPanel (LocalSearchPanel):
                     self.editPanel.calcBytePos (text, result.position + len (result.phrase)) )
         else:
             self.resultLabel.SetLabel (_(u"Not found"))
-
-            #self.editor.SetFocus()
 
     
     def findNext (self, text, phrase):
