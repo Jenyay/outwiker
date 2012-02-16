@@ -6,8 +6,10 @@ import os
 import wx
 
 import outwiker.core.system
+import outwiker.core.commands
 from outwiker.core.application import Application
-from .guiconfig import TrayConfig
+from .guiconfig import TrayConfig, GeneralGuiConfig
+from .mainid import MainId
 
 
 class OutwikerTrayIcon (wx.TaskBarIcon):
@@ -47,18 +49,37 @@ class OutwikerTrayIcon (wx.TaskBarIcon):
 
     def __bind (self):
         self.Bind (wx.EVT_TASKBAR_LEFT_DOWN, self.__OnTrayLeftClick)
+        self.mainWnd.Bind (wx.EVT_ICONIZE, self.__onIconize)
+        self.mainWnd.Bind (wx.EVT_CLOSE, self.__onClose)
+        self.mainWnd.Bind (wx.EVT_MENU, self.__onExit, id=MainId.ID_EXIT)
+
         self.Bind(wx.EVT_MENU, self.__onExit, id=self.ID_EXIT)
         self.Bind(wx.EVT_MENU, self.__onRestore, id=self.ID_RESTORE)
-        self.mainWnd.Bind (wx.EVT_ICONIZE, self.__onIconize)
+
         Application.onPreferencesDialogClose += self.__onPreferencesDialogClose
     
 
     def __unbind (self):
         self.Unbind (wx.EVT_TASKBAR_LEFT_DOWN, handler = self.__OnTrayLeftClick)
+        self.mainWnd.Unbind (wx.EVT_ICONIZE, handler = self.__onIconize)
+        self.mainWnd.Unbind (wx.EVT_CLOSE, handler=self.__onClose)
+        self.mainWnd.Unbind (wx.EVT_MENU, handler=self.__onExit, id=MainId.ID_EXIT)
+
         self.Unbind(wx.EVT_MENU, handler = self.__onExit, id=self.ID_EXIT)
         self.Unbind(wx.EVT_MENU, handler = self.__onRestore, id=self.ID_RESTORE)
-        self.mainWnd.Unbind (wx.EVT_ICONIZE, handler = self.__onIconize)
+
         Application.onPreferencesDialogClose -= self.__onPreferencesDialogClose
+
+
+    def __onClose (self, event):
+        generalConfig = GeneralGuiConfig (Application.config)
+        askBeforeExit = generalConfig.askBeforeExitOption.value
+
+        if (not askBeforeExit or 
+                outwiker.core.commands.MessageBox (_(u"Really exit?"), _(u"Exit"), wx.YES_NO  | wx.ICON_QUESTION ) == wx.YES):
+            self.mainWnd.Destroy()
+        else:
+            event.Veto()
     
 
     def __onPreferencesDialogClose (self, prefDialog):
@@ -137,7 +158,7 @@ class OutwikerTrayIcon (wx.TaskBarIcon):
     def Destroy (self):
         self.removeTrayIcon()
         self.__unbind()
-        wx.TaskBarIcon.Destroy (self)
+        super (OutwikerTrayIcon, self).Destroy()
 
 
     def ShowTrayIcon (self):
