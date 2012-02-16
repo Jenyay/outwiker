@@ -32,25 +32,25 @@ class GeneralGuiConfig (object):
         self.config = config
 
         # Спрашивать подтверждение выхода?
-        self.askBeforeExitOption = BooleanOption (self.config, 
+        self.askBeforeExit = BooleanOption (self.config, 
                 GeneralGuiConfig.GENERAL_SECTION, 
                 GeneralGuiConfig.ASK_BEFORE_EXIT_PARAM, 
                 GeneralGuiConfig.ASK_BEFORE_EXIT_DEFAULT)
 
         # Интервал, через которое происходит автосохранение страницы. Если значение <= 0, значит автосохранение отключено
-        self.autosaveIntervalOption = IntegerOption (self.config, 
+        self.autosaveInterval = IntegerOption (self.config, 
                 GeneralGuiConfig.GENERAL_SECTION, 
                 GeneralGuiConfig.AUTOSAVE_INTERVAL_PARAM, 
                 GeneralGuiConfig.AUTOSAVE_INTERVAL_DEFAULT)
 
         # Количество последних открытых вики
-        self.historyLengthOption = IntegerOption (self.config, 
+        self.historyLength = IntegerOption (self.config, 
                 GeneralGuiConfig.RECENT_SECTION, 
                 GeneralGuiConfig.RECENT_WIKI_COUNT_PARAM, 
                 GeneralGuiConfig.RECENT_WIKI_COUNT_DEFAULT)
 
         # Открывать последнуюю открытую вики при старте?
-        self.autoopenOption = BooleanOption (self.config, 
+        self.autoopen = BooleanOption (self.config, 
                 GeneralGuiConfig.RECENT_SECTION, 
                 GeneralGuiConfig.RECENT_AUTOOPEN_PARAM, 
                 GeneralGuiConfig.RECENT_AUTOOPEN_DEFAULT)
@@ -88,27 +88,36 @@ class TrayConfig (object):
     ALWAYS_SHOW_TRAY_ICON_PARAM = u"AlwaysShowTrayIcon"
     ALWAYS_SHOW_TRAY_ICON_DEFAULT = False
 
+    MINIMIZE_ON_CLOSE_PARAM = u"MinimizeOnClose"
+    MINIMIZE_ON_CLOSE_DEFAULT = False
+
 
     def __init__ (self, config):
         self.config = config
 
         # Сворачивать в трей?
-        self.minimizeOption = BooleanOption (self.config, 
+        self.minimizeToTray = BooleanOption (self.config, 
                 GeneralGuiConfig.GENERAL_SECTION, 
                 TrayConfig.MINIMIZE_TO_TRAY_PARAM, 
                 TrayConfig.MINIMIZE_TO_TRAY_DEFAULT)
 
         # Запускаться свернутым?
-        self.startIconizedOption = BooleanOption (self.config, 
+        self.startIconized = BooleanOption (self.config, 
                 GeneralGuiConfig.GENERAL_SECTION, 
                 TrayConfig.START_ICONIZED_PARAM, 
                 TrayConfig.START_ICONIZED_DEFAULT)
 
         # Всегда показывать иконку в трее?
-        self.alwaysShowTrayIconOption = BooleanOption (self.config, 
+        self.alwaysShowTrayIcon = BooleanOption (self.config, 
                 GeneralGuiConfig.GENERAL_SECTION, 
                 TrayConfig.ALWAYS_SHOW_TRAY_ICON_PARAM, 
                 TrayConfig.ALWAYS_SHOW_TRAY_ICON_DEFAULT)
+
+        # Сворачивать окно программы при закрытии главного окна
+        self.minimizeOnClose = BooleanOption (self.config,
+                GeneralGuiConfig.GENERAL_SECTION,
+                TrayConfig.MINIMIZE_ON_CLOSE_PARAM,
+                TrayConfig.MINIMIZE_ON_CLOSE_DEFAULT)
 
 
 
@@ -141,25 +150,25 @@ class EditorConfig (object):
         self.config = config
 
         # Показывать номера строк в редакторе?
-        self.lineNumbersOption = BooleanOption (self.config, 
+        self.lineNumbers = BooleanOption (self.config, 
                 GeneralGuiConfig.GENERAL_SECTION, 
                 EditorConfig.SHOW_LINE_NUMBERS_SECTION, 
                 EditorConfig.SHOW_LINE_NUMBERS_DEFAULT)
 
         # Размер табуляции
-        self.tabWidthOption = IntegerOption (self.config, 
+        self.tabWidth = IntegerOption (self.config, 
                 GeneralGuiConfig.GENERAL_SECTION, 
                 EditorConfig.TAB_WIDTH_SECTION, 
                 EditorConfig.TAB_WIDTH_DEFAULT)
         
         # Размер шрифта
-        self.fontSizeOption = IntegerOption (self.config, 
+        self.fontSize = IntegerOption (self.config, 
                 EditorConfig.FONT_SECTION, 
                 EditorConfig.FONT_SIZE_SECTION, 
                 EditorConfig.FONT_SIZE_DEFAULT)
 
         # Начертание шрифта
-        self.fontFaceNameOption = StringOption (self.config, 
+        self.fontName = StringOption (self.config, 
                 EditorConfig.FONT_SECTION, 
                 EditorConfig.FONT_NAME_SECTION, 
                 EditorConfig.FONT_NAME_DEFAULT)
@@ -200,12 +209,12 @@ class HtmlRenderConfig (object):
     def __init__ (self, config):
         self.config = config
 
-        self.fontSizeOption = IntegerOption (self.config, 
+        self.fontSize = IntegerOption (self.config, 
                 HtmlRenderConfig.HTML_SECTION, 
                 HtmlRenderConfig.FONT_SIZE_PARAM, 
                 HtmlRenderConfig.FONT_SIZE_DEFAULT)
 
-        self.fontFaceNameOption = StringOption (self.config, 
+        self.fontName = StringOption (self.config, 
                 HtmlRenderConfig.HTML_SECTION, 
                 HtmlRenderConfig.FONT_FACE_NAME_PARAM, 
                 HtmlRenderConfig.FONT_NAME_DEFAULT)
@@ -220,7 +229,7 @@ class HtmlRenderConfig (object):
                 HtmlRenderConfig.FONT_ITALIC_PARAM, 
                 HtmlRenderConfig.FONT_ITALIC_DEFAULT)
 
-        self.userStyleOption = StringOption (self.config, 
+        self.userStyle = StringOption (self.config, 
                 HtmlRenderConfig.HTML_SECTION, 
                 HtmlRenderConfig.USER_STYLE_PARAM, 
                 HtmlRenderConfig.USER_STYLE_DEFAULT)
@@ -263,12 +272,12 @@ class TextPrintConfig (object):
         self.config = config
 
         # Настройки шрифта
-        self.fontFaceNameOption = StringOption (self.config, 
+        self.fontName = StringOption (self.config, 
                 TextPrintConfig.PRINT_SECTION, 
                 TextPrintConfig.FONT_NAME_SECTION, 
                 TextPrintConfig.FONT_NAME_DEFAULT)
 
-        self.fontSizeOption = IntegerOption (self.config, 
+        self.fontSize = IntegerOption (self.config, 
                 TextPrintConfig.PRINT_SECTION, 
                 TextPrintConfig.FONT_SIZE_SECTION,
                 TextPrintConfig.FONT_SIZE_DEFAULT)
@@ -336,32 +345,32 @@ class MainWindowConfig (object):
     def __init__ (self, config):
         self.config = config
 
-        self.titleFormatOption = StringOption (self.config, 
+        self.titleFormat = StringOption (self.config, 
                 MainWindowConfig.MAIN_WINDOW_SECTION, 
                 self.TITLE_FORMAT_SECTION,
                 self.TITLE_FORMAT_DEFAULT)
 
-        self.WidthOption = IntegerOption (self.config, 
+        self.width = IntegerOption (self.config, 
                 MainWindowConfig.MAIN_WINDOW_SECTION, 
                 self.WIDTH_SECTION,
                 self.WIDTH_DEFAULT)
 
-        self.HeightOption = IntegerOption (self.config, 
+        self.height = IntegerOption (self.config, 
                 MainWindowConfig.MAIN_WINDOW_SECTION, 
                 self.HEIGHT_SECTION,
                 self.HEIGHT_DEFAULT)
 
-        self.XPosOption = IntegerOption (self.config, 
+        self.xPos = IntegerOption (self.config, 
                 MainWindowConfig.MAIN_WINDOW_SECTION, 
                 self.XPOS_SECTION,
                 self.XPOS_DEFAULT)
 
-        self.YPosOption = IntegerOption (self.config, 
+        self.yPos = IntegerOption (self.config, 
                 MainWindowConfig.MAIN_WINDOW_SECTION, 
                 self.YPOS_SECTION,
                 self.YPOS_DEFAULT)
 
-        self.FullscreenOption = BooleanOption (self.config, 
+        self.fullscreen = BooleanOption (self.config, 
                 MainWindowConfig.MAIN_WINDOW_SECTION, 
                 self.FULLSCREEN_SECTION,
                 self.FULLSCREEN_DEFAULT)

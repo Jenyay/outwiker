@@ -36,12 +36,12 @@ class OutwikerTrayIcon (wx.TaskBarIcon):
         """
         Показать или скрыть иконку в трее в зависимости от настроек
         """
-        if self.config.alwaysShowTrayIconOption.value:
+        if self.config.alwaysShowTrayIcon.value:
             # Если установлена эта опция, то иконку показываем всегда
             self.ShowTrayIcon()
             return
 
-        if self.config.minimizeOption.value and self.mainWnd.IsIconized():
+        if self.config.minimizeToTray.value and self.mainWnd.IsIconized():
             self.ShowTrayIcon()
         else:
             self.removeTrayIcon()
@@ -72,14 +72,28 @@ class OutwikerTrayIcon (wx.TaskBarIcon):
 
 
     def __onClose (self, event):
-        generalConfig = GeneralGuiConfig (Application.config)
-        askBeforeExit = generalConfig.askBeforeExitOption.value
+        if self.config.minimizeOnClose.value:
+            self.mainWnd.Iconize(True)
+            event.Veto()
+            return
 
-        if (not askBeforeExit or 
-                outwiker.core.commands.MessageBox (_(u"Really exit?"), _(u"Exit"), wx.YES_NO  | wx.ICON_QUESTION ) == wx.YES):
+        if (self.__allowExit()):
             self.mainWnd.Destroy()
         else:
             event.Veto()
+
+
+    def __allowExit (self):
+        """
+        Возвращает True, если можно закрывать окно
+        """
+        generalConfig = GeneralGuiConfig (Application.config)
+        askBeforeExit = generalConfig.askBeforeExit.value
+
+        return (not askBeforeExit or 
+                outwiker.core.commands.MessageBox (_(u"Really exit?"), 
+                    _(u"Exit"), 
+                    wx.YES_NO  | wx.ICON_QUESTION ) == wx.YES )
     
 
     def __onPreferencesDialogClose (self, prefDialog):
@@ -87,7 +101,7 @@ class OutwikerTrayIcon (wx.TaskBarIcon):
 
 
     def __initMainWnd (self):
-        if self.config.startIconizedOption.value:
+        if self.config.startIconized.value:
             self.__iconizeWindow()
         else:
             self.mainWnd.Show()
@@ -107,7 +121,7 @@ class OutwikerTrayIcon (wx.TaskBarIcon):
         """
         Свернуть окно
         """
-        if self.config.minimizeOption.value:
+        if self.config.minimizeToTray.value:
             # В трей добавим иконку, а окно спрячем
             self.ShowTrayIcon()
             self.mainWnd.Hide()
@@ -135,14 +149,15 @@ class OutwikerTrayIcon (wx.TaskBarIcon):
     def restoreWindow (self):
         self.mainWnd.Iconize (False)
         self.mainWnd.Show ()
-        if not self.config.alwaysShowTrayIconOption.value:
+        if not self.config.alwaysShowTrayIcon.value:
             self.removeTrayIcon()
         self.mainWnd.Raise()
         self.mainWnd.SetFocus()
 
     
     def __onExit (self, event):
-        self.mainWnd.Close()
+        if (self.__allowExit()):
+            self.mainWnd.Destroy()
 
 
     def CreatePopupMenu (self):

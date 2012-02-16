@@ -117,9 +117,9 @@ class HtmlGenerator (object):
         content.append (str (self.config.thumbSizeOptions.value))
 
         # Настройки отображения HTML-страницы
-        content.append (str (self.htmlrenderconfig.fontSizeOption.value) )
-        content.append (self.htmlrenderconfig.fontFaceNameOption.value.encode(self._unicodeEncoding) )
-        content.append (str (self.htmlrenderconfig.userStyleOption.value) )
+        content.append (str (self.htmlrenderconfig.fontSize.value) )
+        content.append (self.htmlrenderconfig.fontName.value.encode(self._unicodeEncoding) )
+        content.append (str (self.htmlrenderconfig.userStyle.value) )
 
         # Список подстраниц
         for child in self.page.children:

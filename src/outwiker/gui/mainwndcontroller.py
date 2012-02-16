@@ -189,7 +189,7 @@ class MainWndController (object):
         """
         Обновить заголовок главного окна в зависимости от шаблона и текущей страницы
         """
-        template = self.mainWindow.mainWindowConfig.titleFormatOption.value
+        template = self.mainWindow.mainWindowConfig.titleFormat.value
 
         if Application.wikiroot == None:
             self.mainWindow.SetTitle (u"OutWiker")
@@ -208,11 +208,11 @@ class MainWndController (object):
         """
         self.mainWindow.Freeze()
 
-        width = self.mainWindow.mainWindowConfig.WidthOption.value
-        height = self.mainWindow.mainWindowConfig.HeightOption.value
+        width = self.mainWindow.mainWindowConfig.width.value
+        height = self.mainWindow.mainWindowConfig.height.value
 
-        xpos = self.mainWindow.mainWindowConfig.XPosOption.value
-        ypos = self.mainWindow.mainWindowConfig.YPosOption.value
+        xpos = self.mainWindow.mainWindowConfig.xPos.value
+        ypos = self.mainWindow.mainWindowConfig.yPos.value
         
         self.mainWindow.SetDimensions (xpos, ypos, width, height, sizeFlags=wx.SIZE_FORCE)
 

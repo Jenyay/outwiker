@@ -63,7 +63,7 @@ class MainWindow(wx.Frame):
         self._dropTarget = DropFilesTarget (self.attachPanel.panel)
         self.controller.enableGui()
         self.controller.updateRecentMenu()
-        # self.setFullscreen(self.mainWindowConfig.FullscreenOption.value)
+        # self.setFullscreen(self.mainWindowConfig.fullscreen.value)
         self.__panesController.updateViewMenu()
         self.Show()
         self.taskBarIcon = OutwikerTrayIcon(self)
@@ -173,13 +173,13 @@ class MainWindow(wx.Frame):
                         height += ypos
                         ypos = 0
 
-                    self.mainWindowConfig.WidthOption.value = width
-                    self.mainWindowConfig.HeightOption.value = height
+                    self.mainWindowConfig.width.value = width
+                    self.mainWindowConfig.height.value = height
 
-                    self.mainWindowConfig.XPosOption.value = xpos
-                    self.mainWindowConfig.YPosOption.value = ypos
+                    self.mainWindowConfig.xPos.value = xpos
+                    self.mainWindowConfig.yPos.value = ypos
 
-                self.mainWindowConfig.FullscreenOption.value = self.IsFullScreen()
+                self.mainWindowConfig.fullscreen.value = self.IsFullScreen()
 
                 self.__panesController.savePanesParams()
         except Exception, e:

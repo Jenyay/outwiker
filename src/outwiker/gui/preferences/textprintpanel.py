@@ -81,8 +81,8 @@ class TextPrintPanel(wx.Panel):
 
     def LoadState(self):
         # Обычный шрифт
-        fontOption = FontOption (self.config.fontFaceNameOption, 
-                self.config.fontSizeOption, 
+        fontOption = FontOption (self.config.fontName, 
+                self.config.fontSize, 
                 self.config.fontIsBold, 
                 self.config.fontIsItalic)
 

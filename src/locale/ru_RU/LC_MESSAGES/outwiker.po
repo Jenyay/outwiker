@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-09 21:51+0400\n"
+"POT-Creation-Date: 2012-02-16 21:05+0400\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -141,9 +141,9 @@ msgstr "Вы не выбрали файл(ы) для удаления"
 #: outwiker/gui/htmlrenderie.py:159
 #: outwiker/gui/htmlrenderwebkit.py:198
 #: outwiker/gui/htmlrenderwx.py:106
-#: outwiker/gui/mainwindow.py:202
-#: outwiker/gui/mainwindow.py:323
-#: outwiker/gui/mainwndcontroller.py:116
+#: outwiker/gui/mainwindow.py:187
+#: outwiker/gui/mainwindow.py:301
+#: outwiker/gui/mainwndcontroller.py:128
 #: outwiker/gui/pagedialog.py:28
 #: outwiker/gui/pagedialog.py:45
 #: outwiker/gui/pagedialog.py:91
@@ -515,7 +515,7 @@ msgstr "Прикрепить файлы…"
 msgid "Global search…"
 msgstr "Глобальный поиск…"
 
-#: outwiker/gui/mainwindow.py:201
+#: outwiker/gui/mainwindow.py:186
 #, python-format
 msgid ""
 "Can't save config\n"
@@ -524,21 +524,12 @@ msgstr ""
 "Невозможно сохранить настройки\n"
 "%s"
 
-#: outwiker/gui/mainwindow.py:217
-msgid "Really exit?"
-msgstr "Действительно выйти?"
-
-#: outwiker/gui/mainwindow.py:217
-#: outwiker/gui/trayicon.py:130
-msgid "Exit"
-msgstr "Выход"
-
-#: outwiker/gui/mainwindow.py:323
+#: outwiker/gui/mainwindow.py:301
 #: outwiker/gui/pagedialog.py:77
 msgid "Can't create page"
 msgstr "Невозможно создать страницу"
 
-#: outwiker/gui/mainwndcontroller.py:115
+#: outwiker/gui/mainwndcontroller.py:127
 #, python-format
 msgid ""
 "Can't add wiki to recent list.\n"
@@ -624,7 +615,16 @@ msgstr "Введите новое имя метки"
 msgid "Tags (comma separated)"
 msgstr "Метки (разделенные запятыми)"
 
-#: outwiker/gui/trayicon.py:129
+#: outwiker/gui/trayicon.py:94
+msgid "Really exit?"
+msgstr "Действительно выйти?"
+
+#: outwiker/gui/trayicon.py:95
+#: outwiker/gui/trayicon.py:166
+msgid "Exit"
+msgstr "Выход"
+
+#: outwiker/gui/trayicon.py:165
 msgid "Restore"
 msgstr "Восстановить"
 
@@ -739,15 +739,19 @@ msgstr "Запускаться свернутым в трей"
 msgid "Always show tray icon"
 msgstr "Всегда показывать иконку в трее"
 
-#: outwiker/gui/preferences/generalpanel.py:101
+#: outwiker/gui/preferences/generalpanel.py:95
+msgid "Minimize on close window"
+msgstr "Сворачивать при закрытии окна"
+
+#: outwiker/gui/preferences/generalpanel.py:102
 msgid "Recent files history length (restart required)"
 msgstr "Длина истории открытых файлов (требуется перезапуск)"
 
-#: outwiker/gui/preferences/generalpanel.py:109
+#: outwiker/gui/preferences/generalpanel.py:110
 msgid "Automatically open the recent file"
 msgstr "При запуске открывать последний открытый файл"
 
-#: outwiker/gui/preferences/generalpanel.py:123
+#: outwiker/gui/preferences/generalpanel.py:124
 msgid ""
 "Macros for title:\n"
 "{file} - open wiki file name\n"
@@ -757,15 +761,15 @@ msgstr ""
 "{file} - имя файла открытой вики\n"
 "{page} - заголовок открытой страницы"
 
-#: outwiker/gui/preferences/generalpanel.py:125
+#: outwiker/gui/preferences/generalpanel.py:126
 msgid "Main window title format"
 msgstr "Формат заголовка главного окна"
 
-#: outwiker/gui/preferences/generalpanel.py:137
+#: outwiker/gui/preferences/generalpanel.py:138
 msgid "Language (restart required)"
 msgstr "Язык (требуется перезапуск)"
 
-#: outwiker/gui/preferences/generalpanel.py:254
+#: outwiker/gui/preferences/generalpanel.py:262
 msgid "Auto"
 msgstr "Авто"
 

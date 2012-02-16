@@ -92,6 +92,7 @@ class GeneralPanel (wx.ScrolledWindow):
         self.minimizeCheckBox = wx.CheckBox(self, -1, _("Minimize to tray"))
         self.startIconizedCheckBox = wx.CheckBox(self, -1, _("Start iconized"))
         self.alwaysInTrayCheckBox = wx.CheckBox(self, -1, _("Always show tray icon"))
+        self.minimizeOnCloseCheckBox = wx.CheckBox(self, -1, _("Minimize on close window"))
 
 
     def __createHistoryGui (self, generalConfig):
@@ -156,6 +157,7 @@ class GeneralPanel (wx.ScrolledWindow):
         main_sizer.Add(self.minimizeCheckBox, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
         main_sizer.Add(self.startIconizedCheckBox, 0, wx.ALL, 2)
         main_sizer.Add(self.alwaysInTrayCheckBox, 0, wx.ALL, 2)
+        main_sizer.Add(self.minimizeOnCloseCheckBox, 0, wx.ALL, 2)
         main_sizer.Add(self.askBeforeExitCheckBox, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
         main_sizer.Add (self.autosaveSizer, 1, wx.EXPAND, 0)
 
@@ -187,7 +189,7 @@ class GeneralPanel (wx.ScrolledWindow):
         """
         # Длина истории последних открытых файлов
         self.historyLength = configelements.IntegerElement (
-                self.generalConfig.historyLengthOption, 
+                self.generalConfig.historyLength, 
                 self.historySpin, 
                 self.MIN_HISTORY_LENGTH, 
                 self.MAX_HISTORY_LENGTH
@@ -195,7 +197,7 @@ class GeneralPanel (wx.ScrolledWindow):
 
         # Открывать последнюю вики при запуске?
         self.autoopen = configelements.BooleanElement (
-                self.generalConfig.autoopenOption, 
+                self.generalConfig.autoopen, 
                 self.autoopenCheckBox
                 )
 
@@ -206,37 +208,43 @@ class GeneralPanel (wx.ScrolledWindow):
         """
         # Сворачивать в трей?
         self.minimizeToTray = configelements.BooleanElement (
-                self.trayConfig.minimizeOption, 
+                self.trayConfig.minimizeToTray, 
                 self.minimizeCheckBox
                 )
 
         # Всегда показывать иконку в трее
         self.alwaysInTray = configelements.BooleanElement (
-                self.trayConfig.alwaysShowTrayIconOption, 
+                self.trayConfig.alwaysShowTrayIcon, 
                 self.alwaysInTrayCheckBox
+                )
+
+        # Сворачивать при закрытии
+        self.minimizeOnClose = configelements.BooleanElement (
+                self.trayConfig.minimizeOnClose,
+                self.minimizeOnCloseCheckBox
                 )
 
         # Запускаться свернутым?
         self.startIconized = configelements.BooleanElement (
-                self.trayConfig.startIconizedOption, 
+                self.trayConfig.startIconized, 
                 self.startIconizedCheckBox
                 )
 
         # Задавать вопрос перед выходом из программы?
         self.askBeforeExit = configelements.BooleanElement (
-                self.generalConfig.askBeforeExitOption, 
+                self.generalConfig.askBeforeExit, 
                 self.askBeforeExitCheckBox
                 )
 
         # Формат заголовка страницы
         self.titleFormat = configelements.StringElement (
-                self.mainWindowConfig.titleFormatOption, 
+                self.mainWindowConfig.titleFormat, 
                 self.titleFormatText
                 )
 
         # Автосохранение
         self.autosaveInterval = configelements.IntegerElement (
-                self.generalConfig.autosaveIntervalOption, 
+                self.generalConfig.autosaveInterval, 
                 self.autosaveSpin, 
                 self.MIN_AUTOSAVE_INTERVAL, 
                 self.MAX_AUTOSAVE_INTERVAL
@@ -271,6 +279,7 @@ class GeneralPanel (wx.ScrolledWindow):
         """
         self.startIconized.save()
         self.minimizeToTray.save()
+        self.minimizeOnClose.save()
         self.askBeforeExit.save()
         self.historyLength.save()
         self.autoopen.save()

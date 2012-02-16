@@ -43,12 +43,11 @@ class MainWndTest(BaseMainWndTest):
         self.assertNotEqual (None, self.wnd.taskBarIcon)
 
         self.assertNotEqual (None, self.wnd.mainWindowConfig)
-        self.assertNotEqual (None, self.wnd.generalConfig)
 
 
     def testTitle (self):
         conf = MainWindowConfig (Application.config)
-        conf.titleFormatOption.value = u"OutWiker - {page} - {file}"
+        conf.titleFormat.value = u"OutWiker - {page} - {file}"
 
         Application.wikiroot = self.rootwiki
         self.assertEqual (self.wnd.GetTitle(), u"OutWiker -  - testwiki")

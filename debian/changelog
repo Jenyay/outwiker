@@ -1,6 +1,7 @@
 outwiker (1.5.0-624) oneiric; urgency=low
 
   * Рефакторинг
+  * Добавлена настройка для сворачивания окна при закрытии окна
 
  -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Wed, 15 Feb 2012 22:51:39 +0400
 
