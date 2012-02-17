@@ -102,7 +102,7 @@ class OutwikerTrayIcon (wx.TaskBarIcon):
 
     def __initMainWnd (self):
         if self.config.startIconized.value:
-            self.__iconizeWindow()
+            self.mainWnd.Iconize (True)
         else:
             self.mainWnd.Show()
     

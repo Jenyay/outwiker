@@ -290,7 +290,7 @@
 <task completiondate="2010-12-07 22:00:37.403383" expandedContexts="('taskviewer',)" id="46790096:1288288433.56" percentageComplete="100" plannedstartdate="2010-10-28 21:53:00" priority="6" status="1" subject="Вынести использование taskBarIcon (MainWindow) в отдельный класс" />
 <task completiondate="2010-10-24 17:32:08.703000" expandedContexts="('prerequisiteviewerintaskeditor8', 'taskviewer')" id="46840752:1287912320.02" percentageComplete="100" plannedstartdate="2010-10-24 13:25:00" priority="6" status="1" subject="При сворачивании / разворачивании окна под Windows, ширина дерева уменьшается" />
 <task completiondate="2011-06-02 09:21:32.531000" expandedContexts="('prerequisiteviewerintaskeditor8', 'taskviewer')" id="46931344:1303837507.08" percentageComplete="100" plannedstartdate="2011-04-26 21:05:00" priority="9" status="1" subject="При переименовании страницы не обновляется заголовок окна" />
-<task expandedContexts="('taskviewer',)" id="48243440:1303058864.97" plannedstartdate="2011-04-17 20:47:00" priority="6" status="1" subject="Добавить возможность выбирать корень вики" />
+<task expandedContexts="('taskviewer',)" id="48243440:1303058864.97" plannedstartdate="2011-04-17 20:47:00" priority="7" status="1" subject="Показывать информацию при выборе корня вики" />
 <task completiondate="2011-04-18 09:24:43.784279" expandedContexts="('taskviewer',)" id="48651216:1303058795.27" percentageComplete="100" plannedstartdate="2011-04-17 20:46:00" priority="9" status="1" subject="Зависание при попытке переместить страницу в свою же вложенную страницу" />
 <task completiondate="2011-08-02 21:39:43.803997" expandedContexts="('taskviewer',)" id="488d7d20-bd2e-11e0-8af6-00112fd2b1f8" percentageComplete="100" plannedstartdate="2011-08-02 21:38:00" priority="8" status="1" subject="Сделать, чтобы на HTML- и викистраницах работали якоря (anchors)" />
 <task completiondate="2011-07-18 20:30:45.772784" id="48975344:1310970799.7" percentageComplete="100" plannedstartdate="2011-07-18 10:33:00" priority="9" status="1" subject="При перемещении заметки вверх/вниз выбранной становится не та заметка" />
@@ -525,7 +525,7 @@ Traceback (most recent call last):
 RuntimeError: Set changed size during iteration
 </description>
 </task>
-<task actualstartdate="2012-02-15 21:45:01.849718" id="c94d839c-57fc-11e1-925a-00112fd2b1f8" plannedstartdate="2012-02-15 21:45:01.849609" priority="8" status="1" subject="Не работает настройка &quot;Запускаться свернутым в трей&quot; под Linux" />
+<task actualstartdate="2012-02-15 21:45:01.849718" completiondate="2012-02-17 22:27:12.337980" id="c94d839c-57fc-11e1-925a-00112fd2b1f8" percentageComplete="100" plannedstartdate="2012-02-15 21:45:01.849609" priority="8" status="1" subject="Не работает настройка &quot;Запускаться свернутым в трей&quot; под Linux" />
 <task id="c986d7a8-062d-11e1-85e6-00112fd2b1f8" plannedstartdate="2011-11-03 19:09:00" priority="7" status="1" subject="Сворачивание при нажатии на Esc" />
 <task completiondate="2011-08-26 11:12:23.441684" id="c9a994ee-ce29-11e0-9ec4-00112fd2b1f8" percentageComplete="100" plannedstartdate="2011-08-24 12:19:00" priority="8" status="1" subject="Горячая клавиша и кнопка для [[&lt;&lt;]]" />
 <task completiondate="2011-08-11 21:49:53.435432" id="cf443761-c435-11e0-876b-00112fd2b1f8" percentageComplete="100" plannedstartdate="2011-08-11 20:20:00" priority="8" status="1" subject="Невозможно перенести страницу xxx/test в страницу xxx/test123" />

@@ -1,3 +1,9 @@
+outwiker (1.5.0-625) oneiric; urgency=low
+
+  * Исправлена ошибка при запуске программы свернутой
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Fri, 17 Feb 2012 22:29:12 +0400
+
 outwiker (1.5.0-624) oneiric; urgency=low
 
   * Рефакторинг
