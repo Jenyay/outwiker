@@ -46,7 +46,7 @@ class OutWiker(wx.App):
         starter = Starter()
         starter.process()
         
-        return 1
+        return True
 
 
     def getLogFileName (self, configPath):
