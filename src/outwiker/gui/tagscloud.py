@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
+import os
+
 import wx
 
 from .taglabel import TagLabel
@@ -165,7 +167,10 @@ class TagsCloud (wx.ScrolledWindow):
         linesCount = 1
 
         maxwidth = self.GetClientSizeTuple()[0] - self.__margin * 2
-        self.SetScrollbars (0, 0, 0, 0)
+
+        # Хак из-за разного поведения полос прокрутки в винде и линуксе
+        if os.name != "nt":
+            self.SetScrollbars (0, 0, 0, 0)
 
         for tagname in self.__tags:
             label = self.__labels[tagname]
