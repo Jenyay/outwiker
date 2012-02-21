@@ -1,3 +1,9 @@
+outwiker (1.5.0-626) oneiric; urgency=low
+
+  * Мелкие исправления в интерфейсе
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Tue, 21 Feb 2012 22:11:28 +0400
+
 outwiker (1.5.0-625) oneiric; urgency=low
 
   * Исправлена ошибка при запуске программы свернутой

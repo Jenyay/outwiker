@@ -157,7 +157,6 @@ class TagsCloud (wx.ScrolledWindow):
 
     def __moveLabels (self):
         # Метки, расположенные на текущей строке
-        self.SetScrollbars (0, 0, 0, 0)
         currentLine = []
 
         currentx = self.__margin
@@ -165,7 +164,8 @@ class TagsCloud (wx.ScrolledWindow):
 
         linesCount = 1
 
-        maxwidth = self.GetClientSizeTuple()[0] - self.__margin
+        maxwidth = self.GetClientSizeTuple()[0] - self.__margin * 2
+        self.SetScrollbars (0, 0, 0, 0)
 
         for tagname in self.__tags:
             label = self.__labels[tagname]
