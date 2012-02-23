@@ -13,19 +13,21 @@ import outwiker.core.commands
 import outwiker.core.system
 from outwiker.core.application import Application
 
-from .wikitree import WikiTree
 import outwiker.pages.search.searchpage
-from .guiconfig import MainWindowConfig, TreeConfig, AttachConfig, GeneralGuiConfig
+from .guiconfig import MainWindowConfig
 
 from .mainid import MainId
-from .currentpagepanel import CurrentPagePanel
 from .mainmenu import MainMenu
 from .maintoolbar import MainToolBar
 from .pagedialog import createSiblingPage, createChildPage, editPage
 from .trayicon import OutwikerTrayIcon
-from .attachpanel import AttachPanel
 from .preferences.prefdialog import PrefDialog
 from .mainwndcontroller import MainWndController
+from .mainpanescontroller import MainPanesController
+from outwiker.gui.mainpanes.tagscloudmainpane import TagsCloudMainPane
+from outwiker.gui.mainpanes.attachmainpane import AttachMainPane
+from outwiker.gui.mainpanes.treemainpane import TreeMainPane
+from outwiker.gui.mainpanes.pagemainpane import PageMainPane
 
 
 class MainWindow(wx.Frame):
@@ -34,9 +36,6 @@ class MainWindow(wx.Frame):
         wx.Frame.__init__(self, *args, **kwds)
 
         self.mainWindowConfig = MainWindowConfig (Application.config)
-        self.treeConfig = TreeConfig (Application.config)
-        self.attachConfig = AttachConfig (Application.config)
-        self.generalConfig = GeneralGuiConfig (Application.config)
 
         # Флаг, обозначающий, что в цикле обработки стандартных сообщений 
         # (например, копирования в буфер обмена) сообщение вернулось обратно
@@ -54,28 +53,46 @@ class MainWindow(wx.Frame):
         self.controller = MainWndController (self)
         self.controller.loadMainWindowParams()
 
-        self.__createAuiPanes (self)
+
+        self.auiManager = wx.aui.AuiManager(self)
+        self.__createAuiPanes ()
+        self.__panesController = MainPanesController (self, self.auiManager)
 
         self.__bindGuiEvents()
 
-        self._dropTarget = DropFilesTarget (self.attachPanel)
+        self._dropTarget = DropFilesTarget (self.attachPanel.panel)
         self.controller.enableGui()
-        self.__createAcceleratorTable()
         self.controller.updateRecentMenu()
-        self.setFullscreen(self.mainWindowConfig.FullscreenOption.value)
+        # self.setFullscreen(self.mainWindowConfig.fullscreen.value)
+        self.__panesController.updateViewMenu()
         self.Show()
         self.taskBarIcon = OutwikerTrayIcon(self)
 
 
-    def __createAcceleratorTable (self):
-        """
-        Создать горячие клавиши, которые не попали в меню
-        """
-        aTable = wx.AcceleratorTable([
-            (wx.ACCEL_CTRL,  wx.WXK_INSERT, wx.ID_COPY),
-            (wx.ACCEL_SHIFT,  wx.WXK_INSERT, wx.ID_PASTE),
-            (wx.ACCEL_SHIFT,  wx.WXK_DELETE, wx.ID_CUT)])
-        self.SetAcceleratorTable(aTable)
+    def __createAuiPanes(self):
+        self.treePanel = TreeMainPane (
+                self, 
+                self.auiManager, 
+                Application, 
+                self.mainMenu.viewNotes)
+
+        self.pagePanel = PageMainPane (
+                self, 
+                self.auiManager, 
+                Application, 
+                None)
+
+        self.attachPanel = AttachMainPane (
+                self, 
+                self.auiManager, 
+                Application, 
+                self.mainMenu.viewAttaches)
+
+        self.tagsCloudPanel = TagsCloudMainPane (
+                self, 
+                self.auiManager, 
+                Application, 
+                self.mainMenu.viewTagsCloud)
 
 
     def __createStatusBar (self):
@@ -98,162 +115,44 @@ class MainWindow(wx.Frame):
         """
         Подписаться на события меню, кнопок и т.п.
         """
-        self.Bind(wx.EVT_MENU, self.__onNew, id=MainId.ID_NEW)
-        self.Bind(wx.EVT_MENU, self.__onOpen, id=MainId.ID_OPEN)
-        self.Bind(wx.EVT_MENU, self.__onOpenReadOnly, id=MainId.ID_OPEN_READONLY)
-        self.Bind(wx.EVT_MENU, self.__onSave, id=MainId.ID_SAVE)
-        self.Bind(wx.EVT_MENU, self.__onPrint, id=wx.ID_PRINT)
-        self.Bind(wx.EVT_MENU, self.__onExit, id=MainId.ID_EXIT)
-        self.Bind(wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_UNDO)
-        self.Bind(wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_REDO)
-        self.Bind(wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_CUT)
-        self.Bind(wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_COPY)
-        self.Bind(wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_PASTE)
-        self.Bind(wx.EVT_MENU, self.__onPreferences, id=MainId.ID_PREFERENCES)
-        self.Bind(wx.EVT_MENU, self.__onAddSiblingPage, id=MainId.ID_ADDPAGE)
-        self.Bind(wx.EVT_MENU, self.__onAddChildPage, id=MainId.ID_ADDCHILD)
-        self.Bind(wx.EVT_MENU, self.__onMovePageUp, id=MainId.ID_MOVE_PAGE_UP)
-        self.Bind(wx.EVT_MENU, self.__onMovePageDown, id=MainId.ID_MOVE_PAGE_DOWN)
-        self.Bind(wx.EVT_MENU, self.__onSortChildrenAlphabetical, id=MainId.ID_SORT_CHILDREN_ALPHABETICAL)
-        self.Bind(wx.EVT_MENU, self.__onSortSiblingAlphabetical, id=MainId.ID_SORT_SIBLINGS_ALPHABETICAL)
-        self.Bind(wx.EVT_MENU, self.__onRename, id=MainId.ID_RENAME)
-        self.Bind(wx.EVT_MENU, self.__onRemovePage, id=MainId.ID_REMOVE_PAGE)
-        self.Bind(wx.EVT_MENU, self.__onEditPage, id=MainId.ID_EDIT)
-        self.Bind(wx.EVT_MENU, self.__onGlobalSearch, id=MainId.ID_GLOBAL_SEARCH)
-        self.Bind(wx.EVT_MENU, self.__onAttach, id=MainId.ID_ATTACH)
-        self.Bind(wx.EVT_MENU, self.__onCopyTitle, id=MainId.ID_COPY_TITLE)
-        self.Bind(wx.EVT_MENU, self.__onCopyPath, id=MainId.ID_COPYPATH)
-        self.Bind(wx.EVT_MENU, self.__onCopyAttaches, id=MainId.ID_COPY_ATTACH_PATH)
-        self.Bind(wx.EVT_MENU, self.__onCopyLink, id=MainId.ID_COPY_LINK)
-        self.Bind(wx.EVT_MENU, self.__onReload, id=MainId.ID_RELOAD)
-        self.Bind(wx.EVT_MENU, self.__onViewTree, self.mainMenu.viewNotes)
-        self.Bind(wx.EVT_MENU, self.__onViewAttaches, self.mainMenu.viewAttaches)
-        self.Bind(wx.EVT_MENU, self.__onFullscreen, self.mainMenu.viewFullscreen)
-        self.Bind(wx.EVT_MENU, self.__onHelp, id=MainId.ID_HELP)
-        self.Bind(wx.EVT_MENU, self.__onAbout, id=MainId.ID_ABOUT)
-        self.Bind(wx.EVT_TOOL, self.__onNew, id=MainId.ID_NEW)
-        self.Bind(wx.EVT_TOOL, self.__onOpen, id=MainId.ID_OPEN)
-        self.Bind(wx.EVT_TOOL, self.__onReload, id=MainId.ID_RELOAD)
-        self.Bind(wx.EVT_TOOL, self.__onAttach, id=MainId.ID_ATTACH)
-        self.Bind(wx.EVT_TOOL, self.__onGlobalSearch, id=MainId.ID_GLOBAL_SEARCH)
-        self.Bind (wx.EVT_CLOSE, self.__onClose)
-
-    
-    def __createAuiPanes(self, parent):
-        self.auiManager = wx.aui.AuiManager(parent)
-
-        self.tree = WikiTree(parent, -1)
-        self.pagePanel = CurrentPagePanel(parent, -1)
-        self.attachPanel = AttachPanel (parent, -1)
-
-        self.__initPagePane (self.auiManager)
-        self.__initAttachesPane (self.auiManager)
-        self.__initTreePane (self.auiManager)
-        self.__loadPanesSize ()
-
-        self.auiManager.SetDockSizeConstraint (0.8, 0.8)
-        self.auiManager.Update()
-
-        self.auiManager.Bind (wx.aui.EVT_AUI_PANE_CLOSE, self.__onPaneClose)
-
-    
-    def __onPaneClose (self, event):
-        if event.GetPane().name == self.auiManager.GetPane (self.tree).name:
-            self.mainMenu.viewNotes.Check (False)
-        elif event.GetPane().name == self.auiManager.GetPane (self.attachPanel).name:
-            self.mainMenu.viewAttaches.Check (False)
-
-
-    def __initTreePane (self, auiManager):
-        """
-        Загрузить настройки окошка с деревом
-        """
-        pane = self.__loadPaneInfo (self.treeConfig.treePaneOption)
-
-        if pane == None:
-            pane = wx.aui.AuiPaneInfo().Name(("treePane")).Caption(_(u"Notes")).Gripper(False).CaptionVisible(True).Layer(2).Position(0).CloseButton(True).MaximizeButton(False).Left().Dock()
-
-        # Из-за глюка http://trac.wxwidgets.org/ticket/12422 придется пока отказаться от плавающих панелек
-        pane.Dock()
-        pane.CloseButton()
-        pane.Caption(_(u"Notes"))
-
-        pane.BestSize ((self.treeConfig.treeWidthOption.value, 
-            self.treeConfig.treeHeightOption.value))
-        
-        auiManager.AddPane(self.tree, pane)
-    
-
-    def __initAttachesPane (self, auiManager):
-        """
-        Загрузить настройки окошка с прикрепленными файлами
-        """
-        pane = self.__loadPaneInfo (self.attachConfig.attachesPaneOption)
-
-        if pane == None:
-            pane = wx.aui.AuiPaneInfo().Name("attachesPane").Caption(_(u"Attaches")).Gripper(False).CaptionVisible(True).Layer(1).Position(0).CloseButton(True).MaximizeButton(False).Bottom().Dock()
-
-        # Из-за глюка http://trac.wxwidgets.org/ticket/12422 придется пока отказаться от плавающих панелек
-        pane.Dock()
-        pane.CloseButton()
-        pane.Caption(_(u"Attaches"))
-
-        auiManager.AddPane(self.attachPanel, pane, _(u"Attaches") )
-    
-
-    def __initPagePane (self, auiManager):
-        """
-        Загрузить настройки окошка с видом текущей страницы
-        """
-        pane = wx.aui.AuiPaneInfo().Name("pagePane").Gripper(False).CaptionVisible(False).Layer(0).Position(0).CloseButton(False).MaximizeButton(False).Center().Dock()
-
-        auiManager.AddPane(self.pagePanel, pane)
-    
-
-    def __loadPaneInfo (self, param):
-        """
-        Загрузить из конфига и вернуть информацию о dockable-панели (AuiPaneInfo)
-        """
-        string_info = param.value
-
-        if len (string_info) == 0:
-            return
-
-        pane = wx.aui.AuiPaneInfo()
-        try:
-            self.auiManager.LoadPaneInfo (string_info, pane)
-        except Exception, e:
-            return
-
-        return pane
-
-
-    def __savePaneInfo (self, param, paneInfo):
-        """
-        Сохранить в конфиг информацию о dockable-панели (AuiPaneInfo)
-        """
-        string_info = self.auiManager.SavePaneInfo (paneInfo)
-        param.value = string_info
-
-
-    def __savePanesParams (self):
-        """
-        Сохранить параметры панелей
-        """
-        self.__savePaneInfo (self.treeConfig.treePaneOption, self.auiManager.GetPane (self.tree))
-        self.__savePaneInfo (self.attachConfig.attachesPaneOption, self.auiManager.GetPane (self.attachPanel))
-        self.__savePanesSize()
-    
-
-    def __savePanesSize (self):
-        """
-        Сохранить размеры панелей
-        """
-        self.treeConfig.treeWidthOption.value = self.tree.GetSizeTuple()[0]
-        self.treeConfig.treeHeightOption.value = self.tree.GetSizeTuple()[1]
-            
-        self.attachConfig.attachesWidthOption.value = self.attachPanel.GetSizeTuple()[0]
-        self.attachConfig.attachesHeightOption.value = self.attachPanel.GetSizeTuple()[1]
+        self.Bind (wx.EVT_MENU, self.__onNew, id=MainId.ID_NEW)
+        self.Bind (wx.EVT_MENU, self.__onOpen, id=MainId.ID_OPEN)
+        self.Bind (wx.EVT_MENU, self.__onOpenReadOnly, id=MainId.ID_OPEN_READONLY)
+        self.Bind (wx.EVT_MENU, self.__onSave, id=MainId.ID_SAVE)
+        self.Bind (wx.EVT_MENU, self.__onPrint, id=wx.ID_PRINT)
+        self.Bind (wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_UNDO)
+        self.Bind (wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_REDO)
+        self.Bind (wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_CUT)
+        self.Bind (wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_COPY)
+        self.Bind (wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_PASTE)
+        self.Bind (wx.EVT_MENU, self.__onPreferences, id=MainId.ID_PREFERENCES)
+        self.Bind (wx.EVT_MENU, self.__onAddSiblingPage, id=MainId.ID_ADDPAGE)
+        self.Bind (wx.EVT_MENU, self.__onAddChildPage, id=MainId.ID_ADDCHILD)
+        self.Bind (wx.EVT_MENU, self.__onMovePageUp, id=MainId.ID_MOVE_PAGE_UP)
+        self.Bind (wx.EVT_MENU, self.__onMovePageDown, id=MainId.ID_MOVE_PAGE_DOWN)
+        self.Bind (wx.EVT_MENU, self.__onSortChildrenAlphabetical, id=MainId.ID_SORT_CHILDREN_ALPHABETICAL)
+        self.Bind (wx.EVT_MENU, self.__onSortSiblingAlphabetical, id=MainId.ID_SORT_SIBLINGS_ALPHABETICAL)
+        self.Bind (wx.EVT_MENU, self.__onRename, id=MainId.ID_RENAME)
+        self.Bind (wx.EVT_MENU, self.__onRemovePage, id=MainId.ID_REMOVE_PAGE)
+        self.Bind (wx.EVT_MENU, self.__onEditPage, id=MainId.ID_EDIT)
+        self.Bind (wx.EVT_MENU, self.__onGlobalSearch, id=MainId.ID_GLOBAL_SEARCH)
+        self.Bind (wx.EVT_MENU, self.__onAttach, id=MainId.ID_ATTACH)
+        self.Bind (wx.EVT_MENU, self.__onCopyTitle, id=MainId.ID_COPY_TITLE)
+        self.Bind (wx.EVT_MENU, self.__onCopyPath, id=MainId.ID_COPYPATH)
+        self.Bind (wx.EVT_MENU, self.__onCopyAttaches, id=MainId.ID_COPY_ATTACH_PATH)
+        self.Bind (wx.EVT_MENU, self.__onCopyLink, id=MainId.ID_COPY_LINK)
+        self.Bind (wx.EVT_MENU, self.__onReload, id=MainId.ID_RELOAD)
+        self.Bind (wx.EVT_MENU, self.__onFullscreen, self.mainMenu.viewFullscreen)
+        self.Bind (wx.EVT_MENU, self.__onHelp, id=MainId.ID_HELP)
+        self.Bind (wx.EVT_MENU, self.__onAbout, id=MainId.ID_ABOUT)
+        self.Bind (wx.EVT_TOOL, self.__onNew, id=MainId.ID_NEW)
+        self.Bind (wx.EVT_TOOL, self.__onOpen, id=MainId.ID_OPEN)
+        self.Bind (wx.EVT_TOOL, self.__onReload, id=MainId.ID_RELOAD)
+        self.Bind (wx.EVT_TOOL, self.__onAttach, id=MainId.ID_ATTACH)
+        self.Bind (wx.EVT_TOOL, self.__onGlobalSearch, id=MainId.ID_GLOBAL_SEARCH)
+        self.Bind (wx.EVT_TOOL, self.__onAddTagsToBranch, id=MainId.ID_ADD_TAGS_TO_BRANCH)
+        self.Bind (wx.EVT_TOOL, self.__onRemoveTagsFromBranch, id=MainId.ID_REMOVE_TAGS_FROM_BRANCH)
+        self.Bind (wx.EVT_TOOL, self.__onRenameTag, id=MainId.ID_RENAME_TAG)
 
     
     def __saveParams (self):
@@ -274,15 +173,15 @@ class MainWindow(wx.Frame):
                         height += ypos
                         ypos = 0
 
-                    self.mainWindowConfig.WidthOption.value = width
-                    self.mainWindowConfig.HeightOption.value = height
+                    self.mainWindowConfig.width.value = width
+                    self.mainWindowConfig.height.value = height
 
-                    self.mainWindowConfig.XPosOption.value = xpos
-                    self.mainWindowConfig.YPosOption.value = ypos
+                    self.mainWindowConfig.xPos.value = xpos
+                    self.mainWindowConfig.yPos.value = ypos
 
-                self.mainWindowConfig.FullscreenOption.value = self.IsFullScreen()
+                self.mainWindowConfig.fullscreen.value = self.IsFullScreen()
 
-                self.__savePanesParams()
+                self.__panesController.savePanesParams()
         except Exception, e:
             outwiker.core.commands.MessageBox (_(u"Can't save config\n%s") % (unicode (e)),
                     _(u"Error"), wx.ICON_ERROR | wx.OK)
@@ -296,32 +195,22 @@ class MainWindow(wx.Frame):
         self.SetIcon(icon)
 
 
-    def __onClose (self, event):
-        askBeforeExit = self.generalConfig.askBeforeExitOption.value
+    def Destroy(self):
+        """
+        Убрать за собой
+        """
+        self.__saveParams()
 
-        if (not askBeforeExit or 
-                outwiker.core.commands.MessageBox (_(u"Really exit?"), _(u"Exit"), wx.YES_NO  | wx.ICON_QUESTION ) == wx.YES):
-            self.__saveParams()
+        self.auiManager.UnInit()
 
-            self.auiManager.UnInit()
+        self.pagePanel.close()
+        self.__panesController.closePanes()
 
-            self.tree.Close()
-            self.tree = None
+        self.statusbar.Close()
+        self.taskBarIcon.Destroy()
+        self.controller.destroy()
 
-            self.pagePanel.Close()
-            self.pagePanel = None
-
-            self.attachPanel.Close()
-            self.attachPanel = None
-
-            self.statusbar.Close()
-            
-            self.taskBarIcon.Destroy()
-            self.controller.destroy()
-
-            self.Destroy()
-        else:
-            event.Veto()
+        super (MainWindow, self).Destroy()
     
 
     def __onNew(self, event): 
@@ -346,9 +235,9 @@ class MainWindow(wx.Frame):
         save - надо ли предварительно сохранить страницу?
         """
         if save:
-            self.pagePanel.destroyPageView()
+            self.pagePanel.panel.destroyPageView()
         else:
-            self.pagePanel.destroyWithoutSave()
+            self.pagePanel.panel.destroyWithoutSave()
 
 
     def __onAddSiblingPage(self, event):
@@ -371,10 +260,6 @@ class MainWindow(wx.Frame):
 
     def __onAbout(self, event):
         outwiker.core.commands.showAboutDialog (self)
-
-
-    def __onExit(self, event):
-        self.Close()
 
 
     def __onCopyPath(self, event):
@@ -427,7 +312,7 @@ class MainWindow(wx.Frame):
 
 
     def __onRename(self, event):
-        self.tree.beginRename()
+        self.treePanel.beginRename()
 
 
     def __onHelp(self, event):
@@ -439,48 +324,10 @@ class MainWindow(wx.Frame):
 
 
     def __onPreferences(self, event):
-        with PrefDialog (self) as dlg:
-            dlg.ShowModal()
+        dlg = PrefDialog (self)
+        dlg.ShowModal()
+        dlg.Destroy()
     
-
-    def __onViewTree(self, event):
-        self.showHideTree()
-    
-
-    def __showHidePane (self, control):
-        """
-        Показать / скрыть pane с некоторым контролом
-        """
-        pane = self.auiManager.GetPane (control)
-
-        self.__savePanesSize()
-
-        if pane.IsShown():
-            pane.Hide()
-        else:
-            pane.Show()
-
-        self.__loadPanesSize ()
-        self.__updateViewMenu()
-    
-
-    def showHideTree (self):
-        """
-        Показать/спарятать дерево с заметками
-        """
-        self.__showHidePane (self.tree)
-
-    
-    def showHideAttaches (self):
-        """
-        Показать/спарятать дерево с заметками
-        """
-        self.__showHidePane (self.attachPanel)
-
-
-    def __onViewAttaches(self, event):
-        self.showHideAttaches()
-
 
     def __onFullscreen(self, event):
         self.setFullscreen(not self.IsFullScreen())
@@ -497,39 +344,22 @@ class MainWindow(wx.Frame):
 
 
     def __toFullscreen(self):
-        self.__savePanesSize()
+        self.__panesController.savePanesParams()
         self.ShowFullScreen(True, wx.FULLSCREEN_NOTOOLBAR | wx.FULLSCREEN_NOBORDER | wx.FULLSCREEN_NOCAPTION)
-        self.auiManager.GetPane (self.attachPanel).Hide()
-        self.auiManager.GetPane (self.tree).Hide()
-        self.auiManager.Update()
-        self.__updateViewMenu()
+
+        self.__panesController.hidePanes()
+        self.__panesController.updateViewMenu()
 
 
     def __fromFullscreen (self):
         self.controller.loadMainWindowParams()
         self.ShowFullScreen(False)
-        self.auiManager.GetPane (self.attachPanel).Show()
-        self.auiManager.GetPane (self.tree).Show()
-        self.__loadPanesSize ()
-        self.__updateViewMenu()
+
+        self.__panesController.showPanes()
+        self.__panesController.loadPanesSize ()
+        self.__panesController.updateViewMenu()
 
     
-    def __loadPanesSize (self):
-        self.auiManager.GetPane (self.attachPanel).BestSize ((self.attachConfig.attachesWidthOption.value, 
-            self.attachConfig.attachesHeightOption.value))
-
-        self.auiManager.GetPane (self.tree).BestSize ((self.treeConfig.treeWidthOption.value, 
-            self.treeConfig.treeHeightOption.value))
-
-        self.auiManager.Update()
-    
-
-    def __updateViewMenu (self):
-        self.mainMenu.viewNotes.Check (self.auiManager.GetPane (self.tree).IsShown())
-        self.mainMenu.viewAttaches.Check (self.auiManager.GetPane (self.attachPanel).IsShown())
-        self.mainMenu.viewFullscreen.Check (self.IsFullScreen())
-
-
     def __onMovePageUp(self, event):
         outwiker.core.commands.moveCurrentPageUp()
 
@@ -547,7 +377,34 @@ class MainWindow(wx.Frame):
 
 
     def __onPrint(self, event):
-        self.pagePanel.Print()
+        self.pagePanel.panel.Print()
+
+
+    def __onAddTagsToBranch (self, event):
+        if Application.wikiroot == None:
+            return
+
+        if Application.selectedPage == None:
+            outwiker.core.commands.addTagsToBranchGui (Application.wikiroot, self)
+        else:
+            outwiker.core.commands.addTagsToBranchGui (Application.selectedPage, self)
+
+
+    def __onRemoveTagsFromBranch (self, event):
+        if Application.wikiroot == None:
+            return
+
+        if Application.selectedPage == None:
+            outwiker.core.commands.removeTagsFromBranchGui (Application.wikiroot, self)
+        else:
+            outwiker.core.commands.removeTagsFromBranchGui (Application.selectedPage, self)
+
+
+    def __onRenameTag (self, event):
+        if Application.wikiroot != None:
+            outwiker.core.commands.renameTagGui (Application.wikiroot, self)
+            
+
 
 # end of class MainWindow
 

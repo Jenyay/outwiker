@@ -34,7 +34,7 @@ class MainWndTest(BaseMainWndTest):
 
 
     def testProperties (self):
-        self.assertNotEqual (None, self.wnd.tree)
+        self.assertNotEqual (None, self.wnd.treePanel.panel)
         self.assertNotEqual (None, self.wnd.pagePanel)
         self.assertNotEqual (None, self.wnd.attachPanel)
         self.assertNotEqual (None, self.wnd.mainMenu)
@@ -43,14 +43,11 @@ class MainWndTest(BaseMainWndTest):
         self.assertNotEqual (None, self.wnd.taskBarIcon)
 
         self.assertNotEqual (None, self.wnd.mainWindowConfig)
-        self.assertNotEqual (None, self.wnd.treeConfig)
-        self.assertNotEqual (None, self.wnd.attachConfig)
-        self.assertNotEqual (None, self.wnd.generalConfig)
 
 
     def testTitle (self):
         conf = MainWindowConfig (Application.config)
-        conf.titleFormatOption.value = u"OutWiker - {page} - {file}"
+        conf.titleFormat.value = u"OutWiker - {page} - {file}"
 
         Application.wikiroot = self.rootwiki
         self.assertEqual (self.wnd.GetTitle(), u"OutWiker -  - testwiki")

@@ -36,7 +36,7 @@ class AutosaveTimer (wx.PyEvtHandler):
 
 
     def __setTimer (self):
-        interval = self.__guiconfig.autosaveIntervalOption.value
+        interval = self.__guiconfig.autosaveInterval.value
 
         if interval > 0:
             self.__timer.Start (interval * 1000)

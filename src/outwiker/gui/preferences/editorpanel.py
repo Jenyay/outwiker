@@ -37,7 +37,7 @@ class EditorPanel(wx.Panel):
 
         self.tabWidthSpin = wx.SpinCtrl(self, 
                 -1, 
-                str (config.DEFAULT_TAB_WIDTH), 
+                str (config.TAB_WIDTH_DEFAULT), 
                 min=self.MIN_TAB_WIDTH, 
                 max=self.MAX_TAB_WIDTH, 
                 style=wx.SP_ARROW_KEYS|wx.TE_AUTO_URL)
@@ -73,18 +73,18 @@ class EditorPanel(wx.Panel):
 
     def LoadState(self):
         # Показывать ли номера строк?
-        self.lineNumbers = configelements.BooleanElement (self.__config.lineNumbersOption, self.lineNumbersCheckBox)
+        self.lineNumbers = configelements.BooleanElement (self.__config.lineNumbers, self.lineNumbersCheckBox)
 
         # Шрифт для редактора
-        fontOption = FontOption (self.__config.fontFaceNameOption, 
-                self.__config.fontSizeOption, 
+        fontOption = FontOption (self.__config.fontName, 
+                self.__config.fontSize, 
                 self.__config.fontIsBold, 
                 self.__config.fontIsItalic)
 
         self.fontEditor = configelements.FontElement (fontOption, self.fontPicker)
 
         # Размер табуляции
-        self.tabWidth = configelements.IntegerElement (self.__config.tabWidthOption, 
+        self.tabWidth = configelements.IntegerElement (self.__config.tabWidth, 
                 self.tabWidthSpin, 
                 self.MIN_TAB_WIDTH, 
                 self.MAX_TAB_WIDTH)

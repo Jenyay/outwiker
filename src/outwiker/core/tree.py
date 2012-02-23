@@ -7,9 +7,10 @@ import shutil
 
 from .config import PageConfig
 from .bookmarks import Bookmarks
-from .search import TagsList
+from .tagslist import TagsList
 from .event import Event
 from .exceptions import ClearConfigError, RootFormatError, DublicateTitle, ReadonlyException, TreeException
+from .tagscommands import parseTagsList
 
 
 class RootWikiPage (object):
@@ -94,7 +95,11 @@ class RootWikiPage (object):
         Получить нужную страницу по относительному пути в дереве
         """
         if path == "/":
-            return self
+            return self.root
+
+        # Если путь начинается с "/", то отсчет начнем от корня
+        if path[0] == "/":
+            return self.root[path[1:]]
 
         # Разделим путь по составным частям
         titles = path.split ("/")
@@ -611,7 +616,9 @@ class WikiPage (RootWikiPage):
 
     @property
     def tags (self):
-        return self._tags
+        result = [tag.lower() for tag in self._tags]
+        result.sort()
+        return result
 
 
     @tags.setter
@@ -619,8 +626,13 @@ class WikiPage (RootWikiPage):
         if self.readonly:
             raise ReadonlyException
 
-        if self._tags != tags:
-            self._tags = tags[:]
+        lowertags = [tag.lower() for tag in tags]
+        # Избавимся от дубликатов
+        newtagset = set (lowertags)
+        newtags = list (newtagset)
+
+        if newtagset != set (self._tags):
+            self._tags = newtags
             self.save()
             self.root.onPageUpdate(self)
 
@@ -728,7 +740,7 @@ class WikiPage (RootWikiPage):
         except ConfigParser.NoOptionError:
             return []
 
-        tags = TagsList.parseTagsList (tagsString)
+        tags = parseTagsList (tagsString)
 
         return tags
 

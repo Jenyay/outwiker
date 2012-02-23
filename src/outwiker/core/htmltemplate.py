@@ -21,9 +21,9 @@ class HtmlTemplate (object):
         """
         self.config = HtmlRenderConfig (Application.config)
 
-        self.fontsize = self.config.fontSizeOption.value
-        self.fontfamily = self.config.fontFaceNameOption.value
-        self.userStyle = self.config.userStyleOption.value
+        self.fontsize = self.config.fontSize.value
+        self.fontfamily = self.config.fontName.value
+        self.userStyle = self.config.userStyle.value
 
         tpl_fname = u"template.html"
         tpl_path = os.path.join (path, tpl_fname)

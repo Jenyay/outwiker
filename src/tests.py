@@ -28,6 +28,7 @@ if __name__ == '__main__':
     from test.invalidwiki import InvalidWikiTest
     from test.factory import FactorySelectorTest
     from test.titletester import PageTitleTesterTest
+    from test.tags import TagsListTest
 
     from test.pagemove import MoveTest
     from test.attachment import AttachmentTest
@@ -70,7 +71,7 @@ if __name__ == '__main__':
     from test.event import EventTest, EventsTest
     from test.config import ConfigTest, ConfigOptionsTest, TrayConfigTest, EditorConfigTest
     from test.recent import RecentWikiTest
-    from test.search import SearcherTest, TagsListTest, SearchPageTest
+    from test.search import SearcherTest, SearchPageTest
     from test.localsearch import LocalSearchTest
     from test.i18n import I18nTest
     from test.version import VersionTest, StatusTest
@@ -84,11 +85,13 @@ if __name__ == '__main__':
     from test.guitests.attach import AttachPanelTest
     from test.guitests.tree import TreeTest
     from test.guitests.pagepanel import PagePanelTest
+    from test.guitests.tagspanel import TagsPanelTest
 
     from test.plugins.loader import PluginsLoaderTest
     from test.plugins.testwikicommand import PluginWikiCommandTest
     from test.plugins.style import StylePluginTest
     from test.plugins.source import SourcePluginTest
+    from test.plugins.export2html import Export2HtmlTest
 
     if os.name == "nt":
         from test.guitests.uriidentifiers import UriIdentifierIETest

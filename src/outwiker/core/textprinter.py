@@ -20,8 +20,8 @@ class TextPrinter (object):
 
         self.config = TextPrintConfig (Application.config)
 
-        self.normalFont = self.config.fontFaceNameOption.value
-        self.monoFont = self.config.fontFaceNameOption.value
+        self.normalFont = self.config.fontName.value
+        self.monoFont = self.config.fontName.value
 
         # Поля на странице: верхнее, нижнее, левое, правое, расстояние между шапкой/подвалом и текстом в мм
         headerspace = 0.0

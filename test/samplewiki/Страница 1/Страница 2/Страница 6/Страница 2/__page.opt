@@ -1,0 +1,8 @@
+[General]
+type = wiki
+tags = test
+order = 1
+
+[wiki]
+md5_hash = 0ee42d02b8778d436ee030fd24753715
+

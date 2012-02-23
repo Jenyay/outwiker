@@ -1,0 +1,8 @@
+[General]
+type = wiki
+tags = пользователям
+order = 1
+
+[wiki]
+md5_hash = 97312049984efc3ce908e144f1f492f6
+

@@ -1,0 +1,8 @@
+[General]
+type = wiki
+tags = for users
+order = 2
+
+[wiki]
+md5_hash = d4b0f4ebb96b1c74fe0fa4a314288f45
+

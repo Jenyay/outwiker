@@ -1,5 +1,5 @@
-dirname=outwiker-1.4.0
-origname=outwiker_1.4.0.orig.tar
+dirname=outwiker-1.5.0
+origname=outwiker_1.5.0.orig.tar
 outwiker_dir=$(DESTDIR)/usr/share/outwiker/
 
 all:
@@ -38,7 +38,7 @@ deb: source
 
 win:
 	cd src; python setup_win.py build
-	cd distrib\\outwiker_win; 7z a ..\\outwiker_win32_unstable.zip .\\* .\plugins -r -aoa
+	cd build\\outwiker_win; 7z a ..\\outwiker_win32_unstable.zip .\\* .\plugins -r -aoa
 
 plugin:
 	rm -f distrib/source.zip
@@ -49,13 +49,15 @@ plugin:
 	cd plugins/testdebug; 7z a -r -aoa -xr!*.pyc ../../distrib/testdebug.zip ./* 
 	rm -f distrib/testcounter.zip
 	cd plugins/testcounter; 7z a -r -aoa -xr!*.pyc ../../distrib/testcounter.zip ./* 
+	rm -f distrib/export2html.zip
+	cd plugins/export2html; 7z a -r -aoa -xr!*.pyc ../../distrib/export2html.zip ./*
 
 wintests:
 	python src\\setup_tests.py build
 
 source: clean
 	mkdir -p build/$(dirname)
-	rsync -avz --exclude=.bzr --exclude=distrib --exclude=build --exclude=*.pyc --exclude=*.dll --exclude=*.exe * build/$(dirname)/
+	rsync -avz --exclude=.bzr --exclude=distrib --exclude=build --exclude=*.pyc --exclude=*.dll --exclude=*.exe * --exclude=src/.ropeproject build/$(dirname)/
 
 orig: source
 	cd build; tar -cvf $(origname) $(dirname)

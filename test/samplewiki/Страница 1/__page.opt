@@ -5,4 +5,8 @@ param1 = абырвалг
 [General]
 type = html
 tags = Тест, test, двойной тег
+linewrap = True
+
+[Tree]
+expand = True
 

@@ -19,7 +19,7 @@ class AttachPanel(wx.Panel):
         self.ID_EXECUTE = wx.NewId()
         self.ID_REFRESH = wx.NewId()
 
-        kwds["style"] = wx.TAB_TRAVERSAL
+        # kwds["style"] = wx.TAB_TRAVERSAL
         wx.Panel.__init__(self, *args, **kwds)
         self.__toolbar = self.__createToolBar(self, -1)
         self.__attachList = wx.ListCtrl(self, -1, style=wx.LC_LIST|wx.SUNKEN_BORDER)

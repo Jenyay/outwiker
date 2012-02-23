@@ -1,4 +1,3 @@
-;distrib
 *.pyc
 *.bak
 *.~ml
@@ -11,17 +10,12 @@ logdict2.6.5.final.0-1.log
 warnoutwiker_win32.txt
 warnoutwiker_linux.txt
 build
-distrib/exe.win32-2.6
 doc/todo.tsk.lock
 doc/todo.tsk.lock.*
 test/*.profile
-distrib/tests_win
-distrib/outwiker_win
-distrib/outwiker-*/DEBIAN/md5sums
-distrib/outwiker-*/opt/outwiker
-distrib/outwiker-*/usr/share/outwiker
-distrib/*.zip
+distrib
 .coverage
 htmlcov
 src/tests.log
 src/plugins/*
+.ropeproject

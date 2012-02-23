@@ -1,0 +1,5 @@
+Дополнительные плагины вы можете найти [[здесь -> http://jenyay.net/Outwiker/Plugins]].
+
+Для установки плагинов необходимо распаковать архив в папку ''plugins'' рядом с запускаемым файлом или в папку .outwiker\plugins в директории пользователя (под Windows XP - C:\Documents and Settings\USERNAME\.outwiker\plugins, под Linux - ~/.outwiker/plugins).
+
+Если вы написали собственный плагин и хотите, чтобы он был помещен на страницу с плагинами, пришлите его на почту [[mailto:jenyay.ilin@gmail.com | jenyay.ilin@gmail.com]] с подробным описанием. Прилагающиеся Unit-тесты приветствуются.

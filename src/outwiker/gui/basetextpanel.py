@@ -205,10 +205,6 @@ class BaseTextPanel (BasePagePanel):
         assert self.mainWindow.mainMenu.GetMenuCount() >= 3
         assert self.searchMenu != None
 
-        #import traceback
-        #traceback.print_stack()
-        #print 
-
         self.mainWindow.Unbind(wx.EVT_MENU, id=self.ID_SEARCH)
         self.mainWindow.Unbind(wx.EVT_MENU, id=self.ID_SEARCH_NEXT)
         self.mainWindow.Unbind(wx.EVT_MENU, id=self.ID_SEARCH_PREV)

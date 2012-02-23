@@ -457,22 +457,22 @@ class TrayConfigTest (unittest.TestCase):
 
 
     def testDefault (self):
-        self.assertEqual (self.trayConfig.minimizeOption.value, True)
-        self.assertEqual (self.trayConfig.startIconizedOption.value, False)
-        self.assertEqual (self.trayConfig.alwaysShowTrayIconOption.value, False)
+        self.assertEqual (self.trayConfig.minimizeToTray.value, True)
+        self.assertEqual (self.trayConfig.startIconized.value, False)
+        self.assertEqual (self.trayConfig.alwaysShowTrayIcon.value, False)
     
 
     def testChange (self):
         newConfig = TrayConfig (self.config)
 
-        newConfig.minimizeOption.value = False
-        self.assertEqual (self.trayConfig.minimizeOption.value, False)
+        newConfig.minimizeToTray.value = False
+        self.assertEqual (self.trayConfig.minimizeToTray.value, False)
 
-        newConfig.startIconizedOption.value = True
-        self.assertEqual (self.trayConfig.startIconizedOption.value, True)
+        newConfig.startIconized.value = True
+        self.assertEqual (self.trayConfig.startIconized.value, True)
 
-        newConfig.alwaysShowTrayIconOption.value = True
-        self.assertEqual (self.trayConfig.alwaysShowTrayIconOption.value, True)
+        newConfig.alwaysShowTrayIcon.value = True
+        self.assertEqual (self.trayConfig.alwaysShowTrayIcon.value, True)
 
 
 
@@ -490,10 +490,10 @@ class EditorConfigTest (unittest.TestCase):
     
 
     def testDefault (self):
-        self.assertEqual (self.editorConfig.lineNumbersOption.value, False)
-        self.assertEqual (self.editorConfig.tabWidthOption.value, 4)
-        self.assertEqual (self.editorConfig.fontSizeOption.value, 10)
-        self.assertEqual (self.editorConfig.fontFaceNameOption.value, "")
+        self.assertEqual (self.editorConfig.lineNumbers.value, False)
+        self.assertEqual (self.editorConfig.tabWidth.value, 4)
+        self.assertEqual (self.editorConfig.fontSize.value, 10)
+        self.assertEqual (self.editorConfig.fontName.value, "")
         self.assertEqual (self.editorConfig.fontIsBold.value, False)
         self.assertEqual (self.editorConfig.fontIsItalic.value, False)
 
@@ -501,17 +501,17 @@ class EditorConfigTest (unittest.TestCase):
     def testChange (self):
         newConfig = EditorConfig (self.config)
 
-        newConfig.lineNumbersOption.value = True
-        self.assertEqual (self.editorConfig.lineNumbersOption.value, True)
+        newConfig.lineNumbers.value = True
+        self.assertEqual (self.editorConfig.lineNumbers.value, True)
 
-        newConfig.tabWidthOption.value = 8
-        self.assertEqual (self.editorConfig.tabWidthOption.value, 8)
+        newConfig.tabWidth.value = 8
+        self.assertEqual (self.editorConfig.tabWidth.value, 8)
 
-        newConfig.fontSizeOption.value = 12
-        self.assertEqual (self.editorConfig.fontSizeOption.value, 12)
+        newConfig.fontSize.value = 12
+        self.assertEqual (self.editorConfig.fontSize.value, 12)
 
-        newConfig.fontFaceNameOption.value = "Arial"
-        self.assertEqual (self.editorConfig.fontFaceNameOption.value, "Arial")
+        newConfig.fontName.value = "Arial"
+        self.assertEqual (self.editorConfig.fontName.value, "Arial")
 
         newConfig.fontIsBold.value = True
         self.assertEqual (self.editorConfig.fontIsBold.value, True)

@@ -5,7 +5,7 @@ import wx
 
 import outwiker.core.commands
 from .basepagedialog import BasePageDialog
-from outwiker.core.search import TagsList
+from outwiker.core.tagslist import TagsList
 from outwiker.core.tree import RootWikiPage
 from outwiker.core.application import Application
 from outwiker.core.factoryselector import FactorySelector
@@ -128,8 +128,7 @@ class CreatePageDialog (BasePageDialog):
         self._setComboPageType(self.lastCreatedPageType.value)
 
         if parentPage.parent != None:
-            tags = TagsList.getTagsString (parentPage.tags)
-            self.tagsTextCtrl.SetValue (tags)
+            self.tagsSelector.tags = parentPage.tags
     
 
     def onOk (self, event):
@@ -164,15 +163,14 @@ class EditPageDialog (BasePageDialog):
         """
         Подготовить диалог к редактированию свойств страницы
         """
-        tags = TagsList.getTagsString (currentPage.tags)
-        self.tagsTextCtrl.SetValue (tags)
+        self.tagsSelector.tags = currentPage.tags
         
         # Запретить изменять заголовок
         self.titleTextCtrl.SetValue (currentPage.title)
 
         # Установить тип страницы
         self._setComboPageType(currentPage.getTypeString())
-        self.comboType.Disable ()
+        self.typeCombo.Disable ()
 
         # Добавить текущую иконку
         icon = currentPage.icon

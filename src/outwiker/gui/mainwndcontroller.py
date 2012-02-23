@@ -41,6 +41,18 @@ class MainWndController (object):
         self.__autosaveTimer = AutosaveTimer (Application)
 
         self.init()
+        self.__createAcceleratorTable()
+
+
+    def __createAcceleratorTable (self):
+        """
+        Создать горячие клавиши, которые не попали в меню
+        """
+        aTable = wx.AcceleratorTable([
+            (wx.ACCEL_CTRL,  wx.WXK_INSERT, wx.ID_COPY),
+            (wx.ACCEL_SHIFT,  wx.WXK_INSERT, wx.ID_PASTE),
+            (wx.ACCEL_SHIFT,  wx.WXK_DELETE, wx.ID_CUT)])
+        self.parent.SetAcceleratorTable(aTable)
 
 
     def init (self):
@@ -154,9 +166,9 @@ class MainWndController (object):
 
         self.__enableTools (enabled)
         self.__enableMenu (enabled)
-        self.mainWindow.pagePanel.Enable(enabled)
-        self.mainWindow.tree.Enable(enabled)
-        self.mainWindow.attachPanel.Enable(enabled)
+        self.mainWindow.pagePanel.panel.Enable(enabled)
+        self.mainWindow.treePanel.panel.Enable(enabled)
+        self.mainWindow.attachPanel.panel.Enable(enabled)
 
 
     def __enableTools (self, enabled):
@@ -177,7 +189,7 @@ class MainWndController (object):
         """
         Обновить заголовок главного окна в зависимости от шаблона и текущей страницы
         """
-        template = self.mainWindow.mainWindowConfig.titleFormatOption.value
+        template = self.mainWindow.mainWindowConfig.titleFormat.value
 
         if Application.wikiroot == None:
             self.mainWindow.SetTitle (u"OutWiker")
@@ -196,11 +208,11 @@ class MainWndController (object):
         """
         self.mainWindow.Freeze()
 
-        width = self.mainWindow.mainWindowConfig.WidthOption.value
-        height = self.mainWindow.mainWindowConfig.HeightOption.value
+        width = self.mainWindow.mainWindowConfig.width.value
+        height = self.mainWindow.mainWindowConfig.height.value
 
-        xpos = self.mainWindow.mainWindowConfig.XPosOption.value
-        ypos = self.mainWindow.mainWindowConfig.YPosOption.value
+        xpos = self.mainWindow.mainWindowConfig.xPos.value
+        ypos = self.mainWindow.mainWindowConfig.yPos.value
         
         self.mainWindow.SetDimensions (xpos, ypos, width, height, sizeFlags=wx.SIZE_FORCE)
 

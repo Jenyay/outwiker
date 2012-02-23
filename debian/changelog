@@ -1,3 +1,168 @@
+outwiker (1.5.0-626~natty) natty; urgency=low
+
+  * 
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Wed, 22 Feb 2012 21:51:45 +0400
+
+outwiker (1.5.0-626~maverick) maverick; urgency=low
+
+  * 
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Wed, 22 Feb 2012 21:36:54 +0400
+
+outwiker (1.5.0-626) oneiric; urgency=low
+
+  * Мелкие исправления в интерфейсе
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Tue, 21 Feb 2012 22:11:28 +0400
+
+outwiker (1.5.0-625) oneiric; urgency=low
+
+  * Исправлена ошибка при запуске программы свернутой
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Fri, 17 Feb 2012 22:29:12 +0400
+
+outwiker (1.5.0-624) oneiric; urgency=low
+
+  * Рефакторинг
+  * Добавлена настройка для сворачивания окна при закрытии окна
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Wed, 15 Feb 2012 22:51:39 +0400
+
+outwiker (1.5.0-623) oneiric; urgency=low
+
+  * Подготовка к релизу. Дополнение в справке
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Tue, 14 Feb 2012 22:09:08 +0400
+
+outwiker (1.5.0-622) oneiric; urgency=low
+
+  * Ускорена работа с метками
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Fri, 10 Feb 2012 09:30:08 +0400
+
+outwiker (1.5.0-621) oneiric; urgency=low
+
+  * Добавлена возможность переименования меток
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Thu, 09 Feb 2012 21:46:06 +0400
+
+outwiker (1.5.0-620) oneiric; urgency=low
+
+  * Добавлена возможность удаления меток из ветки
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Wed, 08 Feb 2012 10:21:53 +0400
+
+outwiker (1.5.0-619) oneiric; urgency=low
+
+  * Добавлена возможность добавлять метки ко целой ветке заметок
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Tue, 07 Feb 2012 22:25:45 +0400
+
+outwiker (1.5.0-618) oneiric; urgency=low
+
+  * Рефакторинг диалога создания/редактирования страниц
+  * Исправления в интерфейсе
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Mon, 06 Feb 2012 21:32:16 +0400
+
+outwiker (1.5.0-617) oneiric; urgency=low
+
+  * Рефакторинг главного окна
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Thu, 02 Feb 2012 09:56:36 +0400
+
+outwiker (1.5.0-616) oneiric; urgency=low
+
+  * Рефакторинг главного окна
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Fri, 27 Jan 2012 22:09:25 +0400
+
+outwiker (1.5.0-615) oneiric; urgency=low
+
+  * Разные исправления в интерфейсе
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Thu, 26 Jan 2012 22:48:06 +0400
+
+outwiker (1.5.0-614) oneiric; urgency=low
+
+  * Теперь добавлять/удалять теги можно с помощью среднего клика по тегу
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Wed, 25 Jan 2012 17:21:31 +0400
+
+outwiker (1.5.0-613) oneiric; urgency=low
+
+  * Теперь в облаке тегов выделяются теги выделенной заметки
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Tue, 24 Jan 2012 09:46:08 +0400
+
+outwiker (1.5.0-612) oneiric; urgency=low
+
+  * Рефакторинг панели с тегами
+  * Исправлена ошибка в расчета размера тегов
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Thu, 19 Jan 2012 22:27:26 +0400
+
+outwiker (1.5.0-611) oneiric; urgency=low
+
+  * Улучшения во внешнем виде облака тегов и списка страниц
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Wed, 18 Jan 2012 22:20:38 +0400
+
+outwiker (1.5.0-610) oneiric; urgency=low
+
+  * Исправлена ошибка в облаке тегов при добавлении тегов
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Tue, 17 Jan 2012 20:35:57 +0400
+
+outwiker (1.5.0-609) oneiric; urgency=low
+
+  * Исправления во всплывающем окне при клике на тег
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Tue, 17 Jan 2012 20:27:04 +0400
+
+outwiker (1.5.0-608) oneiric; urgency=low
+
+  * Добавлено облако тегов в главное окно
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Mon, 16 Jan 2012 22:53:49 +0400
+
+outwiker (1.5.0-607) oneiric; urgency=low
+
+  * Рефакторинг облака тегов
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Sat, 14 Jan 2012 11:24:50 +0400
+
+outwiker (1.5.0-606) oneiric; urgency=low
+
+  * Исправления в облаке меток
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Fri, 13 Jan 2012 20:01:47 +0400
+
+outwiker (1.5.0-605) oneiric; urgency=low
+
+  * Теперь метки можно добавлять с помощью облака меток
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Wed, 11 Jan 2012 22:39:04 +0400
+
+outwiker (1.5.0-604) oneiric; urgency=low
+
+  * Улучшена обработка ссылок страницами
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Mon, 09 Jan 2012 19:54:48 +0400
+
+outwiker (1.5.0-603) oneiric; urgency=low
+
+  * ToDo Changed
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Fri, 16 Dec 2011 19:27:33 +0400
+
+outwiker (1.5.0-602) oneiric; urgency=low
+
+  * Переход к версии 1.5.0
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Fri, 16 Dec 2011 09:02:53 +0400
+
 outwiker (1.4.0-601) oneiric; urgency=low
 
   * Добавлена поддержка плагинов.

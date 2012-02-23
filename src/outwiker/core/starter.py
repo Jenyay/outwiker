@@ -31,7 +31,7 @@ class Starter (object):
         """
         Открыть последнюю вики, если установлена соответствующая опция
         """
-        openRecent = self.generalConfig.autoopenOption.value
+        openRecent = self.generalConfig.autoopen.value
 
         if openRecent and len (Application.recentWiki) > 0:
             openWiki (Application.recentWiki[0])

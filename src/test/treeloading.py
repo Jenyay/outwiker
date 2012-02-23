@@ -45,6 +45,28 @@ class WikiPagesTest(unittest.TestCase):
 
         self.assertEqual (self.root[u"Страница 111"], None)
         self.assertEqual (self.root[u"/"], self.root)
+
+
+    def testPageAccess2 (self):
+        self.assertEqual (self.root[u"Страница 1"][u"Страница 2"], 
+                self.root[u"Страница 1/Страница 2"])
+
+        self.assertEqual (self.root[u"СтраНица 1"][u"стРаниЦА 2/СтраНицА 5"], 
+                self.root[u"СтраНица 1/стРаниЦА 2/СтраНицА 5"])
+
+
+    def testPageAccess3 (self):
+        self.assertEqual (self.root[u"Страница 1"][u"/Страница 1/Страница 2"], 
+                self.root[u"Страница 1/Страница 2"])
+
+        self.assertEqual (self.root[u"СтраНица 1"][u"/СтраНица 1/стРаниЦА 2/СтраНицА 5"], 
+                self.root[u"СтраНица 1/стРаниЦА 2/СтраНицА 5"])
+
+
+
+    def testAccessRoot (self):
+        self.assertEqual (self.root[u"Страница 1"][u"/"], self.root)
+
     
 
     def testPageType1 (self):
@@ -96,7 +118,7 @@ class WikiPagesTest(unittest.TestCase):
 
 
     def testTags (self):
-        self.assertTrue (u"Тест" in self.root[u"Страница 1"].tags)
+        self.assertTrue (u"тест" in self.root[u"Страница 1"].tags)
         self.assertTrue (u"test" in self.root[u"Страница 1"].tags, self.root[u"Страница 1"].tags)
         self.assertTrue (u"двойной тег" in self.root[u"Страница 1"].tags)
         self.assertEqual (len (self.root[u"Страница 1"].tags), 3)
@@ -123,7 +145,7 @@ class WikiPagesTest(unittest.TestCase):
         self.assertEqual (len (self.root[u"Страница 1"].children), 1)
         self.assertEqual (self.root[u"Страница 1"].children[0], self.root[u"Страница 1/Страница 2"])
 
-        self.assertEqual (len (self.root[u"Страница 1/Страница 2"].children), 1)
+        self.assertEqual (len (self.root[u"Страница 1/Страница 2"].children), 2)
         self.assertEqual (len (self.root[u"Страница 3"].children), 0)
         self.assertEqual (len (self.root[u"page 4"].children), 0)
 

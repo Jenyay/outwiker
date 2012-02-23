@@ -3,7 +3,6 @@
 import os
 import re
 from abc import ABCMeta, abstractmethod, abstractproperty
-import cgi
 
 import wx
 

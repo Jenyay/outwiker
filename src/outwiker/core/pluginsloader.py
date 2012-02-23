@@ -155,7 +155,8 @@ class PluginsLoader (object):
                 # Попытаться импортировать модуль
                 package = __import__ (packageName + "." + modulename)
                 return getattr (package, modulename)
-            except ImportError:
+            except ImportError as e:
+                # print str (e)
                 # Ну не шмогли импортировать, тогда этот модуль игнорируем
                 pass
 

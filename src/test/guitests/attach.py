@@ -41,10 +41,10 @@ class AttachPanelTest (BaseMainWndTest):
 
 
     def testEmpty (self):
-        self.assertNotEqual (None, self.wnd.attachPanel)
-        self.assertNotEqual (None, self.wnd.attachPanel.attachList)
-        self.assertNotEqual (None, self.wnd.attachPanel.toolBar)
-        self.assertEqual (0, self.wnd.attachPanel.attachList.GetItemCount())
+        self.assertNotEqual (None, self.wnd.attachPanel.panel)
+        self.assertNotEqual (None, self.wnd.attachPanel.panel.attachList)
+        self.assertNotEqual (None, self.wnd.attachPanel.panel.toolBar)
+        self.assertEqual (0, self.wnd.attachPanel.panel.attachList.GetItemCount())
 
 
     def testAttach1 (self):
@@ -53,10 +53,10 @@ class AttachPanelTest (BaseMainWndTest):
 
         Application.wikiroot = self.wikiroot
         Application.wikiroot.selectedPage = self.page
-        self.assertEqual (self.wnd.attachPanel.attachList.GetItemCount(), len (self.fullFilesPath))
+        self.assertEqual (self.wnd.attachPanel.panel.attachList.GetItemCount(), len (self.fullFilesPath))
 
         attach.removeAttach ([self.files[0]])
-        self.assertEqual (self.wnd.attachPanel.attachList.GetItemCount(), len (self.fullFilesPath) - 1)
+        self.assertEqual (self.wnd.attachPanel.panel.attachList.GetItemCount(), len (self.fullFilesPath) - 1)
 
 
     def testAttach2 (self):
@@ -66,7 +66,7 @@ class AttachPanelTest (BaseMainWndTest):
         attach = Attachment (self.page)
         attach.attach (self.fullFilesPath)
 
-        self.assertEqual (self.wnd.attachPanel.attachList.GetItemCount(), len (self.fullFilesPath))
+        self.assertEqual (self.wnd.attachPanel.panel.attachList.GetItemCount(), len (self.fullFilesPath))
 
 
     def testAttach3 (self):
@@ -76,10 +76,10 @@ class AttachPanelTest (BaseMainWndTest):
         attach = Attachment (self.page)
         attach.attach (self.fullFilesPath[:1])
 
-        self.assertEqual (self.wnd.attachPanel.attachList.GetItemCount(), 1)
+        self.assertEqual (self.wnd.attachPanel.panel.attachList.GetItemCount(), 1)
         attach.attach (self.fullFilesPath[1:])
 
-        self.assertEqual (self.wnd.attachPanel.attachList.GetItemCount(), len (self.fullFilesPath))
+        self.assertEqual (self.wnd.attachPanel.panel.attachList.GetItemCount(), len (self.fullFilesPath))
 
 
     def testAttach4 (self):
@@ -88,10 +88,10 @@ class AttachPanelTest (BaseMainWndTest):
 
         Application.wikiroot = self.wikiroot
         Application.wikiroot.selectedPage = self.page
-        self.assertEqual (self.wnd.attachPanel.attachList.GetItemCount(), len (self.fullFilesPath))
+        self.assertEqual (self.wnd.attachPanel.panel.attachList.GetItemCount(), len (self.fullFilesPath))
 
         Application.wikiroot.selectedPage = self.wikiroot[u"Страница 1"]
-        self.assertEqual (self.wnd.attachPanel.attachList.GetItemCount(), 0)
+        self.assertEqual (self.wnd.attachPanel.panel.attachList.GetItemCount(), 0)
 
 
     def testAttach5 (self):
@@ -100,10 +100,10 @@ class AttachPanelTest (BaseMainWndTest):
 
         Application.wikiroot = self.wikiroot
         Application.wikiroot.selectedPage = self.page
-        self.assertEqual (self.wnd.attachPanel.attachList.GetItemCount(), len (self.fullFilesPath))
+        self.assertEqual (self.wnd.attachPanel.panel.attachList.GetItemCount(), len (self.fullFilesPath))
 
         Application.wikiroot = None
-        self.assertEqual (self.wnd.attachPanel.attachList.GetItemCount(), 0)
+        self.assertEqual (self.wnd.attachPanel.panel.attachList.GetItemCount(), 0)
 
 
     def testAttach6 (self):
@@ -112,10 +112,10 @@ class AttachPanelTest (BaseMainWndTest):
 
         Application.wikiroot = self.wikiroot
         Application.wikiroot.selectedPage = self.page
-        self.assertEqual (self.wnd.attachPanel.attachList.GetItemCount(), len (self.fullFilesPath))
+        self.assertEqual (self.wnd.attachPanel.panel.attachList.GetItemCount(), len (self.fullFilesPath))
 
         Application.wikiroot.selectedPage = None
-        self.assertEqual (self.wnd.attachPanel.attachList.GetItemCount(), 0)
+        self.assertEqual (self.wnd.attachPanel.panel.attachList.GetItemCount(), 0)
 
 
     def testAttach7 (self):
@@ -125,10 +125,10 @@ class AttachPanelTest (BaseMainWndTest):
         self.wikiroot.selectedPage = self.page
         Application.wikiroot = self.wikiroot
 
-        self.assertEqual (self.wnd.attachPanel.attachList.GetItemCount(), len (self.fullFilesPath))
+        self.assertEqual (self.wnd.attachPanel.panel.attachList.GetItemCount(), len (self.fullFilesPath))
 
         Application.wikiroot.selectedPage = None
-        self.assertEqual (self.wnd.attachPanel.attachList.GetItemCount(), 0)
+        self.assertEqual (self.wnd.attachPanel.panel.attachList.GetItemCount(), 0)
 
 
     def testAttach8 (self):
@@ -138,7 +138,7 @@ class AttachPanelTest (BaseMainWndTest):
         attach = Attachment (self.page)
         attach.attach (self.fullFilesPath)
 
-        self.assertEqual (self.wnd.attachPanel.attachList.GetItemCount(), 0)
+        self.assertEqual (self.wnd.attachPanel.panel.attachList.GetItemCount(), 0)
 
 
     def testReloading (self):
@@ -148,7 +148,7 @@ class AttachPanelTest (BaseMainWndTest):
         self.wikiroot.selectedPage = self.page
         Application.wikiroot = self.wikiroot
 
-        self.assertEqual (self.wnd.attachPanel.attachList.GetItemCount(), len (self.fullFilesPath))
+        self.assertEqual (self.wnd.attachPanel.panel.attachList.GetItemCount(), len (self.fullFilesPath))
 
         # Создадим другую независимую вики
         newpath = u"../test/testwiki2"
@@ -166,7 +166,7 @@ class AttachPanelTest (BaseMainWndTest):
         newwikiroot.selectedPage = newwikiroot[u"Новая страница 1"]
 
         Application.wikiroot = newwikiroot
-        self.assertEqual (self.wnd.attachPanel.attachList.GetItemCount(), len (newfullFilesPath))
+        self.assertEqual (self.wnd.attachPanel.panel.attachList.GetItemCount(), len (newfullFilesPath))
 
         Application.wikiroot.selectedPage = None
         Application.wikiroot = None

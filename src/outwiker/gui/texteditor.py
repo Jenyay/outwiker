@@ -103,8 +103,8 @@ class TextEditor(wx.Panel):
         """
         Установить шрифт по умолчанию в контрол StyledTextCtrl
         """
-        size = self.config.fontSizeOption.value
-        faceName = self.config.fontFaceNameOption.value
+        size = self.config.fontSize.value
+        faceName = self.config.fontName.value
         isBold = self.config.fontIsBold.value
         isItalic = self.config.fontIsItalic.value
 
@@ -120,15 +120,15 @@ class TextEditor(wx.Panel):
         self.textCtrl.SetWrapVisualFlags (wx.stc.STC_WRAPVISUALFLAG_END)
 
         self._setMarginWidth (self.textCtrl)
-        self.textCtrl.SetTabWidth (self.config.tabWidthOption.value)
+        self.textCtrl.SetTabWidth (self.config.tabWidth.value)
     
 
     def _setMarginWidth (self, editor):
         """
         Установить размер левой области, где пишутся номера строк в зависимости от шрифта
         """
-        linenumbers =  self.config.lineNumbersOption.value
-        fontSize = self.config.fontSizeOption.value
+        linenumbers =  self.config.lineNumbers.value
+        fontSize = self.config.fontSize.value
 
         if linenumbers:
             width = int (35.0 / 10.0 * fontSize)

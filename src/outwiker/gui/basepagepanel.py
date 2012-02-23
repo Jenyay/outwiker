@@ -95,9 +95,6 @@ class BasePagePanel (wx.Panel):
         self._currentpage = page
 
         if not os.path.exists (page.path):
-            # MessageBox (
-            #         _(u'Page "%s" not found. Wiki will be reload') % self.page.title,
-            #         _("Error"), wx.OR | wx.ICON_ERROR )
             return
 
         self._onSetPage (page)

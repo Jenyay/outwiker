@@ -53,14 +53,14 @@ class HtmlRenderPanel(wx.Panel):
 
     def LoadState(self):
         # Шрифт для HTML-рендера
-        fontOption = FontOption (self.config.fontFaceNameOption, 
-                self.config.fontSizeOption, 
+        fontOption = FontOption (self.config.fontName, 
+                self.config.fontSize, 
                 self.config.fontIsBold, 
                 self.config.fontIsItalic)
 
         self.fontEditor = configelements.FontElement (fontOption, self.fontPicker)
 
-        self.userStyle = configelements.StringElement (self.config.userStyleOption, self.userStyleTextBox)
+        self.userStyle = configelements.StringElement (self.config.userStyle, self.userStyleTextBox)
 
 
     def Save (self):

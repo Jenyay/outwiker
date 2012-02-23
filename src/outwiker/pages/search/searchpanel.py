@@ -6,7 +6,8 @@ import ConfigParser
 import wx
 
 from outwiker.core.application import Application
-from outwiker.core.search import Searcher, TagsList, AllTagsSearchStrategy, AnyTagSearchStrategy
+from outwiker.core.search import Searcher, AllTagsSearchStrategy, AnyTagSearchStrategy
+from outwiker.core.tagslist import TagsList
 from .htmlreport import HtmlReport
 from outwiker.gui.htmlrenderfactory import getHtmlRender
 from outwiker.gui.basepagepanel import BasePagePanel

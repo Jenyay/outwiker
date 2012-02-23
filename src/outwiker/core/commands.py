@@ -17,9 +17,13 @@ from .tree import WikiDocument, RootWikiPage
 from .application import Application
 from .attachment import Attachment
 from .pagetitletester import PageTitleError, PageTitleWarning
+from .tagscommands import tagBranch, removeTagsFromBranch, renameTag
+from .tagslist import TagsList
 
 from outwiker.gui.overwritedialog import OverwriteDialog
 from outwiker.gui.about import AboutDialog
+from outwiker.gui.tagsdialog import TagsDialog
+from outwiker.gui.renametagdialog import RenameTagDialog
 
 
 def MessageBox (*args, **kwargs):
@@ -454,3 +458,58 @@ def pageExists (page):
     Проверка на то, что страница была удалена сторонними средствами
     """
     return os.path.exists (page.path)
+
+
+@testreadonly
+def addTagsToBranchGui (page, parent):
+    """
+    Добавить теги к ветке, начинающейся со страницы page. 
+    Теги к странице page тоже добавляются
+    """
+    dlg = TagsDialog (parent, Application)
+    dlg.SetTitle (_(u"Add Tags to Branch"))
+
+    if dlg.ShowModal() == wx.ID_OK:
+        Application.onStartTreeUpdate(page.root)
+
+        try:
+            tagBranch (page, dlg.tags)
+        finally:
+            Application.onEndTreeUpdate(page.root)
+
+    dlg.Destroy()
+
+
+@testreadonly
+def removeTagsFromBranchGui (page, parent):
+    """
+    Удалить теги из ветки, начинающейся со страницы page
+    """
+    dlg = TagsDialog (parent, Application)
+    dlg.SetTitle (_(u"Remove Tags from Branch"))
+
+    if dlg.ShowModal() == wx.ID_OK:
+        Application.onStartTreeUpdate(page.root)
+
+        try:
+            removeTagsFromBranch (page, dlg.tags)
+        finally:
+            Application.onEndTreeUpdate(page.root)
+
+    dlg.Destroy()
+        
+
+@testreadonly
+def renameTagGui (wikiroot, parent):
+    tagslist = TagsList (wikiroot)
+
+    dlg = RenameTagDialog (parent, tagslist)
+    if dlg.ShowModal() == wx.ID_OK:
+        Application.onStartTreeUpdate(wikiroot)
+
+        try:
+            renameTag (wikiroot, dlg.oldTagName, dlg.newTagName)
+        finally:
+            Application.onEndTreeUpdate(wikiroot)
+
+    dlg.Destroy()

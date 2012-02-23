@@ -96,7 +96,7 @@ class ReadonlyLoadTest (unittest.TestCase):
 
 
     def testTags (self):
-        self.assertTrue (u"Тест" in self.root[u"Страница 1"].tags)
+        self.assertTrue (u"тест" in self.root[u"Страница 1"].tags)
         self.assertTrue (u"test" in self.root[u"Страница 1"].tags, self.root[u"Страница 1"].tags)
         self.assertTrue (u"двойной тег" in self.root[u"Страница 1"].tags)
         self.assertEqual (len (self.root[u"Страница 1"].tags), 3)
@@ -123,7 +123,7 @@ class ReadonlyLoadTest (unittest.TestCase):
         self.assertEqual (len (self.root[u"Страница 1"].children), 1)
         self.assertEqual (self.root[u"Страница 1"].children[0], self.root[u"Страница 1/Страница 2"])
 
-        self.assertEqual (len (self.root[u"Страница 1/Страница 2"].children), 1)
+        self.assertEqual (len (self.root[u"Страница 1/Страница 2"].children), 2)
         self.assertEqual (len (self.root[u"Страница 3"].children), 0)
         self.assertEqual (len (self.root[u"page 4"].children), 0)
 

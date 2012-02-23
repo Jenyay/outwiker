@@ -29,7 +29,7 @@ class BaseMainWndTest(unittest.TestCase):
 
     def setUp(self):
         generalConfig = GeneralGuiConfig (Application.config)
-        generalConfig.askBeforeExitOption.value = False
+        generalConfig.askBeforeExit.value = False
 
         self.wnd = MainWindow (None, -1, "")
         Application.mainWindow = self.wnd

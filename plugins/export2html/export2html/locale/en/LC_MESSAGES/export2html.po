@@ -1,0 +1,101 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Export2Html\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-01-05 21:55+0400\n"
+"PO-Revision-Date: 2012-01-05 21:55+0300\n"
+"Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
+"Language-Team: jenyay.net <jenyay.ilin@gmail.com>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: baseexporter.py:50
+#: baseexporter.py:104
+msgid "File {0} already exists"
+msgstr "File {0} already exists"
+
+#: baseexporter.py:53
+msgid "Folder {0} not exists"
+msgstr "Folder {0} not exists"
+
+#: controller.py:37
+msgid "Export Page To HTML..."
+msgstr "Export Page To HTML..."
+
+#: controller.py:40
+msgid "Export Branch To HTML..."
+msgstr "Export Branch To HTML..."
+
+#: controller.py:50
+msgid "Please, select page"
+msgstr "Please, select page"
+
+#: controller.py:51
+#: controller.py:59
+#: controller.py:73
+#: exportdialog.py:81
+#: exportpagedialog.py:32
+msgid "Error"
+msgstr "Error"
+
+#: controller.py:58
+#: exporterfactory.py:25
+msgid "This page type not support export to HTML"
+msgstr "This page type not support export to HTML"
+
+#: controller.py:72
+msgid "Wiki is not open"
+msgstr "Wiki is not open"
+
+#: exportbranchdialog.py:32
+msgid "Use long file names (include parent name)"
+msgstr "Use long file names (include parent name)"
+
+#: exportdialog.py:15
+#: exportmenu.py:63
+#: exportmenu.py:81
+msgid "Export"
+msgstr "Export"
+
+#: exportdialog.py:19
+msgid "Folder for Export:"
+msgstr "Folder for Export:"
+
+#: exportdialog.py:30
+msgid "Overwrite Existing Files"
+msgstr "Overwrite Existing Files"
+
+#: exportdialog.py:31
+msgid "Attaches. Save Only Images"
+msgstr "Attaches. Save Only Images"
+
+#: exportdialog.py:80
+msgid "Please, select folder for export"
+msgstr "Please, select folder for export"
+
+#: exportmenu.py:48
+#: exportmenu.py:75
+msgid "File menu not found"
+msgstr "File menu not found"
+
+#: htmlexporter.py:38
+msgid "{0} not found"
+msgstr "{0} not found"
+
+#: logdialog.py:13
+msgid "Errors List"
+msgstr "Errors List"
+
+#: pluginexport2html.py:40
+msgid "Export pages to HTML"
+msgstr "Export pages to HTML"
+
