@@ -12,7 +12,7 @@ from .titlenamegenerator import TitleNameGenerator
 
 class ExportBranchDialog (ExportDialog):
     """
-    Класс диалога для экспорта одной страницы
+    Класс диалога для экспорта ветки страниц
     """
     def __init__ (self, parent, rootpage):
         ExportDialog.__init__ (self, parent)

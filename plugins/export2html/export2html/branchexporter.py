@@ -5,12 +5,16 @@ import os.path
 import re
 
 from .exporterfactory import ExporterFactory
+from .indexgenerator import IndexGenerator
 from outwiker.core.tree import WikiDocument
 
 
 class BranchExporter (object):
     def __init__ (self, startpage, nameGenerator):
         self.__startpage = startpage
+
+        self.__indexfname = u"index.html"
+        self.__contentfname = u"__content.html"
 
         # Список ошибок, возникших при экспорте
         self.__log = []
@@ -48,7 +52,20 @@ class BranchExporter (object):
 
         self.__replacePageLinks (outdir)
 
+        self.__createContent (outdir, alwaysOverwrite)
+
         return self.log
+
+
+    def __createContent (self, outdir, alwaysOverwrite):
+        """
+        Создать оглавление
+        """
+        indexpath = os.path.join (outdir, self.__indexfname)
+        contentpath = os.path.join (outdir, self.__contentfname)
+
+        indexgenerator = IndexGenerator (self.__startpage, self.__renames)
+        indexgenerator.generatefiles (indexpath, contentpath)
 
 
     def __replacePageLinks (self, outdir):
@@ -58,13 +75,17 @@ class BranchExporter (object):
         for page in self.__renames.keys():
             fullname = os.path.join (outdir, self.__renames[page] + u".html")
 
-            with open (fullname) as fp:
-                text = unicode (fp.read (), "utf8")
+            try:
+                with open (fullname) as fp:
+                    text = unicode (fp.read (), "utf8")
 
-            newtext = self.__replacePageLinksInText (text, page, outdir)
+                newtext = self.__replacePageLinksInText (text, page, outdir)
 
-            with open (fullname, "wb") as fp:
-                fp.write (newtext.encode ("utf8"))
+                with open (fullname, "wb") as fp:
+                    fp.write (newtext.encode ("utf8"))
+            except BaseException, error:
+                self.__log.append (u"{0}: {1}".format (page.title, unicode (error) ) )
+
 
 
     def __replacePageLinksInText (self, text, page, outdir):
@@ -77,16 +98,12 @@ class BranchExporter (object):
         for match in matches:
             url = match[hrefMatchIndex]
 
-            # print url
-
             # Проверить, что это не ссылка на сайт
             if self.__isInternetUrl (url):
-                # print 111
                 continue
 
             # Проверить, что это не ссылка на файл
             if self.__isFileLink (url, outdir):
-                # print 222
                 continue
 
             # Это ссылка на подстраницу?
@@ -98,11 +115,9 @@ class BranchExporter (object):
                 linkToPage = page.root[correcturl]
 
             if linkToPage == None:
-                # print 333
                 continue
 
             if linkToPage not in self.__renames.keys():
-                # print 444
                 continue
 
             # Эта страница нам подходит
