@@ -2,10 +2,11 @@
 # -*- coding: UTF-8 -*-
 
 from string import Template
+import cgi
 import os.path
 
 
-class PageListGenerator (object):
+class ContentGenerator (object):
     """
     Класс для создания списка страниц в виде HTML
     """
@@ -24,13 +25,16 @@ class PageListGenerator (object):
         """
         Создать файл (с имемени fname), содержащий список страниц
         """
-        pageList = []
-        self.__addpage (pageList, self.__rootpage)
+        resultList = []
 
-        result = self.__prepareResult (u"<br>\n".join (pageList) )
+        resultList.append ("<ul>")
+        result = self.__addpage (resultList, self.__rootpage, 1)
+        resultList.append ("</ul>")
+
+        finalresult = self.__prepareResult (u"\n".join (resultList) )
 
         with open (fname, "w") as fp:
-            fp.write (result)
+            fp.write (finalresult)
 
 
     def __prepareResult (self, result):
@@ -55,11 +59,19 @@ class PageListGenerator (object):
         return Template (template)
 
 
-    def __addpage (self, pageList, page):
-        template = u"<a href='{url}'>{title}</a>"
+    def __addpage (self, resultList, page, level):
+        indent = u"    "
+        template = u"{indent}<li><a href='{url}'>{title}</a></li>"
 
         if "title" in dir (page):
-            pageList.append (template.format (url=self.__renames[page] + ".html", title=page.title) )
+            resultList.append (template.format (indent=indent * level,
+                url=self.__renames[page] + ".html", 
+                title=cgi.escape(page.title) ) )
 
-        for child in page.children:
-            self.__addpage (pageList, child)
+        if len (page.children) != 0:
+            resultList.append (indent * level + "<ul>")
+
+            for child in page.children:
+                self.__addpage (resultList, child, level + 1)
+
+            resultList.append (indent * level + "</ul>")

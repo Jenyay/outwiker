@@ -1,7 +1,10 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-from pagelistgenerator import PageListGenerator
+from string import Template
+import os.path
+
+from contentgenerator import ContentGenerator
 
 
 class IndexGenerator (object):
@@ -17,18 +20,36 @@ class IndexGenerator (object):
         self.__renames = renames
 
 
-    def generatefiles (self, indexfname, treefname):
+    def generatefiles (self, indexfname, contentfname):
         """
         Создать файлы с оглавлением
         outdir - папка, где должны быть созданы файлы
         indexfname - имя главного файла содержания (index.html)
-        treefname - имя файла со ссылками на страницы
+        contentfname - имя файла со ссылками на страницы
         """
-        ## Создать файл со списком экспортируемых страниц
-
         # Создать экземпляр класса, оформляющий список страниц
-        pagelistgenerator = PageListGenerator (self.__rootpage, self.__renames)
-        pagelistgenerator.generate (treefname)
+        contentgenerator = ContentGenerator (self.__rootpage, self.__renames)
+        contentgenerator.generate (contentfname)
 
-        ## Создать файл с фреймами, отображающий все оглавление
-        pass
+        # Создать файл с фреймами, отображающий все оглавление
+        indextemplate = self.__loadTemplate (u"index.html")
+        indexresult = indextemplate.substitute (contentfname=os.path.basename (contentfname) )
+
+        with open (indexfname, "w") as fp:
+            fp.write (indexresult)
+
+
+    def __loadTemplate (self, fname):
+        """
+        Загрузить шаблон.
+        """
+        templatedir = u"templates"
+
+        templateFileName = os.path.join (os.path.dirname (__file__), 
+                templatedir, 
+                fname)
+
+        with open (templateFileName) as fp:
+            template = unicode (fp.read(), "utf8")
+
+        return Template (template)
