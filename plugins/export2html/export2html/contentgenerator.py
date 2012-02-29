@@ -20,6 +20,7 @@ class ContentGenerator (object):
         self.__renames = renames
 
         self.__contenttemplate = u"content.html"
+        self.__indent = u"    "
 
 
     def generate (self, fname):
@@ -35,28 +36,73 @@ class ContentGenerator (object):
         finalresult = self.__prepareResult (u"\n".join (resultList) )
 
         with open (fname, "w") as fp:
-            fp.write (finalresult)
+            fp.write (finalresult.encode ("utf8"))
 
 
     def __prepareResult (self, result):
         template = loadTemplate(self.__contenttemplate)
         resultcontent = template.substitute (content=result)
         return resultcontent
-        
 
-    def __addpage (self, resultList, page, level):
-        indent = u"    "
+
+    def __getIcon (self, page):
+        """
+        Возвращает путь до сохраненной иконки или None, если ее нет
+        """
+        if page.icon == None:
+            return
+
+        dirname = self.__renames[page]
+        iconpath = u"{dirname}/{iconname}".format (dirname=dirname, 
+                iconname=os.path.basename (page.icon))
+
+        return iconpath
+
+
+    def __prepareUrl (self, url):
+        """
+        Заменить в ссылке "опасные" символы
+        """
+        result = url.replace ("%", "%25")
+        result = result.replace ("#", "%23")
+        result = result.replace ("?", "%3F")
+        result = result.replace (" ", "%20")
+        return result
+
+
+    def __getPageLink (self, page, level):
+        """
+        Метод возвращает оформленную ссылку на страницу
+        """
         template = u"{indent}<li><a href='{url}' target='main'>{title}</a></li>"
 
-        if "title" in dir (page):
-            resultList.append (template.format (indent=indent * level,
-                url=self.__renames[page] + ".html", 
-                title=cgi.escape(page.title) ) )
+        templateIcon = u"{indent}<li><span style='white-space:nowrap'><a href='{url}' target='main'><img src='{iconpath}'></a><a href='{url}' target='main'>{title}</a></span></li>"
+
+        if page.icon == None:
+            itemstring = template.format (indent=self.__indent * level,
+                url=self.__prepareUrl (self.__renames[page] + ".html"), 
+                title=cgi.escape(page.title) )
+        else:
+            iconpath = self.__getIcon (page)
+
+            itemstring = templateIcon.format (indent=self.__indent * level,
+                url=self.__prepareUrl (self.__renames[page] + ".html"), 
+                title=cgi.escape(page.title),
+                iconpath=self.__prepareUrl (iconpath) )
+        
+        return itemstring
+
+
+    def __addpage (self, resultList, page, level):
+        if page in self.__renames.keys():
+            if "title" in dir (page):
+                itemstring = self.__getPageLink (page, level)
+                resultList.append (itemstring)
 
         if len (page.children) != 0:
-            resultList.append (indent * level + "<ul>")
+            resultList.append (self.__indent * level + "<ul>")
 
             for child in page.children:
                 self.__addpage (resultList, child, level + 1)
 
-            resultList.append (indent * level + "</ul>")
+            resultList.append (self.__indent * level + "</ul>")

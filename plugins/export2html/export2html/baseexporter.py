@@ -56,6 +56,7 @@ class BaseExporter (object):
             fp.write (content.encode ("utf8"))
 
         self.__exportAttaches (page, exportdir, imagesonly, alwaisOverwrite)
+        self.__exportIcon (page, exportdir, alwaisOverwrite)
 
 
     def __exportAttaches (self, page, exportdir, imagesonly, alwaisOverwrite):
@@ -72,6 +73,17 @@ class BaseExporter (object):
                 newpath = os.path.join (exportdir, os.path.basename (fname) )
                 self.__checkForExists (newpath, alwaisOverwrite)
                 self.__copy (fname, newpath)
+
+
+    def __exportIcon (self, page, exportdir, alwaisOverwrite):
+        assert os.path.exists (exportdir)
+
+        if page.icon == None:
+            return
+
+        newIconPath = os.path.join (exportdir, os.path.basename (page.icon))
+        self.__checkForExists (newIconPath, alwaisOverwrite)
+        self.__copy (page.icon, newIconPath)
 
 
     def __delete (self, path):

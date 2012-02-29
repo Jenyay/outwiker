@@ -396,32 +396,32 @@ class Export2HtmlTest (unittest.TestCase):
                 page=self.root[pagename])
 
 
-    def testHtmlNotFound (self):
-        """
-        Проверка на случай, если нет сформированного HTML-а
-        """
-        pagename = u"Страница 1"
+    # def testHtmlNotFound (self):
+    #     """
+    #     Проверка на случай, если нет сформированного HTML-а
+    #     """
+    #     pagename = u"Страница 1"
 
-        htmlname = u"__content.html"
-        tmpname = u"__tmp.html"
+    #     htmlname = u"__content.html"
+    #     tmpname = u"__tmp.html"
 
-        page = self.root[pagename]
+    #     page = self.root[pagename]
 
-        srcname = os.path.join (page.path, htmlname)
-        newname = os.path.join (page.path, tmpname)
+    #     srcname = os.path.join (page.path, htmlname)
+    #     newname = os.path.join (page.path, tmpname)
 
-        os.rename (srcname, newname)
+    #     os.rename (srcname, newname)
 
-        exporter = self.__tester.exporterFactory.getExporter (self.root[pagename])
+    #     exporter = self.__tester.exporterFactory.getExporter (self.root[pagename])
 
-        self.assertRaises (BaseException, 
-                exporter.export, 
-                outdir = self.outputdir,
-                exportname=pagename,
-                imagesonly=False,
-                alwaysOverwrite=False)
+    #     self.assertRaises (BaseException, 
+    #             exporter.export, 
+    #             outdir = self.outputdir,
+    #             exportname=pagename,
+    #             imagesonly=False,
+    #             alwaysOverwrite=False)
 
-        os.rename (newname, srcname)
+    #     os.rename (newname, srcname)
 
 
     def testExportBranchFiles (self):

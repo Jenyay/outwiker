@@ -35,7 +35,8 @@ class HtmlExporter (BaseExporter):
             with open (os.path.join (self._page.path, self.__htmlFileName) ) as fp:
                 content = unicode (fp.read(), "utf8")
         except IOError:
-            raise HtmlNotFoundError (_(u"{0} not found").format (self.__htmlFileName) )
+            # raise HtmlNotFoundError (_(u"{0} not found").format (self.__htmlFileName) )
+            content = u""
 
         changedContent = self.__prepareHtmlContent (content, exportname)
 

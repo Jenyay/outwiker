@@ -13,7 +13,7 @@ class I18nTest(unittest.TestCase):
 
     def testGetLang (self):
         langs = outwiker.core.i18n.getLanguages()
-        self.assertEqual (len (langs), 2)
+        self.assertEqual (len (langs), 3)
         index1 = langs.index ("ru_RU")
         index2 = langs.index ("en")
 
