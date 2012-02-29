@@ -1,10 +1,10 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-from string import Template
 import os.path
 
-from contentgenerator import ContentGenerator
+from .contentgenerator import ContentGenerator
+from .template import loadTemplate
 
 
 class IndexGenerator (object):
@@ -19,6 +19,8 @@ class IndexGenerator (object):
         self.__rootpage = rootpage
         self.__renames = renames
 
+        self.__templatename = u"index.html"
+
 
     def generatefiles (self, indexfname, contentfname):
         """
@@ -32,24 +34,8 @@ class IndexGenerator (object):
         contentgenerator.generate (contentfname)
 
         # Создать файл с фреймами, отображающий все оглавление
-        indextemplate = self.__loadTemplate (u"index.html")
+        indextemplate = loadTemplate (self.__templatename)
         indexresult = indextemplate.substitute (contentfname=os.path.basename (contentfname) )
 
         with open (indexfname, "w") as fp:
             fp.write (indexresult)
-
-
-    def __loadTemplate (self, fname):
-        """
-        Загрузить шаблон.
-        """
-        templatedir = u"templates"
-
-        templateFileName = os.path.join (os.path.dirname (__file__), 
-                templatedir, 
-                fname)
-
-        with open (templateFileName) as fp:
-            template = unicode (fp.read(), "utf8")
-
-        return Template (template)

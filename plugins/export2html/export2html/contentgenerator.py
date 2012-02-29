@@ -1,9 +1,10 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-from string import Template
 import cgi
 import os.path
+
+from .template import loadTemplate
 
 
 class ContentGenerator (object):
@@ -38,30 +39,14 @@ class ContentGenerator (object):
 
 
     def __prepareResult (self, result):
-        template = self.__loadTemplate()
+        template = loadTemplate(self.__contenttemplate)
         resultcontent = template.substitute (content=result)
         return resultcontent
         
 
-    def __loadTemplate (self):
-        """
-        Загрузить шаблон.
-        """
-        templatedir = u"templates"
-
-        templateFileName = os.path.join (os.path.dirname (__file__), 
-                templatedir, 
-                self.__contenttemplate)
-
-        with open (templateFileName) as fp:
-            template = unicode (fp.read(), "utf8")
-
-        return Template (template)
-
-
     def __addpage (self, resultList, page, level):
         indent = u"    "
-        template = u"{indent}<li><a href='{url}'>{title}</a></li>"
+        template = u"{indent}<li><a href='{url}' target='main'>{title}</a></li>"
 
         if "title" in dir (page):
             resultList.append (template.format (indent=indent * level,

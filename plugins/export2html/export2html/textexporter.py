@@ -3,8 +3,8 @@
 
 import cgi
 import os.path
-from string import Template
 
+from .template import loadTemplate
 from .baseexporter import BaseExporter
 
 class TextExporter (BaseExporter):
@@ -24,8 +24,11 @@ class TextExporter (BaseExporter):
         Может бросить исключение IOError, если не найден файл с шаблоном
         Используется для экспорта текстовых страниц
         """
+        singleTemplate = u"single.html"
+
         assert self._page.getTypeString() == "text"
-        template = self.__loadTemplate()
+
+        template = loadTemplate(singleTemplate)
         content = self.__prepareTextContent (self._page.content)
         resultcontent = template.substitute (content=content, title=self._page.title)
 
@@ -40,18 +43,3 @@ class TextExporter (BaseExporter):
     def __prepareTextContent (self, content):
         result = u"<pre>{0}</pre>".format (cgi.escape (content))
         return result
-
-
-    def __loadTemplate (self):
-        """
-        Загрузить шаблон.
-        Используется для экспорта текстовых страниц
-        """
-        templatedir = u"templates"
-        singleTemplate = u"single.html"
-
-        templateFileName = os.path.join (os.path.dirname (__file__), templatedir, singleTemplate)
-        with open (templateFileName) as fp:
-            template = unicode (fp.read(), "utf8")
-
-        return Template (template)

@@ -13,7 +13,7 @@ class BranchExporter (object):
     def __init__ (self, startpage, nameGenerator):
         self.__startpage = startpage
 
-        self.__indexfname = u"index.html"
+        self.__indexfname = u"__index.html"
         self.__contentfname = u"__content.html"
 
         # Список ошибок, возникших при экспорте
