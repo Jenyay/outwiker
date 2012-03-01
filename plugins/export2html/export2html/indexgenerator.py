@@ -3,7 +3,7 @@
 
 import os.path
 
-from .contentgenerator import ContentGenerator
+from .indexcontentgenerator import IndexContentGenerator
 from .template import loadTemplate
 
 
@@ -30,7 +30,7 @@ class IndexGenerator (object):
         contentfname - имя файла со ссылками на страницы
         """
         # Создать экземпляр класса, оформляющий список страниц
-        contentgenerator = ContentGenerator (self.__rootpage, self.__renames)
+        contentgenerator = IndexContentGenerator (self.__rootpage, self.__renames)
         contentgenerator.generate (contentfname)
 
         # Создать файл с фреймами, отображающий все оглавление

@@ -7,7 +7,7 @@ import os.path
 from .template import loadTemplate
 
 
-class ContentGenerator (object):
+class IndexContentGenerator (object):
     """
     Класс для создания списка страниц в виде HTML
     """

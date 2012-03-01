@@ -63,8 +63,14 @@ class Export2HtmlTest (unittest.TestCase):
 
         self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename + ".html") ) )
         self.assertTrue (os.path.isfile (os.path.join (self.outputdir, pagename + ".html") ) )
+
         self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename) ) )
         self.assertTrue (os.path.isdir (os.path.join (self.outputdir, pagename) ) )
+
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "__icon.png") ) )
+
+        self.assertFalse (os.path.exists (os.path.join (self.outputdir, "__index.html") ) )
+        self.assertFalse (os.path.exists (os.path.join (self.outputdir, "__content.html") ) )
 
 
     def testExportWithName (self):
@@ -84,6 +90,7 @@ class Export2HtmlTest (unittest.TestCase):
         self.assertTrue (os.path.isfile (os.path.join (self.outputdir, exportname + ".html") ) )
         self.assertTrue (os.path.exists (os.path.join (self.outputdir, exportname) ) )
         self.assertTrue (os.path.isdir (os.path.join (self.outputdir, exportname) ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, exportname, "__icon.png") ) )
 
     
     def testAttachesSinglePage (self):
@@ -444,26 +451,42 @@ class Export2HtmlTest (unittest.TestCase):
             pagename) ) )
         self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
             pagename + ".html") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
+            pagename, "__icon.png") ) )
 
         self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
             pagename + u"_Страница 2") ) )
         self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
             pagename + u"_Страница 2.html") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
+            pagename + u"_Страница 2", "__icon.gif") ) )
 
         self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
             pagename + u"_Страница 2_Страница 5") ) )
         self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
             pagename + u"_Страница 2_Страница 5.html") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
+            pagename + u"_Страница 2_Страница 5", "__icon.gif") ) )
 
         self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
             pagename + u"_Страница 2_Страница 6") ) )
         self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
             pagename + u"_Страница 2_Страница 6.html") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
+            pagename + u"_Страница 2_Страница 6", "__icon.png") ) )
 
         self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
             pagename + u"_Страница 2_Страница 6_Страница 7") ) )
         self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
             pagename + u"_Страница 2_Страница 6_Страница 7.html") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
+            pagename + u"_Страница 2_Страница 6_Страница 7", "__icon.png") ) )
+
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, "__index.html") ) )
+        self.assertTrue (os.path.isfile (os.path.join (self.outputdir, "__index.html") ) )
+
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, "__content.html") ) )
+        self.assertTrue (os.path.isfile (os.path.join (self.outputdir, "__content.html") ) )
 
 
     def testExportBranchRoot (self):
@@ -559,6 +582,12 @@ class Export2HtmlTest (unittest.TestCase):
             u"Страница 7") ) )
         self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
             u"Страница 7.html") ) )
+
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, "__index.html") ) )
+        self.assertTrue (os.path.isfile (os.path.join (self.outputdir, "__index.html") ) )
+
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, "__content.html") ) )
+        self.assertTrue (os.path.isfile (os.path.join (self.outputdir, "__content.html") ) )
 
 
     def testBranchContentTitleNames1 (self):

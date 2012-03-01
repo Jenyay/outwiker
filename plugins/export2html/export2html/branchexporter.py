@@ -51,13 +51,11 @@ class BranchExporter (object):
                 alwaysOverwrite)
 
         self.__replacePageLinks (outdir)
-
-        self.__createContent (outdir, alwaysOverwrite)
-
+        self.__createIndex (outdir, alwaysOverwrite)
         return self.log
 
 
-    def __createContent (self, outdir, alwaysOverwrite):
+    def __createIndex (self, outdir, alwaysOverwrite):
         """
         Создать оглавление
         """

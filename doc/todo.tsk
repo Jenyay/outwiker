@@ -403,6 +403,7 @@ IndexError: string index out of range
 <task actualstartdate="2012-02-29 21:46:20.993315" completiondate="2012-02-29 22:31:48.688410" id="4a425f1c-62fd-11e1-aceb-00112fd2b1f8" percentageComplete="100" plannedstartdate="2012-02-29 21:46:20.993228" status="1" subject="В оглавление вставить иконки страниц" />
 <task completiondate="2012-02-29 21:44:01.687101" id="7fa27330-34a0-11e1-8a32-00112fd2b1f8" percentageComplete="100" plannedstartdate="2012-01-01 21:46:00" status="1" subject="index.html" />
 <task completiondate="2012-01-05 20:58:56.040668" id="884e255e-34a0-11e1-a250-00112fd2b1f8" percentageComplete="100" plannedstartdate="2012-01-01 21:46:00" status="1" subject="Исправлять ссылки на страницы" />
+<task actualstartdate="2012-03-01 21:33:43.987054" id="b1762296-63c4-11e1-af51-00112fd2b1f8" plannedstartdate="2012-03-01 21:33:43.986943" status="1" subject="Экспорт производить в отдельном потоке" />
 <task expandedContexts="('taskviewer',)" id="d7d2c900-34a1-11e1-bf8e-00112fd2b1f8" plannedstartdate="2012-01-01 21:55:00" status="1" subject="Ссылки-теги на страницах" />
 <task completiondate="2012-01-04 22:11:16.421000" id="de99f930-34a0-11e1-9fc5-00112fd2b1f8" percentageComplete="100" plannedstartdate="2012-01-01 21:48:00" status="1" subject="Сокращенный вариант именования файлов" />
 </task>
