@@ -1,3 +1,9 @@
+outwiker (1.6.0-628) oneiric; urgency=low
+
+  * Переход к версии 1.6
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Sun, 04 Mar 2012 15:39:49 +0400
+
 outwiker (1.5.0-627~maverick) maverick; urgency=low
 
   * 
