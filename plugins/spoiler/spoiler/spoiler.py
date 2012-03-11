@@ -5,6 +5,7 @@ import os.path
 
 from outwiker.core.pluginbase import Plugin
 from outwiker.core.system import getOS
+from outwiker.pages.wiki.wikipanel import WikiPagePanel
 
 from .commandspoiler import SpoilerCommand
 
@@ -35,6 +36,7 @@ class PluginSpoiler (Plugin):
 
     def initialize(self):
         self._application.onWikiParserPrepare += self.__onWikiParserPrepare
+        self._application.onPageViewCreate += self.__onPageViewCreate
         self.__initlocale()
 
 
@@ -48,6 +50,43 @@ class PluginSpoiler (Plugin):
             _ = self._init_i18n (domain, langdir)
         except BaseException as e:
             print e
+
+
+    def __onPageViewCreate(self, page):
+        """Обработка события после создания представления страницы"""
+        assert self._application.mainWindow != None
+
+        if page.getTypeString() != u"wiki":
+            return
+
+        pageView = self.__getPageView()
+
+        helpString = _(u"Collapse text (:spoiler:)")
+
+        pageView.addTool (pageView.commandsMenu, 
+                "ID_PLUGIN_SPOILER", 
+                self.__onInsertCommand, 
+                helpString, 
+                helpString, 
+                None)
+
+
+    def __onInsertCommand (self, event):
+        startCommand = u'(:spoiler:)\n'
+        endCommand = u'\n(:spoilerend:)'
+
+        pageView = self.__getPageView()
+        pageView.codeEditor.turnText (startCommand, endCommand)
+
+
+    def __getPageView (self):
+        """
+        Получить указатель на панель представления страницы
+        """
+        pageView = self._application.mainWindow.pagePanel.pageView
+        assert type (pageView) == WikiPagePanel
+
+        return pageView
 
 
     @property

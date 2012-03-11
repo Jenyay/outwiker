@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-11 09:22+0400\n"
+"POT-Creation-Date: 2012-03-11 09:41+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,14 +17,18 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: commandspoiler.py:44
+#: commandspoiler.py:46
 msgid "Expand"
 msgstr ""
 
-#: commandspoiler.py:45
+#: commandspoiler.py:47
 msgid "Collapse"
 msgstr ""
 
-#: spoiler.py:60
+#: spoiler.py:64
+msgid "Collapse text (:spoiler:)"
+msgstr ""
+
+#: spoiler.py:99
 msgid "Add command (:spoiler:) in wiki parser"
 msgstr ""
