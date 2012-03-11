@@ -62,13 +62,20 @@ class PluginSpoiler (Plugin):
         pageView = self.__getPageView()
 
         helpString = _(u"Collapse text (:spoiler:)")
+        image = self.__getButtonImage ()
 
         pageView.addTool (pageView.commandsMenu, 
                 "ID_PLUGIN_SPOILER", 
                 self.__onInsertCommand, 
                 helpString, 
                 helpString, 
-                None)
+                image)
+
+
+    def __getButtonImage (self):
+        imagedir = unicode (os.path.join (os.path.dirname (__file__), "images"), getOS().filesEncoding)
+        fname = os.path.join (imagedir, "spoiler.png")
+        return fname
 
 
     def __onInsertCommand (self, event):
@@ -96,7 +103,34 @@ class PluginSpoiler (Plugin):
     
     @property
     def description (self):
-        return _(u"Add command (:spoiler:) in wiki parser")
+        return _(u"""Add command (:spoiler:) in wiki parser.
+
+<B>Usage:</B>
+<PRE>(:spoiler:)
+Text
+(:spoilerend:)</PRE>
+
+For nested spoilers use (:spoiler0:), (:spoiler1:)... (:spoiler9:) commands. 
+
+<U>Example:</U>
+
+<PRE>(:spoiler:)
+Text
+&nbsp;&nbsp;&nbsp;(:spoiler1:)
+&nbsp;&nbsp;&nbsp;Nested spoiler
+&nbsp;&nbsp;&nbsp;(:spoiler1end:)
+(:spoilerend:)</PRE>
+
+<B>Params:</B>
+<U>expandtext</U> - Link text for the collapsed spoiler. Default: "Expand".
+<U>collapsetext</U> - Link text for the expanded spoiler. Default: "Collapse".
+
+<U>Example:</U>
+
+<PRE>(:spoiler expandtext="More..." collapsetext="Less":)
+Text
+(:spoilerend:)</PRE>
+""")
 
 
     @property
