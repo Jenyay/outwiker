@@ -10,11 +10,13 @@ class SpoilerCommand (Command):
         expandtext - текст вместо надписи "Expand/Развернуть"
         collapsetext - текст вместо надписи "Collapse/Свернуть"
     """
-    def __init__ (self, parser, name):
+    def __init__ (self, parser, name, lang):
         """
         parser - экземпляр парсера
         """
         Command.__init__ (self, parser)
+        global _
+        _ = lang
 
         self.__name = name
 
@@ -41,8 +43,8 @@ class SpoilerCommand (Command):
         self.__collapseParam = u"collapsetext"
 
         # Надписи по умолчанию
-        self.__expandTextDefault = u"Expand"
-        self.__collapseTextDefault = u"Collapse"
+        self.__expandTextDefault = _(u"Expand")
+        self.__collapseTextDefault = _(u"Collapse")
 
         # Добавлены ли стили в заголовок
         self.__styleAppend = False

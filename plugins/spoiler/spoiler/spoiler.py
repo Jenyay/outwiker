@@ -1,9 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
+import os.path
+
 from outwiker.core.pluginbase import Plugin
+from outwiker.core.system import getOS
 
 from .commandspoiler import SpoilerCommand
+
 
 class PluginSpoiler (Plugin):
     """
@@ -18,11 +22,11 @@ class PluginSpoiler (Plugin):
 
 
     def __onWikiParserPrepare (self, parser):
-        parser.addCommand (SpoilerCommand (parser, "spoiler"))
+        parser.addCommand (SpoilerCommand (parser, "spoiler", _))
 
         for index in range (self.__maxCommandIndex + 1):
             commandname = "spoiler{index}".format (index=index)
-            parser.addCommand (SpoilerCommand (parser, commandname) )
+            parser.addCommand (SpoilerCommand (parser, commandname, _) )
 
 
     ###################################################
@@ -31,6 +35,19 @@ class PluginSpoiler (Plugin):
 
     def initialize(self):
         self._application.onWikiParserPrepare += self.__onWikiParserPrepare
+        self.__initlocale()
+
+
+    def __initlocale (self):
+        domain = u"spoiler"
+
+        langdir = unicode (os.path.join (os.path.dirname (__file__), "locale"), getOS().filesEncoding)
+        global _
+
+        try:
+            _ = self._init_i18n (domain, langdir)
+        except BaseException as e:
+            print e
 
 
     @property
