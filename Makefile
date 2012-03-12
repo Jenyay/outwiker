@@ -41,16 +41,18 @@ win:
 	cd build\\outwiker_win; 7z a ..\\outwiker_win32_unstable.zip .\\* .\plugins -r -aoa
 
 plugin:
-	rm -f distrib/source.zip
-	cd plugins/source; 7z a -r -aoa -xr!*.pyc ../../distrib/source.zip ./* 
-	rm -f distrib/style.zip
-	cd plugins/style; 7z a -r -aoa -xr!*.pyc ../../distrib/style.zip ./* 
-	rm -f distrib/testdebug.zip
-	cd plugins/testdebug; 7z a -r -aoa -xr!*.pyc ../../distrib/testdebug.zip ./* 
-	rm -f distrib/testcounter.zip
-	cd plugins/testcounter; 7z a -r -aoa -xr!*.pyc ../../distrib/testcounter.zip ./* 
-	rm -f distrib/export2html.zip
-	cd plugins/export2html; 7z a -r -aoa -xr!*.pyc ../../distrib/export2html.zip ./*
+	rm -f build/plugins/source.zip
+	cd plugins/source; 7z a -r -aoa -xr!*.pyc ../../build/plugins/source.zip ./* 
+	rm -f build/plugins/style.zip
+	cd plugins/style; 7z a -r -aoa -xr!*.pyc ../../build/plugins/style.zip ./* 
+	rm -f build/plugins/testdebug.zip
+	cd plugins/testdebug; 7z a -r -aoa -xr!*.pyc ../../build/plugins/testdebug.zip ./* 
+	rm -f build/plugins/testcounter.zip
+	cd plugins/testcounter; 7z a -r -aoa -xr!*.pyc ../../build/plugins/testcounter.zip ./* 
+	rm -f build/plugins/export2html.zip
+	cd plugins/export2html; 7z a -r -aoa -xr!*.pyc ../../build/plugins/export2html.zip ./*
+	rm -f build/plugins/spoiler.zip
+	cd plugins/spoiler; 7z a -r -aoa -xr!*.pyc ../../build/plugins/spoiler.zip ./*
 
 wintests:
 	python src\\setup_tests.py build
