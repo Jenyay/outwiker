@@ -70,6 +70,9 @@ class PluginSpoiler (Plugin):
                 helpString, 
                 helpString, 
                 image)
+        
+        # Начиная с OutWiker 1.6 следующая строка будет не нужна
+        self._application.mainWindow.mainToolbar.Realize()
 
 
     def __getButtonImage (self):

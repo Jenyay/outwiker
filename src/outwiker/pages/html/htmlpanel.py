@@ -314,6 +314,8 @@ class HtmlPanel(BaseTextPanel):
                     buttonText, 
                     "")
 
+            # self.mainWindow.mainToolbar.Realize()
+
         self._enableTool (self.toolsId[idstring])
 
 
@@ -348,6 +350,8 @@ class HtmlPanel(BaseTextPanel):
                     wx.Bitmap(image, wx.BITMAP_TYPE_ANY), 
                     wx.NullBitmap, 
                     buttonText)
+
+            # self.mainWindow.mainToolbar.Realize()
 
         self._enableTool (self.toolsId[idstring])
 
