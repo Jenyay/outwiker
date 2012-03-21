@@ -55,3 +55,7 @@ class TextPanel (BaseTextPanel):
 
     def GetSearchPanel (self):
         return self.textEditor.searchPanel
+
+
+    def _isEnabledTool (self, tool):
+        return True

@@ -18,18 +18,6 @@ from outwiker.gui.htmlrenderfactory import getHtmlRender
 from outwiker.gui.htmltexteditor import HtmlTextEditor
 
 
-class ToolsInfo (object):
-    def __init__ (self, id, alwaysEnabled, menu):
-        """
-        id - идентификатор
-        alwaysEnabled - кнопка всегда активна?
-        menu - меню, куда добавляем новый пункт
-        """
-        self.id = id
-        self.alwaysEnabled = alwaysEnabled
-        self.menu = menu
-
-
 class HtmlPanel(BaseTextPanel):
     __metaclass__ = ABCMeta
     
@@ -52,8 +40,8 @@ class HtmlPanel(BaseTextPanel):
         self.__do_layout()
 
         self.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED, self.onTabChanged, self.notebook)
+        self.Bind (wx.EVT_CLOSE, self.onClose)
 
-        self.toolsId = {}
 
     @abstractproperty
     def toolsMenu (self):
@@ -106,21 +94,16 @@ class HtmlPanel(BaseTextPanel):
     
     
     def __do_layout(self):
-        grid_sizer_7 = wx.FlexGridSizer(1, 1, 0, 0)
-        grid_sizer_9 = wx.FlexGridSizer(1, 1, 0, 0)
-        grid_sizer_9.Add(self.htmlWindow, 1, wx.EXPAND, 0)
-        grid_sizer_9.AddGrowableRow(0)
-        grid_sizer_9.AddGrowableCol(0)
         self.notebook.AddPage(self.codeEditor, _("HTML"))
         self.notebook.AddPage(self.htmlWindow, _("Preview"))
-        grid_sizer_7.Add(self.notebook, 1, wx.EXPAND, 0)
-        grid_sizer_7.Fit(self)
-        grid_sizer_7.AddGrowableRow(0)
-        grid_sizer_7.AddGrowableCol(0)
 
-        self.SetSizer(grid_sizer_7)
+        mainSizer = wx.FlexGridSizer(1, 1, 0, 0)
+        mainSizer.Add(self.notebook, 1, wx.EXPAND, 0)
+        mainSizer.AddGrowableRow(0)
+        mainSizer.AddGrowableCol(0)
 
-        self.Bind (wx.EVT_CLOSE, self.onClose)
+        self.SetSizer(mainSizer)
+        self.Layout()
 
 
     @abstractmethod
@@ -135,17 +118,6 @@ class HtmlPanel(BaseTextPanel):
         path = os.path.join (self._currentpage.path, self._htmlFile)
         return path
 
-
-    def removeHtml (self):
-        """
-        Удалить сгенерированный HTML-файл
-        """
-        if self.currentHtmlFile != None:
-            try:
-                os.remove (self.currentHtmlFile)
-            except OSError:
-                pass
-    
 
     def _openDefaultPage(self):
         assert self._currentpage != None
@@ -165,17 +137,6 @@ class HtmlPanel(BaseTextPanel):
             self._onSwitchToPreview()
         else:
             self._onSwitchToCode()
-
-
-    @property
-    def _isEnabledTools (self):
-        """
-        Возвращает True, если инструменты (кнопки и меню) должны быть активны
-        """
-        assert self.notebook != None
-        assert self.notebook.GetSelection() != -1
-
-        return self.notebook.GetSelection() == self.CODE_PAGE_INDEX
 
 
     def _onSwitchToCode (self):
@@ -228,16 +189,25 @@ class HtmlPanel(BaseTextPanel):
         """
         Активировать или дезактивировать инструменты (пункты меню и кнопки) в зависимости от текущей выбранной вкладки
         """
-        for tool in self.toolsId.values():
-            self._enableTool (tool)
+        for tool in self.allTools:
+            self.enableTool (tool, self._isEnabledTool (tool))
 
 
-    def _enableTool (self, tool):
+    def _isEnabledTool (self, tool):
+        assert self.notebook != None
+        assert self.notebook.GetSelection() != -1
+
+        enabled = (self.notebook.GetSelection() == self.CODE_PAGE_INDEX or 
+                tool.alwaysEnabled)
+
+        return enabled
+
+
+    def enableTool (self, tool, enabled):
         """
         Активировать или дезактивировать один инструмент (пункт меню и кнопку)
+        tool - экземпляр класса ToolsInfo
         """
-        enabled = self._isEnabledTools or tool.alwaysEnabled
-
         tool.menu.Enable (tool.id, enabled)
 
         if self.mainWindow.mainToolbar.FindById (tool.id) != None:
@@ -279,103 +249,9 @@ class HtmlPanel(BaseTextPanel):
             self.notebook.SetSelection (self.CODE_PAGE_INDEX)
 
 
-    def addTool (self, 
-            menu, 
-            idstring, 
-            func, 
-            menuText, 
-            buttonText, 
-            image, 
-            alwaysEnabled = False):
-        """
-        Добавить пункт меню и кнопку на панель
-        menu -- меню для добавления элемента
-        id -- идентификатор меню и кнопки
-        func -- обработчик
-        menuText -- название пунта меню
-        buttonText -- подсказка для кнопки
-        image -- имя файла с картинкой
-        disableOnView -- дизаблить кнопку при переключении на просмотр результата
-        """
-        assert idstring not in self.toolsId
-
-        id = wx.NewId()
-        self.toolsId[idstring] = ToolsInfo (id, alwaysEnabled, menu)
-
-        menu.Append (id, menuText, "", wx.ITEM_NORMAL)
-        self.mainWindow.Bind(wx.EVT_MENU, func, id = id)
-
-        if image != None and len (image) != 0:
-            self.mainWindow.mainToolbar.AddLabelTool(id, 
-                    buttonText, 
-                    wx.Bitmap(image, wx.BITMAP_TYPE_ANY), 
-                    wx.NullBitmap, 
-                    wx.ITEM_NORMAL, 
-                    buttonText, 
-                    "")
-
-            # self.mainWindow.mainToolbar.Realize()
-
-        self._enableTool (self.toolsId[idstring])
-
-
-    def addCheckTool (self, 
-            menu, 
-            idstring, 
-            func, 
-            menuText, 
-            buttonText, 
-            image, 
-            alwaysEnabled = False):
-        """
-        Добавить пункт меню с галкой и залипающую кнопку на панель
-        menu -- меню для добавления элемента
-        id -- идентификатор меню и кнопки
-        func -- обработчик
-        menuText -- название пунта меню
-        buttonText -- подсказка для кнопки
-        image -- имя файла с картинкой
-        disableOnView -- дизаблить кнопку при переключении на просмотр результата
-        """
-        assert idstring not in self.toolsId
-
-        id = wx.NewId()
-        self.toolsId[idstring] = ToolsInfo (id, alwaysEnabled, menu)
-
-        menu.AppendCheckItem (id, menuText, "")
-        self.mainWindow.Bind(wx.EVT_MENU, func, id = id)
-
-        if image != None and len (image) != 0:
-            self.mainWindow.mainToolbar.AddCheckTool(id, 
-                    wx.Bitmap(image, wx.BITMAP_TYPE_ANY), 
-                    wx.NullBitmap, 
-                    buttonText)
-
-            # self.mainWindow.mainToolbar.Realize()
-
-        self._enableTool (self.toolsId[idstring])
-
-
-    def _checkTools (self, idstring, checked):
-        """
-        Активировать/деактивировать залипающие элементы управления
-        idstring - строка, описывающая элементы управления
-        checked - устанавливаемое состояние
-        """
-        assert idstring in self.toolsId
-        assert self.mainWindow != None
-
-        tools = self.toolsId[idstring]
-
-        if tools.menu != None:
-            tools.menu.Check (tools.id, checked)
-
-        self.mainWindow.mainToolbar.ToggleTool (tools.id, checked)
-    
-
     def removeGui (self):
-        for key in self.toolsId.keys ():
-            self._removeTool (self.toolsId[key].id)
+        for tool in self.allTools:
+            self._removeTool (tool.id)
 
         BaseTextPanel.removeGui (self)
 
@@ -432,7 +308,7 @@ class HtmlPagePanel (HtmlPanel):
 
     def __updatePageConfigTools (self):
         if self._currentpage != None:
-            self._checkTools ("ID_AUTOLINEWRAP", self._currentpage.autoLineWrap)
+            self.checkTools ("ID_AUTOLINEWRAP", self._currentpage.autoLineWrap)
 
 
     def __onAutoLineWrap (self, event):
@@ -460,7 +336,7 @@ class HtmlPagePanel (HtmlPanel):
 
 
         self.mainWindow.mainMenu.Insert (self.__HTML_MENU_INDEX, self.__htmlMenu, _(u"H&tml"))
-        self.mainWindow.mainToolbar.Realize()
+        # self.mainWindow.mainToolbar.Realize()
 
 
     def __addFontTools (self):

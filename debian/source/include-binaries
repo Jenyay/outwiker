@@ -47,3 +47,6 @@ src/help/help_en/Key Features/Using tags/__attach/addtag.png
 src/help/help_en/Key Features/Using tags/__attach/pageproperties.png
 src/help/help_en/Key Features/Using tags/__attach/mainwindow.png
 src/help/help_en/Key Features/Using tags/__icon.png
+plugins/spoiler/spoiler/images/spoiler.png
+plugins/spoiler/spoiler/locale/ru_RU/LC_MESSAGES/spoiler.mo
+plugins/spoiler/spoiler/locale/en/LC_MESSAGES/spoiler.mo

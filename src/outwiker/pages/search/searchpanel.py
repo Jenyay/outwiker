@@ -235,3 +235,7 @@ class SearchPanel(BasePagePanel):
     def onClear(self, event):
         for n in range (self.tagsList.GetCount()):
             self.tagsList.Check (n, False)
+
+
+    def _isEnabledTool (self, tool):
+        return True

@@ -1,3 +1,9 @@
+outwiker (1.6.0-629) oneiric; urgency=low
+
+  * Рефакторинг панелей для страниц
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Wed, 21 Mar 2012 21:31:04 +0400
+
 outwiker (1.6.0-628) oneiric; urgency=low
 
   * Переход к версии 1.6

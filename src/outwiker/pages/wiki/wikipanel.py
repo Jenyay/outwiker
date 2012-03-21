@@ -217,36 +217,6 @@ class WikiPagePanel (HtmlPanel):
                 None)
 
     
-
-    def __addTableTools (self):
-        """
-        Добавить инструменты, связанные с таблицами
-        """
-        #self.addTool (self.__wikiMenu, 
-        #        self.toolsId["ID_TABLE"], 
-        #        lambda event: self.codeEditor.turnText (u'<table>', u'</table>'), 
-        #        u"Table\tCtrl+Q", 
-        #        u"Table (<table>…</table>)", 
-        #        os.path.join (self.imagesDir, "table.png"))
-
-        #self.addTool (self.__wikiMenu, 
-        #        self.toolsId["ID_TABLE_TR"], 
-        #        lambda event: self.codeEditor.turnText (u'<tr>',u'</tr>'), 
-        #        u"Table row\tCtrl+W", 
-        #        u"Table row (<tr>…</tr>)", 
-        #        os.path.join (self.imagesDir, "table_insert_row.png"))
-
-
-        #self.addTool (self.__wikiMenu, 
-        #        self.toolsId["ID_TABLE_TD"], 
-        #        lambda event: self.codeEditor.turnText (u'<td>', u'</td>'), 
-        #        u"Table cell\tCtrl+Y", 
-        #        u"Table cell (<td>…</td>)", 
-        #        os.path.join (self.imagesDir, "table_insert_cell.png"))
-
-        pass
-
-    
     def __addListTools (self):
         """
         Добавить инструменты, связанные со списками
@@ -389,7 +359,6 @@ class WikiPagePanel (HtmlPanel):
         self.__addFontTools()
         self.__addAlignTools()
         self.__addHTools()
-        self.__addTableTools()
         self.__addListTools()
         self.__addFormatTools()
         self.__addOtherTools()
