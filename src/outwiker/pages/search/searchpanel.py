@@ -237,5 +237,5 @@ class SearchPanel(BasePagePanel):
             self.tagsList.Check (n, False)
 
 
-    def _isEnabledTool (self, tool):
-        return True
+    # def _isEnabledTool (self, tool):
+    #     return True

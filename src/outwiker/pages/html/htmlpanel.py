@@ -42,10 +42,74 @@ class HtmlPanel(BaseTextPanel):
         self.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED, self.onTabChanged, self.notebook)
         self.Bind (wx.EVT_CLOSE, self.onClose)
 
+        # self._enableAllTools()
+
 
     @abstractproperty
     def toolsMenu (self):
         pass
+
+
+    def addTool (self, 
+            menu, 
+            idstring, 
+            func, 
+            menuText, 
+            buttonText, 
+            image, 
+            alwaysEnabled = False):
+        """
+        Добавить пункт меню и кнопку на панель
+        menu -- меню для добавления элемента
+        id -- идентификатор меню и кнопки
+        func -- обработчик
+        menuText -- название пунта меню
+        buttonText -- подсказка для кнопки
+        image -- имя файла с картинкой
+        alwaysEnabled -- Кнопка должна быть всегда активна
+        """
+        BaseTextPanel.addTool (self, 
+            menu, 
+            idstring, 
+            func, 
+            menuText, 
+            buttonText, 
+            image, 
+            alwaysEnabled)
+        
+        tool = self._tools[idstring]
+        self.enableTool (tool, self._isEnabledTool (tool))
+
+
+    def addCheckTool (self, 
+            menu, 
+            idstring, 
+            func, 
+            menuText, 
+            buttonText, 
+            image, 
+            alwaysEnabled = False):
+        """
+        Добавить пункт меню с галкой и залипающую кнопку на панель
+        menu -- меню для добавления элемента
+        id -- идентификатор меню и кнопки
+        func -- обработчик
+        menuText -- название пунта меню
+        buttonText -- подсказка для кнопки
+        image -- имя файла с картинкой
+        alwaysEnabled -- Кнопка должна быть всегда активна
+        """
+        BaseTextPanel.addCheckTool (self, 
+            menu, 
+            idstring, 
+            func, 
+            menuText, 
+            buttonText, 
+            image, 
+            alwaysEnabled)
+
+        tool = self._tools[idstring]
+        self.enableTool (tool, self._isEnabledTool (tool))
 
 
     def Print (self):
@@ -194,24 +258,16 @@ class HtmlPanel(BaseTextPanel):
 
 
     def _isEnabledTool (self, tool):
+        if "notebook" not in dir (self):
+            return True
+
         assert self.notebook != None
         assert self.notebook.GetSelection() != -1
 
-        enabled = (self.notebook.GetSelection() == self.CODE_PAGE_INDEX or 
-                tool.alwaysEnabled)
+        enabled = (tool.alwaysEnabled or
+                self.notebook.GetSelection() == self.CODE_PAGE_INDEX)
 
         return enabled
-
-
-    def enableTool (self, tool, enabled):
-        """
-        Активировать или дезактивировать один инструмент (пункт меню и кнопку)
-        tool - экземпляр класса ToolsInfo
-        """
-        tool.menu.Enable (tool.id, enabled)
-
-        if self.mainWindow.mainToolbar.FindById (tool.id) != None:
-            self.mainWindow.mainToolbar.EnableTool (tool.id, enabled)
 
 
     def GetSearchPanel (self):
@@ -219,12 +275,6 @@ class HtmlPanel(BaseTextPanel):
             return self.codeEditor.searchPanel
 
         return None
-
-
-    def _removeTool (self, id):
-        if self.mainWindow.mainToolbar.FindById (id) != None:
-            self.mainWindow.mainToolbar.DeleteTool (id)
-        self.mainWindow.Unbind(wx.EVT_MENU, id=id)
 
 
     def _addRenderTools (self):
@@ -247,13 +297,6 @@ class HtmlPanel(BaseTextPanel):
             self.notebook.SetSelection (self.RESULT_PAGE_INDEX)
         else:
             self.notebook.SetSelection (self.CODE_PAGE_INDEX)
-
-
-    def removeGui (self):
-        for tool in self.allTools:
-            self._removeTool (tool.id)
-
-        BaseTextPanel.removeGui (self)
 
 
 
@@ -336,7 +379,6 @@ class HtmlPagePanel (HtmlPanel):
 
 
         self.mainWindow.mainMenu.Insert (self.__HTML_MENU_INDEX, self.__htmlMenu, _(u"H&tml"))
-        # self.mainWindow.mainToolbar.Realize()
 
 
     def __addFontTools (self):
@@ -588,5 +630,5 @@ class HtmlPagePanel (HtmlPanel):
 
 
     def removeGui (self):
-        HtmlPanel.removeGui (self)
+        BaseTextPanel.removeGui (self)
         self.mainWindow.mainMenu.Remove (self.__HTML_MENU_INDEX - 1)

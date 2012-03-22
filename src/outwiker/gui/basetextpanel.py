@@ -38,13 +38,6 @@ class BaseTextPanel (BasePagePanel):
         """
         pass
 
-    @abstractmethod
-    def _isEnabledTool (self, tool):
-        """
-        Возвращает True, если инструмент tool в данный момент должен быть активен или False в противном случае
-        """
-        pass
-
     
     def __init__ (self, parent, *args, **kwds):
         BasePagePanel.__init__ (self, parent, *args, **kwds)
@@ -60,10 +53,6 @@ class BaseTextPanel (BasePagePanel):
         # Используется для проверки того, что диалог уже показан и еще раз его показывать не надо
         self.externalEditDialog = None
 
-        self.ID_SEARCH = wx.NewId()
-        self.ID_SEARCH_NEXT = wx.NewId()
-        self.ID_SEARCH_PREV = wx.NewId()
-
         # Словарь, хранящий информацию о созданных инструментах 
         # Ключ - строка, описыывающая инструмент
         # Значение - экземпляр класса ToolsInfo
@@ -72,8 +61,7 @@ class BaseTextPanel (BasePagePanel):
         self.searchMenuIndex = 2
         self.imagesDir = outwiker.core.system.getImagesDir()
 
-        self._addMenuItems ()
-        self._addToolsItems ()
+        self._addSearchTools ()
 
         Application.onAttachmentPaste += self.onAttachmentPaste
         Application.onPreferencesDialogClose += self.onPreferencesDialogClose
@@ -225,46 +213,57 @@ class BaseTextPanel (BasePagePanel):
         assert self.mainWindow.mainMenu.GetMenuCount() >= 3
         assert self.searchMenu != None
 
-        self.mainWindow.Unbind(wx.EVT_MENU, id=self.ID_SEARCH)
-        self.mainWindow.Unbind(wx.EVT_MENU, id=self.ID_SEARCH_NEXT)
-        self.mainWindow.Unbind(wx.EVT_MENU, id=self.ID_SEARCH_PREV)
-
         self.mainWindow.mainMenu.Remove (self.searchMenuIndex)
         self.searchMenu = None
 
-        self.mainWindow.mainToolbar.DeleteTool (self.ID_SEARCH)
+        self._removeAllTools()
+
+
+    def _removeAllTools (self):
+        for toolKey in self._tools.keys():
+            self._removeTool (toolKey)
+
+
+    def _removeTool (self, toolKey):
+        tool = self._tools[toolKey]
+
+        if self.mainWindow.mainToolbar.FindById (tool.id) != None:
+            self.mainWindow.mainToolbar.DeleteTool (tool.id)
+        self.mainWindow.Unbind(wx.EVT_MENU, id=tool.id)
+
+        del self._tools[toolKey]
 
     
-    def _addMenuItems (self):
-        """
-        Добавить пункты меню
-        """
+    def _addSearchTools (self):
         assert self.mainWindow != None
-
         self.searchMenu = wx.Menu()
-
-        self.searchMenu.Append (self.ID_SEARCH, _(u"Search…\tCtrl+F"), "", wx.ITEM_NORMAL)
-        self.searchMenu.Append (self.ID_SEARCH_NEXT, _(u"Find next\tF3"), "", wx.ITEM_NORMAL)
-        self.searchMenu.Append (self.ID_SEARCH_PREV, _(u"Find previous\tShift+F3"), "", wx.ITEM_NORMAL)
-        
         self.mainWindow.mainMenu.Insert (self.searchMenuIndex, self.searchMenu, _("&Search") )
 
-        self.mainWindow.Bind(wx.EVT_MENU, self.onSearch, id=self.ID_SEARCH)
-        self.mainWindow.Bind(wx.EVT_MENU, self.onSearchNext, id=self.ID_SEARCH_NEXT)
-        self.mainWindow.Bind(wx.EVT_MENU, self.onSearchPrev, id=self.ID_SEARCH_PREV)
-    
-
-    def _addToolsItems (self):
-        self.mainWindow.mainToolbar.AddLabelTool(self.ID_SEARCH, 
+        self.addTool (self.searchMenu,
+                u"ID_BASE_SEARCH",
+                self.onSearch,
+                _(u"Search…\tCtrl+F"),
                 _(u"Search"),
-                wx.Bitmap(os.path.join (self.imagesDir, "local_search.png"), wx.BITMAP_TYPE_ANY), 
-                wx.NullBitmap, 
-                wx.ITEM_NORMAL, 
-                _(u"Search"),
-                "")
+                os.path.join (self.imagesDir, "local_search.png"),
+                False)
 
-        self.mainWindow.mainToolbar.Realize()
-    
+
+        self.addTool (self.searchMenu,
+                u"ID_BASE_SEARCH_PREV",
+                self.onSearchPrev,
+                _(u"Find previous\tShift+F3"),
+                "",
+                None,
+                False)
+
+        self.addTool (self.searchMenu,
+                u"ID_BASE_SEARCH_NEXT",
+                self.onSearchNext,
+                _(u"Find next\tF3"),
+                "",
+                None,
+                False)
+
 
     def _showSearchPanel (self, panel):
         if not panel.IsShown():
@@ -309,7 +308,7 @@ class BaseTextPanel (BasePagePanel):
         menuText -- название пунта меню
         buttonText -- подсказка для кнопки
         image -- имя файла с картинкой
-        disableOnView -- дизаблить кнопку при переключении на просмотр результата
+        alwaysEnabled -- Кнопка должна быть всегда активна
         """
         assert idstring not in self._tools
 
@@ -331,7 +330,16 @@ class BaseTextPanel (BasePagePanel):
 
             self.mainWindow.mainToolbar.Realize()
 
-        self.enableTool (tool, self._isEnabledTool (tool))
+
+    def enableTool (self, tool, enabled):
+        """
+        Активировать или дезактивировать один инструмент (пункт меню и кнопку)
+        tool - экземпляр класса ToolsInfo
+        """
+        tool.menu.Enable (tool.id, enabled)
+
+        if self.mainWindow.mainToolbar.FindById (tool.id) != None:
+            self.mainWindow.mainToolbar.EnableTool (tool.id, enabled)
 
 
     def addCheckTool (self, 
@@ -350,7 +358,7 @@ class BaseTextPanel (BasePagePanel):
         menuText -- название пунта меню
         buttonText -- подсказка для кнопки
         image -- имя файла с картинкой
-        disableOnView -- дизаблить кнопку при переключении на просмотр результата
+        alwaysEnabled -- Кнопка должна быть всегда активна
         """
         assert idstring not in self._tools
 
@@ -368,8 +376,6 @@ class BaseTextPanel (BasePagePanel):
                     buttonText)
 
             self.mainWindow.mainToolbar.Realize()
-
-        self.enableTool (tool, self._isEnabledTool (tool))
 
 
     def checkTools (self, idstring, checked):
