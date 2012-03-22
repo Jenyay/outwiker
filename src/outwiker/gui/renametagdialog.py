@@ -13,7 +13,9 @@ class RenameTagDialog(wx.Dialog):
         parent - родительское окно
         tagsList - список тегов для облака тегов (экземпляр класса TagsList)
         """
-        super(RenameTagDialog, self).__init__(parent)
+        super(RenameTagDialog, self).__init__(parent, 
+                style=wx.DEFAULT_DIALOG_STYLE|wx.RESIZE_BORDER|wx.THICK_FRAME)
+
         self.SetTitle (_(u"Rename tag"))
 
         self.__createControls(tagsList)

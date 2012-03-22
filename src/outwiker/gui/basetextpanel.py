@@ -213,10 +213,9 @@ class BaseTextPanel (BasePagePanel):
         assert self.mainWindow.mainMenu.GetMenuCount() >= 3
         assert self.searchMenu != None
 
+        self._removeAllTools()
         self.mainWindow.mainMenu.Remove (self.searchMenuIndex)
         self.searchMenu = None
-
-        self._removeAllTools()
 
 
     def _removeAllTools (self):

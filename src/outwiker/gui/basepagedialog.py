@@ -20,13 +20,13 @@ class BasePageDialog(wx.Dialog):
         """
         kwds["style"] = wx.DEFAULT_DIALOG_STYLE|wx.RESIZE_BORDER|wx.THICK_FRAME
         wx.Dialog.__init__(self, *args, **kwds)
-        self.titleLabel = wx.StaticText(self, -1, _(u"Title"))
-        self.titleTextCtrl = wx.TextCtrl(self, -1, "")
-        self.tagsSelector = TagsSelector (self)
-        self.typeLabel = wx.StaticText(self, -1, _(u"Page type"))
-        self.typeCombo = wx.ComboBox(self, -1, choices=[], style=wx.CB_DROPDOWN|wx.CB_DROPDOWN|wx.CB_READONLY)
-        self.iconLabel = wx.StaticText(self, -1, _(u"Icon"))
-        self.iconsList = IconListCtrl (self)
+
+        self.notebook = wx.Notebook (self, -1)
+        self.generalPanel = wx.Panel (self.notebook)
+        self.iconPanel = wx.Panel (self.notebook)
+
+        self.__createGeneralControls()
+        self.__createIconControls()
 
         self.__set_properties()
         self.__do_layout()
@@ -38,13 +38,47 @@ class BasePageDialog(wx.Dialog):
         self.titleTextCtrl.SetFocus()
 
 
+    def __createIconControls (self):
+        self.iconsList = IconListCtrl (self.iconPanel)
+
+
+    def __createGeneralControls (self):
+        self.titleLabel = wx.StaticText(self.generalPanel, -1, _(u"Title"))
+        self.titleTextCtrl = wx.TextCtrl(self.generalPanel, -1, "")
+        self.tagsSelector = TagsSelector (self.generalPanel)
+        self.typeLabel = wx.StaticText(self.generalPanel, -1, _(u"Page type"))
+        self.typeCombo = wx.ComboBox(self.generalPanel, -1, choices=[], style=wx.CB_DROPDOWN|wx.CB_DROPDOWN|wx.CB_READONLY)
+
+
     def __set_properties(self):
         self.SetTitle(_(u"Create Page"))
         self.SetSize((500, 350))
         self.titleTextCtrl.SetMinSize((350,-1))
         self.iconsList.SetMinSize((500, 150))
 
+
     def __do_layout(self):
+        self.notebook.AddPage (self.generalPanel, _("General"))
+        self.notebook.AddPage (self.iconPanel, _("Icon"))
+
+        self.__layoutGeneralTab()
+        self.__layoutIconTab()
+        self.__layoutMain()
+
+        self.Layout()
+        self.titleTextCtrl.SetFocus()
+
+
+    def __layoutMain (self):        
+        mainSizer = wx.FlexGridSizer(2, 1, 0, 0)
+        mainSizer.AddGrowableCol(0)
+        mainSizer.AddGrowableRow(0)
+        mainSizer.Add (self.notebook, 0, wx.EXPAND, 0)
+        self._createOkCancelButtons (mainSizer)
+        self.SetSizer(mainSizer)
+
+
+    def __layoutGeneralTab (self):
         titleSizer = wx.FlexGridSizer(1, 2, 0, 0)
         titleSizer.Add(self.titleLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 4)
         titleSizer.Add(self.titleTextCtrl, 0, wx.ALL|wx.EXPAND, 4)
@@ -55,19 +89,24 @@ class BasePageDialog(wx.Dialog):
         typeSizer.Add(self.typeCombo, 0, wx.ALL|wx.EXPAND, 4)
         typeSizer.AddGrowableCol(1)
 
-        mainSizer = wx.FlexGridSizer(6, 1, 0, 0)
-        mainSizer.AddGrowableRow(4)
-        mainSizer.AddGrowableCol(0)
-        mainSizer.Add(titleSizer, 1, wx.EXPAND, 0)
-        mainSizer.Add(typeSizer, 1, wx.EXPAND, 0)
-        mainSizer.Add(self.tagsSelector, 1, wx.EXPAND, 0)
-        mainSizer.Add(self.iconLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 4)
-        mainSizer.Add(self.iconsList, 1, wx.ALL|wx.EXPAND, 2)
-        self._createOkCancelButtons (mainSizer)
-        self.SetSizer(mainSizer)
+        generalSizer = wx.FlexGridSizer(3, 1, 0, 0)
+        generalSizer.AddGrowableRow(2)
+        generalSizer.AddGrowableCol(0)
+        generalSizer.Add(titleSizer, 0, wx.EXPAND, 0)
+        generalSizer.Add(typeSizer, 0, wx.EXPAND, 0)
+        generalSizer.Add(self.tagsSelector, 0, wx.EXPAND, 0)
 
-        self.Layout()
-        self.titleTextCtrl.SetFocus()
+        self.generalPanel.SetSizer (generalSizer)
+
+
+    def __layoutIconTab (self):
+        iconSizer = wx.FlexGridSizer(1, 1, 0, 0)
+        iconSizer.AddGrowableRow(0)
+        iconSizer.AddGrowableCol(0)
+        iconSizer.Add(self.iconsList, 1, wx.ALL|wx.EXPAND, 2)
+
+        self.iconPanel.SetSizer (iconSizer)
+
 
 
     def _setTagsList (self):
@@ -80,7 +119,6 @@ class BasePageDialog(wx.Dialog):
     def _createOkCancelButtons (self, sizer):
         # Создание кнопок Ok/Cancel
         buttonsSizer = self.CreateButtonSizer (wx.OK | wx.CANCEL)
-        sizer.AddSpacer(0)
         sizer.Add (buttonsSizer, 1, wx.ALIGN_RIGHT | wx.ALL, border = 2)
         self.Bind (wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
 
@@ -129,6 +167,5 @@ class BasePageDialog(wx.Dialog):
     def icon (self):
         return self.iconsList.icon
 
-# end of class BasePageDialog
 
 

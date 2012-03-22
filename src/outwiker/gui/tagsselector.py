@@ -48,15 +48,17 @@ class TagsSelector (wx.Panel):
 
 
     def __layout (self):
-        mainSizer = wx.BoxSizer(wx.VERTICAL)
         titleTextSizer = wx.FlexGridSizer (1, 2, 0, 0)
         titleTextSizer.AddGrowableCol(1)
 
         titleTextSizer.Add(self.label_tags, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 4)
         titleTextSizer.Add(self.tagsTextCtrl, 0, wx.ALL|wx.EXPAND, 0)
 
+        mainSizer = wx.FlexGridSizer (2, 1, 0, 0)
         mainSizer.Add (titleTextSizer, 0, wx.ALL|wx.EXPAND, 4)
         mainSizer.Add (self.__tagsCloud, 0, wx.ALL|wx.EXPAND, 4)
+        mainSizer.AddGrowableCol(0)
+        mainSizer.AddGrowableRow(1)
 
         self.SetSizer(mainSizer)
         self.Layout()
