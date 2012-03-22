@@ -22,11 +22,12 @@ class BasePageDialog(wx.Dialog):
         wx.Dialog.__init__(self, *args, **kwds)
 
         self.notebook = wx.Notebook (self, -1)
-        self.generalPanel = wx.Panel (self.notebook)
-        self.iconPanel = wx.Panel (self.notebook)
 
-        self.__createGeneralControls()
-        self.__createIconControls()
+        self.generalPanel = GeneralPanel (self.notebook)
+        self.iconPanel = IconPanel (self.notebook)
+
+        self.notebook.AddPage (self.generalPanel, _("General"))
+        self.notebook.AddPage (self.iconPanel, _("Icon"))
 
         self.__set_properties()
         self.__do_layout()
@@ -35,41 +36,15 @@ class BasePageDialog(wx.Dialog):
         self._fillComboType()
         self._setTagsList()
 
-        self.titleTextCtrl.SetFocus()
-
-
-    def __createIconControls (self):
-        self.iconsList = IconListCtrl (self.iconPanel)
-
-
-    def __createGeneralControls (self):
-        self.titleLabel = wx.StaticText(self.generalPanel, -1, _(u"Title"))
-        self.titleTextCtrl = wx.TextCtrl(self.generalPanel, -1, "")
-        self.tagsSelector = TagsSelector (self.generalPanel)
-        self.typeLabel = wx.StaticText(self.generalPanel, -1, _(u"Page type"))
-        self.typeCombo = wx.ComboBox(self.generalPanel, -1, choices=[], style=wx.CB_DROPDOWN|wx.CB_DROPDOWN|wx.CB_READONLY)
+        self.generalPanel.titleTextCtrl.SetFocus()
 
 
     def __set_properties(self):
         self.SetTitle(_(u"Create Page"))
         self.SetSize((500, 350))
-        self.titleTextCtrl.SetMinSize((350,-1))
-        self.iconsList.SetMinSize((500, 150))
 
 
     def __do_layout(self):
-        self.notebook.AddPage (self.generalPanel, _("General"))
-        self.notebook.AddPage (self.iconPanel, _("Icon"))
-
-        self.__layoutGeneralTab()
-        self.__layoutIconTab()
-        self.__layoutMain()
-
-        self.Layout()
-        self.titleTextCtrl.SetFocus()
-
-
-    def __layoutMain (self):        
         mainSizer = wx.FlexGridSizer(2, 1, 0, 0)
         mainSizer.AddGrowableCol(0)
         mainSizer.AddGrowableRow(0)
@@ -77,8 +52,78 @@ class BasePageDialog(wx.Dialog):
         self._createOkCancelButtons (mainSizer)
         self.SetSizer(mainSizer)
 
+        self.Layout()
 
-    def __layoutGeneralTab (self):
+
+    def _setTagsList (self):
+        assert Application.wikiroot != None
+
+        tagslist = TagsList (Application.wikiroot)
+        self.generalPanel.tagsSelector.setTagsList (tagslist)
+    
+
+    def _createOkCancelButtons (self, sizer):
+        # Создание кнопок Ok/Cancel
+        buttonsSizer = self.CreateButtonSizer (wx.OK | wx.CANCEL)
+        sizer.Add (buttonsSizer, 1, wx.ALIGN_RIGHT | wx.ALL, border = 2)
+        self.Bind (wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
+
+    
+    def _fillComboType (self):
+        self.generalPanel.typeCombo.Clear()
+        for factory in FactorySelector.factories:
+            self.generalPanel.typeCombo.Append (factory.title, factory)
+
+        if not self.generalPanel.typeCombo.IsEmpty():
+            self.generalPanel.typeCombo.SetSelection (0)
+    
+
+    def _setComboPageType (self, pageTypeString):
+        """
+        Установить тип страницы в диалоге по строке, описывающей тип страницы
+        """
+        n = 0
+        for factory in FactorySelector.factories:
+            if factory.getTypeString() == FactorySelector.getFactory(pageTypeString).getTypeString():
+                self.generalPanel.typeCombo.SetSelection (n)
+                break
+            n += 1
+
+
+    @property
+    def selectedFactory (self):
+        index = self.generalPanel.typeCombo.GetSelection()
+        return self.generalPanel.typeCombo.GetClientData (index)
+
+
+    @property
+    def pageTitle (self):
+        return self.generalPanel.titleTextCtrl.GetValue().strip()
+
+
+    @property
+    def tags (self):
+        return self.generalPanel.tagsSelector.tags
+
+
+    @property
+    def icon (self):
+        return self.iconPanel.iconsList.icon
+
+
+
+class GeneralPanel (wx.Panel):
+    """
+    Класс панели, расположенной на вкладке "Общее"
+    """
+    def __init__ (self, parent):
+        super (GeneralPanel, self).__init__ (parent)
+
+        self.__createGeneralControls()
+        self.__layout ()
+
+
+    def __layout (self):
         titleSizer = wx.FlexGridSizer(1, 2, 0, 0)
         titleSizer.Add(self.titleLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 4)
         titleSizer.Add(self.titleTextCtrl, 0, wx.ALL|wx.EXPAND, 4)
@@ -96,76 +141,45 @@ class BasePageDialog(wx.Dialog):
         generalSizer.Add(typeSizer, 0, wx.EXPAND, 0)
         generalSizer.Add(self.tagsSelector, 0, wx.EXPAND, 0)
 
-        self.generalPanel.SetSizer (generalSizer)
+        self.SetSizer (generalSizer)
+        self.Layout()
 
 
-    def __layoutIconTab (self):
+    def __createGeneralControls (self):
+        self.titleLabel = wx.StaticText(self, -1, _(u"Title"))
+        
+        self.titleTextCtrl = wx.TextCtrl(self, -1, "")
+        self.titleTextCtrl.SetMinSize((350, -1))
+
+        self.tagsSelector = TagsSelector (self)
+        self.typeLabel = wx.StaticText(self, -1, _(u"Page type"))
+
+        self.typeCombo = wx.ComboBox(self, 
+                -1, 
+                choices=[], 
+                style=wx.CB_DROPDOWN|wx.CB_DROPDOWN|wx.CB_READONLY)
+
+
+
+
+class IconPanel (wx.Panel):
+    """
+    Класс панели, расположенной на вкладке "Значок"
+    """
+    def __init__ (self, parent):
+        super (IconPanel, self).__init__ (parent)
+
+        self.iconsList = IconListCtrl (self)
+        self.iconsList.SetMinSize((200, 150))
+
+        self.__layout()
+
+
+    def __layout (self):
         iconSizer = wx.FlexGridSizer(1, 1, 0, 0)
         iconSizer.AddGrowableRow(0)
         iconSizer.AddGrowableCol(0)
         iconSizer.Add(self.iconsList, 1, wx.ALL|wx.EXPAND, 2)
 
-        self.iconPanel.SetSizer (iconSizer)
-
-
-
-    def _setTagsList (self):
-        assert Application.wikiroot != None
-
-        tagslist = TagsList (Application.wikiroot)
-        self.tagsSelector.setTagsList (tagslist)
-    
-
-    def _createOkCancelButtons (self, sizer):
-        # Создание кнопок Ok/Cancel
-        buttonsSizer = self.CreateButtonSizer (wx.OK | wx.CANCEL)
-        sizer.Add (buttonsSizer, 1, wx.ALIGN_RIGHT | wx.ALL, border = 2)
-        self.Bind (wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
-
-        sizer.Fit(self)
+        self.SetSizer (iconSizer)
         self.Layout()
-
-    
-    def _fillComboType (self):
-        self.typeCombo.Clear()
-        for factory in FactorySelector.factories:
-            self.typeCombo.Append (factory.title, factory)
-
-        if not self.typeCombo.IsEmpty():
-            self.typeCombo.SetSelection (0)
-    
-
-    def _setComboPageType (self, pageTypeString):
-        """
-        Установить тип страницы в диалоге по строке, описывающей тип страницы
-        """
-        n = 0
-        for factory in FactorySelector.factories:
-            if factory.getTypeString() == FactorySelector.getFactory(pageTypeString).getTypeString():
-                self.typeCombo.SetSelection (n)
-                break
-            n += 1
-
-
-    @property
-    def selectedFactory (self):
-        index = self.typeCombo.GetSelection()
-        return self.typeCombo.GetClientData (index)
-
-
-    @property
-    def pageTitle (self):
-        return self.titleTextCtrl.GetValue().strip()
-
-
-    @property
-    def tags (self):
-        return self.tagsSelector.tags
-
-
-    @property
-    def icon (self):
-        return self.iconsList.icon
-
-
-

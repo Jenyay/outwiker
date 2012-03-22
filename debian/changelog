@@ -1,3 +1,9 @@
+outwiker (1.6.0-630) oneiric; urgency=low
+
+  * Изменение интерфейса диалога свойств страниц
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Thu, 22 Mar 2012 21:38:45 +0400
+
 outwiker (1.6.0-629) oneiric; urgency=low
 
   * Рефакторинг панелей для страниц

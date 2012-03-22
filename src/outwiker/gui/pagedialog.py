@@ -128,13 +128,13 @@ class CreatePageDialog (BasePageDialog):
         self._setComboPageType(self.lastCreatedPageType.value)
 
         if parentPage.parent != None:
-            self.tagsSelector.tags = parentPage.tags
+            self.generalPanel.tagsSelector.tags = parentPage.tags
     
 
     def onOk (self, event):
         if not testPageTitle (self.pageTitle):
-            self.titleTextCtrl.SetFocus()
-            self.titleTextCtrl.SetSelection (-1, -1)
+            self.generalPanel.titleTextCtrl.SetFocus()
+            self.generalPanel.titleTextCtrl.SetSelection (-1, -1)
             return
 
         if (self.parentPage != None and
@@ -155,33 +155,33 @@ class EditPageDialog (BasePageDialog):
 
         self.SetTitle(_(u"Edit page properties"))
         self._prepareForChange (currentPage)
-        self.titleTextCtrl.SetFocus()
-        self.titleTextCtrl.SetSelection (-1, -1)
+        self.generalPanel.titleTextCtrl.SetFocus()
+        self.generalPanel.titleTextCtrl.SetSelection (-1, -1)
 
 
     def _prepareForChange (self, currentPage):
         """
         Подготовить диалог к редактированию свойств страницы
         """
-        self.tagsSelector.tags = currentPage.tags
+        self.generalPanel.tagsSelector.tags = currentPage.tags
         
         # Запретить изменять заголовок
-        self.titleTextCtrl.SetValue (currentPage.title)
+        self.generalPanel.titleTextCtrl.SetValue (currentPage.title)
 
         # Установить тип страницы
         self._setComboPageType(currentPage.getTypeString())
-        self.typeCombo.Disable ()
+        self.generalPanel.typeCombo.Disable ()
 
         # Добавить текущую иконку
         icon = currentPage.icon
         if icon != None:
-            self.iconsList.addCurrentIcon (icon)
+            self.iconPanel.iconsList.addCurrentIcon (icon)
 
 
     def onOk (self, event):
         if not testPageTitle (self.pageTitle):
-            self.titleTextCtrl.SetFocus()
-            self.titleTextCtrl.SetSelection (-1, -1)
+            self.generalPanel.titleTextCtrl.SetFocus()
+            self.generalPanel.titleTextCtrl.SetSelection (-1, -1)
             return
 
         if not self.currentPage.canRename (self.pageTitle):
