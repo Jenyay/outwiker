@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 from abc import ABCMeta, abstractproperty
-from command import Command
+from outwiker.pages.wiki.parser.command import Command
 
 
 class LjCommand (Command):

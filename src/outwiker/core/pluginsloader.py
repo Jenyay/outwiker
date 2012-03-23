@@ -156,7 +156,7 @@ class PluginsLoader (object):
                 package = __import__ (packageName + "." + modulename)
                 return getattr (package, modulename)
             except ImportError as e:
-                # print str (e)
+                # print "*** {modulename}\n{error}\n".format (modulename=modulename, error=str(e))
                 # Ну не шмогли импортировать, тогда этот модуль игнорируем
                 pass
 
@@ -191,8 +191,7 @@ class PluginsLoader (object):
             try:
                 plugin = obj (self.__application)
             except BaseException as e:
-                print str (obj)
-                print e
+                print "*** {classname}\n{error}\n".format (classname=name, error=str(e))
                 return
 
             if not self.__isNewPlugin (plugin.name):

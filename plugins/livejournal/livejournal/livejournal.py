@@ -1,16 +1,19 @@
-#!/usr/bin/env python
+#!/usr/bin/python
 # -*- coding: UTF-8 -*-
+
 
 import os.path
 
 from outwiker.core.pluginbase import Plugin
 from outwiker.core.system import getOS
+from outwiker.core.commands import getCurrentVersion
+from outwiker.core.version import Version, StatusSet
 from outwiker.pages.wiki.wikipanel import WikiPagePanel
 
-from .commandspoiler import SpoilerCommand
+from .ljcommand import LjUserCommand, LjCommunityCommand
 
 
-class PluginSpoiler (Plugin):
+class PluginLivejournal (Plugin):
     """
     Плагин, добавляющий обработку команды spoiler в википарсер
     """
@@ -18,16 +21,16 @@ class PluginSpoiler (Plugin):
         """
         application - экземпляр класса core.application.ApplicationParams
         """
+        # Для работы этого плагина тербуется версия OutWiker 1.6.0.631
+        if getCurrentVersion() < Version (1, 6, 0, 631, status=StatusSet.DEV):
+            raise BaseException ("OutWiker version requirement: 1.6.0.631")
+
         Plugin.__init__ (self, application)
-        self.__maxCommandIndex = 9
 
 
     def __onWikiParserPrepare (self, parser):
-        parser.addCommand (SpoilerCommand (parser, "spoiler", _))
-
-        for index in range (self.__maxCommandIndex + 1):
-            commandname = "spoiler{index}".format (index=index)
-            parser.addCommand (SpoilerCommand (parser, commandname, _) )
+        parser.addCommand (LjUserCommand (parser))
+        parser.addCommand (LjCommunityCommand (parser))
 
 
     ###################################################
@@ -41,7 +44,7 @@ class PluginSpoiler (Plugin):
 
 
     def __initlocale (self):
-        domain = u"spoiler"
+        domain = u"livejournal"
 
         langdir = unicode (os.path.join (os.path.dirname (__file__), "locale"), getOS().filesEncoding)
         global _
@@ -50,6 +53,7 @@ class PluginSpoiler (Plugin):
             _ = self._init_i18n (domain, langdir)
         except BaseException as e:
             print e
+        pass
 
 
     def __onPageViewCreate(self, page):
@@ -61,32 +65,26 @@ class PluginSpoiler (Plugin):
 
         pageView = self.__getPageView()
 
-        helpString = _(u"Collapse text (:spoiler:)")
-        image = self.__getButtonImage ()
+        pageView.addTool (pageView.commandsMenu, 
+                "ID_LJUSER", 
+                lambda event: pageView.codeEditor.turnText (u"(:ljuser ", u":)"), 
+                _(u"Livejournal User (:ljuser ...:)"), 
+                _(u"Livejournal User (:ljuser ...:)"), 
+                self.__getButtonImage ("ljuser.gif"),
+                False)
 
         pageView.addTool (pageView.commandsMenu, 
-                "ID_PLUGIN_SPOILER", 
-                self.__onInsertCommand, 
-                helpString, 
-                helpString, 
-                image)
+                "ID_LJCOMM", 
+                lambda event: pageView.codeEditor.turnText (u"(:ljcomm ", u":)"), 
+                _(u"Livejournal Community (:ljcomm ...:)"), 
+                _(u"Livejournal Community (:ljcomm ...:)"), 
+                self.__getButtonImage ("ljcommunity.gif"),
+                False)
+
         
-        # Начиная с OutWiker 1.6 следующая строка будет не нужна
-        self._application.mainWindow.mainToolbar.Realize()
-
-
-    def __getButtonImage (self):
+    def __getButtonImage (self, fname):
         imagedir = unicode (os.path.join (os.path.dirname (__file__), "images"), getOS().filesEncoding)
-        fname = os.path.join (imagedir, "spoiler.png")
-        return fname
-
-
-    def __onInsertCommand (self, event):
-        startCommand = u'(:spoiler:)\n'
-        endCommand = u'\n(:spoilerend:)'
-
-        pageView = self.__getPageView()
-        pageView.codeEditor.turnText (startCommand, endCommand)
+        return os.path.join (imagedir, fname)
 
 
     def __getPageView (self):
@@ -101,44 +99,22 @@ class PluginSpoiler (Plugin):
 
     @property
     def name (self):
-        return u"Spoiler"
+        return u"Livejournal"
 
     
     @property
     def description (self):
-        return _(u"""Add command (:spoiler:) in wiki parser.
+        return _(u"""Add commands (:ljuser:) and (:ljcomm:) in wiki parser.
 
 <B>Usage:</B>
-<PRE>(:spoiler:)
-Text
-(:spoilerend:)</PRE>
-
-For nested spoilers use (:spoiler0:), (:spoiler1:)... (:spoiler9:) commands. 
-
-<U>Example:</U>
-
-<PRE>(:spoiler:)
-Text
-&nbsp;&nbsp;&nbsp;(:spoiler1:)
-&nbsp;&nbsp;&nbsp;Nested spoiler
-&nbsp;&nbsp;&nbsp;(:spoiler1end:)
-(:spoilerend:)</PRE>
-
-<B>Params:</B>
-<U>expandtext</U> - Link text for the collapsed spoiler. Default: "Expand".
-<U>collapsetext</U> - Link text for the expanded spoiler. Default: "Collapse".
-
-<U>Example:</U>
-
-<PRE>(:spoiler expandtext="More..." collapsetext="Less":)
-Text
-(:spoilerend:)</PRE>
+(:ljuser username:)
+(:ljcomm communityname:)
 """)
 
 
     @property
     def version (self):
-        return u"1.0.1"
+        return u"1.0"
 
 
     def destroy (self):

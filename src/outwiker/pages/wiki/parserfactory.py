@@ -5,7 +5,6 @@ from parser.wikiparser import Parser
 from parser.commandinclude import IncludeCommand
 from parser.commandchildlist import ChildListCommand
 from parser.commandattachlist import AttachListCommand
-from parser.commandbloggers import LjUserCommand, LjCommunityCommand
 from outwiker.core.application import Application
 
 
@@ -15,7 +14,7 @@ class ParserFactory (object):
     """
     def __init__ (self):
         # Список типов команд. Экземпляры команд создаются при заполнении командами парсера
-        self.__commands = [IncludeCommand, ChildListCommand, LjUserCommand, LjCommunityCommand, AttachListCommand]
+        self.__commands = [IncludeCommand, ChildListCommand, AttachListCommand]
 
 
     def make (self, page, config):

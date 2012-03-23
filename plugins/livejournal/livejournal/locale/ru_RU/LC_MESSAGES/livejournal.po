@@ -1,0 +1,45 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: livejournal\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-03-23 22:54+0400\n"
+"PO-Revision-Date: 2012-03-23 22:57+0300\n"
+"Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
+"Language-Team: jenyay.net <jenyay.ilin@gmail.com>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Russian\n"
+"X-Poedit-Country: RUSSIAN FEDERATION\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: livejournal.py:71
+#: livejournal.py:72
+msgid "Livejournal User (:ljuser ...:)"
+msgstr "Пользователь Livejournal (:ljuser ...:)"
+
+#: livejournal.py:79
+#: livejournal.py:80
+msgid "Livejournal Community (:ljcomm ...:)"
+msgstr "Сообщество Livejournal (:ljcomm ...:)"
+
+#: livejournal.py:107
+msgid ""
+"Add commands (:ljuser:) and (:ljcomm:) in wiki parser.\n"
+"\n"
+"<B>Usage:</B>\n"
+"(:ljuser username:)\n"
+"(:ljcomm communityname:)\n"
+msgstr ""
+"Добавляет викикоманды (:ljuser:) и (:ljcomm:) для вставки ссылок на пользователя и сообщество livejournal.com соответственно.\n"
+"\n"
+"<B>Использование:</B>\n"
+"(:ljuser username:)\n"
+"(:ljcomm communityname:)\n"
+

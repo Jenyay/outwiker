@@ -383,21 +383,6 @@ class WikiPagePanel (HtmlPanel):
         self.__wikiMenu.AppendSubMenu (self.commandsMenu, _(u"Commands"))
 
         self.addTool (self.commandsMenu, 
-                "ID_LJUSER", 
-                lambda event: self.codeEditor.turnText (u"(:ljuser ", u":)"), 
-                _(u"Livejournal User (:ljuser ...:)"), 
-                _(u"Livejournal User (:ljuser ...:)"), 
-                None)
-
-        self.addTool (self.commandsMenu, 
-                "ID_LJCOMM", 
-                lambda event: self.codeEditor.turnText (u"(:ljcomm ", u":)"), 
-                _(u"Livejournal Community (:ljcomm ...:)"), 
-                _(u"Livejournal Community (:ljcomm ...:)"), 
-                None)
-
-
-        self.addTool (self.commandsMenu, 
                 "ID_ATTACHLIST", 
                 lambda event: self.codeEditor.replaceText (u"(:attachlist:)"), 
                 _(u"Attachment (:attachlist:)"), 
@@ -410,7 +395,6 @@ class WikiPagePanel (HtmlPanel):
                 _(u"Children (:childlist:)"), 
                 _(u"Children (:childlist:)"), 
                 None)
-
 
         self.addTool (self.commandsMenu, 
                 "ID_INCLUDE", 

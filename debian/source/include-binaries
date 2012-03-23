@@ -50,3 +50,7 @@ src/help/help_en/Key Features/Using tags/__icon.png
 plugins/spoiler/spoiler/images/spoiler.png
 plugins/spoiler/spoiler/locale/ru_RU/LC_MESSAGES/spoiler.mo
 plugins/spoiler/spoiler/locale/en/LC_MESSAGES/spoiler.mo
+plugins/livejournal/livejournal/images/ljcommunity.gif
+plugins/livejournal/livejournal/images/ljuser.gif
+plugins/livejournal/livejournal/locale/ru_RU/LC_MESSAGES/livejournal.mo
+plugins/livejournal/livejournal/locale/en/LC_MESSAGES/livejournal.mo
