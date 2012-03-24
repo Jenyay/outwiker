@@ -21,7 +21,7 @@ class PluginLivejournal (Plugin):
         """
         application - экземпляр класса core.application.ApplicationParams
         """
-        # Для работы этого плагина тербуется версия OutWiker 1.6.0.631
+        # Для работы этого плагина требуется версия OutWiker 1.6.0.631
         if getCurrentVersion() < Version (1, 6, 0, 631, status=StatusSet.DEV):
             raise BaseException ("OutWiker version requirement: 1.6.0.631")
 

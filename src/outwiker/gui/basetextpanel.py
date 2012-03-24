@@ -220,17 +220,20 @@ class BaseTextPanel (BasePagePanel):
 
     def _removeAllTools (self):
         for toolKey in self._tools.keys():
-            self._removeTool (toolKey)
+            self.removeTool (toolKey)
 
 
-    def _removeTool (self, toolKey):
-        tool = self._tools[toolKey]
+    def removeTool (self, idstring):
+        tool = self._tools[idstring]
 
         if self.mainWindow.mainToolbar.FindById (tool.id) != None:
             self.mainWindow.mainToolbar.DeleteTool (tool.id)
+
+        tool.menu.Remove (tool.id)
+        
         self.mainWindow.Unbind(wx.EVT_MENU, id=tool.id)
 
-        del self._tools[toolKey]
+        del self._tools[idstring]
 
     
     def _addSearchTools (self):

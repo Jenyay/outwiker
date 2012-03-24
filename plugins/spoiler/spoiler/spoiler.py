@@ -1,10 +1,21 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
+# Плагин для вставки свернутого текста
+# История версий
+# 1.1
+#    * Исправлены ошибки, связанные с отключением плагина
+#    * Требуется минимальная версия OutWiker - 1.6.0.632
+# 1.0
+#    * Первый релиз
+
+
 import os.path
 
 from outwiker.core.pluginbase import Plugin
 from outwiker.core.system import getOS
+from outwiker.core.commands import getCurrentVersion
+from outwiker.core.version import Version, StatusSet
 from outwiker.pages.wiki.wikipanel import WikiPagePanel
 
 from .commandspoiler import SpoilerCommand
@@ -18,8 +29,13 @@ class PluginSpoiler (Plugin):
         """
         application - экземпляр класса core.application.ApplicationParams
         """
+        # Для работы этого плагина требуется OutWiker 1.6.0.632
+        if getCurrentVersion() < Version (1, 6, 0, 632, status=StatusSet.DEV):
+            raise BaseException ("OutWiker version requirement: 1.6.0.632")
+
         Plugin.__init__ (self, application)
         self.__maxCommandIndex = 9
+        self.SPOILER_TOOL_ID = u"PLUGIN_SPOILER_TOOL_ID"
 
 
     def __onWikiParserPrepare (self, parser):
@@ -39,6 +55,9 @@ class PluginSpoiler (Plugin):
         self._application.onPageViewCreate += self.__onPageViewCreate
         self.__initlocale()
 
+        if self._isCurrentWikiPage:
+            self.__onPageViewCreate (self._application.selectedPage)
+
 
     def __initlocale (self):
         domain = u"spoiler"
@@ -52,11 +71,17 @@ class PluginSpoiler (Plugin):
             print e
 
 
+    @property
+    def _isCurrentWikiPage (self):
+        return (self._application.selectedPage != None and
+                self._application.selectedPage.getTypeString() == u"wiki")
+
+
     def __onPageViewCreate(self, page):
         """Обработка события после создания представления страницы"""
         assert self._application.mainWindow != None
 
-        if page.getTypeString() != u"wiki":
+        if not self._isCurrentWikiPage:
             return
 
         pageView = self.__getPageView()
@@ -65,15 +90,12 @@ class PluginSpoiler (Plugin):
         image = self.__getButtonImage ()
 
         pageView.addTool (pageView.commandsMenu, 
-                "ID_PLUGIN_SPOILER", 
+                self.SPOILER_TOOL_ID, 
                 self.__onInsertCommand, 
                 helpString, 
                 helpString, 
                 image)
         
-        # Начиная с OutWiker 1.6 следующая строка будет не нужна
-        self._application.mainWindow.mainToolbar.Realize()
-
 
     def __getButtonImage (self):
         imagedir = unicode (os.path.join (os.path.dirname (__file__), "images"), getOS().filesEncoding)
@@ -138,14 +160,17 @@ Text
 
     @property
     def version (self):
-        return u"1.0.1"
+        return u"1.1"
 
 
     def destroy (self):
         """
-        Уничтожение (выгрузка) плагина. Здесь плагин должен отписаться от всех событий
+        Уничтожение (выгрузка) плагина. Здесь плагин должен отписаться от всех событий и удалить свои кнопки, пункты меню и т.п.
         """
         self._application.onWikiParserPrepare -= self.__onWikiParserPrepare
         self._application.onPageViewCreate -= self.__onPageViewCreate
+
+        if self._isCurrentWikiPage:
+            pageView = self.__getPageView().removeTool (self.SPOILER_TOOL_ID)
 
     #############################################

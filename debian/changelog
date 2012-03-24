@@ -1,3 +1,9 @@
+outwiker (1.6.0-632) oneiric; urgency=low
+
+  * 
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Sat, 24 Mar 2012 09:03:23 +0400
+
 outwiker (1.6.0-631) oneiric; urgency=low
 
   * Команды ljuser и ljcomm вынес в отдельный плагин
