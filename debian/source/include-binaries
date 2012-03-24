@@ -54,3 +54,5 @@ plugins/livejournal/livejournal/images/ljcommunity.gif
 plugins/livejournal/livejournal/images/ljuser.gif
 plugins/livejournal/livejournal/locale/ru_RU/LC_MESSAGES/livejournal.mo
 plugins/livejournal/livejournal/locale/en/LC_MESSAGES/livejournal.mo
+plugins/style/style/locale/ru_RU/LC_MESSAGES/style.mo
+plugins/style/style/locale/en/LC_MESSAGES/style.mo

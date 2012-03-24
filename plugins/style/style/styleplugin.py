@@ -141,6 +141,6 @@ body {background-color: #EEE;}
         self._application.onPageViewCreate -= self.__onPageViewCreate
 
         if self._isCurrentWikiPage:
-            pageView = self.__getPageView().removeTool (self.STYLE_TOOL_ID)
+            self.__getPageView().removeTool (self.STYLE_TOOL_ID)
 
     #############################################

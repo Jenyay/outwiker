@@ -171,6 +171,6 @@ Text
         self._application.onPageViewCreate -= self.__onPageViewCreate
 
         if self._isCurrentWikiPage:
-            pageView = self.__getPageView().removeTool (self.SPOILER_TOOL_ID)
+            self.__getPageView().removeTool (self.SPOILER_TOOL_ID)
 
     #############################################

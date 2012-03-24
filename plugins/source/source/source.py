@@ -5,9 +5,11 @@ import os.path
 import sys
 
 from outwiker.core.pluginbase import Plugin
+from outwiker.core.system import getOS
+from outwiker.core.commands import getCurrentVersion
+from outwiker.core.version import Version, StatusSet
 from outwiker.pages.wiki.wikipanel import WikiPagePanel
 from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
-from outwiker.core.system import getOS
 
 from .sourceconfig import SourceConfig
 
@@ -20,22 +22,40 @@ class PluginSource (Plugin):
         """
         application - экземпляр класса core.application.ApplicationParams
         """
+        # Для работы этого плагина требуется OutWiker 1.6.0.632
+        if getCurrentVersion() < Version (1, 6, 0, 632, status=StatusSet.DEV):
+            raise BaseException ("OutWiker version requirement: 1.6.0.632")
+
         Plugin.__init__ (self, application)
-        self.__version = u"1.3.0"
+        self.__version = u"1.4.0"
+        self.SOURCE_TOOL_ID = u"PLUGIN_SOURCE_TOOL_ID"
+
+
+    @property
+    def _isCurrentWikiPage (self):
+        return (self._application.selectedPage != None and
+                self._application.selectedPage.getTypeString() == u"wiki")
 
 
     def initialize(self):
         self.__initlocale()
 
+        self.__correctSysPath()
+
+        self._application.onWikiParserPrepare += self.__onWikiParserPrepare
+        self._application.onPageViewCreate += self.__onPageViewCreate
+        self._application.onPreferencesDialogCreate += self.__onPreferencesDialogCreate
+
+        if self._isCurrentWikiPage:
+            self.__onPageViewCreate (self._application.selectedPage)
+
+
+    def __correctSysPath (self):
         cmd_folder = unicode (os.path.dirname(os.path.abspath(__file__)), getOS().filesEncoding )
         syspath = [unicode (item, getOS().filesEncoding) if type (item) != type(u"") else item for item in sys.path]
 
         if cmd_folder not in syspath:
             sys.path.insert(0, cmd_folder)
-
-        self._application.onWikiParserPrepare += self.__onWikiParserPrepare
-        self._application.onPageViewCreate += self.__onPageViewCreate
-        self._application.onPreferencesDialogCreate += self.__onPreferencesDialogCreate
 
     
     def __onWikiParserPrepare (self, parser):
@@ -63,7 +83,7 @@ class PluginSource (Plugin):
 
         helpString = _(u"Source Code (:source ...:)")
         pageView.addTool (pageView.commandsMenu, 
-                "ID_PLUGIN_SOURCE", 
+                self.SOURCE_TOOL_ID, 
                 self.__onInsertCommand, 
                 helpString, 
                 helpString, 
@@ -151,3 +171,7 @@ if __name__ == "__main__":
         """
         self._application.onWikiParserPrepare -= self.__onWikiParserPrepare
         self._application.onPageViewCreate -= self.__onPageViewCreate
+        self._application.onPreferencesDialogCreate -= self.__onPreferencesDialogCreate
+
+        if self._isCurrentWikiPage:
+            self.__getPageView().removeTool (self.SOURCE_TOOL_ID)
