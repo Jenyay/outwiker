@@ -21,11 +21,13 @@ class PluginLivejournal (Plugin):
         """
         application - экземпляр класса core.application.ApplicationParams
         """
-        # Для работы этого плагина требуется версия OutWiker 1.6.0.631
-        if getCurrentVersion() < Version (1, 6, 0, 631, status=StatusSet.DEV):
-            raise BaseException ("OutWiker version requirement: 1.6.0.631")
+        # Для работы этого плагина требуется версия OutWiker 1.6.0.632
+        if getCurrentVersion() < Version (1, 6, 0, 632, status=StatusSet.DEV):
+            raise BaseException ("OutWiker version requirement: 1.6.0.632")
 
         Plugin.__init__ (self, application)
+        self.ID_LJUSER = u"PLUGIN_LIVEJOURNAL_LJUSER_ID"
+        self.ID_LJCOMMUNITY = u"PLUGIN_LIVEJOURNAL_LJCOMMUNITY_ID"
 
 
     def __onWikiParserPrepare (self, parser):
@@ -42,6 +44,9 @@ class PluginLivejournal (Plugin):
         self._application.onPageViewCreate += self.__onPageViewCreate
         self.__initlocale()
 
+        if self._isCurrentWikiPage:
+            self.__onPageViewCreate (self._application.selectedPage)
+
 
     def __initlocale (self):
         domain = u"livejournal"
@@ -56,17 +61,23 @@ class PluginLivejournal (Plugin):
         pass
 
 
+    @property
+    def _isCurrentWikiPage (self):
+        return (self._application.selectedPage != None and
+                self._application.selectedPage.getTypeString() == u"wiki")
+
+
     def __onPageViewCreate(self, page):
         """Обработка события после создания представления страницы"""
         assert self._application.mainWindow != None
 
-        if page.getTypeString() != u"wiki":
+        if not self._isCurrentWikiPage:
             return
 
         pageView = self.__getPageView()
 
         pageView.addTool (pageView.commandsMenu, 
-                "ID_LJUSER", 
+                self.ID_LJUSER, 
                 lambda event: pageView.codeEditor.turnText (u"(:ljuser ", u":)"), 
                 _(u"Livejournal User (:ljuser ...:)"), 
                 _(u"Livejournal User (:ljuser ...:)"), 
@@ -74,7 +85,7 @@ class PluginLivejournal (Plugin):
                 False)
 
         pageView.addTool (pageView.commandsMenu, 
-                "ID_LJCOMM", 
+                self.ID_LJCOMMUNITY, 
                 lambda event: pageView.codeEditor.turnText (u"(:ljcomm ", u":)"), 
                 _(u"Livejournal Community (:ljcomm ...:)"), 
                 _(u"Livejournal Community (:ljcomm ...:)"), 
@@ -123,5 +134,9 @@ class PluginLivejournal (Plugin):
         """
         self._application.onWikiParserPrepare -= self.__onWikiParserPrepare
         self._application.onPageViewCreate -= self.__onPageViewCreate
+
+        if self._isCurrentWikiPage:
+            self.__getPageView().removeTool (self.ID_LJUSER)
+            self.__getPageView().removeTool (self.ID_LJCOMMUNITY)
 
     #############################################
