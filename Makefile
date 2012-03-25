@@ -53,6 +53,8 @@ plugin:
 	cd plugins/export2html; 7z a -r -aoa -xr!*.pyc ../../build/plugins/export2html.zip ./*
 	rm -f build/plugins/spoiler.zip
 	cd plugins/spoiler; 7z a -r -aoa -xr!*.pyc ../../build/plugins/spoiler.zip ./*
+	rm -f build/plugins/livejournal.zip
+	cd plugins/livejournal; 7z a -r -aoa -xr!*.pyc ../../build/plugins/livejournal.zip ./*
 
 wintests:
 	python src\\setup_tests.py build

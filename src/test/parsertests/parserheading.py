@@ -233,14 +233,6 @@ class ParserHeadingTest (unittest.TestCase):
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
 
-    def testHeaderLjUser (self):
-        text = u"бла-бла-бла \n!!! Заголовок (:ljuser jenyay:)\nбла-бла-бла"
-
-        result = u"бла-бла-бла \n<H2>Заголовок <span class='ljuser ljuser-name_jenyay' lj:user='jenyay' style='white-space:nowrap'><a href='http://jenyay.livejournal.com/profile'><img src='http://l-stat.livejournal.com/img/userinfo.gif?v=3' alt='[info]' width='17' height='17' style='vertical-align: bottom; border: 0; padding-right: 1px;'/></a><a href='http://jenyay.livejournal.com/'><b>jenyay</b></a></span></H2>\nбла-бла-бла"
-
-        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
-
-
     def testHeaderTex (self):
         text = u"бла-бла-бла \n!!! Заголовок {$e^x$}\nбла-бла-бла"
         result_parse = self.parser.toHtml (text)

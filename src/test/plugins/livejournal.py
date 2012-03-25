@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import unittest
@@ -14,21 +14,28 @@ from outwiker.pages.wiki.htmlgenerator import HtmlGenerator
 from test.utils import removeWiki
 
 
-class StylePluginTest (unittest.TestCase):
+class LivejournalPluginTest (unittest.TestCase):
     def setUp(self):
-        self.encoding = "866"
+        self.__pluginname = u"Livejournal"
 
         self.filesPath = u"../test/samplefiles/"
         self.__createWiki()
 
-        dirlist = [u"../plugins/style"]
+        dirlist = [u"../plugins/livejournal"]
 
         self.loader = PluginsLoader(Application)
         self.loader.load (dirlist)
         
         self.factory = ParserFactory()
         self.parser = self.factory.make (self.testPage, Application.config)
-    
+
+
+    def __readFile (self, path):
+        with open (path) as fp:
+            result = unicode (fp.read(), "utf8")
+
+        return result
+
 
     def __createWiki (self):
         # Здесь будет создаваться вики
@@ -50,72 +57,27 @@ class StylePluginTest (unittest.TestCase):
         self.assertEqual ( len (self.loader), 1)
 
 
-    def testStyleContentParse (self):
-        text = u"""Бла-бла-бла
-(:style:)
-body {font-size: 33px}
-(:styleend:)
-бла-бла-бла
-"""
+    def testUser1 (self):
+        text = u"бла-бла-бла (:ljuser  a_str:)"
 
-        validResult = u"""Бла-бла-бла
-
-бла-бла-бла
-"""
-        styleresult = u"<STYLE>body {font-size: 33px}</STYLE>"
-
-        result = self.parser.toHtml (text)
-        self.assertEqual (result, validResult)
-        self.assertTrue (styleresult in self.parser.head)
-
-
-    def testFullHtml (self):
-        text = u"""Бла-бла-бла
-(:style:)
-body {font-size: 33px}
-(:styleend:)
-бла-бла-бла
-"""
         self.testPage.content = text
 
         generator = HtmlGenerator (self.testPage)
         htmlpath = generator.makeHtml ()
         result = self.__readFile (htmlpath)
 
-        validStyle = u"<STYLE>body {font-size: 33px}</STYLE>"
+        self.assertTrue (u"бла-бла-бла" in result)
+        self.assertTrue (u"""<span class='ljuser ljuser-name_a_str' lj:user='a_str' style='white-space:nowrap'><a href='http://a-str.livejournal.com/profile'><img src='http://l-stat.livejournal.com/img/userinfo.gif?v=3' alt='[info]' width='17' height='17' style='vertical-align: bottom; border: 0; padding-right: 1px;'/></a><a href='http://a-str.livejournal.com/'><b>a_str</b></a></span>""" in result)
 
-        self.assertTrue (validStyle in result, result)
 
+    def testCommunity1 (self):
+        text = u"бла-бла-бла  (:ljcomm american_gangst:)"
 
-    def testFullHtml2 (self):
-        text = u"""Бла-бла-бла
-(:style:)
-body {font-size: 33px}
-(:styleend:)
-
-sdfsdf sdf
-
-(:style:)
-body {font-size: 10px}
-(:styleend:)
-
-бла-бла-бла
-"""
         self.testPage.content = text
 
         generator = HtmlGenerator (self.testPage)
         htmlpath = generator.makeHtml ()
         result = self.__readFile (htmlpath)
 
-        validStyle1 = u"<STYLE>body {font-size: 33px}</STYLE>"
-        validStyle2 = u"<STYLE>body {font-size: 10px}</STYLE>"
-
-        self.assertTrue (validStyle1 in result, result)
-        self.assertTrue (validStyle2 in result, result)
-
-
-    def __readFile (self, path):
-        with open (path) as fp:
-            result = unicode (fp.read(), "utf8")
-
-        return result
+        self.assertTrue (u"бла-бла-бла" in result)
+        self.assertTrue (u"""<span class='ljuser ljuser-name_american_gangst' lj:user='american_gangst' style='white-space:nowrap'><a href='http://american-gangst.livejournal.com/profile'><img src='http://l-stat.livejournal.com/img/community.gif?v=3' alt='[info]' width='16' height='16' style='vertical-align: bottom; border: 0; padding-right: 1px;'/></a><a href='http://american-gangst.livejournal.com/'><b>american_gangst</b></a></span>""" in result)

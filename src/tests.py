@@ -54,7 +54,7 @@ if __name__ == '__main__':
 
     from test.parsertests.wikicommands import WikiCommandsTest
     from test.parsertests.wikicommandinclude import WikiIncludeCommandTest
-    from test.parsertests.wikicommandbloggers import WikiBloggersCommandTest
+    # from test.parsertests.wikicommandbloggers import WikiBloggersCommandTest
     from test.parsertests.wikicommandchildlist import WikiChildListCommandTest
     from test.parsertests.wikicommandattachlist import WikiAttachListCommandTest
     from test.parsertests.wikicommandcounter import WikiCounterCommandTest
@@ -93,6 +93,7 @@ if __name__ == '__main__':
     from test.plugins.source import SourcePluginTest
     from test.plugins.export2html import Export2HtmlTest
     from test.plugins.spoiler import SpoilerPluginTest
+    from test.plugins.livejournal import LivejournalPluginTest
 
     if os.name == "nt":
         from test.guitests.uriidentifiers import UriIdentifierIETest
