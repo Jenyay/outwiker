@@ -35,22 +35,16 @@ else:
             parser.addCommand (LjCommunityCommand (parser))
 
 
-        ###################################################
-        # Свойства и методы, которые необходимо определить
-        ###################################################
-
         def initialize(self):
             self._application.onWikiParserPrepare += self.__onWikiParserPrepare
             self._application.onPageViewCreate += self.__onPageViewCreate
-            self.__initlocale()
+            self._initlocale("livejournal")
 
             if self._isCurrentWikiPage:
                 self.__onPageViewCreate (self._application.selectedPage)
 
 
-        def __initlocale (self):
-            domain = u"livejournal"
-
+        def _initlocale (self, domain):
             langdir = unicode (os.path.join (os.path.dirname (__file__), "locale"), getOS().filesEncoding)
             global _
 
@@ -58,7 +52,6 @@ else:
                 _ = self._init_i18n (domain, langdir)
             except BaseException as e:
                 print e
-            pass
 
 
         @property
@@ -74,14 +67,14 @@ else:
             if not self._isCurrentWikiPage:
                 return
 
-            pageView = self.__getPageView()
+            pageView = self._getPageView()
 
             pageView.addTool (pageView.commandsMenu, 
                     self.ID_LJUSER, 
                     lambda event: pageView.codeEditor.turnText (u"(:ljuser ", u":)"), 
                     _(u"Livejournal User (:ljuser ...:)"), 
                     _(u"Livejournal User (:ljuser ...:)"), 
-                    self.__getButtonImage ("ljuser.gif"),
+                    self._getImagePath ("ljuser.gif"),
                     False)
 
             pageView.addTool (pageView.commandsMenu, 
@@ -89,23 +82,20 @@ else:
                     lambda event: pageView.codeEditor.turnText (u"(:ljcomm ", u":)"), 
                     _(u"Livejournal Community (:ljcomm ...:)"), 
                     _(u"Livejournal Community (:ljcomm ...:)"), 
-                    self.__getButtonImage ("ljcommunity.gif"),
+                    self._getImagePath ("ljcommunity.gif"),
                     False)
 
             
-        def __getButtonImage (self, fname):
+        def _getImagePath (self, fname):
             imagedir = unicode (os.path.join (os.path.dirname (__file__), "images"), getOS().filesEncoding)
             return os.path.join (imagedir, fname)
 
 
-        def __getPageView (self):
+        def _getPageView (self):
             """
             Получить указатель на панель представления страницы
             """
-            pageView = self._application.mainWindow.pagePanel.pageView
-            assert type (pageView) == WikiPagePanel
-
-            return pageView
+            return self._application.mainWindow.pagePanel.pageView
 
 
         @property
@@ -117,10 +107,10 @@ else:
         def description (self):
             return _(u"""Add commands (:ljuser:) and (:ljcomm:) in wiki parser.
 
-    <B>Usage:</B>
-    (:ljuser username:)
-    (:ljcomm communityname:)
-    """)
+<B>Usage:</B>
+(:ljuser username:)
+(:ljcomm communityname:)
+""")
 
 
         @property
@@ -136,7 +126,5 @@ else:
             self._application.onPageViewCreate -= self.__onPageViewCreate
 
             if self._isCurrentWikiPage:
-                self.__getPageView().removeTool (self.ID_LJUSER)
-                self.__getPageView().removeTool (self.ID_LJCOMMUNITY)
-
-        #############################################
+                self._getPageView().removeTool (self.ID_LJUSER)
+                self._getPageView().removeTool (self.ID_LJCOMMUNITY)

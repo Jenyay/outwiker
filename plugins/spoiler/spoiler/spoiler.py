@@ -45,22 +45,16 @@ else:
                 parser.addCommand (SpoilerCommand (parser, commandname, _) )
 
 
-        ###################################################
-        # Свойства и методы, которые необходимо определить
-        ###################################################
-
         def initialize(self):
             self._application.onWikiParserPrepare += self.__onWikiParserPrepare
             self._application.onPageViewCreate += self.__onPageViewCreate
-            self.__initlocale()
+            self._initlocale(u"spoiler")
 
             if self._isCurrentWikiPage:
                 self.__onPageViewCreate (self._application.selectedPage)
 
 
-        def __initlocale (self):
-            domain = u"spoiler"
-
+        def _initlocale (self, domain):
             langdir = unicode (os.path.join (os.path.dirname (__file__), "locale"), getOS().filesEncoding)
             global _
 
@@ -83,10 +77,10 @@ else:
             if not self._isCurrentWikiPage:
                 return
 
-            pageView = self.__getPageView()
+            pageView = self._getPageView()
 
             helpString = _(u"Collapse text (:spoiler:)")
-            image = self.__getButtonImage ()
+            image = self._getImagePath ()
 
             pageView.addTool (pageView.commandsMenu, 
                     self.SPOILER_TOOL_ID, 
@@ -96,7 +90,7 @@ else:
                     image)
             
 
-        def __getButtonImage (self):
+        def _getImagePath (self):
             imagedir = unicode (os.path.join (os.path.dirname (__file__), "images"), getOS().filesEncoding)
             fname = os.path.join (imagedir, "spoiler.png")
             return fname
@@ -106,18 +100,15 @@ else:
             startCommand = u'(:spoiler:)\n'
             endCommand = u'\n(:spoilerend:)'
 
-            pageView = self.__getPageView()
+            pageView = self._getPageView()
             pageView.codeEditor.turnText (startCommand, endCommand)
 
 
-        def __getPageView (self):
+        def _getPageView (self):
             """
             Получить указатель на панель представления страницы
             """
-            pageView = self._application.mainWindow.pagePanel.pageView
-            assert type (pageView) == WikiPagePanel
-
-            return pageView
+            return self._application.mainWindow.pagePanel.pageView
 
 
         @property
@@ -129,32 +120,32 @@ else:
         def description (self):
             return _(u"""Add command (:spoiler:) in wiki parser.
 
-    <B>Usage:</B>
-    <PRE>(:spoiler:)
-    Text
-    (:spoilerend:)</PRE>
+<B>Usage:</B>
+<PRE>(:spoiler:)
+Text
+(:spoilerend:)</PRE>
 
-    For nested spoilers use (:spoiler0:), (:spoiler1:)... (:spoiler9:) commands. 
+For nested spoilers use (:spoiler0:), (:spoiler1:)... (:spoiler9:) commands. 
 
-    <U>Example:</U>
+<U>Example:</U>
 
-    <PRE>(:spoiler:)
-    Text
-    &nbsp;&nbsp;&nbsp;(:spoiler1:)
-    &nbsp;&nbsp;&nbsp;Nested spoiler
-    &nbsp;&nbsp;&nbsp;(:spoiler1end:)
-    (:spoilerend:)</PRE>
+<PRE>(:spoiler:)
+Text
+&nbsp;&nbsp;&nbsp;(:spoiler1:)
+&nbsp;&nbsp;&nbsp;Nested spoiler
+&nbsp;&nbsp;&nbsp;(:spoiler1end:)
+(:spoilerend:)</PRE>
 
-    <B>Params:</B>
-    <U>expandtext</U> - Link text for the collapsed spoiler. Default: "Expand".
-    <U>collapsetext</U> - Link text for the expanded spoiler. Default: "Collapse".
+<B>Params:</B>
+<U>expandtext</U> - Link text for the collapsed spoiler. Default: "Expand".
+<U>collapsetext</U> - Link text for the expanded spoiler. Default: "Collapse".
 
-    <U>Example:</U>
+<U>Example:</U>
 
-    <PRE>(:spoiler expandtext="More..." collapsetext="Less":)
-    Text
-    (:spoilerend:)</PRE>
-    """)
+<PRE>(:spoiler expandtext="More..." collapsetext="Less":)
+Text
+(:spoilerend:)</PRE>
+""")
 
 
         @property
@@ -170,6 +161,4 @@ else:
             self._application.onPageViewCreate -= self.__onPageViewCreate
 
             if self._isCurrentWikiPage:
-                self.__getPageView().removeTool (self.SPOILER_TOOL_ID)
-
-        #############################################
+                self._getPageView().removeTool (self.SPOILER_TOOL_ID)

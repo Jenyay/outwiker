@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-23 22:54+0400\n"
+"POT-Creation-Date: 2012-03-25 17:55+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,15 +17,15 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: livejournal.py:71 livejournal.py:72
+#: livejournal.py:79 livejournal.py:80
 msgid "Livejournal User (:ljuser ...:)"
 msgstr ""
 
-#: livejournal.py:79 livejournal.py:80
+#: livejournal.py:87 livejournal.py:88
 msgid "Livejournal Community (:ljcomm ...:)"
 msgstr ""
 
-#: livejournal.py:107
+#: livejournal.py:112
 msgid ""
 "Add commands (:ljuser:) and (:ljcomm:) in wiki parser.\n"
 "\n"

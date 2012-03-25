@@ -38,7 +38,7 @@ else:
 
 
         def initialize(self):
-            self.__initlocale()
+            self._initlocale(u"source")
 
             self.__correctSysPath()
 
@@ -79,7 +79,7 @@ else:
             if page.getTypeString() != u"wiki":
                 return
 
-            pageView = self.__getPageView()
+            pageView = self._getPageView()
 
             helpString = _(u"Source Code (:source ...:)")
             pageView.addTool (pageView.commandsMenu, 
@@ -90,14 +90,11 @@ else:
                     None)
 
 
-        def __getPageView (self):
+        def _getPageView (self):
             """
             Получить указатель на панель представления страницы
             """
-            pageView = self._application.mainWindow.pagePanel.pageView
-            assert type (pageView) == WikiPagePanel
-
-            return pageView
+            return self._application.mainWindow.pagePanel.pageView
 
 
         @property
@@ -115,7 +112,7 @@ else:
 
             endCommand = u'\n(:sourceend:)'
 
-            pageView = self.__getPageView()
+            pageView = self._getPageView()
             pageView.codeEditor.turnText (startCommand, endCommand)
 
 
@@ -128,24 +125,24 @@ else:
         def description (self):
             return _(u"""Add command (:source:) in wiki parser. This command highlight your source code.
 
-    <B>Usage:</B>:
-    (:source params... :)
-    source code
-    (:sourceend:)
+<B>Usage:</B>:
+(:source params... :)
+source code
+(:sourceend:)
 
-    <B>Params:</B>
-    <I>lang</I> - programming language
-    <I>tabwidth</I> - tab size
+<B>Params:</B>
+<I>lang</I> - programming language
+<I>tabwidth</I> - tab size
 
-    <B>Example:</B>
-    <PRE>(:source lang="python" tabwidth=4:)
-    import os
+<B>Example:</B>
+<PRE>(:source lang="python" tabwidth=4:)
+import os
 
-    if __name__ == "__main__":
-        print "Hello World!"
-    (:sourceend:)
-    </PRE>
-    """)
+if __name__ == "__main__":
+    print "Hello World!"
+(:sourceend:)
+</PRE>
+""")
 
 
         @property
@@ -153,9 +150,7 @@ else:
             return self.__version
 
 
-        def __initlocale (self):
-            domain = u"source"
-
+        def _initlocale (self, domain):
             langdir = unicode (os.path.join (os.path.dirname (__file__), "locale"), getOS().filesEncoding)
             global _
 
@@ -174,4 +169,4 @@ else:
             self._application.onPreferencesDialogCreate -= self.__onPreferencesDialogCreate
 
             if self._isCurrentWikiPage:
-                self.__getPageView().removeTool (self.SOURCE_TOOL_ID)
+                self._getPageView().removeTool (self.SOURCE_TOOL_ID)

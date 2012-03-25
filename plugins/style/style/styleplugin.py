@@ -32,10 +32,6 @@ else:
             parser.addCommand (StyleCommand (parser))
 
 
-        ###################################################
-        # Свойства и методы, которые необходимо определить
-        ###################################################
-
         @property
         def name (self):
             return u"Style"
@@ -45,16 +41,16 @@ else:
         def description (self):
             return _(u"""Add command (:style:) to wiki parser. This command allow the setting of a user CSS style for a page.
 
-    <B>Usage</B>:
-    (:style:)
-    styles
-    (:styleend:)
+<B>Usage</B>:
+(:style:)
+styles
+(:styleend:)
 
-    <B>Example:</B>
-    (:style:)
-    body {background-color: #EEE;}
-    (:styleend:)
-    """)
+<B>Example:</B>
+(:style:)
+body {background-color: #EEE;}
+(:styleend:)
+""")
 
 
         @property
@@ -65,15 +61,13 @@ else:
         def initialize(self):
             self._application.onWikiParserPrepare += self.__onWikiParserPrepare
             self._application.onPageViewCreate += self.__onPageViewCreate
-            self.__initlocale()
+            self._initlocale(u"style")
 
             if self._isCurrentWikiPage:
                 self.__onPageViewCreate (self._application.selectedPage)
 
 
-        def __initlocale (self):
-            domain = u"style"
-
+        def _initlocale (self, domain):
             langdir = unicode (os.path.join (os.path.dirname (__file__), "locale"), getOS().filesEncoding)
             global _
 
@@ -90,10 +84,9 @@ else:
             if not self._isCurrentWikiPage:
                 return
 
-            pageView = self.__getPageView()
+            pageView = self._getPageView()
 
             helpString = _(u"Custom Style (:style:)")
-            # image = self.__getButtonImage ()
 
             pageView.addTool (pageView.commandsMenu, 
                     self.STYLE_TOOL_ID, 
@@ -103,28 +96,19 @@ else:
                     None)
             
 
-        # def __getButtonImage (self):
-        #     imagedir = unicode (os.path.join (os.path.dirname (__file__), "images"), getOS().filesEncoding)
-        #     fname = os.path.join (imagedir, "style.png")
-        #     return fname
-
-
         def __onInsertCommand (self, event):
             startCommand = u'(:style:)\n'
             endCommand = u'\n(:styleend:)'
 
-            pageView = self.__getPageView()
+            pageView = self._getPageView()
             pageView.codeEditor.turnText (startCommand, endCommand)
 
 
-        def __getPageView (self):
+        def _getPageView (self):
             """
             Получить указатель на панель представления страницы
             """
-            pageView = self._application.mainWindow.pagePanel.pageView
-            assert type (pageView) == WikiPagePanel
-
-            return pageView
+            return self._application.mainWindow.pagePanel.pageView
 
 
         @property
@@ -141,6 +125,4 @@ else:
             self._application.onPageViewCreate -= self.__onPageViewCreate
 
             if self._isCurrentWikiPage:
-                self.__getPageView().removeTool (self.STYLE_TOOL_ID)
-
-        #############################################
+                self._getPageView().removeTool (self.STYLE_TOOL_ID)

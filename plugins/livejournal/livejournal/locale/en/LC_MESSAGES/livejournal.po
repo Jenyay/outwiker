@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: livejournal\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-23 22:54+0400\n"
-"PO-Revision-Date: 2012-03-23 22:55+0300\n"
+"POT-Creation-Date: 2012-03-25 17:55+0400\n"
+"PO-Revision-Date: 2012-03-25 17:55+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: jenyay.net <jenyay.ilin@gmail.com>\n"
 "Language: \n"
@@ -19,17 +19,17 @@ msgstr ""
 "X-Poedit-Country: UNITED STATES\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#: livejournal.py:71
-#: livejournal.py:72
+#: livejournal.py:79
+#: livejournal.py:80
 msgid "Livejournal User (:ljuser ...:)"
 msgstr "Livejournal User (:ljuser ...:)"
 
-#: livejournal.py:79
-#: livejournal.py:80
+#: livejournal.py:87
+#: livejournal.py:88
 msgid "Livejournal Community (:ljcomm ...:)"
 msgstr "Livejournal Community (:ljcomm ...:)"
 
-#: livejournal.py:107
+#: livejournal.py:112
 msgid ""
 "Add commands (:ljuser:) and (:ljcomm:) in wiki parser.\n"
 "\n"
