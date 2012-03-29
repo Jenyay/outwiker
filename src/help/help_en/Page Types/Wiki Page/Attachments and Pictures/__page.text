@@ -44,7 +44,7 @@ Thumbnails are created in a "__thumb" subdirectory within a attachments director
 
 || [=[[Attach:file.txt]]=] || [[Attach:file.txt]] || Link to an attached file. [[<<]]Same as the previous variant. ||
 
-|| [=Attach:small_image.jpg=] || [[Attach:small_image.jpg]] || Link to an attached picture ||
+|| [=[[Attach:small_image.jpg]]=] || [[Attach:small_image.jpg]] || Link to an attached picture ||
 
 || [=[[Attach:file.txt | Attached file]]=]|| [[Attach:file.txt | Attached file]] || Link to an attached file with a comment ||
 
