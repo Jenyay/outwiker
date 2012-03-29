@@ -53,7 +53,6 @@ class MainWindow(wx.Frame):
         self.controller = MainWndController (self)
         self.controller.loadMainWindowParams()
 
-
         self.auiManager = wx.aui.AuiManager(self)
         self.__createAuiPanes ()
         self.__panesController = MainPanesController (self, self.auiManager)
@@ -66,6 +65,10 @@ class MainWindow(wx.Frame):
         # self.setFullscreen(self.mainWindowConfig.fullscreen.value)
         self.__panesController.updateViewMenu()
         self.Show()
+
+        if self.mainWindowConfig.maximized.value:
+            self.Maximize()
+
         self.taskBarIcon = OutwikerTrayIcon(self)
 
 
@@ -161,7 +164,8 @@ class MainWindow(wx.Frame):
         """
         try:
             if not self.IsIconized():
-                if not self.IsFullScreen():
+                if (not self.IsFullScreen() and
+                        not self.IsMaximized()):
                     (width, height) = self.GetSizeTuple()
                     (xpos, ypos) = self.GetPositionTuple()
 
@@ -180,6 +184,7 @@ class MainWindow(wx.Frame):
                     self.mainWindowConfig.yPos.value = ypos
 
                 self.mainWindowConfig.fullscreen.value = self.IsFullScreen()
+                self.mainWindowConfig.maximized.value = self.IsMaximized()
 
                 self.__panesController.savePanesParams()
         except Exception, e:

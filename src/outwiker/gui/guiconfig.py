@@ -342,6 +342,10 @@ class MainWindowConfig (object):
     FULLSCREEN_SECTION = u"fullscreen"
     FULLSCREEN_DEFAULT = False
 
+    MAXIMIZED_SECTION = u"maximized"
+    MAXIMIZED_DEFAULT = False
+
+
     def __init__ (self, config):
         self.config = config
 
@@ -374,6 +378,11 @@ class MainWindowConfig (object):
                 MainWindowConfig.MAIN_WINDOW_SECTION, 
                 self.FULLSCREEN_SECTION,
                 self.FULLSCREEN_DEFAULT)
+
+        self.maximized = BooleanOption (self.config, 
+                MainWindowConfig.MAIN_WINDOW_SECTION, 
+                self.MAXIMIZED_SECTION,
+                self.MAXIMIZED_DEFAULT)
 
 
 
