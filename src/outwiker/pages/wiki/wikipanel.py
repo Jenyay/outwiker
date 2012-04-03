@@ -12,7 +12,7 @@ from outwiker.core.htmlimprover import HtmlImprover
 from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
 
-from outwiker.gui.texteditor import TextEditor
+from .wikieditor import WikiEditor
 from outwiker.gui.basetextpanel import BaseTextPanel
 from outwiker.gui.htmltexteditor import HtmlTextEditor
 from outwiker.pages.html.htmlpanel import HtmlPanel
@@ -62,7 +62,7 @@ class WikiPagePanel (HtmlPanel):
     
 
     def GetTextEditor(self):
-        return TextEditor
+        return WikiEditor
 
 
     def GetSearchPanel (self):

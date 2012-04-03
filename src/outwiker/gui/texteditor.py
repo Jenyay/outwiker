@@ -108,6 +108,8 @@ class TextEditor(wx.Panel):
         isBold = self.config.fontIsBold.value
         isItalic = self.config.fontIsItalic.value
 
+        self.textCtrl.StyleClearAll()
+
         self.textCtrl.StyleSetSize (wx.stc.STC_STYLE_DEFAULT, size)
         self.textCtrl.StyleSetFaceName (wx.stc.STC_STYLE_DEFAULT, faceName)
         self.textCtrl.StyleSetBold (wx.stc.STC_STYLE_DEFAULT, isBold)
