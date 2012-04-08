@@ -14,35 +14,23 @@ class WikiEditor (TextEditor):
         self.STYLE_ITALIC_ID = 2
         self.style_italic = "italic"
 
+        self.STYLE_BOLD_ITALIC_ID = self.STYLE_BOLD_ID | self.STYLE_ITALIC_ID
+        self.style_bold_italic = "bold,italic"
+
         self._stylelist = []
 
         super (WikiEditor, self).__init__ (parent)
 
         self.bolded = FontsFactory.makeBold (None).setParseAction(lambda s, l, t: None).setResultsName ("bold")
         self.italic = FontsFactory.makeItalic (None).setParseAction(lambda s, l, t: None).setResultsName ("italic")
+        self.bold_italic = FontsFactory.makeBoldItalic (None).setParseAction(lambda s, l, t: None).setResultsName ("bold_italic")
 
-        self.colorParser = self.bolded | self.italic
+        self.colorParser = self.bold_italic | self.bolded | self.italic 
 
         self.textCtrl.Bind (wx.stc.EVT_STC_STYLENEEDED, self.onStyleNeeded)
         self.textCtrl.Bind (wx.stc.EVT_STC_CHANGE, self.onChange)
 
         self.__styleSet = False
-
-    
-    # def _applyBoldStyle (self, s, loc, toks):
-        # text = self.textCtrl.GetText()
-
-        # bytepos_start = self.calcBytePos (text, loc)
-        # byte_len = self.calcByteLen (toks[0])
-        # bytepos_end = bytepos_start + byte_len
-
-        # self._stylelist[bytepos_start: bytepos_end] = [self.STYLE_BOLD_ID] * byte_len
-        # print "_applyBoldStyle start"
-        # print loc
-        # print toks
-        # print "_applyBoldStyle end"
-        # pass
-
 
 
     def setDefaultSettings (self):
@@ -57,6 +45,9 @@ class WikiEditor (TextEditor):
 
         self._setStyleDafault (self.STYLE_ITALIC_ID)
         self.textCtrl.StyleSetSpec (self.STYLE_ITALIC_ID, self.style_italic)
+
+        self._setStyleDafault (self.STYLE_BOLD_ITALIC_ID)
+        self.textCtrl.StyleSetSpec (self.STYLE_BOLD_ITALIC_ID, self.style_bold_italic)
 
 
     def _setStyleDafault (self, styleId):
@@ -78,33 +69,7 @@ class WikiEditor (TextEditor):
         textlength = self.calcByteLen (text)
         self._stylelist = [0] * textlength
 
-        # tmp = self.colorParser.searchString (text)
-        tmp = self.colorParser.scanString (text)
-        # print tmp
-        for item in tmp:
-            pos_start = item[1]
-            pos_end = item[2]
-
-            # print item[0]
-
-            # print "for start"
-            # print item[0].getName()
-            # print item[1]
-            # print item[2]
-            # print "for end"
-            # print 
-
-            # # Нас интересует позиция в байтах, а не в символах
-            bytepos_start = self.calcBytePos (text, pos_start)
-            bytepos_end = self.calcBytePos (text, pos_end)
-            text_byte_len = bytepos_end - bytepos_start
-
-            # Применим стиль
-            if item[0].getName() == "bold":
-                self._stylelist[bytepos_start: bytepos_end] = [self.STYLE_BOLD_ID] * text_byte_len
-            elif item[0].getName() == "italic":
-                self._stylelist[bytepos_start: bytepos_end] = [self.STYLE_ITALIC_ID] * text_byte_len
-            # pass
+        self._colorizeText (text, 0, textlength, self.colorParser, self._stylelist)
 
         stylebytes = "".join ([chr(byte) for byte in self._stylelist])
 
@@ -112,3 +77,35 @@ class WikiEditor (TextEditor):
         self.textCtrl.SetStyleBytes (textlength, stylebytes)
 
         self.__styleSet = True
+
+
+    def _colorizeText (self, text, start, end, parser, stylelist):
+        tokens = self.colorParser.scanString (text[start: end])
+        for token in tokens:
+            pos_start = token[1] + start
+            pos_end = token[2] + start
+
+            # Нас интересует позиция в байтах, а не в символах
+            bytepos_start = self.calcBytePos (text, pos_start)
+            bytepos_end = self.calcBytePos (text, pos_end)
+
+            # Применим стиль
+            if token[0].getName() == "bold":
+                self._addStyle (stylelist, self.STYLE_BOLD_ID, bytepos_start, bytepos_end)
+                self._colorizeText (text, pos_start + 3, pos_end - 3, parser, stylelist)
+            elif token[0].getName() == "italic":
+                self._addStyle (stylelist, self.STYLE_ITALIC_ID, bytepos_start, bytepos_end)
+                self._colorizeText (text, pos_start + 3, pos_end - 3, parser, stylelist)
+            elif token[0].getName() == "bold_italic":
+                self._addStyle (stylelist, self.STYLE_BOLD_ITALIC_ID, bytepos_start, bytepos_end)
+                self._colorizeText (text, pos_start + 4, pos_end - 4, parser, stylelist)
+
+
+    def _addStyle (self, stylelist, styleid, bytepos_start, bytepos_end):
+        """
+        Добавляет стиль с идентификатором styleid к массиву stylelist
+        """
+        style_src = stylelist[bytepos_start: bytepos_end]
+        style_new = [style | styleid for style in style_src]
+        
+        stylelist[bytepos_start: bytepos_end] = style_new
