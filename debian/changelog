@@ -1,3 +1,9 @@
+outwiker (1.6.0-635) oneiric; urgency=low
+
+  * Раскраска викисинтаксиса в редакторе
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Mon, 09 Apr 2012 10:31:14 +0400
+
 outwiker (1.6.0-634) oneiric; urgency=low
 
   * Раскраска викисинтаксиса в редакторе
