@@ -1,10 +1,16 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
+import wx
+
+import threading
+
 from parser.tokenfonts import FontsFactory
 from parser.tokenheading import HeadingFactory
 from parser.tokencommand import CommandFactory
 from parser.tokenlink import LinkFactory
+
+ApplyStyleEvent, EVT_APPLY_STYLE = wx.lib.newevent.NewEvent()
 
 
 class WikiColorizer (object):
@@ -35,20 +41,20 @@ class WikiColorizer (object):
                 self.italic | 
                 self.link)
 
-        self._isRun = False
+        self._thread = None
 
 
     def start (self, text):
-        if self._isRun:
-            return
+        if (self._thread == None or
+                not self._thread.isAlive()):
+            self._thread = threading.Thread (None, self._threadFunc, args=(text,))
+            self._thread.start()
 
+
+    def _threadFunc (self, text):
         stylebytes = self._startColorize (text)
-
-        currentText = self._editor.getTextForParse ()
-        if currentText == text:
-            self._editor.applyStyles (stylebytes)
-
-        self._isRun = False
+        event = ApplyStyleEvent (text=text, stylebytes=stylebytes)
+        wx.PostEvent (self._editor, event)
 
 
     def _startColorize (self, text):

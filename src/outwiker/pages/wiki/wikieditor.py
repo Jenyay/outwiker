@@ -4,7 +4,9 @@
 import wx.stc
 
 from outwiker.gui.texteditor import TextEditor
-from .wikicolorizer import WikiColorizer
+from .wikicolorizer import WikiColorizer, EVT_APPLY_STYLE
+
+# Событие вызывается с помощью PostEvent для потокобезопасного применения стилей к редактору
 
 
 class WikiEditor (TextEditor):
@@ -34,6 +36,7 @@ class WikiEditor (TextEditor):
         self.textCtrl.Bind (wx.EVT_IDLE, self.onStyleNeeded)
         # self.textCtrl.Bind (wx.stc.EVT_STC_STYLENEEDED, self.onStyleNeeded)
         self.textCtrl.Bind (wx.stc.EVT_STC_CHANGE, self.onChange)
+        self.Bind (EVT_APPLY_STYLE, self._onApplyStyle)
 
         self.__styleSet = False
 
@@ -106,7 +109,12 @@ class WikiEditor (TextEditor):
         self._colorizer.start (text)
 
 
-    def applyStyles (self, stylebytes):
+    def _onApplyStyle (self, event):
+        if event.text == self.getTextForParse():
+            self._applyStyles (event.stylebytes)
+    
+
+    def _applyStyles (self, stylebytes):
         self.textCtrl.StartStyling (0, 0xff)
         self.textCtrl.SetStyleBytes (len (stylebytes), stylebytes)
         self.__styleSet = True
