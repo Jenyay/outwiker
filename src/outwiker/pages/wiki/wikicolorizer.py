@@ -2,6 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 import wx
+import wx.stc
 
 import threading
 
@@ -64,7 +65,7 @@ class WikiColorizer (object):
 
     def _startColorize (self, text):
         textlength = self._editor.calcByteLen (text)
-        stylelist = [0] * textlength
+        stylelist = [wx.stc.STC_STYLE_DEFAULT] * textlength
 
         self._colorizeText (text, 0, textlength, self.colorParser, stylelist)
 
@@ -111,7 +112,7 @@ class WikiColorizer (object):
         Добавляет стиль с идентификатором styleid к массиву stylelist
         """
         style_src = stylelist[bytepos_start: bytepos_end]
-        style_new = [style | styleid for style in style_src]
+        style_new = [styleid if style == wx.stc.STC_STYLE_DEFAULT else style | styleid for style in style_src]
         
         stylelist[bytepos_start: bytepos_end] = style_new
 

@@ -10,10 +10,13 @@ from outwiker.core.application import Application
 
 class HtmlTextEditor (TextEditor):
     def __init__(self, *args, **kwds):
+        self._htmlStylesSection = "HtmlStyles"
         TextEditor.__init__(self, *args, **kwds)
 
-        self._htmlStylesSection = "HtmlStyles"
-        self.setupHtmlStyles(self.textCtrl)
+
+    def setDefaultSettings (self):
+        super (HtmlTextEditor, self).setDefaultSettings()
+        self.setupHtmlStyles (self.textCtrl)
 
     
     def setupHtmlStyles (self, textCtrl):
