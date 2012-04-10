@@ -9,6 +9,7 @@ from parser.tokenfonts import FontsFactory
 from parser.tokenheading import HeadingFactory
 from parser.tokencommand import CommandFactory
 from parser.tokenlink import LinkFactory
+from parser.tokenurl import UrlFactory
 
 ApplyStyleEvent, EVT_APPLY_STYLE = wx.lib.newevent.NewEvent()
 
@@ -28,18 +29,22 @@ class WikiColorizer (object):
         self.command = CommandFactory.make (None).setParseAction(lambda s, l, t: None).setResultsName ("command")
 
         self.link = LinkFactory.make (None).setParseAction(lambda s, l, t: None).setResultsName ("link")
+        
+        self.url = UrlFactory.make (None).setParseAction(lambda s, l, t: None).setResultsName ("link")
 
         self.colorParser = (self.command | 
                 self.bold_italic | 
                 self.bolded | 
                 self.italic | 
                 self.heading | 
-                self.link)
+                self.link | 
+                self.url)
 
         self.insideBlockParser = (self.bold_italic | 
                 self.bolded | 
                 self.italic | 
-                self.link)
+                self.link | 
+                self.url)
 
         self._thread = None
 
@@ -85,7 +90,7 @@ class WikiColorizer (object):
 
             elif token[0].getName() == "italic":
                 self._addStyle (stylelist, self._editor.STYLE_ITALIC_ID, bytepos_start, bytepos_end)
-                self._colorizeText (text, pos_start + 3, pos_end - 3, self.insideBlockParser, stylelist)
+                self._colorizeText (text, pos_start + 2, pos_end - 2, self.insideBlockParser, stylelist)
 
             elif token[0].getName() == "bold_italic":
                 self._addStyle (stylelist, self._editor.STYLE_BOLD_ITALIC_ID, bytepos_start, bytepos_end)
