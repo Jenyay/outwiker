@@ -33,8 +33,8 @@ class WikiEditor (TextEditor):
 
         self._colorizer = WikiColorizer (self)
 
-        self.textCtrl.Bind (wx.EVT_IDLE, self.onStyleNeeded)
-        # self.textCtrl.Bind (wx.stc.EVT_STC_STYLENEEDED, self.onStyleNeeded)
+        # self.textCtrl.Bind (wx.EVT_IDLE, self.onStyleNeeded)
+        self.textCtrl.Bind (wx.stc.EVT_STC_STYLENEEDED, self.onStyleNeeded)
         self.textCtrl.Bind (wx.stc.EVT_STC_CHANGE, self.onChange)
         self.Bind (EVT_APPLY_STYLE, self._onApplyStyle)
 
