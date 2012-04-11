@@ -115,6 +115,11 @@ class TextEditor(wx.Panel):
         self.textCtrl.StyleSetBold (wx.stc.STC_STYLE_DEFAULT, isBold)
         self.textCtrl.StyleSetItalic (wx.stc.STC_STYLE_DEFAULT, isItalic)
         
+        self.textCtrl.StyleSetSize (0, size)
+        self.textCtrl.StyleSetFaceName (0, faceName)
+        self.textCtrl.StyleSetBold (0, isBold)
+        self.textCtrl.StyleSetItalic (0, isItalic)
+        
         # Заблокируем горячую клавишу Ctrl+D, чтобы использовать ее как добавление закладки
         self.textCtrl.CmdKeyClear (ord ("D"), wx.stc.STC_SCMOD_CTRL)
         self.textCtrl.CmdKeyClear (ord ("R"), wx.stc.STC_SCMOD_CTRL | wx.stc.STC_SCMOD_SHIFT)

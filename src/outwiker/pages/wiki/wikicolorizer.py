@@ -19,11 +19,13 @@ class WikiColorizer (object):
     def __init__ (self, editor):
         self._editor = editor
 
-        self.bolded = FontsFactory.makeBold (None).setParseAction(lambda s, l, t: None).setResultsName ("bold")
+        self.bold = FontsFactory.makeBold (None).setParseAction(lambda s, l, t: None).setResultsName ("bold")
 
         self.italic = FontsFactory.makeItalic (None).setParseAction(lambda s, l, t: None).setResultsName ("italic")
 
         self.bold_italic = FontsFactory.makeBoldItalic (None).setParseAction(lambda s, l, t: None).setResultsName ("bold_italic")
+
+        self.underline = FontsFactory.makeUnderline (None).setParseAction(lambda s, l, t: None).setResultsName ("underline")
 
         self.heading = HeadingFactory.make (None).setParseAction(lambda s, l, t: None).setResultsName ("heading")
 
@@ -35,15 +37,17 @@ class WikiColorizer (object):
 
         self.colorParser = (self.command | 
                 self.bold_italic | 
-                self.bolded | 
+                self.bold | 
                 self.italic | 
+                self.underline | 
                 self.heading | 
                 self.link | 
                 self.url)
 
         self.insideBlockParser = (self.bold_italic | 
-                self.bolded | 
+                self.bold | 
                 self.italic | 
+                self.underline | 
                 self.link | 
                 self.url)
 
@@ -97,6 +101,10 @@ class WikiColorizer (object):
                 self._addStyle (stylelist, self._editor.STYLE_BOLD_ITALIC_ID, bytepos_start, bytepos_end)
                 self._colorizeText (text, pos_start + 4, pos_end - 4, self.insideBlockParser, stylelist)
 
+            elif token[0].getName() == "underline":
+                self._addStyle (stylelist, self._editor.STYLE_UNDERLINE_ID, bytepos_start, bytepos_end)
+                self._colorizeText (text, pos_start + 2, pos_end - 2, self.insideBlockParser, stylelist)
+
             elif token[0].getName() == "heading":
                 self._setStyle (stylelist, self._editor.STYLE_HEADING_ID, bytepos_start, bytepos_end)
 
@@ -104,7 +112,7 @@ class WikiColorizer (object):
                 self._setStyle (stylelist, self._editor.STYLE_COMMAND_ID, bytepos_start, bytepos_end)
 
             elif token[0].getName() == "link":
-                self._setStyle (stylelist, self._editor.STYLE_LINK_ID, bytepos_start, bytepos_end)
+                self._addStyle (stylelist, self._editor.STYLE_LINK_ID, bytepos_start, bytepos_end)
 
 
     def _addStyle (self, stylelist, styleid, bytepos_start, bytepos_end):
