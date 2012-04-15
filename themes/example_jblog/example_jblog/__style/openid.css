@@ -1,0 +1,37 @@
+/* yuicompress openid.css -o openid.min.css
+ * @see http://developer.yahoo.com/yui/compressor/
+ */
+
+#openid_enabled_link, .openid_link, #openid_identifier, #commentform #openid_identifier {
+	background-image: url('openid.gif');
+	background-position: 3px 50%;
+	background-repeat: no-repeat; 
+	padding-left: 21px !important; 
+}
+
+.openid_loading {
+	background: url('ajax-loader.gif') right center no-repeat;
+}
+
+body.login #openid_identifier {
+	width: 92%;
+	font-size: 20px;
+	background-color: #FFF;
+	border: 1px solid #ccc;
+	padding: 3px 3px 3px 18px;
+	margin-right: 6px;
+}
+
+#openid_comment {
+	margin: 0.8em 1em;
+}
+#openid_comment input {
+	width: auto;
+}
+
+/* fix link color on wp-login.php */
+body.login form#loginform a.legacy, 
+body.login form#registerform a.legacy {
+	color: #FFF;
+}
+

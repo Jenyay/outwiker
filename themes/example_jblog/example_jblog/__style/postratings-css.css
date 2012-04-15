@@ -1,0 +1,44 @@
+/*
++----------------------------------------------------------------+
+|																							|
+|	WordPress 2.8 Plugin: WP-PostRatings 1.61								|
+|	Copyright (c) 2009 Lester "GaMerZ" Chan									|
+|																							|
+|	File Written By:																	|
+|	- Lester "GaMerZ" Chan															|
+|	- http://lesterchan.net															|
+|																							|
+|	File Information:																	|
+|	- Post Ratings CSS File															|
+|	- wp-content/plugins/wp-postratings/postratings-css.css			|
+|																							|
++----------------------------------------------------------------+
+*/
+
+
+.post-ratings {
+	width:100%;
+	filter: alpha(opacity=100);
+	-moz-opacity: 1;
+	opacity: 1;
+	/* background-color: #ffffff; */
+}
+.post-ratings-loading {
+	display: none;
+	height: 16px;
+	text-align: left;
+}
+.post-ratings-image {
+	border: 0px;
+}
+.post-ratings IMG, .post-ratings-loading IMG, .post-ratings-image IMG {
+	border: 0px;
+	padding: 0px;
+	margin: 0px;
+}
+.post-ratings-text {
+}
+.post-ratings-comment-author {
+	font-weight: normal;
+	font-style: italic;
+}

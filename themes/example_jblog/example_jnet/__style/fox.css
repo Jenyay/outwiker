@@ -1,0 +1,87 @@
+/* new MessageForm and Forum styling */
+/* this expects a div or table as class 'messagebox' surrounding all elements */
+
+.messagebox {margin:8px 0 0 0;
+            border-right:1px solid #ccc;
+            border-bottom:1px solid #ccc;
+	    }
+.messageheader, .messagefooter {
+            padding:0 0 0 3px;
+            border-top:1px solid #ccc;
+            border-left:1px solid #ccc;
+            background:#e7e7e7;
+            height:1.3em;
+            }
+.messageauthor {
+	    padding:2px 3px;
+            border-top:1px solid #ccc;
+            border-left:1px solid #ccc;	    
+	    }
+.messagesubject {
+	    margin:0 0 0px 0;
+	    padding:0 3px;
+            border-top:1px solid #ccc;
+            border-left:1px solid #ccc;
+            background:#efefef;
+            height:1.3em;
+            } 
+.messagetext {
+            margin:0;
+            padding:3px;
+            border-top:1px solid #ccc;
+            border-left:1px solid #ccc;
+            background:#f7f7f7;
+            }
+
+/* older CommentBoxPlus compatible styling */
+.messagehead {
+            margin:1em 0 0 0;
+            padding:0 0 0 3px;
+            border:1px solid #ccc;
+            background:#e7e7e7;
+            }
+.messageitem {
+            margin:0;
+            padding:3px;
+            
+
+            border-right:1px solid #ccc;
+            border-bottom:1px solid #ccc;
+            background:#f7f7f7;          
+            }
+  
+.messagehead h5, .messagehead h4 { margin:0.25em 0 0 0; }
+
+
+/*use the following if message head should be same as message item */
+/* .messagehead { background:#f7f7f7; border-bottom:none; } */
+
+
+.inputbutton { margin:0 0 0 5px; 
+               padding:0 3px }
+.inputtext { background:#f7f7f7; 
+			 border:1px solid #ccc;
+             margin:0 0 3px 0;
+             }
+
+/* Fox delete button & link */
+.foxdelbutton {
+	display:inline; 
+	margin:0; 
+	}
+.foxdelbutton input {
+	font-size: 80%;
+	padding:0px; margin:0px;
+	cursor: pointer;
+	cursor: hand;
+	}
+.foxdelbutton input:hover { 
+    color:#990000;
+    }
+a.foxdellink { 
+	font-size:85%; 
+	font-family:Arial;
+	} 
+a.foxdellink:hover {
+	text-decoration:none;
+	} 

@@ -1,0 +1,380 @@
+/*
+Theme Name: Fluid Blue
+Theme URI: http://srinig.com/wordpress-themes/fluid-blue/
+Description: A simple two column fluid width theme. Right sidebar supports widgets. Standards compliant.
+Version: 1.0.1
+Author: Srini G
+Author URI: http://srinig.com/
+
+	The CSS, XHTML and design is released under GPL:
+	http://www.opensource.org/licenses/gpl-license.php
+
+*/
+
+body {
+	margin:0;
+	background:#fff;
+	color:#444;
+	font-size: 65.5%; /* Resets 1em to 10px */
+	font-family: Verdana, Arial, 'Lucida Grande', Arial, Sans-Serif;
+	text-align:center;
+}
+
+a { 
+	color:#157;
+}
+
+a:hover {
+	text-decoration:underline 
+}
+
+h1, h1 a, h2, h2 a, h3, h4, h5, h6 {
+	margin-bottom:0;
+	color:#27a;
+	text-align:left;
+}
+
+h1 {font-size:2.4em;}
+h2 {font-size:2em;}
+h3 {font-size:1.6em;}
+h4 {font-size:1.2em;}
+h5 {font-size:1em;}
+h6 {font-size:0.8em;}
+
+h2 a, h1 a {text-decoration:none;}
+
+img {
+	border:0;
+	margin:5px;
+}
+
+img.wp-smiley {
+	margin:0;
+}
+
+input, textarea {
+	border:1px solid #aaa;
+	font-size:1.2em;
+}
+
+
+/* Layout */
+#page {
+	min-width:760px;
+	margin:0 auto;
+	text-align:left;
+}
+
+#wrapper {
+	margin:0 5%;
+	padding-right:230px;
+}
+
+#content{
+	float:left;
+	width:96%;
+	border-right:230px solid #eee;
+	margin-right:-230px;
+	padding:20px 4% 20px 0;
+}
+
+#sidebar{
+	float:left;
+	width:190px;
+	margin:0 -230px 0 0;
+	padding:20px;
+	background:#eee;
+}
+
+#footer {
+	clear:both;
+	padding:10px;
+	border-top:0.2em solid #555;
+}
+
+/* Header */
+
+#header {
+	margin:0;
+	padding:2em 0;
+	background:#237ab2;
+}
+
+#headertitle {
+	margin:0 5%;
+}
+#headertitle h1 {
+	margin:0;
+}
+#headertitle h1 a {
+	background:transparent;
+	color:#fff;
+}
+#headertitle h1 a:hover {
+	text-decoration:none;
+}
+
+#headertitle p {
+	margin:0;
+	background:transparent;
+	color:#fff;
+	font-size:1.1em;
+}
+
+.search {
+	float:right;
+	position:relative;
+	bottom:3em;
+	right:5%;
+}
+.search form {
+	margin:0;
+	padding:0;
+}
+.search input {
+	display:inline;
+	width:218px;
+	border:1px solid #eee;
+	margin:0;
+	padding:0.2em 5px;
+	background:#237ab2;
+	color:#eee;
+	font-size:1em;
+}
+
+
+/* Top navigation */
+
+#hmenu {
+	border-top:0.1em solid #555;
+	border-bottom:0.1em solid #555;
+	background:#165279;
+}
+
+#hmenu ul {
+	margin:0 5%;
+	padding:0.5em 0;
+	background:#165279;
+	list-style-type:none;
+	list-style-position:outside;
+	text-indent:0;
+}
+
+#hmenu ul li {
+	display:inline;
+	margin:0;
+	padding:0;
+	text-transform:uppercase;
+}
+
+#hmenu ul li:before {
+	content: "| \0020";
+	background:transparent;
+	color:#eee;
+}
+#hmenu ul li.hmenu1:before {
+	content: "";
+}
+#hmenu ul li a {
+	padding:0.5em;
+	margin:0;
+	background:transparent;
+	color:#c6c8c9;
+	text-decoration:none;
+}
+
+#hmenu ul li.hmenu1 a {
+	padding-left:0;
+}
+
+#hmenu ul li a:hover {
+	background:transparent;
+	color:#fff;
+}
+
+/* Sidebar */
+
+
+#sidebar ul {
+	padding:0;
+	margin:0;
+	list-style: none;
+}
+#sidebar ul li {
+	margin:0 0 2em 0;
+}
+
+#sidebar ul ul {
+	margin:0;
+	padding:0;
+}
+
+#sidebar li li {
+	margin:0.1em 0;
+}
+
+#sidebar li li li {
+	padding-left:10px;
+}
+
+#sidebar ul h2 {
+	margin:0;
+	padding:0;
+	color:#4588c4;
+	font-size:1.2em;
+	text-transform:uppercase;
+}
+
+
+/* Footer */
+#footer { 
+	text-align:center;
+	font-size:1em;
+	background:#165279;
+	color:#eee;
+}
+
+#footer a {
+	color:#aac;
+}
+
+/* Post */
+.post {
+	margin:0 0 4em 0;
+	clear:both;
+}
+
+.post p, .post ol li, .post ul li{
+	margin-top:0;
+	font-size:1.2em;
+	line-height:1.5em;
+	text-align:justify;
+}
+.post li li {
+	font-size:1em;
+}
+.post blockquote {
+	padding:0 0 0 2em;
+	border-left:0.4em solid #ccc;
+	font-size:1em;
+}
+.post blockquote blockquote {
+	margin-left:0;
+	font-size:1em;
+}
+
+.postmetadata {
+	margin:1em 0;
+	font-size:1.1em;
+	color:#888;
+	text-align:justify;
+}
+
+
+/* Comments */
+
+#comments {
+	margin:0 2em;
+	font-size: 1.2em;
+}
+
+.commentlist {
+	margin:0;
+	padding:0;
+	list-style:none;
+}
+
+.commentlist li {
+	padding:2em 0;
+	overflow:auto;
+	border-bottom:0.1em solid #eee;
+}
+
+.commentlist p {
+	margin:0.5em 0;
+}
+
+.commentlist h4 {
+	margin:0;
+}
+
+textarea#comment {
+	width:100%;
+	font-size: 1.2em;
+}
+/* Comment ends */
+
+
+/* Calendar */
+#wp-calendar caption {
+	text-transform:uppercase;
+	font-weight:bold;
+	color:#27a;
+	text-align:center;
+}
+#wp-calendar thead th {
+	font-weight:normal;
+	color:#27a;
+	text-align:center;
+}
+#wp-calendar tbody td {
+	text-align:center;
+}
+#wp-calendar tbody td a {
+	font-weight:bold;
+	font-size: 120%;
+}
+#wp-calendar tbody td.pad {
+	border:none;
+}
+/* Calendar ends */
+
+abbr {
+	cursor:help;
+	border-bottom: 0.1em dotted;
+}
+
+.alignleft {
+	float:left;
+}
+.alignright {
+	float:right;
+}
+
+ /* Captions */  
+ .aligncenter,  
+ div.aligncenter {  
+ display: block;  
+ margin-left: auto;  
+ margin-right: auto;  
+ }  
+   
+ .wp-caption {  
+  border: 1px solid #ddd;  
+  text-align: center;  
+  background-color: #f3f3f3;  
+  padding-top: 4px;  
+  margin: 10px;  
+  -moz-border-radius: 3px;  
+  -khtml-border-radius: 3px;  
+  -webkit-border-radius: 3px;  
+  border-radius: 3px;  
+  }  
+    
+  .wp-caption img {  
+  margin: 0;  
+  padding: 0;  
+  border: 0 none;  
+  }  
+    
+  .wp-caption p.wp-caption-text {  
+  font-size: 11px;  
+  line-height: 17px;  
+  padding: 0 4px 5px;  
+  margin: 0;  
+  }  
+  /* End captions */  
+
+pre {
+font-size: 150%;
+}

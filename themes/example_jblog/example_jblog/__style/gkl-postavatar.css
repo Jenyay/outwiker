@@ -1,0 +1,22 @@
+.postavatar {
+	float: left; padding: 10px;
+}
+
+.postavatar img {
+	/*border: 5px solid #000;*/
+	margin: 5px;
+}
+
+a.pa {
+	border: none;
+}
+
+/* CSS for admin pages. Please do not edit below here
+/* still a lot to do... */
+fieldset#postavatarfield {
+
+}
+
+fieldset#postavatarfield h3.dbx-handle {
+
+}

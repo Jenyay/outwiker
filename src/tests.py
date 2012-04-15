@@ -95,6 +95,8 @@ if __name__ == '__main__':
     from test.plugins.spoiler import SpoilerPluginTest
     from test.plugins.livejournal import LivejournalPluginTest
 
+    from test.styles.styleslist import StylesListTest
+
     if os.name == "nt":
         from test.guitests.uriidentifiers import UriIdentifierIETest
     else:
