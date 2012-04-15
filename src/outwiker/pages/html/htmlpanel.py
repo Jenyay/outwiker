@@ -12,6 +12,7 @@ from outwiker.core.attachment import Attachment
 from outwiker.core.htmlimprover import HtmlImprover
 from outwiker.core.htmltemplate import HtmlTemplate
 from outwiker.core.system import getTemplatesDir, getImagesDir
+from outwiker.core.style import Style
 
 from outwiker.gui.basetextpanel import BaseTextPanel
 from outwiker.gui.htmlrenderfactory import getHtmlRender
@@ -613,7 +614,8 @@ class HtmlPagePanel (HtmlPanel):
             # Если страница открыта только для чтения и html-файл уже существует, то покажем его
             return path
 
-        tpl = HtmlTemplate (os.path.join (getTemplatesDir(), "__default") )
+        style = Style()
+        tpl = HtmlTemplate (style.getPageStyle (page))
 
         if page.autoLineWrap:
             text = HtmlImprover.run (page.content)

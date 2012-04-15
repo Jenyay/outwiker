@@ -37,7 +37,7 @@ class HtmlTemplateTest(unittest.TestCase):
 </BODY>
 </HTML>"""
 
-        templatepath = os.path.join (getTemplatesDir(), "__default")
+        templatepath = os.path.join (getTemplatesDir(), "__default", "__style.html")
         tpl = HtmlTemplate (templatepath)
         result = tpl.substitute (content=content)
 
@@ -87,7 +87,7 @@ class HtmlTemplateTest(unittest.TestCase):
 </BODY>
 </HTML>"""
 
-        templatepath = os.path.join (getTemplatesDir(), "__default")
+        templatepath = os.path.join (getTemplatesDir(), "__default", "__style.html")
         tpl = HtmlTemplate (templatepath)
 
         result = tpl.substitute (HtmlImprover.run (src) )
@@ -125,7 +125,7 @@ class HtmlTemplateTest(unittest.TestCase):
 </BODY>
 </HTML>"""
 
-        templatepath = os.path.join (getTemplatesDir(), "__default")
+        templatepath = os.path.join (getTemplatesDir(), "__default", "__style.html")
         tpl = HtmlTemplate (templatepath)
 
         result = tpl.substitute (HtmlImprover.run (src) )

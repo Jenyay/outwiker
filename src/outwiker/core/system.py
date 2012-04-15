@@ -16,7 +16,7 @@ from .pagetitletester import WindowsPageTitleTester, LinuxPageTitleTester
 
 # Папки, используемые в программе
 IMAGES_DIR = u"images"
-STYLES_DIR = u"themes"
+STYLES_DIR = u"styles"
 PLUGINS_DIR = u"plugins"
 
 # Имя файла настроек по умолчанию

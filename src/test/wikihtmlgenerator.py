@@ -252,6 +252,13 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
         self.assertTrue (generator.canReadFromCache())
 
 
+    def testCacheStyle (self):
+        """
+        Проверка на то, что изменение стиля страницы сбрасывает кэш
+        """
+        self.fail()
+
+
     def testEmpty1 (self):
         text = u"бла-бла-бла"
 

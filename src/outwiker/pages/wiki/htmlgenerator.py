@@ -10,6 +10,7 @@ from outwiker.core.htmltemplate import HtmlTemplate
 from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
 from outwiker.core.tree import RootWikiPage
+from outwiker.core.style import Style
 from parserfactory import ParserFactory
 from wikiconfig import WikiConfig
 from emptycontent import EmptyContent
@@ -43,7 +44,8 @@ class HtmlGenerator (object):
 
         content = self.page.content if len (self.page.content) > 0 else self._generateEmptyContent (parser)
 
-        tpl = HtmlTemplate (os.path.join (getTemplatesDir(), "__default") )
+        style = Style()
+        tpl = HtmlTemplate (style.getPageStyle (self.page))
         text = HtmlImprover.run (parser.toHtml (content) )
         head = parser.head
         result = tpl.substitute (content=text, userhead=head)

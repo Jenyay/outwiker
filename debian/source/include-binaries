@@ -56,10 +56,10 @@ plugins/livejournal/livejournal/locale/ru_RU/LC_MESSAGES/livejournal.mo
 plugins/livejournal/livejournal/locale/en/LC_MESSAGES/livejournal.mo
 plugins/style/style/locale/ru_RU/LC_MESSAGES/style.mo
 plugins/style/style/locale/en/LC_MESSAGES/style.mo
-themes/example_jblog/example_jnet/__style/feed_blog.png
-themes/example_jblog/example_jnet/__style/feed.png
-themes/example_jblog/example_jblog/__style/livejournal.png
-themes/example_jblog/example_jblog/__style/feed_blog.png
-themes/example_jblog/example_jblog/__style/feed.png
-themes/example_jblog/example_jblog/__style/gogle_plus_48.png
-themes/example_jblog/example_jblog/__style/twitter.png
+styles/example_jnet/__style/feed_blog.png
+styles/example_jnet/__style/feed.png
+styles/example_jblog/__style/livejournal.png
+styles/example_jblog/__style/feed_blog.png
+styles/example_jblog/__style/feed.png
+styles/example_jblog/__style/gogle_plus_48.png
+styles/example_jblog/__style/twitter.png
