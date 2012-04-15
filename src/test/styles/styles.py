@@ -24,7 +24,9 @@ class StylesTest (unittest.TestCase):
         HtmlPageFactory.create (self.rootwiki, u"Html-страница 2", [])
 
         self._styleFname = u"__style.html"
-        self._testStylePath = os.path.join (u"../styles/example_jblog", self._styleFname)
+        self._styleDir = u"__style"
+        self._exampleStyleDir = u"../styles/example_jblog"
+        self._testStylePath = os.path.join (self._exampleStyleDir, self._styleFname)
 
 
     def tearDown (self):
@@ -85,3 +87,59 @@ class StylesTest (unittest.TestCase):
         pageStyle = os.path.abspath (style.getPageStyle (page))
 
         self.assertEqual (pageStyle, validStyle)
+
+
+    def testSetStyleAsDir (self):
+        style = Style()
+        page = self.rootwiki[u"Викистраница 1"]
+
+        pageStyleFname = os.path.join (page.path, self._styleFname)
+        pageStyleDir = os.path.join (page.path, self._styleDir)
+
+        self.assertFalse (os.path.exists (pageStyleDir))
+        self.assertFalse (os.path.exists (pageStyleFname))
+
+        style.setPageStyle (page, self._exampleStyleDir)
+
+        self.assertTrue (os.path.exists (pageStyleDir))
+        self.assertTrue (os.path.exists (pageStyleFname))
+
+        style.setPageStyleDefault (page)
+
+        self.assertFalse (os.path.exists (pageStyleDir))
+        self.assertFalse (os.path.exists (pageStyleFname))
+
+
+    def testSetStyle2 (self):
+        style = Style()
+        page = self.rootwiki[u"Викистраница 1"]
+
+        pageStyleFname = os.path.join (page.path, self._styleFname)
+        pageStyleDir = os.path.join (page.path, self._styleDir)
+
+        self.assertFalse (os.path.exists (pageStyleDir))
+        self.assertFalse (os.path.exists (pageStyleFname))
+
+        style.setPageStyle (page, self._exampleStyleDir)
+
+        self.assertTrue (os.path.exists (pageStyleDir))
+        self.assertTrue (os.path.exists (pageStyleFname))
+
+        style.setPageStyle (page, style.getDefaultStyle())
+
+        self.assertFalse (os.path.exists (pageStyleDir))
+        self.assertTrue (os.path.exists (pageStyleFname))
+
+
+    def testSetStyleReadOnly (self):
+        """
+        Тест на попытку изменения стиля страницы, открытой в режиме "только для чтения"
+        """
+        self.fail()
+
+
+    def testEvent (self):
+        """
+        Вызов событий при изменении стиля страницы
+        """
+        self.fail()
