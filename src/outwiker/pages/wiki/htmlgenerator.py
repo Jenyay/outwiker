@@ -43,7 +43,7 @@ class HtmlGenerator (object):
 
         content = self.page.content if len (self.page.content) > 0 else self._generateEmptyContent (parser)
 
-        tpl = HtmlTemplate (os.path.join (getTemplatesDir(), "html") )
+        tpl = HtmlTemplate (os.path.join (getTemplatesDir(), "__default") )
         text = HtmlImprover.run (parser.toHtml (content) )
         head = parser.head
         result = tpl.substitute (content=text, userhead=head)

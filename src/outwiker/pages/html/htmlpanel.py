@@ -613,7 +613,7 @@ class HtmlPagePanel (HtmlPanel):
             # Если страница открыта только для чтения и html-файл уже существует, то покажем его
             return path
 
-        tpl = HtmlTemplate (os.path.join (getTemplatesDir(), "html") )
+        tpl = HtmlTemplate (os.path.join (getTemplatesDir(), "__default") )
 
         if page.autoLineWrap:
             text = HtmlImprover.run (page.content)

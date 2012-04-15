@@ -25,7 +25,7 @@ class HtmlTemplate (object):
         self.fontfamily = self.config.fontName.value
         self.userStyle = self.config.userStyle.value
 
-        tpl_fname = u"template.html"
+        tpl_fname = u"__default.html"
         tpl_path = os.path.join (path, tpl_fname)
 
         with open (tpl_path) as fp:
