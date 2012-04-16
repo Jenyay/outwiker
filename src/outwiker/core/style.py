@@ -4,6 +4,7 @@
 import os.path
 import shutil
 
+from .exceptions import ReadonlyException
 from .system import getTemplatesDir
 from .htmltemplate import HtmlTemplate
 
@@ -44,7 +45,13 @@ class Style (object):
         style может быть путем до папки или до файла __style.html
         Может бросить исключение IOError
         """
-        self.setPageStyleDefault (page)
+        if page == None:
+            return
+
+        if page.readonly:
+            raise ReadonlyException
+
+        self._removeStyleFromPage (page)
 
         # Путь до стиля (папка)
         styledir = style if os.path.isdir (style) else os.path.dirname (style)
@@ -59,12 +66,16 @@ class Style (object):
         if os.path.exists (style_folder):
             shutil.copytree (style_folder, os.path.join (page.path, self._styleDir) )
 
+        page.root.onPageUpdate (page)
 
-    def setPageStyleDefault (self, page):
+
+    def _removeStyleFromPage (self, page):
         """
-        Удалить прикрепленный к странице стиль
+        Удалить файлы стиля из страницы
         Может бросить исключение IOError
         """
+        assert not page.readonly
+
         style_file = os.path.join (page.path, self._styleFname)
         style_dir = os.path.join (page.path, self._styleDir)
 
@@ -73,4 +84,19 @@ class Style (object):
 
         if os.path.exists (style_dir):
             shutil.rmtree (style_dir)
+
+
+    def setPageStyleDefault (self, page):
+        """
+        Удалить прикрепленный к странице стиль
+        Может бросить исключение IOError
+        """
+        if page == None:
+            return
+
+        if page.readonly:
+            raise ReadonlyException
+
+        self._removeStyleFromPage(page)
+        page.root.onPageUpdate (page)
 

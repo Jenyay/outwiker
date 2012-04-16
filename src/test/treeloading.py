@@ -217,6 +217,7 @@ class TextPageAttachmentTest (unittest.TestCase):
         removeWiki (self.path)
 
         self.rootwiki = WikiDocument.create (self.path)
+        Application.wikiroot = self.rootwiki
 
         TextPageFactory.create (self.rootwiki, u"Страница 1", [])
         TextPageFactory.create (self.rootwiki, u"Страница 2", [])

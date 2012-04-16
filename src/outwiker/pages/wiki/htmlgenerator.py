@@ -113,6 +113,7 @@ class HtmlGenerator (object):
 
         self.__getDirContent (self.page, content)
         content.append (self.__getPluginsList())
+        content.append (self.__getStyleContent (self.page))
 
         # Настройки, касающиеся вида вики-страницы
         content.append (str (self.config.showAttachInsteadBlankOptions.value))
@@ -133,6 +134,21 @@ class HtmlGenerator (object):
             content.append (emptycontent.content.encode (self._unicodeEncoding))
 
         return u"".join (content)
+
+
+    def __getStyleContent (self, page):
+        """
+        Возвращает содержимое шаблона
+        """
+        style = Style ()
+
+        try:
+            with open (style.getPageStyle (page)) as fp:
+                stylecontent = fp.read()
+        except IOError:
+            stylecontent = u""
+
+        return stylecontent
 
 
     def __getPluginsList (self):

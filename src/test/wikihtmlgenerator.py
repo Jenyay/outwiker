@@ -10,6 +10,7 @@ from outwiker.core.tree import WikiDocument
 from outwiker.core.attachment import Attachment
 from outwiker.core.application import Application
 from outwiker.core.config import Config
+from outwiker.core.style import Style
 from outwiker.gui.guiconfig import HtmlRenderConfig
 
 from outwiker.pages.wiki.wikipage import WikiPageFactory
@@ -256,7 +257,42 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
         """
         Проверка на то, что изменение стиля страницы сбрасывает кэш
         """
-        self.fail()
+        style = Style()
+
+        # Только создали страницу, кешировать нельзя
+        generator = HtmlGenerator (self.testPage)
+        self.assertFalse (generator.canReadFromCache())
+
+        generator.makeHtml ()
+        self.assertTrue (generator.canReadFromCache())
+
+        exampleStyleDir = u"../styles/example_jblog"
+        exampleStyleDir2 = u"../styles/example_jnet"
+
+        # Изменим стиль страницы
+        style.setPageStyle (self.testPage, exampleStyleDir)
+
+        self.assertFalse (generator.canReadFromCache())
+        generator.makeHtml ()
+        self.assertTrue (generator.canReadFromCache())
+
+        # Еще раз изменим стиль
+        style.setPageStyle (self.testPage, exampleStyleDir2)
+
+        self.assertFalse (generator.canReadFromCache())
+        generator.makeHtml ()
+        self.assertTrue (generator.canReadFromCache())
+
+        # Изменим стиль на тот же 
+        style.setPageStyle (self.testPage, exampleStyleDir2)
+        self.assertTrue (generator.canReadFromCache())
+
+        # Установим стиль по умолчанию
+        style.setPageStyleDefault (self.testPage)
+
+        self.assertFalse (generator.canReadFromCache())
+        generator.makeHtml ()
+        self.assertTrue (generator.canReadFromCache())
 
 
     def testEmpty1 (self):

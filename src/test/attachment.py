@@ -31,6 +31,8 @@ class AttachmentTest (unittest.TestCase):
         self.files = [u"accept.png", u"add.png", u"anchor.png", u"файл с пробелами.tmp", u"dir"]
         self.fullFilesPath = [os.path.join (filesPath, fname) for fname in self.files]
 
+        Application.wikiroot = self.rootwiki
+
 
     def tearDown (self):
         removeWiki (self.path)
@@ -476,4 +478,3 @@ class AttachmentTest (unittest.TestCase):
         attach.attach (self.fullFilesPath)
 
         self.assertRaises (OSError, attach.getAttachRelative, "invaliddir")
-

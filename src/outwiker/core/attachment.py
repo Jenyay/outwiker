@@ -6,7 +6,6 @@ import os.path
 import shutil
 
 import exceptions
-from application import Application
 
 
 class Attachment (object):
@@ -79,7 +78,7 @@ class Attachment (object):
             else:
                 shutil.copy (name, attachPath)
 
-        Application.onPageUpdate (self.page)
+        self.page.root.onPageUpdate (self.page)
 
 
     def removeAttach (self, files):
@@ -99,10 +98,10 @@ class Attachment (object):
                 else:
                     os.remove (path)
             except OSError:
-                Application.onPageUpdate (self.page)
+                self.page.root.onPageUpdate (self.page)
                 raise IOError (u"Can't remove %s" % fname)
 
-        Application.onPageUpdate (self.page)
+        self.page.root.onPageUpdate (self.page)
 
 
     @staticmethod

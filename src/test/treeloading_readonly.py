@@ -9,6 +9,7 @@ from outwiker.core.tree import RootWikiPage, WikiDocument
 from outwiker.core.exceptions import ReadonlyException
 from outwiker.core.event import Event
 from outwiker.core.attachment import Attachment
+from outwiker.core.style import Style
 from outwiker.core.config import StringOption
 
 from outwiker.pages.text.textpage import TextPageFactory, TextWikiPage
@@ -163,6 +164,9 @@ class ReadonlyChangeTest (unittest.TestCase):
         self.path = u"../test/testwiki"
         removeWiki (self.path)
 
+        self._exampleStyleDir = u"../styles/example_jblog"
+        self._exampleStyleDir2 = u"../styles/example_jnet"
+
         wiki = WikiDocument.create (self.path)
 
         TextPageFactory.create (wiki, u"Страница 1", [])
@@ -260,6 +264,18 @@ class ReadonlyChangeTest (unittest.TestCase):
         fullFilesPath = [os.path.join (filesPath, fname) for fname in files]
 
         self.assertRaises (ReadonlyException, Attachment (self.wiki[u"Страница 2/Страница 3"]).attach, fullFilesPath)
+
+
+    def testChangeStyle1 (self):
+        style = Style ()
+        self.assertRaises (ReadonlyException,
+            style.setPageStyle, self.wiki[u"Страница 1"], self._exampleStyleDir)
+    
+
+    def testChangeStyle2 (self):
+        style = Style ()
+        self.assertRaises (ReadonlyException,
+            style.setPageStyleDefault, self.wiki[u"Страница 1"])
     
 
     def testRemoveAttach1 (self):

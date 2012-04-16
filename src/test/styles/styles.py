@@ -7,6 +7,7 @@ import shutil
 
 from outwiker.core.style import Style
 from outwiker.core.tree import RootWikiPage, WikiDocument
+from outwiker.core.application import Application
 from outwiker.pages.wiki.wikipage import WikiPageFactory, WikiWikiPage
 from outwiker.pages.html.htmlpage import HtmlPageFactory, HtmlWikiPage
 from test.utils import removeWiki
@@ -14,6 +15,10 @@ from test.utils import removeWiki
 
 class StylesTest (unittest.TestCase):
     def setUp (self):
+        # Количество срабатываний особытий при обновлении страницы
+        self._pageUpdateCount = 0
+        self._pageUpdateSender = None
+
         # Здесь будет создаваться вики
         self.path = u"../test/testwiki"
         removeWiki (self.path)
@@ -26,10 +31,20 @@ class StylesTest (unittest.TestCase):
         self._styleFname = u"__style.html"
         self._styleDir = u"__style"
         self._exampleStyleDir = u"../styles/example_jblog"
+        self._exampleStyleDir2 = u"../styles/example_jnet"
         self._testStylePath = os.path.join (self._exampleStyleDir, self._styleFname)
+
+        Application.wikiroot = self.rootwiki
+        Application.onPageUpdate += self.onPageUpdate
+
+
+    def onPageUpdate (self, sender):
+        self._pageUpdateCount += 1
+        self._pageUpdateSender = sender
 
 
     def tearDown (self):
+        Application.onPageUpdate -= self.onPageUpdate
         removeWiki (self.path)
 
 
@@ -110,6 +125,27 @@ class StylesTest (unittest.TestCase):
         self.assertFalse (os.path.exists (pageStyleFname))
 
 
+    def testSetStyleAsFile (self):
+        style = Style()
+        page = self.rootwiki[u"Викистраница 1"]
+
+        pageStyleFname = os.path.join (page.path, self._styleFname)
+        pageStyleDir = os.path.join (page.path, self._styleDir)
+
+        self.assertFalse (os.path.exists (pageStyleDir))
+        self.assertFalse (os.path.exists (pageStyleFname))
+
+        style.setPageStyle (page, os.path.join (self._exampleStyleDir, self._styleFname) )
+
+        self.assertTrue (os.path.exists (pageStyleDir))
+        self.assertTrue (os.path.exists (pageStyleFname))
+
+        style.setPageStyleDefault (page)
+
+        self.assertFalse (os.path.exists (pageStyleDir))
+        self.assertFalse (os.path.exists (pageStyleFname))
+
+
     def testSetStyle2 (self):
         style = Style()
         page = self.rootwiki[u"Викистраница 1"]
@@ -131,15 +167,29 @@ class StylesTest (unittest.TestCase):
         self.assertTrue (os.path.exists (pageStyleFname))
 
 
-    def testSetStyleReadOnly (self):
-        """
-        Тест на попытку изменения стиля страницы, открытой в режиме "только для чтения"
-        """
-        self.fail()
-
-
     def testEvent (self):
         """
         Вызов событий при изменении стиля страницы
         """
-        self.fail()
+        style = Style()
+        page = self.rootwiki[u"Викистраница 1"]
+
+        self.assertEqual (self._pageUpdateCount, 0)
+
+        style.setPageStyle (page, self._exampleStyleDir)
+        self.assertEqual (self._pageUpdateCount, 1)
+
+        style.setPageStyleDefault (page)
+        self.assertEqual (self._pageUpdateCount, 2)
+
+        style.setPageStyle (page, self._exampleStyleDir2)
+        self.assertEqual (self._pageUpdateCount, 3)
+
+
+    def testInvalidPage (self):
+        style = Style()
+        style.setPageStyle (None, self._exampleStyleDir)
+        style.setPageStyleDefault (None)
+
+        style.setPageStyle (self.rootwiki, self._exampleStyleDir)
+        style.setPageStyleDefault (self.rootwiki)
