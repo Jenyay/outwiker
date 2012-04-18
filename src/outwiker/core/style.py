@@ -21,11 +21,8 @@ class Style (object):
         """
         Возвращает путь до файла стиля для страницы page
         """
-        pageStylePath = os.path.join (page.path, self._styleFname)
-
-        if (os.path.exists (pageStylePath) and
-                os.path.isfile (pageStylePath)):
-            style = pageStylePath
+        if self.check (page.path):
+            style = os.path.join (page.path, self._styleFname)
         else:
             style = self.getDefaultStyle()
 
@@ -60,7 +57,7 @@ class Style (object):
         style_fname = os.path.join (styledir, self._styleFname)
         style_folder = os.path.join (styledir, self._styleDir)
 
-        assert os.path.exists (style_fname)
+        # assert os.path.exists (style_fname)
         shutil.copy (style_fname, page.path)
 
         if os.path.exists (style_folder):
@@ -100,3 +97,12 @@ class Style (object):
         self._removeStyleFromPage(page)
         page.root.onPageUpdate (page)
 
+
+    def check (self, path):
+        """
+        Возвращает True, если path - путь до корректного стиля
+        """
+        style_file = os.path.join (path, self._styleFname)
+        file_correct = os.path.exists (style_file) and os.path.isfile (style_file)
+
+        return file_correct

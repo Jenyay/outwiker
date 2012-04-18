@@ -266,8 +266,8 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
         generator.makeHtml ()
         self.assertTrue (generator.canReadFromCache())
 
-        exampleStyleDir = u"../styles/example_jblog"
-        exampleStyleDir2 = u"../styles/example_jnet"
+        exampleStyleDir = u"../test/styles/example_jblog/example_jblog"
+        exampleStyleDir2 = u"../test/styles/example_jnet/example_jnet"
 
         # Изменим стиль страницы
         style.setPageStyle (self.testPage, exampleStyleDir)

@@ -25,9 +25,11 @@ class BasePageDialog(wx.Dialog):
 
         self.generalPanel = GeneralPanel (self.notebook)
         self.iconPanel = IconPanel (self.notebook)
+        self.appearancePanel = AppearancePanel (self.notebook)
 
         self.notebook.AddPage (self.generalPanel, _("General"))
         self.notebook.AddPage (self.iconPanel, _("Icon"))
+        self.notebook.AddPage (self.appearancePanel, _("Appearance"))
 
         self.__set_properties()
         self.__do_layout()
@@ -182,4 +184,29 @@ class IconPanel (wx.Panel):
         iconSizer.Add(self.iconsList, 1, wx.ALL|wx.EXPAND, 2)
 
         self.SetSizer (iconSizer)
+        self.Layout()
+
+
+class AppearancePanel (wx.Panel):
+    def __init__ (self, parent):
+        super (AppearancePanel, self).__init__ (parent)
+
+        self.styleText = wx.StaticText (self, -1, _("Page style"))
+        self.styleCombo = wx.ComboBox (
+                self, 
+                -1, 
+                choices=[], 
+                style=wx.CB_DROPDOWN|wx.CB_DROPDOWN|wx.CB_READONLY
+                )
+
+        self.__layout ()
+
+
+    def __layout (self):
+        styleSizer = wx.FlexGridSizer (1, 2, 0, 0)
+        styleSizer.AddGrowableCol (1)
+        styleSizer.Add (self.styleText, 1, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 4)
+        styleSizer.Add (self.styleCombo, 1, wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND, 4)
+
+        self.SetSizer (styleSizer)
         self.Layout()

@@ -30,8 +30,9 @@ class StylesTest (unittest.TestCase):
 
         self._styleFname = u"__style.html"
         self._styleDir = u"__style"
-        self._exampleStyleDir = u"../styles/example_jblog"
-        self._exampleStyleDir2 = u"../styles/example_jnet"
+        self._exampleStyleDir = u"../test/styles/example_jblog/example_jblog"
+        self._exampleStyleDir2 = u"../test/styles/example_jnet/example_jnet"
+        self._invalidStyleDir = u"../styles/invalid"
         self._testStylePath = os.path.join (self._exampleStyleDir, self._styleFname)
 
         Application.wikiroot = self.rootwiki
@@ -193,3 +194,10 @@ class StylesTest (unittest.TestCase):
 
         style.setPageStyle (self.rootwiki, self._exampleStyleDir)
         style.setPageStyleDefault (self.rootwiki)
+
+
+    def testInvalidPath (self):
+        style = Style()
+        page = self.rootwiki[u"Викистраница 1"]
+
+        self.assertRaises (IOError, style.setPageStyle, page, self._invalidStyleDir)
