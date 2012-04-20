@@ -176,6 +176,10 @@ def getConfigPath (dirname=DEFAULT_CONFIG_DIR, fname=DEFAULT_CONFIG_NAME):
         if not os.path.exists (pluginsDir):
             os.mkdir (pluginsDir)
 
+        stylesDir = os.path.join (homeDir, STYLES_DIR)
+        if not os.path.exists (stylesDir):
+            os.mkdir (stylesDir)
+
         path = os.path.join (homeDir, fname)
 
     return path
@@ -189,20 +193,36 @@ def getTemplatesDir ():
     return os.path.join (getCurrentDir(), STYLES_DIR)
 
 
-def getPluginsDirList (dirname=DEFAULT_CONFIG_DIR, configname=DEFAULT_CONFIG_NAME):
+def getPluginsDirList (configDirName=DEFAULT_CONFIG_DIR, configFileName=DEFAULT_CONFIG_NAME):
     """
     Возвращает список директорий, откуда должны грузиться плагины
-    Параметры, связанные с файлом настроек (dirname и configname) используются для нахождения папки с настройками
+    """ 
+    return getSpecialDirList (PLUGINS_DIR, configDirName, configFileName)
+
+
+def getStylesDirList (configDirName=DEFAULT_CONFIG_DIR, 
+        configFileName=DEFAULT_CONFIG_NAME):
     """
-    # Директория "plugins" рядом с запускаемым файлом
-    programPluginsDir = os.path.join (getCurrentDir(), PLUGINS_DIR)
+    Возвращает список директорий, откуда должны грузиться плагины
+    """ 
+    return getSpecialDirList (STYLES_DIR, configDirName, configFileName)
 
-    # Директория "plugins" рядом с файлом настроек
-    configdir = os.path.dirname (getConfigPath (dirname, configname))
-    pluginDir = os.path.join (configdir, PLUGINS_DIR)
 
-    dirlist = [programPluginsDir]
-    if os.path.abspath (programPluginsDir) != os.path.abspath (pluginDir):
-        dirlist.append (pluginDir)
+def getSpecialDirList (dirname, 
+        configDirName=DEFAULT_CONFIG_DIR,
+        configFileName=DEFAULT_CONFIG_NAME):
+    """
+    Возвращает список "специальных" директорий (директорий для плагинов, стилей и т.п., расположение которых зависит от расположения файла настроек)
+    """
+    # Директория рядом с запускаемым файлом
+    programSpecialDir = os.path.join (getCurrentDir(), dirname)
+
+    # Директория рядом с файлом настроек
+    configdir = os.path.dirname (getConfigPath (configDirName, configFileName))
+    specialDir = os.path.join (configdir, dirname)
+
+    dirlist = [programSpecialDir]
+    if os.path.abspath (programSpecialDir) != os.path.abspath (specialDir):
+        dirlist.append (specialDir)
 
     return dirlist

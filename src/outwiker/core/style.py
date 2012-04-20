@@ -48,8 +48,6 @@ class Style (object):
         if page.readonly:
             raise ReadonlyException
 
-        self._removeStyleFromPage (page)
-
         # Путь до стиля (папка)
         styledir = style if os.path.isdir (style) else os.path.dirname (style)
 
@@ -57,7 +55,14 @@ class Style (object):
         style_fname = os.path.join (styledir, self._styleFname)
         style_folder = os.path.join (styledir, self._styleDir)
 
-        # assert os.path.exists (style_fname)
+        if os.path.abspath (style_fname) == os.path.abspath (self.getPageStyle (page)):
+            return
+
+        if os.path.abspath (style_fname) == os.path.abspath (self.getDefaultStyle()):
+            self.setPageStyleDefault (page)
+            return
+
+        self._removeStyleFromPage (page)
         shutil.copy (style_fname, page.path)
 
         if os.path.exists (style_folder):

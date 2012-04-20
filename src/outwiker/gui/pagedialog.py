@@ -11,6 +11,7 @@ from outwiker.core.application import Application
 from outwiker.core.factoryselector import FactorySelector
 from outwiker.core.config import StringOption
 from outwiker.core.commands import testPageTitle, pageExists, MessageBox
+from outwiker.core.style import Style
 
 
 @outwiker.core.commands.testreadonly
@@ -44,6 +45,11 @@ def editPage (parentWnd, currentPage):
         except OSError as e:
             outwiker.core.commands.MessageBox (_(u"Can't rename page\n") + unicode (e), _(u"Error"), wx.ICON_ERROR | wx.OK)
 
+        try:
+            Style().setPageStyle (currentPage, dlg.style)
+        except IOError as e:
+            outwiker.core.commands.MessageBox (_(u"Can't change page style\n") + unicode (e), _(u"Error"), wx.ICON_ERROR | wx.OK)
+
         currentPage.root.selectedPage = currentPage
 
     dlg.Destroy()
@@ -71,6 +77,7 @@ def createPageWithDialog (parentwnd, parentpage):
             assert page != None
 
             page.icon = dlg.icon
+            Style().setPageStyle (page, dlg.style)
             page.root.selectedPage = page
 
         except OSError, IOError:
@@ -129,6 +136,8 @@ class CreatePageDialog (BasePageDialog):
 
         if parentPage.parent != None:
             self.generalPanel.tagsSelector.tags = parentPage.tags
+
+        self._fillStyleCombo (self._stylesList, None)
     
 
     def onOk (self, event):
@@ -146,6 +155,15 @@ class CreatePageDialog (BasePageDialog):
         event.Skip()
 
 
+    @property
+    def style (self):
+        selItem = self.appearancePanel.styleCombo.GetSelection()
+        if selItem == 0:
+            return Style().getDefaultStyle()
+
+        return self._stylesList[selItem - 1]
+
+
 class EditPageDialog (BasePageDialog):
     def __init__ (self, currentPage, parentPage = None, *args, **kwds):
         BasePageDialog.__init__ (self, parentPage, *args, **kwds)
@@ -157,6 +175,8 @@ class EditPageDialog (BasePageDialog):
         self._prepareForChange (currentPage)
         self.generalPanel.titleTextCtrl.SetFocus()
         self.generalPanel.titleTextCtrl.SetSelection (-1, -1)
+
+        self._fillStyleCombo (self._stylesList, currentPage)
 
 
     def _prepareForChange (self, currentPage):
@@ -191,4 +211,15 @@ class EditPageDialog (BasePageDialog):
             return
 
         event.Skip()
+
+
+    @property
+    def style (self):
+        selItem = self.appearancePanel.styleCombo.GetSelection()
+        if selItem == 0:
+            return Style().getPageStyle (self.currentPage)
+        elif selItem == 1:
+            return Style().getDefaultStyle()
+
+        return self._stylesList[selItem - 2]
 

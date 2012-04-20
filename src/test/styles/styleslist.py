@@ -34,3 +34,9 @@ class StylesListTest (unittest.TestCase):
 
         self.assertEqual (os.path.abspath (style1), os.path.abspath (styleslist[0]))
         self.assertEqual (os.path.abspath (style2), os.path.abspath (styleslist[1]))
+
+
+    def testIter (self):
+        styleslist = StylesList (self._dirlist)
+        styles = [style for style in styleslist]
+        self.assertEqual (len (styles), 2)

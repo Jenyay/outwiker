@@ -48,4 +48,4 @@ class StylesList (object):
         style = Style ()
         return [os.path.join (path, styledir) 
                 for styledir in os.listdir(path) 
-                if style.check (os.path.join (path, styledir) ) ]
+                if not styledir.startswith ("__") and style.check (os.path.join (path, styledir) ) ]

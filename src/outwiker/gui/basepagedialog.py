@@ -9,6 +9,9 @@ import wx
 from outwiker.core.factoryselector import FactorySelector
 from outwiker.core.application import Application
 from outwiker.core.tagslist import TagsList
+from outwiker.core.style import Style
+from outwiker.core.styleslist import StylesList
+from outwiker.core.system import getStylesDirList
 from .iconlistctrl import IconListCtrl
 from .tagsselector import TagsSelector
 
@@ -39,6 +42,7 @@ class BasePageDialog(wx.Dialog):
         self._setTagsList()
 
         self.generalPanel.titleTextCtrl.SetFocus()
+        self._stylesList = StylesList (getStylesDirList ())
 
 
     def __set_properties(self):
@@ -55,6 +59,27 @@ class BasePageDialog(wx.Dialog):
         self.SetSizer(mainSizer)
 
         self.Layout()
+
+
+    def _fillStyleCombo (self, styleslist, page=None):
+        """
+        Заполняет self.appearancePanel.styleCombo списком стилей
+        styleslist - список путей до загруженных стилей
+        page - страница, для которой вызывается диалог. Если page != None, то первый стиль в списке - это стиль данной страницы
+        """
+        names = []
+        if page != None:
+            names.append (_(u"Do not change"))
+
+        names.append (_(u"Default") )
+        style_names = [os.path.basename (style) for style in styleslist]
+
+        names += style_names
+
+        self.appearancePanel.styleCombo.Clear()
+        self.appearancePanel.styleCombo.AppendItems (names)
+        self.appearancePanel.styleCombo.SetSelection (0)
+
 
 
     def _setTagsList (self):

@@ -165,7 +165,7 @@ class StylesTest (unittest.TestCase):
         style.setPageStyle (page, style.getDefaultStyle())
 
         self.assertFalse (os.path.exists (pageStyleDir))
-        self.assertTrue (os.path.exists (pageStyleFname))
+        self.assertFalse (os.path.exists (pageStyleFname))
 
 
     def testEvent (self):
@@ -201,3 +201,20 @@ class StylesTest (unittest.TestCase):
         page = self.rootwiki[u"Викистраница 1"]
 
         self.assertRaises (IOError, style.setPageStyle, page, self._invalidStyleDir)
+
+
+    def testSelfDefault (self):
+        style = Style()
+
+        page = self.rootwiki[u"Викистраница 1"]
+        style.setPageStyle (page, style.getPageStyle (page))
+
+        self.assertEqual (os.path.abspath (style.getPageStyle(page) ),
+                os.path.abspath (style.getDefaultStyle() ) )
+
+
+    def testSelfSpecial (self):
+        style = Style()
+        page = self.rootwiki[u"Викистраница 1"]
+        style.setPageStyle (page, self._exampleStyleDir)
+        style.setPageStyle (page, style.getPageStyle (page))
