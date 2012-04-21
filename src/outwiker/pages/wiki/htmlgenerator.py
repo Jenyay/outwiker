@@ -144,11 +144,11 @@ class HtmlGenerator (object):
 
         try:
             with open (style.getPageStyle (page)) as fp:
-                stylecontent = fp.read()
+                stylecontent = unicode (fp.read(), "utf8")
         except IOError:
             stylecontent = u""
 
-        return stylecontent
+        return stylecontent.encode (self._unicodeEncoding)
 
 
     def __getPluginsList (self):
