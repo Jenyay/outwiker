@@ -15,6 +15,7 @@ import wx
 import gtk, gtk.gdk
 
 # pywebkitgtk (http://code.google.com/p/pywebkitgtk/)
+# http://webkitgtk.org/reference/webkitgtk/stable/webkitgtk-webkitwebview.html
 import webkit
 
 import outwiker.core.system
@@ -67,6 +68,10 @@ class HtmlRenderWebKit(HtmlRender):
         scrolled_window.show_all()
 
         self.canOpenUrl = False                # Можно ли открывать ссылки
+
+        # settings = webkit.WebSettings()
+        # settings.set_property ("enable-offline-web-application-cache", "FALSE")
+        # self.ctrl.set_settings (settings)
 
         self.ctrl.connect("navigation-policy-decision-requested", self.__onNavigate)
         self.ctrl.connect("hovering-over-link", self.__onHoveredOverLink)
@@ -160,13 +165,20 @@ class HtmlRenderWebKit(HtmlRender):
 
 
     def __onNavigate (self, view, frame, request, action, decision):
-        try:
-            href = unicode (urllib.unquote (request.get_uri()), "utf8")
-        except UnicodeDecodeError:
-            #print request.get_uri()
+        # Проверка на то, что мы не пытаемся открыть вложенный фрейм
+        if frame != self.ctrl.get_main_frame():
+            return False
+
+        # Проверка на перезагрузку страницы
+        if action.get_reason().value_nick == "reload":
             return True
 
         curr_href = self.ctrl.get_main_frame().get_uri()
+
+        try:
+            href = unicode (urllib.unquote (request.get_uri()), "utf8")
+        except UnicodeDecodeError:
+            return True
 
         if self.canOpenUrl or href == curr_href:
             # Если вызов uri осуществляется из программы или это запрос на обновление, то 
