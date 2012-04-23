@@ -1,3 +1,9 @@
+outwiker (1.6.0-640) oneiric; urgency=low
+
+  * Добавил новый шаблон black_and_red
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Mon, 23 Apr 2012 22:24:22 +0400
+
 outwiker (1.6.0-639) oneiric; urgency=low
 
   * Добавлены новые стили для страниц
