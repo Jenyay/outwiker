@@ -2,9 +2,140 @@
 <html lang="ru">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<link rel="STYLESHEET" href="./__style/lindachan.css" type="text/css">
 
 		<STYLE type="text/css">
+			BODY {
+			  padding:0px;
+			  margin:7px;
+			  color:black;
+			  }
+
+			/* Списки */
+
+			UL {
+			  margin-top:0px;
+			  margin-right:0px;
+			  margin-bottom:0px;
+			  margin-left:19px;
+			  padding-left:0px; /* Mozilla устанавливает это значение в 20px */
+			  list-style-type:square;}
+
+			LI {
+			  margin-top:0px;
+			  margin-right:0px;
+			  margin-bottom:0px;}
+
+			OL {
+			  margin-top:0px;
+			  margin-right:0px;
+			  margin-bottom:0px;}
+
+			/* Никогда не были нужны рамки рисунков. */
+			IMG {
+			  border:none;}
+
+			P {
+			  text-align:justify;
+			  x-text-indent:16pt;  /* Решено обойтись без отступов. */
+			  margin:0px 0px 15px 0px;
+			  padding:0px;}
+
+
+			/* Блок с каким-то связным содержанием */
+			DIV.CONTENT_BLOCK {
+			  width:100%;
+			  margin:0px auto 10px auto;
+			  
+			  padding:10px;
+			  border:2px solid #8000FF;
+			  background:white;}
+
+			/* Это рассчитано на использование совместно с 
+			   DIV.CONTENT_BLOCK. Тоесть должно стоять перед блоками. */
+			H1 {
+			  font:bold 20pt Georgia,Garamond,'Times New Roman',Times,serif;
+			  text-align:center;
+			  background:white;
+			  
+			  color:#8000FF; /* darkblue; */
+			  x-color:white;
+			  x-background:#8000FF;
+			  
+			  margin:0px auto 10px auto;
+			  padding:1px 10px 3px 10px;
+			  border:2px solid #8000FF;}
+
+			/* Это должно стоять в начале блока DIV.CONTENT_BLOCK. Как
+			   раз для этого бордюрчик и сделан. */
+			H2 {
+			  font:bold 17pt Georgia,Garamond,'Times New Roman',Times,serif;
+			  text-align:left;
+			  color:#8000FF;
+			  margin:0px 0px 10px 0px;
+			  border-bottom:2px solid #8000FF;}
+
+			H3 {
+			  font:bold 14pt Georgia,Garamond,'Times New Roman',Times,serif;
+			  text-align:left;
+			  color:#8000FF; /* darkblue; */
+			  margin:0px 0px 10px 0px;}
+
+			PRE {
+			  margin:0px 0px 15px 0px;
+			  padding:0px;}
+
+
+			HR {
+			  border:1px solid #8000FF;}
+
+			/* Выравнивание в таблицах */
+			TBODY {
+				vertical-align:top;}
+			TFOOT {
+				vertical-align:top;}
+			THEAD {
+				vertical-align:top;}
+			TR {vertical-align:top;}
+			TD {vertical-align:top;}
+			TH {vertical-align:top;}
+
+			/*********************
+			* Динамическая ширина. 
+			* TODO: Разобраться с аватарками - там фиксированная ширина.
+			*********************/
+			DIV.CONTENT_BLOCK, H1 {
+			  width:auto;
+			  margin:0px 5px 10px 5px;
+			  }
+
+
+			/* Зелёная схема. */
+			BODY {
+			  background:#D9FFDF url("./__style/background.png");}
+			H1 {
+			  border-color:#008000;
+			  color:#008000;}
+			H2 {
+			  color:#008000;
+			  border-bottom-color:#008000;}
+			H3 {
+			  color:#008000;}
+			DIV.CONTENT_BLOCK {
+			  border-color:#008000;
+			  background:white;}
+
+			A:link {
+			  color:#3A7807;}
+			A:visited {
+			  color:#3A7807;}
+			A:active {
+			  color:#3A7807;}
+			A:hover {
+			  color:#3A7807;}
+
+			HR {
+				border-color:#3A7807;}
+
 			body, div, p, table {
 				font-size:${fontsize}pt;
 				font-family:$fontfamily;

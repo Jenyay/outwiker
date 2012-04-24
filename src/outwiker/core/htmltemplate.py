@@ -25,15 +25,12 @@ class HtmlTemplate (object):
         self.fontfamily = self.config.fontName.value
         self.userStyle = self.config.userStyle.value
 
-        # tpl_fname = u"__style.html"
-        # tpl_path = os.path.join (path, tpl_fname)
-
         with open (path) as fp:
             self.template = Template (unicode (fp.read().strip(), "utf8") )
 
 
     def substitute (self, content, userhead=u""):
-        return self.template.substitute (content=content, 
+        return self.template.safe_substitute (content=content, 
                 fontsize=self.fontsize,
                 fontfamily = self.fontfamily,
                 userstyle = self.userStyle,

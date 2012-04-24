@@ -9,6 +9,7 @@ from outwiker.core.style import Style
 from outwiker.core.tree import RootWikiPage, WikiDocument
 from outwiker.core.application import Application
 from outwiker.pages.wiki.wikipage import WikiPageFactory, WikiWikiPage
+from outwiker.pages.wiki.htmlgenerator import HtmlGenerator
 from outwiker.pages.html.htmlpage import HtmlPageFactory, HtmlWikiPage
 from test.utils import removeWiki
 
@@ -218,3 +219,25 @@ class StylesTest (unittest.TestCase):
         page = self.rootwiki[u"Викистраница 1"]
         style.setPageStyle (page, self._exampleStyleDir)
         style.setPageStyle (page, style.getPageStyle (page))
+
+
+    def testInvalidStyle1 (self):
+        style = Style()
+        page = self.rootwiki[u"Викистраница 1"]
+        
+        fname = os.path.join (page.path, style._styleFname)
+        with open (fname, "w") as fp:
+            fp.write (u"""<HTML>
+<HEAD>
+</HEAD>
+
+<BODY>
+<P>$content</P>
+
+$invalidkey
+</BODY>
+</HTML>
+""")
+
+        generator = HtmlGenerator (page)
+        htmlpath = generator.makeHtml ()
