@@ -187,6 +187,13 @@ class WikiPagePanel (HtmlPanel):
 
     def __addAlignTools (self):
         self.addTool (self.__wikiMenu, 
+                "ID_ALIGN_LEFT", 
+                lambda event: self.codeEditor.turnText (u"%left%", u""), 
+                _(u"Left align\tCtrl+Alt+L"), 
+                _(u"Left align"), 
+                os.path.join (self.imagesDir, "text_align_left.png"))
+
+        self.addTool (self.__wikiMenu, 
                 "ID_ALIGN_CENTER", 
                 lambda event: self.codeEditor.turnText (u"%center%", u""), 
                 _(u"Center align\tCtrl+Alt+C"), 
@@ -200,6 +207,13 @@ class WikiPagePanel (HtmlPanel):
                 _(u"Right align"), 
                 os.path.join (self.imagesDir, "text_align_right.png"))
     
+        self.addTool (self.__wikiMenu, 
+                "ID_ALIGN_JUSTIFY", 
+                lambda event: self.codeEditor.turnText (u"%justify%", u""), 
+                _(u"Justify align\tCtrl+Alt+J"), 
+                _(u"Justify align"), 
+                os.path.join (self.imagesDir, "text_align_justify.png"))
+
 
     def __addFormatTools (self):
         self.addTool (self.__wikiMenu, 

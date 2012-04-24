@@ -11,7 +11,7 @@ from tokenheading import HeadingFactory
 from tokenadhoc import AdHocFactory
 from tokenhorline import HorLineFactory
 from tokenlink import LinkFactory
-from tokenalign import CenterAlignFactory, RightAlignFactory
+from tokenalign import AlignFactory
 from tokentable import TableFactory
 from tokenurl import UrlFactory
 from tokenurlimage import UrlImageFactory
@@ -52,8 +52,7 @@ class Parser (object):
         self.preformat = PreFormatFactory.make (self)
         self.horline = HorLineFactory.make(self)
         self.link = LinkFactory.make (self)
-        self.centerAlign = CenterAlignFactory.make(self)
-        self.rightAlign = RightAlignFactory.make (self)
+        self.align = AlignFactory.make(self)
         self.table = TableFactory.make(self)
         self.url = UrlFactory.make (self)
         self.urlImage = UrlImageFactory.make (self)
@@ -104,8 +103,7 @@ class Parser (object):
                 self.underlined |
                 self.strike |
                 self.horline |
-                self.centerAlign |
-                self.rightAlign |
+                self.align |
                 self.lists |
                 self.table |
                 self.attachesImage |

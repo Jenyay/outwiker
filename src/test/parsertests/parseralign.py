@@ -97,3 +97,17 @@ class ParserAlignTest (unittest.TestCase):
         result = u'бла-бла-бла \n<DIV ALIGN="RIGHT">кхм бла-бла-бла\nбла-бла-бла</DIV>'
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testLeft1 (self):
+        text = u"%left%бла-бла-бла \n'''кхм''' бла-бла-бла\n\nбла-бла-бла"
+        result = u'<DIV ALIGN="LEFT">бла-бла-бла \n<B>кхм</B> бла-бла-бла</DIV>\n\nбла-бла-бла'
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testJustify1 (self):
+        text = u"%justify%бла-бла-бла \n'''кхм''' бла-бла-бла\n\nбла-бла-бла"
+        result = u'<DIV ALIGN="JUSTIFY">бла-бла-бла \n<B>кхм</B> бла-бла-бла</DIV>\n\nбла-бла-бла'
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))

@@ -431,6 +431,13 @@ class HtmlPagePanel (HtmlPanel):
     
     def __addAlignTools (self):
         self.addTool (self.__htmlMenu, 
+                "ID_ALIGN_LEFT", 
+                lambda event: self.codeEditor.turnText (u'<div align="left">', u'</div>'), 
+                _(u"Left align\tCtrl+Alt+L"), 
+                _(u"Left align"), 
+                os.path.join (self.imagesDir, "text_align_left.png"))
+
+        self.addTool (self.__htmlMenu, 
                 "ID_ALIGN_CENTER", 
                 lambda event: self.codeEditor.turnText (u'<div align="center">', u'</div>'), 
                 _(u"Center align\tCtrl+Alt+C"), 
@@ -444,6 +451,13 @@ class HtmlPagePanel (HtmlPanel):
                 _(u"Right align"), 
                 os.path.join (self.imagesDir, "text_align_right.png"))
     
+        self.addTool (self.__htmlMenu, 
+                "ID_ALIGN_JUSTIFY", 
+                lambda event: self.codeEditor.turnText (u'<div align="justify">', u'</div>'), 
+                _(u"Justify align\tCtrl+Alt+J"), 
+                _(u"Justify align"), 
+                os.path.join (self.imagesDir, "text_align_justify.png"))
+
 
     def __addTableTools (self):
         """
