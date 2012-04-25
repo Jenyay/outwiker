@@ -22,9 +22,7 @@ class SpoilerCommand (Command):
 
         self.__style1 = u"""<STYLE>div.spoiler_style1 {
     padding: 3px; 
-    background-color: #FFFFFF; 
     border: 1px solid #d8d8d8; 
-    font-size: 1em;
     }</STYLE>"""
 
         self.__style2 = u"""<STYLE>div.spoiler_style2 {

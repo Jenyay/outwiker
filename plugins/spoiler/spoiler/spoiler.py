@@ -150,7 +150,7 @@ Text
 
         @property
         def version (self):
-            return u"1.1"
+            return u"1.2"
 
 
         def destroy (self):
