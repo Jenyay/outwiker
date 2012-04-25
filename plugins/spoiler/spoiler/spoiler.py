@@ -97,8 +97,8 @@ else:
 
 
         def __onInsertCommand (self, event):
-            startCommand = u'(:spoiler:)\n'
-            endCommand = u'\n(:spoilerend:)'
+            startCommand = u'(:spoiler:)'
+            endCommand = u'(:spoilerend:)'
 
             pageView = self._getPageView()
             pageView.codeEditor.turnText (startCommand, endCommand)
@@ -137,12 +137,13 @@ Text
 (:spoilerend:)</PRE>
 
 <B>Params:</B>
+<U>inline</U> - Spoiler will be in inline mode.
 <U>expandtext</U> - Link text for the collapsed spoiler. Default: "Expand".
 <U>collapsetext</U> - Link text for the expanded spoiler. Default: "Collapse".
 
 <U>Example:</U>
 
-<PRE>(:spoiler expandtext="More..." collapsetext="Less":)
+<PRE>(:spoiler expandtext="More..." collapsetext="Less" inline :)
 Text
 (:spoilerend:)</PRE>
 """)
@@ -150,7 +151,7 @@ Text
 
         @property
         def version (self):
-            return u"1.2"
+            return u"1.3"
 
 
         def destroy (self):

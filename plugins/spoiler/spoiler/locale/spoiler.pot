@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-11 22:02+0400\n"
+"POT-Creation-Date: 2012-04-25 22:02+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,19 +17,19 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: commandspoiler.py:46
+#: commandspoiler.py:48
 msgid "Expand"
 msgstr ""
 
-#: commandspoiler.py:47
+#: commandspoiler.py:49
 msgid "Collapse"
 msgstr ""
 
-#: spoiler.py:64
+#: spoiler.py:82
 msgid "Collapse text (:spoiler:)"
 msgstr ""
 
-#: spoiler.py:106
+#: spoiler.py:121
 msgid ""
 "Add command (:spoiler:) in wiki parser.\n"
 "\n"
@@ -51,6 +51,7 @@ msgid ""
 "(:spoilerend:)</PRE>\n"
 "\n"
 "<B>Params:</B>\n"
+"<U>inline</U> - Spoiler will be in inline mode.\n"
 "<U>expandtext</U> - Link text for the collapsed spoiler. Default: \"Expand"
 "\".\n"
 "<U>collapsetext</U> - Link text for the expanded spoiler. Default: \"Collapse"
@@ -58,7 +59,7 @@ msgid ""
 "\n"
 "<U>Example:</U>\n"
 "\n"
-"<PRE>(:spoiler expandtext=\"More...\" collapsetext=\"Less\":)\n"
+"<PRE>(:spoiler expandtext=\"More...\" collapsetext=\"Less\" inline :)\n"
 "Text\n"
 "(:spoilerend:)</PRE>\n"
 msgstr ""

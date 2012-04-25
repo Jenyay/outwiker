@@ -9,6 +9,7 @@ class SpoilerCommand (Command):
     Параметры:
         expandtext - текст вместо надписи "Expand/Развернуть"
         collapsetext - текст вместо надписи "Collapse/Свернуть"
+        inline - спойлер вставляется в текст
     """
     def __init__ (self, parser, name, lang):
         """
@@ -34,11 +35,14 @@ class SpoilerCommand (Command):
     display: block;
     }</STYLE>"""
 
-        self.__resultTemplate = ur"""
+        self.__blockTemplate = ur"""
         <div class="spoiler_style1"><div class="spoiler_style2"><span onClick="if (this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display != '') {  this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display = ''; this.innerHTML = '<b></b><a href=\'#\' onClick=\'return false;\'>{collapsetext}</a>'; } else { this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display = 'none'; this.innerHTML = '<b></b><a href=\'#\' onClick=\'return false;\'>{expandtext}</a>'; }" /><b></b><a href="#" onClick="return false;">{expandtext}</a></span></div><div class="spoiler_quotecontent"><div style="display: none;">{content}</div></div></div>"""
+
+        self.__inlineTemplate = ur"""<span><span onClick="this.parentNode.getElementsByTagName('span')[1].style.display = ''; this.style.display = 'none';"><a href="#">{expandtext}</a></span><span style="display: none;" onClick="this.parentNode.getElementsByTagName('span')[0].style.display = ''; this.style.display = 'none';">{content}</span></span>"""
     
         self.__expandParam = u"expandtext"
         self.__collapseParam = u"collapsetext"
+        self.__inlineParam = u"inline"
 
         # Надписи по умолчанию
         self.__expandTextDefault = _(u"Expand")
@@ -62,15 +66,26 @@ class SpoilerCommand (Command):
         Метод возвращает текст, который будет вставлен на место команды в вики-нотации
         """
         params_dict = Command.parseParams (params)
+        template = self.__getTemplate (params_dict)
 
         parsedcontent = self.parser.parseWikiMarkup (content.strip())
-        result = self.__resultTemplate.replace (u"{expandtext}", self.__getExpandText (params_dict) )
+        result = template.replace (u"{expandtext}", self.__getExpandText (params_dict) )
         result = result.replace (u"{collapsetext}", self.__getCollapseText (params_dict) )
         result = result.replace (u"{content}", parsedcontent)
 
         self.__appendStyles()
 
         return result
+
+
+    def __getTemplate (self, params_dict):
+        """
+        Возвращает шаблон в зависимости от вида спойлера
+        """
+        if self.__inlineParam in params_dict.keys():
+            return self.__inlineTemplate
+        else:
+            return self.__blockTemplate
 
 
     def __appendStyles (self):
