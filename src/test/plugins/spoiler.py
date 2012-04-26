@@ -150,3 +150,32 @@ class SpoilerPluginTest (unittest.TestCase):
         self.assertTrue (u"Текст</div></div></div>" in result)
         self.assertTrue (u"Раскукожить</a></span></div>" in result)
         self.assertTrue (u"Скукожить</a>" in result)
+
+
+    def testInline (self):
+        text = u"бла-бла-бла (:spoiler inline:)Текст(:spoilerend:)"
+
+        self.testPage.content = text
+
+        generator = HtmlGenerator (self.testPage)
+        htmlpath = generator.makeHtml ()
+        result = self.__readFile (htmlpath)
+
+        self.assertTrue (u"бла-бла-бла" in result)
+        self.assertFalse (u"Текст</div></div></div>" in result)
+        self.assertTrue (u"<span><span" in result)
+
+
+    def testInlineExpandText (self):
+        text = u"""бла-бла-бла (:spoiler expandtext="Раскукожить" inline:)Текст(:spoilerend:)"""
+
+        self.testPage.content = text
+
+        generator = HtmlGenerator (self.testPage)
+        htmlpath = generator.makeHtml ()
+        result = self.__readFile (htmlpath)
+
+        self.assertTrue (u"бла-бла-бла" in result)
+        self.assertFalse (u"Текст</div></div></div>" in result)
+        self.assertTrue (u"<span><span" in result)
+        self.assertTrue (u"""<a href="#">Раскукожить</a>""" in result)
