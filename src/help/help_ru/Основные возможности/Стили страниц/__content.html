@@ -1,0 +1,38 @@
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>
+
+	<STYLE type="text/css">
+		body, div, p, table {
+			font-size:10pt;
+			font-family:Verdana;
+		}
+
+		img{border:none}
+		li strike {color: RGB(200, 200, 200); }
+	</STYLE>
+	
+</HEAD>
+
+<BODY>
+<P>Для вики- и HTML-страниц можно устанавливать стили оформления. Для выбора стиля страницы предназначена вкладка "Оформление" диалога свойств страницы.</P>
+
+<P><DIV ALIGN="CENTER"> <IMG SRC="__attach/styles_01.png"/></DIV></P>
+
+<P>Стили для страниц могут храниться в следующих директориях:</P>
+
+<P>
+<UL>
+<LI>В директории <I>styles</I> рядом с запускаемым файлом.</LI>
+<LI>В директории <I>styles</I> внутри директории <I>.outwiker</I>, которая, в свою очередь, расположена в домашнем каталоге пользователя (под Linux это <I>~/.outwiker/styles</I>).</LI>
+</UL>При установке стиля, в директорию страницы копируются файл <I>__style.html</I> и поддиректория <I>__style</I>, если она есть в выбранном стиле. Таким образом, решается проблема, если на одном компьютере установлен какой-то стиль, а на другом - нет. В то же время такой подход позволяет индивидуально подстраивать стили для каждой страницы. При установки стиля по умолчанию файл <I>__style.html</I> и поддиректория <I>__style</I> удаляются.</P>
+
+<P>Ниже показаны скриншоты одной и той же страницы с применением разных стилей.</P>
+
+<P><TABLE border=0 width=100%><TR><TD ALIGN="CENTER"><A HREF="__attach/style_default.png"><IMG SRC="__attach/__thumb/th_maxsize_250_style_default.png"/></A>
+<BR>Стиль по умолчанию</TD><TD ALIGN="CENTER"><A HREF="__attach/style_black_and_red.png"><IMG SRC="__attach/__thumb/th_maxsize_250_style_black_and_red.png"/></A>
+<BR>Стиль "black_and_red"</TD></TR><TR><TD ALIGN="CENTER"><A HREF="__attach/style_dark.png"><IMG SRC="__attach/__thumb/th_maxsize_250_style_dark.png"/></A>
+<BR>Стиль "dark"</TD><TD ALIGN="CENTER"><A HREF="__attach/style_green.png"><IMG SRC="__attach/__thumb/th_maxsize_250_style_green.png"/></A>
+<BR>Стиль "green"</TD></TR></TABLE></P>
+</BODY>
+</HTML>

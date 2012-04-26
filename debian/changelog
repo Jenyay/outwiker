@@ -1,3 +1,9 @@
+outwiker (1.6.0-642) oneiric; urgency=low
+
+  * Небольшие исправления. Подготовка к релизу
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Thu, 26 Apr 2012 22:07:36 +0400
+
 outwiker (1.6.0-641) oneiric; urgency=low
 
   * Добавил новые команды для выравнивания в викинотацию
