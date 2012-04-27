@@ -1,3 +1,9 @@
+outwiker (1.6.0-643~precise) precise; urgency=low
+
+  * Исправления в сборке deb-пакетов
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Fri, 27 Apr 2012 23:12:26 +0400
+
 outwiker (1.6.0-642~precise) precise; urgency=low
 
   * Небольшие исправления. Подготовка к релизу
