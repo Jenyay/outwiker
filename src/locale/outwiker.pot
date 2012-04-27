@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-24 22:29+0400\n"
+"POT-Creation-Date: 2012-04-27 09:27+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -74,35 +74,33 @@ msgid "mailto:jenyay.ilin@gmail.com"
 msgstr ""
 
 #: outwiker/gui/about.py:33
-msgid "WebMoney (WMR):"
+msgid ""
+"The program uses some sets of free icons taken from sites famfamfam.com and "
+"yusukekamiyamane.com. Many thanks to the authors of those sites.\n"
+"\n"
+"\n"
+"Thanks Nabrodov Alexey (http://averr.in/) for the program icon. \n"
+"\n"
+"Thanks Cheshkov Iliya (http://ilyuxaif.livejournal.com) for english help "
+"correction. \n"
+"\n"
+"Thanks Yury aka Cuprum (http://cuprum.name/) for the icons of browsers and "
+"operating systems and \"dark\" style. \n"
+"\n"
+"Thanks linda_kaioh (http://linda-kaioh.livejournal.com/) for the program "
+"testing and \"green\" style. \n"
+"\n"
+"Thanks Vitaliy Yakovchuk for the ukrainian translation.\n"
+"\n"
+"Rendering the formulas uses mimeTeX."
 msgstr ""
 
-#: outwiker/gui/about.py:34
-msgid "R356551209135"
-msgstr ""
-
-#: outwiker/gui/about.py:35
-msgid "WebMoney (WMZ)"
-msgstr ""
-
-#: outwiker/gui/about.py:36
-msgid "Z427584680984"
-msgstr ""
-
-#: outwiker/gui/about.py:37
-msgid "Yandex.Money"
-msgstr ""
-
-#: outwiker/gui/about.py:38
-msgid "41001580829031"
-msgstr ""
-
-#: outwiker/gui/about.py:51 outwiker/gui/about.py:103
+#: outwiker/gui/about.py:46 outwiker/gui/about.py:94
 msgid "About"
 msgstr ""
 
-#: outwiker/gui/about.py:104
-msgid "Donate"
+#: outwiker/gui/about.py:95
+msgid "Thanks"
 msgstr ""
 
 #: outwiker/gui/attachpanel.py:76 outwiker/gui/attachpanel.py:81

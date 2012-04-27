@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-24 22:29+0400\n"
+"POT-Creation-Date: 2012-04-27 09:27+0400\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -71,37 +71,47 @@ msgid "mailto:jenyay.ilin@gmail.com"
 msgstr "mailto:jenyay.ilin@gmail.com"
 
 #: outwiker/gui/about.py:33
-msgid "WebMoney (WMR):"
-msgstr "WebMoney (WMR):"
+msgid ""
+"The program uses some sets of free icons taken from sites famfamfam.com and yusukekamiyamane.com. Many thanks to the authors of those sites.\n"
+"\n"
+"\n"
+"Thanks Nabrodov Alexey (http://averr.in/) for the program icon. \n"
+"\n"
+"Thanks Cheshkov Iliya (http://ilyuxaif.livejournal.com) for english help correction. \n"
+"\n"
+"Thanks Yury aka Cuprum (http://cuprum.name/) for the icons of browsers and operating systems and \"dark\" style. \n"
+"\n"
+"Thanks linda_kaioh (http://linda-kaioh.livejournal.com/) for the program testing and \"green\" style. \n"
+"\n"
+"Thanks Vitaliy Yakovchuk for the ukrainian translation.\n"
+"\n"
+"Rendering the formulas uses mimeTeX."
+msgstr ""
+"Программа использует бесплатные иконки, взятые с сайтов famfamfam.com и yusukekamiyamane.com, за что спасибо авторам этих сайтов. Иконки действительно очень выручают :)\n"
+"\n"
+"\n"
+"Особые благодарности:\n"
+"\n"
+"Набродову Алексею (http://averr.in/) за иконку для программы.\n"
+"\n"
+"Чешкову Илье (http://ilyuxaif.livejournal.com) за исправление английского перевода справки.\n"
+"\n"
+"Юрию aka Cuprum (http://cuprum.name/) за иконки браузеров и операционных систем для набора иконок, а также за стиль \"dark\".\n"
+"\n"
+"linda_kaioh (http://linda-kaioh.livejournal.com/) за тестирование программы и за стиль \"green\".\n"
+"\n"
+"Виталию Яковчуку за украинскую локализацию программы.\n"
+"\n"
+"Для рендеринга формул используется mimeTeX."
 
-#: outwiker/gui/about.py:34
-msgid "R356551209135"
-msgstr "R356551209135"
-
-#: outwiker/gui/about.py:35
-msgid "WebMoney (WMZ)"
-msgstr "WebMoney (WMZ)"
-
-#: outwiker/gui/about.py:36
-msgid "Z427584680984"
-msgstr "Z427584680984"
-
-#: outwiker/gui/about.py:37
-msgid "Yandex.Money"
-msgstr "Яндекс.Деньги"
-
-#: outwiker/gui/about.py:38
-msgid "41001580829031"
-msgstr "41001580829031"
-
-#: outwiker/gui/about.py:51
-#: outwiker/gui/about.py:103
+#: outwiker/gui/about.py:46
+#: outwiker/gui/about.py:94
 msgid "About"
 msgstr "О программе"
 
-#: outwiker/gui/about.py:104
-msgid "Donate"
-msgstr "Donate"
+#: outwiker/gui/about.py:95
+msgid "Thanks"
+msgstr "Благодарности"
 
 #: outwiker/gui/attachpanel.py:76
 #: outwiker/gui/attachpanel.py:81
@@ -1531,6 +1541,27 @@ msgstr "Заголовок страницы содержит запрещённ�
 #: outwiker/core/textprinter.py:106
 msgid "Printing error"
 msgstr "Ошибка печати"
+
+#~ msgid "WebMoney (WMR):"
+#~ msgstr "WebMoney (WMR):"
+
+#~ msgid "R356551209135"
+#~ msgstr "R356551209135"
+
+#~ msgid "WebMoney (WMZ)"
+#~ msgstr "WebMoney (WMZ)"
+
+#~ msgid "Z427584680984"
+#~ msgstr "Z427584680984"
+
+#~ msgid "Yandex.Money"
+#~ msgstr "Яндекс.Деньги"
+
+#~ msgid "41001580829031"
+#~ msgstr "41001580829031"
+
+#~ msgid "Donate"
+#~ msgstr "Donate"
 
 #~ msgid "Livejournal User (:ljuser ...:)"
 #~ msgstr "Пользователь Livejournal (:ljuser ...:)"
