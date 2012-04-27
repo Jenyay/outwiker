@@ -1,8 +1,11 @@
 [General]
 type = wiki
-tags = 
-order = 9
+tags = пользователям, стили
+order = 4
 
 [wiki]
-md5_hash = e75d72c52b7424c0ae89ad805a832578
+md5_hash = e4270da98e9f6f1b4fd1e8ce10dca815
+
+[Tree]
+expand = True
 

@@ -1,4 +1,4 @@
-Дополнительные плагины вы можете найти [[здесь -> http://jenyay.net/Outwiker/Plugins]].
+Расширения (плагины) позволяют дополнительно наращивать возможности OutWiker. Расширения вы можете найти [[здесь -> http://jenyay.net/Outwiker/Plugins]].
 
 Для установки плагинов необходимо распаковать архив в папку ''plugins'' рядом с запускаемым файлом или в папку .outwiker\plugins в директории пользователя (под Windows XP - C:\Documents and Settings\USERNAME\.outwiker\plugins, под Linux - ~/.outwiker/plugins).
 

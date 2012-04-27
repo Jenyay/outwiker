@@ -28,13 +28,13 @@ install:
 	cp "outwiker.desktop" $(DESTDIR)/usr/share/applications
 
 debsource: source
-	cd build/$(dirname)/debian; debuild -S
+	cd build/$(dirname)/debian; debuild -S --source-option=--include-binaries --source-option=--include-removal
 
 debsourceinclude: source
-	cd build/$(dirname)/debian; debuild -S -sa
+	cd build/$(dirname)/debian; debuild -S -sa --source-option=--include-binaries --source-option=--include-removal
 
 deb: source
-	cd build/$(dirname)/debian; debuild
+	cd build/$(dirname)/debian; debuild --source-option=--include-binaries --source-option=--include-removal
 
 win:
 	cd src; python setup_win.py build

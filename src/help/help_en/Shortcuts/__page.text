@@ -35,8 +35,10 @@
 ||Ctrl+U ||Underlined||
 ||Ctrl+= ||Subscript||
 ||Ctrl++ ||Superscript||
+||Ctrl+Alt+L ||Left align||
 ||Ctrl+Alt+C ||Center align||
 ||Ctrl+Alt+R ||Right align||
+||Ctrl+Alt+J ||Justify align||
 ||Ctrl+1 ... Ctrl+6 ||Heading level 1-6||
 ||Ctrl+G ||Unorder list||
 ||Ctrl+J ||Order list||

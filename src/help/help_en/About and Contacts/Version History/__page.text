@@ -1,7 +1,11 @@
 !!! 1.6.0
 
-*
-
+* Redesigned properties dialog page.
+* Wiki commands for decoration options for users and community livejournal.com removed from the program into a [[plugin -> http://jenyay.net/Outwiker/LivejournalPlugin]].
+* Added the wiki syntax coloring in the editor.
+* Added ability to change the style pages.
+* Now to align text to the wiki pages other than [=%center%=] and [=%right%=] you can use [=%left%=] and [=%justify%=].
+* Internal changes.
 
 !!! 1.5.0.627 (23.02.2012)
 
