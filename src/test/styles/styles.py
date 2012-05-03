@@ -240,4 +240,4 @@ $invalidkey
 """)
 
         generator = HtmlGenerator (page)
-        htmlpath = generator.makeHtml ()
+        htmlpath = generator.makeHtml (Style().getPageStyle (page))

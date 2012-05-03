@@ -520,8 +520,6 @@ class WikiTree(wx.Panel):
         """
         Обновить дерево
         """
-        #self.Unbind (wx.EVT_TREE_SEL_CHANGED, handler = self.__onSelChanged)
-
         # Так как мы сами будем сворачивать/разворачивать узлы дерева, 
         # на эти события реагировать не надо пока строится дерево
         self.treeCtrl.Unbind (wx.EVT_TREE_ITEM_COLLAPSED, handler = self.__onTreeStateChanged)
@@ -544,7 +542,6 @@ class WikiTree(wx.Panel):
             self.selectedPage = rootPage.selectedPage
             self.treeCtrl.Expand (rootItem)
 
-        #self.Bind (wx.EVT_TREE_SEL_CHANGED, self.__onSelChanged)
         self.treeCtrl.Bind (wx.EVT_TREE_ITEM_COLLAPSED, self.__onTreeStateChanged)
         self.treeCtrl.Bind (wx.EVT_TREE_ITEM_EXPANDED, self.__onTreeStateChanged)
     
@@ -615,30 +612,23 @@ class WikiTree(wx.Panel):
         """
         Обновить страницу (удалить из списка и добавить снова)
         """
-        #print page.title
-        #print page.root.selectedPage.title
-
         # Отпишемся от обновлений страниц, чтобы не изменять выбранную страницу
         self.__unbindUpdateEvents()
         self.treeCtrl.Freeze()
 
-        self.__removePageItem (page)
+        try:
+            self.__removePageItem (page)
 
-        #print page.title
-        #print page.root.selectedPage.title
+            item = self.__insertChild (page, self._pageCache[page.parent])
 
-        item = self.__insertChild (page, self._pageCache[page.parent])
+            if page.root.selectedPage == page:
+                # Если обновляем выбранную страницу
+                self.treeCtrl.SelectItem (item)
 
-        #print page.title
-        #print page.root.selectedPage.title
-
-        if page.root.selectedPage == page:
-            # Если обновляем выбранную страницу
-            self.treeCtrl.SelectItem (item)
-
-        self.__scrollToCurrentPage()
-        self.treeCtrl.Thaw()
-        self.__bindUpdateEvents()
+            self.__scrollToCurrentPage()
+        finally:
+            self.treeCtrl.Thaw()
+            self.__bindUpdateEvents()
     
 
     def __scrollToCurrentPage (self):

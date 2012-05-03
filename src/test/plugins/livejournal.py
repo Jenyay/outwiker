@@ -7,6 +7,7 @@ import os.path
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
+from outwiker.core.style import Style
 from outwiker.pages.wiki.parser.wikiparser import Parser
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
@@ -63,7 +64,7 @@ class LivejournalPluginTest (unittest.TestCase):
         self.testPage.content = text
 
         generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml ()
+        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
         result = self.__readFile (htmlpath)
 
         self.assertTrue (u"бла-бла-бла" in result)
@@ -76,7 +77,7 @@ class LivejournalPluginTest (unittest.TestCase):
         self.testPage.content = text
 
         generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml ()
+        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
         result = self.__readFile (htmlpath)
 
         self.assertTrue (u"бла-бла-бла" in result)

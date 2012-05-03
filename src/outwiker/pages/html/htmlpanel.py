@@ -138,6 +138,13 @@ class HtmlPanel(BaseTextPanel):
 
     
     def UpdateView (self, page):
+        # import traceback
+        # print page.title
+        # traceback.print_stack()
+        # print
+        # print
+        # print Application.onWikiOpen.handlers
+
         self.Freeze()
 
         try:
@@ -187,7 +194,8 @@ class HtmlPanel(BaseTextPanel):
     def _openDefaultPage(self):
         assert self._currentpage != None
 
-        if len (self._currentpage.content) > 0 or len (Attachment (self._currentpage).attachmentFull) > 0:
+        if (len (self._currentpage.content) > 0 or 
+                len (Attachment (self._currentpage).attachmentFull) > 0):
             self.notebook.SetSelection (self.RESULT_PAGE_INDEX)
         else:
             self.notebook.SetSelection (self.CODE_PAGE_INDEX)
@@ -622,6 +630,12 @@ class HtmlPagePanel (HtmlPanel):
 
 
     def generateHtml (self, page):
+        # import traceback
+        # print page.title
+        # traceback.print_stack()
+        # print
+        # print
+
         path = self.getHtmlPath (page)
 
         if page.readonly and os.path.exists (path):
