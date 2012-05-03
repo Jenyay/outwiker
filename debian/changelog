@@ -1,3 +1,9 @@
+outwiker (1.6.0-644~oneiric) oneiric; urgency=low
+
+  * Исправления ошибок
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Thu, 03 May 2012 09:40:11 +0400
+
 outwiker (1.6.0-643~precise) precise; urgency=low
 
   * Исправления в сборке deb-пакетов

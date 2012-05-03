@@ -11,6 +11,7 @@ from outwiker.core.tree import RootWikiPage
 from outwiker.core.htmlimprover import HtmlImprover
 from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
+from outwiker.core.style import Style
 
 from .wikieditor import WikiEditor
 from outwiker.gui.basetextpanel import BaseTextPanel
@@ -426,8 +427,20 @@ class WikiPagePanel (HtmlPanel):
 
     
     def generateHtml (self, page):
+        style = Style()
+        stylepath = style.getPageStyle (page)
         generator = HtmlGenerator (page)
-        return generator.makeHtml()
+
+        try:
+            html = generator.makeHtml(stylepath)
+        except:
+            MessageBox (_(u"Page style Error. Style by default is used"),  
+                    _(u"Error"),
+                    wx.ICON_ERROR | wx.OK)
+
+            html = generator.makeHtml (style.getDefaultStyle())
+
+        return html
 
 
     def removeGui (self):

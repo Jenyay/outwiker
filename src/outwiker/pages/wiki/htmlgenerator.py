@@ -33,7 +33,7 @@ class HtmlGenerator (object):
         self._unicodeEncoding = "unicode_escape"
 
 
-    def makeHtml (self):
+    def makeHtml (self, stylepath):
         path = self.getResultPath()
 
         if self.canReadFromCache():
@@ -44,10 +44,11 @@ class HtmlGenerator (object):
 
         content = self.page.content if len (self.page.content) > 0 else self._generateEmptyContent (parser)
 
-        style = Style()
-        tpl = HtmlTemplate (style.getPageStyle (self.page))
         text = HtmlImprover.run (parser.toHtml (content) )
         head = parser.head
+
+        tpl = HtmlTemplate (stylepath)
+
         result = tpl.substitute (content=text, userhead=head)
 
 
@@ -146,6 +147,8 @@ class HtmlGenerator (object):
             with open (style.getPageStyle (page)) as fp:
                 stylecontent = unicode (fp.read(), "utf8")
         except IOError:
+            stylecontent = u""
+        except UnicodeDecodeError:
             stylecontent = u""
 
         return stylecontent.encode (self._unicodeEncoding)

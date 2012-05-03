@@ -629,7 +629,16 @@ class HtmlPagePanel (HtmlPanel):
             return path
 
         style = Style()
-        tpl = HtmlTemplate (style.getPageStyle (page))
+        stylepath = style.getPageStyle (page)
+
+        try:
+            tpl = HtmlTemplate (stylepath)
+        except:
+            MessageBox (_(u"Page style Error. Style by default is used"),  
+                    _(u"Error"),
+                    wx.ICON_ERROR | wx.OK)
+
+            tpl = HtmlTemplate (style.getDefaultStyle())
 
         if page.autoLineWrap:
             text = HtmlImprover.run (page.content)
