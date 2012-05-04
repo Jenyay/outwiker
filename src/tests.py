@@ -64,6 +64,7 @@ if __name__ == '__main__':
     from test.thumbnails import ThumbnailsTest
     from test.htmlimprover import HtmlImproverTest
     from test.wikihtmlgenerator import WikiHtmlGeneratorTest
+    from test.wikihash import WikiHashTest
     from test.htmltemplate import HtmlTemplateTest
     from test.htmlpages import HtmlPagesTest
 

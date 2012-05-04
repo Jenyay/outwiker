@@ -176,7 +176,7 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
         self.assertTrue (generator.canReadFromCache())
 
 
-    def testCacheEmpty1 (self):
+    def testCacheEmpty (self):
         emptycontent = EmptyContent (Application.config)
         self.testPage.content = u""
 
@@ -378,6 +378,7 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
 
         self.assertEqual (len (Application.plugins), 2)
         self.assertTrue (generator.canReadFromCache())
+        Application.plugins.clear()
 
 
     def testConfigThumbSizeCache (self):
