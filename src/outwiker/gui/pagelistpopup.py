@@ -34,6 +34,7 @@ class PageListPopup (wx.PopupTransientWindow):
 
 
     def Popup (self):
+        self.Dismiss()
         self.Layout()
         self.SetPosition (self.__getBestPosition())
         super (PageListPopup, self).Popup ()
