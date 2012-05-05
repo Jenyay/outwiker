@@ -33,7 +33,7 @@ includefiles = ['images',
 
 includes = []
 excludes = []
-packages = []
+packages = ['urllib', 'urllib2']
 
 
 setup(

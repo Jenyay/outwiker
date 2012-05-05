@@ -2,6 +2,8 @@
 # -*- coding: UTF-8 -*-
 
 import os.path
+import urllib
+import urllib2
 
 import wx
 
@@ -91,7 +93,7 @@ class PluginDebug (Plugin):
 
     @property
     def version (self):
-        return u"0.2"
+        return u"0.3"
 
 
     def initialize(self):
