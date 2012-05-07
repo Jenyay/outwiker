@@ -151,6 +151,7 @@ class CreatePageDialog (BasePageDialog):
             outwiker.core.commands.MessageBox (_(u"A page with this title already exists"), _(u"Error"), wx.ICON_ERROR | wx.OK)
             return
 
+        self.saveParams()
         self.lastCreatedPageType.value = self.selectedFactory.getTypeString()
         event.Skip()
 
@@ -210,6 +211,7 @@ class EditPageDialog (BasePageDialog):
                     wx.ICON_ERROR | wx.OK)
             return
 
+        self.saveParams()
         event.Skip()
 
 

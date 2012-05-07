@@ -484,3 +484,25 @@ class TagsCloudConfig (object):
                 MainWindowConfig.MAIN_WINDOW_SECTION, 
                 self.PANE_OPTIONS_SECTION,
                 self.PANE_OPTIONS_DEFAULT)
+
+
+class PageDialogConfig (object):
+    WIDTH_SECTION = u"PageDialogWidth"
+    WIDTH_DEFAULT = 500
+
+    HEIGHT_SECTION = u"PageDialogHeight"
+    HEIGHT_DEFAULT = 350
+
+    def __init__ (self, config):
+        self.config = config
+
+        self.width = IntegerOption (self.config, 
+                MainWindowConfig.MAIN_WINDOW_SECTION, 
+                self.WIDTH_SECTION,
+                self.WIDTH_DEFAULT)
+
+        self.height = IntegerOption (self.config, 
+                MainWindowConfig.MAIN_WINDOW_SECTION, 
+                self.HEIGHT_SECTION,
+                self.HEIGHT_DEFAULT)
+

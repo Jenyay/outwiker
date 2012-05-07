@@ -12,6 +12,7 @@ from outwiker.core.tagslist import TagsList
 from outwiker.core.style import Style
 from outwiker.core.styleslist import StylesList
 from outwiker.core.system import getStylesDirList
+from .guiconfig import PageDialogConfig
 from .iconlistctrl import IconListCtrl
 from .tagsselector import TagsSelector
 
@@ -23,6 +24,8 @@ class BasePageDialog(wx.Dialog):
         """
         kwds["style"] = wx.DEFAULT_DIALOG_STYLE|wx.RESIZE_BORDER|wx.THICK_FRAME
         wx.Dialog.__init__(self, *args, **kwds)
+
+        self.config = PageDialogConfig (Application.config)
 
         self.notebook = wx.Notebook (self, -1)
 
@@ -43,11 +46,12 @@ class BasePageDialog(wx.Dialog):
 
         self.generalPanel.titleTextCtrl.SetFocus()
         self._stylesList = StylesList (getStylesDirList ())
+        # self.Center(wx.CENTRE_ON_SCREEN)
 
 
     def __set_properties(self):
         self.SetTitle(_(u"Create Page"))
-        self.SetSize((500, 350))
+        self.SetSize((self.config.width.value, self.config.height.value))
 
 
     def __do_layout(self):
@@ -59,6 +63,12 @@ class BasePageDialog(wx.Dialog):
         self.SetSizer(mainSizer)
 
         self.Layout()
+
+
+    def saveParams (self):
+        width, height = self.GetSizeTuple()
+        self.config.width.value = width
+        self.config.height.value = height
 
 
     def _fillStyleCombo (self, styleslist, page=None):
