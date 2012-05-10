@@ -1,6 +1,12 @@
+outwiker (1.6.0-647~precise) precise; urgency=low
+
+  * Небольшие исправления
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Thu, 10 May 2012 21:20:13 +0400
+
 outwiker (1.6.0-646) oneiric; urgency=low
 
-  * Небольшие испрвления
+  * Добавлена украинская локализация
 
  -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Thu, 10 May 2012 20:22:48 +0400
 

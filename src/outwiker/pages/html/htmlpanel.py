@@ -265,6 +265,13 @@ class HtmlPanel(BaseTextPanel):
         for tool in self.allTools:
             self.enableTool (tool, self._isEnabledTool (tool))
 
+        # Отдельно проверим возможность работы поиска по странице
+        # Поиск не должен работать только на странице просмотра
+        searchEnabled = self.notebook.GetSelection() != self.RESULT_PAGE_INDEX
+        self.enableTool (self._tools[u"ID_BASE_SEARCH"], searchEnabled)
+        self.enableTool (self._tools[u"ID_BASE_SEARCH_PREV"], searchEnabled)
+        self.enableTool (self._tools[u"ID_BASE_SEARCH_NEXT"], searchEnabled)
+
 
     def _isEnabledTool (self, tool):
         if "notebook" not in dir (self):
