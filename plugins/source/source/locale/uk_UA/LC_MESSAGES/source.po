@@ -1,0 +1,79 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: source\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-11-13 20:56+0400\n"
+"PO-Revision-Date: 2012-05-10 20:42+0300\n"
+"Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
+"Language-Team: jenyay.net <jenyay.ilin@gmail.com>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Ukrainian\n"
+"X-Poedit-Country: UKRAINE\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: preferencepanel.py:38
+msgid "Default Programming Language"
+msgstr "Мова програмування по замовчуванню"
+
+#: preferencepanel.py:61
+msgid "Default Tab Width"
+msgstr "Розмір табуляції по замовчуванню"
+
+#: source.py:47
+msgid "Source [Plugin]"
+msgstr "Source [Розширення]"
+
+#: source.py:61
+msgid "Source Code (:source ...:)"
+msgstr "Текст програми (:source ...:)"
+
+#: source.py:101
+msgid ""
+"Add command (:source:) in wiki parser. This command highlight your source code.\n"
+"\n"
+"<B>Usage:</B>:\n"
+"(:source params... :)\n"
+"source code\n"
+"(:sourceend:)\n"
+"\n"
+"<B>Params:</B>\n"
+"<I>lang</I> - programming language\n"
+"<I>tabwidth</I> - tab size\n"
+"\n"
+"<B>Example:</B>\n"
+"<PRE>(:source lang=\"python\" tabwidth=4:)\n"
+"import os\n"
+"\n"
+"if __name__ == \"__main__\":\n"
+"    print \"Hello World!\"\n"
+"(:sourceend:)\n"
+"</PRE>\n"
+msgstr ""
+"Розширення додає вікі-команду (:source:) для розфарбовування тексту програми на різних мовах програмування.\n"
+"\n"
+"<B>Використання:</B>:\n"
+"(:source параметри... :)\n"
+"початковий код\n"
+"(:sourceend:)\n"
+"\n"
+"<B>Параметри:</B>\n"
+"<I>lang</I> - мова програмування\n"
+"<I>tabwidth</I> - розмір табуляції\n"
+"\n"
+"<B>Приклад:</B>\n"
+"<PRE>(:source lang=\"python\" tabwidth=4:)\n"
+"import os\n"
+"\n"
+"if __name__ == \"__main__\":\n"
+"    print \"Hello World!\"\n"
+"(:sourceend:)\n"
+"</PRE>\n"
+
