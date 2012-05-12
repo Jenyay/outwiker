@@ -235,7 +235,7 @@
 </description>
 </task>
 <task completiondate="2011-12-02 22:50:53.208576" id="2782c1a8-1b7a-11e1-8bad-00112fd2b1f8" percentageComplete="100" plannedstartdate="2011-11-30 21:38:46.066209" priority="7" status="1" subject="При создании заметка находится на одной строке в дереве, а после перезагрузки вики ее порядок становится другим" />
-<task actualstartdate="2012-05-11 20:48:39.258392" id="28a588a6-9b89-11e1-b542-00112fd2b1f8" plannedstartdate="2012-05-11 20:48:39.258304" priority="8" status="1" subject="Обрабатывать событие завершение работы системы" />
+<task actualstartdate="2012-05-11 20:48:39.258392" completiondate="2012-05-12 09:57:45.890000" id="28a588a6-9b89-11e1-b542-00112fd2b1f8" percentageComplete="100" plannedstartdate="2012-05-11 20:48:39.258304" priority="8" status="1" subject="Обрабатывать событие завершение работы системы" />
 <task id="29211c96-fa17-11e0-b443-00112fd2b1f8" plannedstartdate="2011-10-19 09:57:00" priority="6" status="1" subject="Возможность выбирать цвет и фон для заметки в дереве" />
 <task id="2e4e2656-05dd-11e1-8566-00112fd2b1f8" plannedstartdate="2011-11-03 09:32:00" priority="5" status="1" subject="В редакторе при нажатии Home/End хотелось бы чтобы курсор перескакивал в начало/конец строки, а не абзаца" />
 <task completiondate="2011-11-14 21:56:59.328443" id="36f3378e-02cb-11e1-b61b-00112fd2b1f8" percentageComplete="100" plannedstartdate="2011-10-30 11:46:00" priority="8" status="1" subject="Не сохранять настройки при переключении между вкладками" />

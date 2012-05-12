@@ -42,11 +42,16 @@ class OutWiker(wx.App):
         Application.plugins.load (getPluginsDirList())
 
         self.bindActivateApp()
+        self.Bind (wx.EVT_QUERY_END_SESSION, self._onEndSession)
 
         starter = Starter()
         starter.process()
         
         return True
+
+
+    def _onEndSession (self, event):
+        self.mainWnd.Destroy()
 
 
     def getLogFileName (self, configPath):
