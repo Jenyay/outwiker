@@ -46,7 +46,7 @@ class BasePageDialog(wx.Dialog):
 
         self.generalPanel.titleTextCtrl.SetFocus()
         self._stylesList = StylesList (getStylesDirList ())
-        # self.Center(wx.CENTRE_ON_SCREEN)
+        self.Center(wx.CENTRE_ON_SCREEN)
 
 
     def __set_properties(self):
