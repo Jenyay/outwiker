@@ -220,10 +220,23 @@ def createNewWiki (parentwnd):
     """
     dlg = wx.FileDialog (parentwnd, style = wx.FD_SAVE)
 
+    newPageTitle = _(u"First Wiki Page")
+    newPageContent = _(u"""!! First Wiki Page
+
+This is the first page. You can use a text formating: '''bold''', ''italic'', {+underlined text+}, [[http://jenyay.net | link]] and others.
+""")
+
     if dlg.ShowModal() == wx.ID_OK:
         try:
-            Application.wikiroot = WikiDocument.create (dlg.GetPath ())
-            Application.wikiroot.selectedPage = None
+            from outwiker.pages.wiki.wikipage import WikiPageFactory
+
+            newwiki = WikiDocument.create (dlg.GetPath ())
+            WikiPageFactory.create (newwiki, newPageTitle, [_(u"test")])
+            firstPage = newwiki[newPageTitle]
+            firstPage.content = newPageContent
+
+            Application.wikiroot = newwiki
+            Application.wikiroot.selectedPage = firstPage
         except (IOError, OSError) as e:
             # TODO: проверить под Windows
             MessageBox (_(u"Can't create wiki\n") + unicode (str (e), "utf8"),
