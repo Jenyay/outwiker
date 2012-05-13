@@ -1454,7 +1454,7 @@ msgid ""
 "\n"
 "This is the first page. You can use a text formating: '''bold''', ''italic'', {+underlined text+}, [[http://jenyay.net | link]] and others.\n"
 msgstr ""
-"!! Первая вики страница\n"
+"!! Первая викистраница\n"
 "\n"
 "Это первая страница. Здесь Вы можете использовать форматирование текста, например: '''полужирный шрифт''', ''курсив'', {+подчеркнутый текст+}, [[http://jenyay.net | ссылки]] и другое.\n"
 
