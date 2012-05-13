@@ -1233,7 +1233,7 @@ msgstr ""
 
 #: outwiker/pages/wiki/wikipage.py:38
 msgid "Wiki Page"
-msgstr "Вики-страница"
+msgstr "Викистраница"
 
 #: outwiker/pages/wiki/wikipanel.py:32
 msgid "Wiki"
@@ -1446,7 +1446,7 @@ msgstr "Ошибка файла __page.opt"
 
 #: outwiker/core/commands.py:223
 msgid "First Wiki Page"
-msgstr "Первая вики страница"
+msgstr "Первая викистраница"
 
 #: outwiker/core/commands.py:224
 msgid ""
