@@ -31,6 +31,7 @@ class ButtonsDialog (wx.Dialog):
 
         self.__createButtons (buttons, default, cancel)
         self.__do_layout()
+        self.Center(wx.CENTRE_ON_SCREEN)
 
 
     def __createButtons (self, buttons, default, cancel):

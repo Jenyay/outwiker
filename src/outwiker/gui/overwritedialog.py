@@ -41,6 +41,7 @@ class OverwriteDialog(wx.Dialog):
         self.flag = 0
 
         self.SetEscapeId (wx.ID_CANCEL)
+        self.Center(wx.CENTRE_ON_SCREEN)
 
 
     def __set_properties(self):

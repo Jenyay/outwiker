@@ -16,6 +16,7 @@ class TagsDialog (wx.Dialog):
         self.__createControls()
         self.__setTagsList()
         self.__tagsSelector.SetFocus()
+        self.Center(wx.CENTRE_ON_SCREEN)
 
 
     def __setTagsList (self):

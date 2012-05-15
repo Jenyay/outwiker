@@ -43,6 +43,7 @@ class PrefDialog(wx.Dialog):
         Application.onPreferencesDialogCreate (self)
 
         self.__loadAllOptions()
+        self.Center(wx.CENTRE_ON_SCREEN)
 
 
     @property
