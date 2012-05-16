@@ -238,14 +238,14 @@ class WikiPagePanel (HtmlPanel):
         """
         self.addTool (self.__wikiMenu, 
                 "ID_MARK_LIST", 
-                lambda event: self.codeEditor.turnList (u'', u'', u'*', u''), 
+                lambda event: self.codeEditor.turnList (u'', u'', u'* ', u''), 
                 _(u"Bullets list\tCtrl+G"), 
                 _(u"Bullets list"), 
                 os.path.join (self.imagesDir, "text_list_bullets.png"))
 
         self.addTool (self.__wikiMenu, 
                 "ID_NUMBER_LIST", 
-                lambda event: self.codeEditor.turnList (u'', u'', u'#', u''), 
+                lambda event: self.codeEditor.turnList (u'', u'', u'# ', u''), 
                 _(u"Numbers list\tCtrl+J"), 
                 _(u"Numbers list"), 
                 os.path.join (self.imagesDir, "text_list_numbers.png"))

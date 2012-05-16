@@ -1,4 +1,10 @@
-outwiker (1.6.0-649~precise) precise; urgency=low
+outwiker (1.6.0-650~oneiric) oneiric; urgency=low
+
+  * Небольшие оформительские исправления
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Wed, 16 May 2012 22:18:13 +0400
+
+outwiker (1.6.0-649~oneiric) oneiric; urgency=low
 
   * Теперь при создании вики создается первая страница
 
