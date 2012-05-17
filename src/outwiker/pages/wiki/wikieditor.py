@@ -138,3 +138,30 @@ class WikiEditor (TextEditor):
         self.textCtrl.StartStyling (0, 0xff)
         self.textCtrl.SetStyleBytes (len (stylebytes), stylebytes)
         self.__styleSet = True
+
+
+    def turnList (self, itemStart):
+        """
+        Создать список
+        """
+        selText = self.textCtrl.GetSelectedText()
+        items = filter (lambda item: len (item.strip()) > 0, selText.split ("\n") )
+
+        # Собираем все элементы
+        if len (items) > 0:
+            itemsList = reduce (lambda result, item: result + itemStart + item.strip() + "\n", items, u"")
+        else:
+            itemsList = itemStart + "\n"
+
+        itemsList = itemsList[: -1]
+
+        self.textCtrl.ReplaceSelection (itemsList)
+
+        # if len (items) == 0:
+        #     endText = u"%s\n%s" % (itemEnd, end)
+        #     len_bytes = self.calcByteLen (endText)
+
+        #     currPos = self.textCtrl.GetSelectionEnd()
+        #     newPos = currPos - len_bytes
+        #     self.textCtrl.SetSelection (newPos, newPos)
+

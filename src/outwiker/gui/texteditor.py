@@ -220,37 +220,6 @@ class TextEditor(wx.Panel):
             self.textCtrl.SetSelection (newPos, newPos)
 
 
-    def turnList (self, start, end, itemStart, itemEnd):
-        """
-        Создать список
-        """
-        selText = self.textCtrl.GetSelectedText()
-        items = filter (lambda item: len (item.strip()) > 0, selText.split ("\n") )
-
-        # Собираем все элементы
-        if len (items) > 0:
-            itemsList = reduce (lambda result, item: result + itemStart + item.strip() + itemEnd + "\n", items, u"")
-        else:
-            itemsList = itemStart + itemEnd + "\n"
-
-        result = start + itemsList + end
-
-        if len (end) == 0:
-            # Если нет завершающего тега (как в викинотации), 
-            # то не нужен перевод строки у последнего элемента
-            result = result[: -1]
-
-        self.textCtrl.ReplaceSelection (result)
-
-        if len (items) == 0:
-            endText = u"%s\n%s" % (itemEnd, end)
-            len_bytes = self.calcByteLen (endText)
-
-            currPos = self.textCtrl.GetSelectionEnd()
-            newPos = currPos - len_bytes
-            self.textCtrl.SetSelection (newPos, newPos)
-
-
     def escapeHtml (self, event):
         selText = self.textCtrl.GetSelectedText()
         text = cgi.escape (selText, quote=True)
