@@ -188,15 +188,13 @@ class GeneralPanel (wx.Panel):
         self.titleTextCtrl = wx.TextCtrl(self, -1, "")
         self.titleTextCtrl.SetMinSize((350, -1))
 
-        self.tagsSelector = TagsSelector (self)
-        self.typeLabel = wx.StaticText(self, -1, _(u"Page type"))
-
         self.typeCombo = wx.ComboBox(self, 
                 -1, 
                 choices=[], 
-                style=wx.CB_DROPDOWN|wx.CB_DROPDOWN|wx.CB_READONLY)
+                style=wx.CB_DROPDOWN|wx.CB_READONLY)
 
-
+        self.tagsSelector = TagsSelector (self)
+        self.typeLabel = wx.StaticText(self, -1, _(u"Page type"))
 
 
 class IconPanel (wx.Panel):
