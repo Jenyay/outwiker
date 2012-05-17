@@ -1,0 +1,11 @@
+[General]
+type = wiki
+tags = for users, styles
+order = 3
+
+[wiki]
+md5_hash = d0d139b335b67863ff751b612201f8e5
+
+[Tree]
+expand = True
+

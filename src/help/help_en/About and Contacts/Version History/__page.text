@@ -5,7 +5,7 @@
 * Added the wiki syntax coloring in the editor.
 * Added ability to change the style pages.
 * Now to align text to the wiki pages other than [=%center%=] and [=%right%=] you can use [=%left%=] and [=%justify%=].
-* Internal changes.
+* Many small improvements.
 
 !!! 1.5.0.627 (23.02.2012)
 

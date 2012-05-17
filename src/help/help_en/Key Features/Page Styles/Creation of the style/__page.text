@@ -1,0 +1,36 @@
+Style is the directory where the must be ''__style.html'' file and ''__style'' subdirectory (do not necessarily).
+
+''__style.html'' file is HTML file in UTF-8 encoding, into which a special macro substitutes the contents page and some additional parameters that are written below. For example, default style:
+
+[@
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>
+
+	<STYLE type="text/css">
+		body, div, p, table {
+			font-size:${fontsize}pt;
+			font-family:$fontfamily;
+		}
+
+		img{border:none}
+		$userstyle
+	</STYLE>
+	$userhead
+</HEAD>
+
+<BODY>
+<P>$content</P>
+</BODY>
+</HTML>
+@]
+
+'' __style.html'' file contains a substitution macros that begin with "$" character followed by a macro name, perhaps surrounded by curly braces, for example: $content or ${content}. The second case is needed, if immediately after the macro must be placed some text right next to it (without spaces). Currently supports the following styles of macro substitution:
+
+* $content - replaced by the contents page.
+* $fontsize - font size specified in the settings. Measured in points (pt).
+* $fontfamily - font name specified in the settings.
+* $userstyle - additional styles that can be created in the process of parsing wiki pages.
+* $userhead - additional tags inside the tag &lt;head&gt; ... &lt;/ head&gt;, which can be created in the process of parsing wiki pages.
+
+''__style'' вirectory is not mandatory. It can be placed images and files with styles CSS. However, to keep the CSS styles in this directory is not desirable, it is best to place them directly in the file ''__style.html''. This is primarily due to the caching of style when running under Linux. If multiple styles are CSS files with the same name, then when you switch between these styles, CSS files with the same name when rendering HTML can be updated immediately.

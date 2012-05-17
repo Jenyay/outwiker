@@ -1,0 +1,57 @@
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>
+
+	<STYLE type="text/css">
+		body, div, p, table {
+			font-size:10pt;
+			font-family:Verdana;
+		}
+
+		img{border:none}
+		li strike {color: RGB(200, 200, 200); }
+	</STYLE>
+	
+</HEAD>
+
+<BODY>
+<P>Style is the directory where the must be <I>__style.html</I> file and <I>__style</I> subdirectory (do not necessarily).</P>
+
+<P><I>__style.html</I> file is HTML file in UTF-8 encoding, into which a special macro substitutes the contents page and some additional parameters that are written below. For example, default style:</P>
+
+<P>
+<PRE>
+&lt;HTML&gt;
+&lt;HEAD&gt;
+	&lt;META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/&gt;
+
+	&lt;STYLE type=&quot;text/css&quot;&gt;
+		body, div, p, table {
+			font-size:${fontsize}pt;
+			font-family:$fontfamily;
+		}
+
+		img{border:none}
+		$userstyle
+	&lt;/STYLE&gt;
+	$userhead
+&lt;/HEAD&gt;
+
+&lt;BODY&gt;
+&lt;P&gt;$content&lt;/P&gt;
+&lt;/BODY&gt;
+&lt;/HTML&gt;
+</PRE></P>
+
+<P><I> __style.html</I> file contains a substitution macros that begin with "$" character followed by a macro name, perhaps surrounded by curly braces, for example: $content or ${content}. The second case is needed, if immediately after the macro must be placed some text right next to it (without spaces). Currently supports the following styles of macro substitution:</P>
+
+<P>
+<UL>
+<LI>$content - replaced by the contents page.</LI>
+<LI>$fontsize - font size specified in the settings. Measured in points (pt).</LI>
+<LI>$fontfamily - font name specified in the settings.</LI>
+<LI>$userstyle - additional styles that can be created in the process of parsing wiki pages.</LI>
+<LI>$userhead - additional tags inside the tag &lt;head&gt; ... &lt;/ head&gt;, which can be created in the process of parsing wiki pages.</LI>
+</UL><I>__style</I> вirectory is not mandatory. It can be placed images and files with styles CSS. However, to keep the CSS styles in this directory is not desirable, it is best to place them directly in the file <I>__style.html</I>. This is primarily due to the caching of style when running under Linux. If multiple styles are CSS files with the same name, then when you switch between these styles, CSS files with the same name when rendering HTML can be updated immediately.</P>
+</BODY>
+</HTML>
