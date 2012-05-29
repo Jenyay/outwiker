@@ -1,5 +1,5 @@
-dirname=outwiker-1.6.0
-origname=outwiker_1.6.0.orig.tar
+dirname=outwiker-1.7.0
+origname=outwiker_1.7.0.orig.tar
 outwiker_dir=$(DESTDIR)/usr/share/outwiker/
 
 all:

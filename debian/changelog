@@ -1,3 +1,9 @@
+outwiker (1.7.0-651~oneiric) oneiric; urgency=low
+
+  * Испрвлена ошибка с созданием превьюшек с расширением с заглавными буквами
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Tue, 29 May 2012 22:12:37 +0400
+
 outwiker (1.6.0-650~oneiric) oneiric; urgency=low
 
   * Небольшие оформительские исправления
