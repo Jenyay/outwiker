@@ -20,7 +20,7 @@ from outwiker.pages.wiki.wikiconfig import WikiConfig
 
 class ParserThumbTest (unittest.TestCase):
     def setUp(self):
-        self.encoding = "866"
+        self.encoding = "utf8"
 
         self.filesPath = u"../test/samplefiles/"
 
@@ -48,7 +48,7 @@ class ParserThumbTest (unittest.TestCase):
         files = [u"accept.png", u"add.png", u"anchor.png", u"filename.tmp", 
                 u"файл с пробелами.tmp", u"картинка с пробелами.png", 
                 u"image.jpg", u"image.jpeg", u"image.png", u"image.tif", u"image.tiff", u"image.gif",
-                u"image_01.JPG", u"dir", u"dir.xxx", u"dir.png"]
+                u"image_01.JPG", u"dir", u"dir.xxx", u"dir.png", "particle_01.PNG"]
 
         fullFilesPath = [os.path.join (self.filesPath, fname) for fname in files]
 
@@ -215,6 +215,20 @@ class ParserThumbTest (unittest.TestCase):
         path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_maxsize_250_image.png")
         self.assertTrue (os.path.exists (path), path.encode (self.encoding))
 
+
+    def testThumbCapitalizeExtension (self):
+        text = u'бла-бла-бла \nкхм % thumb % Attach:particle_01.PNG %% бла-бла-бла\nбла-бла-бла'
+
+        path = os.path.join ("__attach", "__thumb", "th_maxsize_250_particle_01.PNG")
+
+        result = u'бла-бла-бла \nкхм <A HREF="__attach/particle_01.PNG"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+        path = os.path.join (self.attach_page2.getAttachPath(), 
+                "__thumb/th_maxsize_250_particle_01.PNG")
+
+        self.assertTrue (os.path.exists (path), path.encode (self.encoding))
     
     def testThumbGif (self):
         text = u'бла-бла-бла \nкхм % thumb % Attach:image.gif %% бла-бла-бла\nбла-бла-бла'
