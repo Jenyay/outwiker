@@ -1,4 +1,10 @@
-outwiker (1.7.0-651~oneiric) oneiric; urgency=low
+outwiker (1.7.0-652~precise) precise; urgency=low
+
+  * 
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Wed, 30 May 2012 23:23:53 +0400
+
+outwiker (1.7.0-651~precise) precise; urgency=low
 
   * Испрвлена ошибка с созданием превьюшек с расширением с заглавными буквами
 
