@@ -95,6 +95,7 @@ if __name__ == '__main__':
     from test.plugins.export2html import Export2HtmlTest
     from test.plugins.spoiler import SpoilerPluginTest
     from test.plugins.livejournal import LivejournalPluginTest
+    from test.plugins.lightbox import LightboxPluginTest
 
     from test.styles.styles import StylesTest
     from test.styles.styleslist import StylesListTest
