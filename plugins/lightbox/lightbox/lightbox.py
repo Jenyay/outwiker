@@ -12,9 +12,9 @@ from outwiker.pages.wiki.wikipanel import WikiPagePanel
 from .lightboxcommand import LightboxCommand
 
 
-# Для работы этого плагина требуется OutWiker 1.6.0.632 и выше
-if getCurrentVersion() < Version (1, 6, 0, 632, status=StatusSet.DEV):
-    print ("Style plugin. OutWiker version requirement: 1.6.0.632")
+# Для работы этого плагина требуется OutWiker 1.7.0.653 и выше
+if getCurrentVersion() < Version (1, 7, 0, 653, status=StatusSet.DEV):
+    print ("Lightbox plugin. OutWiker version requirement: 1.7.0.653")
 else:
     class PluginLightbox (Plugin):
         """
