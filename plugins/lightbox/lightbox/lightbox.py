@@ -40,7 +40,16 @@ else:
         
         @property
         def description (self):
-            return _(u"""Add command (:lightbox:) to wiki parser.""")
+            return _(u"""This plugin adds a command (:lighbox:), after adding a images from thumbnails will open in a preview window, rather than in an external program.
+                    
+<B>Usage</B>
+
+(:lighbox:)
+
+bla-bla-bla %thumb%Attach:image_1.jpg%%
+bla-bla-bla...
+%thumb%Attach:image_2.png%%
+""")
 
 
         @property

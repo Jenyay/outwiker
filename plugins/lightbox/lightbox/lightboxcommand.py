@@ -60,8 +60,8 @@ class LightboxCommand (Command):
             self.__scriptAppend = True
 
             header = u"""<script type="text/javascript" src="./__attach/__thumb/jquery-1.7.2.min.js"></script>
-            <link rel="stylesheet" href="./__attach/__thumb/jquery.fancybox.css" type="text/css" media="screen" />
-            <script type="text/javascript" src="./__attach/__thumb/jquery.fancybox.pack.js"></script>"""
+<link rel="stylesheet" href="./__attach/__thumb/jquery.fancybox.css" type="text/css" media="screen" />
+<script type="text/javascript" src="./__attach/__thumb/jquery.fancybox.pack.js"></script>"""
 
             self.parser.appendToHead (header)
 
