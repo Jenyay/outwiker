@@ -19,7 +19,6 @@ class StylePluginTest (unittest.TestCase):
     def setUp(self):
         self.encoding = "866"
 
-        self.filesPath = u"../test/samplefiles/"
         self.__createWiki()
 
         dirlist = [u"../plugins/style"]

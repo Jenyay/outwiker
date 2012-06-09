@@ -7,7 +7,7 @@ import os.path
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
-from outwiker.core.style import Style
+from outwiker.core.attachment import Attachment
 from outwiker.pages.wiki.parser.wikiparser import Parser
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
@@ -22,7 +22,7 @@ class ThumbListPluginTest (unittest.TestCase):
         self.filesPath = u"../test/samplefiles/"
         self.__createWiki()
 
-        dirlist = [u"../plugins/lightbox"]
+        dirlist = [u"../plugins/thumblist"]
 
         self.loader = PluginsLoader(Application)
         self.loader.load (dirlist)
@@ -51,10 +51,49 @@ class ThumbListPluginTest (unittest.TestCase):
         self.assertEqual ( len (self.loader), 1)
 
 
-    # def testContentParse1 (self):
-    #     text = u"""Бла-бла-бла (:lightbox:) бла-бла-бла"""
+    def testContentParseEmpty (self):
+        text = u"""Бла-бла-бла (:thumblist:) бла-бла-бла"""
 
-    #     validResult = u"""$("a[href$='.jpg'],a[href$='.jpeg'],a[href$='.png'],a[href$='.gif'],a[href$='.bmp'],a[href$='.tif'],a[href$='.tiff']").attr('rel', 'gallery').fancybox();"""
+        validResult = u"""Бла-бла-бла  бла-бла-бла"""
 
-    #     result = self.parser.toHtml (text)
-    #     self.assertTrue (validResult in result)
+        result = self.parser.toHtml (text)
+        self.assertEqual (validResult, result)
+
+
+    def testAttach1 (self):
+        text = u"""Бла-бла-бла 
+        (:thumblist:) 
+        бла-бла-бла"""
+
+        files = [u"first.jpg"]
+        fullpath = [os.path.join (self.filesPath, fname) for fname in files]
+        Attachment(self.testPage).attach (fullpath)
+
+        result = self.parser.toHtml (text)
+
+        self.assertTrue (u"first.jpg" in result)
+        self.assertTrue (u"__thumb" in result)
+        self.assertTrue (u"_first.jpg" in result)
+
+        self.assertTrue (os.path.exists (os.path.join (self.testPage.path, "__attach", "__thumb") ) )
+
+
+    def testAttach2 (self):
+        text = u"""Бла-бла-бла 
+        (:thumblist:) 
+        бла-бла-бла"""
+
+        files = [u"first.jpg", u"image_01.JPG", u"html.txt"]
+        fullpath = [os.path.join (self.filesPath, fname) for fname in files]
+        Attachment(self.testPage).attach (fullpath)
+
+        result = self.parser.toHtml (text)
+
+        self.assertTrue (u"first.jpg" in result)
+        self.assertTrue (u"__thumb" in result)
+        self.assertTrue (u"_first.jpg" in result)
+
+        self.assertTrue (u"image_01.JPG" in result)
+        self.assertTrue (u"_image_01.JPG" in result)
+
+        self.assertFalse (u"html.txt" in result)

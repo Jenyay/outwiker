@@ -19,7 +19,6 @@ class SpoilerPluginTest (unittest.TestCase):
     def setUp(self):
         self.__pluginname = u"Spoiler"
 
-        self.filesPath = u"../test/samplefiles/"
         self.__createWiki()
 
         dirlist = [u"../plugins/spoiler"]

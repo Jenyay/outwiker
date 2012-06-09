@@ -17,7 +17,6 @@ class PluginWikiCommandTest(unittest.TestCase):
     Проверка плагина, добавляющего обработку команды TestCommand
     """
     def setUp(self):
-        self.filesPath = u"../test/samplefiles/"
         self.__createWiki()
 
         dirlist = [u"../plugins/testwikicommand"]

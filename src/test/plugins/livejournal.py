@@ -19,7 +19,6 @@ class LivejournalPluginTest (unittest.TestCase):
     def setUp(self):
         self.__pluginname = u"Livejournal"
 
-        self.filesPath = u"../test/samplefiles/"
         self.__createWiki()
 
         dirlist = [u"../plugins/livejournal"]

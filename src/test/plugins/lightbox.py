@@ -7,7 +7,6 @@ import os.path
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
-from outwiker.core.style import Style
 from outwiker.pages.wiki.parser.wikiparser import Parser
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
@@ -19,7 +18,6 @@ class LightboxPluginTest (unittest.TestCase):
     def setUp(self):
         self.encoding = "utf8"
 
-        self.filesPath = u"../test/samplefiles/"
         self.__createWiki()
 
         dirlist = [u"../plugins/lightbox"]

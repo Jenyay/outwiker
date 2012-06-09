@@ -19,7 +19,6 @@ class SourcePluginTest (unittest.TestCase):
     def setUp(self):
         self.__pluginname = u"Source"
 
-        self.filesPath = u"../test/samplefiles/"
         self.__createWiki()
 
         dirlist = [u"../plugins/source"]
