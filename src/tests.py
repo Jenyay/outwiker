@@ -96,6 +96,7 @@ if __name__ == '__main__':
     from test.plugins.spoiler import SpoilerPluginTest
     from test.plugins.livejournal import LivejournalPluginTest
     from test.plugins.lightbox import LightboxPluginTest
+    from test.plugins.thumblist import ThumbListPluginTest
 
     from test.styles.styles import StylesTest
     from test.styles.styleslist import StylesListTest

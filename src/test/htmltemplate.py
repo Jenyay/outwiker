@@ -16,7 +16,8 @@ class HtmlTemplateTest(unittest.TestCase):
 
     def test1(self):
         content = u"бла-бла-бла"
-        result_right = u"""<HTML>
+        result_right = u"""<!DOCTYPE html>
+<HTML>
 <HEAD>
 	<META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>
 
@@ -47,7 +48,8 @@ class HtmlTemplateTest(unittest.TestCase):
     def testImproved1 (self):
         src = u"""<UL><LI>Несортированный список. Элемент 1</LI><LI>Несортированный список. Элемент 2</LI><LI>Несортированный список. Элемент 3</LI><OL><LI>Вложенный сортированный список. Элемент 1</LI><LI>Вложенный сортированный список. Элемент 2</LI><LI>Вложенный сортированный список. Элемент 3</LI><LI>Вложенный сортированный список. Элемент 4</LI><UL><LI>Совсем вложенный сортированный список. Элемент 1</LI><LI>Совсем вложенный сортированный список. Элемент 2</LI></UL><LI>Вложенный сортированный список. Элемент 5</LI></OL><UL><LI>Вложенный несортированный список. Элемент 1</LI></UL></UL>"""
 
-        expectedResult = u"""<HTML>
+        expectedResult = u"""<!DOCTYPE html>
+<HTML>
 <HEAD>
 	<META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>
 
@@ -97,7 +99,8 @@ class HtmlTemplateTest(unittest.TestCase):
     def testImproved2 (self):
         src = ur"""<H2>Attach links</H2><P>Attach:file.odt<BR><A HREF="__attach/file.odt">file.odt</A><BR><A HREF="__attach/file.odt">alternative text</A><BR><A HREF="__attach/file with spaces.pdf">file with spaces.pdf</A><P><H2>Images</H2>"""
 
-        expectedResult = ur"""<HTML>
+        expectedResult = ur"""<!DOCTYPE html>
+<HTML>
 <HEAD>
 	<META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>
 

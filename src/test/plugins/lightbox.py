@@ -54,7 +54,7 @@ class LightboxPluginTest (unittest.TestCase):
     def testContentParse1 (self):
         text = u"""Бла-бла-бла (:lightbox:) бла-бла-бла"""
 
-        validResult = u"""$("a[href$='.jpg'],a[href$='.jpeg'],a[href$='.png'],a[href$='.gif'],a[href$='.bmp'],a[href$='.tif'],a[href$='.tiff']").attr('rel', 'gallery').fancybox();"""
+        validResult = u"""$("a[href$='.jpg']"""
 
         result = self.parser.toHtml (text)
         self.assertTrue (validResult in result)
