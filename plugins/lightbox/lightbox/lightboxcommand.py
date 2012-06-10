@@ -70,4 +70,4 @@ class LightboxCommand (Command):
             except IOError, e:
                 return _(u"<B>Can't copy script files</B>\n{0}").format (e)
 
-        return u"""<script>  $(document).ready(function() {    $("a[href$='.jpg'],a[href$='.jpeg'],a[href$='.png'],a[href$='.PNG'],a[href$='.gif'],a[href$='.GIF'],a[href$='.bmp'],a[href$='.BMP'],a[href$='.tif'],a[href$='.TIF'],a[href$='.tiff'],a[href$='.TIFF']").attr('rel', 'gallery').fancybox();  });</script>"""
+        return u"""<script>  $(document).ready(function() {    $("a[href$='.jpg'],a[href$='.jpeg'],a[href$='.JPG'],a[href$='.JPEG'],a[href$='.png'],a[href$='.PNG'],a[href$='.gif'],a[href$='.GIF'],a[href$='.bmp'],a[href$='.BMP'],a[href$='.tif'],a[href$='.TIF'],a[href$='.tiff'],a[href$='.TIFF']").attr('rel', 'gallery').fancybox();  });</script>"""
