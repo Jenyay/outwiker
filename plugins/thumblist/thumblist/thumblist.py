@@ -77,7 +77,7 @@ else:
 
             pageView = self._getPageView()
 
-            helpString = _(u"Thumbnails Gallery (:thumblist:)")
+            helpString = _(u"Thumbnails Gallery (:thumbgallery:)")
 
             pageView.addTool (pageView.commandsMenu, 
                     self.THUMBLIST_TOOL_ID, 
@@ -89,8 +89,8 @@ else:
             
 
         def __onInsertCommand (self, event):
-            startCommand = u'(:thumblist:)\n'
-            endCommand = u'\n(:thumblistend:)'
+            startCommand = u'(:thumbgallery:)\n'
+            endCommand = u'\n(:thumbgalleryend:)'
 
             pageView = self._getPageView()
             pageView.codeEditor.turnText (startCommand, endCommand)

@@ -143,6 +143,28 @@ class ThumbListPluginTest (unittest.TestCase):
         self.assertFalse (u"html.txt" in result)
 
 
+    def testAttachGalleryEmpty1 (self):
+        text = u"""Бла-бла-бла 
+        (:thumbgallery:) 
+        (:thumbgalleryend:) 
+        бла-бла-бла"""
+
+        files = [u"first.jpg", u"image_01.JPG", u"html.txt"]
+        fullpath = [os.path.join (self.filesPath, fname) for fname in files]
+        Attachment(self.testPage).attach (fullpath)
+
+        result = self.parser.toHtml (text)
+
+        self.assertFalse (u"first.jpg" in result)
+        self.assertFalse (u"__thumb" in result)
+        self.assertFalse (u"_first.jpg" in result)
+
+        self.assertFalse (u"image_01.JPG" in result)
+        self.assertFalse (u"_image_01.JPG" in result)
+
+        self.assertFalse (u"html.txt" in result)
+
+
     def testAttachList1 (self):
         text = u"""Бла-бла-бла 
         (:thumblist:) 
@@ -176,6 +198,33 @@ class ThumbListPluginTest (unittest.TestCase):
             Attach:first.jpg
             Attach:particle_01.PNG
         (:thumblistend:) 
+        бла-бла-бла"""
+
+        files = [u"first.jpg", u"image_01.JPG", u"particle_01.PNG", u"image.png", u"html.txt"]
+        fullpath = [os.path.join (self.filesPath, fname) for fname in files]
+        Attachment(self.testPage).attach (fullpath)
+
+        result = self.parser.toHtml (text)
+
+        self.assertTrue (u"first.jpg" in result)
+        self.assertTrue (u"_first.jpg" in result)
+        self.assertTrue (u"__thumb" in result)
+
+        self.assertTrue (u"particle_01.PNG" in result)
+        self.assertTrue ("_particle_01.PNG" in result)
+
+        self.assertFalse (u"image_01.JPG" in result)
+        self.assertFalse (u"_image_01.JPG" in result)
+
+        self.assertFalse (u"html.txt" in result)
+
+
+    def testAttachGalleryList2 (self):
+        text = u"""Бла-бла-бла 
+        (:thumbgallery:) 
+            Attach:first.jpg
+            Attach:particle_01.PNG
+        (:thumbgalleryend:) 
         бла-бла-бла"""
 
         files = [u"first.jpg", u"image_01.JPG", u"particle_01.PNG", u"image.png", u"html.txt"]
@@ -257,5 +306,133 @@ class ThumbListPluginTest (unittest.TestCase):
 
         self.assertFalse (u"image_01.JPG" in result)
         self.assertFalse (u"_image_01.JPG" in result)
+
+        self.assertFalse (u"html.txt" in result)
+
+
+    def testAttachGallerySize1 (self):
+        text = u"""Бла-бла-бла 
+        (:thumbgallery maxsize=100:) 
+
+            Attach:first.jpg
+
+
+            Attach:particle_01.PNG
+
+
+        (:thumbgalleryend:) 
+        бла-бла-бла"""
+
+        files = [u"first.jpg", u"image_01.JPG", u"particle_01.PNG", u"image.png", u"html.txt"]
+        fullpath = [os.path.join (self.filesPath, fname) for fname in files]
+        Attachment(self.testPage).attach (fullpath)
+
+        result = self.parser.toHtml (text)
+
+        self.assertTrue (u"first.jpg" in result)
+        self.assertTrue (u"maxsize_100_first.jpg" in result)
+        self.assertTrue (u"__thumb" in result)
+
+        self.assertTrue (u"particle_01.PNG" in result)
+        self.assertTrue ("maxsize_100_particle_01.PNG" in result)
+
+        self.assertFalse (u"image_01.JPG" in result)
+        self.assertFalse (u"maxsize_100_image_01.JPG" in result)
+
+        self.assertFalse (u"html.txt" in result)
+
+
+    def testAttachGallerySize2 (self):
+        text = u"""Бла-бла-бла 
+        (:thumbgallery px=100:) 
+
+            Attach:first.jpg
+
+
+            Attach:particle_01.PNG
+
+
+        (:thumbgalleryend:) 
+        бла-бла-бла"""
+
+        files = [u"first.jpg", u"image_01.JPG", u"particle_01.PNG", u"image.png", u"html.txt"]
+        fullpath = [os.path.join (self.filesPath, fname) for fname in files]
+        Attachment(self.testPage).attach (fullpath)
+
+        result = self.parser.toHtml (text)
+
+        self.assertTrue (u"first.jpg" in result)
+        self.assertTrue (u"maxsize_100_first.jpg" in result)
+        self.assertTrue (u"__thumb" in result)
+
+        self.assertTrue (u"particle_01.PNG" in result)
+        self.assertTrue ("maxsize_100_particle_01.PNG" in result)
+
+        self.assertFalse (u"image_01.JPG" in result)
+        self.assertFalse (u"maxsize_100_image_01.JPG" in result)
+
+        self.assertFalse (u"html.txt" in result)
+
+
+    def testAttachListSize1 (self):
+        text = u"""Бла-бла-бла 
+        (:thumblist maxsize=100:) 
+
+            Attach:first.jpg
+
+
+            Attach:particle_01.PNG
+
+
+        (:thumblistend:) 
+        бла-бла-бла"""
+
+        files = [u"first.jpg", u"image_01.JPG", u"particle_01.PNG", u"image.png", u"html.txt"]
+        fullpath = [os.path.join (self.filesPath, fname) for fname in files]
+        Attachment(self.testPage).attach (fullpath)
+
+        result = self.parser.toHtml (text)
+
+        self.assertTrue (u"first.jpg" in result)
+        self.assertTrue (u"maxsize_100_first.jpg" in result)
+        self.assertTrue (u"__thumb" in result)
+
+        self.assertTrue (u"particle_01.PNG" in result)
+        self.assertTrue ("maxsize_100_particle_01.PNG" in result)
+
+        self.assertFalse (u"image_01.JPG" in result)
+        self.assertFalse (u"maxsize_100_image_01.JPG" in result)
+
+        self.assertFalse (u"html.txt" in result)
+
+
+    def testAttachListSize2 (self):
+        text = u"""Бла-бла-бла 
+        (:thumblist px=100:) 
+
+            Attach:first.jpg
+
+
+            Attach:particle_01.PNG
+
+
+        (:thumblistend:) 
+        бла-бла-бла"""
+
+        files = [u"first.jpg", u"image_01.JPG", u"particle_01.PNG", u"image.png", u"html.txt"]
+        fullpath = [os.path.join (self.filesPath, fname) for fname in files]
+        Attachment(self.testPage).attach (fullpath)
+
+        result = self.parser.toHtml (text)
+
+        self.assertTrue (u"first.jpg" in result)
+        self.assertTrue (u"maxsize_100_first.jpg" in result)
+        self.assertTrue (u"__thumb" in result)
+
+        self.assertTrue (u"particle_01.PNG" in result)
+        self.assertTrue ("maxsize_100_particle_01.PNG" in result)
+
+        self.assertFalse (u"image_01.JPG" in result)
+        self.assertFalse (u"maxsize_100_image_01.JPG" in result)
 
         self.assertFalse (u"html.txt" in result)

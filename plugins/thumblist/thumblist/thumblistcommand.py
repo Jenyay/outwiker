@@ -39,8 +39,8 @@ class ThumbListCommand (Command):
         Запустить команду на выполнение. 
         Метод возвращает текст, который будет вставлен на место команды в вики-нотации
         """
-        # paramsDict = Command.parseParams (params)
-        thumbsize = self._getThumbSize();
+        paramsDict = Command.parseParams (params)
+        thumbsize = self._getThumbSize(paramsDict);
         files = self._getFiles (content)
 
         generator = ThumbStreamGenerator (files, thumbsize, self.parser)
@@ -89,6 +89,16 @@ class ThumbListCommand (Command):
                 fnameLower.endswith (".gif"))
 
 
-    def _getThumbSize (self):
-        config = WikiConfig (self.parser.config)
-        return config.thumbSizeOptions.value
+    def _getThumbSize (self, paramsDict):
+        sizeParamName1 = "px"
+        sizeParamName2 = "maxsize"
+
+        if sizeParamName1 in paramsDict.keys():
+            thumbsize = paramsDict[sizeParamName1]
+        elif sizeParamName2 in paramsDict.keys():
+            thumbsize = paramsDict[sizeParamName2]
+        else:
+            config = WikiConfig (self.parser.config)
+            thumbsize = config.thumbSizeOptions.value
+
+        return thumbsize
