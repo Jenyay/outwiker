@@ -25,7 +25,7 @@ class ThumbListCommand (Command):
         """
         Command.__init__ (self, parser)
 
-    
+
     @property
     def name (self):
         """
@@ -49,9 +49,30 @@ class ThumbListCommand (Command):
 
     def _getFiles (self, content):
         attach = Attachment (self.parser.page)
+
+        filesList = self._getFilesList (content)
         allFiles = attach.getAttachRelative()
 
-        files = [fname for fname in allFiles if self._isImage (fname)]
+        if len (content) == 0:
+            files = [fname for fname in allFiles if self._isImage (fname)]
+        else:
+            files = [fname for fname in filesList if self._isImage (fname) and fname in allFiles]
+
+        return files
+
+
+    def _getFilesList (self, content):
+        """
+        Возвращает список файлов, перечисленных в теле команды
+        """
+        def _removeAttach (line):
+            """
+            Удалить фразу "Attach:" в начале строки
+            """
+            attachPhrase = u"attach:"
+            return line[len (attachPhrase):] if line.lower().startswith (attachPhrase) else line
+
+        files = [_removeAttach (fname) for fname in content.split() if len (fname.strip()) != 0]
         return files
 
 
@@ -64,8 +85,6 @@ class ThumbListCommand (Command):
         return (fnameLower.endswith (".png") or
                 fnameLower.endswith (".jpg") or
                 fnameLower.endswith (".jpeg") or
-                fnameLower.endswith (".tif") or
-                fnameLower.endswith (".tiff") or
                 fnameLower.endswith (".bmp") or
                 fnameLower.endswith (".gif"))
 

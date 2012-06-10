@@ -10,6 +10,7 @@ from outwiker.core.version import Version, StatusSet
 from outwiker.pages.wiki.wikipanel import WikiPagePanel
 
 from .thumblistcommand import ThumbListCommand
+from .thumbgallerycommand import ThumbGalleryCommand
 
 
 # Для работы этого плагина требуется OutWiker 1.6.0.632
@@ -30,6 +31,7 @@ else:
 
         def __onWikiParserPrepare (self, parser):
             parser.addCommand (ThumbListCommand (parser))
+            parser.addCommand (ThumbGalleryCommand (parser))
 
 
         @property
@@ -75,14 +77,15 @@ else:
 
             pageView = self._getPageView()
 
-            helpString = _(u"Thumb List (:thumblist:)")
+            helpString = _(u"Thumbnails Gallery (:thumblist:)")
 
             pageView.addTool (pageView.commandsMenu, 
                     self.THUMBLIST_TOOL_ID, 
                     self.__onInsertCommand, 
                     helpString, 
                     helpString, 
-                    None)
+                    self._getImagePath (u"gallery.png"),
+                    False)
             
 
         def __onInsertCommand (self, event):
@@ -98,6 +101,12 @@ else:
             Получить указатель на панель представления страницы
             """
             return self._application.mainWindow.pagePanel.pageView
+
+
+        def _getImagePath (self, fname):
+            imagedir = unicode (os.path.join (os.path.dirname (__file__), "images"), 
+                    getOS().filesEncoding)
+            return os.path.join (imagedir, fname)
 
 
         @property
