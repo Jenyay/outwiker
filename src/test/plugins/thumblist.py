@@ -310,6 +310,70 @@ class ThumbListPluginTest (unittest.TestCase):
         self.assertFalse (u"html.txt" in result)
 
 
+    def testAttachGallerySpaces1 (self):
+        text = u"""Бла-бла-бла 
+        (:thumbgallery:) 
+
+            Attach:first.jpg
+
+
+            Attach:картинка с пробелами.png
+
+
+        (:thumbgalleryend:) 
+        бла-бла-бла"""
+
+        files = [u"first.jpg", u"image_01.JPG", u"particle_01.PNG", u"image.png", u"html.txt", u"картинка с пробелами.png"]
+        fullpath = [os.path.join (self.filesPath, fname) for fname in files]
+        Attachment(self.testPage).attach (fullpath)
+
+        result = self.parser.toHtml (text)
+
+        self.assertTrue (u"first.jpg" in result)
+        self.assertTrue (u"_first.jpg" in result)
+        self.assertTrue (u"__thumb" in result)
+
+        self.assertTrue (u"картинка с пробелами.png" in result)
+        self.assertTrue (u"_картинка с пробелами.png" in result)
+
+        self.assertFalse (u"image_01.JPG" in result)
+        self.assertFalse (u"_image_01.JPG" in result)
+
+        self.assertFalse (u"html.txt" in result)
+
+
+    def testAttachGallerySpaces2 (self):
+        text = u"""Бла-бла-бла 
+        (:thumbgallery:) 
+
+            Attach:first.jpg
+
+
+            картинка с пробелами.png
+
+
+        (:thumbgalleryend:) 
+        бла-бла-бла"""
+
+        files = [u"first.jpg", u"image_01.JPG", u"particle_01.PNG", u"image.png", u"html.txt", u"картинка с пробелами.png"]
+        fullpath = [os.path.join (self.filesPath, fname) for fname in files]
+        Attachment(self.testPage).attach (fullpath)
+
+        result = self.parser.toHtml (text)
+
+        self.assertTrue (u"first.jpg" in result)
+        self.assertTrue (u"_first.jpg" in result)
+        self.assertTrue (u"__thumb" in result)
+
+        self.assertTrue (u"картинка с пробелами.png" in result)
+        self.assertTrue (u"_картинка с пробелами.png" in result)
+
+        self.assertFalse (u"image_01.JPG" in result)
+        self.assertFalse (u"_image_01.JPG" in result)
+
+        self.assertFalse (u"html.txt" in result)
+
+
     def testAttachGallerySize1 (self):
         text = u"""Бла-бла-бла 
         (:thumbgallery maxsize=100:) 
@@ -318,12 +382,12 @@ class ThumbListPluginTest (unittest.TestCase):
 
 
             Attach:particle_01.PNG
-
+            Attach:картинка с пробелами.png
 
         (:thumbgalleryend:) 
         бла-бла-бла"""
 
-        files = [u"first.jpg", u"image_01.JPG", u"particle_01.PNG", u"image.png", u"html.txt"]
+        files = [u"first.jpg", u"image_01.JPG", u"particle_01.PNG", u"image.png", u"html.txt", u"картинка с пробелами.png"]
         fullpath = [os.path.join (self.filesPath, fname) for fname in files]
         Attachment(self.testPage).attach (fullpath)
 
@@ -335,6 +399,9 @@ class ThumbListPluginTest (unittest.TestCase):
 
         self.assertTrue (u"particle_01.PNG" in result)
         self.assertTrue ("maxsize_100_particle_01.PNG" in result)
+
+        self.assertTrue (u"картинка с пробелами.png" in result)
+        self.assertTrue (u"maxsize_100_картинка с пробелами.png" in result)
 
         self.assertFalse (u"image_01.JPG" in result)
         self.assertFalse (u"maxsize_100_image_01.JPG" in result)

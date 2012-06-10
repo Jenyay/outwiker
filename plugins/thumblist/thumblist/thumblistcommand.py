@@ -72,7 +72,8 @@ class ThumbListCommand (Command):
             attachPhrase = u"attach:"
             return line[len (attachPhrase):] if line.lower().startswith (attachPhrase) else line
 
-        files = [_removeAttach (fname) for fname in content.split() if len (fname.strip()) != 0]
+        files = [_removeAttach (fname.strip()) for fname in content.split(u"\n") if len (fname.strip()) != 0]
+
         return files
 
 
