@@ -41,29 +41,32 @@ class ThumbListCommand (Command):
         """
         paramsDict = Command.parseParams (params)
         thumbsize = self._getThumbSize(paramsDict);
-        files = self._getFiles (content)
+        lineItems = self._parseContent (content)
 
-        generator = ThumbStreamGenerator (files, thumbsize, self.parser)
+        generator = ThumbStreamGenerator (lineItems, thumbsize, self.parser)
         return generator.generate()
 
 
-    def _getFiles (self, content):
+    def _parseContent (self, content):
         attach = Attachment (self.parser.page)
 
-        filesList = self._getFilesList (content)
+        filesList = self._getLinesItems (content)
         allFiles = attach.getAttachRelative()
 
         if len (content) == 0:
-            files = [fname for fname in allFiles if self._isImage (fname)]
+            files = [(fname, u"") for fname in allFiles if self._isImage (fname)]
         else:
-            files = [fname for fname in filesList if self._isImage (fname) and fname in allFiles]
+            files = [lineitem for lineitem 
+                    in filesList 
+                    if self._isImage (lineitem[0]) and lineitem[0] in allFiles]
 
         return files
 
 
-    def _getFilesList (self, content):
+    def _getLinesItems (self, content):
         """
-        Возвращает список файлов, перечисленных в теле команды
+        Возвращает список файлов и комментариев к ним, перечисленных в теле команды.
+        Возвращает список кортежей: (имя файла, комментарий)
         """
         def _removeAttach (line):
             """
@@ -72,9 +75,25 @@ class ThumbListCommand (Command):
             attachPhrase = u"attach:"
             return line[len (attachPhrase):] if line.lower().startswith (attachPhrase) else line
 
-        files = [_removeAttach (fname.strip()) for fname in content.split(u"\n") if len (fname.strip()) != 0]
+        lines = [self._splitLine (_removeAttach (fname.strip() ) )
+                for fname in content.split(u"\n") 
+                if len (fname.strip()) != 0]
 
-        return files
+        return lines
+
+
+    def _splitLine (self, line):
+        """
+        Из строки в формате "Имя файла | Комментарий" делает кортеж (Имя файла, Комментарий)
+        """
+        splitItems = line.rsplit ("|", 1)
+        if len (splitItems) > 1:
+            result = (splitItems[0].strip(), splitItems[1].strip())
+        else:
+            result = (line, u"")
+
+        return result
+
 
 
     def _isImage (self, fname):

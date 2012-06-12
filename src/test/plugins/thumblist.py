@@ -72,7 +72,7 @@ class ThumbListPluginTest (unittest.TestCase):
 
         result = self.parser.toHtml (text)
 
-        self.assertTrue (u"first.jpg" in result)
+        self.assertTrue (u'<A HREF="__attach/first.jpg">' in result)
         self.assertTrue (u"__thumb" in result)
         self.assertTrue (u"_first.jpg" in result)
 
@@ -90,11 +90,11 @@ class ThumbListPluginTest (unittest.TestCase):
 
         result = self.parser.toHtml (text)
 
-        self.assertTrue (u"first.jpg" in result)
+        self.assertTrue (u'<A HREF="__attach/first.jpg">' in result)
         self.assertTrue (u"__thumb" in result)
         self.assertTrue (u"_first.jpg" in result)
 
-        self.assertTrue (u"image_01.JPG" in result)
+        self.assertTrue (u'<A HREF="__attach/image_01.JPG">' in result)
         self.assertTrue (u"_image_01.JPG" in result)
 
         self.assertFalse (u"html.txt" in result)
@@ -111,11 +111,11 @@ class ThumbListPluginTest (unittest.TestCase):
 
         result = self.parser.toHtml (text)
 
-        self.assertTrue (u"first.jpg" in result)
+        self.assertTrue (u'<A HREF="__attach/first.jpg">' in result)
         self.assertTrue (u"__thumb" in result)
         self.assertTrue (u"_first.jpg" in result)
 
-        self.assertTrue (u"image_01.JPG" in result)
+        self.assertTrue (u'<A HREF="__attach/image_01.JPG">' in result)
         self.assertTrue (u"_image_01.JPG" in result)
 
         self.assertFalse (u"html.txt" in result)
@@ -133,11 +133,11 @@ class ThumbListPluginTest (unittest.TestCase):
 
         result = self.parser.toHtml (text)
 
-        self.assertFalse (u"first.jpg" in result)
+        self.assertFalse (u'<A HREF="__attach/first.jpg">' in result)
         self.assertFalse (u"__thumb" in result)
         self.assertFalse (u"_first.jpg" in result)
 
-        self.assertFalse (u"image_01.JPG" in result)
+        self.assertFalse (u'<A HREF="__attach/image_01.JPG">' in result)
         self.assertFalse (u"_image_01.JPG" in result)
 
         self.assertFalse (u"html.txt" in result)
@@ -155,11 +155,11 @@ class ThumbListPluginTest (unittest.TestCase):
 
         result = self.parser.toHtml (text)
 
-        self.assertFalse (u"first.jpg" in result)
+        self.assertFalse (u'<A HREF="__attach/first.jpg">' in result)
         self.assertFalse (u"__thumb" in result)
         self.assertFalse (u"_first.jpg" in result)
 
-        self.assertFalse (u"image_01.JPG" in result)
+        self.assertFalse (u'<A HREF="__attach/image_01.JPG">' in result)
         self.assertFalse (u"_image_01.JPG" in result)
 
         self.assertFalse (u"html.txt" in result)
@@ -179,14 +179,14 @@ class ThumbListPluginTest (unittest.TestCase):
 
         result = self.parser.toHtml (text)
 
-        self.assertTrue (u"first.jpg" in result)
+        self.assertTrue (u'<A HREF="__attach/first.jpg">' in result)
         self.assertTrue (u"_first.jpg" in result)
         self.assertTrue (u"__thumb" in result)
 
-        self.assertTrue (u"particle_01.PNG" in result)
+        self.assertTrue (u'<A HREF="__attach/particle_01.PNG">' in result)
         self.assertTrue ("_particle_01.PNG" in result)
 
-        self.assertFalse (u"image_01.JPG" in result)
+        self.assertFalse (u'<A HREF="__attach/image_01.JPG">' in result)
         self.assertFalse (u"_image_01.JPG" in result)
 
         self.assertFalse (u"html.txt" in result)
@@ -206,14 +206,14 @@ class ThumbListPluginTest (unittest.TestCase):
 
         result = self.parser.toHtml (text)
 
-        self.assertTrue (u"first.jpg" in result)
+        self.assertTrue (u'<A HREF="__attach/first.jpg">' in result)
         self.assertTrue (u"_first.jpg" in result)
         self.assertTrue (u"__thumb" in result)
 
-        self.assertTrue (u"particle_01.PNG" in result)
+        self.assertTrue (u'<A HREF="__attach/particle_01.PNG">' in result)
         self.assertTrue ("_particle_01.PNG" in result)
 
-        self.assertFalse (u"image_01.JPG" in result)
+        self.assertFalse (u'<A HREF="__attach/image_01.JPG">' in result)
         self.assertFalse (u"_image_01.JPG" in result)
 
         self.assertFalse (u"html.txt" in result)
@@ -233,14 +233,14 @@ class ThumbListPluginTest (unittest.TestCase):
 
         result = self.parser.toHtml (text)
 
-        self.assertTrue (u"first.jpg" in result)
+        self.assertTrue (u'<A HREF="__attach/first.jpg">' in result)
         self.assertTrue (u"_first.jpg" in result)
         self.assertTrue (u"__thumb" in result)
 
-        self.assertTrue (u"particle_01.PNG" in result)
+        self.assertTrue (u'<A HREF="__attach/particle_01.PNG">' in result)
         self.assertTrue ("_particle_01.PNG" in result)
 
-        self.assertFalse (u"image_01.JPG" in result)
+        self.assertFalse (u'<A HREF="__attach/image_01.JPG">' in result)
         self.assertFalse (u"_image_01.JPG" in result)
 
         self.assertFalse (u"html.txt" in result)
@@ -265,14 +265,14 @@ class ThumbListPluginTest (unittest.TestCase):
 
         result = self.parser.toHtml (text)
 
-        self.assertTrue (u"first.jpg" in result)
+        self.assertTrue (u'<A HREF="__attach/first.jpg">' in result)
         self.assertTrue (u"_first.jpg" in result)
         self.assertTrue (u"__thumb" in result)
 
-        self.assertTrue (u"particle_01.PNG" in result)
+        self.assertTrue (u'<A HREF="__attach/particle_01.PNG">' in result)
         self.assertTrue ("_particle_01.PNG" in result)
 
-        self.assertFalse (u"image_01.JPG" in result)
+        self.assertFalse (u'<A HREF="__attach/image_01.JPG">' in result)
         self.assertFalse (u"_image_01.JPG" in result)
 
         self.assertFalse (u"html.txt" in result)
@@ -297,14 +297,14 @@ class ThumbListPluginTest (unittest.TestCase):
 
         result = self.parser.toHtml (text)
 
-        self.assertTrue (u"first.jpg" in result)
+        self.assertTrue (u'<A HREF="__attach/first.jpg">' in result)
         self.assertTrue (u"_first.jpg" in result)
         self.assertTrue (u"__thumb" in result)
 
-        self.assertTrue (u"particle_01.PNG" in result)
+        self.assertTrue (u'<A HREF="__attach/particle_01.PNG">' in result)
         self.assertTrue ("_particle_01.PNG" in result)
 
-        self.assertFalse (u"image_01.JPG" in result)
+        self.assertFalse (u'<A HREF="__attach/image_01.JPG">' in result)
         self.assertFalse (u"_image_01.JPG" in result)
 
         self.assertFalse (u"html.txt" in result)
@@ -329,14 +329,14 @@ class ThumbListPluginTest (unittest.TestCase):
 
         result = self.parser.toHtml (text)
 
-        self.assertTrue (u"first.jpg" in result)
+        self.assertTrue (u'<A HREF="__attach/first.jpg">' in result)
         self.assertTrue (u"_first.jpg" in result)
         self.assertTrue (u"__thumb" in result)
 
         self.assertTrue (u"картинка с пробелами.png" in result)
         self.assertTrue (u"_картинка с пробелами.png" in result)
 
-        self.assertFalse (u"image_01.JPG" in result)
+        self.assertFalse (u'<A HREF="__attach/image_01.JPG">' in result)
         self.assertFalse (u"_image_01.JPG" in result)
 
         self.assertFalse (u"html.txt" in result)
@@ -361,14 +361,14 @@ class ThumbListPluginTest (unittest.TestCase):
 
         result = self.parser.toHtml (text)
 
-        self.assertTrue (u"first.jpg" in result)
+        self.assertTrue (u'<A HREF="__attach/first.jpg">' in result)
         self.assertTrue (u"_first.jpg" in result)
         self.assertTrue (u"__thumb" in result)
 
         self.assertTrue (u"картинка с пробелами.png" in result)
         self.assertTrue (u"_картинка с пробелами.png" in result)
 
-        self.assertFalse (u"image_01.JPG" in result)
+        self.assertFalse (u'<A HREF="__attach/image_01.JPG">' in result)
         self.assertFalse (u"_image_01.JPG" in result)
 
         self.assertFalse (u"html.txt" in result)
@@ -393,17 +393,17 @@ class ThumbListPluginTest (unittest.TestCase):
 
         result = self.parser.toHtml (text)
 
-        self.assertTrue (u"first.jpg" in result)
+        self.assertTrue (u'<A HREF="__attach/first.jpg">' in result)
         self.assertTrue (u"maxsize_100_first.jpg" in result)
         self.assertTrue (u"__thumb" in result)
 
-        self.assertTrue (u"particle_01.PNG" in result)
+        self.assertTrue (u'<A HREF="__attach/particle_01.PNG">' in result)
         self.assertTrue ("maxsize_100_particle_01.PNG" in result)
 
         self.assertTrue (u"картинка с пробелами.png" in result)
         self.assertTrue (u"maxsize_100_картинка с пробелами.png" in result)
 
-        self.assertFalse (u"image_01.JPG" in result)
+        self.assertFalse (u'<A HREF="__attach/image_01.JPG">' in result)
         self.assertFalse (u"maxsize_100_image_01.JPG" in result)
 
         self.assertFalse (u"html.txt" in result)
@@ -428,14 +428,14 @@ class ThumbListPluginTest (unittest.TestCase):
 
         result = self.parser.toHtml (text)
 
-        self.assertTrue (u"first.jpg" in result)
+        self.assertTrue (u'<A HREF="__attach/first.jpg">' in result)
         self.assertTrue (u"maxsize_100_first.jpg" in result)
         self.assertTrue (u"__thumb" in result)
 
-        self.assertTrue (u"particle_01.PNG" in result)
+        self.assertTrue (u'<A HREF="__attach/particle_01.PNG">' in result)
         self.assertTrue ("maxsize_100_particle_01.PNG" in result)
 
-        self.assertFalse (u"image_01.JPG" in result)
+        self.assertFalse (u'<A HREF="__attach/image_01.JPG">' in result)
         self.assertFalse (u"maxsize_100_image_01.JPG" in result)
 
         self.assertFalse (u"html.txt" in result)
@@ -460,14 +460,14 @@ class ThumbListPluginTest (unittest.TestCase):
 
         result = self.parser.toHtml (text)
 
-        self.assertTrue (u"first.jpg" in result)
+        self.assertTrue (u'<A HREF="__attach/first.jpg">' in result)
         self.assertTrue (u"maxsize_100_first.jpg" in result)
         self.assertTrue (u"__thumb" in result)
 
-        self.assertTrue (u"particle_01.PNG" in result)
+        self.assertTrue (u'<A HREF="__attach/particle_01.PNG">' in result)
         self.assertTrue ("maxsize_100_particle_01.PNG" in result)
 
-        self.assertFalse (u"image_01.JPG" in result)
+        self.assertFalse (u'<A HREF="__attach/image_01.JPG">' in result)
         self.assertFalse (u"maxsize_100_image_01.JPG" in result)
 
         self.assertFalse (u"html.txt" in result)
@@ -492,14 +492,70 @@ class ThumbListPluginTest (unittest.TestCase):
 
         result = self.parser.toHtml (text)
 
-        self.assertTrue (u"first.jpg" in result)
+        self.assertTrue (u'<A HREF="__attach/first.jpg">' in result)
         self.assertTrue (u"maxsize_100_first.jpg" in result)
         self.assertTrue (u"__thumb" in result)
 
-        self.assertTrue (u"particle_01.PNG" in result)
+        self.assertTrue (u'<A HREF="__attach/particle_01.PNG">' in result)
         self.assertTrue ("maxsize_100_particle_01.PNG" in result)
 
-        self.assertFalse (u"image_01.JPG" in result)
+        self.assertFalse (u'<A HREF="__attach/image_01.JPG">' in result)
         self.assertFalse (u"maxsize_100_image_01.JPG" in result)
+
+        self.assertFalse (u"html.txt" in result)
+
+
+
+    def testAttachListComments1 (self):
+        text = u"""Бла-бла-бла 
+        (:thumblist px=100:) 
+
+            Attach:first.jpg    | Первый
+
+
+            Attach:particle_01.PNG|Комментарий к картинке
+
+
+        (:thumblistend:) 
+        бла-бла-бла"""
+
+        files = [u"first.jpg", u"image_01.JPG", u"particle_01.PNG", u"image.png", u"html.txt"]
+        fullpath = [os.path.join (self.filesPath, fname) for fname in files]
+        Attachment(self.testPage).attach (fullpath)
+
+        result = self.parser.toHtml (text)
+
+        self.assertTrue (u'<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue (u"maxsize_100_first.jpg" in result)
+        self.assertTrue (u"__thumb" in result)
+
+        self.assertTrue (u'<A HREF="__attach/particle_01.PNG">' in result)
+        self.assertTrue ("maxsize_100_particle_01.PNG" in result)
+
+        self.assertFalse (u'<A HREF="__attach/image_01.JPG">' in result)
+        self.assertFalse (u"maxsize_100_image_01.JPG" in result)
+
+        self.assertFalse (u"html.txt" in result)
+
+
+    def testAttachListComments2 (self):
+        text = u"""Бла-бла-бла 
+        (:thumblist:) 
+            Attach:first.jpg    | Первый
+            Attach:particle_01.PNG|Комментарий к картинке
+        (:thumblistend:) 
+        бла-бла-бла"""
+
+        files = [u"first.jpg", u"image_01.JPG", u"particle_01.PNG", u"image.png", u"html.txt"]
+        fullpath = [os.path.join (self.filesPath, fname) for fname in files]
+        Attachment(self.testPage).attach (fullpath)
+
+        result = self.parser.toHtml (text)
+
+        self.assertTrue (u'<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue (u"__thumb" in result)
+
+        self.assertTrue (u'<A HREF="__attach/particle_01.PNG">' in result)
+        self.assertFalse (u'<A HREF="__attach/image_01.JPG">' in result)
 
         self.assertFalse (u"html.txt" in result)
