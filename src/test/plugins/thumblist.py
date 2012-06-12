@@ -55,10 +55,11 @@ class ThumbListPluginTest (unittest.TestCase):
     def testContentParseEmpty (self):
         text = u"""Бла-бла-бла (:thumblist:) бла-бла-бла"""
 
-        validResult = u"""Бла-бла-бла  бла-бла-бла"""
+        validResult = u"""Бла-бла-бла <div class="thumblist"></div> бла-бла-бла"""
 
         result = self.parser.toHtml (text)
         self.assertEqual (validResult, result)
+        self.assertTrue (u"<table" not in result)
 
 
     def testAttachFull1 (self):
@@ -77,6 +78,7 @@ class ThumbListPluginTest (unittest.TestCase):
         self.assertTrue (u"_first.jpg" in result)
 
         self.assertTrue (os.path.exists (os.path.join (self.testPage.path, "__attach", "__thumb") ) )
+        self.assertTrue (u"<table" not in result)
 
 
     def testAttachThumbListFull2 (self):
@@ -98,6 +100,7 @@ class ThumbListPluginTest (unittest.TestCase):
         self.assertTrue (u"_image_01.JPG" in result)
 
         self.assertFalse (u"html.txt" in result)
+        self.assertTrue (u"<table" not in result)
 
 
     def testAttachGalleryFull2 (self):
@@ -119,6 +122,7 @@ class ThumbListPluginTest (unittest.TestCase):
         self.assertTrue (u"_image_01.JPG" in result)
 
         self.assertFalse (u"html.txt" in result)
+        self.assertTrue (u"<table" not in result)
 
 
     def testAttachEmpty1 (self):
@@ -141,6 +145,7 @@ class ThumbListPluginTest (unittest.TestCase):
         self.assertFalse (u"_image_01.JPG" in result)
 
         self.assertFalse (u"html.txt" in result)
+        self.assertTrue (u"<table" not in result)
 
 
     def testAttachGalleryEmpty1 (self):
@@ -163,6 +168,7 @@ class ThumbListPluginTest (unittest.TestCase):
         self.assertFalse (u"_image_01.JPG" in result)
 
         self.assertFalse (u"html.txt" in result)
+        self.assertTrue (u"<table" not in result)
 
 
     def testAttachList1 (self):
@@ -190,6 +196,7 @@ class ThumbListPluginTest (unittest.TestCase):
         self.assertFalse (u"_image_01.JPG" in result)
 
         self.assertFalse (u"html.txt" in result)
+        self.assertTrue (u"<table" not in result)
 
 
     def testAttachList2 (self):
@@ -217,6 +224,7 @@ class ThumbListPluginTest (unittest.TestCase):
         self.assertFalse (u"_image_01.JPG" in result)
 
         self.assertFalse (u"html.txt" in result)
+        self.assertTrue (u"<table" not in result)
 
 
     def testAttachGalleryList2 (self):
@@ -244,6 +252,7 @@ class ThumbListPluginTest (unittest.TestCase):
         self.assertFalse (u"_image_01.JPG" in result)
 
         self.assertFalse (u"html.txt" in result)
+        self.assertTrue (u"<table" not in result)
 
 
     def testAttachList3 (self):
@@ -276,6 +285,7 @@ class ThumbListPluginTest (unittest.TestCase):
         self.assertFalse (u"_image_01.JPG" in result)
 
         self.assertFalse (u"html.txt" in result)
+        self.assertTrue (u"<table" not in result)
 
 
     def testAttachGallery3 (self):
@@ -308,6 +318,7 @@ class ThumbListPluginTest (unittest.TestCase):
         self.assertFalse (u"_image_01.JPG" in result)
 
         self.assertFalse (u"html.txt" in result)
+        self.assertTrue (u"<table" not in result)
 
 
     def testAttachGallerySpaces1 (self):
@@ -340,6 +351,7 @@ class ThumbListPluginTest (unittest.TestCase):
         self.assertFalse (u"_image_01.JPG" in result)
 
         self.assertFalse (u"html.txt" in result)
+        self.assertTrue (u"<table" not in result)
 
 
     def testAttachGallerySpaces2 (self):
@@ -372,6 +384,7 @@ class ThumbListPluginTest (unittest.TestCase):
         self.assertFalse (u"_image_01.JPG" in result)
 
         self.assertFalse (u"html.txt" in result)
+        self.assertTrue (u"<table" not in result)
 
 
     def testAttachGallerySize1 (self):
@@ -407,6 +420,7 @@ class ThumbListPluginTest (unittest.TestCase):
         self.assertFalse (u"maxsize_100_image_01.JPG" in result)
 
         self.assertFalse (u"html.txt" in result)
+        self.assertTrue (u"<table" not in result)
 
 
     def testAttachGallerySize2 (self):
@@ -439,6 +453,7 @@ class ThumbListPluginTest (unittest.TestCase):
         self.assertFalse (u"maxsize_100_image_01.JPG" in result)
 
         self.assertFalse (u"html.txt" in result)
+        self.assertTrue (u"<table" not in result)
 
 
     def testAttachListSize1 (self):
@@ -471,6 +486,7 @@ class ThumbListPluginTest (unittest.TestCase):
         self.assertFalse (u"maxsize_100_image_01.JPG" in result)
 
         self.assertFalse (u"html.txt" in result)
+        self.assertTrue (u"<table" not in result)
 
 
     def testAttachListSize2 (self):
@@ -503,7 +519,7 @@ class ThumbListPluginTest (unittest.TestCase):
         self.assertFalse (u"maxsize_100_image_01.JPG" in result)
 
         self.assertFalse (u"html.txt" in result)
-
+        self.assertTrue (u"<table" not in result)
 
 
     def testAttachListComments1 (self):
@@ -536,6 +552,7 @@ class ThumbListPluginTest (unittest.TestCase):
         self.assertFalse (u"maxsize_100_image_01.JPG" in result)
 
         self.assertFalse (u"html.txt" in result)
+        self.assertTrue (u"<table" not in result)
 
 
     def testAttachListComments2 (self):
@@ -559,3 +576,121 @@ class ThumbListPluginTest (unittest.TestCase):
         self.assertFalse (u'<A HREF="__attach/image_01.JPG">' in result)
 
         self.assertFalse (u"html.txt" in result)
+        self.assertTrue (u"<table" not in result)
+
+
+    def testTable1 (self):
+        text = u"""Бла-бла-бла 
+        (:thumblist cols=2:)
+        бла-бла-бла"""
+
+        files = [u"first.jpg", u"image_01.JPG", u"particle_01.PNG", u"image.png", u"html.txt"]
+        fullpath = [os.path.join (self.filesPath, fname) for fname in files]
+        Attachment(self.testPage).attach (fullpath)
+
+        result = self.parser.toHtml (text)
+
+        self.assertTrue (u'<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue (u"__thumb" in result)
+
+        self.assertTrue (u'<A HREF="__attach/particle_01.PNG">' in result)
+        self.assertTrue (u'<A HREF="__attach/image_01.JPG">' in result)
+
+        self.assertFalse (u"html.txt" in result)
+
+        self.assertTrue (u"<table" in result)
+
+        # В таблице две строки
+        self.assertEqual (len (result.split ("<tr") ), 2 + 1)
+
+
+    def testTable2 (self):
+        text = u"""Бла-бла-бла 
+        (:thumblist cols=1:)
+        бла-бла-бла"""
+
+        files = [u"first.jpg", u"image_01.JPG", u"particle_01.PNG", u"image.png", u"html.txt"]
+        fullpath = [os.path.join (self.filesPath, fname) for fname in files]
+        Attachment(self.testPage).attach (fullpath)
+
+        result = self.parser.toHtml (text)
+
+        self.assertTrue (u'<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue (u"__thumb" in result)
+
+        self.assertTrue (u'<A HREF="__attach/particle_01.PNG">' in result)
+        self.assertTrue (u'<A HREF="__attach/image_01.JPG">' in result)
+
+        self.assertFalse (u"html.txt" in result)
+
+        self.assertTrue (u"<table" in result)
+
+        # В таблице две строки
+        self.assertEqual (len (result.split ("<tr") ), 4 + 1)
+
+
+    def testInvalidCols1 (self):
+        text = u"""Бла-бла-бла 
+        (:thumblist cols:) 
+        бла-бла-бла"""
+
+        files = [u"first.jpg", u"image_01.JPG", u"html.txt"]
+        fullpath = [os.path.join (self.filesPath, fname) for fname in files]
+        Attachment(self.testPage).attach (fullpath)
+
+        result = self.parser.toHtml (text)
+
+        self.assertTrue (u'<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue (u"__thumb" in result)
+        self.assertTrue (u"_first.jpg" in result)
+
+        self.assertTrue (u'<A HREF="__attach/image_01.JPG">' in result)
+        self.assertTrue (u"_image_01.JPG" in result)
+
+        self.assertFalse (u"html.txt" in result)
+        self.assertTrue (u"<table" not in result)
+
+
+    def testInvalidCols2 (self):
+        text = u"""Бла-бла-бла 
+        (:thumblist cols=:) 
+        бла-бла-бла"""
+
+        files = [u"first.jpg", u"image_01.JPG", u"html.txt"]
+        fullpath = [os.path.join (self.filesPath, fname) for fname in files]
+        Attachment(self.testPage).attach (fullpath)
+
+        result = self.parser.toHtml (text)
+
+        self.assertTrue (u'<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue (u"__thumb" in result)
+        self.assertTrue (u"_first.jpg" in result)
+
+        self.assertTrue (u'<A HREF="__attach/image_01.JPG">' in result)
+        self.assertTrue (u"_image_01.JPG" in result)
+
+        self.assertFalse (u"html.txt" in result)
+        self.assertTrue (u"<table" not in result)
+
+
+    def testInvalidCols3 (self):
+        text = u"""Бла-бла-бла 
+        (:thumblist cols=abyrvalg:) 
+        бла-бла-бла"""
+
+        files = [u"first.jpg", u"image_01.JPG", u"html.txt"]
+        fullpath = [os.path.join (self.filesPath, fname) for fname in files]
+        Attachment(self.testPage).attach (fullpath)
+
+        result = self.parser.toHtml (text)
+
+        self.assertTrue (u'<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue (u"__thumb" in result)
+        self.assertTrue (u"_first.jpg" in result)
+
+        self.assertTrue (u'<A HREF="__attach/image_01.JPG">' in result)
+        self.assertTrue (u"_image_01.JPG" in result)
+
+        self.assertFalse (u"html.txt" in result)
+        self.assertTrue (u"<table" not in result)
+

@@ -8,6 +8,7 @@ from outwiker.core.attachment import Attachment
 from outwiker.pages.wiki.wikiconfig import WikiConfig
 
 from .thumbstreamgenerator import ThumbStreamGenerator
+from .thumbtablegenerator import ThumbTableGenerator
 
 
 class ThumbListCommand (Command):
@@ -41,9 +42,15 @@ class ThumbListCommand (Command):
         """
         paramsDict = Command.parseParams (params)
         thumbsize = self._getThumbSize(paramsDict);
+        columnsCount = self._getColumnsCount(paramsDict)
+
         lineItems = self._parseContent (content)
 
-        generator = ThumbStreamGenerator (lineItems, thumbsize, self.parser)
+        if columnsCount == 0:
+            generator = ThumbStreamGenerator (lineItems, thumbsize, self.parser)
+        else:
+            generator = ThumbTableGenerator (lineItems, thumbsize, self.parser, columnsCount)
+
         return generator.generate()
 
 
@@ -107,6 +114,23 @@ class ThumbListCommand (Command):
                 fnameLower.endswith (".jpeg") or
                 fnameLower.endswith (".bmp") or
                 fnameLower.endswith (".gif"))
+
+
+    def _getColumnsCount (self, paramsDict):
+        """
+        Возвращает количество столбцов для таблицы
+        """
+        paramname = "cols"
+        cols = 0
+
+        try:
+            cols = int (paramsDict[paramname])
+        except KeyError:
+            pass
+        except ValueError:
+            pass
+
+        return cols
 
 
     def _getThumbSize (self, paramsDict):

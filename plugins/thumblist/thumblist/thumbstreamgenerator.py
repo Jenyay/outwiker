@@ -16,28 +16,30 @@ class ThumbStreamGenerator (object):
         self._thumbsize = thumbsize
         self._parser = parser
 
+        # Обертка для галереи в целом
+        self._fullTemplate = u'<div class="thumblist">{content}</div>'
+
+        # Обертка для одной картинки
         self._singleThumbTemplate = u'<div class="thumblist-thumb"><div class="thumblist-image">%thumb maxsize={maxsize}%Attach:{fname}%%</div></div>'
 
-        self._style ="""
+        self._style ="""<!-- Begin Thumblist styles -->
 <style>
     div.thumblist {
         }
-</style>
-<style>
+    
     div.thumblist-thumb {
         display: inline;
         }
-</style>
-<style>
+    
     div.thumblist-image {
         display: inline;
         }
-</style>
-<style>
+    
     div.thumblist-image img{
 		padding: 0.3em 0.3em 0.5em 0.5em;
         }
-</style>"""
+</style>
+<!-- End Thumblist styles -->"""
 
 
     def generate (self):
@@ -52,4 +54,5 @@ class ThumbStreamGenerator (object):
         if self._style not in self._parser.head:
             self._parser.appendToHead (self._style)
 
-        return self._parser.parseWikiMarkup (wikitext)
+        resultContent = self._parser.parseWikiMarkup (wikitext)
+        return self._fullTemplate.format (content = resultContent)
