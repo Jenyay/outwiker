@@ -9,6 +9,7 @@ from outwiker.pages.wiki.wikiconfig import WikiConfig
 
 from .thumbstreamgenerator import ThumbStreamGenerator
 from .thumbtablegenerator import ThumbTableGenerator
+from .utilites import isImage
 
 
 class ThumbListCommand (Command):
@@ -59,13 +60,14 @@ class ThumbListCommand (Command):
 
         filesList = self._getLinesItems (content)
         allFiles = attach.getAttachRelative()
+        allFiles.sort()
 
         if len (content) == 0:
-            files = [(fname, u"") for fname in allFiles if self._isImage (fname)]
+            files = [(fname, u"") for fname in allFiles if isImage (fname)]
         else:
             files = [lineitem for lineitem 
                     in filesList 
-                    if self._isImage (lineitem[0]) and lineitem[0] in allFiles]
+                    if isImage (lineitem[0]) and lineitem[0] in allFiles]
 
         return files
 
@@ -100,20 +102,6 @@ class ThumbListCommand (Command):
             result = (line, u"")
 
         return result
-
-
-
-    def _isImage (self, fname):
-        """
-        Возвращает True, если fname - картинка
-        """
-        fnameLower = fname.lower()
-
-        return (fnameLower.endswith (".png") or
-                fnameLower.endswith (".jpg") or
-                fnameLower.endswith (".jpeg") or
-                fnameLower.endswith (".bmp") or
-                fnameLower.endswith (".gif"))
 
 
     def _getColumnsCount (self, paramsDict):

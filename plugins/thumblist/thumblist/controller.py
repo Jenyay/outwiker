@@ -67,40 +67,46 @@ class Controller (object):
         """
         Событие при нажатии на кнопку вставки галереи
         """
-        dlg = ThumbDialog (self._application.mainWindow)
+        dlg = ThumbDialog (self._application.mainWindow, self._application.selectedPage)
 
         if dlg.ShowModal() == wx.ID_OK:
-            self._insertSelectedGallery (dlg.columnsCount, dlg.thumbSize)
+            if dlg.isAllFiles:
+                self._insertFullGallery (dlg.columnsCount, dlg.thumbSize)
+            else:
+                self._insertSelectedGallery (dlg.columnsCount, dlg.thumbSize, dlg.selectedFiles)
 
         dlg.Destroy()
 
 
-    def _insertSelectedGallery (self, columns, thumbsize):
+    def _insertSelectedGallery (self, columns, thumbsize, files):
         """
         Вставить в редактор шаблон для галереи, оформленной в виде таблицы с заданным количеством столбцов.
         columns - количество столбцов
         thumbsize - размер превьюшек (0 - размер по умолчанию)
+        files - список файлов для галереи
         """
         params = self._getGalleryParams (columns, thumbsize)
 
-        startCommand = u'(:thumbgallery {params}:)\n'.format (params=params)
-        endCommand = u'\n(:thumbgalleryend:)'
+        attachFiles = ["    Attach:" + fname for fname in files]
+        filesString = u"\n".join (attachFiles)
+
+        command = u'(:thumbgallery{params}:)\n{files}\n(:thumbgalleryend:)'.format (params=params, files=filesString)
 
         pageView = self._getPageView()
-        pageView.codeEditor.turnText (startCommand, endCommand)
+        pageView.codeEditor.replaceText (command)
 
 
-    # def _insertFullGallery (self, columns, thumbsize):
-    #     """
-    #     Вставить галерею из всех прикрепленных картинок
-    #     thumbsize - размер превьюшек (0 - размер по умолчанию)
-    #     """
-    #     params = self._getGalleryParams (columns, thumbsize)
+    def _insertFullGallery (self, columns, thumbsize):
+        """
+        Вставить галерею из всех прикрепленных картинок
+        thumbsize - размер превьюшек (0 - размер по умолчанию)
+        """
+        params = self._getGalleryParams (columns, thumbsize)
 
-    #     command = u'(:thumbgallery {params}:)'.format (params=params)
+        command = u'(:thumbgallery{params}:)'.format (params=params)
 
-    #     pageView = self._getPageView()
-    #     pageView.codeEditor.replaceText (command)
+        pageView = self._getPageView()
+        pageView.codeEditor.replaceText (command)
 
 
     def _getGalleryParams (self, columns, thumbsize):
@@ -111,7 +117,11 @@ class Controller (object):
         if thumbsize > 0:
             result += u" px={size}".format (size=thumbsize)
 
-        return result.strip()
+        result = result.strip()
+        if len (result) > 0:
+            result = " " + result
+
+        return result
 
 
     def _getPageView (self):
