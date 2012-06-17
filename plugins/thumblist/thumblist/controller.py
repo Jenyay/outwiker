@@ -3,11 +3,14 @@
 
 import os.path
 
+import wx
+
 from outwiker.core.system import getOS
 from outwiker.pages.wiki.wikipanel import WikiPagePanel
 
 from .thumblistcommand import ThumbListCommand
 from .thumbgallerycommand import ThumbGalleryCommand
+from .thumbdialog import ThumbDialog
 
 
 class Controller (object):
@@ -53,19 +56,62 @@ class Controller (object):
 
         pageView.addTool (pageView.commandsMenu, 
                 self.THUMBLIST_TOOL_ID, 
-                self.__onInsertCommand, 
+                self._onInsertCommand, 
                 helpString, 
                 helpString, 
                 self._getImagePath (u"gallery.png"),
                 False)
         
 
-    def __onInsertCommand (self, event):
-        startCommand = u'(:thumbgallery:)\n'
+    def _onInsertCommand (self, event):
+        """
+        Событие при нажатии на кнопку вставки галереи
+        """
+        dlg = ThumbDialog (self._application.mainWindow)
+
+        if dlg.ShowModal() == wx.ID_OK:
+            self._insertSelectedGallery (dlg.columnsCount, dlg.thumbSize)
+
+        dlg.Destroy()
+
+
+    def _insertSelectedGallery (self, columns, thumbsize):
+        """
+        Вставить в редактор шаблон для галереи, оформленной в виде таблицы с заданным количеством столбцов.
+        columns - количество столбцов
+        thumbsize - размер превьюшек (0 - размер по умолчанию)
+        """
+        params = self._getGalleryParams (columns, thumbsize)
+
+        startCommand = u'(:thumbgallery {params}:)\n'.format (params=params)
         endCommand = u'\n(:thumbgalleryend:)'
 
         pageView = self._getPageView()
         pageView.codeEditor.turnText (startCommand, endCommand)
+
+
+    # def _insertFullGallery (self, columns, thumbsize):
+    #     """
+    #     Вставить галерею из всех прикрепленных картинок
+    #     thumbsize - размер превьюшек (0 - размер по умолчанию)
+    #     """
+    #     params = self._getGalleryParams (columns, thumbsize)
+
+    #     command = u'(:thumbgallery {params}:)'.format (params=params)
+
+    #     pageView = self._getPageView()
+    #     pageView.codeEditor.replaceText (command)
+
+
+    def _getGalleryParams (self, columns, thumbsize):
+        result = u""
+        if columns > 0:
+            result += u" cols={columns}".format (columns=columns)
+
+        if thumbsize > 0:
+            result += u" px={size}".format (size=thumbsize)
+
+        return result.strip()
 
 
     def _getPageView (self):
