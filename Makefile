@@ -55,6 +55,10 @@ plugin:
 	cd plugins/spoiler; 7z a -r -aoa -xr!*.pyc ../../build/plugins/spoiler.zip ./*
 	rm -f build/plugins/livejournal.zip
 	cd plugins/livejournal; 7z a -r -aoa -xr!*.pyc ../../build/plugins/livejournal.zip ./*
+	rm -f build/plugins/lightbox.zip
+	cd plugins/lightbox; 7z a -r -aoa -xr!*.pyc ../../build/plugins/lightbox.zip ./*
+	rm -f build/plugins/thumblist.zip
+	cd plugins/thumblist; 7z a -r -aoa -xr!*.pyc ../../build/plugins/thumblist.zip ./*
 
 wintests:
 	python src\\setup_tests.py build
