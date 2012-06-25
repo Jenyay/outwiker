@@ -15,9 +15,9 @@ from .controller import Controller
 if getCurrentVersion() < Version (1, 6, 0, 632, status=StatusSet.DEV):
     print ("Thumblist plugin. OutWiker version requirement: 1.6.0.632")
 else:
-    class PluginThumbList (Plugin):
+    class PluginThumbGallery (Plugin):
         """
-        Плагин, добавляющий обработку команды (:thumblist:) в википарсер
+        Плагин, добавляющий обработку команды (:thumblist:) и (:thumbgallery:) в википарсер
         """
         def __init__ (self, application):
             """
@@ -29,7 +29,7 @@ else:
 
         @property
         def name (self):
-            return u"ThumbList"
+            return u"ThumbGallery"
 
         
         @property
