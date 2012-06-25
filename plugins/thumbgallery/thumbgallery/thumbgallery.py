@@ -43,7 +43,7 @@ else:
 
 
         def initialize(self):
-            self._initlocale(u"thumblist")
+            self._initlocale(u"thumbgallery")
             self._controller.initialize()
 
 
