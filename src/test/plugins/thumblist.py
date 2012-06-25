@@ -23,7 +23,7 @@ class ThumbListPluginTest (unittest.TestCase):
         self.filesPath = u"../test/samplefiles/"
         self.__createWiki()
 
-        dirlist = [u"../plugins/thumblist"]
+        dirlist = [u"../plugins/thumbgallery"]
 
         self.loader = PluginsLoader(Application)
         self.loader.load (dirlist)
