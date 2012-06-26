@@ -12,6 +12,7 @@ from parser.tokencommand import CommandFactory
 from parser.tokenlink import LinkFactory
 from parser.tokenurl import UrlFactory
 from parser.tokenlinebreak import LineBreakFactory
+from parser.tokennoformat import NoFormatFactory
 
 
 ApplyStyleEvent, EVT_APPLY_STYLE = wx.lib.newevent.NewEvent()
@@ -39,7 +40,10 @@ class WikiColorizer (object):
 
         self.linebreak = LineBreakFactory.make (None).setParseAction(lambda s, l, t: None).setResultsName ("linebreak")
 
-        self.colorParser = (self.command | 
+        self.noformat = NoFormatFactory.make (None).setParseAction(lambda s, l, t: None).setResultsName ("noformat")
+
+        self.colorParser = (self.noformat |
+                self.command | 
                 self.bold_italic | 
                 self.bold | 
                 self.italic | 
@@ -49,7 +53,8 @@ class WikiColorizer (object):
                 self.link | 
                 self.url)
 
-        self.insideBlockParser = (self.bold_italic | 
+        self.insideBlockParser = (self.noformat |
+                self.bold_italic | 
                 self.bold | 
                 self.italic | 
                 self.underline | 
@@ -118,6 +123,9 @@ class WikiColorizer (object):
                 self._setStyle (stylelist, self._editor.STYLE_COMMAND_ID, bytepos_start, bytepos_end)
 
             elif token[0].getName() == "linebreak":
+                pass
+            
+            elif token[0].getName() == "noformat":
                 pass
 
             elif token[0].getName() == "link":
