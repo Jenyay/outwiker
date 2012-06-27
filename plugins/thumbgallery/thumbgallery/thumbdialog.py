@@ -15,6 +15,8 @@ class ThumbDialog (wx.Dialog):
 
         self._page = page
 
+        self.SetTitle (_(u"Create Gallery"))
+
         self.Center(wx.CENTRE_ON_SCREEN)
 
         self._maxColumns = 100
