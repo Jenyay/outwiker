@@ -69,7 +69,10 @@ class Controller (object):
         """
         Событие при нажатии на кнопку вставки галереи
         """
-        dlg = ThumbDialog (self._application.mainWindow, self._application.selectedPage, _)
+        dlg = ThumbDialog (self._application.mainWindow, 
+                self._application.selectedPage, 
+                _,
+                self._application)
 
         if dlg.ShowModal() == wx.ID_OK:
             if dlg.isAllFiles:

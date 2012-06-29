@@ -4,37 +4,38 @@
 import wx
 
 from outwiker.core.attachment import Attachment
+from outwiker.gui.preferences.configelements import IntegerElement
 
+from .thumbconfig import ThumbConfig
 from .utilites import isImage
 
 
 class ThumbDialog (wx.Dialog):
-    def __init__ (self, parent, page, lang):
+    def __init__ (self, parent, page, lang, application):
         super (ThumbDialog, self).__init__ (parent, 
                 style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.THICK_FRAME)
         global _
         _ = lang
 
         self._page = page
+        self._config = ThumbConfig (application.config)
+
 
         self.SetTitle (_(u"Gallery"))
 
         self.Center(wx.CENTRE_ON_SCREEN)
-
-        self._maxColumns = 100
-        self._maxThumbSize = 10000
 
         self.ALL_BUTTON = wx.NewId()
         self.CLEAR_BUTTON = wx.NewId()
 
         # Контролы для выбора количества столбцов
         self.columnsLabel = wx.StaticText (self, -1, _(u"Columns count (0 - without table)") )
-        self.columns = wx.SpinCtrl (self, min=0, max=self._maxColumns)
+        self.columns = wx.SpinCtrl (self, min=0, max=self._config.COLUMNS_COUNT_MAX)
         self.columns.SetMinSize ((150, -1))
 
         # Контролы для указания размера превьюшек
         self.thumbSizeLabel = wx.StaticText (self, -1, _(u"Thumbnails size (0 - default size)") )
-        self.thumbSizeCtrl = wx.SpinCtrl (self, min=0, max=self._maxThumbSize)
+        self.thumbSizeCtrl = wx.SpinCtrl (self, min=0, max=self._config.THUMB_SIZE_MAX)
         self.thumbSizeCtrl.SetMinSize ((150, -1))
 
         # Контролы для выбора прикрепленных файлов
@@ -45,6 +46,7 @@ class ThumbDialog (wx.Dialog):
 
         self.Bind (wx.EVT_BUTTON, self._onAll, id=self.ALL_BUTTON)
         self.Bind (wx.EVT_BUTTON, self._onClear, id=self.CLEAR_BUTTON)
+        self.Bind (wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
 
         self._fillAttaches()
         self.columns.SetFocus()
@@ -55,6 +57,7 @@ class ThumbDialog (wx.Dialog):
         self.SetMinSize ((dlgWidth, dlgHeight))
 
         self._layout ()
+        self.LoadState()
 
 
     def _onAll (self, event):
@@ -194,3 +197,25 @@ class ThumbDialog (wx.Dialog):
         Вовзращает True, если выбраны все файлы и False в противном случае
         """
         return len (self.selectedFiles) == self.attachFiles.GetCount()
+
+
+    def LoadState(self):
+        self.columnsCountConfigElement = IntegerElement (self._config.columnsCount, 
+                self.columns, 
+                0, 
+                self._config.COLUMNS_COUNT_MAX)
+    
+        self.thumbSizeConfigElement = IntegerElement (self._config.thumbSize, 
+                self.thumbSizeCtrl, 
+                0, 
+                self._config.THUMB_SIZE_MAX)
+
+
+    def Save (self):
+        self.columnsCountConfigElement.save()
+        self.thumbSizeConfigElement.save()
+
+
+    def onOk (self, event):
+        self.Save()
+        event.Skip()

@@ -71,6 +71,7 @@ class IntegerElement (StringElement):
     def __init__ (self, option, control, minValue, maxValue):
         StringElement.__init__ (self, option, control)
         self.control.SetRange (minValue, maxValue)
+        self._updateGUI()
 
 
 class FontElement (object):
