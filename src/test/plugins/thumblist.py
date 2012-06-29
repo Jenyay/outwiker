@@ -12,6 +12,7 @@ from outwiker.pages.wiki.parser.wikiparser import Parser
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
 from outwiker.pages.wiki.htmlgenerator import HtmlGenerator
+# from outwiker.pages.wiki.wikiconfig import WikiConfig
 from test.utils import removeWiki
 
 
@@ -694,3 +695,42 @@ class ThumbListPluginTest (unittest.TestCase):
         self.assertFalse (u"html.txt" in result)
         self.assertTrue (u"<table" not in result)
 
+
+    def testInvalidThumbSizeStream (self):
+        text = u"""Абырвалг 
+        (:thumblist px=abyrvalg:) 
+        бла-бла-бла"""
+
+        files = [u"first.jpg", u"image_01.JPG", u"html.txt"]
+        fullpath = [os.path.join (self.filesPath, fname) for fname in files]
+        Attachment(self.testPage).attach (fullpath)
+
+        result = self.parser.toHtml (text)
+        self.assertTrue (u"бла-бла-бла" in result)
+
+        self.assertTrue (u'<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue (u"__thumb" in result)
+        self.assertTrue (u"_first.jpg" in result)
+
+        self.assertTrue (u'<A HREF="__attach/image_01.JPG">' in result)
+        self.assertTrue (u"_image_01.JPG" in result)
+
+
+    def testInvalidThumbSizeTable (self):
+        text = u"""Абырвалг 
+        (:thumblist px=abyrvalg сщды=3:) 
+        бла-бла-бла"""
+
+        files = [u"first.jpg", u"image_01.JPG", u"html.txt"]
+        fullpath = [os.path.join (self.filesPath, fname) for fname in files]
+        Attachment(self.testPage).attach (fullpath)
+
+        result = self.parser.toHtml (text)
+        self.assertTrue (u"бла-бла-бла" in result)
+
+        self.assertTrue (u'<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue (u"__thumb" in result)
+        self.assertTrue (u"_first.jpg" in result)
+
+        self.assertTrue (u'<A HREF="__attach/image_01.JPG">' in result)
+        self.assertTrue (u"_image_01.JPG" in result)

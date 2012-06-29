@@ -1,7 +1,12 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-class ThumbTableGenerator (object):
+from outwiker.core.attachment import Attachment
+
+from .basethumbgenerator import BaseThumbGenerator
+
+
+class ThumbTableGenerator (BaseThumbGenerator):
     """
     Создание списка превьюшек в виде таблицы
     """
@@ -12,9 +17,7 @@ class ThumbTableGenerator (object):
         parser - экземпляр википарсера (Parser)
         cols - количество столбцов таблицы
         """
-        self._items = items
-        self._thumbsize = thumbsize
-        self._parser = parser
+        super (ThumbTableGenerator, self).__init__ (items, thumbsize, parser)
         self._cols = cols
 
         # Обертка для галереи в целом
@@ -58,9 +61,8 @@ class ThumbTableGenerator (object):
         if self._style not in self._parser.head:
             self._parser.appendToHead (self._style)
 
-        rows = self._generateRows (self._items)
+        resultContent = self._generateRows (self._items)
 
-        resultContent = self._parser.parseWikiMarkup (rows)
         return self._fullTemplate.format (content = resultContent)
 
     
@@ -68,7 +70,10 @@ class ThumbTableGenerator (object):
         """
         Возвращает оформленный элемент таблицы
         """
-        image = u"%thumb maxsize={maxsize}%Attach:{fname}%%".format (maxsize=self._thumbsize, fname=item[0])
+        image = u"""<A HREF="{attachdir}/{imagename}"><IMG SRC="{thumbpath}"/></A>""".format (
+                attachdir=Attachment.attachDir,
+                imagename = item[0],
+                thumbpath=self._getThumbnail (self._parser.page, item[0]) )
 
         return self._singleThumbTemplate.format (thumbimage=image, comment=item[1])
 
