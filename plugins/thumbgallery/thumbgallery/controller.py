@@ -27,7 +27,9 @@ class Controller (object):
         parser.addCommand (ThumbGalleryCommand (parser))
 
 
-    def initialize (self):
+    def initialize (self, lang):
+        global _
+        _ = lang
         self._application.onWikiParserPrepare += self.__onWikiParserPrepare
         self._application.onPageViewCreate += self.__onPageViewCreate
 
@@ -67,7 +69,7 @@ class Controller (object):
         """
         Событие при нажатии на кнопку вставки галереи
         """
-        dlg = ThumbDialog (self._application.mainWindow, self._application.selectedPage)
+        dlg = ThumbDialog (self._application.mainWindow, self._application.selectedPage, _)
 
         if dlg.ShowModal() == wx.ID_OK:
             if dlg.isAllFiles:

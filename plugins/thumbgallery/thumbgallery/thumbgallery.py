@@ -44,7 +44,7 @@ else:
 
         def initialize(self):
             self._initlocale(u"thumbgallery")
-            self._controller.initialize()
+            self._controller.initialize(_)
 
 
         def _initlocale (self, domain):

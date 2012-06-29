@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-29 12:47+0400\n"
+"POT-Creation-Date: 2012-06-29 13:10+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,34 +17,34 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: controller.py:55
+#: controller.py:57
 msgid "Thumbnails Gallery (:thumbgallery:)"
 msgstr ""
 
-#: thumbdialog.py:18
-msgid "Create Gallery"
+#: thumbdialog.py:20
+msgid "Gallery"
 msgstr ""
 
-#: thumbdialog.py:29
+#: thumbdialog.py:31
 msgid "Columns count (0 - without table)"
 msgstr ""
 
-#: thumbdialog.py:34
+#: thumbdialog.py:36
 msgid "Thumbnails size (0 - default size)"
 msgstr ""
 
-#: thumbdialog.py:41
+#: thumbdialog.py:43
 msgid "All Images"
 msgstr ""
 
-#: thumbdialog.py:42
+#: thumbdialog.py:44
 msgid "Clear"
 msgstr ""
 
-#: thumbgallery.py:69
+#: thumbgallery.py:72
 msgid "locale/description.html"
 msgstr ""
 
-#: thumbgallery.py:76
+#: thumbgallery.py:80
 msgid "Can't load description"
 msgstr ""

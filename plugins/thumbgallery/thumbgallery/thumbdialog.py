@@ -9,13 +9,15 @@ from .utilites import isImage
 
 
 class ThumbDialog (wx.Dialog):
-    def __init__ (self, parent, page):
+    def __init__ (self, parent, page, lang):
         super (ThumbDialog, self).__init__ (parent, 
                 style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.THICK_FRAME)
+        global _
+        _ = lang
 
         self._page = page
 
-        self.SetTitle (_(u"Create Gallery"))
+        self.SetTitle (_(u"Gallery"))
 
         self.Center(wx.CENTRE_ON_SCREEN)
 
