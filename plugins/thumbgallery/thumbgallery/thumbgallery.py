@@ -34,7 +34,7 @@ else:
         
         @property
         def description (self):
-            return _(u"""Add command (:thumblist:) to wiki parser.""")
+            return self._loadDescription()
 
 
         @property
@@ -54,7 +54,8 @@ else:
             try:
                 _ = self._init_i18n (domain, langdir)
             except BaseException as e:
-                print e
+                # print e
+                pass
 
 
         def destroy (self):
@@ -62,3 +63,18 @@ else:
             Уничтожение (выгрузка) плагина. Здесь плагин должен отписаться от всех событий
             """
             self._controller.destroy()
+
+
+        def _loadDescription (self):
+            """
+            Загрузить описание плагина из файла
+            """
+            path = _(u"locale/description.html")
+            currentDir = unicode (os.path.dirname (__file__), getOS().filesEncoding)
+            fullpath = os.path.join (currentDir, path)
+
+            try:
+                with open (fullpath) as fp:
+                    return unicode (fp.read (), "utf8")
+            except IOError:
+                return _(u"Can't load description")

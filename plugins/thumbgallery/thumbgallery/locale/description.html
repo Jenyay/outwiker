@@ -1,0 +1,60 @@
+ThumbGallery plugin adds a command (:thumbgallery:) into the wiki notation. This command can operate in two modes: show all attached images or only selected files. 
+
+<b>Syntax</b>
+
+(:thumbgallery [params]:)
+
+or
+
+(:thumbgallery [params]:)
+[Attach:]picture_1 [| Comment]
+[Attach:]picture_2 [| Comment]
+...
+(:thumbgalleryend:)
+
+<b>Parameters</b>
+<ul>
+<li><i>cols = ...</i> An integer value. The number of columns in the table. If <i>cols = 0</i> or not specified, then the gallery will be a sequence of thumbnails without splitting into rows and columns.</li>
+
+<li><i>px = ...</i> An integer value. Specifies the size of the thumbnails (on the larger side). If <i>px = 0</i>, or the parameter is not specified, the default value from the program settings.</li>
+</ul>
+
+<b>Examples</b>
+
+<u>Creating a gallery of all attached files</u>
+
+(:thumbgallery:)
+
+
+<u>Creating a gallery of all attached files with a given thumbnails size</u>
+
+(:thumbgallery px=150:)
+
+
+<u>Creating a gallery of all attached files as a table design</u>
+
+(:thumbgallery px= 150 cols=3:)
+
+
+<u>Creating a gallery of the selected files as a table design</u>
+
+(:thumbgallery cols=3 px=150:)
+&nbsp;&nbsp;&nbsp;Attach:DSC_0567.jpg
+&nbsp;&nbsp;&nbsp;Attach:DSC_0604.jpg
+&nbsp;&nbsp;&nbsp;Attach:klyazma_2011_07.jpg
+&nbsp;&nbsp;&nbsp;Attach:smoke.jpg
+&nbsp;&nbsp;&nbsp;Attach:sunset_1.jpg
+&nbsp;&nbsp;&nbsp;Attach:sev_beach2.jpg
+(:thumbgalleryend:)
+
+
+<u>Creating a gallery of the selected files with comments</u>
+
+(:thumbgallery cols=3 px=150:)
+&nbsp;&nbsp;&nbsp;DSC_0567.jpg
+&nbsp;&nbsp;&nbsp;DSC_0604.jpg
+&nbsp;&nbsp;&nbsp;klyazma_2011_07.jpg | Klyazma river
+&nbsp;&nbsp;&nbsp;smoke.jpg | Smoky summer in Moscow
+&nbsp;&nbsp;&nbsp;sunset_1.jpg
+&nbsp;&nbsp;&nbsp;sev_beach2.jpg | Black Sea. Sevastopol
+(:thumbgalleryend:)
