@@ -79,6 +79,15 @@ class WikiTree(wx.Panel):
         self.__BindPopupMenuEvents()
 
 
+    def getTreeItem (self, page):
+        """
+        Получить элемент дерева по странице.
+        Если для страницы не создан элемент дерева, возвращается None
+        """
+        if page in self._pageCache:
+            return self._pageCache[page]
+
+
     def __BindApplicationEvents(self):
         """
         Подписка на события контроллера
@@ -161,14 +170,13 @@ class WikiTree(wx.Panel):
         Обработка создания страницы
         """
         if newpage.parent in self._pageCache:
-            parentItem = self._pageCache[newpage.parent]
-            self.__insertChild (newpage, parentItem)
+            self.__insertChild (newpage)
 
             assert newpage in self._pageCache
             item = self._pageCache[newpage]
             assert item.IsOk()
 
-            self.treeCtrl.Expand (item)
+            self.expand (newpage)
 
 
     def __onAddSiblingPage (self, event):
@@ -225,7 +233,11 @@ class WikiTree(wx.Panel):
     def __onTreeStateChanged (self, event):
         item = event.GetItem()
         assert item.IsOk()
+        page = self.treeCtrl.GetItemData (item).GetData()
         self.__saveItemState (item)
+
+        for child in page.children:
+            self.__appendChildren (child)
 
 
     def __saveItemState (self, itemid):
@@ -243,16 +255,20 @@ class WikiTree(wx.Panel):
 
 
     def __loadExpandState (self, page):
-        if page.parent != None:
-            try:
-                expanded = page.params.getbool (self.pageOptionsSection, self.pageOptionExpand)
-            except ConfigParser.NoSectionError:
-                return
-            except ConfigParser.NoOptionError:
-                return
+        if page == None:
+            return True
 
-            if expanded:
-                self.treeCtrl.Expand (self._pageCache[page])
+        if page.parent == None:
+            return True
+
+        try:
+            expanded = page.params.getbool (self.pageOptionsSection, self.pageOptionExpand)
+        except ConfigParser.NoSectionError:
+            return False
+        except ConfigParser.NoOptionError:
+            return False
+
+        return expanded
 
 
     def __onRemove (self, event):
@@ -458,7 +474,7 @@ class WikiTree(wx.Panel):
             if endDragItem.IsOk():
                 newParent = self.treeCtrl.GetItemData (endDragItem).GetData()
                 outwiker.core.commands.movePage (draggedPage, newParent)
-                self.treeCtrl.Expand (self._pageCache[newParent])
+                self.expand (newParent)
 
         self.dragItem = None
 
@@ -500,8 +516,28 @@ class WikiTree(wx.Panel):
         if newSelPage == None:
             return
 
-        item = self._pageCache[newSelPage]
+        self.__expandToPage (newSelPage)
+        item = self.getTreeItem (newSelPage)
+
+        assert item != None
+
         self.treeCtrl.SelectItem (item)
+        
+
+    def __expandToPage (self, page):
+        """
+        Развернуть ветви до того уровня, чтобы появился элемент для page
+        """
+        # Список родительских страниц, которые нужно добавить в дерево
+        pages = []
+        currentPage = page.parent
+        while currentPage != None:
+            pages.append (currentPage)
+            currentPage = currentPage.parent
+
+        pages.reverse()
+        for currentPage in pages:
+            self.expand (currentPage)
 
     
     def __set_properties(self):
@@ -514,6 +550,12 @@ class WikiTree(wx.Panel):
         self.SetSizer(mainSizer)
         mainSizer.AddGrowableRow(1)
         mainSizer.AddGrowableCol(0)
+
+
+    def expand (self, page):
+        item = self.getTreeItem (page)
+        if item != None:
+            self.treeCtrl.Expand (item)
     
 
     def __treeUpdate (self, rootPage):
@@ -536,29 +578,32 @@ class WikiTree(wx.Panel):
                     data = wx.TreeItemData (rootPage),
                     image = self.defaultImageId)
 
+            self._pageCache[rootPage] = rootItem
             self.__mountItem (rootItem, rootPage)
+            self.__appendChildren (rootPage)
 
-            self.__appendChildren (rootPage, rootItem)
             self.selectedPage = rootPage.selectedPage
-            self.treeCtrl.Expand (rootItem)
+            self.expand (rootPage)
 
         self.treeCtrl.Bind (wx.EVT_TREE_ITEM_COLLAPSED, self.__onTreeStateChanged)
         self.treeCtrl.Bind (wx.EVT_TREE_ITEM_EXPANDED, self.__onTreeStateChanged)
     
 
-    def __appendChildren (self, parentPage, parentItem):
+    def __appendChildren (self, parentPage):
         """
         Добавить детей в дерево
         parentPage - родительская страница, куда добавляем дочерние страницы
-        parentItem - родительский элемент дерева, куда добавляем дочерние элементы
         """
-        self._pageCache[parentPage] = parentItem
+        parentExpanded = self.__loadExpandState (parentPage)
+        grandParentExpanded = self.__loadExpandState (parentPage.parent)
 
-        for child in parentPage.children:
-            item = self.__insertChild (child, parentItem)
-            self.__mountItem (item, child)
+        if grandParentExpanded:
+            for child in parentPage.children:
+                if child not in self._pageCache:
+                    self.__insertChild (child)
 
-        self.__loadExpandState (parentPage)
+        if parentExpanded:
+            self.expand (parentPage)
 
 
     def __mountItem (self, treeitem, page):
@@ -566,18 +611,18 @@ class WikiTree(wx.Panel):
         Оформить элемент дерева в зависимости от настроек страницы (например, пометить только для чтения)
         """
         if page.readonly:
-            #font = self.treeCtrl.GetItemFont (treeitem)
             font = wx.SystemSettings.GetFont (wx.SYS_DEFAULT_GUI_FONT)
             font.SetStyle (wx.FONTSTYLE_ITALIC)
             self.treeCtrl.SetItemFont (treeitem, font)
 
-    
 
-    def __insertChild (self, child, parentItem):
+    def __insertChild (self, child):
         """
-        Вставить одну дочерниюю страницу (child) в ветвь, 
-        где родителем является элемент parentItem
+        Вставить одну дочерниюю страницу (child) в ветвь
         """
+        parentItem = self.getTreeItem (child.parent)
+        assert parentItem != None
+
         item = self.treeCtrl.InsertItemBefore (parentItem, 
                 child.order, 
                 child.title, 
@@ -594,18 +639,24 @@ class WikiTree(wx.Panel):
             
         self.treeCtrl.SetItemImage (item, imageId)
 
-        self.__appendChildren (child, item)
+        self._pageCache[child] = item
+        self.__mountItem (item, child)
+        self.__appendChildren (child)
 
         return item
     
 
     def __removePageItem (self, page):
         """
-        Удалить элемент, соответствующий странице
+        Удалить элемент, соответствующий странице и все его дочерние страницы
         """
-        item = self._pageCache[page]
-        del self._pageCache[page]
-        self.treeCtrl.Delete (item)
+        for child in page.children:
+            self.__removePageItem (child)
+
+        item = self.getTreeItem (page)
+        if item != None:
+            del self._pageCache[page]
+            self.treeCtrl.Delete (item)
 
 
     def __updatePage (self, page):
@@ -619,7 +670,7 @@ class WikiTree(wx.Panel):
         try:
             self.__removePageItem (page)
 
-            item = self.__insertChild (page, self._pageCache[page.parent])
+            item = self.__insertChild (page)
 
             if page.root.selectedPage == page:
                 # Если обновляем выбранную страницу
@@ -639,7 +690,7 @@ class WikiTree(wx.Panel):
         if selectedPage == None:
             return
 
-        item = self._pageCache[selectedPage]
+        item = self.getTreeItem (selectedPage)
         if not self.treeCtrl.IsVisible (item):
             self.treeCtrl.ScrollTo (item)
     
