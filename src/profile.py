@@ -7,7 +7,7 @@ import pstats
 import wx
 
 from outwiker.core.application import Application
-from outwiker import OutWiker
+from runoutwiker import OutWiker
 
 def wikiparserProfile ():
     import profiles.pro_parser
@@ -34,7 +34,7 @@ def outwikerProfile ():
 
     stats = pstats.Stats(profile_fname)
     #stats.strip_dirs().sort_stats('calls').print_stats(30)
-    stats.strip_dirs().sort_stats('cumulative').print_stats(30)
+    stats.strip_dirs().sort_stats('time').print_stats(100)
 
 
 if __name__ == "__main__":
