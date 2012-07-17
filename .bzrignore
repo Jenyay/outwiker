@@ -12,7 +12,7 @@ warnoutwiker_linux.txt
 build
 doc/todo.tsk.lock
 doc/todo.tsk.lock.*
-test/*.profile
+profiles/*.profile
 distrib
 .coverage
 htmlcov

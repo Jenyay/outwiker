@@ -10,25 +10,25 @@ from outwiker.core.application import Application
 from runoutwiker import OutWiker
 
 def wikiparserProfile ():
-    import profiles.pro_parser
+    from profiles import pro_parser
 
-    fname = "profiles/test2.wiki"
-    profile_fname = "../test/wikiparser.profile"
+    fname = "../profiles/text_gogol.wiki"
+    profile_fname = "../profiles/wikiparser.profile"
 
     global pparser
-    pparser = profiles.pro_parser.ParseSample (fname)
+    pparser = pro_parser.ParseSample (fname)
 
     #pparser.run()
     cProfile.run('pparser.run()', profile_fname)
 
     stats = pstats.Stats(profile_fname)
-    stats.strip_dirs().sort_stats('cumulative').print_stats(10)
+    stats.strip_dirs().sort_stats('time').print_stats(30)
 
 
 def outwikerProfile ():
     global outwiker
     outwiker = OutWiker(0)
-    profile_fname = "../test/outwiker.profile"
+    profile_fname = "../profiles/outwiker.profile"
 
     cProfile.run('outwiker.MainLoop()', profile_fname)
 
@@ -38,7 +38,7 @@ def outwikerProfile ():
 
 
 if __name__ == "__main__":
-    Application.init ("../test/testconfig.ini")
+    Application.init ("../profiles/testconfig.ini")
 
     class testApp(wx.App):
         def __init__(self, *args, **kwds):
@@ -46,5 +46,5 @@ if __name__ == "__main__":
 
     app = testApp(redirect=False)
 
-    #wikiparserProfile()
-    outwikerProfile ()
+    wikiparserProfile()
+    # outwikerProfile ()
