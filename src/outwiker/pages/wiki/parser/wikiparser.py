@@ -15,7 +15,7 @@ from tokenalign import AlignFactory
 from tokentable import TableFactory
 from tokenurl import UrlFactory
 from tokenurlimage import UrlImageFactory
-from tokenattach import NotImageAttachFactory, ImageAttachFactory
+from tokenattach import AttachFactory, AttachImagesFactory
 from tokenlist import ListFactory
 from tokenlinebreak import LineBreakFactory
 from tokentex import TexFactory
@@ -56,8 +56,8 @@ class Parser (object):
         self.table = TableFactory.make(self)
         self.url = UrlFactory.make (self)
         self.urlImage = UrlImageFactory.make (self)
-        self.attachesNotImage = NotImageAttachFactory.make (self)
-        self.attachesImage = ImageAttachFactory.make (self)
+        self.attaches = AttachFactory.make (self)
+        self.attachImages = AttachImagesFactory.make (self)
         self.adhoctokens = AdHocFactory.make(self)
         self.lists = ListFactory.make (self)
         self.lineBreak = LineBreakFactory.make (self)
@@ -79,8 +79,7 @@ class Parser (object):
                 self.strike |
                 self.subscript |
                 self.superscript |
-                self.attachesImage |
-                self.attachesNotImage |
+                self.attaches |
                 self.tex |
                 self.command
                 )
@@ -106,8 +105,7 @@ class Parser (object):
                 self.align |
                 self.lists |
                 self.table |
-                self.attachesImage |
-                self.attachesNotImage |
+                self.attaches |
                 self.headings |
                 self.tex |
                 self.command
@@ -123,7 +121,7 @@ class Parser (object):
                 self.urlImage |
                 self.underlined |
                 self.strike |
-                self.attachesImage | 
+                self.attachImages |
                 self.tex |
                 self.command |
                 self.noformat

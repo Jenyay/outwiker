@@ -2,32 +2,62 @@
 # -*- coding: UTF-8 -*-
 
 import os.path
+from abc import ABCMeta, abstractmethod
 
 from outwiker.libs.pyparsing import replaceWith, Literal
-
 from outwiker.core.attachment import Attachment
 
 from utils import concatenate, isImage
 
 
-class NotImageAttachFactory (object):
+class AttachFactory (object):
     @staticmethod
     def make (parser):
-        return NotImageAttachToken (parser).getToken()
+        return AttachAllToken (parser).getToken()
 
 
-class ImageAttachFactory (object):
+class AttachImagesFactory (object):
     @staticmethod
     def make (parser):
-        return ImageAttachToken (parser).getToken()
-
+        return AttachImagesToken (parser).getToken()
 
 
 class AttachToken (object):
+    __metaclass__ = ABCMeta
     attachString = u"Attach:"
 
     def __init__ (self, parser):
         self.parser = parser
+
+
+    def getToken (self):
+        """
+        Создать элементы из прикрепленных файлов.
+        Отдельно картинки, отдельно все файлы
+        """
+        attachesAll = []
+
+        attaches = Attachment (self.parser.page).attachmentFull
+        attaches.sort (self.sortByLength, reverse=True)
+
+        for attach in attaches:
+            fname = os.path.basename (attach)
+            if self.filterFile (fname):
+                attach = Literal (fname)
+                attachesAll.append (attach)
+
+        finalToken = Literal (self.attachString) + concatenate (attachesAll)
+        finalToken.setParseAction (self.convertToLink)
+        return finalToken
+
+
+    def convertToLink (self, s, l, t):
+        fname = t[1]
+
+        if isImage (fname):
+            return '<IMG SRC="%s/%s"/>' % (Attachment.attachDir, fname)
+        else:
+            return '<A HREF="%s/%s">%s</A>' % (Attachment.attachDir, fname, fname)
     
 
     # TODO: Вынести в отдельный модуль
@@ -43,67 +73,18 @@ class AttachToken (object):
         return 0
 
 
-
-class NotImageAttachToken (AttachToken):
-    def __init__ (self, parser):
-        AttachToken.__init__ (self, parser)
-
-
-    def getToken (self):
+    @abstractmethod
+    def filterFile (self, fname):
         """
-        Создать элементы из прикрепленных файлов.
-        Отдельно картинки, отдельно все файлы
+        Должен возвращать True, если файл подходит для токена и False в противном случае
         """
-        attachesAll = []
-
-        attaches = Attachment (self.parser.page).attachmentFull
-        attaches.sort (self.sortByLength, reverse=True)
-
-        for attach in attaches:
-            if not isImage (attach):
-                fname = os.path.basename (attach)
-                attach = Literal (AttachToken.attachString + fname)
-                attach.setParseAction (replaceWith (self.__getReplaceForAttach (fname) ) )
-                attachesAll.append (attach)
-
-        return concatenate (attachesAll)
 
 
-    def __getReplaceForAttach (self, fname):
-        """
-        Получить строку для замены ссылкой на прикрепленный файл
-        """
-        return '<A HREF="%s/%s">%s</A>' % (Attachment.attachDir, fname, fname)
+class AttachAllToken (AttachToken):
+    def filterFile (self, fname):
+        return True
 
 
-
-class ImageAttachToken (AttachToken):
-    def __init__ (self, parser):
-        AttachToken.__init__ (self, parser)
-
-
-    def getToken (self):
-        """
-        Создать элементы из прикрепленных файлов.
-        Отдельно картинки, отдельно все файлы
-        """
-        attachesImages = []
-
-        attaches = Attachment (self.parser.page).attachmentFull
-        attaches.sort (self.sortByLength, reverse=True)
-
-        for attach in attaches:
-            if isImage (attach):
-                fname = os.path.basename (attach)
-                attach_token = Literal (AttachToken.attachString + fname)
-                attach_token.setParseAction (replaceWith (self.__getReplaceForImageAttach (fname) ) )
-                attachesImages.append (attach_token)
-
-        return concatenate (attachesImages)
-
-
-    def __getReplaceForImageAttach (self, fname):
-        """
-        Получить строку для замены ссылкой на прикрепленный файл
-        """
-        return '<IMG SRC="%s/%s"/>' % (Attachment.attachDir, fname)
+class AttachImagesToken (AttachToken):
+    def filterFile (self, fname):
+        return isImage (fname)

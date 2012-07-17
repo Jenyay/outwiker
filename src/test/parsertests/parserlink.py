@@ -508,3 +508,9 @@ class ParserLinkTest (unittest.TestCase):
         self.assertEqual (self.parser.toHtml (text), result)
 
 
+    def testFileAttach (self):
+        comment = u"Attach:filename.tmp"
+        text = u"бла-бла-бла \n[[%s -> %s]] бла-бла-бла\nбла-бла-бла" % (comment, self.url2)
+        result = u'бла-бла-бла \n<A HREF="%s">%s</A> бла-бла-бла\nбла-бла-бла' % (self.url2, comment)
+
+        self.assertEqual (self.parser.toHtml (text), result)
