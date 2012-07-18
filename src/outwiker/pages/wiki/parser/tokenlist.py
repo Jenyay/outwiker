@@ -114,7 +114,6 @@ class ListToken (object):
         for item in items:
             if len (item.strip()) == 0:
                 continue
-            #print item
 
             level = self.__getListLevel (item, self.allListsParams)
 
@@ -156,9 +155,9 @@ class ListToken (object):
         for param in self.allListsParams:
             regex += param.symbol
 
-        regex += "]+) *(?P<item>.*?)$[\r\n]*"
+        regex += "]+) *(?P<item>.*?)$\n{0,2}"
 
-        item =  Regex (regex, re.MULTILINE).setParseAction (noConvert)
+        item =  Regex (regex, re.MULTILINE).setParseAction (noConvert).leaveWhitespace()
 
         fullList = OneOrMore (item).setParseAction (self.__convertList)
 
