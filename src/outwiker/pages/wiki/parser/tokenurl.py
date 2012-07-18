@@ -28,7 +28,7 @@ class UrlToken (object):
 
     def __convertToUrlLink (self, s, l, t):
         """
-        Преобразовать ссылку на инетрнет-адрес
+        Преобразовать ссылку на интернет-адрес
         """
         if (not t[0].startswith ("http://") and
                 not t[0].startswith ("ftp://") and
