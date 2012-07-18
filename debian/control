@@ -4,8 +4,7 @@ Priority: optional
 Maintainer: Eugeniy Ilin <jenyay.ilin@gmail.com>
 Standards-Version: 3.9.2
 Build-Depends: debhelper (>= 8), python (>=2.7), python-support (>= 1)
-# Build-Depends-Indep: python-support (>= 0.5.3)
-Homepage: http://jenyay.net/Soft/Outwiker
+Homepage: http://jenyay.net/Outwiker/English
 
 Package: outwiker
 Architecture: all
