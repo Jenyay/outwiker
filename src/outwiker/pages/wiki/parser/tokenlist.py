@@ -74,37 +74,6 @@ class ListToken (object):
         return result
 
 
-    def toHtml (self, items):
-        """
-        Преобразовать список элементов списка в HTML-список (возможно, вложенный)
-        """
-        splitItems = self.__splitLists (items)
-        lists = [self.__generateListForItems (currentItems) for currentItems in splitItems]
-
-        return u"".join (lists)
-
-
-    def __splitLists (self, items):
-        """
-        Разделить массив items на несколько массивов по тем элементам, где в конце есть утроенные переводы строк
-        """
-        # Массив массивов
-        splitItems = [[]]
-        for item in items:
-            if len (item.strip()) == 0:
-                continue
-
-            splitItems[-1].append (item)
-
-            procItem = item.replace ("\r\n", "\n")
-            if len (splitItems) == 0 or procItem.endswith ("\n\n\n"):
-                splitItems.append ([])
-
-
-        return splitItems
-
-
-
     def __generateListForItems (self, items):
         currLevel = 0
         currItem = []
@@ -168,7 +137,7 @@ class ListToken (object):
         """
         Преобразовать список элементов списка в HTML-список (возможно, вложенный)
         """
-        return self.toHtml (tokens)
+        return self.__generateListForItems (tokens)
 
 
     def __getListLevel (self, item, params):
