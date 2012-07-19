@@ -20,6 +20,7 @@ from tokenlist import ListFactory
 from tokenlinebreak import LineBreakFactory
 from tokentex import TexFactory
 from tokencommand import CommandFactory
+from tokentext import TextFactory
 
 from ..thumbnails import Thumbnails
 
@@ -63,8 +64,13 @@ class Parser (object):
         self.lineBreak = LineBreakFactory.make (self)
         self.tex = TexFactory.make (self)
         self.command = CommandFactory.make (self)
+        self.text = TextFactory.make(self)
 
-        self.listItemMarkup = (self.lineBreak |
+        self.listItemMarkup = (self.attaches |
+                self.urlImage |
+                self.url |
+                self.text | 
+                self.lineBreak |
                 self.link |
                 self.boldItalicized |
                 self.bolded |
@@ -72,8 +78,6 @@ class Parser (object):
                 self.code |
                 self.preformat |
                 self.noformat |
-                self.urlImage |
-                self.url |
                 self.thumb |
                 self.underlined |
                 self.strike |
@@ -85,7 +89,11 @@ class Parser (object):
                 )
 
 
-        self.wikiMarkup = (self.lineBreak |
+        self.wikiMarkup = (self.attaches |
+                self.urlImage |
+                self.url |
+                self.text | 
+                self.lineBreak |
                 self.link |
                 self.adhoctokens |
                 self.subscript |
@@ -96,8 +104,6 @@ class Parser (object):
                 self.code |
                 self.preformat |
                 self.noformat |
-                self.urlImage |
-                self.url |
                 self.thumb |
                 self.underlined |
                 self.strike |
@@ -105,30 +111,31 @@ class Parser (object):
                 self.align |
                 self.lists |
                 self.table |
-                self.attaches |
                 self.headings |
                 self.tex |
                 self.command
                 )
 
         # Нотация для ссылок
-        self.linkMarkup = (self.adhoctokens |
+        self.linkMarkup = (self.attachImages |
+                self.urlImage |
+                self.text | 
+                self.adhoctokens |
                 self.subscript |
                 self.superscript |
                 self.boldItalicized |
                 self.bolded |
                 self.italicized |
-                self.urlImage |
                 self.underlined |
                 self.strike |
-                self.attachImages |
                 self.tex |
                 self.command |
                 self.noformat
                 )
 
         # Нотация для заголовков
-        self.headingMarkup = (self.adhoctokens |
+        self.headingMarkup = (self.text | 
+                self.adhoctokens |
                 self.subscript |
                 self.superscript |
                 self.boldItalicized |

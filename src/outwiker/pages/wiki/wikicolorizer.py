@@ -13,6 +13,7 @@ from parser.tokenlink import LinkFactory
 from parser.tokenurl import UrlFactory
 from parser.tokenlinebreak import LineBreakFactory
 from parser.tokennoformat import NoFormatFactory
+from parser.tokentext import TextFactory
 
 
 ApplyStyleEvent, EVT_APPLY_STYLE = wx.lib.newevent.NewEvent()
@@ -21,6 +22,8 @@ ApplyStyleEvent, EVT_APPLY_STYLE = wx.lib.newevent.NewEvent()
 class WikiColorizer (object):
     def __init__ (self, editor):
         self._editor = editor
+
+        self.text = TextFactory.make (None).setResultsName ("text")
 
         self.bold = FontsFactory.makeBold (None).setParseAction(lambda s, l, t: None).setResultsName ("bold")
 
@@ -42,25 +45,27 @@ class WikiColorizer (object):
 
         self.noformat = NoFormatFactory.make (None).setParseAction(lambda s, l, t: None).setResultsName ("noformat")
 
-        self.colorParser = (self.noformat |
+        self.colorParser = (self.url |
+                self.text |
+                self.linebreak | 
+                self.link |
+                self.noformat |
                 self.command | 
                 self.bold_italic | 
                 self.bold | 
                 self.italic | 
                 self.underline | 
-                self.heading | 
-                self.linebreak | 
-                self.link | 
-                self.url)
+                self.heading)
 
-        self.insideBlockParser = (self.noformat |
+        self.insideBlockParser = (self.url |
+                self.text |
+                self.linebreak | 
+                self.link |
+                self.noformat |
                 self.bold_italic | 
                 self.bold | 
                 self.italic | 
-                self.underline | 
-                self.linebreak |
-                self.link | 
-                self.url)
+                self.underline)
 
         self._thread = None
 
@@ -121,12 +126,6 @@ class WikiColorizer (object):
 
             elif token[0].getName() == "command":
                 self._setStyle (stylelist, self._editor.STYLE_COMMAND_ID, bytepos_start, bytepos_end)
-
-            elif token[0].getName() == "linebreak":
-                pass
-            
-            elif token[0].getName() == "noformat":
-                pass
 
             elif token[0].getName() == "link":
                 self._addStyle (stylelist, self._editor.STYLE_LINK_ID, bytepos_start, bytepos_end)
