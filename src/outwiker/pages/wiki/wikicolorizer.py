@@ -100,34 +100,40 @@ class WikiColorizer (object):
             pos_start = token[1] + start
             pos_end = token[2] + start
 
+            tokenname = token[0].getName()
+            if (tokenname == "text" or
+                tokenname == "linebreak" or
+                tokenname == "noformat"):
+                continue
+
             # Нас интересует позиция в байтах, а не в символах
             bytepos_start = self._editor.calcBytePos (text, pos_start)
             bytepos_end = self._editor.calcBytePos (text, pos_end)
 
             # Применим стиль
-            if token[0].getName() == "bold":
+            if tokenname == "bold":
                 self._addStyle (stylelist, self._editor.STYLE_BOLD_ID, bytepos_start, bytepos_end)
                 self._colorizeText (text, pos_start + 3, pos_end - 3, self.insideBlockParser, stylelist)
 
-            elif token[0].getName() == "italic":
+            elif tokenname == "italic":
                 self._addStyle (stylelist, self._editor.STYLE_ITALIC_ID, bytepos_start, bytepos_end)
                 self._colorizeText (text, pos_start + 2, pos_end - 2, self.insideBlockParser, stylelist)
 
-            elif token[0].getName() == "bold_italic":
+            elif tokenname == "bold_italic":
                 self._addStyle (stylelist, self._editor.STYLE_BOLD_ITALIC_ID, bytepos_start, bytepos_end)
                 self._colorizeText (text, pos_start + 4, pos_end - 4, self.insideBlockParser, stylelist)
 
-            elif token[0].getName() == "underline":
+            elif tokenname == "underline":
                 self._addStyle (stylelist, self._editor.STYLE_UNDERLINE_ID, bytepos_start, bytepos_end)
                 self._colorizeText (text, pos_start + 2, pos_end - 2, self.insideBlockParser, stylelist)
 
-            elif token[0].getName() == "heading":
+            elif tokenname == "heading":
                 self._setStyle (stylelist, self._editor.STYLE_HEADING_ID, bytepos_start, bytepos_end)
 
-            elif token[0].getName() == "command":
+            elif tokenname == "command":
                 self._setStyle (stylelist, self._editor.STYLE_COMMAND_ID, bytepos_start, bytepos_end)
 
-            elif token[0].getName() == "link":
+            elif tokenname == "link":
                 self._addStyle (stylelist, self._editor.STYLE_LINK_ID, bytepos_start, bytepos_end)
 
 
