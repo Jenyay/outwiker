@@ -1,9 +1,15 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
+import os.path
+import subprocess
+
 import wx
 
-from toolsinfo import ToolsInfo
+from outwiker.core.tree import RootWikiPage
+
+from .toolsinfo import ToolsInfo
+from .menumaker import MenuMaker
 
 
 class Controller (object):
@@ -29,37 +35,41 @@ class Controller (object):
 
     def __onTreePopupMenu (self, menu, page):
         self._page = page
+        menuMaker = MenuMaker (menu, self._tools)
 
         if page.getTypeString() == "wiki":
-            self.__insertWikiItems (menu)
-
-
-    def __insertWikiItems (self, menu):
-        contentMenu = wx.Menu()
-        self.__appendToolsMenu (contentMenu, self.__onOpenContentFile)
-
-        itemsCount = len (menu.GetMenuItems())
-        menu.InsertMenu (itemsCount - 3, -1, _(u"Open Content File with..."), contentMenu, u"")
+            menuMaker.insertWikiItems (self.__onOpenContentFile, self.__onOpenResultFile)
 
 
     def __onOpenContentFile (self, event):
+        assert self._page != None
+
+        tools = self.__getToolsById (event.GetId())
+        contentFname = os.path.join (self._page.path, RootWikiPage.contentFile)
+
+        self.__executeTools (tools.command, contentFname)
+
+
+    def __onOpenResultFile (self, event):
+        assert self._page != None
+
+        tools = self.__getToolsById (event.GetId())
+        contentFname = os.path.join (self._page.path, "__content.html")
+
+        self.__executeTools (tools.command, contentFname)
+
+
+    def __executeTools (self, command, fname):
+        subprocess.call ([command, fname])
+
+
+    def __getToolsById (self, toolsid):
         tools = None
+
         for toolItem in self._tools:
-            if toolItem.toolsid == event.GetId():
+            if toolItem.toolsid == toolsid:
                 tools = toolItem
                 break
 
         assert tools != None
-        print tools.title
-
-
-    def __appendToolsMenu (self, menu, function):
-        """
-        Добавить пункты для внешних редакторов
-        menu - добавляемое контекстное меню
-        function - обработчик события выбора пункта меню
-        """
-        for toolItem in self._tools:
-            menuItem = menu.Append (toolItem.toolsid, toolItem.title)
-            menu.Bind (wx.EVT_MENU, id=toolItem.toolsid, handler=function)
-
+        return tools
