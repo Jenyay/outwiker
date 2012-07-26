@@ -7,9 +7,11 @@ import subprocess
 import wx
 
 from outwiker.core.tree import RootWikiPage
+from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
 
 from .toolsinfo import ToolsInfo
 from .menumaker import MenuMaker
+from .toolsconfig import ToolsConfig
 
 
 class Controller (object):
@@ -19,26 +21,34 @@ class Controller (object):
     def __init__ (self, ownerPlugin):
         self._owner = ownerPlugin
 
-        self._tools = [ToolsInfo (u"gvim", u"gvim", wx.NewId()), 
-                ToolsInfo (u"scite", u"scite", wx.NewId())]
+        # self._tools = [ToolsInfo (u"gvim", u"gvim", wx.NewId()), 
+        #         ToolsInfo (u"scite", u"scite", wx.NewId())]
 
         self._page = None
+        self._toolsConfig = ToolsConfig (self._owner.application.config)
+        self._tools = self._toolsConfig.tools
 
 
     def initialize (self):
         self._owner.application.onTreePopupMenu += self.__onTreePopupMenu
+        self._owner.application.onPreferencesDialogCreate += self.__onPreferencesDialogCreate
 
 
     def destroy (self):
         self._owner.application.onTreePopupMenu -= self.__onTreePopupMenu
+        self._owner.application.onPreferencesDialogCreate -= self.__onPreferencesDialogCreate
 
 
     def __onTreePopupMenu (self, menu, page):
         self._page = page
         menuMaker = MenuMaker (menu, self._tools)
+        pagetype = page.getTypeString()
 
-        if page.getTypeString() == "wiki":
-            menuMaker.insertWikiItems (self.__onOpenContentFile, self.__onOpenResultFile)
+        if pagetype == "wiki" or pagetype == "html":
+            menuMaker.insertContentMenuItem (self.__onOpenContentFile)
+            menuMaker.insertResultMenuItem (self.__onOpenResultFile)        
+        elif pagetype == "text":
+            menuMaker.insertContentMenuItem (self.__onOpenContentFile)
 
 
     def __onOpenContentFile (self, event):
@@ -73,3 +83,12 @@ class Controller (object):
 
         assert tools != None
         return tools
+
+
+    def __onPreferencesDialogCreate (self, dialog):
+        from .preferencespanel import PreferencesPanel
+        prefPanel = PreferencesPanel (dialog.treeBook, self._owner.application.config)
+
+        panelName = _(u"External Tools [Plugin]")
+        panelsList = [PreferencePanelInfo (prefPanel, panelName)]
+        dialog.appendPreferenceGroup (panelName, panelsList)
