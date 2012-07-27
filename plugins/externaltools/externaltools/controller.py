@@ -8,6 +8,7 @@ import wx
 
 from outwiker.core.tree import RootWikiPage
 from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
+from outwiker.core.commands import MessageBox
 
 from .toolsinfo import ToolsInfo
 from .menumaker import MenuMaker
@@ -21,12 +22,9 @@ class Controller (object):
     def __init__ (self, ownerPlugin):
         self._owner = ownerPlugin
 
-        # self._tools = [ToolsInfo (u"gvim", u"gvim", wx.NewId()), 
-        #         ToolsInfo (u"scite", u"scite", wx.NewId())]
-
         self._page = None
         self._toolsConfig = ToolsConfig (self._owner.application.config)
-        self._tools = self._toolsConfig.tools
+        self._tools = None
 
 
     def initialize (self):
@@ -41,6 +39,8 @@ class Controller (object):
 
     def __onTreePopupMenu (self, menu, page):
         self._page = page
+        self._tools = self._toolsConfig.tools
+
         menuMaker = MenuMaker (menu, self._tools)
         pagetype = page.getTypeString()
 
@@ -70,7 +70,12 @@ class Controller (object):
 
 
     def __executeTools (self, command, fname):
-        subprocess.call ([command, fname])
+        try:
+            subprocess.call ([command, fname])
+        except OSError:
+            MessageBox (_(u"Can't execute tools"), 
+                    _(u"Error"),
+                    wx.OK | wx.ICON_ERROR )
 
 
     def __getToolsById (self, toolsid):

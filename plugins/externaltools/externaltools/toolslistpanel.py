@@ -9,6 +9,11 @@ import wx
 from outwiker.core.system import getOS
 
 from .scrolledpanel import ScrolledPanel
+from .toolsinfo import ToolsInfo
+
+
+# Событие, вызываемое при удалении инструмента
+RemoveToolEvent, EVT_REMOVE_TOOL = wx.lib.newevent.NewEvent()
 
 
 class ToolsListPanel (ScrolledPanel):
@@ -18,9 +23,6 @@ class ToolsListPanel (ScrolledPanel):
     def __init__ (self, parent):
         super (ToolsListPanel, self).__init__ (parent, style=wx.BORDER_THEME)
         
-        # Список инструментов (экземпляры класса ToolsInfo)
-        self._tools = []
-
         # Интерфейсные элементы для инструментов (экземпляры класса ToolsItemCtrl)
         self._toolsGuiElements = []
 
@@ -29,27 +31,37 @@ class ToolsListPanel (ScrolledPanel):
         self.SetSizer (self._mainSizer)
         self.SetAutoLayout(1)
 
+        self.Bind (EVT_REMOVE_TOOL, handler=self.__onRemoveTools)
+
 
     @property
     def tools (self):
-        return self._tools
+        return [toolGuiElement.toolItem for 
+                toolGuiElement in self._toolsGuiElements 
+                if len (toolGuiElement.toolItem.command.strip()) != 0]
 
 
     @tools.setter
     def tools (self, newtools):
-        self._tools = newtools[:]
-        self.__updateGui()
+        self.__updateGui(newtools)
 
 
-    def __updateGui (self):
+    def __onRemoveTools (self, event):
+        assert event.EventObject in self._toolsGuiElements
+
+        self._toolsGuiElements.remove (event.EventObject)
+        self._mainSizer.Detach (event.EventObject)
+        event.EventObject.Destroy()
+
+        self.SetupScrolling(scrollToTop=False)
+
+
+    def __updateGui (self, newtools):
         self._mainSizer.Clear (True)
         self._toolsGuiElements = []
 
-        for toolsItem in self._tools:
+        for toolsItem in newtools:
             self.addTool (toolsItem)
-
-        # self.SetupScrolling()
-        # self.Layout()
 
 
     def addTool (self, toolsItem=None):
@@ -63,7 +75,6 @@ class ToolsListPanel (ScrolledPanel):
 
         self.SetupScrolling(scrollToTop=False)
         self.ScrollChildIntoView (toolGuiElement)
-        # toolGuiElement.SetFocus()
 
 
 
@@ -94,11 +105,12 @@ class ToolsItemCtrl (wx.Panel):
                 browseBitmap)
 
         removeBitmap = wx.Bitmap (self.__getImagePath ("cross.png"))
-        self.removeButton = wx.BitmapButton (self, 
+        self._removeButton = wx.BitmapButton (self, 
                 self._REMOVE_ID, 
                 removeBitmap)
 
         self._browseButton.Bind(wx.EVT_BUTTON, self.__onBrowse)
+        self._removeButton.Bind(wx.EVT_BUTTON, self.__onRemove)
 
         self.__layout()
 
@@ -119,6 +131,12 @@ class ToolsItemCtrl (wx.Panel):
         dlg.Destroy()
 
 
+    def __onRemove (self, event):
+        removeEvent = RemoveToolEvent ()
+        removeEvent.SetEventObject (self)
+        wx.PostEvent (self.GetParent(), removeEvent)
+
+
     def __getImagePath (self, fname):
         return unicode (os.path.join (os.path.dirname (__file__), "images", fname),
                 getOS().filesEncoding)
@@ -129,7 +147,7 @@ class ToolsItemCtrl (wx.Panel):
         sizer.AddGrowableCol (0)
         sizer.Add (self._pathTextCtrl, 1, wx.EXPAND | wx.ALL, border=2)
         sizer.Add (self._browseButton, 1, wx.RIGHT | wx.TOP | wx.BOTTOM, border=2)
-        sizer.Add (self.removeButton, 1, wx.ALL, border=2)
+        sizer.Add (self._removeButton, 1, wx.ALL, border=2)
 
         self.SetSizer (sizer)
         self.Layout()
