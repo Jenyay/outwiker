@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: externaltools\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-07-29 19:04+0300\n"
-"PO-Revision-Date: 2012-07-29 19:05+0300\n"
+"PO-Revision-Date: 2012-07-29 22:19+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: jenyay.net <jenyay.ilin@gmail.com>\n"
 "Language: \n"
@@ -19,11 +19,11 @@ msgstr ""
 
 #: ../../../menumaker.py:39
 msgid "Open Content File with..."
-msgstr "Открыть файл с текстом с помощью..."
+msgstr "Открыть файл с текстом заметки в..."
 
 #: ../../../menumaker.py:48
 msgid "Open Result HTML File with..."
-msgstr "Открыть HTML-результат с помощью..."
+msgstr "Открыть HTML-файл в..."
 
 #: ../../../toolslistpanel.py:106
 msgid "Open file dialog..."
