@@ -25,7 +25,6 @@ class PreferencesPanel (wx.Panel):
         wx.Panel.__init__ (self, parent, style=wx.TAB_TRAVERSAL)
         self._config = config
 
-        # from .i18n import _
         global _
         _ = get_()
 

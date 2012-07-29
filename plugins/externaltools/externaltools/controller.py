@@ -14,6 +14,7 @@ from outwiker.core.system import getOS
 from .toolsinfo import ToolsInfo
 from .menumaker import MenuMaker
 from .toolsconfig import ToolsConfig
+from .i18n import get_
 
 
 class Controller (object):
@@ -33,6 +34,9 @@ class Controller (object):
 
 
     def initialize (self):
+        global _
+        _ = get_()
+
         self._owner.application.onTreePopupMenu += self.__onTreePopupMenu
         self._owner.application.onPreferencesDialogCreate += self.__onPreferencesDialogCreate
 
@@ -49,9 +53,11 @@ class Controller (object):
         pagetype = page.getTypeString()
 
         if pagetype == "wiki" or pagetype == "html":
+            menuMaker.insertSeparator()
             menuMaker.insertContentMenuItem ()
             menuMaker.insertResultMenuItem ()
         elif pagetype == "text":
+            menuMaker.insertSeparator()
             menuMaker.insertContentMenuItem ()
 
 

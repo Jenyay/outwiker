@@ -3,6 +3,8 @@
 
 import wx
 
+from .i18n import get_
+
 
 class MenuMaker (object):
     """
@@ -17,9 +19,15 @@ class MenuMaker (object):
         self._parent = parent
         self._controller = controller
 
+        # Положение добавляемых пунктов меню от конца списка
+        self._popupPosition = 2
+
         # Словарь для нахождения инструмента по идентификатору меню
         # Ключ - id, значение - экземпляр ToolsInfo
         self._menuId = {}
+
+        global _
+        _ = get_()
 
 
     def insertContentMenuItem (self):
@@ -31,7 +39,11 @@ class MenuMaker (object):
         self.__appendToolsMenu (contentMenu, self.__onOpenContentFile, self._controller.tools)
 
         itemsCount = len (self._menu.GetMenuItems())
-        self._menu.InsertMenu (itemsCount - 2, -1, _(u"Open Content File with..."), contentMenu, u"")
+        self._menu.InsertMenu (itemsCount - self._popupPosition, 
+                -1, 
+                _(u"Open Content File with..."), 
+                contentMenu, 
+                u"")
 
 
     def insertResultMenuItem (self):
@@ -40,7 +52,16 @@ class MenuMaker (object):
         self.__appendToolsMenu (resultMenu, self.__onOpenResultFile, self._controller.tools)
 
         itemsCount = len (self._menu.GetMenuItems())
-        self._menu.InsertMenu (itemsCount - 2, -1, _(u"Open Result HTML File with..."), resultMenu, u"")
+        self._menu.InsertMenu (itemsCount - self._popupPosition, 
+                -1, 
+                _(u"Open Result HTML File with..."), 
+                resultMenu, 
+                u"")
+
+
+    def insertSeparator (self):
+        itemsCount = len (self._menu.GetMenuItems())
+        self._menu.InsertSeparator (itemsCount - self._popupPosition)
 
 
     def __appendToolsMenu (self, menu, function, tools):

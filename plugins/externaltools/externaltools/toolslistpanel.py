@@ -10,6 +10,7 @@ from outwiker.core.system import getOS
 
 from .scrolledpanel import ScrolledPanel
 from .toolsinfo import ToolsInfo
+from .i18n import get_
 
 
 # Событие, вызываемое при удалении инструмента
@@ -21,7 +22,10 @@ class ToolsListPanel (ScrolledPanel):
     Окно со списком всех добавленных инструментов
     """
     def __init__ (self, parent):
-        super (ToolsListPanel, self).__init__ (parent, style=wx.BORDER_THEME)
+        super (ToolsListPanel, self).__init__ (parent)
+
+        global _
+        _ = get_()
         
         # Интерфейсные элементы для инструментов (экземпляры класса ToolsItemCtrl)
         self._toolsGuiElements = []
@@ -103,11 +107,13 @@ class ToolsItemCtrl (wx.Panel):
         self._browseButton = wx.BitmapButton (self, 
                 self._BROWSE_ID, 
                 browseBitmap)
+        self._browseButton.SetToolTipString (_(u"Open file dialog..."))
 
         removeBitmap = wx.Bitmap (self.__getImagePath ("cross.png"))
         self._removeButton = wx.BitmapButton (self, 
                 self._REMOVE_ID, 
                 removeBitmap)
+        self._removeButton.SetToolTipString (_(u"Remove tool"))
 
         self._browseButton.Bind(wx.EVT_BUTTON, self.__onBrowse)
         self._removeButton.Bind(wx.EVT_BUTTON, self.__onRemove)
