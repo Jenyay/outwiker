@@ -13,6 +13,7 @@ build
 doc/todo.tsk.lock
 doc/todo.tsk.lock.*
 profiles/*.profile
+test/*.profile
 distrib
 .coverage
 htmlcov

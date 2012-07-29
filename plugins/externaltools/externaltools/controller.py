@@ -9,6 +9,7 @@ import wx
 from outwiker.core.tree import RootWikiPage
 from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
 from outwiker.core.commands import MessageBox
+from outwiker.core.system import getOS
 
 from .toolsinfo import ToolsInfo
 from .menumaker import MenuMaker
@@ -24,7 +25,11 @@ class Controller (object):
 
         self._page = None
         self._toolsConfig = ToolsConfig (self._owner.application.config)
-        self._tools = None
+
+
+    @property
+    def tools (self):
+        return self._toolsConfig.tools
 
 
     def initialize (self):
@@ -39,55 +44,45 @@ class Controller (object):
 
     def __onTreePopupMenu (self, menu, page):
         self._page = page
-        self._tools = self._toolsConfig.tools
 
-        menuMaker = MenuMaker (menu, self._tools)
+        menuMaker = MenuMaker (self, menu, self._owner.application.mainWindow)
         pagetype = page.getTypeString()
 
         if pagetype == "wiki" or pagetype == "html":
-            menuMaker.insertContentMenuItem (self.__onOpenContentFile)
-            menuMaker.insertResultMenuItem (self.__onOpenResultFile)        
+            menuMaker.insertContentMenuItem ()
+            menuMaker.insertResultMenuItem ()
         elif pagetype == "text":
-            menuMaker.insertContentMenuItem (self.__onOpenContentFile)
+            menuMaker.insertContentMenuItem ()
 
 
-    def __onOpenContentFile (self, event):
+    def openContentFile (self, tools):
+        """
+        Открыть файл контента текущей страницы с помощью tools
+        """
         assert self._page != None
-
-        tools = self.__getToolsById (event.GetId())
         contentFname = os.path.join (self._page.path, RootWikiPage.contentFile)
-
         self.__executeTools (tools.command, contentFname)
 
 
-    def __onOpenResultFile (self, event):
+    def openResultFile (self, tools):
+        """
+        Открыть файл результата текущей страницы с помощью tools
+        """
         assert self._page != None
-
-        tools = self.__getToolsById (event.GetId())
         contentFname = os.path.join (self._page.path, "__content.html")
-
         self.__executeTools (tools.command, contentFname)
 
 
     def __executeTools (self, command, fname):
+        encoding = getOS().filesEncoding
+
         try:
-            subprocess.call ([command, fname])
+            subprocess.call ([command.encode (encoding), 
+                fname.encode (encoding)])
         except OSError:
             MessageBox (_(u"Can't execute tools"), 
                     _(u"Error"),
                     wx.OK | wx.ICON_ERROR )
-
-
-    def __getToolsById (self, toolsid):
-        tools = None
-
-        for toolItem in self._tools:
-            if toolItem.toolsid == toolsid:
-                tools = toolItem
-                break
-
-        assert tools != None
-        return tools
 
 
     def __onPreferencesDialogCreate (self, dialog):
