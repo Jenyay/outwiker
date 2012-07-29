@@ -119,7 +119,7 @@ class ToolsItemCtrl (wx.Panel):
         if os.name == "nt":
             wildcard = _(u"Executables (*.exe)|*.exe|All Files|*.*")
         else:
-            wildcard = _(u"All Files|*.*")
+            wildcard = _(u"All Files|*")
 
         dlg = wx.FileDialog (self,
                 wildcard=wildcard,
