@@ -66,6 +66,8 @@ plugin:
 	cd plugins/lightbox; 7z a -r -aoa -xr!*.pyc ../../build/plugins/lightbox.zip ./*
 	rm -f build/plugins/thumbgallery.zip
 	cd plugins/thumbgallery; 7z a -r -aoa -xr!*.pyc ../../build/plugins/thumbgallery.zip ./*
+	rm -f build/plugins/externaltools.zip
+	cd plugins/externaltools; 7z a -r -aoa -xr!*.pyc ../../build/plugins/externaltools.zip ./*
 
 wintests:
 	python src\\setup_tests.py build
