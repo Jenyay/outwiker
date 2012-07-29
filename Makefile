@@ -11,7 +11,11 @@ install:
 	mkdir -p $(outwiker_dir)
 	mkdir -p $(DESTDIR)/usr/bin/
 	mkdir -p $(DESTDIR)/usr/share/applications
-	mkdir -p $(DESTDIR)/usr/share/pixmaps
+	mkdir -p $(DESTDIR)/usr/share/icons/hicolor/16x16/apps
+	mkdir -p $(DESTDIR)/usr/share/icons/hicolor/32x32/apps
+	mkdir -p $(DESTDIR)/usr/share/icons/hicolor/48x48/apps
+	mkdir -p $(DESTDIR)/usr/share/icons/hicolor/64x64/apps
+	mkdir -p $(DESTDIR)/usr/share/icons/hicolor/scalable/apps
 	cp -r "src/outwiker" $(outwiker_dir)
 	cp -r "src/help" $(outwiker_dir)
 	cp -r "src/images" $(outwiker_dir)
@@ -23,8 +27,11 @@ install:
 	cp "copyright" $(outwiker_dir)
 	cp "README" $(outwiker_dir)
 	cp "outwiker" $(DESTDIR)/usr/bin/
-	cp "src/images/outwiker.xpm" $(DESTDIR)/usr/share/pixmaps/
-	# cp "src/images/outwiker_64x64.png" $(DESTDIR)/usr/share/pixmaps/
+	cp "images/outwiker_16.png" $(DESTDIR)/usr/share/icons/hicolor/16x16/apps/outwiker.png
+	cp "images/outwiker_32.png" $(DESTDIR)/usr/share/icons/hicolor/32x32/apps/outwiker.png
+	cp "images/outwiker_48.png" $(DESTDIR)/usr/share/icons/hicolor/48x48/apps/outwiker.png
+	cp "images/outwiker_64.png" $(DESTDIR)/usr/share/icons/hicolor/64x64/apps/outwiker.png
+	cp "images/outwiker.svg" $(DESTDIR)/usr/share/icons/hicolor/scalable/apps/outwiker.svg
 	cp "outwiker.desktop" $(DESTDIR)/usr/share/applications
 
 debsource: source

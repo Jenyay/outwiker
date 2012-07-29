@@ -1,3 +1,9 @@
+outwiker (1.7.0-658~oneiric) oneiric; urgency=low
+
+  * 
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Sun, 29 Jul 2012 11:57:59 +0400
+
 outwiker (1.7.0-657~oneiric) oneiric; urgency=low
 
   * Ускорение википарсера и раскраски викисинтаксиса

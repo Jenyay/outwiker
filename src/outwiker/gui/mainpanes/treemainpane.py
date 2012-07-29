@@ -41,9 +41,3 @@ class TreeMainPane (MainPane):
             self.config.height.value))
 
         return pane
-
-
-    def _getPaneDefault (self):
-        pane = wx.aui.AuiPaneInfo().Name("attachesPane").Caption(self.caption).Gripper(False).CaptionVisible(True).Layer(0).Position(0).CloseButton(True).MaximizeButton(False).Bottom().Dock()
-
-        return pane

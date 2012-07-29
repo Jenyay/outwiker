@@ -53,7 +53,6 @@ class MainPanesController (object):
 
     def loadPanesSize (self):
         map (lambda pane: pane.loadPaneSize(), self.__panes)
-        self.__mainWnd.auiManager.Update()
 
 
     def savePanesParams (self):
@@ -80,6 +79,7 @@ class MainPanesController (object):
             panel.pane.Show()
 
         self.loadPanesSize ()
+        self.auiManager.Update()
         self.updateViewMenu()
 
 

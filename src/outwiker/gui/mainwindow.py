@@ -73,17 +73,17 @@ class MainWindow(wx.Frame):
 
 
     def __createAuiPanes(self):
-        self.treePanel = TreeMainPane (
-                self, 
-                self.auiManager, 
-                Application, 
-                self.mainMenu.viewNotes)
-
         self.pagePanel = PageMainPane (
                 self, 
                 self.auiManager, 
                 Application, 
                 None)
+
+        self.treePanel = TreeMainPane (
+                self, 
+                self.auiManager, 
+                Application, 
+                self.mainMenu.viewNotes)
 
         self.attachPanel = AttachMainPane (
                 self, 
