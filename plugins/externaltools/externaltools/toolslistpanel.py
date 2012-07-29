@@ -91,7 +91,7 @@ class ToolsItemCtrl (wx.Panel):
         parent - родительское окно
         toolItem - экземпляр класса ToolsInfo
         """
-        super (ToolsItemCtrl, self).__init__ (parent, style=wx.BORDER_THEME | wx.TAB_TRAVERSAL)
+        super (ToolsItemCtrl, self).__init__ (parent, style=wx.BORDER_NONE | wx.TAB_TRAVERSAL)
 
         self._BROWSE_ID = wx.NewId()
         self._REMOVE_ID = wx.NewId()
