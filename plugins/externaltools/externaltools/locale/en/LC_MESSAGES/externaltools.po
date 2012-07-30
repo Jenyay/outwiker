@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: externaltools\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-29 19:04+0300\n"
-"PO-Revision-Date: 2012-07-29 19:04+0300\n"
+"POT-Creation-Date: 2012-07-30 09:31+0300\n"
+"PO-Revision-Date: 2012-07-30 09:31+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: jenyay.net <jenyay.ilin@gmail.com>\n"
 "Language: \n"
@@ -11,62 +11,62 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: _;gettext;gettext_noop\n"
-"X-Poedit-Basepath: .\n"
+"X-Poedit-Basepath: ../../..\n"
 "X-Poedit-Language: English\n"
 "X-Poedit-Country: UNITED KINGDOM\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Poedit-SearchPath-0: ../../..\n"
+"X-Poedit-SearchPath-0: .\n"
 
-#: ../../../menumaker.py:39
+#: menumaker.py:44
 msgid "Open Content File with..."
 msgstr "Open Content File with..."
 
-#: ../../../menumaker.py:48
+#: menumaker.py:57
 msgid "Open Result HTML File with..."
 msgstr "Open Result HTML File with..."
 
-#: ../../../toolslistpanel.py:106
+#: toolslistpanel.py:110
 msgid "Open file dialog..."
 msgstr "Open file dialog..."
 
-#: ../../../toolslistpanel.py:112
+#: toolslistpanel.py:116
 msgid "Remove tool"
 msgstr "Remove tool"
 
-#: ../../../toolslistpanel.py:122
+#: toolslistpanel.py:126
 msgid "Executables (*.exe)|*.exe|All Files|*.*"
 msgstr "Executables (*.exe)|*.exe|All Files|*.*"
 
-#: ../../../toolslistpanel.py:124
+#: toolslistpanel.py:128
 msgid "All Files|*"
 msgstr "All Files|*"
 
-#: ../../../externaltools.py:41
+#: externaltools.py:41
 msgid "Open notes files with external editor"
 msgstr "Open notes files with external editor"
 
-#: ../../../preferencespanel.py:36
+#: preferencespanel.py:36
 msgid "Tools List"
 msgstr "Tools List"
 
-#: ../../../preferencespanel.py:37
+#: preferencespanel.py:37
 msgid "Append Tools"
 msgstr "Append Tools"
 
-#: ../../../preferencespanel.py:89
+#: preferencespanel.py:89
 msgid "Can't save options"
 msgstr "Can't save options"
 
-#: ../../../preferencespanel.py:90
-#: ../../../controller.py:88
+#: preferencespanel.py:90
+#: controller.py:90
 msgid "Error"
 msgstr "Error"
 
-#: ../../../controller.py:87
+#: controller.py:89
 msgid "Can't execute tools"
 msgstr "Can't execute tools"
 
-#: ../../../controller.py:96
+#: controller.py:98
 msgid "External Tools [Plugin]"
 msgstr "External Tools [Plugin]"
 
