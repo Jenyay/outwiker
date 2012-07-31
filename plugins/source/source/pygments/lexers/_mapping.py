@@ -150,6 +150,7 @@ LEXERS = {
     'ObjectiveJLexer': ('pygments.lexers.web', 'Objective-J', ('objective-j', 'objectivej', 'obj-j', 'objj'), ('*.j',), ('text/x-objective-j',)),
     'OcamlLexer': ('pygments.lexers.compiled', 'OCaml', ('ocaml',), ('*.ml', '*.mli', '*.mll', '*.mly'), ('text/x-ocaml',)),
     'OcamlLexer': ('pygments.lexers.functional', 'OCaml', ('ocaml',), ('*.ml', '*.mli', '*.mll', '*.mly'), ('text/x-ocaml',)),
+    'OneSLexer': ('pygments.lexers.1S', '1S', ('1s', '1c'), ('*.1s', '*.prm', '*.1cpp'), ('text/x-1s',)),
     'OocLexer': ('pygments.lexers.compiled', 'Ooc', ('ooc',), ('*.ooc',), ('text/x-ooc',)),
     'PerlLexer': ('pygments.lexers.agile', 'Perl', ('perl', 'pl'), ('*.pl', '*.pm'), ('text/x-perl', 'application/x-perl')),
     'PhpLexer': ('pygments.lexers.web', 'PHP', ('php', 'php3', 'php4', 'php5'), ('*.php', '*.php[345]'), ('text/x-php',)),

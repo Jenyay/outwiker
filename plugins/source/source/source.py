@@ -27,7 +27,7 @@ else:
             application - экземпляр класса core.application.ApplicationParams
             """
             Plugin.__init__ (self, application)
-            self.__version = u"1.5"
+            self.__version = u"1.6"
             self.SOURCE_TOOL_ID = u"PLUGIN_SOURCE_TOOL_ID"
 
 
