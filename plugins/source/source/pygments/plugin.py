@@ -35,10 +35,11 @@
     :copyright: Copyright 2006-2010 by the Pygments team, see AUTHORS.
     :license: BSD, see LICENSE for details.
 """
-try:
-    import pkg_resources
-except ImportError:
-    pkg_resources = None
+# try:
+#     import pkg_resources
+# except ImportError:
+#     pkg_resources = None
+pkg_resources = None
 
 LEXER_ENTRY_POINT = 'pygments.lexers'
 FORMATTER_ENTRY_POINT = 'pygments.formatters'
