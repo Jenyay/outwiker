@@ -271,6 +271,7 @@ class HtmlPanel(BaseTextPanel):
         self.enableTool (self._tools[u"ID_BASE_SEARCH"], searchEnabled)
         self.enableTool (self._tools[u"ID_BASE_SEARCH_PREV"], searchEnabled)
         self.enableTool (self._tools[u"ID_BASE_SEARCH_NEXT"], searchEnabled)
+        self.mainWindow.auiManager.Update()
 
 
     def _isEnabledTool (self, tool):

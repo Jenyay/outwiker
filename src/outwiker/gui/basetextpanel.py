@@ -342,6 +342,8 @@ class BaseTextPanel (BasePagePanel):
 
         if self.mainWindow.mainToolbar.FindById (tool.id) != None:
             self.mainWindow.mainToolbar.EnableTool (tool.id, enabled)
+            # self.mainWindow.auiManager.Update()
+            # self.mainWindow.mainToolbar.Update()
 
 
     def addCheckTool (self, 

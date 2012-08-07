@@ -28,6 +28,7 @@ from outwiker.gui.mainpanes.tagscloudmainpane import TagsCloudMainPane
 from outwiker.gui.mainpanes.attachmainpane import AttachMainPane
 from outwiker.gui.mainpanes.treemainpane import TreeMainPane
 from outwiker.gui.mainpanes.pagemainpane import PageMainPane
+from outwiker.core.system import getImagesDir
 
 
 class MainWindow(wx.Frame):
@@ -47,7 +48,6 @@ class MainWindow(wx.Frame):
         self.mainMenu = None
         self.__createMenu()
 
-        self.__createToolBar()
         self.__createStatusBar()
 
         self.controller = MainWndController (self)
@@ -55,6 +55,8 @@ class MainWindow(wx.Frame):
 
         self.auiManager = wx.aui.AuiManager(self)
         self.__createAuiPanes ()
+        self.__createToolBar()
+        # self.__createGeneralToolBar()
         self.__panesController = MainPanesController (self, self.auiManager)
 
         self.__bindGuiEvents()
@@ -70,6 +72,28 @@ class MainWindow(wx.Frame):
             self.Maximize()
 
         self.taskBarIcon = OutwikerTrayIcon(self)
+
+
+    # def __createGeneralToolBar (self):
+    #     self.generalToolBar = wx.aui.AuiToolBar(self)
+
+    #     self.generalToolBar.SetToolBitmapSize(wx.Size(16, 16))
+    #     self.imagesDir = getImagesDir()
+
+    #     self.generalToolBar.AddTool(MainId.ID_NEW, 
+    #             _(u"New…"), 
+    #             wx.Bitmap(os.path.join (self.imagesDir, "new.png"), wx.BITMAP_TYPE_ANY), 
+    #             _(u"Create new wiki…"))
+
+    #     self.generalToolBar.AddTool(MainId.ID_OPEN, 
+    #             _(u"Open…"), 
+    #             wx.Bitmap(os.path.join (self.imagesDir, "open.png"), wx.BITMAP_TYPE_ANY), 
+    #             _(u"Open wiki…"))
+
+    #     self.generalToolBar.Realize()
+
+    #     self.auiManager.AddPane(self.generalToolBar, 
+    #             wx.aui.AuiPaneInfo().Name("generalToolBar").Caption("General Toolbar").ToolbarPane().Top())
 
 
     def __createAuiPanes(self):
@@ -110,8 +134,10 @@ class MainWindow(wx.Frame):
 
 
     def __createToolBar (self):
-        self.mainToolbar = MainToolBar (self, -1, style=wx.TB_HORIZONTAL|wx.TB_FLAT|wx.TB_DOCKABLE)
-        self.SetToolBar(self.mainToolbar)
+        self.mainToolbar = MainToolBar (self, self.auiManager)
+        # self.SetToolBar(self.mainToolbar)
+        # self.auiManager.AddPane(self.mainToolbar, 
+        #     wx.aui.AuiPaneInfo().Name("generalToolBar").Caption("General Toolbar").ToolbarPane().Top())
 
 
     def __bindGuiEvents (self):
@@ -210,6 +236,8 @@ class MainWindow(wx.Frame):
 
         self.pagePanel.close()
         self.__panesController.closePanes()
+        self.mainToolbar.Destroy()
+        # self.generalToolBar = None
 
         self.statusbar.Close()
         self.taskBarIcon.Destroy()
