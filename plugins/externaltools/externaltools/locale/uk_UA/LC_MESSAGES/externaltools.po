@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-07-30 09:31+0300\n"
-"PO-Revision-Date: 2012-08-07 18:57+0300\n"
+"PO-Revision-Date: 2012-08-07 23:29+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Ukrainian\n"
 "Language: \n"
@@ -32,7 +32,7 @@ msgstr "Діалогове вікно відкриття файлу..."
 
 #: toolslistpanel.py:116
 msgid "Remove tool"
-msgstr "Видалити інструмент"
+msgstr "Видалити засоб"
 
 #: toolslistpanel.py:126
 msgid "Executables (*.exe)|*.exe|All Files|*.*"
@@ -52,7 +52,7 @@ msgstr "Список засобів"
 
 #: preferencespanel.py:37
 msgid "Append Tools"
-msgstr "Засоби додатку"
+msgstr "Додати засоб"
 
 #: preferencespanel.py:89
 msgid "Can't save options"
