@@ -1,0 +1,60 @@
+Плагін ThumbGallery додає команду (:thumbgallery:) в вікінотацію. Ця команда може працювати в двох режимах: показувати всі приєднані зображення або лише обрані файли. 
+
+<b>Синтаксис</b>
+
+(:thumbgallery [параметри]:)
+
+або
+
+(:thumbgallery [параметри]:)
+[Attach:]picture_1 [| Коментар]
+[Attach:]picture_2 [| Коментар]
+...
+(:thumbgalleryend:)
+
+<b>Параметри</b>
+<ul>
+<li><i>cols = ...</i> Цілочисельне значення. Кількість стовпців у таблиці. Якщо <i>cols = 0</i> або параметр не вказаний, то галерея буде послідовністю мініатюр без розбиття на рядки і стовпці.</li>
+
+<li><i>px = ...</i> Цілочисельне значення. Задає розмір мініатюр (за більшою стороною). Якщо <i>px = 0</i>, або параметр не заданий, то використовується значення за замовчуванням, встановлене в налаштуваннях програми.</li>
+</ul>
+
+<b>Приклади використання</b>
+
+<u>Створення галереї з усіх приєднаних файлів</u>
+
+(:thumbgallery:)
+
+
+<u>Створення галереї з усіх приєднаних файлів з заданим розміром мініатюр</u>
+
+(:thumbgallery px=150:)
+
+
+<u>Створення галереї з усіх приєднаних файлів з оформленням у вигляді таблиці</u>
+
+(:thumbgallery px= 150 cols=3:)
+
+
+<u>Створення галереї з обраних файлів з оформленням у вигляді таблиці</u>
+
+(:thumbgallery cols=3 px=150:)
+&nbsp;&nbsp;&nbsp;Attach:DSC_0567.jpg
+&nbsp;&nbsp;&nbsp;Attach:DSC_0604.jpg
+&nbsp;&nbsp;&nbsp;Attach:klyazma_2011_07.jpg
+&nbsp;&nbsp;&nbsp;Attach:smoke.jpg
+&nbsp;&nbsp;&nbsp;Attach:sunset_1.jpg
+&nbsp;&nbsp;&nbsp;Attach:sev_beach2.jpg
+(:thumbgalleryend:)
+
+
+<u>Створення галереї з обраних файлів з коментарями</u>
+
+(:thumbgallery cols=3 px=150:)
+&nbsp;&nbsp;&nbsp;DSC_0567.jpg
+&nbsp;&nbsp;&nbsp;DSC_0604.jpg
+&nbsp;&nbsp;&nbsp;klyazma_2011_07.jpg | Річка Клязьма
+&nbsp;&nbsp;&nbsp;smoke.jpg | Димне літо в Москві
+&nbsp;&nbsp;&nbsp;sunset_1.jpg
+&nbsp;&nbsp;&nbsp;sev_beach2.jpg | Чорне Море. Севастополь
+(:thumbgalleryend:)
