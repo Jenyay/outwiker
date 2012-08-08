@@ -1,3 +1,9 @@
+outwiker (1.7.0-659~precise) precise; urgency=low
+
+  * Новый интерфейс панели инструментов
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Wed, 08 Aug 2012 22:22:33 +0400
+
 outwiker (1.7.0-658~oneiric) oneiric; urgency=low
 
   * 

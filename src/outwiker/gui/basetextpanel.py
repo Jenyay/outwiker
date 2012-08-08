@@ -220,14 +220,16 @@ class BaseTextPanel (BasePagePanel):
 
     def _removeAllTools (self):
         for toolKey in self._tools.keys():
-            self.removeTool (toolKey)
+            self.removeTool (toolKey, fullUpdate=False)
+
+        self.mainWindow.mainToolbar.UpdateAuiManager()
 
 
-    def removeTool (self, idstring):
+    def removeTool (self, idstring, fullUpdate=True):
         tool = self._tools[idstring]
 
         if self.mainWindow.mainToolbar.FindById (tool.id) != None:
-            self.mainWindow.mainToolbar.DeleteTool (tool.id)
+            self.mainWindow.mainToolbar.DeleteTool (tool.id, fullUpdate=fullUpdate)
 
         tool.menu.Remove (tool.id)
         
@@ -247,7 +249,8 @@ class BaseTextPanel (BasePagePanel):
                 _(u"Search…\tCtrl+F"),
                 _(u"Search"),
                 os.path.join (self.imagesDir, "local_search.png"),
-                False)
+                False,
+                fullUpdate=False)
 
 
         self.addTool (self.searchMenu,
@@ -256,7 +259,7 @@ class BaseTextPanel (BasePagePanel):
                 _(u"Find previous\tShift+F3"),
                 "",
                 None,
-                False)
+                fullUpdate=False)
 
         self.addTool (self.searchMenu,
                 u"ID_BASE_SEARCH_NEXT",
@@ -264,7 +267,7 @@ class BaseTextPanel (BasePagePanel):
                 _(u"Find next\tF3"),
                 "",
                 None,
-                False)
+                fullUpdate=False)
 
 
     def _showSearchPanel (self, panel):
@@ -301,7 +304,8 @@ class BaseTextPanel (BasePagePanel):
             menuText, 
             buttonText, 
             image, 
-            alwaysEnabled = False):
+            alwaysEnabled=False,
+            fullUpdate=True):
         """
         Добавить пункт меню и кнопку на панель
         menu -- меню для добавления элемента
@@ -322,15 +326,13 @@ class BaseTextPanel (BasePagePanel):
         self.mainWindow.Bind(wx.EVT_MENU, func, id = id)
 
         if image != None and len (image) != 0:
-            self.mainWindow.mainToolbar.AddLabelTool(id, 
+            self.mainWindow.mainToolbar.AddTool(id, 
                     buttonText, 
                     wx.Bitmap(image, wx.BITMAP_TYPE_ANY), 
-                    wx.NullBitmap, 
-                    wx.ITEM_NORMAL, 
-                    buttonText, 
-                    "")
+                    buttonText,
+                    fullUpdate=fullUpdate)
 
-            self.mainWindow.mainToolbar.Realize()
+            self.mainWindow.mainToolbar.UpdateToolBar()
 
 
     def enableTool (self, tool, enabled):
@@ -342,8 +344,6 @@ class BaseTextPanel (BasePagePanel):
 
         if self.mainWindow.mainToolbar.FindById (tool.id) != None:
             self.mainWindow.mainToolbar.EnableTool (tool.id, enabled)
-            # self.mainWindow.auiManager.Update()
-            # self.mainWindow.mainToolbar.Update()
 
 
     def addCheckTool (self, 
@@ -353,7 +353,8 @@ class BaseTextPanel (BasePagePanel):
             menuText, 
             buttonText, 
             image, 
-            alwaysEnabled = False):
+            alwaysEnabled = False,
+            fullUpdate=True):
         """
         Добавить пункт меню с галкой и залипающую кнопку на панель
         menu -- меню для добавления элемента
@@ -374,10 +375,12 @@ class BaseTextPanel (BasePagePanel):
         self.mainWindow.Bind(wx.EVT_MENU, func, id = id)
 
         if image != None and len (image) != 0:
-            self.mainWindow.mainToolbar.AddCheckTool(id, 
+            self.mainWindow.mainToolbar.AddTool(id, 
+                    buttonText,
                     wx.Bitmap(image, wx.BITMAP_TYPE_ANY), 
-                    wx.NullBitmap, 
-                    buttonText)
+                    buttonText,
+                    wx.ITEM_CHECK,
+                    fullUpdate=fullUpdate)
 
             self.mainWindow.mainToolbar.Realize()
 

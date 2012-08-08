@@ -140,42 +140,48 @@ class WikiPagePanel (HtmlPanel):
                 lambda event: self.codeEditor.turnText (u"'''", u"'''"), 
                 _(u"Bold\tCtrl+B"), 
                 _(u"Bold"), 
-                os.path.join (self.imagesDir, "text_bold.png"))
+                os.path.join (self.imagesDir, "text_bold.png"),
+                fullUpdate=False)
 
         self.addTool (self.__wikiMenu, 
                 "ID_ITALIC", 
                 lambda event: self.codeEditor.turnText (u"''", u"''"), 
                 _(u"Italic\tCtrl+I"), 
                 _(u"Italic"), 
-                os.path.join (self.imagesDir, "text_italic.png"))
+                os.path.join (self.imagesDir, "text_italic.png"),
+                fullUpdate=False)
 
         self.addTool (self.__wikiMenu, 
                 "ID_BOLD_ITALIC", 
                 lambda event: self.codeEditor.turnText (u"''''", u"''''"), 
                 _(u"Bold italic\tCtrl+Shift+I"), 
                 _(u"Bold italic"), 
-                os.path.join (self.imagesDir, "text_bold_italic.png"))
+                os.path.join (self.imagesDir, "text_bold_italic.png"),
+                fullUpdate=False)
 
         self.addTool (self.__wikiMenu, 
                 "ID_UNDERLINE", 
                 lambda event: self.codeEditor.turnText (u"{+", u"+}"), 
                 _(u"Underline\tCtrl+U"), 
                 _(u"Underline"), 
-                os.path.join (self.imagesDir, "text_underline.png"))
+                os.path.join (self.imagesDir, "text_underline.png"),
+                fullUpdate=False)
 
         self.addTool (self.__wikiMenu, 
                 "ID_STRIKE", 
                 lambda event: self.codeEditor.turnText (u"{-", u"-}"), 
                 _(u"Strikethrough\tCtrl+K"), 
                 _(u"Strikethrough"), 
-                os.path.join (self.imagesDir, "text_strikethrough.png"))
+                os.path.join (self.imagesDir, "text_strikethrough.png"),
+                fullUpdate=False)
 
         self.addTool (self.__wikiMenu, 
                 "ID_SUBSCRIPT", 
                 lambda event: self.codeEditor.turnText (u"'_", u"_'"), 
                 _(u"Subscript\tCtrl+="), 
                 _(u"Subscript"), 
-                os.path.join (self.imagesDir, "text_subscript.png"))
+                os.path.join (self.imagesDir, "text_subscript.png"),
+                fullUpdate=False)
 
 
         self.addTool (self.__wikiMenu, 
@@ -183,7 +189,8 @@ class WikiPagePanel (HtmlPanel):
                 lambda event: self.codeEditor.turnText (u"'^", u"^'"), 
                 _(u"Superscript\tCtrl++"), 
                 _(u"Superscript"), 
-                os.path.join (self.imagesDir, "text_superscript.png"))
+                os.path.join (self.imagesDir, "text_superscript.png"),
+                fullUpdate=False)
     
 
     def __addAlignTools (self):
@@ -192,28 +199,32 @@ class WikiPagePanel (HtmlPanel):
                 lambda event: self.codeEditor.turnText (u"%left%", u""), 
                 _(u"Left align\tCtrl+Alt+L"), 
                 _(u"Left align"), 
-                os.path.join (self.imagesDir, "text_align_left.png"))
+                os.path.join (self.imagesDir, "text_align_left.png"),
+                fullUpdate=False)
 
         self.addTool (self.__wikiMenu, 
                 "ID_ALIGN_CENTER", 
                 lambda event: self.codeEditor.turnText (u"%center%", u""), 
                 _(u"Center align\tCtrl+Alt+C"), 
                 _(u"Center align"), 
-                os.path.join (self.imagesDir, "text_align_center.png"))
+                os.path.join (self.imagesDir, "text_align_center.png"),
+                fullUpdate=False)
 
         self.addTool (self.__wikiMenu, 
                 "ID_ALIGN_RIGHT", 
                 lambda event: self.codeEditor.turnText (u"%right%", u""), 
                 _(u"Right align\tCtrl+Alt+R"), 
                 _(u"Right align"), 
-                os.path.join (self.imagesDir, "text_align_right.png"))
+                os.path.join (self.imagesDir, "text_align_right.png"),
+                fullUpdate=False)
     
         self.addTool (self.__wikiMenu, 
                 "ID_ALIGN_JUSTIFY", 
                 lambda event: self.codeEditor.turnText (u"%justify%", u""), 
                 _(u"Justify align\tCtrl+Alt+J"), 
                 _(u"Justify align"), 
-                os.path.join (self.imagesDir, "text_align_justify.png"))
+                os.path.join (self.imagesDir, "text_align_justify.png"),
+                fullUpdate=False)
 
 
     def __addFormatTools (self):
@@ -222,14 +233,16 @@ class WikiPagePanel (HtmlPanel):
                 lambda event: self.codeEditor.turnText (u"[@", u"@]"), 
                 _(u"Preformat [@…@]\tCtrl+Alt+F"), 
                 _(u"Preformat [@…@]"),
-                None)
+                None,
+                fullUpdate=False)
 
         self.addTool (self.__wikiMenu, 
                 "ID_NONFORMAT", 
                 lambda event: self.codeEditor.turnText (u"[=", u"=]"), 
                 _(u"Non-parsed [=…=]"), 
                 _(u"Non-parsed [=…=]"), 
-                None)
+                None,
+                fullUpdate=False)
 
     
     def __addListTools (self):
@@ -241,14 +254,16 @@ class WikiPagePanel (HtmlPanel):
                 lambda event: self.codeEditor.turnList (u'* '), 
                 _(u"Bullets list\tCtrl+G"), 
                 _(u"Bullets list"), 
-                os.path.join (self.imagesDir, "text_list_bullets.png"))
+                os.path.join (self.imagesDir, "text_list_bullets.png"),
+                fullUpdate=False)
 
         self.addTool (self.__wikiMenu, 
                 "ID_NUMBER_LIST", 
                 lambda event: self.codeEditor.turnList (u'# '), 
                 _(u"Numbers list\tCtrl+J"), 
                 _(u"Numbers list"), 
-                os.path.join (self.imagesDir, "text_list_numbers.png"))
+                os.path.join (self.imagesDir, "text_list_numbers.png"),
+                fullUpdate=False)
     
 
     def __addHTools (self):
@@ -260,42 +275,48 @@ class WikiPagePanel (HtmlPanel):
                 lambda event: self.codeEditor.turnText (u"\n!! ", u""), 
                 _(u"H1\tCtrl+1"), 
                 _(u"H1"), 
-                os.path.join (self.imagesDir, "text_heading_1.png"))
+                os.path.join (self.imagesDir, "text_heading_1.png"),
+                fullUpdate=False)
 
         self.addTool (self.__wikiMenu, 
                 "ID_H2", 
                 lambda event: self.codeEditor.turnText (u"!!! ", u""), 
                 _(u"H2\tCtrl+2"), 
                 _(u"H2"), 
-                os.path.join (self.imagesDir, "text_heading_2.png"))
+                os.path.join (self.imagesDir, "text_heading_2.png"),
+                fullUpdate=False)
         
         self.addTool (self.__wikiMenu, 
                 "ID_H3", 
                 lambda event: self.codeEditor.turnText (u"!!!! ", u""), 
                 _(u"H3\tCtrl+3"), 
                 _(u"H3"), 
-                os.path.join (self.imagesDir, "text_heading_3.png"))
+                os.path.join (self.imagesDir, "text_heading_3.png"),
+                fullUpdate=False)
 
         self.addTool (self.__wikiMenu, 
                 "ID_H4", 
                 lambda event: self.codeEditor.turnText (u"!!!!! ", u""), 
                 _(u"H4\tCtrl+4"), 
                 _(u"H4"), 
-                os.path.join (self.imagesDir, "text_heading_4.png"))
+                os.path.join (self.imagesDir, "text_heading_4.png"),
+                fullUpdate=False)
 
         self.addTool (self.__wikiMenu, 
                 "ID_H5", 
                 lambda event: self.codeEditor.turnText (u"!!!!!! ", u""), 
                 _(u"H5\tCtrl+5"), 
                 _(u"H5"), 
-                os.path.join (self.imagesDir, "text_heading_5.png"))
+                os.path.join (self.imagesDir, "text_heading_5.png"),
+                fullUpdate=False)
 
         self.addTool (self.__wikiMenu, 
                 "ID_H6", 
                 lambda event: self.codeEditor.turnText (u"!!!!!!! ", u""), 
                 _(u"H6\tCtrl+6"), 
                 _(u"H6"), 
-                os.path.join (self.imagesDir, "text_heading_6.png"))
+                os.path.join (self.imagesDir, "text_heading_6.png"),
+                fullUpdate=False)
     
 
     def __addOtherTools (self):
@@ -307,14 +328,16 @@ class WikiPagePanel (HtmlPanel):
                 lambda event: self.codeEditor.turnText (u'%thumb%', u'%%'), 
                 _(u'Thumbnail\tCtrl+M'), 
                 _(u'Thumbnail'), 
-                os.path.join (self.imagesDir, "images.png"))
+                os.path.join (self.imagesDir, "images.png"),
+                fullUpdate=False)
 
         self.addTool (self.__wikiMenu, 
                 "ID_LINK", 
                 lambda event: self.codeEditor.turnText (u'[[', u']]'), 
                 _(u"Link\tCtrl+L"), 
                 _(u'Link'), 
-                os.path.join (self.imagesDir, "link.png"))
+                os.path.join (self.imagesDir, "link.png"),
+                fullUpdate=False)
 
 
         self.addTool (self.__wikiMenu, 
@@ -322,7 +345,8 @@ class WikiPagePanel (HtmlPanel):
                 lambda event: self.codeEditor.turnText (u'[[#', u']]'), 
                 _(u"Anchor\tCtrl+Alt+L"), 
                 _(u'Anchor'), 
-                os.path.join (self.imagesDir, "anchor.png"))
+                os.path.join (self.imagesDir, "anchor.png"),
+                fullUpdate=False)
 
 
         self.addTool (self.__wikiMenu, 
@@ -330,21 +354,24 @@ class WikiPagePanel (HtmlPanel):
                 lambda event: self.codeEditor.replaceText (u'----'), 
                 _(u"Horizontal line\tCtrl+H"), 
                 _(u"Horizontal line"), 
-                os.path.join (self.imagesDir, "text_horizontalrule.png"))
+                os.path.join (self.imagesDir, "text_horizontalrule.png"),
+                fullUpdate=False)
 
         self.addTool (self.__wikiMenu, 
                 "ID_LINEBREAK", 
                 lambda event: self.codeEditor.replaceText (u'[[<<]]'), 
                 _(u"Line break\tCtrl+Return"), 
                 _(u"Line break"), 
-                os.path.join (self.imagesDir, "linebreak.png"))
+                os.path.join (self.imagesDir, "linebreak.png"),
+                fullUpdate=False)
 
         self.addTool (self.__wikiMenu, 
                 "ID_EQUATION", 
                 lambda event: self.codeEditor.turnText (u'{$', u'$}'), 
                 _(u"Equation\tCtrl+Q"), 
                 _(u'Equation'), 
-                os.path.join (self.imagesDir, "equation.png"))
+                os.path.join (self.imagesDir, "equation.png"),
+                fullUpdate=False)
 
         self.__wikiMenu.AppendSeparator()
 
@@ -353,7 +380,8 @@ class WikiPagePanel (HtmlPanel):
                 self.codeEditor.escapeHtml, 
                 _(u"Convert HTML Symbols"), 
                 _(u"Convert HTML Symbols"), 
-                None)
+                None,
+                fullUpdate=False)
 
 
     def __createCustomTools (self):
@@ -367,7 +395,8 @@ class WikiPagePanel (HtmlPanel):
                 _(u"HTML Code\tShift+F4"), 
                 _(u"HTML Code"), 
                 os.path.join (self.imagesDir, "html.png"),
-                True)
+                True,
+                fullUpdate=False)
 
         self._addRenderTools()
         self.__addCommandsTools()
@@ -402,21 +431,24 @@ class WikiPagePanel (HtmlPanel):
                 lambda event: self.codeEditor.replaceText (u"(:attachlist:)"), 
                 _(u"Attachment (:attachlist:)"), 
                 _(u"Attachment (:attachlist:)"), 
-                None)
+                None,
+                fullUpdate=False)
 
         self.addTool (self.commandsMenu, 
                 "ID_CHILDLIST", 
                 lambda event: self.codeEditor.replaceText (u"(:childlist:)"), 
                 _(u"Children (:childlist:)"), 
                 _(u"Children (:childlist:)"), 
-                None)
+                None,
+                fullUpdate=False)
 
         self.addTool (self.commandsMenu, 
                 "ID_INCLUDE", 
                 lambda event: self.codeEditor.turnText (u"(:include ", u":)"), 
                 _(u"Include (:include ...:)"), 
                 _(u"Include (:include ...:)"), 
-                None)
+                None,
+                fullUpdate=False)
 
 
     def __openHtmlCode (self, event):

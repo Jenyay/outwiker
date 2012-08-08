@@ -12,84 +12,101 @@ from outwiker.core.system import getImagesDir
 
 class MainToolBar (wx.aui.AuiToolBar):
     def __init__ (self, parent, auiManager):
-        wx.aui.AuiToolBar.__init__(self, parent)
+        super (MainToolBar, self).__init__(parent)
 
         self._parent = parent
         self._auiManager = auiManager
 
-        self._pane = wx.aui.AuiPaneInfo().Name("generalToolBar").Caption("General Toolbar").ToolbarPane().Top()
+        self._pane = wx.aui.AuiPaneInfo().Name("generalToolBar").Caption("General").ToolbarPane().Top()
 
         self.imagesDir = getImagesDir()
 
-        self.AddLabelTool(MainId.ID_NEW, 
+        self.AddTool(MainId.ID_NEW, 
                 _(u"New…"), 
                 wx.Bitmap(os.path.join (self.imagesDir, "new.png"), wx.BITMAP_TYPE_ANY), 
-                wx.NullBitmap, 
-                wx.ITEM_NORMAL, 
-                _(u"Create new wiki…"), u"")
+                _(u"Create new wiki…"),
+                fullUpdate=False)
 
-        self.AddLabelTool(MainId.ID_OPEN, 
+        self.AddTool(MainId.ID_OPEN, 
                 _(u"Open…"), 
                 wx.Bitmap(os.path.join (self.imagesDir, "open.png"), wx.BITMAP_TYPE_ANY), 
-                wx.NullBitmap, 
-                wx.ITEM_NORMAL, 
-                _(u"Open wiki…"), 
-                "")
+                _(u"Open wiki…"),
+                fullUpdate=False)
 
-        #self.AddLabelTool(MainId.ID_SAVE, 
-        #        _("Save"), 
-        #        wx.Bitmap(os.path.join (self.imagesDir, "save.png"), wx.BITMAP_TYPE_ANY), 
-        #        wx.NullBitmap, 
-        #        wx.ITEM_NORMAL, 
-        #        _("Save wiki"), 
-        #        "")
-
-        self.AddLabelTool(MainId.ID_RELOAD, 
+        self.AddTool(MainId.ID_RELOAD, 
                 _("Reload"), 
                 wx.Bitmap(os.path.join (self.imagesDir, "reload.png"), wx.BITMAP_TYPE_ANY), 
-                wx.NullBitmap, 
-                wx.ITEM_NORMAL, 
-                _("Reload wiki"), 
-                "")
+                _("Reload wiki"),
+                fullUpdate=False)
 
         self.AddSeparator()
 
-        self.AddLabelTool(MainId.ID_ATTACH, 
+        self.AddTool(MainId.ID_ATTACH, 
                 _(u"Attach files…"), 
                 wx.Bitmap(os.path.join (self.imagesDir, "attach.png"), wx.BITMAP_TYPE_ANY), 
-                wx.NullBitmap, 
-                wx.ITEM_NORMAL, 
-                _(u"Attach files…"), "")
+                _(u"Attach files…"),
+                fullUpdate=False)
 
-        self.AddLabelTool(MainId.ID_GLOBAL_SEARCH, 
+        self.AddTool(MainId.ID_GLOBAL_SEARCH, 
                 _(u"Global search…"), 
                 wx.Bitmap(os.path.join (self.imagesDir, "global_search.png"), wx.BITMAP_TYPE_ANY), 
-                wx.NullBitmap, 
-                wx.ITEM_NORMAL, 
-                _(u"Global search…"), 
-                "")
+                _(u"Global search…"),
+                fullUpdate=False)
 
         self.AddSeparator()
         self.Realize()
-
 
         self._auiManager.AddPane(self, self._pane)
 
 
     def AddLabelTool (self, toolid, label, bitmap, bmpDisabled, kind, shortHelp, longHelp):
         """
-        Метод добавлен для совместимости с плагинами. 
+        Метод добавлен для совместимости со старыми плагинами. 
         """
         self.AddTool (toolid, label, bitmap, shortHelp, kind)
+
+
+    def AddCheckTool(self, 
+            toolid, 
+            bitmap, 
+            bmpDisabled, 
+            shortHelp, 
+            longHelp="",
+            fullUpdate=True):
+        self.AddTool (toolid, shortHelp, bitmap, shortHelp, wx.ITEM_CHECK, fullUpdate)
+
+
+    def DeleteTool (self, toolid, fullUpdate=True):
+        super (MainToolBar, self).DeleteTool (toolid)
+        self.UpdateToolBar()
+        if fullUpdate:
+            self.UpdateAuiManager()
+
+
+    def AddTool(self, 
+            tool_id, 
+            label, 
+            bitmap, 
+            short_help_string=wx.EmptyString, 
+            kind=wx.ITEM_NORMAL,
+            fullUpdate=True):
+        super (MainToolBar, self).AddTool (tool_id, label, bitmap, short_help_string, kind)
+        self.UpdateToolBar()
+        if fullUpdate:
+            self.UpdateAuiManager()
+
+
+    def UpdateToolBar (self):
+        self.Realize()
         self._auiManager.DetachPane (self)
         self._auiManager.AddPane(self, self._pane)
-        self.Realize()
-        # self._auiManager.Update()
 
 
-    def AddCheckTool(self, toolid, bitmap, bmpDisabled, shortHelp, longHelp=""):
-        self.AddTool (toolid, shortHelp, bitmap, shortHelp, wx.ITEM_CHECK)
+    def UpdateAuiManager (self):
+        self._auiManager.Update()
 
 
     def FindById (self, toolid):
         return self.FindTool (toolid)
+
+
