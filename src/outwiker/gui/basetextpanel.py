@@ -224,15 +224,15 @@ class BaseTextPanel (BasePagePanel):
         for toolKey in self._tools.keys():
             self.removeTool (toolKey, fullUpdate=False)
 
-        self.mainWindow.mainToolbar.UpdateAuiManager()
+        self.mainWindow.UpdateAuiManager()
         self.mainWindow.Thaw()
 
 
     def removeTool (self, idstring, fullUpdate=True):
         tool = self._tools[idstring]
 
-        if self.mainWindow.mainToolbar.FindById (tool.id) != None:
-            self.mainWindow.mainToolbar.DeleteTool (tool.id, fullUpdate=fullUpdate)
+        if self.mainWindow.generalToolbar.FindById (tool.id) != None:
+            self.mainWindow.generalToolbar.DeleteTool (tool.id, fullUpdate=fullUpdate)
 
         tool.menu.Remove (tool.id)
         
@@ -329,13 +329,13 @@ class BaseTextPanel (BasePagePanel):
         self.mainWindow.Bind(wx.EVT_MENU, func, id = id)
 
         if image != None and len (image) != 0:
-            self.mainWindow.mainToolbar.AddTool(id, 
+            self.mainWindow.generalToolbar.AddTool(id, 
                     buttonText, 
                     wx.Bitmap(image, wx.BITMAP_TYPE_ANY), 
                     buttonText,
                     fullUpdate=fullUpdate)
 
-            self.mainWindow.mainToolbar.UpdateToolBar()
+            self.mainWindow.generalToolbar.UpdateToolBar()
 
 
     def enableTool (self, tool, enabled):
@@ -345,9 +345,9 @@ class BaseTextPanel (BasePagePanel):
         """
         tool.menu.Enable (tool.id, enabled)
 
-        if self.mainWindow.mainToolbar.FindById (tool.id) != None:
-            self.mainWindow.mainToolbar.EnableTool (tool.id, enabled)
-            self.mainWindow.mainToolbar.Realize()
+        if self.mainWindow.generalToolbar.FindById (tool.id) != None:
+            self.mainWindow.generalToolbar.EnableTool (tool.id, enabled)
+            self.mainWindow.generalToolbar.Realize()
 
 
     def addCheckTool (self, 
@@ -379,14 +379,14 @@ class BaseTextPanel (BasePagePanel):
         self.mainWindow.Bind(wx.EVT_MENU, func, id = id)
 
         if image != None and len (image) != 0:
-            self.mainWindow.mainToolbar.AddTool(id, 
+            self.mainWindow.generalToolbar.AddTool(id, 
                     buttonText,
                     wx.Bitmap(image, wx.BITMAP_TYPE_ANY), 
                     buttonText,
                     wx.ITEM_CHECK,
                     fullUpdate=fullUpdate)
 
-            # self.mainWindow.mainToolbar.Realize()
+            # self.mainWindow.generalToolbar.Realize()
 
 
     def checkTools (self, idstring, checked):
@@ -403,4 +403,4 @@ class BaseTextPanel (BasePagePanel):
         if tools.menu != None:
             tools.menu.Check (tools.id, checked)
 
-        self.mainWindow.mainToolbar.ToggleTool (tools.id, checked)
+        self.mainWindow.generalToolbar.ToggleTool (tools.id, checked)

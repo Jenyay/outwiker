@@ -38,7 +38,7 @@ class MainWndTest(BaseMainWndTest):
         self.assertNotEqual (None, self.wnd.pagePanel)
         self.assertNotEqual (None, self.wnd.attachPanel)
         self.assertNotEqual (None, self.wnd.mainMenu)
-        self.assertNotEqual (None, self.wnd.mainToolbar)
+        self.assertNotEqual (None, self.wnd.generalToolbar)
         self.assertNotEqual (None, self.wnd.statusbar)
         self.assertNotEqual (None, self.wnd.taskBarIcon)
 
