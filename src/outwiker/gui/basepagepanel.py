@@ -9,6 +9,7 @@ import wx
 from outwiker.core.commands import MessageBox
 from outwiker.core.event import Event
 from outwiker.gui.toolsinfo import ToolsInfo
+from outwiker.core.application import Application
 
 
 class BasePagePanel (wx.Panel):
@@ -22,6 +23,7 @@ class BasePagePanel (wx.Panel):
         wx.Panel.__init__(self, parent, *args, **kwds)
 
         self._currentpage = None
+        self.mainWindow = Application.mainWindow
 
         # Событие, срабатывающее, когда устанавливается новая страница
         # Параметр: новая страница
@@ -51,8 +53,9 @@ class BasePagePanel (wx.Panel):
     def removeTool (self, idstring, fullUpdate=True):
         tool = self._tools[idstring]
 
-        if self.mainWindow.generalToolbar.FindById (tool.id) != None:
-            self.mainWindow.generalToolbar.DeleteTool (tool.id, fullUpdate=fullUpdate)
+        if (self.mainWindow.GENERAL_TOOLBAR_STR in self.mainWindow.toolbars and
+            self.mainWindow.toolbars[self.mainWindow.GENERAL_TOOLBAR_STR].FindById (tool.id) != None):
+                self.mainWindow.toolbars[self.mainWindow.GENERAL_TOOLBAR_STR].DeleteTool (tool.id, fullUpdate=fullUpdate)
 
         tool.menu.Remove (tool.id)
         
@@ -90,13 +93,13 @@ class BasePagePanel (wx.Panel):
         self.mainWindow.Bind(wx.EVT_MENU, func, id = id)
 
         if image != None and len (image) != 0:
-            self.mainWindow.generalToolbar.AddTool(id, 
+            self.mainWindow.toolbars[self.mainWindow.GENERAL_TOOLBAR_STR].AddTool(id, 
                     buttonText, 
                     wx.Bitmap(image, wx.BITMAP_TYPE_ANY), 
                     buttonText,
                     fullUpdate=fullUpdate)
 
-            self.mainWindow.generalToolbar.UpdateToolBar()
+            self.mainWindow.toolbars[self.mainWindow.GENERAL_TOOLBAR_STR].UpdateToolBar()
 
 
     def enableTool (self, tool, enabled):
@@ -106,9 +109,9 @@ class BasePagePanel (wx.Panel):
         """
         tool.menu.Enable (tool.id, enabled)
 
-        if self.mainWindow.generalToolbar.FindById (tool.id) != None:
-            self.mainWindow.generalToolbar.EnableTool (tool.id, enabled)
-            self.mainWindow.generalToolbar.Realize()
+        if self.mainWindow.toolbars[self.mainWindow.GENERAL_TOOLBAR_STR].FindById (tool.id) != None:
+            self.mainWindow.toolbars[self.mainWindow.GENERAL_TOOLBAR_STR].EnableTool (tool.id, enabled)
+            self.mainWindow.toolbars[self.mainWindow.GENERAL_TOOLBAR_STR].Realize()
 
 
     def addCheckTool (self, 
@@ -140,7 +143,7 @@ class BasePagePanel (wx.Panel):
         self.mainWindow.Bind(wx.EVT_MENU, func, id = id)
 
         if image != None and len (image) != 0:
-            self.mainWindow.generalToolbar.AddTool(id, 
+            self.mainWindow.toolbars[self.mainWindow.GENERAL_TOOLBAR_STR].AddTool(id, 
                     buttonText,
                     wx.Bitmap(image, wx.BITMAP_TYPE_ANY), 
                     buttonText,
@@ -162,7 +165,7 @@ class BasePagePanel (wx.Panel):
         if tools.menu != None:
             tools.menu.Check (tools.id, checked)
 
-        self.mainWindow.generalToolbar.ToggleTool (tools.id, checked)
+        self.mainWindow.toolbars[self.mainWindow.GENERAL_TOOLBAR_STR].ToggleTool (tools.id, checked)
 
 
     ###############################################

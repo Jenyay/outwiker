@@ -173,8 +173,8 @@ class MainWndController (object):
 
     def __enableTools (self, enabled):
         for toolId in self.disabledTools:
-            if self.mainWindow.generalToolbar.FindById (toolId) != None:
-                self.mainWindow.generalToolbar.EnableTool (toolId, enabled)
+            if self.mainWindow.generalToolBar.FindById (toolId) != None:
+                self.mainWindow.generalToolBar.EnableTool (toolId, enabled)
 
     
     def __enableMenu (self, enabled):

@@ -29,6 +29,7 @@ from outwiker.gui.mainpanes.attachmainpane import AttachMainPane
 from outwiker.gui.mainpanes.treemainpane import TreeMainPane
 from outwiker.gui.mainpanes.pagemainpane import PageMainPane
 from outwiker.core.system import getImagesDir
+from .toolbarscontroller import ToolBarsController
 
 
 class MainWindow(wx.Frame):
@@ -55,7 +56,11 @@ class MainWindow(wx.Frame):
 
         self.auiManager = wx.aui.AuiManager(self)
         self.__createAuiPanes ()
-        self.__createToolBar()
+
+        self.GENERAL_TOOLBAR_STR = "general"
+        self.toolbars = ToolBarsController (self)
+        self.toolbars[self.GENERAL_TOOLBAR_STR] = GeneralToolBar (self, self.auiManager)
+
         self.__panesController = MainPanesController (self, self.auiManager)
 
         self.__bindGuiEvents()
@@ -70,6 +75,11 @@ class MainWindow(wx.Frame):
             self.Maximize()
 
         self.taskBarIcon = OutwikerTrayIcon(self)
+
+
+    @property
+    def generalToolBar (self):
+        return self.toolbars[self.GENERAL_TOOLBAR_STR]
 
 
     def UpdateAuiManager (self):
@@ -111,10 +121,6 @@ class MainWindow(wx.Frame):
     def __createMenu (self):
         self.mainMenu = MainMenu()
         self.SetMenuBar(self.mainMenu)
-
-
-    def __createToolBar (self):
-        self.generalToolbar = GeneralToolBar (self, self.auiManager)
 
 
     def __bindGuiEvents (self):
@@ -209,12 +215,12 @@ class MainWindow(wx.Frame):
         """
         self.__saveParams()
 
+        self.toolbars.destroyAllToolBars()
+
         self.auiManager.UnInit()
 
         self.pagePanel.close()
         self.__panesController.closePanes()
-        self.generalToolbar.Destroy()
-        # self.generalToolBar = None
 
         self.statusbar.Close()
         self.taskBarIcon.Destroy()

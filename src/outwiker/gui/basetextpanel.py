@@ -41,7 +41,6 @@ class BaseTextPanel (BasePagePanel):
     def __init__ (self, parent, *args, **kwds):
         super (BaseTextPanel, self).__init__ (parent, *args, **kwds)
 
-        self.mainWindow = Application.mainWindow
         self.searchMenu = None
 
         # Предыдущее сохраненное состояние. 
