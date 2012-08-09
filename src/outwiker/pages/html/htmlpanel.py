@@ -23,7 +23,7 @@ class HtmlPanel(BaseTextPanel):
     __metaclass__ = ABCMeta
     
     def __init__(self, parent, *args, **kwds):
-        BaseTextPanel.__init__ (self, parent, *args, **kwds)
+        super (HtmlPanel, self).__init__ (parent, *args, **kwds)
 
         self._htmlFile = "__content.html"
         self.currentHtmlFile = None
@@ -43,8 +43,6 @@ class HtmlPanel(BaseTextPanel):
         self.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED, self.onTabChanged, self.notebook)
         self.Bind (wx.EVT_CLOSE, self.onClose)
 
-        # self._enableAllTools()
-
 
     @abstractproperty
     def toolsMenu (self):
@@ -58,7 +56,8 @@ class HtmlPanel(BaseTextPanel):
             menuText, 
             buttonText, 
             image, 
-            alwaysEnabled = False):
+            alwaysEnabled=False,
+            fullUpdate=True):
         """
         Добавить пункт меню и кнопку на панель
         menu -- меню для добавления элемента
@@ -69,14 +68,14 @@ class HtmlPanel(BaseTextPanel):
         image -- имя файла с картинкой
         alwaysEnabled -- Кнопка должна быть всегда активна
         """
-        BaseTextPanel.addTool (self, 
-            menu, 
+        super (HtmlPanel, self).addTool (menu, 
             idstring, 
             func, 
             menuText, 
             buttonText, 
             image, 
-            alwaysEnabled)
+            alwaysEnabled,
+            fullUpdate)
         
         tool = self._tools[idstring]
         self.enableTool (tool, self._isEnabledTool (tool))
@@ -89,7 +88,8 @@ class HtmlPanel(BaseTextPanel):
             menuText, 
             buttonText, 
             image, 
-            alwaysEnabled = False):
+            alwaysEnabled = False,
+            fullUpdate=True):
         """
         Добавить пункт меню с галкой и залипающую кнопку на панель
         menu -- меню для добавления элемента
@@ -100,14 +100,14 @@ class HtmlPanel(BaseTextPanel):
         image -- имя файла с картинкой
         alwaysEnabled -- Кнопка должна быть всегда активна
         """
-        BaseTextPanel.addCheckTool (self, 
-            menu, 
+        super (HtmlPanel, self).addCheckTool (menu, 
             idstring, 
             func, 
             menuText, 
             buttonText, 
             image, 
-            alwaysEnabled)
+            alwaysEnabled,
+            fullUpdate)
 
         tool = self._tools[idstring]
         self.enableTool (tool, self._isEnabledTool (tool))
@@ -138,13 +138,6 @@ class HtmlPanel(BaseTextPanel):
 
     
     def UpdateView (self, page):
-        # import traceback
-        # print page.title
-        # traceback.print_stack()
-        # print
-        # print
-        # print Application.onWikiOpen.handlers
-
         self.Freeze()
 
         try:
@@ -262,6 +255,8 @@ class HtmlPanel(BaseTextPanel):
         """
         Активировать или дезактивировать инструменты (пункты меню и кнопки) в зависимости от текущей выбранной вкладки
         """
+        self.mainWindow.Freeze()
+
         for tool in self.allTools:
             self.enableTool (tool, self._isEnabledTool (tool))
 
@@ -271,6 +266,9 @@ class HtmlPanel(BaseTextPanel):
         self.enableTool (self._tools[u"ID_BASE_SEARCH"], searchEnabled)
         self.enableTool (self._tools[u"ID_BASE_SEARCH_PREV"], searchEnabled)
         self.enableTool (self._tools[u"ID_BASE_SEARCH_NEXT"], searchEnabled)
+        self.mainWindow.UpdateAuiManager()
+        
+        self.mainWindow.Thaw()
 
 
     def _isEnabledTool (self, tool):
@@ -300,7 +298,8 @@ class HtmlPanel(BaseTextPanel):
                 _(u"Code / Preview\tF4"), 
                 _(u"Code / Preview"), 
                 os.path.join (self.imagesDir, "render.png"),
-                True)
+                True,
+                False)
 
         self.toolsMenu.AppendSeparator()
 
@@ -360,7 +359,8 @@ class HtmlPagePanel (HtmlPanel):
                 _(u"Auto Line Wrap"), 
                 _(u"Auto Line Wrap"), 
                 os.path.join (self.imagesDir, "linewrap.png"),
-                alwaysEnabled = True)
+                alwaysEnabled = True,
+                fullUpdate=False)
 
         self.__updatePageConfigTools()
 
@@ -384,6 +384,8 @@ class HtmlPagePanel (HtmlPanel):
 
         self.__htmlMenu = wx.Menu()
         
+        self.mainWindow.Freeze()
+
         self.__createPageConfigTools ()
         self._addRenderTools()
         self.__addFontTools()
@@ -393,6 +395,7 @@ class HtmlPagePanel (HtmlPanel):
         self.__addListTools()
         self.__addOtherTools()
 
+        self.mainWindow.Thaw()
 
         self.mainWindow.mainMenu.Insert (self.__HTML_MENU_INDEX, self.__htmlMenu, _(u"H&tml"))
 
@@ -406,42 +409,48 @@ class HtmlPagePanel (HtmlPanel):
                 lambda event: self.codeEditor.turnText (u"<b>", u"</b>"), 
                 _(u"Bold\tCtrl+B"), 
                 _(u"Bold (<b>…</b>)"), 
-                os.path.join (self.imagesDir, "text_bold.png"))
+                os.path.join (self.imagesDir, "text_bold.png"),
+                fullUpdate=False)
 
         self.addTool (self.__htmlMenu, 
                 "ID_ITALIC", 
                 lambda event: self.codeEditor.turnText (u"<i>", u"</i>"), 
                 _(u"Italic\tCtrl+I"), 
                 _(u"Italic (<i>…</i>)"), 
-                os.path.join (self.imagesDir, "text_italic.png"))
+                os.path.join (self.imagesDir, "text_italic.png"),
+                fullUpdate=False)
 
         self.addTool (self.__htmlMenu, 
                 "ID_UNDERLINE", 
                 lambda event: self.codeEditor.turnText (u"<u>", u"</u>"), 
                 _(u"Underline\tCtrl+U"), 
                 _(u"Underline (<u>…</u>)"), 
-                os.path.join (self.imagesDir, "text_underline.png"))
+                os.path.join (self.imagesDir, "text_underline.png"),
+                fullUpdate=False)
 
         self.addTool (self.__htmlMenu, 
                 "ID_STRIKE", 
                 lambda event: self.codeEditor.turnText (u"<strike>", u"</strike>"), 
                 _(u"Strikethrough\tCtrl+K"), 
                 _(u"Strikethrough (<strike>…</strike>)"), 
-                os.path.join (self.imagesDir, "text_strikethrough.png"))
+                os.path.join (self.imagesDir, "text_strikethrough.png"),
+                fullUpdate=False)
 
         self.addTool (self.__htmlMenu, 
                 "ID_SUBSCRIPT", 
                 lambda event: self.codeEditor.turnText (u"<sub>", u"</sub>"), 
                 _(u"Subscript\tCtrl+="), 
                 _(u"Subscript (<sub>…</sub>)"), 
-                os.path.join (self.imagesDir, "text_subscript.png"))
+                os.path.join (self.imagesDir, "text_subscript.png"),
+                fullUpdate=False)
 
         self.addTool (self.__htmlMenu, 
                 "ID_SUPERSCRIPT", 
                 lambda event: self.codeEditor.turnText (u"<sup>", u"</sup>"), 
                 _(u"Superscript\tCtrl++"), 
                 _(u"Superscript (<sup>…</sup>)"), 
-                os.path.join (self.imagesDir, "text_superscript.png"))
+                os.path.join (self.imagesDir, "text_superscript.png"),
+                fullUpdate=False)
 
     
     def __addAlignTools (self):
@@ -450,28 +459,32 @@ class HtmlPagePanel (HtmlPanel):
                 lambda event: self.codeEditor.turnText (u'<div align="left">', u'</div>'), 
                 _(u"Left align\tCtrl+Alt+L"), 
                 _(u"Left align"), 
-                os.path.join (self.imagesDir, "text_align_left.png"))
+                os.path.join (self.imagesDir, "text_align_left.png"),
+                fullUpdate=False)
 
         self.addTool (self.__htmlMenu, 
                 "ID_ALIGN_CENTER", 
                 lambda event: self.codeEditor.turnText (u'<div align="center">', u'</div>'), 
                 _(u"Center align\tCtrl+Alt+C"), 
                 _(u"Center align"), 
-                os.path.join (self.imagesDir, "text_align_center.png"))
+                os.path.join (self.imagesDir, "text_align_center.png"),
+                fullUpdate=False)
 
         self.addTool (self.__htmlMenu, 
                 "ID_ALIGN_RIGHT", 
                 lambda event: self.codeEditor.turnText (u'<div align="right">', u'</div>'), 
                 _(u"Right align\tCtrl+Alt+R"), 
                 _(u"Right align"), 
-                os.path.join (self.imagesDir, "text_align_right.png"))
+                os.path.join (self.imagesDir, "text_align_right.png"),
+                fullUpdate=False)
     
         self.addTool (self.__htmlMenu, 
                 "ID_ALIGN_JUSTIFY", 
                 lambda event: self.codeEditor.turnText (u'<div align="justify">', u'</div>'), 
                 _(u"Justify align\tCtrl+Alt+J"), 
                 _(u"Justify align"), 
-                os.path.join (self.imagesDir, "text_align_justify.png"))
+                os.path.join (self.imagesDir, "text_align_justify.png"),
+                fullUpdate=False)
 
 
     def __addTableTools (self):
@@ -483,14 +496,16 @@ class HtmlPagePanel (HtmlPanel):
                 lambda event: self.codeEditor.turnText (u'<table>', u'</table>'), 
                 _(u"Table\tCtrl+Q"), 
                 _(u"Table (<table>…</table>)"), 
-                os.path.join (self.imagesDir, "table.png"))
+                os.path.join (self.imagesDir, "table.png"),
+                fullUpdate=False)
 
         self.addTool (self.__htmlMenu, 
                 "ID_TABLE_TR", 
                 lambda event: self.codeEditor.turnText (u'<tr>',u'</tr>'), 
                 _(u"Table row\tCtrl+W"), 
                 _(u"Table row (<tr>…</tr>)"), 
-                os.path.join (self.imagesDir, "table_insert_row.png"))
+                os.path.join (self.imagesDir, "table_insert_row.png"),
+                fullUpdate=False)
 
 
         self.addTool (self.__htmlMenu, 
@@ -498,7 +513,8 @@ class HtmlPagePanel (HtmlPanel):
                 lambda event: self.codeEditor.turnText (u'<td>', u'</td>'), 
                 _(u"Table cell\tCtrl+Y"), 
                 _(u"Table cell (<td>…</td>)"), 
-                os.path.join (self.imagesDir, "table_insert_cell.png"))
+                os.path.join (self.imagesDir, "table_insert_cell.png"),
+                fullUpdate=False)
 
     
     def __addListTools (self):
@@ -510,14 +526,16 @@ class HtmlPagePanel (HtmlPanel):
                 lambda event: self.codeEditor.turnList (u'<ul>\n', u'</ul>', u'<li>', u'</li>'), 
                 _(u"Bullets list\tCtrl+G"), 
                 _(u"Bullets list (<ul>…</ul>)"), 
-                os.path.join (self.imagesDir, "text_list_bullets.png"))
+                os.path.join (self.imagesDir, "text_list_bullets.png"),
+                fullUpdate=False)
 
         self.addTool (self.__htmlMenu, 
                 "ID_NUMBER_LIST", 
                 lambda event: self.codeEditor.turnList (u'<ol>\n', u'</ol>', u'<li>', u'</li>'), 
                 _(u"Numbers list\tCtrl+J"), 
                 _(u"Numbers list (<ul>…</ul>)"), 
-                os.path.join (self.imagesDir, "text_list_numbers.png"))
+                os.path.join (self.imagesDir, "text_list_numbers.png"),
+                fullUpdate=False)
     
 
     def __addHTools (self):
@@ -529,42 +547,48 @@ class HtmlPagePanel (HtmlPanel):
                 lambda event: self.codeEditor.turnText (u"<h1>", u"</h1>"), 
                 _(u"H1\tCtrl+1"), 
                 _(u"H1 (<h1>…</h1>)"), 
-                os.path.join (self.imagesDir, "text_heading_1.png"))
+                os.path.join (self.imagesDir, "text_heading_1.png"),
+                fullUpdate=False)
 
         self.addTool (self.__htmlMenu, 
                 "ID_H2", 
                 lambda event: self.codeEditor.turnText (u"<h2>", u"</h2>"), 
                 _(u"H2\tCtrl+2"), 
                 _(u"H2 (<h2>…</h2>)"), 
-                os.path.join (self.imagesDir, "text_heading_2.png"))
+                os.path.join (self.imagesDir, "text_heading_2.png"),
+                fullUpdate=False)
         
         self.addTool (self.__htmlMenu, 
                 "ID_H3", 
                 lambda event: self.codeEditor.turnText (u"<h3>", u"</h3>"), 
                 _(u"H3\tCtrl+3"), 
                 _(u"H3 (<h3>…</h3>)"), 
-                os.path.join (self.imagesDir, "text_heading_3.png"))
+                os.path.join (self.imagesDir, "text_heading_3.png"),
+                fullUpdate=False)
 
         self.addTool (self.__htmlMenu, 
                 "ID_H4", 
                 lambda event: self.codeEditor.turnText (u"<h4>", u"</h4>"), 
                 _(u"H4\tCtrl+4"), 
                 _(u"H4 (<h4>…</h4>)"), 
-                os.path.join (self.imagesDir, "text_heading_4.png"))
+                os.path.join (self.imagesDir, "text_heading_4.png"),
+                fullUpdate=False)
 
         self.addTool (self.__htmlMenu, 
                 "ID_H5", 
                 lambda event: self.codeEditor.turnText (u"<h5>", u"</h5>"), 
                 _(u"H5\tCtrl+5"), 
                 _(u"H5 (<h5>…</h5>)"), 
-                os.path.join (self.imagesDir, "text_heading_5.png"))
+                os.path.join (self.imagesDir, "text_heading_5.png"),
+                fullUpdate=False)
 
         self.addTool (self.__htmlMenu, 
                 "ID_H6", 
                 lambda event: self.codeEditor.turnText (u"<h6>", u"</h6>"), 
                 _(u"H6\tCtrl+6"), 
                 _(u"H6 (<h6>…</h6>)"), 
-                os.path.join (self.imagesDir, "text_heading_6.png"))
+                os.path.join (self.imagesDir, "text_heading_6.png"),
+                fullUpdate=False)
     
 
     def __addOtherTools (self):
@@ -576,14 +600,16 @@ class HtmlPagePanel (HtmlPanel):
                 lambda event: self.codeEditor.turnText (u'<img src="', u'"/>'), 
                 _(u'Image\tCtrl+M'), 
                 _(u'Image (<img src="…"/>'), 
-                os.path.join (self.imagesDir, "image.png"))
+                os.path.join (self.imagesDir, "image.png"),
+                fullUpdate=False)
 
         self.addTool (self.__htmlMenu, 
                 "ID_LINK", 
                 lambda event: self.codeEditor.turnText (u'<a href="">', u'</a>'), 
                 _(u"Link\tCtrl+L"), 
                 _(u'Link (<a href="…">…</a>)'), 
-                os.path.join (self.imagesDir, "link.png"))
+                os.path.join (self.imagesDir, "link.png"),
+                fullUpdate=False)
 
 
         self.addTool (self.__htmlMenu, 
@@ -591,7 +617,8 @@ class HtmlPagePanel (HtmlPanel):
                 lambda event: self.codeEditor.turnText (u'<a name="', u'"></a>'), 
                 _(u"Anchor\tCtrl+Alt+L"), 
                 _(u'Anchor (<a name="…">…</a>)'), 
-                os.path.join (self.imagesDir, "anchor.png"))
+                os.path.join (self.imagesDir, "anchor.png"),
+                fullUpdate=False)
 
 
         self.addTool (self.__htmlMenu, 
@@ -599,7 +626,8 @@ class HtmlPagePanel (HtmlPanel):
                 lambda event: self.codeEditor.replaceText (u'<hr>'), 
                 _(u"Horizontal line\tCtrl+H"), 
                 _(u"Horizontal line (<hr>)"), 
-                os.path.join (self.imagesDir, "text_horizontalrule.png"))
+                os.path.join (self.imagesDir, "text_horizontalrule.png"),
+                fullUpdate=False)
 
 
         self.addTool (self.__htmlMenu, 
@@ -607,7 +635,8 @@ class HtmlPagePanel (HtmlPanel):
                 lambda event: self.codeEditor.turnText (u"<code>", u"</code>"), 
                 _(u"Code\tCtrl+Alt+D"), 
                 _(u"Code (<code>…</code>)"), 
-                os.path.join (self.imagesDir, "code.png"))
+                os.path.join (self.imagesDir, "code.png"),
+                fullUpdate=False)
 
 
         self.addTool (self.__htmlMenu, 
@@ -615,7 +644,8 @@ class HtmlPagePanel (HtmlPanel):
                 lambda event: self.codeEditor.turnText (u"<pre>", u"</pre>"), 
                 _(u"Preformat\tCtrl+Alt+F"), 
                 _(u"Preformat (<pre>…</pre>)"), 
-                None)
+                None,
+                fullUpdate=False)
 
 
         self.addTool (self.__htmlMenu, 
@@ -623,7 +653,8 @@ class HtmlPagePanel (HtmlPanel):
                 lambda event: self.codeEditor.turnText (u"<blockquote>", u"</blockquote>"), 
                 _(u"Quote\tCtrl+Alt+Q"), 
                 _(u"Quote (<blockquote>…</blockquote>)"), 
-                os.path.join (self.imagesDir, "quote.png"))
+                os.path.join (self.imagesDir, "quote.png"),
+                fullUpdate=False)
 
 
         self.__htmlMenu.AppendSeparator()
@@ -633,16 +664,11 @@ class HtmlPagePanel (HtmlPanel):
                 self.codeEditor.escapeHtml, 
                 _(u"Convert HTML Symbols"), 
                 _(u"Convert HTML Symbols"), 
-                None)
+                None,
+                fullUpdate=False)
 
 
     def generateHtml (self, page):
-        # import traceback
-        # print page.title
-        # traceback.print_stack()
-        # print
-        # print
-
         path = self.getHtmlPath (page)
 
         if page.readonly and os.path.exists (path):
@@ -676,5 +702,5 @@ class HtmlPagePanel (HtmlPanel):
 
 
     def removeGui (self):
-        BaseTextPanel.removeGui (self)
+        super (HtmlPagePanel, self).removeGui ()
         self.mainWindow.mainMenu.Remove (self.__HTML_MENU_INDEX - 1)

@@ -18,7 +18,7 @@ from .guiconfig import MainWindowConfig
 
 from .mainid import MainId
 from .mainmenu import MainMenu
-from .maintoolbar import MainToolBar
+from .generaltoolbar import GeneralToolBar
 from .pagedialog import createSiblingPage, createChildPage, editPage
 from .trayicon import OutwikerTrayIcon
 from .preferences.prefdialog import PrefDialog
@@ -28,6 +28,8 @@ from outwiker.gui.mainpanes.tagscloudmainpane import TagsCloudMainPane
 from outwiker.gui.mainpanes.attachmainpane import AttachMainPane
 from outwiker.gui.mainpanes.treemainpane import TreeMainPane
 from outwiker.gui.mainpanes.pagemainpane import PageMainPane
+from outwiker.core.system import getImagesDir
+from .toolbarscontroller import ToolBarsController
 
 
 class MainWindow(wx.Frame):
@@ -47,7 +49,6 @@ class MainWindow(wx.Frame):
         self.mainMenu = None
         self.__createMenu()
 
-        self.__createToolBar()
         self.__createStatusBar()
 
         self.controller = MainWndController (self)
@@ -55,6 +56,11 @@ class MainWindow(wx.Frame):
 
         self.auiManager = wx.aui.AuiManager(self)
         self.__createAuiPanes ()
+
+        self.GENERAL_TOOLBAR_STR = "general"
+        self.toolbars = ToolBarsController (self)
+        self.toolbars[self.GENERAL_TOOLBAR_STR] = GeneralToolBar (self, self.auiManager)
+
         self.__panesController = MainPanesController (self, self.auiManager)
 
         self.__bindGuiEvents()
@@ -62,7 +68,6 @@ class MainWindow(wx.Frame):
         self._dropTarget = DropFilesTarget (self.attachPanel.panel)
         self.controller.enableGui()
         self.controller.updateRecentMenu()
-        # self.setFullscreen(self.mainWindowConfig.fullscreen.value)
         self.__panesController.updateViewMenu()
         self.Show()
 
@@ -70,6 +75,15 @@ class MainWindow(wx.Frame):
             self.Maximize()
 
         self.taskBarIcon = OutwikerTrayIcon(self)
+
+
+    @property
+    def generalToolBar (self):
+        return self.toolbars[self.GENERAL_TOOLBAR_STR]
+
+
+    def UpdateAuiManager (self):
+        self.auiManager.Update()
 
 
     def __createAuiPanes(self):
@@ -107,11 +121,6 @@ class MainWindow(wx.Frame):
     def __createMenu (self):
         self.mainMenu = MainMenu()
         self.SetMenuBar(self.mainMenu)
-
-
-    def __createToolBar (self):
-        self.mainToolbar = MainToolBar (self, -1, style=wx.TB_HORIZONTAL|wx.TB_FLAT|wx.TB_DOCKABLE)
-        self.SetToolBar(self.mainToolbar)
 
 
     def __bindGuiEvents (self):
@@ -205,6 +214,8 @@ class MainWindow(wx.Frame):
         Убрать за собой
         """
         self.__saveParams()
+
+        self.toolbars.destroyAllToolBars()
 
         self.auiManager.UnInit()
 

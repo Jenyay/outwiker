@@ -12,7 +12,6 @@ from outwiker.core.attachment import Attachment
 from outwiker.core.application import Application
 
 from outwiker.gui.buttonsdialog import ButtonsDialog
-from outwiker.gui.toolsinfo import ToolsInfo
 
 from .basepagepanel import BasePagePanel
 
@@ -40,9 +39,8 @@ class BaseTextPanel (BasePagePanel):
 
     
     def __init__ (self, parent, *args, **kwds):
-        BasePagePanel.__init__ (self, parent, *args, **kwds)
+        super (BaseTextPanel, self).__init__ (parent, *args, **kwds)
 
-        self.mainWindow = Application.mainWindow
         self.searchMenu = None
 
         # Предыдущее сохраненное состояние. 
@@ -53,11 +51,6 @@ class BaseTextPanel (BasePagePanel):
         # Используется для проверки того, что диалог уже показан и еще раз его показывать не надо
         self.externalEditDialog = None
 
-        # Словарь, хранящий информацию о созданных инструментах 
-        # Ключ - строка, описыывающая инструмент
-        # Значение - экземпляр класса ToolsInfo
-        self._tools = {}
-
         self.searchMenuIndex = 2
         self.imagesDir = outwiker.core.system.getImagesDir()
 
@@ -67,11 +60,6 @@ class BaseTextPanel (BasePagePanel):
         Application.onPreferencesDialogClose += self.onPreferencesDialogClose
 
         self._onSetPage += self.__onSetPage
-
-
-    @property
-    def allTools (self):
-        return self._tools.values()
 
 
     def __onSetPage (self, page):
@@ -218,24 +206,6 @@ class BaseTextPanel (BasePagePanel):
         self.searchMenu = None
 
 
-    def _removeAllTools (self):
-        for toolKey in self._tools.keys():
-            self.removeTool (toolKey)
-
-
-    def removeTool (self, idstring):
-        tool = self._tools[idstring]
-
-        if self.mainWindow.mainToolbar.FindById (tool.id) != None:
-            self.mainWindow.mainToolbar.DeleteTool (tool.id)
-
-        tool.menu.Remove (tool.id)
-        
-        self.mainWindow.Unbind(wx.EVT_MENU, id=tool.id)
-
-        del self._tools[idstring]
-
-    
     def _addSearchTools (self):
         assert self.mainWindow != None
         self.searchMenu = wx.Menu()
@@ -247,7 +217,8 @@ class BaseTextPanel (BasePagePanel):
                 _(u"Search…\tCtrl+F"),
                 _(u"Search"),
                 os.path.join (self.imagesDir, "local_search.png"),
-                False)
+                False,
+                fullUpdate=False)
 
 
         self.addTool (self.searchMenu,
@@ -256,7 +227,7 @@ class BaseTextPanel (BasePagePanel):
                 _(u"Find previous\tShift+F3"),
                 "",
                 None,
-                False)
+                fullUpdate=False)
 
         self.addTool (self.searchMenu,
                 u"ID_BASE_SEARCH_NEXT",
@@ -264,7 +235,7 @@ class BaseTextPanel (BasePagePanel):
                 _(u"Find next\tF3"),
                 "",
                 None,
-                False)
+                fullUpdate=False)
 
 
     def _showSearchPanel (self, panel):
@@ -292,106 +263,3 @@ class BaseTextPanel (BasePagePanel):
         if panel != None:
             self._showSearchPanel (panel)
             panel.prevSearch()
-
-
-    def addTool (self, 
-            menu, 
-            idstring, 
-            func, 
-            menuText, 
-            buttonText, 
-            image, 
-            alwaysEnabled = False):
-        """
-        Добавить пункт меню и кнопку на панель
-        menu -- меню для добавления элемента
-        id -- идентификатор меню и кнопки
-        func -- обработчик
-        menuText -- название пунта меню
-        buttonText -- подсказка для кнопки
-        image -- имя файла с картинкой
-        alwaysEnabled -- Кнопка должна быть всегда активна
-        """
-        assert idstring not in self._tools
-
-        id = wx.NewId()
-        tool = ToolsInfo (id, alwaysEnabled, menu)
-        self._tools[idstring] = tool
-
-        menu.Append (id, menuText, "", wx.ITEM_NORMAL)
-        self.mainWindow.Bind(wx.EVT_MENU, func, id = id)
-
-        if image != None and len (image) != 0:
-            self.mainWindow.mainToolbar.AddLabelTool(id, 
-                    buttonText, 
-                    wx.Bitmap(image, wx.BITMAP_TYPE_ANY), 
-                    wx.NullBitmap, 
-                    wx.ITEM_NORMAL, 
-                    buttonText, 
-                    "")
-
-            self.mainWindow.mainToolbar.Realize()
-
-
-    def enableTool (self, tool, enabled):
-        """
-        Активировать или дезактивировать один инструмент (пункт меню и кнопку)
-        tool - экземпляр класса ToolsInfo
-        """
-        tool.menu.Enable (tool.id, enabled)
-
-        if self.mainWindow.mainToolbar.FindById (tool.id) != None:
-            self.mainWindow.mainToolbar.EnableTool (tool.id, enabled)
-
-
-    def addCheckTool (self, 
-            menu, 
-            idstring, 
-            func, 
-            menuText, 
-            buttonText, 
-            image, 
-            alwaysEnabled = False):
-        """
-        Добавить пункт меню с галкой и залипающую кнопку на панель
-        menu -- меню для добавления элемента
-        id -- идентификатор меню и кнопки
-        func -- обработчик
-        menuText -- название пунта меню
-        buttonText -- подсказка для кнопки
-        image -- имя файла с картинкой
-        alwaysEnabled -- Кнопка должна быть всегда активна
-        """
-        assert idstring not in self._tools
-
-        id = wx.NewId()
-        tool = ToolsInfo (id, alwaysEnabled, menu)
-        self._tools[idstring] = tool
-
-        menu.AppendCheckItem (id, menuText, "")
-        self.mainWindow.Bind(wx.EVT_MENU, func, id = id)
-
-        if image != None and len (image) != 0:
-            self.mainWindow.mainToolbar.AddCheckTool(id, 
-                    wx.Bitmap(image, wx.BITMAP_TYPE_ANY), 
-                    wx.NullBitmap, 
-                    buttonText)
-
-            self.mainWindow.mainToolbar.Realize()
-
-
-    def checkTools (self, idstring, checked):
-        """
-        Активировать/деактивировать залипающие элементы управления
-        idstring - строка, описывающая элементы управления
-        checked - устанавливаемое состояние
-        """
-        assert idstring in self._tools
-        assert self.mainWindow != None
-
-        tools = self._tools[idstring]
-
-        if tools.menu != None:
-            tools.menu.Check (tools.id, checked)
-
-        self.mainWindow.mainToolbar.ToggleTool (tools.id, checked)
