@@ -30,23 +30,6 @@ class BaseToolBar (wx.aui.AuiToolBar):
         pass
 
 
-    def AddLabelTool (self, toolid, label, bitmap, bmpDisabled, kind, shortHelp, longHelp):
-        """
-        Метод добавлен для совместимости со старыми плагинами. 
-        """
-        self.AddTool (toolid, label, bitmap, shortHelp, kind)
-
-
-    def AddCheckTool(self, 
-            toolid, 
-            bitmap, 
-            bmpDisabled, 
-            shortHelp, 
-            longHelp="",
-            fullUpdate=True):
-        self.AddTool (toolid, shortHelp, bitmap, shortHelp, wx.ITEM_CHECK, fullUpdate)
-
-
     def DeleteTool (self, toolid, fullUpdate=True):
         super (BaseToolBar, self).DeleteTool (toolid)
         self.UpdateToolBar()

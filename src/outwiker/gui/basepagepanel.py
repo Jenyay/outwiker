@@ -147,8 +147,6 @@ class BasePagePanel (wx.Panel):
                     wx.ITEM_CHECK,
                     fullUpdate=fullUpdate)
 
-            # self.mainWindow.generalToolbar.Realize()
-
 
     def checkTools (self, idstring, checked):
         """

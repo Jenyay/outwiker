@@ -413,8 +413,6 @@ class WikiPagePanel (HtmlPanel):
                 self.__wikiMenu, 
                 _(u"&Wiki") )
 
-        self.mainWindow.generalToolbar.Realize()
-
         self.mainWindow.Thaw()
 
 
