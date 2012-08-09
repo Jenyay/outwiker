@@ -23,7 +23,7 @@ from htmlgenerator import HtmlGenerator
 
 class WikiPagePanel (HtmlPanel):
     def __init__ (self, parent, *args, **kwds):
-        HtmlPanel.__init__ (self, parent, *args, **kwds)
+        super (WikiPagePanel, self).__init__ (parent, *args, **kwds)
 
         self._configSection = u"wiki"
         self._hashKey = u"md5_hash"
@@ -75,7 +75,7 @@ class WikiPagePanel (HtmlPanel):
         return None
 
 
-    def onTabChanged(self, event): # wxGlade: HtmlPanel.<event_handler>
+    def onTabChanged(self, event):
         if self._currentpage == None:
             return
 
@@ -480,7 +480,7 @@ class WikiPagePanel (HtmlPanel):
 
 
     def removeGui (self):
-        HtmlPanel.removeGui (self)
+        super (WikiPagePanel, self).removeGui ()
         self.mainWindow.mainMenu.Remove (self.__WIKI_MENU_INDEX - 1)
 
     

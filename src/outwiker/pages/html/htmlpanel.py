@@ -23,7 +23,7 @@ class HtmlPanel(BaseTextPanel):
     __metaclass__ = ABCMeta
     
     def __init__(self, parent, *args, **kwds):
-        BaseTextPanel.__init__ (self, parent, *args, **kwds)
+        super (HtmlPanel, self).__init__ (parent, *args, **kwds)
 
         self._htmlFile = "__content.html"
         self.currentHtmlFile = None
@@ -68,8 +68,7 @@ class HtmlPanel(BaseTextPanel):
         image -- имя файла с картинкой
         alwaysEnabled -- Кнопка должна быть всегда активна
         """
-        BaseTextPanel.addTool (self, 
-            menu, 
+        super (HtmlPanel, self).addTool (menu, 
             idstring, 
             func, 
             menuText, 
@@ -101,8 +100,7 @@ class HtmlPanel(BaseTextPanel):
         image -- имя файла с картинкой
         alwaysEnabled -- Кнопка должна быть всегда активна
         """
-        BaseTextPanel.addCheckTool (self, 
-            menu, 
+        super (HtmlPanel, self).addCheckTool (menu, 
             idstring, 
             func, 
             menuText, 
@@ -704,5 +702,5 @@ class HtmlPagePanel (HtmlPanel):
 
 
     def removeGui (self):
-        BaseTextPanel.removeGui (self)
+        super (HtmlPagePanel, self).removeGui ()
         self.mainWindow.mainMenu.Remove (self.__HTML_MENU_INDEX - 1)
