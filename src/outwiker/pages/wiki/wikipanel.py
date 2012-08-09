@@ -389,6 +389,8 @@ class WikiPagePanel (HtmlPanel):
 
         self.__wikiMenu = wx.Menu()
 
+        self.mainWindow.Freeze()
+
         self.addTool (self.__wikiMenu, 
                 "ID_HTMLCODE", 
                 self.__openHtmlCode, 
@@ -412,6 +414,8 @@ class WikiPagePanel (HtmlPanel):
                 _(u"&Wiki") )
 
         self.mainWindow.mainToolbar.Realize()
+
+        self.mainWindow.Thaw()
 
 
     @property

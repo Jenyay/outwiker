@@ -257,6 +257,8 @@ class HtmlPanel(BaseTextPanel):
         """
         Активировать или дезактивировать инструменты (пункты меню и кнопки) в зависимости от текущей выбранной вкладки
         """
+        self.mainWindow.Freeze()
+
         for tool in self.allTools:
             self.enableTool (tool, self._isEnabledTool (tool))
 
@@ -267,6 +269,8 @@ class HtmlPanel(BaseTextPanel):
         self.enableTool (self._tools[u"ID_BASE_SEARCH_PREV"], searchEnabled)
         self.enableTool (self._tools[u"ID_BASE_SEARCH_NEXT"], searchEnabled)
         self.mainWindow.mainToolbar.UpdateAuiManager()
+        
+        self.mainWindow.Thaw()
 
 
     def _isEnabledTool (self, tool):
@@ -382,6 +386,8 @@ class HtmlPagePanel (HtmlPanel):
 
         self.__htmlMenu = wx.Menu()
         
+        self.mainWindow.Freeze()
+
         self.__createPageConfigTools ()
         self._addRenderTools()
         self.__addFontTools()
@@ -390,6 +396,8 @@ class HtmlPagePanel (HtmlPanel):
         self.__addTableTools()
         self.__addListTools()
         self.__addOtherTools()
+
+        self.mainWindow.Thaw()
 
         self.mainWindow.mainMenu.Insert (self.__HTML_MENU_INDEX, self.__htmlMenu, _(u"H&tml"))
 

@@ -219,10 +219,13 @@ class BaseTextPanel (BasePagePanel):
 
 
     def _removeAllTools (self):
+        self.mainWindow.Freeze()
+
         for toolKey in self._tools.keys():
             self.removeTool (toolKey, fullUpdate=False)
 
         self.mainWindow.mainToolbar.UpdateAuiManager()
+        self.mainWindow.Thaw()
 
 
     def removeTool (self, idstring, fullUpdate=True):
@@ -344,6 +347,7 @@ class BaseTextPanel (BasePagePanel):
 
         if self.mainWindow.mainToolbar.FindById (tool.id) != None:
             self.mainWindow.mainToolbar.EnableTool (tool.id, enabled)
+            self.mainWindow.mainToolbar.Realize()
 
 
     def addCheckTool (self, 
@@ -382,7 +386,7 @@ class BaseTextPanel (BasePagePanel):
                     wx.ITEM_CHECK,
                     fullUpdate=fullUpdate)
 
-            self.mainWindow.mainToolbar.Realize()
+            # self.mainWindow.mainToolbar.Realize()
 
 
     def checkTools (self, idstring, checked):

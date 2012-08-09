@@ -56,7 +56,7 @@ class MainToolBar (wx.aui.AuiToolBar):
         self.AddSeparator()
         self.Realize()
 
-        self._auiManager.AddPane(self, self._pane)
+        # self._auiManager.AddPane(self, self._pane)
 
 
     def AddLabelTool (self, toolid, label, bitmap, bmpDisabled, kind, shortHelp, longHelp):
