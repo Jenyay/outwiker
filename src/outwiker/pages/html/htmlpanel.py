@@ -376,7 +376,8 @@ class HtmlPagePanel (HtmlPanel):
                 _(u"Auto Line Wrap"), 
                 os.path.join (self.imagesDir, "linewrap.png"),
                 alwaysEnabled = True,
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="html")
 
         self.__updatePageConfigTools()
 
