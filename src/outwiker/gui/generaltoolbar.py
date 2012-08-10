@@ -54,4 +54,4 @@ class GeneralToolBar (BaseToolBar):
 
 
     def _createPane (self):
-        return wx.aui.AuiPaneInfo().Name("generalToolBar").Caption(_(u"General")).ToolbarPane().Top()
+        return wx.aui.AuiPaneInfo().Name("generalToolBar").Caption(_(u"General")).ToolbarPane().Top().Position(0)

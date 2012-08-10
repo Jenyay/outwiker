@@ -18,6 +18,8 @@ from outwiker.gui.basetextpanel import BaseTextPanel
 from outwiker.gui.htmlrenderfactory import getHtmlRender
 from outwiker.gui.htmltexteditor import HtmlTextEditor
 
+from .htmltoolbar import HtmlToolBar
+
 
 class HtmlPanel(BaseTextPanel):
     __metaclass__ = ABCMeta
@@ -57,7 +59,8 @@ class HtmlPanel(BaseTextPanel):
             buttonText, 
             image, 
             alwaysEnabled=False,
-            fullUpdate=True):
+            fullUpdate=True,
+            panelname="plugins"):
         """
         Добавить пункт меню и кнопку на панель
         menu -- меню для добавления элемента
@@ -75,7 +78,8 @@ class HtmlPanel(BaseTextPanel):
             buttonText, 
             image, 
             alwaysEnabled,
-            fullUpdate)
+            fullUpdate,
+            panelname)
         
         tool = self._tools[idstring]
         self.enableTool (tool, self._isEnabledTool (tool))
@@ -89,7 +93,8 @@ class HtmlPanel(BaseTextPanel):
             buttonText, 
             image, 
             alwaysEnabled = False,
-            fullUpdate=True):
+            fullUpdate=True,
+            panelname="plugins"):
         """
         Добавить пункт меню с галкой и залипающую кнопку на панель
         menu -- меню для добавления элемента
@@ -107,7 +112,8 @@ class HtmlPanel(BaseTextPanel):
             buttonText, 
             image, 
             alwaysEnabled,
-            fullUpdate)
+            fullUpdate,
+            panelname)
 
         tool = self._tools[idstring]
         self.enableTool (tool, self._isEnabledTool (tool))
@@ -299,7 +305,8 @@ class HtmlPanel(BaseTextPanel):
                 _(u"Code / Preview"), 
                 os.path.join (self.imagesDir, "render.png"),
                 True,
-                False)
+                False,
+                panelname=self.mainWindow.GENERAL_TOOLBAR_STR)
 
         self.toolsMenu.AppendSeparator()
 
@@ -319,7 +326,12 @@ class HtmlPanel(BaseTextPanel):
 
 class HtmlPagePanel (HtmlPanel):
     def __init__ (self, parent, *args, **kwds):
-        HtmlPanel.__init__ (self, parent, *args, **kwds)
+        super (HtmlPagePanel, self).__init__ (parent, *args, **kwds)
+
+        self._htmlPanelName = "html"
+
+        self.mainWindow.toolbars[self._htmlPanelName] = HtmlToolBar(self.mainWindow, self.mainWindow.auiManager)
+        self.mainWindow.toolbars[self._htmlPanelName].UpdateToolBar()
 
         self.__HTML_MENU_INDEX = 7
         self.__createCustomTools()
@@ -334,7 +346,11 @@ class HtmlPagePanel (HtmlPanel):
 
     def onClose (self, event):
         Application.onPageUpdate -= self.__onPageUpdate
-        HtmlPanel.onClose (self, event)
+
+        if self._htmlPanelName in self.mainWindow.toolbars:
+            self.mainWindow.toolbars.destroyToolBar (self._htmlPanelName)
+
+        super (HtmlPagePanel, self).onClose (event)
 
 
     def __onPageUpdate (self, sender):
@@ -410,7 +426,8 @@ class HtmlPagePanel (HtmlPanel):
                 _(u"Bold\tCtrl+B"), 
                 _(u"Bold (<b>…</b>)"), 
                 os.path.join (self.imagesDir, "text_bold.png"),
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="html")
 
         self.addTool (self.__htmlMenu, 
                 "ID_ITALIC", 
@@ -418,7 +435,8 @@ class HtmlPagePanel (HtmlPanel):
                 _(u"Italic\tCtrl+I"), 
                 _(u"Italic (<i>…</i>)"), 
                 os.path.join (self.imagesDir, "text_italic.png"),
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="html")
 
         self.addTool (self.__htmlMenu, 
                 "ID_UNDERLINE", 
@@ -426,7 +444,8 @@ class HtmlPagePanel (HtmlPanel):
                 _(u"Underline\tCtrl+U"), 
                 _(u"Underline (<u>…</u>)"), 
                 os.path.join (self.imagesDir, "text_underline.png"),
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="html")
 
         self.addTool (self.__htmlMenu, 
                 "ID_STRIKE", 
@@ -434,7 +453,8 @@ class HtmlPagePanel (HtmlPanel):
                 _(u"Strikethrough\tCtrl+K"), 
                 _(u"Strikethrough (<strike>…</strike>)"), 
                 os.path.join (self.imagesDir, "text_strikethrough.png"),
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="html")
 
         self.addTool (self.__htmlMenu, 
                 "ID_SUBSCRIPT", 
@@ -442,7 +462,8 @@ class HtmlPagePanel (HtmlPanel):
                 _(u"Subscript\tCtrl+="), 
                 _(u"Subscript (<sub>…</sub>)"), 
                 os.path.join (self.imagesDir, "text_subscript.png"),
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="html")
 
         self.addTool (self.__htmlMenu, 
                 "ID_SUPERSCRIPT", 
@@ -450,7 +471,8 @@ class HtmlPagePanel (HtmlPanel):
                 _(u"Superscript\tCtrl++"), 
                 _(u"Superscript (<sup>…</sup>)"), 
                 os.path.join (self.imagesDir, "text_superscript.png"),
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="html")
 
     
     def __addAlignTools (self):
@@ -460,7 +482,8 @@ class HtmlPagePanel (HtmlPanel):
                 _(u"Left align\tCtrl+Alt+L"), 
                 _(u"Left align"), 
                 os.path.join (self.imagesDir, "text_align_left.png"),
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="html")
 
         self.addTool (self.__htmlMenu, 
                 "ID_ALIGN_CENTER", 
@@ -468,7 +491,8 @@ class HtmlPagePanel (HtmlPanel):
                 _(u"Center align\tCtrl+Alt+C"), 
                 _(u"Center align"), 
                 os.path.join (self.imagesDir, "text_align_center.png"),
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="html")
 
         self.addTool (self.__htmlMenu, 
                 "ID_ALIGN_RIGHT", 
@@ -476,7 +500,8 @@ class HtmlPagePanel (HtmlPanel):
                 _(u"Right align\tCtrl+Alt+R"), 
                 _(u"Right align"), 
                 os.path.join (self.imagesDir, "text_align_right.png"),
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="html")
     
         self.addTool (self.__htmlMenu, 
                 "ID_ALIGN_JUSTIFY", 
@@ -484,7 +509,8 @@ class HtmlPagePanel (HtmlPanel):
                 _(u"Justify align\tCtrl+Alt+J"), 
                 _(u"Justify align"), 
                 os.path.join (self.imagesDir, "text_align_justify.png"),
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="html")
 
 
     def __addTableTools (self):
@@ -497,7 +523,8 @@ class HtmlPagePanel (HtmlPanel):
                 _(u"Table\tCtrl+Q"), 
                 _(u"Table (<table>…</table>)"), 
                 os.path.join (self.imagesDir, "table.png"),
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="html")
 
         self.addTool (self.__htmlMenu, 
                 "ID_TABLE_TR", 
@@ -505,7 +532,8 @@ class HtmlPagePanel (HtmlPanel):
                 _(u"Table row\tCtrl+W"), 
                 _(u"Table row (<tr>…</tr>)"), 
                 os.path.join (self.imagesDir, "table_insert_row.png"),
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="html")
 
 
         self.addTool (self.__htmlMenu, 
@@ -514,7 +542,8 @@ class HtmlPagePanel (HtmlPanel):
                 _(u"Table cell\tCtrl+Y"), 
                 _(u"Table cell (<td>…</td>)"), 
                 os.path.join (self.imagesDir, "table_insert_cell.png"),
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="html")
 
     
     def __addListTools (self):
@@ -527,7 +556,8 @@ class HtmlPagePanel (HtmlPanel):
                 _(u"Bullets list\tCtrl+G"), 
                 _(u"Bullets list (<ul>…</ul>)"), 
                 os.path.join (self.imagesDir, "text_list_bullets.png"),
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="html")
 
         self.addTool (self.__htmlMenu, 
                 "ID_NUMBER_LIST", 
@@ -535,7 +565,8 @@ class HtmlPagePanel (HtmlPanel):
                 _(u"Numbers list\tCtrl+J"), 
                 _(u"Numbers list (<ul>…</ul>)"), 
                 os.path.join (self.imagesDir, "text_list_numbers.png"),
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="html")
     
 
     def __addHTools (self):
@@ -548,7 +579,8 @@ class HtmlPagePanel (HtmlPanel):
                 _(u"H1\tCtrl+1"), 
                 _(u"H1 (<h1>…</h1>)"), 
                 os.path.join (self.imagesDir, "text_heading_1.png"),
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="html")
 
         self.addTool (self.__htmlMenu, 
                 "ID_H2", 
@@ -556,7 +588,8 @@ class HtmlPagePanel (HtmlPanel):
                 _(u"H2\tCtrl+2"), 
                 _(u"H2 (<h2>…</h2>)"), 
                 os.path.join (self.imagesDir, "text_heading_2.png"),
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="html")
         
         self.addTool (self.__htmlMenu, 
                 "ID_H3", 
@@ -564,7 +597,8 @@ class HtmlPagePanel (HtmlPanel):
                 _(u"H3\tCtrl+3"), 
                 _(u"H3 (<h3>…</h3>)"), 
                 os.path.join (self.imagesDir, "text_heading_3.png"),
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="html")
 
         self.addTool (self.__htmlMenu, 
                 "ID_H4", 
@@ -572,7 +606,8 @@ class HtmlPagePanel (HtmlPanel):
                 _(u"H4\tCtrl+4"), 
                 _(u"H4 (<h4>…</h4>)"), 
                 os.path.join (self.imagesDir, "text_heading_4.png"),
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="html")
 
         self.addTool (self.__htmlMenu, 
                 "ID_H5", 
@@ -580,7 +615,8 @@ class HtmlPagePanel (HtmlPanel):
                 _(u"H5\tCtrl+5"), 
                 _(u"H5 (<h5>…</h5>)"), 
                 os.path.join (self.imagesDir, "text_heading_5.png"),
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="html")
 
         self.addTool (self.__htmlMenu, 
                 "ID_H6", 
@@ -588,7 +624,8 @@ class HtmlPagePanel (HtmlPanel):
                 _(u"H6\tCtrl+6"), 
                 _(u"H6 (<h6>…</h6>)"), 
                 os.path.join (self.imagesDir, "text_heading_6.png"),
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="html")
     
 
     def __addOtherTools (self):
@@ -601,7 +638,8 @@ class HtmlPagePanel (HtmlPanel):
                 _(u'Image\tCtrl+M'), 
                 _(u'Image (<img src="…"/>'), 
                 os.path.join (self.imagesDir, "image.png"),
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="html")
 
         self.addTool (self.__htmlMenu, 
                 "ID_LINK", 
@@ -609,7 +647,8 @@ class HtmlPagePanel (HtmlPanel):
                 _(u"Link\tCtrl+L"), 
                 _(u'Link (<a href="…">…</a>)'), 
                 os.path.join (self.imagesDir, "link.png"),
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="html")
 
 
         self.addTool (self.__htmlMenu, 
@@ -618,7 +657,8 @@ class HtmlPagePanel (HtmlPanel):
                 _(u"Anchor\tCtrl+Alt+L"), 
                 _(u'Anchor (<a name="…">…</a>)'), 
                 os.path.join (self.imagesDir, "anchor.png"),
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="html")
 
 
         self.addTool (self.__htmlMenu, 
@@ -627,7 +667,8 @@ class HtmlPagePanel (HtmlPanel):
                 _(u"Horizontal line\tCtrl+H"), 
                 _(u"Horizontal line (<hr>)"), 
                 os.path.join (self.imagesDir, "text_horizontalrule.png"),
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="html")
 
 
         self.addTool (self.__htmlMenu, 
@@ -636,7 +677,8 @@ class HtmlPagePanel (HtmlPanel):
                 _(u"Code\tCtrl+Alt+D"), 
                 _(u"Code (<code>…</code>)"), 
                 os.path.join (self.imagesDir, "code.png"),
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="html")
 
 
         self.addTool (self.__htmlMenu, 
@@ -645,7 +687,8 @@ class HtmlPagePanel (HtmlPanel):
                 _(u"Preformat\tCtrl+Alt+F"), 
                 _(u"Preformat (<pre>…</pre>)"), 
                 None,
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="html")
 
 
         self.addTool (self.__htmlMenu, 
@@ -654,7 +697,8 @@ class HtmlPagePanel (HtmlPanel):
                 _(u"Quote\tCtrl+Alt+Q"), 
                 _(u"Quote (<blockquote>…</blockquote>)"), 
                 os.path.join (self.imagesDir, "quote.png"),
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="html")
 
 
         self.__htmlMenu.AppendSeparator()
@@ -665,7 +709,8 @@ class HtmlPagePanel (HtmlPanel):
                 _(u"Convert HTML Symbols"), 
                 _(u"Convert HTML Symbols"), 
                 None,
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="html")
 
 
     def generateHtml (self, page):

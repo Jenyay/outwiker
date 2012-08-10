@@ -218,7 +218,8 @@ class BaseTextPanel (BasePagePanel):
                 _(u"Search"),
                 os.path.join (self.imagesDir, "local_search.png"),
                 False,
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname=self.mainWindow.GENERAL_TOOLBAR_STR)
 
 
         self.addTool (self.searchMenu,
@@ -227,7 +228,8 @@ class BaseTextPanel (BasePagePanel):
                 _(u"Find previous\tShift+F3"),
                 "",
                 None,
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname=self.mainWindow.GENERAL_TOOLBAR_STR)
 
         self.addTool (self.searchMenu,
                 u"ID_BASE_SEARCH_NEXT",
@@ -235,7 +237,8 @@ class BaseTextPanel (BasePagePanel):
                 _(u"Find next\tF3"),
                 "",
                 None,
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname=self.mainWindow.GENERAL_TOOLBAR_STR)
 
 
     def _showSearchPanel (self, panel):

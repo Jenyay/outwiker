@@ -18,7 +18,6 @@ from .guiconfig import MainWindowConfig
 
 from .mainid import MainId
 from .mainmenu import MainMenu
-from .generaltoolbar import GeneralToolBar
 from .pagedialog import createSiblingPage, createChildPage, editPage
 from .trayicon import OutwikerTrayIcon
 from .preferences.prefdialog import PrefDialog
@@ -29,6 +28,9 @@ from outwiker.gui.mainpanes.attachmainpane import AttachMainPane
 from outwiker.gui.mainpanes.treemainpane import TreeMainPane
 from outwiker.gui.mainpanes.pagemainpane import PageMainPane
 from outwiker.core.system import getImagesDir
+
+from .generaltoolbar import GeneralToolBar
+from .pluginstoolbar import PluginsToolBar
 from .toolbarscontroller import ToolBarsController
 
 
@@ -58,8 +60,11 @@ class MainWindow(wx.Frame):
         self.__createAuiPanes ()
 
         self.GENERAL_TOOLBAR_STR = "general"
+        self.PLUGINS_TOOLBAR_STR = "plugins"
         self.toolbars = ToolBarsController (self)
         self.toolbars[self.GENERAL_TOOLBAR_STR] = GeneralToolBar (self, self.auiManager)
+        self.toolbars[self.PLUGINS_TOOLBAR_STR] = PluginsToolBar (self, self.auiManager)
+        self.toolbars[self.PLUGINS_TOOLBAR_STR].UpdateToolBar()
 
         self.__panesController = MainPanesController (self, self.auiManager)
 

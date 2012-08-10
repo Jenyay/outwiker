@@ -14,6 +14,7 @@ from outwiker.core.attachment import Attachment
 from outwiker.core.style import Style
 
 from .wikieditor import WikiEditor
+from .wikitoolbar import WikiToolBar
 from outwiker.gui.basetextpanel import BaseTextPanel
 from outwiker.gui.htmltexteditor import HtmlTextEditor
 from outwiker.pages.html.htmlpanel import HtmlPanel
@@ -28,6 +29,11 @@ class WikiPagePanel (HtmlPanel):
         self._configSection = u"wiki"
         self._hashKey = u"md5_hash"
         self.__WIKI_MENU_INDEX = 7
+
+        self._wikiPanelName = "wiki"
+
+        self.mainWindow.toolbars[self._wikiPanelName] = WikiToolBar(self.mainWindow, self.mainWindow.auiManager)
+        self.mainWindow.toolbars[self._wikiPanelName].UpdateToolBar()
 
         self.notebook.SetPageText (0, _(u"Wiki"))
 
@@ -46,6 +52,14 @@ class WikiPagePanel (HtmlPanel):
             self.htmlcodePageIndex = self.__createHtmlCodePanel(self.htmlSizer)
 
         self.Layout()
+
+
+    def onClose (self, event):
+        if self._wikiPanelName in self.mainWindow.toolbars:
+            self.mainWindow.toolbars.destroyToolBar (self._wikiPanelName)
+
+        super (WikiPagePanel, self).onClose (event)
+
 
     @property
     def toolsMenu (self):
@@ -141,7 +155,8 @@ class WikiPagePanel (HtmlPanel):
                 _(u"Bold\tCtrl+B"), 
                 _(u"Bold"), 
                 os.path.join (self.imagesDir, "text_bold.png"),
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="wiki")
 
         self.addTool (self.__wikiMenu, 
                 "ID_ITALIC", 
@@ -149,7 +164,8 @@ class WikiPagePanel (HtmlPanel):
                 _(u"Italic\tCtrl+I"), 
                 _(u"Italic"), 
                 os.path.join (self.imagesDir, "text_italic.png"),
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="wiki")
 
         self.addTool (self.__wikiMenu, 
                 "ID_BOLD_ITALIC", 
@@ -157,7 +173,8 @@ class WikiPagePanel (HtmlPanel):
                 _(u"Bold italic\tCtrl+Shift+I"), 
                 _(u"Bold italic"), 
                 os.path.join (self.imagesDir, "text_bold_italic.png"),
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="wiki")
 
         self.addTool (self.__wikiMenu, 
                 "ID_UNDERLINE", 
@@ -165,7 +182,8 @@ class WikiPagePanel (HtmlPanel):
                 _(u"Underline\tCtrl+U"), 
                 _(u"Underline"), 
                 os.path.join (self.imagesDir, "text_underline.png"),
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="wiki")
 
         self.addTool (self.__wikiMenu, 
                 "ID_STRIKE", 
@@ -173,7 +191,8 @@ class WikiPagePanel (HtmlPanel):
                 _(u"Strikethrough\tCtrl+K"), 
                 _(u"Strikethrough"), 
                 os.path.join (self.imagesDir, "text_strikethrough.png"),
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="wiki")
 
         self.addTool (self.__wikiMenu, 
                 "ID_SUBSCRIPT", 
@@ -181,7 +200,8 @@ class WikiPagePanel (HtmlPanel):
                 _(u"Subscript\tCtrl+="), 
                 _(u"Subscript"), 
                 os.path.join (self.imagesDir, "text_subscript.png"),
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="wiki")
 
 
         self.addTool (self.__wikiMenu, 
@@ -190,7 +210,8 @@ class WikiPagePanel (HtmlPanel):
                 _(u"Superscript\tCtrl++"), 
                 _(u"Superscript"), 
                 os.path.join (self.imagesDir, "text_superscript.png"),
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="wiki")
     
 
     def __addAlignTools (self):
@@ -200,7 +221,8 @@ class WikiPagePanel (HtmlPanel):
                 _(u"Left align\tCtrl+Alt+L"), 
                 _(u"Left align"), 
                 os.path.join (self.imagesDir, "text_align_left.png"),
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="wiki")
 
         self.addTool (self.__wikiMenu, 
                 "ID_ALIGN_CENTER", 
@@ -208,7 +230,8 @@ class WikiPagePanel (HtmlPanel):
                 _(u"Center align\tCtrl+Alt+C"), 
                 _(u"Center align"), 
                 os.path.join (self.imagesDir, "text_align_center.png"),
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="wiki")
 
         self.addTool (self.__wikiMenu, 
                 "ID_ALIGN_RIGHT", 
@@ -216,7 +239,8 @@ class WikiPagePanel (HtmlPanel):
                 _(u"Right align\tCtrl+Alt+R"), 
                 _(u"Right align"), 
                 os.path.join (self.imagesDir, "text_align_right.png"),
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="wiki")
     
         self.addTool (self.__wikiMenu, 
                 "ID_ALIGN_JUSTIFY", 
@@ -224,7 +248,8 @@ class WikiPagePanel (HtmlPanel):
                 _(u"Justify align\tCtrl+Alt+J"), 
                 _(u"Justify align"), 
                 os.path.join (self.imagesDir, "text_align_justify.png"),
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="wiki")
 
 
     def __addFormatTools (self):
@@ -242,7 +267,8 @@ class WikiPagePanel (HtmlPanel):
                 _(u"Non-parsed [=…=]"), 
                 _(u"Non-parsed [=…=]"), 
                 None,
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="wiki")
 
     
     def __addListTools (self):
@@ -255,7 +281,8 @@ class WikiPagePanel (HtmlPanel):
                 _(u"Bullets list\tCtrl+G"), 
                 _(u"Bullets list"), 
                 os.path.join (self.imagesDir, "text_list_bullets.png"),
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="wiki")
 
         self.addTool (self.__wikiMenu, 
                 "ID_NUMBER_LIST", 
@@ -263,7 +290,8 @@ class WikiPagePanel (HtmlPanel):
                 _(u"Numbers list\tCtrl+J"), 
                 _(u"Numbers list"), 
                 os.path.join (self.imagesDir, "text_list_numbers.png"),
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="wiki")
     
 
     def __addHTools (self):
@@ -276,7 +304,8 @@ class WikiPagePanel (HtmlPanel):
                 _(u"H1\tCtrl+1"), 
                 _(u"H1"), 
                 os.path.join (self.imagesDir, "text_heading_1.png"),
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="wiki")
 
         self.addTool (self.__wikiMenu, 
                 "ID_H2", 
@@ -284,7 +313,8 @@ class WikiPagePanel (HtmlPanel):
                 _(u"H2\tCtrl+2"), 
                 _(u"H2"), 
                 os.path.join (self.imagesDir, "text_heading_2.png"),
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="wiki")
         
         self.addTool (self.__wikiMenu, 
                 "ID_H3", 
@@ -292,7 +322,8 @@ class WikiPagePanel (HtmlPanel):
                 _(u"H3\tCtrl+3"), 
                 _(u"H3"), 
                 os.path.join (self.imagesDir, "text_heading_3.png"),
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="wiki")
 
         self.addTool (self.__wikiMenu, 
                 "ID_H4", 
@@ -300,7 +331,8 @@ class WikiPagePanel (HtmlPanel):
                 _(u"H4\tCtrl+4"), 
                 _(u"H4"), 
                 os.path.join (self.imagesDir, "text_heading_4.png"),
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="wiki")
 
         self.addTool (self.__wikiMenu, 
                 "ID_H5", 
@@ -308,7 +340,8 @@ class WikiPagePanel (HtmlPanel):
                 _(u"H5\tCtrl+5"), 
                 _(u"H5"), 
                 os.path.join (self.imagesDir, "text_heading_5.png"),
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="wiki")
 
         self.addTool (self.__wikiMenu, 
                 "ID_H6", 
@@ -316,7 +349,8 @@ class WikiPagePanel (HtmlPanel):
                 _(u"H6\tCtrl+6"), 
                 _(u"H6"), 
                 os.path.join (self.imagesDir, "text_heading_6.png"),
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="wiki")
     
 
     def __addOtherTools (self):
@@ -329,7 +363,8 @@ class WikiPagePanel (HtmlPanel):
                 _(u'Thumbnail\tCtrl+M'), 
                 _(u'Thumbnail'), 
                 os.path.join (self.imagesDir, "images.png"),
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="wiki")
 
         self.addTool (self.__wikiMenu, 
                 "ID_LINK", 
@@ -337,7 +372,8 @@ class WikiPagePanel (HtmlPanel):
                 _(u"Link\tCtrl+L"), 
                 _(u'Link'), 
                 os.path.join (self.imagesDir, "link.png"),
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="wiki")
 
 
         self.addTool (self.__wikiMenu, 
@@ -346,7 +382,8 @@ class WikiPagePanel (HtmlPanel):
                 _(u"Anchor\tCtrl+Alt+L"), 
                 _(u'Anchor'), 
                 os.path.join (self.imagesDir, "anchor.png"),
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="wiki")
 
 
         self.addTool (self.__wikiMenu, 
@@ -355,7 +392,8 @@ class WikiPagePanel (HtmlPanel):
                 _(u"Horizontal line\tCtrl+H"), 
                 _(u"Horizontal line"), 
                 os.path.join (self.imagesDir, "text_horizontalrule.png"),
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="wiki")
 
         self.addTool (self.__wikiMenu, 
                 "ID_LINEBREAK", 
@@ -363,7 +401,8 @@ class WikiPagePanel (HtmlPanel):
                 _(u"Line break\tCtrl+Return"), 
                 _(u"Line break"), 
                 os.path.join (self.imagesDir, "linebreak.png"),
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="wiki")
 
         self.addTool (self.__wikiMenu, 
                 "ID_EQUATION", 
@@ -371,7 +410,8 @@ class WikiPagePanel (HtmlPanel):
                 _(u"Equation\tCtrl+Q"), 
                 _(u'Equation'), 
                 os.path.join (self.imagesDir, "equation.png"),
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="wiki")
 
         self.__wikiMenu.AppendSeparator()
 
@@ -381,7 +421,8 @@ class WikiPagePanel (HtmlPanel):
                 _(u"Convert HTML Symbols"), 
                 _(u"Convert HTML Symbols"), 
                 None,
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname="wiki")
 
 
     def __createCustomTools (self):
@@ -398,7 +439,8 @@ class WikiPagePanel (HtmlPanel):
                 _(u"HTML Code"), 
                 os.path.join (self.imagesDir, "html.png"),
                 True,
-                fullUpdate=False)
+                fullUpdate=False,
+                panelname=self.mainWindow.GENERAL_TOOLBAR_STR)
 
         self._addRenderTools()
         self.__addCommandsTools()
