@@ -87,3 +87,6 @@ class MainPanesController (object):
         for pane in self.__panes:
             if event.GetPane().name == self.auiManager.GetPane (pane.panel).name:
                 pane.menuItem.Check (False)
+                return
+
+        event.Skip()

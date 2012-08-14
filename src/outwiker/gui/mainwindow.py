@@ -29,9 +29,9 @@ from outwiker.gui.mainpanes.treemainpane import TreeMainPane
 from outwiker.gui.mainpanes.pagemainpane import PageMainPane
 from outwiker.core.system import getImagesDir
 
-from .generaltoolbar import GeneralToolBar
-from .pluginstoolbar import PluginsToolBar
-from .toolbarscontroller import ToolBarsController
+from toolbars.generaltoolbar import GeneralToolBar
+from toolbars.pluginstoolbar import PluginsToolBar
+from toolbars.toolbarscontroller import ToolBarsController
 
 
 class MainWindow(wx.Frame):

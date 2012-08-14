@@ -6,9 +6,9 @@ import os.path
 import wx
 import wx.aui
 
-from .mainid import MainId
-from .basetoolbar import BaseToolBar
+from outwiker.gui.mainid import MainId
 from outwiker.core.system import getImagesDir
+from .basetoolbar import BaseToolBar
 
 
 class GeneralToolBar (BaseToolBar):

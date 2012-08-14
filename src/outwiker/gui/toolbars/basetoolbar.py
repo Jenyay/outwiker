@@ -60,3 +60,21 @@ class BaseToolBar (wx.aui.AuiToolBar):
         return self.FindTool (toolid)
 
 
+    @property
+    def caption (self):
+        return self._pane.caption
+
+
+    @property
+    def name (self):
+        return self._pane.name
+
+
+    def Hide (self):
+        self._pane.Hide()
+        super (BaseToolBar, self).Hide()
+
+
+    def Show (self):
+        self._pane.Show()
+        super (BaseToolBar, self).Show()

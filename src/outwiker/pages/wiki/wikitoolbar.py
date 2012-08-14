@@ -7,7 +7,7 @@ import os.path
 import wx
 import wx.aui
 
-from outwiker.gui.basetoolbar import BaseToolBar
+from outwiker.gui.toolbars.basetoolbar import BaseToolBar
 from outwiker.core.system import getImagesDir
 
 
