@@ -41,11 +41,20 @@ class ToolBarsController (object):
         if toolbarname in self._toolbars:
             raise KeyError()
 
-        newitem = self._toolbarsMenu.AppendCheckItem (wx.NewId(), toolbar.caption)
-        newitem.Check (toolbar.IsShown())
+        newitem = self._addMenu (toolbar)
         self._toolbars[toolbarname] = ToolBarInfo (toolbar, newitem)
 
+
+    def _addMenu (self, toolbar):
+        newitem = self._toolbarsMenu.AppendCheckItem (wx.NewId(), toolbar.caption)
+        newitem.Check (toolbar.IsShown())
+
         self._parent.Bind(wx.EVT_MENU, self.__onToolBarMenuClick, newitem)
+        return newitem
+
+
+    def _removeMenu (self, toolbarinfo):
+        self._toolbarsMenu.DeleteItem (toolbarinfo.menuitem)
 
 
     def __onToolBarMenuClick (self, event):
@@ -74,9 +83,11 @@ class ToolBarsController (object):
         """
         Уничтожить панель инструментов. Нужно вызывать до вызова auiManager.UnInit()
         """
-        self._parent.auiManager.DetachPane (self._toolbars[toolbarname].toolbar)
+        toolbarinfo = self._toolbars[toolbarname]
+        self._removeMenu (toolbarinfo)
+        self._parent.auiManager.DetachPane (toolbarinfo.toolbar)
 
-        self._toolbars[toolbarname].toolbar.Destroy()
+        toolbarinfo.toolbar.Destroy()
         del self._toolbars[toolbarname]
         self._parent.UpdateAuiManager()
 
