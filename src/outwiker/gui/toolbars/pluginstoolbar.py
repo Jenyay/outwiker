@@ -9,6 +9,7 @@ import wx.aui
 
 from .basetoolbar import BaseToolBar
 from outwiker.core.system import getImagesDir
+from outwiker.core.application import Application
 
 
 class PluginsToolBar (BaseToolBar):
@@ -17,4 +18,14 @@ class PluginsToolBar (BaseToolBar):
 
 
     def _createPane (self):
-        return wx.aui.AuiPaneInfo().Name("pluginsToolBar").Caption(_(u"Plugins")).ToolbarPane().Top().Position(5)
+        return wx.aui.AuiPaneInfo().Name(self.name).Caption(self.caption).ToolbarPane().Top().Position(5)
+
+
+    @property
+    def name (self):
+        return u"pluginsToolBar"
+
+
+    @property
+    def caption (self):
+        return _(u"Plugins")

@@ -251,6 +251,7 @@ class BasePagePanel (wx.Panel):
         Закрытие панели. 
         Вызывать вручную!!!
         """
+        self.mainWindow.toolbars.updatePanesInfo()
         self.Save()
         self.CloseWithoutSave()
     

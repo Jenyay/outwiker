@@ -1,10 +1,13 @@
 #!/usr/bin/env python
 #-*- coding: utf-8 -*-
 
-from abc import ABCMeta, abstractmethod
+from abc import ABCMeta, abstractmethod, abstractproperty
 
 import wx
 import wx.aui
+
+from outwiker.core.application import Application
+from outwiker.gui.guiconfig import MainWindowConfig
 
 
 class BaseToolBar (wx.aui.AuiToolBar):
@@ -15,10 +18,23 @@ class BaseToolBar (wx.aui.AuiToolBar):
 
     def __init__ (self, parent, auiManager):
         super (BaseToolBar, self).__init__(parent)
+        self._SECTION_NAME = MainWindowConfig.MAIN_WINDOW_SECTION
 
         self._parent = parent
         self._auiManager = auiManager
-        self._pane = self._createPane()
+        self._pane = self._loadPaneInfo()
+
+
+    def _loadPaneInfo (self):
+        try:
+            paneinfo = Application.config.get (self._SECTION_NAME, self.name)
+            pane = wx.aui.AuiPaneInfo()
+            self._auiManager.LoadPaneInfo (paneinfo, pane)
+            pane.Caption(self.caption)#.Layer(0)
+        except BaseException, e:
+            pane = self._createPane()
+
+        return pane
 
 
     @abstractmethod
@@ -28,6 +44,15 @@ class BaseToolBar (wx.aui.AuiToolBar):
         Должен вернуть экземпляр класса AuiPaneInfo
         """
         pass
+
+
+    def savePaneInfo (self):
+        config = Application.config
+        paneinfo = self._auiManager.SavePaneInfo (self.pane)
+        config.set (self._SECTION_NAME, self.name, paneinfo)
+
+        # print "savePaneInfo"
+        # print paneinfo
 
 
     def DeleteTool (self, toolid, fullUpdate=True):
@@ -57,7 +82,11 @@ class BaseToolBar (wx.aui.AuiToolBar):
 
 
     def updatePaneInfo (self):
-        self._pane.Position (self._auiManager.GetPane (self).dock_pos)
+        currentpane = self._auiManager.GetPane (self)
+        self.pane.Position (currentpane.dock_pos).Row (currentpane.dock_row).Direction (currentpane.dock_direction).Layer (currentpane.dock_layer)
+
+        # print "updatePaneInfo"
+        # print self._auiManager.SavePaneInfo (self.pane)
 
 
     def UpdateToolBar (self):
@@ -71,12 +100,12 @@ class BaseToolBar (wx.aui.AuiToolBar):
         return self.FindTool (toolid)
 
 
-    @property
+    @abstractproperty
     def caption (self):
-        return self.pane.caption
+        pass
 
 
-    @property
+    @abstractproperty
     def name (self):
         return self.pane.name
 
@@ -90,3 +119,8 @@ class BaseToolBar (wx.aui.AuiToolBar):
     def Show (self):
         self.pane.Show()
         super (BaseToolBar, self).Show()
+
+
+    def Destroy (self):
+        self.savePaneInfo()
+        super (BaseToolBar, self).Destroy()

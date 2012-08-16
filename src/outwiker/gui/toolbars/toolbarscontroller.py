@@ -99,6 +99,8 @@ class ToolBarsController (object):
         Уничтожить все панели инструментов.
         Нужно вызывать до вызова auiManager.UnInit()
         """
+        self.updatePanesInfo()
+
         for toolbarname in self._toolbars.keys():
             self.destroyToolBar (toolbarname)
 
@@ -107,5 +109,5 @@ class ToolBarsController (object):
         return toolbarname in self._toolbars
 
 
-    # def updatePanesInfo (self):
-    #     map (lambda toolbar: toolbar.toolbar.updatePaneInfo(), self._toolbars.values())
+    def updatePanesInfo (self):
+        map (lambda toolbar: toolbar.toolbar.updatePaneInfo(), self._toolbars.values())

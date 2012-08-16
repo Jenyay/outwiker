@@ -17,4 +17,14 @@ class HtmlToolBar (BaseToolBar):
 
 
     def _createPane (self):
-        return wx.aui.AuiPaneInfo().Name("htmlToolBar").Caption(_(u"HTML")).ToolbarPane().Top().Position(1)
+        return wx.aui.AuiPaneInfo().Name(self.name).Caption(self.caption).ToolbarPane().Top().Position(1)
+
+
+    @property
+    def name (self):
+        return u"htmlToolBar"
+
+
+    @property
+    def caption (self):
+        return _(u"HTML")
