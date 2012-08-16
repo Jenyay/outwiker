@@ -43,6 +43,7 @@ class ToolBarsController (object):
 
         newitem = self._addMenu (toolbar)
         self._toolbars[toolbarname] = ToolBarInfo (toolbar, newitem)
+        toolbar.UpdateToolBar()
 
 
     def _addMenu (self, toolbar):
@@ -104,3 +105,7 @@ class ToolBarsController (object):
 
     def __contains__ (self, toolbarname):
         return toolbarname in self._toolbars
+
+
+    # def updatePanesInfo (self):
+    #     map (lambda toolbar: toolbar.toolbar.updatePaneInfo(), self._toolbars.values())

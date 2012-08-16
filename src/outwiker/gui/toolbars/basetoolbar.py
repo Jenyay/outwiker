@@ -48,12 +48,23 @@ class BaseToolBar (wx.aui.AuiToolBar):
         self.UpdateToolBar()
         if fullUpdate:
             self._parent.UpdateAuiManager()
+            self.updatePaneInfo()
+
+
+    @property
+    def pane (self):
+        return self._pane
+
+
+    def updatePaneInfo (self):
+        self._pane.Position (self._auiManager.GetPane (self).dock_pos)
 
 
     def UpdateToolBar (self):
         self.Realize()
         self._auiManager.DetachPane (self)
-        self._auiManager.AddPane(self, self._pane)
+        self._auiManager.AddPane(self, self.pane)
+        self.updatePaneInfo()
 
 
     def FindById (self, toolid):
@@ -62,19 +73,20 @@ class BaseToolBar (wx.aui.AuiToolBar):
 
     @property
     def caption (self):
-        return self._pane.caption
+        return self.pane.caption
 
 
     @property
     def name (self):
-        return self._pane.name
+        return self.pane.name
 
 
     def Hide (self):
-        self._pane.Hide()
+        self.updatePaneInfo()
+        self.pane.Hide()
         super (BaseToolBar, self).Hide()
 
 
     def Show (self):
-        self._pane.Show()
+        self.pane.Show()
         super (BaseToolBar, self).Show()

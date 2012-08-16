@@ -64,7 +64,6 @@ class MainWindow(wx.Frame):
         self.toolbars = ToolBarsController (self)
         self.toolbars[self.GENERAL_TOOLBAR_STR] = GeneralToolBar (self, self.auiManager)
         self.toolbars[self.PLUGINS_TOOLBAR_STR] = PluginsToolBar (self, self.auiManager)
-        self.toolbars[self.PLUGINS_TOOLBAR_STR].UpdateToolBar()
 
         self.__panesController = MainPanesController (self, self.auiManager)
 

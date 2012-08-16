@@ -17,4 +17,4 @@ class WikiToolBar (BaseToolBar):
 
 
     def _createPane (self):
-        return wx.aui.AuiPaneInfo().Name("wikiToolBar").Caption(_(u"Wiki")).ToolbarPane().Top().Position(1)
+        return wx.aui.AuiPaneInfo().Name("wikiToolBar").Caption(_(u"Wiki")).ToolbarPane().Top().Position(10)
