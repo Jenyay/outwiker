@@ -30,7 +30,8 @@ class BaseToolBar (wx.aui.AuiToolBar):
             paneinfo = Application.config.get (self._SECTION_NAME, self.name)
             pane = wx.aui.AuiPaneInfo()
             self._auiManager.LoadPaneInfo (paneinfo, pane)
-            pane.Caption(self.caption)#.Layer(0)
+            pane.Caption(self.caption)
+            pane.Dock()
         except BaseException, e:
             pane = self._createPane()
 
@@ -50,9 +51,6 @@ class BaseToolBar (wx.aui.AuiToolBar):
         config = Application.config
         paneinfo = self._auiManager.SavePaneInfo (self.pane)
         config.set (self._SECTION_NAME, self.name, paneinfo)
-
-        # print "savePaneInfo"
-        # print paneinfo
 
 
     def DeleteTool (self, toolid, fullUpdate=True):
@@ -84,9 +82,6 @@ class BaseToolBar (wx.aui.AuiToolBar):
     def updatePaneInfo (self):
         currentpane = self._auiManager.GetPane (self)
         self.pane.Position (currentpane.dock_pos).Row (currentpane.dock_row).Direction (currentpane.dock_direction).Layer (currentpane.dock_layer)
-
-        # print "updatePaneInfo"
-        # print self._auiManager.SavePaneInfo (self.pane)
 
 
     def UpdateToolBar (self):

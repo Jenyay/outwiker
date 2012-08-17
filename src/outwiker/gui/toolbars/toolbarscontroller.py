@@ -28,6 +28,7 @@ class ToolBarsController (object):
         for toolbarinfo in self._toolbars.values():
             if event.GetPane().name == toolbarinfo.toolbar.name:
                 toolbarinfo.menuitem.Check (False)
+                toolbarinfo.toolbar.Hide()
                 return
 
         event.Skip()
@@ -48,7 +49,7 @@ class ToolBarsController (object):
 
     def _addMenu (self, toolbar):
         newitem = self._toolbarsMenu.AppendCheckItem (wx.NewId(), toolbar.caption)
-        newitem.Check (toolbar.IsShown())
+        newitem.Check (toolbar.pane.IsShown())
 
         self._parent.Bind(wx.EVT_MENU, self.__onToolBarMenuClick, newitem)
         return newitem
