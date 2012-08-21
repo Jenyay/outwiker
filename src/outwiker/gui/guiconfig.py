@@ -16,7 +16,7 @@ class GeneralGuiConfig (object):
     RECENT_SECTION = u"RecentWiki"
 
     ASK_BEFORE_EXIT_PARAM = u"AskBeforeExit"
-    ASK_BEFORE_EXIT_DEFAULT = True
+    ASK_BEFORE_EXIT_DEFAULT = False
 
     AUTOSAVE_INTERVAL_PARAM = u"AutosaveInterval"
     AUTOSAVE_INTERVAL_DEFAULT = 3
