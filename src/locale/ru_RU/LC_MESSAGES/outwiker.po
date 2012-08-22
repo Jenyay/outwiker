@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-14 18:47+0400\n"
+"POT-Creation-Date: 2012-08-22 12:52+0400\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -152,11 +152,14 @@ msgstr "Вы не выбрали файл(ы) для удаления"
 #: outwiker/gui/attachpanel.py:240
 #: outwiker/gui/attachpanel.py:250
 #: outwiker/gui/basetextpanel.py:166
+#: outwiker/gui/currentpagepanel.py:92
+#: outwiker/gui/currentpagepanel.py:239
+#: outwiker/gui/currentpagepanel.py:248
 #: outwiker/gui/htmlrenderie.py:162
 #: outwiker/gui/htmlrenderwebkit.py:210
 #: outwiker/gui/htmlrenderwx.py:106
-#: outwiker/gui/mainwindow.py:206
-#: outwiker/gui/mainwindow.py:322
+#: outwiker/gui/mainwindow.py:205
+#: outwiker/gui/mainwindow.py:321
 #: outwiker/gui/mainwndcontroller.py:128
 #: outwiker/gui/pagedialog.py:29
 #: outwiker/gui/pagedialog.py:46
@@ -226,7 +229,7 @@ msgstr "Ошибка запуска файла '%s'"
 
 #: outwiker/gui/basepagedialog.py:36
 #: outwiker/gui/preferences/prefdialog.py:126
-#: outwiker/gui/toolbars/generaltoolbar.py:57
+#: outwiker/gui/toolbars/generaltoolbar.py:67
 #: outwiker/pages/wiki/wikipage.py:71
 msgid "General"
 msgstr "Общие"
@@ -312,13 +315,31 @@ msgstr "Найти выше\tShift+F3"
 msgid "Find next\tF3"
 msgstr "Найти далее\tF3"
 
-#: outwiker/gui/currentpagepanel.py:101
+#: outwiker/gui/currentpagepanel.py:92
+msgid "Can't open page. Page folder not exists"
+msgstr "Невозможно открыть страницу. Папка со страницей отсутствует."
+
+#: outwiker/gui/currentpagepanel.py:109
 msgid "Add to Bookmarks"
 msgstr "Добавить в закладки"
 
-#: outwiker/gui/currentpagepanel.py:105
+#: outwiker/gui/currentpagepanel.py:113
 msgid "Remove from Bookmarks"
 msgstr "Удалить из закладок"
+
+#: outwiker/gui/currentpagepanel.py:239
+msgid "Can't save page. Wiki folder not exists. Wiki will be closed."
+msgstr ""
+"Невозможно сохранить страницу. \n"
+"Папка с вики не существует. \n"
+"Вики будет закрыта"
+
+#: outwiker/gui/currentpagepanel.py:248
+msgid "Can't save page. Page folder not exists. Wiki will be reloaded."
+msgstr ""
+"Невозможно сохранить страницу. \n"
+"Папка со страницей не существует. \n"
+"Вики будет перезагружена."
 
 #: outwiker/gui/editorsearchpanel.py:79
 msgid "Not found"
@@ -504,7 +525,7 @@ msgstr "Прикрепленные файлы"
 
 #: outwiker/gui/mainmenu.py:140
 #: outwiker/gui/mainpanes/tagscloudmainpane.py:56
-#: outwiker/pages/search/searchpanel.py:34
+#: outwiker/pages/search/searchpanel.py:36
 msgid "Tags"
 msgstr "Метки"
 
@@ -520,7 +541,7 @@ msgstr "&Помощь\tF1"
 msgid "&About…\tCtrl+F1"
 msgstr "&О программе…\tCtrl+F1"
 
-#: outwiker/gui/mainwindow.py:205
+#: outwiker/gui/mainwindow.py:204
 #, python-format
 msgid ""
 "Can't save config\n"
@@ -529,7 +550,7 @@ msgstr ""
 "Невозможно сохранить настройки\n"
 "%s"
 
-#: outwiker/gui/mainwindow.py:322
+#: outwiker/gui/mainwindow.py:321
 #: outwiker/gui/pagedialog.py:84
 msgid "Can't create page"
 msgstr "Невозможно создать страницу"
@@ -836,7 +857,7 @@ msgid "Interface"
 msgstr "Интерфейс"
 
 #: outwiker/gui/preferences/prefdialog.py:136
-#: outwiker/gui/toolbars/pluginstoolbar.py:20
+#: outwiker/gui/toolbars/pluginstoolbar.py:31
 msgid "Plugins"
 msgstr "Расширения"
 
@@ -891,7 +912,7 @@ msgid "HTML Page"
 msgstr "HTML-страница"
 
 #: outwiker/pages/html/htmlpanel.py:168
-#: outwiker/pages/html/htmltoolbar.py:20
+#: outwiker/pages/html/htmltoolbar.py:30
 #: outwiker/pages/wiki/wikipanel.py:75
 msgid "HTML"
 msgstr "HTML"
@@ -1191,8 +1212,8 @@ msgstr "Преобразовать символы в HTML"
 msgid "Page style Error. Style by default is used"
 msgstr "Ошибка в файле стиля страницы. Будет использоваться стиль по умолчанию."
 
-#: outwiker/pages/search/htmlreport.py:58
-#: outwiker/pages/search/searchpanel.py:32
+#: outwiker/pages/search/htmlreport.py:64
+#: outwiker/pages/search/searchpanel.py:34
 msgid "Tags: "
 msgstr "Метки:"
 
@@ -1204,23 +1225,23 @@ msgstr "Страница поиска"
 msgid "# Search"
 msgstr "# Поиск"
 
-#: outwiker/pages/search/searchpanel.py:30
+#: outwiker/pages/search/searchpanel.py:32
 msgid "Search words: "
 msgstr "Искомые слова:"
 
-#: outwiker/pages/search/searchpanel.py:34
+#: outwiker/pages/search/searchpanel.py:36
 msgid "Any tag"
 msgstr "Любая метка"
 
-#: outwiker/pages/search/searchpanel.py:34
+#: outwiker/pages/search/searchpanel.py:36
 msgid "All tags"
 msgstr "Все метки"
 
-#: outwiker/pages/search/searchpanel.py:35
+#: outwiker/pages/search/searchpanel.py:37
 msgid "Clear all tags"
 msgstr "Очистить все метки"
 
-#: outwiker/pages/search/searchpanel.py:36
+#: outwiker/pages/search/searchpanel.py:38
 msgid "Find"
 msgstr "Найти"
 
@@ -1247,7 +1268,7 @@ msgid "Wiki Page"
 msgstr "Викистраница"
 
 #: outwiker/pages/wiki/wikipanel.py:38
-#: outwiker/pages/wiki/wikitoolbar.py:20
+#: outwiker/pages/wiki/wikitoolbar.py:30
 msgid "Wiki"
 msgstr "Вики"
 
