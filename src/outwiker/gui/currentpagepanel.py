@@ -88,6 +88,11 @@ class CurrentPagePanel(wx.Panel):
         """
         Событие при выборе страницы
         """
+        if page != None and not pageExists (page):
+            MessageBox (_(u"Can't open page. Page folder not exists"), _("Error"), wx.OK | wx.ICON_ERROR)
+            Application.selectedPage = None
+            return
+
         self.Freeze()
         self.__updatePageView (page)
         self.__updatePageInfo (page)
@@ -243,11 +248,15 @@ class CurrentPagePanel(wx.Panel):
                 MessageBox (_(u"Can't save page. Page folder not exists. Wiki will be reloaded."), _("Error"), wx.OK | wx.ICON_ERROR)
                 self.__saveProcessing = False
 
-                Application.selectedPage = None
-                openWiki (Application.wikiroot.path)
+                self.__reloadWiki()
                 return
 
             self.__pageView.Save()
+
+
+    def __reloadWiki (self):
+        Application.selectedPage = None
+        openWiki (Application.wikiroot.path)
 
 
     def __onForceSave (self):
