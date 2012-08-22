@@ -24,7 +24,7 @@ class TagsCloud (wx.ScrolledWindow):
         # Шаг между строчками тегов
         self.__stepy = 28
 
-        self.__tags = []
+        self.__tags = {}
 
         # Ключ - имя метки, значение - контрол, отображающий эту метку
         self.__labels = {}
@@ -39,9 +39,8 @@ class TagsCloud (wx.ScrolledWindow):
 
     def setTags (self, taglist):
         """
-        Добавить тег в облако
+        Добавить теги в облако
         """
-        # self.Scroll (0, 0)
         self.Freeze()
         oldy = self.GetScrollPos (wx.VERTICAL)
         self.clear()
@@ -70,6 +69,10 @@ class TagsCloud (wx.ScrolledWindow):
         Убрать все выделения с меток
         """
         map (lambda label: label.mark(False), self.__labels.values())
+
+
+    def isMarked (self, tag):
+        return self.__labels[tag].isMarked
 
 
     def clear(self):
@@ -145,8 +148,6 @@ class TagsCloud (wx.ScrolledWindow):
         """
         Расположение тегов в окне
         """
-        # self.SetScrollbars (0, 0, 0, 0)
-
         if self.__tags == None:
             return
 

@@ -8,9 +8,17 @@ class HtmlReport (object):
     """
     Класс для генерации HTML-а, для вывода найденных страниц
     """
+    def __init__ (self, pages, searchPhrase, searchTags):
+        """
+        pages - список найденных страниц
+        searchPhrase - искомая фраза
+        searchTags - теги, которые участвуют в поиске
+        """
+        self.__pages = pages
+        self.__searchPhrase = searchPhrase
+        self.__searchTags = searchTags
 
-    @staticmethod
-    def generate (pages):
+    def generate (self):
         """
         Сгенерить отчет
         """
@@ -27,15 +35,14 @@ class HtmlReport (object):
 
         items = u""
 
-        for page in pages:
-            items += HtmlReport.generataPageView (page)
+        for page in self.__pages:
+            items += self.generataPageView (page)
 
         result = shell % items
         return result
     
 
-    @staticmethod
-    def generataPageView (page):
+    def generataPageView (self, page):
         """
         Вернуть представление для одной страницы
         """
@@ -43,21 +50,20 @@ class HtmlReport (object):
         if page.parent.parent != None:
             item += u" (%s)" % page.parent.subpath
 
-        item += "<br>" + HtmlReport.generatePageTags (page) + "<p>"
+        item += "<br>" + self.generatePageTags (page) + "<p>"
 
         result = u"<li>%s</li>\n" % item
 
         return result
 
 
-    @staticmethod
-    def generatePageTags (page):
+    def generatePageTags (self, page):
         """
         Создать список тегов для страницы
         """
         result = "<FONT SIZE='-1'>" + _(u"Tags: ")
         for tag in page.tags:
-            result += HtmlReport.generageTagView (tag) + u", "
+            result += self.generageTagView (tag) + u", "
 
         if result.endswith (", "):
             result = result [: -2]
@@ -67,10 +73,12 @@ class HtmlReport (object):
         return result
 
 
-    @staticmethod
-    def generageTagView (tag):
+    def generageTagView (self, tag):
         """
         Оформление для одного тега
         """
-        #result = "<img src='__tag.png'/>%s" % (tag)
-        return tag
+        if tag in self.__searchTags:
+            style = "font-weight: bold; background-color: rgb(255,255,36);"
+            return "<span style='{style}'>{tag}</span>".format (style=style, tag=tag)
+        else:
+            return tag

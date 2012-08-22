@@ -78,3 +78,7 @@ class TagLabel (wx.HyperlinkCtrl):
         self.__isMarked = marked
         self.__format()
 
+    
+    @property
+    def isMarked (self):
+        return self.__isMarked

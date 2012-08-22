@@ -12,6 +12,8 @@ from .htmlreport import HtmlReport
 from outwiker.gui.htmlrenderfactory import getHtmlRender
 from outwiker.gui.basepagepanel import BasePagePanel
 from outwiker.core.commands import pageExists
+from outwiker.gui.tagscloud import TagsCloud
+from outwiker.gui.taglabel import EVT_TAG_LEFT_CLICK
 
 
 class SearchPanel(BasePagePanel):
@@ -30,7 +32,7 @@ class SearchPanel(BasePagePanel):
         self.wordsLabel = wx.StaticText(self, -1, _(u"Search words: "))
         self.wordsTextCtrl = wx.TextCtrl(self, -1, "")
         self.tagsLabel = wx.StaticText(self, -1, _(u"Tags: "))
-        self.tagsList = wx.CheckListBox(self, -1, choices=[])
+        self.tagsList = TagsCloud (self)
         self.tagsStrategy = wx.RadioBox(self, -1, _(u"Tags"), choices=[_(u"Any tag"), _(u"All tags")], majorDimension=0, style=wx.RA_SPECIFY_ROWS)
         self.clearTagsBtn = wx.Button(self, -1, _(u"Clear all tags"))
         self.searchBtn = wx.Button(self, -1, _(u"Find"))
@@ -41,6 +43,12 @@ class SearchPanel(BasePagePanel):
 
         self.Bind(wx.EVT_BUTTON, self.onClear, self.clearTagsBtn)
         self.Bind(wx.EVT_BUTTON, self.onFind, self.searchBtn)
+        self.tagsList.Bind (EVT_TAG_LEFT_CLICK, self.__onTagLeftClick)
+
+
+    def __onTagLeftClick (self, event):
+        tag = event.text
+        self.tagsList.mark (tag, not self.tagsList.isMarked(tag))
 
 
     def Print (self):
@@ -68,18 +76,15 @@ class SearchPanel(BasePagePanel):
         assert self.page != None
 
         # заполним список тегов
-        self.tagsList.Clear()
-        list_items = [u"%s (%d)" % (tag, len (self._allTags[tag] ) ) for tag in self._allTags ]
-        self.tagsList.InsertItems (list_items, 0)
+        list_items = TagsList (Application.wikiroot)
+        self.tagsList.setTags (list_items)
 
         tags = self.page.searchTags
 
         # Поставим галки, где нужно
-        n = 0
         for tag in self._allTags:
             if tag in tags:
-                self.tagsList.Check (n)
-            n += 1
+                self.tagsList.mark (tag)
 
         # Установим стратегию поиска по тегам
         strategyIndex = self._strategyList.index (self.page.strategy)
@@ -170,7 +175,7 @@ class SearchPanel(BasePagePanel):
         
         self.Save()
 
-        phrase = self.wordsTextCtrl.GetValue ()
+        phrase = self._getSearchPhrase()
         tags = self._getSearchTags()
 
         searcher = Searcher (phrase, tags, self.page.strategy)
@@ -181,22 +186,31 @@ class SearchPanel(BasePagePanel):
     
 
     def _getSearchTags (self):
-        n = 0
-
+        """
+        Получить список искомых тегов
+        """
         tags = []
 
         for tag in self._allTags:
-            if self.tagsList.IsChecked (n):
+            if self.tagsList.isMarked (tag):
                 tags.append (tag)
-
-            n += 1
 
         return tags
 
+
+    def _getSearchPhrase (self):
+        """
+        Получить искомую фразу
+        """
+        return self.wordsTextCtrl.GetValue ()
     
 
     def _showResults (self, resultPages):
-        htmltext = HtmlReport.generate (resultPages)
+        """
+        Показать результат
+        """
+        report = HtmlReport (resultPages, self._getSearchPhrase(), self._getSearchTags())
+        htmltext = report.generate ()
         self.resultWindow.SetPage (htmltext, self.page.path)
     
 
@@ -233,9 +247,4 @@ class SearchPanel(BasePagePanel):
 
 
     def onClear(self, event):
-        for n in range (self.tagsList.GetCount()):
-            self.tagsList.Check (n, False)
-
-
-    # def _isEnabledTool (self, tool):
-    #     return True
+        self.tagsList.clearMarks()
