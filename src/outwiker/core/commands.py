@@ -470,7 +470,7 @@ def pageExists (page):
     """
     Проверка на то, что страница была удалена сторонними средствами
     """
-    return os.path.exists (page.path)
+    return page != None and os.path.exists (page.path)
 
 
 @testreadonly

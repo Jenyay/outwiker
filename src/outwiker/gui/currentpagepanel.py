@@ -6,7 +6,7 @@ import wx
 
 from outwiker.core.application import Application
 from outwiker.core.factoryselector import FactorySelector
-from outwiker.core.commands import pageExists, openWiki
+from outwiker.core.commands import pageExists, openWiki, MessageBox
 from outwiker.core.tree import RootWikiPage
 from outwiker.core.tagscommands import getTagsString
 import outwiker.core.system
@@ -17,6 +17,9 @@ class CurrentPagePanel(wx.Panel):
     def __init__(self, *args, **kwds):
         self.__pageView = None
         self.__currentPage = None
+
+        # Флаг обозначает, что выполняется метод Save
+        self.__saveProcessing = False
 
         self.imagesDir = outwiker.core.system.getImagesDir()
         
@@ -221,9 +224,25 @@ class CurrentPagePanel(wx.Panel):
         """
         Сохранить текущую страницу
         """
+        if self.__saveProcessing:
+            return
+
         if self.__pageView != None:
+            if not pageExists (Application.selectedPage.root):
+                # Нет папки с деревом
+                self.__saveProcessing = True
+                MessageBox (_(u"Can't save page. Wiki folder not exists. Wiki will be closed."), _("Error"), wx.OK | wx.ICON_ERROR)
+                self.__saveProcessing = False
+
+                Application.wikiroot = None
+                return
+
             if not pageExists (Application.selectedPage):
                 # Похоже, страница удалена вручную, перезагрузим вики
+                self.__saveProcessing = True
+                MessageBox (_(u"Can't save page. Page folder not exists. Wiki will be reloaded."), _("Error"), wx.OK | wx.ICON_ERROR)
+                self.__saveProcessing = False
+
                 Application.selectedPage = None
                 openWiki (Application.wikiroot.path)
                 return
