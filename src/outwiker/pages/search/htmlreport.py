@@ -78,7 +78,7 @@ class HtmlReport (object):
         Оформление для одного тега
         """
         if tag in self.__searchTags:
-            style = "font-weight: bold; background-color: rgb(255,255,36);"
-            return "<span style='{style}'>{tag}</span>".format (style=style, tag=tag)
+            style = u"font-weight: bold; background-color: rgb(255,255,36);"
+            return u"<span style='{style}'>{tag}</span>".format (style=style, tag=tag)
         else:
             return tag
