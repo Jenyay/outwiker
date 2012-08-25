@@ -29,6 +29,7 @@ if __name__ == '__main__':
     from test.factory import FactorySelectorTest
     from test.titletester import PageTitleTesterTest
     from test.tags import TagsListTest
+    from test.pagedatetime import PageDateTimeTest
 
     from test.pagemove import MoveTest
     from test.attachment import AttachmentTest

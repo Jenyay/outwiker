@@ -9,6 +9,7 @@ import os
 import os.path
 import ConfigParser
 import shutil
+import datetime
 
 from outwiker.core.config import Config
 from outwiker.core.system import getCurrentDir, getConfigPath
@@ -135,6 +136,7 @@ class ConfigOptionsTest (unittest.TestCase):
             fp.write (u"[Test]\n")
             fp.write (u"intval=100\n")
             fp.write (u"boolval=True\n")
+            fp.write (u"datetimeval=2012-08-25 16:18:24.171654\n")
             fp.write (u"strval=тест\n".encode ("utf-8"))
             fp.write (u"list1=элемент 1;элемент 2;элемент 3\n".encode ("utf-8"))
             fp.write (u"list2=элемент 1\n".encode ("utf-8"))
@@ -214,6 +216,38 @@ class ConfigOptionsTest (unittest.TestCase):
         opt.value = 666
 
         self.assertEqual (newopt.value, 666)
+
+
+    # Опции для хранения даты/времени
+    def testDateTimeOpt1 (self):
+        strdatetime = "2012-08-25 16:18:24.171654"
+
+        opt = outwiker.core.config.DateTimeOption (self.config, u"Test", u"datetimeval", None)
+        self.assertEqual (opt.value, 
+                datetime.datetime.strptime (strdatetime, outwiker.core.config.DateTimeOption.formatDate))
+    
+
+    def testDateTimeOpt2 (self):
+        opt = outwiker.core.config.DateTimeOption (self.config, u"Test", u"datetimeval_invalid", None)
+        self.assertEqual (opt.value, None)
+    
+
+    def testDateTimeOpt3 (self):
+        defaultValue = datetime.datetime (2012, 8, 25)
+
+        opt = outwiker.core.config.DateTimeOption (self.config, u"Test", u"datetimeval_invalid", defaultValue)
+        self.assertEqual (opt.value, defaultValue)
+
+
+    def testDateTimeOpt4 (self):
+        newdate = datetime.datetime (2012, 8, 25)
+        opt = outwiker.core.config.DateTimeOption (self.config, u"Test", u"datetimeval2", None)
+        opt.value = newdate
+
+        newconfig = outwiker.core.config.Config (self.path)
+        newopt = outwiker.core.config.DateTimeOption (newconfig, u"Test", u"datetimeval2", None)
+
+        self.assertEqual (newopt.value, newdate)
     
 
     # Булевы опции

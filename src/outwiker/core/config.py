@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import ConfigParser
+import datetime
 
 
 class Config (object):
@@ -144,6 +145,38 @@ class BooleanOption (StringOption):
         return self.config.getbool (self.section, self.param)
 
 
+class DateTimeOption (StringOption):
+    """
+    Настройка для хранения даты и времени
+    """
+    formatDate = "%Y-%m-%d %H:%M:%S.%f"
+
+    def __init__ (self, config, section, param, defaultValue):
+        StringOption.__init__ (self, config, section, param, defaultValue)
+
+
+    def _loadValue (self):
+        strdate = self.config.get (self.section, self.param)
+
+        try:
+            date = datetime.datetime.strptime (strdate, self.formatDate)
+        except ValueError:
+            return self.defaultValue
+
+        return date
+
+
+    @property
+    def value (self):
+        return self._loadParam ()
+
+
+    @value.setter
+    def value (self, date):
+        val = datetime.datetime.strftime (date, self.formatDate)
+        self.config.set (self.section, self.param, val)
+
+
 class ListOption (StringOption):
     """
     Класс для хранения настроек в виде списка. По умолчанию элементы разделяются символом ";", но разделитель можно изменять
@@ -161,6 +194,7 @@ class ListOption (StringOption):
 
     @property
     def value (self):
+        # return super (ListOption, self).value
         return self._loadParam ()
 
 
@@ -209,6 +243,7 @@ class PageConfig (Config):
     """
     sectionName = u"General"
     orderParamName = u"order"
+    datetimeParamName = u"datetime"
 
     def __init__ (self, fname, readonly=False):
         Config.__init__ (self, fname, readonly)
@@ -216,4 +251,5 @@ class PageConfig (Config):
         self.typeOption = StringOption (self, PageConfig.sectionName, u"type", u"")
         self.orderOption = IntegerOption (self, PageConfig.sectionName, PageConfig.orderParamName, -1)
         self.lastViewedPageOption = StringOption (self,u"History", u"LastViewedPage", u"")
+        self.datetimeOption = DateTimeOption (self, PageConfig.sectionName, PageConfig.datetimeParamName, None)
 

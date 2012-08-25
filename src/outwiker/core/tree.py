@@ -4,6 +4,7 @@
 import os.path
 import ConfigParser
 import shutil
+import datetime
 
 from .config import PageConfig
 from .bookmarks import Bookmarks
@@ -226,11 +227,6 @@ class RootWikiPage (object):
         self._children.sort (RootWikiPage.sortFunction)
 
 
-    # def _updateSiblingsOrder (self):
-    #     for page, order in zip (self.parent.children, range (len (self.parent.children) ) ):
-    #         page.params.orderOption.value = order
-    
-
     def removeFromChildren (self, page):
         """
         Удалить страницу из дочерних страниц
@@ -249,6 +245,26 @@ class RootWikiPage (object):
             currentpage = currentpage.parent
 
         return False
+
+
+    @property
+    def datetime (self):
+        """
+        Получить дату и время изменения страницы в виде экземпляра класса datetime.datetime
+        """
+        return self.params.datetimeOption.value
+
+
+    @datetime.setter
+    def datetime (self, date):
+        self.params.datetimeOption.value = date
+
+
+    def updateDateTime (self):
+        """
+        Установить дату изменения страницы в текущую дату/время
+        """
+        self.params.datetimeOption.value = datetime.datetime.now()
 
 
 class WikiDocument (RootWikiPage):
@@ -602,6 +618,7 @@ class WikiPage (RootWikiPage):
 
         if iconpath != newpath:
             shutil.copyfile (iconpath, newpath)
+            self.updateDateTime()
 
         self.root.onPageUpdate (self)
         self.root.onTreeUpdate (self)
@@ -616,6 +633,9 @@ class WikiPage (RootWikiPage):
 
     @property
     def tags (self):
+        """
+        Получить список тегов для страницы (список строк)
+        """
         result = [tag.lower() for tag in self._tags]
         result.sort()
         return result
@@ -623,6 +643,10 @@ class WikiPage (RootWikiPage):
 
     @tags.setter
     def tags (self, tags):
+        """
+        Установить теги для страницы
+        tags - список тегов (список строк)
+        """
         if self.readonly:
             raise ReadonlyException
 
@@ -634,6 +658,7 @@ class WikiPage (RootWikiPage):
         if newtagset != set (self._tags):
             self._tags = newtags
             self.save()
+            self.updateDateTime()
             self.root.onPageUpdate(self)
 
 
@@ -687,13 +712,14 @@ class WikiPage (RootWikiPage):
         if not os.path.exists (self.path):
             os.mkdir (self.path)
 
-        try:
-            text = self.content
-        except IOError:
-            text = u""
+        # try:
+        #     text = self.content
+        # except IOError:
+        #     text = u""
 
-        with open (os.path.join (self.path, RootWikiPage.contentFile), "w") as fp:
-            fp.write (text.encode ("utf8"))
+        # with open (os.path.join (self.path, RootWikiPage.contentFile), "w") as fp:
+        #     fp.write (text.encode ("utf8"))
+        # self.content = self.content
 
         self._saveOptions ()
     
@@ -727,6 +753,7 @@ class WikiPage (RootWikiPage):
         """
         self._tags = tags[:]
         self.save()
+        self.updateDateTime()
         self.parent.saveChildrenParams()
         self.root.onPageCreate(self)
     
@@ -766,13 +793,14 @@ class WikiPage (RootWikiPage):
         if self.readonly:
             raise ReadonlyException
 
-        #if text != self.content:
-        path = os.path.join (self.path, RootWikiPage.contentFile)
+        if text != self.content or text == u"":
+            path = os.path.join (self.path, RootWikiPage.contentFile)
 
-        with open (path, "wb") as fp:
-            fp.write (text.encode ("utf8"))
+            with open (path, "wb") as fp:
+                fp.write (text.encode ("utf8"))
 
-        self.root.onPageUpdate(self)
+            self.updateDateTime()
+            self.root.onPageUpdate(self)
     
 
     @property
