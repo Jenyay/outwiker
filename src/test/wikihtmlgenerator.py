@@ -283,10 +283,6 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
         generator.makeHtml (Style().getPageStyle (self.testPage))
         self.assertTrue (generator.canReadFromCache())
 
-        # Изменим стиль на тот же 
-        style.setPageStyle (self.testPage, exampleStyleDir2)
-        self.assertTrue (generator.canReadFromCache())
-
         # Установим стиль по умолчанию
         style.setPageStyleDefault (self.testPage)
 

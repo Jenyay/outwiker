@@ -7,6 +7,8 @@ import datetime
 from outwiker.core.tree import RootWikiPage, WikiDocument, WikiPage
 from outwiker.core.config import PageConfig
 from outwiker.pages.text.textpage import TextPageFactory
+from outwiker.pages.html.htmlpage import HtmlPageFactory
+from outwiker.core.style import Style
 from test.utils import removeWiki
 
 
@@ -157,5 +159,19 @@ class PageDateTimeTest (unittest.TestCase):
 
         # Удалим теги
         self.rootwiki[u"Страница 1"].tags = []
+        delta = datetime.datetime.now() - self.rootwiki[u"Страница 1"].datetime
+        self.assertLess (delta, self._maxDelta)
+
+
+    def testChangeStyle (self):
+        exampleStyleDir = u"../test/styles/example_jblog/example_jblog"
+        newdate = datetime.datetime (2012, 8, 24)
+
+        HtmlPageFactory.create (self.rootwiki, u"Страница 1", [])
+        self.rootwiki[u"Страница 1"].datetime = newdate
+
+        style = Style()
+        style.setPageStyle (self.rootwiki[u"Страница 1"], exampleStyleDir)
+
         delta = datetime.datetime.now() - self.rootwiki[u"Страница 1"].datetime
         self.assertLess (delta, self._maxDelta)

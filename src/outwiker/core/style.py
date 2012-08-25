@@ -68,6 +68,7 @@ class Style (object):
         if os.path.exists (style_folder):
             shutil.copytree (style_folder, os.path.join (page.path, self._styleDir) )
 
+        page.updateDateTime()
         page.root.onPageUpdate (page)
 
 
@@ -100,6 +101,7 @@ class Style (object):
             raise ReadonlyException
 
         self._removeStyleFromPage(page)
+        page.updateDateTime()
         page.root.onPageUpdate (page)
 
 
