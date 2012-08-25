@@ -536,8 +536,8 @@ class WikiTree(wx.Panel):
             currentPage = currentPage.parent
 
         pages.reverse()
-        for currentPage in pages:
-            self.expand (currentPage)
+        for page in pages:
+            self.expand (page)
 
     
     def __set_properties(self):
@@ -564,8 +564,8 @@ class WikiTree(wx.Panel):
         """
         # Так как мы сами будем сворачивать/разворачивать узлы дерева, 
         # на эти события реагировать не надо пока строится дерево
-        self.treeCtrl.Unbind (wx.EVT_TREE_ITEM_COLLAPSED, handler = self.__onTreeStateChanged)
-        self.treeCtrl.Unbind (wx.EVT_TREE_ITEM_EXPANDED, handler = self.__onTreeStateChanged)
+        # self.treeCtrl.Unbind (wx.EVT_TREE_ITEM_COLLAPSED, handler = self.__onTreeStateChanged)
+        # self.treeCtrl.Unbind (wx.EVT_TREE_ITEM_EXPANDED, handler = self.__onTreeStateChanged)
         
         self.treeCtrl.DeleteAllItems()
         self.imagelist.RemoveAll()
@@ -585,8 +585,8 @@ class WikiTree(wx.Panel):
             self.selectedPage = rootPage.selectedPage
             self.expand (rootPage)
 
-        self.treeCtrl.Bind (wx.EVT_TREE_ITEM_COLLAPSED, self.__onTreeStateChanged)
-        self.treeCtrl.Bind (wx.EVT_TREE_ITEM_EXPANDED, self.__onTreeStateChanged)
+        # self.treeCtrl.Bind (wx.EVT_TREE_ITEM_COLLAPSED, self.__onTreeStateChanged)
+        # self.treeCtrl.Bind (wx.EVT_TREE_ITEM_EXPANDED, self.__onTreeStateChanged)
     
 
     def __appendChildren (self, parentPage):
