@@ -57,6 +57,22 @@ class SpoilerPluginTest (unittest.TestCase):
         self.assertEqual ( len (self.loader), 1)
 
 
+    def testInterface (self):
+        """
+        Тест на то, что в интерфейсе классов outwiker не пропали нужные публичные свойства и методы
+        """
+        from outwiker.core.pluginbase import Plugin
+        from outwiker.core.system import getOS
+        from outwiker.core.commands import getCurrentVersion
+        from outwiker.core.version import Version, StatusSet
+        from outwiker.pages.wiki.wikipanel import WikiPagePanel
+        from outwiker.pages.wiki.parser.command import Command
+
+        getOS().filesEncoding
+        StatusSet.DEV
+        Command.parseParams
+
+
     def testEmptyCommand (self):
         text = u'''bla-bla-bla (:spoiler:) bla-bla-bla'''
 

@@ -43,6 +43,7 @@ class MainWndTest(BaseMainWndTest):
         self.assertNotEqual (None, self.wnd.taskBarIcon)
 
         self.assertNotEqual (None, self.wnd.mainWindowConfig)
+        self.wnd.mainToolbar.Realize()
 
 
     def testTitle (self):

@@ -16,7 +16,6 @@ from outwiker.core.pluginbase import Plugin
 from outwiker.core.system import getOS
 from outwiker.core.commands import getCurrentVersion
 from outwiker.core.version import Version, StatusSet
-from outwiker.pages.wiki.wikipanel import WikiPagePanel
 
 from .commandspoiler import SpoilerCommand
 
@@ -151,7 +150,7 @@ Text
 
         @property
         def version (self):
-            return u"1.4"
+            return u"1.4.1"
 
 
         def destroy (self):
