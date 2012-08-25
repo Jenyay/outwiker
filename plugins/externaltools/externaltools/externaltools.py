@@ -43,7 +43,7 @@ class PluginExternalTools (Plugin):
 
     @property
     def version (self):
-        return u"1.1"
+        return u"1.2"
 
 
     def initialize(self):
