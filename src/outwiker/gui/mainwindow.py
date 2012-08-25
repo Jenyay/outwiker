@@ -82,17 +82,11 @@ class MainWindow(wx.Frame):
 
 
     @property
-    def generalToolBar (self):
-        return self.toolbars[self.GENERAL_TOOLBAR_STR]
-
-
-    @property
     def mainToolbar (self):
         """
-        Добавлено для совместимости со старыми плагинами.
-        Использовать надо generalToolBar
+        Доступ к основной панели инструментов
         """
-        return self.generalToolBar
+        return self.toolbars[self.GENERAL_TOOLBAR_STR]
 
 
     def UpdateAuiManager (self):
