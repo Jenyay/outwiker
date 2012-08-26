@@ -173,6 +173,7 @@ class SearchPanel(BasePagePanel):
     def onFind(self, event):
         assert self.page != None
         
+        self.page.updateDateTime()
         self.Save()
 
         phrase = self._getSearchPhrase()
