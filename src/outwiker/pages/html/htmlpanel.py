@@ -236,8 +236,10 @@ class HtmlPanel(BaseTextPanel):
         Подготовить и показать HTML текущей страницы
         """
         assert self._currentpage != None
+        
+        status_item = 0
 
-        setStatusText (_(u"Page rendered. Please wait…") )
+        setStatusText (_(u"Page rendered. Please wait…"), status_item)
         Application.onHtmlRenderingBegin (self._currentpage, self.htmlWindow)
 
         try:
@@ -253,7 +255,7 @@ class HtmlPanel(BaseTextPanel):
                     _(u"Error"), 
                     wx.ICON_ERROR | wx.OK)
 
-        setStatusText (u"")
+        setStatusText (u"", status_item)
         Application.onHtmlRenderingEnd (self._currentpage, self.htmlWindow)
     
 

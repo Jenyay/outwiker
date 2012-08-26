@@ -121,7 +121,10 @@ class MainWindow(wx.Frame):
 
     def __createStatusBar (self):
         self.statusbar = wx.StatusBar(self, -1)
-        self.statusbar.SetFieldsCount(1)
+
+        items_count = 2
+        self.statusbar.SetFieldsCount(items_count)
+        self.statusbar.SetStatusWidths ([-1, 200])
         self.SetStatusBar (self.statusbar)
 
 

@@ -2,10 +2,12 @@
 # -*- coding: UTF-8 -*-
 
 import os.path
+import datetime
 
 import wx
 
 from outwiker.core.application import Application
+from outwiker.core.commands import setStatusText
 from .bookmarkscontroller import BookmarksController
 from .autosavetimer import AutosaveTimer
 from .mainid import MainId
@@ -76,6 +78,18 @@ class MainWndController (object):
         return self.mainWindow.mainMenu
 
 
+    def updatePageDateTime (self):
+        statusbar_item = 1
+        dateFormat = u"%Y.%m.%d %H:%M:%S"
+        text = u""
+
+        if (Application.selectedPage != None and 
+            Application.selectedPage.datetime != None):
+                text = datetime.datetime.strftime (Application.selectedPage.datetime, dateFormat)
+
+        setStatusText (text, statusbar_item)
+
+
     def removeMenuItemsById (self, menu, keys):
         """
         Удалить все элементы меню по идентификаторам
@@ -92,6 +106,7 @@ class MainWndController (object):
         Application.onBookmarksChanged += self.__onBookmarksChanged
         Application.onTreeUpdate += self.__onTreeUpdate
         Application.onWikiOpen += self.__onWikiOpen
+        Application.onPageUpdate += self.__onPageUpdate
 
 
     def __unbindAppEvents (self):
@@ -100,6 +115,7 @@ class MainWndController (object):
         Application.onBookmarksChanged -= self.__onBookmarksChanged
         Application.onTreeUpdate -= self.__onTreeUpdate
         Application.onWikiOpen -= self.__onWikiOpen
+        Application.onPageUpdate -= self.__onPageUpdate
 
 
     def __onBookmarksChanged (self, event):
@@ -112,6 +128,11 @@ class MainWndController (object):
         """
         self.updateBookmarks()
         self.updateTitle()
+        self.updatePageDateTime()
+
+
+    def __onPageUpdate (self, page):
+        self.updatePageDateTime()
 
 
     def __onWikiOpen (self, wikiroot):
@@ -130,6 +151,7 @@ class MainWndController (object):
         self.enableGui()
         self.updateBookmarks()
         self.updateTitle()
+        self.updatePageDateTime()
 
 
     def updateBookmarks (self):
@@ -144,6 +166,7 @@ class MainWndController (object):
         Обработчик события выбора страницы в дереве
         """
         self.updateTitle()
+        self.updatePageDateTime()
 
 
     def __onPreferencesDialogClose (self, prefDialog):
@@ -151,6 +174,7 @@ class MainWndController (object):
         Обработчик события изменения настроек главного окна
         """
         self.updateTitle()
+        self.updatePageDateTime()
     #
     ###################################################
 

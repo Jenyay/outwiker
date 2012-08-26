@@ -55,15 +55,15 @@ class HtmlRenderIE (HtmlRender):
             (url, page, filename, anchor) = self.__identifyUri (status)
 
             if page != None:
-                outwiker.core.commands.setStatusText (page.subpath)
+                outwiker.core.commands.setStatusText (page.subpath, self._status_item)
             elif filename != None:
-                outwiker.core.commands.setStatusText (filename)
+                outwiker.core.commands.setStatusText (filename, self._status_item)
             elif anchor != None:
-                outwiker.core.commands.setStatusText (anchor)
+                outwiker.core.commands.setStatusText (anchor, self._status_item)
             else:
-                outwiker.core.commands.setStatusText (status)
+                outwiker.core.commands.setStatusText (status, self._status_item)
         else:
-            outwiker.core.commands.setStatusText (status)
+            outwiker.core.commands.setStatusText (status, self._status_item)
 
 
     def __onCopyFromHtml(self, event):

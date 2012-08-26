@@ -20,6 +20,7 @@ class HtmlRenderWX (wx.Panel):
 
         self.render = wx.html.HtmlWindow (self, style=wx.html.HW_SCROLLBAR_AUTO)
 
+        self._status_item = 0
         self.__layout()
 
         self._currentPage = None
@@ -52,11 +53,11 @@ class HtmlRenderWX (wx.Panel):
     def onCellHover (self, event):
         cell = event.GetCell()
         text = cell.GetLink().GetHref() if cell.GetLink() else u""
-        outwiker.core.commands.setStatusText(text)
+        outwiker.core.commands.setStatusText(text, self._status_item)
 
 
     def onMouseMove (self, event):
-        outwiker.core.commands.setStatusText(u"")
+        outwiker.core.commands.setStatusText(u"", self._status_item)
         event.Skip()
 
 

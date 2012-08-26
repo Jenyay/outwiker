@@ -133,35 +133,35 @@ class HtmlRenderWebKit(HtmlRender):
 
     def __onHoveredOverLink (self, view, title, uri):
         if uri == None:
-            outwiker.core.commands.setStatusText (u"")
+            outwiker.core.commands.setStatusText (u"", self._status_item)
             return
 
         try:
             href = unicode (urllib.unquote (uri), "utf8")
         except UnicodeDecodeError:
             #print uri
-            outwiker.core.commands.setStatusText (u"")
+            outwiker.core.commands.setStatusText (u"", self._status_item)
             return
 
         (url, page, filename, anchor) = self.__identifyUri (href)
 
         if url != None:
-            outwiker.core.commands.setStatusText (url)
+            outwiker.core.commands.setStatusText (url, self._status_item)
             return
 
         if page != None:
-            outwiker.core.commands.setStatusText (page.subpath)
+            outwiker.core.commands.setStatusText (page.subpath, self._status_item)
             return
 
         if filename != None:
-            outwiker.core.commands.setStatusText (filename)
+            outwiker.core.commands.setStatusText (filename, self._status_item)
             return
 
         if anchor != None:
-            outwiker.core.commands.setStatusText (anchor)
+            outwiker.core.commands.setStatusText (anchor, self._status_item)
             return
 
-        outwiker.core.commands.setStatusText (u"")
+        outwiker.core.commands.setStatusText (u"", self._status_item)
 
 
     def __onNavigate (self, view, frame, request, action, decision):

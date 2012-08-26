@@ -17,6 +17,8 @@ class HtmlRender (wx.Panel):
     def __init__(self, parent):
         wx.Panel.__init__(self, parent)
 
+        # Номер элемента статусной панели, куда выводится текст
+        self._status_item = 0
         self._currentPage = None
 
 

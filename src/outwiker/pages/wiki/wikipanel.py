@@ -107,7 +107,8 @@ class WikiPagePanel (HtmlPanel):
         assert self._currentpage != None
 
         self.Save()
-        setStatusText (_(u"Page rendered. Please wait…") )
+        status_item = 0
+        setStatusText (_(u"Page rendered. Please wait…"), status_item)
         Application.onHtmlRenderingBegin (self._currentpage, self.htmlWindow)
 
         try:
@@ -123,7 +124,7 @@ class WikiPagePanel (HtmlPanel):
                     _(u"Error"), 
                     wx.ICON_ERROR | wx.OK)
 
-        setStatusText (u"")
+        setStatusText (u"", status_item)
         Application.onHtmlRenderingEnd (self._currentpage, self.htmlWindow)
 
         self._enableAllTools ()
