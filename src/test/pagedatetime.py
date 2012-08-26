@@ -175,3 +175,22 @@ class PageDateTimeTest (unittest.TestCase):
 
         delta = datetime.datetime.now() - self.rootwiki[u"Страница 1"].datetime
         self.assertLess (delta, self._maxDelta)
+
+
+    def testChild (self):
+        """
+        Проверка на то, что добавление дочерней страницы не изменяет дату модификации
+        """
+        newdate = datetime.datetime (2012, 8, 24)
+        newcontent = u"Бла-бла-бла"
+
+        TextPageFactory.create (self.rootwiki, u"Страница 1", [])
+        self.rootwiki[u"Страница 1"].content = newcontent
+        self.rootwiki[u"Страница 1"].datetime = newdate
+        self.assertEqual (self.rootwiki[u"Страница 1"].datetime, newdate)
+
+        TextPageFactory.create (self.rootwiki[u"Страница 1"], u"Страница 2", [])
+        self.assertEqual (self.rootwiki[u"Страница 1"].datetime, newdate)
+
+        self.rootwiki[u"Страница 1/Страница 2"].content = u"Бла-бла"
+        self.assertEqual (self.rootwiki[u"Страница 1"].datetime, newdate)
