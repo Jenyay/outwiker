@@ -252,7 +252,15 @@ class RootWikiPage (object):
         """
         Получить дату и время изменения страницы в виде экземпляра класса datetime.datetime
         """
-        return self.params.datetimeOption.value
+        date = self.params.datetimeOption.value
+        if date == None:
+            # Если дата не установлена, то возвратим дату последнего изменения файла с контентом
+            contentpath = os.path.join (self.path, RootWikiPage.contentFile)
+            if os.path.exists (contentpath):
+                time = os.path.getmtime(contentpath)
+                date = datetime.datetime.fromtimestamp(time)
+
+        return date
 
 
     @datetime.setter

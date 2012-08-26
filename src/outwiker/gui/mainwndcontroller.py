@@ -80,7 +80,7 @@ class MainWndController (object):
 
     def updatePageDateTime (self):
         statusbar_item = 1
-        dateFormat = u"%Y.%m.%d %H:%M:%S"
+        dateFormat = u"%d.%m.%Y    %H:%M"
         text = u""
 
         if (Application.selectedPage != None and 
