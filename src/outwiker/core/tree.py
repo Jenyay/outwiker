@@ -254,11 +254,13 @@ class RootWikiPage (object):
         """
         date = self.params.datetimeOption.value
         if date == None:
-            # Если дата не установлена, то возвратим дату последнего изменения файла с контентом
+            # Если дата не установлена, то возвратим дату последнего изменения файла с контентом,
+            # при этом запишем эту дату в файл настроек
             contentpath = os.path.join (self.path, RootWikiPage.contentFile)
             if os.path.exists (contentpath):
                 time = os.path.getmtime(contentpath)
                 date = datetime.datetime.fromtimestamp(time)
+                self.datetime = date
 
         return date
 
@@ -272,7 +274,7 @@ class RootWikiPage (object):
         """
         Установить дату изменения страницы в текущую дату/время
         """
-        self.params.datetimeOption.value = datetime.datetime.now()
+        self.datetime = datetime.datetime.now()
 
 
 class WikiDocument (RootWikiPage):
