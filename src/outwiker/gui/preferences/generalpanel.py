@@ -157,10 +157,15 @@ class GeneralPanel (wx.ScrolledWindow):
         """
         Создать элементы интерфейса, связанные с форматом заголовка главного окна
         """
-        self.titleMacrosLabel = wx.StaticText(self, -1, _("Macros for title:\n{file} - open wiki file name\n{page} - open page title"))
+
+        hints = [(u"{file}", _(u"Wiki file name")),
+                (u"{page}", _(u"Page title"))
+            ]
 
         self.titleFormatLabel = wx.StaticText(self, -1, _("Main window title format"))
-        self.titleFormatText = wx.TextCtrl(self, -1, "")
+
+        self.titleFormatText = FormatCtrl(self, self.mainWindowConfig.titleFormat.value, hints)
+
         self.titleFormatSizer = wx.FlexGridSizer(1, 2, 0, 0)
         self.titleFormatSizer.Add(self.titleFormatLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
         self.titleFormatSizer.Add(self.titleFormatText, 0, wx.ALL|wx.EXPAND, 2)
@@ -203,9 +208,6 @@ class GeneralPanel (wx.ScrolledWindow):
 
         self.__addStaticLine(main_sizer)
         main_sizer.Add(self.titleFormatSizer, 1, wx.EXPAND, 0)
-        main_sizer.Add(self.titleMacrosLabel, 0, wx.ALL, 0)
-
-        self.__addStaticLine (main_sizer)
         main_sizer.Add (self.dateTimeSizer, 1, wx.EXPAND, 0)
 
         self.__addStaticLine(main_sizer)
