@@ -8,6 +8,7 @@ import outwiker.core.i18n
 from outwiker.core.application import Application
 from outwiker.core.i18n import I18nConfig
 from outwiker.gui.guiconfig import TrayConfig, GeneralGuiConfig, MainWindowConfig
+from outwiker.gui.formatctrl import FormatCtrl
 
 
 class GeneralPanel (wx.ScrolledWindow):
@@ -34,6 +35,7 @@ class GeneralPanel (wx.ScrolledWindow):
         self.__createAutosaveGui(self.generalConfig)
         self.__createHistoryGui(self.generalConfig)
         self.__createTitleFormatGui()
+        self.__createDateTimeFormatGui(self.generalConfig)
         self.__createLanguageGui()
 
         self.__set_properties()
@@ -76,6 +78,40 @@ class GeneralPanel (wx.ScrolledWindow):
         self.autosaveSizer.AddGrowableRow(0)
         self.autosaveSizer.AddGrowableCol(0)
         self.autosaveSizer.AddGrowableCol(1)
+
+
+    def __createDateTimeFormatGui (self, generalConfig):
+        """
+        Создать элементы, связанные с выбором формата даты и времени
+        """
+        dateTimeLabel = wx.StaticText(self, -1, _("Date and time format"))
+
+        hints = [(u"%a", _(u"Abbreviated weekday name")),
+                (u"%A", _(u"Full weekday name")),
+                (u"%b", _(u"Abbreviated month name")),
+                (u"%B", _(u"Full month name")),
+                (u"%c", _(u"Appropriate date and time representation")),
+                (u"%d", _(u"Day of the month as a decimal number [01,31]")),
+                (u"%H", _(u"Hour (24-hour clock) as a decimal number [00,23]")),
+                (u"%I", _(u"Hour (12-hour clock) as a decimal number [01,12]")),
+                (u"%m", _(u"Month as a decimal number [01,12]")),
+                (u"%M", _(u"Minute as a decimal number [00,59]")),
+                (u"%p", _(u"AM or PM")),
+                (u"%S", _(u"Second as a decimal number [00,61]")),
+                (u"%x", _(u"Appropriate date representation")),
+                (u"%X", _(u"Appropriate time representation")),
+                (u"%y", _(u"Year without century [00,99]")),
+                (u"%Y", _(u"Year with century")),
+                (u"%%", _(u"A literal '%' character")),
+                ]
+        self.dateTimeFormatCtrl = FormatCtrl (self, generalConfig.dateTimeFormat.value, hints)
+
+        self.dateTimeSizer = wx.FlexGridSizer(1, 2, 0, 0)
+        self.dateTimeSizer.AddGrowableRow(0)
+        self.dateTimeSizer.AddGrowableCol(1)
+
+        self.dateTimeSizer.Add(dateTimeLabel, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
+        self.dateTimeSizer.Add(self.dateTimeFormatCtrl, 0, wx.ALL | wx.EXPAND, border=2)
 
 
     def __createMiscGui (self):
@@ -169,6 +205,9 @@ class GeneralPanel (wx.ScrolledWindow):
         main_sizer.Add(self.titleFormatSizer, 1, wx.EXPAND, 0)
         main_sizer.Add(self.titleMacrosLabel, 0, wx.ALL, 0)
 
+        self.__addStaticLine (main_sizer)
+        main_sizer.Add (self.dateTimeSizer, 1, wx.EXPAND, 0)
+
         self.__addStaticLine(main_sizer)
         main_sizer.Add(self.languageSizer, 1, wx.EXPAND, 0)
 
@@ -242,6 +281,11 @@ class GeneralPanel (wx.ScrolledWindow):
                 self.titleFormatText
                 )
 
+        self.dateTimeFormat = configelements.StringElement (
+                self.generalConfig.dateTimeFormat, 
+                self.dateTimeFormatCtrl
+                )
+
         # Автосохранение
         self.autosaveInterval = configelements.IntegerElement (
                 self.generalConfig.autosaveInterval, 
@@ -284,6 +328,7 @@ class GeneralPanel (wx.ScrolledWindow):
         self.historyLength.save()
         self.autoopen.save()
         self.autosaveInterval.save()
+        self.dateTimeFormat.save()
         self.__saveLanguage()
 
         if self.titleFormat.isValueChanged() or self.alwaysInTray.isValueChanged():

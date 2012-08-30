@@ -11,6 +11,7 @@ from outwiker.core.commands import setStatusText
 from .bookmarkscontroller import BookmarksController
 from .autosavetimer import AutosaveTimer
 from .mainid import MainId
+from .guiconfig import GeneralGuiConfig
 import outwiker.core.commands
 
 
@@ -80,7 +81,9 @@ class MainWndController (object):
 
     def updatePageDateTime (self):
         statusbar_item = 1
-        dateFormat = u"%d.%m.%Y    %H:%M"
+        config = GeneralGuiConfig (Application.config)
+
+        dateFormat = config.dateTimeFormat.value
         text = u""
 
         if (Application.selectedPage != None and 

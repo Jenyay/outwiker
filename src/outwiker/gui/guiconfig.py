@@ -27,6 +27,9 @@ class GeneralGuiConfig (object):
     RECENT_AUTOOPEN_PARAM = u"AutoOpen"
     RECENT_AUTOOPEN_DEFAULT = False
 
+    DATETIME_FORMAT_PARAM = u"DateTimeFormat"
+    DATETIME_FORMAT_DEFAULT = u"%d.%m.%Y.  %H:%M"
+
 
     def __init__ (self, config):
         self.config = config
@@ -54,6 +57,12 @@ class GeneralGuiConfig (object):
                 GeneralGuiConfig.RECENT_SECTION, 
                 GeneralGuiConfig.RECENT_AUTOOPEN_PARAM, 
                 GeneralGuiConfig.RECENT_AUTOOPEN_DEFAULT)
+
+        # Формат для представления даты и времени модификиции страниц
+        self.dateTimeFormat = StringOption (self.config, 
+                GeneralGuiConfig.GENERAL_SECTION, 
+                GeneralGuiConfig.DATETIME_FORMAT_PARAM, 
+                GeneralGuiConfig.DATETIME_FORMAT_DEFAULT)
 
 
 class PluginsConfig (object):
