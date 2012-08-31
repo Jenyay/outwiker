@@ -210,7 +210,7 @@ class SearchPanel(BasePagePanel):
         """
         Показать результат
         """
-        report = HtmlReport (resultPages, self._getSearchPhrase(), self._getSearchTags())
+        report = HtmlReport (resultPages, self._getSearchPhrase(), self._getSearchTags(), Application)
         htmltext = report.generate ()
         self.resultWindow.SetPage (htmltext, self.page.path)
     

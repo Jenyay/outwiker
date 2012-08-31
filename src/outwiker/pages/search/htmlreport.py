@@ -2,13 +2,16 @@
 # -*- coding: UTF-8 -*-
 
 import os
+import datetime
+
+from outwiker.gui.guiconfig import GeneralGuiConfig
 
 
 class HtmlReport (object):
     """
     Класс для генерации HTML-а, для вывода найденных страниц
     """
-    def __init__ (self, pages, searchPhrase, searchTags):
+    def __init__ (self, pages, searchPhrase, searchTags, application):
         """
         pages - список найденных страниц
         searchPhrase - искомая фраза
@@ -17,6 +20,7 @@ class HtmlReport (object):
         self.__pages = pages
         self.__searchPhrase = searchPhrase
         self.__searchTags = searchTags
+        self.__application = application
 
     def generate (self):
         """
@@ -46,13 +50,29 @@ class HtmlReport (object):
         """
         Вернуть представление для одной страницы
         """
-        item = "<b><a href='/%s'>%s</a></b>" % (page.subpath, page.title)
+        item = u"<b><a href='/%s'>%s</a></b>" % (page.subpath, page.title)
         if page.parent.parent != None:
             item += u" (%s)" % page.parent.subpath
 
-        item += "<br>" + self.generatePageTags (page) + "<p>"
+        item += u"<br>" + self.generatePageInfo (page) + "<p></p>"
 
         result = u"<li>%s</li>\n" % item
+
+        return result
+
+
+    def generatePageInfo (self, page):
+        tags = self.generatePageTags (page)
+        date = self.generateDate (page)
+
+        pageinfo = u"<font size='-1'>{tags}<br>{date}</font>".format (tags=tags, date=date)
+        return pageinfo
+
+
+    def generateDate (self, page):
+        config = GeneralGuiConfig (self.__application.config)
+        dateStr = page.datetime.strftime (config.dateTimeFormat.value)
+        result = _(u"Last modified date: {0}").format (dateStr)
 
         return result
 
@@ -61,14 +81,12 @@ class HtmlReport (object):
         """
         Создать список тегов для страницы
         """
-        result = "<FONT SIZE='-1'>" + _(u"Tags: ")
+        result = _(u"Tags: ")
         for tag in page.tags:
             result += self.generageTagView (tag) + u", "
 
         if result.endswith (", "):
             result = result [: -2]
-
-        result += "</FONT>"
 
         return result
 

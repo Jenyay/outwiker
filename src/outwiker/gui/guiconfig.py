@@ -28,7 +28,7 @@ class GeneralGuiConfig (object):
     RECENT_AUTOOPEN_DEFAULT = False
 
     DATETIME_FORMAT_PARAM = u"DateTimeFormat"
-    DATETIME_FORMAT_DEFAULT = u"%d.%m.%Y.  %H:%M"
+    DATETIME_FORMAT_DEFAULT = u"%c"
 
 
     def __init__ (self, config):
