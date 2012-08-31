@@ -24,7 +24,7 @@ class OutwikerTrayIcon (wx.TaskBarIcon):
         self.ID_RESTORE = wx.NewId()
         self.ID_EXIT = wx.NewId()
 
-        self.icon = wx.Icon(os.path.join (outwiker.core.system.getImagesDir(), "outwiker_16x16.png"), wx.BITMAP_TYPE_ANY)
+        self.icon = wx.Icon(os.path.join (outwiker.core.system.getImagesDir(), "outwiker.ico"), wx.BITMAP_TYPE_ANY)
 
         self.__bind()
     
