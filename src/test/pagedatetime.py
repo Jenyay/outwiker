@@ -6,9 +6,10 @@ import datetime
 
 from outwiker.core.tree import RootWikiPage, WikiDocument, WikiPage
 from outwiker.core.config import PageConfig
+from outwiker.core.style import Style
+from outwiker.core.attachment import Attachment
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.pages.html.htmlpage import HtmlPageFactory
-from outwiker.core.style import Style
 from test.utils import removeWiki
 
 
@@ -194,3 +195,24 @@ class PageDateTimeTest (unittest.TestCase):
 
         self.rootwiki[u"Страница 1/Страница 2"].content = u"Бла-бла"
         self.assertEqual (self.rootwiki[u"Страница 1"].datetime, newdate)
+
+
+    def testAttachment (self):
+        newdate = datetime.datetime (2012, 8, 24)
+        newcontent = u"Бла-бла-бла"
+
+        TextPageFactory.create (self.rootwiki, u"Страница 1", [])
+        self.rootwiki[u"Страница 1"].content = newcontent
+        self.rootwiki[u"Страница 1"].datetime = newdate
+        self.assertEqual (self.rootwiki[u"Страница 1"].datetime, newdate)
+
+        # Прикрепили файл - должна измениться дата страницы
+        Attachment (self.rootwiki[u"Страница 1"]).attach ([u"../test/samplefiles/first.jpg"])
+        delta = datetime.datetime.now() - self.rootwiki[u"Страница 1"].datetime
+        self.assertLess (delta, self._maxDelta)
+
+        self.rootwiki[u"Страница 1"].datetime = newdate
+
+        # Удалили файл - должна измениться дата страницы
+        Attachment (self.rootwiki[u"Страница 1"]).removeAttach ([u"first.jpg"])
+        delta = datetime.datetime.now() - self.rootwiki[u"Страница 1"].datetime

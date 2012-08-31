@@ -78,12 +78,14 @@ class Attachment (object):
             else:
                 shutil.copy (name, attachPath)
 
+        self.page.updateDateTime()
         self.page.root.onPageUpdate (self.page)
 
 
     def removeAttach (self, files):
         """
         Удалить прикрепленные файлы
+        files - список имен файлов (путей относительно папки __attach)
         """
         if self.page.readonly:
             raise exceptions.ReadonlyException
@@ -101,6 +103,7 @@ class Attachment (object):
                 self.page.root.onPageUpdate (self.page)
                 raise IOError (u"Can't remove %s" % fname)
 
+        self.page.updateDateTime()
         self.page.root.onPageUpdate (self.page)
 
 
