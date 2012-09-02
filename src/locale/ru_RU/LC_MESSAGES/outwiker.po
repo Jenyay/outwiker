@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-02 12:11+0400\n"
+"POT-Creation-Date: 2012-09-02 18:43+0400\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -162,23 +162,21 @@ msgstr "Вы не выбрали файл(ы) для удаления"
 #: outwiker/pages/wiki/wikipanel.py:146
 #: outwiker/pages/wiki/wikipanel.py:515
 #: outwiker/core/commands.py:48
-#: outwiker/core/commands.py:100
-#: outwiker/core/commands.py:103
-#: outwiker/core/commands.py:120
-#: outwiker/core/commands.py:203
-#: outwiker/core/commands.py:243
-#: outwiker/core/commands.py:250
+#: outwiker/core/commands.py:126
+#: outwiker/core/commands.py:209
+#: outwiker/core/commands.py:249
 #: outwiker/core/commands.py:256
-#: outwiker/core/commands.py:307
-#: outwiker/core/commands.py:310
-#: outwiker/core/commands.py:330
-#: outwiker/core/commands.py:338
-#: outwiker/core/commands.py:350
-#: outwiker/core/commands.py:363
-#: outwiker/core/commands.py:376
-#: outwiker/core/commands.py:391
-#: outwiker/core/commands.py:407
-#: outwiker/core/commands.py:410
+#: outwiker/core/commands.py:262
+#: outwiker/core/commands.py:313
+#: outwiker/core/commands.py:316
+#: outwiker/core/commands.py:336
+#: outwiker/core/commands.py:344
+#: outwiker/core/commands.py:356
+#: outwiker/core/commands.py:369
+#: outwiker/core/commands.py:382
+#: outwiker/core/commands.py:397
+#: outwiker/core/commands.py:413
+#: outwiker/core/commands.py:416
 #: outwiker/core/textprinter.py:106
 msgid "Error"
 msgstr "Ошибка"
@@ -587,10 +585,10 @@ msgstr "Невозможно изменить стиль страницы\n"
 
 #: outwiker/gui/pagedialog.py:98
 #: outwiker/gui/pagedialog.py:117
-#: outwiker/core/commands.py:350
-#: outwiker/core/commands.py:363
-#: outwiker/core/commands.py:376
-#: outwiker/core/commands.py:391
+#: outwiker/core/commands.py:356
+#: outwiker/core/commands.py:369
+#: outwiker/core/commands.py:382
+#: outwiker/core/commands.py:397
 msgid "Wiki is not open"
 msgstr "Вики не открыта"
 
@@ -1493,30 +1491,39 @@ msgstr "Шаблон для пустой страницы"
 msgid "Wiki is opened as read-only"
 msgstr "Вики открыта только для чтения"
 
-#: outwiker/core/commands.py:88
+#: outwiker/core/commands.py:92
 #, python-format
 msgid "File '%s' exists already"
 msgstr "Файл '%s' уже существует"
 
-#: outwiker/core/commands.py:111
+#: outwiker/core/commands.py:105
+#: outwiker/core/commands.py:107
+msgid ""
+"Error copying files\n"
+"{0}"
+msgstr ""
+"Ошибка копирования файлов\n"
+"{0}"
+
+#: outwiker/core/commands.py:117
 #, python-format
 msgid "Remove page '%s' and all subpages?"
 msgstr "Удалить страницу '%s' и все дочерние страницы?"
 
-#: outwiker/core/commands.py:113
+#: outwiker/core/commands.py:119
 msgid "Remove page?"
 msgstr "Удалить страницу?"
 
-#: outwiker/core/commands.py:120
+#: outwiker/core/commands.py:126
 msgid "Can't remove page"
 msgstr "Невозможно удалить страницу"
 
-#: outwiker/core/commands.py:202
+#: outwiker/core/commands.py:208
 #, python-format
 msgid "Can't load wiki '%s'"
 msgstr "Невозможно загрузить вики '%s'"
 
-#: outwiker/core/commands.py:211
+#: outwiker/core/commands.py:217
 #, python-format
 msgid ""
 "Can't load wiki '%s'\n"
@@ -1529,15 +1536,15 @@ msgstr ""
 "Очистить этот файл и перезагрузить вики?\n"
 "При этом закладки будут потеряны."
 
-#: outwiker/core/commands.py:212
+#: outwiker/core/commands.py:218
 msgid "__page.opt error"
 msgstr "Ошибка файла __page.opt"
 
-#: outwiker/core/commands.py:223
+#: outwiker/core/commands.py:229
 msgid "First Wiki Page"
 msgstr "Первая викистраница"
 
-#: outwiker/core/commands.py:224
+#: outwiker/core/commands.py:230
 msgid ""
 "!! First Wiki Page\n"
 "\n"
@@ -1547,41 +1554,41 @@ msgstr ""
 "\n"
 "Это первая страница. Здесь Вы можете использовать форматирование текста, например: '''полужирный шрифт''', ''курсив'', {+подчеркнутый текст+}, [[http://jenyay.net | ссылки]] и другое.\n"
 
-#: outwiker/core/commands.py:234
+#: outwiker/core/commands.py:240
 msgid "test"
 msgstr "проверка"
 
-#: outwiker/core/commands.py:242
+#: outwiker/core/commands.py:248
 msgid "Can't create wiki\n"
 msgstr "Невозможно создать вики\n"
 
-#: outwiker/core/commands.py:250
+#: outwiker/core/commands.py:256
 msgid "Can't open clipboard"
 msgstr "Невозможно открыть буфер обмена"
 
-#: outwiker/core/commands.py:256
+#: outwiker/core/commands.py:262
 msgid "Can't copy text to clipboard"
 msgstr "Ошибка копирования текста в буфер обмена"
 
-#: outwiker/core/commands.py:307
-#: outwiker/core/commands.py:407
+#: outwiker/core/commands.py:313
+#: outwiker/core/commands.py:413
 msgid "Can't move page when page with that title already exists"
 msgstr "Невозможно переместить страницу, так как страница с таким именем уже существует"
 
-#: outwiker/core/commands.py:310
+#: outwiker/core/commands.py:316
 msgid "Can't move page"
 msgstr "Невозможно переместить страницу"
 
-#: outwiker/core/commands.py:330
+#: outwiker/core/commands.py:336
 #, python-format
 msgid "Can't open file %s"
 msgstr "Ошибка открытия файла %s"
 
-#: outwiker/core/commands.py:338
+#: outwiker/core/commands.py:344
 msgid "Can't parse version"
 msgstr "Ошибка разбора версии"
 
-#: outwiker/core/commands.py:410
+#: outwiker/core/commands.py:416
 #, python-format
 msgid ""
 "Can't rename page\n"
@@ -1590,23 +1597,23 @@ msgstr ""
 "Невозможно переименовать страницу\n"
 "'%s'"
 
-#: outwiker/core/commands.py:422
+#: outwiker/core/commands.py:428
 msgid "help_en"
 msgstr "help_ru"
 
-#: outwiker/core/commands.py:433
+#: outwiker/core/commands.py:439
 msgid "Save current page before reload?"
 msgstr "Сохранить текущую страницу перед перезагрузкой?"
 
-#: outwiker/core/commands.py:434
+#: outwiker/core/commands.py:440
 msgid "Save?"
 msgstr "Сохранить?"
 
-#: outwiker/core/commands.py:453
+#: outwiker/core/commands.py:459
 msgid "The invalid page title"
 msgstr "Ошибка заголовка страницы"
 
-#: outwiker/core/commands.py:457
+#: outwiker/core/commands.py:463
 msgid ""
 "{0}\n"
 "Continue?"
@@ -1614,15 +1621,15 @@ msgstr ""
 "{0}\n"
 "Продолжить?"
 
-#: outwiker/core/commands.py:460
+#: outwiker/core/commands.py:466
 msgid "The page title"
 msgstr "Заголовок страницы"
 
-#: outwiker/core/commands.py:483
+#: outwiker/core/commands.py:489
 msgid "Add Tags to Branch"
 msgstr "Добавление меток к ветке"
 
-#: outwiker/core/commands.py:502
+#: outwiker/core/commands.py:508
 msgid "Remove Tags from Branch"
 msgstr "Удаление меток из ветки"
 

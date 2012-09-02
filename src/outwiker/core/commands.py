@@ -102,9 +102,9 @@ def attachFiles (parent, page, files):
     try:
         Attachment (page).attach (newAttaches)
     except IOError as e:
-        text = u'Error copying files\n{0}'.format (str (e))
+        text = _(u'Error copying files\n{0}').format (str (e))
     except shutil.Error as e:
-        text = u'Error copying files\n{0}'.format (str (e))
+        text = _(u'Error copying files\n{0}').format (str (e))
         
     overwriteDialog.Destroy()
 
