@@ -14,6 +14,8 @@ class LocalSearchPanel(wx.Panel):
         wx.Panel.__init__(self, *args, **kwds)
         self.phraseTextCtrl = wx.SearchCtrl (self, -1, "", style=wx.TE_PROCESS_ENTER)
         self.phraseTextCtrl.ShowCancelButton(True)
+        self.phraseTextCtrl.SetDescriptiveText (_(u"Search"))
+
         self.nextSearchBtn = wx.BitmapButton(self, -1, wx.Bitmap(os.path.join (self.imagesDir, "arrow_down.png"), wx.BITMAP_TYPE_ANY))
         self.prevSearchBtn = wx.BitmapButton(self, -1, wx.Bitmap(os.path.join (self.imagesDir, "arrow_up.png"), wx.BITMAP_TYPE_ANY))
         self.resultLabel = wx.StaticText(self, -1, "")

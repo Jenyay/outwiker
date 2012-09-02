@@ -29,8 +29,10 @@ class SearchPanel(BasePagePanel):
 
         self._strategyList = [AnyTagSearchStrategy, AllTagsSearchStrategy]
 
-        self.wordsLabel = wx.StaticText(self, -1, _(u"Search words: "))
-        self.wordsTextCtrl = wx.TextCtrl(self, -1, "")
+        self.wordsTextCtrl = wx.SearchCtrl(self, -1, "", style=wx.TE_PROCESS_ENTER)
+        self.wordsTextCtrl.ShowCancelButton (True)
+        self.wordsTextCtrl.SetDescriptiveText (_(u"Search"))
+
         self.tagsLabel = wx.StaticText(self, -1, _(u"Tags: "))
         self.tagsList = TagsCloud (self)
         self.tagsStrategy = wx.RadioBox(self, -1, _(u"Tags"), choices=[_(u"Any tag"), _(u"All tags")], majorDimension=0, style=wx.RA_SPECIFY_ROWS)
@@ -42,7 +44,15 @@ class SearchPanel(BasePagePanel):
         self.__do_layout()
 
         self.Bind(wx.EVT_BUTTON, self.onClear, self.clearTagsBtn)
+
+        self.Bind(wx.EVT_SEARCHCTRL_CANCEL_BTN, 
+                lambda event: self.wordsTextCtrl.SetValue (u""), 
+                self.wordsTextCtrl)
+
+        self.Bind(wx.EVT_SEARCHCTRL_SEARCH_BTN, self.onFind, self.wordsTextCtrl)
+        self.Bind(wx.EVT_TEXT_ENTER, self.onFind, self.wordsTextCtrl)
         self.Bind(wx.EVT_BUTTON, self.onFind, self.searchBtn)
+
         self.tagsList.Bind (EVT_TAG_LEFT_CLICK, self.__onTagLeftClick)
 
 
@@ -148,11 +158,7 @@ class SearchPanel(BasePagePanel):
         mainSizer = wx.FlexGridSizer(4, 1, 0, 0)
         tagsSizer = wx.FlexGridSizer(1, 3, 0, 0)
         rightSizer = wx.FlexGridSizer(2, 1, 0, 0)
-        phraseSizer = wx.FlexGridSizer(1, 2, 0, 0)
-        phraseSizer.Add(self.wordsLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 4)
-        phraseSizer.Add(self.wordsTextCtrl, 0, wx.ALL|wx.EXPAND|wx.ALIGN_CENTER_VERTICAL, 2)
-        phraseSizer.AddGrowableCol(1)
-        mainSizer.Add(phraseSizer, 1, wx.EXPAND, 0)
+        mainSizer.Add(self.wordsTextCtrl, 1, wx.EXPAND, 0)
         tagsSizer.Add(self.tagsLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 4)
         tagsSizer.Add(self.tagsList, 0, wx.ALL|wx.EXPAND, 2)
         rightSizer.Add(self.tagsStrategy, 0, wx.EXPAND, 0)
