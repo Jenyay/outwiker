@@ -82,25 +82,31 @@ def attachFiles (parent, page, files):
 
     oldAttaches = [os.path.basename (fname).lower() for fname in Attachment (page).attachmentFull]
 
-    with OverwriteDialog (parent) as overwriteDialog:
-        for fname in files:
-            if os.path.basename (fname).lower() in oldAttaches:
-                text = _(u"File '%s' exists already") % (os.path.basename (fname))
-                result = overwriteDialog.ShowDialog (text)
+    # Список файлов, которые будут добавлены
+    newAttaches = []
 
-                if result == overwriteDialog.ID_SKIP:
-                    continue
-                elif result == wx.ID_CANCEL:
-                    break
-            
-            try:
-                Attachment (page).attach ([fname])
-            except IOError:
-                text = u'Can\'t attach file "%s"' % (fname)
-                MessageBox (text, _(u"Error"), wx.ICON_ERROR | wx.OK)
-            except shutil.Error:
-                text = u'Can\'t attach file "%s"' % (fname)
-                MessageBox (text, _(u"Error"), wx.ICON_ERROR | wx.OK)
+    overwriteDialog = OverwriteDialog (parent)
+
+    for fname in files:
+        if os.path.basename (fname).lower() in oldAttaches:
+            text = _(u"File '%s' exists already") % (os.path.basename (fname))
+            result = overwriteDialog.ShowDialog (text)
+
+            if result == overwriteDialog.ID_SKIP:
+                continue
+            elif result == wx.ID_CANCEL:
+                break
+
+        newAttaches.append (fname)
+    
+    try:
+        Attachment (page).attach (newAttaches)
+    except IOError as e:
+        text = u'Error copying files\n{0}'.format (str (e))
+    except shutil.Error as e:
+        text = u'Error copying files\n{0}'.format (str (e))
+        
+    overwriteDialog.Destroy()
 
 
 @testreadonly

@@ -63,7 +63,7 @@ class Attachment (object):
 
     def attach (self, files):
         """
-        Прикрепить файл к странице
+        Прикрепить файлы к странице
         files -- список файлов (или папок), которые надо прикрепить
         """
         if self.page.readonly:

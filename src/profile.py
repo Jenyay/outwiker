@@ -47,5 +47,5 @@ if __name__ == "__main__":
 
     app = testApp(redirect=False)
 
-    wikiparserProfile()
-    # outwikerProfile ()
+    # wikiparserProfile()
+    outwikerProfile ()
