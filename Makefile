@@ -46,8 +46,9 @@ deb: source
 	cd build/$(dirname)/debian; debuild --source-option=--include-binaries --source-option=--auto-commit
 
 win:
-	cd src; python setup_win.py build
-	cd build\\outwiker_win; 7z a ..\\outwiker_win32_unstable.zip .\\* .\plugins -r -aoa
+	cd src && python setup_win.py build
+	cd build\\outwiker_win && 7z a ..\outwiker_win32_unstable.zip .\* .\plugins -r -aoa
+	cd build\\outwiker_win && 7z a ..\outwiker_win32_unstable.7z .\* .\plugins -r -aoa
 
 plugin:
 	rm -f build/plugins/source.zip
