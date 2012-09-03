@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
+import re
+
 from outwiker.libs.pyparsing import Regex, OneOrMore, Optional, LineEnd, LineStart
 
 
@@ -19,13 +21,13 @@ class TableToken (object):
 
 
     def getToken (self):
-        tableCell = Regex ("(?P<text>.*?)\\|\\|")
+        tableCell = Regex (r"(?P<text>(.|(\\r?\n))*?)\|\|")
         tableCell.setParseAction(self.__convertTableCell)
 
         tableRow = LineStart() + "||" + OneOrMore (tableCell) + Optional (LineEnd())
         tableRow.setParseAction(self.__convertTableRow)
 
-        table = LineStart() + Regex ("\\|\\| *(?P<params>.+)?") + LineEnd() + OneOrMore (tableRow)
+        table = LineStart() + Regex (r"\|\| *(?P<params>.+)?") + LineEnd() + OneOrMore (tableRow)
         table.setParseAction(self.__convertTable)
 
         return table

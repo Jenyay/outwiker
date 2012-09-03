@@ -18,6 +18,7 @@ from tokenurlimage import UrlImageFactory
 from tokenattach import AttachFactory, AttachImagesFactory
 from tokenlist import ListFactory
 from tokenlinebreak import LineBreakFactory
+from tokenlinejoin import LineJoinFactory
 from tokentex import TexFactory
 from tokencommand import CommandFactory
 from tokentext import TextFactory
@@ -62,6 +63,7 @@ class Parser (object):
         self.adhoctokens = AdHocFactory.make(self)
         self.lists = ListFactory.make (self)
         self.lineBreak = LineBreakFactory.make (self)
+        self.lineJoin = LineJoinFactory.make (self)
         self.tex = TexFactory.make (self)
         self.command = CommandFactory.make (self)
         self.text = TextFactory.make(self)
@@ -71,6 +73,7 @@ class Parser (object):
                 self.url |
                 self.text | 
                 self.lineBreak |
+                self.lineJoin |
                 self.link |
                 self.boldItalicized |
                 self.bolded |
@@ -94,6 +97,7 @@ class Parser (object):
                 self.url |
                 self.text | 
                 self.lineBreak |
+                self.lineJoin |
                 self.link |
                 self.adhoctokens |
                 self.subscript |
@@ -130,6 +134,8 @@ class Parser (object):
                 self.strike |
                 self.tex |
                 self.command |
+                self.lineBreak |
+                self.lineJoin |
                 self.noformat
                 )
 
@@ -145,6 +151,8 @@ class Parser (object):
                 self.strike |
                 self.tex |
                 self.command |
+                self.lineBreak |
+                self.lineJoin |
                 self.noformat
                 )
 
@@ -171,7 +179,7 @@ class Parser (object):
         thumb = Thumbnails (self.page)
         thumb.clearDir()
 
-        text = text.replace ("\\\n", "")
+        # text = text.replace ("\\\n", "")
         return self.parseWikiMarkup(text)
 
 

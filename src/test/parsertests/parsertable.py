@@ -81,3 +81,28 @@ sdfsdf || centered || right aligned||
     
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
+
+    def testTable4 (self):
+        text = u"""||border=1 width=350
+||left aligned \\
+sdfsdf || centered || right aligned||
+||left aligned [[<<]] dsfsdf || centered || right aligned||
+||left aligned [[&lt;&lt;]] dsfsdf || centered || right aligned||
+||left aligned [[<<]][[<<]] sdfsdfsdf || centered || right aligned||
+
+Бла-бла-бла
+
+||border=1 width=350
+||left aligned \\
+sdfsdf || centered || right aligned||
+||left aligned [[<<]] dsfsdf || centered || right aligned||
+||left aligned [[&lt;&lt;]] dsfsdf || centered || right aligned||
+||left aligned [[<<]][[<<]] sdfsdfsdf || centered || right aligned||
+"""
+        
+        result = u'''<TABLE border=1 width=350><TR><TD ALIGN="LEFT">left aligned sdfsdf</TD><TD ALIGN="CENTER">centered</TD><TD ALIGN="RIGHT">right aligned</TD></TR><TR><TD ALIGN="LEFT">left aligned <BR> dsfsdf</TD><TD ALIGN="CENTER">centered</TD><TD ALIGN="RIGHT">right aligned</TD></TR><TR><TD ALIGN="LEFT">left aligned <BR> dsfsdf</TD><TD ALIGN="CENTER">centered</TD><TD ALIGN="RIGHT">right aligned</TD></TR><TR><TD ALIGN="LEFT">left aligned <BR><BR> sdfsdfsdf</TD><TD ALIGN="CENTER">centered</TD><TD ALIGN="RIGHT">right aligned</TD></TR></TABLE>
+Бла-бла-бла
+
+<TABLE border=1 width=350><TR><TD ALIGN="LEFT">left aligned sdfsdf</TD><TD ALIGN="CENTER">centered</TD><TD ALIGN="RIGHT">right aligned</TD></TR><TR><TD ALIGN="LEFT">left aligned <BR> dsfsdf</TD><TD ALIGN="CENTER">centered</TD><TD ALIGN="RIGHT">right aligned</TD></TR><TR><TD ALIGN="LEFT">left aligned <BR> dsfsdf</TD><TD ALIGN="CENTER">centered</TD><TD ALIGN="RIGHT">right aligned</TD></TR><TR><TD ALIGN="LEFT">left aligned <BR><BR> sdfsdfsdf</TD><TD ALIGN="CENTER">centered</TD><TD ALIGN="RIGHT">right aligned</TD></TR></TABLE>'''
+    
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
