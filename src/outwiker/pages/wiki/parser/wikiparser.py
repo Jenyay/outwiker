@@ -179,7 +179,6 @@ class Parser (object):
         thumb = Thumbnails (self.page)
         thumb.clearDir()
 
-        # text = text.replace ("\\\n", "")
         return self.parseWikiMarkup(text)
 
 

@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-import re
-
 from outwiker.libs.pyparsing import Literal, Regex
 
 
@@ -17,6 +15,6 @@ class LineJoinToken (object):
     Токен для горизонтальной линии
     """
     def getToken (self):
-        token = Regex (r"\\r?\n", re.MULTILINE)
+        token = Regex (r"\\r?\n")
         token.setParseAction (lambda s, l, t: u"")
         return token
