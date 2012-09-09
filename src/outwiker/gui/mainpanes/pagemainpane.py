@@ -9,7 +9,7 @@ from ..currentpagepanel import CurrentPagePanel
 
 class PageMainPane (MainPane):
     """
-    Класс для работы с панелью с облаком тегов в главном окне
+    Класс для работы с панелью с контентом страницы
     """
     def _createPanel (self):
         return CurrentPagePanel(self.parent, -1)

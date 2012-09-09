@@ -11,6 +11,7 @@ from outwiker.core.tree import RootWikiPage
 from outwiker.core.tagscommands import getTagsString
 import outwiker.core.system
 from .pagedialog import editPage
+from .tabsctrl import TabsCtrl
 
 
 class CurrentPagePanel(wx.Panel):
@@ -28,6 +29,8 @@ class CurrentPagePanel(wx.Panel):
 
         kwds["style"] = wx.TAB_TRAVERSAL
         wx.Panel.__init__(self, *args, **kwds)
+
+        self.tabsCtrl = TabsCtrl (self)
         self.bookmarkButton = wx.BitmapButton(self, -1, wx.Bitmap(os.path.join (self.imagesDir, "star_gray.png"), wx.BITMAP_TYPE_ANY))
         self.titleLabel = wx.StaticText(self, -1, "")
 
@@ -177,9 +180,10 @@ class CurrentPagePanel(wx.Panel):
 
 
     def __do_layout(self):
-        mainSizer = wx.FlexGridSizer(3, 1, 0, 0)
         contentSizer = wx.FlexGridSizer(1, 1, 0, 0)
-        titleSizer = wx.FlexGridSizer(1, 3, 0, 0)
+        contentSizer.AddGrowableRow(0)
+        contentSizer.AddGrowableCol(0)
+        titleSizer = wx.FlexGridSizer(1, 0, 0, 0)
         titleSizer.Add(self.bookmarkButton, 0, 0, 0)
 
         titleSizer.Add(self.titleLabel, 
@@ -188,14 +192,15 @@ class CurrentPagePanel(wx.Panel):
                 2)
 
         titleSizer.AddGrowableCol(1)
+
+        mainSizer = wx.FlexGridSizer(0, 1, 0, 0)
+        mainSizer.AddGrowableRow(2)
+        mainSizer.AddGrowableCol(0)
+        mainSizer.Add(self.tabsCtrl, 1, wx.EXPAND, 0)
         mainSizer.Add(titleSizer, 1, wx.EXPAND, 0)
-        contentSizer.AddGrowableRow(0)
-        contentSizer.AddGrowableCol(0)
         mainSizer.Add(contentSizer, 1, wx.EXPAND, 0)
         self.SetSizer(mainSizer)
         mainSizer.Fit(self)
-        mainSizer.AddGrowableRow(1)
-        mainSizer.AddGrowableCol(0)
 
         self.contentSizer = contentSizer
 

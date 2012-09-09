@@ -27,6 +27,7 @@ from outwiker.gui.mainpanes.tagscloudmainpane import TagsCloudMainPane
 from outwiker.gui.mainpanes.attachmainpane import AttachMainPane
 from outwiker.gui.mainpanes.treemainpane import TreeMainPane
 from outwiker.gui.mainpanes.pagemainpane import PageMainPane
+from outwiker.gui.tabscontroller import TabsController
 from outwiker.core.system import getImagesDir
 
 from toolbars.generaltoolbar import GeneralToolBar
@@ -79,6 +80,7 @@ class MainWindow(wx.Frame):
             self.Maximize()
 
         self.taskBarIcon = OutwikerTrayIcon(self)
+        self.tabsController = TabsController (self.pagePanel.panel.tabsCtrl, Application)
 
 
     @property
