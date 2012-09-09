@@ -3,6 +3,8 @@
 
 import os.path
 
+import wx
+
 
 class TabsController (object):
     def __init__ (self, tabsCtrl, application):
@@ -20,6 +22,18 @@ class TabsController (object):
         self._application.onTreeUpdate += self.__updateCurrentPage
         self._application.onPageRename += self.__onPageRename
         self._application.onEndTreeUpdate += self.__updateCurrentPage
+
+        self._tabsCtrl.Bind (wx.aui.EVT_AUINOTEBOOK_PAGE_CHANGED, self.__onTabChanged)
+
+
+    def __onTabChanged (self, event):
+        newindex = event.GetSelection()
+        page = self._tabsCtrl.getPage(newindex)
+        self._application.selectedPage = page
+
+
+    def cloneTab (self):
+        self.__createCurrentTab()
 
 
     def __onPageRename (self, page, oldSubpath):
@@ -42,8 +56,10 @@ class TabsController (object):
 
 
     def __createCurrentTab (self):
-        self._tabsCtrl.addPage (self.__getTitle (self._application.selectedPage))
+        page = self._application.selectedPage
+        self._tabsCtrl.addPage (self.__getTitle (page), page)
 
 
     def __updateCurrentPage (self, page):
         self._tabsCtrl.renameCurrentTab (self.__getTitle (self._application.selectedPage))
+        self._tabsCtrl.setCurrentPage (self._application.selectedPage)

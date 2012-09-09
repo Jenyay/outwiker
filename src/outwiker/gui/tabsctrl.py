@@ -30,8 +30,9 @@ class TabsCtrl (wx.Panel):
         self.SetMinSize ((-1, self._tabs.GetTabCtrlHeight()))
 
 
-    def addPage (self, title):
-        blankWindow = wx.Window (self)
+    def addPage (self, title, page):
+        blankWindow = wx.Window (self, size=(1,1))
+        blankWindow.page = page
         self._tabs.AddPage (blankWindow, title)
         self.updateSize()
         return blankWindow
@@ -45,4 +46,15 @@ class TabsCtrl (wx.Panel):
 
     def renameCurrentTab (self, title):
         page_index = self._tabs.GetSelection()
-        self._tabs.SetPageText (page_index, title)
+        if page_index >= 0:
+            self._tabs.SetPageText (page_index, title)
+
+
+    def getPage (self, index):
+        return self._tabs.GetPage (index).page
+
+
+    def setCurrentPage (self, page):
+        page_index = self._tabs.GetSelection()
+        if page_index >= 0:
+            self._tabs.GetPage (page_index).page = page

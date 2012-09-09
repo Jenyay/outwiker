@@ -177,6 +177,11 @@ class MainWindow(wx.Frame):
         self.Bind (wx.EVT_TOOL, self.__onAddTagsToBranch, id=MainId.ID_ADD_TAGS_TO_BRANCH)
         self.Bind (wx.EVT_TOOL, self.__onRemoveTagsFromBranch, id=MainId.ID_REMOVE_TAGS_FROM_BRANCH)
         self.Bind (wx.EVT_TOOL, self.__onRenameTag, id=MainId.ID_RENAME_TAG)
+        self.Bind (wx.EVT_TOOL, self.__onAddNewTab, id=MainId.ID_ADD_TAB)
+
+
+    def __onAddNewTab (self, event):
+        self.tabsController.cloneTab()
 
     
     def __saveParams (self):
