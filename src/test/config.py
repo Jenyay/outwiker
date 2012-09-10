@@ -476,6 +476,54 @@ class ConfigOptionsTest (unittest.TestCase):
         self.assertEqual (stringopt.value.strip(), u"")
 
 
+    def testStringListSection1 (self):
+        section = u"listSection"
+        paramname = u"param_"
+
+        testlist = [u"Бла-бла-бла",
+                u"Строка 1",
+                u"Строка 2"]
+
+        self.config.remove_section (section)
+        opt = outwiker.core.config.StringListSection (self.config, section, paramname)
+        self.assertEqual (opt.value, [])
+
+        # Установим список
+        opt.value = testlist
+        self.assertEqual (len (opt.value), 3)
+        self.assertEqual (opt.value[0], u"Бла-бла-бла")
+        self.assertEqual (opt.value[1], u"Строка 1")
+        self.assertEqual (opt.value[2], u"Строка 2")
+
+        self.assertTrue (self.config.has_section (section))
+        self.assertEqual (self.config.get (section, u"param_0"), u"Бла-бла-бла")
+        self.assertEqual (self.config.get (section, u"param_1"), u"Строка 1")
+        self.assertEqual (self.config.get (section, u"param_2"), u"Строка 2")
+        self.config.remove_section (section)
+
+
+    def testStringListSection2 (self):
+        section = u"listSection"
+        paramname = u"param_"
+
+        testlist = [u"Бла-бла-бла",
+                u"Строка 1",
+                u"Строка 2"]
+
+        self.config.remove_section (section)
+        opt = outwiker.core.config.StringListSection (self.config, section, paramname)
+        self.assertEqual (opt.value, [])
+
+        # Установим список
+        opt.value = testlist
+
+        opt_other = outwiker.core.config.StringListSection (self.config, section, paramname)
+        self.assertEqual (len (opt_other.value), 3)
+        self.assertEqual (opt_other.value[0], u"Бла-бла-бла")
+        self.assertEqual (opt_other.value[1], u"Строка 1")
+        self.assertEqual (opt_other.value[2], u"Строка 2")
+        self.config.remove_section (section)
+
 
 class TrayConfigTest (unittest.TestCase):
     def setUp (self):

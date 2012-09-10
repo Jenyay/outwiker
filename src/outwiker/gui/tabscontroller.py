@@ -15,6 +15,14 @@ class TabsController (object):
         self._tabsCtrl = tabsCtrl
         self._application = application
 
+        self.__bindEvents()
+
+
+    def destroy (self):
+        self.__unbindEvents()
+
+
+    def __bindEvents (self):
         self._application.onWikiOpen += self.__onWikiOpen
         self._application.onPageUpdate += self.__updateCurrentPage
         self._application.onPageSelect += self.__updateCurrentPage
@@ -24,6 +32,18 @@ class TabsController (object):
         self._application.onEndTreeUpdate += self.__updateCurrentPage
 
         self._tabsCtrl.Bind (wx.aui.EVT_AUINOTEBOOK_PAGE_CHANGED, self.__onTabChanged)
+
+
+    def __unbindEvents (self):
+        self._application.onWikiOpen -= self.__onWikiOpen
+        self._application.onPageUpdate -= self.__updateCurrentPage
+        self._application.onPageSelect -= self.__updateCurrentPage
+        self._application.onPageCreate -= self.__updateCurrentPage
+        self._application.onTreeUpdate -= self.__updateCurrentPage
+        self._application.onPageRename -= self.__onPageRename
+        self._application.onEndTreeUpdate -= self.__updateCurrentPage
+
+        self._tabsCtrl.Unbind (wx.aui.EVT_AUINOTEBOOK_PAGE_CHANGED, handler=self.__onTabChanged)
 
 
     def __onTabChanged (self, event):

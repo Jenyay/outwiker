@@ -232,6 +232,7 @@ class MainWindow(wx.Frame):
         """
         self.__saveParams()
 
+        self.tabsController.destroy()
         self.toolbars.destroyAllToolBars()
 
         self.auiManager.UnInit()
