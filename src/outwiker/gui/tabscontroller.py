@@ -5,6 +5,8 @@ import os.path
 
 import wx
 
+from outwiker.core.config import StringListSection
+
 
 class TabsController (object):
     def __init__ (self, tabsCtrl, application):
@@ -15,10 +17,20 @@ class TabsController (object):
         self._tabsCtrl = tabsCtrl
         self._application = application
 
+        self._tabsSection = u"Tabs"
+        self._tabsParamName = u"tab_"
+
         self.__bindEvents()
 
 
+    def __createConfig (self, config):
+        return StringListSection (config, self._tabsSection, self._tabsParamName)
+
+
     def destroy (self):
+        if self._application.wikiroot != None:
+            self.__saveTabs(self._application.wikiroot)
+
         self.__unbindEvents()
 
 
@@ -52,6 +64,25 @@ class TabsController (object):
         self._application.selectedPage = page
 
 
+    def __loadTabs (self, wikiroot):
+        self._tabsCtrl.clear()
+
+        if wikiroot == None:
+            return
+
+        tabsList = self.__createConfig(wikiroot.params).value
+
+        for tab in tabsList:
+            page = wikiroot[tab]
+            if page != None:
+                self._tabsCtrl.addPage (self.__getTitle (page), page)
+
+
+    def __saveTabs (self, wikiroot):
+        pageSubpathList = [page.subpath for page in self._tabsCtrl.getPages() if page != None]
+        self.__createConfig(wikiroot.params).value = pageSubpathList
+
+
     def cloneTab (self):
         self.__createCurrentTab()
 
@@ -61,8 +92,7 @@ class TabsController (object):
 
 
     def __onWikiOpen (self, root):
-        self._tabsCtrl.clear()
-        self.__createCurrentTab()
+        self.__loadTabs(root)
 
 
     def __getTitle (self, page):

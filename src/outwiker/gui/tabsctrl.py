@@ -58,3 +58,7 @@ class TabsCtrl (wx.Panel):
         page_index = self._tabs.GetSelection()
         if page_index >= 0:
             self._tabs.GetPage (page_index).page = page
+
+
+    def getPages (self):
+        return [self._tabs.GetPage (index).page for index in range (self._tabs.GetPageCount())]
