@@ -60,8 +60,9 @@ class TagsCloud (wx.ScrolledWindow):
         """
         Выделить метку
         """
-        assert tag.lower().strip() in self.__labels.keys()
-        self.__labels[tag.lower().strip()].mark(marked)
+        # assert tag.lower().strip() in self.__labels.keys()
+        if tag.lower().strip() in self.__labels.keys():
+            self.__labels[tag.lower().strip()].mark(marked)
 
 
     def clearMarks (self):

@@ -2,19 +2,20 @@
 # -*- coding: UTF-8 -*-
 
 import wx
-import wx.aui
+import wx.lib.agw.flatnotebook as fnb
 
 
 class TabsCtrl (wx.Panel):
     def __init__ (self, parent):
         super (TabsCtrl, self).__init__ (parent)
 
-        self._tabs = wx.aui.AuiNotebook (self)
+        self._tabs = fnb.FlatNotebook (self, agwStyle = (fnb.FNB_MOUSE_MIDDLE_CLOSES_TABS | 
+            fnb.FNB_X_ON_TAB))
+
         self.__layout()
 
 
     def __layout (self):
-        self.updateSize()
         mainSizer = wx.FlexGridSizer (1, 0)
         mainSizer.AddGrowableCol (0)
         mainSizer.AddGrowableRow (0)
@@ -22,19 +23,12 @@ class TabsCtrl (wx.Panel):
         mainSizer.Add (self._tabs, 0, wx.EXPAND)
         self.SetSizer (mainSizer)
         self.Layout()
-        self.updateSize()
-
-
-    def updateSize (self):
-        self.SetMaxSize ((-1, self._tabs.GetTabCtrlHeight()))
-        self.SetMinSize ((-1, self._tabs.GetTabCtrlHeight()))
 
 
     def addPage (self, title, page):
         blankWindow = wx.Window (self, size=(1,1))
         blankWindow.page = page
         self._tabs.AddPage (blankWindow, title)
-        self.updateSize()
         return blankWindow
 
 
@@ -60,5 +54,21 @@ class TabsCtrl (wx.Panel):
             self._tabs.GetPage (page_index).page = page
 
 
+    def getSelection (self):
+        return self._tabs.GetSelection()
+
+
     def getPages (self):
         return [self._tabs.GetPage (index).page for index in range (self._tabs.GetPageCount())]
+
+
+    def getPageCount (self):
+        return self._tabs.GetPageCount()
+
+
+    def setSelection (self, index):
+        return self._tabs.SetSelection (index)
+
+
+    def deletePage (self, index):
+        return self._tabs.DeletePage (index)
