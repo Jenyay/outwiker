@@ -7,6 +7,7 @@
 
 import os
 import shutil
+import time
 
 import wx
 
@@ -18,6 +19,7 @@ def removeWiki (path):
         try:
             shutil.rmtree (path)
         except OSError:
+            time.sleep (1)
             shutil.rmtree (path)
 
 
@@ -31,4 +33,5 @@ def getImageSize (fname):
     height = image.GetHeight()
 
     return (width, height)
+
 
