@@ -220,6 +220,53 @@ class IntegerOption (StringOption):
         return self.config.getint (self.section, self.param)
 
 
+class StringListSection (object):
+    """
+    Класс для хранения списка строк. Список хранится в отдельной секции
+    """
+    def __init__ (self, config, section, paramname):
+        """
+        config - экземпляр класса Config
+        section - имя секции для хранения списка
+        paramname - начало имени параметров, которые будут храниться в секции. К paramname будут добавляться порядковые числа.
+        """
+        self._config = config
+        self._section = section
+        self._paramname = u"%s{number}" % paramname
+
+
+    def _loadValue (self):
+        if not self._config.has_section (self._section):
+            return []
+
+        result = []
+        index = 0
+        try:
+            while (1):
+                option = self._paramname.format (number=index)
+                subpath = self._config.get (self._section, option)
+                result.append (subpath)
+                index += 1
+        except ConfigParser.NoOptionError:
+            pass
+
+        return result
+
+
+    @property
+    def value (self):
+        return self._loadValue ()
+
+
+    @value.setter
+    def value (self, val):
+        self._config.remove_section (self._section)
+
+        for index in range (len (val)):
+            option = self._paramname.format (number=index)
+            self._config.set (self._section, option, val[index])
+
+
 class FontOption (object):
     def __init__ (self, 
             faceNameOption, 

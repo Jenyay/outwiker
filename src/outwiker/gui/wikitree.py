@@ -519,9 +519,10 @@ class WikiTree(wx.Panel):
         self.__expandToPage (newSelPage)
         item = self.getTreeItem (newSelPage)
 
-        assert item != None
+        # assert item != None
 
-        self.treeCtrl.SelectItem (item)
+        if item != None:
+            self.treeCtrl.SelectItem (item)
         
 
     def __expandToPage (self, page):

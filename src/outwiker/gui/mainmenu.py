@@ -68,7 +68,7 @@ class MainMenu (wx.MenuBar):
 
     def __createTreeMenu (self):
         treeMenu = wx.Menu()
-        treeMenu.Append(MainId.ID_ADDPAGE, _(u"Add &Sibling Page…\tCtrl+T"), "", wx.ITEM_NORMAL)
+        treeMenu.Append(MainId.ID_ADDPAGE, _(u"Add &Sibling Page…\tCtrl+Alt+T"), "", wx.ITEM_NORMAL)
         treeMenu.Append(MainId.ID_ADDCHILD, _(u"Add &Child Page…\tCtrl+Shift+T"), "", wx.ITEM_NORMAL)
         treeMenu.AppendSeparator()
         treeMenu.Append(MainId.ID_MOVE_PAGE_UP, _("Move Page Up\tCtrl+Shift+Up"), "", wx.ITEM_NORMAL)
@@ -86,6 +86,7 @@ class MainMenu (wx.MenuBar):
 
     def __createToolsMenu (self):
         toolsMenu = wx.Menu()
+        toolsMenu.Append(MainId.ID_ADD_TAB, _(u"Add Tab…\tCtrl+T"), "", wx.ITEM_NORMAL)
         toolsMenu.Append(MainId.ID_GLOBAL_SEARCH, _(u"&Global Search…\tCtrl+Shift+F"), "", wx.ITEM_NORMAL)
         toolsMenu.Append(MainId.ID_ATTACH, _(u"&Attach Files…\tCtrl+Alt+A"), "", wx.ITEM_NORMAL)
 

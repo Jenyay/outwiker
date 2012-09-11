@@ -46,3 +46,4 @@ class MainId (object):
     ID_ADD_TAGS_TO_BRANCH = wx.NewId()
     ID_REMOVE_TAGS_FROM_BRANCH = wx.NewId()
     ID_RENAME_TAG = wx.NewId()
+    ID_ADD_TAB = wx.NewId()

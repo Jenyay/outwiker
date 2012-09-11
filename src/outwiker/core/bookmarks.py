@@ -4,6 +4,7 @@
 import ConfigParser
 
 from .event import Event
+from .config import StringListSection
 
 
 class Bookmarks (object):
@@ -15,17 +16,19 @@ class Bookmarks (object):
         wikiroot -- корень вики
         config -- экземпляр класса Config, который будет хранить настройки
         """
-        self._config = config
         self.root = wikiroot
         self.configSection = u"Bookmarks"
-        self.configOptionTemplate = u"bookmark_%d"
+        self.configOption = u"bookmark_"
+        
+        self.__bookmarksConfig = StringListSection (config, 
+                self.configSection, self.configOption)
+
+        # Страницы в закладках
+        self.__pages = self.__bookmarksConfig.value
 
         # Изменение списка закладок
         # Параметр - экземпляр класса Bookmarks
         self.onBookmarksChanged = Event()
-
-        # Страницы в закладках
-        self.__pages = self._load()
 
         wikiroot.onPageRemove += self.onPageRemove
         wikiroot.onPageRename += self.onPageRename
@@ -38,7 +41,7 @@ class Bookmarks (object):
         # Если удаляемая страница в закладках, то уберем ее оттуда
         if self.pageMarked (page):
             self.remove (page)
-    
+
 
     def onPageRename (self, page, oldSubpath):
         for n in range (len (self.__pages)):
@@ -47,24 +50,6 @@ class Bookmarks (object):
                 self.__pages[n] = subpath.replace (oldSubpath, page.subpath, 1)
 
 
-    def _load (self):
-        if not self._config.has_section (self.configSection):
-            return []
-
-        result = []
-        index = 0
-        try:
-            while (1):
-                option = self.configOptionTemplate % index
-                subpath = self._config.get (self.configSection, option)
-                result.append (subpath)
-                index += 1
-        except ConfigParser.NoOptionError:
-            pass
-
-        return result
-
-    
     def __len__ (self):
         return len (self.__pages)
 
@@ -84,11 +69,7 @@ class Bookmarks (object):
     
 
     def save (self):
-        self._config.remove_section (self.configSection)
-
-        for n in range (len (self.__pages)):
-            option = self.configOptionTemplate % n
-            self._config.set (self.configSection, option, self.__pages[n])
+        self.__bookmarksConfig.value = self.__pages
 
 
     def remove (self, page):

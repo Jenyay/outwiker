@@ -27,6 +27,7 @@ from outwiker.gui.mainpanes.tagscloudmainpane import TagsCloudMainPane
 from outwiker.gui.mainpanes.attachmainpane import AttachMainPane
 from outwiker.gui.mainpanes.treemainpane import TreeMainPane
 from outwiker.gui.mainpanes.pagemainpane import PageMainPane
+from outwiker.gui.tabscontroller import TabsController
 from outwiker.core.system import getImagesDir
 
 from toolbars.generaltoolbar import GeneralToolBar
@@ -79,6 +80,7 @@ class MainWindow(wx.Frame):
             self.Maximize()
 
         self.taskBarIcon = OutwikerTrayIcon(self)
+        self.tabsController = TabsController (self.pagePanel.panel.tabsCtrl, Application)
 
 
     @property
@@ -175,6 +177,11 @@ class MainWindow(wx.Frame):
         self.Bind (wx.EVT_TOOL, self.__onAddTagsToBranch, id=MainId.ID_ADD_TAGS_TO_BRANCH)
         self.Bind (wx.EVT_TOOL, self.__onRemoveTagsFromBranch, id=MainId.ID_REMOVE_TAGS_FROM_BRANCH)
         self.Bind (wx.EVT_TOOL, self.__onRenameTag, id=MainId.ID_RENAME_TAG)
+        self.Bind (wx.EVT_TOOL, self.__onAddNewTab, id=MainId.ID_ADD_TAB)
+
+
+    def __onAddNewTab (self, event):
+        self.tabsController.cloneTab()
 
     
     def __saveParams (self):
@@ -225,6 +232,7 @@ class MainWindow(wx.Frame):
         """
         self.__saveParams()
 
+        self.tabsController.destroy()
         self.toolbars.destroyAllToolBars()
 
         self.auiManager.UnInit()
