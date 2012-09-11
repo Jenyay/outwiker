@@ -10,7 +10,8 @@ class TabsCtrl (wx.Panel):
         super (TabsCtrl, self).__init__ (parent)
 
         self._tabs = fnb.FlatNotebook (self, agwStyle = (fnb.FNB_MOUSE_MIDDLE_CLOSES_TABS | 
-            fnb.FNB_X_ON_TAB))
+            fnb.FNB_X_ON_TAB | 
+            fnb.FNB_SMART_TABS))
 
         self.__layout()
 
@@ -29,7 +30,12 @@ class TabsCtrl (wx.Panel):
         blankWindow = wx.Window (self, size=(1,1))
         blankWindow.page = page
         self._tabs.AddPage (blankWindow, title)
-        return blankWindow
+
+
+    def insertPage (self, index, title, page):
+        blankWindow = wx.Window (self, size=(1,1))
+        blankWindow.page = page
+        self._tabs.InsertPage (index, blankWindow, title)
 
 
     def clear (self):

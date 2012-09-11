@@ -32,14 +32,12 @@ class CurrentPagePanel(wx.Panel):
 
         self.tabsCtrl = TabsCtrl (self)
         self.bookmarkButton = wx.BitmapButton(self, -1, wx.Bitmap(os.path.join (self.imagesDir, "star_gray.png"), wx.BITMAP_TYPE_ANY))
-        self.titleLabel = wx.StaticText(self, -1, "")
 
         self.__set_properties()
         self.__do_layout()
 
         self.Bind(wx.EVT_BUTTON, self.__onBookmark, self.bookmarkButton)
-        self.titleLabel.Bind (wx.EVT_LEFT_DCLICK, self.__onTitleDoubleClick)
-        self.Bind (wx.EVT_LEFT_DCLICK, self.__onTitleDoubleClick)
+        # self.Bind (wx.EVT_LEFT_DCLICK, self.__onTitleDoubleClick)
 
         Application.onWikiOpen += self.__onWikiOpen
         Application.onPageSelect += self.__onPageSelect
@@ -51,9 +49,9 @@ class CurrentPagePanel(wx.Panel):
         self.Bind (wx.EVT_CLOSE, self.__onClose)
 
 
-    def __onTitleDoubleClick (self, event):
-        if Application.selectedPage != None:
-            editPage (self, Application.selectedPage)
+    # def __onTitleDoubleClick (self, event):
+    #     if Application.selectedPage != None:
+    #         editPage (self, Application.selectedPage)
 
 
     @property
@@ -163,12 +161,7 @@ class CurrentPagePanel(wx.Panel):
         self.Freeze()
         try:
             if page != None:
-                title = "%s" % (page.title)
-                self.titleLabel.SetLabel (title)
-
                 self.__updateBookmarkBtn()
-            else:
-                self.titleLabel.SetLabel (u"")
             self.Layout()
         finally:
             self.Thaw()
@@ -176,33 +169,24 @@ class CurrentPagePanel(wx.Panel):
     
     def __set_properties(self):
         self.bookmarkButton.SetSize(self.bookmarkButton.GetBestSize())
-        self.titleLabel.SetFont(wx.Font(14, wx.DEFAULT, wx.NORMAL, wx.NORMAL, 0, "MS Shell Dlg 2"))
 
 
     def __do_layout(self):
-        contentSizer = wx.FlexGridSizer(1, 1, 0, 0)
-        contentSizer.AddGrowableRow(0)
-        contentSizer.AddGrowableCol(0)
-        titleSizer = wx.FlexGridSizer(1, 0, 0, 0)
-        titleSizer.Add(self.bookmarkButton, 0, 0, 0)
-
-        titleSizer.Add(self.titleLabel, 
-                0, 
-                wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_CENTER_HORIZONTAL, 
-                2)
-
-        titleSizer.AddGrowableCol(1)
+        self.contentSizer = wx.FlexGridSizer(1, 1, 0, 0)
+        self.contentSizer.AddGrowableRow(0)
+        self.contentSizer.AddGrowableCol(0)
+        tabsSizer = wx.FlexGridSizer(1, 0, 0, 0)
+        tabsSizer.Add(self.bookmarkButton, 0,  wx.ALIGN_CENTER_VERTICAL, 0)
+        tabsSizer.Add(self.tabsCtrl, 0, wx.EXPAND, 0)
+        tabsSizer.AddGrowableCol(1)
 
         mainSizer = wx.FlexGridSizer(0, 1, 0, 0)
-        mainSizer.AddGrowableRow(2)
+        mainSizer.AddGrowableRow(1)
         mainSizer.AddGrowableCol(0)
-        mainSizer.Add(self.tabsCtrl, 1, wx.EXPAND, 0)
-        mainSizer.Add(titleSizer, 1, wx.EXPAND, 0)
-        mainSizer.Add(contentSizer, 1, wx.EXPAND, 0)
+        mainSizer.Add(tabsSizer, 1, wx.EXPAND, 0)
+        mainSizer.Add(self.contentSizer, 1, wx.EXPAND, 0)
         self.SetSizer(mainSizer)
         mainSizer.Fit(self)
-
-        self.contentSizer = contentSizer
 
 
     def destroyPageView (self):
@@ -274,8 +258,3 @@ class CurrentPagePanel(wx.Panel):
                 Application.selectedPage.root.bookmarks.add (Application.selectedPage)
             else:
                 Application.selectedPage.root.bookmarks.remove (Application.selectedPage)
-
-
-# end of class CurrentPagePanel
-
-

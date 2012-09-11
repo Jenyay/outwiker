@@ -157,7 +157,8 @@ class TabsController (object):
 
     def __createCurrentTab (self):
         page = self._application.selectedPage
-        self._tabsCtrl.addPage (self.__getTitle (page), page)
+        selectedTab = self._tabsCtrl.getSelection()
+        self._tabsCtrl.insertPage (selectedTab + 1, self.__getTitle (page), page)
         self.__saveTabs()
 
 
