@@ -57,7 +57,6 @@ class TabsTest(BaseMainWndTest):
 
 
     def testSelection (self):
-        # Откываем вики, где нет сохраненных вкладок
         Application.wikiroot = self.wikiroot
         Application.selectedPage = self.wikiroot[u"Страница 1"]
 
@@ -81,3 +80,315 @@ class TabsTest(BaseMainWndTest):
         self.assertEqual (self._tabsController.getPage(0), 
                 self.wikiroot[u"Страница 2/Страница 3/Страница 4"])
         self.assertEqual (self._tabsController.getTabTitle (0), u"Страница 4")
+
+
+    def testCloneTab1 (self):
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+
+        self._tabsController.cloneTab()
+        self.assertEqual (self._tabsController.getTabsCount(), 2)
+        self.assertEqual (self._tabsController.getSelection(), 1)
+        self.assertEqual (self._tabsController.getPage(1), self.wikiroot[u"Страница 1"])
+        self.assertEqual (self._tabsController.getTabTitle (1), u"Страница 1")
+
+        self._tabsController.cloneTab()
+        self.assertEqual (self._tabsController.getTabsCount(), 3)
+        self.assertEqual (self._tabsController.getSelection(), 2)
+
+
+    def testCloneTab2 (self):
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+
+        self._tabsController.cloneTab()
+        Application.selectedPage = self.wikiroot[u"Страница 2"]
+
+        self._tabsController.cloneTab()
+
+        Application.selectedPage = self.wikiroot[u"Страница 2/Страница 3/Страница 4"]
+
+        self.assertEqual (self._tabsController.getPage(0), self.wikiroot[u"Страница 1"])
+        self.assertEqual (self._tabsController.getTabTitle (0), u"Страница 1")
+
+        self.assertEqual (self._tabsController.getPage(1), self.wikiroot[u"Страница 2"])
+        self.assertEqual (self._tabsController.getTabTitle (1), u"Страница 2")
+
+        self.assertEqual (self._tabsController.getPage(2), 
+                self.wikiroot[u"Страница 2/Страница 3/Страница 4"])
+        self.assertEqual (self._tabsController.getTabTitle (2), u"Страница 4")
+
+
+    def testRemoveSelection (self):
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+
+        self.wikiroot[u"Страница 1"].remove()
+        self.assertEqual (self._tabsController.getTabsCount(), 1)
+        self.assertEqual (self._tabsController.getSelection(), 0)
+        self.assertEqual (self._tabsController.getPage(0), None)
+        self.assertEqual (self._tabsController.getTabTitle (0), u"testwiki")
+
+
+    def testRemoveSelection2 (self):
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+        self._tabsController.cloneTab()
+        Application.selectedPage = self.wikiroot[u"Страница 2"]
+
+        self.wikiroot[u"Страница 2"].remove()
+        self.assertEqual (self._tabsController.getTabsCount(), 2)
+        self.assertEqual (self._tabsController.getSelection(), 1)
+        self.assertEqual (self._tabsController.getPage(1), None)
+        self.assertEqual (self._tabsController.getTabTitle (1), u"testwiki")
+
+
+    def testRenameSelection (self):
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+        self.wikiroot[u"Страница 1"].title = u"Бла-бла-бла"
+
+        self.assertEqual (self._tabsController.getSelection(), 0)
+        self.assertEqual (self._tabsController.getPage(0), self.wikiroot[u"Бла-бла-бла"])
+        self.assertEqual (self._tabsController.getTabTitle (0), u"Бла-бла-бла")
+
+
+    def testRename (self):
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+        self._tabsController.cloneTab()
+        self._tabsController.cloneTab()
+        self.wikiroot[u"Страница 1"].title = u"Бла-бла-бла"
+
+        self.assertEqual (self._tabsController.getPage(0), self.wikiroot[u"Бла-бла-бла"])
+        self.assertEqual (self._tabsController.getTabTitle (0), u"Бла-бла-бла")
+
+        self.assertEqual (self._tabsController.getPage(1), self.wikiroot[u"Бла-бла-бла"])
+        self.assertEqual (self._tabsController.getTabTitle (1), u"Бла-бла-бла")
+
+        self.assertEqual (self._tabsController.getPage(2), self.wikiroot[u"Бла-бла-бла"])
+        self.assertEqual (self._tabsController.getTabTitle (2), u"Бла-бла-бла")
+
+
+    def testRemove1 (self):
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+        self._tabsController.cloneTab()
+        self._tabsController.cloneTab()
+
+        self.wikiroot[u"Страница 1"].remove()
+        self.assertEqual (self._tabsController.getTabsCount(), 1)
+        self.assertEqual (self._tabsController.getSelection(), 0)
+        self.assertEqual (self._tabsController.getPage(0), None)
+        self.assertEqual (self._tabsController.getTabTitle (0), u"testwiki")
+
+
+    def testRemove2 (self):
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+        self._tabsController.cloneTab()
+        self._tabsController.cloneTab()
+        self._tabsController.openInTab (self.wikiroot[u"Страница 2"], True)
+
+        self.wikiroot[u"Страница 1"].remove()
+        self.assertEqual (self._tabsController.getTabsCount(), 1)
+        self.assertEqual (self._tabsController.getSelection(), 0)
+        self.assertEqual (self._tabsController.getPage(0), self.wikiroot[u"Страница 2"])
+        self.assertEqual (self._tabsController.getTabTitle (0), u"Страница 2")
+
+
+    def testRemove3 (self):
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+        self._tabsController.cloneTab()
+        self._tabsController.cloneTab()
+        self._tabsController.openInTab (self.wikiroot[u"Страница 2"], False)
+
+        self.wikiroot[u"Страница 1"].remove()
+        self.assertEqual (self._tabsController.getTabsCount(), 2)
+        self.assertEqual (self._tabsController.getSelection(), 0)
+
+        self.assertEqual (self._tabsController.getPage(0), None)
+        self.assertEqual (self._tabsController.getTabTitle (0), u"testwiki")
+
+        self.assertEqual (self._tabsController.getPage(1), self.wikiroot[u"Страница 2"])
+        self.assertEqual (self._tabsController.getTabTitle (1), u"Страница 2")
+
+
+    def testRemove4 (self):
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+        self._tabsController.openInTab (self.wikiroot[u"Страница 2"], False)
+        self._tabsController.openInTab (self.wikiroot[u"Страница 2"], False)
+        self._tabsController.openInTab (self.wikiroot[u"Страница 2"], False)
+
+        self.wikiroot[u"Страница 2"].remove()
+        self.assertEqual (self._tabsController.getTabsCount(), 1)
+        self.assertEqual (self._tabsController.getSelection(), 0)
+
+        self.assertEqual (self._tabsController.getPage(0), self.wikiroot[u"Страница 1"])
+        self.assertEqual (self._tabsController.getTabTitle (0), u"Страница 1")
+
+
+    def testOpenInTab1 (self):
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+        self._tabsController.openInTab (self.wikiroot[u"Страница 2/Страница 3/Страница 4"], True)
+
+        self.assertEqual (Application.selectedPage, 
+                self.wikiroot[u"Страница 2/Страница 3/Страница 4"])
+
+        self.assertEqual (self._tabsController.getSelection(), 1)
+
+        self.assertEqual (self._tabsController.getPage(1), 
+                self.wikiroot[u"Страница 2/Страница 3/Страница 4"])
+
+        self.assertEqual (self._tabsController.getTabTitle (1), u"Страница 4")
+
+
+    def testOpenInTab2 (self):
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+        self._tabsController.openInTab (self.wikiroot[u"Страница 2/Страница 3/Страница 4"], False)
+
+        self.assertEqual (Application.selectedPage, self.wikiroot[u"Страница 1"])
+        self.assertEqual (self._tabsController.getSelection(), 0)
+
+        self.assertEqual (self._tabsController.getPage(0), self.wikiroot[u"Страница 1"])
+        self.assertEqual (self._tabsController.getTabTitle (0), u"Страница 1")
+
+        self.assertEqual (self._tabsController.getPage(1), 
+                self.wikiroot[u"Страница 2/Страница 3/Страница 4"])
+        self.assertEqual (self._tabsController.getTabTitle (1), u"Страница 4")
+
+
+    def testOpenInTab3 (self):
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+        self._tabsController.cloneTab()
+        self._tabsController.cloneTab()
+
+        self._tabsController.setSelection (0)
+        self._tabsController.openInTab (self.wikiroot[u"Страница 2/Страница 3/Страница 4"], True)
+
+        self.assertEqual (Application.selectedPage, 
+                self.wikiroot[u"Страница 2/Страница 3/Страница 4"])
+
+        self.assertEqual (self._tabsController.getSelection(), 1)
+        self.assertEqual (self._tabsController.getPage(1), 
+                self.wikiroot[u"Страница 2/Страница 3/Страница 4"])
+
+        self.assertEqual (self._tabsController.getTabTitle (1), u"Страница 4")
+
+
+    def testSetSelection (self):
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+        self._tabsController.openInTab (self.wikiroot[u"Страница 2"], False)
+        self._tabsController.openInTab (self.wikiroot[u"Страница 2/Страница 3/Страница 4"], False)
+
+        self.assertEqual (self._tabsController.getSelection(), 0)
+        self.assertEqual (self._tabsController.getPage(0), self.wikiroot[u"Страница 1"])
+        self.assertEqual (self._tabsController.getTabTitle (0), u"Страница 1")
+
+        self._tabsController.setSelection (2)
+        self.assertEqual (Application.selectedPage, self.wikiroot[u"Страница 2"])
+        self.assertEqual (self._tabsController.getSelection(), 2)
+        self.assertEqual (self._tabsController.getPage(2), self.wikiroot[u"Страница 2"])
+
+        self._tabsController.setSelection (1)
+        self.assertEqual (Application.selectedPage, 
+                self.wikiroot[u"Страница 2/Страница 3/Страница 4"])
+        self.assertEqual (self._tabsController.getSelection(), 1)
+        self.assertEqual (self._tabsController.getPage(1), 
+                self.wikiroot[u"Страница 2/Страница 3/Страница 4"])
+
+
+    def testCloseWiki (self):
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+        Application.wikiroot = None
+        self.assertEqual (self._tabsController.getTabsCount(), 0)
+
+
+    def testSaveTabs1 (self):
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+        Application.wikiroot = None
+        self.assertEqual (self._tabsController.getTabsCount(), 0)
+
+        otherwiki = WikiDocument.load (self.path)
+        Application.wikiroot = otherwiki
+        self.assertEqual (self._tabsController.getTabsCount(), 1)
+        self.assertEqual (self._tabsController.getSelection(), 0)
+        self.assertEqual (self._tabsController.getPage(0), otherwiki[u"Страница 1"])
+        self.assertEqual (self._tabsController.getTabTitle (0), u"Страница 1")
+
+
+    def testSaveTabs2 (self):
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+        self._tabsController.openInTab (self.wikiroot[u"Страница 2"], False)
+        self._tabsController.openInTab (self.wikiroot[u"Страница 2/Страница 3/Страница 4"], False)
+
+        Application.wikiroot = None
+        self.assertEqual (self._tabsController.getTabsCount(), 0)
+
+        otherwiki = WikiDocument.load (self.path)
+        Application.wikiroot = otherwiki
+
+        self.assertEqual (self._tabsController.getTabsCount(), 3)
+        self.assertEqual (self._tabsController.getSelection(), 0)
+
+        self.assertEqual (self._tabsController.getPage(0), otherwiki[u"Страница 1"])
+        self.assertEqual (self._tabsController.getTabTitle (0), u"Страница 1")
+        self.assertEqual (self._tabsController.getPage(1), 
+                otherwiki[u"Страница 2/Страница 3/Страница 4"])
+        self.assertEqual (self._tabsController.getPage(2), otherwiki[u"Страница 2"])
+
+
+    def testSaveTabs3 (self):
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+        self._tabsController.openInTab (self.wikiroot[u"Страница 2"], False)
+        self._tabsController.openInTab (self.wikiroot[u"Страница 2/Страница 3/Страница 4"], False)
+        self._tabsController.setSelection (1)
+
+        Application.wikiroot = None
+        self.assertEqual (self._tabsController.getTabsCount(), 0)
+
+        otherwiki = WikiDocument.load (self.path)
+        Application.wikiroot = otherwiki
+
+        self.assertEqual (self._tabsController.getTabsCount(), 3)
+        self.assertEqual (self._tabsController.getSelection(), 1)
+
+        self.assertEqual (self._tabsController.getPage(0), otherwiki[u"Страница 1"])
+        self.assertEqual (self._tabsController.getTabTitle (0), u"Страница 1")
+        self.assertEqual (self._tabsController.getPage(1), 
+                otherwiki[u"Страница 2/Страница 3/Страница 4"])
+        self.assertEqual (self._tabsController.getPage(2), otherwiki[u"Страница 2"])
+
+
+    def testSaveTabs4 (self):
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+        self._tabsController.openInTab (self.wikiroot[u"Страница 2"], False)
+        self._tabsController.openInTab (self.wikiroot[u"Страница 2/Страница 3/Страница 4"], False)
+        self._tabsController.setSelection (1)
+        Application.selectedPage = self.wikiroot[u"Страница 2/Страница 3"]
+
+        Application.wikiroot = None
+        self.assertEqual (self._tabsController.getTabsCount(), 0)
+
+        otherwiki = WikiDocument.load (self.path)
+        Application.wikiroot = otherwiki
+
+        self.assertEqual (self._tabsController.getTabsCount(), 3)
+        self.assertEqual (self._tabsController.getSelection(), 1)
+
+        self.assertEqual (self._tabsController.getPage(0), otherwiki[u"Страница 1"])
+        self.assertEqual (self._tabsController.getTabTitle (0), u"Страница 1")
+        self.assertEqual (self._tabsController.getPage(1), 
+                otherwiki[u"Страница 2/Страница 3"])
+        self.assertEqual (self._tabsController.getPage(2), otherwiki[u"Страница 2"])

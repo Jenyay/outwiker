@@ -32,10 +32,10 @@ class TabsCtrl (wx.Panel):
         self._tabs.AddPage (blankWindow, title)
 
 
-    def InsertPage (self, index, title, page):
+    def InsertPage (self, index, title, page, select):
         blankWindow = wx.Window (self, size=(1,1))
         blankWindow.page = page
-        self._tabs.InsertPage (index, blankWindow, title)
+        self._tabs.InsertPage (index, blankWindow, title, select)
 
 
     def Clear (self):
@@ -49,7 +49,11 @@ class TabsCtrl (wx.Panel):
     def RenameCurrentTab (self, title):
         page_index = self.GetSelection()
         if page_index >= 0:
-            self._tabs.SetPageText (page_index, title)
+            self.RenameTab (page_index, title)
+
+
+    def RenameTab (self, index, title):
+        self._tabs.SetPageText (index, title)
 
 
     def GetPage (self, index):

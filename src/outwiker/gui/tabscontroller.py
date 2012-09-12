@@ -28,6 +28,17 @@ class TabsController (object):
         self.__bindEvents()
 
 
+    def openInTab (self, page, select):
+        """
+        Открыть страницу в новой вкладке
+        page - страница, которую надо открыть в новой вкладке
+        select - нужно ли сразу выбрать новую вкладку
+        """
+        selectedTab = self._tabsCtrl.GetSelection()
+        self._tabsCtrl.InsertPage (selectedTab + 1, self.__getTitle (page), page, select)
+        self.__saveTabs()
+
+
     def getTabsCount (self):
         """
         Возвращает количество открытых вкладок
@@ -46,8 +57,18 @@ class TabsController (object):
         return self._tabsCtrl.GetSelection()
 
 
+    def setSelection (self, index):
+        self._tabsCtrl.SetSelection (index)
+        self._application.selectedPage = self._tabsCtrl.GetPage (index)
+        self.__saveTabs()
+
+
     def getPage (self, index):
         return self._tabsCtrl.GetPage (index)
+
+
+    def cloneTab (self):
+        self.__createCurrentTab()
 
 
     def __createStringListConfig (self, config):
@@ -55,19 +76,22 @@ class TabsController (object):
 
 
     def destroy (self):
+        """
+        Вызывать перед удалением контроллера
+        """
         self.__saveTabs()
-
         self.__unbindEvents()
 
 
     def __bindEvents (self):
         self._application.onWikiOpen += self.__onWikiOpen
-        self._application.onPageUpdate += self.__updateCurrentPage
-        self._application.onPageSelect += self.__updateCurrentPage
-        self._application.onPageCreate += self.__updateCurrentPage
-        self._application.onTreeUpdate += self.__updateCurrentPage
+        self._application.onPageUpdate += self.__onPageUpdate
+        self._application.onPageSelect += self.__onPageUpdate
+        self._application.onPageCreate += self.__onPageUpdate
+        self._application.onTreeUpdate += self.__onPageUpdate
+        self._application.onPageRemove += self.__onPageUpdate
         self._application.onPageRename += self.__onPageRename
-        self._application.onEndTreeUpdate += self.__updateCurrentPage
+        self._application.onEndTreeUpdate += self.__onPageUpdate
 
         self.__bindGuiEvents()
 
@@ -79,12 +103,13 @@ class TabsController (object):
 
     def __unbindEvents (self):
         self._application.onWikiOpen -= self.__onWikiOpen
-        self._application.onPageUpdate -= self.__updateCurrentPage
-        self._application.onPageSelect -= self.__updateCurrentPage
-        self._application.onPageCreate -= self.__updateCurrentPage
-        self._application.onTreeUpdate -= self.__updateCurrentPage
+        self._application.onPageUpdate -= self.__onPageUpdate
+        self._application.onPageSelect -= self.__onPageUpdate
+        self._application.onPageCreate -= self.__onPageUpdate
+        self._application.onTreeUpdate -= self.__onPageUpdate
+        self._application.onPageRemove -= self.__onPageUpdate
         self._application.onPageRename -= self.__onPageRename
-        self._application.onEndTreeUpdate -= self.__updateCurrentPage
+        self._application.onEndTreeUpdate -= self.__onPageUpdate
 
         self.__unbindGuiEvents()
 
@@ -155,12 +180,8 @@ class TabsController (object):
             self._application.wikiroot.params.set (self._tabSelectedSection, self._tabSelectedOption, str (selectedTab))
 
 
-    def cloneTab (self):
-        self.__createCurrentTab()
-
-
     def __onPageRename (self, page, oldSubpath):
-        self.__updateCurrentPage (self._application.selectedPage)
+        self.__onPageUpdate (self._application.selectedPage)
 
 
     def __onWikiOpen (self, root):
@@ -178,13 +199,29 @@ class TabsController (object):
 
 
     def __createCurrentTab (self):
-        page = self._application.selectedPage
-        selectedTab = self._tabsCtrl.GetSelection()
-        self._tabsCtrl.InsertPage (selectedTab + 1, self.__getTitle (page), page)
-        self.__saveTabs()
+        self.openInTab (self._application.selectedPage, True)
 
 
-    def __updateCurrentPage (self, page):
+    def __onPageUpdate (self, page):
         self._tabsCtrl.RenameCurrentTab (self.__getTitle (self._application.selectedPage))
         self._tabsCtrl.SetCurrentPage (self._application.selectedPage)
+        self.__checkInvalidTabs ()
         self.__saveTabs()
+
+
+    def __checkInvalidTabs (self):
+        """
+        Проверить табы на неправильность отображения
+        """
+        index = 0
+        while index < self.getTabsCount():
+            selectedIndex = self.getSelection()
+            page = self.getPage (index)
+
+            if (page == None or page.isRemoved) and index != selectedIndex:
+                self._tabsCtrl.DeletePage (index)
+                index -= 1
+            elif page == None or page.title != self.getTabTitle (index):
+                self._tabsCtrl.RenameTab (index, self.__getTitle (page))
+
+            index += 1
