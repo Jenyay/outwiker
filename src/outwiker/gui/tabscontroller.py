@@ -28,6 +28,28 @@ class TabsController (object):
         self.__bindEvents()
 
 
+    def getTabsCount (self):
+        """
+        Возвращает количество открытых вкладок
+        """
+        return self._tabsCtrl.GetPageCount()
+
+
+    def getTabTitle (self, index):
+        """
+        Возвращает заголовок вкладки с номером index
+        """
+        return self._tabsCtrl.GetPageText(index)
+
+
+    def getSelection (self):
+        return self._tabsCtrl.GetSelection()
+
+
+    def getPage (self, index):
+        return self._tabsCtrl.GetPage (index)
+
+
     def __createStringListConfig (self, config):
         return StringListSection (config, self._tabsSection, self._tabsParamName)
 
@@ -73,8 +95,8 @@ class TabsController (object):
 
 
     def __onTabClose (self, event):
-        selectedTabIndex = self._tabsCtrl.getSelection()
-        tabsCount = self._tabsCtrl.getPageCount()
+        selectedTabIndex = self._tabsCtrl.GetSelection()
+        tabsCount = self._tabsCtrl.GetPageCount()
 
         if tabsCount == 1:
             event.Veto()
@@ -85,14 +107,14 @@ class TabsController (object):
 
     def __onTabChanged (self, event):
         newindex = event.GetSelection()
-        page = self._tabsCtrl.getPage(newindex)
+        page = self._tabsCtrl.GetPage(newindex)
         self._application.selectedPage = page
         self.__saveTabs()
 
 
     def __loadTabs (self, wikiroot):
         self.__unbindGuiEvents()
-        self._tabsCtrl.clear()
+        self._tabsCtrl.Clear()
 
         if wikiroot == None:
             self.__bindGuiEvents()
@@ -103,14 +125,14 @@ class TabsController (object):
         for tab in tabsList:
             page = wikiroot[tab]
             if page != None:
-                self._tabsCtrl.addPage (self.__getTitle (page), page)
+                self._tabsCtrl.AddPage (self.__getTitle (page), page)
 
         selectedTab = IntegerOption (wikiroot.params, 
                 self._tabSelectedSection, 
                 self._tabSelectedOption,
                 0).value
 
-        pageCount = self._tabsCtrl.getPageCount()
+        pageCount = self._tabsCtrl.GetPageCount()
 
         if selectedTab < 0 or selectedTab >= pageCount:
             selectedTab = 0
@@ -118,18 +140,18 @@ class TabsController (object):
         if pageCount < 1:
             self.__createCurrentTab()
 
-        self._tabsCtrl.setSelection (selectedTab)
-        self._application.selectedPage = self._tabsCtrl.getPage (selectedTab)
+        self._tabsCtrl.SetSelection (selectedTab)
+        self._application.selectedPage = self._tabsCtrl.GetPage (selectedTab)
 
         self.__bindGuiEvents()
 
 
     def __saveTabs (self):
         if self._application.wikiroot != None:
-            pageSubpathList = [page.subpath for page in self._tabsCtrl.getPages() if page != None]
+            pageSubpathList = [page.subpath for page in self._tabsCtrl.GetPages() if page != None]
             self.__createStringListConfig (self._application.wikiroot.params).value = pageSubpathList
 
-            selectedTab = self._tabsCtrl.getSelection()
+            selectedTab = self._tabsCtrl.GetSelection()
             self._application.wikiroot.params.set (self._tabSelectedSection, self._tabSelectedOption, str (selectedTab))
 
 
@@ -157,12 +179,12 @@ class TabsController (object):
 
     def __createCurrentTab (self):
         page = self._application.selectedPage
-        selectedTab = self._tabsCtrl.getSelection()
-        self._tabsCtrl.insertPage (selectedTab + 1, self.__getTitle (page), page)
+        selectedTab = self._tabsCtrl.GetSelection()
+        self._tabsCtrl.InsertPage (selectedTab + 1, self.__getTitle (page), page)
         self.__saveTabs()
 
 
     def __updateCurrentPage (self, page):
-        self._tabsCtrl.renameCurrentTab (self.__getTitle (self._application.selectedPage))
-        self._tabsCtrl.setCurrentPage (self._application.selectedPage)
+        self._tabsCtrl.RenameCurrentTab (self.__getTitle (self._application.selectedPage))
+        self._tabsCtrl.SetCurrentPage (self._application.selectedPage)
         self.__saveTabs()

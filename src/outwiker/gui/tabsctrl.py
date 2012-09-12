@@ -26,55 +26,57 @@ class TabsCtrl (wx.Panel):
         self.Layout()
 
 
-    def addPage (self, title, page):
+    def AddPage (self, title, page):
         blankWindow = wx.Window (self, size=(1,1))
         blankWindow.page = page
         self._tabs.AddPage (blankWindow, title)
 
 
-    def insertPage (self, index, title, page):
+    def InsertPage (self, index, title, page):
         blankWindow = wx.Window (self, size=(1,1))
         blankWindow.page = page
         self._tabs.InsertPage (index, blankWindow, title)
 
 
-    def clear (self):
-        count = self._tabs.GetPageCount()
-        for _ in range (count):
-            self._tabs.DeletePage (0)
+    def Clear (self):
+        self._tabs.DeleteAllPages()
 
 
-    def renameCurrentTab (self, title):
-        page_index = self._tabs.GetSelection()
+    def GetPageText (self, index):
+        return self._tabs.GetPageText (index)
+
+
+    def RenameCurrentTab (self, title):
+        page_index = self.GetSelection()
         if page_index >= 0:
             self._tabs.SetPageText (page_index, title)
 
 
-    def getPage (self, index):
+    def GetPage (self, index):
         return self._tabs.GetPage (index).page
 
 
-    def setCurrentPage (self, page):
-        page_index = self._tabs.GetSelection()
+    def SetCurrentPage (self, page):
+        page_index = self.GetSelection()
         if page_index >= 0:
             self._tabs.GetPage (page_index).page = page
 
 
-    def getSelection (self):
+    def GetSelection (self):
         return self._tabs.GetSelection()
 
 
-    def getPages (self):
-        return [self._tabs.GetPage (index).page for index in range (self._tabs.GetPageCount())]
+    def GetPages (self):
+        return [self.GetPage (index) for index in range (self.GetPageCount())]
 
 
-    def getPageCount (self):
+    def GetPageCount (self):
         return self._tabs.GetPageCount()
 
 
-    def setSelection (self, index):
+    def SetSelection (self, index):
         return self._tabs.SetSelection (index)
 
 
-    def deletePage (self, index):
+    def DeletePage (self, index):
         return self._tabs.DeletePage (index)

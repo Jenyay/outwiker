@@ -88,6 +88,7 @@ if __name__ == '__main__':
     from test.guitests.tree import TreeTest
     from test.guitests.pagepanel import PagePanelTest
     from test.guitests.tagspanel import TagsPanelTest
+    from test.guitests.tabs import TabsTest
 
     from test.plugins.loader import PluginsLoaderTest
     from test.plugins.testwikicommand import PluginWikiCommandTest
