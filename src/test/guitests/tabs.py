@@ -392,3 +392,50 @@ class TabsTest(BaseMainWndTest):
         self.assertEqual (self._tabsController.getPage(1), 
                 otherwiki[u"Страница 2/Страница 3"])
         self.assertEqual (self._tabsController.getPage(2), otherwiki[u"Страница 2"])
+
+
+    def testSaveTabs5 (self):
+        wikiReadOnly = WikiDocument.load (self.path)
+        Application.wikiroot = wikiReadOnly
+
+        Application.selectedPage = wikiReadOnly[u"Страница 1"]
+        self._tabsController.cloneTab()
+        self._tabsController.openInTab (wikiReadOnly[u"Страница 2"], True)
+        self.assertEqual (self._tabsController.getTabsCount(), 3)
+
+        # Загрузим вики еще раз, чтобы убедиться, что состояние вкладок мы не поменяли
+        otherwiki = WikiDocument.load (self.path)
+        Application.wikiroot = otherwiki
+        self.assertEqual (self._tabsController.getTabsCount(), 3)
+        self.assertEqual (Application.selectedPage, otherwiki[u"Страница 2"])
+
+
+    def testMove (self):
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+        self._tabsController.cloneTab()
+        self._tabsController.openInTab (self.wikiroot[u"Страница 2"], True)
+        self._tabsController.setSelection (2)
+
+        self.wikiroot[u"Страница 1"].moveTo (self.wikiroot[u"Страница 2"])
+        self.assertEqual (self.wikiroot[u"Страница 2/Страница 1"], self._tabsController.getPage (0))
+        self.assertEqual (self.wikiroot[u"Страница 2/Страница 1"], self._tabsController.getPage (1))
+
+        self._tabsController.setSelection (0)
+        self.assertEqual (Application.selectedPage, self.wikiroot[u"Страница 2/Страница 1"])
+
+
+    def testReadOnly (self):
+        wikiReadOnly = WikiDocument.load (self.path, readonly=True)
+        Application.wikiroot = wikiReadOnly
+
+        Application.selectedPage = wikiReadOnly[u"Страница 1"]
+        self._tabsController.cloneTab()
+        self._tabsController.openInTab (wikiReadOnly[u"Страница 2"], True)
+        self.assertEqual (self._tabsController.getTabsCount(), 3)
+
+        # Загрузим вики еще раз, чтобы убедиться, что состояние вкладок мы не поменяли
+        otherwiki = WikiDocument.load (self.path, readonly=True)
+        Application.wikiroot = otherwiki
+        self.assertEqual (self._tabsController.getTabsCount(), 1)
+        self.assertEqual (Application.selectedPage, None)
