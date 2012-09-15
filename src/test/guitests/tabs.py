@@ -395,12 +395,12 @@ class TabsTest(BaseMainWndTest):
 
 
     def testSaveTabs5 (self):
-        wikiReadOnly = WikiDocument.load (self.path)
-        Application.wikiroot = wikiReadOnly
+        wiki = WikiDocument.load (self.path)
+        Application.wikiroot = wiki
 
-        Application.selectedPage = wikiReadOnly[u"Страница 1"]
+        Application.selectedPage = wiki[u"Страница 1"]
         self._tabsController.cloneTab()
-        self._tabsController.openInTab (wikiReadOnly[u"Страница 2"], True)
+        self._tabsController.openInTab (wiki[u"Страница 2"], True)
         self.assertEqual (self._tabsController.getTabsCount(), 3)
 
         # Загрузим вики еще раз, чтобы убедиться, что состояние вкладок мы не поменяли
@@ -408,6 +408,41 @@ class TabsTest(BaseMainWndTest):
         Application.wikiroot = otherwiki
         self.assertEqual (self._tabsController.getTabsCount(), 3)
         self.assertEqual (Application.selectedPage, otherwiki[u"Страница 2"])
+
+
+    def testSaveAfterRemove (self):
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+        self._tabsController.cloneTab()
+        self._tabsController.openInTab (self.wikiroot[u"Страница 2"], True)
+        self._tabsController.cloneTab()
+        self._tabsController.cloneTab()
+        self._tabsController.cloneTab()
+
+        self.wikiroot[u"Страница 1"].remove()
+
+        otherwiki = WikiDocument.load (self.path)
+        Application.wikiroot = otherwiki
+        self.assertEqual (self._tabsController.getTabsCount(), 4)
+        self.assertEqual (self._tabsController.getSelection(), 3)
+        self.assertEqual (self._tabsController.getPage (0), otherwiki[u"Страница 2"])
+        self.assertEqual (self._tabsController.getPage (3), otherwiki[u"Страница 2"])
+
+
+    def testSaveAfterMove (self):
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+        self._tabsController.cloneTab()
+        self._tabsController.openInTab (self.wikiroot[u"Страница 2"], True)
+
+        self.wikiroot[u"Страница 1"].moveTo (self.wikiroot[u"Страница 2"])
+
+        otherwiki = WikiDocument.load (self.path)
+        Application.wikiroot = otherwiki
+        self.assertEqual (self._tabsController.getTabsCount (), 3)
+        self.assertEqual (self._tabsController.getPage (0), otherwiki[u"Страница 2/Страница 1"])
+        self.assertEqual (self._tabsController.getPage (1), otherwiki[u"Страница 2/Страница 1"])
+        self.assertEqual (self._tabsController.getPage (2), otherwiki[u"Страница 2"])
 
 
     def testMove (self):
