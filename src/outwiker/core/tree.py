@@ -355,10 +355,6 @@ class WikiDocument (RootWikiPage):
 
         root.loadChildren()
 
-        lastvieved = root.lastViewedPage
-        if lastvieved != None:
-            root.selectedPage = root[lastvieved]
-
         root.onTreeUpdate(root)
         return root
 
@@ -395,19 +391,9 @@ class WikiDocument (RootWikiPage):
             self._selectedPage = None
         else:
             self._selectedPage = page
-            subpath = page.subpath
-
-        if not self.readonly:
-            self._params.lastViewedPageOption.value = subpath
 
         self.root.onPageSelect(self._selectedPage)
         self.save()
-    
-
-    @property
-    def lastViewedPage (self):
-        subpath = self._params.lastViewedPageOption.value
-        return subpath if len (subpath) != 0 else None
 
 
     @property
@@ -508,9 +494,6 @@ class WikiPage (RootWikiPage):
 
         WikiPage.__renamePaths (self, newpath)
 
-        if self.root.selectedPage == self:
-            self.root.params.lastViewedPageOption.value = self.subpath
-
         self.root.onPageRename (self, oldsubpath)
         self.root.onTreeUpdate (self)
     
@@ -576,9 +559,6 @@ class WikiPage (RootWikiPage):
         newparent.addToChildren (self)
         
         WikiPage.__renamePaths (self, newpath)
-
-        if self.root.selectedPage == self:
-            self.root.params.lastViewedPageOption.value = self.subpath
 
         self.root.onTreeUpdate (self)
 

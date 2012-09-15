@@ -227,77 +227,9 @@ class TextPageCreationTest(unittest.TestCase):
         self.assertEqual (wiki[u"Страница 1/Страница 5"].content, u"111111")
     
 
-    def testLastViewedPage1 (self):
-        """
-        Тест на то, что в настройках корня сохраняется ссылка на последнюю просмотренную страницу
-        """
-        wiki = WikiDocument.load (self.path)
-        section = u"History"
-        param = u"LastViewedPage"
-
-        subpath = StringOption (wiki.params, section, param, u"")
-
-        wiki.selectedPage = wiki[u"Страница 1"]
-        self.assertEqual (subpath.value, u"Страница 1")
-
-        wiki.selectedPage = wiki[u"Страница 2/Страница 3"]
-        self.assertEqual (subpath.value, u"Страница 2/Страница 3")
-
-        # Проверим, что параметр сохраняется в файл
-        wiki2 = WikiDocument.load (self.path)
-
-        subpath2 = StringOption (wiki2.params, section, param, u"")
-        self.assertEqual (subpath2.value, u"Страница 2/Страница 3")
-
-    
-    def testLastViewedPage2 (self):
-        """
-        Тест на то, что в настройках корня сохраняется ссылка на последнюю просмотренную страницу
-        """
-        wiki = WikiDocument.load (self.path)
-
-        self.assertEqual (wiki.lastViewedPage, None)
-
-        wiki.selectedPage = wiki[u"Страница 1"]
-        subpath = wiki.lastViewedPage
-        self.assertEqual (subpath, u"Страница 1")
-
-        wiki.selectedPage = wiki[u"Страница 2/Страница 3"]
-        subpath = wiki.lastViewedPage
-        self.assertEqual (subpath, u"Страница 2/Страница 3")
-
-        # Проверим, что параметр сохраняется в файл
-        wiki2 = WikiDocument.load (self.path)
-
-        subpath = wiki2.lastViewedPage
-        self.assertEqual (subpath, u"Страница 2/Страница 3")
-
-
-    def testLastViewedPage3 (self):
-        """
-        Тест на то, что в настройках корня сохраняется ссылка на последнюю просмотренную страницу
-        """
-        self.rootwiki.selectedPage = self.rootwiki[u"Страница 2/Страница 3"]
-
-        self.rootwiki.selectedPage = self.rootwiki
-
-        # Проверим, что параметр сохраняется в файл
-        wiki2 = WikiDocument.load (self.path)
-
-        #subpath = wiki2.lastViewedPage
-        self.assertEqual (wiki2.selectedPage, None)
-
-
     def testSelection1 (self):
         self.rootwiki.selectedPage = self.rootwiki[u"Страница 2/Страница 3"]
         self.assertEqual (self.rootwiki.selectedPage, self.rootwiki[u"Страница 2/Страница 3"])
-
-
-    def testSelection2 (self):
-        self.rootwiki.selectedPage = self.rootwiki[u"Страница 2/Страница 3"]
-        wiki2 = WikiDocument.load (self.path)
-
-        self.assertEqual (wiki2.selectedPage, wiki2[u"Страница 2/Страница 3"])
 
 
     def testSelection3 (self):
@@ -305,15 +237,6 @@ class TextPageCreationTest(unittest.TestCase):
         wiki2 = WikiDocument.load (self.path)
 
         self.assertEqual (wiki2.selectedPage, None)
-
-
-    def testSelection4 (self):
-        self.rootwiki.selectedPage = self.rootwiki[u"Страница 2/Страница 3"]
-        self.rootwiki[u"Страница 2/Страница 3"].remove()
-
-        wiki2 = WikiDocument.load (self.path)
-
-        self.assertEqual (wiki2.selectedPage, wiki2[u"Страница 2"])
 
 
     def testSelection5 (self):
