@@ -40,6 +40,12 @@ class TabsController (object):
 
 
     def closeTab (self, index):
+        """
+        Закыть вкладку с индексом index
+        """
+        if index < 0 or index >= self.getTabsCount():
+            raise ValueError
+
         self._tabsCtrl.DeletePage (index)
 
 
@@ -54,6 +60,9 @@ class TabsController (object):
         """
         Возвращает заголовок вкладки с номером index
         """
+        if index < 0 or index >= self.getTabsCount():
+            raise ValueError
+
         return self._tabsCtrl.GetPageText(index)
 
 
@@ -62,12 +71,18 @@ class TabsController (object):
 
 
     def setSelection (self, index):
+        if index < 0 or index >= self.getTabsCount():
+            raise ValueError
+
         self._tabsCtrl.SetSelection (index)
         self._application.selectedPage = self._tabsCtrl.GetPage (index)
         self.__saveTabs()
 
 
     def getPage (self, index):
+        if index < 0 or index >= self.getTabsCount():
+            raise ValueError
+
         return self._tabsCtrl.GetPage (index)
 
 

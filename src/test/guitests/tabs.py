@@ -532,3 +532,47 @@ class TabsTest(BaseMainWndTest):
         self.assertEqual (self._tabsController.getTabsCount(), 1)
         self.assertEqual (self._tabsController.getPage (0), self.wikiroot[u"Страница 1"])
         self.assertEqual (Application.selectedPage, self.wikiroot[u"Страница 1"])
+
+
+    def testCloseTabInvalid (self):
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+        self._tabsController.openInTab (self.wikiroot[u"Страница 2"], True)
+        self._tabsController.openInTab (self.wikiroot[u"Страница 2/Страница 3"], True)
+
+        self.assertRaises (ValueError, self._tabsController.closeTab, -1)
+        self.assertRaises (ValueError, self._tabsController.closeTab, 3)
+        self.assertRaises (ValueError, self._tabsController.closeTab, 5)
+
+
+    def testTabTitleInvalid (self):
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+        self._tabsController.openInTab (self.wikiroot[u"Страница 2"], True)
+        self._tabsController.openInTab (self.wikiroot[u"Страница 2/Страница 3"], True)
+
+        self.assertRaises (ValueError, self._tabsController.getTabTitle, -1)
+        self.assertRaises (ValueError, self._tabsController.getTabTitle, 3)
+        self.assertRaises (ValueError, self._tabsController.getTabTitle, 5)
+
+
+    def testSetSelectionInvalid (self):
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+        self._tabsController.openInTab (self.wikiroot[u"Страница 2"], True)
+        self._tabsController.openInTab (self.wikiroot[u"Страница 2/Страница 3"], True)
+
+        self.assertRaises (ValueError, self._tabsController.setSelection, -1)
+        self.assertRaises (ValueError, self._tabsController.setSelection, 3)
+        self.assertRaises (ValueError, self._tabsController.setSelection, 5)
+        
+    
+    def testGetPageInvalid (self):
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+        self._tabsController.openInTab (self.wikiroot[u"Страница 2"], True)
+        self._tabsController.openInTab (self.wikiroot[u"Страница 2/Страница 3"], True)
+
+        self.assertRaises (ValueError, self._tabsController.getPage, -1)
+        self.assertRaises (ValueError, self._tabsController.getPage, 3)
+        self.assertRaises (ValueError, self._tabsController.getPage, 5)
