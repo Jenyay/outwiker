@@ -39,6 +39,10 @@ class TabsController (object):
         self.__saveTabs()
 
 
+    def closeTab (self, index):
+        self._tabsCtrl.DeletePage (index)
+
+
     def getTabsCount (self):
         """
         Возвращает количество открытых вкладок

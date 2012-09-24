@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-02 18:43+0400\n"
+"POT-Creation-Date: 2012-09-24 21:26+0400\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
+"Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -134,14 +134,14 @@ msgstr "You did not select a file to remove"
 #: outwiker/gui/attachpanel.py:240
 #: outwiker/gui/attachpanel.py:250
 #: outwiker/gui/basetextpanel.py:166
-#: outwiker/gui/currentpagepanel.py:92
-#: outwiker/gui/currentpagepanel.py:239
-#: outwiker/gui/currentpagepanel.py:248
+#: outwiker/gui/currentpagepanel.py:93
+#: outwiker/gui/currentpagepanel.py:228
+#: outwiker/gui/currentpagepanel.py:237
 #: outwiker/gui/htmlrenderie.py:162
 #: outwiker/gui/htmlrenderwebkit.py:210
 #: outwiker/gui/htmlrenderwx.py:107
-#: outwiker/gui/mainwindow.py:211
-#: outwiker/gui/mainwindow.py:327
+#: outwiker/gui/mainwindow.py:223
+#: outwiker/gui/mainwindow.py:340
 #: outwiker/gui/mainwndcontroller.py:152
 #: outwiker/gui/pagedialog.py:29
 #: outwiker/gui/pagedialog.py:46
@@ -284,6 +284,8 @@ msgid "Search…\tCtrl+F"
 msgstr "Search…\tCtrl+F"
 
 #: outwiker/gui/basetextpanel.py:218
+#: outwiker/gui/localsearchpanel.py:17
+#: outwiker/pages/search/searchpanel.py:34
 msgid "Search"
 msgstr "Search"
 
@@ -295,23 +297,23 @@ msgstr "Find previous\tShift+F3"
 msgid "Find next\tF3"
 msgstr "Find next\tF3"
 
-#: outwiker/gui/currentpagepanel.py:92
+#: outwiker/gui/currentpagepanel.py:93
 msgid "Can't open page. Page folder not exists"
 msgstr "Can't open page. Page folder not exists"
 
-#: outwiker/gui/currentpagepanel.py:109
+#: outwiker/gui/currentpagepanel.py:110
 msgid "Add to Bookmarks"
 msgstr "Add to Bookmarks"
 
-#: outwiker/gui/currentpagepanel.py:113
+#: outwiker/gui/currentpagepanel.py:114
 msgid "Remove from Bookmarks"
 msgstr "Remove from Bookmarks"
 
-#: outwiker/gui/currentpagepanel.py:239
+#: outwiker/gui/currentpagepanel.py:228
 msgid "Can't save page. Wiki folder not exists. Wiki will be closed."
 msgstr "Can't save page. Wiki folder not exists. Wiki will be closed."
 
-#: outwiker/gui/currentpagepanel.py:248
+#: outwiker/gui/currentpagepanel.py:237
 msgid "Can't save page. Page folder not exists. Wiki will be reloaded."
 msgstr "Can't save page. Page folder not exists. Wiki will be reloaded."
 
@@ -324,11 +326,11 @@ msgstr "Not found"
 msgid "Can't read file %s"
 msgstr "Can't read file %s"
 
-#: outwiker/gui/localsearchpanel.py:40
+#: outwiker/gui/localsearchpanel.py:33
 msgid "Find Next"
 msgstr "Find Next"
 
-#: outwiker/gui/localsearchpanel.py:41
+#: outwiker/gui/localsearchpanel.py:34
 msgid "Find Previous"
 msgstr "Find Previous"
 
@@ -409,8 +411,8 @@ msgid "Pr&eferences…\tCtrl+F8"
 msgstr "Pr&eferences…\tCtrl+F8"
 
 #: outwiker/gui/mainmenu.py:71
-msgid "Add &Sibling Page…\tCtrl+T"
-msgstr "Add &Sibling Page…\tCtrl+T"
+msgid "Add &Sibling Page…\tCtrl+Alt+T"
+msgstr "Add &Sibling Page…\tCtrl+Alt+T"
 
 #: outwiker/gui/mainmenu.py:72
 msgid "Add &Child Page…\tCtrl+Shift+T"
@@ -445,77 +447,85 @@ msgid "Pag&e Properties…\tCtrl+E"
 msgstr "Pag&e Properties…\tCtrl+E"
 
 #: outwiker/gui/mainmenu.py:89
+msgid "Add Tab\tCtrl+T"
+msgstr "OutWiker"
+
+#: outwiker/gui/mainmenu.py:90
+msgid "Close Tab\tCtrl+W"
+msgstr "Close Tab\tCtrl+W"
+
+#: outwiker/gui/mainmenu.py:93
 msgid "&Global Search…\tCtrl+Shift+F"
 msgstr "&Global Search…\tCtrl+Shift+F"
 
-#: outwiker/gui/mainmenu.py:90
+#: outwiker/gui/mainmenu.py:94
 msgid "&Attach Files…\tCtrl+Alt+A"
 msgstr "&Attach Files…\tCtrl+Alt+A"
 
-#: outwiker/gui/mainmenu.py:93
+#: outwiker/gui/mainmenu.py:97
 msgid "Copy Page &Title\tCtrl+Shift+D"
 msgstr "Copy Page &Title\tCtrl+Shift+D"
 
-#: outwiker/gui/mainmenu.py:94
+#: outwiker/gui/mainmenu.py:98
 msgid "Copy &Page Path\tCtrl+Shift+P"
 msgstr "Copy &Page Path\tCtrl+Shift+P"
 
-#: outwiker/gui/mainmenu.py:95
+#: outwiker/gui/mainmenu.py:99
 msgid "Copy Atta&ches Path\tCtrl+Shift+A"
 msgstr "Copy Atta&ches Path\tCtrl+Shift+A"
 
-#: outwiker/gui/mainmenu.py:96
+#: outwiker/gui/mainmenu.py:100
 msgid "Copy Page &Link\tCtrl+Shift+L"
 msgstr "Copy Page &Link\tCtrl+Shift+L"
 
-#: outwiker/gui/mainmenu.py:99
+#: outwiker/gui/mainmenu.py:103
 msgid "Add Tags to Branch..."
 msgstr "Add Tags to Branch..."
 
-#: outwiker/gui/mainmenu.py:100
+#: outwiker/gui/mainmenu.py:104
 msgid "Remove Tags from Branch..."
 msgstr "Remove Tags from Branch..."
 
-#: outwiker/gui/mainmenu.py:101
+#: outwiker/gui/mainmenu.py:105
 msgid "Rename Tag..."
 msgstr "Rename Tag..."
 
-#: outwiker/gui/mainmenu.py:104
+#: outwiker/gui/mainmenu.py:108
 msgid "&Reload Wiki…\tCtrl+R"
 msgstr "&Reload Wiki…\tCtrl+R"
 
-#: outwiker/gui/mainmenu.py:111
+#: outwiker/gui/mainmenu.py:115
 msgid "&Add/Remove Bookmark\tCtrl+D"
 msgstr "&Add/Remove Bookmark\tCtrl+D"
 
-#: outwiker/gui/mainmenu.py:123
+#: outwiker/gui/mainmenu.py:127
 msgid "Notes &Tree"
 msgstr "Notes &Tree"
 
-#: outwiker/gui/mainmenu.py:131
+#: outwiker/gui/mainmenu.py:135
 #: outwiker/gui/mainpanes/attachmainpane.py:22
 msgid "Attaches"
 msgstr "Attaches"
 
-#: outwiker/gui/mainmenu.py:140
+#: outwiker/gui/mainmenu.py:144
 #: outwiker/gui/mainpanes/tagscloudmainpane.py:56
-#: outwiker/pages/search/searchpanel.py:36
+#: outwiker/pages/search/searchpanel.py:38
 msgid "Tags"
 msgstr "Tags"
 
-#: outwiker/gui/mainmenu.py:150
+#: outwiker/gui/mainmenu.py:154
 msgid "Fullscreen\tF11"
 msgstr "Fullscreen\tF11"
 
-#: outwiker/gui/mainmenu.py:160
+#: outwiker/gui/mainmenu.py:164
 msgid "&Help\tF1"
 msgstr "&Help\tF1"
 
-#: outwiker/gui/mainmenu.py:161
+#: outwiker/gui/mainmenu.py:165
 msgid "&About…\tCtrl+F1"
 msgstr "&About…\tCtrl+F1"
 
-#: outwiker/gui/mainwindow.py:210
+#: outwiker/gui/mainwindow.py:222
 #, python-format
 msgid ""
 "Can't save config\n"
@@ -524,7 +534,7 @@ msgstr ""
 "Can't save config\n"
 "%s"
 
-#: outwiker/gui/mainwindow.py:327
+#: outwiker/gui/mainwindow.py:340
 #: outwiker/gui/pagedialog.py:84
 msgid "Can't create page"
 msgstr "Can't create page"
@@ -642,14 +652,14 @@ msgstr ""
 "%s"
 
 #: outwiker/gui/wikitree.py:341
-#: outwiker/gui/wikitree.py:733
-#: outwiker/gui/wikitree.py:738
+#: outwiker/gui/wikitree.py:734
+#: outwiker/gui/wikitree.py:739
 msgid "Add Child Page…"
 msgstr "Add Child Page…"
 
 #: outwiker/gui/wikitree.py:342
-#: outwiker/gui/wikitree.py:724
-#: outwiker/gui/wikitree.py:729
+#: outwiker/gui/wikitree.py:725
+#: outwiker/gui/wikitree.py:730
 msgid "Add Sibling Page…"
 msgstr "Add Sibling Page…"
 
@@ -681,23 +691,23 @@ msgstr "Copy Page Link"
 msgid "Properties…"
 msgstr "Properties…"
 
-#: outwiker/gui/wikitree.py:704
-#: outwiker/gui/wikitree.py:709
+#: outwiker/gui/wikitree.py:705
+#: outwiker/gui/wikitree.py:710
 msgid "Move Page Down"
 msgstr "Move Page Down"
 
-#: outwiker/gui/wikitree.py:713
-#: outwiker/gui/wikitree.py:718
+#: outwiker/gui/wikitree.py:714
+#: outwiker/gui/wikitree.py:719
 msgid "Move Page Up"
 msgstr "Move Page Up"
 
-#: outwiker/gui/wikitree.py:742
-#: outwiker/gui/wikitree.py:747
+#: outwiker/gui/wikitree.py:743
+#: outwiker/gui/wikitree.py:748
 msgid "Remove Page…"
 msgstr "Remove Page…"
 
-#: outwiker/gui/wikitree.py:753
-#: outwiker/gui/wikitree.py:758
+#: outwiker/gui/wikitree.py:754
+#: outwiker/gui/wikitree.py:759
 msgid "Page Properties…"
 msgstr "Page Properties…"
 
@@ -1261,7 +1271,7 @@ msgid "Last modified date: {0}"
 msgstr "Last modified date: {0}"
 
 #: outwiker/pages/search/htmlreport.py:84
-#: outwiker/pages/search/searchpanel.py:34
+#: outwiker/pages/search/searchpanel.py:36
 msgid "Tags: "
 msgstr "Tags: "
 
@@ -1273,23 +1283,19 @@ msgstr "Search Page"
 msgid "# Search"
 msgstr "# Search"
 
-#: outwiker/pages/search/searchpanel.py:32
-msgid "Search words: "
-msgstr "Search words: "
-
-#: outwiker/pages/search/searchpanel.py:36
+#: outwiker/pages/search/searchpanel.py:38
 msgid "Any tag"
 msgstr "Any tag"
 
-#: outwiker/pages/search/searchpanel.py:36
+#: outwiker/pages/search/searchpanel.py:38
 msgid "All tags"
 msgstr "All tags"
 
-#: outwiker/pages/search/searchpanel.py:37
+#: outwiker/pages/search/searchpanel.py:39
 msgid "Clear all tags"
 msgstr "Clear all tags"
 
-#: outwiker/pages/search/searchpanel.py:38
+#: outwiker/pages/search/searchpanel.py:40
 msgid "Find"
 msgstr "Find"
 
@@ -1656,6 +1662,9 @@ msgstr "The page title contains invalid characters for Microsoft Windows operati
 #: outwiker/core/textprinter.py:106
 msgid "Printing error"
 msgstr "Printing error"
+
+#~ msgid "Search words: "
+#~ msgstr "Search words: "
 
 #~ msgid "My site:"
 #~ msgstr "My site:"

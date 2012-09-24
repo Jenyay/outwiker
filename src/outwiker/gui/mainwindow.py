@@ -178,10 +178,15 @@ class MainWindow(wx.Frame):
         self.Bind (wx.EVT_TOOL, self.__onRemoveTagsFromBranch, id=MainId.ID_REMOVE_TAGS_FROM_BRANCH)
         self.Bind (wx.EVT_TOOL, self.__onRenameTag, id=MainId.ID_RENAME_TAG)
         self.Bind (wx.EVT_TOOL, self.__onAddNewTab, id=MainId.ID_ADD_TAB)
+        self.Bind (wx.EVT_TOOL, self.__onCloseTab, id=MainId.ID_CLOSE_TAB)
 
 
     def __onAddNewTab (self, event):
-        self.tabsController.cloneTab()
+        outwiker.core.commands.addNewTab (Application)
+
+
+    def __onCloseTab (self, event):
+        outwiker.core.commands.closeCurrentTab (Application)
 
     
     def __saveParams (self):

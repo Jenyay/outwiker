@@ -84,3 +84,7 @@ class TabsCtrl (wx.Panel):
 
     def DeletePage (self, index):
         return self._tabs.DeletePage (index)
+
+
+    def DeletePage (self, index):
+        self._tabs.DeletePage (index)

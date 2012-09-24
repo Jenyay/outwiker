@@ -532,3 +532,19 @@ def renameTagGui (wikiroot, parent):
             Application.onEndTreeUpdate(wikiroot)
 
     dlg.Destroy()
+
+
+def closeCurrentTab (application):
+    """
+    Закыть текущую вкладку
+    """
+    assert application.mainWindow != None
+
+    index = application.mainWindow.tabsController.getSelection()
+    if index != -1:
+        application.mainWindow.tabsController.closeTab (index)
+
+
+def addNewTab (application):
+    assert application.mainWindow != None
+    application.mainWindow.tabsController.cloneTab()

@@ -474,3 +474,61 @@ class TabsTest(BaseMainWndTest):
         Application.wikiroot = otherwiki
         self.assertEqual (self._tabsController.getTabsCount(), 1)
         self.assertEqual (Application.selectedPage, None)
+
+
+    def testCloseLastTab (self):
+        """
+        Тест на попытку закрыть единственную вкладку
+        """
+        Application.wikiroot = self.wikiroot
+        self.assertEqual (self._tabsController.getTabsCount(), 1)
+        
+        self._tabsController.closeTab (0)
+        self.assertEqual (self._tabsController.getTabsCount(), 1)
+
+
+    def testCloseTab1 (self):
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+        self._tabsController.openInTab (self.wikiroot[u"Страница 2"], True)
+        self._tabsController.openInTab (self.wikiroot[u"Страница 2/Страница 3"], True)
+        
+        self.assertEqual (self._tabsController.getTabsCount(), 3) 
+        self.assertEqual (Application.selectedPage, self.wikiroot[u"Страница 2/Страница 3"])
+
+        self._tabsController.closeTab (0)
+        self.assertEqual (self._tabsController.getTabsCount(), 2)
+        self.assertEqual (self._tabsController.getPage (0), self.wikiroot[u"Страница 2"])
+        self.assertEqual (self._tabsController.getPage (1), self.wikiroot[u"Страница 2/Страница 3"])
+        self.assertEqual (Application.selectedPage, self.wikiroot[u"Страница 2/Страница 3"])
+
+        self._tabsController.closeTab (0)
+        self.assertEqual (self._tabsController.getTabsCount(), 1)
+        self.assertEqual (self._tabsController.getPage (0), self.wikiroot[u"Страница 2/Страница 3"])
+        self.assertEqual (Application.selectedPage, self.wikiroot[u"Страница 2/Страница 3"])
+
+
+    def testCloseTab2 (self):
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+        self._tabsController.openInTab (self.wikiroot[u"Страница 2"], True)
+        self._tabsController.openInTab (self.wikiroot[u"Страница 2/Страница 3"], True)
+
+        self.assertEqual (self._tabsController.getTabsCount(), 3) 
+
+        self._tabsController.closeTab (2)
+
+        self.assertEqual (self._tabsController.getTabsCount(), 2)
+        self.assertEqual (self._tabsController.getPage (0), self.wikiroot[u"Страница 1"])
+        self.assertEqual (self._tabsController.getPage (1), self.wikiroot[u"Страница 2"])
+        self.assertEqual (Application.selectedPage, self.wikiroot[u"Страница 2"])
+
+        self._tabsController.closeTab (1)
+        self.assertEqual (self._tabsController.getTabsCount(), 1)
+        self.assertEqual (self._tabsController.getPage (0), self.wikiroot[u"Страница 1"])
+        self.assertEqual (Application.selectedPage, self.wikiroot[u"Страница 1"])
+
+        self._tabsController.closeTab (0)
+        self.assertEqual (self._tabsController.getTabsCount(), 1)
+        self.assertEqual (self._tabsController.getPage (0), self.wikiroot[u"Страница 1"])
+        self.assertEqual (Application.selectedPage, self.wikiroot[u"Страница 1"])
