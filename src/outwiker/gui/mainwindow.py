@@ -141,6 +141,7 @@ class MainWindow(wx.Frame):
         """
         self.Bind (wx.EVT_MENU, self.__onNew, id=MainId.ID_NEW)
         self.Bind (wx.EVT_MENU, self.__onOpen, id=MainId.ID_OPEN)
+        self.Bind (wx.EVT_MENU, self.__onClose, id=MainId.ID_CLOSE)
         self.Bind (wx.EVT_MENU, self.__onOpenReadOnly, id=MainId.ID_OPEN_READONLY)
         self.Bind (wx.EVT_MENU, self.__onSave, id=MainId.ID_SAVE)
         self.Bind (wx.EVT_MENU, self.__onPrint, id=wx.ID_PRINT)
@@ -187,6 +188,10 @@ class MainWindow(wx.Frame):
 
     def __onCloseTab (self, event):
         outwiker.core.commands.closeCurrentTab (Application)
+
+
+    def __onClose (self, event):
+        outwiker.core.commands.closeWiki (Application)
 
     
     def __saveParams (self):

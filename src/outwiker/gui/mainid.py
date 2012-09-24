@@ -12,6 +12,7 @@ class MainId (object):
     ID_OPEN = wx.ID_OPEN
     ID_OPEN_READONLY = wx.NewId()
     ID_SAVE = wx.ID_SAVE
+    ID_CLOSE = wx.ID_CLOSE
     ID_RELOAD = wx.NewId()
     ID_ADDPAGE = wx.NewId()
     ID_ADDCHILD = wx.NewId()

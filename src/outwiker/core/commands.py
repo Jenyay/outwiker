@@ -548,3 +548,7 @@ def closeCurrentTab (application):
 def addNewTab (application):
     assert application.mainWindow != None
     application.mainWindow.tabsController.cloneTab()
+
+
+def closeWiki (application):
+    application.wikiroot = None
