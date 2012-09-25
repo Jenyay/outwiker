@@ -188,19 +188,30 @@ class HtmlRenderWebKit(HtmlRender):
             # разрешить обработать запрос компоненту 
             return False
         else:
-            return self.__onLinkClicked (href)
+            button = action.get_button()
+            modifier = action.get_modifier_state()
+            return self.__onLinkClicked (href, button, modifier)
 
 
-    def __onLinkClicked (self, href):
+    def __onLinkClicked (self, href, button, modifier):
         """
         Клик по ссылке
         Возвращает False, если обрабатывать ссылку разрешить компоненту, 
         в противном случае - True
+        href - ссылка
+        button - кнопка мыши, с помощью которой кликнули по ссылке (1 - левая, 2 - средняя, 3 - правая, -1 - не известно)
+        modifier - зажатые клавиши (1 - Shift, 4 - Ctrl)
         """
+        middle_button = 2
+        ctrl_key = 4
+
         (url, page, filename, anchor) = self.__identifyUri (href)
 
         if url != None:
             self.openUrl (url)
+
+        elif page != None and (button == middle_button or modifier == ctrl_key):
+            Application.mainWindow.tabsController.openInTab (page, True)
 
         elif page != None:
             self._currentPage.root.selectedPage = page
