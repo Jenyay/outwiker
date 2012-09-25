@@ -552,3 +552,13 @@ def addNewTab (application):
 
 def closeWiki (application):
     application.wikiroot = None
+
+
+def nextTab (application):
+    assert application.mainWindow != None
+    tabsCount = application.mainWindow.tabsController.nextTab()
+
+
+def previousTab (application):
+    assert application.mainWindow != None
+    tabsCount = application.mainWindow.tabsController.previousTab()

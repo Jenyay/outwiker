@@ -534,6 +534,76 @@ class TabsTest(BaseMainWndTest):
         self.assertEqual (Application.selectedPage, self.wikiroot[u"Страница 1"])
 
 
+    def testNextTab1 (self):
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+        self._tabsController.openInTab (self.wikiroot[u"Страница 2/Страница 3"], False)
+        self._tabsController.openInTab (self.wikiroot[u"Страница 2"], False)
+
+        self.assertEqual (Application.selectedPage, self.wikiroot[u"Страница 1"])
+        self.assertEqual (self._tabsController.getSelection(), 0)
+
+        self._tabsController.nextTab()
+        self.assertEqual (Application.selectedPage, self.wikiroot[u"Страница 2"])
+        self.assertEqual (self._tabsController.getSelection(), 1)
+
+        self._tabsController.nextTab()
+        self.assertEqual (Application.selectedPage, self.wikiroot[u"Страница 2/Страница 3"])
+        self.assertEqual (self._tabsController.getSelection(), 2)
+
+        self._tabsController.nextTab()
+        self.assertEqual (Application.selectedPage, self.wikiroot[u"Страница 1"])
+        self.assertEqual (self._tabsController.getSelection(), 0)
+
+
+    def testNextTab2 (self):
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+
+        self.assertEqual (Application.selectedPage, self.wikiroot[u"Страница 1"])
+        self.assertEqual (self._tabsController.getSelection(), 0)
+
+        self._tabsController.nextTab()
+
+        self.assertEqual (Application.selectedPage, self.wikiroot[u"Страница 1"])
+        self.assertEqual (self._tabsController.getSelection(), 0)
+
+
+    def testPrevTab1 (self):
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+        self._tabsController.openInTab (self.wikiroot[u"Страница 2/Страница 3"], False)
+        self._tabsController.openInTab (self.wikiroot[u"Страница 2"], False)
+
+        self.assertEqual (Application.selectedPage, self.wikiroot[u"Страница 1"])
+        self.assertEqual (self._tabsController.getSelection(), 0)
+
+        self._tabsController.previousTab()
+        self.assertEqual (Application.selectedPage, self.wikiroot[u"Страница 2/Страница 3"])
+        self.assertEqual (self._tabsController.getSelection(), 2)
+
+        self._tabsController.previousTab()
+        self.assertEqual (Application.selectedPage, self.wikiroot[u"Страница 2"])
+        self.assertEqual (self._tabsController.getSelection(), 1)
+
+        self._tabsController.previousTab()
+        self.assertEqual (Application.selectedPage, self.wikiroot[u"Страница 1"])
+        self.assertEqual (self._tabsController.getSelection(), 0)
+
+
+    def testPrevTab2 (self):
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+
+        self.assertEqual (Application.selectedPage, self.wikiroot[u"Страница 1"])
+        self.assertEqual (self._tabsController.getSelection(), 0)
+
+        self._tabsController.previousTab()
+
+        self.assertEqual (Application.selectedPage, self.wikiroot[u"Страница 1"])
+        self.assertEqual (self._tabsController.getSelection(), 0)
+
+
     def testCloseTabInvalid (self):
         Application.wikiroot = self.wikiroot
         Application.selectedPage = self.wikiroot[u"Страница 1"]

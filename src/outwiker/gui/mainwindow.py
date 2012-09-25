@@ -180,6 +180,16 @@ class MainWindow(wx.Frame):
         self.Bind (wx.EVT_TOOL, self.__onRenameTag, id=MainId.ID_RENAME_TAG)
         self.Bind (wx.EVT_TOOL, self.__onAddNewTab, id=MainId.ID_ADD_TAB)
         self.Bind (wx.EVT_TOOL, self.__onCloseTab, id=MainId.ID_CLOSE_TAB)
+        self.Bind (wx.EVT_TOOL, self.__onNextTab, id=MainId.ID_NEXT_TAB)
+        self.Bind (wx.EVT_TOOL, self.__onPrevTab, id=MainId.ID_PREV_TAB)
+
+
+    def __onNextTab (self, event):
+        outwiker.core.commands.nextTab (Application)
+
+
+    def __onPrevTab (self, event):
+        outwiker.core.commands.previousTab (Application)
 
 
     def __onAddNewTab (self, event):

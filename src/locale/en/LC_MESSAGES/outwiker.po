@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-24 21:59+0400\n"
+"POT-Creation-Date: 2012-09-25 21:20+0400\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -138,10 +138,10 @@ msgstr "You did not select a file to remove"
 #: outwiker/gui/currentpagepanel.py:228
 #: outwiker/gui/currentpagepanel.py:237
 #: outwiker/gui/htmlrenderie.py:162
-#: outwiker/gui/htmlrenderwebkit.py:210
+#: outwiker/gui/htmlrenderwebkit.py:213
 #: outwiker/gui/htmlrenderwx.py:107
-#: outwiker/gui/mainwindow.py:228
-#: outwiker/gui/mainwindow.py:345
+#: outwiker/gui/mainwindow.py:238
+#: outwiker/gui/mainwindow.py:355
 #: outwiker/gui/mainwndcontroller.py:152
 #: outwiker/gui/pagedialog.py:29
 #: outwiker/gui/pagedialog.py:46
@@ -200,7 +200,7 @@ msgstr "You did not select a file to execute"
 #: outwiker/gui/attachpanel.py:249
 #: outwiker/gui/htmlrenderie.py:161
 #: outwiker/gui/htmlrender.py:66
-#: outwiker/gui/htmlrenderwebkit.py:209
+#: outwiker/gui/htmlrenderwebkit.py:212
 #: outwiker/gui/htmlrenderwx.py:106
 #: outwiker/gui/htmlrenderwx.py:153
 #, python-format
@@ -321,7 +321,7 @@ msgstr "Can't save page. Page folder not exists. Wiki will be reloaded."
 msgid "Not found"
 msgstr "Not found"
 
-#: outwiker/gui/htmlrenderwebkit.py:95
+#: outwiker/gui/htmlrenderwebkit.py:98
 #, python-format
 msgid "Can't read file %s"
 msgstr "Can't read file %s"
@@ -458,78 +458,86 @@ msgstr "OutWiker"
 msgid "Close Tab\tCtrl+W"
 msgstr "Close Tab\tCtrl+W"
 
-#: outwiker/gui/mainmenu.py:96
+#: outwiker/gui/mainmenu.py:94
+msgid "Previous Tab\tCtrl+Shift+PgUp"
+msgstr "Previous Tab\tCtrl+Shift+PgUp"
+
+#: outwiker/gui/mainmenu.py:95
+msgid "Next Tab\tCtrl+Shift+PgDn"
+msgstr "Next Tab\tCtrl+Shift+PgDn"
+
+#: outwiker/gui/mainmenu.py:98
 msgid "&Global Search…\tCtrl+Shift+F"
 msgstr "&Global Search…\tCtrl+Shift+F"
 
-#: outwiker/gui/mainmenu.py:97
+#: outwiker/gui/mainmenu.py:99
 msgid "&Attach Files…\tCtrl+Alt+A"
 msgstr "&Attach Files…\tCtrl+Alt+A"
 
-#: outwiker/gui/mainmenu.py:100
+#: outwiker/gui/mainmenu.py:102
 msgid "Copy Page &Title\tCtrl+Shift+D"
 msgstr "Copy Page &Title\tCtrl+Shift+D"
 
-#: outwiker/gui/mainmenu.py:101
+#: outwiker/gui/mainmenu.py:103
 msgid "Copy &Page Path\tCtrl+Shift+P"
 msgstr "Copy &Page Path\tCtrl+Shift+P"
 
-#: outwiker/gui/mainmenu.py:102
+#: outwiker/gui/mainmenu.py:104
 msgid "Copy Atta&ches Path\tCtrl+Shift+A"
 msgstr "Copy Atta&ches Path\tCtrl+Shift+A"
 
-#: outwiker/gui/mainmenu.py:103
+#: outwiker/gui/mainmenu.py:105
 msgid "Copy Page &Link\tCtrl+Shift+L"
 msgstr "Copy Page &Link\tCtrl+Shift+L"
 
-#: outwiker/gui/mainmenu.py:106
+#: outwiker/gui/mainmenu.py:108
 msgid "Add Tags to Branch..."
 msgstr "Add Tags to Branch..."
 
-#: outwiker/gui/mainmenu.py:107
+#: outwiker/gui/mainmenu.py:109
 msgid "Remove Tags from Branch..."
 msgstr "Remove Tags from Branch..."
 
-#: outwiker/gui/mainmenu.py:108
+#: outwiker/gui/mainmenu.py:110
 msgid "Rename Tag..."
 msgstr "Rename Tag..."
 
-#: outwiker/gui/mainmenu.py:111
+#: outwiker/gui/mainmenu.py:113
 msgid "&Reload Wiki…\tCtrl+R"
 msgstr "&Reload Wiki…\tCtrl+R"
 
-#: outwiker/gui/mainmenu.py:118
+#: outwiker/gui/mainmenu.py:120
 msgid "&Add/Remove Bookmark\tCtrl+D"
 msgstr "&Add/Remove Bookmark\tCtrl+D"
 
-#: outwiker/gui/mainmenu.py:130
+#: outwiker/gui/mainmenu.py:132
 msgid "Notes &Tree"
 msgstr "Notes &Tree"
 
-#: outwiker/gui/mainmenu.py:138
+#: outwiker/gui/mainmenu.py:140
 #: outwiker/gui/mainpanes/attachmainpane.py:22
 msgid "Attaches"
 msgstr "Attaches"
 
-#: outwiker/gui/mainmenu.py:147
+#: outwiker/gui/mainmenu.py:149
 #: outwiker/gui/mainpanes/tagscloudmainpane.py:56
 #: outwiker/pages/search/searchpanel.py:38
 msgid "Tags"
 msgstr "Tags"
 
-#: outwiker/gui/mainmenu.py:157
+#: outwiker/gui/mainmenu.py:159
 msgid "Fullscreen\tF11"
 msgstr "Fullscreen\tF11"
 
-#: outwiker/gui/mainmenu.py:167
+#: outwiker/gui/mainmenu.py:169
 msgid "&Help\tF1"
 msgstr "&Help\tF1"
 
-#: outwiker/gui/mainmenu.py:168
+#: outwiker/gui/mainmenu.py:170
 msgid "&About…\tCtrl+F1"
 msgstr "&About…\tCtrl+F1"
 
-#: outwiker/gui/mainwindow.py:227
+#: outwiker/gui/mainwindow.py:237
 #, python-format
 msgid ""
 "Can't save config\n"
@@ -538,7 +546,7 @@ msgstr ""
 "Can't save config\n"
 "%s"
 
-#: outwiker/gui/mainwindow.py:345
+#: outwiker/gui/mainwindow.py:355
 #: outwiker/gui/pagedialog.py:84
 msgid "Can't create page"
 msgstr "Can't create page"
@@ -1781,9 +1789,6 @@ msgstr "Printing error"
 
 #~ msgid "Current icon"
 #~ msgstr "Current icon"
-
-#~ msgid "Center align\tCtrl+Shift+C"
-#~ msgstr "Center align\tCtrl+Shift+C"
 
 #~ msgid "Show Attachments Instead Blank page"
 #~ msgstr "Show Attachments Instead Blank page"

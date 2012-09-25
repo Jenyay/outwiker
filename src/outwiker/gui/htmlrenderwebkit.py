@@ -79,6 +79,9 @@ class HtmlRenderWebKit(HtmlRender):
 
         self.Bind (wx.EVT_MENU, self.__onCopyFromHtml, id = wx.ID_COPY)
         self.Bind (wx.EVT_MENU, self.__onCopyFromHtml, id = wx.ID_CUT)
+
+        # self.ctrl.get_settings().set_property("enable-page-cache", False)
+        self.ctrl.get_settings().set_property("tab-key-cycles-through-elements", False)
         
 
     def Print (self):

@@ -8,6 +8,7 @@ import wx.lib.agw.flatnotebook as fnb
 
 from outwiker.core.config import StringListSection, IntegerOption
 from outwiker.core.tree import RootWikiPage
+from .mainid import MainId
 
 
 class TabsController (object):
@@ -24,6 +25,8 @@ class TabsController (object):
 
         self._tabSelectedSection = RootWikiPage.sectionGeneral
         self._tabSelectedOption = u"selectedtab"
+
+        self.NEXT_TAB = wx.NewId()
 
         self.__bindEvents()
 
@@ -90,6 +93,28 @@ class TabsController (object):
         self.__createCurrentTab()
 
 
+    def nextTab (self):
+        tabsCount = self.getTabsCount()
+        currentTab = self.getSelection()
+
+        if tabsCount < 2:
+            return
+
+        nexttab = currentTab + 1 if currentTab < tabsCount - 1 else 0
+        self.setSelection (nexttab)
+
+
+    def previousTab (self):
+        tabsCount = self.getTabsCount()
+        currentTab = self.getSelection()
+
+        if tabsCount < 2:
+            return
+
+        prevtab = currentTab - 1 if currentTab > 0 else tabsCount - 1
+        self.setSelection (prevtab)
+
+
     def __createStringListConfig (self, config):
         return StringListSection (config, self._tabsSection, self._tabsParamName)
 
@@ -100,6 +125,16 @@ class TabsController (object):
         """
         self.__saveTabs()
         self.__unbindEvents()
+
+
+    def __bindGuiEvents (self):
+        self._tabsCtrl.Bind (fnb.EVT_FLATNOTEBOOK_PAGE_CHANGED, self.__onTabChanged)
+        self._tabsCtrl.Bind (fnb.EVT_FLATNOTEBOOK_PAGE_CLOSING, self.__onTabClose)
+
+
+    def __unbindGuiEvents (self):
+        self._tabsCtrl.Unbind (fnb.EVT_FLATNOTEBOOK_PAGE_CHANGED, handler=self.__onTabChanged)
+        self._tabsCtrl.Unbind (fnb.EVT_FLATNOTEBOOK_PAGE_CLOSING, handler=self.__onTabClose)
 
 
     def __bindEvents (self):
@@ -115,11 +150,6 @@ class TabsController (object):
         self.__bindGuiEvents()
 
 
-    def __bindGuiEvents (self):
-        self._tabsCtrl.Bind (fnb.EVT_FLATNOTEBOOK_PAGE_CHANGED, self.__onTabChanged)
-        self._tabsCtrl.Bind (fnb.EVT_FLATNOTEBOOK_PAGE_CLOSING, self.__onTabClose)
-
-
     def __unbindEvents (self):
         self._application.onWikiOpen -= self.__onWikiOpen
         self._application.onPageUpdate -= self.__onPageUpdate
@@ -131,11 +161,6 @@ class TabsController (object):
         self._application.onEndTreeUpdate -= self.__onPageUpdate
 
         self.__unbindGuiEvents()
-
-
-    def __unbindGuiEvents (self):
-        self._tabsCtrl.Unbind (fnb.EVT_FLATNOTEBOOK_PAGE_CHANGED, handler=self.__onTabChanged)
-        self._tabsCtrl.Unbind (fnb.EVT_FLATNOTEBOOK_PAGE_CLOSING, handler=self.__onTabClose)
 
 
     def __onTabClose (self, event):
