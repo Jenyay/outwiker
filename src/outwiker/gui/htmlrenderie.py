@@ -130,6 +130,14 @@ class HtmlRenderIE (HtmlRender):
             self.__onLinkClicked (href)
 
 
+    def NewWindow3 (self, this, pDisp, Cancel, dwFlags, currentURL, href):
+        Cancel[0] = True
+
+        (url, page, filename, anchor) = self.__identifyUri (href)
+        if page != None:
+            Application.mainWindow.tabsController.openInTab (page, True)
+
+
     def __identifyUri (self, href):
         """
         Определить тип ссылки и вернуть кортеж (url, page, filename)
