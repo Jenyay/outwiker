@@ -128,6 +128,7 @@ class WikiTree(wx.Panel):
         """
         # События, связанные с деревом
         self.Bind (wx.EVT_TREE_SEL_CHANGED, self.__onSelChanged)
+        self.Bind (wx.EVT_TREE_ITEM_MIDDLE_CLICK, self.__onMiddleClick)
 
         # Перетаскивание элементов
         self.treeCtrl.Bind (wx.EVT_TREE_BEGIN_DRAG, self.__onBeginDrag)
@@ -154,6 +155,15 @@ class WikiTree(wx.Panel):
         self.Bind(wx.EVT_MENU, self.__onPropertiesButton, id=self.ID_PROPERTIES_BUTTON)
 
         self.Bind (wx.EVT_CLOSE, self.__onClose)
+
+
+    def __onMiddleClick (self, event):
+        item = event.GetItem()
+        if not item.IsOk():
+            return
+
+        page = self.treeCtrl.GetItemData (item).GetData()
+        Application.mainWindow.tabsController.openInTab (page, True)
 
 
     def __onClose (self, event):
