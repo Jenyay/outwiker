@@ -147,9 +147,13 @@ class HtmlRenderIE (HtmlRender):
         Клик по ссылке
         """
         (url, page, filename, anchor) = self.__identifyUri (href)
+        ctrlstate = wx.GetKeyState(wx.WXK_CONTROL)
 
         if url != None:
             self.openUrl (url)
+
+        elif page != None and ctrlstate:
+            Application.mainWindow.tabsController.openInTab (page, True)
 
         elif page != None:
             self._currentPage.root.selectedPage = page
