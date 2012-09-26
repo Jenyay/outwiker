@@ -39,6 +39,26 @@ class TabsTest(BaseMainWndTest):
         self.assertEqual (self._tabsController.getTabsCount(), 0)
 
 
+    def testCloneEmpty1 (self):
+        # Пока нет откытых вики, нет и вкладок
+        self.assertEqual (self._tabsController.getTabsCount(), 0)
+
+        self._tabsController.cloneTab()
+        self.assertEqual (self._tabsController.getTabsCount(), 0)
+
+
+    def testCloneEmpty2 (self):
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = None
+        self.assertEqual (self._tabsController.getTabsCount(), 1)
+
+        self._tabsController.cloneTab()
+        self.assertEqual (self._tabsController.getTabsCount(), 2)
+        self.assertEqual (self._tabsController.getPage(0), None)
+        self.assertEqual (self._tabsController.getPage(1), None)
+
+
+
     def testOpenWiki (self):
         # Откываем вики, где нет сохраненных вкладок
         Application.wikiroot = self.wikiroot

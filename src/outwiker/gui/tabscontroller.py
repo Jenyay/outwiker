@@ -90,7 +90,8 @@ class TabsController (object):
 
 
     def cloneTab (self):
-        self.__createCurrentTab()
+        if self.getTabsCount() != 0:
+            self.__createCurrentTab()
 
 
     def nextTab (self):
@@ -130,11 +131,13 @@ class TabsController (object):
     def __bindGuiEvents (self):
         self._tabsCtrl.Bind (fnb.EVT_FLATNOTEBOOK_PAGE_CHANGED, self.__onTabChanged)
         self._tabsCtrl.Bind (fnb.EVT_FLATNOTEBOOK_PAGE_CLOSING, self.__onTabClose)
+        self._tabsCtrl.Bind (fnb.EVT_FLATNOTEBOOK_PAGE_DROPPED, self.__onTabDropped)
 
 
     def __unbindGuiEvents (self):
         self._tabsCtrl.Unbind (fnb.EVT_FLATNOTEBOOK_PAGE_CHANGED, handler=self.__onTabChanged)
         self._tabsCtrl.Unbind (fnb.EVT_FLATNOTEBOOK_PAGE_CLOSING, handler=self.__onTabClose)
+        self._tabsCtrl.Unbind (fnb.EVT_FLATNOTEBOOK_PAGE_DROPPED, handler=self.__onTabDropped)
 
 
     def __bindEvents (self):
@@ -178,6 +181,10 @@ class TabsController (object):
         newindex = event.GetSelection()
         page = self._tabsCtrl.GetPage(newindex)
         self._application.selectedPage = page
+        self.__saveTabs()
+
+
+    def __onTabDropped (self, event):
         self.__saveTabs()
 
 
