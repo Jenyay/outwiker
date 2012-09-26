@@ -503,7 +503,13 @@ class WikiTree(wx.Panel):
 
 
     def __onSelChanged (self, event):
-        Application.selectedPage = self.selectedPage
+        ctrlstate = wx.GetKeyState(wx.WXK_CONTROL)
+        shiftstate = wx.GetKeyState(wx.WXK_SHIFT)
+
+        if ctrlstate or shiftstate:
+            Application.mainWindow.tabsController.openInTab (self.selectedPage, True)
+        else:
+            Application.selectedPage = self.selectedPage
     
 
     def __onPageOrderChange (self, sender):
