@@ -128,9 +128,6 @@ class HtmlRenderWebKit(HtmlRender):
         basepath = unicode (self.ctrl.get_main_frame().get_uri(), "utf8")
         identifier = UriIdentifierWebKit (self._currentPage, basepath)
 
-        #print basepath
-        #print href
-
         return identifier.identify (href)
 
 
@@ -142,7 +139,6 @@ class HtmlRenderWebKit(HtmlRender):
         try:
             href = unicode (urllib.unquote (uri), "utf8")
         except UnicodeDecodeError:
-            #print uri
             outwiker.core.commands.setStatusText (u"", self._status_item)
             return
 

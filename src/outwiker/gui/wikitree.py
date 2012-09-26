@@ -34,6 +34,9 @@ class WikiTree(wx.Panel):
         self.ID_COPY_TITLE = wx.NewId()
         self.ID_COPY_LINK = wx.NewId()
 
+        # Переключатель, устанавливается в True, если "внезапно" изменяется текущая страница
+        self.__externalPageSelect = False
+
         kwds["style"] = wx.TAB_TRAVERSAL
         wx.Panel.__init__(self, *args, **kwds)
         self.toolbar = self.__getToolbar(self, -1)
@@ -497,16 +500,22 @@ class WikiTree(wx.Panel):
         """
         Изменение выбранной страницы
         """
-        currpage = self.selectedPage
-        if currpage != page:
-            self.selectedPage = page
+        # Пометим, что изменение страницы произошло снаружи, а не из-за клика по дереву
+        self.__externalPageSelect = True
+
+        try:
+            currpage = self.selectedPage
+            if currpage != page:
+                self.selectedPage = page
+        finally:
+           self.__externalPageSelect = False
 
 
     def __onSelChanged (self, event):
         ctrlstate = wx.GetKeyState(wx.WXK_CONTROL)
         shiftstate = wx.GetKeyState(wx.WXK_SHIFT)
 
-        if ctrlstate or shiftstate:
+        if (ctrlstate or shiftstate) and not self.__externalPageSelect:
             Application.mainWindow.tabsController.openInTab (self.selectedPage, True)
         else:
             Application.selectedPage = self.selectedPage
