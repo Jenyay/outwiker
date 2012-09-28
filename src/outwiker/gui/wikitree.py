@@ -13,6 +13,8 @@ import outwiker.core.commands
 import outwiker.core.system
 import outwiker.gui.pagedialog
 from outwiker.core.config import BooleanOption
+from .mainid import MainId
+from .pagepopupmenu import PagePopupMenu
 
 
 class WikiTree(wx.Panel):
@@ -28,7 +30,7 @@ class WikiTree(wx.Panel):
         self.ID_ADD_SIBLING_PAGE = wx.NewId()
         self.ID_ADD_CHILD_PAGE = wx.NewId()
         self.ID_REMOVE_PAGE = wx.NewId()
-        
+
         self.ID_COPY_PATH = wx.NewId()
         self.ID_COPY_ATTACH_PATH = wx.NewId()
         self.ID_COPY_TITLE = wx.NewId()
@@ -55,11 +57,11 @@ class WikiTree(wx.Panel):
 
         self.defaultBitmap = wx.Bitmap (self.defaultIcon)
         assert self.defaultBitmap.IsOk()
-        
+
         self.defaultBitmap.SetHeight (self.iconHeight)
 
         self.dragItem = None
-    
+
         # Картинки для дерева
         self.imagelist = wx.ImageList(16, self.iconHeight)
         self.treeCtrl.AssignImageList (self.imagelist)
@@ -68,8 +70,8 @@ class WikiTree(wx.Panel):
         # Словарь. Ключ - страница, значение - элемент дерева wx.TreeItemId
         self._pageCache = {}
 
-        # Элемент, над которым показываем меню
-        self.popupItem = None
+        # Страница, над элементом которой вызывается контекстное меню
+        self.popupPage = None
 
         # Секция настроек куда сохраняем развернутость страницы
         self.pageOptionsSection = u"Tree"
@@ -79,7 +81,6 @@ class WikiTree(wx.Panel):
 
         self.__BindApplicationEvents()
         self.__BindGuiEvents()
-        self.__BindPopupMenuEvents()
 
 
     def getTreeItem (self, page):
@@ -104,7 +105,7 @@ class WikiTree(wx.Panel):
 
         Application.onStartTreeUpdate += self.__onStartTreeUpdate
         Application.onEndTreeUpdate += self.__onEndTreeUpdate
-        
+
 
     def __UnBindApplicationEvents(self):
         """
@@ -119,11 +120,11 @@ class WikiTree(wx.Panel):
 
         Application.onStartTreeUpdate -= self.__onStartTreeUpdate
         Application.onEndTreeUpdate -= self.__onEndTreeUpdate
-        
+
 
     def __onWikiOpen (self, root):
         self.__treeUpdate (root)
-    
+
 
     def __BindGuiEvents (self):
         """
@@ -136,13 +137,13 @@ class WikiTree(wx.Panel):
         # Перетаскивание элементов
         self.treeCtrl.Bind (wx.EVT_TREE_BEGIN_DRAG, self.__onBeginDrag)
         self.treeCtrl.Bind (wx.EVT_TREE_END_DRAG, self.__onEndDrag)
-        
+
         # Переименование элемента
         self.treeCtrl.Bind (wx.EVT_TREE_END_LABEL_EDIT, self.__onEndLabelEdit)
 
         # Показ всплывающего меню
         self.treeCtrl.Bind (wx.EVT_TREE_ITEM_MENU, self.__onItemMenu)
-        
+
         # Сворачивание/разворачивание элементов
         self.treeCtrl.Bind (wx.EVT_TREE_ITEM_COLLAPSED, self.__onTreeStateChanged)
         self.treeCtrl.Bind (wx.EVT_TREE_ITEM_EXPANDED, self.__onTreeStateChanged)
@@ -154,7 +155,7 @@ class WikiTree(wx.Panel):
         self.Bind(wx.EVT_MENU, self.__onAddSiblingPage, id=self.ID_ADD_SIBLING_PAGE)
         self.Bind(wx.EVT_MENU, self.__onAddChildPage, id=self.ID_ADD_CHILD_PAGE)
         self.Bind(wx.EVT_MENU, self.__onRemovePage, id=self.ID_REMOVE_PAGE)
-        
+
         self.Bind(wx.EVT_MENU, self.__onPropertiesButton, id=self.ID_PROPERTIES_BUTTON)
 
         self.Bind (wx.EVT_CLOSE, self.__onClose)
@@ -215,7 +216,7 @@ class WikiTree(wx.Panel):
 
     def __onPageRemove (self, page):
         self.__removePageItem (page)
-    
+
 
     def __onTreeItemActivated (self, event):
         item = event.GetItem()
@@ -224,24 +225,7 @@ class WikiTree(wx.Panel):
 
         page = self.treeCtrl.GetItemData (item).GetData()
         outwiker.gui.pagedialog.editPage (self, page)
-        
 
-    def __BindPopupMenuEvents (self):
-        """
-        События, связанные с контекстным меню
-        """
-        self.Bind(wx.EVT_MENU, self.__onAddChild, id=self.ID_ADD_CHILD)
-        self.Bind(wx.EVT_MENU, self.__onAddSibling, id=self.ID_ADD_SIBLING)
-        self.Bind(wx.EVT_MENU, self.__onRename, id=self.ID_RENAME)
-        self.Bind(wx.EVT_MENU, self.__onRemove, id=self.ID_REMOVE)
-        
-        self.Bind(wx.EVT_MENU, self.__onCopyTitle, id=self.ID_COPY_TITLE)
-        self.Bind(wx.EVT_MENU, self.__onCopyPath, id=self.ID_COPY_PATH)
-        self.Bind(wx.EVT_MENU, self.__onCopyAttachPath, id=self.ID_COPY_ATTACH_PATH)
-        self.Bind(wx.EVT_MENU, self.__onCopyLink, id=self.ID_COPY_LINK)
-
-        self.Bind(wx.EVT_MENU, self.__onPropertiesPopup, id=self.ID_PROPERTIES_POPUP)
-    
 
     def __onTreeStateChanged (self, event):
         item = event.GetItem()
@@ -288,75 +272,52 @@ class WikiTree(wx.Panel):
         """
         Удалить страницу
         """
-        assert self.popupItem != None
-        assert self.popupItem.IsOk()
-
-        page = self.treeCtrl.GetItemData (self.popupItem).GetData()
-        assert page != None
-
-        outwiker.core.commands.removePage (page)
+        assert self.popupPage != None
+        outwiker.core.commands.removePage (self.popupPage)
 
 
     def __onCopyLink (self, event):
         """
         Копировать ссылку на страницу в буфер обмена
         """
-        assert self.popupItem != None
-        assert self.popupItem.IsOk()
+        assert self.popupPage != None
+        outwiker.core.commands.copyLinkToClipboard (self.popupPage)
 
-        page = self.treeCtrl.GetItemData (self.popupItem).GetData()
-        assert page != None
 
-        outwiker.core.commands.copyLinkToClipboard (page)
-
-    
     def __onCopyTitle (self, event):
         """
         Копировать заголовок страницы в буфер обмена
         """
-        assert self.popupItem != None
-        assert self.popupItem.IsOk()
+        assert self.popupPage != None
+        outwiker.core.commands.copyTitleToClipboard (self.popupPage)
 
-        page = self.treeCtrl.GetItemData (self.popupItem).GetData()
-        assert page != None
 
-        outwiker.core.commands.copyTitleToClipboard (page)
-
-    
     def __onCopyPath (self, event):
         """
         Копировать путь до страницы в буфер обмена
         """
-        assert self.popupItem != None
-        assert self.popupItem.IsOk()
-
-        page = self.treeCtrl.GetItemData (self.popupItem).GetData()
-        assert page != None
-
-        outwiker.core.commands.copyPathToClipboard (page)
+        assert self.popupPage != None
+        outwiker.core.commands.copyPathToClipboard (self.popupPage)
 
 
     def __onCopyAttachPath (self, event):
         """
         Копировать путь до прикрепленных файлов в буфер обмена
         """
-        assert self.popupItem != None
-        assert self.popupItem.IsOk()
-
-        page = self.treeCtrl.GetItemData (self.popupItem).GetData()
-        assert page != None
-
-        outwiker.core.commands.copyAttachPathToClipboard (page)
+        assert self.popupPage != None
+        outwiker.core.commands.copyAttachPathToClipboard (self.popupPage)
 
 
-    def __createPopupMenu (self):
+    def __createPopupMenu (self, popupPage):
+        self.popupPage = popupPage
+
         popupMenu = wx.Menu ()
         popupMenu.Append (self.ID_ADD_CHILD, _(u"Add Child Page…"))
         popupMenu.Append (self.ID_ADD_SIBLING, _(u"Add Sibling Page…"))
         popupMenu.Append (self.ID_RENAME, _(u"Rename"))
         popupMenu.Append (self.ID_REMOVE, _(u"Remove…"))
         popupMenu.AppendSeparator()
-        
+
         popupMenu.Append (self.ID_COPY_TITLE, _(u"Copy Page Title"))
         popupMenu.Append (self.ID_COPY_PATH, _(u"Copy Page Path"))
         popupMenu.Append (self.ID_COPY_ATTACH_PATH, _(u"Copy Attaches Path"))
@@ -365,60 +326,57 @@ class WikiTree(wx.Panel):
 
         popupMenu.Append (self.ID_PROPERTIES_POPUP, _(u"Properties…"))
 
+        self.__bindPopupMenuEvents (popupMenu)
+
         return popupMenu
-    
+
+
+    def __bindPopupMenuEvents (self, popupMenu):
+        popupMenu.Bind(wx.EVT_MENU, self.__onAddChild, id=self.ID_ADD_CHILD)
+        popupMenu.Bind(wx.EVT_MENU, self.__onAddSibling, id=self.ID_ADD_SIBLING)
+        popupMenu.Bind(wx.EVT_MENU, self.__onRename, id=self.ID_RENAME)
+        popupMenu.Bind(wx.EVT_MENU, self.__onRemove, id=self.ID_REMOVE)
+        popupMenu.Bind(wx.EVT_MENU, self.__onCopyTitle, id=self.ID_COPY_TITLE)
+        popupMenu.Bind(wx.EVT_MENU, self.__onCopyPath, id=self.ID_COPY_PATH)
+        popupMenu.Bind(wx.EVT_MENU, self.__onCopyAttachPath, id=self.ID_COPY_ATTACH_PATH)
+        popupMenu.Bind(wx.EVT_MENU, self.__onCopyLink, id=self.ID_COPY_LINK)
+        popupMenu.Bind(wx.EVT_MENU, self.__onPropertiesPopup, id=self.ID_PROPERTIES_POPUP)
+
 
     def __onRename (self, event):
-        assert self.popupItem != None
-        assert self.popupItem.IsOk()
+        assert self.popupPage != None
+        self.treeCtrl.EditLabel (self._pageCache[self.popupPage])
 
-        self.treeCtrl.EditLabel (self.popupItem)
-    
 
     def __onAddChild (self, event):
-        assert self.popupItem != None
-        assert self.popupItem.IsOk()
+        assert self.popupPage != None
+        outwiker.gui.pagedialog.createPageWithDialog (self, self.popupPage)
 
-        page = self.treeCtrl.GetItemData (self.popupItem).GetData()
-        assert page != None
 
-        outwiker.gui.pagedialog.createPageWithDialog (self, page)
-
-    
     def __onAddSibling (self, event):
-        assert self.popupItem != None
-        assert self.popupItem.IsOk()
+        assert self.popupPage != None
+        outwiker.gui.pagedialog.createPageWithDialog (self, self.popupPage.parent)
 
-        page = self.treeCtrl.GetItemData (self.popupItem).GetData()
-        assert page != None
-        assert page.parent != None
 
-        outwiker.gui.pagedialog.createPageWithDialog (self, page.parent)
-
-    
     def __onPropertiesPopup (self, event):
-        assert self.popupItem != None
-        assert self.popupItem.IsOk()
+        assert self.popupPage != None
+        if self.popupPage.parent != None:
+            outwiker.gui.pagedialog.editPage (self, self.popupPage)
 
-        page = self.treeCtrl.GetItemData (self.popupItem).GetData()
-        assert page != None
-
-        if page.parent != None:
-            outwiker.gui.pagedialog.editPage (self, page)
-    
 
     def __onItemMenu (self, event):
-        self.popupItem = event.GetItem()
-        if not self.popupItem.IsOk ():
+        self.popupPage = None
+        popupItem = event.GetItem()
+        if not popupItem.IsOk ():
             return
 
-        popupMenu = self.__createPopupMenu()
+        popupPage = self.treeCtrl.GetItemData (popupItem).GetData()
+        popupMenu = self.__createPopupMenu(popupPage)
 
-        page = self.treeCtrl.GetItemData (self.popupItem).GetData()
-        Application.onTreePopupMenu (popupMenu, page)
+        Application.onTreePopupMenu (popupMenu, popupPage)
 
         self.PopupMenu (popupMenu)
-    
+
 
     def beginRename (self):
         selectedItem = self.treeCtrl.GetSelection()
@@ -437,7 +395,7 @@ class WikiTree(wx.Panel):
 
         item = event.GetItem()
         page = self.treeCtrl.GetItemData (item).GetData()
-        
+
         # Не доверяем переименовывать элементы системе
         event.Veto()
 
@@ -446,7 +404,7 @@ class WikiTree(wx.Panel):
 
     def __onStartTreeUpdate (self, root):
         self.__unbindUpdateEvents()
-    
+
 
     def __unbindUpdateEvents (self):
         Application.onTreeUpdate -= self.__onTreeUpdate
@@ -468,7 +426,7 @@ class WikiTree(wx.Panel):
         Application.onPageOrderChange += self.__onPageOrderChange
         self.Bind (wx.EVT_TREE_SEL_CHANGED, self.__onSelChanged)
 
-    
+
     def __onBeginDrag (self, event):
         event.Allow()
         self.dragItem = event.GetItem()
@@ -519,14 +477,14 @@ class WikiTree(wx.Panel):
             Application.mainWindow.tabsController.openInTab (self.selectedPage, True)
         else:
             Application.selectedPage = self.selectedPage
-    
+
 
     def __onPageOrderChange (self, sender):
         """
         Изменение порядка страниц
         """
         self.__updatePage (sender)
-    
+
 
     @property
     def selectedPage (self):
@@ -548,7 +506,7 @@ class WikiTree(wx.Panel):
 
         if item != None:
             self.treeCtrl.SelectItem (item)
-        
+
 
     def __expandToPage (self, page):
         """
@@ -565,7 +523,7 @@ class WikiTree(wx.Panel):
         for page in pages:
             self.expand (page)
 
-    
+
     def __set_properties(self):
         self.SetSize((256, 260))
 
@@ -582,7 +540,7 @@ class WikiTree(wx.Panel):
         item = self.getTreeItem (page)
         if item != None:
             self.treeCtrl.Expand (item)
-    
+
 
     def __treeUpdate (self, rootPage):
         """
@@ -670,7 +628,7 @@ class WikiTree(wx.Panel):
         self.__appendChildren (child)
 
         return item
-    
+
 
     def __removePageItem (self, page):
         """
@@ -706,7 +664,7 @@ class WikiTree(wx.Panel):
         finally:
             self.treeCtrl.Thaw()
             self.__bindUpdateEvents()
-    
+
 
     def __scrollToCurrentPage (self):
         """
@@ -719,7 +677,7 @@ class WikiTree(wx.Panel):
         item = self.getTreeItem (selectedPage)
         if not self.treeCtrl.IsVisible (item):
             self.treeCtrl.ScrollTo (item)
-    
+
 
     def __getToolbar (self, parent, id):
         imagesDir = outwiker.core.system.getImagesDir()
@@ -787,7 +745,7 @@ class WikiTree(wx.Panel):
 
         toolbar.Realize()
         return toolbar
-    
+
 
 # end of class WikiTree
 
