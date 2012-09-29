@@ -88,3 +88,11 @@ class TabsCtrl (wx.Panel):
 
     def DeletePage (self, index):
         self._tabs.DeletePage (index)
+
+
+    def NextPage (self):
+        self._tabs.AdvanceSelection(True)
+
+
+    def PreviousPage (self):
+        self._tabs.AdvanceSelection (False)

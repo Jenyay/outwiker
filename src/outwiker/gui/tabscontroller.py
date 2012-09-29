@@ -9,6 +9,7 @@ import wx.lib.agw.flatnotebook as fnb
 from outwiker.core.config import StringListSection, IntegerOption
 from outwiker.core.tree import RootWikiPage
 from .mainid import MainId
+from .pagepopupmenu import PagePopupMenu
 
 
 class TabsController (object):
@@ -95,25 +96,11 @@ class TabsController (object):
 
 
     def nextTab (self):
-        tabsCount = self.getTabsCount()
-        currentTab = self.getSelection()
-
-        if tabsCount < 2:
-            return
-
-        nexttab = currentTab + 1 if currentTab < tabsCount - 1 else 0
-        self.setSelection (nexttab)
+        self._tabsCtrl.NextPage()
 
 
     def previousTab (self):
-        tabsCount = self.getTabsCount()
-        currentTab = self.getSelection()
-
-        if tabsCount < 2:
-            return
-
-        prevtab = currentTab - 1 if currentTab > 0 else tabsCount - 1
-        self.setSelection (prevtab)
+        self._tabsCtrl.PreviousPage()
 
 
     def __createStringListConfig (self, config):
@@ -132,12 +119,14 @@ class TabsController (object):
         self._tabsCtrl.Bind (fnb.EVT_FLATNOTEBOOK_PAGE_CHANGED, self.__onTabChanged)
         self._tabsCtrl.Bind (fnb.EVT_FLATNOTEBOOK_PAGE_CLOSING, self.__onTabClose)
         self._tabsCtrl.Bind (fnb.EVT_FLATNOTEBOOK_PAGE_DROPPED, self.__onTabDropped)
+        self._tabsCtrl.Bind (fnb.EVT_FLATNOTEBOOK_PAGE_CONTEXT_MENU, self.__onPopupMenu)
 
 
     def __unbindGuiEvents (self):
         self._tabsCtrl.Unbind (fnb.EVT_FLATNOTEBOOK_PAGE_CHANGED, handler=self.__onTabChanged)
         self._tabsCtrl.Unbind (fnb.EVT_FLATNOTEBOOK_PAGE_CLOSING, handler=self.__onTabClose)
         self._tabsCtrl.Unbind (fnb.EVT_FLATNOTEBOOK_PAGE_DROPPED, handler=self.__onTabDropped)
+        self._tabsCtrl.Unbind (fnb.EVT_FLATNOTEBOOK_PAGE_CONTEXT_MENU, handler=self.__onPopupMenu)
 
 
     def __bindEvents (self):
@@ -164,6 +153,12 @@ class TabsController (object):
         self._application.onEndTreeUpdate -= self.__onPageUpdate
 
         self.__unbindGuiEvents()
+
+
+    def __onPopupMenu (self, event):
+        popupPage = self.getPage (event.GetSelection())
+        popupMenu = PagePopupMenu (self._tabsCtrl, popupPage, self._application)
+        self._tabsCtrl.PopupMenu (popupMenu.menu)
 
 
     def __onTabClose (self, event):

@@ -19,22 +19,13 @@ from .pagepopupmenu import PagePopupMenu
 
 class WikiTree(wx.Panel):
     def __init__(self, *args, **kwds):
-        self.ID_ADD_CHILD = wx.NewId()
-        self.ID_ADD_SIBLING = wx.NewId()
-        self.ID_RENAME = wx.NewId()
-        self.ID_REMOVE = wx.NewId()
         self.ID_PROPERTIES_BUTTON = wx.NewId()
-        self.ID_PROPERTIES_POPUP = wx.NewId()
         self.ID_MOVE_UP = wx.NewId()
         self.ID_MOVE_DOWN = wx.NewId()
         self.ID_ADD_SIBLING_PAGE = wx.NewId()
         self.ID_ADD_CHILD_PAGE = wx.NewId()
         self.ID_REMOVE_PAGE = wx.NewId()
-
-        self.ID_COPY_PATH = wx.NewId()
-        self.ID_COPY_ATTACH_PATH = wx.NewId()
-        self.ID_COPY_TITLE = wx.NewId()
-        self.ID_COPY_LINK = wx.NewId()
+        self.ID_RENAME = wx.NewId()
 
         # Переключатель, устанавливается в True, если "внезапно" изменяется текущая страница
         self.__externalPageSelect = False
@@ -70,8 +61,7 @@ class WikiTree(wx.Panel):
         # Словарь. Ключ - страница, значение - элемент дерева wx.TreeItemId
         self._pageCache = {}
 
-        # Страница, над элементом которой вызывается контекстное меню
-        self.popupPage = None
+        self.popupMenu = None
 
         # Секция настроек куда сохраняем развернутость страницы
         self.pageOptionsSection = u"Tree"
@@ -268,102 +258,6 @@ class WikiTree(wx.Panel):
         return expanded
 
 
-    def __onRemove (self, event):
-        """
-        Удалить страницу
-        """
-        assert self.popupPage != None
-        outwiker.core.commands.removePage (self.popupPage)
-
-
-    def __onCopyLink (self, event):
-        """
-        Копировать ссылку на страницу в буфер обмена
-        """
-        assert self.popupPage != None
-        outwiker.core.commands.copyLinkToClipboard (self.popupPage)
-
-
-    def __onCopyTitle (self, event):
-        """
-        Копировать заголовок страницы в буфер обмена
-        """
-        assert self.popupPage != None
-        outwiker.core.commands.copyTitleToClipboard (self.popupPage)
-
-
-    def __onCopyPath (self, event):
-        """
-        Копировать путь до страницы в буфер обмена
-        """
-        assert self.popupPage != None
-        outwiker.core.commands.copyPathToClipboard (self.popupPage)
-
-
-    def __onCopyAttachPath (self, event):
-        """
-        Копировать путь до прикрепленных файлов в буфер обмена
-        """
-        assert self.popupPage != None
-        outwiker.core.commands.copyAttachPathToClipboard (self.popupPage)
-
-
-    def __createPopupMenu (self, popupPage):
-        self.popupPage = popupPage
-
-        popupMenu = wx.Menu ()
-        popupMenu.Append (self.ID_ADD_CHILD, _(u"Add Child Page…"))
-        popupMenu.Append (self.ID_ADD_SIBLING, _(u"Add Sibling Page…"))
-        popupMenu.Append (self.ID_RENAME, _(u"Rename"))
-        popupMenu.Append (self.ID_REMOVE, _(u"Remove…"))
-        popupMenu.AppendSeparator()
-
-        popupMenu.Append (self.ID_COPY_TITLE, _(u"Copy Page Title"))
-        popupMenu.Append (self.ID_COPY_PATH, _(u"Copy Page Path"))
-        popupMenu.Append (self.ID_COPY_ATTACH_PATH, _(u"Copy Attaches Path"))
-        popupMenu.Append (self.ID_COPY_LINK, _(u"Copy Page Link"))
-        popupMenu.AppendSeparator()
-
-        popupMenu.Append (self.ID_PROPERTIES_POPUP, _(u"Properties…"))
-
-        self.__bindPopupMenuEvents (popupMenu)
-
-        return popupMenu
-
-
-    def __bindPopupMenuEvents (self, popupMenu):
-        popupMenu.Bind(wx.EVT_MENU, self.__onAddChild, id=self.ID_ADD_CHILD)
-        popupMenu.Bind(wx.EVT_MENU, self.__onAddSibling, id=self.ID_ADD_SIBLING)
-        popupMenu.Bind(wx.EVT_MENU, self.__onRename, id=self.ID_RENAME)
-        popupMenu.Bind(wx.EVT_MENU, self.__onRemove, id=self.ID_REMOVE)
-        popupMenu.Bind(wx.EVT_MENU, self.__onCopyTitle, id=self.ID_COPY_TITLE)
-        popupMenu.Bind(wx.EVT_MENU, self.__onCopyPath, id=self.ID_COPY_PATH)
-        popupMenu.Bind(wx.EVT_MENU, self.__onCopyAttachPath, id=self.ID_COPY_ATTACH_PATH)
-        popupMenu.Bind(wx.EVT_MENU, self.__onCopyLink, id=self.ID_COPY_LINK)
-        popupMenu.Bind(wx.EVT_MENU, self.__onPropertiesPopup, id=self.ID_PROPERTIES_POPUP)
-
-
-    def __onRename (self, event):
-        assert self.popupPage != None
-        self.treeCtrl.EditLabel (self._pageCache[self.popupPage])
-
-
-    def __onAddChild (self, event):
-        assert self.popupPage != None
-        outwiker.gui.pagedialog.createPageWithDialog (self, self.popupPage)
-
-
-    def __onAddSibling (self, event):
-        assert self.popupPage != None
-        outwiker.gui.pagedialog.createPageWithDialog (self, self.popupPage.parent)
-
-
-    def __onPropertiesPopup (self, event):
-        assert self.popupPage != None
-        if self.popupPage.parent != None:
-            outwiker.gui.pagedialog.editPage (self, self.popupPage)
-
-
     def __onItemMenu (self, event):
         self.popupPage = None
         popupItem = event.GetItem()
@@ -371,11 +265,17 @@ class WikiTree(wx.Panel):
             return
 
         popupPage = self.treeCtrl.GetItemData (popupItem).GetData()
-        popupMenu = self.__createPopupMenu(popupPage)
+        self.popupMenu = PagePopupMenu (self, popupPage, Application)
+        self.popupMenu.menu.Insert (3, self.ID_RENAME, _(u"Rename"))
+        self.popupMenu.menu.Bind (wx.EVT_MENU, self.__onRename, id=self.ID_RENAME)
 
-        Application.onTreePopupMenu (popupMenu, popupPage)
+        self.PopupMenu (self.popupMenu.menu)
 
-        self.PopupMenu (popupMenu)
+
+    def __onRename (self, event):
+        assert self.popupMenu != None
+        assert self.popupMenu.popupPage != None
+        self.treeCtrl.EditLabel (self._pageCache[self.popupMenu.popupPage])
 
 
     def beginRename (self):
