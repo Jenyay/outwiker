@@ -12,7 +12,9 @@ class LinkDialog (wx.Dialog):
         link - Ссылка по умолчанию
         comment - Комментарий к ссылке по умолчанию
         """
-        super (LinkDialog, self).__init__ (parent, style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER )
+        super (LinkDialog, self).__init__ (parent, 
+                style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER,
+                title=_("Link"))
         self.link = link
         self.comment = comment
 

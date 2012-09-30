@@ -36,7 +36,11 @@ class LinkDialogContoller (object):
 
         result = dlg.ShowModal()
         self.link = dlg.linkText.GetValue()
+
         self.comment = dlg.commentText.GetValue()
+        if len (self.comment) == 0:
+            self.comment = self.link
+
         dlg.Destroy()
 
         return result

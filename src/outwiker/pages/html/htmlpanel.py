@@ -17,6 +17,7 @@ from outwiker.core.style import Style
 from outwiker.gui.basetextpanel import BaseTextPanel
 from outwiker.gui.htmlrenderfactory import getHtmlRender
 from outwiker.gui.htmltexteditor import HtmlTextEditor
+from outwiker.gui.linkdialogcontroller import LinkDialogContoller
 
 from .htmltoolbar import HtmlToolBar
 
@@ -646,7 +647,7 @@ class HtmlPagePanel (HtmlPanel):
 
         self.addTool (self.__htmlMenu, 
                 "ID_LINK", 
-                lambda event: self.codeEditor.turnText (u'<a href="">', u'</a>'), 
+                self.__onInsertLink, 
                 _(u"Link\tCtrl+L"), 
                 _(u'Link (<a href="…">…</a>)'), 
                 os.path.join (self.imagesDir, "link.png"),
@@ -752,3 +753,14 @@ class HtmlPagePanel (HtmlPanel):
     def removeGui (self):
         super (HtmlPagePanel, self).removeGui ()
         self.mainWindow.mainMenu.Remove (self.__HTML_MENU_INDEX - 1)
+
+
+    def __onInsertLink (self, event):
+        linkController = LinkDialogContoller (self, self.codeEditor.GetSelectedText())
+
+        if linkController.showDialog() == wx.ID_OK:
+            text = u'<a href="{link}">{comment}</a>'.format (comment=linkController.comment, 
+                    link=linkController.link)
+
+            self.codeEditor.replaceText (text)
+
