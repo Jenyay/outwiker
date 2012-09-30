@@ -22,7 +22,7 @@ class HeadingToken (object):
         """
         Токены для заголовков H1, H2,...
         """
-        return Regex (self.heading_Regex, re.MULTILINE).setParseAction(self.convertToHeading)
+        return Regex (self.heading_Regex, re.MULTILINE).setParseAction(self.convertToHeading)("heading")
 
 
     def convertToHeading (self, s, l, t):

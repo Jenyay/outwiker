@@ -22,6 +22,6 @@ class UrlImageToken (object):
 
     def getToken (self):
         token = Regex ("(https?|ftp)://[a-z0-9-]+(\.[a-z0-9-]+)+(/[-._\w%]+)*/[-\w_.%]+\.(gif|png|jpe?g|bmp|tiff?)", re.IGNORECASE)
-        token.setParseAction(lambda s, l, t: u'<IMG SRC="%s"/>' % t[0])
+        token.setParseAction(lambda s, l, t: u'<IMG SRC="%s"/>' % t[0])("image")
         return token
 

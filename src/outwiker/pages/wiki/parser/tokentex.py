@@ -29,7 +29,7 @@ class TexToken (object):
     def getToken (self):
         return QuotedString (TexToken.texStart, 
                 endQuoteChar = TexToken.texEnd, 
-                multiline = True).setParseAction(self.makeTexEquation)
+                multiline = True).setParseAction(self.makeTexEquation)("tex")
 
 
     def makeTexEquation (self, s, l, t):

@@ -26,7 +26,7 @@ class TableToken (object):
         tableRow.setParseAction(self.__convertTableRow)
 
         table = LineStart() + Regex (r"\|\| *(?P<params>.+)?") + LineEnd() + OneOrMore (tableRow)
-        table.setParseAction(self.__convertTable)
+        table.setParseAction(self.__convertTable)("table")
 
         return table
 

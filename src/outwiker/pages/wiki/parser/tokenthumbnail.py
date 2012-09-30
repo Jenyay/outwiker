@@ -31,7 +31,7 @@ class ThumbnailToken (object):
 
     def getToken (self):
         result = Regex (r"""% *?(((thumb +)?width *?= *?(?P<width>\d+) *?(px)?)|((thumb +)?height *?= *?(?P<height>\d+) *?(px)?)|((thumb +)?maxsize *?= *?(?P<maxsize>\d+) *?(px)?)|(thumb *?)) *?% *?Attach:(?P<fname>.*?\.(jpe?g|bmp|gif|tiff?|png)) *?%%""", re.IGNORECASE)
-        result.setParseAction (self.__convertThumb)
+        result.setParseAction (self.__convertThumb)("thumbnail")
         return result
 
 

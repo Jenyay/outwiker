@@ -80,7 +80,7 @@ class BoldSubscriptToken (AdHocToken):
                 multiline = True).setParseAction(
                         self.convertToHTMLAdHoc("<B>", 
                         "</B>",
-                        suffix = SubscriptToken.subscriptEnd))
+                        suffix = SubscriptToken.subscriptEnd))("bold_subscript")
 
 
 
@@ -97,7 +97,7 @@ class BoldSuperscriptToken (AdHocToken):
                 endQuoteChar = SuperscriptToken.superscriptEnd + BoldToken.boldEnd, 
                 multiline = True).setParseAction(self.convertToHTMLAdHoc("<B>", 
                     "</B>",
-                    suffix = SuperscriptToken.superscriptEnd))
+                    suffix = SuperscriptToken.superscriptEnd))("bold_superscript")
 
 
 class ItalicSubscriptToken (AdHocToken):
@@ -113,7 +113,7 @@ class ItalicSubscriptToken (AdHocToken):
                 endQuoteChar = SubscriptToken.subscriptEnd + ItalicToken.italicEnd, 
                 multiline = True).setParseAction(self.convertToHTMLAdHoc("<I>", 
                     "</I>",
-                    suffix = SubscriptToken.subscriptEnd))
+                    suffix = SubscriptToken.subscriptEnd))("italic_subscript")
 
 
 
@@ -130,7 +130,7 @@ class ItalicSuperscriptToken (AdHocToken):
                 endQuoteChar = SuperscriptToken.superscriptEnd + ItalicToken.italicEnd, 
                 multiline = True).setParseAction(self.convertToHTMLAdHoc("<I>", 
                     "</I>",
-                    suffix = SuperscriptToken.superscriptEnd))
+                    suffix = SuperscriptToken.superscriptEnd))("italic_superscript")
 
 
 class BoldItalicSubscriptToken (AdHocToken):
@@ -146,7 +146,7 @@ class BoldItalicSubscriptToken (AdHocToken):
                 endQuoteChar = SubscriptToken.subscriptEnd + BoldItalicToken.boldItalicEnd, 
                 multiline = True).setParseAction(self.convertToHTMLAdHoc("<B><I>", 
                     "</I></B>",
-                    suffix = SubscriptToken.subscriptEnd))
+                    suffix = SubscriptToken.subscriptEnd))("bold_italic_subscript")
 
 
 
@@ -163,4 +163,4 @@ class BoldItalicSuperscriptToken (AdHocToken):
                 endQuoteChar = SuperscriptToken.superscriptEnd + BoldItalicToken.boldItalicEnd, 
                 multiline = True).setParseAction(self.convertToHTMLAdHoc("<B><I>", 
                     "</I></B>",
-                    suffix = SuperscriptToken.superscriptEnd))
+                    suffix = SuperscriptToken.superscriptEnd))("bold_italic_superscript")

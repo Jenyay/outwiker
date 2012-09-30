@@ -29,7 +29,7 @@ class LinkToken (object):
     def getToken (self):
         return QuotedString(LinkToken.linkStart, 
                 endQuoteChar = LinkToken.linkEnd, 
-                multiline = False).setParseAction(self.__convertToLink)
+                multiline = False).setParseAction(self.__convertToLink)("link")
     
 
     def __convertToLink (self, s, l, t):

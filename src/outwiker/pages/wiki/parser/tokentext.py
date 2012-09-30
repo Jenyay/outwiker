@@ -18,7 +18,6 @@ class TextToken (object):
     """
     def getToken (self):
         textRegex = "[\w]+"
-        # textRegex = "[^'\"\-[\]\\ \s!@#$%^&*\(\),./|`]+"
         token = Regex (textRegex, re.UNICODE)
-        token.leaveWhitespace()
+        token.leaveWhitespace()("text")
         return token

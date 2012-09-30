@@ -47,7 +47,7 @@ class AttachToken (object):
                 attachesAll.append (attach)
 
         finalToken = Literal (self.attachString) + concatenate (attachesAll)
-        finalToken.setParseAction (self.convertToLink)
+        finalToken.setParseAction (self.convertToLink)("attach")
         return finalToken
 
 

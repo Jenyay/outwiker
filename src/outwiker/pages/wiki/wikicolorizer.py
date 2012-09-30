@@ -23,27 +23,17 @@ class WikiColorizer (object):
     def __init__ (self, editor):
         self._editor = editor
 
-        self.text = TextFactory.make (None).setResultsName ("text")
-
-        self.bold = FontsFactory.makeBold (None).setParseAction(lambda s, l, t: None).setResultsName ("bold")
-
-        self.italic = FontsFactory.makeItalic (None).setParseAction(lambda s, l, t: None).setResultsName ("italic")
-
-        self.bold_italic = FontsFactory.makeBoldItalic (None).setParseAction(lambda s, l, t: None).setResultsName ("bold_italic")
-
-        self.underline = FontsFactory.makeUnderline (None).setParseAction(lambda s, l, t: None).setResultsName ("underline")
-
-        self.heading = HeadingFactory.make (None).setParseAction(lambda s, l, t: None).setResultsName ("heading")
-
-        self.command = CommandFactory.make (None).setParseAction(lambda s, l, t: None).setResultsName ("command")
-
-        self.link = LinkFactory.make (None).setParseAction(lambda s, l, t: None).setResultsName ("link")
-        
-        self.url = UrlFactory.make (None).setParseAction(lambda s, l, t: None).setResultsName ("link")
-
-        self.linebreak = LineBreakFactory.make (None).setParseAction(lambda s, l, t: None).setResultsName ("linebreak")
-
-        self.noformat = NoFormatFactory.make (None).setParseAction(lambda s, l, t: None).setResultsName ("noformat")
+        self.text = TextFactory.make (None)
+        self.bold = FontsFactory.makeBold (None).setParseAction(lambda s, l, t: None)
+        self.italic = FontsFactory.makeItalic (None).setParseAction(lambda s, l, t: None)
+        self.bold_italic = FontsFactory.makeBoldItalic (None).setParseAction(lambda s, l, t: None)
+        self.underline = FontsFactory.makeUnderline (None).setParseAction(lambda s, l, t: None)
+        self.heading = HeadingFactory.make (None).setParseAction(lambda s, l, t: None)
+        self.command = CommandFactory.make (None).setParseAction(lambda s, l, t: None)
+        self.link = LinkFactory.make (None).setParseAction(lambda s, l, t: None)
+        self.url = UrlFactory.make (None).setParseAction(lambda s, l, t: None)
+        self.linebreak = LineBreakFactory.make (None).setParseAction(lambda s, l, t: None)
+        self.noformat = NoFormatFactory.make (None).setParseAction(lambda s, l, t: None)
 
         self.colorParser = (self.url |
                 self.text |
@@ -134,6 +124,9 @@ class WikiColorizer (object):
                 self._setStyle (stylelist, self._editor.STYLE_COMMAND_ID, bytepos_start, bytepos_end)
 
             elif tokenname == "link":
+                self._addStyle (stylelist, self._editor.STYLE_LINK_ID, bytepos_start, bytepos_end)
+
+            elif tokenname == "url":
                 self._addStyle (stylelist, self._editor.STYLE_LINK_ID, bytepos_start, bytepos_end)
 
 

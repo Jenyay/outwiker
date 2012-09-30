@@ -27,7 +27,7 @@ class PreFormatToken (object):
     def getToken (self):
         return QuotedString(PreFormatToken.preFormatStart, 
                 endQuoteChar = PreFormatToken.preFormatEnd, 
-                multiline = True).setParseAction(self.__convertPreformat)
+                multiline = True).setParseAction(self.__convertPreformat)("preformat")
     
     
     def __convertPreformat (self, s, l, t):

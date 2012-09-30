@@ -128,7 +128,7 @@ class ListToken (object):
 
         item =  Regex (regex, re.MULTILINE).setParseAction (noConvert).leaveWhitespace()
 
-        fullList = OneOrMore (item).setParseAction (self.__convertList)
+        fullList = OneOrMore (item).setParseAction (self.__convertList)("list")
 
         return fullList
 

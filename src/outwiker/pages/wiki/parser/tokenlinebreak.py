@@ -20,4 +20,4 @@ class LineBreakToken (object):
     def getToken (self):
         token1 = Literal (LineBreakToken.expression1).setParseAction (lambda s, l, t: "<BR>")
         token2 = Literal (LineBreakToken.expression2).setParseAction (lambda s, l, t: "<BR>")
-        return token1 | token2
+        return (token1 | token2)("linebreak")

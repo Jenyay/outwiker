@@ -25,4 +25,4 @@ class NoFormatToken (object):
     def getToken (self):
         return QuotedString(NoFormatToken.noFormatStart, 
                 endQuoteChar = NoFormatToken.noFormatEnd, 
-                multiline = True).setParseAction(noConvert)
+                multiline = True).setParseAction(noConvert)("noformat")

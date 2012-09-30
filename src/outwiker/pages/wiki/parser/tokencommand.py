@@ -30,7 +30,7 @@ class CommandToken (object):
         ((?P<content>.*?)                # Контент между (:name:) и (:nameend:)
         \(:\s*(?P=name)end\s*:\))?       # Конец команды "(:nameend:)" """
 
-        return Regex (reg, flags=re.MULTILINE | re.DOTALL | re.IGNORECASE | re.VERBOSE).setParseAction (self.execute)
+        return Regex (reg, flags=re.MULTILINE | re.DOTALL | re.IGNORECASE | re.VERBOSE).setParseAction (self.execute)("command")
 
 
     def execute (self, s, l, t):
