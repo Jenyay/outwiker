@@ -241,6 +241,10 @@ class TextEditor(wx.Panel):
     def EmptyUndoBuffer (self):
         self.textCtrl.EmptyUndoBuffer()
 
+
+    def GetSelectedText (self):
+        return self.textCtrl.GetSelectedText()
+
 # end of class TextEditor
 
 

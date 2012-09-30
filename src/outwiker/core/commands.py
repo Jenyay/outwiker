@@ -265,6 +265,22 @@ def copyTextToClipboard (text):
     wx.TheClipboard.Close()
 
 
+def getClipboardText ():
+    if not wx.TheClipboard.Open():
+        MessageBox (_(u"Can't open clipboard"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+        return
+
+    data = wx.TextDataObject()
+    getDataResult = wx.TheClipboard.GetData (data)
+    wx.TheClipboard.Close()
+
+    if not getDataResult:
+        return
+
+    return data.GetDataHere()
+
+
+
 def copyPathToClipboard (page):
     """
     Копировать путь до страницы в буфер обмена

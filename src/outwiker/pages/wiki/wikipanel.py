@@ -17,6 +17,7 @@ from .wikieditor import WikiEditor
 from .wikitoolbar import WikiToolBar
 from outwiker.gui.basetextpanel import BaseTextPanel
 from outwiker.gui.htmltexteditor import HtmlTextEditor
+from outwiker.gui.linkdialogcontroller import LinkDialogContoller
 from outwiker.pages.html.htmlpanel import HtmlPanel
 from wikiconfig import WikiConfig
 from htmlgenerator import HtmlGenerator
@@ -369,7 +370,7 @@ class WikiPagePanel (HtmlPanel):
 
         self.addTool (self.__wikiMenu, 
                 "ID_LINK", 
-                lambda event: self.codeEditor.turnText (u'[[', u']]'), 
+                self.__onInsertLink, 
                 _(u"Link\tCtrl+L"), 
                 _(u'Link'), 
                 os.path.join (self.imagesDir, "link.png"),
@@ -540,3 +541,16 @@ class WikiPagePanel (HtmlPanel):
                 text += "\n"
 
         return text
+
+
+    def __onInsertLink (self, event):
+        linkController = LinkDialogContoller (self, self.codeEditor.GetSelectedText())
+        if linkController.showDialog() == wx.ID_OK:
+            if linkController.comment == linkController.link:
+                text = u"[[{link}]]".format (link=linkController.link)
+            else:
+                text = u"[[{comment} -> {link}]]".format (comment=linkController.comment, 
+                        link=linkController.link)
+
+            self.codeEditor.replaceText (text)
+
