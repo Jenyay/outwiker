@@ -3,7 +3,6 @@
 
 import wx
 import os
-import hashlib
 
 from outwiker.core.commands import MessageBox, setStatusText
 from outwiker.core.config import Config, StringOption
@@ -18,12 +17,12 @@ from .wikitoolbar import WikiToolBar
 from outwiker.gui.basetextpanel import BaseTextPanel
 from outwiker.gui.htmltexteditor import HtmlTextEditor
 from outwiker.gui.linkdialogcontroller import LinkDialogContoller
-from outwiker.pages.html.htmlpanel import HtmlPanel
+from outwiker.pages.html.basehtmlpanel import BaseHtmlPanel
 from wikiconfig import WikiConfig
 from htmlgenerator import HtmlGenerator
 
 
-class WikiPagePanel (HtmlPanel):
+class WikiPagePanel (BaseHtmlPanel):
     def __init__ (self, parent, *args, **kwds):
         super (WikiPagePanel, self).__init__ (parent, *args, **kwds)
 
@@ -151,7 +150,7 @@ class WikiPagePanel (HtmlPanel):
         """
         Добавить инструменты, связанные со шрифтами
         """
-        self.addTool (self.__wikiMenu, 
+        self.addTool (self.__fontMenu, 
                 "ID_BOLD", 
                 lambda event: self.codeEditor.turnText (u"'''", u"'''"), 
                 _(u"Bold\tCtrl+B"), 
@@ -160,7 +159,7 @@ class WikiPagePanel (HtmlPanel):
                 fullUpdate=False,
                 panelname="wiki")
 
-        self.addTool (self.__wikiMenu, 
+        self.addTool (self.__fontMenu, 
                 "ID_ITALIC", 
                 lambda event: self.codeEditor.turnText (u"''", u"''"), 
                 _(u"Italic\tCtrl+I"), 
@@ -169,7 +168,7 @@ class WikiPagePanel (HtmlPanel):
                 fullUpdate=False,
                 panelname="wiki")
 
-        self.addTool (self.__wikiMenu, 
+        self.addTool (self.__fontMenu, 
                 "ID_BOLD_ITALIC", 
                 lambda event: self.codeEditor.turnText (u"''''", u"''''"), 
                 _(u"Bold italic\tCtrl+Shift+I"), 
@@ -178,7 +177,7 @@ class WikiPagePanel (HtmlPanel):
                 fullUpdate=False,
                 panelname="wiki")
 
-        self.addTool (self.__wikiMenu, 
+        self.addTool (self.__fontMenu, 
                 "ID_UNDERLINE", 
                 lambda event: self.codeEditor.turnText (u"{+", u"+}"), 
                 _(u"Underline\tCtrl+U"), 
@@ -187,7 +186,7 @@ class WikiPagePanel (HtmlPanel):
                 fullUpdate=False,
                 panelname="wiki")
 
-        self.addTool (self.__wikiMenu, 
+        self.addTool (self.__fontMenu, 
                 "ID_STRIKE", 
                 lambda event: self.codeEditor.turnText (u"{-", u"-}"), 
                 _(u"Strikethrough\tCtrl+K"), 
@@ -196,7 +195,7 @@ class WikiPagePanel (HtmlPanel):
                 fullUpdate=False,
                 panelname="wiki")
 
-        self.addTool (self.__wikiMenu, 
+        self.addTool (self.__fontMenu, 
                 "ID_SUBSCRIPT", 
                 lambda event: self.codeEditor.turnText (u"'_", u"_'"), 
                 _(u"Subscript\tCtrl+="), 
@@ -206,7 +205,7 @@ class WikiPagePanel (HtmlPanel):
                 panelname="wiki")
 
 
-        self.addTool (self.__wikiMenu, 
+        self.addTool (self.__fontMenu, 
                 "ID_SUPERSCRIPT", 
                 lambda event: self.codeEditor.turnText (u"'^", u"^'"), 
                 _(u"Superscript\tCtrl++"), 
@@ -217,7 +216,7 @@ class WikiPagePanel (HtmlPanel):
     
 
     def __addAlignTools (self):
-        self.addTool (self.__wikiMenu, 
+        self.addTool (self.__alignMenu, 
                 "ID_ALIGN_LEFT", 
                 lambda event: self.codeEditor.turnText (u"%left%", u""), 
                 _(u"Left align\tCtrl+Alt+L"), 
@@ -226,7 +225,7 @@ class WikiPagePanel (HtmlPanel):
                 fullUpdate=False,
                 panelname="wiki")
 
-        self.addTool (self.__wikiMenu, 
+        self.addTool (self.__alignMenu, 
                 "ID_ALIGN_CENTER", 
                 lambda event: self.codeEditor.turnText (u"%center%", u""), 
                 _(u"Center align\tCtrl+Alt+C"), 
@@ -235,7 +234,7 @@ class WikiPagePanel (HtmlPanel):
                 fullUpdate=False,
                 panelname="wiki")
 
-        self.addTool (self.__wikiMenu, 
+        self.addTool (self.__alignMenu, 
                 "ID_ALIGN_RIGHT", 
                 lambda event: self.codeEditor.turnText (u"%right%", u""), 
                 _(u"Right align\tCtrl+Alt+R"), 
@@ -244,7 +243,7 @@ class WikiPagePanel (HtmlPanel):
                 fullUpdate=False,
                 panelname="wiki")
     
-        self.addTool (self.__wikiMenu, 
+        self.addTool (self.__alignMenu, 
                 "ID_ALIGN_JUSTIFY", 
                 lambda event: self.codeEditor.turnText (u"%justify%", u""), 
                 _(u"Justify align\tCtrl+Alt+J"), 
@@ -255,7 +254,7 @@ class WikiPagePanel (HtmlPanel):
 
 
     def __addFormatTools (self):
-        self.addTool (self.__wikiMenu, 
+        self.addTool (self.__formatMenu, 
                 "ID_PREFORMAT", 
                 lambda event: self.codeEditor.turnText (u"[@", u"@]"), 
                 _(u"Preformat [@…@]\tCtrl+Alt+F"), 
@@ -263,7 +262,7 @@ class WikiPagePanel (HtmlPanel):
                 None,
                 fullUpdate=False)
 
-        self.addTool (self.__wikiMenu, 
+        self.addTool (self.__formatMenu, 
                 "ID_NONFORMAT", 
                 lambda event: self.codeEditor.turnText (u"[=", u"=]"), 
                 _(u"Non-parsed [=…=]"), 
@@ -277,7 +276,7 @@ class WikiPagePanel (HtmlPanel):
         """
         Добавить инструменты, связанные со списками
         """
-        self.addTool (self.__wikiMenu, 
+        self.addTool (self.__listMenu, 
                 "ID_MARK_LIST", 
                 lambda event: self.codeEditor.turnList (u'* '), 
                 _(u"Bullets list\tCtrl+G"), 
@@ -286,7 +285,7 @@ class WikiPagePanel (HtmlPanel):
                 fullUpdate=False,
                 panelname="wiki")
 
-        self.addTool (self.__wikiMenu, 
+        self.addTool (self.__listMenu, 
                 "ID_NUMBER_LIST", 
                 lambda event: self.codeEditor.turnList (u'# '), 
                 _(u"Numbers list\tCtrl+J"), 
@@ -300,7 +299,7 @@ class WikiPagePanel (HtmlPanel):
         """
         Добавить инструменты для заголовочных тегов <H>
         """
-        self.addTool (self.__wikiMenu, 
+        self.addTool (self.__headingMenu, 
                 "ID_H1", 
                 lambda event: self.codeEditor.turnText (u"\n!! ", u""), 
                 _(u"H1\tCtrl+1"), 
@@ -309,7 +308,7 @@ class WikiPagePanel (HtmlPanel):
                 fullUpdate=False,
                 panelname="wiki")
 
-        self.addTool (self.__wikiMenu, 
+        self.addTool (self.__headingMenu, 
                 "ID_H2", 
                 lambda event: self.codeEditor.turnText (u"!!! ", u""), 
                 _(u"H2\tCtrl+2"), 
@@ -318,7 +317,7 @@ class WikiPagePanel (HtmlPanel):
                 fullUpdate=False,
                 panelname="wiki")
         
-        self.addTool (self.__wikiMenu, 
+        self.addTool (self.__headingMenu, 
                 "ID_H3", 
                 lambda event: self.codeEditor.turnText (u"!!!! ", u""), 
                 _(u"H3\tCtrl+3"), 
@@ -327,7 +326,7 @@ class WikiPagePanel (HtmlPanel):
                 fullUpdate=False,
                 panelname="wiki")
 
-        self.addTool (self.__wikiMenu, 
+        self.addTool (self.__headingMenu, 
                 "ID_H4", 
                 lambda event: self.codeEditor.turnText (u"!!!!! ", u""), 
                 _(u"H4\tCtrl+4"), 
@@ -336,7 +335,7 @@ class WikiPagePanel (HtmlPanel):
                 fullUpdate=False,
                 panelname="wiki")
 
-        self.addTool (self.__wikiMenu, 
+        self.addTool (self.__headingMenu, 
                 "ID_H5", 
                 lambda event: self.codeEditor.turnText (u"!!!!!! ", u""), 
                 _(u"H5\tCtrl+5"), 
@@ -345,7 +344,7 @@ class WikiPagePanel (HtmlPanel):
                 fullUpdate=False,
                 panelname="wiki")
 
-        self.addTool (self.__wikiMenu, 
+        self.addTool (self.__headingMenu, 
                 "ID_H6", 
                 lambda event: self.codeEditor.turnText (u"!!!!!!! ", u""), 
                 _(u"H6\tCtrl+6"), 
@@ -432,6 +431,13 @@ class WikiPagePanel (HtmlPanel):
 
         self.__wikiMenu = wx.Menu()
 
+        self.__headingMenu = wx.Menu()
+        self.__fontMenu = wx.Menu()
+        self.__alignMenu = wx.Menu()
+        self.__formatMenu = wx.Menu()
+        self.__listMenu = wx.Menu()
+        self.__commandsMenu = wx.Menu()
+
         self.mainWindow.Freeze()
 
         self.addTool (self.__wikiMenu, 
@@ -444,7 +450,15 @@ class WikiPagePanel (HtmlPanel):
                 fullUpdate=False,
                 panelname=self.mainWindow.GENERAL_TOOLBAR_STR)
 
+
         self._addRenderTools()
+        self.__wikiMenu.AppendSubMenu (self.__headingMenu, _(u"Heading"))
+        self.__wikiMenu.AppendSubMenu (self.__fontMenu, _(u"Font"))
+        self.__wikiMenu.AppendSubMenu (self.__alignMenu, _(u"Alignment"))
+        self.__wikiMenu.AppendSubMenu (self.__formatMenu, _(u"Formatting"))
+        self.__wikiMenu.AppendSubMenu (self.__listMenu, _(u"Lists"))
+        self.__wikiMenu.AppendSubMenu (self.__commandsMenu, _(u"Commands"))
+
         self.__addCommandsTools()
         self.__addFontTools()
         self.__addAlignTools()
@@ -469,9 +483,6 @@ class WikiPagePanel (HtmlPanel):
 
     
     def __addCommandsTools (self):
-        self.__commandsMenu = wx.Menu()
-        self.__wikiMenu.AppendSubMenu (self.commandsMenu, _(u"Commands"))
-
         self.addTool (self.commandsMenu, 
                 "ID_ATTACHLIST", 
                 lambda event: self.codeEditor.replaceText (u"(:attachlist:)"), 
