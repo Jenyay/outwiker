@@ -68,6 +68,15 @@ class RemovePagesTest (unittest.TestCase):
         Application.onPageRemove -= self.onPageRemove
 
 
+    def testRemove2 (self):
+        Application.wikiroot = self.rootwiki
+        Application.selectedPage = self.rootwiki[u"Страница 2"]
+
+        self.rootwiki[u"Страница 2"].remove()
+
+        self.assertEqual (Application.selectedPage, None)
+
+
     def testRemoveNoEvent (self):
         Application.onPageRemove += self.onPageRemove
 

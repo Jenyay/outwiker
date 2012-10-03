@@ -825,6 +825,7 @@ class WikiPage (RootWikiPage):
 
         oldpath = self.path
         tempname = self._getTempName (oldpath)
+        oldSelectedPage = self.root.selectedPage
 
         try:
             os.renames (oldpath, tempname)
@@ -837,9 +838,9 @@ class WikiPage (RootWikiPage):
         self._removePageFromTree (self)
 
         # Если выбранная страница была удалена
-        if self.root.selectedPage != None and self.root.selectedPage.isRemoved:
+        if oldSelectedPage == self:
             # Новая выбранная страница взамен старой
-            newselpage = self.root.selectedPage
+            newselpage = oldSelectedPage
             while newselpage.parent != None and newselpage.isRemoved:
                 newselpage = newselpage.parent
 
