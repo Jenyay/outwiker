@@ -37,9 +37,6 @@ class PrefDialog(wx.Dialog):
         self.__pluginsPage = None
         self.__createPages()
 
-        # self.__treeBook.Bind (wx.EVT_TREEBOOK_PAGE_CHANGING, self.__onPageChanging)
-        # self.__treeBook.Bind (wx.EVT_TREEBOOK_PAGE_CHANGED, self.__onPageChanged)
-
         Application.onPreferencesDialogCreate (self)
 
         self.__loadAllOptions()
@@ -78,7 +75,7 @@ class PrefDialog(wx.Dialog):
         title = _("Preferences")
         self.SetTitle(title)
 
-        width = 750
+        width = 800
         height = 500
 
         self.SetSize((width, height))
