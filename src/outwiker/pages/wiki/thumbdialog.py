@@ -77,6 +77,7 @@ class ThumbDialog (wx.Dialog):
         mainSizer = wx.FlexGridSizer (rows=0, cols=2)
         mainSizer.AddGrowableCol (0)
         mainSizer.AddGrowableCol (1)
+        mainSizer.AddGrowableRow (4)
 
         mainSizer.Add (filenameLabel, 0, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=4)
         mainSizer.Add (self.filesListCombo, 0, flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND, border=4)
