@@ -154,6 +154,19 @@ class TabsTest(BaseMainWndTest):
         Application.wikiroot = self.wikiroot
         Application.selectedPage = self.wikiroot[u"Страница 1"]
         self._tabsController.cloneTab()
+        Application.selectedPage = self.wikiroot[u"Страница 2/Страница 3/Страница 4"]
+
+        self.wikiroot[u"Страница 2"].remove()
+        self.assertEqual (self._tabsController.getTabsCount(), 2)
+        self.assertEqual (self._tabsController.getSelection(), 1)
+        self.assertEqual (self._tabsController.getPage(1), None)
+        self.assertEqual (self._tabsController.getTabTitle (1), u"testwiki")
+
+
+    def testRemoveSelection3 (self):
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+        self._tabsController.cloneTab()
         Application.selectedPage = self.wikiroot[u"Страница 2"]
 
         self.wikiroot[u"Страница 2"].remove()
