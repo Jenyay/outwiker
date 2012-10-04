@@ -838,7 +838,7 @@ class WikiPage (RootWikiPage):
         self._removePageFromTree (self)
 
         # Если выбранная страница была удалена
-        if oldSelectedPage == self:
+        if oldSelectedPage != None and oldSelectedPage.isRemoved:
             # Новая выбранная страница взамен старой
             newselpage = oldSelectedPage
             while newselpage.parent != None and newselpage.isRemoved:
