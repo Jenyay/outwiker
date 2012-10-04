@@ -14,6 +14,7 @@ from outwiker.core.style import Style
 
 from .wikieditor import WikiEditor
 from .wikitoolbar import WikiToolBar
+from .thumbdialogcontroller import ThumbDialogController
 from outwiker.gui.basetextpanel import BaseTextPanel
 from outwiker.gui.htmltexteditor import HtmlTextEditor
 from outwiker.gui.linkdialogcontroller import LinkDialogContoller
@@ -360,7 +361,7 @@ class WikiPagePanel (BaseHtmlPanel):
         """
         self.addTool (self.__wikiMenu, 
                 "ID_THUMB", 
-                lambda event: self.codeEditor.turnText (u'%thumb%', u'%%'), 
+                self.__onThumb,
                 _(u'Thumbnail\tCtrl+M'), 
                 _(u'Thumbnail'), 
                 os.path.join (self.imagesDir, "images.png"),
@@ -564,4 +565,14 @@ class WikiPagePanel (BaseHtmlPanel):
                         link=linkController.link)
 
             self.codeEditor.replaceText (text)
+
+
+    def __onThumb (self, event):
+        dlgController = ThumbDialogController (self, 
+                self._currentpage, 
+                self.codeEditor.GetSelectedText())
+
+        if dlgController.showDialog() == wx.ID_OK:
+            # self.codeEditor.turnText (u'%thumb%', u'%%')
+            self.codeEditor.replaceText (dlgController.result)
 

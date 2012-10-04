@@ -22,6 +22,7 @@ class LinkDialog (wx.Dialog):
 
         self._createGui ()
         self.linkText.SetFocus()
+        self.Center(wx.CENTRE_ON_SCREEN)
 
 
     def _createGui (self):
