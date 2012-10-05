@@ -32,18 +32,22 @@ class LinkDialogContoller (object):
         comment = self.selectedString
         link = self._findLink()
 
-        dlg = LinkDialog (self.parent, link, comment)
+        dlg = self._createDialog (self.parent, link, comment)
 
         result = dlg.ShowModal()
-        self.link = dlg.linkText.GetValue()
+        self.link = dlg.link
 
-        self.comment = dlg.commentText.GetValue()
+        self.comment = dlg.comment
         if len (self.comment) == 0:
             self.comment = self.link
 
         dlg.Destroy()
 
         return result
+
+
+    def _createDialog (self, parent, link, comment):
+        return LinkDialog (self.parent, link, comment)
 
 
     def _findLink (self):
