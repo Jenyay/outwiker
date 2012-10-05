@@ -107,7 +107,6 @@ class PrefDialog(wx.Dialog):
         main_sizer.AddGrowableCol(0)
         
         self.__createOkCancelButtons(main_sizer)
-        self.Fit()
         self.Layout()
     
 
