@@ -21,8 +21,6 @@ class ThumbDialog (wx.Dialog):
                 title=_("Thumbnails"))
 
         self.__filesList = filesList
-        self.__filesList.sort()
-
         self.__selectedFile = selectedFile
 
         self.__createGui()
@@ -54,7 +52,8 @@ class ThumbDialog (wx.Dialog):
         self.filesListCombo.SetSelection (0)
         self.filesListCombo.SetMinSize ((250, -1))
 
-        if self.__selectedFile in self.__filesList:
+        if len (self.__selectedFile) > 0:
+            assert self.__selectedFile in self.__filesList
             self.filesListCombo.SetStringSelection (self.__selectedFile)
 
         # Элементы для выбора размера

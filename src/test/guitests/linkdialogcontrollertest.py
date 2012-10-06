@@ -1,11 +1,6 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-
-import unittest
-
-import wx
-
 from outwiker.gui.linkdialogcontroller import LinkDialogContoller
 from outwiker.core.commands import copyTextToClipboard, getClipboardText
 from .basemainwnd import BaseMainWndTest

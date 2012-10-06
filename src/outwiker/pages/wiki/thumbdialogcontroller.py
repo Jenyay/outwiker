@@ -25,23 +25,27 @@ class ThumbDialogController (object):
 
 
     def showDialog (self):
-        attach = Attachment (self._page)
-        filesList = filter (isImage, attach.getAttachRelative())
+        filesList = filter (isImage, Attachment (self._page).getAttachRelative())
         filesList.sort (Attachment.sortByName)
 
-        if self._selectedText.startswith (u"Attach:"):
+        if (self._selectedText.startswith (u"Attach:") and
+                self._selectedText[len (u"Attach:"):] in filesList):
             selectedFile = self._selectedText[len (u"Attach:"):]
         else:
             selectedFile = u""
 
-        dlg = ThumbDialog (self._parent, filesList, selectedFile)
+        dlg = self._createDialog (self._parent, filesList, selectedFile)
         resultDlg = dlg.ShowModal()
-        
+
         self.result = self.__generateText (dlg)
 
         dlg.Destroy()
 
         return resultDlg
+
+
+    def _createDialog (self, parent, filesList, selectedFile):
+        return ThumbDialog (parent, filesList, selectedFile)
 
 
     def __generateText (self, dlg):
@@ -51,11 +55,11 @@ class ThumbDialogController (object):
 
         if size == 0:
             scaleText = u""
-        elif scaleType == dlg.WIDTH:
+        elif scaleType == ThumbDialog.WIDTH:
             scaleText = u" width={size}".format (size = size)
-        elif scaleType == dlg.HEIGHT:
+        elif scaleType == ThumbDialog.HEIGHT:
             scaleText = u" height={size}".format (size = size)
-        elif scaleType == dlg.MAX_SIZE:
+        elif scaleType == ThumbDialog.MAX_SIZE:
             scaleText = u" maxsize={size}".format (size = size)
         else:
             raise NotImplementedError
