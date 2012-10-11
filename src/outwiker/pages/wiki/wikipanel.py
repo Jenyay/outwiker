@@ -214,6 +214,15 @@ class WikiPagePanel (BaseHtmlPanel):
                 os.path.join (self.imagesDir, "text_superscript.png"),
                 fullUpdate=False,
                 panelname="wiki")
+
+        self.addTool (self.__fontMenu, 
+                "ID_MONOSPACED", 
+                lambda event: self.codeEditor.turnText (u"@@", u"@@"), 
+                _(u"Monospaced\tCtrl+@"), 
+                _(u"Monospaced"), 
+                os.path.join (self.imagesDir, "text_monospace.png"),
+                fullUpdate=False,
+                panelname="wiki")
     
 
     def __addAlignTools (self):
