@@ -32,6 +32,16 @@ class WikiPagePanel (BaseHtmlPanel):
         self.__WIKI_MENU_INDEX = 7
 
         self._wikiPanelName = "wiki"
+        self._fontSizeList = [u"20%", u"40%", u"60%", u"80%", u"120%", u"140%", u"160%", u"180%", u"200%"]
+        self._fontSizeFormat = [(u"[----", u"----]"),
+                (u"[---", u"---]"),
+                (u"[--", u"--]"),
+                (u"[-", u"-]"),
+                (u"[+", u"+]"),
+                (u"[++", u"++]"),
+                (u"[+++", u"+++]"),
+                (u"[++++", u"++++]"),
+                (u"[+++++", u"+++++]")]
 
         self.mainWindow.toolbars[self._wikiPanelName] = WikiToolBar(self.mainWindow, self.mainWindow.auiManager)
         self.mainWindow.toolbars[self._wikiPanelName].UpdateToolBar()
@@ -214,6 +224,27 @@ class WikiPagePanel (BaseHtmlPanel):
                 os.path.join (self.imagesDir, "text_superscript.png"),
                 fullUpdate=False,
                 panelname="wiki")
+
+
+        self.addTool (self.__fontMenu, 
+                "ID_BIGFONT", 
+                self.__onBigFont, 
+                _(u"Big\tCtrl+_"), 
+                _(u"Big font"), 
+                os.path.join (self.imagesDir, "text_big.png"),
+                fullUpdate=False,
+                panelname="wiki")
+
+
+        self.addTool (self.__fontMenu, 
+                "ID_SMALLFONT", 
+                self.__onSmallFont, 
+                _(u"Small\tCtrl+-"), 
+                _(u"Small font"), 
+                os.path.join (self.imagesDir, "text_small.png"),
+                fullUpdate=False,
+                panelname="wiki")
+
 
         self.addTool (self.__fontMenu, 
                 "ID_MONOSPACED", 
@@ -582,6 +613,28 @@ class WikiPagePanel (BaseHtmlPanel):
                 self.codeEditor.GetSelectedText())
 
         if dlgController.showDialog() == wx.ID_OK:
-            # self.codeEditor.turnText (u'%thumb%', u'%%')
             self.codeEditor.replaceText (dlgController.result)
 
+
+    def __onBigFont (self, event):
+        self.__selectFontSize (4)
+
+
+    def __onSmallFont (self, event):
+        self.__selectFontSize (3)
+
+
+    def __selectFontSize (self, selIndex):
+        dlg = wx.SingleChoiceDialog (self, 
+                _(u"Select font size"),
+                _(u"Font size"),
+                self._fontSizeList)
+
+        selectedText = self.codeEditor.GetSelectedText()
+
+        dlg.SetSelection (selIndex)
+        if dlg.ShowModal() == wx.ID_OK:
+            sizeIndex = dlg.GetSelection()
+            self.codeEditor.turnText (self._fontSizeFormat[sizeIndex][0], self._fontSizeFormat[sizeIndex][1])
+
+        dlg.Destroy()

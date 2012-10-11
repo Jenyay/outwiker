@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-11 20:31+0400\n"
+"POT-Creation-Date: 2012-10-11 22:11+0400\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -156,11 +156,11 @@ msgstr "You did not select a file to remove"
 #: outwiker/pages/html/basehtmlpanel.py:245
 #: outwiker/pages/html/basehtmlpanel.py:249
 #: outwiker/pages/html/htmlpanel.py:439
-#: outwiker/pages/wiki/wikipanel.py:121
-#: outwiker/pages/wiki/wikipanel.py:125
-#: outwiker/pages/wiki/wikipanel.py:145
-#: outwiker/pages/wiki/wikipanel.py:147
-#: outwiker/pages/wiki/wikipanel.py:537
+#: outwiker/pages/wiki/wikipanel.py:131
+#: outwiker/pages/wiki/wikipanel.py:135
+#: outwiker/pages/wiki/wikipanel.py:155
+#: outwiker/pages/wiki/wikipanel.py:157
+#: outwiker/pages/wiki/wikipanel.py:568
 #: outwiker/core/commands.py:48
 #: outwiker/core/commands.py:126
 #: outwiker/core/commands.py:209
@@ -271,7 +271,7 @@ msgstr "Owerwrite?"
 
 #: outwiker/gui/basetextpanel.py:165
 #: outwiker/pages/html/basehtmlpanel.py:244
-#: outwiker/pages/wiki/wikipanel.py:120
+#: outwiker/pages/wiki/wikipanel.py:130
 #, python-format
 msgid "Can't save file %s"
 msgstr "Can't save file %s"
@@ -329,7 +329,7 @@ msgstr "Can't read file %s"
 
 #: outwiker/gui/linkdialog.py:17
 #: outwiker/gui/linkdialog.py:33
-#: outwiker/pages/wiki/wikipanel.py:384
+#: outwiker/pages/wiki/wikipanel.py:415
 msgid "Link"
 msgstr "Link"
 
@@ -746,7 +746,7 @@ msgstr "Notes"
 #: outwiker/gui/preferences/htmlrenderpanel.py:28
 #: outwiker/gui/preferences/textprintpanel.py:29
 #: outwiker/pages/html/htmlpanel.py:110
-#: outwiker/pages/wiki/wikipanel.py:466
+#: outwiker/pages/wiki/wikipanel.py:497
 msgid "Font"
 msgstr "Font"
 
@@ -988,17 +988,17 @@ msgstr "Toolbars"
 
 #: outwiker/pages/html/basehtmlpanel.py:162
 #: outwiker/pages/html/htmltoolbar.py:30
-#: outwiker/pages/wiki/wikipanel.py:76
+#: outwiker/pages/wiki/wikipanel.py:86
 msgid "HTML"
 msgstr "HTML"
 
 #: outwiker/pages/html/basehtmlpanel.py:236
-#: outwiker/pages/wiki/wikipanel.py:112
+#: outwiker/pages/wiki/wikipanel.py:122
 msgid "Page rendered. Please wait…"
 msgstr "Page rendered. Please wait…"
 
 #: outwiker/pages/html/basehtmlpanel.py:248
-#: outwiker/pages/wiki/wikipanel.py:124
+#: outwiker/pages/wiki/wikipanel.py:134
 #, python-format
 msgid ""
 "Can't save HTML-file\n"
@@ -1027,22 +1027,22 @@ msgid "Auto Line Wrap"
 msgstr "Auto Line Wrap"
 
 #: outwiker/pages/html/htmlpanel.py:109
-#: outwiker/pages/wiki/wikipanel.py:465
+#: outwiker/pages/wiki/wikipanel.py:496
 msgid "Heading"
 msgstr "Heading"
 
 #: outwiker/pages/html/htmlpanel.py:111
-#: outwiker/pages/wiki/wikipanel.py:467
+#: outwiker/pages/wiki/wikipanel.py:498
 msgid "Alignment"
 msgstr "Alignment"
 
 #: outwiker/pages/html/htmlpanel.py:112
-#: outwiker/pages/wiki/wikipanel.py:468
+#: outwiker/pages/wiki/wikipanel.py:499
 msgid "Formatting"
 msgstr "Formatting"
 
 #: outwiker/pages/html/htmlpanel.py:113
-#: outwiker/pages/wiki/wikipanel.py:469
+#: outwiker/pages/wiki/wikipanel.py:500
 msgid "Lists"
 msgstr "Lists"
 
@@ -1055,7 +1055,7 @@ msgid "H&tml"
 msgstr "H&tml"
 
 #: outwiker/pages/html/htmlpanel.py:135
-#: outwiker/pages/wiki/wikipanel.py:157
+#: outwiker/pages/wiki/wikipanel.py:167
 msgid "Bold\tCtrl+B"
 msgstr "Bold\tCtrl+B"
 
@@ -1064,7 +1064,7 @@ msgid "Bold (<b>…</b>)"
 msgstr "Bold (<b>…</b>)"
 
 #: outwiker/pages/html/htmlpanel.py:144
-#: outwiker/pages/wiki/wikipanel.py:166
+#: outwiker/pages/wiki/wikipanel.py:176
 msgid "Italic\tCtrl+I"
 msgstr "Italic\tCtrl+I"
 
@@ -1073,7 +1073,7 @@ msgid "Italic (<i>…</i>)"
 msgstr "Italic (<i>…</i>)"
 
 #: outwiker/pages/html/htmlpanel.py:153
-#: outwiker/pages/wiki/wikipanel.py:184
+#: outwiker/pages/wiki/wikipanel.py:194
 msgid "Underline\tCtrl+U"
 msgstr "Underline\tCtrl+U"
 
@@ -1082,7 +1082,7 @@ msgid "Underline (<u>…</u>)"
 msgstr "Underline (<u>…</u>)"
 
 #: outwiker/pages/html/htmlpanel.py:162
-#: outwiker/pages/wiki/wikipanel.py:193
+#: outwiker/pages/wiki/wikipanel.py:203
 msgid "Strikethrough\tCtrl+K"
 msgstr "Strikethrough\tCtrl+K"
 
@@ -1091,7 +1091,7 @@ msgid "Strikethrough (<strike>…</strike>)"
 msgstr "Strikethrough (<strike>…</strike>)"
 
 #: outwiker/pages/html/htmlpanel.py:171
-#: outwiker/pages/wiki/wikipanel.py:202
+#: outwiker/pages/wiki/wikipanel.py:212
 msgid "Subscript\tCtrl+="
 msgstr "Subscript\tCtrl+="
 
@@ -1100,7 +1100,7 @@ msgid "Subscript (<sub>…</sub>)"
 msgstr "Subscript (<sub>…</sub>)"
 
 #: outwiker/pages/html/htmlpanel.py:180
-#: outwiker/pages/wiki/wikipanel.py:212
+#: outwiker/pages/wiki/wikipanel.py:222
 msgid "Superscript\tCtrl++"
 msgstr "Superscript\tCtrl++"
 
@@ -1109,42 +1109,42 @@ msgid "Superscript (<sup>…</sup>)"
 msgstr "Superscript (<sup>…</sup>)"
 
 #: outwiker/pages/html/htmlpanel.py:191
-#: outwiker/pages/wiki/wikipanel.py:232
+#: outwiker/pages/wiki/wikipanel.py:263
 msgid "Left align\tCtrl+Alt+L"
 msgstr "Left align\tCtrl+Alt+L"
 
 #: outwiker/pages/html/htmlpanel.py:192
-#: outwiker/pages/wiki/wikipanel.py:233
+#: outwiker/pages/wiki/wikipanel.py:264
 msgid "Left align"
 msgstr "Left align"
 
 #: outwiker/pages/html/htmlpanel.py:200
-#: outwiker/pages/wiki/wikipanel.py:241
+#: outwiker/pages/wiki/wikipanel.py:272
 msgid "Center align\tCtrl+Alt+C"
 msgstr "Center align\tCtrl+Alt+C"
 
 #: outwiker/pages/html/htmlpanel.py:201
-#: outwiker/pages/wiki/wikipanel.py:242
+#: outwiker/pages/wiki/wikipanel.py:273
 msgid "Center align"
 msgstr "Center align"
 
 #: outwiker/pages/html/htmlpanel.py:209
-#: outwiker/pages/wiki/wikipanel.py:250
+#: outwiker/pages/wiki/wikipanel.py:281
 msgid "Right align\tCtrl+Alt+R"
 msgstr "Right align\tCtrl+Alt+R"
 
 #: outwiker/pages/html/htmlpanel.py:210
-#: outwiker/pages/wiki/wikipanel.py:251
+#: outwiker/pages/wiki/wikipanel.py:282
 msgid "Right align"
 msgstr "Right align"
 
 #: outwiker/pages/html/htmlpanel.py:218
-#: outwiker/pages/wiki/wikipanel.py:259
+#: outwiker/pages/wiki/wikipanel.py:290
 msgid "Justify align\tCtrl+Alt+J"
 msgstr "Justify align\tCtrl+Alt+J"
 
 #: outwiker/pages/html/htmlpanel.py:219
-#: outwiker/pages/wiki/wikipanel.py:260
+#: outwiker/pages/wiki/wikipanel.py:291
 msgid "Justify align"
 msgstr "Justify align"
 
@@ -1173,7 +1173,7 @@ msgid "Table cell (<td>…</td>)"
 msgstr "Table cell (<td>…</td>)"
 
 #: outwiker/pages/html/htmlpanel.py:265
-#: outwiker/pages/wiki/wikipanel.py:292
+#: outwiker/pages/wiki/wikipanel.py:323
 msgid "Bullets list\tCtrl+G"
 msgstr "Bullets list\tCtrl+G"
 
@@ -1182,7 +1182,7 @@ msgid "Bullets list (<ul>…</ul>)"
 msgstr "Bullets list (<ul>…</ul>)"
 
 #: outwiker/pages/html/htmlpanel.py:274
-#: outwiker/pages/wiki/wikipanel.py:301
+#: outwiker/pages/wiki/wikipanel.py:332
 msgid "Numbers list\tCtrl+J"
 msgstr "Numbers list\tCtrl+J"
 
@@ -1191,7 +1191,7 @@ msgid "Numbers list (<ul>…</ul>)"
 msgstr "Numbers list (<ul>…</ul>)"
 
 #: outwiker/pages/html/htmlpanel.py:288
-#: outwiker/pages/wiki/wikipanel.py:315
+#: outwiker/pages/wiki/wikipanel.py:346
 msgid "H1\tCtrl+1"
 msgstr "H1\tCtrl+1"
 
@@ -1200,7 +1200,7 @@ msgid "H1 (<h1>…</h1>)"
 msgstr "H1 (<h1>…</h1>)"
 
 #: outwiker/pages/html/htmlpanel.py:297
-#: outwiker/pages/wiki/wikipanel.py:324
+#: outwiker/pages/wiki/wikipanel.py:355
 msgid "H2\tCtrl+2"
 msgstr "H2\tCtrl+2"
 
@@ -1209,7 +1209,7 @@ msgid "H2 (<h2>…</h2>)"
 msgstr "H2 (<h2>…</h2>)"
 
 #: outwiker/pages/html/htmlpanel.py:306
-#: outwiker/pages/wiki/wikipanel.py:333
+#: outwiker/pages/wiki/wikipanel.py:364
 msgid "H3\tCtrl+3"
 msgstr "H3\tCtrl+3"
 
@@ -1218,7 +1218,7 @@ msgid "H3 (<h3>…</h3>)"
 msgstr "H3 (<h3>…</h3>)"
 
 #: outwiker/pages/html/htmlpanel.py:315
-#: outwiker/pages/wiki/wikipanel.py:342
+#: outwiker/pages/wiki/wikipanel.py:373
 msgid "H4\tCtrl+4"
 msgstr "H4\tCtrl+4"
 
@@ -1227,7 +1227,7 @@ msgid "H4 (<h4>…</h4>)"
 msgstr "H4 (<h4>…</h4>)"
 
 #: outwiker/pages/html/htmlpanel.py:324
-#: outwiker/pages/wiki/wikipanel.py:351
+#: outwiker/pages/wiki/wikipanel.py:382
 msgid "H5\tCtrl+5"
 msgstr "H5\tCtrl+5"
 
@@ -1236,7 +1236,7 @@ msgid "H5 (<h5>…</h5>)"
 msgstr "H5 (<h5>…</h5>)"
 
 #: outwiker/pages/html/htmlpanel.py:333
-#: outwiker/pages/wiki/wikipanel.py:360
+#: outwiker/pages/wiki/wikipanel.py:391
 msgid "H6\tCtrl+6"
 msgstr "H6\tCtrl+6"
 
@@ -1253,7 +1253,7 @@ msgid "Image (<img src=\"…\"/>"
 msgstr "Image (<img src=\"…\"/>"
 
 #: outwiker/pages/html/htmlpanel.py:356
-#: outwiker/pages/wiki/wikipanel.py:383
+#: outwiker/pages/wiki/wikipanel.py:414
 msgid "Link\tCtrl+L"
 msgstr "Link\tCtrl+L"
 
@@ -1262,7 +1262,7 @@ msgid "Link (<a href=\"…\">…</a>)"
 msgstr "Link (<a href=\"…\">…</a>)"
 
 #: outwiker/pages/html/htmlpanel.py:366
-#: outwiker/pages/wiki/wikipanel.py:393
+#: outwiker/pages/wiki/wikipanel.py:424
 msgid "Anchor\tCtrl+Alt+L"
 msgstr "Anchor\tCtrl+Alt+L"
 
@@ -1271,7 +1271,7 @@ msgid "Anchor (<a name=\"…\">…</a>)"
 msgstr "Anchor (<a name=\"…\">…</a>)"
 
 #: outwiker/pages/html/htmlpanel.py:376
-#: outwiker/pages/wiki/wikipanel.py:403
+#: outwiker/pages/wiki/wikipanel.py:434
 msgid "Horizontal line\tCtrl+H"
 msgstr "Horizontal line\tCtrl+H"
 
@@ -1305,13 +1305,13 @@ msgstr "Quote (<blockquote>…</blockquote>)"
 
 #: outwiker/pages/html/htmlpanel.py:418
 #: outwiker/pages/html/htmlpanel.py:419
-#: outwiker/pages/wiki/wikipanel.py:432
-#: outwiker/pages/wiki/wikipanel.py:433
+#: outwiker/pages/wiki/wikipanel.py:463
+#: outwiker/pages/wiki/wikipanel.py:464
 msgid "Convert HTML Symbols"
 msgstr "Convert HTML Symbols"
 
 #: outwiker/pages/html/htmlpanel.py:438
-#: outwiker/pages/wiki/wikipanel.py:536
+#: outwiker/pages/wiki/wikipanel.py:567
 msgid "Page style Error. Style by default is used"
 msgstr "Page style Error. Style by default is used"
 
@@ -1398,163 +1398,187 @@ msgstr "0 - default size"
 msgid "Wiki Page"
 msgstr "Wiki Page"
 
-#: outwiker/pages/wiki/wikipanel.py:39
+#: outwiker/pages/wiki/wikipanel.py:49
 #: outwiker/pages/wiki/wikitoolbar.py:30
 msgid "Wiki"
 msgstr "Wiki"
 
-#: outwiker/pages/wiki/wikipanel.py:145
-#: outwiker/pages/wiki/wikipanel.py:147
+#: outwiker/pages/wiki/wikipanel.py:155
+#: outwiker/pages/wiki/wikipanel.py:157
 msgid "Can't load HTML-file"
 msgstr "Can't load HTML-file"
 
-#: outwiker/pages/wiki/wikipanel.py:158
+#: outwiker/pages/wiki/wikipanel.py:168
 msgid "Bold"
 msgstr "Bold"
 
-#: outwiker/pages/wiki/wikipanel.py:167
+#: outwiker/pages/wiki/wikipanel.py:177
 msgid "Italic"
 msgstr "Italic"
 
-#: outwiker/pages/wiki/wikipanel.py:175
+#: outwiker/pages/wiki/wikipanel.py:185
 msgid "Bold italic\tCtrl+Shift+I"
 msgstr "Bold italic\tCtrl+Shift+I"
 
-#: outwiker/pages/wiki/wikipanel.py:176
+#: outwiker/pages/wiki/wikipanel.py:186
 msgid "Bold italic"
 msgstr "Bold italic"
 
-#: outwiker/pages/wiki/wikipanel.py:185
+#: outwiker/pages/wiki/wikipanel.py:195
 msgid "Underline"
 msgstr "Underline"
 
-#: outwiker/pages/wiki/wikipanel.py:194
+#: outwiker/pages/wiki/wikipanel.py:204
 msgid "Strikethrough"
 msgstr "Strikethrough"
 
-#: outwiker/pages/wiki/wikipanel.py:203
+#: outwiker/pages/wiki/wikipanel.py:213
 msgid "Subscript"
 msgstr "Subscript"
 
-#: outwiker/pages/wiki/wikipanel.py:213
+#: outwiker/pages/wiki/wikipanel.py:223
 msgid "Superscript"
 msgstr "Superscript"
 
-#: outwiker/pages/wiki/wikipanel.py:221
+#: outwiker/pages/wiki/wikipanel.py:232
+msgid "Big\tCtrl+_"
+msgstr "Big\tCtrl+_"
+
+#: outwiker/pages/wiki/wikipanel.py:233
+msgid "Big font"
+msgstr "Big font"
+
+#: outwiker/pages/wiki/wikipanel.py:242
+msgid "Small\tCtrl+-"
+msgstr "Small\tCtrl+-"
+
+#: outwiker/pages/wiki/wikipanel.py:243
+msgid "Small font"
+msgstr "Small font"
+
+#: outwiker/pages/wiki/wikipanel.py:252
 msgid "Monospaced\tCtrl+@"
 msgstr "Monospaced\tCtrl+@"
 
-#: outwiker/pages/wiki/wikipanel.py:222
+#: outwiker/pages/wiki/wikipanel.py:253
 msgid "Monospaced"
 msgstr "Monospaced"
 
-#: outwiker/pages/wiki/wikipanel.py:270
+#: outwiker/pages/wiki/wikipanel.py:301
 msgid "Preformat [@…@]\tCtrl+Alt+F"
 msgstr "Preformat [@…@]\tCtrl+Alt+F"
 
-#: outwiker/pages/wiki/wikipanel.py:271
+#: outwiker/pages/wiki/wikipanel.py:302
 msgid "Preformat [@…@]"
 msgstr "Preformat [@…@]"
 
-#: outwiker/pages/wiki/wikipanel.py:278
-#: outwiker/pages/wiki/wikipanel.py:279
+#: outwiker/pages/wiki/wikipanel.py:309
+#: outwiker/pages/wiki/wikipanel.py:310
 msgid "Non-parsed [=…=]"
 msgstr "Non-parsed [=…=]"
 
-#: outwiker/pages/wiki/wikipanel.py:293
+#: outwiker/pages/wiki/wikipanel.py:324
 msgid "Bullets list"
 msgstr "Bullets list"
 
-#: outwiker/pages/wiki/wikipanel.py:302
+#: outwiker/pages/wiki/wikipanel.py:333
 msgid "Numbers list"
 msgstr "Numbers list"
 
-#: outwiker/pages/wiki/wikipanel.py:316
+#: outwiker/pages/wiki/wikipanel.py:347
 msgid "H1"
 msgstr "H1"
 
-#: outwiker/pages/wiki/wikipanel.py:325
+#: outwiker/pages/wiki/wikipanel.py:356
 msgid "H2"
 msgstr "H2"
 
-#: outwiker/pages/wiki/wikipanel.py:334
+#: outwiker/pages/wiki/wikipanel.py:365
 msgid "H3"
 msgstr "H3"
 
-#: outwiker/pages/wiki/wikipanel.py:343
+#: outwiker/pages/wiki/wikipanel.py:374
 msgid "H4"
 msgstr "H4"
 
-#: outwiker/pages/wiki/wikipanel.py:352
+#: outwiker/pages/wiki/wikipanel.py:383
 msgid "H5"
 msgstr "H5"
 
-#: outwiker/pages/wiki/wikipanel.py:361
+#: outwiker/pages/wiki/wikipanel.py:392
 msgid "H6"
 msgstr "H6"
 
-#: outwiker/pages/wiki/wikipanel.py:374
+#: outwiker/pages/wiki/wikipanel.py:405
 msgid "Thumbnail\tCtrl+M"
 msgstr "Thumbnail\tCtrl+M"
 
-#: outwiker/pages/wiki/wikipanel.py:375
+#: outwiker/pages/wiki/wikipanel.py:406
 msgid "Thumbnail"
 msgstr "Thumbnail"
 
-#: outwiker/pages/wiki/wikipanel.py:394
+#: outwiker/pages/wiki/wikipanel.py:425
 msgid "Anchor"
 msgstr "Anchor"
 
-#: outwiker/pages/wiki/wikipanel.py:404
+#: outwiker/pages/wiki/wikipanel.py:435
 msgid "Horizontal line"
 msgstr "Horizontal line"
 
-#: outwiker/pages/wiki/wikipanel.py:412
+#: outwiker/pages/wiki/wikipanel.py:443
 msgid "Line break\tCtrl+Return"
 msgstr "Line break\tCtrl+Return"
 
-#: outwiker/pages/wiki/wikipanel.py:413
+#: outwiker/pages/wiki/wikipanel.py:444
 msgid "Line break"
 msgstr "Line break"
 
-#: outwiker/pages/wiki/wikipanel.py:421
+#: outwiker/pages/wiki/wikipanel.py:452
 msgid "Equation\tCtrl+Q"
 msgstr "Equation\tCtrl+Q"
 
-#: outwiker/pages/wiki/wikipanel.py:422
+#: outwiker/pages/wiki/wikipanel.py:453
 msgid "Equation"
 msgstr "Equation"
 
-#: outwiker/pages/wiki/wikipanel.py:456
+#: outwiker/pages/wiki/wikipanel.py:487
 msgid "HTML Code\tShift+F4"
 msgstr "HTML Code\tShift+F4"
 
-#: outwiker/pages/wiki/wikipanel.py:457
+#: outwiker/pages/wiki/wikipanel.py:488
 msgid "HTML Code"
 msgstr "HTML Code"
 
-#: outwiker/pages/wiki/wikipanel.py:470
+#: outwiker/pages/wiki/wikipanel.py:501
 msgid "Commands"
 msgstr "Commands"
 
-#: outwiker/pages/wiki/wikipanel.py:482
+#: outwiker/pages/wiki/wikipanel.py:513
 msgid "&Wiki"
 msgstr "&Wiki"
 
-#: outwiker/pages/wiki/wikipanel.py:499
-#: outwiker/pages/wiki/wikipanel.py:500
+#: outwiker/pages/wiki/wikipanel.py:530
+#: outwiker/pages/wiki/wikipanel.py:531
 msgid "Attachment (:attachlist:)"
 msgstr "Attachment (:attachlist:)"
 
-#: outwiker/pages/wiki/wikipanel.py:507
-#: outwiker/pages/wiki/wikipanel.py:508
+#: outwiker/pages/wiki/wikipanel.py:538
+#: outwiker/pages/wiki/wikipanel.py:539
 msgid "Children (:childlist:)"
 msgstr "Children (:childlist:)"
 
-#: outwiker/pages/wiki/wikipanel.py:515
-#: outwiker/pages/wiki/wikipanel.py:516
+#: outwiker/pages/wiki/wikipanel.py:546
+#: outwiker/pages/wiki/wikipanel.py:547
 msgid "Include (:include ...:)"
 msgstr "Include (:include ...:)"
+
+#: outwiker/pages/wiki/wikipanel.py:629
+msgid "Select font size"
+msgstr "Select font size"
+
+#: outwiker/pages/wiki/wikipanel.py:630
+msgid "Font size"
+msgstr "Font size"
 
 #: outwiker/pages/wiki/wikipreferences.py:22
 msgid "Show HTML Code Tab"
