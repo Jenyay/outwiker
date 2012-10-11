@@ -12,8 +12,8 @@ from runoutwiker import OutWiker
 def wikiparserProfile ():
     from profiles import pro_parser
 
-    fname = "../profiles/test2.wiki"
-    # fname = "../profiles/text_gogol.wiki"
+    # fname = "../profiles/test2.wiki"
+    fname = "../profiles/text_gogol.wiki"
     profile_fname = "../profiles/wikiparser.profile"
 
     global pparser

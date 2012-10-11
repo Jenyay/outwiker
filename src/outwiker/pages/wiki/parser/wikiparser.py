@@ -48,6 +48,8 @@ class Parser (object):
         self.subscript = FontsFactory.makeSubscript (self)
         self.superscript = FontsFactory.makeSuperscript (self)
         self.code = FontsFactory.makeCode (self)
+        self.small = FontsFactory.makeSmall(self)
+        self.big = FontsFactory.makeBig(self)
         self.headings = HeadingFactory.make(self)
         self.thumb = ThumbnailFactory.make(self)
         self.noformat = NoFormatFactory.make(self)
@@ -79,6 +81,8 @@ class Parser (object):
                 self.bolded |
                 self.italicized |
                 self.code |
+                self.small |
+                self.big |
                 self.preformat |
                 self.noformat |
                 self.thumb |
@@ -106,6 +110,8 @@ class Parser (object):
                 self.bolded |
                 self.italicized |
                 self.code |
+                self.small |
+                self.big |
                 self.preformat |
                 self.noformat |
                 self.thumb |
@@ -131,6 +137,8 @@ class Parser (object):
                 self.bolded |
                 self.italicized |
                 self.underlined |
+                self.small |
+                self.big |
                 self.strike |
                 self.tex |
                 self.command |
@@ -148,6 +156,8 @@ class Parser (object):
                 self.bolded |
                 self.italicized |
                 self.underlined |
+                self.small |
+                self.big |
                 self.strike |
                 self.tex |
                 self.command |

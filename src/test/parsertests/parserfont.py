@@ -102,3 +102,122 @@ class ParserFontTest (unittest.TestCase):
         result = u'бла-бла-бла \nкхм <SUB> это нижний индекс</SUB> бла-бла-бла\nбла-бла-бла'
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testSmall1 (self):
+        text = u"бла-бла-бла \nкхм [-мелкий шрифт-] бла-бла-бла\nбла-бла-бла"
+        result = u'бла-бла-бла \nкхм <SPAN STYLE="font-size:80%">мелкий шрифт</SPAN> бла-бла-бла\nбла-бла-бла'
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testSmall2 (self):
+        text = u"бла-бла-бла \nкхм [--мелкий шрифт--] бла-бла-бла\nбла-бла-бла"
+        result = u'бла-бла-бла \nкхм <SPAN STYLE="font-size:60%">мелкий шрифт</SPAN> бла-бла-бла\nбла-бла-бла'
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testSmall3 (self):
+        text = u"бла-бла-бла \nкхм [---мелкий шрифт---] бла-бла-бла\nбла-бла-бла"
+        result = u'бла-бла-бла \nкхм <SPAN STYLE="font-size:40%">мелкий шрифт</SPAN> бла-бла-бла\nбла-бла-бла'
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testSmall4 (self):
+        text = u"бла-бла-бла \nкхм [----мелкий шрифт----] бла-бла-бла\nбла-бла-бла"
+        result = u'бла-бла-бла \nкхм <SPAN STYLE="font-size:20%">мелкий шрифт</SPAN> бла-бла-бла\nбла-бла-бла'
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testSmall5 (self):
+        text = u"бла-бла-бла \nкхм [-----мелкий шрифт-----] бла-бла-бла\nбла-бла-бла"
+        result = u'бла-бла-бла \nкхм <SPAN STYLE="font-size:20%">-мелкий шрифт-</SPAN> бла-бла-бла\nбла-бла-бла'
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testSmall6 (self):
+        text = u"бла-бла-бла \nкхм [--мелкий шрифт-] бла-бла-бла\nбла-бла-бла"
+        result = u'бла-бла-бла \nкхм <SPAN STYLE="font-size:80%">-мелкий шрифт</SPAN> бла-бла-бла\nбла-бла-бла'
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testSmallLink (self):
+        text = u"бла-бла-бла \nкхм [-[[мелкий шрифт -> http://jenyay.net]]-] бла-бла-бла\nбла-бла-бла"
+        result = u'бла-бла-бла \nкхм <SPAN STYLE="font-size:80%"><A HREF="http://jenyay.net">мелкий шрифт</A></SPAN> бла-бла-бла\nбла-бла-бла'
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testSmallHeading (self):
+        text = u"бла-бла-бла \n!! Кхм [-мелкий шрифт-] бла-бла-бла\nбла-бла-бла"
+        result = u'бла-бла-бла \n<H1>Кхм <SPAN STYLE="font-size:80%">мелкий шрифт</SPAN> бла-бла-бла</H1>\nбла-бла-бла'
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testBig1 (self):
+        text = u"бла-бла-бла \nкхм [+ крупный шрифт+] бла-бла-бла\nбла-бла-бла"
+        result = u'бла-бла-бла \nкхм <SPAN STYLE="font-size:120%"> крупный шрифт</SPAN> бла-бла-бла\nбла-бла-бла'
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testBig2 (self):
+        text = u"бла-бла-бла \nкхм [++крупный шрифт++] бла-бла-бла\nбла-бла-бла"
+        result = u'бла-бла-бла \nкхм <SPAN STYLE="font-size:140%">крупный шрифт</SPAN> бла-бла-бла\nбла-бла-бла'
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testBig3 (self):
+        text = u"бла-бла-бла \nкхм [+++крупный шрифт+++] бла-бла-бла\nбла-бла-бла"
+        result = u'бла-бла-бла \nкхм <SPAN STYLE="font-size:160%">крупный шрифт</SPAN> бла-бла-бла\nбла-бла-бла'
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testBig4 (self):
+        text = u"бла-бла-бла \nкхм [++++крупный шрифт++++] бла-бла-бла\nбла-бла-бла"
+        result = u'бла-бла-бла \nкхм <SPAN STYLE="font-size:180%">крупный шрифт</SPAN> бла-бла-бла\nбла-бла-бла'
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testBig5 (self):
+        text = u"бла-бла-бла \nкхм [+++++крупный шрифт+++++] бла-бла-бла\nбла-бла-бла"
+        result = u'бла-бла-бла \nкхм <SPAN STYLE="font-size:200%">крупный шрифт</SPAN> бла-бла-бла\nбла-бла-бла'
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testBig6 (self):
+        text = u"бла-бла-бла \nкхм [++++++крупный шрифт++++++] бла-бла-бла\nбла-бла-бла"
+        result = u'бла-бла-бла \nкхм <SPAN STYLE="font-size:200%">+крупный шрифт+</SPAN> бла-бла-бла\nбла-бла-бла'
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testBig7 (self):
+        text = u"бла-бла-бла \nкхм [++крупный шрифт+] бла-бла-бла\nбла-бла-бла"
+        result = u'бла-бла-бла \nкхм <SPAN STYLE="font-size:120%">+крупный шрифт</SPAN> бла-бла-бла\nбла-бла-бла'
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testBigLink (self):
+        text = u"бла-бла-бла \nкхм [+[[крупный шрифт -> http://jenyay.net]]+] бла-бла-бла\nбла-бла-бла"
+        result = u'бла-бла-бла \nкхм <SPAN STYLE="font-size:120%"><A HREF="http://jenyay.net">крупный шрифт</A></SPAN> бла-бла-бла\nбла-бла-бла'
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testBigHeading (self):
+        text = u"бла-бла-бла \n!! Кхм [+крупный шрифт+] бла-бла-бла\nбла-бла-бла"
+        result = u'бла-бла-бла \n<H1>Кхм <SPAN STYLE="font-size:120%">крупный шрифт</SPAN> бла-бла-бла</H1>\nбла-бла-бла'
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))

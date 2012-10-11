@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-from outwiker.libs.pyparsing import QuotedString
+import re
+
+from outwiker.libs.pyparsing import QuotedString, Regex
 
 from tokenblock import BlockToken
 
@@ -71,6 +73,22 @@ class FontsFactory (object):
         Создать токен для кода
         """
         return CodeToken(parser).getToken()
+
+
+    @staticmethod
+    def makeSmall (parser):
+        """
+        Создать парсер для мелкого шрифта
+        """
+        return SmallFontToken(parser).getToken()
+
+
+    @staticmethod
+    def makeBig (parser):
+        """
+        Создать парсер для крупного шрифта
+        """
+        return BigFontToken(parser).getToken()
 
 
 
@@ -209,3 +227,41 @@ class BoldItalicToken (BlockToken):
         return QuotedString (BoldItalicToken.boldItalicStart, 
                 endQuoteChar = BoldItalicToken.boldItalicEnd, 
                 multiline = True).setParseAction(self.convertToHTML("<B><I>","</I></B>"))("bold_italic")
+
+
+class SmallFontToken (BlockToken):
+    """
+    Токен для мелкого шрифта
+    """
+    def __init__ (self, parser):
+        BlockToken.__init__ (self, parser)
+
+
+    def getToken (self):
+        return Regex (r"\[(?P<count>-{1,4})(?P<text>.*?)\1\]", re.MULTILINE | re.UNICODE | re.DOTALL).setParseAction (self.__parse)("small")
+
+
+    def __parse (self, s, l, t):
+        # Расчет масштаба в зависимости от количества минусов
+        size = 100 - len (t["count"]) * 20
+
+        return '<SPAN STYLE="font-size:{size}%">{text}</SPAN>'.format (size=size, text=self.parser.parseWikiMarkup (t["text"]))
+
+
+class BigFontToken (BlockToken):
+    """
+    Токен для крупного шрифта
+    """
+    def __init__ (self, parser):
+        BlockToken.__init__ (self, parser)
+
+
+    def getToken (self):
+        return Regex (r"\[(?P<count>\+{1,5})(?P<text>.*?)\1\]", re.MULTILINE | re.UNICODE | re.DOTALL).setParseAction (self.__parse)("big")
+
+
+    def __parse (self, s, l, t):
+        # Расчет масштаба в зависимости от количества минусов
+        size = 100 + len (t["count"]) * 20
+
+        return '<SPAN STYLE="font-size:{size}%">{text}</SPAN>'.format (size=size, text=self.parser.parseWikiMarkup (t["text"]))
