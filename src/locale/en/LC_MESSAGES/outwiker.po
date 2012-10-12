@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-11 22:11+0400\n"
+"POT-Creation-Date: 2012-10-12 21:34+0400\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -1441,16 +1441,16 @@ msgid "Superscript"
 msgstr "Superscript"
 
 #: outwiker/pages/wiki/wikipanel.py:232
-msgid "Big\tCtrl+_"
-msgstr "Big\tCtrl+_"
+msgid "Big\tCtrl+."
+msgstr "OutWiker"
 
 #: outwiker/pages/wiki/wikipanel.py:233
 msgid "Big font"
 msgstr "Big font"
 
 #: outwiker/pages/wiki/wikipanel.py:242
-msgid "Small\tCtrl+-"
-msgstr "Small\tCtrl+-"
+msgid "Small\tCtrl+,"
+msgstr "Small\tCtrl+,"
 
 #: outwiker/pages/wiki/wikipanel.py:243
 msgid "Small font"
