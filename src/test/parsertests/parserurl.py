@@ -138,3 +138,10 @@ class ParserUrlTest (unittest.TestCase):
         result = u'<A HREF="http://rapidshare.com/#!download|514l34|373912473|ansys_hfss_12.1_with_fix.part1.rar|100431">http://rapidshare.com/#!download|514l34|373912473|ansys_hfss_12.1_with_fix.part1.rar|100431</A>'
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testUrlParse15 (self):
+        text = u"бла-бла-бла http://IP-адрес-apt-proxy:9999/ubuntu/ бла-бла"
+        result = u'бла-бла-бла <A HREF="http://IP-адрес-apt-proxy:9999/ubuntu/">http://IP-адрес-apt-proxy:9999/ubuntu/</A> бла-бла'
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
