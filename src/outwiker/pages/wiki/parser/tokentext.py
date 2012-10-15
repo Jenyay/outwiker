@@ -18,6 +18,6 @@ class TextToken (object):
     """
     def getToken (self):
         textRegex = "[\w]+"
-        token = Regex (textRegex, re.UNICODE)
-        token.leaveWhitespace()("text")
+        token = Regex (textRegex, re.UNICODE)("text")
+        token.leaveWhitespace()
         return token

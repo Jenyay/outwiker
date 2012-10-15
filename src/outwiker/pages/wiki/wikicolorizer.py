@@ -91,6 +91,8 @@ class WikiColorizer (object):
             pos_end = token[2] + start
 
             tokenname = token[0].getName()
+            # print tokenname
+
             if (tokenname == "text" or
                 tokenname == "linebreak" or
                 tokenname == "noformat"):
