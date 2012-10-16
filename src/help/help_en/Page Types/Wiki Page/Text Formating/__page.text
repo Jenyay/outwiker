@@ -14,6 +14,24 @@
 
 ||[='_Subscript_'=] ||'_Subscript_' || For comparison: normal font '_Subscript_' ||
 
+||[=[----Small font----]=] ||[----Small font----] || - ||
+
+||[=[---Small font---]=] ||[---Small font---] || - ||
+
+||[=[--Small font--]=] ||[--Small font--] || - ||
+
+||[=[-Small font-]=] ||[-Small font-] || - ||
+
+||[=[+Big font+]=] ||[+Big font+] || - ||
+
+||[=[++Big font++]=] ||[++Big font++] || - ||
+
+||[=[+++Big font+++]=] ||[+++Big font+++] || - ||
+
+||[=[++++Big font++++]=] ||[++++Big font++++] || - ||
+
+||[=[+++++Big font+++++]=] ||[+++++Big font+++++] || - ||
+
 ||[={+Underlined+}=] ||{+Underlined+} || - ||
 
 ||[={-Strikethrough-}=] ||{-Strikethrough-} || - ||

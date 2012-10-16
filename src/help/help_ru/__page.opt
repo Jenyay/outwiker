@@ -8,3 +8,9 @@ expand = True
 [History]
 lastviewedpage = О программе и контакты
 
+[General]
+selectedtab = 0
+
+[Tabs]
+tab_0 = Основные возможности
+

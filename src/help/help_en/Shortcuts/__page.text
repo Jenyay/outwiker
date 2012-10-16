@@ -13,7 +13,7 @@
 ||Ctrl+F ||Find ||
 ||F3 ||Find next ||
 ||Shift + F3 ||Find prev ||
-||Ctrl+T ||Create a page with the same nesting level as the current ||
+||Ctrl+Alt+T ||Create a page with the same nesting level as the current ||
 ||Ctrl+Shift+T ||Create nested page ||
 ||Ctrl+Shift+Del ||Remove current page ||
 ||F2 ||Rename page ||
@@ -32,9 +32,12 @@
 ||Ctrl+B ||In bold||
 ||Ctrl+I ||In italic||
 ||Ctrl+Shift+I ||In bold italic||
+||Ctrl+Shift+I ||In monospaced||
 ||Ctrl+U ||Underlined||
 ||Ctrl+= ||Subscript||
 ||Ctrl++ ||Superscript||
+||Ctrl+, ||Small font||
+||Ctrl+. ||Big font||
 ||Ctrl+Alt+L ||Left align||
 ||Ctrl+Alt+C ||Center align||
 ||Ctrl+Alt+R ||Right align||
@@ -52,3 +55,5 @@
 ||Ctrl+Alt+Q ||Insert the &lt;BLOCKQUOTE&gt; tag[[<<]]''For HTML pages''||
 ||Ctrl+Shift+Up ||Move page up||
 ||Ctrl+Shift+Down ||Move page down||
+||Ctrl+T ||Add tab||
+||Ctrl+W ||Close tab||

@@ -8,3 +8,9 @@ expand = True
 [History]
 lastviewedpage = About and Contacts
 
+[General]
+selectedtab = 0
+
+[Tabs]
+tab_0 = About and Contacts
+

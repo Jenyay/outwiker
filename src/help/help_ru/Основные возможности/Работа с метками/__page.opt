@@ -2,7 +2,8 @@
 type = wiki
 tags = пользователям
 order = 1
+datetime = 2012-04-27 23:04:51.000000
 
 [wiki]
-md5_hash = 97312049984efc3ce908e144f1f492f6
+md5_hash = 8d4437f67f88c311e5f4a48d84981bf2
 
