@@ -55,7 +55,6 @@ if __name__ == '__main__':
 
     from test.parsertests.wikicommands import WikiCommandsTest
     from test.parsertests.wikicommandinclude import WikiIncludeCommandTest
-    # from test.parsertests.wikicommandbloggers import WikiBloggersCommandTest
     from test.parsertests.wikicommandchildlist import WikiChildListCommandTest
     from test.parsertests.wikicommandattachlist import WikiAttachListCommandTest
     from test.parsertests.wikicommandcounter import WikiCounterCommandTest
