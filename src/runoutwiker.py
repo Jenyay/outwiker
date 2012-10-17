@@ -6,7 +6,14 @@ import os.path
 import sys
 
 import wxversion
-wxversion.select("2.8")
+
+try:
+    wxversion.select("2.8")
+except wxversion.VersionError:
+    if os.name == "nt":
+        pass
+    else:
+        raise
 
 import wx
 
