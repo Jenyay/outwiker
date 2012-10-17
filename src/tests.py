@@ -6,6 +6,9 @@ Unit-тесты
 """
 import os
 
+import wxversion
+wxversion.select("2.8")
+
 import wx
 
 from outwiker.core.application import Application
