@@ -837,7 +837,6 @@ class WikiPage (RootWikiPage):
 
         self.root.onStartTreeUpdate (self.root)
         self._removePageFromTree (self)
-        self.root.onEndTreeUpdate (self.root)
 
         # Если выбранная страница была удалена
         if (oldSelectedPage != None and 
@@ -852,6 +851,8 @@ class WikiPage (RootWikiPage):
                 newselpage = None
 
             self.root.selectedPage = newselpage
+
+        self.root.onEndTreeUpdate (self.root)
         
 
     def _removePageFromTree (self, page):

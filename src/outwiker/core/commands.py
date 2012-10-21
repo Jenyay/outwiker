@@ -118,14 +118,14 @@ def removePage (page):
 
     if MessageBox (text, _(u"Remove page?"), wx.YES_NO  | wx.ICON_QUESTION) == wx.YES:
         root = page.root
-        Application.onStartTreeUpdate(root)
+        # Application.onStartTreeUpdate(root)
 
         try:
             page.remove()
         except IOError:
             MessageBox (_(u"Can't remove page"), _(u"Error"), wx.ICON_ERROR | wx.OK)
-        finally:
-            Application.onEndTreeUpdate(root)
+        # finally:
+        #     Application.onEndTreeUpdate(root)
 
 
 
