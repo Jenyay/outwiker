@@ -272,12 +272,13 @@ def getClipboardText ():
 
     data = wx.TextDataObject()
     getDataResult = wx.TheClipboard.GetData (data)
+
     wx.TheClipboard.Close()
 
     if not getDataResult:
         return
 
-    return data.GetDataHere()
+    return data.GetText()
 
 
 

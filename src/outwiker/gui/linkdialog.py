@@ -21,6 +21,8 @@ class LinkDialog (wx.Dialog):
         self.textWidth = 300
 
         self._createGui ()
+        self.linkText.SetSelection (0, 0)
+        self.linkText.SetSelection (0, len (self.linkText.GetValue()))
         self.linkText.SetFocus()
         self.Center(wx.CENTRE_ON_SCREEN)
 
