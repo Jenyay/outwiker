@@ -157,6 +157,7 @@ class TabsTest(BaseMainWndTest):
         Application.selectedPage = self.wikiroot[u"Страница 2/Страница 3/Страница 4"]
 
         self.wikiroot[u"Страница 2"].remove()
+
         self.assertEqual (self._tabsController.getTabsCount(), 2)
         self.assertEqual (self._tabsController.getSelection(), 1)
         self.assertEqual (self._tabsController.getPage(1), None)

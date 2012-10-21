@@ -24,6 +24,12 @@ Application.init ("../test/testconfig.ini")
 
 if __name__ == '__main__':
     app = wx.PySimpleApp(redirect=False)
+
+    def emptyFunc():
+        pass
+
+    app.bindActivateApp = emptyFunc
+    app.unbindActivateApp = emptyFunc
     loop = wx.EventLoop()
     wx.EventLoop.SetActive(loop)
 

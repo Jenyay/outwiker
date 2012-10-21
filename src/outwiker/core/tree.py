@@ -835,10 +835,13 @@ class WikiPage (RootWikiPage):
         except OSError:
             raise IOError
 
+        self.root.onStartTreeUpdate (self.root)
         self._removePageFromTree (self)
+        self.root.onEndTreeUpdate (self.root)
 
         # Если выбранная страница была удалена
-        if oldSelectedPage != None and oldSelectedPage.isRemoved:
+        if (oldSelectedPage != None and 
+                (oldSelectedPage == self or self.isChild (oldSelectedPage) ) ):
             # Новая выбранная страница взамен старой
             newselpage = oldSelectedPage
             while newselpage.parent != None and newselpage.isRemoved:
