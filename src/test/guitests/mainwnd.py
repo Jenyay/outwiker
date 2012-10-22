@@ -46,9 +46,11 @@ class MainWndTest(BaseMainWndTest):
         self.wnd.mainToolbar.Realize()
 
 
-    def testTitle (self):
+    def testTitle1 (self):
         conf = MainWindowConfig (Application.config)
         conf.titleFormat.value = u"OutWiker - {page} - {file}"
+
+        self.assertEqual (self.wnd.GetTitle(), u"OutWiker")
 
         Application.wikiroot = self.rootwiki
         self.assertEqual (self.wnd.GetTitle(), u"OutWiker -  - testwiki")
@@ -59,3 +61,18 @@ class MainWndTest(BaseMainWndTest):
         self.rootwiki.selectedPage = self.rootwiki[u"Страница 2/Страница 3"]
         self.assertEqual (self.wnd.GetTitle(), u"OutWiker - Страница 3 - testwiki")
 
+
+    def testTitle2 (self):
+        conf = MainWindowConfig (Application.config)
+        conf.titleFormat.value = u"{file} - {page} - OutWiker"
+
+        self.assertEqual (self.wnd.GetTitle(), u"OutWiker")
+
+        Application.wikiroot = self.rootwiki
+        self.assertEqual (self.wnd.GetTitle(), u"testwiki -  - OutWiker")
+
+        self.rootwiki.selectedPage = self.rootwiki[u"Страница 1"]
+        self.assertEqual (self.wnd.GetTitle(), u"testwiki - Страница 1 - OutWiker")
+
+        self.rootwiki.selectedPage = self.rootwiki[u"Страница 2/Страница 3"]
+        self.assertEqual (self.wnd.GetTitle(), u"testwiki - Страница 3 - OutWiker")

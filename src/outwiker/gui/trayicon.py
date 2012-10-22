@@ -33,12 +33,8 @@ class OutwikerTrayIcon (wx.TaskBarIcon):
         """
         Показать или скрыть иконку в трее в зависимости от настроек
         """
-        if self.config.alwaysShowTrayIcon.value:
-            # Если установлена эта опция, то иконку показываем всегда
-            self.ShowTrayIcon()
-            return
-
-        if self.config.minimizeToTray.value and self.mainWnd.IsIconized():
+        if (self.config.alwaysShowTrayIcon.value or 
+                (self.config.minimizeToTray.value and self.mainWnd.IsIconized() ) ):
             self.ShowTrayIcon()
         else:
             self.removeTrayIcon()
@@ -55,6 +51,9 @@ class OutwikerTrayIcon (wx.TaskBarIcon):
         self.Bind(wx.EVT_MENU, self.__onRestore, id=self.ID_RESTORE)
 
         Application.onPreferencesDialogClose += self.__onPreferencesDialogClose
+        Application.onPageSelect += self.__OnTaskBarUpdate
+        Application.onTreeUpdate += self.__OnTaskBarUpdate
+        Application.onEndTreeUpdate += self.__OnTaskBarUpdate
     
 
     def __unbind (self):
@@ -67,6 +66,13 @@ class OutwikerTrayIcon (wx.TaskBarIcon):
         self.Unbind(wx.EVT_MENU, handler = self.__onRestore, id=self.ID_RESTORE)
 
         Application.onPreferencesDialogClose -= self.__onPreferencesDialogClose
+        Application.onPageSelect -= self.__OnTaskBarUpdate
+        Application.onTreeUpdate -= self.__OnTaskBarUpdate
+        Application.onEndTreeUpdate -= self.__OnTaskBarUpdate
+
+
+    def __OnTaskBarUpdate (self, page):
+        self.updateTrayIcon()
 
 
     def __onIdle (self, event):
@@ -181,5 +187,5 @@ class OutwikerTrayIcon (wx.TaskBarIcon):
 
 
     def ShowTrayIcon (self):
-        if not self.IsIconInstalled():
-            self.SetIcon(self.icon)
+        tooltip = outwiker.core.commands.getMainWindowTitle (Application)
+        self.SetIcon(self.icon, tooltip)

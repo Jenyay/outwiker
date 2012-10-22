@@ -7,7 +7,7 @@ import datetime
 import wx
 
 from outwiker.core.application import Application
-from outwiker.core.commands import setStatusText
+from outwiker.core.commands import setStatusText, getMainWindowTitle
 from .bookmarkscontroller import BookmarksController
 from .autosavetimer import AutosaveTimer
 from .mainid import MainId
@@ -216,17 +216,7 @@ class MainWndController (object):
         """
         Обновить заголовок главного окна в зависимости от шаблона и текущей страницы
         """
-        template = self.mainWindow.mainWindowConfig.titleFormat.value
-
-        if Application.wikiroot == None:
-            self.mainWindow.SetTitle (u"OutWiker")
-            return
-
-        pageTitle = u"" if Application.wikiroot.selectedPage == None else Application.wikiroot.selectedPage.title
-        filename = os.path.basename (Application.wikiroot.path)
-
-        result = template.replace ("{file}", filename).replace ("{page}", pageTitle)
-        self.mainWindow.SetTitle (result)
+        self.mainWindow.SetTitle (getMainWindowTitle (Application))
 
 
     def loadMainWindowParams(self):

@@ -575,3 +575,17 @@ def nextTab (application):
 def previousTab (application):
     assert application.mainWindow != None
     tabsCount = application.mainWindow.tabsController.previousTab()
+
+
+def getMainWindowTitle (application):
+    template = application.mainWindow.mainWindowConfig.titleFormat.value
+
+    if application.wikiroot == None:
+        result = u"OutWiker"
+    else:
+        pageTitle = u"" if application.wikiroot.selectedPage == None else application.wikiroot.selectedPage.title
+        filename = os.path.basename (application.wikiroot.path)
+
+        result = template.replace ("{file}", filename).replace ("{page}", pageTitle)
+
+    return result
