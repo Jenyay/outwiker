@@ -78,6 +78,8 @@ class EditorSearchPanel (LocalSearchPanel):
         else:
             self.resultLabel.SetLabel (_(u"Not found"))
 
+        self.Layout()
+
     
     def findNext (self, text, phrase):
         """

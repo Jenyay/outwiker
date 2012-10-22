@@ -19,6 +19,7 @@ class LocalSearchPanel(wx.Panel):
         self.nextSearchBtn = wx.BitmapButton(self, -1, wx.Bitmap(os.path.join (self.imagesDir, "arrow_down.png"), wx.BITMAP_TYPE_ANY))
         self.prevSearchBtn = wx.BitmapButton(self, -1, wx.Bitmap(os.path.join (self.imagesDir, "arrow_up.png"), wx.BITMAP_TYPE_ANY))
         self.resultLabel = wx.StaticText(self, -1, "")
+        self.resultLabel.SetMinSize ((150, -1))
 
         self.__set_properties()
         self.__do_layout()
