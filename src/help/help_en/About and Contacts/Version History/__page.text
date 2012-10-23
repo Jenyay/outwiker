@@ -1,4 +1,20 @@
-!!! 1.6.0
+!!! 1.7.0
+
+* Added the ability to open the notes in separate tabs.
+* The toolbar is divided into several floating toolbars.
+* Saved and displayed date of the last changes in the page.
+* Greatly accelerated parsing and coloring of wiki syntax (bacceleration from 2 to 10 times).
+* Added interface to insert some elements of wiki syntax.
+* Added ability to larger and smaller font on wiki pages.
+* Fixes in page templates.
+* The distribution for Linux adds vector and large icons.
+* Changes in the appearance of the search page.
+* Created the installler for Windows.
+* Fixed a bug where thumbnails were not created to wiki pages if extensions image files was recorded in capital letters.
+* Fixed a bug that did not keep the size of internal windows (tree notes, attachments, etc.)
+*  Fixed other bugs.
+
+!!! 1.6.0.650 (19.05.2012)
 
 * Redesigned properties dialog page.
 * Wiki commands for decoration options for users and community livejournal.com removed from the program into a [[plugin -> http://jenyay.net/Outwiker/LivejournalPlugin]].
