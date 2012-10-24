@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-22 20:31+0400\n"
+"POT-Creation-Date: 2012-10-24 20:38+0400\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -281,8 +281,8 @@ msgid "&Search"
 msgstr "&Поиск"
 
 #: outwiker/gui/basetextpanel.py:217
-msgid "Search…\tCtrl+F"
-msgstr "Поиск…\tCtrl+F"
+msgid "Search…"
+msgstr "Поиск…"
 
 #: outwiker/gui/basetextpanel.py:218
 #: outwiker/gui/localsearchpanel.py:17
@@ -291,12 +291,14 @@ msgid "Search"
 msgstr "Поиск"
 
 #: outwiker/gui/basetextpanel.py:228
-msgid "Find previous\tShift+F3"
-msgstr "Найти выше\tShift+F3"
+#: outwiker/gui/localsearchpanel.py:35
+msgid "Find Previous"
+msgstr "Найти предыдущий"
 
 #: outwiker/gui/basetextpanel.py:237
-msgid "Find next\tF3"
-msgstr "Найти далее\tF3"
+#: outwiker/gui/localsearchpanel.py:34
+msgid "Find Next"
+msgstr "Найти далее"
 
 #: outwiker/gui/currentpagepanel.py:93
 msgid "Can't open page. Page folder not exists"
@@ -344,14 +346,6 @@ msgstr "Ссылка"
 #: outwiker/gui/linkdialog.py:41
 msgid "Comment"
 msgstr "Комментарий"
-
-#: outwiker/gui/localsearchpanel.py:33
-msgid "Find Next"
-msgstr "Найти далее"
-
-#: outwiker/gui/localsearchpanel.py:34
-msgid "Find Previous"
-msgstr "Найти предыдущий"
 
 #: outwiker/gui/mainmenu.py:21
 msgid "&File"
@@ -1009,9 +1003,6 @@ msgstr ""
 "%s"
 
 #: outwiker/pages/html/basehtmlpanel.py:300
-msgid "Code / Preview\tF4"
-msgstr "Код / Просмотр\tF4"
-
 #: outwiker/pages/html/basehtmlpanel.py:301
 msgid "Code / Preview"
 msgstr "Код / Просмотр"
@@ -1129,9 +1120,6 @@ msgid "Center align"
 msgstr "Выравнивание по центру"
 
 #: outwiker/pages/html/htmlpanel.py:209
-msgid "Right align\tCtrl+Alt+R"
-msgstr "Выравнивание по правому краю\tCtrl+Alt+R"
-
 #: outwiker/pages/html/htmlpanel.py:210
 #: outwiker/pages/wiki/wikipanel.py:281
 #: outwiker/pages/wiki/wikipanel.py:282
@@ -1681,6 +1669,21 @@ msgstr "Заголовок страницы содержит запрещённ�
 #: outwiker/core/textprinter.py:106
 msgid "Printing error"
 msgstr "Ошибка печати"
+
+#~ msgid "Find previous\tShift+F3"
+#~ msgstr "Найти выше\tShift+F3"
+
+#~ msgid "Find next\tF3"
+#~ msgstr "Найти далее\tF3"
+
+#~ msgid "Search…\tCtrl+F"
+#~ msgstr "Поиск…\tCtrl+F"
+
+#~ msgid "Code / Preview\tF4"
+#~ msgstr "Код / Просмотр\tF4"
+
+#~ msgid "Right align\tCtrl+Alt+R"
+#~ msgstr "Выравнивание по правому краю\tCtrl+Alt+R"
 
 #~ msgid "&New…\tCtrl+N"
 #~ msgstr "&Создать…\tCtrl+N"

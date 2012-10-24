@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-22 20:31+0400\n"
+"POT-Creation-Date: 2012-10-24 20:38+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -250,7 +250,7 @@ msgid "&Search"
 msgstr ""
 
 #: outwiker/gui/basetextpanel.py:217
-msgid "Search…\tCtrl+F"
+msgid "Search…"
 msgstr ""
 
 #: outwiker/gui/basetextpanel.py:218 outwiker/gui/localsearchpanel.py:17
@@ -258,12 +258,12 @@ msgstr ""
 msgid "Search"
 msgstr ""
 
-#: outwiker/gui/basetextpanel.py:228
-msgid "Find previous\tShift+F3"
+#: outwiker/gui/basetextpanel.py:228 outwiker/gui/localsearchpanel.py:35
+msgid "Find Previous"
 msgstr ""
 
-#: outwiker/gui/basetextpanel.py:237
-msgid "Find next\tF3"
+#: outwiker/gui/basetextpanel.py:237 outwiker/gui/localsearchpanel.py:34
+msgid "Find Next"
 msgstr ""
 
 #: outwiker/gui/currentpagepanel.py:93
@@ -303,14 +303,6 @@ msgstr ""
 
 #: outwiker/gui/linkdialog.py:41
 msgid "Comment"
-msgstr ""
-
-#: outwiker/gui/localsearchpanel.py:33
-msgid "Find Next"
-msgstr ""
-
-#: outwiker/gui/localsearchpanel.py:34
-msgid "Find Previous"
 msgstr ""
 
 #: outwiker/gui/mainmenu.py:21
@@ -930,9 +922,6 @@ msgid ""
 msgstr ""
 
 #: outwiker/pages/html/basehtmlpanel.py:300
-msgid "Code / Preview\tF4"
-msgstr ""
-
 #: outwiker/pages/html/basehtmlpanel.py:301
 msgid "Code / Preview"
 msgstr ""
@@ -1033,12 +1022,8 @@ msgstr ""
 msgid "Center align"
 msgstr ""
 
-#: outwiker/pages/html/htmlpanel.py:209
-msgid "Right align\tCtrl+Alt+R"
-msgstr ""
-
-#: outwiker/pages/html/htmlpanel.py:210 outwiker/pages/wiki/wikipanel.py:281
-#: outwiker/pages/wiki/wikipanel.py:282
+#: outwiker/pages/html/htmlpanel.py:209 outwiker/pages/html/htmlpanel.py:210
+#: outwiker/pages/wiki/wikipanel.py:281 outwiker/pages/wiki/wikipanel.py:282
 msgid "Right align"
 msgstr ""
 

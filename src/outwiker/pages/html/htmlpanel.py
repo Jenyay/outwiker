@@ -206,7 +206,7 @@ class HtmlPagePanel (BaseHtmlPanel):
         self.addTool (self.__alignMenu, 
                 "ID_ALIGN_RIGHT", 
                 lambda event: self.codeEditor.turnText (u'<div align="right">', u'</div>'), 
-                _(u"Right align\tCtrl+Alt+R"), 
+                _(u"Right align") + "\tCtrl+Alt+R", 
                 _(u"Right align"), 
                 os.path.join (self.imagesDir, "text_align_right.png"),
                 fullUpdate=False,
