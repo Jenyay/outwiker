@@ -17,16 +17,17 @@ from outwiker.gui.htmlrenderfactory import getHtmlRender
 
 class BaseHtmlPanel(BaseTextPanel):
     __metaclass__ = ABCMeta
+
+    # Номера страниц-вкладок
+    CODE_PAGE_INDEX = 0
+    RESULT_PAGE_INDEX = 1
+
     
     def __init__(self, parent, *args, **kwds):
         super (BaseHtmlPanel, self).__init__ (parent, *args, **kwds)
 
         self._htmlFile = "__content.html"
         self.currentHtmlFile = None
-
-        # Номера страниц-вкладок
-        self.CODE_PAGE_INDEX = 0
-        self.RESULT_PAGE_INDEX = 1
 
         self.imagesDir = getImagesDir()
 
@@ -122,6 +123,32 @@ class BaseHtmlPanel(BaseTextPanel):
     def GetTextEditor(self):
         return HtmlTextEditor
 
+
+    @property
+    def selectedPageIndex (self):
+        """
+        Возвращает номер выбранной страницы (код или просмотр)
+        """
+        return self.notebook.GetSelection()
+
+
+    @selectedPageIndex.setter
+    def selectedPageIndex (self, index):
+        """
+        Устанавливает выбранную страницу (код или просмотр)
+        """
+        if index >= 0 and index < self.pageCount:
+            self.notebook.SetSelection (index)
+
+
+    @property
+    def pageCount (self):
+        return self.notebook.GetPageCount ()
+
+    
+    def addPage (self, parent, title):
+        self.notebook.AddPage(parent, title)
+
     
     def onPreferencesDialogClose (self, prefDialog):
         self.codeEditor.setDefaultSettings()
@@ -156,11 +183,11 @@ class BaseHtmlPanel(BaseTextPanel):
 
     def GetContentFromGui(self):
         return self.codeEditor.GetText()
-    
-    
+
+
     def __do_layout(self):
-        self.notebook.AddPage(self.codeEditor, _("HTML"))
-        self.notebook.AddPage(self.htmlWindow, _("Preview"))
+        self.addPage(self.codeEditor, _("HTML"))
+        self.addPage(self.htmlWindow, _("Preview"))
 
         mainSizer = wx.FlexGridSizer(1, 1, 0, 0)
         mainSizer.Add(self.notebook, 1, wx.EXPAND, 0)
@@ -187,11 +214,11 @@ class BaseHtmlPanel(BaseTextPanel):
     def _openDefaultPage(self):
         assert self._currentpage != None
 
-        if (len (self._currentpage.content) > 0 or 
+        if (len (self._currentpage.content) > 0 or
                 len (Attachment (self._currentpage).attachmentFull) > 0):
-            self.notebook.SetSelection (self.RESULT_PAGE_INDEX)
+            self.selectedPageIndex = self.RESULT_PAGE_INDEX
         else:
-            self.notebook.SetSelection (self.CODE_PAGE_INDEX)
+            self.selectedPageIndex = self.CODE_PAGE_INDEX
             self.codeEditor.SetFocus()
 
 
@@ -199,7 +226,7 @@ class BaseHtmlPanel(BaseTextPanel):
         if self._currentpage == None:
             return
 
-        if self.notebook.GetSelection() == self.RESULT_PAGE_INDEX:
+        if self.selectedPageIndex == self.RESULT_PAGE_INDEX:
             self._onSwitchToPreview()
         else:
             self._onSwitchToCode()
@@ -264,7 +291,7 @@ class BaseHtmlPanel(BaseTextPanel):
 
         # Отдельно проверим возможность работы поиска по странице
         # Поиск не должен работать только на странице просмотра
-        searchEnabled = self.notebook.GetSelection() != self.RESULT_PAGE_INDEX
+        searchEnabled = self.selectedPageIndex != self.RESULT_PAGE_INDEX
         self.enableTool (self._tools[u"ID_BASE_SEARCH"], searchEnabled)
         self.enableTool (self._tools[u"ID_BASE_SEARCH_PREV"], searchEnabled)
         self.enableTool (self._tools[u"ID_BASE_SEARCH_NEXT"], searchEnabled)
@@ -278,16 +305,16 @@ class BaseHtmlPanel(BaseTextPanel):
             return True
 
         assert self.notebook != None
-        assert self.notebook.GetSelection() != -1
+        assert self.selectedPageIndex != -1
 
         enabled = (tool.alwaysEnabled or
-                self.notebook.GetSelection() == self.CODE_PAGE_INDEX)
+                self.selectedPageIndex == self.CODE_PAGE_INDEX)
 
         return enabled
 
 
     def GetSearchPanel (self):
-        if self.notebook.GetSelection() == self.CODE_PAGE_INDEX:
+        if self.selectedPageIndex == self.CODE_PAGE_INDEX:
             return self.codeEditor.searchPanel
 
         return None
@@ -311,8 +338,8 @@ class BaseHtmlPanel(BaseTextPanel):
         if self._currentpage == None:
             return
 
-        if self.notebook.GetSelection() == self.CODE_PAGE_INDEX:
-            self.notebook.SetSelection (self.RESULT_PAGE_INDEX)
+        if self.selectedPageIndex == self.CODE_PAGE_INDEX:
+            self.selectedPageIndex = self.RESULT_PAGE_INDEX
         else:
-            self.notebook.SetSelection (self.CODE_PAGE_INDEX)
+            self.selectedPageIndex = self.CODE_PAGE_INDEX
 

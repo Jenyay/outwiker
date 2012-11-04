@@ -106,6 +106,8 @@ if __name__ == '__main__':
     from test.guitests.tabs import TabsTest
     from test.guitests.linkdialogcontrollertest import LinkDialogControllerTest
     from test.guitests.thumbdialogcontrollertest import ThumbDialogControllerTest
+    from test.guitests.wikipagepanel import WikiPagePanelTest
+    from test.guitests.htmlpagepanel import HtmlPagePanelTest
 
     from test.plugins.loader import PluginsLoaderTest
     from test.plugins.testwikicommand import PluginWikiCommandTest

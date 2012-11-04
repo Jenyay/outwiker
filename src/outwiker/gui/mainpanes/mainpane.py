@@ -58,7 +58,6 @@ class MainPane (object):
     def loadPaneSize (self):
         self.pane.BestSize ((self.config.width.value, 
             self.config.height.value))
-        # self._auiManager.Update()
 
 
     def show (self):

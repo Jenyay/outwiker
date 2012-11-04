@@ -37,7 +37,6 @@ class CurrentPagePanel(wx.Panel):
         self.__do_layout()
 
         self.Bind(wx.EVT_BUTTON, self.__onBookmark, self.bookmarkButton)
-        # self.Bind (wx.EVT_LEFT_DCLICK, self.__onTitleDoubleClick)
 
         Application.onWikiOpen += self.__onWikiOpen
         Application.onPageSelect += self.__onPageSelect
@@ -47,11 +46,6 @@ class CurrentPagePanel(wx.Panel):
         Application.onForceSave += self.__onForceSave
 
         self.Bind (wx.EVT_CLOSE, self.__onClose)
-
-
-    # def __onTitleDoubleClick (self, event):
-    #     if Application.selectedPage != None:
-    #         editPage (self, Application.selectedPage)
 
 
     @property

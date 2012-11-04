@@ -24,6 +24,9 @@ from htmlgenerator import HtmlGenerator
 
 
 class WikiPagePanel (BaseHtmlPanel):
+    HTML_RESULT_PAGE_INDEX = BaseHtmlPanel.RESULT_PAGE_INDEX + 1
+
+
     def __init__ (self, parent, *args, **kwds):
         super (WikiPagePanel, self).__init__ (parent, *args, **kwds)
 
@@ -83,8 +86,8 @@ class WikiPagePanel (BaseHtmlPanel):
         self.htmlCodeWindow.SetReadOnly (True)
         parentSizer.Add(self.htmlCodeWindow, 1, wx.TOP|wx.BOTTOM|wx.EXPAND, 2)
         
-        self.notebook.AddPage (self.htmlCodeWindow, _("HTML"))
-        return self.notebook.GetPageCount () - 1
+        self.addPage (self.htmlCodeWindow, _("HTML"))
+        return self.pageCount - 1
     
 
     def GetTextEditor(self):
@@ -92,9 +95,9 @@ class WikiPagePanel (BaseHtmlPanel):
 
 
     def GetSearchPanel (self):
-        if self.notebook.GetSelection() == self.CODE_PAGE_INDEX:
+        if self.selectedPageIndex == self.CODE_PAGE_INDEX:
             return self.codeEditor.searchPanel
-        elif self.notebook.GetSelection() == self.htmlcodePageIndex:
+        elif self.selectedPageIndex == self.htmlcodePageIndex:
             return self.htmlCodeWindow.searchPanel
 
         return None
@@ -104,13 +107,13 @@ class WikiPagePanel (BaseHtmlPanel):
         if self._currentpage == None:
             return
 
-        if self.notebook.GetSelection() == self.CODE_PAGE_INDEX:
+        if self.selectedPageIndex == self.CODE_PAGE_INDEX:
             self._onSwitchToCode()
 
-        elif self.notebook.GetSelection() == self.RESULT_PAGE_INDEX:
+        elif self.selectedPageIndex == self.RESULT_PAGE_INDEX:
             self._onSwitchToPreview()
 
-        elif self.notebook.GetSelection() == self.htmlcodePageIndex:
+        elif self.selectedPageIndex == self.htmlcodePageIndex:
             self._onSwitchCodeHtml()
 
 
@@ -549,11 +552,22 @@ class WikiPagePanel (BaseHtmlPanel):
                 fullUpdate=False)
 
 
-    def __openHtmlCode (self, event):
-        if self.htmlcodePageIndex == -1:
+    @BaseHtmlPanel.selectedPageIndex.setter
+    def selectedPageIndex (self, index):
+        """
+        Устанавливает выбранную страницу (код, просмотр или полученный HTML)
+        """
+        if index == self.HTML_RESULT_PAGE_INDEX and self.htmlcodePageIndex == -1:
             self.htmlcodePageIndex = self.__createHtmlCodePanel(self.htmlSizer)
+            selectedPage = self.htmlcodePageIndex
+        else:
+            selectedPage = index
 
-        self.notebook.SetSelection (self.htmlcodePageIndex)
+        BaseHtmlPanel.selectedPageIndex.fset (self, selectedPage)
+
+
+    def __openHtmlCode (self, event):
+        self.selectedPageIndex = self.HTML_RESULT_PAGE_INDEX
 
     
     def generateHtml (self, page):
