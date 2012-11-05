@@ -10,6 +10,7 @@ from outwiker.core.application import Application
 from outwiker.core.commands import MessageBox, setStatusText
 from outwiker.core.system import getTemplatesDir, getImagesDir
 from outwiker.core.attachment import Attachment
+from outwiker.core.config import IntegerOption
 from outwiker.gui.basetextpanel import BaseTextPanel
 from outwiker.gui.htmltexteditor import HtmlTextEditor
 from outwiker.gui.htmlrenderfactory import getHtmlRender
@@ -28,6 +29,10 @@ class BaseHtmlPanel(BaseTextPanel):
 
         self._htmlFile = "__content.html"
         self.currentHtmlFile = None
+
+        # Где хранить параметы текущей страницы страницы (код, просмотр и т.д.)
+        self.tabSectionName = u"Misc"
+        self.tabParamName = u"PageIndex"
 
         self.imagesDir = getImagesDir()
 
@@ -176,7 +181,11 @@ class BaseHtmlPanel(BaseTextPanel):
             self.codeEditor.SetReadOnly (page.readonly)
 
             self._showHtml()
-            self._openDefaultPage()
+            tabIndex = self.loadPageTab (self._currentpage)
+            if tabIndex < 0:
+                tabIndex = self._getDefaultPage()
+
+            self.selectedPageIndex = tabIndex
         finally:
             self.Thaw()
 
@@ -211,15 +220,14 @@ class BaseHtmlPanel(BaseTextPanel):
         return path
 
 
-    def _openDefaultPage(self):
+    def _getDefaultPage(self):
         assert self._currentpage != None
 
         if (len (self._currentpage.content) > 0 or
                 len (Attachment (self._currentpage).attachmentFull) > 0):
-            self.selectedPageIndex = self.RESULT_PAGE_INDEX
-        else:
-            self.selectedPageIndex = self.CODE_PAGE_INDEX
-            self.codeEditor.SetFocus()
+            return self.RESULT_PAGE_INDEX
+
+        return self.CODE_PAGE_INDEX
 
 
     def onTabChanged(self, event):
@@ -230,6 +238,26 @@ class BaseHtmlPanel(BaseTextPanel):
             self._onSwitchToPreview()
         else:
             self._onSwitchToCode()
+
+        self.savePageTab(self._currentpage)
+
+
+    def savePageTab (self, page):
+        """
+        Соханить текущую вкладку (код, просмотр и т.п.) в настройки страницы
+        """
+        assert page != None
+        tabOption = IntegerOption (page.params, self.tabSectionName, self.tabParamName, -1)
+        tabOption.value = self.selectedPageIndex
+
+
+    def loadPageTab (self, page):
+        """
+        Прочитать из страницы настройки текущей вкладки (код, просмотр и т.п.)
+        """
+        assert page != None
+        tabOption = IntegerOption (page.params, self.tabSectionName, self.tabParamName, -1)
+        return tabOption.value
 
 
     def _onSwitchToCode (self):

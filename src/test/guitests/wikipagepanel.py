@@ -169,3 +169,79 @@ class WikiPagePanelTest (BaseMainWndTest):
 
         self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
                 WikiPagePanel.RESULT_PAGE_INDEX)
+
+
+    def testSavePageIndex1 (self):
+        """
+        Тест на сохранение текущей вкладки страницы
+        """
+        config = WikiConfig (Application.config)
+        config.showHtmlCodeOptions.value = True
+
+        self.wikiroot[u"Викистраница"].content = u"Бла-бла-бла"
+        self.wikiroot[u"Викистраница 2"].content = u"Бла-бла-бла 2"
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Викистраница"]
+
+        # В начале по умолчанию выбирается вкладка с просмотром
+        self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
+                WikiPagePanel.RESULT_PAGE_INDEX)
+
+        # Переключимся на вкладку с кодом
+        Application.mainWindow.pagePanel.pageView.selectedPageIndex = WikiPagePanel.CODE_PAGE_INDEX
+
+        # Переключимся на другую страницу. Опять должна быть выбрана вкладка с просмотром
+        Application.selectedPage = self.wikiroot[u"Викистраница 2"]
+        self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
+                WikiPagePanel.RESULT_PAGE_INDEX)
+
+        # Переключимся на результирующий HTML
+        Application.mainWindow.pagePanel.pageView.selectedPageIndex = WikiPagePanel.HTML_RESULT_PAGE_INDEX
+
+        # А при возврате на предыдущую страницу, должна быть выбана страница с кодом
+        Application.selectedPage = self.wikiroot[u"Викистраница"]
+        self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
+                WikiPagePanel.CODE_PAGE_INDEX)
+
+        # При переключении на другую страницу, выбиается вкладка с результирующим HTML
+        Application.selectedPage = self.wikiroot[u"Викистраница 2"]
+        self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
+                WikiPagePanel.HTML_RESULT_PAGE_INDEX)
+
+
+    def testSavePageIndex2 (self):
+        """
+        Тест на сохранение текущей вкладки страницы
+        """
+        config = WikiConfig (Application.config)
+        config.showHtmlCodeOptions.value = False
+
+        self.wikiroot[u"Викистраница"].content = u"Бла-бла-бла"
+        self.wikiroot[u"Викистраница 2"].content = u"Бла-бла-бла 2"
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Викистраница"]
+
+        # В начале по умолчанию выбирается вкладка с просмотром
+        self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
+                WikiPagePanel.RESULT_PAGE_INDEX)
+
+        # Переключимся на вкладку с кодом
+        Application.mainWindow.pagePanel.pageView.selectedPageIndex = WikiPagePanel.CODE_PAGE_INDEX
+
+        # Переключимся на другую страницу. Опять должна быть выбрана вкладка с просмотром
+        Application.selectedPage = self.wikiroot[u"Викистраница 2"]
+        self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
+                WikiPagePanel.RESULT_PAGE_INDEX)
+
+        # Переключимся на результирующий HTML
+        Application.mainWindow.pagePanel.pageView.selectedPageIndex = WikiPagePanel.HTML_RESULT_PAGE_INDEX
+
+        # А при возврате на предыдущую страницу, должна быть выбана страница с кодом
+        Application.selectedPage = self.wikiroot[u"Викистраница"]
+        self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
+                WikiPagePanel.CODE_PAGE_INDEX)
+
+        # При переключении на другую страницу, выбиается вкладка с результирующим HTML
+        Application.selectedPage = self.wikiroot[u"Викистраница 2"]
+        self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
+                WikiPagePanel.HTML_RESULT_PAGE_INDEX)

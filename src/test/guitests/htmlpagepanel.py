@@ -125,3 +125,35 @@ class HtmlPagePanelTest (BaseMainWndTest):
 
         self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
                 HtmlPagePanel.RESULT_PAGE_INDEX)
+
+
+    def testSavePageIndex (self):
+        """
+        Тест на сохранение текущей вкладки страницы
+        """
+        self.wikiroot[u"HTML-страница"].content = u"Бла-бла-бла"
+        self.wikiroot[u"HTML-страница 2"].content = u"Бла-бла-бла 2"
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"HTML-страница"]
+
+        # В начале по умолчанию выбирается вкладка с просмотром
+        self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
+                HtmlPagePanel.RESULT_PAGE_INDEX)
+
+        # Переключимся на вкладку с кодом
+        Application.mainWindow.pagePanel.pageView.selectedPageIndex = HtmlPagePanel.CODE_PAGE_INDEX
+
+        # Переключимся на другую страницу. Опять должна быть выбрана вкладка с просмотром
+        Application.selectedPage = self.wikiroot[u"HTML-страница 2"]
+        self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
+                HtmlPagePanel.RESULT_PAGE_INDEX)
+
+        # А при возврате на предыдущую страницу, должна быть выбана страница с кодом
+        Application.selectedPage = self.wikiroot[u"HTML-страница"]
+        self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
+                HtmlPagePanel.CODE_PAGE_INDEX)
+
+        # При переключении на другую страницу, выбиается вкладка с результирующим HTML
+        Application.selectedPage = self.wikiroot[u"HTML-страница 2"]
+        self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
+                HtmlPagePanel.RESULT_PAGE_INDEX)

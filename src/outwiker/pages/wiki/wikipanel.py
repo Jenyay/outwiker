@@ -116,6 +116,8 @@ class WikiPagePanel (BaseHtmlPanel):
         elif self.selectedPageIndex == self.htmlcodePageIndex:
             self._onSwitchCodeHtml()
 
+        self.savePageTab(self._currentpage)
+
 
     def _onSwitchCodeHtml (self):
         assert self._currentpage != None
