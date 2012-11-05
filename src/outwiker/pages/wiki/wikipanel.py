@@ -15,6 +15,7 @@ from outwiker.core.style import Style
 from .wikieditor import WikiEditor
 from .wikitoolbar import WikiToolBar
 from .thumbdialogcontroller import ThumbDialogController
+from .linkcreator import LinkCreator
 from outwiker.gui.basetextpanel import BaseTextPanel
 from outwiker.gui.htmltexteditor import HtmlTextEditor
 from outwiker.gui.linkdialogcontroller import LinkDialogContoller
@@ -614,12 +615,8 @@ class WikiPagePanel (BaseHtmlPanel):
     def __onInsertLink (self, event):
         linkController = LinkDialogContoller (self, self.codeEditor.GetSelectedText())
         if linkController.showDialog() == wx.ID_OK:
-            if linkController.comment == linkController.link:
-                text = u"[[{link}]]".format (link=linkController.link)
-            else:
-                text = u"[[{comment} -> {link}]]".format (comment=linkController.comment, 
-                        link=linkController.link)
-
+            linkCreator = LinkCreator (self.config)
+            text = linkCreator.create (linkController.link, linkController.comment)
             self.codeEditor.replaceText (text)
 
 

@@ -22,6 +22,12 @@ class WikiConfig (object):
     # Размер превьюшек по умолчанию
     THUMB_SIZE_DEFAULT = 250
 
+    # Имя параметра "Стиль ссылок по умолчанию"
+    LINK_STYLE_PARAM = u"DefaultLinkStyle"
+
+    # Стиль ссылок по умолчанию
+    LINK_STYLE_DEFAULT = 0
+
 
     def __init__ (self, config):
         self.config = config
@@ -43,3 +49,9 @@ class WikiConfig (object):
                 WikiConfig.WIKI_SECTION, 
                 WikiConfig.SHOW_ATTACH_BLANK_PARAM, 
                 True)
+
+        # Стиль ссылок по умолчанию
+        self.linkStyleOptions = IntegerOption (self.config, 
+                WikiConfig.WIKI_SECTION, 
+                WikiConfig.LINK_STYLE_PARAM, 
+                WikiConfig.LINK_STYLE_DEFAULT)

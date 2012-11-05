@@ -83,6 +83,7 @@ if __name__ == '__main__':
     from test.wikihash import WikiHashTest
     from test.htmltemplate import HtmlTemplateTest
     from test.htmlpages import HtmlPagesTest
+    from test.wikilinkcreator import WikiLinkCreatorTest
 
     from test.utils import removeWiki
     from test.event import EventTest, EventsTest
