@@ -359,7 +359,6 @@ class BaseHtmlPanel(BaseTextPanel):
                 False,
                 panelname=self.mainWindow.GENERAL_TOOLBAR_STR)
 
-        self.toolsMenu.AppendSeparator()
 
 
     def __switchView (self, event):

@@ -487,6 +487,8 @@ class WikiPagePanel (BaseHtmlPanel):
 
         self.mainWindow.Freeze()
 
+        self._addRenderTools()
+
         self.addTool (self.__wikiMenu, 
                 "ID_HTMLCODE", 
                 self.__openHtmlCode, 
@@ -497,8 +499,18 @@ class WikiPagePanel (BaseHtmlPanel):
                 fullUpdate=False,
                 panelname=self.mainWindow.GENERAL_TOOLBAR_STR)
 
+        self.addTool (self.__wikiMenu, 
+                "ID_UPDATE_HTML", 
+                self.__updateHtml, 
+                _(u"Update HTML Code") + "\tCtrl+F4", 
+                _(u"Update HTML Code"), 
+                None,
+                True,
+                fullUpdate=False,
+                panelname="wiki")
 
-        self._addRenderTools()
+        self.toolsMenu.AppendSeparator()
+
         self.__wikiMenu.AppendSubMenu (self.__headingMenu, _(u"Heading"))
         self.__wikiMenu.AppendSubMenu (self.__fontMenu, _(u"Font"))
         self.__wikiMenu.AppendSubMenu (self.__alignMenu, _(u"Alignment"))
@@ -651,3 +663,15 @@ class WikiPagePanel (BaseHtmlPanel):
             self.codeEditor.turnText (self._fontSizeFormat[sizeIndex][0], self._fontSizeFormat[sizeIndex][1])
 
         dlg.Destroy()
+
+
+    def __updateHtml (self, event):
+        """
+        Сбросить кэш для того, чтобы заново сделать HTML
+        """
+        HtmlGenerator (self._currentpage).resetHash()
+        if self.selectedPageIndex == self.RESULT_PAGE_INDEX:
+            self._onSwitchToPreview()
+        elif self.selectedPageIndex == self.HTML_RESULT_PAGE_INDEX:
+            self._onSwitchCodeHtml()
+

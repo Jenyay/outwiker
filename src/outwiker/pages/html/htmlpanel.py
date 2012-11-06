@@ -105,6 +105,7 @@ class HtmlPagePanel (BaseHtmlPanel):
 
         self.__createPageConfigTools ()
         self._addRenderTools()
+        self.toolsMenu.AppendSeparator()
 
         self.__htmlMenu.AppendSubMenu (self.__headingMenu, _(u"Heading"))
         self.__htmlMenu.AppendSubMenu (self.__fontMenu, _(u"Font"))

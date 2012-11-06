@@ -424,6 +424,36 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
         self.assertTrue (generator.canReadFromCache())
 
 
+    def testResetHash1 (self):
+        # Только создали страницу, кешировать нельзя
+        generator = HtmlGenerator (self.testPage)
+        self.assertFalse (generator.canReadFromCache())
+
+        generator.makeHtml (Style().getPageStyle (self.testPage))
+
+        # После того, как один раз сгенерили страницу, если ничего не изменилось, можно кешировать
+        self.assertTrue (generator.canReadFromCache())
+
+        generator.resetHash()
+        self.assertFalse (generator.canReadFromCache())
+
+
+    def testResetHash2 (self):
+        # Только создали страницу, кешировать нельзя
+        generator = HtmlGenerator (self.testPage)
+        self.assertFalse (generator.canReadFromCache())
+        generator.resetHash()
+
+        generator.makeHtml (Style().getPageStyle (self.testPage))
+
+        # После того, как один раз сгенерили страницу, если ничего не изменилось, можно кешировать
+        self.assertTrue (generator.canReadFromCache())
+
+        generator.resetHash()
+        self.assertFalse (generator.canReadFromCache())
+
+
+
     # def testFontNameInvalidEncoding (self):
     #     """
     #     Тест на то, что на кэширование влияет изменение размера превьюшки по умолчанию

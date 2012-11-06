@@ -52,11 +52,8 @@ class HtmlGenerator (object):
         with open (path, "wb") as fp:
             fp.write (result.encode ("utf-8"))
 
-        hashoption = StringOption (Config (os.path.join (self.page.path, RootWikiPage.pageConfig)),
-                self._configSection, self._hashKey, u"")
-
         try:
-            hashoption.value = self.getHash()
+            self._getHashOption().value = self.getHash()
         except IOError:
             # Не самая страшная потеря, если не сохранится хэш.
             # Максимум, что грозит пользователю, каждый раз генерить старницу
@@ -85,11 +82,21 @@ class HtmlGenerator (object):
         """
         path = self.getResultPath()
         hash = self.getHash()
-
-        hashoption = StringOption (Config (os.path.join (self.page.path, RootWikiPage.pageConfig)),
-                self._configSection, self._hashKey, u"")
+        hashoption = self._getHashOption()
 
         if os.path.exists (path) and (hash == hashoption.value or self.page.readonly):
             return True
 
         return False
+
+
+    def resetHash (self):
+        self._getHashOption().value = u""
+
+
+    def _getHashOption (self):
+        return StringOption (
+                Config (os.path.join (self.page.path, RootWikiPage.pageConfig)),
+                self._configSection, 
+                self._hashKey, 
+                u"")
