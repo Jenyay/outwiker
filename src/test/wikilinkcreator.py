@@ -25,7 +25,7 @@ class WikiLinkCreatorTest (unittest.TestCase):
         creator = LinkCreator (self.config)
         text = creator.create (link, comment)
 
-        self.assertEqual (text, "[[Бла-бла-бла -> Ссылко бла-бла-бла]]")
+        self.assertEqual (text, u"[[Бла-бла-бла -> Ссылко бла-бла-бла]]")
 
 
     def testCreateStyle1 (self):
@@ -36,7 +36,7 @@ class WikiLinkCreatorTest (unittest.TestCase):
         creator = LinkCreator (self.config)
         text = creator.create (link, comment)
 
-        self.assertEqual (text, "[[Ссылко бла-бла-бла | Бла-бла-бла]]")
+        self.assertEqual (text, u"[[Ссылко бла-бла-бла | Бла-бла-бла]]")
 
 
     def testCreateStyleInvalid (self):
@@ -47,7 +47,7 @@ class WikiLinkCreatorTest (unittest.TestCase):
         creator = LinkCreator (self.config)
         text = creator.create (link, comment)
 
-        self.assertEqual (text, "[[Бла-бла-бла -> Ссылко бла-бла-бла]]")
+        self.assertEqual (text, u"[[Бла-бла-бла -> Ссылко бла-бла-бла]]")
 
 
     def testEmptyComment0 (self):
@@ -57,7 +57,7 @@ class WikiLinkCreatorTest (unittest.TestCase):
         creator = LinkCreator (self.config)
         text = creator.create (link, comment)
 
-        self.assertEqual (text, "[[Ссылко бла-бла-бла]]")
+        self.assertEqual (text, u"[[Ссылко бла-бла-бла]]")
 
 
     def testEmptyComment1 (self):
@@ -68,7 +68,7 @@ class WikiLinkCreatorTest (unittest.TestCase):
         creator = LinkCreator (self.config)
         text = creator.create (link, comment)
 
-        self.assertEqual (text, "[[Ссылко бла-бла-бла]]")
+        self.assertEqual (text, u"[[Ссылко бла-бла-бла]]")
 
 
     def testLinkComment0 (self):
@@ -78,7 +78,7 @@ class WikiLinkCreatorTest (unittest.TestCase):
         creator = LinkCreator (self.config)
         text = creator.create (link, comment)
 
-        self.assertEqual (text, "[[Ссылко бла-бла-бла]]")
+        self.assertEqual (text, u"[[Ссылко бла-бла-бла]]")
 
 
     def testLinkComment1 (self):
@@ -89,7 +89,7 @@ class WikiLinkCreatorTest (unittest.TestCase):
         creator = LinkCreator (self.config)
         text = creator.create (link, comment)
 
-        self.assertEqual (text, "[[Ссылко бла-бла-бла]]")
+        self.assertEqual (text, u"[[Ссылко бла-бла-бла]]")
 
 
     def testLinkCommentInvalid (self):
@@ -100,7 +100,7 @@ class WikiLinkCreatorTest (unittest.TestCase):
         creator = LinkCreator (self.config)
         text = creator.create (link, comment)
 
-        self.assertEqual (text, "[[Ссылко бла-бла-бла]]")
+        self.assertEqual (text, u"[[Ссылко бла-бла-бла]]")
 
 
     def testEmptyCommentStrip0 (self):
@@ -110,7 +110,7 @@ class WikiLinkCreatorTest (unittest.TestCase):
         creator = LinkCreator (self.config)
         text = creator.create (link, comment)
 
-        self.assertEqual (text, "[[Ссылко бла-бла-бла]]")
+        self.assertEqual (text, u"[[Ссылко бла-бла-бла]]")
 
 
     def testEmptyCommentStrip1 (self):
@@ -121,7 +121,7 @@ class WikiLinkCreatorTest (unittest.TestCase):
         creator = LinkCreator (self.config)
         text = creator.create (link, comment)
 
-        self.assertEqual (text, "[[Ссылко бла-бла-бла]]")
+        self.assertEqual (text, u"[[Ссылко бла-бла-бла]]")
 
 
     def testLinkCommentStrip0 (self):
@@ -131,7 +131,7 @@ class WikiLinkCreatorTest (unittest.TestCase):
         creator = LinkCreator (self.config)
         text = creator.create (link, comment)
 
-        self.assertEqual (text, "[[Ссылко бла-бла-бла]]")
+        self.assertEqual (text, u"[[Ссылко бла-бла-бла]]")
 
 
     def testLinkCommentStrip1 (self):
@@ -142,4 +142,4 @@ class WikiLinkCreatorTest (unittest.TestCase):
         creator = LinkCreator (self.config)
         text = creator.create (link, comment)
 
-        self.assertEqual (text, "[[Ссылко бла-бла-бла]]")
+        self.assertEqual (text, u"[[Ссылко бла-бла-бла]]")
