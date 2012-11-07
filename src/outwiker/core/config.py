@@ -18,9 +18,15 @@ class Config (object):
         self.__config = ConfigParser.ConfigParser()
 
         self.__config.read (self.fname)
-    
+
 
     def set (self, section, param, value):
+        """
+        Установить значение параметра.
+        section - имя секции в файле конфига
+        param - имя параметра
+        value - устанавливаемое значение
+        """
         if self.readonly:
             return False
 
@@ -28,12 +34,18 @@ class Config (object):
         if not self.__config.has_section (section_encoded):
             self.__config.add_section (section_encoded)
 
-        self.__config.set (section_encoded, param.encode ("utf8"), unicode (value).encode ("utf8"))
+        self.__config.set (section_encoded, 
+                param.encode ("utf8"), 
+                unicode (value).encode ("utf8"))
 
         return self.save()
 
 
     def save (self):
+        """
+        Сохранить изменения
+        Возвращает True, если сохранение прошло успешно и False в противном случае
+        """
         if self.readonly:
             return False
 
@@ -41,23 +53,50 @@ class Config (object):
             self.__config.write (fp)
 
         return True
-    
-    
+
+
     def get (self, section, param):
-        val = self.__config.get (section.encode ("utf8"), param.encode ("utf8"))
+        """
+        Получить значение из конфига
+        section - имя секции файла конфига
+        param - имя параметра
+        Возващает строку с прочитанным значением
+        Может бросать исключения
+        """
+        val = self.__config.get (section.encode ("utf8"), 
+                param.encode ("utf8"))
         return unicode (val, "utf8", "replace")
 
     
     def getint (self, section, param):
-        return int (self.__config.get (section.encode ("utf8"), param.encode ("utf8")))
+        """
+        Получить целочисленное значение из конфига
+        section - имя секции файла конфига
+        param - имя параметра
+        Возващает строку с прочитанным значением
+        Может бросать исключения
+        """
+        return int (self.get (section, param))
+
 
     def getbool (self, section, param):
-        val = self.__config.get (section.encode ("utf8"), param.encode ("utf8"))
+        """
+        Получить булево значение из конфига
+        section - имя секции файла конфига
+        param - имя параметра
+        Возващает строку с прочитанным значением
+        Может бросать исключения
+        """
+        val = self.get (section, param)
 
         return True if val.strip().lower() == "true" else False
 
 
     def remove_section (self, section):
+        """
+        Удалить текцию из файла конфига
+        section - имя удаляемой секции
+        """
         section_encoded = section.encode ("utf8")
         result1 = self.__config.remove_section (section_encoded)
         result2 = self.save()
@@ -66,21 +105,34 @@ class Config (object):
 
 
     def remove_option (self, section, option):
+        """
+        Удалить настройку из файла конфига
+        section - имя секции, которой принадлежит опция
+        option - имя удаляемой опции
+        """
         section_encoded = section.encode ("utf8")
         option_encoded = option.encode ("utf8")
 
-        result1 = self.__config.remove_option (section_encoded, option_encoded)
+        result1 = self.__config.remove_option (section_encoded, 
+                option_encoded)
+
         result2 = self.save()
 
         return result1 and result2
 
 
     def has_section (self, section):
+        """
+        Возврщает True, если векция с именем section существует или False в противном случае
+        """
         section_encoded = section.encode ("utf8")
         return self.__config.has_section (section_encoded)
 
 
 class StringOption (object):
+    """
+    Класс для упрощения работы со строковыми опциями
+    """
     def __init__ (self, config, section, param, defaultValue):
         """
         config - экземпляр класса core.Config
@@ -94,7 +146,8 @@ class StringOption (object):
         self.defaultValue = defaultValue
 
         # Указатель на последнее возникшее исключение
-        # Т.к. как правило исключения игнорируются, то это поле используется для отладкиы
+        # Как правило исключения игнорируются, 
+        # поэтому это поле используется для отладки
         self.error = None
 
 
@@ -117,15 +170,24 @@ class StringOption (object):
 
     @property
     def value (self):
+        """
+        Возвращает знвчение парамета
+        """
         return self._loadParam ()
 
 
     @value.setter
     def value (self, val):
+        """
+        Устанавливает значение параметра
+        """
         self.config.set (self.section, self.param, val)
 
 
     def remove_option (self):
+        """
+        Удалить настройку
+        """
         self.config.remove_option (self.section, self.param)
 
 
@@ -194,7 +256,6 @@ class ListOption (StringOption):
 
     @property
     def value (self):
-        # return super (ListOption, self).value
         return self._loadParam ()
 
 
@@ -295,8 +356,21 @@ class PageConfig (Config):
     def __init__ (self, fname, readonly=False):
         Config.__init__ (self, fname, readonly)
 
-        self.typeOption = StringOption (self, PageConfig.sectionName, u"type", u"")
-        self.orderOption = IntegerOption (self, PageConfig.sectionName, PageConfig.orderParamName, -1)
-        self.lastViewedPageOption = StringOption (self,u"History", u"LastViewedPage", u"")
-        self.datetimeOption = DateTimeOption (self, PageConfig.sectionName, PageConfig.datetimeParamName, None)
+        self.typeOption = StringOption (self, 
+                PageConfig.sectionName, 
+                u"type", u"")
+
+        self.orderOption = IntegerOption (self, 
+                PageConfig.sectionName, 
+                PageConfig.orderParamName, -1)
+
+        self.lastViewedPageOption = StringOption (self, 
+                u"History", 
+                u"LastViewedPage", 
+                u"")
+
+        self.datetimeOption = DateTimeOption (self, 
+                PageConfig.sectionName, 
+                PageConfig.datetimeParamName, 
+                None)
 
