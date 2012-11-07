@@ -64,7 +64,7 @@ class WikiPrefGeneralPanel(wx.Panel):
         linkStyleSizer.AddGrowableCol(0)
         linkStyleSizer.AddGrowableCol(1)
         linkStyleSizer.Add (self.linkStyleLabel, 0, 
-                flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND, border=2)
+                flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
         linkStyleSizer.Add (self.linkStyleCombo, 0, 
                 flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND, border=2)
         mainSizer.Add(linkStyleSizer, 1, wx.EXPAND, 0)
