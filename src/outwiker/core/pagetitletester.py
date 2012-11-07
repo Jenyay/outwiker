@@ -6,11 +6,17 @@ import re
 
 
 class PageTitleError (BaseException):
+    """
+    Исключение, которое бросается, если заголовок не может быть использован во всех ОС
+    """
     def __init__ (self, message):
         BaseException.__init__ (self, message)
 
 
 class PageTitleWarning (BaseException):
+    """
+    Исключение, которое бросается, если заголовок не может быть использован в некоторых ОС (читай, под Windows)
+    """
     def __init__ (self, message):
         BaseException.__init__ (self, message)
 
@@ -19,6 +25,8 @@ class PageTitleTester (object):
     """
     Класс для проверки правильности заголовка страницы
     """
+    __metaclass__ = ABCMeta
+
 
     def test (self, title):
         """
@@ -32,7 +40,8 @@ class PageTitleTester (object):
         self._testForWarning (title)
 
 
-    def _testCommonWarnings (self, title):
+    @staticmethod
+    def _testCommonWarnings (title):
         """
         Проверка на предупреждения, общие для всех систем
         """
@@ -44,7 +53,7 @@ class PageTitleTester (object):
 
     def _testCommonErrors (self, title):
         """
-        Проверка на ошибки, которые специфичны для всех систем
+        Проверка на ошибки, общие для всех систем
         """
         striptitle = title.strip()
 
@@ -59,8 +68,18 @@ class PageTitleTester (object):
 
         invalidCharacters = '\\/\0'
 
-        if len (filter (lambda char: char in striptitle, invalidCharacters) ) != 0:
-            raise PageTitleError ( _(u"The page title contains invalid characters") )
+        if not self._testForInvalidChar (striptitle, invalidCharacters):
+            raise PageTitleError ( 
+                    _(u"The page title contains invalid characters") )
+
+
+    @staticmethod
+    def _testForInvalidChar (title, invalidCharacters):
+        """
+        Возвращает True, если в заголовке title есть заперещенные символы из строки invalidCharacters
+        """
+        return len ([char for char in invalidCharacters 
+            if char in title]) == 0
 
 
     @abstractmethod
@@ -87,8 +106,9 @@ class WindowsPageTitleTester (PageTitleTester):
         invalidCharacters = '><|?*:"'
         striptitle = title.strip()
 
-        if len (filter (lambda char: char in striptitle, invalidCharacters) ) != 0:
-            raise PageTitleError ( _(u"The page title contains invalid characters") )
+        if not self._testForInvalidChar (striptitle, invalidCharacters):
+            raise PageTitleError (
+                    _(u"The page title contains invalid characters") )
 
 
     def _testForWarning (self, title):
@@ -107,5 +127,6 @@ class LinuxPageTitleTester (PageTitleTester):
         invalidCharacters = '><|?*:"'
         striptitle = title.strip()
 
-        if len (filter (lambda char: char in striptitle, invalidCharacters) ) != 0:
-            raise PageTitleWarning ( _(u"The page title contains invalid characters for Microsoft Windows operating system") )
+        if not self._testForInvalidChar (striptitle, invalidCharacters):
+            raise PageTitleWarning ( 
+                    _(u"The page title contains invalid characters for Microsoft Windows operating system") )

@@ -152,6 +152,9 @@ class StringOption (object):
 
 
     def _loadParam (self):
+        """
+        Возващает прочитанное из конфига значение из значение по умолчанию
+        """
         try:
             val = self._loadValue()
         except Exception as e:
@@ -316,11 +319,17 @@ class StringListSection (object):
 
     @property
     def value (self):
+        """
+        Возвращает знвчение парамета
+        """
         return self._loadValue ()
 
 
     @value.setter
     def value (self, val):
+        """
+        Устанавливает значение параметра
+        """
         self._config.remove_section (self._section)
 
         for index in range (len (val)):
