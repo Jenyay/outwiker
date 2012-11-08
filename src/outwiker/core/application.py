@@ -18,95 +18,9 @@ class ApplicationParams (object):
         self.config = None
         self.recentWiki = None
         self.plugins = PluginsLoader (self)
-        self.__createEvents()
 
-    
-    def init (self, configFilename):
-        """
-        Инициализировать конфиг и локаль
-        """
-        self.config = Config (configFilename)
-        self.recentWiki = RecentWiki (self.config)
-        self.__initLocale()
+        # Создать экземпляры событий
 
-
-    @property
-    def wikiroot (self):
-        return self.__wikiroot
-
-
-    @wikiroot.setter
-    def wikiroot (self, value):
-        self.onWikiClose (self.__wikiroot)
-
-        if self.__wikiroot != None:
-            self.__unbindWikiEvents (self.__wikiroot)
-
-        self.__wikiroot = value
-
-        if self.__wikiroot != None:
-            self.__bindWikiEvents (self.__wikiroot)
-
-        self.onWikiOpen (self.__wikiroot)
-
-
-    @property
-    def mainWindow (self):
-        return self.__mainWindow
-
-
-    @mainWindow.setter
-    def mainWindow (self, value):
-        self.__mainWindow = value
-
-
-    def __bindWikiEvents (self, wiki):
-        wiki.onPageSelect += self.onPageSelect
-        wiki.onPageUpdate += self.onPageUpdate
-        wiki.onTreeUpdate += self.onTreeUpdate
-        wiki.onStartTreeUpdate += self.onStartTreeUpdate
-        wiki.onEndTreeUpdate += self.onEndTreeUpdate
-        wiki.onPageOrderChange += self.onPageOrderChange
-        wiki.onPageRename += self.onPageRename
-        wiki.onPageCreate += self.onPageCreate
-        wiki.onPageRemove += self.onPageRemove
-        wiki.bookmarks.onBookmarksChanged += self.onBookmarksChanged
-
-
-    def __unbindWikiEvents (self, wiki):
-        wiki.onPageSelect -= self.onPageSelect
-        wiki.onPageUpdate -= self.onPageUpdate
-        wiki.onTreeUpdate -= self.onTreeUpdate
-        wiki.onStartTreeUpdate -= self.onStartTreeUpdate
-        wiki.onEndTreeUpdate -= self.onEndTreeUpdate
-        wiki.onPageOrderChange -= self.onPageOrderChange
-        wiki.onPageRename -= self.onPageRename
-        wiki.onPageCreate -= self.onPageCreate
-        wiki.onPageRemove -= self.onPageRemove
-        wiki.bookmarks.onBookmarksChanged -= self.onBookmarksChanged
-
-
-    @property
-    def selectedPage (self):
-        """
-        Вернуть текущую страницу или None, если страница не выбрана или вики не открыта
-        """
-        if self.__wikiroot == None:
-            return None
-
-        return self.__wikiroot.selectedPage
-
-
-    @selectedPage.setter
-    def selectedPage (self, page):
-        if self.__wikiroot != None and self.__wikiroot.selectedPage != page:
-            self.__wikiroot.selectedPage = page
-
-
-    def __createEvents (self):
-        """
-        Создать статические члены для событий
-        """
         # Открытие вики
         # Параметр: root - корень новой вики (возможно, None)
         self.onWikiOpen = Event()
@@ -205,9 +119,115 @@ class ApplicationParams (object):
         # Параметр: menu - созданное всплывающее меню,
         # tray - экземпля класса OutwikerTrayIcon
         self.onTrayPopupMenu = Event()
-        
+
+    
+    def init (self, configFilename):
+        """
+        Инициализировать конфиг и локаль
+        """
+        self.config = Config (configFilename)
+        self.recentWiki = RecentWiki (self.config)
+        self.__initLocale()
+
+
+    @property
+    def wikiroot (self):
+        """
+        Возвращает корень открытой в данный момент вики или None, если нет открытой вики
+        """
+        return self.__wikiroot
+
+
+    @wikiroot.setter
+    def wikiroot (self, value):
+        """
+        Установить текущую вики
+        """
+        self.onWikiClose (self.__wikiroot)
+
+        if self.__wikiroot != None:
+            self.__unbindWikiEvents (self.__wikiroot)
+
+        self.__wikiroot = value
+
+        if self.__wikiroot != None:
+            self.__bindWikiEvents (self.__wikiroot)
+
+        self.onWikiOpen (self.__wikiroot)
+
+
+    @property
+    def mainWindow (self):
+        """
+        Возвращает главное окно программы или None, если оно еще не создано
+        """
+        return self.__mainWindow
+
+
+    @mainWindow.setter
+    def mainWindow (self, value):
+        """
+        Установить главное окно программы
+        """
+        self.__mainWindow = value
+
+
+    def __bindWikiEvents (self, wiki):
+        """
+        Подписка на события, связанные с открытой вики для передачи их дальше
+        """
+        wiki.onPageSelect += self.onPageSelect
+        wiki.onPageUpdate += self.onPageUpdate
+        wiki.onTreeUpdate += self.onTreeUpdate
+        wiki.onStartTreeUpdate += self.onStartTreeUpdate
+        wiki.onEndTreeUpdate += self.onEndTreeUpdate
+        wiki.onPageOrderChange += self.onPageOrderChange
+        wiki.onPageRename += self.onPageRename
+        wiki.onPageCreate += self.onPageCreate
+        wiki.onPageRemove += self.onPageRemove
+        wiki.bookmarks.onBookmarksChanged += self.onBookmarksChanged
+
+
+    def __unbindWikiEvents (self, wiki):
+        """
+        Отписаться от события, связанных с открытой вики
+        """
+        wiki.onPageSelect -= self.onPageSelect
+        wiki.onPageUpdate -= self.onPageUpdate
+        wiki.onTreeUpdate -= self.onTreeUpdate
+        wiki.onStartTreeUpdate -= self.onStartTreeUpdate
+        wiki.onEndTreeUpdate -= self.onEndTreeUpdate
+        wiki.onPageOrderChange -= self.onPageOrderChange
+        wiki.onPageRename -= self.onPageRename
+        wiki.onPageCreate -= self.onPageCreate
+        wiki.onPageRemove -= self.onPageRemove
+        wiki.bookmarks.onBookmarksChanged -= self.onBookmarksChanged
+
+
+    @property
+    def selectedPage (self):
+        """
+        Вернуть текущую страницу или None, если страница не выбрана или вики не открыта
+        """
+        if self.__wikiroot == None:
+            return None
+
+        return self.__wikiroot.selectedPage
+
+
+    @selectedPage.setter
+    def selectedPage (self, page):
+        """
+        Установить текущую страницу
+        """
+        if self.__wikiroot != None and self.__wikiroot.selectedPage != page:
+            self.__wikiroot.selectedPage = page
+
 
     def __initLocale (self):
+        """
+        Инициализации локализаций интерфейса
+        """
         language = getLanguageFromConfig (self.config)
 
         try:

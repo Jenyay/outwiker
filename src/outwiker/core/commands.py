@@ -45,7 +45,9 @@ def testreadonly (func):
         try:
             func (*args, **kwargs)
         except outwiker.core.exceptions.ReadonlyException:
-            MessageBox (_(u"Wiki is opened as read-only"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+            MessageBox (_(u"Wiki is opened as read-only"), 
+                    _(u"Error"), 
+                    wx.ICON_ERROR | wx.OK)
 
     return readOnlyWrap
 
@@ -60,7 +62,8 @@ def attachFilesWithDialog (parent, page):
     if page.readonly:
         raise outwiker.core.exceptions.ReadonlyException
 
-    dlg = wx.FileDialog (parent, style = wx.FD_OPEN | wx.FD_FILE_MUST_EXIST | wx.FD_MULTIPLE)
+    dlg = wx.FileDialog (parent, 
+            style = wx.FD_OPEN | wx.FD_FILE_MUST_EXIST | wx.FD_MULTIPLE)
 
     if dlg.ShowModal() == wx.ID_OK:
         files = dlg.GetPaths()
@@ -80,7 +83,8 @@ def attachFiles (parent, page, files):
     if page.readonly:
         raise outwiker.core.exceptions.ReadonlyException
 
-    oldAttaches = [os.path.basename (fname).lower() for fname in Attachment (page).attachmentFull]
+    oldAttaches = [os.path.basename (fname).lower() 
+            for fname in Attachment (page).attachmentFull]
 
     # Список файлов, которые будут добавлены
     newAttaches = []
@@ -116,13 +120,17 @@ def removePage (page):
 
     text = _(u"Remove page '%s' and all subpages?") % (page.title)
 
-    if MessageBox (text, _(u"Remove page?"), wx.YES_NO  | wx.ICON_QUESTION) == wx.YES:
+    if (MessageBox (text, 
+        _(u"Remove page?"), 
+        wx.YES_NO  | wx.ICON_QUESTION) == wx.YES):
         root = page.root
 
         try:
             page.remove()
         except IOError:
-            MessageBox (_(u"Can't remove page"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+            MessageBox (_(u"Can't remove page"), 
+                    _(u"Error"), 
+                    wx.ICON_ERROR | wx.OK)
 
 
 def openWikiWithDialog (parent, readonly=False):
@@ -249,13 +257,17 @@ This is the first page. You can use a text formating: '''bold''', ''italic'', {+
 
 def copyTextToClipboard (text):
     if not wx.TheClipboard.Open():
-        MessageBox (_(u"Can't open clipboard"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+        MessageBox (_(u"Can't open clipboard"), 
+                _(u"Error"), 
+                wx.ICON_ERROR | wx.OK)
         return
 
     data = wx.TextDataObject (text)
 
     if not wx.TheClipboard.SetData(data):
-        MessageBox (_(u"Can't copy text to clipboard"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+        MessageBox (_(u"Can't copy text to clipboard"), 
+                _(u"Error"), 
+                wx.ICON_ERROR | wx.OK)
 
     wx.TheClipboard.Flush()
     wx.TheClipboard.Close()
@@ -263,7 +275,9 @@ def copyTextToClipboard (text):
 
 def getClipboardText ():
     if not wx.TheClipboard.Open():
-        MessageBox (_(u"Can't open clipboard"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+        MessageBox (_(u"Can't open clipboard"), 
+                _(u"Error"), 
+                wx.ICON_ERROR | wx.OK)
         return
 
     data = wx.TextDataObject()
@@ -323,10 +337,15 @@ def movePage (page, newParent):
         page.moveTo (newParent)
     except outwiker.core.exceptions.DublicateTitle:
         # Невозможно переместить из-за дублирования имен
-        MessageBox (_(u"Can't move page when page with that title already exists"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+        MessageBox (_(u"Can't move page when page with that title already exists"), 
+                _(u"Error"), 
+                wx.ICON_ERROR | wx.OK)
+
     except outwiker.core.exceptions.TreeException:
         # Невозможно переместить по другой причине
-        MessageBox (_(u"Can't move page"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+        MessageBox (_(u"Can't move page"), 
+                _(u"Error"), 
+                wx.ICON_ERROR | wx.OK)
 
 
 def setStatusText (text, index = 0):
@@ -349,12 +368,16 @@ def getCurrentVersion ():
         MessageBox (_(u"Can't open file %s") % fname, _(u"Error"), wx.ICON_ERROR | wx.OK)
         return
 
-    version_str = "%s.%s %s" % (lines[0].strip(), lines[1].strip(), lines[2].strip())
+    version_str = "%s.%s %s" % (lines[0].strip(), 
+            lines[1].strip(), 
+            lines[2].strip())
 
     try:
         version = Version.parse (version_str)
     except ValueError:
-        MessageBox (_(u"Can't parse version"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+        MessageBox (_(u"Can't parse version"), 
+                _(u"Error"), 
+                wx.ICON_ERROR | wx.OK)
         version = Version(0, 0)
 
     return version
@@ -366,7 +389,9 @@ def moveCurrentPageUp ():
     Переместить текущую страницу на одну позицию вверх
     """
     if Application.wikiroot == None:
-        MessageBox (_(u"Wiki is not open"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+        MessageBox (_(u"Wiki is not open"), 
+                _(u"Error"), 
+                wx.ICON_ERROR | wx.OK)
         return
 
     if Application.wikiroot.selectedPage != None:
@@ -379,7 +404,9 @@ def moveCurrentPageDown ():
     Переместить текущую страницу на одну позицию вниз
     """
     if Application.wikiroot == None:
-        MessageBox (_(u"Wiki is not open"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+        MessageBox (_(u"Wiki is not open"), 
+                _(u"Error"), 
+                wx.ICON_ERROR | wx.OK)
         return
 
     if Application.wikiroot.selectedPage != None:
@@ -392,7 +419,9 @@ def sortChildrenAlphabeticalGUI ():
     Команда для сортировки дочерних страниц текущей страницы по алфавиту
     """
     if Application.wikiroot == None:
-        MessageBox (_(u"Wiki is not open"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+        MessageBox (_(u"Wiki is not open"), 
+                _(u"Error"), 
+                wx.ICON_ERROR | wx.OK)
         return
 
     if Application.wikiroot.selectedPage != None:
@@ -407,7 +436,9 @@ def sortSiblingsAlphabeticalGUI ():
     Команда для сортировки по алфавиту того же уровня, на котором мы сейчас находимся
     """
     if Application.wikiroot == None:
-        MessageBox (_(u"Wiki is not open"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+        MessageBox (_(u"Wiki is not open"), 
+                _(u"Error"), 
+                wx.ICON_ERROR | wx.OK)
         return
 
     if Application.wikiroot.selectedPage != None:
@@ -423,10 +454,14 @@ def renamePage (page, newtitle):
         page.title = newtitle
 
     except outwiker.core.exceptions.DublicateTitle:
-        MessageBox (_(u"Can't move page when page with that title already exists"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+        MessageBox (_(u"Can't move page when page with that title already exists"), 
+                _(u"Error"), 
+                wx.ICON_ERROR | wx.OK)
 
     except OSError as e:
-        MessageBox (_(u"Can't rename page\n%s") % unicode (e), _(u"Error"), wx.ICON_ERROR | wx.OK)
+        MessageBox (_(u"Can't rename page\n%s") % unicode (e), 
+                _(u"Error"), 
+                wx.ICON_ERROR | wx.OK)
 
 
 def showAboutDialog (parent):
@@ -439,7 +474,9 @@ def showAboutDialog (parent):
 def openHelp ():
     help_dir = u"help"
     current_help = _("help_en")
-    path = os.path.join (outwiker.core.system.getCurrentDir(), help_dir, current_help)
+    path = os.path.join (outwiker.core.system.getCurrentDir(), 
+            help_dir, 
+            current_help)
     openWiki (path, readonly=True)
 
 
@@ -469,7 +506,9 @@ def testPageTitle (title):
         tester.test (title)
 
     except PageTitleError as error:
-        MessageBox (error.message, _(u"The invalid page title"), wx.OK | wx.ICON_ERROR)
+        MessageBox (error.message, 
+                _(u"The invalid page title"), 
+                wx.OK | wx.ICON_ERROR)
         return False
 
     except PageTitleWarning as warning:
@@ -583,7 +622,8 @@ def getMainWindowTitle (application):
     if application.wikiroot == None:
         result = u"OutWiker"
     else:
-        pageTitle = u"" if application.wikiroot.selectedPage == None else application.wikiroot.selectedPage.title
+        pageTitle = (u"" if application.wikiroot.selectedPage == None 
+                else application.wikiroot.selectedPage.title)
         filename = os.path.basename (application.wikiroot.path)
 
         result = template.replace ("{file}", filename).replace ("{page}", pageTitle)

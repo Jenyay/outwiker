@@ -23,7 +23,8 @@ class Starter (object):
         if len (sys.argv) > 1:
             self.__openFromCommandLine()
         else:
-            # Открыть последний открытый файл (если установлена соответствующая опция)
+            # Открыть последний открытый файл 
+            # (если установлена соответствующая опция)
             self.__openRecentWiki ()
 
 

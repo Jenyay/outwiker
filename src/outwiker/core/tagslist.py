@@ -16,10 +16,16 @@ class TagsList (object):
 
     @property
     def tags (self):
+        """
+        Возвращает список тегов
+        """
         return self._tags.keys()
 
     
     def _findTags (self, page):
+        """
+        Поиск тегов для страницы page и ее дочерних страниц
+        """
         if page.parent != None:
             for tag in page.tags:
                 tag_lower = tag.lower()

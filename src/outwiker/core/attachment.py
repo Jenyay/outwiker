@@ -5,7 +5,7 @@ import os
 import os.path
 import shutil
 
-import exceptions
+from .exceptions import ReadonlyException
 
 
 class Attachment (object):
@@ -43,7 +43,8 @@ class Attachment (object):
         """
         path = self.getAttachPath()
 
-        return [os.path.join (path, fname) for fname in self.getAttachRelative()]
+        return [os.path.join (path, fname) 
+                for fname in self.getAttachRelative()]
 
 
     def getAttachRelative (self, dirname="."):
@@ -67,7 +68,7 @@ class Attachment (object):
         files -- список файлов (или папок), которые надо прикрепить
         """
         if self.page.readonly:
-            raise exceptions.ReadonlyException
+            raise ReadonlyException
 
         attachPath = self.getAttachPath(True)
 
@@ -88,7 +89,7 @@ class Attachment (object):
         files - список имен файлов (путей относительно папки __attach)
         """
         if self.page.readonly:
-            raise exceptions.ReadonlyException
+            raise ReadonlyException
 
         attachPath = self.getAttachPath(True)
 
@@ -127,8 +128,8 @@ class Attachment (object):
         """
         Метод для сортировки файлов по расширению
         """
-        (root1, ext1) = os.path.splitext (os.path.basename (fname1).lower())
-        (root2, ext2) = os.path.splitext (os.path.basename (fname2).lower())
+        (_, ext1) = os.path.splitext (os.path.basename (fname1).lower())
+        (_, ext2) = os.path.splitext (os.path.basename (fname2).lower())
 
         if ext1 > ext2:
             return 1
