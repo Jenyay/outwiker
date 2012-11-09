@@ -7,6 +7,7 @@ from .taglabel import EVT_TAG_LEFT_CLICK, EVT_TAG_MIDDLE_CLICK
 from outwiker.core.tagslist import TagsList
 from outwiker.core.tree import RootWikiPage
 from outwiker.core.tagscommands import removeTag, appendTag
+from outwiker.core.sortfunctions import sortAlphabeticalFunction
 
 
 class TagsPanelController (object):
@@ -40,7 +41,7 @@ class TagsPanelController (object):
         assert self.__currentTags != None
 
         pages = self.__currentTags[event.text][:]
-        pages.sort (RootWikiPage.sortAlphabeticalFunction)
+        pages.sort (sortAlphabeticalFunction)
 
         self.__tagsPanel.showPopup(pages)
 

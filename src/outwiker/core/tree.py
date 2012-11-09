@@ -12,6 +12,7 @@ from .tagslist import TagsList
 from .event import Event
 from .exceptions import ClearConfigError, RootFormatError, DublicateTitle, ReadonlyException, TreeException
 from .tagscommands import parseTagsList
+from .sortfunctions import sortOrderFunction, sortAlphabeticalFunction
 
 
 class RootWikiPage (object):
@@ -27,9 +28,8 @@ class RootWikiPage (object):
 
     def __init__(self, path, readonly=False):
         """
-        Constructor.
-        
         path -- путь до страницы относительно корня дерева
+        readonly - True, если страница предназначена только для чтения
         """
         # Путь до страницы
         self._path = path
@@ -142,51 +142,16 @@ class RootWikiPage (object):
 
                 result.append (page)
 
-        result.sort (RootWikiPage.sortFunction)
+        result.sort (sortOrderFunction)
 
         return result
-
-
-    @staticmethod
-    def sortFunction (page1, page2):
-        """
-        Функция для сортировки страниц с учетом order
-        """
-
-        orderpage1 = page1.params.orderOption.value
-        orderpage2 = page2.params.orderOption.value
-
-        # Если еще не установили порядок страницы (значение по умолчанию: -1)
-        if orderpage1 == -1 or orderpage2 == -1:
-            orderpage1 = -1
-            orderpage2 = -1
-
-        if orderpage1 > orderpage2:
-            return 1
-        elif orderpage1 < orderpage2:
-            return -1
-
-        return RootWikiPage.sortAlphabeticalFunction (page1, page2)
-
-
-    @staticmethod
-    def sortAlphabeticalFunction (page1, page2):
-        """
-        Функция для сортировки страниц по алфавиту
-        """
-        if page1.title.lower() > page2.title.lower():
-            return 1
-        elif page1.title.lower() < page2.title.lower():
-            return -1
-
-        return 0
 
 
     def sortChildrenAlphabetical(self):
         """
         Отсортировать дочерние страницы по алфавиту
         """
-        self._children.sort (RootWikiPage.sortAlphabeticalFunction)
+        self._children.sort (sortAlphabeticalFunction)
 
         self.root.onStartTreeUpdate (self.root)
         self.saveChildrenParams()
@@ -224,7 +189,7 @@ class RootWikiPage (object):
         Добавить страницу к дочерним страницам
         """
         self._children.append (page)
-        self._children.sort (RootWikiPage.sortFunction)
+        self._children.sort (sortOrderFunction)
 
 
     def removeFromChildren (self, page):
