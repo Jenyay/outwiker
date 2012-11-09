@@ -128,8 +128,8 @@ class Attachment (object):
         """
         Метод для сортировки файлов по расширению
         """
-        (_, ext1) = os.path.splitext (os.path.basename (fname1).lower())
-        (_, ext2) = os.path.splitext (os.path.basename (fname2).lower())
+        ext1 = os.path.splitext (os.path.basename (fname1).lower())[1]
+        ext2 = os.path.splitext (os.path.basename (fname2).lower())[1]
 
         if ext1 > ext2:
             return 1
