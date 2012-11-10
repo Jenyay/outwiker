@@ -108,8 +108,8 @@ class SearchPanel(BasePagePanel):
 
 
     def __onChangeStrategy (self, event):
-        if self.resultWindow.page != None:
-            self.UpdateView(self.resultWindow.page)
+        if self.page != None:
+            self.UpdateView(self.page)
 
 
     def __getCurrentSortStrategy (self):
@@ -226,7 +226,7 @@ class SearchPanel(BasePagePanel):
         resultPages = searcher.find (self.page.root)
 
         self._saveResults (resultPages)
-        self._showResults (resultPages)
+        self.UpdateView (self.page)
 
 
     def _getSearchTags (self):
