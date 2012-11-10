@@ -8,9 +8,10 @@ import wx
 from outwiker.core.application import Application
 from outwiker.core.search import Searcher, AllTagsSearchStrategy, AnyTagSearchStrategy
 from outwiker.core.tagslist import TagsList
+from outwiker.core.commands import pageExists
+from outwiker.core.config import IntegerOption
 from outwiker.gui.htmlrenderfactory import getHtmlRender
 from outwiker.gui.basepagepanel import BasePagePanel
-from outwiker.core.commands import pageExists
 from outwiker.gui.tagscloud import TagsCloud
 from outwiker.gui.taglabel import EVT_TAG_LEFT_CLICK
 from .htmlreport import HtmlReport
@@ -25,13 +26,17 @@ class SearchPanel(BasePagePanel):
 
         # Секция для хранения найденных результатов (кэш)
         self._resultsSection = u"SearchResults"
+        self.sortStrategySection = u"Sort"
 
         self._resultOptionTemplate = u"page_%d"
 
         self._strategyList = [AnyTagSearchStrategy, AllTagsSearchStrategy]
         self._sortStrategies = getSortStrategies()
 
-        self.wordsTextCtrl = wx.SearchCtrl(self, -1, "", style=wx.TE_PROCESS_ENTER)
+        self.wordsTextCtrl = wx.SearchCtrl(self, 
+                -1, 
+                "", 
+                style=wx.TE_PROCESS_ENTER)
         self.wordsTextCtrl.ShowCancelButton (True)
         self.wordsTextCtrl.SetDescriptiveText (_(u"Search"))
 
@@ -53,7 +58,9 @@ class SearchPanel(BasePagePanel):
         self.resultWindow = getHtmlRender (self)
 
         self.sortLabel = wx.StaticText(self, -1, _(u"Sort by "))
-        self.sortStrategy = wx.ComboBox (self, -1, style=wx.CB_DROPDOWN | wx.CB_READONLY)
+        self.sortStrategy = wx.ComboBox (self, 
+                -1, 
+                style=wx.CB_DROPDOWN | wx.CB_READONLY)
         self.sortStrategy.SetMinSize ((200, -1))
         for sortStrategy in self._sortStrategies:
             self.sortStrategy.Append (sortStrategy.title)
@@ -61,18 +68,30 @@ class SearchPanel(BasePagePanel):
 
         self.__do_layout()
 
-        self.Bind(wx.EVT_BUTTON, self.onClear, self.clearTagsBtn)
+        self.Bind(wx.EVT_BUTTON, self.__onClear, self.clearTagsBtn)
 
         self.Bind(wx.EVT_SEARCHCTRL_CANCEL_BTN, 
                 lambda event: self.wordsTextCtrl.SetValue (u""), 
                 self.wordsTextCtrl)
 
-        self.Bind(wx.EVT_SEARCHCTRL_SEARCH_BTN, self.onFind, self.wordsTextCtrl)
-        self.Bind(wx.EVT_TEXT_ENTER, self.onFind, self.wordsTextCtrl)
-        self.Bind(wx.EVT_BUTTON, self.onFind, self.searchBtn)
-        self.Bind(wx.EVT_COMBOBOX, self.__onChangeStrategy, self.sortStrategy)
+        self.Bind(wx.EVT_SEARCHCTRL_SEARCH_BTN, 
+                self.__onFind, 
+                self.wordsTextCtrl)
 
-        self.tagsList.Bind (EVT_TAG_LEFT_CLICK, self.__onTagLeftClick)
+        self.Bind(wx.EVT_TEXT_ENTER, 
+                self.__onFind, 
+                self.wordsTextCtrl)
+
+        self.Bind(wx.EVT_BUTTON, 
+                self.__onFind, 
+                self.searchBtn)
+
+        self.Bind(wx.EVT_COMBOBOX, 
+                self.__onChangeSortStrategy, 
+                self.sortStrategy)
+
+        self.tagsList.Bind (EVT_TAG_LEFT_CLICK, 
+                self.__onTagLeftClick)
 
 
     def __do_layout(self):
@@ -97,8 +116,16 @@ class SearchPanel(BasePagePanel):
         mainSizer.Add(tagsSizer, 1, wx.EXPAND, 0)
 
         sortSizer = wx.BoxSizer (wx.HORIZONTAL)
-        sortSizer.Add (self.sortLabel, 1, wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=2)
-        sortSizer.Add (self.sortStrategy, 1, wx.ALIGN_CENTER_VERTICAL | wx.ALL | wx. EXPAND, border=2)
+        sortSizer.Add (self.sortLabel, 
+                1, 
+                wx.ALIGN_CENTER_VERTICAL | wx.ALL, 
+                border=2)
+
+        sortSizer.Add (self.sortStrategy, 
+                1, 
+                wx.ALIGN_CENTER_VERTICAL | wx.ALL | wx. EXPAND, 
+                border=2)
+
         mainSizer.Add (sortSizer, 1, wx.EXPAND, 0)
 
         mainSizer.Add(self.resultWindow, 1, wx.EXPAND | wx.ALL, border=2)
@@ -107,21 +134,34 @@ class SearchPanel(BasePagePanel):
         self.Layout()
 
 
-    def __onChangeStrategy (self, event):
+    def __onChangeSortStrategy (self, event):
+        """
+        Изменение способа сортировки
+        """
+        self.Save ()
         if self.page != None:
             self.UpdateView(self.page)
 
 
     def __getCurrentSortStrategy (self):
+        """
+        Получить стратегию для выбранного типа сортировки
+        """
         return self._sortStrategies[self.sortStrategy.GetSelection()]
 
 
     def __onTagLeftClick (self, event):
+        """
+        Обработчик события при клике по метке
+        """
         tag = event.text
         self.tagsList.mark (tag, not self.tagsList.isMarked(tag))
 
 
     def Print (self):
+        """
+        Печать страницы (на принтер)
+        """
         self.resultWindow.Print()
 
 
@@ -129,17 +169,17 @@ class SearchPanel(BasePagePanel):
         pass
 
 
-    def updatePageInfo (self):
+    def __updatePageInfo (self):
         """
         Обновить интерфейс, чтобы он соответствовал настройкам страницы
         """
         assert self.page != None
 
-        self.updateSearchPhrase()
-        self.updateTagsList()
+        self.__updateSearchPhrase()
+        self.__updateTagsList()
     
 
-    def updateTagsList (self):
+    def __updateTagsList (self):
         """
         Обновить список тегов
         """
@@ -161,10 +201,13 @@ class SearchPanel(BasePagePanel):
 
         self.tagsStrategy.SetSelection(strategyIndex)
 
-        
-    def updateSearchPhrase (self):
+
+    def __updateSearchPhrase (self):
+        """
+        Записать искомую фразу из текущей страницы в интерфейс
+        """
         self.wordsTextCtrl.SetValue (self.page.phrase)
-    
+
 
     def Save (self):
         """
@@ -173,26 +216,27 @@ class SearchPanel(BasePagePanel):
         if (self.page != None and 
                 not self.page.isRemoved and
                 pageExists (self.page) ):
-            self._saveSearchPhrase()
-            self._saveSearchTags()
-            self._saveSearchTagsStrategy()
+            self.__saveSearchPhrase()
+            self.__saveSearchTags()
+            self.__saveSearchTagsStrategy()
+            self.__saveSortStrategy ()
     
 
-    def _saveSearchPhrase (self):
+    def __saveSearchPhrase (self):
         """
         Сохранить искомую фразу в настройки страницы
         """
         self.page.phrase = self.wordsTextCtrl.GetValue()
 
 
-    def _saveSearchTags (self):
+    def __saveSearchTags (self):
         """
         Сохранить искомые теги в настройке страницы
         """
-        self.page.searchTags = self._getSearchTags()
+        self.page.searchTags = self.__getSearchTags()
 
 
-    def _saveSearchTagsStrategy (self):
+    def __saveSearchTagsStrategy (self):
         """
         Сохранить стратегию поиска по тегам (все теги или любой тег)
         """
@@ -201,35 +245,66 @@ class SearchPanel(BasePagePanel):
 
 
     def UpdateView (self, page):
+        """
+        Обновить внешний вид страницы и отобразить найденные результаты
+        """
         self.resultWindow.page = page
         self._allTags = TagsList (self.page.root)
 
-        self.updatePageInfo()
+        self.__updatePageInfo()
 
         sortStrategy = self.__getCurrentSortStrategy()
-        resultPages = self._loadResults ()
+        resultPages = self.__loadResults ()
         resultPages.sort (sortStrategy.sort)
 
-        self._showResults (resultPages)
+        self.__showResults (resultPages)
+        self.__loadSortStrategy ()
 
 
-    def onFind(self, event):
+    def __loadSortStrategy (self):
+        assert self.page != None
+
+        sortOption = IntegerOption (self.page.params, 
+                self.page.paramsSection, 
+                self.sortStrategySection,
+                0)
+
+        sort = sortOption.value
+        if sort < 0 or sort >= len (self._sortStrategies):
+            sort = 0
+        self.sortStrategy.SetSelection (sort)
+
+
+    def __saveSortStrategy (self):
+        assert self.page != None
+
+        sortOption = IntegerOption (self.page.params, 
+                self.page.paramsSection, 
+                self.sortStrategySection,
+                0)
+        sortOption.value = self.sortStrategy.GetSelection()
+
+
+    def __onFind (self, event):
+        """
+        Обработчик события кнопки "Найти"
+        """
         assert self.page != None
 
         self.page.updateDateTime()
         self.Save()
 
-        phrase = self._getSearchPhrase()
-        tags = self._getSearchTags()
+        phrase = self.__getSearchPhrase()
+        tags = self.__getSearchTags()
 
         searcher = Searcher (phrase, tags, self.page.strategy)
         resultPages = searcher.find (self.page.root)
 
-        self._saveResults (resultPages)
+        self.__saveResults (resultPages)
         self.UpdateView (self.page)
 
 
-    def _getSearchTags (self):
+    def __getSearchTags (self):
         """
         Получить список искомых тегов
         """
@@ -242,33 +317,45 @@ class SearchPanel(BasePagePanel):
         return tags
 
 
-    def _getSearchPhrase (self):
+    def __getSearchPhrase (self):
         """
         Получить искомую фразу
         """
         return self.wordsTextCtrl.GetValue ()
     
 
-    def _showResults (self, resultPages):
+    def __showResults (self, resultPages):
         """
         Показать результат
         """
-        report = HtmlReport (resultPages, self._getSearchPhrase(), self._getSearchTags(), Application)
+        report = HtmlReport (resultPages, 
+                self.__getSearchPhrase(), 
+                self.__getSearchTags(), 
+                Application)
+
         htmltext = report.generate ()
         self.resultWindow.SetPage (htmltext, self.page.path)
     
 
-    def _saveResults (self, resultPages):
+    def __saveResults (self, resultPages):
+        """
+        Сохранить найденные страницы в конфиг
+        """
         assert self.page != None
 
         self.page.params.remove_section (self._resultsSection)
 
         for n in range (len (resultPages)):
             option = self._resultOptionTemplate % n
-            self.page.params.set (self._resultsSection, option, resultPages[n].subpath)
+            self.page.params.set (self._resultsSection, 
+                    option, 
+                    resultPages[n].subpath)
 
     
-    def _loadResults (self):
+    def __loadResults (self):
+        """
+        Загрузить найденные страницы из конфига
+        """
         assert self.page != None
 
         n = 0
@@ -290,5 +377,8 @@ class SearchPanel(BasePagePanel):
         return resultPages
 
 
-    def onClear(self, event):
+    def __onClear (self, event):
+        """
+        Очистка выбранных тегов
+        """
         self.tagsList.clearMarks()
