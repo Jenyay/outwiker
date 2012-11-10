@@ -8,12 +8,13 @@ import wx
 from outwiker.core.application import Application
 from outwiker.core.search import Searcher, AllTagsSearchStrategy, AnyTagSearchStrategy
 from outwiker.core.tagslist import TagsList
-from .htmlreport import HtmlReport
 from outwiker.gui.htmlrenderfactory import getHtmlRender
 from outwiker.gui.basepagepanel import BasePagePanel
 from outwiker.core.commands import pageExists
 from outwiker.gui.tagscloud import TagsCloud
 from outwiker.gui.taglabel import EVT_TAG_LEFT_CLICK
+from .htmlreport import HtmlReport
+from .sortstrategies import getSortStrategies
 
 
 class SearchPanel(BasePagePanel):
@@ -28,6 +29,7 @@ class SearchPanel(BasePagePanel):
         self._resultOptionTemplate = u"page_%d"
 
         self._strategyList = [AnyTagSearchStrategy, AllTagsSearchStrategy]
+        self._sortStrategies = getSortStrategies()
 
         self.wordsTextCtrl = wx.SearchCtrl(self, -1, "", style=wx.TE_PROCESS_ENTER)
         self.wordsTextCtrl.ShowCancelButton (True)
@@ -35,12 +37,28 @@ class SearchPanel(BasePagePanel):
 
         self.tagsLabel = wx.StaticText(self, -1, _(u"Tags: "))
         self.tagsList = TagsCloud (self)
-        self.tagsStrategy = wx.RadioBox(self, -1, _(u"Tags"), choices=[_(u"Any tag"), _(u"All tags")], majorDimension=0, style=wx.RA_SPECIFY_ROWS)
+        self.tagsList.SetMinSize((250, 150))
+
+        strategies = [_(u"Any tag"), _(u"All tags")]
+        self.tagsStrategy = wx.RadioBox(self, 
+                -1, 
+                _(u"Tags"), 
+                choices=strategies, 
+                majorDimension=0, 
+                style=wx.RA_SPECIFY_ROWS)
+        self.tagsStrategy.SetSelection(0)
+
         self.clearTagsBtn = wx.Button(self, -1, _(u"Clear all tags"))
         self.searchBtn = wx.Button(self, -1, _(u"Find"))
         self.resultWindow = getHtmlRender (self)
 
-        self.__set_properties()
+        self.sortLabel = wx.StaticText(self, -1, _(u"Sort by "))
+        self.sortStrategy = wx.ComboBox (self, -1, style=wx.CB_DROPDOWN | wx.CB_READONLY)
+        self.sortStrategy.SetMinSize ((200, -1))
+        for sortStrategy in self._sortStrategies:
+            self.sortStrategy.Append (sortStrategy.title)
+        self.sortStrategy.SetSelection (0)
+
         self.__do_layout()
 
         self.Bind(wx.EVT_BUTTON, self.onClear, self.clearTagsBtn)
@@ -52,8 +70,50 @@ class SearchPanel(BasePagePanel):
         self.Bind(wx.EVT_SEARCHCTRL_SEARCH_BTN, self.onFind, self.wordsTextCtrl)
         self.Bind(wx.EVT_TEXT_ENTER, self.onFind, self.wordsTextCtrl)
         self.Bind(wx.EVT_BUTTON, self.onFind, self.searchBtn)
+        self.Bind(wx.EVT_COMBOBOX, self.__onChangeStrategy, self.sortStrategy)
 
         self.tagsList.Bind (EVT_TAG_LEFT_CLICK, self.__onTagLeftClick)
+
+
+    def __do_layout(self):
+        mainSizer = wx.FlexGridSizer(4, 1, 0, 0)
+        mainSizer.AddGrowableRow(3)
+        mainSizer.AddGrowableCol(0)
+        mainSizer.Add(self.wordsTextCtrl, 1, wx.EXPAND, 0)
+
+        rightSizer = wx.FlexGridSizer(2, 1, 0, 0)
+        rightSizer.Add(self.tagsStrategy, 0, wx.EXPAND, 0)
+        rightSizer.Add(self.clearTagsBtn, 0, wx.ALL|wx.EXPAND, 2)
+        rightSizer.Add(self.searchBtn, 0, wx.ALL|wx.EXPAND, 2)
+        rightSizer.AddGrowableRow(0)
+        rightSizer.AddGrowableCol(0)
+
+        tagsSizer = wx.FlexGridSizer(1, 3, 0, 0)
+        tagsSizer.Add(self.tagsLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 4)
+        tagsSizer.Add(self.tagsList, 0, wx.ALL|wx.EXPAND, 2)
+        tagsSizer.Add(rightSizer, 1, wx.EXPAND, 0)
+        tagsSizer.AddGrowableCol(1)
+
+        mainSizer.Add(tagsSizer, 1, wx.EXPAND, 0)
+
+        sortSizer = wx.BoxSizer (wx.HORIZONTAL)
+        sortSizer.Add (self.sortLabel, 1, wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=2)
+        sortSizer.Add (self.sortStrategy, 1, wx.ALIGN_CENTER_VERTICAL | wx.ALL | wx. EXPAND, border=2)
+        mainSizer.Add (sortSizer, 1, wx.EXPAND, 0)
+
+        mainSizer.Add(self.resultWindow, 1, wx.EXPAND | wx.ALL, border=2)
+
+        self.SetSizer(mainSizer)
+        self.Layout()
+
+
+    def __onChangeStrategy (self, event):
+        if self.resultWindow.page != None:
+            self.UpdateView(self.resultWindow.page)
+
+
+    def __getCurrentSortStrategy (self):
+        return self._sortStrategies[self.sortStrategy.GetSelection()]
 
 
     def __onTagLeftClick (self, event):
@@ -63,7 +123,7 @@ class SearchPanel(BasePagePanel):
 
     def Print (self):
         self.resultWindow.Print()
-    
+
 
     def Clear (self):
         pass
@@ -123,14 +183,14 @@ class SearchPanel(BasePagePanel):
         Сохранить искомую фразу в настройки страницы
         """
         self.page.phrase = self.wordsTextCtrl.GetValue()
-    
+
 
     def _saveSearchTags (self):
         """
         Сохранить искомые теги в настройке страницы
         """
         self.page.searchTags = self._getSearchTags()
-    
+
 
     def _saveSearchTagsStrategy (self):
         """
@@ -146,39 +206,16 @@ class SearchPanel(BasePagePanel):
 
         self.updatePageInfo()
 
+        sortStrategy = self.__getCurrentSortStrategy()
         resultPages = self._loadResults ()
+        resultPages.sort (sortStrategy.sort)
+
         self._showResults (resultPages)
-
-
-    def __set_properties(self):
-        self.tagsList.SetMinSize((250, 150))
-        self.tagsStrategy.SetSelection(0)
-
-    def __do_layout(self):
-        mainSizer = wx.FlexGridSizer(4, 1, 0, 0)
-        tagsSizer = wx.FlexGridSizer(1, 3, 0, 0)
-        rightSizer = wx.FlexGridSizer(2, 1, 0, 0)
-        mainSizer.Add(self.wordsTextCtrl, 1, wx.EXPAND, 0)
-        tagsSizer.Add(self.tagsLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 4)
-        tagsSizer.Add(self.tagsList, 0, wx.ALL|wx.EXPAND, 2)
-        rightSizer.Add(self.tagsStrategy, 0, wx.EXPAND, 0)
-        rightSizer.Add(self.clearTagsBtn, 0, wx.ALL|wx.EXPAND, 2)
-        rightSizer.Add(self.searchBtn, 0, wx.ALL|wx.EXPAND, 2)
-        rightSizer.AddGrowableRow(0)
-        rightSizer.AddGrowableCol(0)
-        tagsSizer.Add(rightSizer, 1, wx.EXPAND, 0)
-        tagsSizer.AddGrowableCol(1)
-        mainSizer.Add(tagsSizer, 1, wx.EXPAND, 0)
-        mainSizer.Add(self.resultWindow, 1, wx.EXPAND | wx.ALL, border=2)
-        self.SetSizer(mainSizer)
-        mainSizer.Fit(self)
-        mainSizer.AddGrowableRow(2)
-        mainSizer.AddGrowableCol(0)
 
 
     def onFind(self, event):
         assert self.page != None
-        
+
         self.page.updateDateTime()
         self.Save()
 
@@ -190,7 +227,7 @@ class SearchPanel(BasePagePanel):
 
         self._saveResults (resultPages)
         self._showResults (resultPages)
-    
+
 
     def _getSearchTags (self):
         """
