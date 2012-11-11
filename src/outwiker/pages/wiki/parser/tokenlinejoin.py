@@ -16,5 +16,5 @@ class LineJoinToken (object):
     """
     def getToken (self):
         token = Regex (r"\\r?\n")
-        token.setParseAction (lambda s, l, t: u"")("linejoin")
+        token = token.setParseAction (lambda s, l, t: u"")("linejoin")
         return token

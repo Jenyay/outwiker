@@ -3,7 +3,6 @@
 
 import os
 import unittest
-import hashlib
 
 from test.utils import removeWiki
 

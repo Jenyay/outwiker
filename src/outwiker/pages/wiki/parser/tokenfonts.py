@@ -123,7 +123,7 @@ class SuperscriptToken (BlockToken):
     def getToken (self):
         return QuotedString (SuperscriptToken.superscriptStart, 
                 endQuoteChar = SuperscriptToken.superscriptEnd, 
-                multiline = True).setParseAction(self.convertToHTML("<SUP>","</SUP>"))("super")
+                multiline = True).setParseAction(self.convertToHTML("<SUP>","</SUP>"))("superscript")
 
 
 class SubscriptToken (BlockToken):

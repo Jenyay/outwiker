@@ -53,6 +53,7 @@ if __name__ == '__main__':
     from test.pageremove import RemovePagesTest
     from test.pageorder import PageOrderTest
 
+    from test.parsertests.tokennames import TokenNamesTest
     from test.parsertests.parserfont import ParserFontTest
     from test.parsertests.parserformat import ParserFormatTest
     from test.parsertests.parsermisc import ParserMiscTest
