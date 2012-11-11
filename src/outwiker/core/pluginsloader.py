@@ -43,12 +43,17 @@ class PluginsLoader (object):
 
 
     def updateDisableList (self):
+        """
+        Обновление состояния плагинов. Одни отключить, другие включить
+        """
         options = PluginsConfig (self.__application.config)
-        
-        # Пройтись по включенным плагинам и отключить те, что попали в черный список
+
+        # Пройтись по включенным плагинам и отключить те,
+        # что попали в черный список
         self.__disableEnabledPlugins (options.disabledPlugins.value)
 
-        # Пройтись по отключенным плагинам и включить те, что не попали в "черный список"
+        # Пройтись по отключенным плагинам и включить те, 
+        # что не попали в "черный список"
         self.__enableDisabledPlugins (options.disabledPlugins.value)
 
 
@@ -93,10 +98,13 @@ class PluginsLoader (object):
 
                 # Добавить путь до currentDir в sys.path
                 fullpath = os.path.abspath (currentDir)
-                # TODO: Разобраться с Unicode в следующей строке. Икогда выскакивает предупреждение:
+                # TODO: Разобраться с Unicode в следующей строке. 
+                # Иногда выскакивает предупреждение:
                 # ...\outwiker\core\pluginsloader.py:41: UnicodeWarning: Unicode equal comparison failed to convert both arguments to Unicode - interpreting them as being unequal
 
-                syspath = [unicode (item, getOS().filesEncoding) if type (item) != unicode else item for item in sys.path]
+                syspath = [unicode (item, getOS().filesEncoding) 
+                        if type (item) != unicode else item 
+                        for item in sys.path]
 
                 if fullpath not in syspath:
                     sys.path.insert (0, fullpath)
@@ -112,9 +120,7 @@ class PluginsLoader (object):
         """
         Уничтожить все загруженные плагины
         """
-        for name, plugin in self.__plugins.items():
-            plugin.destroy()
-
+        map (lambda plugin: plugin.destroy(), self.__plugins.values())
         self.__plugins = {}
 
 
@@ -133,7 +139,8 @@ class PluginsLoader (object):
 
             # Проверить, что это директория
             if os.path.isdir (packagePath):
-                # Переберем все файлы внутри packagePath и попытаемся их импортировать
+                # Переберем все файлы внутри packagePath 
+                # и попытаемся их импортировать
                 for fileName in os.listdir (packagePath):
                     module = self.__importSingleModule (packageName, fileName)
                     if module != None:
@@ -173,7 +180,9 @@ class PluginsLoader (object):
 
         for module in modules:
             for name in dir (module):
-                self.__createObject (module, name, options.disabledPlugins.value)
+                self.__createObject (module, 
+                        name, 
+                        options.disabledPlugins.value)
 
 
     def __createObject (self, module, name, disabledPlugins):
@@ -191,7 +200,8 @@ class PluginsLoader (object):
             try:
                 plugin = obj (self.__application)
             except BaseException as e:
-                print "*** {classname}\n{error}\n".format (classname=name, error=str(e))
+                print "*** {classname}\n{error}\n".format (classname=name, 
+                        error=str(e))
                 return
 
             if not self.__isNewPlugin (plugin.name):
@@ -212,7 +222,7 @@ class PluginsLoader (object):
         return (pluginname not in self.__plugins and 
                 pluginname not in self.__disabledPlugins)
 
-    
+
     def __len__ (self):
         return len (self.__plugins)
 

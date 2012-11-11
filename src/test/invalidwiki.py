@@ -5,6 +5,7 @@
 Тесты на загрузку вики с ошибками
 """
 
+import datetime
 import os.path
 import shutil
 import unittest
@@ -22,7 +23,7 @@ path = u"../test/invalidwiki"
 
 class InvalidWikiTest (unittest.TestCase):
     def setUp (self):
-        pass
+        self.defaultdate = datetime.datetime (2020, 1, 1)
 
 
     def testInvalidWikiRoot1 (self):
@@ -105,6 +106,7 @@ class InvalidWikiTest (unittest.TestCase):
         wiki = WikiDocument.load (path)
         page = wiki[u"Страница без аттачей"]
         self.assertEqual ( len (Attachment (page).attachmentFull), 0)
+        page.datetime = self.defaultdate
 
     
     def testEmptyAttaches2 (self):
@@ -123,7 +125,8 @@ class InvalidWikiTest (unittest.TestCase):
         # Удалим прикрепленные файлы
         attachPath = Attachment (wiki[u"Страница без аттачей"]).getAttachPath()
         shutil.rmtree (attachPath)
-    
+        wiki[u"Страница без аттачей"].datetime = self.defaultdate
+
 
     def testEmptyContent (self):
         """
