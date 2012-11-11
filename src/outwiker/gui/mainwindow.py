@@ -9,7 +9,7 @@ import wx.aui
 
 from outwiker.core.tree import WikiDocument, RootWikiPage
 import outwiker.core.config
-import outwiker.core.commands
+import outwiker.core.commands as cmd
 import outwiker.core.system
 from outwiker.core.application import Application
 
@@ -49,8 +49,8 @@ class MainWindow(wx.Frame):
         self.__setIcon()
         self.SetTitle (u"OutWiker")
 
-        self.mainMenu = None
-        self.__createMenu()
+        self.mainMenu = MainMenu()
+        self.SetMenuBar(self.mainMenu)
 
         self.__createStatusBar()
 
@@ -63,8 +63,12 @@ class MainWindow(wx.Frame):
         self.GENERAL_TOOLBAR_STR = "general"
         self.PLUGINS_TOOLBAR_STR = "plugins"
         self.toolbars = ToolBarsController (self)
-        self.toolbars[self.GENERAL_TOOLBAR_STR] = GeneralToolBar (self, self.auiManager)
-        self.toolbars[self.PLUGINS_TOOLBAR_STR] = PluginsToolBar (self, self.auiManager)
+
+        self.toolbars[self.GENERAL_TOOLBAR_STR] = GeneralToolBar (self, 
+                self.auiManager)
+
+        self.toolbars[self.PLUGINS_TOOLBAR_STR] = PluginsToolBar (self, 
+                self.auiManager)
 
         self.__panesController = MainPanesController (self, self.auiManager)
 
@@ -80,7 +84,8 @@ class MainWindow(wx.Frame):
             self.Maximize()
 
         self.taskBarIcon = OutwikerTrayIcon(self)
-        self.tabsController = TabsController (self.pagePanel.panel.tabsCtrl, Application)
+        self.tabsController = TabsController (self.pagePanel.panel.tabsCtrl, 
+                Application)
 
 
     @property
@@ -92,10 +97,16 @@ class MainWindow(wx.Frame):
 
 
     def UpdateAuiManager (self):
+        """
+        Обновление auiManager. Сделано для облегчения доступа
+        """
         self.auiManager.Update()
 
 
     def __createAuiPanes(self):
+        """
+        Создание плавающих панелей
+        """
         self.pagePanel = PageMainPane (
                 self, 
                 self.auiManager, 
@@ -122,17 +133,15 @@ class MainWindow(wx.Frame):
 
 
     def __createStatusBar (self):
+        """
+        Создание статусной панели
+        """
         self.statusbar = wx.StatusBar(self, -1)
 
         items_count = 2
         self.statusbar.SetFieldsCount(items_count)
         self.statusbar.SetStatusWidths ([-1, 200])
         self.SetStatusBar (self.statusbar)
-
-
-    def __createMenu (self):
-        self.mainMenu = MainMenu()
-        self.SetMenuBar(self.mainMenu)
 
 
     def __bindGuiEvents (self):
@@ -142,7 +151,11 @@ class MainWindow(wx.Frame):
         self.Bind (wx.EVT_MENU, self.__onNew, id=MainId.ID_NEW)
         self.Bind (wx.EVT_MENU, self.__onOpen, id=MainId.ID_OPEN)
         self.Bind (wx.EVT_MENU, self.__onClose, id=MainId.ID_CLOSE)
-        self.Bind (wx.EVT_MENU, self.__onOpenReadOnly, id=MainId.ID_OPEN_READONLY)
+
+        self.Bind (wx.EVT_MENU, 
+                self.__onOpenReadOnly, 
+                id=MainId.ID_OPEN_READONLY)
+
         self.Bind (wx.EVT_MENU, self.__onSave, id=MainId.ID_SAVE)
         self.Bind (wx.EVT_MENU, self.__onPrint, id=wx.ID_PRINT)
         self.Bind (wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_UNDO)
@@ -154,29 +167,65 @@ class MainWindow(wx.Frame):
         self.Bind (wx.EVT_MENU, self.__onAddSiblingPage, id=MainId.ID_ADDPAGE)
         self.Bind (wx.EVT_MENU, self.__onAddChildPage, id=MainId.ID_ADDCHILD)
         self.Bind (wx.EVT_MENU, self.__onMovePageUp, id=MainId.ID_MOVE_PAGE_UP)
-        self.Bind (wx.EVT_MENU, self.__onMovePageDown, id=MainId.ID_MOVE_PAGE_DOWN)
-        self.Bind (wx.EVT_MENU, self.__onSortChildrenAlphabetical, id=MainId.ID_SORT_CHILDREN_ALPHABETICAL)
-        self.Bind (wx.EVT_MENU, self.__onSortSiblingAlphabetical, id=MainId.ID_SORT_SIBLINGS_ALPHABETICAL)
+
+        self.Bind (wx.EVT_MENU, 
+                self.__onMovePageDown, 
+                id=MainId.ID_MOVE_PAGE_DOWN)
+
+        self.Bind (wx.EVT_MENU, 
+                self.__onSortChildrenAlphabetical, 
+                id=MainId.ID_SORT_CHILDREN_ALPHABETICAL)
+
+        self.Bind (wx.EVT_MENU, 
+                self.__onSortSiblingAlphabetical, 
+                id=MainId.ID_SORT_SIBLINGS_ALPHABETICAL)
+
         self.Bind (wx.EVT_MENU, self.__onRename, id=MainId.ID_RENAME)
-        self.Bind (wx.EVT_MENU, self.__onRemovePage, id=MainId.ID_REMOVE_PAGE)
+
+        self.Bind (wx.EVT_MENU, 
+                self.__onRemovePage, 
+                id=MainId.ID_REMOVE_PAGE)
+
         self.Bind (wx.EVT_MENU, self.__onEditPage, id=MainId.ID_EDIT)
-        self.Bind (wx.EVT_MENU, self.__onGlobalSearch, id=MainId.ID_GLOBAL_SEARCH)
+
+        self.Bind (wx.EVT_MENU, 
+                self.__onGlobalSearch, 
+                id=MainId.ID_GLOBAL_SEARCH)
+
         self.Bind (wx.EVT_MENU, self.__onAttach, id=MainId.ID_ATTACH)
         self.Bind (wx.EVT_MENU, self.__onCopyTitle, id=MainId.ID_COPY_TITLE)
         self.Bind (wx.EVT_MENU, self.__onCopyPath, id=MainId.ID_COPYPATH)
-        self.Bind (wx.EVT_MENU, self.__onCopyAttaches, id=MainId.ID_COPY_ATTACH_PATH)
+
+        self.Bind (wx.EVT_MENU, 
+                self.__onCopyAttaches, 
+                id=MainId.ID_COPY_ATTACH_PATH)
+
         self.Bind (wx.EVT_MENU, self.__onCopyLink, id=MainId.ID_COPY_LINK)
         self.Bind (wx.EVT_MENU, self.__onReload, id=MainId.ID_RELOAD)
-        self.Bind (wx.EVT_MENU, self.__onFullscreen, self.mainMenu.viewFullscreen)
+
+        self.Bind (wx.EVT_MENU, 
+                self.__onFullscreen, 
+                self.mainMenu.viewFullscreen)
+
         self.Bind (wx.EVT_MENU, self.__onHelp, id=MainId.ID_HELP)
         self.Bind (wx.EVT_MENU, self.__onAbout, id=MainId.ID_ABOUT)
         self.Bind (wx.EVT_TOOL, self.__onNew, id=MainId.ID_NEW)
         self.Bind (wx.EVT_TOOL, self.__onOpen, id=MainId.ID_OPEN)
         self.Bind (wx.EVT_TOOL, self.__onReload, id=MainId.ID_RELOAD)
         self.Bind (wx.EVT_TOOL, self.__onAttach, id=MainId.ID_ATTACH)
-        self.Bind (wx.EVT_TOOL, self.__onGlobalSearch, id=MainId.ID_GLOBAL_SEARCH)
-        self.Bind (wx.EVT_TOOL, self.__onAddTagsToBranch, id=MainId.ID_ADD_TAGS_TO_BRANCH)
-        self.Bind (wx.EVT_TOOL, self.__onRemoveTagsFromBranch, id=MainId.ID_REMOVE_TAGS_FROM_BRANCH)
+
+        self.Bind (wx.EVT_TOOL, 
+                self.__onGlobalSearch, 
+                id=MainId.ID_GLOBAL_SEARCH)
+
+        self.Bind (wx.EVT_TOOL, 
+                self.__onAddTagsToBranch, 
+                id=MainId.ID_ADD_TAGS_TO_BRANCH)
+
+        self.Bind (wx.EVT_TOOL, 
+                self.__onRemoveTagsFromBranch, 
+                id=MainId.ID_REMOVE_TAGS_FROM_BRANCH)
+
         self.Bind (wx.EVT_TOOL, self.__onRenameTag, id=MainId.ID_RENAME_TAG)
         self.Bind (wx.EVT_TOOL, self.__onAddNewTab, id=MainId.ID_ADD_TAB)
         self.Bind (wx.EVT_TOOL, self.__onCloseTab, id=MainId.ID_CLOSE_TAB)
@@ -185,23 +234,38 @@ class MainWindow(wx.Frame):
 
 
     def __onNextTab (self, event):
-        outwiker.core.commands.nextTab (Application)
+        """
+        Обработчик события переключения на следующую вкладку
+        """
+        cmd.nextTab (Application)
 
 
     def __onPrevTab (self, event):
-        outwiker.core.commands.previousTab (Application)
+        """
+        Обработчик события переключения на предыдущую вкладку
+        """
+        cmd.previousTab (Application)
 
 
     def __onAddNewTab (self, event):
-        outwiker.core.commands.addNewTab (Application)
+        """
+        Обработчик события добавления новой вкладки
+        """
+        cmd.addNewTab (Application)
 
 
     def __onCloseTab (self, event):
-        outwiker.core.commands.closeCurrentTab (Application)
+        """
+        Обработчик события закрытия вкладки
+        """
+        cmd.closeCurrentTab (Application)
 
 
     def __onClose (self, event):
-        outwiker.core.commands.closeWiki (Application)
+        """
+        Обработчик события закрытия программы
+        """
+        cmd.closeWiki (Application)
 
     
     def __saveParams (self):
@@ -234,13 +298,17 @@ class MainWindow(wx.Frame):
 
                 self.__panesController.savePanesParams()
         except Exception, e:
-            outwiker.core.commands.MessageBox (_(u"Can't save config\n%s") % (unicode (e)),
+            cmd.MessageBox (_(u"Can't save config\n%s") % (unicode (e)),
                     _(u"Error"), wx.ICON_ERROR | wx.OK)
     
 
     def __setIcon (self):
+        """
+        Установки иконки главного окна
+        """
         icon = wx.EmptyIcon()
-        icon.CopyFromBitmap(wx.Bitmap(os.path.join (outwiker.core.system.getImagesDir(), "outwiker.ico"), 
+        icon.CopyFromBitmap(wx.Bitmap(os.path.join (outwiker.core.system.getImagesDir(), 
+            "outwiker.ico"), 
             wx.BITMAP_TYPE_ANY))
 
         self.SetIcon(icon)
@@ -267,20 +335,32 @@ class MainWindow(wx.Frame):
         super (MainWindow, self).Destroy()
     
 
-    def __onNew(self, event): 
-        outwiker.core.commands.createNewWiki(self)
+    def __onNew(self, event):
+        """
+        Обработчик события создания новой вики
+        """
+        cmd.createNewWiki(self)
 
 
     def __onOpen(self, event):
-        outwiker.core.commands.openWikiWithDialog (self)
+        """
+        Обработчик события открытия вики
+        """
+        cmd.openWikiWithDialog (self)
     
 
     def __onSave(self, event):
+        """
+        Обработчик события принудительного сохранения вики
+        """
         Application.onForceSave()
 
 
     def __onReload(self, event):
-        outwiker.core.commands.reloadWiki (self)
+        """
+        Обработчик события перезагрузки вики
+        """
+        cmd.reloadWiki (self)
     
 
     def destroyPagePanel (self, save):
@@ -309,53 +389,87 @@ class MainWindow(wx.Frame):
 
 
     def __onAttach(self, event):
+        """
+        Обработчик события прикрепления файлов к странице
+        """
         if Application.selectedPage != None:
-            outwiker.core.commands.attachFilesWithDialog (self, Application.wikiroot.selectedPage)
+            cmd.attachFilesWithDialog (self, 
+                    Application.wikiroot.selectedPage)
+
 
     def __onAbout(self, event):
-        outwiker.core.commands.showAboutDialog (self)
+        """
+        Обработчик события показа диалога "О программе"
+        """
+        cmd.showAboutDialog (self)
 
 
     def __onCopyPath(self, event):
+        """
+        Обработчик события копирования пути до текущей страницы в буфер обмена
+        """
         if Application.selectedPage != None:
-            outwiker.core.commands.copyPathToClipboard (Application.wikiroot.selectedPage)
+            cmd.copyPathToClipboard (Application.wikiroot.selectedPage)
 
 
     def __onCopyAttaches(self, event):
+        """
+        Обработчик события копирования пути до прикрепленных файлов в буфер обмена
+        """
         if Application.selectedPage != None:
-            outwiker.core.commands.copyAttachPathToClipboard (Application.wikiroot.selectedPage)
+            cmd.copyAttachPathToClipboard (Application.wikiroot.selectedPage)
 
     
     def __onCopyLink(self, event):
+        """
+        Обработчик события копирования ссылки на текущую страницу в буфер обмена
+        """
         if Application.selectedPage != None:
-            outwiker.core.commands.copyLinkToClipboard (Application.wikiroot.selectedPage)
+            cmd.copyLinkToClipboard (Application.wikiroot.selectedPage)
 
     
     def __onCopyTitle(self, event):
+        """
+        Обработчик события копирования заголовка текущей страницы в буфер обмена
+        """
         if Application.selectedPage != None:
-            outwiker.core.commands.copyTitleToClipboard (Application.wikiroot.selectedPage)
+            cmd.copyTitleToClipboard (Application.wikiroot.selectedPage)
     
 
     def __onEditPage(self, event):
+        """
+        Обработчик события изменения настроек страницы
+        """
         if Application.selectedPage != None:
             editPage (self, Application.selectedPage)
 
 
     def __onRemovePage(self, event):
+        """
+        Обработчик события удаления текущей страницы
+        """
         if Application.selectedPage != None:
-            outwiker.core.commands.removePage (Application.wikiroot.selectedPage)
+            cmd.removePage (Application.wikiroot.selectedPage)
 
 
-    @outwiker.core.commands.testreadonly
+    @cmd.testreadonly
     def __onGlobalSearch(self, event):
+        """
+        Обработчик события создания или показа страницы глобального поиска
+        """
         if Application.wikiroot != None:
             try:
                 outwiker.pages.search.searchpage.GlobalSearch.create (Application.wikiroot)
             except IOError:
-                outwiker.core.commands.MessageBox (_(u"Can't create page"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+                cmd.MessageBox (_(u"Can't create page"), 
+                        _(u"Error"), 
+                        wx.ICON_ERROR | wx.OK)
 
 
     def __onStdEvent(self, event):
+        """
+        Обработчик стандартных событий (копировать, вставить и т.п.)
+        """
         if not self.__stdEventLoop:
             self.__stdEventLoop = True
             target = wx.Window.FindFocus()
@@ -366,24 +480,39 @@ class MainWindow(wx.Frame):
 
 
     def __onRename(self, event):
+        """
+        Обработчик события переименования текущей страницы
+        """
         self.treePanel.beginRename()
 
 
     def __onHelp(self, event):
-        outwiker.core.commands.openHelp()
+        """
+        Обработчик события вызова справки
+        """
+        cmd.openHelp()
 
 
     def __onOpenReadOnly(self, event):
-        outwiker.core.commands.openWikiWithDialog (self, readonly=True)
+        """
+        Обработчик события открытия вики в режиме "только для чтения"
+        """
+        cmd.openWikiWithDialog (self, readonly=True)
 
 
     def __onPreferences(self, event):
+        """
+        Обработчик события вызова диалога настроек программы
+        """
         dlg = PrefDialog (self)
         dlg.ShowModal()
         dlg.Destroy()
     
 
     def __onFullscreen(self, event):
+        """
+        Обработчик события переключения в полноэкранный режим
+        """
         self.setFullscreen(not self.IsFullScreen())
 
 
@@ -398,14 +527,23 @@ class MainWindow(wx.Frame):
 
 
     def __toFullscreen(self):
+        """
+        Переключение в полноэкранный режим
+        """
         self.__panesController.savePanesParams()
-        self.ShowFullScreen(True, wx.FULLSCREEN_NOTOOLBAR | wx.FULLSCREEN_NOBORDER | wx.FULLSCREEN_NOCAPTION)
+        self.ShowFullScreen(True, 
+                (wx.FULLSCREEN_NOTOOLBAR | 
+                    wx.FULLSCREEN_NOBORDER | 
+                    wx.FULLSCREEN_NOCAPTION))
 
         self.__panesController.hidePanes()
         self.__panesController.updateViewMenu()
 
 
     def __fromFullscreen (self):
+        """
+        Возврат из полноэкранного режима
+        """
         self.controller.loadMainWindowParams()
         self.ShowFullScreen(False)
 
@@ -415,55 +553,81 @@ class MainWindow(wx.Frame):
 
     
     def __onMovePageUp(self, event):
-        outwiker.core.commands.moveCurrentPageUp()
+        """
+        Обработчик события перемещения страницы вверх
+        """
+        cmd.moveCurrentPageUp()
 
 
     def __onMovePageDown(self, event):
-        outwiker.core.commands.moveCurrentPageDown()
+        """
+        Обработчик события перемещения страницы вниз
+        """
+        cmd.moveCurrentPageDown()
         
 
     def __onSortChildrenAlphabetical(self, event):
-        outwiker.core.commands.sortChildrenAlphabeticalGUI()
+        """
+        Обработчик события сортировки дочерних страниц по алфавиту
+        """
+        cmd.sortChildrenAlphabeticalGUI()
 
 
     def __onSortSiblingAlphabetical(self, event):
-        outwiker.core.commands.sortSiblingsAlphabeticalGUI()
+        """
+        Обработчик события сортировки братских страниц по алфавиту
+        """
+        cmd.sortSiblingsAlphabeticalGUI()
 
 
     def __onPrint(self, event):
+        """
+        Печать текущей страницы
+        """
         self.pagePanel.panel.Print()
 
 
     def __onAddTagsToBranch (self, event):
+        """
+        Обработчик события добавления меток к ветке
+        """
         if Application.wikiroot == None:
             return
 
         if Application.selectedPage == None:
-            outwiker.core.commands.addTagsToBranchGui (Application.wikiroot, self)
+            cmd.addTagsToBranchGui (Application.wikiroot, 
+                    self)
         else:
-            outwiker.core.commands.addTagsToBranchGui (Application.selectedPage, self)
+            cmd.addTagsToBranchGui (Application.selectedPage, self)
 
 
     def __onRemoveTagsFromBranch (self, event):
+        """
+        Обработчик события удаления меток из ветки
+        """
         if Application.wikiroot == None:
             return
 
         if Application.selectedPage == None:
-            outwiker.core.commands.removeTagsFromBranchGui (Application.wikiroot, self)
+            cmd.removeTagsFromBranchGui (Application.wikiroot, self)
         else:
-            outwiker.core.commands.removeTagsFromBranchGui (Application.selectedPage, self)
+            cmd.removeTagsFromBranchGui (Application.selectedPage, self)
 
 
     def __onRenameTag (self, event):
+        """
+        Обработчик события переименования метки
+        """
         if Application.wikiroot != None:
-            outwiker.core.commands.renameTagGui (Application.wikiroot, self)
-            
-
+            cmd.renameTagGui (Application.wikiroot, self)
 
 # end of class MainWindow
 
 
 class DropFilesTarget (wx.FileDropTarget):
+    """
+    Класс для возможности перетаскивания файлов между другими программами и OutWiker
+    """
     def __init__ (self, mainWindow):
         wx.FileDropTarget.__init__ (self)
         self._mainWindow = mainWindow
@@ -473,7 +637,7 @@ class DropFilesTarget (wx.FileDropTarget):
     def OnDropFiles (self, x, y, files):
         if (Application.wikiroot != None and
                 Application.wikiroot.selectedPage != None):
-            outwiker.core.commands.attachFiles (self._mainWindow, 
+            cmd.attachFiles (self._mainWindow, 
                         Application.wikiroot.selectedPage, 
                         files)
             return True

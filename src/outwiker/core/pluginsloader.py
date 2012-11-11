@@ -142,14 +142,15 @@ class PluginsLoader (object):
                 # Переберем все файлы внутри packagePath 
                 # и попытаемся их импортировать
                 for fileName in os.listdir (packagePath):
-                    module = self.__importSingleModule (packageName, fileName)
+                    module = self._importSingleModule (packageName, fileName)
                     if module != None:
                         modules.append (module)
 
         return modules
 
 
-    def __importSingleModule (self, packageName, fileName):
+    @staticmethod
+    def _importSingleModule (packageName, fileName):
         """
         Импортировать один модуль по имени пакета и файла с модулем
         """
