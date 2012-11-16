@@ -40,11 +40,11 @@ else:
         
         @property
         def description (self):
-            return _(u"""This plugin adds a command (:lighbox:), after adding a images from thumbnails will open in a preview window, rather than in an external program.
+            return _(u"""This plugin adds a command (:lightbox:), after adding a images from thumbnails will open in a preview window, rather than in an external program.
                     
 <B>Usage</B>
 
-(:lighbox:)
+(:lightbox:)
 
 bla-bla-bla %thumb%Attach:image_1.jpg%%
 bla-bla-bla...
@@ -54,7 +54,7 @@ bla-bla-bla...
 
         @property
         def version (self):
-            return u"1.1"
+            return u"1.1.1"
 
 
         def initialize(self):
