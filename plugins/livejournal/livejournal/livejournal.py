@@ -48,6 +48,7 @@ else:
             """
             self._application.onWikiParserPrepare += self.__onWikiParserPrepare
             self._application.onPageViewCreate += self.__onPageViewCreate
+            self._application.onPageSelect += self.__onPageSelect
             self._initlocale("livejournal")
 
             if self._isCurrentWikiPage:
@@ -65,6 +66,14 @@ else:
                 _ = self._init_i18n (domain, langdir)
             except BaseException as e:
                 print e
+
+
+        def __onPageSelect (self, page):
+            """
+            Обработчик события выбора новой страницы
+            """
+            if not self._isCurrentWikiPage:
+                self.__destroyToolBar()
 
 
         @property
@@ -171,7 +180,7 @@ else:
 
         @property
         def version (self):
-            return u"1.2"
+            return u"1.2.1"
 
 
         def destroy (self):
@@ -180,8 +189,6 @@ else:
             """
             self._application.onWikiParserPrepare -= self.__onWikiParserPrepare
             self._application.onPageViewCreate -= self.__onPageViewCreate
+            self._application.onPageSelect -= self.__onPageSelect
 
             self.__destroyToolBar()
-            # if self._isCurrentWikiPage:
-            #     self._getPageView().removeTool (self.ID_LJUSER)
-            #     self._getPageView().removeTool (self.ID_LJCOMMUNITY)
