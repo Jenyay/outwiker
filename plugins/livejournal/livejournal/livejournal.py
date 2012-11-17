@@ -48,7 +48,7 @@ else:
             """
             self._application.onWikiParserPrepare += self.__onWikiParserPrepare
             self._application.onPageViewCreate += self.__onPageViewCreate
-            self._application.onPageSelect += self.__onPageSelect
+            self._application.onPageViewDestroy += self.__onPageViewDestroy
             self._initlocale("livejournal")
 
             if self._isCurrentWikiPage:
@@ -68,12 +68,11 @@ else:
                 print e
 
 
-        def __onPageSelect (self, page):
+        def __onPageViewDestroy (self, page):
             """
             Обработчик события выбора новой страницы
             """
-            if not self._isCurrentWikiPage:
-                self.__destroyToolBar()
+            self.__destroyToolBar()
 
 
         @property
@@ -189,6 +188,6 @@ else:
             """
             self._application.onWikiParserPrepare -= self.__onWikiParserPrepare
             self._application.onPageViewCreate -= self.__onPageViewCreate
-            self._application.onPageSelect -= self.__onPageSelect
+            self._application.onPageViewDestroy -= self.__onPageViewDestroy
 
             self.__destroyToolBar()
