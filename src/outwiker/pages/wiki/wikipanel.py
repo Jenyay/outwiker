@@ -427,7 +427,7 @@ class WikiPagePanel (BaseHtmlPanel):
         self.addTool (self.__wikiMenu, 
                 "ID_ANCHOR", 
                 lambda event: self.codeEditor.turnText (u'[[#', u']]'), 
-                _(u"Anchor") + "\tCtrl+Alt+L",
+                _(u"Anchor") + "\tCtrl+Alt+N",
                 _(u'Anchor'), 
                 os.path.join (self.imagesDir, "anchor.png"),
                 fullUpdate=False,

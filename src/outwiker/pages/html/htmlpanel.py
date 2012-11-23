@@ -364,7 +364,7 @@ class HtmlPagePanel (BaseHtmlPanel):
         self.addTool (self.__htmlMenu, 
                 "ID_ANCHOR", 
                 lambda event: self.codeEditor.turnText (u'<a name="', u'"></a>'), 
-                _(u"Anchor") + "\tCtrl+Alt+L", 
+                _(u"Anchor") + "\tCtrl+Alt+N", 
                 _(u'Anchor (<a name="…">…</a>)'), 
                 os.path.join (self.imagesDir, "anchor.png"),
                 fullUpdate=False,
