@@ -52,26 +52,27 @@ win:
 	iscc outwiker_setup.iss
 
 plugin:
+	rm -f build/plugins/outwiker-plugins-all.zip
 	rm -f build/plugins/source.zip
-	cd plugins/source; 7z a -r -aoa -xr!*.pyc ../../build/plugins/source.zip ./* 
+	cd plugins/source; 7z a -r -aoa -xr!*.pyc ../../build/plugins/source.zip ./*; 7z a -r -aoa -xr!*.pyc ../../build/plugins/outwiker-plugins-all.zip ./*
 	rm -f build/plugins/style.zip
-	cd plugins/style; 7z a -r -aoa -xr!*.pyc ../../build/plugins/style.zip ./* 
-	rm -f build/plugins/testdebug.zip
-	cd plugins/testdebug; 7z a -r -aoa -xr!*.pyc ../../build/plugins/testdebug.zip ./* 
-	rm -f build/plugins/testcounter.zip
-	cd plugins/testcounter; 7z a -r -aoa -xr!*.pyc ../../build/plugins/testcounter.zip ./* 
+	cd plugins/style; 7z a -r -aoa -xr!*.pyc ../../build/plugins/style.zip ./* ; 7z a -r -aoa -xr!*.pyc ../../build/plugins/outwiker-plugins-all.zip ./*
+	# rm -f build/plugins/testdebug.zip
+	# cd plugins/testdebug; 7z a -r -aoa -xr!*.pyc ../../build/plugins/testdebug.zip ./* ; 7z a -r -aoa -xr!*.pyc ../../build/plugins/outwiker-plugins-all.zip ./*
+	# rm -f build/plugins/testcounter.zip
+	# cd plugins/testcounter; 7z a -r -aoa -xr!*.pyc ../../build/plugins/testcounter.zip ./* ; 7z a -r -aoa -xr!*.pyc ../../build/plugins/outwiker-plugins-all.zip ./*
 	rm -f build/plugins/export2html.zip
-	cd plugins/export2html; 7z a -r -aoa -xr!*.pyc ../../build/plugins/export2html.zip ./*
+	cd plugins/export2html; 7z a -r -aoa -xr!*.pyc ../../build/plugins/export2html.zip ./*; 7z a -r -aoa -xr!*.pyc ../../build/plugins/outwiker-plugins-all.zip ./*
 	rm -f build/plugins/spoiler.zip
-	cd plugins/spoiler; 7z a -r -aoa -xr!*.pyc ../../build/plugins/spoiler.zip ./*
+	cd plugins/spoiler; 7z a -r -aoa -xr!*.pyc ../../build/plugins/spoiler.zip ./*; 7z a -r -aoa -xr!*.pyc ../../build/plugins/outwiker-plugins-all.zip ./*
 	rm -f build/plugins/livejournal.zip
-	cd plugins/livejournal; 7z a -r -aoa -xr!*.pyc ../../build/plugins/livejournal.zip ./*
+	cd plugins/livejournal; 7z a -r -aoa -xr!*.pyc ../../build/plugins/livejournal.zip ./*; 7z a -r -aoa -xr!*.pyc ../../build/plugins/outwiker-plugins-all.zip ./*
 	rm -f build/plugins/lightbox.zip
-	cd plugins/lightbox; 7z a -r -aoa -xr!*.pyc ../../build/plugins/lightbox.zip ./*
+	cd plugins/lightbox; 7z a -r -aoa -xr!*.pyc ../../build/plugins/lightbox.zip ./*; 7z a -r -aoa -xr!*.pyc ../../build/plugins/outwiker-plugins-all.zip ./*
 	rm -f build/plugins/thumbgallery.zip
-	cd plugins/thumbgallery; 7z a -r -aoa -xr!*.pyc ../../build/plugins/thumbgallery.zip ./*
+	cd plugins/thumbgallery; 7z a -r -aoa -xr!*.pyc ../../build/plugins/thumbgallery.zip ./*; 7z a -r -aoa -xr!*.pyc ../../build/plugins/outwiker-plugins-all.zip ./*
 	rm -f build/plugins/externaltools.zip
-	cd plugins/externaltools; 7z a -r -aoa -xr!*.pyc ../../build/plugins/externaltools.zip ./*
+	cd plugins/externaltools; 7z a -r -aoa -xr!*.pyc ../../build/plugins/externaltools.zip ./*; 7z a -r -aoa -xr!*.pyc ../../build/plugins/outwiker-plugins-all.zip ./*
 
 wintests:
 	python src\\setup_tests.py build
