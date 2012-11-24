@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-10 21:05+0400\n"
+"POT-Creation-Date: 2012-11-24 10:39+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,81 +25,81 @@ msgstr ""
 msgid "Version:"
 msgstr ""
 
-#: outwiker/gui/about.py:28
+#: outwiker/gui/about.py:29
 msgid "OutWiker is personal wiki system and tree notes outliner."
 msgstr ""
 
-#: outwiker/gui/about.py:29
+#: outwiker/gui/about.py:30
 msgid "License: GPL 3"
 msgstr ""
 
-#: outwiker/gui/about.py:30
+#: outwiker/gui/about.py:31
 msgid "OutWiker's page:"
 msgstr ""
 
-#: outwiker/gui/about.py:31
+#: outwiker/gui/about.py:32
 msgid "http://jenyay.net/Outwiker/English"
 msgstr ""
 
-#: outwiker/gui/about.py:33
+#: outwiker/gui/about.py:34
 msgid "jenyay.ilin@gmail.com"
 msgstr ""
 
-#: outwiker/gui/about.py:33
+#: outwiker/gui/about.py:34
 msgid "mailto:jenyay.ilin@gmail.com"
 msgstr ""
 
-#: outwiker/gui/about.py:34
+#: outwiker/gui/about.py:35
 msgid "Google+ page"
 msgstr ""
 
-#: outwiker/gui/about.py:34
+#: outwiker/gui/about.py:35
 msgid ""
 "https://plus.google.com/u/0/b/113404982971748285098/113404982971748285098/"
 "posts"
 msgstr ""
 
-#: outwiker/gui/about.py:35
+#: outwiker/gui/about.py:36
 msgid "Facebook page"
 msgstr ""
 
-#: outwiker/gui/about.py:35
+#: outwiker/gui/about.py:36
 msgid "http://www.facebook.com/outwiker"
 msgstr ""
 
-#: outwiker/gui/about.py:36
+#: outwiker/gui/about.py:37
 msgid "Livejournal community"
 msgstr ""
 
-#: outwiker/gui/about.py:36
+#: outwiker/gui/about.py:37
 msgid "http://ru-outwiker.livejournal.com/?style=mine"
 msgstr ""
 
-#: outwiker/gui/about.py:37
+#: outwiker/gui/about.py:38
 msgid "Twitter"
 msgstr ""
 
-#: outwiker/gui/about.py:37
+#: outwiker/gui/about.py:38
 msgid "https://twitter.com/OutWiker"
 msgstr ""
 
-#: outwiker/gui/about.py:38
+#: outwiker/gui/about.py:39
 msgid "Vkontakte group"
 msgstr ""
 
-#: outwiker/gui/about.py:38
+#: outwiker/gui/about.py:39
 msgid "http://vk.com/outwiker"
 msgstr ""
 
-#: outwiker/gui/about.py:51 outwiker/gui/about.py:96
+#: outwiker/gui/about.py:52 outwiker/gui/about.py:97
 msgid "About"
 msgstr ""
 
-#: outwiker/gui/about.py:76
+#: outwiker/gui/about.py:77
 msgid "Author: Ilin Eugeniy (aka Jenyay)"
 msgstr ""
 
-#: outwiker/gui/about.py:97
+#: outwiker/gui/about.py:98
 msgid "Contacts"
 msgstr ""
 
@@ -133,7 +133,7 @@ msgstr ""
 #: outwiker/gui/currentpagepanel.py:87 outwiker/gui/currentpagepanel.py:222
 #: outwiker/gui/currentpagepanel.py:231 outwiker/gui/htmlrenderie.py:174
 #: outwiker/gui/htmlrenderwebkit.py:220 outwiker/gui/htmlrenderwx.py:107
-#: outwiker/gui/mainwindow.py:238 outwiker/gui/mainwindow.py:355
+#: outwiker/gui/mainwindow.py:302 outwiker/gui/mainwindow.py:465
 #: outwiker/gui/mainwndcontroller.py:152 outwiker/gui/pagedialog.py:29
 #: outwiker/gui/pagedialog.py:46 outwiker/gui/pagedialog.py:51
 #: outwiker/gui/pagedialog.py:98 outwiker/gui/pagedialog.py:117
@@ -255,7 +255,7 @@ msgid "Search…"
 msgstr ""
 
 #: outwiker/gui/basetextpanel.py:218 outwiker/gui/localsearchpanel.py:17
-#: outwiker/pages/search/searchpanel.py:36
+#: outwiker/pages/search/searchpanel.py:41
 msgid "Search"
 msgstr ""
 
@@ -330,189 +330,186 @@ msgstr ""
 msgid "&View"
 msgstr ""
 
-#: outwiker/gui/mainmenu.py:39 outwiker/gui/mainmenu.py:169
+#: outwiker/gui/mainmenu.py:39 outwiker/gui/mainmenu.py:327
 msgid "&Help"
 msgstr ""
 
-#: outwiker/gui/mainmenu.py:44
+#: outwiker/gui/mainmenu.py:46
 msgid "&New…"
 msgstr ""
 
-#: outwiker/gui/mainmenu.py:45
+#: outwiker/gui/mainmenu.py:51
 msgid "&Open…"
 msgstr ""
 
-#: outwiker/gui/mainmenu.py:46
+#: outwiker/gui/mainmenu.py:56
 msgid "Open &Read-only…"
 msgstr ""
 
-#: outwiker/gui/mainmenu.py:48
+#: outwiker/gui/mainmenu.py:63
 msgid "&Close"
 msgstr ""
 
-#: outwiker/gui/mainmenu.py:49
+#: outwiker/gui/mainmenu.py:68
 msgid "&Save"
 msgstr ""
 
-#: outwiker/gui/mainmenu.py:51
+#: outwiker/gui/mainmenu.py:75
 msgid "&Print"
 msgstr ""
 
-#: outwiker/gui/mainmenu.py:52
+#: outwiker/gui/mainmenu.py:80
 msgid "&Exit…"
 msgstr ""
 
-#: outwiker/gui/mainmenu.py:60
+#: outwiker/gui/mainmenu.py:93
 msgid "&Undo"
 msgstr ""
 
-#: outwiker/gui/mainmenu.py:61
+#: outwiker/gui/mainmenu.py:98
 msgid "&Redo"
 msgstr ""
 
-#: outwiker/gui/mainmenu.py:63
+#: outwiker/gui/mainmenu.py:105
 msgid "Cu&t"
 msgstr ""
 
-#: outwiker/gui/mainmenu.py:64
+#: outwiker/gui/mainmenu.py:110
 msgid "&Copy"
 msgstr ""
 
-#: outwiker/gui/mainmenu.py:65
+#: outwiker/gui/mainmenu.py:115
 msgid "&Paste"
 msgstr ""
 
-#: outwiker/gui/mainmenu.py:67
+#: outwiker/gui/mainmenu.py:122
 msgid "Pr&eferences…"
 msgstr ""
 
-#: outwiker/gui/mainmenu.py:74
+#: outwiker/gui/mainmenu.py:133
 msgid "Add &Sibling Page…"
 msgstr ""
 
-#: outwiker/gui/mainmenu.py:75
+#: outwiker/gui/mainmenu.py:138
 msgid "Add &Child Page…"
 msgstr ""
 
-#: outwiker/gui/mainmenu.py:77 outwiker/gui/wikitree.py:597
-#: outwiker/gui/wikitree.py:602
-msgid "Move Page Up"
+#: outwiker/gui/mainmenu.py:145
+msgid "Move Page &Up"
 msgstr ""
 
-#: outwiker/gui/mainmenu.py:78 outwiker/gui/wikitree.py:588
-#: outwiker/gui/wikitree.py:593
-msgid "Move Page Down"
+#: outwiker/gui/mainmenu.py:150
+msgid "Move Page &Down"
 msgstr ""
 
-#: outwiker/gui/mainmenu.py:79
-msgid "Sort Children Pages Alphabetical"
+#: outwiker/gui/mainmenu.py:155
+msgid "Sort Children Pages &Alphabetical"
 msgstr ""
 
-#: outwiker/gui/mainmenu.py:80
-msgid "Sort Siblings Pages Alphabetical"
+#: outwiker/gui/mainmenu.py:160
+msgid "Sort Siblings Pages A&lphabetical"
 msgstr ""
 
-#: outwiker/gui/mainmenu.py:82
+#: outwiker/gui/mainmenu.py:167
 msgid "Re&name Page"
 msgstr ""
 
-#: outwiker/gui/mainmenu.py:83
+#: outwiker/gui/mainmenu.py:172
 msgid "Rem&ove Page…"
 msgstr ""
 
-#: outwiker/gui/mainmenu.py:85
-msgid "Pag&e Properties…"
+#: outwiker/gui/mainmenu.py:179
+msgid "&Page Properties…"
 msgstr ""
 
-#: outwiker/gui/mainmenu.py:92
-msgid "Add Tab"
+#: outwiker/gui/mainmenu.py:190
+msgid "A&dd Tab"
 msgstr ""
 
-#: outwiker/gui/mainmenu.py:93
-msgid "Close Tab"
+#: outwiker/gui/mainmenu.py:195
+msgid "&Close Tab"
 msgstr ""
 
-#: outwiker/gui/mainmenu.py:94
-msgid "Previous Tab"
+#: outwiker/gui/mainmenu.py:200
+msgid "Pr&evious Tab"
 msgstr ""
 
-#: outwiker/gui/mainmenu.py:95
-msgid "Next Tab"
+#: outwiker/gui/mainmenu.py:205
+msgid "&Next Tab"
 msgstr ""
 
-#: outwiker/gui/mainmenu.py:98
-msgid "&Global Search…"
+#: outwiker/gui/mainmenu.py:212
+msgid "Gl&obal Search…"
 msgstr ""
 
-#: outwiker/gui/mainmenu.py:99
+#: outwiker/gui/mainmenu.py:217
 msgid "&Attach Files…"
 msgstr ""
 
-#: outwiker/gui/mainmenu.py:102
+#: outwiker/gui/mainmenu.py:224
 msgid "Copy Page &Title"
 msgstr ""
 
-#: outwiker/gui/mainmenu.py:103
+#: outwiker/gui/mainmenu.py:229
 msgid "Copy &Page Path"
 msgstr ""
 
-#: outwiker/gui/mainmenu.py:104
-msgid "Copy Atta&chments Path"
+#: outwiker/gui/mainmenu.py:234
+msgid "Copy Attachment&s Path"
 msgstr ""
 
-#: outwiker/gui/mainmenu.py:105
+#: outwiker/gui/mainmenu.py:239
 msgid "Copy Page &Link"
 msgstr ""
 
-#: outwiker/gui/mainmenu.py:108
-msgid "Add Tags to Branch…"
+#: outwiker/gui/mainmenu.py:246
+msgid "Add Tags to &Branch…"
 msgstr ""
 
-#: outwiker/gui/mainmenu.py:109
-msgid "Remove Tags from Branch…"
+#: outwiker/gui/mainmenu.py:251
+msgid "Re&move Tags from Branch…"
 msgstr ""
 
-#: outwiker/gui/mainmenu.py:110
-msgid "Rename Tag…"
+#: outwiker/gui/mainmenu.py:256
+msgid "Rename Ta&g…"
 msgstr ""
 
-#: outwiker/gui/mainmenu.py:113
+#: outwiker/gui/mainmenu.py:263
 msgid "&Reload Wiki…"
 msgstr ""
 
-#: outwiker/gui/mainmenu.py:120
+#: outwiker/gui/mainmenu.py:274
 msgid "&Add/Remove Bookmark"
 msgstr ""
 
-#: outwiker/gui/mainmenu.py:132
-msgid "Notes &Tree"
+#: outwiker/gui/mainmenu.py:289
+msgid "&Notes Tree"
 msgstr ""
 
-#: outwiker/gui/mainmenu.py:140 outwiker/gui/mainpanes/attachmainpane.py:22
-msgid "Attaches"
+#: outwiker/gui/mainmenu.py:297
+msgid "&Attachments"
 msgstr ""
 
-#: outwiker/gui/mainmenu.py:149 outwiker/gui/mainpanes/tagscloudmainpane.py:56
-#: outwiker/pages/search/searchpanel.py:45
-msgid "Tags"
+#: outwiker/gui/mainmenu.py:306
+msgid "&Tags"
 msgstr ""
 
-#: outwiker/gui/mainmenu.py:159
-msgid "Fullscreen"
+#: outwiker/gui/mainmenu.py:316
+msgid "&Fullscreen"
 msgstr ""
 
-#: outwiker/gui/mainmenu.py:170
+#: outwiker/gui/mainmenu.py:332
 msgid "&About…"
 msgstr ""
 
-#: outwiker/gui/mainwindow.py:237
+#: outwiker/gui/mainwindow.py:301
 #, python-format
 msgid ""
 "Can't save config\n"
 "%s"
 msgstr ""
 
-#: outwiker/gui/mainwindow.py:355 outwiker/gui/pagedialog.py:84
+#: outwiker/gui/mainwindow.py:464 outwiker/gui/pagedialog.py:84
 msgid "Can't create page"
 msgstr ""
 
@@ -656,6 +653,14 @@ msgstr ""
 msgid "Rename"
 msgstr ""
 
+#: outwiker/gui/wikitree.py:588 outwiker/gui/wikitree.py:593
+msgid "Move Page Down"
+msgstr ""
+
+#: outwiker/gui/wikitree.py:597 outwiker/gui/wikitree.py:602
+msgid "Move Page Up"
+msgstr ""
+
 #: outwiker/gui/wikitree.py:626 outwiker/gui/wikitree.py:631
 msgid "Remove Page…"
 msgstr ""
@@ -664,8 +669,17 @@ msgstr ""
 msgid "Page Properties…"
 msgstr ""
 
+#: outwiker/gui/mainpanes/attachmainpane.py:22
+msgid "Attachments"
+msgstr ""
+
 #: outwiker/gui/mainpanes/pagemainpane.py:23
 msgid "Note"
+msgstr ""
+
+#: outwiker/gui/mainpanes/tagscloudmainpane.py:56
+#: outwiker/pages/search/searchpanel.py:50
+msgid "Tags"
 msgstr ""
 
 #: outwiker/gui/mainpanes/treemainpane.py:26
@@ -900,7 +914,7 @@ msgid "Global search…"
 msgstr ""
 
 #: outwiker/gui/toolbars/toolbarscontroller.py:23
-msgid "Toolbars"
+msgid "&Toolbars"
 msgstr ""
 
 #: outwiker/pages/html/basehtmlpanel.py:198
@@ -1193,7 +1207,7 @@ msgid "Last modified date: {0}"
 msgstr ""
 
 #: outwiker/pages/search/htmlreport.py:84
-#: outwiker/pages/search/searchpanel.py:38
+#: outwiker/pages/search/searchpanel.py:43
 msgid "Tags: "
 msgstr ""
 
@@ -1205,23 +1219,23 @@ msgstr ""
 msgid "# Search"
 msgstr ""
 
-#: outwiker/pages/search/searchpanel.py:42
+#: outwiker/pages/search/searchpanel.py:47
 msgid "Any tag"
 msgstr ""
 
-#: outwiker/pages/search/searchpanel.py:42
+#: outwiker/pages/search/searchpanel.py:47
 msgid "All tags"
 msgstr ""
 
-#: outwiker/pages/search/searchpanel.py:51
+#: outwiker/pages/search/searchpanel.py:56
 msgid "Clear all tags"
 msgstr ""
 
-#: outwiker/pages/search/searchpanel.py:52
+#: outwiker/pages/search/searchpanel.py:57
 msgid "Find"
 msgstr ""
 
-#: outwiker/pages/search/searchpanel.py:55
+#: outwiker/pages/search/searchpanel.py:60
 msgid "Sort by "
 msgstr ""
 

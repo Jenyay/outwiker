@@ -19,7 +19,7 @@ class AttachMainPane (MainPane):
 
     @property
     def caption (self):
-        return _(u"Attaches")
+        return _(u"Attachments")
 
 
     def _createPane (self):

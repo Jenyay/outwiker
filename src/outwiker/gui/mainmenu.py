@@ -142,22 +142,22 @@ class MainMenu (wx.MenuBar):
         treeMenu.AppendSeparator()
 
         treeMenu.Append(MainId.ID_MOVE_PAGE_UP, 
-                _("Move Page Up") + "\tCtrl+Shift+Up", 
+                _("Move Page &Up") + "\tCtrl+Shift+Up", 
                 "", 
                 wx.ITEM_NORMAL)
 
         treeMenu.Append(MainId.ID_MOVE_PAGE_DOWN, 
-                _("Move Page Down") + "\tCtrl+Shift+Down", 
+                _("Move Page &Down") + "\tCtrl+Shift+Down", 
                 "", 
                 wx.ITEM_NORMAL)
 
         treeMenu.Append(MainId.ID_SORT_CHILDREN_ALPHABETICAL, 
-                _("Sort Children Pages Alphabetical"), 
+                _("Sort Children Pages &Alphabetical"), 
                 "", 
                 wx.ITEM_NORMAL)
 
         treeMenu.Append(MainId.ID_SORT_SIBLINGS_ALPHABETICAL, 
-                _("Sort Siblings Pages Alphabetical"), 
+                _("Sort Siblings Pages A&lphabetical"), 
                 "", 
                 wx.ITEM_NORMAL)
 
@@ -176,7 +176,7 @@ class MainMenu (wx.MenuBar):
         treeMenu.AppendSeparator()
 
         treeMenu.Append(MainId.ID_EDIT, 
-                _(u"Pag&e Properties…") + "\tCtrl+E", 
+                _(u"&Page Properties…") + "\tCtrl+E", 
                 "", 
                 wx.ITEM_NORMAL)
 
@@ -187,29 +187,29 @@ class MainMenu (wx.MenuBar):
         toolsMenu = wx.Menu()
 
         toolsMenu.Append(MainId.ID_ADD_TAB, 
-                _(u"Add Tab") + "\tCtrl+T", 
+                _(u"A&dd Tab") + "\tCtrl+T", 
                 "",
                 wx.ITEM_NORMAL)
 
         toolsMenu.Append(MainId.ID_CLOSE_TAB, 
-                _(u"Close Tab") + "\tCtrl+W", 
+                _(u"&Close Tab") + "\tCtrl+W", 
                 "", 
                 wx.ITEM_NORMAL)
 
         toolsMenu.Append(MainId.ID_PREV_TAB, 
-                _(u"Previous Tab") + "\tCtrl+Shift+PgUp", 
+                _(u"Pr&evious Tab") + "\tCtrl+Shift+PgUp", 
                 "", 
                 wx.ITEM_NORMAL)
 
         toolsMenu.Append(MainId.ID_NEXT_TAB, 
-                _(u"Next Tab") + "\tCtrl+Shift+PgDn", 
+                _(u"&Next Tab") + "\tCtrl+Shift+PgDn", 
                 "", 
                 wx.ITEM_NORMAL)
 
         toolsMenu.AppendSeparator()
 
         toolsMenu.Append(MainId.ID_GLOBAL_SEARCH, 
-                _(u"&Global Search…") + "\tCtrl+Shift+F", 
+                _(u"Gl&obal Search…") + "\tCtrl+Shift+F", 
                 "", 
                 wx.ITEM_NORMAL)
 
@@ -231,7 +231,7 @@ class MainMenu (wx.MenuBar):
                 wx.ITEM_NORMAL)
 
         toolsMenu.Append(MainId.ID_COPY_ATTACH_PATH, 
-                _(u"Copy Atta&chments Path") + "\tCtrl+Shift+A", 
+                _(u"Copy Attachment&s Path") + "\tCtrl+Shift+A", 
                 "", 
                 wx.ITEM_NORMAL)
 
@@ -243,17 +243,17 @@ class MainMenu (wx.MenuBar):
         toolsMenu.AppendSeparator()
 
         toolsMenu.Append (MainId.ID_ADD_TAGS_TO_BRANCH, 
-                _(u"Add Tags to Branch…"), 
+                _(u"Add Tags to &Branch…"), 
                 "", 
                 wx.ITEM_NORMAL)
 
         toolsMenu.Append (MainId.ID_REMOVE_TAGS_FROM_BRANCH, 
-                _(u"Remove Tags from Branch…"), 
+                _(u"Re&move Tags from Branch…"), 
                 "", 
                 wx.ITEM_NORMAL)
 
         toolsMenu.Append (MainId.ID_RENAME_TAG, 
-                _(u"Rename Tag…"), 
+                _(u"Rename Ta&g…"), 
                 "", 
                 wx.ITEM_NORMAL)
 
@@ -286,7 +286,7 @@ class MainMenu (wx.MenuBar):
         self.viewNotes = wx.MenuItem(
                 viewMenu, 
                 MainId.ID_VIEW_TREE, 
-                _("Notes &Tree"), 
+                _("&Notes Tree"), 
                 "", 
                 wx.ITEM_CHECK)
         viewMenu.AppendItem(self.viewNotes)
@@ -294,7 +294,7 @@ class MainMenu (wx.MenuBar):
         self.viewAttaches = wx.MenuItem(
                 viewMenu, 
                 MainId.ID_VIEW_ATTACHES, 
-                _("Attaches"), 
+                _("&Attachments"), 
                 "", 
                 wx.ITEM_CHECK)
         viewMenu.AppendItem(self.viewAttaches)
@@ -303,7 +303,7 @@ class MainMenu (wx.MenuBar):
         self.viewTagsCloud = wx.MenuItem(
                 viewMenu, 
                 MainId.ID_VIEW_TAGSCLOUD, 
-                _("Tags"), 
+                _("&Tags"), 
                 "", 
                 wx.ITEM_CHECK)
         viewMenu.AppendItem(self.viewTagsCloud)
@@ -313,7 +313,7 @@ class MainMenu (wx.MenuBar):
         self.viewFullscreen = wx.MenuItem(
                 viewMenu, 
                 MainId.ID_VIEW_FULLSCREEN, 
-                _("Fullscreen") + "\tF11", 
+                _("&Fullscreen") + "\tF11", 
                 "", 
                 wx.ITEM_CHECK)
         viewMenu.AppendItem(self.viewFullscreen)
