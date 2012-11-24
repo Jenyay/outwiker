@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-24 11:21+0400\n"
+"POT-Creation-Date: 2012-11-24 16:34+0400\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -282,8 +282,8 @@ msgid "&Search"
 msgstr "&Search"
 
 #: outwiker/gui/basetextpanel.py:217
-msgid "Search…"
-msgstr "Search…"
+msgid "&Search…"
+msgstr "&Search…"
 
 #: outwiker/gui/basetextpanel.py:218
 #: outwiker/gui/localsearchpanel.py:17
@@ -292,14 +292,12 @@ msgid "Search"
 msgstr "Search"
 
 #: outwiker/gui/basetextpanel.py:228
-#: outwiker/gui/localsearchpanel.py:35
-msgid "Find Previous"
-msgstr "Find Previous"
+msgid "Find &Previous"
+msgstr "Find &Previous"
 
 #: outwiker/gui/basetextpanel.py:237
-#: outwiker/gui/localsearchpanel.py:34
-msgid "Find Next"
-msgstr "Find Next"
+msgid "Find &Next"
+msgstr "Find &Next"
 
 #: outwiker/gui/currentpagepanel.py:87
 msgid "Can't open page. Page folder not exists"
@@ -339,6 +337,14 @@ msgstr "Link"
 #: outwiker/gui/linkdialog.py:41
 msgid "Comment"
 msgstr "Comment"
+
+#: outwiker/gui/localsearchpanel.py:34
+msgid "Find Next"
+msgstr "Find Next"
+
+#: outwiker/gui/localsearchpanel.py:35
+msgid "Find Previous"
+msgstr "Find Previous"
 
 #: outwiker/gui/mainmenu.py:21
 msgid "&File"
