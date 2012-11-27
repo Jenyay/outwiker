@@ -14,7 +14,7 @@ class HeadingFactory (object):
 
 class HeadingToken (object):
     def __init__ (self, parser):
-        self.heading_Regex = "^(?P<header>!!+)\s+(?P<title>.*)$"
+        self.heading_Regex = r"^(?P<header>!!+)\s+(?P<title>.*)$"
         self.parser = parser
 
 

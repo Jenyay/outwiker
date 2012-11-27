@@ -117,14 +117,16 @@ class HtmlTemplateTest(unittest.TestCase):
 </HEAD>
 
 <BODY>
-<P><H2>Attach links</H2></P>
+<P>
+<H2>Attach links</H2></P>
 
 <P>Attach:file.odt
 <BR><A HREF="__attach/file.odt">file.odt</A>
 <BR><A HREF="__attach/file.odt">alternative text</A>
 <BR><A HREF="__attach/file with spaces.pdf">file with spaces.pdf</A></P>
 
-<P><H2>Images</H2></P>
+<P>
+<H2>Images</H2></P>
 </BODY>
 </HTML>"""
 

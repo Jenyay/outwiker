@@ -27,6 +27,13 @@ class HtmlImprover (object):
         result = HtmlImprover.ireplace (result, "</UL>", "\n</UL>")
         result = HtmlImprover.ireplace (result, "<OL>", "\n<OL>")
         result = HtmlImprover.ireplace (result, "</OL>", "\n</OL>")
+
+        result = HtmlImprover.ireplace (result, "<H1>", "\n<H1>")
+        result = HtmlImprover.ireplace (result, "<H2>", "\n<H2>")
+        result = HtmlImprover.ireplace (result, "<H3>", "\n<H3>")
+        result = HtmlImprover.ireplace (result, "<H4>", "\n<H4>")
+        result = HtmlImprover.ireplace (result, "<H5>", "\n<H5>")
+        result = HtmlImprover.ireplace (result, "<H6>", "\n<H6>")
         
         result = HtmlImprover.ireplace (result, "<PRE>", "\n<PRE>")
 
@@ -63,6 +70,13 @@ class HtmlImprover (object):
                 item = item.replace ("\n\n", "<P>")
                 item = item.replace ("\n", "<BR>")
                 item = item.replace ("<BR><LI>", "<LI>")
+
+                item = item.replace ("<BR><H1>", "<H1>")
+                item = item.replace ("<BR><H2>", "<H2>")
+                item = item.replace ("<BR><H3>", "<H3>")
+                item = item.replace ("<BR><H4>", "<H4>")
+                item = item.replace ("<BR><H5>", "<H5>")
+                item = item.replace ("<BR><H6>", "<H6>")
                 index += len (parts[n]) + len (starttag)
             else:
                 item = "<PRE>" + item + "</PRE>"

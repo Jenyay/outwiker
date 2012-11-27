@@ -204,7 +204,7 @@
 <task expandedContexts="('prerequisiteviewerintaskeditor', 'prerequisiteviewerintaskeditor1', 'prerequisiteviewerintaskeditor2', 'prerequisiteviewerintaskeditor3', 'prerequisiteviewerintaskeditor4', 'prerequisiteviewerintaskeditor5', 'taskviewer')" id="211995404:1286954957.3" plannedstartdate="2010-10-13 11:29:00" priority="1" status="1" subject="Автозахват буфера обмена" />
 <task completiondate="2011-05-26 09:56:11.970000" expandedContexts="('prerequisiteviewerintaskeditor', 'prerequisiteviewerintaskeditor1', 'prerequisiteviewerintaskeditor2', 'prerequisiteviewerintaskeditor3', 'prerequisiteviewerintaskeditor4', 'prerequisiteviewerintaskeditor5', 'taskviewer')" id="213159916:1286955061.5" percentageComplete="100" plannedstartdate="2010-10-13 11:31:00" priority="9" status="1" subject="Использовать движок IE для рендеринга HTML под Windows">
 <task completiondate="2011-05-23 09:19:37.234000" expandedContexts="('taskviewer',)" id="46226992:1305917362.88" percentageComplete="100" plannedstartdate="2011-05-20 22:49:00" status="1" subject="Копирование текста через меню" />
-<task completiondate="2011-05-26 09:56:11.970000" id="48539984:1305917380.58" percentageComplete="100" plannedstartdate="2011-05-20 22:49:00" status="1" subject="Загрузка HTML из строки" />
+<task completiondate="2011-05-26 09:56:11.970000" expandedContexts="('taskviewer',)" id="48539984:1305917380.58" percentageComplete="100" plannedstartdate="2011-05-20 22:49:00" status="1" subject="Загрузка HTML из строки" />
 <task completiondate="2011-05-23 09:19:38.515000" expandedContexts="('taskviewer',)" id="48540720:1305917400.48" percentageComplete="100" plannedstartdate="2011-05-20 22:50:00" status="1" subject="При наведении курсора на ссылку показывать адрес в статусной панели" />
 </task>
 <task expandedContexts="('prerequisiteviewerintaskeditor', 'prerequisiteviewerintaskeditor1', 'prerequisiteviewerintaskeditor2', 'prerequisiteviewerintaskeditor3', 'prerequisiteviewerintaskeditor4', 'taskviewer')" id="213227948:1286955294.0" plannedstartdate="2010-10-13 11:34:00" priority="1" status="1" subject="Поиск в отдельном потоке" />
@@ -495,7 +495,7 @@ File "runoutwiker.py", line 83, in &lt;module&gt;
 Хотя бы под Linux
 1.3.0
 </description>
-<task completiondate="2011-05-25 22:48:58.330504" id="62271632:1305266121.82" percentageComplete="100" plannedstartdate="2011-05-13 09:55:00" status="1" subject="Загрузка HTML из строки" />
+<task completiondate="2011-05-25 22:48:58.330504" expandedContexts="('taskviewer',)" id="62271632:1305266121.82" percentageComplete="100" plannedstartdate="2011-05-13 09:55:00" status="1" subject="Загрузка HTML из строки" />
 <task completiondate="2011-05-13 09:54:35.234738" expandedContexts="('taskviewer',)" id="76320656:1305221845.11" percentageComplete="100" plannedstartdate="2011-05-12 21:37:00" status="1" subject="Обработка открытия ссылок" />
 <task completiondate="2011-05-17 22:14:18.224155" id="86667920:1305221782.08" percentageComplete="100" plannedstartdate="2011-05-12 21:36:00" status="1" subject="Копирование текста по Ctrl+C" />
 <task completiondate="2011-05-13 21:58:12.554987" expandedContexts="('taskviewer',)" id="98038736:1305221804.03" percentageComplete="100" plannedstartdate="2011-05-12 21:36:00" status="1" subject="При наведении курсора на ссылку показывать адрес в статусной панели" />
@@ -517,7 +517,7 @@ File "runoutwiker.py", line 83, in &lt;module&gt;
 Имена секций и настроек вынести в переменные
 </description>
 </task>
-<task actualstartdate="2012-11-27 19:09:59.015218" id="82861b52-38a4-11e2-9efa-c86000d06e16" plannedstartdate="2012-11-27 19:09:59.015134" priority="6" status="1" subject="Избавиться от тегов &lt;BR&gt; перед заголовками &lt;H1&gt;" />
+<task actualstartdate="2012-11-27 19:09:59.015218" completiondate="2012-11-27 21:48:49.502833" expandedContexts="('taskviewer',)" id="82861b52-38a4-11e2-9efa-c86000d06e16" percentageComplete="100" plannedstartdate="2012-11-27 19:09:59.015134" priority="6" status="1" subject="Избавиться от тегов &lt;BR&gt; перед заголовками &lt;H1&gt;" />
 <task actualstartdate="2012-09-11 22:00:03.834505" id="83433332-fc3a-11e1-8b7a-c86000d06e16" plannedstartdate="2012-09-11 22:00:03.834449" priority="5" status="1" subject="Выпадающий список вкладок" />
 <task completiondate="2011-08-02 19:03:46.750000" expandedContexts="('taskviewer',)" id="83e03770-bc50-11e0-ab5b-00112fd2b1f8" percentageComplete="100" plannedstartdate="2011-08-01 19:11:00" priority="8" status="1" subject="Под Windows не показываются отрендеренные страницы, если вики открыта через относительные пути" />
 <task completiondate="2011-06-14 21:33:41.320140" expandedContexts="('taskviewer',)" id="84488016:1306862315.29" percentageComplete="100" plannedstartdate="2011-05-31 21:18:00" priority="8" status="1" subject="Ошибка при попытке открытия вики, если некоторые страницы недоступны для записи" />
@@ -699,7 +699,7 @@ Windows
 </task>
 <task completiondate="2011-10-13 23:44:43.557142" id="fa4f11e6-f5c2-11e0-841f-00112fd2b1f8" percentageComplete="100" plannedstartdate="2011-10-13 21:44:00" priority="8" status="1" subject="Возможность локализации плагинов" />
 <task expandedContexts="('taskviewer',)" id="fa8bdbf6-05dc-11e1-8566-00112fd2b1f8" plannedstartdate="2011-11-03 09:30:00" status="1" subject="Удаление заметок в корзину " />
-<task completiondate="2011-11-18 09:44:21.806313" id="fa8ccc28-0cee-11e1-9198-00112fd2b1f8" percentageComplete="100" plannedstartdate="2011-11-12 09:27:00" priority="7" status="1" subject="Избавиться от заглавных букв в именах модулей" />
+<task completiondate="2011-11-18 09:44:21.806313" expandedContexts="('taskviewer',)" id="fa8ccc28-0cee-11e1-9198-00112fd2b1f8" percentageComplete="100" plannedstartdate="2011-11-12 09:27:00" priority="7" status="1" subject="Избавиться от заглавных букв в именах модулей" />
 <task completiondate="2011-11-07 22:32:06.369905" expandedContexts="('taskviewer',)" id="fd00caa2-096c-11e1-914a-00112fd2b1f8" percentageComplete="100" plannedstartdate="2011-11-07 22:19:00" priority="8" status="1" subject="Перевод заголовокв панелей Tree и Attaches" />
 <task expandedContexts="('taskviewer',)" id="fdfb651e-012e-11e1-9a4a-00112fd2b1f8" plannedstartdate="2011-10-28 10:35:00" priority="6" status="1" subject="Викикоманда для изменения цвета шрифта" />
 <category categorizables="156092524:1289245433.88 fd00caa2-096c-11e1-914a-00112fd2b1f8" expandedContexts="('categoryviewerinnoteeditor', 'categoryviewerintaskeditor', 'categoryviewerintaskeditor1', 'categoryviewerintaskeditor2', 'categoryviewerintaskeditor3', 'categoryviewerintaskeditor4', 'categoryviewerintaskeditor5', 'categoryviewerintaskeditor6')" id="153172492:1289245366.49" status="1" subject="Локализация" />

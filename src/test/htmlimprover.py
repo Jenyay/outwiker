@@ -9,17 +9,19 @@ class HtmlImproverTest (unittest.TestCase):
     def test1 (self):
         src = ur"""<H2>Attach links</H2><P>Attach:file.odt<BR><A HREF="__attach/file.odt">file.odt</A><BR><A HREF="__attach/file.odt">alternative text</A><BR><A HREF="__attach/file with spaces.pdf">file with spaces.pdf</A><P><H2>Images</H2>"""
 
-        expectedResult = ur"""<H2>Attach links</H2></P>
+        expectedResult = ur"""
+<H2>Attach links</H2></P>
 
 <P>Attach:file.odt
 <BR><A HREF="__attach/file.odt">file.odt</A>
 <BR><A HREF="__attach/file.odt">alternative text</A>
 <BR><A HREF="__attach/file with spaces.pdf">file with spaces.pdf</A></P>
 
-<P><H2>Images</H2>"""
+<P>
+<H2>Images</H2>"""
 
         result = HtmlImprover.run (src)
-        self.assertEqual (expectedResult, result, result)
+        self.assertEqual (expectedResult, result)
     
 
     def test2 (self):
