@@ -7,4 +7,8 @@ expand = False
 [General]
 type = wiki
 tags = программистам
+datetime = 2012-12-01 11:52:13.573807
+
+[Misc]
+pageindex = 1
 

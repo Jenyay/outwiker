@@ -1,5 +1,5 @@
 [wiki]
-md5_hash = db3533e058e4052bb5c0597c8dd38131
+md5_hash = c1ef5e88220919a1d876983ac1a8e098
 
 [Tree]
 expand = True
@@ -8,4 +8,8 @@ expand = True
 type = wiki
 order = 8
 tags = программистам
+datetime = 2012-04-27 23:04:51.000000
+
+[Misc]
+pageindex = 1
 

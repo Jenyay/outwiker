@@ -4,6 +4,10 @@
 
 '''bzr branch lp:outwiker/trunk'''
 
+Для получения исходников последней стабильной версии выполните команду
+
+'''bzr branch lp:outwiker/stable'''
+
 Для выполнения этих команд должна быть установлена программа [[http://bazaar.canonical.com/en/ | Bazaar]].
 
 Для запуска программы из исходников должны быть установлены [[http://www.python.org/ | Python 2.7]] и библиотека [[http://wxpython.org/ | wxPython 2.8]].
