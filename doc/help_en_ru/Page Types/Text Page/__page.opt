@@ -1,8 +1,0 @@
-[Tree]
-expand = False
-
-[General]
-type = text
-order = 2
-tags = for users
-
