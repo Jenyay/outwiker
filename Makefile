@@ -1,5 +1,5 @@
-dirname=outwiker-1.7.0
-origname=outwiker_1.7.0.orig.tar
+dirname=outwiker-1.8.0
+origname=outwiker_1.8.0.orig.tar
 outwiker_dir=$(DESTDIR)/usr/share/outwiker/
 
 all:
@@ -21,7 +21,7 @@ install:
 	cp -r "src/help" $(outwiker_dir)
 	cp -r "src/images" $(outwiker_dir)
 	cp -r "src/locale" $(outwiker_dir)
-	cp -r "src/plugins" $(outwiker_dir)
+	# cp -r "src/plugins" $(outwiker_dir)
 	cp -r "src/styles" $(outwiker_dir)
 	cp "src/runoutwiker.py" $(outwiker_dir)
 	cp "src/version.txt" $(outwiker_dir)
@@ -57,10 +57,6 @@ plugin:
 	cd plugins/source; 7z a -r -aoa -xr!*.pyc ../../build/plugins/source.zip ./*; 7z a -r -aoa -xr!*.pyc ../../build/plugins/outwiker-plugins-all.zip ./*
 	rm -f build/plugins/style.zip
 	cd plugins/style; 7z a -r -aoa -xr!*.pyc ../../build/plugins/style.zip ./* ; 7z a -r -aoa -xr!*.pyc ../../build/plugins/outwiker-plugins-all.zip ./*
-	# rm -f build/plugins/testdebug.zip
-	# cd plugins/testdebug; 7z a -r -aoa -xr!*.pyc ../../build/plugins/testdebug.zip ./* ; 7z a -r -aoa -xr!*.pyc ../../build/plugins/outwiker-plugins-all.zip ./*
-	# rm -f build/plugins/testcounter.zip
-	# cd plugins/testcounter; 7z a -r -aoa -xr!*.pyc ../../build/plugins/testcounter.zip ./* ; 7z a -r -aoa -xr!*.pyc ../../build/plugins/outwiker-plugins-all.zip ./*
 	rm -f build/plugins/export2html.zip
 	cd plugins/export2html; 7z a -r -aoa -xr!*.pyc ../../build/plugins/export2html.zip ./*; 7z a -r -aoa -xr!*.pyc ../../build/plugins/outwiker-plugins-all.zip ./*
 	rm -f build/plugins/spoiler.zip
@@ -79,7 +75,7 @@ wintests:
 
 source: clean
 	mkdir -p build/$(dirname)
-	rsync -avz --exclude=.bzr --exclude=distrib --exclude=build --exclude=*.pyc --exclude=*.dll --exclude=*.exe * --exclude=src/.ropeproject build/$(dirname)/
+	rsync -avz --exclude=.bzr --exclude=distrib --exclude=build --exclude=*.pyc --exclude=*.dll --exclude=*.exe * --exclude=src/.ropeproject --exclude=src/test --exclude=src/setup_win.py --exclude=src/setup_tests.py --exclude=src/profile.py --exclude=src/tests.py --exclude=src/Microsoft.VC90.CRT.manifest --exclude=src/profiles --exclude=src/tools --exclude=doc --exclude=plugins --exclude=profiles --exclude=test --exclude=_update_version_bzr.py --exclude=outwiker_setup.iss --exclude=updateversion --exclude=updateversion.py build/$(dirname)/
 
 orig: source
 	cd build; tar -cvf $(origname) $(dirname)
