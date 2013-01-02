@@ -1,7 +1,10 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
+import os.path
+
 from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
+from outwiker.core.system import getOS
 
 from .i18n import get_
 from .preferencepanel import PreferencePanel
@@ -50,10 +53,16 @@ class Controller (object):
 
 
     def __onWikiParserPrepare (self, parser):
+        """
+        Вызывается до разбора викитекста. Добавление команды (:source:)
+        """
         parser.addCommand (CommandSource (parser, self._application.config))
 
 
     def __onPreferencesDialogCreate (self, dialog):
+        """
+        Добавление страницы с настройками
+        """
         prefPanel = PreferencePanel (dialog.treeBook, self._application.config)
 
         panelName = _(u"Source [Plugin]")
@@ -63,6 +72,9 @@ class Controller (object):
 
     @property
     def _isCurrentWikiPage (self):
+        """
+        Возвращает True, если текущая страница - это викистраница, и False в противном случае
+        """
         return (self._application.selectedPage != None and
                 self._application.selectedPage.getTypeString() == u"wiki")
 
@@ -77,15 +89,20 @@ class Controller (object):
         pageView = self._getPageView()
 
         helpString = _(u"Source Code (:source ...:)")
+        image = self._getImagePath ("source.png")
+
         pageView.addTool (pageView.commandsMenu, 
                 self.SOURCE_TOOL_ID, 
                 self.__onInsertCommand, 
                 helpString, 
                 helpString, 
-                None)
+                image)
 
 
     def __onInsertCommand (self, event):
+        """
+        Вставка команды (:source:) в редактор
+        """
         config = self._plugin.config
 
         startCommand = u'(:source lang="{language}" tabwidth={tabwidth}:)\n'.format (
@@ -104,3 +121,9 @@ class Controller (object):
         Получить указатель на панель представления страницы
         """
         return self._application.mainWindow.pagePanel.pageView
+
+
+    def _getImagePath (self, imageName):
+        imagedir = unicode (os.path.join (os.path.dirname (__file__), "images"), getOS().filesEncoding)
+        fname = os.path.join (imagedir, imageName)
+        return fname
