@@ -9,13 +9,14 @@ from outwiker.gui.preferences.configelements import StringElement, IntegerElemen
 from outwiker.core.system import getOS
 
 from .sourceconfig import SourceConfig
+from .i18n import get_
 
 
 class PreferencePanel (wx.Panel):
     """
     Панель с настройками
     """
-    def __init__ (self, parent, config, lang):
+    def __init__ (self, parent, config):
         """
         parent - родитель панели (должен быть wx.Treebook)
         config - настройки из plugin._application.config
@@ -23,7 +24,8 @@ class PreferencePanel (wx.Panel):
         """
         wx.Panel.__init__ (self, parent, style=wx.TAB_TRAVERSAL)
 
-        self._ = lang
+        global _
+        _ = get_()
 
         self.__createGui()
         self.__controller = PrefPanelController (self, config)
@@ -46,7 +48,7 @@ class PreferencePanel (wx.Panel):
         """
         Создать интерфейс, связанный с языком программирования по умолчанию
         """
-        languageLabel = wx.StaticText(self, -1, self._(u"Default Programming Language"))
+        languageLabel = wx.StaticText(self, -1, _(u"Default Programming Language"))
         self.languageComboBox = wx.ComboBox (self, style=wx.CB_DROPDOWN | wx.CB_READONLY )
         self.languageComboBox.SetMinSize (wx.Size (100, -1))
 
@@ -69,7 +71,7 @@ class PreferencePanel (wx.Panel):
         """
         Создать интерфейс, связанный с размером табуляции
         """
-        tabWidthLabel = wx.StaticText(self, -1, self._(u"Default Tab Width"))
+        tabWidthLabel = wx.StaticText(self, -1, _(u"Default Tab Width"))
         self.tabWidthSpin = wx.SpinCtrl (
                 self, 
                 style=wx.SP_ARROW_KEYS|wx.TE_AUTO_URL

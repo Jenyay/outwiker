@@ -11,6 +11,7 @@ from outwiker.core.version import Version, StatusSet
 
 from .sourceconfig import SourceConfig
 from .controller import Controller
+from .i18n import set_
 
 
 # Для работы этого плагина требуется OutWiker 1.6.0.632
@@ -93,6 +94,8 @@ if __name__ == "__main__":
                 _ = self._init_i18n (domain, langdir)
             except BaseException as e:
                 print e
+
+            set_(_)
 
 
         def destroy (self):

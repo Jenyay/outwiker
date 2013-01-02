@@ -3,6 +3,10 @@
 
 from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
 
+from .i18n import get_
+from .preferencepanel import PreferencePanel
+from .commandsource import CommandSource
+
 
 class Controller (object):
     """
@@ -20,8 +24,11 @@ class Controller (object):
 
     def initialize (self):
         """
-        Инициализация контроллера при активации плагина. Подпись на нужные события
+        Инициализация контроллера при активации плагина. Подписка на нужные события
         """
+        global _
+        _ = get_()
+
         self._application.onWikiParserPrepare += self.__onWikiParserPrepare
         self._application.onPageViewCreate += self.__onPageViewCreate
         self._application.onPreferencesDialogCreate += self.__onPreferencesDialogCreate
@@ -43,13 +50,11 @@ class Controller (object):
 
 
     def __onWikiParserPrepare (self, parser):
-        from .commandsource import CommandSource
         parser.addCommand (CommandSource (parser, self._application.config))
 
 
     def __onPreferencesDialogCreate (self, dialog):
-        from .preferencepanel import PreferencePanel
-        prefPanel = PreferencePanel (dialog.treeBook, self._application.config, _)
+        prefPanel = PreferencePanel (dialog.treeBook, self._application.config)
 
         panelName = _(u"Source [Plugin]")
         panelsList = [PreferencePanelInfo (prefPanel, panelName)]
