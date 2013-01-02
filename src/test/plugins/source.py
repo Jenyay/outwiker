@@ -4,6 +4,8 @@
 import unittest
 import os.path
 
+import wx
+
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
@@ -13,6 +15,89 @@ from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
 from outwiker.pages.wiki.htmlgenerator import HtmlGenerator
 from test.utils import removeWiki
+
+
+class FakeSpinCtrl (object):
+    """
+    Заглушка вместо SpinCtrl
+    """
+    def __init__ (self, value=0):
+        self.Value = value
+
+
+    def GetValue (self):
+        return self.Value
+
+
+    def SetValue (self, value):
+        self.Value = value
+
+
+    def SetRange(self, minVal, maxVal):
+        pass
+
+
+class FakeComboBox (object):
+    """
+    Заглушка вместо ComboBox
+    """
+    def __init__ (self):
+        self.Clear()
+
+
+    def Clear (self):
+        self._items = []
+        self.Selection = None
+
+
+    def AppendItems(self, strings):
+        self._items += strings
+
+
+    def SetSelection(self, n):
+        self.Selection = n
+
+
+    def GetSelection(self):
+        return self.Selection
+
+        
+    def GetValue (self):
+        if self.Selection != None:
+            return self._items[self.Selection]
+
+
+class FakeInsertDialog (object):
+    """
+    Заглушка вместо реального диалога для вставки команды (:source:)
+    """
+    def __init__ (self, resultDialog):
+        self._resultDialog = resultDialog
+
+        # Заглушки вместо интерфейса
+        self.tabWidthSpin = FakeSpinCtrl ()
+        self.languageComboBox = FakeComboBox ()
+
+
+    def ShowModal (self):
+        return self._resultDialog
+
+
+    @property
+    def tabWidth (self):
+        """
+        Размер табуляции
+        """
+        return self.tabWidthSpin.GetValue()
+
+
+    @property
+    def language (self):
+        """
+        Выбранный язык
+        """
+        return self.languageComboBox.GetValue()
+
 
 
 class SourcePluginTest (unittest.TestCase):
@@ -25,7 +110,10 @@ class SourcePluginTest (unittest.TestCase):
 
         self.loader = PluginsLoader(Application)
         self.loader.load (dirlist)
-        self.loader[self.__pluginname].config.tabWidth.value = 4
+
+        self.config = self.loader[self.__pluginname].config
+        self.config.tabWidth.value = 4
+        self.config.defaultLanguage.remove_option()
         
         self.factory = ParserFactory()
         self.parser = self.factory.make (self.testPage, Application.config)
@@ -312,7 +400,7 @@ def hello (count):
 		print "Hello world!!!"
 (:sourceend:)
 '''
-        self.loader[self.__pluginname].config.tabWidth.value = 10
+        self.config.tabWidth.value = 10
 
         self.testPage.content = text
 
@@ -343,7 +431,7 @@ def hello (count):
 		print "Hello world!!!"
 (:sourceend:)
 '''
-        self.loader[self.__pluginname].config.tabWidth.value = 4
+        self.config.tabWidth.value = 4
 
         self.testPage.content = text
 
@@ -359,3 +447,56 @@ def hello (count):
         self.assertTrue (innerString2 in result)
         self.assertTrue (innerString3 in result)
         self.assertFalse (u"(:source" in result)
+
+
+    def testDialogController1 (self):
+        """
+        Тест контроллера диалога для вставки команды (:source:)
+        """
+        dialog = FakeInsertDialog (resultDialog=wx.ID_CANCEL)
+        controller = self.loader[self.__pluginname].insertDialogControllerClass(dialog, self.config)
+        result = controller.showDialog()
+
+        self.assertEqual (result, None)
+
+
+    def testDialogControllerResult1 (self):
+        """
+        Тест контроллера диалога для вставки команды (:source:)
+        """
+        self.config.defaultLanguage.value = "text"
+        self.config.tabWidth.value = 4
+
+        dialog = FakeInsertDialog (resultDialog=wx.ID_OK)
+        controller = self.loader[self.__pluginname].insertDialogControllerClass(dialog, self.config)
+        result = controller.showDialog()
+
+        self.assertEqual (result, (u'(:source lang="text" tabwidth=4:)\n', u'\n(:sourceend:)'))
+
+
+    def testDialogControllerResult2 (self):
+        """
+        Тест контроллера диалога для вставки команды (:source:)
+        """
+        self.config.defaultLanguage.value = "python"
+        self.config.tabWidth.value = 8
+
+        dialog = FakeInsertDialog (resultDialog=wx.ID_OK)
+        controller = self.loader[self.__pluginname].insertDialogControllerClass(dialog, self.config)
+        result = controller.showDialog()
+
+        self.assertEqual (result, (u'(:source lang="python" tabwidth=8:)\n', u'\n(:sourceend:)'))
+
+
+    def testDialogControllerResult3 (self):
+        """
+        Тест контроллера диалога для вставки команды (:source:)
+        """
+        self.config.defaultLanguage.value = "text"
+        self.config.tabWidth.remove_option()
+
+        dialog = FakeInsertDialog (resultDialog=wx.ID_OK)
+        controller = self.loader[self.__pluginname].insertDialogControllerClass(dialog, self.config)
+        result = controller.showDialog()
+
+        self.assertEqual (result, (u'(:source lang="text" tabwidth=4:)\n', u'\n(:sourceend:)'))

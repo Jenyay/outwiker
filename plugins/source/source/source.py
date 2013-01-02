@@ -12,6 +12,7 @@ from outwiker.core.version import Version, StatusSet
 from .sourceconfig import SourceConfig
 from .controller import Controller
 from .i18n import set_
+from .insertdialogcontroller import InsertDialogController
 
 
 # Для работы этого плагина требуется OutWiker 1.6.0.632
@@ -41,7 +42,10 @@ else:
 
         def __correctSysPath (self):
             cmd_folder = unicode (os.path.dirname(os.path.abspath(__file__)), getOS().filesEncoding )
-            syspath = [unicode (item, getOS().filesEncoding) if type (item) != type(u"") else item for item in sys.path]
+
+            syspath = [unicode (item, getOS().filesEncoding) 
+                    if type (item) != type(u"") 
+                    else item for item in sys.path]
 
             if cmd_folder not in syspath:
                 sys.path.insert(0, cmd_folder)
@@ -103,3 +107,12 @@ if __name__ == "__main__":
             Уничтожение (выгрузка) плагина. Здесь плагин должен отписаться от всех событий
             """
             self.__controler.destroy()
+
+
+        @property
+        def insertDialogControllerClass (self):
+            """
+            Возвращает класс (не экземпляр класса) InsertDialogController.
+            Используется для тестирования
+            """
+            return InsertDialogController

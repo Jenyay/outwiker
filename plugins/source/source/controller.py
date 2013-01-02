@@ -8,7 +8,8 @@ from outwiker.core.system import getOS
 
 from .i18n import get_
 from .preferencepanel import PreferencePanel
-from .commandsource import CommandSource
+from .insertdialog import InsertDialog
+from .insertdialogcontroller import InsertDialogController
 
 
 class Controller (object):
@@ -56,6 +57,7 @@ class Controller (object):
         """
         Вызывается до разбора викитекста. Добавление команды (:source:)
         """
+        from .commandsource import CommandSource
         parser.addCommand (CommandSource (parser, self._application.config))
 
 
@@ -105,15 +107,23 @@ class Controller (object):
         """
         config = self._plugin.config
 
-        startCommand = u'(:source lang="{language}" tabwidth={tabwidth}:)\n'.format (
-                language=config.defaultLanguage.value,
-                tabwidth=config.tabWidth.value
-                )
+        dlg = InsertDialog (self._application.mainWindow)
 
-        endCommand = u'\n(:sourceend:)'
+        dlgController = InsertDialogController (dlg, config)
+        result = dlgController.showDialog ()
 
-        pageView = self._getPageView()
-        pageView.codeEditor.turnText (startCommand, endCommand)
+        dlg.Destroy()
+
+        if result != None:
+            startCommand = u'(:source lang="{language}" tabwidth={tabwidth}:)\n'.format (
+                    language=config.defaultLanguage.value,
+                    tabwidth=config.tabWidth.value
+                    )
+
+            endCommand = u'\n(:sourceend:)'
+
+            pageView = self._getPageView()
+            pageView.codeEditor.turnText (startCommand, endCommand)
 
 
     def _getPageView (self):
