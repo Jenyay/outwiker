@@ -21,6 +21,10 @@ class ComboBox (Control):
         self._items += strings
 
 
+    def GetItems (self):
+        return self._items
+
+
     def SetSelection(self, n):
         self.Selection = n
 

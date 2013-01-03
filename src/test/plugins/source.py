@@ -93,6 +93,7 @@ class SourcePluginTest (unittest.TestCase):
 
     def testPluginLoad (self):
         self.assertEqual ( len (self.loader), 1)
+        self.assertGreater (len (self.loader[self.__pluginname].url), 0)
 
 
     def testEmptyCommand (self):
@@ -414,6 +415,7 @@ def hello (count):
         """
         Тест контроллера диалога для вставки команды (:source:)
         """
+        self.config.languageList.value = [u"python", u"cpp", u"haskell", u"text"]
         self.config.defaultLanguage.value = "text"
         self.config.tabWidth.value = 4
 
@@ -444,6 +446,7 @@ def hello (count):
         """
         Тест контроллера диалога для вставки команды (:source:)
         """
+        self.config.languageList.value = [u"python", u"cpp", u"haskell", u"text"]
         self.config.defaultLanguage.value = "text"
         self.config.tabWidth.remove_option()
 
@@ -453,3 +456,65 @@ def hello (count):
         result = controller.showDialog()
 
         self.assertEqual (result, (u'(:source lang="text" tabwidth=4:)\n', u'\n(:sourceend:)'))
+
+
+    def testSourceConfig1 (self):
+        self.config.defaultLanguage.value = u"python"
+        self.config.tabWidth.value = 8
+        self.config.dialogWidth.value = 100
+        self.config.dialogHeight.value = 200
+        self.config.languageList.value = [u"python", u"cpp", u"haskell"]
+
+        self.assertEqual (self.config.defaultLanguage.value, u"python")
+        self.assertEqual (self.config.tabWidth.value, 8)
+        self.assertEqual (self.config.dialogWidth.value, 100)
+        self.assertEqual (self.config.dialogHeight.value, 200)
+        self.assertEqual (self.config.languageList.value, 
+                [u"python", u"cpp", u"haskell"])
+
+
+    def testDialogValues1 (self):
+        self.config.languageList.value = [u"python", u"cpp", u"haskell"]
+        self.config.defaultLanguage.value = u"haskell"
+        self.config.tabWidth.value = 10
+
+        dialog = FakeInsertDialog ()
+        controller = self.loader[self.__pluginname].insertDialogControllerClass(dialog, self.config)
+        controller.showDialog()
+
+        self.assertEqual (dialog.languageComboBox.GetItems(), 
+                [u"python", u"cpp", u"haskell"])
+
+        self.assertEqual (dialog.languageComboBox.GetSelection(), 2)
+        self.assertEqual (dialog.languageComboBox.GetValue(), u"haskell")
+
+        self.assertEqual (dialog.tabWidthSpin.GetValue(), 10)
+
+
+    def testDialogValues2 (self):
+        self.config.languageList.value = []
+        self.config.defaultLanguage.value = u"haskell"
+
+        dialog = FakeInsertDialog ()
+        controller = self.loader[self.__pluginname].insertDialogControllerClass(dialog, self.config)
+        controller.showDialog()
+
+        self.assertEqual (dialog.languageComboBox.GetItems(), [u"text"])
+
+        self.assertEqual (dialog.languageComboBox.GetSelection(), 0)
+        self.assertEqual (dialog.languageComboBox.GetValue(), u"text")
+
+
+    def testDialogValues3 (self):
+        self.config.languageList.value = [u"python", u"cpp", u"haskell"]
+        self.config.defaultLanguage.value = u"c"
+
+        dialog = FakeInsertDialog ()
+        controller = self.loader[self.__pluginname].insertDialogControllerClass(dialog, self.config)
+        controller.showDialog()
+
+        self.assertEqual (dialog.languageComboBox.GetItems(), [u"python", u"cpp", u"haskell"])
+
+        self.assertEqual (dialog.languageComboBox.GetSelection(), 0)
+        self.assertEqual (dialog.languageComboBox.GetValue(), u"python")
+
