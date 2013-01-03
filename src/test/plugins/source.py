@@ -67,7 +67,16 @@ class FakeComboBox (object):
             return self._items[self.Selection]
 
 
-class FakeInsertDialog (object):
+class FakeWindow (object):
+    def GetSizeTuple (self):
+        return (0, 0)
+
+
+    def SetSizeWH (self, width, height):
+        pass
+
+
+class FakeInsertDialog (FakeWindow):
     """
     Заглушка вместо реального диалога для вставки команды (:source:)
     """
