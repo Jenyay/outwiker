@@ -15,68 +15,12 @@ from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
 from outwiker.pages.wiki.htmlgenerator import HtmlGenerator
 from test.utils import removeWiki
+from test.fakewx.spinctrl import SpinCtrl
+from test.fakewx.combobox import ComboBox
+from test.fakewx.window import Window
 
 
-class FakeSpinCtrl (object):
-    """
-    Заглушка вместо SpinCtrl
-    """
-    def __init__ (self, value=0):
-        self.Value = value
-
-
-    def GetValue (self):
-        return self.Value
-
-
-    def SetValue (self, value):
-        self.Value = value
-
-
-    def SetRange(self, minVal, maxVal):
-        pass
-
-
-class FakeComboBox (object):
-    """
-    Заглушка вместо ComboBox
-    """
-    def __init__ (self):
-        self.Clear()
-
-
-    def Clear (self):
-        self._items = []
-        self.Selection = None
-
-
-    def AppendItems(self, strings):
-        self._items += strings
-
-
-    def SetSelection(self, n):
-        self.Selection = n
-
-
-    def GetSelection(self):
-        return self.Selection
-
-        
-    def GetValue (self):
-        if self.Selection != None:
-            return self._items[self.Selection]
-
-
-class FakeWindow (object):
-    def GetSizeTuple (self):
-        return (0, 0)
-
-
-    def SetSizeWH (self, width, height):
-        pass
-
-
-class FakeInsertDialog (FakeWindow):
+class FakeInsertDialog (Window):
     """
     Заглушка вместо реального диалога для вставки команды (:source:)
     """
@@ -84,8 +28,8 @@ class FakeInsertDialog (FakeWindow):
         self._resultDialog = resultDialog
 
         # Заглушки вместо интерфейса
-        self.tabWidthSpin = FakeSpinCtrl ()
-        self.languageComboBox = FakeComboBox ()
+        self.tabWidthSpin = SpinCtrl ()
+        self.languageComboBox = ComboBox ()
 
 
     def ShowModal (self):
