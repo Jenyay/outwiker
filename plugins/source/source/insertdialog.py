@@ -66,7 +66,9 @@ class InsertDialog (wx.Dialog):
         Создать интерфейс, связанный с языком программирования по умолчанию
         """
         languageLabel = wx.StaticText(self, -1, _(u"Programming Language"))
-        self.languageComboBox = wx.ComboBox (self, style=wx.CB_DROPDOWN | wx.CB_READONLY )
+        self.languageComboBox = wx.ComboBox (self, 
+                style=wx.CB_DROPDOWN | wx.CB_READONLY | wx.CB_SORT)
+
         self.languageComboBox.SetMinSize (wx.Size (150, -1))
 
         mainSizer.Add (

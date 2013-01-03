@@ -15,9 +15,9 @@ from .i18n import set_
 from .insertdialogcontroller import InsertDialogController
 
 
-# Для работы этого плагина требуется OutWiker 1.6.0.632
-if getCurrentVersion() < Version (1, 6, 0, 632, status=StatusSet.DEV):
-    print ("Source plugin. OutWiker version requirement: 1.6.0.632")
+# Для работы этого плагина требуется OutWiker 1.7
+if getCurrentVersion() < Version (1, 7, 0, 680, status=StatusSet.DEV):
+    print ("Source plugin. OutWiker version requirement: 1.7.0.680")
 else:
     class PluginSource (Plugin):
         """
@@ -88,6 +88,11 @@ if __name__ == "__main__":
         @property
         def version (self):
             return self.__version
+
+        
+        @property
+        def url (self):
+            return _(u"http://jenyay.net/Outwiker/SourcePluginEn")
 
 
         def _initlocale (self, domain):

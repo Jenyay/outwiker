@@ -35,63 +35,65 @@ class PreferencePanel (wx.Panel):
         """
         Создать элементы управления
         """
-        mainSizer = wx.FlexGridSizer (2, 0)
+        mainSizer = wx.FlexGridSizer (0, 1)
         mainSizer.AddGrowableCol(0)
         mainSizer.AddGrowableRow(1)
 
-        # self.__createTabWidthGui (mainSizer)
-        # self.__createLanguageGui (mainSizer)
+        languageLabel = wx.StaticText(self, -1, _(u"Used Languages"))
+        mainSizer.Add (
+                languageLabel, 
+                proportion=1,
+                flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+                border=2)
+
+        self.__createLangGui (mainSizer)
         self.SetSizer(mainSizer)
 
 
-    # def __createLanguageGui (self, mainSizer):
-    #     """
-    #     Создать интерфейс, связанный с языком программирования по умолчанию
-    #     """
-    #     languageLabel = wx.StaticText(self, -1, _(u"Default Programming Language"))
-    #     self.languageComboBox = wx.ComboBox (self, style=wx.CB_DROPDOWN | wx.CB_READONLY )
-    #     self.languageComboBox.SetMinSize (wx.Size (100, -1))
+    def __createLangGui (self, mainSizer):
+        """
+        Создание элементов управления, связанных с выбором используемых языков
+        """
+        # Сайзер для расположения списка языков и кнопок
+        langSizer = wx.FlexGridSizer (0, 2)
+        langSizer.AddGrowableRow (0)
+        langSizer.AddGrowableCol (0)
 
-    #     mainSizer.Add (
-    #             languageLabel, 
-    #             proportion=1,
-    #             flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-    #             border=2
-    #             )
+        self.langList = wx.CheckListBox (self, -1)
+        langSizer.Add (
+                self.langList,
+                proportion=1,
+                flag = wx.ALL | wx.EXPAND,
+                border=2)
 
-    #     mainSizer.Add (
-    #             self.languageComboBox, 
-    #             proportion=1,
-    #             flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT,
-    #             border=2
-    #             )
+        # Кнопки
+        buttonsSizer = wx.BoxSizer (wx.VERTICAL)
+        self.selectAllButton = wx.Button (self, label=_(u"Select All"))
+        self.clearButton = wx.Button (self, label=_(u"Clear"))
 
+        buttonsSizer.Add (
+                self.selectAllButton,
+                proportion=1,
+                flag=wx.ALL,
+                border=2)
 
-    # def __createTabWidthGui (self, mainSizer):
-    #     """
-    #     Создать интерфейс, связанный с размером табуляции
-    #     """
-    #     tabWidthLabel = wx.StaticText(self, -1, _(u"Default Tab Width"))
-    #     self.tabWidthSpin = wx.SpinCtrl (
-    #             self, 
-    #             style=wx.SP_ARROW_KEYS|wx.TE_AUTO_URL
-    #             )
-    #     self.tabWidthSpin.SetMinSize (wx.Size (100, -1))
+        buttonsSizer.Add (
+                self.clearButton,
+                proportion=1,
+                flag=wx.ALL,
+                border=2)
 
+        langSizer.Add (
+                buttonsSizer,
+                proportion=1,
+                flag=wx.ALL,
+                border=2)
 
-    #     mainSizer.Add (
-    #             tabWidthLabel, 
-    #             proportion=1,
-    #             flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-    #             border=2
-    #             )
-
-    #     mainSizer.Add (
-    #             self.tabWidthSpin, 
-    #             proportion=1,
-    #             flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT,
-    #             border=2
-    #             )
+        mainSizer.Add (
+                langSizer,
+                proportion=1,
+                flag=wx.ALL | wx.EXPAND,
+                border=2)
 
 
     def LoadState(self):
@@ -111,31 +113,68 @@ class PrefPanelController (object):
         self.__owner = owner
         self.__config = SourceConfig (config)
 
-        # self.MIN_TAB_WIDTH = 1
-        # self.MAX_TAB_WIDTH = 50
+        self.__owner.selectAllButton.Bind (wx.EVT_BUTTON, self._onSelectAll)
+        self.__owner.clearButton.Bind (wx.EVT_BUTTON, self._onClear)
 
 
     def loadState (self):
-        # self.__tabWidthOption = IntegerElement (
-        #         self.__config.tabWidth, 
-        #         self.__owner.tabWidthSpin, 
-        #         self.MIN_TAB_WIDTH, 
-        #         self.MAX_TAB_WIDTH
-        #         )
+        allLanguages = self._getAllLanguages ()
+        self.__owner.langList.Clear()
+        self.__owner.langList.AppendItems (allLanguages)
 
-        # languages = getLangList()
-        # self.__owner.languageComboBox.Clear()
-        # self.__owner.languageComboBox.AppendItems (languages)
+        # Уберем языки, которых нет в списке
+        selectedLanguages = [item for item in self.__config.languageList.value if item in allLanguages]
 
-        # try:
-        #     selindex = languages.index (self.__config.defaultLanguage.value.lower().strip())
-        #     self.__owner.languageComboBox.SetSelection (selindex)
-        # except ValueError:
-        #     self.__owner.languageComboBox.SetSelection (0)
-        pass
+        self.__owner.langList.SetCheckedStrings (selectedLanguages)
 
 
     def save (self):
-        # self.__tabWidthOption.save()
-        # self.__config.defaultLanguage.value = self.__owner.languageComboBox.GetValue()
-        pass
+        self.__config.languageList.value = self.__owner.langList.GetCheckedStrings()
+
+
+    def _onSelectAll (self, event):
+        self.__owner.langList.SetChecked (range (self.__owner.langList.GetCount()))
+
+
+    def _onClear (self, event):
+        self.__owner.langList.SetChecked ([])
+
+
+    def _getAllLanguages (self):
+        """
+        Получить список всех языков, о которых знает pygments
+        """
+        from .pygments.lexers._mapping import LEXERS
+        languages = [self._getLongestName (lexer[2]).lower() for lexer in LEXERS.values()]
+
+        # Сделаем некоторые замены
+        languages = self._replaceLangItem (languages, "php3", "php")
+
+        languages.sort()
+        return languages
+
+
+    def _replaceLangItem (self, items, oldname, newname):
+        """
+        Заменить элемент в списке
+        Возвращает новый список
+        """
+        return [newname if item == oldname else item for item in items]
+
+
+    @staticmethod
+    def _getLongestName (namelist):
+        """
+        Возвращает самое длинное название языка из списка имен одного и того же языка
+        """
+        maxlen = 0
+        bestname = u""
+
+        for name in namelist:
+            if len (name) > maxlen:
+                maxlen = len (name)
+                bestname = name
+
+        return bestname
+
+

@@ -5,9 +5,6 @@ import wx
 
 from outwiker.gui.preferences.configelements import IntegerElement
 
-from .utilites import getLangList
-
-
 class InsertDialogController (object):
     """
     Класс для управления диалогом InsertDialog
@@ -76,7 +73,12 @@ class InsertDialogController (object):
                 self.MAX_TAB_WIDTH
                 )
 
-        languages = getLangList()
+        languages = [item for item in self._config.languageList.value if len (item.strip()) > 0]
+
+        # Если не выбран ни один из языков, добавляем "text"
+        if len (languages) == 0:
+            languages = [u"text"]
+
         self._dialog.languageComboBox.Clear()
         self._dialog.languageComboBox.AppendItems (languages)
 
@@ -89,7 +91,7 @@ class InsertDialogController (object):
 
     def saveState (self):
         """
-        Сохранить настрйоки диалога
+        Сохранить настройки диалога
         """
         self._tabWidthOption.save()
         self._config.defaultLanguage.value = self._dialog.languageComboBox.GetValue()
