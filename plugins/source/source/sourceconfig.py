@@ -52,6 +52,24 @@ class SourceConfig (object):
                 languageListOption, 
                 self.DEFAULT_LANGUAGE_LIST)
 
+        # Размеры диалога для вставки команды (:source:)
+        self.DEFAULT_DIALOG_WIDTH = -1
+        self.DEFAULT_DIALOG_HEIGHT = -1
+
+        dialogWidthOption = u"DialogWidth"
+        dialogHeightOption = u"DialogHeight"
+
+        self.__dialogWidth = IntegerOption (self.__config, 
+                section, 
+                dialogWidthOption, 
+                self.DEFAULT_DIALOG_WIDTH)
+
+        self.__dialogHeight = IntegerOption (self.__config, 
+                section, 
+                dialogHeightOption, 
+                self.DEFAULT_DIALOG_HEIGHT)
+
+
 
     @property
     def tabWidth (self):
@@ -66,3 +84,13 @@ class SourceConfig (object):
     @property
     def languageList (self):
         return self.__languageList
+
+
+    @property
+    def dialogWidth (self):
+        return self.__dialogWidth
+
+
+    @property
+    def dialogHeight (self):
+        return self.__dialogHeight

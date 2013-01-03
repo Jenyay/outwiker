@@ -20,7 +20,6 @@ class InsertDialog (wx.Dialog):
 
         self.__createGui()
         self.languageComboBox.SetFocus()
-        self.Fit()
         self.Center(wx.CENTRE_ON_SCREEN)
 
 
@@ -48,6 +47,7 @@ class InsertDialog (wx.Dialog):
 
         self.SetSizer(mainSizer)
         self.Layout()
+        self.Fit()
 
 
     def __createOkCancelButtons (self, mainSizer):
@@ -65,7 +65,7 @@ class InsertDialog (wx.Dialog):
         """
         Создать интерфейс, связанный с языком программирования по умолчанию
         """
-        languageLabel = wx.StaticText(self, -1, _(u"Programming Language"))
+        languageLabel = wx.StaticText(self, -1, _(u"Language"))
         self.languageComboBox = wx.ComboBox (self, 
                 style=wx.CB_DROPDOWN | wx.CB_READONLY | wx.CB_SORT)
 

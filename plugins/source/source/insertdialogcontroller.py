@@ -88,6 +88,12 @@ class InsertDialogController (object):
         except ValueError:
             self._dialog.languageComboBox.SetSelection (0)
 
+        currentWidth, currentHeight = self._dialog.GetSizeTuple ()
+        dialogWidth = max (self._config.dialogWidth.value, currentWidth)
+        dialogHeight = max (self._config.dialogHeight.value, currentHeight)
+
+        self._dialog.SetSizeWH (dialogWidth, dialogHeight)
+
 
     def saveState (self):
         """
@@ -95,3 +101,7 @@ class InsertDialogController (object):
         """
         self._tabWidthOption.save()
         self._config.defaultLanguage.value = self._dialog.languageComboBox.GetValue()
+
+        currentWidth, currentHeight = self._dialog.GetSizeTuple ()
+        self._config.dialogWidth.value = currentWidth
+        self._config.dialogHeight.value = currentHeight
