@@ -17,23 +17,19 @@ from outwiker.pages.wiki.htmlgenerator import HtmlGenerator
 from test.utils import removeWiki
 from test.fakewx.spinctrl import SpinCtrl
 from test.fakewx.combobox import ComboBox
-from test.fakewx.window import Window
+from test.fakewx.dialog import Dialog
 
 
-class FakeInsertDialog (Window):
+class FakeInsertDialog (Dialog):
     """
     Заглушка вместо реального диалога для вставки команды (:source:)
     """
-    def __init__ (self, resultDialog):
-        self._resultDialog = resultDialog
+    def __init__ (self):
+        super (FakeInsertDialog, self).__init__ ()
 
         # Заглушки вместо интерфейса
         self.tabWidthSpin = SpinCtrl ()
         self.languageComboBox = ComboBox ()
-
-
-    def ShowModal (self):
-        return self._resultDialog
 
 
     @property
@@ -406,7 +402,8 @@ def hello (count):
         """
         Тест контроллера диалога для вставки команды (:source:)
         """
-        dialog = FakeInsertDialog (resultDialog=wx.ID_CANCEL)
+        dialog = FakeInsertDialog ()
+        dialog.SetReturnCode (wx.ID_CANCEL)
         controller = self.loader[self.__pluginname].insertDialogControllerClass(dialog, self.config)
         result = controller.showDialog()
 
@@ -420,7 +417,8 @@ def hello (count):
         self.config.defaultLanguage.value = "text"
         self.config.tabWidth.value = 4
 
-        dialog = FakeInsertDialog (resultDialog=wx.ID_OK)
+        dialog = FakeInsertDialog ()
+        dialog.SetReturnCode (wx.ID_OK)
         controller = self.loader[self.__pluginname].insertDialogControllerClass(dialog, self.config)
         result = controller.showDialog()
 
@@ -434,7 +432,8 @@ def hello (count):
         self.config.defaultLanguage.value = "python"
         self.config.tabWidth.value = 8
 
-        dialog = FakeInsertDialog (resultDialog=wx.ID_OK)
+        dialog = FakeInsertDialog ()
+        dialog.SetReturnCode (wx.ID_OK)
         controller = self.loader[self.__pluginname].insertDialogControllerClass(dialog, self.config)
         result = controller.showDialog()
 
@@ -448,7 +447,8 @@ def hello (count):
         self.config.defaultLanguage.value = "text"
         self.config.tabWidth.remove_option()
 
-        dialog = FakeInsertDialog (resultDialog=wx.ID_OK)
+        dialog = FakeInsertDialog ()
+        dialog.SetReturnCode (wx.ID_OK)
         controller = self.loader[self.__pluginname].insertDialogControllerClass(dialog, self.config)
         result = controller.showDialog()
 
