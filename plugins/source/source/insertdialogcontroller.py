@@ -17,22 +17,13 @@ class InsertDialogController (object):
         self._dialog = dialog
         self._config = config
 
-        self.MIN_TAB_WIDTH = 1
+        self.MIN_TAB_WIDTH = 0
         self.MAX_TAB_WIDTH = 50
 
         # Результат работы диалога
         # Если пользователь в диалоге нажал кнопку Cancel, _result = None,
         # иначе хранит кортеж из двух значений: (начало команды, завершение команды)
         self._result = None
-
-
-    @property
-    def result (self):
-        """
-        Результат работы диалога
-        Если пользователь в диалоге нажал кнопку Cancel, _result = None, иначе возвращает кортеж из двух значений: (начало команды, завершение команды)
-        """
-        return self._result
 
 
     def showDialog (self):
@@ -44,17 +35,25 @@ class InsertDialogController (object):
 
         self.loadState()
 
-        if self._dialog.ShowModal() == wx.ID_OK:
+        result = self._dialog.ShowModal()
+        if result == wx.ID_OK:
             self.saveState()
-            self._resultStr = self._createCommandStrings (self._dialog)
 
-        return self._resultStr
+        return result
 
 
-    def _createCommandStrings (self, dialog):
-        startCommand = u'(:source lang="{language}" tabwidth={tabwidth}:)\n'.format (
-                language=dialog.language,
-                tabwidth=dialog.tabWidth
+    def getCommandStrings (self):
+        """
+        Возвращает кортеж из двух строк, описывающих начало и конец команды
+        """
+        if self._dialog.tabWidth != 0:
+            startCommand = u'(:source lang="{language}" tabwidth={tabwidth}:)\n'.format (
+                language=self._dialog.language,
+                tabwidth=self._dialog.tabWidth
+                )
+        else:
+            startCommand = u'(:source lang="{language}":)\n'.format (
+                language=self._dialog.language
                 )
 
         endCommand = u'\n(:sourceend:)'
@@ -66,12 +65,8 @@ class InsertDialogController (object):
         """
         Загрузить настройки и установить их в диалоге
         """
-        self._tabWidthOption = IntegerElement (
-                self._config.tabWidth, 
-                self._dialog.tabWidthSpin, 
-                self.MIN_TAB_WIDTH, 
-                self.MAX_TAB_WIDTH
-                )
+        self._dialog.tabWidthSpin.SetRange (self.MIN_TAB_WIDTH, self.MAX_TAB_WIDTH)
+        self._dialog.tabWidthSpin.SetValue (0)
 
         languages = [item for item in self._config.languageList.value if len (item.strip()) > 0]
 
@@ -99,7 +94,7 @@ class InsertDialogController (object):
         """
         Сохранить настройки диалога
         """
-        self._tabWidthOption.save()
+        # self._tabWidthOption.save()
         self._config.defaultLanguage.value = self._dialog.languageComboBox.GetValue()
 
         currentWidth, currentHeight = self._dialog.GetSizeTuple ()

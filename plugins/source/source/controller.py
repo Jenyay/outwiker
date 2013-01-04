@@ -3,6 +3,8 @@
 
 import os.path
 
+import wx
+
 from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
 from outwiker.core.system import getOS
 
@@ -110,20 +112,14 @@ class Controller (object):
         dlg = InsertDialog (self._application.mainWindow)
 
         dlgController = InsertDialogController (dlg, config)
-        result = dlgController.showDialog ()
+        resultDlg = dlgController.showDialog ()
+
+        if resultDlg == wx.ID_OK:
+            command = dlgController.getCommandStrings()
+            pageView = self._getPageView()
+            pageView.codeEditor.turnText (command[0], command[1])
 
         dlg.Destroy()
-
-        if result != None:
-            startCommand = u'(:source lang="{language}" tabwidth={tabwidth}:)\n'.format (
-                    language=config.defaultLanguage.value,
-                    tabwidth=config.tabWidth.value
-                    )
-
-            endCommand = u'\n(:sourceend:)'
-
-            pageView = self._getPageView()
-            pageView.codeEditor.turnText (startCommand, endCommand)
 
 
     def _getPageView (self):

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Source plugin 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-03 22:07+0400\n"
-"PO-Revision-Date: 2013-01-03 22:08+0300\n"
+"POT-Creation-Date: 2013-01-04 10:18+0400\n"
+"PO-Revision-Date: 2013-01-04 10:19+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language: \n"
@@ -19,11 +19,11 @@ msgstr ""
 "X-Poedit-Country: UNITED STATES\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#: controller.py:70
+#: controller.py:72
 msgid "Source [Plugin]"
 msgstr "Source [Plugin]"
 
-#: controller.py:93
+#: controller.py:95
 msgid "Source Code (:source ...:)"
 msgstr "Source Code (:source ...:)"
 
@@ -36,18 +36,22 @@ msgid "Language"
 msgstr "Language"
 
 #: insertdialog.py:93
-msgid "Tab Width"
-msgstr "Tab Width"
+msgid "Tab Width (0 - Default Value)"
+msgstr "Source [Plugin]"
 
-#: preferencepanel.py:42
+#: preferencepanel.py:54
+msgid "Default Tab Width"
+msgstr "Default Tab Width"
+
+#: preferencepanel.py:89
 msgid "Used Languages"
 msgstr "Used Languages"
 
-#: preferencepanel.py:71
+#: preferencepanel.py:110
 msgid "Select All"
 msgstr "Select All"
 
-#: preferencepanel.py:72
+#: preferencepanel.py:111
 msgid "Clear"
 msgstr "Clear"
 

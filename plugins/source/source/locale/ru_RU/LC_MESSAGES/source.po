@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SourcePlugin 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-03 22:07+0400\n"
-"PO-Revision-Date: 2013-01-03 22:10+0300\n"
+"POT-Creation-Date: 2013-01-04 10:18+0400\n"
+"PO-Revision-Date: 2013-01-04 10:19+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language: \n"
@@ -19,11 +19,11 @@ msgstr ""
 "X-Poedit-Country: RUSSIAN FEDERATION\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#: controller.py:70
+#: controller.py:72
 msgid "Source [Plugin]"
 msgstr "Source [Расширение]"
 
-#: controller.py:93
+#: controller.py:95
 msgid "Source Code (:source ...:)"
 msgstr "Текст программы (:source ...:)"
 
@@ -36,18 +36,22 @@ msgid "Language"
 msgstr "Язык"
 
 #: insertdialog.py:93
-msgid "Tab Width"
-msgstr "Размер табуляции"
+msgid "Tab Width (0 - Default Value)"
+msgstr "Размер табуляции (0 - значение по умолчанию)"
 
-#: preferencepanel.py:42
+#: preferencepanel.py:54
+msgid "Default Tab Width"
+msgstr "Размер табуляции по умолчанию"
+
+#: preferencepanel.py:89
 msgid "Used Languages"
 msgstr "Используемые языки"
 
-#: preferencepanel.py:71
+#: preferencepanel.py:110
 msgid "Select All"
 msgstr "Выбрать все"
 
-#: preferencepanel.py:72
+#: preferencepanel.py:111
 msgid "Clear"
 msgstr "Очистить"
 

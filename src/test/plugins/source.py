@@ -408,7 +408,19 @@ def hello (count):
         controller = self.loader[self.__pluginname].insertDialogControllerClass(dialog, self.config)
         result = controller.showDialog()
 
-        self.assertEqual (result, None)
+        self.assertEqual (result, wx.ID_CANCEL)
+
+
+    def testDialogController2 (self):
+        """
+        Тест контроллера диалога для вставки команды (:source:)
+        """
+        dialog = FakeInsertDialog ()
+        dialog.SetReturnCode (wx.ID_OK)
+        controller = self.loader[self.__pluginname].insertDialogControllerClass(dialog, self.config)
+        result = controller.showDialog()
+
+        self.assertEqual (result, wx.ID_OK)
 
 
     def testDialogControllerResult1 (self):
@@ -417,12 +429,14 @@ def hello (count):
         """
         self.config.languageList.value = [u"python", u"cpp", u"haskell", u"text"]
         self.config.defaultLanguage.value = "text"
-        self.config.tabWidth.value = 4
 
         dialog = FakeInsertDialog ()
         dialog.SetReturnCode (wx.ID_OK)
         controller = self.loader[self.__pluginname].insertDialogControllerClass(dialog, self.config)
-        result = controller.showDialog()
+        controller.showDialog()
+
+        dialog.tabWidthSpin.SetValue (4)
+        result = controller.getCommandStrings()
 
         self.assertEqual (result, (u'(:source lang="text" tabwidth=4:)\n', u'\n(:sourceend:)'))
 
@@ -432,12 +446,14 @@ def hello (count):
         Тест контроллера диалога для вставки команды (:source:)
         """
         self.config.defaultLanguage.value = "python"
-        self.config.tabWidth.value = 8
 
         dialog = FakeInsertDialog ()
         dialog.SetReturnCode (wx.ID_OK)
         controller = self.loader[self.__pluginname].insertDialogControllerClass(dialog, self.config)
-        result = controller.showDialog()
+        controller.showDialog()
+
+        dialog.tabWidthSpin.SetValue (8)
+        result = controller.getCommandStrings()
 
         self.assertEqual (result, (u'(:source lang="python" tabwidth=8:)\n', u'\n(:sourceend:)'))
 
@@ -448,14 +464,53 @@ def hello (count):
         """
         self.config.languageList.value = [u"python", u"cpp", u"haskell", u"text"]
         self.config.defaultLanguage.value = "text"
-        self.config.tabWidth.remove_option()
 
         dialog = FakeInsertDialog ()
         dialog.SetReturnCode (wx.ID_OK)
         controller = self.loader[self.__pluginname].insertDialogControllerClass(dialog, self.config)
-        result = controller.showDialog()
+        controller.showDialog()
+
+        dialog.tabWidthSpin.SetValue (4)
+        result = controller.getCommandStrings()
 
         self.assertEqual (result, (u'(:source lang="text" tabwidth=4:)\n', u'\n(:sourceend:)'))
+
+
+    def testDialogControllerResult4 (self):
+        """
+        Тест контроллера диалога для вставки команды (:source:)
+        """
+        self.config.languageList.value = [u"python", u"cpp", u"haskell", u"text"]
+        self.config.defaultLanguage.value = "text"
+
+        dialog = FakeInsertDialog ()
+        dialog.SetReturnCode (wx.ID_OK)
+        controller = self.loader[self.__pluginname].insertDialogControllerClass(dialog, self.config)
+        controller.showDialog()
+
+        dialog.tabWidthSpin.SetValue (0)
+        result = controller.getCommandStrings()
+
+        self.assertEqual (result, (u'(:source lang="text":)\n', u'\n(:sourceend:)'))
+
+
+    def testDialogControllerResult5 (self):
+        """
+        Тест контроллера диалога для вставки команды (:source:)
+        """
+        self.config.languageList.value = [u"python", u"cpp", u"haskell", u"text"]
+        self.config.defaultLanguage.value = "text"
+
+        dialog = FakeInsertDialog ()
+        dialog.SetReturnCode (wx.ID_OK)
+        controller = self.loader[self.__pluginname].insertDialogControllerClass(dialog, self.config)
+        controller.showDialog()
+
+        dialog.languageComboBox.SetSelection (0)
+        dialog.tabWidthSpin.SetValue (0)
+        result = controller.getCommandStrings()
+
+        self.assertEqual (result, (u'(:source lang="python":)\n', u'\n(:sourceend:)'))
 
 
     def testSourceConfig1 (self):
@@ -476,7 +531,6 @@ def hello (count):
     def testDialogValues1 (self):
         self.config.languageList.value = [u"python", u"cpp", u"haskell"]
         self.config.defaultLanguage.value = u"haskell"
-        self.config.tabWidth.value = 10
 
         dialog = FakeInsertDialog ()
         controller = self.loader[self.__pluginname].insertDialogControllerClass(dialog, self.config)
@@ -488,7 +542,7 @@ def hello (count):
         self.assertEqual (dialog.languageComboBox.GetSelection(), 2)
         self.assertEqual (dialog.languageComboBox.GetValue(), u"haskell")
 
-        self.assertEqual (dialog.tabWidthSpin.GetValue(), 10)
+        self.assertEqual (dialog.tabWidthSpin.GetValue(), 0)
 
 
     def testDialogValues2 (self):

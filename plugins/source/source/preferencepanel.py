@@ -37,8 +37,55 @@ class PreferencePanel (wx.Panel):
         """
         mainSizer = wx.FlexGridSizer (0, 1)
         mainSizer.AddGrowableCol(0)
-        mainSizer.AddGrowableRow(1)
+        mainSizer.AddGrowableRow(2)
 
+        self.__createTabWidthGui (mainSizer)
+        self.__createLangGui (mainSizer)
+        self.SetSizer(mainSizer)
+
+
+    def __createTabWidthGui (self, mainSizer):
+        """
+        Создать элементы управления, связанные с выбором размера табуляции по умолчанию
+        """
+        tabSizer = langSizer = wx.FlexGridSizer (0, 2)
+        tabSizer.AddGrowableCol (1)
+
+        tabWidthLabel = wx.StaticText(self, -1, _(u"Default Tab Width"))
+
+        self.tabWidthSpin = wx.SpinCtrl (
+                self, 
+                style=wx.SP_ARROW_KEYS | wx.TE_AUTO_URL
+                )
+        self.tabWidthSpin.SetMinSize (wx.Size (150, -1))
+
+        tabSizer.Add (
+                tabWidthLabel, 
+                proportion=1,
+                flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+                border=2
+                )
+
+        tabSizer.Add (
+                self.tabWidthSpin, 
+                proportion=1,
+                flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT,
+                border=2
+                )
+
+        mainSizer.Add (
+                tabSizer,
+                proportion=1,
+                flag=wx.ALL | wx.EXPAND,
+                border=2)
+
+
+
+    def __createLangGui (self, mainSizer):
+        """
+        Создание элементов управления, связанных с выбором используемых языков
+        """
+        # Метка с комментарием о том, что это за языки в списке
         languageLabel = wx.StaticText(self, -1, _(u"Used Languages"))
         mainSizer.Add (
                 languageLabel, 
@@ -46,14 +93,6 @@ class PreferencePanel (wx.Panel):
                 flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
                 border=2)
 
-        self.__createLangGui (mainSizer)
-        self.SetSizer(mainSizer)
-
-
-    def __createLangGui (self, mainSizer):
-        """
-        Создание элементов управления, связанных с выбором используемых языков
-        """
         # Сайзер для расположения списка языков и кнопок
         langSizer = wx.FlexGridSizer (0, 2)
         langSizer.AddGrowableRow (0)
@@ -110,6 +149,9 @@ class PrefPanelController (object):
     Контроллер для панели настроек
     """
     def __init__ (self, owner, config):
+        self.MIN_TAB_WIDTH = 1
+        self.MAX_TAB_WIDTH = 50
+
         self.__owner = owner
         self.__config = SourceConfig (config)
 
@@ -118,6 +160,13 @@ class PrefPanelController (object):
 
 
     def loadState (self):
+        self._tabWidthOption = IntegerElement (
+                self.__config.tabWidth, 
+                self.__owner.tabWidthSpin, 
+                self.MIN_TAB_WIDTH, 
+                self.MAX_TAB_WIDTH
+                )
+
         allLanguages = self._getAllLanguages ()
         self.__owner.langList.Clear()
         self.__owner.langList.AppendItems (allLanguages)
@@ -130,6 +179,7 @@ class PrefPanelController (object):
 
     def save (self):
         self.__config.languageList.value = self.__owner.langList.GetCheckedStrings()
+        self._tabWidthOption.save()
 
 
     def _onSelectAll (self, event):

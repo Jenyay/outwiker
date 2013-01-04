@@ -90,7 +90,7 @@ class InsertDialog (wx.Dialog):
         """
         Создать интерфейс, связанный с размером табуляции
         """
-        tabWidthLabel = wx.StaticText(self, -1, _(u"Tab Width"))
+        tabWidthLabel = wx.StaticText(self, -1, _(u"Tab Width (0 - Default Value)"))
         self.tabWidthSpin = wx.SpinCtrl (
                 self, 
                 style=wx.SP_ARROW_KEYS|wx.TE_AUTO_URL
