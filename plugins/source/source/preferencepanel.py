@@ -10,7 +10,6 @@ from outwiker.core.system import getOS
 
 from .sourceconfig import SourceConfig
 from .i18n import get_
-from .utilites import getLangList
 
 
 class PreferencePanel (wx.Panel):
@@ -113,13 +112,13 @@ class PreferencePanel (wx.Panel):
         buttonsSizer.Add (
                 self.selectAllButton,
                 proportion=1,
-                flag=wx.ALL,
+                flag=wx.ALL | wx.EXPAND,
                 border=2)
 
         buttonsSizer.Add (
                 self.clearButton,
                 proportion=1,
-                flag=wx.ALL,
+                flag=wx.ALL | wx.EXPAND,
                 border=2)
 
         langSizer.Add (
