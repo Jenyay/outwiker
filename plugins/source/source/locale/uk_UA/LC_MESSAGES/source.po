@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: outwiker\n"
+"Project-Id-Version: source\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-01-04 10:18+0400\n"
-"PO-Revision-Date: 2013-01-04 11:47+0300\n"
+"PO-Revision-Date: 2013-01-04 16:52+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
@@ -13,10 +13,11 @@ msgstr ""
 "X-Generator: crowdin.net\n"
 "X-Poedit-Language: Ukrainian\n"
 "X-Poedit-Country: UKRAINE\n"
+"X-Poedit-SourceCharset: utf-8\n"
 
 #: controller.py:72
 msgid "Source [Plugin]"
-msgstr "Source [Розширення]"
+msgstr "Source [Додаток]"
 
 #: controller.py:95
 msgid "Source Code (:source ...:)"
@@ -24,7 +25,7 @@ msgstr "Текст програми (:source ...:)"
 
 #: insertdialog.py:19
 msgid "Source code"
-msgstr "Сирцевий код"
+msgstr "Текст програми"
 
 #: insertdialog.py:68
 msgid "Language"
@@ -40,7 +41,7 @@ msgstr "Ширина табуляції за замовчуванням"
 
 #: preferencepanel.py:89
 msgid "Used Languages"
-msgstr "Використовані мови"
+msgstr "Мови, що використовуються"
 
 #: preferencepanel.py:110
 msgid "Select All"
@@ -72,7 +73,7 @@ msgid ""
 "(:sourceend:)\n"
 "</PRE>\n"
 msgstr ""
-"Розширення додає вікі-команду (:source:) для розфарбовування тексту програми на різних мовах програмування.\n"
+"Додаток додає вікі-команду (:source:) для розфарбовування тексту програми на різних мовах програмування.\n"
 "\n"
 "<B>Використання:</B>:\n"
 "(:source параметри... :)\n"
