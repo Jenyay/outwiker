@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Source plugin 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-01-04 10:18+0400\n"
-"PO-Revision-Date: 2013-01-04 10:19+0300\n"
+"PO-Revision-Date: 2013-01-04 11:41+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language: \n"
@@ -29,7 +29,7 @@ msgstr "Source Code (:source ...:)"
 
 #: insertdialog.py:19
 msgid "Source code"
-msgstr "Default Programming Language"
+msgstr "Source code"
 
 #: insertdialog.py:68
 msgid "Language"
@@ -37,7 +37,7 @@ msgstr "Language"
 
 #: insertdialog.py:93
 msgid "Tab Width (0 - Default Value)"
-msgstr "Source [Plugin]"
+msgstr "Tab Width (0 - Default Value)"
 
 #: preferencepanel.py:54
 msgid "Default Tab Width"
@@ -77,7 +77,7 @@ msgid ""
 "(:sourceend:)\n"
 "</PRE>\n"
 msgstr ""
-"Add command (:source:) in wiki parser.\n"
+"Add command (:source:) in wiki parser. This command highlight your source code.\n"
 "\n"
 "<B>Usage:</B>:\n"
 "(:source params... :)\n"
