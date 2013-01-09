@@ -115,6 +115,7 @@ if __name__ == '__main__':
     from test.plugins.testwikicommand import PluginWikiCommandTest
     from test.plugins.style import StylePluginTest
     from test.plugins.source import SourcePluginTest
+    from test.plugins.sourcegui import SourceGuiPluginTest
     from test.plugins.export2html import Export2HtmlTest
     from test.plugins.spoiler import SpoilerPluginTest
     from test.plugins.livejournal import LivejournalPluginTest
