@@ -46,6 +46,12 @@ class CommandSource (Command):
         # Язык программирования по умолчанию
         self.langDefault = u"text"
 
+        # Кодировка для прикрепленного файла
+        self.encodingParam = "encoding"
+
+        # Используемая кодировка по умолчанию
+        self.encodingDefault = "utf8"
+
         global _
         _ = get_()
 
@@ -71,9 +77,11 @@ class CommandSource (Command):
         tabWidthParamName = u"tabwidth"
 
         try:
-            sourceText = self.__getContentFromFile (params_dict[self.fileParamName])
+            sourceText = self.__getContentFromFile (params_dict)
         except KeyError:
             sourceText = content
+        except IOError:
+            return _(u"<B>Source plugin: File '{0}' not found</B>".format (self.__getFileName (params_dict[self.fileParamName])))
 
         try:
             tabwidth = int (params_dict[tabWidthParamName]) if tabWidthParamName in params_dict else defaultTabWidth
@@ -86,28 +94,46 @@ class CommandSource (Command):
         return colortext
 
 
-    def __getContentFromFile (self, fileParam):
+    def __getContentFromFile (self, params_dict):
         """
-        Попытаться прочитать исходник из файла, заданный в параметре fileParam
-        В начале fileParam может стоять строка Attach:
+        Попытаться прочитать исходник из файла, заданный в параметре self.fileParamName
+        В начале значения параметра может стоять строка Attach:
         """
-        fname = self.__getFileName (fileParam)
+        fname = self.__getFileName (params_dict[self.fileParamName])
 
         # Полный путь до прикрепленного файла
         attachPath = Attachment (self.parser.page).getFullPath (fname)
 
-        try:
-            with open (attachPath) as fp:
-                sourceTextStr = fp.read()
-        except IOError:
-            return _(u"Can't open '{0}'".format (fname))
+        # Обработка исключений происходит выше (в execute)
+        with open (attachPath) as fp:
+            sourceTextStr = fp.read()
+
+        encoding = self.__getEncoding (params_dict)
 
         try:
-            sourceText = unicode (sourceTextStr, "utf8")
+            sourceText = unicode (sourceTextStr, encoding)
         except UnicodeDecodeError:
             return sourceTextStr
+        except LookupError:
+            # Введена неизвестная кодировка, попробуем UTF-8
+            try:
+                sourceText = unicode (sourceTextStr, self.encodingDefault)
+            except UnicodeDecodeError:
+                return sourceTextStr
 
         return sourceText
+
+
+    def __getEncoding (self, params_dict):
+        """
+        Выберем кодировку в соответствии с параметрами
+        """
+        encoding = self.encodingDefault
+
+        if self.encodingParam in params_dict:
+            encoding = params_dict[self.encodingParam]
+
+        return encoding
 
 
     def __getFileName (self, fileParam):
