@@ -192,7 +192,7 @@ def hello (count):
         innerString2 = u'        print &quot;Hello world!!!&quot;'
         innerString3 = u'def hello (count):'
         
-        self.assertTrue (innerString1 in result)
+        self.assertTrue (innerString1 in result, result)
         self.assertTrue (innerString2 in result)
         self.assertTrue (innerString3 in result)
         self.assertFalse (u"(:source" in result)

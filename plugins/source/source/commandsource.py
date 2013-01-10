@@ -2,16 +2,16 @@
 # -*- coding: UTF-8 -*-
 
 from outwiker.pages.wiki.parser.command import Command
-from outwiker.pages.wiki.parser.tokenattach import AttachToken
 from outwiker.core.attachment import Attachment
 
 from pygments import highlight
-from pygments.lexers import get_lexer_by_name, get_lexer_for_filename
 from pygments.formatters import HtmlFormatter
-from pygments.lexers import ClassNotFound
 
 from .sourceconfig import SourceConfig
+from .lexermaker import LexerMaker
 from .i18n import get_
+from .params import FILE_PARAM_NAME, ENCODING_PARAM_NAME, ENCODING_DEFAULT, TAB_WIDTH_PARAM_NAME, HIGHLIGHT_STYLE
+from .misc import getFileName
 
 
 class CommandSource (Command):
@@ -26,6 +26,8 @@ class CommandSource (Command):
     Параметры:
     tabwidth - размер табуляции
     lang - язык программирования (пока не используется)
+    file - имя прикрепленного файла (с приставкой Attach: или без нее)
+    encoding - кодировка для прикрепленного файла (используется вместе с параметром file). Если кодирвока не указана, используется UTF-8
     """
     def __init__ (self, parser, config):
         """
@@ -36,21 +38,6 @@ class CommandSource (Command):
 
         # Добавлены ли стили в заголовок
         self.__styleAppend = False
-
-        # Имя параметра для указания прикрепленного файла для раскраски
-        self.fileParamName = u"file"
-
-        # Имя параметра для указания языка
-        self.langParam = u"lang"
-
-        # Язык программирования по умолчанию
-        self.langDefault = u"text"
-
-        # Кодировка для прикрепленного файла
-        self.encodingParam = "encoding"
-
-        # Используемая кодировка по умолчанию
-        self.encodingDefault = "utf8"
 
         global _
         _ = get_()
@@ -73,18 +60,15 @@ class CommandSource (Command):
 
         defaultTabWidth = self.__config.tabWidth.value
 
-        # Имя параметра для размера табуляции
-        tabWidthParamName = u"tabwidth"
-
         try:
             sourceText = self.__getContentFromFile (params_dict)
         except KeyError:
             sourceText = content
         except IOError:
-            return _(u"<B>Source plugin: File '{0}' not found</B>".format (self.__getFileName (params_dict[self.fileParamName])))
+            return _(u"<B>Source plugin: File '{0}' not found</B>".format (getFileName (params_dict[FILE_PARAM_NAME])))
 
         try:
-            tabwidth = int (params_dict[tabWidthParamName]) if tabWidthParamName in params_dict else defaultTabWidth
+            tabwidth = int (params_dict[TAB_WIDTH_PARAM_NAME]) if TAB_WIDTH_PARAM_NAME in params_dict else defaultTabWidth
         except ValueError:
             tabwidth = defaultTabWidth
 
@@ -96,10 +80,10 @@ class CommandSource (Command):
 
     def __getContentFromFile (self, params_dict):
         """
-        Попытаться прочитать исходник из файла, заданный в параметре self.fileParamName
+        Попытаться прочитать исходник из файла, заданный в параметре FILE_PARAM_NAME
         В начале значения параметра может стоять строка Attach:
         """
-        fname = self.__getFileName (params_dict[self.fileParamName])
+        fname = getFileName (params_dict[FILE_PARAM_NAME])
 
         # Полный путь до прикрепленного файла
         attachPath = Attachment (self.parser.page).getFullPath (fname)
@@ -117,7 +101,7 @@ class CommandSource (Command):
         except LookupError:
             # Введена неизвестная кодировка, попробуем UTF-8
             try:
-                sourceText = unicode (sourceTextStr, self.encodingDefault)
+                sourceText = unicode (sourceTextStr, ENCODING_DEFAULT)
             except UnicodeDecodeError:
                 return sourceTextStr
 
@@ -128,85 +112,28 @@ class CommandSource (Command):
         """
         Выберем кодировку в соответствии с параметрами
         """
-        encoding = self.encodingDefault
+        encoding = ENCODING_DEFAULT
 
-        if self.encodingParam in params_dict:
-            encoding = params_dict[self.encodingParam]
+        if ENCODING_PARAM_NAME in params_dict:
+            encoding = params_dict[ENCODING_PARAM_NAME]
 
         return encoding
-
-
-    def __getFileName (self, fileParam):
-        """
-        Получить имя прикрепленного файла по параметру file
-        fileParam - значение параметра file
-        """
-        fname = fileParam.strip()
-
-        if fname.startswith (AttachToken.attachString):
-            fname = fname[len (AttachToken.attachString): ]
-
-        return fname
-
-
-    def __getLexer (self, params_dict):
-        if self.langParam in params_dict:
-            lexer = self.__getLexerByName (params_dict)
-        elif self.fileParamName in params_dict:
-            lexer = self.__getLexerByFileName (params_dict)
-        else:
-            lexer = self.__getDefaultLexer()
-
-        return lexer
-
-
-    def __getLexerByName (self, params_dict):
-        """
-        Возвращает лексер для нужного языка программирования в зависимости от параметров
-        """
-        lang = params_dict[self.langParam] if self.langParam in params_dict else self.langDefault
-        
-        try:
-            lexer = get_lexer_by_name(lang, stripall=True)
-        except ClassNotFound:
-            lexer = self.__getDefaultLexer ()
-
-        return lexer
-
-
-    def __getLexerByFileName (self, params_dict):
-        fname = self.__getFileName (params_dict[self.fileParamName])
-
-        try:
-            lexer = get_lexer_for_filename (fname, stripall=True)
-        except ClassNotFound:
-            lexer = self.__getDefaultLexer ()
-
-        return lexer
-
-
-    def __getDefaultLexer (self):
-        """
-        Создать лексер по умолчанию
-        """
-        return get_lexer_by_name(self.langDefault, stripall=True)
 
 
     def __colorize (self, params_dict, content):
         """
         Раскраска исходников. Возвращает получившийся HTML и добавляет нужные стили в заголовок страницы
         """
-        lexer = self.__getLexer (params_dict)
+        lexermaker = LexerMaker ()
+        lexer = lexermaker.getLexer (params_dict)
 
-        # Стиль для общего div
-        highlightStyle = u'.highlight {border-style: solid; border-color: gray; border-width: 1px; background-color: #eee; padding-left: 10px;}'
         sourceStyle = HtmlFormatter().get_style_defs()
 
         styleTemplate = u"<STYLE>{0}</STYLE>"
 
         if not self.__styleAppend:
             self.parser.appendToHead (styleTemplate.format (sourceStyle))
-            self.parser.appendToHead (styleTemplate.format (highlightStyle))
+            self.parser.appendToHead (styleTemplate.format (HIGHLIGHT_STYLE))
 
             self.__styleAppend = True
 
