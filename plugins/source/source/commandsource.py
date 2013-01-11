@@ -10,7 +10,7 @@ from pygments.formatters import HtmlFormatter
 from .sourceconfig import SourceConfig
 from .lexermaker import LexerMaker
 from .i18n import get_
-from .params import FILE_PARAM_NAME, ENCODING_PARAM_NAME, ENCODING_DEFAULT, TAB_WIDTH_PARAM_NAME, HIGHLIGHT_STYLE
+from .params import FILE_PARAM_NAME, ENCODING_PARAM_NAME, ENCODING_DEFAULT, TAB_WIDTH_PARAM_NAME, HIGHLIGHT_STYLE, TAB_WIDTH_DEFAULT
 from .misc import getFileName
 
 
@@ -58,8 +58,6 @@ class CommandSource (Command):
         """
         params_dict = Command.parseParams (params)
 
-        defaultTabWidth = self.__config.tabWidth.value
-
         try:
             sourceText = self.__getContentFromFile (params_dict)
         except KeyError:
@@ -67,15 +65,30 @@ class CommandSource (Command):
         except IOError:
             return _(u"<B>Source plugin: File '{0}' not found</B>".format (getFileName (params_dict[FILE_PARAM_NAME])))
 
-        try:
-            tabwidth = int (params_dict[TAB_WIDTH_PARAM_NAME]) if TAB_WIDTH_PARAM_NAME in params_dict else defaultTabWidth
-        except ValueError:
-            tabwidth = defaultTabWidth
+        tabwidth = self.__getTabWidth (params_dict)
 
         newcontent = sourceText.replace ("\t", " " * tabwidth)
         colortext = self.__colorize (params_dict, newcontent)
 
         return colortext
+
+
+    def __getTabWidth (self, params_dict):
+        """
+        Получить размер табуляции в зависимости от параметров
+        """
+        tabwidth = self.__config.tabWidth.value
+
+        try:
+            if TAB_WIDTH_PARAM_NAME in params_dict:
+                tabwidth = int (params_dict[TAB_WIDTH_PARAM_NAME])
+        except ValueError:
+            pass
+
+        if tabwidth <= 0:
+            tabwidth = TAB_WIDTH_DEFAULT
+
+        return tabwidth
 
 
     def __getContentFromFile (self, params_dict):

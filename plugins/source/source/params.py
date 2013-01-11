@@ -23,5 +23,8 @@ ENCODING_DEFAULT = "utf8"
 # Имя параметра для размера табуляции
 TAB_WIDTH_PARAM_NAME = u"tabwidth"
 
+# Размер табуляции по умолчанию
+TAB_WIDTH_DEFAULT = 4
+
 # Стиль для общего div
 HIGHLIGHT_STYLE = u'.highlight {border-style: solid; border-color: gray; border-width: 1px; background-color: #eee; padding-left: 10px;}'

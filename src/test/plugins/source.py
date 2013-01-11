@@ -59,6 +59,7 @@ class SourcePluginTest (unittest.TestCase):
         
 
     def tearDown(self):
+        self.config.tabWidth.value = 4
         removeWiki (self.path)
         self.loader.clear()
 
@@ -363,6 +364,68 @@ def hello (count):
 
         innerString1 = u".go { color: #808080 } /* Generic.Output */"
         innerString2 = u'          for i in range (10)'
+        innerString3 = u'def hello (count):'
+        
+        self.assertTrue (innerString1 in result)
+        self.assertTrue (innerString2 in result)
+        self.assertTrue (innerString3 in result)
+        self.assertFalse (u"(:source" in result)
+
+
+    def testConfigTabWidth3(self):
+        text = u'''(:source tabwidth="-1":)
+import os
+
+# Комментарий
+def hello (count):
+	"""
+	Hello world
+	"""
+	for i in range (10):
+		print "Hello world!!!"
+(:sourceend:)
+'''
+        self.config.tabWidth.value = 4
+
+        self.testPage.content = text
+
+        generator = HtmlGenerator (self.testPage)
+        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
+        result = self.__readFile (htmlpath)
+
+        innerString1 = u".go { color: #808080 } /* Generic.Output */"
+        innerString2 = u'    for i in range (10)'
+        innerString3 = u'def hello (count):'
+        
+        self.assertTrue (innerString1 in result)
+        self.assertTrue (innerString2 in result)
+        self.assertTrue (innerString3 in result)
+        self.assertFalse (u"(:source" in result)
+
+
+    def testConfigTabWidth4(self):
+        text = u'''(:source:)
+import os
+
+# Комментарий
+def hello (count):
+	"""
+	Hello world
+	"""
+	for i in range (10):
+		print "Hello world!!!"
+(:sourceend:)
+'''
+        self.config.tabWidth.value = -1
+
+        self.testPage.content = text
+
+        generator = HtmlGenerator (self.testPage)
+        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
+        result = self.__readFile (htmlpath)
+
+        innerString1 = u".go { color: #808080 } /* Generic.Output */"
+        innerString2 = u'    for i in range (10)'
         innerString3 = u'def hello (count):'
         
         self.assertTrue (innerString1 in result)
