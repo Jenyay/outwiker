@@ -18,8 +18,12 @@ class InsertDialog (wx.Dialog):
                 style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.THICK_FRAME,
                 title=_(u"Source code"))
 
+        # Размер отступа
+        self._indent = 50
+        self._fieldsWidth = 200
+
         self.__createGui()
-        self.languageComboBox.SetFocus()
+        self.fileCheckBox.SetFocus()
         self.Center(wx.CENTRE_ON_SCREEN)
 
 
@@ -33,14 +37,35 @@ class InsertDialog (wx.Dialog):
         return self.tabWidthSpin.GetValue()
 
 
+    @property
+    def languageIndex (self):
+        return self.languageComboBox.GetCurrentSelection()
+
+
+    @property
+    def attachment (self):
+        return self.attachmentComboBox.GetValue()
+
+
+    @property
+    def encoding (self):
+        return self.encodingComboBox.GetValue()
+
+
+    @property
+    def insertFromFile (self):
+        return self.fileCheckBox.IsChecked()
+
+
     def __createGui(self):
         """
         Создать элементы управления
         """
-        mainSizer = wx.FlexGridSizer (0, 2)
-        mainSizer.AddGrowableCol(1)
-        mainSizer.AddGrowableRow(2)
+        mainSizer = wx.FlexGridSizer (0, 1)
+        mainSizer.AddGrowableCol(0)
+        mainSizer.AddGrowableRow(3)
 
+        self.__createFileGui (mainSizer)
         self.__createLanguageGui (mainSizer)
         self.__createTabWidthGui (mainSizer)
         self.__createOkCancelButtons (mainSizer)
@@ -65,23 +90,34 @@ class InsertDialog (wx.Dialog):
         """
         Создать интерфейс, связанный с языком программирования по умолчанию
         """
+        langSizer = wx.FlexGridSizer (0, 2)
+        langSizer.AddGrowableCol(1)
+
         languageLabel = wx.StaticText(self, -1, _(u"Language"))
         self.languageComboBox = wx.ComboBox (self, 
-                style=wx.CB_DROPDOWN | wx.CB_READONLY | wx.CB_SORT)
+                style=wx.CB_DROPDOWN | wx.CB_READONLY)
 
-        self.languageComboBox.SetMinSize (wx.Size (150, -1))
+        self.languageComboBox.SetMinSize (wx.Size (self._fieldsWidth, -1))
 
-        mainSizer.Add (
-                languageLabel, 
+        langSizer.Add (
+                languageLabel,
                 proportion=1,
                 flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
                 border=2
                 )
 
-        mainSizer.Add (
-                self.languageComboBox, 
+
+        langSizer.Add (
+                self.languageComboBox,
                 proportion=1,
-                flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT | wx.EXPAND,
+                flag=wx.ALL | wx.ALIGN_RIGHT,
+                border=2
+                )
+
+        mainSizer.Add (
+                langSizer, 
+                proportion=1,
+                flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND,
                 border=2
                 )
 
@@ -90,24 +126,109 @@ class InsertDialog (wx.Dialog):
         """
         Создать интерфейс, связанный с размером табуляции
         """
+        tabSizer = wx.FlexGridSizer (0, 2)
+        tabSizer.AddGrowableCol(1)
+
         tabWidthLabel = wx.StaticText(self, -1, _(u"Tab Width (0 - Default Value)"))
         self.tabWidthSpin = wx.SpinCtrl (
                 self, 
                 style=wx.SP_ARROW_KEYS|wx.TE_AUTO_URL
                 )
-        self.tabWidthSpin.SetMinSize (wx.Size (150, -1))
+        self.tabWidthSpin.SetMinSize (wx.Size (self._fieldsWidth, -1))
 
 
-        mainSizer.Add (
+        tabSizer.Add (
                 tabWidthLabel, 
                 proportion=1,
                 flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
                 border=2
                 )
 
-        mainSizer.Add (
+        tabSizer.Add (
                 self.tabWidthSpin, 
+                proportion=1,
+                flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT,
+                border=2
+                )
+
+        mainSizer.Add (
+                tabSizer, 
                 proportion=1,
                 flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT | wx.EXPAND,
                 border=2
                 )
+
+
+    def __createFileGui (self, mainSizer):
+        """
+        Создать интерфейс, связанный со вставкой исходников из вложенных файлов
+        """
+        self.fileCheckBox = wx.CheckBox (
+                self,
+                label = _(u"Insert source from file"))
+
+        mainSizer.Add (
+                self.fileCheckBox, 
+                proportion=1,
+                flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT | wx.EXPAND,
+                border=2
+                )
+
+        fileSizer = wx.FlexGridSizer (0, 3)
+        fileSizer.AddGrowableCol (2)
+
+        # Список для выбора прикрепленных файлов
+        self.attachmentLabel = wx.StaticText(self, -1, _(u"Attached file"))
+        self.attachmentComboBox = wx.ComboBox (self,
+                style=wx.CB_DROPDOWN | wx.CB_READONLY)
+
+        self.attachmentComboBox.SetMinSize ((self._fieldsWidth, -1))
+
+        fileSizer.Add ((self._indent, 0))
+
+        fileSizer.Add (
+                self.attachmentLabel, 
+                proportion=1,
+                flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+                border=2
+                )
+
+        fileSizer.Add (
+                self.attachmentComboBox, 
+                proportion=1,
+                flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT,
+                border=2
+                )
+
+        # Выбор кодировки файла
+        self.encodingLabel = wx.StaticText(self, -1, _(u"File encoding"))
+        self.encodingComboBox = wx.ComboBox (self,
+                style=wx.CB_DROPDOWN)
+
+        self.encodingComboBox.SetMinSize ((self._fieldsWidth, -1))
+
+        # Размер отступа
+        fileSizer.Add ((self._indent, 0))
+
+        fileSizer.Add (
+                self.encodingLabel, 
+                proportion=1,
+                flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+                border=2
+                )
+
+        fileSizer.Add (
+                self.encodingComboBox, 
+                proportion=1,
+                flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT,
+                border=2
+                )
+
+        mainSizer.Add (
+                fileSizer, 
+                proportion=1,
+                flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT | wx.EXPAND,
+                border=2
+                )
+
+

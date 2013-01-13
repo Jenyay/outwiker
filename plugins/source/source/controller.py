@@ -111,7 +111,7 @@ class Controller (object):
 
         dlg = InsertDialog (self._application.mainWindow)
 
-        dlgController = InsertDialogController (dlg, config)
+        dlgController = InsertDialogController (self._application.selectedPage, dlg, config)
         resultDlg = dlgController.showDialog ()
 
         if resultDlg == wx.ID_OK:
