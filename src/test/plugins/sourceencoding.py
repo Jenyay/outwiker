@@ -94,8 +94,10 @@ class SourceEncodingPluginTest (unittest.TestCase):
         htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
         result = self.__readFile (htmlpath)
 
-        self.assertTrue (u'<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>' in result)
+        self.assertTrue (u'<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>' not in result)
         self.assertTrue (u'Ошибка соединения с сервером' not in result)
+
+        self.assertTrue (u'Source' in result)
 
 
     def testHighlightFileEncoding3 (self):
@@ -110,8 +112,10 @@ class SourceEncodingPluginTest (unittest.TestCase):
         htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
         result = self.__readFile (htmlpath)
 
-        self.assertTrue (u'<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>' in result)
+        self.assertTrue (u'<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>' not in result)
         self.assertTrue (u'Ошибка соединения с сервером' not in result)
+
+        self.assertTrue (u'Source' in result)
 
 
     def testHighlightFileEncoding4 (self):
@@ -126,8 +130,10 @@ class SourceEncodingPluginTest (unittest.TestCase):
         htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
         result = self.__readFile (htmlpath)
 
-        self.assertTrue (u'<span class="kn">import</span> <span class="nn">os.path</span>' in result)
+        self.assertTrue (u'<span class="kn">import</span> <span class="nn">os.path</span>' not in result)
 
-        self.assertTrue (u'<span class="bp">self</span><span class="o">.</span><span class="n">__correctSysPath</span><span class="p">()</span>' in result)
+        self.assertTrue (u'<span class="bp">self</span><span class="o">.</span><span class="n">__correctSysPath</span><span class="p">()</span>' not in result)
 
-        self.assertTrue (u'Уничтожение (выгрузка) плагина.' in result)
+        self.assertTrue (u'Уничтожение (выгрузка) плагина.' not in result)
+
+        self.assertTrue (u'Source' in result)

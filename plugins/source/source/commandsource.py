@@ -60,10 +60,18 @@ class CommandSource (Command):
 
         try:
             sourceText = self.__getContentFromFile (params_dict)
+
         except KeyError:
             sourceText = content
+
         except IOError:
-            return _(u"<B>Source plugin: File '{0}' not found</B>".format (getFileName (params_dict[FILE_PARAM_NAME])))
+            return _(u"<B>Source plugin error: File '{0}' not found</B>").format (getFileName (params_dict[FILE_PARAM_NAME]))
+
+        except UnicodeDecodeError:
+            return _(u"<B>Source plugin error: Encoding error</B>")
+
+        except LookupError:
+            return _(u"<B>Source plugin error: Unknown encoding</B>")
 
         tabwidth = self.__getTabWidth (params_dict)
 
@@ -105,20 +113,7 @@ class CommandSource (Command):
         with open (attachPath) as fp:
             sourceTextStr = fp.read()
 
-        encoding = self.__getEncoding (params_dict)
-
-        try:
-            sourceText = unicode (sourceTextStr, encoding)
-        except UnicodeDecodeError:
-            return sourceTextStr
-        except LookupError:
-            # Введена неизвестная кодировка, попробуем UTF-8
-            try:
-                sourceText = unicode (sourceTextStr, ENCODING_DEFAULT)
-            except UnicodeDecodeError:
-                return sourceTextStr
-
-        return sourceText
+        return unicode (sourceTextStr, self.__getEncoding (params_dict))
 
 
     def __getEncoding (self, params_dict):

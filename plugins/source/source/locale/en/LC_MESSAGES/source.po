@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Source plugin 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-14 09:04+0400\n"
-"PO-Revision-Date: 2013-01-14 09:14+0300\n"
+"POT-Creation-Date: 2013-01-14 21:04+0400\n"
+"PO-Revision-Date: 2013-01-14 21:05+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language: \n"
@@ -19,9 +19,17 @@ msgstr ""
 "X-Poedit-Country: UNITED STATES\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#: commandsource.py:66
-msgid "<B>Source plugin: File '{0}' not found</B>"
-msgstr "<B>Source plugin: File '{0}' not found</B>"
+#: commandsource.py:68
+msgid "<B>Source plugin error: File '{0}' not found</B>"
+msgstr "<B>Source plugin error: File '{0}' not found</B>"
+
+#: commandsource.py:71
+msgid "<B>Source plugin error: Encoding error</B>"
+msgstr "<B>Source plugin error: Encoding error</B>"
+
+#: commandsource.py:74
+msgid "<B>Source plugin error: Unknown encoding</B>"
+msgstr "<B>Source plugin error: Unknown encoding</B>"
 
 #: controller.py:72
 msgid "Source [Plugin]"
