@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SourcePlugin 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-04 10:18+0400\n"
-"PO-Revision-Date: 2013-01-04 10:19+0300\n"
+"POT-Creation-Date: 2013-01-14 09:04+0400\n"
+"PO-Revision-Date: 2013-01-14 09:07+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language: \n"
@@ -19,6 +19,10 @@ msgstr ""
 "X-Poedit-Country: RUSSIAN FEDERATION\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
+#: commandsource.py:66
+msgid "<B>Source plugin: File '{0}' not found</B>"
+msgstr "<B>Плагин Source: Файл '{0}' не найден</B>"
+
 #: controller.py:72
 msgid "Source [Plugin]"
 msgstr "Source [Расширение]"
@@ -27,31 +31,47 @@ msgstr "Source [Расширение]"
 msgid "Source Code (:source ...:)"
 msgstr "Текст программы (:source ...:)"
 
+#: insertdialogcontroller.py:187
+msgid "Auto"
+msgstr "Авто"
+
 #: insertdialog.py:19
 msgid "Source code"
 msgstr "Текст программы"
 
-#: insertdialog.py:68
+#: insertdialog.py:96
 msgid "Language"
 msgstr "Язык"
 
-#: insertdialog.py:93
+#: insertdialog.py:132
 msgid "Tab Width (0 - Default Value)"
 msgstr "Размер табуляции (0 - значение по умолчанию)"
 
-#: preferencepanel.py:54
+#: insertdialog.py:168
+msgid "Insert source from file"
+msgstr "Вставить текст программы из файла"
+
+#: insertdialog.py:181
+msgid "Attached file"
+msgstr "Прикрепленный файла"
+
+#: insertdialog.py:204
+msgid "File encoding"
+msgstr "Кодировка файла"
+
+#: preferencepanel.py:53
 msgid "Default Tab Width"
 msgstr "Размер табуляции по умолчанию"
 
-#: preferencepanel.py:89
+#: preferencepanel.py:88
 msgid "Used Languages"
 msgstr "Используемые языки"
 
-#: preferencepanel.py:110
+#: preferencepanel.py:109
 msgid "Select All"
 msgstr "Выбрать все"
 
-#: preferencepanel.py:111
+#: preferencepanel.py:110
 msgid "Clear"
 msgstr "Очистить"
 

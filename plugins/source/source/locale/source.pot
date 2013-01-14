@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-04 10:18+0400\n"
+"POT-Creation-Date: 2013-01-14 09:04+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,10 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: commandsource.py:66
+msgid "<B>Source plugin: File '{0}' not found</B>"
+msgstr ""
 
 #: controller.py:72
 msgid "Source [Plugin]"
@@ -25,31 +29,47 @@ msgstr ""
 msgid "Source Code (:source ...:)"
 msgstr ""
 
+#: insertdialogcontroller.py:187
+msgid "Auto"
+msgstr ""
+
 #: insertdialog.py:19
 msgid "Source code"
 msgstr ""
 
-#: insertdialog.py:68
+#: insertdialog.py:96
 msgid "Language"
 msgstr ""
 
-#: insertdialog.py:93
+#: insertdialog.py:132
 msgid "Tab Width (0 - Default Value)"
 msgstr ""
 
-#: preferencepanel.py:54
+#: insertdialog.py:168
+msgid "Insert source from file"
+msgstr ""
+
+#: insertdialog.py:181
+msgid "Attached file"
+msgstr ""
+
+#: insertdialog.py:204
+msgid "File encoding"
+msgstr ""
+
+#: preferencepanel.py:53
 msgid "Default Tab Width"
 msgstr ""
 
-#: preferencepanel.py:89
+#: preferencepanel.py:88
 msgid "Used Languages"
 msgstr ""
 
-#: preferencepanel.py:110
+#: preferencepanel.py:109
 msgid "Select All"
 msgstr ""
 
-#: preferencepanel.py:111
+#: preferencepanel.py:110
 msgid "Clear"
 msgstr ""
 
