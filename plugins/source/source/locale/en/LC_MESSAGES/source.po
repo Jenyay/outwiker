@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Source plugin 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-01-14 09:04+0400\n"
-"PO-Revision-Date: 2013-01-14 09:05+0300\n"
+"PO-Revision-Date: 2013-01-14 09:14+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language: \n"
@@ -21,7 +21,7 @@ msgstr ""
 
 #: commandsource.py:66
 msgid "<B>Source plugin: File '{0}' not found</B>"
-msgstr "Source [Plugin]"
+msgstr "<B>Source plugin: File '{0}' not found</B>"
 
 #: controller.py:72
 msgid "Source [Plugin]"
