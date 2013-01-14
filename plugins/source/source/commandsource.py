@@ -65,13 +65,13 @@ class CommandSource (Command):
             sourceText = content
 
         except IOError:
-            return _(u"<B>Source plugin error: File '{0}' not found</B>").format (getFileName (params_dict[FILE_PARAM_NAME]))
+            return _(u"<B>Source plugin: File '{0}' not found</B>").format (getFileName (params_dict[FILE_PARAM_NAME]))
 
         except UnicodeDecodeError:
-            return _(u"<B>Source plugin error: Encoding error</B>")
+            return _(u"<B>Source plugin: Encoding error</B>")
 
         except LookupError:
-            return _(u"<B>Source plugin error: Unknown encoding</B>")
+            return _(u"<B>Source plugin: Unknown encoding</B>")
 
         tabwidth = self.__getTabWidth (params_dict)
 

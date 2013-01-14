@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-14 21:04+0400\n"
+"POT-Creation-Date: 2013-01-14 21:45+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,15 +18,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: commandsource.py:68
-msgid "<B>Source plugin error: File '{0}' not found</B>"
+msgid "<B>Source plugin: File '{0}' not found</B>"
 msgstr ""
 
 #: commandsource.py:71
-msgid "<B>Source plugin error: Encoding error</B>"
+msgid "<B>Source plugin: Encoding error</B>"
 msgstr ""
 
 #: commandsource.py:74
-msgid "<B>Source plugin error: Unknown encoding</B>"
+msgid "<B>Source plugin: Unknown encoding</B>"
 msgstr ""
 
 #: controller.py:72
