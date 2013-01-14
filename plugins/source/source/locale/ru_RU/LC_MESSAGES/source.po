@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: SourcePlugin 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-01-14 09:04+0400\n"
-"PO-Revision-Date: 2013-01-14 09:07+0300\n"
+"PO-Revision-Date: 2013-01-14 20:22+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language: \n"
@@ -53,7 +53,7 @@ msgstr "Вставить текст программы из файла"
 
 #: insertdialog.py:181
 msgid "Attached file"
-msgstr "Прикрепленный файла"
+msgstr "Прикрепленный файл"
 
 #: insertdialog.py:204
 msgid "File encoding"
