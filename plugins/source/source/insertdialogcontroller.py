@@ -24,6 +24,8 @@ class InsertDialogController (object):
         self.MIN_TAB_WIDTH = 0
         self.MAX_TAB_WIDTH = 50
 
+        self.AUTO_LANGUAGE = _(u"Auto")
+
         # Результат работы диалога
         # Если пользователь в диалоге нажал кнопку Cancel, _result = None,
         # иначе хранит кортеж из двух значений: (начало команды, завершение команды)
@@ -184,7 +186,7 @@ class InsertDialogController (object):
         languages = self._getLangList()
 
         if self._dialog.insertFromFile:
-            languages = [_(u"Auto")] + languages
+            languages = [self.AUTO_LANGUAGE] + languages
 
         self._dialog.languageComboBox.Clear()
         self._dialog.languageComboBox.AppendItems (languages)

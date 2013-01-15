@@ -114,15 +114,17 @@ if __name__ == '__main__':
     from test.plugins.loader import PluginsLoaderTest
     from test.plugins.testwikicommand import PluginWikiCommandTest
     from test.plugins.style import StylePluginTest
-    from test.plugins.source import SourcePluginTest
-    from test.plugins.sourceencoding import SourceEncodingPluginTest
-    from test.plugins.sourcefile import SourceFilePluginTest
-    from test.plugins.sourcegui import SourceGuiPluginTest
     from test.plugins.export2html import Export2HtmlTest
     from test.plugins.spoiler import SpoilerPluginTest
     from test.plugins.livejournal import LivejournalPluginTest
     from test.plugins.lightbox import LightboxPluginTest
     from test.plugins.thumblist import ThumbListPluginTest
+
+    from test.plugins.source.source import SourcePluginTest
+    from test.plugins.source.sourceencoding import SourceEncodingPluginTest
+    from test.plugins.source.sourcefile import SourceFilePluginTest
+    from test.plugins.source.sourcegui import SourceGuiPluginTest
+    from test.plugins.source.sourceattachment import SourceAttachmentPluginTest
 
     from test.styles.styles import StylesTest
     from test.styles.styleslist import StylesListTest
