@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-14 09:04+0400\n"
-"PO-Revision-Date: 2013-01-14 20:25+0300\n"
+"POT-Creation-Date: 2013-01-14 21:45+0400\n"
+"PO-Revision-Date: 2013-01-15 20:47+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
@@ -15,9 +15,17 @@ msgstr ""
 "X-Poedit-Country: UKRAINE\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#: commandsource.py:66
+#: commandsource.py:68
 msgid "<B>Source plugin: File '{0}' not found</B>"
 msgstr "<B>Додаток Source: Файл '{0}' не знайдено</B>"
+
+#: commandsource.py:71
+msgid "<B>Source plugin: Encoding error</B>"
+msgstr "<B>Додаток Source: Помилка кодування</B>"
+
+#: commandsource.py:74
+msgid "<B>Source plugin: Unknown encoding</B>"
+msgstr "<B>Додаток Source: Невідоме кодування</B>"
 
 #: controller.py:72
 msgid "Source [Plugin]"
