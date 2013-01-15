@@ -33,6 +33,9 @@ class SourceGuiPluginTest (unittest.TestCase):
         self.config = self.loader[self.__pluginname].config
         self.config.tabWidth.value = 4
         self.config.defaultLanguage.remove_option()
+
+        self.dialog = FakeInsertDialog ()
+        self.controller = self.loader[self.__pluginname].insertDialogControllerClass(self.testPage, self.dialog, self.config)
         
 
     def __readFile (self, path):
@@ -62,10 +65,8 @@ class SourceGuiPluginTest (unittest.TestCase):
         """
         Тест контроллера диалога для вставки команды (:source:)
         """
-        dialog = FakeInsertDialog ()
-        dialog.SetReturnCode (wx.ID_CANCEL)
-        controller = self.loader[self.__pluginname].insertDialogControllerClass(self.testPage, dialog, self.config)
-        result = controller.showDialog()
+        self.dialog.SetReturnCode (wx.ID_CANCEL)
+        result = self.controller.showDialog()
 
         self.assertEqual (result, wx.ID_CANCEL)
 
@@ -74,10 +75,8 @@ class SourceGuiPluginTest (unittest.TestCase):
         """
         Тест контроллера диалога для вставки команды (:source:)
         """
-        dialog = FakeInsertDialog ()
-        dialog.SetReturnCode (wx.ID_OK)
-        controller = self.loader[self.__pluginname].insertDialogControllerClass(self.testPage, dialog, self.config)
-        result = controller.showDialog()
+        self.dialog.SetReturnCode (wx.ID_OK)
+        result = self.controller.showDialog()
 
         self.assertEqual (result, wx.ID_OK)
 
@@ -89,13 +88,11 @@ class SourceGuiPluginTest (unittest.TestCase):
         self.config.languageList.value = [u"python", u"cpp", u"haskell", u"text"]
         self.config.defaultLanguage.value = "text"
 
-        dialog = FakeInsertDialog ()
-        dialog.SetReturnCode (wx.ID_OK)
-        controller = self.loader[self.__pluginname].insertDialogControllerClass(self.testPage, dialog, self.config)
-        controller.showDialog()
+        self.dialog.SetReturnCode (wx.ID_OK)
+        self.controller.showDialog()
 
-        dialog.tabWidthSpin.SetValue (4)
-        result = controller.getCommandStrings()
+        self.dialog.tabWidthSpin.SetValue (4)
+        result = self.controller.getCommandStrings()
 
         self.assertEqual (result, (u'(:source lang="text" tabwidth="4":)\n', u'\n(:sourceend:)'))
 
@@ -106,13 +103,11 @@ class SourceGuiPluginTest (unittest.TestCase):
         """
         self.config.defaultLanguage.value = "python"
 
-        dialog = FakeInsertDialog ()
-        dialog.SetReturnCode (wx.ID_OK)
-        controller = self.loader[self.__pluginname].insertDialogControllerClass(self.testPage, dialog, self.config)
-        controller.showDialog()
+        self.dialog.SetReturnCode (wx.ID_OK)
+        self.controller.showDialog()
 
-        dialog.tabWidthSpin.SetValue (8)
-        result = controller.getCommandStrings()
+        self.dialog.tabWidthSpin.SetValue (8)
+        result = self.controller.getCommandStrings()
 
         self.assertEqual (result, (u'(:source lang="python" tabwidth="8":)\n', u'\n(:sourceend:)'))
 
@@ -124,13 +119,11 @@ class SourceGuiPluginTest (unittest.TestCase):
         self.config.languageList.value = [u"python", u"cpp", u"haskell", u"text"]
         self.config.defaultLanguage.value = "text"
 
-        dialog = FakeInsertDialog ()
-        dialog.SetReturnCode (wx.ID_OK)
-        controller = self.loader[self.__pluginname].insertDialogControllerClass(self.testPage, dialog, self.config)
-        controller.showDialog()
+        self.dialog.SetReturnCode (wx.ID_OK)
+        self.controller.showDialog()
 
-        dialog.tabWidthSpin.SetValue (4)
-        result = controller.getCommandStrings()
+        self.dialog.tabWidthSpin.SetValue (4)
+        result = self.controller.getCommandStrings()
 
         self.assertEqual (result, (u'(:source lang="text" tabwidth="4":)\n', u'\n(:sourceend:)'))
 
@@ -142,13 +135,11 @@ class SourceGuiPluginTest (unittest.TestCase):
         self.config.languageList.value = [u"python", u"cpp", u"haskell", u"text"]
         self.config.defaultLanguage.value = "text"
 
-        dialog = FakeInsertDialog ()
-        dialog.SetReturnCode (wx.ID_OK)
-        controller = self.loader[self.__pluginname].insertDialogControllerClass(self.testPage, dialog, self.config)
-        controller.showDialog()
+        self.dialog.SetReturnCode (wx.ID_OK)
+        self.controller.showDialog()
 
-        dialog.tabWidthSpin.SetValue (0)
-        result = controller.getCommandStrings()
+        self.dialog.tabWidthSpin.SetValue (0)
+        result = self.controller.getCommandStrings()
 
         self.assertEqual (result, (u'(:source lang="text":)\n', u'\n(:sourceend:)'))
 
@@ -160,14 +151,12 @@ class SourceGuiPluginTest (unittest.TestCase):
         self.config.languageList.value = [u"python", u"cpp", u"haskell", u"text"]
         self.config.defaultLanguage.value = "text"
 
-        dialog = FakeInsertDialog ()
-        dialog.SetReturnCode (wx.ID_OK)
-        controller = self.loader[self.__pluginname].insertDialogControllerClass(self.testPage, dialog, self.config)
-        controller.showDialog()
+        self.dialog.SetReturnCode (wx.ID_OK)
+        self.controller.showDialog()
 
-        dialog.languageComboBox.SetSelection (0)
-        dialog.tabWidthSpin.SetValue (0)
-        result = controller.getCommandStrings()
+        self.dialog.languageComboBox.SetSelection (0)
+        self.dialog.tabWidthSpin.SetValue (0)
+        result = self.controller.getCommandStrings()
 
         self.assertEqual (result, (u'(:source lang="cpp":)\n', u'\n(:sourceend:)'))
 
@@ -179,14 +168,12 @@ class SourceGuiPluginTest (unittest.TestCase):
         self.config.languageList.value = [u"python", u"cpp", u"haskell", u"text"]
         self.config.defaultLanguage.value = "text"
 
-        dialog = FakeInsertDialog ()
-        dialog.SetReturnCode (wx.ID_OK)
-        controller = self.loader[self.__pluginname].insertDialogControllerClass(self.testPage, dialog, self.config)
-        controller.showDialog()
+        self.dialog.SetReturnCode (wx.ID_OK)
+        self.controller.showDialog()
 
-        dialog.languageComboBox.SetSelection (1)
-        dialog.tabWidthSpin.SetValue (0)
-        result = controller.getCommandStrings()
+        self.dialog.languageComboBox.SetSelection (1)
+        self.dialog.tabWidthSpin.SetValue (0)
+        result = self.controller.getCommandStrings()
 
         self.assertEqual (result, (u'(:source lang="haskell":)\n', u'\n(:sourceend:)'))
 
@@ -206,46 +193,55 @@ class SourceGuiPluginTest (unittest.TestCase):
                 [u"python", u"cpp", u"haskell"])
 
 
+    # def testSourceConfig2 (self):
+    #     self.config.defaultLanguage.value = u"python"
+    #     self.config.tabWidth.value = 8
+    #     self.config.dialogWidth.value = 100
+    #     self.config.dialogHeight.value = 200
+    #     self.config.languageList.value = [u"cpp", u"haskell", u"python"]
+
+    #     self.controller.loadState()
+    #     self.dialog.languageComboBox.SetSelection (0)
+    #     self.dialog.SetReturnCode (wx.ID_OK)
+    #     self.controller.showDialog()
+
+    #     self.assertEqual (self.config.defaultLanguage.value, u"cpp")
+
+
     def testDialogValues1 (self):
         self.config.languageList.value = [u"python", u"cpp", u"haskell"]
         self.config.defaultLanguage.value = u"haskell"
 
-        dialog = FakeInsertDialog ()
-        controller = self.loader[self.__pluginname].insertDialogControllerClass(self.testPage, dialog, self.config)
-        controller.showDialog()
+        self.controller.showDialog()
 
-        self.assertEqual (dialog.languageComboBox.GetItems(), 
+        self.assertEqual (self.dialog.languageComboBox.GetItems(), 
                 [u"cpp", u"haskell", u"python"])
 
-        self.assertEqual (dialog.languageComboBox.GetSelection(), 1)
-        self.assertEqual (dialog.languageComboBox.GetValue(), u"haskell")
+        self.assertEqual (self.dialog.languageComboBox.GetSelection(), 1)
+        self.assertEqual (self.dialog.languageComboBox.GetValue(), u"haskell")
 
-        self.assertEqual (dialog.tabWidthSpin.GetValue(), 0)
+        self.assertEqual (self.dialog.tabWidthSpin.GetValue(), 0)
 
 
     def testDialogValues2 (self):
         self.config.languageList.value = []
         self.config.defaultLanguage.value = u"haskell"
 
-        dialog = FakeInsertDialog ()
-        controller = self.loader[self.__pluginname].insertDialogControllerClass(self.testPage, dialog, self.config)
-        controller.showDialog()
+        self.controller.showDialog()
 
-        self.assertEqual (dialog.languageComboBox.GetItems(), [u"text"])
+        self.assertEqual (self.dialog.languageComboBox.GetItems(), [u"text"])
 
-        self.assertEqual (dialog.languageComboBox.GetSelection(), 0)
-        self.assertEqual (dialog.languageComboBox.GetValue(), u"text")
+        self.assertEqual (self.dialog.languageComboBox.GetSelection(), 0)
+        self.assertEqual (self.dialog.languageComboBox.GetValue(), u"text")
 
 
     def testDialogValues3 (self):
         self.config.languageList.value = [u"python", u"cpp", u"haskell"]
         self.config.defaultLanguage.value = u"c"
 
-        dialog = FakeInsertDialog ()
-        controller = self.loader[self.__pluginname].insertDialogControllerClass(self.testPage, dialog, self.config)
-        controller.showDialog()
+        self.controller.showDialog()
 
-        self.assertEqual (dialog.languageComboBox.GetItems(), [u"cpp", u"haskell", u"python"])
+        self.assertEqual (self.dialog.languageComboBox.GetItems(), [u"cpp", u"haskell", u"python"])
 
-        self.assertEqual (dialog.languageComboBox.GetSelection(), 0)
-        self.assertEqual (dialog.languageComboBox.GetValue(), u"cpp")
+        self.assertEqual (self.dialog.languageComboBox.GetSelection(), 0)
+        self.assertEqual (self.dialog.languageComboBox.GetValue(), u"cpp")

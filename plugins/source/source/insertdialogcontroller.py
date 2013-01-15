@@ -48,8 +48,6 @@ class InsertDialogController (object):
         Метод показывает диалог и возвращает кортеж из двух строк, которыми надо будет обернуть выделенный текст
         Если пользователь нажимает кнопку "Cancel", возвращается None
         """
-        self._resultStr = None
-
         self.loadState()
 
         result = self._dialog.ShowModal()
@@ -205,7 +203,9 @@ class InsertDialogController (object):
         """
         Сохранить настройки диалога
         """
-        self._config.defaultLanguage.value = self._dialog.languageComboBox.GetValue()
+        if (not self._dialog.insertFromFile or 
+                self._dialog.languageComboBox.GetSelection() != 0):
+            self._config.defaultLanguage.value = self._dialog.languageComboBox.GetValue()
 
         currentWidth, currentHeight = self._dialog.GetSizeTuple ()
         self._config.dialogWidth.value = currentWidth

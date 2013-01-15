@@ -33,6 +33,9 @@ class SourceAttachmentPluginTest (unittest.TestCase):
         self.config = self.loader[self.__pluginname].config
         self.config.tabWidth.value = 4
         self.config.defaultLanguage.remove_option()
+
+        self.dialog = FakeInsertDialog ()
+        self.controller = self.loader[self.__pluginname].insertDialogControllerClass(self.testPage, self.dialog, self.config)
         
 
     def __readFile (self, path):
@@ -59,11 +62,9 @@ class SourceAttachmentPluginTest (unittest.TestCase):
 
 
     def testAttachment1 (self):
-        dialog = FakeInsertDialog ()
-        controller = self.loader[self.__pluginname].insertDialogControllerClass(self.testPage, dialog, self.config)
-        controller.showDialog()
+        self.controller.showDialog()
 
-        self.assertEqual (dialog.attachmentComboBox.GetCount(), 0)
+        self.assertEqual (self.dialog.attachmentComboBox.GetCount(), 0)
 
 
     def testAttachment2 (self):
@@ -72,13 +73,11 @@ class SourceAttachmentPluginTest (unittest.TestCase):
         Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, u"source_utf8.py")])
         Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, u"source_cp1251.cs")])
 
-        dialog = FakeInsertDialog ()
-        controller = self.loader[self.__pluginname].insertDialogControllerClass(self.testPage, dialog, self.config)
-        controller.showDialog()
+        self.controller.showDialog()
 
-        self.assertEqual (dialog.attachmentComboBox.GetSelection(), 0)
-        self.assertEqual (dialog.attachmentComboBox.GetCount(), 2)
-        self.assertEqual (dialog.attachmentComboBox.GetItems(), 
+        self.assertEqual (self.dialog.attachmentComboBox.GetSelection(), 0)
+        self.assertEqual (self.dialog.attachmentComboBox.GetCount(), 2)
+        self.assertEqual (self.dialog.attachmentComboBox.GetItems(), 
                 [u"source_cp1251.cs", u"source_utf8.py"])
 
 
@@ -88,15 +87,13 @@ class SourceAttachmentPluginTest (unittest.TestCase):
         Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, u"source_utf8.py")])
         Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, u"source_cp1251.cs")])
 
-        dialog = FakeInsertDialog ()
-        controller = self.loader[self.__pluginname].insertDialogControllerClass(self.testPage, dialog, self.config)
-        controller.showDialog()
+        self.controller.showDialog()
 
-        dialog.fileCheckBox.SetValue(True)
-        dialog.attachmentComboBox.SetSelection (0)
-        dialog.encodingComboBox.SetSelection (0)
+        self.dialog.fileCheckBox.SetValue(True)
+        self.dialog.attachmentComboBox.SetSelection (0)
+        self.dialog.encodingComboBox.SetSelection (0)
 
-        result = controller.getCommandStrings()
+        result = self.controller.getCommandStrings()
 
         self.assertEqual (result, (u'(:source file="Attach:source_cp1251.cs":)', u'(:sourceend:)'))
 
@@ -107,15 +104,13 @@ class SourceAttachmentPluginTest (unittest.TestCase):
         Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, u"source_utf8.py")])
         Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, u"source_cp1251.cs")])
 
-        dialog = FakeInsertDialog ()
-        controller = self.loader[self.__pluginname].insertDialogControllerClass(self.testPage, dialog, self.config)
-        controller.showDialog()
+        self.controller.showDialog()
 
-        dialog.fileCheckBox.SetValue(True)
-        dialog.attachmentComboBox.SetSelection (1)
-        dialog.encodingComboBox.SetSelection (0)
+        self.dialog.fileCheckBox.SetValue(True)
+        self.dialog.attachmentComboBox.SetSelection (1)
+        self.dialog.encodingComboBox.SetSelection (0)
 
-        result = controller.getCommandStrings()
+        result = self.controller.getCommandStrings()
 
         self.assertEqual (result, (u'(:source file="Attach:source_utf8.py":)', u'(:sourceend:)'))
 
@@ -126,15 +121,13 @@ class SourceAttachmentPluginTest (unittest.TestCase):
         Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, u"source_utf8.py")])
         Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, u"source_cp1251.cs")])
 
-        dialog = FakeInsertDialog ()
-        controller = self.loader[self.__pluginname].insertDialogControllerClass(self.testPage, dialog, self.config)
-        controller.showDialog()
+        self.controller.showDialog()
 
-        dialog.fileCheckBox.SetValue(True)
-        dialog.attachmentComboBox.SetSelection (0)
-        dialog.encodingComboBox.SetSelection (2)
+        self.dialog.fileCheckBox.SetValue(True)
+        self.dialog.attachmentComboBox.SetSelection (0)
+        self.dialog.encodingComboBox.SetSelection (2)
 
-        result = controller.getCommandStrings()
+        result = self.controller.getCommandStrings()
 
         self.assertEqual (result, (u'(:source file="Attach:source_cp1251.cs" encoding="cp1251":)', u'(:sourceend:)'))
 
@@ -147,21 +140,19 @@ class SourceAttachmentPluginTest (unittest.TestCase):
 
         self.config.languageList.value = [u"cpp", u"csharp", u"haskell"]
 
-        dialog = FakeInsertDialog ()
-        controller = self.loader[self.__pluginname].insertDialogControllerClass(self.testPage, dialog, self.config)
-        controller.showDialog()
+        self.controller.showDialog()
 
-        dialog.fileCheckBox.SetValue(True)
+        self.dialog.fileCheckBox.SetValue(True)
 
         # Т.к. при изменении состояния флажка события не возникают,
         # Вручную обновим список языков
-        controller.loadLanguagesState()
+        self.controller.loadLanguagesState()
 
-        dialog.attachmentComboBox.SetSelection (0)
-        dialog.encodingComboBox.SetSelection (2)
-        dialog.languageComboBox.SetSelection (3)
+        self.dialog.attachmentComboBox.SetSelection (0)
+        self.dialog.encodingComboBox.SetSelection (2)
+        self.dialog.languageComboBox.SetSelection (3)
 
-        result = controller.getCommandStrings()
+        result = self.controller.getCommandStrings()
 
         self.assertEqual (result, (u'(:source file="Attach:source_cp1251.cs" lang="haskell" encoding="cp1251":)', u'(:sourceend:)'))
 
@@ -174,16 +165,14 @@ class SourceAttachmentPluginTest (unittest.TestCase):
 
         self.config.languageList.value = [u"cpp", u"haskell", u"csharp"]
 
-        dialog = FakeInsertDialog ()
-        controller = self.loader[self.__pluginname].insertDialogControllerClass(self.testPage, dialog, self.config)
-        controller.showDialog()
+        self.controller.showDialog()
 
-        dialog.fileCheckBox.SetValue(True)
-        dialog.attachmentComboBox.SetSelection (0)
-        dialog.encodingComboBox.SetSelection (2)
-        dialog.languageComboBox.SetSelection (0)
+        self.dialog.fileCheckBox.SetValue(True)
+        self.dialog.attachmentComboBox.SetSelection (0)
+        self.dialog.encodingComboBox.SetSelection (2)
+        self.dialog.languageComboBox.SetSelection (0)
 
-        result = controller.getCommandStrings()
+        result = self.controller.getCommandStrings()
 
         self.assertEqual (result, (u'(:source file="Attach:source_cp1251.cs" encoding="cp1251":)', u'(:sourceend:)'))
 
@@ -196,21 +185,19 @@ class SourceAttachmentPluginTest (unittest.TestCase):
 
         self.config.languageList.value = [u"cpp", u"csharp", u"haskell"]
 
-        dialog = FakeInsertDialog ()
-        controller = self.loader[self.__pluginname].insertDialogControllerClass(self.testPage, dialog, self.config)
-        controller.showDialog()
+        self.controller.showDialog()
 
-        dialog.fileCheckBox.SetValue(True)
+        self.dialog.fileCheckBox.SetValue(True)
 
         # Т.к. при изменении состояния флажка события не возникают,
         # Вручную обновим список языков
-        controller.loadLanguagesState()
+        self.controller.loadLanguagesState()
 
-        dialog.attachmentComboBox.SetSelection (0)
-        dialog.encodingComboBox.SetSelection (0)
-        dialog.languageComboBox.SetSelection (2)
+        self.dialog.attachmentComboBox.SetSelection (0)
+        self.dialog.encodingComboBox.SetSelection (0)
+        self.dialog.languageComboBox.SetSelection (2)
 
-        result = controller.getCommandStrings()
+        result = self.controller.getCommandStrings()
 
         self.assertEqual (result, (u'(:source file="Attach:source_cp1251.cs" lang="csharp":)', u'(:sourceend:)'))
 
@@ -223,21 +210,19 @@ class SourceAttachmentPluginTest (unittest.TestCase):
 
         self.config.languageList.value = [u"cpp", u"csharp", u"haskell"]
 
-        dialog = FakeInsertDialog ()
-        controller = self.loader[self.__pluginname].insertDialogControllerClass(self.testPage, dialog, self.config)
-        controller.showDialog()
+        self.controller.showDialog()
 
-        dialog.fileCheckBox.SetValue(True)
+        self.dialog.fileCheckBox.SetValue(True)
 
         # Т.к. при изменении состояния флажка события не возникают,
         # Вручную обновим список языков
-        controller.loadLanguagesState()
+        self.controller.loadLanguagesState()
 
-        dialog.attachmentComboBox.SetSelection (0)
-        dialog.encodingComboBox.SetSelection (0)
-        dialog.languageComboBox.SetSelection (2)
-        dialog.tabWidthSpin.SetValue (10)
+        self.dialog.attachmentComboBox.SetSelection (0)
+        self.dialog.encodingComboBox.SetSelection (0)
+        self.dialog.languageComboBox.SetSelection (2)
+        self.dialog.tabWidthSpin.SetValue (10)
 
-        result = controller.getCommandStrings()
+        result = self.controller.getCommandStrings()
 
         self.assertEqual (result, (u'(:source file="Attach:source_cp1251.cs" lang="csharp" tabwidth="10":)', u'(:sourceend:)'))
