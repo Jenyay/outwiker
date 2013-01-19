@@ -73,8 +73,10 @@ source code
 <B>Params:</B>
 <I>lang</I> - programming language
 <I>tabwidth</I> - tab size
+<I>file</I> - attached source file
+<I>encoding</I> - encoding of the attached source file (default encoding - utf8)
 
-<B>Example:</B>
+<B>Example 1:</B>
 <PRE>(:source lang="python" tabwidth=4:)
 import os
 
@@ -82,6 +84,12 @@ if __name__ == "__main__":
     print "Hello World!"
 (:sourceend:)
 </PRE>
+
+<B>Example 2:</B>
+(:source file="Attach:example.cs" encoding="cp1251":)(:sourceend:)
+
+<B>Example 3:</B>
+(:source file="Attach:example.txt" lang="python":)(:sourceend:)
 """)
 
 
