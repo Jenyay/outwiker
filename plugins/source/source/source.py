@@ -86,10 +86,10 @@ if __name__ == "__main__":
 </PRE>
 
 <B>Example 2:</B>
-(:source file="Attach:example.cs" encoding="cp1251":)(:sourceend:)
+<PRE>(:source file="Attach:example.cs" encoding="cp1251":)(:sourceend:)</PRE>
 
 <B>Example 3:</B>
-(:source file="Attach:example.txt" lang="python":)(:sourceend:)
+<PRE>(:source file="Attach:example.txt" lang="python":)(:sourceend:)</PRE>
 """)
 
 
