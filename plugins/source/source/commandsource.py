@@ -128,6 +128,15 @@ class CommandSource (Command):
         return encoding
 
 
+    def __getStyle (self, params_dict):
+        style = u"default"
+        return style
+
+
+    def __getCssClass (self, style):
+        return u"highlight-" + style
+
+
     def __colorize (self, params_dict, content):
         """
         Раскраска исходников. Возвращает получившийся HTML и добавляет нужные стили в заголовок страницы
@@ -135,17 +144,20 @@ class CommandSource (Command):
         lexermaker = LexerMaker ()
         lexer = lexermaker.getLexer (params_dict)
 
-        sourceStyle = HtmlFormatter().get_style_defs()
+        style = self.__getStyle (params_dict)
+        cssclass = self.__getCssClass (style)
+
+        formatter = HtmlFormatter(linenos=False, cssclass=cssclass, style=style)
+        sourceStyle = formatter.get_style_defs()
 
         styleTemplate = u"<STYLE>{0}</STYLE>"
 
         if not self.__styleAppend:
             self.parser.appendToHead (styleTemplate.format (sourceStyle))
-            self.parser.appendToHead (styleTemplate.format (HIGHLIGHT_STYLE))
+            self.parser.appendToHead (styleTemplate.format ("".join (["div.", cssclass, HIGHLIGHT_STYLE]) ) )
 
             self.__styleAppend = True
 
-        formatter = HtmlFormatter(linenos=False)
         result = highlight(content, lexer, formatter)
 
         result = result.replace ("\n</td>", "</td>")

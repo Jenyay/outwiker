@@ -27,4 +27,4 @@ TAB_WIDTH_PARAM_NAME = u"tabwidth"
 TAB_WIDTH_DEFAULT = 4
 
 # Стиль для общего div
-HIGHLIGHT_STYLE = u'.highlight {border-style: solid; border-color: gray; border-width: 1px; background-color: #eee; padding-left: 10px;}'
+HIGHLIGHT_STYLE = u'{border-style: solid; border-color: gray; border-width: 1px; padding-left: 10px;}'
