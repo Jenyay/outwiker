@@ -134,3 +134,33 @@ def hello (count):
         self.assertTrue (innerString2 in result)
         self.assertTrue (innerString3 in result)
         self.assertTrue (innerString4 in result)
+
+
+    def testSeveralStyles (self):
+        text = u'''(:source lang="python" tabwidth=4 style="vim":){0}(:sourceend:)
+        
+(:source lang="python" tabwidth=4:){0}(:sourceend:)'''.format (self.pythonSource)
+
+        self.testPage.content = text
+
+        generator = HtmlGenerator (self.testPage)
+        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
+        result = self.__readFile (htmlpath)
+
+        innerString1 = u".highlight-vim .c"
+        innerString2 = u".highlight-vim .c { color: #000080 } /* Comment */"
+        innerString3 = u'        <span class="k">print</span> <span class="s">&quot;Hello world!!!&quot;</span>'
+        innerString4 = u'<span class="kn">import</span> <span class="nn">os</span>'
+        innerString5 = u".highlight-default .c"
+        innerString6 = u".highlight-default .c { color: #408080; font-style: italic } /* Comment */"
+        innerString7 = u'<div class="highlight-default">'
+        innerString8 = u'<div class="highlight-vim">'
+        
+        self.assertTrue (innerString1 in result)
+        self.assertTrue (innerString2 in result)
+        self.assertTrue (innerString3 in result)
+        self.assertTrue (innerString4 in result)
+        self.assertTrue (innerString5 in result)
+        self.assertTrue (innerString6 in result)
+        self.assertTrue (innerString7 in result)
+        self.assertTrue (innerString8 in result)
