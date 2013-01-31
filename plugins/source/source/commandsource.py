@@ -6,11 +6,12 @@ from outwiker.core.attachment import Attachment
 
 from pygments import highlight
 from pygments.formatters import HtmlFormatter
+from pygments.styles import STYLE_MAP
 
 from .sourceconfig import SourceConfig
 from .lexermaker import LexerMaker
 from .i18n import get_
-from .params import FILE_PARAM_NAME, ENCODING_PARAM_NAME, ENCODING_DEFAULT, TAB_WIDTH_PARAM_NAME, HIGHLIGHT_STYLE, TAB_WIDTH_DEFAULT
+from .params import FILE_PARAM_NAME, ENCODING_PARAM_NAME, ENCODING_DEFAULT, TAB_WIDTH_PARAM_NAME, HIGHLIGHT_STYLE, TAB_WIDTH_DEFAULT, STYLE_PARAM_NAME, STYLE_DEFAULT
 from .misc import getFileName
 
 
@@ -36,8 +37,8 @@ class CommandSource (Command):
         Command.__init__ (self, parser)
         self.__config = SourceConfig (config)
 
-        # Добавлены ли стили в заголовок
-        self.__styleAppend = False
+        # Стили, добавленные в заголовок
+        self.__appendStyles = []
 
         global _
         _ = get_()
@@ -128,6 +129,18 @@ class CommandSource (Command):
         return encoding
 
 
+    def __getStyle (self, params_dict):
+        if (STYLE_PARAM_NAME not in params_dict or
+                params_dict[STYLE_PARAM_NAME] not in STYLE_MAP):
+            return STYLE_DEFAULT
+
+        return params_dict[STYLE_PARAM_NAME]
+
+
+    def __getCssClass (self, style):
+        return u"highlight-" + style
+
+
     def __colorize (self, params_dict, content):
         """
         Раскраска исходников. Возвращает получившийся HTML и добавляет нужные стили в заголовок страницы
@@ -135,17 +148,20 @@ class CommandSource (Command):
         lexermaker = LexerMaker ()
         lexer = lexermaker.getLexer (params_dict)
 
-        sourceStyle = HtmlFormatter().get_style_defs()
+        style = self.__getStyle (params_dict)
+        cssclass = self.__getCssClass (style)
+
+        formatter = HtmlFormatter(linenos=False, cssclass=cssclass, style=style)
+        sourceStyle = formatter.get_style_defs()
 
         styleTemplate = u"<STYLE>{0}</STYLE>"
 
-        if not self.__styleAppend:
+        if style not in self.__appendStyles:
             self.parser.appendToHead (styleTemplate.format (sourceStyle))
-            self.parser.appendToHead (styleTemplate.format (HIGHLIGHT_STYLE))
+            self.parser.appendToHead (styleTemplate.format ("".join (["div.", cssclass, HIGHLIGHT_STYLE]) ) )
 
-            self.__styleAppend = True
+            self.__appendStyles.append (style)
 
-        formatter = HtmlFormatter(linenos=False)
         result = highlight(content, lexer, formatter)
 
         result = result.replace ("\n</td>", "</td>")

@@ -6,6 +6,8 @@ import wx
 from outwiker.gui.preferences.configelements import IntegerElement
 from outwiker.core.attachment import Attachment
 
+from .params import STYLE_DEFAULT
+
 
 class InsertDialogController (object):
     """
@@ -63,9 +65,11 @@ class InsertDialogController (object):
         """
         langStr = u' lang="{language}"'.format (language=self._dialog.language)
         tabWidthStr = self._getTabWidthParam()
+        styleStr = self._getStyleParam()
 
-        startCommand = u'(:source{lang}{tabwidth}:)\n'.format (lang=langStr,
-                tabwidth=tabWidthStr)
+        startCommand = u'(:source{lang}{tabwidth}{style}:)\n'.format (lang=langStr,
+                tabwidth=tabWidthStr,
+                style=styleStr)
 
         endCommand = u'\n(:sourceend:)'
 
@@ -77,6 +81,10 @@ class InsertDialogController (object):
             return u' tabwidth="{0}"'.format(self._dialog.tabWidth)
         else:
             return u''
+
+
+    def _getStyleParam (self):
+        return u'' if self._dialog.style == STYLE_DEFAULT else ' style="{style}"'.format (style=self._dialog.style)
 
 
     def _getStringsForAttachment (self):
@@ -92,10 +100,13 @@ class InsertDialogController (object):
         langStr = u'' if language == None else u' lang="{lang}"'.format (lang=language)
         tabWidthStr = self._getTabWidthParam()
 
-        startCommand = u'(:source{file}{lang}{encoding}{tabwidth}:)'.format (file=fnameStr,
+        styleStr = self._getStyleParam()
+
+        startCommand = u'(:source{file}{lang}{encoding}{tabwidth}{style}:)'.format (file=fnameStr,
                 lang=langStr, 
                 encoding=encodingStr,
-                tabwidth=tabWidthStr)
+                tabwidth=tabWidthStr,
+                style=styleStr)
 
         endCommand = u'(:sourceend:)'
 
@@ -131,6 +142,7 @@ class InsertDialogController (object):
         self.loadLanguagesState()
         self._loadEncodingState()
         self._loadAttachmentState()
+        self._loadStyleState()
 
         self._updateDialogSize()
         self.enableFileGuiElements (False)
@@ -159,6 +171,26 @@ class InsertDialogController (object):
 
         if len (files) > 0:
             self._dialog.attachmentComboBox.SetSelection (0)
+
+
+    def _loadStyleState (self):
+        from pygments.styles import STYLE_MAP
+
+        styles = STYLE_MAP.keys()
+        styles.sort()
+
+        assert len (styles) > 0
+
+        self._dialog.styleComboBox.Clear()
+        self._dialog.styleComboBox.AppendItems (styles)
+
+        selectedStyle = STYLE_DEFAULT
+
+        if selectedStyle in STYLE_MAP:
+            index = styles.index (selectedStyle)
+            assert index >= 0
+
+            self._dialog.styleComboBox.SetSelection (index)
 
 
     def _loadEncodingState (self):

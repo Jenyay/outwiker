@@ -101,7 +101,7 @@ def hello (count):
         htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
         result = self.__readFile (htmlpath)
 
-        innerString1 = u".go { color: #808080 } /* Generic.Output */"
+        innerString1 = u".highlight-default .go { color: #808080 } /* Generic.Output */"
         innerString2 = u'          <span class="k">print</span> <span class="s">&quot;Hello world!!!&quot;</span>'
         innerString3 = u'<span class="kn">import</span> <span class="nn">os</span>'
         
@@ -130,7 +130,7 @@ def hello (count):
         htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
         result = self.__readFile (htmlpath)
 
-        innerString1 = u".go { color: #808080 } /* Generic.Output */"
+        innerString1 = u".highlight-default .go { color: #808080 } /* Generic.Output */"
         innerString2 = u'       <span class="k">print</span> <span class="s">&quot;Hello world!!!&quot;</span>'
         innerString3 = u'<span class="kn">import</span> <span class="nn">os</span>'
         
@@ -160,7 +160,7 @@ def hello (count):
         htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
         result = self.__readFile (htmlpath)
 
-        innerString1 = u".go { color: #808080 } /* Generic.Output */"
+        innerString1 = u".highlight-default .go { color: #808080 } /* Generic.Output */"
         innerString2 = u'       <span class="k">print</span> <span class="s">&quot;Hello world!!!&quot;</span>'
         innerString3 = u'<span class="kn">import</span> <span class="nn">os</span>'
         
@@ -189,7 +189,7 @@ def hello (count):
         htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
         result = self.__readFile (htmlpath)
 
-        innerString1 = u".go { color: #808080 } /* Generic.Output */"
+        innerString1 = u".highlight-default .go { color: #808080 } /* Generic.Output */"
         innerString2 = u'        print &quot;Hello world!!!&quot;'
         innerString3 = u'def hello (count):'
         
@@ -219,7 +219,7 @@ def hello (count):
         htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
         result = self.__readFile (htmlpath)
 
-        innerString1 = u".go { color: #808080 } /* Generic.Output */"
+        innerString1 = u".highlight-default .go { color: #808080 } /* Generic.Output */"
         innerString2 = u'        print &quot;Hello world!!!&quot;'
         innerString3 = u'def hello (count):'
         
@@ -249,7 +249,7 @@ def hello (count):
         htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
         result = self.__readFile (htmlpath)
 
-        innerString1 = u".go { color: #808080 } /* Generic.Output */"
+        innerString1 = u".highlight-default .go { color: #808080 } /* Generic.Output */"
         innerString2 = u'        print &quot;Hello world!!!&quot;'
         innerString3 = u'def hello (count):'
         
@@ -292,7 +292,7 @@ def hello (count):
         htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
         result = self.__readFile (htmlpath)
 
-        innerString1 = u".go { color: #808080 } /* Generic.Output */"
+        innerString1 = u".highlight-default .go { color: #808080 } /* Generic.Output */"
         innerString2 = u'        print &quot;Hello world!!!&quot;'
         innerString3 = u'def hello (count):'
         innerString4 = u'       <span class="k">print</span> <span class="s">&quot;Hello world!!!&quot;</span>'
@@ -331,7 +331,7 @@ def hello (count):
         htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
         result = self.__readFile (htmlpath)
 
-        innerString1 = u".go { color: #808080 } /* Generic.Output */"
+        innerString1 = u".highlight-default .go { color: #808080 } /* Generic.Output */"
         innerString2 = u'          for i in range (10)'
         innerString3 = u'def hello (count):'
         
@@ -362,7 +362,7 @@ def hello (count):
         htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
         result = self.__readFile (htmlpath)
 
-        innerString1 = u".go { color: #808080 } /* Generic.Output */"
+        innerString1 = u".highlight-default .go { color: #808080 } /* Generic.Output */"
         innerString2 = u'          for i in range (10)'
         innerString3 = u'def hello (count):'
         
@@ -393,7 +393,7 @@ def hello (count):
         htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
         result = self.__readFile (htmlpath)
 
-        innerString1 = u".go { color: #808080 } /* Generic.Output */"
+        innerString1 = u".highlight-default .go { color: #808080 } /* Generic.Output */"
         innerString2 = u'    for i in range (10)'
         innerString3 = u'def hello (count):'
         
@@ -424,7 +424,7 @@ def hello (count):
         htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
         result = self.__readFile (htmlpath)
 
-        innerString1 = u".go { color: #808080 } /* Generic.Output */"
+        innerString1 = u".highlight-default .go { color: #808080 } /* Generic.Output */"
         innerString2 = u'    for i in range (10)'
         innerString3 = u'def hello (count):'
         

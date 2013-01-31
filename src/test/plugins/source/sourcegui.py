@@ -193,22 +193,7 @@ class SourceGuiPluginTest (unittest.TestCase):
                 [u"python", u"cpp", u"haskell"])
 
 
-    # def testSourceConfig2 (self):
-    #     self.config.defaultLanguage.value = u"python"
-    #     self.config.tabWidth.value = 8
-    #     self.config.dialogWidth.value = 100
-    #     self.config.dialogHeight.value = 200
-    #     self.config.languageList.value = [u"cpp", u"haskell", u"python"]
-
-    #     self.controller.loadState()
-    #     self.dialog.languageComboBox.SetSelection (0)
-    #     self.dialog.SetReturnCode (wx.ID_OK)
-    #     self.controller.showDialog()
-
-    #     self.assertEqual (self.config.defaultLanguage.value, u"cpp")
-
-
-    def testDialogValues1 (self):
+    def testDialogLanguageValues1 (self):
         self.config.languageList.value = [u"python", u"cpp", u"haskell"]
         self.config.defaultLanguage.value = u"haskell"
 
@@ -223,7 +208,7 @@ class SourceGuiPluginTest (unittest.TestCase):
         self.assertEqual (self.dialog.tabWidthSpin.GetValue(), 0)
 
 
-    def testDialogValues2 (self):
+    def testDialogLanguageValues2 (self):
         self.config.languageList.value = []
         self.config.defaultLanguage.value = u"haskell"
 
@@ -235,7 +220,7 @@ class SourceGuiPluginTest (unittest.TestCase):
         self.assertEqual (self.dialog.languageComboBox.GetValue(), u"text")
 
 
-    def testDialogValues3 (self):
+    def testDialogLanguageValues3 (self):
         self.config.languageList.value = [u"python", u"cpp", u"haskell"]
         self.config.defaultLanguage.value = u"c"
 
@@ -245,3 +230,93 @@ class SourceGuiPluginTest (unittest.TestCase):
 
         self.assertEqual (self.dialog.languageComboBox.GetSelection(), 0)
         self.assertEqual (self.dialog.languageComboBox.GetValue(), u"cpp")
+
+
+    def testDialogStyleValues (self):
+        self.config.languageList.value = [u"python", u"cpp", u"haskell"]
+        self.config.defaultLanguage.value = u"python"
+
+        self.controller.showDialog()
+
+        self.assertEqual (self.dialog.styleComboBox.GetCount(), 18)
+        self.assertEqual (self.dialog.styleComboBox.GetValue(), "default")
+
+        result = self.controller.getCommandStrings()
+
+        self.assertEqual (result, (u'(:source lang="python":)\n', u'\n(:sourceend:)'))
+
+
+    def testDialogStyleText (self):
+        self.config.languageList.value = [u"python", u"cpp", u"haskell"]
+        self.config.defaultLanguage.value = u"python"
+
+        self.controller.showDialog()
+        self.dialog.styleComboBox.SetSelection (0)
+
+        self.assertEqual (self.dialog.styleComboBox.GetValue(), "autumn")
+        self.assertEqual (self.dialog.style, "autumn")
+
+        result = self.controller.getCommandStrings()
+
+        self.assertEqual (result, (u'(:source lang="python" style="autumn":)\n', u'\n(:sourceend:)'))
+
+
+    def testDialogStyleFile (self):
+        self.samplefilesPath = u"../test/samplefiles/sources"
+        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, u"source_utf8.py")])
+        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, u"source_cp1251.cs")])
+
+        self.config.languageList.value = [u"python", u"cpp", u"haskell"]
+        self.config.defaultLanguage.value = u"python"
+
+        self.controller.showDialog()
+
+        self.dialog.fileCheckBox.SetValue(True)
+        self.dialog.styleComboBox.SetSelection (0)
+        self.dialog.attachmentComboBox.SetSelection (0)
+
+        self.assertEqual (self.dialog.styleComboBox.GetValue(), "autumn")
+        self.assertEqual (self.dialog.style, "autumn")
+
+        result = self.controller.getCommandStrings()
+
+        self.assertEqual (result, (u'(:source file="Attach:source_cp1251.cs" lang="python" style="autumn":)', u'(:sourceend:)'))
+
+
+    def testDialogStyleFile2 (self):
+        self.samplefilesPath = u"../test/samplefiles/sources"
+        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, u"source_utf8.py")])
+        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, u"source_cp1251.cs")])
+
+        self.config.languageList.value = [u"python", u"cpp", u"haskell"]
+        self.config.defaultLanguage.value = u"python"
+
+        self.controller.showDialog()
+
+        self.dialog.fileCheckBox.SetValue(True)
+        self.dialog.styleComboBox.SetSelection (0)
+        self.dialog.attachmentComboBox.SetSelection (0)
+        self.dialog.languageComboBox.SetSelection (0)
+
+        self.assertEqual (self.dialog.styleComboBox.GetValue(), "autumn")
+        self.assertEqual (self.dialog.style, "autumn")
+
+        result = self.controller.getCommandStrings()
+
+        self.assertEqual (result, (u'(:source file="Attach:source_cp1251.cs" style="autumn":)', u'(:sourceend:)'))
+
+
+    def testDialogStyleText2 (self):
+        self.config.languageList.value = [u"python", u"cpp", u"haskell"]
+        self.config.defaultLanguage.value = u"python"
+
+        self.controller.showDialog()
+        self.dialog.styleComboBox.SetSelection (0)
+        self.dialog.tabWidthSpin.SetValue (5)
+
+        self.assertEqual (self.dialog.styleComboBox.GetValue(), "autumn")
+        self.assertEqual (self.dialog.style, "autumn")
+
+        result = self.controller.getCommandStrings()
+
+        self.assertEqual (result, (u'(:source lang="python" tabwidth="5" style="autumn":)\n', u'\n(:sourceend:)'))

@@ -57,6 +57,11 @@ class InsertDialog (wx.Dialog):
         return self.fileCheckBox.IsChecked()
 
 
+    @property
+    def style (self):
+        return self.styleComboBox.GetValue()
+
+
     def __createGui(self):
         """
         Создать элементы управления
@@ -67,6 +72,7 @@ class InsertDialog (wx.Dialog):
 
         self.__createFileGui (mainSizer)
         self.__createLanguageGui (mainSizer)
+        self.__createStyleGui (mainSizer)
         self.__createTabWidthGui (mainSizer)
         self.__createOkCancelButtons (mainSizer)
 
@@ -88,7 +94,7 @@ class InsertDialog (wx.Dialog):
 
     def __createLanguageGui (self, mainSizer):
         """
-        Создать интерфейс, связанный с языком программирования по умолчанию
+        Создать интерфейс, связанный с языком программирования
         """
         langSizer = wx.FlexGridSizer (0, 2)
         langSizer.AddGrowableCol(1)
@@ -155,6 +161,42 @@ class InsertDialog (wx.Dialog):
                 tabSizer, 
                 proportion=1,
                 flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT | wx.EXPAND,
+                border=2
+                )
+
+
+    def __createStyleGui (self, mainSizer):
+        """
+        Создать интерфейс, связанный с выбором стиля оформления
+        """
+        styleSizer = wx.FlexGridSizer (0, 2)
+        styleSizer.AddGrowableCol(1)
+
+        styleLabel = wx.StaticText(self, -1, _(u"Style"))
+        self.styleComboBox = wx.ComboBox (self, 
+                style=wx.CB_DROPDOWN | wx.CB_READONLY)
+
+        self.styleComboBox.SetMinSize (wx.Size (self._fieldsWidth, -1))
+
+        styleSizer.Add (
+                styleLabel,
+                proportion=1,
+                flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+                border=2
+                )
+
+
+        styleSizer.Add (
+                self.styleComboBox,
+                proportion=1,
+                flag=wx.ALL | wx.ALIGN_RIGHT,
+                border=2
+                )
+
+        mainSizer.Add (
+                styleSizer, 
+                proportion=1,
+                flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND,
                 border=2
                 )
 
