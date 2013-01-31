@@ -27,6 +27,9 @@ class FakeInsertDialog (Dialog):
         self.encodingLabel = StaticText ()
         self.encodingComboBox = ComboBox ()
 
+        self.styleLabel = StaticText ()
+        self.styleComboBox = ComboBox ()
+
 
     @property
     def language (self):
@@ -56,3 +59,8 @@ class FakeInsertDialog (Dialog):
     @property
     def insertFromFile (self):
         return self.fileCheckBox.IsChecked()
+
+
+    @property
+    def style (self):
+        return self.styleComboBox.GetValue()
