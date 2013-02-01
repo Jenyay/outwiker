@@ -34,3 +34,20 @@ STYLE_DEFAULT = u"default"
 
 # Стиль для общего div
 HIGHLIGHT_STYLE = u'{border-style: solid; border-color: gray; border-width: 1px; padding-left: 10px;}'
+
+# Список языков программирования по умолчанию
+LANGUAGE_LIST_DEFAULT = [
+            u"text",
+            u"c",
+            u"cpp",
+            u"csharp",
+            u"php",
+            u"python",
+            u"html",
+            u"css",
+            u"ruby",
+            u"java",
+            u"javascript",
+            u"objective-c",
+            u"perl",
+            u"vb.net"]

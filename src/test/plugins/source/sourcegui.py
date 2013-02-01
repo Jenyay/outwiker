@@ -31,8 +31,7 @@ class SourceGuiPluginTest (unittest.TestCase):
         self.loader.load (dirlist)
 
         self.config = self.loader[self.__pluginname].config
-        self.config.tabWidth.value = 4
-        self.config.defaultLanguage.remove_option()
+        self._clearConfig (self.config)
 
         self.dialog = FakeInsertDialog ()
         self.controller = self.loader[self.__pluginname].insertDialogControllerClass(self.testPage, self.dialog, self.config)
@@ -57,8 +56,15 @@ class SourceGuiPluginTest (unittest.TestCase):
         
 
     def tearDown(self):
+        self._clearConfig (self.config)
         removeWiki (self.path)
         self.loader.clear()
+
+
+    def _clearConfig (self, config):
+        config.tabWidth.remove_option()
+        config.defaultLanguage.remove_option()
+        config.style.remove_option()
 
 
     def testDialogController1 (self):
@@ -232,6 +238,21 @@ class SourceGuiPluginTest (unittest.TestCase):
         self.assertEqual (self.dialog.languageComboBox.GetValue(), u"cpp")
 
 
+    def testDialogLanguageValues4 (self):
+        self.config.languageList.value = [u"python", u"cpp", u"haskell"]
+        self.config.defaultLanguage.value = u"   haskell   "
+
+        self.controller.showDialog()
+
+        self.assertEqual (self.dialog.languageComboBox.GetItems(), 
+                [u"cpp", u"haskell", u"python"])
+
+        self.assertEqual (self.dialog.languageComboBox.GetSelection(), 1)
+        self.assertEqual (self.dialog.languageComboBox.GetValue(), u"haskell")
+
+        self.assertEqual (self.dialog.tabWidthSpin.GetValue(), 0)
+
+
     def testDialogStyleValues (self):
         self.config.languageList.value = [u"python", u"cpp", u"haskell"]
         self.config.defaultLanguage.value = u"python"
@@ -320,3 +341,32 @@ class SourceGuiPluginTest (unittest.TestCase):
         result = self.controller.getCommandStrings()
 
         self.assertEqual (result, (u'(:source lang="python" tabwidth="5" style="autumn":)\n', u'\n(:sourceend:)'))
+
+
+    def testStyleConfig1 (self):
+        self.config.style.value = "default"
+
+        self.controller.showDialog ()
+        self.assertEqual (self.dialog.style, "default")
+
+
+    def testStyleConfig2 (self):
+        self.config.style.value = "vim"
+
+        self.controller.showDialog ()
+        self.assertEqual (self.dialog.style, "vim")
+
+
+    def testStyleConfig3 (self):
+        self.config.style.value = "  vim   "
+
+        self.controller.showDialog ()
+        self.assertEqual (self.dialog.style, "vim")
+
+
+    def testStyleConfig4 (self):
+        self.config.style.value = "invalid_style"
+
+        self.controller.showDialog ()
+        self.assertEqual (self.dialog.style, "default")
+

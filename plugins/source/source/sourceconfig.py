@@ -3,6 +3,8 @@
 
 from outwiker.core.config import StringOption, IntegerOption, ListOption
 
+from .params import LANGUAGE_DEFAULT, TAB_WIDTH_DEFAULT, STYLE_DEFAULT, LANGUAGE_LIST_DEFAULT
+
 
 class SourceConfig (object):
     def __init__ (self, config):
@@ -11,46 +13,40 @@ class SourceConfig (object):
         section = u"SourcePlugin"
 
         # Размер табуляции по умолчанию
-        self.DEFAULT_TAB_WIDTH = 4
         tabWidthOption = u"TabWidth"
 
         self.__tabWidth = IntegerOption (self.__config, 
                 section, 
                 tabWidthOption, 
-                self.DEFAULT_TAB_WIDTH)
+                TAB_WIDTH_DEFAULT)
+
 
         # Язык программирования по умолчанию
-        self.DEFAULT_LANGUAGE = u"text"
         defaultLanguageOption = u"DefaultLanguage"
 
         self.__defaultLanguage = StringOption (self.__config, 
                 section, 
                 defaultLanguageOption, 
-                self.DEFAULT_LANGUAGE)
+                LANGUAGE_DEFAULT)
+
 
         # Список выбранных языков программирования
-        self.DEFAULT_LANGUAGE_LIST = [
-            u"text",
-            u"c",
-            u"cpp",
-            u"csharp",
-            u"php",
-            u"python",
-            u"html",
-            u"css",
-            u"ruby",
-            u"java",
-            u"javascript",
-            u"objective-c",
-            u"perl",
-            u"vb.net"]
-
         languageListOption = u"LanguageList"
 
         self.__languageList = ListOption (self.__config, 
                 section, 
                 languageListOption, 
-                self.DEFAULT_LANGUAGE_LIST)
+                LANGUAGE_LIST_DEFAULT)
+
+
+        # Стиль по умолчанию
+        styleOption = u"Style"
+
+        self.__style = StringOption (self.__config, 
+                section, 
+                styleOption, 
+                STYLE_DEFAULT)
+
 
         # Размеры диалога для вставки команды (:source:)
         self.DEFAULT_DIALOG_WIDTH = -1
@@ -94,3 +90,8 @@ class SourceConfig (object):
     @property
     def dialogHeight (self):
         return self.__dialogHeight
+
+
+    @property
+    def style (self):
+        return self.__style

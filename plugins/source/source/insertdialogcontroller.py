@@ -3,7 +3,6 @@
 
 import wx
 
-from outwiker.gui.preferences.configelements import IntegerElement
 from outwiker.core.attachment import Attachment
 
 from .params import STYLE_DEFAULT
@@ -184,7 +183,9 @@ class InsertDialogController (object):
         self._dialog.styleComboBox.Clear()
         self._dialog.styleComboBox.AppendItems (styles)
 
-        selectedStyle = STYLE_DEFAULT
+        selectedStyle = self._config.style.value.strip()
+        if selectedStyle not in styles:
+            selectedStyle = STYLE_DEFAULT
 
         if selectedStyle in STYLE_MAP:
             index = styles.index (selectedStyle)
@@ -242,6 +243,7 @@ class InsertDialogController (object):
         currentWidth, currentHeight = self._dialog.GetSizeTuple ()
         self._config.dialogWidth.value = currentWidth
         self._config.dialogHeight.value = currentHeight
+        self._config.style.value = self._dialog.styleComboBox.GetValue()
 
 
     def enableFileGuiElements (self, enabled):
