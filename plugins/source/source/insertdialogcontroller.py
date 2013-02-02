@@ -1,9 +1,13 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
+import os.path
+
 import wx
 
 from outwiker.core.attachment import Attachment
+from outwiker.core.commands import attachFiles, testreadonly
+import outwiker.core.exceptions
 
 from .params import STYLE_DEFAULT
 
@@ -35,13 +39,52 @@ class InsertDialogController (object):
 
     def __bindEvents (self):
         self._dialog.fileCheckBox.Bind (wx.EVT_CHECKBOX, handler=self.__onfileChecked)
+        self._dialog.attachButton.Bind (wx.EVT_BUTTON, handler=self.__onAttach)
 
 
     def __onfileChecked (self, event):
-        enableFile = self._dialog.fileCheckBox.IsChecked()
+        """
+        Обработчик события при установке/снятии флажка "Вставить текст программы из файла"
+        """
+        self.updateFileChecked()
 
-        self.enableFileGuiElements (enableFile)
+
+    def updateFileChecked (self):
+        """
+        Обновление интерфейса после установки/удаления флажка "Вставить текст программы из файла"
+        """
+        self.enableFileGuiElements (self._dialog.fileCheckBox.IsChecked())
         self.loadLanguagesState()
+
+
+    @testreadonly
+    def __onAttach (self, event):
+        """
+        Обработчик события при нажатии на кнопку для прикрепления файла
+        """
+        if self._page.readonly:
+            raise outwiker.core.exceptions.ReadonlyException
+
+        # Кусок ниже практически полностью скопирован из функции outwiker.core.commands.attachFilesWithDialog
+        dlg = wx.FileDialog (self._dialog, 
+            style = wx.FD_OPEN | wx.FD_FILE_MUST_EXIST | wx.FD_MULTIPLE)
+
+        if dlg.ShowModal() == wx.ID_OK:
+            files = dlg.GetPaths()
+            files.sort()
+            attachFiles (self._dialog, self._page, files)
+
+            self._loadAttachmentState()
+
+            # Выберем только что добавленный файл
+            newfile = os.path.basename (files[0])
+            if newfile in self._dialog.attachmentComboBox.GetItems():
+                self._dialog.attachmentComboBox.SetStringSelection (newfile)
+
+            self._dialog.fileCheckBox.SetValue (True)
+            self.updateFileChecked()
+
+        dlg.Destroy()
 
 
     def showDialog (self):

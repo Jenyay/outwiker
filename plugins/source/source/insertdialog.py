@@ -4,6 +4,7 @@
 import wx
 
 from .i18n import get_
+from .misc import getImagePath
 
 
 class InsertDialog (wx.Dialog):
@@ -252,7 +253,7 @@ class InsertDialog (wx.Dialog):
                 border=2
                 )
 
-        fileSizer = wx.FlexGridSizer (0, 3)
+        fileSizer = wx.FlexGridSizer (0, 4)
         fileSizer.AddGrowableCol (2)
 
         # Список для выбора прикрепленных файлов
@@ -278,6 +279,17 @@ class InsertDialog (wx.Dialog):
                 border=2
                 )
 
+        attachImage = wx.Bitmap (getImagePath ("attach.png"))
+        self.attachButton = wx.BitmapButton (parent, -1, attachImage)
+        self.attachButton.SetToolTipString (_(u"Attach new files"))
+
+        fileSizer.Add (
+                self.attachButton,
+                proportion = 1,
+                flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT,
+                border = 2
+                )
+
         # Выбор кодировки файла
         self.encodingLabel = wx.StaticText(parent, -1, _(u"File encoding"))
         self.encodingComboBox = wx.ComboBox (parent,
@@ -285,7 +297,6 @@ class InsertDialog (wx.Dialog):
 
         self.encodingComboBox.SetMinSize ((self._fieldsWidth, -1))
 
-        # Размер отступа
         fileSizer.Add ((self._indent, 0))
 
         fileSizer.Add (

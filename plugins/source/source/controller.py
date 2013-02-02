@@ -6,12 +6,12 @@ import os.path
 import wx
 
 from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
-from outwiker.core.system import getOS
 
 from .i18n import get_
 from .preferencepanel import PreferencePanel
 from .insertdialog import InsertDialog
 from .insertdialogcontroller import InsertDialogController
+from .misc import getImagePath
 
 
 class Controller (object):
@@ -93,7 +93,7 @@ class Controller (object):
         pageView = self._getPageView()
 
         helpString = _(u"Source Code (:source ...:)")
-        image = self._getImagePath ("source.png")
+        image = getImagePath ("source.png")
 
         pageView.addTool (pageView.commandsMenu, 
                 self.SOURCE_TOOL_ID, 
@@ -129,7 +129,3 @@ class Controller (object):
         return self._application.mainWindow.pagePanel.pageView
 
 
-    def _getImagePath (self, imageName):
-        imagedir = unicode (os.path.join (os.path.dirname (__file__), "images"), getOS().filesEncoding)
-        fname = os.path.join (imagedir, imageName)
-        return fname
