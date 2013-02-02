@@ -6,6 +6,8 @@ import os.path
 import wx
 
 from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
+from outwiker.core.commands import testreadonly
+import outwiker.core.exceptions
 
 from .i18n import get_
 from .preferencepanel import PreferencePanel
@@ -103,10 +105,14 @@ class Controller (object):
                 image)
 
 
+    @testreadonly
     def __onInsertCommand (self, event):
         """
         Вставка команды (:source:) в редактор
         """
+        if self._application.selectedPage.readonly:
+            raise outwiker.core.exceptions.ReadonlyException
+
         config = self._plugin.config
 
         dlg = InsertDialog (self._application.mainWindow)
