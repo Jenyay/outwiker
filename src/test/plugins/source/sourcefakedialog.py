@@ -6,6 +6,7 @@ from test.fakewx.combobox import ComboBox
 from test.fakewx.dialog import Dialog
 from test.fakewx.statictext import StaticText
 from test.fakewx.checkbox import CheckBox
+from test.fakewx.button import Button
 
 
 class FakeInsertDialog (Dialog):
@@ -29,6 +30,8 @@ class FakeInsertDialog (Dialog):
 
         self.styleLabel = StaticText ()
         self.styleComboBox = ComboBox ()
+
+        self.attachButton = Button()
 
 
     @property
