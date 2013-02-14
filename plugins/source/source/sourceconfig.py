@@ -10,13 +10,13 @@ class SourceConfig (object):
     def __init__ (self, config):
         self.__config = config
 
-        section = u"SourcePlugin"
+        self.section = u"SourcePlugin"
 
         # Размер табуляции по умолчанию
         tabWidthOption = u"TabWidth"
 
         self.__tabWidth = IntegerOption (self.__config, 
-                section, 
+                self.section, 
                 tabWidthOption, 
                 TAB_WIDTH_DEFAULT)
 
@@ -25,7 +25,7 @@ class SourceConfig (object):
         defaultLanguageOption = u"DefaultLanguage"
 
         self.__defaultLanguage = StringOption (self.__config, 
-                section, 
+                self.section, 
                 defaultLanguageOption, 
                 LANGUAGE_DEFAULT)
 
@@ -34,7 +34,7 @@ class SourceConfig (object):
         languageListOption = u"LanguageList"
 
         self.__languageList = ListOption (self.__config, 
-                section, 
+                self.section, 
                 languageListOption, 
                 LANGUAGE_LIST_DEFAULT)
 
@@ -43,7 +43,7 @@ class SourceConfig (object):
         styleOption = u"Style"
 
         self.__style = StringOption (self.__config, 
-                section, 
+                self.section, 
                 styleOption, 
                 STYLE_DEFAULT)
 
@@ -56,12 +56,12 @@ class SourceConfig (object):
         dialogHeightOption = u"DialogHeight"
 
         self.__dialogWidth = IntegerOption (self.__config, 
-                section, 
+                self.section, 
                 dialogWidthOption, 
                 self.DEFAULT_DIALOG_WIDTH)
 
         self.__dialogHeight = IntegerOption (self.__config, 
-                section, 
+                self.section, 
                 dialogHeightOption, 
                 self.DEFAULT_DIALOG_HEIGHT)
 

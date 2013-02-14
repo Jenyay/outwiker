@@ -33,6 +33,7 @@ class SourceAttachmentPluginTest (unittest.TestCase):
         self.config = self.loader[self.__pluginname].config
         self.config.tabWidth.value = 4
         self.config.defaultLanguage.remove_option()
+        Application.config.remove_section (self.config.section)
 
         self.dialog = FakeInsertDialog ()
         self.controller = self.loader[self.__pluginname].insertDialogControllerClass(self.testPage, self.dialog, self.config)
@@ -58,6 +59,7 @@ class SourceAttachmentPluginTest (unittest.TestCase):
 
     def tearDown(self):
         removeWiki (self.path)
+        Application.config.remove_section (self.config.section)
         self.loader.clear()
 
 
@@ -90,6 +92,8 @@ class SourceAttachmentPluginTest (unittest.TestCase):
         self.controller.showDialog()
 
         self.dialog.fileCheckBox.SetValue(True)
+        self.controller.updateFileChecked()
+
         self.dialog.attachmentComboBox.SetSelection (0)
         self.dialog.encodingComboBox.SetSelection (0)
 
@@ -107,6 +111,8 @@ class SourceAttachmentPluginTest (unittest.TestCase):
         self.controller.showDialog()
 
         self.dialog.fileCheckBox.SetValue(True)
+        self.controller.updateFileChecked()
+
         self.dialog.attachmentComboBox.SetSelection (1)
         self.dialog.encodingComboBox.SetSelection (0)
 
@@ -124,6 +130,8 @@ class SourceAttachmentPluginTest (unittest.TestCase):
         self.controller.showDialog()
 
         self.dialog.fileCheckBox.SetValue(True)
+        self.controller.updateFileChecked()
+
         self.dialog.attachmentComboBox.SetSelection (0)
         self.dialog.encodingComboBox.SetSelection (2)
 
