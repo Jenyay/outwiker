@@ -265,6 +265,7 @@ class InsertDialog (wx.Dialog):
 
         fileSizer.Add ((self._indent, 0))
 
+
         fileSizer.Add (
                 self.attachmentLabel, 
                 proportion=1,
@@ -272,13 +273,7 @@ class InsertDialog (wx.Dialog):
                 border=2
                 )
 
-        fileSizer.Add (
-                self.attachmentComboBox, 
-                proportion=1,
-                flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT,
-                border=2
-                )
-
+        # Кнопка для прикрепления нового файла
         attachImage = wx.Bitmap (getImagePath ("attach.png"))
         self.attachButton = wx.BitmapButton (parent, -1, attachImage)
         self.attachButton.SetToolTipString (_(u"Attach new files"))
@@ -289,6 +284,14 @@ class InsertDialog (wx.Dialog):
                 flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT,
                 border = 2
                 )
+
+        fileSizer.Add (
+                self.attachmentComboBox, 
+                proportion=1,
+                flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT,
+                border=2
+                )
+
 
         # Выбор кодировки файла
         self.encodingLabel = wx.StaticText(parent, -1, _(u"File encoding"))
@@ -305,6 +308,8 @@ class InsertDialog (wx.Dialog):
                 flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
                 border=2
                 )
+
+        fileSizer.Add ((self._indent, 0))
 
         fileSizer.Add (
                 self.encodingComboBox, 
