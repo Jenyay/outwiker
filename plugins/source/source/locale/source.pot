@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-19 17:56+0400\n"
+"POT-Creation-Date: 2013-02-14 17:56+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,51 +17,67 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: commandsource.py:68
+#: commandsource.py:69
 msgid "<B>Source plugin: File '{0}' not found</B>"
 msgstr ""
 
-#: commandsource.py:71
+#: commandsource.py:72
 msgid "<B>Source plugin: Encoding error</B>"
 msgstr ""
 
-#: commandsource.py:74
+#: commandsource.py:75
 msgid "<B>Source plugin: Unknown encoding</B>"
 msgstr ""
 
-#: controller.py:72
+#: controller.py:74
 msgid "Source [Plugin]"
 msgstr ""
 
-#: controller.py:95
+#: controller.py:97
 msgid "Source Code (:source ...:)"
 msgstr ""
 
-#: insertdialogcontroller.py:27
+#: insertdialogcontroller.py:32
 msgid "Auto"
 msgstr ""
 
-#: insertdialog.py:19
+#: insertdialog.py:20
 msgid "Source code"
 msgstr ""
 
-#: insertdialog.py:96
+#: insertdialog.py:87
+msgid "General"
+msgstr ""
+
+#: insertdialog.py:88
+msgid "Appearance"
+msgstr ""
+
+#: insertdialog.py:139
 msgid "Language"
 msgstr ""
 
-#: insertdialog.py:132
+#: insertdialog.py:175
 msgid "Tab Width (0 - Default Value)"
 msgstr ""
 
-#: insertdialog.py:168
+#: insertdialog.py:212
+msgid "Style"
+msgstr ""
+
+#: insertdialog.py:247
 msgid "Insert source from file"
 msgstr ""
 
-#: insertdialog.py:181
+#: insertdialog.py:260
 msgid "Attached file"
 msgstr ""
 
-#: insertdialog.py:204
+#: insertdialog.py:279
+msgid "Attach new files"
+msgstr ""
+
+#: insertdialog.py:297
 msgid "File encoding"
 msgstr ""
 

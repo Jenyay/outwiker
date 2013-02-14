@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SourcePlugin 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-19 10:06+0400\n"
-"PO-Revision-Date: 2013-01-19 17:53+0300\n"
+"POT-Creation-Date: 2013-02-14 17:56+0400\n"
+"PO-Revision-Date: 2013-02-14 17:58+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language: \n"
@@ -19,51 +19,67 @@ msgstr ""
 "X-Poedit-Country: RUSSIAN FEDERATION\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#: commandsource.py:68
+#: commandsource.py:69
 msgid "<B>Source plugin: File '{0}' not found</B>"
 msgstr "<B>Плагин Source: Файл '{0}' не найден</B>"
 
-#: commandsource.py:71
+#: commandsource.py:72
 msgid "<B>Source plugin: Encoding error</B>"
 msgstr "<B>Плагин Source: Ошибка кодировки</B>"
 
-#: commandsource.py:74
+#: commandsource.py:75
 msgid "<B>Source plugin: Unknown encoding</B>"
 msgstr "<B>Плагин Source: Неизвестная кодировка</B>"
 
-#: controller.py:72
+#: controller.py:74
 msgid "Source [Plugin]"
 msgstr "Source [Расширение]"
 
-#: controller.py:95
+#: controller.py:97
 msgid "Source Code (:source ...:)"
 msgstr "Текст программы (:source ...:)"
 
-#: insertdialogcontroller.py:27
+#: insertdialogcontroller.py:32
 msgid "Auto"
 msgstr "Авто"
 
-#: insertdialog.py:19
+#: insertdialog.py:20
 msgid "Source code"
 msgstr "Текст программы"
 
-#: insertdialog.py:96
+#: insertdialog.py:87
+msgid "General"
+msgstr "Общее"
+
+#: insertdialog.py:88
+msgid "Appearance"
+msgstr "Внешний вид"
+
+#: insertdialog.py:139
 msgid "Language"
 msgstr "Язык"
 
-#: insertdialog.py:132
+#: insertdialog.py:175
 msgid "Tab Width (0 - Default Value)"
 msgstr "Размер табуляции (0 - значение по умолчанию)"
 
-#: insertdialog.py:168
+#: insertdialog.py:212
+msgid "Style"
+msgstr "Стиль"
+
+#: insertdialog.py:247
 msgid "Insert source from file"
 msgstr "Вставить текст программы из файла"
 
-#: insertdialog.py:181
+#: insertdialog.py:260
 msgid "Attached file"
 msgstr "Прикрепленный файл"
 
-#: insertdialog.py:204
+#: insertdialog.py:279
+msgid "Attach new files"
+msgstr "Прикрепить новые файлы"
+
+#: insertdialog.py:297
 msgid "File encoding"
 msgstr "Кодировка файла"
 
