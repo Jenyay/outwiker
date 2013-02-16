@@ -10,6 +10,7 @@ from outwiker.core.commands import attachFiles, testreadonly
 import outwiker.core.exceptions
 
 from .params import STYLE_DEFAULT
+from .misc import getDefaultStyle, fillStyleComboBox
 
 
 class InsertDialogController (object):
@@ -216,25 +217,9 @@ class InsertDialogController (object):
 
 
     def _loadStyleState (self):
-        from pygments.styles import STYLE_MAP
-
-        styles = STYLE_MAP.keys()
-        styles.sort()
-
-        assert len (styles) > 0
-
-        self._dialog.styleComboBox.Clear()
-        self._dialog.styleComboBox.AppendItems (styles)
-
-        selectedStyle = self._config.style.value.strip()
-        if selectedStyle not in styles:
-            selectedStyle = STYLE_DEFAULT
-
-        if selectedStyle in STYLE_MAP:
-            index = styles.index (selectedStyle)
-            assert index >= 0
-
-            self._dialog.styleComboBox.SetSelection (index)
+        fillStyleComboBox (self._config, 
+                self._dialog.styleComboBox, 
+                self._config.style.value.strip())
 
 
     def _loadEncodingState (self):

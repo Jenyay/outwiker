@@ -10,6 +10,7 @@ from outwiker.core.system import getOS
 
 from .sourceconfig import SourceConfig
 from .i18n import get_
+from .misc import fillStyleComboBox
 
 
 class PreferencePanel (wx.Panel):
@@ -36,9 +37,10 @@ class PreferencePanel (wx.Panel):
         """
         mainSizer = wx.FlexGridSizer (0, 1)
         mainSizer.AddGrowableCol(0)
-        mainSizer.AddGrowableRow(2)
+        mainSizer.AddGrowableRow(3)
 
         self.__createTabWidthGui (mainSizer)
+        self.__createDefaultStyleGui (mainSizer)
         self.__createLangGui (mainSizer)
         self.SetSizer(mainSizer)
 
@@ -47,7 +49,7 @@ class PreferencePanel (wx.Panel):
         """
         Создать элементы управления, связанные с выбором размера табуляции по умолчанию
         """
-        tabSizer = langSizer = wx.FlexGridSizer (0, 2)
+        tabSizer = wx.FlexGridSizer (0, 2)
         tabSizer.AddGrowableCol (1)
 
         tabWidthLabel = wx.StaticText(self, -1, _(u"Default Tab Width"))
@@ -74,6 +76,39 @@ class PreferencePanel (wx.Panel):
 
         mainSizer.Add (
                 tabSizer,
+                proportion=1,
+                flag=wx.ALL | wx.EXPAND,
+                border=2)
+
+
+    def __createDefaultStyleGui (self, mainSizer):
+        """
+        Создать элементы управления, связанные с выбором стиля по умолчанию
+        """
+        styleSizer = wx.FlexGridSizer (0, 2)
+        styleSizer.AddGrowableCol (1)
+
+        styleLabel = wx.StaticText(self, -1, _(u"Default Style"))
+
+        self.styleComboBox = wx.ComboBox (self, -1, style=wx.CB_DROPDOWN | wx.CB_READONLY)
+        self.styleComboBox.SetMinSize ((150, -1))
+
+        styleSizer.Add (
+                styleLabel, 
+                proportion=1,
+                flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+                border=2
+                )
+
+        styleSizer.Add (
+                self.styleComboBox, 
+                proportion=1,
+                flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT,
+                border=2
+                )
+
+        mainSizer.Add (
+                styleSizer,
                 proportion=1,
                 flag=wx.ALL | wx.EXPAND,
                 border=2)
@@ -166,6 +201,10 @@ class PrefPanelController (object):
                 self.MAX_TAB_WIDTH
                 )
 
+        fillStyleComboBox (self.__config, 
+                self.__owner.styleComboBox, 
+                self.__config.defaultStyle.value.strip())
+
         allLanguages = self._getAllLanguages ()
         self.__owner.langList.Clear()
         self.__owner.langList.AppendItems (allLanguages)
@@ -177,8 +216,9 @@ class PrefPanelController (object):
 
 
     def save (self):
-        self.__config.languageList.value = self.__owner.langList.GetCheckedStrings()
         self._tabWidthOption.save()
+        self.__config.defaultStyle.value = self.__owner.styleComboBox.GetValue()
+        self.__config.languageList.value = self.__owner.langList.GetCheckedStrings()
 
 
     def _onSelectAll (self, event):

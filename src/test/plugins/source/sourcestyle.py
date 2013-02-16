@@ -47,6 +47,7 @@ def hello (count):
         self.config = self.loader[self.__pluginname].config
         self.config.tabWidth.value = 4
         self.config.defaultLanguage.remove_option()
+        Application.config.remove_section (self.config.section)
         
         self.factory = ParserFactory()
         self.parser = self.factory.make (self.testPage, Application.config)
@@ -72,6 +73,7 @@ def hello (count):
 
     def tearDown(self):
         self.config.tabWidth.value = 4
+        Application.config.remove_section (self.config.section)
         removeWiki (self.path)
         self.loader.clear()
 
@@ -87,6 +89,72 @@ def hello (count):
 
         innerString1 = u".highlight-default .c"
         innerString2 = u".highlight-default .c { color: #408080; font-style: italic } /* Comment */"
+        innerString3 = u'        <span class="k">print</span> <span class="s">&quot;Hello world!!!&quot;</span>'
+        innerString4 = u'<span class="kn">import</span> <span class="nn">os</span>'
+        
+        self.assertTrue (innerString1 in result)
+        self.assertTrue (innerString2 in result)
+        self.assertTrue (innerString3 in result)
+        self.assertTrue (innerString4 in result)
+
+
+    def testDefaultInvalidStyle (self):
+        text = u'(:source lang="python" tabwidth=4:){0}(:sourceend:)'.format (self.pythonSource)
+
+        self.testPage.content = text
+
+        self.config.defaultStyle.value = "invalid_blablabla"
+
+        generator = HtmlGenerator (self.testPage)
+        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
+        result = self.__readFile (htmlpath)
+
+        innerString1 = u".highlight-default .c"
+        innerString2 = u".highlight-default .c { color: #408080; font-style: italic } /* Comment */"
+        innerString3 = u'        <span class="k">print</span> <span class="s">&quot;Hello world!!!&quot;</span>'
+        innerString4 = u'<span class="kn">import</span> <span class="nn">os</span>'
+        
+        self.assertTrue (innerString1 in result)
+        self.assertTrue (innerString2 in result)
+        self.assertTrue (innerString3 in result)
+        self.assertTrue (innerString4 in result)
+
+
+    def testDefaultEmptyStyle (self):
+        text = u'(:source lang="python" tabwidth=4:){0}(:sourceend:)'.format (self.pythonSource)
+
+        self.testPage.content = text
+
+        self.config.defaultStyle.value = ""
+
+        generator = HtmlGenerator (self.testPage)
+        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
+        result = self.__readFile (htmlpath)
+
+        innerString1 = u".highlight-default .c"
+        innerString2 = u".highlight-default .c { color: #408080; font-style: italic } /* Comment */"
+        innerString3 = u'        <span class="k">print</span> <span class="s">&quot;Hello world!!!&quot;</span>'
+        innerString4 = u'<span class="kn">import</span> <span class="nn">os</span>'
+        
+        self.assertTrue (innerString1 in result)
+        self.assertTrue (innerString2 in result)
+        self.assertTrue (innerString3 in result)
+        self.assertTrue (innerString4 in result)
+
+
+    def testDefaultStyleVim (self):
+        text = u'(:source lang="python" tabwidth=4:){0}(:sourceend:)'.format (self.pythonSource)
+
+        self.testPage.content = text
+
+        self.config.defaultStyle.value = "vim"
+
+        generator = HtmlGenerator (self.testPage)
+        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
+        result = self.__readFile (htmlpath)
+
+        innerString1 = u".highlight-vim .c"
+        innerString2 = u".highlight-vim .c { color: #000080 } /* Comment */"
         innerString3 = u'        <span class="k">print</span> <span class="s">&quot;Hello world!!!&quot;</span>'
         innerString4 = u'<span class="kn">import</span> <span class="nn">os</span>'
         
@@ -164,3 +232,76 @@ def hello (count):
         self.assertTrue (innerString6 in result)
         self.assertTrue (innerString7 in result)
         self.assertTrue (innerString8 in result)
+
+
+    def testDefaultStyleFile (self):
+        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, u"source_utf8.py")])
+        text = u'(:source lang="python" tabwidth=4 file="source_utf8.py":){0}(:sourceend:)'.format (self.pythonSource)
+
+        self.testPage.content = text
+
+        generator = HtmlGenerator (self.testPage)
+        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
+        result = self.__readFile (htmlpath)
+
+        innerString1 = u".highlight-default .c"
+        innerString2 = u".highlight-default .c { color: #408080; font-style: italic } /* Comment */"
+        
+        self.assertTrue (innerString1 in result)
+        self.assertTrue (innerString2 in result)
+
+
+    def testDefaultInvalidStyleFile (self):
+        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, u"source_utf8.py")])
+        text = u'(:source lang="python" tabwidth=4 file="source_utf8.py":){0}(:sourceend:)'.format (self.pythonSource)
+
+        self.testPage.content = text
+
+        self.config.defaultStyle.value = "invalid_blablabla"
+
+        generator = HtmlGenerator (self.testPage)
+        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
+        result = self.__readFile (htmlpath)
+
+        innerString1 = u".highlight-default .c"
+        innerString2 = u".highlight-default .c { color: #408080; font-style: italic } /* Comment */"
+        
+        self.assertTrue (innerString1 in result)
+        self.assertTrue (innerString2 in result)
+
+
+    def testDefaultEmptyStyleFile (self):
+        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, u"source_utf8.py")])
+        text = u'(:source lang="python" tabwidth=4 file="source_utf8.py":){0}(:sourceend:)'.format (self.pythonSource)
+
+        self.testPage.content = text
+
+        self.config.defaultStyle.value = ""
+
+        generator = HtmlGenerator (self.testPage)
+        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
+        result = self.__readFile (htmlpath)
+
+        innerString1 = u".highlight-default .c"
+        innerString2 = u".highlight-default .c { color: #408080; font-style: italic } /* Comment */"
+        
+        self.assertTrue (innerString1 in result)
+        self.assertTrue (innerString2 in result)
+
+
+    def testDefaultStyleVimFile (self):
+        text = u'(:source lang="python" tabwidth=4:){0}(:sourceend:)'.format (self.pythonSource)
+
+        self.testPage.content = text
+
+        self.config.defaultStyle.value = "vim"
+
+        generator = HtmlGenerator (self.testPage)
+        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
+        result = self.__readFile (htmlpath)
+
+        innerString1 = u".highlight-vim .c"
+        innerString2 = u".highlight-vim .c { color: #000080 } /* Comment */"
+        
+        self.assertTrue (innerString1 in result)
+        self.assertTrue (innerString2 in result)

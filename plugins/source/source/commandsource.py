@@ -12,7 +12,7 @@ from .sourceconfig import SourceConfig
 from .lexermaker import LexerMaker
 from .i18n import get_
 from .params import FILE_PARAM_NAME, ENCODING_PARAM_NAME, ENCODING_DEFAULT, TAB_WIDTH_PARAM_NAME, HIGHLIGHT_STYLE, TAB_WIDTH_DEFAULT, STYLE_PARAM_NAME, STYLE_DEFAULT
-from .misc import getFileName
+from .misc import getFileName, getDefaultStyle
 
 
 class CommandSource (Command):
@@ -132,7 +132,7 @@ class CommandSource (Command):
     def __getStyle (self, params_dict):
         if (STYLE_PARAM_NAME not in params_dict or
                 params_dict[STYLE_PARAM_NAME] not in STYLE_MAP):
-            return STYLE_DEFAULT
+            return getDefaultStyle (self.__config)
 
         return params_dict[STYLE_PARAM_NAME]
 

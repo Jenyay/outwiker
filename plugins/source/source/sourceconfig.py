@@ -39,14 +39,13 @@ class SourceConfig (object):
                 LANGUAGE_LIST_DEFAULT)
 
 
-        # Стиль по умолчанию
-        styleOption = u"Style"
+        # Стиль, используемый по умолчанию (если стиль не указан явно)
+        defaultStyleOption = u"DefaultStyle"
 
-        self.__style = StringOption (self.__config, 
+        self.__defaultStyle = StringOption (self.__config, 
                 self.section, 
-                styleOption, 
+                defaultStyleOption, 
                 STYLE_DEFAULT)
-
 
         # Размеры диалога для вставки команды (:source:)
         self.DEFAULT_DIALOG_WIDTH = -1
@@ -94,4 +93,20 @@ class SourceConfig (object):
 
     @property
     def style (self):
-        return self.__style
+        styleOption = u"Style"
+
+        # Стиль, выбранный в диалоге по умолчанию
+        # Переменная, отвечающая за параметр создается здесь, 
+        # чтобы можно было использовать значение по умолчанию, 
+        # прочитанное из defaultStyle
+        style = StringOption (self.__config, 
+                self.section, 
+                styleOption, 
+                self.defaultStyle.value)
+
+        return style
+
+
+    @property
+    def defaultStyle (self):
+        return self.__defaultStyle

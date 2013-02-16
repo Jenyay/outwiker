@@ -62,9 +62,7 @@ class SourceGuiPluginTest (unittest.TestCase):
 
 
     def _clearConfig (self, config):
-        config.tabWidth.remove_option()
-        config.defaultLanguage.remove_option()
-        config.style.remove_option()
+        Application.config.remove_section (self.config.section)
 
 
     def testDialogController1 (self):
@@ -253,7 +251,7 @@ class SourceGuiPluginTest (unittest.TestCase):
         self.assertEqual (self.dialog.tabWidthSpin.GetValue(), 0)
 
 
-    def testDialogStyleValues (self):
+    def testDialogStyleValues1 (self):
         self.config.languageList.value = [u"python", u"cpp", u"haskell"]
         self.config.defaultLanguage.value = u"python"
 
@@ -265,6 +263,38 @@ class SourceGuiPluginTest (unittest.TestCase):
         result = self.controller.getCommandStrings()
 
         self.assertEqual (result, (u'(:source lang="python":)\n', u'\n(:sourceend:)'))
+
+
+    def testDialogStyleValues2 (self):
+        self.config.defaultStyle.value = "blablabla"
+        self.controller.showDialog()
+
+        self.assertEqual (self.dialog.styleComboBox.GetCount(), 18)
+        self.assertEqual (self.dialog.styleComboBox.GetValue(), "default")
+
+
+    def testDialogStyleValues3 (self):
+        self.config.defaultStyle.value = ""
+        self.controller.showDialog()
+
+        self.assertEqual (self.dialog.styleComboBox.GetCount(), 18)
+        self.assertEqual (self.dialog.styleComboBox.GetValue(), "default")
+
+
+    def testDialogStyleValues4 (self):
+        self.config.defaultStyle.value = "vim"
+        self.controller.showDialog()
+
+        self.assertEqual (self.dialog.styleComboBox.GetCount(), 18)
+        self.assertEqual (self.dialog.styleComboBox.GetValue(), "vim")
+
+
+    def testDialogStyleValues5 (self):
+        self.config.defaultStyle.value = "emacs"
+        self.controller.showDialog()
+
+        self.assertEqual (self.dialog.styleComboBox.GetCount(), 18)
+        self.assertEqual (self.dialog.styleComboBox.GetValue(), "emacs")
 
 
     def testDialogStyleText (self):
