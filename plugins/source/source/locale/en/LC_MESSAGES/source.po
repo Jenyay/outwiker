@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Source plugin 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-14 17:56+0400\n"
-"PO-Revision-Date: 2013-02-14 17:57+0300\n"
+"POT-Creation-Date: 2013-02-16 20:41+0400\n"
+"PO-Revision-Date: 2013-02-16 20:41+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language: \n"
@@ -39,7 +39,7 @@ msgstr "Source [Plugin]"
 msgid "Source Code (:source ...:)"
 msgstr "Source Code (:source ...:)"
 
-#: insertdialogcontroller.py:32
+#: insertdialogcontroller.py:33
 msgid "Auto"
 msgstr "Auto"
 
@@ -83,19 +83,23 @@ msgstr "Attach new files"
 msgid "File encoding"
 msgstr "File encoding"
 
-#: preferencepanel.py:53
+#: preferencepanel.py:55
 msgid "Default Tab Width"
 msgstr "Default Tab Width"
 
-#: preferencepanel.py:88
+#: preferencepanel.py:91
+msgid "Default Style"
+msgstr "Default Style"
+
+#: preferencepanel.py:123
 msgid "Used Languages"
 msgstr "Used Languages"
 
-#: preferencepanel.py:109
+#: preferencepanel.py:144
 msgid "Select All"
 msgstr "Select All"
 
-#: preferencepanel.py:110
+#: preferencepanel.py:145
 msgid "Clear"
 msgstr "Clear"
 
