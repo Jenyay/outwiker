@@ -297,6 +297,38 @@ class SourceGuiPluginTest (unittest.TestCase):
         self.assertEqual (self.dialog.styleComboBox.GetValue(), "emacs")
 
 
+    def testDialogStyle1 (self):
+        self.config.languageList.value = [u"python", u"cpp", u"haskell"]
+        self.config.defaultLanguage.value = u"python"
+        self.config.defaultStyle.value = u"vim"
+        self.config.style.value = u"vim"
+
+        self.controller.showDialog()
+
+        self.assertEqual (self.dialog.styleComboBox.GetCount(), 18)
+        self.assertEqual (self.dialog.styleComboBox.GetValue(), "vim")
+
+        result = self.controller.getCommandStrings()
+
+        self.assertEqual (result, (u'(:source lang="python":)\n', u'\n(:sourceend:)'))
+
+
+    def testDialogStyle2 (self):
+        self.config.languageList.value = [u"python", u"cpp", u"haskell"]
+        self.config.defaultLanguage.value = u"python"
+        self.config.defaultStyle.value = u"vim"
+        self.config.style.value = u"default"
+
+        self.controller.showDialog()
+
+        self.assertEqual (self.dialog.styleComboBox.GetCount(), 18)
+        self.assertEqual (self.dialog.styleComboBox.GetValue(), "default")
+
+        result = self.controller.getCommandStrings()
+
+        self.assertEqual (result, (u'(:source lang="python" style="default":)\n', u'\n(:sourceend:)'))
+
+
     def testDialogStyleText (self):
         self.config.languageList.value = [u"python", u"cpp", u"haskell"]
         self.config.defaultLanguage.value = u"python"

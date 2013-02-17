@@ -9,7 +9,6 @@ from outwiker.core.attachment import Attachment
 from outwiker.core.commands import attachFiles, testreadonly
 import outwiker.core.exceptions
 
-from .params import STYLE_DEFAULT
 from .misc import getDefaultStyle, fillStyleComboBox
 
 
@@ -127,7 +126,7 @@ class InsertDialogController (object):
 
 
     def _getStyleParam (self):
-        return u'' if self._dialog.style == STYLE_DEFAULT else ' style="{style}"'.format (style=self._dialog.style)
+        return u'' if self._dialog.style == getDefaultStyle (self._config) else ' style="{style}"'.format (style=self._dialog.style)
 
 
     def _getStringsForAttachment (self):
