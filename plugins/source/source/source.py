@@ -75,6 +75,7 @@ source code
 <I>tabwidth</I> - tab size
 <I>file</I> - attached source file
 <I>encoding</I> - encoding of the attached source file (default encoding - utf8)
+<I>style</I> - style of hightlighting
 
 <B>Example 1:</B>
 <PRE>(:source lang="python" tabwidth=4:)
@@ -86,9 +87,18 @@ if __name__ == "__main__":
 </PRE>
 
 <B>Example 2:</B>
-<PRE>(:source file="Attach:example.cs" encoding="cp1251":)(:sourceend:)</PRE>
+<PRE>(:source lang="python" style="autumn":)
+import os
+
+if __name__ == "__main__":
+    print "Hello World!"
+(:sourceend:)
+</PRE>
 
 <B>Example 3:</B>
+<PRE>(:source file="Attach:example.cs" encoding="cp1251":)(:sourceend:)</PRE>
+
+<B>Example 4:</B>
 <PRE>(:source file="Attach:example.txt" lang="python":)(:sourceend:)</PRE>
 """)
 
