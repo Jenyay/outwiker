@@ -54,7 +54,7 @@ class WikiHashCalculator (object):
         # Настройки отображения HTML-страницы
         content.append (str (self.__htmlConfig.fontSize.value) )
         content.append (self.__htmlConfig.fontName.value.encode(self._unicodeEncoding) )
-        content.append (str (self.__htmlConfig.userStyle.value) )
+        content.append (self.__htmlConfig.userStyle.value.encode(self._unicodeEncoding))
 
         # Список подстраниц
         for child in page.children:

@@ -48,6 +48,8 @@ class WikiHashTest (unittest.TestCase):
 
 
     def __setDefaultConfig (self):
+        self.__htmlconfig.userStyle.value = u""
+
         # Установим размер превьюшки, не совпадающий с размером по умолчанию
         Application.config.set (WikiConfig.WIKI_SECTION, 
                 WikiConfig.THUMB_SIZE_PARAM, 
@@ -56,6 +58,10 @@ class WikiHashTest (unittest.TestCase):
         Application.config.set (HtmlRenderConfig.HTML_SECTION, 
                 HtmlRenderConfig.FONT_FACE_NAME_PARAM, 
                 HtmlRenderConfig.FONT_NAME_DEFAULT)
+
+
+    def tearDown (self):
+        Application.config.remove_section (HtmlRenderConfig.HTML_SECTION)
     
 
     def __createWiki (self):
@@ -311,3 +317,58 @@ class WikiHashTest (unittest.TestCase):
 
         hash2 = hashCalculator.getHash (self.testPage)
         self.assertNotEqual (hash2, hash_src)
+
+
+    def testConfigUserStyle (self):
+        """
+        Тест на то, что на кэширование влияет изменение пользовательских стилей
+        """
+        hashCalculator = WikiHashCalculator (Application)
+        hash_src = hashCalculator.getHash (self.testPage)
+
+        self.__htmlconfig.userStyle.value = u"p {background-color: maroon; /* Цвет фона под текстом параграфа */ color: white; /* Цвет текста */ }"
+
+        hash2 = hashCalculator.getHash (self.testPage)
+        self.assertNotEqual (hash2, hash_src)
+
+
+    def testInvalidFontSize (self):
+        """
+        Тест на корректную обработку некорректных настроек размера шрифта
+        """
+        hashCalculator = WikiHashCalculator (Application)
+        hash_src = hashCalculator.getHash (self.testPage)
+
+        Application.config.set (HtmlRenderConfig.HTML_SECTION, 
+                HtmlRenderConfig.FONT_SIZE_PARAM, 
+                u"Бла-бла-бла")
+
+        hashCalculator.getHash (self.testPage)
+
+
+    def testInvalidFontBold (self):
+        """
+        Тест на корректную обработку некорректных настроек шрифта
+        """
+        hashCalculator = WikiHashCalculator (Application)
+        hash_src = hashCalculator.getHash (self.testPage)
+
+        Application.config.set (HtmlRenderConfig.HTML_SECTION, 
+                HtmlRenderConfig.FONT_BOLD_PARAM, 
+                u"Бла-бла-бла")
+
+        hashCalculator.getHash (self.testPage)
+
+
+    def testInvalidFontItalic (self):
+        """
+        Тест на корректную обработку некорректных настроек шрифта
+        """
+        hashCalculator = WikiHashCalculator (Application)
+        hash_src = hashCalculator.getHash (self.testPage)
+
+        Application.config.set (HtmlRenderConfig.HTML_SECTION, 
+                HtmlRenderConfig.FONT_ITALIC_PARAM, 
+                u"Бла-бла-бла")
+
+        hashCalculator.getHash (self.testPage)

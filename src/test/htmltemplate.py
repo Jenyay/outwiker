@@ -4,17 +4,31 @@
 import os.path
 import unittest
 
+from outwiker.core.application import Application
 from outwiker.core.htmltemplate import HtmlTemplate
 from outwiker.core.system import getTemplatesDir
 from outwiker.core.htmlimprover import HtmlImprover
+from outwiker.gui.guiconfig import HtmlRenderConfig
 
 
 class HtmlTemplateTest(unittest.TestCase):
     def setUp(self):
-        pass
+        self.config = HtmlRenderConfig (Application.config)
+        self.__clearConfig()
 
 
-    def test1(self):
+    def tearDown (self):
+        self.__clearConfig()
+
+
+    def __clearConfig (self):
+        # self.config.userStyle.value = u""
+        # self.config.fontFamily.value = u"Verdana"
+        # self.config.fontSize.value = 10
+        Application.config.remove_section (HtmlRenderConfig.HTML_SECTION)
+
+
+    def testDefault (self):
         content = u"бла-бла-бла"
         result_right = u"""<!DOCTYPE html>
 <HTML>
@@ -43,6 +57,99 @@ class HtmlTemplateTest(unittest.TestCase):
         result = tpl.substitute (content=content)
 
         self.assertEqual (result, result_right, result)
+
+
+    def testChangeFontName (self):
+        self.config.fontName.value = u"Arial"
+
+        content = u"бла-бла-бла"
+        result_right = u"""<!DOCTYPE html>
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>
+
+	<STYLE type="text/css">
+		body, div, p, table {
+			font-size:10pt;
+			font-family:Arial;
+		}
+
+		img{border:none}
+		
+	</STYLE>
+	
+</HEAD>
+
+<BODY>
+<P>бла-бла-бла</P>
+</BODY>
+</HTML>"""
+
+        templatepath = os.path.join (getTemplatesDir(), "__default", "__style.html")
+        tpl = HtmlTemplate (templatepath)
+        result = tpl.substitute (content=content)
+
+        self.assertEqual (result, result_right, result)
+
+
+    def testChangeFontSize (self):
+        self.config.fontSize.value = 20
+        content = u"бла-бла-бла"
+        result_right = u"""<!DOCTYPE html>
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>
+
+	<STYLE type="text/css">
+		body, div, p, table {
+			font-size:20pt;
+			font-family:Verdana;
+		}
+
+		img{border:none}
+		
+	</STYLE>
+	
+</HEAD>
+
+<BODY>
+<P>бла-бла-бла</P>
+</BODY>
+</HTML>"""
+
+        templatepath = os.path.join (getTemplatesDir(), "__default", "__style.html")
+        tpl = HtmlTemplate (templatepath)
+        result = tpl.substitute (content=content)
+
+        self.assertEqual (result, result_right, result)
+
+
+    def testChangeUserStyle (self):
+        style = u"p {background-color: maroon; color: white; }"
+
+        self.config.userStyle.value = style
+
+        content = u"бла-бла-бла"
+        
+        templatepath = os.path.join (getTemplatesDir(), "__default", "__style.html")
+        tpl = HtmlTemplate (templatepath)
+        result = tpl.substitute (content=content)
+
+        self.assertTrue (style in result, result)
+
+
+    def testChangeUserStyleRussian (self):
+        style = u"p {background-color: maroon; /* Цвет фона под текстом параграфа */ color: white; /* Цвет текста */ }"
+
+        self.config.userStyle.value = style
+
+        content = u"бла-бла-бла"
+        
+        templatepath = os.path.join (getTemplatesDir(), "__default", "__style.html")
+        tpl = HtmlTemplate (templatepath)
+        result = tpl.substitute (content=content)
+
+        self.assertTrue (style in result, result)
 
 
     def testImproved1 (self):
