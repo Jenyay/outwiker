@@ -111,3 +111,24 @@ class ParserAlignTest (unittest.TestCase):
         result = u'<DIV ALIGN="JUSTIFY">бла-бла-бла \n<B>кхм</B> бла-бла-бла</DIV>\n\nбла-бла-бла'
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testInvalidAlign1 (self):
+        text = u"%invalid%бла-бла-бла \n'''кхм''' бла-бла-бла\n\nбла-бла-бла"
+        result = u'%invalid%бла-бла-бла \n<B>кхм</B> бла-бла-бла\n\nбла-бла-бла'
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testInvalidAlign2 (self):
+        text = u"%invalid center%бла-бла-бла \n'''кхм''' бла-бла-бла\n\nбла-бла-бла"
+        result = u'%invalid center%бла-бла-бла \n<B>кхм</B> бла-бла-бла\n\nбла-бла-бла'
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testInvalidAlign3 (self):
+        text = u"%center invalid%бла-бла-бла \n'''кхм''' бла-бла-бла\n\nбла-бла-бла"
+        result = u'%center invalid%бла-бла-бла \n<B>кхм</B> бла-бла-бла\n\nбла-бла-бла'
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))

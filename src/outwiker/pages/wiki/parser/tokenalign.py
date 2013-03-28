@@ -24,7 +24,8 @@ class AlignToken (object):
 
 
     def getToken (self):
-        alignRegex = "%\\s*(?P<align>\\w+)\\s*%(?P<text>.*?)(?P<end>(\n\n)|\Z)"
+        # alignRegex = "%\\s*(?P<align>\\w+)\\s*%(?P<text>.*?)(?P<end>(\n\n)|\Z)"
+        alignRegex = "%\\s*(?P<align>(left)|(right)|(center)|(justify))\\s*%(?P<text>.*?)(?P<end>(\n\n)|\Z)"
 
         return Regex (alignRegex, 
                 re.MULTILINE | re.DOTALL | re.IGNORECASE).setParseAction(self._align)("alignment")
