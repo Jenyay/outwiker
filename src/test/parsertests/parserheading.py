@@ -17,7 +17,7 @@ from outwiker.pages.wiki.parserfactory import ParserFactory
 
 class ParserHeadingTest (unittest.TestCase):
     def setUp(self):
-        self.encoding = "866"
+        self.encoding = "utf8"
 
         self.filesPath = u"../test/samplefiles/"
 
@@ -238,3 +238,38 @@ class ParserHeadingTest (unittest.TestCase):
         result_parse = self.parser.toHtml (text)
 
         self.assertTrue (result_parse.startswith (u'бла-бла-бла \n<H2>Заголовок <IMG SRC="__attach/__thumb/eqn_') )
+
+
+    def testHeaderLink1 (self):
+        text = u"бла-бла-бла \n!!! Заголовок [[бла-бла-бла -> http://jenyay.net]]\nбла-бла-бла"
+        result = u'бла-бла-бла \n<H2>Заголовок <A HREF="http://jenyay.net">бла-бла-бла</A></H2>\nбла-бла-бла'
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testHeaderLink2 (self):
+        text = u"бла-бла-бла \n!!! Заголовок [[http://jenyay.net | бла-бла-бла]]\nбла-бла-бла"
+        result = u'бла-бла-бла \n<H2>Заголовок <A HREF="http://jenyay.net">бла-бла-бла</A></H2>\nбла-бла-бла'
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testHeaderLink3 (self):
+        text = u"бла-бла-бла \n!!! [[Заголовок бла-бла-бла -> http://jenyay.net]]\nбла-бла-бла"
+        result = u'бла-бла-бла \n<H2><A HREF="http://jenyay.net">Заголовок бла-бла-бла</A></H2>\nбла-бла-бла'
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testHeaderLink4 (self):
+        text = u"бла-бла-бла \n!!! [[http://jenyay.net | Заголовок бла-бла-бла]]\nбла-бла-бла"
+        result = u'бла-бла-бла \n<H2><A HREF="http://jenyay.net">Заголовок бла-бла-бла</A></H2>\nбла-бла-бла'
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testHeaderAnchor (self):
+        text = u"бла-бла-бла \n!!! [[#anchor]] Заголовок бла-бла-бла\nбла-бла-бла"
+        result = u'бла-бла-бла \n<H2><A NAME="anchor"></A> Заголовок бла-бла-бла</H2>\nбла-бла-бла'
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))

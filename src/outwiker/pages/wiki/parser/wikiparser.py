@@ -148,22 +148,28 @@ class Parser (object):
                 )
 
         # Нотация для заголовков
-        self.headingMarkup = (self.text | 
+        self.headingMarkup = (self.attaches |
+                self.urlImage |
+                self.url |
+                self.text | 
+                self.lineJoin |
+                self.link |
                 self.adhoctokens |
                 self.subscript |
                 self.superscript |
                 self.boldItalicized |
                 self.bolded |
                 self.italicized |
-                self.underlined |
                 self.small |
                 self.big |
+                self.noformat |
+                self.thumb |
+                self.underlined |
                 self.strike |
+                self.horline |
+                self.align |
                 self.tex |
-                self.command |
-                self.lineBreak |
-                self.lineJoin |
-                self.noformat
+                self.command
                 )
 
 
