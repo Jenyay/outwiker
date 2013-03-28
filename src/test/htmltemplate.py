@@ -15,6 +15,7 @@ class HtmlTemplateTest(unittest.TestCase):
     def setUp(self):
         self.config = HtmlRenderConfig (Application.config)
         self.__clearConfig()
+        self.maxDiff = None
 
 
     def tearDown (self):
@@ -33,9 +34,10 @@ class HtmlTemplateTest(unittest.TestCase):
         result_right = u"""<!DOCTYPE html>
 <HTML>
 <HEAD>
+	<META HTTP-EQUIV='X-UA-Compatible' CONTENT='IE=edge' />
 	<META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>
 
-	<STYLE type="text/css">
+	<STYLE type='text/css'>
 		body, div, p, table {
 			font-size:10pt;
 			font-family:Verdana;
@@ -66,9 +68,10 @@ class HtmlTemplateTest(unittest.TestCase):
         result_right = u"""<!DOCTYPE html>
 <HTML>
 <HEAD>
+	<META HTTP-EQUIV='X-UA-Compatible' CONTENT='IE=edge' />
 	<META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>
 
-	<STYLE type="text/css">
+	<STYLE type='text/css'>
 		body, div, p, table {
 			font-size:10pt;
 			font-family:Arial;
@@ -98,9 +101,10 @@ class HtmlTemplateTest(unittest.TestCase):
         result_right = u"""<!DOCTYPE html>
 <HTML>
 <HEAD>
+	<META HTTP-EQUIV='X-UA-Compatible' CONTENT='IE=edge' />
 	<META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>
 
-	<STYLE type="text/css">
+	<STYLE type='text/css'>
 		body, div, p, table {
 			font-size:20pt;
 			font-family:Verdana;
@@ -158,9 +162,10 @@ class HtmlTemplateTest(unittest.TestCase):
         expectedResult = u"""<!DOCTYPE html>
 <HTML>
 <HEAD>
+	<META HTTP-EQUIV='X-UA-Compatible' CONTENT='IE=edge' />
 	<META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>
 
-	<STYLE type="text/css">
+	<STYLE type='text/css'>
 		body, div, p, table {
 			font-size:10pt;
 			font-family:Verdana;
@@ -209,9 +214,10 @@ class HtmlTemplateTest(unittest.TestCase):
         expectedResult = ur"""<!DOCTYPE html>
 <HTML>
 <HEAD>
+	<META HTTP-EQUIV='X-UA-Compatible' CONTENT='IE=edge' />
 	<META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>
 
-	<STYLE type="text/css">
+	<STYLE type='text/css'>
 		body, div, p, table {
 			font-size:10pt;
 			font-family:Verdana;
@@ -241,7 +247,7 @@ class HtmlTemplateTest(unittest.TestCase):
         tpl = HtmlTemplate (templatepath)
 
         result = tpl.substitute (HtmlImprover.run (src) )
-        self.assertEqual (expectedResult, result, result)
+        self.assertEqual (expectedResult, result)
 
 
     def testException (self):
