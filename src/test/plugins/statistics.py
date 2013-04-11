@@ -8,6 +8,9 @@ from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
 from outwiker.pages.wiki.wikipage import WikiPageFactory
+from outwiker.pages.html.htmlpage import HtmlPageFactory
+from outwiker.pages.text.textpage import TextPageFactory
+from outwiker.pages.search.searchpage import SearchPageFactory
 from test.utils import removeWiki
 
 
@@ -36,8 +39,184 @@ class StatisticsTest (unittest.TestCase):
 
         self.rootwiki = WikiDocument.create (self.path)
 
-        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
-        self.testPage = self.rootwiki[u"Страница 1"]
 
     def testPluginLoad (self):
         self.assertEqual ( len (self.loader), 1)
+
+
+    def testSymbolsCountWiki (self):
+        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
+        testPage = self.rootwiki[u"Страница 1"]
+
+        testPage.content = u"Бла бла бла"
+        pageStat = self.loader[self.__pluginname].getPageStat (testPage)
+
+        self.assertEqual (pageStat.symbols, 11)
+
+
+    def testSymbolsCountHtml (self):
+        HtmlPageFactory.create (self.rootwiki, u"Страница 1", [])
+        testPage = self.rootwiki[u"Страница 1"]
+
+        testPage.content = u"Бла бла бла"
+        pageStat = self.loader[self.__pluginname].getPageStat (testPage)
+
+        self.assertEqual (pageStat.symbols, 11)
+
+
+    def testSymbolsCountText (self):
+        TextPageFactory.create (self.rootwiki, u"Страница 1", [])
+        testPage = self.rootwiki[u"Страница 1"]
+
+        testPage.content = u"Бла бла бла"
+        pageStat = self.loader[self.__pluginname].getPageStat (testPage)
+
+        self.assertEqual (pageStat.symbols, 11)
+
+
+    def testSymbolsCountSearch (self):
+        def runTest ():
+            SearchPageFactory.create (self.rootwiki, u"Страница 1", [])
+            testPage = self.rootwiki[u"Страница 1"]
+
+            pageStat = self.loader[self.__pluginname].getPageStat (testPage)
+            pageStat.symbols
+
+        self.assertRaises (TypeError, runTest)
+
+
+    def testSymbolsNotWhiteSpacesWiki (self):
+        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
+        testPage = self.rootwiki[u"Страница 1"]
+
+        testPage.content = u"Бла бла бла\r\n\t\t\tАбырвалг  "
+        pageStat = self.loader[self.__pluginname].getPageStat (testPage)
+
+        self.assertEqual (pageStat.symbolsNotWhiteSpaces, 17)
+
+
+    def testSymbolsNotWhiteSpacesHtml (self):
+        HtmlPageFactory.create (self.rootwiki, u"Страница 1", [])
+        testPage = self.rootwiki[u"Страница 1"]
+
+        testPage.content = u"Бла бла бла\r\n\t\t\tАбырвалг  "
+        pageStat = self.loader[self.__pluginname].getPageStat (testPage)
+
+        self.assertEqual (pageStat.symbolsNotWhiteSpaces, 17)
+
+
+    def testSymbolsNotWhiteSpacesText (self):
+        TextPageFactory.create (self.rootwiki, u"Страница 1", [])
+        testPage = self.rootwiki[u"Страница 1"]
+
+        testPage.content = u"Бла бла бла\r\n\t\t\tАбырвалг  "
+        pageStat = self.loader[self.__pluginname].getPageStat (testPage)
+
+        self.assertEqual (pageStat.symbolsNotWhiteSpaces, 17)
+
+
+    def testSymbolsNotWhiteSpacesSearch (self):
+        def runTest ():
+            SearchPageFactory.create (self.rootwiki, u"Страница 1", [])
+            testPage = self.rootwiki[u"Страница 1"]
+
+            pageStat = self.loader[self.__pluginname].getPageStat (testPage)
+            pageStat.symbolsNotWhiteSpaces
+
+        self.assertRaises (TypeError, runTest)
+
+
+    def testLinesWiki1 (self):
+        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
+        testPage = self.rootwiki[u"Страница 1"]
+
+        testPage.content = u"""Бла бла бла
+Еще одна строка
+И еще строка
+Последняя строка"""
+
+        pageStat = self.loader[self.__pluginname].getPageStat (testPage)
+
+        self.assertEqual (pageStat.lines, 4)
+
+
+    def testLinesWiki2 (self):
+        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
+        testPage = self.rootwiki[u"Страница 1"]
+
+        testPage.content = u"""Бла бла бла
+Еще одна строка
+
+И еще строка
+
+Последняя строка
+
+"""
+
+        pageStat = self.loader[self.__pluginname].getPageStat (testPage)
+
+        self.assertEqual (pageStat.lines, 4)
+
+
+    def testLinesHtml1 (self):
+        HtmlPageFactory.create (self.rootwiki, u"Страница 1", [])
+        testPage = self.rootwiki[u"Страница 1"]
+
+        testPage.content = u"""Бла бла бла
+Еще одна строка
+И еще строка
+Последняя строка"""
+
+        pageStat = self.loader[self.__pluginname].getPageStat (testPage)
+
+        self.assertEqual (pageStat.lines, 4)
+
+
+    def testLinesHtml2 (self):
+        HtmlPageFactory.create (self.rootwiki, u"Страница 1", [])
+        testPage = self.rootwiki[u"Страница 1"]
+
+        testPage.content = u"""Бла бла бла
+Еще одна строка
+
+И еще строка
+
+Последняя строка
+
+"""
+
+        pageStat = self.loader[self.__pluginname].getPageStat (testPage)
+
+        self.assertEqual (pageStat.lines, 4)
+
+
+    def testLinesText1 (self):
+        TextPageFactory.create (self.rootwiki, u"Страница 1", [])
+        testPage = self.rootwiki[u"Страница 1"]
+
+        testPage.content = u"""Бла бла бла
+Еще одна строка
+И еще строка
+Последняя строка"""
+
+        pageStat = self.loader[self.__pluginname].getPageStat (testPage)
+
+        self.assertEqual (pageStat.lines, 4)
+
+
+    def testLinesText2 (self):
+        TextPageFactory.create (self.rootwiki, u"Страница 1", [])
+        testPage = self.rootwiki[u"Страница 1"]
+
+        testPage.content = u"""Бла бла бла
+Еще одна строка
+
+И еще строка
+
+Последняя строка
+
+"""
+
+        pageStat = self.loader[self.__pluginname].getPageStat (testPage)
+
+        self.assertEqual (pageStat.lines, 4)
