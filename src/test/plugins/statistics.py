@@ -220,3 +220,122 @@ class StatisticsTest (unittest.TestCase):
         pageStat = self.loader[self.__pluginname].getPageStat (testPage)
 
         self.assertEqual (pageStat.lines, 4)
+
+
+    def testWordsWiki1 (self):
+        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
+        testPage = self.rootwiki[u"Страница 1"]
+
+        testPage.content = u"""Бла бла бла
+Еще одна строка
+
+И еще строка
+
+Последняя строка
+
+"""
+
+        pageStat = self.loader[self.__pluginname].getPageStat (testPage)
+
+        self.assertEqual (pageStat.words, 11)
+
+
+    def testWordsWiki2 (self):
+        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
+        testPage = self.rootwiki[u"Страница 1"]
+
+        testPage.content = u"""Бла бла бла.
+Еще одна строка111 222 333
+
+И еще строка ... ... ;;; @#$%#$
+
+Последняя строка
+
+"""
+
+        pageStat = self.loader[self.__pluginname].getPageStat (testPage)
+
+        self.assertEqual (pageStat.words, 13)
+
+
+    def testWordsHtml1 (self):
+        HtmlPageFactory.create (self.rootwiki, u"Страница 1", [])
+        testPage = self.rootwiki[u"Страница 1"]
+
+        testPage.content = u"""Бла бла бла
+Еще одна строка
+
+И еще строка
+
+Последняя строка
+
+"""
+
+        pageStat = self.loader[self.__pluginname].getPageStat (testPage)
+
+        self.assertEqual (pageStat.words, 11)
+
+
+    def testWordsHtml2 (self):
+        HtmlPageFactory.create (self.rootwiki, u"Страница 1", [])
+        testPage = self.rootwiki[u"Страница 1"]
+
+        testPage.content = u"""Бла бла бла.
+Еще одна строка111 222 333
+
+И еще строка ... ... ;;; @#$%#$
+
+Последняя строка
+
+"""
+
+        pageStat = self.loader[self.__pluginname].getPageStat (testPage)
+
+        self.assertEqual (pageStat.words, 13)
+
+
+    def testWordsText1 (self):
+        TextPageFactory.create (self.rootwiki, u"Страница 1", [])
+        testPage = self.rootwiki[u"Страница 1"]
+
+        testPage.content = u"""Бла бла бла
+Еще одна строка
+
+И еще строка
+
+Последняя строка
+
+"""
+
+        pageStat = self.loader[self.__pluginname].getPageStat (testPage)
+
+        self.assertEqual (pageStat.words, 11)
+
+
+    def testWordsText2 (self):
+        TextPageFactory.create (self.rootwiki, u"Страница 1", [])
+        testPage = self.rootwiki[u"Страница 1"]
+
+        testPage.content = u"""Бла бла бла.
+Еще одна строка111 222 333
+
+И еще строка ... ... ;;; @#$%#$
+
+Последняя строка
+
+"""
+
+        pageStat = self.loader[self.__pluginname].getPageStat (testPage)
+
+        self.assertEqual (pageStat.words, 13)
+
+
+    def testWordsSearch (self):
+        def runTest ():
+            SearchPageFactory.create (self.rootwiki, u"Страница 1", [])
+            testPage = self.rootwiki[u"Страница 1"]
+
+            pageStat = self.loader[self.__pluginname].getPageStat (testPage)
+            pageStat.words
+
+        self.assertRaises (TypeError, runTest)

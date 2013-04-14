@@ -1,6 +1,9 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
+import re
+
+
 class PageStat (object):
     """
     Класс для сбора статистики одиночной страницы
@@ -13,6 +16,7 @@ class PageStat (object):
 
         # Типы страниц, по которым можно собрать статистику
         self._supportedPages = ['html', 'text', 'wiki']
+        self._wordsRegExp = re.compile ('\w+', re.M | re.U)
 
 
     def _testPageType (self):
@@ -38,3 +42,11 @@ class PageStat (object):
         self._testPageType ()
         lines = [line for line in self._page.content.split ("\n") if len (line.strip()) != 0]
         return len (lines)
+
+
+    @property
+    def words (self):
+        self._testPageType ()
+        return len (self._wordsRegExp.findall (self._page.content))
+        
+
