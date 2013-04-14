@@ -3,6 +3,8 @@
 
 import os.path
 
+import wx
+
 from outwiker.core.pluginbase import Plugin
 from outwiker.core.commands import getCurrentVersion
 from outwiker.core.version import Version, StatusSet
@@ -22,9 +24,10 @@ else:
             """
             Plugin.__init__ (self, application)
 
-        @property
-        def application (self):
-            return self._application
+            self.ID_PAGE_STAT = wx.NewId()
+
+            self._separatorMenuItem = None
+            self._pageStatMenuItem = None
 
 
         ###################################################
@@ -53,13 +56,14 @@ else:
         
         def initialize(self):
             self._initlocale(u"statistics")
+            self._addMenuItems ()
 
 
         def destroy (self):
             """
             Уничтожение (выгрузка) плагина. Здесь плагин должен отписаться от всех событий
             """
-            pass
+            self._removeMenu ()
 
         #############################################
 
@@ -75,5 +79,43 @@ else:
             set_(_)
 
 
+        @property
+        def toolsMenu (self):
+            return self._application.mainWindow.mainMenu.toolsMenu
+
+
+        def _addMenuItems (self):
+            """
+            Добавить пункты, связанные со статистикой в меню 'Инструменты'
+            """
+            assert self._separatorMenuItem == None
+            assert self._pageStatMenuItem == None
+
+            self._separatorMenuItem = self.toolsMenu.AppendSeparator()
+            self._pageStatMenuItem = self.toolsMenu.Append (self.ID_PAGE_STAT, _(u"Page statistic"))
+
+            self._application.mainWindow.Bind (wx.EVT_MENU, self._onPageStat, id=self.ID_PAGE_STAT)
+
+
+        def _removeMenu (self):
+            """
+            Удалить добавленные пункты меню
+            """
+            assert self._separatorMenuItem != None
+            assert self._pageStatMenuItem != None
+
+            self._application.mainWindow.Unbind (wx.EVT_MENU, handler=self._onPageStat)
+
+            self.toolsMenu.RemoveItem (self._separatorMenuItem)
+            self.toolsMenu.RemoveItem (self._pageStatMenuItem)
+
+            self._separatorMenuItem = None
+            self._pageStatMenuItem = None
+
+
         def getPageStat (self, page):
             return PageStat (page)
+
+
+        def _onPageStat (self, event):
+            print "Statistics"
