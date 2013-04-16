@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-10 10:08+0400\n"
+"POT-Creation-Date: 2013-04-16 10:06+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,30 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: statistics.py:35
+#: pagestatdialog.py:58
+msgid "Word count"
+msgstr ""
+
+#: pagestatdialog.py:74
+msgid "Line count"
+msgstr ""
+
+#: pagestatdialog.py:90
+msgid "Character count"
+msgstr ""
+
+#: pagestatdialog.py:106
+msgid "Character count without spaces"
+msgstr ""
+
+#: statistics.py:45
 msgid "Plugin to display statistics"
+msgstr ""
+
+#: statistics.py:55
+msgid "http://jenyay.net"
+msgstr ""
+
+#: statistics.py:96
+msgid "Page statistic"
 msgstr ""

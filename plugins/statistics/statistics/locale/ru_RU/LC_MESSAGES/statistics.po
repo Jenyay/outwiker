@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Statistics\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-10 10:08+0400\n"
-"PO-Revision-Date: 2013-04-10 10:11+0300\n"
+"POT-Creation-Date: 2013-04-16 10:06+0400\n"
+"PO-Revision-Date: 2013-04-16 10:08+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: jenyay.net <jenyay.ilin@gmail.com>\n"
 "Language: \n"
@@ -19,7 +19,31 @@ msgstr ""
 "X-Poedit-Country: RUSSIAN FEDERATION\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#: statistics.py:35
+#: pagestatdialog.py:58
+msgid "Word count"
+msgstr "Количество слов"
+
+#: pagestatdialog.py:74
+msgid "Line count"
+msgstr "Количество строк"
+
+#: pagestatdialog.py:90
+msgid "Character count"
+msgstr "Количество символов"
+
+#: pagestatdialog.py:106
+msgid "Character count without spaces"
+msgstr "Количество символов, исключая пробелы"
+
+#: statistics.py:45
 msgid "Plugin to display statistics"
 msgstr "Плагин для показа статистики"
+
+#: statistics.py:55
+msgid "http://jenyay.net"
+msgstr "http://jenyay.net"
+
+#: statistics.py:96
+msgid "Page statistic"
+msgstr "Статистика страницы"
 
