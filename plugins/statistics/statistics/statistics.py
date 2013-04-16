@@ -12,6 +12,7 @@ from outwiker.core.system import getOS
 
 from .i18n import set_
 from .pagestat import PageStat
+from .pagestatdialog import PageStatDialog
 
 
 if getCurrentVersion() < Version (1, 7, 0, 684, status=StatusSet.DEV):
@@ -118,4 +119,8 @@ else:
 
 
         def _onPageStat (self, event):
-            print "Statistics"
+            if self._application.selectedPage != None:
+                pageStat = PageStat (self._application.selectedPage)
+
+                with PageStatDialog (self._application.mainWindow, pageStat) as dlg:
+                    dlg.ShowModal()
