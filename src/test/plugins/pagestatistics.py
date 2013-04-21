@@ -14,8 +14,8 @@ from outwiker.pages.search.searchpage import SearchPageFactory
 from test.utils import removeWiki
 
 
-class StatisticsTest (unittest.TestCase):
-    """Тесты плагина Statistics"""
+class PageStatisticsTest (unittest.TestCase):
+    """Тесты плагина Statistics применительно к статистике страницы"""
     def setUp (self):
         self.__pluginname = u"Statistics"
 

@@ -12,6 +12,7 @@ from outwiker.core.system import getOS
 
 from .i18n import set_
 from .pagestat import PageStat
+from .treestat import TreeStat
 from .pagestatdialog import PageStatDialog
 
 
@@ -26,9 +27,11 @@ else:
             Plugin.__init__ (self, application)
 
             self.ID_PAGE_STAT = wx.NewId()
+            self.ID_TREE_STAT = wx.NewId()
 
             self._separatorMenuItem = None
             self._pageStatMenuItem = None
+            self._treeStatMenuItem = None
 
 
         ###################################################
@@ -57,14 +60,18 @@ else:
         
         def initialize(self):
             self._initlocale(u"statistics")
-            self._addMenuItems ()
+
+            if self._application.mainWindow != None:
+                self._addMenuItems ()
 
 
         def destroy (self):
             """
             Уничтожение (выгрузка) плагина. Здесь плагин должен отписаться от всех событий
             """
-            self._removeMenu ()
+            if self._application.mainWindow != None:
+                self._removeMenu ()
+
 
         #############################################
 
@@ -91,11 +98,15 @@ else:
             """
             assert self._separatorMenuItem == None
             assert self._pageStatMenuItem == None
+            assert self._treeStatMenuItem == None
 
             self._separatorMenuItem = self.toolsMenu.AppendSeparator()
-            self._pageStatMenuItem = self.toolsMenu.Append (self.ID_PAGE_STAT, _(u"Page statistic"))
 
+            self._pageStatMenuItem = self.toolsMenu.Append (self.ID_PAGE_STAT, _(u"Page statistic"))
             self._application.mainWindow.Bind (wx.EVT_MENU, self._onPageStat, id=self.ID_PAGE_STAT)
+
+            self._treeStatMenuItem = self.toolsMenu.Append (self.ID_TREE_STAT, _(u"Tree statistic"))
+            self._application.mainWindow.Bind (wx.EVT_MENU, self._onTreeStat, id=self.ID_TREE_STAT)
 
 
         def _removeMenu (self):
@@ -104,18 +115,18 @@ else:
             """
             assert self._separatorMenuItem != None
             assert self._pageStatMenuItem != None
+            assert self._treeStatMenuItem != None
 
             self._application.mainWindow.Unbind (wx.EVT_MENU, handler=self._onPageStat)
+            self._application.mainWindow.Unbind (wx.EVT_MENU, handler=self._onTreeStat)
 
             self.toolsMenu.RemoveItem (self._separatorMenuItem)
             self.toolsMenu.RemoveItem (self._pageStatMenuItem)
+            self.toolsMenu.RemoveItem (self._treeStatMenuItem)
 
             self._separatorMenuItem = None
             self._pageStatMenuItem = None
-
-
-        def getPageStat (self, page):
-            return PageStat (page)
+            self._treeStatMenuItem = None
 
 
         def _onPageStat (self, event):
@@ -124,3 +135,24 @@ else:
 
                 with PageStatDialog (self._application.mainWindow, pageStat) as dlg:
                     dlg.ShowModal()
+
+
+        def _onTreeStat (self, event):
+            if self._application.wikiroot != None:
+                treeStat = TreeStat (self._application.wikiroot)
+
+                print "Page count: {0}".format (treeStat.pageCount)
+
+
+        def getPageStat (self, page):
+            """
+            Получить экземпляр класса для сбора статистики по странице. Используется в тестах
+            """
+            return PageStat (page)
+
+
+        def getTreeStat (self, root):
+            """
+            Получить экземпляр класса для сбора статистики по дереву. Используется в тестах
+            """
+            return TreeStat (root)

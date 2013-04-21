@@ -119,7 +119,8 @@ if __name__ == '__main__':
     from test.plugins.livejournal import LivejournalPluginTest
     from test.plugins.lightbox import LightboxPluginTest
     from test.plugins.thumblist import ThumbListPluginTest
-    from test.plugins.statistics import StatisticsTest
+    from test.plugins.pagestatistics import PageStatisticsTest
+    from test.plugins.treestatistics import TreeStatisticsTest
 
     from test.plugins.source.source import SourcePluginTest
     from test.plugins.source.sourceencoding import SourceEncodingPluginTest
