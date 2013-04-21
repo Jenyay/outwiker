@@ -87,3 +87,49 @@ class TreeStatisticsTest (unittest.TestCase):
         treeStat = self.loader[self.__pluginname].getTreeStat (self.rootwiki)
 
         self.assertEqual (treeStat.pageCount, 5)
+
+
+    def testMaxDepth1 (self):
+        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
+
+        treeStat = self.loader[self.__pluginname].getTreeStat (self.rootwiki)
+
+        self.assertEqual (len (treeStat.maxDepth), 1)
+
+        self.assertEqual (treeStat.maxDepth[0][0], 1)
+        self.assertEqual (treeStat.maxDepth[0][1], self.rootwiki[u"Страница 1"])
+
+
+    def testMaxDepth2 (self):
+        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
+        WikiPageFactory.create (self.rootwiki[u"Страница 1"], u"Страница 2", [])
+
+        treeStat = self.loader[self.__pluginname].getTreeStat (self.rootwiki)
+
+        self.assertEqual (len (treeStat.maxDepth), 1)
+        self.assertEqual (treeStat.maxDepth[0][0], 2)
+        self.assertEqual (treeStat.maxDepth[0][1], self.rootwiki[u"Страница 1/Страница 2"])
+
+
+    def testMaxDepth3 (self):
+        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
+        WikiPageFactory.create (self.rootwiki, u"Страница 2", [])
+
+        treeStat = self.loader[self.__pluginname].getTreeStat (self.rootwiki)
+
+        self.assertEqual (len (treeStat.maxDepth), 2)
+        self.assertEqual (treeStat.maxDepth[0][0], 1)
+
+
+    def testMaxDepth4 (self):
+        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
+        WikiPageFactory.create (self.rootwiki[u"Страница 1"], u"Страница 2", [])
+        WikiPageFactory.create (self.rootwiki[u"Страница 1/Страница 2"], u"Страница 3", [])
+        WikiPageFactory.create (self.rootwiki, u"Страница 4", [])
+        WikiPageFactory.create (self.rootwiki[u"Страница 1"], u"Страница 5", [])
+
+        treeStat = self.loader[self.__pluginname].getTreeStat (self.rootwiki)
+
+        self.assertEqual (len (treeStat.maxDepth), 1)
+        self.assertEqual (treeStat.maxDepth[0][0], 3)
+        self.assertEqual (treeStat.maxDepth[0][1], self.rootwiki[u"Страница 1/Страница 2/Страница 3"])

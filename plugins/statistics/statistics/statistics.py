@@ -141,7 +141,12 @@ else:
             if self._application.wikiroot != None:
                 treeStat = TreeStat (self._application.wikiroot)
 
-                print "Page count: {0}".format (treeStat.pageCount)
+                print u"Page count: {0}".format (treeStat.pageCount)
+
+                maxDepthList = treeStat.maxDepth
+                print u"Max depth: {0}".format (maxDepthList[0][0])
+                for _, page in maxDepthList:
+                    print u"    {0}".format (page.title)
 
 
         def getPageStat (self, page):
