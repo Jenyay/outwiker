@@ -38,8 +38,24 @@ class TreeStat (object):
 
     @property
     def tagsCount (self):
+        """
+        Возвращает количество используемых тегов в дереве
+        """
         tags = TagsList (self._root)
         return len (tags)
+
+
+    @property
+    def frequentTags (self):
+        """
+        Возвращает упорядоченный по количеству использований список кортежей вида: (имя тега, количество использований)
+        """
+        tags = TagsList (self._root)
+
+        tagslist = [(tagName, len (tags[tagName])) for tagName in tags]
+        tagslist.sort (key=lambda item: item[1], reverse=True)
+
+        return tagslist
 
 
     def _getMaxDepth (self, depthList):

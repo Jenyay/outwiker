@@ -175,3 +175,49 @@ class TreeStatisticsTest (unittest.TestCase):
         treeStat = self.loader[self.__pluginname].getTreeStat (self.rootwiki)
 
         self.assertEqual (treeStat.tagsCount, 4)
+
+
+    def testFrequentTags1 (self):
+        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
+
+        treeStat = self.loader[self.__pluginname].getTreeStat (self.rootwiki)
+
+        self.assertEqual (len (treeStat.frequentTags), 0)
+
+
+    def testFrequentTags2 (self):
+        WikiPageFactory.create (self.rootwiki, u"Страница 1", [u"тег 1"])
+
+        treeStat = self.loader[self.__pluginname].getTreeStat (self.rootwiki)
+
+        self.assertEqual (len (treeStat.frequentTags), 1)
+        self.assertEqual (treeStat.frequentTags[0][0], u"тег 1")
+        self.assertEqual (treeStat.frequentTags[0][1], 1)
+
+
+    def testFrequentTags3 (self):
+        WikiPageFactory.create (self.rootwiki, u"Страница 1", [u"тег 1", u"тег2"])
+
+        treeStat = self.loader[self.__pluginname].getTreeStat (self.rootwiki)
+
+        self.assertEqual (len (treeStat.frequentTags), 2)
+
+
+    def testFrequentTags4 (self):
+        WikiPageFactory.create (self.rootwiki, u"Страница 1", [u"тег 1", u"тег 2", u"тег 3"])
+        WikiPageFactory.create (self.rootwiki[u"Страница 1"], u"Страница 2", [u"тег 1", u"тег 3"])
+        WikiPageFactory.create (self.rootwiki[u"Страница 1/Страница 2"], u"Страница 3", [u"тег 3"])
+        WikiPageFactory.create (self.rootwiki, u"Страница 4", [])
+        WikiPageFactory.create (self.rootwiki[u"Страница 1"], u"Страница 5", [])
+
+        treeStat = self.loader[self.__pluginname].getTreeStat (self.rootwiki)
+
+        self.assertEqual (len (treeStat.frequentTags), 3)
+        self.assertEqual (treeStat.frequentTags[0][0], u"тег 3")
+        self.assertEqual (treeStat.frequentTags[0][1], 3)
+
+        self.assertEqual (treeStat.frequentTags[1][0], u"тег 1")
+        self.assertEqual (treeStat.frequentTags[1][1], 2)
+
+        self.assertEqual (treeStat.frequentTags[2][0], u"тег 2")
+        self.assertEqual (treeStat.frequentTags[2][1], 1)

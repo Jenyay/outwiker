@@ -141,15 +141,25 @@ else:
             if self._application.wikiroot != None:
                 treeStat = TreeStat (self._application.wikiroot)
 
+                # Количество страниц
                 print u"Page count: {0}".format (treeStat.pageCount)
 
+                # Страницы с максимальной глубиной вложенности
                 maxDepthList = treeStat.maxDepth
                 print u"Max depth: {0}".format (maxDepthList[0][0])
                 for _, page in maxDepthList:
                     print u"    {0}".format (page.title)
 
-
+                # Количество тегов
                 print u"Tags count: {0}".format (treeStat.tagsCount)
+
+                # Самые часто используемые теги
+                tagsList = treeStat.frequentTags[0: min (10, treeStat.tagsCount)]
+                print u"Frequent tags:"
+                for tagName, count in tagsList:
+                    print u"    {0}: {1}".format (tagName, count)
+
+
 
 
         def getPageStat (self, page):
