@@ -39,6 +39,9 @@ class TreeStat (object):
         """
         Возвращает список из страниц с наибольшим уровнем вложенности
         """
+        if len (depthList) == 0:
+            return []
+
         maxDepth = max (depthList, key=lambda item: item[0])[0]
 
         maxDepthList = [item for item in depthList if item[0] == maxDepth]

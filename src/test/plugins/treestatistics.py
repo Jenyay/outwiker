@@ -133,3 +133,9 @@ class TreeStatisticsTest (unittest.TestCase):
         self.assertEqual (len (treeStat.maxDepth), 1)
         self.assertEqual (treeStat.maxDepth[0][0], 3)
         self.assertEqual (treeStat.maxDepth[0][1], self.rootwiki[u"Страница 1/Страница 2/Страница 3"])
+
+
+    def testMaxDepth5 (self):
+        treeStat = self.loader[self.__pluginname].getTreeStat (self.rootwiki)
+
+        self.assertEqual (len (treeStat.maxDepth), 0)
