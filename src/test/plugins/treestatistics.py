@@ -139,3 +139,39 @@ class TreeStatisticsTest (unittest.TestCase):
         treeStat = self.loader[self.__pluginname].getTreeStat (self.rootwiki)
 
         self.assertEqual (len (treeStat.maxDepth), 0)
+
+
+    def testTagsCount1 (self):
+        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
+
+        treeStat = self.loader[self.__pluginname].getTreeStat (self.rootwiki)
+
+        self.assertEqual (treeStat.tagsCount, 0)
+
+
+    def testTagsCount2 (self):
+        WikiPageFactory.create (self.rootwiki, u"Страница 1", [u"Тег 1"])
+
+        treeStat = self.loader[self.__pluginname].getTreeStat (self.rootwiki)
+
+        self.assertEqual (treeStat.tagsCount, 1)
+
+
+    def testTagsCount3 (self):
+        WikiPageFactory.create (self.rootwiki, u"Страница 1", [u"Тег 1", u"Тег 2", u"Тег 3"])
+
+        treeStat = self.loader[self.__pluginname].getTreeStat (self.rootwiki)
+
+        self.assertEqual (treeStat.tagsCount, 3)
+
+
+    def testTagsCount4 (self):
+        WikiPageFactory.create (self.rootwiki, u"Страница 1", [u"Тег 1", u"Тег 2", u"Тег 3"])
+        WikiPageFactory.create (self.rootwiki[u"Страница 1"], u"Страница 2", [u"Тег 4"])
+        WikiPageFactory.create (self.rootwiki[u"Страница 1/Страница 2"], u"Страница 3", [u"Тег 1", u"Тег 2"])
+        WikiPageFactory.create (self.rootwiki, u"Страница 4", [])
+        WikiPageFactory.create (self.rootwiki[u"Страница 1"], u"Страница 5", [])
+
+        treeStat = self.loader[self.__pluginname].getTreeStat (self.rootwiki)
+
+        self.assertEqual (treeStat.tagsCount, 4)

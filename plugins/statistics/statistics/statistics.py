@@ -149,6 +149,9 @@ else:
                     print u"    {0}".format (page.title)
 
 
+                print u"Tags count: {0}".format (treeStat.tagsCount)
+
+
         def getPageStat (self, page):
             """
             Получить экземпляр класса для сбора статистики по странице. Используется в тестах

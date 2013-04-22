@@ -2,6 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 from outwiker.core.tree import WikiDocument
+from outwiker.core.tagslist import TagsList
 
 
 class TreeStat (object):
@@ -33,6 +34,12 @@ class TreeStat (object):
         self._getDepthList(self._root, depthList, 0)
 
         return self._getMaxDepth (depthList)
+
+
+    @property
+    def tagsCount (self):
+        tags = TagsList (self._root)
+        return len (tags)
 
 
     def _getMaxDepth (self, depthList):
