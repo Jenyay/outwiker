@@ -159,6 +159,14 @@ else:
                 for tagName, count in tagsList:
                     print u"    {0}: {1}".format (tagName, count)
 
+                # Самые редкто используемые теги
+                tagsList = treeStat.frequentTags
+                tagsList.reverse()
+
+                print u"Infrequent tags:"
+                for tagName, count in tagsList[0: min (10, treeStat.tagsCount)]:
+                    print u"    {0}: {1}".format (tagName, count)
+
 
 
 
