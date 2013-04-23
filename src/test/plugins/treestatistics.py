@@ -1,8 +1,9 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-import unittest
+import datetime
 import os.path
+import unittest
 
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.tree import WikiDocument
@@ -221,3 +222,55 @@ class TreeStatisticsTest (unittest.TestCase):
 
         self.assertEqual (treeStat.frequentTags[2][0], u"тег 2")
         self.assertEqual (treeStat.frequentTags[2][1], 1)
+
+
+    def testPageDate1 (self):
+        treeStat = self.loader[self.__pluginname].getTreeStat (self.rootwiki)
+
+        self.assertEqual (len (treeStat.pageDate), 0)
+
+
+    def testPageDate2 (self):
+        treeStat = self.loader[self.__pluginname].getTreeStat (self.rootwiki)
+        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
+
+        self.assertEqual (len (treeStat.pageDate), 1)
+        self.assertEqual (treeStat.pageDate[0], self.rootwiki[u"Страница 1"])
+
+
+    def testPageDate3 (self):
+        treeStat = self.loader[self.__pluginname].getTreeStat (self.rootwiki)
+        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
+        WikiPageFactory.create (self.rootwiki[u"Страница 1"], u"Страница 2", [])
+        WikiPageFactory.create (self.rootwiki[u"Страница 1/Страница 2"], u"Страница 3", [])
+
+        self.rootwiki[u"Страница 1"].datetime = datetime.datetime (2013, 4, 23)
+        self.rootwiki[u"Страница 1/Страница 2"].datetime = datetime.datetime (2013, 4, 20)
+        self.rootwiki[u"Страница 1/Страница 2/Страница 3"].datetime = datetime.datetime (2013, 4, 30)
+
+        self.assertEqual (len (treeStat.pageDate), 3)
+        self.assertEqual (treeStat.pageDate[0], self.rootwiki[u"Страница 1/Страница 2/Страница 3"])
+        self.assertEqual (treeStat.pageDate[1], self.rootwiki[u"Страница 1"])
+        self.assertEqual (treeStat.pageDate[2], self.rootwiki[u"Страница 1/Страница 2"])
+
+
+    def testPageDate4 (self):
+        treeStat = self.loader[self.__pluginname].getTreeStat (self.rootwiki)
+        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
+        WikiPageFactory.create (self.rootwiki[u"Страница 1"], u"Страница 2", [])
+        WikiPageFactory.create (self.rootwiki[u"Страница 1/Страница 2"], u"Страница 3", [])
+        WikiPageFactory.create (self.rootwiki, u"Страница 4", [])
+        WikiPageFactory.create (self.rootwiki[u"Страница 4"], u"Страница 5", [])
+
+        self.rootwiki[u"Страница 1"].datetime = datetime.datetime (2013, 4, 23)
+        self.rootwiki[u"Страница 1/Страница 2"].datetime = datetime.datetime (2013, 4, 20)
+        self.rootwiki[u"Страница 1/Страница 2/Страница 3"].datetime = datetime.datetime (2013, 4, 30)
+        self.rootwiki[u"Страница 4"].datetime = datetime.datetime (2010, 1, 1)
+        self.rootwiki[u"Страница 4/Страница 5"].datetime = datetime.datetime (2009, 1, 1)
+
+        self.assertEqual (len (treeStat.pageDate), 5)
+        self.assertEqual (treeStat.pageDate[0], self.rootwiki[u"Страница 1/Страница 2/Страница 3"])
+        self.assertEqual (treeStat.pageDate[1], self.rootwiki[u"Страница 1"])
+        self.assertEqual (treeStat.pageDate[2], self.rootwiki[u"Страница 1/Страница 2"])
+        self.assertEqual (treeStat.pageDate[3], self.rootwiki[u"Страница 4"])
+        self.assertEqual (treeStat.pageDate[4], self.rootwiki[u"Страница 4/Страница 5"])

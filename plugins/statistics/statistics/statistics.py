@@ -141,6 +141,9 @@ else:
             if self._application.wikiroot != None:
                 treeStat = TreeStat (self._application.wikiroot)
 
+                # Сколько элементов списков выводить
+                listcount = 10
+
                 # Количество страниц
                 print u"Page count: {0}".format (treeStat.pageCount)
 
@@ -154,7 +157,7 @@ else:
                 print u"Tags count: {0}".format (treeStat.tagsCount)
 
                 # Самые часто используемые теги
-                tagsList = treeStat.frequentTags[0: min (10, treeStat.tagsCount)]
+                tagsList = treeStat.frequentTags[0: min (listcount, treeStat.tagsCount)]
                 print u"Frequent tags:"
                 for tagName, count in tagsList:
                     print u"    {0}: {1}".format (tagName, count)
@@ -164,9 +167,20 @@ else:
                 tagsList.reverse()
 
                 print u"Infrequent tags:"
-                for tagName, count in tagsList[0: min (10, treeStat.tagsCount)]:
+                for tagName, count in tagsList[0: min (listcount, treeStat.tagsCount)]:
                     print u"    {0}: {1}".format (tagName, count)
 
+                # Последние измененные записи
+                pageDate = treeStat.pageDate
+                print "Recent edited pages:"
+                for page in pageDate[0: min (listcount, treeStat.pageCount)]:
+                    print u"    {0}: {1}".format (page.title, page.datetime)
+
+                # Самые старые записи
+                pageDate.reverse()
+                print "Old pages:"
+                for page in pageDate[0: min (listcount, treeStat.pageCount)]:
+                    print u"    {0}: {1}".format (page.title, page.datetime)
 
 
 

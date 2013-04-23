@@ -58,6 +58,24 @@ class TreeStat (object):
         return tagslist
 
 
+    @property
+    def pageDate (self):
+        """
+        Возвращает список всех страниц, упорядоченный по дате изменения (новые страницы сверху)
+        """
+        pageList = []
+        self._getPageList (self._root, pageList)
+        pageList.sort (key=lambda page: page.datetime, reverse=True)
+        return pageList
+
+
+    def _getPageList (self, root, pageList):
+        pageList += root.children
+
+        for child in root.children:
+            self._getPageList (child, pageList)
+
+
     def _getMaxDepth (self, depthList):
         """
         Возвращает список из страниц с наибольшим уровнем вложенности
