@@ -14,6 +14,7 @@ from .i18n import set_
 from .pagestat import PageStat
 from .treestat import TreeStat
 from .pagestatdialog import PageStatDialog
+from .treestatdialog import TreeStatDialog
 
 
 if getCurrentVersion() < Version (1, 7, 0, 684, status=StatusSet.DEV):
@@ -140,47 +141,49 @@ else:
         def _onTreeStat (self, event):
             if self._application.wikiroot != None:
                 treeStat = TreeStat (self._application.wikiroot)
+                with TreeStatDialog (self._application.mainWindow, treeStat) as dlg:
+                    dlg.ShowModal()
 
-                # Сколько элементов списков выводить
-                listcount = 10
+                # # Сколько элементов списков выводить
+                # listcount = 10
 
-                # Количество страниц
-                print u"Page count: {0}".format (treeStat.pageCount)
+                # # Количество страниц +
+                # print u"Page count: {0}".format (treeStat.pageCount)
 
-                # Страницы с максимальной глубиной вложенности
-                maxDepthList = treeStat.maxDepth
-                print u"Max depth: {0}".format (maxDepthList[0][0])
-                for _, page in maxDepthList:
-                    print u"    {0}".format (page.title)
+                # # Страницы с максимальной глубиной вложенности
+                # maxDepthList = treeStat.maxDepth
+                # print u"Max depth: {0}".format (maxDepthList[0][0])
+                # for _, page in maxDepthList:
+                #     print u"    {0}".format (page.title)
 
-                # Количество тегов
-                print u"Tags count: {0}".format (treeStat.tagsCount)
+                # # Количество тегов
+                # print u"Tags count: {0}".format (treeStat.tagsCount)
 
-                # Самые часто используемые теги
-                tagsList = treeStat.frequentTags[0: min (listcount, treeStat.tagsCount)]
-                print u"Frequent tags:"
-                for tagName, count in tagsList:
-                    print u"    {0}: {1}".format (tagName, count)
+                # # Самые часто используемые теги
+                # tagsList = treeStat.frequentTags[0: min (listcount, treeStat.tagsCount)]
+                # print u"Frequent tags:"
+                # for tagName, count in tagsList:
+                #     print u"    {0}: {1}".format (tagName, count)
 
-                # Самые редкто используемые теги
-                tagsList = treeStat.frequentTags
-                tagsList.reverse()
+                # # Самые редко используемые теги
+                # tagsList = treeStat.frequentTags
+                # tagsList.reverse()
 
-                print u"Infrequent tags:"
-                for tagName, count in tagsList[0: min (listcount, treeStat.tagsCount)]:
-                    print u"    {0}: {1}".format (tagName, count)
+                # print u"Infrequent tags:"
+                # for tagName, count in tagsList[0: min (listcount, treeStat.tagsCount)]:
+                #     print u"    {0}: {1}".format (tagName, count)
 
-                # Последние измененные записи
-                pageDate = treeStat.pageDate
-                print "Recent edited pages:"
-                for page in pageDate[0: min (listcount, treeStat.pageCount)]:
-                    print u"    {0}: {1}".format (page.title, page.datetime)
+                # # Последние измененные записи
+                # pageDate = treeStat.pageDate
+                # print "Recent edited pages:"
+                # for page in pageDate[0: min (listcount, treeStat.pageCount)]:
+                #     print u"    {0}: {1}".format (page.title, page.datetime)
 
-                # Самые старые записи
-                pageDate.reverse()
-                print "Old pages:"
-                for page in pageDate[0: min (listcount, treeStat.pageCount)]:
-                    print u"    {0}: {1}".format (page.title, page.datetime)
+                # # Самые старые записи
+                # pageDate.reverse()
+                # print "Old pages:"
+                # for page in pageDate[0: min (listcount, treeStat.pageCount)]:
+                #     print u"    {0}: {1}".format (page.title, page.datetime)
 
 
 
