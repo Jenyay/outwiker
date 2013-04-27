@@ -141,13 +141,13 @@ else:
         def _onTreeStat (self, event):
             if self._application.wikiroot != None:
                 treeStat = TreeStat (self._application.wikiroot)
-                with TreeStatDialog (self._application.mainWindow, treeStat) as dlg:
+                with TreeStatDialog (self._application.mainWindow, self._application, treeStat) as dlg:
                     dlg.ShowModal()
 
                 # # Сколько элементов списков выводить
                 # listcount = 10
 
-                # # Количество страниц +
+                # # Количество страниц 
                 # print u"Page count: {0}".format (treeStat.pageCount)
 
                 # # Страницы с максимальной глубиной вложенности

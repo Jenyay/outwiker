@@ -3,40 +3,52 @@
 
 import wx
 
+from outwiker.gui.htmlrenderfactory import getHtmlRender
+from outwiker.core.system import getCurrentDir
+
 from .i18n import get_
-from .pagecountpanel import PageCountPanel
-from .maxdepthpanel import MaxDepthPanel
 
 
 class TreeStatDialog (wx.Dialog):
-    def __init__ (self, parent, treestat):
+    def __init__ (self, parent, application, treestat):
         """
         treestat - экземпляр класса TreeStat
         """
         super (TreeStatDialog, self).__init__ (parent)
+        self._application = application
+        self._treestat = treestat
+
+        # Размер списков со страницами
+        self._listSize = 10
 
         global _
         _ = get_()
 
         self.SetTitle (_(u"Tree Statistic"))
+        self.Show()
         self._createGUI ()
-        self.Fit()
         self.Center (wx.CENTRE_ON_SCREEN)
 
-        self.updateStat (treestat)
+        self._updateStatistics()
 
 
     def _createGUI (self):
         mainSizer = wx.FlexGridSizer (cols=1)
         mainSizer.AddGrowableCol (0)
+        mainSizer.AddGrowableRow (0)
 
-        # Панель с информацией о количестве страниц
-        self.pageCountPanel = PageCountPanel (self)
-        mainSizer.Add (self.pageCountPanel, flag=wx.EXPAND | wx.ALL, border=4)
+        self._htmlRender = getHtmlRender (self)
 
-        # Панель с информацией о страницах с наибольшей вложенностью
-        self.maxDepthPanel = MaxDepthPanel (self)
-        mainSizer.Add (self.maxDepthPanel, flag=wx.EXPAND | wx.ALL, border=4)
+        # Шаманство, связанное с тем, что HTML-рендер ожидает, что есть выбранная страница
+        # Если бы ему это было не обязательно, то достаточно было бы использовать только следующую строку
+        # self._htmlRender.page = self._application.selectedPage
+
+        if self._application.selectedPage != None:
+            self._htmlRender.page = self._application.selectedPage
+        elif len (self._application.wikiroot.children) != 0:
+            self._htmlRender.page = self._application.wikiroot.children[0]
+
+        mainSizer.Add (self._htmlRender, flag=wx.EXPAND | wx.ALL, border=4)
 
         # Кнопка Ok
         okBtn = wx.Button (self, wx.ID_OK)
@@ -46,20 +58,59 @@ class TreeStatDialog (wx.Dialog):
         self.Layout()
 
 
-    def updateStat (self, treestat):
-        self._updatePageCount (treestat)
-        self._updateMaxDepth (treestat)
+    def _updateStatistics (self):
+        # Шаманство, связанное с тем, что HTML-рендер ожидает, что есть выбранная страница
+        if self._htmlRender.page == None:
+            return u""
+
+        htmlTemplate = ur"""<!DOCTYPE html>
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV='X-UA-Compatible' CONTENT='IE=edge' />
+	<META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>
+</HEAD>
+
+<BODY>
+{content}
+</BODY>
+</HTML>"""
+
+        content = self._getContent ()
+
+        resultHtml = htmlTemplate.format (content=content)
+        self._htmlRender.SetPage (resultHtml, getCurrentDir())
 
 
-    def _updatePageCount (self, treestat):
+    def _getContent (self):
         """
-        Обновление количества страниц
+        Создать HTML со статистикой. То, что должно быть внутри тега <body>
         """
-        self.pageCountPanel.pageCount.SetValue (str (treestat.pageCount))
+        pageCountHtml = self._getPageCountHtml ()
+        maxDepthHtml = self._getMaxDepthHtml ()
+
+        return u"".join ([pageCountHtml, maxDepthHtml])
 
 
-    def _updateMaxDepth (self, treestat):
+    def _getPageCountHtml (self):
         """
-        Обновление панели с информацией о страницах с наибольшей вложенностью
+        Получить HTML с количеством страниц
         """
-        self.maxDepthPanel.maxDepth.SetValue (str (treestat.pageCount))
+        return u"<p>" + _(u"Page count: {0}").format (self._treestat.pageCount) + "</p>";
+
+
+    def _getMaxDepthHtml (self):
+        """
+        Получить HTML со статистикой по максимальной глубине вложенности
+        """
+        maxDepthList = self._treestat.maxDepth
+        maxDepth = 0 if len (maxDepthList) == 0 else self._treestat.maxDepth[0][0]
+
+        maxDepthHtml = u"<p>" + _(u"Max page depth: {0}").format (maxDepth) + "</p>";
+
+        # Сформировать список страниц с наибольшей глубиной вложенности
+        pagesList = [u"<a href='{link}' title='{link}'>{title}</a>".format (link="/" + page.subpath, title=page.title)
+                for depth, page in maxDepthList]
+
+        pagesHtml = u"<p>" + u"<br/>".join (pagesList) + u"</p>"
+
+        return u"<hr>" + maxDepthHtml + pagesHtml
