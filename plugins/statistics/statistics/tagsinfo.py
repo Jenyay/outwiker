@@ -1,6 +1,9 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
+from .i18n import get_
+
+
 class TagsInfo (object):
     """Класс для генерации информации о тегах"""
     def __init__(self, treestat, itemsCount):
@@ -9,6 +12,9 @@ class TagsInfo (object):
         """
         self._treestat = treestat
         self._itemsCount = itemsCount
+
+        global _
+        _ = get_()
        
 
     @property

@@ -1,10 +1,16 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
+from .i18n import get_
+
+
 class MaxDepthInfo (object):
     """Класс для оформления сведений о страницах с максимальной глубиной вложенности"""
     def __init__(self, treestat):
         self._treestat = treestat
+
+        global _
+        _ = get_()
 
 
     @property

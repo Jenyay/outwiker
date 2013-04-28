@@ -17,7 +17,7 @@ class PageStatDialog (wx.Dialog):
         global _
         _ = get_()
 
-        self.SetTitle (_(u"Page statistic"))
+        self.SetTitle (_(u"Page Statistic"))
         self._createGui ()
         self.Fit()
         self.Center (wx.CENTRE_ON_SCREEN)

@@ -56,7 +56,7 @@ else:
 
         @property
         def url (self):
-            return _(u"http://jenyay.net")
+            return _(u"http://jenyay.net/Outwiker/StatisticsEn")
         
         
         def initialize(self):
@@ -103,10 +103,10 @@ else:
 
             self._separatorMenuItem = self.toolsMenu.AppendSeparator()
 
-            self._pageStatMenuItem = self.toolsMenu.Append (self.ID_PAGE_STAT, _(u"Page statistic"))
+            self._pageStatMenuItem = self.toolsMenu.Append (self.ID_PAGE_STAT, _(u"Page Statistic"))
             self._application.mainWindow.Bind (wx.EVT_MENU, self._onPageStat, id=self.ID_PAGE_STAT)
 
-            self._treeStatMenuItem = self.toolsMenu.Append (self.ID_TREE_STAT, _(u"Tree statistic"))
+            self._treeStatMenuItem = self.toolsMenu.Append (self.ID_TREE_STAT, _(u"Tree Statistic"))
             self._application.mainWindow.Bind (wx.EVT_MENU, self._onTreeStat, id=self.ID_TREE_STAT)
 
 
@@ -143,30 +143,6 @@ else:
                 treeStat = TreeStat (self._application.wikiroot)
                 with TreeStatDialog (self._application.mainWindow, self._application, treeStat) as dlg:
                     dlg.ShowModal()
-
-                # # Сколько элементов списков выводить
-                # listcount = 10
-
-                # # Самые редко используемые теги
-                # tagsList = treeStat.frequentTags
-                # tagsList.reverse()
-
-                # print u"Infrequent tags:"
-                # for tagName, count in tagsList[0: min (listcount, treeStat.tagsCount)]:
-                #     print u"    {0}: {1}".format (tagName, count)
-
-                # # Последние измененные записи
-                # pageDate = treeStat.pageDate
-                # print "Recent edited pages:"
-                # for page in pageDate[0: min (listcount, treeStat.pageCount)]:
-                #     print u"    {0}: {1}".format (page.title, page.datetime)
-
-                # # Самые старые записи
-                # pageDate.reverse()
-                # print "Old pages:"
-                # for page in pageDate[0: min (listcount, treeStat.pageCount)]:
-                #     print u"    {0}: {1}".format (page.title, page.datetime)
-
 
 
         def getPageStat (self, page):
