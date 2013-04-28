@@ -8,7 +8,8 @@ from outwiker.core.system import getCurrentDir
 
 from .i18n import get_
 from .maxdepthinfo import MaxDepthInfo
-from pagecountinfo import PageCountInfo
+from .pagecountinfo import PageCountInfo
+from .tagsinfo import TagsInfo
 
 
 class TreeStatDialog (wx.Dialog):
@@ -21,7 +22,7 @@ class TreeStatDialog (wx.Dialog):
         self._treestat = treestat
 
         # Размер списков со страницами
-        self._listSize = 10
+        self._itemsCount = 10
 
         global _
         _ = get_()
@@ -29,6 +30,7 @@ class TreeStatDialog (wx.Dialog):
         self.SetTitle (_(u"Tree Statistic"))
         self.Show()
         self._createGUI ()
+        self.SetSize ((600, 500))
         self.Center (wx.CENTRE_ON_SCREEN)
 
         self._updateStatistics()
@@ -65,7 +67,7 @@ class TreeStatDialog (wx.Dialog):
         if self._htmlRender.page == None:
             return _(u"A tree has no pages")
 
-        htmlTemplate = ur"""<!DOCTYPE html>
+        htmlTemplate = u"""<!DOCTYPE html>
 <HTML>
 <HEAD>
 	<META HTTP-EQUIV='X-UA-Compatible' CONTENT='IE=edge' />
@@ -88,6 +90,7 @@ class TreeStatDialog (wx.Dialog):
         Создать HTML со статистикой. То, что должно быть внутри тега <body>
         """
         infoList = [PageCountInfo (self._treestat),
-                MaxDepthInfo (self._treestat)]
+                MaxDepthInfo (self._treestat),
+                TagsInfo (self._treestat, self._itemsCount)]
 
         return u"".join ([info.content for info in infoList])

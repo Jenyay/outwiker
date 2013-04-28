@@ -4,7 +4,6 @@
 class MaxDepthInfo (object):
     """Класс для оформления сведений о страницах с максимальной глубиной вложенности"""
     def __init__(self, treestat):
-        super(MaxDepthInfo, self).__init__()
         self._treestat = treestat
 
 

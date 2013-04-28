@@ -4,7 +4,6 @@
 class PageCountInfo (object):
     """Класс для оформления информации о количестве страниц в дереве"""
     def __init__(self, treestat):
-        super(PageCountInfo, self).__init__()
         self._treestat = treestat
 
 
