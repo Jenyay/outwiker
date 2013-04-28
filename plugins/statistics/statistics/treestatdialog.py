@@ -7,6 +7,8 @@ from outwiker.gui.htmlrenderfactory import getHtmlRender
 from outwiker.core.system import getCurrentDir
 
 from .i18n import get_
+from .maxdepthinfo import MaxDepthInfo
+from pagecountinfo import PageCountInfo
 
 
 class TreeStatDialog (wx.Dialog):
@@ -61,7 +63,7 @@ class TreeStatDialog (wx.Dialog):
     def _updateStatistics (self):
         # Шаманство, связанное с тем, что HTML-рендер ожидает, что есть выбранная страница
         if self._htmlRender.page == None:
-            return u""
+            return _(u"A tree has no pages")
 
         htmlTemplate = ur"""<!DOCTYPE html>
 <HTML>
@@ -85,32 +87,7 @@ class TreeStatDialog (wx.Dialog):
         """
         Создать HTML со статистикой. То, что должно быть внутри тега <body>
         """
-        pageCountHtml = self._getPageCountHtml ()
-        maxDepthHtml = self._getMaxDepthHtml ()
+        infoList = [PageCountInfo (self._treestat),
+                MaxDepthInfo (self._treestat)]
 
-        return u"".join ([pageCountHtml, maxDepthHtml])
-
-
-    def _getPageCountHtml (self):
-        """
-        Получить HTML с количеством страниц
-        """
-        return u"<p>" + _(u"Page count: {0}").format (self._treestat.pageCount) + "</p>";
-
-
-    def _getMaxDepthHtml (self):
-        """
-        Получить HTML со статистикой по максимальной глубине вложенности
-        """
-        maxDepthList = self._treestat.maxDepth
-        maxDepth = 0 if len (maxDepthList) == 0 else self._treestat.maxDepth[0][0]
-
-        maxDepthHtml = u"<p>" + _(u"Max page depth: {0}").format (maxDepth) + "</p>";
-
-        # Сформировать список страниц с наибольшей глубиной вложенности
-        pagesList = [u"<a href='{link}' title='{link}'>{title}</a>".format (link="/" + page.subpath, title=page.title)
-                for depth, page in maxDepthList]
-
-        pagesHtml = u"<p>" + u"<br/>".join (pagesList) + u"</p>"
-
-        return u"<hr>" + maxDepthHtml + pagesHtml
+        return u"".join ([info.content for info in infoList])
