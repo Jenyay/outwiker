@@ -91,10 +91,10 @@ class TreeStatDialog (wx.Dialog):
         """
         Создать HTML со статистикой. То, что должно быть внутри тега <body>
         """
-        infoList = [PageCountInfo (self._treestat),
-                MaxDepthInfo (self._treestat),
-                TagsInfo (self._treestat, self._itemsCount),
-                DatePageInfo (self._treestat, self._itemsCount, self._application.config),
-                PageContentLengthInfo (self._treestat, self._itemsCount)]
+        infoList = [PageCountInfo (self._treestat.pageCount),
+                MaxDepthInfo (self._treestat.maxDepth),
+                TagsInfo (self._treestat.frequentTags, self._itemsCount),
+                DatePageInfo (self._treestat.pageDate, self._itemsCount, self._application.config),
+                PageContentLengthInfo (self._treestat.pageContentLength, self._itemsCount)]
 
         return u"".join ([info.content for info in infoList])

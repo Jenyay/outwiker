@@ -8,14 +8,12 @@ from .i18n import get_
 
 class PageContentLengthInfo (object):
     """Класс для генерации информации о самых длинных записях"""
-    def __init__(self, treestat, itemsCount):
+    def __init__(self, pageContentList, itemsCount):
         """
         itemsCount - количество выводимых страниц в списках
         """
-        self._treestat = treestat
+        self._pageListAll = pageContentList
         self._itemsCount = itemsCount
-
-        self._pageListAll = treestat.pageContentLength
 
         global _
         _ = get_()

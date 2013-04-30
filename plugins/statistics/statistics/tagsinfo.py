@@ -6,12 +6,12 @@ from .i18n import get_
 
 class TagsInfo (object):
     """Класс для генерации информации о тегах"""
-    def __init__(self, treestat, itemsCount):
+    def __init__(self, frequentTagsList, itemsCount):
         """
         itemsCount - количество выводимых страниц в списках
         """
-        self._treestat = treestat
         self._itemsCount = itemsCount
+        self._frequentTagsList = frequentTagsList
 
         global _
         _ = get_()
@@ -33,12 +33,12 @@ class TagsInfo (object):
         """
         Получить оформленное количество тегов
         """
-        return u"<p>" + _(u"Tags count: {0}").format (self._treestat.tagsCount) + "</p>"
+        return u"<p>" + _(u"Tags count: {0}").format (len (self._frequentTagsList)) + "</p>"
 
 
     def _getFrequentTags (self):
         title = _(u"Most frequently used tags:")
-        tagsList = self._treestat.frequentTags[0: min (self._itemsCount, self._treestat.tagsCount)]
+        tagsList = self._frequentTagsList[0: min (self._itemsCount, len (self._frequentTagsList))]
 
         itemsHtml = self._getTagsListHtml (tagsList)
         return u"""<p>{title}<br>{items}</p>""".format (title=title, items=itemsHtml)
@@ -47,9 +47,9 @@ class TagsInfo (object):
     def _getRarelyTags (self):
         title = _(u"Most rarely used tags:")
 
-        tagsListAll = self._treestat.frequentTags
+        tagsListAll = self._frequentTagsList[:]
         tagsListAll.reverse()
-        tagsList = tagsListAll[0: min (self._itemsCount, self._treestat.tagsCount)]
+        tagsList = tagsListAll[0: min (self._itemsCount, len (self._frequentTagsList))]
 
         itemsHtml = self._getTagsListHtml (tagsList)
         return u"""<p>{title}<br>{items}</p>""".format (title=title, items=itemsHtml)
