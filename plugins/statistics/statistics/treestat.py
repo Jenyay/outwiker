@@ -4,6 +4,7 @@
 from outwiker.core.tree import WikiDocument
 from outwiker.core.tagslist import TagsList
 
+from .pagestat import PageStat
 
 class TreeStat (object):
     """
@@ -67,6 +68,29 @@ class TreeStat (object):
         self._getPageList (self._root, pageList)
         pageList.sort (key=lambda page: page.datetime, reverse=True)
         return pageList
+
+
+    @property
+    def pageContentLength (self):
+        """
+        Возвращает список всех страниц, упорядоченный по размеру содержимого (самые длинные заметки сверху).
+        Возвращает список кортежей вида (страница, количество символов без пробела)
+        """
+        pageList = []
+        self._getPageList (self._root, pageList)
+
+        def getLength (page):
+            try:
+                result = PageStat (page).symbolsNotWhiteSpaces
+            except TypeError:
+                result = 0
+
+            return result
+
+        pageList.sort (key=getLength, reverse=True)
+
+        result = [(page, getLength (page)) for page in pageList]
+        return result
 
 
     def _getPageList (self, root, pageList):

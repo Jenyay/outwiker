@@ -274,3 +274,75 @@ class TreeStatisticsTest (unittest.TestCase):
         self.assertEqual (treeStat.pageDate[2], self.rootwiki[u"Страница 1/Страница 2"])
         self.assertEqual (treeStat.pageDate[3], self.rootwiki[u"Страница 4"])
         self.assertEqual (treeStat.pageDate[4], self.rootwiki[u"Страница 4/Страница 5"])
+
+
+    def testPageContentLength1 (self):
+        treeStat = self.loader[self.__pluginname].getTreeStat (self.rootwiki)
+
+        pagesList = treeStat.pageContentLength
+        self.assertEqual (len (pagesList), 0)
+
+
+    def testPageContentLength2 (self):
+        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
+        self.rootwiki[u"Страница 1"].content = u"Бла"
+
+        treeStat = self.loader[self.__pluginname].getTreeStat (self.rootwiki)
+
+        pagesList = treeStat.pageContentLength
+
+        self.assertEqual (len (pagesList), 1)
+        self.assertEqual (pagesList[0][0], self.rootwiki[u"Страница 1"])
+        self.assertEqual (pagesList[0][1], 3)
+
+
+    def testPageContentLength3 (self):
+        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
+        WikiPageFactory.create (self.rootwiki[u"Страница 1"], u"Страница 2", [])
+        WikiPageFactory.create (self.rootwiki[u"Страница 1/Страница 2"], u"Страница 3", [])
+        WikiPageFactory.create (self.rootwiki, u"Страница 4", [])
+
+        self.rootwiki[u"Страница 1"].content = u"Бла"
+        self.rootwiki[u"Страница 1/Страница 2"].content = u"   Бла-бла-бла   "
+        self.rootwiki[u"Страница 1/Страница 2/Страница 3"].content = u"Бла-"
+        self.rootwiki[u"Страница 4"].content = u" Бла-бла                                  "
+
+        treeStat = self.loader[self.__pluginname].getTreeStat (self.rootwiki)
+
+        pagesList = treeStat.pageContentLength
+
+        self.assertEqual (len (pagesList), 4)
+        
+        self.assertEqual (pagesList[0][0], self.rootwiki[u"Страница 1/Страница 2"])
+        self.assertEqual (pagesList[0][1], 11)
+
+        self.assertEqual (pagesList[1][0], self.rootwiki[u"Страница 4"])
+        self.assertEqual (pagesList[1][1], 7)
+
+        self.assertEqual (pagesList[2][0], self.rootwiki[u"Страница 1/Страница 2/Страница 3"])
+        self.assertEqual (pagesList[2][1], 4)
+
+        self.assertEqual (pagesList[3][0], self.rootwiki[u"Страница 1"])
+        self.assertEqual (pagesList[3][1], 3)
+
+
+    def testPageContentLength4 (self):
+        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
+        WikiPageFactory.create (self.rootwiki[u"Страница 1"], u"Страница 2", [])
+        WikiPageFactory.create (self.rootwiki[u"Страница 1/Страница 2"], u"Страница 3", [])
+        WikiPageFactory.create (self.rootwiki, u"Страница 4", [])
+        SearchPageFactory.create (self.rootwiki, u"Страница 5", [])
+
+        self.rootwiki[u"Страница 1"].content = u"Бла"
+        self.rootwiki[u"Страница 1/Страница 2"].content = u"   Бла-бла-бла   "
+        self.rootwiki[u"Страница 1/Страница 2/Страница 3"].content = u"Бла-"
+        self.rootwiki[u"Страница 4"].content = u" Бла-бла                                  "
+
+        treeStat = self.loader[self.__pluginname].getTreeStat (self.rootwiki)
+
+        pagesList = treeStat.pageContentLength
+
+        self.assertEqual (len (pagesList), 5)
+
+        self.assertEqual (pagesList[4][0], self.rootwiki[u"Страница 5"])
+        self.assertEqual (pagesList[4][1], 0)
