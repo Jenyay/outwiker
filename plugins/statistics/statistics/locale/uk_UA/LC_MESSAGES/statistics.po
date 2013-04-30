@@ -1,0 +1,78 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: outwiker\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-04-28 20:20+0400\n"
+"PO-Revision-Date: 2013-04-30 08:12+0300\n"
+"Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
+"Language-Team: Ukrainian\n"
+"Language: uk_UA\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+#: datepageinfo.py:34
+msgid "Recent edited pages:"
+msgstr "Останні змінені сторінки:"
+
+#: datepageinfo.py:42
+msgid "Oldest pages:"
+msgstr "Найстаріші сторінки:"
+
+#: maxdepthinfo.py:15
+msgid "Max page depth: {0}"
+msgstr "Максимальна глибина вкладеності: {0}"
+
+#: pagecountinfo.py:12
+msgid "Page count: {0}"
+msgstr "Кількість сторінок: {0}"
+
+#: pagestatdialog.py:20 statistics.py:106
+msgid "Page Statistic"
+msgstr "Статистика сторінки"
+
+#: pagestatdialog.py:59
+msgid "Word count"
+msgstr "Кількість слів"
+
+#: pagestatdialog.py:75
+msgid "Line count"
+msgstr "Кількість рядків"
+
+#: pagestatdialog.py:91
+msgid "Character count"
+msgstr "Кількість символів"
+
+#: pagestatdialog.py:107
+msgid "Character count without spaces"
+msgstr "Кількість символів без пробілів"
+
+#: statistics.py:49
+msgid "Plugin to display statistics"
+msgstr "Плагін для відображення статистики"
+
+#: statistics.py:59
+msgid "http://jenyay.net/Outwiker/StatisticsEn"
+msgstr "http://jenyay.net/Outwiker/Statistics"
+
+#: statistics.py:109 treestatdialog.py:31
+msgid "Tree Statistic"
+msgstr "Статистика дерева"
+
+#: tagsinfo.py:30
+msgid "Tags count: {0}"
+msgstr "Кількість міток: {0}"
+
+#: tagsinfo.py:34
+msgid "Most frequently used tags:"
+msgstr "Найчастіше використовувані мітки:"
+
+#: tagsinfo.py:42
+msgid "Most rarely used tags:"
+msgstr "Найрідше використовувані мітки:"
+
+#: treestatdialog.py:69
+msgid "A tree has no pages"
+msgstr "Дерево не має сторінок"
