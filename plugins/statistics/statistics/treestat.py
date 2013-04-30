@@ -16,6 +16,9 @@ class TreeStat (object):
         """
         self._root = root
 
+        # Список всех страниц. Испозуется для кеширования, чтобы каждый раз не формировать
+        self._pageList = None
+
 
     @property
     def pageCount (self):
@@ -64,8 +67,8 @@ class TreeStat (object):
         """
         Возвращает список всех страниц, упорядоченный по дате изменения (новые страницы сверху)
         """
-        pageList = []
-        self._getPageList (self._root, pageList)
+        pageList = self._getPageList (self._root)
+
         pageList.sort (key=lambda page: page.datetime, reverse=True)
         return pageList
 
@@ -76,8 +79,7 @@ class TreeStat (object):
         Возвращает список всех страниц, упорядоченный по размеру содержимого (самые длинные заметки сверху).
         Возвращает список кортежей вида (страница, количество символов без пробела)
         """
-        pageList = []
-        self._getPageList (self._root, pageList)
+        pageList = self._getPageList (self._root)
 
         def getLength (page):
             try:
@@ -93,11 +95,23 @@ class TreeStat (object):
         return result
 
 
-    def _getPageList (self, root, pageList):
+    def _getPageList (self, root):
+        """
+        Получить список всех страниц, в том числе и вложенных
+        """
+        if not self._pageList:
+            pageList = []
+            self._getPageListIterate (self._root, pageList)
+            self._pageList = pageList
+
+        return self._pageList[:]
+
+
+    def _getPageListIterate (self, root, pageList):
         pageList += root.children
 
         for child in root.children:
-            self._getPageList (child, pageList)
+            self._getPageListIterate (child, pageList)
 
 
     def _getMaxDepth (self, depthList):
