@@ -1,7 +1,11 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
+import os
+import os.path
 import re
+
+from outwiker.core.attachment import Attachment
 
 
 class PageStat (object):
@@ -50,3 +54,21 @@ class PageStat (object):
         return len (self._wordsRegExp.findall (self._page.content))
         
 
+    @property
+    def attachmentsCount (self):
+        attachment = Attachment (self._page)
+        currentFiles = attachment.attachmentFull
+
+        filesList = []
+        self._getFilesListRecursive (currentFiles, filesList)
+
+        return len (filesList)
+
+
+    def _getFilesListRecursive (self, currentDirFiles, filesListFlat):
+        for fname in currentDirFiles:
+            if os.path.isfile (fname):
+                filesListFlat.append (fname)
+            elif os.path.isdir (fname):
+                currentFiles = [os.path.join (fname, listItem) for listItem in os.listdir (fname)]
+                self._getFilesListRecursive (currentFiles, filesListFlat)

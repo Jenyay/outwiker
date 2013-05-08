@@ -7,6 +7,7 @@ import os.path
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
+from outwiker.core.attachment import Attachment
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.html.htmlpage import HtmlPageFactory
 from outwiker.pages.text.textpage import TextPageFactory
@@ -25,6 +26,10 @@ class PageStatisticsTest (unittest.TestCase):
 
         self.loader = PluginsLoader(Application)
         self.loader.load (dirlist)
+
+        filesPath = u"../test/samplefiles/"
+        self.files = [u"accept.png", u"add.png", u"anchor.png", u"dir"]
+        self.fullFilesPath = [os.path.join (filesPath, fname) for fname in self.files]
 
 
     def tearDown (self):
@@ -339,3 +344,52 @@ class PageStatisticsTest (unittest.TestCase):
             pageStat.words
 
         self.assertRaises (TypeError, runTest)
+
+
+    def testAttachmentsCountWiki1 (self):
+        TextPageFactory.create (self.rootwiki, u"Страница 1", [])
+        testPage = self.rootwiki[u"Страница 1"]
+
+        pageStat = self.loader[self.__pluginname].getPageStat (testPage)
+
+        self.assertEqual (pageStat.attachmentsCount, 0)
+
+
+    def testAttachmentsCountWiki2 (self):
+        TextPageFactory.create (self.rootwiki, u"Страница 1", [])
+        testPage = self.rootwiki[u"Страница 1"]
+        Attachment (testPage).attach (self.fullFilesPath[0:1])
+
+        pageStat = self.loader[self.__pluginname].getPageStat (testPage)
+
+        self.assertEqual (pageStat.attachmentsCount, 1)
+
+
+    def testAttachmentsCountWiki3 (self):
+        TextPageFactory.create (self.rootwiki, u"Страница 1", [])
+        testPage = self.rootwiki[u"Страница 1"]
+        Attachment (testPage).attach (self.fullFilesPath[0:3])
+
+        pageStat = self.loader[self.__pluginname].getPageStat (testPage)
+
+        self.assertEqual (pageStat.attachmentsCount, 3)
+
+
+    def testAttachmentsCountWiki4 (self):
+        TextPageFactory.create (self.rootwiki, u"Страница 1", [])
+        testPage = self.rootwiki[u"Страница 1"]
+        Attachment (testPage).attach (self.fullFilesPath)
+
+        pageStat = self.loader[self.__pluginname].getPageStat (testPage)
+
+        self.assertEqual (pageStat.attachmentsCount, 6)
+
+
+    def testAttachmentsCountSearch1 (self):
+        SearchPageFactory.create (self.rootwiki, u"Страница 1", [])
+        testPage = self.rootwiki[u"Страница 1"]
+        Attachment (testPage).attach (self.fullFilesPath)
+
+        pageStat = self.loader[self.__pluginname].getPageStat (testPage)
+
+        self.assertEqual (pageStat.attachmentsCount, 6)
