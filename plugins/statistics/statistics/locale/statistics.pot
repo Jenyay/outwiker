@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-30 09:34+0400\n"
+"POT-Creation-Date: 2013-05-08 20:48+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,19 +17,19 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: datepageinfo.py:39
+#: datepageinfo.py:35
 msgid "Recent edited pages:"
 msgstr ""
 
-#: datepageinfo.py:47
+#: datepageinfo.py:43
 msgid "Oldest pages:"
 msgstr ""
 
-#: maxdepthinfo.py:21
+#: maxdepthinfo.py:24
 msgid "Max page depth: {0}"
 msgstr ""
 
-#: pagecontentlengthinfo.py:26
+#: pagecontentlengthinfo.py:24
 msgid "The longest notes (in brackets the number of characters):"
 msgstr ""
 
@@ -41,20 +41,24 @@ msgstr ""
 msgid "Page Statistic"
 msgstr ""
 
-#: pagestatdialog.py:59
+#: pagestatdialog.py:61
 msgid "Word count"
 msgstr ""
 
-#: pagestatdialog.py:75
+#: pagestatdialog.py:77
 msgid "Line count"
 msgstr ""
 
-#: pagestatdialog.py:91
+#: pagestatdialog.py:93
 msgid "Character count"
 msgstr ""
 
-#: pagestatdialog.py:107
+#: pagestatdialog.py:109
 msgid "Character count without spaces"
+msgstr ""
+
+#: pagestatdialog.py:125
+msgid "Number of attachments"
 msgstr ""
 
 #: statistics.py:49

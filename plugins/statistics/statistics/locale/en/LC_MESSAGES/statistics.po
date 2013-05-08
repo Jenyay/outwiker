@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Statistics\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-30 09:34+0400\n"
-"PO-Revision-Date: 2013-04-30 09:35+0300\n"
+"POT-Creation-Date: 2013-05-08 20:48+0400\n"
+"PO-Revision-Date: 2013-05-08 20:49+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: jenyay.net <jenyay.ilin@gmail.com>\n"
 "Language: en_GB\n"
@@ -18,19 +18,19 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Generator: Poedit 1.5.4\n"
 
-#: datepageinfo.py:39
+#: datepageinfo.py:35
 msgid "Recent edited pages:"
 msgstr "Recent edited pages:"
 
-#: datepageinfo.py:47
+#: datepageinfo.py:43
 msgid "Oldest pages:"
 msgstr "Oldest pages:"
 
-#: maxdepthinfo.py:21
+#: maxdepthinfo.py:24
 msgid "Max page depth: {0}"
 msgstr "Max page depth: {0}"
 
-#: pagecontentlengthinfo.py:26
+#: pagecontentlengthinfo.py:24
 msgid "The longest notes (in brackets the number of characters):"
 msgstr "The longest notes (in brackets the number of characters):"
 
@@ -42,21 +42,25 @@ msgstr "Page count: {0}"
 msgid "Page Statistic"
 msgstr "Page Statistic"
 
-#: pagestatdialog.py:59
+#: pagestatdialog.py:61
 msgid "Word count"
 msgstr "Word count"
 
-#: pagestatdialog.py:75
+#: pagestatdialog.py:77
 msgid "Line count"
 msgstr "Line count"
 
-#: pagestatdialog.py:91
+#: pagestatdialog.py:93
 msgid "Character count"
 msgstr "Character count"
 
-#: pagestatdialog.py:107
+#: pagestatdialog.py:109
 msgid "Character count without spaces"
 msgstr "Character count without spaces"
+
+#: pagestatdialog.py:125
+msgid "Number of attachments"
+msgstr "Number of attachments"
 
 #: statistics.py:49
 msgid "Plugin to display statistics"

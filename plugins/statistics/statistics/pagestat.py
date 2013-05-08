@@ -30,12 +30,18 @@ class PageStat (object):
 
     @property
     def symbols (self):
+        """
+        Возвращает количество символов в тексте страницы
+        """
         self._testPageType ()
         return len (self._page.content)
 
 
     @property
     def symbolsNotWhiteSpaces (self):
+        """
+        Возвращает количество символов в тексте страницы, исключая пробелы, табуляции и переводы строк
+        """
         self._testPageType ()
         chars = [char for char in self._page.content if len (char.strip()) != 0]
         return len (chars)
@@ -43,6 +49,9 @@ class PageStat (object):
 
     @property
     def lines (self):
+        """
+        Возвращает количество непустых строк в тексте страницы
+        """
         self._testPageType ()
         lines = [line for line in self._page.content.split ("\n") if len (line.strip()) != 0]
         return len (lines)
@@ -50,12 +59,18 @@ class PageStat (object):
 
     @property
     def words (self):
+        """
+        Возвращает количество слов в тексте страницы
+        """
         self._testPageType ()
         return len (self._wordsRegExp.findall (self._page.content))
         
 
     @property
     def attachmentsCount (self):
+        """
+        Возвращает количество прикрепленных файлов, включая файлы, вложенные в прикрепленные директории. Сами директории не учитываются
+        """
         attachment = Attachment (self._page)
         currentFiles = attachment.attachmentFull
 
@@ -66,6 +81,10 @@ class PageStat (object):
 
 
     def _getFilesListRecursive (self, currentDirFiles, filesListFlat):
+        """
+        currentDirFiles - список файлов и директорий в директории, которая будет считаться корневой
+        filesListFlat - заполняемый список файлов
+        """
         for fname in currentDirFiles:
             if os.path.isfile (fname):
                 filesListFlat.append (fname)

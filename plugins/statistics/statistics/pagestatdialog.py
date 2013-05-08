@@ -17,6 +17,9 @@ class PageStatDialog (wx.Dialog):
         global _
         _ = get_()
 
+        # Размер полей ввода
+        self._textWidth = 100
+
         self.SetTitle (_(u"Page Statistic"))
         self._createGui ()
         self.Fit()
@@ -49,6 +52,8 @@ class PageStatDialog (wx.Dialog):
         except TypeError:
             pass
 
+        self.filesCountText.SetValue (str (pageStat.attachmentsCount))
+
 
     def _createGui (self):
         mainSizer = wx.FlexGridSizer (cols=2)
@@ -58,7 +63,7 @@ class PageStatDialog (wx.Dialog):
         # Количество слов
         wordsLabel = wx.StaticText (self, label=_(u"Word count"))
         self.wordsText = wx.TextCtrl (self, style=wx.TE_READONLY)
-        self.wordsText.SetMinSize ((100, -1))
+        self.wordsText.SetMinSize ((self._textWidth, -1))
 
         mainSizer.Add (wordsLabel, 
                 1,
@@ -74,7 +79,7 @@ class PageStatDialog (wx.Dialog):
         # Количество строк
         linesLabel = wx.StaticText (self, label=_(u"Line count"))
         self.linesText = wx.TextCtrl (self, style=wx.TE_READONLY)
-        self.linesText.SetMinSize ((100, -1))
+        self.linesText.SetMinSize ((self._textWidth, -1))
 
         mainSizer.Add (linesLabel, 
                 1,
@@ -90,7 +95,7 @@ class PageStatDialog (wx.Dialog):
         # Количество символов
         symbolsLabel = wx.StaticText (self, label=_(u"Character count"))
         self.symbolsText = wx.TextCtrl (self, style=wx.TE_READONLY)
-        self.symbolsText.SetMinSize ((100, -1))
+        self.symbolsText.SetMinSize ((self._textWidth, -1))
 
         mainSizer.Add (symbolsLabel, 
                 1,
@@ -106,7 +111,7 @@ class PageStatDialog (wx.Dialog):
         # Количество символов без пробелов
         symbolsWithoutSpacesLabel = wx.StaticText (self, label=_(u"Character count without spaces"))
         self.symbolsWithoutSpacesText = wx.TextCtrl (self, style=wx.TE_READONLY)
-        self.symbolsWithoutSpacesText.SetMinSize ((100, -1))
+        self.symbolsWithoutSpacesText.SetMinSize ((self._textWidth, -1))
 
         mainSizer.Add (symbolsWithoutSpacesLabel, 
                 1,
@@ -119,6 +124,22 @@ class PageStatDialog (wx.Dialog):
                 border=4)
 
 
+        # Количество прикрепленных файлов
+        filesCountLabel = wx.StaticText (self, label=_(u"Number of attachments"))
+        self.filesCountText = wx.TextCtrl (self, style=wx.TE_READONLY)
+        self.filesCountText.SetMinSize ((self._textWidth, -1))
+
+        mainSizer.Add (filesCountLabel, 
+                1,
+                flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+                border=4)
+
+        mainSizer.Add (self.filesCountText, 
+                1,
+                flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+                border=4)
+
+        # Кнопка "Ок"
         mainSizer.AddStretchSpacer()
         okBtn = wx.Button (self, wx.ID_OK)
         okBtn.SetDefault()
