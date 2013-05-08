@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-08 20:48+0400\n"
+"POT-Creation-Date: 2013-05-08 21:27+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,28 +37,32 @@ msgstr ""
 msgid "Page count: {0}"
 msgstr ""
 
-#: pagestatdialog.py:20 statistics.py:106
+#: pagestatdialog.py:23 statistics.py:106
 msgid "Page Statistic"
 msgstr ""
 
-#: pagestatdialog.py:61
+#: pagestatdialog.py:66
 msgid "Word count"
 msgstr ""
 
-#: pagestatdialog.py:77
+#: pagestatdialog.py:82
 msgid "Line count"
 msgstr ""
 
-#: pagestatdialog.py:93
+#: pagestatdialog.py:98
 msgid "Character count"
 msgstr ""
 
-#: pagestatdialog.py:109
+#: pagestatdialog.py:114
 msgid "Character count without spaces"
 msgstr ""
 
-#: pagestatdialog.py:125
+#: pagestatdialog.py:130
 msgid "Number of attachments"
+msgstr ""
+
+#: pagestatdialog.py:146
+msgid "Size of attachments (kB)"
 msgstr ""
 
 #: statistics.py:49

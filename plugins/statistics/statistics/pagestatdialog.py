@@ -18,7 +18,7 @@ class PageStatDialog (wx.Dialog):
         _ = get_()
 
         # Размер полей ввода
-        self._textWidth = 100
+        self._textWidth = 150
 
         self.SetTitle (_(u"Page Statistic"))
         self._createGui ()
@@ -53,6 +53,8 @@ class PageStatDialog (wx.Dialog):
             pass
 
         self.filesCountText.SetValue (str (pageStat.attachmentsCount))
+        self.filesSizeText.SetValue (u"{0:,.2f}".format (pageStat.attachmentsSize / 1024.0).replace (",", " "))
+        
 
 
     def _createGui (self):
@@ -138,6 +140,23 @@ class PageStatDialog (wx.Dialog):
                 1,
                 flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
                 border=4)
+
+
+        # Размер прикрепленных файлов
+        filesSizeLabel = wx.StaticText (self, label=_(u"Size of attachments (kB)"))
+        self.filesSizeText = wx.TextCtrl (self, style=wx.TE_READONLY)
+        self.filesSizeText.SetMinSize ((self._textWidth, -1))
+
+        mainSizer.Add (filesSizeLabel, 
+                1,
+                flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+                border=4)
+
+        mainSizer.Add (self.filesSizeText, 
+                1,
+                flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+                border=4)
+
 
         # Кнопка "Ок"
         mainSizer.AddStretchSpacer()

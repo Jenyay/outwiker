@@ -80,6 +80,20 @@ class PageStat (object):
         return len (filesList)
 
 
+    @property
+    def attachmentsSize (self):
+        """
+        Возвращает общий размер прикрепленных файлов, включая файлы, вложенные в прикрепленные директории.
+        """
+        attachment = Attachment (self._page)
+        currentFiles = attachment.attachmentFull
+
+        filesList = []
+        self._getFilesListRecursive (currentFiles, filesList)
+
+        return sum ([os.stat (fname).st_size for fname in filesList])
+
+
     def _getFilesListRecursive (self, currentDirFiles, filesListFlat):
         """
         currentDirFiles - список файлов и директорий в директории, которая будет считаться корневой
