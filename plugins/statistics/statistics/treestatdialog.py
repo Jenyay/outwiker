@@ -12,6 +12,7 @@ from .pagecountinfo import PageCountInfo
 from .tagsinfo import TagsInfo
 from .datepageinfo import DatePageInfo
 from .pagecontentlengthinfo import PageContentLengthInfo
+from .pageattachmentsizeinfo import PageAttachmentSizeInfo
 
 
 class TreeStatDialog (wx.Dialog):
@@ -95,6 +96,7 @@ class TreeStatDialog (wx.Dialog):
                 MaxDepthInfo (self._treestat.maxDepth),
                 TagsInfo (self._treestat.frequentTags, self._itemsCount),
                 DatePageInfo (self._treestat.pageDate, self._itemsCount, self._application.config),
-                PageContentLengthInfo (self._treestat.pageContentLength, self._itemsCount)]
+                PageContentLengthInfo (self._treestat.pageContentLength, self._itemsCount),
+                PageAttachmentSizeInfo (self._treestat.pageAttachmentsSize, self._itemsCount)]
 
         return u"".join ([info.content for info in infoList])

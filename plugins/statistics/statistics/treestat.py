@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
+from outwiker.core.attachment import Attachment
 from outwiker.core.tree import WikiDocument
 from outwiker.core.tagslist import TagsList
 
@@ -92,6 +93,20 @@ class TreeStat (object):
         pageList.sort (key=getLength, reverse=True)
 
         result = [(page, getLength (page)) for page in pageList]
+        return result
+
+
+    @property
+    def pageAttachmentsSize (self):
+        """
+        Возвращает список всех страниц, упорядоченный по размеру прикрепленных файлов.
+        Возвращается кортеж вида (страница, размер прикрепленных файлов)
+        """
+        pageList = self._getPageList (self._root)
+        pageList.sort (key=lambda page: PageStat (page).attachmentsSize, reverse=True)
+
+        result = [(page, PageStat (page).attachmentsSize) for page in pageList]
+
         return result
 
 

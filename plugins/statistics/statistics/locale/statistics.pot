@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-08 21:27+0400\n"
+"POT-Creation-Date: 2013-05-08 22:06+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,6 +27,12 @@ msgstr ""
 
 #: maxdepthinfo.py:24
 msgid "Max page depth: {0}"
+msgstr ""
+
+#: pageattachmentsizeinfo.py:24
+msgid ""
+"Pages with the largest size of attachments (in brackets the size of "
+"attachments):"
 msgstr ""
 
 #: pagecontentlengthinfo.py:24
@@ -73,7 +79,7 @@ msgstr ""
 msgid "http://jenyay.net/Outwiker/StatisticsEn"
 msgstr ""
 
-#: statistics.py:109 treestatdialog.py:32
+#: statistics.py:109 treestatdialog.py:33
 msgid "Tree Statistic"
 msgstr ""
 
@@ -89,6 +95,6 @@ msgstr ""
 msgid "Most rarely used tags:"
 msgstr ""
 
-#: treestatdialog.py:70
+#: treestatdialog.py:71
 msgid "A tree has no pages"
 msgstr ""

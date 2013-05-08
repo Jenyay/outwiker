@@ -5,6 +5,7 @@ import datetime
 import os.path
 import unittest
 
+from outwiker.core.attachment import Attachment
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
@@ -26,6 +27,10 @@ class TreeStatisticsTest (unittest.TestCase):
 
         self.loader = PluginsLoader(Application)
         self.loader.load (dirlist)
+
+        filesPath = u"../test/samplefiles/"
+        self.files = [u"accept.png", u"add.png", u"anchor.png", u"dir"]
+        self.fullFilesPath = [os.path.join (filesPath, fname) for fname in self.files]
 
 
     def tearDown (self):
@@ -346,3 +351,62 @@ class TreeStatisticsTest (unittest.TestCase):
 
         self.assertEqual (pagesList[4][0], self.rootwiki[u"Страница 5"])
         self.assertEqual (pagesList[4][1], 0)
+
+
+    def testAttachmentSize1 (self):
+        treeStat = self.loader[self.__pluginname].getTreeStat (self.rootwiki)
+
+        pagesList = treeStat.pageAttachmentsSize
+        self.assertEqual (len (pagesList), 0)
+
+
+    def testAttachmentSize2 (self):
+        treeStat = self.loader[self.__pluginname].getTreeStat (self.rootwiki)
+        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
+
+        pagesList = treeStat.pageAttachmentsSize
+
+        self.assertEqual (len (pagesList), 1)
+        self.assertEqual (pagesList[0][0], self.rootwiki[u"Страница 1"])
+        self.assertEqual (pagesList[0][1], 0)
+
+
+    def testAttachmentSize3 (self):
+        treeStat = self.loader[self.__pluginname].getTreeStat (self.rootwiki)
+        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
+        Attachment (self.rootwiki[u"Страница 1"]).attach (self.fullFilesPath[0:1])
+
+        pagesList = treeStat.pageAttachmentsSize
+
+        self.assertEqual (len (pagesList), 1)
+        self.assertEqual (pagesList[0][0], self.rootwiki[u"Страница 1"])
+        self.assertEqual (pagesList[0][1], 781)
+
+
+    def testAttachmentSize4 (self):
+        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
+        WikiPageFactory.create (self.rootwiki[u"Страница 1"], u"Страница 2", [])
+        WikiPageFactory.create (self.rootwiki[u"Страница 1/Страница 2"], u"Страница 3", [])
+        WikiPageFactory.create (self.rootwiki, u"Страница 4", [])
+        SearchPageFactory.create (self.rootwiki, u"Страница 5", [])
+
+        Attachment (self.rootwiki[u"Страница 1"]).attach ([])
+        Attachment (self.rootwiki[u"Страница 1/Страница 2"]).attach (self.fullFilesPath[0:1])
+        Attachment (self.rootwiki[u"Страница 1/Страница 2/Страница 3"]).attach (self.fullFilesPath[0:2])
+        Attachment (self.rootwiki[u"Страница 4"]).attach (self.fullFilesPath[0:3])
+        Attachment (self.rootwiki[u"Страница 5"]).attach (self.fullFilesPath)
+
+        treeStat = self.loader[self.__pluginname].getTreeStat (self.rootwiki)
+
+        pagesList = treeStat.pageAttachmentsSize
+
+        self.assertEqual (len (pagesList), 5)
+
+        self.assertEqual (pagesList[4][0], self.rootwiki[u"Страница 1"])
+        self.assertEqual (pagesList[4][1], 0)
+
+        self.assertEqual (pagesList[0][0], self.rootwiki[u"Страница 5"])
+        self.assertEqual (pagesList[0][1], 11771)
+
+        self.assertEqual (pagesList[1][0], self.rootwiki[u"Страница 4"])
+        self.assertEqual (pagesList[1][1], 2037)
