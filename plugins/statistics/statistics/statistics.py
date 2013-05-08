@@ -18,7 +18,7 @@ from .treestatdialog import TreeStatDialog
 
 
 if getCurrentVersion() < Version (1, 7, 0, 684, status=StatusSet.DEV):
-    print ("Spoiler plugin. OutWiker version requirement: 1.7.0.684")
+    print ("Statistics plugin. OutWiker version requirement: 1.7.0.684")
 else:
     class PluginStatistics (Plugin):
         def __init__ (self, application):
