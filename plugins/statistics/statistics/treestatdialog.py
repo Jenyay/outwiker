@@ -13,6 +13,7 @@ from .tagsinfo import TagsInfo
 from .datepageinfo import DatePageInfo
 from .pagecontentlengthinfo import PageContentLengthInfo
 from .pageattachmentsizeinfo import PageAttachmentSizeInfo
+from .statisticsconfig import StatisticsConfig
 
 
 class TreeStatDialog (wx.Dialog):
@@ -24,17 +25,18 @@ class TreeStatDialog (wx.Dialog):
                 style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.THICK_FRAME)
         self._application = application
         self._treestat = treestat
+        self._config = StatisticsConfig (self._application.config)
 
         # Размер списков со страницами
         self._itemsCount = 20
-        self._windowWidth = 600
-        self._windowHeight = 500
 
         global _
         _ = get_()
 
         self.SetTitle (_(u"Tree Statistic"))
-        self.SetSize ((self._windowWidth, self._windowHeight))
+
+        self.SetSize ((self._config.treeDialogWidth.value, self._config.treeDialogHeight.value))
+
         self.Show()
         self._createGUI ()
         self.Center (wx.CENTRE_ON_SCREEN)
@@ -63,6 +65,9 @@ class TreeStatDialog (wx.Dialog):
         # Кнопка Ok
         okBtn = wx.Button (self, wx.ID_OK)
         mainSizer.Add (okBtn, flag=wx.ALIGN_RIGHT | wx.ALL, border=4)
+
+        self.Bind (wx.EVT_CLOSE, self._onClose)
+        self.Bind (wx.EVT_BUTTON, self._onClose, id=wx.ID_OK)
 
         self.SetSizer (mainSizer)
         self.Layout()
@@ -103,3 +108,14 @@ class TreeStatDialog (wx.Dialog):
                 PageAttachmentSizeInfo (self._treestat.pageAttachmentsSize, self._itemsCount)]
 
         return u"".join ([info.content for info in infoList])
+
+
+    def _onClose (self, event):
+        self._saveParams()
+        event.Skip()
+
+
+    def _saveParams (self):
+        width, height = self.GetSizeTuple()
+        self._config.treeDialogWidth.value = width
+        self._config.treeDialogHeight.value = height
