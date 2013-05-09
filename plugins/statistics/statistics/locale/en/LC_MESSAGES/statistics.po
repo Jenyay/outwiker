@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Statistics\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-08 22:06+0400\n"
-"PO-Revision-Date: 2013-05-08 22:06+0300\n"
+"POT-Creation-Date: 2013-05-09 09:53+0400\n"
+"PO-Revision-Date: 2013-05-09 09:53+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: jenyay.net <jenyay.ilin@gmail.com>\n"
 "Language: en_GB\n"
@@ -37,6 +37,10 @@ msgid ""
 msgstr ""
 "Pages with the largest size of attachments (in brackets the size of "
 "attachments):"
+
+#: pageattachmentsizeinfo.py:43
+msgid "kB"
+msgstr "kB"
 
 #: pagecontentlengthinfo.py:24
 msgid "The longest notes (in brackets the number of characters):"
@@ -82,7 +86,7 @@ msgstr "Plugin to display statistics"
 msgid "http://jenyay.net/Outwiker/StatisticsEn"
 msgstr "http://jenyay.net/Outwiker/StatisticsEn"
 
-#: statistics.py:109 treestatdialog.py:33
+#: statistics.py:109 treestatdialog.py:36
 msgid "Tree Statistic"
 msgstr "Tree Statistic"
 
@@ -98,7 +102,7 @@ msgstr "Most frequently used tags:"
 msgid "Most rarely used tags:"
 msgstr "Most rarely used tags:"
 
-#: treestatdialog.py:71
+#: treestatdialog.py:74
 msgid "A tree has no pages"
 msgstr "A tree has no pages"
 

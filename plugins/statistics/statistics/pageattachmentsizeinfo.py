@@ -39,10 +39,13 @@ class PageAttachmentSizeInfo (object):
         """
         Оформить список страниц в виде HTML
         """
+        # Локализованные единицы изменения размеров файлов
+        kb = _(u"kB")
 
-        items = [u"<li><a href='{url}'>{title}</a> ({size} kB)</li>".format (url=u"/" + page.subpath,
+        items = [u"<li><a href='{url}'>{title}</a> ({size} {kb})</li>".format (url=u"/" + page.subpath,
             title=page.title,
-            size="{0:,.2f}".format (size / 1024.0).replace (",", " "))
+            size="{0:,.2f}".format (size / 1024.0).replace (",", " "),
+            kb=kb)
                 for page, size in pageList]
 
         return u"<ul>" + u"".join (items) + u"</ul>"
