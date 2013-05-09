@@ -20,20 +20,21 @@ class TreeStatDialog (wx.Dialog):
         """
         treestat - экземпляр класса TreeStat
         """
-        super (TreeStatDialog, self).__init__ (parent)
+        super (TreeStatDialog, self).__init__ (parent, 
+                style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.THICK_FRAME)
         self._application = application
         self._treestat = treestat
 
         # Размер списков со страницами
-        self._itemsCount = 10
+        self._itemsCount = 20
 
         global _
         _ = get_()
 
         self.SetTitle (_(u"Tree Statistic"))
+        self.SetSize ((600, 500))
         self.Show()
         self._createGUI ()
-        self.SetSize ((600, 500))
         self.Center (wx.CENTRE_ON_SCREEN)
 
         self._updateStatistics()
