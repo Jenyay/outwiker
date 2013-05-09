@@ -27,12 +27,14 @@ class TreeStatDialog (wx.Dialog):
 
         # Размер списков со страницами
         self._itemsCount = 20
+        self._windowWidth = 600
+        self._windowHeight = 500
 
         global _
         _ = get_()
 
         self.SetTitle (_(u"Tree Statistic"))
-        self.SetSize ((600, 500))
+        self.SetSize ((self._windowWidth, self._windowHeight))
         self.Show()
         self._createGUI ()
         self.Center (wx.CENTRE_ON_SCREEN)

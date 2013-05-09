@@ -90,9 +90,8 @@ class TreeStat (object):
 
             return result
 
-        pageList.sort (key=getLength, reverse=True)
-
         result = [(page, getLength (page)) for page in pageList]
+        result.sort (key=lambda item: item[1], reverse=True)
         return result
 
 
@@ -103,9 +102,8 @@ class TreeStat (object):
         Возвращается кортеж вида (страница, размер прикрепленных файлов)
         """
         pageList = self._getPageList (self._root)
-        pageList.sort (key=lambda page: PageStat (page).attachmentsSize, reverse=True)
-
         result = [(page, PageStat (page).attachmentsSize) for page in pageList]
+        result.sort (key=lambda item: item[1], reverse=True)
 
         return result
 
