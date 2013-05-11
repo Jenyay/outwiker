@@ -1,6 +1,9 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
+import threading
+import time
+
 import wx
 
 from outwiker.gui.htmlrenderfactory import getHtmlRender
@@ -14,6 +17,7 @@ from .datepageinfo import DatePageInfo
 from .pagecontentlengthinfo import PageContentLengthInfo
 from .pageattachmentsizeinfo import PageAttachmentSizeInfo
 from .statisticsconfig import StatisticsConfig
+from .pyprogress import PyProgress
 
 
 class TreeStatDialog (wx.Dialog):
@@ -29,6 +33,19 @@ class TreeStatDialog (wx.Dialog):
 
         # Размер списков со страницами
         self._itemsCount = 20
+
+        # Шаблон для содержимого HTML-рендера
+        self._htmlTemplate = u"""<!DOCTYPE html>
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV='X-UA-Compatible' CONTENT='IE=edge' />
+	<META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>
+</HEAD>
+
+<BODY>
+{content}
+</BODY>
+</HTML>"""
 
         global _
         _ = get_()
@@ -76,24 +93,42 @@ class TreeStatDialog (wx.Dialog):
     def _updateStatistics (self):
         # Шаманство, связанное с тем, что HTML-рендер ожидает, что есть выбранная страница
         if self._htmlRender.page == None:
-            return _(u"A tree has no pages")
+            self._setHtml (_(u"A tree has no pages"))
+            return
 
-        htmlTemplate = u"""<!DOCTYPE html>
-<HTML>
-<HEAD>
-	<META HTTP-EQUIV='X-UA-Compatible' CONTENT='IE=edge' />
-	<META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>
-</HEAD>
+        self._setHtml (_(u"Collecting statistics. Please wait..."))
 
-<BODY>
-{content}
-</BODY>
-</HTML>"""
+        updateGaugeInterval = 0.1
+        gaugeProportion = 0.2
+        gauseSteps = 20
 
-        content = self._getContent ()
+        progressDlg = PyProgress(None, -1, _(u"Statistics"),
+                            _(u"Collecting statistics..."),
+                            agwStyle = wx.PD_APP_MODAL)
 
-        resultHtml = htmlTemplate.format (content=content)
+        progressDlg.SetGaugeProportion(gaugeProportion)
+        progressDlg.SetGaugeSteps(gauseSteps)
+        progressDlg.UpdatePulse()
+
+        resultList = []
+        thread = threading.Thread (None, self._threadFunc, args=(resultList,))
+        thread.start()
+
+        while thread.isAlive ():
+            progressDlg.UpdatePulse()
+            time.sleep (updateGaugeInterval)
+
+        progressDlg.Destroy()
+        self._setHtml (resultList[0])
+
+
+    def _setHtml (self, content):
+        resultHtml = self._htmlTemplate.format (content=content)
         self._htmlRender.SetPage (resultHtml, getCurrentDir())
+
+
+    def _threadFunc (self, resultList):
+        resultList.append (self._getContent ())
 
 
     def _getContent (self):

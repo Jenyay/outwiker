@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Statistics\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-09 09:53+0400\n"
-"PO-Revision-Date: 2013-05-09 09:53+0300\n"
+"POT-Creation-Date: 2013-05-11 19:32+0400\n"
+"PO-Revision-Date: 2013-05-11 19:33+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: jenyay.net <jenyay.ilin@gmail.com>\n"
 "Language: en_GB\n"
@@ -86,7 +86,7 @@ msgstr "Plugin to display statistics"
 msgid "http://jenyay.net/Outwiker/StatisticsEn"
 msgstr "http://jenyay.net/Outwiker/StatisticsEn"
 
-#: statistics.py:109 treestatdialog.py:36
+#: statistics.py:109 treestatdialog.py:53
 msgid "Tree Statistic"
 msgstr "Tree Statistic"
 
@@ -102,9 +102,21 @@ msgstr "Most frequently used tags:"
 msgid "Most rarely used tags:"
 msgstr "Most rarely used tags:"
 
-#: treestatdialog.py:74
+#: treestatdialog.py:96
 msgid "A tree has no pages"
 msgstr "A tree has no pages"
+
+#: treestatdialog.py:99
+msgid "Collecting statistics. Please wait..."
+msgstr "Collecting statistics. Please wait..."
+
+#: treestatdialog.py:105
+msgid "Statistics"
+msgstr "Statistics"
+
+#: treestatdialog.py:106
+msgid "Collecting statistics..."
+msgstr "Collecting statistics..."
 
 #~ msgid "Page statistic"
 #~ msgstr "Page statistic"
