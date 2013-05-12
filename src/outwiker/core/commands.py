@@ -24,6 +24,7 @@ from outwiker.gui.overwritedialog import OverwriteDialog
 from outwiker.gui.about import AboutDialog
 from outwiker.gui.tagsdialog import TagsDialog
 from outwiker.gui.renametagdialog import RenameTagDialog
+from outwiker.gui.longprocessrunner import LongProcessRunner
 
 
 def MessageBox (*args, **kwargs):
@@ -158,19 +159,29 @@ def openWiki (path, readonly=False):
     wikiroot = None
 
     Application.onStartTreeUpdate(None)
-    
-    try:
-        # Загрузить вики
-        wikiroot = WikiDocument.load (os.path.realpath (path), readonly)
-        Application.wikiroot = wikiroot
-    except IOError:
+
+    def threadFunc (path, readonly):
+        try:
+            return WikiDocument.load (path, readonly)
+        except IOError, error:
+            return error
+        except outwiker.core.exceptions.RootFormatError, error:
+            return error
+
+    runner = LongProcessRunner (threadFunc, 
+            Application.mainWindow, 
+            _(u"Loading"), 
+            _(u"Opening notes tree..."))
+    result = runner.run (os.path.realpath (path), readonly)
+
+    if isinstance (result, IOError):
         __canNotLoadWikiMessage (path)
+    elif isinstance (result, outwiker.core.exceptions.RootFormatError):
+        __rootFormatErrorHandle (path, readonly)
+    else:
+        Application.wikiroot = result
 
-    except outwiker.core.exceptions.RootFormatError:
-        __rootFormatErrorHandle(path, readonly)
-
-    finally:
-        Application.onEndTreeUpdate(wikiroot)
+    Application.onEndTreeUpdate(wikiroot)
 
     return Application.wikiroot
 
