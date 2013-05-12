@@ -102,7 +102,7 @@ class TreeStatDialog (wx.Dialog):
         gaugeProportion = 0.2
         gauseSteps = 20
 
-        progressDlg = PyProgress(None, -1, _(u"Statistics"),
+        progressDlg = PyProgress(self, -1, _(u"Statistics"),
                             _(u"Collecting statistics..."),
                             agwStyle = wx.PD_APP_MODAL)
 
@@ -120,6 +120,7 @@ class TreeStatDialog (wx.Dialog):
 
         progressDlg.Destroy()
         self._setHtml (resultList[0])
+        self.Raise()
 
 
     def _setHtml (self, content):
