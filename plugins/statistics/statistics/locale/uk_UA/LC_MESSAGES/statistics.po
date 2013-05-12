@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-28 20:20+0400\n"
-"PO-Revision-Date: 2013-04-30 08:12+0300\n"
+"POT-Creation-Date: 2013-05-11 19:32+0400\n"
+"PO-Revision-Date: 2013-05-12 21:49+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
@@ -13,41 +13,65 @@ msgstr ""
 "X-Generator: Poedit 1.5.4\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-#: datepageinfo.py:34
+#: datepageinfo.py:35
 msgid "Recent edited pages:"
 msgstr "Останні змінені сторінки:"
 
-#: datepageinfo.py:42
+#: datepageinfo.py:43
 msgid "Oldest pages:"
 msgstr "Найстаріші сторінки:"
 
-#: maxdepthinfo.py:15
+#: maxdepthinfo.py:24
 msgid "Max page depth: {0}"
 msgstr "Максимальна глибина вкладеності: {0}"
 
-#: pagecountinfo.py:12
+#: pageattachmentsizeinfo.py:24
+msgid ""
+"Pages with the largest size of attachments (in brackets the size of "
+"attachments):"
+msgstr ""
+"Сторінки з найбільшим розміром долучених файлів (в дужках вказано розмір "
+"всіх долучених файлів):"
+
+#: pageattachmentsizeinfo.py:43
+msgid "kB"
+msgstr "кБ"
+
+#: pagecontentlengthinfo.py:24
+msgid "The longest notes (in brackets the number of characters):"
+msgstr "Найдовші нотатки (в дужках вказана кількість символів):"
+
+#: pagecountinfo.py:18
 msgid "Page count: {0}"
 msgstr "Кількість сторінок: {0}"
 
-#: pagestatdialog.py:20 statistics.py:106
+#: pagestatdialog.py:23 statistics.py:106
 msgid "Page Statistic"
 msgstr "Статистика сторінки"
 
-#: pagestatdialog.py:59
+#: pagestatdialog.py:66
 msgid "Word count"
 msgstr "Кількість слів"
 
-#: pagestatdialog.py:75
+#: pagestatdialog.py:82
 msgid "Line count"
 msgstr "Кількість рядків"
 
-#: pagestatdialog.py:91
+#: pagestatdialog.py:98
 msgid "Character count"
 msgstr "Кількість символів"
 
-#: pagestatdialog.py:107
+#: pagestatdialog.py:114
 msgid "Character count without spaces"
 msgstr "Кількість символів без пробілів"
+
+#: pagestatdialog.py:130
+msgid "Number of attachments"
+msgstr "Кількість долучених файлів"
+
+#: pagestatdialog.py:146
+msgid "Size of attachments (kB)"
+msgstr "Розмір долучених файлів (кБ)"
 
 #: statistics.py:49
 msgid "Plugin to display statistics"
@@ -57,22 +81,34 @@ msgstr "Плагін для відображення статистики"
 msgid "http://jenyay.net/Outwiker/StatisticsEn"
 msgstr "http://jenyay.net/Outwiker/Statistics"
 
-#: statistics.py:109 treestatdialog.py:31
+#: statistics.py:109 treestatdialog.py:53
 msgid "Tree Statistic"
 msgstr "Статистика дерева"
 
-#: tagsinfo.py:30
+#: tagsinfo.py:36
 msgid "Tags count: {0}"
 msgstr "Кількість міток: {0}"
 
-#: tagsinfo.py:34
+#: tagsinfo.py:40
 msgid "Most frequently used tags:"
 msgstr "Найчастіше використовувані мітки:"
 
-#: tagsinfo.py:42
+#: tagsinfo.py:48
 msgid "Most rarely used tags:"
 msgstr "Найрідше використовувані мітки:"
 
-#: treestatdialog.py:69
+#: treestatdialog.py:96
 msgid "A tree has no pages"
 msgstr "Дерево не має сторінок"
+
+#: treestatdialog.py:99
+msgid "Collecting statistics. Please wait..."
+msgstr "Збір статистики. Будь ласка, зачекайте..."
+
+#: treestatdialog.py:105
+msgid "Statistics"
+msgstr "Статистика"
+
+#: treestatdialog.py:106
+msgid "Collecting statistics..."
+msgstr "Збір статистики..."
