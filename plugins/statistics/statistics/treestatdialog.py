@@ -17,7 +17,7 @@ from .datepageinfo import DatePageInfo
 from .pagecontentlengthinfo import PageContentLengthInfo
 from .pageattachmentsizeinfo import PageAttachmentSizeInfo
 from .statisticsconfig import StatisticsConfig
-from .pyprogress import PyProgress
+from .longprocessrunner import LongProcessRunner
 
 
 class TreeStatDialog (wx.Dialog):
@@ -98,38 +98,19 @@ class TreeStatDialog (wx.Dialog):
 
         self._setHtml (_(u"Collecting statistics. Please wait..."))
 
-        updateGaugeInterval = 0.1
-        gaugeProportion = 0.2
-        gauseSteps = 20
+        runner = LongProcessRunner (self._getContent, 
+                self, 
+                _(u"Statistics"), 
+                _(u"Collecting statistics..."))
 
-        progressDlg = PyProgress(self, -1, _(u"Statistics"),
-                            _(u"Collecting statistics..."),
-                            agwStyle = wx.PD_APP_MODAL)
+        resultList = runner.run ()
 
-        progressDlg.SetGaugeProportion(gaugeProportion)
-        progressDlg.SetGaugeSteps(gauseSteps)
-        progressDlg.UpdatePulse()
-
-        resultList = []
-        thread = threading.Thread (None, self._threadFunc, args=(resultList,))
-        thread.start()
-
-        while thread.isAlive ():
-            progressDlg.UpdatePulse()
-            time.sleep (updateGaugeInterval)
-
-        progressDlg.Destroy()
-        self._setHtml (resultList[0])
-        self.Raise()
+        self._setHtml (resultList)
 
 
     def _setHtml (self, content):
         resultHtml = self._htmlTemplate.format (content=content)
         self._htmlRender.SetPage (resultHtml, getCurrentDir())
-
-
-    def _threadFunc (self, resultList):
-        resultList.append (self._getContent ())
 
 
     def _getContent (self):
