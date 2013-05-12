@@ -301,7 +301,7 @@ class SearchPanel(BasePagePanel):
         searcher = Searcher (phrase, tags, self.page.strategy)
 
         runner = LongProcessRunner (searcher.find, 
-                self, 
+                Application.mainWindow, 
                 _(u"Search"), 
                 _(u"Search pages..."))
 
