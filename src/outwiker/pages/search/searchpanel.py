@@ -14,6 +14,7 @@ from outwiker.gui.htmlrenderfactory import getHtmlRender
 from outwiker.gui.basepagepanel import BasePagePanel
 from outwiker.gui.tagscloud import TagsCloud
 from outwiker.gui.taglabel import EVT_TAG_LEFT_CLICK
+from outwiker.gui.longprocessrunner import LongProcessRunner
 from .htmlreport import HtmlReport
 from .sortstrategies import getSortStrategies
 
@@ -298,7 +299,13 @@ class SearchPanel(BasePagePanel):
         tags = self.__getSearchTags()
 
         searcher = Searcher (phrase, tags, self.page.strategy)
-        resultPages = searcher.find (self.page.root)
+
+        runner = LongProcessRunner (searcher.find, 
+                self, 
+                _(u"Search"), 
+                _(u"Search pages..."))
+
+        resultPages = runner.run(self.page.root)
 
         self.__saveResults (resultPages)
         self.UpdateView (self.page)
