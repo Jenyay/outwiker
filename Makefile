@@ -69,6 +69,8 @@ plugin:
 	cd plugins/thumbgallery; 7z a -r -aoa -xr!*.pyc ../../build/plugins/thumbgallery.zip ./*; 7z a -r -aoa -xr!*.pyc ../../build/plugins/outwiker-plugins-all.zip ./*
 	rm -f build/plugins/externaltools.zip
 	cd plugins/externaltools; 7z a -r -aoa -xr!*.pyc ../../build/plugins/externaltools.zip ./*; 7z a -r -aoa -xr!*.pyc ../../build/plugins/outwiker-plugins-all.zip ./*
+	rm -f build/plugins/statistics.zip
+	cd plugins/statistics; 7z a -r -aoa -xr!*.pyc ../../build/plugins/statistics.zip ./*; 7z a -r -aoa -xr!*.pyc ../../build/plugins/outwiker-plugins-all.zip ./*
 
 wintests:
 	python src\\setup_tests.py build
