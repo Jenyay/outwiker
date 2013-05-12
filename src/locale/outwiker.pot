@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-24 16:34+0400\n"
+"POT-Creation-Date: 2013-05-12 18:33+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -144,15 +144,15 @@ msgstr ""
 #: outwiker/pages/html/htmlpanel.py:441 outwiker/pages/wiki/wikipanel.py:137
 #: outwiker/pages/wiki/wikipanel.py:141 outwiker/pages/wiki/wikipanel.py:161
 #: outwiker/pages/wiki/wikipanel.py:163 outwiker/pages/wiki/wikipanel.py:597
-#: outwiker/core/commands.py:49 outwiker/core/commands.py:132
-#: outwiker/core/commands.py:213 outwiker/core/commands.py:253
-#: outwiker/core/commands.py:261 outwiker/core/commands.py:269
-#: outwiker/core/commands.py:279 outwiker/core/commands.py:341
-#: outwiker/core/commands.py:347 outwiker/core/commands.py:368
-#: outwiker/core/commands.py:379 outwiker/core/commands.py:393
-#: outwiker/core/commands.py:408 outwiker/core/commands.py:423
-#: outwiker/core/commands.py:440 outwiker/core/commands.py:458
-#: outwiker/core/commands.py:463 outwiker/core/textprinter.py:106
+#: outwiker/core/commands.py:50 outwiker/core/commands.py:133
+#: outwiker/core/commands.py:224 outwiker/core/commands.py:264
+#: outwiker/core/commands.py:272 outwiker/core/commands.py:280
+#: outwiker/core/commands.py:290 outwiker/core/commands.py:352
+#: outwiker/core/commands.py:358 outwiker/core/commands.py:379
+#: outwiker/core/commands.py:390 outwiker/core/commands.py:404
+#: outwiker/core/commands.py:419 outwiker/core/commands.py:434
+#: outwiker/core/commands.py:451 outwiker/core/commands.py:469
+#: outwiker/core/commands.py:474 outwiker/core/textprinter.py:106
 msgid "Error"
 msgstr ""
 
@@ -255,7 +255,8 @@ msgid "&Search…"
 msgstr ""
 
 #: outwiker/gui/basetextpanel.py:218 outwiker/gui/localsearchpanel.py:17
-#: outwiker/pages/search/searchpanel.py:41
+#: outwiker/pages/search/searchpanel.py:42
+#: outwiker/pages/search/searchpanel.py:305
 msgid "Search"
 msgstr ""
 
@@ -566,8 +567,8 @@ msgid "Can't change page style\n"
 msgstr ""
 
 #: outwiker/gui/pagedialog.py:98 outwiker/gui/pagedialog.py:117
-#: outwiker/core/commands.py:392 outwiker/core/commands.py:407
-#: outwiker/core/commands.py:422 outwiker/core/commands.py:439
+#: outwiker/core/commands.py:403 outwiker/core/commands.py:418
+#: outwiker/core/commands.py:433 outwiker/core/commands.py:450
 msgid "Wiki is not open"
 msgstr ""
 
@@ -685,7 +686,7 @@ msgid "Note"
 msgstr ""
 
 #: outwiker/gui/mainpanes/tagscloudmainpane.py:56
-#: outwiker/pages/search/searchpanel.py:50
+#: outwiker/pages/search/searchpanel.py:51
 msgid "Tags"
 msgstr ""
 
@@ -1227,7 +1228,7 @@ msgid "Last modified date: {0}"
 msgstr ""
 
 #: outwiker/pages/search/htmlreport.py:84
-#: outwiker/pages/search/searchpanel.py:43
+#: outwiker/pages/search/searchpanel.py:44
 msgid "Tags: "
 msgstr ""
 
@@ -1239,24 +1240,28 @@ msgstr ""
 msgid "# Search"
 msgstr ""
 
-#: outwiker/pages/search/searchpanel.py:47
+#: outwiker/pages/search/searchpanel.py:48
 msgid "Any tag"
 msgstr ""
 
-#: outwiker/pages/search/searchpanel.py:47
+#: outwiker/pages/search/searchpanel.py:48
 msgid "All tags"
 msgstr ""
 
-#: outwiker/pages/search/searchpanel.py:56
+#: outwiker/pages/search/searchpanel.py:57
 msgid "Clear all tags"
 msgstr ""
 
-#: outwiker/pages/search/searchpanel.py:57
+#: outwiker/pages/search/searchpanel.py:58
 msgid "Find"
 msgstr ""
 
-#: outwiker/pages/search/searchpanel.py:60
+#: outwiker/pages/search/searchpanel.py:61
 msgid "Sort by "
+msgstr ""
+
+#: outwiker/pages/search/searchpanel.py:306
+msgid "Search pages..."
 msgstr ""
 
 #: outwiker/pages/search/sortstrategies.py:68
@@ -1528,40 +1533,48 @@ msgstr ""
 msgid "[[link | comment]]"
 msgstr ""
 
-#: outwiker/core/commands.py:48
+#: outwiker/core/commands.py:49
 msgid "Wiki is opened as read-only"
 msgstr ""
 
-#: outwiker/core/commands.py:96
+#: outwiker/core/commands.py:97
 #, python-format
 msgid "File '%s' exists already"
 msgstr ""
 
-#: outwiker/core/commands.py:109 outwiker/core/commands.py:111
+#: outwiker/core/commands.py:110 outwiker/core/commands.py:112
 msgid ""
 "Error copying files\n"
 "{0}"
 msgstr ""
 
-#: outwiker/core/commands.py:121
+#: outwiker/core/commands.py:122
 #, python-format
 msgid "Remove page '%s' and all subpages?"
 msgstr ""
 
-#: outwiker/core/commands.py:124
+#: outwiker/core/commands.py:125
 msgid "Remove page?"
 msgstr ""
 
-#: outwiker/core/commands.py:131
+#: outwiker/core/commands.py:132
 msgid "Can't remove page"
 msgstr ""
 
-#: outwiker/core/commands.py:212
+#: outwiker/core/commands.py:173
+msgid "Loading"
+msgstr ""
+
+#: outwiker/core/commands.py:174
+msgid "Opening notes tree..."
+msgstr ""
+
+#: outwiker/core/commands.py:223
 #, python-format
 msgid "Can't load wiki '%s'"
 msgstr ""
 
-#: outwiker/core/commands.py:221
+#: outwiker/core/commands.py:232
 #, python-format
 msgid ""
 "Can't load wiki '%s'\n"
@@ -1570,15 +1583,15 @@ msgid ""
 "Bookmarks will be lost"
 msgstr ""
 
-#: outwiker/core/commands.py:222
+#: outwiker/core/commands.py:233
 msgid "__page.opt error"
 msgstr ""
 
-#: outwiker/core/commands.py:233
+#: outwiker/core/commands.py:244
 msgid "First Wiki Page"
 msgstr ""
 
-#: outwiker/core/commands.py:234
+#: outwiker/core/commands.py:245
 msgid ""
 "!! First Wiki Page\n"
 "\n"
@@ -1586,77 +1599,77 @@ msgid ""
 "''italic'', {+underlined text+}, [[http://jenyay.net | link]] and others.\n"
 msgstr ""
 
-#: outwiker/core/commands.py:244
+#: outwiker/core/commands.py:255
 msgid "test"
 msgstr ""
 
-#: outwiker/core/commands.py:252
+#: outwiker/core/commands.py:263
 msgid "Can't create wiki\n"
 msgstr ""
 
-#: outwiker/core/commands.py:260 outwiker/core/commands.py:278
+#: outwiker/core/commands.py:271 outwiker/core/commands.py:289
 msgid "Can't open clipboard"
 msgstr ""
 
-#: outwiker/core/commands.py:268
+#: outwiker/core/commands.py:279
 msgid "Can't copy text to clipboard"
 msgstr ""
 
-#: outwiker/core/commands.py:340 outwiker/core/commands.py:457
+#: outwiker/core/commands.py:351 outwiker/core/commands.py:468
 msgid "Can't move page when page with that title already exists"
 msgstr ""
 
-#: outwiker/core/commands.py:346
+#: outwiker/core/commands.py:357
 msgid "Can't move page"
 msgstr ""
 
-#: outwiker/core/commands.py:368
+#: outwiker/core/commands.py:379
 #, python-format
 msgid "Can't open file %s"
 msgstr ""
 
-#: outwiker/core/commands.py:378
+#: outwiker/core/commands.py:389
 msgid "Can't parse version"
 msgstr ""
 
-#: outwiker/core/commands.py:462
+#: outwiker/core/commands.py:473
 #, python-format
 msgid ""
 "Can't rename page\n"
 "%s"
 msgstr ""
 
-#: outwiker/core/commands.py:476
+#: outwiker/core/commands.py:487
 msgid "help_en"
 msgstr ""
 
-#: outwiker/core/commands.py:489
+#: outwiker/core/commands.py:500
 msgid "Save current page before reload?"
 msgstr ""
 
-#: outwiker/core/commands.py:490
+#: outwiker/core/commands.py:501
 msgid "Save?"
 msgstr ""
 
-#: outwiker/core/commands.py:510
+#: outwiker/core/commands.py:521
 msgid "The invalid page title"
 msgstr ""
 
-#: outwiker/core/commands.py:515
+#: outwiker/core/commands.py:526
 msgid ""
 "{0}\n"
 "Continue?"
 msgstr ""
 
-#: outwiker/core/commands.py:518
+#: outwiker/core/commands.py:529
 msgid "The page title"
 msgstr ""
 
-#: outwiker/core/commands.py:541
+#: outwiker/core/commands.py:552
 msgid "Add Tags to Branch"
 msgstr ""
 
-#: outwiker/core/commands.py:560
+#: outwiker/core/commands.py:571
 msgid "Remove Tags from Branch"
 msgstr ""
 
