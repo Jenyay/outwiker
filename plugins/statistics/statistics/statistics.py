@@ -46,7 +46,9 @@ else:
         
         @property
         def description (self):
-            return _(u"Plugin to display statistics")
+            return _(u"""The plugin to display statistics. 
+                    
+Statistics plugin append menu items <b>Tools -> Page Statistic</b> and <b>Tools -> Tree Statistic</b>.""")
 
 
         @property

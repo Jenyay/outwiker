@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Statistics\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-11 19:32+0400\n"
-"PO-Revision-Date: 2013-05-11 19:33+0300\n"
+"POT-Creation-Date: 2013-05-15 22:01+0400\n"
+"PO-Revision-Date: 2013-05-15 22:03+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: jenyay.net <jenyay.ilin@gmail.com>\n"
 "Language: en_GB\n"
@@ -50,7 +50,7 @@ msgstr "The longest notes (in brackets the number of characters):"
 msgid "Page count: {0}"
 msgstr "Page count: {0}"
 
-#: pagestatdialog.py:23 statistics.py:106
+#: pagestatdialog.py:23 statistics.py:108
 msgid "Page Statistic"
 msgstr "Page Statistic"
 
@@ -79,14 +79,22 @@ msgid "Size of attachments (kB)"
 msgstr "Size of attachments (kB)"
 
 #: statistics.py:49
-msgid "Plugin to display statistics"
-msgstr "Plugin to display statistics"
+msgid ""
+"The plugin to display statistics. \n"
+"                    \n"
+"Statistics plugin append menu items <b>Tools -> Page Statistic</b> and "
+"<b>Tools -> Tree Statistic</b>."
+msgstr ""
+"The plugin to display statistics. \n"
+"                    \n"
+"Statistics plugin append menu items <b>Tools -> Page Statistic</b> and "
+"<b>Tools -> Tree Statistic</b>."
 
-#: statistics.py:59
+#: statistics.py:61
 msgid "http://jenyay.net/Outwiker/StatisticsEn"
 msgstr "http://jenyay.net/Outwiker/StatisticsEn"
 
-#: statistics.py:109 treestatdialog.py:53
+#: statistics.py:111 treestatdialog.py:53
 msgid "Tree Statistic"
 msgstr "Tree Statistic"
 
@@ -110,13 +118,16 @@ msgstr "A tree has no pages"
 msgid "Collecting statistics. Please wait..."
 msgstr "Collecting statistics. Please wait..."
 
-#: treestatdialog.py:105
+#: treestatdialog.py:103
 msgid "Statistics"
 msgstr "Statistics"
 
-#: treestatdialog.py:106
+#: treestatdialog.py:104
 msgid "Collecting statistics..."
 msgstr "Collecting statistics..."
+
+#~ msgid "Plugin to display statistics"
+#~ msgstr "Plugin to display statistics"
 
 #~ msgid "Page statistic"
 #~ msgstr "Page statistic"

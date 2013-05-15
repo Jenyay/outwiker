@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-11 19:32+0400\n"
+"POT-Creation-Date: 2013-05-15 22:01+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -47,7 +47,7 @@ msgstr ""
 msgid "Page count: {0}"
 msgstr ""
 
-#: pagestatdialog.py:23 statistics.py:106
+#: pagestatdialog.py:23 statistics.py:108
 msgid "Page Statistic"
 msgstr ""
 
@@ -76,14 +76,18 @@ msgid "Size of attachments (kB)"
 msgstr ""
 
 #: statistics.py:49
-msgid "Plugin to display statistics"
+msgid ""
+"The plugin to display statistics. \n"
+"                    \n"
+"Statistics plugin append menu items <b>Tools -> Page Statistic</b> and "
+"<b>Tools -> Tree Statistic</b>."
 msgstr ""
 
-#: statistics.py:59
+#: statistics.py:61
 msgid "http://jenyay.net/Outwiker/StatisticsEn"
 msgstr ""
 
-#: statistics.py:109 treestatdialog.py:53
+#: statistics.py:111 treestatdialog.py:53
 msgid "Tree Statistic"
 msgstr ""
 
@@ -107,10 +111,10 @@ msgstr ""
 msgid "Collecting statistics. Please wait..."
 msgstr ""
 
-#: treestatdialog.py:105
+#: treestatdialog.py:103
 msgid "Statistics"
 msgstr ""
 
-#: treestatdialog.py:106
+#: treestatdialog.py:104
 msgid "Collecting statistics..."
 msgstr ""

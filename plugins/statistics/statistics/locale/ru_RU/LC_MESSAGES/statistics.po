@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Statistics\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-11 19:32+0400\n"
-"PO-Revision-Date: 2013-05-11 19:34+0300\n"
+"POT-Creation-Date: 2013-05-15 22:01+0400\n"
+"PO-Revision-Date: 2013-05-15 22:03+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: jenyay.net <jenyay.ilin@gmail.com>\n"
 "Language: ru_RU\n"
@@ -50,7 +50,7 @@ msgstr "Самые длинные заметки (в скобках указан
 msgid "Page count: {0}"
 msgstr "Количество страниц: {0}"
 
-#: pagestatdialog.py:23 statistics.py:106
+#: pagestatdialog.py:23 statistics.py:108
 msgid "Page Statistic"
 msgstr "Статистика страницы"
 
@@ -79,14 +79,22 @@ msgid "Size of attachments (kB)"
 msgstr "Размер прикрепленных файлов (кБ)"
 
 #: statistics.py:49
-msgid "Plugin to display statistics"
-msgstr "Плагин для показа статистики"
+msgid ""
+"The plugin to display statistics. \n"
+"                    \n"
+"Statistics plugin append menu items <b>Tools -> Page Statistic</b> and "
+"<b>Tools -> Tree Statistic</b>."
+msgstr ""
+"Плагин для показа статистики. \n"
+"                    \n"
+"Плагин Statistics добавляет пункты меню <b>Инструменты -> Статистика "
+"страницы</b> и <b>Инструменты -> Статистика дерева</b>."
 
-#: statistics.py:59
+#: statistics.py:61
 msgid "http://jenyay.net/Outwiker/StatisticsEn"
 msgstr "http://jenyay.net/Outwiker/Statistics"
 
-#: statistics.py:109 treestatdialog.py:53
+#: statistics.py:111 treestatdialog.py:53
 msgid "Tree Statistic"
 msgstr "Статистика дерева"
 
@@ -110,13 +118,16 @@ msgstr "В дереве нет страниц"
 msgid "Collecting statistics. Please wait..."
 msgstr "Сбор статистики. Пожалуйста, подождите..."
 
-#: treestatdialog.py:105
+#: treestatdialog.py:103
 msgid "Statistics"
 msgstr "Статистика"
 
-#: treestatdialog.py:106
+#: treestatdialog.py:104
 msgid "Collecting statistics..."
 msgstr "Сбор статистики..."
+
+#~ msgid "Plugin to display statistics"
+#~ msgstr "Плагин для показа статистики"
 
 #~ msgid "Page statistic"
 #~ msgstr "Статистика страницы"
