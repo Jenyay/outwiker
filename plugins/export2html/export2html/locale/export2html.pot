@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-05 21:55+0400\n"
+"POT-Creation-Date: 2013-05-17 09:26+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: baseexporter.py:50 baseexporter.py:104
+#: baseexporter.py:50 baseexporter.py:116
 msgid "File {0} already exists"
 msgstr ""
 
@@ -37,7 +37,7 @@ msgstr ""
 msgid "Please, select page"
 msgstr ""
 
-#: controller.py:51 controller.py:59 controller.py:73 exportdialog.py:81
+#: controller.py:51 controller.py:59 controller.py:73 exportdialog.py:83
 #: exportpagedialog.py:32
 msgid "Error"
 msgstr ""
@@ -50,36 +50,40 @@ msgstr ""
 msgid "Wiki is not open"
 msgstr ""
 
-#: exportbranchdialog.py:32
+#: exportbranchdialog.py:31
 msgid "Use long file names (include parent name)"
 msgstr ""
 
-#: exportdialog.py:15 exportmenu.py:63 exportmenu.py:81
+#: exportbranchdialog.py:58
+msgid "Export to HTML"
+msgstr ""
+
+#: exportbranchdialog.py:59
+msgid "Please wait..."
+msgstr ""
+
+#: exportdialog.py:17 exportmenu.py:63 exportmenu.py:81
 msgid "Export"
 msgstr ""
 
-#: exportdialog.py:19
+#: exportdialog.py:21
 msgid "Folder for Export:"
 msgstr ""
 
-#: exportdialog.py:30
+#: exportdialog.py:32
 msgid "Overwrite Existing Files"
 msgstr ""
 
-#: exportdialog.py:31
+#: exportdialog.py:33
 msgid "Attaches. Save Only Images"
 msgstr ""
 
-#: exportdialog.py:80
+#: exportdialog.py:82
 msgid "Please, select folder for export"
 msgstr ""
 
 #: exportmenu.py:48 exportmenu.py:75
 msgid "File menu not found"
-msgstr ""
-
-#: htmlexporter.py:38
-msgid "{0} not found"
 msgstr ""
 
 #: logdialog.py:13
@@ -88,4 +92,8 @@ msgstr ""
 
 #: pluginexport2html.py:40
 msgid "Export pages to HTML"
+msgstr ""
+
+#: pluginexport2html.py:64
+msgid "http://jenyay.net/Outwiker/Export2HtmlPluginEn"
 msgstr ""
