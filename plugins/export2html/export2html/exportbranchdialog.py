@@ -7,6 +7,7 @@ from .exportdialog import ExportDialog
 from .branchexporter import BranchExporter
 from .logdialog import LogDialog
 from .longnamegenerator import LongNameGenerator
+from .longprocessrunner import LongProcessRunner
 from .titlenamegenerator import TitleNameGenerator
 
 
@@ -41,13 +42,31 @@ class ExportBranchDialog (ExportDialog):
             return TitleNameGenerator (self.path)
 
 
+    def _threadExport (self, exporter, path, imagesOnly, overwrite):
+        """
+        Экспорт, выполняемый в отдельном потоке
+        """
+        return exporter.export (path, imagesOnly, overwrite)
+
+
     def _onOk (self):
         namegenerator = self.__getNameGenerator()
         exporter = BranchExporter (self.__rootpage, namegenerator)
 
-        result = exporter.export (self.path,
+        runner = LongProcessRunner (self._threadExport,
+                self,
+                _(u"Export to HTML"),
+                _(u"Please wait..."))
+
+        result = runner.run (exporter, 
+                self.path,
                 self.imagesOnly,
                 self.overwrite)
+
+        # result = self._threadExport (exporter, 
+        #         self.path,
+        #         self.imagesOnly,
+        #         self.overwrite)
 
         if len (result) != 0:
             logdlg = LogDialog (self, result)

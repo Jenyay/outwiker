@@ -42,7 +42,7 @@ class PluginExport2Html (Plugin):
 
     @property
     def version (self):
-        return u"1.2.1"
+        return u"1.2.2"
 
     
     def initialize(self):
@@ -57,6 +57,12 @@ class PluginExport2Html (Plugin):
         self.__controller.destroy()
 
     #############################################
+
+
+    @property
+    def url (self):
+        return _(u"http://jenyay.net/Outwiker/Export2HtmlPluginEn")
+
 
     def __initlocale (self):
         domain = u"export2html"
