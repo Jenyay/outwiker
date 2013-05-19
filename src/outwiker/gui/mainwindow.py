@@ -23,6 +23,7 @@ from .trayicon import OutwikerTrayIcon
 from .preferences.prefdialog import PrefDialog
 from .mainwndcontroller import MainWndController
 from .mainpanescontroller import MainPanesController
+from .shortcuter import Shortcuter
 from outwiker.gui.mainpanes.tagscloudmainpane import TagsCloudMainPane
 from outwiker.gui.mainpanes.attachmainpane import AttachMainPane
 from outwiker.gui.mainpanes.treemainpane import TreeMainPane
@@ -51,6 +52,7 @@ class MainWindow(wx.Frame):
 
         self.mainMenu = MainMenu()
         self.SetMenuBar(self.mainMenu)
+        self.updateShortcuts()
 
         self.__createStatusBar()
 
@@ -94,6 +96,13 @@ class MainWindow(wx.Frame):
         Доступ к основной панели инструментов
         """
         return self.toolbars[self.GENERAL_TOOLBAR_STR]
+
+
+    def updateShortcuts (self):
+        """
+        Обновить шорткаты (буквы с подчеркиванием) в меню
+        """
+        Shortcuter (self.mainMenu).assignShortcuts()
 
 
     def UpdateAuiManager (self):
