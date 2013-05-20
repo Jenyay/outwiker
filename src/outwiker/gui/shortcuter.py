@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 """
-Версия 1.0
+Версия 1.1
 """
 
 import wx
@@ -23,33 +23,79 @@ class Shortcuter (object):
         self._menubar.UpdateMenus()
 
 
-    def checkDublicates (self):
+    def checkDuplicateShortcuts (self):
         """
-        Проверить шорткаты на повторы. Возвращает список заголовков с дублирующимися шорткатами
+        Проверить шорткаты на повторы. 
+        Возвращает множество заголовков с дублирующимися шорткатами
         """
-        dublicates = []
+        duplicates = set()
+        self._checkDuplicatesShortcuts (self._menubar, duplicates)
+        
+        result = list (duplicates)
+        result.sort (key=lambda item: self._extractShortcut (item))
 
-        self._checkDublicates (self._menubar, dublicates)
-        return dublicates
+        return result
 
 
-    def _checkDublicates (self, menu, dublicatesList):
-        self._getExistingShortcuts (menu, lambda shortcut, title: dublicatesList.append (title))
+    def checkDuplacateHotKeys (self):
+        """
+        Проверить горячие клавиши на повторы во всем меню. 
+        Возвращает множество заголовков с дублирующимися горячими клавишами
+        """
+        duplicates = set()
+        self._checkDuplicatesHotKeys (self._menubar, duplicates)
 
+        result = list (duplicates)
+        result.sort (key=lambda item: self._extractHotKey (item))
+
+        return result
+
+
+    def _checkDuplicatesHotKeys (self, menu, duplicates, hotkeysDict={}):
+        """
+        menu - меню, в котором проверяются горячие клавиши
+        duplicates - множество пунктов меню, в которых горячие клавиши совпадают
+        hotkeysDict - словарь полученных горячих клавиш. Ключ - горячая клавиша, значение - пункт меню
+        """
         menuitems = self._getMenuItems (menu)
 
         for menuitem, position in zip (menuitems, range (len (menuitems))):
+            title = self._getText (menuitem, position)
+            hotkey = self._extractHotKey (title)
+
+            if hotkey in hotkeysDict:
+                duplicates.add (hotkeysDict[hotkey])
+                duplicates.add (title)
+
+            if len (hotkey) != 0:
+                hotkeysDict[hotkey] = title
+
             submenu = self._getSubMenu (menuitem)
             if submenu != None:
-                self._checkDublicates (submenu, dublicatesList)
+                self._checkDuplicatesHotKeys (submenu, duplicates, hotkeysDict)
 
 
-    def _getExistingShortcuts (self, menu, dublicateFunc):
+    def _checkDuplicatesShortcuts (self, menu, duplicates):
+        def addDuplicates (oldtitle, newtitle):
+            duplicates.add (oldtitle)
+            duplicates.add (newtitle)
+
+        self._getExistingShortcuts (menu, addDuplicates)
+
+        menuitems = self._getMenuItems (menu)
+
+        for menuitem in menuitems:
+            submenu = self._getSubMenu (menuitem)
+            if submenu != None:
+                self._checkDuplicatesShortcuts (submenu, duplicates)
+
+
+    def _getExistingShortcuts (self, menu, duplicateFunc):
         """
         Возвращает список уже присвоенных шорткатов.
         Возвращает словарь шорткатов
         menu - меню, из которого нужно извлечь шорткаты
-        dublicateFunc - функция, которая вызывается в случае обнаружения повторяющихся шорткатов. Функция принимает два аргумента: строку с буквой-шорткатом и заголовок пункта меню, к которому этот шорткат относится.
+        duplicateFunc - функция, которая вызывается в случае обнаружения повторяющихся шорткатов. Функция принимает две строки с пунктами меню, где совпадают шорткаты.
         """
         # Ключ - буква, клавиатурного сокращения (подчеркнутая буква, буква перед которой стоит &)
         # Значение - название пункта меню.
@@ -62,7 +108,7 @@ class Shortcuter (object):
             shortcut = self._extractShortcut (title)
 
             if shortcut in shortcuts:
-                dublicateFunc (shortcuts[shortcut], title)
+                duplicateFunc (shortcuts[shortcut], title)
 
             if len (shortcut) != 0:
                 shortcuts[shortcut] = title
@@ -74,7 +120,7 @@ class Shortcuter (object):
         """
         Проверить и применить клавишные сокращения для одного меню
         """
-        def noneDublicateFunc (shortcut, title):
+        def noneDuplicateFunc (shortcut, title):
             """
             Функция, используемая в случае, если при обнаружении повторения шортката делать ничего не надо
             """
@@ -82,7 +128,7 @@ class Shortcuter (object):
 
         # Ключ - буква, клавиатурного сокращения (подчеркнутая буква, буква перед которой стоит &)
         # Значение - название пункта меню.
-        shortcuts = self._getExistingShortcuts (menu, noneDublicateFunc)
+        shortcuts = self._getExistingShortcuts (menu, noneDuplicateFunc)
 
         menuitems = self._getMenuItems (menu)
 
@@ -190,3 +236,12 @@ class Shortcuter (object):
             return u""
         
         return cleartitle[index + 1].lower()
+
+
+    @staticmethod
+    def _extractHotKey (title):
+        """
+        Возвращает горячую клавишу для меню (то, что идет после символа табуляции)
+        """
+        substrings = title.split ("\t", 1)
+        return substrings[1] if len (substrings) == 2 else u""
