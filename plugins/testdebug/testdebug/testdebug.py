@@ -88,7 +88,10 @@ class PluginDebug (Plugin):
     @property
     def description (self):
         return _(u"""Debug Plugin
-<a href="http://jenyay.net">http://jenyay.net</a>""")
+<a href="http://jenyay.net">http://jenyay.net</a>
+
+<a href="/111">Link to page</a>
+""")
 
 
     @property

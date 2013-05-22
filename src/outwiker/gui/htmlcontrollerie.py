@@ -29,7 +29,6 @@ class UriIdentifierIE (UriIdentifier):
         """
         Попытка найти страницу вики
         """
-        # assert self._currentPage != None
         if self._currentPage == None:
             return None
 

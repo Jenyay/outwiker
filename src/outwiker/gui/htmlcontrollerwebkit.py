@@ -56,7 +56,8 @@ class UriIdentifierWebKit (UriIdentifier):
         """
         Попытка найти страницу вики, если ссылка, на которую щелкнули не интернетная (http, ftp, mailto)
         """
-        assert self._currentPage != None
+        if self._currentPage == None:
+            return None
 
         newSelectedPage = None
 
