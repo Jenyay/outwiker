@@ -5,7 +5,7 @@
 
     Lexers for assembly languages.
 
-    :copyright: Copyright 2006-2010 by the Pygments team, see AUTHORS.
+    :copyright: Copyright 2006-2013 by the Pygments team, see AUTHORS.
     :license: BSD, see LICENSE for details.
 """
 
@@ -13,10 +13,11 @@ import re
 
 from pygments.lexer import RegexLexer, include, bygroups, using, DelegatingLexer
 from pygments.lexers.compiled import DLexer, CppLexer, CLexer
-from pygments.token import *
+from pygments.token import Text, Name, Number, String, Comment, Punctuation, \
+     Other, Keyword, Operator
 
 __all__ = ['GasLexer', 'ObjdumpLexer','DObjdumpLexer', 'CppObjdumpLexer',
-           'CObjdumpLexer', 'LlvmLexer', 'NasmLexer']
+           'CObjdumpLexer', 'LlvmLexer', 'NasmLexer', 'Ca65Lexer']
 
 
 class GasLexer(RegexLexer):
@@ -30,7 +31,7 @@ class GasLexer(RegexLexer):
 
     #: optional Comment or Whitespace
     string = r'"(\\"|[^"])*"'
-    char = r'[a-zA-Z$._0-9@]'
+    char = r'[a-zA-Z$._0-9@-]'
     identifier = r'(?:[a-zA-Z$_]' + char + '*|\.' + char + '+)'
     number = r'(?:0[xX][a-zA-Z0-9]+|\d+)'
 
@@ -72,6 +73,7 @@ class GasLexer(RegexLexer):
             ('%' + identifier, Name.Variable),
             # Numeric constants
             ('$'+number, Number.Integer),
+            (r"$'(.|\\')'", String.Char),
             (r'[\r\n]+', Text, '#pop'),
             (r'#.*?$', Comment, '#pop'),
             include('punctuation'),
@@ -88,7 +90,11 @@ class GasLexer(RegexLexer):
     }
 
     def analyse_text(text):
-        return re.match(r'^\.\w+', text, re.M)
+        if re.match(r'^\.(text|data|section)', text, re.M):
+            return True
+        elif re.match(r'^\.\w+', text, re.M):
+            return 0.1
+
 
 class ObjdumpLexer(RegexLexer):
     """
@@ -130,17 +136,17 @@ class ObjdumpLexer(RegexLexer):
             ('( *)('+hex+r'+:)(\t)((?:'+hex+hex+' )+)$',
                 bygroups(Text, Name.Label, Text, Number.Hex)),
             # Skipped a few bytes
-            ('\t\.\.\.$', Text),
+            (r'\t\.\.\.$', Text),
             # Relocation line
             # (With offset)
-            ('(\t\t\t)('+hex+'+:)( )([^\t]+)(\t)(.*?)([-+])(0x' + hex + '+)$',
+            (r'(\t\t\t)('+hex+r'+:)( )([^\t]+)(\t)(.*?)([-+])(0x' + hex + '+)$',
                 bygroups(Text, Name.Label, Text, Name.Property, Text,
                          Name.Constant, Punctuation, Number.Hex)),
             # (Without offset)
-            ('(\t\t\t)('+hex+'+:)( )([^\t]+)(\t)(.*?)$',
+            (r'(\t\t\t)('+hex+r'+:)( )([^\t]+)(\t)(.*?)$',
                 bygroups(Text, Name.Label, Text, Name.Property, Text,
                          Name.Constant)),
-            ('[^\n]+\n', Other)
+            (r'[^\n]+\n', Other)
         ]
     }
 
@@ -202,7 +208,7 @@ class LlvmLexer(RegexLexer):
             include('whitespace'),
 
             # Before keywords, because keywords are valid label names :(...
-            (r'^\s*' + identifier + '\s*:', Name.Label),
+            (identifier + '\s*:', Name.Label),
 
             include('keyword'),
 
@@ -234,8 +240,8 @@ class LlvmLexer(RegexLexer):
              r'|linkonce_odr|weak|weak_odr|appending|dllimport|dllexport'
              r'|common|default|hidden|protected|extern_weak|external'
              r'|thread_local|zeroinitializer|undef|null|to|tail|target|triple'
-             r'|deplibs|datalayout|volatile|nuw|nsw|exact|inbounds|align'
-             r'|addrspace|section|alias|module|asm|sideeffect|gc|dbg'
+             r'|datalayout|volatile|nuw|nsw|nnan|ninf|nsz|arcp|fast|exact|inbounds'
+             r'|align|addrspace|section|alias|module|asm|sideeffect|gc|dbg'
 
              r'|ccc|fastcc|coldcc|x86_stdcallcc|x86_fastcallcc|arm_apcscc'
              r'|arm_aapcscc|arm_aapcs_vfpcc'
@@ -296,9 +302,10 @@ class NasmLexer(RegexLexer):
     binn = r'[01]+b'
     decn = r'[0-9]+'
     floatn = decn + r'\.e?' + decn
-    string = r'"(\\"|[^"])*"|' + r"'(\\'|[^'])*'"
+    string = r'"(\\"|[^"\n])*"|' + r"'(\\'|[^'\n])*'|" + r"`(\\`|[^`\n])*`"
     declkw = r'(?:res|d)[bwdqt]|times'
-    register = (r'[a-d][lh]|e?[a-d]x|e?[sb]p|e?[sd]i|[c-gs]s|st[0-7]|'
+    register = (r'r[0-9][0-5]?[bwd]|'
+                r'[a-d][lh]|[er]?[a-d]x|[er]?[sb]p|[er]?[sd]i|[c-gs]s|st[0-7]|'
                 r'mm[0-7]|cr[0-4]|dr[0-367]|tr[3-7]')
     wordop = r'seg|wrt|strict'
     type = r'byte|[dq]?word'
@@ -351,3 +358,41 @@ class NasmLexer(RegexLexer):
             (type, Keyword.Type)
         ],
     }
+
+
+class Ca65Lexer(RegexLexer):
+    """
+    For ca65 assembler sources.
+
+    *New in Pygments 1.6.*
+    """
+    name = 'ca65'
+    aliases = ['ca65']
+    filenames = ['*.s']
+
+    flags = re.IGNORECASE
+
+    tokens = {
+        'root': [
+            (r';.*', Comment.Single),
+            (r'\s+', Text),
+            (r'[a-z_.@$][\w.@$]*:', Name.Label),
+            (r'((ld|st)[axy]|(in|de)[cxy]|asl|lsr|ro[lr]|adc|sbc|cmp|cp[xy]'
+             r'|cl[cvdi]|se[cdi]|jmp|jsr|bne|beq|bpl|bmi|bvc|bvs|bcc|bcs'
+             r'|p[lh][ap]|rt[is]|brk|nop|ta[xy]|t[xy]a|txs|tsx|and|ora|eor'
+             r'|bit)\b', Keyword),
+            (r'\.[a-z0-9_]+', Keyword.Pseudo),
+            (r'[-+~*/^&|!<>=]', Operator),
+            (r'"[^"\n]*.', String),
+            (r"'[^'\n]*.", String.Char),
+            (r'\$[0-9a-f]+|[0-9a-f]+h\b', Number.Hex),
+            (r'\d+|%[01]+', Number.Integer),
+            (r'[#,.:()=]', Punctuation),
+            (r'[a-z_.@$][\w.@$]*', Name),
+        ]
+    }
+
+    def analyse_text(self, text):
+        # comments in GAS start with "#"
+        if re.match(r'^\s*;', text, re.MULTILINE):
+            return 0.9

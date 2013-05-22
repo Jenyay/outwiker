@@ -26,6 +26,7 @@ class SourceGuiPluginTest (unittest.TestCase):
         self.__createWiki()
 
         dirlist = [u"../plugins/source"]
+        self._stylesCount = 19
 
         self.loader = PluginsLoader(Application)
         self.loader.load (dirlist)
@@ -257,7 +258,7 @@ class SourceGuiPluginTest (unittest.TestCase):
 
         self.controller.showDialog()
 
-        self.assertEqual (self.dialog.styleComboBox.GetCount(), 18)
+        self.assertEqual (self.dialog.styleComboBox.GetCount(), self._stylesCount)
         self.assertEqual (self.dialog.styleComboBox.GetValue(), "default")
 
         result = self.controller.getCommandStrings()
@@ -269,7 +270,7 @@ class SourceGuiPluginTest (unittest.TestCase):
         self.config.defaultStyle.value = "blablabla"
         self.controller.showDialog()
 
-        self.assertEqual (self.dialog.styleComboBox.GetCount(), 18)
+        self.assertEqual (self.dialog.styleComboBox.GetCount(), self._stylesCount)
         self.assertEqual (self.dialog.styleComboBox.GetValue(), "default")
 
 
@@ -277,7 +278,7 @@ class SourceGuiPluginTest (unittest.TestCase):
         self.config.defaultStyle.value = ""
         self.controller.showDialog()
 
-        self.assertEqual (self.dialog.styleComboBox.GetCount(), 18)
+        self.assertEqual (self.dialog.styleComboBox.GetCount(), self._stylesCount)
         self.assertEqual (self.dialog.styleComboBox.GetValue(), "default")
 
 
@@ -285,7 +286,7 @@ class SourceGuiPluginTest (unittest.TestCase):
         self.config.defaultStyle.value = "vim"
         self.controller.showDialog()
 
-        self.assertEqual (self.dialog.styleComboBox.GetCount(), 18)
+        self.assertEqual (self.dialog.styleComboBox.GetCount(), self._stylesCount)
         self.assertEqual (self.dialog.styleComboBox.GetValue(), "vim")
 
 
@@ -293,7 +294,7 @@ class SourceGuiPluginTest (unittest.TestCase):
         self.config.defaultStyle.value = "emacs"
         self.controller.showDialog()
 
-        self.assertEqual (self.dialog.styleComboBox.GetCount(), 18)
+        self.assertEqual (self.dialog.styleComboBox.GetCount(), self._stylesCount)
         self.assertEqual (self.dialog.styleComboBox.GetValue(), "emacs")
 
 
@@ -305,7 +306,7 @@ class SourceGuiPluginTest (unittest.TestCase):
 
         self.controller.showDialog()
 
-        self.assertEqual (self.dialog.styleComboBox.GetCount(), 18)
+        self.assertEqual (self.dialog.styleComboBox.GetCount(), self._stylesCount)
         self.assertEqual (self.dialog.styleComboBox.GetValue(), "vim")
 
         result = self.controller.getCommandStrings()
@@ -321,7 +322,7 @@ class SourceGuiPluginTest (unittest.TestCase):
 
         self.controller.showDialog()
 
-        self.assertEqual (self.dialog.styleComboBox.GetCount(), 18)
+        self.assertEqual (self.dialog.styleComboBox.GetCount(), self._stylesCount)
         self.assertEqual (self.dialog.styleComboBox.GetValue(), "default")
 
         result = self.controller.getCommandStrings()

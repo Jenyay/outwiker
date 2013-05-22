@@ -5,7 +5,7 @@
 
     Lexers for non-source code file types.
 
-    :copyright: Copyright 2006-2010 by the Pygments team, see AUTHORS.
+    :copyright: Copyright 2006-2013 by the Pygments team, see AUTHORS.
     :license: BSD, see LICENSE for details.
 """
 
@@ -16,7 +16,7 @@ from pygments.lexer import Lexer, LexerContext, RegexLexer, ExtendedRegexLexer, 
      bygroups, include, using, this, do_insertions
 from pygments.token import Punctuation, Text, Comment, Keyword, Name, String, \
      Generic, Operator, Number, Whitespace, Literal
-from pygments.util import get_bool_opt
+from pygments.util import get_bool_opt, ClassNotFound
 from pygments.lexers.other import BashLexer
 
 __all__ = ['IniLexer', 'PropertiesLexer', 'SourcesListLexer', 'BaseMakefileLexer',
@@ -24,7 +24,8 @@ __all__ = ['IniLexer', 'PropertiesLexer', 'SourcesListLexer', 'BaseMakefileLexer
            'GroffLexer', 'ApacheConfLexer', 'BBCodeLexer', 'MoinWikiLexer',
            'RstLexer', 'VimLexer', 'GettextLexer', 'SquidConfLexer',
            'DebianControlLexer', 'DarcsPatchLexer', 'YamlLexer',
-           'LighttpdConfLexer', 'NginxConfLexer', 'CMakeLexer']
+           'LighttpdConfLexer', 'NginxConfLexer', 'CMakeLexer', 'HttpLexer',
+           'PyPyLogLexer', 'RegeditLexer', 'HxmlLexer']
 
 
 class IniLexer(RegexLexer):
@@ -40,7 +41,7 @@ class IniLexer(RegexLexer):
     tokens = {
         'root': [
             (r'\s+', Text),
-            (r'[;#].*?$', Comment),
+            (r'[;#].*', Comment.Single),
             (r'\[.*?\]$', Keyword),
             (r'(.*?)([ \t]*)(=)([ \t]*)(.*(?:\n[ \t].+)*)',
              bygroups(Name.Attribute, Text, Operator, Text, String))
@@ -52,6 +53,49 @@ class IniLexer(RegexLexer):
         if npos < 3:
             return False
         return text[0] == '[' and text[npos-1] == ']'
+
+
+class RegeditLexer(RegexLexer):
+    """
+    Lexer for `Windows Registry
+    <http://en.wikipedia.org/wiki/Windows_Registry#.REG_files>`_ files produced
+    by regedit.
+
+    *New in Pygments 1.6.*
+    """
+
+    name = 'reg'
+    aliases = ['registry']
+    filenames = ['*.reg']
+    mimetypes = ['text/x-windows-registry']
+
+    tokens = {
+        'root': [
+            (r'Windows Registry Editor.*', Text),
+            (r'\s+', Text),
+            (r'[;#].*', Comment.Single),
+            (r'(\[)(-?)(HKEY_[A-Z_]+)(.*?\])$',
+             bygroups(Keyword, Operator, Name.Builtin, Keyword)),
+            # String keys, which obey somewhat normal escaping
+            (r'("(?:\\"|\\\\|[^"])+")([ \t]*)(=)([ \t]*)',
+             bygroups(Name.Attribute, Text, Operator, Text),
+             'value'),
+            # Bare keys (includes @)
+            (r'(.*?)([ \t]*)(=)([ \t]*)',
+             bygroups(Name.Attribute, Text, Operator, Text),
+             'value'),
+        ],
+        'value': [
+            (r'-', Operator, '#pop'), # delete value
+            (r'(dword|hex(?:\([0-9a-fA-F]\))?)(:)([0-9a-fA-F,]+)',
+             bygroups(Name.Variable, Punctuation, Number), '#pop'),
+            # As far as I know, .reg files do not support line continuation.
+            (r'.*', String, '#pop'),
+        ]
+    }
+
+    def analyse_text(text):
+        return text.startswith('Windows Registry Editor')
 
 
 class PropertiesLexer(RegexLexer):
@@ -171,7 +215,7 @@ class BaseMakefileLexer(RegexLexer):
     *New in Pygments 0.10.*
     """
 
-    name = 'Makefile'
+    name = 'Base Makefile'
     aliases = ['basemake']
     filenames = []
     mimetypes = []
@@ -186,7 +230,7 @@ class BaseMakefileLexer(RegexLexer):
              bygroups(Keyword, Text), 'export'),
             (r'export\s+', Keyword),
             # assignment
-            (r'([a-zA-Z0-9_${}.-]+)(\s*)([!?:+]?=)([ \t]*)((?:.*\\\n|.*\n)+)',
+            (r'([a-zA-Z0-9_${}.-]+)(\s*)([!?:+]?=)([ \t]*)((?:.*\\\n)+|.*\n)',
              bygroups(Name.Variable, Text, Operator, Text, using(BashLexer))),
             # strings
             (r'(?s)"(\\\\|\\.|[^"\\])*"', String.Double),
@@ -291,12 +335,12 @@ class DarcsPatchLexer(RegexLexer):
         'insert': [
             include('specialText'),
             (r'\[', Generic.Inserted),
-            (r'[^\n\[]*', Generic.Inserted),
+            (r'[^\n\[]+', Generic.Inserted),
         ],
         'delete': [
             include('specialText'),
             (r'\[', Generic.Deleted),
-            (r'[^\n\[]*', Generic.Deleted),
+            (r'[^\n\[]+', Generic.Deleted),
         ],
     }
 
@@ -345,18 +389,18 @@ class IrcLogsLexer(RegexLexer):
             # /me msgs
             ("^" + timestamp + r"""
                 (\s*[*]\s+)            # Star
-                ([^\s]+\s+.*?\n)       # Nick + rest of message """,
+                (\S+\s+.*?\n)          # Nick + rest of message """,
              bygroups(Comment.Preproc, Keyword, Generic.Inserted)),
             # join/part msgs
             ("^" + timestamp + r"""
                 (\s*(?:\*{3}|<?-[!@=P]?->?)\s*)  # Star(s) or symbols
-                ([^\s]+\s+)                     # Nick + Space
+                (\S+\s+)                     # Nick + Space
                 (.*?\n)                         # Rest of message """,
              bygroups(Comment.Preproc, Keyword, String, Comment)),
             (r"^.*?\n", Text),
         ],
         'msg': [
-            (r"[^\s]+:(?!//)", Name.Attribute),  # Prefix
+            (r"\S+:(?!//)", Name.Attribute),  # Prefix
             (r".*\n", Text, '#pop'),
         ],
     }
@@ -467,7 +511,7 @@ class GroffLexer(RegexLexer):
 
     tokens = {
         'root': [
-            (r'(?i)(\.)(\w+)', bygroups(Text, Keyword), 'request'),
+            (r'(\.)(\w+)', bygroups(Text, Keyword), 'request'),
             (r'\.', Punctuation, 'request'),
             # Regular characters, slurp till we find a backslash or newline
             (r'[^\\\n]*', Text, 'textline'),
@@ -481,7 +525,7 @@ class GroffLexer(RegexLexer):
             # groff has many ways to write escapes.
             (r'\\"[^\n]*', Comment),
             (r'\\[fn]\w', String.Escape),
-            (r'\\\(..', String.Escape),
+            (r'\\\(.{2}', String.Escape),
             (r'\\.\[.*\]', String.Escape),
             (r'\\.', String.Escape),
             (r'\\\n', Text, 'request'),
@@ -527,7 +571,7 @@ class ApacheConfLexer(RegexLexer):
             (r'(#.*?)$', Comment),
             (r'(<[^\s>]+)(?:(\s+)(.*?))?(>)',
              bygroups(Name.Tag, Text, String, Name.Tag)),
-            (r'([a-zA-Z][a-zA-Z0-9]*)(\s+)',
+            (r'([a-zA-Z][a-zA-Z0-9_]*)(\s+)',
              bygroups(Name.Builtin, Text), 'value'),
             (r'\.+', Text),
         ],
@@ -572,7 +616,7 @@ class MoinWikiLexer(RegexLexer):
             (r'(\'\'\'?|\|\||`|__|~~|\^|,,|::)', Comment), # Formatting
             # Lists
             (r'^( +)([.*-])( )', bygroups(Text, Name.Builtin, Text)),
-            (r'^( +)([a-zivx]{1,5}\.)( )', bygroups(Text, Name.Builtin, Text)),
+            (r'^( +)([a-z]{1,5}\.)( )', bygroups(Text, Name.Builtin, Text)),
             # Other Formatting
             (r'\[\[\w+.*?\]\]', Keyword), # Macro
             (r'(\[[^\s\]]+)(\s+[^\]]+?)?(\])',
@@ -613,7 +657,6 @@ class RstLexer(RegexLexer):
 
     def _handle_sourcecode(self, match):
         from pygments.lexers import get_lexer_by_name
-        from pygments.util import ClassNotFound
 
         # section header
         yield match.start(1), Punctuation, match.group(1)
@@ -653,6 +696,13 @@ class RstLexer(RegexLexer):
         for item in do_insertions(ins, lexer.get_tokens_unprocessed(code)):
             yield item
 
+    # from docutils.parsers.rst.states
+    closers = u'\'")]}>\u2019\u201d\xbb!?'
+    unicode_delimiters = u'\u2010\u2011\u2012\u2013\u2014\u00a0'
+    end_string_suffix = (r'((?=$)|(?=[-/:.,; \n\x00%s%s]))'
+                         % (re.escape(unicode_delimiters),
+                            re.escape(closers)))
+
     tokens = {
         'root': [
             # Heading with overline
@@ -689,9 +739,9 @@ class RstLexer(RegexLexer):
              bygroups(Punctuation, Text, Operator.Word, Punctuation, Text,
                       using(this, state='inline'))),
             # A reference target
-            (r'^( *\.\.)(\s*)([\w\t ]+:)(.*?)$',
+            (r'^( *\.\.)(\s*)(_(?:[^:\\]|\\.)+:)(.*?)$',
              bygroups(Punctuation, Text, Name.Tag, using(this, state='inline'))),
-            # A footnote target
+            # A footnote/citation target
             (r'^( *\.\.)(\s*)(\[.+\])(.*?)$',
              bygroups(Punctuation, Text, Name.Tag, using(this, state='inline'))),
             # A substitution def
@@ -730,10 +780,9 @@ class RstLexer(RegexLexer):
             (r'.', Text),
         ],
         'literal': [
-            (r'[^`\\]+', String),
-            (r'\\.', String),
-            (r'``', String, '#pop'),
-            (r'[`\\]', String),
+            (r'[^`]+', String),
+            (r'``' + end_string_suffix, String, '#pop'),
+            (r'`', String),
         ]
     }
 
@@ -761,21 +810,23 @@ class VimLexer(RegexLexer):
     """
     name = 'VimL'
     aliases = ['vim']
-    filenames = ['*.vim', '.vimrc']
+    filenames = ['*.vim', '.vimrc', '.exrc', '.gvimrc',
+                 '_vimrc', '_exrc', '_gvimrc', 'vimrc', 'gvimrc']
     mimetypes = ['text/x-vim']
     flags = re.MULTILINE
 
     tokens = {
         'root': [
-            # Who decided that doublequote was a good comment character??
             (r'^\s*".*', Comment),
-            (r'(?<=\s)"[^\-:.%#=*].*', Comment),
 
             (r'[ \t]+', Text),
             # TODO: regexes can have other delims
             (r'/(\\\\|\\/|[^\n/])*/', String.Regex),
             (r'"(\\\\|\\"|[^\n"])*"', String.Double),
             (r"'(\\\\|\\'|[^\n'])*'", String.Single),
+
+            # Who decided that doublequote was a good comment character??
+            (r'(?<=\s)"[^\-:.%#=*].*', Comment),
             (r'-?\d+', Number),
             (r'#[0-9a-f]{6}', Number.Hex),
             (r'^:', Punctuation),
@@ -876,106 +927,106 @@ class SquidConfLexer(RegexLexer):
     mimetypes = ['text/x-squidconf']
     flags = re.IGNORECASE
 
-    keywords = [ "acl", "always_direct", "announce_host",
-                 "announce_period", "announce_port", "announce_to",
-                 "anonymize_headers", "append_domain", "as_whois_server",
-                 "auth_param_basic", "authenticate_children",
-                 "authenticate_program", "authenticate_ttl", "broken_posts",
-                 "buffered_logs", "cache_access_log", "cache_announce",
-                 "cache_dir", "cache_dns_program", "cache_effective_group",
-                 "cache_effective_user", "cache_host", "cache_host_acl",
-                 "cache_host_domain", "cache_log", "cache_mem",
-                 "cache_mem_high", "cache_mem_low", "cache_mgr",
-                 "cachemgr_passwd", "cache_peer", "cache_peer_access",
-                 "cahce_replacement_policy", "cache_stoplist",
-                 "cache_stoplist_pattern", "cache_store_log", "cache_swap",
-                 "cache_swap_high", "cache_swap_log", "cache_swap_low",
-                 "client_db", "client_lifetime", "client_netmask",
-                 "connect_timeout", "coredump_dir", "dead_peer_timeout",
-                 "debug_options", "delay_access", "delay_class",
-                 "delay_initial_bucket_level", "delay_parameters",
-                 "delay_pools", "deny_info", "dns_children", "dns_defnames",
-                 "dns_nameservers", "dns_testnames", "emulate_httpd_log",
-                 "err_html_text", "fake_user_agent", "firewall_ip",
-                 "forwarded_for", "forward_snmpd_port", "fqdncache_size",
-                 "ftpget_options", "ftpget_program", "ftp_list_width",
-                 "ftp_passive", "ftp_user", "half_closed_clients",
-                 "header_access", "header_replace", "hierarchy_stoplist",
-                 "high_response_time_warning", "high_page_fault_warning",
-                 "htcp_port", "http_access", "http_anonymizer", "httpd_accel",
-                 "httpd_accel_host", "httpd_accel_port",
-                 "httpd_accel_uses_host_header", "httpd_accel_with_proxy",
-                 "http_port", "http_reply_access", "icp_access",
-                 "icp_hit_stale", "icp_port", "icp_query_timeout",
-                 "ident_lookup", "ident_lookup_access", "ident_timeout",
-                 "incoming_http_average", "incoming_icp_average",
-                 "inside_firewall", "ipcache_high", "ipcache_low",
-                 "ipcache_size", "local_domain", "local_ip", "logfile_rotate",
-                 "log_fqdn", "log_icp_queries", "log_mime_hdrs",
-                 "maximum_object_size", "maximum_single_addr_tries",
-                 "mcast_groups", "mcast_icp_query_timeout", "mcast_miss_addr",
-                 "mcast_miss_encode_key", "mcast_miss_port", "memory_pools",
-                 "memory_pools_limit", "memory_replacement_policy",
-                 "mime_table", "min_http_poll_cnt", "min_icp_poll_cnt",
-                 "minimum_direct_hops", "minimum_object_size",
-                 "minimum_retry_timeout", "miss_access", "negative_dns_ttl",
-                 "negative_ttl", "neighbor_timeout", "neighbor_type_domain",
-                 "netdb_high", "netdb_low", "netdb_ping_period",
-                 "netdb_ping_rate", "never_direct", "no_cache",
-                 "passthrough_proxy", "pconn_timeout", "pid_filename",
-                 "pinger_program", "positive_dns_ttl", "prefer_direct",
-                 "proxy_auth", "proxy_auth_realm", "query_icmp", "quick_abort",
-                 "quick_abort", "quick_abort_max", "quick_abort_min",
-                 "quick_abort_pct", "range_offset_limit", "read_timeout",
-                 "redirect_children", "redirect_program",
-                 "redirect_rewrites_host_header", "reference_age",
-                 "reference_age", "refresh_pattern", "reload_into_ims",
-                 "request_body_max_size", "request_size", "request_timeout",
-                 "shutdown_lifetime", "single_parent_bypass",
-                 "siteselect_timeout", "snmp_access", "snmp_incoming_address",
-                 "snmp_port", "source_ping", "ssl_proxy",
-                 "store_avg_object_size", "store_objects_per_bucket",
-                 "strip_query_terms", "swap_level1_dirs", "swap_level2_dirs",
-                 "tcp_incoming_address", "tcp_outgoing_address",
-                 "tcp_recv_bufsize", "test_reachability", "udp_hit_obj",
-                 "udp_hit_obj_size", "udp_incoming_address",
-                 "udp_outgoing_address", "unique_hostname", "unlinkd_program",
-                 "uri_whitespace", "useragent_log", "visible_hostname",
-                 "wais_relay", "wais_relay_host", "wais_relay_port",
-                 ]
+    keywords = [
+        "access_log", "acl", "always_direct", "announce_host",
+        "announce_period", "announce_port", "announce_to", "anonymize_headers",
+        "append_domain", "as_whois_server", "auth_param_basic",
+        "authenticate_children", "authenticate_program", "authenticate_ttl",
+        "broken_posts", "buffered_logs", "cache_access_log", "cache_announce",
+        "cache_dir", "cache_dns_program", "cache_effective_group",
+        "cache_effective_user", "cache_host", "cache_host_acl",
+        "cache_host_domain", "cache_log", "cache_mem", "cache_mem_high",
+        "cache_mem_low", "cache_mgr", "cachemgr_passwd", "cache_peer",
+        "cache_peer_access", "cahce_replacement_policy", "cache_stoplist",
+        "cache_stoplist_pattern", "cache_store_log", "cache_swap",
+        "cache_swap_high", "cache_swap_log", "cache_swap_low", "client_db",
+        "client_lifetime", "client_netmask", "connect_timeout", "coredump_dir",
+        "dead_peer_timeout", "debug_options", "delay_access", "delay_class",
+        "delay_initial_bucket_level", "delay_parameters", "delay_pools",
+        "deny_info", "dns_children", "dns_defnames", "dns_nameservers",
+        "dns_testnames", "emulate_httpd_log", "err_html_text",
+        "fake_user_agent", "firewall_ip", "forwarded_for", "forward_snmpd_port",
+        "fqdncache_size", "ftpget_options", "ftpget_program", "ftp_list_width",
+        "ftp_passive", "ftp_user", "half_closed_clients", "header_access",
+        "header_replace", "hierarchy_stoplist", "high_response_time_warning",
+        "high_page_fault_warning", "hosts_file", "htcp_port", "http_access",
+        "http_anonymizer", "httpd_accel", "httpd_accel_host",
+        "httpd_accel_port", "httpd_accel_uses_host_header",
+        "httpd_accel_with_proxy", "http_port", "http_reply_access",
+        "icp_access", "icp_hit_stale", "icp_port", "icp_query_timeout",
+        "ident_lookup", "ident_lookup_access", "ident_timeout",
+        "incoming_http_average", "incoming_icp_average", "inside_firewall",
+        "ipcache_high", "ipcache_low", "ipcache_size", "local_domain",
+        "local_ip", "logfile_rotate", "log_fqdn", "log_icp_queries",
+        "log_mime_hdrs", "maximum_object_size", "maximum_single_addr_tries",
+        "mcast_groups", "mcast_icp_query_timeout", "mcast_miss_addr",
+        "mcast_miss_encode_key", "mcast_miss_port", "memory_pools",
+        "memory_pools_limit", "memory_replacement_policy", "mime_table",
+        "min_http_poll_cnt", "min_icp_poll_cnt", "minimum_direct_hops",
+        "minimum_object_size", "minimum_retry_timeout", "miss_access",
+        "negative_dns_ttl", "negative_ttl", "neighbor_timeout",
+        "neighbor_type_domain", "netdb_high", "netdb_low", "netdb_ping_period",
+        "netdb_ping_rate", "never_direct", "no_cache", "passthrough_proxy",
+        "pconn_timeout", "pid_filename", "pinger_program", "positive_dns_ttl",
+        "prefer_direct", "proxy_auth", "proxy_auth_realm", "query_icmp",
+        "quick_abort", "quick_abort", "quick_abort_max", "quick_abort_min",
+        "quick_abort_pct", "range_offset_limit", "read_timeout",
+        "redirect_children", "redirect_program",
+        "redirect_rewrites_host_header", "reference_age", "reference_age",
+        "refresh_pattern", "reload_into_ims", "request_body_max_size",
+        "request_size", "request_timeout", "shutdown_lifetime",
+        "single_parent_bypass", "siteselect_timeout", "snmp_access",
+        "snmp_incoming_address", "snmp_port", "source_ping", "ssl_proxy",
+        "store_avg_object_size", "store_objects_per_bucket",
+        "strip_query_terms", "swap_level1_dirs", "swap_level2_dirs",
+        "tcp_incoming_address", "tcp_outgoing_address", "tcp_recv_bufsize",
+        "test_reachability", "udp_hit_obj", "udp_hit_obj_size",
+        "udp_incoming_address", "udp_outgoing_address", "unique_hostname",
+        "unlinkd_program", "uri_whitespace", "useragent_log",
+        "visible_hostname", "wais_relay", "wais_relay_host", "wais_relay_port",
+    ]
 
-    opts = [ "proxy-only", "weight", "ttl", "no-query", "default",
-             "round-robin", "multicast-responder", "on", "off", "all",
-             "deny", "allow", "via", "parent", "no-digest", "heap", "lru",
-             "realm", "children", "credentialsttl", "none", "disable",
-             "offline_toggle", "diskd", "q1", "q2",
-             ]
+    opts = [
+        "proxy-only", "weight", "ttl", "no-query", "default", "round-robin",
+        "multicast-responder", "on", "off", "all", "deny", "allow", "via",
+        "parent", "no-digest", "heap", "lru", "realm", "children", "q1", "q2",
+        "credentialsttl", "none", "disable", "offline_toggle", "diskd",
+    ]
 
-    actions = [ "shutdown", "info", "parameter", "server_list",
-                "client_list", r'squid\.conf',
-                ]
+    actions = [
+        "shutdown", "info", "parameter", "server_list", "client_list",
+        r'squid\.conf',
+    ]
 
-    actions_stats = [ "objects", "vm_objects", "utilization",
-                      "ipcache", "fqdncache", "dns", "redirector", "io",
-                      "reply_headers", "filedescriptors", "netdb",
-                      ]
+    actions_stats = [
+        "objects", "vm_objects", "utilization", "ipcache", "fqdncache", "dns",
+        "redirector", "io", "reply_headers", "filedescriptors", "netdb",
+    ]
 
-    actions_log = [ "status", "enable", "disable", "clear"]
+    actions_log = ["status", "enable", "disable", "clear"]
 
-    acls = [ "url_regex", "urlpath_regex", "referer_regex", "port",
-             "proto", "req_mime_type", "rep_mime_type", "method",
-             "browser", "user", "src", "dst", "time", "dstdomain", "ident",
-             "snmp_community",
-             ]
+    acls = [
+        "url_regex", "urlpath_regex", "referer_regex", "port", "proto",
+        "req_mime_type", "rep_mime_type", "method", "browser", "user", "src",
+        "dst", "time", "dstdomain", "ident", "snmp_community",
+    ]
 
-    ip_re = r'\b(?:\d{1,3}\.){3}\d{1,3}\b'
+    ip_re = (
+        r'(?:(?:(?:[3-9]\d?|2(?:5[0-5]|[0-4]?\d)?|1\d{0,2}|0x0*[0-9a-f]{1,2}|'
+        r'0+[1-3]?[0-7]{0,2})(?:\.(?:[3-9]\d?|2(?:5[0-5]|[0-4]?\d)?|1\d{0,2}|'
+        r'0x0*[0-9a-f]{1,2}|0+[1-3]?[0-7]{0,2})){3})|(?!.*::.*::)(?:(?!:)|'
+        r':(?=:))(?:[0-9a-f]{0,4}(?:(?<=::)|(?<!::):)){6}(?:[0-9a-f]{0,4}'
+        r'(?:(?<=::)|(?<!::):)[0-9a-f]{0,4}(?:(?<=::)|(?<!:)|(?<=:)(?<!::):)|'
+        r'(?:25[0-4]|2[0-4]\d|1\d\d|[1-9]?\d)(?:\.(?:25[0-4]|2[0-4]\d|1\d\d|'
+        r'[1-9]?\d)){3}))'
+    )
 
     def makelistre(list):
-        return r'\b(?:'+'|'.join(list)+r')\b'
+        return r'\b(?:' + '|'.join(list) + r')\b'
 
     tokens = {
         'root': [
-            (r'\s+', Text),
+            (r'\s+', Whitespace),
             (r'#', Comment, 'comment'),
             (makelistre(keywords), Keyword),
             (makelistre(opts), Name.Constant),
@@ -984,8 +1035,8 @@ class SquidConfLexer(RegexLexer):
             (r'stats/'+makelistre(actions), String),
             (r'log/'+makelistre(actions)+r'=', String),
             (makelistre(acls), Keyword),
-            (ip_re+r'(?:/(?:'+ip_re+r')|\d+)?', Number),
-            (r'\b\d+\b', Number),
+            (ip_re + r'(?:/(?:' + ip_re + r'|\b\d+\b))?', Number.Float),
+            (r'(?:\b\d+\b(?:-\b\d+|%)?)', Number),
             (r'\S+', Text),
         ],
         'comment': [
@@ -1010,11 +1061,11 @@ class DebianControlLexer(RegexLexer):
             (r'^(Description)', Keyword, 'description'),
             (r'^(Maintainer)(:\s*)', bygroups(Keyword, Text), 'maintainer'),
             (r'^((Build-)?Depends)', Keyword, 'depends'),
-            (r'^((?:Python-)?Version)(:\s*)([^\s]+)$',
+            (r'^((?:Python-)?Version)(:\s*)(\S+)$',
              bygroups(Keyword, Text, Number)),
-            (r'^((?:Installed-)?Size)(:\s*)([^\s]+)$',
+            (r'^((?:Installed-)?Size)(:\s*)(\S+)$',
              bygroups(Keyword, Text, Number)),
-            (r'^(MD5Sum|SHA1|SHA256)(:\s*)([^\s]+)$',
+            (r'^(MD5Sum|SHA1|SHA256)(:\s*)(\S+)$',
              bygroups(Keyword, Text, Number)),
             (r'^([a-zA-Z\-0-9\.]*?)(:\s*)(.*?)$',
              bygroups(Keyword, Whitespace, String)),
@@ -1026,7 +1077,8 @@ class DebianControlLexer(RegexLexer):
             (r'.', Text),
         ],
         'description': [
-            (r'(.*)(Homepage)(: )([^\s]+)', bygroups(Text, String, Name, Name.Class)),
+            (r'(.*)(Homepage)(: )(\S+)',
+             bygroups(Text, String, Name, Name.Class)),
             (r':.*\n', Generic.Strong),
             (r' .*\n', Text),
             ('', Text, '#pop'),
@@ -1039,9 +1091,9 @@ class DebianControlLexer(RegexLexer):
             (r'\|', Operator),
             (r'[\s]+', Text),
             (r'[}\)]\s*$', Text, '#pop'),
-            (r'[}]', Text),
+            (r'}', Text),
             (r'[^,]$', Name.Function, '#pop'),
-            (r'([\+\.a-zA-Z0-9-][\s\n]*)', Name.Function),
+            (r'([\+\.a-zA-Z0-9-])(\s*)', bygroups(Name.Function, Text)),
             (r'\[.*?\]', Name.Entity),
         ],
         'depend_vers': [
@@ -1378,7 +1430,8 @@ class YamlLexer(ExtendedRegexLexer):
         # ignored and regular whitespaces in quoted scalars
         'quoted-scalar-whitespaces': [
             # leading and trailing whitespaces are ignored
-            (r'^[ ]+|[ ]+$', Text),
+            (r'^[ ]+', Text),
+            (r'[ ]+$', Text),
             # line breaks are ignored
             (r'\n+', Text),
             # other whitespaces are a part of the value
@@ -1447,7 +1500,8 @@ class YamlLexer(ExtendedRegexLexer):
             # the scalar ends with a comment
             (r'[ ]+(?=#)', Text, '#pop'),
             # leading and trailing whitespaces are ignored
-            (r'^[ ]+|[ ]+$', Text),
+            (r'^[ ]+', Text),
+            (r'[ ]+$', Text),
             # line breaks are ignored
             (r'\n+', Text),
             # other whitespaces are a part of the value
@@ -1606,3 +1660,184 @@ class CMakeLexer(RegexLexer):
         ]
     }
 
+
+class HttpLexer(RegexLexer):
+    """
+    Lexer for HTTP sessions.
+
+    *New in Pygments 1.5.*
+    """
+
+    name = 'HTTP'
+    aliases = ['http']
+
+    flags = re.DOTALL
+
+    def header_callback(self, match):
+        if match.group(1).lower() == 'content-type':
+            content_type = match.group(5).strip()
+            if ';' in content_type:
+                content_type = content_type[:content_type.find(';')].strip()
+            self.content_type = content_type
+        yield match.start(1), Name.Attribute, match.group(1)
+        yield match.start(2), Text, match.group(2)
+        yield match.start(3), Operator, match.group(3)
+        yield match.start(4), Text, match.group(4)
+        yield match.start(5), Literal, match.group(5)
+        yield match.start(6), Text, match.group(6)
+
+    def continuous_header_callback(self, match):
+        yield match.start(1), Text, match.group(1)
+        yield match.start(2), Literal, match.group(2)
+        yield match.start(3), Text, match.group(3)
+
+    def content_callback(self, match):
+        content_type = getattr(self, 'content_type', None)
+        content = match.group()
+        offset = match.start()
+        if content_type:
+            from pygments.lexers import get_lexer_for_mimetype
+            try:
+                lexer = get_lexer_for_mimetype(content_type)
+            except ClassNotFound:
+                pass
+            else:
+                for idx, token, value in lexer.get_tokens_unprocessed(content):
+                    yield offset + idx, token, value
+                return
+        yield offset, Text, content
+
+    tokens = {
+        'root': [
+            (r'(GET|POST|PUT|DELETE|HEAD|OPTIONS|TRACE)( +)([^ ]+)( +)'
+             r'(HTTPS?)(/)(1\.[01])(\r?\n|$)',
+             bygroups(Name.Function, Text, Name.Namespace, Text,
+                      Keyword.Reserved, Operator, Number, Text),
+             'headers'),
+            (r'(HTTPS?)(/)(1\.[01])( +)(\d{3})( +)([^\r\n]+)(\r?\n|$)',
+             bygroups(Keyword.Reserved, Operator, Number, Text, Number,
+                      Text, Name.Exception, Text),
+             'headers'),
+        ],
+        'headers': [
+            (r'([^\s:]+)( *)(:)( *)([^\r\n]+)(\r?\n|$)', header_callback),
+            (r'([\t ]+)([^\r\n]+)(\r?\n|$)', continuous_header_callback),
+            (r'\r?\n', Text, 'content')
+        ],
+        'content': [
+            (r'.+', content_callback)
+        ]
+    }
+
+
+class PyPyLogLexer(RegexLexer):
+    """
+    Lexer for PyPy log files.
+
+    *New in Pygments 1.5.*
+    """
+    name = "PyPy Log"
+    aliases = ["pypylog", "pypy"]
+    filenames = ["*.pypylog"]
+    mimetypes = ['application/x-pypylog']
+
+    tokens = {
+        "root": [
+            (r"\[\w+\] {jit-log-.*?$", Keyword, "jit-log"),
+            (r"\[\w+\] {jit-backend-counts$", Keyword, "jit-backend-counts"),
+            include("extra-stuff"),
+        ],
+        "jit-log": [
+            (r"\[\w+\] jit-log-.*?}$", Keyword, "#pop"),
+            (r"^\+\d+: ", Comment),
+            (r"--end of the loop--", Comment),
+            (r"[ifp]\d+", Name),
+            (r"ptr\d+", Name),
+            (r"(\()(\w+(?:\.\w+)?)(\))",
+             bygroups(Punctuation, Name.Builtin, Punctuation)),
+            (r"[\[\]=,()]", Punctuation),
+            (r"(\d+\.\d+|inf|-inf)", Number.Float),
+            (r"-?\d+", Number.Integer),
+            (r"'.*'", String),
+            (r"(None|descr|ConstClass|ConstPtr|TargetToken)", Name),
+            (r"<.*?>+", Name.Builtin),
+            (r"(label|debug_merge_point|jump|finish)", Name.Class),
+            (r"(int_add_ovf|int_add|int_sub_ovf|int_sub|int_mul_ovf|int_mul|"
+             r"int_floordiv|int_mod|int_lshift|int_rshift|int_and|int_or|"
+             r"int_xor|int_eq|int_ne|int_ge|int_gt|int_le|int_lt|int_is_zero|"
+             r"int_is_true|"
+             r"uint_floordiv|uint_ge|uint_lt|"
+             r"float_add|float_sub|float_mul|float_truediv|float_neg|"
+             r"float_eq|float_ne|float_ge|float_gt|float_le|float_lt|float_abs|"
+             r"ptr_eq|ptr_ne|instance_ptr_eq|instance_ptr_ne|"
+             r"cast_int_to_float|cast_float_to_int|"
+             r"force_token|quasiimmut_field|same_as|virtual_ref_finish|"
+             r"virtual_ref|mark_opaque_ptr|"
+             r"call_may_force|call_assembler|call_loopinvariant|"
+             r"call_release_gil|call_pure|call|"
+             r"new_with_vtable|new_array|newstr|newunicode|new|"
+             r"arraylen_gc|"
+             r"getarrayitem_gc_pure|getarrayitem_gc|setarrayitem_gc|"
+             r"getarrayitem_raw|setarrayitem_raw|getfield_gc_pure|"
+             r"getfield_gc|getinteriorfield_gc|setinteriorfield_gc|"
+             r"getfield_raw|setfield_gc|setfield_raw|"
+             r"strgetitem|strsetitem|strlen|copystrcontent|"
+             r"unicodegetitem|unicodesetitem|unicodelen|"
+             r"guard_true|guard_false|guard_value|guard_isnull|"
+             r"guard_nonnull_class|guard_nonnull|guard_class|guard_no_overflow|"
+             r"guard_not_forced|guard_no_exception|guard_not_invalidated)",
+             Name.Builtin),
+            include("extra-stuff"),
+        ],
+        "jit-backend-counts": [
+            (r"\[\w+\] jit-backend-counts}$", Keyword, "#pop"),
+            (r":", Punctuation),
+            (r"\d+", Number),
+            include("extra-stuff"),
+        ],
+        "extra-stuff": [
+            (r"\s+", Text),
+            (r"#.*?$", Comment),
+        ],
+    }
+
+
+class HxmlLexer(RegexLexer):
+    """
+    Lexer for `haXe build <http://haxe.org/doc/compiler>`_ files.
+
+    *New in Pygments 1.6.*
+    """
+    name = 'Hxml'
+    aliases = ['haxeml', 'hxml']
+    filenames = ['*.hxml']
+
+    tokens = {
+        'root': [
+            # Seperator
+            (r'(--)(next)', bygroups(Punctuation, Generic.Heading)),
+            # Compiler switches with one dash
+            (r'(-)(prompt|debug|v)', bygroups(Punctuation, Keyword.Keyword)),
+            # Compilerswitches with two dashes
+            (r'(--)(neko-source|flash-strict|flash-use-stage|no-opt|no-traces|'
+             r'no-inline|times|no-output)', bygroups(Punctuation, Keyword)),
+            # Targets and other options that take an argument
+            (r'(-)(cpp|js|neko|x|as3|swf9?|swf-lib|php|xml|main|lib|D|resource|'
+             r'cp|cmd)( +)(.+)',
+             bygroups(Punctuation, Keyword, Whitespace, String)),
+            # Options that take only numerical arguments
+            (r'(-)(swf-version)( +)(\d+)',
+             bygroups(Punctuation, Keyword, Number.Integer)),
+            # An Option that defines the size, the fps and the background
+            # color of an flash movie
+            (r'(-)(swf-header)( +)(\d+)(:)(\d+)(:)(\d+)(:)([A-Fa-f0-9]{6})',
+             bygroups(Punctuation, Keyword, Whitespace, Number.Integer,
+                      Punctuation, Number.Integer, Punctuation, Number.Integer,
+                      Punctuation, Number.Hex)),
+            # options with two dashes that takes arguments
+            (r'(--)(js-namespace|php-front|php-lib|remap|gen-hx-classes)( +)'
+             r'(.+)', bygroups(Punctuation, Keyword, Whitespace, String)),
+            # Single line comment, multiline ones are not allowed.
+            (r'#.*', Comment.Single)
+        ]
+    }

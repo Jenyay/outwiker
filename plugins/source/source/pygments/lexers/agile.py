@@ -5,7 +5,7 @@
 
     Lexers for agile languages.
 
-    :copyright: Copyright 2006-2010 by the Pygments team, see AUTHORS.
+    :copyright: Copyright 2006-2013 by the Pygments team, see AUTHORS.
     :license: BSD, see LICENSE for details.
 """
 
@@ -20,12 +20,14 @@ from pygments import unistring as uni
 
 
 __all__ = ['PythonLexer', 'PythonConsoleLexer', 'PythonTracebackLexer',
-           'RubyLexer', 'RubyConsoleLexer', 'PerlLexer', 'LuaLexer',
-           'MiniDLexer', 'IoLexer', 'TclLexer', 'ClojureLexer',
-           'Python3Lexer', 'Python3TracebackLexer', 'FactorLexer', 'IokeLexer']
+           'Python3Lexer', 'Python3TracebackLexer', 'RubyLexer',
+           'RubyConsoleLexer', 'PerlLexer', 'LuaLexer', 'MoonScriptLexer',
+           'CrocLexer', 'MiniDLexer', 'IoLexer', 'TclLexer', 'FactorLexer',
+           'FancyLexer', 'DgLexer']
 
 # b/w compatibility
 from pygments.lexers.functional import SchemeLexer
+from pygments.lexers.jvm import IokeLexer, ClojureLexer
 
 line_re  = re.compile('.*?\n')
 
@@ -36,8 +38,8 @@ class PythonLexer(RegexLexer):
     """
 
     name = 'Python'
-    aliases = ['python', 'py']
-    filenames = ['*.py', '*.pyw', '*.sc', 'SConstruct', 'SConscript', '*.tac']
+    aliases = ['python', 'py', 'sage']
+    filenames = ['*.py', '*.pyw', '*.sc', 'SConstruct', 'SConscript', '*.tac', '*.sage']
     mimetypes = ['text/x-python', 'application/x-python']
 
     tokens = {
@@ -55,8 +57,10 @@ class PythonLexer(RegexLexer):
             include('keywords'),
             (r'(def)((?:\s|\\\s)+)', bygroups(Keyword, Text), 'funcname'),
             (r'(class)((?:\s|\\\s)+)', bygroups(Keyword, Text), 'classname'),
-            (r'(from)((?:\s|\\\s)+)', bygroups(Keyword.Namespace, Text), 'fromimport'),
-            (r'(import)((?:\s|\\\s)+)', bygroups(Keyword.Namespace, Text), 'import'),
+            (r'(from)((?:\s|\\\s)+)', bygroups(Keyword.Namespace, Text),
+             'fromimport'),
+            (r'(import)((?:\s|\\\s)+)', bygroups(Keyword.Namespace, Text),
+             'import'),
             include('builtins'),
             include('backtick'),
             ('(?:[rR]|[uU][rR]|[rR][uU])"""', String, 'tdqs'),
@@ -73,7 +77,7 @@ class PythonLexer(RegexLexer):
         'keywords': [
             (r'(assert|break|continue|del|elif|else|except|exec|'
              r'finally|for|global|if|lambda|pass|print|raise|'
-             r'return|try|while|yield|as|with)\b', Keyword),
+             r'return|try|while|yield(\s+from)?|as|with)\b', Keyword),
         ],
         'builtins': [
             (r'(?<!\.)(__import__|abs|all|any|apply|basestring|bin|bool|buffer|'
@@ -102,12 +106,12 @@ class PythonLexer(RegexLexer):
              r'WindowsError|ZeroDivisionError)\b', Name.Exception),
         ],
         'numbers': [
-            (r'(\d+\.\d*|\d*\.\d+)([eE][+-]?[0-9]+)?', Number.Float),
-            (r'\d+[eE][+-]?[0-9]+', Number.Float),
-            (r'0[0-7]+', Number.Oct),
+            (r'(\d+\.\d*|\d*\.\d+)([eE][+-]?[0-9]+)?j?', Number.Float),
+            (r'\d+[eE][+-]?[0-9]+j?', Number.Float),
+            (r'0[0-7]+j?', Number.Oct),
             (r'0[xX][a-fA-F0-9]+', Number.Hex),
             (r'\d+L', Number.Integer.Long),
-            (r'\d+', Number.Integer)
+            (r'\d+j?', Number.Integer)
         ],
         'backtick': [
             ('`.*?`', String.Backtick),
@@ -123,15 +127,23 @@ class PythonLexer(RegexLexer):
             ('[a-zA-Z_][a-zA-Z0-9_]*', Name.Class, '#pop')
         ],
         'import': [
-            (r'((?:\s|\\\s)+)(as)((?:\s|\\\s)+)',
-             bygroups(Text, Keyword.Namespace, Text)),
+            (r'(?:[ \t]|\\\n)+', Text),
+            (r'as\b', Keyword.Namespace),
+            (r',', Operator),
             (r'[a-zA-Z_][a-zA-Z0-9_.]*', Name.Namespace),
-            (r'(\s*)(,)(\s*)', bygroups(Text, Operator, Text)),
             (r'', Text, '#pop') # all else: go back
         ],
         'fromimport': [
-            (r'((?:\s|\\\s)+)(import)\b', bygroups(Text, Keyword.Namespace), '#pop'),
+            (r'(?:[ \t]|\\\n)+', Text),
+            (r'import\b', Keyword.Namespace, '#pop'),
+            # if None occurs here, it's "raise x from None", since None can
+            # never be a module name
+            (r'None\b', Name.Builtin.Pseudo, '#pop'),
+            # sadly, in "raise x from y" y will be highlighted as namespace too
             (r'[a-zA-Z_.][a-zA-Z0-9_.]*', Name.Namespace),
+            # anything else here also means "raise x from y" and is therefore
+            # not an error
+            (r'', Text, '#pop'),
         ],
         'stringescape': [
             (r'\\([\\abfnrtv"\']|\n|N{.*?}|u[a-fA-F0-9]{4}|'
@@ -152,12 +164,12 @@ class PythonLexer(RegexLexer):
         ],
         'dqs': [
             (r'"', String, '#pop'),
-            (r'\\\\|\\"|\\\n', String.Escape), # included here again for raw strings
+            (r'\\\\|\\"|\\\n', String.Escape), # included here for raw strings
             include('strings')
         ],
         'sqs': [
             (r"'", String, '#pop'),
-            (r"\\\\|\\'|\\\n", String.Escape), # included here again for raw strings
+            (r"\\\\|\\'|\\\n", String.Escape), # included here for raw strings
             include('strings')
         ],
         'tdqs': [
@@ -173,7 +185,7 @@ class PythonLexer(RegexLexer):
     }
 
     def analyse_text(text):
-        return shebang_matches(text, r'pythonw?(2\.\d)?')
+        return shebang_matches(text, r'pythonw?(2(\.\d)?)?')
 
 
 class Python3Lexer(RegexLexer):
@@ -195,8 +207,9 @@ class Python3Lexer(RegexLexer):
     tokens = PythonLexer.tokens.copy()
     tokens['keywords'] = [
         (r'(assert|break|continue|del|elif|else|except|'
-         r'finally|for|global|if|lambda|pass|raise|'
-         r'return|try|while|yield|as|with|True|False|None)\b', Keyword),
+         r'finally|for|global|if|lambda|pass|raise|nonlocal|'
+         r'return|try|while|yield(\s+from)?|as|with|True|False|None)\b',
+         Keyword),
     ]
     tokens['builtins'] = [
         (r'(?<!\.)(__import__|abs|all|any|bin|bool|bytearray|bytes|'
@@ -252,6 +265,7 @@ class Python3Lexer(RegexLexer):
         (r'(\s+)(import)\b', bygroups(Text, Keyword), '#pop'),
         (r'\.', Name.Namespace),
         (uni_name, Name.Namespace),
+        (r'', Text, '#pop'),
     ]
     # don't highlight "%s" substitutions
     tokens['strings'] = [
@@ -364,7 +378,8 @@ class PythonTracebackLexer(RegexLexer):
 
     tokens = {
         'root': [
-            (r'^Traceback \(most recent call last\):\n', Generic.Traceback, 'intb'),
+            (r'^Traceback \(most recent call last\):\n',
+             Generic.Traceback, 'intb'),
             # SyntaxError starts with this.
             (r'^(?=  File "[^"]+", line \d+)', Generic.Traceback, 'intb'),
             (r'^.*\n', Other),
@@ -376,9 +391,9 @@ class PythonTracebackLexer(RegexLexer):
              bygroups(Text, Name.Builtin, Text, Number, Text)),
             (r'^(    )(.+)(\n)',
              bygroups(Text, using(PythonLexer), Text)),
-            (r'^([ \t]*)(...)(\n)',
+            (r'^([ \t]*)(\.\.\.)(\n)',
              bygroups(Text, Comment, Text)), # for doctests...
-            (r'^(.+)(: )(.+)(\n)',
+            (r'^([^:]+)(: )(.+)(\n)',
              bygroups(Generic.Error, Text, Name, Text), '#pop'),
             (r'^([a-zA-Z_][a-zA-Z0-9_]*)(:?\n)',
              bygroups(Generic.Error, Text), '#pop')
@@ -412,9 +427,9 @@ class Python3TracebackLexer(RegexLexer):
              bygroups(Text, Name.Builtin, Text, Number, Text, Name, Text)),
             (r'^(    )(.+)(\n)',
              bygroups(Text, using(Python3Lexer), Text)),
-            (r'^([ \t]*)(...)(\n)',
+            (r'^([ \t]*)(\.\.\.)(\n)',
              bygroups(Text, Comment, Text)), # for doctests...
-            (r'^(.+)(: )(.+)(\n)',
+            (r'^([^:]+)(: )(.+)(\n)',
              bygroups(Generic.Error, Text, Name, Text), '#pop'),
             (r'^([a-zA-Z_][a-zA-Z0-9_]*)(:?\n)',
              bygroups(Generic.Error, Text), '#pop')
@@ -483,11 +498,11 @@ class RubyLexer(ExtendedRegexLexer):
 
     def gen_rubystrings_rules():
         def intp_regex_callback(self, match, ctx):
-            yield match.start(1), String.Regex, match.group(1)    # begin
+            yield match.start(1), String.Regex, match.group(1)  # begin
             nctx = LexerContext(match.group(3), 0, ['interpolated-regex'])
             for i, t, v in self.get_tokens_unprocessed(context=nctx):
                 yield match.start(3)+i, t, v
-            yield match.start(4), String.Regex, match.group(4)    # end[mixounse]*
+            yield match.start(4), String.Regex, match.group(4)  # end[mixounse]*
             ctx.pos = match.end()
 
         def intp_string_callback(self, match, ctx):
@@ -495,17 +510,19 @@ class RubyLexer(ExtendedRegexLexer):
             nctx = LexerContext(match.group(3), 0, ['interpolated-string'])
             for i, t, v in self.get_tokens_unprocessed(context=nctx):
                 yield match.start(3)+i, t, v
-            yield match.start(4), String.Other, match.group(4)    # end
+            yield match.start(4), String.Other, match.group(4)  # end
             ctx.pos = match.end()
 
         states = {}
         states['strings'] = [
             # easy ones
-            (r'\:([a-zA-Z_][\w_]*[\!\?]?|\*\*?|[-+]@?|'
+            (r'\:@{0,2}([a-zA-Z_]\w*[\!\?]?|\*\*?|[-+]@?|'
              r'[/%&|^`~]|\[\]=?|<<|>>|<=?>|>=?|===?)', String.Symbol),
             (r":'(\\\\|\\'|[^'])*'", String.Symbol),
             (r"'(\\\\|\\'|[^'])*'", String.Single),
             (r':"', String.Symbol, 'simple-sym'),
+            (r'([a-zA-Z_][a-zA-Z0-9]*)(:)',
+             bygroups(String.Symbol, Punctuation)),  # Since Ruby 1.9
             (r'"', String.Double, 'simple-string'),
             (r'(?<!\.)`', String.Backtick, 'simple-backtick'),
         ]
@@ -583,14 +600,15 @@ class RubyLexer(ExtendedRegexLexer):
     tokens = {
         'root': [
             (r'#.*?$', Comment.Single),
-            (r'=begin\s.*?\n=end', Comment.Multiline),
+            (r'=begin\s.*?\n=end.*?$', Comment.Multiline),
             # keywords
             (r'(BEGIN|END|alias|begin|break|case|defined\?|'
              r'do|else|elsif|end|ensure|for|if|in|next|redo|'
              r'rescue|raise|retry|return|super|then|undef|unless|until|when|'
              r'while|yield)\b', Keyword),
             # start of function, class and module names
-            (r'(module)(\s+)([a-zA-Z_][a-zA-Z0-9_]*(::[a-zA-Z_][a-zA-Z0-9_]*)*)',
+            (r'(module)(\s+)([a-zA-Z_][a-zA-Z0-9_]*'
+             r'(?:::[a-zA-Z_][a-zA-Z0-9_]*)*)',
              bygroups(Keyword, Text, Name.Namespace)),
             (r'(def)(\s+)', bygroups(Keyword, Text), 'funcname'),
             (r'def(?=[*%&^`~+-/\[<>=])', Keyword, 'funcname'),
@@ -598,18 +616,19 @@ class RubyLexer(ExtendedRegexLexer):
             # special methods
             (r'(initialize|new|loop|include|extend|raise|attr_reader|'
              r'attr_writer|attr_accessor|attr|catch|throw|private|'
-             r'module_function|public|protected|true|false|nil)\b', Keyword.Pseudo),
+             r'module_function|public|protected|true|false|nil)\b',
+             Keyword.Pseudo),
             (r'(not|and|or)\b', Operator.Word),
             (r'(autoload|block_given|const_defined|eql|equal|frozen|include|'
              r'instance_of|is_a|iterator|kind_of|method_defined|nil|'
              r'private_method_defined|protected_method_defined|'
              r'public_method_defined|respond_to|tainted)\?', Name.Builtin),
             (r'(chomp|chop|exit|gsub|sub)!', Name.Builtin),
-            (r'(?<!\.)(Array|Float|Integer|String|__id__|__send__|abort|ancestors|'
-             r'at_exit|autoload|binding|callcc|caller|'
+            (r'(?<!\.)(Array|Float|Integer|String|__id__|__send__|abort|'
+             r'ancestors|at_exit|autoload|binding|callcc|caller|'
              r'catch|chomp|chop|class_eval|class_variables|'
-             r'clone|const_defined\?|const_get|const_missing|const_set|constants|'
-             r'display|dup|eval|exec|exit|extend|fail|fork|'
+             r'clone|const_defined\?|const_get|const_missing|const_set|'
+             r'constants|display|dup|eval|exec|exit|extend|fail|fork|'
              r'format|freeze|getc|gets|global_variables|gsub|'
              r'hash|id|included_modules|inspect|instance_eval|'
              r'instance_method|instance_methods|'
@@ -628,12 +647,13 @@ class RubyLexer(ExtendedRegexLexer):
              r'warn)\b', Name.Builtin),
             (r'__(FILE|LINE)__\b', Name.Builtin.Pseudo),
             # normal heredocs
-            (r'(?<!\w)(<<-?)(["`\']?)([a-zA-Z_]\w*)(\2)(.*?\n)', heredoc_callback),
+            (r'(?<!\w)(<<-?)(["`\']?)([a-zA-Z_]\w*)(\2)(.*?\n)',
+             heredoc_callback),
             # empty string heredocs
             (r'(<<-?)("|\')()(\2)(.*?\n)', heredoc_callback),
             (r'__END__', Comment.Preproc, 'end-part'),
             # multiline regex (after keywords or assignments)
-            (r'(?:^|(?<=[=<>~!])|'
+            (r'(?:^|(?<=[=<>~!:])|'
                  r'(?<=(?:\s|;)when\s)|'
                  r'(?<=(?:\s|;)or\s)|'
                  r'(?<=(?:\s|;)and\s)|'
@@ -657,10 +677,11 @@ class RubyLexer(ExtendedRegexLexer):
                  r'(?<=^if\s)|'
                  r'(?<=^elsif\s)'
              r')(\s*)(/)', bygroups(Text, String.Regex), 'multiline-regex'),
-            # multiline regex (in method calls)
-            (r'(?<=\(|,)/', String.Regex, 'multiline-regex'),
+            # multiline regex (in method calls or subscripts)
+            (r'(?<=\(|,|\[)/', String.Regex, 'multiline-regex'),
             # multiline regex (this time the funny no whitespace rule)
-            (r'(\s+)(/[^\s=])', String.Regex, 'multiline-regex'),
+            (r'(\s+)(/)(?![\s=])', bygroups(Text, String.Regex),
+             'multiline-regex'),
             # lex numbers and ignore following regular expressions which
             # are division operators in fact (grrrr. i hate that. any
             # better ideas?)
@@ -695,7 +716,7 @@ class RubyLexer(ExtendedRegexLexer):
             # like keywords (class) or like this: ` ?!?
             (r'(\.|::)([a-zA-Z_]\w*[\!\?]?|[*%&^`~+-/\[<>=])',
              bygroups(Operator, Name)),
-            (r'[a-zA-Z_][\w_]*[\!\?]?', Name),
+            (r'[a-zA-Z_]\w*[\!\?]?', Name),
             (r'(\[|\]|\*\*|<<?|>>?|>=|<=|<=>|=~|={3}|'
              r'!~|&&?|\|\||\.{1,3})', Operator),
             (r'[-+/*%=<>&!^|~]=?', Operator),
@@ -705,7 +726,7 @@ class RubyLexer(ExtendedRegexLexer):
         'funcname': [
             (r'\(', Punctuation, 'defexpr'),
             (r'(?:([a-zA-Z_][a-zA-Z0-9_]*)(\.))?'
-             r'([a-zA-Z_][\w_]*[\!\?]?|\*\*?|[-+]@?|'
+             r'([a-zA-Z_]\w*[\!\?]?|\*\*?|[-+]@?|'
              r'[/%&|^`~]|\[\]=?|<<|>>|<=?>|>=?|===?)',
              bygroups(Name.Class, Operator, Name.Function), '#pop'),
             (r'', Text, '#pop')
@@ -713,7 +734,7 @@ class RubyLexer(ExtendedRegexLexer):
         'classname': [
             (r'\(', Punctuation, 'defexpr'),
             (r'<<', Operator, '#pop'),
-            (r'[A-Z_][\w_]*', Name.Class, '#pop'),
+            (r'[A-Z_]\w*', Name.Class, '#pop'),
             (r'', Text, '#pop')
         ],
         'defexpr': [
@@ -732,7 +753,8 @@ class RubyLexer(ExtendedRegexLexer):
         ],
         'string-intp-escaped': [
             include('string-intp'),
-            (r'\\([\\abefnrstv#"\']|x[a-fA-F0-9]{1,2}|[0-7]{1,3})', String.Escape)
+            (r'\\([\\abefnrstv#"\']|x[a-fA-F0-9]{1,2}|[0-7]{1,3})',
+             String.Escape)
         ],
         'interpolated-regex': [
             include('string-intp'),
@@ -819,19 +841,19 @@ class PerlLexer(RegexLexer):
     mimetypes = ['text/x-perl', 'application/x-perl']
 
     flags = re.DOTALL | re.MULTILINE
-    # TODO: give this a perl guy who knows how to parse perl...
+    # TODO: give this to a perl guy who knows how to parse perl...
     tokens = {
         'balanced-regex': [
-            (r'/(\\\\|\\/|[^/])*/[egimosx]*', String.Regex, '#pop'),
-            (r'!(\\\\|\\!|[^!])*![egimosx]*', String.Regex, '#pop'),
+            (r'/(\\\\|\\[^\\]|[^\\/])*/[egimosx]*', String.Regex, '#pop'),
+            (r'!(\\\\|\\[^\\]|[^\\!])*![egimosx]*', String.Regex, '#pop'),
             (r'\\(\\\\|[^\\])*\\[egimosx]*', String.Regex, '#pop'),
-            (r'{(\\\\|\\}|[^}])*}[egimosx]*', String.Regex, '#pop'),
-            (r'<(\\\\|\\>|[^>])*>[egimosx]*', String.Regex, '#pop'),
-            (r'\[(\\\\|\\\]|[^\]])*\][egimosx]*', String.Regex, '#pop'),
-            (r'\((\\\\|\\\)|[^\)])*\)[egimosx]*', String.Regex, '#pop'),
-            (r'@(\\\\|\\\@|[^\@])*@[egimosx]*', String.Regex, '#pop'),
-            (r'%(\\\\|\\\%|[^\%])*%[egimosx]*', String.Regex, '#pop'),
-            (r'\$(\\\\|\\\$|[^\$])*\$[egimosx]*', String.Regex, '#pop'),
+            (r'{(\\\\|\\[^\\]|[^\\}])*}[egimosx]*', String.Regex, '#pop'),
+            (r'<(\\\\|\\[^\\]|[^\\>])*>[egimosx]*', String.Regex, '#pop'),
+            (r'\[(\\\\|\\[^\\]|[^\\\]])*\][egimosx]*', String.Regex, '#pop'),
+            (r'\((\\\\|\\[^\\]|[^\\\)])*\)[egimosx]*', String.Regex, '#pop'),
+            (r'@(\\\\|\\[^\\]|[^\\\@])*@[egimosx]*', String.Regex, '#pop'),
+            (r'%(\\\\|\\[^\\]|[^\\\%])*%[egimosx]*', String.Regex, '#pop'),
+            (r'\$(\\\\|\\[^\\]|[^\\\$])*\$[egimosx]*', String.Regex, '#pop'),
         ],
         'root': [
             (r'\#.*?$', Comment.Single),
@@ -843,20 +865,26 @@ class PerlLexer(RegexLexer):
              bygroups(Keyword, Text, Name, Text, Punctuation, Text), 'format'),
             (r'(eq|lt|gt|le|ge|ne|not|and|or|cmp)\b', Operator.Word),
             # common delimiters
-            (r's/(\\\\|\\/|[^/])*/(\\\\|\\/|[^/])*/[egimosx]*', String.Regex),
+            (r's/(\\\\|\\[^\\]|[^\\/])*/(\\\\|\\[^\\]|[^\\/])*/[egimosx]*',
+                String.Regex),
             (r's!(\\\\|\\!|[^!])*!(\\\\|\\!|[^!])*![egimosx]*', String.Regex),
             (r's\\(\\\\|[^\\])*\\(\\\\|[^\\])*\\[egimosx]*', String.Regex),
-            (r's@(\\\\|\\@|[^@])*@(\\\\|\\@|[^@])*@[egimosx]*', String.Regex),
-            (r's%(\\\\|\\%|[^%])*%(\\\\|\\%|[^%])*%[egimosx]*', String.Regex),
+            (r's@(\\\\|\\[^\\]|[^\\@])*@(\\\\|\\[^\\]|[^\\@])*@[egimosx]*',
+                String.Regex),
+            (r's%(\\\\|\\[^\\]|[^\\%])*%(\\\\|\\[^\\]|[^\\%])*%[egimosx]*',
+                String.Regex),
             # balanced delimiters
-            (r's{(\\\\|\\}|[^}])*}\s*', String.Regex, 'balanced-regex'),
-            (r's<(\\\\|\\>|[^>])*>\s*', String.Regex, 'balanced-regex'),
-            (r's\[(\\\\|\\\]|[^\]])*\]\s*', String.Regex, 'balanced-regex'),
-            (r's\((\\\\|\\\)|[^\)])*\)\s*', String.Regex, 'balanced-regex'),
+            (r's{(\\\\|\\[^\\]|[^\\}])*}\s*', String.Regex, 'balanced-regex'),
+            (r's<(\\\\|\\[^\\]|[^\\>])*>\s*', String.Regex, 'balanced-regex'),
+            (r's\[(\\\\|\\[^\\]|[^\\\]])*\]\s*', String.Regex,
+                'balanced-regex'),
+            (r's\((\\\\|\\[^\\]|[^\\\)])*\)\s*', String.Regex,
+                'balanced-regex'),
 
-            (r'm?/(\\\\|\\/|[^/\n])*/[gcimosx]*', String.Regex),
+            (r'm?/(\\\\|\\[^\\]|[^\\/\n])*/[gcimosx]*', String.Regex),
             (r'm(?=[/!\\{<\[\(@%\$])', String.Regex, 'balanced-regex'),
-            (r'((?<==~)|(?<=\())\s*/(\\\\|\\/|[^/])*/[gcimosx]*', String.Regex),
+            (r'((?<==~)|(?<=\())\s*/(\\\\|\\[^\\]|[^\\/])*/[gcimosx]*',
+                String.Regex),
             (r'\s+', Text),
             (r'(abs|accept|alarm|atan2|bind|binmode|bless|caller|chdir|'
              r'chmod|chomp|chop|chown|chr|chroot|close|closedir|connect|'
@@ -898,9 +926,9 @@ class PerlLexer(RegexLexer):
              Number.Float),
             (r'(?i)\d+(_\d*)*e[+-]?\d+(_\d*)*', Number.Float),
             (r'\d+(_\d+)*', Number.Integer),
-            (r"'(\\\\|\\'|[^'])*'", String),
-            (r'"(\\\\|\\"|[^"])*"', String),
-            (r'`(\\\\|\\`|[^`])*`', String.Backtick),
+            (r"'(\\\\|\\[^\\]|[^'\\])*'", String),
+            (r'"(\\\\|\\[^\\]|[^"\\])*"', String),
+            (r'`(\\\\|\\[^\\]|[^`\\])*`', String.Backtick),
             (r'<([^\s>]+)>', String.Regex),
             (r'(q|qq|qw|qr|qx)\{', String.Other, 'cb-string'),
             (r'(q|qq|qw|qr|qx)\(', String.Other, 'rb-string'),
@@ -909,7 +937,7 @@ class PerlLexer(RegexLexer):
             (r'(q|qq|qw|qr|qx)([^a-zA-Z0-9])(.|\n)*?\2', String.Other),
             (r'package\s+', Keyword, 'modulename'),
             (r'sub\s+', Keyword, 'funcname'),
-            (r'(\[\]|\*\*|::|<<|>>|>=|<=|<=>|={3}|!=|=~|'
+            (r'(\[\]|\*\*|::|<<|>>|>=|<=>|<=|={3}|!=|=~|'
              r'!~|&&?|\|\||\.{1,3})', Operator),
             (r'[-+/*%=<>&^|!\\~]=?', Operator),
             (r'[\(\)\[\]:;,<>/\?\{\}]', Punctuation), # yes, there's no shortage
@@ -934,10 +962,10 @@ class PerlLexer(RegexLexer):
             (r'(?=[^a-zA-Z0-9_])', Text, '#pop'),
         ],
         'modulename': [
-            (r'[a-zA-Z_][\w_]*', Name.Namespace, '#pop')
+            (r'[a-zA-Z_]\w*', Name.Namespace, '#pop')
         ],
         'funcname': [
-            (r'[a-zA-Z_][\w_]*[\!\?]?', Name.Function),
+            (r'[a-zA-Z_]\w*[\!\?]?', Name.Function),
             (r'\s+', Text),
             # argument declaration
             (r'(\([$@%]*\))(\s*)', bygroups(Punctuation, Text)),
@@ -1033,7 +1061,7 @@ class LuaLexer(RegexLexer):
             # multiline strings
             (r'(?s)\[(=*)\[.*?\]\1\]', String),
 
-            (r'(==|~=|<=|>=|\.\.|\.\.\.|[=+\-*/%^<>#])', Operator),
+            (r'(==|~=|<=|>=|\.\.\.|\.\.|[=+\-*/%^<>#])', Operator),
             (r'[\[\]\{\}\(\)\.,:;]', Punctuation),
             (r'(and|or|not)\b', Operator.Word),
 
@@ -1042,8 +1070,7 @@ class LuaLexer(RegexLexer):
             (r'(local)\b', Keyword.Declaration),
             (r'(true|false|nil)\b', Keyword.Constant),
 
-            (r'(function)(\s+)', bygroups(Keyword, Text), 'funcname'),
-            (r'(class)(\s+)', bygroups(Keyword, Text), 'classname'),
+            (r'(function)\b', Keyword, 'funcname'),
 
             (r'[A-Za-z_][A-Za-z0-9_]*(\.[A-Za-z_][A-Za-z0-9_]*)?', Name),
 
@@ -1052,14 +1079,11 @@ class LuaLexer(RegexLexer):
         ],
 
         'funcname': [
+            (r'\s+', Text),
             ('(?:([A-Za-z_][A-Za-z0-9_]*)(\.))?([A-Za-z_][A-Za-z0-9_]*)',
              bygroups(Name.Class, Punctuation, Name.Function), '#pop'),
             # inline function
             ('\(', Punctuation, '#pop'),
-        ],
-
-        'classname': [
-            ('[A-Za-z_][A-Za-z0-9_]*', Name.Class, '#pop')
         ],
 
         # if I understand correctly, every character is valid in a lua string,
@@ -1112,15 +1136,80 @@ class LuaLexer(RegexLexer):
             yield index, token, value
 
 
-class MiniDLexer(RegexLexer):
+class MoonScriptLexer(LuaLexer):
     """
-    For `MiniD <http://www.dsource.org/projects/minid>`_ (a D-like scripting
-    language) source.
+    For `MoonScript <http://moonscript.org.org>`_ source code.
+
+    *New in Pygments 1.5.*
     """
-    name = 'MiniD'
-    filenames = ['*.md']
-    aliases = ['minid']
-    mimetypes = ['text/x-minidsrc']
+
+    name = "MoonScript"
+    aliases = ["moon", "moonscript"]
+    filenames = ["*.moon"]
+    mimetypes = ['text/x-moonscript', 'application/x-moonscript']
+
+    tokens = {
+        'root': [
+            (r'#!(.*?)$', Comment.Preproc),
+            (r'', Text, 'base'),
+        ],
+        'base': [
+            ('--.*$', Comment.Single),
+            (r'(?i)(\d*\.\d+|\d+\.\d*)(e[+-]?\d+)?', Number.Float),
+            (r'(?i)\d+e[+-]?\d+', Number.Float),
+            (r'(?i)0x[0-9a-f]*', Number.Hex),
+            (r'\d+', Number.Integer),
+            (r'\n', Text),
+            (r'[^\S\n]+', Text),
+            (r'(?s)\[(=*)\[.*?\]\1\]', String),
+            (r'(->|=>)', Name.Function),
+            (r':[a-zA-Z_][a-zA-Z0-9_]*', Name.Variable),
+            (r'(==|!=|~=|<=|>=|\.\.\.|\.\.|[=+\-*/%^<>#!.\\:])', Operator),
+            (r'[;,]', Punctuation),
+            (r'[\[\]\{\}\(\)]', Keyword.Type),
+            (r'[a-zA-Z_][a-zA-Z0-9_]*:', Name.Variable),
+            (r"(class|extends|if|then|super|do|with|import|export|"
+             r"while|elseif|return|for|in|from|when|using|else|"
+             r"and|or|not|switch|break)\b", Keyword),
+            (r'(true|false|nil)\b', Keyword.Constant),
+            (r'(and|or|not)\b', Operator.Word),
+            (r'(self)\b', Name.Builtin.Pseudo),
+            (r'@@?([a-zA-Z_][a-zA-Z0-9_]*)?', Name.Variable.Class),
+            (r'[A-Z]\w*', Name.Class), # proper name
+            (r'[A-Za-z_][A-Za-z0-9_]*(\.[A-Za-z_][A-Za-z0-9_]*)?', Name),
+            ("'", String.Single, combined('stringescape', 'sqs')),
+            ('"', String.Double, combined('stringescape', 'dqs'))
+        ],
+        'stringescape': [
+            (r'''\\([abfnrtv\\"']|\d{1,3})''', String.Escape)
+        ],
+        'sqs': [
+            ("'", String.Single, '#pop'),
+            (".", String)
+        ],
+        'dqs': [
+            ('"', String.Double, '#pop'),
+            (".", String)
+        ]
+    }
+
+    def get_tokens_unprocessed(self, text):
+        # set . as Operator instead of Punctuation
+        for index, token, value in \
+            LuaLexer.get_tokens_unprocessed(self, text):
+            if token == Punctuation and value == ".":
+                token = Operator
+            yield index, token, value
+
+
+class CrocLexer(RegexLexer):
+    """
+    For `Croc <http://jfbillingsley.com/croc>`_ source.
+    """
+    name = 'Croc'
+    filenames = ['*.croc']
+    aliases = ['croc']
+    mimetypes = ['text/x-crocsrc']
 
     tokens = {
         'root': [
@@ -1128,35 +1217,33 @@ class MiniDLexer(RegexLexer):
             (r'\s+', Text),
             # Comments
             (r'//(.*?)\n', Comment.Single),
-            (r'/(\\\n)?[*](.|\n)*?[*](\\\n)?/', Comment.Multiline),
-            (r'/\+', Comment.Multiline, 'nestedcomment'),
+            (r'/\*', Comment.Multiline, 'nestedcomment'),
             # Keywords
-            (r'(as|assert|break|case|catch|class|continue|coroutine|default'
+            (r'(as|assert|break|case|catch|class|continue|default'
              r'|do|else|finally|for|foreach|function|global|namespace'
-             r'|if|import|in|is|local|module|return|super|switch'
+             r'|if|import|in|is|local|module|return|scope|super|switch'
              r'|this|throw|try|vararg|while|with|yield)\b', Keyword),
             (r'(false|true|null)\b', Keyword.Constant),
             # FloatLiteral
-            (r'([0-9][0-9_]*)?\.[0-9_]+([eE][+\-]?[0-9_]+)?', Number.Float),
+            (r'([0-9][0-9_]*)(?=[.eE])(\.[0-9][0-9_]*)?([eE][+\-]?[0-9_]+)?',
+             Number.Float),
             # IntegerLiteral
             # -- Binary
-            (r'0[Bb][01_]+', Number),
-            # -- Octal
-            (r'0[Cc][0-7_]+', Number.Oct),
+            (r'0[bB][01][01_]*', Number),
             # -- Hexadecimal
-            (r'0[xX][0-9a-fA-F_]+', Number.Hex),
+            (r'0[xX][0-9a-fA-F][0-9a-fA-F_]*', Number.Hex),
             # -- Decimal
-            (r'(0|[1-9][0-9_]*)', Number.Integer),
+            (r'([0-9][0-9_]*)(?![.eE])', Number.Integer),
             # CharacterLiteral
-            (r"""'(\\['"?\\abfnrtv]|\\x[0-9a-fA-F]{2}|\\[0-9]{1,3}"""
+            (r"""'(\\['"\\nrt]|\\x[0-9a-fA-F]{2}|\\[0-9]{1,3}"""
              r"""|\\u[0-9a-fA-F]{4}|\\U[0-9a-fA-F]{8}|.)'""",
              String.Char
             ),
             # StringLiteral
             # -- WysiwygString
-            (r'@"(""|.)*"', String),
-            # -- AlternateWysiwygString
-            (r'`(``|.)*`', String),
+            (r'@"(""|[^"])*"', String),
+            (r'@`(``|[^`])*`', String),
+            (r"@'(''|[^'])*'", String),
             # -- DoubleQuotedString
             (r'"(\\\\|\\"|[^"])*"', String),
             # Tokens
@@ -1169,12 +1256,22 @@ class MiniDLexer(RegexLexer):
             (r'[a-zA-Z_]\w*', Name),
         ],
         'nestedcomment': [
-            (r'[^+/]+', Comment.Multiline),
-            (r'/\+', Comment.Multiline, '#push'),
-            (r'\+/', Comment.Multiline, '#pop'),
-            (r'[+/]', Comment.Multiline),
+            (r'[^*/]+', Comment.Multiline),
+            (r'/\*', Comment.Multiline, '#push'),
+            (r'\*/', Comment.Multiline, '#pop'),
+            (r'[*/]', Comment.Multiline),
         ],
     }
+
+
+class MiniDLexer(CrocLexer):
+    """
+    For MiniD source. MiniD is now known as Croc.
+    """
+    name = 'MiniD'
+    filenames = ['*.md']
+    aliases = ['minid']
+    mimetypes = ['text/x-minidsrc']
 
 
 class IoLexer(RegexLexer):
@@ -1208,7 +1305,7 @@ class IoLexer(RegexLexer):
             # constants
             (r'(nil|false|true)\b', Name.Constant),
             # names
-            ('(Object|list|List|Map|args|Sequence|Coroutine|File)\b',
+            (r'(Object|list|List|Map|args|Sequence|Coroutine|File)\b',
              Name.Builtin),
             ('[a-zA-Z_][a-zA-Z0-9_]*', Name),
             # numbers
@@ -1300,7 +1397,7 @@ class TclLexer(RegexLexer):
         'params': [
             (r';', Keyword, '#pop'),
             (r'\n', Text, '#pop'),
-            (r'(else|elseif|then)', Keyword),
+            (r'(else|elseif|then)\b', Keyword),
             include('basic'),
             include('data'),
         ],
@@ -1352,141 +1449,6 @@ class TclLexer(RegexLexer):
 
     def analyse_text(text):
         return shebang_matches(text, r'(tcl)')
-
-
-class ClojureLexer(RegexLexer):
-    """
-    Lexer for `Clojure <http://clojure.org/>`_ source code.
-
-    *New in Pygments 0.11.*
-    """
-    name = 'Clojure'
-    aliases = ['clojure', 'clj']
-    filenames = ['*.clj']
-    mimetypes = ['text/x-clojure', 'application/x-clojure']
-
-    keywords = [
-        'fn', 'def', 'defn', 'defmacro', 'defmethod', 'defmulti', 'defn-',
-        'defstruct',
-        'if', 'cond',
-        'let', 'for'
-    ]
-    builtins = [
-        '.', '..',
-        '*', '+', '-', '->', '..', '/', '<', '<=', '=', '==', '>', '>=',
-        'accessor', 'agent', 'agent-errors', 'aget', 'alength', 'all-ns',
-        'alter', 'and', 'append-child', 'apply', 'array-map', 'aset',
-        'aset-boolean', 'aset-byte', 'aset-char', 'aset-double', 'aset-float',
-        'aset-int', 'aset-long', 'aset-short', 'assert', 'assoc', 'await',
-        'await-for', 'bean', 'binding', 'bit-and', 'bit-not', 'bit-or',
-        'bit-shift-left', 'bit-shift-right', 'bit-xor', 'boolean', 'branch?',
-        'butlast', 'byte', 'cast', 'char', 'children', 'class',
-        'clear-agent-errors', 'comment', 'commute', 'comp', 'comparator',
-        'complement', 'concat', 'conj', 'cons', 'constantly',
-        'construct-proxy', 'contains?', 'count', 'create-ns', 'create-struct',
-        'cycle', 'dec',  'deref', 'difference', 'disj', 'dissoc', 'distinct',
-        'doall', 'doc', 'dorun', 'doseq', 'dosync', 'dotimes', 'doto',
-        'double', 'down', 'drop', 'drop-while', 'edit', 'end?', 'ensure',
-        'eval', 'every?', 'false?', 'ffirst', 'file-seq', 'filter', 'find',
-        'find-doc', 'find-ns', 'find-var', 'first', 'float', 'flush',
-        'fnseq', 'frest', 'gensym', 'get', 'get-proxy-class',
-        'hash-map', 'hash-set', 'identical?', 'identity', 'if-let', 'import',
-        'in-ns', 'inc', 'index', 'insert-child', 'insert-left', 'insert-right',
-        'inspect-table', 'inspect-tree', 'instance?', 'int', 'interleave',
-        'intersection', 'into', 'into-array', 'iterate', 'join', 'key', 'keys',
-        'keyword', 'keyword?', 'last', 'lazy-cat', 'lazy-cons', 'left',
-        'lefts', 'line-seq', 'list', 'list*', 'load', 'load-file',
-        'locking', 'long', 'loop', 'macroexpand', 'macroexpand-1',
-        'make-array', 'make-node', 'map', 'map-invert', 'map?', 'mapcat',
-        'max', 'max-key', 'memfn', 'merge', 'merge-with', 'meta', 'min',
-        'min-key', 'name', 'namespace', 'neg?', 'new', 'newline', 'next',
-        'nil?', 'node', 'not', 'not-any?', 'not-every?', 'not=', 'ns-imports',
-        'ns-interns', 'ns-map', 'ns-name', 'ns-publics', 'ns-refers',
-        'ns-resolve', 'ns-unmap', 'nth', 'nthrest', 'or', 'parse', 'partial',
-        'path', 'peek', 'pop', 'pos?', 'pr', 'pr-str', 'print', 'print-str',
-        'println', 'println-str', 'prn', 'prn-str', 'project', 'proxy',
-        'proxy-mappings', 'quot', 'rand', 'rand-int', 'range', 're-find',
-        're-groups', 're-matcher', 're-matches', 're-pattern', 're-seq',
-        'read', 'read-line', 'reduce', 'ref', 'ref-set', 'refer', 'rem',
-        'remove', 'remove-method', 'remove-ns', 'rename', 'rename-keys',
-        'repeat', 'replace', 'replicate', 'resolve', 'rest', 'resultset-seq',
-        'reverse', 'rfirst', 'right', 'rights', 'root', 'rrest', 'rseq',
-        'second', 'select', 'select-keys', 'send', 'send-off', 'seq',
-        'seq-zip', 'seq?', 'set', 'short', 'slurp', 'some', 'sort',
-        'sort-by', 'sorted-map', 'sorted-map-by', 'sorted-set',
-        'special-symbol?', 'split-at', 'split-with', 'str', 'string?',
-        'struct', 'struct-map', 'subs', 'subvec', 'symbol', 'symbol?',
-        'sync', 'take', 'take-nth', 'take-while', 'test', 'time', 'to-array',
-        'to-array-2d', 'tree-seq', 'true?', 'union', 'up', 'update-proxy',
-        'val', 'vals', 'var-get', 'var-set', 'var?', 'vector', 'vector-zip',
-        'vector?', 'when', 'when-first', 'when-let', 'when-not',
-        'with-local-vars', 'with-meta', 'with-open', 'with-out-str',
-        'xml-seq', 'xml-zip', 'zero?', 'zipmap', 'zipper']
-
-    # valid names for identifiers
-    # well, names can only not consist fully of numbers
-    # but this should be good enough for now
-    valid_name = r'[a-zA-Z0-9!$%&*+,/:<=>?@^_~-]+'
-
-    tokens = {
-        'root' : [
-            # the comments - always starting with semicolon
-            # and going to the end of the line
-            (r';.*$', Comment.Single),
-
-            # whitespaces - usually not relevant
-            (r'\s+', Text),
-
-            # numbers
-            (r'-?\d+\.\d+', Number.Float),
-            (r'-?\d+', Number.Integer),
-            # support for uncommon kinds of numbers -
-            # have to figure out what the characters mean
-            #(r'(#e|#i|#b|#o|#d|#x)[\d.]+', Number),
-
-            # strings, symbols and characters
-            (r'"(\\\\|\\"|[^"])*"', String),
-            (r"'" + valid_name, String.Symbol),
-            (r"\\([()/'\".'_!Â§$%& ?;=#+-]{1}|[a-zA-Z0-9]+)", String.Char),
-
-            # constants
-            (r'(#t|#f)', Name.Constant),
-
-            # special operators
-            (r"('|#|`|,@|,|\.)", Operator),
-
-            # highlight the keywords
-            ('(%s)' % '|'.join([
-                re.escape(entry) + ' ' for entry in keywords]),
-                Keyword
-            ),
-
-            # first variable in a quoted string like
-            # '(this is syntactic sugar)
-            (r"(?<='\()" + valid_name, Name.Variable),
-            (r"(?<=#\()" + valid_name, Name.Variable),
-
-            # highlight the builtins
-            ("(?<=\()(%s)" % '|'.join([
-                re.escape(entry) + ' ' for entry in builtins]),
-                Name.Builtin
-            ),
-
-            # the remaining functions
-            (r'(?<=\()' + valid_name, Name.Function),
-            # find the remaining variables
-            (valid_name, Name.Variable),
-
-            # Clojure accepts vector notation
-            (r'(\[|\])', Punctuation),
-
-            # Clojure accepts map notation
-            (r'(\{|\})', Punctuation),
-
-            # the famous parentheses!
-            (r'(\(|\))', Punctuation),
-        ],
-    }
 
 
 class FactorLexer(RegexLexer):
@@ -1651,33 +1613,38 @@ class FactorLexer(RegexLexer):
 
             # defining words
             (r'(\s*)(:|::|MACRO:|MEMO:)(\s+)(\S+)',
-                bygroups(Text, Keyword, Text, Name.Function)),
+             bygroups(Text, Keyword, Text, Name.Function)),
             (r'(\s*)(M:)(\s+)(\S+)(\s+)(\S+)',
-                bygroups(Text, Keyword, Text, Name.Class, Text, Name.Function)),
+             bygroups(Text, Keyword, Text, Name.Class, Text, Name.Function)),
             (r'(\s*)(GENERIC:)(\s+)(\S+)',
-                bygroups(Text, Keyword, Text, Name.Function)),
+             bygroups(Text, Keyword, Text, Name.Function)),
             (r'(\s*)(HOOK:|GENERIC#)(\s+)(\S+)(\s+)(\S+)',
-                bygroups(Text, Keyword, Text, Name.Function, Text, Name.Function)),
+             bygroups(Text, Keyword, Text, Name.Function, Text, Name.Function)),
             (r'(\()(\s+)', bygroups(Name.Function, Text), 'stackeffect'),
             (r'\;\s', Keyword),
 
             # imports and namespaces
-            (r'(USING:)((?:\s|\\\s)+)', bygroups(Keyword.Namespace, Text), 'import'),
-            (r'(USE:)(\s+)(\S+)', bygroups(Keyword.Namespace, Text, Name.Namespace)),
-            (r'(UNUSE:)(\s+)(\S+)', bygroups(Keyword.Namespace, Text, Name.Namespace)),
+            (r'(USING:)((?:\s|\\\s)+)',
+             bygroups(Keyword.Namespace, Text), 'import'),
+            (r'(USE:)(\s+)(\S+)',
+             bygroups(Keyword.Namespace, Text, Name.Namespace)),
+            (r'(UNUSE:)(\s+)(\S+)',
+             bygroups(Keyword.Namespace, Text, Name.Namespace)),
             (r'(QUALIFIED:)(\s+)(\S+)',
-                bygroups(Keyword.Namespace, Text, Name.Namespace)),
+             bygroups(Keyword.Namespace, Text, Name.Namespace)),
             (r'(QUALIFIED-WITH:)(\s+)(\S+)',
-                bygroups(Keyword.Namespace, Text, Name.Namespace)),
+             bygroups(Keyword.Namespace, Text, Name.Namespace)),
             (r'(FROM:|EXCLUDE:)(\s+)(\S+)(\s+)(=>)',
-                bygroups(Keyword.Namespace, Text, Name.Namespace, Text, Text)),
-            (r'(IN:)(\s+)(\S+)', bygroups(Keyword.Namespace, Text, Name.Namespace)),
+             bygroups(Keyword.Namespace, Text, Name.Namespace, Text, Text)),
+            (r'(IN:)(\s+)(\S+)',
+             bygroups(Keyword.Namespace, Text, Name.Namespace)),
             (r'(?:ALIAS|DEFER|FORGET|POSTPONE):', Keyword.Namespace),
 
             # tuples and classes
             (r'(TUPLE:)(\s+)(\S+)(\s+<\s+)(\S+)',
-                bygroups(Keyword, Text, Name.Class, Text, Name.Class), 'slots'),
-            (r'(TUPLE:)(\s+)(\S+)', bygroups(Keyword, Text, Name.Class), 'slots'),
+             bygroups(Keyword, Text, Name.Class, Text, Name.Class), 'slots'),
+            (r'(TUPLE:)(\s+)(\S+)',
+             bygroups(Keyword, Text, Name.Class), 'slots'),
             (r'(UNION:)(\s+)(\S+)', bygroups(Keyword, Text, Name.Class)),
             (r'(INTERSECTION:)(\s+)(\S+)', bygroups(Keyword, Text, Name.Class)),
             (r'(PREDICATE:)(\s+)(\S+)(\s+<\s+)(\S+)',
@@ -1695,7 +1662,8 @@ class FactorLexer(RegexLexer):
             (r'ERROR:', Keyword),
             (r'SYNTAX:', Keyword),
             (r'(HELP:)(\s+)(\S+)', bygroups(Keyword, Text, Name.Function)),
-            (r'(MAIN:)(\s+)(\S+)', bygroups(Keyword.Namespace, Text, Name.Function)),
+            (r'(MAIN:)(\s+)(\S+)',
+             bygroups(Keyword.Namespace, Text, Name.Function)),
             (r'(?:ALIEN|TYPEDEF|FUNCTION|STRUCT):', Keyword),
 
             # vocab.private
@@ -1725,7 +1693,8 @@ class FactorLexer(RegexLexer):
             (r'[-+/*=<>^]\s', Operator),
 
             # keywords
-            (r'(?:deprecated|final|foldable|flushable|inline|recursive)\s', Keyword),
+            (r'(?:deprecated|final|foldable|flushable|inline|recursive)\s',
+             Keyword),
 
             # builtins
             (builtin_kernel, Name.Builtin),
@@ -1769,191 +1738,180 @@ class FactorLexer(RegexLexer):
     }
 
 
-class IokeLexer(RegexLexer):
+class FancyLexer(RegexLexer):
     """
-    For `Ioke <http://ioke.org/>`_ (a strongly typed, dynamic,
-    prototype based programming language) source.
+    Pygments Lexer For `Fancy <http://www.fancy-lang.org/>`_.
 
-    *New in Pygments 1.4.*
+    Fancy is a self-hosted, pure object-oriented, dynamic,
+    class-based, concurrent general-purpose programming language
+    running on Rubinius, the Ruby VM.
+
+    *New in Pygments 1.5.*
     """
-    name = 'Ioke'
-    filenames = ['*.ik']
-    aliases = ['ioke', 'ik']
-    mimetypes = ['text/x-iokesrc']
+    name = 'Fancy'
+    filenames = ['*.fy', '*.fancypack']
+    aliases = ['fancy', 'fy']
+    mimetypes = ['text/x-fancysrc']
+
     tokens = {
-        'interpolatableText': [
-            (r'(\\b|\\e|\\t|\\n|\\f|\\r|\\"|\\\\|\\#|\\\Z|\\u[0-9a-fA-F]{1,4}'
-             r'|\\[0-3]?[0-7]?[0-7])', String.Escape),
-            (r'#{', Punctuation, 'textInterpolationRoot')
-            ],
-
-        'text': [
-            (r'(?<!\\)"', String, '#pop'),
-            include('interpolatableText'),
-            (r'[^"]', String)
-            ],
-
-        'documentation': [
-            (r'(?<!\\)"', String.Doc, '#pop'),
-            include('interpolatableText'),
-            (r'[^"]', String.Doc)
-            ],
-
-        'textInterpolationRoot': [
-            (r'}', Punctuation, '#pop'),
-            include('root')
-            ],
-
-        'slashRegexp': [
-            (r'(?<!\\)/[oxpniums]*', String.Regex, '#pop'),
-            include('interpolatableText'),
-            (r'\\/', String.Regex),
-            (r'[^/]', String.Regex)
-            ],
-
-        'squareRegexp': [
-            (r'(?<!\\)][oxpniums]*', String.Regex, '#pop'),
-            include('interpolatableText'),
-            (r'\\]', String.Regex),
-            (r'[^\]]', String.Regex)
-            ],
-
-        'squareText': [
-            (r'(?<!\\)]', String, '#pop'),
-            include('interpolatableText'),
-            (r'[^\]]', String)
-            ],
-
+        # copied from PerlLexer:
+        'balanced-regex': [
+            (r'/(\\\\|\\/|[^/])*/[egimosx]*', String.Regex, '#pop'),
+            (r'!(\\\\|\\!|[^!])*![egimosx]*', String.Regex, '#pop'),
+            (r'\\(\\\\|[^\\])*\\[egimosx]*', String.Regex, '#pop'),
+            (r'{(\\\\|\\}|[^}])*}[egimosx]*', String.Regex, '#pop'),
+            (r'<(\\\\|\\>|[^>])*>[egimosx]*', String.Regex, '#pop'),
+            (r'\[(\\\\|\\\]|[^\]])*\][egimosx]*', String.Regex, '#pop'),
+            (r'\((\\\\|\\\)|[^\)])*\)[egimosx]*', String.Regex, '#pop'),
+            (r'@(\\\\|\\\@|[^\@])*@[egimosx]*', String.Regex, '#pop'),
+            (r'%(\\\\|\\\%|[^\%])*%[egimosx]*', String.Regex, '#pop'),
+            (r'\$(\\\\|\\\$|[^\$])*\$[egimosx]*', String.Regex, '#pop'),
+        ],
         'root': [
-            (r'\n', Text),
             (r'\s+', Text),
 
+            # balanced delimiters (copied from PerlLexer):
+            (r's{(\\\\|\\}|[^}])*}\s*', String.Regex, 'balanced-regex'),
+            (r's<(\\\\|\\>|[^>])*>\s*', String.Regex, 'balanced-regex'),
+            (r's\[(\\\\|\\\]|[^\]])*\]\s*', String.Regex, 'balanced-regex'),
+            (r's\((\\\\|\\\)|[^\)])*\)\s*', String.Regex, 'balanced-regex'),
+            (r'm?/(\\\\|\\/|[^/\n])*/[gcimosx]*', String.Regex),
+            (r'm(?=[/!\\{<\[\(@%\$])', String.Regex, 'balanced-regex'),
+
             # Comments
-            (r';(.*?)\n', Comment),
-            (r'\A#!(.*?)\n', Comment),
-
-            #Regexps
-            (r'#/', String.Regex, 'slashRegexp'),
-            (r'#r\[', String.Regex, 'squareRegexp'),
-
-            #Symbols
-            (r':[a-zA-Z0-9_!:?]+', String.Symbol),
-            (r'[a-zA-Z0-9_!:?]+:(?![a-zA-Z0-9_!?])', String.Other),
-            (r':"(\\\\|\\"|[^"])*"', String.Symbol),
-
-            #Documentation
-            (r'((?<=fn\()|(?<=fnx\()|(?<=method\()|(?<=macro\()|(?<=lecro\()'
-             r'|(?<=syntax\()|(?<=dmacro\()|(?<=dlecro\()|(?<=dlecrox\()'
-             r'|(?<=dsyntax\())[\s\n\r]*"', String.Doc, 'documentation'),
-
-            #Text
-            (r'"', String, 'text'),
-            (r'#\[', String, 'squareText'),
-
-            #Mimic
-            (r'[a-zA-Z0-9_][a-zA-Z0-9!?_:]+(?=\s*=.*mimic\s)', Name.Entity),
-
-            #Assignment
-            (r'[a-zA-Z_][a-zA-Z0-9_!:?]*(?=[\s]*[+*/-]?=[^=].*($|\.))', Name.Variable),
-
+            (r'#(.*?)\n', Comment.Single),
+            # Symbols
+            (r'\'([^\'\s\[\]\(\)\{\}]+|\[\])', String.Symbol),
+            # Multi-line DoubleQuotedString
+            (r'"""(\\\\|\\"|[^"])*"""', String),
+            # DoubleQuotedString
+            (r'"(\\\\|\\"|[^"])*"', String),
             # keywords
-            (r'(break|cond|continue|do|ensure|for|for:dict|for:set|if|let|'
-             r'loop|p:for|p:for:dict|p:for:set|return|unless|until|while|'
-             r'with)(?![a-zA-Z0-9!:_?])', Keyword.Reserved),
-
-            # Origin
-            (r'(eval|mimic|print|println)(?![a-zA-Z0-9!:_?])', Keyword),
-
-            # Base
-            (r'(cell\?|cellNames|cellOwner\?|cellOwner|cells|cell|'
-             r'documentation|hash|identity|mimic|removeCell\!|undefineCell\!)'
-             r'(?![a-zA-Z0-9!:_?])', Keyword),
-
-            # Ground
-            (r'(stackTraceAsText)(?![a-zA-Z0-9!:_?])', Keyword),
-
-            #DefaultBehaviour Literals
-            (r'(dict|list|message|set)(?![a-zA-Z0-9!:_?])', Keyword.Reserved),
-
-            #DefaultBehaviour Case
-            (r'(case|case:and|case:else|case:nand|case:nor|case:not|case:or|'
-             r'case:otherwise|case:xor)(?![a-zA-Z0-9!:_?])', Keyword.Reserved),
-
-            #DefaultBehaviour Reflection
-            (r'(asText|become\!|derive|freeze\!|frozen\?|in\?|is\?|kind\?|'
-             r'mimic\!|mimics|mimics\?|prependMimic\!|removeAllMimics\!|'
-             r'removeMimic\!|same\?|send|thaw\!|uniqueHexId)'
-             r'(?![a-zA-Z0-9!:_?])', Keyword),
-
-            #DefaultBehaviour Aspects
-            (r'(after|around|before)(?![a-zA-Z0-9!:_?])', Keyword.Reserved),
-
-            # DefaultBehaviour
-            (r'(kind|cellDescriptionDict|cellSummary|genSym|inspect|notice)'
-             r'(?![a-zA-Z0-9!:_?])', Keyword),
-            (r'(use|destructuring)', Keyword.Reserved),
-
-            #DefaultBehavior BaseBehavior
-            (r'(cell\?|cellOwner\?|cellOwner|cellNames|cells|cell|'
-             r'documentation|identity|removeCell!|undefineCell)'
-             r'(?![a-zA-Z0-9!:_?])', Keyword),
-
-            #DefaultBehavior Internal
-            (r'(internal:compositeRegexp|internal:concatenateText|'
-             r'internal:createDecimal|internal:createNumber|'
-             r'internal:createRegexp|internal:createText)'
-             r'(?![a-zA-Z0-9!:_?])', Keyword.Reserved),
-
-            #DefaultBehaviour Conditions
-            (r'(availableRestarts|bind|error\!|findRestart|handle|'
-             r'invokeRestart|rescue|restart|signal\!|warn\!)'
-             r'(?![a-zA-Z0-9!:_?])', Keyword.Reserved),
-
+            (r'(def|class|try|catch|finally|retry|return|return_local|match|'
+             r'case|->|=>)\b', Keyword),
             # constants
-            (r'(nil|false|true)(?![a-zA-Z0-9!:_?])', Name.Constant),
-
+            (r'(self|super|nil|false|true)\b', Name.Constant),
+            (r'[(){};,/?\|:\\]', Punctuation),
             # names
-            (r'(Arity|Base|Call|Condition|DateTime|Aspects|Pointcut|'
-             r'Assignment|BaseBehavior|Boolean|Case|AndCombiner|Else|'
-             r'NAndCombiner|NOrCombiner|NotCombiner|OrCombiner|XOrCombiner|'
-             r'Conditions|Definitions|FlowControl|Internal|Literals|'
-             r'Reflection|DefaultMacro|DefaultMethod|DefaultSyntax|Dict|'
-             r'FileSystem|Ground|Handler|Hook|IO|IokeGround|Struct|'
-             r'LexicalBlock|LexicalMacro|List|Message|Method|Mixins|'
-             r'NativeMethod|Number|Origin|Pair|Range|Reflector|Regexp Match|'
-             r'Regexp|Rescue|Restart|Runtime|Sequence|Set|Symbol|'
-             r'System|Text|Tuple)(?![a-zA-Z0-9!:_?])', Name.Builtin),
-
+            (r'(Object|Array|Hash|Directory|File|Class|String|Number|'
+             r'Enumerable|FancyEnumerable|Block|TrueClass|NilClass|'
+             r'FalseClass|Tuple|Symbol|Stack|Set|FancySpec|Method|Package|'
+             r'Range)\b', Name.Builtin),
             # functions
-            (ur'(generateMatchMethod|aliasMethod|\u03bb|\u028E|fnx|fn|method|'
-             ur'dmacro|dlecro|syntax|macro|dlecrox|lecrox|lecro|syntax)'
-             ur'(?![a-zA-Z0-9!:_?])', Name.Function),
-
-            # Numbers
-            (r'-?0[xX][0-9a-fA-F]+', Number.Hex),
-            (r'-?(\d+\.?\d*|\d*\.\d+)([eE][+-]?[0-9]+)?', Number.Float),
-            (r'-?\d+', Number.Integer),
-
-            (r'#\(', Punctuation),
-
-             # Operators
-            (ur'(&&>>|\|\|>>|\*\*>>|:::|::|\.\.\.|===|\*\*>|\*\*=|&&>|&&=|'
-             ur'\|\|>|\|\|=|\->>|\+>>|!>>|<>>>|<>>|&>>|%>>|#>>|@>>|/>>|\*>>|'
-             ur'\?>>|\|>>|\^>>|~>>|\$>>|=>>|<<=|>>=|<=>|<\->|=~|!~|=>|\+\+|'
-             ur'\-\-|<=|>=|==|!=|&&|\.\.|\+=|\-=|\*=|\/=|%=|&=|\^=|\|=|<\-|'
-             ur'\+>|!>|<>|&>|%>|#>|\@>|\/>|\*>|\?>|\|>|\^>|~>|\$>|<\->|\->|'
-             ur'<<|>>|\*\*|\?\||\?&|\|\||>|<|\*|\/|%|\+|\-|&|\^|\||=|\$|!|~|'
-             ur'\?|#|\u2260|\u2218|\u2208|\u2209)', Operator),
-            (r'(and|nand|or|xor|nor|return|import)(?![a-zA-Z0-9_!?])',
-             Operator),
-
-            # Punctuation
-            (r'(\`\`|\`|\'\'|\'|\.|\,|@|@@|\[|\]|\(|\)|{|})', Punctuation),
-
-            #kinds
-            (r'[A-Z][a-zA-Z0-9_!:?]*', Name.Class),
-
-            #default cellnames
-            (r'[a-z_][a-zA-Z0-9_!:?]*', Name)
+            (r'[a-zA-Z]([a-zA-Z0-9_]|[-+?!=*/^><%])*:', Name.Function),
+            # operators, must be below functions
+            (r'[-+*/~,<>=&!?%^\[\]\.$]+', Operator),
+            ('[A-Z][a-zA-Z0-9_]*', Name.Constant),
+            ('@[a-zA-Z_][a-zA-Z0-9_]*', Name.Variable.Instance),
+            ('@@[a-zA-Z_][a-zA-Z0-9_]*', Name.Variable.Class),
+            ('@@?', Operator),
+            ('[a-zA-Z_][a-zA-Z0-9_]*', Name),
+            # numbers - / checks are necessary to avoid mismarking regexes,
+            # see comment in RubyLexer
+            (r'(0[oO]?[0-7]+(?:_[0-7]+)*)(\s*)([/?])?',
+             bygroups(Number.Oct, Text, Operator)),
+            (r'(0[xX][0-9A-Fa-f]+(?:_[0-9A-Fa-f]+)*)(\s*)([/?])?',
+             bygroups(Number.Hex, Text, Operator)),
+            (r'(0[bB][01]+(?:_[01]+)*)(\s*)([/?])?',
+             bygroups(Number.Bin, Text, Operator)),
+            (r'([\d]+(?:_\d+)*)(\s*)([/?])?',
+             bygroups(Number.Integer, Text, Operator)),
+            (r'\d+([eE][+-]?[0-9]+)|\d+\.\d+([eE][+-]?[0-9]+)?', Number.Float),
+            (r'\d+', Number.Integer)
         ]
+    }
+
+
+class DgLexer(RegexLexer):
+    """
+    Lexer for `dg <http://pyos.github.com/dg>`_,
+    a functional and object-oriented programming language
+    running on the CPython 3 VM.
+
+    *New in Pygments 1.6.*
+    """
+    name = 'dg'
+    aliases = ['dg']
+    filenames = ['*.dg']
+    mimetypes = ['text/x-dg']
+
+    tokens = {
+        'root': [
+            # Whitespace:
+            (r'\s+', Text),
+            (r'#.*?$', Comment.Single),
+            # Lexemes:
+            #  Numbers
+            (r'0[bB][01]+', Number.Bin),
+            (r'0[oO][0-7]+', Number.Oct),
+            (r'0[xX][\da-fA-F]+', Number.Hex),
+            (r'[+-]?\d+\.\d+([eE][+-]?\d+)?[jJ]?', Number.Float),
+            (r'[+-]?\d+[eE][+-]?\d+[jJ]?', Number.Float),
+            (r'[+-]?\d+[jJ]?', Number.Integer),
+            #  Character/String Literals
+            (r"[br]*'''", String, combined('stringescape', 'tsqs', 'string')),
+            (r'[br]*"""', String, combined('stringescape', 'tdqs', 'string')),
+            (r"[br]*'", String, combined('stringescape', 'sqs', 'string')),
+            (r'[br]*"', String, combined('stringescape', 'dqs', 'string')),
+            #  Operators
+            (r"`\w+'*`", Operator), # Infix links
+            #   Reserved infix links
+            (r'\b(or|and|if|else|where|is|in)\b', Operator.Word),
+            (r'[!$%&*+\-./:<-@\\^|~;,]+', Operator),
+            #  Identifiers
+            #   Python 3 types
+            (r"(?<!\.)(bool|bytearray|bytes|classmethod|complex|dict'?|"
+             r"float|frozenset|int|list'?|memoryview|object|property|range|"
+             r"set'?|slice|staticmethod|str|super|tuple'?|type)"
+             r"(?!['\w])", Name.Builtin),
+            #   Python 3 builtins + some more
+            (r'(?<!\.)(__import__|abs|all|any|bin|bind|chr|cmp|compile|complex|'
+             r'delattr|dir|divmod|drop|dropwhile|enumerate|eval|filter|flip|'
+             r'foldl1?|format|fst|getattr|globals|hasattr|hash|head|hex|id|'
+             r'init|input|isinstance|issubclass|iter|iterate|last|len|locals|'
+             r'map|max|min|next|oct|open|ord|pow|print|repr|reversed|round|'
+             r'setattr|scanl1?|snd|sorted|sum|tail|take|takewhile|vars|zip)'
+             r"(?!['\w])", Name.Builtin),
+            (r"(?<!\.)(self|Ellipsis|NotImplemented|None|True|False)(?!['\w])",
+             Name.Builtin.Pseudo),
+            (r"(?<!\.)[A-Z]\w*(Error|Exception|Warning)'*(?!['\w])",
+             Name.Exception),
+            (r"(?<!\.)(KeyboardInterrupt|SystemExit|StopIteration|"
+             r"GeneratorExit)(?!['\w])", Name.Exception),
+            #   Compiler-defined identifiers
+            (r"(?<![\.\w])(import|inherit|for|while|switch|not|raise|unsafe|"
+             r"yield|with)(?!['\w])", Keyword.Reserved),
+            #   Other links
+            (r"[A-Z_']+\b", Name),
+            (r"[A-Z][\w']*\b", Keyword.Type),
+            (r"\w+'*", Name),
+            #  Blocks
+            (r'[()]', Punctuation),
+        ],
+        'stringescape': [
+            (r'\\([\\abfnrtv"\']|\n|N{.*?}|u[a-fA-F0-9]{4}|'
+             r'U[a-fA-F0-9]{8}|x[a-fA-F0-9]{2}|[0-7]{1,3})', String.Escape)
+        ],
+        'string': [
+            (r'%(\([a-zA-Z0-9_]+\))?[-#0 +]*([0-9]+|[*])?(\.([0-9]+|[*]))?'
+             '[hlL]?[diouxXeEfFgGcrs%]', String.Interpol),
+            (r'[^\\\'"%\n]+', String),
+            # quotes, percents and backslashes must be parsed one at a time
+            (r'[\'"\\]', String),
+            # unhandled string formatting sign
+            (r'%', String),
+            (r'\n', String)
+        ],
+        'dqs': [
+            (r'"', String, '#pop')
+        ],
+        'sqs': [
+            (r"'", String, '#pop')
+        ],
+        'tdqs': [
+            (r'"""', String, '#pop')
+        ],
+        'tsqs': [
+            (r"'''", String, '#pop')
+        ],
     }

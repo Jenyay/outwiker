@@ -28,7 +28,7 @@ else:
             application - экземпляр класса core.application.ApplicationParams
             """
             Plugin.__init__ (self, application)
-            self.__version = u"1.9"
+            self.__version = u"1.9.1"
             self.__controler = Controller(self, application)
 
 

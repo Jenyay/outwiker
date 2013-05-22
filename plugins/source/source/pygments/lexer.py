@@ -5,10 +5,10 @@
 
     Base lexer classes.
 
-    :copyright: Copyright 2006-2010 by the Pygments team, see AUTHORS.
+    :copyright: Copyright 2006-2013 by the Pygments team, see AUTHORS.
     :license: BSD, see LICENSE for details.
 """
-import re
+import re, itertools
 
 from pygments.filter import apply_filters, Filter
 from pygments.filters import get_filter_by_name
@@ -18,8 +18,14 @@ from pygments.util import get_bool_opt, get_int_opt, get_list_opt, \
 
 
 __all__ = ['Lexer', 'RegexLexer', 'ExtendedRegexLexer', 'DelegatingLexer',
-           'LexerContext', 'include', 'bygroups', 'using', 'this']
+           'LexerContext', 'include', 'inherit', 'bygroups', 'using', 'this']
 
+
+_encoding_map = [('\xef\xbb\xbf', 'utf-8'),
+                 ('\xff\xfe\0\0', 'utf-32'),
+                 ('\0\0\xfe\xff', 'utf-32be'),
+                 ('\xff\xfe', 'utf-16'),
+                 ('\xfe\xff', 'utf-16be')]
 
 _default_analyse = staticmethod(lambda x: 0.0)
 
@@ -66,14 +72,17 @@ class Lexer(object):
     #: Shortcuts for the lexer
     aliases = []
 
-    #: fn match rules
+    #: File name globs
     filenames = []
 
-    #: fn alias filenames
+    #: Secondary file name globs
     alias_filenames = []
 
-    #: mime types
+    #: MIME types
     mimetypes = []
+
+    #: Priority, should multiple lexers match and no content is provided
+    priority = 0
 
     __metaclass__ = LexerMeta
 
@@ -142,10 +151,25 @@ class Lexer(object):
                     raise ImportError('To enable chardet encoding guessing, '
                                       'please install the chardet library '
                                       'from http://chardet.feedparser.org/')
-                enc = chardet.detect(text)
-                text = text.decode(enc['encoding'])
+                # check for BOM first
+                decoded = None
+                for bom, encoding in _encoding_map:
+                    if text.startswith(bom):
+                        decoded = unicode(text[len(bom):], encoding,
+                                          errors='replace')
+                        break
+                # no BOM found, so use chardet
+                if decoded is None:
+                    enc = chardet.detect(text[:1024]) # Guess using first 1KB
+                    decoded = unicode(text, enc.get('encoding') or 'utf-8',
+                                      errors='replace')
+                text = decoded
             else:
                 text = text.decode(self.encoding)
+        else:
+            if text.startswith(u'\ufeff'):
+                text = text[len(u'\ufeff'):]
+
         # text now *is* a unicode string
         text = text.replace('\r\n', '\n')
         text = text.replace('\r', '\n')
@@ -221,6 +245,16 @@ class include(str):
     pass
 
 
+class _inherit(object):
+    """
+    Indicates the a state should inherit from its superclass.
+    """
+    def __repr__(self):
+        return 'inherit'
+
+inherit = _inherit()
+
+
 class combined(tuple):
     """
     Indicates a state combined from multiple states.
@@ -274,12 +308,14 @@ def bygroups(*args):
                 if data:
                     yield match.start(i + 1), action, data
             else:
-                if ctx:
-                    ctx.pos = match.start(i + 1)
-                for item in action(lexer, _PseudoMatch(match.start(i + 1),
-                                   match.group(i + 1)), ctx):
-                    if item:
-                        yield item
+                data = match.group(i + 1)
+                if data is not None:
+                    if ctx:
+                        ctx.pos = match.start(i + 1)
+                    for item in action(lexer, _PseudoMatch(match.start(i + 1),
+                                       data), ctx):
+                        if item:
+                            yield item
         if ctx:
             ctx.pos = match.end()
     return callback
@@ -409,6 +445,9 @@ class RegexLexerMeta(LexerMeta):
                 tokens.extend(cls._process_state(unprocessed, processed,
                                                  str(tdef)))
                 continue
+            if isinstance(tdef, _inherit):
+                # processed already
+                continue
 
             assert type(tdef) is tuple, "wrong rule def %r" % tdef
 
@@ -437,16 +476,59 @@ class RegexLexerMeta(LexerMeta):
             cls._process_state(tokendefs, processed, state)
         return processed
 
+    def get_tokendefs(cls):
+        """
+        Merge tokens from superclasses in MRO order, returning a single tokendef
+        dictionary.
+
+        Any state that is not defined by a subclass will be inherited
+        automatically.  States that *are* defined by subclasses will, by
+        default, override that state in the superclass.  If a subclass wishes to
+        inherit definitions from a superclass, it can use the special value
+        "inherit", which will cause the superclass' state definition to be
+        included at that point in the state.
+        """
+        tokens = {}
+        inheritable = {}
+        for c in itertools.chain((cls,), cls.__mro__):
+            toks = c.__dict__.get('tokens', {})
+
+            for state, items in toks.iteritems():
+                curitems = tokens.get(state)
+                if curitems is None:
+                    tokens[state] = items
+                    try:
+                        inherit_ndx = items.index(inherit)
+                    except ValueError:
+                        continue
+                    inheritable[state] = inherit_ndx
+                    continue
+
+                inherit_ndx = inheritable.pop(state, None)
+                if inherit_ndx is None:
+                    continue
+
+                # Replace the "inherit" value with the items
+                curitems[inherit_ndx:inherit_ndx+1] = items
+                try:
+                    new_inh_ndx = items.index(inherit)
+                except ValueError:
+                    pass
+                else:
+                    inheritable[state] = inherit_ndx + new_inh_ndx
+
+        return tokens
+
     def __call__(cls, *args, **kwds):
         """Instantiate cls after preprocessing its token definitions."""
-        if not hasattr(cls, '_tokens'):
+        if '_tokens' not in cls.__dict__:
             cls._all_tokens = {}
             cls._tmpname = 0
             if hasattr(cls, 'token_variants') and cls.token_variants:
                 # don't process yet
                 pass
             else:
-                cls._tokens = cls.process_tokendef('', cls.tokens)
+                cls._tokens = cls.process_tokendef('', cls.get_tokendefs())
 
         return type.__call__(cls, *args, **kwds)
 
@@ -525,10 +607,10 @@ class RegexLexer(Lexer):
                 try:
                     if text[pos] == '\n':
                         # at EOL, reset state to "root"
-                        pos += 1
                         statestack = ['root']
                         statetokens = tokendefs['root']
                         yield pos, Text, u'\n'
+                        pos += 1
                         continue
                     yield pos, Error, text[pos]
                     pos += 1
@@ -587,7 +669,13 @@ class ExtendedRegexLexer(RegexLexer):
                     if new_state is not None:
                         # state transition
                         if isinstance(new_state, tuple):
-                            ctx.stack.extend(new_state)
+                            for state in new_state:
+                                if state == '#pop':
+                                    ctx.stack.pop()
+                                elif state == '#push':
+                                    ctx.stack.append(statestack[-1])
+                                else:
+                                    ctx.stack.append(state)
                         elif isinstance(new_state, int):
                             # pop
                             del ctx.stack[new_state:]
@@ -603,10 +691,10 @@ class ExtendedRegexLexer(RegexLexer):
                         break
                     if text[ctx.pos] == '\n':
                         # at EOL, reset state to "root"
-                        ctx.pos += 1
                         ctx.stack = ['root']
                         statetokens = tokendefs['root']
                         yield ctx.pos, Text, u'\n'
+                        ctx.pos += 1
                         continue
                     yield ctx.pos, Error, text[ctx.pos]
                     ctx.pos += 1
@@ -675,4 +763,3 @@ def do_insertions(insertions, tokens):
         except StopIteration:
             insleft = False
             break  # not strictly necessary
-

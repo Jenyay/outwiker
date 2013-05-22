@@ -5,7 +5,7 @@
 
     Lexers for parser generators.
 
-    :copyright: Copyright 2006-2010 by the Pygments team, see AUTHORS.
+    :copyright: Copyright 2006-2013 by the Pygments team, see AUTHORS.
     :license: BSD, see LICENSE for details.
 """
 
@@ -28,7 +28,8 @@ __all__ = ['RagelLexer', 'RagelEmbeddedLexer', 'RagelCLexer', 'RagelDLexer',
            'AntlrPerlLexer', 'AntlrRubyLexer', 'AntlrCppLexer',
            #'AntlrCLexer',
            'AntlrCSharpLexer', 'AntlrObjectiveCLexer',
-           'AntlrJavaLexer', "AntlrActionScriptLexer"]
+           'AntlrJavaLexer', "AntlrActionScriptLexer",
+           'TreetopLexer']
 
 
 class RagelLexer(RegexLexer):
@@ -72,8 +73,8 @@ class RagelLexer(RegexLexer):
         ],
         'operators': [
             (r',', Operator), # Join
-            (r'\||&|-|--', Operator), # Union, Intersection and Subtraction
-            (r'\.|<:|:>|:>>', Operator), # Concatention
+            (r'\||&|--?', Operator), # Union, Intersection and Subtraction
+            (r'\.|<:|:>>?', Operator), # Concatention
             (r':', Operator), # Label
             (r'->', Operator), # Epsilon Transition
             (r'(>|\$|%|<|@|<>)(/|eof\b)', Operator), # EOF Actions
@@ -393,7 +394,7 @@ class AntlrLexer(RegexLexer):
             # throwsSpec
             (r'(throws)(\s+)(' + _id + ')',
              bygroups(Keyword, Whitespace, Name.Label)),
-            (r'(?:(,)(\s*)(' + _id + '))+',
+            (r'(,)(\s*)(' + _id + ')',
              bygroups(Punctuation, Whitespace, Name.Label)), # Additional throws
             # optionsSpec
             (r'options\b', Keyword, 'options'),
@@ -693,3 +694,85 @@ class AntlrActionScriptLexer(DelegatingLexer):
     def analyse_text(text):
         return AntlrLexer.analyse_text(text) and \
                re.search(r'^\s*language\s*=\s*ActionScript\s*;', text, re.M)
+
+class TreetopBaseLexer(RegexLexer):
+    """
+    A base lexer for `Treetop <http://treetop.rubyforge.org/>`_ grammars.
+    Not for direct use; use TreetopLexer instead.
+
+    *New in Pygments 1.6.*
+    """
+
+    tokens = {
+        'root': [
+            include('space'),
+            (r'require[ \t]+[^\n\r]+[\n\r]', Other),
+            (r'module\b', Keyword.Namespace, 'module'),
+            (r'grammar\b', Keyword, 'grammar'),
+        ],
+        'module': [
+            include('space'),
+            include('end'),
+            (r'module\b', Keyword, '#push'),
+            (r'grammar\b', Keyword, 'grammar'),
+            (r'[A-Z][A-Za-z_0-9]*(?:::[A-Z][A-Za-z_0-9]*)*', Name.Namespace),
+        ],
+        'grammar': [
+            include('space'),
+            include('end'),
+            (r'rule\b', Keyword, 'rule'),
+            (r'include\b', Keyword, 'include'),
+            (r'[A-Z][A-Za-z_0-9]*', Name),
+        ],
+        'include': [
+            include('space'),
+            (r'[A-Z][A-Za-z_0-9]*(?:::[A-Z][A-Za-z_0-9]*)*', Name.Class, '#pop'),
+        ],
+        'rule': [
+            include('space'),
+            include('end'),
+            (r'"(\\\\|\\"|[^"])*"', String.Double),
+            (r"'(\\\\|\\'|[^'])*'", String.Single),
+            (r'([A-Za-z_][A-Za-z_0-9]*)(:)', bygroups(Name.Label, Punctuation)),
+            (r'[A-Za-z_][A-Za-z_0-9]*', Name),
+            (r'[()]', Punctuation),
+            (r'[?+*/&!~]', Operator),
+            (r'\[(?:\\.|\[:\^?[a-z]+:\]|[^\\\]])+\]', String.Regex),
+            (r'([0-9]*)(\.\.)([0-9]*)',
+             bygroups(Number.Integer, Operator, Number.Integer)),
+            (r'(<)([^>]+)(>)', bygroups(Punctuation, Name.Class, Punctuation)),
+            (r'{', Punctuation, 'inline_module'),
+            (r'\.', String.Regex),
+        ],
+        'inline_module': [
+            (r'{', Other, 'ruby'),
+            (r'}', Punctuation, '#pop'),
+            (r'[^{}]+', Other),
+        ],
+        'ruby': [
+            (r'{', Other, '#push'),
+            (r'}', Other, '#pop'),
+            (r'[^{}]+', Other),
+        ],
+        'space': [
+            (r'[ \t\n\r]+', Whitespace),
+            (r'#[^\n]*', Comment.Single),
+        ],
+        'end': [
+            (r'end\b', Keyword, '#pop'),
+        ],
+    }
+
+class TreetopLexer(DelegatingLexer):
+    """
+    A lexer for `Treetop <http://treetop.rubyforge.org/>`_ grammars.
+
+    *New in Pygments 1.6.*
+    """
+
+    name = 'Treetop'
+    aliases = ['treetop']
+    filenames = ['*.treetop', '*.tt']
+
+    def __init__(self, **options):
+        super(TreetopLexer, self).__init__(RubyLexer, TreetopBaseLexer, **options)
