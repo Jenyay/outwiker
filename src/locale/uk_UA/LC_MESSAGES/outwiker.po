@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-05-19 19:23+0400\n"
-"PO-Revision-Date: 2013-05-19 19:37+0300\n"
+"PO-Revision-Date: 2013-05-22 18:07+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
@@ -1147,7 +1147,7 @@ msgstr "Цитування (<blockquote>…</blockquote>)"
 
 #: outwiker/pages/html/htmlpanel.py:382
 msgid "Image"
-msgstr ""
+msgstr "Зображення"
 
 #: outwiker/pages/html/htmlpanel.py:383
 msgid "Image (<img src=\"…\"/>"
@@ -1587,156 +1587,3 @@ msgstr "Заголовок сторінки містить заборонені 
 #: outwiker/core/textprinter.py:106
 msgid "Printing error"
 msgstr "Помилка друку"
-
-#~ msgid "&New…"
-#~ msgstr "&Створити…"
-
-#~ msgid "&Open…"
-#~ msgstr "&Відкрити…"
-
-#~ msgid "&Paste"
-#~ msgstr "Вс&тавити"
-
-#~ msgid "Add &Sibling Page…"
-#~ msgstr "Додати &сторінку того ж рівня…"
-
-#~ msgid "Add &Child Page…"
-#~ msgstr "Додати &дочірню сторінку…"
-
-#~ msgid "Move Page &Up"
-#~ msgstr "Перемістити сторінку в&гору"
-
-#~ msgid "Move Page &Down"
-#~ msgstr "Перемістити сторінку в&низ"
-
-#~ msgid "Rem&ove Page…"
-#~ msgstr "&Видалити сторінку…"
-
-#~ msgid "&Page Properties…"
-#~ msgstr "Властивост&і сторінки…"
-
-#~ msgid "&Attach Files…"
-#~ msgstr "Долучити &файли…"
-
-#~ msgid "Copy Page &Title"
-#~ msgstr "Копіювати з&аголовок сторінки"
-
-#~ msgid "Copy &Page Path"
-#~ msgstr "Копіювати &шлях до сторінки"
-
-#~ msgid "Copy Page &Link"
-#~ msgstr "Копіювати пос&илання на сторінку"
-
-#~ msgid "&Attachments"
-#~ msgstr "&Прикріплені файли"
-
-#~ msgid "&Tags"
-#~ msgstr "&Мітки"
-
-#~ msgid "&Auto Line Wrap"
-#~ msgstr "&Автоматичне перенесення рядків"
-
-#~ msgid "&Font"
-#~ msgstr "&Шрифт"
-
-#~ msgid "H&tml"
-#~ msgstr "H&TML"
-
-#~ msgid "&Bold"
-#~ msgstr "&Жирний"
-
-#~ msgid "&Italic"
-#~ msgstr "&Курсив"
-
-#~ msgid "&Underline"
-#~ msgstr "&Підкреслений"
-
-#~ msgid "&Strikethrough"
-#~ msgstr "&Закреслений"
-
-#~ msgid "Subscri&pt"
-#~ msgstr "&Нижній індекс"
-
-#~ msgid "Supe&rscript"
-#~ msgstr "&Верхній індекс"
-
-#~ msgid "&Left align"
-#~ msgstr "Вирівнювання по &лівому краю"
-
-#~ msgid "&Center align"
-#~ msgstr "Вирівнювання по &центру"
-
-#~ msgid "&Right align"
-#~ msgstr "Вирівнювання по &правому краю"
-
-#~ msgid "&Justify align"
-#~ msgstr "Вирівнювання по &ширині"
-
-#~ msgid "&Bullets list"
-#~ msgstr "&Маркірований список"
-
-#~ msgid "&Numbers list"
-#~ msgstr "&Нумерований список"
-
-#~ msgid "H&1"
-#~ msgstr "H&1"
-
-#~ msgid "H&2"
-#~ msgstr "H&2"
-
-#~ msgid "H&3"
-#~ msgstr "H&3"
-
-#~ msgid "H&4"
-#~ msgstr "H&4"
-
-#~ msgid "H&5"
-#~ msgstr "H&5"
-
-#~ msgid "H&6"
-#~ msgstr "H&6"
-
-#~ msgid "Ima&ge"
-#~ msgstr "З&ображення"
-
-#~ msgid "L&ink"
-#~ msgstr "&Посилання"
-
-#~ msgid "&Anchor"
-#~ msgstr "&Якір"
-
-#~ msgid "Hori&zontal line"
-#~ msgstr "&Горизонтальна лінія"
-
-#~ msgid "Convert HTML &Symbols"
-#~ msgstr "Ко&нвертувати символи в HTML"
-
-#~ msgid "Bo&ld italic"
-#~ msgstr "Ж&ирний курсив"
-
-#~ msgid "M&onospaced"
-#~ msgstr "М&оноширинний"
-
-#~ msgid "&Preformat [@…@]"
-#~ msgstr "&Форматування [@…@]"
-
-#~ msgid "&Non-parsed [=…=]"
-#~ msgstr "&Оформлене [=…=]"
-
-#~ msgid "&Thumbnail"
-#~ msgstr "М&ініатюра"
-
-#~ msgid "Line &break"
-#~ msgstr "&Розрив рядка"
-
-#~ msgid "E&quation"
-#~ msgstr "Форм&ула"
-
-#~ msgid "&HTML Code"
-#~ msgstr "К&од HTML"
-
-#~ msgid "&Update HTML Code"
-#~ msgstr "О&новити код HTML"
-
-#~ msgid "&Wiki"
-#~ msgstr "Ві&кі"
