@@ -55,7 +55,7 @@ class BookmarksGuiTest (BaseMainWndTest):
         self.assertFalse (items[0].IsSeparator())
         self.assertTrue (items[1].IsSeparator())
 
-        self.assertEqual (items[2].GetText(), u"Страница 1")
+        self.assertEqual (items[2].GetText().replace (u"_", u""), u"Страница 1")
 
         self.rootwiki.bookmarks.remove (self.rootwiki[u"Страница 1"])
         self.assertEqual (bookmarksMenu.GetMenuItemCount(), 2)
@@ -74,8 +74,8 @@ class BookmarksGuiTest (BaseMainWndTest):
         self.assertFalse (items[0].IsSeparator())
         self.assertTrue (items[1].IsSeparator())
 
-        self.assertEqual (items[2].GetText(), u"Страница 1")
-        self.assertEqual (items[3].GetText(), u"Страница 3 [Страница 2]")
+        self.assertEqual (items[2].GetText().replace (u"_", u""), u"Страница 1")
+        self.assertEqual (items[3].GetText().replace (u"_", u""), u"Страница 3 [Страница 2]")
 
         self.rootwiki.bookmarks.remove (self.rootwiki[u"Страница 1"])
         self.assertEqual (bookmarksMenu.GetMenuItemCount(), 3)
@@ -84,7 +84,7 @@ class BookmarksGuiTest (BaseMainWndTest):
         self.assertFalse (items[0].IsSeparator())
         self.assertTrue (items[1].IsSeparator())
 
-        self.assertEqual (items[2].GetText(), u"Страница 3 [Страница 2]")
+        self.assertEqual (items[2].GetText().replace (u"_", u""), u"Страница 3 [Страница 2]")
 
 
     def testTitleBookmarks (self):
@@ -101,9 +101,9 @@ class BookmarksGuiTest (BaseMainWndTest):
         self.assertFalse (items[0].IsSeparator())
         self.assertTrue (items[1].IsSeparator())
 
-        self.assertEqual (items[2].GetText(), u"Страница 1")
-        self.assertEqual (items[3].GetText(), u"Страница 3 [Страница 2]")
-        self.assertEqual (items[4].GetText(), u"Страница 4 [Страница 2/Страница 3]")
+        self.assertEqual (items[2].GetText().replace (u"_", u""), u"Страница 1")
+        self.assertEqual (items[3].GetText().replace (u"_", u""), u"Страница 3 [Страница 2]")
+        self.assertEqual (items[4].GetText().replace (u"_", u""), u"Страница 4 [Страница 2/Страница 3]")
 
 
     def testLoading (self):
@@ -117,6 +117,6 @@ class BookmarksGuiTest (BaseMainWndTest):
         items = bookmarksMenu.GetMenuItems()
         self.assertEqual (bookmarksMenu.GetMenuItemCount(), 5)
 
-        self.assertEqual (items[2].GetText(), u"Страница 1")
-        self.assertEqual (items[3].GetText(), u"Страница 3 [Страница 2]")
-        self.assertEqual (items[4].GetText(), u"Страница 4 [Страница 2/Страница 3]")
+        self.assertEqual (items[2].GetText().replace (u"_", u""), u"Страница 1")
+        self.assertEqual (items[3].GetText().replace (u"_", u""), u"Страница 3 [Страница 2]")
+        self.assertEqual (items[4].GetText().replace (u"_", u""), u"Страница 4 [Страница 2/Страница 3]")
