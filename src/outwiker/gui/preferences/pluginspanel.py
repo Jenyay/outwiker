@@ -100,24 +100,44 @@ class PluginsController (object):
 
     def __createPluginInfo (self, plugin):
         assert plugin != None
-        #assert issubclass (plugin, Plugin)
 
-        infoTemplate = _(u"""<HTML>
+        infoTemplate = u"""<HTML>
 <HEAD>
     <META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>
 </HEAD>
 
 <BODY>
-<H3>{name}</H3>
-<B>Version:</B> {version}<BR>
-<BR>
-<B>Description:</B> {description}
+{name}<BR>
+{version}<BR>
+{url}<BR>
+{description}<BR>
 </BODY>
-</HTML>""")
+</HTML>"""
 
-        description = plugin.description.replace ("\n", "<BR>")
+        plugin_name = u"""<H3>{name}</H3>""".format (name=plugin.name)
 
-        result = infoTemplate.format (name=plugin.name, version=plugin.version, description=description)
+        plugin_version = u"""<B>{version_header}:</B> {version}""".format (
+                version_header = _(u"Version"),
+                version=plugin.version)
+
+        plugin_description = u"""<B>{description_head}:</B> {description}""".format (
+                description_head = _(u"Description"),
+                description = plugin.description.replace ("\n", "<BR>"))
+
+        if "url" in dir (plugin):
+            plugin_url = u"""<BR><B>{site_head}</B>: <A HREF="{url}">{url}</a><BR>""".format (
+                    site_head = _("Site"),
+                    url = plugin.url)
+        else:
+            plugin_url = u""
+
+
+        result = infoTemplate.format (
+                name = plugin_name,
+                version = plugin_version,
+                description = plugin_description,
+                url = plugin_url)
+
         return result
 
 

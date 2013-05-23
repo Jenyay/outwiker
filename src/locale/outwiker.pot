@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-19 19:23+0400\n"
+"POT-Creation-Date: 2013-05-23 10:00+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -792,20 +792,16 @@ msgstr ""
 msgid "Additional styles (CSS):"
 msgstr ""
 
-#: outwiker/gui/preferences/pluginspanel.py:105
-msgid ""
-"<HTML>\n"
-"<HEAD>\n"
-"    <META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>\n"
-"</HEAD>\n"
-"\n"
-"<BODY>\n"
-"<H3>{name}</H3>\n"
-"<B>Version:</B> {version}<BR>\n"
-"<BR>\n"
-"<B>Description:</B> {description}\n"
-"</BODY>\n"
-"</HTML>"
+#: outwiker/gui/preferences/pluginspanel.py:122
+msgid "Version"
+msgstr ""
+
+#: outwiker/gui/preferences/pluginspanel.py:126
+msgid "Description"
+msgstr ""
+
+#: outwiker/gui/preferences/pluginspanel.py:131
+msgid "Site"
 msgstr ""
 
 #: outwiker/gui/preferences/prefdialog.py:75
