@@ -74,7 +74,14 @@ class Controller (object):
                 _,
                 self._application)
 
-        if dlg.ShowModal() == wx.ID_OK:
+        # Вручную задизаблим главное окно из-за глюка под Linux,
+        # где главное окно становится активным, если есть полоса прокрутки
+        # в контроле CheckListBox
+        self._application.mainWindow.Disable()
+        dlgResult = dlg.ShowModal()
+        self._application.mainWindow.Enable()
+
+        if dlgResult == wx.ID_OK:
             if dlg.isAllFiles:
                 self._insertFullGallery (dlg.columnsCount, dlg.thumbSize)
             else:

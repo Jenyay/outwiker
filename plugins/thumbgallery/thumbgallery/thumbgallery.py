@@ -39,7 +39,7 @@ else:
 
         @property
         def version (self):
-            return u"1.1"
+            return u"1.1.1"
 
 
         def initialize(self):
