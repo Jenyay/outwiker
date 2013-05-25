@@ -130,6 +130,14 @@ class ThumbDialogControllerTest (unittest.TestCase):
         self.assertEqual (controller.dlg.selectedFile, u"")
 
 
+    def testSelectedAttach4 (self):
+        Attachment (self.testPage).attach (self.fullFilesPath)
+        controller = TestThumbDialogController (None, self.testPage, u"  Attach:accept.png   ", 0, u"", ThumbDialog.WIDTH)
+        controller.showDialog()
+
+        self.assertEqual (controller.dlg.selectedFile, u"accept.png")
+
+
     def testResult1 (self):
         controller = TestThumbDialogController (None, 
                 self.testPage, 

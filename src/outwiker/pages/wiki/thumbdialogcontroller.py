@@ -18,7 +18,7 @@ class ThumbDialogController (object):
 
         self._parent = parent
         self._page = page
-        self._selectedText = selectedText
+        self._selectedText = selectedText.strip()
 
         # Строка, полученная из параметров, выбанных в диалоге
         self.result = u""
