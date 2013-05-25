@@ -1,5 +1,5 @@
 <h1>OutWiker</h1>
-<h3>Version 1.7.0</h3>
+<h3>Version 1.8.0</h3>
 
 OutWiker is designed to store notes in a tree. Such programs are called "outliner", personal wiki, or tree-like editors. I spent a lot of time to pick up a similar program available, but eventually decided to make my own outliner which seems to be the most convenient in use for me. 
 
@@ -26,5 +26,7 @@ Thanks Yury aka Cuprum (<a href="http://cuprum.name/">http://cuprum.name/</a>) f
 Thanks <span class='ljuser ljuser-name_linda_kaioh' lj:user='linda_kaioh' style='white-space:nowrap'><a href='http://linda-kaioh.livejournal.com/profile'><img src='http://l-stat.livejournal.com/img/userinfo.gif?v=3' alt='[info]' width='17' height='17' style='vertical-align: bottom; border: 0; padding-right: 1px;'/></a><a href='http://linda-kaioh.livejournal.com/'><b>linda_kaioh</b></a></span> for the program testing.
 Thanks Vitaliy Yakovchuk, Dmytro Vasylchenko and VadymDerckach for the ukrainian translation.
 Thanks tehTen with Jabber 1010@xmpp.ru for "greyness" style.
+Thanks Alex (http://jenyay.net/forum/user/8/) for "AVC" style.
+Thanks Gabrielle Ramires (gabrielleramires.iv@gmail.com) for "Gabrielle" style.
 
 Rendering the formulas uses <a href="http://www.forkosh.com/mimetex.html">mimeTeX</a>.
