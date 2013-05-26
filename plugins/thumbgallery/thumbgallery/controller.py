@@ -80,6 +80,7 @@ class Controller (object):
         self._application.mainWindow.Disable()
         dlgResult = dlg.ShowModal()
         self._application.mainWindow.Enable()
+        self._application.mainWindow.Raise()
 
         if dlgResult == wx.ID_OK:
             if dlg.isAllFiles:
