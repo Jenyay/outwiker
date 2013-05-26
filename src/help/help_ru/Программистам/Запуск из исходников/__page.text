@@ -1,14 +1,17 @@
-Исходники программы открыты и распространяются под лицензией GPL. Исходники расположены на [[https://launchpad.net/outwiker| launchpad.net]].
+Исходники программы открыты и распространяются под лицензией GPL. Исходники расположены на [[https://github.com/Jenyay/outwiker | github]].
 
-Чтобы получить самую свежую версию исходников из bazaar-репозитория, выполните команду
+Чтобы получить самую свежую версию исходников из репозитория, выполните команду
 
-'''bzr branch lp:outwiker/trunk'''
+'''git clone https://github.com/Jenyay/outwiker.git'''
 
 Для получения исходников последней стабильной версии выполните команду
 
-'''bzr branch lp:outwiker/stable'''
+'''git clone https://github.com/Jenyay/outwiker.git
+cd outwiker
+git checkout stable
+'''
 
-Для выполнения этих команд должна быть установлена программа [[http://bazaar.canonical.com/en/ | Bazaar]].
+Для выполнения этих команд должна быть установлена программа [[http://git-scm.com/ | Git]].
 
 Для запуска программы из исходников должны быть установлены [[http://www.python.org/ | Python 2.7]] и библиотека [[http://wxpython.org/ | wxPython 2.8]].
 
