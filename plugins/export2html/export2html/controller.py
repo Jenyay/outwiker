@@ -10,7 +10,6 @@ from .exportpagedialog import ExportPageDialog
 from .exportbranchdialog import ExportBranchDialog
 from .exceptions import InvalidPageFormat
 from .exporterfactory import ExporterFactory
-# from .i18n import _
 
 
 class Controller (object):
@@ -20,7 +19,6 @@ class Controller (object):
     def __init__ (self, owner, application):
         self.__application = application
         self.__owner = owner
-        # self._ = None
 
         self.__exportMenu = None
 
@@ -29,10 +27,6 @@ class Controller (object):
 
 
     def __addExportItems (self, menu):
-        # print _
-        # print i18n._
-        # from .i18n import _
-
         self.__exportSingleItem = menu.Append (id=self.EXPORT_SINGLE,
                 text=_(u"Export Page To HTML..."))
 
@@ -60,7 +54,10 @@ class Controller (object):
                     wx.OK | wx.ICON_ERROR )
             return
 
-        dlg = ExportPageDialog (self.__application.mainWindow, exporter)
+        dlg = ExportPageDialog (self.__application.mainWindow, 
+                exporter,
+                self.__application.config)
+
         dlg.ShowModal()
         dlg.Destroy()
 
@@ -74,14 +71,23 @@ class Controller (object):
                     wx.OK | wx.ICON_ERROR )
             return
 
-        if self.__application.selectedPage == None:
-            root = self.__application.wikiroot
-        else:
-            root = self.__application.selectedPage
+        root = self.__getRootPage()
 
-        dlg = ExportBranchDialog (self.__application.mainWindow, root)
+        dlg = ExportBranchDialog (self.__application.mainWindow, 
+                root,
+                self.__application.config)
         dlg.ShowModal()
         dlg.Destroy()
+
+
+    def __getRootPage (self):
+        """
+        Возвращает страницу, которая будет считаться корнем ветки при экспорте
+        """
+        if self.__application.selectedPage == None:
+            return self.__application.wikiroot
+
+        return self.__application.selectedPage
 
 
     def __createMenu (self):

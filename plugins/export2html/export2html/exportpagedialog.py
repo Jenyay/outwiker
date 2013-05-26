@@ -12,8 +12,8 @@ class ExportPageDialog (ExportDialog):
     """
     Класс диалога для экспорта одной страницы
     """
-    def __init__ (self, parent, exporter):
-        ExportDialog.__init__ (self, parent)
+    def __init__ (self, parent, exporter, config):
+        ExportDialog.__init__ (self, parent, config)
         self.__exporter = exporter
 
         from .i18n import _
@@ -21,6 +21,9 @@ class ExportPageDialog (ExportDialog):
 
 
     def _onOk (self):
+        self._config.imagesOnly = self.imagesOnly
+        self._config.overwrite = self.overwrite
+
         try:
             self.__exporter.export (self.path, 
                     self.__exporter.page.title,

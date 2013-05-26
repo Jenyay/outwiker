@@ -15,8 +15,8 @@ class ExportBranchDialog (ExportDialog):
     """
     Класс диалога для экспорта ветки страниц
     """
-    def __init__ (self, parent, rootpage):
-        ExportDialog.__init__ (self, parent)
+    def __init__ (self, parent, rootpage, config):
+        ExportDialog.__init__ (self, parent, config)
         self.__rootpage = rootpage
 
         from .i18n import _
@@ -26,9 +26,30 @@ class ExportBranchDialog (ExportDialog):
         self.Fit()
         self.Layout()
 
+        self.longNames = self._config.longNames
+
+
+    @property
+    def longNames (self):
+        """
+        Создавать файлы с длинными именами (включать заголовки родителей)
+        """
+        return self.__longNameFormatCheckBox.GetValue()
+
+
+    @longNames.setter
+    def longNames (self, value):
+        self.__longNameFormatCheckBox.SetValue (value)
+
 
     def __addNameFormatCheckBox (self):
-        self.__longNameFormatCheckBox = wx.CheckBox (self, -1, _(u"Use long file names (include parent name)"))
+        """
+        Добавить чекбокс "Создавать файлы с длинными именами (включать заголовки родителей)"
+        """
+        self.__longNameFormatCheckBox = wx.CheckBox (self, 
+                -1, 
+                _(u"Use long file names (include parent name)"))
+
         self._mainSizer.Insert (4, 
                 self.__longNameFormatCheckBox, 
                 flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, 
@@ -36,10 +57,10 @@ class ExportBranchDialog (ExportDialog):
 
 
     def __getNameGenerator (self):
-        if self.__longNameFormatCheckBox.GetValue():
-            return LongNameGenerator (self.__rootpage)
-        else:
-            return TitleNameGenerator (self.path)
+        """
+        Возвращает генератор имен для создаваемых страниц (длинные имена или короткие)
+        """
+        return LongNameGenerator (self.__rootpage) if self.longNames else TitleNameGenerator (self.path)
 
 
     def _threadExport (self, exporter, path, imagesOnly, overwrite):
@@ -50,6 +71,10 @@ class ExportBranchDialog (ExportDialog):
 
 
     def _onOk (self):
+        self._config.longNames = self.longNames
+        self._config.imagesOnly = self.imagesOnly
+        self._config.overwrite = self.overwrite
+
         namegenerator = self.__getNameGenerator()
         exporter = BranchExporter (self.__rootpage, namegenerator)
 
@@ -62,11 +87,6 @@ class ExportBranchDialog (ExportDialog):
                 self.path,
                 self.imagesOnly,
                 self.overwrite)
-
-        # result = self._threadExport (exporter, 
-        #         self.path,
-        #         self.imagesOnly,
-        #         self.overwrite)
 
         if len (result) != 0:
             logdlg = LogDialog (self, result)

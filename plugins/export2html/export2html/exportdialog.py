@@ -1,18 +1,23 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-from outwiker.core.commands import MessageBox
-
 from abc import abstractmethod, ABCMeta
 
 import wx
 
+from outwiker.core.commands import MessageBox
+
+from .exportconfig import ExportConfig
+
+
 class ExportDialog (wx.Dialog):
     __metaclass__ = ABCMeta
 
-    def __init__ (self, parent):
+    def __init__ (self, parent, config):
         from .i18n import _
         global _
+
+        self._config = ExportConfig (config)
 
         wx.Dialog.__init__ (self, parent, title=_(u"Export"), style=wx.DEFAULT_DIALOG_STYLE)
 
@@ -39,7 +44,13 @@ class ExportDialog (wx.Dialog):
         self.Bind (wx.EVT_BUTTON, self.__onSelFolder, self.__selFolderButton)
         self.Bind (wx.EVT_BUTTON, self.__onOkPressed, id=wx.ID_OK)
 
+        self.__loadParams ()
         self._setFocusDefault()
+
+    
+    def __loadParams (self):
+        self.overwrite = self._config.overwrite
+        self.imagesOnly = self._config.imagesOnly
 
 
     def _setFocusDefault (self):
@@ -67,14 +78,29 @@ class ExportDialog (wx.Dialog):
         return self.__folderTextCtrl.GetValue().strip()
 
 
+    @path.setter
+    def path (self, value):
+        self.__folderTextCtrl.SetValue (value)
+
+
     @property
     def overwrite (self):
         return self.__overwriteCheckBox.GetValue()
 
 
+    @overwrite.setter
+    def overwrite (self, value):
+        self.__overwriteCheckBox.SetValue (value)
+
+
     @property
     def imagesOnly (self):
         return self.__imagesOnlyCheckBox.GetValue()
+
+
+    @imagesOnly.setter
+    def imagesOnly (self, value):
+        self.__imagesOnlyCheckBox.SetValue (value)
 
 
     def __onOkPressed (self, event):
