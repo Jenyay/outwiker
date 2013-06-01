@@ -9,6 +9,7 @@ from outwiker.core.version import Version, StatusSet
 from outwiker.core.system import getOS
 
 from .i18n import set_
+from .versionextractor import VersionExtractor
 
 
 if getCurrentVersion() < Version (1, 7, 0, 684, status=StatusSet.DEV):
@@ -76,3 +77,8 @@ else:
                 print e
 
             set_(_)
+
+
+        @property
+        def VersionExtractor (self):
+            return VersionExtractor
