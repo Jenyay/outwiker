@@ -121,6 +121,7 @@ if __name__ == '__main__':
     from test.plugins.thumblist import ThumbListPluginTest
     from test.plugins.pagestatistics import PageStatisticsTest
     from test.plugins.treestatistics import TreeStatisticsTest
+    from test.plugins.updatenotifier import UpdateNotifierTest
 
     from test.plugins.source.source import SourcePluginTest
     from test.plugins.source.sourceencoding import SourceEncodingPluginTest
