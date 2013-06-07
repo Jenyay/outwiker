@@ -10,6 +10,7 @@ from outwiker.core.system import getOS
 
 from .i18n import set_
 from .versionextractor import VersionExtractor
+from .controller import Controller
 
 
 if getCurrentVersion() < Version (1, 7, 0, 684, status=StatusSet.DEV):
@@ -24,6 +25,7 @@ else:
             application - экземпляр класса core.application.ApplicationParams
             """
             Plugin.__init__ (self, application)
+            self._controller = Controller(application)
 
 
         @property
@@ -57,13 +59,14 @@ else:
         
         def initialize(self):
             self._initlocale(u"updatenotifier")
+            self._controller.initialize()
 
 
         def destroy (self):
             """
             Уничтожение (выгрузка) плагина. Здесь плагин должен отписаться от всех событий
             """
-            pass
+            self._controller.destroy()
 
         #############################################
 
