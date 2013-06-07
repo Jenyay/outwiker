@@ -90,6 +90,48 @@ class UpdateNotifierTest (unittest.TestCase):
         self.assertEqual (versions[u"unstable"], u"2.3.4.567")
 
 
+    def testExtractVersion_5 (self):
+        text = u"""Бла-бла-бла 
+
+<!--  #version  stable   1.2.3  --> 
+
+Бла-бла-бла"""
+        
+        extractor = self.loader[self.__pluginname].VersionExtractor ()
+        versions = extractor.getVersions (text)
+
+        self.assertEqual (len (versions), 1)
+        self.assertEqual (versions[u"stable"], u"1.2.3")
+
+
+    def testExtractVersion_6 (self):
+        text = u"""Бла-бла-бла 
+
+<!--  #version  stable   1.2  --> 
+
+Бла-бла-бла"""
+        
+        extractor = self.loader[self.__pluginname].VersionExtractor ()
+        versions = extractor.getVersions (text)
+
+        self.assertEqual (len (versions), 1)
+        self.assertEqual (versions[u"stable"], u"1.2")
+
+
+    def testExtractVersion_7 (self):
+        text = u"""Бла-бла-бла 
+
+<!--  #version  stable   1  --> 
+
+Бла-бла-бла"""
+        
+        extractor = self.loader[self.__pluginname].VersionExtractor ()
+        versions = extractor.getVersions (text)
+
+        self.assertEqual (len (versions), 1)
+        self.assertEqual (versions[u"stable"], u"1")
+
+
     def testExtractVersionEmpty_1 (self):
         text = u"""Бла-бла-бла Бла-бла-бла"""
         
