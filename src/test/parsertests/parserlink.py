@@ -514,3 +514,31 @@ class ParserLinkTest (unittest.TestCase):
         result = u'бла-бла-бла \n<A HREF="%s">%s</A> бла-бла-бла\nбла-бла-бла' % (self.url2, comment)
 
         self.assertEqual (self.parser.toHtml (text), result)
+
+
+    def testManyArrows (self):
+        text = u"бла-бла-бла \n[[Бла-бла-бла -> Бла-бла-бла -> http://jenyay.net]] бла-бла-бла\nбла-бла-бла"
+        result = u'бла-бла-бла \n<A HREF="http://jenyay.net">Бла-бла-бла -&gt; Бла-бла-бла</A> бла-бла-бла\nбла-бла-бла'
+
+        self.assertEqual (self.parser.toHtml (text), result)
+
+
+    def testManyPipes1 (self):
+        text = u"бла-бла-бла \n[[http://jenyay.net | Бла-бла-бла | Бла-бла-бла]] бла-бла-бла\nбла-бла-бла"
+        result = u'бла-бла-бла \n<A HREF="http://jenyay.net">Бла-бла-бла | Бла-бла-бла</A> бла-бла-бла\nбла-бла-бла'
+
+        self.assertEqual (self.parser.toHtml (text), result)
+
+
+    def testManyPipes2 (self):
+        text = u"бла-бла-бла \n[[http://jenyay.net/|blablabla | Бла-бла-бла]] бла-бла-бла\nбла-бла-бла"
+        result = u'бла-бла-бла \n<A HREF="http://jenyay.net/|blablabla">Бла-бла-бла</A> бла-бла-бла\nбла-бла-бла'
+
+        self.assertEqual (self.parser.toHtml (text), result)
+
+
+    def testManyPipes3 (self):
+        text = u"бла-бла-бла \n[[http://jenyay.net/|blablabla|Бла-бла-бла]] бла-бла-бла\nбла-бла-бла"
+        result = u'бла-бла-бла \n<A HREF="http://jenyay.net/|blablabla">Бла-бла-бла</A> бла-бла-бла\nбла-бла-бла'
+
+        self.assertEqual (self.parser.toHtml (text), result)

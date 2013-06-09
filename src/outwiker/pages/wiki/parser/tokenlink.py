@@ -48,7 +48,7 @@ class LinkToken (object):
         """
         Преобразовать ссылки в виде [[comment -> url]]
         """
-        comment, url = text.split ("->")
+        comment, url = text.rsplit ("->", 1)
         realurl = self.__prepareUrl (url)
 
         return self.__getUrlTag (realurl, cgi.escape (comment) )
@@ -58,7 +58,12 @@ class LinkToken (object):
         """
         Преобразовать ссылки в виде [[url | comment]]
         """
-        url, comment = text.rsplit ("|", 1)
+        # Т.к. символ | может быть в ссылке и в тексте, 
+        # считаем, что после ссылки пользователь поставит пробел
+        if " |" in text:
+            url, comment = text.split (" |", 1)
+        else:
+            url, comment = text.rsplit ("|", 1)
         realurl = self.__prepareUrl (url)
 
         return self.__getUrlTag (realurl, cgi.escape (comment) )
