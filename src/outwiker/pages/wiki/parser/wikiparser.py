@@ -152,6 +152,7 @@ class Parser (object):
                 self.urlImage |
                 self.url |
                 self.text | 
+                self.lineBreak |
                 self.lineJoin |
                 self.link |
                 self.adhoctokens |
