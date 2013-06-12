@@ -1,9 +1,12 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
+import urllib2
+
 from outwiker.core.version import Version
 
 from .i18n import get_
+from .versionextractor import extractVersion
 
 
 class VersionList (object):
@@ -60,16 +63,45 @@ class VersionList (object):
         """
         Получить номера версий всех плагинов и самой программы из интернета
         """
-        self._outwikerStableVersion = self._getVersionFromPage (self._outwikerStablePage)
-        self._outwikerUnstableVersion = self._getVersionFromPage (self._outwikerUnstablePage)
+        self._outwikerStableVersion = self._getVersionFromPage (self._outwikerStablePage, "stable")
+        self._outwikerUnstableVersion = self._getVersionFromPage (self._outwikerUnstablePage, "unstable")
 
         for plugin in self._plugins:
-            self._pluginsVersion[plugin.name] = self._getVersionFromPage (self._pluginPages[plugin.name])
+            self._pluginsVersion[plugin.name] = self._getVersionFromPage (self._pluginPages[plugin.name], "stable")
 
 
-    def _getVersionFromPage (self, url):
+    def _getVersionFromPage (self, url, versionname):
+        """
+        url - ссылка, откуда получается номер версии
+        versionname - название версии (stable, unstable и т.п.)
+        """
         if url == None:
             return None
+
+        text = self._loadPage (url)
+        versions = extractVersion (text)
+
+        if versionname not in versions:
+            return None
+
+        return Version.parse (versions[versionname])
+
+
+    def _loadPage (self, url):
+        """
+        Загрузка страницы. 
+        Возвращает текст страницы или пустую строку в случае ошибки
+        """
+        try:
+            fp = urllib2.urlopen (url)
+            text = fp.read()
+            fp.close()
+        except urllib2.HTTPError:
+            return u""
+        except ValueError:
+            return u""
+
+        return text
         
 
     def getPluginVersion (self, pluginname):

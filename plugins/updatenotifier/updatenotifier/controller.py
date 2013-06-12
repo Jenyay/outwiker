@@ -6,6 +6,7 @@ import os.path
 import wx
 
 from .i18n import get_
+from .versionlist import VersionList
 
 
 class Controller (object):
@@ -50,7 +51,14 @@ class Controller (object):
 
 
     def __onCheckUpdate (self, event):
-        print "111" 
+        verList = VersionList (self._application.plugins)
+        verList.updateVersions()
+
+        print u"OutWiker stable version: {0}".format (verList.getStableVersion())
+        print u"OutWiker unstable version: {0}".format (verList.getUnstableVersion())
+
+        for plugin in self._application.plugins:
+            print u"{0} version: {1}".format (plugin.name, verList.getPluginVersion (plugin.name))
 
 
     @property

@@ -16,6 +16,7 @@ from outwiker.core.system import getOS
 class PluginDebug (Plugin):
     def __init__ (self, application):
         Plugin.__init__ (self, application)
+        self._url = u"http://jenyay.net/Outwiker/DebugPlugin"
 
 
     def __createMenu (self):
@@ -101,7 +102,12 @@ class PluginDebug (Plugin):
 
     @property
     def url (self):
-        return u"http://jenyay.net/Outwiker/DebugPlugin"
+        return self._url
+
+
+    @url.setter
+    def url (self, value):
+        self._url = value
     
     
     def initialize(self):

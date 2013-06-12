@@ -9,7 +9,7 @@ from outwiker.core.version import Version, StatusSet
 from outwiker.core.system import getOS
 
 from .i18n import set_
-from .versionextractor import VersionExtractor
+from .versionextractor import extractVersion
 from .versionlist import VersionList
 from .controller import Controller
 
@@ -84,8 +84,8 @@ else:
 
 
         @property
-        def VersionExtractor (self):
-            return VersionExtractor
+        def extractVersion (self):
+            return extractVersion
 
 
         @property

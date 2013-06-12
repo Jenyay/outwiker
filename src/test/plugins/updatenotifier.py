@@ -36,8 +36,7 @@ class UpdateNotifierTest (unittest.TestCase):
 
 Бла-бла-бла"""
         
-        extractor = self.loader[self.__pluginname].VersionExtractor ()
-        versions = extractor.getVersions (text)
+        versions = self.loader[self.__pluginname].extractVersion (text)
 
         self.assertEqual (len (versions), 1)
         self.assertEqual (versions[u"stable"], u"1.2.3.456")
@@ -51,8 +50,7 @@ class UpdateNotifierTest (unittest.TestCase):
 
 Бла-бла-бла"""
         
-        extractor = self.loader[self.__pluginname].VersionExtractor ()
-        versions = extractor.getVersions (text)
+        versions = self.loader[self.__pluginname].extractVersion (text)
 
         self.assertEqual (len (versions), 1)
         self.assertEqual (versions[u"unstable"], u"1.2.3.456")
@@ -66,8 +64,7 @@ class UpdateNotifierTest (unittest.TestCase):
 
 Бла-бла-бла"""
         
-        extractor = self.loader[self.__pluginname].VersionExtractor ()
-        versions = extractor.getVersions (text)
+        versions = self.loader[self.__pluginname].extractVersion (text)
 
         self.assertEqual (len (versions), 2)
         self.assertEqual (versions[u"stable"], u"1.2.3.456")
@@ -86,8 +83,7 @@ class UpdateNotifierTest (unittest.TestCase):
 
 Бла-бла-бла"""
         
-        extractor = self.loader[self.__pluginname].VersionExtractor ()
-        versions = extractor.getVersions (text)
+        versions = self.loader[self.__pluginname].extractVersion (text)
 
         self.assertEqual (len (versions), 2)
         self.assertEqual (versions[u"stable"], u"1.2.3.456")
@@ -102,8 +98,7 @@ class UpdateNotifierTest (unittest.TestCase):
 
 Бла-бла-бла"""
         
-        extractor = self.loader[self.__pluginname].VersionExtractor ()
-        versions = extractor.getVersions (text)
+        versions = self.loader[self.__pluginname].extractVersion (text)
 
         self.assertEqual (len (versions), 1)
         self.assertEqual (versions[u"stable"], u"1.2.3")
@@ -117,8 +112,7 @@ class UpdateNotifierTest (unittest.TestCase):
 
 Бла-бла-бла"""
         
-        extractor = self.loader[self.__pluginname].VersionExtractor ()
-        versions = extractor.getVersions (text)
+        versions = self.loader[self.__pluginname].extractVersion (text)
 
         self.assertEqual (len (versions), 1)
         self.assertEqual (versions[u"stable"], u"1.2")
@@ -132,8 +126,7 @@ class UpdateNotifierTest (unittest.TestCase):
 
 Бла-бла-бла"""
         
-        extractor = self.loader[self.__pluginname].VersionExtractor ()
-        versions = extractor.getVersions (text)
+        versions = self.loader[self.__pluginname].extractVersion (text)
 
         self.assertEqual (len (versions), 1)
         self.assertEqual (versions[u"stable"], u"1")
@@ -143,8 +136,7 @@ class UpdateNotifierTest (unittest.TestCase):
         self.loader.load ([u"../plugins/updatenotifier"])
         text = u"""Бла-бла-бла Бла-бла-бла"""
         
-        extractor = self.loader[self.__pluginname].VersionExtractor ()
-        versions = extractor.getVersions (text)
+        versions = self.loader[self.__pluginname].extractVersion (text)
 
         self.assertEqual (len (versions), 0)
 
@@ -156,8 +148,7 @@ class UpdateNotifierTest (unittest.TestCase):
         
         Бла-бла-бла"""
         
-        extractor = self.loader[self.__pluginname].VersionExtractor ()
-        versions = extractor.getVersions (text)
+        versions = self.loader[self.__pluginname].extractVersion (text)
 
         self.assertEqual (len (versions), 0)
 
@@ -169,8 +160,7 @@ class UpdateNotifierTest (unittest.TestCase):
         
         Бла-бла-бла"""
         
-        extractor = self.loader[self.__pluginname].VersionExtractor ()
-        versions = extractor.getVersions (text)
+        versions = self.loader[self.__pluginname].extractVersion (text)
 
         self.assertEqual (len (versions), 0)
 
@@ -182,8 +172,7 @@ class UpdateNotifierTest (unittest.TestCase):
         
         Бла-бла-бла"""
         
-        extractor = self.loader[self.__pluginname].VersionExtractor ()
-        versions = extractor.getVersions (text)
+        versions = self.loader[self.__pluginname].extractVersion (text)
 
         self.assertEqual (len (versions), 0)
 
@@ -196,8 +185,7 @@ class UpdateNotifierTest (unittest.TestCase):
         
         Бла-бла-бла"""
         
-        extractor = self.loader[self.__pluginname].VersionExtractor ()
-        versions = extractor.getVersions (text)
+        versions = self.loader[self.__pluginname].extractVersion (text)
 
         self.assertEqual (len (versions), 0)
 
@@ -220,3 +208,29 @@ class UpdateNotifierTest (unittest.TestCase):
 
         self.assertTrue (verlist.getPluginVersion (u"Debug Plugin") == Version (0, 5))
         self.assertTrue (verlist.getStableVersion () == Version (1, 7, 0))
+
+
+    def testVersionList_2 (self):
+        self.loader.load ([u"../plugins/updatenotifier",
+            u"../plugins/testdebug"])
+        self.assertEqual ( len (self.loader), 2)
+
+        self.loader[u"Debug Plugin"].url = u"http://jenyay.net/invalid"
+
+        verlist = self.loader[self.__pluginname].VersionList (self.loader)
+
+        verlist.updateVersions()
+        self.assertTrue (verlist.getPluginVersion (u"Debug Plugin") == None)
+
+
+    def testVersionList_3 (self):
+        self.loader.load ([u"../plugins/updatenotifier",
+            u"../plugins/testdebug"])
+        self.assertEqual ( len (self.loader), 2)
+
+        self.loader[u"Debug Plugin"].url = u"invalid"
+
+        verlist = self.loader[self.__pluginname].VersionList (self.loader)
+
+        verlist.updateVersions()
+        self.assertTrue (verlist.getPluginVersion (u"Debug Plugin") == None)
