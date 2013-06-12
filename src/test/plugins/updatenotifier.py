@@ -6,6 +6,7 @@ import os.path
 
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.application import Application
+from outwiker.core.version import Version
 from test.utils import removeWiki
 
 
@@ -14,10 +15,8 @@ class UpdateNotifierTest (unittest.TestCase):
     def setUp (self):
         self.__pluginname = u"UpdateNotifier"
 
-        dirlist = [u"../plugins/updatenotifier"]
-
         self.loader = PluginsLoader(Application)
-        self.loader.load (dirlist)
+        self.loader.load ([u"../plugins/updatenotifier"])
 
 
     def tearDown (self):
@@ -25,10 +24,12 @@ class UpdateNotifierTest (unittest.TestCase):
 
 
     def testPluginLoad (self):
+        self.loader.load ([u"../plugins/updatenotifier"])
         self.assertEqual ( len (self.loader), 1)
 
 
     def testExtractVersion_1 (self):
+        self.loader.load ([u"../plugins/updatenotifier"])
         text = u"""Бла-бла-бла 
 
 <!--  #version  stable   1.2.3.456  --> 
@@ -43,6 +44,7 @@ class UpdateNotifierTest (unittest.TestCase):
 
 
     def testExtractVersion_2 (self):
+        self.loader.load ([u"../plugins/updatenotifier"])
         text = u"""Бла-бла-бла 
 
 <!--#version  unstable   1.2.3.456--> 
@@ -57,6 +59,7 @@ class UpdateNotifierTest (unittest.TestCase):
 
 
     def testExtractVersion_3 (self):
+        self.loader.load ([u"../plugins/updatenotifier"])
         text = u"""Бла-бла-бла 
 
 <!--  #version  stable   1.2.3.456  --><!--  #version  unstable   2.3.4.567  --> 
@@ -72,6 +75,7 @@ class UpdateNotifierTest (unittest.TestCase):
 
 
     def testExtractVersion_4 (self):
+        self.loader.load ([u"../plugins/updatenotifier"])
         text = u"""Бла-бла-бла 
 
 <!--  #version  stable   1.2.3.456  -->
@@ -91,6 +95,7 @@ class UpdateNotifierTest (unittest.TestCase):
 
 
     def testExtractVersion_5 (self):
+        self.loader.load ([u"../plugins/updatenotifier"])
         text = u"""Бла-бла-бла 
 
 <!--  #version  stable   1.2.3  --> 
@@ -105,6 +110,7 @@ class UpdateNotifierTest (unittest.TestCase):
 
 
     def testExtractVersion_6 (self):
+        self.loader.load ([u"../plugins/updatenotifier"])
         text = u"""Бла-бла-бла 
 
 <!--  #version  stable   1.2  --> 
@@ -119,6 +125,7 @@ class UpdateNotifierTest (unittest.TestCase):
 
 
     def testExtractVersion_7 (self):
+        self.loader.load ([u"../plugins/updatenotifier"])
         text = u"""Бла-бла-бла 
 
 <!--  #version  stable   1  --> 
@@ -133,6 +140,7 @@ class UpdateNotifierTest (unittest.TestCase):
 
 
     def testExtractVersionEmpty_1 (self):
+        self.loader.load ([u"../plugins/updatenotifier"])
         text = u"""Бла-бла-бла Бла-бла-бла"""
         
         extractor = self.loader[self.__pluginname].VersionExtractor ()
@@ -142,6 +150,7 @@ class UpdateNotifierTest (unittest.TestCase):
 
 
     def testExtractVersionEmpty_2 (self):
+        self.loader.load ([u"../plugins/updatenotifier"])
         text = u"""Бла-бла-бла 
         <!--  #version  1.2.3.456  -->
         
@@ -154,6 +163,7 @@ class UpdateNotifierTest (unittest.TestCase):
 
 
     def testExtractVersionEmpty_3 (self):
+        self.loader.load ([u"../plugins/updatenotifier"])
         text = u"""Бла-бла-бла 
         <!--  #version  stable  -->
         
@@ -166,6 +176,7 @@ class UpdateNotifierTest (unittest.TestCase):
 
 
     def testExtractVersionEmpty_4 (self):
+        self.loader.load ([u"../plugins/updatenotifier"])
         text = u"""Бла-бла-бла 
         <!--  #version  -->
         
@@ -178,6 +189,8 @@ class UpdateNotifierTest (unittest.TestCase):
 
 
     def testExtractVersionEmpty_5 (self):
+        self.loader.load ([u"../plugins/updatenotifier"])
+
         text = u"""Бла-бла-бла 
         <!--  unstable   2.3.4.567  -->
         
@@ -187,3 +200,23 @@ class UpdateNotifierTest (unittest.TestCase):
         versions = extractor.getVersions (text)
 
         self.assertEqual (len (versions), 0)
+
+
+    def testVersionList_1 (self):
+        self.loader.load ([u"../plugins/updatenotifier",
+            u"../plugins/testdebug"])
+        self.assertEqual ( len (self.loader), 2)
+
+        verlist = self.loader[self.__pluginname].VersionList (self.loader)
+
+        # Без обновления все версии равны None
+        self.assertTrue (verlist.getPluginVersion (u"Debug Plugin") == None)
+        self.assertTrue (verlist.getPluginVersion (u"UpdateNotifier") == None)
+
+        self.assertTrue (verlist.getStableVersion () == None)
+        self.assertTrue (verlist.getUnstableVersion () == None)
+
+        verlist.updateVersions()
+
+        self.assertTrue (verlist.getPluginVersion (u"Debug Plugin") == Version (0, 5))
+        self.assertTrue (verlist.getStableVersion () == Version (1, 7, 0))

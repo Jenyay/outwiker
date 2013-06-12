@@ -121,22 +121,25 @@ class PluginDebug (Plugin):
         self.ID_BUTTONSDIALOG = wx.NewId()
 
         self.__menuName = _(u"Debug")
-        self.__createMenu()
 
-        self._application.onTreePopupMenu += self.__onTreePopupMenu
-        self._application.onTrayPopupMenu += self.__onTrayPopupMenu
+        if self._application.mainWindow != None:
+            self.__createMenu()
+
+            self._application.onTreePopupMenu += self.__onTreePopupMenu
+            self._application.onTrayPopupMenu += self.__onTrayPopupMenu
 
 
     def destroy (self):
         """
         Уничтожение (выгрузка) плагина. Здесь плагин должен отписаться от всех событий
         """
-        self._application.mainWindow.Unbind(wx.EVT_MENU, handler=self.__onPluginsList, id=self.ID_PLUGINSLIST)
-        self._application.mainWindow.Unbind(wx.EVT_MENU, handler=self.__onButtonsDialog, id=self.ID_BUTTONSDIALOG)
+        if self._application.mainWindow != None:
+            self._application.mainWindow.Unbind(wx.EVT_MENU, handler=self.__onPluginsList, id=self.ID_PLUGINSLIST)
+            self._application.mainWindow.Unbind(wx.EVT_MENU, handler=self.__onButtonsDialog, id=self.ID_BUTTONSDIALOG)
 
-        index = self._application.mainWindow.mainMenu.FindMenu (self.__menuName)
-        assert index != wx.NOT_FOUND
+            index = self._application.mainWindow.mainMenu.FindMenu (self.__menuName)
+            assert index != wx.NOT_FOUND
 
-        index = self._application.mainWindow.mainMenu.Remove (index)
+            index = self._application.mainWindow.mainMenu.Remove (index)
 
     #############################################

@@ -28,15 +28,17 @@ class Controller (object):
         global _
         _ = get_()
 
-        self.__createMenu()
+        if self._application.mainWindow != None:
+            self.__createMenu()
 
 
     def destroy (self):
         """
         Вызывается при отключении плагина
         """
-        self._application.mainWindow.Unbind (wx.EVT_MENU, id=self.UPDATE_ID, handler=self.__onCheckUpdate)
-        self._helpMenu.Delete (self.UPDATE_ID)
+        if self._application.mainWindow != None:
+            self._application.mainWindow.Unbind (wx.EVT_MENU, id=self.UPDATE_ID, handler=self.__onCheckUpdate)
+            self._helpMenu.Delete (self.UPDATE_ID)
 
 
     def __createMenu (self):
