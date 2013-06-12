@@ -96,9 +96,14 @@ class PluginDebug (Plugin):
 
     @property
     def version (self):
-        return u"0.3"
+        return u"0.4"
 
 
+    @property
+    def url (self):
+        return u"http://jenyay.net/Outwiker/DebugPlugin"
+    
+    
     def initialize(self):
         domain = u"testdebug"
         self.__ID_TREE_POPUP = wx.NewId()
