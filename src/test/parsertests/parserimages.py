@@ -107,3 +107,27 @@ class ParserImagesTest (unittest.TestCase):
         result = u'бла-бла-бла \n<IMG SRC="%s"/> бла-бла-бла\nбла-бла-бла' % (url)
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testImage9 (self):
+        url = u"https://lh5.googleusercontent.com/-IbkA63YQYq0/Ub4Axyf2sNI/AAAAAAAADiY/q8fRG3uXtRY/s700/2013-06-16+09.06.29.jpg"
+        text = u"бла-бла-бла \n%s бла-бла-бла\nбла-бла-бла" % (url)
+        result = u'бла-бла-бла \n<IMG SRC="%s"/> бла-бла-бла\nбла-бла-бла' % (url)
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testImage10 (self):
+        url = u"https://lh5.googleusercontent.com/-_StTTaVjYXw/Ub4A0Gz7VaI/AAAAAAAADik/2BP9muKXDWQ/s700/2013-06-16+13.27.27.jpg"
+        text = u"бла-бла-бла \n%s бла-бла-бла\nбла-бла-бла" % (url)
+        result = u'бла-бла-бла \n<IMG SRC="%s"/> бла-бла-бла\nбла-бла-бла' % (url)
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testImage11 (self):
+        url = u"https://lh4.googleusercontent.com/-0r9yj2bE02A/UbQcriTO4oI/AAAAAAAADfM/bQAHRmcqr6Y/w617-h822-no/2013-06-08_19-28-28_430.jpg"
+        text = u"бла-бла-бла \n%s бла-бла-бла\nбла-бла-бла" % (url)
+        result = u'бла-бла-бла \n<IMG SRC="%s"/> бла-бла-бла\nбла-бла-бла' % (url)
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
