@@ -21,9 +21,16 @@ class UpdateDialogController (object):
         verList = VersionList (self._application.plugins)
         verList.updateVersions()
 
-        self._updateDialog.setCurrentOutWikerVersion (getCurrentVersion())
-        self._updateDialog.setLatestStableOutwikerVersion (verList.getStableVersion())
-        self._updateDialog.setLatestUnstableOutwikerVersion (verList.getUnstableVersion())
+        currentVersion = getCurrentVersion()
+        stableVersion = verList.getStableVersion()
+        unstableVersion = verList.getUnstableVersion()
+
+        self._updateDialog.setCurrentOutWikerVersion (currentVersion)
+        self._updateDialog.setLatestStableOutwikerVersion (stableVersion)
+        self._updateDialog.setLatestUnstableOutwikerVersion (unstableVersion)
+
+        self._updateDialog.showUpdateStableOutWiker (currentVersion < stableVersion)
+        self._updateDialog.showUpdateUnstableOutWiker (currentVersion < unstableVersion)
 
         for plugin in self._application.plugins:
             self._updateDialog.addPluginInfo (plugin, verList.getPluginVersion (plugin.name))
