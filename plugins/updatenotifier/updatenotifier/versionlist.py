@@ -64,13 +64,14 @@ class VersionList (object):
         Получить номера версий всех плагинов и самой программы из интернета
         """
         self._outwikerStableVersion = self._getVersionFromPage (self._outwikerStablePage, "stable")
-        self._outwikerUnstableVersion = self._getVersionFromPage (self._outwikerUnstablePage, "unstable")
+        self._outwikerUnstableVersion = self._getVersionFromPage (self._outwikerUnstablePage, 
+                "unstable", status="dev")
 
         for plugin in self._plugins:
             self._pluginsVersion[plugin.name] = self._getVersionFromPage (self._pluginPages[plugin.name], "stable")
 
 
-    def _getVersionFromPage (self, url, versionname):
+    def _getVersionFromPage (self, url, versionname, status=""):
         """
         url - ссылка, откуда получается номер версии
         versionname - название версии (stable, unstable и т.п.)
@@ -84,7 +85,7 @@ class VersionList (object):
         if versionname not in versions:
             return None
 
-        return Version.parse (versions[versionname])
+        return Version.parse (versions[versionname] + " " + status)
 
 
     def _loadPage (self, url):
