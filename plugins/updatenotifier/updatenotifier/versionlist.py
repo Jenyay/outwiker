@@ -109,6 +109,10 @@ class VersionList (object):
         return self._pluginsVersion[pluginname]
 
 
+    def getPluginUrl (self, pluginname):
+        return self._pluginPages[pluginname]
+
+
     def getStableVersion (self):
         return self._outwikerStableVersion
 

@@ -2,6 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 from outwiker.core.commands import getCurrentVersion
+from outwiker.core.version import Version
 
 from .versionlist import VersionList
 from .updatedialog import UpdateDialog
@@ -26,14 +27,19 @@ class UpdateDialogController (object):
         unstableVersion = verList.getUnstableVersion()
 
         self._updateDialog.setCurrentOutWikerVersion (currentVersion)
-        self._updateDialog.setLatestStableOutwikerVersion (stableVersion)
-        self._updateDialog.setLatestUnstableOutwikerVersion (unstableVersion)
-
-        self._updateDialog.showUpdateStableOutWiker (currentVersion < stableVersion)
-        self._updateDialog.showUpdateUnstableOutWiker (currentVersion < unstableVersion)
+        self._updateDialog.setLatestStableOutwikerVersion (stableVersion, currentVersion < stableVersion)
+        self._updateDialog.setLatestUnstableOutwikerVersion (unstableVersion, currentVersion < unstableVersion)
 
         for plugin in self._application.plugins:
-            self._updateDialog.addPluginInfo (plugin, verList.getPluginVersion (plugin.name))
+            pluginVersion = verList.getPluginVersion (plugin.name)
+            if (pluginVersion != None and
+                    pluginVersion > Version.parse (plugin.version)):
+                try:
+                    self._updateDialog.addPluginInfo (plugin, 
+                            pluginVersion,
+                            verList.getPluginUrl (plugin.name))
+                except KeyError:
+                    pass
         
 
     def ShowModal (self):
