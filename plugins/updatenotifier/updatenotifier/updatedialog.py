@@ -20,7 +20,7 @@ class UpdateDialog(wx.Dialog):
         self._inactiveUrlColor = wx.BLACK
         
         self.SetSize ((500, 400))
-        self.SetTitle (_(u"Update Notifier"))
+        self.SetTitle (_(u"UpdateNotifier"))
         self._createGui ()
 
 

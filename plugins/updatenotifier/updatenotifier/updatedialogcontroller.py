@@ -6,6 +6,7 @@ from outwiker.core.version import Version
 
 from .versionlist import VersionList
 from .updatedialog import UpdateDialog
+from .longprocessrunner import LongProcessRunner
 
 
 class UpdateDialogController (object):
@@ -43,7 +44,7 @@ class UpdateDialogController (object):
             except KeyError:
                 continue
 
-            if (pluginVersion != None and 
+            if (pluginVersion != None and
                     pluginVersion > currentPluginVersion):
                 self._updateDialog.addPluginInfo (plugin,
                         pluginVersion,
@@ -51,5 +52,13 @@ class UpdateDialogController (object):
 
 
     def ShowModal (self):
-        self._updateVersions()
+        # self._updateVersions()
+
+        progressRunner = LongProcessRunner (self._updateVersions, 
+                self._application.mainWindow,
+                dialogTitle = u"UpdateNotifier",
+                dialogText = _(u"Check for new versions"))
+
+        progressRunner.run()
+
         return self._updateDialog.ShowModal()
