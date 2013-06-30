@@ -32,15 +32,23 @@ class UpdateDialogController (object):
 
         for plugin in self._application.plugins:
             pluginVersion = verList.getPluginVersion (plugin.name)
-            if (pluginVersion != None and
-                    pluginVersion > Version.parse (plugin.version)):
-                try:
-                    self._updateDialog.addPluginInfo (plugin, 
-                            pluginVersion,
-                            verList.getPluginUrl (plugin.name))
-                except KeyError:
-                    pass
-        
+
+            try:
+                currentPluginVersion = Version.parse (plugin.version)
+            except ValueError:
+                continue
+
+            try:
+                pluginUrl = verList.getPluginUrl (plugin.name)
+            except KeyError:
+                continue
+
+            if (pluginVersion != None and 
+                    pluginVersion > currentPluginVersion):
+                self._updateDialog.addPluginInfo (plugin,
+                        pluginVersion,
+                        verList.getPluginUrl (plugin.name))
+
 
     def ShowModal (self):
         self._updateVersions()
