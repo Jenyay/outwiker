@@ -15,6 +15,6 @@ class LineJoinToken (object):
     Токен для горизонтальной линии
     """
     def getToken (self):
-        token = Regex (r"\\r?\n")
+        token = Regex (r"\\\n")
         token = token.setParseAction (lambda s, l, t: u"")("linejoin")
         return token

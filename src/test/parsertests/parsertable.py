@@ -106,3 +106,33 @@ sdfsdf || centered || right aligned||
 <TABLE border=1 width=350><TR><TD ALIGN="LEFT">left aligned sdfsdf</TD><TD ALIGN="CENTER">centered</TD><TD ALIGN="RIGHT">right aligned</TD></TR><TR><TD ALIGN="LEFT">left aligned <BR> dsfsdf</TD><TD ALIGN="CENTER">centered</TD><TD ALIGN="RIGHT">right aligned</TD></TR><TR><TD ALIGN="LEFT">left aligned <BR> dsfsdf</TD><TD ALIGN="CENTER">centered</TD><TD ALIGN="RIGHT">right aligned</TD></TR><TR><TD ALIGN="LEFT">left aligned <BR><BR> sdfsdfsdf</TD><TD ALIGN="CENTER">centered</TD><TD ALIGN="RIGHT">right aligned</TD></TR></TABLE>'''
     
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testTable5 (self):
+        text = u"""||border=1
+||x01\\
+||"""
+        
+        result = u'''<TABLE border=1><TR><TD>x01</TD></TR></TABLE>'''
+    
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testTable6 (self):
+        text = u"""||border=1
+||x01\\
+    ||"""
+        
+        result = u'''<TABLE border=1><TR><TD>x01</TD></TR></TABLE>'''
+    
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testTable8 (self):
+        text = u"""||border=1
+||x01\\
+    ||"""
+        
+        result = u'''<TABLE border=1><TR><TD>x01</TD></TR></TABLE>'''
+    
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))

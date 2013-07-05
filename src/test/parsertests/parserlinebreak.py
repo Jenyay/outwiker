@@ -95,3 +95,9 @@ class ParserLineBreakTest (unittest.TestCase):
         self.assertEqual (result, result_right, result)
 
 
+    def testLineBreak6 (self):
+        text = u"Строка 1\\r\nСтрока 2"
+        result_right = u"Строка 1\\r\nСтрока 2"
+        result = self.parser.toHtml (text)
+
+        self.assertEqual (result, result_right, result)
