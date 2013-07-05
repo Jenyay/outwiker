@@ -128,7 +128,10 @@ sdfsdf || centered || right aligned||
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
 
-    def testTable8 (self):
+    def testTable7 (self):
+        """
+        Этот пример отличается от предыдущего хитрыми юникодными пробелами в таблице
+        """
         text = u"""||border=1
 ||x01\\
     ||"""
