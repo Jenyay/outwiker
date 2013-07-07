@@ -843,7 +843,7 @@ msgstr "Интерфейс"
 #: outwiker/gui/preferences/prefdialog.py:132
 #: outwiker/gui/toolbars/pluginstoolbar.py:31
 msgid "Plugins"
-msgstr "Расширения"
+msgstr "Плагины"
 
 #: outwiker/gui/preferences/textprintpanel.py:28
 msgid "This options for text printing only"
