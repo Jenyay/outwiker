@@ -49,8 +49,8 @@ class UpdateDialog(wx.Dialog):
         """
         Создание интерфейса для показа последней стабильной версии OutWiker
         """
-        self.outwikerStableLabel = wx.StaticText (self, -1, u"Latest stable OutWiker version")
-        self.outwikerStableLink = wx.HyperlinkCtrl (self, -1, _("Update..."), url=_(u"http://jenyay.net/Outwiker/English"))
+        self.outwikerStableLabel = wx.StaticText (self, -1, _(u"Latest stable OutWiker version"))
+        self.outwikerStableLink = wx.HyperlinkCtrl (self, -1, u"", url=_(u"http://jenyay.net/Outwiker/English"))
 
         outwikerStableSizer = wx.FlexGridSizer (cols=2)
         outwikerStableSizer.AddGrowableCol (1)
@@ -70,8 +70,8 @@ class UpdateDialog(wx.Dialog):
         """
         Создание интерфейса для показа последней нестабильной версии OutWiker
         """
-        self.outwikerUnstableLabel = wx.StaticText (self, -1, u"Latest unstable OutWiker version")
-        self.outwikerUnstableLink = wx.HyperlinkCtrl (self, -1, _("Update..."), url=_(u"http://jenyay.net/Outwiker/UnstableEn"))
+        self.outwikerUnstableLabel = wx.StaticText (self, -1, _(u"Latest unstable OutWiker version"))
+        self.outwikerUnstableLink = wx.HyperlinkCtrl (self, -1, u"", url=_(u"http://jenyay.net/Outwiker/UnstableEn"))
 
         outwikerUnstableSizer = wx.FlexGridSizer (cols=2)
         outwikerUnstableSizer.AddGrowableCol (0)

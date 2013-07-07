@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-01 10:14+0400\n"
+"POT-Creation-Date: 2013-07-07 21:20+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,10 +17,72 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: updatenotifier.py:44
-msgid "Plugin description"
+#: controller.py:49
+msgid "Check for Updates..."
 msgstr ""
 
-#: updatenotifier.py:54
-msgid "http://jenyay.net"
+#: updatedialogcontroller.py:64
+msgid "Check for new versions..."
+msgstr ""
+
+#: updatedialog.py:23
+msgid "UpdateNotifier"
+msgstr ""
+
+#: updatedialog.py:31
+msgid "Current OutWiker version"
+msgstr ""
+
+#: updatedialog.py:52
+msgid "Latest stable OutWiker version"
+msgstr ""
+
+#: updatedialog.py:53 versionlist.py:25
+msgid "http://jenyay.net/Outwiker/English"
+msgstr ""
+
+#: updatedialog.py:73
+msgid "Latest unstable OutWiker version"
+msgstr ""
+
+#: updatedialog.py:74 versionlist.py:28
+msgid "http://jenyay.net/Outwiker/UnstableEn"
+msgstr ""
+
+#: updatedialog.py:94
+msgid "Updated plugins:"
+msgstr ""
+
+#: updatenotifier.py:48
+msgid ""
+"Check for update OutWiker and plug-ins for it. Append menu item \"Help -> "
+"Check for Updates...\""
+msgstr ""
+
+#: updatenotifier.py:58
+msgid "http://jenyay.net/Outwiker/UpdateNotifierEn"
+msgstr ""
+
+#: versionlist.py:39
+msgid "http://jenyay.net/Outwiker/ExternalToolsEn"
+msgstr ""
+
+#: versionlist.py:40
+msgid "http://jenyay.net/Outwiker/LightboxEn"
+msgstr ""
+
+#: versionlist.py:41
+msgid "http://jenyay.net/Outwiker/LivejournalPluginEn"
+msgstr ""
+
+#: versionlist.py:42
+msgid "http://jenyay.net/Outwiker/SpoilerEn"
+msgstr ""
+
+#: versionlist.py:43
+msgid "http://jenyay.net/Outwiker/StylePluginEn"
+msgstr ""
+
+#: versionlist.py:44
+msgid "http://jenyay.net/Outwiker/ThumbGalleryEn"
 msgstr ""

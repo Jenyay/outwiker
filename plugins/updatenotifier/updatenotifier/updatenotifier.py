@@ -45,7 +45,7 @@ else:
         
         @property
         def description (self):
-            return _(u"Plugin description")
+            return _(u'''Check for update OutWiker and plug-ins for it. Append menu item "Help -> Check for Updates..."''')
 
 
         @property
@@ -55,7 +55,7 @@ else:
 
         @property
         def url (self):
-            return _(u"http://jenyay.net")
+            return _(u"http://jenyay.net/Outwiker/UpdateNotifierEn")
         
         
         def initialize(self):

@@ -7,6 +7,7 @@ from outwiker.core.version import Version
 from .versionlist import VersionList
 from .updatedialog import UpdateDialog
 from .longprocessrunner import LongProcessRunner
+from .i18n import get_
 
 
 class UpdateDialogController (object):
@@ -15,6 +16,9 @@ class UpdateDialogController (object):
     Сюда вынесена вся логика.
     """
     def __init__ (self, application):
+        global _
+        _ = get_()
+
         self._application = application
         self._updateDialog = UpdateDialog (self._application.mainWindow)
 
@@ -57,7 +61,7 @@ class UpdateDialogController (object):
         progressRunner = LongProcessRunner (self._updateVersions, 
                 self._application.mainWindow,
                 dialogTitle = u"UpdateNotifier",
-                dialogText = _(u"Check for new versions"))
+                dialogText = _(u"Check for new versions..."))
 
         progressRunner.run()
 

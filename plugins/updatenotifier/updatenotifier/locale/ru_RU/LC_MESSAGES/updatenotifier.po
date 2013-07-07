@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UpdateNotifier\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-01 10:14+0400\n"
-"PO-Revision-Date: 2013-06-01 10:14+0300\n"
+"POT-Creation-Date: 2013-07-07 21:20+0400\n"
+"PO-Revision-Date: 2013-07-07 21:21+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language: ru_RU\n"
@@ -18,10 +18,80 @@ msgstr ""
 "X-Generator: Poedit 1.5.4\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-#: updatenotifier.py:44
-msgid "Plugin description"
-msgstr ""
+#: controller.py:49
+msgid "Check for Updates..."
+msgstr "Проверить обновления..."
 
-#: updatenotifier.py:54
-msgid "http://jenyay.net"
+#: updatedialogcontroller.py:64
+msgid "Check for new versions..."
+msgstr "Поиск новых версий..."
+
+#: updatedialog.py:23
+msgid "UpdateNotifier"
+msgstr "UpdateNotifier"
+
+#: updatedialog.py:31
+msgid "Current OutWiker version"
+msgstr "Текущая версия OutWiker"
+
+#: updatedialog.py:52
+msgid "Latest stable OutWiker version"
+msgstr "Последняя стабильная версия OutWiker"
+
+#: updatedialog.py:53 versionlist.py:25
+msgid "http://jenyay.net/Outwiker/English"
+msgstr "http://jenyay.net/Soft/Outwiker"
+
+#: updatedialog.py:73
+msgid "Latest unstable OutWiker version"
+msgstr "Последняя нестабильная версия OutWiker"
+
+#: updatedialog.py:74 versionlist.py:28
+msgid "http://jenyay.net/Outwiker/UnstableEn"
+msgstr "http://jenyay.net/Outwiker/Unstable"
+
+#: updatedialog.py:94
+msgid "Updated plugins:"
+msgstr "Обновленные плагины:"
+
+#: updatenotifier.py:48
+msgid ""
+"Check for update OutWiker and plug-ins for it. Append menu item \"Help -> "
+"Check for Updates...\""
 msgstr ""
+"Проверка обновлений OutWiker и плагинов к нему. Плагин добавляет пункт меню "
+"\"Справка -> Проверить обновления...\""
+
+#: updatenotifier.py:58
+msgid "http://jenyay.net/Outwiker/UpdateNotifierEn"
+msgstr "http://jenyay.net/Outwiker/UpdateNotifier"
+
+#: versionlist.py:39
+msgid "http://jenyay.net/Outwiker/ExternalToolsEn"
+msgstr "http://jenyay.net/Outwiker/ExternalTools"
+
+#: versionlist.py:40
+msgid "http://jenyay.net/Outwiker/LightboxEn"
+msgstr "http://jenyay.net/Outwiker/Lightbox"
+
+#: versionlist.py:41
+msgid "http://jenyay.net/Outwiker/LivejournalPluginEn"
+msgstr "http://jenyay.net/Outwiker/LivejournalPlugin"
+
+#: versionlist.py:42
+msgid "http://jenyay.net/Outwiker/SpoilerEn"
+msgstr "http://jenyay.net/Outwiker/Spoiler"
+
+#: versionlist.py:43
+msgid "http://jenyay.net/Outwiker/StylePluginEn"
+msgstr "http://jenyay.net/Outwiker/StylePlugin"
+
+#: versionlist.py:44
+msgid "http://jenyay.net/Outwiker/ThumbGalleryEn"
+msgstr "http://jenyay.net/Outwiker/ThumbGallery"
+
+#~ msgid "Update..."
+#~ msgstr "Обновить..."
+
+#~ msgid "Plugin description"
+#~ msgstr "Описание плагина"
