@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-from outwiker.core.commands import getCurrentVersion
+from outwiker.core.commands import getCurrentVersion, MessageBox
 from outwiker.core.version import Version
 
 from .versionlist import VersionList
@@ -20,20 +20,33 @@ class UpdateDialogController (object):
         _ = get_()
 
         self._application = application
-        self._updateDialog = UpdateDialog (self._application.mainWindow)
 
 
-    def _updateVersions (self):
-        verList = VersionList (self._application.plugins)
-        verList.updateVersions()
-
+    def _prepareUpdates (self, verList, updateDialog):
+        """
+        Сверяем полученные номера версий с теми, что установлены сейчас и заполняем диалог изменениями (updateDialog)
+        Возвращает True, если есть какие-нибудь обновления
+        """
         currentVersion = getCurrentVersion()
         stableVersion = verList.getStableVersion()
         unstableVersion = verList.getUnstableVersion()
 
-        self._updateDialog.setCurrentOutWikerVersion (currentVersion)
-        self._updateDialog.setLatestStableOutwikerVersion (stableVersion, currentVersion < stableVersion)
-        self._updateDialog.setLatestUnstableOutwikerVersion (unstableVersion, currentVersion < unstableVersion)
+        # Есть ли какие-нибудь обновления?
+        hasUpdates = False
+
+        updateDialog.setCurrentOutWikerVersion (currentVersion)
+
+        if stableVersion != None:
+            hasUpdates = hasUpdates or (currentVersion < stableVersion)
+            updateDialog.setLatestStableOutwikerVersion (stableVersion, currentVersion < stableVersion)
+        else:
+            updateDialog.setLatestStableOutwikerVersion (currentVersion, False)
+
+        if unstableVersion != None:
+            hasUpdates = hasUpdates or (currentVersion < unstableVersion)
+            updateDialog.setLatestUnstableOutwikerVersion (unstableVersion, currentVersion < unstableVersion)
+        else:
+            updateDialog.setLatestUnstableOutwikerVersion (currentVersion, False)
 
         for plugin in self._application.plugins:
             pluginVersion = verList.getPluginVersion (plugin.name)
@@ -50,19 +63,33 @@ class UpdateDialogController (object):
 
             if (pluginVersion != None and
                     pluginVersion > currentPluginVersion):
-                self._updateDialog.addPluginInfo (plugin,
+                updateDialog.addPluginInfo (plugin,
                         pluginVersion,
                         verList.getPluginUrl (plugin.name))
+                hasUpdates = True
+
+        return hasUpdates
 
 
     def ShowModal (self):
-        # self._updateVersions()
+        """
+        Проверить обновления и показать диалог с результатами
+        """
+        verList = VersionList (self._application.plugins)
 
-        progressRunner = LongProcessRunner (self._updateVersions, 
+        progressRunner = LongProcessRunner (verList.updateVersions, 
                 self._application.mainWindow,
                 dialogTitle = u"UpdateNotifier",
                 dialogText = _(u"Check for new versions..."))
 
         progressRunner.run()
+        # verList.updateVersions()
 
-        return self._updateDialog.ShowModal()
+        updateDialog = UpdateDialog (self._application.mainWindow)
+        hasUpdates = self._prepareUpdates (verList, updateDialog)
+
+        if hasUpdates:
+            updateDialog.ShowModal()
+        else:
+            MessageBox (_(u"Updates not found"),
+                    u"UpdateNotifier")

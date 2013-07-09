@@ -99,6 +99,8 @@ class VersionList (object):
             fp.close()
         except urllib2.HTTPError:
             return u""
+        except urllib2.URLError:
+            return u""
         except ValueError:
             return u""
 
