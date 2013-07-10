@@ -19,7 +19,11 @@ class Controller (object):
         application - экземпляр класса ApplicationParams
         """
         self.UPDATE_ID = wx.NewId()
+        self.SILENCE_UPDATE_ID = wx.NewId()
         self._application = application
+
+        # В режиме отладки добавляются новые пункты меню
+        self._debug = True
 
 
     def initialize (self):
@@ -41,6 +45,9 @@ class Controller (object):
             self._application.mainWindow.Unbind (wx.EVT_MENU, id=self.UPDATE_ID, handler=self.__onCheckUpdate)
             self._helpMenu.Delete (self.UPDATE_ID)
 
+            if self._debug:
+                self._helpMenu.Delete (self.SILENCE_UPDATE_ID)
+
 
     def __createMenu (self):
         """Добавление пункта меню для проверки обновлений"""
@@ -49,10 +56,19 @@ class Controller (object):
         self._helpMenu.Append (id=self.UPDATE_ID, text=_(u"Check for Updates..."))
         self._application.mainWindow.Bind (wx.EVT_MENU, self.__onCheckUpdate, id=self.UPDATE_ID)
 
+        if self._debug:
+            self._helpMenu.Append (id=self.SILENCE_UPDATE_ID, text=u"Silence check for Updates...")
+            self._application.mainWindow.Bind (wx.EVT_MENU, self.__onSilenceCheckUpdate, id=self.SILENCE_UPDATE_ID)
+
 
     def __onCheckUpdate (self, event):
         updateDialogController = UpdateDialogController (self._application)
         updateDialogController.ShowModal()
+
+
+    def __onSilenceCheckUpdate (self, event):
+        updateDialogController = UpdateDialogController (self._application)
+        updateDialogController.updateSilence()
 
 
     @property

@@ -1,13 +1,21 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-from outwiker.core.commands import getCurrentVersion, MessageBox
+import threading
+
+import wx
+
+from outwiker.core.commands import getCurrentVersion, MessageBox, setStatusText
 from outwiker.core.version import Version
 
 from .versionlist import VersionList
 from .updatedialog import UpdateDialog
 from .longprocessrunner import LongProcessRunner
 from .i18n import get_
+
+# Событие срабатывает, когда завершается "молчаливое" обновление списка версий
+# Параметр verList - экземпляр класса VersionList
+UpdateVersionsEvent, EVT_UPDATE_VERSIONS = wx.lib.newevent.NewEvent()
 
 
 class UpdateDialogController (object):
@@ -20,6 +28,10 @@ class UpdateDialogController (object):
         _ = get_()
 
         self._application = application
+
+        # Экземпляр потока, который будет проверять новые версии
+        self._silenceThread = None
+        self._application.mainWindow.Bind (EVT_UPDATE_VERSIONS, handler=self._onVersionUpdate)
 
 
     def _prepareUpdates (self, verList, updateDialog):
@@ -83,7 +95,6 @@ class UpdateDialogController (object):
                 dialogText = _(u"Check for new versions..."))
 
         progressRunner.run()
-        # verList.updateVersions()
 
         updateDialog = UpdateDialog (self._application.mainWindow)
         hasUpdates = self._prepareUpdates (verList, updateDialog)
@@ -93,3 +104,36 @@ class UpdateDialogController (object):
         else:
             MessageBox (_(u"Updates not found"),
                     u"UpdateNotifier")
+        updateDialog.Destroy()
+
+
+    def _onVersionUpdate (self, event):
+        setStatusText (u"")
+        updateDialog = UpdateDialog (self._application.mainWindow)
+        hasUpdates = self._prepareUpdates (event.verList, updateDialog)
+
+        if hasUpdates:
+            updateDialog.ShowModal()
+        updateDialog.Destroy()
+
+
+    def _silenceThreadFunc (self, verList):
+        """
+        Функция потока для молчаливой проверки обновлений
+        """
+        verList.updateVersions()
+        event = UpdateVersionsEvent (verList=verList)
+        wx.PostEvent (self._application.mainWindow, event)
+
+            
+    def updateSilence (self):
+        """
+        Молчаливое обновление списка версий
+        """
+        setStatusText (_(u"Check for new versions..."))
+        verList = VersionList (self._application.plugins)
+
+        if (self._silenceThread == None or
+                not self._silenceThread.isAlive()):
+            self._silenceThread = threading.Thread (None, self._silenceThreadFunc, args=(verList,))
+            self._silenceThread.start()
