@@ -5,8 +5,11 @@ import os.path
 
 import wx
 
+from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
+
 from .i18n import get_
 from .updatedialogcontroller import UpdateDialogController
+from .preferencepanel import PreferencePanel
 
 
 class Controller (object):
@@ -35,6 +38,8 @@ class Controller (object):
 
         if self._application.mainWindow != None:
             self.__createMenu()
+        
+        self._application.onPreferencesDialogCreate += self.__onPreferencesDialogCreate
 
 
     def destroy (self):
@@ -48,6 +53,8 @@ class Controller (object):
             if self._debug:
                 self._helpMenu.Delete (self.SILENCE_UPDATE_ID)
 
+        self._application.onPreferencesDialogCreate -= self.__onPreferencesDialogCreate
+
 
     def __createMenu (self):
         """Добавление пункта меню для проверки обновлений"""
@@ -57,7 +64,7 @@ class Controller (object):
         self._application.mainWindow.Bind (wx.EVT_MENU, self.__onCheckUpdate, id=self.UPDATE_ID)
 
         if self._debug:
-            self._helpMenu.Append (id=self.SILENCE_UPDATE_ID, text=u"Silence check for Updates...")
+            self._helpMenu.Append (id=self.SILENCE_UPDATE_ID, text=_(u"Silence check for Updates..."))
             self._application.mainWindow.Bind (wx.EVT_MENU, self.__onSilenceCheckUpdate, id=self.SILENCE_UPDATE_ID)
 
 
@@ -69,6 +76,17 @@ class Controller (object):
     def __onSilenceCheckUpdate (self, event):
         updateDialogController = UpdateDialogController (self._application)
         updateDialogController.updateSilence()
+
+
+    def __onPreferencesDialogCreate (self, dialog):
+        """
+        Добавление страницы с настройками
+        """
+        prefPanel = PreferencePanel (dialog.treeBook, self._application.config)
+
+        panelName = _(u"UpdateNotifier [Plugin]")
+        panelsList = [PreferencePanelInfo (prefPanel, panelName)]
+        dialog.appendPreferenceGroup (panelName, panelsList)
 
 
     @property
