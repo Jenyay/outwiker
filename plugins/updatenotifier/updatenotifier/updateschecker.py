@@ -20,7 +20,7 @@ from .i18n import get_
 UpdateVersionsEvent, EVT_UPDATE_VERSIONS = wx.lib.newevent.NewEvent()
 
 
-class UpdateDialogController (object):
+class UpdatesChecker (object):
     """
     Контроллер для управления UpdateDialog.
     Сюда вынесена вся логика.
@@ -33,34 +33,66 @@ class UpdateDialogController (object):
 
         # Экземпляр потока, который будет проверять новые версии
         self._silenceThread = None
-        self._application.mainWindow.Bind (EVT_UPDATE_VERSIONS, handler=self._onVersionUpdate)
+        self._application.mainWindow.Bind (EVT_UPDATE_VERSIONS, handler=self._onSilenceVersionUpdate)
 
 
-    def _prepareUpdates (self, verList, updateDialog):
+    def _showUpdates (self, verList):
         """
         Сверяем полученные номера версий с теми, что установлены сейчас и заполняем диалог изменениями (updateDialog)
         Возвращает True, если есть какие-нибудь обновления
         """
+        setStatusText (u"")
+
         currentVersion = getCurrentVersion()
-        stableVersion = verList.getStableVersion()
-        unstableVersion = verList.getUnstableVersion()
+        stableVersion = verList.stableVersion
+        unstableVersion = verList.unstableVersion
 
-        # Есть ли какие-нибудь обновления?
-        hasUpdates = False
+        updatedPlugins = self.getUpdatedPlugins (verList)
 
+        updateDialog = UpdateDialog (self._application.mainWindow)
         updateDialog.setCurrentOutWikerVersion (currentVersion)
 
         if stableVersion != None:
-            hasUpdates = hasUpdates or (currentVersion < stableVersion)
             updateDialog.setLatestStableOutwikerVersion (stableVersion, currentVersion < stableVersion)
         else:
             updateDialog.setLatestStableOutwikerVersion (currentVersion, False)
 
         if unstableVersion != None:
-            hasUpdates = hasUpdates or (currentVersion < unstableVersion)
             updateDialog.setLatestUnstableOutwikerVersion (unstableVersion, currentVersion < unstableVersion)
         else:
             updateDialog.setLatestUnstableOutwikerVersion (currentVersion, False)
+
+        for plugin in updatedPlugins:
+            updateDialog.addPluginInfo (plugin,
+                    verList.getPluginVersion (plugin.name),
+                    verList.getPluginUrl (plugin.name))
+
+        updateDialog.ShowModal()
+        updateDialog.Destroy()
+
+
+    def hasUpdates (self, verList):
+        """
+        Возвращает True, если есть обновления в плагинах или самой программы
+        """
+        currentVersion = getCurrentVersion()
+        stableVersion = verList.stableVersion
+        unstableVersion = verList.unstableVersion
+
+        updatedPlugins = self.getUpdatedPlugins (verList)
+
+        result = ((currentVersion < stableVersion) or 
+                (currentVersion < unstableVersion) or 
+                len (updatedPlugins) != 0)
+
+        return result
+
+
+    def getUpdatedPlugins (self, verList):
+        """
+        Возвращает список плагинов, которые обновились
+        """
+        updatedPlugins = []
 
         for plugin in self._application.plugins:
             pluginVersion = verList.getPluginVersion (plugin.name)
@@ -77,49 +109,21 @@ class UpdateDialogController (object):
 
             if (pluginVersion != None and
                     pluginVersion > currentPluginVersion):
-                updateDialog.addPluginInfo (plugin,
-                        pluginVersion,
-                        verList.getPluginUrl (plugin.name))
-                hasUpdates = True
+                updatedPlugins.append (plugin)
 
-        UpdatesConfig (self._application.config).lastUpdate = datetime.datetime.today()
-        return hasUpdates
+        return updatedPlugins
 
 
-    def ShowModal (self):
-        """
-        Проверить обновления и показать диалог с результатами
-        """
-        verList = VersionList (self._application.plugins)
-        setStatusText (_(u"Check for new versions..."))
+    def _onSilenceVersionUpdate (self, event):
+        if self.hasUpdates (event.verList):
+            self._showUpdates (event.verList)
+            self._touchLastUpdateDate()
 
-        progressRunner = LongProcessRunner (verList.updateVersions, 
-                self._application.mainWindow,
-                dialogTitle = u"UpdateNotifier",
-                dialogText = _(u"Check for new versions..."))
-
-        progressRunner.run()
-
-        updateDialog = UpdateDialog (self._application.mainWindow)
-        hasUpdates = self._prepareUpdates (verList, updateDialog)
-
-        if hasUpdates:
-            updateDialog.ShowModal()
-        else:
-            MessageBox (_(u"Updates not found"),
-                    u"UpdateNotifier")
-        updateDialog.Destroy()
-
-
-    def _onVersionUpdate (self, event):
-        setStatusText (u"")
-        updateDialog = UpdateDialog (self._application.mainWindow)
-        hasUpdates = self._prepareUpdates (event.verList, updateDialog)
-
-        if hasUpdates:
-            updateDialog.ShowModal()
-        updateDialog.Destroy()
         self._silenceThread = None
+
+
+    def _touchLastUpdateDate (self):
+        UpdatesConfig (self._application.config).lastUpdate = datetime.datetime.today()
 
 
     def _silenceThreadFunc (self, verList):
@@ -133,7 +137,7 @@ class UpdateDialogController (object):
             wx.PostEvent (self._application.mainWindow, event)
 
             
-    def updateSilence (self):
+    def checkForUpdatesSilence (self):
         """
         Молчаливое обновление списка версий
         """
@@ -145,3 +149,25 @@ class UpdateDialogController (object):
 
             self._silenceThread = threading.Thread (None, self._silenceThreadFunc, args=(verList,))
             self._silenceThread.start()
+
+
+    def checkForUpdates (self):
+        """
+        Проверить обновления и показать диалог с результатами
+        """
+        verList = VersionList (self._application.plugins)
+        setStatusText (_(u"Check for new versions..."))
+
+        progressRunner = LongProcessRunner (verList.updateVersions, 
+                self._application.mainWindow,
+                dialogTitle = u"UpdateNotifier",
+                dialogText = _(u"Check for new versions..."))
+
+        progressRunner.run()
+
+        if self.hasUpdates (verList):
+            self._showUpdates (verList)
+            self._touchLastUpdateDate()
+        else:
+            MessageBox (_(u"Updates not found"),
+                    u"UpdateNotifier")

@@ -9,7 +9,7 @@ import wx
 from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
 
 from .i18n import get_
-from .updatedialogcontroller import UpdateDialogController
+from .updateschecker import UpdatesChecker
 from .preferencepanel import PreferencePanel
 from .updatesconfig import UpdatesConfig
 
@@ -29,7 +29,7 @@ class Controller (object):
 
         # В режиме отладки добавляются новые пункты меню
         self._debug = True
-        self._updateDialogController = None
+        self._updatesChecker = None
 
 
     def initialize (self):
@@ -39,7 +39,7 @@ class Controller (object):
         global _
         _ = get_()
 
-        self._updateDialogController = UpdateDialogController (self._application)
+        self._updatesChecker = UpdatesChecker (self._application)
 
         if self._application.mainWindow != None:
             self._application.mainWindow.Bind (wx.EVT_IDLE, handler=self.__onIdle)
@@ -75,7 +75,7 @@ class Controller (object):
 
         if (config.updateInterval > 0 and
                 datetime.datetime.today() - config.lastUpdate  >= datetime.timedelta (config.updateInterval)):
-            self._updateDialogController.updateSilence()
+            self._updatesChecker.checkForUpdatesSilence()
 
 
 
@@ -92,11 +92,11 @@ class Controller (object):
 
 
     def __onCheckUpdate (self, event):
-        self._updateDialogController.ShowModal()
+        self._updatesChecker.checkForUpdates()
 
 
     def __onSilenceCheckUpdate (self, event):
-        self._updateDialogController.updateSilence()
+        self._updatesChecker.checkForUpdatesSilence()
 
 
     def __onPreferencesDialogCreate (self, dialog):

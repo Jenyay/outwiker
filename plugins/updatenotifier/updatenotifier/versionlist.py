@@ -115,9 +115,17 @@ class VersionList (object):
         return self._pluginPages[pluginname]
 
 
-    def getStableVersion (self):
+    @property
+    def stableVersion (self):
+        """
+        Возвращает номер стабильной версии OutWiker, которая лежит на сайте программы
+        """
         return self._outwikerStableVersion
 
 
-    def getUnstableVersion (self):
+    @property
+    def unstableVersion (self):
+        """
+        Возвращает номер нестабильной версии OutWiker, которая лежит на сайте программы
+        """
         return self._outwikerUnstableVersion
