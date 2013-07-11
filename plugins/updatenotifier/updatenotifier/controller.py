@@ -29,7 +29,7 @@ class Controller (object):
 
         # В режиме отладки добавляются новые пункты меню
         self._debug = True
-        self._updateDialogController = UpdateDialogController (self._application)
+        self._updateDialogController = None
 
 
     def initialize (self):
@@ -38,6 +38,8 @@ class Controller (object):
         """
         global _
         _ = get_()
+
+        self._updateDialogController = UpdateDialogController (self._application)
 
         if self._application.mainWindow != None:
             self._application.mainWindow.Bind (wx.EVT_IDLE, handler=self.__onIdle)

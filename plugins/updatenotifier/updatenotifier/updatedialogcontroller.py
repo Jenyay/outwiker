@@ -9,11 +9,11 @@ import wx
 from outwiker.core.commands import getCurrentVersion, MessageBox, setStatusText
 from outwiker.core.version import Version
 
-from .i18n import get_
 from .longprocessrunner import LongProcessRunner
 from .updatedialog import UpdateDialog
 from .updatesconfig import UpdatesConfig
 from .versionlist import VersionList
+from .i18n import get_
 
 # Событие срабатывает, когда завершается "молчаливое" обновление списка версий
 # Параметр verList - экземпляр класса VersionList
@@ -91,6 +91,7 @@ class UpdateDialogController (object):
         Проверить обновления и показать диалог с результатами
         """
         verList = VersionList (self._application.plugins)
+        setStatusText (_(u"Check for new versions..."))
 
         progressRunner = LongProcessRunner (verList.updateVersions, 
                 self._application.mainWindow,
