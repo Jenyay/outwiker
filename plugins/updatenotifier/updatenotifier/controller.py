@@ -2,6 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 import os.path
+import datetime
 
 import wx
 
@@ -10,6 +11,7 @@ from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
 from .i18n import get_
 from .updatedialogcontroller import UpdateDialogController
 from .preferencepanel import PreferencePanel
+from .updatesconfig import UpdatesConfig
 
 
 class Controller (object):
@@ -37,6 +39,7 @@ class Controller (object):
         _ = get_()
 
         if self._application.mainWindow != None:
+            self._application.mainWindow.Bind (wx.EVT_IDLE, handler=self.__onIdle)
             self.__createMenu()
         
         self._application.onPreferencesDialogCreate += self.__onPreferencesDialogCreate
@@ -54,6 +57,24 @@ class Controller (object):
                 self._helpMenu.Delete (self.SILENCE_UPDATE_ID)
 
         self._application.onPreferencesDialogCreate -= self.__onPreferencesDialogCreate
+
+
+    def __onIdle (self, event):
+        self.__autoUpdate()
+        self._application.mainWindow.Unbind (wx.EVT_IDLE, handler=self.__onIdle)
+
+
+    def __autoUpdate (self):
+        """
+        Автоматическая проверка обновлений
+        """
+        config = UpdatesConfig (self._application.config)
+
+        if (config.updateInterval > 0 and
+                datetime.datetime.today() - config.lastUpdate  >= datetime.timedelta (config.updateInterval)):
+            updateDialogController = UpdateDialogController (self._application)
+            updateDialogController.updateSilence()
+
 
 
     def __createMenu (self):

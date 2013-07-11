@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
+import datetime
 import threading
 
 import wx
@@ -8,10 +9,11 @@ import wx
 from outwiker.core.commands import getCurrentVersion, MessageBox, setStatusText
 from outwiker.core.version import Version
 
-from .versionlist import VersionList
-from .updatedialog import UpdateDialog
-from .longprocessrunner import LongProcessRunner
 from .i18n import get_
+from .longprocessrunner import LongProcessRunner
+from .updatedialog import UpdateDialog
+from .updatesconfig import UpdatesConfig
+from .versionlist import VersionList
 
 # Событие срабатывает, когда завершается "молчаливое" обновление списка версий
 # Параметр verList - экземпляр класса VersionList
@@ -80,6 +82,7 @@ class UpdateDialogController (object):
                         verList.getPluginUrl (plugin.name))
                 hasUpdates = True
 
+        UpdatesConfig (self._application.config).lastUpdate = datetime.datetime.today()
         return hasUpdates
 
 
