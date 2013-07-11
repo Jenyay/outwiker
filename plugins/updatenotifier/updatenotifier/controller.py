@@ -29,6 +29,7 @@ class Controller (object):
 
         # В режиме отладки добавляются новые пункты меню
         self._debug = True
+        self._updateDialogController = UpdateDialogController (self._application)
 
 
     def initialize (self):
@@ -72,8 +73,7 @@ class Controller (object):
 
         if (config.updateInterval > 0 and
                 datetime.datetime.today() - config.lastUpdate  >= datetime.timedelta (config.updateInterval)):
-            updateDialogController = UpdateDialogController (self._application)
-            updateDialogController.updateSilence()
+            self._updateDialogController.updateSilence()
 
 
 
@@ -90,13 +90,11 @@ class Controller (object):
 
 
     def __onCheckUpdate (self, event):
-        updateDialogController = UpdateDialogController (self._application)
-        updateDialogController.ShowModal()
+        self._updateDialogController.ShowModal()
 
 
     def __onSilenceCheckUpdate (self, event):
-        updateDialogController = UpdateDialogController (self._application)
-        updateDialogController.updateSilence()
+        self._updateDialogController.updateSilence()
 
 
     def __onPreferencesDialogCreate (self, dialog):

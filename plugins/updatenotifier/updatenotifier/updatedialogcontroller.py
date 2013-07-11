@@ -111,6 +111,7 @@ class UpdateDialogController (object):
 
 
     def _onVersionUpdate (self, event):
+        self._silenceThread = None
         setStatusText (u"")
         updateDialog = UpdateDialog (self._application.mainWindow)
         hasUpdates = self._prepareUpdates (event.verList, updateDialog)
@@ -138,5 +139,6 @@ class UpdateDialogController (object):
 
         if (self._silenceThread == None or
                 not self._silenceThread.isAlive()):
+
             self._silenceThread = threading.Thread (None, self._silenceThreadFunc, args=(verList,))
             self._silenceThread.start()
