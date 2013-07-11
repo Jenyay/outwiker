@@ -111,7 +111,6 @@ class UpdateDialogController (object):
 
 
     def _onVersionUpdate (self, event):
-        self._silenceThread = None
         setStatusText (u"")
         updateDialog = UpdateDialog (self._application.mainWindow)
         hasUpdates = self._prepareUpdates (event.verList, updateDialog)
@@ -119,6 +118,7 @@ class UpdateDialogController (object):
         if hasUpdates:
             updateDialog.ShowModal()
         updateDialog.Destroy()
+        self._silenceThread = None
 
 
     def _silenceThreadFunc (self, verList):
@@ -127,7 +127,9 @@ class UpdateDialogController (object):
         """
         verList.updateVersions()
         event = UpdateVersionsEvent (verList=verList)
-        wx.PostEvent (self._application.mainWindow, event)
+
+        if self._application.mainWindow:
+            wx.PostEvent (self._application.mainWindow, event)
 
             
     def updateSilence (self):
