@@ -30,6 +30,7 @@ class UpdatesChecker (object):
         _ = get_()
 
         self._application = application
+        self._config = UpdatesConfig (self._application.config)
 
         # Экземпляр потока, который будет проверять новые версии
         self._silenceThread = None
@@ -81,8 +82,11 @@ class UpdatesChecker (object):
 
         updatedPlugins = self.getUpdatedPlugins (verList)
 
+        # Обновилась ли нестабильная версия (или игнорируем ее)
+        unstableUpdate = (currentVersion < unstableVersion) and not self._config.ignoreUnstable
+
         result = ((currentVersion < stableVersion) or 
-                (currentVersion < unstableVersion) or 
+                unstableUpdate or 
                 len (updatedPlugins) != 0)
 
         return result
@@ -115,6 +119,8 @@ class UpdatesChecker (object):
 
 
     def _onSilenceVersionUpdate (self, event):
+        setStatusText (u"")
+
         if self.hasUpdates (event.verList):
             self._showUpdates (event.verList)
             self._touchLastUpdateDate()
@@ -123,7 +129,7 @@ class UpdatesChecker (object):
 
 
     def _touchLastUpdateDate (self):
-        UpdatesConfig (self._application.config).lastUpdate = datetime.datetime.today()
+        self._config.lastUpdate = datetime.datetime.today()
 
 
     def _silenceThreadFunc (self, verList):

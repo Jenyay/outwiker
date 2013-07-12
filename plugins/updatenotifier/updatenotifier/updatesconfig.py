@@ -3,7 +3,7 @@
 
 import datetime
 
-from outwiker.core.config import IntegerOption, DateTimeOption
+from outwiker.core.config import IntegerOption, DateTimeOption, BooleanOption
 
 class UpdatesConfig (object):
     def __init__ (self, config):
@@ -22,6 +22,7 @@ class UpdatesConfig (object):
                 UPDATE_INTERVAL_OPTION, 
                 UPDATE_INTERVAL_DEFAULT)
 
+
         # Дата последней проверки обновлений
         LAST_UPDATE_OPTION = u"LastUpdate"
 
@@ -32,6 +33,17 @@ class UpdatesConfig (object):
                 self.section,
                 LAST_UPDATE_OPTION,
                 LAST_UPDATE_DEFAULT)
+
+
+        # Игнорировать обновления нестабильной версии OutWiker?
+        IGNORE_UNSTABLE_OPTION = u"IgnoreUnstable"
+
+        IGNORE_UNSTABLE_DEFAULT = False
+
+        self.__ignoreUnstable = BooleanOption (self.__config,
+                self.section,
+                IGNORE_UNSTABLE_OPTION,
+                IGNORE_UNSTABLE_DEFAULT)
 
 
     @property
@@ -64,3 +76,13 @@ class UpdatesConfig (object):
         Дата последнего обновления
         """
         self.__lastUpdate.value = value
+
+
+    @property
+    def ignoreUnstable (self):
+        return self.__ignoreUnstable.value
+    
+    
+    @ignoreUnstable.setter
+    def ignoreUnstable (self, value):
+        self.__ignoreUnstable.value = value

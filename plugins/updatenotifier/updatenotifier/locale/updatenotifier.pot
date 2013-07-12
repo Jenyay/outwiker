@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-11 10:29+0400\n"
+"POT-Creation-Date: 2013-07-12 09:55+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,20 +17,24 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: controller.py:84
+#: controller.py:86
 msgid "Check for Updates..."
 msgstr ""
 
-#: controller.py:88
+#: controller.py:90
 msgid "Silence check for Updates..."
 msgstr ""
 
-#: controller.py:106
+#: controller.py:108
 msgid "UpdateNotifier [Plugin]"
 msgstr ""
 
-#: preferencepanel.py:39
+#: preferencepanel.py:40
 msgid "Check for updates"
+msgstr ""
+
+#: preferencepanel.py:61
+msgid "Ignore updates unstable versions"
 msgstr ""
 
 #: prefpanelcontroller.py:26
@@ -61,17 +65,8 @@ msgstr ""
 msgid "Every month"
 msgstr ""
 
-#: prefpanelcontroller.py:50
+#: prefpanelcontroller.py:58
 msgid "Custom"
-msgstr ""
-
-#: updatedialogcontroller.py:94 updatedialogcontroller.py:99
-#: updatedialogcontroller.py:140
-msgid "Check for new versions..."
-msgstr ""
-
-#: updatedialogcontroller.py:109
-msgid "Updates not found"
 msgstr ""
 
 #: updatedialog.py:23
@@ -110,6 +105,14 @@ msgstr ""
 
 #: updatenotifier.py:58
 msgid "http://jenyay.net/Outwiker/UpdateNotifierEn"
+msgstr ""
+
+#: updateschecker.py:150 updateschecker.py:165 updateschecker.py:170
+msgid "Check for new versions..."
+msgstr ""
+
+#: updateschecker.py:178
+msgid "Updates not found"
 msgstr ""
 
 #: versionlist.py:39

@@ -36,6 +36,7 @@ class PreferencePanel (wx.Panel):
         mainSizer = wx.FlexGridSizer (cols=1)
         mainSizer.AddGrowableCol (0)
 
+        # Интервал обновлений
         intervalLabel = wx.StaticText (self, -1, _(u"Check for updates"))
         self.intervalComboBox = wx.ComboBox (self, -1, style=wx.CB_DROPDOWN | wx.CB_READONLY)
         self.intervalComboBox.SetMinSize ((150, -1))
@@ -55,6 +56,13 @@ class PreferencePanel (wx.Panel):
                 border=4)
 
         mainSizer.Add (intervalSizer, 1, flag=wx.EXPAND | wx.ALL, border=4)
+
+        # Игнорировать нестибильные версии?
+        self.ignoreUnstableCheckBox = wx.CheckBox (self, label=_(u"Ignore updates unstable versions"))
+        mainSizer.Add (self.ignoreUnstableCheckBox,
+                flag=wx.ALIGN_CENTER_VERTICAL | wx.ALL,
+                border=4)
+
         self.SetSizer(mainSizer)
         self.Layout()
 

@@ -34,6 +34,14 @@ class PrefPanelController (object):
 
 
     def loadState (self):
+        self.__loadIntervalList()
+        self.__owner.ignoreUnstableCheckBox.SetValue (self.__config.ignoreUnstable)
+
+
+    def __loadIntervalList (self):
+        """
+        Заполнить комбобокс с интервалами обновлений
+        """
         keys = self.intervalList.keys()
         keys.sort()
 
@@ -52,6 +60,14 @@ class PrefPanelController (object):
 
 
     def save (self):
+        self.__saveInterval()
+        self.__config.ignoreUnstable = self.__owner.ignoreUnstableCheckBox.IsChecked()
+
+
+    def __saveInterval (self):
+        """
+        Сохранить интервал проверки обновлений
+        """
         keys = self.intervalList.keys()
         keys.sort()
 

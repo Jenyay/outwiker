@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UpdateNotifier\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-11 10:29+0400\n"
-"PO-Revision-Date: 2013-07-11 10:30+0300\n"
+"POT-Creation-Date: 2013-07-12 09:55+0400\n"
+"PO-Revision-Date: 2013-07-12 09:56+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language: ru_RU\n"
@@ -18,21 +18,25 @@ msgstr ""
 "X-Generator: Poedit 1.5.4\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-#: controller.py:84
+#: controller.py:86
 msgid "Check for Updates..."
 msgstr "Проверить обновления..."
 
-#: controller.py:88
+#: controller.py:90
 msgid "Silence check for Updates..."
 msgstr "Тихая проверка обновлений..."
 
-#: controller.py:106
+#: controller.py:108
 msgid "UpdateNotifier [Plugin]"
 msgstr "UpdateNotifier [Плагин]"
 
-#: preferencepanel.py:39
+#: preferencepanel.py:40
 msgid "Check for updates"
 msgstr "Проверка обновлений"
+
+#: preferencepanel.py:61
+msgid "Ignore updates unstable versions"
+msgstr "Игнорировать обновления нестабильных версий"
 
 #: prefpanelcontroller.py:26
 msgid "Never"
@@ -62,18 +66,9 @@ msgstr "Раз в две недели"
 msgid "Every month"
 msgstr "Раз в месяц"
 
-#: prefpanelcontroller.py:50
+#: prefpanelcontroller.py:58
 msgid "Custom"
 msgstr "Другое"
-
-#: updatedialogcontroller.py:94 updatedialogcontroller.py:99
-#: updatedialogcontroller.py:140
-msgid "Check for new versions..."
-msgstr "Поиск новых версий..."
-
-#: updatedialogcontroller.py:109
-msgid "Updates not found"
-msgstr "Обновления не найдены"
 
 #: updatedialog.py:23
 msgid "UpdateNotifier"
@@ -114,6 +109,14 @@ msgstr ""
 #: updatenotifier.py:58
 msgid "http://jenyay.net/Outwiker/UpdateNotifierEn"
 msgstr "http://jenyay.net/Outwiker/UpdateNotifier"
+
+#: updateschecker.py:150 updateschecker.py:165 updateschecker.py:170
+msgid "Check for new versions..."
+msgstr "Поиск новых версий..."
+
+#: updateschecker.py:178
+msgid "Updates not found"
+msgstr "Обновления не найдены"
 
 #: versionlist.py:39
 msgid "http://jenyay.net/Outwiker/ExternalToolsEn"
