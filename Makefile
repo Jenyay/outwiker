@@ -71,6 +71,7 @@ plugin:
 	cd plugins/externaltools; 7z a -r -aoa -xr!*.pyc ../../build/plugins/externaltools.zip ./*; 7z a -r -aoa -xr!*.pyc ../../build/plugins/outwiker-plugins-all.zip ./*
 	rm -f build/plugins/statistics.zip
 	cd plugins/statistics; 7z a -r -aoa -xr!*.pyc ../../build/plugins/statistics.zip ./*; 7z a -r -aoa -xr!*.pyc ../../build/plugins/outwiker-plugins-all.zip ./*
+	cd plugins/updatenotifier; 7z a -r -aoa -xr!*.pyc ../../build/plugins/updatenotifier.zip ./*; 7z a -r -aoa -xr!*.pyc ../../build/plugins/outwiker-plugins-all.zip ./*
 
 wintests:
 	python src\\setup_tests.py build
