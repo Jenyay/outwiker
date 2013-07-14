@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-11 10:29+0400\n"
-"PO-Revision-Date: 2013-07-11 23:13+0300\n"
+"POT-Creation-Date: 2013-07-12 09:55+0400\n"
+"PO-Revision-Date: 2013-07-14 11:51+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
@@ -12,21 +12,25 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.5.4\n"
 
-#: controller.py:84
+#: controller.py:86
 msgid "Check for Updates..."
 msgstr "Перевірити оновлення..."
 
-#: controller.py:88
+#: controller.py:90
 msgid "Silence check for Updates..."
 msgstr "Тиха перевірка оновлень..."
 
-#: controller.py:106
+#: controller.py:108
 msgid "UpdateNotifier [Plugin]"
 msgstr "UpdateNotifier [Додаток]"
 
-#: preferencepanel.py:39
+#: preferencepanel.py:40
 msgid "Check for updates"
 msgstr "Перевірка оновлень"
+
+#: preferencepanel.py:61
+msgid "Ignore updates unstable versions"
+msgstr "Ігнорувати оновлення нестабільних версій"
 
 #: prefpanelcontroller.py:26
 msgid "Never"
@@ -56,18 +60,9 @@ msgstr "Кожні два тижні"
 msgid "Every month"
 msgstr "Щомісяця"
 
-#: prefpanelcontroller.py:50
+#: prefpanelcontroller.py:58
 msgid "Custom"
 msgstr "Інше"
-
-#: updatedialogcontroller.py:94 updatedialogcontroller.py:99
-#: updatedialogcontroller.py:140
-msgid "Check for new versions..."
-msgstr "Пошук нових версій..."
-
-#: updatedialogcontroller.py:109
-msgid "Updates not found"
-msgstr "Оновлення не знайдено"
 
 #: updatedialog.py:23
 msgid "UpdateNotifier"
@@ -108,6 +103,14 @@ msgstr ""
 #: updatenotifier.py:58
 msgid "http://jenyay.net/Outwiker/UpdateNotifierEn"
 msgstr "http://jenyay.net/Outwiker/UpdateNotifier"
+
+#: updateschecker.py:150 updateschecker.py:165 updateschecker.py:170
+msgid "Check for new versions..."
+msgstr "Пошук нових версій..."
+
+#: updateschecker.py:178
+msgid "Updates not found"
+msgstr "Оновлення не знайдено"
 
 #: versionlist.py:39
 msgid "http://jenyay.net/Outwiker/ExternalToolsEn"

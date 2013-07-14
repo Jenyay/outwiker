@@ -28,7 +28,7 @@ class Controller (object):
         self._application = application
 
         # В режиме отладки добавляются новые пункты меню
-        self._debug = True
+        self._debug = False
         self._updatesChecker = None
 
 
