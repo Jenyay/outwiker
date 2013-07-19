@@ -280,3 +280,20 @@ class ParserHeadingTest (unittest.TestCase):
         result = u'бла-бла-бла \n<H2>Заголовок<BR> бла-бла-бла</H2>\nбла-бла-бла'
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testLineJoin1 (self):
+        text = u"""бла-бла-бла \n!!! Заголовок \\
+бла-бла-бла бла-бла-бла"""
+        result = u'бла-бла-бла \n<H2>Заголовок бла-бла-бла бла-бла-бла</H2>'
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testLineJoin2 (self):
+        text = u"""бла-бла-бла \n!!! Заголовок \\
+бла-бла-бла
+бла-бла-бла"""
+        result = u'бла-бла-бла \n<H2>Заголовок бла-бла-бла</H2>\nбла-бла-бла'
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
