@@ -23,9 +23,7 @@ msgstr "Версия:"
 
 #: outwiker/gui/about.py:29
 msgid "OutWiker is personal wiki system and tree notes outliner."
-msgstr ""
-"OutWiker представляет собой персональную викисистему и древовидный редактор "
-"заметок"
+msgstr "OutWiker - это персональная викисистема и древовидный редактор заметок"
 
 #: outwiker/gui/about.py:30
 msgid "License: GPL 3"
