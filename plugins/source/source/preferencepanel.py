@@ -6,7 +6,6 @@ import os.path
 import wx
 
 from outwiker.gui.preferences.configelements import IntegerElement
-from outwiker.core.system import getOS
 
 from .sourceconfig import SourceConfig
 from .i18n import get_

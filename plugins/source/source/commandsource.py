@@ -154,6 +154,9 @@ class CommandSource (Command):
         formatter = HtmlFormatter(linenos=False, cssclass=cssclass, style=style)
         sourceStyle = formatter.get_style_defs()
 
+        # Нужно для улучшения внешнего вида исходников на страницах с темным фоном
+        sourceStyle += u".highlight-{name} {{ color: inherit; background-color: inherit }}".format (name=style)
+
         styleTemplate = u"<STYLE>{0}</STYLE>"
 
         if style not in self.__appendStyles:
