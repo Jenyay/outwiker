@@ -155,7 +155,7 @@ class CommandSource (Command):
         sourceStyle = formatter.get_style_defs()
 
         # Нужно для улучшения внешнего вида исходников на страницах с темным фоном
-        sourceStyle += u".highlight-{name} {{ color: inherit; background-color: inherit }}".format (name=style)
+        sourceStyle += u"\n.highlight-{name} {{ color: inherit; background-color: inherit }}".format (name=style)
 
         styleTemplate = u"<STYLE>{0}</STYLE>"
 
