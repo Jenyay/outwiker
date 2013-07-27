@@ -29,6 +29,9 @@ TAB_WIDTH_DEFAULT = 4
 # Имя параметра для задания стиля оформления
 STYLE_PARAM_NAME = u"style"
 
+# Имя параметра, указывающий, что надо использовать фон страницы в блоке кода
+PARENT_BACKGROUND_PARAM_NAME = "parentbg"
+
 # Имя стиля по умолчанию
 STYLE_DEFAULT = u"default"
 

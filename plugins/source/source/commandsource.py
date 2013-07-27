@@ -11,7 +11,7 @@ from pygments.styles import STYLE_MAP
 from .sourceconfig import SourceConfig
 from .lexermaker import LexerMaker
 from .i18n import get_
-from .params import FILE_PARAM_NAME, ENCODING_PARAM_NAME, ENCODING_DEFAULT, TAB_WIDTH_PARAM_NAME, HIGHLIGHT_STYLE, TAB_WIDTH_DEFAULT, STYLE_PARAM_NAME, STYLE_DEFAULT
+from .params import FILE_PARAM_NAME, ENCODING_PARAM_NAME, ENCODING_DEFAULT, TAB_WIDTH_PARAM_NAME, HIGHLIGHT_STYLE, TAB_WIDTH_DEFAULT, STYLE_PARAM_NAME, STYLE_DEFAULT, PARENT_BACKGROUND_PARAM_NAME
 from .misc import getFileName, getDefaultStyle
 
 
@@ -155,8 +155,10 @@ class CommandSource (Command):
         sourceStyle = formatter.get_style_defs()
 
         # Нужно для улучшения внешнего вида исходников на страницах с темным фоном
-        sourceStyle += u"\n.highlight-{name} {{ color: inherit; background-color: inherit }}".format (name=style)
         sourceStyle += u"\n.highlight-{name} pre {{padding: 0px; border: none; color: inherit; background-color: inherit }}".format (name=style)
+
+        if PARENT_BACKGROUND_PARAM_NAME in params_dict:
+            sourceStyle += u"\n.highlight-{name} {{color: inherit; background-color: inherit }}".format (name=style)
 
         styleTemplate = u"<STYLE>{0}</STYLE>"
 

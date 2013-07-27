@@ -305,3 +305,54 @@ def hello (count):
         
         self.assertTrue (innerString1 in result)
         self.assertTrue (innerString2 in result)
+
+
+    def testParentBg1 (self):
+        text = u'(:source lang="python" tabwidth=4:){0}(:sourceend:)'.format (self.pythonSource)
+
+        self.testPage.content = text
+        self.config.defaultStyle.value = "vim"
+
+        generator = HtmlGenerator (self.testPage)
+        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
+        result = self.__readFile (htmlpath)
+
+        innerString1 = u".highlight-vim pre {padding: 0px; border: none; color: inherit; background-color: inherit }"
+        innerString2 = u".highlight-vim {color: inherit; background-color: inherit }"
+        
+        self.assertTrue (innerString1 in result)
+        self.assertTrue (innerString2 not in result)
+
+
+    def testParentBg2 (self):
+        text = u'(:source lang="python" tabwidth=4 parentbg:){0}(:sourceend:)'.format (self.pythonSource)
+
+        self.testPage.content = text
+        self.config.defaultStyle.value = "vim"
+
+        generator = HtmlGenerator (self.testPage)
+        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
+        result = self.__readFile (htmlpath)
+
+        innerString1 = u".highlight-vim pre {padding: 0px; border: none; color: inherit; background-color: inherit }"
+        innerString2 = u".highlight-vim {color: inherit; background-color: inherit }"
+        
+        self.assertTrue (innerString1 in result)
+        self.assertTrue (innerString2 in result)
+
+
+    def testParentBg3 (self):
+        text = u'(:source lang="python" parentbg tabwidth=4:){0}(:sourceend:)'.format (self.pythonSource)
+
+        self.testPage.content = text
+        self.config.defaultStyle.value = "vim"
+
+        generator = HtmlGenerator (self.testPage)
+        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
+        result = self.__readFile (htmlpath)
+
+        innerString1 = u".highlight-vim pre {padding: 0px; border: none; color: inherit; background-color: inherit }"
+        innerString2 = u".highlight-vim {color: inherit; background-color: inherit }"
+        
+        self.assertTrue (innerString1 in result)
+        self.assertTrue (innerString2 in result)
