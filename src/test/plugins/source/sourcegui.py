@@ -433,3 +433,23 @@ class SourceGuiPluginTest (unittest.TestCase):
         self.controller.showDialog ()
         self.assertEqual (self.dialog.style, "default")
 
+
+    def testParentBgConfig1 (self):
+        self.config.parentbg.value = u"  False  "
+        self.controller.showDialog ()
+
+        self.assertEqual (self.dialog.parentbg, False)
+
+
+    def testParentBgConfig2 (self):
+        self.config.parentbg.value = u"  True  "
+        self.controller.showDialog ()
+
+        self.assertEqual (self.dialog.parentbg, True)
+
+
+    def testParentBgConfig3 (self):
+        self.config.parentbg.value = u"  блаблабла  "
+        self.controller.showDialog ()
+
+        self.assertEqual (self.dialog.parentbg, False)

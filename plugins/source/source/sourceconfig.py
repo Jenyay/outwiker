@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-from outwiker.core.config import StringOption, IntegerOption, ListOption
+from outwiker.core.config import StringOption, IntegerOption, ListOption, BooleanOption
 
 from .params import LANGUAGE_DEFAULT, TAB_WIDTH_DEFAULT, STYLE_DEFAULT, LANGUAGE_LIST_DEFAULT
 
@@ -65,6 +65,16 @@ class SourceConfig (object):
                 self.DEFAULT_DIALOG_HEIGHT)
 
 
+        # Настройка "Использовать фон страницы в блоке кода"
+        self.DEFAULT_PARENT_BACKGROUND = False
+        parentBgOption = u"ParentBg"
+
+        self.__parentBg = BooleanOption (self.__config,
+                self.section,
+                parentBgOption,
+                self.DEFAULT_PARENT_BACKGROUND)
+
+
 
     @property
     def tabWidth (self):
@@ -110,3 +120,9 @@ class SourceConfig (object):
     @property
     def defaultStyle (self):
         return self.__defaultStyle
+
+
+    @property
+    def parentbg (self):
+        return self.__parentBg
+

@@ -63,6 +63,11 @@ class InsertDialog (wx.Dialog):
         return self.styleComboBox.GetValue()
 
 
+    @property
+    def parentbg (self):
+        return self.parentBgCheckBox.GetValue()
+
+
     def __createGui(self):
         """
         Создать элементы управления
@@ -114,6 +119,7 @@ class InsertDialog (wx.Dialog):
 
         self.__createStyleGui (appearanceSizer, appearancePanel)
         self.__createTabWidthGui (appearanceSizer, appearancePanel)
+        self.__createParentBgGui (appearanceSizer, appearancePanel)
 
         return appearancePanel
 
@@ -126,6 +132,20 @@ class InsertDialog (wx.Dialog):
                 proportion=1,
                 flag=wx.ALL | wx.ALIGN_RIGHT | wx.ALIGN_BOTTOM,
                 border=2
+                )
+
+
+    def __createParentBgGui (self, mainSizer, parent):
+        """
+        Создать элементы интерфейса для опции "Использовать фон страницы для блока кода"
+        """
+        self.parentBgCheckBox = wx.CheckBox (parent, -1, _(u"Use the page background for the code block"))
+
+        mainSizer.Add (
+                self.parentBgCheckBox, 
+                proportion=1,
+                flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND,
+                border=4
                 )
 
 

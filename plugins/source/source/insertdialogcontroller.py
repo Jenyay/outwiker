@@ -108,10 +108,12 @@ class InsertDialogController (object):
         langStr = u' lang="{language}"'.format (language=self._dialog.language)
         tabWidthStr = self._getTabWidthParam()
         styleStr = self._getStyleParam()
+        parentbg = self._getParentBg()
 
-        startCommand = u'(:source{lang}{tabwidth}{style}:)\n'.format (lang=langStr,
+        startCommand = u'(:source{lang}{tabwidth}{style}{parentbg}:)\n'.format (lang=langStr,
                 tabwidth=tabWidthStr,
-                style=styleStr)
+                style=styleStr,
+                parentbg=parentbg)
 
         endCommand = u'\n(:sourceend:)'
 
@@ -123,6 +125,13 @@ class InsertDialogController (object):
             return u' tabwidth="{0}"'.format(self._dialog.tabWidth)
         else:
             return u''
+
+
+    def _getParentBg (self):
+        if self._dialog.parentbg:
+            return u' parentbg'
+
+        return u''
 
 
     def _getStyleParam (self):
@@ -143,12 +152,14 @@ class InsertDialogController (object):
         tabWidthStr = self._getTabWidthParam()
 
         styleStr = self._getStyleParam()
+        parentbg = self._getParentBg()
 
-        startCommand = u'(:source{file}{lang}{encoding}{tabwidth}{style}:)'.format (file=fnameStr,
+        startCommand = u'(:source{file}{lang}{encoding}{tabwidth}{style}{parentbg}:)'.format (file=fnameStr,
                 lang=langStr, 
                 encoding=encodingStr,
                 tabwidth=tabWidthStr,
-                style=styleStr)
+                style=styleStr,
+                parentbg=parentbg)
 
         endCommand = u'(:sourceend:)'
 
@@ -185,6 +196,7 @@ class InsertDialogController (object):
         self._loadEncodingState()
         self._loadAttachmentState()
         self._loadStyleState()
+        self._loadParentBgState()
 
         self._updateDialogSize()
         self.enableFileGuiElements (False)
@@ -219,6 +231,10 @@ class InsertDialogController (object):
         fillStyleComboBox (self._config, 
                 self._dialog.styleComboBox, 
                 self._config.style.value.strip())
+
+
+    def _loadParentBgState (self):
+        self._dialog.parentBgCheckBox.SetValue (self._config.parentbg.value)
 
 
     def _loadEncodingState (self):
@@ -265,12 +281,13 @@ class InsertDialogController (object):
         """
         if (not self._dialog.insertFromFile or 
                 self._dialog.languageComboBox.GetSelection() != 0):
-            self._config.defaultLanguage.value = self._dialog.languageComboBox.GetValue()
+            self._config.defaultLanguage.value = self._dialog.language
 
         currentWidth, currentHeight = self._dialog.GetSizeTuple ()
         self._config.dialogWidth.value = currentWidth
         self._config.dialogHeight.value = currentHeight
-        self._config.style.value = self._dialog.styleComboBox.GetValue()
+        self._config.style.value = self._dialog.style
+        self._config.parentbg.value = self._dialog.parentbg
 
 
     def enableFileGuiElements (self, enabled):

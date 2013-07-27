@@ -28,7 +28,7 @@ else:
             application - экземпляр класса core.application.ApplicationParams
             """
             Plugin.__init__ (self, application)
-            self.__version = u"1.9.2"
+            self.__version = u"1.10"
             self.__controler = Controller(self, application)
 
 
@@ -76,6 +76,7 @@ source code
 <I>file</I> - attached source file
 <I>encoding</I> - encoding of the attached source file (default encoding - utf8)
 <I>style</I> - style of hightlighting
+<I>parentbg</I> - use the page background for the code block
 
 <B>Example 1:</B>
 <PRE>(:source lang="python" tabwidth=4:)

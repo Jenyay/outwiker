@@ -32,6 +32,7 @@ class FakeInsertDialog (Dialog):
         self.styleComboBox = ComboBox ()
 
         self.attachButton = Button()
+        self.parentBgCheckBox = CheckBox ()
 
 
     @property
@@ -67,3 +68,8 @@ class FakeInsertDialog (Dialog):
     @property
     def style (self):
         return self.styleComboBox.GetValue()
+
+
+    @property
+    def parentbg (self):
+        return self.parentBgCheckBox.GetValue()
