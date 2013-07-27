@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-17 14:10+0400\n"
+"POT-Creation-Date: 2013-07-27 13:47+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -45,72 +45,82 @@ msgstr ""
 msgid "Source code"
 msgstr ""
 
-#: insertdialog.py:87
+#: insertdialog.py:92
 msgid "General"
 msgstr ""
 
-#: insertdialog.py:88
+#: insertdialog.py:93
 msgid "Appearance"
 msgstr ""
 
-#: insertdialog.py:139
+#: insertdialog.py:142
+msgid "Use the page background for the code block"
+msgstr ""
+
+#: insertdialog.py:159
 msgid "Language"
 msgstr ""
 
-#: insertdialog.py:175
+#: insertdialog.py:195
 msgid "Tab Width (0 - Default Value)"
 msgstr ""
 
-#: insertdialog.py:212
+#: insertdialog.py:232
 msgid "Style"
 msgstr ""
 
-#: insertdialog.py:247
+#: insertdialog.py:267
 msgid "Insert source from file"
 msgstr ""
 
-#: insertdialog.py:260
+#: insertdialog.py:280
 msgid "Attached file"
 msgstr ""
 
-#: insertdialog.py:279
+#: insertdialog.py:299
 msgid "Attach new files"
 msgstr ""
 
-#: insertdialog.py:297
+#: insertdialog.py:317
 msgid "File encoding"
 msgstr ""
 
-#: preferencepanel.py:55
+#: preferencepanel.py:54
 msgid "Default Tab Width"
 msgstr ""
 
-#: preferencepanel.py:91
+#: preferencepanel.py:90
 msgid "Default Style"
 msgstr ""
 
-#: preferencepanel.py:123
+#: preferencepanel.py:122
 msgid "Used Languages"
 msgstr ""
 
-#: preferencepanel.py:144
+#: preferencepanel.py:143
 msgid "Select All"
 msgstr ""
 
-#: preferencepanel.py:145
+#: preferencepanel.py:144
 msgid "Clear"
 msgstr ""
 
-#: source.py:66
+#: source.py:67
 msgid ""
 "Add command (:source:) in wiki parser. This command highlight your source "
-"code.\n"
-"\n"
+"code."
+msgstr ""
+
+#: source.py:69
+msgid ""
 "<B>Usage:</B>:\n"
 "(:source params... :)\n"
 "source code\n"
-"(:sourceend:)\n"
-"\n"
+"(:sourceend:)"
+msgstr ""
+
+#: source.py:74
+msgid ""
 "<B>Params:</B>\n"
 "<I>lang</I> - programming language\n"
 "<I>tabwidth</I> - tab size\n"
@@ -118,7 +128,11 @@ msgid ""
 "<I>encoding</I> - encoding of the attached source file (default encoding - "
 "utf8)\n"
 "<I>style</I> - style of hightlighting\n"
-"\n"
+"<I>parentbg</I> - use the page background for the code block"
+msgstr ""
+
+#: source.py:82
+msgid ""
 "<B>Example 1:</B>\n"
 "<PRE>(:source lang=\"python\" tabwidth=4:)\n"
 "import os\n"
@@ -126,8 +140,11 @@ msgid ""
 "if __name__ == \"__main__\":\n"
 "    print \"Hello World!\"\n"
 "(:sourceend:)\n"
-"</PRE>\n"
-"\n"
+"</PRE>"
+msgstr ""
+
+#: source.py:91
+msgid ""
 "<B>Example 2:</B>\n"
 "<PRE>(:source lang=\"python\" style=\"autumn\":)\n"
 "import os\n"
@@ -135,17 +152,23 @@ msgid ""
 "if __name__ == \"__main__\":\n"
 "    print \"Hello World!\"\n"
 "(:sourceend:)\n"
-"</PRE>\n"
-"\n"
-"<B>Example 3:</B>\n"
-"<PRE>(:source file=\"Attach:example.cs\" encoding=\"cp1251\":)(:sourceend:)</"
-"PRE>\n"
-"\n"
-"<B>Example 4:</B>\n"
-"<PRE>(:source file=\"Attach:example.txt\" lang=\"python\":)(:sourceend:)</"
-"PRE>\n"
+"</PRE>"
 msgstr ""
 
-#: source.py:113
+#: source.py:100
+msgid ""
+"<B>Example 3:</B>\n"
+"<PRE>(:source file=\"Attach:example.cs\" encoding=\"cp1251\":)(:sourceend:)</"
+"PRE>"
+msgstr ""
+
+#: source.py:103
+msgid ""
+"<B>Example 4:</B>\n"
+"<PRE>(:source file=\"Attach:example.txt\" lang=\"python\":)(:sourceend:)</"
+"PRE>"
+msgstr ""
+
+#: source.py:134
 msgid "http://jenyay.net/Outwiker/SourcePluginEn"
 msgstr ""

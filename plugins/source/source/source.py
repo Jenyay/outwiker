@@ -28,6 +28,7 @@ else:
             application - экземпляр класса core.application.ApplicationParams
             """
             Plugin.__init__ (self, application)
+
             self.__version = u"1.10"
             self.__controler = Controller(self, application)
 
@@ -63,45 +64,64 @@ else:
 
         @property
         def description (self):
-            return _(u"""Add command (:source:) in wiki parser. This command highlight your source code.
+            description = _(u"Add command (:source:) in wiki parser. This command highlight your source code.")
 
-<B>Usage:</B>:
+            usage = _(u"""<B>Usage:</B>:
 (:source params... :)
 source code
-(:sourceend:)
+(:sourceend:)""")
 
-<B>Params:</B>
+            params = _(u"""<B>Params:</B>
 <I>lang</I> - programming language
 <I>tabwidth</I> - tab size
 <I>file</I> - attached source file
 <I>encoding</I> - encoding of the attached source file (default encoding - utf8)
 <I>style</I> - style of hightlighting
-<I>parentbg</I> - use the page background for the code block
+<I>parentbg</I> - use the page background for the code block""")
 
-<B>Example 1:</B>
+            example1 = _(u"""<B>Example 1:</B>
 <PRE>(:source lang="python" tabwidth=4:)
 import os
 
 if __name__ == "__main__":
     print "Hello World!"
 (:sourceend:)
-</PRE>
+</PRE>""")
 
-<B>Example 2:</B>
+            example2 = _(u"""<B>Example 2:</B>
 <PRE>(:source lang="python" style="autumn":)
 import os
 
 if __name__ == "__main__":
     print "Hello World!"
 (:sourceend:)
-</PRE>
+</PRE>""")
 
-<B>Example 3:</B>
-<PRE>(:source file="Attach:example.cs" encoding="cp1251":)(:sourceend:)</PRE>
+            example3 = _(u"""<B>Example 3:</B>
+<PRE>(:source file="Attach:example.cs" encoding="cp1251":)(:sourceend:)</PRE>""")
 
-<B>Example 4:</B>
-<PRE>(:source file="Attach:example.txt" lang="python":)(:sourceend:)</PRE>
-""")
+            example4 = _(u"""<B>Example 4:</B>
+<PRE>(:source file="Attach:example.txt" lang="python":)(:sourceend:)</PRE>""")
+
+            return u"""{description}
+
+{usage}
+
+{params}
+
+{example1}
+
+{example2}
+
+{example3}
+
+{example4}""".format (description=description,
+        usage=usage,
+        params=params,
+        example1=example1,
+        example2=example2,
+        example3=example3,
+        example4=example4)
 
 
         @property
