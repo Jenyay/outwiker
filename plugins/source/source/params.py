@@ -36,7 +36,8 @@ PARENT_BACKGROUND_PARAM_NAME = "parentbg"
 STYLE_DEFAULT = u"default"
 
 # Стиль для общего div
-HIGHLIGHT_STYLE = u'{border-style: solid; border-color: gray; border-width: 1px; padding-left: 10px;}'
+# HIGHLIGHT_STYLE = u'{border-style: solid; border-color: gray; border-width: 1px; padding-left: 10px;}'
+HIGHLIGHT_STYLE = u'{padding-left: 10px; padding-right: 10px;}'
 
 # Список языков программирования по умолчанию
 LANGUAGE_LIST_DEFAULT = [
