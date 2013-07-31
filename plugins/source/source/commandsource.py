@@ -37,8 +37,8 @@ class CommandSource (Command):
         Command.__init__ (self, parser)
         self.__config = SourceConfig (config)
 
-        # Стили, добавленные в заголовок
-        self.__appendStyles = []
+        # Стили CSS, добавленные в заголовок
+        self.__appendCssClasses = []
 
         global _
         _ = get_()
@@ -161,7 +161,7 @@ class CommandSource (Command):
         # Нужно для улучшения внешнего вида исходников на страницах с темным фоном
         sourceStyle += u"\n.{name} pre {{padding: 0px; border: none; color: inherit; background-color: inherit }}".format (name=cssclass)
         sourceStyle += u"\n.{name} table {{padding: 0px; border: none;}}".format (name=cssclass)
-        sourceStyle += u"\n.source-block pre {{padding: 0px; border: none; color: inherit; background-color: inherit }}"
+        sourceStyle += u"\n.source-block pre {padding: 0px; border: none; color: inherit; background-color: inherit }"
         sourceStyle += u"\n.{name}table td {{border-width:0}}".format (name=cssclass)
         sourceStyle += u"\n.linenodiv pre {{padding: 0px; border: none; color: inherit; background-color: inherit }}".format (name=style)
 
@@ -170,11 +170,11 @@ class CommandSource (Command):
 
         styleTemplate = u"<STYLE>{0}</STYLE>"
 
-        if cssclass not in self.__appendStyles:
+        if cssclass not in self.__appendCssClasses:
             self.parser.appendToHead (styleTemplate.format (sourceStyle))
             self.parser.appendToHead (styleTemplate.format ("".join (["div.", cssclass, HIGHLIGHT_STYLE]) ) )
 
-            self.__appendStyles.append (cssclass)
+            self.__appendCssClasses.append (cssclass)
 
         content = highlight(content, lexer, formatter)
 

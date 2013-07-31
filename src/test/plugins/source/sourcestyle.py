@@ -334,11 +334,17 @@ def hello (count):
         htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
         result = self.__readFile (htmlpath)
 
-        innerString1 = u".highlight-vim pre {padding: 0px; border: none; color: inherit; background-color: inherit }"
-        innerString2 = u".highlight-vim {color: inherit; background-color: inherit }"
+        innerString1 = u".highlight-vim-parentbg pre {padding: 0px; border: none; color: inherit; background-color: inherit }"
+        innerString2 = u".highlight-vim-parentbg {color: inherit; background-color: inherit }"
+        innerString3 = u'<div class="highlight-vim-parentbg">'
+        innerString4 = u".highlight-vim {color: inherit; background-color: inherit }"
+        innerString5 = u'<div class="highlight-vim">'
         
         self.assertTrue (innerString1 in result)
         self.assertTrue (innerString2 in result)
+        self.assertTrue (innerString3 in result)
+        self.assertTrue (innerString4 not in result)
+        self.assertTrue (innerString5 not in result)
 
 
     def testParentBg3 (self):
@@ -351,8 +357,39 @@ def hello (count):
         htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
         result = self.__readFile (htmlpath)
 
-        innerString1 = u".highlight-vim pre {padding: 0px; border: none; color: inherit; background-color: inherit }"
-        innerString2 = u".highlight-vim {color: inherit; background-color: inherit }"
+        innerString1 = u".highlight-vim-parentbg pre {padding: 0px; border: none; color: inherit; background-color: inherit }"
+        innerString2 = u".highlight-vim-parentbg {color: inherit; background-color: inherit }"
+        innerString3 = u'<div class="highlight-vim-parentbg">'
+        innerString4 = u".highlight-vim {color: inherit; background-color: inherit }"
+        innerString5 = u'<div class="highlight-vim">'
         
         self.assertTrue (innerString1 in result)
         self.assertTrue (innerString2 in result)
+        self.assertTrue (innerString3 in result)
+        self.assertTrue (innerString4 not in result)
+        self.assertTrue (innerString5 not in result)
+
+
+    def testParentBg4 (self):
+        text = u'''(:source lang="python" tabwidth=4:){0}(:sourceend:)
+        
+        (:source lang="python" tabwidth=4 parentbg:){0}(:sourceend:)'''.format (self.pythonSource)
+
+        self.testPage.content = text
+        self.config.defaultStyle.value = "vim"
+
+        generator = HtmlGenerator (self.testPage)
+        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
+        result = self.__readFile (htmlpath)
+
+        innerString1 = u".highlight-vim-parentbg pre {padding: 0px; border: none; color: inherit; background-color: inherit }"
+        innerString2 = u".highlight-vim-parentbg {color: inherit; background-color: inherit }"
+        innerString3 = u'<div class="highlight-vim-parentbg">'
+        innerString4 = u".highlight-vim {color: inherit; background-color: inherit }"
+        innerString5 = u'<div class="highlight-vim">'
+        
+        self.assertTrue (innerString1 in result)
+        self.assertTrue (innerString2 in result)
+        self.assertTrue (innerString3 in result)
+        self.assertTrue (innerString4 not in result)
+        self.assertTrue (innerString5 in result)
