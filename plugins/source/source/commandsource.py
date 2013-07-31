@@ -178,7 +178,7 @@ class CommandSource (Command):
 
         content = highlight(content, lexer, formatter)
 
-        result = u"".join ([u'<div class="source-block">', content, u'</div>'])
+        result = u"".join ([u'<div class="source-block">', content.strip(), u'</div>'])
         result = result.replace ("\n</td>", "</td>")
 
         return result
