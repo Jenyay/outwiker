@@ -11,7 +11,7 @@ from pygments.styles import STYLE_MAP
 from .sourceconfig import SourceConfig
 from .lexermaker import LexerMaker
 from .i18n import get_
-from .params import FILE_PARAM_NAME, ENCODING_PARAM_NAME, ENCODING_DEFAULT, TAB_WIDTH_PARAM_NAME, HIGHLIGHT_STYLE, TAB_WIDTH_DEFAULT, STYLE_PARAM_NAME, STYLE_DEFAULT, PARENT_BACKGROUND_PARAM_NAME
+from .params import FILE_PARAM_NAME, ENCODING_PARAM_NAME, ENCODING_DEFAULT, TAB_WIDTH_PARAM_NAME, HIGHLIGHT_STYLE, TAB_WIDTH_DEFAULT, STYLE_PARAM_NAME, STYLE_DEFAULT, PARENT_BACKGROUND_PARAM_NAME, LINE_NUM_PARAM_NAME
 from .misc import getFileName, getDefaultStyle
 
 
@@ -155,15 +155,19 @@ class CommandSource (Command):
         style = self.__getStyle (params_dict)
         cssclass = self.__getCssClass (style, PARENT_BACKGROUND_PARAM_NAME in params_dict)
 
-        formatter = HtmlFormatter(linenos=False, cssclass=cssclass, style=style)
+        linenum = LINE_NUM_PARAM_NAME in params_dict
+
+        formatter = HtmlFormatter(linenos=linenum, cssclass=cssclass, style=style)
         sourceStyle = formatter.get_style_defs()
 
-        # Нужно для улучшения внешнего вида исходников на страницах с темным фоном
+        # Нужно для улучшения внешнего вида исходников
         sourceStyle += u"\n.{name} pre {{padding: 0px; border: none; color: inherit; background-color: inherit }}".format (name=cssclass)
         sourceStyle += u"\n.{name} table {{padding: 0px; border: none;}}".format (name=cssclass)
         sourceStyle += u"\n.source-block pre {padding: 0px; border: none; color: inherit; background-color: inherit }"
-        sourceStyle += u"\n.{name}table td {{border-width:0}}".format (name=cssclass)
+        sourceStyle += u"\n.{name}table td {{border-width:0; }}".format (name=cssclass)
+        sourceStyle += u"\n.{name}table td.code {{width:100%; }}".format (name=cssclass)
         sourceStyle += u"\n.linenodiv pre {{padding: 0px; border: none; color: inherit; background-color: inherit }}".format (name=style)
+        sourceStyle += u"\ndiv.source-block {border-style: solid; border-color: gray; border-width: 1px }"
 
         if PARENT_BACKGROUND_PARAM_NAME in params_dict:
             sourceStyle += u"\n.{name} {{color: inherit; background-color: inherit }}".format (name=cssclass)

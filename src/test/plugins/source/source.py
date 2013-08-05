@@ -432,3 +432,41 @@ def hello (count):
         self.assertTrue (innerString2 in result)
         self.assertTrue (innerString3 in result)
         self.assertFalse (u"(:source" in result)
+
+
+    def testLineNum1 (self):
+        text = u'''(:source linenum:)
+import os
+import os.path
+import sys
+
+# Комментарий
+def hello (count):
+	"""
+	Hello world
+	"""
+	for i in range (10):
+		print "Hello world!!!"
+(:sourceend:)
+'''
+        self.config.tabWidth.value = 4
+
+        self.testPage.content = text
+
+        generator = HtmlGenerator (self.testPage)
+        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
+        result = self.__readFile (htmlpath)
+
+        innerString1 = u""" 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11"""
+        
+        self.assertTrue (innerString1 in result)
