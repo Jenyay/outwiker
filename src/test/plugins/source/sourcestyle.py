@@ -317,7 +317,7 @@ def hello (count):
         htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
         result = self.__readFile (htmlpath)
 
-        innerString1 = u".highlight-vim pre {padding: 0px; border: none; color: inherit; background-color: inherit }"
+        innerString1 = u".highlight-vim pre {padding: 0px; border: none; color: inherit; background-color: inherit; margin:0px; }"
         innerString2 = u".highlight-vim {color: inherit; background-color: inherit }"
         
         self.assertTrue (innerString1 in result)
@@ -334,7 +334,7 @@ def hello (count):
         htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
         result = self.__readFile (htmlpath)
 
-        innerString1 = u".highlight-vim-parentbg pre {padding: 0px; border: none; color: inherit; background-color: inherit }"
+        innerString1 = u".highlight-vim-parentbg pre {padding: 0px; border: none; color: inherit; background-color: inherit; margin:0px; }"
         innerString2 = u".highlight-vim-parentbg {color: inherit; background-color: inherit }"
         innerString3 = u'<div class="highlight-vim-parentbg">'
         innerString4 = u".highlight-vim {color: inherit; background-color: inherit }"
@@ -357,7 +357,7 @@ def hello (count):
         htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
         result = self.__readFile (htmlpath)
 
-        innerString1 = u".highlight-vim-parentbg pre {padding: 0px; border: none; color: inherit; background-color: inherit }"
+        innerString1 = u".highlight-vim-parentbg pre {padding: 0px; border: none; color: inherit; background-color: inherit; margin:0px; }"
         innerString2 = u".highlight-vim-parentbg {color: inherit; background-color: inherit }"
         innerString3 = u'<div class="highlight-vim-parentbg">'
         innerString4 = u".highlight-vim {color: inherit; background-color: inherit }"
@@ -382,7 +382,7 @@ def hello (count):
         htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
         result = self.__readFile (htmlpath)
 
-        innerString1 = u".highlight-vim-parentbg pre {padding: 0px; border: none; color: inherit; background-color: inherit }"
+        innerString1 = u".highlight-vim-parentbg pre {padding: 0px; border: none; color: inherit; background-color: inherit; margin:0px; }"
         innerString2 = u".highlight-vim-parentbg {color: inherit; background-color: inherit }"
         innerString3 = u'<div class="highlight-vim-parentbg">'
         innerString4 = u".highlight-vim {color: inherit; background-color: inherit }"
