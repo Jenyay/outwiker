@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-27 13:47+0400\n"
+"POT-Creation-Date: 2013-08-06 14:06+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -45,43 +45,47 @@ msgstr ""
 msgid "Source code"
 msgstr ""
 
-#: insertdialog.py:92
+#: insertdialog.py:97
 msgid "General"
 msgstr ""
 
-#: insertdialog.py:93
+#: insertdialog.py:98
 msgid "Appearance"
 msgstr ""
 
-#: insertdialog.py:142
+#: insertdialog.py:148
 msgid "Use the page background for the code block"
 msgstr ""
 
-#: insertdialog.py:159
+#: insertdialog.py:162
+msgid "Enable line numbers"
+msgstr ""
+
+#: insertdialog.py:179
 msgid "Language"
 msgstr ""
 
-#: insertdialog.py:195
+#: insertdialog.py:215
 msgid "Tab Width (0 - Default Value)"
 msgstr ""
 
-#: insertdialog.py:232
+#: insertdialog.py:252
 msgid "Style"
 msgstr ""
 
-#: insertdialog.py:267
+#: insertdialog.py:287
 msgid "Insert source from file"
 msgstr ""
 
-#: insertdialog.py:280
+#: insertdialog.py:300
 msgid "Attached file"
 msgstr ""
 
-#: insertdialog.py:299
+#: insertdialog.py:319
 msgid "Attach new files"
 msgstr ""
 
-#: insertdialog.py:317
+#: insertdialog.py:337
 msgid "File encoding"
 msgstr ""
 
@@ -122,16 +126,23 @@ msgstr ""
 #: source.py:74
 msgid ""
 "<B>Params:</B>\n"
-"<I>lang</I> - programming language\n"
-"<I>tabwidth</I> - tab size\n"
-"<I>file</I> - attached source file\n"
-"<I>encoding</I> - encoding of the attached source file (default encoding - "
+"<U>lang</U> - programming language\n"
+"\n"
+"<U>tabwidth</U> - tab size\n"
+"\n"
+"<U>file</U> - attached source file\n"
+"\n"
+"<U>encoding</U> - encoding of the attached source file (default encoding - "
 "utf8)\n"
-"<I>style</I> - style of hightlighting\n"
-"<I>parentbg</I> - use the page background for the code block"
+"\n"
+"<U>style</U> - style of hightlighting\n"
+"\n"
+"<U>parentbg</U> - use the page background for the code block\n"
+"\n"
+"<U>linenum</U> - enable line numbers"
 msgstr ""
 
-#: source.py:82
+#: source.py:89
 msgid ""
 "<B>Example 1:</B>\n"
 "<PRE>(:source lang=\"python\" tabwidth=4:)\n"
@@ -143,7 +154,7 @@ msgid ""
 "</PRE>"
 msgstr ""
 
-#: source.py:91
+#: source.py:98
 msgid ""
 "<B>Example 2:</B>\n"
 "<PRE>(:source lang=\"python\" style=\"autumn\":)\n"
@@ -155,20 +166,32 @@ msgid ""
 "</PRE>"
 msgstr ""
 
-#: source.py:100
+#: source.py:107
 msgid ""
 "<B>Example 3:</B>\n"
+"<PRE>(:source lang=\"python\" tabwidth=4 parentbg linenum:)\n"
+"import os\n"
+"\n"
+"if __name__ == \"__main__\":\n"
+"    print \"Hello World!\"\n"
+"(:sourceend:)\n"
+"</PRE>"
+msgstr ""
+
+#: source.py:116
+msgid ""
+"<B>Example 4:</B>\n"
 "<PRE>(:source file=\"Attach:example.cs\" encoding=\"cp1251\":)(:sourceend:)</"
 "PRE>"
 msgstr ""
 
-#: source.py:103
+#: source.py:119
 msgid ""
-"<B>Example 4:</B>\n"
+"<B>Example 5:</B>\n"
 "<PRE>(:source file=\"Attach:example.txt\" lang=\"python\":)(:sourceend:)</"
 "PRE>"
 msgstr ""
 
-#: source.py:134
+#: source.py:154
 msgid "http://jenyay.net/Outwiker/SourcePluginEn"
 msgstr ""

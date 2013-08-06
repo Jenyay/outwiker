@@ -68,12 +68,12 @@ LANGUAGE_LIST_DEFAULT = [
 
 
 CUSTOM_STYLES = u"""
-.{name} pre {{padding: 0px; border: none; color: inherit; background-color: inherit }}
+.{name} pre {{padding: 0px; border: none; color: inherit; background-color: inherit; }}
 .{name} table {{padding: 0px; border: none;}}
 .{name}table td {{border-width:0; vertical-align: baseline; }}
 .{name}table tr {{vertical-align: baseline; }}
 .{name}table tbody {{vertical-align: baseline; }}
 .{name}table td.code {{width:100%; }}
-.source-block pre {{padding: 0px; border: none; color: inherit; background-color: inherit }}
-.linenodiv pre {{padding: 0px; border: none; color: inherit; background-color: inherit }}
-div.source-block {{border-style: solid; border-color: gray; border-width: 1px }}"""
+.source-block pre {{padding: 0px; border: none; color: inherit; background-color: inherit; }}
+.linenodiv pre {{padding: 0px; border: none; color: inherit; background-color: inherit; }}
+div.source-block {{border-style: solid; border-color: gray; border-width: 1px; }}"""

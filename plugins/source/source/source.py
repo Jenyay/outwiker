@@ -72,12 +72,19 @@ source code
 (:sourceend:)""")
 
             params = _(u"""<B>Params:</B>
-<I>lang</I> - programming language
-<I>tabwidth</I> - tab size
-<I>file</I> - attached source file
-<I>encoding</I> - encoding of the attached source file (default encoding - utf8)
-<I>style</I> - style of hightlighting
-<I>parentbg</I> - use the page background for the code block""")
+<U>lang</U> - programming language
+
+<U>tabwidth</U> - tab size
+
+<U>file</U> - attached source file
+
+<U>encoding</U> - encoding of the attached source file (default encoding - utf8)
+
+<U>style</U> - style of hightlighting
+
+<U>parentbg</U> - use the page background for the code block
+
+<U>linenum</U> - enable line numbers""")
 
             example1 = _(u"""<B>Example 1:</B>
 <PRE>(:source lang="python" tabwidth=4:)
@@ -98,10 +105,20 @@ if __name__ == "__main__":
 </PRE>""")
 
             example3 = _(u"""<B>Example 3:</B>
-<PRE>(:source file="Attach:example.cs" encoding="cp1251":)(:sourceend:)</PRE>""")
+<PRE>(:source lang="python" tabwidth=4 parentbg linenum:)
+import os
+
+if __name__ == "__main__":
+    print "Hello World!"
+(:sourceend:)
+</PRE>""")
 
             example4 = _(u"""<B>Example 4:</B>
+<PRE>(:source file="Attach:example.cs" encoding="cp1251":)(:sourceend:)</PRE>""")
+
+            example5 = _(u"""<B>Example 5:</B>
 <PRE>(:source file="Attach:example.txt" lang="python":)(:sourceend:)</PRE>""")
+
 
             return u"""{description}
 
@@ -115,13 +132,16 @@ if __name__ == "__main__":
 
 {example3}
 
-{example4}""".format (description=description,
+{example4}
+
+{example5}""".format (description=description,
         usage=usage,
         params=params,
         example1=example1,
         example2=example2,
         example3=example3,
-        example4=example4)
+        example4=example4,
+        example5=example5)
 
 
         @property
