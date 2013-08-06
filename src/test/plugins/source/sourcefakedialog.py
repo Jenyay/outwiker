@@ -33,6 +33,7 @@ class FakeInsertDialog (Dialog):
 
         self.attachButton = Button()
         self.parentBgCheckBox = CheckBox ()
+        self.lineNumCheckBox = CheckBox ()
 
 
     @property
@@ -73,3 +74,8 @@ class FakeInsertDialog (Dialog):
     @property
     def parentbg (self):
         return self.parentBgCheckBox.GetValue()
+
+
+    @property
+    def lineNum (self):
+        return self.lineNumCheckBox.GetValue()

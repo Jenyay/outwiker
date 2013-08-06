@@ -68,6 +68,11 @@ class InsertDialog (wx.Dialog):
         return self.parentBgCheckBox.GetValue()
 
 
+    @property
+    def lineNum (self):
+        return self.lineNumCheckBox.GetValue()
+
+
     def __createGui(self):
         """
         Создать элементы управления
@@ -119,6 +124,7 @@ class InsertDialog (wx.Dialog):
 
         self.__createStyleGui (appearanceSizer, appearancePanel)
         self.__createTabWidthGui (appearanceSizer, appearancePanel)
+        self.__createLineNumGui (appearanceSizer, appearancePanel)
         self.__createParentBgGui (appearanceSizer, appearancePanel)
 
         return appearancePanel
@@ -143,6 +149,20 @@ class InsertDialog (wx.Dialog):
 
         mainSizer.Add (
                 self.parentBgCheckBox, 
+                proportion=1,
+                flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND,
+                border=4
+                )
+
+
+    def __createLineNumGui (self, mainSizer, parent):
+        """
+        Создать элементы интерфейса для добавления номеров строк
+        """
+        self.lineNumCheckBox = wx.CheckBox (parent, -1, _(u"Enable line numbers"))
+
+        mainSizer.Add (
+                self.lineNumCheckBox, 
                 proportion=1,
                 flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND,
                 border=4

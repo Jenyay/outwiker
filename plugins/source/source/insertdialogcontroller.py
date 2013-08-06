@@ -109,11 +109,13 @@ class InsertDialogController (object):
         tabWidthStr = self._getTabWidthParam()
         styleStr = self._getStyleParam()
         parentbg = self._getParentBg()
+        linenum = self._getLineNum()
 
-        startCommand = u'(:source{lang}{tabwidth}{style}{parentbg}:)\n'.format (lang=langStr,
+        startCommand = u'(:source{lang}{tabwidth}{style}{parentbg}{linenum}:)\n'.format (lang=langStr,
                 tabwidth=tabWidthStr,
                 style=styleStr,
-                parentbg=parentbg)
+                parentbg=parentbg,
+                linenum=linenum)
 
         endCommand = u'\n(:sourceend:)'
 
@@ -130,6 +132,13 @@ class InsertDialogController (object):
     def _getParentBg (self):
         if self._dialog.parentbg:
             return u' parentbg'
+
+        return u''
+
+
+    def _getLineNum (self):
+        if self._dialog.lineNum:
+            return u' linenum'
 
         return u''
 
@@ -153,13 +162,15 @@ class InsertDialogController (object):
 
         styleStr = self._getStyleParam()
         parentbg = self._getParentBg()
+        linenum = self._getLineNum()
 
-        startCommand = u'(:source{file}{lang}{encoding}{tabwidth}{style}{parentbg}:)'.format (file=fnameStr,
+        startCommand = u'(:source{file}{lang}{encoding}{tabwidth}{style}{parentbg}{linenum}:)'.format (file=fnameStr,
                 lang=langStr, 
                 encoding=encodingStr,
                 tabwidth=tabWidthStr,
                 style=styleStr,
-                parentbg=parentbg)
+                parentbg=parentbg,
+                linenum=linenum)
 
         endCommand = u'(:sourceend:)'
 
