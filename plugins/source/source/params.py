@@ -68,7 +68,7 @@ LANGUAGE_LIST_DEFAULT = [
 
 
 CUSTOM_STYLES = u"""
-.{name} pre {{padding: 0px; border: none; color: inherit; background-color: inherit; }}
+.{name} pre {{padding: 0px; border: none; color: inherit; background-color: inherit; margin:0px 0px 0px 0px; }}
 .{name} table {{padding: 0px; border: none;}}
 .{name}table td {{border-width:0; vertical-align: baseline; }}
 .{name}table tr {{vertical-align: baseline; }}
