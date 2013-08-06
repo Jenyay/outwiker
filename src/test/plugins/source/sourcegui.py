@@ -434,6 +434,11 @@ class SourceGuiPluginTest (unittest.TestCase):
         self.assertEqual (self.dialog.style, "default")
 
 
+    def testStyleConfig5 (self):
+        self.controller.showDialog ()
+        self.assertEqual (self.dialog.style, "default")
+
+
     def testParentBgConfig1 (self):
         self.config.parentbg.value = u"  False  "
         self.controller.showDialog ()
@@ -453,3 +458,38 @@ class SourceGuiPluginTest (unittest.TestCase):
         self.controller.showDialog ()
 
         self.assertEqual (self.dialog.parentbg, False)
+
+
+    def testParentBgConfig4 (self):
+        # Если нет вообще записей в файле настроек
+        self.controller.showDialog ()
+
+        self.assertEqual (self.dialog.parentbg, False)
+
+
+    def testLineNumConfig1 (self):
+        # Если нет вообще записей в файле настроек
+        self.controller.showDialog ()
+
+        self.assertEqual (self.dialog.lineNum, False)
+
+
+    def testLineNumConfig2 (self):
+        self.config.lineNum.value = u"  False  "
+        self.controller.showDialog ()
+
+        self.assertEqual (self.dialog.lineNum, False)
+
+
+    def testLineNumConfig3 (self):
+        self.config.lineNum.value = u"  блаблабла  "
+        self.controller.showDialog ()
+
+        self.assertEqual (self.dialog.lineNum, False)
+
+
+    def testLineNumConfig4 (self):
+        self.config.lineNum.value = u"True"
+        self.controller.showDialog ()
+
+        self.assertEqual (self.dialog.lineNum, True)

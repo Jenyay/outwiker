@@ -207,7 +207,9 @@ class InsertDialogController (object):
         self._loadEncodingState()
         self._loadAttachmentState()
         self._loadStyleState()
-        self._loadParentBgState()
+
+        self._dialog.parentBgCheckBox.SetValue (self._config.parentbg.value)
+        self._dialog.lineNumCheckBox.SetValue (self._config.lineNum.value)
 
         self._updateDialogSize()
         self.enableFileGuiElements (False)
@@ -242,10 +244,6 @@ class InsertDialogController (object):
         fillStyleComboBox (self._config, 
                 self._dialog.styleComboBox, 
                 self._config.style.value.strip())
-
-
-    def _loadParentBgState (self):
-        self._dialog.parentBgCheckBox.SetValue (self._config.parentbg.value)
 
 
     def _loadEncodingState (self):
@@ -299,6 +297,7 @@ class InsertDialogController (object):
         self._config.dialogHeight.value = currentHeight
         self._config.style.value = self._dialog.style
         self._config.parentbg.value = self._dialog.parentbg
+        self._config.lineNum.value = self._dialog.lineNum
 
 
     def enableFileGuiElements (self, enabled):

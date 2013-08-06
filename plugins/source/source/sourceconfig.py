@@ -75,6 +75,16 @@ class SourceConfig (object):
                 self.DEFAULT_PARENT_BACKGROUND)
 
 
+        # Настройка для добавления нумерации строк
+        self.DEFAULT_LINE_NUM = False
+        lineNumOption = u"LineNum"
+
+        self.__lineNum = BooleanOption (self.__config,
+                self.section,
+                lineNumOption,
+                self.DEFAULT_LINE_NUM)
+
+
 
     @property
     def tabWidth (self):
@@ -126,3 +136,7 @@ class SourceConfig (object):
     def parentbg (self):
         return self.__parentBg
 
+
+    @property
+    def lineNum (self):
+        return self.__lineNum
