@@ -493,3 +493,52 @@ class SourceGuiPluginTest (unittest.TestCase):
         self.controller.showDialog ()
 
         self.assertEqual (self.dialog.lineNum, True)
+
+
+    def testDialogParengBg (self):
+        self.config.languageList.value = [u"python", u"cpp", u"haskell"]
+        self.config.defaultLanguage.value = u"python"
+
+        self.controller.showDialog()
+        self.dialog.parentBgCheckBox.SetValue (True)
+
+        result = self.controller.getCommandStrings()
+
+        self.assertEqual (result, (u'(:source lang="python" parentbg:)\n', u'\n(:sourceend:)'))
+
+
+    def testDialogLineNum (self):
+        self.config.languageList.value = [u"python", u"cpp", u"haskell"]
+        self.config.defaultLanguage.value = u"python"
+
+        self.controller.showDialog()
+        self.dialog.lineNumCheckBox.SetValue (True)
+
+        result = self.controller.getCommandStrings()
+
+        self.assertEqual (result, (u'(:source lang="python" linenum:)\n', u'\n(:sourceend:)'))
+
+
+    def testDialogParentBgLineNum (self):
+        self.config.languageList.value = [u"python", u"cpp", u"haskell"]
+        self.config.defaultLanguage.value = u"python"
+
+        self.controller.showDialog()
+        self.dialog.parentBgCheckBox.SetValue (True)
+        self.dialog.lineNumCheckBox.SetValue (True)
+
+        result = self.controller.getCommandStrings()
+
+        self.assertEqual (result, (u'(:source lang="python" parentbg linenum:)\n', u'\n(:sourceend:)'))
+
+
+    def testDialogTabWidth (self):
+        self.config.languageList.value = [u"python", u"cpp", u"haskell"]
+        self.config.defaultLanguage.value = u"python"
+
+        self.controller.showDialog()
+        self.dialog.tabWidthSpin.SetValue (10)
+
+        result = self.controller.getCommandStrings()
+
+        self.assertEqual (result, (u'(:source lang="python" tabwidth="10":)\n', u'\n(:sourceend:)'))

@@ -162,7 +162,7 @@ class SourceAttachmentPluginTest (unittest.TestCase):
 
         result = self.controller.getCommandStrings()
 
-        self.assertEqual (result, (u'(:source file="Attach:source_cp1251.cs" lang="haskell" encoding="cp1251":)', u'(:sourceend:)'))
+        self.assertEqual (result, (u'(:source file="Attach:source_cp1251.cs" encoding="cp1251" lang="haskell":)', u'(:sourceend:)'))
 
 
     def testAttachment7 (self):

@@ -101,27 +101,6 @@ class InsertDialogController (object):
         return result
 
 
-    def _getStringsForText (self):
-        """
-        Возвращает кортеж строк для случая оформления исходников из текста (не из файла)
-        """
-        langStr = u' lang="{language}"'.format (language=self._dialog.language)
-        tabWidthStr = self._getTabWidthParam()
-        styleStr = self._getStyleParam()
-        parentbg = self._getParentBg()
-        linenum = self._getLineNum()
-
-        startCommand = u'(:source{lang}{tabwidth}{style}{parentbg}{linenum}:)\n'.format (lang=langStr,
-                tabwidth=tabWidthStr,
-                style=styleStr,
-                parentbg=parentbg,
-                linenum=linenum)
-
-        endCommand = u'\n(:sourceend:)'
-
-        return (startCommand, endCommand)
-
-
     def _getTabWidthParam (self):
         if self._dialog.tabWidth != 0:
             return u' tabwidth="{0}"'.format(self._dialog.tabWidth)
@@ -147,6 +126,38 @@ class InsertDialogController (object):
         return u'' if self._dialog.style == getDefaultStyle (self._config) else ' style="{style}"'.format (style=self._dialog.style)
 
 
+    def _getCommonParams (self):
+        """
+        Получить список параметров, общий для исходников, вставляемых в виде текста и из файла
+        """
+        commonparams = u'{tabwidth}{style}{parentbg}{linenum}'
+
+        tabWidthStr = self._getTabWidthParam()
+        styleStr = self._getStyleParam()
+        parentbg = self._getParentBg()
+        linenum = self._getLineNum()
+
+        return commonparams.format (tabwidth=tabWidthStr,
+                style=styleStr,
+                parentbg=parentbg,
+                linenum=linenum)
+
+
+    def _getStringsForText (self):
+        """
+        Возвращает кортеж строк для случая оформления исходников из текста (не из файла)
+        """
+        langStr = u' lang="{language}"'.format (language=self._dialog.language)
+        commonparams = self._getCommonParams()
+
+        startCommand = u'(:source{lang}{commonparams}:)\n'.format (lang=langStr,
+                commonparams=commonparams)
+
+        endCommand = u'\n(:sourceend:)'
+
+        return (startCommand, endCommand)
+
+
     def _getStringsForAttachment (self):
         """
         Возвращает кортеж строк для случая оформления исходников из прикрепленных файлов
@@ -158,19 +169,13 @@ class InsertDialogController (object):
         fnameStr = u' file="Attach:{fname}"'.format (fname=fname)
         encodingStr = u'' if encoding == "utf8" else u' encoding="{encoding}"'.format (encoding=encoding)
         langStr = u'' if language == None else u' lang="{lang}"'.format (lang=language)
-        tabWidthStr = self._getTabWidthParam()
 
-        styleStr = self._getStyleParam()
-        parentbg = self._getParentBg()
-        linenum = self._getLineNum()
+        commonparams = self._getCommonParams()
 
-        startCommand = u'(:source{file}{lang}{encoding}{tabwidth}{style}{parentbg}{linenum}:)'.format (file=fnameStr,
-                lang=langStr, 
+        startCommand = u'(:source{file}{encoding}{lang}{commonparams}:)'.format (file=fnameStr,
                 encoding=encodingStr,
-                tabwidth=tabWidthStr,
-                style=styleStr,
-                parentbg=parentbg,
-                linenum=linenum)
+                lang=langStr, 
+                commonparams=commonparams)
 
         endCommand = u'(:sourceend:)'
 
