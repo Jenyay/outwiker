@@ -12,6 +12,8 @@ from outwiker.gui.buttonsdialog import ButtonsDialog
 from outwiker.core.pluginbase import Plugin
 from outwiker.core.system import getOS
 
+from .debugaction import DebugAction
+
 
 class PluginDebug (Plugin):
     def __init__ (self, application):
@@ -28,6 +30,10 @@ class PluginDebug (Plugin):
 
         self._application.mainWindow.Bind(wx.EVT_MENU, self.__onPluginsList, id=self.ID_PLUGINSLIST)
         self._application.mainWindow.Bind(wx.EVT_MENU, self.__onButtonsDialog, id=self.ID_BUTTONSDIALOG)
+
+        action = DebugAction()
+        self._application.mainWindow.actionController.appendAction (action, self.menu)
+
 
 
     def __onTreePopupMenu (self, menu, page):

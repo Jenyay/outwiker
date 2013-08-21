@@ -76,3 +76,7 @@ class MainWndTest(BaseMainWndTest):
 
         self.rootwiki.selectedPage = self.rootwiki[u"Страница 2/Страница 3"]
         self.assertEqual (self.wnd.GetTitle(), u"testwiki - Страница 3 - OutWiker")
+
+
+    def testActionController (self):
+        self.assertNotEqual (self.wnd.actionController, None)
