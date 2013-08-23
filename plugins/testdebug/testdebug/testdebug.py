@@ -32,7 +32,7 @@ class PluginDebug (Plugin):
         self._application.mainWindow.Bind(wx.EVT_MENU, self.__onButtonsDialog, id=self.ID_BUTTONSDIALOG)
 
         action = DebugAction()
-        self._application.mainWindow.actionController.appendAction (action, self.menu)
+        self._application.mainWindow.actionController.appendMenuItem (action, self.menu)
 
 
 
