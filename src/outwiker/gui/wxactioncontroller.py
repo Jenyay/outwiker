@@ -10,12 +10,13 @@ class ActionInfo (object):
     Класс для внутреннего использования в WxActionController
     Хранит информацию о добавленных действиях
     """
-    def __init__ (self, action):
+    def __init__ (self, action, hotkey):
         """
         action - действие
         menuItem - пункт меню, связанный с действием
         """
         self.action = action
+        self.hotkey = hotkey
         self.menuItem = None
         self.toolbar = None
         self.toolItemId = None
@@ -38,17 +39,19 @@ class WxActionController (object):
         return self._actionsInfo.values()
 
 
-    def register (self, action):
+    def register (self, action, hotkey=u""):
         """
         Добавить действие в словарь. При этом никаких элементов интерфейса не создается
+        action - регистрируемое действие
+        hotkey - горячая клавиша по умолчанию для этого действия. Если в настройках задана другая горячая клавиша, то приоритет отдается клавише из настроек
         """
         # Не должно быть одинаковых идентификаторов действий
         assert action.strid not in self._actionsInfo
 
-        actionInfo = ActionInfo (action)
+        actionInfo = ActionInfo (action, hotkey)
         self._actionsInfo[action.strid] = actionInfo
-    
-    
+
+
     def appendMenuItem (self, strid, menu):
         """
         Добавить действие в меню menu
@@ -59,7 +62,7 @@ class WxActionController (object):
         newid = wx.NewId()
         action = self._actionsInfo[strid].action
 
-        menuItem = menu.Append (newid, self._getItemTitle (action))
+        menuItem = menu.Append (newid, self._getMenuItemTitle (strid))
         self._actionsInfo[strid].menuItem = menuItem
 
         self._mainWindow.Bind (wx.EVT_MENU, handler=lambda event: action.run(), id=newid)
@@ -118,13 +121,13 @@ class WxActionController (object):
         assert strid in self._actionsInfo
         actionid = wx.NewId()
         action = self._actionsInfo[strid].action
-        title = self._getItemTitle (action)
+        title = self._getToolbarItemTitle (strid)
         bitmap = wx.Bitmap (image)
 
         toolbar.AddTool(actionid, 
             title, 
             bitmap, 
-            short_help_string=wx.EmptyString, 
+            short_help_string=title, 
             kind=wx.ITEM_NORMAL,
             fullUpdate=fullUpdate)
 
@@ -133,8 +136,21 @@ class WxActionController (object):
         self._mainWindow.Bind (wx.EVT_TOOL, handler=lambda event: action.run(), id=actionid)
 
 
-    def _getItemTitle (self, action, hotkey=u""):
-        if len (hotkey) == 0:
-            return action.title
+    def _getMenuItemTitle (self, strid):
+        assert strid in self._actionsInfo
 
-        return u"{0}\t{1}".format (action.title, hotkey)
+        actionInfo = self._actionsInfo[strid]
+        if len (actionInfo.hotkey) == 0:
+            return actionInfo.action.title
+
+        return u"{0}\t{1}".format (actionInfo.action.title, actionInfo.hotkey)
+
+
+    def _getToolbarItemTitle (self, strid):
+        assert strid in self._actionsInfo
+
+        actionInfo = self._actionsInfo[strid]
+        if len (actionInfo.hotkey) == 0:
+            return actionInfo.action.title
+
+        return u"{0} ({1})".format (actionInfo.action.title, actionInfo.hotkey)

@@ -56,7 +56,7 @@ class ActionControllerTest (BaseMainWndTest):
 
         self.actionController.register (action)
         self.actionController.appendMenuItem (action.strid, menu)
-        self.assertNotEqual (menu.FindItem (action.title), wx.NOT_FOUND)
+        self._assertMenuItemExists (menu, action.title, "")
 
 
     def testRemoveAction (self):
@@ -72,7 +72,7 @@ class ActionControllerTest (BaseMainWndTest):
                 image)
 
         self.assertEqual (len (self.actionController.actions), 1)
-        self.assertNotEqual (menu.FindItem (action.title), wx.NOT_FOUND)
+        self._assertMenuItemExists (menu, action.title, "")
         self.assertEqual (toolbar.GetToolCount(), 1)
 
         self.actionController.removeAction (action.strid)
@@ -228,12 +228,12 @@ class ActionControllerTest (BaseMainWndTest):
                 image)
 
         self.assertEqual (toolbar.GetToolCount(), 1)
-        self.assertNotEqual (menu.FindItem (action.title), wx.NOT_FOUND)
+        self._assertMenuItemExists (menu, action.title, "")
 
         self.actionController.removeToolbarButton (action.strid)
 
         self.assertEqual (toolbar.GetToolCount(), 0)
-        self.assertNotEqual (menu.FindItem (action.title), wx.NOT_FOUND)
+        self._assertMenuItemExists (menu, action.title, "")
 
 
     def testRemoveToolButtonInvalid (self):
@@ -246,12 +246,12 @@ class ActionControllerTest (BaseMainWndTest):
         self.actionController.appendMenuItem (action.strid, menu)
 
         self.assertEqual (toolbar.GetToolCount(), 0)
-        self.assertNotEqual (menu.FindItem (action.title), wx.NOT_FOUND)
+        self._assertMenuItemExists (menu, action.title, "")
 
         self.actionController.removeToolbarButton (action.strid)
 
         self.assertEqual (toolbar.GetToolCount(), 0)
-        self.assertNotEqual (menu.FindItem (action.title), wx.NOT_FOUND)
+        self._assertMenuItemExists (menu, action.title, "")
 
 
     def testRemoveMenuItemInvalid (self):
@@ -287,12 +287,57 @@ class ActionControllerTest (BaseMainWndTest):
                 image)
 
         self.assertEqual (toolbar.GetToolCount(), 1)
-        self.assertNotEqual (menu.FindItem (action.title), wx.NOT_FOUND)
+        self._assertMenuItemExists (menu, action.title, "")
 
         self.actionController.removeMenuItem (action.strid)
 
         self.assertEqual (toolbar.GetToolCount(), 1)
         self.assertEqual (menu.FindItem (action.title), wx.NOT_FOUND)
+
+
+    def testHotKeysDefaultMenu (self):
+        action = TestAction()
+        menu = self.wnd.mainMenu.fileMenu
+        hotkey = u"Ctrl+T"
+
+        self.actionController.register (action, hotkey=hotkey)
+        self.assertEqual (self._getHotKey (action.strid), hotkey)
+
+        self.actionController.appendMenuItem (action.strid, menu)
+
+        self._assertMenuItemExists (menu, action.title, hotkey)
+
+
+    def testHotKeysDefaultToolBar (self):
+        action = TestAction()
+        hotkey = u"Ctrl+T"
+        toolbar = self.wnd.toolbars[self.wnd.PLUGINS_TOOLBAR_STR]
+        image = "../test/images/save.png"
+
+        self.actionController.register (action, hotkey=hotkey)
+        self.assertEqual (self._getHotKey (action.strid), hotkey)
+
+        self.actionController.appendToolbarButton (action.strid, 
+                toolbar,
+                image)
+
+        self.assertEqual (self._getToolItemLabel (toolbar, action.strid), 
+                u"{0} ({1})".format (action.title, hotkey))
+
+
+    def _assertMenuItemExists (self, menu, title, hotkey):
+        """
+        Проверить, что в меню есть элемент с заголовком (title + '\t' + hotkey)
+        """
+        menuItemId = menu.FindItem (title)
+        self.assertNotEqual (menuItemId, wx.NOT_FOUND)
+
+        menuItem = menu.FindItemById (menuItemId)
+        
+        if len (hotkey) != 0:
+            self.assertEqual (menuItem.GetItemLabel(), title + "\t" + hotkey)
+        else:
+            self.assertEqual (menuItem.GetItemLabel(), title)
 
 
     def _emulateMenuClick (self, menuItemId):
@@ -312,12 +357,22 @@ class ActionControllerTest (BaseMainWndTest):
         self.wnd.ProcessEvent (event)
 
 
-    def _getMenuItemId (self, strid):
+    def _getActionInfo (self, strid):
         result = None
         for actionInfo in self.actionController.actions:
             if actionInfo.action.strid == strid:
-                result = actionInfo.menuItem.GetId()
+                result = actionInfo
                 break
+
+        return result
+
+
+    def _getMenuItemId (self, strid):
+        result = None
+       
+        actionInfo = self._getActionInfo(strid)
+        if actionInfo != None:
+            result = actionInfo.menuItem.GetId()
 
         return result
 
@@ -327,9 +382,35 @@ class ActionControllerTest (BaseMainWndTest):
         Получить идентификатор кнопки с панели инструментов
         """
         result = None
-        for actionInfo in self.actionController.actions:
-            if actionInfo.action.strid == strid:
-                result = actionInfo.toolItemId
-                break
+       
+        actionInfo = self._getActionInfo(strid)
+        if actionInfo != None:
+            result = actionInfo.toolItemId
+
+        return result
+
+
+    def _getToolItemLabel (self, toolbar, strid):
+        result = None
+
+        itemId = self._getToolItemId (strid)
+        if itemId != None:
+            item = toolbar.FindTool (itemId)
+            assert item != None
+
+            result = item.GetLabel()
+
+        return result
+
+
+    def _getHotKey (self, strid):
+        """
+        Получить идентификатор кнопки с панели инструментов
+        """
+        result = None
+       
+        actionInfo = self._getActionInfo(strid)
+        if actionInfo != None:
+            result = actionInfo.hotkey
 
         return result

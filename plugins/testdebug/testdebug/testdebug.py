@@ -31,10 +31,33 @@ class PluginDebug (Plugin):
         self._application.mainWindow.Bind(wx.EVT_MENU, self.__onPluginsList, id=self.ID_PLUGINSLIST)
         self._application.mainWindow.Bind(wx.EVT_MENU, self.__onButtonsDialog, id=self.ID_BUTTONSDIALOG)
 
-        action = DebugAction()
-        self._application.mainWindow.actionController.register (action)
-        self._application.mainWindow.actionController.appendMenuItem (action.strid, self.menu)
 
+    def __createTestAction (self):
+        mainWindow = self._application.mainWindow
+
+        if mainWindow != None:
+            action = DebugAction()
+            hotkey = "Ctrl+Shift+Alt+T"
+            toolbar = mainWindow.toolbars[mainWindow.PLUGINS_TOOLBAR_STR]
+            image = self.getImagePath ("bug.png")
+
+            controller = mainWindow.actionController
+            
+            controller.register (action, hotkey=hotkey)
+
+            controller.appendMenuItem (action.strid, self.menu)
+            controller.appendToolbarButton (action.strid, 
+                    toolbar,
+                    image)
+
+
+    def getImagePath (self, imageName):
+        """
+        Получить полный путь до картинки
+        """
+        imagedir = unicode (os.path.join (os.path.dirname (__file__), "images"), getOS().filesEncoding)
+        fname = os.path.join (imagedir, imageName)
+        return fname
 
 
     def __onTreePopupMenu (self, menu, page):
@@ -137,6 +160,7 @@ class PluginDebug (Plugin):
 
         if self._application.mainWindow != None:
             self.__createMenu()
+            self.__createTestAction()
 
             self._application.onTreePopupMenu += self.__onTreePopupMenu
             self._application.onTrayPopupMenu += self.__onTrayPopupMenu
