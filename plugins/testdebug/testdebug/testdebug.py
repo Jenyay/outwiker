@@ -35,7 +35,7 @@ class PluginDebug (Plugin):
     def __createTestAction (self):
         mainWindow = self._application.mainWindow
 
-        if mainWindow != None:
+        if mainWindow != None and mainWindow.PLUGINS_TOOLBAR_STR in mainWindow.toolbars:
             action = DebugAction()
             hotkey = "Ctrl+Shift+Alt+T"
             toolbar = mainWindow.toolbars[mainWindow.PLUGINS_TOOLBAR_STR]
@@ -49,6 +49,13 @@ class PluginDebug (Plugin):
             controller.appendToolbarButton (action.strid, 
                     toolbar,
                     image)
+
+
+    def __removeTestAction (self):
+        mainWindow = self._application.mainWindow
+
+        if mainWindow != None and mainWindow.PLUGINS_TOOLBAR_STR in mainWindow.toolbars:
+            mainWindow.actionController.removeAction (DebugAction().strid)
 
 
     def getImagePath (self, imageName):
