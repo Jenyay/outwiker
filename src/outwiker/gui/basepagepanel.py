@@ -76,13 +76,13 @@ class BasePagePanel (wx.Panel):
             panelname="plugins"):
         """
         Добавить пункт меню и кнопку на панель
-        menu -- меню для добавления элемента
-        id -- идентификатор меню и кнопки
-        func -- обработчик
-        menuText -- название пунта меню
-        buttonText -- подсказка для кнопки
-        image -- имя файла с картинкой
-        alwaysEnabled -- Кнопка должна быть всегда активна
+        menu - меню для добавления элемента
+        id - идентификатор меню и кнопки
+        func - обработчик
+        menuText - название пунта меню
+        buttonText - подсказка для кнопки
+        image - имя файла с картинкой
+        alwaysEnabled - Кнопка должна быть всегда активна
         fullUpdate - нужно ли полностью обновлять окно после добавления кнопки
         panelname - имя панели, куда добавляется кнопка
         """
@@ -171,7 +171,9 @@ class BasePagePanel (wx.Panel):
         if tools.menu != None:
             tools.menu.Check (tools.id, checked)
 
-        self.mainWindow.toolbars[tools.panelname].ToggleTool (tools.id, checked)
+        # Проверка на случай, если панель уже удалена, например, при закрытии программы
+        if tools.panelname in self.mainWindow.toolbars:
+            self.mainWindow.toolbars[tools.panelname].ToggleTool (tools.id, checked)
 
 
     ###############################################

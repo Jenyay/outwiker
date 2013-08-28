@@ -9,14 +9,31 @@ class BaseAction (object):
     
     @abstractproperty
     def title (self):
+        """
+        Надпись, отображаемая в меню и на всплывающих подсказках на кнопках
+        """
+        pass
+
+
+    @abstractproperty
+    def description (self):
+        """
+        Короткое описание, показываемое в настройках горячих клавиш
+        """
         pass
 
 
     @abstractproperty
     def strid (self):
+        """
+        Уникальный строковый идентификатор действия. Используется для задания горчячих клавиш через файл настроек и для идентификации действий
+        """
         pass
 
 
     @abstractmethod
     def run (self):
+        """
+        Метод, выполняемый при активации действия
+        """
         pass

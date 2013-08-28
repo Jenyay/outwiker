@@ -48,6 +48,8 @@ class OutWiker(wx.App):
         Application.mainWindow = self.mainWnd
         Application.plugins.load (getPluginsDirList())
 
+        self._registerActions()
+
         self.bindActivateApp()
         self.Bind (wx.EVT_QUERY_END_SESSION, self._onEndSession)
 
@@ -55,6 +57,14 @@ class OutWiker(wx.App):
         starter.process()
         
         return True
+
+
+    def _registerActions (self):
+        """
+        Зарегистрировать действия, связанные с разными типами страниц
+        """
+        from outwiker.pages.html.htmlpage import HtmlPageFactory
+        HtmlPageFactory.registerActions (Application)
 
 
     def _onEndSession (self, event):

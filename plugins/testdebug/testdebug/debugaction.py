@@ -11,6 +11,11 @@ class DebugAction (BaseAction):
     @property
     def title (self):
         return u"DebugAction"
+
+
+    @property
+    def description (self):
+        return u"DebugAction"
     
 
     @property

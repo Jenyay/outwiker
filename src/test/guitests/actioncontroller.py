@@ -22,6 +22,11 @@ class TestAction (BaseAction):
 
 
     @property
+    def description (self):
+        return u"Тестовый Action"
+
+
+    @property
     def strid (self):
         return u"test_action"
 

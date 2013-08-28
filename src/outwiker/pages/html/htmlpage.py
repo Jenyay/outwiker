@@ -10,6 +10,7 @@ from outwiker.core.config import BooleanOption
 from outwiker.core.tree import WikiPage
 from outwiker.core.factory import PageFactory
 from .htmlpanel import HtmlPagePanel
+from actions.bold import HtmlBoldAction
 
 
 class HtmlWikiPage (WikiPage):
@@ -52,9 +53,24 @@ class HtmlPageFactory (PageFactory):
     def getPageType():
         return HtmlWikiPage
 
+
     @staticmethod
     def getTypeString ():
         return HtmlPageFactory.getPageType().getTypeString()
+
+
+    @staticmethod
+    def registerActions (application):
+        """
+        Зарегистрировать все действия, связанные с HTML-страницей
+        """
+        application.mainWindow.actionController.register (HtmlBoldAction (application), "Ctrl+B")
+
+
+    @staticmethod
+    def removeActions (application):
+        application.mainWindow.actionController.removeAction (HtmlBoldAction.stringId)
+
 
     # Название страницы, показываемое пользователю
     title = _(u"HTML Page")

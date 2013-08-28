@@ -7,7 +7,6 @@ import sys
 import wx
 import wx.aui
 
-from outwiker.core.tree import WikiDocument, RootWikiPage
 import outwiker.core.config
 import outwiker.core.commands as cmd
 import outwiker.core.system

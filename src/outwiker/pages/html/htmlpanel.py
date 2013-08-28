@@ -15,6 +15,7 @@ from outwiker.gui.linkdialogcontroller import LinkDialogContoller
 
 from .htmltoolbar import HtmlToolBar
 from .basehtmlpanel import BaseHtmlPanel
+from actions.bold import HtmlBoldAction
 
 
 class HtmlPagePanel (BaseHtmlPanel):
@@ -40,7 +41,12 @@ class HtmlPagePanel (BaseHtmlPanel):
     def onClose (self, event):
         Application.onPageUpdate -= self.__onPageUpdate
 
+        # Убрать за собой все кнопки и элементы меню
+        self.mainWindow.actionController.removeMenuItem (HtmlBoldAction.stringId)
+
         if self._htmlPanelName in self.mainWindow.toolbars:
+            self.mainWindow.actionController.removeToolbarButton (HtmlBoldAction.stringId)
+
             self.mainWindow.toolbars.destroyToolBar (self._htmlPanelName)
 
         super (HtmlPagePanel, self).onClose (event)
@@ -133,14 +139,16 @@ class HtmlPagePanel (BaseHtmlPanel):
         """
         Добавить инструменты, связанные со шрифтами
         """
-        self.addTool (self.__fontMenu, 
-                "ID_BOLD", 
-                lambda event: self.codeEditor.turnText (u"<b>", u"</b>"), 
-                _(u"Bold") + "\tCtrl+B", 
-                _(u"Bold (<b>…</b>)"), 
+        toolbarName = "html"
+        toolbar = self.mainWindow.toolbars[toolbarName]
+
+        # Полужирный шрифт
+        self.mainWindow.actionController.appendMenuItem (HtmlBoldAction.stringId, self.__fontMenu)
+        self.mainWindow.actionController.appendToolbarButton (HtmlBoldAction.stringId, 
+                toolbar,
                 os.path.join (self.imagesDir, "text_bold.png"),
-                fullUpdate=False,
-                panelname="html")
+                fullUpdate=False)
+
 
         self.addTool (self.__fontMenu, 
                 "ID_ITALIC", 
