@@ -136,6 +136,17 @@ class WxActionController (object):
         self._mainWindow.Bind (wx.EVT_TOOL, handler=lambda event: action.run(), id=actionid)
 
 
+    def enableTools (self, strid, enabled=True):
+        assert strid in self._actionsInfo
+        actionInfo = self._actionsInfo[strid]
+
+        if actionInfo.toolItemId != None:
+            actionInfo.toolbar.EnableTool (actionInfo.toolItemId, enabled)
+
+        if actionInfo.menuItem != None:
+            actionInfo.menuItem.Enable (enabled)
+
+
     def _getMenuItemTitle (self, strid):
         assert strid in self._actionsInfo
 

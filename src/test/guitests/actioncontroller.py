@@ -330,6 +330,79 @@ class ActionControllerTest (BaseMainWndTest):
                 u"{0} ({1})".format (action.title, hotkey))
 
 
+    def testDisableTools (self):
+        action = TestAction()
+        hotkey = u"Ctrl+T"
+        toolbar = self.wnd.toolbars[self.wnd.PLUGINS_TOOLBAR_STR]
+        image = "../test/images/save.png"
+
+        self.actionController.register (action, hotkey=hotkey)
+
+        self.actionController.appendToolbarButton (action.strid, 
+                toolbar,
+                image)
+
+        toolid = self._getToolItemId (action.strid)
+
+        self.actionController.enableTools (action.strid, False)
+        self.assertFalse (toolbar.GetToolEnabled (toolid))
+
+        self.actionController.enableTools (action.strid, True)
+        self.assertTrue (toolbar.GetToolEnabled (toolid))
+
+
+    def testDisableMenuItem (self):
+        action = TestAction()
+        hotkey = u"Ctrl+T"
+        menu = self.wnd.mainMenu.fileMenu
+
+        self.actionController.register (action, hotkey=hotkey)
+
+        self.actionController.appendMenuItem (action.strid, menu)
+
+        menuItemId = self._getMenuItemId (action.strid)
+
+        self.actionController.enableTools (action.strid, False)
+        self.assertFalse (menu.IsEnabled (menuItemId))
+
+        self.actionController.enableTools (action.strid, True)
+        self.assertTrue (menu.IsEnabled (menuItemId))
+
+
+    def testDidableToolsAll (self):
+        action = TestAction()
+        hotkey = u"Ctrl+T"
+        toolbar = self.wnd.toolbars[self.wnd.PLUGINS_TOOLBAR_STR]
+        image = "../test/images/save.png"
+        menu = self.wnd.mainMenu.fileMenu
+
+        self.actionController.register (action, hotkey=hotkey)
+
+        self.actionController.appendMenuItem (action.strid, menu)
+        self.actionController.appendToolbarButton (action.strid, 
+                toolbar,
+                image)
+
+        menuItemId = self._getMenuItemId (action.strid)
+        toolid = self._getToolItemId (action.strid)
+
+        self.actionController.enableTools (action.strid, False)
+        self.assertFalse (toolbar.GetToolEnabled (toolid))
+        self.assertFalse (menu.IsEnabled (menuItemId))
+
+        self.actionController.enableTools (action.strid, True)
+        self.assertTrue (toolbar.GetToolEnabled (toolid))
+        self.assertTrue (menu.IsEnabled (menuItemId))
+
+
+    def testDisableToolsNone (self):
+        action = TestAction()
+        hotkey = u"Ctrl+T"
+
+        self.actionController.register (action, hotkey=hotkey)
+        self.actionController.enableTools (action.strid, False)
+
+
     def _assertMenuItemExists (self, menu, title, hotkey):
         """
         Проверить, что в меню есть элемент с заголовком (title + '\t' + hotkey)
@@ -398,12 +471,20 @@ class ActionControllerTest (BaseMainWndTest):
     def _getToolItemLabel (self, toolbar, strid):
         result = None
 
+        item = self._getToolItem (toolbar, strid)
+
+        if item != None:
+            result = item.GetLabel()
+
+        return result
+
+
+    def _getToolItem (self, toolbar, strid):
+        result = None
+
         itemId = self._getToolItemId (strid)
         if itemId != None:
-            item = toolbar.FindTool (itemId)
-            assert item != None
-
-            result = item.GetLabel()
+            result = toolbar.FindTool (itemId)
 
         return result
 
