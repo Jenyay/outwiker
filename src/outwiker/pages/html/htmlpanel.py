@@ -52,6 +52,26 @@ class HtmlPagePanel (BaseHtmlPanel):
         super (HtmlPagePanel, self).onClose (event)
 
 
+    def _onSwitchToCode (self):
+        """
+        Обработка события при переключении на код страницы
+        """
+        actionController = self.mainWindow.actionController
+
+        actionController.enableTools (HtmlBoldAction.stringId, True)
+        super (HtmlPagePanel, self)._onSwitchToCode()
+
+
+    def _onSwitchToPreview (self):
+        """
+        Обработка события при переключении на просмотр страницы
+        """
+        actionController = self.mainWindow.actionController
+
+        actionController.enableTools (HtmlBoldAction.stringId, False)
+        super (HtmlPagePanel, self)._onSwitchToPreview()
+
+
     def __onPageUpdate (self, sender):
         if sender == self._currentpage:
             self.__updatePageConfigTools()
