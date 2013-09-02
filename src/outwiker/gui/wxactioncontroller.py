@@ -65,7 +65,7 @@ class WxActionController (object):
         menuItem = menu.Append (newid, self._getMenuItemTitle (strid))
         self._actionsInfo[strid].menuItem = menuItem
 
-        self._mainWindow.Bind (wx.EVT_MENU, handler=lambda event: action.run(), id=newid)
+        self._mainWindow.Bind (wx.EVT_MENU, handler=lambda event: action.run(None), id=newid)
 
 
     def removeAction (self, strid):
@@ -120,7 +120,38 @@ class WxActionController (object):
         """
         assert strid in self._actionsInfo
         actionid = wx.NewId()
+        buttonType = wx.ITEM_NORMAL
         action = self._actionsInfo[strid].action
+
+        self._appendToolbarItem (strid, toolbar, image, buttonType, actionid, fullUpdate)
+        self._mainWindow.Bind (wx.EVT_TOOL, handler=lambda event: action.run(None), id=actionid)
+
+
+    def appendToolbarCheckButton (self, strid, toolbar, image, fullUpdate=True):
+        """
+        Добавить кнопку на панель инструментов.
+        Действие уже должно быть зарегистрировано с помощью метода register
+        strid - строковый идентификатор действия, для которого создается кнопка на панели инструментов
+        toolbar - панель инструментов, куда будет добавлена кнопка (класс, производный от BaseToolBar)
+        image - путь до картинки, которая будет помещена на кнопку
+        fullUpdate - нужно ли полностью обновить панель после добавления кнопки
+        """
+        assert strid in self._actionsInfo
+        actionid = wx.NewId()
+        buttonType = wx.ITEM_CHECK
+        action = self._actionsInfo[strid].action
+
+        self._appendToolbarItem (strid, toolbar, image, buttonType, actionid, fullUpdate)
+
+        self._mainWindow.Bind (wx.EVT_TOOL, handler=lambda event: action.run(event.Checked()), id=actionid)
+
+
+    def _appendToolbarItem (self, strid, toolbar, image, buttonType, actionid, fullUpdate=True):
+        """
+        Общий метод для добавления кнопки на панель инструментов
+        buttonType - тип кнопки (wx.ITEM_NORMAL для обычной кнопки и wx.ITEM_CHECK для зажимаемой кнопки)
+        """
+        assert strid in self._actionsInfo
         title = self._getToolbarItemTitle (strid)
         bitmap = wx.Bitmap (image)
 
@@ -128,12 +159,11 @@ class WxActionController (object):
             title, 
             bitmap, 
             short_help_string=title, 
-            kind=wx.ITEM_NORMAL,
+            kind=buttonType,
             fullUpdate=fullUpdate)
 
         self._actionsInfo[strid].toolbar = toolbar
         self._actionsInfo[strid].toolItemId = actionid
-        self._mainWindow.Bind (wx.EVT_TOOL, handler=lambda event: action.run(), id=actionid)
 
 
     def enableTools (self, strid, enabled=True):

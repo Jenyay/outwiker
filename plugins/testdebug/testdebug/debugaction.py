@@ -23,5 +23,5 @@ class DebugAction (BaseAction):
         return u"plugin_debug_action"
     
     
-    def run (self):
-        print u"DebugAction.run()"
+    def run (self, params):
+        print u"DebugAction.run({0})".format (params)

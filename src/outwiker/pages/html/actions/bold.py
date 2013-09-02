@@ -29,7 +29,7 @@ class HtmlBoldAction (BaseAction):
         return self.stringId
     
     
-    def run (self):
+    def run (self, params):
         assert self._application.mainWindow != None
         assert self._application.mainWindow.pagePanel != None
 

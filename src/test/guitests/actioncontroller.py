@@ -31,8 +31,35 @@ class TestAction (BaseAction):
         return u"test_action"
 
 
-    def run (self):
+    def run (self, params):
         self.runCount += 1
+
+
+class TestCheckAction (BaseAction):
+    def __init__ (self):
+        self.runCount = 0
+
+
+    @property
+    def title (self):
+        return u"Тестовый CheckAction"
+
+
+    @property
+    def description (self):
+        return u"Тестовый CheckAction"
+
+
+    @property
+    def strid (self):
+        return u"test_check_action"
+
+
+    def run (self, params):
+        if params:
+            self.runCount += 1
+        else:
+            self.runCount -= 1
 
 
 class ActionControllerTest (BaseMainWndTest):
@@ -155,6 +182,47 @@ class ActionControllerTest (BaseMainWndTest):
 
         self.assertEqual (toolbar.GetToolCount(), 0)
 
+
+    def testAppendToolbarCheckButton (self):
+        action = TestCheckAction()
+        menu = self.wnd.mainMenu.fileMenu
+        toolbar = self.wnd.toolbars[self.wnd.PLUGINS_TOOLBAR_STR]
+        image = "../test/images/save.png"
+
+        self.actionController.register (action)
+        self.actionController.appendToolbarCheckButton (action.strid, 
+                toolbar,
+                image)
+
+        self.assertEqual (toolbar.GetToolCount(), 1)
+
+        self.actionController.removeAction (action.strid)
+
+        self.assertEqual (toolbar.GetToolCount(), 0)
+
+
+    def testAppendToolbarCheckButtonAndRun (self):
+        action = TestCheckAction()
+        toolbar = self.wnd.toolbars[self.wnd.PLUGINS_TOOLBAR_STR]
+        image = "../test/images/save.png"
+
+        self.actionController.register (action)
+        self.actionController.appendToolbarCheckButton (action.strid, 
+                toolbar,
+                image)
+
+        toolItemId = self._getToolItemId (action.strid)
+
+        self._emulateCheckButtonClick (toolItemId)
+        self.assertEqual (action.runCount, 1)
+
+        self._emulateCheckButtonClick (toolItemId)
+        self.assertEqual (action.runCount, 0)
+
+        self._emulateCheckButtonClick (toolItemId)
+        self.assertEqual (action.runCount, 1)
+
+        self.actionController.removeAction (action.strid)
 
 
     def testAppendToolbarButtonOnly (self):
@@ -432,6 +500,20 @@ class ActionControllerTest (BaseMainWndTest):
         """
         toolbar = self.wnd.toolbars[self.wnd.PLUGINS_TOOLBAR_STR]
         event = wx.CommandEvent (wx.wxEVT_COMMAND_TOOL_CLICKED, toolitemId)
+        self.wnd.ProcessEvent (event)
+
+
+    def _emulateCheckButtonClick (self, toolitemId):
+        """
+        Эмуляция события выбора пункта меню
+        """
+        toolbar = self.wnd.toolbars[self.wnd.PLUGINS_TOOLBAR_STR]
+        toolitem = toolbar.FindTool (toolitemId)
+        newState = not toolitem.GetState()
+        toolbar.ToggleTool (toolitemId, newState)
+
+        event = wx.CommandEvent (wx.wxEVT_COMMAND_TOOL_CLICKED, toolitemId)
+        event.SetInt (newState)
         self.wnd.ProcessEvent (event)
 
 
