@@ -91,6 +91,15 @@ class ActionControllerTest (BaseMainWndTest):
         self._assertMenuItemExists (menu, action.title, "")
 
 
+    def testAppendCheckMenu (self):
+        action = TestCheckAction()
+        menu = self.wnd.mainMenu.fileMenu
+
+        self.actionController.register (action)
+        self.actionController.appendMenuCheckItem (action.strid, menu)
+        self._assertMenuItemExists (menu, action.title, "")
+
+
     def testRemoveAction (self):
         action = TestAction()
         menu = self.wnd.mainMenu.fileMenu
@@ -185,7 +194,6 @@ class ActionControllerTest (BaseMainWndTest):
 
     def testAppendToolbarCheckButton (self):
         action = TestCheckAction()
-        menu = self.wnd.mainMenu.fileMenu
         toolbar = self.wnd.toolbars[self.wnd.PLUGINS_TOOLBAR_STR]
         image = "../test/images/save.png"
 
@@ -223,6 +231,64 @@ class ActionControllerTest (BaseMainWndTest):
         self.assertEqual (action.runCount, 1)
 
         self.actionController.removeAction (action.strid)
+
+
+    def testCheckButtonAndMenu (self):
+        action = TestCheckAction()
+        menu = self.wnd.mainMenu.fileMenu
+        toolbar = self.wnd.toolbars[self.wnd.PLUGINS_TOOLBAR_STR]
+        image = "../test/images/save.png"
+
+        self.actionController.register (action)
+        self.actionController.appendToolbarCheckButton (action.strid, 
+                toolbar,
+                image)
+        self.actionController.appendMenuCheckItem (action.strid, menu)
+
+        menuItem = self._getMenuItem (action.strid)
+        toolItem = self._getToolItem (toolbar, action.strid)
+        toolItemId = self._getToolItemId (action.strid)
+
+        self.assertFalse (menuItem.IsChecked())
+        self.assertFalse (toolItem.GetState())
+
+        self._emulateCheckButtonClick (toolItemId)
+
+        self.assertTrue (menuItem.IsChecked())
+        self.assertTrue (toolItem.GetState())
+
+        self._emulateCheckButtonClick (toolItemId)
+
+        self.assertFalse (menuItem.IsChecked())
+        self.assertFalse (toolItem.GetState())
+
+
+    def testRemoveCheckMenu (self):
+        action = TestCheckAction()
+        menu = self.wnd.mainMenu.fileMenu
+        toolbar = self.wnd.toolbars[self.wnd.PLUGINS_TOOLBAR_STR]
+        image = "../test/images/save.png"
+
+        self.actionController.register (action)
+        self.actionController.appendToolbarCheckButton (action.strid, 
+                toolbar,
+                image)
+
+        self.actionController.appendMenuCheckItem (action.strid, menu)
+        self.actionController.removeMenuItem (action.strid)
+
+        toolItem = self._getToolItem (toolbar, action.strid)
+        toolItemId = self._getToolItemId (action.strid)
+
+        self.assertFalse (toolItem.GetState())
+
+        self._emulateCheckButtonClick (toolItemId)
+
+        self.assertTrue (toolItem.GetState())
+
+        self._emulateCheckButtonClick (toolItemId)
+
+        self.assertFalse (toolItem.GetState())
 
 
     def testAppendToolbarButtonOnly (self):
@@ -533,6 +599,16 @@ class ActionControllerTest (BaseMainWndTest):
         actionInfo = self._getActionInfo(strid)
         if actionInfo != None:
             result = actionInfo.menuItem.GetId()
+
+        return result
+
+
+    def _getMenuItem (self, strid):
+        result = None
+       
+        actionInfo = self._getActionInfo(strid)
+        if actionInfo != None:
+            result = actionInfo.menuItem
 
         return result
 

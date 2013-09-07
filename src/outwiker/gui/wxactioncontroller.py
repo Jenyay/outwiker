@@ -68,6 +68,22 @@ class WxActionController (object):
         self._mainWindow.Bind (wx.EVT_MENU, handler=lambda event: action.run(None), id=newid)
 
 
+    def appendMenuCheckItem (self, strid, menu):
+        """
+        Добавить действие в меню menu
+        Действие должно быть уже зарегистрировано с помощью метода register
+        """
+        assert strid in self._actionsInfo
+
+        newid = wx.NewId()
+        action = self._actionsInfo[strid].action
+
+        menuItem = menu.AppendCheckItem (newid, self._getMenuItemTitle (strid))
+        self._actionsInfo[strid].menuItem = menuItem
+
+        self._mainWindow.Bind (wx.EVT_MENU, handler=lambda event: self._onCheck (event, action), id=newid)
+
+
     def removeAction (self, strid):
         """
         Удалить действие из интерфейса.
@@ -143,7 +159,24 @@ class WxActionController (object):
 
         self._appendToolbarItem (strid, toolbar, image, buttonType, actionid, fullUpdate)
 
-        self._mainWindow.Bind (wx.EVT_TOOL, handler=lambda event: action.run(event.Checked()), id=actionid)
+        self._mainWindow.Bind (wx.EVT_TOOL, handler=lambda event: self._onCheck (event, action), id=actionid)
+
+
+    def _onCheck (self, event, action):
+        """
+        Обработчик события нажатия залипающей кнопки или пункта меню с чекбоксом
+        """
+        # Установим флажки на соответствующем пункте меню и зажмем соответствующую кнопку
+        menuItem = self._actionsInfo[action.strid].menuItem
+        if (menuItem != None):
+            menuItem.Check (event.Checked())
+
+        toolbar = self._actionsInfo[action.strid].toolbar
+        if toolbar != None:
+            toolbar.ToggleTool (self._actionsInfo[action.strid].toolItemId, event.Checked())
+            toolbar.Realize()
+
+        action.run (event.Checked())
 
 
     def _appendToolbarItem (self, strid, toolbar, image, buttonType, actionid, fullUpdate=True):
