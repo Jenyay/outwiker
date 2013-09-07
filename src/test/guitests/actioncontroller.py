@@ -233,7 +233,7 @@ class ActionControllerTest (BaseMainWndTest):
         self.actionController.removeAction (action.strid)
 
 
-    def testCheckButtonAndMenu (self):
+    def testCheckButtonAndMenuWithEvents (self):
         action = TestCheckAction()
         menu = self.wnd.mainMenu.fileMenu
         toolbar = self.wnd.toolbars[self.wnd.PLUGINS_TOOLBAR_STR]
@@ -261,6 +261,51 @@ class ActionControllerTest (BaseMainWndTest):
 
         self.assertFalse (menuItem.IsChecked())
         self.assertFalse (toolItem.GetState())
+
+
+    def testCheckButtonAndMenu (self):
+        action = TestCheckAction()
+        menu = self.wnd.mainMenu.fileMenu
+        toolbar = self.wnd.toolbars[self.wnd.PLUGINS_TOOLBAR_STR]
+        image = "../test/images/save.png"
+
+        self.actionController.register (action)
+        self.actionController.appendToolbarCheckButton (action.strid, 
+                toolbar,
+                image)
+        self.actionController.appendMenuCheckItem (action.strid, menu)
+
+        menuItem = self._getMenuItem (action.strid)
+        toolItem = self._getToolItem (toolbar, action.strid)
+        toolItemId = self._getToolItemId (action.strid)
+
+        self.assertFalse (menuItem.IsChecked())
+        self.assertFalse (toolItem.GetState())
+        self.assertEqual (action.runCount, 0)
+
+        self.actionController.check (action.strid, True)
+
+        self.assertTrue (menuItem.IsChecked())
+        self.assertTrue (toolItem.GetState())
+        self.assertEqual (action.runCount, 1)
+
+        self.actionController.check (action.strid, True)
+
+        self.assertTrue (menuItem.IsChecked())
+        self.assertTrue (toolItem.GetState())
+        self.assertEqual (action.runCount, 2)
+
+        self.actionController.check (action.strid, False)
+
+        self.assertFalse (menuItem.IsChecked())
+        self.assertFalse (toolItem.GetState())
+        self.assertEqual (action.runCount, 1)
+
+        self.actionController.check (action.strid, False)
+
+        self.assertFalse (menuItem.IsChecked())
+        self.assertFalse (toolItem.GetState())
+        self.assertEqual (action.runCount, 0)
 
 
     def testRemoveCheckMenu (self):

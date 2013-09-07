@@ -81,7 +81,7 @@ class WxActionController (object):
         menuItem = menu.AppendCheckItem (newid, self._getMenuItemTitle (strid))
         self._actionsInfo[strid].menuItem = menuItem
 
-        self._mainWindow.Bind (wx.EVT_MENU, handler=lambda event: self._onCheck (event, action), id=newid)
+        self._mainWindow.Bind (wx.EVT_MENU, handler=lambda event: self._onCheck (action, event.Checked()), id=newid)
 
 
     def removeAction (self, strid):
@@ -159,24 +159,33 @@ class WxActionController (object):
 
         self._appendToolbarItem (strid, toolbar, image, buttonType, actionid, fullUpdate)
 
-        self._mainWindow.Bind (wx.EVT_TOOL, handler=lambda event: self._onCheck (event, action), id=actionid)
+        self._mainWindow.Bind (wx.EVT_TOOL, handler=lambda event: self._onCheck (action, event.Checked()), id=actionid)
 
 
-    def _onCheck (self, event, action):
+    def check (self, strid, checked):
+        """
+        Установить или снять флажок и нажать/отжать кнопку, соответствующие действию
+        """
+        assert strid in self._actionsInfo
+
+        self._onCheck (self._actionsInfo[strid].action, checked)
+
+
+    def _onCheck (self, action, checked):
         """
         Обработчик события нажатия залипающей кнопки или пункта меню с чекбоксом
         """
         # Установим флажки на соответствующем пункте меню и зажмем соответствующую кнопку
         menuItem = self._actionsInfo[action.strid].menuItem
         if (menuItem != None):
-            menuItem.Check (event.Checked())
+            menuItem.Check (checked)
 
         toolbar = self._actionsInfo[action.strid].toolbar
         if toolbar != None:
-            toolbar.ToggleTool (self._actionsInfo[action.strid].toolItemId, event.Checked())
+            toolbar.ToggleTool (self._actionsInfo[action.strid].toolItemId, checked)
             toolbar.Realize()
 
-        action.run (event.Checked())
+        action.run (checked)
 
 
     def _appendToolbarItem (self, strid, toolbar, image, buttonType, actionid, fullUpdate=True):
