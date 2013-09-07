@@ -16,6 +16,7 @@ from outwiker.gui.linkdialogcontroller import LinkDialogContoller
 from .htmltoolbar import HtmlToolBar
 from .basehtmlpanel import BaseHtmlPanel
 from actions.bold import HtmlBoldAction
+from actions.autolinewrap import HtmlAutoLineWrap
 
 
 class HtmlPagePanel (BaseHtmlPanel):
@@ -43,9 +44,11 @@ class HtmlPagePanel (BaseHtmlPanel):
 
         # Убрать за собой все кнопки и элементы меню
         self.mainWindow.actionController.removeMenuItem (HtmlBoldAction.stringId)
+        self.mainWindow.actionController.removeMenuItem (HtmlAutoLineWrap.stringId)
 
         if self._htmlPanelName in self.mainWindow.toolbars:
             self.mainWindow.actionController.removeToolbarButton (HtmlBoldAction.stringId)
+            self.mainWindow.actionController.removeToolbarButton (HtmlAutoLineWrap.stringId)
 
             self.mainWindow.toolbars.destroyToolBar (self._htmlPanelName)
 
@@ -74,42 +77,36 @@ class HtmlPagePanel (BaseHtmlPanel):
 
     def __onPageUpdate (self, sender):
         if sender == self._currentpage:
-            self.__updatePageConfigTools()
             if self.notebook.GetSelection() == self.RESULT_PAGE_INDEX:
                 self._showHtml()
 
 
     def UpdateView (self, page):
-        self.__updatePageConfigTools()
+        self.__updateLineWrapTools()
         BaseHtmlPanel.UpdateView (self, page)
 
 
-    def __createPageConfigTools (self):
+    def __createLineWrapTools (self):
         """
         Создать кнопки и пункты меню, отображающие настройки страницы
         """
-        self.addCheckTool (self.__htmlMenu, 
-                "ID_AUTOLINEWRAP", 
-                self.__onAutoLineWrap, 
-                _(u"Auto Line Wrap"), 
-                _(u"Auto Line Wrap"), 
-                os.path.join (self.imagesDir, "linewrap.png"),
-                alwaysEnabled = True,
-                fullUpdate=False,
-                panelname="html")
+        image = os.path.join (self.imagesDir, "linewrap.png")
+        toolbarName = "html"
+        toolbar = self.mainWindow.toolbars[toolbarName]
 
-        self.__updatePageConfigTools()
+        self.mainWindow.actionController.appendMenuCheckItem (HtmlAutoLineWrap.stringId, self.__htmlMenu)
+        self.mainWindow.actionController.appendToolbarCheckButton (HtmlAutoLineWrap.stringId, 
+                toolbar,
+                image,
+                fullUpdate=False)
+
+        self.__updateLineWrapTools()
 
 
-    def __updatePageConfigTools (self):
+    def __updateLineWrapTools (self):
         if self._currentpage != None:
-            self.checkTools ("ID_AUTOLINEWRAP", self._currentpage.autoLineWrap)
-
-
-    def __onAutoLineWrap (self, event):
-        if self._currentpage != None:
-            self._currentpage.autoLineWrap = event.Checked()
-            self.__updatePageConfigTools()
+            self.mainWindow.actionController.check (HtmlAutoLineWrap.stringId, 
+                    self._currentpage.autoLineWrap)
 
 
     def __createCustomTools (self):
@@ -129,7 +126,7 @@ class HtmlPagePanel (BaseHtmlPanel):
 
         self.mainWindow.Freeze()
 
-        self.__createPageConfigTools ()
+        self.__createLineWrapTools ()
         self._addRenderTools()
         self.toolsMenu.AppendSeparator()
 

@@ -10,7 +10,9 @@ from outwiker.core.config import BooleanOption
 from outwiker.core.tree import WikiPage
 from outwiker.core.factory import PageFactory
 from .htmlpanel import HtmlPagePanel
+
 from actions.bold import HtmlBoldAction
+from actions.autolinewrap import HtmlAutoLineWrap
 
 
 class HtmlWikiPage (WikiPage):
@@ -65,11 +67,13 @@ class HtmlPageFactory (PageFactory):
         Зарегистрировать все действия, связанные с HTML-страницей
         """
         application.mainWindow.actionController.register (HtmlBoldAction (application), "Ctrl+B")
+        application.mainWindow.actionController.register (HtmlAutoLineWrap (application), "")
 
 
     @staticmethod
     def removeActions (application):
         application.mainWindow.actionController.removeAction (HtmlBoldAction.stringId)
+        application.mainWindow.actionController.removeAction (HtmlAutoLineWrap.stringId)
 
 
     # Название страницы, показываемое пользователю
