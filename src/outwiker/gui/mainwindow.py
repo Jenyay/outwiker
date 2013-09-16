@@ -9,7 +9,6 @@ import wx.aui
 
 import outwiker.core.config
 import outwiker.core.commands as cmd
-import outwiker.core.system
 from outwiker.core.application import Application
 
 import outwiker.pages.search.searchpage
@@ -34,6 +33,8 @@ from outwiker.core.system import getImagesDir
 from toolbars.generaltoolbar import GeneralToolBar
 from toolbars.pluginstoolbar import PluginsToolBar
 from toolbars.toolbarscontroller import ToolBarsController
+
+from outwiker.actions.open import OpenAction
 
 
 class MainWindow(wx.Frame):
@@ -90,6 +91,21 @@ class MainWindow(wx.Frame):
                 Application)
 
         self.actionController = WxActionController(self)
+        self.__addActionsGui()
+
+
+    def __addActionsGui (self):
+        imagesDir = getImagesDir()
+
+        # Открыть...
+        self.actionController.register (OpenAction (Application), "Ctrl+O")
+
+        self.actionController.appendMenuItem (OpenAction.stringId, self.mainMenu.fileMenu)
+
+        self.actionController.appendToolbarButton (OpenAction.stringId, 
+                self.mainToolbar,
+                os.path.join (imagesDir, u"open.png"),
+                True)
 
 
     @property
@@ -160,7 +176,7 @@ class MainWindow(wx.Frame):
         Подписаться на события меню, кнопок и т.п.
         """
         self.Bind (wx.EVT_MENU, self.__onNew, id=MainId.ID_NEW)
-        self.Bind (wx.EVT_MENU, self.__onOpen, id=MainId.ID_OPEN)
+        # self.Bind (wx.EVT_MENU, self.__onOpen, id=MainId.ID_OPEN)
         self.Bind (wx.EVT_MENU, self.__onClose, id=MainId.ID_CLOSE)
 
         self.Bind (wx.EVT_MENU, 
@@ -221,7 +237,7 @@ class MainWindow(wx.Frame):
         self.Bind (wx.EVT_MENU, self.__onHelp, id=MainId.ID_HELP)
         self.Bind (wx.EVT_MENU, self.__onAbout, id=MainId.ID_ABOUT)
         self.Bind (wx.EVT_TOOL, self.__onNew, id=MainId.ID_NEW)
-        self.Bind (wx.EVT_TOOL, self.__onOpen, id=MainId.ID_OPEN)
+        # self.Bind (wx.EVT_TOOL, self.__onOpen, id=MainId.ID_OPEN)
         self.Bind (wx.EVT_TOOL, self.__onReload, id=MainId.ID_RELOAD)
         self.Bind (wx.EVT_TOOL, self.__onAttach, id=MainId.ID_ATTACH)
 
@@ -318,7 +334,7 @@ class MainWindow(wx.Frame):
         Установки иконки главного окна
         """
         icon = wx.EmptyIcon()
-        icon.CopyFromBitmap(wx.Bitmap(os.path.join (outwiker.core.system.getImagesDir(), 
+        icon.CopyFromBitmap(wx.Bitmap(os.path.join (getImagesDir(), 
             "outwiker.ico"), 
             wx.BITMAP_TYPE_ANY))
 

@@ -47,10 +47,10 @@ class MainMenu (wx.MenuBar):
                 "", 
                 wx.ITEM_NORMAL)
 
-        fileMenu.Append (MainId.ID_OPEN, 
-                _(u"Open…") + "\tCtrl+O", 
-                "", 
-                wx.ITEM_NORMAL)
+        # fileMenu.Append (MainId.ID_OPEN, 
+        #         _(u"Open…") + "\tCtrl+O", 
+        #         "", 
+        #         wx.ITEM_NORMAL)
 
         fileMenu.Append (MainId.ID_OPEN_READONLY,
                 _(u"Open Read-only…") + "\tCtrl+Shift+O", 

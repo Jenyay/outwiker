@@ -23,11 +23,11 @@ class GeneralToolBar (BaseToolBar):
                 _(u"Create new wiki…"),
                 fullUpdate=False)
 
-        self.AddTool(MainId.ID_OPEN, 
-                _(u"Open…"), 
-                wx.Bitmap(os.path.join (self.imagesDir, "open.png"), wx.BITMAP_TYPE_ANY), 
-                _(u"Open wiki…"),
-                fullUpdate=False)
+        # self.AddTool(MainId.ID_OPEN, 
+        #         _(u"Open…"), 
+        #         wx.Bitmap(os.path.join (self.imagesDir, "open.png"), wx.BITMAP_TYPE_ANY), 
+        #         _(u"Open wiki…"),
+        #         fullUpdate=False)
 
         self.AddTool(MainId.ID_RELOAD, 
                 _("Reload"), 
