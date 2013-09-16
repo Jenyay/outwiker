@@ -35,6 +35,7 @@ from toolbars.pluginstoolbar import PluginsToolBar
 from toolbars.toolbarscontroller import ToolBarsController
 
 from outwiker.actions.open import OpenAction
+from outwiker.actions.openreadonly import OpenReadOnlyAction
 
 
 class MainWindow(wx.Frame):
@@ -106,6 +107,11 @@ class MainWindow(wx.Frame):
                 self.mainToolbar,
                 os.path.join (imagesDir, u"open.png"),
                 True)
+
+        # Открыть только для чтения
+        self.actionController.register (OpenReadOnlyAction (Application), "Ctrl+Shift+O")
+
+        self.actionController.appendMenuItem (OpenReadOnlyAction.stringId, self.mainMenu.fileMenu)
 
 
     @property
