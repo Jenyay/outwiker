@@ -37,6 +37,7 @@ from outwiker.actions.new import NewAction
 from outwiker.actions.open import OpenAction
 from outwiker.actions.openreadonly import OpenReadOnlyAction
 from outwiker.actions.close import CloseAction
+from outwiker.actions.save import SaveAction
 
 
 class MainWindow(wx.Frame):
@@ -127,6 +128,10 @@ class MainWindow(wx.Frame):
         Application.actionController.appendMenuItem (CloseAction.stringId, 
                 Application.mainWindow.mainMenu.fileMenu)
 
+        # Сохранить
+        Application.actionController.appendMenuItem (SaveAction.stringId, 
+                Application.mainWindow.mainMenu.fileMenu)
+
         Application.mainWindow.mainMenu.fileMenu.AppendSeparator()
 
 
@@ -201,7 +206,6 @@ class MainWindow(wx.Frame):
                 self.__onOpenReadOnly, 
                 id=MainId.ID_OPEN_READONLY)
 
-        self.Bind (wx.EVT_MENU, self.__onSave, id=MainId.ID_SAVE)
         self.Bind (wx.EVT_MENU, self.__onPrint, id=wx.ID_PRINT)
         self.Bind (wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_UNDO)
         self.Bind (wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_REDO)
@@ -370,13 +374,6 @@ class MainWindow(wx.Frame):
 
         super (MainWindow, self).Destroy()
     
-
-    def __onSave(self, event):
-        """
-        Обработчик события принудительного сохранения вики
-        """
-        Application.onForceSave()
-
 
     def __onReload(self, event):
         """

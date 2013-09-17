@@ -42,13 +42,6 @@ class MainMenu (wx.MenuBar):
     def __createFileMenu (self):
         fileMenu = wx.Menu()
 
-        fileMenu.Append (MainId.ID_SAVE, 
-                _("Save") + "\tCtrl+S", 
-                "", 
-                wx.ITEM_NORMAL)
-
-        fileMenu.AppendSeparator()
-
         fileMenu.Append (wx.ID_PRINT, 
                 _("Print") + "\tCtrl+P", 
                 "", 

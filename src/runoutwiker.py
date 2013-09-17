@@ -26,6 +26,7 @@ from outwiker.actions.new import NewAction
 from outwiker.actions.open import OpenAction
 from outwiker.actions.openreadonly import OpenReadOnlyAction
 from outwiker.actions.close import CloseAction
+from outwiker.actions.save import SaveAction
 
 
 class OutWiker(wx.App):
@@ -86,6 +87,9 @@ class OutWiker(wx.App):
         
         # Закрыть
         Application.actionController.register (CloseAction (Application), "Ctrl+Shift+W")
+
+        # Сохранить
+        Application.actionController.register (SaveAction (Application), "Ctrl+S")
 
 
     def _onEndSession (self, event):
