@@ -25,6 +25,7 @@ from outwiker.gui.wxactioncontroller import WxActionController
 from outwiker.actions.new import NewAction
 from outwiker.actions.open import OpenAction
 from outwiker.actions.openreadonly import OpenReadOnlyAction
+from outwiker.actions.close import CloseAction
 
 
 class OutWiker(wx.App):
@@ -82,6 +83,9 @@ class OutWiker(wx.App):
 
         # Открыть только для чтения
         Application.actionController.register (OpenReadOnlyAction (Application), "Ctrl+Shift+O")
+        
+        # Закрыть
+        Application.actionController.register (CloseAction (Application), "Ctrl+Shift+W")
 
 
     def _onEndSession (self, event):

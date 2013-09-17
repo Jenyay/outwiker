@@ -42,11 +42,6 @@ class MainMenu (wx.MenuBar):
     def __createFileMenu (self):
         fileMenu = wx.Menu()
 
-        fileMenu.Append (MainId.ID_CLOSE, 
-                _(u"Close") + "\tCtrl+Shift+W", 
-                "", 
-                wx.ITEM_NORMAL)
-
         fileMenu.Append (MainId.ID_SAVE, 
                 _("Save") + "\tCtrl+S", 
                 "", 

@@ -36,6 +36,7 @@ from toolbars.toolbarscontroller import ToolBarsController
 from outwiker.actions.new import NewAction
 from outwiker.actions.open import OpenAction
 from outwiker.actions.openreadonly import OpenReadOnlyAction
+from outwiker.actions.close import CloseAction
 
 
 class MainWindow(wx.Frame):
@@ -122,6 +123,12 @@ class MainWindow(wx.Frame):
         Application.mainWindow.mainMenu.fileMenu.AppendSeparator()
         Application.mainWindow.mainToolbar.AddSeparator()
 
+        # Закрыть
+        Application.actionController.appendMenuItem (CloseAction.stringId, 
+                Application.mainWindow.mainMenu.fileMenu)
+
+        Application.mainWindow.mainMenu.fileMenu.AppendSeparator()
+
 
     @property
     def mainToolbar (self):
@@ -190,8 +197,6 @@ class MainWindow(wx.Frame):
         """
         Подписаться на события меню, кнопок и т.п.
         """
-        self.Bind (wx.EVT_MENU, self.__onClose, id=MainId.ID_CLOSE)
-
         self.Bind (wx.EVT_MENU, 
                 self.__onOpenReadOnly, 
                 id=MainId.ID_OPEN_READONLY)
@@ -299,13 +304,6 @@ class MainWindow(wx.Frame):
         cmd.closeCurrentTab (Application)
 
 
-    def __onClose (self, event):
-        """
-        Обработчик события закрытия программы
-        """
-        cmd.closeWiki (Application)
-
-    
     def __saveParams (self):
         """
         Сохранить параметры в конфиг
