@@ -21,7 +21,6 @@ from outwiker.core.application import Application
 from outwiker.core.system import getOS, getPluginsDirList, getConfigPath
 from outwiker.core.starter import Starter
 from outwiker.gui.wxactioncontroller import WxActionController
-from outwiker.core.system import getImagesDir
 
 from outwiker.actions.new import NewAction
 from outwiker.actions.open import OpenAction
@@ -57,6 +56,7 @@ class OutWiker(wx.App):
         Application.plugins.load (getPluginsDirList())
 
         self._registerActions()
+        self.mainWnd.addActionsGui()
 
         self.bindActivateApp()
         self.Bind (wx.EVT_QUERY_END_SESSION, self._onEndSession)
@@ -74,41 +74,14 @@ class OutWiker(wx.App):
         from outwiker.pages.html.htmlpage import HtmlPageFactory
         HtmlPageFactory.registerActions (Application)
 
-        imagesDir = getImagesDir()
-
-
         # Открыть...
         Application.actionController.register (OpenAction (Application), "Ctrl+O")
-
-        Application.actionController.appendMenuItem (OpenAction.stringId, 
-                Application.mainWindow.mainMenu.fileMenu)
-
-        Application.actionController.appendToolbarButton (OpenAction.stringId, 
-                Application.mainWindow.mainToolbar,
-                os.path.join (imagesDir, u"open.png"),
-                True)
-
 
         # Создать...
         Application.actionController.register (NewAction (Application), "Ctrl+N")
 
-        Application.actionController.appendMenuItem (NewAction.stringId, 
-                Application.mainWindow.mainMenu.fileMenu)
-
-        Application.actionController.appendToolbarButton (NewAction.stringId, 
-                Application.mainWindow.mainToolbar,
-                os.path.join (imagesDir, u"new.png"),
-                True)
-
-
         # Открыть только для чтения
         Application.actionController.register (OpenReadOnlyAction (Application), "Ctrl+Shift+O")
-
-        Application.actionController.appendMenuItem (OpenReadOnlyAction.stringId, 
-                Application.mainWindow.mainMenu.fileMenu)
-
-        Application.mainWindow.mainMenu.fileMenu.AppendSeparator()
-        Application.mainWindow.mainToolbar.AddSeparator()
 
 
     def _onEndSession (self, event):

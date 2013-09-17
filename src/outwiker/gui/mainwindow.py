@@ -33,6 +33,10 @@ from toolbars.generaltoolbar import GeneralToolBar
 from toolbars.pluginstoolbar import PluginsToolBar
 from toolbars.toolbarscontroller import ToolBarsController
 
+from outwiker.actions.new import NewAction
+from outwiker.actions.open import OpenAction
+from outwiker.actions.openreadonly import OpenReadOnlyAction
+
 
 class MainWindow(wx.Frame):
     def __init__(self, *args, **kwds):
@@ -86,6 +90,37 @@ class MainWindow(wx.Frame):
         self.taskBarIcon = OutwikerTrayIcon(self)
         self.tabsController = TabsController (self.pagePanel.panel.tabsCtrl, 
                 Application)
+
+
+    def addActionsGui (self):
+        imagesDir = getImagesDir()
+
+        # Открыть...
+        Application.actionController.appendMenuItem (OpenAction.stringId, 
+                Application.mainWindow.mainMenu.fileMenu)
+
+        Application.actionController.appendToolbarButton (OpenAction.stringId, 
+                Application.mainWindow.mainToolbar,
+                os.path.join (imagesDir, u"open.png"),
+                True)
+
+
+        # Создать...
+        Application.actionController.appendMenuItem (NewAction.stringId, 
+                Application.mainWindow.mainMenu.fileMenu)
+
+        Application.actionController.appendToolbarButton (NewAction.stringId, 
+                Application.mainWindow.mainToolbar,
+                os.path.join (imagesDir, u"new.png"),
+                True)
+
+
+        # Открыть только для чтения
+        Application.actionController.appendMenuItem (OpenReadOnlyAction.stringId, 
+                Application.mainWindow.mainMenu.fileMenu)
+
+        Application.mainWindow.mainMenu.fileMenu.AppendSeparator()
+        Application.mainWindow.mainToolbar.AddSeparator()
 
 
     @property
