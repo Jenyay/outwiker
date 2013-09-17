@@ -42,11 +42,6 @@ class MainMenu (wx.MenuBar):
     def __createFileMenu (self):
         fileMenu = wx.Menu()
 
-        fileMenu.Append (wx.ID_PRINT, 
-                _("Print") + "\tCtrl+P", 
-                "", 
-                wx.ITEM_NORMAL)
-
         fileMenu.Append (MainId.ID_EXIT, 
                 _(u"Exit…") + "\tAlt+F4", 
                 "", 

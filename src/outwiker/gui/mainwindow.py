@@ -38,6 +38,7 @@ from outwiker.actions.open import OpenAction
 from outwiker.actions.openreadonly import OpenReadOnlyAction
 from outwiker.actions.close import CloseAction
 from outwiker.actions.save import SaveAction
+from outwiker.actions.printaction import PrintAction
 
 
 class MainWindow(wx.Frame):
@@ -106,7 +107,6 @@ class MainWindow(wx.Frame):
                 os.path.join (imagesDir, u"open.png"),
                 True)
 
-
         # Создать...
         Application.actionController.appendMenuItem (NewAction.stringId, 
                 Application.mainWindow.mainMenu.fileMenu)
@@ -115,7 +115,6 @@ class MainWindow(wx.Frame):
                 Application.mainWindow.mainToolbar,
                 os.path.join (imagesDir, u"new.png"),
                 True)
-
 
         # Открыть только для чтения
         Application.actionController.appendMenuItem (OpenReadOnlyAction.stringId, 
@@ -130,6 +129,12 @@ class MainWindow(wx.Frame):
 
         # Сохранить
         Application.actionController.appendMenuItem (SaveAction.stringId, 
+                Application.mainWindow.mainMenu.fileMenu)
+
+        Application.mainWindow.mainMenu.fileMenu.AppendSeparator()
+
+        # Печать
+        Application.actionController.appendMenuItem (PrintAction.stringId, 
                 Application.mainWindow.mainMenu.fileMenu)
 
         Application.mainWindow.mainMenu.fileMenu.AppendSeparator()
@@ -206,7 +211,6 @@ class MainWindow(wx.Frame):
                 self.__onOpenReadOnly, 
                 id=MainId.ID_OPEN_READONLY)
 
-        self.Bind (wx.EVT_MENU, self.__onPrint, id=wx.ID_PRINT)
         self.Bind (wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_UNDO)
         self.Bind (wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_REDO)
         self.Bind (wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_CUT)
@@ -597,13 +601,6 @@ class MainWindow(wx.Frame):
         Обработчик события сортировки братских страниц по алфавиту
         """
         cmd.sortSiblingsAlphabeticalGUI()
-
-
-    def __onPrint(self, event):
-        """
-        Печать текущей страницы
-        """
-        self.pagePanel.panel.Print()
 
 
     def __onAddTagsToBranch (self, event):
