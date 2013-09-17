@@ -55,10 +55,11 @@ class OutWiker(wx.App):
 
         Application.mainWindow = self.mainWnd
         Application.actionController = WxActionController (self.mainWnd)
-        Application.plugins.load (getPluginsDirList())
 
         self._registerActions()
         self.mainWnd.addActionsGui()
+
+        Application.plugins.load (getPluginsDirList())
 
         self.bindActivateApp()
         self.Bind (wx.EVT_QUERY_END_SESSION, self._onEndSession)
