@@ -27,15 +27,15 @@ from outwiker.gui.mainpanes.attachmainpane import AttachMainPane
 from outwiker.gui.mainpanes.treemainpane import TreeMainPane
 from outwiker.gui.mainpanes.pagemainpane import PageMainPane
 from outwiker.gui.tabscontroller import TabsController
-from outwiker.gui.wxactioncontroller import WxActionController
+# from outwiker.gui.wxactioncontroller import WxActionController
 from outwiker.core.system import getImagesDir
 
 from toolbars.generaltoolbar import GeneralToolBar
 from toolbars.pluginstoolbar import PluginsToolBar
 from toolbars.toolbarscontroller import ToolBarsController
 
-from outwiker.actions.open import OpenAction
-from outwiker.actions.openreadonly import OpenReadOnlyAction
+# from outwiker.actions.open import OpenAction
+# from outwiker.actions.openreadonly import OpenReadOnlyAction
 
 
 class MainWindow(wx.Frame):
@@ -90,28 +90,6 @@ class MainWindow(wx.Frame):
         self.taskBarIcon = OutwikerTrayIcon(self)
         self.tabsController = TabsController (self.pagePanel.panel.tabsCtrl, 
                 Application)
-
-        self.actionController = WxActionController(self)
-        self.__addActionsGui()
-
-
-    def __addActionsGui (self):
-        imagesDir = getImagesDir()
-
-        # Открыть...
-        self.actionController.register (OpenAction (Application), "Ctrl+O")
-
-        self.actionController.appendMenuItem (OpenAction.stringId, self.mainMenu.fileMenu)
-
-        self.actionController.appendToolbarButton (OpenAction.stringId, 
-                self.mainToolbar,
-                os.path.join (imagesDir, u"open.png"),
-                True)
-
-        # Открыть только для чтения
-        self.actionController.register (OpenReadOnlyAction (Application), "Ctrl+Shift+O")
-
-        self.actionController.appendMenuItem (OpenReadOnlyAction.stringId, self.mainMenu.fileMenu)
 
 
     @property

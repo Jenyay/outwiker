@@ -43,12 +43,12 @@ class HtmlPagePanel (BaseHtmlPanel):
         Application.onPageUpdate -= self.__onPageUpdate
 
         # Убрать за собой все кнопки и элементы меню
-        self.mainWindow.actionController.removeMenuItem (HtmlBoldAction.stringId)
-        self.mainWindow.actionController.removeMenuItem (HtmlAutoLineWrap.stringId)
+        Application.actionController.removeMenuItem (HtmlBoldAction.stringId)
+        Application.actionController.removeMenuItem (HtmlAutoLineWrap.stringId)
 
         if self._htmlPanelName in self.mainWindow.toolbars:
-            self.mainWindow.actionController.removeToolbarButton (HtmlBoldAction.stringId)
-            self.mainWindow.actionController.removeToolbarButton (HtmlAutoLineWrap.stringId)
+            Application.actionController.removeToolbarButton (HtmlBoldAction.stringId)
+            Application.actionController.removeToolbarButton (HtmlAutoLineWrap.stringId)
 
             self.mainWindow.toolbars.destroyToolBar (self._htmlPanelName)
 
@@ -59,7 +59,7 @@ class HtmlPagePanel (BaseHtmlPanel):
         """
         Обработка события при переключении на код страницы
         """
-        actionController = self.mainWindow.actionController
+        actionController = Application.actionController
 
         actionController.enableTools (HtmlBoldAction.stringId, True)
         super (HtmlPagePanel, self)._onSwitchToCode()
@@ -69,7 +69,7 @@ class HtmlPagePanel (BaseHtmlPanel):
         """
         Обработка события при переключении на просмотр страницы
         """
-        actionController = self.mainWindow.actionController
+        actionController = Application.actionController
 
         actionController.enableTools (HtmlBoldAction.stringId, False)
         super (HtmlPagePanel, self)._onSwitchToPreview()
@@ -94,8 +94,8 @@ class HtmlPagePanel (BaseHtmlPanel):
         toolbarName = "html"
         toolbar = self.mainWindow.toolbars[toolbarName]
 
-        self.mainWindow.actionController.appendMenuCheckItem (HtmlAutoLineWrap.stringId, self.__htmlMenu)
-        self.mainWindow.actionController.appendToolbarCheckButton (HtmlAutoLineWrap.stringId, 
+        Application.actionController.appendMenuCheckItem (HtmlAutoLineWrap.stringId, self.__htmlMenu)
+        Application.actionController.appendToolbarCheckButton (HtmlAutoLineWrap.stringId, 
                 toolbar,
                 image,
                 fullUpdate=False)
@@ -105,7 +105,7 @@ class HtmlPagePanel (BaseHtmlPanel):
 
     def __updateLineWrapTools (self):
         if self._currentpage != None:
-            self.mainWindow.actionController.check (HtmlAutoLineWrap.stringId, 
+            Application.actionController.check (HtmlAutoLineWrap.stringId, 
                     self._currentpage.autoLineWrap)
 
 
@@ -160,8 +160,8 @@ class HtmlPagePanel (BaseHtmlPanel):
         toolbar = self.mainWindow.toolbars[toolbarName]
 
         # Полужирный шрифт
-        self.mainWindow.actionController.appendMenuItem (HtmlBoldAction.stringId, self.__fontMenu)
-        self.mainWindow.actionController.appendToolbarButton (HtmlBoldAction.stringId, 
+        Application.actionController.appendMenuItem (HtmlBoldAction.stringId, self.__fontMenu)
+        Application.actionController.appendToolbarButton (HtmlBoldAction.stringId, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_bold.png"),
                 fullUpdate=False)

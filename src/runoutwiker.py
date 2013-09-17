@@ -20,6 +20,11 @@ import wx
 from outwiker.core.application import Application
 from outwiker.core.system import getOS, getPluginsDirList, getConfigPath
 from outwiker.core.starter import Starter
+from outwiker.gui.wxactioncontroller import WxActionController
+from outwiker.core.system import getImagesDir
+
+from outwiker.actions.open import OpenAction
+from outwiker.actions.openreadonly import OpenReadOnlyAction
 
 
 class OutWiker(wx.App):
@@ -45,7 +50,9 @@ class OutWiker(wx.App):
         wx.InitAllImageHandlers()
         self.mainWnd = MainWindow(None, -1, "")
         self.SetTopWindow (self.mainWnd)
+
         Application.mainWindow = self.mainWnd
+        Application.actionController = WxActionController (self.mainWnd)
         Application.plugins.load (getPluginsDirList())
 
         self._registerActions()
@@ -65,6 +72,27 @@ class OutWiker(wx.App):
         """
         from outwiker.pages.html.htmlpage import HtmlPageFactory
         HtmlPageFactory.registerActions (Application)
+
+        imagesDir = getImagesDir()
+
+
+        # Открыть...
+        Application.actionController.register (OpenAction (Application), "Ctrl+O")
+
+        Application.actionController.appendMenuItem (OpenAction.stringId, 
+                Application.mainWindow.mainMenu.fileMenu)
+
+        Application.actionController.appendToolbarButton (OpenAction.stringId, 
+                Application.mainWindow.mainToolbar,
+                os.path.join (imagesDir, u"open.png"),
+                True)
+
+
+        # Открыть только для чтения
+        Application.actionController.register (OpenReadOnlyAction (Application), "Ctrl+Shift+O")
+
+        Application.actionController.appendMenuItem (OpenReadOnlyAction.stringId, 
+                Application.mainWindow.mainMenu.fileMenu)
 
 
     def _onEndSession (self, event):

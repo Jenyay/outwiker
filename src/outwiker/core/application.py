@@ -17,6 +17,7 @@ class ApplicationParams (object):
         self.__mainWindow = None
         self.config = None
         self.recentWiki = None
+        self.actionController = None
         self.plugins = PluginsLoader (self)
 
         # Создать экземпляры событий

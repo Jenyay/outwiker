@@ -9,6 +9,7 @@ from outwiker.core.application import Application
 from outwiker.gui.mainwindow import MainWindow
 from outwiker.gui.guiconfig import GeneralGuiConfig
 from outwiker.pages.html.htmlpage import HtmlPageFactory
+from outwiker.gui.wxactioncontroller import WxActionController
 
 
 class BaseMainWndTest(unittest.TestCase):
@@ -34,6 +35,7 @@ class BaseMainWndTest(unittest.TestCase):
 
         self.wnd = MainWindow (None, -1, "")
         Application.mainWindow = self.wnd
+        Application.actionController = WxActionController (self.wnd)
         wx.GetApp().SetTopWindow (self.wnd)
 
         # Зарегистрировать действия для всех типов страниц

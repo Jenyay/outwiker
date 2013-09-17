@@ -41,7 +41,7 @@ class PluginDebug (Plugin):
             toolbar = mainWindow.toolbars[mainWindow.PLUGINS_TOOLBAR_STR]
             image = self.getImagePath ("bug.png")
 
-            controller = mainWindow.actionController
+            controller = self._application.actionController
             
             controller.register (action, hotkey=hotkey)
 
@@ -55,7 +55,7 @@ class PluginDebug (Plugin):
         mainWindow = self._application.mainWindow
 
         if mainWindow != None and mainWindow.PLUGINS_TOOLBAR_STR in mainWindow.toolbars:
-            mainWindow.actionController.removeAction (DebugAction().strid)
+            self._application.actionController.removeAction (DebugAction().strid)
 
 
     def getImagePath (self, imageName):

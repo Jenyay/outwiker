@@ -66,14 +66,14 @@ class HtmlPageFactory (PageFactory):
         """
         Зарегистрировать все действия, связанные с HTML-страницей
         """
-        application.mainWindow.actionController.register (HtmlBoldAction (application), "Ctrl+B")
-        application.mainWindow.actionController.register (HtmlAutoLineWrap (application), "")
+        application.actionController.register (HtmlBoldAction (application), "Ctrl+B")
+        application.actionController.register (HtmlAutoLineWrap (application), "")
 
 
     @staticmethod
     def removeActions (application):
-        application.mainWindow.actionController.removeAction (HtmlBoldAction.stringId)
-        application.mainWindow.actionController.removeAction (HtmlAutoLineWrap.stringId)
+        application.actionController.removeAction (HtmlBoldAction.stringId)
+        application.actionController.removeAction (HtmlAutoLineWrap.stringId)
 
 
     # Название страницы, показываемое пользователю
