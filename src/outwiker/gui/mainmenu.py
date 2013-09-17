@@ -13,11 +13,10 @@ class MainMenu (wx.MenuBar):
     """
     Класс главного окна
     """
-
     def __init__ (self):
         wx.MenuBar.__init__ (self)
 
-        self.fileMenu = self.__createFileMenu ()
+        self.fileMenu = wx.Menu()
         self.Append(self.fileMenu, _("File"))
 
         self.editMenu = self.__createEditMenu()
@@ -37,19 +36,6 @@ class MainMenu (wx.MenuBar):
 
         self.helpMenu = self.__createHelpMenu ()
         self.Append(self.helpMenu, _("Help"))
-
-
-    def __createFileMenu (self):
-        fileMenu = wx.Menu()
-
-        fileMenu.Append (MainId.ID_EXIT, 
-                _(u"Exit…") + "\tAlt+F4", 
-                "", 
-                wx.ITEM_NORMAL)
-
-        fileMenu.AppendSeparator()
-    
-        return fileMenu
 
 
     def __createEditMenu (self):

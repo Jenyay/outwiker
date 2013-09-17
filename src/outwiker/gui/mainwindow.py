@@ -39,6 +39,7 @@ from outwiker.actions.openreadonly import OpenReadOnlyAction
 from outwiker.actions.close import CloseAction
 from outwiker.actions.save import SaveAction
 from outwiker.actions.printaction import PrintAction
+from outwiker.actions.exit import ExitAction
 
 
 class MainWindow(wx.Frame):
@@ -135,6 +136,10 @@ class MainWindow(wx.Frame):
 
         # Печать
         Application.actionController.appendMenuItem (PrintAction.stringId, 
+                Application.mainWindow.mainMenu.fileMenu)
+
+        # Выход
+        Application.actionController.appendMenuItem (ExitAction.stringId, 
                 Application.mainWindow.mainMenu.fileMenu)
 
         Application.mainWindow.mainMenu.fileMenu.AppendSeparator()

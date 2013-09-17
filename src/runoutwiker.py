@@ -28,6 +28,7 @@ from outwiker.actions.openreadonly import OpenReadOnlyAction
 from outwiker.actions.close import CloseAction
 from outwiker.actions.save import SaveAction
 from outwiker.actions.printaction import PrintAction
+from outwiker.actions.exit import ExitAction
 
 
 class OutWiker(wx.App):
@@ -95,6 +96,9 @@ class OutWiker(wx.App):
 
         # Печать
         Application.actionController.register (PrintAction (Application), "Ctrl+P")
+
+        # Выход
+        Application.actionController.register (ExitAction (Application), "Alt+F4")
 
 
     def _onEndSession (self, event):
