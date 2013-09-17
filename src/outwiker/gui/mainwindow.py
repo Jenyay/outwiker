@@ -155,7 +155,6 @@ class MainWindow(wx.Frame):
         """
         Подписаться на события меню, кнопок и т.п.
         """
-        self.Bind (wx.EVT_MENU, self.__onNew, id=MainId.ID_NEW)
         self.Bind (wx.EVT_MENU, self.__onClose, id=MainId.ID_CLOSE)
 
         self.Bind (wx.EVT_MENU, 
@@ -215,7 +214,6 @@ class MainWindow(wx.Frame):
 
         self.Bind (wx.EVT_MENU, self.__onHelp, id=MainId.ID_HELP)
         self.Bind (wx.EVT_MENU, self.__onAbout, id=MainId.ID_ABOUT)
-        self.Bind (wx.EVT_TOOL, self.__onNew, id=MainId.ID_NEW)
         self.Bind (wx.EVT_TOOL, self.__onReload, id=MainId.ID_RELOAD)
         self.Bind (wx.EVT_TOOL, self.__onAttach, id=MainId.ID_ATTACH)
 
@@ -339,13 +337,6 @@ class MainWindow(wx.Frame):
 
         super (MainWindow, self).Destroy()
     
-
-    def __onNew(self, event):
-        """
-        Обработчик события создания новой вики
-        """
-        cmd.createNewWiki(self)
-
 
     def __onSave(self, event):
         """

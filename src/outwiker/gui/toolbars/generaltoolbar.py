@@ -17,12 +17,6 @@ class GeneralToolBar (BaseToolBar):
 
         self.imagesDir = getImagesDir()
 
-        self.AddTool(MainId.ID_NEW, 
-                _(u"New…"), 
-                wx.Bitmap(os.path.join (self.imagesDir, "new.png"), wx.BITMAP_TYPE_ANY), 
-                _(u"Create new wiki…"),
-                fullUpdate=False)
-
         self.AddTool(MainId.ID_RELOAD, 
                 _("Reload"), 
                 wx.Bitmap(os.path.join (self.imagesDir, "reload.png"), wx.BITMAP_TYPE_ANY), 
