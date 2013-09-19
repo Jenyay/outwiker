@@ -58,7 +58,6 @@ class MainWindow(wx.Frame):
 
         self.mainMenu = MainMenu()
         self.SetMenuBar(self.mainMenu)
-        self.updateShortcuts()
 
         self.__createStatusBar()
 
@@ -83,9 +82,6 @@ class MainWindow(wx.Frame):
         self.__bindGuiEvents()
 
         self._dropTarget = DropFilesTarget (self.attachPanel.panel)
-        self.controller.enableGui()
-        self.controller.updateRecentMenu()
-        self.__panesController.updateViewMenu()
         self.Show()
 
         if self.mainWindowConfig.maximized.value:
@@ -96,7 +92,21 @@ class MainWindow(wx.Frame):
                 Application)
 
 
-    def addActionsGui (self):
+    def createGui (self):
+        """
+        Создать пункты меню, кнопки на панелях инструментов и т.п.
+        """
+        self._addActionsGui()
+        self.controller.enableGui()
+        self.controller.updateRecentMenu()
+        self.__panesController.updateViewMenu()
+        self.updateShortcuts()
+
+
+    def _addActionsGui (self):
+        """
+        Создать элементы интерфейса, привязанные к actions
+        """
         imagesDir = getImagesDir()
 
         # Открыть...
@@ -143,6 +153,8 @@ class MainWindow(wx.Frame):
                 Application.mainWindow.mainMenu.fileMenu)
 
         Application.mainWindow.mainMenu.fileMenu.AppendSeparator()
+
+        Application.mainWindow.mainMenu.UpdateMenus()
 
 
     @property

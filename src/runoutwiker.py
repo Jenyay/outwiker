@@ -59,7 +59,7 @@ class OutWiker(wx.App):
         Application.actionController = WxActionController (self.mainWnd)
 
         self._registerActions()
-        self.mainWnd.addActionsGui()
+        self.mainWnd.createGui()
 
         Application.plugins.load (getPluginsDirList())
 
