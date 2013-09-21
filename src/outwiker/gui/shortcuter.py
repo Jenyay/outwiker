@@ -135,7 +135,6 @@ class Shortcuter (object):
         for menuitem, position in zip (menuitems, range (len (menuitems))):
             title = self._getText (menuitem, position)
             shortcut = self._extractShortcut (title)
-            # print title
 
             if len (shortcut) == 0:
                 newtitle, newshortcut = self._findNewShortcut (title, shortcuts)
@@ -186,11 +185,21 @@ class Shortcuter (object):
         """
         if isinstance (menuitem, wx.MenuItem):
             menuitem.SetItemLabel (title)
+            checkable = menuitem.IsCheckable()
+            checked = menuitem.IsChecked()
 
             # Без удаления пункта не хотят появляться подчеркивания
             menu = menuitem.GetMenu()
             menu.RemoveItem (menuitem)
+
             menu.InsertItem (position, menuitem)
+
+            if checkable:
+                # После удаления пункта меню пропадает его "чекабельность"
+                # Только таким образом ее удается восстановить (по крайней мере под Unity)
+                menuitem.Check(False)
+                menuitem.Check (checked)
+
         elif isinstance (menuitem, wx.Menu):
             menubar = menuitem.GetMenuBar()
             menubar.SetMenuLabel (position, title)
