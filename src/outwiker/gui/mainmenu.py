@@ -235,33 +235,6 @@ class MainMenu (wx.MenuBar):
     def __createViewMenu (self):
         viewMenu = wx.Menu()
 
-        self.viewNotes = wx.MenuItem(
-                viewMenu, 
-                MainId.ID_VIEW_TREE, 
-                _("Notes Tree"), 
-                "", 
-                wx.ITEM_CHECK)
-        viewMenu.AppendItem(self.viewNotes)
-
-        self.viewAttaches = wx.MenuItem(
-                viewMenu, 
-                MainId.ID_VIEW_ATTACHES, 
-                _("Attachments"), 
-                "", 
-                wx.ITEM_CHECK)
-        viewMenu.AppendItem(self.viewAttaches)
-
-
-        self.viewTagsCloud = wx.MenuItem(
-                viewMenu, 
-                MainId.ID_VIEW_TAGSCLOUD, 
-                _("Tags"), 
-                "", 
-                wx.ITEM_CHECK)
-        viewMenu.AppendItem(self.viewTagsCloud)
-
-        viewMenu.AppendSeparator()
-
         self.viewFullscreen = wx.MenuItem(
                 viewMenu, 
                 MainId.ID_VIEW_FULLSCREEN, 

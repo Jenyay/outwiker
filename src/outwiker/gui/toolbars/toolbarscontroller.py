@@ -20,7 +20,7 @@ class ToolBarsController (object):
 
         # Подменю для показа скрытия панелей
         self._toolbarsMenu = wx.Menu()
-        self._parent.mainMenu.viewMenu.InsertMenu (3, -1, _(u"&Toolbars"), self._toolbarsMenu)
+        self._parent.mainMenu.viewMenu.AppendMenu (-1, _(u"&Toolbars"), self._toolbarsMenu)
         self._parent.auiManager.Bind (wx.aui.EVT_AUI_PANE_CLOSE, self.__onPaneClose)
 
 

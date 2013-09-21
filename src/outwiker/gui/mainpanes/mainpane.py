@@ -12,16 +12,14 @@ class MainPane (object):
     """
     __metaclass__ = ABCMeta
 
-    def __init__ (self, parent, auiManager, application, menuItem):
+    def __init__ (self, parent, auiManager, application):
         """
         parent - родитель панели
         application - экземпляр outwiker.core.application.ApplicationParams
-        menuItem - пункт меню, который отвечает за отображение/скрытие панели
         """
         self._parent = parent
         self._auiManager = auiManager
         self._application = application
-        self._menuItem = menuItem
         self._panel = self._createPanel()
         self._config = self._createConfig()
 
@@ -108,11 +106,6 @@ class MainPane (object):
     @property
     def config (self):
         return self._config
-
-
-    @property
-    def menuItem (self):
-        return self._menuItem
 
 
     @property

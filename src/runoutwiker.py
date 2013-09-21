@@ -29,6 +29,9 @@ from outwiker.actions.close import CloseAction
 from outwiker.actions.save import SaveAction
 from outwiker.actions.printaction import PrintAction
 from outwiker.actions.exit import ExitAction
+from outwiker.actions.showhideattaches import ShowHideAttachesAction
+from outwiker.actions.showhidetree import ShowHideTreeAction
+from outwiker.actions.showhidetags import ShowHideTagsAction
 
 
 class OutWiker(wx.App):
@@ -99,6 +102,15 @@ class OutWiker(wx.App):
 
         # Выход
         Application.actionController.register (ExitAction (Application), "Alt+F4")
+
+        # Показать / скрыть панель с прикрепленными файлами
+        Application.actionController.register (ShowHideAttachesAction (Application), "")
+
+        # Показать / скрыть панель с деревом заметок
+        Application.actionController.register (ShowHideTreeAction (Application), "")
+
+        # Показать / скрыть панель с тегами
+        Application.actionController.register (ShowHideTagsAction (Application), "")
 
 
     def _onEndSession (self, event):

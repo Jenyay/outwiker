@@ -77,7 +77,7 @@ class MainWindow(wx.Frame):
         self.toolbars[self.PLUGINS_TOOLBAR_STR] = PluginsToolBar (self, 
                 self.auiManager)
 
-        self.__panesController = MainPanesController (self, self.auiManager)
+        self.__panesController = MainPanesController (Application, self)
 
         self.__bindGuiEvents()
 
@@ -154,7 +154,7 @@ class MainWindow(wx.Frame):
 
         Application.mainWindow.mainMenu.fileMenu.AppendSeparator()
 
-        Application.mainWindow.mainMenu.UpdateMenus()
+        self.__panesController.createViewMenuItems ()
 
 
     @property
@@ -186,26 +186,22 @@ class MainWindow(wx.Frame):
         self.pagePanel = PageMainPane (
                 self, 
                 self.auiManager, 
-                Application, 
-                None)
+                Application)
 
         self.treePanel = TreeMainPane (
                 self, 
                 self.auiManager, 
-                Application, 
-                self.mainMenu.viewNotes)
+                Application)
 
         self.attachPanel = AttachMainPane (
                 self, 
                 self.auiManager, 
-                Application, 
-                self.mainMenu.viewAttaches)
+                Application)
 
         self.tagsCloudPanel = TagsCloudMainPane (
                 self, 
                 self.auiManager, 
-                Application, 
-                self.mainMenu.viewTagsCloud)
+                Application)
 
 
     def __createStatusBar (self):

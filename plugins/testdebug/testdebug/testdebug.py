@@ -36,19 +36,22 @@ class PluginDebug (Plugin):
         mainWindow = self._application.mainWindow
 
         if mainWindow != None and mainWindow.PLUGINS_TOOLBAR_STR in mainWindow.toolbars:
-            action = DebugAction()
+            action = DebugAction(self._application)
             hotkey = "Ctrl+Shift+Alt+T"
             toolbar = mainWindow.toolbars[mainWindow.PLUGINS_TOOLBAR_STR]
             image = self.getImagePath ("bug.png")
 
             controller = self._application.actionController
-            
+
             controller.register (action, hotkey=hotkey)
 
             controller.appendMenuCheckItem (action.strid, self.menu)
             controller.appendToolbarCheckButton (action.strid, 
                     toolbar,
                     image)
+
+            # controller.check (action.strid, True)
+            # mainWindow.updateShortcuts()
 
 
     def __removeTestAction (self):
