@@ -39,6 +39,10 @@ class WxActionController (object):
         return self._actionsInfo.values()
 
 
+    def getAction (self, strid):
+        return self._actionsInfo[strid].action
+
+
     def register (self, action, hotkey=u""):
         """
         Добавить действие в словарь. При этом никаких элементов интерфейса не создается

@@ -582,6 +582,25 @@ class ActionControllerTest (BaseMainWndTest):
         self.actionController.enableTools (action.strid, False)
 
 
+    def testGetActions1 (self):
+        action1 = TestAction()
+        action2 = TestCheckAction()
+
+        self.actionController.register (action1)
+        self.actionController.register (action2)
+
+        self.assertEqual (self.actionController.getAction(action1.strid), action1)
+        self.assertEqual (self.actionController.getAction(action2.strid), action2)
+
+
+    def testGetActions2 (self):
+        action1 = TestAction()
+        action2 = TestCheckAction()
+        self.actionController.register (action1)
+
+        self.assertRaises (KeyError, self.actionController.getAction, action2.strid)
+
+
     def _assertMenuItemExists (self, menu, title, hotkey):
         """
         Проверить, что в меню есть элемент с заголовком (title + '\t' + hotkey)

@@ -14,20 +14,13 @@ class MainPanesController (object):
         self.__mainWindow = mainWindow
         self.auiManager = mainWindow.auiManager
 
-        self.__panes = [self.__mainWindow.attachPanel,
-                self.__mainWindow.treePanel,
-                self.__mainWindow.tagsCloudPanel]
-
         self.__actions = [ShowHideTreeAction, 
                 ShowHideTagsAction,
                 ShowHideAttachesAction]
 
-        self.loadPanesSize()
-
         self.auiManager.Bind (wx.aui.EVT_AUI_PANE_CLOSE, self.__onPaneClose)
 
         self.auiManager.SetDockSizeConstraint (0.8, 0.8)
-        self.auiManager.Update()
 
 
     def createViewMenuItems (self):
@@ -38,48 +31,63 @@ class MainPanesController (object):
     def __onPaneClose (self, event):
         paneName = event.GetPane().name
 
-        if paneName == self.auiManager.GetPane (self.__mainWindow.attachPanel.panel).name:
-            self.__application.actionController.check (ShowHideAttachesAction.stringId, False)
-
-        elif paneName == self.auiManager.GetPane (self.__mainWindow.treePanel.panel).name:
-            self.__application.actionController.check (ShowHideTreeAction.stringId, False)
-
-        elif paneName == self.auiManager.GetPane (self.__mainWindow.tagsCloudPanel.panel).name:
-            self.__application.actionController.check (ShowHideTagsAction.stringId, False)
-
-        # for action in self.__actions:
-        #     if paneName == self.auiManager.GetPane (action.getPanel().panel).name:
-        #         self.__application.actionController.check (action.stringId, False)
+        for action in self.__getAllActions():
+            if paneName == self.auiManager.GetPane (action.getPanel().panel).name:
+                self.__application.actionController.check (action.stringId, False)
 
         event.Skip()
 
 
+    def __getAllActions (self):
+        """
+        Возвращает список всех _экземпляров_ действий
+        """
+        return [self.__application.actionController.getAction (actionType.stringId)
+                for actionType in self.__actions]
+
+
     def showPanes (self):
-        map (lambda pane: pane.show(), self.__panes)
+        """
+        Показать все панели
+        """
+        map (lambda action: action.getPanel().show(), self.__getAllActions())
         self.auiManager.Update()
 
 
     def hidePanes (self):
-        map (lambda pane: pane.hide(), self.__panes)
+        """
+        Скрыть все панели
+        """
+        map (lambda action: action.getPanel().hide(), self.__getAllActions())
         self.auiManager.Update()
 
 
     def closePanes (self):
-        map (lambda pane: pane.close(), self.__panes)
+        """
+        Закрыть все панели
+        """
+        map (lambda action: action.getPanel().close(), self.__getAllActions())
 
 
     def loadPanesSize (self):
-        map (lambda pane: pane.loadPaneSize(), self.__panes)
+        """
+        Загрузить размеры всех панелей
+        """
+        map (lambda action: action.getPanel().loadPaneSize(), self.__getAllActions())
+        self.auiManager.Update()
 
 
     def savePanesParams (self):
         """
-        Сохранить размеры панелей
+        Сохранить размеры всех панелей
         """
-        map (lambda pane: pane.saveParams(), self.__panes)
+        map (lambda action: action.getPanel().saveParams(), self.__getAllActions())
 
 
     def updateViewMenu (self):
+        """
+        Установить флажки напротив нужных пунктов меню "Вид", относящихся к панелям
+        """
         self.__mainWindow.mainMenu.viewFullscreen.Check (self.__mainWindow.IsFullScreen())
 
         self.__application.actionController.check (ShowHideAttachesAction.stringId, 

@@ -96,6 +96,7 @@ class MainWindow(wx.Frame):
         """
         Создать пункты меню, кнопки на панелях инструментов и т.п.
         """
+        self.__panesController.loadPanesSize ()
         self._addActionsGui()
         self.controller.enableGui()
         self.controller.updateRecentMenu()
