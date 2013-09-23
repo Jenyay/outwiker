@@ -6,6 +6,7 @@ import unittest
 import wx
 
 from outwiker.core.application import Application
+from outwiker.core.commands import registerActions
 from outwiker.gui.mainwindow import MainWindow
 from outwiker.gui.guiconfig import GeneralGuiConfig
 from outwiker.pages.html.htmlpage import HtmlPageFactory
@@ -42,17 +43,8 @@ class BaseMainWndTest(unittest.TestCase):
         Application.actionController = WxActionController (self.wnd)
         wx.GetApp().SetTopWindow (self.wnd)
 
-        # Зарегистрировать действия для всех типов страниц
-        HtmlPageFactory.registerActions (Application)
-
-        # Показать / скрыть панель с прикрепленными файлами
-        Application.actionController.register (ShowHideAttachesAction (Application), "")
-
-        # Показать / скрыть панель с деревом заметок
-        Application.actionController.register (ShowHideTreeAction (Application), "")
-
-        # Показать / скрыть панель с тегами
-        Application.actionController.register (ShowHideTagsAction (Application), "")
+        registerActions (Application)
+        self.wnd.createGui()
 
 
     def tearDown (self):

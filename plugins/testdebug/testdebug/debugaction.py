@@ -28,5 +28,4 @@ class DebugAction (BaseAction):
 
 
     def run (self, params):
-        self._application.mainWindow.updateViewMenu()
         print u"DebugAction.run({0})".format (params)

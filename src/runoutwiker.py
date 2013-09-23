@@ -20,18 +20,8 @@ import wx
 from outwiker.core.application import Application
 from outwiker.core.system import getOS, getPluginsDirList, getConfigPath
 from outwiker.core.starter import Starter
+from outwiker.core.commands import registerActions
 from outwiker.gui.wxactioncontroller import WxActionController
-
-from outwiker.actions.new import NewAction
-from outwiker.actions.open import OpenAction
-from outwiker.actions.openreadonly import OpenReadOnlyAction
-from outwiker.actions.close import CloseAction
-from outwiker.actions.save import SaveAction
-from outwiker.actions.printaction import PrintAction
-from outwiker.actions.exit import ExitAction
-from outwiker.actions.showhideattaches import ShowHideAttachesAction
-from outwiker.actions.showhidetree import ShowHideTreeAction
-from outwiker.actions.showhidetags import ShowHideTagsAction
 
 
 class OutWiker(wx.App):
@@ -61,7 +51,7 @@ class OutWiker(wx.App):
         Application.mainWindow = self.mainWnd
         Application.actionController = WxActionController (self.mainWnd)
 
-        self._registerActions()
+        registerActions(Application)
         self.mainWnd.createGui()
 
         Application.plugins.load (getPluginsDirList())
@@ -73,44 +63,6 @@ class OutWiker(wx.App):
         starter.process()
         
         return True
-
-
-    def _registerActions (self):
-        """
-        Зарегистрировать действия, связанные с разными типами страниц
-        """
-        from outwiker.pages.html.htmlpage import HtmlPageFactory
-        HtmlPageFactory.registerActions (Application)
-
-        # Открыть...
-        Application.actionController.register (OpenAction (Application), "Ctrl+O")
-
-        # Создать...
-        Application.actionController.register (NewAction (Application), "Ctrl+N")
-
-        # Открыть только для чтения
-        Application.actionController.register (OpenReadOnlyAction (Application), "Ctrl+Shift+O")
-        
-        # Закрыть
-        Application.actionController.register (CloseAction (Application), "Ctrl+Shift+W")
-
-        # Сохранить
-        Application.actionController.register (SaveAction (Application), "Ctrl+S")
-
-        # Печать
-        Application.actionController.register (PrintAction (Application), "Ctrl+P")
-
-        # Выход
-        Application.actionController.register (ExitAction (Application), "Alt+F4")
-
-        # Показать / скрыть панель с прикрепленными файлами
-        Application.actionController.register (ShowHideAttachesAction (Application), "")
-
-        # Показать / скрыть панель с деревом заметок
-        Application.actionController.register (ShowHideTreeAction (Application), "")
-
-        # Показать / скрыть панель с тегами
-        Application.actionController.register (ShowHideTagsAction (Application), "")
 
 
     def _onEndSession (self, event):
