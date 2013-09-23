@@ -647,20 +647,10 @@ class ActionControllerTest (BaseMainWndTest):
         self.wnd.ProcessEvent (event)
 
 
-    def _getActionInfo (self, strid):
-        result = None
-        for actionInfo in self.actionController.actions:
-            if actionInfo.action.strid == strid:
-                result = actionInfo
-                break
-
-        return result
-
-
     def _getMenuItemId (self, strid):
         result = None
        
-        actionInfo = self._getActionInfo(strid)
+        actionInfo = self.actionController.getActionInfo(strid)
         if actionInfo != None:
             result = actionInfo.menuItem.GetId()
 
@@ -670,7 +660,7 @@ class ActionControllerTest (BaseMainWndTest):
     def _getMenuItem (self, strid):
         result = None
        
-        actionInfo = self._getActionInfo(strid)
+        actionInfo = self.actionController.getActionInfo(strid)
         if actionInfo != None:
             result = actionInfo.menuItem
 
@@ -683,7 +673,7 @@ class ActionControllerTest (BaseMainWndTest):
         """
         result = None
        
-        actionInfo = self._getActionInfo(strid)
+        actionInfo = self.actionController.getActionInfo(strid)
         if actionInfo != None:
             result = actionInfo.toolItemId
 
@@ -717,7 +707,7 @@ class ActionControllerTest (BaseMainWndTest):
         """
         result = None
        
-        actionInfo = self._getActionInfo(strid)
+        actionInfo = self.actionController.getActionInfo(strid)
         if actionInfo != None:
             result = actionInfo.hotkey
 

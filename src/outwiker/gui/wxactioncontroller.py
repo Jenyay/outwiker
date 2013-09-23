@@ -43,6 +43,14 @@ class WxActionController (object):
         return self._actionsInfo[strid].action
 
 
+    def getActionInfo (self, strid):
+        """
+        Возвращает всю информацию о зарегистрированном action.
+        Используется только для тестирования!!!
+        """
+        return self._actionsInfo[strid]
+
+
     def register (self, action, hotkey=u""):
         """
         Добавить действие в словарь. При этом никаких элементов интерфейса не создается
