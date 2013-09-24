@@ -40,6 +40,7 @@ from outwiker.actions.close import CloseAction
 from outwiker.actions.save import SaveAction
 from outwiker.actions.printaction import PrintAction
 from outwiker.actions.exit import ExitAction
+from outwiker.actions.fullscreen import FullScreenAction
 
 
 class MainWindow(wx.Frame):
@@ -103,6 +104,9 @@ class MainWindow(wx.Frame):
         self.__panesController.updateViewMenu()
         self.updateShortcuts()
 
+        if self.mainWindowConfig.fullscreen.value:
+            Application.actionController.check (FullScreenAction.stringId, True)
+
 
     def _addActionsGui (self):
         """
@@ -156,6 +160,12 @@ class MainWindow(wx.Frame):
         Application.mainWindow.mainMenu.fileMenu.AppendSeparator()
 
         self.__panesController.createViewMenuItems ()
+
+        Application.mainWindow.mainMenu.viewMenu.AppendSeparator()
+
+        # Полноэкранный режим
+        Application.actionController.appendMenuCheckItem (FullScreenAction.stringId, 
+                self.mainMenu.viewMenu)
 
 
     @property
@@ -269,10 +279,6 @@ class MainWindow(wx.Frame):
 
         self.Bind (wx.EVT_MENU, self.__onCopyLink, id=MainId.ID_COPY_LINK)
         self.Bind (wx.EVT_MENU, self.__onReload, id=MainId.ID_RELOAD)
-
-        self.Bind (wx.EVT_MENU, 
-                self.__onFullscreen, 
-                self.mainMenu.viewFullscreen)
 
         self.Bind (wx.EVT_MENU, self.__onHelp, id=MainId.ID_HELP)
         self.Bind (wx.EVT_MENU, self.__onAbout, id=MainId.ID_ABOUT)
@@ -544,13 +550,6 @@ class MainWindow(wx.Frame):
         dlg = PrefDialog (self)
         dlg.ShowModal()
         dlg.Destroy()
-    
-
-    def __onFullscreen(self, event):
-        """
-        Обработчик события переключения в полноэкранный режим
-        """
-        self.setFullscreen(not self.IsFullScreen())
 
 
     def setFullscreen (self, fullscreen):

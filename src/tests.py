@@ -112,6 +112,7 @@ if __name__ == '__main__':
     from test.guitests.htmlpagepanel import HtmlPagePanelTest
     from test.guitests.actioncontroller import ActionControllerTest
     from test.guitests.mainpanes import MainPanesTest
+    from test.guitests.fullscreen import FullScreenTest
 
     from test.plugins.loader import PluginsLoaderTest
     from test.plugins.testwikicommand import PluginWikiCommandTest

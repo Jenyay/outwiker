@@ -88,8 +88,6 @@ class MainPanesController (object):
         """
         Установить флажки напротив нужных пунктов меню "Вид", относящихся к панелям
         """
-        self.__mainWindow.mainMenu.viewFullscreen.Check (self.__mainWindow.IsFullScreen())
-
         self.__application.actionController.check (ShowHideAttachesAction.stringId, 
                 self.__mainWindow.attachPanel.isShown())
 

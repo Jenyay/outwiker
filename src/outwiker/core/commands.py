@@ -646,46 +646,49 @@ def registerActions (application):
     """
     Зарегистрировать действия, связанные с разными типами страниц
     """
-    from outwiker.actions.new import NewAction
-    from outwiker.actions.open import OpenAction
-    from outwiker.actions.openreadonly import OpenReadOnlyAction
-    from outwiker.actions.close import CloseAction
-    from outwiker.actions.save import SaveAction
-    from outwiker.actions.printaction import PrintAction
-    from outwiker.actions.exit import ExitAction
-    from outwiker.actions.showhideattaches import ShowHideAttachesAction
-    from outwiker.actions.showhidetree import ShowHideTreeAction
-    from outwiker.actions.showhidetags import ShowHideTagsAction
-
     from outwiker.pages.html.htmlpage import HtmlPageFactory
     HtmlPageFactory.registerActions (application)
 
     # Открыть...
+    from outwiker.actions.open import OpenAction
     application.actionController.register (OpenAction (application), "Ctrl+O")
 
     # Создать...
+    from outwiker.actions.new import NewAction
     application.actionController.register (NewAction (application), "Ctrl+N")
 
     # Открыть только для чтения
+    from outwiker.actions.openreadonly import OpenReadOnlyAction
     application.actionController.register (OpenReadOnlyAction (application), "Ctrl+Shift+O")
     
     # Закрыть
+    from outwiker.actions.close import CloseAction
     application.actionController.register (CloseAction (application), "Ctrl+Shift+W")
 
     # Сохранить
+    from outwiker.actions.save import SaveAction
     application.actionController.register (SaveAction (application), "Ctrl+S")
 
     # Печать
+    from outwiker.actions.printaction import PrintAction
     application.actionController.register (PrintAction (application), "Ctrl+P")
 
     # Выход
+    from outwiker.actions.exit import ExitAction
     application.actionController.register (ExitAction (application), "Alt+F4")
 
     # Показать / скрыть панель с прикрепленными файлами
+    from outwiker.actions.showhideattaches import ShowHideAttachesAction
     application.actionController.register (ShowHideAttachesAction (application), "")
 
     # Показать / скрыть панель с деревом заметок
+    from outwiker.actions.showhidetree import ShowHideTreeAction
     application.actionController.register (ShowHideTreeAction (application), "")
 
     # Показать / скрыть панель с тегами
+    from outwiker.actions.showhidetags import ShowHideTagsAction
     application.actionController.register (ShowHideTagsAction (application), "")
+
+    # Полноэкранный режим
+    from outwiker.actions.fullscreen import FullScreenAction
+    application.actionController.register (FullScreenAction (application), "F11")

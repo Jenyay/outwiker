@@ -31,7 +31,7 @@ class MainMenu (wx.MenuBar):
         self.bookmarksMenu = self.__createBookmarksMenu ()
         self.Append(self.bookmarksMenu, _("Bookmarks"))
 
-        self.viewMenu = self.__createViewMenu ()
+        self.viewMenu = wx.Menu()
         self.Append(self.viewMenu, _("View"))
 
         self.helpMenu = self.__createHelpMenu ()
@@ -230,20 +230,6 @@ class MainMenu (wx.MenuBar):
         bookmarksMenu.AppendSeparator()
 
         return bookmarksMenu
-
-
-    def __createViewMenu (self):
-        viewMenu = wx.Menu()
-
-        self.viewFullscreen = wx.MenuItem(
-                viewMenu, 
-                MainId.ID_VIEW_FULLSCREEN, 
-                _("Fullscreen") + "\tF11", 
-                "", 
-                wx.ITEM_CHECK)
-        viewMenu.AppendItem(self.viewFullscreen)
-
-        return viewMenu
 
 
     def __createHelpMenu (self):
