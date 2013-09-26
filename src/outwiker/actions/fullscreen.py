@@ -32,4 +32,4 @@ class FullScreenAction (BaseAction):
 
 
     def run (self, params):
-        self._application.mainWindow.setFullscreen (not self._application.mainWindow.IsFullScreen())
+        self._application.mainWindow.setFullscreen (params)
