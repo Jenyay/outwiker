@@ -82,6 +82,31 @@ class ActionControllerTest (BaseMainWndTest):
         self.assertEqual (len (self.actionController.actions), 1)
 
 
+    def testHotKeys (self):
+        hotkey1 = "F1"
+        action1 = TestAction()
+
+        hotkey2 = "Ctrl+F2"
+        action2 = TestCheckAction()
+
+        self.actionController.register (action1, hotkey1)
+        self.actionController.register (action2, hotkey2)
+
+        self.assertEqual (self.actionController.getHotKey(action1.strid), hotkey1)
+        self.assertEqual (self.actionController.getHotKey(action2.strid), hotkey2)
+
+
+    def testTitles (self):
+        action1 = TestAction()
+        action2 = TestCheckAction()
+
+        self.actionController.register (action1)
+        self.actionController.register (action2)
+
+        self.assertEqual (self.actionController.getTitle(action1.strid), action1.title)
+        self.assertEqual (self.actionController.getTitle(action2.strid), action2.title)
+
+
     def testAppendMenu (self):
         action = TestAction()
         menu = self.wnd.mainMenu.fileMenu
@@ -485,7 +510,7 @@ class ActionControllerTest (BaseMainWndTest):
         hotkey = u"Ctrl+T"
 
         self.actionController.register (action, hotkey=hotkey)
-        self.assertEqual (self._getHotKey (action.strid), hotkey)
+        self.assertEqual (self.actionController.getHotKey (action.strid), hotkey)
 
         self.actionController.appendMenuItem (action.strid, menu)
 
@@ -499,7 +524,7 @@ class ActionControllerTest (BaseMainWndTest):
         image = "../test/images/save.png"
 
         self.actionController.register (action, hotkey=hotkey)
-        self.assertEqual (self._getHotKey (action.strid), hotkey)
+        self.assertEqual (self.actionController.getHotKey (action.strid), hotkey)
 
         self.actionController.appendToolbarButton (action.strid, 
                 toolbar,
@@ -697,18 +722,5 @@ class ActionControllerTest (BaseMainWndTest):
         itemId = self._getToolItemId (strid)
         if itemId != None:
             result = toolbar.FindTool (itemId)
-
-        return result
-
-
-    def _getHotKey (self, strid):
-        """
-        Получить идентификатор кнопки с панели инструментов
-        """
-        result = None
-       
-        actionInfo = self.actionController.getActionInfo(strid)
-        if actionInfo != None:
-            result = actionInfo.hotkey
 
         return result

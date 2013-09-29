@@ -69,8 +69,6 @@ class WxActionController (object):
         Добавить действие в меню menu
         Действие должно быть уже зарегистрировано с помощью метода register
         """
-        assert strid in self._actionsInfo
-
         newid = wx.NewId()
         action = self._actionsInfo[strid].action
 
@@ -85,8 +83,6 @@ class WxActionController (object):
         Добавить действие в меню menu
         Действие должно быть уже зарегистрировано с помощью метода register
         """
-        assert strid in self._actionsInfo
-
         newid = wx.NewId()
         action = self._actionsInfo[strid].action
 
@@ -101,8 +97,6 @@ class WxActionController (object):
         Удалить действие из интерфейса.
         strid - строковый идентификатор удаляемого действия
         """
-        assert strid in self._actionsInfo
-
         self.removeToolbarButton (strid)
         self.removeMenuItem (strid)
 
@@ -114,8 +108,6 @@ class WxActionController (object):
         Убрать кнопку с панели инструментов
         Если кнопка не была добавлена, то метод ничего не делает
         """
-        assert strid in self._actionsInfo
-
         actionInfo = self._actionsInfo[strid]
 
         if actionInfo.toolbar != None:
@@ -127,8 +119,6 @@ class WxActionController (object):
 
 
     def removeMenuItem (self, strid):
-        assert strid in self._actionsInfo
-
         actionInfo = self._actionsInfo[strid]
 
         if actionInfo.menuItem != None:
@@ -146,7 +136,6 @@ class WxActionController (object):
         image - путь до картинки, которая будет помещена на кнопку
         fullUpdate - нужно ли полностью обновить панель после добавления кнопки
         """
-        assert strid in self._actionsInfo
         actionid = wx.NewId()
         buttonType = wx.ITEM_NORMAL
         action = self._actionsInfo[strid].action
@@ -164,7 +153,6 @@ class WxActionController (object):
         image - путь до картинки, которая будет помещена на кнопку
         fullUpdate - нужно ли полностью обновить панель после добавления кнопки
         """
-        assert strid in self._actionsInfo
         actionid = wx.NewId()
         buttonType = wx.ITEM_CHECK
         action = self._actionsInfo[strid].action
@@ -178,8 +166,6 @@ class WxActionController (object):
         """
         Установить или снять флажок и нажать/отжать кнопку, соответствующие действию
         """
-        assert strid in self._actionsInfo
-
         self._onCheck (self._actionsInfo[strid].action, checked)
 
 
@@ -209,10 +195,10 @@ class WxActionController (object):
         title = self._getToolbarItemTitle (strid)
         bitmap = wx.Bitmap (image)
 
-        toolbar.AddTool(actionid, 
-            title, 
-            bitmap, 
-            short_help_string=title, 
+        toolbar.AddTool(actionid,
+            title,
+            bitmap,
+            short_help_string=title,
             kind=buttonType,
             fullUpdate=fullUpdate)
 
@@ -221,7 +207,6 @@ class WxActionController (object):
 
 
     def enableTools (self, strid, enabled=True):
-        assert strid in self._actionsInfo
         actionInfo = self._actionsInfo[strid]
 
         if actionInfo.toolItemId != None:
@@ -231,21 +216,35 @@ class WxActionController (object):
             actionInfo.menuItem.Enable (enabled)
 
 
+    def getHotKey (self, strid):
+        """
+        Возвращает горячую клавишу для действия по его strid
+        """
+        return self._actionsInfo[strid].hotkey
+
+
+    def getTitle (self, strid):
+        """
+        Возвращает заголовок действия по его strid
+        """
+        return self._actionsInfo[strid].action.title
+
+
     def _getMenuItemTitle (self, strid):
-        assert strid in self._actionsInfo
+        hotkey = self.getHotKey (strid)
+        title = self.getTitle (strid)
 
-        actionInfo = self._actionsInfo[strid]
-        if len (actionInfo.hotkey) == 0:
-            return actionInfo.action.title
+        if len (hotkey) == 0:
+            return title
 
-        return u"{0}\t{1}".format (actionInfo.action.title, actionInfo.hotkey)
+        return u"{0}\t{1}".format (title, hotkey)
 
 
     def _getToolbarItemTitle (self, strid):
-        assert strid in self._actionsInfo
+        hotkey = self.getHotKey (strid)
+        title = self.getTitle (strid)
 
-        actionInfo = self._actionsInfo[strid]
-        if len (actionInfo.hotkey) == 0:
-            return actionInfo.action.title
+        if len (hotkey) == 0:
+            return title
 
-        return u"{0} ({1})".format (actionInfo.action.title, actionInfo.hotkey)
+        return u"{0} ({1})".format (title, hotkey)
