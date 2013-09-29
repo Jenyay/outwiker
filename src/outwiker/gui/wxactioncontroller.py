@@ -34,9 +34,11 @@ class WxActionController (object):
         self._actionsInfo = {}
 
 
-    @property
-    def actions (self):
-        return self._actionsInfo.values()
+    def getActionsStrId (self):
+        """
+        Возвращает все зарегистрированные strid
+        """
+        return self._actionsInfo.keys()
 
 
     def getAction (self, strid):

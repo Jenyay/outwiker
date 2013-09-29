@@ -75,11 +75,11 @@ class ActionControllerTest (BaseMainWndTest):
     def testRegisterAction (self):
         action = TestAction()
 
-        self.assertEqual (len (self.actionController.actions), 0)
+        self.assertEqual (len (self.actionController.getActionsStrId()), 0)
 
         self.actionController.register (action)
 
-        self.assertEqual (len (self.actionController.actions), 1)
+        self.assertEqual (len (self.actionController.getActionsStrId()), 1)
 
 
     def testHotKeys (self):
@@ -137,13 +137,13 @@ class ActionControllerTest (BaseMainWndTest):
                 toolbar,
                 image)
 
-        self.assertEqual (len (self.actionController.actions), 1)
+        self.assertEqual (len (self.actionController.getActionsStrId()), 1)
         self._assertMenuItemExists (menu, action.title, "")
         self.assertEqual (toolbar.GetToolCount(), 1)
 
         self.actionController.removeAction (action.strid)
 
-        self.assertEqual (len (self.actionController.actions), 0)
+        self.assertEqual (len (self.actionController.getActionsStrId()), 0)
         self.assertEqual (menu.FindItem (action.title), wx.NOT_FOUND)
         self.assertEqual (toolbar.GetToolCount(), 0)
 
