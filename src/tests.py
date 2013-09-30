@@ -96,6 +96,7 @@ if __name__ == '__main__':
     from test.version import VersionTest, StatusTest
     from test.treesort import TreeSortTest
     from test.emptycontent import EmptyContentTest
+    from test.hotkey import HotKeyTest
 
     #from test.guitests.tray import TrayNormalTest#, TrayIconizedTest
     from test.guitests.mainid import MainIdTest
