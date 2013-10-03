@@ -168,6 +168,15 @@ class HotKeyParserTest (unittest.TestCase):
         self.assertFalse (hotkey.alt)
 
 
+    def testParse14 (self):
+        hotkey = self.parser.fromString (u"    ")
+
+        self.assertEqual (hotkey.key, u"")
+        self.assertFalse (hotkey.ctrl)
+        self.assertFalse (hotkey.shift)
+        self.assertFalse (hotkey.alt)
+
+
     def testParseInvalid1 (self):
         self.assertRaises (ValueError, self.parser.fromString, u"Ctrl+")
 
