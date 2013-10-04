@@ -11,9 +11,8 @@ import ConfigParser
 import shutil
 import datetime
 
-from outwiker.core.config import Config
+from outwiker.core.config import Config, StringOption, IntegerOption, DateTimeOption, BooleanOption, ListOption, StringListSection
 from outwiker.core.system import getCurrentDir, getConfigPath
-import outwiker.core.config
 
 from outwiker.gui.guiconfig import TrayConfig, EditorConfig
 
@@ -151,7 +150,7 @@ class ConfigOptionsTest (unittest.TestCase):
             fp.write (u"list11=|\n".encode ("utf-8"))
             fp.write (u"list12=элемент 1|\n".encode ("utf-8"))
 
-        self.config = outwiker.core.config.Config (self.path)
+        self.config = Config (self.path)
     
 
     def tearDown (self):
@@ -160,28 +159,28 @@ class ConfigOptionsTest (unittest.TestCase):
 
     # Строковые опции
     def testStringOpt1 (self):
-        opt = outwiker.core.config.StringOption (self.config, u"Test", u"strval", "defaultval")
+        opt = StringOption (self.config, u"Test", u"strval", "defaultval")
         self.assertEqual (opt.value, u"тест")
 
 
     def testStringOpt2 (self):
-        opt = outwiker.core.config.StringOption (self.config, u"Test", u"strval2", "defaultval")
+        opt = StringOption (self.config, u"Test", u"strval2", "defaultval")
         self.assertEqual (opt.value, u"defaultval")
 
 
     def testStringOpt3 (self):
-        opt = outwiker.core.config.StringOption (self.config, u"Test", u"strval3", "defaultval")
+        opt = StringOption (self.config, u"Test", u"strval3", "defaultval")
         opt.value = u"проверка"
 
-        newconfig = outwiker.core.config.Config (self.path)
-        newopt = outwiker.core.config.StringOption (newconfig, u"Test", u"strval3", "defaultval")
+        newconfig = Config (self.path)
+        newopt = StringOption (newconfig, u"Test", u"strval3", "defaultval")
 
         self.assertEqual (newopt.value, u"проверка")
 
 
     def testStringOpt4 (self):
-        opt = outwiker.core.config.StringOption (self.config, u"Test", u"strval3", "defaultval")
-        newopt = outwiker.core.config.StringOption (self.config, u"Test", u"strval3", "defaultval")
+        opt = StringOption (self.config, u"Test", u"strval3", "defaultval")
+        newopt = StringOption (self.config, u"Test", u"strval3", "defaultval")
 
         opt.value = u"проверка"
 
@@ -190,28 +189,28 @@ class ConfigOptionsTest (unittest.TestCase):
 
     # Целочисленные опции
     def testIntOpt1 (self):
-        opt = outwiker.core.config.IntegerOption (self.config, u"Test", u"intval", 777)
+        opt = IntegerOption (self.config, u"Test", u"intval", 777)
         self.assertEqual (opt.value, 100)
 
 
     def testIntOpt2 (self):
-        opt = outwiker.core.config.IntegerOption (self.config, u"Test", u"intval2", 777)
+        opt = IntegerOption (self.config, u"Test", u"intval2", 777)
         self.assertEqual (opt.value, 777)
 
 
     def testIntOpt3 (self):
-        opt = outwiker.core.config.IntegerOption (self.config, u"Test", u"intval3", 777)
+        opt = IntegerOption (self.config, u"Test", u"intval3", 777)
         opt.value = 666
 
-        newconfig = outwiker.core.config.Config (self.path)
-        newopt = outwiker.core.config.IntegerOption (newconfig, u"Test", u"intval3", 888)
+        newconfig = Config (self.path)
+        newopt = IntegerOption (newconfig, u"Test", u"intval3", 888)
 
         self.assertEqual (newopt.value, 666)
     
 
     def testIntOpt4 (self):
-        opt = outwiker.core.config.IntegerOption (self.config, u"Test", u"intval3", 777)
-        newopt = outwiker.core.config.IntegerOption (self.config, u"Test", u"intval3", 888)
+        opt = IntegerOption (self.config, u"Test", u"intval3", 777)
+        newopt = IntegerOption (self.config, u"Test", u"intval3", 888)
 
         opt.value = 666
 
@@ -222,58 +221,58 @@ class ConfigOptionsTest (unittest.TestCase):
     def testDateTimeOpt1 (self):
         strdatetime = "2012-08-25 16:18:24.171654"
 
-        opt = outwiker.core.config.DateTimeOption (self.config, u"Test", u"datetimeval", None)
+        opt = DateTimeOption (self.config, u"Test", u"datetimeval", None)
         self.assertEqual (opt.value, 
-                datetime.datetime.strptime (strdatetime, outwiker.core.config.DateTimeOption.formatDate))
+                datetime.datetime.strptime (strdatetime, DateTimeOption.formatDate))
     
 
     def testDateTimeOpt2 (self):
-        opt = outwiker.core.config.DateTimeOption (self.config, u"Test", u"datetimeval_invalid", None)
+        opt = DateTimeOption (self.config, u"Test", u"datetimeval_invalid", None)
         self.assertEqual (opt.value, None)
     
 
     def testDateTimeOpt3 (self):
         defaultValue = datetime.datetime (2012, 8, 25)
 
-        opt = outwiker.core.config.DateTimeOption (self.config, u"Test", u"datetimeval_invalid", defaultValue)
+        opt = DateTimeOption (self.config, u"Test", u"datetimeval_invalid", defaultValue)
         self.assertEqual (opt.value, defaultValue)
 
 
     def testDateTimeOpt4 (self):
         newdate = datetime.datetime (2012, 8, 25)
-        opt = outwiker.core.config.DateTimeOption (self.config, u"Test", u"datetimeval2", None)
+        opt = DateTimeOption (self.config, u"Test", u"datetimeval2", None)
         opt.value = newdate
 
-        newconfig = outwiker.core.config.Config (self.path)
-        newopt = outwiker.core.config.DateTimeOption (newconfig, u"Test", u"datetimeval2", None)
+        newconfig = Config (self.path)
+        newopt = DateTimeOption (newconfig, u"Test", u"datetimeval2", None)
 
         self.assertEqual (newopt.value, newdate)
     
 
     # Булевы опции
     def testBoolOpt1 (self):
-        opt = outwiker.core.config.BooleanOption (self.config, u"Test", u"Boolval", False)
+        opt = BooleanOption (self.config, u"Test", u"Boolval", False)
         self.assertEqual (opt.value, True)
 
 
     def testBoolOpt2 (self):
-        opt = outwiker.core.config.BooleanOption (self.config, u"Test", u"Boolval2", False)
+        opt = BooleanOption (self.config, u"Test", u"Boolval2", False)
         self.assertEqual (opt.value, False)
 
 
     def testBoolOpt3 (self):
-        opt = outwiker.core.config.BooleanOption (self.config, u"Test", u"Boolval3", False)
+        opt = BooleanOption (self.config, u"Test", u"Boolval3", False)
         opt.value = True
 
-        newconfig = outwiker.core.config.Config (self.path)
-        newopt = outwiker.core.config.BooleanOption (newconfig, u"Test", u"Boolval3", False)
+        newconfig = Config (self.path)
+        newopt = BooleanOption (newconfig, u"Test", u"Boolval3", False)
 
         self.assertEqual (newopt.value, True)
     
 
     def testBoolOpt4 (self):
-        opt = outwiker.core.config.BooleanOption (self.config, u"Test", u"Boolval3", False)
-        newopt = outwiker.core.config.BooleanOption (self.config, u"Test", u"Boolval3", False)
+        opt = BooleanOption (self.config, u"Test", u"Boolval3", False)
+        newopt = BooleanOption (self.config, u"Test", u"Boolval3", False)
 
         opt.value = True
 
@@ -281,7 +280,7 @@ class ConfigOptionsTest (unittest.TestCase):
 
 
     def testRemoveOption1 (self):
-        opt = outwiker.core.config.StringOption (self.config, u"Test", u"strval", u"Значение по умолчанию")
+        opt = StringOption (self.config, u"Test", u"strval", u"Значение по умолчанию")
         self.assertEqual (opt.value, u"тест")
 
         opt.remove_option()
@@ -289,190 +288,190 @@ class ConfigOptionsTest (unittest.TestCase):
 
 
     def testRemoveOption2 (self):
-        opt = outwiker.core.config.StringOption (self.config, u"Test", u"strval", u"Значение по умолчанию")
+        opt = StringOption (self.config, u"Test", u"strval", u"Значение по умолчанию")
         opt.remove_option()
 
-        opt2 = outwiker.core.config.StringOption (self.config, u"Test", u"strval", u"Значение по умолчанию")
+        opt2 = StringOption (self.config, u"Test", u"strval", u"Значение по умолчанию")
         self.assertEqual (opt2.value, u"Значение по умолчанию")
 
 
     def testRemoveOption3 (self):
-        opt = outwiker.core.config.StringOption (self.config, u"Test", u"invalid", u"Значение по умолчанию")
+        opt = StringOption (self.config, u"Test", u"invalid", u"Значение по умолчанию")
         opt.remove_option()
 
 
     def testListOption1 (self):
-        opt1 = outwiker.core.config.ListOption (self.config, u"Test", u"list1", [])
+        opt1 = ListOption (self.config, u"Test", u"list1", [])
         self.assertEqual (opt1.value, [u"элемент 1", u"элемент 2", u"элемент 3"])
 
-        opt2 = outwiker.core.config.ListOption (self.config, u"Test", u"list2", [])
+        opt2 = ListOption (self.config, u"Test", u"list2", [])
         self.assertEqual (opt2.value, [u"элемент 1"])
 
-        opt3 = outwiker.core.config.ListOption (self.config, u"Test", u"list3", [])
+        opt3 = ListOption (self.config, u"Test", u"list3", [])
         self.assertEqual (opt3.value, [u""])
 
-        opt4 = outwiker.core.config.ListOption (self.config, u"Test", u"list4", [])
+        opt4 = ListOption (self.config, u"Test", u"list4", [])
         self.assertEqual (opt4.value, [u"", u""])
 
-        opt5 = outwiker.core.config.ListOption (self.config, u"Test", u"list5", [])
+        opt5 = ListOption (self.config, u"Test", u"list5", [])
         self.assertEqual (opt5.value, [u"", u"", u""])
 
-        opt6 = outwiker.core.config.ListOption (self.config, u"Test", u"list6", [])
+        opt6 = ListOption (self.config, u"Test", u"list6", [])
         self.assertEqual (opt6.value, [u"элемент 1", u""])
 
-        opt7 = outwiker.core.config.ListOption (self.config, u"Test", u"list7", [])
+        opt7 = ListOption (self.config, u"Test", u"list7", [])
         self.assertEqual (opt7.value, [])
 
     
     def testListOption2 (self):
-        opt8 = outwiker.core.config.ListOption (self.config, u"Test", u"list8", [], separator="|")
+        opt8 = ListOption (self.config, u"Test", u"list8", [], separator="|")
         self.assertEqual (opt8.value, [u"элемент 1", u"элемент 2", u"элемент 3"])
 
-        opt9 = outwiker.core.config.ListOption (self.config, u"Test", u"list9", [], separator="|")
+        opt9 = ListOption (self.config, u"Test", u"list9", [], separator="|")
         self.assertEqual (opt9.value, [u"элемент 1"])
 
-        opt10 = outwiker.core.config.ListOption (self.config, u"Test", u"list10", [], separator="|")
+        opt10 = ListOption (self.config, u"Test", u"list10", [], separator="|")
         self.assertEqual (opt10.value, [u""])
 
-        opt11 = outwiker.core.config.ListOption (self.config, u"Test", u"list11", [], separator="|")
+        opt11 = ListOption (self.config, u"Test", u"list11", [], separator="|")
         self.assertEqual (opt11.value, [u"", u""])
 
-        opt12 = outwiker.core.config.ListOption (self.config, u"Test", u"list12", [], separator="|")
+        opt12 = ListOption (self.config, u"Test", u"list12", [], separator="|")
         self.assertEqual (opt12.value, [u"элемент 1", u""])
 
 
     def testSaveListOption1 (self):
         testlist = [u"элемент 1", u"элемент 2", u"элемент 3"] 
 
-        opt = outwiker.core.config.ListOption (self.config, u"Test", u"savelist", [])
+        opt = ListOption (self.config, u"Test", u"savelist", [])
         opt.value = testlist
 
-        newconfig = outwiker.core.config.Config (self.path)
-        newopt = outwiker.core.config.ListOption (self.config, u"Test", u"savelist", [])
+        newconfig = Config (self.path)
+        newopt = ListOption (self.config, u"Test", u"savelist", [])
 
         self.assertEqual (newopt.value, testlist)
 
-        stringopt = outwiker.core.config.StringOption (self.config, u"Test", u"savelist", "")
+        stringopt = StringOption (self.config, u"Test", u"savelist", "")
         self.assertEqual (stringopt.value.strip(), u"элемент 1;элемент 2;элемент 3")
 
 
     def testSaveListOption2 (self):
         testlist = [u"элемент 1"]
 
-        opt = outwiker.core.config.ListOption (self.config, u"Test", u"savelist", [])
+        opt = ListOption (self.config, u"Test", u"savelist", [])
         opt.value = testlist
 
-        newconfig = outwiker.core.config.Config (self.path)
-        newopt = outwiker.core.config.ListOption (self.config, u"Test", u"savelist", [])
+        newconfig = Config (self.path)
+        newopt = ListOption (self.config, u"Test", u"savelist", [])
 
         self.assertEqual (newopt.value, testlist)
 
-        stringopt = outwiker.core.config.StringOption (self.config, u"Test", u"savelist", "")
+        stringopt = StringOption (self.config, u"Test", u"savelist", "")
         self.assertEqual (stringopt.value.strip(), u"элемент 1")
 
 
     def testSaveListOption3 (self):
         testlist = []
 
-        opt = outwiker.core.config.ListOption (self.config, u"Test", u"savelist", [])
+        opt = ListOption (self.config, u"Test", u"savelist", [])
         opt.value = testlist
 
-        newconfig = outwiker.core.config.Config (self.path)
-        newopt = outwiker.core.config.ListOption (self.config, u"Test", u"savelist", [])
+        newconfig = Config (self.path)
+        newopt = ListOption (self.config, u"Test", u"savelist", [])
 
         self.assertEqual (newopt.value, [u""])
 
-        stringopt = outwiker.core.config.StringOption (self.config, u"Test", u"savelist", "")
+        stringopt = StringOption (self.config, u"Test", u"savelist", "")
         self.assertEqual (stringopt.value.strip(), u"")
 
 
     def testSaveListOption4 (self):
         testlist = [u"элемент 1", u"элемент 2", u"элемент 3"] 
 
-        opt = outwiker.core.config.ListOption (self.config, u"Test", u"savelist", [], separator="|")
+        opt = ListOption (self.config, u"Test", u"savelist", [], separator="|")
         opt.value = testlist
 
-        newconfig = outwiker.core.config.Config (self.path)
-        newopt = outwiker.core.config.ListOption (self.config, u"Test", u"savelist", [], separator="|")
+        newconfig = Config (self.path)
+        newopt = ListOption (self.config, u"Test", u"savelist", [], separator="|")
 
         self.assertEqual (newopt.value, testlist)
 
-        stringopt = outwiker.core.config.StringOption (self.config, u"Test", u"savelist", "")
+        stringopt = StringOption (self.config, u"Test", u"savelist", "")
         self.assertEqual (stringopt.value.strip(), u"элемент 1|элемент 2|элемент 3")
 
 
     def testSaveListOption5 (self):
         testlist = [u"элемент 1"]
 
-        opt = outwiker.core.config.ListOption (self.config, u"Test", u"savelist", [], separator="|")
+        opt = ListOption (self.config, u"Test", u"savelist", [], separator="|")
         opt.value = testlist
 
-        newconfig = outwiker.core.config.Config (self.path)
-        newopt = outwiker.core.config.ListOption (self.config, u"Test", u"savelist", [], separator="|")
+        newconfig = Config (self.path)
+        newopt = ListOption (self.config, u"Test", u"savelist", [], separator="|")
 
         self.assertEqual (newopt.value, testlist)
 
-        stringopt = outwiker.core.config.StringOption (self.config, u"Test", u"savelist", "")
+        stringopt = StringOption (self.config, u"Test", u"savelist", "")
         self.assertEqual (stringopt.value.strip(), u"элемент 1")
 
 
     def testSaveListOption6 (self):
         testlist = []
 
-        opt = outwiker.core.config.ListOption (self.config, u"Test", u"savelist", [], separator="|")
+        opt = ListOption (self.config, u"Test", u"savelist", [], separator="|")
         opt.value = testlist
 
-        newconfig = outwiker.core.config.Config (self.path)
-        newopt = outwiker.core.config.ListOption (self.config, u"Test", u"savelist", [], separator="|")
+        newconfig = Config (self.path)
+        newopt = ListOption (self.config, u"Test", u"savelist", [], separator="|")
 
         self.assertEqual (newopt.value, [""])
 
-        stringopt = outwiker.core.config.StringOption (self.config, u"Test", u"savelist", "")
+        stringopt = StringOption (self.config, u"Test", u"savelist", "")
         self.assertEqual (stringopt.value.strip(), u"")
 
 
     def testSaveListOption7 (self):
         testlist = [u""]
 
-        opt = outwiker.core.config.ListOption (self.config, u"Test", u"savelist", [], separator="|")
+        opt = ListOption (self.config, u"Test", u"savelist", [], separator="|")
         opt.value = testlist
 
-        newconfig = outwiker.core.config.Config (self.path)
-        newopt = outwiker.core.config.ListOption (self.config, u"Test", u"savelist", [], separator="|")
+        newconfig = Config (self.path)
+        newopt = ListOption (self.config, u"Test", u"savelist", [], separator="|")
 
         self.assertEqual (newopt.value, testlist)
 
-        stringopt = outwiker.core.config.StringOption (self.config, u"Test", u"savelist", "")
+        stringopt = StringOption (self.config, u"Test", u"savelist", "")
         self.assertEqual (stringopt.value.strip(), u"")
 
 
     def testSaveListOption8 (self):
         testlist = [u""]
 
-        opt = outwiker.core.config.ListOption (self.config, u"Test", u"savelist", [])
+        opt = ListOption (self.config, u"Test", u"savelist", [])
         opt.value = testlist
 
-        newconfig = outwiker.core.config.Config (self.path)
-        newopt = outwiker.core.config.ListOption (self.config, u"Test", u"savelist", [])
+        newconfig = Config (self.path)
+        newopt = ListOption (self.config, u"Test", u"savelist", [])
 
         self.assertEqual (newopt.value, testlist)
 
-        stringopt = outwiker.core.config.StringOption (self.config, u"Test", u"savelist", "")
+        stringopt = StringOption (self.config, u"Test", u"savelist", "")
         self.assertEqual (stringopt.value.strip(), u"")
 
 
     def testSaveListOption9 (self):
         testlist = [u""]
 
-        opt = outwiker.core.config.ListOption (self.config, u"Test", u"savelist", [], separator="|")
+        opt = ListOption (self.config, u"Test", u"savelist", [], separator="|")
         opt.value = testlist
 
-        newconfig = outwiker.core.config.Config (self.path)
-        newopt = outwiker.core.config.ListOption (self.config, u"Test", u"savelist", [], separator="|")
+        newconfig = Config (self.path)
+        newopt = ListOption (self.config, u"Test", u"savelist", [], separator="|")
 
         self.assertEqual (newopt.value, testlist)
 
-        stringopt = outwiker.core.config.StringOption (self.config, u"Test", u"savelist", "")
+        stringopt = StringOption (self.config, u"Test", u"savelist", "")
         self.assertEqual (stringopt.value.strip(), u"")
 
 
@@ -485,7 +484,7 @@ class ConfigOptionsTest (unittest.TestCase):
                 u"Строка 2"]
 
         self.config.remove_section (section)
-        opt = outwiker.core.config.StringListSection (self.config, section, paramname)
+        opt = StringListSection (self.config, section, paramname)
         self.assertEqual (opt.value, [])
 
         # Установим список
@@ -511,13 +510,13 @@ class ConfigOptionsTest (unittest.TestCase):
                 u"Строка 2"]
 
         self.config.remove_section (section)
-        opt = outwiker.core.config.StringListSection (self.config, section, paramname)
+        opt = StringListSection (self.config, section, paramname)
         self.assertEqual (opt.value, [])
 
         # Установим список
         opt.value = testlist
 
-        opt_other = outwiker.core.config.StringListSection (self.config, section, paramname)
+        opt_other = StringListSection (self.config, section, paramname)
         self.assertEqual (len (opt_other.value), 3)
         self.assertEqual (opt_other.value[0], u"Бла-бла-бла")
         self.assertEqual (opt_other.value[1], u"Строка 1")
@@ -528,7 +527,7 @@ class ConfigOptionsTest (unittest.TestCase):
 class TrayConfigTest (unittest.TestCase):
     def setUp (self):
         self.path = u"../test/testconfig.ini"
-        self.config = outwiker.core.config.Config (self.path)
+        self.config = Config (self.path)
 
         self.trayConfig = TrayConfig (self.config)
     
@@ -561,7 +560,7 @@ class TrayConfigTest (unittest.TestCase):
 class EditorConfigTest (unittest.TestCase):
     def setUp (self):
         self.path = u"../test/testconfig.ini"
-        self.config = outwiker.core.config.Config (self.path)
+        self.config = Config (self.path)
 
         self.editorConfig = EditorConfig (self.config)
     
