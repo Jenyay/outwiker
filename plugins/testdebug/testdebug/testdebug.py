@@ -9,6 +9,7 @@ import wx
 
 from outwiker.core.commands import MessageBox
 from outwiker.gui.buttonsdialog import ButtonsDialog
+from outwiker.gui.hotkey import HotKey
 from outwiker.core.pluginbase import Plugin
 from outwiker.core.system import getOS
 
@@ -37,7 +38,7 @@ class PluginDebug (Plugin):
 
         if mainWindow != None and mainWindow.PLUGINS_TOOLBAR_STR in mainWindow.toolbars:
             action = DebugAction(self._application)
-            hotkey = "Ctrl+Shift+Alt+T"
+            hotkey = HotKey ("T", ctrl=True, shift=True, alt=True)
             toolbar = mainWindow.toolbars[mainWindow.PLUGINS_TOOLBAR_STR]
             image = self.getImagePath ("bug.png")
 

@@ -7,6 +7,8 @@ import wx
 
 from outwiker.gui.wxactioncontroller import WxActionController
 from outwiker.gui.baseaction import BaseAction
+from outwiker.gui.hotkey import HotKey
+from outwiker.gui.hotkeyparser import HotKeyParser
 from outwiker.core.application import Application
 from basemainwnd import BaseMainWndTest
 
@@ -83,10 +85,10 @@ class ActionControllerTest (BaseMainWndTest):
 
 
     def testHotKeys (self):
-        hotkey1 = "F1"
+        hotkey1 = HotKey ("F1")
         action1 = TestAction()
 
-        hotkey2 = "Ctrl+F2"
+        hotkey2 = HotKey ("F2", ctrl=True)
         action2 = TestCheckAction()
 
         self.actionController.register (action1, hotkey1)
@@ -113,7 +115,7 @@ class ActionControllerTest (BaseMainWndTest):
 
         self.actionController.register (action)
         self.actionController.appendMenuItem (action.strid, menu)
-        self._assertMenuItemExists (menu, action.title, "")
+        self._assertMenuItemExists (menu, action.title, None)
 
 
     def testAppendCheckMenu (self):
@@ -122,7 +124,7 @@ class ActionControllerTest (BaseMainWndTest):
 
         self.actionController.register (action)
         self.actionController.appendMenuCheckItem (action.strid, menu)
-        self._assertMenuItemExists (menu, action.title, "")
+        self._assertMenuItemExists (menu, action.title, None)
 
 
     def testRemoveAction (self):
@@ -138,7 +140,7 @@ class ActionControllerTest (BaseMainWndTest):
                 image)
 
         self.assertEqual (len (self.actionController.getActionsStrId()), 1)
-        self._assertMenuItemExists (menu, action.title, "")
+        self._assertMenuItemExists (menu, action.title, None)
         self.assertEqual (toolbar.GetToolCount(), 1)
 
         self.actionController.removeAction (action.strid)
@@ -437,12 +439,12 @@ class ActionControllerTest (BaseMainWndTest):
                 image)
 
         self.assertEqual (toolbar.GetToolCount(), 1)
-        self._assertMenuItemExists (menu, action.title, "")
+        self._assertMenuItemExists (menu, action.title, None)
 
         self.actionController.removeToolbarButton (action.strid)
 
         self.assertEqual (toolbar.GetToolCount(), 0)
-        self._assertMenuItemExists (menu, action.title, "")
+        self._assertMenuItemExists (menu, action.title, None)
 
 
     def testRemoveToolButtonInvalid (self):
@@ -455,12 +457,12 @@ class ActionControllerTest (BaseMainWndTest):
         self.actionController.appendMenuItem (action.strid, menu)
 
         self.assertEqual (toolbar.GetToolCount(), 0)
-        self._assertMenuItemExists (menu, action.title, "")
+        self._assertMenuItemExists (menu, action.title, None)
 
         self.actionController.removeToolbarButton (action.strid)
 
         self.assertEqual (toolbar.GetToolCount(), 0)
-        self._assertMenuItemExists (menu, action.title, "")
+        self._assertMenuItemExists (menu, action.title, None)
 
 
     def testRemoveMenuItemInvalid (self):
@@ -496,7 +498,7 @@ class ActionControllerTest (BaseMainWndTest):
                 image)
 
         self.assertEqual (toolbar.GetToolCount(), 1)
-        self._assertMenuItemExists (menu, action.title, "")
+        self._assertMenuItemExists (menu, action.title, None)
 
         self.actionController.removeMenuItem (action.strid)
 
@@ -507,7 +509,7 @@ class ActionControllerTest (BaseMainWndTest):
     def testHotKeysDefaultMenu (self):
         action = TestAction()
         menu = self.wnd.mainMenu.fileMenu
-        hotkey = u"Ctrl+T"
+        hotkey = HotKey ("T", ctrl=True)
 
         self.actionController.register (action, hotkey=hotkey)
         self.assertEqual (self.actionController.getHotKey (action.strid), hotkey)
@@ -519,7 +521,7 @@ class ActionControllerTest (BaseMainWndTest):
 
     def testHotKeysDefaultToolBar (self):
         action = TestAction()
-        hotkey = u"Ctrl+T"
+        hotkey = HotKey ("T", ctrl=True)
         toolbar = self.wnd.toolbars[self.wnd.PLUGINS_TOOLBAR_STR]
         image = "../test/images/save.png"
 
@@ -531,12 +533,12 @@ class ActionControllerTest (BaseMainWndTest):
                 image)
 
         self.assertEqual (self._getToolItemLabel (toolbar, action.strid), 
-                u"{0} ({1})".format (action.title, hotkey))
+                u"{0} ({1})".format (action.title, HotKeyParser.toString (hotkey) ) )
 
 
     def testDisableTools (self):
         action = TestAction()
-        hotkey = u"Ctrl+T"
+        hotkey = HotKey ("T", ctrl=True)
         toolbar = self.wnd.toolbars[self.wnd.PLUGINS_TOOLBAR_STR]
         image = "../test/images/save.png"
 
@@ -557,7 +559,7 @@ class ActionControllerTest (BaseMainWndTest):
 
     def testDisableMenuItem (self):
         action = TestAction()
-        hotkey = u"Ctrl+T"
+        hotkey = HotKey ("T", ctrl=True)
         menu = self.wnd.mainMenu.fileMenu
 
         self.actionController.register (action, hotkey=hotkey)
@@ -575,7 +577,7 @@ class ActionControllerTest (BaseMainWndTest):
 
     def testDidableToolsAll (self):
         action = TestAction()
-        hotkey = u"Ctrl+T"
+        hotkey = HotKey ("T", ctrl=True)
         toolbar = self.wnd.toolbars[self.wnd.PLUGINS_TOOLBAR_STR]
         image = "../test/images/save.png"
         menu = self.wnd.mainMenu.fileMenu
@@ -601,7 +603,7 @@ class ActionControllerTest (BaseMainWndTest):
 
     def testDisableToolsNone (self):
         action = TestAction()
-        hotkey = u"Ctrl+T"
+        hotkey = HotKey ("T", ctrl=True)
 
         self.actionController.register (action, hotkey=hotkey)
         self.actionController.enableTools (action.strid, False)
@@ -635,8 +637,8 @@ class ActionControllerTest (BaseMainWndTest):
 
         menuItem = menu.FindItemById (menuItemId)
         
-        if len (hotkey) != 0:
-            self.assertEqual (menuItem.GetItemLabel(), title + "\t" + hotkey)
+        if hotkey != None:
+            self.assertEqual (menuItem.GetItemLabel(), title + "\t" + HotKeyParser.toString (hotkey))
         else:
             self.assertEqual (menuItem.GetItemLabel(), title)
 

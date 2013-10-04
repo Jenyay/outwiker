@@ -9,7 +9,8 @@ import os.path
 from outwiker.core.config import BooleanOption
 from outwiker.core.tree import WikiPage
 from outwiker.core.factory import PageFactory
-from .htmlpanel import HtmlPagePanel
+from outwiker.gui.hotkey import HotKey
+from outwiker.pages.html.htmlpanel import HtmlPagePanel
 
 from actions.bold import HtmlBoldAction
 from actions.autolinewrap import HtmlAutoLineWrap
@@ -66,8 +67,9 @@ class HtmlPageFactory (PageFactory):
         """
         Зарегистрировать все действия, связанные с HTML-страницей
         """
-        application.actionController.register (HtmlBoldAction (application), "Ctrl+B")
-        application.actionController.register (HtmlAutoLineWrap (application), "")
+        application.actionController.register (HtmlBoldAction (application), 
+                HotKey ("B", ctrl=True))
+        application.actionController.register (HtmlAutoLineWrap (application))
 
 
     @staticmethod

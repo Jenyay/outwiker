@@ -8,12 +8,13 @@ from outwiker.gui.hotkey import HotKey
 
 class HotKeyParser (object):
     """Класс для создания экземпляра класса HotKey из строки и создания строки по HotKey"""
-    def __init__(self):
-        self._regex = re.compile ("((?P<ctrl>\s*ctrl\s*\+)|(?P<shift>\s*shift\s*\+)|(?P<alt>\s*alt\s*\+))*(?P<key>.*)",
-                re.I | re.U)
+    # Регулярное выражение для получения горячей клавиши по строке
+    _regex = re.compile ("((?P<ctrl>\s*ctrl\s*\+)|(?P<shift>\s*shift\s*\+)|(?P<alt>\s*alt\s*\+))*(?P<key>.*)",
+            re.I | re.U)
 
 
-    def toString (self, hotkey):
+    @staticmethod
+    def toString (hotkey):
         """
         Создание строки по экземпляру класса HotKey
         """
@@ -28,11 +29,12 @@ class HotKeyParser (object):
                 key=hotkey.key)
 
 
-    def fromString (self, hotkeyStr):
+    @staticmethod
+    def fromString (hotkeyStr):
         """
         Создание экземпляра класса HotKey по строке
         """
-        match = self._regex.match (hotkeyStr)
+        match = HotKeyParser._regex.match (hotkeyStr)
         if match == None:
             raise ValueError ("Invalid hot key string")
 

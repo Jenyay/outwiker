@@ -4,6 +4,8 @@
 
 import wx
 
+from outwiker.gui.hotkeyparser import HotKeyParser
+
 
 class ActionInfo (object):
     """
@@ -53,7 +55,7 @@ class WxActionController (object):
         return self._actionsInfo[strid]
 
 
-    def register (self, action, hotkey=u""):
+    def register (self, action, hotkey=None):
         """
         Добавить действие в словарь. При этом никаких элементов интерфейса не создается
         action - регистрируемое действие
@@ -236,17 +238,17 @@ class WxActionController (object):
         hotkey = self.getHotKey (strid)
         title = self.getTitle (strid)
 
-        if len (hotkey) == 0:
+        if hotkey == None:
             return title
 
-        return u"{0}\t{1}".format (title, hotkey)
+        return u"{0}\t{1}".format (title, HotKeyParser.toString (hotkey))
 
 
     def _getToolbarItemTitle (self, strid):
         hotkey = self.getHotKey (strid)
         title = self.getTitle (strid)
 
-        if len (hotkey) == 0:
+        if hotkey == None:
             return title
 
-        return u"{0} ({1})".format (title, hotkey)
+        return u"{0} ({1})".format (title, HotKeyParser.toString (hotkey))
