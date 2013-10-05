@@ -153,7 +153,7 @@ class StringOption (object):
 
     def _loadParam (self):
         """
-        Возващает прочитанное из конфига значение из значение по умолчанию
+        Возващает прочитанное из конфига значение или значение по умолчанию
         """
         try:
             val = self._loadValue()
@@ -184,7 +184,14 @@ class StringOption (object):
         """
         Устанавливает значение параметра
         """
-        self.config.set (self.section, self.param, val)
+        self.config.set (self.section, self.param, self._prepareToWrite (val) )
+
+
+    def _prepareToWrite (self, val):
+        """
+        Преобразовать (если надо) значение к виду, в котором оно будет записано в конфиг
+        """
+        return val
 
 
     def remove_option (self):
@@ -200,7 +207,7 @@ class BooleanOption (StringOption):
     Элемент управления - wx.CheckBox
     """
     def __init__ (self, config, section, param, defaultValue):
-        StringOption.__init__ (self, config, section, param, defaultValue)
+        super (BooleanOption, self).__init__ (config, section, param, defaultValue)
 
 
     def _loadValue (self):
@@ -217,7 +224,7 @@ class DateTimeOption (StringOption):
     formatDate = "%Y-%m-%d %H:%M:%S.%f"
 
     def __init__ (self, config, section, param, defaultValue):
-        StringOption.__init__ (self, config, section, param, defaultValue)
+        super (DateTimeOption, self).__init__ (config, section, param, defaultValue)
 
 
     def _loadValue (self):
@@ -247,7 +254,7 @@ class ListOption (StringOption):
     Класс для хранения настроек в виде списка. По умолчанию элементы разделяются символом ";", но разделитель можно изменять
     """
     def __init__ (self, config, section, param, defaultValue, separator=";"):
-        StringOption.__init__ (self, config, section, param, defaultValue)
+        super (ListOption, self).__init__ (config, section, param, defaultValue)
         self.__separator = separator
 
 
@@ -257,15 +264,8 @@ class ListOption (StringOption):
         return items
 
 
-    @property
-    def value (self):
-        return self._loadParam ()
-
-
-    @value.setter
-    def value (self, val):
-        line = self.__separator.join (val)
-        self.config.set (self.section, self.param, line)
+    def _prepareToWrite (self, value):
+        return self.__separator.join (value)
 
 
 class IntegerOption (StringOption):
@@ -274,7 +274,7 @@ class IntegerOption (StringOption):
     Элемент управления - wx.SpinCtrl
     """
     def __init__ (self, config, section, param, defaultValue):
-        StringOption.__init__ (self, config, section, param, defaultValue)
+        super (IntegerOption, self).__init__ (config, section, param, defaultValue)
 
 
     def _loadValue (self):

@@ -98,6 +98,7 @@ if __name__ == '__main__':
     from test.emptycontent import EmptyContentTest
     from test.hotkey import HotKeyTest
     from test.hotkeyparser import HotKeyParserTest
+    from test.hotkeyconfig import HotKeyConfigTest
 
     #from test.guitests.tray import TrayNormalTest#, TrayIconizedTest
     from test.guitests.mainid import MainIdTest
