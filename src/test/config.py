@@ -136,6 +136,7 @@ class ConfigOptionsTest (unittest.TestCase):
             fp.write (u"intval=100\n")
             fp.write (u"boolval=True\n")
             fp.write (u"datetimeval=2012-08-25 16:18:24.171654\n")
+            fp.write (u"datetimeerror=sdfasdfasdf\n")
             fp.write (u"strval=тест\n".encode ("utf-8"))
             fp.write (u"list1=элемент 1;элемент 2;элемент 3\n".encode ("utf-8"))
             fp.write (u"list2=элемент 1\n".encode ("utf-8"))
@@ -247,6 +248,13 @@ class ConfigOptionsTest (unittest.TestCase):
         newopt = DateTimeOption (newconfig, u"Test", u"datetimeval2", None)
 
         self.assertEqual (newopt.value, newdate)
+
+
+    def testDateTimeOpt5 (self):
+        defaultValue = datetime.datetime (2012, 8, 25)
+
+        opt = DateTimeOption (self.config, u"Test", u"datetimeerror", defaultValue)
+        self.assertEqual (opt.value, defaultValue)
     
 
     # Булевы опции

@@ -1,12 +1,12 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-from outwiker.core.config import StringOption
+from outwiker.core.config import BaseOption
 from outwiker.gui.hotkey import HotKey
 from outwiker.gui.hotkeyparser import HotKeyParser
 
 
-class HotKeyOption (StringOption):
+class HotKeyOption (BaseOption):
     def __init__ (self, config, section, param, defaultValue):
         super (HotKeyOption, self).__init__ (config, section, param, defaultValue)
 

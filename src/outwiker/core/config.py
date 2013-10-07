@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from abc import ABCMeta, abstractmethod
 import ConfigParser
 import datetime
 
@@ -129,10 +130,12 @@ class Config (object):
         return self.__config.has_section (section_encoded)
 
 
-class StringOption (object):
+class BaseOption (object):
     """
-    Класс для упрощения работы со строковыми опциями
+    Базовый класс для работы с отдельными записями конфига
     """
+    __metaclass__ = ABCMeta
+
     def __init__ (self, config, section, param, defaultValue):
         """
         config - экземпляр класса core.Config
@@ -151,6 +154,45 @@ class StringOption (object):
         self.error = None
 
 
+    def remove_option (self):
+        """
+        Удалить настройку
+        """
+        self.config.remove_option (self.section, self.param)
+
+
+    @property
+    def value (self):
+        """
+        Возвращает значение парамета
+        """
+        return self._loadParam ()
+
+
+    @value.setter
+    def value (self, val):
+        """
+        Устанавливает значение параметра
+        """
+        self.config.set (self.section, self.param, self._prepareToWrite (val) )
+
+
+    @abstractmethod
+    def _loadValue (self):
+        """
+        Метод должен прочитать из конфига параметр self.param из секции self.section и вернуть значение.
+        Исключения можно игнорировать, поскольку они перехватываются выше в методе _loadParam
+        """
+        pass
+
+
+    def _prepareToWrite (self, val):
+        """
+        Преобразовать (если надо) значение к виду, в котором оно будет записано в конфиг
+        """
+        return val
+
+
     def _loadParam (self):
         """
         Возващает прочитанное из конфига значение или значение по умолчанию
@@ -164,6 +206,15 @@ class StringOption (object):
         return val
 
 
+
+class StringOption (BaseOption):
+    """
+    Класс для упрощения работы со строковыми опциями
+    """
+    def __init__ (self, config, section, param, defaultValue):
+        super (StringOption, self).__init__ (config, section, param, defaultValue)
+
+
     def _loadValue (self):
         """
         Получить значение. В производных классах этот метод переопределяется
@@ -171,37 +222,8 @@ class StringOption (object):
         return self.config.get (self.section, self.param)
 
 
-    @property
-    def value (self):
-        """
-        Возвращает знвчение парамета
-        """
-        return self._loadParam ()
 
-
-    @value.setter
-    def value (self, val):
-        """
-        Устанавливает значение параметра
-        """
-        self.config.set (self.section, self.param, self._prepareToWrite (val) )
-
-
-    def _prepareToWrite (self, val):
-        """
-        Преобразовать (если надо) значение к виду, в котором оно будет записано в конфиг
-        """
-        return val
-
-
-    def remove_option (self):
-        """
-        Удалить настройку
-        """
-        self.config.remove_option (self.section, self.param)
-
-
-class BooleanOption (StringOption):
+class BooleanOption (BaseOption):
     """
     Булевская настройка.
     Элемент управления - wx.CheckBox
@@ -217,7 +239,7 @@ class BooleanOption (StringOption):
         return self.config.getbool (self.section, self.param)
 
 
-class DateTimeOption (StringOption):
+class DateTimeOption (BaseOption):
     """
     Настройка для хранения даты и времени
     """
@@ -229,27 +251,15 @@ class DateTimeOption (StringOption):
 
     def _loadValue (self):
         strdate = self.config.get (self.section, self.param)
-
-        try:
-            date = datetime.datetime.strptime (strdate, self.formatDate)
-        except ValueError:
-            return self.defaultValue
-
-        return date
+        return datetime.datetime.strptime (strdate, self.formatDate)
 
 
-    @property
-    def value (self):
-        return self._loadParam ()
+    def _prepareToWrite (self, value):
+        return datetime.datetime.strftime (value, self.formatDate)
 
 
-    @value.setter
-    def value (self, date):
-        val = datetime.datetime.strftime (date, self.formatDate)
-        self.config.set (self.section, self.param, val)
 
-
-class ListOption (StringOption):
+class ListOption (BaseOption):
     """
     Класс для хранения настроек в виде списка. По умолчанию элементы разделяются символом ";", но разделитель можно изменять
     """
@@ -268,7 +278,7 @@ class ListOption (StringOption):
         return self.__separator.join (value)
 
 
-class IntegerOption (StringOption):
+class IntegerOption (BaseOption):
     """
     Настройка для целых чисел.
     Элемент управления - wx.SpinCtrl
