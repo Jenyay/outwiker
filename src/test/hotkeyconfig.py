@@ -120,3 +120,18 @@ MyHotKey=Ctrl+DEL""")
 
         self.assertTrue ("[TestHotKey]" in resultFile)
         self.assertTrue ("myhotkey = Ctrl+F11" in resultFile)
+
+
+    def testHotKeyWrite2 (self):
+        config = Config (self.path)
+        section = "TestHotKey"
+        paramName = "MyHotKey"
+
+        option = HotKeyOption (config, section, paramName, None)
+        option.value = None
+
+        with open (self.path) as fp:
+            resultFile = fp.read()
+
+        self.assertTrue ("[TestHotKey]" in resultFile)
+        self.assertTrue ("myhotkey =" in resultFile)

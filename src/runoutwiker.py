@@ -49,7 +49,7 @@ class OutWiker(wx.App):
         self.SetTopWindow (self.mainWnd)
 
         Application.mainWindow = self.mainWnd
-        Application.actionController = WxActionController (self.mainWnd)
+        Application.actionController = WxActionController (self.mainWnd, Application.config)
 
         registerActions(Application)
         self.mainWnd.createGui()

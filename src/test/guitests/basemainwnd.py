@@ -42,7 +42,7 @@ class BaseMainWndTest(unittest.TestCase):
 
         self.wnd = MainWindow (None, -1, "")
         Application.mainWindow = self.wnd
-        Application.actionController = WxActionController (self.wnd)
+        Application.actionController = WxActionController (self.wnd, Application.config)
         wx.GetApp().SetTopWindow (self.wnd)
 
         registerActions (Application)

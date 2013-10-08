@@ -9,6 +9,7 @@ from outwiker.gui.wxactioncontroller import WxActionController
 from outwiker.gui.baseaction import BaseAction
 from outwiker.gui.hotkey import HotKey
 from outwiker.gui.hotkeyparser import HotKeyParser
+from outwiker.gui.hotkeyoption import HotKeyOption
 from outwiker.core.application import Application
 from basemainwnd import BaseMainWndTest
 
@@ -67,11 +68,13 @@ class TestCheckAction (BaseAction):
 class ActionControllerTest (BaseMainWndTest):
     def setUp (self):
         BaseMainWndTest.setUp (self)
-        self.actionController = WxActionController(self.wnd)
+        self.actionController = WxActionController(self.wnd, Application.config)
+        Application.config.remove_section (self.actionController.configSection)
 
 
     def tearDown (self):
         BaseMainWndTest.tearDown (self)
+        Application.config.remove_section (self.actionController.configSection)
 
 
     def testRegisterAction (self):
@@ -626,6 +629,66 @@ class ActionControllerTest (BaseMainWndTest):
         self.actionController.register (action1)
 
         self.assertRaises (KeyError, self.actionController.getAction, action2.strid)
+
+
+    def testHotKeyLoadConfig (self):
+        action = TestAction()
+        hotKeyFromConfig = HotKey ("F11")
+        HotKeyOption (Application.config, self.actionController.configSection, action.strid, None).value = hotKeyFromConfig
+
+        self.actionController.register (action, HotKey ("F12", ctrl=True))
+
+        self.assertEqual (self.actionController.getHotKey (action.strid).key, "F11")
+        self.assertFalse (self.actionController.getHotKey (action.strid).ctrl)
+        self.assertFalse (self.actionController.getHotKey (action.strid).shift)
+        self.assertFalse (self.actionController.getHotKey (action.strid).alt)
+
+
+    def testHotKeySaveConfig1 (self):
+        action = TestAction()
+        hotkey = HotKey ("F11", ctrl=True)
+
+        self.actionController.register (action, hotkey)
+        self.actionController.saveHotKeys()
+
+        otherActionController = WxActionController (self.wnd, Application.config)
+        otherActionController.register (action)
+
+        self.assertEqual (otherActionController.getHotKey (action.strid).key, "F11")
+        self.assertTrue (otherActionController.getHotKey (action.strid).ctrl)
+        self.assertFalse (otherActionController.getHotKey (action.strid).shift)
+        self.assertFalse (otherActionController.getHotKey (action.strid).alt)
+
+
+    def testHotKeySaveConfig2 (self):
+        action = TestAction()
+        hotkey = HotKey ("F11", ctrl=True)
+
+        self.actionController.register (action, hotkey)
+        self.actionController.saveHotKeys()
+
+        otherActionController = WxActionController (self.wnd, Application.config)
+        otherActionController.register (action, HotKey ("F1", shift=True))
+
+        self.assertEqual (otherActionController.getHotKey (action.strid).key, "F11")
+        self.assertTrue (otherActionController.getHotKey (action.strid).ctrl)
+        self.assertFalse (otherActionController.getHotKey (action.strid).shift)
+        self.assertFalse (otherActionController.getHotKey (action.strid).alt)
+
+
+    def testHotKeySaveConfig3 (self):
+        action = TestAction()
+
+        self.actionController.register (action)
+        self.actionController.saveHotKeys()
+
+        otherActionController = WxActionController (self.wnd, Application.config)
+        otherActionController.register (action)
+
+        self.assertEqual (otherActionController.getHotKey (action.strid).key, "")
+        self.assertFalse (otherActionController.getHotKey (action.strid).ctrl)
+        self.assertFalse (otherActionController.getHotKey (action.strid).shift)
+        self.assertFalse (otherActionController.getHotKey (action.strid).alt)
 
 
     def _assertMenuItemExists (self, menu, title, hotkey):

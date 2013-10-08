@@ -383,6 +383,7 @@ class MainWindow(wx.Frame):
         Убрать за собой
         """
         self.__saveParams()
+        Application.actionController.saveHotKeys()
 
         self.tabsController.destroy()
         self.toolbars.destroyAllToolBars()

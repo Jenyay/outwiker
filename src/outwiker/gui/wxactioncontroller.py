@@ -5,6 +5,7 @@
 import wx
 
 from outwiker.gui.hotkeyparser import HotKeyParser
+from outwiker.gui.hotkeyoption import HotKeyOption
 
 
 class ActionInfo (object):
@@ -28,14 +29,22 @@ class WxActionController (object):
     """
     Класс для управления Actions - добавление / удаление пунктов меню и кнопок на панели инструментов
     """
-    def __init__ (self, mainWindow):
+    def __init__ (self, mainWindow, config):
         self._mainWindow = mainWindow
+        self._config = config
 
         # Словарь для хранения информации о действиях
         # Ключ - строковый идентификатор действия, значение - экземпляр класса ActionInfo
         self._actionsInfo = {}
 
+        self._configSection = "HotKeys"
 
+
+    @property
+    def configSection (self):
+        return self._configSection
+    
+    
     def getActionsStrId (self):
         """
         Возвращает все зарегистрированные strid
@@ -59,13 +68,35 @@ class WxActionController (object):
         """
         Добавить действие в словарь. При этом никаких элементов интерфейса не создается
         action - регистрируемое действие
-        hotkey - горячая клавиша по умолчанию для этого действия. Если в настройках задана другая горячая клавиша, то приоритет отдается клавише из настроек
+        hotkey - горячая клавиша по умолчанию для этого действия (Экземпляр класса HotKey). Если в настройках задана другая горячая клавиша, то приоритет отдается клавише из настроек
         """
         # Не должно быть одинаковых идентификаторов действий
         assert action.strid not in self._actionsInfo
 
-        actionInfo = ActionInfo (action, hotkey)
+        actionInfo = ActionInfo (action, self._getHotKeyForAction (action, hotkey) )
         self._actionsInfo[action.strid] = actionInfo
+
+
+    def _getHotKeyForAction (self, action, defaultHotKey):
+        """
+        Получить горячую клавишу. Или берется клавиша из конфига, или defaultHotKey
+        """
+        return HotKeyOption (self._config,
+                self.configSection,
+                action.strid,
+                defaultHotKey).value
+
+
+    def saveHotKeys (self):
+        """
+        Сохранить все горячие клавиши в конфиг
+        """
+        for actionInfo in self._actionsInfo.values():
+            option = HotKeyOption (self._config,
+                self.configSection,
+                actionInfo.action.strid,
+                None)
+            option.value = actionInfo.hotkey
 
 
     def appendMenuItem (self, strid, menu):

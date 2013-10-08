@@ -19,4 +19,4 @@ class HotKeyOption (BaseOption):
 
 
     def _prepareToWrite (self, value):
-        return HotKeyParser.toString (value)
+        return u"" if value == None else HotKeyParser.toString (value)
