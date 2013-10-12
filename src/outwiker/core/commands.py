@@ -645,10 +645,15 @@ def getMainWindowTitle (application):
 
 def registerActions (application):
     """
-    Зарегистрировать действия, связанные с разными типами страниц
+    Зарегистрировать действия
     """
+    # Действия, связанные с разными типами страниц
     from outwiker.pages.html.htmlpage import HtmlPageFactory
     HtmlPageFactory.registerActions (application)
+
+    from outwiker.pages.wiki.wikipage import WikiPageFactory
+    WikiPageFactory.registerActions (application)
+
 
     # Открыть...
     from outwiker.actions.open import OpenAction

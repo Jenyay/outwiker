@@ -22,6 +22,7 @@ from outwiker.gui.linkdialogcontroller import LinkDialogContoller
 from outwiker.pages.html.basehtmlpanel import BaseHtmlPanel
 from wikiconfig import WikiConfig
 from htmlgenerator import HtmlGenerator
+from actions.bold import WikiBoldAction
 
 
 class WikiPagePanel (BaseHtmlPanel):
@@ -71,7 +72,11 @@ class WikiPagePanel (BaseHtmlPanel):
 
 
     def onClose (self, event):
+        Application.actionController.removeMenuItem (WikiBoldAction.stringId)
+
         if self._wikiPanelName in self.mainWindow.toolbars:
+            Application.actionController.removeToolbarButton (WikiBoldAction.stringId)
+
             self.mainWindow.toolbars.destroyToolBar (self._wikiPanelName)
 
         super (WikiPagePanel, self).onClose (event)
@@ -121,8 +126,32 @@ class WikiPagePanel (BaseHtmlPanel):
         self.savePageTab(self._currentpage)
 
 
+    def _onSwitchToCode (self):
+        """
+        Обработка события при переключении на код страницы
+        """
+        actionController = Application.actionController
+
+        actionController.enableTools (WikiBoldAction.stringId, True)
+        super (WikiPagePanel, self)._onSwitchToCode()
+
+
+    def _onSwitchToPreview (self):
+        """
+        Обработка события при переключении на просмотр страницы
+        """
+        actionController = Application.actionController
+
+        actionController.enableTools (WikiBoldAction.stringId, False)
+        super (WikiPagePanel, self)._onSwitchToPreview()
+
+
     def _onSwitchCodeHtml (self):
         assert self._currentpage != None
+
+        actionController = Application.actionController
+
+        actionController.enableTools (WikiBoldAction.stringId, False)
 
         self.Save()
         status_item = 0
@@ -168,14 +197,24 @@ class WikiPagePanel (BaseHtmlPanel):
         """
         Добавить инструменты, связанные со шрифтами
         """
-        self.addTool (self.__fontMenu, 
-                "ID_BOLD", 
-                lambda event: self.codeEditor.turnText (u"'''", u"'''"), 
-                _(u"Bold") + "\tCtrl+B", 
-                _(u"Bold"), 
+        # self.addTool (self.__fontMenu, 
+        #         "ID_BOLD", 
+        #         lambda event: self.codeEditor.turnText (u"'''", u"'''"), 
+        #         _(u"Bold") + "\tCtrl+B", 
+        #         _(u"Bold"), 
+        #         os.path.join (self.imagesDir, "text_bold.png"),
+        #         fullUpdate=False,
+        #         panelname="wiki")
+
+        toolbarName = "wiki"
+        toolbar = self.mainWindow.toolbars[toolbarName]
+
+        # Полужирный шрифт
+        Application.actionController.appendMenuItem (WikiBoldAction.stringId, self.__fontMenu)
+        Application.actionController.appendToolbarButton (WikiBoldAction.stringId, 
+                toolbar,
                 os.path.join (self.imagesDir, "text_bold.png"),
-                fullUpdate=False,
-                panelname="wiki")
+                fullUpdate=False)
 
         self.addTool (self.__fontMenu, 
                 "ID_ITALIC", 

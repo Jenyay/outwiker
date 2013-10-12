@@ -9,6 +9,8 @@ from wikipanel import WikiPagePanel
 from wikipreferences import WikiPrefGeneralPanel
 from outwiker.core.factory import PageFactory
 from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
+from actions.bold import WikiBoldAction
+from outwiker.gui.hotkey import HotKey
 
 
 class WikiWikiPage (WikiPage):
@@ -70,3 +72,16 @@ class WikiPageFactory (PageFactory):
 
         return [ PreferencePanelInfo (generalPanel, _(u"General") ) ]
 
+
+    @staticmethod
+    def registerActions (application):
+        """
+        Зарегистрировать все действия, связанные с HTML-страницей
+        """
+        application.actionController.register (WikiBoldAction (application), 
+                HotKey ("B", ctrl=True))
+
+
+    @staticmethod
+    def removeActions (application):
+        application.actionController.removeAction (WikiBoldAction.stringId)
