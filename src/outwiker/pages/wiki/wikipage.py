@@ -9,8 +9,11 @@ from wikipanel import WikiPagePanel
 from wikipreferences import WikiPrefGeneralPanel
 from outwiker.core.factory import PageFactory
 from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
-from actions.bold import WikiBoldAction
 from outwiker.gui.hotkey import HotKey
+
+from actions.bold import WikiBoldAction
+from actions.italic import WikiItalicAction
+from actions.bolditalic import WikiBoldItalicAction
 
 
 class WikiWikiPage (WikiPage):
@@ -80,8 +83,14 @@ class WikiPageFactory (PageFactory):
         """
         application.actionController.register (WikiBoldAction (application), 
                 HotKey ("B", ctrl=True))
+        application.actionController.register (WikiItalicAction (application), 
+                HotKey ("I", ctrl=True))
+        application.actionController.register (WikiBoldItalicAction (application), 
+                HotKey ("I", ctrl=True, shift=True))
 
 
     @staticmethod
     def removeActions (application):
         application.actionController.removeAction (WikiBoldAction.stringId)
+        application.actionController.removeAction (WikiItalicAction.stringId)
+        application.actionController.removeAction (WikiBoldItalicAction.stringId)

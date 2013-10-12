@@ -22,7 +22,10 @@ from outwiker.gui.linkdialogcontroller import LinkDialogContoller
 from outwiker.pages.html.basehtmlpanel import BaseHtmlPanel
 from wikiconfig import WikiConfig
 from htmlgenerator import HtmlGenerator
+
 from actions.bold import WikiBoldAction
+from actions.italic import WikiItalicAction
+from actions.bolditalic import WikiBoldItalicAction
 
 
 class WikiPagePanel (BaseHtmlPanel):
@@ -72,14 +75,25 @@ class WikiPagePanel (BaseHtmlPanel):
 
 
     def onClose (self, event):
-        Application.actionController.removeMenuItem (WikiBoldAction.stringId)
+        self._removeActionTools()
 
         if self._wikiPanelName in self.mainWindow.toolbars:
-            Application.actionController.removeToolbarButton (WikiBoldAction.stringId)
-
             self.mainWindow.toolbars.destroyToolBar (self._wikiPanelName)
 
         super (WikiPagePanel, self).onClose (event)
+
+
+    def _removeActionTools (self):
+        actionController = Application.actionController
+
+        actionController.removeMenuItem (WikiBoldAction.stringId)
+        actionController.removeMenuItem (WikiItalicAction.stringId)
+        actionController.removeMenuItem (WikiBoldItalicAction.stringId)
+
+        if self._wikiPanelName in self.mainWindow.toolbars:
+            actionController.removeToolbarButton (WikiBoldAction.stringId)
+            actionController.removeToolbarButton (WikiItalicAction.stringId)
+            actionController.removeToolbarButton (WikiBoldItalicAction.stringId)
 
 
     @property
@@ -126,13 +140,23 @@ class WikiPagePanel (BaseHtmlPanel):
         self.savePageTab(self._currentpage)
 
 
+    def _enableActions (self, enabled):
+        actionController = Application.actionController
+
+        self.mainWindow.Freeze()
+
+        actionController.enableTools (WikiBoldAction.stringId, enabled)
+        actionController.enableTools (WikiItalicAction.stringId, enabled)
+        actionController.enableTools (WikiBoldItalicAction.stringId, enabled)
+
+        self.mainWindow.Thaw()
+
+
     def _onSwitchToCode (self):
         """
         Обработка события при переключении на код страницы
         """
-        actionController = Application.actionController
-
-        actionController.enableTools (WikiBoldAction.stringId, True)
+        self._enableActions (True)
         super (WikiPagePanel, self)._onSwitchToCode()
 
 
@@ -140,18 +164,14 @@ class WikiPagePanel (BaseHtmlPanel):
         """
         Обработка события при переключении на просмотр страницы
         """
-        actionController = Application.actionController
-
-        actionController.enableTools (WikiBoldAction.stringId, False)
+        self._enableActions (False)
         super (WikiPagePanel, self)._onSwitchToPreview()
 
 
     def _onSwitchCodeHtml (self):
         assert self._currentpage != None
 
-        actionController = Application.actionController
-
-        actionController.enableTools (WikiBoldAction.stringId, False)
+        self._enableActions (False)
 
         self.Save()
         status_item = 0
@@ -197,15 +217,6 @@ class WikiPagePanel (BaseHtmlPanel):
         """
         Добавить инструменты, связанные со шрифтами
         """
-        # self.addTool (self.__fontMenu, 
-        #         "ID_BOLD", 
-        #         lambda event: self.codeEditor.turnText (u"'''", u"'''"), 
-        #         _(u"Bold") + "\tCtrl+B", 
-        #         _(u"Bold"), 
-        #         os.path.join (self.imagesDir, "text_bold.png"),
-        #         fullUpdate=False,
-        #         panelname="wiki")
-
         toolbarName = "wiki"
         toolbar = self.mainWindow.toolbars[toolbarName]
 
@@ -216,23 +227,21 @@ class WikiPagePanel (BaseHtmlPanel):
                 os.path.join (self.imagesDir, "text_bold.png"),
                 fullUpdate=False)
 
-        self.addTool (self.__fontMenu, 
-                "ID_ITALIC", 
-                lambda event: self.codeEditor.turnText (u"''", u"''"), 
-                _(u"Italic") + "\tCtrl+I", 
-                _(u"Italic"), 
-                os.path.join (self.imagesDir, "text_italic.png"),
-                fullUpdate=False,
-                panelname="wiki")
 
-        self.addTool (self.__fontMenu, 
-                "ID_BOLD_ITALIC", 
-                lambda event: self.codeEditor.turnText (u"''''", u"''''"), 
-                _(u"Bold italic") + "\tCtrl+Shift+I", 
-                _(u"Bold italic"), 
+        # Курсивный шрифт
+        Application.actionController.appendMenuItem (WikiItalicAction.stringId, self.__fontMenu)
+        Application.actionController.appendToolbarButton (WikiItalicAction.stringId, 
+                toolbar,
+                os.path.join (self.imagesDir, "text_italic.png"),
+                fullUpdate=False)
+
+        # Полужирный курсивный шрифт
+        Application.actionController.appendMenuItem (WikiBoldItalicAction.stringId, self.__fontMenu)
+        Application.actionController.appendToolbarButton (WikiBoldItalicAction.stringId, 
+                toolbar,
                 os.path.join (self.imagesDir, "text_bold_italic.png"),
-                fullUpdate=False,
-                panelname="wiki")
+                fullUpdate=False)
+
 
         self.addTool (self.__fontMenu, 
                 "ID_UNDERLINE", 
