@@ -14,6 +14,10 @@ from outwiker.gui.hotkey import HotKey
 from actions.bold import WikiBoldAction
 from actions.italic import WikiItalicAction
 from actions.bolditalic import WikiBoldItalicAction
+from actions.underline import WikiUnderlineAction
+from actions.strike import WikiStrikeAction
+from actions.subscript import WikiSubscriptAction
+from actions.superscript import WikiSuperscriptAction
 
 
 class WikiWikiPage (WikiPage):
@@ -87,6 +91,14 @@ class WikiPageFactory (PageFactory):
                 HotKey ("I", ctrl=True))
         application.actionController.register (WikiBoldItalicAction (application), 
                 HotKey ("I", ctrl=True, shift=True))
+        application.actionController.register (WikiUnderlineAction (application), 
+                HotKey ("U", ctrl=True))
+        application.actionController.register (WikiStrikeAction (application), 
+                HotKey ("K", ctrl=True))
+        application.actionController.register (WikiSubscriptAction (application), 
+                HotKey ("=", ctrl=True))
+        application.actionController.register (WikiSuperscriptAction (application), 
+                HotKey ("+", ctrl=True))
 
 
     @staticmethod
@@ -94,3 +106,7 @@ class WikiPageFactory (PageFactory):
         application.actionController.removeAction (WikiBoldAction.stringId)
         application.actionController.removeAction (WikiItalicAction.stringId)
         application.actionController.removeAction (WikiBoldItalicAction.stringId)
+        application.actionController.removeAction (WikiUnderlineAction.stringId)
+        application.actionController.removeAction (WikiStrikeAction.stringId)
+        application.actionController.removeAction (WikiSubscriptAction.stringId)
+        application.actionController.removeAction (WikiSuperscriptAction.stringId)

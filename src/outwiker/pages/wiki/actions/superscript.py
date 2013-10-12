@@ -4,11 +4,11 @@
 from outwiker.gui.baseaction import BaseAction
 
 
-class WikiBoldItalicAction (BaseAction):
+class WikiSuperscriptAction (BaseAction):
     """
-    Выделение текста полужирным курсивным шрифтом
+    Верхний индекс
     """
-    stringId = u"WikiBoldItalic"
+    stringId = u"WikiSuperscript"
 
     def __init__ (self, application):
         self._application = application
@@ -16,12 +16,12 @@ class WikiBoldItalicAction (BaseAction):
 
     @property
     def title (self):
-        return _(u"Bold italic")
+        return _(u"Superscript")
 
 
     @property
     def description (self):
-        return _(u"Bold italic for wiki pages")
+        return _(u"Superscript for wiki pages")
     
 
     @property
@@ -34,4 +34,4 @@ class WikiBoldItalicAction (BaseAction):
         assert self._application.mainWindow.pagePanel != None
 
         codeEditor = self._application.mainWindow.pagePanel.pageView.codeEditor
-        codeEditor.turnText (u"''''", u"''''")
+        codeEditor.turnText (u"'^", u"^'")

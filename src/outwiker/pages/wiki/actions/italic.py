@@ -6,7 +6,7 @@ from outwiker.gui.baseaction import BaseAction
 
 class WikiItalicAction (BaseAction):
     """
-    Выделение текста полужирным шрифтом
+    Выделение текста курсивным шрифтом
     """
     stringId = u"WikiItalic"
 

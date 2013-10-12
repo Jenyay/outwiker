@@ -26,6 +26,10 @@ from htmlgenerator import HtmlGenerator
 from actions.bold import WikiBoldAction
 from actions.italic import WikiItalicAction
 from actions.bolditalic import WikiBoldItalicAction
+from actions.underline import WikiUnderlineAction
+from actions.strike import WikiStrikeAction
+from actions.subscript import WikiSubscriptAction
+from actions.superscript import WikiSuperscriptAction
 
 
 class WikiPagePanel (BaseHtmlPanel):
@@ -38,6 +42,16 @@ class WikiPagePanel (BaseHtmlPanel):
         self._configSection = u"wiki"
         self._hashKey = u"md5_hash"
         self.__WIKI_MENU_INDEX = 7
+
+        # Список действий, которые нужно удалять с панелей и из меню. 
+        # А еще их надо дизаблить при переходе на вкладки просмотра результата или HTML
+        self.__wikiNotationActions = [WikiBoldAction,
+                WikiItalicAction,
+                WikiBoldItalicAction,
+                WikiUnderlineAction,
+                WikiStrikeAction,
+                WikiSubscriptAction,
+                WikiSuperscriptAction]
 
         self._wikiPanelName = "wiki"
         self._fontSizeList = [u"20%", u"40%", u"60%", u"80%", u"120%", u"140%", u"160%", u"180%", u"200%"]
@@ -86,14 +100,12 @@ class WikiPagePanel (BaseHtmlPanel):
     def _removeActionTools (self):
         actionController = Application.actionController
 
-        actionController.removeMenuItem (WikiBoldAction.stringId)
-        actionController.removeMenuItem (WikiItalicAction.stringId)
-        actionController.removeMenuItem (WikiBoldItalicAction.stringId)
+        map (lambda action: actionController.removeMenuItem (action.stringId), 
+                self.__wikiNotationActions)
 
         if self._wikiPanelName in self.mainWindow.toolbars:
-            actionController.removeToolbarButton (WikiBoldAction.stringId)
-            actionController.removeToolbarButton (WikiItalicAction.stringId)
-            actionController.removeToolbarButton (WikiBoldItalicAction.stringId)
+            map (lambda action: actionController.removeToolbarButton (action.stringId), 
+                self.__wikiNotationActions)
 
 
     @property
@@ -145,9 +157,8 @@ class WikiPagePanel (BaseHtmlPanel):
 
         self.mainWindow.Freeze()
 
-        actionController.enableTools (WikiBoldAction.stringId, enabled)
-        actionController.enableTools (WikiItalicAction.stringId, enabled)
-        actionController.enableTools (WikiBoldItalicAction.stringId, enabled)
+        map (lambda action: actionController.enableTools (action.stringId, enabled), 
+                self.__wikiNotationActions)
 
         self.mainWindow.Thaw()
 
@@ -243,42 +254,36 @@ class WikiPagePanel (BaseHtmlPanel):
                 fullUpdate=False)
 
 
-        self.addTool (self.__fontMenu, 
-                "ID_UNDERLINE", 
-                lambda event: self.codeEditor.turnText (u"{+", u"+}"), 
-                _(u"Underline") + "\tCtrl+U", 
-                _(u"Underline"), 
+        # Подчеркнутый шрифт
+        Application.actionController.appendMenuItem (WikiUnderlineAction.stringId, self.__fontMenu)
+        Application.actionController.appendToolbarButton (WikiUnderlineAction.stringId, 
+                toolbar,
                 os.path.join (self.imagesDir, "text_underline.png"),
-                fullUpdate=False,
-                panelname="wiki")
+                fullUpdate=False)
 
-        self.addTool (self.__fontMenu, 
-                "ID_STRIKE", 
-                lambda event: self.codeEditor.turnText (u"{-", u"-}"), 
-                _(u"Strikethrough") + "\tCtrl+K", 
-                _(u"Strikethrough"), 
+
+        # Зачеркнутый шрифт
+        Application.actionController.appendMenuItem (WikiStrikeAction.stringId, self.__fontMenu)
+        Application.actionController.appendToolbarButton (WikiStrikeAction.stringId, 
+                toolbar,
                 os.path.join (self.imagesDir, "text_strikethrough.png"),
-                fullUpdate=False,
-                panelname="wiki")
+                fullUpdate=False)
 
-        self.addTool (self.__fontMenu, 
-                "ID_SUBSCRIPT", 
-                lambda event: self.codeEditor.turnText (u"'_", u"_'"), 
-                _(u"Subscript") + "\tCtrl+=", 
-                _(u"Subscript"), 
+
+        # Нижний индекс
+        Application.actionController.appendMenuItem (WikiSubscriptAction.stringId, self.__fontMenu)
+        Application.actionController.appendToolbarButton (WikiSubscriptAction.stringId, 
+                toolbar,
                 os.path.join (self.imagesDir, "text_subscript.png"),
-                fullUpdate=False,
-                panelname="wiki")
+                fullUpdate=False)
 
 
-        self.addTool (self.__fontMenu, 
-                "ID_SUPERSCRIPT", 
-                lambda event: self.codeEditor.turnText (u"'^", u"^'"), 
-                _(u"Superscript") + "\tCtrl++", 
-                _(u"Superscript"), 
+        # Верхний индекс
+        Application.actionController.appendMenuItem (WikiSuperscriptAction.stringId, self.__fontMenu)
+        Application.actionController.appendToolbarButton (WikiSuperscriptAction.stringId, 
+                toolbar,
                 os.path.join (self.imagesDir, "text_superscript.png"),
-                fullUpdate=False,
-                panelname="wiki")
+                fullUpdate=False)
 
 
         self.addTool (self.__fontMenu, 
