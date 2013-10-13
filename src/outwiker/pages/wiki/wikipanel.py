@@ -41,6 +41,7 @@ from actions.preformat import WikiPreformatAction
 from actions.nonparsed import WikiNonParsedAction
 from actions.listbullets import WikiListBulletsAction
 from actions.listnumbers import WikiListNumbersAction
+from actions.headings import *
 
 
 class WikiPagePanel (BaseHtmlPanel):
@@ -77,7 +78,14 @@ class WikiPagePanel (BaseHtmlPanel):
                 WikiPreformatAction,
                 WikiNonParsedAction,
                 WikiListBulletsAction,
-                WikiListNumbersAction]
+                WikiListNumbersAction,
+                WikiHeading1Action,
+                WikiHeading2Action,
+                WikiHeading3Action,
+                WikiHeading4Action,
+                WikiHeading5Action,
+                WikiHeading6Action,
+                ]
 
         self._wikiPanelName = "wiki"
 
@@ -399,60 +407,45 @@ class WikiPagePanel (BaseHtmlPanel):
         """
         Добавить инструменты для заголовочных тегов <H>
         """
-        self.addTool (self.__headingMenu, 
-                "ID_H1", 
-                lambda event: self.codeEditor.turnText (u"\n!! ", u""), 
-                _(u"H1") + "\tCtrl+1", 
-                _(u"H1"), 
+        toolbar = self.mainWindow.toolbars[self.__toolbarName]
+        menu = self.__headingMenu
+
+        Application.actionController.appendMenuItem (WikiHeading1Action.stringId, menu)
+        Application.actionController.appendToolbarButton (WikiHeading1Action.stringId, 
+                toolbar,
                 os.path.join (self.imagesDir, "text_heading_1.png"),
-                fullUpdate=False,
-                panelname="wiki")
+                fullUpdate=False)
 
-        self.addTool (self.__headingMenu, 
-                "ID_H2", 
-                lambda event: self.codeEditor.turnText (u"!!! ", u""), 
-                _(u"H2") + "\tCtrl+2", 
-                _(u"H2"), 
+        Application.actionController.appendMenuItem (WikiHeading2Action.stringId, menu)
+        Application.actionController.appendToolbarButton (WikiHeading2Action.stringId, 
+                toolbar,
                 os.path.join (self.imagesDir, "text_heading_2.png"),
-                fullUpdate=False,
-                panelname="wiki")
-        
-        self.addTool (self.__headingMenu, 
-                "ID_H3", 
-                lambda event: self.codeEditor.turnText (u"!!!! ", u""), 
-                _(u"H3") + "\tCtrl+3", 
-                _(u"H3"), 
+                fullUpdate=False)
+
+        Application.actionController.appendMenuItem (WikiHeading3Action.stringId, menu)
+        Application.actionController.appendToolbarButton (WikiHeading3Action.stringId, 
+                toolbar,
                 os.path.join (self.imagesDir, "text_heading_3.png"),
-                fullUpdate=False,
-                panelname="wiki")
+                fullUpdate=False)
 
-        self.addTool (self.__headingMenu, 
-                "ID_H4", 
-                lambda event: self.codeEditor.turnText (u"!!!!! ", u""), 
-                _(u"H4") + "\tCtrl+4", 
-                _(u"H4"), 
+        Application.actionController.appendMenuItem (WikiHeading4Action.stringId, menu)
+        Application.actionController.appendToolbarButton (WikiHeading4Action.stringId, 
+                toolbar,
                 os.path.join (self.imagesDir, "text_heading_4.png"),
-                fullUpdate=False,
-                panelname="wiki")
+                fullUpdate=False)
 
-        self.addTool (self.__headingMenu, 
-                "ID_H5", 
-                lambda event: self.codeEditor.turnText (u"!!!!!! ", u""), 
-                _(u"H5") + "\tCtrl+5", 
-                _(u"H5"), 
+        Application.actionController.appendMenuItem (WikiHeading5Action.stringId, menu)
+        Application.actionController.appendToolbarButton (WikiHeading5Action.stringId, 
+                toolbar,
                 os.path.join (self.imagesDir, "text_heading_5.png"),
-                fullUpdate=False,
-                panelname="wiki")
+                fullUpdate=False)
 
-        self.addTool (self.__headingMenu, 
-                "ID_H6", 
-                lambda event: self.codeEditor.turnText (u"!!!!!!! ", u""), 
-                _(u"H6") + "\tCtrl+6", 
-                _(u"H6"), 
+        Application.actionController.appendMenuItem (WikiHeading6Action.stringId, menu)
+        Application.actionController.appendToolbarButton (WikiHeading6Action.stringId, 
+                toolbar,
                 os.path.join (self.imagesDir, "text_heading_6.png"),
-                fullUpdate=False,
-                panelname="wiki")
-    
+                fullUpdate=False)
+
 
     def __addOtherTools (self):
         """

@@ -29,6 +29,7 @@ from actions.preformat import WikiPreformatAction
 from actions.nonparsed import WikiNonParsedAction
 from actions.listbullets import WikiListBulletsAction
 from actions.listnumbers import WikiListNumbersAction
+from actions.headings import *
 
 
 _actions = [
@@ -49,7 +50,13 @@ _actions = [
         (WikiPreformatAction, HotKey ("F", ctrl=True, alt=True)),
         (WikiNonParsedAction, None),
         (WikiListBulletsAction, HotKey ("G", ctrl=True)),
-        (WikiListNumbersAction, HotKey ("J", ctrl=True)),
+        (WikiListNumbersAction, HotKey ("G", ctrl=True)),
+        (WikiHeading1Action, HotKey ("1", ctrl=True)),
+        (WikiHeading2Action, HotKey ("2", ctrl=True)),
+        (WikiHeading3Action, HotKey ("3", ctrl=True)),
+        (WikiHeading4Action, HotKey ("4", ctrl=True)),
+        (WikiHeading5Action, HotKey ("5", ctrl=True)),
+        (WikiHeading6Action, HotKey ("6", ctrl=True)),
         ]
 
 
