@@ -21,6 +21,10 @@ from actions.superscript import WikiSuperscriptAction
 from actions.fontsizebig import WikiFontSizeBigAction
 from actions.fontsizesmall import WikiFontSizeSmallAction
 from actions.monospace import WikiMonospaceAction
+from actions.alignleft import WikiAlignLeftAction
+from actions.alignright import WikiAlignRightAction
+from actions.aligncenter import WikiAlignCenterAction
+from actions.alignjustify import WikiAlignJustifyAction
 
 
 class WikiWikiPage (WikiPage):
@@ -109,6 +113,15 @@ class WikiPageFactory (PageFactory):
         application.actionController.register (WikiMonospaceAction (application), 
                 HotKey ("7", ctrl=True))
 
+        application.actionController.register (WikiAlignLeftAction (application), 
+                HotKey ("L", ctrl=True, alt=True))
+        application.actionController.register (WikiAlignRightAction (application), 
+                HotKey ("R", ctrl=True, alt=True))
+        application.actionController.register (WikiAlignCenterAction (application), 
+                HotKey ("C", ctrl=True, alt=True))
+        application.actionController.register (WikiAlignJustifyAction (application), 
+                HotKey ("J", ctrl=True, alt=True))
+
 
     @staticmethod
     def removeActions (application):
@@ -122,3 +135,7 @@ class WikiPageFactory (PageFactory):
         application.actionController.removeAction (WikiFontSizeBigAction.stringId)
         application.actionController.removeAction (WikiFontSizeSmallAction.stringId)
         application.actionController.removeAction (WikiMonospaceAction.stringId)
+        application.actionController.removeAction (WikiAlignLeftAction.stringId)
+        application.actionController.removeAction (WikiAlignRightAction.stringId)
+        application.actionController.removeAction (WikiAlignCenterAction.stringId)
+        application.actionController.removeAction (WikiAlignJustifyAction.stringId)

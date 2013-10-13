@@ -33,6 +33,10 @@ from actions.superscript import WikiSuperscriptAction
 from actions.fontsizebig import WikiFontSizeBigAction
 from actions.fontsizesmall import WikiFontSizeSmallAction
 from actions.monospace import WikiMonospaceAction
+from actions.alignleft import WikiAlignLeftAction
+from actions.alignright import WikiAlignRightAction
+from actions.aligncenter import WikiAlignCenterAction
+from actions.alignjustify import WikiAlignJustifyAction
 
 
 class WikiPagePanel (BaseHtmlPanel):
@@ -47,6 +51,7 @@ class WikiPagePanel (BaseHtmlPanel):
         self._configSection = u"wiki"
         self._hashKey = u"md5_hash"
         self.__WIKI_MENU_INDEX = 7
+        self.__toolbarName = "wiki"
 
         # Список действий, которые нужно удалять с панелей и из меню. 
         # А еще их надо дизаблить при переходе на вкладки просмотра результата или HTML
@@ -60,7 +65,11 @@ class WikiPagePanel (BaseHtmlPanel):
                 WikiSuperscriptAction,
                 WikiFontSizeBigAction,
                 WikiFontSizeSmallAction,
-                WikiMonospaceAction]
+                WikiMonospaceAction,
+                WikiAlignLeftAction,
+                WikiAlignRightAction,
+                WikiAlignCenterAction,
+                WikiAlignJustifyAction]
 
         self._wikiPanelName = "wiki"
 
@@ -227,8 +236,7 @@ class WikiPagePanel (BaseHtmlPanel):
         """
         Добавить инструменты, связанные со шрифтами
         """
-        toolbarName = "wiki"
-        toolbar = self.mainWindow.toolbars[toolbarName]
+        toolbar = self.mainWindow.toolbars[self.__toolbarName]
 
         # Полужирный шрифт
         Application.actionController.appendMenuItem (WikiBoldAction.stringId, self.__fontMenu)
@@ -310,43 +318,40 @@ class WikiPagePanel (BaseHtmlPanel):
 
 
     def __addAlignTools (self):
-        self.addTool (self.__alignMenu, 
-                "ID_ALIGN_LEFT", 
-                lambda event: self.codeEditor.turnText (u"%left%", u""), 
-                _(u"Left align") + "\tCtrl+Alt+L", 
-                _(u"Left align"), 
+        toolbar = self.mainWindow.toolbars[self.__toolbarName]
+
+        # Выравнивание по левому краю
+        Application.actionController.appendMenuItem (WikiAlignLeftAction.stringId, self.__alignMenu)
+        Application.actionController.appendToolbarButton (WikiAlignLeftAction.stringId, 
+                toolbar,
                 os.path.join (self.imagesDir, "text_align_left.png"),
-                fullUpdate=False,
-                panelname="wiki")
+                fullUpdate=False)
 
-        self.addTool (self.__alignMenu, 
-                "ID_ALIGN_CENTER", 
-                lambda event: self.codeEditor.turnText (u"%center%", u""), 
-                _(u"Center align") + "\tCtrl+Alt+C", 
-                _(u"Center align"), 
+
+        # Выравнивание по центру
+        Application.actionController.appendMenuItem (WikiAlignCenterAction.stringId, self.__alignMenu)
+        Application.actionController.appendToolbarButton (WikiAlignCenterAction.stringId, 
+                toolbar,
                 os.path.join (self.imagesDir, "text_align_center.png"),
-                fullUpdate=False,
-                panelname="wiki")
+                fullUpdate=False)
 
-        self.addTool (self.__alignMenu, 
-                "ID_ALIGN_RIGHT", 
-                lambda event: self.codeEditor.turnText (u"%right%", u""), 
-                _(u"Right align") + "\tCtrl+Alt+R", 
-                _(u"Right align"), 
+
+        # Выравнивание по правому краю
+        Application.actionController.appendMenuItem (WikiAlignRightAction.stringId, self.__alignMenu)
+        Application.actionController.appendToolbarButton (WikiAlignRightAction.stringId, 
+                toolbar,
                 os.path.join (self.imagesDir, "text_align_right.png"),
-                fullUpdate=False,
-                panelname="wiki")
-    
-        self.addTool (self.__alignMenu, 
-                "ID_ALIGN_JUSTIFY", 
-                lambda event: self.codeEditor.turnText (u"%justify%", u""), 
-                _(u"Justify align") + "\tCtrl+Alt+J", 
-                _(u"Justify align"), 
+                fullUpdate=False)
+
+
+        # Выравнивание по ширине
+        Application.actionController.appendMenuItem (WikiAlignJustifyAction.stringId, self.__alignMenu)
+        Application.actionController.appendToolbarButton (WikiAlignJustifyAction.stringId, 
+                toolbar,
                 os.path.join (self.imagesDir, "text_align_justify.png"),
-                fullUpdate=False,
-                panelname="wiki")
+                fullUpdate=False)
 
-
+    
     def __addFormatTools (self):
         self.addTool (self.__formatMenu, 
                 "ID_PREFORMAT", 
