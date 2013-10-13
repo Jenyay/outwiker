@@ -25,6 +25,8 @@ from actions.alignleft import WikiAlignLeftAction
 from actions.alignright import WikiAlignRightAction
 from actions.aligncenter import WikiAlignCenterAction
 from actions.alignjustify import WikiAlignJustifyAction
+from actions.preformat import WikiPreformatAction
+from actions.nonparsed import WikiNonParsedAction
 
 
 _actions = [
@@ -41,7 +43,9 @@ _actions = [
         (WikiAlignLeftAction, HotKey ("L", ctrl=True, alt=True)),
         (WikiAlignRightAction, HotKey ("R", ctrl=True, alt=True)),
         (WikiAlignCenterAction, HotKey ("C", ctrl=True, alt=True)),
-        (WikiAlignJustifyAction, HotKey ("J", ctrl=True, alt=True))
+        (WikiAlignJustifyAction, HotKey ("J", ctrl=True, alt=True)),
+        (WikiPreformatAction, HotKey ("F", ctrl=True, alt=True)),
+        (WikiNonParsedAction, None)
         ]
 
 

@@ -37,6 +37,8 @@ from actions.alignleft import WikiAlignLeftAction
 from actions.alignright import WikiAlignRightAction
 from actions.aligncenter import WikiAlignCenterAction
 from actions.alignjustify import WikiAlignJustifyAction
+from actions.preformat import WikiPreformatAction
+from actions.nonparsed import WikiNonParsedAction
 
 
 class WikiPagePanel (BaseHtmlPanel):
@@ -69,7 +71,9 @@ class WikiPagePanel (BaseHtmlPanel):
                 WikiAlignLeftAction,
                 WikiAlignRightAction,
                 WikiAlignCenterAction,
-                WikiAlignJustifyAction]
+                WikiAlignJustifyAction,
+                WikiPreformatAction,
+                WikiNonParsedAction]
 
         self._wikiPanelName = "wiki"
 
@@ -237,9 +241,10 @@ class WikiPagePanel (BaseHtmlPanel):
         Добавить инструменты, связанные со шрифтами
         """
         toolbar = self.mainWindow.toolbars[self.__toolbarName]
+        menu = self.__fontMenu
 
         # Полужирный шрифт
-        Application.actionController.appendMenuItem (WikiBoldAction.stringId, self.__fontMenu)
+        Application.actionController.appendMenuItem (WikiBoldAction.stringId, menu)
         Application.actionController.appendToolbarButton (WikiBoldAction.stringId, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_bold.png"),
@@ -247,14 +252,14 @@ class WikiPagePanel (BaseHtmlPanel):
 
 
         # Курсивный шрифт
-        Application.actionController.appendMenuItem (WikiItalicAction.stringId, self.__fontMenu)
+        Application.actionController.appendMenuItem (WikiItalicAction.stringId, menu)
         Application.actionController.appendToolbarButton (WikiItalicAction.stringId, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_italic.png"),
                 fullUpdate=False)
 
         # Полужирный курсивный шрифт
-        Application.actionController.appendMenuItem (WikiBoldItalicAction.stringId, self.__fontMenu)
+        Application.actionController.appendMenuItem (WikiBoldItalicAction.stringId, menu)
         Application.actionController.appendToolbarButton (WikiBoldItalicAction.stringId, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_bold_italic.png"),
@@ -262,7 +267,7 @@ class WikiPagePanel (BaseHtmlPanel):
 
 
         # Подчеркнутый шрифт
-        Application.actionController.appendMenuItem (WikiUnderlineAction.stringId, self.__fontMenu)
+        Application.actionController.appendMenuItem (WikiUnderlineAction.stringId, menu)
         Application.actionController.appendToolbarButton (WikiUnderlineAction.stringId, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_underline.png"),
@@ -270,7 +275,7 @@ class WikiPagePanel (BaseHtmlPanel):
 
 
         # Зачеркнутый шрифт
-        Application.actionController.appendMenuItem (WikiStrikeAction.stringId, self.__fontMenu)
+        Application.actionController.appendMenuItem (WikiStrikeAction.stringId, menu)
         Application.actionController.appendToolbarButton (WikiStrikeAction.stringId, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_strikethrough.png"),
@@ -278,7 +283,7 @@ class WikiPagePanel (BaseHtmlPanel):
 
 
         # Нижний индекс
-        Application.actionController.appendMenuItem (WikiSubscriptAction.stringId, self.__fontMenu)
+        Application.actionController.appendMenuItem (WikiSubscriptAction.stringId, menu)
         Application.actionController.appendToolbarButton (WikiSubscriptAction.stringId, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_subscript.png"),
@@ -286,7 +291,7 @@ class WikiPagePanel (BaseHtmlPanel):
 
 
         # Верхний индекс
-        Application.actionController.appendMenuItem (WikiSuperscriptAction.stringId, self.__fontMenu)
+        Application.actionController.appendMenuItem (WikiSuperscriptAction.stringId, menu)
         Application.actionController.appendToolbarButton (WikiSuperscriptAction.stringId, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_superscript.png"),
@@ -294,7 +299,7 @@ class WikiPagePanel (BaseHtmlPanel):
 
 
         # Крупный шрифт
-        Application.actionController.appendMenuItem (WikiFontSizeBigAction.stringId, self.__fontMenu)
+        Application.actionController.appendMenuItem (WikiFontSizeBigAction.stringId, menu)
         Application.actionController.appendToolbarButton (WikiFontSizeBigAction.stringId, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_big.png"),
@@ -302,7 +307,7 @@ class WikiPagePanel (BaseHtmlPanel):
 
 
         # Мелкий шрифт
-        Application.actionController.appendMenuItem (WikiFontSizeSmallAction.stringId, self.__fontMenu)
+        Application.actionController.appendMenuItem (WikiFontSizeSmallAction.stringId, menu)
         Application.actionController.appendToolbarButton (WikiFontSizeSmallAction.stringId, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_small.png"),
@@ -310,7 +315,7 @@ class WikiPagePanel (BaseHtmlPanel):
 
 
         # Моноширинный шрифт
-        Application.actionController.appendMenuItem (WikiMonospaceAction.stringId, self.__fontMenu)
+        Application.actionController.appendMenuItem (WikiMonospaceAction.stringId, menu)
         Application.actionController.appendToolbarButton (WikiMonospaceAction.stringId, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_monospace.png"),
@@ -319,9 +324,10 @@ class WikiPagePanel (BaseHtmlPanel):
 
     def __addAlignTools (self):
         toolbar = self.mainWindow.toolbars[self.__toolbarName]
+        menu = self.__alignMenu
 
         # Выравнивание по левому краю
-        Application.actionController.appendMenuItem (WikiAlignLeftAction.stringId, self.__alignMenu)
+        Application.actionController.appendMenuItem (WikiAlignLeftAction.stringId, menu)
         Application.actionController.appendToolbarButton (WikiAlignLeftAction.stringId, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_align_left.png"),
@@ -329,7 +335,7 @@ class WikiPagePanel (BaseHtmlPanel):
 
 
         # Выравнивание по центру
-        Application.actionController.appendMenuItem (WikiAlignCenterAction.stringId, self.__alignMenu)
+        Application.actionController.appendMenuItem (WikiAlignCenterAction.stringId, menu)
         Application.actionController.appendToolbarButton (WikiAlignCenterAction.stringId, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_align_center.png"),
@@ -337,7 +343,7 @@ class WikiPagePanel (BaseHtmlPanel):
 
 
         # Выравнивание по правому краю
-        Application.actionController.appendMenuItem (WikiAlignRightAction.stringId, self.__alignMenu)
+        Application.actionController.appendMenuItem (WikiAlignRightAction.stringId, menu)
         Application.actionController.appendToolbarButton (WikiAlignRightAction.stringId, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_align_right.png"),
@@ -345,7 +351,7 @@ class WikiPagePanel (BaseHtmlPanel):
 
 
         # Выравнивание по ширине
-        Application.actionController.appendMenuItem (WikiAlignJustifyAction.stringId, self.__alignMenu)
+        Application.actionController.appendMenuItem (WikiAlignJustifyAction.stringId, menu)
         Application.actionController.appendToolbarButton (WikiAlignJustifyAction.stringId, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_align_justify.png"),
@@ -353,24 +359,16 @@ class WikiPagePanel (BaseHtmlPanel):
 
     
     def __addFormatTools (self):
-        self.addTool (self.__formatMenu, 
-                "ID_PREFORMAT", 
-                lambda event: self.codeEditor.turnText (u"[@", u"@]"), 
-                _(u"Preformat [@…@]") + "\tCtrl+Alt+F", 
-                _(u"Preformat [@…@]"),
-                None,
-                fullUpdate=False)
+        toolbar = self.mainWindow.toolbars[self.__toolbarName]
+        menu = self.__formatMenu
 
-        self.addTool (self.__formatMenu, 
-                "ID_NONFORMAT", 
-                lambda event: self.codeEditor.turnText (u"[=", u"=]"), 
-                _(u"Non-parsed [=…=]"), 
-                _(u"Non-parsed [=…=]"), 
-                None,
-                fullUpdate=False,
-                panelname="wiki")
+        # Форматированный текст
+        Application.actionController.appendMenuItem (WikiPreformatAction.stringId, menu)
 
-    
+        # Текст, который не нужно разбирать википарсером
+        Application.actionController.appendMenuItem (WikiNonParsedAction.stringId, menu)
+
+
     def __addListTools (self):
         """
         Добавить инструменты, связанные со списками
