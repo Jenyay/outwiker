@@ -18,6 +18,8 @@ from actions.underline import WikiUnderlineAction
 from actions.strike import WikiStrikeAction
 from actions.subscript import WikiSubscriptAction
 from actions.superscript import WikiSuperscriptAction
+from actions.fontsizebig import WikiFontSizeBigAction
+from actions.fontsizesmall import WikiFontSizeSmallAction
 
 
 class WikiWikiPage (WikiPage):
@@ -99,6 +101,10 @@ class WikiPageFactory (PageFactory):
                 HotKey ("=", ctrl=True))
         application.actionController.register (WikiSuperscriptAction (application), 
                 HotKey ("+", ctrl=True))
+        application.actionController.register (WikiFontSizeBigAction (application), 
+                HotKey (".", ctrl=True))
+        application.actionController.register (WikiFontSizeSmallAction (application), 
+                HotKey (",", ctrl=True))
 
 
     @staticmethod
@@ -110,3 +116,5 @@ class WikiPageFactory (PageFactory):
         application.actionController.removeAction (WikiStrikeAction.stringId)
         application.actionController.removeAction (WikiSubscriptAction.stringId)
         application.actionController.removeAction (WikiSuperscriptAction.stringId)
+        application.actionController.removeAction (WikiFontSizeBigAction.stringId)
+        application.actionController.removeAction (WikiFontSizeSmallAction.stringId)

@@ -30,6 +30,8 @@ from actions.underline import WikiUnderlineAction
 from actions.strike import WikiStrikeAction
 from actions.subscript import WikiSubscriptAction
 from actions.superscript import WikiSuperscriptAction
+from actions.fontsizebig import WikiFontSizeBigAction
+from actions.fontsizesmall import WikiFontSizeSmallAction
 
 
 class WikiPagePanel (BaseHtmlPanel):
@@ -39,31 +41,26 @@ class WikiPagePanel (BaseHtmlPanel):
     def __init__ (self, parent, *args, **kwds):
         super (WikiPagePanel, self).__init__ (parent, *args, **kwds)
 
+        self._application = Application
+
         self._configSection = u"wiki"
         self._hashKey = u"md5_hash"
         self.__WIKI_MENU_INDEX = 7
 
         # Список действий, которые нужно удалять с панелей и из меню. 
         # А еще их надо дизаблить при переходе на вкладки просмотра результата или HTML
-        self.__wikiNotationActions = [WikiBoldAction,
+        self.__wikiNotationActions = [
+                WikiBoldAction,
                 WikiItalicAction,
                 WikiBoldItalicAction,
                 WikiUnderlineAction,
                 WikiStrikeAction,
                 WikiSubscriptAction,
-                WikiSuperscriptAction]
+                WikiSuperscriptAction,
+                WikiFontSizeBigAction,
+                WikiFontSizeSmallAction]
 
         self._wikiPanelName = "wiki"
-        self._fontSizeList = [u"20%", u"40%", u"60%", u"80%", u"120%", u"140%", u"160%", u"180%", u"200%"]
-        self._fontSizeFormat = [(u"[----", u"----]"),
-                (u"[---", u"---]"),
-                (u"[--", u"--]"),
-                (u"[-", u"-]"),
-                (u"[+", u"+]"),
-                (u"[++", u"++]"),
-                (u"[+++", u"+++]"),
-                (u"[++++", u"++++]"),
-                (u"[+++++", u"+++++]")]
 
         self.mainWindow.toolbars[self._wikiPanelName] = WikiToolBar(self.mainWindow, self.mainWindow.auiManager)
         self.mainWindow.toolbars[self._wikiPanelName].UpdateToolBar()
@@ -286,24 +283,20 @@ class WikiPagePanel (BaseHtmlPanel):
                 fullUpdate=False)
 
 
-        self.addTool (self.__fontMenu, 
-                "ID_BIGFONT", 
-                self.__onBigFont, 
-                _(u"Big") + "\tCtrl+.", 
-                _(u"Big font"), 
+        # Крупный шрифт
+        Application.actionController.appendMenuItem (WikiFontSizeBigAction.stringId, self.__fontMenu)
+        Application.actionController.appendToolbarButton (WikiFontSizeBigAction.stringId, 
+                toolbar,
                 os.path.join (self.imagesDir, "text_big.png"),
-                fullUpdate=False,
-                panelname="wiki")
+                fullUpdate=False)
 
 
-        self.addTool (self.__fontMenu, 
-                "ID_SMALLFONT", 
-                self.__onSmallFont, 
-                _(u"Small") + "\tCtrl+,", 
-                _(u"Small font"), 
+        # Мелкий шрифт
+        Application.actionController.appendMenuItem (WikiFontSizeSmallAction.stringId, self.__fontMenu)
+        Application.actionController.appendToolbarButton (WikiFontSizeSmallAction.stringId, 
+                toolbar,
                 os.path.join (self.imagesDir, "text_small.png"),
-                fullUpdate=False,
-                panelname="wiki")
+                fullUpdate=False)
 
 
         self.addTool (self.__fontMenu, 
@@ -695,28 +688,12 @@ class WikiPagePanel (BaseHtmlPanel):
             self.codeEditor.replaceText (dlgController.result)
 
 
-    def __onBigFont (self, event):
-        self.__selectFontSize (4)
+    def selectFontSize (self, selIndex):
+        fontSizeSelector = FontSizeSelector (self._application.mainWindow)
+        notation = fontSizeSelector.selectFontSize (selIndex)
 
-
-    def __onSmallFont (self, event):
-        self.__selectFontSize (3)
-
-
-    def __selectFontSize (self, selIndex):
-        dlg = wx.SingleChoiceDialog (self, 
-                _(u"Select font size"),
-                _(u"Font size"),
-                self._fontSizeList)
-
-        selectedText = self.codeEditor.GetSelectedText()
-
-        dlg.SetSelection (selIndex)
-        if dlg.ShowModal() == wx.ID_OK:
-            sizeIndex = dlg.GetSelection()
-            self.codeEditor.turnText (self._fontSizeFormat[sizeIndex][0], self._fontSizeFormat[sizeIndex][1])
-
-        dlg.Destroy()
+        codeEditor = self._application.mainWindow.pagePanel.pageView.codeEditor
+        codeEditor.turnText (notation[0], notation[1])
 
 
     def __updateHtml (self, event):
