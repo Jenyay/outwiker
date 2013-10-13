@@ -20,6 +20,7 @@ from actions.subscript import WikiSubscriptAction
 from actions.superscript import WikiSuperscriptAction
 from actions.fontsizebig import WikiFontSizeBigAction
 from actions.fontsizesmall import WikiFontSizeSmallAction
+from actions.monospace import WikiMonospaceAction
 
 
 class WikiWikiPage (WikiPage):
@@ -105,6 +106,8 @@ class WikiPageFactory (PageFactory):
                 HotKey (".", ctrl=True))
         application.actionController.register (WikiFontSizeSmallAction (application), 
                 HotKey (",", ctrl=True))
+        application.actionController.register (WikiMonospaceAction (application), 
+                HotKey ("7", ctrl=True))
 
 
     @staticmethod
@@ -118,3 +121,4 @@ class WikiPageFactory (PageFactory):
         application.actionController.removeAction (WikiSuperscriptAction.stringId)
         application.actionController.removeAction (WikiFontSizeBigAction.stringId)
         application.actionController.removeAction (WikiFontSizeSmallAction.stringId)
+        application.actionController.removeAction (WikiMonospaceAction.stringId)

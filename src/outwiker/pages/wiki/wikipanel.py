@@ -32,6 +32,7 @@ from actions.subscript import WikiSubscriptAction
 from actions.superscript import WikiSuperscriptAction
 from actions.fontsizebig import WikiFontSizeBigAction
 from actions.fontsizesmall import WikiFontSizeSmallAction
+from actions.monospace import WikiMonospaceAction
 
 
 class WikiPagePanel (BaseHtmlPanel):
@@ -58,7 +59,8 @@ class WikiPagePanel (BaseHtmlPanel):
                 WikiSubscriptAction,
                 WikiSuperscriptAction,
                 WikiFontSizeBigAction,
-                WikiFontSizeSmallAction]
+                WikiFontSizeSmallAction,
+                WikiMonospaceAction]
 
         self._wikiPanelName = "wiki"
 
@@ -299,15 +301,13 @@ class WikiPagePanel (BaseHtmlPanel):
                 fullUpdate=False)
 
 
-        self.addTool (self.__fontMenu, 
-                "ID_MONOSPACED", 
-                lambda event: self.codeEditor.turnText (u"@@", u"@@"), 
-                _(u"Monospaced") + "\tCtrl+7", 
-                _(u"Monospaced"), 
+        # Моноширинный шрифт
+        Application.actionController.appendMenuItem (WikiMonospaceAction.stringId, self.__fontMenu)
+        Application.actionController.appendToolbarButton (WikiMonospaceAction.stringId, 
+                toolbar,
                 os.path.join (self.imagesDir, "text_monospace.png"),
-                fullUpdate=False,
-                panelname="wiki")
-    
+                fullUpdate=False)
+
 
     def __addAlignTools (self):
         self.addTool (self.__alignMenu, 
