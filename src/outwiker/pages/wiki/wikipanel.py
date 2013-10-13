@@ -39,6 +39,8 @@ from actions.aligncenter import WikiAlignCenterAction
 from actions.alignjustify import WikiAlignJustifyAction
 from actions.preformat import WikiPreformatAction
 from actions.nonparsed import WikiNonParsedAction
+from actions.listbullets import WikiListBulletsAction
+from actions.listnumbers import WikiListNumbersAction
 
 
 class WikiPagePanel (BaseHtmlPanel):
@@ -73,7 +75,9 @@ class WikiPagePanel (BaseHtmlPanel):
                 WikiAlignCenterAction,
                 WikiAlignJustifyAction,
                 WikiPreformatAction,
-                WikiNonParsedAction]
+                WikiNonParsedAction,
+                WikiListBulletsAction,
+                WikiListNumbersAction]
 
         self._wikiPanelName = "wiki"
 
@@ -357,9 +361,8 @@ class WikiPagePanel (BaseHtmlPanel):
                 os.path.join (self.imagesDir, "text_align_justify.png"),
                 fullUpdate=False)
 
-    
+
     def __addFormatTools (self):
-        toolbar = self.mainWindow.toolbars[self.__toolbarName]
         menu = self.__formatMenu
 
         # Форматированный текст
@@ -373,24 +376,24 @@ class WikiPagePanel (BaseHtmlPanel):
         """
         Добавить инструменты, связанные со списками
         """
-        self.addTool (self.__listMenu, 
-                "ID_MARK_LIST", 
-                lambda event: self.codeEditor.turnList (u'* '), 
-                _(u"Bullets list") + "\tCtrl+G", 
-                _(u"Bullets list"), 
-                os.path.join (self.imagesDir, "text_list_bullets.png"),
-                fullUpdate=False,
-                panelname="wiki")
+        toolbar = self.mainWindow.toolbars[self.__toolbarName]
+        menu = self.__listMenu
 
-        self.addTool (self.__listMenu, 
-                "ID_NUMBER_LIST", 
-                lambda event: self.codeEditor.turnList (u'# '), 
-                _(u"Numbers list") + "\tCtrl+J", 
-                _(u"Numbers list"), 
+        # Ненумерованный список
+        Application.actionController.appendMenuItem (WikiListBulletsAction.stringId, menu)
+        Application.actionController.appendToolbarButton (WikiListBulletsAction.stringId, 
+                toolbar,
+                os.path.join (self.imagesDir, "text_list_bullets.png"),
+                fullUpdate=False)
+
+
+        # Нумерованный список
+        Application.actionController.appendMenuItem (WikiListNumbersAction.stringId, menu)
+        Application.actionController.appendToolbarButton (WikiListNumbersAction.stringId, 
+                toolbar,
                 os.path.join (self.imagesDir, "text_list_numbers.png"),
-                fullUpdate=False,
-                panelname="wiki")
-    
+                fullUpdate=False)
+
 
     def __addHTools (self):
         """

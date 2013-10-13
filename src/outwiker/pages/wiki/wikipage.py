@@ -27,6 +27,8 @@ from actions.aligncenter import WikiAlignCenterAction
 from actions.alignjustify import WikiAlignJustifyAction
 from actions.preformat import WikiPreformatAction
 from actions.nonparsed import WikiNonParsedAction
+from actions.listbullets import WikiListBulletsAction
+from actions.listnumbers import WikiListNumbersAction
 
 
 _actions = [
@@ -45,7 +47,9 @@ _actions = [
         (WikiAlignCenterAction, HotKey ("C", ctrl=True, alt=True)),
         (WikiAlignJustifyAction, HotKey ("J", ctrl=True, alt=True)),
         (WikiPreformatAction, HotKey ("F", ctrl=True, alt=True)),
-        (WikiNonParsedAction, None)
+        (WikiNonParsedAction, None),
+        (WikiListBulletsAction, HotKey ("G", ctrl=True)),
+        (WikiListNumbersAction, HotKey ("J", ctrl=True)),
         ]
 
 
