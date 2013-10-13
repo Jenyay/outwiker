@@ -27,6 +27,24 @@ from actions.aligncenter import WikiAlignCenterAction
 from actions.alignjustify import WikiAlignJustifyAction
 
 
+_actions = [
+        (WikiBoldAction, HotKey ("B", ctrl=True)),
+        (WikiItalicAction, HotKey ("B", ctrl=True)),
+        (WikiBoldItalicAction,  HotKey ("I", ctrl=True, shift=True)),
+        (WikiUnderlineAction, HotKey ("U", ctrl=True)),
+        (WikiStrikeAction, HotKey ("K", ctrl=True)),
+        (WikiSubscriptAction, HotKey ("=", ctrl=True)),
+        (WikiSuperscriptAction, HotKey ("+", ctrl=True)),
+        (WikiFontSizeBigAction, HotKey (".", ctrl=True)),
+        (WikiFontSizeSmallAction, HotKey (",", ctrl=True)),
+        (WikiMonospaceAction, HotKey ("7", ctrl=True)),
+        (WikiAlignLeftAction, HotKey ("L", ctrl=True, alt=True)),
+        (WikiAlignRightAction, HotKey ("R", ctrl=True, alt=True)),
+        (WikiAlignCenterAction, HotKey ("C", ctrl=True, alt=True)),
+        (WikiAlignJustifyAction, HotKey ("J", ctrl=True, alt=True))
+        ]
+
+
 class WikiWikiPage (WikiPage):
     """
     Класс wiki-страниц
@@ -92,50 +110,9 @@ class WikiPageFactory (PageFactory):
         """
         Зарегистрировать все действия, связанные с HTML-страницей
         """
-        application.actionController.register (WikiBoldAction (application), 
-                HotKey ("B", ctrl=True))
-        application.actionController.register (WikiItalicAction (application), 
-                HotKey ("I", ctrl=True))
-        application.actionController.register (WikiBoldItalicAction (application), 
-                HotKey ("I", ctrl=True, shift=True))
-        application.actionController.register (WikiUnderlineAction (application), 
-                HotKey ("U", ctrl=True))
-        application.actionController.register (WikiStrikeAction (application), 
-                HotKey ("K", ctrl=True))
-        application.actionController.register (WikiSubscriptAction (application), 
-                HotKey ("=", ctrl=True))
-        application.actionController.register (WikiSuperscriptAction (application), 
-                HotKey ("+", ctrl=True))
-        application.actionController.register (WikiFontSizeBigAction (application), 
-                HotKey (".", ctrl=True))
-        application.actionController.register (WikiFontSizeSmallAction (application), 
-                HotKey (",", ctrl=True))
-        application.actionController.register (WikiMonospaceAction (application), 
-                HotKey ("7", ctrl=True))
-
-        application.actionController.register (WikiAlignLeftAction (application), 
-                HotKey ("L", ctrl=True, alt=True))
-        application.actionController.register (WikiAlignRightAction (application), 
-                HotKey ("R", ctrl=True, alt=True))
-        application.actionController.register (WikiAlignCenterAction (application), 
-                HotKey ("C", ctrl=True, alt=True))
-        application.actionController.register (WikiAlignJustifyAction (application), 
-                HotKey ("J", ctrl=True, alt=True))
+        map (lambda actionTuple: application.actionController.register (actionTuple[0](application), actionTuple[1] ), _actions)
 
 
     @staticmethod
     def removeActions (application):
-        application.actionController.removeAction (WikiBoldAction.stringId)
-        application.actionController.removeAction (WikiItalicAction.stringId)
-        application.actionController.removeAction (WikiBoldItalicAction.stringId)
-        application.actionController.removeAction (WikiUnderlineAction.stringId)
-        application.actionController.removeAction (WikiStrikeAction.stringId)
-        application.actionController.removeAction (WikiSubscriptAction.stringId)
-        application.actionController.removeAction (WikiSuperscriptAction.stringId)
-        application.actionController.removeAction (WikiFontSizeBigAction.stringId)
-        application.actionController.removeAction (WikiFontSizeSmallAction.stringId)
-        application.actionController.removeAction (WikiMonospaceAction.stringId)
-        application.actionController.removeAction (WikiAlignLeftAction.stringId)
-        application.actionController.removeAction (WikiAlignRightAction.stringId)
-        application.actionController.removeAction (WikiAlignCenterAction.stringId)
-        application.actionController.removeAction (WikiAlignJustifyAction.stringId)
+        map (lambda actionTuple: application.actionController.removeAction (actionTuple[0].stringId), _actions)
