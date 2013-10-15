@@ -48,6 +48,9 @@ from actions.equation import WikiEquationAction
 from actions.escapehtml import WikiEscapeHtmlAction
 from actions.openhtmlcode import WikiOpenHtmlCodeAction
 from actions.updatehtml import WikiUpdateHtmlAction
+from actions.attachlist import WikiAttachListAction
+from actions.childlist import WikiChildListAction
+from actions.include import WikiIncludeAction
 
 
 class WikiPagePanel (BaseHtmlPanel):
@@ -98,6 +101,9 @@ class WikiPagePanel (BaseHtmlPanel):
                 WikiLineBreakAction,
                 WikiEquationAction,
                 WikiEscapeHtmlAction,
+                WikiAttachListAction,
+                WikiChildListAction,
+                WikiIncludeAction,
                 ]
 
         self._wikiPanelName = "wiki"
@@ -581,35 +587,20 @@ class WikiPagePanel (BaseHtmlPanel):
     @property
     def commandsMenu (self):
         """
-        Свойство возвращает меню с вики-командами
+        Свойство возвращает меню с викикомандами
         """
         return self.__commandsMenu
 
-    
+
     def __addCommandsTools (self):
-        self.addTool (self.commandsMenu, 
-                "ID_ATTACHLIST", 
-                lambda event: self.codeEditor.replaceText (u"(:attachlist:)"), 
-                _(u"Attachment (:attachlist:)"), 
-                _(u"Attachment (:attachlist:)"), 
-                None,
-                fullUpdate=False)
+        # Команда (:attachlist:)
+        Application.actionController.appendMenuItem (WikiAttachListAction.stringId, self.commandsMenu)
 
-        self.addTool (self.commandsMenu, 
-                "ID_CHILDLIST", 
-                lambda event: self.codeEditor.replaceText (u"(:childlist:)"), 
-                _(u"Children (:childlist:)"), 
-                _(u"Children (:childlist:)"), 
-                None,
-                fullUpdate=False)
+        # Команда (:childlist:)
+        Application.actionController.appendMenuItem (WikiChildListAction.stringId, self.commandsMenu)
 
-        self.addTool (self.commandsMenu, 
-                "ID_INCLUDE", 
-                lambda event: self.codeEditor.turnText (u"(:include ", u":)"), 
-                _(u"Include (:include ...:)"), 
-                _(u"Include (:include ...:)"), 
-                None,
-                fullUpdate=False)
+        # Команда (:include:)
+        Application.actionController.appendMenuItem (WikiIncludeAction.stringId, self.commandsMenu)
 
 
     @BaseHtmlPanel.selectedPageIndex.setter
@@ -629,7 +620,7 @@ class WikiPagePanel (BaseHtmlPanel):
     def openHtmlCode (self):
         self.selectedPageIndex = self.HTML_RESULT_PAGE_INDEX
 
-    
+
     def generateHtml (self, page):
         style = Style()
         stylepath = style.getPageStyle (page)
@@ -678,8 +669,3 @@ class WikiPagePanel (BaseHtmlPanel):
             self._onSwitchToPreview()
         elif self.selectedPageIndex == self.HTML_RESULT_PAGE_INDEX:
             self._onSwitchCodeHtml()
-
-
-    def __updateHtml (self, event):
-        self.updateHtml()
-

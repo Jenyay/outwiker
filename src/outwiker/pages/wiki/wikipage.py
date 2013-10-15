@@ -39,6 +39,9 @@ from actions.equation import WikiEquationAction
 from actions.escapehtml import WikiEscapeHtmlAction
 from actions.openhtmlcode import WikiOpenHtmlCodeAction
 from actions.updatehtml import WikiUpdateHtmlAction
+from actions.attachlist import WikiAttachListAction
+from actions.childlist import WikiChildListAction
+from actions.include import WikiIncludeAction
 
 
 _actions = [
@@ -75,6 +78,9 @@ _actions = [
         (WikiEscapeHtmlAction, None),
         (WikiOpenHtmlCodeAction, HotKey ("F4", shift=True)),
         (WikiUpdateHtmlAction, HotKey ("F4", ctrl=True)),
+        (WikiAttachListAction, None),
+        (WikiChildListAction, None),
+        (WikiIncludeAction, None),
         ]
 
 
