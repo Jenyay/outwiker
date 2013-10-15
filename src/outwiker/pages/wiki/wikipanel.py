@@ -14,11 +14,8 @@ from outwiker.core.style import Style
 
 from .wikieditor import WikiEditor
 from .wikitoolbar import WikiToolBar
-from .thumbdialogcontroller import ThumbDialogController
-from .linkcreator import LinkCreator
 from outwiker.gui.basetextpanel import BaseTextPanel
 from outwiker.gui.htmltexteditor import HtmlTextEditor
-from outwiker.gui.linkdialogcontroller import LinkDialogContoller
 from outwiker.pages.html.basehtmlpanel import BaseHtmlPanel
 from wikiconfig import WikiConfig
 from htmlgenerator import HtmlGenerator
@@ -42,6 +39,13 @@ from actions.nonparsed import WikiNonParsedAction
 from actions.listbullets import WikiListBulletsAction
 from actions.listnumbers import WikiListNumbersAction
 from actions.headings import *
+from actions.thumb import WikiThumbAction
+from actions.link import WikiLinkAction
+from actions.anchor import WikiAnchorAction
+from actions.horline import WikiHorLineAction
+from actions.linebreak import WikiLineBreakAction
+from actions.equation import WikiEquationAction
+from actions.escapehtml import WikiEscapeHtmlAction
 
 
 class WikiPagePanel (BaseHtmlPanel):
@@ -85,6 +89,13 @@ class WikiPagePanel (BaseHtmlPanel):
                 WikiHeading4Action,
                 WikiHeading5Action,
                 WikiHeading6Action,
+                WikiThumbAction,
+                WikiLinkAction,
+                WikiAnchorAction,
+                WikiHorLineAction,
+                WikiLineBreakAction,
+                WikiEquationAction,
+                WikiEscapeHtmlAction,
                 ]
 
         self._wikiPanelName = "wiki"
@@ -451,72 +462,61 @@ class WikiPagePanel (BaseHtmlPanel):
         """
         Добавить остальные инструменты
         """
-        self.addTool (self.__wikiMenu, 
-                "ID_THUMB", 
-                self.__onThumb,
-                _(u"Thumbnail") + "\tCtrl+M", 
-                _(u"Thumbnail"), 
+        # Добавить миниатюру
+        toolbar = self.mainWindow.toolbars[self.__toolbarName]
+        menu = self.__wikiMenu
+
+        Application.actionController.appendMenuItem (WikiThumbAction.stringId, menu)
+        Application.actionController.appendToolbarButton (WikiThumbAction.stringId, 
+                toolbar,
                 os.path.join (self.imagesDir, "images.png"),
-                fullUpdate=False,
-                panelname="wiki")
+                fullUpdate=False)
 
-        self.addTool (self.__wikiMenu, 
-                "ID_LINK", 
-                self.__onInsertLink, 
-                _(u"Link") + "\tCtrl+L", 
-                _(u'Link'), 
+
+        # Вставка ссылок
+        Application.actionController.appendMenuItem (WikiLinkAction.stringId, menu)
+        Application.actionController.appendToolbarButton (WikiLinkAction.stringId, 
+                toolbar,
                 os.path.join (self.imagesDir, "link.png"),
-                fullUpdate=False,
-                panelname="wiki")
+                fullUpdate=False)
 
 
-        self.addTool (self.__wikiMenu, 
-                "ID_ANCHOR", 
-                lambda event: self.codeEditor.turnText (u'[[#', u']]'), 
-                _(u"Anchor") + "\tCtrl+Alt+N",
-                _(u'Anchor'), 
+        # Вставка якоря
+        Application.actionController.appendMenuItem (WikiAnchorAction.stringId, menu)
+        Application.actionController.appendToolbarButton (WikiAnchorAction.stringId, 
+                toolbar,
                 os.path.join (self.imagesDir, "anchor.png"),
-                fullUpdate=False,
-                panelname="wiki")
+                fullUpdate=False)
 
 
-        self.addTool (self.__wikiMenu, 
-                "ID_HORLINE", 
-                lambda event: self.codeEditor.replaceText (u'----'), 
-                _(u"Horizontal line") + "\tCtrl+H", 
-                _(u"Horizontal line"), 
+        # Вставка горизонтальной линии
+        Application.actionController.appendMenuItem (WikiHorLineAction.stringId, menu)
+        Application.actionController.appendToolbarButton (WikiHorLineAction.stringId, 
+                toolbar,
                 os.path.join (self.imagesDir, "text_horizontalrule.png"),
-                fullUpdate=False,
-                panelname="wiki")
+                fullUpdate=False)
 
-        self.addTool (self.__wikiMenu, 
-                "ID_LINEBREAK", 
-                lambda event: self.codeEditor.replaceText (u'[[<<]]'), 
-                _(u"Line break") + "\tCtrl+Return", 
-                _(u"Line break"), 
+
+        # Вставка разрыва страницы
+        Application.actionController.appendMenuItem (WikiLineBreakAction.stringId, menu)
+        Application.actionController.appendToolbarButton (WikiLineBreakAction.stringId, 
+                toolbar,
                 os.path.join (self.imagesDir, "linebreak.png"),
-                fullUpdate=False,
-                panelname="wiki")
+                fullUpdate=False)
 
-        self.addTool (self.__wikiMenu, 
-                "ID_EQUATION", 
-                lambda event: self.codeEditor.turnText (u'{$', u'$}'), 
-                _(u"Equation") + "\tCtrl+Q", 
-                _(u'Equation'), 
+
+        # Вставка формулы
+        Application.actionController.appendMenuItem (WikiEquationAction.stringId, menu)
+        Application.actionController.appendToolbarButton (WikiEquationAction.stringId, 
+                toolbar,
                 os.path.join (self.imagesDir, "equation.png"),
-                fullUpdate=False,
-                panelname="wiki")
+                fullUpdate=False)
+
 
         self.__wikiMenu.AppendSeparator()
 
-        self.addTool (self.__wikiMenu, 
-                "ID_ESCAPEHTML", 
-                self.codeEditor.escapeHtml, 
-                _(u"Convert HTML Symbols"), 
-                _(u"Convert HTML Symbols"), 
-                None,
-                fullUpdate=False,
-                panelname="wiki")
+        # Преобразовать некоторые символы в и их HTML-представление
+        Application.actionController.appendMenuItem (WikiEscapeHtmlAction.stringId, menu)
 
 
     def __createCustomTools (self):
@@ -652,7 +652,7 @@ class WikiPagePanel (BaseHtmlPanel):
         super (WikiPagePanel, self).removeGui ()
         self.mainWindow.mainMenu.Remove (self.__WIKI_MENU_INDEX - 1)
 
-    
+
     def _getAttachString (self, fnames):
         """
         Функция возвращает текст, который будет вставлен на страницу при вставке выбранных прикрепленных файлов из панели вложений
@@ -668,31 +668,6 @@ class WikiPagePanel (BaseHtmlPanel):
                 text += "\n"
 
         return text
-
-
-    def __onInsertLink (self, event):
-        linkController = LinkDialogContoller (self, self.codeEditor.GetSelectedText())
-        if linkController.showDialog() == wx.ID_OK:
-            linkCreator = LinkCreator (self.config)
-            text = linkCreator.create (linkController.link, linkController.comment)
-            self.codeEditor.replaceText (text)
-
-
-    def __onThumb (self, event):
-        dlgController = ThumbDialogController (self, 
-                self._currentpage, 
-                self.codeEditor.GetSelectedText())
-
-        if dlgController.showDialog() == wx.ID_OK:
-            self.codeEditor.replaceText (dlgController.result)
-
-
-    def selectFontSize (self, selIndex):
-        fontSizeSelector = FontSizeSelector (self._application.mainWindow)
-        notation = fontSizeSelector.selectFontSize (selIndex)
-
-        codeEditor = self._application.mainWindow.pagePanel.pageView.codeEditor
-        codeEditor.turnText (notation[0], notation[1])
 
 
     def __updateHtml (self, event):
