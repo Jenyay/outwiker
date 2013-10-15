@@ -46,6 +46,8 @@ from actions.horline import WikiHorLineAction
 from actions.linebreak import WikiLineBreakAction
 from actions.equation import WikiEquationAction
 from actions.escapehtml import WikiEscapeHtmlAction
+from actions.openhtmlcode import WikiOpenHtmlCodeAction
+from actions.updatehtml import WikiUpdateHtmlAction
 
 
 class WikiPagePanel (BaseHtmlPanel):
@@ -135,12 +137,19 @@ class WikiPagePanel (BaseHtmlPanel):
     def _removeActionTools (self):
         actionController = Application.actionController
 
+        # Удалим элементы меню
         map (lambda action: actionController.removeMenuItem (action.stringId), 
                 self.__wikiNotationActions)
 
+        actionController.removeMenuItem (WikiOpenHtmlCodeAction.stringId)
+        actionController.removeMenuItem (WikiUpdateHtmlAction.stringId)
+
+        # Удалим кнопки с панелей инструментов
         if self._wikiPanelName in self.mainWindow.toolbars:
             map (lambda action: actionController.removeToolbarButton (action.stringId), 
                 self.__wikiNotationActions)
+
+            actionController.removeToolbarButton (WikiOpenHtmlCodeAction.stringId)
 
 
     @property
@@ -535,25 +544,15 @@ class WikiPagePanel (BaseHtmlPanel):
 
         self._addRenderTools()
 
-        self.addTool (self.__wikiMenu, 
-                "ID_HTMLCODE", 
-                self.__openHtmlCode, 
-                _(u"HTML Code") + "\tShift+F4", 
-                _(u"HTML Code"), 
+        # Переключиться на код HTML
+        Application.actionController.appendMenuItem (WikiOpenHtmlCodeAction.stringId, self.__wikiMenu)
+        Application.actionController.appendToolbarButton (WikiOpenHtmlCodeAction.stringId, 
+                self.mainWindow.toolbars[self.mainWindow.GENERAL_TOOLBAR_STR],
                 os.path.join (self.imagesDir, "html.png"),
-                True,
-                fullUpdate=False,
-                panelname=self.mainWindow.GENERAL_TOOLBAR_STR)
+                fullUpdate=False)
 
-        self.addTool (self.__wikiMenu, 
-                "ID_UPDATE_HTML", 
-                self.__updateHtml, 
-                _(u"Update HTML Code") + "\tCtrl+F4", 
-                _(u"Update HTML Code"), 
-                None,
-                True,
-                fullUpdate=False,
-                panelname="wiki")
+        # Обновить код HTML
+        Application.actionController.appendMenuItem (WikiUpdateHtmlAction.stringId, self.__wikiMenu)
 
         self.toolsMenu.AppendSeparator()
 
@@ -627,7 +626,7 @@ class WikiPagePanel (BaseHtmlPanel):
         BaseHtmlPanel.selectedPageIndex.fset (self, selectedPage)
 
 
-    def __openHtmlCode (self, event):
+    def openHtmlCode (self):
         self.selectedPageIndex = self.HTML_RESULT_PAGE_INDEX
 
     
@@ -670,7 +669,7 @@ class WikiPagePanel (BaseHtmlPanel):
         return text
 
 
-    def __updateHtml (self, event):
+    def updateHtml (self):
         """
         Сбросить кэш для того, чтобы заново сделать HTML
         """
@@ -679,4 +678,8 @@ class WikiPagePanel (BaseHtmlPanel):
             self._onSwitchToPreview()
         elif self.selectedPageIndex == self.HTML_RESULT_PAGE_INDEX:
             self._onSwitchCodeHtml()
+
+
+    def __updateHtml (self, event):
+        self.updateHtml()
 

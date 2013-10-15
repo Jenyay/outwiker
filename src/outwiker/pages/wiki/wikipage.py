@@ -37,6 +37,8 @@ from actions.horline import WikiHorLineAction
 from actions.linebreak import WikiLineBreakAction
 from actions.equation import WikiEquationAction
 from actions.escapehtml import WikiEscapeHtmlAction
+from actions.openhtmlcode import WikiOpenHtmlCodeAction
+from actions.updatehtml import WikiUpdateHtmlAction
 
 
 _actions = [
@@ -71,6 +73,8 @@ _actions = [
         (WikiLineBreakAction, HotKey ("Return", ctrl=True)),
         (WikiEquationAction, HotKey ("Q", ctrl=True)),
         (WikiEscapeHtmlAction, None),
+        (WikiOpenHtmlCodeAction, HotKey ("F4", shift=True)),
+        (WikiUpdateHtmlAction, HotKey ("F4", ctrl=True)),
         ]
 
 
