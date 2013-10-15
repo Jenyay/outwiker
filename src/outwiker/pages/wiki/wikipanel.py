@@ -51,6 +51,7 @@ from actions.updatehtml import WikiUpdateHtmlAction
 from actions.attachlist import WikiAttachListAction
 from actions.childlist import WikiChildListAction
 from actions.include import WikiIncludeAction
+from outwiker.pages.html.actions.switchcoderesult import SwitchCodeResultAction
 
 
 class WikiPagePanel (BaseHtmlPanel):
@@ -149,6 +150,7 @@ class WikiPagePanel (BaseHtmlPanel):
 
         actionController.removeMenuItem (WikiOpenHtmlCodeAction.stringId)
         actionController.removeMenuItem (WikiUpdateHtmlAction.stringId)
+        actionController.removeMenuItem (SwitchCodeResultAction.stringId)
 
         # Удалим кнопки с панелей инструментов
         if self._wikiPanelName in self.mainWindow.toolbars:
@@ -156,6 +158,7 @@ class WikiPagePanel (BaseHtmlPanel):
                 self.__wikiNotationActions)
 
             actionController.removeToolbarButton (WikiOpenHtmlCodeAction.stringId)
+            actionController.removeToolbarButton (SwitchCodeResultAction.stringId)
 
 
     @property
@@ -532,6 +535,14 @@ class WikiPagePanel (BaseHtmlPanel):
 
         # Преобразовать некоторые символы в и их HTML-представление
         Application.actionController.appendMenuItem (WikiEscapeHtmlAction.stringId, menu)
+
+
+    def _addRenderTools (self):
+        Application.actionController.appendMenuItem (SwitchCodeResultAction.stringId, self.toolsMenu)
+        Application.actionController.appendToolbarButton (SwitchCodeResultAction.stringId, 
+                self.mainWindow.toolbars[self.mainWindow.GENERAL_TOOLBAR_STR],
+                os.path.join (self.imagesDir, "render.png"),
+                fullUpdate=False)
 
 
     def __createCustomTools (self):

@@ -17,6 +17,7 @@ from .htmltoolbar import HtmlToolBar
 from .basehtmlpanel import BaseHtmlPanel
 from actions.bold import HtmlBoldAction
 from actions.autolinewrap import HtmlAutoLineWrap
+from actions.switchcoderesult import SwitchCodeResultAction
 
 
 class HtmlPagePanel (BaseHtmlPanel):
@@ -42,17 +43,26 @@ class HtmlPagePanel (BaseHtmlPanel):
     def onClose (self, event):
         Application.onPageUpdate -= self.__onPageUpdate
 
-        # Убрать за собой все кнопки и элементы меню
-        Application.actionController.removeMenuItem (HtmlBoldAction.stringId)
-        Application.actionController.removeMenuItem (HtmlAutoLineWrap.stringId)
+        self._removeActionTools()
 
         if self._htmlPanelName in self.mainWindow.toolbars:
-            Application.actionController.removeToolbarButton (HtmlBoldAction.stringId)
-            Application.actionController.removeToolbarButton (HtmlAutoLineWrap.stringId)
-
             self.mainWindow.toolbars.destroyToolBar (self._htmlPanelName)
 
         super (HtmlPagePanel, self).onClose (event)
+
+
+    def _removeActionTools (self):
+        actionController = Application.actionController
+
+        Application.actionController.removeMenuItem (HtmlBoldAction.stringId)
+        Application.actionController.removeMenuItem (HtmlAutoLineWrap.stringId)
+        Application.actionController.removeMenuItem (SwitchCodeResultAction.stringId)
+        
+        # Удалим кнопки с панелей инструментов
+        if self._htmlPanelName in self.mainWindow.toolbars:
+            Application.actionController.removeToolbarButton (HtmlBoldAction.stringId)
+            Application.actionController.removeToolbarButton (HtmlAutoLineWrap.stringId)
+            Application.actionController.removeToolbarButton (SwitchCodeResultAction.stringId)
 
 
     def _onSwitchToCode (self):
@@ -127,7 +137,6 @@ class HtmlPagePanel (BaseHtmlPanel):
         self.mainWindow.Freeze()
 
         self.__createLineWrapTools ()
-        self._addRenderTools()
         self.toolsMenu.AppendSeparator()
 
         self.__htmlMenu.AppendSubMenu (self.__headingMenu, _(u"Heading"))
@@ -144,12 +153,21 @@ class HtmlPagePanel (BaseHtmlPanel):
         self.__addListTools()
         self.__addFormatTools()
         self.__addOtherTools()
+        self._addRenderTools()
 
         Application.mainWindow.updateShortcuts()
 
         self.mainWindow.Thaw()
 
         self.mainWindow.mainMenu.Insert (self.__HTML_MENU_INDEX, self.__htmlMenu, _(u"Html"))
+
+
+    def _addRenderTools (self):
+        Application.actionController.appendMenuItem (SwitchCodeResultAction.stringId, self.toolsMenu)
+        Application.actionController.appendToolbarButton (SwitchCodeResultAction.stringId, 
+                self.mainWindow.toolbars[self.mainWindow.GENERAL_TOOLBAR_STR],
+                os.path.join (self.imagesDir, "render.png"),
+                fullUpdate=False)
 
 
     def __addFontTools (self):

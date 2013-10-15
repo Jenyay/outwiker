@@ -14,6 +14,7 @@ from outwiker.pages.html.htmlpanel import HtmlPagePanel
 
 from actions.bold import HtmlBoldAction
 from actions.autolinewrap import HtmlAutoLineWrap
+from actions.switchcoderesult import SwitchCodeResultAction
 
 
 class HtmlWikiPage (WikiPage):
@@ -70,12 +71,15 @@ class HtmlPageFactory (PageFactory):
         application.actionController.register (HtmlBoldAction (application), 
                 HotKey ("B", ctrl=True))
         application.actionController.register (HtmlAutoLineWrap (application))
+        application.actionController.register (SwitchCodeResultAction (application),
+                HotKey ("F4"))
 
 
     @staticmethod
     def removeActions (application):
         application.actionController.removeAction (HtmlBoldAction.stringId)
         application.actionController.removeAction (HtmlAutoLineWrap.stringId)
+        application.actionController.removeAction (SwitchCodeResultAction.stringId)
 
 
     # Название страницы, показываемое пользователю

@@ -348,20 +348,14 @@ class BaseHtmlPanel(BaseTextPanel):
         return None
 
 
-    def _addRenderTools (self):
-        self.addTool (self.toolsMenu, 
-                "ID_RENDER", 
-                self.__switchView, 
-                _(u"&Code / Preview") + "\tF4", 
-                _(u"Code / Preview"), 
-                os.path.join (self.imagesDir, "render.png"),
-                True,
-                False,
-                panelname=self.mainWindow.GENERAL_TOOLBAR_STR)
-
-
-
     def __switchView (self, event):
+        self.switchCodeResult()
+
+
+    def switchCodeResult (self):
+        """
+        Переключение между кодом и результатом
+        """
         if self._currentpage == None:
             return
 
@@ -369,4 +363,3 @@ class BaseHtmlPanel(BaseTextPanel):
             self.selectedPageIndex = self.RESULT_PAGE_INDEX
         else:
             self.selectedPageIndex = self.CODE_PAGE_INDEX
-
