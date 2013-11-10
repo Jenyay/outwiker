@@ -26,6 +26,9 @@ from actions.alignleft import HtmlAlignLeftAction
 from actions.aligncenter import HtmlAlignCenterAction
 from actions.alignright import HtmlAlignRightAction
 from actions.alignjustify import HtmlAlignJustifyAction
+from actions.table import HtmlTableAction
+from actions.tablerow import HtmlTableRowAction
+from actions.tablecell import HtmlTableCellAction
 
 from actions.autolinewrap import HtmlAutoLineWrap
 from actions.switchcoderesult import SwitchCodeResultAction
@@ -56,6 +59,9 @@ class HtmlPagePanel (BaseHtmlPanel):
                 HtmlAlignCenterAction,
                 HtmlAlignRightAction,
                 HtmlAlignJustifyAction,
+                HtmlTableAction,
+                HtmlTableRowAction,
+                HtmlTableCellAction,
                 ]
 
         Application.onPageUpdate += self.__onPageUpdate
@@ -309,33 +315,32 @@ class HtmlPagePanel (BaseHtmlPanel):
         """
         Добавить инструменты, связанные с таблицами
         """
-        self.addTool (self.__tableMenu, 
-                "ID_TABLE", 
-                lambda event: self.codeEditor.turnText (u'<table>', u'</table>'), 
-                _(u"Table") + "\tCtrl+Q", 
-                _(u"Table (<table>…</table>)"), 
+        toolbarName = "html"
+        toolbar = self.mainWindow.toolbars[toolbarName]
+
+        # Вставить таблицу
+        Application.actionController.appendMenuItem (HtmlTableAction.stringId, self.__tableMenu)
+        Application.actionController.appendToolbarButton (HtmlTableAction.stringId, 
+                toolbar,
                 os.path.join (self.imagesDir, "table.png"),
-                fullUpdate=False,
-                panelname="html")
+                fullUpdate=False)
 
-        self.addTool (self.__tableMenu, 
-                "ID_TABLE_TR", 
-                lambda event: self.codeEditor.turnText (u'<tr>',u'</tr>'), 
-                _(u"Table row") + "\tCtrl+W", 
-                _(u"Table row (<tr>…</tr>)"), 
+
+        # Вставить строку таблицы
+        Application.actionController.appendMenuItem (HtmlTableRowAction.stringId, self.__tableMenu)
+        Application.actionController.appendToolbarButton (HtmlTableRowAction.stringId, 
+                toolbar,
                 os.path.join (self.imagesDir, "table_insert_row.png"),
-                fullUpdate=False,
-                panelname="html")
+                fullUpdate=False)
 
 
-        self.addTool (self.__tableMenu, 
-                "ID_TABLE_TD", 
-                lambda event: self.codeEditor.turnText (u'<td>', u'</td>'), 
-                _(u"Table cell") + "\tCtrl+Y", 
-                _(u"Table cell (<td>…</td>)"), 
+        # Вставить ячейку таблицы
+        Application.actionController.appendMenuItem (HtmlTableCellAction.stringId, self.__tableMenu)
+        Application.actionController.appendToolbarButton (HtmlTableCellAction.stringId, 
+                toolbar,
                 os.path.join (self.imagesDir, "table_insert_cell.png"),
-                fullUpdate=False,
-                panelname="html")
+                fullUpdate=False)
+
 
     
     def __addListTools (self):

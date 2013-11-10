@@ -22,6 +22,9 @@ from actions.alignleft import HtmlAlignLeftAction
 from actions.aligncenter import HtmlAlignCenterAction
 from actions.alignright import HtmlAlignRightAction
 from actions.alignjustify import HtmlAlignJustifyAction
+from actions.table import HtmlTableAction
+from actions.tablerow import HtmlTableRowAction
+from actions.tablecell import HtmlTableCellAction
 
 from actions.autolinewrap import HtmlAutoLineWrap
 from actions.switchcoderesult import SwitchCodeResultAction
@@ -37,6 +40,9 @@ _actions = [
         (HtmlAlignCenterAction, HotKey ("C", ctrl=True, alt=True)),
         (HtmlAlignRightAction, HotKey ("R", ctrl=True, alt=True)),
         (HtmlAlignJustifyAction, HotKey ("J", ctrl=True, alt=True)),
+        (HtmlTableAction, HotKey ("Q", ctrl=True)),
+        (HtmlTableRowAction, HotKey ("W", ctrl=True)),
+        (HtmlTableCellAction, HotKey ("Y", ctrl=True)),
         (HtmlAutoLineWrap, None),
         (SwitchCodeResultAction, HotKey ("F4")),
         ]
