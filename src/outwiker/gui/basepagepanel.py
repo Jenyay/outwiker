@@ -117,65 +117,6 @@ class BasePagePanel (wx.Panel):
             self.mainWindow.toolbars[tool.panelname].Realize()
 
 
-    def addCheckTool (self, 
-            menu, 
-            idstring, 
-            func, 
-            menuText, 
-            buttonText, 
-            image, 
-            alwaysEnabled = False,
-            fullUpdate=True,
-            panelname="plugins"):
-        """
-        Добавить пункт меню с галкой и залипающую кнопку на панель
-        menu -- меню для добавления элемента
-        id -- идентификатор меню и кнопки
-        func -- обработчик
-        menuText -- название пунта меню
-        buttonText -- подсказка для кнопки
-        image -- имя файла с картинкой
-        alwaysEnabled -- Кнопка должна быть всегда активна
-        fullUpdate - нужно ли полностью обновлять окно после добавления кнопки
-        panelname - имя панели, куда добавляется кнопка
-        """
-        assert idstring not in self._tools
-
-        id = wx.NewId()
-        tool = ToolsInfo (id, alwaysEnabled, menu, panelname)
-        self._tools[idstring] = tool
-
-        menu.AppendCheckItem (id, menuText, "")
-        self.mainWindow.Bind(wx.EVT_MENU, func, id = id)
-
-        if image != None and len (image) != 0:
-            self.mainWindow.toolbars[tool.panelname].AddTool(id, 
-                    buttonText,
-                    wx.Bitmap(image, wx.BITMAP_TYPE_ANY), 
-                    buttonText,
-                    wx.ITEM_CHECK,
-                    fullUpdate=fullUpdate)
-
-
-    def checkTools (self, idstring, checked):
-        """
-        Активировать/деактивировать залипающие элементы управления
-        idstring - строка, описывающая элементы управления
-        checked - устанавливаемое состояние
-        """
-        assert idstring in self._tools
-        assert self.mainWindow != None
-
-        tools = self._tools[idstring]
-
-        if tools.menu != None:
-            tools.menu.Check (tools.id, checked)
-
-        # Проверка на случай, если панель уже удалена, например, при закрытии программы
-        if tools.panelname in self.mainWindow.toolbars:
-            self.mainWindow.toolbars[tools.panelname].ToggleTool (tools.id, checked)
-
-
     ###############################################
     # Методы, которые обязательно надо перегрузить
     ###############################################

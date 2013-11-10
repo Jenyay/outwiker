@@ -588,6 +588,8 @@ class WikiPagePanel (BaseHtmlPanel):
         self.__addFormatTools()
         self.__addOtherTools()
 
+        Application.mainWindow.updateShortcuts()
+
         self.mainWindow.mainMenu.Insert (self.__WIKI_MENU_INDEX, 
                 self.__wikiMenu, 
                 _(u"Wiki") )

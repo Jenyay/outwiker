@@ -111,6 +111,8 @@ class HtmlPagePanel (BaseHtmlPanel):
     def _removeActionTools (self):
         actionController = Application.actionController
 
+        self.mainWindow.Freeze()
+
         # Удалим элементы меню
         map (lambda action: actionController.removeMenuItem (action.stringId), 
                 self.__htmlNotationActions)
@@ -125,6 +127,8 @@ class HtmlPagePanel (BaseHtmlPanel):
 
             Application.actionController.removeToolbarButton (HtmlAutoLineWrap.stringId)
             Application.actionController.removeToolbarButton (SwitchCodeResultAction.stringId)
+
+        self.mainWindow.Thaw()
 
 
     def _enableActions (self, enabled):
