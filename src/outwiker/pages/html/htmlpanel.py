@@ -17,6 +17,16 @@ from .htmltoolbar import HtmlToolBar
 from .basehtmlpanel import BaseHtmlPanel
 
 from actions.bold import HtmlBoldAction
+from actions.italic import HtmlItalicAction
+from actions.underline import HtmlUnderlineAction
+from actions.strike import HtmlStrikeAction
+from actions.subscript import HtmlSubscriptAction
+from actions.superscript import HtmlSuperscriptAction
+from actions.alignleft import HtmlAlignLeftAction
+from actions.aligncenter import HtmlAlignCenterAction
+from actions.alignright import HtmlAlignRightAction
+from actions.alignjustify import HtmlAlignJustifyAction
+
 from actions.autolinewrap import HtmlAutoLineWrap
 from actions.switchcoderesult import SwitchCodeResultAction
 
@@ -37,6 +47,15 @@ class HtmlPagePanel (BaseHtmlPanel):
         # А еще их надо дизаблить при переходе на вкладку просмотра результата
         self.__htmlNotationActions = [
                 HtmlBoldAction,
+                HtmlItalicAction,
+                HtmlUnderlineAction,
+                HtmlStrikeAction,
+                HtmlSubscriptAction,
+                HtmlSuperscriptAction,
+                HtmlAlignLeftAction,
+                HtmlAlignCenterAction,
+                HtmlAlignRightAction,
+                HtmlAlignJustifyAction,
                 ]
 
         Application.onPageUpdate += self.__onPageUpdate
@@ -196,6 +215,7 @@ class HtmlPagePanel (BaseHtmlPanel):
         toolbarName = "html"
         toolbar = self.mainWindow.toolbars[toolbarName]
 
+
         # Полужирный шрифт
         Application.actionController.appendMenuItem (HtmlBoldAction.stringId, self.__fontMenu)
         Application.actionController.appendToolbarButton (HtmlBoldAction.stringId, 
@@ -204,88 +224,85 @@ class HtmlPagePanel (BaseHtmlPanel):
                 fullUpdate=False)
 
 
-        self.addTool (self.__fontMenu, 
-                "ID_ITALIC", 
-                lambda event: self.codeEditor.turnText (u"<i>", u"</i>"), 
-                _(u"Italic") + "\tCtrl+I", 
-                _(u"Italic (<i>…</i>)"), 
+        # Курсивный шрифт
+        Application.actionController.appendMenuItem (HtmlItalicAction.stringId, self.__fontMenu)
+        Application.actionController.appendToolbarButton (HtmlItalicAction.stringId, 
+                toolbar,
                 os.path.join (self.imagesDir, "text_italic.png"),
-                fullUpdate=False,
-                panelname="html")
+                fullUpdate=False)
 
-        self.addTool (self.__fontMenu, 
-                "ID_UNDERLINE", 
-                lambda event: self.codeEditor.turnText (u"<u>", u"</u>"), 
-                _(u"Underline") + "\tCtrl+U", 
-                _(u"Underline (<u>…</u>)"), 
+
+        # Подчеркнутый шрифт
+        Application.actionController.appendMenuItem (HtmlUnderlineAction.stringId, self.__fontMenu)
+        Application.actionController.appendToolbarButton (HtmlUnderlineAction.stringId, 
+                toolbar,
                 os.path.join (self.imagesDir, "text_underline.png"),
-                fullUpdate=False,
-                panelname="html")
+                fullUpdate=False)
 
-        self.addTool (self.__fontMenu, 
-                "ID_STRIKE", 
-                lambda event: self.codeEditor.turnText (u"<strike>", u"</strike>"), 
-                _(u"Strikethrough") + "\tCtrl+K", 
-                _(u"Strikethrough (<strike>…</strike>)"), 
+
+        # Зачеркнутый шрифт
+        Application.actionController.appendMenuItem (HtmlStrikeAction.stringId, self.__fontMenu)
+        Application.actionController.appendToolbarButton (HtmlStrikeAction.stringId, 
+                toolbar,
                 os.path.join (self.imagesDir, "text_strikethrough.png"),
-                fullUpdate=False,
-                panelname="html")
+                fullUpdate=False)
 
-        self.addTool (self.__fontMenu, 
-                "ID_SUBSCRIPT", 
-                lambda event: self.codeEditor.turnText (u"<sub>", u"</sub>"), 
-                _(u"Subscript") + "\tCtrl+=", 
-                _(u"Subscript (<sub>…</sub>)"), 
+
+        # Нижний индекс
+        Application.actionController.appendMenuItem (HtmlSubscriptAction.stringId, self.__fontMenu)
+        Application.actionController.appendToolbarButton (HtmlSubscriptAction.stringId, 
+                toolbar,
                 os.path.join (self.imagesDir, "text_subscript.png"),
-                fullUpdate=False,
-                panelname="html")
+                fullUpdate=False)
 
-        self.addTool (self.__fontMenu, 
-                "ID_SUPERSCRIPT", 
-                lambda event: self.codeEditor.turnText (u"<sup>", u"</sup>"), 
-                _(u"Superscript") + "\tCtrl++", 
-                _(u"Superscript (<sup>…</sup>)"), 
+
+        # Верхний индекс
+        Application.actionController.appendMenuItem (HtmlSuperscriptAction.stringId, self.__fontMenu)
+        Application.actionController.appendToolbarButton (HtmlSuperscriptAction.stringId, 
+                toolbar,
                 os.path.join (self.imagesDir, "text_superscript.png"),
-                fullUpdate=False,
-                panelname="html")
+                fullUpdate=False)
+
 
     
     def __addAlignTools (self):
-        self.addTool (self.__alignMenu, 
-                "ID_ALIGN_LEFT", 
-                lambda event: self.codeEditor.turnText (u'<div align="left">', u'</div>'), 
-                _(u"Left align") + "\tCtrl+Alt+L", 
-                _(u"Left align"), 
+        """
+        Добавить инструменты, связанные с выравниванием
+        """
+        toolbarName = "html"
+        toolbar = self.mainWindow.toolbars[toolbarName]
+
+        # Выравнивание по левому краю
+        Application.actionController.appendMenuItem (HtmlAlignLeftAction.stringId, self.__alignMenu)
+        Application.actionController.appendToolbarButton (HtmlAlignLeftAction.stringId, 
+                toolbar,
                 os.path.join (self.imagesDir, "text_align_left.png"),
-                fullUpdate=False,
-                panelname="html")
+                fullUpdate=False)
 
-        self.addTool (self.__alignMenu, 
-                "ID_ALIGN_CENTER", 
-                lambda event: self.codeEditor.turnText (u'<div align="center">', u'</div>'), 
-                _(u"Center align") + "\tCtrl+Alt+C", 
-                _(u"Center align"), 
+
+        # Выравнивание по центру
+        Application.actionController.appendMenuItem (HtmlAlignCenterAction.stringId, self.__alignMenu)
+        Application.actionController.appendToolbarButton (HtmlAlignCenterAction.stringId, 
+                toolbar,
                 os.path.join (self.imagesDir, "text_align_center.png"),
-                fullUpdate=False,
-                panelname="html")
+                fullUpdate=False)
 
-        self.addTool (self.__alignMenu, 
-                "ID_ALIGN_RIGHT", 
-                lambda event: self.codeEditor.turnText (u'<div align="right">', u'</div>'), 
-                _(u"Right align") + "\tCtrl+Alt+R", 
-                _(u"Right align"), 
+
+        # Выравнивание по правому краю
+        Application.actionController.appendMenuItem (HtmlAlignRightAction.stringId, self.__alignMenu)
+        Application.actionController.appendToolbarButton (HtmlAlignRightAction.stringId, 
+                toolbar,
                 os.path.join (self.imagesDir, "text_align_right.png"),
-                fullUpdate=False,
-                panelname="html")
-    
-        self.addTool (self.__alignMenu, 
-                "ID_ALIGN_JUSTIFY", 
-                lambda event: self.codeEditor.turnText (u'<div align="justify">', u'</div>'), 
-                _(u"Justify align") + "\tCtrl+Alt+J", 
-                _(u"Justify align"), 
+                fullUpdate=False)
+
+
+        # Выравнивание по ширине
+        Application.actionController.appendMenuItem (HtmlAlignJustifyAction.stringId, self.__alignMenu)
+        Application.actionController.appendToolbarButton (HtmlAlignJustifyAction.stringId, 
+                toolbar,
                 os.path.join (self.imagesDir, "text_align_justify.png"),
-                fullUpdate=False,
-                panelname="html")
+                fullUpdate=False)
+
 
 
     def __addTableTools (self):

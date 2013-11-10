@@ -13,11 +13,30 @@ from outwiker.gui.hotkey import HotKey
 from outwiker.pages.html.htmlpanel import HtmlPagePanel
 
 from actions.bold import HtmlBoldAction
+from actions.italic import HtmlItalicAction
+from actions.underline import HtmlUnderlineAction
+from actions.strike import HtmlStrikeAction
+from actions.subscript import HtmlSubscriptAction
+from actions.superscript import HtmlSuperscriptAction
+from actions.alignleft import HtmlAlignLeftAction
+from actions.aligncenter import HtmlAlignCenterAction
+from actions.alignright import HtmlAlignRightAction
+from actions.alignjustify import HtmlAlignJustifyAction
+
 from actions.autolinewrap import HtmlAutoLineWrap
 from actions.switchcoderesult import SwitchCodeResultAction
 
 _actions = [
         (HtmlBoldAction, HotKey ("B", ctrl=True)),
+        (HtmlItalicAction, HotKey ("I", ctrl=True)),
+        (HtmlUnderlineAction, HotKey ("U", ctrl=True)),
+        (HtmlStrikeAction, HotKey ("K", ctrl=True)),
+        (HtmlSubscriptAction, HotKey ("=", ctrl=True)),
+        (HtmlSuperscriptAction, HotKey ("+", ctrl=True)),
+        (HtmlAlignLeftAction, HotKey ("L", ctrl=True, alt=True)),
+        (HtmlAlignCenterAction, HotKey ("C", ctrl=True, alt=True)),
+        (HtmlAlignRightAction, HotKey ("R", ctrl=True, alt=True)),
+        (HtmlAlignJustifyAction, HotKey ("J", ctrl=True, alt=True)),
         (HtmlAutoLineWrap, None),
         (SwitchCodeResultAction, HotKey ("F4")),
         ]
