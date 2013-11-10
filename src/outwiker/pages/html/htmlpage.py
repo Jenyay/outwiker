@@ -12,6 +12,7 @@ from outwiker.core.factory import PageFactory
 from outwiker.gui.hotkey import HotKey
 from outwiker.pages.html.htmlpanel import HtmlPagePanel
 
+from actions.headings import *
 from actions.bold import HtmlBoldAction
 from actions.italic import HtmlItalicAction
 from actions.underline import HtmlUnderlineAction
@@ -25,6 +26,11 @@ from actions.alignjustify import HtmlAlignJustifyAction
 from actions.table import HtmlTableAction
 from actions.tablerow import HtmlTableRowAction
 from actions.tablecell import HtmlTableCellAction
+from actions.listbullets import HtmlListBulletsAction
+from actions.listnumbers import HtmlListNumbersAction
+from actions.code import HtmlCodeAction
+from actions.preformat import HtmlPreformatAction
+from actions.quote import HtmlQuoteAction
 
 from actions.autolinewrap import HtmlAutoLineWrap
 from actions.switchcoderesult import SwitchCodeResultAction
@@ -43,6 +49,17 @@ _actions = [
         (HtmlTableAction, HotKey ("Q", ctrl=True)),
         (HtmlTableRowAction, HotKey ("W", ctrl=True)),
         (HtmlTableCellAction, HotKey ("Y", ctrl=True)),
+        (HtmlListBulletsAction, HotKey ("G", ctrl=True)),
+        (HtmlListNumbersAction, HotKey ("J", ctrl=True)),
+        (HtmlHeading1Action, HotKey ("1", ctrl=True)),
+        (HtmlHeading2Action, HotKey ("2", ctrl=True)),
+        (HtmlHeading3Action, HotKey ("3", ctrl=True)),
+        (HtmlHeading4Action, HotKey ("4", ctrl=True)),
+        (HtmlHeading5Action, HotKey ("5", ctrl=True)),
+        (HtmlHeading6Action, HotKey ("6", ctrl=True)),
+        (HtmlCodeAction, HotKey ("D", ctrl=True, alt=True)),
+        (HtmlPreformatAction, HotKey ("F", ctrl=True, alt=True)),
+        (HtmlQuoteAction, HotKey ("Q", ctrl=True, alt=True)),
         (HtmlAutoLineWrap, None),
         (SwitchCodeResultAction, HotKey ("F4")),
         ]

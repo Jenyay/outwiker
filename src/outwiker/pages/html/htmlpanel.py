@@ -16,6 +16,7 @@ from outwiker.gui.linkdialogcontroller import LinkDialogContoller
 from .htmltoolbar import HtmlToolBar
 from .basehtmlpanel import BaseHtmlPanel
 
+from actions.headings import *
 from actions.bold import HtmlBoldAction
 from actions.italic import HtmlItalicAction
 from actions.underline import HtmlUnderlineAction
@@ -29,6 +30,11 @@ from actions.alignjustify import HtmlAlignJustifyAction
 from actions.table import HtmlTableAction
 from actions.tablerow import HtmlTableRowAction
 from actions.tablecell import HtmlTableCellAction
+from actions.listbullets import HtmlListBulletsAction
+from actions.listnumbers import HtmlListNumbersAction
+from actions.code import HtmlCodeAction
+from actions.preformat import HtmlPreformatAction
+from actions.quote import HtmlQuoteAction
 
 from actions.autolinewrap import HtmlAutoLineWrap
 from actions.switchcoderesult import SwitchCodeResultAction
@@ -62,6 +68,17 @@ class HtmlPagePanel (BaseHtmlPanel):
                 HtmlTableAction,
                 HtmlTableRowAction,
                 HtmlTableCellAction,
+                HtmlListBulletsAction,
+                HtmlListNumbersAction,
+                HtmlHeading1Action,
+                HtmlHeading2Action,
+                HtmlHeading3Action,
+                HtmlHeading4Action,
+                HtmlHeading5Action,
+                HtmlHeading6Action,
+                HtmlCodeAction,
+                HtmlPreformatAction,
+                HtmlQuoteAction,
                 ]
 
         Application.onPageUpdate += self.__onPageUpdate
@@ -145,8 +162,7 @@ class HtmlPagePanel (BaseHtmlPanel):
         Создать кнопки и пункты меню, отображающие настройки страницы
         """
         image = os.path.join (self.imagesDir, "linewrap.png")
-        toolbarName = "html"
-        toolbar = self.mainWindow.toolbars[toolbarName]
+        toolbar = self.mainWindow.toolbars["html"]
 
         Application.actionController.appendMenuCheckItem (HtmlAutoLineWrap.stringId, self.__htmlMenu)
         Application.actionController.appendToolbarCheckButton (HtmlAutoLineWrap.stringId, 
@@ -218,12 +234,11 @@ class HtmlPagePanel (BaseHtmlPanel):
         """
         Добавить инструменты, связанные со шрифтами
         """
-        toolbarName = "html"
-        toolbar = self.mainWindow.toolbars[toolbarName]
-
+        toolbar = self.mainWindow.toolbars[self._htmlPanelName]
+        menu = self.__fontMenu
 
         # Полужирный шрифт
-        Application.actionController.appendMenuItem (HtmlBoldAction.stringId, self.__fontMenu)
+        Application.actionController.appendMenuItem (HtmlBoldAction.stringId, menu)
         Application.actionController.appendToolbarButton (HtmlBoldAction.stringId, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_bold.png"),
@@ -231,7 +246,7 @@ class HtmlPagePanel (BaseHtmlPanel):
 
 
         # Курсивный шрифт
-        Application.actionController.appendMenuItem (HtmlItalicAction.stringId, self.__fontMenu)
+        Application.actionController.appendMenuItem (HtmlItalicAction.stringId, menu)
         Application.actionController.appendToolbarButton (HtmlItalicAction.stringId, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_italic.png"),
@@ -239,7 +254,7 @@ class HtmlPagePanel (BaseHtmlPanel):
 
 
         # Подчеркнутый шрифт
-        Application.actionController.appendMenuItem (HtmlUnderlineAction.stringId, self.__fontMenu)
+        Application.actionController.appendMenuItem (HtmlUnderlineAction.stringId, menu)
         Application.actionController.appendToolbarButton (HtmlUnderlineAction.stringId, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_underline.png"),
@@ -247,7 +262,7 @@ class HtmlPagePanel (BaseHtmlPanel):
 
 
         # Зачеркнутый шрифт
-        Application.actionController.appendMenuItem (HtmlStrikeAction.stringId, self.__fontMenu)
+        Application.actionController.appendMenuItem (HtmlStrikeAction.stringId, menu)
         Application.actionController.appendToolbarButton (HtmlStrikeAction.stringId, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_strikethrough.png"),
@@ -255,7 +270,7 @@ class HtmlPagePanel (BaseHtmlPanel):
 
 
         # Нижний индекс
-        Application.actionController.appendMenuItem (HtmlSubscriptAction.stringId, self.__fontMenu)
+        Application.actionController.appendMenuItem (HtmlSubscriptAction.stringId, menu)
         Application.actionController.appendToolbarButton (HtmlSubscriptAction.stringId, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_subscript.png"),
@@ -263,7 +278,7 @@ class HtmlPagePanel (BaseHtmlPanel):
 
 
         # Верхний индекс
-        Application.actionController.appendMenuItem (HtmlSuperscriptAction.stringId, self.__fontMenu)
+        Application.actionController.appendMenuItem (HtmlSuperscriptAction.stringId, menu)
         Application.actionController.appendToolbarButton (HtmlSuperscriptAction.stringId, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_superscript.png"),
@@ -275,11 +290,11 @@ class HtmlPagePanel (BaseHtmlPanel):
         """
         Добавить инструменты, связанные с выравниванием
         """
-        toolbarName = "html"
-        toolbar = self.mainWindow.toolbars[toolbarName]
+        toolbar = self.mainWindow.toolbars[self._htmlPanelName]
+        menu = self.__alignMenu
 
         # Выравнивание по левому краю
-        Application.actionController.appendMenuItem (HtmlAlignLeftAction.stringId, self.__alignMenu)
+        Application.actionController.appendMenuItem (HtmlAlignLeftAction.stringId, menu)
         Application.actionController.appendToolbarButton (HtmlAlignLeftAction.stringId, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_align_left.png"),
@@ -287,7 +302,7 @@ class HtmlPagePanel (BaseHtmlPanel):
 
 
         # Выравнивание по центру
-        Application.actionController.appendMenuItem (HtmlAlignCenterAction.stringId, self.__alignMenu)
+        Application.actionController.appendMenuItem (HtmlAlignCenterAction.stringId, menu)
         Application.actionController.appendToolbarButton (HtmlAlignCenterAction.stringId, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_align_center.png"),
@@ -295,7 +310,7 @@ class HtmlPagePanel (BaseHtmlPanel):
 
 
         # Выравнивание по правому краю
-        Application.actionController.appendMenuItem (HtmlAlignRightAction.stringId, self.__alignMenu)
+        Application.actionController.appendMenuItem (HtmlAlignRightAction.stringId, menu)
         Application.actionController.appendToolbarButton (HtmlAlignRightAction.stringId, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_align_right.png"),
@@ -303,7 +318,7 @@ class HtmlPagePanel (BaseHtmlPanel):
 
 
         # Выравнивание по ширине
-        Application.actionController.appendMenuItem (HtmlAlignJustifyAction.stringId, self.__alignMenu)
+        Application.actionController.appendMenuItem (HtmlAlignJustifyAction.stringId, menu)
         Application.actionController.appendToolbarButton (HtmlAlignJustifyAction.stringId, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_align_justify.png"),
@@ -315,11 +330,11 @@ class HtmlPagePanel (BaseHtmlPanel):
         """
         Добавить инструменты, связанные с таблицами
         """
-        toolbarName = "html"
-        toolbar = self.mainWindow.toolbars[toolbarName]
+        toolbar = self.mainWindow.toolbars[self._htmlPanelName]
+        menu = self.__tableMenu
 
         # Вставить таблицу
-        Application.actionController.appendMenuItem (HtmlTableAction.stringId, self.__tableMenu)
+        Application.actionController.appendMenuItem (HtmlTableAction.stringId, menu)
         Application.actionController.appendToolbarButton (HtmlTableAction.stringId, 
                 toolbar,
                 os.path.join (self.imagesDir, "table.png"),
@@ -327,7 +342,7 @@ class HtmlPagePanel (BaseHtmlPanel):
 
 
         # Вставить строку таблицы
-        Application.actionController.appendMenuItem (HtmlTableRowAction.stringId, self.__tableMenu)
+        Application.actionController.appendMenuItem (HtmlTableRowAction.stringId, menu)
         Application.actionController.appendToolbarButton (HtmlTableRowAction.stringId, 
                 toolbar,
                 os.path.join (self.imagesDir, "table_insert_row.png"),
@@ -335,7 +350,7 @@ class HtmlPagePanel (BaseHtmlPanel):
 
 
         # Вставить ячейку таблицы
-        Application.actionController.appendMenuItem (HtmlTableCellAction.stringId, self.__tableMenu)
+        Application.actionController.appendMenuItem (HtmlTableCellAction.stringId, menu)
         Application.actionController.appendToolbarButton (HtmlTableCellAction.stringId, 
                 toolbar,
                 os.path.join (self.imagesDir, "table_insert_cell.png"),
@@ -347,114 +362,90 @@ class HtmlPagePanel (BaseHtmlPanel):
         """
         Добавить инструменты, связанные со списками
         """
-        self.addTool (self.__listMenu, 
-                "ID_MARK_LIST", 
-                lambda event: self.codeEditor.turnList (u'<ul>\n', u'</ul>', u'<li>', u'</li>'), 
-                _(u"Bullets list") + "\tCtrl+G", 
-                _(u"Bullets list (<ul>…</ul>)"), 
-                os.path.join (self.imagesDir, "text_list_bullets.png"),
-                fullUpdate=False,
-                panelname="html")
+        toolbar = self.mainWindow.toolbars[self._htmlPanelName]
+        menu = self.__listMenu
 
-        self.addTool (self.__listMenu, 
-                "ID_NUMBER_LIST", 
-                lambda event: self.codeEditor.turnList (u'<ol>\n', u'</ol>', u'<li>', u'</li>'), 
-                _(u"Numbers list") + "\tCtrl+J", 
-                _(u"Numbers list (<ul>…</ul>)"), 
+        # Ненумерованный список
+        Application.actionController.appendMenuItem (HtmlListBulletsAction.stringId, menu)
+        Application.actionController.appendToolbarButton (HtmlListBulletsAction.stringId, 
+                toolbar,
+                os.path.join (self.imagesDir, "text_list_bullets.png"),
+                fullUpdate=False)
+
+        # Нумерованный список
+        Application.actionController.appendMenuItem (HtmlListNumbersAction.stringId, menu)
+        Application.actionController.appendToolbarButton (HtmlListNumbersAction.stringId, 
+                toolbar,
                 os.path.join (self.imagesDir, "text_list_numbers.png"),
-                fullUpdate=False,
-                panelname="html")
-    
+                fullUpdate=False)
+
+
 
     def __addHTools (self):
         """
         Добавить инструменты для заголовочных тегов <H>
         """
-        self.addTool (self.__headingMenu, 
-                "ID_H1", 
-                lambda event: self.codeEditor.turnText (u"<h1>", u"</h1>"), 
-                _(u"H1") + "\tCtrl+1", 
-                _(u"H1 (<h1>…</h1>)"), 
+        toolbar = self.mainWindow.toolbars[self._htmlPanelName]
+        menu = self.__headingMenu
+
+        Application.actionController.appendMenuItem (HtmlHeading1Action.stringId, menu)
+        Application.actionController.appendToolbarButton (HtmlHeading1Action.stringId, 
+                toolbar,
                 os.path.join (self.imagesDir, "text_heading_1.png"),
-                fullUpdate=False,
-                panelname="html")
+                fullUpdate=False)
 
-        self.addTool (self.__headingMenu, 
-                "ID_H2", 
-                lambda event: self.codeEditor.turnText (u"<h2>", u"</h2>"), 
-                _(u"H2") + "\tCtrl+2", 
-                _(u"H2 (<h2>…</h2>)"), 
+        Application.actionController.appendMenuItem (HtmlHeading2Action.stringId, menu)
+        Application.actionController.appendToolbarButton (HtmlHeading2Action.stringId, 
+                toolbar,
                 os.path.join (self.imagesDir, "text_heading_2.png"),
-                fullUpdate=False,
-                panelname="html")
-        
-        self.addTool (self.__headingMenu, 
-                "ID_H3", 
-                lambda event: self.codeEditor.turnText (u"<h3>", u"</h3>"), 
-                _(u"H3") + "\tCtrl+3", 
-                _(u"H3 (<h3>…</h3>)"), 
+                fullUpdate=False)
+
+        Application.actionController.appendMenuItem (HtmlHeading3Action.stringId, menu)
+        Application.actionController.appendToolbarButton (HtmlHeading3Action.stringId, 
+                toolbar,
                 os.path.join (self.imagesDir, "text_heading_3.png"),
-                fullUpdate=False,
-                panelname="html")
+                fullUpdate=False)
 
-        self.addTool (self.__headingMenu, 
-                "ID_H4", 
-                lambda event: self.codeEditor.turnText (u"<h4>", u"</h4>"), 
-                _(u"H4") + "\tCtrl+4", 
-                _(u"H4 (<h4>…</h4>)"), 
+        Application.actionController.appendMenuItem (HtmlHeading4Action.stringId, menu)
+        Application.actionController.appendToolbarButton (HtmlHeading4Action.stringId, 
+                toolbar,
                 os.path.join (self.imagesDir, "text_heading_4.png"),
-                fullUpdate=False,
-                panelname="html")
+                fullUpdate=False)
 
-        self.addTool (self.__headingMenu, 
-                "ID_H5", 
-                lambda event: self.codeEditor.turnText (u"<h5>", u"</h5>"), 
-                _(u"H5") + "\tCtrl+5", 
-                _(u"H5 (<h5>…</h5>)"), 
+        Application.actionController.appendMenuItem (HtmlHeading5Action.stringId, menu)
+        Application.actionController.appendToolbarButton (HtmlHeading5Action.stringId, 
+                toolbar,
                 os.path.join (self.imagesDir, "text_heading_5.png"),
-                fullUpdate=False,
-                panelname="html")
+                fullUpdate=False)
 
-        self.addTool (self.__headingMenu, 
-                "ID_H6", 
-                lambda event: self.codeEditor.turnText (u"<h6>", u"</h6>"), 
-                _(u"H6") + "\tCtrl+6", 
-                _(u"H6 (<h6>…</h6>)"), 
+        Application.actionController.appendMenuItem (HtmlHeading6Action.stringId, menu)
+        Application.actionController.appendToolbarButton (HtmlHeading6Action.stringId, 
+                toolbar,
                 os.path.join (self.imagesDir, "text_heading_6.png"),
-                fullUpdate=False,
-                panelname="html")
+                fullUpdate=False) 
 
 
     def __addFormatTools (self):
-        self.addTool (self.__formatMenu, 
-                "ID_CODE", 
-                lambda event: self.codeEditor.turnText (u"<code>", u"</code>"), 
-                _(u"Code") + "\tCtrl+Alt+D", 
-                _(u"Code (<code>…</code>)"), 
+        toolbar = self.mainWindow.toolbars[self._htmlPanelName]
+        menu = self.__formatMenu
+
+        # Код
+        Application.actionController.appendMenuItem (HtmlCodeAction.stringId, menu)
+        Application.actionController.appendToolbarButton (HtmlCodeAction.stringId, 
+                toolbar,
                 os.path.join (self.imagesDir, "code.png"),
-                fullUpdate=False,
-                panelname="html")
+                fullUpdate=False)
 
+        # Preformat
+        Application.actionController.appendMenuItem (HtmlPreformatAction.stringId, menu)
 
-        self.addTool (self.__formatMenu, 
-                "ID_PREFORMAT", 
-                lambda event: self.codeEditor.turnText (u"<pre>", u"</pre>"), 
-                _(u"Preformat") + "\tCtrl+Alt+F", 
-                _(u"Preformat (<pre>…</pre>)"), 
-                None,
-                fullUpdate=False,
-                panelname="html")
-
-
-        self.addTool (self.__formatMenu, 
-                "ID_BLOCKQUOTE", 
-                lambda event: self.codeEditor.turnText (u"<blockquote>", u"</blockquote>"), 
-                _(u"Quote") + "\tCtrl+Alt+Q", 
-                _(u"Quote (<blockquote>…</blockquote>)"), 
+        # Цитирование
+        Application.actionController.appendMenuItem (HtmlQuoteAction.stringId, menu)
+        Application.actionController.appendToolbarButton (HtmlQuoteAction.stringId, 
+                toolbar,
                 os.path.join (self.imagesDir, "quote.png"),
-                fullUpdate=False,
-                panelname="html")
-    
+                fullUpdate=False)
+
 
     def __addOtherTools (self):
         """
