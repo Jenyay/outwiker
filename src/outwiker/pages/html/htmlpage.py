@@ -31,6 +31,11 @@ from actions.listnumbers import HtmlListNumbersAction
 from actions.code import HtmlCodeAction
 from actions.preformat import HtmlPreformatAction
 from actions.quote import HtmlQuoteAction
+from actions.image import HtmlImageAction
+from actions.link import HtmlLinkAction
+from actions.anchor import HtmlAnchorAction
+from actions.horline import HtmlHorLineAction
+from actions.escapehtml import HtmlEscapeHtmlAction
 
 from actions.autolinewrap import HtmlAutoLineWrap
 from actions.switchcoderesult import SwitchCodeResultAction
@@ -60,6 +65,11 @@ _actions = [
         (HtmlCodeAction, HotKey ("D", ctrl=True, alt=True)),
         (HtmlPreformatAction, HotKey ("F", ctrl=True, alt=True)),
         (HtmlQuoteAction, HotKey ("Q", ctrl=True, alt=True)),
+        (HtmlImageAction, HotKey ("M", ctrl=True)),
+        (HtmlLinkAction, HotKey ("L", ctrl=True)),
+        (HtmlAnchorAction, HotKey ("N", ctrl=True, alt=True)),
+        (HtmlHorLineAction, HotKey ("H", ctrl=True)),
+        (HtmlEscapeHtmlAction, None),
         (HtmlAutoLineWrap, None),
         (SwitchCodeResultAction, HotKey ("F4")),
         ]

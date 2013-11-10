@@ -11,8 +11,6 @@ from outwiker.core.htmlimprover import HtmlImprover
 from outwiker.core.htmltemplate import HtmlTemplate
 from outwiker.core.style import Style
 
-from outwiker.gui.linkdialogcontroller import LinkDialogContoller
-
 from .htmltoolbar import HtmlToolBar
 from .basehtmlpanel import BaseHtmlPanel
 
@@ -35,6 +33,11 @@ from actions.listnumbers import HtmlListNumbersAction
 from actions.code import HtmlCodeAction
 from actions.preformat import HtmlPreformatAction
 from actions.quote import HtmlQuoteAction
+from actions.image import HtmlImageAction
+from actions.link import HtmlLinkAction
+from actions.anchor import HtmlAnchorAction
+from actions.horline import HtmlHorLineAction
+from actions.escapehtml import HtmlEscapeHtmlAction
 
 from actions.autolinewrap import HtmlAutoLineWrap
 from actions.switchcoderesult import SwitchCodeResultAction
@@ -79,6 +82,11 @@ class HtmlPagePanel (BaseHtmlPanel):
                 HtmlCodeAction,
                 HtmlPreformatAction,
                 HtmlQuoteAction,
+                HtmlImageAction,
+                HtmlLinkAction,
+                HtmlAnchorAction,
+                HtmlHorLineAction,
+                HtmlEscapeHtmlAction,
                 ]
 
         Application.onPageUpdate += self.__onPageUpdate
@@ -451,54 +459,46 @@ class HtmlPagePanel (BaseHtmlPanel):
         """
         Добавить остальные инструменты
         """
-        self.addTool (self.__htmlMenu, 
-                "ID_IMAGE", 
-                lambda event: self.codeEditor.turnText (u'<img src="', u'"/>'), 
-                _(u'Image') + '\tCtrl+M', 
-                _(u'Image (<img src="…"/>'), 
+        toolbar = self.mainWindow.toolbars[self._htmlPanelName]
+        menu = self.__htmlMenu
+
+        # Вставить картинку
+        Application.actionController.appendMenuItem (HtmlImageAction.stringId, menu)
+        Application.actionController.appendToolbarButton (HtmlImageAction.stringId, 
+                toolbar,
                 os.path.join (self.imagesDir, "image.png"),
-                fullUpdate=False,
-                panelname="html")
+                fullUpdate=False)
 
-        self.addTool (self.__htmlMenu, 
-                "ID_LINK", 
-                self.__onInsertLink, 
-                _(u"Link") + "\tCtrl+L", 
-                _(u'Link (<a href="…">…</a>)'), 
+
+        # Вставить ссылку
+        Application.actionController.appendMenuItem (HtmlLinkAction.stringId, menu)
+        Application.actionController.appendToolbarButton (HtmlLinkAction.stringId, 
+                toolbar,
                 os.path.join (self.imagesDir, "link.png"),
-                fullUpdate=False,
-                panelname="html")
+                fullUpdate=False)
 
 
-        self.addTool (self.__htmlMenu, 
-                "ID_ANCHOR", 
-                lambda event: self.codeEditor.turnText (u'<a name="', u'"></a>'), 
-                _(u"Anchor") + "\tCtrl+Alt+N", 
-                _(u'Anchor (<a name="…">…</a>)'), 
+        # Вставить якорь
+        Application.actionController.appendMenuItem (HtmlAnchorAction.stringId, menu)
+        Application.actionController.appendToolbarButton (HtmlAnchorAction.stringId, 
+                toolbar,
                 os.path.join (self.imagesDir, "anchor.png"),
-                fullUpdate=False,
-                panelname="html")
+                fullUpdate=False)
 
 
-        self.addTool (self.__htmlMenu, 
-                "ID_HORLINE", 
-                lambda event: self.codeEditor.replaceText (u'<hr>'), 
-                _(u"Horizontal line") + "\tCtrl+H", 
-                _(u"Horizontal line (<hr>)"), 
+        # Вставить горизонтальную линию
+        Application.actionController.appendMenuItem (HtmlHorLineAction.stringId, menu)
+        Application.actionController.appendToolbarButton (HtmlHorLineAction.stringId, 
+                toolbar,
                 os.path.join (self.imagesDir, "text_horizontalrule.png"),
-                fullUpdate=False,
-                panelname="html")
+                fullUpdate=False)
+
 
         self.__htmlMenu.AppendSeparator()
 
-        self.addTool (self.__htmlMenu, 
-                "ID_ESCAPEHTML", 
-                self.codeEditor.escapeHtml, 
-                _(u"Convert HTML Symbols"), 
-                _(u"Convert HTML Symbols"), 
-                None,
-                fullUpdate=False,
-                panelname="html")
+        # Преобразовать символы в их HTML-представление
+        Application.actionController.appendMenuItem (HtmlEscapeHtmlAction.stringId, menu)
+
 
 
     def generateHtml (self, page):
@@ -537,14 +537,3 @@ class HtmlPagePanel (BaseHtmlPanel):
     def removeGui (self):
         super (HtmlPagePanel, self).removeGui ()
         self.mainWindow.mainMenu.Remove (self.__HTML_MENU_INDEX - 1)
-
-
-    def __onInsertLink (self, event):
-        linkController = LinkDialogContoller (self, self.codeEditor.GetSelectedText())
-
-        if linkController.showDialog() == wx.ID_OK:
-            text = u'<a href="{link}">{comment}</a>'.format (comment=linkController.comment, 
-                    link=linkController.link)
-
-            self.codeEditor.replaceText (text)
-

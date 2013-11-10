@@ -4,11 +4,11 @@
 from outwiker.gui.baseaction import BaseAction
 
 
-class WikiEscapeHtmlAction (BaseAction):
+class HtmlHorLineAction (BaseAction):
     """
-    Преобразовать некоторые символы в и их HTML-представление
+    Вставка горизонтальной линии
     """
-    stringId = u"WikiEscapeHtml"
+    stringId = u"HtmlHorLine"
 
     def __init__ (self, application):
         self._application = application
@@ -16,12 +16,12 @@ class WikiEscapeHtmlAction (BaseAction):
 
     @property
     def title (self):
-        return _(u"Convert HTML Symbols")
+        return _(u"Horizontal line")
 
 
     @property
     def description (self):
-        return _(u"Convert HTML Symbols for wiki pages")
+        return _(u"Horizontal line for HTML pages")
     
 
     @property
@@ -33,4 +33,5 @@ class WikiEscapeHtmlAction (BaseAction):
         assert self._application.mainWindow != None
         assert self._application.mainWindow.pagePanel != None
 
-        self._application.mainWindow.pagePanel.pageView.codeEditor.escapeHtml(None)
+        codeEditor = self._application.mainWindow.pagePanel.pageView.codeEditor
+        codeEditor.replaceText (u'<hr>')

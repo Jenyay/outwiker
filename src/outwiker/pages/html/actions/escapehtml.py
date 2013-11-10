@@ -4,11 +4,11 @@
 from outwiker.gui.baseaction import BaseAction
 
 
-class WikiEscapeHtmlAction (BaseAction):
+class HtmlEscapeHtmlAction (BaseAction):
     """
     Преобразовать некоторые символы в и их HTML-представление
     """
-    stringId = u"WikiEscapeHtml"
+    stringId = u"HtmlEscapeHtml"
 
     def __init__ (self, application):
         self._application = application
@@ -21,14 +21,14 @@ class WikiEscapeHtmlAction (BaseAction):
 
     @property
     def description (self):
-        return _(u"Convert HTML Symbols for wiki pages")
-    
+        return _(u"Convert HTML Symbols for HTML pages")
+
 
     @property
     def strid (self):
         return self.stringId
-    
-    
+
+
     def run (self, params):
         assert self._application.mainWindow != None
         assert self._application.mainWindow.pagePanel != None
