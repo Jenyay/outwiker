@@ -16,6 +16,12 @@ from actions.bold import HtmlBoldAction
 from actions.autolinewrap import HtmlAutoLineWrap
 from actions.switchcoderesult import SwitchCodeResultAction
 
+_actions = [
+        (HtmlBoldAction, HotKey ("B", ctrl=True)),
+        (HtmlAutoLineWrap, None),
+        (SwitchCodeResultAction, HotKey ("F4")),
+        ]
+
 
 class HtmlWikiPage (WikiPage):
     """
@@ -68,25 +74,16 @@ class HtmlPageFactory (PageFactory):
         """
         Зарегистрировать все действия, связанные с HTML-страницей
         """
-        application.actionController.register (HtmlBoldAction (application), 
-                HotKey ("B", ctrl=True))
-        application.actionController.register (HtmlAutoLineWrap (application))
-        application.actionController.register (SwitchCodeResultAction (application),
-                HotKey ("F4"))
+        map (lambda actionTuple: application.actionController.register (actionTuple[0](application), actionTuple[1] ), _actions)
 
 
     @staticmethod
     def removeActions (application):
-        application.actionController.removeAction (HtmlBoldAction.stringId)
-        application.actionController.removeAction (HtmlAutoLineWrap.stringId)
-        application.actionController.removeAction (SwitchCodeResultAction.stringId)
+        map (lambda actionTuple: application.actionController.removeAction (actionTuple[0].stringId), _actions)
 
 
     # Название страницы, показываемое пользователю
     title = _(u"HTML Page")
-
-    def __init__ (self):
-        pass
 
 
     @staticmethod

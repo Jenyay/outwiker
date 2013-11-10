@@ -15,6 +15,7 @@ from outwiker.gui.linkdialogcontroller import LinkDialogContoller
 
 from .htmltoolbar import HtmlToolBar
 from .basehtmlpanel import BaseHtmlPanel
+
 from actions.bold import HtmlBoldAction
 from actions.autolinewrap import HtmlAutoLineWrap
 from actions.switchcoderesult import SwitchCodeResultAction
@@ -31,6 +32,12 @@ class HtmlPagePanel (BaseHtmlPanel):
 
         self.__HTML_MENU_INDEX = 7
         self.__createCustomTools()
+
+        # Список действий, которые нужно удалять с панелей и из меню. 
+        # А еще их надо дизаблить при переходе на вкладку просмотра результата
+        self.__htmlNotationActions = [
+                HtmlBoldAction,
+                ]
 
         Application.onPageUpdate += self.__onPageUpdate
 
@@ -54,24 +61,38 @@ class HtmlPagePanel (BaseHtmlPanel):
     def _removeActionTools (self):
         actionController = Application.actionController
 
-        Application.actionController.removeMenuItem (HtmlBoldAction.stringId)
+        # Удалим элементы меню
+        map (lambda action: actionController.removeMenuItem (action.stringId), 
+                self.__htmlNotationActions)
+
         Application.actionController.removeMenuItem (HtmlAutoLineWrap.stringId)
         Application.actionController.removeMenuItem (SwitchCodeResultAction.stringId)
         
         # Удалим кнопки с панелей инструментов
         if self._htmlPanelName in self.mainWindow.toolbars:
-            Application.actionController.removeToolbarButton (HtmlBoldAction.stringId)
+            map (lambda action: actionController.removeToolbarButton (action.stringId), 
+                self.__htmlNotationActions)
+
             Application.actionController.removeToolbarButton (HtmlAutoLineWrap.stringId)
             Application.actionController.removeToolbarButton (SwitchCodeResultAction.stringId)
+
+
+    def _enableActions (self, enabled):
+        actionController = Application.actionController
+
+        self.mainWindow.Freeze()
+
+        map (lambda action: actionController.enableTools (action.stringId, enabled), 
+                self.__htmlNotationActions)
+
+        self.mainWindow.Thaw()
 
 
     def _onSwitchToCode (self):
         """
         Обработка события при переключении на код страницы
         """
-        actionController = Application.actionController
-
-        actionController.enableTools (HtmlBoldAction.stringId, True)
+        self._enableActions (True)
         super (HtmlPagePanel, self)._onSwitchToCode()
 
 
@@ -79,9 +100,7 @@ class HtmlPagePanel (BaseHtmlPanel):
         """
         Обработка события при переключении на просмотр страницы
         """
-        actionController = Application.actionController
-
-        actionController.enableTools (HtmlBoldAction.stringId, False)
+        self._enableActions (False)
         super (HtmlPagePanel, self)._onSwitchToPreview()
 
 

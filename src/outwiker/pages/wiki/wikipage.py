@@ -111,10 +111,6 @@ class WikiPageFactory (PageFactory):
     title = _(u"Wiki Page")
 
 
-    def __init__ (self):
-        pass
-
-
     @staticmethod
     def create (parent, title, tags):
         """
@@ -147,7 +143,7 @@ class WikiPageFactory (PageFactory):
     @staticmethod
     def registerActions (application):
         """
-        Зарегистрировать все действия, связанные с HTML-страницей
+        Зарегистрировать все действия, связанные с викистраницей
         """
         map (lambda actionTuple: application.actionController.register (actionTuple[0](application), actionTuple[1] ), _actions)
 
