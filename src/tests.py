@@ -111,7 +111,7 @@ if __name__ == '__main__':
     from test.guitests.tabs import TabsTest
     from test.guitests.linkdialogcontrollertest import LinkDialogControllerTest
     from test.guitests.thumbdialogcontrollertest import ThumbDialogControllerTest
-    from test.guitests.wikipagepanel import WikiPagePanelTest
+    from test.guitests.wikipageview import WikiPageViewTest
     from test.guitests.htmlpageview import HtmlPageViewTest
     from test.guitests.actioncontroller import ActionControllerTest
     from test.guitests.mainpanes import MainPanesTest

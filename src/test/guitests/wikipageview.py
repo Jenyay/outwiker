@@ -7,11 +7,11 @@ from outwiker.core.application import Application
 from test.utils import removeWiki
 
 from outwiker.pages.wiki.wikipage import WikiPageFactory
-from outwiker.pages.wiki.wikipanel import WikiPagePanel
+from outwiker.pages.wiki.wikipageview import WikiPageView
 from outwiker.pages.wiki.wikiconfig import WikiConfig
 
 
-class WikiPagePanelTest (BaseMainWndTest):
+class WikiPageViewTest (BaseMainWndTest):
     """
     Тесты окна со списком прикрепленных файлов
     """
@@ -38,10 +38,10 @@ class WikiPagePanelTest (BaseMainWndTest):
         self.assertEqual (None, Application.mainWindow.pagePanel.pageView)
 
         Application.selectedPage = self.wikiroot[u"Викистраница"]
-        self.assertEqual (WikiPagePanel, type (Application.mainWindow.pagePanel.pageView))
+        self.assertEqual (WikiPageView, type (Application.mainWindow.pagePanel.pageView))
 
         Application.selectedPage = self.wikiroot[u"Викистраница 2"]
-        self.assertEqual (WikiPagePanel, type (Application.mainWindow.pagePanel.pageView))
+        self.assertEqual (WikiPageView, type (Application.mainWindow.pagePanel.pageView))
 
         Application.selectedPage = None
         self.assertEqual (None, Application.mainWindow.pagePanel.pageView)
@@ -56,14 +56,14 @@ class WikiPagePanelTest (BaseMainWndTest):
 
         # Т.к. страница пустая, то по умолчанию выбирается вкладка с кодом
         self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
-                WikiPagePanel.CODE_PAGE_INDEX)
+                WikiPageView.CODE_PAGE_INDEX)
 
         self.wikiroot[u"Викистраница 2"].content = u"Бла-бла-бла"
         Application.selectedPage = self.wikiroot[u"Викистраница 2"]
         
         # Т.к. страница НЕ пустая, то по умолчанию выбирается вкладка с просмотром
         self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
-                WikiPagePanel.RESULT_PAGE_INDEX)
+                WikiPageView.RESULT_PAGE_INDEX)
 
 
     def testSelectedPage (self):
@@ -75,23 +75,23 @@ class WikiPagePanelTest (BaseMainWndTest):
 
         # Т.к. страница пустая, то по умолчанию выбирается вкладка с кодом
         self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
-                WikiPagePanel.CODE_PAGE_INDEX)
+                WikiPageView.CODE_PAGE_INDEX)
 
-        Application.mainWindow.pagePanel.pageView.selectedPageIndex = WikiPagePanel.RESULT_PAGE_INDEX
+        Application.mainWindow.pagePanel.pageView.selectedPageIndex = WikiPageView.RESULT_PAGE_INDEX
 
         self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
-                WikiPagePanel.RESULT_PAGE_INDEX)
+                WikiPageView.RESULT_PAGE_INDEX)
 
         
-        Application.mainWindow.pagePanel.pageView.selectedPageIndex = WikiPagePanel.CODE_PAGE_INDEX
+        Application.mainWindow.pagePanel.pageView.selectedPageIndex = WikiPageView.CODE_PAGE_INDEX
 
         self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
-                WikiPagePanel.CODE_PAGE_INDEX)
+                WikiPageView.CODE_PAGE_INDEX)
 
-        Application.mainWindow.pagePanel.pageView.selectedPageIndex = WikiPagePanel.HTML_RESULT_PAGE_INDEX
+        Application.mainWindow.pagePanel.pageView.selectedPageIndex = WikiPageView.HTML_RESULT_PAGE_INDEX
 
         self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
-                WikiPagePanel.HTML_RESULT_PAGE_INDEX)
+                WikiPageView.HTML_RESULT_PAGE_INDEX)
 
 
     def testResultHtmlPage1 (self):
@@ -125,10 +125,10 @@ class WikiPagePanelTest (BaseMainWndTest):
         Application.selectedPage = self.wikiroot[u"Викистраница"]
         self.assertEqual (Application.mainWindow.pagePanel.pageView.pageCount, 2)
 
-        Application.mainWindow.pagePanel.pageView.selectedPageIndex = WikiPagePanel.HTML_RESULT_PAGE_INDEX
+        Application.mainWindow.pagePanel.pageView.selectedPageIndex = WikiPageView.HTML_RESULT_PAGE_INDEX
 
         self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
-                WikiPagePanel.HTML_RESULT_PAGE_INDEX)
+                WikiPageView.HTML_RESULT_PAGE_INDEX)
         self.assertEqual (Application.mainWindow.pagePanel.pageView.pageCount, 3)
 
 
@@ -138,37 +138,37 @@ class WikiPagePanelTest (BaseMainWndTest):
 
         # Т.к. страница пустая, то по умолчанию выбирается вкладка с кодом
         self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
-                WikiPagePanel.CODE_PAGE_INDEX)
+                WikiPageView.CODE_PAGE_INDEX)
 
     
         Application.mainWindow.pagePanel.pageView.selectedPageIndex = 100
 
         self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
-                WikiPagePanel.CODE_PAGE_INDEX)
+                WikiPageView.CODE_PAGE_INDEX)
 
 
         Application.mainWindow.pagePanel.pageView.selectedPageIndex = -1
 
         self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
-                WikiPagePanel.CODE_PAGE_INDEX)
+                WikiPageView.CODE_PAGE_INDEX)
 
 
-        Application.mainWindow.pagePanel.pageView.selectedPageIndex = WikiPagePanel.RESULT_PAGE_INDEX
+        Application.mainWindow.pagePanel.pageView.selectedPageIndex = WikiPageView.RESULT_PAGE_INDEX
 
         self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
-                WikiPagePanel.RESULT_PAGE_INDEX)
+                WikiPageView.RESULT_PAGE_INDEX)
 
 
         Application.mainWindow.pagePanel.pageView.selectedPageIndex = 1000
 
         self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
-                WikiPagePanel.RESULT_PAGE_INDEX)
+                WikiPageView.RESULT_PAGE_INDEX)
 
 
         Application.mainWindow.pagePanel.pageView.selectedPageIndex = -1
 
         self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
-                WikiPagePanel.RESULT_PAGE_INDEX)
+                WikiPageView.RESULT_PAGE_INDEX)
 
 
     def testSavePageIndex1 (self):
@@ -185,28 +185,28 @@ class WikiPagePanelTest (BaseMainWndTest):
 
         # В начале по умолчанию выбирается вкладка с просмотром
         self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
-                WikiPagePanel.RESULT_PAGE_INDEX)
+                WikiPageView.RESULT_PAGE_INDEX)
 
         # Переключимся на вкладку с кодом
-        Application.mainWindow.pagePanel.pageView.selectedPageIndex = WikiPagePanel.CODE_PAGE_INDEX
+        Application.mainWindow.pagePanel.pageView.selectedPageIndex = WikiPageView.CODE_PAGE_INDEX
 
         # Переключимся на другую страницу. Опять должна быть выбрана вкладка с просмотром
         Application.selectedPage = self.wikiroot[u"Викистраница 2"]
         self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
-                WikiPagePanel.RESULT_PAGE_INDEX)
+                WikiPageView.RESULT_PAGE_INDEX)
 
         # Переключимся на результирующий HTML
-        Application.mainWindow.pagePanel.pageView.selectedPageIndex = WikiPagePanel.HTML_RESULT_PAGE_INDEX
+        Application.mainWindow.pagePanel.pageView.selectedPageIndex = WikiPageView.HTML_RESULT_PAGE_INDEX
 
         # А при возврате на предыдущую страницу, должна быть выбана страница с кодом
         Application.selectedPage = self.wikiroot[u"Викистраница"]
         self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
-                WikiPagePanel.CODE_PAGE_INDEX)
+                WikiPageView.CODE_PAGE_INDEX)
 
         # При переключении на другую страницу, выбиается вкладка с результирующим HTML
         Application.selectedPage = self.wikiroot[u"Викистраница 2"]
         self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
-                WikiPagePanel.HTML_RESULT_PAGE_INDEX)
+                WikiPageView.HTML_RESULT_PAGE_INDEX)
 
 
     def testSavePageIndex2 (self):
@@ -223,25 +223,25 @@ class WikiPagePanelTest (BaseMainWndTest):
 
         # В начале по умолчанию выбирается вкладка с просмотром
         self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
-                WikiPagePanel.RESULT_PAGE_INDEX)
+                WikiPageView.RESULT_PAGE_INDEX)
 
         # Переключимся на вкладку с кодом
-        Application.mainWindow.pagePanel.pageView.selectedPageIndex = WikiPagePanel.CODE_PAGE_INDEX
+        Application.mainWindow.pagePanel.pageView.selectedPageIndex = WikiPageView.CODE_PAGE_INDEX
 
         # Переключимся на другую страницу. Опять должна быть выбрана вкладка с просмотром
         Application.selectedPage = self.wikiroot[u"Викистраница 2"]
         self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
-                WikiPagePanel.RESULT_PAGE_INDEX)
+                WikiPageView.RESULT_PAGE_INDEX)
 
         # Переключимся на результирующий HTML
-        Application.mainWindow.pagePanel.pageView.selectedPageIndex = WikiPagePanel.HTML_RESULT_PAGE_INDEX
+        Application.mainWindow.pagePanel.pageView.selectedPageIndex = WikiPageView.HTML_RESULT_PAGE_INDEX
 
         # А при возврате на предыдущую страницу, должна быть выбана страница с кодом
         Application.selectedPage = self.wikiroot[u"Викистраница"]
         self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
-                WikiPagePanel.CODE_PAGE_INDEX)
+                WikiPageView.CODE_PAGE_INDEX)
 
         # При переключении на другую страницу, выбиается вкладка с результирующим HTML
         Application.selectedPage = self.wikiroot[u"Викистраница 2"]
         self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
-                WikiPagePanel.HTML_RESULT_PAGE_INDEX)
+                WikiPageView.HTML_RESULT_PAGE_INDEX)

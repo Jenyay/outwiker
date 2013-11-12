@@ -5,7 +5,7 @@
 """
 
 from outwiker.core.tree import WikiPage
-from wikipanel import WikiPagePanel
+from wikipageview import WikiPageView
 from wikipreferences import WikiPrefGeneralPanel
 from outwiker.core.factory import PageFactory
 from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
@@ -124,7 +124,7 @@ class WikiPageFactory (PageFactory):
         """
         Вернуть контрол, который будет отображать и редактировать страницу
         """
-        panel = WikiPagePanel (parent)
+        panel = WikiPageView (parent)
 
         return panel
 

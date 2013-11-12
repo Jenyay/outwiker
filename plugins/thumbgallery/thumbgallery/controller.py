@@ -6,7 +6,6 @@ import os.path
 import wx
 
 from outwiker.core.system import getOS
-from outwiker.pages.wiki.wikipanel import WikiPagePanel
 
 from .thumblistcommand import ThumbListCommand
 from .thumbgallerycommand import ThumbGalleryCommand

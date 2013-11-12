@@ -8,7 +8,6 @@ from outwiker.core.pluginbase import Plugin
 from outwiker.core.system import getOS
 from outwiker.core.commands import getCurrentVersion
 from outwiker.core.version import Version, StatusSet
-from outwiker.pages.wiki.wikipanel import WikiPagePanel
 
 from .ljcommand import LjUserCommand, LjCommunityCommand
 from .ljtoolbar import LJToolBar
