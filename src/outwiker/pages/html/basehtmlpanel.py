@@ -14,6 +14,7 @@ from outwiker.core.config import IntegerOption
 from outwiker.gui.basetextpanel import BaseTextPanel
 from outwiker.gui.htmltexteditor import HtmlTextEditor
 from outwiker.gui.htmlrenderfactory import getHtmlRender
+from outwiker.actions.search import SearchAction, SearchNextAction, SearchPrevAction
 
 
 class BaseHtmlPanel(BaseTextPanel):
@@ -286,9 +287,12 @@ class BaseHtmlPanel(BaseTextPanel):
         # Отдельно проверим возможность работы поиска по странице
         # Поиск не должен работать только на странице просмотра
         searchEnabled = self.selectedPageIndex != self.RESULT_PAGE_INDEX
-        self.enableTool (self._tools[u"ID_BASE_SEARCH"], searchEnabled)
-        self.enableTool (self._tools[u"ID_BASE_SEARCH_PREV"], searchEnabled)
-        self.enableTool (self._tools[u"ID_BASE_SEARCH_NEXT"], searchEnabled)
+
+        actionController = Application.actionController
+        actionController.enableTools (SearchAction.stringId, searchEnabled)
+        actionController.enableTools (SearchNextAction.stringId, searchEnabled)
+        actionController.enableTools (SearchPrevAction.stringId, searchEnabled)
+
         self.mainWindow.UpdateAuiManager()
         
         self.mainWindow.Thaw()

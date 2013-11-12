@@ -13,6 +13,8 @@ from outwiker.core.application import Application
 
 from outwiker.gui.buttonsdialog import ButtonsDialog
 
+from outwiker.actions.search import SearchAction, SearchNextAction, SearchPrevAction
+
 from .basepagepanel import BasePagePanel
 
 
@@ -181,7 +183,7 @@ class BaseTextPanel (BasePagePanel):
 
         return text
 
-    
+
     def Clear (self):
         """
         Убрать за собой
@@ -201,6 +203,15 @@ class BaseTextPanel (BasePagePanel):
         assert self.mainWindow.mainMenu.GetMenuCount() >= 3
         assert self.searchMenu != None
 
+        Application.actionController.removeMenuItem (SearchAction.stringId)
+        Application.actionController.removeMenuItem (SearchNextAction.stringId)
+        Application.actionController.removeMenuItem (SearchPrevAction.stringId)
+
+        if self.mainWindow.GENERAL_TOOLBAR_STR in self.mainWindow.toolbars:
+            Application.actionController.removeToolbarButton (SearchAction.stringId)
+            Application.actionController.removeToolbarButton (SearchNextAction.stringId)
+            Application.actionController.removeToolbarButton (SearchPrevAction.stringId)
+
         self._removeAllTools()
         self.mainWindow.mainMenu.Remove (self.searchMenuIndex)
         self.searchMenu = None
@@ -211,58 +222,17 @@ class BaseTextPanel (BasePagePanel):
         self.searchMenu = wx.Menu()
         self.mainWindow.mainMenu.Insert (self.searchMenuIndex, self.searchMenu, _("&Search") )
 
-        self.addTool (self.searchMenu,
-                u"ID_BASE_SEARCH",
-                self.onSearch,
-                _(u"&Search…") + "\tCtrl+F",
-                _(u"Search"),
+        toolbar = self.mainWindow.toolbars[self.mainWindow.GENERAL_TOOLBAR_STR]
+
+        # Начать поиск на странице
+        Application.actionController.appendMenuItem (SearchAction.stringId, self.searchMenu)
+        Application.actionController.appendToolbarButton (SearchAction.stringId, 
+                toolbar,
                 os.path.join (self.imagesDir, "local_search.png"),
-                False,
-                fullUpdate=False,
-                panelname=self.mainWindow.GENERAL_TOOLBAR_STR)
+                fullUpdate=False)
 
+        # Продолжить поиск вперед на странице
+        Application.actionController.appendMenuItem (SearchNextAction.stringId, self.searchMenu)
 
-        self.addTool (self.searchMenu,
-                u"ID_BASE_SEARCH_PREV",
-                self.onSearchPrev,
-                _(u"Find &Previous") + "\tShift+F3",
-                "",
-                None,
-                fullUpdate=False,
-                panelname=self.mainWindow.GENERAL_TOOLBAR_STR)
-
-        self.addTool (self.searchMenu,
-                u"ID_BASE_SEARCH_NEXT",
-                self.onSearchNext,
-                _(u"Find &Next") + "\tF3",
-                "",
-                None,
-                fullUpdate=False,
-                panelname=self.mainWindow.GENERAL_TOOLBAR_STR)
-
-
-    def _showSearchPanel (self, searchPanel):
-        if not searchPanel.IsShown():
-            searchPanel.Show()
-            searchPanel.GetParent().Layout()
-
-
-    def onSearch (self, event):
-        searchPanel = self.GetSearchPanel()
-        if searchPanel != None:
-            self._showSearchPanel (searchPanel)
-            searchPanel.startSearch()
-
-
-    def onSearchNext (self, event):
-        searchPanel = self.GetSearchPanel()
-        if searchPanel != None:
-            self._showSearchPanel (searchPanel)
-            searchPanel.nextSearch()
-
-
-    def onSearchPrev (self, event):
-        searchPanel = self.GetSearchPanel()
-        if searchPanel != None:
-            self._showSearchPanel (searchPanel)
-            searchPanel.prevSearch()
+        # Продолжить поиск назад на странице
+        Application.actionController.appendMenuItem (SearchPrevAction.stringId, self.searchMenu)

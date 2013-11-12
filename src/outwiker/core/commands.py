@@ -706,3 +706,14 @@ def registerActions (application):
     from outwiker.actions.fullscreen import FullScreenAction
     application.actionController.register (FullScreenAction (application), 
             HotKey ("F11") )
+
+    # Поиск
+    from outwiker.actions.search import SearchAction, SearchNextAction, SearchPrevAction
+    application.actionController.register (SearchAction (application), 
+            HotKey ("F", ctrl=True) )
+
+    application.actionController.register (SearchNextAction (application), 
+            HotKey ("F3") )
+
+    application.actionController.register (SearchPrevAction (application), 
+            HotKey ("F3", shift=True) )
