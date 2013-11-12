@@ -10,7 +10,7 @@ from outwiker.core.config import BooleanOption
 from outwiker.core.tree import WikiPage
 from outwiker.core.factory import PageFactory
 from outwiker.gui.hotkey import HotKey
-from outwiker.pages.html.htmlpanel import HtmlPagePanel
+from outwiker.pages.html.htmlpageview import HtmlPageView
 
 from actions.headings import *
 from actions.bold import HtmlBoldAction
@@ -151,7 +151,7 @@ class HtmlPageFactory (PageFactory):
         """
         Вернуть контрол, который будет отображать и редактировать страницу
         """
-        panel = HtmlPagePanel (parent)
+        panel = HtmlPageView (parent)
 
         return panel
 

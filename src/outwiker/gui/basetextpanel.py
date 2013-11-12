@@ -241,28 +241,28 @@ class BaseTextPanel (BasePagePanel):
                 panelname=self.mainWindow.GENERAL_TOOLBAR_STR)
 
 
-    def _showSearchPanel (self, panel):
-        if not panel.IsShown():
-            panel.Show()
-            panel.GetParent().Layout()
+    def _showSearchPanel (self, searchPanel):
+        if not searchPanel.IsShown():
+            searchPanel.Show()
+            searchPanel.GetParent().Layout()
 
 
     def onSearch (self, event):
-        panel = self.GetSearchPanel()
-        if panel != None:
-            self._showSearchPanel (panel)
-            panel.startSearch()
+        searchPanel = self.GetSearchPanel()
+        if searchPanel != None:
+            self._showSearchPanel (searchPanel)
+            searchPanel.startSearch()
 
 
     def onSearchNext (self, event):
-        panel = self.GetSearchPanel()
-        if panel != None:
-            self._showSearchPanel (panel)
-            panel.nextSearch()
+        searchPanel = self.GetSearchPanel()
+        if searchPanel != None:
+            self._showSearchPanel (searchPanel)
+            searchPanel.nextSearch()
 
 
     def onSearchPrev (self, event):
-        panel = self.GetSearchPanel()
-        if panel != None:
-            self._showSearchPanel (panel)
-            panel.prevSearch()
+        searchPanel = self.GetSearchPanel()
+        if searchPanel != None:
+            self._showSearchPanel (searchPanel)
+            searchPanel.prevSearch()

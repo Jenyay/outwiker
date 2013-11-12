@@ -112,7 +112,7 @@ if __name__ == '__main__':
     from test.guitests.linkdialogcontrollertest import LinkDialogControllerTest
     from test.guitests.thumbdialogcontrollertest import ThumbDialogControllerTest
     from test.guitests.wikipagepanel import WikiPagePanelTest
-    from test.guitests.htmlpagepanel import HtmlPagePanelTest
+    from test.guitests.htmlpageview import HtmlPageViewTest
     from test.guitests.actioncontroller import ActionControllerTest
     from test.guitests.mainpanes import MainPanesTest
     from test.guitests.fullscreen import FullScreenTest

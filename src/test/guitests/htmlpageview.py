@@ -7,10 +7,10 @@ from outwiker.core.application import Application
 from test.utils import removeWiki
 
 from outwiker.pages.html.htmlpage import HtmlPageFactory
-from outwiker.pages.html.htmlpanel import HtmlPagePanel
+from outwiker.pages.html.htmlpageview import HtmlPageView
 
 
-class HtmlPagePanelTest (BaseMainWndTest):
+class HtmlPageViewTest (BaseMainWndTest):
     """
     Тесты окна со списком прикрепленных файлов
     """
@@ -37,10 +37,10 @@ class HtmlPagePanelTest (BaseMainWndTest):
         self.assertEqual (None, Application.mainWindow.pagePanel.pageView)
 
         Application.selectedPage = self.wikiroot[u"HTML-страница"]
-        self.assertEqual (HtmlPagePanel, type (Application.mainWindow.pagePanel.pageView))
+        self.assertEqual (HtmlPageView, type (Application.mainWindow.pagePanel.pageView))
 
         Application.selectedPage = self.wikiroot[u"HTML-страница 2"]
-        self.assertEqual (HtmlPagePanel, type (Application.mainWindow.pagePanel.pageView))
+        self.assertEqual (HtmlPageView, type (Application.mainWindow.pagePanel.pageView))
 
         Application.selectedPage = None
         self.assertEqual (None, Application.mainWindow.pagePanel.pageView)
@@ -55,14 +55,14 @@ class HtmlPagePanelTest (BaseMainWndTest):
 
         # Т.к. страница пустая, то по умолчанию выбирается вкладка с кодом
         self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
-                HtmlPagePanel.CODE_PAGE_INDEX)
+                HtmlPageView.CODE_PAGE_INDEX)
 
         self.wikiroot[u"HTML-страница 2"].content = u"Бла-бла-бла"
         Application.selectedPage = self.wikiroot[u"HTML-страница 2"]
         
         # Т.к. страница НЕ пустая, то по умолчанию выбирается вкладка с просмотром
         self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
-                HtmlPagePanel.RESULT_PAGE_INDEX)
+                HtmlPageView.RESULT_PAGE_INDEX)
 
 
     def testSelectedPage (self):
@@ -74,18 +74,18 @@ class HtmlPagePanelTest (BaseMainWndTest):
 
         # Т.к. страница пустая, то по умолчанию выбирается вкладка с кодом
         self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
-                HtmlPagePanel.CODE_PAGE_INDEX)
+                HtmlPageView.CODE_PAGE_INDEX)
 
-        Application.mainWindow.pagePanel.pageView.selectedPageIndex = HtmlPagePanel.RESULT_PAGE_INDEX
+        Application.mainWindow.pagePanel.pageView.selectedPageIndex = HtmlPageView.RESULT_PAGE_INDEX
 
         self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
-                HtmlPagePanel.RESULT_PAGE_INDEX)
+                HtmlPageView.RESULT_PAGE_INDEX)
 
         
-        Application.mainWindow.pagePanel.pageView.selectedPageIndex = HtmlPagePanel.CODE_PAGE_INDEX
+        Application.mainWindow.pagePanel.pageView.selectedPageIndex = HtmlPageView.CODE_PAGE_INDEX
 
         self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
-                HtmlPagePanel.CODE_PAGE_INDEX)
+                HtmlPageView.CODE_PAGE_INDEX)
 
 
     def testInvalidPageIndex (self):
@@ -94,37 +94,37 @@ class HtmlPagePanelTest (BaseMainWndTest):
 
         # Т.к. страница пустая, то по умолчанию выбирается вкладка с кодом
         self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
-                HtmlPagePanel.CODE_PAGE_INDEX)
+                HtmlPageView.CODE_PAGE_INDEX)
 
     
         Application.mainWindow.pagePanel.pageView.selectedPageIndex = 100
 
         self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
-                HtmlPagePanel.CODE_PAGE_INDEX)
+                HtmlPageView.CODE_PAGE_INDEX)
 
 
         Application.mainWindow.pagePanel.pageView.selectedPageIndex = -1
 
         self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
-                HtmlPagePanel.CODE_PAGE_INDEX)
+                HtmlPageView.CODE_PAGE_INDEX)
 
 
-        Application.mainWindow.pagePanel.pageView.selectedPageIndex = HtmlPagePanel.RESULT_PAGE_INDEX
+        Application.mainWindow.pagePanel.pageView.selectedPageIndex = HtmlPageView.RESULT_PAGE_INDEX
 
         self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
-                HtmlPagePanel.RESULT_PAGE_INDEX)
+                HtmlPageView.RESULT_PAGE_INDEX)
 
 
         Application.mainWindow.pagePanel.pageView.selectedPageIndex = 1000
 
         self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
-                HtmlPagePanel.RESULT_PAGE_INDEX)
+                HtmlPageView.RESULT_PAGE_INDEX)
 
 
         Application.mainWindow.pagePanel.pageView.selectedPageIndex = -1
 
         self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
-                HtmlPagePanel.RESULT_PAGE_INDEX)
+                HtmlPageView.RESULT_PAGE_INDEX)
 
 
     def testSavePageIndex (self):
@@ -138,22 +138,22 @@ class HtmlPagePanelTest (BaseMainWndTest):
 
         # В начале по умолчанию выбирается вкладка с просмотром
         self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
-                HtmlPagePanel.RESULT_PAGE_INDEX)
+                HtmlPageView.RESULT_PAGE_INDEX)
 
         # Переключимся на вкладку с кодом
-        Application.mainWindow.pagePanel.pageView.selectedPageIndex = HtmlPagePanel.CODE_PAGE_INDEX
+        Application.mainWindow.pagePanel.pageView.selectedPageIndex = HtmlPageView.CODE_PAGE_INDEX
 
         # Переключимся на другую страницу. Опять должна быть выбрана вкладка с просмотром
         Application.selectedPage = self.wikiroot[u"HTML-страница 2"]
         self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
-                HtmlPagePanel.RESULT_PAGE_INDEX)
+                HtmlPageView.RESULT_PAGE_INDEX)
 
         # А при возврате на предыдущую страницу, должна быть выбана страница с кодом
         Application.selectedPage = self.wikiroot[u"HTML-страница"]
         self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
-                HtmlPagePanel.CODE_PAGE_INDEX)
+                HtmlPageView.CODE_PAGE_INDEX)
 
         # При переключении на другую страницу, выбиается вкладка с результирующим HTML
         Application.selectedPage = self.wikiroot[u"HTML-страница 2"]
         self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
-                HtmlPagePanel.RESULT_PAGE_INDEX)
+                HtmlPageView.RESULT_PAGE_INDEX)

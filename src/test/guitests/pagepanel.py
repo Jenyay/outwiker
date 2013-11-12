@@ -11,7 +11,7 @@ from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.pages.text.textpanel import TextPanel
 
 from outwiker.pages.html.htmlpage import HtmlPageFactory
-from outwiker.pages.html.htmlpanel import HtmlPagePanel
+from outwiker.pages.html.htmlpageview import HtmlPageView
 
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.wikipanel import WikiPagePanel
@@ -63,7 +63,7 @@ class PagePanelTest (BaseMainWndTest):
         self.assertEqual (TextPanel, type (self.wnd.pagePanel.pageView))
 
         self.wikiroot.selectedPage = self.wikiroot[u"HTML-страница"]
-        self.assertEqual (HtmlPagePanel, type (self.wnd.pagePanel.pageView))
+        self.assertEqual (HtmlPageView, type (self.wnd.pagePanel.pageView))
 
         self.wikiroot.selectedPage = self.wikiroot[u"Викистраница"]
         self.assertEqual (WikiPagePanel, type (self.wnd.pagePanel.pageView))
@@ -101,7 +101,7 @@ class PagePanelTest (BaseMainWndTest):
         currentView = self.wnd.pagePanel.pageView
 
         self.assertNotEqual (None, currentView)
-        self.assertEqual (HtmlPagePanel, type (currentView))
+        self.assertEqual (HtmlPageView, type (currentView))
 
         self.wikiroot.selectedPage = self.wikiroot[u"HTML-страница 2"]
         self.assertEqual (currentView, self.wnd.pagePanel.pageView)

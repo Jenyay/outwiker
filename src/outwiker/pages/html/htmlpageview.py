@@ -43,9 +43,9 @@ from actions.autolinewrap import HtmlAutoLineWrap
 from actions.switchcoderesult import SwitchCodeResultAction
 
 
-class HtmlPagePanel (BaseHtmlPanel):
+class HtmlPageView (BaseHtmlPanel):
     def __init__ (self, parent, *args, **kwds):
-        super (HtmlPagePanel, self).__init__ (parent, *args, **kwds)
+        super (HtmlPageView, self).__init__ (parent, *args, **kwds)
 
         self.__HTML_MENU_INDEX = 7
         self._htmlPanelName = "html"
@@ -108,7 +108,7 @@ class HtmlPagePanel (BaseHtmlPanel):
         if self._htmlPanelName in self.mainWindow.toolbars:
             self.mainWindow.toolbars.destroyToolBar (self._htmlPanelName)
 
-        super (HtmlPagePanel, self).onClose (event)
+        super (HtmlPageView, self).onClose (event)
 
 
     def _removeActionTools (self):
@@ -150,7 +150,7 @@ class HtmlPagePanel (BaseHtmlPanel):
         Обработка события при переключении на код страницы
         """
         self._enableActions (True)
-        super (HtmlPagePanel, self)._onSwitchToCode()
+        super (HtmlPageView, self)._onSwitchToCode()
 
 
     def _onSwitchToPreview (self):
@@ -158,7 +158,7 @@ class HtmlPagePanel (BaseHtmlPanel):
         Обработка события при переключении на просмотр страницы
         """
         self._enableActions (False)
-        super (HtmlPagePanel, self)._onSwitchToPreview()
+        super (HtmlPageView, self)._onSwitchToPreview()
 
 
     def __onPageUpdate (self, sender):
@@ -540,5 +540,5 @@ class HtmlPagePanel (BaseHtmlPanel):
 
 
     def removeGui (self):
-        super (HtmlPagePanel, self).removeGui ()
+        super (HtmlPageView, self).removeGui ()
         self.mainWindow.mainMenu.Remove (self.__HTML_MENU_INDEX - 1)
