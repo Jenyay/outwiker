@@ -125,6 +125,7 @@ class WikiPagePanel (BaseHtmlPanel):
 
         self.__createCustomTools()
         Application.mainWindow.updateShortcuts()
+        self.mainWindow.UpdateAuiManager()
 
         if self.config.showHtmlCodeOptions.value:
             self.htmlcodePageIndex = self.__createHtmlCodePanel(self.htmlSizer)
@@ -587,8 +588,6 @@ class WikiPagePanel (BaseHtmlPanel):
         self.__addListTools()
         self.__addFormatTools()
         self.__addOtherTools()
-
-        Application.mainWindow.updateShortcuts()
 
         self.mainWindow.mainMenu.Insert (self.__WIKI_MENU_INDEX, 
                 self.__wikiMenu, 

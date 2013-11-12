@@ -47,13 +47,12 @@ class HtmlPagePanel (BaseHtmlPanel):
     def __init__ (self, parent, *args, **kwds):
         super (HtmlPagePanel, self).__init__ (parent, *args, **kwds)
 
+        self.__HTML_MENU_INDEX = 7
         self._htmlPanelName = "html"
 
-        self.mainWindow.toolbars[self._htmlPanelName] = HtmlToolBar(self.mainWindow, self.mainWindow.auiManager)
+        self.mainWindow.toolbars[self._htmlPanelName] = HtmlToolBar(self.mainWindow, 
+                self.mainWindow.auiManager)
         self.mainWindow.toolbars[self._htmlPanelName].UpdateToolBar()
-
-        self.__HTML_MENU_INDEX = 7
-        self.__createCustomTools()
 
         # Список действий, которые нужно удалять с панелей и из меню. 
         # А еще их надо дизаблить при переходе на вкладку просмотра результата
@@ -88,6 +87,10 @@ class HtmlPagePanel (BaseHtmlPanel):
                 HtmlHorLineAction,
                 HtmlEscapeHtmlAction,
                 ]
+
+        self.__createCustomTools()
+        Application.mainWindow.updateShortcuts()
+        self.mainWindow.UpdateAuiManager()
 
         Application.onPageUpdate += self.__onPageUpdate
 
@@ -226,8 +229,6 @@ class HtmlPagePanel (BaseHtmlPanel):
         self.__addFormatTools()
         self.__addOtherTools()
         self._addRenderTools()
-
-        Application.mainWindow.updateShortcuts()
 
         self.mainWindow.Thaw()
 
