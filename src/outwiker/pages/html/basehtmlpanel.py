@@ -333,3 +333,11 @@ class BaseHtmlPanel(BaseTextPanel):
             self.selectedPageIndex = self.RESULT_PAGE_INDEX
         else:
             self.selectedPageIndex = self.CODE_PAGE_INDEX
+
+
+    def turnText (self, left, right):
+        """
+        Обернуть выделенный текст строками left и right.
+        Метод предназначен в первую очередь для упрощения доступа к одноименному методу из codeEditor
+        """
+        Application.mainWindow.pagePanel.pageView.codeEditor.turnText (left, right)

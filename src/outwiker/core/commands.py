@@ -26,6 +26,8 @@ from outwiker.gui.tagsdialog import TagsDialog
 from outwiker.gui.renametagdialog import RenameTagDialog
 from outwiker.gui.longprocessrunner import LongProcessRunner
 from outwiker.gui.hotkey import HotKey
+from outwiker.gui.polyaction import PolyAction
+from outwiker.actions.polyactionsid import *
 
 
 def MessageBox (*args, **kwargs):
@@ -717,3 +719,13 @@ def registerActions (application):
 
     application.actionController.register (SearchPrevAction (application), 
             HotKey ("F3", shift=True) )
+
+    _registerPolyActions (application)
+
+
+def _registerPolyActions (application):
+    application.actionController.register (PolyAction (application,
+        BOLD_STR_ID,
+        _(u"Bold"),
+        _(u"Bold")),
+        HotKey ("B", ctrl=True))

@@ -19,8 +19,8 @@ from outwiker.gui.htmltexteditor import HtmlTextEditor
 from outwiker.pages.html.basehtmlpanel import BaseHtmlPanel
 from wikiconfig import WikiConfig
 from htmlgenerator import HtmlGenerator
+from outwiker.actions.polyactionsid import *
 
-from actions.bold import WikiBoldAction
 from actions.italic import WikiItalicAction
 from actions.bolditalic import WikiBoldItalicAction
 from actions.underline import WikiUnderlineAction
@@ -68,10 +68,14 @@ class WikiPageView (BaseHtmlPanel):
         self.__WIKI_MENU_INDEX = 7
         self.__toolbarName = "wiki"
 
+        # Список используемых полиморфных действий
+        self.__polyActions = [
+                BOLD_STR_ID,
+                ]
+
         # Список действий, которые нужно удалять с панелей и из меню. 
         # А еще их надо дизаблить при переходе на вкладки просмотра результата или HTML
         self.__wikiNotationActions = [
-                WikiBoldAction,
                 WikiItalicAction,
                 WikiBoldItalicAction,
                 WikiUnderlineAction,
@@ -149,6 +153,10 @@ class WikiPageView (BaseHtmlPanel):
         map (lambda action: actionController.removeMenuItem (action.stringId), 
                 self.__wikiNotationActions)
 
+        # Удалим элементы меню полиморфных действий
+        map (lambda strid: actionController.removeMenuItem (strid), 
+                self.__polyActions)
+
         actionController.removeMenuItem (WikiOpenHtmlCodeAction.stringId)
         actionController.removeMenuItem (WikiUpdateHtmlAction.stringId)
         actionController.removeMenuItem (SwitchCodeResultAction.stringId)
@@ -158,8 +166,15 @@ class WikiPageView (BaseHtmlPanel):
             map (lambda action: actionController.removeToolbarButton (action.stringId), 
                 self.__wikiNotationActions)
 
+            map (lambda strid: actionController.removeToolbarButton (strid), 
+                self.__polyActions)
+
             actionController.removeToolbarButton (WikiOpenHtmlCodeAction.stringId)
             actionController.removeToolbarButton (SwitchCodeResultAction.stringId)
+
+        # Обнулим функции действия в полиморфных действиях
+        map (lambda strid: actionController.getAction (strid).setFunc (None), 
+                self.__polyActions)
 
 
     @property
@@ -211,8 +226,13 @@ class WikiPageView (BaseHtmlPanel):
 
         self.mainWindow.Freeze()
 
+        # Активируем / дизактивируем собственные действия
         map (lambda action: actionController.enableTools (action.stringId, enabled), 
                 self.__wikiNotationActions)
+
+        # Активируем / дизактивируем полиморфные действия
+        map (lambda strid: actionController.enableTools (strid, enabled), 
+                self.__polyActions)
 
         self.mainWindow.Thaw()
 
@@ -286,8 +306,10 @@ class WikiPageView (BaseHtmlPanel):
         menu = self.__fontMenu
 
         # Полужирный шрифт
-        Application.actionController.appendMenuItem (WikiBoldAction.stringId, menu)
-        Application.actionController.appendToolbarButton (WikiBoldAction.stringId, 
+        Application.actionController.getAction (BOLD_STR_ID).setFunc (lambda param: self.turnText (u"'''", u"'''"))
+
+        Application.actionController.appendMenuItem (BOLD_STR_ID, menu)
+        Application.actionController.appendToolbarButton (BOLD_STR_ID, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_bold.png"),
                 fullUpdate=False)

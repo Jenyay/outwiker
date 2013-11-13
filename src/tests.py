@@ -114,6 +114,7 @@ if __name__ == '__main__':
     from test.guitests.wikipageview import WikiPageViewTest
     from test.guitests.htmlpageview import HtmlPageViewTest
     from test.guitests.actioncontroller import ActionControllerTest
+    from test.guitests.polyaction import PolyActionTest
     from test.guitests.mainpanes import MainPanesTest
     from test.guitests.fullscreen import FullScreenTest
 

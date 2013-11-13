@@ -14,8 +14,8 @@ from outwiker.core.style import Style
 from .htmltoolbar import HtmlToolBar
 from .basehtmlpanel import BaseHtmlPanel
 
+from outwiker.actions.polyactionsid import *
 from actions.headings import *
-from actions.bold import HtmlBoldAction
 from actions.italic import HtmlItalicAction
 from actions.underline import HtmlUnderlineAction
 from actions.strike import HtmlStrikeAction
@@ -54,10 +54,14 @@ class HtmlPageView (BaseHtmlPanel):
                 self.mainWindow.auiManager)
         self.mainWindow.toolbars[self._htmlPanelName].UpdateToolBar()
 
+        # Список используемых полиморфных действий
+        self.__polyActions = [
+                BOLD_STR_ID,
+                ]
+
         # Список действий, которые нужно удалять с панелей и из меню. 
         # А еще их надо дизаблить при переходе на вкладку просмотра результата
         self.__htmlNotationActions = [
-                HtmlBoldAction,
                 HtmlItalicAction,
                 HtmlUnderlineAction,
                 HtmlStrikeAction,
@@ -120,6 +124,10 @@ class HtmlPageView (BaseHtmlPanel):
         map (lambda action: actionController.removeMenuItem (action.stringId), 
                 self.__htmlNotationActions)
 
+        # Удалим элементы меню полиморфных действий
+        map (lambda strid: actionController.removeMenuItem (strid), 
+                self.__polyActions)
+
         Application.actionController.removeMenuItem (HtmlAutoLineWrap.stringId)
         Application.actionController.removeMenuItem (SwitchCodeResultAction.stringId)
         
@@ -128,8 +136,15 @@ class HtmlPageView (BaseHtmlPanel):
             map (lambda action: actionController.removeToolbarButton (action.stringId), 
                 self.__htmlNotationActions)
 
+            map (lambda strid: actionController.removeToolbarButton (strid), 
+                self.__polyActions)
+
             Application.actionController.removeToolbarButton (HtmlAutoLineWrap.stringId)
             Application.actionController.removeToolbarButton (SwitchCodeResultAction.stringId)
+
+        # Обнулим функции действия в полиморфных действиях
+        map (lambda strid: actionController.getAction (strid).setFunc (None), 
+                self.__polyActions)
 
         self.mainWindow.Thaw()
 
@@ -141,6 +156,10 @@ class HtmlPageView (BaseHtmlPanel):
 
         map (lambda action: actionController.enableTools (action.stringId, enabled), 
                 self.__htmlNotationActions)
+
+        # Активируем / дизактивируем полиморфные действия
+        map (lambda strid: actionController.enableTools (strid, enabled), 
+                self.__polyActions)
 
         self.mainWindow.Thaw()
 
@@ -251,8 +270,10 @@ class HtmlPageView (BaseHtmlPanel):
         menu = self.__fontMenu
 
         # Полужирный шрифт
-        Application.actionController.appendMenuItem (HtmlBoldAction.stringId, menu)
-        Application.actionController.appendToolbarButton (HtmlBoldAction.stringId, 
+        Application.actionController.getAction (BOLD_STR_ID).setFunc (lambda param: self.turnText (u"<b>", u"</b>"))
+
+        Application.actionController.appendMenuItem (BOLD_STR_ID, menu)
+        Application.actionController.appendToolbarButton (BOLD_STR_ID, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_bold.png"),
                 fullUpdate=False)
