@@ -11,26 +11,13 @@ from outwiker.core.factory import PageFactory
 from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
 from outwiker.gui.hotkey import HotKey
 
-from actions.underline import WikiUnderlineAction
-from actions.strike import WikiStrikeAction
-from actions.subscript import WikiSubscriptAction
-from actions.superscript import WikiSuperscriptAction
 from actions.fontsizebig import WikiFontSizeBigAction
 from actions.fontsizesmall import WikiFontSizeSmallAction
-from actions.monospace import WikiMonospaceAction
-from actions.alignleft import WikiAlignLeftAction
-from actions.alignright import WikiAlignRightAction
-from actions.aligncenter import WikiAlignCenterAction
-from actions.alignjustify import WikiAlignJustifyAction
-from actions.preformat import WikiPreformatAction
 from actions.nonparsed import WikiNonParsedAction
 from actions.listbullets import WikiListBulletsAction
 from actions.listnumbers import WikiListNumbersAction
-from actions.headings import *
 from actions.thumb import WikiThumbAction
 from actions.link import WikiLinkAction
-from actions.anchor import WikiAnchorAction
-from actions.horline import WikiHorLineAction
 from actions.linebreak import WikiLineBreakAction
 from actions.equation import WikiEquationAction
 from actions.escapehtml import WikiEscapeHtmlAction
@@ -42,31 +29,13 @@ from actions.include import WikiIncludeAction
 
 
 _actions = [
-        (WikiUnderlineAction, HotKey ("U", ctrl=True)),
-        (WikiStrikeAction, HotKey ("K", ctrl=True)),
-        (WikiSubscriptAction, HotKey ("=", ctrl=True)),
-        (WikiSuperscriptAction, HotKey ("+", ctrl=True)),
         (WikiFontSizeBigAction, HotKey (".", ctrl=True)),
         (WikiFontSizeSmallAction, HotKey (",", ctrl=True)),
-        (WikiMonospaceAction, HotKey ("7", ctrl=True)),
-        (WikiAlignLeftAction, HotKey ("L", ctrl=True, alt=True)),
-        (WikiAlignRightAction, HotKey ("R", ctrl=True, alt=True)),
-        (WikiAlignCenterAction, HotKey ("C", ctrl=True, alt=True)),
-        (WikiAlignJustifyAction, HotKey ("J", ctrl=True, alt=True)),
-        (WikiPreformatAction, HotKey ("F", ctrl=True, alt=True)),
         (WikiNonParsedAction, None),
         (WikiListBulletsAction, HotKey ("G", ctrl=True)),
         (WikiListNumbersAction, HotKey ("J", ctrl=True)),
-        (WikiHeading1Action, HotKey ("1", ctrl=True)),
-        (WikiHeading2Action, HotKey ("2", ctrl=True)),
-        (WikiHeading3Action, HotKey ("3", ctrl=True)),
-        (WikiHeading4Action, HotKey ("4", ctrl=True)),
-        (WikiHeading5Action, HotKey ("5", ctrl=True)),
-        (WikiHeading6Action, HotKey ("6", ctrl=True)),
         (WikiThumbAction, HotKey ("M", ctrl=True)),
         (WikiLinkAction, HotKey ("L", ctrl=True)),
-        (WikiAnchorAction, HotKey ("L", ctrl=True, alt=True)),
-        (WikiHorLineAction, HotKey ("H", ctrl=True)),
         (WikiLineBreakAction, HotKey ("Return", ctrl=True)),
         (WikiEquationAction, HotKey ("Q", ctrl=True)),
         (WikiEscapeHtmlAction, None),

@@ -724,6 +724,8 @@ def registerActions (application):
 
 
 def _registerPolyActions (application):
+    # Шрифты
+
     application.actionController.register (PolyAction (application,
         BOLD_STR_ID,
         _(u"Bold"),
@@ -741,3 +743,117 @@ def _registerPolyActions (application):
         _(u"Bold italic"),
         _(u"Bold italic")),
         HotKey ("I", ctrl=True, shift=True))
+
+    application.actionController.register (PolyAction (application,
+        UNDERLINE_STR_ID,
+        _(u"Underline"),
+        _(u"Underline")),
+        HotKey ("U", ctrl=True))
+
+    application.actionController.register (PolyAction (application,
+        STRIKE_STR_ID,
+        _(u"Strikethrough"),
+        _(u"Strikethrough")),
+        HotKey ("K", ctrl=True))
+
+    application.actionController.register (PolyAction (application,
+        SUBSCRIPT_STR_ID,
+        _(u"Subscript"),
+        _(u"Subscript")),
+        HotKey ("=", ctrl=True))
+
+    application.actionController.register (PolyAction (application,
+        SUPERSCRIPT_STR_ID,
+        _(u"Superscript"),
+        _(u"Superscript")),
+        HotKey ("+", ctrl=True))
+
+    application.actionController.register (PolyAction (application,
+        PREFORMAT_STR_ID,
+        _(u"Preformatted text"),
+        _(u"Preformatted text")),
+        HotKey ("F", ctrl=True, alt=True))
+
+    application.actionController.register (PolyAction (application,
+        CODE_STR_ID,
+        _(u"Insert code"),
+        _(u"Insert code (monospaced font)")),
+        HotKey ("D", ctrl=True, alt=True))
+
+
+    # Выравнивания
+
+    application.actionController.register (PolyAction (application,
+        ALIGN_LEFT_STR_ID,
+        _(u"Align text left"),
+        _(u"Align text left")),
+        HotKey ("L", ctrl=True, alt=True))
+
+    application.actionController.register (PolyAction (application,
+        ALIGN_CENTER_STR_ID,
+        _(u"Center"),
+        _(u"Center")),
+        HotKey ("C", ctrl=True, alt=True))
+
+    application.actionController.register (PolyAction (application,
+        ALIGN_RIGHT_STR_ID,
+        _(u"Align text right"),
+        _(u"Align text right")),
+        HotKey ("R", ctrl=True, alt=True))
+
+    application.actionController.register (PolyAction (application,
+        ALIGN_JUSTIFY_STR_ID,
+        _(u"Justify"),
+        _(u"Justify")),
+        HotKey ("J", ctrl=True, alt=True))
+
+
+    # Заголовки
+    application.actionController.register (PolyAction (application,
+        HEADING_1_STR_ID,
+        _(u"First-level heading"),
+        _(u"First-level heading")),
+        HotKey ("1", ctrl=True))
+
+    application.actionController.register (PolyAction (application,
+        HEADING_2_STR_ID,
+        _(u"Second-level heading"),
+        _(u"Second-level heading")),
+        HotKey ("2", ctrl=True))
+
+    application.actionController.register (PolyAction (application,
+        HEADING_3_STR_ID,
+        _(u"Subtitle three"),
+        _(u"Subtitle three")),
+        HotKey ("3", ctrl=True))
+
+    application.actionController.register (PolyAction (application,
+        HEADING_4_STR_ID,
+        _(u"Subtitle four"),
+        _(u"Subtitle four")),
+        HotKey ("4", ctrl=True))
+
+    application.actionController.register (PolyAction (application,
+        HEADING_5_STR_ID,
+        _(u"Subtitle five"),
+        _(u"Subtitle five")),
+        HotKey ("5", ctrl=True))
+
+    application.actionController.register (PolyAction (application,
+        HEADING_6_STR_ID,
+        _(u"Subtitle six"),
+        _(u"Subtitle six")),
+        HotKey ("6", ctrl=True))
+
+    # Разное
+    application.actionController.register (PolyAction (application,
+        ANCHOR_STR_ID,
+        _(u"Anchor"),
+        _(u"Anchor")),
+        HotKey ("N", ctrl=True, alt=True))
+
+    application.actionController.register (PolyAction (application,
+        HORLINE_STR_ID,
+        _(u"Horizontal rule"),
+        _(u"Horizontal rule")),
+        HotKey ("H", ctrl=True))

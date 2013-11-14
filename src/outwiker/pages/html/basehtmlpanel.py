@@ -341,3 +341,11 @@ class BaseHtmlPanel(BaseTextPanel):
         Метод предназначен в первую очередь для упрощения доступа к одноименному методу из codeEditor
         """
         Application.mainWindow.pagePanel.pageView.codeEditor.turnText (left, right)
+
+
+    def replaceText (self, text):
+        """
+        Заменить выделенный текст строкой text
+        Метод предназначен в первую очередь для упрощения доступа к одноименному методу из codeEditor
+        """
+        Application.mainWindow.pagePanel.pageView.codeEditor.replaceText (text)

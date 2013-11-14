@@ -15,27 +15,14 @@ from .htmltoolbar import HtmlToolBar
 from .basehtmlpanel import BaseHtmlPanel
 
 from outwiker.actions.polyactionsid import *
-from actions.headings import *
-from actions.underline import HtmlUnderlineAction
-from actions.strike import HtmlStrikeAction
-from actions.subscript import HtmlSubscriptAction
-from actions.superscript import HtmlSuperscriptAction
-from actions.alignleft import HtmlAlignLeftAction
-from actions.aligncenter import HtmlAlignCenterAction
-from actions.alignright import HtmlAlignRightAction
-from actions.alignjustify import HtmlAlignJustifyAction
 from actions.table import HtmlTableAction
 from actions.tablerow import HtmlTableRowAction
 from actions.tablecell import HtmlTableCellAction
 from actions.listbullets import HtmlListBulletsAction
 from actions.listnumbers import HtmlListNumbersAction
-from actions.code import HtmlCodeAction
-from actions.preformat import HtmlPreformatAction
 from actions.quote import HtmlQuoteAction
 from actions.image import HtmlImageAction
 from actions.link import HtmlLinkAction
-from actions.anchor import HtmlAnchorAction
-from actions.horline import HtmlHorLineAction
 from actions.escapehtml import HtmlEscapeHtmlAction
 
 from actions.autolinewrap import HtmlAutoLineWrap
@@ -58,37 +45,37 @@ class HtmlPageView (BaseHtmlPanel):
                 BOLD_STR_ID,
                 ITALIC_STR_ID,
                 BOLD_ITALIC_STR_ID,
+                UNDERLINE_STR_ID,
+                STRIKE_STR_ID,
+                SUBSCRIPT_STR_ID,
+                SUPERSCRIPT_STR_ID,
+                ALIGN_LEFT_STR_ID,
+                ALIGN_CENTER_STR_ID,
+                ALIGN_RIGHT_STR_ID,
+                ALIGN_JUSTIFY_STR_ID,
+                HEADING_1_STR_ID,
+                HEADING_2_STR_ID,
+                HEADING_3_STR_ID,
+                HEADING_4_STR_ID,
+                HEADING_5_STR_ID,
+                HEADING_6_STR_ID,
+                PREFORMAT_STR_ID,
+                CODE_STR_ID,
+                ANCHOR_STR_ID,
+                HORLINE_STR_ID,
                 ]
 
         # Список действий, которые нужно удалять с панелей и из меню. 
         # А еще их надо дизаблить при переходе на вкладку просмотра результата
         self.__htmlNotationActions = [
-                HtmlUnderlineAction,
-                HtmlStrikeAction,
-                HtmlSubscriptAction,
-                HtmlSuperscriptAction,
-                HtmlAlignLeftAction,
-                HtmlAlignCenterAction,
-                HtmlAlignRightAction,
-                HtmlAlignJustifyAction,
                 HtmlTableAction,
                 HtmlTableRowAction,
                 HtmlTableCellAction,
                 HtmlListBulletsAction,
                 HtmlListNumbersAction,
-                HtmlHeading1Action,
-                HtmlHeading2Action,
-                HtmlHeading3Action,
-                HtmlHeading4Action,
-                HtmlHeading5Action,
-                HtmlHeading6Action,
-                HtmlCodeAction,
-                HtmlPreformatAction,
                 HtmlQuoteAction,
                 HtmlImageAction,
                 HtmlLinkAction,
-                HtmlAnchorAction,
-                HtmlHorLineAction,
                 HtmlEscapeHtmlAction,
                 ]
 
@@ -299,32 +286,40 @@ class HtmlPageView (BaseHtmlPanel):
 
 
         # Подчеркнутый шрифт
-        Application.actionController.appendMenuItem (HtmlUnderlineAction.stringId, menu)
-        Application.actionController.appendToolbarButton (HtmlUnderlineAction.stringId, 
+        Application.actionController.getAction (UNDERLINE_STR_ID).setFunc (lambda param: self.turnText (u"<u>", u"</u>"))
+
+        Application.actionController.appendMenuItem (UNDERLINE_STR_ID, menu)
+        Application.actionController.appendToolbarButton (UNDERLINE_STR_ID, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_underline.png"),
                 fullUpdate=False)
 
 
         # Зачеркнутый шрифт
-        Application.actionController.appendMenuItem (HtmlStrikeAction.stringId, menu)
-        Application.actionController.appendToolbarButton (HtmlStrikeAction.stringId, 
+        Application.actionController.getAction (STRIKE_STR_ID).setFunc (lambda param: self.turnText (u"<strike>", u"</strike>"))
+
+        Application.actionController.appendMenuItem (STRIKE_STR_ID, menu)
+        Application.actionController.appendToolbarButton (STRIKE_STR_ID, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_strikethrough.png"),
                 fullUpdate=False)
 
 
         # Нижний индекс
-        Application.actionController.appendMenuItem (HtmlSubscriptAction.stringId, menu)
-        Application.actionController.appendToolbarButton (HtmlSubscriptAction.stringId, 
+        Application.actionController.getAction (SUBSCRIPT_STR_ID).setFunc (lambda param: self.turnText (u"<sub>", u"</sub>"))
+
+        Application.actionController.appendMenuItem (SUBSCRIPT_STR_ID, menu)
+        Application.actionController.appendToolbarButton (SUBSCRIPT_STR_ID, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_subscript.png"),
                 fullUpdate=False)
 
 
         # Верхний индекс
-        Application.actionController.appendMenuItem (HtmlSuperscriptAction.stringId, menu)
-        Application.actionController.appendToolbarButton (HtmlSuperscriptAction.stringId, 
+        Application.actionController.getAction (SUPERSCRIPT_STR_ID).setFunc (lambda param: self.turnText (u"<sup>", u"</sup>"))
+
+        Application.actionController.appendMenuItem (SUPERSCRIPT_STR_ID, menu)
+        Application.actionController.appendToolbarButton (SUPERSCRIPT_STR_ID, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_superscript.png"),
                 fullUpdate=False)
@@ -339,32 +334,40 @@ class HtmlPageView (BaseHtmlPanel):
         menu = self.__alignMenu
 
         # Выравнивание по левому краю
-        Application.actionController.appendMenuItem (HtmlAlignLeftAction.stringId, menu)
-        Application.actionController.appendToolbarButton (HtmlAlignLeftAction.stringId, 
+        Application.actionController.getAction (ALIGN_LEFT_STR_ID).setFunc (lambda param: self.turnText (u'<div align="left">', u'</div>'))
+
+        Application.actionController.appendMenuItem (ALIGN_LEFT_STR_ID, menu)
+        Application.actionController.appendToolbarButton (ALIGN_LEFT_STR_ID, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_align_left.png"),
                 fullUpdate=False)
 
 
         # Выравнивание по центру
-        Application.actionController.appendMenuItem (HtmlAlignCenterAction.stringId, menu)
-        Application.actionController.appendToolbarButton (HtmlAlignCenterAction.stringId, 
+        Application.actionController.getAction (ALIGN_CENTER_STR_ID).setFunc (lambda param: self.turnText (u'<div align="center">', u'</div>'))
+
+        Application.actionController.appendMenuItem (ALIGN_CENTER_STR_ID, menu)
+        Application.actionController.appendToolbarButton (ALIGN_CENTER_STR_ID, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_align_center.png"),
                 fullUpdate=False)
 
 
         # Выравнивание по правому краю
-        Application.actionController.appendMenuItem (HtmlAlignRightAction.stringId, menu)
-        Application.actionController.appendToolbarButton (HtmlAlignRightAction.stringId, 
+        Application.actionController.getAction (ALIGN_RIGHT_STR_ID).setFunc (lambda param: self.turnText (u'<div align="right">', u'</div>'))
+
+        Application.actionController.appendMenuItem (ALIGN_RIGHT_STR_ID, menu)
+        Application.actionController.appendToolbarButton (ALIGN_RIGHT_STR_ID, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_align_right.png"),
                 fullUpdate=False)
 
 
         # Выравнивание по ширине
-        Application.actionController.appendMenuItem (HtmlAlignJustifyAction.stringId, menu)
-        Application.actionController.appendToolbarButton (HtmlAlignJustifyAction.stringId, 
+        Application.actionController.getAction (ALIGN_JUSTIFY_STR_ID).setFunc (lambda param: self.turnText (u'<div align="justify">', u'</div>'))
+
+        Application.actionController.appendMenuItem (ALIGN_JUSTIFY_STR_ID, menu)
+        Application.actionController.appendToolbarButton (ALIGN_JUSTIFY_STR_ID, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_align_justify.png"),
                 fullUpdate=False)
@@ -433,41 +436,48 @@ class HtmlPageView (BaseHtmlPanel):
         toolbar = self.mainWindow.toolbars[self._htmlPanelName]
         menu = self.__headingMenu
 
-        Application.actionController.appendMenuItem (HtmlHeading1Action.stringId, menu)
-        Application.actionController.appendToolbarButton (HtmlHeading1Action.stringId, 
+        Application.actionController.getAction (HEADING_1_STR_ID).setFunc (lambda param: self.turnText (u"<h1>", u"</h1>"))
+        Application.actionController.getAction (HEADING_2_STR_ID).setFunc (lambda param: self.turnText (u"<h2>", u"</h2>"))
+        Application.actionController.getAction (HEADING_3_STR_ID).setFunc (lambda param: self.turnText (u"<h3>", u"</h3>"))
+        Application.actionController.getAction (HEADING_4_STR_ID).setFunc (lambda param: self.turnText (u"<h4>", u"</h4>"))
+        Application.actionController.getAction (HEADING_5_STR_ID).setFunc (lambda param: self.turnText (u"<h5>", u"</h5>"))
+        Application.actionController.getAction (HEADING_6_STR_ID).setFunc (lambda param: self.turnText (u"<h6>", u"</h6>"))
+
+        Application.actionController.appendMenuItem (HEADING_1_STR_ID, menu)
+        Application.actionController.appendToolbarButton (HEADING_1_STR_ID, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_heading_1.png"),
                 fullUpdate=False)
 
-        Application.actionController.appendMenuItem (HtmlHeading2Action.stringId, menu)
-        Application.actionController.appendToolbarButton (HtmlHeading2Action.stringId, 
+        Application.actionController.appendMenuItem (HEADING_2_STR_ID, menu)
+        Application.actionController.appendToolbarButton (HEADING_2_STR_ID, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_heading_2.png"),
                 fullUpdate=False)
 
-        Application.actionController.appendMenuItem (HtmlHeading3Action.stringId, menu)
-        Application.actionController.appendToolbarButton (HtmlHeading3Action.stringId, 
+        Application.actionController.appendMenuItem (HEADING_3_STR_ID, menu)
+        Application.actionController.appendToolbarButton (HEADING_3_STR_ID, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_heading_3.png"),
                 fullUpdate=False)
 
-        Application.actionController.appendMenuItem (HtmlHeading4Action.stringId, menu)
-        Application.actionController.appendToolbarButton (HtmlHeading4Action.stringId, 
+        Application.actionController.appendMenuItem (HEADING_4_STR_ID, menu)
+        Application.actionController.appendToolbarButton (HEADING_4_STR_ID, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_heading_4.png"),
                 fullUpdate=False)
 
-        Application.actionController.appendMenuItem (HtmlHeading5Action.stringId, menu)
-        Application.actionController.appendToolbarButton (HtmlHeading5Action.stringId, 
+        Application.actionController.appendMenuItem (HEADING_5_STR_ID, menu)
+        Application.actionController.appendToolbarButton (HEADING_5_STR_ID, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_heading_5.png"),
                 fullUpdate=False)
 
-        Application.actionController.appendMenuItem (HtmlHeading6Action.stringId, menu)
-        Application.actionController.appendToolbarButton (HtmlHeading6Action.stringId, 
+        Application.actionController.appendMenuItem (HEADING_6_STR_ID, menu)
+        Application.actionController.appendToolbarButton (HEADING_6_STR_ID, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_heading_6.png"),
-                fullUpdate=False) 
+                fullUpdate=False)
 
 
     def __addFormatTools (self):
@@ -475,14 +485,18 @@ class HtmlPageView (BaseHtmlPanel):
         menu = self.__formatMenu
 
         # Код
-        Application.actionController.appendMenuItem (HtmlCodeAction.stringId, menu)
-        Application.actionController.appendToolbarButton (HtmlCodeAction.stringId, 
+        Application.actionController.getAction (CODE_STR_ID).setFunc (lambda param: self.turnText (u'<code>', u'</code>'))
+
+        Application.actionController.appendMenuItem (CODE_STR_ID, menu)
+        Application.actionController.appendToolbarButton (CODE_STR_ID, 
                 toolbar,
                 os.path.join (self.imagesDir, "code.png"),
                 fullUpdate=False)
 
+
         # Preformat
-        Application.actionController.appendMenuItem (HtmlPreformatAction.stringId, menu)
+        Application.actionController.getAction (PREFORMAT_STR_ID).setFunc (lambda param: self.turnText (u"<pre>", u"</pre>"))
+        Application.actionController.appendMenuItem (PREFORMAT_STR_ID, menu)
 
         # Цитирование
         Application.actionController.appendMenuItem (HtmlQuoteAction.stringId, menu)
@@ -516,16 +530,20 @@ class HtmlPageView (BaseHtmlPanel):
 
 
         # Вставить якорь
-        Application.actionController.appendMenuItem (HtmlAnchorAction.stringId, menu)
-        Application.actionController.appendToolbarButton (HtmlAnchorAction.stringId, 
+        Application.actionController.getAction (ANCHOR_STR_ID).setFunc (lambda param: self.turnText (u'<a name="', u'"></a>'))
+
+        Application.actionController.appendMenuItem (ANCHOR_STR_ID, menu)
+        Application.actionController.appendToolbarButton (ANCHOR_STR_ID, 
                 toolbar,
                 os.path.join (self.imagesDir, "anchor.png"),
                 fullUpdate=False)
 
 
         # Вставить горизонтальную линию
-        Application.actionController.appendMenuItem (HtmlHorLineAction.stringId, menu)
-        Application.actionController.appendToolbarButton (HtmlHorLineAction.stringId, 
+        Application.actionController.getAction (HORLINE_STR_ID).setFunc (lambda param: self.replaceText (u"<hr>"))
+
+        Application.actionController.appendMenuItem (HORLINE_STR_ID, menu)
+        Application.actionController.appendToolbarButton (HORLINE_STR_ID, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_horizontalrule.png"),
                 fullUpdate=False)
