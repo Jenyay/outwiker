@@ -16,7 +16,6 @@ from .basehtmlpanel import BaseHtmlPanel
 
 from outwiker.actions.polyactionsid import *
 from actions.headings import *
-from actions.italic import HtmlItalicAction
 from actions.underline import HtmlUnderlineAction
 from actions.strike import HtmlStrikeAction
 from actions.subscript import HtmlSubscriptAction
@@ -57,12 +56,13 @@ class HtmlPageView (BaseHtmlPanel):
         # Список используемых полиморфных действий
         self.__polyActions = [
                 BOLD_STR_ID,
+                ITALIC_STR_ID,
+                BOLD_ITALIC_STR_ID,
                 ]
 
         # Список действий, которые нужно удалять с панелей и из меню. 
         # А еще их надо дизаблить при переходе на вкладку просмотра результата
         self.__htmlNotationActions = [
-                HtmlItalicAction,
                 HtmlUnderlineAction,
                 HtmlStrikeAction,
                 HtmlSubscriptAction,
@@ -280,10 +280,21 @@ class HtmlPageView (BaseHtmlPanel):
 
 
         # Курсивный шрифт
-        Application.actionController.appendMenuItem (HtmlItalicAction.stringId, menu)
-        Application.actionController.appendToolbarButton (HtmlItalicAction.stringId, 
+        Application.actionController.getAction (ITALIC_STR_ID).setFunc (lambda param: self.turnText (u"<i>", u"</i>"))
+
+        Application.actionController.appendMenuItem (ITALIC_STR_ID, menu)
+        Application.actionController.appendToolbarButton (ITALIC_STR_ID, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_italic.png"),
+                fullUpdate=False)
+
+        # Полужирный курсивный шрифт
+        Application.actionController.getAction (BOLD_ITALIC_STR_ID).setFunc (lambda param: self.turnText (u"<b><i>", u"</i></b>"))
+
+        Application.actionController.appendMenuItem (BOLD_ITALIC_STR_ID, menu)
+        Application.actionController.appendToolbarButton (BOLD_ITALIC_STR_ID, 
+                toolbar,
+                os.path.join (self.imagesDir, "text_bold_italic.png"),
                 fullUpdate=False)
 
 

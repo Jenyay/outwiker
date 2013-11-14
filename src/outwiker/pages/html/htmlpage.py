@@ -13,7 +13,6 @@ from outwiker.gui.hotkey import HotKey
 from outwiker.pages.html.htmlpageview import HtmlPageView
 
 from actions.headings import *
-from actions.italic import HtmlItalicAction
 from actions.underline import HtmlUnderlineAction
 from actions.strike import HtmlStrikeAction
 from actions.subscript import HtmlSubscriptAction
@@ -40,7 +39,6 @@ from actions.autolinewrap import HtmlAutoLineWrap
 from actions.switchcoderesult import SwitchCodeResultAction
 
 _actions = [
-        (HtmlItalicAction, HotKey ("I", ctrl=True)),
         (HtmlUnderlineAction, HotKey ("U", ctrl=True)),
         (HtmlStrikeAction, HotKey ("K", ctrl=True)),
         (HtmlSubscriptAction, HotKey ("=", ctrl=True)),

@@ -11,8 +11,6 @@ from outwiker.core.factory import PageFactory
 from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
 from outwiker.gui.hotkey import HotKey
 
-from actions.italic import WikiItalicAction
-from actions.bolditalic import WikiBoldItalicAction
 from actions.underline import WikiUnderlineAction
 from actions.strike import WikiStrikeAction
 from actions.subscript import WikiSubscriptAction
@@ -44,8 +42,6 @@ from actions.include import WikiIncludeAction
 
 
 _actions = [
-        (WikiItalicAction, HotKey ("I", ctrl=True)),
-        (WikiBoldItalicAction,  HotKey ("I", ctrl=True, shift=True)),
         (WikiUnderlineAction, HotKey ("U", ctrl=True)),
         (WikiStrikeAction, HotKey ("K", ctrl=True)),
         (WikiSubscriptAction, HotKey ("=", ctrl=True)),

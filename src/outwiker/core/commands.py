@@ -729,3 +729,15 @@ def _registerPolyActions (application):
         _(u"Bold"),
         _(u"Bold")),
         HotKey ("B", ctrl=True))
+
+    application.actionController.register (PolyAction (application,
+        ITALIC_STR_ID,
+        _(u"Italic"),
+        _(u"Italic")),
+        HotKey ("I", ctrl=True))
+
+    application.actionController.register (PolyAction (application,
+        BOLD_ITALIC_STR_ID,
+        _(u"Bold italic"),
+        _(u"Bold italic")),
+        HotKey ("I", ctrl=True, shift=True))

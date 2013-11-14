@@ -21,8 +21,6 @@ from wikiconfig import WikiConfig
 from htmlgenerator import HtmlGenerator
 from outwiker.actions.polyactionsid import *
 
-from actions.italic import WikiItalicAction
-from actions.bolditalic import WikiBoldItalicAction
 from actions.underline import WikiUnderlineAction
 from actions.strike import WikiStrikeAction
 from actions.subscript import WikiSubscriptAction
@@ -71,13 +69,13 @@ class WikiPageView (BaseHtmlPanel):
         # Список используемых полиморфных действий
         self.__polyActions = [
                 BOLD_STR_ID,
+                ITALIC_STR_ID,
+                BOLD_ITALIC_STR_ID,
                 ]
 
         # Список действий, которые нужно удалять с панелей и из меню. 
         # А еще их надо дизаблить при переходе на вкладки просмотра результата или HTML
         self.__wikiNotationActions = [
-                WikiItalicAction,
-                WikiBoldItalicAction,
                 WikiUnderlineAction,
                 WikiStrikeAction,
                 WikiSubscriptAction,
@@ -316,15 +314,19 @@ class WikiPageView (BaseHtmlPanel):
 
 
         # Курсивный шрифт
-        Application.actionController.appendMenuItem (WikiItalicAction.stringId, menu)
-        Application.actionController.appendToolbarButton (WikiItalicAction.stringId, 
+        Application.actionController.getAction (ITALIC_STR_ID).setFunc (lambda param: self.turnText (u"''", u"''"))
+
+        Application.actionController.appendMenuItem (ITALIC_STR_ID, menu)
+        Application.actionController.appendToolbarButton (ITALIC_STR_ID, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_italic.png"),
                 fullUpdate=False)
 
         # Полужирный курсивный шрифт
-        Application.actionController.appendMenuItem (WikiBoldItalicAction.stringId, menu)
-        Application.actionController.appendToolbarButton (WikiBoldItalicAction.stringId, 
+        Application.actionController.getAction (BOLD_ITALIC_STR_ID).setFunc (lambda param: self.turnText (u"''''", u"''''"))
+
+        Application.actionController.appendMenuItem (BOLD_ITALIC_STR_ID, menu)
+        Application.actionController.appendToolbarButton (BOLD_ITALIC_STR_ID, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_bold_italic.png"),
                 fullUpdate=False)
