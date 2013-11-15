@@ -17,7 +17,7 @@ class WikiFontSizeSmallAction (WikiFontSizeBaseAction):
 
     @property
     def description (self):
-        return _(u"Small font for wiki pages")
+        return _(u"Small font")
     
 
     @property

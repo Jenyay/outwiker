@@ -21,7 +21,7 @@ class WikiIncludeAction (BaseAction):
 
     @property
     def description (self):
-        return _(u"Insert (:include:) command for wiki pages")
+        return _(u"Insert (:include:) command")
     
 
     @property

@@ -49,7 +49,7 @@ class TexToken (object):
         try:
             image_fname = tex.makeImage (eqn)
         except IOError:
-            return _(u"<B>Can't create imege file</B>")
+            return _(u"<B>Can't create image file</B>")
         
         image_path = os.path.join (Thumbnails.getRelativeThumbDir(), image_fname)
         result = u'<IMG SRC="{image}"/>'.format (image=image_path.replace ("\\", "/"))

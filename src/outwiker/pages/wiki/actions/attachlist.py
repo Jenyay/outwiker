@@ -21,7 +21,7 @@ class WikiAttachListAction (BaseAction):
 
     @property
     def description (self):
-        return _(u"Insert (:attachlist:) command for wiki pages")
+        return _(u"Insert (:attachlist:) command")
     
 
     @property

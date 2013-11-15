@@ -24,7 +24,7 @@ class WikiThumbAction (BaseAction):
 
     @property
     def description (self):
-        return _(u"Insert thumbnail on wiki page")
+        return _(u"Insert thumbnail")
     
 
     @property

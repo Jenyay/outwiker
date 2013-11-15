@@ -21,7 +21,7 @@ class WikiChildListAction (BaseAction):
 
     @property
     def description (self):
-        return _(u"Insert (:childlist:) command for wiki pages")
+        return _(u"Insert (:childlist:) command")
     
 
     @property

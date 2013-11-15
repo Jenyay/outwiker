@@ -21,7 +21,7 @@ class WikiEquationAction (BaseAction):
 
     @property
     def description (self):
-        return _(u"Equation for wiki pages")
+        return _(u"Equation")
     
 
     @property

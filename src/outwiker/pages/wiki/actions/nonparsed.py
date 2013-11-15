@@ -21,7 +21,7 @@ class WikiNonParsedAction (BaseAction):
 
     @property
     def description (self):
-        return _(u"Non parsed text for wiki pages")
+        return _(u"Non parsed text")
     
 
     @property
