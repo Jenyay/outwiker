@@ -14,13 +14,8 @@ from outwiker.gui.hotkey import HotKey
 from actions.fontsizebig import WikiFontSizeBigAction
 from actions.fontsizesmall import WikiFontSizeSmallAction
 from actions.nonparsed import WikiNonParsedAction
-from actions.listbullets import WikiListBulletsAction
-from actions.listnumbers import WikiListNumbersAction
 from actions.thumb import WikiThumbAction
-from actions.link import WikiLinkAction
-from actions.linebreak import WikiLineBreakAction
 from actions.equation import WikiEquationAction
-from actions.escapehtml import WikiEscapeHtmlAction
 from actions.openhtmlcode import WikiOpenHtmlCodeAction
 from actions.updatehtml import WikiUpdateHtmlAction
 from actions.attachlist import WikiAttachListAction
@@ -32,13 +27,8 @@ _actions = [
         (WikiFontSizeBigAction, HotKey (".", ctrl=True)),
         (WikiFontSizeSmallAction, HotKey (",", ctrl=True)),
         (WikiNonParsedAction, None),
-        (WikiListBulletsAction, HotKey ("G", ctrl=True)),
-        (WikiListNumbersAction, HotKey ("J", ctrl=True)),
         (WikiThumbAction, HotKey ("M", ctrl=True)),
-        (WikiLinkAction, HotKey ("L", ctrl=True)),
-        (WikiLineBreakAction, HotKey ("Return", ctrl=True)),
         (WikiEquationAction, HotKey ("Q", ctrl=True)),
-        (WikiEscapeHtmlAction, None),
         (WikiOpenHtmlCodeAction, HotKey ("F4", shift=True)),
         (WikiUpdateHtmlAction, HotKey ("F4", ctrl=True)),
         (WikiAttachListAction, None),

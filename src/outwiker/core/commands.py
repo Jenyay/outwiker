@@ -857,3 +857,67 @@ def _registerPolyActions (application):
         _(u"Horizontal rule"),
         _(u"Horizontal rule")),
         HotKey ("H", ctrl=True))
+
+    application.actionController.register (PolyAction (application,
+        LINK_STR_ID,
+        _(u"Link"),
+        _(u"Insert Link")),
+        HotKey ("L", ctrl=True))
+
+    application.actionController.register (PolyAction (application,
+        QUOTE_STR_ID,
+        _(u"Quote"),
+        _(u"Insert a quote block")),
+        HotKey ("Q", ctrl=True, alt=True))
+
+    application.actionController.register (PolyAction (application,
+        IMAGE_STR_ID,
+        _(u"Image"),
+        _(u"Insert image")),
+        HotKey ("M", ctrl=True))
+
+
+    # Списки
+    application.actionController.register (PolyAction (application,
+        LIST_BULLETS_STR_ID,
+        _(u"Bullets list"),
+        _(u"Insert a bullets list")),
+        HotKey ("G", ctrl=True))
+
+    application.actionController.register (PolyAction (application,
+        LIST_NUMBERS_STR_ID,
+        _(u"Numbers list"),
+        _(u"Insert a numbers list")),
+        HotKey ("J", ctrl=True))
+
+    application.actionController.register (PolyAction (application,
+        LINE_BREAK_STR_ID,
+        _(u"Line break"),
+        _(u"Insert a line break")),
+        HotKey ("Return", ctrl=True))
+
+    application.actionController.register (PolyAction (application,
+        HTML_ESCAPE_STR_ID,
+        _(u"Convert HTML Symbols"),
+        _(u"Convert HTML Symbols")),
+        None)
+
+
+    # Таблицы
+    application.actionController.register (PolyAction (application,
+        TABLE_STR_ID,
+        _(u"Table"),
+        _(u"Insert a table")),
+        HotKey ("Q", ctrl=True))
+
+    application.actionController.register (PolyAction (application,
+        TABLE_ROW_STR_ID,
+        _(u"Table row"),
+        _(u"Insert a table row")),
+        HotKey ("W", ctrl=True))
+
+    application.actionController.register (PolyAction (application,
+        TABLE_CELL_STR_ID,
+        _(u"Table cell"),
+        _(u"Insert a table cell")),
+        HotKey ("Y", ctrl=True))

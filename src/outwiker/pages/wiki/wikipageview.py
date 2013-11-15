@@ -24,13 +24,9 @@ from outwiker.actions.polyactionsid import *
 from actions.fontsizebig import WikiFontSizeBigAction
 from actions.fontsizesmall import WikiFontSizeSmallAction
 from actions.nonparsed import WikiNonParsedAction
-from actions.listbullets import WikiListBulletsAction
-from actions.listnumbers import WikiListNumbersAction
 from actions.thumb import WikiThumbAction
-from actions.link import WikiLinkAction
-from actions.linebreak import WikiLineBreakAction
+from actions.link import insertLink
 from actions.equation import WikiEquationAction
-from actions.escapehtml import WikiEscapeHtmlAction
 from actions.openhtmlcode import WikiOpenHtmlCodeAction
 from actions.updatehtml import WikiUpdateHtmlAction
 from actions.attachlist import WikiAttachListAction
@@ -76,6 +72,11 @@ class WikiPageView (BaseHtmlPanel):
                 CODE_STR_ID,
                 ANCHOR_STR_ID,
                 HORLINE_STR_ID,
+                LINK_STR_ID,
+                LIST_BULLETS_STR_ID,
+                LIST_NUMBERS_STR_ID,
+                LINE_BREAK_STR_ID,
+                HTML_ESCAPE_STR_ID,
                 ]
 
         # Список действий, которые нужно удалять с панелей и из меню. 
@@ -84,13 +85,8 @@ class WikiPageView (BaseHtmlPanel):
                 WikiFontSizeBigAction,
                 WikiFontSizeSmallAction,
                 WikiNonParsedAction,
-                WikiListBulletsAction,
-                WikiListNumbersAction,
                 WikiThumbAction,
-                WikiLinkAction,
-                WikiLineBreakAction,
                 WikiEquationAction,
-                WikiEscapeHtmlAction,
                 WikiAttachListAction,
                 WikiChildListAction,
                 WikiIncludeAction,
@@ -110,10 +106,10 @@ class WikiPageView (BaseHtmlPanel):
         # Номер вкладки с кодом HTML. -1, если вкладки нет
         self.htmlcodePageIndex = -1
 
-        self.config = WikiConfig (Application.config)
+        self.config = WikiConfig (self._application.config)
 
         self.__createCustomTools()
-        Application.mainWindow.updateShortcuts()
+        self._application.mainWindow.updateShortcuts()
         self.mainWindow.UpdateAuiManager()
 
         if self.config.showHtmlCodeOptions.value:
@@ -132,7 +128,7 @@ class WikiPageView (BaseHtmlPanel):
 
 
     def _removeActionTools (self):
-        actionController = Application.actionController
+        actionController = self._application.actionController
 
         # Удалим элементы меню
         map (lambda action: actionController.removeMenuItem (action.stringId), 
@@ -207,7 +203,7 @@ class WikiPageView (BaseHtmlPanel):
 
 
     def _enableActions (self, enabled):
-        actionController = Application.actionController
+        actionController = self._application.actionController
 
         self.mainWindow.Freeze()
 
@@ -246,7 +242,7 @@ class WikiPageView (BaseHtmlPanel):
         self.Save()
         status_item = 0
         setStatusText (_(u"Page rendered. Please wait…"), status_item)
-        Application.onHtmlRenderingBegin (self._currentpage, self.htmlWindow)
+        self._application.onHtmlRenderingBegin (self._currentpage, self.htmlWindow)
 
         try:
             self.currentHtmlFile = self.generateHtml (self._currentpage)
@@ -262,7 +258,7 @@ class WikiPageView (BaseHtmlPanel):
                     wx.ICON_ERROR | wx.OK)
 
         setStatusText (u"", status_item)
-        Application.onHtmlRenderingEnd (self._currentpage, self.htmlWindow)
+        self._application.onHtmlRenderingEnd (self._currentpage, self.htmlWindow)
 
         self._enableAllTools ()
         self.htmlCodeWindow.SetFocus()
@@ -291,95 +287,95 @@ class WikiPageView (BaseHtmlPanel):
         menu = self.__fontMenu
 
         # Полужирный шрифт
-        Application.actionController.getAction (BOLD_STR_ID).setFunc (lambda param: self.turnText (u"'''", u"'''"))
+        self._application.actionController.getAction (BOLD_STR_ID).setFunc (lambda param: self.turnText (u"'''", u"'''"))
 
-        Application.actionController.appendMenuItem (BOLD_STR_ID, menu)
-        Application.actionController.appendToolbarButton (BOLD_STR_ID, 
+        self._application.actionController.appendMenuItem (BOLD_STR_ID, menu)
+        self._application.actionController.appendToolbarButton (BOLD_STR_ID, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_bold.png"),
                 fullUpdate=False)
 
 
         # Курсивный шрифт
-        Application.actionController.getAction (ITALIC_STR_ID).setFunc (lambda param: self.turnText (u"''", u"''"))
+        self._application.actionController.getAction (ITALIC_STR_ID).setFunc (lambda param: self.turnText (u"''", u"''"))
 
-        Application.actionController.appendMenuItem (ITALIC_STR_ID, menu)
-        Application.actionController.appendToolbarButton (ITALIC_STR_ID, 
+        self._application.actionController.appendMenuItem (ITALIC_STR_ID, menu)
+        self._application.actionController.appendToolbarButton (ITALIC_STR_ID, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_italic.png"),
                 fullUpdate=False)
 
         # Полужирный курсивный шрифт
-        Application.actionController.getAction (BOLD_ITALIC_STR_ID).setFunc (lambda param: self.turnText (u"''''", u"''''"))
+        self._application.actionController.getAction (BOLD_ITALIC_STR_ID).setFunc (lambda param: self.turnText (u"''''", u"''''"))
 
-        Application.actionController.appendMenuItem (BOLD_ITALIC_STR_ID, menu)
-        Application.actionController.appendToolbarButton (BOLD_ITALIC_STR_ID, 
+        self._application.actionController.appendMenuItem (BOLD_ITALIC_STR_ID, menu)
+        self._application.actionController.appendToolbarButton (BOLD_ITALIC_STR_ID, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_bold_italic.png"),
                 fullUpdate=False)
 
 
         # Подчеркнутый шрифт
-        Application.actionController.getAction (UNDERLINE_STR_ID).setFunc (lambda param: self.turnText (u"{+", u"+}"))
+        self._application.actionController.getAction (UNDERLINE_STR_ID).setFunc (lambda param: self.turnText (u"{+", u"+}"))
 
-        Application.actionController.appendMenuItem (UNDERLINE_STR_ID, menu)
-        Application.actionController.appendToolbarButton (UNDERLINE_STR_ID, 
+        self._application.actionController.appendMenuItem (UNDERLINE_STR_ID, menu)
+        self._application.actionController.appendToolbarButton (UNDERLINE_STR_ID, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_underline.png"),
                 fullUpdate=False)
 
 
         # Зачеркнутый шрифт
-        Application.actionController.getAction (STRIKE_STR_ID).setFunc (lambda param: self.turnText (u"{-", u"-}"))
+        self._application.actionController.getAction (STRIKE_STR_ID).setFunc (lambda param: self.turnText (u"{-", u"-}"))
 
-        Application.actionController.appendMenuItem (STRIKE_STR_ID, menu)
-        Application.actionController.appendToolbarButton (STRIKE_STR_ID, 
+        self._application.actionController.appendMenuItem (STRIKE_STR_ID, menu)
+        self._application.actionController.appendToolbarButton (STRIKE_STR_ID, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_strikethrough.png"),
                 fullUpdate=False)
 
 
         # Нижний индекс
-        Application.actionController.getAction (SUBSCRIPT_STR_ID).setFunc (lambda param: self.turnText (u"'_", u"_'"))
+        self._application.actionController.getAction (SUBSCRIPT_STR_ID).setFunc (lambda param: self.turnText (u"'_", u"_'"))
 
-        Application.actionController.appendMenuItem (SUBSCRIPT_STR_ID, menu)
-        Application.actionController.appendToolbarButton (SUBSCRIPT_STR_ID, 
+        self._application.actionController.appendMenuItem (SUBSCRIPT_STR_ID, menu)
+        self._application.actionController.appendToolbarButton (SUBSCRIPT_STR_ID, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_subscript.png"),
                 fullUpdate=False)
 
 
         # Верхний индекс
-        Application.actionController.getAction (SUPERSCRIPT_STR_ID).setFunc (lambda param: self.turnText (u"'^", u"^'"))
+        self._application.actionController.getAction (SUPERSCRIPT_STR_ID).setFunc (lambda param: self.turnText (u"'^", u"^'"))
 
-        Application.actionController.appendMenuItem (SUPERSCRIPT_STR_ID, menu)
-        Application.actionController.appendToolbarButton (SUPERSCRIPT_STR_ID, 
+        self._application.actionController.appendMenuItem (SUPERSCRIPT_STR_ID, menu)
+        self._application.actionController.appendToolbarButton (SUPERSCRIPT_STR_ID, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_superscript.png"),
                 fullUpdate=False)
 
 
         # Крупный шрифт
-        Application.actionController.appendMenuItem (WikiFontSizeBigAction.stringId, menu)
-        Application.actionController.appendToolbarButton (WikiFontSizeBigAction.stringId, 
+        self._application.actionController.appendMenuItem (WikiFontSizeBigAction.stringId, menu)
+        self._application.actionController.appendToolbarButton (WikiFontSizeBigAction.stringId, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_big.png"),
                 fullUpdate=False)
 
 
         # Мелкий шрифт
-        Application.actionController.appendMenuItem (WikiFontSizeSmallAction.stringId, menu)
-        Application.actionController.appendToolbarButton (WikiFontSizeSmallAction.stringId, 
+        self._application.actionController.appendMenuItem (WikiFontSizeSmallAction.stringId, menu)
+        self._application.actionController.appendToolbarButton (WikiFontSizeSmallAction.stringId, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_small.png"),
                 fullUpdate=False)
 
 
         # Моноширинный шрифт
-        Application.actionController.getAction (CODE_STR_ID).setFunc (lambda param: self.turnText (u'@@', u'@@'))
+        self._application.actionController.getAction (CODE_STR_ID).setFunc (lambda param: self.turnText (u'@@', u'@@'))
 
-        Application.actionController.appendMenuItem (CODE_STR_ID, menu)
-        Application.actionController.appendToolbarButton (CODE_STR_ID, 
+        self._application.actionController.appendMenuItem (CODE_STR_ID, menu)
+        self._application.actionController.appendToolbarButton (CODE_STR_ID, 
                 toolbar,
                 os.path.join (self.imagesDir, "code.png"),
                 fullUpdate=False)
@@ -390,40 +386,40 @@ class WikiPageView (BaseHtmlPanel):
         menu = self.__alignMenu
 
         # Выравнивание по левому краю
-        Application.actionController.getAction (ALIGN_LEFT_STR_ID).setFunc (lambda param: self.turnText (u"%left%", u""))
+        self._application.actionController.getAction (ALIGN_LEFT_STR_ID).setFunc (lambda param: self.turnText (u"%left%", u""))
 
-        Application.actionController.appendMenuItem (ALIGN_LEFT_STR_ID, menu)
-        Application.actionController.appendToolbarButton (ALIGN_LEFT_STR_ID, 
+        self._application.actionController.appendMenuItem (ALIGN_LEFT_STR_ID, menu)
+        self._application.actionController.appendToolbarButton (ALIGN_LEFT_STR_ID, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_align_left.png"),
                 fullUpdate=False)
 
 
         # Выравнивание по центру
-        Application.actionController.getAction (ALIGN_CENTER_STR_ID).setFunc (lambda param: self.turnText (u"%center%", u""))
+        self._application.actionController.getAction (ALIGN_CENTER_STR_ID).setFunc (lambda param: self.turnText (u"%center%", u""))
 
-        Application.actionController.appendMenuItem (ALIGN_CENTER_STR_ID, menu)
-        Application.actionController.appendToolbarButton (ALIGN_CENTER_STR_ID, 
+        self._application.actionController.appendMenuItem (ALIGN_CENTER_STR_ID, menu)
+        self._application.actionController.appendToolbarButton (ALIGN_CENTER_STR_ID, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_align_center.png"),
                 fullUpdate=False)
 
 
         # Выравнивание по правому краю
-        Application.actionController.getAction (ALIGN_RIGHT_STR_ID).setFunc (lambda param: self.turnText (u"%right%", u""))
+        self._application.actionController.getAction (ALIGN_RIGHT_STR_ID).setFunc (lambda param: self.turnText (u"%right%", u""))
 
-        Application.actionController.appendMenuItem (ALIGN_RIGHT_STR_ID, menu)
-        Application.actionController.appendToolbarButton (ALIGN_RIGHT_STR_ID, 
+        self._application.actionController.appendMenuItem (ALIGN_RIGHT_STR_ID, menu)
+        self._application.actionController.appendToolbarButton (ALIGN_RIGHT_STR_ID, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_align_right.png"),
                 fullUpdate=False)
 
 
         # Выравнивание по ширине
-        Application.actionController.getAction (ALIGN_JUSTIFY_STR_ID).setFunc (lambda param: self.turnText (u"%justify%", u""))
+        self._application.actionController.getAction (ALIGN_JUSTIFY_STR_ID).setFunc (lambda param: self.turnText (u"%justify%", u""))
 
-        Application.actionController.appendMenuItem (ALIGN_JUSTIFY_STR_ID, menu)
-        Application.actionController.appendToolbarButton (ALIGN_JUSTIFY_STR_ID, 
+        self._application.actionController.appendMenuItem (ALIGN_JUSTIFY_STR_ID, menu)
+        self._application.actionController.appendToolbarButton (ALIGN_JUSTIFY_STR_ID, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_align_justify.png"),
                 fullUpdate=False)
@@ -433,11 +429,11 @@ class WikiPageView (BaseHtmlPanel):
         menu = self.__formatMenu
 
         # Форматированный текст
-        Application.actionController.getAction (PREFORMAT_STR_ID).setFunc (lambda param: self.turnText (u"[@", u"@]"))
-        Application.actionController.appendMenuItem (PREFORMAT_STR_ID, menu)
+        self._application.actionController.getAction (PREFORMAT_STR_ID).setFunc (lambda param: self.turnText (u"[@", u"@]"))
+        self._application.actionController.appendMenuItem (PREFORMAT_STR_ID, menu)
 
         # Текст, который не нужно разбирать википарсером
-        Application.actionController.appendMenuItem (WikiNonParsedAction.stringId, menu)
+        self._application.actionController.appendMenuItem (WikiNonParsedAction.stringId, menu)
 
 
     def __addListTools (self):
@@ -448,16 +444,20 @@ class WikiPageView (BaseHtmlPanel):
         menu = self.__listMenu
 
         # Ненумерованный список
-        Application.actionController.appendMenuItem (WikiListBulletsAction.stringId, menu)
-        Application.actionController.appendToolbarButton (WikiListBulletsAction.stringId, 
+        self._application.actionController.getAction (LIST_BULLETS_STR_ID).setFunc (lambda param: self._application.mainWindow.pagePanel.pageView.codeEditor.turnList ("* "))
+
+        self._application.actionController.appendMenuItem (LIST_BULLETS_STR_ID, menu)
+        self._application.actionController.appendToolbarButton (LIST_BULLETS_STR_ID, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_list_bullets.png"),
                 fullUpdate=False)
 
 
         # Нумерованный список
-        Application.actionController.appendMenuItem (WikiListNumbersAction.stringId, menu)
-        Application.actionController.appendToolbarButton (WikiListNumbersAction.stringId, 
+        self._application.actionController.getAction (LIST_NUMBERS_STR_ID).setFunc (lambda param: self._application.mainWindow.pagePanel.pageView.codeEditor.turnList ("# "))
+
+        self._application.actionController.appendMenuItem (LIST_NUMBERS_STR_ID, menu)
+        self._application.actionController.appendToolbarButton (LIST_NUMBERS_STR_ID, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_list_numbers.png"),
                 fullUpdate=False)
@@ -470,45 +470,45 @@ class WikiPageView (BaseHtmlPanel):
         toolbar = self.mainWindow.toolbars[self.__toolbarName]
         menu = self.__headingMenu
 
-        Application.actionController.getAction (HEADING_1_STR_ID).setFunc (lambda param: self.turnText (u"!! ", u""))
-        Application.actionController.getAction (HEADING_2_STR_ID).setFunc (lambda param: self.turnText (u"!!! ", u""))
-        Application.actionController.getAction (HEADING_3_STR_ID).setFunc (lambda param: self.turnText (u"!!!! ", u""))
-        Application.actionController.getAction (HEADING_4_STR_ID).setFunc (lambda param: self.turnText (u"!!!!! ", u""))
-        Application.actionController.getAction (HEADING_5_STR_ID).setFunc (lambda param: self.turnText (u"!!!!!! ", u""))
-        Application.actionController.getAction (HEADING_6_STR_ID).setFunc (lambda param: self.turnText (u"!!!!!!! ", u""))
+        self._application.actionController.getAction (HEADING_1_STR_ID).setFunc (lambda param: self.turnText (u"!! ", u""))
+        self._application.actionController.getAction (HEADING_2_STR_ID).setFunc (lambda param: self.turnText (u"!!! ", u""))
+        self._application.actionController.getAction (HEADING_3_STR_ID).setFunc (lambda param: self.turnText (u"!!!! ", u""))
+        self._application.actionController.getAction (HEADING_4_STR_ID).setFunc (lambda param: self.turnText (u"!!!!! ", u""))
+        self._application.actionController.getAction (HEADING_5_STR_ID).setFunc (lambda param: self.turnText (u"!!!!!! ", u""))
+        self._application.actionController.getAction (HEADING_6_STR_ID).setFunc (lambda param: self.turnText (u"!!!!!!! ", u""))
 
-        Application.actionController.appendMenuItem (HEADING_1_STR_ID, menu)
-        Application.actionController.appendToolbarButton (HEADING_1_STR_ID, 
+        self._application.actionController.appendMenuItem (HEADING_1_STR_ID, menu)
+        self._application.actionController.appendToolbarButton (HEADING_1_STR_ID, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_heading_1.png"),
                 fullUpdate=False)
 
-        Application.actionController.appendMenuItem (HEADING_2_STR_ID, menu)
-        Application.actionController.appendToolbarButton (HEADING_2_STR_ID, 
+        self._application.actionController.appendMenuItem (HEADING_2_STR_ID, menu)
+        self._application.actionController.appendToolbarButton (HEADING_2_STR_ID, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_heading_2.png"),
                 fullUpdate=False)
 
-        Application.actionController.appendMenuItem (HEADING_3_STR_ID, menu)
-        Application.actionController.appendToolbarButton (HEADING_3_STR_ID, 
+        self._application.actionController.appendMenuItem (HEADING_3_STR_ID, menu)
+        self._application.actionController.appendToolbarButton (HEADING_3_STR_ID, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_heading_3.png"),
                 fullUpdate=False)
 
-        Application.actionController.appendMenuItem (HEADING_4_STR_ID, menu)
-        Application.actionController.appendToolbarButton (HEADING_4_STR_ID, 
+        self._application.actionController.appendMenuItem (HEADING_4_STR_ID, menu)
+        self._application.actionController.appendToolbarButton (HEADING_4_STR_ID, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_heading_4.png"),
                 fullUpdate=False)
 
-        Application.actionController.appendMenuItem (HEADING_5_STR_ID, menu)
-        Application.actionController.appendToolbarButton (HEADING_5_STR_ID, 
+        self._application.actionController.appendMenuItem (HEADING_5_STR_ID, menu)
+        self._application.actionController.appendToolbarButton (HEADING_5_STR_ID, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_heading_5.png"),
                 fullUpdate=False)
 
-        Application.actionController.appendMenuItem (HEADING_6_STR_ID, menu)
-        Application.actionController.appendToolbarButton (HEADING_6_STR_ID, 
+        self._application.actionController.appendMenuItem (HEADING_6_STR_ID, menu)
+        self._application.actionController.appendToolbarButton (HEADING_6_STR_ID, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_heading_6.png"),
                 fullUpdate=False)
@@ -523,52 +523,56 @@ class WikiPageView (BaseHtmlPanel):
         toolbar = self.mainWindow.toolbars[self.__toolbarName]
         menu = self.__wikiMenu
 
-        Application.actionController.appendMenuItem (WikiThumbAction.stringId, menu)
-        Application.actionController.appendToolbarButton (WikiThumbAction.stringId, 
+        self._application.actionController.appendMenuItem (WikiThumbAction.stringId, menu)
+        self._application.actionController.appendToolbarButton (WikiThumbAction.stringId, 
                 toolbar,
                 os.path.join (self.imagesDir, "images.png"),
                 fullUpdate=False)
 
 
         # Вставка ссылок
-        Application.actionController.appendMenuItem (WikiLinkAction.stringId, menu)
-        Application.actionController.appendToolbarButton (WikiLinkAction.stringId, 
+        self._application.actionController.getAction (LINK_STR_ID).setFunc (lambda param: insertLink (self._application))
+
+        self._application.actionController.appendMenuItem (LINK_STR_ID, menu)
+        self._application.actionController.appendToolbarButton (LINK_STR_ID, 
                 toolbar,
                 os.path.join (self.imagesDir, "link.png"),
                 fullUpdate=False)
 
 
         # Вставка якоря
-        Application.actionController.getAction (ANCHOR_STR_ID).setFunc (lambda param: self.turnText (u"[[#", u"]]"))
+        self._application.actionController.getAction (ANCHOR_STR_ID).setFunc (lambda param: self.turnText (u"[[#", u"]]"))
 
-        Application.actionController.appendMenuItem (ANCHOR_STR_ID, menu)
-        Application.actionController.appendToolbarButton (ANCHOR_STR_ID, 
+        self._application.actionController.appendMenuItem (ANCHOR_STR_ID, menu)
+        self._application.actionController.appendToolbarButton (ANCHOR_STR_ID, 
                 toolbar,
                 os.path.join (self.imagesDir, "anchor.png"),
                 fullUpdate=False)
 
 
         # Вставка горизонтальной линии
-        Application.actionController.getAction (HORLINE_STR_ID).setFunc (lambda param: self.replaceText (u"----"))
+        self._application.actionController.getAction (HORLINE_STR_ID).setFunc (lambda param: self.replaceText (u"----"))
 
-        Application.actionController.appendMenuItem (HORLINE_STR_ID, menu)
-        Application.actionController.appendToolbarButton (HORLINE_STR_ID, 
+        self._application.actionController.appendMenuItem (HORLINE_STR_ID, menu)
+        self._application.actionController.appendToolbarButton (HORLINE_STR_ID, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_horizontalrule.png"),
                 fullUpdate=False)
 
 
         # Вставка разрыва страницы
-        Application.actionController.appendMenuItem (WikiLineBreakAction.stringId, menu)
-        Application.actionController.appendToolbarButton (WikiLineBreakAction.stringId, 
+        self._application.actionController.getAction (LINE_BREAK_STR_ID).setFunc (lambda param: self.replaceText (u"[[<<]]"))
+
+        self._application.actionController.appendMenuItem (LINE_BREAK_STR_ID, menu)
+        self._application.actionController.appendToolbarButton (LINE_BREAK_STR_ID, 
                 toolbar,
                 os.path.join (self.imagesDir, "linebreak.png"),
                 fullUpdate=False)
 
 
         # Вставка формулы
-        Application.actionController.appendMenuItem (WikiEquationAction.stringId, menu)
-        Application.actionController.appendToolbarButton (WikiEquationAction.stringId, 
+        self._application.actionController.appendMenuItem (WikiEquationAction.stringId, menu)
+        self._application.actionController.appendToolbarButton (WikiEquationAction.stringId, 
                 toolbar,
                 os.path.join (self.imagesDir, "equation.png"),
                 fullUpdate=False)
@@ -577,12 +581,13 @@ class WikiPageView (BaseHtmlPanel):
         self.__wikiMenu.AppendSeparator()
 
         # Преобразовать некоторые символы в и их HTML-представление
-        Application.actionController.appendMenuItem (WikiEscapeHtmlAction.stringId, menu)
+        self._application.actionController.getAction (HTML_ESCAPE_STR_ID).setFunc (lambda param: self.escapeHtml ())
+        self._application.actionController.appendMenuItem (HTML_ESCAPE_STR_ID, menu)
 
 
     def _addRenderTools (self):
-        Application.actionController.appendMenuItem (SwitchCodeResultAction.stringId, self.toolsMenu)
-        Application.actionController.appendToolbarButton (SwitchCodeResultAction.stringId, 
+        self._application.actionController.appendMenuItem (SwitchCodeResultAction.stringId, self.toolsMenu)
+        self._application.actionController.appendToolbarButton (SwitchCodeResultAction.stringId, 
                 self.mainWindow.toolbars[self.mainWindow.GENERAL_TOOLBAR_STR],
                 os.path.join (self.imagesDir, "render.png"),
                 fullUpdate=False)
@@ -605,14 +610,14 @@ class WikiPageView (BaseHtmlPanel):
         self._addRenderTools()
 
         # Переключиться на код HTML
-        Application.actionController.appendMenuItem (WikiOpenHtmlCodeAction.stringId, self.__wikiMenu)
-        Application.actionController.appendToolbarButton (WikiOpenHtmlCodeAction.stringId, 
+        self._application.actionController.appendMenuItem (WikiOpenHtmlCodeAction.stringId, self.__wikiMenu)
+        self._application.actionController.appendToolbarButton (WikiOpenHtmlCodeAction.stringId, 
                 self.mainWindow.toolbars[self.mainWindow.GENERAL_TOOLBAR_STR],
                 os.path.join (self.imagesDir, "html.png"),
                 fullUpdate=False)
 
         # Обновить код HTML
-        Application.actionController.appendMenuItem (WikiUpdateHtmlAction.stringId, self.__wikiMenu)
+        self._application.actionController.appendMenuItem (WikiUpdateHtmlAction.stringId, self.__wikiMenu)
 
         self.toolsMenu.AppendSeparator()
 
@@ -648,13 +653,13 @@ class WikiPageView (BaseHtmlPanel):
 
     def __addCommandsTools (self):
         # Команда (:attachlist:)
-        Application.actionController.appendMenuItem (WikiAttachListAction.stringId, self.commandsMenu)
+        self._application.actionController.appendMenuItem (WikiAttachListAction.stringId, self.commandsMenu)
 
         # Команда (:childlist:)
-        Application.actionController.appendMenuItem (WikiChildListAction.stringId, self.commandsMenu)
+        self._application.actionController.appendMenuItem (WikiChildListAction.stringId, self.commandsMenu)
 
         # Команда (:include:)
-        Application.actionController.appendMenuItem (WikiIncludeAction.stringId, self.commandsMenu)
+        self._application.actionController.appendMenuItem (WikiIncludeAction.stringId, self.commandsMenu)
 
 
     @BaseHtmlPanel.selectedPageIndex.setter

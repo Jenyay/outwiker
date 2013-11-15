@@ -12,29 +12,10 @@ from outwiker.core.factory import PageFactory
 from outwiker.gui.hotkey import HotKey
 from outwiker.pages.html.htmlpageview import HtmlPageView
 
-from actions.table import HtmlTableAction
-from actions.tablerow import HtmlTableRowAction
-from actions.tablecell import HtmlTableCellAction
-from actions.listbullets import HtmlListBulletsAction
-from actions.listnumbers import HtmlListNumbersAction
-from actions.quote import HtmlQuoteAction
-from actions.image import HtmlImageAction
-from actions.link import HtmlLinkAction
-from actions.escapehtml import HtmlEscapeHtmlAction
-
 from actions.autolinewrap import HtmlAutoLineWrap
 from actions.switchcoderesult import SwitchCodeResultAction
 
 _actions = [
-        (HtmlTableAction, HotKey ("Q", ctrl=True)),
-        (HtmlTableRowAction, HotKey ("W", ctrl=True)),
-        (HtmlTableCellAction, HotKey ("Y", ctrl=True)),
-        (HtmlListBulletsAction, HotKey ("G", ctrl=True)),
-        (HtmlListNumbersAction, HotKey ("J", ctrl=True)),
-        (HtmlQuoteAction, HotKey ("Q", ctrl=True, alt=True)),
-        (HtmlImageAction, HotKey ("M", ctrl=True)),
-        (HtmlLinkAction, HotKey ("L", ctrl=True)),
-        (HtmlEscapeHtmlAction, None),
         (HtmlAutoLineWrap, None),
         (SwitchCodeResultAction, HotKey ("F4")),
         ]

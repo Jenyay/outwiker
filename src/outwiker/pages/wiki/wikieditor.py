@@ -156,12 +156,3 @@ class WikiEditor (TextEditor):
         itemsList = itemsList[: -1]
 
         self.textCtrl.ReplaceSelection (itemsList)
-
-        # if len (items) == 0:
-        #     endText = u"%s\n%s" % (itemEnd, end)
-        #     len_bytes = self.calcByteLen (endText)
-
-        #     currPos = self.textCtrl.GetSelectionEnd()
-        #     newPos = currPos - len_bytes
-        #     self.textCtrl.SetSelection (newPos, newPos)
-

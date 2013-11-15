@@ -349,3 +349,11 @@ class BaseHtmlPanel(BaseTextPanel):
         Метод предназначен в первую очередь для упрощения доступа к одноименному методу из codeEditor
         """
         Application.mainWindow.pagePanel.pageView.codeEditor.replaceText (text)
+
+
+    def escapeHtml (self):
+        """
+        Заменить символы на их HTML-представление
+        Метод предназначен в первую очередь для упрощения доступа к одноименному методу из codeEditor
+        """
+        Application.mainWindow.pagePanel.pageView.codeEditor.escapeHtml ()

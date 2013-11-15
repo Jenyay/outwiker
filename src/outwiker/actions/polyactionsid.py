@@ -56,3 +56,33 @@ ANCHOR_STR_ID = "Anchor"
 
 # Горизонтальная линия
 HORLINE_STR_ID = "HorizontalRule"
+
+# Вставить ссылку
+LINK_STR_ID = "Link"
+
+# Ненумерованный список
+LIST_BULLETS_STR_ID = "ListBullets"
+
+# Нумерованный список
+LIST_NUMBERS_STR_ID = "ListNumbers"
+
+# Перевод строки
+LINE_BREAK_STR_ID = "LineBreak"
+
+# Перевод символов в их HTML-представление
+HTML_ESCAPE_STR_ID = "HtmlEscape"
+
+# Вставка таблицы
+TABLE_STR_ID = "Table"
+
+# Вставка строки таблицы
+TABLE_ROW_STR_ID = "TableRow"
+
+# Вставка ячейки таблицы
+TABLE_CELL_STR_ID = "TableCell"
+
+# Цитата
+QUOTE_STR_ID = "Quote"
+
+# Картинка
+IMAGE_STR_ID = "Image"

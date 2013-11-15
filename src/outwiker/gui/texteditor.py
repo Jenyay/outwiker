@@ -220,7 +220,7 @@ class TextEditor(wx.Panel):
             self.textCtrl.SetSelection (newPos, newPos)
 
 
-    def escapeHtml (self, event):
+    def escapeHtml (self):
         selText = self.textCtrl.GetSelectedText()
         text = cgi.escape (selText, quote=True)
         self.textCtrl.ReplaceSelection (text)
