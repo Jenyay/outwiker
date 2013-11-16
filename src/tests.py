@@ -117,6 +117,8 @@ if __name__ == '__main__':
     from test.guitests.polyaction import PolyActionTest
     from test.guitests.mainpanes import MainPanesTest
     from test.guitests.fullscreen import FullScreenTest
+    from test.guitests.wikiactions import WikiActionsTest
+    from test.guitests.htmlactions import HtmlActionsTest
 
     from test.plugins.loader import PluginsLoaderTest
     from test.plugins.testwikicommand import PluginWikiCommandTest

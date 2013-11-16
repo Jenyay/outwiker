@@ -38,13 +38,18 @@ class BaseHtmlPanel(BaseTextPanel):
         self.imagesDir = getImagesDir()
 
         self.notebook = wx.Notebook(self, -1, style=wx.NB_BOTTOM)
-        self.codeEditor = self.GetTextEditor()(self.notebook)
+        self._codeEditor = self.GetTextEditor()(self.notebook)
         self.htmlWindow = getHtmlRender (self.notebook)
 
         self.__do_layout()
 
         self.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED, self.onTabChanged, self.notebook)
         self.Bind (wx.EVT_CLOSE, self.onClose)
+
+
+    @property
+    def codeEditor (self):
+        return self._codeEditor
 
 
     @abstractproperty
