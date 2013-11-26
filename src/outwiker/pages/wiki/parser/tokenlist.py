@@ -29,8 +29,8 @@ class ListToken (object):
     orderList = "#"
 
     def __init__ (self, parser):
-        self.allListsParams = [ListParams (ListToken.unorderList, u"<UL>", u"</UL>"), 
-                ListParams (ListToken.orderList, u"<OL>", u"</OL>")]
+        self.allListsParams = [ListParams (ListToken.unorderList, u"<ul>", u"</ul>"), 
+                ListParams (ListToken.orderList, u"<ol>", u"</ol>")]
         self.parser = parser
 
 
@@ -164,7 +164,7 @@ class ListToken (object):
         text = (item[level:]).strip()
         itemText = self.parser.parseListItemMarkup (text)
 
-        return u"<LI>%s</LI>" % (itemText)
+        return u"<li>%s</li>" % (itemText)
     
 
     def __getStartListTag (self, symbol, params):

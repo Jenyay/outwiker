@@ -55,7 +55,7 @@ class WikiAttachListCommandTest (unittest.TestCase):
 
     def _compareResult (self, titles, names, result):
         attachdir = u"__attach"
-        template = u'<A HREF="{path}">{title}</A>\n'
+        template = u'<a href="{path}">{title}</a>\n'
 
         result_right = u"".join ([template.format (path = os.path.join (attachdir, name).replace ("\\", "/"), title=title) 
             for (name, title) in zip (names, titles) ] ).rstrip()

@@ -106,7 +106,7 @@ class CodeToken (BlockToken):
     def getToken (self):
         return QuotedString (CodeToken.codeStart, 
                 endQuoteChar = CodeToken.codeEnd, 
-                multiline = True).setParseAction(self.convertToHTML("<CODE>","</CODE>"))("code")
+                multiline = True).setParseAction(self.convertToHTML("<code>","</code>"))("code")
 
 
 class SuperscriptToken (BlockToken):
@@ -123,7 +123,7 @@ class SuperscriptToken (BlockToken):
     def getToken (self):
         return QuotedString (SuperscriptToken.superscriptStart, 
                 endQuoteChar = SuperscriptToken.superscriptEnd, 
-                multiline = True).setParseAction(self.convertToHTML("<SUP>","</SUP>"))("superscript")
+                multiline = True).setParseAction(self.convertToHTML("<sup>","</sup>"))("superscript")
 
 
 class SubscriptToken (BlockToken):
@@ -140,7 +140,7 @@ class SubscriptToken (BlockToken):
     def getToken (self):
         return QuotedString (SubscriptToken.subscriptStart, 
                 endQuoteChar = SubscriptToken.subscriptEnd, 
-                multiline = True).setParseAction(self.convertToHTML("<SUB>","</SUB>"))("subscript")
+                multiline = True).setParseAction(self.convertToHTML("<sub>","</sub>"))("subscript")
 
 
 class UnderlineToken (BlockToken):
@@ -157,7 +157,7 @@ class UnderlineToken (BlockToken):
     def getToken (self):
         return QuotedString (UnderlineToken.underlineStart, 
                 endQuoteChar = UnderlineToken.underlineEnd, 
-                multiline = True).setParseAction(self.convertToHTML("<U>","</U>"))("underline")
+                multiline = True).setParseAction(self.convertToHTML("<u>","</u>"))("underline")
 
 
 class StrikeToken (BlockToken):
@@ -174,7 +174,7 @@ class StrikeToken (BlockToken):
     def getToken (self):
         return QuotedString (StrikeToken.strikeStart, 
                 endQuoteChar = StrikeToken.strikeEnd, 
-                multiline = True).setParseAction(self.convertToHTML("<STRIKE>","</STRIKE>"))("strike")
+                multiline = True).setParseAction(self.convertToHTML("<strike>","</strike>"))("strike")
 
 
 
@@ -192,7 +192,7 @@ class ItalicToken (BlockToken):
     def getToken (self):
         return QuotedString (ItalicToken.italicStart, 
                 endQuoteChar = ItalicToken.italicEnd, 
-                multiline = True).setParseAction(self.convertToHTML("<I>","</I>"))("italic")
+                multiline = True).setParseAction(self.convertToHTML("<i>","</i>"))("italic")
     
 
 class BoldToken (BlockToken):
@@ -209,7 +209,7 @@ class BoldToken (BlockToken):
     def getToken (self):
         return QuotedString (BoldToken.boldStart, 
                 endQuoteChar = BoldToken.boldEnd, 
-                multiline = True).setParseAction(self.convertToHTML("<B>","</B>"))("bold")
+                multiline = True).setParseAction(self.convertToHTML("<b>","</b>"))("bold")
 
 
 class BoldItalicToken (BlockToken):
@@ -226,7 +226,7 @@ class BoldItalicToken (BlockToken):
     def getToken (self):
         return QuotedString (BoldItalicToken.boldItalicStart, 
                 endQuoteChar = BoldItalicToken.boldItalicEnd, 
-                multiline = True).setParseAction(self.convertToHTML("<B><I>","</I></B>"))("bold_italic")
+                multiline = True).setParseAction(self.convertToHTML("<b><i>","</i></b>"))("bold_italic")
 
 
 class SmallFontToken (BlockToken):
@@ -245,7 +245,7 @@ class SmallFontToken (BlockToken):
         # Расчет масштаба в зависимости от количества минусов
         size = 100 - len (t["count"]) * 20
 
-        return u'<SPAN STYLE="font-size:{size}%">{text}</SPAN>'.format (size=size, text=self.parser.parseWikiMarkup (t["text"]))
+        return u'<span style="font-size:{size}%">{text}</span>'.format (size=size, text=self.parser.parseWikiMarkup (t["text"]))
 
 
 class BigFontToken (BlockToken):
@@ -264,4 +264,4 @@ class BigFontToken (BlockToken):
         # Расчет масштаба в зависимости от количества минусов
         size = 100 + len (t["count"]) * 20
 
-        return u'<SPAN STYLE="font-size:{size}%">{text}</SPAN>'.format (size=size, text=self.parser.parseWikiMarkup (t["text"]))
+        return u'<span style="font-size:{size}%">{text}</span>'.format (size=size, text=self.parser.parseWikiMarkup (t["text"]))

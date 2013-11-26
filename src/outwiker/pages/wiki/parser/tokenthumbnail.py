@@ -76,4 +76,4 @@ class ThumbnailToken (object):
         except IOError as e:
             return _(u"<b>Can't create thumbnail: \n%s</b>" % repr (e))
 
-        return u'<A HREF="%s/%s"><IMG SRC="%s"/></A>' % (Attachment.attachDir, fname, thumb.replace ("\\", "/"))
+        return u'<a href="%s/%s"><img src="%s"/></a>' % (Attachment.attachDir, fname, thumb.replace ("\\", "/"))

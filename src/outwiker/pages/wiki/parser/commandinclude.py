@@ -48,11 +48,9 @@ class IncludeCommand (Command):
                 # Почему-то в конце всегда оказывается перевод строки
                 text = unicode (fp.read (), encoding).rstrip()
         except IOError:
-            return _(u"<B>Can't open file %s</B>" % path)
+            return _(u"<b>Can't open file %s</b>" % path)
         except:
-            return _(u"<B>Encoding error in file %s</B>" % os.path.basename (path) )
-        #except TypeError:
-        #    return _(u"<B>Encoding error in file %s</B>" % os.path.basename (path) )
+            return _(u"<b>Encoding error in file %s</b>" % os.path.basename (path) )
 
         return self._postprocessText (text, params_dict)
 

@@ -39,21 +39,21 @@ class ParserFormatTest (unittest.TestCase):
 
     def testMonospaced (self):
         text = u"бла-бла-бла @@моноширинный текст@@ бла-бла-бла"
-        result = u"бла-бла-бла <CODE>моноширинный текст</CODE> бла-бла-бла"
+        result = u"бла-бла-бла <code>моноширинный текст</code> бла-бла-бла"
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
     
 
     def testPreformat1 (self):
         text = u"[@ '''Полужирный''' \n''Курсив'' @]"
-        result = u"<PRE> '''Полужирный''' \n''Курсив'' </PRE>"
+        result = u"<pre> '''Полужирный''' \n''Курсив'' </pre>"
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
 
     def testPreformat2 (self):
         text = u'бла-бла-бла [@ <a href="http://jenyay.net/&param">jenyay.net</a> @] foo bar'
-        result = u"бла-бла-бла <PRE> &lt;a href=&quot;http://jenyay.net/&amp;param&quot;&gt;jenyay.net&lt;/a&gt; </PRE> foo bar"
+        result = u"бла-бла-бла <pre> &lt;a href=&quot;http://jenyay.net/&amp;param&quot;&gt;jenyay.net&lt;/a&gt; </pre> foo bar"
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
     

@@ -80,7 +80,7 @@ class LinkToken (object):
 
 
     def __getUrlTag (self, url, comment):
-        return '<A HREF="%s">%s</A>' % (url.strip(), self.parser.parseLinkMarkup (comment.strip()) )
+        return '<a href="%s">%s</a>' % (url.strip(), self.parser.parseLinkMarkup (comment.strip()) )
 
 
     def __convertEmptyLink (self, text):
@@ -99,10 +99,10 @@ class LinkToken (object):
                 self.parser.page[textStrip] == None):
             # Ссылка начинается на #, но сложенных страниц с таким именем нет,
             # значит это якорь
-            return '<A NAME="%s"></A>' % (textStrip[1:])
+            return '<a name="%s"></a>' % (textStrip[1:])
         else:
             # Ссылка не на прикрепление
             url = text.strip()
             comment = text.strip()
 
-        return '<A HREF="%s">%s</A>' % (url, cgi.escape (comment) )
+        return '<a href="%s">%s</a>' % (url, cgi.escape (comment) )

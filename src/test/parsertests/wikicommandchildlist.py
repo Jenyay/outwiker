@@ -49,9 +49,9 @@ class WikiChildListCommandTest (unittest.TestCase):
         command = ChildListCommand (self.parser)
         result = command.execute ("", "")
 
-        result_right = u"""<A HREF="Страница 2">Страница 2</A>
-<A HREF="СТРАНИЦА 3">СТРАНИЦА 3</A>
-<A HREF="Страница 4">Страница 4</A>"""
+        result_right = u"""<a href="Страница 2">Страница 2</a>
+<a href="СТРАНИЦА 3">СТРАНИЦА 3</a>
+<a href="Страница 4">Страница 4</a>"""
 
         self.assertEqual (result_right, result, result)
 
@@ -61,9 +61,9 @@ class WikiChildListCommandTest (unittest.TestCase):
 
         result = self.parser.toHtml (text)
 
-        result_right = u"""<A HREF="Страница 2">Страница 2</A>
-<A HREF="СТРАНИЦА 3">СТРАНИЦА 3</A>
-<A HREF="Страница 4">Страница 4</A>"""
+        result_right = u"""<a href="Страница 2">Страница 2</a>
+<a href="СТРАНИЦА 3">СТРАНИЦА 3</a>
+<a href="Страница 4">Страница 4</a>"""
 
         self.assertEqual (result_right, result, result)
 
@@ -74,9 +74,9 @@ class WikiChildListCommandTest (unittest.TestCase):
 
         result = self.parser.toHtml (text)
 
-        result_right = u"""<A HREF="Страница 4">Страница 4</A>
-<A HREF="Страница 2">Страница 2</A>
-<A HREF="СТРАНИЦА 3">СТРАНИЦА 3</A>"""
+        result_right = u"""<a href="Страница 4">Страница 4</a>
+<a href="Страница 2">Страница 2</a>
+<a href="СТРАНИЦА 3">СТРАНИЦА 3</a>"""
 
         self.assertEqual (result_right, result, result)
 
@@ -87,9 +87,9 @@ class WikiChildListCommandTest (unittest.TestCase):
 
         result = self.parser.toHtml (text)
 
-        result_right = u"""<A HREF="Страница 2">Страница 2</A>
-<A HREF="СТРАНИЦА 3">СТРАНИЦА 3</A>
-<A HREF="Страница 4">Страница 4</A>"""
+        result_right = u"""<a href="Страница 2">Страница 2</a>
+<a href="СТРАНИЦА 3">СТРАНИЦА 3</a>
+<a href="Страница 4">Страница 4</a>"""
 
         self.assertEqual (result_right, result, result)
 
@@ -100,9 +100,9 @@ class WikiChildListCommandTest (unittest.TestCase):
 
         result = self.parser.toHtml (text)
 
-        result_right = u"""<A HREF="Страница 4">Страница 4</A>
-<A HREF="СТРАНИЦА 3">СТРАНИЦА 3</A>
-<A HREF="Страница 2">Страница 2</A>"""
+        result_right = u"""<a href="Страница 4">Страница 4</a>
+<a href="СТРАНИЦА 3">СТРАНИЦА 3</a>
+<a href="Страница 2">Страница 2</a>"""
 
         self.assertEqual (result_right, result, result)
 
@@ -113,9 +113,9 @@ class WikiChildListCommandTest (unittest.TestCase):
 
         result = self.parser.toHtml (text)
 
-        result_right = u"""<A HREF="СТРАНИЦА 3">СТРАНИЦА 3</A>
-<A HREF="Страница 2">Страница 2</A>
-<A HREF="Страница 4">Страница 4</A>"""
+        result_right = u"""<a href="СТРАНИЦА 3">СТРАНИЦА 3</a>
+<a href="Страница 2">Страница 2</a>
+<a href="Страница 4">Страница 4</a>"""
 
         self.assertEqual (result_right, result, result)
 

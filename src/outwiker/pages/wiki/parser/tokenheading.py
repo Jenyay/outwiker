@@ -28,4 +28,4 @@ class HeadingToken (object):
     def convertToHeading (self, s, l, t):
         level = len (t["header"]) - 1
         content = self.parser.parseHeadingMarkup (t["title"])
-        return u"<H{level}>{content}</H{level}>".format (level=level, content=content)
+        return u"<h{level}>{content}</h{level}>".format (level=level, content=content)

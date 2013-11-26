@@ -55,9 +55,9 @@ class AttachToken (object):
         fname = t[1]
 
         if isImage (fname):
-            return '<IMG SRC="%s/%s"/>' % (Attachment.attachDir, fname)
+            return '<img src="%s/%s"/>' % (Attachment.attachDir, fname)
         else:
-            return '<A HREF="%s/%s">%s</A>' % (Attachment.attachDir, fname, fname)
+            return '<a href="%s/%s">%s</a>' % (Attachment.attachDir, fname, fname)
     
 
     # TODO: Вынести в отдельный модуль

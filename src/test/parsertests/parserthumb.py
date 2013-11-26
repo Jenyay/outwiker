@@ -67,7 +67,7 @@ class ParserThumbTest (unittest.TestCase):
         text = u'бла-бла-бла \nкхм % width = 100 px % Attach:image.jpg %% бла-бла-бла\nбла-бла-бла'
         path = os.path.join ("__attach", "__thumb", "th_width_100_image.jpg")
 
-        result = u'бла-бла-бла \nкхм <A HREF="__attach/image.jpg"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
+        result = u'бла-бла-бла \nкхм <a href="__attach/image.jpg"><img src="{path}"/></a> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
@@ -79,7 +79,7 @@ class ParserThumbTest (unittest.TestCase):
         text = u'бла-бла-бла \nкхм % thumb width = 100 px % Attach:image.jpg %% бла-бла-бла\nбла-бла-бла'
         path = os.path.join ("__attach", "__thumb", "th_width_100_image.jpg")
 
-        result = u'бла-бла-бла \nкхм <A HREF="__attach/image.jpg"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
+        result = u'бла-бла-бла \nкхм <a href="__attach/image.jpg"><img src="{path}"/></a> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
@@ -91,7 +91,7 @@ class ParserThumbTest (unittest.TestCase):
         text = u'бла-бла-бла \nкхм % width = 100 px % Attach:image.jpeg %% бла-бла-бла\nбла-бла-бла'
         path = os.path.join ("__attach", "__thumb", "th_width_100_image.jpeg")
 
-        result = u'бла-бла-бла \nкхм <A HREF="__attach/image.jpeg"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
+        result = u'бла-бла-бла \nкхм <a href="__attach/image.jpeg"><img src="{path}"/></a> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
@@ -103,7 +103,7 @@ class ParserThumbTest (unittest.TestCase):
         text = u'бла-бла-бла \nкхм % width = 100 px % Attach:image.gif %% бла-бла-бла\nбла-бла-бла'
         path = os.path.join ("__attach", "__thumb", "th_width_100_image.png")
 
-        result = u'бла-бла-бла \nкхм <A HREF="__attach/image.gif"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
+        result = u'бла-бла-бла \nкхм <a href="__attach/image.gif"><img src="{path}"/></a> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
@@ -115,7 +115,7 @@ class ParserThumbTest (unittest.TestCase):
         text = u'бла-бла-бла \nкхм % width = 100 px % Attach:image.png %% бла-бла-бла\nбла-бла-бла'
         path = os.path.join ("__attach", "__thumb", "th_width_100_image.png")
 
-        result = u'бла-бла-бла \nкхм <A HREF="__attach/image.png"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
+        result = u'бла-бла-бла \nкхм <a href="__attach/image.png"><img src="{path}"/></a> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
@@ -127,7 +127,7 @@ class ParserThumbTest (unittest.TestCase):
         text = u'бла-бла-бла \nкхм % height = 100 px % Attach:image.jpg %% бла-бла-бла\nбла-бла-бла'
         path = os.path.join ("__attach", "__thumb", "th_height_100_image.jpg")
 
-        result = u'бла-бла-бла \nкхм <A HREF="__attach/image.jpg"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
+        result = u'бла-бла-бла \nкхм <a href="__attach/image.jpg"><img src="{path}"/></a> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
@@ -139,7 +139,7 @@ class ParserThumbTest (unittest.TestCase):
         text = u'бла-бла-бла \nкхм % thumb height = 100 px % Attach:image.jpg %% бла-бла-бла\nбла-бла-бла'
         path = os.path.join ("__attach", "__thumb", "th_height_100_image.jpg")
 
-        result = u'бла-бла-бла \nкхм <A HREF="__attach/image.jpg"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format(path=path.replace ("\\", "/"))
+        result = u'бла-бла-бла \nкхм <a href="__attach/image.jpg"><img src="{path}"/></a> бла-бла-бла\nбла-бла-бла'.format(path=path.replace ("\\", "/"))
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
@@ -151,7 +151,7 @@ class ParserThumbTest (unittest.TestCase):
         text = u'бла-бла-бла \nкхм % height = 100 px % Attach:image.jpeg %% бла-бла-бла\nбла-бла-бла'
         path = os.path.join ("__attach", "__thumb", "th_height_100_image.jpeg")
 
-        result = u'бла-бла-бла \nкхм <A HREF="__attach/image.jpeg"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
+        result = u'бла-бла-бла \nкхм <a href="__attach/image.jpeg"><img src="{path}"/></a> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
@@ -162,7 +162,7 @@ class ParserThumbTest (unittest.TestCase):
     def testThumbHeightGif (self):
         text = u'бла-бла-бла \nкхм % height = 100 px % Attach:image.gif %% бла-бла-бла\nбла-бла-бла'
         path = os.path.join ("__attach", "__thumb", "th_height_100_image.png")
-        result = u'бла-бла-бла \nкхм <A HREF="__attach/image.gif"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
+        result = u'бла-бла-бла \nкхм <a href="__attach/image.gif"><img src="{path}"/></a> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
@@ -174,7 +174,7 @@ class ParserThumbTest (unittest.TestCase):
         text = u'бла-бла-бла \nкхм % height = 100 px % Attach:image.png %% бла-бла-бла\nбла-бла-бла'
         path = os.path.join ("__attach", "__thumb", "th_height_100_image.png")
 
-        result = u'бла-бла-бла \nкхм <A HREF="__attach/image.png"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
+        result = u'бла-бла-бла \nкхм <a href="__attach/image.png"><img src="{path}"/></a> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
@@ -186,7 +186,7 @@ class ParserThumbTest (unittest.TestCase):
         text = u'бла-бла-бла \nкхм % thumb % Attach:image.jpg %% бла-бла-бла\nбла-бла-бла'
         path = os.path.join ("__attach", "__thumb", "th_maxsize_250_image.jpg")
 
-        result = u'бла-бла-бла \nкхм <A HREF="__attach/image.jpg"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
+        result = u'бла-бла-бла \nкхм <a href="__attach/image.jpg"><img src="{path}"/></a> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
@@ -197,7 +197,7 @@ class ParserThumbTest (unittest.TestCase):
     def testThumbJpeg (self):
         text = u'бла-бла-бла \nкхм % thumb % Attach:image.jpeg %% бла-бла-бла\nбла-бла-бла'
         path = os.path.join ("__attach", "__thumb", "th_maxsize_250_image.jpeg")
-        result = u'бла-бла-бла \nкхм <A HREF="__attach/image.jpeg"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
+        result = u'бла-бла-бла \nкхм <a href="__attach/image.jpeg"><img src="{path}"/></a> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
@@ -208,7 +208,7 @@ class ParserThumbTest (unittest.TestCase):
     def testThumbPng (self):
         text = u'бла-бла-бла \nкхм % thumb % Attach:image.png %% бла-бла-бла\nбла-бла-бла'
         path = os.path.join ("__attach", "__thumb", "th_maxsize_250_image.png")
-        result = u'бла-бла-бла \nкхм <A HREF="__attach/image.png"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
+        result = u'бла-бла-бла \nкхм <a href="__attach/image.png"><img src="{path}"/></a> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
@@ -221,7 +221,7 @@ class ParserThumbTest (unittest.TestCase):
 
         path = os.path.join ("__attach", "__thumb", "th_maxsize_250_particle_01.PNG")
 
-        result = u'бла-бла-бла \nкхм <A HREF="__attach/particle_01.PNG"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
+        result = u'бла-бла-бла \nкхм <a href="__attach/particle_01.PNG"><img src="{path}"/></a> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
@@ -234,7 +234,7 @@ class ParserThumbTest (unittest.TestCase):
         text = u'бла-бла-бла \nкхм % thumb % Attach:image.gif %% бла-бла-бла\nбла-бла-бла'
         path = os.path.join ("__attach", "__thumb", "th_maxsize_250_image.png")
 
-        result = u'бла-бла-бла \nкхм <A HREF="__attach/image.gif"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path = path.replace ("\\", "/"))
+        result = u'бла-бла-бла \nкхм <a href="__attach/image.gif"><img src="{path}"/></a> бла-бла-бла\nбла-бла-бла'.format (path = path.replace ("\\", "/"))
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
@@ -246,7 +246,7 @@ class ParserThumbTest (unittest.TestCase):
         text = u'бла-бла-бла \nкхм % maxsize = 300 % Attach:image.jpg %% бла-бла-бла\nбла-бла-бла'
         path = os.path.join ("__attach", "__thumb", "th_maxsize_300_image.jpg")
 
-        result = u'бла-бла-бла \nкхм <A HREF="__attach/image.jpg"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
+        result = u'бла-бла-бла \nкхм <a href="__attach/image.jpg"><img src="{path}"/></a> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
@@ -258,7 +258,7 @@ class ParserThumbTest (unittest.TestCase):
         text = u'бла-бла-бла \nкхм % maxsize = 300 % Attach:image.jpg %% бла-бла-бла\nбла-бла-бла'
         path = os.path.join ("__attach", "__thumb", "th_maxsize_300_image.jpg")
 
-        result = u'бла-бла-бла \nкхм <A HREF="__attach/image.jpg"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
+        result = u'бла-бла-бла \nкхм <a href="__attach/image.jpg"><img src="{path}"/></a> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
@@ -270,7 +270,7 @@ class ParserThumbTest (unittest.TestCase):
         text = u'бла-бла-бла \nкхм % maxsize = 300 % Attach:image.png %% бла-бла-бла\nбла-бла-бла'
         path = os.path.join ("__attach", "__thumb", "th_maxsize_300_image.png")
 
-        result = u'бла-бла-бла \nкхм <A HREF="__attach/image.png"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
+        result = u'бла-бла-бла \nкхм <a href="__attach/image.png"><img src="{path}"/></a> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
@@ -282,7 +282,7 @@ class ParserThumbTest (unittest.TestCase):
         text = u'бла-бла-бла \nкхм % maxsize = 300 % Attach:image.gif %% бла-бла-бла\nбла-бла-бла'
         path = os.path.join ("__attach", "__thumb", "th_maxsize_300_image.png")
 
-        result = u'бла-бла-бла \nкхм <A HREF="__attach/image.gif"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
+        result = u'бла-бла-бла \nкхм <a href="__attach/image.gif"><img src="{path}"/></a> бла-бла-бла\nбла-бла-бла'.format (path=path.replace ("\\", "/"))
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
@@ -296,7 +296,7 @@ class ParserThumbTest (unittest.TestCase):
         text = u'бла-бла-бла \nкхм % thumb % Attach:image.gif %% бла-бла-бла\nбла-бла-бла'
         path = os.path.join ("__attach", "__thumb", "th_maxsize_333_image.png")
 
-        result = u'бла-бла-бла \nкхм <A HREF="__attach/image.gif"><IMG SRC="{path}"/></A> бла-бла-бла\nбла-бла-бла'.format (path = path.replace ("\\", "/"))
+        result = u'бла-бла-бла \nкхм <a href="__attach/image.gif"><img src="{path}"/></a> бла-бла-бла\nбла-бла-бла'.format (path = path.replace ("\\", "/"))
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 

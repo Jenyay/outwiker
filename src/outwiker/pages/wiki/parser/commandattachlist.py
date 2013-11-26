@@ -16,7 +16,7 @@ class SimpleView (object):
         fnames - имена файлов, которые нужно вывести (относительный путь)
         attachdir - путь до прикрепленных файлов (полный, а не относительный)
         """
-        template = u'<A HREF="{link}">{title}</A>\n'
+        template = u'<a href="{link}">{title}</a>\n'
 
         titles = [u"[%s]" % (name) if os.path.isdir (os.path.join (attachdir, name)) else name for name in fnames]
 

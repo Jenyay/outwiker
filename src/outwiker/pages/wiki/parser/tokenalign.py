@@ -20,11 +20,10 @@ class AlignToken (object):
     
 
     def _align (self, s, l, t):
-        return u'<DIV ALIGN="' + t["align"].upper() + '">' + self.parser.parseWikiMarkup (t["text"]) + '</DIV>' + t["end"]
+        return u'<div align="' + t["align"].lower() + '">' + self.parser.parseWikiMarkup (t["text"]) + '</div>' + t["end"]
 
 
     def getToken (self):
-        # alignRegex = "%\\s*(?P<align>\\w+)\\s*%(?P<text>.*?)(?P<end>(\n\n)|\Z)"
         alignRegex = "%\\s*(?P<align>(left)|(right)|(center)|(justify))\\s*%(?P<text>.*?)(?P<end>(\n\n)|\Z)"
 
         return Regex (alignRegex, 

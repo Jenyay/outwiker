@@ -13,7 +13,7 @@ class SimpleView (object):
         """
         children - список упорядоченных дочерних страниц
         """
-        template = u'<A HREF="{link}">{title}</A>\n'
+        template = u'<a href="{link}">{title}</a>\n'
         result = u"".join ([template.format (link=page.title, title=page.title) for page in children ] )
 
         # Выкинем последний перевод строки

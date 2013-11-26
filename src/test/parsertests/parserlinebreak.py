@@ -47,7 +47,7 @@ class ParserLineBreakTest (unittest.TestCase):
 
     def testLineBreak1 (self):
         text = u"Строка 1[[<<]]Строка 2"
-        result_right = u"Строка 1<BR>Строка 2"
+        result_right = u"Строка 1<br>Строка 2"
         result = self.parser.toHtml (text)
 
         self.assertEqual (result, result_right, result)
@@ -55,7 +55,7 @@ class ParserLineBreakTest (unittest.TestCase):
 
     def testLineBreak2 (self):
         text = u"Строка 1[[&lt;&lt;]]Строка 2"
-        result_right = u"Строка 1<BR>Строка 2"
+        result_right = u"Строка 1<br>Строка 2"
         result = self.parser.toHtml (text)
 
         self.assertEqual (result, result_right, result)
@@ -75,7 +75,7 @@ class ParserLineBreakTest (unittest.TestCase):
 # Третий элемент списка [[<<]][[<<]] Вторая строка третьего элемента списка после двух отступов.
 # Четвертый элемент списка."""
 
-        result_right = ur"""<OL><LI>Первый элемент списка.</LI><LI>Второй элемент списка <BR>Вторая строка второго элемента списка.</LI><LI>Третий элемент списка <BR><BR> Вторая строка третьего элемента списка после двух отступов.</LI><LI>Четвертый элемент списка.</LI></OL>"""
+        result_right = ur"""<ol><li>Первый элемент списка.</li><li>Второй элемент списка <br>Вторая строка второго элемента списка.</li><li>Третий элемент списка <br><br> Вторая строка третьего элемента списка после двух отступов.</li><li>Четвертый элемент списка.</li></ol>"""
         result = self.parser.toHtml (text)
 
         self.assertEqual (result, result_right, result)
@@ -89,7 +89,7 @@ class ParserLineBreakTest (unittest.TestCase):
 ||Четвертая \
 строка ||"""
 
-        result_right = ur"""<TABLE border=1><TR><TD>Первая строка</TD></TR><TR><TD>Вторая строка <BR>продолжение второй строки</TD></TR><TR><TD ALIGN="LEFT">Третья строка <BR><BR> Продолжение третьей строки</TD></TR><TR><TD ALIGN="LEFT">Четвертая строка</TD></TR></TABLE>"""
+        result_right = ur"""<table border=1><tr><td>Первая строка</td></tr><tr><td>Вторая строка <br>продолжение второй строки</td></tr><tr><td align="left">Третья строка <br><br> Продолжение третьей строки</td></tr><tr><td align="left">Четвертая строка</td></tr></table>"""
         result = self.parser.toHtml (text)
 
         self.assertEqual (result, result_right, result)

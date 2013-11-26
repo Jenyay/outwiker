@@ -44,104 +44,104 @@ class ParserUrlTest (unittest.TestCase):
 
     def testUrlParse1 (self):
         text = u"http://example.com/,"
-        result = u'<A HREF="http://example.com/">http://example.com/</A>,'
+        result = u'<a href="http://example.com/">http://example.com/</a>,'
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
     
 
     def testUrlParse2 (self):
         text = u"http://example.com/."
-        result = u'<A HREF="http://example.com/">http://example.com/</A>.'
+        result = u'<a href="http://example.com/">http://example.com/</a>.'
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
 
     def testUrlParse3 (self):
         text = u"http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz),"
-        result = u'<A HREF="http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)">http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)</A>,'
+        result = u'<a href="http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)">http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)</a>,'
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
     
 
     def testUrlParse4 (self):
         text = u"http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)."
-        result = u'<A HREF="http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)">http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)</A>.'
+        result = u'<a href="http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)">http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)</a>.'
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
     
 
     def testUrlParse5 (self):
         text = u"http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/,"
-        result = u'<A HREF="http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/">http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/</A>,'
+        result = u'<a href="http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/">http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/</a>,'
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
     
     def testUrlParse6 (self):
         text = u"http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/."
-        result = u'<A HREF="http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/">http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/</A>.'
+        result = u'<a href="http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/">http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/</a>.'
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
 
     def testUrlParse7 (self):
         text = u"http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/"
-        result = u'<A HREF="http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/">http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/</A>'
+        result = u'<a href="http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/">http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/</a>'
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
     
     def testUrlParse8 (self):
         text = u"http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/"
-        result = u'<A HREF="http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/">http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/</A>'
+        result = u'<a href="http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/">http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/</a>'
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
     
 
     def testUrlParse9 (self):
         text = u"www.jenyay.net"
-        result = u'<A HREF="http://www.jenyay.net">www.jenyay.net</A>'
+        result = u'<a href="http://www.jenyay.net">www.jenyay.net</a>'
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
     
 
     def testUrlParse10 (self):
         text = u"www.jenyay.net,"
-        result = u'<A HREF="http://www.jenyay.net">www.jenyay.net</A>,'
+        result = u'<a href="http://www.jenyay.net">www.jenyay.net</a>,'
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
 
     def testUrlParse11 (self):
         text = u"www.jenyay.net."
-        result = u'<A HREF="http://www.jenyay.net">www.jenyay.net</A>.'
+        result = u'<a href="http://www.jenyay.net">www.jenyay.net</a>.'
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
 
     def testUrlParse12 (self):
         text = u"www.jenyay.net/"
-        result = u'<A HREF="http://www.jenyay.net/">www.jenyay.net/</A>'
+        result = u'<a href="http://www.jenyay.net/">www.jenyay.net/</a>'
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
 
     def testUrlParse13 (self):
         text = u"ftp.jenyay.net"
-        result = u'<A HREF="http://ftp.jenyay.net">ftp.jenyay.net</A>'
+        result = u'<a href="http://ftp.jenyay.net">ftp.jenyay.net</a>'
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
     
     def testUrlParse14 (self):
         text = u"http://rapidshare.com/#!download|514l34|373912473|ansys_hfss_12.1_with_fix.part1.rar|100431"
-        result = u'<A HREF="http://rapidshare.com/#!download|514l34|373912473|ansys_hfss_12.1_with_fix.part1.rar|100431">http://rapidshare.com/#!download|514l34|373912473|ansys_hfss_12.1_with_fix.part1.rar|100431</A>'
+        result = u'<a href="http://rapidshare.com/#!download|514l34|373912473|ansys_hfss_12.1_with_fix.part1.rar|100431">http://rapidshare.com/#!download|514l34|373912473|ansys_hfss_12.1_with_fix.part1.rar|100431</a>'
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
 
     def testUrlParse15 (self):
         text = u"бла-бла-бла http://IP-адрес-apt-proxy:9999/ubuntu/ бла-бла"
-        result = u'бла-бла-бла <A HREF="http://IP-адрес-apt-proxy:9999/ubuntu/">http://IP-адрес-apt-proxy:9999/ubuntu/</A> бла-бла'
+        result = u'бла-бла-бла <a href="http://IP-адрес-apt-proxy:9999/ubuntu/">http://IP-адрес-apt-proxy:9999/ubuntu/</a> бла-бла'
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))

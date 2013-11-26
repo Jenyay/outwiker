@@ -42,17 +42,17 @@ class TexToken (object):
         try:
             path = thumb.getThumbPath (True)
         except IOError:
-            return _(u"<B>Can't create thumbnails directory</B>")
+            return _(u"<b>Can't create thumbnails directory</b>")
 
         tex = getTexRender (path)
 
         try:
             image_fname = tex.makeImage (eqn)
         except IOError:
-            return _(u"<B>Can't create image file</B>")
+            return _(u"<b>Can't create image file</b>")
         
         image_path = os.path.join (Thumbnails.getRelativeThumbDir(), image_fname)
-        result = u'<IMG SRC="{image}"/>'.format (image=image_path.replace ("\\", "/"))
+        result = u'<img src="{image}"/>'.format (image=image_path.replace ("\\", "/"))
 
         return result
 

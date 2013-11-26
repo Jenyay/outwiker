@@ -15,5 +15,5 @@ class HorLineToken (object):
     Токен для горизонтальной линии
     """
     def getToken (self):
-        return Regex("----+").setParseAction (lambda s, l, t: "<HR>")("horline")
+        return Regex("----+").setParseAction (lambda s, l, t: "<hr>")("horline")
 

@@ -59,7 +59,7 @@ class ParserAttachTest (unittest.TestCase):
     def testAttach01 (self):
         fname = u"filename.tmp"
         text = u"бла-бла-бла \nAttach:%s бла-бла-бла\nбла-бла-бла" % (fname)
-        result = u'бла-бла-бла \n<A HREF="__attach/%s">%s</A> бла-бла-бла\nбла-бла-бла' % (fname, fname)
+        result = u'бла-бла-бла \n<a href="__attach/%s">%s</a> бла-бла-бла\nбла-бла-бла' % (fname, fname)
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
     
@@ -67,7 +67,7 @@ class ParserAttachTest (unittest.TestCase):
     def testAttach02 (self):
         fname = u"accept.png"
         text = u"бла-бла-бла \nAttach:%s бла-бла-бла\nбла-бла-бла" % (fname)
-        result = u'бла-бла-бла \n<IMG SRC="__attach/%s"/> бла-бла-бла\nбла-бла-бла' % (fname)
+        result = u'бла-бла-бла \n<img src="__attach/%s"/> бла-бла-бла\nбла-бла-бла' % (fname)
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
     
@@ -75,7 +75,7 @@ class ParserAttachTest (unittest.TestCase):
     def testAttach03 (self):
         fname = u"filename.tmp"
         text = u"бла-бла-бла \n[[Attach:%s]] бла-бла-бла\nбла-бла-бла" % (fname)
-        result = u'бла-бла-бла \n<A HREF="__attach/%s">%s</A> бла-бла-бла\nбла-бла-бла' % (fname, fname)
+        result = u'бла-бла-бла \n<a href="__attach/%s">%s</a> бла-бла-бла\nбла-бла-бла' % (fname, fname)
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
     
@@ -83,7 +83,7 @@ class ParserAttachTest (unittest.TestCase):
     def testAttach04 (self):
         fname = u"файл с пробелами.tmp"
         text = u"бла-бла-бла \nAttach:%s бла-бла-бла\nбла-бла-бла" % (fname)
-        result = u'бла-бла-бла \n<A HREF="__attach/%s">%s</A> бла-бла-бла\nбла-бла-бла' % (fname, fname)
+        result = u'бла-бла-бла \n<a href="__attach/%s">%s</a> бла-бла-бла\nбла-бла-бла' % (fname, fname)
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
     
@@ -91,7 +91,7 @@ class ParserAttachTest (unittest.TestCase):
     def testAttach05 (self):
         fname = u"файл с пробелами.tmp"
         text = u"бла-бла-бла \n[[Attach:%s]] бла-бла-бла\nбла-бла-бла" % (fname)
-        result = u'бла-бла-бла \n<A HREF="__attach/%s">%s</A> бла-бла-бла\nбла-бла-бла' % (fname, fname)
+        result = u'бла-бла-бла \n<a href="__attach/%s">%s</a> бла-бла-бла\nбла-бла-бла' % (fname, fname)
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
     
@@ -99,7 +99,7 @@ class ParserAttachTest (unittest.TestCase):
     def testAttach06 (self):
         fname = u"картинка с пробелами.png"
         text = u"бла-бла-бла \nAttach:%s бла-бла-бла\nбла-бла-бла" % (fname)
-        result = u'бла-бла-бла \n<IMG SRC="__attach/%s"/> бла-бла-бла\nбла-бла-бла' % (fname)
+        result = u'бла-бла-бла \n<img src="__attach/%s"/> бла-бла-бла\nбла-бла-бла' % (fname)
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
@@ -107,7 +107,7 @@ class ParserAttachTest (unittest.TestCase):
     def testAttach07 (self):
         fname = u"accept.png"
         text = u"бла-бла-бла \n[[Attach:%s]] бла-бла-бла\nбла-бла-бла" % (fname)
-        result = u'бла-бла-бла \n<A HREF="__attach/%s">%s</A> бла-бла-бла\nбла-бла-бла' % (fname, fname)
+        result = u'бла-бла-бла \n<a href="__attach/%s">%s</a> бла-бла-бла\nбла-бла-бла' % (fname, fname)
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
@@ -115,7 +115,7 @@ class ParserAttachTest (unittest.TestCase):
     def testAttach08 (self):
         fname = u"accept.png"
         text = u"бла-бла-бла \n[[Attach:%s | Комментарий]] бла-бла-бла\nбла-бла-бла" % (fname)
-        result = u'бла-бла-бла \n<A HREF="__attach/%s">Комментарий</A> бла-бла-бла\nбла-бла-бла' % (fname)
+        result = u'бла-бла-бла \n<a href="__attach/%s">Комментарий</a> бла-бла-бла\nбла-бла-бла' % (fname)
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
@@ -123,7 +123,7 @@ class ParserAttachTest (unittest.TestCase):
     def testAttach09 (self):
         fname = u"файл с пробелами.tmp"
         text = u"бла-бла-бла \n[[Attach:%s | Комментарий]] бла-бла-бла\nбла-бла-бла" % (fname)
-        result = u'бла-бла-бла \n<A HREF="__attach/%s">Комментарий</A> бла-бла-бла\nбла-бла-бла' % (fname)
+        result = u'бла-бла-бла \n<a href="__attach/%s">Комментарий</a> бла-бла-бла\nбла-бла-бла' % (fname)
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
@@ -131,7 +131,7 @@ class ParserAttachTest (unittest.TestCase):
     def testAttach10 (self):
         fname = u"accept.png"
         text = u"бла-бла-бла \n[[Комментарий -> Attach:%s]] бла-бла-бла\nбла-бла-бла" % (fname)
-        result = u'бла-бла-бла \n<A HREF="__attach/%s">Комментарий</A> бла-бла-бла\nбла-бла-бла' % (fname)
+        result = u'бла-бла-бла \n<a href="__attach/%s">Комментарий</a> бла-бла-бла\nбла-бла-бла' % (fname)
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
@@ -139,14 +139,14 @@ class ParserAttachTest (unittest.TestCase):
     def testAttach11 (self):
         fname = u"файл с пробелами.tmp"
         text = u"бла-бла-бла \n[[Комментарий -> Attach:%s]] бла-бла-бла\nбла-бла-бла" % (fname)
-        result = u'бла-бла-бла \n<A HREF="__attach/%s">Комментарий</A> бла-бла-бла\nбла-бла-бла' % (fname)
+        result = u'бла-бла-бла \n<a href="__attach/%s">Комментарий</a> бла-бла-бла\nбла-бла-бла' % (fname)
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
     
     def testAttach12 (self):
         fname = u"image_01.JPG"
         text = u"бла-бла-бла \nAttach:%s бла-бла-бла\nбла-бла-бла" % (fname)
-        result = u'бла-бла-бла \n<IMG SRC="__attach/%s"/> бла-бла-бла\nбла-бла-бла' % (fname)
+        result = u'бла-бла-бла \n<img src="__attach/%s"/> бла-бла-бла\nбла-бла-бла' % (fname)
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
@@ -154,7 +154,7 @@ class ParserAttachTest (unittest.TestCase):
     def testAttach13 (self):
         fname = u"dir.xxx"
         text = u"бла-бла-бла \nAttach:%s бла-бла-бла\nбла-бла-бла" % (fname)
-        result = u'бла-бла-бла \n<A HREF="__attach/%s">%s</A> бла-бла-бла\nбла-бла-бла' % (fname, fname)
+        result = u'бла-бла-бла \n<a href="__attach/%s">%s</a> бла-бла-бла\nбла-бла-бла' % (fname, fname)
 
         self.assertEqual (self.parser.toHtml (text), 
                 result, 
@@ -164,7 +164,7 @@ class ParserAttachTest (unittest.TestCase):
     def testAttach14 (self):
         fname = u"dir"
         text = u"бла-бла-бла \nAttach:%s бла-бла-бла\nбла-бла-бла" % (fname)
-        result = u'бла-бла-бла \n<A HREF="__attach/%s">%s</A> бла-бла-бла\nбла-бла-бла' % (fname, fname)
+        result = u'бла-бла-бла \n<a href="__attach/%s">%s</a> бла-бла-бла\nбла-бла-бла' % (fname, fname)
 
         self.assertEqual (self.parser.toHtml (text), 
                 result, 
@@ -174,6 +174,6 @@ class ParserAttachTest (unittest.TestCase):
     def testAttach15 (self):
         fname = u"dir.png"
         text = u"бла-бла-бла \nAttach:%s бла-бла-бла\nбла-бла-бла" % (fname)
-        result = u'бла-бла-бла \n<IMG SRC="__attach/%s"/> бла-бла-бла\nбла-бла-бла' % (fname)
+        result = u'бла-бла-бла \n<img src="__attach/%s"/> бла-бла-бла\nбла-бла-бла' % (fname)
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))

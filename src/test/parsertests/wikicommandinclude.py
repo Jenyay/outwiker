@@ -179,7 +179,7 @@ class WikiIncludeCommandTest (unittest.TestCase):
     def testIncludeCommand12 (self):
         text = u"""бла-бла-бла (:include Attach:wiki.txt wikiparse:)"""
 
-        result_right = u"""бла-бла-бла <B>Этот текст содержит вики-нотацию</B>"""
+        result_right = u"""бла-бла-бла <b>Этот текст содержит вики-нотацию</b>"""
 
         result = self.parser.toHtml (text)
         self.assertEqual (result, result_right, result)
@@ -197,7 +197,7 @@ class WikiIncludeCommandTest (unittest.TestCase):
     def testIncludeCommandInvalid2 (self):
         text = u"""бла-бла-бла(:include Attach:image.gif :)"""
 
-        result_right = u"""бла-бла-бла""" + _(u"<B>Encoding error in file image.gif</B>")
+        result_right = u"""бла-бла-бла""" + _(u"<b>Encoding error in file image.gif</b>")
 
         result = self.parser.toHtml (text)
         self.assertEqual (result, result_right, result)
@@ -206,7 +206,7 @@ class WikiIncludeCommandTest (unittest.TestCase):
     def testIncludeCommandInvalid3 (self):
         text = u"""бла-бла-бла(:include Attach:image.gif encoding=base64 :)"""
 
-        result_right = u"""бла-бла-бла""" + _(u"<B>Encoding error in file image.gif</B>")
+        result_right = u"""бла-бла-бла""" + _(u"<b>Encoding error in file image.gif</b>")
 
         result = self.parser.toHtml (text)
         self.assertEqual (result, result_right, result)

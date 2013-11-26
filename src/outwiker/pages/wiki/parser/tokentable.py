@@ -45,13 +45,13 @@ class TableToken (object):
         align = u''
 
         if leftAlign and rightAlign:
-            align = u' ALIGN="CENTER"'
+            align = u' align="center"'
         elif leftAlign:
-            align = u' ALIGN="LEFT"'
+            align = u' align="left"'
         elif rightAlign:
-            align = u' ALIGN="RIGHT"'
+            align = u' align="right"'
 
-        result = u'<TD%s>%s</TD>' % (align, self.parser.parseWikiMarkup (text.strip() ) )
+        result = u'<td%s>%s</td>' % (align, self.parser.parseWikiMarkup (text.strip() ) )
 
         return result
 
@@ -62,20 +62,20 @@ class TableToken (object):
         else:
             lastindex = len (t)
 
-        result = u"<TR>"
+        result = u"<tr>"
         for element in t[1: lastindex]:
             result += element
 
-        result += "</TR>"
+        result += "</tr>"
 
         return result
 
 
     def __convertTable (self, s, l, t):
-        result = u"<TABLE %s>" % t[0][2:].strip()
+        result = u"<table %s>" % t[0][2:].strip()
         for element in t[2:]:
             result += element
 
-        result += "</TABLE>"
+        result += "</table>"
 
         return result

@@ -23,21 +23,18 @@ class HtmlTemplateTest(unittest.TestCase):
 
 
     def __clearConfig (self):
-        # self.config.userStyle.value = u""
-        # self.config.fontFamily.value = u"Verdana"
-        # self.config.fontSize.value = 10
         Application.config.remove_section (HtmlRenderConfig.HTML_SECTION)
 
 
     def testDefault (self):
         content = u"бла-бла-бла"
         result_right = u"""<!DOCTYPE html>
-<HTML>
-<HEAD>
-	<META HTTP-EQUIV='X-UA-Compatible' CONTENT='IE=edge' />
-	<META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>
+<html>
+<head>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+	<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
 
-	<STYLE type='text/css'>
+	<style type='text/css'>
 		body, div, p, table {
 			font-size:10pt;
 			font-family:Verdana;
@@ -45,14 +42,14 @@ class HtmlTemplateTest(unittest.TestCase):
 
 		img{border:none}
 		
-	</STYLE>
+	</style>
 	
-</HEAD>
+</head>
 
-<BODY>
-<P>бла-бла-бла</P>
-</BODY>
-</HTML>"""
+<body>
+<p>бла-бла-бла</p>
+</body>
+</html>"""
 
         templatepath = os.path.join (getTemplatesDir(), "__default", "__style.html")
         tpl = HtmlTemplate (templatepath)
@@ -66,12 +63,12 @@ class HtmlTemplateTest(unittest.TestCase):
 
         content = u"бла-бла-бла"
         result_right = u"""<!DOCTYPE html>
-<HTML>
-<HEAD>
-	<META HTTP-EQUIV='X-UA-Compatible' CONTENT='IE=edge' />
-	<META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>
+<html>
+<head>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+	<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
 
-	<STYLE type='text/css'>
+	<style type='text/css'>
 		body, div, p, table {
 			font-size:10pt;
 			font-family:Arial;
@@ -79,14 +76,14 @@ class HtmlTemplateTest(unittest.TestCase):
 
 		img{border:none}
 		
-	</STYLE>
+	</style>
 	
-</HEAD>
+</head>
 
-<BODY>
-<P>бла-бла-бла</P>
-</BODY>
-</HTML>"""
+<body>
+<p>бла-бла-бла</p>
+</body>
+</html>"""
 
         templatepath = os.path.join (getTemplatesDir(), "__default", "__style.html")
         tpl = HtmlTemplate (templatepath)
@@ -99,12 +96,12 @@ class HtmlTemplateTest(unittest.TestCase):
         self.config.fontSize.value = 20
         content = u"бла-бла-бла"
         result_right = u"""<!DOCTYPE html>
-<HTML>
-<HEAD>
-	<META HTTP-EQUIV='X-UA-Compatible' CONTENT='IE=edge' />
-	<META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>
+<html>
+<head>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+	<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
 
-	<STYLE type='text/css'>
+	<style type='text/css'>
 		body, div, p, table {
 			font-size:20pt;
 			font-family:Verdana;
@@ -112,14 +109,14 @@ class HtmlTemplateTest(unittest.TestCase):
 
 		img{border:none}
 		
-	</STYLE>
+	</style>
 	
-</HEAD>
+</head>
 
-<BODY>
-<P>бла-бла-бла</P>
-</BODY>
-</HTML>"""
+<body>
+<p>бла-бла-бла</p>
+</body>
+</html>"""
 
         templatepath = os.path.join (getTemplatesDir(), "__default", "__style.html")
         tpl = HtmlTemplate (templatepath)
@@ -157,15 +154,15 @@ class HtmlTemplateTest(unittest.TestCase):
 
 
     def testImproved1 (self):
-        src = u"""<UL><LI>Несортированный список. Элемент 1</LI><LI>Несортированный список. Элемент 2</LI><LI>Несортированный список. Элемент 3</LI><OL><LI>Вложенный сортированный список. Элемент 1</LI><LI>Вложенный сортированный список. Элемент 2</LI><LI>Вложенный сортированный список. Элемент 3</LI><LI>Вложенный сортированный список. Элемент 4</LI><UL><LI>Совсем вложенный сортированный список. Элемент 1</LI><LI>Совсем вложенный сортированный список. Элемент 2</LI></UL><LI>Вложенный сортированный список. Элемент 5</LI></OL><UL><LI>Вложенный несортированный список. Элемент 1</LI></UL></UL>"""
+        src = u"""<ul><li>Несортированный список. Элемент 1</li><li>Несортированный список. Элемент 2</li><li>Несортированный список. Элемент 3</li><ol><li>Вложенный сортированный список. Элемент 1</li><li>Вложенный сортированный список. Элемент 2</li><li>Вложенный сортированный список. Элемент 3</li><li>Вложенный сортированный список. Элемент 4</li><ul><li>Совсем вложенный сортированный список. Элемент 1</li><li>Совсем вложенный сортированный список. Элемент 2</li></ul><li>Вложенный сортированный список. Элемент 5</li></ol><ul><li>Вложенный несортированный список. Элемент 1</li></ul></ul>"""
 
         expectedResult = u"""<!DOCTYPE html>
-<HTML>
-<HEAD>
-	<META HTTP-EQUIV='X-UA-Compatible' CONTENT='IE=edge' />
-	<META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>
+<html>
+<head>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+	<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
 
-	<STYLE type='text/css'>
+	<style type='text/css'>
 		body, div, p, table {
 			font-size:10pt;
 			font-family:Verdana;
@@ -173,33 +170,33 @@ class HtmlTemplateTest(unittest.TestCase):
 
 		img{border:none}
 		
-	</STYLE>
+	</style>
 	
-</HEAD>
+</head>
 
-<BODY>
-<P>
-<UL>
-<LI>Несортированный список. Элемент 1</LI>
-<LI>Несортированный список. Элемент 2</LI>
-<LI>Несортированный список. Элемент 3</LI>
-<OL>
-<LI>Вложенный сортированный список. Элемент 1</LI>
-<LI>Вложенный сортированный список. Элемент 2</LI>
-<LI>Вложенный сортированный список. Элемент 3</LI>
-<LI>Вложенный сортированный список. Элемент 4</LI>
-<UL>
-<LI>Совсем вложенный сортированный список. Элемент 1</LI>
-<LI>Совсем вложенный сортированный список. Элемент 2</LI>
-</UL>
-<LI>Вложенный сортированный список. Элемент 5</LI>
-</OL>
-<UL>
-<LI>Вложенный несортированный список. Элемент 1</LI>
-</UL>
-</UL></P>
-</BODY>
-</HTML>"""
+<body>
+<p>
+<ul>
+<li>Несортированный список. Элемент 1</li>
+<li>Несортированный список. Элемент 2</li>
+<li>Несортированный список. Элемент 3</li>
+<ol>
+<li>Вложенный сортированный список. Элемент 1</li>
+<li>Вложенный сортированный список. Элемент 2</li>
+<li>Вложенный сортированный список. Элемент 3</li>
+<li>Вложенный сортированный список. Элемент 4</li>
+<ul>
+<li>Совсем вложенный сортированный список. Элемент 1</li>
+<li>Совсем вложенный сортированный список. Элемент 2</li>
+</ul>
+<li>Вложенный сортированный список. Элемент 5</li>
+</ol>
+<ul>
+<li>Вложенный несортированный список. Элемент 1</li>
+</ul>
+</ul></p>
+</body>
+</html>"""
 
         templatepath = os.path.join (getTemplatesDir(), "__default", "__style.html")
         tpl = HtmlTemplate (templatepath)
@@ -209,15 +206,15 @@ class HtmlTemplateTest(unittest.TestCase):
 
 
     def testImproved2 (self):
-        src = ur"""<H2>Attach links</H2><P>Attach:file.odt<BR><A HREF="__attach/file.odt">file.odt</A><BR><A HREF="__attach/file.odt">alternative text</A><BR><A HREF="__attach/file with spaces.pdf">file with spaces.pdf</A><P><H2>Images</H2>"""
+        src = ur"""<h2>Attach links</h2><p>Attach:file.odt<br><a href="__attach/file.odt">file.odt</a><br><a href="__attach/file.odt">alternative text</a><br><a href="__attach/file with spaces.pdf">file with spaces.pdf</a><p><h2>Images</h2>"""
 
         expectedResult = ur"""<!DOCTYPE html>
-<HTML>
-<HEAD>
-	<META HTTP-EQUIV='X-UA-Compatible' CONTENT='IE=edge' />
-	<META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>
+<html>
+<head>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+	<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
 
-	<STYLE type='text/css'>
+	<style type='text/css'>
 		body, div, p, table {
 			font-size:10pt;
 			font-family:Verdana;
@@ -225,23 +222,23 @@ class HtmlTemplateTest(unittest.TestCase):
 
 		img{border:none}
 		
-	</STYLE>
+	</style>
 	
-</HEAD>
+</head>
 
-<BODY>
-<P>
-<H2>Attach links</H2></P>
+<body>
+<p>
+<h2>Attach links</h2></p>
 
-<P>Attach:file.odt
-<BR><A HREF="__attach/file.odt">file.odt</A>
-<BR><A HREF="__attach/file.odt">alternative text</A>
-<BR><A HREF="__attach/file with spaces.pdf">file with spaces.pdf</A></P>
+<p>Attach:file.odt
+<br><a href="__attach/file.odt">file.odt</a>
+<br><a href="__attach/file.odt">alternative text</a>
+<br><a href="__attach/file with spaces.pdf">file with spaces.pdf</a></p>
 
-<P>
-<H2>Images</H2></P>
-</BODY>
-</HTML>"""
+<p>
+<h2>Images</h2></p>
+</body>
+</html>"""
 
         templatepath = os.path.join (getTemplatesDir(), "__default", "__style.html")
         tpl = HtmlTemplate (templatepath)

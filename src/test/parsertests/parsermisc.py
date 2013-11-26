@@ -44,7 +44,7 @@ class ParserMiscTest (unittest.TestCase):
 
     def testHorLine (self):
         text = u"бла-бла-бла \nкхм ---- бла-бла-бла\nбла-бла-бла"
-        result = u'бла-бла-бла \nкхм <HR> бла-бла-бла\nбла-бла-бла'
+        result = u'бла-бла-бла \nкхм <hr> бла-бла-бла\nбла-бла-бла'
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 

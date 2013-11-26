@@ -35,7 +35,7 @@ class HtmlWikiPage (WikiPage):
     @property
     def autoLineWrap (self):
         """
-        Добавлять ли теги <BR> и <P> вместо разрывов строк?
+        Добавлять ли теги <br> и <p> вместо разрывов строк?
         """
         option = BooleanOption (self.params, self.__autoLineWrapSection, self.__autoLineWrapParam, True)
         return option.value
@@ -44,7 +44,7 @@ class HtmlWikiPage (WikiPage):
     @autoLineWrap.setter
     def autoLineWrap (self, value):
         """
-        Добавлять ли теги <BR> и <P> вместо разрывов строк?
+        Добавлять ли теги <br> и <p> вместо разрывов строк?
         """
         option = BooleanOption (self.params, self.__autoLineWrapSection, self.__autoLineWrapParam, True)
         option.value = value

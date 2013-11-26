@@ -122,7 +122,7 @@ class SpoilerPluginTest (unittest.TestCase):
         result = self.__readFile (htmlpath)
 
         self.assertTrue (u"бла-бла-бла" in result)
-        self.assertTrue (u"<B>Текст</B></div></div></div>" in result)
+        self.assertTrue (u"<b>Текст</b></div></div></div>" in result)
 
 
     def testExpandText (self):
