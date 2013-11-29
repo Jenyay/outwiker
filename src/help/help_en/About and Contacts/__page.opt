@@ -6,6 +6,7 @@ type = html
 order = 1
 tags = 
 datetime = 2013-05-25 20:59:52.340967
+linewrap = True
 
 [Misc]
 pageindex = 1

@@ -8,11 +8,11 @@
 
 ||[=''''Bold Italic''''=] ||''''Bold Italic'''' || - ||
 
-||[=@@Monospaced font@@=] ||@@Monospaced font@@ || The text is enclosed by tag &lt;CODE&gt;...&lt;/CODE&gt; ||
+||[=@@Monospaced font@@=] ||@@Monospaced font@@ || The text is enclosed by the tag &lt;code&gt;...&lt;/code&gt; ||
 
-||[='^Superscript^'=] ||'^Superscript^' || For comparison: normal font '^Superscript^' ||
+||[='^Superscript^'=] ||'^Superscript^' || For comparison: the normal font '^Superscript^' ||
 
-||[='_Subscript_'=] ||'_Subscript_' || For comparison: normal font '_Subscript_' ||
+||[='_Subscript_'=] ||'_Subscript_' || For comparison: the normal font '_Subscript_' ||
 
 ||[=[----Small font----]=] ||[----Small font----] || - ||
 
@@ -36,7 +36,9 @@
 
 ||[={-Strikethrough-}=] ||{-Strikethrough-} || - ||
 
-||[=[@Preformated '''text'''@]=] ||[@Preformated '''text'''@] || Within the brackets, there is no substitute symbols wiki notation, text is enclosed by tag &lt;PRE&gt;...&lt;/PRE&gt; ||
+||[=[>Quote<]=] ||[>Quote<] ||The text is enclosed by the tag &lt;clockquote&gt;...&lt;/blockquote&gt; ||
+
+||[=[@Preformated '''text'''@]=] ||[@Preformated '''text'''@] || Within the brackets, there is no substitute symbols wiki notation, text is enclosed by tag &lt;pre&gt;...&lt;/pre&gt; ||
 
 ||[@[=Nonformated '''text'''=]@] ||[=Nonformated '''text'''=] || Within the brackets, there is no substitute symbols wiki notation ||
 
