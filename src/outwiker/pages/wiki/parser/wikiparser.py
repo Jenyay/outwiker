@@ -22,6 +22,7 @@ from tokenlinejoin import LineJoinFactory
 from tokentex import TexFactory
 from tokencommand import CommandFactory
 from tokentext import TextFactory
+from tokenquote import QuoteFactory
 
 from ..thumbnails import Thumbnails
 
@@ -47,6 +48,7 @@ class Parser (object):
         self.strike = FontsFactory.makeStrike (self)
         self.subscript = FontsFactory.makeSubscript (self)
         self.superscript = FontsFactory.makeSuperscript (self)
+        self.quote = QuoteFactory.make (self)
         self.code = FontsFactory.makeCode (self)
         self.small = FontsFactory.makeSmall(self)
         self.big = FontsFactory.makeBig(self)
@@ -112,6 +114,7 @@ class Parser (object):
                 self.code |
                 self.small |
                 self.big |
+                self.quote |
                 self.preformat |
                 self.noformat |
                 self.thumb |

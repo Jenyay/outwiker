@@ -69,6 +69,7 @@ if __name__ == '__main__':
     from test.parsertests.parserurl import ParserUrlTest
     from test.parsertests.parsertex import ParserTexTest
     from test.parsertests.parserlinebreak import ParserLineBreakTest
+    from test.parsertests.parserquote import ParserQuoteTest
 
     from test.parsertests.wikicommands import WikiCommandsTest
     from test.parsertests.wikicommandinclude import WikiIncludeCommandTest

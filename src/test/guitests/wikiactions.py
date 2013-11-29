@@ -36,6 +36,7 @@ class WikiActionsTest (BaseMainWndTest):
                 (PREFORMAT_STR_ID, "[@", "@]"),
                 (CODE_STR_ID, "@@", "@@"),
                 (ANCHOR_STR_ID, "[[#", "]]"),
+                (QUOTE_STR_ID, "[>", "<]"),
                 ]
 
         self._replaceSyntax = [

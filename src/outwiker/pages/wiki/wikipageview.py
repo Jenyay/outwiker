@@ -58,6 +58,7 @@ class WikiPageView (BaseHtmlPanel):
                 STRIKE_STR_ID,
                 SUBSCRIPT_STR_ID,
                 SUPERSCRIPT_STR_ID,
+                QUOTE_STR_ID,
                 ALIGN_LEFT_STR_ID,
                 ALIGN_CENTER_STR_ID,
                 ALIGN_RIGHT_STR_ID,
@@ -368,6 +369,16 @@ class WikiPageView (BaseHtmlPanel):
         self._application.actionController.appendToolbarButton (WikiFontSizeSmallAction.stringId, 
                 toolbar,
                 os.path.join (self.imagesDir, "text_small.png"),
+                fullUpdate=False)
+
+
+        # Цитата
+        self._application.actionController.getAction (QUOTE_STR_ID).setFunc (lambda param: self.turnText (u'[>', u'<]'))
+
+        self._application.actionController.appendMenuItem (QUOTE_STR_ID, menu)
+        self._application.actionController.appendToolbarButton (QUOTE_STR_ID, 
+                toolbar,
+                os.path.join (self.imagesDir, "quote.png"),
                 fullUpdate=False)
 
 
