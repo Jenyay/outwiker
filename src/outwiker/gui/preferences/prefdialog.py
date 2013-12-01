@@ -10,6 +10,7 @@ from editorpanel import EditorPanel
 from htmlrenderpanel import HtmlRenderPanel
 from textprintpanel import TextPrintPanel
 from pluginspanel import PluginsPanel
+from hotkeyspanel import HotKeysPanel
 
 from outwiker.core.exceptions import PreferencesException
 from outwiker.core.factoryselector import FactorySelector
@@ -35,6 +36,7 @@ class PrefDialog(wx.Dialog):
         self.__htmlRenderPage = None
         self.__textPrintPage = None
         self.__pluginsPage = None
+        self.__hotkeysPage = None
         self.__createPages()
 
         Application.onPreferencesDialogCreate (self)
@@ -132,13 +134,19 @@ class PrefDialog(wx.Dialog):
         self.__treeBook.AddPage (self.__pluginsPage, _(u"Plugins") )
 
 
+    def __createHotKeysPage (self):
+        self.__hotkeysPage = HotKeysPanel (self.__treeBook)
+        self.__treeBook.AddPage (self.__hotkeysPage, _(u"Hotkeys") )
+
+
     def __createPages (self):
         """
         Создать страницы окна настроек
         """
-        self.__createInterfacePages()
-        self.__createPagesForPages()
-        self.__createPluginsPage()
+        self.__createInterfacePages ()
+        self.__createPagesForPages ()
+        self.__createPluginsPage ()
+        self.__createHotKeysPage ()
 
         self.__expandAllPages()
         self.__treeBook.SetSelection (0)
