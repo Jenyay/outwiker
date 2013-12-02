@@ -1286,7 +1286,7 @@ msgstr "Горизонтальная линия"
 
 #: outwiker/core/commands.py:864
 msgid "Insert Link"
-msgstr "Вставить сылку"
+msgstr "Вставить ссылку"
 
 #: outwiker/core/commands.py:869
 msgid "Quote"

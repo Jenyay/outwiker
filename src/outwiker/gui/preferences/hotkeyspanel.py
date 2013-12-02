@@ -4,6 +4,7 @@
 import wx
 
 from outwiker.core.application import Application
+from outwiker.gui.hotkeyeditor import HotkeyEditor
 
 
 class HotKeysPanel (wx.Panel):
@@ -46,11 +47,15 @@ class HotKeysPanel (wx.Panel):
         leftSizer.Add (self.__filterText, flag=wx.EXPAND | wx.ALL, border=2)
 
 
-        # Сайзер для размещения элементов в парвой части: 
+        # Сайзер для размещения элементов в правой части: 
         # выбор горячей клавиши и описание action
         rightSizer = wx.FlexGridSizer (rows=2)
         rightSizer.AddGrowableCol (0)
-        rightSizer.AddGrowableRow (0)
+        rightSizer.AddGrowableRow (1)
+
+        # Горячая клавиша
+        self.__hotkey = HotkeyEditor (self)
+        self.__hotkey.Disable()
 
         # Описание action
         self.__descriptionText = wx.TextCtrl (self, 
@@ -58,6 +63,7 @@ class HotKeysPanel (wx.Panel):
         self.__descriptionText.Disable()
         self.__descriptionText.SetMinSize ((200, -1))
 
+        rightSizer.Add (self.__hotkey, flag=wx.EXPAND | wx.ALL, border=2)
         rightSizer.Add (self.__descriptionText, flag=wx.EXPAND | wx.ALL, border=2)
 
         mainSizer.Add (leftSizer, flag=wx.EXPAND | wx.ALL, border=2)
@@ -79,6 +85,8 @@ class HotKeysPanel (wx.Panel):
         strid = event.GetClientData()
         if strid != None:
             self.__descriptionText.Value = Application.actionController.getAction(strid).description
+            self.__hotkey.Enable()
+            self.__hotkey.setHotkey (Application.actionController.getHotKey(strid))
 
 
     def __fillActionsList (self):
