@@ -60,7 +60,6 @@ class HotKeysPanel (wx.Panel):
         # Описание action
         self.__descriptionText = wx.TextCtrl (self, 
                 style=wx.TE_WORDWRAP | wx.TE_MULTILINE | wx.TE_READONLY )
-        self.__descriptionText.Disable()
         self.__descriptionText.SetMinSize ((200, -1))
 
         rightSizer.Add (self.__hotkey, flag=wx.EXPAND | wx.ALL, border=2)
