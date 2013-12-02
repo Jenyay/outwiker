@@ -144,3 +144,6 @@ class HotKeysPanel (wx.Panel):
             if Application.actionController.getHotKey (strid) != hotkey:
                 Application.actionController.setHotKey (strid, hotkey)
 
+        if Application.mainWindow != None:
+            Application.mainWindow.updateShortcuts()
+
