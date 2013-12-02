@@ -99,6 +99,22 @@ class WxActionController (object):
             option.value = actionInfo.hotkey
 
 
+    def setHotKey (self, strid, hotkey):
+        actionInfo = self._actionsInfo[strid]
+
+        actionInfo.hotkey = hotkey
+        if actionInfo.menuItem != None:
+            actionInfo.menuItem.SetItemLabel (self._getMenuItemTitle (strid))
+
+        if actionInfo.toolbar != None and actionInfo.toolItemId != None:
+            title = self._getToolbarItemTitle (strid)
+            actionInfo.toolbar.SetToolLabel (actionInfo.toolItemId, title)
+            actionInfo.toolbar.SetToolShortHelp (actionInfo.toolItemId, title)
+
+        self.saveHotKeys()
+
+
+
     def appendMenuItem (self, strid, menu):
         """
         Добавить действие в меню menu

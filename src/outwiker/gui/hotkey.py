@@ -30,3 +30,15 @@ class HotKey (object):
     @property
     def shift (self):
         return self._shift
+
+
+    def __eq__ (self, other):
+        return (other != None and
+                self._key == other._key and
+                self._ctrl == other._ctrl and
+                self._alt == other._alt and
+                self._shift == other._shift)
+
+
+    def __ne__ (self, other):
+        return not self.__eq__ (other)

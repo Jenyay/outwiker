@@ -58,3 +58,45 @@ class HotKeyTest (unittest.TestCase):
         self.assertTrue (hotkey.ctrl)
         self.assertTrue (hotkey.alt)
         self.assertTrue (hotkey.shift)
+
+
+    def testEqual1 (self):
+        hotkey1 = HotKey (u"F1", ctrl=True, alt=True)
+        hotkey2 = HotKey (u"F1", ctrl=True, alt=True)
+
+        self.assertTrue (hotkey1 == hotkey2)
+
+
+    def testNotEqual1 (self):
+        hotkey1 = HotKey (u"F1", ctrl=True, alt=True, shift=True)
+        hotkey2 = HotKey (u"F1", ctrl=True, alt=True)
+
+        self.assertTrue (hotkey1 != hotkey2)
+
+
+    def testNotEqual2 (self):
+        hotkey1 = HotKey (u"F1", ctrl=True, alt=True, shift=True)
+        hotkey2 = HotKey (u"F1", ctrl=True, shift=True)
+
+        self.assertTrue (hotkey1 != hotkey2)
+
+
+    def testNotEqual3 (self):
+        hotkey1 = HotKey (u"F1", ctrl=True, alt=True, shift=True)
+        hotkey2 = HotKey (u"F1", alt=True, shift=True)
+
+        self.assertTrue (hotkey1 != hotkey2)
+
+
+    def testNotEqual4 (self):
+        hotkey1 = HotKey (u"F1", ctrl=True, alt=True)
+        hotkey2 = None
+
+        self.assertTrue (hotkey1 != hotkey2)
+
+
+    def testNotEqual5 (self):
+        hotkey1 = None
+        hotkey2 = HotKey (u"F1", ctrl=True, alt=True)
+
+        self.assertTrue (hotkey1 != hotkey2)

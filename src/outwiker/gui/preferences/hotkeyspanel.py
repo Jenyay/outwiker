@@ -4,7 +4,7 @@
 import wx
 
 from outwiker.core.application import Application
-from outwiker.gui.hotkeyeditor import HotkeyEditor
+from outwiker.gui.hotkeyeditor import HotkeyEditor, EVT_HOTKEY_EDIT
 
 
 class HotKeysPanel (wx.Panel):
@@ -15,8 +15,25 @@ class HotKeysPanel (wx.Panel):
         kwds["style"] = wx.TAB_TRAVERSAL
         super (HotKeysPanel, self).__init__ (*args, **kwds)
 
+        # Новые горячие клавиши
+        # Ключ - strid, значение - горячая клавиша
+        self.__hotkeys = {}
+
         self.__createGui ()
         self.LoadState()
+
+        self.__filterText.Bind (wx.EVT_TEXT, self.__onFilterEdit)
+        self.__actionsList.Bind (wx.EVT_LISTBOX, self.__onActionSelect)
+        self.__hotkey.Bind (EVT_HOTKEY_EDIT, self.__onHotkeyEdit)
+
+
+    def __onHotkeyEdit (self, event):
+        index = self.__actionsList.GetSelection ()
+        if index == wx.NOT_FOUND:
+            return
+
+        strid = self.__actionsList.GetClientData (index)
+        self.__hotkeys[strid] = event.hotkey
 
 
     def __createGui (self):
@@ -36,13 +53,11 @@ class HotKeysPanel (wx.Panel):
 
         # Список с именами actions
         self.__actionsList = wx.ListBox (self)
-        self.__actionsList.Bind (wx.EVT_LISTBOX, self.__onActionSelect)
 
         leftSizer.Add (self.__actionsList, flag=wx.EXPAND | wx.ALL, border=2)
 
         # Фильтр
         self.__filterText = wx.TextCtrl (self)
-        self.__filterText.Bind (wx.EVT_TEXT, self.__onFilterEdit)
 
         leftSizer.Add (self.__filterText, flag=wx.EXPAND | wx.ALL, border=2)
 
@@ -72,6 +87,17 @@ class HotKeysPanel (wx.Panel):
 
     def LoadState(self):
         self.__fillActionsList ()
+        self.__initHotKeys ()
+
+
+    def __initHotKeys (self):
+        """
+        Заполнить словарь __hotkeys текущими значениями
+        """
+        actionController = Application.actionController
+        strIdList = actionController.getActionsStrId()
+        for strid in strIdList:
+            self.__hotkeys[strid] = actionController.getHotKey (strid)
 
 
     def __onFilterEdit (self, event):
@@ -114,5 +140,7 @@ class HotKeysPanel (wx.Panel):
 
 
     def Save (self):
-        pass
+        for strid, hotkey in self.__hotkeys.iteritems():
+            if Application.actionController.getHotKey (strid) != hotkey:
+                Application.actionController.setHotKey (strid, hotkey)
 

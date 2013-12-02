@@ -3,6 +3,13 @@
 
 import wx
 
+from outwiker.gui.hotkey import HotKey
+
+
+# Событие, возникающее при изменении горячей клавиши
+# Дополнительный парметр - hotkey, хранящий экземпляр класса HotKey или None
+HotkeyEditEvent, EVT_HOTKEY_EDIT = wx.lib.newevent.NewEvent()
+
 
 class HotkeyEditor (wx.Panel):
     """Контрол для представления и редактирвоания горячей клавиши"""
@@ -14,11 +21,19 @@ class HotkeyEditor (wx.Panel):
 A B C D E F G H I J K L M N O P Q R S T U V W X Y Z,
 Insert Enter Delete Home End Pageup Pagedown 
 Up Down Left Right
-/ \ * - + . _ = `"""
+/ \ * - + . _ = ` ,"""
 
         self._hotkeysList = [_("None")] + [item for item in hotkeys.split() if len (item) != 0]
 
+        # Тот же самый список в нижнем регистре для сравнения
+        self._hotkeysListLower = [item.lower() for item in self._hotkeysList]
+
         self.__createGui()
+
+        self._ctrl.Bind (wx.EVT_CHECKBOX, self.__onEdit)
+        self._alt.Bind (wx.EVT_CHECKBOX, self.__onEdit)
+        self._shift.Bind (wx.EVT_CHECKBOX, self.__onEdit)
+        self._key.Bind (wx.EVT_COMBOBOX, self.__onEdit)
 
 
     def setHotkey (self, hotkey):
@@ -27,12 +42,43 @@ Up Down Left Right
         hotkey - экземпляр класса HotKey или None
         """
         self.clear()
-        if hotkey == None:
+        if (hotkey == None or 
+            hotkey.key == None or
+            len (hotkey.key) == 0):
             return
 
         self._ctrl.Value = hotkey.ctrl
         self._shift.Value = hotkey.shift
         self._alt.Value = hotkey.alt
+        self._key.SetSelection (self.__findKeyItem (hotkey.key) )
+
+
+    def getHotkey (self):
+        """
+        Возвращает установленную горячую клавишу
+        """
+        if self._key.GetSelection() == 0:
+            return None
+
+        return HotKey (self._key.Value,
+                self._ctrl.Value,
+                self._alt.Value,
+                self._shift.Value)
+
+
+    def __onEdit (self, event):
+        event = HotkeyEditEvent (hotkey=self.getHotkey ())
+        wx.PostEvent (self, event)
+
+
+    def __findKeyItem (self, key):
+        """
+        Возвращает номер строки комбобокса, соответствующей горячей клавише
+        """
+        try:
+            return self._hotkeysListLower.index (key.lower())
+        except ValueError:
+            return 0
 
 
     def clear (self):

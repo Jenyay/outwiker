@@ -691,6 +691,123 @@ class ActionControllerTest (BaseMainWndTest):
         self.assertFalse (otherActionController.getHotKey (action.strid).alt)
 
 
+    def testSetHotKey (self):
+        action = TestAction()
+        self.actionController.register (action, None)
+
+        hotkey = HotKey ("F11", ctrl=True)
+        self.actionController.setHotKey (action.strid, hotkey)
+        self.assertEqual (self.actionController.getHotKey (action.strid), hotkey)
+
+
+    def testChangeHotkeyGui (self):
+        menu = self.wnd.mainMenu.fileMenu
+        toolbar = self.wnd.toolbars[self.wnd.PLUGINS_TOOLBAR_STR]
+        image = "../test/images/save.png"
+
+        hotkey = HotKey ("F11", ctrl=True)
+
+        action = TestAction()
+        self.actionController.register (action, None)
+
+        self.actionController.appendMenuItem (action.strid, menu)
+        self.actionController.appendToolbarButton (action.strid, 
+                toolbar,
+                image)
+
+        self.actionController.setHotKey (action.strid, hotkey)
+
+        self.assertEqual (self._getToolItemLabel (toolbar, action.strid), 
+                u"{} ({})".format (action.title, "Ctrl+F11"))
+
+        self.assertEqual (self._getMenuItem(action.strid).GetItemLabel(), 
+                u"{}\t{}".format (action.title, "Ctrl+F11"))
+
+
+    def testChangeHotkeyGuiMenu (self):
+        menu = self.wnd.mainMenu.fileMenu
+
+        hotkey = HotKey ("F11", ctrl=True)
+
+        action = TestAction()
+        self.actionController.register (action, None)
+
+        self.actionController.appendMenuItem (action.strid, menu)
+
+        self.actionController.setHotKey (action.strid, hotkey)
+
+        self.assertEqual (self._getMenuItem(action.strid).GetItemLabel(), 
+                u"{}\t{}".format (action.title, "Ctrl+F11"))
+
+
+    def testChangeHotkeyToolbar (self):
+        toolbar = self.wnd.toolbars[self.wnd.PLUGINS_TOOLBAR_STR]
+        image = "../test/images/save.png"
+
+        hotkey = HotKey ("F11", ctrl=True)
+
+        action = TestAction()
+        self.actionController.register (action, None)
+
+        self.actionController.appendToolbarButton (action.strid, 
+                toolbar,
+                image)
+
+        self.actionController.setHotKey (action.strid, hotkey)
+
+        self.assertEqual (self._getToolItemLabel (toolbar, action.strid), 
+                u"{} ({})".format (action.title, "Ctrl+F11"))
+
+
+    def testChangeHotkeyGuiChecked1 (self):
+        menu = self.wnd.mainMenu.fileMenu
+        toolbar = self.wnd.toolbars[self.wnd.PLUGINS_TOOLBAR_STR]
+        image = "../test/images/save.png"
+
+        hotkey = HotKey ("F11", ctrl=True)
+
+        action = TestCheckAction()
+        self.actionController.register (action, None)
+
+        self.actionController.appendMenuCheckItem (action.strid, menu)
+        self.actionController.appendToolbarCheckButton (action.strid, 
+                toolbar,
+                image)
+
+        self.actionController.setHotKey (action.strid, hotkey)
+
+        self.assertEqual (self._getToolItemLabel (toolbar, action.strid), 
+                u"{} ({})".format (action.title, "Ctrl+F11"))
+
+        self.assertEqual (self._getMenuItem(action.strid).GetItemLabel(), 
+                u"{}\t{}".format (action.title, "Ctrl+F11"))
+
+
+    def testChangeHotkeyGuiChecked2 (self):
+        menu = self.wnd.mainMenu.fileMenu
+        toolbar = self.wnd.toolbars[self.wnd.PLUGINS_TOOLBAR_STR]
+        image = "../test/images/save.png"
+
+        hotkey = HotKey ("F11", ctrl=True)
+
+        action = TestCheckAction()
+        self.actionController.register (action, None)
+
+        self.actionController.appendMenuCheckItem (action.strid, menu)
+        self.actionController.appendToolbarCheckButton (action.strid, 
+                toolbar,
+                image)
+
+        menuItem = self._getMenuItem (action.strid)
+        toolItem = self._getToolItem (toolbar, action.strid)
+
+        self.actionController.setHotKey (action.strid, hotkey)
+        self.actionController.check (action.strid, True)
+
+        self.assertTrue (menuItem.IsChecked())
+        self.assertTrue (toolItem.GetState())
+
+
     def _assertMenuItemExists (self, menu, title, hotkey):
         """
         Проверить, что в меню есть элемент с заголовком (title + '\t' + hotkey)
