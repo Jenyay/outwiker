@@ -28,12 +28,22 @@ class HotKeysPanel (wx.Panel):
 
 
     def __onHotkeyEdit (self, event):
+        strid = self.__getSelectedStrid()
+        if strid != None:
+            self.__hotkeys[strid] = event.hotkey
+            self.__findConflicts ()
+
+
+    def __getSelectedStrid (self):
+        """
+        Возвращает strid выбранного действия или None, если в списке ничего не выбрано
+        """
         index = self.__actionsList.GetSelection ()
         if index == wx.NOT_FOUND:
-            return
+            return None
 
-        strid = self.__actionsList.GetClientData (index)
-        self.__hotkeys[strid] = event.hotkey
+        return self.__actionsList.GetClientData (index)
+
 
 
     def __createGui (self):
@@ -61,10 +71,9 @@ class HotKeysPanel (wx.Panel):
 
         leftSizer.Add (self.__filterText, flag=wx.EXPAND | wx.ALL, border=2)
 
-
         # Сайзер для размещения элементов в правой части: 
         # выбор горячей клавиши и описание action
-        rightSizer = wx.FlexGridSizer (rows=2)
+        rightSizer = wx.FlexGridSizer (cols=1)
         rightSizer.AddGrowableCol (0)
         rightSizer.AddGrowableRow (1)
 
@@ -77,17 +86,41 @@ class HotKeysPanel (wx.Panel):
                 style=wx.TE_WORDWRAP | wx.TE_MULTILINE | wx.TE_READONLY )
         self.__descriptionText.SetMinSize ((200, -1))
 
+        # Список actions с такими же горячими клавишами
+        self.__conflictLabel = wx.StaticText (self, label=_(u"Actions with the same hotkey"))
+        self.__conflictActionsText = wx.TextCtrl (self,
+                style=wx.TE_WORDWRAP | wx.TE_MULTILINE | wx.TE_READONLY )
+        self.__conflictActionsText.SetMinSize ((-1, 100))
+
         rightSizer.Add (self.__hotkey, flag=wx.EXPAND | wx.ALL, border=2)
         rightSizer.Add (self.__descriptionText, flag=wx.EXPAND | wx.ALL, border=2)
+        rightSizer.Add (self.__conflictLabel, flag=wx.EXPAND | wx.ALL, border=2)
+        rightSizer.Add (self.__conflictActionsText, flag=wx.EXPAND | wx.ALL, border=2)
 
         mainSizer.Add (leftSizer, flag=wx.EXPAND | wx.ALL, border=2)
         mainSizer.Add (rightSizer, flag=wx.EXPAND | wx.ALL, border=2)
         self.SetSizer (mainSizer)
 
 
+    def __findConflicts (self):
+        """
+        Заполнить список действий с такой же горячей клавишей
+        """
+        self.__conflictActionsText.Value = u""
+        stridCurrent = self.__getSelectedStrid ()
+        hotkeyCurrent = self.__hotkey.getHotkey ()
+
+        for strid, hotkey in self.__hotkeys.iteritems():
+            if stridCurrent == strid:
+                continue
+            if hotkey == hotkeyCurrent:
+                self.__conflictActionsText.Value += Application.actionController.getTitle (strid) + "\n"
+
+
     def LoadState(self):
         self.__fillActionsList ()
         self.__initHotKeys ()
+        self.__findConflicts ()
 
 
     def __initHotKeys (self):
@@ -111,7 +144,8 @@ class HotKeysPanel (wx.Panel):
         if strid != None:
             self.__descriptionText.Value = Application.actionController.getAction(strid).description
             self.__hotkey.Enable()
-            self.__hotkey.setHotkey (Application.actionController.getHotKey(strid))
+            self.__hotkey.setHotkey (self.__hotkeys[strid])
+            self.__findConflicts ()
 
 
     def __fillActionsList (self):
