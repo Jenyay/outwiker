@@ -51,9 +51,6 @@ class PluginDebug (Plugin):
                     toolbar,
                     image)
 
-            # controller.check (action.strid, True)
-            # mainWindow.updateShortcuts()
-
 
     def __removeTestAction (self):
         mainWindow = self._application.mainWindow
@@ -181,6 +178,10 @@ class PluginDebug (Plugin):
         """
         Уничтожение (выгрузка) плагина. Здесь плагин должен отписаться от всех событий
         """
+        self._application.actionController.removeMenuItem (DebugAction.stringId)
+        self._application.actionController.removeToolbarButton (DebugAction.stringId)
+        self._application.actionController.removeAction (DebugAction.stringId)
+
         if self._application.mainWindow != None:
             self._application.mainWindow.Unbind(wx.EVT_MENU, handler=self.__onPluginsList, id=self.ID_PLUGINSLIST)
             self._application.mainWindow.Unbind(wx.EVT_MENU, handler=self.__onButtonsDialog, id=self.ID_BUTTONSDIALOG)

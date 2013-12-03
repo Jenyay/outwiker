@@ -175,8 +175,12 @@ class HotKeysPanel (wx.Panel):
 
     def Save (self):
         for strid, hotkey in self.__hotkeys.iteritems():
-            if Application.actionController.getHotKey (strid) != hotkey:
-                Application.actionController.setHotKey (strid, hotkey)
+            try:
+                if Application.actionController.getHotKey (strid) != hotkey:
+                    Application.actionController.setHotKey (strid, hotkey)
+            except KeyError:
+                # Плагин могли уже отключить
+                pass
 
         if Application.mainWindow != None:
             Application.mainWindow.updateShortcuts()

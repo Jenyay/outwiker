@@ -8,6 +8,8 @@ class DebugAction (BaseAction):
     """
     Класс действия, предназначенный для отладки действий с помощью плагина TestDebug
     """
+    stringId = u"plugin_debug_action"
+
     def __init__ (self, application):
         super (DebugAction, self).__init__()
         self._application = application
@@ -24,7 +26,7 @@ class DebugAction (BaseAction):
 
     @property
     def strid (self):
-        return u"plugin_debug_action"
+        return DebugAction.stringId
 
 
     def run (self, params):
