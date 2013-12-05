@@ -34,7 +34,8 @@ class UpdatesChecker (object):
 
         # Экземпляр потока, который будет проверять новые версии
         self._silenceThread = None
-        self._application.mainWindow.Bind (EVT_UPDATE_VERSIONS, handler=self._onSilenceVersionUpdate)
+        if self._application.mainWindow != None:
+            self._application.mainWindow.Bind (EVT_UPDATE_VERSIONS, handler=self._onSilenceVersionUpdate)
 
 
     def _showUpdates (self, verList):

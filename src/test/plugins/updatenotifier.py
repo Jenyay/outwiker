@@ -11,7 +11,7 @@ from test.utils import removeWiki
 
 
 class UpdateNotifierTest (unittest.TestCase):
-    """Тесты плагина PluginName"""
+    """Тесты плагина UpdateNotifier"""
     def setUp (self):
         self.__pluginname = u"UpdateNotifier"
 

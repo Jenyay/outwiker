@@ -4,6 +4,7 @@
 
 from outwiker.gui.baseaction import BaseAction
 
+
 class DebugAction (BaseAction):
     """
     Класс действия, предназначенный для отладки действий с помощью плагина TestDebug
