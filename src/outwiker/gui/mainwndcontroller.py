@@ -14,6 +14,10 @@ from .mainid import MainId
 from .guiconfig import GeneralGuiConfig
 import outwiker.core.commands
 
+from outwiker.actions.save import SaveAction
+from outwiker.actions.close import CloseAction
+from outwiker.actions.printaction import PrintAction
+
 
 class MainWndController (object):
     """
@@ -27,7 +31,6 @@ class MainWndController (object):
         self.parent = parent
 
         # Идентификаторы пунктов меню и кнопок, которые надо задизаблить, если не открыта вики
-        # MainId.ID_SAVE, 
         self.disabledTools = [MainId.ID_RELOAD, 
                 MainId.ID_ADDPAGE, MainId.ID_ADDCHILD, MainId.ID_ATTACH, 
                 MainId.ID_COPYPATH, MainId.ID_COPY_ATTACH_PATH, MainId.ID_COPY_LINK,
@@ -36,6 +39,14 @@ class MainWndController (object):
                 MainId.ID_UNDO, MainId.ID_REDO, MainId.ID_CUT, MainId.ID_COPY, MainId.ID_PASTE,
                 MainId.ID_SORT_SIBLINGS_ALPHABETICAL, MainId.ID_SORT_CHILDREN_ALPHABETICAL,
                 MainId.ID_MOVE_PAGE_UP, MainId.ID_MOVE_PAGE_DOWN, MainId.ID_RENAME]
+
+
+        # Действия, котоыре надо дизаблить, если не открыто вики
+        self._disabledActions = [
+                SaveAction,
+                CloseAction,
+                PrintAction,
+                ]
 
         # Идентификаторы для пунктов меню последних открытых вики
         # Ключ - id, значение - путь до вики
@@ -205,6 +216,9 @@ class MainWndController (object):
 
             if self.mainMenu.FindItemById (toolId) != None:
                 self.mainMenu.Enable (toolId, enabled)
+
+        map (lambda action: Application.actionController.enableTools (action.stringId, enabled),
+                self._disabledActions)
 
     #
     ###################################################
