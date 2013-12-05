@@ -11,7 +11,7 @@ from outwiker.core.commands import setStatusText, getMainWindowTitle
 from .bookmarkscontroller import BookmarksController
 from .autosavetimer import AutosaveTimer
 from .mainid import MainId
-from .guiconfig import GeneralGuiConfig
+from .guiconfig import GeneralGuiConfig, TrayConfig
 import outwiker.core.commands
 
 from outwiker.actions.save import SaveAction
@@ -28,7 +28,7 @@ class MainWndController (object):
         """
         parent - окно, которым управляет контроллер
         """
-        self.parent = parent
+        self._mainWindow = parent
 
         # Идентификаторы пунктов меню и кнопок, которые надо задизаблить, если не открыта вики
         self.disabledTools = [MainId.ID_RELOAD, 
@@ -67,7 +67,7 @@ class MainWndController (object):
             (wx.ACCEL_CTRL,  wx.WXK_INSERT, wx.ID_COPY),
             (wx.ACCEL_SHIFT,  wx.WXK_INSERT, wx.ID_PASTE),
             (wx.ACCEL_SHIFT,  wx.WXK_DELETE, wx.ID_CUT)])
-        self.parent.SetAcceleratorTable(aTable)
+        self._mainWindow.SetAcceleratorTable(aTable)
 
 
     def init (self):
@@ -75,15 +75,42 @@ class MainWndController (object):
         Начальные установки для главного окна
         """
         self.__bindAppEvents()
+        self.mainWindow.Bind (wx.EVT_CLOSE, self.__onClose)
+
+
+    def __onClose (self, event):
+        if TrayConfig (Application.config).minimizeOnClose.value:
+            self._mainWindow.Iconize(True)
+            event.Veto()
+            return
+
+        if (self.__allowExit()):
+            self._mainWindow.Destroy()
+        else:
+            event.Veto()
+
+
+    def __allowExit (self):
+        """
+        Возвращает True, если можно закрывать окно
+        """
+        generalConfig = GeneralGuiConfig (Application.config)
+        askBeforeExit = generalConfig.askBeforeExit.value
+
+        return (not askBeforeExit or 
+                outwiker.core.commands.MessageBox (_(u"Really exit?"), 
+                    _(u"Exit"), 
+                    wx.YES_NO  | wx.ICON_QUESTION ) == wx.YES )
 
 
     def destroy (self):
         self.__unbindAppEvents()
+        self.mainWindow.Unbind (wx.EVT_CLOSE, handler=self.__onClose)
 
 
     @property
     def mainWindow (self):
-        return self.parent
+        return self._mainWindow
 
 
     @property

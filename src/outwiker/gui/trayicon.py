@@ -43,7 +43,7 @@ class OutwikerTrayIcon (wx.TaskBarIcon):
     def __bind (self):
         self.Bind (wx.EVT_TASKBAR_LEFT_DOWN, self.__OnTrayLeftClick)
         self.mainWnd.Bind (wx.EVT_ICONIZE, self.__onIconize)
-        self.mainWnd.Bind (wx.EVT_CLOSE, self.__onClose)
+        # self.mainWnd.Bind (wx.EVT_CLOSE, self.__onClose)
         self.mainWnd.Bind (wx.EVT_IDLE, self.__onIdle)
 
         self.Bind(wx.EVT_MENU, self.__onExit, id=self.ID_EXIT)
@@ -58,7 +58,7 @@ class OutwikerTrayIcon (wx.TaskBarIcon):
     def __unbind (self):
         self.Unbind (wx.EVT_TASKBAR_LEFT_DOWN, handler = self.__OnTrayLeftClick)
         self.mainWnd.Unbind (wx.EVT_ICONIZE, handler = self.__onIconize)
-        self.mainWnd.Unbind (wx.EVT_CLOSE, handler=self.__onClose)
+        # self.mainWnd.Unbind (wx.EVT_CLOSE, handler=self.__onClose)
 
         self.Unbind(wx.EVT_MENU, handler = self.__onExit, id=self.ID_EXIT)
         self.Unbind(wx.EVT_MENU, handler = self.__onRestore, id=self.ID_RESTORE)
@@ -78,31 +78,6 @@ class OutwikerTrayIcon (wx.TaskBarIcon):
         self.updateTrayIcon()
         self.mainWnd.Unbind (wx.EVT_IDLE, handler=self.__onIdle)
 
-
-    def __onClose (self, event):
-        if self.config.minimizeOnClose.value:
-            self.mainWnd.Iconize(True)
-            event.Veto()
-            return
-
-        if (self.__allowExit()):
-            self.mainWnd.Destroy()
-        else:
-            event.Veto()
-
-
-    def __allowExit (self):
-        """
-        Возвращает True, если можно закрывать окно
-        """
-        generalConfig = GeneralGuiConfig (Application.config)
-        askBeforeExit = generalConfig.askBeforeExit.value
-
-        return (not askBeforeExit or 
-                outwiker.core.commands.MessageBox (_(u"Really exit?"), 
-                    _(u"Exit"), 
-                    wx.YES_NO  | wx.ICON_QUESTION ) == wx.YES )
-    
 
     def __onPreferencesDialogClose (self, prefDialog):
         self.updateTrayIcon()
