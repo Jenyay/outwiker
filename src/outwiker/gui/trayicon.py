@@ -9,7 +9,7 @@ import outwiker.core.system
 import outwiker.core.commands
 from outwiker.core.application import Application
 from .guiconfig import TrayConfig, GeneralGuiConfig
-from .mainid import MainId
+from outwiker.actions.exit import ExitAction
 
 
 class OutwikerTrayIcon (wx.TaskBarIcon):
@@ -44,7 +44,6 @@ class OutwikerTrayIcon (wx.TaskBarIcon):
         self.Bind (wx.EVT_TASKBAR_LEFT_DOWN, self.__OnTrayLeftClick)
         self.mainWnd.Bind (wx.EVT_ICONIZE, self.__onIconize)
         self.mainWnd.Bind (wx.EVT_CLOSE, self.__onClose)
-        self.mainWnd.Bind (wx.EVT_MENU, self.__onExit, id=MainId.ID_EXIT)
         self.mainWnd.Bind (wx.EVT_IDLE, self.__onIdle)
 
         self.Bind(wx.EVT_MENU, self.__onExit, id=self.ID_EXIT)
@@ -60,7 +59,6 @@ class OutwikerTrayIcon (wx.TaskBarIcon):
         self.Unbind (wx.EVT_TASKBAR_LEFT_DOWN, handler = self.__OnTrayLeftClick)
         self.mainWnd.Unbind (wx.EVT_ICONIZE, handler = self.__onIconize)
         self.mainWnd.Unbind (wx.EVT_CLOSE, handler=self.__onClose)
-        self.mainWnd.Unbind (wx.EVT_MENU, handler=self.__onExit, id=MainId.ID_EXIT)
 
         self.Unbind(wx.EVT_MENU, handler = self.__onExit, id=self.ID_EXIT)
         self.Unbind(wx.EVT_MENU, handler = self.__onRestore, id=self.ID_RESTORE)
@@ -166,8 +164,7 @@ class OutwikerTrayIcon (wx.TaskBarIcon):
 
     
     def __onExit (self, event):
-        if (self.__allowExit()):
-            self.mainWnd.Destroy()
+        Application.actionController.getAction (ExitAction.stringId).run(None)
 
 
     def CreatePopupMenu (self):

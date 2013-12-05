@@ -18,7 +18,6 @@ from .mainid import MainId
 from .mainmenu import MainMenu
 from .pagedialog import createSiblingPage, createChildPage, editPage
 from .trayicon import OutwikerTrayIcon
-from .preferences.prefdialog import PrefDialog
 from .mainwndcontroller import MainWndController
 from .mainpanescontroller import MainPanesController
 from .shortcuter import Shortcuter
@@ -41,6 +40,7 @@ from outwiker.actions.save import SaveAction
 from outwiker.actions.printaction import PrintAction
 from outwiker.actions.exit import ExitAction
 from outwiker.actions.fullscreen import FullScreenAction
+from outwiker.actions.preferences import PreferencesAction
 
 
 class MainWindow(wx.Frame):
@@ -108,9 +108,9 @@ class MainWindow(wx.Frame):
             Application.actionController.check (FullScreenAction.stringId, True)
 
 
-    def _addActionsGui (self):
+    def __createFileMenu (self):
         """
-        Создать элементы интерфейса, привязанные к actions
+        Заполнить действиями меню Файл
         """
         imagesDir = getImagesDir()
 
@@ -159,6 +159,16 @@ class MainWindow(wx.Frame):
 
         Application.mainWindow.mainMenu.fileMenu.AppendSeparator()
 
+
+    def _addActionsGui (self):
+        """
+        Создать элементы интерфейса, привязанные к actions
+        """
+        imagesDir = getImagesDir()
+
+        self.__createFileMenu ()
+
+
         self.__panesController.createViewMenuItems ()
 
         Application.mainWindow.mainMenu.viewMenu.AppendSeparator()
@@ -166,6 +176,12 @@ class MainWindow(wx.Frame):
         # Полноэкранный режим
         Application.actionController.appendMenuCheckItem (FullScreenAction.stringId, 
                 self.mainMenu.viewMenu)
+
+        # Вызов диалога настроек
+        Application.mainWindow.mainMenu.editMenu.AppendSeparator()
+
+        Application.actionController.appendMenuItem (PreferencesAction.stringId,
+                Application.mainWindow.mainMenu.editMenu)
 
 
     @property
@@ -231,16 +247,11 @@ class MainWindow(wx.Frame):
         """
         Подписаться на события меню, кнопок и т.п.
         """
-        self.Bind (wx.EVT_MENU, 
-                self.__onOpenReadOnly, 
-                id=MainId.ID_OPEN_READONLY)
-
         self.Bind (wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_UNDO)
         self.Bind (wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_REDO)
         self.Bind (wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_CUT)
         self.Bind (wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_COPY)
         self.Bind (wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_PASTE)
-        self.Bind (wx.EVT_MENU, self.__onPreferences, id=MainId.ID_PREFERENCES)
         self.Bind (wx.EVT_MENU, self.__onAddSiblingPage, id=MainId.ID_ADDPAGE)
         self.Bind (wx.EVT_MENU, self.__onAddChildPage, id=MainId.ID_ADDCHILD)
         self.Bind (wx.EVT_MENU, self.__onMovePageUp, id=MainId.ID_MOVE_PAGE_UP)
@@ -535,22 +546,6 @@ class MainWindow(wx.Frame):
         Обработчик события вызова справки
         """
         cmd.openHelp()
-
-
-    def __onOpenReadOnly(self, event):
-        """
-        Обработчик события открытия вики в режиме "только для чтения"
-        """
-        cmd.openWikiWithDialog (self, readonly=True)
-
-
-    def __onPreferences(self, event):
-        """
-        Обработчик события вызова диалога настроек программы
-        """
-        dlg = PrefDialog (self)
-        dlg.ShowModal()
-        dlg.Destroy()
 
 
     def setFullscreen (self, fullscreen):

@@ -27,7 +27,8 @@ class MainWndController (object):
         self.parent = parent
 
         # Идентификаторы пунктов меню и кнопок, которые надо задизаблить, если не открыта вики
-        self.disabledTools = [MainId.ID_SAVE, MainId.ID_RELOAD, 
+        # MainId.ID_SAVE, 
+        self.disabledTools = [MainId.ID_RELOAD, 
                 MainId.ID_ADDPAGE, MainId.ID_ADDCHILD, MainId.ID_ATTACH, 
                 MainId.ID_COPYPATH, MainId.ID_COPY_ATTACH_PATH, MainId.ID_COPY_LINK,
                 MainId.ID_COPY_TITLE, MainId.ID_BOOKMARKS, MainId.ID_ADDBOOKMARK,
@@ -192,7 +193,6 @@ class MainWndController (object):
         enabled = Application.wikiroot != None
 
         self.__enableTools (enabled)
-        self.__enableMenu (enabled)
         self.mainWindow.pagePanel.panel.Enable(enabled)
         self.mainWindow.treePanel.panel.Enable(enabled)
         self.mainWindow.attachPanel.panel.Enable(enabled)
@@ -203,11 +203,9 @@ class MainWndController (object):
             if self.mainWindow.mainToolbar.FindById (toolId) != None:
                 self.mainWindow.mainToolbar.EnableTool (toolId, enabled)
 
-    
-    def __enableMenu (self, enabled):
-        for toolId in self.disabledTools:
             if self.mainMenu.FindItemById (toolId) != None:
                 self.mainMenu.Enable (toolId, enabled)
+
     #
     ###################################################
 

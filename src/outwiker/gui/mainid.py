@@ -8,17 +8,11 @@ class MainId (object):
     """
     Коллекция ID для меню и панели главного окна
     """
-    ID_NEW = wx.ID_NEW
-    ID_OPEN = wx.ID_OPEN
-    ID_OPEN_READONLY = wx.NewId()
-    ID_SAVE = wx.ID_SAVE
-    ID_CLOSE = wx.ID_CLOSE
     ID_RELOAD = wx.NewId()
     ID_ADDPAGE = wx.NewId()
     ID_ADDCHILD = wx.NewId()
     ID_ATTACH = wx.NewId()
     ID_ABOUT = wx.ID_ABOUT
-    ID_EXIT = wx.ID_EXIT
     ID_COPYPATH = wx.NewId()
     ID_COPY_ATTACH_PATH = wx.NewId()
     ID_COPY_LINK = wx.NewId()
@@ -30,7 +24,6 @@ class MainId (object):
     ID_GLOBAL_SEARCH = wx.NewId()
     ID_RENAME = wx.NewId()
     ID_HELP = wx.ID_HELP_COMMANDS
-    ID_PREFERENCES = wx.ID_PROPERTIES
     ID_VIEW_TREE = wx.NewId()
     ID_VIEW_ATTACHES = wx.NewId()
     ID_VIEW_TAGSCLOUD = wx.NewId()

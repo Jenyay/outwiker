@@ -720,6 +720,12 @@ def registerActions (application):
     application.actionController.register (SearchPrevAction (application), 
             HotKey ("F3", shift=True) )
 
+
+    # Вызов настроек
+    from outwiker.actions.preferences import PreferencesAction
+    application.actionController.register (PreferencesAction (application), 
+            HotKey ("F8", ctrl=True) )
+
     _registerPolyActions (application)
 
 

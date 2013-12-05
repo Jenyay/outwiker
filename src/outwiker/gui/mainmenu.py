@@ -68,13 +68,6 @@ class MainMenu (wx.MenuBar):
                 "", 
                 wx.ITEM_NORMAL)
 
-        editMenu.AppendSeparator()
-
-        editMenu.Append (MainId.ID_PREFERENCES, 
-                _(u"Preferences…") + "\tCtrl+F8", 
-                "", 
-                wx.ITEM_NORMAL)
-
         return editMenu
 
 

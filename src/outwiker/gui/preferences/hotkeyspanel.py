@@ -182,6 +182,6 @@ class HotKeysPanel (wx.Panel):
                 # Плагин могли уже отключить
                 pass
 
-        if Application.mainWindow != None:
-            Application.mainWindow.updateShortcuts()
+        # if Application.mainWindow != None:
+        #     Application.mainWindow.updateShortcuts()
 
