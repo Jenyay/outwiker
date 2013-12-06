@@ -6,7 +6,7 @@ import unittest
 import wx
 
 from outwiker.gui.polyaction import PolyAction
-from outwiker.gui.wxactioncontroller import WxActionController
+from outwiker.gui.actioncontroller import ActionController
 from outwiker.gui.hotkey import HotKey
 from outwiker.core.application import Application
 from basemainwnd import BaseMainWndTest
@@ -16,7 +16,7 @@ class PolyActionTest (BaseMainWndTest):
     """Тестирование класса PolyAction"""
     def setUp (self):
         BaseMainWndTest.setUp (self)
-        self.actionController = WxActionController(self.wnd, Application.config)
+        self.actionController = ActionController(self.wnd, Application.config)
         Application.config.remove_section (self.actionController.configSection)
 
         self._actionVal = 0

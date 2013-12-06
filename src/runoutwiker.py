@@ -21,7 +21,7 @@ from outwiker.core.application import Application
 from outwiker.core.system import getOS, getPluginsDirList, getConfigPath
 from outwiker.core.starter import Starter
 from outwiker.core.commands import registerActions
-from outwiker.gui.wxactioncontroller import WxActionController
+from outwiker.gui.actioncontroller import ActionController
 
 
 class OutWiker(wx.App):
@@ -49,7 +49,7 @@ class OutWiker(wx.App):
         self.SetTopWindow (self.mainWnd)
 
         Application.mainWindow = self.mainWnd
-        Application.actionController = WxActionController (self.mainWnd, Application.config)
+        Application.actionController = ActionController (self.mainWnd, Application.config)
 
         registerActions(Application)
         self.mainWnd.createGui()

@@ -5,7 +5,7 @@ import unittest
 
 import wx
 
-from outwiker.gui.wxactioncontroller import WxActionController
+from outwiker.gui.actioncontroller import ActionController
 from outwiker.gui.baseaction import BaseAction
 from outwiker.gui.hotkey import HotKey
 from outwiker.gui.hotkeyparser import HotKeyParser
@@ -68,7 +68,7 @@ class TestCheckAction (BaseAction):
 class ActionControllerTest (BaseMainWndTest):
     def setUp (self):
         BaseMainWndTest.setUp (self)
-        self.actionController = WxActionController(self.wnd, Application.config)
+        self.actionController = ActionController(self.wnd, Application.config)
         Application.config.remove_section (self.actionController.configSection)
 
 
@@ -651,7 +651,7 @@ class ActionControllerTest (BaseMainWndTest):
         self.actionController.register (action, hotkey)
         self.actionController.saveHotKeys()
 
-        otherActionController = WxActionController (self.wnd, Application.config)
+        otherActionController = ActionController (self.wnd, Application.config)
         otherActionController.register (action)
 
         self.assertEqual (otherActionController.getHotKey (action.strid).key, "F11")
@@ -667,7 +667,7 @@ class ActionControllerTest (BaseMainWndTest):
         self.actionController.register (action, hotkey)
         self.actionController.saveHotKeys()
 
-        otherActionController = WxActionController (self.wnd, Application.config)
+        otherActionController = ActionController (self.wnd, Application.config)
         otherActionController.register (action, HotKey ("F1", shift=True))
 
         self.assertEqual (otherActionController.getHotKey (action.strid).key, "F11")
@@ -682,7 +682,7 @@ class ActionControllerTest (BaseMainWndTest):
         self.actionController.register (action)
         self.actionController.saveHotKeys()
 
-        otherActionController = WxActionController (self.wnd, Application.config)
+        otherActionController = ActionController (self.wnd, Application.config)
         otherActionController.register (action)
 
         self.assertEqual (otherActionController.getHotKey (action.strid).key, "")
@@ -777,7 +777,7 @@ class ActionControllerTest (BaseMainWndTest):
         self.assertEqual (self._getToolItemLabel (toolbar, action.strid), 
                 u"{} ({})".format (action.title, "F11"))
 
-        otherActionController = WxActionController (self.wnd, Application.config)
+        otherActionController = ActionController (self.wnd, Application.config)
         otherActionController.register (action, None)
 
         self.assertEqual (otherActionController.getHotKey (action.strid),

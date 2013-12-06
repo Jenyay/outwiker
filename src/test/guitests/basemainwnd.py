@@ -10,7 +10,7 @@ from outwiker.core.commands import registerActions
 from outwiker.gui.mainwindow import MainWindow
 from outwiker.gui.guiconfig import GeneralGuiConfig, MainWindowConfig
 from outwiker.pages.html.htmlpage import HtmlPageFactory
-from outwiker.gui.wxactioncontroller import WxActionController
+from outwiker.gui.actioncontroller import ActionController
 
 from outwiker.actions.showhideattaches import ShowHideAttachesAction
 from outwiker.actions.showhidetree import ShowHideTreeAction
@@ -42,7 +42,7 @@ class BaseMainWndTest(unittest.TestCase):
 
         self.wnd = MainWindow (None, -1, "")
         Application.mainWindow = self.wnd
-        Application.actionController = WxActionController (self.wnd, Application.config)
+        Application.actionController = ActionController (self.wnd, Application.config)
         wx.GetApp().SetTopWindow (self.wnd)
 
         registerActions (Application)

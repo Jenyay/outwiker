@@ -10,7 +10,7 @@ from outwiker.gui.hotkeyoption import HotKeyOption
 
 class ActionInfo (object):
     """
-    Класс для внутреннего использования в WxActionController
+    Класс для внутреннего использования в ActionController
     Хранит информацию о добавленных действиях
     """
     def __init__ (self, action, hotkey):
@@ -25,7 +25,7 @@ class ActionInfo (object):
         self.toolItemId = None
 
 
-class WxActionController (object):
+class ActionController (object):
     """
     Класс для управления Actions - добавление / удаление пунктов меню и кнопок на панели инструментов
     """
