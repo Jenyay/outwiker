@@ -17,6 +17,7 @@ import outwiker.core.commands
 from outwiker.actions.save import SaveAction
 from outwiker.actions.close import CloseAction
 from outwiker.actions.printaction import PrintAction
+from outwiker.actions.addsiblingpage import AddSiblingPageAction
 
 
 class MainWndController (object):
@@ -32,7 +33,7 @@ class MainWndController (object):
 
         # Идентификаторы пунктов меню и кнопок, которые надо задизаблить, если не открыта вики
         self.disabledTools = [MainId.ID_RELOAD, 
-                MainId.ID_ADDPAGE, MainId.ID_ADDCHILD, MainId.ID_ATTACH, 
+                MainId.ID_ADDCHILD, MainId.ID_ATTACH, 
                 MainId.ID_COPYPATH, MainId.ID_COPY_ATTACH_PATH, MainId.ID_COPY_LINK,
                 MainId.ID_COPY_TITLE, MainId.ID_BOOKMARKS, MainId.ID_ADDBOOKMARK,
                 MainId.ID_EDIT, MainId.ID_REMOVE_PAGE, MainId.ID_GLOBAL_SEARCH,
@@ -46,6 +47,7 @@ class MainWndController (object):
                 SaveAction,
                 CloseAction,
                 PrintAction,
+                AddSiblingPageAction,
                 ]
 
         # Идентификаторы для пунктов меню последних открытых вики

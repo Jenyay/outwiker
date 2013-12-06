@@ -726,6 +726,12 @@ def registerActions (application):
     application.actionController.register (PreferencesAction (application), 
             HotKey ("F8", ctrl=True) )
 
+
+    # Добавить страницу того же уровня
+    from outwiker.actions.addsiblingpage import AddSiblingPageAction
+    application.actionController.register (AddSiblingPageAction (application), 
+            HotKey ("T", ctrl=True, alt=True) )
+
     _registerPolyActions (application)
 
 

@@ -8,13 +8,12 @@ import ConfigParser
 import wx
 
 from outwiker.core.application import Application
-import outwiker.core.exceptions
 import outwiker.core.commands
 import outwiker.core.system
 import outwiker.gui.pagedialog
 from outwiker.core.config import BooleanOption
-from .mainid import MainId
-from .pagepopupmenu import PagePopupMenu
+from outwiker.gui.pagepopupmenu import PagePopupMenu
+from outwiker.actions.addsiblingpage import AddSiblingPageAction
 
 
 class WikiTree(wx.Panel):
@@ -32,7 +31,7 @@ class WikiTree(wx.Panel):
 
         kwds["style"] = wx.TAB_TRAVERSAL
         wx.Panel.__init__(self, *args, **kwds)
-        self.toolbar = self.__getToolbar(self, -1)
+        self.toolbar = wx.ToolBar (self, -1, style=wx.TB_HORIZONTAL|wx.TB_FLAT|wx.TB_DOCKABLE)
 
         treeStyle = (wx.TR_HAS_BUTTONS | 
                 wx.TR_EDIT_LABELS | 
@@ -184,7 +183,7 @@ class WikiTree(wx.Panel):
 
 
     def __onAddSiblingPage (self, event):
-        outwiker.gui.pagedialog.createSiblingPage (self)
+        Application.actionController.getAction (AddSiblingPageAction.stringId).run (None)
 
 
     def __onAddChildPage (self, event):
@@ -568,7 +567,7 @@ class WikiTree(wx.Panel):
 
     def __scrollToCurrentPage (self):
         """
-        Если текущая страницавылезла за пределы видимости, то прокрутить к ней
+        Если текущая страница вылезла за пределы видимости, то прокрутить к ней
         """
         selectedPage = Application.selectedPage
         if selectedPage == None:
@@ -579,12 +578,15 @@ class WikiTree(wx.Panel):
             self.treeCtrl.ScrollTo (item)
 
 
-    def __getToolbar (self, parent, id):
+    def addButtons (self):
+        """
+        Добавить кнопки на панель
+        Т.к. текст подсказок берется из Actions, этот метод вызывается после создания окна
+        """
         imagesDir = outwiker.core.system.getImagesDir()
+        actionController =  Application.actionController
 
-        toolbar = wx.ToolBar (parent, id, style=wx.TB_HORIZONTAL|wx.TB_FLAT|wx.TB_DOCKABLE)
-
-        toolbar.AddLabelTool(self.ID_MOVE_DOWN, 
+        self.toolbar.AddLabelTool(self.ID_MOVE_DOWN, 
                 _(u"Move Page Down"), 
                 wx.Bitmap(os.path.join (imagesDir, "move_down.png"),
                     wx.BITMAP_TYPE_ANY),
@@ -593,7 +595,8 @@ class WikiTree(wx.Panel):
                 _(u"Move Page Down"), 
                 "")
 
-        toolbar.AddLabelTool(self.ID_MOVE_UP, 
+
+        self.toolbar.AddLabelTool(self.ID_MOVE_UP, 
                 _(u"Move Page Up"), 
                 wx.Bitmap(os.path.join (imagesDir, "move_up.png"),
                     wx.BITMAP_TYPE_ANY),
@@ -601,19 +604,22 @@ class WikiTree(wx.Panel):
                 wx.ITEM_NORMAL,
                 _(u"Move Page Up"), 
                 "")
-        toolbar.AddSeparator()
+        self.toolbar.AddSeparator()
 
 
-        toolbar.AddLabelTool(self.ID_ADD_SIBLING_PAGE,
-                _(u"Add Sibling Page…"), 
+        siblingTitle = actionController.getTitle (AddSiblingPageAction.stringId)
+
+        self.toolbar.AddLabelTool(self.ID_ADD_SIBLING_PAGE,
+                siblingTitle, 
                 wx.Bitmap(os.path.join (imagesDir, "node-insert-next.png"),
                     wx.BITMAP_TYPE_ANY),
                 wx.NullBitmap, 
                 wx.ITEM_NORMAL,
-                _(u"Add Sibling Page…"), 
+                siblingTitle, 
                 "")
 
-        toolbar.AddLabelTool(self.ID_ADD_CHILD_PAGE,
+
+        self.toolbar.AddLabelTool(self.ID_ADD_CHILD_PAGE,
                 _(u"Add Child Page…"), 
                 wx.Bitmap(os.path.join (imagesDir, "node-insert-child.png"),
                     wx.BITMAP_TYPE_ANY),
@@ -622,7 +628,8 @@ class WikiTree(wx.Panel):
                 _(u"Add Child Page…"), 
                 "")
 
-        toolbar.AddLabelTool(self.ID_REMOVE_PAGE,
+
+        self.toolbar.AddLabelTool(self.ID_REMOVE_PAGE,
                 _(u"Remove Page…"), 
                 wx.Bitmap(os.path.join (imagesDir, "node-delete.png"),
                     wx.BITMAP_TYPE_ANY),
@@ -631,9 +638,10 @@ class WikiTree(wx.Panel):
                 _(u"Remove Page…"), 
                 "")
 
-        toolbar.AddSeparator()
+        self.toolbar.AddSeparator()
 
-        toolbar.AddLabelTool(self.ID_PROPERTIES_BUTTON,
+
+        self.toolbar.AddLabelTool(self.ID_PROPERTIES_BUTTON,
                 _(u"Page Properties…"), 
                 wx.Bitmap(os.path.join (imagesDir, "edit.png"),
                     wx.BITMAP_TYPE_ANY),
@@ -643,9 +651,7 @@ class WikiTree(wx.Panel):
                 "")
 
 
-        toolbar.Realize()
-        return toolbar
-
-
+        self.toolbar.Realize()
+        
 # end of class WikiTree
 

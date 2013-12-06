@@ -74,11 +74,6 @@ class MainMenu (wx.MenuBar):
     def __createTreeMenu (self):
         treeMenu = wx.Menu()
 
-        treeMenu.Append(MainId.ID_ADDPAGE, 
-                _(u"Add Sibling Page…") + "\tCtrl+Alt+T", 
-                "", 
-                wx.ITEM_NORMAL)
-
         treeMenu.Append(MainId.ID_ADDCHILD, 
                 _(u"Add Child Page…") + "\tCtrl+Shift+T", 
                 "", 

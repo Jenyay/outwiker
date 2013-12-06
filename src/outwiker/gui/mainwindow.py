@@ -16,7 +16,7 @@ from .guiconfig import MainWindowConfig
 
 from .mainid import MainId
 from .mainmenu import MainMenu
-from .pagedialog import createSiblingPage, createChildPage, editPage
+from .pagedialog import createChildPage, editPage
 from .trayicon import OutwikerTrayIcon
 from .mainwndcontroller import MainWndController
 from .mainpanescontroller import MainPanesController
@@ -41,6 +41,7 @@ from outwiker.actions.printaction import PrintAction
 from outwiker.actions.exit import ExitAction
 from outwiker.actions.fullscreen import FullScreenAction
 from outwiker.actions.preferences import PreferencesAction
+from outwiker.actions.addsiblingpage import AddSiblingPageAction
 
 
 class MainWindow(wx.Frame):
@@ -98,10 +99,11 @@ class MainWindow(wx.Frame):
         Создать пункты меню, кнопки на панелях инструментов и т.п.
         """
         self.__panesController.loadPanesSize ()
-        self._addActionsGui()
+        self.__addActionsGui()
         self.controller.enableGui()
         self.controller.updateRecentMenu()
         self.__panesController.updateViewMenu()
+        self.treePanel.panel.addButtons()
         self.updateShortcuts()
 
         if self.mainWindowConfig.fullscreen.value:
@@ -160,13 +162,24 @@ class MainWindow(wx.Frame):
         Application.mainWindow.mainMenu.fileMenu.AppendSeparator()
 
 
-    def _addActionsGui (self):
+    def __createTreeMenu (self):
+        """
+        Заполнить действиями меню Дерево
+        """
+        imagesDir = getImagesDir()
+
+        Application.actionController.appendMenuItem (AddSiblingPageAction.stringId, 
+                Application.mainWindow.mainMenu.treeMenu)
+
+
+    def __addActionsGui (self):
         """
         Создать элементы интерфейса, привязанные к actions
         """
         imagesDir = getImagesDir()
 
         self.__createFileMenu ()
+        self.__createTreeMenu ()
 
 
         self.__panesController.createViewMenuItems ()
@@ -252,7 +265,6 @@ class MainWindow(wx.Frame):
         self.Bind (wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_CUT)
         self.Bind (wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_COPY)
         self.Bind (wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_PASTE)
-        self.Bind (wx.EVT_MENU, self.__onAddSiblingPage, id=MainId.ID_ADDPAGE)
         self.Bind (wx.EVT_MENU, self.__onAddChildPage, id=MainId.ID_ADDCHILD)
         self.Bind (wx.EVT_MENU, self.__onMovePageUp, id=MainId.ID_MOVE_PAGE_UP)
 
@@ -429,13 +441,6 @@ class MainWindow(wx.Frame):
             self.pagePanel.panel.destroyWithoutSave()
 
 
-    def __onAddSiblingPage(self, event):
-        """
-        Создание страницы на уровне текущей страницы
-        """
-        createSiblingPage (self)
-
-    
     def __onAddChildPage(self, event):
         """
         Создание дочерней страницы
