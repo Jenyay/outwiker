@@ -759,6 +759,31 @@ class ActionControllerTest (BaseMainWndTest):
                 u"{} ({})".format (action.title, "Ctrl+F11"))
 
 
+    def testDelayChangeHotkeyToolbar (self):
+        toolbar = self.wnd.toolbars[self.wnd.PLUGINS_TOOLBAR_STR]
+        image = "../test/images/save.png"
+
+        hotkey = HotKey ("F11", ctrl=True)
+
+        action = TestAction()
+        self.actionController.register (action, HotKey ("F11"))
+
+        self.actionController.appendToolbarButton (action.strid, 
+                toolbar,
+                image)
+
+        self.actionController.setHotKey (action.strid, hotkey, False)
+
+        self.assertEqual (self._getToolItemLabel (toolbar, action.strid), 
+                u"{} ({})".format (action.title, "F11"))
+
+        otherActionController = WxActionController (self.wnd, Application.config)
+        otherActionController.register (action, None)
+
+        self.assertEqual (otherActionController.getHotKey (action.strid),
+                hotkey)
+
+
     def testChangeHotkeyGuiChecked1 (self):
         menu = self.wnd.mainMenu.fileMenu
         toolbar = self.wnd.toolbars[self.wnd.PLUGINS_TOOLBAR_STR]

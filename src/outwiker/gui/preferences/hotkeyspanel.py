@@ -174,14 +174,20 @@ class HotKeysPanel (wx.Panel):
 
 
     def Save (self):
+        from outwiker.actions.preferences import PreferencesAction
         for strid, hotkey in self.__hotkeys.iteritems():
             try:
+                # Не будем менять до перезапуска горячую клавишу для вызова настроек.
+                # Это связано с тем, что потом придется удалять этот пункт меню, чтобы
+                # расставить подчеркивания с помощью Shortcuter, но возникнут проблемы,
+                # т.к. в это место кода мы попадаем из обработчика события, связанного 
+                # с этим пунктом меню
                 if Application.actionController.getHotKey (strid) != hotkey:
-                    Application.actionController.setHotKey (strid, hotkey)
+                    Application.actionController.setHotKey (strid, hotkey, strid != PreferencesAction.stringId)
             except KeyError:
                 # Плагин могли уже отключить
                 pass
 
-        # if Application.mainWindow != None:
-        #     Application.mainWindow.updateShortcuts()
+        if Application.mainWindow != None:
+            Application.mainWindow.updateShortcuts()
 
