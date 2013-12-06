@@ -14,6 +14,7 @@ import outwiker.gui.pagedialog
 from outwiker.core.config import BooleanOption
 from outwiker.gui.pagepopupmenu import PagePopupMenu
 from outwiker.actions.addsiblingpage import AddSiblingPageAction
+from outwiker.actions.addchildpage import AddChildPageAction
 
 
 class WikiTree(wx.Panel):
@@ -187,7 +188,7 @@ class WikiTree(wx.Panel):
 
 
     def __onAddChildPage (self, event):
-        outwiker.gui.pagedialog.createChildPage (self)
+        Application.actionController.getAction (AddChildPageAction.stringId).run (None)
 
 
     def __onRemovePage (self, event):

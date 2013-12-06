@@ -9,7 +9,6 @@ class MainId (object):
     Коллекция ID для меню и панели главного окна
     """
     ID_RELOAD = wx.NewId()
-    ID_ADDCHILD = wx.NewId()
     ID_ATTACH = wx.NewId()
     ID_ABOUT = wx.ID_ABOUT
     ID_COPYPATH = wx.NewId()

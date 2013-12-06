@@ -16,7 +16,7 @@ from .guiconfig import MainWindowConfig
 
 from .mainid import MainId
 from .mainmenu import MainMenu
-from .pagedialog import createChildPage, editPage
+from .pagedialog import editPage
 from .trayicon import OutwikerTrayIcon
 from .mainwndcontroller import MainWndController
 from .mainpanescontroller import MainPanesController
@@ -42,6 +42,7 @@ from outwiker.actions.exit import ExitAction
 from outwiker.actions.fullscreen import FullScreenAction
 from outwiker.actions.preferences import PreferencesAction
 from outwiker.actions.addsiblingpage import AddSiblingPageAction
+from outwiker.actions.addchildpage import AddChildPageAction
 
 
 class MainWindow(wx.Frame):
@@ -171,6 +172,11 @@ class MainWindow(wx.Frame):
         Application.actionController.appendMenuItem (AddSiblingPageAction.stringId, 
                 Application.mainWindow.mainMenu.treeMenu)
 
+        Application.actionController.appendMenuItem (AddChildPageAction.stringId, 
+                Application.mainWindow.mainMenu.treeMenu)
+
+        Application.mainWindow.mainMenu.treeMenu.AppendSeparator()
+
 
     def __addActionsGui (self):
         """
@@ -265,7 +271,6 @@ class MainWindow(wx.Frame):
         self.Bind (wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_CUT)
         self.Bind (wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_COPY)
         self.Bind (wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_PASTE)
-        self.Bind (wx.EVT_MENU, self.__onAddChildPage, id=MainId.ID_ADDCHILD)
         self.Bind (wx.EVT_MENU, self.__onMovePageUp, id=MainId.ID_MOVE_PAGE_UP)
 
         self.Bind (wx.EVT_MENU, 
@@ -439,13 +444,6 @@ class MainWindow(wx.Frame):
             self.pagePanel.panel.destroyPageView()
         else:
             self.pagePanel.panel.destroyWithoutSave()
-
-
-    def __onAddChildPage(self, event):
-        """
-        Создание дочерней страницы
-        """
-        createChildPage (self)
 
 
     def __onAttach(self, event):

@@ -732,6 +732,12 @@ def registerActions (application):
     application.actionController.register (AddSiblingPageAction (application), 
             HotKey ("T", ctrl=True, alt=True) )
 
+
+    # Добавить дочернюю страницу
+    from outwiker.actions.addchildpage import AddChildPageAction
+    application.actionController.register (AddChildPageAction (application), 
+            HotKey ("T", ctrl=True, shift=True) )
+
     _registerPolyActions (application)
 
 
