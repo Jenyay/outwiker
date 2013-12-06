@@ -398,36 +398,6 @@ def getCurrentVersion ():
 
 
 @testreadonly
-def moveCurrentPageUp ():
-    """
-    Переместить текущую страницу на одну позицию вверх
-    """
-    if Application.wikiroot == None:
-        MessageBox (_(u"Wiki is not open"), 
-                _(u"Error"), 
-                wx.ICON_ERROR | wx.OK)
-        return
-
-    if Application.wikiroot.selectedPage != None:
-        Application.wikiroot.selectedPage.order -= 1
-
-
-@testreadonly
-def moveCurrentPageDown ():
-    """
-    Переместить текущую страницу на одну позицию вниз
-    """
-    if Application.wikiroot == None:
-        MessageBox (_(u"Wiki is not open"), 
-                _(u"Error"), 
-                wx.ICON_ERROR | wx.OK)
-        return
-
-    if Application.wikiroot.selectedPage != None:
-        Application.wikiroot.selectedPage.order += 1
-
-
-@testreadonly
 def sortChildrenAlphabeticalGUI ():
     """
     Команда для сортировки дочерних страниц текущей страницы по алфавиту
@@ -737,6 +707,18 @@ def registerActions (application):
     from outwiker.actions.addchildpage import AddChildPageAction
     application.actionController.register (AddChildPageAction (application), 
             HotKey ("T", ctrl=True, shift=True) )
+
+
+    # Переместить страницу на одну позицию вверх
+    from outwiker.actions.movepageup import MovePageUpAction
+    application.actionController.register (MovePageUpAction (application), 
+            HotKey ("Up", ctrl=True, shift=True) )
+
+
+    # Переместить страницу на одну позицию вниз
+    from outwiker.actions.movepagedown import MovePageDownAction
+    application.actionController.register (MovePageDownAction (application), 
+            HotKey ("Down", ctrl=True, shift=True) )
 
     _registerPolyActions (application)
 

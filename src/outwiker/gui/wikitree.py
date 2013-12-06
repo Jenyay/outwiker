@@ -15,6 +15,8 @@ from outwiker.core.config import BooleanOption
 from outwiker.gui.pagepopupmenu import PagePopupMenu
 from outwiker.actions.addsiblingpage import AddSiblingPageAction
 from outwiker.actions.addchildpage import AddChildPageAction
+from outwiker.actions.movepageup import MovePageUpAction
+from outwiker.actions.movepagedown import MovePageDownAction
 
 
 class WikiTree(wx.Panel):
@@ -192,16 +194,18 @@ class WikiTree(wx.Panel):
 
 
     def __onRemovePage (self, event):
-        if Application.wikiroot != None and Application.wikiroot.selectedPage != None:
+        if Application.wikiroot.selectedPage != None:
             outwiker.core.commands.removePage (Application.wikiroot.selectedPage)
 
 
     def __onMoveUp (self, event):
-        outwiker.core.commands.moveCurrentPageUp()
+        if Application.wikiroot.selectedPage != None:
+            Application.actionController.getAction (MovePageUpAction.stringId).run (None)
 
 
     def __onMoveDown (self, event):
-        outwiker.core.commands.moveCurrentPageDown()
+        if Application.wikiroot.selectedPage != None:
+            Application.actionController.getAction (MovePageDownAction.stringId).run (None)
 
 
     def __onPageRemove (self, page):
@@ -587,29 +591,30 @@ class WikiTree(wx.Panel):
         imagesDir = outwiker.core.system.getImagesDir()
         actionController =  Application.actionController
 
+        moveDownTitle = actionController.getTitle (MovePageDownAction.stringId)
         self.toolbar.AddLabelTool(self.ID_MOVE_DOWN, 
-                _(u"Move Page Down"), 
+                moveDownTitle, 
                 wx.Bitmap(os.path.join (imagesDir, "move_down.png"),
                     wx.BITMAP_TYPE_ANY),
                 wx.NullBitmap, 
                 wx.ITEM_NORMAL,
-                _(u"Move Page Down"), 
+                moveDownTitle, 
                 "")
 
 
+        moveUpTitle = actionController.getTitle (MovePageUpAction.stringId)
         self.toolbar.AddLabelTool(self.ID_MOVE_UP, 
-                _(u"Move Page Up"), 
+                moveUpTitle, 
                 wx.Bitmap(os.path.join (imagesDir, "move_up.png"),
                     wx.BITMAP_TYPE_ANY),
                 wx.NullBitmap, 
                 wx.ITEM_NORMAL,
-                _(u"Move Page Up"), 
+                moveUpTitle, 
                 "")
         self.toolbar.AddSeparator()
 
 
         siblingTitle = actionController.getTitle (AddSiblingPageAction.stringId)
-
         self.toolbar.AddLabelTool(self.ID_ADD_SIBLING_PAGE,
                 siblingTitle, 
                 wx.Bitmap(os.path.join (imagesDir, "node-insert-next.png"),
@@ -620,13 +625,14 @@ class WikiTree(wx.Panel):
                 "")
 
 
+        childTitle = actionController.getTitle (AddChildPageAction.stringId)
         self.toolbar.AddLabelTool(self.ID_ADD_CHILD_PAGE,
-                _(u"Add Child Page…"), 
+                childTitle, 
                 wx.Bitmap(os.path.join (imagesDir, "node-insert-child.png"),
                     wx.BITMAP_TYPE_ANY),
                 wx.NullBitmap, 
                 wx.ITEM_NORMAL,
-                _(u"Add Child Page…"), 
+                childTitle, 
                 "")
 
 

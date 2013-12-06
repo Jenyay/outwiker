@@ -387,12 +387,12 @@ msgstr "Добавить дочернюю страницу…"
 #: outwiker/gui/mainmenu.py:97 outwiker/gui/wikitree.py:597
 #: outwiker/gui/wikitree.py:602
 msgid "Move Page Up"
-msgstr "Переместить страницу вв&ерх"
+msgstr "Переместить страницу вверх"
 
 #: outwiker/gui/mainmenu.py:102 outwiker/gui/wikitree.py:588
 #: outwiker/gui/wikitree.py:593
 msgid "Move Page Down"
-msgstr "Переместить страницу в&низ"
+msgstr "Переместить страницу вниз"
 
 #: outwiker/gui/mainmenu.py:107
 msgid "Sort Children Pages Alphabetical"

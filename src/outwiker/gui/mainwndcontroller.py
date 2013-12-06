@@ -19,6 +19,9 @@ from outwiker.actions.close import CloseAction
 from outwiker.actions.printaction import PrintAction
 from outwiker.actions.addsiblingpage import AddSiblingPageAction
 from outwiker.actions.addchildpage import AddChildPageAction
+from outwiker.actions.movepageup import MovePageUpAction
+from outwiker.actions.movepagedown import MovePageDownAction
+
 
 
 class MainWndController (object):
@@ -40,7 +43,7 @@ class MainWndController (object):
                 MainId.ID_EDIT, MainId.ID_REMOVE_PAGE, MainId.ID_GLOBAL_SEARCH,
                 MainId.ID_UNDO, MainId.ID_REDO, MainId.ID_CUT, MainId.ID_COPY, MainId.ID_PASTE,
                 MainId.ID_SORT_SIBLINGS_ALPHABETICAL, MainId.ID_SORT_CHILDREN_ALPHABETICAL,
-                MainId.ID_MOVE_PAGE_UP, MainId.ID_MOVE_PAGE_DOWN, MainId.ID_RENAME]
+                MainId.ID_RENAME]
 
 
         # Действия, которые надо дизаблить, если не открыто вики
@@ -50,6 +53,7 @@ class MainWndController (object):
                 PrintAction,
                 AddSiblingPageAction,
                 AddChildPageAction,
+                MovePageDownAction,
                 ]
 
         # Идентификаторы для пунктов меню последних открытых вики

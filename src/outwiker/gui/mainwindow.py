@@ -43,6 +43,8 @@ from outwiker.actions.fullscreen import FullScreenAction
 from outwiker.actions.preferences import PreferencesAction
 from outwiker.actions.addsiblingpage import AddSiblingPageAction
 from outwiker.actions.addchildpage import AddChildPageAction
+from outwiker.actions.movepageup import MovePageUpAction
+from outwiker.actions.movepagedown import MovePageDownAction
 
 
 class MainWindow(wx.Frame):
@@ -177,6 +179,12 @@ class MainWindow(wx.Frame):
 
         Application.mainWindow.mainMenu.treeMenu.AppendSeparator()
 
+        Application.actionController.appendMenuItem (MovePageUpAction.stringId, 
+                Application.mainWindow.mainMenu.treeMenu)
+
+        Application.actionController.appendMenuItem (MovePageDownAction.stringId, 
+                Application.mainWindow.mainMenu.treeMenu)
+
 
     def __addActionsGui (self):
         """
@@ -271,11 +279,6 @@ class MainWindow(wx.Frame):
         self.Bind (wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_CUT)
         self.Bind (wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_COPY)
         self.Bind (wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_PASTE)
-        self.Bind (wx.EVT_MENU, self.__onMovePageUp, id=MainId.ID_MOVE_PAGE_UP)
-
-        self.Bind (wx.EVT_MENU, 
-                self.__onMovePageDown, 
-                id=MainId.ID_MOVE_PAGE_DOWN)
 
         self.Bind (wx.EVT_MENU, 
                 self.__onSortChildrenAlphabetical, 
@@ -587,20 +590,6 @@ class MainWindow(wx.Frame):
         self.__panesController.updateViewMenu()
 
     
-    def __onMovePageUp(self, event):
-        """
-        Обработчик события перемещения страницы вверх
-        """
-        cmd.moveCurrentPageUp()
-
-
-    def __onMovePageDown(self, event):
-        """
-        Обработчик события перемещения страницы вниз
-        """
-        cmd.moveCurrentPageDown()
-        
-
     def __onSortChildrenAlphabetical(self, event):
         """
         Обработчик события сортировки дочерних страниц по алфавиту

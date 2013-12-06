@@ -74,16 +74,6 @@ class MainMenu (wx.MenuBar):
     def __createTreeMenu (self):
         treeMenu = wx.Menu()
 
-        treeMenu.Append(MainId.ID_MOVE_PAGE_UP, 
-                _("Move Page Up") + "\tCtrl+Shift+Up", 
-                "", 
-                wx.ITEM_NORMAL)
-
-        treeMenu.Append(MainId.ID_MOVE_PAGE_DOWN, 
-                _("Move Page Down") + "\tCtrl+Shift+Down", 
-                "", 
-                wx.ITEM_NORMAL)
-
         treeMenu.Append(MainId.ID_SORT_CHILDREN_ALPHABETICAL, 
                 _("Sort Children Pages Alphabetical"), 
                 "", 
