@@ -63,6 +63,7 @@ class HotKeysPanel (wx.Panel):
 
         # Список с именами actions
         self.__actionsList = wx.ListBox (self)
+        self.__actionsList.SetMinSize ((200, -1))
 
         leftSizer.Add (self.__actionsList, flag=wx.EXPAND | wx.ALL, border=2)
 
