@@ -9,8 +9,8 @@ from ..wikitree import WikiTree
 
 
 class TreeMainPane (MainPane):
-    def beginRename (self):
-        self.panel.beginRename()
+    def beginRename (self, page=None):
+        self.panel.beginRename(page)
 
 
     def _createPanel (self):

@@ -18,9 +18,7 @@ class MainId (object):
     ID_BOOKMARKS = wx.NewId()
     ID_ADDBOOKMARK = wx.NewId()
     ID_EDIT = wx.NewId()
-    ID_REMOVE_PAGE = wx.NewId()
     ID_GLOBAL_SEARCH = wx.NewId()
-    ID_RENAME = wx.NewId()
     ID_HELP = wx.ID_HELP_COMMANDS
     ID_VIEW_TREE = wx.NewId()
     ID_VIEW_ATTACHES = wx.NewId()

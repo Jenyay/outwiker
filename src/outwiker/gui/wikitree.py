@@ -17,6 +17,7 @@ from outwiker.actions.addsiblingpage import AddSiblingPageAction
 from outwiker.actions.addchildpage import AddChildPageAction
 from outwiker.actions.movepageup import MovePageUpAction
 from outwiker.actions.movepagedown import MovePageDownAction
+from outwiker.actions.removepage import RemovePageAction
 
 
 class WikiTree(wx.Panel):
@@ -194,8 +195,7 @@ class WikiTree(wx.Panel):
 
 
     def __onRemovePage (self, event):
-        if Application.wikiroot.selectedPage != None:
-            outwiker.core.commands.removePage (Application.wikiroot.selectedPage)
+        Application.actionController.getAction (RemovePageAction.stringId).run (None)
 
 
     def __onMoveUp (self, event):
@@ -270,20 +270,15 @@ class WikiTree(wx.Panel):
 
         popupPage = self.treeCtrl.GetItemData (popupItem).GetData()
         self.popupMenu = PagePopupMenu (self, popupPage, Application)
-        self.popupMenu.menu.Insert (3, self.ID_RENAME, _(u"Rename"))
-        self.popupMenu.menu.Bind (wx.EVT_MENU, self.__onRename, id=self.ID_RENAME)
-
         self.PopupMenu (self.popupMenu.menu)
 
 
-    def __onRename (self, event):
-        assert self.popupMenu != None
-        assert self.popupMenu.popupPage != None
-        self.treeCtrl.EditLabel (self._pageCache[self.popupMenu.popupPage])
+    def beginRename (self, page=None):
+        """
+        Начать переименование страницы в дереве. Если page == None, то начать переименование текущей страницы
+        """
+        selectedItem = self.treeCtrl.GetSelection() if page == None else self._pageCache[page]
 
-
-    def beginRename (self):
-        selectedItem = self.treeCtrl.GetSelection()
         if not selectedItem.IsOk():
             return
 
@@ -450,14 +445,11 @@ class WikiTree(wx.Panel):
         """
         Обновить дерево
         """
-        # Так как мы сами будем сворачивать/разворачивать узлы дерева, 
-        # на эти события реагировать не надо пока строится дерево
-        # self.treeCtrl.Unbind (wx.EVT_TREE_ITEM_COLLAPSED, handler = self.__onTreeStateChanged)
-        # self.treeCtrl.Unbind (wx.EVT_TREE_ITEM_EXPANDED, handler = self.__onTreeStateChanged)
-        
         self.treeCtrl.DeleteAllItems()
         self.imagelist.RemoveAll()
         self.defaultImageId = self.imagelist.Add (self.defaultBitmap)
+
+        # Ключ - страница, значение - экземпляр класса TreeItemId
         self._pageCache = {}
 
         if rootPage != None:
@@ -473,9 +465,6 @@ class WikiTree(wx.Panel):
             self.selectedPage = rootPage.selectedPage
             self.expand (rootPage)
 
-        # self.treeCtrl.Bind (wx.EVT_TREE_ITEM_COLLAPSED, self.__onTreeStateChanged)
-        # self.treeCtrl.Bind (wx.EVT_TREE_ITEM_EXPANDED, self.__onTreeStateChanged)
-    
 
     def __appendChildren (self, parentPage):
         """
@@ -636,13 +625,14 @@ class WikiTree(wx.Panel):
                 "")
 
 
+        removeTitle = actionController.getTitle (RemovePageAction.stringId)
         self.toolbar.AddLabelTool(self.ID_REMOVE_PAGE,
-                _(u"Remove Page…"), 
+                removeTitle, 
                 wx.Bitmap(os.path.join (imagesDir, "node-delete.png"),
                     wx.BITMAP_TYPE_ANY),
                 wx.NullBitmap, 
                 wx.ITEM_NORMAL,
-                _(u"Remove Page…"), 
+                removeTitle, 
                 "")
 
         self.toolbar.AddSeparator()

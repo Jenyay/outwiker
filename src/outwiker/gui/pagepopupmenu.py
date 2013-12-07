@@ -4,12 +4,18 @@
 import wx
 
 import outwiker.gui.pagedialog
+import outwiker.core.commands
+from outwiker.actions.addchildpage import AddChildPageAction
+from outwiker.actions.addsiblingpage import AddSiblingPageAction
+from outwiker.actions.removepage import RemovePageAction
+from outwiker.actions.renamepage import RenamePageAction
 
 
 class PagePopupMenu (object):
     def __init__ (self, parent, popupPage, application):
         self.ID_ADD_CHILD = wx.NewId()
         self.ID_ADD_SIBLING = wx.NewId()
+        self.ID_RENAME = wx.NewId()
         self.ID_REMOVE = wx.NewId()
         self.ID_PROPERTIES_POPUP = wx.NewId()
 
@@ -19,18 +25,20 @@ class PagePopupMenu (object):
         self.ID_COPY_LINK = wx.NewId()
 
         self.parent = parent
+        self._application = application
 
         # Страница, над элементом которой вызывается контекстное меню
         self.popupPage = popupPage
         self.menu = self.__createPopupMenu (self.popupPage)
 
-        application.onTreePopupMenu (self.menu, popupPage)
+        self._application.onTreePopupMenu (self.menu, popupPage)
 
 
     def __bindPopupMenuEvents (self, popupMenu):
         popupMenu.Bind(wx.EVT_MENU, self.__onAddChild, id=self.ID_ADD_CHILD)
         popupMenu.Bind(wx.EVT_MENU, self.__onAddSibling, id=self.ID_ADD_SIBLING)
         popupMenu.Bind(wx.EVT_MENU, self.__onRemove, id=self.ID_REMOVE)
+        popupMenu.Bind(wx.EVT_MENU, self.__onRename, id=self.ID_RENAME)
         popupMenu.Bind(wx.EVT_MENU, self.__onCopyTitle, id=self.ID_COPY_TITLE)
         popupMenu.Bind(wx.EVT_MENU, self.__onCopyPath, id=self.ID_COPY_PATH)
         popupMenu.Bind(wx.EVT_MENU, self.__onCopyAttachPath, id=self.ID_COPY_ATTACH_PATH)
@@ -40,12 +48,12 @@ class PagePopupMenu (object):
 
     def __onAddChild (self, event):
         assert self.popupPage != None
-        outwiker.gui.pagedialog.createPageWithDialog (self.parent, self.popupPage)
+        self._application.actionController.getAction (AddChildPageAction.stringId).run (None)
 
 
     def __onAddSibling (self, event):
         assert self.popupPage != None
-        outwiker.gui.pagedialog.createPageWithDialog (self.parent, self.popupPage.parent)
+        self._application.actionController.getAction (AddSiblingPageAction.stringId).run (None)
 
 
     def __onPropertiesPopup (self, event):
@@ -56,12 +64,22 @@ class PagePopupMenu (object):
 
     def __createPopupMenu (self, popupPage):
         self.popupPage = popupPage
+        actionController =  self._application.actionController
 
         popupMenu = wx.Menu ()
-        popupMenu.Append (self.ID_ADD_CHILD, _(u"Add Child Page…"))
-        popupMenu.Append (self.ID_ADD_SIBLING, _(u"Add Sibling Page…"))
-        # popupMenu.Append (self.ID_RENAME, _(u"Rename"))
-        popupMenu.Append (self.ID_REMOVE, _(u"Remove…"))
+
+        popupMenu.Append (self.ID_ADD_CHILD, 
+                actionController.getTitle (AddChildPageAction.stringId))
+
+        popupMenu.Append (self.ID_ADD_SIBLING, 
+                actionController.getTitle (AddSiblingPageAction.stringId))
+
+        popupMenu.Append (self.ID_REMOVE, 
+                actionController.getTitle (RemovePageAction.stringId))
+
+        popupMenu.Append (self.ID_RENAME, 
+                actionController.getTitle (RenamePageAction.stringId))
+
         popupMenu.AppendSeparator()
 
         popupMenu.Append (self.ID_COPY_TITLE, _(u"Copy Page Title"))
@@ -82,7 +100,15 @@ class PagePopupMenu (object):
         Удалить страницу
         """
         assert self.popupPage != None
-        outwiker.core.commands.removePage (self.popupPage)
+        self._application.actionController.getAction (RemovePageAction.stringId).run (None)
+
+
+    def __onRename (self, event):
+        """
+        Переименовать страницу
+        """
+        assert self.popupPage != None
+        self._application.mainWindow.treePanel.beginRename (self.popupPage)
 
 
     def __onCopyLink (self, event):

@@ -47,6 +47,8 @@ from outwiker.actions.movepageup import MovePageUpAction
 from outwiker.actions.movepagedown import MovePageDownAction
 from outwiker.actions.sortchildalpha import SortChildAlphabeticalAction
 from outwiker.actions.sortsiblingsalpha import SortSiblingsAlphabeticalAction
+from outwiker.actions.renamepage import RenamePageAction
+from outwiker.actions.removepage import RemovePageAction
 
 
 class MainWindow(wx.Frame):
@@ -197,6 +199,16 @@ class MainWindow(wx.Frame):
         Application.mainWindow.mainMenu.treeMenu.AppendSeparator()
 
 
+        Application.actionController.appendMenuItem (RenamePageAction.stringId, 
+                Application.mainWindow.mainMenu.treeMenu)
+
+        Application.actionController.appendMenuItem (RemovePageAction.stringId, 
+                Application.mainWindow.mainMenu.treeMenu)
+
+        Application.mainWindow.mainMenu.treeMenu.AppendSeparator()
+
+
+
     def __addActionsGui (self):
         """
         Создать элементы интерфейса, привязанные к actions
@@ -290,12 +302,6 @@ class MainWindow(wx.Frame):
         self.Bind (wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_CUT)
         self.Bind (wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_COPY)
         self.Bind (wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_PASTE)
-
-        self.Bind (wx.EVT_MENU, self.__onRename, id=MainId.ID_RENAME)
-
-        self.Bind (wx.EVT_MENU, 
-                self.__onRemovePage, 
-                id=MainId.ID_REMOVE_PAGE)
 
         self.Bind (wx.EVT_MENU, self.__onEditPage, id=MainId.ID_EDIT)
 
@@ -508,14 +514,6 @@ class MainWindow(wx.Frame):
             editPage (self, Application.selectedPage)
 
 
-    def __onRemovePage(self, event):
-        """
-        Обработчик события удаления текущей страницы
-        """
-        if Application.selectedPage != None:
-            cmd.removePage (Application.wikiroot.selectedPage)
-
-
     @cmd.testreadonly
     def __onGlobalSearch(self, event):
         """
@@ -541,13 +539,6 @@ class MainWindow(wx.Frame):
             if target != None:
                 target.ProcessEvent (event)
         self.__stdEventLoop = False
-
-
-    def __onRename(self, event):
-        """
-        Обработчик события переименования текущей страницы
-        """
-        self.treePanel.beginRename()
 
 
     def __onHelp(self, event):

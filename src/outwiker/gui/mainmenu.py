@@ -74,18 +74,6 @@ class MainMenu (wx.MenuBar):
     def __createTreeMenu (self):
         treeMenu = wx.Menu()
 
-        treeMenu.Append(MainId.ID_RENAME, 
-                _("Rename Page") + "\tF2", 
-                "", 
-                wx.ITEM_NORMAL)
-
-        treeMenu.Append(MainId.ID_REMOVE_PAGE, 
-                _(u"Remove Page…") + "\tCtrl+Shift+Del", 
-                "", 
-                wx.ITEM_NORMAL)
-
-        treeMenu.AppendSeparator()
-
         treeMenu.Append(MainId.ID_EDIT, 
                 _(u"Page Properties…") + "\tCtrl+E", 
                 "", 

@@ -23,6 +23,8 @@ from outwiker.actions.movepageup import MovePageUpAction
 from outwiker.actions.movepagedown import MovePageDownAction
 from outwiker.actions.sortchildalpha import SortChildAlphabeticalAction
 from outwiker.actions.sortsiblingsalpha import SortSiblingsAlphabeticalAction
+from outwiker.actions.renamepage import RenamePageAction
+from outwiker.actions.removepage import RemovePageAction
 
 
 
@@ -48,14 +50,12 @@ class MainWndController (object):
                 MainId.ID_BOOKMARKS, 
                 MainId.ID_ADDBOOKMARK,
                 MainId.ID_EDIT, 
-                MainId.ID_REMOVE_PAGE, 
                 MainId.ID_GLOBAL_SEARCH,
                 MainId.ID_UNDO, 
                 MainId.ID_REDO, 
                 MainId.ID_CUT, 
                 MainId.ID_COPY, 
                 MainId.ID_PASTE,
-                MainId.ID_RENAME,
                 ]
 
 
@@ -69,6 +69,8 @@ class MainWndController (object):
                 MovePageDownAction,
                 SortChildAlphabeticalAction,
                 SortSiblingsAlphabeticalAction,
+                RenamePageAction,
+                RemovePageAction,
                 ]
 
         # Идентификаторы для пунктов меню последних открытых вики

@@ -699,6 +699,18 @@ def registerActions (application):
     application.actionController.register (SortSiblingsAlphabeticalAction (application), 
             None)
 
+
+    # Переименование текущей страницы
+    from outwiker.actions.renamepage import RenamePageAction
+    application.actionController.register (RenamePageAction (application), 
+            HotKey ("F2"))
+
+
+    # Удаление текущей страницы
+    from outwiker.actions.removepage import RemovePageAction
+    application.actionController.register (RemovePageAction (application), 
+            HotKey ("Delete", ctrl=True, shift=True))
+
     _registerPolyActions (application)
 
 
