@@ -9,6 +9,7 @@ from outwiker.actions.addchildpage import AddChildPageAction
 from outwiker.actions.addsiblingpage import AddSiblingPageAction
 from outwiker.actions.removepage import RemovePageAction
 from outwiker.actions.renamepage import RenamePageAction
+from outwiker.actions.editpageprop import EditPagePropertiesAction
 
 
 class PagePopupMenu (object):
@@ -88,7 +89,8 @@ class PagePopupMenu (object):
         popupMenu.Append (self.ID_COPY_LINK, _(u"Copy Page Link"))
         popupMenu.AppendSeparator()
 
-        popupMenu.Append (self.ID_PROPERTIES_POPUP, _(u"Properties…"))
+        popupMenu.Append (self.ID_PROPERTIES_POPUP, 
+                actionController.getTitle (EditPagePropertiesAction.stringId))
 
         self.__bindPopupMenuEvents (popupMenu)
 

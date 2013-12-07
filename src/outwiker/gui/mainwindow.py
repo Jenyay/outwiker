@@ -16,7 +16,6 @@ from .guiconfig import MainWindowConfig
 
 from .mainid import MainId
 from .mainmenu import MainMenu
-from .pagedialog import editPage
 from .trayicon import OutwikerTrayIcon
 from .mainwndcontroller import MainWndController
 from .mainpanescontroller import MainPanesController
@@ -49,6 +48,7 @@ from outwiker.actions.sortchildalpha import SortChildAlphabeticalAction
 from outwiker.actions.sortsiblingsalpha import SortSiblingsAlphabeticalAction
 from outwiker.actions.renamepage import RenamePageAction
 from outwiker.actions.removepage import RemovePageAction
+from outwiker.actions.editpageprop import EditPagePropertiesAction
 
 
 class MainWindow(wx.Frame):
@@ -207,6 +207,9 @@ class MainWindow(wx.Frame):
 
         Application.mainWindow.mainMenu.treeMenu.AppendSeparator()
 
+        Application.actionController.appendMenuItem (EditPagePropertiesAction.stringId, 
+                Application.mainWindow.mainMenu.treeMenu)
+
 
 
     def __addActionsGui (self):
@@ -303,7 +306,7 @@ class MainWindow(wx.Frame):
         self.Bind (wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_COPY)
         self.Bind (wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_PASTE)
 
-        self.Bind (wx.EVT_MENU, self.__onEditPage, id=MainId.ID_EDIT)
+        # self.Bind (wx.EVT_MENU, self.__onEditPage, id=MainId.ID_EDIT)
 
         self.Bind (wx.EVT_MENU, 
                 self.__onGlobalSearch, 
@@ -505,14 +508,6 @@ class MainWindow(wx.Frame):
         if Application.selectedPage != None:
             cmd.copyTitleToClipboard (Application.wikiroot.selectedPage)
     
-
-    def __onEditPage(self, event):
-        """
-        Обработчик события изменения настроек страницы
-        """
-        if Application.selectedPage != None:
-            editPage (self, Application.selectedPage)
-
 
     @cmd.testreadonly
     def __onGlobalSearch(self, event):

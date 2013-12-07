@@ -18,6 +18,7 @@ from outwiker.actions.addchildpage import AddChildPageAction
 from outwiker.actions.movepageup import MovePageUpAction
 from outwiker.actions.movepagedown import MovePageDownAction
 from outwiker.actions.removepage import RemovePageAction
+from outwiker.actions.editpageprop import EditPagePropertiesAction
 
 
 class WikiTree(wx.Panel):
@@ -167,11 +168,6 @@ class WikiTree(wx.Panel):
         self.__UnBindApplicationEvents()
 
 
-    def __onPropertiesButton (self, event):
-        if Application.selectedPage != None:
-            outwiker.gui.pagedialog.editPage (self, Application.selectedPage)
-
-
     def __onPageCreate (self, newpage):
         """
         Обработка создания страницы
@@ -184,6 +180,10 @@ class WikiTree(wx.Panel):
             assert item.IsOk()
 
             self.expand (newpage)
+
+
+    def __onPropertiesButton (self, event):
+        Application.actionController.getAction (EditPagePropertiesAction.stringId).run (None)
 
 
     def __onAddSiblingPage (self, event):
@@ -638,13 +638,14 @@ class WikiTree(wx.Panel):
         self.toolbar.AddSeparator()
 
 
+        propertiesTitle = actionController.getTitle (EditPagePropertiesAction.stringId)
         self.toolbar.AddLabelTool(self.ID_PROPERTIES_BUTTON,
-                _(u"Page Properties…"), 
+                propertiesTitle, 
                 wx.Bitmap(os.path.join (imagesDir, "edit.png"),
                     wx.BITMAP_TYPE_ANY),
                 wx.NullBitmap, 
                 wx.ITEM_NORMAL,
-                _(u"Page Properties…"), 
+                propertiesTitle, 
                 "")
 
 

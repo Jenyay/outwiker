@@ -22,7 +22,7 @@ class MainMenu (wx.MenuBar):
         self.editMenu = self.__createEditMenu()
         self.Append(self.editMenu, _("Edit"))
 
-        self.treeMenu = self.__createTreeMenu()
+        self.treeMenu = wx.Menu()
         self.Append(self.treeMenu, _("Tree"))
 
         self.toolsMenu = self.__createToolsMenu ()
@@ -69,17 +69,6 @@ class MainMenu (wx.MenuBar):
                 wx.ITEM_NORMAL)
 
         return editMenu
-
-
-    def __createTreeMenu (self):
-        treeMenu = wx.Menu()
-
-        treeMenu.Append(MainId.ID_EDIT, 
-                _(u"Page Properties…") + "\tCtrl+E", 
-                "", 
-                wx.ITEM_NORMAL)
-
-        return treeMenu
 
 
     def __createToolsMenu (self):

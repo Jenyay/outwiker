@@ -711,6 +711,12 @@ def registerActions (application):
     application.actionController.register (RemovePageAction (application), 
             HotKey ("Delete", ctrl=True, shift=True))
 
+
+    # Редактирование свойств страницы
+    from outwiker.actions.editpageprop import EditPagePropertiesAction
+    application.actionController.register (EditPagePropertiesAction (application), 
+            HotKey ("E", ctrl=True))
+
     _registerPolyActions (application)
 
 
