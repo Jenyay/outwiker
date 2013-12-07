@@ -74,18 +74,6 @@ class MainMenu (wx.MenuBar):
     def __createTreeMenu (self):
         treeMenu = wx.Menu()
 
-        treeMenu.Append(MainId.ID_SORT_CHILDREN_ALPHABETICAL, 
-                _("Sort Children Pages Alphabetical"), 
-                "", 
-                wx.ITEM_NORMAL)
-
-        treeMenu.Append(MainId.ID_SORT_SIBLINGS_ALPHABETICAL, 
-                _("Sort Siblings Pages Alphabetical"), 
-                "", 
-                wx.ITEM_NORMAL)
-
-        treeMenu.AppendSeparator()
-
         treeMenu.Append(MainId.ID_RENAME, 
                 _("Rename Page") + "\tF2", 
                 "", 

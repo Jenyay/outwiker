@@ -398,38 +398,6 @@ def getCurrentVersion ():
 
 
 @testreadonly
-def sortChildrenAlphabeticalGUI ():
-    """
-    Команда для сортировки дочерних страниц текущей страницы по алфавиту
-    """
-    if Application.wikiroot == None:
-        MessageBox (_(u"Wiki is not open"), 
-                _(u"Error"), 
-                wx.ICON_ERROR | wx.OK)
-        return
-
-    if Application.wikiroot.selectedPage != None:
-        Application.wikiroot.selectedPage.sortChildrenAlphabetical ()
-    else:
-        Application.wikiroot.sortChildrenAlphabetical ()
-
-
-@testreadonly
-def sortSiblingsAlphabeticalGUI ():
-    """
-    Команда для сортировки по алфавиту того же уровня, на котором мы сейчас находимся
-    """
-    if Application.wikiroot == None:
-        MessageBox (_(u"Wiki is not open"), 
-                _(u"Error"), 
-                wx.ICON_ERROR | wx.OK)
-        return
-
-    if Application.wikiroot.selectedPage != None:
-        Application.wikiroot.selectedPage.parent.sortChildrenAlphabetical ()
-
-
-@testreadonly
 def renamePage (page, newtitle):
     if not testPageTitle (newtitle):
         return
@@ -719,6 +687,17 @@ def registerActions (application):
     from outwiker.actions.movepagedown import MovePageDownAction
     application.actionController.register (MovePageDownAction (application), 
             HotKey ("Down", ctrl=True, shift=True) )
+
+    # Сортировка дочерних страниц по алфавиту
+    from outwiker.actions.sortchildalpha import SortChildAlphabeticalAction
+    application.actionController.register (SortChildAlphabeticalAction (application), 
+            None)
+
+
+    # Сортировка страниц того же уровня, что и выбранная, по алфавиту
+    from outwiker.actions.sortsiblingsalpha import SortSiblingsAlphabeticalAction
+    application.actionController.register (SortSiblingsAlphabeticalAction (application), 
+            None)
 
     _registerPolyActions (application)
 

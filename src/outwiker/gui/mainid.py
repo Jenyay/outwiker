@@ -26,8 +26,6 @@ class MainId (object):
     ID_VIEW_ATTACHES = wx.NewId()
     ID_VIEW_TAGSCLOUD = wx.NewId()
     ID_VIEW_FULLSCREEN = wx.NewId()
-    ID_SORT_CHILDREN_ALPHABETICAL = wx.NewId()
-    ID_SORT_SIBLINGS_ALPHABETICAL = wx.NewId()
     ID_UNDO = wx.ID_UNDO
     ID_REDO = wx.ID_REDO
     ID_CUT = wx.ID_CUT

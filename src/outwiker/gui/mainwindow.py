@@ -45,6 +45,8 @@ from outwiker.actions.addsiblingpage import AddSiblingPageAction
 from outwiker.actions.addchildpage import AddChildPageAction
 from outwiker.actions.movepageup import MovePageUpAction
 from outwiker.actions.movepagedown import MovePageDownAction
+from outwiker.actions.sortchildalpha import SortChildAlphabeticalAction
+from outwiker.actions.sortsiblingsalpha import SortSiblingsAlphabeticalAction
 
 
 class MainWindow(wx.Frame):
@@ -179,11 +181,20 @@ class MainWindow(wx.Frame):
 
         Application.mainWindow.mainMenu.treeMenu.AppendSeparator()
 
+
         Application.actionController.appendMenuItem (MovePageUpAction.stringId, 
                 Application.mainWindow.mainMenu.treeMenu)
 
         Application.actionController.appendMenuItem (MovePageDownAction.stringId, 
                 Application.mainWindow.mainMenu.treeMenu)
+
+        Application.actionController.appendMenuItem (SortChildAlphabeticalAction.stringId, 
+                Application.mainWindow.mainMenu.treeMenu)
+
+        Application.actionController.appendMenuItem (SortSiblingsAlphabeticalAction.stringId, 
+                Application.mainWindow.mainMenu.treeMenu)
+
+        Application.mainWindow.mainMenu.treeMenu.AppendSeparator()
 
 
     def __addActionsGui (self):
@@ -279,14 +290,6 @@ class MainWindow(wx.Frame):
         self.Bind (wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_CUT)
         self.Bind (wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_COPY)
         self.Bind (wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_PASTE)
-
-        self.Bind (wx.EVT_MENU, 
-                self.__onSortChildrenAlphabetical, 
-                id=MainId.ID_SORT_CHILDREN_ALPHABETICAL)
-
-        self.Bind (wx.EVT_MENU, 
-                self.__onSortSiblingAlphabetical, 
-                id=MainId.ID_SORT_SIBLINGS_ALPHABETICAL)
 
         self.Bind (wx.EVT_MENU, self.__onRename, id=MainId.ID_RENAME)
 
@@ -590,20 +593,6 @@ class MainWindow(wx.Frame):
         self.__panesController.updateViewMenu()
 
     
-    def __onSortChildrenAlphabetical(self, event):
-        """
-        Обработчик события сортировки дочерних страниц по алфавиту
-        """
-        cmd.sortChildrenAlphabeticalGUI()
-
-
-    def __onSortSiblingAlphabetical(self, event):
-        """
-        Обработчик события сортировки братских страниц по алфавиту
-        """
-        cmd.sortSiblingsAlphabeticalGUI()
-
-
     def __onAddTagsToBranch (self, event):
         """
         Обработчик события добавления меток к ветке

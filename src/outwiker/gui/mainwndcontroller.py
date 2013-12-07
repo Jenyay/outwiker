@@ -21,6 +21,8 @@ from outwiker.actions.addsiblingpage import AddSiblingPageAction
 from outwiker.actions.addchildpage import AddChildPageAction
 from outwiker.actions.movepageup import MovePageUpAction
 from outwiker.actions.movepagedown import MovePageDownAction
+from outwiker.actions.sortchildalpha import SortChildAlphabeticalAction
+from outwiker.actions.sortsiblingsalpha import SortSiblingsAlphabeticalAction
 
 
 
@@ -36,17 +38,28 @@ class MainWndController (object):
         self._mainWindow = parent
 
         # Идентификаторы пунктов меню и кнопок, которые надо задизаблить, если не открыта вики
-        self.disabledTools = [MainId.ID_RELOAD, 
+        self.disabledTools = [
+                MainId.ID_RELOAD, 
                 MainId.ID_ATTACH, 
-                MainId.ID_COPYPATH, MainId.ID_COPY_ATTACH_PATH, MainId.ID_COPY_LINK,
-                MainId.ID_COPY_TITLE, MainId.ID_BOOKMARKS, MainId.ID_ADDBOOKMARK,
-                MainId.ID_EDIT, MainId.ID_REMOVE_PAGE, MainId.ID_GLOBAL_SEARCH,
-                MainId.ID_UNDO, MainId.ID_REDO, MainId.ID_CUT, MainId.ID_COPY, MainId.ID_PASTE,
-                MainId.ID_SORT_SIBLINGS_ALPHABETICAL, MainId.ID_SORT_CHILDREN_ALPHABETICAL,
-                MainId.ID_RENAME]
+                MainId.ID_COPYPATH, 
+                MainId.ID_COPY_ATTACH_PATH, 
+                MainId.ID_COPY_LINK,
+                MainId.ID_COPY_TITLE, 
+                MainId.ID_BOOKMARKS, 
+                MainId.ID_ADDBOOKMARK,
+                MainId.ID_EDIT, 
+                MainId.ID_REMOVE_PAGE, 
+                MainId.ID_GLOBAL_SEARCH,
+                MainId.ID_UNDO, 
+                MainId.ID_REDO, 
+                MainId.ID_CUT, 
+                MainId.ID_COPY, 
+                MainId.ID_PASTE,
+                MainId.ID_RENAME,
+                ]
 
 
-        # Действия, которые надо дизаблить, если не открыто вики
+        # Действия, которые надо дизаблить, если не открыта вики
         self._disabledActions = [
                 SaveAction,
                 CloseAction,
@@ -54,6 +67,8 @@ class MainWndController (object):
                 AddSiblingPageAction,
                 AddChildPageAction,
                 MovePageDownAction,
+                SortChildAlphabeticalAction,
+                SortSiblingsAlphabeticalAction,
                 ]
 
         # Идентификаторы для пунктов меню последних открытых вики
