@@ -305,7 +305,7 @@ class TokenNamesTest (unittest.TestCase):
         self._checkToken (testtoken, text, validname)
 
 
-    def testBoldSuperscript (self):
+    def testBoldItalicSuperscript (self):
         testtoken = AdHocFactory.make (FakeParser()).setParseAction(lambda s, l, t: None)
         text = u"'''''^Бла-бла-бла^'''''"
         validname = u"bold_italic_superscript"

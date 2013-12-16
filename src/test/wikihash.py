@@ -60,10 +60,6 @@ class WikiHashTest (unittest.TestCase):
                 HtmlRenderConfig.FONT_NAME_DEFAULT)
 
 
-    def tearDown (self):
-        Application.config.remove_section (HtmlRenderConfig.HTML_SECTION)
-    
-
     def __createWiki (self):
         # Здесь будет создаваться вики
         self.path = u"../test/testwiki"
@@ -76,6 +72,7 @@ class WikiHashTest (unittest.TestCase):
         
 
     def tearDown(self):
+        Application.config.remove_section (HtmlRenderConfig.HTML_SECTION)
         self.__setDefaultConfig()
         removeWiki (self.path)
 

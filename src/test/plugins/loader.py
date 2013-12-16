@@ -39,12 +39,12 @@ class PluginsLoaderTest(unittest.TestCase):
         self.assertEqual (loader[u"TestEmpty2"].version, u"0.1")
         self.assertEqual (loader[u"TestEmpty2"].description, u"This plugin is empty")
 
-        loader.clear()
-        self.assertEqual (len (loader), 0)
-
         # Проверим, как работает итерация
         for plugin in loader:
             self.assertTrue (plugin == loader[u"TestEmpty1"] or plugin == loader[u"TestEmpty2"])
+
+        loader.clear()
+        self.assertEqual (len (loader), 0)
 
 
     def testLoadInvalid (self):
