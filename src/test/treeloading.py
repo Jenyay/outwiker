@@ -34,6 +34,7 @@ class WikiPagesTest(unittest.TestCase):
 
     def testInvalidEncoding (self):
         content = self.root["invalid encoding"].content
+        self.assertEqual (len (self.root["invalid encoding"].tags), 1)
 
 
     def testPagesAccess (self):

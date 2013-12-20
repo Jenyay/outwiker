@@ -27,7 +27,6 @@ class ReadonlyLoadTest (unittest.TestCase):
     def setUp(self):
         self.path = u"../test/samplewiki"
         self.root = WikiDocument.load (self.path, readonly=True)
-        #print self.root
 
 
     def testLoadWiki(self):
