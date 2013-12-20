@@ -740,7 +740,7 @@ class WikiPage (RootWikiPage):
         except IOError:
             pass
         
-        return unicode (text, "utf8")
+        return unicode (text, "utf8", errors="replace")
 
 
     @content.setter

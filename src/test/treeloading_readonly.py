@@ -31,7 +31,7 @@ class ReadonlyLoadTest (unittest.TestCase):
 
 
     def testLoadWiki(self):
-        self.assertEqual ( len (self.root), 5, "Pages count == 5")
+        self.assertEqual ( len (self.root), 6)
     
 
     def testPageType1 (self):

@@ -29,7 +29,11 @@ class WikiPagesTest(unittest.TestCase):
 
 
     def testLoadWiki(self):
-        self.assertEqual ( len (self.root), 5, "Pages count == 5")
+        self.assertEqual ( len (self.root), 6)
+
+
+    def testInvalidEncoding (self):
+        content = self.root["invalid encoding"].content
 
 
     def testPagesAccess (self):
