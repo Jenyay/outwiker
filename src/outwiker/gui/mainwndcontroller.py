@@ -26,6 +26,7 @@ from outwiker.actions.sortsiblingsalpha import SortSiblingsAlphabeticalAction
 from outwiker.actions.renamepage import RenamePageAction
 from outwiker.actions.removepage import RemovePageAction
 from outwiker.actions.editpageprop import EditPagePropertiesAction
+from outwiker.actions.exit import ExitAction
 
 
 
@@ -105,28 +106,11 @@ class MainWndController (object):
 
 
     def __onClose (self, event):
+        event.Veto()
         if TrayConfig (Application.config).minimizeOnClose.value:
             self._mainWindow.Iconize(True)
-            event.Veto()
-            return
-
-        if (self.__allowExit()):
-            self._mainWindow.Destroy()
         else:
-            event.Veto()
-
-
-    def __allowExit (self):
-        """
-        Возвращает True, если можно закрывать окно
-        """
-        generalConfig = GeneralGuiConfig (Application.config)
-        askBeforeExit = generalConfig.askBeforeExit.value
-
-        return (not askBeforeExit or 
-                outwiker.core.commands.MessageBox (_(u"Really exit?"), 
-                    _(u"Exit"), 
-                    wx.YES_NO  | wx.ICON_QUESTION ) == wx.YES )
+            Application.actionController.getAction (ExitAction.stringId).run(None)
 
 
     def destroy (self):
