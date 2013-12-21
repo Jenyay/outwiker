@@ -95,6 +95,6 @@ class MainPanesController (object):
                 self.__mainWindow.treePanel.isShown())
 
         self.__application.actionController.check (ShowHideTagsAction.stringId, 
-                self.__mainWindow.treePanel.isShown())
+                self.__mainWindow.tagsCloudPanel.isShown())
 
         self.auiManager.Update()
