@@ -23,14 +23,6 @@ class BaseAction (object):
         pass
 
 
-    @abstractproperty
-    def strid (self):
-        """
-        Уникальный строковый идентификатор действия. Используется для задания горчячих клавиш через файл настроек и для идентификации действий
-        """
-        pass
-
-
     @abstractmethod
     def run (self, params):
         """

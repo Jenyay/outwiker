@@ -71,10 +71,10 @@ class ActionController (object):
         hotkey - горячая клавиша по умолчанию для этого действия (Экземпляр класса HotKey). Если в настройках задана другая горячая клавиша, то приоритет отдается клавише из настроек
         """
         # Не должно быть одинаковых идентификаторов действий
-        assert action.strid not in self._actionsInfo
+        assert action.stringId not in self._actionsInfo
 
         actionInfo = ActionInfo (action, self._getHotKeyForAction (action, hotkey) )
-        self._actionsInfo[action.strid] = actionInfo
+        self._actionsInfo[action.stringId] = actionInfo
 
 
     def _getHotKeyForAction (self, action, defaultHotKey):
@@ -83,7 +83,7 @@ class ActionController (object):
         """
         return HotKeyOption (self._config,
                 self.configSection,
-                action.strid,
+                action.stringId,
                 defaultHotKey).value
 
 
@@ -94,7 +94,7 @@ class ActionController (object):
         for actionInfo in self._actionsInfo.values():
             option = HotKeyOption (self._config,
                 self.configSection,
-                actionInfo.action.strid,
+                actionInfo.action.stringId,
                 None)
             option.value = actionInfo.hotkey
 
@@ -233,13 +233,13 @@ class ActionController (object):
         Обработчик события нажатия залипающей кнопки или пункта меню с чекбоксом
         """
         # Установим флажки на соответствующем пункте меню и зажмем соответствующую кнопку
-        menuItem = self._actionsInfo[action.strid].menuItem
+        menuItem = self._actionsInfo[action.stringId].menuItem
         if (menuItem != None):
             menuItem.Check (checked)
 
-        toolbar = self._actionsInfo[action.strid].toolbar
+        toolbar = self._actionsInfo[action.stringId].toolbar
         if toolbar != None:
-            toolbar.ToggleTool (self._actionsInfo[action.strid].toolItemId, checked)
+            toolbar.ToggleTool (self._actionsInfo[action.stringId].toolItemId, checked)
             toolbar.Realize()
 
         action.run (checked)

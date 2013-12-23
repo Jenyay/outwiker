@@ -46,7 +46,7 @@ class MainPanesTest (BaseMainWndTest):
 
 
     def _testClose (self, action, panel):
-        actionInfo = Application.actionController.getActionInfo (action.strid)
+        actionInfo = Application.actionController.getActionInfo (action.stringId)
 
         self.assertTrue (actionInfo.menuItem.IsChecked())
 
@@ -58,22 +58,22 @@ class MainPanesTest (BaseMainWndTest):
         self.assertFalse (actionInfo.menuItem.IsChecked())
         self.assertFalse (panel.isShown())
 
-        Application.actionController.check (action.strid, True)
+        Application.actionController.check (action.stringId, True)
 
         self.assertTrue (actionInfo.menuItem.IsChecked())
         self.assertTrue (panel.isShown())
 
 
     def _testMenuCheckForAction (self, action):
-        actionInfo = Application.actionController.getActionInfo (action.strid)
+        actionInfo = Application.actionController.getActionInfo (action.stringId)
 
         self.assertNotEqual (actionInfo.menuItem, None)
 
         self.assertTrue (actionInfo.menuItem.IsCheckable())
         self.assertTrue (actionInfo.menuItem.IsChecked())
 
-        Application.actionController.check (action.strid, False)
+        Application.actionController.check (action.stringId, False)
         self.assertFalse (actionInfo.menuItem.IsChecked())
 
-        Application.actionController.check (action.strid, True)
+        Application.actionController.check (action.stringId, True)
         self.assertTrue (actionInfo.menuItem.IsChecked())

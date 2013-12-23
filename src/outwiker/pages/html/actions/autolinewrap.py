@@ -24,11 +24,6 @@ class HtmlAutoLineWrap (BaseAction):
         return _(u"Auto line wrap for HTML pages")
 
 
-    @property
-    def strid (self):
-        return self.stringId
-
-
     def run (self, checked):
         assert self._application.selectedPage.getTypeString() == "html"
 

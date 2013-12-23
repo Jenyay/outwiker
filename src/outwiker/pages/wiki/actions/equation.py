@@ -24,11 +24,6 @@ class WikiEquationAction (BaseAction):
         return _(u"Equation")
     
 
-    @property
-    def strid (self):
-        return self.stringId
-    
-    
     def run (self, params):
         assert self._application.mainWindow != None
         assert self._application.mainWindow.pagePanel != None

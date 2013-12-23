@@ -24,11 +24,6 @@ class WikiUpdateHtmlAction (BaseAction):
         return _(u"Update HTML code for wiki page")
     
 
-    @property
-    def strid (self):
-        return self.stringId
-    
-    
     def run (self, params):
         assert self._application.mainWindow != None
         assert self._application.mainWindow.pagePanel != None

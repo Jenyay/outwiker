@@ -27,11 +27,6 @@ class MovePageUpAction (BaseAction):
         return _(u"Move page up")
     
 
-    @property
-    def strid (self):
-        return self.stringId
-
-
     def run (self, params):
         self.moveCurrentPageUp ()
 

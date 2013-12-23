@@ -20,10 +20,5 @@ class WikiFontSizeSmallAction (WikiFontSizeBaseAction):
         return _(u"Small font")
     
 
-    @property
-    def strid (self):
-        return self.stringId
-    
-    
     def run (self, params):
         self.selectFontSize (3)

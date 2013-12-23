@@ -24,11 +24,6 @@ class SwitchCodeResultAction (BaseAction):
         return _(u"Switch Code <--> Preview for HTML and wiki pages")
     
 
-    @property
-    def strid (self):
-        return self.stringId
-    
-    
     def run (self, params):
         assert self._application.mainWindow != None
         assert self._application.mainWindow.pagePanel != None

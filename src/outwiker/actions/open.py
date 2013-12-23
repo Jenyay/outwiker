@@ -27,10 +27,5 @@ class OpenAction (BaseAction):
         return _(u"Open tree notes")
     
 
-    @property
-    def strid (self):
-        return self.stringId
-    
-    
     def run (self, params):
         openWikiWithDialog (self._application.mainWindow, False)

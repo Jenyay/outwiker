@@ -25,10 +25,5 @@ class DebugAction (BaseAction):
         return u"DebugAction"
     
 
-    @property
-    def strid (self):
-        return DebugAction.stringId
-
-
     def run (self, params):
         print u"DebugAction.run({0})".format (params)

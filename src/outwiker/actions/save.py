@@ -26,10 +26,5 @@ class SaveAction (BaseAction):
         return _(u"Save current note")
     
 
-    @property
-    def strid (self):
-        return self.stringId
-
-
     def run (self, params):
         self._application.onForceSave()

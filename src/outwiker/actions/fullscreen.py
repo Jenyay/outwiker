@@ -26,10 +26,5 @@ class FullScreenAction (BaseAction):
         return _(u"Fullscreen mode on/off")
     
 
-    @property
-    def strid (self):
-        return self.stringId
-
-
     def run (self, params):
         self._application.mainWindow.setFullscreen (params)

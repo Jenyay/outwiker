@@ -27,10 +27,5 @@ class AddSiblingPageAction (BaseAction):
         return _(u"Add sibling page")
     
 
-    @property
-    def strid (self):
-        return self.stringId
-
-
     def run (self, params):
         createSiblingPage (self._application.mainWindow)

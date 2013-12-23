@@ -27,10 +27,5 @@ class CloseAction (BaseAction):
         return _(u"Close a tree notes")
     
 
-    @property
-    def strid (self):
-        return self.stringId
-
-
     def run (self, params):
         closeWiki (self._application)

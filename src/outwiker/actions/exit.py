@@ -28,11 +28,6 @@ class ExitAction (BaseAction):
         return _(u"Close OutWiker")
     
 
-    @property
-    def strid (self):
-        return self.stringId
-
-
     def run (self, params):
         if (self.__allowExit()):
             self._application.mainWindow.Destroy()

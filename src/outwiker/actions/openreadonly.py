@@ -27,10 +27,5 @@ class OpenReadOnlyAction (BaseAction):
         return _(u"Open tree notes read only")
     
 
-    @property
-    def strid (self):
-        return self.stringId
-    
-    
     def run (self, params):
         openWikiWithDialog (self._application.mainWindow, True)

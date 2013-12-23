@@ -46,8 +46,8 @@ class PluginDebug (Plugin):
 
             controller.register (action, hotkey=hotkey)
 
-            controller.appendMenuCheckItem (action.strid, self.menu)
-            controller.appendToolbarCheckButton (action.strid, 
+            controller.appendMenuCheckItem (DebugAction.stringId, self.menu)
+            controller.appendToolbarCheckButton (DebugAction.stringId, 
                     toolbar,
                     image)
 

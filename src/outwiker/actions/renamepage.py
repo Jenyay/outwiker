@@ -26,10 +26,5 @@ class RenamePageAction (BaseAction):
         return _(u"Rename current page")
     
 
-    @property
-    def strid (self):
-        return self.stringId
-
-
     def run (self, params):
         self._application.mainWindow.treePanel.beginRename()

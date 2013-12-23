@@ -27,10 +27,5 @@ class NewAction (BaseAction):
         return _(u"Create a new tree notes")
     
 
-    @property
-    def strid (self):
-        return self.stringId
-
-
     def run (self, params):
         createNewWiki (self._application.mainWindow)

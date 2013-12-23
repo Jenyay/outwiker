@@ -20,10 +20,5 @@ class WikiFontSizeBigAction (WikiFontSizeBaseAction):
         return _(u"Big font")
     
 
-    @property
-    def strid (self):
-        return self.stringId
-    
-    
     def run (self, params):
         self.selectFontSize (4)

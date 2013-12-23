@@ -27,11 +27,6 @@ class MovePageDownAction (BaseAction):
         return _(u"Move page down")
     
 
-    @property
-    def strid (self):
-        return self.stringId
-
-
     def run (self, params):
         self.moveCurrentPageDown ()
 

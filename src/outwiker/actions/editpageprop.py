@@ -27,11 +27,6 @@ class EditPagePropertiesAction (BaseAction):
         return _(u"Edit page properties")
     
 
-    @property
-    def strid (self):
-        return self.stringId
-
-
     def run (self, params):
         if self._application.selectedPage != None:
             editPage (self._application.mainWindow,

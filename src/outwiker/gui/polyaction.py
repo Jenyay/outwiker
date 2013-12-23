@@ -31,8 +31,9 @@ class PolyAction (BaseAction):
     def description (self):
         return self._description
 
+
     @property
-    def strid (self):
+    def stringId (self):
         return self._strid
 
 

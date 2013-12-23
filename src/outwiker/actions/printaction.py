@@ -26,10 +26,5 @@ class PrintAction (BaseAction):
         return _(u"Print current page")
     
 
-    @property
-    def strid (self):
-        return self.stringId
-
-
     def run (self, params):
         self._application.mainWindow.pagePanel.panel.Print()

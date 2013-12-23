@@ -27,11 +27,6 @@ class PreferencesAction (BaseAction):
         return _(u"Open the preferences dialog")
     
 
-    @property
-    def strid (self):
-        return self.stringId
-
-
     def run (self, params):
         dlg = PrefDialog (self._application.mainWindow)
         dlg.ShowModal()

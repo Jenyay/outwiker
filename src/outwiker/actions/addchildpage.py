@@ -27,10 +27,5 @@ class AddChildPageAction (BaseAction):
         return _(u"Add child page")
     
 
-    @property
-    def strid (self):
-        return self.stringId
-
-
     def run (self, params):
         createChildPage (self._application.mainWindow)

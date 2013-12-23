@@ -19,11 +19,6 @@ class BaseSearchAction (BaseAction):
             searchPanel.GetParent().Layout()
 
 
-    @property
-    def strid (self):
-        return self.stringId
-
-
     def _getPageView (self):
         return self._application.mainWindow.pagePanel.panel.pageView
 

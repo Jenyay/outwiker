@@ -24,11 +24,6 @@ class WikiAttachListAction (BaseAction):
         return _(u"Insert (:attachlist:) command")
     
 
-    @property
-    def strid (self):
-        return self.stringId
-    
-    
     def run (self, params):
         assert self._application.mainWindow != None
         assert self._application.mainWindow.pagePanel != None

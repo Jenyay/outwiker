@@ -27,11 +27,6 @@ class WikiThumbAction (BaseAction):
         return _(u"Insert thumbnail")
     
 
-    @property
-    def strid (self):
-        return self.stringId
-    
-    
     def run (self, params):
         codeEditor = self._application.mainWindow.pagePanel.pageView.codeEditor
 

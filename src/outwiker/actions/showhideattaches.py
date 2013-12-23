@@ -26,10 +26,5 @@ class ShowHideAttachesAction (ShowHideBaseAction):
         return _(u"Show / hide a attachments panel")
     
 
-    @property
-    def strid (self):
-        return self.stringId
-
-
     def getPanel (self):
         return self._application.mainWindow.attachPanel 

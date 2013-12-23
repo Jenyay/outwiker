@@ -26,10 +26,5 @@ class ShowHideTagsAction (ShowHideBaseAction):
         return _(u"Show / hide a tags panel")
     
 
-    @property
-    def strid (self):
-        return self.stringId
-
-
     def getPanel (self):
         return self._application.mainWindow.tagsCloudPanel

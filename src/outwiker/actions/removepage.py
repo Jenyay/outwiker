@@ -27,11 +27,6 @@ class RemovePageAction (BaseAction):
         return _(u"Remove current page and all children")
     
 
-    @property
-    def strid (self):
-        return self.stringId
-
-
     def run (self, params):
         if self._application.selectedPage != None:
             removePage (self._application.wikiroot.selectedPage)

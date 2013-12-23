@@ -26,10 +26,5 @@ class ShowHideTreeAction (ShowHideBaseAction):
         return _(u"Show / hide a notes tree panel")
     
 
-    @property
-    def strid (self):
-        return self.stringId
-
-
     def getPanel (self):
         return self._application.mainWindow.treePanel

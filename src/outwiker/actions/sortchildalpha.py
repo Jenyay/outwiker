@@ -27,11 +27,6 @@ class SortChildAlphabeticalAction (BaseAction):
         return _(u"Sort children pages alphabetically")
     
 
-    @property
-    def strid (self):
-        return self.stringId
-
-
     def run (self, params):
         self.sortChildren()
 
