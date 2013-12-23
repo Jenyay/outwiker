@@ -27,6 +27,7 @@ from outwiker.actions.renamepage import RenamePageAction
 from outwiker.actions.removepage import RemovePageAction
 from outwiker.actions.editpageprop import EditPagePropertiesAction
 from outwiker.actions.exit import ExitAction
+from outwiker.actions.addbookmark import AddBookmarkAction
 
 
 
@@ -50,7 +51,6 @@ class MainWndController (object):
                 MainId.ID_COPY_LINK,
                 MainId.ID_COPY_TITLE, 
                 MainId.ID_BOOKMARKS, 
-                # MainId.ID_ADDBOOKMARK,
                 MainId.ID_GLOBAL_SEARCH,
                 MainId.ID_UNDO, 
                 MainId.ID_REDO, 
@@ -68,11 +68,13 @@ class MainWndController (object):
                 AddSiblingPageAction,
                 AddChildPageAction,
                 MovePageDownAction,
+                MovePageUpAction,
                 SortChildAlphabeticalAction,
                 SortSiblingsAlphabeticalAction,
                 RenamePageAction,
                 RemovePageAction,
                 EditPagePropertiesAction,
+                AddBookmarkAction,
                 ]
 
         # Идентификаторы для пунктов меню последних открытых вики
@@ -215,6 +217,12 @@ class MainWndController (object):
         """
         self.updateTitle()
         self.updatePageDateTime()
+        self._updateBookmarksState()
+
+
+    def _updateBookmarksState (self):
+        Application.actionController.enableTools (AddBookmarkAction.stringId,
+                Application.selectedPage != None)
 
 
     def __onPreferencesDialogClose (self, prefDialog):
@@ -240,6 +248,8 @@ class MainWndController (object):
         self.mainWindow.pagePanel.panel.Enable(enabled)
         self.mainWindow.treePanel.panel.Enable(enabled)
         self.mainWindow.attachPanel.panel.Enable(enabled)
+
+        self._updateBookmarksState()
 
 
     def __enableTools (self, enabled):

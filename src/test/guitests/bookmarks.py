@@ -141,3 +141,22 @@ class BookmarksGuiTest (BaseMainWndTest):
 
         Application.actionController.getAction (AddBookmarkAction.stringId).run(None)
         self.assertEqual (bookmarksMenu.GetMenuItemCount(), 2)
+
+
+    def testEnableDisable (self):
+        bookmarksMenu = self.wnd.mainMenu.bookmarksMenu
+
+        self.assertFalse (bookmarksMenu.GetMenuItems()[0].IsEnabled())
+
+        Application.wikiroot = self.rootwiki
+        Application.selectedPage = None
+
+        self.assertFalse (bookmarksMenu.GetMenuItems()[0].IsEnabled())
+
+        Application.selectedPage = self.rootwiki[u"Страница 1"]
+
+        self.assertTrue (bookmarksMenu.GetMenuItems()[0].IsEnabled())
+
+        Application.selectedPage = None
+
+        self.assertFalse (bookmarksMenu.GetMenuItems()[0].IsEnabled())
