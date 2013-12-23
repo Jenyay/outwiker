@@ -4,7 +4,7 @@
 import wx
 
 from outwiker.core.application import Application
-from .mainid import MainId
+# from .mainid import MainId
 
 
 class BookmarksController (object):
@@ -13,15 +13,13 @@ class BookmarksController (object):
     """
     def __init__ (self, controller):
         """
-        parentWnd - указатель на главное окно
+        controller - экземпляр класса MainWndController
         """
         self.controller = controller
 
         # Идентификаторы для пунктов меню для открытия закладок
         # Ключ - id, значение - путь до страницы вики
         self._bookmarksId = {}
-
-        self.controller.mainWindow.Bind(wx.EVT_MENU, self.__onBookmark, id=MainId.ID_ADDBOOKMARK)
 
 
     def updateBookmarks (self):
@@ -58,16 +56,3 @@ class BookmarksController (object):
 
         if page != None:
             Application.wikiroot.selectedPage = Application.wikiroot[subpath]
-
-
-    def __onBookmark(self, event):
-        """
-        Обработчик события при добавлении/удалении текущей страницы
-        """
-        if Application.selectedPage != None:
-            selectedPage = Application.wikiroot.selectedPage
-
-            if not Application.wikiroot.bookmarks.pageMarked (selectedPage):
-                Application.wikiroot.bookmarks.add (Application.wikiroot.selectedPage)
-            else:
-                Application.wikiroot.bookmarks.remove (Application.wikiroot.selectedPage)

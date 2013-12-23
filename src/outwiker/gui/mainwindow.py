@@ -49,6 +49,7 @@ from outwiker.actions.sortsiblingsalpha import SortSiblingsAlphabeticalAction
 from outwiker.actions.renamepage import RenamePageAction
 from outwiker.actions.removepage import RemovePageAction
 from outwiker.actions.editpageprop import EditPagePropertiesAction
+from outwiker.actions.addbookmark import AddBookmarkAction
 
 
 class MainWindow(wx.Frame):
@@ -221,7 +222,6 @@ class MainWindow(wx.Frame):
         self.__createFileMenu ()
         self.__createTreeMenu ()
 
-
         self.__panesController.createViewMenuItems ()
 
         Application.mainWindow.mainMenu.viewMenu.AppendSeparator()
@@ -235,6 +235,12 @@ class MainWindow(wx.Frame):
 
         Application.actionController.appendMenuItem (PreferencesAction.stringId,
                 Application.mainWindow.mainMenu.editMenu)
+
+        # Добавление / удаление закладки
+        Application.actionController.appendMenuItem (AddBookmarkAction.stringId,
+                Application.mainWindow.mainMenu.bookmarksMenu)
+
+        Application.mainWindow.mainMenu.bookmarksMenu.AppendSeparator()
 
 
     @property

@@ -28,7 +28,7 @@ class MainMenu (wx.MenuBar):
         self.toolsMenu = self.__createToolsMenu ()
         self.Append(self.toolsMenu, _("Tools"))
 
-        self.bookmarksMenu = self.__createBookmarksMenu ()
+        self.bookmarksMenu = wx.Menu ()
         self.Append(self.bookmarksMenu, _("Bookmarks"))
 
         self.viewMenu = wx.Menu()
@@ -153,19 +153,6 @@ class MainMenu (wx.MenuBar):
                 wx.ITEM_NORMAL)
 
         return toolsMenu
-
-
-    def __createBookmarksMenu (self):
-        bookmarksMenu = wx.Menu()
-
-        bookmarksMenu.Append(MainId.ID_ADDBOOKMARK, 
-                _("Add/Remove Bookmark") + "\tCtrl+D", 
-                "", 
-                wx.ITEM_NORMAL)
-
-        bookmarksMenu.AppendSeparator()
-
-        return bookmarksMenu
 
 
     def __createHelpMenu (self):

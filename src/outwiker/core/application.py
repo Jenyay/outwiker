@@ -54,7 +54,7 @@ class ApplicationParams (object):
         # Параметр - экземпляр класса Bookmarks
         self.onBookmarksChanged = Event()
 
-        # Удаленеи страницы
+        # Удаление страницы
         # Параметр - удаленная страница
         self.onPageRemove = Event()
 

@@ -50,7 +50,7 @@ class MainWndController (object):
                 MainId.ID_COPY_LINK,
                 MainId.ID_COPY_TITLE, 
                 MainId.ID_BOOKMARKS, 
-                MainId.ID_ADDBOOKMARK,
+                # MainId.ID_ADDBOOKMARK,
                 MainId.ID_GLOBAL_SEARCH,
                 MainId.ID_UNDO, 
                 MainId.ID_REDO, 

@@ -4,6 +4,7 @@
 import os.path
 import wx
 
+from outwiker.actions.addbookmark import AddBookmarkAction
 from outwiker.core.application import Application
 from outwiker.core.factoryselector import FactorySelector
 from outwiker.core.commands import pageExists, openWiki, MessageBox
@@ -247,8 +248,4 @@ class CurrentPagePanel(wx.Panel):
 
 
     def __onBookmark(self, event):
-        if Application.selectedPage != None:
-            if not Application.selectedPage.root.bookmarks.pageMarked (Application.selectedPage):
-                Application.selectedPage.root.bookmarks.add (Application.selectedPage)
-            else:
-                Application.selectedPage.root.bookmarks.remove (Application.selectedPage)
+        Application.actionController.getAction (AddBookmarkAction.stringId).run(None)

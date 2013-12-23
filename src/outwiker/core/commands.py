@@ -717,6 +717,12 @@ def registerActions (application):
     application.actionController.register (EditPagePropertiesAction (application), 
             HotKey ("E", ctrl=True))
 
+
+    # Добавление закладки
+    from outwiker.actions.addbookmark import AddBookmarkAction
+    application.actionController.register (AddBookmarkAction (application), 
+            HotKey ("D", ctrl=True))
+
     _registerPolyActions (application)
 
 

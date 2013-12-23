@@ -7,6 +7,7 @@ import wx
 class MainId (object):
     """
     Коллекция ID для меню и панели главного окна
+    С появлением Actions эти константы становятся ненужными. В идеале от них нужно избавиться.
     """
     ID_RELOAD = wx.NewId()
     ID_ATTACH = wx.NewId()
@@ -16,7 +17,6 @@ class MainId (object):
     ID_COPY_LINK = wx.NewId()
     ID_COPY_TITLE = wx.NewId()
     ID_BOOKMARKS = wx.NewId()
-    ID_ADDBOOKMARK = wx.NewId()
     ID_GLOBAL_SEARCH = wx.NewId()
     ID_HELP = wx.ID_HELP_COMMANDS
     ID_VIEW_TREE = wx.NewId()
