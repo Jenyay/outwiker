@@ -178,7 +178,7 @@ class MainWndController (object):
         """
         Событие при обновлении дерева
         """
-        self.updateBookmarks()
+        self.bookmarks.updateBookmarks()
         self.updateTitle()
         self.updatePageDateTime()
 
@@ -201,14 +201,10 @@ class MainWndController (object):
                         _(u"Error"), wx.ICON_ERROR | wx.OK)
 
         self.enableGui()
-        self.updateBookmarks()
+        self.bookmarks.updateBookmarks()
         self.updateTitle()
         self.updatePageDateTime()
 
-
-    def updateBookmarks (self):
-        self.bookmarks.updateBookmarks()
-    
 
     ###################################################
     # Обработка событий

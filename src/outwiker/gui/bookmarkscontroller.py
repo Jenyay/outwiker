@@ -4,7 +4,6 @@
 import wx
 
 from outwiker.core.application import Application
-# from .mainid import MainId
 
 
 class BookmarksController (object):

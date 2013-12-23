@@ -6,6 +6,7 @@ from outwiker.core.tree import RootWikiPage, WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.core.application import Application
 from test.utils import removeWiki
+from outwiker.actions.addbookmark import AddBookmarkAction
 
 
 class BookmarksGuiTest (BaseMainWndTest):
@@ -124,3 +125,19 @@ class BookmarksGuiTest (BaseMainWndTest):
         self.assertEqual (self._getItemText (items[2]), u"Страница 1")
         self.assertEqual (self._getItemText (items[3]), u"Страница 3 [Страница 2]")
         self.assertEqual (self._getItemText (items[4]), u"Страница 4 [Страница 2/Страница 3]")
+
+
+    def testAddBookmarkAction1 (self):
+        Application.wikiroot = self.rootwiki
+        Application.selectedPage = self.rootwiki[u"Страница 1"]
+
+        bookmarksMenu = self.wnd.mainMenu.bookmarksMenu
+        self.assertEqual (bookmarksMenu.GetMenuItemCount(), 2)
+
+        Application.actionController.getAction (AddBookmarkAction.stringId).run(None)
+
+        self.assertEqual (bookmarksMenu.GetMenuItemCount(), 3)
+        self.assertEqual (self._getItemText (bookmarksMenu.GetMenuItems()[2]), u"Страница 1")
+
+        Application.actionController.getAction (AddBookmarkAction.stringId).run(None)
+        self.assertEqual (bookmarksMenu.GetMenuItemCount(), 2)
