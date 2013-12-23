@@ -92,6 +92,7 @@ class CurrentPagePanel(wx.Panel):
         self.Freeze()
         self.__updatePageView (page)
         self.__updatePageInfo (page)
+        self.bookmarkButton.Enable (page != None)
         self.Thaw()
 
 
