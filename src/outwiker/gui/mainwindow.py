@@ -126,99 +126,121 @@ class MainWindow(wx.Frame):
         Заполнить действиями меню Файл
         """
         imagesDir = getImagesDir()
+        toolbar = Application.mainWindow.mainToolbar
+        menu = Application.mainWindow.mainMenu.fileMenu
+        actionController = Application.actionController
 
         # Открыть...
-        Application.actionController.appendMenuItem (OpenAction.stringId, 
-                Application.mainWindow.mainMenu.fileMenu)
+        actionController.appendMenuItem (
+                OpenAction.stringId, 
+                menu)
 
-        Application.actionController.appendToolbarButton (OpenAction.stringId, 
-                Application.mainWindow.mainToolbar,
+        actionController.appendToolbarButton (
+                OpenAction.stringId, 
+                toolbar,
                 os.path.join (imagesDir, u"open.png"),
                 True)
 
         # Создать...
-        Application.actionController.appendMenuItem (NewAction.stringId, 
-                Application.mainWindow.mainMenu.fileMenu)
+        actionController.appendMenuItem (
+                NewAction.stringId, 
+                menu)
 
-        Application.actionController.appendToolbarButton (NewAction.stringId, 
-                Application.mainWindow.mainToolbar,
+        actionController.appendToolbarButton (
+                NewAction.stringId, 
+                toolbar,
                 os.path.join (imagesDir, u"new.png"),
                 True)
 
         # Открыть только для чтения
-        Application.actionController.appendMenuItem (OpenReadOnlyAction.stringId, 
-                Application.mainWindow.mainMenu.fileMenu)
+        actionController.appendMenuItem (
+                OpenReadOnlyAction.stringId, 
+                menu)
 
-        Application.mainWindow.mainMenu.fileMenu.AppendSeparator()
-        Application.mainWindow.mainToolbar.AddSeparator()
+        menu.AppendSeparator()
+        toolbar.AddSeparator()
 
         # Закрыть
-        Application.actionController.appendMenuItem (CloseAction.stringId, 
-                Application.mainWindow.mainMenu.fileMenu)
+        actionController.appendMenuItem (
+                CloseAction.stringId, 
+                menu)
 
         # Сохранить
-        Application.actionController.appendMenuItem (SaveAction.stringId, 
-                Application.mainWindow.mainMenu.fileMenu)
+        actionController.appendMenuItem (
+                SaveAction.stringId, 
+                menu)
 
-        Application.mainWindow.mainMenu.fileMenu.AppendSeparator()
+        menu.AppendSeparator()
 
         # Печать
-        Application.actionController.appendMenuItem (PrintAction.stringId, 
-                Application.mainWindow.mainMenu.fileMenu)
+        actionController.appendMenuItem (
+                PrintAction.stringId, 
+                menu)
 
         # Выход
-        Application.actionController.appendMenuItem (ExitAction.stringId, 
-                Application.mainWindow.mainMenu.fileMenu)
+        actionController.appendMenuItem (
+                ExitAction.stringId, 
+                menu)
 
-        Application.mainWindow.mainMenu.fileMenu.AppendSeparator()
+        menu.AppendSeparator()
 
 
     def __createTreeMenu (self):
         """
         Заполнить действиями меню Дерево
         """
-        imagesDir = getImagesDir()
+        actionController = Application.actionController
+        menu = Application.mainWindow.mainMenu.treeMenu
 
-        Application.actionController.appendMenuItem (AddSiblingPageAction.stringId, 
-                Application.mainWindow.mainMenu.treeMenu)
+        actionController.appendMenuItem (
+                AddSiblingPageAction.stringId, 
+                menu)
 
-        Application.actionController.appendMenuItem (AddChildPageAction.stringId, 
-                Application.mainWindow.mainMenu.treeMenu)
+        actionController.appendMenuItem (
+                AddChildPageAction.stringId, 
+                menu)
 
-        Application.mainWindow.mainMenu.treeMenu.AppendSeparator()
-
-
-        Application.actionController.appendMenuItem (MovePageUpAction.stringId, 
-                Application.mainWindow.mainMenu.treeMenu)
-
-        Application.actionController.appendMenuItem (MovePageDownAction.stringId, 
-                Application.mainWindow.mainMenu.treeMenu)
-
-        Application.actionController.appendMenuItem (SortChildAlphabeticalAction.stringId, 
-                Application.mainWindow.mainMenu.treeMenu)
-
-        Application.actionController.appendMenuItem (SortSiblingsAlphabeticalAction.stringId, 
-                Application.mainWindow.mainMenu.treeMenu)
-
-        Application.mainWindow.mainMenu.treeMenu.AppendSeparator()
+        menu.AppendSeparator()
 
 
-        Application.actionController.appendMenuItem (RenamePageAction.stringId, 
-                Application.mainWindow.mainMenu.treeMenu)
+        actionController.appendMenuItem (
+                MovePageUpAction.stringId, 
+                menu)
 
-        Application.actionController.appendMenuItem (RemovePageAction.stringId, 
-                Application.mainWindow.mainMenu.treeMenu)
+        actionController.appendMenuItem (
+                MovePageDownAction.stringId, 
+                menu)
 
-        Application.mainWindow.mainMenu.treeMenu.AppendSeparator()
+        actionController.appendMenuItem (
+                SortChildAlphabeticalAction.stringId, 
+                menu)
 
-        Application.actionController.appendMenuItem (EditPagePropertiesAction.stringId, 
-                Application.mainWindow.mainMenu.treeMenu)
+        actionController.appendMenuItem (
+                SortSiblingsAlphabeticalAction.stringId, 
+                menu)
+
+        menu.AppendSeparator()
+
+
+        actionController.appendMenuItem (
+                RenamePageAction.stringId, 
+                menu)
+
+        actionController.appendMenuItem (
+                RemovePageAction.stringId, 
+                menu)
+
+        menu.AppendSeparator()
+
+        actionController.appendMenuItem (
+                EditPagePropertiesAction.stringId, 
+                menu)
 
 
     def __createToolsMenu (self):
         imagesDir = getImagesDir()
-        menu = Application.mainWindow.mainMenu.toolsMenu
         toolbar = Application.mainWindow.mainToolbar
+        menu = Application.mainWindow.mainMenu.toolsMenu
         actionController = Application.actionController
 
         actionController.appendMenuItem (
@@ -266,28 +288,27 @@ class MainWindow(wx.Frame):
         """
         Создать элементы интерфейса, привязанные к actions
         """
-        imagesDir = getImagesDir()
-
         self.__createFileMenu ()
         self.__createTreeMenu ()
         self.__createToolsMenu ()
-
         self.__panesController.createViewMenuItems ()
+
+        actionController = Application.actionController
 
         Application.mainWindow.mainMenu.viewMenu.AppendSeparator()
 
         # Полноэкранный режим
-        Application.actionController.appendMenuCheckItem (FullScreenAction.stringId, 
+        actionController.appendMenuCheckItem (FullScreenAction.stringId, 
                 self.mainMenu.viewMenu)
 
         # Вызов диалога настроек
         Application.mainWindow.mainMenu.editMenu.AppendSeparator()
 
-        Application.actionController.appendMenuItem (PreferencesAction.stringId,
+        actionController.appendMenuItem (PreferencesAction.stringId,
                 Application.mainWindow.mainMenu.editMenu)
 
         # Добавление / удаление закладки
-        Application.actionController.appendMenuItem (AddBookmarkAction.stringId,
+        actionController.appendMenuItem (AddBookmarkAction.stringId,
                 Application.mainWindow.mainMenu.bookmarksMenu)
 
         Application.mainWindow.mainMenu.bookmarksMenu.AppendSeparator()

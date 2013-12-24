@@ -48,7 +48,6 @@ class MainWndController (object):
         # Идентификаторы пунктов меню и кнопок, которые надо задизаблить, если не открыта вики
         self.disabledTools = [
                 MainId.ID_RELOAD, 
-                # MainId.ID_ATTACH, 
                 MainId.ID_COPYPATH, 
                 MainId.ID_COPY_ATTACH_PATH, 
                 MainId.ID_COPY_LINK,
