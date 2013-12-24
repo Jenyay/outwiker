@@ -30,6 +30,7 @@ from outwiker.actions.exit import ExitAction
 from outwiker.actions.addbookmark import AddBookmarkAction
 from outwiker.actions.tabs import AddTabAction, CloseTabAction, PreviousTabAction, NextTabAction
 from outwiker.actions.globalsearch import GlobalSearchAction
+from outwiker.actions.attachfiles import AttachFilesAction
 
 
 
@@ -47,7 +48,7 @@ class MainWndController (object):
         # Идентификаторы пунктов меню и кнопок, которые надо задизаблить, если не открыта вики
         self.disabledTools = [
                 MainId.ID_RELOAD, 
-                MainId.ID_ATTACH, 
+                # MainId.ID_ATTACH, 
                 MainId.ID_COPYPATH, 
                 MainId.ID_COPY_ATTACH_PATH, 
                 MainId.ID_COPY_LINK,
@@ -80,6 +81,7 @@ class MainWndController (object):
                 PreviousTabAction,
                 NextTabAction,
                 GlobalSearchAction,
+                AttachFilesAction,
                 ]
 
         # Идентификаторы для пунктов меню последних открытых вики

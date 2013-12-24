@@ -74,13 +74,6 @@ class MainMenu (wx.MenuBar):
     def __createToolsMenu (self):
         toolsMenu = wx.Menu()
 
-        toolsMenu.Append(MainId.ID_ATTACH, 
-                _(u"Attach Files…") + "\tCtrl+Alt+A", 
-                "", 
-                wx.ITEM_NORMAL)
-
-        toolsMenu.AppendSeparator()
-
         toolsMenu.Append(MainId.ID_COPY_TITLE, 
                 _(u"Copy Page Title") + "\tCtrl+Shift+D", 
                 "", 

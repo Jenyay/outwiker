@@ -10,13 +10,11 @@ class MainId (object):
     С появлением Actions эти константы становятся ненужными. В идеале от них нужно избавиться.
     """
     ID_RELOAD = wx.NewId()
-    ID_ATTACH = wx.NewId()
     ID_ABOUT = wx.ID_ABOUT
     ID_COPYPATH = wx.NewId()
     ID_COPY_ATTACH_PATH = wx.NewId()
     ID_COPY_LINK = wx.NewId()
     ID_COPY_TITLE = wx.NewId()
-    # ID_GLOBAL_SEARCH = wx.NewId()
     ID_HELP = wx.ID_HELP_COMMANDS
     ID_VIEW_TREE = wx.NewId()
     ID_VIEW_ATTACHES = wx.NewId()

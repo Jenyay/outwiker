@@ -57,27 +57,6 @@ def testreadonly (func):
 
 
 @testreadonly
-def attachFilesWithDialog (parent, page):
-    """
-    Вызвать диалог для приаттачивания файлов к странице
-    parent - родительское окно
-    page - страница, куда прикрепляем файлы
-    """
-    if page.readonly:
-        raise outwiker.core.exceptions.ReadonlyException
-
-    dlg = wx.FileDialog (parent, 
-            style = wx.FD_OPEN | wx.FD_FILE_MUST_EXIST | wx.FD_MULTIPLE)
-
-    if dlg.ShowModal() == wx.ID_OK:
-        files = dlg.GetPaths()
-        files.sort()
-        attachFiles (parent, page, files)
-
-    dlg.Destroy()
-
-
-@testreadonly
 def attachFiles (parent, page, files):
     """
     Прикрепить файлы к странице с диалогом о перезаписи при необходимости
@@ -726,6 +705,12 @@ def registerActions (application):
     from outwiker.actions.globalsearch import GlobalSearchAction
     application.actionController.register (GlobalSearchAction (application), 
             HotKey ("F", ctrl=True, shift=True))
+
+
+    # Прикрепить файлы к странице
+    from outwiker.actions.attachfiles import AttachFilesAction
+    application.actionController.register (AttachFilesAction (application), 
+            HotKey ("A", ctrl=True, alt=True))
 
 
     _registerPolyActions (application)

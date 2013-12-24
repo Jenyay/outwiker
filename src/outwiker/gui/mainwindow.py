@@ -52,6 +52,7 @@ from outwiker.actions.editpageprop import EditPagePropertiesAction
 from outwiker.actions.addbookmark import AddBookmarkAction
 from outwiker.actions.tabs import AddTabAction, CloseTabAction, PreviousTabAction, NextTabAction
 from outwiker.actions.globalsearch import GlobalSearchAction
+from outwiker.actions.attachfiles import AttachFilesAction
 
 
 class MainWindow(wx.Frame):
@@ -217,6 +218,7 @@ class MainWindow(wx.Frame):
     def __createToolsMenu (self):
         imagesDir = getImagesDir()
         menu = Application.mainWindow.mainMenu.toolsMenu
+        toolbar = Application.mainWindow.mainToolbar
         actionController = Application.actionController
 
         actionController.appendMenuItem (
@@ -242,9 +244,21 @@ class MainWindow(wx.Frame):
                 menu)
 
         actionController.appendToolbarButton (GlobalSearchAction.stringId, 
-                Application.mainWindow.mainToolbar,
+                toolbar,
                 os.path.join (imagesDir, u"global_search.png"),
                 True)
+
+
+        actionController.appendMenuItem (
+                AttachFilesAction.stringId, 
+                menu)
+
+        actionController.appendToolbarButton (AttachFilesAction.stringId, 
+                toolbar,
+                os.path.join (imagesDir, u"attach.png"),
+                True)
+
+        menu.AppendSeparator()
 
 
 
@@ -348,7 +362,6 @@ class MainWindow(wx.Frame):
         self.Bind (wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_COPY)
         self.Bind (wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_PASTE)
 
-        self.Bind (wx.EVT_MENU, self.__onAttach, id=MainId.ID_ATTACH)
         self.Bind (wx.EVT_MENU, self.__onCopyTitle, id=MainId.ID_COPY_TITLE)
         self.Bind (wx.EVT_MENU, self.__onCopyPath, id=MainId.ID_COPYPATH)
 
@@ -362,7 +375,6 @@ class MainWindow(wx.Frame):
         self.Bind (wx.EVT_MENU, self.__onHelp, id=MainId.ID_HELP)
         self.Bind (wx.EVT_MENU, self.__onAbout, id=MainId.ID_ABOUT)
         self.Bind (wx.EVT_TOOL, self.__onReload, id=MainId.ID_RELOAD)
-        self.Bind (wx.EVT_TOOL, self.__onAttach, id=MainId.ID_ATTACH)
 
         self.Bind (wx.EVT_TOOL, 
                 self.__onAddTagsToBranch, 
@@ -459,15 +471,6 @@ class MainWindow(wx.Frame):
             self.pagePanel.panel.destroyPageView()
         else:
             self.pagePanel.panel.destroyWithoutSave()
-
-
-    def __onAttach(self, event):
-        """
-        Обработчик события прикрепления файлов к странице
-        """
-        if Application.selectedPage != None:
-            cmd.attachFilesWithDialog (self, 
-                    Application.wikiroot.selectedPage)
 
 
     def __onAbout(self, event):

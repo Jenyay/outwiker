@@ -24,14 +24,6 @@ class GeneralToolBar (BaseToolBar):
                 fullUpdate=False)
 
         self.AddSeparator()
-
-        self.AddTool(MainId.ID_ATTACH, 
-                _(u"Attach files…"), 
-                wx.Bitmap(os.path.join (self.imagesDir, "attach.png"), wx.BITMAP_TYPE_ANY), 
-                _(u"Attach files…"),
-                fullUpdate=False)
-
-        self.AddSeparator()
         self.Realize()
 
 
