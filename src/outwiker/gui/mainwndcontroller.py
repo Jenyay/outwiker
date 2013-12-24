@@ -33,6 +33,7 @@ from outwiker.actions.globalsearch import GlobalSearchAction
 from outwiker.actions.attachfiles import AttachFilesAction
 import outwiker.actions.clipboard as clipboard
 import outwiker.actions.tags as tags
+from outwiker.actions.reloadwiki import ReloadWikiAction
 
 
 
@@ -49,7 +50,6 @@ class MainWndController (object):
 
         # Идентификаторы пунктов меню и кнопок, которые надо задизаблить, если не открыта вики
         self.disabledTools = [
-                MainId.ID_RELOAD, 
                 MainId.ID_UNDO, 
                 MainId.ID_REDO, 
                 MainId.ID_CUT, 
@@ -86,6 +86,7 @@ class MainWndController (object):
                 tags.AddTagsToBranchAction,
                 tags.RemoveTagsFromBranchAction,
                 tags.RenameTagAction,
+                ReloadWikiAction,
                 ]
 
         # Идентификаторы для пунктов меню последних открытых вики

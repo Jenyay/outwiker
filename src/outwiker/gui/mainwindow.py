@@ -55,6 +55,7 @@ from outwiker.actions.globalsearch import GlobalSearchAction
 from outwiker.actions.attachfiles import AttachFilesAction
 import outwiker.actions.clipboard as clipboard
 import outwiker.actions.tags as tags
+from outwiker.actions.reloadwiki import ReloadWikiAction
 
 
 class MainWindow(wx.Frame):
@@ -316,6 +317,9 @@ class MainWindow(wx.Frame):
 
         menu.AppendSeparator()
 
+        actionController.appendMenuItem (
+                ReloadWikiAction.stringId, 
+                menu)
 
 
     def __addActionsGui (self):
@@ -416,10 +420,10 @@ class MainWindow(wx.Frame):
         self.Bind (wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_CUT)
         self.Bind (wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_COPY)
         self.Bind (wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_PASTE)
-        self.Bind (wx.EVT_MENU, self.__onReload, id=MainId.ID_RELOAD)
         self.Bind (wx.EVT_MENU, self.__onHelp, id=MainId.ID_HELP)
         self.Bind (wx.EVT_MENU, self.__onAbout, id=MainId.ID_ABOUT)
-        self.Bind (wx.EVT_TOOL, self.__onReload, id=MainId.ID_RELOAD)
+        # self.Bind (wx.EVT_TOOL, self.__onReload, id=MainId.ID_RELOAD)
+        # self.Bind (wx.EVT_MENU, self.__onReload, id=MainId.ID_RELOAD)
 
 
     def __saveParams (self):
@@ -488,13 +492,6 @@ class MainWindow(wx.Frame):
         self.controller.destroy()
 
         super (MainWindow, self).Destroy()
-    
-
-    def __onReload(self, event):
-        """
-        Обработчик события перезагрузки вики
-        """
-        cmd.reloadWiki (self)
     
 
     def destroyPagePanel (self, save):

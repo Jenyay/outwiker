@@ -408,22 +408,6 @@ def openHelp ():
     openWiki (path, readonly=True)
 
 
-def reloadWiki (mainWnd):
-    """
-    Перезагрузить вики
-    mainWnd - указатель на главное окно. Нужно, чтобы сообщить ему о необходимости удалить панель с текущей страницей
-    """
-    if Application.wikiroot != None:
-        result = (MessageBox (_(u"Save current page before reload?"), 
-            _(u"Save?"), wx.YES_NO | wx.CANCEL  | wx.ICON_QUESTION ))
-
-        if result == wx.CANCEL:
-            return
-
-        mainWnd.destroyPagePanel (result == wx.YES)
-        openWiki (Application.wikiroot.path)
-
-
 def testPageTitle (title):
     """
     Возвращает True, если можно создавать страницу с таким заголовком
@@ -727,6 +711,14 @@ def registerActions (application):
     application.actionController.register (
             tags.RenameTagAction (application), 
             None)
+
+    # Перезагрузить вики
+    from outwiker.actions.reloadwiki import ReloadWikiAction
+
+    application.actionController.register (
+            ReloadWikiAction (application), 
+            HotKey ("R", ctrl=True))
+
 
     _registerPolyActions (application)
 

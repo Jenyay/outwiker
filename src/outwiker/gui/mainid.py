@@ -9,7 +9,6 @@ class MainId (object):
     Коллекция ID для меню и панели главного окна
     С появлением Actions эти константы становятся ненужными. В идеале от них нужно избавиться.
     """
-    ID_RELOAD = wx.NewId()
     ID_ABOUT = wx.ID_ABOUT
     ID_HELP = wx.ID_HELP_COMMANDS
     ID_VIEW_TREE = wx.NewId()

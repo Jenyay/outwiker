@@ -25,7 +25,7 @@ class MainMenu (wx.MenuBar):
         self.treeMenu = wx.Menu()
         self.Append(self.treeMenu, _("Tree"))
 
-        self.toolsMenu = self.__createToolsMenu ()
+        self.toolsMenu = wx.Menu()
         self.Append(self.toolsMenu, _("Tools"))
 
         self.bookmarksMenu = wx.Menu ()
@@ -69,17 +69,6 @@ class MainMenu (wx.MenuBar):
                 wx.ITEM_NORMAL)
 
         return editMenu
-
-
-    def __createToolsMenu (self):
-        toolsMenu = wx.Menu()
-
-        toolsMenu.Append(MainId.ID_RELOAD, 
-                _(u"Reload Wiki…") + "\tCtrl+R", 
-                "", 
-                wx.ITEM_NORMAL)
-
-        return toolsMenu
 
 
     def __createHelpMenu (self):

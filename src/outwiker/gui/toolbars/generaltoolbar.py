@@ -12,21 +12,6 @@ from .basetoolbar import BaseToolBar
 
 
 class GeneralToolBar (BaseToolBar):
-    def __init__ (self, parent, auiManager):
-        super (GeneralToolBar, self).__init__(parent, auiManager)
-
-        self.imagesDir = getImagesDir()
-
-        self.AddTool(MainId.ID_RELOAD, 
-                _("Reload"), 
-                wx.Bitmap(os.path.join (self.imagesDir, "reload.png"), wx.BITMAP_TYPE_ANY), 
-                _("Reload wiki"),
-                fullUpdate=False)
-
-        self.AddSeparator()
-        self.Realize()
-
-
     def _createPane (self):
         return wx.aui.AuiPaneInfo().Name(self.name).Caption(self.caption).ToolbarPane().Top().Position(0)
 
