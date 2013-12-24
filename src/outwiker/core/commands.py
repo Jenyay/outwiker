@@ -17,13 +17,10 @@ from outwiker.core.tree import WikiDocument, RootWikiPage
 from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
 from outwiker.core.pagetitletester import PageTitleError, PageTitleWarning
-from outwiker.core.tagscommands import tagBranch, removeTagsFromBranch, renameTag
-from outwiker.core.tagslist import TagsList
 
 from outwiker.gui.overwritedialog import OverwriteDialog
 from outwiker.gui.about import AboutDialog
 from outwiker.gui.tagsdialog import TagsDialog
-from outwiker.gui.renametagdialog import RenameTagDialog
 from outwiker.gui.longprocessrunner import LongProcessRunner
 from outwiker.gui.hotkey import HotKey
 from outwiker.gui.polyaction import PolyAction
@@ -462,61 +459,6 @@ def pageExists (page):
     return page != None and os.path.exists (page.path)
 
 
-@testreadonly
-def addTagsToBranchGui (page, parent):
-    """
-    Добавить теги к ветке, начинающейся со страницы page. 
-    Теги к странице page тоже добавляются
-    """
-    dlg = TagsDialog (parent, Application)
-    dlg.SetTitle (_(u"Add Tags to Branch"))
-
-    if dlg.ShowModal() == wx.ID_OK:
-        Application.onStartTreeUpdate(page.root)
-
-        try:
-            tagBranch (page, dlg.tags)
-        finally:
-            Application.onEndTreeUpdate(page.root)
-
-    dlg.Destroy()
-
-
-@testreadonly
-def removeTagsFromBranchGui (page, parent):
-    """
-    Удалить теги из ветки, начинающейся со страницы page
-    """
-    dlg = TagsDialog (parent, Application)
-    dlg.SetTitle (_(u"Remove Tags from Branch"))
-
-    if dlg.ShowModal() == wx.ID_OK:
-        Application.onStartTreeUpdate(page.root)
-
-        try:
-            removeTagsFromBranch (page, dlg.tags)
-        finally:
-            Application.onEndTreeUpdate(page.root)
-
-    dlg.Destroy()
-        
-
-@testreadonly
-def renameTagGui (wikiroot, parent):
-    tagslist = TagsList (wikiroot)
-
-    dlg = RenameTagDialog (parent, tagslist)
-    if dlg.ShowModal() == wx.ID_OK:
-        Application.onStartTreeUpdate(wikiroot)
-
-        try:
-            renameTag (wikiroot, dlg.oldTagName, dlg.newTagName)
-        finally:
-            Application.onEndTreeUpdate(wikiroot)
-
-    dlg.Destroy()
-
-
 def closeWiki (application):
     application.wikiroot = None
 
@@ -550,189 +492,241 @@ def registerActions (application):
 
     # Открыть...
     from outwiker.actions.open import OpenAction
-    application.actionController.register (OpenAction (application), 
+    application.actionController.register (
+            OpenAction (application), 
             HotKey ("O", ctrl=True))
 
     # Создать...
     from outwiker.actions.new import NewAction
-    application.actionController.register (NewAction (application), 
+    application.actionController.register (
+            NewAction (application), 
             HotKey ("N", ctrl=True))
 
     # Открыть только для чтения
     from outwiker.actions.openreadonly import OpenReadOnlyAction
-    application.actionController.register (OpenReadOnlyAction (application), 
+    application.actionController.register (
+            OpenReadOnlyAction (application), 
             HotKey ("O", ctrl=True, shift=True))
     
     # Закрыть
     from outwiker.actions.close import CloseAction
-    application.actionController.register (CloseAction (application), 
+    application.actionController.register (
+            CloseAction (application), 
             HotKey ("W", ctrl=True, shift=True))
 
     # Сохранить
     from outwiker.actions.save import SaveAction
-    application.actionController.register (SaveAction (application), 
+    application.actionController.register (
+            SaveAction (application), 
             HotKey ("S", ctrl=True))
 
     # Печать
     from outwiker.actions.printaction import PrintAction
-    application.actionController.register (PrintAction (application), 
+    application.actionController.register (
+            PrintAction (application), 
             HotKey ("P", ctrl=True))
 
     # Выход
     from outwiker.actions.exit import ExitAction
-    application.actionController.register (ExitAction (application), 
+    application.actionController.register (
+            ExitAction (application), 
             HotKey ("F4", alt=True))
 
     # Показать / скрыть панель с прикрепленными файлами
     from outwiker.actions.showhideattaches import ShowHideAttachesAction
-    application.actionController.register (ShowHideAttachesAction (application))
+    application.actionController.register (
+            ShowHideAttachesAction (application))
 
     # Показать / скрыть панель с деревом заметок
     from outwiker.actions.showhidetree import ShowHideTreeAction
-    application.actionController.register (ShowHideTreeAction (application))
+    application.actionController.register (
+            ShowHideTreeAction (application))
 
     # Показать / скрыть панель с тегами
     from outwiker.actions.showhidetags import ShowHideTagsAction
-    application.actionController.register (ShowHideTagsAction (application))
+    application.actionController.register (
+            ShowHideTagsAction (application))
 
     # Полноэкранный режим
     from outwiker.actions.fullscreen import FullScreenAction
-    application.actionController.register (FullScreenAction (application), 
+    application.actionController.register (
+            FullScreenAction (application), 
             HotKey ("F11") )
 
     # Поиск
     from outwiker.actions.search import SearchAction, SearchNextAction, SearchPrevAction
-    application.actionController.register (SearchAction (application), 
+    application.actionController.register (
+            SearchAction (application), 
             HotKey ("F", ctrl=True) )
 
-    application.actionController.register (SearchNextAction (application), 
+    application.actionController.register (
+            SearchNextAction (application), 
             HotKey ("F3") )
 
-    application.actionController.register (SearchPrevAction (application), 
+    application.actionController.register (
+            SearchPrevAction (application), 
             HotKey ("F3", shift=True) )
 
 
     # Вызов настроек
     from outwiker.actions.preferences import PreferencesAction
-    application.actionController.register (PreferencesAction (application), 
+    application.actionController.register (
+            PreferencesAction (application), 
             HotKey ("F8", ctrl=True) )
 
 
     # Добавить страницу того же уровня
     from outwiker.actions.addsiblingpage import AddSiblingPageAction
-    application.actionController.register (AddSiblingPageAction (application), 
+    application.actionController.register (
+            AddSiblingPageAction (application), 
             HotKey ("T", ctrl=True, alt=True) )
 
 
     # Добавить дочернюю страницу
     from outwiker.actions.addchildpage import AddChildPageAction
-    application.actionController.register (AddChildPageAction (application), 
+    application.actionController.register (
+            AddChildPageAction (application), 
             HotKey ("T", ctrl=True, shift=True) )
 
 
     # Переместить страницу на одну позицию вверх
     from outwiker.actions.movepageup import MovePageUpAction
-    application.actionController.register (MovePageUpAction (application), 
+    application.actionController.register (
+            MovePageUpAction (application), 
             HotKey ("Up", ctrl=True, shift=True) )
 
 
     # Переместить страницу на одну позицию вниз
     from outwiker.actions.movepagedown import MovePageDownAction
-    application.actionController.register (MovePageDownAction (application), 
+    application.actionController.register (
+            MovePageDownAction (application), 
             HotKey ("Down", ctrl=True, shift=True) )
 
     # Сортировка дочерних страниц по алфавиту
     from outwiker.actions.sortchildalpha import SortChildAlphabeticalAction
-    application.actionController.register (SortChildAlphabeticalAction (application), 
+    application.actionController.register (
+            SortChildAlphabeticalAction (application), 
             None)
 
 
     # Сортировка страниц того же уровня, что и выбранная, по алфавиту
     from outwiker.actions.sortsiblingsalpha import SortSiblingsAlphabeticalAction
-    application.actionController.register (SortSiblingsAlphabeticalAction (application), 
+    application.actionController.register (
+            SortSiblingsAlphabeticalAction (application), 
             None)
 
 
     # Переименование текущей страницы
     from outwiker.actions.renamepage import RenamePageAction
-    application.actionController.register (RenamePageAction (application), 
+    application.actionController.register (
+            RenamePageAction (application), 
             HotKey ("F2"))
 
 
     # Удаление текущей страницы
     from outwiker.actions.removepage import RemovePageAction
-    application.actionController.register (RemovePageAction (application), 
+    application.actionController.register (
+            RemovePageAction (application), 
             HotKey ("Delete", ctrl=True, shift=True))
 
 
     # Редактирование свойств страницы
     from outwiker.actions.editpageprop import EditPagePropertiesAction
-    application.actionController.register (EditPagePropertiesAction (application), 
+    application.actionController.register (
+            EditPagePropertiesAction (application), 
             HotKey ("E", ctrl=True))
 
 
     # Добавление закладки
     from outwiker.actions.addbookmark import AddBookmarkAction
-    application.actionController.register (AddBookmarkAction (application), 
+    application.actionController.register (
+            AddBookmarkAction (application), 
             HotKey ("D", ctrl=True))
 
 
     # Добавление вкладки
     from outwiker.actions.tabs import AddTabAction
-    application.actionController.register (AddTabAction (application), 
+    application.actionController.register (
+            AddTabAction (application), 
             HotKey ("T", ctrl=True))
 
 
     # Закрытие вкладки
     from outwiker.actions.tabs import CloseTabAction
-    application.actionController.register (CloseTabAction (application), 
+    application.actionController.register (
+            CloseTabAction (application), 
             HotKey ("W", ctrl=True))
 
 
     # Перейти на предыдущую вкладку
     from outwiker.actions.tabs import PreviousTabAction
-    application.actionController.register (PreviousTabAction (application), 
+    application.actionController.register (
+            PreviousTabAction (application), 
             HotKey ("PageUp", ctrl=True, shift=True))
 
 
     # Перейти на следующую вкладку
     from outwiker.actions.tabs import NextTabAction
-    application.actionController.register (NextTabAction (application), 
+    application.actionController.register (
+            NextTabAction (application), 
             HotKey ("PageDown", ctrl=True, shift=True))
 
 
     # Открыть или создать страницу глобального поиска
     from outwiker.actions.globalsearch import GlobalSearchAction
-    application.actionController.register (GlobalSearchAction (application), 
+    application.actionController.register (
+            GlobalSearchAction (application), 
             HotKey ("F", ctrl=True, shift=True))
 
 
     # Прикрепить файлы к странице
     from outwiker.actions.attachfiles import AttachFilesAction
-    application.actionController.register (AttachFilesAction (application), 
+    application.actionController.register (
+            AttachFilesAction (application), 
             HotKey ("A", ctrl=True, alt=True))
 
 
     import outwiker.actions.clipboard as clipboard
     
     # Копировать заголовок текущей страницы
-    application.actionController.register (clipboard.CopyPageTitleAction (application), 
+    application.actionController.register (
+            clipboard.CopyPageTitleAction (application), 
             HotKey ("D", ctrl=True, shift=True))
 
 
     # Копировать путь до текущей страницы
-    application.actionController.register (clipboard.CopyPagePathAction (application), 
+    application.actionController.register (
+            clipboard.CopyPagePathAction (application), 
             HotKey ("P", ctrl=True, shift=True))
 
 
     # Копировать путь до прикрепленных файлов
-    application.actionController.register (clipboard.CopyAttachPathAction (application), 
+    application.actionController.register (
+            clipboard.CopyAttachPathAction (application), 
             HotKey ("A", ctrl=True, shift=True))
 
 
     # Копировать ссылку на текущую страницу
-    application.actionController.register (clipboard.CopyPageLinkAction (application), 
+    application.actionController.register (
+            clipboard.CopyPageLinkAction (application), 
             HotKey ("L", ctrl=True, shift=True))
+
+    import outwiker.actions.tags as tags
+
+    # Добавить метки к ветке
+    application.actionController.register (
+            tags.AddTagsToBranchAction (application), 
+            None)
+
+    # Удалить метки из ветки
+    application.actionController.register (
+            tags.RemoveTagsFromBranchAction (application), 
+            None)
+
+    # Переименовать метку
+    application.actionController.register (
+            tags.RenameTagAction (application), 
+            None)
 
     _registerPolyActions (application)
 

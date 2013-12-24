@@ -32,6 +32,7 @@ from outwiker.actions.tabs import AddTabAction, CloseTabAction, PreviousTabActio
 from outwiker.actions.globalsearch import GlobalSearchAction
 from outwiker.actions.attachfiles import AttachFilesAction
 import outwiker.actions.clipboard as clipboard
+import outwiker.actions.tags as tags
 
 
 
@@ -82,6 +83,9 @@ class MainWndController (object):
                 clipboard.CopyPagePathAction,
                 clipboard.CopyAttachPathAction,
                 clipboard.CopyPageLinkAction,
+                tags.AddTagsToBranchAction,
+                tags.RemoveTagsFromBranchAction,
+                tags.RenameTagAction,
                 ]
 
         # Идентификаторы для пунктов меню последних открытых вики

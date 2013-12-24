@@ -54,6 +54,7 @@ from outwiker.actions.tabs import AddTabAction, CloseTabAction, PreviousTabActio
 from outwiker.actions.globalsearch import GlobalSearchAction
 from outwiker.actions.attachfiles import AttachFilesAction
 import outwiker.actions.clipboard as clipboard
+import outwiker.actions.tags as tags
 
 
 class MainWindow(wx.Frame):
@@ -301,6 +302,20 @@ class MainWindow(wx.Frame):
 
         menu.AppendSeparator()
 
+        actionController.appendMenuItem (
+                tags.AddTagsToBranchAction.stringId, 
+                menu)
+
+        actionController.appendMenuItem (
+                tags.RemoveTagsFromBranchAction.stringId, 
+                menu)
+
+        actionController.appendMenuItem (
+                tags.RenameTagAction.stringId, 
+                menu)
+
+        menu.AppendSeparator()
+
 
 
     def __addActionsGui (self):
@@ -405,16 +420,6 @@ class MainWindow(wx.Frame):
         self.Bind (wx.EVT_MENU, self.__onHelp, id=MainId.ID_HELP)
         self.Bind (wx.EVT_MENU, self.__onAbout, id=MainId.ID_ABOUT)
         self.Bind (wx.EVT_TOOL, self.__onReload, id=MainId.ID_RELOAD)
-
-        self.Bind (wx.EVT_TOOL, 
-                self.__onAddTagsToBranch, 
-                id=MainId.ID_ADD_TAGS_TO_BRANCH)
-
-        self.Bind (wx.EVT_TOOL, 
-                self.__onRemoveTagsFromBranch, 
-                id=MainId.ID_REMOVE_TAGS_FROM_BRANCH)
-
-        self.Bind (wx.EVT_TOOL, self.__onRenameTag, id=MainId.ID_RENAME_TAG)
 
 
     def __saveParams (self):
@@ -564,41 +569,6 @@ class MainWindow(wx.Frame):
         self.__panesController.showPanes()
         self.__panesController.loadPanesSize ()
         self.__panesController.updateViewMenu()
-
-    
-    def __onAddTagsToBranch (self, event):
-        """
-        Обработчик события добавления меток к ветке
-        """
-        if Application.wikiroot == None:
-            return
-
-        if Application.selectedPage == None:
-            cmd.addTagsToBranchGui (Application.wikiroot, 
-                    self)
-        else:
-            cmd.addTagsToBranchGui (Application.selectedPage, self)
-
-
-    def __onRemoveTagsFromBranch (self, event):
-        """
-        Обработчик события удаления меток из ветки
-        """
-        if Application.wikiroot == None:
-            return
-
-        if Application.selectedPage == None:
-            cmd.removeTagsFromBranchGui (Application.wikiroot, self)
-        else:
-            cmd.removeTagsFromBranchGui (Application.selectedPage, self)
-
-
-    def __onRenameTag (self, event):
-        """
-        Обработчик события переименования метки
-        """
-        if Application.wikiroot != None:
-            cmd.renameTagGui (Application.wikiroot, self)
 
 # end of class MainWindow
 
