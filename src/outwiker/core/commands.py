@@ -722,6 +722,12 @@ def registerActions (application):
             HotKey ("PageDown", ctrl=True, shift=True))
 
 
+    # Открыть или создать страницу глобального поиска
+    from outwiker.actions.globalsearch import GlobalSearchAction
+    application.actionController.register (GlobalSearchAction (application), 
+            HotKey ("F", ctrl=True, shift=True))
+
+
     _registerPolyActions (application)
 
 

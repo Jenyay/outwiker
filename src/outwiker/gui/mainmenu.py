@@ -74,11 +74,6 @@ class MainMenu (wx.MenuBar):
     def __createToolsMenu (self):
         toolsMenu = wx.Menu()
 
-        toolsMenu.Append(MainId.ID_GLOBAL_SEARCH, 
-                _(u"Global Search…") + "\tCtrl+Shift+F", 
-                "", 
-                wx.ITEM_NORMAL)
-
         toolsMenu.Append(MainId.ID_ATTACH, 
                 _(u"Attach Files…") + "\tCtrl+Alt+A", 
                 "", 

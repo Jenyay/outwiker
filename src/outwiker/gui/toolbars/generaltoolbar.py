@@ -31,12 +31,6 @@ class GeneralToolBar (BaseToolBar):
                 _(u"Attach files…"),
                 fullUpdate=False)
 
-        self.AddTool(MainId.ID_GLOBAL_SEARCH, 
-                _(u"Global search…"), 
-                wx.Bitmap(os.path.join (self.imagesDir, "global_search.png"), wx.BITMAP_TYPE_ANY), 
-                _(u"Global search…"),
-                fullUpdate=False)
-
         self.AddSeparator()
         self.Realize()
 

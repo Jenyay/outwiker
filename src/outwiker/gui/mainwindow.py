@@ -51,6 +51,7 @@ from outwiker.actions.removepage import RemovePageAction
 from outwiker.actions.editpageprop import EditPagePropertiesAction
 from outwiker.actions.addbookmark import AddBookmarkAction
 from outwiker.actions.tabs import AddTabAction, CloseTabAction, PreviousTabAction, NextTabAction
+from outwiker.actions.globalsearch import GlobalSearchAction
 
 
 class MainWindow(wx.Frame):
@@ -236,6 +237,15 @@ class MainWindow(wx.Frame):
 
         menu.AppendSeparator()
 
+        actionController.appendMenuItem (
+                GlobalSearchAction.stringId, 
+                menu)
+
+        actionController.appendToolbarButton (GlobalSearchAction.stringId, 
+                Application.mainWindow.mainToolbar,
+                os.path.join (imagesDir, u"global_search.png"),
+                True)
+
 
 
     def __addActionsGui (self):
@@ -338,12 +348,6 @@ class MainWindow(wx.Frame):
         self.Bind (wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_COPY)
         self.Bind (wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_PASTE)
 
-        # self.Bind (wx.EVT_MENU, self.__onEditPage, id=MainId.ID_EDIT)
-
-        self.Bind (wx.EVT_MENU, 
-                self.__onGlobalSearch, 
-                id=MainId.ID_GLOBAL_SEARCH)
-
         self.Bind (wx.EVT_MENU, self.__onAttach, id=MainId.ID_ATTACH)
         self.Bind (wx.EVT_MENU, self.__onCopyTitle, id=MainId.ID_COPY_TITLE)
         self.Bind (wx.EVT_MENU, self.__onCopyPath, id=MainId.ID_COPYPATH)
@@ -359,10 +363,6 @@ class MainWindow(wx.Frame):
         self.Bind (wx.EVT_MENU, self.__onAbout, id=MainId.ID_ABOUT)
         self.Bind (wx.EVT_TOOL, self.__onReload, id=MainId.ID_RELOAD)
         self.Bind (wx.EVT_TOOL, self.__onAttach, id=MainId.ID_ATTACH)
-
-        self.Bind (wx.EVT_TOOL, 
-                self.__onGlobalSearch, 
-                id=MainId.ID_GLOBAL_SEARCH)
 
         self.Bind (wx.EVT_TOOL, 
                 self.__onAddTagsToBranch, 
@@ -508,20 +508,6 @@ class MainWindow(wx.Frame):
         if Application.selectedPage != None:
             cmd.copyTitleToClipboard (Application.wikiroot.selectedPage)
     
-
-    @cmd.testreadonly
-    def __onGlobalSearch(self, event):
-        """
-        Обработчик события создания или показа страницы глобального поиска
-        """
-        if Application.wikiroot != None:
-            try:
-                outwiker.pages.search.searchpage.GlobalSearch.create (Application.wikiroot)
-            except IOError:
-                cmd.MessageBox (_(u"Can't create page"), 
-                        _(u"Error"), 
-                        wx.ICON_ERROR | wx.OK)
-
 
     def __onStdEvent(self, event):
         """

@@ -29,6 +29,7 @@ from outwiker.actions.editpageprop import EditPagePropertiesAction
 from outwiker.actions.exit import ExitAction
 from outwiker.actions.addbookmark import AddBookmarkAction
 from outwiker.actions.tabs import AddTabAction, CloseTabAction, PreviousTabAction, NextTabAction
+from outwiker.actions.globalsearch import GlobalSearchAction
 
 
 
@@ -51,7 +52,6 @@ class MainWndController (object):
                 MainId.ID_COPY_ATTACH_PATH, 
                 MainId.ID_COPY_LINK,
                 MainId.ID_COPY_TITLE, 
-                MainId.ID_GLOBAL_SEARCH,
                 MainId.ID_UNDO, 
                 MainId.ID_REDO, 
                 MainId.ID_CUT, 
@@ -79,6 +79,7 @@ class MainWndController (object):
                 CloseTabAction,
                 PreviousTabAction,
                 NextTabAction,
+                GlobalSearchAction,
                 ]
 
         # Идентификаторы для пунктов меню последних открытых вики
