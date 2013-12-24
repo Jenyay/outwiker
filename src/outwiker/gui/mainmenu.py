@@ -34,7 +34,7 @@ class MainMenu (wx.MenuBar):
         self.viewMenu = wx.Menu()
         self.Append(self.viewMenu, _("View"))
 
-        self.helpMenu = self.__createHelpMenu ()
+        self.helpMenu = wx.Menu()
         self.Append(self.helpMenu, _("Help"))
 
 
@@ -69,19 +69,3 @@ class MainMenu (wx.MenuBar):
                 wx.ITEM_NORMAL)
 
         return editMenu
-
-
-    def __createHelpMenu (self):
-        helpMenu = wx.Menu()
-        helpMenu.Append(MainId.ID_HELP, 
-                _("Help") + "\tF1", 
-                "", 
-                wx.ITEM_NORMAL)
-
-        helpMenu.Append(MainId.ID_ABOUT, 
-                _(u"About…") + "\tCtrl+F1", 
-                "", 
-                wx.ITEM_NORMAL)
-
-        return helpMenu
-

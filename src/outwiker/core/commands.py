@@ -17,9 +17,7 @@ from outwiker.core.tree import WikiDocument, RootWikiPage
 from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
 from outwiker.core.pagetitletester import PageTitleError, PageTitleWarning
-
 from outwiker.gui.overwritedialog import OverwriteDialog
-from outwiker.gui.about import AboutDialog
 from outwiker.gui.tagsdialog import TagsDialog
 from outwiker.gui.longprocessrunner import LongProcessRunner
 from outwiker.gui.hotkey import HotKey
@@ -392,22 +390,6 @@ def renamePage (page, newtitle):
                 wx.ICON_ERROR | wx.OK)
 
 
-def showAboutDialog (parent):
-    version = getCurrentVersion()
-    dlg = AboutDialog (version, parent)
-    dlg.ShowModal()
-    dlg.Destroy()
-
-
-def openHelp ():
-    help_dir = u"help"
-    current_help = _("help_en")
-    path = os.path.join (outwiker.core.system.getCurrentDir(), 
-            help_dir, 
-            current_help)
-    openWiki (path, readonly=True)
-
-
 def testPageTitle (title):
     """
     Возвращает True, если можно создавать страницу с таким заголовком
@@ -714,10 +696,21 @@ def registerActions (application):
 
     # Перезагрузить вики
     from outwiker.actions.reloadwiki import ReloadWikiAction
-
     application.actionController.register (
             ReloadWikiAction (application), 
             HotKey ("R", ctrl=True))
+
+    # Вызов справки
+    from outwiker.actions.openhelp import OpenHelpAction
+    application.actionController.register (
+            OpenHelpAction (application), 
+            HotKey ("F1"))
+
+    # "О программе"
+    from outwiker.actions.about import AboutAction
+    application.actionController.register (
+            AboutAction (application), 
+            HotKey ("F1", ctrl=True))
 
 
     _registerPolyActions (application)

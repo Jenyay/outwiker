@@ -56,6 +56,8 @@ from outwiker.actions.attachfiles import AttachFilesAction
 import outwiker.actions.clipboard as clipboard
 import outwiker.actions.tags as tags
 from outwiker.actions.reloadwiki import ReloadWikiAction
+from outwiker.actions.openhelp import OpenHelpAction
+from outwiker.actions.about import AboutAction
 
 
 class MainWindow(wx.Frame):
@@ -322,6 +324,19 @@ class MainWindow(wx.Frame):
                 menu)
 
 
+    def __createHelpMenu (self):
+        menu = Application.mainWindow.mainMenu.helpMenu
+        actionController = Application.actionController
+
+        actionController.appendMenuItem (
+                OpenHelpAction.stringId,
+                menu)
+
+        actionController.appendMenuItem (
+                AboutAction.stringId,
+                menu)
+
+
     def __addActionsGui (self):
         """
         Создать элементы интерфейса, привязанные к actions
@@ -329,6 +344,7 @@ class MainWindow(wx.Frame):
         self.__createFileMenu ()
         self.__createTreeMenu ()
         self.__createToolsMenu ()
+        self.__createHelpMenu ()
         self.__panesController.createViewMenuItems ()
 
         actionController = Application.actionController
@@ -420,10 +436,6 @@ class MainWindow(wx.Frame):
         self.Bind (wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_CUT)
         self.Bind (wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_COPY)
         self.Bind (wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_PASTE)
-        self.Bind (wx.EVT_MENU, self.__onHelp, id=MainId.ID_HELP)
-        self.Bind (wx.EVT_MENU, self.__onAbout, id=MainId.ID_ABOUT)
-        # self.Bind (wx.EVT_TOOL, self.__onReload, id=MainId.ID_RELOAD)
-        # self.Bind (wx.EVT_MENU, self.__onReload, id=MainId.ID_RELOAD)
 
 
     def __saveParams (self):
@@ -505,13 +517,6 @@ class MainWindow(wx.Frame):
             self.pagePanel.panel.destroyWithoutSave()
 
 
-    def __onAbout(self, event):
-        """
-        Обработчик события показа диалога "О программе"
-        """
-        cmd.showAboutDialog (self)
-
-
     def __onStdEvent(self, event):
         """
         Обработчик стандартных событий (копировать, вставить и т.п.)
@@ -523,13 +528,6 @@ class MainWindow(wx.Frame):
             if target != None:
                 target.ProcessEvent (event)
         self.__stdEventLoop = False
-
-
-    def __onHelp(self, event):
-        """
-        Обработчик события вызова справки
-        """
-        cmd.openHelp()
 
 
     def setFullscreen (self, fullscreen):
