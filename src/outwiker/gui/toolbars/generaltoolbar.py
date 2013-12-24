@@ -12,6 +12,10 @@ from .basetoolbar import BaseToolBar
 
 
 class GeneralToolBar (BaseToolBar):
+    def __init__ (self, parent, auiManager):
+        super (GeneralToolBar, self).__init__(parent, auiManager)
+
+
     def _createPane (self):
         return wx.aui.AuiPaneInfo().Name(self.name).Caption(self.caption).ToolbarPane().Top().Position(0)
 
