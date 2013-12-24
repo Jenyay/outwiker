@@ -50,6 +50,7 @@ from outwiker.actions.renamepage import RenamePageAction
 from outwiker.actions.removepage import RemovePageAction
 from outwiker.actions.editpageprop import EditPagePropertiesAction
 from outwiker.actions.addbookmark import AddBookmarkAction
+from outwiker.actions.tabs import AddTabAction, CloseTabAction, PreviousTabAction, NextTabAction
 
 
 class MainWindow(wx.Frame):
@@ -212,6 +213,30 @@ class MainWindow(wx.Frame):
                 Application.mainWindow.mainMenu.treeMenu)
 
 
+    def __createToolsMenu (self):
+        imagesDir = getImagesDir()
+        menu = Application.mainWindow.mainMenu.toolsMenu
+        actionController = Application.actionController
+
+        actionController.appendMenuItem (
+                AddTabAction.stringId, 
+                menu)
+
+        actionController.appendMenuItem (
+                CloseTabAction.stringId, 
+                menu)
+
+        actionController.appendMenuItem (
+                PreviousTabAction.stringId, 
+                menu)
+
+        actionController.appendMenuItem (
+                NextTabAction.stringId, 
+                menu)
+
+        menu.AppendSeparator()
+
+
 
     def __addActionsGui (self):
         """
@@ -221,6 +246,7 @@ class MainWindow(wx.Frame):
 
         self.__createFileMenu ()
         self.__createTreeMenu ()
+        self.__createToolsMenu ()
 
         self.__panesController.createViewMenuItems ()
 
@@ -347,38 +373,6 @@ class MainWindow(wx.Frame):
                 id=MainId.ID_REMOVE_TAGS_FROM_BRANCH)
 
         self.Bind (wx.EVT_TOOL, self.__onRenameTag, id=MainId.ID_RENAME_TAG)
-        self.Bind (wx.EVT_TOOL, self.__onAddNewTab, id=MainId.ID_ADD_TAB)
-        self.Bind (wx.EVT_TOOL, self.__onCloseTab, id=MainId.ID_CLOSE_TAB)
-        self.Bind (wx.EVT_TOOL, self.__onNextTab, id=MainId.ID_NEXT_TAB)
-        self.Bind (wx.EVT_TOOL, self.__onPrevTab, id=MainId.ID_PREV_TAB)
-
-
-    def __onNextTab (self, event):
-        """
-        Обработчик события переключения на следующую вкладку
-        """
-        cmd.nextTab (Application)
-
-
-    def __onPrevTab (self, event):
-        """
-        Обработчик события переключения на предыдущую вкладку
-        """
-        cmd.previousTab (Application)
-
-
-    def __onAddNewTab (self, event):
-        """
-        Обработчик события добавления новой вкладки
-        """
-        cmd.addNewTab (Application)
-
-
-    def __onCloseTab (self, event):
-        """
-        Обработчик события закрытия вкладки
-        """
-        cmd.closeCurrentTab (Application)
 
 
     def __saveParams (self):

@@ -16,7 +16,6 @@ class MainId (object):
     ID_COPY_ATTACH_PATH = wx.NewId()
     ID_COPY_LINK = wx.NewId()
     ID_COPY_TITLE = wx.NewId()
-    ID_BOOKMARKS = wx.NewId()
     ID_GLOBAL_SEARCH = wx.NewId()
     ID_HELP = wx.ID_HELP_COMMANDS
     ID_VIEW_TREE = wx.NewId()
@@ -31,7 +30,3 @@ class MainId (object):
     ID_ADD_TAGS_TO_BRANCH = wx.NewId()
     ID_REMOVE_TAGS_FROM_BRANCH = wx.NewId()
     ID_RENAME_TAG = wx.NewId()
-    ID_ADD_TAB = wx.NewId()
-    ID_CLOSE_TAB = wx.NewId()
-    ID_PREV_TAB = wx.NewId()
-    ID_NEXT_TAB = wx.NewId()

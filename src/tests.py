@@ -110,6 +110,7 @@ if __name__ == '__main__':
     from test.guitests.pagepanel import PagePanelTest
     from test.guitests.tagspanel import TagsPanelTest
     from test.guitests.tabs import TabsTest
+    from test.guitests.actiontabs import ActionTabsTest
     from test.guitests.linkdialogcontrollertest import LinkDialogControllerTest
     from test.guitests.thumbdialogcontrollertest import ThumbDialogControllerTest
     from test.guitests.wikipageview import WikiPageViewTest

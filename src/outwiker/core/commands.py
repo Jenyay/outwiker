@@ -538,34 +538,8 @@ def renameTagGui (wikiroot, parent):
     dlg.Destroy()
 
 
-def closeCurrentTab (application):
-    """
-    Закыть текущую вкладку
-    """
-    assert application.mainWindow != None
-
-    index = application.mainWindow.tabsController.getSelection()
-    if index != -1:
-        application.mainWindow.tabsController.closeTab (index)
-
-
-def addNewTab (application):
-    assert application.mainWindow != None
-    application.mainWindow.tabsController.cloneTab()
-
-
 def closeWiki (application):
     application.wikiroot = None
-
-
-def nextTab (application):
-    assert application.mainWindow != None
-    tabsCount = application.mainWindow.tabsController.nextTab()
-
-
-def previousTab (application):
-    assert application.mainWindow != None
-    tabsCount = application.mainWindow.tabsController.previousTab()
 
 
 def getMainWindowTitle (application):
@@ -722,6 +696,31 @@ def registerActions (application):
     from outwiker.actions.addbookmark import AddBookmarkAction
     application.actionController.register (AddBookmarkAction (application), 
             HotKey ("D", ctrl=True))
+
+
+    # Добавление вкладки
+    from outwiker.actions.tabs import AddTabAction
+    application.actionController.register (AddTabAction (application), 
+            HotKey ("T", ctrl=True))
+
+
+    # Закрытие вкладки
+    from outwiker.actions.tabs import CloseTabAction
+    application.actionController.register (CloseTabAction (application), 
+            HotKey ("W", ctrl=True))
+
+
+    # Перейти на предыдущую вкладку
+    from outwiker.actions.tabs import PreviousTabAction
+    application.actionController.register (PreviousTabAction (application), 
+            HotKey ("PageUp", ctrl=True, shift=True))
+
+
+    # Перейти на следующую вкладку
+    from outwiker.actions.tabs import NextTabAction
+    application.actionController.register (NextTabAction (application), 
+            HotKey ("PageDown", ctrl=True, shift=True))
+
 
     _registerPolyActions (application)
 

@@ -74,28 +74,6 @@ class MainMenu (wx.MenuBar):
     def __createToolsMenu (self):
         toolsMenu = wx.Menu()
 
-        toolsMenu.Append(MainId.ID_ADD_TAB, 
-                _(u"Add Tab") + "\tCtrl+T", 
-                "",
-                wx.ITEM_NORMAL)
-
-        toolsMenu.Append(MainId.ID_CLOSE_TAB, 
-                _(u"Close Tab") + "\tCtrl+W", 
-                "", 
-                wx.ITEM_NORMAL)
-
-        toolsMenu.Append(MainId.ID_PREV_TAB, 
-                _(u"Previous Tab") + "\tCtrl+Shift+PgUp", 
-                "", 
-                wx.ITEM_NORMAL)
-
-        toolsMenu.Append(MainId.ID_NEXT_TAB, 
-                _(u"Next Tab") + "\tCtrl+Shift+PgDn", 
-                "", 
-                wx.ITEM_NORMAL)
-
-        toolsMenu.AppendSeparator()
-
         toolsMenu.Append(MainId.ID_GLOBAL_SEARCH, 
                 _(u"Global Search…") + "\tCtrl+Shift+F", 
                 "", 
