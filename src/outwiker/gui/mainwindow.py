@@ -53,6 +53,7 @@ from outwiker.actions.addbookmark import AddBookmarkAction
 from outwiker.actions.tabs import AddTabAction, CloseTabAction, PreviousTabAction, NextTabAction
 from outwiker.actions.globalsearch import GlobalSearchAction
 from outwiker.actions.attachfiles import AttachFilesAction
+import outwiker.actions.clipboard as clipboard
 
 
 class MainWindow(wx.Frame):
@@ -282,6 +283,24 @@ class MainWindow(wx.Frame):
 
         menu.AppendSeparator()
 
+        actionController.appendMenuItem (
+                clipboard.CopyPageTitleAction.stringId, 
+                menu)
+
+        actionController.appendMenuItem (
+                clipboard.CopyPagePathAction.stringId, 
+                menu)
+
+        actionController.appendMenuItem (
+                clipboard.CopyAttachPathAction.stringId, 
+                menu)
+
+        actionController.appendMenuItem (
+                clipboard.CopyPageLinkAction.stringId, 
+                menu)
+
+        menu.AppendSeparator()
+
 
 
     def __addActionsGui (self):
@@ -382,17 +401,7 @@ class MainWindow(wx.Frame):
         self.Bind (wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_CUT)
         self.Bind (wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_COPY)
         self.Bind (wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_PASTE)
-
-        self.Bind (wx.EVT_MENU, self.__onCopyTitle, id=MainId.ID_COPY_TITLE)
-        self.Bind (wx.EVT_MENU, self.__onCopyPath, id=MainId.ID_COPYPATH)
-
-        self.Bind (wx.EVT_MENU, 
-                self.__onCopyAttaches, 
-                id=MainId.ID_COPY_ATTACH_PATH)
-
-        self.Bind (wx.EVT_MENU, self.__onCopyLink, id=MainId.ID_COPY_LINK)
         self.Bind (wx.EVT_MENU, self.__onReload, id=MainId.ID_RELOAD)
-
         self.Bind (wx.EVT_MENU, self.__onHelp, id=MainId.ID_HELP)
         self.Bind (wx.EVT_MENU, self.__onAbout, id=MainId.ID_ABOUT)
         self.Bind (wx.EVT_TOOL, self.__onReload, id=MainId.ID_RELOAD)
@@ -500,38 +509,6 @@ class MainWindow(wx.Frame):
         """
         cmd.showAboutDialog (self)
 
-
-    def __onCopyPath(self, event):
-        """
-        Обработчик события копирования пути до текущей страницы в буфер обмена
-        """
-        if Application.selectedPage != None:
-            cmd.copyPathToClipboard (Application.wikiroot.selectedPage)
-
-
-    def __onCopyAttaches(self, event):
-        """
-        Обработчик события копирования пути до прикрепленных файлов в буфер обмена
-        """
-        if Application.selectedPage != None:
-            cmd.copyAttachPathToClipboard (Application.wikiroot.selectedPage)
-
-    
-    def __onCopyLink(self, event):
-        """
-        Обработчик события копирования ссылки на текущую страницу в буфер обмена
-        """
-        if Application.selectedPage != None:
-            cmd.copyLinkToClipboard (Application.wikiroot.selectedPage)
-
-    
-    def __onCopyTitle(self, event):
-        """
-        Обработчик события копирования заголовка текущей страницы в буфер обмена
-        """
-        if Application.selectedPage != None:
-            cmd.copyTitleToClipboard (Application.wikiroot.selectedPage)
-    
 
     def __onStdEvent(self, event):
         """

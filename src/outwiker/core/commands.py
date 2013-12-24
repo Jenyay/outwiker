@@ -713,6 +713,27 @@ def registerActions (application):
             HotKey ("A", ctrl=True, alt=True))
 
 
+    import outwiker.actions.clipboard as clipboard
+    
+    # Копировать заголовок текущей страницы
+    application.actionController.register (clipboard.CopyPageTitleAction (application), 
+            HotKey ("D", ctrl=True, shift=True))
+
+
+    # Копировать путь до текущей страницы
+    application.actionController.register (clipboard.CopyPagePathAction (application), 
+            HotKey ("P", ctrl=True, shift=True))
+
+
+    # Копировать путь до прикрепленных файлов
+    application.actionController.register (clipboard.CopyAttachPathAction (application), 
+            HotKey ("A", ctrl=True, shift=True))
+
+
+    # Копировать ссылку на текущую страницу
+    application.actionController.register (clipboard.CopyPageLinkAction (application), 
+            HotKey ("L", ctrl=True, shift=True))
+
     _registerPolyActions (application)
 
 
