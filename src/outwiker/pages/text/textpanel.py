@@ -15,7 +15,7 @@ class TextPanel (BaseTextPanel):
     def __init__ (self, parent, *args, **kwds):
         BaseTextPanel.__init__ (self, parent, *args, **kwds)
 
-        self.__layout()
+        self.__createGui()
 
     
     def Print (self):
@@ -32,7 +32,7 @@ class TextPanel (BaseTextPanel):
         self.textEditor.SetReadOnly (page.readonly)
     
 
-    def __layout (self):
+    def __createGui (self):
         self.textEditor = TextEditor(self, -1)
 
         mainSizer = wx.FlexGridSizer(1, 1, 0, 0)
