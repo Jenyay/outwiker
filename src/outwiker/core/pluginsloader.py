@@ -145,14 +145,31 @@ class PluginsLoader (object):
         for packageName in dirPackagesList:
             packagePath = os.path.join (baseDir, packageName)
 
+            # Флаг, обозначающий, что удалось импортировать хотя бы один модуль
+            success = False
+
+            # Список строк, описывающий возникшие ошибки во время импортирования
+            # Выводятся только если не удалось импортировать ни одного модуля
+            errors = []
+
             # Проверить, что это директория
             if os.path.isdir (packagePath):
                 # Переберем все файлы внутри packagePath 
                 # и попытаемся их импортировать
                 for fileName in os.listdir (packagePath):
-                    module = self._importSingleModule (packageName, fileName)
-                    if module != None:
-                        modules.append (module)
+                    try:
+                        module = self._importSingleModule (packageName, fileName)
+                        if module != None:
+                            modules.append (module)
+                            success = True
+                    except ImportError as e:
+                        errors.append ("*** Plugin loading error ***\n{package}/{fileName}\n{error}".format (
+                            package = packageName, 
+                            fileName = fileName,
+                            error=str(e) ))
+
+            if not success:
+                self._print (u"\n\n".join (errors) + u"\n")
 
         return modules
 
@@ -167,14 +184,9 @@ class PluginsLoader (object):
         # Проверим, что файл может быть модулем
         if fileName.endswith (extension) and fileName != "__init__.py":
             modulename = fileName[: -len (extension)]
-            try:
-                # Попытаться импортировать модуль
-                package = __import__ (packageName + "." + modulename)
-                result = getattr (package, modulename)
-            except ImportError as e:
-                # Ну не шмогли импортировать, тогда этот модуль игнорируем
-                self._print ("*** Plugin loading error. *** {modulename}\n{error}\n".format (modulename=modulename, 
-                    error=str(e) ) )
+            # Попытаться импортировать модуль
+            package = __import__ (packageName + "." + modulename)
+            result = getattr (package, modulename)
 
         return result
 
@@ -209,8 +221,9 @@ class PluginsLoader (object):
             try:
                 plugin = obj (self.__application)
             except BaseException as e:
-                self._print ("*** {classname}\n{error}\n".format (classname=name, 
-                        error=str(e) ) )
+                self._print ("*** Plugin loading error ***\n{classname}\n{error}\n".format (
+                    classname=name, 
+                    error=str(e) ) )
                 return
 
             if not self.__isNewPlugin (plugin.name):
