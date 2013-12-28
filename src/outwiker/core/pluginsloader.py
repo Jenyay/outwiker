@@ -33,6 +33,14 @@ class PluginsLoader (object):
         # Имя классов плагинов должно начинаться с "Plugins"
         self.__pluginsStartName = "Plugin"
 
+        # Установить в False, если не нужно выводить ошибки (например, в тестах)
+        self.enableOutput = True
+
+
+    def _print (self, text):
+        if self.enableOutput:
+            print text
+
 
     @property
     def disabledPlugins (self):
@@ -149,12 +157,12 @@ class PluginsLoader (object):
         return modules
 
 
-    @staticmethod
-    def _importSingleModule (packageName, fileName):
+    def _importSingleModule (self, packageName, fileName):
         """
         Импортировать один модуль по имени пакета и файла с модулем
         """
         extension = ".py"
+        result = None
 
         # Проверим, что файл может быть модулем
         if fileName.endswith (extension) and fileName != "__init__.py":
@@ -162,13 +170,13 @@ class PluginsLoader (object):
             try:
                 # Попытаться импортировать модуль
                 package = __import__ (packageName + "." + modulename)
-                return getattr (package, modulename)
+                result = getattr (package, modulename)
             except ImportError as e:
-                # print "*** {modulename}\n{error}\n".format (modulename=modulename, error=str(e))
                 # Ну не шмогли импортировать, тогда этот модуль игнорируем
-                pass
+                self._print ("*** Plugin loading error. *** {modulename}\n{error}\n".format (modulename=modulename, 
+                    error=str(e) ) )
 
-        return None
+        return result
 
 
     def __loadPlugins (self, modules):
@@ -201,8 +209,8 @@ class PluginsLoader (object):
             try:
                 plugin = obj (self.__application)
             except BaseException as e:
-                print "*** {classname}\n{error}\n".format (classname=name, 
-                        error=str(e))
+                self._print ("*** {classname}\n{error}\n".format (classname=name, 
+                        error=str(e) ) )
                 return
 
             if not self.__isNewPlugin (plugin.name):

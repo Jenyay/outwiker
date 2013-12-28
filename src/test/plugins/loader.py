@@ -58,10 +58,11 @@ class PluginsLoaderTest(unittest.TestCase):
                 u"../plugins/testinvalid7",
                 u"../plugins/testempty1", 
                 u"../plugins/testempty2",
-                u"../plugins/testempty2",                # Ссылка на плагин testempty посторияется еще раз
+                u"../plugins/testempty2",                # Ссылка на плагин testempty2 повторяется еще раз
                 u"../plugins/testwikicommand"]
 
         loader = PluginsLoader(Application)
+        loader.enableOutput = False
         loader.load (dirlist)
 
         self.assertEqual (len (loader), 3)
