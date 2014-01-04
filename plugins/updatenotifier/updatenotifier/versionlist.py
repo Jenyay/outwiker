@@ -68,7 +68,9 @@ class VersionList (object):
                 "unstable", status="dev")
 
         for plugin in self._plugins:
-            self._pluginsVersion[plugin.name] = self._getVersionFromPage (self._pluginPages[plugin.name], "stable")
+            version = self._getVersionFromPage (self._pluginPages[plugin.name], "stable")
+            if version:
+                self._pluginsVersion[plugin.name] = version
 
 
     def _getVersionFromPage (self, url, versionname, status=""):

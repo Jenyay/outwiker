@@ -81,6 +81,9 @@ class UpdatesChecker (object):
         stableVersion = verList.stableVersion
         unstableVersion = verList.unstableVersion
 
+        assert stableVersion != None
+        assert unstableVersion != None
+
         updatedPlugins = self.getUpdatedPlugins (verList)
 
         # Обновилась ли нестабильная версия (или игнорируем ее)
@@ -122,11 +125,21 @@ class UpdatesChecker (object):
     def _onSilenceVersionUpdate (self, event):
         setStatusText (u"")
 
-        if self.hasUpdates (event.verList):
-            self._showUpdates (event.verList)
+        if self._isLoadingSuccess (event.verList):
             self._touchLastUpdateDate()
 
+            if self.hasUpdates (event.verList):
+                self._showUpdates (event.verList)
+
         self._silenceThread = None
+
+
+    def _isLoadingSuccess (self, verList):
+        """
+        Возвращает True, если удалось загрузить номера версий, False в проитвнмо случае
+        """
+        return (verList.stableVersion != None and
+                verList.unstableVersion != None)
 
 
     def _touchLastUpdateDate (self):
@@ -172,9 +185,11 @@ class UpdatesChecker (object):
 
         progressRunner.run()
 
-        if self.hasUpdates (verList):
-            self._showUpdates (verList)
+        if self._isLoadingSuccess (verList):
             self._touchLastUpdateDate()
-        else:
-            MessageBox (_(u"Updates not found"),
-                    u"UpdateNotifier")
+
+            if self.hasUpdates (verList):
+                self._showUpdates (verList)
+            else:
+                MessageBox (_(u"Updates not found"),
+                        u"UpdateNotifier")
