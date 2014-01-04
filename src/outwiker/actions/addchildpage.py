@@ -28,4 +28,5 @@ class AddChildPageAction (BaseAction):
     
 
     def run (self, params):
-        createChildPage (self._application.mainWindow)
+        createChildPage (self._application.mainWindow,
+                self._application.selectedPage)

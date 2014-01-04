@@ -28,4 +28,5 @@ class AddSiblingPageAction (BaseAction):
     
 
     def run (self, params):
-        createSiblingPage (self._application.mainWindow)
+        createSiblingPage (self._application.mainWindow,
+                self._application.selectedPage)

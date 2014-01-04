@@ -89,40 +89,32 @@ def createPageWithDialog (parentwnd, parentpage):
     return page
 
 
-def createSiblingPage (parentwnd):
+def createSiblingPage (parentwnd, page):
     """
     Создать страницу, находящуюся на том же уровне, что и текущая страница
     parentwnd - окно, которое будет родителем для диалога создания страницы
     """
-    if Application.wikiroot == None:
-        outwiker.core.commands.MessageBox (_(u"Wiki is not open"), _(u"Error"), wx.ICON_ERROR | wx.OK)
-        return
+    assert Application.wikiroot != None
 
-    currPage = Application.wikiroot.selectedPage
-
-    if currPage == None or currPage.parent == None:
+    if page == None or page.parent == None:
         parentpage = Application.wikiroot
     else:
-        parentpage = currPage.parent
+        parentpage = page.parent
 
     createPageWithDialog (parentwnd, parentpage)
 
 
-def createChildPage (parentwnd):
+def createChildPage (parentwnd, page):
     """
     Создать страницу, которая будет дочерней к текущей странице
     parentwnd - окно, которое будет родителем для диалога создания страницы
     """
-    if Application.wikiroot == None:
-        outwiker.core.commands.MessageBox (_(u"Wiki is not open"), _(u"Error"), wx.ICON_ERROR | wx.OK)
-        return
+    assert Application.wikiroot != None
 
-    currPage = Application.wikiroot.selectedPage
+    if page == None:
+        page = Application.wikiroot
 
-    if currPage == None:
-        currPage = Application.wikiroot
-
-    createPageWithDialog (parentwnd, currPage)
+    createPageWithDialog (parentwnd, page)
 
 
 class CreatePageDialog (BasePageDialog):

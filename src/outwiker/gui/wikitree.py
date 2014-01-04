@@ -136,7 +136,7 @@ class WikiTree(wx.Panel):
         self.treeCtrl.Bind (wx.EVT_TREE_END_LABEL_EDIT, self.__onEndLabelEdit)
 
         # Показ всплывающего меню
-        self.treeCtrl.Bind (wx.EVT_TREE_ITEM_MENU, self.__onItemMenu)
+        self.treeCtrl.Bind (wx.EVT_TREE_ITEM_MENU, self.__onPopupMenu)
 
         # Сворачивание/разворачивание элементов
         self.treeCtrl.Bind (wx.EVT_TREE_ITEM_COLLAPSED, self.__onTreeStateChanged)
@@ -262,7 +262,7 @@ class WikiTree(wx.Panel):
         return expanded
 
 
-    def __onItemMenu (self, event):
+    def __onPopupMenu (self, event):
         self.popupPage = None
         popupItem = event.GetItem()
         if not popupItem.IsOk ():
