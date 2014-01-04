@@ -33,7 +33,9 @@ includefiles = ['images',
 
 includes = []
 excludes = []
-packages = ['urllib', 'urllib2']
+# Добавляем 'outwiker.pages.wiki.wikipanel', 
+# т.к. этот модуль используется только в старых версиях плагинов
+packages = ['urllib', 'urllib2', 'outwiker.pages.wiki.wikipanel']
 
 
 setup(
