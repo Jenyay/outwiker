@@ -103,7 +103,8 @@ class PagePopupMenu (object):
         Удалить страницу
         """
         assert self.popupPage != None
-        self._application.actionController.getAction (RemovePageAction.stringId).run (None)
+        if self.popupPage != None:
+            outwiker.core.commands.removePage (self.popupPage)
 
 
     def __onRename (self, event):
