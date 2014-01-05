@@ -7,6 +7,7 @@ from outwiker.core.version import Version
 
 from .i18n import get_
 from .versionextractor import extractVersion
+import loaders
 
 
 class VersionList (object):
@@ -20,6 +21,8 @@ class VersionList (object):
 
         self._plugins = plugins
 
+        self._loader = loaders.NormalLoader()
+
         # Номера версий OutWiker
         self._outwikerStableVersion = None
         self._outwikerStablePage = _(u"http://jenyay.net/Outwiker/English")
@@ -30,6 +33,27 @@ class VersionList (object):
         # Без загрузки версий все версии равны None
         self._pluginsVersion = {plugin.name: None for plugin in self._plugins}
         self._pluginPages = self._getPluginPages ()
+
+
+    def updateVersions (self):
+        """
+        Получить номера версий всех плагинов и самой программы из интернета
+        """
+        self._outwikerStableVersion = self._getVersionFromPage (self._outwikerStablePage, "stable")
+        self._outwikerUnstableVersion = self._getVersionFromPage (self._outwikerUnstablePage, 
+                "unstable", status="dev")
+
+        for plugin in self._plugins:
+            version = self._getVersionFromPage (self._pluginPages[plugin.name], "stable")
+            if version:
+                self._pluginsVersion[plugin.name] = version
+
+
+    def setLoader (self, newloader):
+        """
+        Метод используется только для тестирования. Нужен для эмуляции отсутствия соединения с интернетом.
+        """
+        self._loader = newloader
 
 
     def _getPluginPages (self):
@@ -59,20 +83,6 @@ class VersionList (object):
         return pluginPages
 
 
-    def updateVersions (self):
-        """
-        Получить номера версий всех плагинов и самой программы из интернета
-        """
-        self._outwikerStableVersion = self._getVersionFromPage (self._outwikerStablePage, "stable")
-        self._outwikerUnstableVersion = self._getVersionFromPage (self._outwikerUnstablePage, 
-                "unstable", status="dev")
-
-        for plugin in self._plugins:
-            version = self._getVersionFromPage (self._pluginPages[plugin.name], "stable")
-            if version:
-                self._pluginsVersion[plugin.name] = version
-
-
     def _getVersionFromPage (self, url, versionname, status=""):
         """
         url - ссылка, откуда получается номер версии
@@ -96,15 +106,13 @@ class VersionList (object):
         Возвращает текст страницы или пустую строку в случае ошибки
         """
         try:
-            fp = urllib2.urlopen (url)
-            text = fp.read()
-            fp.close()
+            text = self._loader.load (url)
         except urllib2.HTTPError:
-            return u""
+            text = u""
         except urllib2.URLError:
-            return u""
+            text = u""
         except ValueError:
-            return u""
+            text = u""
 
         return text
         

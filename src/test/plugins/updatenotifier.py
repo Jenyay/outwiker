@@ -234,3 +234,21 @@ class UpdateNotifierTest (unittest.TestCase):
 
         verlist.updateVersions()
         self.assertTrue (verlist.getPluginVersion (u"Debug Plugin") == None)
+
+
+    def testVersionListDisconnected (self):
+        self.loader.load ([u"../plugins/updatenotifier",
+            u"../plugins/testdebug"])
+        self.assertEqual ( len (self.loader), 2)
+
+        self.loader[u"Debug Plugin"].url = u"invalid"
+
+        plugin = self.loader[self.__pluginname]
+
+        verlist = plugin.VersionList (self.loader)
+        verlist.setLoader (plugin.loaders.DisconnectedLoader())
+
+        verlist.updateVersions()
+        self.assertEqual (verlist.stableVersion, None)
+        self.assertEqual (verlist.unstableVersion, None)
+        self.assertEqual (verlist.getPluginVersion (u"Debug Plugin"), None)

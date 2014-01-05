@@ -91,3 +91,9 @@ else:
         @property
         def VersionList (self):
             return VersionList
+
+
+        @property
+        def loaders (self):
+            import loaders
+            return loaders
