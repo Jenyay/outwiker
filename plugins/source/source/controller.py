@@ -13,7 +13,7 @@ from .i18n import get_
 from .preferencepanel import PreferencePanel
 from .insertdialog import InsertDialog
 from .insertdialogcontroller import InsertDialogController
-from .misc import getImagePath
+from .guicreators import OldGuiCreator, ActionGuiCreator
 
 
 class Controller (object):
@@ -25,9 +25,10 @@ class Controller (object):
         plugin - Владелец контроллера (экземпляр класса PluginSource)
         application - экземпляр класса ApplicationParams
         """
-        self.SOURCE_TOOL_ID = u"PLUGIN_SOURCE_TOOL_ID"
         self._plugin = plugin
         self._application = application
+
+        self._guiCreator = None
 
 
     def initialize (self):
@@ -37,8 +38,19 @@ class Controller (object):
         global _
         _ = get_()
 
+        # Создание класса для создания GUI в зависимости от того, 
+        # есть ли поддержка actions
+        try:
+            from outwiker.gui.baseaction import BaseAction
+            self._guiCreator = ActionGuiCreator (self, self._application)
+        except ImportError:
+            self._guiCreator = OldGuiCreator (self, self._application)
+
+        self._guiCreator.initialize()
+
         self._application.onWikiParserPrepare += self.__onWikiParserPrepare
         self._application.onPageViewCreate += self.__onPageViewCreate
+        self._application.onPageViewDestroy += self.__onPageViewDestroy
         self._application.onPreferencesDialogCreate += self.__onPreferencesDialogCreate
 
         if self._isCurrentWikiPage:
@@ -51,10 +63,13 @@ class Controller (object):
         """
         self._application.onWikiParserPrepare -= self.__onWikiParserPrepare
         self._application.onPageViewCreate -= self.__onPageViewCreate
+        self._application.onPageViewDestroy -= self.__onPageViewDestroy
         self._application.onPreferencesDialogCreate -= self.__onPreferencesDialogCreate
 
         if self._isCurrentWikiPage:
-            self._getPageView().removeTool (self.SOURCE_TOOL_ID)
+            self._guiCreator.removeTools()
+
+        self._guiCreator.destroy ()
 
 
     def __onWikiParserPrepare (self, parser):
@@ -89,24 +104,22 @@ class Controller (object):
         """Обработка события после создания представления страницы"""
         assert self._application.mainWindow != None
 
-        if page.getTypeString() != u"wiki":
-            return
+        if page.getTypeString() == u"wiki":
+            self._guiCreator.createTools()
 
-        pageView = self._getPageView()
 
-        helpString = _(u"Source Code (:source ...:)")
-        image = getImagePath ("source.png")
+    def __onPageViewDestroy (self, page):
+        """
+        Обработка события перед удалением вида страницы
+        """
+        assert self._application.mainWindow != None
 
-        pageView.addTool (pageView.commandsMenu, 
-                self.SOURCE_TOOL_ID, 
-                self.__onInsertCommand, 
-                helpString, 
-                helpString, 
-                image)
+        if page.getTypeString() == u"wiki":
+            self._guiCreator.removeTools()
 
 
     @testreadonly
-    def __onInsertCommand (self, event):
+    def insertCommand (self):
         """
         Вставка команды (:source:) в редактор
         """
