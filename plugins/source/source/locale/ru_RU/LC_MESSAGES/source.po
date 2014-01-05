@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SourcePlugin 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-06 14:06+0400\n"
-"PO-Revision-Date: 2013-08-06 14:08+0300\n"
+"POT-Creation-Date: 2014-01-05 18:22+0400\n"
+"PO-Revision-Date: 2014-01-05 18:24+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language: ru_RU\n"
@@ -17,6 +17,17 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Generator: Poedit 1.5.4\n"
+
+#: actions.py:24 guicreators.py:105
+msgid "Source Code (:source ...:)"
+msgstr "Текст программы (:source ...:)"
+
+#: actions.py:29
+msgid ""
+"Source plugin. Insert (: source... :) command for source code highlighting"
+msgstr ""
+"Плагин Source. Вставка команды (:source... :), предназначенной для раскраски "
+"исходного кода"
 
 #: commandsource.py:69
 msgid "<B>Source plugin: File '{0}' not found</B>"
@@ -30,13 +41,9 @@ msgstr "<B>Плагин Source: Ошибка кодировки</B>"
 msgid "<B>Source plugin: Unknown encoding</B>"
 msgstr "<B>Плагин Source: Неизвестная кодировка</B>"
 
-#: controller.py:74
+#: controller.py:89
 msgid "Source [Plugin]"
 msgstr "Source [Плагин]"
-
-#: controller.py:97
-msgid "Source Code (:source ...:)"
-msgstr "Текст программы (:source ...:)"
 
 #: insertdialogcontroller.py:32
 msgid "Auto"

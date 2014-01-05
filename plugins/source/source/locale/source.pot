@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-06 14:06+0400\n"
+"POT-Creation-Date: 2014-01-05 18:22+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,15 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: actions.py:24 guicreators.py:105
+msgid "Source Code (:source ...:)"
+msgstr ""
+
+#: actions.py:29
+msgid ""
+"Source plugin. Insert (: source... :) command for source code highlighting"
+msgstr ""
 
 #: commandsource.py:69
 msgid "<B>Source plugin: File '{0}' not found</B>"
@@ -29,12 +38,8 @@ msgstr ""
 msgid "<B>Source plugin: Unknown encoding</B>"
 msgstr ""
 
-#: controller.py:74
+#: controller.py:89
 msgid "Source [Plugin]"
-msgstr ""
-
-#: controller.py:97
-msgid "Source Code (:source ...:)"
 msgstr ""
 
 #: insertdialogcontroller.py:32
