@@ -12,6 +12,7 @@ from .i18n import get_
 from .updateschecker import UpdatesChecker
 from .preferencepanel import PreferencePanel
 from .updatesconfig import UpdatesConfig
+from .guicreators import OldGuiCreator, ActionGuiCreator
 
 
 class Controller (object):
@@ -23,13 +24,13 @@ class Controller (object):
         plugin - Владелец контроллера (экземпляр класса PluginSource)
         application - экземпляр класса ApplicationParams
         """
-        self.UPDATE_ID = wx.NewId()
-        self.SILENCE_UPDATE_ID = wx.NewId()
         self._application = application
 
         # В режиме отладки добавляются новые пункты меню
         self._debug = False
         self._updatesChecker = None
+
+        self._guiCreator = None
 
 
     def initialize (self):
@@ -39,11 +40,18 @@ class Controller (object):
         global _
         _ = get_()
 
+        try:
+            from outwiker.gui.baseaction import BaseAction
+            self._guiCreator = ActionGuiCreator (self, self._application)
+        except ImportError:
+            self._guiCreator = OldGuiCreator (self, self._application)
+
         self._updatesChecker = UpdatesChecker (self._application)
+
+        self._guiCreator.initialize()
 
         if self._application.mainWindow != None:
             self._application.mainWindow.Bind (wx.EVT_IDLE, handler=self.__onIdle)
-            self.__createMenu()
         
         self._application.onPreferencesDialogCreate += self.__onPreferencesDialogCreate
 
@@ -52,14 +60,21 @@ class Controller (object):
         """
         Вызывается при отключении плагина
         """
-        if self._application.mainWindow != None:
-            self._application.mainWindow.Unbind (wx.EVT_MENU, id=self.UPDATE_ID, handler=self.__onCheckUpdate)
-            self._helpMenu.Delete (self.UPDATE_ID)
-
-            if self._debug:
-                self._helpMenu.Delete (self.SILENCE_UPDATE_ID)
-
+        self._guiCreator.destroy()
         self._application.onPreferencesDialogCreate -= self.__onPreferencesDialogCreate
+
+
+    @property
+    def debug (self):
+        return self._debug
+
+
+    def checkForUpdates (self):
+        self._updatesChecker.checkForUpdates()
+
+
+    def checkForUpdatesSilence (self):
+        self._updatesChecker.checkForUpdatesSilence()
 
 
     def __onIdle (self, event):
@@ -75,28 +90,7 @@ class Controller (object):
 
         if (config.updateInterval > 0 and
                 datetime.datetime.today() - config.lastUpdate  >= datetime.timedelta (config.updateInterval)):
-            self._updatesChecker.checkForUpdatesSilence()
-
-
-
-    def __createMenu (self):
-        """Добавление пункта меню для проверки обновлений"""
-        assert self._application.mainWindow != None
-
-        self._helpMenu.Append (id=self.UPDATE_ID, text=_(u"Check for Updates..."))
-        self._application.mainWindow.Bind (wx.EVT_MENU, self.__onCheckUpdate, id=self.UPDATE_ID)
-
-        if self._debug:
-            self._helpMenu.Append (id=self.SILENCE_UPDATE_ID, text=_(u"Silence check for Updates..."))
-            self._application.mainWindow.Bind (wx.EVT_MENU, self.__onSilenceCheckUpdate, id=self.SILENCE_UPDATE_ID)
-
-
-    def __onCheckUpdate (self, event):
-        self._updatesChecker.checkForUpdates()
-
-
-    def __onSilenceCheckUpdate (self, event):
-        self._updatesChecker.checkForUpdatesSilence()
+            self.checkForUpdatesSilence()
 
 
     def __onPreferencesDialogCreate (self, dialog):
@@ -108,8 +102,3 @@ class Controller (object):
         panelName = _(u"UpdateNotifier [Plugin]")
         panelsList = [PreferencePanelInfo (prefPanel, panelName)]
         dialog.appendPreferenceGroup (panelName, panelsList)
-
-
-    @property
-    def _helpMenu (self):
-        return self._application.mainWindow.mainMenu.helpMenu

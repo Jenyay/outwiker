@@ -15,7 +15,7 @@ from .controller import Controller
 
 
 if getCurrentVersion() < Version (1, 7, 0, 684, status=StatusSet.DEV):
-    print ("Spoiler plugin. OutWiker version requirement: 1.7.0.684")
+    print ("UpdateNotifier plugin. OutWiker version requirement: 1.7.0.684")
 else:
     class PluginUpdateNotifier (Plugin):
         """

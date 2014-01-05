@@ -1,8 +1,6 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-import os.path
-
 from outwiker.gui.baseaction import BaseAction
 from outwiker.core.commands import getCurrentVersion
 from outwiker.gui.about import AboutDialog
