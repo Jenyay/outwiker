@@ -7,26 +7,34 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UpdateNotifier\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-12 09:55+0400\n"
-"PO-Revision-Date: 2013-07-14 12:16+0400\n"
+"POT-Creation-Date: 2014-01-05 12:54+0400\n"
+"PO-Revision-Date: 2014-01-05 12:56+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language: ru_RU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.7\n"
+"X-Generator: Poedit 1.5.4\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-#: controller.py:86
+#: actions.py:24 guicreators.py:45
 msgid "Check for Updates..."
 msgstr "Проверить обновления..."
 
-#: controller.py:90
+#: actions.py:29
+msgid "UpdateNotifier plugin. Check for updates"
+msgstr "Плагин UpdateNotifier. Поиск обновлений."
+
+#: actions.py:52 guicreators.py:49
 msgid "Silence check for Updates..."
 msgstr "Тихая проверка обновлений..."
 
-#: controller.py:108
+#: actions.py:57
+msgid "UpdateNotifier plugin. Check for updates. Silence mode"
+msgstr "Плагин UpdateNotifier. Поиск обновлений. Тихий режим."
+
+#: controller.py:102
 msgid "UpdateNotifier [Plugin]"
 msgstr "UpdateNotifier [Плагин]"
 
@@ -82,7 +90,7 @@ msgstr "Текущая версия OutWiker"
 msgid "Latest stable OutWiker version"
 msgstr "Последняя стабильная версия OutWiker"
 
-#: updatedialog.py:53 versionlist.py:25
+#: updatedialog.py:53 versionlist.py:28
 msgid "http://jenyay.net/Outwiker/English"
 msgstr "http://jenyay.net/Soft/Outwiker"
 
@@ -90,7 +98,7 @@ msgstr "http://jenyay.net/Soft/Outwiker"
 msgid "Latest unstable OutWiker version"
 msgstr "Последняя нестабильная версия OutWiker"
 
-#: updatedialog.py:74 versionlist.py:28
+#: updatedialog.py:74 versionlist.py:31
 msgid "http://jenyay.net/Outwiker/UnstableEn"
 msgstr "http://jenyay.net/Outwiker/Unstable"
 
@@ -110,35 +118,35 @@ msgstr ""
 msgid "http://jenyay.net/Outwiker/UpdateNotifierEn"
 msgstr "http://jenyay.net/Outwiker/UpdateNotifier"
 
-#: updateschecker.py:150 updateschecker.py:165 updateschecker.py:170
+#: updateschecker.py:164 updateschecker.py:179 updateschecker.py:184
 msgid "Check for new versions..."
 msgstr "Поиск новых версий..."
 
-#: updateschecker.py:178
+#: updateschecker.py:194
 msgid "Updates not found"
 msgstr "Обновления не найдены"
 
-#: versionlist.py:39
+#: versionlist.py:63
 msgid "http://jenyay.net/Outwiker/ExternalToolsEn"
 msgstr "http://jenyay.net/Outwiker/ExternalTools"
 
-#: versionlist.py:40
+#: versionlist.py:64
 msgid "http://jenyay.net/Outwiker/LightboxEn"
 msgstr "http://jenyay.net/Outwiker/Lightbox"
 
-#: versionlist.py:41
+#: versionlist.py:65
 msgid "http://jenyay.net/Outwiker/LivejournalPluginEn"
 msgstr "http://jenyay.net/Outwiker/LivejournalPlugin"
 
-#: versionlist.py:42
+#: versionlist.py:66
 msgid "http://jenyay.net/Outwiker/SpoilerEn"
 msgstr "http://jenyay.net/Outwiker/Spoiler"
 
-#: versionlist.py:43
+#: versionlist.py:67
 msgid "http://jenyay.net/Outwiker/StylePluginEn"
 msgstr "http://jenyay.net/Outwiker/StylePlugin"
 
-#: versionlist.py:44
+#: versionlist.py:68
 msgid "http://jenyay.net/Outwiker/ThumbGalleryEn"
 msgstr "http://jenyay.net/Outwiker/ThumbGallery"
 

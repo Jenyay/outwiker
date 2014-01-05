@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-12 09:55+0400\n"
+"POT-Creation-Date: 2014-01-05 12:54+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,15 +17,23 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: controller.py:86
+#: actions.py:24 guicreators.py:45
 msgid "Check for Updates..."
 msgstr ""
 
-#: controller.py:90
+#: actions.py:29
+msgid "UpdateNotifier plugin. Check for updates"
+msgstr ""
+
+#: actions.py:52 guicreators.py:49
 msgid "Silence check for Updates..."
 msgstr ""
 
-#: controller.py:108
+#: actions.py:57
+msgid "UpdateNotifier plugin. Check for updates. Silence mode"
+msgstr ""
+
+#: controller.py:102
 msgid "UpdateNotifier [Plugin]"
 msgstr ""
 
@@ -81,7 +89,7 @@ msgstr ""
 msgid "Latest stable OutWiker version"
 msgstr ""
 
-#: updatedialog.py:53 versionlist.py:25
+#: updatedialog.py:53 versionlist.py:28
 msgid "http://jenyay.net/Outwiker/English"
 msgstr ""
 
@@ -89,7 +97,7 @@ msgstr ""
 msgid "Latest unstable OutWiker version"
 msgstr ""
 
-#: updatedialog.py:74 versionlist.py:28
+#: updatedialog.py:74 versionlist.py:31
 msgid "http://jenyay.net/Outwiker/UnstableEn"
 msgstr ""
 
@@ -107,34 +115,34 @@ msgstr ""
 msgid "http://jenyay.net/Outwiker/UpdateNotifierEn"
 msgstr ""
 
-#: updateschecker.py:150 updateschecker.py:165 updateschecker.py:170
+#: updateschecker.py:164 updateschecker.py:179 updateschecker.py:184
 msgid "Check for new versions..."
 msgstr ""
 
-#: updateschecker.py:178
+#: updateschecker.py:194
 msgid "Updates not found"
 msgstr ""
 
-#: versionlist.py:39
+#: versionlist.py:63
 msgid "http://jenyay.net/Outwiker/ExternalToolsEn"
 msgstr ""
 
-#: versionlist.py:40
+#: versionlist.py:64
 msgid "http://jenyay.net/Outwiker/LightboxEn"
 msgstr ""
 
-#: versionlist.py:41
+#: versionlist.py:65
 msgid "http://jenyay.net/Outwiker/LivejournalPluginEn"
 msgstr ""
 
-#: versionlist.py:42
+#: versionlist.py:66
 msgid "http://jenyay.net/Outwiker/SpoilerEn"
 msgstr ""
 
-#: versionlist.py:43
+#: versionlist.py:67
 msgid "http://jenyay.net/Outwiker/StylePluginEn"
 msgstr ""
 
-#: versionlist.py:44
+#: versionlist.py:68
 msgid "http://jenyay.net/Outwiker/ThumbGalleryEn"
 msgstr ""
