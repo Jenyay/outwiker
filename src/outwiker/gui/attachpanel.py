@@ -129,10 +129,8 @@ class AttachPanel(wx.Panel):
 
     def __do_layout(self):
         attachSizer_copy = wx.FlexGridSizer(2, 1, 0, 0)
-        buttonsSizer_copy = wx.BoxSizer(wx.VERTICAL)
         attachSizer_copy.Add(self.__toolbar, 1, wx.EXPAND, 0)
         attachSizer_copy.Add(self.__attachList, 1, wx.ALL|wx.EXPAND, 2)
-        attachSizer_copy.Add(buttonsSizer_copy, 1, wx.EXPAND, 0)
         self.SetSizer(attachSizer_copy)
         attachSizer_copy.Fit(self)
         attachSizer_copy.AddGrowableRow(1)

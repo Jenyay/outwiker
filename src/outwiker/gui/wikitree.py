@@ -427,7 +427,7 @@ class WikiTree(wx.Panel):
         self.SetSize((256, 260))
 
     def __do_layout(self):
-        mainSizer = wx.FlexGridSizer(1, 1, 0, 0)
+        mainSizer = wx.FlexGridSizer(cols=1)
         mainSizer.Add(self.toolbar, 1, wx.EXPAND, 0)
         mainSizer.Add(self.treeCtrl, 1, wx.EXPAND, 0)
         self.SetSizer(mainSizer)

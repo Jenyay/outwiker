@@ -101,7 +101,7 @@ class SearchPanel(BasePagePanel):
         mainSizer.AddGrowableCol(0)
         mainSizer.Add(self.wordsTextCtrl, 1, wx.EXPAND, 0)
 
-        rightSizer = wx.FlexGridSizer(2, 1, 0, 0)
+        rightSizer = wx.FlexGridSizer(cols=1)
         rightSizer.Add(self.tagsStrategy, 0, wx.EXPAND, 0)
         rightSizer.Add(self.clearTagsBtn, 0, wx.ALL|wx.EXPAND, 2)
         rightSizer.Add(self.searchBtn, 0, wx.ALL|wx.EXPAND, 2)
