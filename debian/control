@@ -3,7 +3,7 @@ Section: text
 Priority: optional
 Maintainer: Eugeniy Ilin <jenyay.ilin@gmail.com>
 Standards-Version: 3.9.4
-Build-Depends: debhelper (>= 8), python (>=2.7), python-support (>= 1)
+Build-Depends: debhelper (>=8), python2.7, python-support (>=1)
 Homepage: http://jenyay.net/Outwiker/English
 
 Package: outwiker
