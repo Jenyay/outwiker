@@ -17,7 +17,7 @@ class AboutDialog(wx.Dialog):
         self.imagesDir = getImagesDir()
 
         # begin wxGlade: AboutDialog.__init__
-        kwds["style"] = wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.THICK_FRAME
+        # kwds["style"] = wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.THICK_FRAME
         wx.Dialog.__init__(self, *args, **kwds)
         self.titleLabel = wx.StaticText(self, -1, _("OutWiker"))
         self.versionTitleLabel = wx.StaticText(self, -1, _("Version:"))
@@ -59,12 +59,11 @@ class AboutDialog(wx.Dialog):
 
     def __do_layout(self):
         # begin wxGlade: AboutDialog.__do_layout
-        main_sizer = wx.FlexGridSizer(4, 1, 0, 0)
-        grid_sizer_4 = wx.FlexGridSizer(1, 1, 0, 0)
-        grid_sizer_2 = wx.FlexGridSizer(1, 2, 0, 0)
-        grid_sizer_3 = wx.FlexGridSizer(1, 1, 0, 0)
-        sizeSizer = wx.FlexGridSizer(1, 2, 0, 0)
-        grid_sizer_1 = wx.FlexGridSizer(1, 2, 0, 0)
+        main_sizer = wx.FlexGridSizer(rows=4)
+        grid_sizer_2 = wx.FlexGridSizer(cols=2)
+        grid_sizer_3 = wx.FlexGridSizer(cols=1)
+        sizeSizer = wx.FlexGridSizer(cols=2)
+        grid_sizer_1 = wx.FlexGridSizer(cols=2)
         main_sizer.Add(self.titleLabel, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL, 2)
         grid_sizer_1.Add(self.versionTitleLabel, 0, wx.ALL | wx.ALIGN_RIGHT, 2)
         grid_sizer_1.Add(self.versionLabel, 0, wx.ALL, 2)
@@ -86,14 +85,17 @@ class AboutDialog(wx.Dialog):
         self.aboutPane.SetSizer(grid_sizer_2)
         grid_sizer_2.AddGrowableRow(0)
         grid_sizer_2.AddGrowableCol(1)
-        grid_sizer_4.Add(self.email, 1, wx.ALL | wx.EXPAND | wx.ALIGN_RIGHT, 2)
-        grid_sizer_4.Add(self.googleplus, 1, wx.ALL | wx.EXPAND | wx.ALIGN_RIGHT, 2)
-        grid_sizer_4.Add(self.facebook, 1, wx.ALL | wx.EXPAND | wx.ALIGN_RIGHT, 2)
-        grid_sizer_4.Add(self.livejournal, 1, wx.ALL | wx.EXPAND | wx.ALIGN_RIGHT, 2)
-        grid_sizer_4.Add(self.twitter, 1, wx.ALL | wx.EXPAND | wx.ALIGN_RIGHT, 2)
-        grid_sizer_4.Add(self.vkontakte, 1, wx.ALL | wx.EXPAND | wx.ALIGN_RIGHT, 2)
-        self.contactsPane.SetSizer(grid_sizer_4)
+
+        grid_sizer_4 = wx.FlexGridSizer(cols=1)
         grid_sizer_4.AddGrowableCol(0)
+        grid_sizer_4.Add(self.email, 1, wx.ALL | wx.ALIGN_CENTER, 2)
+        grid_sizer_4.Add(self.googleplus, 1, wx.ALL | wx.ALIGN_CENTER, 2)
+        grid_sizer_4.Add(self.facebook, 1, wx.ALL | wx.ALIGN_CENTER, 2)
+        grid_sizer_4.Add(self.livejournal, 1, wx.ALL | wx.ALIGN_CENTER, 2)
+        grid_sizer_4.Add(self.twitter, 1, wx.ALL | wx.ALIGN_CENTER, 2)
+        grid_sizer_4.Add(self.vkontakte, 1, wx.ALL | wx.ALIGN_CENTER, 2)
+        self.contactsPane.SetSizer(grid_sizer_4)
+
         self.notebook.AddPage(self.aboutPane, _("About"))
         self.notebook.AddPage(self.contactsPane, _("Contacts"))
         main_sizer.Add(self.notebook, 1, wx.ALL | wx.EXPAND, 2)
