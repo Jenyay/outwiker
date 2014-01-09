@@ -21,9 +21,6 @@ def getCurrentVersion ():
     return version_str
 
 includefiles = ['images', 
-    # 'msvcr90.dll', 
-    # 'msvcp90.dll', 
-    # 'Microsoft.VC90.CRT.manifest', 
     'help', 
     'locale', 
     'version.txt', 
