@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
+from datetime import datetime, timedelta
+
 import wx.stc
 
 from outwiker.gui.texteditor import TextEditor
@@ -11,19 +13,27 @@ from .wikicolorizer import WikiColorizer, EVT_APPLY_STYLE
 
 class WikiEditor (TextEditor):
     def __init__ (self, parent):
-        self._createStyles()
+        self.__createStyles()
         super (WikiEditor, self).__init__ (parent)
 
         self._colorizer = WikiColorizer (self)
 
-        self.textCtrl.Bind (wx.stc.EVT_STC_STYLENEEDED, self.onStyleNeeded)
-        self.textCtrl.Bind (wx.stc.EVT_STC_CHANGE, self.onChange)
-        self.Bind (EVT_APPLY_STYLE, self._onApplyStyle)
+        self.textCtrl.Bind (wx.stc.EVT_STC_STYLENEEDED, self.__onStyleNeeded)
+        self.textCtrl.Bind (wx.stc.EVT_STC_CHANGE, self.__onChange)
+        self.Bind (EVT_APPLY_STYLE, self.__onApplyStyle)
 
+        # Уже были установлены стили текста (раскраска)
         self.__styleSet = False
+        # Начинаем раскраску кода не менее чем через это время с момента его изменения
+        self.__DELAY = timedelta (milliseconds=300)
+
+        # Время последней модификации текста страницы. 
+        # Используется для замера времени после модификации, чтобы не парсить текст
+        # после каждой введенной буквы
+        self.__lastEdit = datetime.now()
 
 
-    def _createStyles (self):
+    def __createStyles (self):
         self._styles = {}
 
         # Константы для стилей
@@ -95,46 +105,48 @@ class WikiEditor (TextEditor):
         self.textCtrl.SetStyleBits (7)
 
         for (styleid, style) in self._styles.items():
-            self._setStyleDefault (styleid)
+            self.__setStyleDefault (styleid)
             self.textCtrl.StyleSetSpec (styleid, style)
 
-        self._setStyleHeading()
+        self.__setStyleHeading()
 
 
-    def _setStyleHeading (self):
+    def __setStyleHeading (self):
         self.textCtrl.StyleSetSize (self.STYLE_HEADING_ID, self.config.fontSize.value + 2)
         self.textCtrl.StyleSetFaceName (self.STYLE_HEADING_ID, self.config.fontName.value)
         self.textCtrl.StyleSetSpec (self.STYLE_HEADING_ID, self._styles[self.STYLE_HEADING_ID])
 
 
-    def _setStyleDefault (self, styleId):
+    def __setStyleDefault (self, styleId):
         self.textCtrl.StyleSetSize (styleId, self.config.fontSize.value)
         self.textCtrl.StyleSetFaceName (styleId, self.config.fontName.value)
 
 
-    def onChange (self, event):
+    def __onChange (self, event):
         self.__styleSet = False
+        self.__lastEdit = datetime.now()
 
 
-    def getTextForParse (self):
+    def __getTextForParse (self):
         # Табуляция в редакторе считается за несколько символов
         return self.textCtrl.GetText().replace ("\t", " ")
 
 
-    def onStyleNeeded (self, event):
-        if self.__styleSet:
+    def __onStyleNeeded (self, event):
+        if (self.__styleSet or
+                datetime.now() - self.__lastEdit < self.__DELAY):
             return
 
-        text = self.getTextForParse()
+        text = self.__getTextForParse()
         self._colorizer.start (text)
 
 
-    def _onApplyStyle (self, event):
-        if event.text == self.getTextForParse():
-            self._applyStyles (event.stylebytes)
+    def __onApplyStyle (self, event):
+        if event.text == self.__getTextForParse():
+            self.__applyStyles (event.stylebytes)
     
 
-    def _applyStyles (self, stylebytes):
+    def __applyStyles (self, stylebytes):
         self.textCtrl.StartStyling (0, 0xff)
         self.textCtrl.SetStyleBytes (len (stylebytes), stylebytes)
         self.__styleSet = True
