@@ -8,8 +8,6 @@ import wx.stc
 from outwiker.gui.texteditor import TextEditor
 from .wikicolorizer import WikiColorizer, EVT_APPLY_STYLE
 
-# Событие вызывается с помощью PostEvent для потокобезопасного применения стилей к редактору
-
 
 class WikiEditor (TextEditor):
     def __init__ (self, parent):
@@ -18,7 +16,8 @@ class WikiEditor (TextEditor):
 
         self._colorizer = WikiColorizer (self)
 
-        self.textCtrl.Bind (wx.stc.EVT_STC_STYLENEEDED, self.__onStyleNeeded)
+        self.textCtrl.Bind (wx.EVT_IDLE, self.__onStyleNeeded)
+        # self.textCtrl.Bind (wx.stc.EVT_STC_STYLENEEDED, self.__onStyleNeeded)
         self.textCtrl.Bind (wx.stc.EVT_STC_CHANGE, self.__onChange)
         self.Bind (EVT_APPLY_STYLE, self.__onApplyStyle)
 
@@ -30,7 +29,7 @@ class WikiEditor (TextEditor):
         # Время последней модификации текста страницы. 
         # Используется для замера времени после модификации, чтобы не парсить текст
         # после каждой введенной буквы
-        self.__lastEdit = datetime.now()
+        self.__lastEdit = datetime.now() - self.__DELAY * 2
 
 
     def __createStyles (self):
@@ -125,6 +124,7 @@ class WikiEditor (TextEditor):
     def __onChange (self, event):
         self.__styleSet = False
         self.__lastEdit = datetime.now()
+        event.Skip()
 
 
     def __getTextForParse (self):
