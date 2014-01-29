@@ -13,6 +13,7 @@ from .event import Event
 from .exceptions import ClearConfigError, RootFormatError, DublicateTitle, ReadonlyException, TreeException
 from .tagscommands import parseTagsList
 from .sortfunctions import sortOrderFunction, sortAlphabeticalFunction
+import events
 
 
 class RootWikiPage (object):
@@ -268,7 +269,10 @@ class WikiDocument (RootWikiPage):
         self.onEndTreeUpdate = Event()
 
         # Обновление страницы
-        # Параметры: sender
+        # Параметры: 
+        #     sender
+        #     **kwargs
+        # kwargs содержит значение 'change', хранящее флаги того, что изменилось 
         self.onPageUpdate = Event()
 
         # Изменение порядка страниц
@@ -575,8 +579,7 @@ class WikiPage (RootWikiPage):
             shutil.copyfile (iconpath, newpath)
             self.updateDateTime()
 
-        self.root.onPageUpdate (self)
-        self.root.onTreeUpdate (self)
+        self.root.onPageUpdate (self, change=events.PAGE_UPDATE_ICON)
 
         return newpath
 
@@ -614,7 +617,7 @@ class WikiPage (RootWikiPage):
             self._tags = newtags
             self.save()
             self.updateDateTime()
-            self.root.onPageUpdate(self)
+            self.root.onPageUpdate(self, change=events.PAGE_UPDATE_TAGS)
 
 
     def _getIconFiles (self):
@@ -755,7 +758,7 @@ class WikiPage (RootWikiPage):
                 fp.write (text.encode ("utf8"))
 
             self.updateDateTime()
-            self.root.onPageUpdate(self)
+            self.root.onPageUpdate(self, change=events.PAGE_UPDATE_CONTENT)
     
 
     @property

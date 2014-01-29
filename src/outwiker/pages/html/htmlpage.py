@@ -6,6 +6,7 @@
 
 import os.path
 
+from outwiker.core.events import PAGE_UPDATE_CONTENT
 from outwiker.core.config import BooleanOption
 from outwiker.core.tree import WikiPage
 from outwiker.core.factory import PageFactory
@@ -48,7 +49,7 @@ class HtmlWikiPage (WikiPage):
         """
         option = BooleanOption (self.params, self.__autoLineWrapSection, self.__autoLineWrapParam, True)
         option.value = value
-        self.root.onPageUpdate (self)
+        self.root.onPageUpdate (self, change=PAGE_UPDATE_CONTENT)
 
     
     @staticmethod

@@ -62,7 +62,7 @@ class TextPageCreationTest(unittest.TestCase):
         removeWiki (self.path)
 
 
-    def onPageUpdate (self, page):
+    def onPageUpdate (self, page, **kwargs):
         self.eventcount += 1
 
 

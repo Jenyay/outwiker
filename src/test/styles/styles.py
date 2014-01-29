@@ -40,7 +40,7 @@ class StylesTest (unittest.TestCase):
         Application.onPageUpdate += self.onPageUpdate
 
 
-    def onPageUpdate (self, sender):
+    def onPageUpdate (self, sender, **kwargs):
         self._pageUpdateCount += 1
         self._pageUpdateSender = sender
 

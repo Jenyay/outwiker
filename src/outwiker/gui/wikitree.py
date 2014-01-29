@@ -19,6 +19,7 @@ from outwiker.actions.movepageup import MovePageUpAction
 from outwiker.actions.movepagedown import MovePageDownAction
 from outwiker.actions.removepage import RemovePageAction
 from outwiker.actions.editpageprop import EditPagePropertiesAction
+from outwiker.core.events import PAGE_UPDATE_ICON
 
 
 class WikiTree(wx.Panel):
@@ -96,6 +97,7 @@ class WikiTree(wx.Panel):
         Application.onPageOrderChange += self.__onPageOrderChange
         Application.onPageSelect += self.__onPageSelect
         Application.onPageRemove += self.__onPageRemove
+        Application.onPageUpdate += self.__onPageUpdate
 
         Application.onStartTreeUpdate += self.__onStartTreeUpdate
         Application.onEndTreeUpdate += self.__onEndTreeUpdate
@@ -111,6 +113,7 @@ class WikiTree(wx.Panel):
         Application.onPageOrderChange -= self.__onPageOrderChange
         Application.onPageSelect -= self.__onPageSelect
         Application.onPageRemove -= self.__onPageRemove
+        Application.onPageUpdate -= self.__onPageUpdate
 
         Application.onStartTreeUpdate -= self.__onStartTreeUpdate
         Application.onEndTreeUpdate -= self.__onEndTreeUpdate
@@ -118,6 +121,38 @@ class WikiTree(wx.Panel):
 
     def __onWikiOpen (self, root):
         self.__treeUpdate (root)
+
+
+    def __onPageUpdate (self, sender, **kwargs):
+        change = kwargs['change']
+        if change == PAGE_UPDATE_ICON:
+            self.__updateIcon (sender)
+
+
+    def __loadIcon (self, page):
+        """
+        Добавляет иконку страницы в ImageList и возвращает ее идентификатор. 
+        Если иконки нет, то возвращает идентификатор иконки по умолчанию
+        """
+        icon = page.icon
+
+        if icon != None:
+            image = wx.Bitmap (icon)
+            image.SetHeight (self.iconHeight)
+            imageId = self.imagelist.Add (image)
+        else:
+            imageId = self.defaultImageId
+
+        return imageId
+
+
+    def __updateIcon (self, page):
+        if page not in self._pageCache:
+            # Если нет этой страницы в дереве, то не важно, изменилась иконка или нет
+            return
+
+        self.treeCtrl.SetItemImage (self._pageCache[page],
+            self.__loadIcon (page) )
 
 
     def __BindGuiEvents (self):
@@ -505,16 +540,7 @@ class WikiTree(wx.Panel):
                 child.title, 
                 data = wx.TreeItemData(child) )
 
-        icon = child.icon
-
-        if icon != None:
-            image = wx.Bitmap (icon)
-            image.SetHeight (self.iconHeight)
-            imageId = self.imagelist.Add (image)
-        else:
-            imageId = self.defaultImageId
-            
-        self.treeCtrl.SetItemImage (item, imageId)
+        self.treeCtrl.SetItemImage (item, self.__loadIcon (child) )
 
         self._pageCache[child] = item
         self.__mountItem (item, child)

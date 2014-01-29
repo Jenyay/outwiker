@@ -85,7 +85,7 @@ class TagsPanelController (object):
         self.__markTags()
 
 
-    def __onUpdate (self, sender):
+    def __onUpdate (self, sender, **kwargs):
         self.updateTags()
 
 

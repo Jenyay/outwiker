@@ -96,7 +96,7 @@ class CurrentPagePanel(wx.Panel):
         self.Thaw()
 
 
-    def __onPageUpdate (self, page):
+    def __onPageUpdate (self, page, **kwargs):
         if Application.selectedPage != None and Application.selectedPage == page:
             self.__updatePageInfo (page)
     

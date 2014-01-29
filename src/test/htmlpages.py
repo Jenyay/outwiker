@@ -36,7 +36,7 @@ class HtmlPagesTest(unittest.TestCase):
         removeWiki (self.path)
 
 
-    def __onPageUpdate (self, sender):
+    def __onPageUpdate (self, sender, **kwargs):
         self.__eventcount += 1
         self.__eventSender = sender
 

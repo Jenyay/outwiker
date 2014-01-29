@@ -163,7 +163,7 @@ class HtmlPageView (BaseHtmlPanel):
         super (HtmlPageView, self)._onSwitchToPreview()
 
 
-    def __onPageUpdate (self, sender):
+    def __onPageUpdate (self, sender, **kwargs):
         if sender == self._currentpage:
             if self.notebook.GetSelection() == self.RESULT_PAGE_INDEX:
                 self._showHtml()

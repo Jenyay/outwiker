@@ -16,6 +16,7 @@ from outwiker.core.exceptions import ReadonlyException
 from outwiker.core.config import StringOption, IntegerOption
 from outwiker.core.tagslist import TagsList
 from outwiker.core.tagscommands import parseTagsList, getTagsString
+from outwiker.core.events import PAGE_UPDATE_CONTENT
 
 from .searchpanel import SearchPanel
 
@@ -65,7 +66,7 @@ class SearchWikiPage (WikiPage):
             # Ничего страшного, если поисковая фраза не сохранится
             pass
 
-        Application.onPageUpdate (self)
+        Application.onPageUpdate (self, change=PAGE_UPDATE_CONTENT)
     
 
     def _getSearchTags (self):
@@ -98,7 +99,7 @@ class SearchWikiPage (WikiPage):
             # Ну не сохранятся искомые теги, ничего страшного
             pass
 
-        Application.onPageUpdate (self)
+        Application.onPageUpdate (self, change=PAGE_UPDATE_CONTENT)
     
 
     def _getStrategy (self):
@@ -134,7 +135,7 @@ class SearchWikiPage (WikiPage):
             # Ничего страшного
             pass
 
-        Application.onPageUpdate (self)
+        Application.onPageUpdate (self, change=PAGE_UPDATE_CONTENT)
 
 
 class SearchPageFactory (PageFactory):

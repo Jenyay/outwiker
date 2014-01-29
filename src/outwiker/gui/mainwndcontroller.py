@@ -197,7 +197,7 @@ class MainWndController (object):
         self.updatePageDateTime()
 
 
-    def __onPageUpdate (self, page):
+    def __onPageUpdate (self, page, **kwargs):
         self.updatePageDateTime()
 
 

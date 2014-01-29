@@ -31,7 +31,10 @@ class ApplicationParams (object):
         self.onWikiClose = Event()
 
         # Обновление страницы
-        # Параметры: sender
+        # Параметры: 
+        #     sender
+        #     **kwargs
+        # kwargs содержит значение 'change', хранящее флаги того, что изменилось 
         self.onPageUpdate = Event()
 
         # Создание страницы

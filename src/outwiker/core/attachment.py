@@ -6,6 +6,7 @@ import os.path
 import shutil
 
 from .exceptions import ReadonlyException
+import events
 
 
 class Attachment (object):
@@ -80,7 +81,7 @@ class Attachment (object):
                 shutil.copy (name, attachPath)
 
         self.page.updateDateTime()
-        self.page.root.onPageUpdate (self.page)
+        self.page.root.onPageUpdate (self.page, change=events.PAGE_UPDATE_ATTACHMENT)
 
 
     def removeAttach (self, files):
@@ -101,11 +102,11 @@ class Attachment (object):
                 else:
                     os.remove (path)
             except OSError:
-                self.page.root.onPageUpdate (self.page)
+                self.page.root.onPageUpdate (self.page, change=events.PAGE_UPDATE_ATTACHMENT)
                 raise IOError (u"Can't remove %s" % fname)
 
         self.page.updateDateTime()
-        self.page.root.onPageUpdate (self.page)
+        self.page.root.onPageUpdate (self.page, change=events.PAGE_UPDATE_ATTACHMENT)
 
 
     @staticmethod

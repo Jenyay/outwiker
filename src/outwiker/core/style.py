@@ -6,6 +6,7 @@ import shutil
 
 from .exceptions import ReadonlyException
 from .system import getTemplatesDir
+import events
 
 
 class Style (object):
@@ -76,7 +77,7 @@ class Style (object):
                     os.path.join (page.path, self._styleDir) )
 
         page.updateDateTime()
-        page.root.onPageUpdate (page)
+        page.root.onPageUpdate (page, change=events.PAGE_UPDATE_STYLE)
 
 
     def _removeStyleFromPage (self, page):
@@ -109,7 +110,7 @@ class Style (object):
 
         self._removeStyleFromPage(page)
         page.updateDateTime()
-        page.root.onPageUpdate (page)
+        page.root.onPageUpdate (page, change=events.PAGE_UPDATE_STYLE)
 
 
     def check (self, path):

@@ -15,6 +15,7 @@ from outwiker.pages.html.htmlpage import HtmlPageFactory
 from outwiker.core.event import Event
 from outwiker.core.application import Application
 from test.utils import removeWiki
+from outwiker.core.events import *
 
 
 class EventTest (unittest.TestCase):
@@ -104,26 +105,33 @@ class EventsTest (unittest.TestCase):
         self.treeUpdateCount = 0
         self.pageSelectCount = 0
 
+        self.prev_kwargs = None
+
         Application.wikiroot = None
+
 
     def tearDown(self):
         Application.wikiroot = None
         removeWiki (self.path)
 
-    def pageUpdate (self, sender):
+    def pageUpdate (self, sender, **kwargs):
         self.isPageUpdate = True
         self.pageUpdateSender = sender
         self.pageUpdateCount += 1
+        self.prev_kwargs = kwargs
+
 
     def pageCreate(self, sender):
         self.isPageCreate = True
         self.pageCreateSender = sender
         self.pageCreateCount += 1
 
+
     def treeUpdate (self, sender):
         self.isTreeUpdate = True
         self.treeUpdateSender = sender
         self.treeUpdateCount += 1
+
 
     def pageSelect (self, sender):
         self.isPageSelect = True
@@ -243,6 +251,7 @@ class EventsTest (unittest.TestCase):
         
         self.assertTrue(self.isPageUpdate)
         self.assertEqual (self.pageUpdateSender, rootwiki[u"Страница 1"])
+        self.assertEqual (self.prev_kwargs["change"], PAGE_UPDATE_CONTENT)
 
         Application.onPageUpdate -= self.pageUpdate
         Application.wikiroot = None
@@ -296,6 +305,7 @@ class EventsTest (unittest.TestCase):
         
         self.assertTrue(self.isPageUpdate)
         self.assertEqual (self.pageUpdateSender, rootwiki[u"Страница 1"])
+        self.assertEqual (self.prev_kwargs["change"], PAGE_UPDATE_TAGS)
 
         Application.onPageUpdate -= self.pageUpdate
 
@@ -349,9 +359,9 @@ class EventsTest (unittest.TestCase):
         
         self.assertTrue (self.isPageUpdate)
         self.assertEqual (self.pageUpdateSender, rootwiki[u"Страница 1"])
+        self.assertEqual (self.prev_kwargs["change"], PAGE_UPDATE_ICON)
         
-        self.assertTrue (self.isTreeUpdate)
-        self.assertEqual (self.treeUpdateSender, rootwiki[u"Страница 1"])
+        self.assertFalse (self.isTreeUpdate)
 
         Application.onPageUpdate -= self.pageUpdate
         Application.onTreeUpdate -= self.treeUpdate
@@ -384,8 +394,7 @@ class EventsTest (unittest.TestCase):
         self.assertTrue (self.isPageUpdate)
         self.assertEqual (self.pageUpdateSender, rootwiki[u"Страница 1"])
         
-        self.assertTrue (self.isTreeUpdate)
-        self.assertEqual (self.treeUpdateSender, rootwiki[u"Страница 1"])
+        self.assertFalse (self.isTreeUpdate)
 
         Application.onPageUpdate -= self.pageUpdate
         Application.onTreeUpdate -= self.treeUpdate

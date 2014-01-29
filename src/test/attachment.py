@@ -38,7 +38,7 @@ class AttachmentTest (unittest.TestCase):
         removeWiki (self.path)
 
 
-    def onPageUpdate (self, sender):
+    def onPageUpdate (self, sender, **kwargs):
         self.pageUpdateCount += 1
         self.pageUpdateSender = sender
 

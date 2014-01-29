@@ -148,7 +148,7 @@ class AttachPanel(wx.Panel):
         self.updateAttachments ()
 
 
-    def __onPageUpdate (self, page):
+    def __onPageUpdate (self, page, **kwargs):
         if Application.selectedPage != None and Application.selectedPage == page:
             self.updateAttachments ()
 

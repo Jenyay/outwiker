@@ -248,7 +248,7 @@ class TabsController (object):
         self.openInTab (self._application.selectedPage, True)
 
 
-    def __onPageUpdate (self, page):
+    def __onPageUpdate (self, page, **kwargs):
         self._tabsCtrl.RenameCurrentTab (self.__getTitle (self._application.selectedPage))
         self._tabsCtrl.SetCurrentPage (self._application.selectedPage)
         self.__checkInvalidTabs ()
