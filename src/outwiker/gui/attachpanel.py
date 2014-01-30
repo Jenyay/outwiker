@@ -10,6 +10,7 @@ from outwiker.core.commands import MessageBox
 import outwiker.core.system
 from outwiker.core.attachment import Attachment
 from outwiker.actions.attachfiles import AttachFilesAction
+from outwiker.core.events import PAGE_UPDATE_ATTACHMENT
 
 
 class AttachPanel(wx.Panel):
@@ -149,7 +150,9 @@ class AttachPanel(wx.Panel):
 
 
     def __onPageUpdate (self, page, **kwargs):
-        if Application.selectedPage != None and Application.selectedPage == page:
+        if (Application.selectedPage != None and 
+                Application.selectedPage == page and
+                kwargs['change'] == PAGE_UPDATE_ATTACHMENT):
             self.updateAttachments ()
 
 
