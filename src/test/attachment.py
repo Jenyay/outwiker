@@ -9,7 +9,7 @@ from utils import removeWiki
 from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.core.application import Application
-
+from outwiker.core.events import PAGE_UPDATE_ATTACHMENT
 
 
 class AttachmentTest (unittest.TestCase):
@@ -31,6 +31,7 @@ class AttachmentTest (unittest.TestCase):
         self.files = [u"accept.png", u"add.png", u"anchor.png", u"файл с пробелами.tmp", u"dir"]
         self.fullFilesPath = [os.path.join (filesPath, fname) for fname in self.files]
 
+        self.prev_kwargs = None
         Application.wikiroot = self.rootwiki
 
 
@@ -41,6 +42,7 @@ class AttachmentTest (unittest.TestCase):
     def onPageUpdate (self, sender, **kwargs):
         self.pageUpdateCount += 1
         self.pageUpdateSender = sender
+        self.prev_kwargs = kwargs
 
 
     def testAttachPath1 (self):
@@ -87,6 +89,7 @@ class AttachmentTest (unittest.TestCase):
         
         self.assertEqual (self.pageUpdateCount, 1)
         self.assertEqual (self.pageUpdateSender, self.page)
+        self.assertEqual (self.prev_kwargs['change'], PAGE_UPDATE_ATTACHMENT)
 
         attach.attach (self.fullFilesPath [2 :])
         
