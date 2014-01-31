@@ -12,6 +12,7 @@ class EditorSearchPanel (LocalSearchPanel):
     
         self.editPanel = None
         self.editor = None
+        self.phraseTextCtrl.SetValue (EditorSearchPanel._recentSearch)
 
 
     def nextSearch (self):
@@ -19,7 +20,6 @@ class EditorSearchPanel (LocalSearchPanel):
         Искать следующее вхождение фразы
         """
         self.searchTo (self.findNext)
-        self.editor.SetFocus()
 
 
     def prevSearch (self):
@@ -54,22 +54,18 @@ class EditorSearchPanel (LocalSearchPanel):
         Поиск фразы в нужном направлении (вперед / назад)
         direction - функция, которая ищет текст в нужном направлении (findNext / findPrev)
         """
-        assert self.editor != None
-
-        text = self.editor.GetText()
+        self.phraseTextCtrl.SetFocus ()
         phrase = self.phraseTextCtrl.GetValue ()
-
-        if (len (phrase) == 0 and 
-                len (EditorSearchPanel._recentSearch) == 0):
-            self.phraseTextCtrl.SetFocus ()
-            return
-
-        if len (phrase) == 0:
-            phrase = EditorSearchPanel._recentSearch
-            self.phraseTextCtrl.SetValue (phrase)
 
         EditorSearchPanel._recentSearch = phrase
 
+        if len (phrase) == 0:
+            return
+
+        if self.editor == None:
+            return
+
+        text = self.editor.GetText()
         result = direction (text, phrase)
         if result != None:
             self.resultLabel.SetLabel (u"")
