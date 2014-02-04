@@ -4,6 +4,16 @@
 import cProfile
 import pstats
 
+import wxversion
+
+try:
+    wxversion.select("2.8")
+except wxversion.VersionError:
+    if os.name == "nt":
+        pass
+    else:
+        raise
+
 import wx
 
 from outwiker.core.application import Application
