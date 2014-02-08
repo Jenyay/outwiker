@@ -83,22 +83,6 @@ class TagsCloud (wx.ScrolledWindow):
         self.__tags = []
 
 
-    # def __valignLineLabels (self, labels):
-    #     """
-    #     Выровнять по вертикали метки в одной строке
-    #     """
-    #     maxheight, maxindex = self.__getMaxHeight (labels)
-    #     if maxindex == -1:
-    #         return
-
-    #     centerY = labels[maxindex].GetPositionTuple()[1] + maxheight / 2
-
-    #     for label in labels:
-    #         currx, curry = label.GetPositionTuple()
-    #         height = label.GetSizeTuple()[1]
-    #         label.MoveXY (currx, centerY - height / 2)
-
-
     def __getMaxHeight (self, labels):
         maxheight = 0
         maxindex = -1

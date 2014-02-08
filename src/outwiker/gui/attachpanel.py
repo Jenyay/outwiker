@@ -66,6 +66,9 @@ class AttachPanel(wx.Panel):
 
     def __onClose (self, event):
         self.__unbindAppEvents()
+        self.toolBar.ClearTools()
+        self.attachList.ClearAll()
+        self.Destroy()
     
 
     def __createToolBar (self, parent, id):

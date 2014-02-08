@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
+import wx
+
 from .pagelist import EVT_PAGE_CLICK
 from .taglabel import EVT_TAG_LEFT_CLICK, EVT_TAG_MIDDLE_CLICK
 
@@ -20,12 +22,28 @@ class TagsPanelController (object):
         self.__tagsPanel.Bind (EVT_PAGE_CLICK, self.__onPageClick)
         self.__tagsPanel.Bind (EVT_TAG_LEFT_CLICK, self.__onTagLeftClick)
         self.__tagsPanel.Bind (EVT_TAG_MIDDLE_CLICK, self.__onTagMiddleClick)
+        self.__tagsPanel.Bind (wx.EVT_CLOSE, self.__onClose)
 
         self.__application.onStartTreeUpdate += self.__onStartUpdate
         self.__application.onEndTreeUpdate += self.__onEndUpdate
         self.__application.onPageSelect += self.__onPageSelect
 
         self.updateTags()
+
+
+    def __onClose (self, event):
+        self.__tagsPanel.Unbind (EVT_PAGE_CLICK, handler=self.__onPageClick)
+        self.__tagsPanel.Unbind (EVT_TAG_LEFT_CLICK, handler=self.__onTagLeftClick)
+        self.__tagsPanel.Unbind (EVT_TAG_MIDDLE_CLICK, handler=self.__onTagMiddleClick)
+        self.__tagsPanel.Unbind (wx.EVT_CLOSE, handler=self.__onClose)
+
+        self.__application.onStartTreeUpdate -= self.__onStartUpdate
+        self.__application.onEndTreeUpdate -= self.__onEndUpdate
+        self.__application.onPageSelect -= self.__onPageSelect
+
+        self.__unbindAppEvents()
+        self.__tagsPanel.clearTags()
+        self.__tagsPanel.Destroy()
 
 
     def __onStartUpdate (self, page):

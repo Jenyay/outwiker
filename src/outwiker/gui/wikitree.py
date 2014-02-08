@@ -201,6 +201,10 @@ class WikiTree(wx.Panel):
 
     def __onClose (self, event):
         self.__UnBindApplicationEvents()
+        self.treeCtrl.DeleteAllItems()
+        self.imagelist.RemoveAll()
+        self.toolbar.ClearTools()
+        self.Destroy()
 
 
     def __onPageCreate (self, newpage):
