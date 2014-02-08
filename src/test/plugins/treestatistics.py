@@ -406,7 +406,7 @@ class TreeStatisticsTest (unittest.TestCase):
         self.assertEqual (pagesList[4][1], 0)
 
         self.assertEqual (pagesList[0][0], self.rootwiki[u"Страница 5"])
-        self.assertEqual (pagesList[0][1], 11771)
+        self.assertAlmostEqual (pagesList[0][1], 11771, delta=300)
 
         self.assertEqual (pagesList[1][0], self.rootwiki[u"Страница 4"])
         self.assertEqual (pagesList[1][1], 2037)

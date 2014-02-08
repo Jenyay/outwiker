@@ -431,7 +431,7 @@ class PageStatisticsTest (unittest.TestCase):
 
         pageStat = self.loader[self.__pluginname].getPageStat (testPage)
 
-        self.assertEqual (pageStat.attachmentsSize, 11771)
+        self.assertAlmostEqual (pageStat.attachmentsSize, 11771, delta=300)
 
 
     def testAttachmentsSizeSearch1 (self):
@@ -441,4 +441,4 @@ class PageStatisticsTest (unittest.TestCase):
 
         pageStat = self.loader[self.__pluginname].getPageStat (testPage)
 
-        self.assertEqual (pageStat.attachmentsSize, 11771)
+        self.assertAlmostEqual (pageStat.attachmentsSize, 11771, delta=300)
