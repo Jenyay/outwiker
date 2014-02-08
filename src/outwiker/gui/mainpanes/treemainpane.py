@@ -4,8 +4,8 @@
 import wx.aui
 
 from .mainpane import MainPane
-from ..guiconfig import TreeConfig
-from ..wikitree import WikiTree
+from outwiker.gui.guiconfig import TreeConfig
+from outwiker.gui.notestree import NotesTree
 
 
 class TreeMainPane (MainPane):
@@ -14,7 +14,7 @@ class TreeMainPane (MainPane):
 
 
     def _createPanel (self):
-        return WikiTree (self.parent, -1)
+        return NotesTree (self.parent, -1)
 
 
     def _createConfig (self):

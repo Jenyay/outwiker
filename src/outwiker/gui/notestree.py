@@ -22,7 +22,7 @@ from outwiker.actions.editpageprop import EditPagePropertiesAction
 from outwiker.core.events import PAGE_UPDATE_ICON
 
 
-class WikiTree(wx.Panel):
+class NotesTree(wx.Panel):
     def __init__(self, *args, **kwds):
         self.ID_PROPERTIES_BUTTON = wx.NewId()
         self.ID_MOVE_UP = wx.NewId()
@@ -680,6 +680,3 @@ class WikiTree(wx.Panel):
 
 
         self.toolbar.Realize()
-        
-# end of class WikiTree
-
