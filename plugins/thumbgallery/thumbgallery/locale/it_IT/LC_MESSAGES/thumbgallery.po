@@ -1,0 +1,46 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: outwiker\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-06-29 13:10+0400\n"
+"PO-Revision-Date: 2014-02-09 21:18+0300\n"
+"Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
+"Language-Team: Italian\n"
+"Language: it_IT\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.5.4\n"
+
+#: controller.py:57
+msgid "Thumbnails Gallery (:thumbgallery:)"
+msgstr "Galleria di miniature (:thumbgallery:)"
+
+#: thumbdialog.py:20
+msgid "Gallery"
+msgstr "Galleria"
+
+#: thumbdialog.py:31
+msgid "Columns count (0 - without table)"
+msgstr "Numero di colonne (0 per nessuna tabella)"
+
+#: thumbdialog.py:36
+msgid "Thumbnails size (0 - default size)"
+msgstr "Dimensioni miniature (0 per dimensioni predefinite)"
+
+#: thumbdialog.py:43
+msgid "All Images"
+msgstr "Seleziona tutte"
+
+#: thumbdialog.py:44
+msgid "Clear"
+msgstr "Deseleziona tutto"
+
+#: thumbgallery.py:72
+msgid "locale/description.html"
+msgstr "locale/description.html"
+
+#: thumbgallery.py:80
+msgid "Can't load description"
+msgstr "Impossibile caricare la descrizione"

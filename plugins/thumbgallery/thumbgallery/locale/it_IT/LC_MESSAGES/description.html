@@ -1,0 +1,60 @@
+Il plugin ThumbGallery aggiunge il comando (:thumbgallery:) nella notazione wiki. Questo comando può funzionare in due modalità: mostra tutte le immagini allegate o o solo i file selezionati. 
+
+<b>Sintassi</b>
+
+(:thumbgallery [parametri]:)
+
+oppure
+
+(:thumbgallery [parametri]:)
+[Attach:]picture_1 [| Commento]
+[Attach:]picture_2 [| Commento]
+...
+(:thumbgalleryend:)
+
+<b>Parametri</b>
+<ul>
+<li><i>cols = ...</i> Un numero intero. Il numero di colonne nella tabella. Se <i>cols = 0</i> o non viene specificato nessun valore, allora la galleria sarà una sequenza di miniature senza suddivisione in righe e colonne.</li>
+
+<li><i>px =...</i> Un numero intero. Specifica la dimensione delle miniature (sul lato maggiore). Se <i>px = 0</i>, o il parametro non è specificato, il valore predefinito viene ereditato dalle impostazioni del programma.</li>
+</ul>
+
+<b>Esempi</b>
+
+<u>Creazione di una galleria di tutti i file allegati</u>
+
+(:thumbgallery:)
+
+
+<u>Creazione di una galleria di tutti gli allegati impostando la dimensione delle miniature</u>
+
+(:thumbgallery px=150:)
+
+
+<u>Creazione di una galleria di tutti i file allegati come tabella</u>
+
+(:thumbgallery px= 150 cols=3:)
+
+
+<u>Creazione di una galleria di file selezionati come tabella</u>
+
+(:thumbgallery cols=3 px=150:)
+&nbsp;&nbsp;&nbsp;Attach:DSC_0567.jpg
+&nbsp;&nbsp;&nbsp;Attach:DSC_0604.jpg
+&nbsp;&nbsp;&nbsp;Attach:klyazma_2011_07.jpg
+&nbsp;&nbsp;&nbsp;Attach:smoke.jpg
+&nbsp;&nbsp;&nbsp;Attach:sunset_1.jpg
+&nbsp;&nbsp;&nbsp;Attach:sev_beach2.jpg
+(:thumbgalleryend:)
+
+
+<u>Creazione di una galleria di file selezionati con commenti</u>
+
+(:thumbgallery cols=3 px=150:)
+&nbsp;&nbsp;&nbsp;DSC_0567.jpg
+&nbsp;&nbsp;&nbsp;DSC_0604.jpg
+&nbsp;&nbsp;&nbsp;klyazma_2011_07.jpg | Il fiume Klyazma
+&nbsp;&nbsp;&nbsp;smoke.jpg | Una nebbiosa estate a Mosca
+&nbsp;&nbsp;&nbsp;sunset_1.jpg
+&nbsp;&nbsp;&nbsp;sev_beach2.jpg | Mar nero. Sebastopoli
+(:thumbgalleryend:)

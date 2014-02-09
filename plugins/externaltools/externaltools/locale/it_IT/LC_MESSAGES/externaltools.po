@@ -1,0 +1,70 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: outwiker\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-07-30 09:31+0300\n"
+"PO-Revision-Date: 2014-02-09 21:15+0300\n"
+"Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
+"Language-Team: Italian\n"
+"Language: it_IT\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop\n"
+"X-Poedit-Basepath: ../../..\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.5.4\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: menumaker.py:44
+msgid "Open Content File with..."
+msgstr "Aprire il contenuto del file con..."
+
+#: menumaker.py:57
+msgid "Open Result HTML File with..."
+msgstr "Aprire il file HTML con..."
+
+#: toolslistpanel.py:110
+msgid "Open file dialog..."
+msgstr "Finestra di dialogo Apri file..."
+
+#: toolslistpanel.py:116
+msgid "Remove tool"
+msgstr "Rimuovere strumento"
+
+#: toolslistpanel.py:126
+msgid "Executables (*.exe)|*.exe|All Files|*.*"
+msgstr "Eseguibili (*.exe)|*.exe|Tutti i file|*.*"
+
+#: toolslistpanel.py:128
+msgid "All Files|*"
+msgstr "Tutti i file| *"
+
+#: externaltools.py:41
+msgid "Open notes files with external editor"
+msgstr "Apri il file delle note con un editor esterno"
+
+#: preferencespanel.py:36
+msgid "Tools List"
+msgstr "Elenco degli strumenti"
+
+#: preferencespanel.py:37
+msgid "Append Tools"
+msgstr "Accoda strumenti"
+
+#: preferencespanel.py:89
+msgid "Can't save options"
+msgstr "Impossibile salvare le opzioni"
+
+#: preferencespanel.py:90 controller.py:90
+msgid "Error"
+msgstr "Errore"
+
+#: controller.py:89
+msgid "Can't execute tools"
+msgstr "Impossibile eseguire gli strumenti"
+
+#: controller.py:98
+msgid "External Tools [Plugin]"
+msgstr "Strumenti esterni [Plugin]"

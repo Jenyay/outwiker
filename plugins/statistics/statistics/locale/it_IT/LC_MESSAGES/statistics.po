@@ -1,0 +1,122 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: outwiker\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-05-15 22:01+0400\n"
+"PO-Revision-Date: 2014-02-09 21:16+0300\n"
+"Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
+"Language-Team: Italian\n"
+"Language: it_IT\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.5.4\n"
+
+#: datepageinfo.py:35
+msgid "Recent edited pages:"
+msgstr "Pagine modificate di recente:"
+
+#: datepageinfo.py:43
+msgid "Oldest pages:"
+msgstr "Pagine meno recenti:"
+
+#: maxdepthinfo.py:24
+msgid "Max page depth: {0}"
+msgstr "Profondità massima pagina: {0}"
+
+#: pageattachmentsizeinfo.py:24
+msgid ""
+"Pages with the largest size of attachments (in brackets the size of "
+"attachments):"
+msgstr ""
+"Pagine con la dimensione degli allegati più grande (tra parentesi la "
+"dimensione degli allegati):"
+
+#: pageattachmentsizeinfo.py:43
+msgid "kB"
+msgstr "kB"
+
+#: pagecontentlengthinfo.py:24
+msgid "The longest notes (in brackets the number of characters):"
+msgstr "Le note più lunghe (tra parentesi il numero di caratteri):"
+
+#: pagecountinfo.py:18
+msgid "Page count: {0}"
+msgstr "Conteggio pagine: {0}"
+
+#: pagestatdialog.py:23 statistics.py:108
+msgid "Page Statistic"
+msgstr "Statistica pagine"
+
+#: pagestatdialog.py:66
+msgid "Word count"
+msgstr "Conteggio parole"
+
+#: pagestatdialog.py:82
+msgid "Line count"
+msgstr "Conteggio linee"
+
+#: pagestatdialog.py:98
+msgid "Character count"
+msgstr "Numero di caratteri"
+
+#: pagestatdialog.py:114
+msgid "Character count without spaces"
+msgstr "Numero di caratteri senza spazi"
+
+#: pagestatdialog.py:130
+msgid "Number of attachments"
+msgstr "Numero di allegati"
+
+#: pagestatdialog.py:146
+msgid "Size of attachments (kB)"
+msgstr "Dimensione degli allegati (kB)"
+
+#: statistics.py:49
+msgid ""
+"The plugin to display statistics. \n"
+"                    \n"
+"Statistics plugin append menu items <b>Tools -> Page Statistic</b> and "
+"<b>Tools -> Tree Statistic</b>."
+msgstr ""
+"Plugin per la visualizzazione delle statistiche. \n"
+" \n"
+"Questo plugin aggiunge la voce di menu <b>Strumenti-> Statistiche pagina</b> "
+"e <b>Strumenti-> Statistiche struttura ad albero</b>."
+
+#: statistics.py:61
+msgid "http://jenyay.net/Outwiker/StatisticsEn"
+msgstr "http://jenyay.net/Outwiker/StatisticsEn"
+
+#: statistics.py:111 treestatdialog.py:53
+msgid "Tree Statistic"
+msgstr "Statistiche struttura ad albero"
+
+#: tagsinfo.py:36
+msgid "Tags count: {0}"
+msgstr "Numero tag: {0}"
+
+#: tagsinfo.py:40
+msgid "Most frequently used tags:"
+msgstr "Tag frequentemente usati:"
+
+#: tagsinfo.py:48
+msgid "Most rarely used tags:"
+msgstr "Tag meno usati:"
+
+#: treestatdialog.py:96
+msgid "A tree has no pages"
+msgstr "Struttura ad albero priva di pagine"
+
+#: treestatdialog.py:99
+msgid "Collecting statistics. Please wait..."
+msgstr "Raccolta statistiche in corso, attendere..."
+
+#: treestatdialog.py:103
+msgid "Statistics"
+msgstr "Statistiche"
+
+#: treestatdialog.py:104
+msgid "Collecting statistics..."
+msgstr "Raccolta statistiche..."
