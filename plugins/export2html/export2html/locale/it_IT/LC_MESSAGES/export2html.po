@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-05-17 09:26+0400\n"
-"PO-Revision-Date: 2014-02-10 21:40+0300\n"
+"PO-Revision-Date: 2014-02-11 21:05+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -48,7 +48,7 @@ msgstr "Wiki non aperta"
 
 #: exportbranchdialog.py:31
 msgid "Use long file names (include parent name)"
-msgstr "Includi il nome della cartella superiore (es: parent_pagina)"
+msgstr "Usa nomi file lunghi (include il percorso completo nel nome del file)"
 
 #: exportbranchdialog.py:58
 msgid "Export to HTML"

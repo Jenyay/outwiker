@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-12-24 20:40+0400\n"
-"PO-Revision-Date: 2014-02-10 21:40+0300\n"
+"PO-Revision-Date: 2014-02-11 21:06+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -110,7 +110,7 @@ msgstr "Allega file…"
 
 #: outwiker/gui/attachpanel.py:85 outwiker/gui/attachpanel.py:90
 msgid "Remove Files…"
-msgstr "Rimuovi file…"
+msgstr "Elimina i file…"
 
 #: outwiker/gui/attachpanel.py:96 outwiker/gui/attachpanel.py:101
 #: outwiker/gui/mainmenu.py:67
@@ -127,7 +127,7 @@ msgstr "Aggiorna"
 
 #: outwiker/gui/attachpanel.py:199
 msgid "You did not select a file to remove"
-msgstr "Non è stato selezionato un file da rimuovere"
+msgstr "Non è stato selezionato un file da eliminare"
 
 #: outwiker/gui/attachpanel.py:200 outwiker/gui/attachpanel.py:210
 #: outwiker/gui/attachpanel.py:222 outwiker/gui/attachpanel.py:239
@@ -164,7 +164,7 @@ msgstr "Errore"
 
 #: outwiker/gui/attachpanel.py:204
 msgid "Remove selected files?"
-msgstr "Rimuovere i file selezionati?"
+msgstr "Eliminare i file selezionati?"
 
 #: outwiker/gui/attachpanel.py:205
 msgid "Remove files?"
@@ -317,7 +317,7 @@ msgstr "Commento"
 #: outwiker/gui/localsearchpanel.py:17 outwiker/pages/search/searchpanel.py:42
 #: outwiker/pages/search/searchpanel.py:305 outwiker/actions/search.py:35
 msgid "Search"
-msgstr "Ricerca"
+msgstr "Cerca"
 
 #: outwiker/gui/localsearchpanel.py:34
 msgid "Find Next"
@@ -956,15 +956,15 @@ msgstr ""
 #: outwiker/core/commands.py:99
 #, python-format
 msgid "Remove page '%s' and all subpages?"
-msgstr "Rimuovere la pagina '%s' e tutte le pagine discendenti?"
+msgstr "Eliminare la pagina '%s' e tutte le discendenti?"
 
 #: outwiker/core/commands.py:102
 msgid "Remove page?"
-msgstr "Rimuovere la pagina?"
+msgstr "Eliminare la pagina?"
 
 #: outwiker/core/commands.py:109
 msgid "Can't remove page"
-msgstr "Impossibile rimuovere la pagina"
+msgstr "Impossibile eliminare la pagina"
 
 #: outwiker/core/commands.py:150
 msgid "Loading"
@@ -1276,7 +1276,7 @@ msgstr "Apre il finestra di dialogo \"Informazioni\""
 
 #: outwiker/actions/addbookmark.py:21 outwiker/actions/addbookmark.py:26
 msgid "Add/Remove Bookmark"
-msgstr "Aggiungi/Rimuovi segnalibro"
+msgstr "Aggiungi/Rimuovi preferiti"
 
 #: outwiker/actions/addchildpage.py:22
 msgid "Add Child Page…"
@@ -1288,11 +1288,11 @@ msgstr "Aggiungi pagina discendente"
 
 #: outwiker/actions/addsiblingpage.py:22
 msgid "Add Sibling Page…"
-msgstr "Aggiungere una pagina di pari livello…"
+msgstr "Aggiungi una pagina allo stesso livello…"
 
 #: outwiker/actions/addsiblingpage.py:27
 msgid "Add sibling page"
-msgstr "Aggiunge la pagina di pari livello"
+msgstr "Aggiungi una pagina allo stesso livello"
 
 #: outwiker/actions/attachfiles.py:28
 msgid "Attach files to current page"
@@ -1300,24 +1300,24 @@ msgstr "Allegare il file alla pagina corrente"
 
 #: outwiker/actions/clipboard.py:25
 msgid "Copy current page title to clipboard"
-msgstr "Copiare il titolo della pagina corrente negli Appunti"
+msgstr "Copia il titolo della pagina corrente negli Appunti"
 
 #: outwiker/actions/clipboard.py:51
 msgid "Copy path to current page to clipboard"
-msgstr "Copiare il percorso alla pagina corrente negli Appunti"
+msgstr "Copia il percorso della pagina corrente negli Appunti"
 
 #: outwiker/actions/clipboard.py:71
 msgid "Copy Attachments Path"
-msgstr "Copiare il percorso di allegati"
+msgstr "Copia il percorso degli allegati"
 
 #: outwiker/actions/clipboard.py:76
 msgid "Copy path to attachments for current page to clipboard"
 msgstr ""
-"Copiare il percorso agli allegati relativi la pagina corrente negli Appunti"
+"Copia il percorso degli allegati relativi la pagina corrente negli Appunti"
 
 #: outwiker/actions/clipboard.py:102
 msgid "Copy link to current page to clipboard"
-msgstr "Copiare il collegamento alla pagina corrente negli Appunti"
+msgstr "Copia il collegamento alla pagina corrente negli Appunti"
 
 #: outwiker/actions/close.py:22
 msgid "Close"
@@ -1425,11 +1425,11 @@ msgstr "Stampare la pagina corrente"
 
 #: outwiker/actions/reloadwiki.py:22
 msgid "Reload Wiki…"
-msgstr "Ricaricare Wiki…"
+msgstr "Ricarica la Wiki…"
 
 #: outwiker/actions/reloadwiki.py:27
 msgid "Reload wiki"
-msgstr "Ricaricare wiki"
+msgstr "Ricarica la wiki"
 
 #: outwiker/actions/reloadwiki.py:32
 msgid "Save current page before reload?"
@@ -1441,11 +1441,11 @@ msgstr "Salvare?"
 
 #: outwiker/actions/removepage.py:22
 msgid "Remove Page…"
-msgstr "Rimuovere la pagina…"
+msgstr "Eliminare la pagina…"
 
 #: outwiker/actions/removepage.py:27
 msgid "Remove current page and all children"
-msgstr "Rimuovere la pagina corrente e tutti le discendenti"
+msgstr "Eliminare la pagina corrente e tutte le discendenti"
 
 #: outwiker/actions/renamepage.py:21
 msgid "Rename Page"
@@ -1509,11 +1509,11 @@ msgstr "Ordinare alfabeticamente le pagine discendenti"
 
 #: outwiker/actions/sortsiblingsalpha.py:22
 msgid "Sort Siblings Pages Alphabetically"
-msgstr "Ordinare alfabeticamente le pagine di pari livello"
+msgstr "Ordinare alfabeticamente le pagine allo stesso livello"
 
 #: outwiker/actions/sortsiblingsalpha.py:27
 msgid "Sort siblings pages alphabetically"
-msgstr "Ordinare alfabeticamente le pagine di pari livello"
+msgstr "Ordinare alfabeticamente le pagine allo stesso livello"
 
 #: outwiker/actions/tabs.py:18
 msgid "Close Tab"
@@ -1549,7 +1549,7 @@ msgstr "Vai alla scheda precedente"
 
 #: outwiker/actions/tags.py:26
 msgid "Add Tags to Branch…"
-msgstr "Aggiungere tag al ramo…"
+msgstr "Aggiungi tag al ramo…"
 
 #: outwiker/actions/tags.py:31
 msgid "Add tags to branch"
@@ -1561,7 +1561,7 @@ msgstr "Aggiungi tag al ramo"
 
 #: outwiker/actions/tags.py:80
 msgid "Remove Tags from Branch…"
-msgstr "Rimuovere le tag dal ramo…"
+msgstr "Eliminare le tag dal ramo…"
 
 #: outwiker/actions/tags.py:85
 msgid "Remove tags from branch"
