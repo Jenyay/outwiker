@@ -284,7 +284,23 @@ class NotesTree(wx.Panel):
                     _(u"Error"), wx.ICON_ERROR | wx.OK)
 
 
-    def __loadExpandState (self, page):
+    def __getItemExpandState (self, page):
+        """
+        Проверить, раскрыт ли элемент в дереве для страницы page
+        """
+        if page == None:
+            return True
+
+        if page.parent == None:
+            return True
+
+        return self.treeCtrl.IsExpanded (self._pageCache[page])
+
+
+    def __getPageExpandState (self, page):
+        """
+        Проверить состояние "раскрытости" страницы (что по этому поводу написано в настройках страницы)
+        """
         if page == None:
             return True
 
@@ -510,15 +526,15 @@ class NotesTree(wx.Panel):
         Добавить детей в дерево
         parentPage - родительская страница, куда добавляем дочерние страницы
         """
-        parentExpanded = self.__loadExpandState (parentPage)
-        grandParentExpanded = self.__loadExpandState (parentPage.parent)
+        parentExpanded = self.__getItemExpandState (parentPage)
+        grandParentExpanded = self.__getItemExpandState (parentPage.parent)
 
         if grandParentExpanded:
             for child in parentPage.children:
                 if child not in self._pageCache:
                     self.__insertChild (child)
 
-        if parentExpanded:
+        if self.__getPageExpandState (parentPage):
             self.expand (parentPage)
 
 
