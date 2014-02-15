@@ -74,7 +74,7 @@ plugin:
 	cd plugins/updatenotifier; 7z a -r -aoa -xr!*.pyc ../../build/plugins/updatenotifier.zip ./*; 7z a -r -aoa -xr!*.pyc ../../build/plugins/outwiker-plugins-all.zip ./*
 
 wintests:
-	python src\\setup_tests.py build
+	cd src && python setup_tests.py build
 
 source: clean
 	mkdir -p build/$(dirname)

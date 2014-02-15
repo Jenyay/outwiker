@@ -54,3 +54,4 @@ src/tests.log
 src/plugins/*
 .ropeproject
 doc/doxygen/html
+tests_win
