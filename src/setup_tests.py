@@ -22,16 +22,26 @@ def getCurrentVersion ():
 
     return version_str
 
-includefiles = ['images', 'msvcr90.dll', 'Microsoft.VC90.CRT.manifest', 'locale', 'version.txt', 'tools', 'styles']
+includefiles = ['images', 'locale', 'version.txt', 'tools', 'styles']
 includes = []
 excludes = []
-packages = []
+
+# Добавляем 'outwiker.pages.wiki.wikipanel', 
+# т.к. этот модуль используется только в старых версиях плагинов
+packages = ['urllib', 'urllib2', 'outwiker.pages.wiki.wikipanel']
 
 
 setup(
     name = "tests",
     version = getCurrentVersion(),
     description = "tests",
-    options = {'build_exe': {'excludes':excludes, 'packages':packages, 'include_files':includefiles, 'build_exe':'../distrib/tests_win'}},
+    options = {
+        'build_exe': {
+            'excludes':excludes, 
+            'packages':packages, 
+            'include_files':includefiles, 
+            'build_exe':'../tests_win',
+            'include_msvcr': True,
+            }},
     executables = [Executable("tests.py", base = 'Console')])
 
