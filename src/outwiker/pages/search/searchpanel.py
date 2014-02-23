@@ -25,6 +25,9 @@ class SearchPanel(BasePagePanel):
 
         self._allTags = None
 
+        # Текущий результат поиска (список страниц)
+        self._currentResultPages = []
+
         # Секция для хранения найденных результатов (кэш)
         self._resultsSection = u"SearchResults"
         self.sortStrategySection = u"Sort"
@@ -141,7 +144,7 @@ class SearchPanel(BasePagePanel):
         """
         self.Save ()
         if self.page != None:
-            self.UpdateView(self.page)
+            self.__showResults (self._currentResultPages)
 
 
     def __getCurrentSortStrategy (self):
@@ -251,14 +254,11 @@ class SearchPanel(BasePagePanel):
         """
         self.resultWindow.page = page
         self._allTags = TagsList (self.page.root)
-
         self.__updatePageInfo()
 
-        sortStrategy = self.__getCurrentSortStrategy()
-        resultPages = self.__loadResults ()
-        resultPages.sort (sortStrategy.sort)
+        self._currentResultPages = self.__loadResults ()
 
-        self.__showResults (resultPages)
+        self.__showResults (self._currentResultPages)
         self.__loadSortStrategy ()
 
 
@@ -305,10 +305,10 @@ class SearchPanel(BasePagePanel):
                 _(u"Search"), 
                 _(u"Search pages..."))
 
-        resultPages = runner.run(self.page.root)
+        self._currentResultPages = runner.run(self.page.root)
 
-        self.__saveResults (resultPages)
-        self.UpdateView (self.page)
+        self.__saveResults (self._currentResultPages)
+        self.__showResults (self._currentResultPages)
 
 
     def __getSearchTags (self):
@@ -335,7 +335,12 @@ class SearchPanel(BasePagePanel):
         """
         Показать результат
         """
-        report = HtmlReport (resultPages, 
+        sortStrategy = self.__getCurrentSortStrategy()
+
+        resultPages_sorted = resultPages[:]
+        resultPages_sorted.sort (sortStrategy.sort)
+
+        report = HtmlReport (resultPages_sorted, 
                 self.__getSearchPhrase(), 
                 self.__getSearchTags(), 
                 Application)
