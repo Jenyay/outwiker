@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
+import re
+
+
 class HtmlImprover (object):
     """
     Класс, который делает HTML более читаемым (где надо, расставляет переводы строк)
@@ -10,7 +13,8 @@ class HtmlImprover (object):
         """
         Сделать HTML более читаемым
         """
-        return HtmlImprover.__improveText (text)
+        text = HtmlImprover.__improveText (text)
+        return text
 
 
     @staticmethod
@@ -18,28 +22,33 @@ class HtmlImprover (object):
         result = text.replace ("\r\n", "\n")
         result = HtmlImprover.__replaceEndlines (result)
 
-        result = HtmlImprover.ireplace (result, "<p>", "</p>\n\n<p>")
-        result = HtmlImprover.ireplace (result, "<br>", "\n<br>")
-        result = HtmlImprover.ireplace (result, "<br/>", "\n<br/>")
+        # Компенсация восстановления переносов строк после списков
+        ro0 = r"(?<=</[uo]l>)<p><br>(?=<[uo]l>)"
+        result = re.sub(ro0, "\n\n", result)
 
-        result = HtmlImprover.ireplace (result, "<li>", "\n<li>")
-        result = HtmlImprover.ireplace (result, "<ul>", "\n<ul>")
-        result = HtmlImprover.ireplace (result, "</ul>", "\n</ul>")
-        result = HtmlImprover.ireplace (result, "<ol>", "\n<ol>")
-        result = HtmlImprover.ireplace (result, "</ol>", "\n</ol>")
+        result = result.replace("<p>", "</p>\n\n<p>")
 
-        result = HtmlImprover.ireplace (result, "<h1>", "\n<h1>")
-        result = HtmlImprover.ireplace (result, "<h2>", "\n<h2>")
-        result = HtmlImprover.ireplace (result, "<h3>", "\n<h3>")
-        result = HtmlImprover.ireplace (result, "<h4>", "\n<h4>")
-        result = HtmlImprover.ireplace (result, "<h5>", "\n<h5>")
-        result = HtmlImprover.ireplace (result, "<h6>", "\n<h6>")
-        
-        result = HtmlImprover.ireplace (result, "<pre>", "\n<pre>")
+        blocktags = "[uod]l|h[1-6]|pre|table|div|blockquote|hr"
+        opentags = "[uod]l|table"
+        opentags += "|" + opentags.lower()
+        closetags = "li|d[td]|t[rdh]|caption|thead|tfoot|tbody|colgroup|col"
+        closetags += "|" + closetags.lower()
+        ro1 = r"<p>((?:<br>)?)(?=<(?:" + blocktags + r")[ >])"
+        ro2 = r"(</(?:" + blocktags + r")>|<hr ?/?>)</p>"
+        ro3 = r"(<(?:" + opentags + r")[ >]|</(?:" + closetags + r")>)[\s\n]*<br ?/?>"
+        ro4 = r"<br ?/?>[\s\n]*(?=<(?:" + opentags + r")[ >]|<hr ?/?>)"
+        ro5 = r"<p>(?=</)"
+        ro6 = r"(?=<li>|</[uo]l>|<[bh]r ?/?>|<pre>)"
+        result = re.sub(ro1, "\\1", result)  # Удаление тега <P> перед некоторыми блочными элементами
+        result = re.sub(ro2, "\\1", result)  # Удаление тега </P> после некоторых блочных элементов
+        result = re.sub(ro3, "\\1", result)  # Удаление тега <BR> после некоторых блочных элементов
+        result = re.sub(ro4, "", result)     # Удаление тега <BR> перед некоторыми блочными элементами
+        result = re.sub(ro5, "", result)     # Удаление некоторого разного мусора/бесполезного кода
+        result = re.sub(ro6, "\n", result)   # Добавление переноса строки перед некоторыми элементами
 
         return result
 
-    
+
     @staticmethod
     def __replaceEndlines (text):
         """
@@ -47,7 +56,7 @@ class HtmlImprover (object):
         """
         text_lower = text.lower()
 
-        starttag = "<pre>"
+        starttag = "<pre"
         endtag = "</pre>"
 
         # Разобьем строку по <pre>
@@ -79,7 +88,7 @@ class HtmlImprover (object):
                 item = item.replace ("<br><h6>", "<h6>")
                 index += len (parts[n]) + len (starttag)
             else:
-                item = "<pre>" + item + "</pre>"
+                item = "<pre" + item + "</pre>"
                 index += len (parts[n]) + len (endtag)
 
             result += item

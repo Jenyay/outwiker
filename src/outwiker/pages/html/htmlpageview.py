@@ -600,7 +600,6 @@ class HtmlPageView (BaseHtmlPanel):
 
         if page.autoLineWrap:
             text = HtmlImprover.run (page.content)
-            text = re.sub ("\n<br>\n(<li>)|(<li>)", "\n<LI>", text)
         else:
             text = page.content
 

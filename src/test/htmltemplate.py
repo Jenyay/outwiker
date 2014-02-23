@@ -47,7 +47,7 @@ class HtmlTemplateTest(unittest.TestCase):
 </head>
 
 <body>
-<p>бла-бла-бла</p>
+бла-бла-бла
 </body>
 </html>"""
 
@@ -81,7 +81,7 @@ class HtmlTemplateTest(unittest.TestCase):
 </head>
 
 <body>
-<p>бла-бла-бла</p>
+бла-бла-бла
 </body>
 </html>"""
 
@@ -114,7 +114,7 @@ class HtmlTemplateTest(unittest.TestCase):
 </head>
 
 <body>
-<p>бла-бла-бла</p>
+бла-бла-бла
 </body>
 </html>"""
 
@@ -175,26 +175,22 @@ class HtmlTemplateTest(unittest.TestCase):
 </head>
 
 <body>
-<p>
 <ul>
 <li>Несортированный список. Элемент 1</li>
 <li>Несортированный список. Элемент 2</li>
-<li>Несортированный список. Элемент 3</li>
-<ol>
+<li>Несортированный список. Элемент 3</li><ol>
 <li>Вложенный сортированный список. Элемент 1</li>
 <li>Вложенный сортированный список. Элемент 2</li>
 <li>Вложенный сортированный список. Элемент 3</li>
-<li>Вложенный сортированный список. Элемент 4</li>
-<ul>
+<li>Вложенный сортированный список. Элемент 4</li><ul>
 <li>Совсем вложенный сортированный список. Элемент 1</li>
 <li>Совсем вложенный сортированный список. Элемент 2</li>
 </ul>
 <li>Вложенный сортированный список. Элемент 5</li>
-</ol>
-<ul>
+</ol><ul>
 <li>Вложенный несортированный список. Элемент 1</li>
 </ul>
-</ul></p>
+</ul>
 </body>
 </html>"""
 
@@ -227,16 +223,14 @@ class HtmlTemplateTest(unittest.TestCase):
 </head>
 
 <body>
-<p>
-<h2>Attach links</h2></p>
+<h2>Attach links</h2>
 
 <p>Attach:file.odt
 <br><a href="__attach/file.odt">file.odt</a>
 <br><a href="__attach/file.odt">alternative text</a>
 <br><a href="__attach/file with spaces.pdf">file with spaces.pdf</a></p>
 
-<p>
-<h2>Images</h2></p>
+<h2>Images</h2>
 </body>
 </html>"""
 
