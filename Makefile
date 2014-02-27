@@ -1,11 +1,6 @@
-dirname=outwiker-1.8.0
-origname=outwiker_1.8.0.orig.tar
 outwiker_dir=$(DESTDIR)/usr/share/outwiker/
 
 all:
-
-clean:
-	rm -rf build/$(dirname)
 
 install:
 	mkdir -p $(outwiker_dir)
@@ -35,15 +30,6 @@ install:
 	cp "images/outwiker.svg" $(DESTDIR)/usr/share/icons/hicolor/scalable/apps/outwiker.svg
 	cp "images/outwiker.xpm" $(DESTDIR)/usr/share/pixmaps/
 	cp "outwiker.desktop" $(DESTDIR)/usr/share/applications
-
-debsource: source
-	cd build/$(dirname)/debian; debuild -S --source-option=--include-binaries --source-option=--auto-commit
-
-debsourceinclude: source
-	cd build/$(dirname)/debian; debuild -S -sa --source-option=--include-binaries --source-option=--auto-commit
-
-deb: source
-	cd build/$(dirname)/debian; debuild --source-option=--include-binaries --source-option=--auto-commit
 
 win:
 	cd src && python setup_win.py build
@@ -75,14 +61,3 @@ plugin:
 
 wintests:
 	cd src && python setup_tests.py build
-
-source: clean
-	mkdir -p build/$(dirname)
-	rsync -avz --exclude=.bzr --exclude=distrib --exclude=build --exclude=*.pyc --exclude=*.dll --exclude=*.exe * --exclude=src/.ropeproject --exclude=src/test --exclude=src/setup_win.py --exclude=src/setup_tests.py --exclude=src/profile.py --exclude=src/tests.py --exclude=src/Microsoft.VC90.CRT.manifest --exclude=src/profiles --exclude=src/tools --exclude=doc --exclude=plugins --exclude=profiles --exclude=test --exclude=_update_version_bzr.py --exclude=outwiker_setup.iss --exclude=updateversion --exclude=updateversion.py build/$(dirname)/
-
-orig: source
-	cd build; tar -cvf $(origname) $(dirname)
-	gzip -f build/$(origname)
-
-
-
