@@ -98,3 +98,28 @@ def deb():
 
     with lcd ("build/{}/debian".format (_getDebSourceDirName() ) ):
         local ("debuild --source-option=--include-binaries --source-option=--auto-commit")
+
+
+def plugins():
+    """
+    Создание архивов с плагинами
+    """
+    plugins = ["source",
+            "style",
+            "export2html",
+            "spoiler",
+            "livejournal",
+            "lightbox",
+            "thumbgallery",
+            "externaltools",
+            "statistics",
+            "updatenotifier",
+            ]
+
+    local ("rm -f build/plugins/outwiker-plugins-all.zip")
+
+    for plugin in plugins:
+        local ("rm -f build/plugins/{}.zip".format (plugin))
+
+        with lcd ("plugins/{}".format (plugin)):
+            local ("7z a -r -aoa -xr!*.pyc ../../build/plugins/{}.zip ./*; 7z a -r -aoa -xr!*.pyc ../../build/plugins/outwiker-plugins-all.zip ./*".format (plugin) )
