@@ -74,7 +74,7 @@ def debsourceinclude():
     """
     Создать файлы для закачки в репозиторий, включающие в себя исходники
     """
-    _source()
+    orig()
 
     with lcd ("build/{}/debian".format (_getDebSourceDirName() ) ):
         local ("debuild -S -sa --source-option=--include-binaries --source-option=--auto-commit")
@@ -84,7 +84,7 @@ def debsource():
     """
     Создать файлы для закачки в репозиторий, НЕ включающие в себя исходники
     """
-    _source()
+    orig()
 
     with lcd ("build/{}/debian".format (_getDebSourceDirName() ) ):
         local ("debuild -S --source-option=--include-binaries --source-option=--auto-commit")
@@ -94,7 +94,7 @@ def deb():
     """
     Создать deb-пакет
     """
-    _source()
+    orig()
 
     with lcd ("build/{}/debian".format (_getDebSourceDirName() ) ):
         local ("debuild --source-option=--include-binaries --source-option=--auto-commit")
@@ -145,3 +145,23 @@ def wintests():
     """
     with lcd ("src"):
         local ("python setup_tests.py build")
+
+
+def nextversion():
+    """
+    Увеличить номер сборки (запускать под Linux, поскольку еще увеличивается номер сборки deb-пакета)
+    """
+    # Файл с номером версии
+    fname = u"src/version.txt"
+
+    with open (fname) as fp_in:
+        lines = fp_in.readlines()
+
+    lines[1] = str (int (lines[1]) + 1) + "\n"
+
+    result = u"".join (lines)
+
+    with open (fname, "w") as fp_out:
+        fp_out.write (result)
+
+    local ('dch -v "{}+{}~{}"'.format (lines[0].strip(), lines[1].strip(), distribs[0] ) )
