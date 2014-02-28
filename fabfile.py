@@ -94,7 +94,7 @@ def deb():
             distribs)
 
 
-def debsingle ():
+def debsingle():
     """
     Создать deb-пакет только для первого дистрибутива в списке
     """
@@ -195,6 +195,18 @@ def nextversion():
         fp_out.write (result)
 
     local ('dch -v "{}+{}~{}"'.format (lines[0].strip(), lines[1].strip(), distribs[0] ) )
+
+
+def installdeb():
+    """
+    Создание deb-пакета под дистрибутив distribs[0] и установка его
+    """
+    debsingle()
+
+    version = _getVersion()
+
+    with lcd ("build"):
+        local ("sudo dpkg -i outwiker_{}+{}~{}_all.deb".format (version[0], version[1], distribs[0] ) )
 
 
 def _makechangelog (distrib_src, distrib_new):
