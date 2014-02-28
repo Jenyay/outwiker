@@ -197,7 +197,7 @@ def nextversion():
     local ('dch -v "{}+{}~{}"'.format (lines[0].strip(), lines[1].strip(), distribs[0] ) )
 
 
-def installdeb():
+def debinstall():
     """
     Создание deb-пакета под дистрибутив distribs[0] и установка его
     """
