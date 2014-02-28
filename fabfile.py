@@ -123,3 +123,25 @@ def plugins():
 
         with lcd ("plugins/{}".format (plugin)):
             local ("7z a -r -aoa -xr!*.pyc ../../build/plugins/{}.zip ./*; 7z a -r -aoa -xr!*.pyc ../../build/plugins/outwiker-plugins-all.zip ./*".format (plugin) )
+
+
+def win():
+    """
+    Создание сборок под Windows
+    """
+    with lcd ("src"):
+        local ("python setup_win.py build")
+
+    with lcd ("build/outwiker_win"):
+        local ("7z a ..\outwiker_win32_unstable.zip .\* .\plugins -r -aoa")
+        local ("7z a ..\outwiker_win32_unstable.7z .\* .\plugins -r -aoa")
+
+    local ("iscc outwiker_setup.iss")
+
+
+def wintests():
+    """
+    Сборка тестов в exe-шники
+    """
+    with lcd ("src"):
+        local ("python setup_tests.py build")

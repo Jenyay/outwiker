@@ -30,12 +30,3 @@ install:
 	cp "images/outwiker.svg" $(DESTDIR)/usr/share/icons/hicolor/scalable/apps/outwiker.svg
 	cp "images/outwiker.xpm" $(DESTDIR)/usr/share/pixmaps/
 	cp "outwiker.desktop" $(DESTDIR)/usr/share/applications
-
-win:
-	cd src && python setup_win.py build
-	cd build\\outwiker_win && 7z a ..\outwiker_win32_unstable.zip .\* .\plugins -r -aoa
-	cd build\\outwiker_win && 7z a ..\outwiker_win32_unstable.7z .\* .\plugins -r -aoa
-	iscc outwiker_setup.iss
-
-wintests:
-	cd src && python setup_tests.py build
