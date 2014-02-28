@@ -55,49 +55,79 @@ def _source():
     local ("rsync -avz --exclude=.bzr --exclude=distrib --exclude=build --exclude=*.pyc --exclude=*.dll --exclude=*.exe * --exclude=src/.ropeproject --exclude=src/test --exclude=src/setup_win.py --exclude=src/setup_tests.py --exclude=src/profile.py --exclude=src/tests.py --exclude=src/Microsoft.VC90.CRT.manifest --exclude=src/profiles --exclude=src/tools --exclude=doc --exclude=plugins --exclude=profiles --exclude=test --exclude=_update_version_bzr.py --exclude=outwiker_setup.iss --exclude=updateversion --exclude=updateversion.py {dirname}/".format (dirname=dirname) )
 
 
-def orig():
+def orig (distname):
     """
-    Создать архив с "оригинальными" исходниками для сборки deb-пакета
+    Создать архив с "оригинальными" исходниками для сборки deb-пакета.
+    distname - имя дистрибутива Ubuntu
     """
     _source()
 
-    for distname in distribs:
-        origname = _getOrigName(distname)
+    origname = _getOrigName(distname)
 
-        with lcd ("build"):
-            local ("tar -cvf {} {}".format (origname, _getDebSourceDirName() ) )
+    with lcd ("build"):
+        local ("tar -cvf {} {}".format (origname, _getDebSourceDirName() ) )
 
-        local ("gzip -f build/{}".format (origname) )
+    local ("gzip -f build/{}".format (origname) )
 
 
 def debsourceinclude():
     """
     Создать файлы для закачки в репозиторий, включающие в себя исходники
     """
-    orig()
-
-    with lcd ("build/{}/debian".format (_getDebSourceDirName() ) ):
-        local ("debuild -S -sa --source-option=--include-binaries --source-option=--auto-commit")
+    _debuild ("debuild -S -sa --source-option=--include-binaries --source-option=--auto-commit",
+            distribs)
 
 
 def debsource():
     """
     Создать файлы для закачки в репозиторий, НЕ включающие в себя исходники
     """
-    orig()
-
-    with lcd ("build/{}/debian".format (_getDebSourceDirName() ) ):
-        local ("debuild -S --source-option=--include-binaries --source-option=--auto-commit")
+    _debuild ("debuild -S --source-option=--include-binaries --source-option=--auto-commit",
+            distribs)
 
 
 def deb():
     """
     Создать deb-пакет
     """
-    orig()
+    _debuild ("debuild --source-option=--include-binaries --source-option=--auto-commit", 
+            distribs)
 
-    with lcd ("build/{}/debian".format (_getDebSourceDirName() ) ):
-        local ("debuild --source-option=--include-binaries --source-option=--auto-commit")
+
+def debsingle ():
+    """
+    Создать deb-пакет только для первого дистрибутива в списке
+    """
+    _debuild ("debuild --source-option=--include-binaries --source-option=--auto-commit", 
+            [distribs[0]])
+
+
+def _debuild (command, distriblist):
+    """
+    Выполнение команд, связанные со сборкой deb с помощью debuild. Создает пакеты сразу для всех дистрибутивов, перечисленных в distriblist
+    """
+    for distname in distriblist:
+        # Поменяем дистрибутив в changelog
+        _makechangelog (distribs[0], distname)
+
+        orig(distname)
+
+        with lcd ("build/{}/debian".format (_getDebSourceDirName() ) ):
+            local (command)
+
+        # Вернем старый дистрибутив
+        _makechangelog (distname, distribs[0])
+
+
+def ppaunstable ():
+    """
+    Выполнение команд, связанные со сборкой deb с помощью debuild. Создает пакеты сразу для всех дистрибутивов, перечисленных в distriblist
+    """
+    version = _getVersion()
+
+    for distname in distribs:
+        with lcd ("build".format (_getDebSourceDirName() ) ):
+            local ("dput ppa:outwiker-team/unstable outwiker_{}+{}~{}_source.changes".format (version[0], version[1], distname) )
 
 
 def plugins():
@@ -165,3 +195,20 @@ def nextversion():
         fp_out.write (result)
 
     local ('dch -v "{}+{}~{}"'.format (lines[0].strip(), lines[1].strip(), distribs[0] ) )
+
+
+def _makechangelog (distrib_src, distrib_new):
+    """
+    Подправить changelog под текущий дистрибутив Ubuntu. 
+    
+    Считаем, что у нас в исходном состоянии changelog всегда создан под distrib_src, а мы в первой строке его название заменим на distrib_new.
+    """
+    fname = "debian/changelog"
+
+    with open (fname) as fp:
+        lines = fp.readlines()
+
+    lines[0] = lines[0].replace (distrib_src, distrib_new)
+
+    with open (fname, "w") as fp:
+        fp.write (u"".join (lines))
