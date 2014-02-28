@@ -159,6 +159,13 @@ def win():
     """
     Создание сборок под Windows
     """
+    pluginsdir = os.path.join ("src", "plugins")
+
+    # Папка plugins всегда остается пустой, поэтому ее не удается добавить в git
+    # Надо ее создавать вручную
+    if not os.path.exists (pluginsdir):
+        os.mkdir (pluginsdir)
+
     with lcd ("src"):
         local ("python setup_win.py build")
 
