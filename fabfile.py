@@ -36,7 +36,7 @@ def _getOrigName (distname):
     return "outwiker_{}+{}~{}.orig.tar".format (version[0], version[1], distname)
 
 
-def debclean():
+def _debclean():
     """
     Очистка папки build/<distversion>
     """
@@ -47,7 +47,7 @@ def _source():
     """
     Создать папку с исходниками для сборки deb-пакета
     """
-    debclean()
+    _debclean()
     
     dirname = os.path.join ("build", _getDebSourceDirName() )
     os.mkdir (dirname)
@@ -55,7 +55,7 @@ def _source():
     local ("rsync -avz --exclude=.bzr --exclude=distrib --exclude=build --exclude=*.pyc --exclude=*.dll --exclude=*.exe * --exclude=src/.ropeproject --exclude=src/test --exclude=src/setup_win.py --exclude=src/setup_tests.py --exclude=src/profile.py --exclude=src/tests.py --exclude=src/Microsoft.VC90.CRT.manifest --exclude=src/profiles --exclude=src/tools --exclude=doc --exclude=plugins --exclude=profiles --exclude=test --exclude=_update_version_bzr.py --exclude=outwiker_setup.iss --exclude=updateversion --exclude=updateversion.py {dirname}/".format (dirname=dirname) )
 
 
-def orig (distname):
+def _orig (distname):
     """
     Создать архив с "оригинальными" исходниками для сборки deb-пакета.
     distname - имя дистрибутива Ubuntu
@@ -75,14 +75,6 @@ def debsourceinclude():
     Создать файлы для закачки в репозиторий, включающие в себя исходники
     """
     _debuild ("debuild -S -sa --source-option=--include-binaries --source-option=--auto-commit",
-            distribs)
-
-
-def debsource():
-    """
-    Создать файлы для закачки в репозиторий, НЕ включающие в себя исходники
-    """
-    _debuild ("debuild -S --source-option=--include-binaries --source-option=--auto-commit",
             distribs)
 
 
@@ -110,7 +102,7 @@ def _debuild (command, distriblist):
         # Поменяем дистрибутив в changelog
         _makechangelog (distribs[0], distname)
 
-        orig(distname)
+        _orig(distname)
 
         with lcd ("build/{}/debian".format (_getDebSourceDirName() ) ):
             local (command)
