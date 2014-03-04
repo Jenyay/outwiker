@@ -111,7 +111,6 @@ class EditorSearchPanel (LocalSearchPanel):
         for currResult in searcher.result:
             if currResult.position < currpos:
                 result = currResult
-                #break
 
         if result == None and len (searcher.result) > 0:
             result = searcher.result[-1]

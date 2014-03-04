@@ -24,18 +24,18 @@ class LocalSearchPanel(wx.Panel):
         self.__set_properties()
         self.__do_layout()
 
-        self.Bind(wx.EVT_SEARCHCTRL_CANCEL_BTN, self.onCloseClick, self.phraseTextCtrl)
-        self.Bind(wx.EVT_SEARCHCTRL_SEARCH_BTN, self.onNextSearch, self.phraseTextCtrl)
-        self.Bind(wx.EVT_TEXT_ENTER, self.onNextSearch, self.phraseTextCtrl)
-        self.Bind(wx.EVT_TEXT, self.onTextEnter, self.phraseTextCtrl)
-        self.Bind(wx.EVT_BUTTON, self.onNextSearch, self.nextSearchBtn)
-        self.Bind(wx.EVT_BUTTON, self.onPrevSearch, self.prevSearchBtn)
+        self.Bind(wx.EVT_SEARCHCTRL_CANCEL_BTN, self.__onCloseClick, self.phraseTextCtrl)
+        self.Bind(wx.EVT_SEARCHCTRL_SEARCH_BTN, self.__onNextSearch, self.phraseTextCtrl)
+        self.Bind(wx.EVT_TEXT_ENTER, self.__onNextSearch, self.phraseTextCtrl)
+        self.Bind(wx.EVT_TEXT, self.__onTextEnter, self.phraseTextCtrl)
+        self.Bind(wx.EVT_BUTTON, self.__onNextSearch, self.nextSearchBtn)
+        self.Bind(wx.EVT_BUTTON, self.__onPrevSearch, self.prevSearchBtn)
 
         self.nextSearchBtn.SetToolTipString (_(u"Find Next") )
         self.prevSearchBtn.SetToolTipString (_(u"Find Previous") )
 
-        self.Bind (wx.EVT_CLOSE, self.onClose)
-        self.phraseTextCtrl.Bind (wx.EVT_KEY_DOWN, self.onKeyDown)
+        self.Bind (wx.EVT_CLOSE, self.__onClose)
+        self.phraseTextCtrl.Bind (wx.EVT_KEY_DOWN, self.__onKeyDown)
 
 
     def __set_properties(self):
@@ -55,15 +55,15 @@ class LocalSearchPanel(wx.Panel):
         mainSizer.AddGrowableCol(0)
     
 
-    def onNextSearch(self, event): 
+    def __onNextSearch(self, event): 
         self.nextSearch()
 
     
-    def onPrevSearch(self, event):
+    def __onPrevSearch(self, event):
         self.prevSearch()
 
     
-    def onTextEnter(self, event):
+    def __onTextEnter(self, event):
         self.enterSearchPhrase()
 
     
@@ -92,12 +92,12 @@ class LocalSearchPanel(wx.Panel):
         pass
     
 
-    def onClose(self, event):
+    def __onClose(self, event):
         self.Hide()
         self.GetParent().Layout()
     
 
-    def onKeyDown (self, event):
+    def __onKeyDown (self, event):
         key = event.GetKeyCode()
 
         if key == wx.WXK_ESCAPE:
@@ -106,7 +106,7 @@ class LocalSearchPanel(wx.Panel):
         event.Skip()
 
 
-    def onCloseClick(self, event):
+    def __onCloseClick(self, event):
         self.Close()
 
 
@@ -117,7 +117,7 @@ class SearchResult (object):
     """
     def __init__ (self, position, phrase):
         """
-        position -- начало найденного текста
+        position - начало найденного текста
         """
         self.position = position
         self.phrase = phrase
@@ -137,7 +137,6 @@ class LocalSearcher (object):
         while index != -1:
             result.append (SearchResult (index, self.phrase) )
             index = self.text.find (self.phrase, index + len (self.phrase))
-            #print index
 
         return result
 

@@ -26,7 +26,7 @@ class TextEditor(wx.Panel):
 
         self.__do_layout()
 
-        self.createCoders()
+        self.__createCoders()
 
         self.config = EditorConfig (Application.config)
         self.__showlinenumbers =  self.config.lineNumbers.value
@@ -34,13 +34,13 @@ class TextEditor(wx.Panel):
         self.setDefaultSettings()
         self.searchPanel.setEditor (self, self.textCtrl)
 
-        self.textCtrl.Bind(wx.EVT_MENU, self.onCopyFromEditor, id = MainId.ID_COPY)
-        self.textCtrl.Bind(wx.EVT_MENU, self.onCutFromEditor, id = MainId.ID_CUT)
-        self.textCtrl.Bind(wx.EVT_MENU, self.onPasteToEditor, id = MainId.ID_PASTE)
-        self.textCtrl.Bind(wx.EVT_MENU, self.onUndo, id = MainId.ID_UNDO)
-        self.textCtrl.Bind(wx.EVT_MENU, self.onRedo, id = MainId.ID_REDO)
-        self.textCtrl.Bind (wx.EVT_CHAR, self.OnChar_ImeWorkaround)
-        self.textCtrl.Bind (wx.EVT_KEY_DOWN, self.onKeyDown)
+        self.textCtrl.Bind(wx.EVT_MENU, self.__onCopyFromEditor, id = MainId.ID_COPY)
+        self.textCtrl.Bind(wx.EVT_MENU, self.__onCutFromEditor, id = MainId.ID_CUT)
+        self.textCtrl.Bind(wx.EVT_MENU, self.__onPasteToEditor, id = MainId.ID_PASTE)
+        self.textCtrl.Bind(wx.EVT_MENU, self.__onUndo, id = MainId.ID_UNDO)
+        self.textCtrl.Bind(wx.EVT_MENU, self.__onRedo, id = MainId.ID_REDO)
+        self.textCtrl.Bind (wx.EVT_CHAR, self.__OnChar_ImeWorkaround)
+        self.textCtrl.Bind (wx.EVT_KEY_DOWN, self.__onKeyDown)
 
         # При перехвате этого сообщения в других классах, нужно вызывать event.Skip(), 
         # чтобы это сообщение дошло досюда
@@ -48,7 +48,7 @@ class TextEditor(wx.Panel):
 
 
     def __onChange (self, event):
-        self._setMarginWidth (self.textCtrl)
+        self.__setMarginWidth (self.textCtrl)
 
 
     def Print (self):
@@ -59,23 +59,23 @@ class TextEditor(wx.Panel):
         printer.printout (text if len (selectedtext) == 0 else selectedtext)
 
 
-    def onCopyFromEditor (self, event):
+    def __onCopyFromEditor (self, event):
         self.textCtrl.Copy()
 
 
-    def onCutFromEditor (self, event):
+    def __onCutFromEditor (self, event):
         self.textCtrl.Cut()
 
 
-    def onPasteToEditor (self, event):
+    def __onPasteToEditor (self, event):
         self.textCtrl.Paste()
 
     
-    def onUndo (self, event):
+    def __onUndo (self, event):
         self.textCtrl.Undo()
 
     
-    def onRedo (self, event):
+    def __onRedo (self, event):
         self.textCtrl.Redo()
 
 
@@ -90,7 +90,7 @@ class TextEditor(wx.Panel):
 
         self.searchPanel.Hide()
         self.Layout()
-    
+
 
     def setDefaultSettings (self):
         """
@@ -109,35 +109,35 @@ class TextEditor(wx.Panel):
         self.textCtrl.StyleSetFaceName (wx.stc.STC_STYLE_DEFAULT, faceName)
         self.textCtrl.StyleSetBold (wx.stc.STC_STYLE_DEFAULT, isBold)
         self.textCtrl.StyleSetItalic (wx.stc.STC_STYLE_DEFAULT, isItalic)
-        
+
         self.textCtrl.StyleSetSize (0, size)
         self.textCtrl.StyleSetFaceName (0, faceName)
         self.textCtrl.StyleSetBold (0, isBold)
         self.textCtrl.StyleSetItalic (0, isItalic)
-        
+
         # Заблокируем горячую клавишу Ctrl+D, чтобы использовать ее как добавление закладки
         self.textCtrl.CmdKeyClear (ord ("D"), wx.stc.STC_SCMOD_CTRL)
         self.textCtrl.CmdKeyClear (ord ("R"), wx.stc.STC_SCMOD_CTRL | wx.stc.STC_SCMOD_SHIFT)
         self.textCtrl.SetWrapMode (wx.stc.STC_WRAP_WORD)
         self.textCtrl.SetWrapVisualFlags (wx.stc.STC_WRAPVISUALFLAG_END)
 
-        self._setMarginWidth (self.textCtrl)
+        self.__setMarginWidth (self.textCtrl)
         self.textCtrl.SetTabWidth (self.config.tabWidth.value)
-    
 
-    def _setMarginWidth (self, editor):
+
+    def __setMarginWidth (self, editor):
         """
         Установить размер левой области, где пишутся номера строк в зависимости от шрифта
         """
         if self.__showlinenumbers:
-            editor.SetMarginWidth (0, self._getMarginWidth())
+            editor.SetMarginWidth (0, self.__getMarginWidth())
             editor.SetMarginWidth (1, 5)
         else:
             editor.SetMarginWidth (0, 0)
             editor.SetMarginWidth (1, 8)
 
 
-    def _getMarginWidth (self):
+    def __getMarginWidth (self):
         """
         Расчет размера серой области с номером строк
         """
@@ -164,7 +164,7 @@ class TextEditor(wx.Panel):
         return len(self.encoder (text[: pos] )[0] )
 
 
-    def createCoders (self):
+    def __createCoders (self):
         encoding = outwiker.core.system.getOS().inputEncoding
 
         self._mbcsDec = codecs.getdecoder(encoding)
@@ -172,7 +172,7 @@ class TextEditor(wx.Panel):
         self.encoder = codecs.getencoder("utf-8")
     
 
-    def onKeyDown (self, event):
+    def __onKeyDown (self, event):
         key = event.GetKeyCode()
 
         if key == wx.WXK_ESCAPE:
@@ -181,19 +181,18 @@ class TextEditor(wx.Panel):
         event.Skip()
 
 
-    def OnChar_ImeWorkaround(self, evt):
+    def __OnChar_ImeWorkaround(self, evt):
         """
         Обработка клавиш вручную, чтобы не было проблем с вводом русских букв в Linux.
         Основа кода взята из Wikidpad (WikiTxtCtrl.py -> OnChar_ImeWorkaround)
         """
         key = evt.GetKeyCode()
 
-
         # Return if this doesn't seem to be a real character input
         if evt.ControlDown() or (0 < key < 32):
             evt.Skip()
             return
-            
+
         if key >= wx.WXK_START and evt.GetUnicodeKey() != key:
             evt.Skip()
             return
