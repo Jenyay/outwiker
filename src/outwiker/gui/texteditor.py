@@ -152,7 +152,7 @@ class TextEditor(wx.Panel):
             width = int (1.2 * fontSize * digits)
 
         return width
-    
+
 
     def calcByteLen(self, text):
         """Посчитать длину строки в байтах, а не в символах"""
@@ -167,7 +167,6 @@ class TextEditor(wx.Panel):
     def __createCoders (self):
         encoding = outwiker.core.system.getOS().inputEncoding
 
-        self._mbcsDec = codecs.getdecoder(encoding)
         self.mbcsEnc = codecs.getencoder(encoding)
         self.encoder = codecs.getencoder("utf-8")
     
@@ -254,6 +253,9 @@ class TextEditor(wx.Panel):
 
 
     def SetSelection (self, start, end):
+        """
+        start и end в символах, а не в байтах, в отличие от исходного StyledTextCtrl
+        """
         startText = self.GetText()[:start]
         endText = self.GetText()[:end]
 

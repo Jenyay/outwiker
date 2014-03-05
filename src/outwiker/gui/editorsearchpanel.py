@@ -34,7 +34,7 @@ class EditorSearchPanel (LocalSearchPanel):
         """
         Начать поиск
         """
-        phrase = self.editor.GetSelectedText()
+        phrase = self.editPanel.GetSelectedText()
 
         if len (phrase) == 0:
             phrase = EditorSearchPanel._recentSearch
@@ -62,15 +62,14 @@ class EditorSearchPanel (LocalSearchPanel):
         if len (phrase) == 0:
             return
 
-        if self.editor == None:
+        if self.editPanel == None:
             return
 
-        text = self.editor.GetText()
+        text = self.editPanel.GetText()
         result = direction (text, phrase)
         if result != None:
             self.resultLabel.SetLabel (u"")
-            self.editor.SetSelection (self.editPanel.calcBytePos (text, result.position), 
-                    self.editPanel.calcBytePos (text, result.position + len (result.phrase)) )
+            self.editPanel.SetSelection (result.position, result.position + len (result.phrase) )
         else:
             self.resultLabel.SetLabel (_(u"Not found"))
 

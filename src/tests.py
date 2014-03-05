@@ -120,6 +120,7 @@ if __name__ == '__main__':
     from test.guitests.fullscreen import FullScreenTest
     from test.guitests.wikiactions import WikiActionsTest
     from test.guitests.htmlactions import HtmlActionsTest
+    from test.guitests.texteditor import TextEditorTest
 
     from test.plugins.loader import PluginsLoaderTest
     from test.plugins.testwikicommand import PluginWikiCommandTest
