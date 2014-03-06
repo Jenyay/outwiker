@@ -7,11 +7,10 @@ from .localsearchpanel import LocalSearchPanel, LocalSearcher
 class EditorSearchPanel (LocalSearchPanel):
     _recentSearch = u""
 
-    def __init__ (self, *args, **kwds):
-        LocalSearchPanel.__init__ (self, *args, **kwds)
+    def __init__ (self, parent, editor):
+        super (EditorSearchPanel, self).__init__(parent)
     
-        self.editPanel = None
-        self.editor = None
+        self.editor = editor
         self.phraseTextCtrl.SetValue (EditorSearchPanel._recentSearch)
 
 
@@ -34,7 +33,7 @@ class EditorSearchPanel (LocalSearchPanel):
         """
         Начать поиск
         """
-        phrase = self.editPanel.GetSelectedText()
+        phrase = self.editor.GetSelectedText()
 
         if len (phrase) == 0:
             phrase = EditorSearchPanel._recentSearch
@@ -62,14 +61,11 @@ class EditorSearchPanel (LocalSearchPanel):
         if len (phrase) == 0:
             return
 
-        if self.editPanel == None:
-            return
-
-        text = self.editPanel.GetText()
+        text = self.editor.GetText()
         result = direction (text, phrase)
         if result != None:
             self.resultLabel.SetLabel (u"")
-            self.editPanel.SetSelection (result.position, result.position + len (result.phrase) )
+            self.editor.SetSelection (result.position, result.position + len (result.phrase) )
         else:
             self.resultLabel.SetLabel (_(u"Not found"))
 
@@ -82,7 +78,7 @@ class EditorSearchPanel (LocalSearchPanel):
         """
         searcher = LocalSearcher (text, phrase)
 
-        currpos = self.getCurrPosChars()
+        currpos = self.editor.GetCurrentPosition()
 
         result = None
 
@@ -103,7 +99,7 @@ class EditorSearchPanel (LocalSearchPanel):
         """
         searcher = LocalSearcher (text, phrase)
 
-        currpos = self.getStartSelectionChars()
+        currpos = self.editor.GetSelectionStart()
 
         result = None
 
@@ -123,7 +119,7 @@ class EditorSearchPanel (LocalSearchPanel):
         """
         searcher = LocalSearcher (text, phrase)
 
-        currpos = self.getStartSelectionChars()
+        currpos = self.editor.GetSelectionStart()
 
         result = None
 
@@ -136,32 +132,3 @@ class EditorSearchPanel (LocalSearchPanel):
             result = searcher.result[0]
 
         return result
-
-
-    def getCurrPosChars (self):
-        """
-        Посчитать текущее положение каретки в символах
-        """
-        # Текущая позиция в байтах
-        currpos_bytes = self.editor.GetCurrentPos()
-        text_left = self.editor.GetTextRange (0, currpos_bytes)
-
-        currpos_chars = len (text_left)
-
-        return currpos_chars
-
-
-    def getStartSelectionChars (self):
-        """
-        Получить позицию начала выделенного текста в символах
-        """
-        startsel_bytes = self.editor.GetSelectionStart()
-        text_left = self.editor.GetTextRange (0, startsel_bytes)
-        currpos = len (text_left)
-        return currpos
-
-
-    def setEditor (self, editPanel, editor):
-        self.editPanel = editPanel
-        self.editor = editor
-    

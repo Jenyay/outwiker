@@ -22,7 +22,7 @@ class TextEditor(wx.Panel):
         kwds["style"] = wx.TAB_TRAVERSAL
         wx.Panel.__init__(self, *args, **kwds)
         self.textCtrl = StyledTextCtrl(self, -1)
-        self.searchPanel = EditorSearchPanel(self, -1)
+        self.searchPanel = EditorSearchPanel (self, self)
 
         self.__do_layout()
 
@@ -32,7 +32,6 @@ class TextEditor(wx.Panel):
         self.__showlinenumbers =  self.config.lineNumbers.value
 
         self.setDefaultSettings()
-        self.searchPanel.setEditor (self, self.textCtrl)
 
         self.textCtrl.Bind(wx.EVT_MENU, self.__onCopyFromEditor, id = MainId.ID_COPY)
         self.textCtrl.Bind(wx.EVT_MENU, self.__onCutFromEditor, id = MainId.ID_CUT)
@@ -169,7 +168,7 @@ class TextEditor(wx.Panel):
 
         self.mbcsEnc = codecs.getencoder(encoding)
         self.encoder = codecs.getencoder("utf-8")
-    
+
 
     def __onKeyDown (self, event):
         key = event.GetKeyCode()
@@ -263,3 +262,37 @@ class TextEditor(wx.Panel):
         endByte = self.calcByteLen (endText)
 
         self.textCtrl.SetSelection (firstByte, endByte)
+
+
+    def GetCurrentPosition (self):
+        """
+        Возвращает номер символа (а не байта), перед которых находится курсор
+        """
+        return self.__calcCharPos (self.textCtrl.GetCurrentPos() )
+
+
+    def GetSelectionStart (self):
+        """
+        Возвращает позицию начала выбранной области в символах, а не в байтах
+        """
+        return self.__calcCharPos (self.textCtrl.GetSelectionStart() )
+
+
+    def GetSelectionEnd (self):
+        """
+        Возвращает позицию конца выбранной области в символах, а не в байтах
+        """
+        return self.__calcCharPos (self.textCtrl.GetSelectionEnd() )
+
+
+    def SetFocus (self):
+        self.textCtrl.SetFocus()
+
+
+    def __calcCharPos (self, pos_bytes):
+        """
+        Пересчет позиции в байтах в позицию в символах
+        """
+        text_left = self.textCtrl.GetTextRange (0, pos_bytes)
+        currpos = len (text_left)
+        return currpos

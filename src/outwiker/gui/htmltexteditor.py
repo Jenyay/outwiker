@@ -142,9 +142,7 @@ class HtmlTextEditor (TextEditor):
 
         if len (items) == 0:
             endText = u"%s\n%s" % (itemEnd, end)
-            len_bytes = self.calcByteLen (endText)
 
-            currPos = self.textCtrl.GetSelectionEnd()
-            newPos = currPos - len_bytes
-            self.textCtrl.SetSelection (newPos, newPos)
+            newPos = self.GetSelectionEnd() - len (endText)
+            self.SetSelection (newPos, newPos)
 

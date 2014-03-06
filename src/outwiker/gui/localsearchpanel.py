@@ -7,11 +7,11 @@ import wx
 from outwiker.core.system import getImagesDir
 
 class LocalSearchPanel(wx.Panel):
-    def __init__(self, *args, **kwds):
+    def __init__(self, parent):
+        super (LocalSearchPanel, self).__init__(parent)
+
         self.imagesDir = getImagesDir()
 
-        kwds["style"] = wx.TAB_TRAVERSAL
-        wx.Panel.__init__(self, *args, **kwds)
         self.phraseTextCtrl = wx.SearchCtrl (self, -1, "", style=wx.TE_PROCESS_ENTER)
         self.phraseTextCtrl.ShowCancelButton(True)
         self.phraseTextCtrl.SetDescriptiveText (_(u"Search"))

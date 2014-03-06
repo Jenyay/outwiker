@@ -172,3 +172,52 @@ class TextEditorTest (BaseMainWndTest):
         self._getEditor().SetSelection (0, len (text))
         self._getEditor().turnText (u"Лево", u"Право")
         self.assertEqual (self._getEditor().GetText(), u"ЛевоПроверка абырвалгПраво")
+
+
+    def testGetCurrentPositionEmpty (self):
+        self.assertEqual (self._getEditor().GetCurrentPosition(), 0)
+
+
+    def testGetCurrentPosition (self):
+        text = u"Проверка абырвалг"
+        self._getEditor().SetText (text)
+
+        self._getEditor().SetSelection (0, 1)
+        self.assertEqual (self._getEditor().GetCurrentPosition(), 1)
+
+        self._getEditor().SetSelection (1, 0)
+        self.assertEqual (self._getEditor().GetCurrentPosition(), 0)
+
+        self._getEditor().SetSelection (10, 10)
+        self.assertEqual (self._getEditor().GetCurrentPosition(), 10)
+
+
+    def testGetSelectionPosEmpty (self):
+        self.assertEqual (self._getEditor().GetSelectionStart(), 0)
+        self.assertEqual (self._getEditor().GetSelectionEnd(), 0)
+
+
+    def testGetSelectionPos (self):
+        text = u"Проверка абырвалг"
+        self._getEditor().SetText (text)
+
+        self._getEditor().SetSelection (0, 0)
+        self.assertEqual (self._getEditor().GetSelectionStart(), 0)
+        self.assertEqual (self._getEditor().GetSelectionEnd(), 0)
+
+        self._getEditor().SetSelection (0, 1)
+        self.assertEqual (self._getEditor().GetSelectionStart(), 0)
+        self.assertEqual (self._getEditor().GetSelectionEnd(), 1)
+
+        self._getEditor().SetSelection (1, 0)
+        self.assertEqual (self._getEditor().GetSelectionStart(), 0)
+        self.assertEqual (self._getEditor().GetSelectionEnd(), 1)
+
+        self._getEditor().SetSelection (10, 10)
+        self.assertEqual (self._getEditor().GetSelectionStart(), 10)
+        self.assertEqual (self._getEditor().GetSelectionEnd(), 10)
+
+        self._getEditor().SetSelection (0, len (text))
+        self.assertEqual (self._getEditor().GetSelectionStart(), 0)
+        self.assertEqual (self._getEditor().GetSelectionEnd(), len (text))
+        self.assertEqual (self._getEditor().GetSelectedText(), text)
