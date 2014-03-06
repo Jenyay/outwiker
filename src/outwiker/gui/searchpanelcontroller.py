@@ -1,31 +1,36 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-from .localsearchpanel import LocalSearchPanel, LocalSearcher
+from .localsearchpanel import LocalSearcher
 
 
-class EditorSearchPanel (LocalSearchPanel):
+class SearchPanelController (object):
     _recentSearch = u""
 
-    def __init__ (self, parent, editor):
-        super (EditorSearchPanel, self).__init__(parent)
-    
+    def __init__ (self, searchPanel, editor):
+        """
+        searchPanel - панель со строкой поиска
+        editor - текстовый редактор (экземпляр класса textEditor)
+        """
+        # Панель со строкой поиска
+        self.panel = searchPanel
         self.editor = editor
-        self.phraseTextCtrl.SetValue (EditorSearchPanel._recentSearch)
+
+        self.panel.phraseTextCtrl.SetValue (SearchPanelController._recentSearch)
 
 
     def nextSearch (self):
         """
         Искать следующее вхождение фразы
         """
-        self.searchTo (self.findNext)
+        self._searchTo (self._findNext)
 
 
     def prevSearch (self):
         """
         Искать предыдущее вхождение фразы
         """
-        self.searchTo (self.findPrev)
+        self._searchTo (self._findPrev)
         self.editor.SetFocus()
     
 
@@ -36,27 +41,33 @@ class EditorSearchPanel (LocalSearchPanel):
         phrase = self.editor.GetSelectedText()
 
         if len (phrase) == 0:
-            phrase = EditorSearchPanel._recentSearch
-            self.phraseTextCtrl.SetValue (phrase)
+            phrase = SearchPanelController._recentSearch
+            self.panel.phraseTextCtrl.SetValue (phrase)
 
-        self.phraseTextCtrl.SetValue (phrase)
-        self.phraseTextCtrl.SetSelection (-1, -1)
-        self.phraseTextCtrl.SetFocus ()
+        self.panel.phraseTextCtrl.SetValue (phrase)
+        self.panel.phraseTextCtrl.SetSelection (-1, -1)
+        self.panel.phraseTextCtrl.SetFocus ()
 
 
     def enterSearchPhrase (self):
-        self.searchTo (self.findNextOnEnter)
+        self._searchTo (self._findNextOnEnter)
+
+
+    def show (self):
+        if not self.panel.IsShown():
+            self.panel.Show()
+            self.panel.GetParent().Layout()
     
 
-    def searchTo (self, direction):
+    def _searchTo (self, direction):
         """
         Поиск фразы в нужном направлении (вперед / назад)
-        direction - функция, которая ищет текст в нужном направлении (findNext / findPrev)
+        direction - функция, которая ищет текст в нужном направлении (_findNext / _findPrev)
         """
-        self.phraseTextCtrl.SetFocus ()
-        phrase = self.phraseTextCtrl.GetValue ()
+        self.panel.phraseTextCtrl.SetFocus ()
+        phrase = self.panel.phraseTextCtrl.GetValue ()
 
-        EditorSearchPanel._recentSearch = phrase
+        SearchPanelController._recentSearch = phrase
 
         if len (phrase) == 0:
             return
@@ -64,15 +75,15 @@ class EditorSearchPanel (LocalSearchPanel):
         text = self.editor.GetText()
         result = direction (text, phrase)
         if result != None:
-            self.resultLabel.SetLabel (u"")
+            self.panel.resultLabel.SetLabel (u"")
             self.editor.SetSelection (result.position, result.position + len (result.phrase) )
         else:
-            self.resultLabel.SetLabel (_(u"Not found"))
+            self.panel.resultLabel.SetLabel (_(u"Not found"))
 
-        self.Layout()
+        self.panel.Layout()
 
     
-    def findNext (self, text, phrase):
+    def _findNext (self, text, phrase):
         """
         Найти следующее вхождение
         """
@@ -93,7 +104,7 @@ class EditorSearchPanel (LocalSearchPanel):
         return result
 
 
-    def findPrev (self, text, phrase):
+    def _findPrev (self, text, phrase):
         """
         Найти предыдущее вхождение
         """
@@ -113,7 +124,7 @@ class EditorSearchPanel (LocalSearchPanel):
         return result
 
 
-    def findNextOnEnter (self, text, phrase):
+    def _findNextOnEnter (self, text, phrase):
         """
         Найти следующее вхождение, но начиная с начала выделения текста
         """

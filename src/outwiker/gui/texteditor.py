@@ -12,7 +12,8 @@ import outwiker.core.system
 from outwiker.core.application import Application
 from .guiconfig import EditorConfig
 from outwiker.core.textprinter import TextPrinter
-from .editorsearchpanel import EditorSearchPanel
+from searchpanelcontroller import SearchPanelController
+from localsearchpanel import LocalSearchPanel
 from .mainid import MainId
 
 class TextEditor(wx.Panel):
@@ -22,7 +23,11 @@ class TextEditor(wx.Panel):
         kwds["style"] = wx.TAB_TRAVERSAL
         wx.Panel.__init__(self, *args, **kwds)
         self.textCtrl = StyledTextCtrl(self, -1)
-        self.searchPanel = EditorSearchPanel (self, self)
+
+        # Создание панели поиска и ее контроллера
+        self._searchPanel = LocalSearchPanel (self)
+        self._searchPanelController = SearchPanelController (self._searchPanel, self)
+        self._searchPanel.setController (self._searchPanelController)
 
         self.__do_layout()
 
@@ -48,6 +53,14 @@ class TextEditor(wx.Panel):
 
     def __onChange (self, event):
         self.__setMarginWidth (self.textCtrl)
+
+
+    @property
+    def searchPanel (self):
+        """
+        Возвращает контроллер панели поиска
+        """
+        return self._searchPanelController
 
 
     def Print (self):
@@ -81,13 +94,13 @@ class TextEditor(wx.Panel):
     def __do_layout(self):
         mainSizer = wx.FlexGridSizer(2, 1, 0, 0)
         mainSizer.Add(self.textCtrl, 1, wx.EXPAND, 0)
-        mainSizer.Add(self.searchPanel, 1, wx.EXPAND, 0)
+        mainSizer.Add(self._searchPanel, 1, wx.EXPAND, 0)
         self.SetSizer(mainSizer)
         mainSizer.Fit(self)
         mainSizer.AddGrowableRow(0)
         mainSizer.AddGrowableCol(0)
 
-        self.searchPanel.Hide()
+        self._searchPanel.Hide()
         self.Layout()
 
 
@@ -174,7 +187,7 @@ class TextEditor(wx.Panel):
         key = event.GetKeyCode()
 
         if key == wx.WXK_ESCAPE:
-            self.searchPanel.Close()
+            self._searchPanel.Close()
 
         event.Skip()
 

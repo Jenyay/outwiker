@@ -13,12 +13,6 @@ class BaseSearchAction (BaseAction):
         self._application = application
 
 
-    def _showSearchPanel (self, searchPanel):
-        if not searchPanel.IsShown():
-            searchPanel.Show()
-            searchPanel.GetParent().Layout()
-
-
     def _getPageView (self):
         return self._application.mainWindow.pagePanel.panel.pageView
 
@@ -44,7 +38,7 @@ class SearchAction (BaseSearchAction):
         searchPanel = self._getPageView().GetSearchPanel()
 
         if searchPanel != None:
-            self._showSearchPanel (searchPanel)
+            searchPanel.show()
             searchPanel.startSearch()
 
 
@@ -68,7 +62,7 @@ class SearchNextAction (BaseSearchAction):
         searchPanel = self._getPageView().GetSearchPanel()
 
         if searchPanel != None:
-            self._showSearchPanel (searchPanel)
+            searchPanel.show()
             searchPanel.nextSearch()
 
 
@@ -92,5 +86,5 @@ class SearchPrevAction (BaseSearchAction):
         searchPanel = self._getPageView().GetSearchPanel()
 
         if searchPanel != None:
-            self._showSearchPanel (searchPanel)
+            searchPanel.show()
             searchPanel.prevSearch()
