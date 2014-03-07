@@ -43,7 +43,7 @@ class SearchPanelController (object):
             phrase = SearchPanelController._recentSearch
             self.panel.phraseTextCtrl.SetValue (phrase)
 
-        self.panel.phraseTextCtrl.SetValue (phrase)
+        self.setSearchPhrase (phrase)
         self.panel.phraseTextCtrl.SetSelection (-1, -1)
         self.panel.phraseTextCtrl.SetFocus ()
 
@@ -56,6 +56,20 @@ class SearchPanelController (object):
         if not self.panel.IsShown():
             self.panel.Show()
             self.panel.GetParent().Layout()
+
+
+    def setSearchPhrase (self, phrase):
+        """
+        В панели поиска установить искомую фразу. При этом сразу начинается поиск
+        """
+        self.panel.phraseTextCtrl.SetValue (phrase)
+
+
+    def getSearchPhrase (self):
+        """
+        Возвращает искомую фразу из панели
+        """
+        return self.panel.phraseTextCtrl.GetValue()
     
 
     def _searchTo (self, direction):
@@ -64,7 +78,7 @@ class SearchPanelController (object):
         direction - функция, которая ищет текст в нужном направлении (_findNext / _findPrev)
         """
         self.panel.phraseTextCtrl.SetFocus ()
-        phrase = self.panel.phraseTextCtrl.GetValue ()
+        phrase = self.getSearchPhrase ()
 
         SearchPanelController._recentSearch = phrase
 

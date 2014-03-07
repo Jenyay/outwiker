@@ -221,3 +221,97 @@ class TextEditorTest (BaseMainWndTest):
         self.assertEqual (self._getEditor().GetSelectionStart(), 0)
         self.assertEqual (self._getEditor().GetSelectionEnd(), len (text))
         self.assertEqual (self._getEditor().GetSelectedText(), text)
+
+
+    def testGetSetSearchPhrase (self):
+        searchController = self._getEditor().searchPanel
+
+        searchController.setSearchPhrase (u"Абырвалг")
+        self.assertEqual (searchController.getSearchPhrase(), u"Абырвалг")
+
+
+    def testSearchNext (self):
+        editor = self._getEditor()
+        editor.SetText (u"Абырвалг проверка абырвалг")
+        editor.SetSelection (0, 0)
+
+        searchController = editor.searchPanel
+
+        searchController.setSearchPhrase (u"абырвалг")
+        self.assertEqual (editor.GetSelectionStart(), 0)
+        self.assertEqual (editor.GetSelectionEnd(), 8)
+
+        searchController.nextSearch()
+        self.assertEqual (editor.GetSelectionStart(), 18)
+        self.assertEqual (editor.GetSelectionEnd(), 26)
+
+        searchController.nextSearch()
+        self.assertEqual (editor.GetSelectionStart(), 0)
+        self.assertEqual (editor.GetSelectionEnd(), 8)
+
+
+    def testSearchPrev (self):
+        editor = self._getEditor()
+        editor.SetText (u"Абырвалг проверка абырвалг")
+        editor.SetSelection (0, 0)
+
+        searchController = editor.searchPanel
+
+        searchController.setSearchPhrase (u"абырвалг")
+
+        searchController.prevSearch()
+        self.assertEqual (editor.GetSelectionStart(), 18)
+        self.assertEqual (editor.GetSelectionEnd(), 26)
+
+        searchController.prevSearch()
+        self.assertEqual (editor.GetSelectionStart(), 0)
+        self.assertEqual (editor.GetSelectionEnd(), 8)
+
+        searchController.prevSearch()
+        self.assertEqual (editor.GetSelectionStart(), 18)
+        self.assertEqual (editor.GetSelectionEnd(), 26)
+
+
+    def testSearchSiblingsNext (self):
+        editor = self._getEditor()
+        editor.SetText (u"ыыыыыыыыы")
+        editor.SetSelection (0, 0)
+
+        searchController = editor.searchPanel
+
+        searchController.setSearchPhrase (u"ыыы")
+        self.assertEqual (editor.GetSelectionStart(), 0)
+        self.assertEqual (editor.GetSelectionEnd(), 3)
+        
+        searchController.nextSearch()
+        self.assertEqual (editor.GetSelectionStart(), 3)
+        self.assertEqual (editor.GetSelectionEnd(), 6)
+        
+        searchController.nextSearch()
+        self.assertEqual (editor.GetSelectionStart(), 6)
+        self.assertEqual (editor.GetSelectionEnd(), 9)
+        
+        searchController.nextSearch()
+        self.assertEqual (editor.GetSelectionStart(), 0)
+        self.assertEqual (editor.GetSelectionEnd(), 3)
+
+
+    def testSearchSiblingsPrev (self):
+        editor = self._getEditor()
+        editor.SetText (u"ыыыыыыыыы")
+        editor.SetSelection (0, 0)
+
+        searchController = editor.searchPanel
+
+        searchController.setSearchPhrase (u"ыыы")
+        searchController.prevSearch()
+        self.assertEqual (editor.GetSelectionStart(), 6)
+        self.assertEqual (editor.GetSelectionEnd(), 9)
+        
+        searchController.prevSearch()
+        self.assertEqual (editor.GetSelectionStart(), 3)
+        self.assertEqual (editor.GetSelectionEnd(), 6)
+        
+        searchController.prevSearch()
+        self.assertEqual (editor.GetSelectionStart(), 0)
+        self.assertEqual (editor.GetSelectionEnd(), 3)
