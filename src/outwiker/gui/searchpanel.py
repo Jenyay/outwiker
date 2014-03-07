@@ -6,9 +6,9 @@ import os.path
 import wx
 from outwiker.core.system import getImagesDir
 
-class LocalSearchPanel (wx.Panel):
+class SearchPanel (wx.Panel):
     def __init__(self, parent):
-        super (LocalSearchPanel, self).__init__(parent)
+        super (SearchPanel, self).__init__(parent)
 
         self._controller = None
 
@@ -38,7 +38,7 @@ class LocalSearchPanel (wx.Panel):
         self.Bind(wx.EVT_BUTTON, self.__onNextSearch, self.nextSearchBtn)
         self.Bind(wx.EVT_BUTTON, self.__onPrevSearch, self.prevSearchBtn)
         self.Bind (wx.EVT_CLOSE, self.__onClose)
-        self._phraseTextCtrl.Bind (wx.EVT_KEY_DOWN, self.__onKeyDown)
+        self._phraseTextCtrl.Bind (wx.EVT_KEY_UP, self.__onKeyDown)
 
 
     def _createGui (self):

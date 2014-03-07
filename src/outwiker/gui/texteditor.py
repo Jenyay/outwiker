@@ -13,7 +13,7 @@ from outwiker.core.application import Application
 from .guiconfig import EditorConfig
 from outwiker.core.textprinter import TextPrinter
 from searchpanelcontroller import SearchPanelController
-from localsearchpanel import LocalSearchPanel
+from searchpanel import SearchPanel
 from .mainid import MainId
 
 class TextEditor(wx.Panel):
@@ -25,7 +25,7 @@ class TextEditor(wx.Panel):
         self.textCtrl = StyledTextCtrl(self, -1)
 
         # Создание панели поиска и ее контроллера
-        self._searchPanel = LocalSearchPanel (self)
+        self._searchPanel = SearchPanel (self)
         self._searchPanelController = SearchPanelController (self._searchPanel, self)
         self._searchPanel.setController (self._searchPanelController)
 
