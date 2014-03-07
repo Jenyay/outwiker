@@ -3,7 +3,7 @@
 
 import unittest
 
-from outwiker.gui.localsearchpanel import LocalSearcher, SearchResult
+from outwiker.gui.searchpanelcontroller import LocalSearcher, SearchResult
 
 class LocalSearchTest(unittest.TestCase):
     def setUp(self):
@@ -14,7 +14,8 @@ class LocalSearchTest(unittest.TestCase):
         text = u"1111 sdf sdf 111 657 111 1111 sdf sdf1243"
         phrase = u"111"
         
-        searcher = LocalSearcher (text, phrase)
+        searcher = LocalSearcher()
+        searcher.search (text, phrase)
 
         self.assertEqual (len (searcher.result), 4)
 
@@ -35,7 +36,8 @@ class LocalSearchTest(unittest.TestCase):
         text = u"1111 sdf sdf 111 657 111 1111 sdf sdf1243"
         phrase = u"222"
         
-        searcher = LocalSearcher (text, phrase)
+        searcher = LocalSearcher()
+        searcher.search (text, phrase)
 
         self.assertEqual (len (searcher.result), 0)
 
@@ -44,7 +46,8 @@ class LocalSearchTest(unittest.TestCase):
         text = u"бЛабл sdf sdf Бла 657 бла блА sdf sdf1243"
         phrase = u"бЛа"
         
-        searcher = LocalSearcher (text, phrase)
+        searcher = LocalSearcher()
+        searcher.search (text, phrase)
 
         self.assertEqual (len (searcher.result), 4)
 
@@ -65,7 +68,8 @@ class LocalSearchTest(unittest.TestCase):
         text = u"111 бла-Бла-блА"
         phrase = u"бЛа-"
         
-        searcher = LocalSearcher (text, phrase)
+        searcher = LocalSearcher()
+        searcher.search (text, phrase)
 
         self.assertEqual (len (searcher.result), 2)
 

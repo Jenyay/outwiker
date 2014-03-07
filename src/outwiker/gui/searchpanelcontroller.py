@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-from .localsearchpanel import LocalSearcher
-
-
 class SearchPanelController (object):
     _recentSearch = u""
 
@@ -15,6 +12,8 @@ class SearchPanelController (object):
         # Панель со строкой поиска
         self.panel = searchPanel
         self.editor = editor
+
+        self._searcher = LocalSearcher()
 
         self.panel.phraseTextCtrl.SetValue (SearchPanelController._recentSearch)
 
@@ -87,19 +86,19 @@ class SearchPanelController (object):
         """
         Найти следующее вхождение
         """
-        searcher = LocalSearcher (text, phrase)
+        self._searcher.search (text, phrase)
 
         currpos = self.editor.GetCurrentPosition()
 
         result = None
 
-        for currResult in searcher.result:
+        for currResult in self._searcher.result:
             if currResult.position >= currpos:
                 result = currResult
                 break
 
-        if result == None and len (searcher.result) > 0:
-            result = searcher.result[0]
+        if result == None and len (self._searcher.result) > 0:
+            result = self._searcher.result[0]
 
         return result
 
@@ -108,18 +107,18 @@ class SearchPanelController (object):
         """
         Найти предыдущее вхождение
         """
-        searcher = LocalSearcher (text, phrase)
+        self._searcher.search (text, phrase)
 
         currpos = self.editor.GetSelectionStart()
 
         result = None
 
-        for currResult in searcher.result:
+        for currResult in self._searcher.result:
             if currResult.position < currpos:
                 result = currResult
 
-        if result == None and len (searcher.result) > 0:
-            result = searcher.result[-1]
+        if result == None and len (self._searcher.result) > 0:
+            result = self._searcher.result[-1]
 
         return result
 
@@ -128,18 +127,58 @@ class SearchPanelController (object):
         """
         Найти следующее вхождение, но начиная с начала выделения текста
         """
-        searcher = LocalSearcher (text, phrase)
+        self._searcher.search (text, phrase)
 
         currpos = self.editor.GetSelectionStart()
 
         result = None
 
-        for currResult in searcher.result:
+        for currResult in self._searcher.result:
             if currResult.position >= currpos:
                 result = currResult
                 break
 
-        if result == None and len (searcher.result) > 0:
-            result = searcher.result[0]
+        if result == None and len (self._searcher.result) > 0:
+            result = self._searcher.result[0]
 
         return result
+
+
+
+class SearchResult (object):
+    """
+    Результат поиска по странице
+    """
+    def __init__ (self, position, phrase):
+        """
+        position - начало найденного текста
+        """
+        self.position = position
+        self.phrase = phrase
+
+
+
+class LocalSearcher (object):
+    """
+    Класс для поиска по странице
+    """
+    def __init__ (self):
+        self._result = []
+
+
+    @property
+    def result (self):
+        return self._result
+
+
+    def search (self, text, phrase):
+        self._result = []
+
+        text_lower = text.lower()
+        phrase_lower = phrase.lower()
+
+        index = text_lower.find (phrase_lower)
+
+        while index != -1:
+            self._result.append (SearchResult (index, phrase_lower) )
+            index = text_lower.find (phrase_lower, index + len (phrase_lower))

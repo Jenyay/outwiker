@@ -114,35 +114,3 @@ class LocalSearchPanel (wx.Panel):
 
     def __onCloseClick(self, event):
         self.Close()
-
-
-
-class SearchResult (object):
-    """
-    Результат поиска по странице
-    """
-    def __init__ (self, position, phrase):
-        """
-        position - начало найденного текста
-        """
-        self.position = position
-        self.phrase = phrase
-
-
-class LocalSearcher (object):
-    def __init__ (self, text, phrase):
-        self.text = text.lower()
-        self.phrase = phrase.lower()
-        self.result = self._findAll ()
-
-
-    def _findAll (self):
-        result = []
-        index = self.text.find (self.phrase)
-
-        while index != -1:
-            result.append (SearchResult (index, self.phrase) )
-            index = self.text.find (self.phrase, index + len (self.phrase))
-
-        return result
-
