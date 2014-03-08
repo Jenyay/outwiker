@@ -31,6 +31,20 @@ class SearchPanelController (object):
         """
         self._searchTo (self._findPrev)
         self.editor.SetFocus()
+
+
+    def replace (self):
+        """
+        Сделать замену
+        """
+        print "Replace"
+
+
+    def replaceAll (self):
+        """
+        Заменить все
+        """
+        print "Replace All"
     
 
     def startSearch (self):

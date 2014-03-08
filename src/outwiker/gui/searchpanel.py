@@ -15,6 +15,13 @@ class SearchPanel (wx.Panel):
         self._createGui()
         self._bindEvents()
 
+        # Список элементов, относящихся к замене
+        self._replaceGui = [self._replaceLabel,
+                self._replaceText,
+                self._replaceBtn,
+                self._replaceAllBtn,
+                ]
+
 
     def setController (self, controller):
         self._controller = controller
@@ -35,52 +42,74 @@ class SearchPanel (wx.Panel):
         self.Bind(wx.EVT_SEARCHCTRL_SEARCH_BTN, self.__onNextSearch, self._phraseTextCtrl)
         self.Bind(wx.EVT_TEXT_ENTER, self.__onNextSearch, self._phraseTextCtrl)
         self.Bind(wx.EVT_TEXT, self.__onTextEnter, self._phraseTextCtrl)
-        self.Bind(wx.EVT_BUTTON, self.__onNextSearch, self.nextSearchBtn)
-        self.Bind(wx.EVT_BUTTON, self.__onPrevSearch, self.prevSearchBtn)
+        self.Bind(wx.EVT_BUTTON, self.__onNextSearch, self._nextSearchBtn)
+        self.Bind(wx.EVT_BUTTON, self.__onPrevSearch, self._prevSearchBtn)
         self.Bind (wx.EVT_CLOSE, self.__onClose)
         self._phraseTextCtrl.Bind (wx.EVT_KEY_UP, self.__onKeyDown)
 
+        self._replaceText.Bind (wx.EVT_KEY_UP, self.__onKeyDown)
+        self.Bind(wx.EVT_BUTTON, self.__onReplace, self._replaceBtn)
+        self.Bind(wx.EVT_BUTTON, self.__onReplaceAll, self._replaceAllBtn)
+
 
     def _createGui (self):
-        imagesDir = getImagesDir()
+        self._mainSizer = wx.FlexGridSizer (cols=5)
+        self._mainSizer.AddGrowableCol(1)
 
-        self._phraseTextCtrl = wx.SearchCtrl (self, -1, "", style=wx.TE_PROCESS_ENTER)
+
+        # Элементы интерфейса, связанные с поиском
+        self._findLabel = wx.StaticText(self, -1, _(u"Find what: "))
+
+        # Поле для ввода искомой фразы
+        self._phraseTextCtrl = wx.SearchCtrl (self, -1, u"", style=wx.TE_PROCESS_ENTER)
         self._phraseTextCtrl.ShowCancelButton(True)
         self._phraseTextCtrl.SetDescriptiveText (_(u"Search"))
         self._phraseTextCtrl.SetMinSize((250, -1))
 
-        self.nextSearchBtn = wx.BitmapButton(self, 
-                -1, 
-                wx.Bitmap(os.path.join (imagesDir, "arrow_down.png"), 
-                    wx.BITMAP_TYPE_ANY))
+        # Кнопка "Найти далее"
+        self._nextSearchBtn = wx.Button (self, -1, _(u"Next"))
 
-        self.nextSearchBtn.SetToolTipString (_(u"Find Next") )
-        self.nextSearchBtn.SetSize(self.nextSearchBtn.GetBestSize())
+        # Кнопка "Найти выше"
+        self._prevSearchBtn = wx.Button (self, -1, _(u"Prev"))
 
-        self.prevSearchBtn = wx.BitmapButton(self, 
-                -1, 
-                wx.Bitmap(os.path.join (imagesDir, "arrow_up.png"), 
-                    wx.BITMAP_TYPE_ANY))
-
-        self.prevSearchBtn.SetToolTipString (_(u"Find Previous") )
-        self.prevSearchBtn.SetSize(self.prevSearchBtn.GetBestSize())
-
+        # Метка с результатом поиска 
         self._resultLabel = wx.StaticText(self, -1, "")
         self._resultLabel.SetMinSize ((150, -1))
+
+
+        # Элементы интерфейса, связанные с заменой
+        self._replaceLabel = wx.StaticText(self, -1, _(u"Replace with: "))
+
+        # Текст для замены
+        self._replaceText = wx.TextCtrl (self, -1, u"")
+        self._replaceText.SetMinSize((250, -1))
+
+        # Кнопка "Заменить"
+        self._replaceBtn = wx.Button (self, -1, _(u"Replace"))
+
+        # Кнопка "Заменить все"
+        self._replaceAllBtn = wx.Button (self, -1, _(u"Replace All"))
 
         self._layout()
 
 
     def _layout(self):
-        mainSizer = wx.FlexGridSizer(1, 0, 0, 0)
-        mainSizer.Add(self._phraseTextCtrl, 0, wx.ALL|wx.EXPAND|wx.ALIGN_CENTER_VERTICAL, 2)
-        mainSizer.Add(self.nextSearchBtn, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
-        mainSizer.Add(self.prevSearchBtn, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
-        mainSizer.Add(self._resultLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
-        self.SetSizer(mainSizer)
-        mainSizer.Fit(self)
-        mainSizer.AddGrowableRow(0)
-        mainSizer.AddGrowableCol(0)
+        # Элементы интерфейса для поиска
+        self._mainSizer.Add (self._findLabel, 0, wx.ALL|wx.EXPAND|wx.ALIGN_CENTER_VERTICAL, 2)
+        self._mainSizer.Add (self._phraseTextCtrl, 0, wx.ALL|wx.EXPAND|wx.ALIGN_CENTER_VERTICAL, 2)
+        self._mainSizer.Add (self._nextSearchBtn, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
+        self._mainSizer.Add (self._prevSearchBtn, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
+        self._mainSizer.Add (self._resultLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
+
+        # Элементы интерфейса для замены
+        self._mainSizer.Add (self._replaceLabel, 0, wx.ALL|wx.EXPAND|wx.ALIGN_CENTER_VERTICAL, 2)
+        self._mainSizer.Add (self._replaceText, 0, wx.ALL|wx.EXPAND|wx.ALIGN_CENTER_VERTICAL, 2)
+        self._mainSizer.Add (self._replaceBtn, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
+        self._mainSizer.Add (self._replaceAllBtn, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
+        self._mainSizer.AddStretchSpacer()
+        
+        self.SetSizer (self._mainSizer)
+        self.Layout()
     
 
     def __onNextSearch(self, event): 
@@ -91,6 +120,16 @@ class SearchPanel (wx.Panel):
     def __onPrevSearch(self, event):
         if self._controller != None:
             self._controller.prevSearch()
+
+
+    def __onReplace (self, event):
+        if self._controller != None:
+            self._controller.replace()
+
+
+    def __onReplaceAll (self, event):
+        if self._controller != None:
+            self._controller.replaceAll()
 
     
     def __onTextEnter(self, event):

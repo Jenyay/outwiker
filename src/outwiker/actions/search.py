@@ -17,6 +17,10 @@ class BaseSearchAction (BaseAction):
         return self._application.mainWindow.pagePanel.panel.pageView
 
 
+    def _getSearchPanel (self):
+        return self._getPageView().GetSearchPanel()
+
+
 
 class SearchAction (BaseSearchAction):
     """
@@ -35,7 +39,7 @@ class SearchAction (BaseSearchAction):
 
 
     def run (self, params):
-        searchPanel = self._getPageView().GetSearchPanel()
+        searchPanel = self._getSearchPanel()
 
         if searchPanel != None:
             searchPanel.show()
@@ -59,7 +63,7 @@ class SearchNextAction (BaseSearchAction):
 
 
     def run (self, params):
-        searchPanel = self._getPageView().GetSearchPanel()
+        searchPanel = self._getSearchPanel()
 
         if searchPanel != None:
             searchPanel.show()
@@ -83,7 +87,7 @@ class SearchPrevAction (BaseSearchAction):
 
 
     def run (self, params):
-        searchPanel = self._getPageView().GetSearchPanel()
+        searchPanel = self._getSearchPanel()
 
         if searchPanel != None:
             searchPanel.show()
