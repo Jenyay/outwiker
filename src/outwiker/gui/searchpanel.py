@@ -65,6 +65,8 @@ class SearchPanel (wx.Panel):
     def _createGui (self):
         self._mainSizer = wx.FlexGridSizer (cols=5)
         self._mainSizer.AddGrowableCol(1)
+        self._mainSizer.AddGrowableRow(0)
+        self._mainSizer.AddGrowableRow(1)
 
         # Элементы интерфейса, связанные с поиском
         self._findLabel = wx.StaticText(self, -1, _(u"Find what: "))
@@ -104,14 +106,14 @@ class SearchPanel (wx.Panel):
 
     def _layout(self):
         # Элементы интерфейса для поиска
-        self._mainSizer.Add (self._findLabel, 0, wx.ALL|wx.EXPAND|wx.ALIGN_CENTER_VERTICAL, 2)
+        self._mainSizer.Add (self._findLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
         self._mainSizer.Add (self._searchText, 0, wx.ALL|wx.EXPAND|wx.ALIGN_CENTER_VERTICAL, 2)
         self._mainSizer.Add (self._nextSearchBtn, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
         self._mainSizer.Add (self._prevSearchBtn, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
         self._mainSizer.Add (self._resultLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
 
         # Элементы интерфейса для замены
-        self._mainSizer.Add (self._replaceLabel, 0, wx.ALL|wx.EXPAND|wx.ALIGN_CENTER_VERTICAL, 2)
+        self._mainSizer.Add (self._replaceLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
         self._mainSizer.Add (self._replaceText, 0, wx.ALL|wx.EXPAND|wx.ALIGN_CENTER_VERTICAL, 2)
         self._mainSizer.Add (self._replaceBtn, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
         self._mainSizer.Add (self._replaceAllBtn, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
