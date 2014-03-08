@@ -208,6 +208,14 @@ def debinstall():
         local ("sudo dpkg -i outwiker_{}+{}~{}_all.deb".format (version[0], version[1], distribs[0] ) )
 
 
+def locale():
+    """
+    Обновить файлы локализации (outwiker.pot)
+    """
+    with lcd ("src"):
+        local (r"xgettext -o locale/outwiker.pot outwiker/gui/*.py outwiker/gui/*/*.py outwiker/pages/*/*.py outwiker/pages/*/*/*.py outwiker/core/*.py outwiker/actions/*.py")
+
+
 def _makechangelog (distrib_src, distrib_new):
     """
     Подправить changelog под текущий дистрибутив Ubuntu. 

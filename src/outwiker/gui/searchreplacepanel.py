@@ -119,16 +119,16 @@ class SearchReplacePanel (wx.Panel):
         # Элементы интерфейса для поиска
         self._mainSizer.Add (self._findLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
         self._mainSizer.Add (self._searchText, 0, wx.ALL|wx.EXPAND|wx.ALIGN_CENTER_VERTICAL, 2)
-        self._mainSizer.Add (self._nextSearchBtn, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 1)
-        self._mainSizer.Add (self._prevSearchBtn, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 1)
+        self._mainSizer.Add (self._nextSearchBtn, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL|wx.EXPAND, 1)
+        self._mainSizer.Add (self._prevSearchBtn, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL|wx.EXPAND, 1)
         self._mainSizer.Add (self._closeBtn, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 1)
         self._mainSizer.Add (self._resultLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
 
         # Элементы интерфейса для замены
         self._mainSizer.Add (self._replaceLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
         self._mainSizer.Add (self._replaceText, 0, wx.ALL|wx.EXPAND|wx.ALIGN_CENTER_VERTICAL, 2)
-        self._mainSizer.Add (self._replaceBtn, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 1)
-        self._mainSizer.Add (self._replaceAllBtn, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 1)
+        self._mainSizer.Add (self._replaceBtn, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL|wx.EXPAND, 1)
+        self._mainSizer.Add (self._replaceAllBtn, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL|wx.EXPAND, 1)
         self._mainSizer.AddStretchSpacer()
         self._mainSizer.AddStretchSpacer()
         
