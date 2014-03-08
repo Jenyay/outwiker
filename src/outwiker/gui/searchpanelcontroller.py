@@ -36,15 +36,27 @@ class SearchPanelController (object):
     def replace (self):
         """
         Сделать замену
+        Возвращает True, если удалось сделать замену
         """
-        print "Replace"
+        phrase = self.getSearchPhrase()
+        searchResult = SearchResult (self.editor.GetSelectionStart(), 
+                self.editor.GetSelectedText())
+
+        if (len (phrase) > 0 and self._searcher.inResult (searchResult) ):
+            self.editor.replaceText (self.getReplacePhrase())
+            self.nextSearch()
+            return True
+
+        return False
 
 
     def replaceAll (self):
         """
         Заменить все
         """
-        print "Replace All"
+        self.nextSearch()
+        while (self.replace()):
+            pass
     
 
     def startSearch (self):
@@ -84,6 +96,14 @@ class SearchPanelController (object):
         Возвращает искомую фразу из панели
         """
         return self.panel.phraseTextCtrl.GetValue()
+
+
+    def setReplacePhrase (self, phrase):
+        self.panel.replaceTextCtrl.SetValue (phrase)
+
+
+    def getReplacePhrase (self):
+        return self.panel.replaceTextCtrl.GetValue()
 
 
     def switchToSearchMode (self):
@@ -228,3 +248,18 @@ class LocalSearcher (object):
         while index != -1:
             self._result.append (SearchResult (index, phrase_lower) )
             index = text_lower.find (phrase_lower, index + len (phrase_lower))
+
+
+    def inResult (self, testResult):
+        """
+        testResult - экземпляр класса SearchResult
+        Функция возвращает True, если в self._result есть результат поиска, соответствующий testResult
+
+        Эта функция используется для того, чтобы проверять выделенный в редакторе фрагмент на соответствие поисковой фразе
+        """
+        for resultItem in self._result:
+            if (testResult.position == resultItem.position and
+                    testResult.phrase.lower() == resultItem.phrase.lower()):
+                return True
+
+        return False

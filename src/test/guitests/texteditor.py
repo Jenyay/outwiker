@@ -315,3 +315,122 @@ class TextEditorTest (BaseMainWndTest):
         searchController.prevSearch()
         self.assertEqual (editor.GetSelectionStart(), 0)
         self.assertEqual (editor.GetSelectionEnd(), 3)
+
+
+    def testGetSetReplacePhrase (self):
+        editor = self._getEditor()
+        searchController = editor.searchPanel
+        searchController.switchToReplaceMode()
+
+        self.assertEqual (searchController.getReplacePhrase(), u"")
+
+        searchController.setReplacePhrase (u"Абырвалг")
+        self.assertEqual (searchController.getReplacePhrase(), u"Абырвалг")
+
+
+    def testReplace1 (self):
+        editor = self._getEditor()
+        editor.SetText (u"Абырвалг проверка абырвалг")
+        editor.SetSelection (0, 0)
+
+        searchController = editor.searchPanel
+        searchController.switchToReplaceMode()
+        searchController.setReplacePhrase (u"Проверка")
+        searchController.replace()
+
+        self.assertEqual (editor.GetText(), u"Абырвалг проверка абырвалг")
+
+
+    def testReplace2 (self):
+        editor = self._getEditor()
+        editor.SetText (u"АбыРваЛг проверка абыРВАлг")
+        editor.SetSelection (0, 0)
+
+        searchController = editor.searchPanel
+        searchController.switchToReplaceMode()
+        searchController.setReplacePhrase (u"Проверка111")
+        searchController.setSearchPhrase (u"абырвалг")
+        searchController.replace()
+
+        self.assertEqual (editor.GetText(), u"Проверка111 проверка абыРВАлг")
+        self.assertEqual (editor.GetSelectionStart(), 21)
+        self.assertEqual (editor.GetSelectionEnd(), 29)
+
+        searchController.replace()
+        self.assertEqual (editor.GetText(), u"Проверка111 проверка Проверка111")
+        self.assertEqual (editor.GetSelectionStart(), 32)
+        self.assertEqual (editor.GetSelectionEnd(), 32)
+
+
+    def testReplace3 (self):
+        editor = self._getEditor()
+        editor.SetText (u"АбыРваЛг проверка абыРВАлг")
+        editor.SetSelection (1, 1)
+
+        searchController = editor.searchPanel
+        searchController.switchToReplaceMode()
+        searchController.setReplacePhrase (u"Проверка111")
+        searchController.setSearchPhrase (u"абырвалг")
+
+        self.assertEqual (editor.GetSelectionStart(), 18)
+        self.assertEqual (editor.GetSelectionEnd(), 26)
+
+        searchController.replace()
+
+        self.assertEqual (editor.GetText(), u"АбыРваЛг проверка Проверка111")
+        self.assertEqual (editor.GetSelectionStart(), 0)
+        self.assertEqual (editor.GetSelectionEnd(), 8)
+
+        searchController.replace()
+        self.assertEqual (editor.GetText(), u"Проверка111 проверка Проверка111")
+        self.assertEqual (editor.GetSelectionStart(), 11)
+        self.assertEqual (editor.GetSelectionEnd(), 11)
+
+
+    def testReplace4 (self):
+        editor = self._getEditor()
+        editor.SetText (u"АбыРваЛг проверка абыРВАлг")
+        editor.SetSelection (0, 0)
+
+        searchController = editor.searchPanel
+        searchController.switchToReplaceMode()
+        searchController.setReplacePhrase (u"")
+        searchController.setSearchPhrase (u"абырвалг")
+        searchController.replace()
+
+        self.assertEqual (editor.GetText(), u" проверка абыРВАлг")
+        self.assertEqual (editor.GetSelectionStart(), 10)
+        self.assertEqual (editor.GetSelectionEnd(), 18)
+
+        searchController.replace()
+        self.assertEqual (editor.GetText(), u" проверка ")
+        self.assertEqual (editor.GetSelectionStart(), 10)
+        self.assertEqual (editor.GetSelectionEnd(), 10)
+
+
+    def testReplaceAll1 (self):
+        editor = self._getEditor()
+        editor.SetText (u"АбыРваЛг проверка абыРВАлг")
+        editor.SetSelection (0, 0)
+
+        searchController = editor.searchPanel
+        searchController.switchToReplaceMode()
+        searchController.setReplacePhrase (u"Проверка111")
+        searchController.setSearchPhrase (u"абырвалг")
+        searchController.replaceAll()
+
+        self.assertEqual (editor.GetText(), u"Проверка111 проверка Проверка111")
+
+
+    def testReplaceAll2 (self):
+        editor = self._getEditor()
+        editor.SetText (u"АбыРваЛг проверка абыРВАлг")
+        editor.SetSelection (10, 10)
+
+        searchController = editor.searchPanel
+        searchController.switchToReplaceMode()
+        searchController.setReplacePhrase (u"Проверка111")
+        searchController.setSearchPhrase (u"абырвалг")
+        searchController.replaceAll()
+
+        self.assertEqual (editor.GetText(), u"Проверка111 проверка Проверка111")
