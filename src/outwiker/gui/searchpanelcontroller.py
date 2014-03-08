@@ -120,7 +120,9 @@ class SearchPanelController (object):
         Переключиться в режим поиска
         """
         self.panel.Close()
-        self.panel.setReplaceGuiVisible (True)
+        # Если редактор находится в режиме "только для чтения", 
+        # то не показывать GUI предназначенный для замены
+        self.panel.setReplaceGuiVisible (not self.editor.GetReadOnly())
         self.show()
     
 

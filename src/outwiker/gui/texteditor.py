@@ -248,6 +248,10 @@ class TextEditor(wx.Panel):
         self.textCtrl.SetReadOnly (readonly)
 
 
+    def GetReadOnly (self):
+        return self.textCtrl.GetReadOnly()
+
+
     def GetText(self):
         return self.textCtrl.GetText()
 
