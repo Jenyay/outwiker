@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-class SearchPanelController (object):
+class SearchReplaceController (object):
     _recentSearch = u""
 
     def __init__ (self, searchPanel, editor):
@@ -15,7 +15,7 @@ class SearchPanelController (object):
 
         self._searcher = LocalSearcher()
 
-        self.panel.phraseTextCtrl.SetValue (SearchPanelController._recentSearch)
+        self.setSearchPhrase (SearchReplaceController._recentSearch)
 
 
     def nextSearch (self):
@@ -66,12 +66,12 @@ class SearchPanelController (object):
         phrase = self.editor.GetSelectedText()
 
         if len (phrase) == 0:
-            phrase = SearchPanelController._recentSearch
-            self.panel.phraseTextCtrl.SetValue (phrase)
+            phrase = SearchReplaceController._recentSearch
+            self.setSearchPhrase (phrase)
 
         self.setSearchPhrase (phrase)
-        self.panel.phraseTextCtrl.SetSelection (-1, -1)
-        self.panel.phraseTextCtrl.SetFocus ()
+        self.panel.searchTextCtrl.SetSelection (-1, -1)
+        self.panel.searchTextCtrl.SetFocus ()
 
 
     def enterSearchPhrase (self):
@@ -88,14 +88,14 @@ class SearchPanelController (object):
         """
         В панели поиска установить искомую фразу. При этом сразу начинается поиск
         """
-        self.panel.phraseTextCtrl.SetValue (phrase)
+        self.panel.searchTextCtrl.SetValue (phrase)
 
 
     def getSearchPhrase (self):
         """
         Возвращает искомую фразу из панели
         """
-        return self.panel.phraseTextCtrl.GetValue()
+        return self.panel.searchTextCtrl.GetValue()
 
 
     def setReplacePhrase (self, phrase):
@@ -131,10 +131,10 @@ class SearchPanelController (object):
         Поиск фразы в нужном направлении (вперед / назад)
         direction - функция, которая ищет текст в нужном направлении (_findNext / _findPrev)
         """
-        self.panel.phraseTextCtrl.SetFocus ()
+        self.panel.searchTextCtrl.SetFocus ()
         phrase = self.getSearchPhrase ()
 
-        SearchPanelController._recentSearch = phrase
+        SearchReplaceController._recentSearch = phrase
 
         if len (phrase) == 0:
             return

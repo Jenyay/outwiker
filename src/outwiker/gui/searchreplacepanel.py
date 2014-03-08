@@ -6,9 +6,9 @@ import os.path
 import wx
 from outwiker.core.system import getImagesDir
 
-class SearchPanel (wx.Panel):
+class SearchReplacePanel (wx.Panel):
     def __init__(self, parent):
-        super (SearchPanel, self).__init__(parent, style=wx.TAB_TRAVERSAL | wx.RAISED_BORDER)
+        super (SearchReplacePanel, self).__init__(parent, style=wx.TAB_TRAVERSAL | wx.RAISED_BORDER)
 
         self._controller = None
 
@@ -28,7 +28,7 @@ class SearchPanel (wx.Panel):
 
 
     @property
-    def phraseTextCtrl (self):
+    def searchTextCtrl (self):
         return self._searchText
 
 
@@ -53,8 +53,10 @@ class SearchPanel (wx.Panel):
 
 
     def _bindEvents (self):
-        self.Bind(wx.EVT_TEXT_ENTER, self.__onNextSearch, self._searchText)
-        self.Bind(wx.EVT_TEXT, self.__onTextEnter, self._searchText)
+        self.Bind(wx.EVT_TEXT_ENTER, self.__onEnterPress, self._searchText)
+        self.Bind(wx.EVT_TEXT_ENTER, self.__onEnterPress, self._replaceText)
+
+        self.Bind(wx.EVT_TEXT, self.__onSearchTextChange, self._searchText)
         self.Bind(wx.EVT_BUTTON, self.__onNextSearch, self._nextSearchBtn)
         self.Bind(wx.EVT_BUTTON, self.__onPrevSearch, self._prevSearchBtn)
         self.Bind (wx.EVT_CLOSE, self.__onClose)
@@ -69,11 +71,13 @@ class SearchPanel (wx.Panel):
 
     def _createGui (self):
         # Поле для ввода искомой фразы
-        self._searchText = wx.TextCtrl (self, -1, u"", style=wx.TAB_TRAVERSAL)
+        self._searchText = wx.TextCtrl (self, -1, u"", 
+                style=wx.TAB_TRAVERSAL | wx.TE_PROCESS_ENTER)
         self._searchText.SetMinSize((250, -1))
 
         # Текст для замены
-        self._replaceText = wx.TextCtrl (self, -1, u"")
+        self._replaceText = wx.TextCtrl (self, -1, u"",
+                style=wx.TAB_TRAVERSAL | wx.TE_PROCESS_ENTER)
         self._replaceText.SetMinSize((250, -1))
 
 
@@ -111,15 +115,13 @@ class SearchPanel (wx.Panel):
     def _layout(self):
         self._mainSizer = wx.FlexGridSizer (cols=6)
         self._mainSizer.AddGrowableCol(1)
-        self._mainSizer.AddGrowableRow(0)
-        self._mainSizer.AddGrowableRow(1)
 
         # Элементы интерфейса для поиска
         self._mainSizer.Add (self._findLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
         self._mainSizer.Add (self._searchText, 0, wx.ALL|wx.EXPAND|wx.ALIGN_CENTER_VERTICAL, 2)
         self._mainSizer.Add (self._nextSearchBtn, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 1)
         self._mainSizer.Add (self._prevSearchBtn, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 1)
-        self._mainSizer.Add (self._closeBtn, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL | wx.EXPAND, 1)
+        self._mainSizer.Add (self._closeBtn, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 1)
         self._mainSizer.Add (self._resultLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
 
         # Элементы интерфейса для замены
@@ -154,7 +156,7 @@ class SearchPanel (wx.Panel):
             self._controller.replaceAll()
 
     
-    def __onTextEnter(self, event):
+    def __onSearchTextChange (self, event):
         if self._controller != None:
             self._controller.enterSearchPhrase()
     
@@ -171,6 +173,16 @@ class SearchPanel (wx.Panel):
             self.Close()
 
         event.Skip()
+
+
+    def __onEnterPress (self, event):
+        if self._controller == None:
+            return
+
+        if self._replaceText.IsShown():
+            self._controller.replace()
+        else:
+            self._controller.nextSearch()
 
 
     def __onCloseClick(self, event):
