@@ -42,6 +42,7 @@ class SearchAction (BaseSearchAction):
         searchPanel = self._getSearchPanel()
 
         if searchPanel != None:
+            searchPanel.switchToSearchMode()
             searchPanel.show()
             searchPanel.startSearch()
 
@@ -92,3 +93,28 @@ class SearchPrevAction (BaseSearchAction):
         if searchPanel != None:
             searchPanel.show()
             searchPanel.prevSearch()
+
+
+class SearchAndReplaceAction (BaseSearchAction):
+    """
+    Начать поиск и замену на странице
+    """
+    stringId = u"SearchReplace"
+
+    @property
+    def title (self):
+        return _(u"Search and Replace")
+
+
+    @property
+    def description (self):
+        return _(u"Begin search and replace on page")
+
+
+    def run (self, params):
+        searchPanel = self._getSearchPanel()
+
+        if searchPanel != None:
+            searchPanel.switchToReplaceMode()
+            searchPanel.show()
+            searchPanel.startSearch()

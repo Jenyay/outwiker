@@ -29,7 +29,7 @@ class SearchPanel (wx.Panel):
 
     @property
     def phraseTextCtrl (self):
-        return self._phraseTextCtrl
+        return self._searchText
 
 
     @property
@@ -37,15 +37,25 @@ class SearchPanel (wx.Panel):
         return self._resultLabel
 
 
+    def setReplaceGuiVisible (self, visible):
+        """
+        Установить, нужно ли показывать элементы GUI для замены
+        """
+        for item in self._replaceGui:
+            item.Show (visible)
+
+        self.Layout()
+
+
     def _bindEvents (self):
-        self.Bind(wx.EVT_SEARCHCTRL_CANCEL_BTN, self.__onCloseClick, self._phraseTextCtrl)
-        self.Bind(wx.EVT_SEARCHCTRL_SEARCH_BTN, self.__onNextSearch, self._phraseTextCtrl)
-        self.Bind(wx.EVT_TEXT_ENTER, self.__onNextSearch, self._phraseTextCtrl)
-        self.Bind(wx.EVT_TEXT, self.__onTextEnter, self._phraseTextCtrl)
+        self.Bind(wx.EVT_SEARCHCTRL_CANCEL_BTN, self.__onCloseClick, self._searchText)
+        self.Bind(wx.EVT_SEARCHCTRL_SEARCH_BTN, self.__onNextSearch, self._searchText)
+        self.Bind(wx.EVT_TEXT_ENTER, self.__onNextSearch, self._searchText)
+        self.Bind(wx.EVT_TEXT, self.__onTextEnter, self._searchText)
         self.Bind(wx.EVT_BUTTON, self.__onNextSearch, self._nextSearchBtn)
         self.Bind(wx.EVT_BUTTON, self.__onPrevSearch, self._prevSearchBtn)
         self.Bind (wx.EVT_CLOSE, self.__onClose)
-        self._phraseTextCtrl.Bind (wx.EVT_KEY_UP, self.__onKeyDown)
+        self._searchText.Bind (wx.EVT_KEY_UP, self.__onKeyDown)
 
         self._replaceText.Bind (wx.EVT_KEY_UP, self.__onKeyDown)
         self.Bind(wx.EVT_BUTTON, self.__onReplace, self._replaceBtn)
@@ -56,15 +66,14 @@ class SearchPanel (wx.Panel):
         self._mainSizer = wx.FlexGridSizer (cols=5)
         self._mainSizer.AddGrowableCol(1)
 
-
         # Элементы интерфейса, связанные с поиском
         self._findLabel = wx.StaticText(self, -1, _(u"Find what: "))
 
         # Поле для ввода искомой фразы
-        self._phraseTextCtrl = wx.SearchCtrl (self, -1, u"", style=wx.TE_PROCESS_ENTER)
-        self._phraseTextCtrl.ShowCancelButton(True)
-        self._phraseTextCtrl.SetDescriptiveText (_(u"Search"))
-        self._phraseTextCtrl.SetMinSize((250, -1))
+        self._searchText = wx.SearchCtrl (self, -1, u"", style=wx.TE_PROCESS_ENTER)
+        self._searchText.ShowCancelButton(True)
+        self._searchText.SetDescriptiveText (_(u"Search"))
+        self._searchText.SetMinSize((250, -1))
 
         # Кнопка "Найти далее"
         self._nextSearchBtn = wx.Button (self, -1, _(u"Next"))
@@ -96,7 +105,7 @@ class SearchPanel (wx.Panel):
     def _layout(self):
         # Элементы интерфейса для поиска
         self._mainSizer.Add (self._findLabel, 0, wx.ALL|wx.EXPAND|wx.ALIGN_CENTER_VERTICAL, 2)
-        self._mainSizer.Add (self._phraseTextCtrl, 0, wx.ALL|wx.EXPAND|wx.ALIGN_CENTER_VERTICAL, 2)
+        self._mainSizer.Add (self._searchText, 0, wx.ALL|wx.EXPAND|wx.ALIGN_CENTER_VERTICAL, 2)
         self._mainSizer.Add (self._nextSearchBtn, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
         self._mainSizer.Add (self._prevSearchBtn, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
         self._mainSizer.Add (self._resultLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)

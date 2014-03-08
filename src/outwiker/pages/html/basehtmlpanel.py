@@ -14,7 +14,7 @@ from outwiker.core.config import IntegerOption
 from outwiker.gui.basetextpanel import BaseTextPanel
 from outwiker.gui.htmltexteditor import HtmlTextEditor
 from outwiker.gui.htmlrenderfactory import getHtmlRender
-from outwiker.actions.search import SearchAction, SearchNextAction, SearchPrevAction
+from outwiker.actions.search import SearchAction, SearchNextAction, SearchPrevAction, SearchAndReplaceAction
 
 
 class BaseHtmlPanel(BaseTextPanel):
@@ -297,6 +297,7 @@ class BaseHtmlPanel(BaseTextPanel):
 
         actionController = Application.actionController
         actionController.enableTools (SearchAction.stringId, searchEnabled)
+        actionController.enableTools (SearchAndReplaceAction.stringId, searchEnabled)
         actionController.enableTools (SearchNextAction.stringId, searchEnabled)
         actionController.enableTools (SearchPrevAction.stringId, searchEnabled)
 

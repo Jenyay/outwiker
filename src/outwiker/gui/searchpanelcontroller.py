@@ -84,6 +84,24 @@ class SearchPanelController (object):
         Возвращает искомую фразу из панели
         """
         return self.panel.phraseTextCtrl.GetValue()
+
+
+    def switchToSearchMode (self):
+        """
+        Переключиться в режим поиска
+        """
+        self.panel.Close()
+        self.panel.setReplaceGuiVisible (False)
+        self.show()
+
+
+    def switchToReplaceMode (self):
+        """
+        Переключиться в режим поиска
+        """
+        self.panel.Close()
+        self.panel.setReplaceGuiVisible (True)
+        self.show()
     
 
     def _searchTo (self, direction):

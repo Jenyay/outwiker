@@ -520,7 +520,7 @@ def registerActions (application):
             HotKey ("F11") )
 
     # Поиск
-    from outwiker.actions.search import SearchAction, SearchNextAction, SearchPrevAction
+    from outwiker.actions.search import SearchAction, SearchNextAction, SearchPrevAction, SearchAndReplaceAction
     application.actionController.register (
             SearchAction (application), 
             HotKey ("F", ctrl=True) )
@@ -532,6 +532,10 @@ def registerActions (application):
     application.actionController.register (
             SearchPrevAction (application), 
             HotKey ("F3", shift=True) )
+
+    application.actionController.register (
+            SearchAndReplaceAction (application), 
+            HotKey ("H", ctrl=True) )
 
 
     # Вызов настроек
@@ -849,7 +853,7 @@ def _registerPolyActions (application):
         HORLINE_STR_ID,
         _(u"Horizontal rule"),
         _(u"Horizontal rule")),
-        HotKey ("H", ctrl=True))
+        HotKey ("H", ctrl=True, shift=True))
 
     application.actionController.register (PolyAction (application,
         LINK_STR_ID,

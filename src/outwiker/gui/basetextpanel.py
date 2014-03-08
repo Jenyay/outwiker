@@ -13,7 +13,7 @@ from outwiker.core.application import Application
 
 from outwiker.gui.buttonsdialog import ButtonsDialog
 
-from outwiker.actions.search import SearchAction, SearchNextAction, SearchPrevAction
+from outwiker.actions.search import SearchAction, SearchNextAction, SearchPrevAction, SearchAndReplaceAction
 
 from .basepagepanel import BasePagePanel
 
@@ -204,11 +204,13 @@ class BaseTextPanel (BasePagePanel):
         assert self.searchMenu != None
 
         Application.actionController.removeMenuItem (SearchAction.stringId)
+        Application.actionController.removeMenuItem (SearchAndReplaceAction.stringId)
         Application.actionController.removeMenuItem (SearchNextAction.stringId)
         Application.actionController.removeMenuItem (SearchPrevAction.stringId)
 
         if self.mainWindow.GENERAL_TOOLBAR_STR in self.mainWindow.toolbars:
             Application.actionController.removeToolbarButton (SearchAction.stringId)
+            Application.actionController.removeToolbarButton (SearchAndReplaceAction.stringId)
             Application.actionController.removeToolbarButton (SearchNextAction.stringId)
             Application.actionController.removeToolbarButton (SearchPrevAction.stringId)
 
@@ -229,6 +231,13 @@ class BaseTextPanel (BasePagePanel):
         Application.actionController.appendToolbarButton (SearchAction.stringId, 
                 toolbar,
                 os.path.join (self.imagesDir, "local_search.png"),
+                fullUpdate=False)
+
+        # Начать поиск и замену на странице
+        Application.actionController.appendMenuItem (SearchAndReplaceAction.stringId, self.searchMenu)
+        Application.actionController.appendToolbarButton (SearchAndReplaceAction.stringId, 
+                toolbar,
+                os.path.join (self.imagesDir, "local_replace.png"),
                 fullUpdate=False)
 
         # Продолжить поиск вперед на странице
