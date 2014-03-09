@@ -49,13 +49,6 @@ class HtmlRender (wx.Panel):
         self._currentPage = value
 
 
-    def _isUrl (self, href):
-        return href.lower().startswith ("http://") or \
-                href.lower().startswith ("https://") or \
-                href.lower().startswith ("ftp://") or \
-                href.lower().startswith ("mailto:")
-
-
     def openUrl (self, href):
         """
         Открыть ссылку в браузере (или почтовый адрес в почтовике)

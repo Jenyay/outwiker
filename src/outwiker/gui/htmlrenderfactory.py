@@ -12,5 +12,5 @@ def getHtmlRender (parent):
         from htmlrenderie import HtmlRenderIE
         return HtmlRenderIE (parent)
     else:
-        import htmlrenderwebkit
-        return htmlrenderwebkit.HtmlRenderWebKit (parent)
+        from htmlrenderwebkit import HtmlRenderWebKit
+        return HtmlRenderWebKit (parent)
