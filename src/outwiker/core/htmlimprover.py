@@ -24,27 +24,30 @@ class HtmlImprover (object):
 
         # Компенсация восстановления переносов строк после списков
         ro0 = r"(?<=</[uo]l>)<p><br>(?=<[uo]l>)"
-        result = re.sub(ro0, "\n\n", result)
+        result = re.sub(ro0, "\n\n", result, flags=re.I)
 
-        result = result.replace("<p>", "</p>\n\n<p>")
+        # Сохраним исходный регистр тега <p>.
+        result = re.sub ("<(p)>", r"</\1>\n\n<\1>", result, flags=re.I)
 
-        blocktags = "[uod]l|h[1-6]|pre|table|div|blockquote|hr"
-        opentags = "[uod]l|table"
-        opentags += "|" + opentags.lower()
-        closetags = "li|d[td]|t[rdh]|caption|thead|tfoot|tbody|colgroup|col"
-        closetags += "|" + closetags.lower()
+        blocktags = r"[uod]l|h[1-6]|pre|table|div|blockquote|hr"
+        opentags = r"[uod]l|table"
+        opentags += r"|" + opentags
+        closetags = r"li|d[td]|t[rdh]|caption|thead|tfoot|tbody|colgroup|col"
+        closetags += r"|" + closetags
+
         ro1 = r"<p>((?:<br>)?)(?=<(?:" + blocktags + r")[ >])"
         ro2 = r"(</(?:" + blocktags + r")>|<hr ?/?>)</p>"
         ro3 = r"(<(?:" + opentags + r")[ >]|</(?:" + closetags + r")>)[\s\n]*<br ?/?>"
         ro4 = r"<br ?/?>[\s\n]*(?=<(?:" + opentags + r")[ >]|<hr ?/?>)"
         ro5 = r"<p>(?=</)"
         ro6 = r"(?=<li>|</[uo]l>|<[bh]r ?/?>|<pre>)"
-        result = re.sub(ro1, "\\1", result)  # Удаление тега <P> перед некоторыми блочными элементами
-        result = re.sub(ro2, "\\1", result)  # Удаление тега </P> после некоторых блочных элементов
-        result = re.sub(ro3, "\\1", result)  # Удаление тега <BR> после некоторых блочных элементов
-        result = re.sub(ro4, "", result)     # Удаление тега <BR> перед некоторыми блочными элементами
-        result = re.sub(ro5, "", result)     # Удаление некоторого разного мусора/бесполезного кода
-        result = re.sub(ro6, "\n", result)   # Добавление переноса строки перед некоторыми элементами
+
+        result = re.sub(ro1, r"\1", result, flags=re.I)  # Удаление тега <P> перед некоторыми блочными элементами
+        result = re.sub(ro2, r"\1", result, flags=re.I)  # Удаление тега </P> после некоторых блочных элементов
+        result = re.sub(ro3, r"\1", result, flags=re.I)  # Удаление тега <BR> после некоторых блочных элементов
+        result = re.sub(ro4, "", result, flags=re.I)     # Удаление тега <BR> перед некоторыми блочными элементами
+        result = re.sub(ro5, "", result, flags=re.I)     # Удаление некоторого разного мусора/бесполезного кода
+        result = re.sub(ro6, "\n", result, flags=re.I)   # Добавление переноса строки перед некоторыми элементами
 
         return result
 
