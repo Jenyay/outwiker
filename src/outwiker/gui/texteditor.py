@@ -92,13 +92,13 @@ class TextEditor(wx.Panel):
 
 
     def __do_layout(self):
-        mainSizer = wx.FlexGridSizer(2, 1, 0, 0)
-        mainSizer.Add(self.textCtrl, 1, wx.EXPAND, 0)
-        mainSizer.Add(self._searchPanel, 1, wx.EXPAND, 0)
-        self.SetSizer(mainSizer)
-        mainSizer.Fit(self)
+        mainSizer = wx.FlexGridSizer(rows=2)
         mainSizer.AddGrowableRow(0)
         mainSizer.AddGrowableCol(0)
+
+        mainSizer.Add(self.textCtrl, 0, wx.EXPAND, 0)
+        mainSizer.Add(self._searchPanel, 0, wx.EXPAND, 0)
+        self.SetSizer(mainSizer)
 
         self._searchPanel.Hide()
         self.Layout()

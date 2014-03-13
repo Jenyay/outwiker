@@ -3,7 +3,7 @@
 
 import unittest
 
-from outwiker.gui.searchpanelcontroller import LocalSearcher, SearchResult
+from outwiker.gui.searchreplacecontroller import LocalSearcher, SearchResult
 
 class LocalSearchTest(unittest.TestCase):
     def setUp(self):

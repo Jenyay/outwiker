@@ -72,13 +72,11 @@ class SearchReplacePanel (wx.Panel):
     def _createGui (self):
         # Поле для ввода искомой фразы
         self._searchText = wx.TextCtrl (self, -1, u"", 
-                style=wx.TAB_TRAVERSAL | wx.TE_PROCESS_ENTER)
-        self._searchText.SetMinSize((250, -1))
+                style=wx.TE_PROCESS_ENTER)
 
         # Текст для замены
         self._replaceText = wx.TextCtrl (self, -1, u"",
-                style=wx.TAB_TRAVERSAL | wx.TE_PROCESS_ENTER)
-        self._replaceText.SetMinSize((250, -1))
+                style=wx.TE_PROCESS_ENTER)
 
 
         # Элементы интерфейса, связанные с поиском
@@ -117,24 +115,24 @@ class SearchReplacePanel (wx.Panel):
         self._mainSizer.AddGrowableCol(1)
 
         # Элементы интерфейса для поиска
-        self._mainSizer.Add (self._findLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
-        self._mainSizer.Add (self._searchText, 0, wx.ALL|wx.EXPAND|wx.ALIGN_CENTER_VERTICAL, 2)
-        self._mainSizer.Add (self._nextSearchBtn, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL|wx.EXPAND, 1)
-        self._mainSizer.Add (self._prevSearchBtn, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL|wx.EXPAND, 1)
-        self._mainSizer.Add (self._closeBtn, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 1)
-        self._mainSizer.Add (self._resultLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
+        self._mainSizer.Add (self._findLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, border=2)
+        self._mainSizer.Add (self._searchText, 0, wx.ALL|wx.EXPAND|wx.ALIGN_CENTER_VERTICAL, border=2)
+        self._mainSizer.Add (self._nextSearchBtn, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL|wx.EXPAND, border=1)
+        self._mainSizer.Add (self._prevSearchBtn, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL|wx.EXPAND, border=1)
+        self._mainSizer.Add (self._closeBtn, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, border=1)
+        self._mainSizer.Add (self._resultLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, border=2)
 
         # Элементы интерфейса для замены
-        self._mainSizer.Add (self._replaceLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
-        self._mainSizer.Add (self._replaceText, 0, wx.ALL|wx.EXPAND|wx.ALIGN_CENTER_VERTICAL, 2)
-        self._mainSizer.Add (self._replaceBtn, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL|wx.EXPAND, 1)
-        self._mainSizer.Add (self._replaceAllBtn, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL|wx.EXPAND, 1)
-        self._mainSizer.AddStretchSpacer()
-        self._mainSizer.AddStretchSpacer()
-        
+        self._mainSizer.Add (self._replaceLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, border=2)
+        self._mainSizer.Add (self._replaceText, 0, wx.ALL|wx.EXPAND|wx.ALIGN_CENTER_VERTICAL, border=2)
+        self._mainSizer.Add (self._replaceBtn, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL|wx.EXPAND, border=1)
+        self._mainSizer.Add (self._replaceAllBtn, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL|wx.EXPAND, border=1)
+        # self._mainSizer.AddStretchSpacer()
+        # self._mainSizer.AddStretchSpacer()
+
         self.SetSizer (self._mainSizer)
         self.Layout()
-    
+
 
     def __onNextSearch(self, event):
         if self._controller != None:

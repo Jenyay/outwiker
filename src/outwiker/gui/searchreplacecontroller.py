@@ -81,6 +81,7 @@ class SearchReplaceController (object):
     def show (self):
         if not self.panel.IsShown():
             self.panel.Show()
+            self.panel.Fit()
             self.panel.GetParent().Layout()
 
 
