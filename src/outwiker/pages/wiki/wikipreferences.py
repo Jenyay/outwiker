@@ -44,7 +44,7 @@ class WikiPrefGeneralPanel(wx.Panel):
 
 
     def __do_layout(self):
-        mainSizer = wx.FlexGridSizer(4, 1, 0, 0)
+        mainSizer = wx.FlexGridSizer(cols=1)
         mainSizer.AddGrowableRow(4)
         mainSizer.AddGrowableCol(0)
 

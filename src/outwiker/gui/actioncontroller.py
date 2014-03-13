@@ -203,7 +203,7 @@ class ActionController (object):
         self._mainWindow.Bind (wx.EVT_TOOL, handler=lambda event: action.run(None), id=actionid)
 
 
-    def appendToolbarCheckButton (self, strid, toolbar, image, fullUpdate=True):
+    def appendToolbarCheckButton (self, strid, toolbar, image, fullUpdate=False):
         """
         Добавить кнопку на панель инструментов.
         Действие уже должно быть зарегистрировано с помощью метода register
@@ -239,8 +239,10 @@ class ActionController (object):
 
         toolbar = self._actionsInfo[action.stringId].toolbar
         if toolbar != None:
+            toolbar.Freeze()
             toolbar.ToggleTool (self._actionsInfo[action.stringId].toolItemId, checked)
             toolbar.Realize()
+            toolbar.Thaw()
 
         action.run (checked)
 

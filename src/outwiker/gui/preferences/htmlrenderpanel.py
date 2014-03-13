@@ -36,12 +36,12 @@ class HtmlRenderPanel(wx.Panel):
 
 
     def __do_layout(self):
-        fontSizer = wx.FlexGridSizer(1, 2, 0, 0)
+        fontSizer = wx.FlexGridSizer(cols=2)
         fontSizer.Add(self.fontLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
         fontSizer.Add(self.fontPicker, 1, wx.EXPAND, 0)
         fontSizer.AddGrowableCol(1)
 
-        mainSizer = wx.FlexGridSizer(1, 1, 0, 0)
+        mainSizer = wx.FlexGridSizer(cols=1)
         mainSizer.Add(fontSizer, 1, wx.EXPAND, 0)
         mainSizer.Add(self.userStyleLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
         mainSizer.Add(self.userStyleTextBox, 0, wx.ALL|wx.EXPAND, 2)

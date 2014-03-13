@@ -31,7 +31,7 @@ class HtmlPageView (BaseHtmlPanel):
 
         self.mainWindow.toolbars[self._htmlPanelName] = HtmlToolBar(self.mainWindow, 
                 self.mainWindow.auiManager)
-        self.mainWindow.toolbars[self._htmlPanelName].UpdateToolBar()
+        # self.mainWindow.toolbars[self._htmlPanelName].UpdateToolBar()
 
         # Список используемых полиморфных действий
         self.__polyActions = [
@@ -101,8 +101,6 @@ class HtmlPageView (BaseHtmlPanel):
     def _removeActionTools (self):
         actionController = self._application.actionController
 
-        self.mainWindow.Freeze()
-
         # Удалим элементы меню
         map (lambda action: actionController.removeMenuItem (action.stringId), 
                 self.__htmlNotationActions)
@@ -129,13 +127,9 @@ class HtmlPageView (BaseHtmlPanel):
         map (lambda strid: actionController.getAction (strid).setFunc (None), 
                 self.__polyActions)
 
-        self.mainWindow.Thaw()
-
 
     def _enableActions (self, enabled):
         actionController = self._application.actionController
-
-        self.mainWindow.Freeze()
 
         map (lambda action: actionController.enableTools (action.stringId, enabled), 
                 self.__htmlNotationActions)
@@ -143,8 +137,6 @@ class HtmlPageView (BaseHtmlPanel):
         # Активируем / дизактивируем полиморфные действия
         map (lambda strid: actionController.enableTools (strid, enabled), 
                 self.__polyActions)
-
-        self.mainWindow.Thaw()
 
 
     def _onSwitchToCode (self):
@@ -179,7 +171,7 @@ class HtmlPageView (BaseHtmlPanel):
         Создать кнопки и пункты меню, отображающие настройки страницы
         """
         image = os.path.join (self.imagesDir, "linewrap.png")
-        toolbar = self.mainWindow.toolbars["html"]
+        toolbar = self.mainWindow.toolbars[self._htmlPanelName]
 
         self._application.actionController.appendMenuCheckItem (HtmlAutoLineWrap.stringId, self.__htmlMenu)
         self._application.actionController.appendToolbarCheckButton (HtmlAutoLineWrap.stringId, 
@@ -211,8 +203,6 @@ class HtmlPageView (BaseHtmlPanel):
         self.__listMenu = wx.Menu()
         self.__tableMenu = wx.Menu()
 
-        self.mainWindow.Freeze()
-
         self.__createLineWrapTools ()
         self.toolsMenu.AppendSeparator()
 
@@ -231,8 +221,6 @@ class HtmlPageView (BaseHtmlPanel):
         self.__addFormatTools()
         self.__addOtherTools()
         self._addRenderTools()
-
-        self.mainWindow.Thaw()
 
         self.mainWindow.mainMenu.Insert (self.__HTML_MENU_INDEX, self.__htmlMenu, _(u"Html"))
 

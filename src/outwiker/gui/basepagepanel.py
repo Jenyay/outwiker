@@ -75,7 +75,7 @@ class BasePagePanel (wx.Panel):
             buttonText, 
             image, 
             alwaysEnabled=False,
-            fullUpdate=True,
+            fullUpdate=False,
             panelname="plugins"):
         """
         !!! Внимание. Это устаревший способ добавления элементов интерфейса. Сохраняется только для совместимости со старыми версиями плагинов и в будущих версиях программы может быть убран.
@@ -108,8 +108,6 @@ class BasePagePanel (wx.Panel):
                     buttonText,
                     fullUpdate=fullUpdate)
 
-            self.mainWindow.toolbars[tool.panelname].UpdateToolBar()
-
 
     def enableTool (self, tool, enabled):
         """
@@ -119,8 +117,11 @@ class BasePagePanel (wx.Panel):
         tool.menu.Enable (tool.id, enabled)
 
         if self.mainWindow.toolbars[tool.panelname].FindById (tool.id) != None:
-            self.mainWindow.toolbars[tool.panelname].EnableTool (tool.id, enabled)
-            self.mainWindow.toolbars[tool.panelname].Realize()
+            toolbar = self.mainWindow.toolbars[tool.panelname]
+            toolbar.Freeze()
+            toolbar.EnableTool (tool.id, enabled)
+            toolbar.Realize()
+            toolbar.Thaw()
 
 
     ###############################################

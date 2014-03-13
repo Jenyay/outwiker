@@ -192,7 +192,7 @@ class GeneralPanel (wx.ScrolledWindow):
 
 
     def __do_layout(self):
-        main_sizer = wx.FlexGridSizer(10, 1, 0, 0)
+        main_sizer = wx.FlexGridSizer(cols=1)
         main_sizer.AddGrowableCol(0)
 
         main_sizer.Add(self.minimizeCheckBox, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)

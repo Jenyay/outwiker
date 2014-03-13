@@ -102,13 +102,14 @@ class PrefDialog(wx.Dialog):
 
 
     def __do_layout(self):
-        main_sizer = wx.FlexGridSizer(2, 1, 0, 0)
-        main_sizer.Add(self.__treeBook, 1, wx.ALL|wx.EXPAND, 4)
-        self.SetSizer(main_sizer)
+        main_sizer = wx.FlexGridSizer(rows=2)
         main_sizer.AddGrowableRow(0)
         main_sizer.AddGrowableCol(0)
-        
+        main_sizer.Add(self.__treeBook, 1, wx.ALL|wx.EXPAND, 4)
+
         self.__createOkCancelButtons(main_sizer)
+
+        self.SetSizer(main_sizer)
         self.Layout()
     
 

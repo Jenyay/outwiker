@@ -96,7 +96,6 @@ class WikiPageView (BaseHtmlPanel):
         self._wikiPanelName = "wiki"
 
         self.mainWindow.toolbars[self._wikiPanelName] = WikiToolBar(self.mainWindow, self.mainWindow.auiManager)
-        self.mainWindow.toolbars[self._wikiPanelName].UpdateToolBar()
 
         self.notebook.SetPageText (0, _(u"Wiki"))
 
@@ -206,8 +205,6 @@ class WikiPageView (BaseHtmlPanel):
     def _enableActions (self, enabled):
         actionController = self._application.actionController
 
-        self.mainWindow.Freeze()
-
         # Активируем / дизактивируем собственные действия
         map (lambda action: actionController.enableTools (action.stringId, enabled), 
                 self.__wikiNotationActions)
@@ -215,8 +212,6 @@ class WikiPageView (BaseHtmlPanel):
         # Активируем / дизактивируем полиморфные действия
         map (lambda strid: actionController.enableTools (strid, enabled), 
                 self.__polyActions)
-
-        self.mainWindow.Thaw()
 
 
     def _onSwitchToCode (self):
@@ -616,8 +611,6 @@ class WikiPageView (BaseHtmlPanel):
         self.__listMenu = wx.Menu()
         self.__commandsMenu = wx.Menu()
 
-        self.mainWindow.Freeze()
-
         self._addRenderTools()
 
         # Переключиться на код HTML
@@ -650,8 +643,6 @@ class WikiPageView (BaseHtmlPanel):
         self.mainWindow.mainMenu.Insert (self.__WIKI_MENU_INDEX, 
                 self.__wikiMenu, 
                 _(u"Wiki") )
-
-        self.mainWindow.Thaw()
 
 
     @property

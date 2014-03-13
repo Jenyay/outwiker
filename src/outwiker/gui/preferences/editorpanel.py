@@ -51,18 +51,18 @@ class EditorPanel(wx.Panel):
 
 
     def __do_layout(self):
-        fontSizer = wx.FlexGridSizer(1, 2, 0, 0)
+        fontSizer = wx.FlexGridSizer(rows=1)
         fontSizer.Add(self.fontLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
         fontSizer.Add(self.fontPicker, 1, wx.ALL|wx.EXPAND|wx.ALIGN_CENTER_VERTICAL, 2)
         fontSizer.AddGrowableRow(0)
         fontSizer.AddGrowableCol(1)
 
-        tabWidthSizer = wx.FlexGridSizer(1, 2, 0, 0)
+        tabWidthSizer = wx.FlexGridSizer(cols=2)
         tabWidthSizer.Add(self.tabWidthLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
         tabWidthSizer.Add(self.tabWidthSpin, 0, wx.ALL|wx.ALIGN_RIGHT|wx.ALIGN_CENTER_VERTICAL, 2)
         tabWidthSizer.AddGrowableCol(1)
 
-        mainSizer = wx.FlexGridSizer(2, 1, 0, 0)
+        mainSizer = wx.FlexGridSizer(cols=1)
         mainSizer.Add(fontSizer, 1, wx.EXPAND, 0)
         mainSizer.Add(self.lineNumbersCheckBox, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
         mainSizer.Add(tabWidthSizer, 1, wx.EXPAND, 0)
