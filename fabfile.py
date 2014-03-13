@@ -113,7 +113,7 @@ def _debuild (command, distriblist):
 
 def ppaunstable ():
     """
-    Выполнение команд, связанные со сборкой deb с помощью debuild. Создает пакеты сразу для всех дистрибутивов, перечисленных в distriblist
+    Закачка текущей версии OutWiker в PPA (unstable)
     """
     version = _getVersion()
 
