@@ -136,6 +136,10 @@ class TextEditor(wx.Panel):
         self.__setMarginWidth (self.textCtrl)
         self.textCtrl.SetTabWidth (self.config.tabWidth.value)
 
+        # self.textCtrl.CmdKeyAssign (wx.stc.STC_KEY_HOME, 0, wx.stc.STC_CMD_VCHOME)
+        # self.textCtrl.CmdKeyAssign (wx.stc.STC_KEY_HOME, 0, wx.stc.STC_CMD_HOMEDISPLAY)
+        # self.textCtrl.CmdKeyAssign (wx.stc.STC_KEY_END, 0, wx.stc.STC_CMD_LINEENDDISPLAY)
+
 
     def __setMarginWidth (self, editor):
         """
