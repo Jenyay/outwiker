@@ -54,9 +54,34 @@ class SearchReplaceController (object):
         """
         Заменить все
         """
-        self.nextSearch()
-        while (self.replace()):
-            pass
+        phrase = self.getSearchPhrase ()
+        if len (phrase) == 0:
+            return
+
+        text = self.editor.GetText()
+        self._searcher.search (text, phrase)
+
+        if len (self._searcher.result) == 0:
+            return
+        
+        replace = self.getReplacePhrase()
+
+        newtext = u""
+        position = 0
+
+        for currResult in self._searcher.result:
+            newtext += text[position: currResult.position]
+            newtext += replace
+            position = currResult.position + len (currResult.phrase)
+
+        # Место окончания последней замены (чтобы туда поставить курсор)
+        lastreplace = len (newtext)
+
+        newtext += text[position:]
+
+        self.editor.SetText (newtext)
+        self.editor.SetSelection (lastreplace, lastreplace)
+        self.editor.SetFocus()
     
 
     def startSearch (self):
