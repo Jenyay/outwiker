@@ -205,6 +205,7 @@ LEXERS = {
     'ObjectiveJLexer': ('pygments.lexers.web', 'Objective-J', ('objective-j', 'objectivej', 'obj-j', 'objj'), ('*.j',), ('text/x-objective-j',)),
     'OcamlLexer': ('pygments.lexers.functional', 'OCaml', ('ocaml',), ('*.ml', '*.mli', '*.mll', '*.mly'), ('text/x-ocaml',)),
     'OctaveLexer': ('pygments.lexers.math', 'Octave', ('octave',), ('*.m',), ('text/octave',)),
+    'OneSLexer': ('pygments.lexers.1S', '1S', ('1s', '1c'), ('*.1s', '*.prm', '*.1cpp'), ('text/x-1s',)),
     'OocLexer': ('pygments.lexers.compiled', 'Ooc', ('ooc',), ('*.ooc',), ('text/x-ooc',)),
     'OpaLexer': ('pygments.lexers.functional', 'Opa', ('opa',), ('*.opa',), ('text/x-opa',)),
     'OpenEdgeLexer': ('pygments.lexers.other', 'OpenEdge ABL', ('openedge', 'abl', 'progress'), ('*.p', '*.cls'), ('text/x-openedge', 'application/x-openedge')),

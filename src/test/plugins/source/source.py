@@ -81,6 +81,30 @@ class SourcePluginTest (unittest.TestCase):
         self.assertTrue (u"bla-bla-bla" in result)
 
 
+    def test1S (self):
+        text = u'''(:source lang="1s":)
+Функция УстановитьФизическиеЛица(Выборка)
+    Пока Выборка.Следующий() Цикл
+        //УстановитьФизическоеЛицо
+        ФизическоеЛицо = Справочники.ФизическиеЛица.НайтиПоНаименованию(Выборка.Ссылка);
+        Пользователь = Выборка.Ссылка.ПолучитьОбъект();        
+        Пользователь.ФизическоеЛицо = ФизическоеЛицо;
+        Пользователь.Записать();
+        Сообщить("" + Пользователь + " " + Пользователь.ФизическоеЛицо + "-[ОК!]");
+    КонецЦикла;
+КонецФункции     
+(:sourceend:)'''
+
+        self.testPage.content = text
+
+        generator = HtmlGenerator (self.testPage)
+        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
+        result = self.__readFile (htmlpath)
+
+        self.assertIn (u'<span class="c">//УстановитьФизическоеЛицо</span>', result)
+        self.assertIn (u'<span class="k">КонецФункции</span>', result)
+
+
     def testFullHtmlPython (self):
         text = u'''(:source lang="python" tabwidth=5:)
 import os
