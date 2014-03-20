@@ -42,9 +42,6 @@ class IconButton (wx.PyControl):
         if dotPos != -1:
             text = text[: dotPos]
 
-        # Пока не решил, что лучше, заменять подчеркивания пробелами или нет
-        # text = text.replace ("_", " ")
-
         return text
 
 
