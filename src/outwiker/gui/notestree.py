@@ -483,11 +483,11 @@ class NotesTree(wx.Panel):
 
     def __do_layout(self):
         mainSizer = wx.FlexGridSizer(cols=1)
+        mainSizer.AddGrowableRow(1)
+        mainSizer.AddGrowableCol(0)
         mainSizer.Add(self.toolbar, 1, wx.EXPAND, 0)
         mainSizer.Add(self.treeCtrl, 1, wx.EXPAND, 0)
         self.SetSizer(mainSizer)
-        mainSizer.AddGrowableRow(1)
-        mainSizer.AddGrowableCol(0)
 
 
     def expand (self, page):
