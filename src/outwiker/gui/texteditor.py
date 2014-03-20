@@ -136,9 +136,40 @@ class TextEditor(wx.Panel):
         self.__setMarginWidth (self.textCtrl)
         self.textCtrl.SetTabWidth (self.config.tabWidth.value)
 
-        # self.textCtrl.CmdKeyAssign (wx.stc.STC_KEY_HOME, 0, wx.stc.STC_CMD_VCHOME)
-        # self.textCtrl.CmdKeyAssign (wx.stc.STC_KEY_HOME, 0, wx.stc.STC_CMD_HOMEDISPLAY)
-        # self.textCtrl.CmdKeyAssign (wx.stc.STC_KEY_END, 0, wx.stc.STC_CMD_LINEENDDISPLAY)
+        if self.config.homeEndKeys.value == EditorConfig.HOME_END_OF_LINE:
+            # Клавиши Home / End переносят курсор на начало / конец строки
+            self.textCtrl.CmdKeyAssign (wx.stc.STC_KEY_HOME, 
+                    0, 
+                    wx.stc.STC_CMD_HOMEDISPLAY)
+
+            self.textCtrl.CmdKeyAssign (wx.stc.STC_KEY_HOME, 
+                    wx.stc.STC_SCMOD_ALT, 
+                    wx.stc.STC_CMD_HOME)
+
+            self.textCtrl.CmdKeyAssign (wx.stc.STC_KEY_END, 
+                    0, 
+                    wx.stc.STC_CMD_LINEENDDISPLAY)
+
+            self.textCtrl.CmdKeyAssign (wx.stc.STC_KEY_END, 
+                    wx.stc.STC_SCMOD_ALT, 
+                    wx.stc.STC_CMD_LINEEND)
+        else:
+            # Клавиши Home / End переносят курсор на начало / конец абзаца
+            self.textCtrl.CmdKeyAssign (wx.stc.STC_KEY_HOME, 
+                    0, 
+                    wx.stc.STC_CMD_HOME)
+
+            self.textCtrl.CmdKeyAssign (wx.stc.STC_KEY_HOME, 
+                    wx.stc.STC_SCMOD_ALT, 
+                    wx.stc.STC_CMD_HOMEDISPLAY)
+
+            self.textCtrl.CmdKeyAssign (wx.stc.STC_KEY_END, 
+                    0, 
+                    wx.stc.STC_CMD_LINEEND)
+
+            self.textCtrl.CmdKeyAssign (wx.stc.STC_KEY_END, 
+                    wx.stc.STC_SCMOD_ALT, 
+                    wx.stc.STC_CMD_LINEENDDISPLAY)
 
 
     def __setMarginWidth (self, editor):

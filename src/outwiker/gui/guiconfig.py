@@ -154,6 +154,13 @@ class EditorConfig (object):
     FONT_ITALIC_SECTION = u"italic"
     FONT_ITALIC_DEFAULT = False
 
+    # Поведение клавиш Home / End. 
+    HOME_END_OF_LINE = 0
+    HOME_END_OF_PARAGRAPH = 1
+
+    HOME_END_KEYS_SECTION = u"HomeEndKeys"
+    HOME_END_KEYS_DEFAULT = HOME_END_OF_LINE
+
 
     def __init__ (self, config):
         self.config = config
@@ -191,6 +198,12 @@ class EditorConfig (object):
                 EditorConfig.FONT_SECTION, 
                 EditorConfig.FONT_ITALIC_SECTION, 
                 EditorConfig.FONT_ITALIC_DEFAULT)
+
+        # Поведение клавиш Home / End
+        self.homeEndKeys = IntegerOption (self.config,
+                GeneralGuiConfig.GENERAL_SECTION,
+                EditorConfig.HOME_END_KEYS_SECTION,
+                EditorConfig.HOME_END_KEYS_DEFAULT)
 
 
 class HtmlRenderConfig (object):

@@ -42,6 +42,12 @@ class EditorPanel(wx.Panel):
                 max=self.MAX_TAB_WIDTH, 
                 style=wx.SP_ARROW_KEYS|wx.TE_AUTO_URL)
 
+        # Настройки для клавиш Home / End
+        self.homeEndLabel = wx.StaticText (self, -1, _(u"Home / End keys moves the cursor \nto the beginning / end of ") )
+        self.homeEndCombo = wx.ComboBox (self, -1, style = wx.CB_DROPDOWN | wx.CB_READONLY)
+        self.homeEndCombo.SetMinSize ((200, -1))
+        self.homeEndCombo.AppendItems ([_(u"Line"), _(u"Paragraph") ] )
+
 
     def __set_properties(self):
         self.DEFAULT_WIDTH = 400
@@ -62,11 +68,18 @@ class EditorPanel(wx.Panel):
         tabWidthSizer.Add(self.tabWidthSpin, 0, wx.ALL|wx.ALIGN_RIGHT|wx.ALIGN_CENTER_VERTICAL, 2)
         tabWidthSizer.AddGrowableCol(1)
 
+        homeEndSizer = wx.FlexGridSizer (cols=2)
+        homeEndSizer.AddGrowableCol (0)
+        homeEndSizer.AddGrowableCol (1)
+        homeEndSizer.Add (self.homeEndLabel, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND, 2)
+        homeEndSizer.Add (self.homeEndCombo, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT, 2)
+
         mainSizer = wx.FlexGridSizer(cols=1)
+        mainSizer.AddGrowableCol(0)
         mainSizer.Add(fontSizer, 1, wx.EXPAND, 0)
         mainSizer.Add(self.lineNumbersCheckBox, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
         mainSizer.Add(tabWidthSizer, 1, wx.EXPAND, 0)
-        mainSizer.AddGrowableCol(0)
+        mainSizer.Add(homeEndSizer, 1, wx.EXPAND, 0)
 
         self.SetSizer(mainSizer)
 
@@ -88,10 +101,16 @@ class EditorPanel(wx.Panel):
                 self.tabWidthSpin, 
                 self.MIN_TAB_WIDTH, 
                 self.MAX_TAB_WIDTH)
+
+        if self.__config.homeEndKeys.value == 0:
+            self.homeEndCombo.SetSelection (0)
+        else:
+            self.homeEndCombo.SetSelection (1)
     
 
     def Save (self):
         self.lineNumbers.save()
         self.fontEditor.save()
         self.tabWidth.save()
+        self.__config.homeEndKeys.value = self.homeEndCombo.GetSelection()
 
