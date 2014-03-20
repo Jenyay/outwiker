@@ -1,3 +1,5 @@
+Hot keys can be set in the dialog "Settings", which is called from the menu "Edit - Preferences ...". Hotkeys set by by default, shown in the following table.
+
 ||border=1
 || '''Shortcut''' || '''Action''' ||
 ||Ctrl+N ||Create new wiki ||
@@ -10,7 +12,8 @@
 ||Ctrl+C ||Copy ||
 ||Ctrl+V ||Paste ||
 ||Ctrl+F8 ||Open preferences dialog||
-||Ctrl+F ||Find ||
+||Ctrl+F ||Search on page ||
+||Ctrl+H ||Search and replace on page ||
 ||F3 ||Find next ||
 ||Shift + F3 ||Find prev ||
 ||Ctrl+Alt+T ||Create a page with the same nesting level as the current ||
@@ -50,7 +53,7 @@
 ||Ctrl+M ||Insert thumbnail[[<<]]''For wiki pages''||
 ||Ctrl+L ||Link||
 ||Ctrl+Alt+N ||Anchor||
-||Ctrl+H ||Horizontal line||
+||Ctrl+Shift+H ||Horizontal line||
 ||Ctrl+Alt+D ||Insert the &lt;CODE&gt; tag[[<<]]''For HTML pages''||
 ||Ctrl+Alt+Q ||Insert the &lt;BLOCKQUOTE&gt; tag[[<<]]''For HTML pages''||
 ||Ctrl+Shift+Up ||Move page up||
