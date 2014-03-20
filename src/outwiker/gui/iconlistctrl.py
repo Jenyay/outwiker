@@ -25,8 +25,27 @@ class IconButton (wx.PyControl):
         self.normalBackground = wx.Colour (255, 255, 255)
         self.selectedBackground = wx.Colour (200, 200, 200)
 
+        self.SetToolTipString (self.__getToolTipText (fname))
+
         self.SetSize ((width, height))
         self.Bind (wx.EVT_PAINT, self.__onPaint)
+
+
+    def __getToolTipText (self, fname):
+        """
+        Возвращет текст всплывающей подсказки для кнопки по имени файла
+        """
+        text = os.path.basename (fname)
+
+        # Отбросим расширение файла
+        dotPos = text.rfind (".")
+        if dotPos != -1:
+            text = text[: dotPos]
+
+        # Пока не решил, что лучше, заменять подчеркивания пробелами или нет
+        # text = text.replace ("_", " ")
+
+        return text
 
 
     def __onPaint (self, event):
