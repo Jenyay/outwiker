@@ -478,16 +478,6 @@ class HtmlPageView (BaseHtmlPanel):
         toolbar = self.mainWindow.toolbars[self._htmlPanelName]
         menu = self.__formatMenu
 
-        # Код
-        self._application.actionController.getAction (CODE_STR_ID).setFunc (lambda param: self.turnText (u'<code>', u'</code>'))
-
-        self._application.actionController.appendMenuItem (CODE_STR_ID, menu)
-        self._application.actionController.appendToolbarButton (CODE_STR_ID, 
-                toolbar,
-                os.path.join (self.imagesDir, "code.png"),
-                fullUpdate=False)
-
-
         # Preformat
         self._application.actionController.getAction (PREFORMAT_STR_ID).setFunc (lambda param: self.turnText (u"<pre>", u"</pre>"))
         self._application.actionController.appendMenuItem (PREFORMAT_STR_ID, menu)
@@ -499,6 +489,15 @@ class HtmlPageView (BaseHtmlPanel):
         self._application.actionController.appendToolbarButton (QUOTE_STR_ID, 
                 toolbar,
                 os.path.join (self.imagesDir, "quote.png"),
+                fullUpdate=False)
+
+        # Код
+        self._application.actionController.getAction (CODE_STR_ID).setFunc (lambda param: self.turnText (u'<code>', u'</code>'))
+
+        self._application.actionController.appendMenuItem (CODE_STR_ID, menu)
+        self._application.actionController.appendToolbarButton (CODE_STR_ID, 
+                toolbar,
+                os.path.join (self.imagesDir, "code.png"),
                 fullUpdate=False)
 
 
