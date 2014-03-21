@@ -42,6 +42,11 @@ class IconButton (wx.PyControl):
         if dotPos != -1:
             text = text[: dotPos]
 
+        if text == "__icon":
+            text = _(u"Curent icon")
+        elif text == u"_page":
+            text = _(u"Default icon")
+
         return text
 
 

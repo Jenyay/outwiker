@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-20 21:40+0400\n"
+"POT-Creation-Date: 2014-03-21 21:21+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -142,12 +142,12 @@ msgstr ""
 #: outwiker/gui/renametagdialog.py:75 outwiker/gui/renametagdialog.py:79
 #: outwiker/pages/html/basehtmlpanel.py:274
 #: outwiker/pages/html/basehtmlpanel.py:278
-#: outwiker/pages/html/htmlpageview.py:584
+#: outwiker/pages/html/htmlpageview.py:583
 #: outwiker/pages/wiki/wikipageview.py:249
 #: outwiker/pages/wiki/wikipageview.py:253
 #: outwiker/pages/wiki/wikipageview.py:273
 #: outwiker/pages/wiki/wikipageview.py:275
-#: outwiker/pages/wiki/wikipageview.py:694 outwiker/core/commands.py:48
+#: outwiker/pages/wiki/wikipageview.py:695 outwiker/core/commands.py:48
 #: outwiker/core/commands.py:110 outwiker/core/commands.py:201
 #: outwiker/core/commands.py:241 outwiker/core/commands.py:249
 #: outwiker/core/commands.py:257 outwiker/core/commands.py:267
@@ -294,6 +294,14 @@ msgstr ""
 #: outwiker/gui/htmlrenderwebkit.py:98
 #, python-format
 msgid "Can't read file %s"
+msgstr ""
+
+#: outwiker/gui/iconlistctrl.py:46
+msgid "Curent icon"
+msgstr ""
+
+#: outwiker/gui/iconlistctrl.py:48
+msgid "Default icon"
 msgstr ""
 
 #: outwiker/gui/linkdialog.py:17 outwiker/gui/linkdialog.py:35
@@ -518,7 +526,7 @@ msgstr ""
 #: outwiker/gui/preferences/htmlrenderpanel.py:28
 #: outwiker/gui/preferences/textprintpanel.py:29
 #: outwiker/pages/html/htmlpageview.py:210
-#: outwiker/pages/wiki/wikipageview.py:629
+#: outwiker/pages/wiki/wikipageview.py:630
 msgid "Font"
 msgstr ""
 
@@ -755,22 +763,22 @@ msgid "HTML Page"
 msgstr ""
 
 #: outwiker/pages/html/htmlpageview.py:209
-#: outwiker/pages/wiki/wikipageview.py:628
+#: outwiker/pages/wiki/wikipageview.py:629
 msgid "Heading"
 msgstr ""
 
 #: outwiker/pages/html/htmlpageview.py:211
-#: outwiker/pages/wiki/wikipageview.py:630
+#: outwiker/pages/wiki/wikipageview.py:631
 msgid "Alignment"
 msgstr ""
 
 #: outwiker/pages/html/htmlpageview.py:212
-#: outwiker/pages/wiki/wikipageview.py:631
+#: outwiker/pages/wiki/wikipageview.py:632
 msgid "Formatting"
 msgstr ""
 
 #: outwiker/pages/html/htmlpageview.py:213
-#: outwiker/pages/wiki/wikipageview.py:632
+#: outwiker/pages/wiki/wikipageview.py:633
 msgid "Lists"
 msgstr ""
 
@@ -782,8 +790,8 @@ msgstr ""
 msgid "Html"
 msgstr ""
 
-#: outwiker/pages/html/htmlpageview.py:583
-#: outwiker/pages/wiki/wikipageview.py:693
+#: outwiker/pages/html/htmlpageview.py:582
+#: outwiker/pages/wiki/wikipageview.py:694
 msgid "Page style Error. Style by default is used"
 msgstr ""
 
@@ -899,7 +907,7 @@ msgid "Wiki Page"
 msgstr ""
 
 #: outwiker/pages/wiki/wikipageview.py:100
-#: outwiker/pages/wiki/wikipageview.py:645
+#: outwiker/pages/wiki/wikipageview.py:646
 #: outwiker/pages/wiki/wikitoolbar.py:30
 msgid "Wiki"
 msgstr ""
@@ -909,7 +917,7 @@ msgstr ""
 msgid "Can't load HTML-file"
 msgstr ""
 
-#: outwiker/pages/wiki/wikipageview.py:633
+#: outwiker/pages/wiki/wikipageview.py:634
 msgid "Commands"
 msgstr ""
 
