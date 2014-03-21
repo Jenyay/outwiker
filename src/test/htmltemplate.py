@@ -175,22 +175,27 @@ class HtmlTemplateTest(unittest.TestCase):
 </head>
 
 <body>
+
 <ul>
 <li>Несортированный список. Элемент 1</li>
 <li>Несортированный список. Элемент 2</li>
-<li>Несортированный список. Элемент 3</li><ol>
+<li>Несортированный список. Элемент 3</li>
+<ol>
 <li>Вложенный сортированный список. Элемент 1</li>
 <li>Вложенный сортированный список. Элемент 2</li>
 <li>Вложенный сортированный список. Элемент 3</li>
-<li>Вложенный сортированный список. Элемент 4</li><ul>
+<li>Вложенный сортированный список. Элемент 4</li>
+<ul>
 <li>Совсем вложенный сортированный список. Элемент 1</li>
 <li>Совсем вложенный сортированный список. Элемент 2</li>
 </ul>
 <li>Вложенный сортированный список. Элемент 5</li>
-</ol><ul>
+</ol>
+<ul>
 <li>Вложенный несортированный список. Элемент 1</li>
 </ul>
 </ul>
+
 </body>
 </html>"""
 
@@ -202,7 +207,7 @@ class HtmlTemplateTest(unittest.TestCase):
 
 
     def testImproved2 (self):
-        src = ur"""<h2>Attach links</h2><p>Attach:file.odt<br><a href="__attach/file.odt">file.odt</a><br><a href="__attach/file.odt">alternative text</a><br><a href="__attach/file with spaces.pdf">file with spaces.pdf</a><p><h2>Images</h2>"""
+        src = ur"""<h2>Attach links</h2>Attach:file.odt<br><a href="__attach/file.odt">file.odt</a><br><a href="__attach/file.odt">alternative text</a><br><a href="__attach/file with spaces.pdf">file with spaces.pdf</a><h2>Images</h2>"""
 
         expectedResult = ur"""<!DOCTYPE html>
 <html>
@@ -223,14 +228,14 @@ class HtmlTemplateTest(unittest.TestCase):
 </head>
 
 <body>
+
 <h2>Attach links</h2>
-
-<p>Attach:file.odt
-<br><a href="__attach/file.odt">file.odt</a>
-<br><a href="__attach/file.odt">alternative text</a>
-<br><a href="__attach/file with spaces.pdf">file with spaces.pdf</a></p>
-
+Attach:file.odt<br>
+<a href="__attach/file.odt">file.odt</a><br>
+<a href="__attach/file.odt">alternative text</a><br>
+<a href="__attach/file with spaces.pdf">file with spaces.pdf</a>
 <h2>Images</h2>
+
 </body>
 </html>"""
 
