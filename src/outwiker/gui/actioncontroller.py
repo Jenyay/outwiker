@@ -172,6 +172,7 @@ class ActionController (object):
         if actionInfo.toolbar != None:
             toolid = self._actionsInfo[strid].toolItemId
             self._actionsInfo[strid].toolbar.DeleteTool (toolid, False)
+            self._actionsInfo[strid].toolbar.Realize()
             self._mainWindow.Unbind (wx.EVT_TOOL, id=toolid)
             actionInfo.toolbar = None
             actionInfo.toolItemId = None
@@ -272,6 +273,7 @@ class ActionController (object):
 
         if actionInfo.toolItemId != None:
             actionInfo.toolbar.EnableTool (actionInfo.toolItemId, enabled)
+            actionInfo.toolbar.Realize()
 
         if actionInfo.menuItem != None:
             actionInfo.menuItem.Enable (enabled)

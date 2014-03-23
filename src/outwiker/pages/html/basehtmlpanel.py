@@ -5,6 +5,7 @@ import os
 from abc import ABCMeta, abstractmethod, abstractproperty
 
 import wx
+import wx.lib.newevent
 
 from outwiker.core.application import Application
 from outwiker.core.commands import MessageBox, setStatusText
@@ -15,6 +16,9 @@ from outwiker.gui.basetextpanel import BaseTextPanel
 from outwiker.gui.htmltexteditor import HtmlTextEditor
 from outwiker.gui.htmlrenderfactory import getHtmlRender
 from outwiker.actions.search import SearchAction, SearchNextAction, SearchPrevAction, SearchAndReplaceAction
+
+# Событие вызывается, когда переключаются вкладки страницы (код, HTML, ...)
+PageTabChangedEvent, EVT_PAGE_TAB_CHANGED = wx.lib.newevent.NewEvent()
 
 
 class BaseHtmlPanel(BaseTextPanel):
@@ -43,7 +47,7 @@ class BaseHtmlPanel(BaseTextPanel):
 
         self.__do_layout()
 
-        self.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED, self.onTabChanged, self.notebook)
+        self.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED, self._onTabChanged, self.notebook)
         self.Bind (wx.EVT_CLOSE, self.onClose)
 
 
@@ -186,6 +190,16 @@ class BaseHtmlPanel(BaseTextPanel):
         pass
 
 
+    @abstractmethod
+    def _enableActions (self, enabled):
+        pass
+
+
+    @abstractmethod
+    def onTabChanged(self):
+        pass
+
+
     def getHtmlPath (self, path):
         """
         Получить путь до результирующего файла HTML
@@ -204,16 +218,11 @@ class BaseHtmlPanel(BaseTextPanel):
         return self.CODE_PAGE_INDEX
 
 
-    def onTabChanged(self, event):
-        if self._currentpage == None:
-            return
+    def _onTabChanged (self, event):
+        self.onTabChanged()
 
-        if self.selectedPageIndex == self.RESULT_PAGE_INDEX:
-            self._onSwitchToPreview()
-        else:
-            self._onSwitchToCode()
-
-        self.savePageTab(self._currentpage)
+        newevent = PageTabChangedEvent (tab = self.selectedPageIndex)
+        wx.PostEvent(self, newevent)
 
 
     def savePageTab (self, page):
@@ -238,6 +247,7 @@ class BaseHtmlPanel(BaseTextPanel):
         """
         Обработка события при переключении на код страницы
         """
+        self._enableActions (True)
         self.checkForExternalEditAndSave()
         self._enableAllTools ()
         self.codeEditor.SetFocus()
@@ -248,6 +258,7 @@ class BaseHtmlPanel(BaseTextPanel):
         Обработка события при переключении на просмотр страницы
         """
         self.Save()
+        self._enableActions (False)
         self._enableAllTools ()
         self.htmlWindow.SetFocus()
         self.htmlWindow.Update()

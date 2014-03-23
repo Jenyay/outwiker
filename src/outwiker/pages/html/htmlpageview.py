@@ -87,6 +87,18 @@ class HtmlPageView (BaseHtmlPanel):
         return self.__htmlMenu
 
 
+    def onTabChanged(self):
+        if self._currentpage == None:
+            return
+
+        if self.selectedPageIndex == self.RESULT_PAGE_INDEX:
+            self._onSwitchToPreview()
+        else:
+            self._onSwitchToCode()
+
+        self.savePageTab(self._currentpage)
+
+
     def onClose (self, event):
         self._application.onPageUpdate -= self.__onPageUpdate
 
@@ -137,22 +149,6 @@ class HtmlPageView (BaseHtmlPanel):
         # Активируем / дизактивируем полиморфные действия
         map (lambda strid: actionController.enableTools (strid, enabled), 
                 self.__polyActions)
-
-
-    def _onSwitchToCode (self):
-        """
-        Обработка события при переключении на код страницы
-        """
-        self._enableActions (True)
-        super (HtmlPageView, self)._onSwitchToCode()
-
-
-    def _onSwitchToPreview (self):
-        """
-        Обработка события при переключении на просмотр страницы
-        """
-        self._enableActions (False)
-        super (HtmlPageView, self)._onSwitchToPreview()
 
 
     def __onPageUpdate (self, sender, **kwargs):

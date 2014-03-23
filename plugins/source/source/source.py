@@ -29,7 +29,7 @@ else:
             """
             Plugin.__init__ (self, application)
 
-            self.__version = u"1.11.1"
+            self.__version = u"1.11.2"
             self.__controler = Controller(self, application)
 
 

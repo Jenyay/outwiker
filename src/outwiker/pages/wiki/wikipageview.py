@@ -186,7 +186,7 @@ class WikiPageView (BaseHtmlPanel):
         return None
 
 
-    def onTabChanged(self, event):
+    def onTabChanged (self):
         if self._currentpage == None:
             return
 
@@ -212,22 +212,6 @@ class WikiPageView (BaseHtmlPanel):
         # Активируем / дизактивируем полиморфные действия
         map (lambda strid: actionController.enableTools (strid, enabled), 
                 self.__polyActions)
-
-
-    def _onSwitchToCode (self):
-        """
-        Обработка события при переключении на код страницы
-        """
-        self._enableActions (True)
-        super (WikiPageView, self)._onSwitchToCode()
-
-
-    def _onSwitchToPreview (self):
-        """
-        Обработка события при переключении на просмотр страницы
-        """
-        self._enableActions (False)
-        super (WikiPageView, self)._onSwitchToPreview()
 
 
     def _onSwitchCodeHtml (self):

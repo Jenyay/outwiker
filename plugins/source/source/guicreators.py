@@ -9,6 +9,7 @@ from .misc import getImagePath
 from .i18n import get_
 
 
+
 class BaseGuiCreator (object):
     __metaclass__ = ABCMeta
 
@@ -69,6 +70,14 @@ class ActionGuiCreator (BaseGuiCreator):
                 toolbar,
                 image)
 
+        try:
+            # Это событие появилось только в версии 1.8.0.717
+            from outwiker.pages.html.basehtmlpanel import EVT_PAGE_TAB_CHANGED
+            pageView.Bind (EVT_PAGE_TAB_CHANGED, self._onTabChanged)
+            self._enableTools()
+        except ImportError:
+            pass
+
 
     def removeTools (self):
         from .actions import InsertSourceAction
@@ -80,6 +89,24 @@ class ActionGuiCreator (BaseGuiCreator):
     def destroy (self):
         from .actions import InsertSourceAction
         self._application.actionController.removeAction (InsertSourceAction.stringId)
+
+        try:
+            # Это событие появилось только в версии 1.8.0.717
+            from outwiker.pages.html.basehtmlpanel import EVT_PAGE_TAB_CHANGED
+            self._getPageView().Unbind (EVT_PAGE_TAB_CHANGED, handler=self._onTabChanged)
+        except ImportError:
+            pass
+
+
+    def _onTabChanged (self, event):
+        self._enableTools()
+
+
+    def _enableTools (self):
+        from .actions import InsertSourceAction
+        pageView = self._getPageView()
+        enabled = (pageView.selectedPageIndex == pageView.CODE_PAGE_INDEX)
+        self._application.actionController.enableTools (InsertSourceAction.stringId, enabled)
 
 
     def _getPageView (self):
