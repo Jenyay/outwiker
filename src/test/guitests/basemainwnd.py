@@ -53,3 +53,4 @@ class BaseMainWndTest(unittest.TestCase):
         self.wnd.Close()
         self.wnd.Hide()
         self._processEvents()
+        Application.mainWindow = None

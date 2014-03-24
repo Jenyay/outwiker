@@ -47,19 +47,23 @@ class ActionGuiCreator (BaseGuiCreator):
         super (ActionGuiCreator, self).initialize()
         from .actions import InsertSourceAction
 
-        self._application.actionController.register (
-                InsertSourceAction (self._application, self._controller), 
-                None)
+        if self._application.mainWindow != None:
+            self._application.actionController.register (
+                    InsertSourceAction (self._application, self._controller), 
+                    None)
 
 
     def createTools (self):
         from .actions import InsertSourceAction
 
         mainWindow = self._application.mainWindow
+
+        if mainWindow == None:
+            return
+
         toolbar = mainWindow.toolbars[mainWindow.PLUGINS_TOOLBAR_STR]
 
         pageView = self._getPageView()
-        image = getImagePath ("source.png")
 
         self._application.actionController.appendMenuItem (
                 InsertSourceAction.stringId, 
@@ -68,7 +72,7 @@ class ActionGuiCreator (BaseGuiCreator):
         self._application.actionController.appendToolbarButton (
                 InsertSourceAction.stringId,
                 toolbar,
-                image)
+                getImagePath ("source.png"))
 
         try:
             # Это событие появилось только в версии 1.8.0.717
@@ -88,14 +92,15 @@ class ActionGuiCreator (BaseGuiCreator):
 
     def destroy (self):
         from .actions import InsertSourceAction
-        self._application.actionController.removeAction (InsertSourceAction.stringId)
 
-        try:
-            # Это событие появилось только в версии 1.8.0.717
-            from outwiker.pages.html.basehtmlpanel import EVT_PAGE_TAB_CHANGED
-            self._getPageView().Unbind (EVT_PAGE_TAB_CHANGED, handler=self._onTabChanged)
-        except ImportError:
-            pass
+        if self._application.mainWindow != None:
+            self._application.actionController.removeAction (InsertSourceAction.stringId)
+            try:
+                # Это событие появилось только в версии 1.8.0.717
+                from outwiker.pages.html.basehtmlpanel import EVT_PAGE_TAB_CHANGED
+                self._getPageView().Unbind (EVT_PAGE_TAB_CHANGED, handler=self._onTabChanged)
+            except ImportError:
+                pass
 
 
     def _onTabChanged (self, event):
