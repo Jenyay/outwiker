@@ -11,9 +11,9 @@ Additionally, the command [= (: attachlist:) =] can be used ''sort'' parameter, 
 * ''ext'' - the attached files will be sorted by extension;
 * ''descendext'' - the attached files will be sorted by extension in descending order;
 * ''size'' - the attached files will be sorted by size;
-* ''descendext'' - the attached files will be sorted by size in descending order;
+* ''descendsize'' - the attached files will be sorted by size in descending order;
 * ''date'' - the attached files will be sorted by their date of last modification;
-* ''descendext'' - the attached files will be sorted by their date of last modification in descending order;
+* ''descenddate'' - the attached files will be sorted by their date of last modification in descending order;
 
 !!! Examples
 

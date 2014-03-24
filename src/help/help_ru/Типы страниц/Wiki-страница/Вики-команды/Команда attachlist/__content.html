@@ -1,8 +1,10 @@
-<HTML>
-<HEAD>
-	<META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+	<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
 
-	<STYLE type="text/css">
+	<style type='text/css'>
 		body, div, p, table {
 			font-size:10pt;
 			font-family:Verdana;
@@ -10,49 +12,49 @@
 
 		img{border:none}
 		
-	</STYLE>
-</HEAD>
+	</style>
+	
+</head>
 
-<BODY>
-<P><H2>Назначение и синтаксис команды (:attachlist:)</H2></P>
+<body>
 
-<P>Команда (:attachlist:) предназначена для вставки в вики-страницу списка прикрепленных файлов:</P>
-
-<P>(:attachlist [params...]:)</P>
-
-<P>Дополнительно в команде (:attachlist:) может быть использован параметр <I>sort</I>, который указывает порядок сортировки файлов. Параметр <I>sort</I> может принимать следующие значения:</P>
-
-<P>
-<UL>
-<LI><I>name</I> - прикрепленные файлы будут отсортированы по именам (это равносильно использованию команды (:attachlist:) без параметров);</LI>
-<LI><I>descendname</I> - прикрепленные файлы будут отсортированы по именам в обратном порядке;</LI>
-<LI><I>ext</I> - прикрепленные файлы будут отсортированы по расширениям;</LI>
-<LI><I>descendext</I> - прикрепленные файлы будут отсортированы по расширениям в обратном порядке;</LI>
-<LI><I>size</I> - прикрепленные файлы будут отсортированы по их размеру;</LI>
-<LI><I>descendext</I> - прикрепленные файлы будут отсортированы по их размеру в обратном порядке;</LI>
-<LI><I>date</I> - прикрепленные файлы будут отсортированы по дате их последней модификации;</LI>
-<LI><I>descendext</I> - прикрепленные файлы будут отсортированы по дате их последней модификации в обратном порядке;</LI>
-</UL>
-<BR><H2>Примеры</H2></P>
-
-<P>У данной страницы имеется пять вложенных файлов, следующая таблица показывает результат работы команды (:attachlist:) с различными значениями параметра <I>sort</I>:</P>
-
-<P><TABLE width=850 border=1><TR><TD ALIGN="CENTER"><B>Команда</B></TD><TD ALIGN="CENTER">(:attachlist:)</TD><TD ALIGN="CENTER">(:attachlist sort=ext:)</TD><TD ALIGN="CENTER">(:attachlist sort=descendext:)</TD><TD ALIGN="CENTER">(:attachlist sort=size:)</TD></TR><TR><TD ALIGN="CENTER"><B>Результат</B></TD><TD ALIGN="CENTER"><A HREF="__attach/anchor.png">anchor.png</A>
-<BR><A HREF="__attach/first.jpg">first.jpg</A>
-<BR><A HREF="__attach/image.gif">image.gif</A>
-<BR><A HREF="__attach/image.jpg">image.jpg</A>
-<BR><A HREF="__attach/image.png">image.png</A></TD><TD ALIGN="CENTER"><A HREF="__attach/image.gif">image.gif</A>
-<BR><A HREF="__attach/first.jpg">first.jpg</A>
-<BR><A HREF="__attach/image.jpg">image.jpg</A>
-<BR><A HREF="__attach/anchor.png">anchor.png</A>
-<BR><A HREF="__attach/image.png">image.png</A></TD><TD ALIGN="CENTER"><A HREF="__attach/image.png">image.png</A>
-<BR><A HREF="__attach/anchor.png">anchor.png</A>
-<BR><A HREF="__attach/image.jpg">image.jpg</A>
-<BR><A HREF="__attach/first.jpg">first.jpg</A>
-<BR><A HREF="__attach/image.gif">image.gif</A></TD><TD ALIGN="CENTER"><A HREF="__attach/anchor.png">anchor.png</A>
-<BR><A HREF="__attach/first.jpg">first.jpg</A>
-<BR><A HREF="__attach/image.jpg">image.jpg</A>
-<BR><A HREF="__attach/image.gif">image.gif</A>
-<BR><A HREF="__attach/image.png">image.png</A></TD></TR></TABLE></P>
-</BODY>
-</HTML>
+<h2>Назначение и синтаксис команды (:attachlist:)</h2>
+<br>
+Команда (:attachlist:) предназначена для вставки в вики-страницу списка прикрепленных файлов:<br>
+<br>
+(:attachlist [params...]:)<br>
+<br>
+Дополнительно в команде (:attachlist:) может быть использован параметр <i>sort</i>, который указывает порядок сортировки файлов. Параметр <i>sort</i> может принимать следующие значения:<br>
+<ul>
+<li><i>name</i> - прикрепленные файлы будут отсортированы по именам (это равносильно использованию команды (:attachlist:) без параметров);</li>
+<li><i>descendname</i> - прикрепленные файлы будут отсортированы по именам в обратном порядке;</li>
+<li><i>ext</i> - прикрепленные файлы будут отсортированы по расширениям;</li>
+<li><i>descendext</i> - прикрепленные файлы будут отсортированы по расширениям в обратном порядке;</li>
+<li><i>size</i> - прикрепленные файлы будут отсортированы по их размеру;</li>
+<li><i>descendsize</i> - прикрепленные файлы будут отсортированы по их размеру в обратном порядке;</li>
+<li><i>date</i> - прикрепленные файлы будут отсортированы по дате их последней модификации;</li>
+<li><i>descenddate</i> - прикрепленные файлы будут отсортированы по дате их последней модификации в обратном порядке;</li>
+</ul>
+<h2>Примеры</h2>
+<br>
+У данной страницы имеется пять вложенных файлов, следующая таблица показывает результат работы команды (:attachlist:) с различными значениями параметра <i>sort</i>:<br>
+<br>
+<table width=850 border=1><tr><td align="center"><b>Команда</b></td><td align="center">(:attachlist:)</td><td align="center">(:attachlist sort=ext:)</td><td align="center">(:attachlist sort=descendext:)</td><td align="center">(:attachlist sort=size:)</td></tr><tr><td align="center"><b>Результат</b></td><td align="center"><a href="__attach/anchor.png">anchor.png</a><br>
+<a href="__attach/first.jpg">first.jpg</a><br>
+<a href="__attach/image.gif">image.gif</a><br>
+<a href="__attach/image.jpg">image.jpg</a><br>
+<a href="__attach/image.png">image.png</a></td><td align="center"><a href="__attach/image.gif">image.gif</a><br>
+<a href="__attach/first.jpg">first.jpg</a><br>
+<a href="__attach/image.jpg">image.jpg</a><br>
+<a href="__attach/anchor.png">anchor.png</a><br>
+<a href="__attach/image.png">image.png</a></td><td align="center"><a href="__attach/image.png">image.png</a><br>
+<a href="__attach/anchor.png">anchor.png</a><br>
+<a href="__attach/image.jpg">image.jpg</a><br>
+<a href="__attach/first.jpg">first.jpg</a><br>
+<a href="__attach/image.gif">image.gif</a></td><td align="center"><a href="__attach/anchor.png">anchor.png</a><br>
+<a href="__attach/first.jpg">first.jpg</a><br>
+<a href="__attach/image.jpg">image.jpg</a><br>
+<a href="__attach/image.gif">image.gif</a><br>
+<a href="__attach/image.png">image.png</a></td></tr></table>
+</body>
+</html>
