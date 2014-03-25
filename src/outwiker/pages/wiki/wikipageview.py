@@ -168,10 +168,10 @@ class WikiPageView (BaseHtmlPanel):
         self.htmlCodeWindow = HtmlTextEditor(self.notebook, -1)
         self.htmlCodeWindow.SetReadOnly (True)
         parentSizer.Add(self.htmlCodeWindow, 1, wx.TOP|wx.BOTTOM|wx.EXPAND, 2)
-        
+
         self.addPage (self.htmlCodeWindow, _("HTML"))
         return self.pageCount - 1
-    
+
 
     def GetTextEditor(self):
         return WikiEditor
@@ -218,7 +218,18 @@ class WikiPageView (BaseHtmlPanel):
         assert self._currentpage != None
 
         self._enableActions (False)
+        self._updateHtmlCode ()
+        self._enableAllTools ()
+        self.htmlCodeWindow.SetFocus()
+        self.htmlCodeWindow.Update()
 
+
+    def _updateResult (self):
+        super (WikiPageView, self)._updateResult ()
+        self._updateHtmlCode()
+
+
+    def _updateHtmlCode (self):
         self.Save()
         status_item = 0
         setStatusText (_(u"Page rendered. Please wait…"), status_item)
@@ -239,10 +250,6 @@ class WikiPageView (BaseHtmlPanel):
 
         setStatusText (u"", status_item)
         self._application.onHtmlRenderingEnd (self._currentpage, self.htmlWindow)
-
-        self._enableAllTools ()
-        self.htmlCodeWindow.SetFocus()
-        self.htmlCodeWindow.Update()
 
 
     def _showHtmlCode (self, path):

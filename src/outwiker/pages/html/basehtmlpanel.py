@@ -158,7 +158,7 @@ class BaseHtmlPanel(BaseTextPanel):
             self.codeEditor.EmptyUndoBuffer()
             self.codeEditor.SetReadOnly (page.readonly)
 
-            self._showHtml()
+            self._updateResult()
             tabIndex = self.loadPageTab (self._currentpage)
             if tabIndex < 0:
                 tabIndex = self._getDefaultPage()
@@ -262,10 +262,10 @@ class BaseHtmlPanel(BaseTextPanel):
         self._enableAllTools ()
         self.htmlWindow.SetFocus()
         self.htmlWindow.Update()
-        self._showHtml()
+        self._updateResult()
 
 
-    def _showHtml (self):
+    def _updateResult (self):
         """
         Подготовить и показать HTML текущей страницы
         """
