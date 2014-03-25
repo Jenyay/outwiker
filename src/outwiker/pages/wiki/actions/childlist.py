@@ -94,7 +94,7 @@ class ChildListDialog (wx.Dialog):
         mainSizer.AddGrowableCol (0)
         mainSizer.AddGrowableCol (1)
 
-        mainSizer.Add (self._sortLabel, 0, flag = wx.EXPAND | wx.ALL | wx.ALIGN_CENTER_VERTICAL, border = 2)
+        mainSizer.Add (self._sortLabel, 0, flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL, border = 2)
         mainSizer.Add (self._sortComboBox, 0, flag = wx.EXPAND | wx.ALL | wx.ALIGN_CENTER_VERTICAL, border = 2)
         mainSizer.Add (self._descendCheckBox, 0, flag = wx.EXPAND | wx.ALL | wx.ALIGN_CENTER_VERTICAL, border = 2)
         mainSizer.AddStretchSpacer()
