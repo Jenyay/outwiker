@@ -230,6 +230,10 @@ class WikiPageView (BaseHtmlPanel):
 
 
     def _updateHtmlCode (self):
+        if self.htmlcodePageIndex == -1:
+            # Нет вкладки с кодом HTML. Ничего не делаем
+            return
+
         self.Save()
         status_item = 0
         setStatusText (_(u"Page rendered. Please wait…"), status_item)
