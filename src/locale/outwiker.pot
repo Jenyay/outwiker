@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-25 19:22+0400\n"
+"POT-Creation-Date: 2014-03-26 18:35+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -147,7 +147,8 @@ msgstr ""
 #: outwiker/pages/wiki/wikipageview.py:252
 #: outwiker/pages/wiki/wikipageview.py:268
 #: outwiker/pages/wiki/wikipageview.py:270
-#: outwiker/pages/wiki/wikipageview.py:690 outwiker/core/commands.py:48
+#: outwiker/pages/wiki/wikipageview.py:690
+#: outwiker/pages/wiki/actions/include.py:37 outwiker/core/commands.py:48
 #: outwiker/core/commands.py:110 outwiker/core/commands.py:201
 #: outwiker/core/commands.py:241 outwiker/core/commands.py:249
 #: outwiker/core/commands.py:257 outwiker/core/commands.py:267
@@ -1031,12 +1032,33 @@ msgstr ""
 msgid "Small font"
 msgstr ""
 
-#: outwiker/pages/wiki/actions/include.py:19
+#: outwiker/pages/wiki/actions/include.py:23
 msgid "Include (:include ...:)"
 msgstr ""
 
-#: outwiker/pages/wiki/actions/include.py:24
+#: outwiker/pages/wiki/actions/include.py:28
+#: outwiker/pages/wiki/actions/include.py:69
 msgid "Insert (:include:) command"
+msgstr ""
+
+#: outwiker/pages/wiki/actions/include.py:36
+msgid "Current page does not have any attachments"
+msgstr ""
+
+#: outwiker/pages/wiki/actions/include.py:97
+msgid "Select attachment"
+msgstr ""
+
+#: outwiker/pages/wiki/actions/include.py:105
+msgid "Encoding"
+msgstr ""
+
+#: outwiker/pages/wiki/actions/include.py:112
+msgid "Convert symbols <, > and && to HTML"
+msgstr ""
+
+#: outwiker/pages/wiki/actions/include.py:115
+msgid "Parse wiki notation"
 msgstr ""
 
 #: outwiker/pages/wiki/actions/nonparsed.py:19

@@ -109,7 +109,7 @@ class IncludeDialog (wx.Dialog):
         self._encodingComboBox.SetSelection (0)
 
         # Преобразовывать символы HTML?
-        self._escapeHtmlCheckBox = wx.CheckBox (self, label=_(u"Convert symbols to HTML") )
+        self._escapeHtmlCheckBox = wx.CheckBox (self, label=_(u"Convert symbols <, > and && to HTML") )
 
         # Делать разбор викинотации?
         self._wikiParseCheckBox = wx.CheckBox (self, label=_(u"Parse wiki notation") )
