@@ -263,7 +263,17 @@ class AttachPanel(wx.Panel):
 
             for fname in files:
                 if not os.path.basename(fname).startswith("__") or not os.path.isdir (fname):
+                    # Отключим уведомления об ошибках во всплывающих окнах
+                    # иначе они появляются при попытке прочитать испорченные иконки
+                    # На результат работы это не сказывается, все-равно бракованные
+                    # иконки отлавливаются.
+                    wx.Log_EnableLogging(False)
+
                     imageIndex = self.__getFileImage (fname)
+
+                    # Вернем всплывающие окна с ошибками
+                    wx.Log_EnableLogging(True)
+
                     self.__attachList.InsertImageStringItem (0, os.path.basename (fname), imageIndex)
 
         self.__attachList.Thaw()
