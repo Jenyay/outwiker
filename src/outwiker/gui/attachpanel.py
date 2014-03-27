@@ -21,6 +21,11 @@ class AttachPanel(wx.Panel):
         self.ID_EXECUTE = wx.NewId()
         self.ID_REFRESH = wx.NewId()
 
+        self.DEFAULT_FILE_ICON = 0
+        self.FOLDER_ICON = 1
+
+        imagesDir = outwiker.core.system.getImagesDir()
+
         wx.Panel.__init__(self, *args, **kwds)
         self.__toolbar = self.__createToolBar(self, -1)
         self.__attachList = wx.ListCtrl(self, -1, style=wx.LC_LIST|wx.SUNKEN_BORDER)
@@ -28,6 +33,16 @@ class AttachPanel(wx.Panel):
         self.__set_properties()
         self.__do_layout()
 
+        self.__imageList = wx.ImageList (16, 16)
+        self.__imageList.Add (wx.Bitmap(os.path.join (imagesDir, "file_icon_default.png"),
+                    wx.BITMAP_TYPE_ANY))
+        self.__imageList.Add (wx.Bitmap(os.path.join (imagesDir, "folder.png"),
+                    wx.BITMAP_TYPE_ANY))
+
+        self.__attachList.SetImageList (self.__imageList, wx.IMAGE_LIST_SMALL)
+
+        # Ключ - расширение файла, значение - номер иконки в self.__imageList
+        self.__fileIcons = {}
         self.Bind(wx.EVT_LIST_BEGIN_DRAG, self.__onBeginDrag, self.__attachList)
 
         self.Bind(wx.EVT_MENU, self.__onAttach, id=self.ID_ATTACH)
@@ -41,31 +56,27 @@ class AttachPanel(wx.Panel):
 
         self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.__onPaste, self.__attachList)
 
-        imagesDir = outwiker.core.system.getImagesDir()
-        self.__imageList = wx.ImageList (16, 16)
-        self.__imageList.Add (wx.Bitmap(os.path.join (imagesDir, "page_white.png"),
-                    wx.BITMAP_TYPE_ANY))
-
-        self.__attachList.SetImageList (self.__imageList, wx.IMAGE_LIST_SMALL)
-
-        # Ключ - расширение файла, значение - номер иконки в self.__imageList
-        self.__fileIcons = {}
 
 
-    def __getFileImage (self, filename):
+    def __getFileImage (self, filepath):
         """
         Возвращает номер картинки в imageList для файла по его расширению. При необходимости добавляет картинку в список
         """
+        if os.path.isdir (filepath):
+            return self.FOLDER_ICON
+
+        filename = os.path.basename (filepath)
+
         elements = filename.rsplit (".", 1)
         if len (elements) < 2:
-            return 0
+            return self.DEFAULT_FILE_ICON
 
         ext = elements[1]
 
         if ext not in self.__fileIcons:
             bmp = self.__getSystemIcon (ext)
             if bmp == None:
-                return 0
+                return self.DEFAULT_FILE_ICON
 
             index = self.__imageList.Add (bmp)
             self.__fileIcons[ext] = index
@@ -232,7 +243,7 @@ class AttachPanel(wx.Panel):
 
             for fname in files:
                 if not os.path.basename(fname).startswith("__") or not os.path.isdir (fname):
-                    imageIndex = self.__getFileImage (os.path.basename (fname) )
+                    imageIndex = self.__getFileImage (fname)
                     self.__attachList.InsertImageStringItem (0, os.path.basename (fname), imageIndex)
 
         self.__attachList.Thaw()
