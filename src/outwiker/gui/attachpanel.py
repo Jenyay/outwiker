@@ -7,7 +7,7 @@ import wx
 
 from outwiker.core.application import Application
 from outwiker.core.commands import MessageBox
-import outwiker.core.system
+from outwiker.core.system import getOS, getImagesDir
 from outwiker.core.attachment import Attachment
 from outwiker.actions.attachfiles import AttachFilesAction
 from outwiker.core.events import PAGE_UPDATE_ATTACHMENT
@@ -21,11 +21,6 @@ class AttachPanel(wx.Panel):
         self.ID_EXECUTE = wx.NewId()
         self.ID_REFRESH = wx.NewId()
 
-        self.DEFAULT_FILE_ICON = 0
-        self.FOLDER_ICON = 1
-
-        imagesDir = outwiker.core.system.getImagesDir()
-
         wx.Panel.__init__(self, *args, **kwds)
         self.__toolbar = self.__createToolBar(self, -1)
         self.__attachList = wx.ListCtrl(self, -1, style=wx.LC_LIST|wx.SUNKEN_BORDER)
@@ -33,16 +28,9 @@ class AttachPanel(wx.Panel):
         self.__set_properties()
         self.__do_layout()
 
-        self.__imageList = wx.ImageList (16, 16)
-        self.__imageList.Add (wx.Bitmap(os.path.join (imagesDir, "file_icon_default.png"),
-                    wx.BITMAP_TYPE_ANY))
-        self.__imageList.Add (wx.Bitmap(os.path.join (imagesDir, "folder.png"),
-                    wx.BITMAP_TYPE_ANY))
+        self.__fileIcons = getOS().fileIcons
+        self.__attachList.SetImageList (self.__fileIcons.imageList, wx.IMAGE_LIST_SMALL)
 
-        self.__attachList.SetImageList (self.__imageList, wx.IMAGE_LIST_SMALL)
-
-        # Ключ - расширение файла, значение - номер иконки в self.__imageList
-        self.__fileIcons = {}
         self.Bind(wx.EVT_LIST_BEGIN_DRAG, self.__onBeginDrag, self.__attachList)
 
         self.Bind(wx.EVT_MENU, self.__onAttach, id=self.ID_ATTACH)
@@ -55,82 +43,6 @@ class AttachPanel(wx.Panel):
         self.__bindAppEvents()
 
         self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.__onPaste, self.__attachList)
-
-
-
-    def __getFileImage (self, filepath):
-        """
-        Возвращает номер картинки в imageList для файла по его расширению. При необходимости добавляет картинку в список
-        """
-        if os.path.isdir (filepath):
-            return self.FOLDER_ICON
-
-        filename = os.path.basename (filepath)
-
-        elements = filename.rsplit (".", 1)
-        if len (elements) < 2:
-            return self.DEFAULT_FILE_ICON
-
-        ext = elements[1]
-
-        if ext in self.__fileIcons:
-            return self.__fileIcons[ext]
-
-        if ext.lower() == "exe":
-            bmp = self.__getExeIcon (filepath)
-        else:
-            bmp = self.__getSystemIcon (ext)
-
-        if bmp == None:
-            return self.DEFAULT_FILE_ICON
-
-        index = self.__imageList.Add (bmp)
-
-        if ext.lower() != "exe":
-            self.__fileIcons[ext] = index
-
-        return index
-
-
-    def __getExeIcon (self, filepath):
-        """
-        Возвращает картинку exe-шника
-        """
-        icon = wx.Icon(filepath, wx.BITMAP_TYPE_ICO, 16, 16)
-        if not icon.Ok():
-            return None
-
-        bmp = wx.EmptyBitmap(16,16)
-        bmp.CopyFromIcon(icon)
-        bmp = bmp.ConvertToImage()
-        bmp.Rescale(16,16)
-        bmp = wx.BitmapFromImage(bmp)
-
-        return bmp
-
-
-    def __getSystemIcon (self, ext):
-        """
-        Возвращает картинку, связанную  расширением ext в системе. Если с расширением не связана картинка, возвращется None
-        """
-        filetype = wx.MimeTypesManager().GetFileTypeFromExtension(ext)
-        if filetype == None:
-            return None
-
-        nntype = filetype.GetIconInfo()
-        if nntype == None:
-            return None
-
-        icon = nntype[0]
-        if not icon.Ok():
-            return None
-
-        bmp = wx.EmptyBitmap(16,16)
-        bmp.CopyFromIcon(icon)
-        bmp = bmp.ConvertToImage()
-        bmp.Rescale(16,16)
-        bmp = wx.BitmapFromImage(bmp)
-        return bmp
 
 
     @property
@@ -159,12 +71,12 @@ class AttachPanel(wx.Panel):
         self.__unbindAppEvents()
         self.toolBar.ClearTools()
         self.attachList.ClearAll()
-        self.__imageList.RemoveAll()
+        self.__fileIcons.clear()
         self.Destroy()
 
 
     def __createToolBar (self, parent, id):
-        imagesDir = outwiker.core.system.getImagesDir()
+        imagesDir = getImagesDir()
 
         toolbar = wx.ToolBar (parent, id, style=wx.TB_DOCKABLE)
 
@@ -269,7 +181,7 @@ class AttachPanel(wx.Panel):
                     # иконки отлавливаются.
                     wx.Log_EnableLogging(False)
 
-                    imageIndex = self.__getFileImage (fname)
+                    imageIndex = self.__fileIcons.getFileImage (fname)
 
                     # Вернем всплывающие окна с ошибками
                     wx.Log_EnableLogging(True)
@@ -349,14 +261,14 @@ class AttachPanel(wx.Panel):
             for file in files:
                 fullpath = os.path.join (Attachment (Application.selectedPage).getAttachPath(), file)
                 try:
-                    outwiker.core.system.getOS().startFile (fullpath)
+                    getOS().startFile (fullpath)
                 except OSError:
                     text = _(u"Can't execute file '%s'") % file
                     MessageBox (text, _(u"Error"), wx.ICON_ERROR | wx.OK)
 
 
     def __onBeginDrag(self, event):
-        data = outwiker.core.system.getOS().dragFileDataObject()
+        data = getOS().dragFileDataObject()
 
         for fname in self.__getSelectedFiles():
             data.AddFile (os.path.join (Attachment (Application.selectedPage).getAttachPath(), fname) )
@@ -365,8 +277,5 @@ class AttachPanel(wx.Panel):
         dragSource.SetData(data)
 
         result = dragSource.DoDragDrop ()
-        
-
-# end of class AttachPanel
 
 
