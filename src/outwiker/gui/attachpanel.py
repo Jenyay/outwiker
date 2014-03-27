@@ -73,26 +73,46 @@ class AttachPanel(wx.Panel):
 
         ext = elements[1]
 
-        if ext not in self.__fileIcons:
-            bmp = self.__getSystemIcon (ext)
-            if bmp == None:
-                return self.DEFAULT_FILE_ICON
+        if ext in self.__fileIcons:
+            return self.__fileIcons[ext]
 
-            index = self.__imageList.Add (bmp)
-            self.__fileIcons[ext] = index
+        if ext.lower() == "exe":
+            bmp = self.__getExeIcon (filepath)
         else:
-            index = self.__fileIcons[ext]
+            bmp = self.__getSystemIcon (ext)
+
+        if bmp == None:
+            return self.DEFAULT_FILE_ICON
+
+        index = self.__imageList.Add (bmp)
+
+        if ext.lower() != "exe":
+            self.__fileIcons[ext] = index
 
         return index
+
+
+    def __getExeIcon (self, filepath):
+        """
+        Возвращает картинку exe-шника
+        """
+        icon = wx.Icon(filepath, wx.BITMAP_TYPE_ICO, 16, 16)
+        if not icon.Ok():
+            return None
+
+        bmp = wx.EmptyBitmap(16,16)
+        bmp.CopyFromIcon(icon)
+        bmp = bmp.ConvertToImage()
+        bmp.Rescale(16,16)
+        bmp = wx.BitmapFromImage(bmp)
+
+        return bmp
 
 
     def __getSystemIcon (self, ext):
         """
         Возвращает картинку, связанную  расширением ext в системе. Если с расширением не связана картинка, возвращется None
         """
-        if ext.lower() == "exe":
-            return None
-
         filetype = wx.MimeTypesManager().GetFileTypeFromExtension(ext)
         if filetype == None:
             return None
