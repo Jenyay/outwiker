@@ -41,6 +41,66 @@ class AttachPanel(wx.Panel):
 
         self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.__onPaste, self.__attachList)
 
+        imagesDir = outwiker.core.system.getImagesDir()
+        self.__imageList = wx.ImageList (16, 16)
+        self.__imageList.Add (wx.Bitmap(os.path.join (imagesDir, "page_white.png"),
+                    wx.BITMAP_TYPE_ANY))
+
+        self.__attachList.SetImageList (self.__imageList, wx.IMAGE_LIST_SMALL)
+
+        # Ключ - расширение файла, значение - номер иконки в self.__imageList
+        self.__fileIcons = {}
+
+
+    def __getFileImage (self, filename):
+        """
+        Возвращает номер картинки в imageList для файла по его расширению. При необходимости добавляет картинку в список
+        """
+        elements = filename.rsplit (".", 1)
+        if len (elements) < 2:
+            return 0
+
+        ext = elements[1]
+
+        if ext not in self.__fileIcons:
+            bmp = self.__getSystemIcon (ext)
+            if bmp == None:
+                return 0
+
+            index = self.__imageList.Add (bmp)
+            self.__fileIcons[ext] = index
+        else:
+            index = self.__fileIcons[ext]
+
+        return index
+
+
+    def __getSystemIcon (self, ext):
+        """
+        Возвращает картинку, связанную  расширением ext в системе. Если с расширением не связана картинка, возвращется None
+        """
+        if ext.lower() == "exe":
+            return None
+
+        filetype = wx.MimeTypesManager().GetFileTypeFromExtension(ext)
+        if filetype == None:
+            return None
+
+        nntype = filetype.GetIconInfo()
+        if nntype == None:
+            return None
+
+        icon = nntype[0]
+        if not icon.Ok():
+            return None
+
+        bmp = wx.EmptyBitmap(16,16)
+        bmp.CopyFromIcon(icon)
+        bmp = bmp.ConvertToImage()
+        bmp.Rescale(16,16)
+        bmp = wx.BitmapFromImage(bmp)
+        return bmp
+
 
     @property
     def attachList (self):
@@ -68,8 +128,9 @@ class AttachPanel(wx.Panel):
         self.__unbindAppEvents()
         self.toolBar.ClearTools()
         self.attachList.ClearAll()
+        self.__imageList.RemoveAll()
         self.Destroy()
-    
+
 
     def __createToolBar (self, parent, id):
         imagesDir = outwiker.core.system.getImagesDir()
@@ -169,10 +230,10 @@ class AttachPanel(wx.Panel):
             files = Attachment (Application.selectedPage).attachmentFull
             files.sort(Attachment.sortByName, reverse=True)
 
-
             for fname in files:
                 if not os.path.basename(fname).startswith("__") or not os.path.isdir (fname):
-                    self.__attachList.InsertImageStringItem (0, os.path.basename (fname), 0)
+                    imageIndex = self.__getFileImage (os.path.basename (fname) )
+                    self.__attachList.InsertImageStringItem (0, os.path.basename (fname), imageIndex)
 
         self.__attachList.Thaw()
 
