@@ -121,7 +121,10 @@ if __name__ == '__main__':
     from test.guitests.wikiactions import WikiActionsTest
     from test.guitests.htmlactions import HtmlActionsTest
     from test.guitests.texteditor import TextEditorTest
-    from test.guitests.fileicons import FileIconsTest
+    from test.guitests.fileicons import FileIconsTestUnix
+
+    if os.name == "nt":
+        from test.guitests.uriidentifiers import FileIconsTestWindows
 
     from test.plugins.loader import PluginsLoaderTest
     from test.plugins.testwikicommand import PluginWikiCommandTest
