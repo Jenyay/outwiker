@@ -61,7 +61,7 @@ class UnixFileIcons (BaseFileIcons):
         if len (elements) < 2:
             return self.DEFAULT_FILE_ICON
 
-        ext = elements[1]
+        ext = elements[1].lower()
 
         if ext in self._iconsDict:
             return self._iconsDict[ext]
