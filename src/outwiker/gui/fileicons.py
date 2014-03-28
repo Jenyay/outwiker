@@ -42,6 +42,7 @@ class BaseFileIcons (object):
 
     def clear (self):
         self._imageList.RemoveAll()
+        self._iconsDict = {}
 
 
 class UnixFileIcons (BaseFileIcons):
@@ -155,8 +156,13 @@ class WindowsFileIcons (BaseFileIcons):
 
         ext = elements[1]
 
+        # Поиск иконки по расширению
         if ext in self._iconsDict:
             return self._iconsDict[ext]
+
+        # Поиск иконки по имени файла (используется для расширения .exe)
+        if filepath is self._iconsDict:
+            return self._iconsDict[filepath]
 
         if ext.lower() == "exe":
             bmp = self.__getExeIcon (filepath)
@@ -168,7 +174,11 @@ class WindowsFileIcons (BaseFileIcons):
 
         index = self.imageList.Add (bmp)
 
+        # Для всех расширений кроме .exe в качестве ключа испльзуется расширение
+        # Для .exe используется полный путь до файла
         if ext.lower() != "exe":
             self._iconsDict[ext] = index
+        else:
+            self._iconsDict[filepath] = index
 
         return index
