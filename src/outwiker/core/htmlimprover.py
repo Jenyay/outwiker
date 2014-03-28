@@ -71,7 +71,7 @@ class HtmlImprover (object):
         result = text
         result = result.replace ("\n", "<br>")
 
-        opentags = r"[uod]l|hr|h\d"
+        opentags = r"[uod]l|hr|h\d|tr|td"
         closetags = r"li|d[td]|t[rdh]|caption|thead|tfoot|tbody|colgroup|col|h\d"
 
         # Удаление тега <BR> перед некоторыми блочными элементами
