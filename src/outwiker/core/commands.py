@@ -917,4 +917,4 @@ def _registerPolyActions (application):
         TABLE_CELL_STR_ID,
         _(u"Table cell"),
         _(u"Insert a table cell")),
-        HotKey ("Y", ctrl=True))
+        HotKey ("Y", ctrl=True, shift=True))
