@@ -85,9 +85,6 @@ Attach:file.odt<BR>
         self.assertEqual (expectedResult, result)
 
 
-    
-
-
     def test_br_01 (self):
         src = ur"""абырвалг<br>абырвалг"""
 
@@ -305,3 +302,15 @@ Attach:file.odt<BR>
 
         result = HtmlImprover.run (src)
         self.assertEqual (expectedResult, result)
+
+
+    def test_table_01 (self):
+        src = ur'''<table><tr><td>Абырвалг</td><td>Абырвалг</td><td>Абырвалг</td></tr></table>'''
+        expectedResult = u'''
+<table>
+<tr>
+<td>Абырвалг</td>
+<td>Абырвалг</td>
+<td>Абырвалг</td>
+</tr>
+</table>'''

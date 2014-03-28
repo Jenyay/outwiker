@@ -83,7 +83,7 @@ class HtmlImprover (object):
         result = re.sub(remove_br_after, r"\1", result, flags=re.I)
 
         # Добавление переноса строки перед некоторыми элементами
-        append_eol_before = r"\n*(<li>|<h\d>|</?[uo]l>|<hr\s*/?>|<p>)"
+        append_eol_before = r"\n*(<li>|<h\d>|</?[uo]l>|<hr\s*/?>|<p>|</?table.*?>|</?tr.*?>|<td.*?>)"
         result = re.sub(append_eol_before, "\n\\1", result, flags=re.I)
 
         # Добавление переноса строки после некоторых элементов
