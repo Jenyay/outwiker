@@ -124,7 +124,7 @@ if __name__ == '__main__':
     from test.guitests.fileicons import FileIconsTestUnix
 
     if os.name == "nt":
-        from test.guitests.uriidentifiers import FileIconsTestWindows
+        from test.guitests.fileicons import FileIconsTestWindows
 
     from test.plugins.loader import PluginsLoaderTest
     from test.plugins.testwikicommand import PluginWikiCommandTest
