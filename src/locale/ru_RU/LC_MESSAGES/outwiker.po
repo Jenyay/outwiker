@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 1.5.5\n"
 
 #: outwiker/gui/about.py:22
 msgid "OutWiker"
@@ -558,7 +558,7 @@ msgid ""
 "to the beginning / end of "
 msgstr ""
 "Клавиши Home / End переносят курсор\n"
-"к началу "
+"к началу / концу"
 
 #: outwiker/gui/preferences/editorpanel.py:49
 msgid "Line"
