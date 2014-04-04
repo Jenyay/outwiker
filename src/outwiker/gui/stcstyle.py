@@ -1,6 +1,9 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
+import re
+
+
 class StcStyle (object):
     """
     Набор свойст стиля для класса StyledTextCtrl
@@ -71,3 +74,14 @@ class StcStyle (object):
                 continue
 
         return style
+
+
+    @staticmethod
+    def checkColorString (string):
+        """
+        Возвращает True, если передаваемая строка имеет формат вида #RRGGBB
+        """
+        if len (string.strip()) != 7:
+            return False
+
+        return re.match (r"#[0-9a-f]{6}", string.strip().lower()) != None

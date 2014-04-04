@@ -112,20 +112,27 @@ class TextEditor(wx.Panel):
         faceName = self.config.fontName.value
         isBold = self.config.fontIsBold.value
         isItalic = self.config.fontIsItalic.value
+        fontColor = self.config.fontColor.value
+        backColor = self.config.backColor.value
 
         self.__showlinenumbers = self.config.lineNumbers.value
-
-        self.textCtrl.StyleClearAll()
 
         self.textCtrl.StyleSetSize (wx.stc.STC_STYLE_DEFAULT, size)
         self.textCtrl.StyleSetFaceName (wx.stc.STC_STYLE_DEFAULT, faceName)
         self.textCtrl.StyleSetBold (wx.stc.STC_STYLE_DEFAULT, isBold)
         self.textCtrl.StyleSetItalic (wx.stc.STC_STYLE_DEFAULT, isItalic)
+        self.textCtrl.StyleSetForeground (wx.stc.STC_STYLE_DEFAULT, fontColor)
+        self.textCtrl.StyleSetBackground (wx.stc.STC_STYLE_DEFAULT, backColor)
+
+        self.textCtrl.StyleClearAll()
 
         self.textCtrl.StyleSetSize (0, size)
         self.textCtrl.StyleSetFaceName (0, faceName)
         self.textCtrl.StyleSetBold (0, isBold)
         self.textCtrl.StyleSetItalic (0, isItalic)
+        self.textCtrl.StyleSetForeground (0, fontColor)
+        self.textCtrl.StyleSetBackground (0, backColor)
+
 
         # Заблокируем горячую клавишу Ctrl+D, чтобы использовать ее как добавление закладки
         self.textCtrl.CmdKeyClear (ord ("D"), wx.stc.STC_SCMOD_CTRL)

@@ -197,3 +197,15 @@ class StcStyleParserTest (TestCase):
         self.assertEqual (style.underline, True)
         self.assertEqual (style.fore, u"#000000")
         self.assertEqual (style.back, u"#222222")
+
+
+    def testCheckColorString (self):
+        self.assertTrue (StcStyle.checkColorString (u"#000000"))
+        self.assertTrue (StcStyle.checkColorString (u" #000000 "))
+        self.assertTrue (StcStyle.checkColorString (u"#AA00FF"))
+        self.assertTrue (StcStyle.checkColorString (u"#aa00ff"))
+        
+        self.assertFalse (StcStyle.checkColorString (u"AA00FF"))
+        self.assertFalse (StcStyle.checkColorString (u"#AA00FF0"))
+        self.assertFalse (StcStyle.checkColorString (u"#AA00GG"))
+        self.assertFalse (StcStyle.checkColorString (u"#A0F"))

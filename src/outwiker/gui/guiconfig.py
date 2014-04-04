@@ -161,6 +161,14 @@ class EditorConfig (object):
     HOME_END_KEYS_SECTION = u"HomeEndKeys"
     HOME_END_KEYS_DEFAULT = HOME_END_OF_LINE
 
+    # Цвет шрифта
+    FONT_COLOR_SECTION = u"FontColor"
+    FONT_COLOR_DEFAULT = u"#000000"
+
+    # Цвет фона
+    BACK_COLOR_SECTION = u"BackColor"
+    BACK_COLOR_DEFAULT = u"#FFFFFF"
+
 
     def __init__ (self, config):
         self.config = config
@@ -204,6 +212,16 @@ class EditorConfig (object):
                 GeneralGuiConfig.GENERAL_SECTION,
                 EditorConfig.HOME_END_KEYS_SECTION,
                 EditorConfig.HOME_END_KEYS_DEFAULT)
+
+        self.fontColor = StringOption (self.config,
+                GeneralGuiConfig.GENERAL_SECTION,
+                EditorConfig.FONT_COLOR_SECTION,
+                EditorConfig.FONT_COLOR_DEFAULT)
+
+        self.backColor = StringOption (self.config,
+                GeneralGuiConfig.GENERAL_SECTION,
+                EditorConfig.BACK_COLOR_SECTION,
+                EditorConfig.BACK_COLOR_DEFAULT)
 
 
 class HtmlRenderConfig (object):
