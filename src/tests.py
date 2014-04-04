@@ -122,6 +122,7 @@ if __name__ == '__main__':
     from test.guitests.htmlactions import HtmlActionsTest
     from test.guitests.texteditor import TextEditorTest
     from test.guitests.fileicons import FileIconsTestUnix
+    from test.guitests.stcstyleparser import StcStyleParserTest
 
     if os.name == "nt":
         from test.guitests.fileicons import FileIconsTestWindows
