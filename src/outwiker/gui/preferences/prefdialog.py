@@ -12,6 +12,7 @@ from textprintpanel import TextPrintPanel
 from pluginspanel import PluginsPanel
 from hotkeyspanel import HotKeysPanel
 from htmleditorpanel import HtmlEditorPanel
+from wikieditorpanel import WikiEditorPanel
 
 from outwiker.core.exceptions import PreferencesException
 from outwiker.core.factoryselector import FactorySelector
@@ -136,10 +137,12 @@ class PrefDialog(wx.Dialog):
         """
         self.__editorPage = EditorPanel (self.__treeBook)
         self.__htmlEditorPage = HtmlEditorPanel (self.__treeBook)
+        self.__wikiEditorPage = WikiEditorPanel (self.__treeBook)
 
         editorPanesList = [
                 PreferencePanelInfo (self.__editorPage, _(u"General")),
                 PreferencePanelInfo (self.__htmlEditorPage, _(u"HTML Editor")),
+                PreferencePanelInfo (self.__wikiEditorPage, _(u"Wiki Editor")),
                 ]
 
         self.appendPreferenceGroup (_(u"Editor"), editorPanesList)

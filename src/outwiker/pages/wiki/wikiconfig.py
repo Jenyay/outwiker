@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-from outwiker.core.config import BooleanOption, IntegerOption
+from outwiker.core.config import BooleanOption, IntegerOption, StcStyleOption
+from outwiker.gui.stcstyle import StcStyle
+
 
 class WikiConfig (object):
     """
@@ -9,6 +11,9 @@ class WikiConfig (object):
     """
     # Секция конфига для параметров, связанных с викистраницей
     WIKI_SECTION = u"Wiki"
+
+    # Секция, куда записывать параметры стилей оформления редактора
+    STYLES_SECTION = u"EditorStyles"
 
     # Имя параметра "Показывать ли код HTML?"
     SHOW_HTML_CODE_PARAM = u"ShowHtmlCode"
@@ -25,8 +30,18 @@ class WikiConfig (object):
     # Имя параметра "Стиль ссылок по умолчанию"
     LINK_STYLE_PARAM = u"DefaultLinkStyle"
 
-    # Стиль ссылок по умолчанию
+    # Стиль ссылок по умолчанию ([[... -> ...]] или [[... | ...]])
     LINK_STYLE_DEFAULT = 0
+
+    # Стили редактора
+    STYLE_LINK_SECTION = u"link"
+    STYLE_LINK_DEFAULT = StcStyle.parse (u"fore:#0000FF,underline")
+
+    STYLE_HEADING_SECTION = u"heading"
+    STYLE_HEADING_DEFAULT = StcStyle.parse (u"bold")
+
+    STYLE_COMMAND_SECTION = u"command"
+    STYLE_COMMAND_DEFAULT = StcStyle.parse (u"fore:#6A686B")
 
 
     def __init__ (self, config):
@@ -55,3 +70,19 @@ class WikiConfig (object):
                 WikiConfig.WIKI_SECTION, 
                 WikiConfig.LINK_STYLE_PARAM, 
                 WikiConfig.LINK_STYLE_DEFAULT)
+
+        # Стили редактора
+        self.link = StcStyleOption (self.config, 
+                WikiConfig.STYLES_SECTION, 
+                WikiConfig.STYLE_LINK_SECTION, 
+                WikiConfig.STYLE_LINK_DEFAULT)
+
+        self.heading = StcStyleOption (self.config, 
+                WikiConfig.STYLES_SECTION, 
+                WikiConfig.STYLE_HEADING_SECTION, 
+                WikiConfig.STYLE_HEADING_DEFAULT)
+
+        self.command = StcStyleOption (self.config, 
+                WikiConfig.STYLES_SECTION, 
+                WikiConfig.STYLE_COMMAND_SECTION, 
+                WikiConfig.STYLE_COMMAND_DEFAULT)
