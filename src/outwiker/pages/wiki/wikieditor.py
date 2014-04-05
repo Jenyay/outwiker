@@ -109,21 +109,19 @@ class WikiEditor (TextEditor):
         self.textCtrl.SetStyleBits (7)
 
         for (styleid, style) in self._styles.items():
-            self.__setStyleDefault (styleid)
             self.textCtrl.StyleSetSpec (styleid, style)
+            self.textCtrl.StyleSetSize (styleid, self.config.fontSize.value)
+            self.textCtrl.StyleSetFaceName (styleid, self.config.fontName.value)
+            self.textCtrl.StyleSetBackground (styleid, self.config.backColor.value)
 
         self.__setStyleHeading()
 
 
     def __setStyleHeading (self):
+        self.textCtrl.StyleSetSpec (self.STYLE_HEADING_ID, self._styles[self.STYLE_HEADING_ID])
         self.textCtrl.StyleSetSize (self.STYLE_HEADING_ID, self.config.fontSize.value + 2)
         self.textCtrl.StyleSetFaceName (self.STYLE_HEADING_ID, self.config.fontName.value)
-        self.textCtrl.StyleSetSpec (self.STYLE_HEADING_ID, self._styles[self.STYLE_HEADING_ID])
-
-
-    def __setStyleDefault (self, styleId):
-        self.textCtrl.StyleSetSize (styleId, self.config.fontSize.value)
-        self.textCtrl.StyleSetFaceName (styleId, self.config.fontName.value)
+        self.textCtrl.StyleSetBackground (self.STYLE_HEADING_ID, self.config.backColor.value)
 
 
     def __onChange (self, event):

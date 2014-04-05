@@ -29,6 +29,9 @@ class HtmlTextEditor (TextEditor):
 
         for key in styles.keys():
             textCtrl.StyleSetSpec (key, styles[key])
+            textCtrl.StyleSetSize (key, self.config.fontSize.value)
+            textCtrl.StyleSetFaceName (key, self.config.fontName.value)
+            textCtrl.StyleSetBackground (key, self.config.backColor.value)
 
         tags = u"a abbr acronym address applet area b base basefont \
             bdo big blockquote body br button caption center \
