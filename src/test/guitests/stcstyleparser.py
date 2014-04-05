@@ -199,6 +199,21 @@ class StcStyleParserTest (TestCase):
         self.assertEqual (style.back, u"#222222")
 
 
+    def testParse_14 (self):
+        style = StcStyle.parse (u"back:#222222,bold,,,underline")
+
+        self.assertEqual (style.bold, True)
+        self.assertEqual (style.italic, False)
+        self.assertEqual (style.underline, True)
+        self.assertEqual (style.fore, u"#000000")
+        self.assertEqual (style.back, u"#222222")
+
+
+    def testParse_invalid (self):
+        self.assertEqual (StcStyle.parse (u"sdgsgd"), None)
+        self.assertEqual (StcStyle.parse (u"fore:#AAAAAA,back:#222222,boldasdfa"), None)
+
+
     def testCheckColorString (self):
         self.assertTrue (StcStyle.checkColorString (u"#000000"))
         self.assertTrue (StcStyle.checkColorString (u" #000000 "))

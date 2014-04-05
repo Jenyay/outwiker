@@ -5,6 +5,8 @@ from abc import ABCMeta, abstractmethod
 import ConfigParser
 import datetime
 
+from outwiker.gui.stcstyle import StcStyle
+
 
 class Config (object):
     """
@@ -237,6 +239,28 @@ class BooleanOption (BaseOption):
         Получить значение. В производных классах этот метод переопределяется
         """
         return self.config.getbool (self.section, self.param)
+
+
+class StcStyleOption (BaseOption):
+    """
+    Настрока для хранения стиля редактора StcStyledEditor
+    """
+    def __init__ (self, config, section, param, defaultValue):
+        """
+        defaultValue - экземпляр класса StcStyle
+        """
+        super (StcStyleOption, self).__init__ (config, section, param, defaultValue)
+
+
+    def _loadValue (self):
+        """
+        Получить значение. В производных классах этот метод переопределяется
+        """
+        style = StcStyle.parse (self.config.get (self.section, self.param) )
+        if style == None:
+            raise ValueError
+
+        return style
 
 
 class DateTimeOption (BaseOption):

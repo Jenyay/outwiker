@@ -5,7 +5,8 @@ import locale
 
 import wx
 
-from outwiker.core.config import StringOption, BooleanOption, IntegerOption, ListOption
+from outwiker.core.config import StringOption, BooleanOption, IntegerOption, ListOption, StcStyleOption
+from outwiker.gui.stcstyle import StcStyle
 
 
 class GeneralGuiConfig (object):
@@ -222,6 +223,73 @@ class EditorConfig (object):
                 GeneralGuiConfig.GENERAL_SECTION,
                 EditorConfig.BACK_COLOR_SECTION,
                 EditorConfig.BACK_COLOR_DEFAULT)
+
+
+class HtmlStylesConfig (object):
+    """
+    Класс для хранения настроек стилей редактора HTML
+    """
+    HTML_STYLES_SECTION = u"HtmlStyles"
+
+    STYLE_TAG_SECTION = u"tag"
+    STYLE_TAG_DEFAULT = StcStyle.parse (u"fore:#000080,bold")
+
+    STYLE_TAG_UNKNOWN_SECTION = u"tag_unknown"
+    STYLE_TAG_UNKNOWN_DEFAULT = StcStyle.parse (u"fore:#FF0000")
+
+    STYLE_ATTRIBUTE_SECTION = u"attribute"
+    STYLE_ATTRIBUTE_DEFAULT = StcStyle.parse (u"fore:#008080")
+
+    STYLE_ATTRIBUTE_UNKNOWN_SECTION = u"attribute_unknown"
+    STYLE_ATTRIBUTE_UNKNOWN_DEFAULT = StcStyle.parse (u"fore:#FF0000")
+
+    STYLE_NUMBER_SECTION = u"number"
+    STYLE_NUMBER_DEFAULT = StcStyle.parse (u"fore:#000000")
+
+    STYLE_STRING_SECTION = u"string"
+    STYLE_STRING_DEFAULT = StcStyle.parse (u"fore:#0000FF")
+
+    STYLE_COMMENT_SECTION = u"comment"
+    STYLE_COMMENT_DEFAULT = StcStyle.parse (u"fore:#12B535")
+
+
+    def __init__ (self, config):
+        self.config = config
+
+        self.tag = StcStyleOption (self.config, 
+                HtmlStylesConfig.HTML_STYLES_SECTION, 
+                HtmlStylesConfig.STYLE_TAG_SECTION, 
+                HtmlStylesConfig.STYLE_TAG_DEFAULT)
+
+        self.tagUnknown = StcStyleOption (self.config, 
+                HtmlStylesConfig.HTML_STYLES_SECTION, 
+                HtmlStylesConfig.STYLE_TAG_UNKNOWN_SECTION, 
+                HtmlStylesConfig.STYLE_TAG_UNKNOWN_DEFAULT)
+
+        self.attribute = StcStyleOption (self.config, 
+                HtmlStylesConfig.HTML_STYLES_SECTION, 
+                HtmlStylesConfig.STYLE_ATTRIBUTE_SECTION, 
+                HtmlStylesConfig.STYLE_ATTRIBUTE_DEFAULT)
+
+        self.attributeUnknown = StcStyleOption (self.config, 
+                HtmlStylesConfig.HTML_STYLES_SECTION, 
+                HtmlStylesConfig.STYLE_ATTRIBUTE_UNKNOWN_SECTION, 
+                HtmlStylesConfig.STYLE_ATTRIBUTE_UNKNOWN_DEFAULT)
+
+        self.number = StcStyleOption (self.config, 
+                HtmlStylesConfig.HTML_STYLES_SECTION, 
+                HtmlStylesConfig.STYLE_NUMBER_SECTION, 
+                HtmlStylesConfig.STYLE_NUMBER_DEFAULT)
+
+        self.string = StcStyleOption (self.config, 
+                HtmlStylesConfig.HTML_STYLES_SECTION, 
+                HtmlStylesConfig.STYLE_STRING_SECTION, 
+                HtmlStylesConfig.STYLE_STRING_DEFAULT)
+
+        self.comment = StcStyleOption (self.config, 
+                HtmlStylesConfig.HTML_STYLES_SECTION, 
+                HtmlStylesConfig.STYLE_COMMENT_SECTION, 
+                HtmlStylesConfig.STYLE_COMMENT_DEFAULT)
 
 
 class HtmlRenderConfig (object):

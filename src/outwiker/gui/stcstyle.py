@@ -47,7 +47,8 @@ class StcStyle (object):
     @staticmethod
     def parse (string):
         """
-        Создать класс StcStyle по ее строке представления
+        Создать класс StcStyle по ее строке представления.
+        Возвращает None, если в строке представления есть ошибки
         """
         items = [item.strip() for item in string.split (",") if len (item.strip()) != 0 ]
 
@@ -72,6 +73,8 @@ class StcStyle (object):
             if item.lower() == u"underline":
                 style.underline = True
                 continue
+
+            return None
 
         return style
 

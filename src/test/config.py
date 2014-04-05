@@ -11,10 +11,11 @@ import ConfigParser
 import shutil
 import datetime
 
-from outwiker.core.config import Config, StringOption, IntegerOption, DateTimeOption, BooleanOption, ListOption, StringListSection
+from outwiker.core.config import Config, StringOption, IntegerOption, DateTimeOption, BooleanOption, ListOption, StringListSection, StcStyleOption
 from outwiker.core.system import getCurrentDir, getConfigPath
 
 from outwiker.gui.guiconfig import TrayConfig, EditorConfig
+from outwiker.gui.stcstyle import StcStyle
 
 
 class ConfigTest (unittest.TestCase):
@@ -138,6 +139,12 @@ class ConfigOptionsTest (unittest.TestCase):
             fp.write (u"datetimeval=2012-08-25 16:18:24.171654\n")
             fp.write (u"datetimeerror=sdfasdfasdf\n")
             fp.write (u"strval=тест\n".encode ("utf-8"))
+
+            fp.write (u"style_01=fore:#AAAAAA,back:#111111,bold,italic,underline\n")
+            fp.write (u"style_02=back:#111111,bold,italic,underline\n")
+            fp.write (u"style_03=bold\n")
+            fp.write (u"style_invalid_01=asdfadsfads\n")
+
             fp.write (u"list1=элемент 1;элемент 2;элемент 3\n".encode ("utf-8"))
             fp.write (u"list2=элемент 1\n".encode ("utf-8"))
             fp.write (u"list3=\n".encode ("utf-8"))
@@ -530,6 +537,51 @@ class ConfigOptionsTest (unittest.TestCase):
         self.assertEqual (opt_other.value[1], u"Строка 1")
         self.assertEqual (opt_other.value[2], u"Строка 2")
         self.config.remove_section (section)
+
+
+    def testStcStyle_01 (self):
+        defaultStyle = StcStyle ()
+
+        opt = StcStyleOption (self.config, "Test", "style_01", defaultStyle)
+        self.assertEqual (opt.value.fore, u"#AAAAAA")
+        self.assertEqual (opt.value.back, u"#111111")
+        self.assertEqual (opt.value.bold, True)
+        self.assertEqual (opt.value.italic, True)
+        self.assertEqual (opt.value.underline, True)
+
+
+    def testStcStyle_02 (self):
+        defaultStyle = StcStyle ()
+
+        opt = StcStyleOption (self.config, "Test", "style_02", defaultStyle)
+        self.assertEqual (opt.value.fore, u"#000000")
+        self.assertEqual (opt.value.back, u"#111111")
+        self.assertEqual (opt.value.bold, True)
+        self.assertEqual (opt.value.italic, True)
+        self.assertEqual (opt.value.underline, True)
+
+
+    def testStcStyle_03 (self):
+        defaultStyle = StcStyle ()
+
+        opt = StcStyleOption (self.config, "Test", "style_03", defaultStyle)
+        self.assertEqual (opt.value.fore, u"#000000")
+        self.assertEqual (opt.value.back, u"#FFFFFF")
+        self.assertEqual (opt.value.bold, True)
+        self.assertEqual (opt.value.italic, False)
+        self.assertEqual (opt.value.underline, False)
+
+
+    def testStcStyle_invalid_01 (self):
+        defaultStyle = StcStyle ()
+
+        opt = StcStyleOption (self.config, "Test", "style_invalid_01", defaultStyle)
+        self.assertEqual (opt.value.fore, u"#000000")
+        self.assertEqual (opt.value.back, u"#FFFFFF")
+        self.assertEqual (opt.value.bold, False)
+        self.assertEqual (opt.value.italic, False)
+        self.assertEqual (opt.value.underline, False)
+
 
 
 class TrayConfigTest (unittest.TestCase):

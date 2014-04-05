@@ -11,6 +11,7 @@ from htmlrenderpanel import HtmlRenderPanel
 from textprintpanel import TextPrintPanel
 from pluginspanel import PluginsPanel
 from hotkeyspanel import HotKeysPanel
+from htmleditorpanel import HtmlEditorPanel
 
 from outwiker.core.exceptions import PreferencesException
 from outwiker.core.factoryselector import FactorySelector
@@ -37,6 +38,7 @@ class PrefDialog(wx.Dialog):
         self.__textPrintPage = None
         self.__pluginsPage = None
         self.__hotkeysPage = None
+        self.__htmlEditorPage = None
         self.__createPages()
 
         Application.onPreferencesDialogCreate (self)
@@ -113,21 +115,34 @@ class PrefDialog(wx.Dialog):
         self.Layout()
     
 
-    def __createInterfacePages (self):
+    def __createInterfaceGroup (self):
         """
         Создать страницы с подгруппой "Interface"
         """
         self.__generalPage = GeneralPanel (self.__treeBook)
-        self.__editorPage = EditorPanel (self.__treeBook)
         self.__htmlRenderPage = HtmlRenderPanel (self.__treeBook)
         self.__textPrintPage = TextPrintPanel (self.__treeBook)
 
         interfacePanelsList = [PreferencePanelInfo (self.__generalPage, _(u"General")),
-                PreferencePanelInfo (self.__editorPage, _(u"Editor")),
                 PreferencePanelInfo (self.__htmlRenderPage, _(u"Preview")),
                 PreferencePanelInfo (self.__textPrintPage, _(u"Text Printout"))]
 
         self.appendPreferenceGroup (_(u"Interface"), interfacePanelsList)
+
+
+    def __createEditorGroup (self):
+        """
+        Создать страницы с подгруппой "Редактор"
+        """
+        self.__editorPage = EditorPanel (self.__treeBook)
+        self.__htmlEditorPage = HtmlEditorPanel (self.__treeBook)
+
+        editorPanesList = [
+                PreferencePanelInfo (self.__editorPage, _(u"General")),
+                PreferencePanelInfo (self.__htmlEditorPage, _(u"HTML Editor")),
+                ]
+
+        self.appendPreferenceGroup (_(u"Editor"), editorPanesList)
 
 
     def __createPluginsPage (self):
@@ -144,7 +159,8 @@ class PrefDialog(wx.Dialog):
         """
         Создать страницы окна настроек
         """
-        self.__createInterfacePages ()
+        self.__createInterfaceGroup ()
+        self.__createEditorGroup ()
         self.__createPagesForPages ()
         self.__createPluginsPage ()
         self.__createHotKeysPage ()
