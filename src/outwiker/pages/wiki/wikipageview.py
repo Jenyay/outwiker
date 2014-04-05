@@ -112,10 +112,19 @@ class WikiPageView (BaseHtmlPanel):
         self._application.mainWindow.updateShortcuts()
         self.mainWindow.UpdateAuiManager()
 
+        # Редактор с просмотром получившегося HTML (ессли есть)
+        self.htmlCodeWindow = None
+
         if self.config.showHtmlCodeOptions.value:
             self.htmlcodePageIndex = self.__createHtmlCodePanel(self.htmlSizer)
 
         self.Layout()
+
+
+    def onPreferencesDialogClose (self, prefDialog):
+        super (WikiPageView, self).onPreferencesDialogClose (prefDialog)
+        if self.htmlCodeWindow != None:
+            self.htmlCodeWindow.setDefaultSettings()
 
 
     def onClose (self, event):
