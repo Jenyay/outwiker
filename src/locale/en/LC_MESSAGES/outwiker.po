@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-26 18:35+0400\n"
+"POT-Creation-Date: 2014-04-05 12:31+0400\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -101,35 +101,35 @@ msgstr "Author: Ilin Eugeniy (aka Jenyay)"
 msgid "Contacts"
 msgstr "Contacts"
 
-#: outwiker/gui/attachpanel.py:80 outwiker/gui/attachpanel.py:85
+#: outwiker/gui/attachpanel.py:84 outwiker/gui/attachpanel.py:89
 #: outwiker/actions/attachfiles.py:23
 msgid "Attach Files…"
 msgstr "Attach Files…"
 
-#: outwiker/gui/attachpanel.py:89 outwiker/gui/attachpanel.py:94
+#: outwiker/gui/attachpanel.py:93 outwiker/gui/attachpanel.py:98
 msgid "Remove Files…"
 msgstr "Remove Files…"
 
-#: outwiker/gui/attachpanel.py:100 outwiker/gui/attachpanel.py:105
+#: outwiker/gui/attachpanel.py:104 outwiker/gui/attachpanel.py:109
 #: outwiker/gui/mainmenu.py:67
 msgid "Paste"
 msgstr "Paste"
 
-#: outwiker/gui/attachpanel.py:109 outwiker/gui/attachpanel.py:114
+#: outwiker/gui/attachpanel.py:113 outwiker/gui/attachpanel.py:118
 msgid "Execute"
 msgstr "Execute"
 
-#: outwiker/gui/attachpanel.py:119 outwiker/gui/attachpanel.py:124
+#: outwiker/gui/attachpanel.py:123 outwiker/gui/attachpanel.py:128
 msgid "Refresh"
 msgstr "Refresh"
 
-#: outwiker/gui/attachpanel.py:203
+#: outwiker/gui/attachpanel.py:217
 msgid "You did not select a file to remove"
 msgstr "You did not select a file to remove"
 
-#: outwiker/gui/attachpanel.py:204 outwiker/gui/attachpanel.py:214
-#: outwiker/gui/attachpanel.py:226 outwiker/gui/attachpanel.py:243
-#: outwiker/gui/attachpanel.py:253 outwiker/gui/basetextpanel.py:168
+#: outwiker/gui/attachpanel.py:218 outwiker/gui/attachpanel.py:228
+#: outwiker/gui/attachpanel.py:240 outwiker/gui/attachpanel.py:257
+#: outwiker/gui/attachpanel.py:267 outwiker/gui/basetextpanel.py:168
 #: outwiker/gui/currentpagepanel.py:88 outwiker/gui/currentpagepanel.py:224
 #: outwiker/gui/currentpagepanel.py:233 outwiker/gui/htmlrenderie.py:174
 #: outwiker/gui/htmlrenderwebkit.py:220 outwiker/gui/htmlrenderwx.py:107
@@ -141,11 +141,11 @@ msgstr "You did not select a file to remove"
 #: outwiker/pages/html/basehtmlpanel.py:285
 #: outwiker/pages/html/basehtmlpanel.py:289
 #: outwiker/pages/html/htmlpageview.py:579
-#: outwiker/pages/wiki/wikipageview.py:248
-#: outwiker/pages/wiki/wikipageview.py:252
-#: outwiker/pages/wiki/wikipageview.py:268
-#: outwiker/pages/wiki/wikipageview.py:270
-#: outwiker/pages/wiki/wikipageview.py:690
+#: outwiker/pages/wiki/wikipageview.py:257
+#: outwiker/pages/wiki/wikipageview.py:261
+#: outwiker/pages/wiki/wikipageview.py:277
+#: outwiker/pages/wiki/wikipageview.py:279
+#: outwiker/pages/wiki/wikipageview.py:699
 #: outwiker/pages/wiki/actions/include.py:37 outwiker/core/commands.py:48
 #: outwiker/core/commands.py:110 outwiker/core/commands.py:201
 #: outwiker/core/commands.py:241 outwiker/core/commands.py:249
@@ -160,23 +160,23 @@ msgstr "You did not select a file to remove"
 msgid "Error"
 msgstr "Error"
 
-#: outwiker/gui/attachpanel.py:208
+#: outwiker/gui/attachpanel.py:222
 msgid "Remove selected files?"
 msgstr "Remove selected files?"
 
-#: outwiker/gui/attachpanel.py:209
+#: outwiker/gui/attachpanel.py:223
 msgid "Remove files?"
 msgstr "Remove files?"
 
-#: outwiker/gui/attachpanel.py:225
+#: outwiker/gui/attachpanel.py:239
 msgid "You did not select a file to paste"
 msgstr "You did not select a file to paste"
 
-#: outwiker/gui/attachpanel.py:242
+#: outwiker/gui/attachpanel.py:256
 msgid "You did not select a file to execute"
 msgstr "You did not select a file to execute"
 
-#: outwiker/gui/attachpanel.py:252 outwiker/gui/htmlrender.py:59
+#: outwiker/gui/attachpanel.py:266 outwiker/gui/htmlrender.py:59
 #: outwiker/gui/htmlrenderie.py:173 outwiker/gui/htmlrenderwebkit.py:219
 #: outwiker/gui/htmlrenderwx.py:106 outwiker/gui/htmlrenderwx.py:153
 #, python-format
@@ -184,7 +184,8 @@ msgid "Can't execute file '%s'"
 msgstr "Can't execute file '%s'"
 
 #: outwiker/gui/basepagedialog.py:36
-#: outwiker/gui/preferences/prefdialog.py:125
+#: outwiker/gui/preferences/prefdialog.py:127
+#: outwiker/gui/preferences/prefdialog.py:143
 #: outwiker/gui/toolbars/generaltoolbar.py:30
 #: outwiker/pages/wiki/wikipage.py:93
 msgid "General"
@@ -245,7 +246,7 @@ msgid "Owerwrite?"
 msgstr "Owerwrite?"
 
 #: outwiker/gui/basetextpanel.py:167 outwiker/pages/html/basehtmlpanel.py:284
-#: outwiker/pages/wiki/wikipageview.py:247
+#: outwiker/pages/wiki/wikipageview.py:256
 #, python-format
 msgid "Can't save file %s"
 msgstr "Can't save file %s"
@@ -273,6 +274,21 @@ msgstr "Can't save page. Wiki folder not exists. Wiki will be closed."
 #: outwiker/gui/currentpagepanel.py:233
 msgid "Can't save page. Page folder not exists. Wiki will be reloaded."
 msgstr "Can't save page. Page folder not exists. Wiki will be reloaded."
+
+#: outwiker/gui/editorstyleslist.py:25 outwiker/core/commands.py:728
+#: outwiker/core/commands.py:729
+msgid "Bold"
+msgstr "Bold"
+
+#: outwiker/gui/editorstyleslist.py:26 outwiker/core/commands.py:734
+#: outwiker/core/commands.py:735
+msgid "Italic"
+msgstr "Italic"
+
+#: outwiker/gui/editorstyleslist.py:27 outwiker/core/commands.py:746
+#: outwiker/core/commands.py:747
+msgid "Underline"
+msgstr "Underline"
 
 #: outwiker/gui/hotkeyeditor.py:26
 msgid "None"
@@ -304,11 +320,13 @@ msgid "Default icon"
 msgstr "Default icon"
 
 #: outwiker/gui/linkdialog.py:17 outwiker/gui/linkdialog.py:35
+#: outwiker/gui/preferences/wikieditorpanel.py:38
 #: outwiker/core/commands.py:860
 msgid "Link"
 msgstr "Link"
 
 #: outwiker/gui/linkdialog.py:41
+#: outwiker/gui/preferences/htmleditorpanel.py:44
 msgid "Comment"
 msgstr "Comment"
 
@@ -528,35 +546,43 @@ msgstr "Tags"
 msgid "Notes"
 msgstr "Notes"
 
-#: outwiker/gui/preferences/editorpanel.py:33
+#: outwiker/gui/preferences/editorpanel.py:34
 #: outwiker/gui/preferences/htmlrenderpanel.py:28
 #: outwiker/gui/preferences/textprintpanel.py:29
 #: outwiker/pages/html/htmlpageview.py:206
-#: outwiker/pages/wiki/wikipageview.py:625
+#: outwiker/pages/wiki/wikipageview.py:634
 msgid "Font"
 msgstr "Font"
 
-#: outwiker/gui/preferences/editorpanel.py:35
+#: outwiker/gui/preferences/editorpanel.py:36
 msgid "Show line numbers"
 msgstr "Show line numbers"
 
-#: outwiker/gui/preferences/editorpanel.py:36
+#: outwiker/gui/preferences/editorpanel.py:37
 msgid "Tab width"
 msgstr "Tab width"
 
-#: outwiker/gui/preferences/editorpanel.py:46
+#: outwiker/gui/preferences/editorpanel.py:47
 msgid ""
 "Home / End keys moves the cursor \n"
 "to the beginning / end of "
 msgstr "OutWiker"
 
-#: outwiker/gui/preferences/editorpanel.py:49
+#: outwiker/gui/preferences/editorpanel.py:50
 msgid "Line"
 msgstr "Line"
 
-#: outwiker/gui/preferences/editorpanel.py:49
+#: outwiker/gui/preferences/editorpanel.py:50
 msgid "Paragraph"
 msgstr "Paragraph"
+
+#: outwiker/gui/preferences/editorpanel.py:53
+msgid "Font color"
+msgstr "Font color"
+
+#: outwiker/gui/preferences/editorpanel.py:57
+msgid "Background color"
+msgstr "Background color"
 
 #: outwiker/gui/preferences/generalpanel.py:67
 msgid "Autosave interval in seconds (0 - disabled)"
@@ -686,6 +712,30 @@ msgstr "Auto"
 msgid "Actions with the same hotkey"
 msgstr "Actions with the same hotkey"
 
+#: outwiker/gui/preferences/htmleditorpanel.py:38
+msgid "Tag"
+msgstr "Tag"
+
+#: outwiker/gui/preferences/htmleditorpanel.py:39
+msgid "Unknown tag"
+msgstr "Unknown tag"
+
+#: outwiker/gui/preferences/htmleditorpanel.py:40
+msgid "Attribute"
+msgstr "Attribute"
+
+#: outwiker/gui/preferences/htmleditorpanel.py:41
+msgid "Unknown attribute"
+msgstr "Unknown attribute"
+
+#: outwiker/gui/preferences/htmleditorpanel.py:42
+msgid "Number"
+msgstr "Number"
+
+#: outwiker/gui/preferences/htmleditorpanel.py:43
+msgid "String"
+msgstr "String"
+
 #: outwiker/gui/preferences/htmlrenderpanel.py:30
 msgid "Additional styles (CSS):"
 msgstr "Additional styles (CSS):"
@@ -702,33 +752,41 @@ msgstr "Description"
 msgid "Site"
 msgstr "Site"
 
-#: outwiker/gui/preferences/prefdialog.py:77
+#: outwiker/gui/preferences/prefdialog.py:80
 msgid "Preferences"
 msgstr "Preferences"
 
-#: outwiker/gui/preferences/prefdialog.py:126
-msgid "Editor"
-msgstr "Editor"
-
-#: outwiker/gui/preferences/prefdialog.py:127
+#: outwiker/gui/preferences/prefdialog.py:128
 #: outwiker/pages/html/basehtmlpanel.py:177
 msgid "Preview"
 msgstr "Preview"
 
-#: outwiker/gui/preferences/prefdialog.py:128
+#: outwiker/gui/preferences/prefdialog.py:129
 msgid "Text Printout"
 msgstr "Text Printout"
 
-#: outwiker/gui/preferences/prefdialog.py:130
+#: outwiker/gui/preferences/prefdialog.py:131
 msgid "Interface"
 msgstr "Interface"
 
-#: outwiker/gui/preferences/prefdialog.py:135
+#: outwiker/gui/preferences/prefdialog.py:144
+msgid "HTML Editor"
+msgstr "HTML Editor"
+
+#: outwiker/gui/preferences/prefdialog.py:145
+msgid "Wiki Editor"
+msgstr "Wiki Editor"
+
+#: outwiker/gui/preferences/prefdialog.py:148
+msgid "Editor"
+msgstr "Editor"
+
+#: outwiker/gui/preferences/prefdialog.py:153
 #: outwiker/gui/toolbars/pluginstoolbar.py:30
 msgid "Plugins"
 msgstr "Plugins"
 
-#: outwiker/gui/preferences/prefdialog.py:140
+#: outwiker/gui/preferences/prefdialog.py:158
 msgid "Hotkeys"
 msgstr "Hotkeys"
 
@@ -740,23 +798,33 @@ msgstr "This options for text printing only"
 msgid "Page Options..."
 msgstr "Page Options..."
 
+#: outwiker/gui/preferences/wikieditorpanel.py:39
+#: outwiker/pages/html/htmlpageview.py:205
+#: outwiker/pages/wiki/wikipageview.py:633
+msgid "Heading"
+msgstr "Heading"
+
+#: outwiker/gui/preferences/wikieditorpanel.py:40
+msgid "Command"
+msgstr "Command"
+
 #: outwiker/gui/toolbars/toolbarscontroller.py:23
 msgid "&Toolbars"
 msgstr "&Toolbars"
 
 #: outwiker/pages/html/basehtmlpanel.py:176
 #: outwiker/pages/html/htmltoolbar.py:30
-#: outwiker/pages/wiki/wikipageview.py:172
+#: outwiker/pages/wiki/wikipageview.py:181
 msgid "HTML"
 msgstr "HTML"
 
 #: outwiker/pages/html/basehtmlpanel.py:276
-#: outwiker/pages/wiki/wikipageview.py:239
+#: outwiker/pages/wiki/wikipageview.py:248
 msgid "Page rendered. Please wait…"
 msgstr "Page rendered. Please wait…"
 
 #: outwiker/pages/html/basehtmlpanel.py:288
-#: outwiker/pages/wiki/wikipageview.py:251
+#: outwiker/pages/wiki/wikipageview.py:260
 #, python-format
 msgid ""
 "Can't save HTML-file\n"
@@ -771,23 +839,18 @@ msgstr ""
 msgid "HTML Page"
 msgstr "HTML Page"
 
-#: outwiker/pages/html/htmlpageview.py:205
-#: outwiker/pages/wiki/wikipageview.py:624
-msgid "Heading"
-msgstr "Heading"
-
 #: outwiker/pages/html/htmlpageview.py:207
-#: outwiker/pages/wiki/wikipageview.py:626
+#: outwiker/pages/wiki/wikipageview.py:635
 msgid "Alignment"
 msgstr "Alignment"
 
 #: outwiker/pages/html/htmlpageview.py:208
-#: outwiker/pages/wiki/wikipageview.py:627
+#: outwiker/pages/wiki/wikipageview.py:636
 msgid "Formatting"
 msgstr "Formatting"
 
 #: outwiker/pages/html/htmlpageview.py:209
-#: outwiker/pages/wiki/wikipageview.py:628
+#: outwiker/pages/wiki/wikipageview.py:637
 msgid "Lists"
 msgstr "Lists"
 
@@ -800,7 +863,7 @@ msgid "Html"
 msgstr "Html"
 
 #: outwiker/pages/html/htmlpageview.py:578
-#: outwiker/pages/wiki/wikipageview.py:689
+#: outwiker/pages/wiki/wikipageview.py:698
 msgid "Page style Error. Style by default is used"
 msgstr "Page style Error. Style by default is used"
 
@@ -921,17 +984,17 @@ msgid "Wiki Page"
 msgstr "Wiki Page"
 
 #: outwiker/pages/wiki/wikipageview.py:100
-#: outwiker/pages/wiki/wikipageview.py:641
+#: outwiker/pages/wiki/wikipageview.py:650
 #: outwiker/pages/wiki/wikitoolbar.py:30
 msgid "Wiki"
 msgstr "Wiki"
 
-#: outwiker/pages/wiki/wikipageview.py:268
-#: outwiker/pages/wiki/wikipageview.py:270
+#: outwiker/pages/wiki/wikipageview.py:277
+#: outwiker/pages/wiki/wikipageview.py:279
 msgid "Can't load HTML-file"
 msgstr "Can't load HTML-file"
 
-#: outwiker/pages/wiki/wikipageview.py:629
+#: outwiker/pages/wiki/wikipageview.py:638
 msgid "Commands"
 msgstr "Commands"
 
@@ -1272,21 +1335,9 @@ msgstr ""
 msgid "The page title"
 msgstr "The page title"
 
-#: outwiker/core/commands.py:728 outwiker/core/commands.py:729
-msgid "Bold"
-msgstr "Bold"
-
-#: outwiker/core/commands.py:734 outwiker/core/commands.py:735
-msgid "Italic"
-msgstr "Italic"
-
 #: outwiker/core/commands.py:740 outwiker/core/commands.py:741
 msgid "Bold italic"
 msgstr "Bold italic"
-
-#: outwiker/core/commands.py:746 outwiker/core/commands.py:747
-msgid "Underline"
-msgstr "Underline"
 
 #: outwiker/core/commands.py:752 outwiker/core/commands.py:753
 msgid "Strikethrough"
