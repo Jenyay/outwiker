@@ -263,6 +263,10 @@ class StcStyleOption (BaseOption):
         return style
 
 
+    def _prepareToWrite (self, val):
+        return val.tostr()
+
+
 class DateTimeOption (BaseOption):
     """
     Настройка для хранения даты и времени

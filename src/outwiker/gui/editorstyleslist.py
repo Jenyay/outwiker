@@ -12,6 +12,7 @@ class EditorStylesList (wx.Panel):
 
         self.__createGui ()
         self.__layout()
+        self.__bind()
 
         self._styles = []
 
@@ -46,6 +47,38 @@ class EditorStylesList (wx.Panel):
         self.Layout()
 
 
+    def __bind (self):
+        self._stylesList.Bind (wx.EVT_LISTBOX, self._onStyleSelect, self._stylesList)
+        self._colorPicker.Bind (wx.EVT_COLOURPICKER_CHANGED, self._onStyleChanged, self._colorPicker)
+        self._bold.Bind (wx.EVT_CHECKBOX, self._onStyleChanged, self._bold)
+        self._italic.Bind (wx.EVT_CHECKBOX, self._onStyleChanged, self._italic)
+        self._underline.Bind (wx.EVT_CHECKBOX, self._onStyleChanged, self._underline)
+
+
+    def _onStyleSelect (self, event):
+        self._updateSelection()
+
+
+    def _onStyleChanged (self, event):
+        index = self._stylesList.GetSelection()
+
+        if index >= 0:
+            self._styles[index].fore = self._colorPicker.GetColour().GetAsString (wx.C2S_HTML_SYNTAX)
+            self._styles[index].bold = self._bold.IsChecked()
+            self._styles[index].italic = self._italic.IsChecked()
+            self._styles[index].underline = self._underline.IsChecked()
+
+
+    def _updateSelection (self):
+        index = self._stylesList.GetSelection()
+        
+        if index >= 0:
+            self._colorPicker.SetColour (self._styles[index].fore)
+            self._bold.SetValue (self._styles[index].bold)
+            self._italic.SetValue (self._styles[index].italic)
+            self._underline.SetValue (self._styles[index].underline)
+
+
     def addStyle (self, title, style):
         """
         Добавить стиль в список
@@ -57,3 +90,14 @@ class EditorStylesList (wx.Panel):
 
         if len (self._styles) == 1:
             self._stylesList.SetSelection (0)
+            self._updateSelection()
+
+
+    def getStyle (self, index):
+        """
+        Возвращает экземпляр класса StcStyle по номеру
+        """
+        assert index >= 0
+        assert index < len (self._styles)
+
+        return self._styles[index]

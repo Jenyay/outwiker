@@ -5,18 +5,18 @@ import wx
 
 from outwiker.core.application import Application
 from outwiker.gui.editorstyleslist import EditorStylesList
+from outwiker.gui.guiconfig import HtmlStylesConfig
 
 
 class HtmlEditorPanel(wx.Panel):
     def __init__(self, *args, **kwds):
         kwds["style"] = wx.TAB_TRAVERSAL
         wx.Panel.__init__(self, *args, **kwds)
-        # self.config = HtmlRenderConfig (Application.config)
+
+        self._config = HtmlStylesConfig (Application.config)
 
         self.__createGui()
         self.__layout()
-
-        self.LoadState()
 
 
     def __createGui (self):
@@ -35,19 +35,20 @@ class HtmlEditorPanel(wx.Panel):
 
 
     def LoadState(self):
-        pass
-        # # Шрифт для HTML-рендера
-        # fontOption = FontOption (self.config.fontName, 
-        #         self.config.fontSize, 
-        #         self.config.fontIsBold, 
-        #         self.config.fontIsItalic)
-
-        # self.fontEditor = configelements.FontElement (fontOption, self.fontPicker)
-
-        # self.userStyle = configelements.StringElement (self.config.userStyle, self.userStyleTextBox)
+        self._stylesList.addStyle (_(u"Tag"), self._config.tag.value)
+        self._stylesList.addStyle (_(u"Unknown tag"), self._config.tagUnknown.value)
+        self._stylesList.addStyle (_(u"Attribute"), self._config.attribute.value)
+        self._stylesList.addStyle (_(u"Unknown attribute"), self._config.attributeUnknown.value)
+        self._stylesList.addStyle (_(u"Number"), self._config.number.value)
+        self._stylesList.addStyle (_(u"String"), self._config.string.value)
+        self._stylesList.addStyle (_(u"Comment"), self._config.comment.value)
 
 
     def Save (self):
-        pass
-        # self.fontEditor.save()
-        # self.userStyle.save()
+        self._config.tag.value = self._stylesList.getStyle (0)
+        self._config.tagUnknown.value = self._stylesList.getStyle (1)
+        self._config.attribute.value = self._stylesList.getStyle (2)
+        self._config.attributeUnknown.value = self._stylesList.getStyle (3)
+        self._config.number.value = self._stylesList.getStyle (4)
+        self._config.string.value = self._stylesList.getStyle (5)
+        self._config.comment.value = self._stylesList.getStyle (6)
