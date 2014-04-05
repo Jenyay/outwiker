@@ -225,11 +225,11 @@ class EditorConfig (object):
                 EditorConfig.BACK_COLOR_DEFAULT)
 
 
-class HtmlStylesConfig (object):
+class HtmlEditorStylesConfig (object):
     """
     Класс для хранения настроек стилей редактора HTML
     """
-    HTML_STYLES_SECTION = u"HtmlStyles"
+    HTML_STYLES_SECTION = u"EditorStyles"
 
     STYLE_TAG_SECTION = u"tag"
     STYLE_TAG_DEFAULT = StcStyle.parse (u"fore:#000080,bold")
@@ -257,39 +257,39 @@ class HtmlStylesConfig (object):
         self.config = config
 
         self.tag = StcStyleOption (self.config, 
-                HtmlStylesConfig.HTML_STYLES_SECTION, 
-                HtmlStylesConfig.STYLE_TAG_SECTION, 
-                HtmlStylesConfig.STYLE_TAG_DEFAULT)
+                HtmlEditorStylesConfig.HTML_STYLES_SECTION, 
+                HtmlEditorStylesConfig.STYLE_TAG_SECTION, 
+                HtmlEditorStylesConfig.STYLE_TAG_DEFAULT)
 
         self.tagUnknown = StcStyleOption (self.config, 
-                HtmlStylesConfig.HTML_STYLES_SECTION, 
-                HtmlStylesConfig.STYLE_TAG_UNKNOWN_SECTION, 
-                HtmlStylesConfig.STYLE_TAG_UNKNOWN_DEFAULT)
+                HtmlEditorStylesConfig.HTML_STYLES_SECTION, 
+                HtmlEditorStylesConfig.STYLE_TAG_UNKNOWN_SECTION, 
+                HtmlEditorStylesConfig.STYLE_TAG_UNKNOWN_DEFAULT)
 
         self.attribute = StcStyleOption (self.config, 
-                HtmlStylesConfig.HTML_STYLES_SECTION, 
-                HtmlStylesConfig.STYLE_ATTRIBUTE_SECTION, 
-                HtmlStylesConfig.STYLE_ATTRIBUTE_DEFAULT)
+                HtmlEditorStylesConfig.HTML_STYLES_SECTION, 
+                HtmlEditorStylesConfig.STYLE_ATTRIBUTE_SECTION, 
+                HtmlEditorStylesConfig.STYLE_ATTRIBUTE_DEFAULT)
 
         self.attributeUnknown = StcStyleOption (self.config, 
-                HtmlStylesConfig.HTML_STYLES_SECTION, 
-                HtmlStylesConfig.STYLE_ATTRIBUTE_UNKNOWN_SECTION, 
-                HtmlStylesConfig.STYLE_ATTRIBUTE_UNKNOWN_DEFAULT)
+                HtmlEditorStylesConfig.HTML_STYLES_SECTION, 
+                HtmlEditorStylesConfig.STYLE_ATTRIBUTE_UNKNOWN_SECTION, 
+                HtmlEditorStylesConfig.STYLE_ATTRIBUTE_UNKNOWN_DEFAULT)
 
         self.number = StcStyleOption (self.config, 
-                HtmlStylesConfig.HTML_STYLES_SECTION, 
-                HtmlStylesConfig.STYLE_NUMBER_SECTION, 
-                HtmlStylesConfig.STYLE_NUMBER_DEFAULT)
+                HtmlEditorStylesConfig.HTML_STYLES_SECTION, 
+                HtmlEditorStylesConfig.STYLE_NUMBER_SECTION, 
+                HtmlEditorStylesConfig.STYLE_NUMBER_DEFAULT)
 
         self.string = StcStyleOption (self.config, 
-                HtmlStylesConfig.HTML_STYLES_SECTION, 
-                HtmlStylesConfig.STYLE_STRING_SECTION, 
-                HtmlStylesConfig.STYLE_STRING_DEFAULT)
+                HtmlEditorStylesConfig.HTML_STYLES_SECTION, 
+                HtmlEditorStylesConfig.STYLE_STRING_SECTION, 
+                HtmlEditorStylesConfig.STYLE_STRING_DEFAULT)
 
         self.comment = StcStyleOption (self.config, 
-                HtmlStylesConfig.HTML_STYLES_SECTION, 
-                HtmlStylesConfig.STYLE_COMMENT_SECTION, 
-                HtmlStylesConfig.STYLE_COMMENT_DEFAULT)
+                HtmlEditorStylesConfig.HTML_STYLES_SECTION, 
+                HtmlEditorStylesConfig.STYLE_COMMENT_SECTION, 
+                HtmlEditorStylesConfig.STYLE_COMMENT_DEFAULT)
 
 
 class HtmlRenderConfig (object):

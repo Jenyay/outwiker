@@ -6,7 +6,7 @@ import wx
 
 from outwiker.gui.texteditor import TextEditor
 from outwiker.core.application import Application
-from outwiker.gui.guiconfig import HtmlStylesConfig
+from outwiker.gui.guiconfig import HtmlEditorStylesConfig
 
 
 class HtmlTextEditor (TextEditor):
@@ -72,7 +72,7 @@ class HtmlTextEditor (TextEditor):
         """
         Загрузить стили из конфига
         """
-        config = HtmlStylesConfig (Application.config)
+        config = HtmlEditorStylesConfig (Application.config)
 
         styles = {}
 

@@ -5,7 +5,7 @@ import wx
 
 from outwiker.core.application import Application
 from outwiker.gui.editorstyleslist import EditorStylesList
-from outwiker.gui.guiconfig import HtmlStylesConfig
+from outwiker.gui.guiconfig import HtmlEditorStylesConfig
 
 
 class HtmlEditorPanel(wx.Panel):
@@ -13,7 +13,7 @@ class HtmlEditorPanel(wx.Panel):
         kwds["style"] = wx.TAB_TRAVERSAL
         wx.Panel.__init__(self, *args, **kwds)
 
-        self._config = HtmlStylesConfig (Application.config)
+        self._config = HtmlEditorStylesConfig (Application.config)
 
         self.__createGui()
         self.__layout()
