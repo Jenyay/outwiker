@@ -10,6 +10,7 @@ from outwiker.actions.addsiblingpage import AddSiblingPageAction
 from outwiker.actions.removepage import RemovePageAction
 from outwiker.actions.renamepage import RenamePageAction
 from outwiker.actions.editpageprop import EditPagePropertiesAction
+from outwiker.actions.openattachfolder import OpenAttachFolderAction
 from outwiker.gui.pagedialog import createSiblingPage, createChildPage
 
 
@@ -25,6 +26,7 @@ class PagePopupMenu (object):
         self.ID_COPY_ATTACH_PATH = wx.NewId()
         self.ID_COPY_TITLE = wx.NewId()
         self.ID_COPY_LINK = wx.NewId()
+        self.ID_OPEN_ATTACH_FOLDER = wx.NewId()
 
         self.parent = parent
         self._application = application
@@ -45,6 +47,7 @@ class PagePopupMenu (object):
         popupMenu.Bind(wx.EVT_MENU, self.__onCopyPath, id=self.ID_COPY_PATH)
         popupMenu.Bind(wx.EVT_MENU, self.__onCopyAttachPath, id=self.ID_COPY_ATTACH_PATH)
         popupMenu.Bind(wx.EVT_MENU, self.__onCopyLink, id=self.ID_COPY_LINK)
+        popupMenu.Bind(wx.EVT_MENU, self.__onOpenAttachFolder, id=self.ID_OPEN_ATTACH_FOLDER)
         popupMenu.Bind(wx.EVT_MENU, self.__onPropertiesPopup, id=self.ID_PROPERTIES_POPUP)
 
 
@@ -88,6 +91,7 @@ class PagePopupMenu (object):
         popupMenu.Append (self.ID_COPY_PATH, _(u"Copy Page Path"))
         popupMenu.Append (self.ID_COPY_ATTACH_PATH, _(u"Copy Attachments Path"))
         popupMenu.Append (self.ID_COPY_LINK, _(u"Copy Page Link"))
+        popupMenu.Append (self.ID_OPEN_ATTACH_FOLDER, _(u"Open Attachments Folder"))
         popupMenu.AppendSeparator()
 
         popupMenu.Append (self.ID_PROPERTIES_POPUP, 
@@ -121,6 +125,11 @@ class PagePopupMenu (object):
         """
         assert self.popupPage != None
         outwiker.core.commands.copyLinkToClipboard (self.popupPage)
+
+
+    def __onOpenAttachFolder (self, event):
+        assert self.popupPage != None
+        self._application.actionController.getAction (OpenAttachFolderAction.stringId).run (None)
 
 
     def __onCopyTitle (self, event):
