@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-05 12:31+0400\n"
+"POT-Creation-Date: 2014-04-08 18:27+0400\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -101,39 +101,44 @@ msgstr "Автор: Евгений Ильин (aka Jenyay)"
 msgid "Contacts"
 msgstr "Контакты"
 
-#: outwiker/gui/attachpanel.py:84 outwiker/gui/attachpanel.py:89
+#: outwiker/gui/attachpanel.py:87 outwiker/gui/attachpanel.py:92
+msgid "Refresh"
+msgstr "Обновить"
+
+#: outwiker/gui/attachpanel.py:98 outwiker/gui/attachpanel.py:103
 #: outwiker/actions/attachfiles.py:23
 msgid "Attach Files…"
 msgstr "Прикрепить &файлы…"
 
-#: outwiker/gui/attachpanel.py:93 outwiker/gui/attachpanel.py:98
+#: outwiker/gui/attachpanel.py:107 outwiker/gui/attachpanel.py:112
 msgid "Remove Files…"
 msgstr "Удалить файлы…"
 
-#: outwiker/gui/attachpanel.py:104 outwiker/gui/attachpanel.py:109
+#: outwiker/gui/attachpanel.py:118 outwiker/gui/attachpanel.py:123
 #: outwiker/gui/mainmenu.py:67
 msgid "Paste"
 msgstr "Вставить"
 
-#: outwiker/gui/attachpanel.py:113 outwiker/gui/attachpanel.py:118
+#: outwiker/gui/attachpanel.py:127 outwiker/gui/attachpanel.py:132
 msgid "Execute"
 msgstr "Запустить"
 
-#: outwiker/gui/attachpanel.py:123 outwiker/gui/attachpanel.py:128
-msgid "Refresh"
-msgstr "Обновить"
+#: outwiker/gui/attachpanel.py:136 outwiker/gui/attachpanel.py:141
+#: outwiker/gui/pagepopupmenu.py:94 outwiker/actions/openattachfolder.py:24
+msgid "Open Attachments Folder"
+msgstr "Открыть папку с прикрепленными файлами"
 
-#: outwiker/gui/attachpanel.py:217
+#: outwiker/gui/attachpanel.py:232
 msgid "You did not select a file to remove"
 msgstr "Вы не выбрали файл(ы) для удаления"
 
-#: outwiker/gui/attachpanel.py:218 outwiker/gui/attachpanel.py:228
-#: outwiker/gui/attachpanel.py:240 outwiker/gui/attachpanel.py:257
-#: outwiker/gui/attachpanel.py:267 outwiker/gui/basetextpanel.py:168
+#: outwiker/gui/attachpanel.py:233 outwiker/gui/attachpanel.py:243
+#: outwiker/gui/attachpanel.py:255 outwiker/gui/attachpanel.py:276
+#: outwiker/gui/attachpanel.py:286 outwiker/gui/basetextpanel.py:168
 #: outwiker/gui/currentpagepanel.py:88 outwiker/gui/currentpagepanel.py:224
 #: outwiker/gui/currentpagepanel.py:233 outwiker/gui/htmlrenderie.py:174
 #: outwiker/gui/htmlrenderwebkit.py:220 outwiker/gui/htmlrenderwx.py:107
-#: outwiker/gui/mainwindow.py:472 outwiker/gui/mainwndcontroller.py:215
+#: outwiker/gui/mainwindow.py:477 outwiker/gui/mainwndcontroller.py:215
 #: outwiker/gui/notestree.py:284 outwiker/gui/pagedialog.py:29
 #: outwiker/gui/pagedialog.py:46 outwiker/gui/pagedialog.py:51
 #: outwiker/gui/pagedialog.py:143 outwiker/gui/pagedialog.py:202
@@ -155,28 +160,29 @@ msgstr "Вы не выбрали файл(ы) для удаления"
 #: outwiker/core/commands.py:384 outwiker/core/commands.py:389
 #: outwiker/core/textprinter.py:106 outwiker/actions/globalsearch.py:42
 #: outwiker/actions/movepagedown.py:41 outwiker/actions/movepageup.py:41
+#: outwiker/actions/openattachfolder.py:39
 #: outwiker/actions/sortchildalpha.py:38
 #: outwiker/actions/sortsiblingsalpha.py:38
 msgid "Error"
 msgstr "Ошибка"
 
-#: outwiker/gui/attachpanel.py:222
+#: outwiker/gui/attachpanel.py:237
 msgid "Remove selected files?"
 msgstr "Удалить выбранные файлы?"
 
-#: outwiker/gui/attachpanel.py:223
+#: outwiker/gui/attachpanel.py:238
 msgid "Remove files?"
 msgstr "Удалить файлы?"
 
-#: outwiker/gui/attachpanel.py:239
+#: outwiker/gui/attachpanel.py:254
 msgid "You did not select a file to paste"
 msgstr "Вы не выбрали файл(ы) для вставки"
 
-#: outwiker/gui/attachpanel.py:256
+#: outwiker/gui/attachpanel.py:275
 msgid "You did not select a file to execute"
 msgstr "Вы не выбрали файл(ы) для запуска"
 
-#: outwiker/gui/attachpanel.py:266 outwiker/gui/htmlrender.py:59
+#: outwiker/gui/attachpanel.py:285 outwiker/gui/htmlrender.py:59
 #: outwiker/gui/htmlrenderie.py:173 outwiker/gui/htmlrenderwebkit.py:219
 #: outwiker/gui/htmlrenderwx.py:106 outwiker/gui/htmlrenderwx.py:153
 #, python-format
@@ -281,18 +287,18 @@ msgstr ""
 "Папка со страницей не существует. \n"
 "Вики будет перезагружена."
 
-#: outwiker/gui/editorstyleslist.py:25 outwiker/core/commands.py:728
-#: outwiker/core/commands.py:729
+#: outwiker/gui/editorstyleslist.py:25 outwiker/core/commands.py:735
+#: outwiker/core/commands.py:736
 msgid "Bold"
 msgstr "Полужирный"
 
-#: outwiker/gui/editorstyleslist.py:26 outwiker/core/commands.py:734
-#: outwiker/core/commands.py:735
+#: outwiker/gui/editorstyleslist.py:26 outwiker/core/commands.py:741
+#: outwiker/core/commands.py:742
 msgid "Italic"
 msgstr "Курсив"
 
-#: outwiker/gui/editorstyleslist.py:27 outwiker/core/commands.py:746
-#: outwiker/core/commands.py:747
+#: outwiker/gui/editorstyleslist.py:27 outwiker/core/commands.py:753
+#: outwiker/core/commands.py:754
 msgid "Underline"
 msgstr "Подчёркивание"
 
@@ -327,7 +333,7 @@ msgstr "Значок по умолчанию"
 
 #: outwiker/gui/linkdialog.py:17 outwiker/gui/linkdialog.py:35
 #: outwiker/gui/preferences/wikieditorpanel.py:38
-#: outwiker/core/commands.py:860
+#: outwiker/core/commands.py:867
 msgid "Link"
 msgstr "Ссылка"
 
@@ -380,7 +386,7 @@ msgstr "Вырезать"
 msgid "Copy"
 msgstr "Копировать"
 
-#: outwiker/gui/mainwindow.py:471
+#: outwiker/gui/mainwindow.py:476
 #, python-format
 msgid ""
 "Can't save config\n"
@@ -464,19 +470,19 @@ msgstr ""
 "Невозможно переименовать страницу, так как страница с таким заголовком уже "
 "существует"
 
-#: outwiker/gui/pagepopupmenu.py:87 outwiker/actions/clipboard.py:20
+#: outwiker/gui/pagepopupmenu.py:90 outwiker/actions/clipboard.py:20
 msgid "Copy Page Title"
 msgstr "Копировать заголовок страницы"
 
-#: outwiker/gui/pagepopupmenu.py:88 outwiker/actions/clipboard.py:46
+#: outwiker/gui/pagepopupmenu.py:91 outwiker/actions/clipboard.py:46
 msgid "Copy Page Path"
 msgstr "Копировать путь до страницы"
 
-#: outwiker/gui/pagepopupmenu.py:89
-msgid "Copy Attaches Path"
+#: outwiker/gui/pagepopupmenu.py:92 outwiker/actions/clipboard.py:71
+msgid "Copy Attachments Path"
 msgstr "Копировать путь до прикрепленных файлов"
 
-#: outwiker/gui/pagepopupmenu.py:90 outwiker/actions/clipboard.py:97
+#: outwiker/gui/pagepopupmenu.py:93 outwiker/actions/clipboard.py:97
 msgid "Copy Page Link"
 msgstr "Копировать ссылку на страницу"
 
@@ -864,7 +870,7 @@ msgstr "Форматирование"
 msgid "Lists"
 msgstr "Списки"
 
-#: outwiker/pages/html/htmlpageview.py:210 outwiker/core/commands.py:906
+#: outwiker/pages/html/htmlpageview.py:210 outwiker/core/commands.py:913
 msgid "Table"
 msgstr "Таблица"
 
@@ -1349,147 +1355,147 @@ msgstr ""
 msgid "The page title"
 msgstr "Заголовок страницы"
 
-#: outwiker/core/commands.py:740 outwiker/core/commands.py:741
+#: outwiker/core/commands.py:747 outwiker/core/commands.py:748
 msgid "Bold italic"
 msgstr "Полужирный курсив"
 
-#: outwiker/core/commands.py:752 outwiker/core/commands.py:753
+#: outwiker/core/commands.py:759 outwiker/core/commands.py:760
 msgid "Strikethrough"
 msgstr "Зачеркнутый"
 
-#: outwiker/core/commands.py:758 outwiker/core/commands.py:759
+#: outwiker/core/commands.py:765 outwiker/core/commands.py:766
 msgid "Subscript"
 msgstr "Нижний индекс"
 
-#: outwiker/core/commands.py:764 outwiker/core/commands.py:765
+#: outwiker/core/commands.py:771 outwiker/core/commands.py:772
 msgid "Superscript"
 msgstr "Верхний индекс"
 
-#: outwiker/core/commands.py:770 outwiker/core/commands.py:771
+#: outwiker/core/commands.py:777 outwiker/core/commands.py:778
 msgid "Preformatted text"
 msgstr "Форматированный текст"
 
-#: outwiker/core/commands.py:776
+#: outwiker/core/commands.py:783
 msgid "Insert code"
 msgstr "Вставить код"
 
-#: outwiker/core/commands.py:777
+#: outwiker/core/commands.py:784
 msgid "Insert code (monospaced font)"
 msgstr "Вставить код (моноширинный шрифт)"
 
-#: outwiker/core/commands.py:785 outwiker/core/commands.py:786
+#: outwiker/core/commands.py:792 outwiker/core/commands.py:793
 msgid "Align text left"
 msgstr "Выравнивание по левому краю"
 
-#: outwiker/core/commands.py:791 outwiker/core/commands.py:792
+#: outwiker/core/commands.py:798 outwiker/core/commands.py:799
 msgid "Center"
 msgstr "Выравнивание по центру"
 
-#: outwiker/core/commands.py:797 outwiker/core/commands.py:798
+#: outwiker/core/commands.py:804 outwiker/core/commands.py:805
 msgid "Align text right"
 msgstr "Выравнивание по правому краю"
 
-#: outwiker/core/commands.py:803 outwiker/core/commands.py:804
+#: outwiker/core/commands.py:810 outwiker/core/commands.py:811
 msgid "Justify"
 msgstr "Выравнивание по ширине"
 
-#: outwiker/core/commands.py:811 outwiker/core/commands.py:812
+#: outwiker/core/commands.py:818 outwiker/core/commands.py:819
 msgid "First-level heading"
 msgstr "Заголовок первого уровня"
 
-#: outwiker/core/commands.py:817 outwiker/core/commands.py:818
+#: outwiker/core/commands.py:824 outwiker/core/commands.py:825
 msgid "Second-level heading"
 msgstr "Заголовок второго уровня"
 
-#: outwiker/core/commands.py:823 outwiker/core/commands.py:824
+#: outwiker/core/commands.py:830 outwiker/core/commands.py:831
 msgid "Subtitle three"
 msgstr "Заголовок третьего уровня"
 
-#: outwiker/core/commands.py:829 outwiker/core/commands.py:830
+#: outwiker/core/commands.py:836 outwiker/core/commands.py:837
 msgid "Subtitle four"
 msgstr "Заголовок четвертого уровня"
 
-#: outwiker/core/commands.py:835 outwiker/core/commands.py:836
+#: outwiker/core/commands.py:842 outwiker/core/commands.py:843
 msgid "Subtitle five"
 msgstr "Заголовок пятого уровня"
 
-#: outwiker/core/commands.py:841 outwiker/core/commands.py:842
+#: outwiker/core/commands.py:848 outwiker/core/commands.py:849
 msgid "Subtitle six"
 msgstr "Заголовок шестого уровня"
 
-#: outwiker/core/commands.py:848 outwiker/core/commands.py:849
+#: outwiker/core/commands.py:855 outwiker/core/commands.py:856
 msgid "Anchor"
 msgstr "Якорь"
 
-#: outwiker/core/commands.py:854 outwiker/core/commands.py:855
+#: outwiker/core/commands.py:861 outwiker/core/commands.py:862
 msgid "Horizontal rule"
 msgstr "Горизонтальная линия"
 
-#: outwiker/core/commands.py:861
+#: outwiker/core/commands.py:868
 msgid "Insert Link"
 msgstr "Вставить ссылку"
 
-#: outwiker/core/commands.py:866
+#: outwiker/core/commands.py:873
 msgid "Quote"
 msgstr "Цитирование"
 
-#: outwiker/core/commands.py:867
+#: outwiker/core/commands.py:874
 msgid "Insert a quote block"
 msgstr "Вставить цитату"
 
-#: outwiker/core/commands.py:872
+#: outwiker/core/commands.py:879
 msgid "Image"
 msgstr "Изображение"
 
-#: outwiker/core/commands.py:873
+#: outwiker/core/commands.py:880
 msgid "Insert image"
 msgstr "Вставить изображение"
 
-#: outwiker/core/commands.py:880
+#: outwiker/core/commands.py:887
 msgid "Bullets list"
 msgstr "Ненумерованный список"
 
-#: outwiker/core/commands.py:881
+#: outwiker/core/commands.py:888
 msgid "Insert a bullets list"
 msgstr "Вставить ненумерованный список"
 
-#: outwiker/core/commands.py:886
+#: outwiker/core/commands.py:893
 msgid "Numbers list"
 msgstr "Нумерованный список"
 
-#: outwiker/core/commands.py:887
+#: outwiker/core/commands.py:894
 msgid "Insert a numbers list"
 msgstr "Вставить нумерованный список"
 
-#: outwiker/core/commands.py:892
+#: outwiker/core/commands.py:899
 msgid "Line break"
 msgstr "Разрыв строки"
 
-#: outwiker/core/commands.py:893
+#: outwiker/core/commands.py:900
 msgid "Insert a line break"
 msgstr "Вставить разрыв строки"
 
-#: outwiker/core/commands.py:898 outwiker/core/commands.py:899
+#: outwiker/core/commands.py:905 outwiker/core/commands.py:906
 msgid "Convert HTML Symbols"
 msgstr "Преобразовать символы в HTML"
 
-#: outwiker/core/commands.py:907
+#: outwiker/core/commands.py:914
 msgid "Insert a table"
 msgstr "Вставить таблицу"
 
-#: outwiker/core/commands.py:912
+#: outwiker/core/commands.py:919
 msgid "Table row"
 msgstr "Строка таблицы"
 
-#: outwiker/core/commands.py:913
+#: outwiker/core/commands.py:920
 msgid "Insert a table row"
 msgstr "Вставить строку таблицы"
 
-#: outwiker/core/commands.py:918
+#: outwiker/core/commands.py:925
 msgid "Table cell"
 msgstr "Ячейка таблицы"
 
-#: outwiker/core/commands.py:919
+#: outwiker/core/commands.py:926
 msgid "Insert a table cell"
 msgstr "Вставить ячейка таблицы"
 
@@ -1567,10 +1573,6 @@ msgstr "Копировать заголовок текущей страницы 
 #: outwiker/actions/clipboard.py:51
 msgid "Copy path to current page to clipboard"
 msgstr "Копировать путь до текущей страницы в буфер обмена"
-
-#: outwiker/actions/clipboard.py:71
-msgid "Copy Attachments Path"
-msgstr "Копировать путь до прикрепленных файлов"
 
 #: outwiker/actions/clipboard.py:76
 msgid "Copy path to attachments for current page to clipboard"
@@ -1658,6 +1660,14 @@ msgstr "Открыть…"
 #: outwiker/actions/open.py:27
 msgid "Open tree notes"
 msgstr "Открыть дерево заметок"
+
+#: outwiker/actions/openattachfolder.py:29
+msgid "Open folder with attached files"
+msgstr "Открывает папку с прикрепленными файлами"
+
+#: outwiker/actions/openattachfolder.py:38
+msgid "Can't open folder '{}'"
+msgstr "Ошибка открытия папки '{}'"
 
 #: outwiker/actions/openhelp.py:28
 msgid "Open help"
@@ -1850,6 +1860,9 @@ msgstr "Удаление меток из ветки"
 #: outwiker/actions/tags.py:135
 msgid "Rename Tag…"
 msgstr "Переименовать метку…"
+
+#~ msgid "Copy Attaches Path"
+#~ msgstr "Копировать путь до прикрепленных файлов"
 
 #~ msgid "Find Previous"
 #~ msgstr "Найти &предыдущий"
