@@ -86,7 +86,7 @@ class PagePopupMenu (object):
 
         popupMenu.Append (self.ID_COPY_TITLE, _(u"Copy Page Title"))
         popupMenu.Append (self.ID_COPY_PATH, _(u"Copy Page Path"))
-        popupMenu.Append (self.ID_COPY_ATTACH_PATH, _(u"Copy Attaches Path"))
+        popupMenu.Append (self.ID_COPY_ATTACH_PATH, _(u"Copy Attachments Path"))
         popupMenu.Append (self.ID_COPY_LINK, _(u"Copy Page Link"))
         popupMenu.AppendSeparator()
 
