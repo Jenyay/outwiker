@@ -132,12 +132,12 @@ class AttachPanel(wx.Panel):
                 "")
 
         toolbar.AddLabelTool(self.ID_OPEN_FOLDER, 
-                _(u"Open attach folder"), 
+                _(u"Open attachments folder"), 
                 wx.Bitmap(os.path.join (imagesDir, "folder.png"),
                     wx.BITMAP_TYPE_ANY),
                 wx.NullBitmap, 
                 wx.ITEM_NORMAL,
-                _(u"Open attach folder"), 
+                _(u"Open attachments folder"), 
                 "")
 
 
