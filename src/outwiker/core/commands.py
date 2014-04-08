@@ -656,6 +656,13 @@ def registerActions (application):
             HotKey ("A", ctrl=True, alt=True))
 
 
+    # Открыть папку с прикрепленными файлами
+    from outwiker.actions.openattachfolder import OpenAttachFolderAction
+    application.actionController.register (
+            OpenAttachFolderAction (application), 
+            HotKey ("A", ctrl=True, shift=True, alt=True))
+
+
     import outwiker.actions.clipboard as clipboard
     
     # Копировать заголовок текущей страницы

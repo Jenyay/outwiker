@@ -58,6 +58,7 @@ import outwiker.actions.tags as tags
 from outwiker.actions.reloadwiki import ReloadWikiAction
 from outwiker.actions.openhelp import OpenHelpAction
 from outwiker.actions.about import AboutAction
+from outwiker.actions.openattachfolder import OpenAttachFolderAction
 
 
 class MainWindow(wx.Frame):
@@ -301,6 +302,10 @@ class MainWindow(wx.Frame):
 
         actionController.appendMenuItem (
                 clipboard.CopyPageLinkAction.stringId, 
+                menu)
+
+        actionController.appendMenuItem (
+                OpenAttachFolderAction.stringId, 
                 menu)
 
         menu.AppendSeparator()

@@ -10,6 +10,7 @@ from outwiker.core.commands import MessageBox
 from outwiker.core.system import getOS, getImagesDir
 from outwiker.core.attachment import Attachment
 from outwiker.actions.attachfiles import AttachFilesAction
+from outwiker.actions.openattachfolder import OpenAttachFolderAction
 from outwiker.core.events import PAGE_UPDATE_ATTACHMENT
 
 
@@ -263,15 +264,7 @@ class AttachPanel(wx.Panel):
 
 
     def __onOpenFolder (self, event):
-        if Application.selectedPage != None:
-            files = self.__getSelectedFiles()
-
-        folder = Attachment (Application.selectedPage).getAttachPath (create=True)
-        try:
-            getOS().startFile (folder)
-        except OSError:
-            text = _(u"Can't open folder '{}'".format (folder))
-            MessageBox (text, _(u"Error"), wx.ICON_ERROR | wx.OK)
+        Application.actionController.getAction (OpenAttachFolderAction.stringId).run (None)
 
 
     def __onExecute(self, event):
