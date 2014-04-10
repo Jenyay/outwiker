@@ -20,10 +20,13 @@ from .tagsselector import TagsSelector
 class BasePageDialog(wx.Dialog):
     def __init__(self, parentPage = None, *args, **kwds):
         """
-        parentPage -- родительская страница (используется, если страницу нужно создавать, а не изменять)
+        parentPage - родительская страница (используется, если страницу нужно создавать, а не изменять)
         """
         kwds["style"] = wx.DEFAULT_DIALOG_STYLE|wx.RESIZE_BORDER|wx.THICK_FRAME
         wx.Dialog.__init__(self, *args, **kwds)
+
+        # Используется для редактирования существующей страницы
+        self.currentPage = None
 
         self.config = PageDialogConfig (Application.config)
 
@@ -70,6 +73,14 @@ class BasePageDialog(wx.Dialog):
         self.config.width.value = width
         self.config.height.value = height
 
+        styleIndex =  self.appearancePanel.styleCombo.GetSelection()
+        styleName = self.appearancePanel.styleCombo.GetStringSelection()
+
+        # Не будем изменять стиль по умолчанию в случае, 
+        # если изменяется существующая страница
+        if (self.currentPage == None):
+            self.config.recentStyle.value = styleName
+
 
     def _fillStyleCombo (self, styleslist, page=None):
         """
@@ -88,7 +99,16 @@ class BasePageDialog(wx.Dialog):
 
         self.appearancePanel.styleCombo.Clear()
         self.appearancePanel.styleCombo.AppendItems (names)
-        self.appearancePanel.styleCombo.SetSelection (0)
+
+        # Определение последнего используемого стиля
+        recentStyle = self.config.recentStyle.value
+        names_lower = [name.lower() for name in names]
+        try:
+            recentStyleIndex = names_lower.index (recentStyle.lower())
+        except ValueError:
+            recentStyleIndex = 0
+
+        self.appearancePanel.styleCombo.SetSelection (recentStyleIndex)
 
 
 
@@ -97,7 +117,7 @@ class BasePageDialog(wx.Dialog):
 
         tagslist = TagsList (Application.wikiroot)
         self.generalPanel.tagsSelector.setTagsList (tagslist)
-    
+
 
     def _createOkCancelButtons (self, sizer):
         # Создание кнопок Ok/Cancel
@@ -105,7 +125,7 @@ class BasePageDialog(wx.Dialog):
         sizer.Add (buttonsSizer, 1, wx.ALIGN_RIGHT | wx.ALL, border = 2)
         self.Bind (wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
 
-    
+
     def _fillComboType (self):
         self.generalPanel.typeCombo.Clear()
         for factory in FactorySelector.factories:
@@ -113,7 +133,7 @@ class BasePageDialog(wx.Dialog):
 
         if not self.generalPanel.typeCombo.IsEmpty():
             self.generalPanel.typeCombo.SetSelection (0)
-    
+
 
     def _setComboPageType (self, pageTypeString):
         """

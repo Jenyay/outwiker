@@ -601,6 +601,10 @@ class PageDialogConfig (object):
     HEIGHT_SECTION = u"PageDialogHeight"
     HEIGHT_DEFAULT = 350
 
+    # Последний используемый стиль
+    RECENT_STYLE_SECTION = u"RecentStyle"
+    RECENT_STYLE_DEFAULT = u""
+
     def __init__ (self, config):
         self.config = config
 
@@ -613,4 +617,9 @@ class PageDialogConfig (object):
                 MainWindowConfig.MAIN_WINDOW_SECTION, 
                 self.HEIGHT_SECTION,
                 self.HEIGHT_DEFAULT)
+
+        self.recentStyle = StringOption (self.config,
+                GeneralGuiConfig.GENERAL_SECTION,
+                self.RECENT_STYLE_SECTION,
+                self.RECENT_STYLE_DEFAULT)
 
