@@ -40,7 +40,7 @@ class RootWikiPage (object):
 
         self._params = RootWikiPage._readParams(self.path, self.readonly)
 
-    
+
     @staticmethod
     def _readParams (path, readonly=False):
         return PageConfig (os.path.join (path, RootWikiPage.pageConfig), readonly)
@@ -54,7 +54,7 @@ class RootWikiPage (object):
     @property
     def path (self):
         return self._path
-    
+
 
     @property
     def parent (self):
@@ -183,7 +183,7 @@ class RootWikiPage (object):
     def saveChildrenParams (self):
         for child in self._children:
             child.save()
-    
+
 
     def addToChildren (self, page):
         """
@@ -396,7 +396,7 @@ class WikiPage (RootWikiPage):
     def __init__(self, path, title, parent, readonly = False):
         """
         Constructor.
-        
+    
         path -- путь до страницы
         """
         if not RootWikiPage.testDublicate(parent, title):
@@ -433,13 +433,13 @@ class WikiPage (RootWikiPage):
 
         self.parent._changeChildOrder (self, realorder)
         self.root.onPageOrderChange (self)
-    
+
 
     @property
     def title (self):
         return self._title
 
-    
+
     @title.setter
     def title (self, newtitle):
         if self.readonly:
@@ -465,12 +465,12 @@ class WikiPage (RootWikiPage):
 
         self.root.onPageRename (self, oldsubpath)
         self.root.onTreeUpdate (self)
-    
+
 
     def canRename (self, newtitle):
         return (self.title.lower() == newtitle.lower() or
                 self.parent[newtitle] == None)
-    
+
 
     @staticmethod
     def __renamePaths (page, newPath):
@@ -485,7 +485,7 @@ class WikiPage (RootWikiPage):
             newChildPath = child.path.replace (oldPath, newPath, 1)
             WikiPage.__renamePaths (child, newChildPath)
 
-    
+
     def moveTo (self, newparent):
         """
         Переместить запись к другому родителю
@@ -526,12 +526,12 @@ class WikiPage (RootWikiPage):
         self._parent = newparent
         oldparent.removeFromChildren (self)
         newparent.addToChildren (self)
-        
+    
         WikiPage.__renamePaths (self, newpath)
 
         self.root.onTreeUpdate (self)
 
-    
+
     def _getTempName (self, pagepath):
         """
         Найти уникальное имя для перемещаемой страницы.
@@ -628,7 +628,7 @@ class WikiPage (RootWikiPage):
                     not os.path.isdir (fname))]
 
         return icons
-    
+
 
     def initAfterLoading (self):
         """
@@ -638,7 +638,7 @@ class WikiPage (RootWikiPage):
         self._tags = self._getTags (self._params)
 
         self._children = self.getChildren ()
-    
+
 
     @staticmethod
     def load (path, parent, readonly = False):
@@ -670,17 +670,8 @@ class WikiPage (RootWikiPage):
         if not os.path.exists (self.path):
             os.mkdir (self.path)
 
-        # try:
-        #     text = self.content
-        # except IOError:
-        #     text = u""
-
-        # with open (os.path.join (self.path, RootWikiPage.contentFile), "w") as fp:
-        #     fp.write (text.encode ("utf8"))
-        # self.content = self.content
-
         self._saveOptions ()
-    
+
 
     def _saveOptions (self):
         """
@@ -694,7 +685,6 @@ class WikiPage (RootWikiPage):
 
         # Порядок страницы
         self._params.orderOption.value = self.order
-
 
 
     def _saveTags (self):
@@ -714,7 +704,7 @@ class WikiPage (RootWikiPage):
         self.updateDateTime()
         self.parent.saveChildrenParams()
         self.root.onPageCreate(self)
-    
+
 
     def _getTags (self, configParser):
         """
@@ -729,7 +719,7 @@ class WikiPage (RootWikiPage):
 
         return tags
 
-    
+
     @property
     def content(self):
         """
@@ -742,7 +732,7 @@ class WikiPage (RootWikiPage):
                 text = fp.read()
         except IOError:
             pass
-        
+    
         return unicode (text, "utf8", errors="replace")
 
 
@@ -759,7 +749,7 @@ class WikiPage (RootWikiPage):
 
             self.updateDateTime()
             self.root.onPageUpdate(self, change=events.PAGE_UPDATE_CONTENT)
-    
+
 
     @property
     def textContent (self):
@@ -769,7 +759,7 @@ class WikiPage (RootWikiPage):
         В большинстве случаев достаточно вернуть просто content
         """
         return self.content
-    
+
 
     @property
     def subpath (self):
@@ -821,7 +811,7 @@ class WikiPage (RootWikiPage):
             self.root.selectedPage = newselpage
 
         self.root.onEndTreeUpdate (self.root)
-        
+
 
     def _removePageFromTree (self, page):
         page.parent.removeFromChildren (page)
@@ -838,5 +828,3 @@ class WikiPage (RootWikiPage):
         Проверить, что страница удалена
         """
         return self not in self.parent.children
-    
-
