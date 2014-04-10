@@ -114,6 +114,7 @@ if __name__ == '__main__':
     from test.guitests.thumbdialogcontrollertest import ThumbDialogControllerTest
     from test.guitests.wikipageview import WikiPageViewTest
     from test.guitests.htmlpageview import HtmlPageViewTest
+    from test.guitests.textpageview import TextPageViewTest
     from test.guitests.actioncontroller import ActionControllerTest
     from test.guitests.polyaction import PolyActionTest
     from test.guitests.mainpanes import MainPanesTest

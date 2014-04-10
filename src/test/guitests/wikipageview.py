@@ -13,7 +13,7 @@ from outwiker.pages.wiki.wikiconfig import WikiConfig
 
 class WikiPageViewTest (BaseMainWndTest):
     """
-    Тесты окна со списком прикрепленных файлов
+    Тесты вида викистраниц
     """
     def setUp (self):
         BaseMainWndTest.setUp (self)
@@ -245,3 +245,60 @@ class WikiPageViewTest (BaseMainWndTest):
         Application.selectedPage = self.wikiroot[u"Викистраница 2"]
         self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
                 WikiPageView.HTML_RESULT_PAGE_INDEX)
+
+
+    def testCursorPosition_01 (self):
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = None
+
+        self.wikiroot[u"Викистраница"].content = u"Бла-бла-бла"
+        Application.selectedPage = self.wikiroot[u"Викистраница"]
+        self._getCodeEditor().SetSelection (3, 3)
+
+        Application.selectedPage = None
+        Application.selectedPage = self.wikiroot[u"Викистраница"]
+        self.assertEqual (self._getCodeEditor().GetCurrentPosition(), 3)
+
+
+    def testCursorPosition_02 (self):
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = None
+
+        self.wikiroot[u"Викистраница"].content = u"Бла-бла-бла"
+        Application.selectedPage = self.wikiroot[u"Викистраница"]
+        self._getCodeEditor().SetSelection (0, 0)
+
+        Application.selectedPage = None
+        Application.selectedPage = self.wikiroot[u"Викистраница"]
+        self.assertEqual (self._getCodeEditor().GetCurrentPosition(), 0)
+
+
+    def testCursorPosition_readonly_01 (self):
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = None
+
+        # В исходном файле установим курсор на 3-ю позицию
+        self.wikiroot[u"Викистраница"].content = u"Бла-бла-бла"
+        Application.selectedPage = self.wikiroot[u"Викистраница"]
+        self._getCodeEditor().SetSelection (3, 3)
+        Application.selectedPage = None
+
+        # Теперь загрузим эту вики в режиме только для чтения и поменяем позицию
+        wikiroot_ro = WikiDocument.load (self.path, readonly=True)
+        Application.wikiroot = wikiroot_ro
+        Application.selectedPage = wikiroot_ro[u"Викистраница"]
+        self.assertEqual (self._getCodeEditor().GetCurrentPosition(), 3)
+        self._getCodeEditor().SetSelection (0, 0)
+
+        # После возвращения на страницу положение курсора не должно поменяться
+        Application.selectedPage = None
+        Application.selectedPage = wikiroot_ro[u"Викистраница"]
+        self.assertEqual (self._getCodeEditor().GetCurrentPosition(), 3)
+
+
+    def _getPageView (self):
+        return Application.mainWindow.pagePanel.pageView
+
+
+    def _getCodeEditor (self):
+        return self._getPageView().codeEditor
