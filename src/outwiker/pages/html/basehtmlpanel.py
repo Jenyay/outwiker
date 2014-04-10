@@ -13,7 +13,6 @@ from outwiker.core.system import getTemplatesDir, getImagesDir
 from outwiker.core.attachment import Attachment
 from outwiker.core.config import IntegerOption
 from outwiker.gui.basetextpanel import BaseTextPanel
-from outwiker.gui.htmltexteditor import HtmlTextEditor
 from outwiker.gui.htmlrenderfactory import getHtmlRender
 from outwiker.actions.search import SearchAction, SearchNextAction, SearchPrevAction, SearchAndReplaceAction
 
@@ -49,6 +48,20 @@ class BaseHtmlPanel(BaseTextPanel):
 
         self.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED, self._onTabChanged, self.notebook)
         self.Bind (wx.EVT_CLOSE, self.onClose)
+
+
+    def SetCursorPosition (self, position):
+        """
+        Установить курсор в текстовом редакторе в положение position
+        """
+        self.codeEditor.SetSelection (position, position)
+
+
+    def GetCursorPosition (self):
+        """
+        Возвращает положение курсора в текстовом редакторе
+        """
+        return self.codeEditor.GetCurrentPosition()
 
 
     @property
@@ -103,8 +116,9 @@ class BaseHtmlPanel(BaseTextPanel):
             currpanel.Print()
 
 
+    @abstractproperty
     def GetTextEditor(self):
-        return HtmlTextEditor
+        pass
 
 
     @property
@@ -157,6 +171,8 @@ class BaseHtmlPanel(BaseTextPanel):
             self.codeEditor.SetText (self._currentpage.content)
             self.codeEditor.EmptyUndoBuffer()
             self.codeEditor.SetReadOnly (page.readonly)
+            self.SetCursorPosition (
+                self._getCursorPositionOption (page).value)
 
             self._updateResult()
             tabIndex = self.loadPageTab (self._currentpage)
@@ -164,6 +180,7 @@ class BaseHtmlPanel(BaseTextPanel):
                 tabIndex = self._getDefaultPage()
 
             self.selectedPageIndex = tabIndex
+
         finally:
             self.Thaw()
 

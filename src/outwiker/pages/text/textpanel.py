@@ -17,6 +17,20 @@ class TextPanel (BaseTextPanel):
 
         self.__createGui()
 
+
+    def SetCursorPosition (self, position):
+        """
+        Установить курсор в текстовом редакторе в положение position
+        """
+        self.textEditor.SetSelection (position, position)
+
+
+    def GetCursorPosition (self):
+        """
+        Возвращает положение курсора в текстовом редакторе
+        """
+        return self.textEditor.GetCurrentPosition()
+
     
     def Print (self):
         self.textEditor.Print()
@@ -30,6 +44,9 @@ class TextPanel (BaseTextPanel):
         self.textEditor.SetText (self._currentpage.content)
         self.textEditor.EmptyUndoBuffer()
         self.textEditor.SetReadOnly (page.readonly)
+        self.SetCursorPosition (
+                self._getCursorPositionOption (page).value)
+        self.textEditor.SetFocus()
     
 
     def __createGui (self):

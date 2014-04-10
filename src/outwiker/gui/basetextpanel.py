@@ -10,11 +10,10 @@ import outwiker.core.system
 from outwiker.core.commands import MessageBox, openWiki, pageExists
 from outwiker.core.attachment import Attachment
 from outwiker.core.application import Application
-
 from outwiker.gui.buttonsdialog import ButtonsDialog
-
+from outwiker.core.config import IntegerOption
+from outwiker.core.tree import RootWikiPage
 from outwiker.actions.search import SearchAction, SearchNextAction, SearchPrevAction, SearchAndReplaceAction
-
 from .basepagepanel import BasePagePanel
 
 
@@ -39,7 +38,24 @@ class BaseTextPanel (BasePagePanel):
         """
         pass
 
-    
+
+    @abstractmethod
+    def SetCursorPosition (self, position):
+        """
+        Установить курсор в текстовом редакторе в положение position
+        """
+        pass
+
+
+    @abstractmethod
+    def GetCursorPosition (self):
+        """
+        Возвращает положение курсора в текстовом редакторе
+        """
+        pass
+
+
+
     def __init__ (self, parent, *args, **kwds):
         super (BaseTextPanel, self).__init__ (parent, *args, **kwds)
 
@@ -74,7 +90,7 @@ class BaseTextPanel (BasePagePanel):
 
     def onPreferencesDialogClose (self, prefDialog):
         pass
-    
+
 
     def Save (self):
         """
@@ -155,18 +171,35 @@ class BaseTextPanel (BasePagePanel):
         """
         Сохранение содержимого страницы
         """
-        if (page != None and 
-                not page.isRemoved and 
-                not page.readonly and
-                not self.__stringsAreEqual (page.content, self.GetContentFromGui() ) ):
+        if (page == None or
+                page.isRemoved or
+                page.readonly):
+            return
 
-            try:
-                page.content = self.GetContentFromGui()
-            except IOError as e:
-                # TODO: Проверить под Windows
-                MessageBox (_(u"Can't save file %s") % (unicode (e.filename)), 
-                    _(u"Error"), 
-                    wx.ICON_ERROR | wx.OK)
+        self._getCursorPositionOption(page).value = self.GetCursorPosition()
+
+        if self.__stringsAreEqual (page.content, 
+                    self.GetContentFromGui() ):
+            return
+
+        try:
+            page.content = self.GetContentFromGui()
+        except IOError as e:
+            # TODO: Проверить под Windows
+            MessageBox (_(u"Can't save file %s") % (unicode (e.filename)), 
+                _(u"Error"), 
+                wx.ICON_ERROR | wx.OK)
+
+
+    def _getCursorPositionOption (self, page):
+        section = RootWikiPage.sectionGeneral
+        cursor_section = u"CursorPosition"
+        default = 0
+
+        return IntegerOption (page.params,
+                section,
+                cursor_section,
+                default)
     
 
     def _getAttachString (self, fnames):

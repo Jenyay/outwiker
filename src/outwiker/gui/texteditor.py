@@ -346,6 +346,7 @@ class TextEditor(wx.Panel):
 
     def SetFocus (self):
         self.textCtrl.SetFocus()
+        self.textCtrl.SetSTCFocus(True)
 
 
     def __calcCharPos (self, pos_bytes):

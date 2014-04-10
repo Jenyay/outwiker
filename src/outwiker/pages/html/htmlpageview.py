@@ -10,6 +10,7 @@ from outwiker.core.application import Application
 from outwiker.core.htmlimprover import HtmlImprover
 from outwiker.core.htmltemplate import HtmlTemplate
 from outwiker.core.style import Style
+from outwiker.gui.htmltexteditor import HtmlTextEditor
 
 from .htmltoolbar import HtmlToolBar
 from .basehtmlpanel import BaseHtmlPanel
@@ -80,6 +81,10 @@ class HtmlPageView (BaseHtmlPanel):
         self.mainWindow.UpdateAuiManager()
 
         self._application.onPageUpdate += self.__onPageUpdate
+
+    
+    def GetTextEditor(self):
+        return HtmlTextEditor
 
 
     @property
