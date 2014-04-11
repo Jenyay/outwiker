@@ -4,6 +4,7 @@
 import wx
 
 from outwiker.gui.baseaction import BaseAction
+from outwiker.gui.testeddialog import TestedDialog
 
 
 class WikiAttachListAction (BaseAction):
@@ -14,12 +15,6 @@ class WikiAttachListAction (BaseAction):
 
     def __init__ (self, application):
         self._application = application
-        self._sortStrings = [
-                u"name",
-                u"ext",
-                u"size",
-                u"date",
-                ]
 
 
     @property
@@ -37,35 +32,58 @@ class WikiAttachListAction (BaseAction):
         assert self._application.mainWindow.pagePanel != None
 
         with AttachListDialog (self._application.mainWindow) as dlg:
-            if dlg.ShowModal() == wx.ID_OK:
-                params = self._getParams (dlg)
-                text = u"(:attachlist {}:)".format (params)
+            controller = AttachListDialogController (dlg)
 
-                codeEditor = self._application.mainWindow.pagePanel.pageView.codeEditor
-                codeEditor.replaceText (text)
-
-
-    def _getParams (self, dialog):
-        """
-        Возвращает строку, описывающую параметры согласно настройкам в диалоге
-        """
-        sortname = self._sortStrings[dialog.selectedSort]
-        if dialog.isDescend:
-            sortname = "descend" + sortname
-
-        return u"sort={}".format (sortname)
+            text = controller.getDialogResult()
+            if text != None:
+                self._application.mainWindow.pagePanel.pageView.codeEditor.replaceText (text)
 
 
 
-class AttachListDialog (wx.Dialog):
-    def __init__ (self, parent):
-        super (AttachListDialog, self).__init__ (parent)
-        self._sortStrings = [
+class AttachListDialogController (object):
+    def __init__ (self, dialog):
+        self._sortStringsDialog = [
                 _(u"Name"),
                 _(u"Extension"),
                 _(u"Size"),
                 _(u"Date"),
                 ]
+
+        self._sortStrings = [
+                u"name",
+                u"ext",
+                u"size",
+                u"date",
+                ]
+
+        self._dialog = dialog
+        self._dialog.setSortStrings (self._sortStringsDialog)
+        self._dialog.selectedSort = 0
+
+
+    def getDialogResult (self):
+        if self._dialog.ShowModal() == wx.ID_OK:
+            return self._getCommand()
+
+
+    def _getCommand (self):
+        return u"(:attachlist {}:)".format (self._getParams())
+
+
+    def _getParams (self):
+        """
+        Возвращает строку, описывающую параметры согласно настройкам в диалоге
+        """
+        sortname = self._sortStrings[self._dialog.selectedSort]
+        if self._dialog.isDescend:
+            sortname = "descend" + sortname
+
+        return u"sort={}".format (sortname)
+
+
+class AttachListDialog (TestedDialog):
+    def __init__ (self, parent):
+        super (AttachListDialog, self).__init__ (parent)
 
         self.SetTitle (_(u"Insert (:attachlist:) command"))
 
@@ -73,12 +91,15 @@ class AttachListDialog (wx.Dialog):
         self.__layout()
 
 
+    def setSortStrings (self, sortStrings):
+        self._sortComboBox.Clear()
+        self._sortComboBox.AppendItems (sortStrings)
+
+
     def __createGui (self):
         self._sortLabel = wx.StaticText (self, label = _(u"Sort by"))
 
         self._sortComboBox = wx.ComboBox (self, style = wx.CB_DROPDOWN | wx.CB_READONLY)
-        self._sortComboBox.AppendItems (self._sortStrings)
-        self._sortComboBox.SetSelection (0)
 
         self._descendCheckBox = wx.CheckBox (self, label = _("Descending sort"))
         self._buttonsSizer = self.CreateButtonSizer (wx.OK | wx.CANCEL)
@@ -108,6 +129,16 @@ class AttachListDialog (wx.Dialog):
         return self._sortComboBox.GetSelection()
 
 
+    @selectedSort.setter
+    def selectedSort (self, value):
+        self._sortComboBox.SetSelection (value)
+
+
     @property
     def isDescend (self):
         return self._descendCheckBox.IsChecked()
+
+
+    @isDescend.setter
+    def isDescend (self, value):
+        self._descendCheckBox.SetValue (value)

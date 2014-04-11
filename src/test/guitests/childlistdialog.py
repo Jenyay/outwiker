@@ -10,7 +10,7 @@ from outwiker.core.application import Application
 
 class ChildListDialogTest (BaseMainWndTest):
     """
-    Тесты окна со списком прикрепленных файлов
+    Тесты диалога для вставки команды (:childlist:)
     """
     def setUp (self):
         BaseMainWndTest.setUp (self)

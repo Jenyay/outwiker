@@ -125,6 +125,7 @@ if __name__ == '__main__':
     from test.guitests.fileicons import FileIconsTestUnix
     from test.guitests.stcstyleparser import StcStyleParserTest
     from test.guitests.childlistdialog import ChildListDialogTest
+    from test.guitests.attachlistdialog import AttachListDialogTest
 
     if os.name == "nt":
         from test.guitests.fileicons import FileIconsTestWindows
