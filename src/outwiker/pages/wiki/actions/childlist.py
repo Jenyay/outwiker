@@ -4,6 +4,7 @@
 import wx
 
 from outwiker.gui.baseaction import BaseAction
+from outwiker.gui.testeddialog import TestedDialog
 
 
 class WikiChildListAction (BaseAction):
@@ -15,11 +16,6 @@ class WikiChildListAction (BaseAction):
     def __init__ (self, application):
         self._application = application
 
-        self._sortStrings = [
-                u"order",
-                u"name",
-                ]
-
 
     @property
     def title (self):
@@ -29,27 +25,56 @@ class WikiChildListAction (BaseAction):
     @property
     def description (self):
         return _(u"Insert (:childlist:) command")
-    
+
 
     def run (self, params):
         assert self._application.mainWindow != None
         assert self._application.mainWindow.pagePanel != None
 
         with ChildListDialog (self._application.mainWindow) as dlg:
-            if dlg.ShowModal() == wx.ID_OK:
-                params = self._getParams (dlg)
-                text = u"(:childlist{}:)".format (params)
+            controller = ChildListDialogController (dlg)
 
-                codeEditor = self._application.mainWindow.pagePanel.pageView.codeEditor
-                codeEditor.replaceText (text)
+            text = controller.getDialogResult()
+            if text != None:
+                self._application.mainWindow.pagePanel.pageView.codeEditor.replaceText (text)
 
 
-    def _getParams (self, dialog):
+
+class ChildListDialogController (object):
+    def __init__ (self, dialog):
+        # Параметры сортировки
+        self._sortStrings = [
+                u"order",
+                u"name",
+                ]
+
+        # Строки сортировки, которые будут показаны в комбобоксе диалога
+        self._dialogSortStrings = [
+                _(u"as in tree"),
+                _(u"by name"),
+                ]
+
+        self._dialog = dialog
+        self._dialog.setSortOrders (self._dialogSortStrings)
+        self._dialog.selectedSort = 0
+
+
+    def getDialogResult (self):
+        if self._dialog.ShowModal() == wx.ID_OK:
+            return self._getCommand()
+
+
+    def _getCommand (self):
+        params = self._getParams ()
+        return u"(:childlist{}:)".format (params)
+
+
+    def _getParams (self):
         """
         Возвращает строку, описывающую параметры согласно настройкам в диалоге
         """
-        sortIndex = dialog.selectedSort
-        descend = dialog.isDescend
+        sortIndex = self._dialog.selectedSort
+        descend = self._dialog.isDescend
 
         if sortIndex == 0 and not descend:
             return u""
@@ -61,30 +86,27 @@ class WikiChildListAction (BaseAction):
         return u" sort={}".format (sortname)
 
 
-class ChildListDialog (wx.Dialog):
+class ChildListDialog (TestedDialog):
     """
     Диалог для вставки команды (:childlist:)
     """
     def __init__ (self, parent):
         super (ChildListDialog, self).__init__ (parent)
-        self._sortStrings = [
-                _(u"as in tree"),
-                _(u"by name"),
-                ]
-
         self.SetTitle (_(u"Insert (:childlist:) command"))
 
         self.__createGui ()
         self.__layout()
 
 
+    def setSortOrders (self, sortStrings):
+        self._sortComboBox.Clear()
+        self._sortComboBox.AppendItems (sortStrings)
+
+
     def __createGui (self):
         self._sortLabel = wx.StaticText (self, label = _(u"Sort"))
 
         self._sortComboBox = wx.ComboBox (self, style = wx.CB_DROPDOWN | wx.CB_READONLY)
-        self._sortComboBox.AppendItems (self._sortStrings)
-        self._sortComboBox.SetSelection (0)
-
         self._descendCheckBox = wx.CheckBox (self, label = _("Descending sort"))
         self._buttonsSizer = self.CreateButtonSizer (wx.OK | wx.CANCEL)
 
@@ -113,6 +135,16 @@ class ChildListDialog (wx.Dialog):
         return self._sortComboBox.GetSelection()
 
 
+    @selectedSort.setter
+    def selectedSort (self, value):
+        self._sortComboBox.SetSelection (value)
+
+
     @property
     def isDescend (self):
         return self._descendCheckBox.IsChecked()
+
+
+    @isDescend.setter
+    def isDescend (self, value):
+        self._descendCheckBox.SetValue (value)
