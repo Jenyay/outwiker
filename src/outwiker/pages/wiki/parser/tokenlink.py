@@ -99,7 +99,7 @@ class LinkToken (object):
                 self.parser.page[textStrip] == None):
             # Ссылка начинается на #, но сложенных страниц с таким именем нет,
             # значит это якорь
-            return '<a name="%s"></a>' % (textStrip[1:])
+            return '<a id="%s"></a>' % (textStrip[1:])
         else:
             # Ссылка не на прикрепление
             url = text.strip()

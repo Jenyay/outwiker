@@ -215,7 +215,7 @@ class ParserLinkTest (unittest.TestCase):
         Проверка создания якорей
         """
         text = u"бла-бла-бла \n[[#anchor]] бла-бла-бла\nбла-бла-бла"
-        result = u'бла-бла-бла \n<a name="anchor"></a> бла-бла-бла\nбла-бла-бла'
+        result = u'бла-бла-бла \n<a id="anchor"></a> бла-бла-бла\nбла-бла-бла'
 
         self.assertEqual (self.parser.toHtml (text), result)
 
@@ -225,7 +225,7 @@ class ParserLinkTest (unittest.TestCase):
         Проверка создания якорей
         """
         text = u"бла-бла-бла \n[[#якорь]] бла-бла-бла\nбла-бла-бла"
-        result = u'бла-бла-бла \n<a name="якорь"></a> бла-бла-бла\nбла-бла-бла'
+        result = u'бла-бла-бла \n<a id="якорь"></a> бла-бла-бла\nбла-бла-бла'
 
         self.assertEqual (self.parser.toHtml (text), result)
 

@@ -270,7 +270,7 @@ class ParserHeadingTest (unittest.TestCase):
 
     def testHeaderAnchor (self):
         text = u"бла-бла-бла \n!!! [[#anchor]] Заголовок бла-бла-бла\nбла-бла-бла"
-        result = u'бла-бла-бла \n<h2><a name="anchor"></a> Заголовок бла-бла-бла</h2>\nбла-бла-бла'
+        result = u'бла-бла-бла \n<h2><a id="anchor"></a> Заголовок бла-бла-бла</h2>\nбла-бла-бла'
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
