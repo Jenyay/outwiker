@@ -125,7 +125,8 @@ class HtmlRenderWebKit(HtmlRender):
         """
         Определить тип ссылки и вернуть кортеж (url, page, filename)
         """
-        basepath = unicode (self.ctrl.get_main_frame().get_uri(), "utf8")
+        # basepath = unicode (self.ctrl.get_main_frame().get_uri(), "utf8")
+        basepath = unicode (urllib.unquote (self.ctrl.get_main_frame().get_uri()), "utf8")
         identifier = UriIdentifierWebKit (self._currentPage, basepath)
 
         return identifier.identify (href)
