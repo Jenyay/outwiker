@@ -96,7 +96,7 @@ class HtmlGenerator (object):
 
     def _getHashOption (self):
         return StringOption (
-                Config (os.path.join (self.page.path, RootWikiPage.pageConfig)),
+                self.page.params,
                 self._configSection, 
                 self._hashKey, 
                 u"")
