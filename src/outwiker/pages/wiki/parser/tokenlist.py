@@ -124,7 +124,7 @@ class ListToken (object):
         for param in self.allListsParams:
             regex += param.symbol
 
-        regex += r"]+) *(?P<item>(\\\n|.)*?)$\n{0,2}"
+        regex += r"]+) *(?P<item>(?:\\\n|.)*?)$\n{0,2}"
 
         item =  Regex (regex, re.MULTILINE).setParseAction (noConvert).leaveWhitespace()
 
