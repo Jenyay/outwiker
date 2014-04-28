@@ -21,8 +21,6 @@ class UrlToken (object):
 
     def getToken (self):
         token =  Regex (ur"((?# Начало разбора IP )(?<!\.)(?:25[0-5]|2[0-4]\d|1\d\d|0?[1-9]\d|0{,2}[1-9])(?:\.(?:25[0-5]|2[0-4]\d|[01]?\d?\d)){3}(?!\.?[0-9])(?!\w)(?# Конец разбора IP )|(((news|telnet|nttp|file|http|ftp|https)://)|(www|ftp)\.)[-\w0-9\.]+[-\w0-9]+)(:[0-9]*)?(/([-\w0-9_,\$\.\+\!\*\(\):@|&=\?/~\#\%]*[-\w0-9_\$\+\!\*\(\):@|&=\?/~\#\%])?)?", re.IGNORECASE | re.UNICODE)("url")
-        
-        # token =  Regex (ur"((?# Начало разбора IP )(?<!\.)([01]?\d\d?|2[0-4]\d|25[0-5])\.([01]?\d\d?|2[0-4]\d|25[0-5])\.([01]?\d\d?|2[0-4]\d|25[0-5])\.([01]?\d\d?|2[0-4]\d|25[0-5])(?!\.?[0-9])(?!\w)(?# Конец разбора IP )|(((news|telnet|nttp|file|http|ftp|https)://)|(www|ftp)\.)[-\w0-9\.]+[-\w0-9]+)(:[0-9]*)?(/([-\w0-9_,\$\.\+\!\*\(\):@|&=\?/~\#\%]*[-\w0-9_\$\+\!\*\(\):@|&=\?/~\#\%])?)?", re.IGNORECASE | re.UNICODE)("url")
 
         token.setParseAction(self.__convertToUrlLink)
         return token
