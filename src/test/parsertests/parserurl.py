@@ -220,3 +220,10 @@ class ParserUrlTest (unittest.TestCase):
         result = u'абырвалг192.168.100.25'
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testUrlParse27 (self):
+        text = u"0.168.100.100"
+        result = u'0.168.100.100'
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
