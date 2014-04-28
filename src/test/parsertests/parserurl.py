@@ -145,3 +145,78 @@ class ParserUrlTest (unittest.TestCase):
         result = u'бла-бла-бла <a href="http://IP-адрес-apt-proxy:9999/ubuntu/">http://IP-адрес-apt-proxy:9999/ubuntu/</a> бла-бла'
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testUrlParse16 (self):
+        text = u"192.168.1.1"
+        result = u'<a href="http://192.168.1.1">192.168.1.1</a>'
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testUrlParse17 (self):
+        text = u"192.168.100.100"
+        result = u'<a href="http://192.168.100.100">192.168.100.100</a>'
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testUrlParse18 (self):
+        text = u"999.99.1.1"
+        result = u'999.99.1.1'
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testUrlParse19 (self):
+        text = u"192.168.100.10010"
+        result = u'192.168.100.10010'
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testUrlParse20 (self):
+        text = u"Бла бла 192.168.1.1 бла"
+        result = u'Бла бла <a href="http://192.168.1.1">192.168.1.1</a> бла'
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+    def testUrlParse21 (self):
+        text = u"99.99.1.1.20"
+        result = u'99.99.1.1.20'
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testUrlParse22 (self):
+        text = u"Бла бла 99.99.1.1.20 бла"
+        result = u'Бла бла 99.99.1.1.20 бла'
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testUrlParse23 (self):
+        text = u"192.168.100.256"
+        result = u'192.168.100.256'
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testUrlParse24 (self):
+        text = u"092.168.10.10"
+        result = u'<a href="http://092.168.10.10">092.168.10.10</a>'
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testUrlParse25 (self):
+        text = u"192.168.100.25абырвалг"
+        result = u'192.168.100.25абырвалг'
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+    def testUrlParse26 (self):
+        text = u"абырвалг192.168.100.25"
+        result = u'абырвалг192.168.100.25'
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
