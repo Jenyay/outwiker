@@ -104,11 +104,15 @@ class BasePageDialog(wx.Dialog):
         recentStyle = self.config.recentStyle.value
         names_lower = [name.lower() for name in names]
         try:
-            recentStyleIndex = names_lower.index (recentStyle.lower())
+            currentStyleIndex = names_lower.index (recentStyle.lower())
         except ValueError:
-            recentStyleIndex = 0
+            currentStyleIndex = 0
 
-        self.appearancePanel.styleCombo.SetSelection (recentStyleIndex)
+        if page != None:
+            # Для уже существующих страниц по умолчанию использовать уже установленный стиль
+            currentStyleIndex = 0
+
+        self.appearancePanel.styleCombo.SetSelection (currentStyleIndex)
 
 
 
