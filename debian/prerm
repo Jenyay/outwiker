@@ -5,3 +5,5 @@ if which update-python-modules >/dev/null 2>&1; then
 	update-python-modules -c  outwiker.private
 fi
 # End automatically added section
+
+#DEBHELPER#
