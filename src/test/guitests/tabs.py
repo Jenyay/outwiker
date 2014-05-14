@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 from outwiker.core.application import Application
@@ -6,6 +5,7 @@ from outwiker.gui.mainwindow import MainWindow
 from outwiker.gui.guiconfig import MainWindowConfig
 from outwiker.core.tree import RootWikiPage, WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
+from outwiker.actions.history import HistoryBackAction, HistoryForwardAction
 
 from .basemainwnd import BaseMainWndTest
 from test.utils import removeWiki
@@ -56,7 +56,6 @@ class TabsTest(BaseMainWndTest):
         self.assertEqual (self._tabsController.getTabsCount(), 2)
         self.assertEqual (self._tabsController.getPage(0), None)
         self.assertEqual (self._tabsController.getPage(1), None)
-
 
 
     def testOpenWiki (self):
@@ -680,3 +679,206 @@ class TabsTest(BaseMainWndTest):
         self.assertRaises (ValueError, self._tabsController.getPage, -1)
         self.assertRaises (ValueError, self._tabsController.getPage, 3)
         self.assertRaises (ValueError, self._tabsController.getPage, 5)
+
+
+    def testHistoryEmpty (self):
+        actionController = Application.actionController
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+
+        info_back = actionController.getActionInfo (HistoryBackAction.stringId)
+        info_forward = actionController.getActionInfo (HistoryBackAction.stringId)
+
+        self.assertFalse (info_back.menuItem.IsEnabled())
+        self.assertFalse (info_forward.menuItem.IsEnabled())
+
+
+    def testHistoryGoto (self):
+        actionController = Application.actionController
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+        Application.selectedPage = self.wikiroot[u"Страница 2"]
+
+        info_back = actionController.getActionInfo (HistoryBackAction.stringId)
+        info_forward = actionController.getActionInfo (HistoryForwardAction.stringId)
+
+        self.assertTrue (info_back.menuItem.IsEnabled())
+        self.assertFalse (info_forward.menuItem.IsEnabled())
+
+
+    def testHistoryCloseWiki (self):
+        actionController = Application.actionController
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+        Application.selectedPage = self.wikiroot[u"Страница 2"]
+
+        Application.wikiroot = None
+        Application.wikiroot = self.wikiroot
+
+        info_back = actionController.getActionInfo (HistoryBackAction.stringId)
+        info_forward = actionController.getActionInfo (HistoryForwardAction.stringId)
+
+        self.assertFalse (info_back.menuItem.IsEnabled())
+        self.assertFalse (info_forward.menuItem.IsEnabled())
+
+
+    def testHistorySeveralTabs_01 (self):
+        actionController = Application.actionController
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+        Application.selectedPage = self.wikiroot[u"Страница 2"]
+
+        self._tabsController.openInTab (self.wikiroot[u"Страница 2"], True)
+
+        info_back = actionController.getActionInfo (HistoryBackAction.stringId)
+        info_forward = actionController.getActionInfo (HistoryForwardAction.stringId)
+
+        self.assertFalse (info_back.menuItem.IsEnabled())
+        self.assertFalse (info_forward.menuItem.IsEnabled())
+
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+
+        info_back = actionController.getActionInfo (HistoryBackAction.stringId)
+        info_forward = actionController.getActionInfo (HistoryForwardAction.stringId)
+
+        self.assertTrue (info_back.menuItem.IsEnabled())
+        self.assertFalse (info_forward.menuItem.IsEnabled())
+
+
+    def testHistorySeveralTabs_02 (self):
+        actionController = Application.actionController
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+        Application.selectedPage = self.wikiroot[u"Страница 2"]
+
+        self._tabsController.openInTab (self.wikiroot[u"Страница 2"], True)
+        self._tabsController.setSelection (0)
+
+        info_back = actionController.getActionInfo (HistoryBackAction.stringId)
+        info_forward = actionController.getActionInfo (HistoryForwardAction.stringId)
+
+        self.assertTrue (info_back.menuItem.IsEnabled())
+        self.assertFalse (info_forward.menuItem.IsEnabled())
+
+
+    def testHistorySeveralTabs_03 (self):
+        actionController = Application.actionController
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+        Application.selectedPage = self.wikiroot[u"Страница 2"]
+
+        self._tabsController.openInTab (self.wikiroot[u"Страница 2"], False)
+
+        info_back = actionController.getActionInfo (HistoryBackAction.stringId)
+        info_forward = actionController.getActionInfo (HistoryForwardAction.stringId)
+
+        self.assertTrue (info_back.menuItem.IsEnabled())
+        self.assertFalse (info_forward.menuItem.IsEnabled())
+
+
+    def testHistoryBack_01 (self):
+        actionController = Application.actionController
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+        Application.selectedPage = self.wikiroot[u"Страница 2"]
+
+        Application.actionController.getAction (HistoryBackAction.stringId).run (None)
+
+        self.assertEqual (Application.selectedPage, self.wikiroot[u"Страница 1"])
+
+        info_back = actionController.getActionInfo (HistoryBackAction.stringId)
+        info_forward = actionController.getActionInfo (HistoryForwardAction.stringId)
+
+        self.assertFalse (info_back.menuItem.IsEnabled())
+        self.assertTrue (info_forward.menuItem.IsEnabled())
+
+
+    def testHistoryBack_02 (self):
+        actionController = Application.actionController
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+        Application.selectedPage = None
+
+        Application.actionController.getAction (HistoryBackAction.stringId).run (None)
+
+        self.assertEqual (Application.selectedPage, self.wikiroot[u"Страница 1"])
+
+        info_back = actionController.getActionInfo (HistoryBackAction.stringId)
+        info_forward = actionController.getActionInfo (HistoryForwardAction.stringId)
+
+        self.assertFalse (info_back.menuItem.IsEnabled())
+        self.assertTrue (info_forward.menuItem.IsEnabled())
+
+
+        Application.actionController.getAction (HistoryForwardAction.stringId).run (None)
+
+        info_back = actionController.getActionInfo (HistoryBackAction.stringId)
+        info_forward = actionController.getActionInfo (HistoryForwardAction.stringId)
+
+        self.assertTrue (info_back.menuItem.IsEnabled())
+        self.assertFalse (info_forward.menuItem.IsEnabled())
+
+
+    def testHistoryBackForward_01 (self):
+        actionController = Application.actionController
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+        Application.selectedPage = self.wikiroot[u"Страница 2"]
+        Application.selectedPage = self.wikiroot[u"Страница 2/Страница 3"]
+        Application.selectedPage = self.wikiroot[u"Страница 2/Страница 3/Страница 4"]
+        Application.selectedPage = None
+
+        
+        Application.actionController.getAction (HistoryBackAction.stringId).run (None)
+
+        self.assertEqual (Application.selectedPage, 
+                self.wikiroot[u"Страница 2/Страница 3/Страница 4"])
+
+        Application.actionController.getAction (HistoryBackAction.stringId).run (None)
+
+        self.assertEqual (Application.selectedPage, 
+                self.wikiroot[u"Страница 2/Страница 3"])
+
+        Application.actionController.getAction (HistoryBackAction.stringId).run (None)
+
+        self.assertEqual (Application.selectedPage, 
+                self.wikiroot[u"Страница 2"])
+
+        Application.actionController.getAction (HistoryBackAction.stringId).run (None)
+
+        self.assertEqual (Application.selectedPage, 
+                self.wikiroot[u"Страница 1"])
+
+
+        info_back = actionController.getActionInfo (HistoryBackAction.stringId)
+        info_forward = actionController.getActionInfo (HistoryForwardAction.stringId)
+
+        self.assertFalse (info_back.menuItem.IsEnabled())
+        self.assertTrue (info_forward.menuItem.IsEnabled())
+
+
+        Application.actionController.getAction (HistoryForwardAction.stringId).run (None)
+
+        self.assertEqual (Application.selectedPage, 
+                self.wikiroot[u"Страница 2"])
+
+        Application.actionController.getAction (HistoryForwardAction.stringId).run (None)
+
+        self.assertEqual (Application.selectedPage, 
+                self.wikiroot[u"Страница 2/Страница 3"])
+
+        Application.actionController.getAction (HistoryForwardAction.stringId).run (None)
+
+        self.assertEqual (Application.selectedPage, 
+                self.wikiroot[u"Страница 2/Страница 3/Страница 4"])
+
+        Application.actionController.getAction (HistoryForwardAction.stringId).run (None)
+
+        self.assertEqual (Application.selectedPage, None)
+
+
+        info_back = actionController.getActionInfo (HistoryBackAction.stringId)
+        info_forward = actionController.getActionInfo (HistoryForwardAction.stringId)
+
+        self.assertTrue (info_back.menuItem.IsEnabled())
+        self.assertFalse (info_forward.menuItem.IsEnabled())

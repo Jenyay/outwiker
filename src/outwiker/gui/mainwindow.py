@@ -59,6 +59,7 @@ from outwiker.actions.reloadwiki import ReloadWikiAction
 from outwiker.actions.openhelp import OpenHelpAction
 from outwiker.actions.about import AboutAction
 from outwiker.actions.openattachfolder import OpenAttachFolderAction
+from outwiker.actions.history import HistoryBackAction, HistoryForwardAction
 
 
 class MainWindow(wx.Frame):
@@ -197,6 +198,35 @@ class MainWindow(wx.Frame):
         """
         actionController = Application.actionController
         menu = Application.mainWindow.mainMenu.treeMenu
+        toolbar = Application.mainWindow.mainToolbar
+        imagesDir = getImagesDir()
+
+        actionController.appendMenuItem (
+                HistoryBackAction.stringId, 
+                menu)
+
+        actionController.appendToolbarButton (HistoryBackAction.stringId, 
+                toolbar,
+                os.path.join (imagesDir, u"back.png"),
+                True)
+
+        actionController.enableTools (HistoryBackAction.stringId, False)
+
+
+        actionController.appendMenuItem (
+                HistoryForwardAction.stringId, 
+                menu)
+
+        actionController.appendToolbarButton (HistoryForwardAction.stringId, 
+                toolbar,
+                os.path.join (imagesDir, u"forward.png"),
+                True)
+
+        actionController.enableTools (HistoryForwardAction.stringId, False)
+        
+        
+        toolbar.AddSeparator()
+        menu.AppendSeparator()
 
         actionController.appendMenuItem (
                 AddSiblingPageAction.stringId, 

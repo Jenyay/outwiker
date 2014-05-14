@@ -114,6 +114,20 @@ class TabsController (object):
         self.__unbindEvents()
 
 
+    def historyBack (self):
+        """
+        Перейти на предыдущую страницу на данной вкладке
+        """
+        self._tabsCtrl.HistoryBack()
+
+
+    def historyForward (self):
+        """
+        Перейти на предыдущую страницу на данной вкладке
+        """
+        self._tabsCtrl.HistoryForward()
+
+
     def __bindGuiEvents (self):
         self._tabsCtrl.Bind (fnb.EVT_FLATNOTEBOOK_PAGE_CHANGED, self.__onTabChanged)
         self._tabsCtrl.Bind (fnb.EVT_FLATNOTEBOOK_PAGE_CLOSING, self.__onTabClose)

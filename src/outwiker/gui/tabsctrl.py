@@ -3,6 +3,10 @@
 import wx
 import wx.lib.agw.flatnotebook as fnb
 
+from outwiker.core.application import Application
+from outwiker.core.history import History
+from outwiker.actions.history import HistoryBackAction, HistoryForwardAction
+
 
 class TabsCtrl (wx.Panel):
     def __init__ (self, parent):
@@ -25,6 +29,22 @@ class TabsCtrl (wx.Panel):
         self.Layout()
 
 
+    def _updateHistoryButtons (self):
+        """
+        Активировать или дезактивировать кнопки Вперед / Назад
+        """
+        history = self._getCurrentHistory()
+        if history == None:
+            Application.actionController.enableTools (HistoryBackAction.stringId, False)
+            Application.actionController.enableTools (HistoryForwardAction.stringId, False)
+        else:
+            Application.actionController.enableTools (HistoryBackAction.stringId, 
+                    history.backLength != 0)
+            Application.actionController.enableTools (HistoryForwardAction.stringId, 
+                    history.forwardLength != 0)
+
+
+
     def AddPage (self, title, page):
         blankWindow = TabWindow (self, page)
         self._tabs.AddPage (blankWindow, title)
@@ -33,10 +53,12 @@ class TabsCtrl (wx.Panel):
     def InsertPage (self, index, title, page, select):
         blankWindow = TabWindow (self, page)
         self._tabs.InsertPage (index, blankWindow, title, select)
+        self._updateHistoryButtons()
 
 
     def Clear (self):
         self._tabs.DeleteAllPages()
+        self._updateHistoryButtons()
 
 
     def GetPageText (self, index):
@@ -62,6 +84,18 @@ class TabsCtrl (wx.Panel):
         if page_index >= 0:
             self._tabs.GetPage (page_index).page = page
 
+        self._updateHistoryButtons()
+
+
+    def _getCurrentHistory (self):
+        """
+        Возвращает класс истории для текущей вкладки
+        """
+        page_index = self.GetSelection()
+
+        if page_index >= 0:
+            return self._tabs.GetPage (page_index).history
+
 
     def GetSelection (self):
         return self._tabs.GetSelection()
@@ -76,24 +110,42 @@ class TabsCtrl (wx.Panel):
 
 
     def SetSelection (self, index):
-        return self._tabs.SetSelection (index)
+        result = self._tabs.SetSelection (index)
+        self._updateHistoryButtons()
+        return result
 
 
     def DeletePage (self, index):
-        return self._tabs.DeletePage (index)
+        result = self._tabs.DeletePage (index)
+        self._updateHistoryButtons()
+        return result
 
 
     def DeletePage (self, index):
         self._tabs.DeletePage (index)
+        self._updateHistoryButtons()
 
 
     def NextPage (self):
         self._tabs.AdvanceSelection(True)
+        self._updateHistoryButtons()
 
 
     def PreviousPage (self):
         self._tabs.AdvanceSelection (False)
+        self._updateHistoryButtons()
 
+
+    def HistoryBack (self):
+        page = self._getCurrentHistory().back()
+        Application.selectedPage = page
+        self._updateHistoryButtons()
+
+
+    def HistoryForward (self):
+        page = self._getCurrentHistory().forward()
+        Application.selectedPage = page
+        self._updateHistoryButtons()
 
 
 class TabWindow (wx.Window):
@@ -102,14 +154,20 @@ class TabWindow (wx.Window):
     """
     def __init__ (self, parent, page):
         super (TabWindow, self).__init__ (parent, size=(1, 1) )
-        self._page = page
+        self._history = History()
+        self._history.goto (page)
 
     
     @property
     def page (self):
-        return self._page
+        return self._history.currentPage
 
 
     @page.setter
-    def page (self, value):
-        self._page = value
+    def page (self, page):
+        self._history.goto (page)
+
+
+    @property
+    def history (self):
+        return self._history

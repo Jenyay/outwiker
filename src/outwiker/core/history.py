@@ -61,7 +61,7 @@ class History (object):
         self._forward.append (self._currentPage)
         self._currentPage = self._back.pop()
 
-        if self._currentPage.isRemoved:
+        if self._currentPage != None and self._currentPage.isRemoved:
             self._currentPage = None
 
         return self._currentPage
@@ -74,12 +74,18 @@ class History (object):
         self._back.append (self._currentPage)
         self._currentPage = self._forward.pop()
 
-        if self._currentPage.isRemoved:
+        if self._currentPage != None and self._currentPage.isRemoved:
             self._currentPage = None
 
+        return self._currentPage
+
+
+    @property
+    def currentPage (self):
         return self._currentPage
 
 
     def clear (self):
         self._back = []
         self._forward = []
+        self._currentPage = None

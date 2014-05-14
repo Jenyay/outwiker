@@ -723,6 +723,16 @@ def registerActions (application):
             AboutAction (application), 
             HotKey ("F1", ctrl=True))
 
+    # Назад
+    from outwiker.actions.history import HistoryBackAction, HistoryForwardAction
+    application.actionController.register (
+            HistoryBackAction (application), 
+            HotKey ("Left", ctrl=True))
+
+    application.actionController.register (
+            HistoryForwardAction (application), 
+            HotKey ("Right", ctrl=True))
+
 
     _registerPolyActions (application)
 
