@@ -164,3 +164,129 @@ class HistoryTest (unittest.TestCase):
 
         page = history.back()
         self.assertEqual (page, self.wiki[u"Страница 2"])
+
+
+    def testRename_01 (self):
+        history = History()
+        history.goto (self.wiki[u"Страница 1"])
+        history.goto (self.wiki[u"Страница 2"])
+        history.goto (self.wiki[u"Страница 2/Страница 3"])
+        history.goto (self.wiki[u"Страница 2/Страница 3/Страница 4"])
+
+        self.wiki[u"Страница 2/Страница 3"].title = u"Новый заголовок"
+
+        page = history.back()
+        self.assertEqual (page, self.wiki[u"Страница 2/Новый заголовок"])
+
+
+    def testRename_02 (self):
+        history = History()
+        history.goto (self.wiki[u"Страница 1"])
+        history.goto (self.wiki[u"Страница 2"])
+        history.goto (self.wiki[u"Страница 2/Страница 3"])
+        history.goto (self.wiki[u"Страница 2/Страница 3/Страница 4"])
+
+        self.wiki[u"Страница 2/Страница 3/Страница 4"].title = u"Новый заголовок"
+
+        history.goto (None)
+        page = history.back()
+
+        self.assertEqual (page, self.wiki[u"Страница 2/Страница 3/Новый заголовок"])
+
+
+    def testRemove_01 (self):
+        history = History()
+        history.goto (self.wiki[u"Страница 1"])
+        history.goto (self.wiki[u"Страница 2"])
+        history.goto (self.wiki[u"Страница 2/Страница 3"])
+        history.goto (self.wiki[u"Страница 2/Страница 3/Страница 4"])
+
+        self.wiki[u"Страница 2/Страница 3"].remove()
+        page = history.back()
+
+        self.assertEqual (page, None)
+
+
+    def testRemove_02 (self):
+        history = History()
+        history.goto (self.wiki[u"Страница 1"])
+        history.goto (self.wiki[u"Страница 2"])
+        history.goto (self.wiki[u"Страница 2/Страница 3"])
+        history.goto (self.wiki[u"Страница 2/Страница 3/Страница 4"])
+
+        history.back()
+        self.wiki[u"Страница 2/Страница 3/Страница 4"].remove()
+
+        page = history.forward()
+
+        self.assertEqual (page, None)
+
+
+    def testRemove_03 (self):
+        history = History()
+        history.goto (self.wiki[u"Страница 1"])
+        history.goto (self.wiki[u"Страница 2"])
+        history.goto (self.wiki[u"Страница 2/Страница 3"])
+        history.goto (self.wiki[u"Страница 2/Страница 3/Страница 4"])
+
+        self.wiki[u"Страница 2/Страница 3/Страница 4"].remove()
+
+        history.back()
+        page = history.forward()
+
+        self.assertEqual (page, None)
+
+
+    def testMove_01 (self):
+        history = History()
+        history.goto (self.wiki[u"Страница 1"])
+        history.goto (self.wiki[u"Страница 2"])
+        history.goto (self.wiki[u"Страница 2/Страница 3"])
+        history.goto (self.wiki[u"Страница 2/Страница 3/Страница 4"])
+
+        self.wiki[u"Страница 2/Страница 3"].moveTo (self.wiki[u"Страница 1"])
+
+        page = history.back()
+        self.assertEqual (page, self.wiki[u"Страница 1/Страница 3"])
+
+
+    def testMove_02 (self):
+        history = History()
+        history.goto (self.wiki[u"Страница 1"])
+        history.goto (self.wiki[u"Страница 2"])
+        history.goto (self.wiki[u"Страница 2/Страница 3"])
+        history.goto (self.wiki[u"Страница 2/Страница 3/Страница 4"])
+
+        self.wiki[u"Страница 2"].moveTo (self.wiki[u"Страница 1"])
+
+        page = history.back()
+        self.assertEqual (page, self.wiki[u"Страница 1/Страница 2/Страница 3"])
+
+
+    def testMove_03 (self):
+        history = History()
+        history.goto (self.wiki[u"Страница 1"])
+        history.goto (self.wiki[u"Страница 2"])
+        history.goto (self.wiki[u"Страница 2/Страница 3"])
+        history.goto (self.wiki[u"Страница 2/Страница 3/Страница 4"])
+
+        history.back()
+
+        self.wiki[u"Страница 2/Страница 3/Страница 4"].moveTo (self.wiki[u"Страница 1"])
+
+        page = history.forward()
+        self.assertEqual (page, self.wiki[u"Страница 1/Страница 4"])
+
+
+    def testMove_04 (self):
+        history = History()
+        history.goto (self.wiki[u"Страница 1"])
+        history.goto (self.wiki[u"Страница 2"])
+        history.goto (self.wiki[u"Страница 2/Страница 3"])
+        history.goto (self.wiki[u"Страница 2/Страница 3/Страница 4"])
+
+        self.wiki[u"Страница 2/Страница 3/Страница 4"].moveTo (self.wiki[u"Страница 1"])
+
+        history.back()
+        page = history.forward()
+        self.assertEqual (page, self.wiki[u"Страница 1/Страница 4"])
