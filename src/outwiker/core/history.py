@@ -85,9 +85,3 @@ class History (object):
     @property
     def currentPage (self):
         return self._currentPage
-
-
-    def clear (self):
-        self._back = []
-        self._forward = []
-        self._currentPage = None
