@@ -187,12 +187,15 @@ class Shortcuter (object):
             menuitem.SetItemLabel (title)
             checkable = menuitem.IsCheckable()
             checked = menuitem.IsChecked()
+            enabled = menuitem.IsEnabled()
 
             # Без удаления пункта не хотят появляться подчеркивания
             menu = menuitem.GetMenu()
-            menu.RemoveItem (menuitem)
 
+            menu.RemoveItem (menuitem)
             menu.InsertItem (position, menuitem)
+
+            menuitem.Enable (enabled)
 
             if checkable:
                 # После удаления пункта меню пропадает его "чекабельность"
