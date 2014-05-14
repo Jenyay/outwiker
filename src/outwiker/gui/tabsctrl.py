@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import wx
@@ -27,14 +26,12 @@ class TabsCtrl (wx.Panel):
 
 
     def AddPage (self, title, page):
-        blankWindow = wx.Window (self, size=(1,1))
-        blankWindow.page = page
+        blankWindow = TabWindow (self, page)
         self._tabs.AddPage (blankWindow, title)
 
 
     def InsertPage (self, index, title, page, select):
-        blankWindow = wx.Window (self, size=(1,1))
-        blankWindow.page = page
+        blankWindow = TabWindow (self, page)
         self._tabs.InsertPage (index, blankWindow, title, select)
 
 
@@ -96,3 +93,23 @@ class TabsCtrl (wx.Panel):
 
     def PreviousPage (self):
         self._tabs.AdvanceSelection (False)
+
+
+
+class TabWindow (wx.Window):
+    """
+    Класс окна, хранимого внутри владки с дополнительной информацией (текущая страница, история)
+    """
+    def __init__ (self, parent, page):
+        super (TabWindow, self).__init__ (parent, size=(1, 1) )
+        self._page = page
+
+    
+    @property
+    def page (self):
+        return self._page
+
+
+    @page.setter
+    def page (self, value):
+        self._page = value
