@@ -451,12 +451,10 @@ class NotesTree(wx.Panel):
     @selectedPage.setter
     def selectedPage (self, newSelPage):
         if newSelPage == None:
-            return
-
-        self.__expandToPage (newSelPage)
-        item = self.getTreeItem (newSelPage)
-
-        # assert item != None
+            item = self.treeCtrl.GetRootItem()
+        else:
+            self.__expandToPage (newSelPage)
+            item = self.getTreeItem (newSelPage)
 
         if item != None:
             self.treeCtrl.SelectItem (item)

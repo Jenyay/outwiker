@@ -39,7 +39,9 @@ class History (object):
         """
         Произошел переход на новую страницу
         """
-        if self._currentPage == None:
+        if (self._currentPage == None and
+                len (self._back) == 0 and
+                len (self._forward) == 0 ):
             # В первый раз открыли какую-то страницу
             self._currentPage = newCurrentPage
             return
