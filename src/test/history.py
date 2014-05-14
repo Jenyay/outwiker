@@ -290,3 +290,19 @@ class HistoryTest (unittest.TestCase):
         history.back()
         page = history.forward()
         self.assertEqual (page, self.wiki[u"Страница 1/Страница 4"])
+
+
+    def testClear_01 (self):
+        history = History()
+        history.goto (self.wiki[u"Страница 1"])
+        history.goto (self.wiki[u"Страница 2"])
+        history.goto (self.wiki[u"Страница 2/Страница 3"])
+        history.goto (self.wiki[u"Страница 2/Страница 3/Страница 4"])
+
+        history.back()
+        history.back()
+
+        history.clear()
+
+        self.assertEqual (history.backLength, 0)
+        self.assertEqual (history.forwardLength, 0)

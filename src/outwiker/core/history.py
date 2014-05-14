@@ -78,3 +78,8 @@ class History (object):
             self._currentPage = None
 
         return self._currentPage
+
+
+    def clear (self):
+        self._back = []
+        self._forward = []
