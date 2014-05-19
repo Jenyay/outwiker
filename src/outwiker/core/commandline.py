@@ -30,8 +30,6 @@ class CommandLine (object):
         """
         args - параметры командной строки (исключая outwiker.py или outwiker.exe), т.е. это argv[1:]
         """
-        self._parser = self._createParser()
-
         try:
             self._namespace = self._parser.parse_args (args)
         except SystemExit:
@@ -45,19 +43,19 @@ class CommandLine (object):
         parser.add_argument ('wikipath', 
                 nargs='?', 
                 metavar = _(u"Path"),
-                help=_(u"Path to wiki"))
+                help=u"Path to wiki")
 
         parser.add_argument ('--help', '-h',
                 action='store_const', 
                 const=True, 
                 default=False,
-                help=_(u"Help"))
+                help=u"Help")
 
         parser.add_argument ('--readonly', '-r',
                 action='store_const', 
                 const=True, 
                 default=False,
-                help=_(u"Read only"))
+                help=u"Read only")
 
         return parser
 
