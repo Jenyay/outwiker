@@ -29,8 +29,9 @@ class Starter (object):
 
 
     def __parseCommandLine (self, args):
+        cl = CommandLine ()
         try:
-            cl = CommandLine (args)
+            cl.parseParams (args)
         except CommandLineException:
             print cl.format_help()
             exit (1)
@@ -42,7 +43,7 @@ class Starter (object):
 
         # Открытие дерева с заметками
         if cl.wikipath != None:
-            openWiki (cl.wikipath)
+            openWiki (cl.wikipath, cl.readonly)
 
 
     def __openRecentWiki (self):

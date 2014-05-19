@@ -21,7 +21,12 @@ class CommandLine (object):
     """
     Класс для хранения разобранных параметров командной строки
     """
-    def __init__ (self, args):
+    def __init__ (self):
+        self._parser = self._createParser()
+        self._namespace = None
+
+
+    def parseParams (self, args):
         """
         args - параметры командной строки (исключая outwiker.py или outwiker.exe), т.е. это argv[1:]
         """
@@ -48,17 +53,33 @@ class CommandLine (object):
                 default=False,
                 help=_(u"Help"))
 
+        parser.add_argument ('--readonly', '-r',
+                action='store_const', 
+                const=True, 
+                default=False,
+                help=_(u"Read only"))
+
         return parser
 
 
     @property
     def wikipath (self):
-        return unicode (self._namespace.wikipath, getOS().filesEncoding)
+        result = None
+
+        if self._namespace.wikipath != None:
+            result = unicode (self._namespace.wikipath, getOS().filesEncoding)
+
+        return result
 
 
     @property
     def help (self):
         return self._namespace.help
+
+
+    @property
+    def readonly (self):
+        return self._namespace.readonly
 
 
     def format_help (self):
