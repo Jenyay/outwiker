@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import os
@@ -442,10 +441,17 @@ class NotesTree(wx.Panel):
 
     @property
     def selectedPage (self):
+        page = None
+
         item = self.treeCtrl.GetSelection ()
         if item.IsOk():
             page = self.treeCtrl.GetItemData (item).GetData()
-            return page
+
+            # Проверка того, что выбрали не корневой элемент
+            if page.parent == None:
+                page = None
+        
+        return page
 
 
     @selectedPage.setter
