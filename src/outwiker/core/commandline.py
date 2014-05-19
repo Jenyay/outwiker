@@ -2,6 +2,8 @@
 
 import argparse
 
+from outwiker.core.system import getOS
+
 
 class CommandLineException (BaseException):
     pass
@@ -51,7 +53,7 @@ class CommandLine (object):
 
     @property
     def wikipath (self):
-        return self._namespace.wikipath
+        return unicode (self._namespace.wikipath, getOS().filesEncoding)
 
 
     @property

@@ -7,7 +7,6 @@ import os.path
 from outwiker.core.application import Application
 from outwiker.gui.guiconfig import GeneralGuiConfig
 from outwiker.core.commands import openWiki
-from outwiker.core.system import getOS
 from outwiker.core.commandline import CommandLine, CommandLineException
 
 
