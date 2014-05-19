@@ -4,10 +4,11 @@
 import sys
 import os.path
 
-from .application import Application
+from outwiker.core.application import Application
 from outwiker.gui.guiconfig import GeneralGuiConfig
-from .commands import openWiki
-from .system import getOS
+from outwiker.core.commands import openWiki
+from outwiker.core.system import getOS
+from outwiker.core.commandline import CommandLine, CommandLineException
 
 
 class Starter (object):
@@ -21,11 +22,28 @@ class Starter (object):
         self.generalConfig = GeneralGuiConfig (Application.config)
 
         if len (sys.argv) > 1:
-            self.__openFromCommandLine()
+            self.__parseCommandLine (sys.argv[1:])
         else:
             # Открыть последний открытый файл 
             # (если установлена соответствующая опция)
             self.__openRecentWiki ()
+
+
+    def __parseCommandLine (self, args):
+        try:
+            cl = CommandLine (args)
+        except CommandLineException:
+            print cl.format_help()
+            exit (1)
+
+        # Вывод справки
+        if cl.help:
+            print cl.format_help()
+            exit (1)
+
+        # Открытие дерева с заметками
+        if cl.wikipath != None:
+            openWiki (cl.wikipath)
 
 
     def __openRecentWiki (self):
@@ -36,15 +54,3 @@ class Starter (object):
 
         if openRecent and len (Application.recentWiki) > 0:
             openWiki (Application.recentWiki[0])
-
-
-    def __openFromCommandLine (self):
-        """
-        Открыть вики, путь до которой передан в командной строке
-        """
-        fname = unicode (sys.argv[1], getOS().filesEncoding)
-
-        if len (fname) > 0:
-            openWiki (fname)
-        else:
-            self.__openRecentWiki ()

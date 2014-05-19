@@ -101,6 +101,7 @@ if __name__ == '__main__':
     from test.hotkeyparser import HotKeyParserTest
     from test.hotkeyconfig import HotKeyConfigTest
     from test.history import HistoryTest
+    from test.commandline import CommandLineTest
 
     #from test.guitests.tray import TrayNormalTest#, TrayIconizedTest
     from test.guitests.mainwnd import MainWndTest
