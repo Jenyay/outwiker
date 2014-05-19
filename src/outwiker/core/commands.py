@@ -133,6 +133,15 @@ def openWikiWithDialog (parent, readonly=False):
 
 
 def openWiki (path, readonly=False):
+    if not os.path.exists (path):
+        __canNotLoadWikiMessage (path)
+        return
+    
+    # Если передан путь до файла настроек (а не до папки с вики), 
+    # то оставим только папку
+    if not os.path.isdir (path):
+        path = os.path.split (fname)[0]
+
     wikiroot = None
 
     Application.onStartTreeUpdate(None)

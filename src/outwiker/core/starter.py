@@ -45,8 +45,6 @@ class Starter (object):
         fname = unicode (sys.argv[1], getOS().filesEncoding)
 
         if len (fname) > 0:
-            if not os.path.isdir (fname):
-                fname = os.path.split (fname)[0]
             openWiki (fname)
         else:
             self.__openRecentWiki ()
