@@ -23,12 +23,11 @@ class Starter (object):
         """
         Выполнить команды после создания GUI
         """
-        if self._commandLine != None:
-            self.__processGUICommands ()
-        else:
-            # Открыть последний открытый файл 
-            # (если установлена соответствующая опция)
+        # Открытие дерева с заметками
+        if self._commandLine == None or self._commandLine.wikipath == None:
             self.__openRecentWiki ()
+        else:
+            openWiki (self._commandLine.wikipath, self._commandLine.readonly)
 
 
     def processConsole (self):
@@ -64,12 +63,6 @@ class Starter (object):
             print ur"""OutWiker {ver}""".format (ver = str (getCurrentVersion()) )
             exit (0)
         
-
-    def __processGUICommands (self):
-        # Открытие дерева с заметками
-        if self._commandLine.wikipath != None:
-            openWiki (self._commandLine.wikipath, self._commandLine.readonly)
-
 
     def __openRecentWiki (self):
         """

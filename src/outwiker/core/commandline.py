@@ -42,7 +42,7 @@ class CommandLine (object):
     def _createParser (self):
         parser = _SilentParser(prog = 'outwiker',
                 description = self._description,
-                epilog = "(c) Eugeniy Ilin (aka Jenyay), 2014. Released under the GNU GPL.",
+                epilog = "(c) Eugeniy Ilin (aka Jenyay), 2014. Released under the GNU GPL 3.",
                 add_help = False)
 
         parser.add_argument ('wikipath', 
@@ -77,6 +77,8 @@ class CommandLine (object):
 
         if self._namespace.wikipath != None:
             result = unicode (self._namespace.wikipath, getOS().filesEncoding)
+            if len (result.split()) == 0:
+                result = None
 
         return result
 
