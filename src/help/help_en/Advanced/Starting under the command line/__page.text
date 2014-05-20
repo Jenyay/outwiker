@@ -1,7 +1,16 @@
 You can pass the path to wiki, which will open at the program start, through the command line. For example:
 
-outwiker.exe "C:\temp\samplewiki"
+'''outwiker.exe "C:\temp\samplewiki"'''
 
 or 
 
-outwiker.exe "C:\temp\samplewiki\__page.opt"
+'''outwiker.exe "C:\temp\samplewiki\__page.opt"'''
+
+
+If the tree notes should be open as "read-only", you need to add the option ''--readonly'' or ''-r'':
+
+'''outwiker.exe "C:\temp\samplewiki" --readonly '''
+
+or
+
+'''outwiker.exe "C:\temp\samplewiki" -r '''

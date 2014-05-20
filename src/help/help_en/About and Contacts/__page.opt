@@ -7,6 +7,7 @@ order = 1
 tags = 
 datetime = 2014-03-27 23:20:43.392660
 linewrap = True
+cursorposition = 0
 
 [Misc]
 pageindex = 1

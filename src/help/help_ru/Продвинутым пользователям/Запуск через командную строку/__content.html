@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<HTML>
-<HEAD>
-	<META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>
+<html>
+<head>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+	<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
 
-	<STYLE type="text/css">
+	<style type='text/css'>
 		body, div, p, table {
 			font-size:10pt;
 			font-family:Verdana;
@@ -11,17 +12,26 @@
 
 		img{border:none}
 		
-	</STYLE>
+	</style>
 	
-</HEAD>
+</head>
 
-<BODY>
-<P>Программе через командную строку можно передавать путь до вики, которая будет открыта при запуске программы. Например:</P>
-
-<P>outwiker.exe "C:\temp\samplewiki"</P>
-
-<P>или </P>
-
-<P>outwiker.exe "C:\temp\samplewiki\__page.opt"</P>
-</BODY>
-</HTML>
+<body>
+Программе через командную строку можно передавать путь до дерева заметок, которая будет открыта при запуске программы. Например:<br>
+<br>
+<b>outwiker.exe "C:\temp\samplewiki"</b><br>
+<br>
+или <br>
+<br>
+<b>outwiker.exe "C:\temp\samplewiki\__page.opt"</b><br>
+<br>
+<br>
+Если дерево заметок должно быть открыто в режиме "только для чтения", нужно добавить параметр <i>--readonly</i> или <i>-r</i>:<br>
+<br>
+<b>outwiker.exe "C:\temp\samplewiki" --readonly </b><br>
+<br>
+или<br>
+<br>
+<b>outwiker.exe "C:\temp\samplewiki" -r </b>
+</body>
+</html>
