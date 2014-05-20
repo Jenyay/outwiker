@@ -18,7 +18,7 @@ except wxversion.VersionError:
 import wx
 
 from outwiker.core.application import Application
-from outwiker.core.system import getOS, getPluginsDirList, getConfigPath
+from outwiker.core.system import getOS, getPluginsDirList, getConfigPath, getExeFile
 from outwiker.core.starter import Starter, StarterExit
 from outwiker.core.commands import registerActions
 from outwiker.gui.actioncontroller import ActionController
@@ -42,8 +42,7 @@ class OutWiker(wx.App):
             return True
 
         # Если программа запускается в виде exe-шника, то перенаправить вывод ошибок в лог
-        exepath = unicode (sys.argv[0], getOS().filesEncoding)
-        if exepath.endswith (u".exe"):
+        if getExeFile().endswith (u".exe"):
             # Закоментировать следующую строку, если не надо выводить strout/strerr в лог-файл
             self.RedirectStdio (self.getLogFileName (self._fullConfigPath))
             pass

@@ -1,11 +1,10 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import os.path
+import subprocess
 
 from outwiker.gui.baseaction import BaseAction
-from outwiker.core.commands import openWiki
-from outwiker.core.system import getCurrentDir
+from outwiker.core.system import getCurrentDir, getExeFile
 
 
 class OpenHelpAction (BaseAction):
@@ -34,4 +33,10 @@ class OpenHelpAction (BaseAction):
         path = os.path.join (getCurrentDir(), 
                 help_dir, 
                 current_help)
-        openWiki (path, readonly=True)
+
+        exeFile = getExeFile()
+        if exeFile.endswith (".exe"):
+            DETACHED_PROCESS = 0x00000008
+            subprocess.Popen ([exeFile, path, "--readonly"], creationflags=DETACHED_PROCESS)
+        else:
+            subprocess.Popen (["python", exeFile, path, "--readonly"])

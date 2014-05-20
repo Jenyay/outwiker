@@ -204,6 +204,13 @@ def getTemplatesDir ():
     return os.path.join (getCurrentDir(), STYLES_DIR)
 
 
+def getExeFile ():
+    """
+    Возвращает имя запускаемого файла
+    """
+    return unicode (sys.argv[0], getOS().filesEncoding)
+
+
 def getPluginsDirList (configDirName=DEFAULT_CONFIG_DIR, configFileName=DEFAULT_CONFIG_NAME):
     """
     Возвращает список директорий, откуда должны грузиться плагины
