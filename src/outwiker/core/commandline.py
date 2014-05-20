@@ -3,6 +3,7 @@
 import argparse
 
 from outwiker.core.system import getOS
+from outwiker.core.commands import getCurrentVersion
 
 
 class CommandLineException (BaseException):
@@ -22,6 +23,8 @@ class CommandLine (object):
     Класс для хранения разобранных параметров командной строки
     """
     def __init__ (self):
+        self._description = ur"""OutWiker {ver}. Crossplatform programm for keeping your notes in a tree.""".format (ver = str (getCurrentVersion()) )
+
         self._parser = self._createParser()
         self._namespace = None
 
@@ -37,12 +40,14 @@ class CommandLine (object):
 
 
     def _createParser (self):
-        parser = _SilentParser(prog = 'OutWiker',
+        parser = _SilentParser(prog = 'outwiker',
+                description = self._description,
+                epilog = "(c) Eugeniy Ilin (aka Jenyay), 2014. Released under the GNU GPL.",
                 add_help = False)
 
         parser.add_argument ('wikipath', 
                 nargs='?', 
-                metavar = _(u"Path"),
+                metavar = u"Path",
                 help=u"Path to wiki")
 
         parser.add_argument ('--help', '-h',
@@ -51,11 +56,17 @@ class CommandLine (object):
                 default=False,
                 help=u"Help")
 
+        parser.add_argument ('--version', '-v',
+                action='store_const', 
+                const=True, 
+                default=False,
+                help=u"Version info")
+
         parser.add_argument ('--readonly', '-r',
                 action='store_const', 
                 const=True, 
                 default=False,
-                help=u"Read only")
+                help=u" Open wiki as read only")
 
         return parser
 
@@ -78,6 +89,11 @@ class CommandLine (object):
     @property
     def readonly (self):
         return self._namespace.readonly
+
+
+    @property
+    def version (self):
+        return self._namespace.version
 
 
     def format_help (self):

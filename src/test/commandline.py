@@ -12,6 +12,7 @@ class CommandLineTest (unittest.TestCase):
         self.assertEqual (cl.wikipath, None)
         self.assertFalse (cl.help)
         self.assertFalse (cl.readonly)
+        self.assertFalse (cl.version)
 
 
     def testSingle (self):
@@ -53,3 +54,17 @@ class CommandLineTest (unittest.TestCase):
         cl.parseParams (["-r"])
 
         self.assertTrue (cl.readonly)
+
+
+    def testVersion_01 (self):
+        cl = CommandLine ()
+        cl.parseParams (["--version"])
+
+        self.assertTrue (cl.version)
+
+
+    def testVersion_02 (self):
+        cl = CommandLine ()
+        cl.parseParams (["-v"])
+
+        self.assertTrue (cl.version)

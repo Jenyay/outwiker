@@ -8,6 +8,7 @@ from outwiker.core.application import Application
 from outwiker.gui.guiconfig import GeneralGuiConfig
 from outwiker.core.commands import openWiki
 from outwiker.core.commandline import CommandLine, CommandLineException
+from outwiker.core.commands import getCurrentVersion
 
 
 class Starter (object):
@@ -58,6 +59,11 @@ class Starter (object):
             print self._commandLine.format_help()
             exit (0)
 
+        # Вывод информации о версии
+        if self._commandLine.version:
+            print ur"""OutWiker {ver}""".format (ver = str (getCurrentVersion()) )
+            exit (0)
+        
 
     def __processGUICommands (self):
         # Открытие дерева с заметками
