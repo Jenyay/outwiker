@@ -19,7 +19,7 @@ import wx
 
 from outwiker.core.application import Application
 from outwiker.core.system import getOS, getPluginsDirList, getConfigPath
-from outwiker.core.starter import Starter
+from outwiker.core.starter import Starter, StarterExit
 from outwiker.core.commands import registerActions
 from outwiker.gui.actioncontroller import ActionController
 
@@ -35,8 +35,11 @@ class OutWiker(wx.App):
         self._fullConfigPath = getConfigPath ()
         Application.init(self._fullConfigPath)
 
-        starter = Starter()
-        starter.processConsole()
+        try:
+            starter = Starter()
+            starter.processConsole()
+        except StarterExit:
+            return True
 
         # Если программа запускается в виде exe-шника, то перенаправить вывод ошибок в лог
         exepath = unicode (sys.argv[0], getOS().filesEncoding)

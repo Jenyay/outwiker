@@ -10,6 +10,12 @@ from outwiker.core.commands import openWiki
 from outwiker.core.commandline import CommandLine, CommandLineException
 from outwiker.core.commands import getCurrentVersion
 
+class StarterExit (BaseException):
+    """
+    Исключение бросается, если нужно прервать выполнение программы
+    """
+    pass
+
 
 class Starter (object):
     """
@@ -47,7 +53,7 @@ class Starter (object):
                 cl.parseParams (args)
             except CommandLineException:
                 print cl.format_help()
-                exit (1)
+                raise StarterExit
 
         return cl
 
@@ -56,12 +62,12 @@ class Starter (object):
         # Вывод справки
         if self._commandLine.help:
             print self._commandLine.format_help()
-            exit (0)
+            raise StarterExit
 
         # Вывод информации о версии
         if self._commandLine.version:
             print ur"""OutWiker {ver}""".format (ver = str (getCurrentVersion()) )
-            exit (0)
+            raise StarterExit
         
 
     def __openRecentWiki (self):
