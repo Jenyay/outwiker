@@ -35,6 +35,9 @@ class OutWiker(wx.App):
         self._fullConfigPath = getConfigPath ()
         Application.init(self._fullConfigPath)
 
+        starter = Starter()
+        starter.processConsole()
+
         # Если программа запускается в виде exe-шника, то перенаправить вывод ошибок в лог
         exepath = unicode (sys.argv[0], getOS().filesEncoding)
         if exepath.endswith (u".exe"):
@@ -59,8 +62,7 @@ class OutWiker(wx.App):
         self.bindActivateApp()
         self.Bind (wx.EVT_QUERY_END_SESSION, self._onEndSession)
 
-        starter = Starter()
-        starter.process()
+        starter.processGUI()
 
         return True
 

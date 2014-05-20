@@ -15,42 +15,61 @@ class Starter (object):
     Класс для выполнения команд из командной строки (не для разбора параметров) и начального открытия вики
     """
     def __init__ (self):
-        pass
+        self._commandLine = self.__parseCommandLine (sys.argv[1:])
+    
 
-    def process (self):
-        self.generalConfig = GeneralGuiConfig (Application.config)
-
-        if len (sys.argv) > 1:
-            self.__parseCommandLine (sys.argv[1:])
+    def processGUI (self):
+        """
+        Выполнить команды после создания GUI
+        """
+        if self._commandLine != None:
+            self.__processGUICommands ()
         else:
             # Открыть последний открытый файл 
             # (если установлена соответствующая опция)
             self.__openRecentWiki ()
 
 
+    def processConsole (self):
+        """
+        Выполнить команды командной строки до создания интерфейса
+        """
+        if self._commandLine != None:
+            self.__processConsoleCommands()
+
+
     def __parseCommandLine (self, args):
-        cl = CommandLine ()
-        try:
-            cl.parseParams (args)
-        except CommandLineException:
-            print cl.format_help()
-            exit (1)
+        cl = None
 
+        if len (args) > 0:
+            cl = CommandLine ()
+            try:
+                cl.parseParams (args)
+            except CommandLineException:
+                print cl.format_help()
+                exit (1)
+
+        return cl
+
+
+    def __processConsoleCommands (self):
         # Вывод справки
-        if cl.help:
-            print cl.format_help()
-            exit (1)
+        if self._commandLine.help:
+            print self._commandLine.format_help()
+            exit (0)
 
+
+    def __processGUICommands (self):
         # Открытие дерева с заметками
-        if cl.wikipath != None:
-            openWiki (cl.wikipath, cl.readonly)
+        if self._commandLine.wikipath != None:
+            openWiki (self._commandLine.wikipath, self._commandLine.readonly)
 
 
     def __openRecentWiki (self):
         """
         Открыть последнюю вики, если установлена соответствующая опция
         """
-        openRecent = self.generalConfig.autoopen.value
+        openRecent = GeneralGuiConfig (Application.config).autoopen.value
 
         if openRecent and len (Application.recentWiki) > 0:
             openWiki (Application.recentWiki[0])
