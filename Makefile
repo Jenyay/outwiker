@@ -30,3 +30,6 @@ install:
 	cp "images/outwiker.svg" $(DESTDIR)/usr/share/icons/hicolor/scalable/apps/outwiker.svg
 	cp "images/outwiker.xpm" $(DESTDIR)/usr/share/pixmaps/
 	cp "outwiker.desktop" $(DESTDIR)/usr/share/applications
+	cp -r "man" $(DESTDIR)/usr/share
+	cd $(DESTDIR)/usr/share/man/man1; gzip outwiker.1
+	cd $(DESTDIR)/usr/share/man/ru/man1; gzip outwiker.1
