@@ -144,8 +144,6 @@ def openWiki (path, readonly=False):
 
     wikiroot = None
 
-    Application.onStartTreeUpdate(None)
-
     def threadFunc (path, readonly):
         try:
             return WikiDocument.load (path, readonly)
@@ -166,8 +164,6 @@ def openWiki (path, readonly=False):
         __rootFormatErrorHandle (path, readonly)
     else:
         Application.wikiroot = result
-
-    Application.onEndTreeUpdate(wikiroot)
 
     return Application.wikiroot
 
