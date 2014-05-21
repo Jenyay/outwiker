@@ -36,8 +36,12 @@ class RootWikiPage (object):
         self._path = path
         self._parent = None
         self._children = []
-        self.readonly = readonly or not os.access (os.path.join (path, RootWikiPage.pageConfig), 
-                os.W_OK)
+        self.readonly = readonly
+        
+        configpath = os.path.join (path, RootWikiPage.pageConfig)
+        if (os.path.exists (configpath) and 
+                not os.access (configpath, os.W_OK)):
+            self.readonly = True
 
         self._params = RootWikiPage._readParams(self.path, self.readonly)
 
