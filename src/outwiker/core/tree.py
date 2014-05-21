@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
+import os
 import os.path
 import ConfigParser
 import shutil
@@ -29,14 +30,14 @@ class RootWikiPage (object):
 
     def __init__(self, path, readonly=False):
         """
-        path -- путь до страницы относительно корня дерева
         readonly - True, если страница предназначена только для чтения
         """
         # Путь до страницы
         self._path = path
         self._parent = None
         self._children = []
-        self.readonly = readonly
+        self.readonly = readonly or not os.access (os.path.join (path, RootWikiPage.pageConfig), 
+                os.W_OK)
 
         self._params = RootWikiPage._readParams(self.path, self.readonly)
 

@@ -176,7 +176,13 @@ class BaseTextPanel (BasePagePanel):
                 page.readonly):
             return
 
-        self._getCursorPositionOption(page).value = self.GetCursorPosition()
+        try:
+            self._getCursorPositionOption(page).value = self.GetCursorPosition()
+        except IOError, e:
+            MessageBox (_(u"Can't save file %s") % (unicode (e.filename)), 
+                _(u"Error"), 
+                wx.ICON_ERROR | wx.OK)
+            return
 
         if self.__stringsAreEqual (page.content, 
                     self.GetContentFromGui() ):
@@ -184,7 +190,7 @@ class BaseTextPanel (BasePagePanel):
 
         try:
             page.content = self.GetContentFromGui()
-        except IOError as e:
+        except IOError, e:
             # TODO: Проверить под Windows
             MessageBox (_(u"Can't save file %s") % (unicode (e.filename)), 
                 _(u"Error"), 

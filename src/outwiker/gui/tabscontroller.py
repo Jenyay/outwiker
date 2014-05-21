@@ -7,6 +7,7 @@ import wx.lib.agw.flatnotebook as fnb
 
 from outwiker.core.config import StringListSection, IntegerOption
 from outwiker.core.tree import RootWikiPage
+from outwiker.core.commands import MessageBox
 from .mainid import MainId
 from .pagepopupmenu import PagePopupMenu
 
@@ -232,11 +233,16 @@ class TabsController (object):
 
     def __saveTabs (self):
         if self._application.wikiroot != None:
-            pageSubpathList = [page.subpath for page in self._tabsCtrl.GetPages() if page != None]
-            self.__createStringListConfig (self._application.wikiroot.params).value = pageSubpathList
+            try:
+                pageSubpathList = [page.subpath for page in self._tabsCtrl.GetPages() if page != None]
+                self.__createStringListConfig (self._application.wikiroot.params).value = pageSubpathList
 
-            selectedTab = self._tabsCtrl.GetSelection()
-            self._application.wikiroot.params.set (self._tabSelectedSection, self._tabSelectedOption, str (selectedTab))
+                selectedTab = self._tabsCtrl.GetSelection()
+                self._application.wikiroot.params.set (self._tabSelectedSection, self._tabSelectedOption, str (selectedTab))
+            except IOError, e:
+                MessageBox (_(u"Can't save file %s") % (unicode (e.filename)), 
+                    _(u"Error"), 
+                    wx.ICON_ERROR | wx.OK)
 
 
     def __onPageRename (self, page, oldSubpath):
