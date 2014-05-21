@@ -5,7 +5,9 @@
 Тесты, связанные с созданием вики
 """
 
+import os
 import os.path
+import stat
 import unittest
 
 from outwiker.core.tree import RootWikiPage, WikiDocument
@@ -59,6 +61,7 @@ class TextPageCreationTest(unittest.TestCase):
 
     def tearDown(self):
         Application.wikiroot = None
+        os.chmod (self._getConfigPath (self.rootwiki[u"Страница 1"]), stat.S_IRUSR | stat.S_IXUSR | stat.S_IWUSR)
         removeWiki (self.path)
 
 
@@ -247,3 +250,31 @@ class TextPageCreationTest(unittest.TestCase):
 
         self.assertEqual (wiki2.selectedPage, None)
 
+
+    def testReadOnly_01 (self):
+        os.chmod (self._getConfigPath (self.rootwiki[u"Страница 1"]), stat.S_IRUSR | stat.S_IXUSR)
+
+        wiki2 = WikiDocument.load (self.path)
+        self.assertTrue (wiki2[u"Страница 1"].readonly)
+        self.assertFalse (wiki2[u"Страница 2"].readonly)
+
+
+    def testReadOnly_02 (self):
+        os.chmod (self._getConfigPath (self.rootwiki), stat.S_IRUSR | stat.S_IXUSR)
+
+        wiki2 = WikiDocument.load (self.path)
+        self.assertTrue (wiki2[u"Страница 1"].readonly)
+        self.assertTrue (wiki2[u"Страница 1/Страница 5"].readonly)
+        self.assertTrue (wiki2[u"Страница 2"].readonly)
+
+
+    def testReadOnly_03 (self):
+        os.chmod (self._getConfigPath (self.rootwiki[u"Страница 1"]), stat.S_IRUSR | stat.S_IXUSR)
+
+        wiki2 = WikiDocument.load (self.path)
+        self.assertTrue (wiki2[u"Страница 1/Страница 5"].readonly)
+        self.assertFalse (wiki2[u"Страница 2"].readonly)
+
+
+    def _getConfigPath (self, page):
+        return os.path.join (page.path, RootWikiPage.pageConfig)
