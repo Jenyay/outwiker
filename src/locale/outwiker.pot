@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-14 21:53+0400\n"
+"POT-Creation-Date: 2014-05-22 09:38+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -136,15 +136,16 @@ msgstr ""
 
 #: outwiker/gui/attachpanel.py:233 outwiker/gui/attachpanel.py:243
 #: outwiker/gui/attachpanel.py:255 outwiker/gui/attachpanel.py:276
-#: outwiker/gui/attachpanel.py:286 outwiker/gui/basetextpanel.py:190
-#: outwiker/gui/currentpagepanel.py:88 outwiker/gui/currentpagepanel.py:224
-#: outwiker/gui/currentpagepanel.py:233 outwiker/gui/htmlrenderie.py:174
-#: outwiker/gui/htmlrenderwebkit.py:221 outwiker/gui/htmlrenderwx.py:107
-#: outwiker/gui/mainwindow.py:507 outwiker/gui/mainwndcontroller.py:215
-#: outwiker/gui/notestree.py:284 outwiker/gui/pagedialog.py:29
-#: outwiker/gui/pagedialog.py:46 outwiker/gui/pagedialog.py:51
-#: outwiker/gui/pagedialog.py:143 outwiker/gui/pagedialog.py:202
-#: outwiker/gui/renametagdialog.py:75 outwiker/gui/renametagdialog.py:79
+#: outwiker/gui/attachpanel.py:286 outwiker/gui/basetextpanel.py:183
+#: outwiker/gui/basetextpanel.py:196 outwiker/gui/currentpagepanel.py:88
+#: outwiker/gui/currentpagepanel.py:224 outwiker/gui/currentpagepanel.py:233
+#: outwiker/gui/htmlrenderie.py:174 outwiker/gui/htmlrenderwebkit.py:221
+#: outwiker/gui/htmlrenderwx.py:107 outwiker/gui/mainwindow.py:507
+#: outwiker/gui/mainwndcontroller.py:215 outwiker/gui/notestree.py:283
+#: outwiker/gui/pagedialog.py:29 outwiker/gui/pagedialog.py:46
+#: outwiker/gui/pagedialog.py:51 outwiker/gui/pagedialog.py:143
+#: outwiker/gui/pagedialog.py:202 outwiker/gui/renametagdialog.py:75
+#: outwiker/gui/renametagdialog.py:79 outwiker/gui/tabscontroller.py:244
 #: outwiker/pages/html/basehtmlpanel.py:302
 #: outwiker/pages/html/basehtmlpanel.py:306
 #: outwiker/pages/html/htmlpageview.py:584
@@ -154,12 +155,12 @@ msgstr ""
 #: outwiker/pages/wiki/wikipageview.py:279
 #: outwiker/pages/wiki/wikipageview.py:699
 #: outwiker/pages/wiki/actions/include.py:38 outwiker/core/commands.py:48
-#: outwiker/core/commands.py:110 outwiker/core/commands.py:201
-#: outwiker/core/commands.py:241 outwiker/core/commands.py:249
-#: outwiker/core/commands.py:257 outwiker/core/commands.py:267
-#: outwiker/core/commands.py:329 outwiker/core/commands.py:335
-#: outwiker/core/commands.py:356 outwiker/core/commands.py:367
-#: outwiker/core/commands.py:384 outwiker/core/commands.py:389
+#: outwiker/core/commands.py:110 outwiker/core/commands.py:206
+#: outwiker/core/commands.py:246 outwiker/core/commands.py:254
+#: outwiker/core/commands.py:262 outwiker/core/commands.py:272
+#: outwiker/core/commands.py:334 outwiker/core/commands.py:340
+#: outwiker/core/commands.py:361 outwiker/core/commands.py:372
+#: outwiker/core/commands.py:389 outwiker/core/commands.py:394
 #: outwiker/core/textprinter.py:106 outwiker/actions/globalsearch.py:42
 #: outwiker/actions/movepagedown.py:41 outwiker/actions/movepageup.py:41
 #: outwiker/actions/openattachfolder.py:39
@@ -253,13 +254,14 @@ msgstr ""
 msgid "Owerwrite?"
 msgstr ""
 
-#: outwiker/gui/basetextpanel.py:189 outwiker/pages/html/basehtmlpanel.py:301
+#: outwiker/gui/basetextpanel.py:182 outwiker/gui/basetextpanel.py:195
+#: outwiker/gui/tabscontroller.py:243 outwiker/pages/html/basehtmlpanel.py:301
 #: outwiker/pages/wiki/wikipageview.py:256
 #, python-format
 msgid "Can't save file %s"
 msgstr ""
 
-#: outwiker/gui/basetextpanel.py:258
+#: outwiker/gui/basetextpanel.py:264
 msgid "&Search"
 msgstr ""
 
@@ -283,18 +285,18 @@ msgstr ""
 msgid "Can't save page. Page folder not exists. Wiki will be reloaded."
 msgstr ""
 
-#: outwiker/gui/editorstyleslist.py:25 outwiker/core/commands.py:745
-#: outwiker/core/commands.py:746
+#: outwiker/gui/editorstyleslist.py:25 outwiker/core/commands.py:750
+#: outwiker/core/commands.py:751
 msgid "Bold"
 msgstr ""
 
-#: outwiker/gui/editorstyleslist.py:26 outwiker/core/commands.py:751
-#: outwiker/core/commands.py:752
+#: outwiker/gui/editorstyleslist.py:26 outwiker/core/commands.py:756
+#: outwiker/core/commands.py:757
 msgid "Italic"
 msgstr ""
 
-#: outwiker/gui/editorstyleslist.py:27 outwiker/core/commands.py:763
-#: outwiker/core/commands.py:764
+#: outwiker/gui/editorstyleslist.py:27 outwiker/core/commands.py:768
+#: outwiker/core/commands.py:769
 msgid "Underline"
 msgstr ""
 
@@ -329,7 +331,7 @@ msgstr ""
 
 #: outwiker/gui/linkdialog.py:17 outwiker/gui/linkdialog.py:35
 #: outwiker/gui/preferences/wikieditorpanel.py:38
-#: outwiker/core/commands.py:877
+#: outwiker/core/commands.py:882
 msgid "Link"
 msgstr ""
 
@@ -362,7 +364,7 @@ msgstr ""
 msgid "View"
 msgstr ""
 
-#: outwiker/gui/mainmenu.py:38 outwiker/actions/openhelp.py:23
+#: outwiker/gui/mainmenu.py:38 outwiker/actions/openhelp.py:22
 msgid "Help"
 msgstr ""
 
@@ -397,7 +399,7 @@ msgid ""
 "%s"
 msgstr ""
 
-#: outwiker/gui/notestree.py:283
+#: outwiker/gui/notestree.py:282
 #, python-format
 msgid ""
 "Can't save page options\n"
@@ -852,7 +854,7 @@ msgstr ""
 msgid "Lists"
 msgstr ""
 
-#: outwiker/pages/html/htmlpageview.py:215 outwiker/core/commands.py:923
+#: outwiker/pages/html/htmlpageview.py:215 outwiker/core/commands.py:928
 msgid "Table"
 msgstr ""
 
@@ -1194,7 +1196,7 @@ msgid ""
 msgstr ""
 
 #: outwiker/core/commands.py:47
-msgid "Wiki is opened as read-only"
+msgid "Page is opened as read-only"
 msgstr ""
 
 #: outwiker/core/commands.py:74
@@ -1222,20 +1224,20 @@ msgstr ""
 msgid "Can't remove page"
 msgstr ""
 
-#: outwiker/core/commands.py:150
+#: outwiker/core/commands.py:157
 msgid "Loading"
 msgstr ""
 
-#: outwiker/core/commands.py:151
+#: outwiker/core/commands.py:158
 msgid "Opening notes tree..."
 msgstr ""
 
-#: outwiker/core/commands.py:200
+#: outwiker/core/commands.py:205
 #, python-format
 msgid "Can't load wiki '%s'"
 msgstr ""
 
-#: outwiker/core/commands.py:209
+#: outwiker/core/commands.py:214
 #, python-format
 msgid ""
 "Can't load wiki '%s'\n"
@@ -1244,15 +1246,15 @@ msgid ""
 "Bookmarks will be lost"
 msgstr ""
 
-#: outwiker/core/commands.py:210
+#: outwiker/core/commands.py:215
 msgid "__page.opt error"
 msgstr ""
 
-#: outwiker/core/commands.py:221
+#: outwiker/core/commands.py:226
 msgid "First Wiki Page"
 msgstr ""
 
-#: outwiker/core/commands.py:222
+#: outwiker/core/commands.py:227
 msgid ""
 "!! First Wiki Page\n"
 "\n"
@@ -1260,202 +1262,202 @@ msgid ""
 "''italic'', {+underlined text+}, [[http://jenyay.net | link]] and others.\n"
 msgstr ""
 
-#: outwiker/core/commands.py:232
+#: outwiker/core/commands.py:237
 msgid "test"
 msgstr ""
 
-#: outwiker/core/commands.py:240
+#: outwiker/core/commands.py:245
 msgid "Can't create wiki\n"
 msgstr ""
 
-#: outwiker/core/commands.py:248 outwiker/core/commands.py:266
+#: outwiker/core/commands.py:253 outwiker/core/commands.py:271
 msgid "Can't open clipboard"
 msgstr ""
 
-#: outwiker/core/commands.py:256
+#: outwiker/core/commands.py:261
 msgid "Can't copy text to clipboard"
 msgstr ""
 
-#: outwiker/core/commands.py:328 outwiker/core/commands.py:383
+#: outwiker/core/commands.py:333 outwiker/core/commands.py:388
 msgid "Can't move page when page with that title already exists"
 msgstr ""
 
-#: outwiker/core/commands.py:334
+#: outwiker/core/commands.py:339
 msgid "Can't move page"
 msgstr ""
 
-#: outwiker/core/commands.py:356
+#: outwiker/core/commands.py:361
 #, python-format
 msgid "Can't open file %s"
 msgstr ""
 
-#: outwiker/core/commands.py:366
+#: outwiker/core/commands.py:371
 msgid "Can't parse version"
 msgstr ""
 
-#: outwiker/core/commands.py:388
+#: outwiker/core/commands.py:393
 #, python-format
 msgid ""
 "Can't rename page\n"
 "%s"
 msgstr ""
 
-#: outwiker/core/commands.py:404
+#: outwiker/core/commands.py:409
 msgid "The invalid page title"
 msgstr ""
 
-#: outwiker/core/commands.py:409
+#: outwiker/core/commands.py:414
 #, python-brace-format
 msgid ""
 "{0}\n"
 "Continue?"
 msgstr ""
 
-#: outwiker/core/commands.py:412
+#: outwiker/core/commands.py:417
 msgid "The page title"
 msgstr ""
 
-#: outwiker/core/commands.py:757 outwiker/core/commands.py:758
+#: outwiker/core/commands.py:762 outwiker/core/commands.py:763
 msgid "Bold italic"
 msgstr ""
 
-#: outwiker/core/commands.py:769 outwiker/core/commands.py:770
+#: outwiker/core/commands.py:774 outwiker/core/commands.py:775
 msgid "Strikethrough"
 msgstr ""
 
-#: outwiker/core/commands.py:775 outwiker/core/commands.py:776
+#: outwiker/core/commands.py:780 outwiker/core/commands.py:781
 msgid "Subscript"
 msgstr ""
 
-#: outwiker/core/commands.py:781 outwiker/core/commands.py:782
+#: outwiker/core/commands.py:786 outwiker/core/commands.py:787
 msgid "Superscript"
 msgstr ""
 
-#: outwiker/core/commands.py:787 outwiker/core/commands.py:788
+#: outwiker/core/commands.py:792 outwiker/core/commands.py:793
 msgid "Preformatted text"
 msgstr ""
 
-#: outwiker/core/commands.py:793
+#: outwiker/core/commands.py:798
 msgid "Insert code"
 msgstr ""
 
-#: outwiker/core/commands.py:794
+#: outwiker/core/commands.py:799
 msgid "Insert code (monospaced font)"
 msgstr ""
 
-#: outwiker/core/commands.py:802 outwiker/core/commands.py:803
+#: outwiker/core/commands.py:807 outwiker/core/commands.py:808
 msgid "Align text left"
 msgstr ""
 
-#: outwiker/core/commands.py:808 outwiker/core/commands.py:809
+#: outwiker/core/commands.py:813 outwiker/core/commands.py:814
 msgid "Center"
 msgstr ""
 
-#: outwiker/core/commands.py:814 outwiker/core/commands.py:815
+#: outwiker/core/commands.py:819 outwiker/core/commands.py:820
 msgid "Align text right"
 msgstr ""
 
-#: outwiker/core/commands.py:820 outwiker/core/commands.py:821
+#: outwiker/core/commands.py:825 outwiker/core/commands.py:826
 msgid "Justify"
 msgstr ""
 
-#: outwiker/core/commands.py:828 outwiker/core/commands.py:829
+#: outwiker/core/commands.py:833 outwiker/core/commands.py:834
 msgid "First-level heading"
 msgstr ""
 
-#: outwiker/core/commands.py:834 outwiker/core/commands.py:835
+#: outwiker/core/commands.py:839 outwiker/core/commands.py:840
 msgid "Second-level heading"
 msgstr ""
 
-#: outwiker/core/commands.py:840 outwiker/core/commands.py:841
+#: outwiker/core/commands.py:845 outwiker/core/commands.py:846
 msgid "Subtitle three"
 msgstr ""
 
-#: outwiker/core/commands.py:846 outwiker/core/commands.py:847
+#: outwiker/core/commands.py:851 outwiker/core/commands.py:852
 msgid "Subtitle four"
 msgstr ""
 
-#: outwiker/core/commands.py:852 outwiker/core/commands.py:853
+#: outwiker/core/commands.py:857 outwiker/core/commands.py:858
 msgid "Subtitle five"
 msgstr ""
 
-#: outwiker/core/commands.py:858 outwiker/core/commands.py:859
+#: outwiker/core/commands.py:863 outwiker/core/commands.py:864
 msgid "Subtitle six"
 msgstr ""
 
-#: outwiker/core/commands.py:865 outwiker/core/commands.py:866
+#: outwiker/core/commands.py:870 outwiker/core/commands.py:871
 msgid "Anchor"
 msgstr ""
 
-#: outwiker/core/commands.py:871 outwiker/core/commands.py:872
+#: outwiker/core/commands.py:876 outwiker/core/commands.py:877
 msgid "Horizontal rule"
 msgstr ""
 
-#: outwiker/core/commands.py:878
+#: outwiker/core/commands.py:883
 msgid "Insert Link"
 msgstr ""
 
-#: outwiker/core/commands.py:883
+#: outwiker/core/commands.py:888
 msgid "Quote"
 msgstr ""
 
-#: outwiker/core/commands.py:884
+#: outwiker/core/commands.py:889
 msgid "Insert a quote block"
 msgstr ""
 
-#: outwiker/core/commands.py:889
+#: outwiker/core/commands.py:894
 msgid "Image"
 msgstr ""
 
-#: outwiker/core/commands.py:890
+#: outwiker/core/commands.py:895
 msgid "Insert image"
 msgstr ""
 
-#: outwiker/core/commands.py:897
+#: outwiker/core/commands.py:902
 msgid "Bullets list"
 msgstr ""
 
-#: outwiker/core/commands.py:898
+#: outwiker/core/commands.py:903
 msgid "Insert a bullets list"
 msgstr ""
 
-#: outwiker/core/commands.py:903
+#: outwiker/core/commands.py:908
 msgid "Numbers list"
 msgstr ""
 
-#: outwiker/core/commands.py:904
+#: outwiker/core/commands.py:909
 msgid "Insert a numbers list"
 msgstr ""
 
-#: outwiker/core/commands.py:909
+#: outwiker/core/commands.py:914
 msgid "Line break"
 msgstr ""
 
-#: outwiker/core/commands.py:910
+#: outwiker/core/commands.py:915
 msgid "Insert a line break"
 msgstr ""
 
-#: outwiker/core/commands.py:915 outwiker/core/commands.py:916
+#: outwiker/core/commands.py:920 outwiker/core/commands.py:921
 msgid "Convert HTML Symbols"
 msgstr ""
 
-#: outwiker/core/commands.py:924
+#: outwiker/core/commands.py:929
 msgid "Insert a table"
 msgstr ""
 
-#: outwiker/core/commands.py:929
+#: outwiker/core/commands.py:934
 msgid "Table row"
 msgstr ""
 
-#: outwiker/core/commands.py:930
+#: outwiker/core/commands.py:935
 msgid "Insert a table row"
 msgstr ""
 
-#: outwiker/core/commands.py:935
+#: outwiker/core/commands.py:940
 msgid "Table cell"
 msgstr ""
 
-#: outwiker/core/commands.py:936
+#: outwiker/core/commands.py:941
 msgid "Insert a table cell"
 msgstr ""
 
@@ -1642,11 +1644,11 @@ msgstr ""
 msgid "Can't open folder '{}'"
 msgstr ""
 
-#: outwiker/actions/openhelp.py:28
+#: outwiker/actions/openhelp.py:27
 msgid "Open help"
 msgstr ""
 
-#: outwiker/actions/openhelp.py:33
+#: outwiker/actions/openhelp.py:32
 msgid "help_en"
 msgstr ""
 

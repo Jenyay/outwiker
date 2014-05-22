@@ -44,7 +44,7 @@ def testreadonly (func):
         try:
             func (*args, **kwargs)
         except outwiker.core.exceptions.ReadonlyException:
-            MessageBox (_(u"Wiki is opened as read-only"), 
+            MessageBox (_(u"Page is opened as read-only"), 
                     _(u"Error"), 
                     wx.ICON_ERROR | wx.OK)
 
