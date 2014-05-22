@@ -102,7 +102,7 @@ class PluginsLoader (object):
 
         for currentDir in dirlist:
             if os.path.exists (currentDir):
-                dirPackets = os.listdir (currentDir)
+                dirPackets = sorted (os.listdir (currentDir) )
 
                 # Добавить путь до currentDir в sys.path
                 fullpath = os.path.abspath (currentDir)
@@ -156,7 +156,7 @@ class PluginsLoader (object):
             if os.path.isdir (packagePath):
                 # Переберем все файлы внутри packagePath 
                 # и попытаемся их импортировать
-                for fileName in os.listdir (packagePath):
+                for fileName in sorted (os.listdir (packagePath)):
                     try:
                         module = self._importSingleModule (packageName, fileName)
                         if module != None:
