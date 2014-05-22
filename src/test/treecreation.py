@@ -256,6 +256,7 @@ class TextPageCreationTest(unittest.TestCase):
 
         wiki2 = WikiDocument.load (self.path)
         self.assertTrue (wiki2[u"Страница 1"].readonly)
+        self.assertFalse (wiki2[u"Страница 1/Страница 5"].readonly)
         self.assertFalse (wiki2[u"Страница 2"].readonly)
 
 
@@ -269,11 +270,12 @@ class TextPageCreationTest(unittest.TestCase):
 
 
     def testReadOnly_03 (self):
-        os.chmod (self._getConfigPath (self.rootwiki[u"Страница 1"]), stat.S_IRUSR | stat.S_IXUSR)
+        os.chmod (self._getConfigPath (self.rootwiki[u"Страница 2"]), stat.S_IRUSR | stat.S_IXUSR)
 
         wiki2 = WikiDocument.load (self.path)
-        self.assertTrue (wiki2[u"Страница 1/Страница 5"].readonly)
-        self.assertFalse (wiki2[u"Страница 2"].readonly)
+        self.assertTrue (wiki2[u"Страница 2"].readonly)
+        self.assertFalse (wiki2[u"Страница 2/Страница 3"].readonly)
+        self.assertFalse (wiki2[u"Страница 2/Страница 3/Страница 4"].readonly)
 
 
     def _getConfigPath (self, page):
