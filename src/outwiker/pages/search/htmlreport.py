@@ -5,6 +5,7 @@ import os
 import datetime
 
 from outwiker.gui.guiconfig import GeneralGuiConfig
+from outwiker.core.system import getOS
 
 
 class HtmlReport (object):
@@ -71,7 +72,8 @@ class HtmlReport (object):
 
     def generateDate (self, page):
         config = GeneralGuiConfig (self.__application.config)
-        dateStr = page.datetime.strftime (config.dateTimeFormat.value)
+        dateStr = unicode (page.datetime.strftime (config.dateTimeFormat.value), 
+                getOS().filesEncoding)
         result = _(u"Last modified date: {0}").format (dateStr)
 
         return result
