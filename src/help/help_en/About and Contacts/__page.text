@@ -30,5 +30,6 @@ The program uses some sets of free icons taken from sites <a class='urllink' hre
 <li>Thanks tehTen with Jabber 1010@xmpp.ru for "greyness" style.</li>
 <li>Thanks Alex (<a href="http://jenyay.net/forum/user/8/">http://jenyay.net/forum/user/8/</a>) for "AVC" style.</li>
 <li>Thanks Gabrielle Ramires (gabrielleramires.iv@gmail.com) for "Gabrielle" style.</li>
+<li>Thanks Unreal666 for error detection.</li>
 </ul>
 Rendering the formulas uses <a href="http://www.forkosh.com/mimetex.html">mimeTeX</a>.
