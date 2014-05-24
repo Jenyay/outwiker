@@ -105,6 +105,7 @@ class ActionGuiCreator (BaseGuiCreator):
 
     def _onTabChanged (self, event):
         self._enableTools()
+        event.Skip()
 
 
     def _enableTools (self):
