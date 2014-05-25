@@ -537,6 +537,7 @@ class MainWindow(wx.Frame):
         self.statusbar.Close()
         self.taskBarIcon.Destroy()
         self.controller.destroy()
+        self.auiManager.Destroy()
 
         super (MainWindow, self).Destroy()
     

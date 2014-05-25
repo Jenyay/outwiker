@@ -61,7 +61,12 @@ class TextPageCreationTest(unittest.TestCase):
 
     def tearDown(self):
         Application.wikiroot = None
+        os.chmod (self._getConfigPath (self.rootwiki), stat.S_IRUSR | stat.S_IXUSR | stat.S_IWUSR)
         os.chmod (self._getConfigPath (self.rootwiki[u"Страница 1"]), stat.S_IRUSR | stat.S_IXUSR | stat.S_IWUSR)
+
+        if self.rootwiki[u"Страница 2"] != None:
+            os.chmod (self._getConfigPath (self.rootwiki[u"Страница 2"]), stat.S_IRUSR | stat.S_IXUSR | stat.S_IWUSR)
+
         removeWiki (self.path)
 
 
