@@ -216,6 +216,22 @@ def locale():
         local (r"xgettext -o locale/outwiker.pot outwiker/gui/*.py outwiker/gui/*/*.py outwiker/pages/*/*.py outwiker/pages/*/*/*.py outwiker/core/*.py outwiker/actions/*.py")
 
 
+def run ():
+    """
+    Запустить OutWiker
+    """
+    with lcd ("src"):
+        local ("python runoutwiker.py")
+
+
+def tests (params=""):
+    """
+    Запустить юнит-тесты
+    """
+    with lcd ("src"):
+        local ("python tests.py " + params)
+
+
 def _makechangelog (distrib_src, distrib_new):
     """
     Подправить changelog под текущий дистрибутив Ubuntu. 
