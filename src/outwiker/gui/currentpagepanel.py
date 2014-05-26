@@ -204,6 +204,8 @@ class CurrentPagePanel(wx.Panel):
         Нужно для перезагрузки вики
         """
         if self.__pageView != None:
+            Application.onPageViewDestroy (self.__currentPage)
+
             self.contentSizer.Detach (self.__pageView)
             self.__pageView.CloseWithoutSave()
             self.__pageView = None
