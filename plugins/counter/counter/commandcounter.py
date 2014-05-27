@@ -37,18 +37,41 @@ class CommandCounter (Command):
         """
         params_dict = Command.parseParams (params)
 
-        name = params_dict[NAME_PARAM_NAME].strip() if NAME_PARAM_NAME in params_dict else u""
+        name = self._getNameParam (params_dict)
+        start = self._getStartParam (params_dict)
 
         if name not in self._counters:
             self._counters[name] = _Counter()
 
         counter = self._counters[name]
 
+        if start != None:
+            counter.reset (start)
+
         result = counter.toString()
         counter.increment()
 
         return result
 
+
+    def _getNameParam (self, params_dict):
+        name = params_dict[NAME_PARAM_NAME].strip() if NAME_PARAM_NAME in params_dict else u""
+        return name
+
+
+    def _getStartParam (self, params_dict):
+        """
+        Возвращает значение параметра start (в виде целого числа) или None, если он не задан
+        """
+        if START_PARAM_NAME not in params_dict:
+            return None
+
+        try:
+            start = int (params_dict[START_PARAM_NAME].strip())
+        except ValueError:
+            start = None
+
+        return start
 
 
 class _Counter (object):
@@ -65,3 +88,10 @@ class _Counter (object):
 
     def increment (self):
         self._counter += 1
+
+
+    def reset (self, startval):
+        """
+        Установить счетчик в значение startval
+        """
+        self._counter = startval

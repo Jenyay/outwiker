@@ -15,7 +15,7 @@ from test.utils import removeWiki
 
 class CounterTest (unittest.TestCase):
     def setUp(self):
-        self.encoding = "utf8"
+        self.maxDiff = None
 
         self.filesPath = u"../test/samplefiles/"
         self.__createWiki()
@@ -143,6 +143,46 @@ class CounterTest (unittest.TestCase):
     def testName_09 (self):
         text = u'(:counter name="  Абырвалг":) (:counter name="Новый счетчик  ":) (:counter name=" Абырвалг ":) (:counter name="Новый счетчик ":)'
         validResult = u"1 1 2 2"
+
+        result = self.parser.toHtml (text)
+        self.assertEqual (result, validResult)
+
+
+    def testStart_01 (self):
+        text = u"(:counter:) (:counter:) (:counter start=1:) (:counter:)"
+        validResult = u"1 2 1 2"
+
+        result = self.parser.toHtml (text)
+        self.assertEqual (result, validResult)
+
+
+    def testStart_02 (self):
+        text = u"(:counter start=5:) (:counter:) (:counter:)"
+        validResult = u"5 6 7"
+
+        result = self.parser.toHtml (text)
+        self.assertEqual (result, validResult)
+
+
+    def testStart_03 (self):
+        text = u"(:counter:) (:counter:) (:counter start=0:) (:counter:)"
+        validResult = u"1 2 0 1"
+
+        result = self.parser.toHtml (text)
+        self.assertEqual (result, validResult)
+
+
+    def testStart_04 (self):
+        text = u'(:counter:) (:counter name="Абырвалг":) (:counter:) (:counter name="Абырвалг" start=10:) (:counter:)'
+        validResult = u"1 1 2 10 3"
+
+        result = self.parser.toHtml (text)
+        self.assertEqual (result, validResult)
+
+
+    def testStart_05 (self):
+        text = u'(:counter start="-1":) (:counter:) (:counter:) (:counter start=10:)'
+        validResult = u"-1 0 1 10"
 
         result = self.parser.toHtml (text)
         self.assertEqual (result, validResult)
