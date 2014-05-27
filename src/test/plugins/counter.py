@@ -186,3 +186,19 @@ class CounterTest (unittest.TestCase):
 
         result = self.parser.toHtml (text)
         self.assertEqual (result, validResult)
+
+
+    def testStart_06 (self):
+        text = u'(:counter start="абырвалг":) (:counter:) (:counter:)'
+        validResult = u"1 2 3"
+
+        result = self.parser.toHtml (text)
+        self.assertEqual (result, validResult)
+
+
+    def testStart_07 (self):
+        text = u'(:counter:) (:counter:) (:counter start="абырвалг":)'
+        validResult = u"1 2 3"
+
+        result = self.parser.toHtml (text)
+        self.assertEqual (result, validResult)
