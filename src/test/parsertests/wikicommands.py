@@ -64,6 +64,48 @@ class WikiCommandsTest (unittest.TestCase):
         self.assertEqual (len (params), 0)
 
 
+    def testParamsParsing3 (self):
+        params_text = u"""Параметр=-1"""
+        params = Command.parseParams (params_text)
+        self.assertEqual (params[u"Параметр"], u"-1")
+
+
+    def testParamsParsing4 (self):
+        params_text = u'Параметр="-1"'
+        params = Command.parseParams (params_text)
+        self.assertEqual (params[u"Параметр"], u"-1")
+
+
+    def testParamsParsing5 (self):
+        params_text = u'Параметр= -1 '
+        params = Command.parseParams (params_text)
+        self.assertEqual (params[u"Параметр"], u"-1")
+
+
+    def testParamsParsing6 (self):
+        params_text = u'Параметр=Бла-бла-бла'
+        params = Command.parseParams (params_text)
+        self.assertEqual (params[u"Параметр"], u"Бла-бла-бла")
+
+
+    def testParamsParsing7 (self):
+        params_text = u'Параметр= Бла-бла-бла'
+        params = Command.parseParams (params_text)
+        self.assertEqual (params[u"Параметр"], u"Бла-бла-бла")
+
+
+    def testParamsParsing8 (self):
+        params_text = u'Параметр=Бла_бла_бла'
+        params = Command.parseParams (params_text)
+        self.assertEqual (params[u"Параметр"], u"Бла_бла_бла")
+
+
+    def testParamsParsing9 (self):
+        params_text = u'Параметр= Бла_бла_бла'
+        params = Command.parseParams (params_text)
+        self.assertEqual (params[u"Параметр"], u"Бла_бла_бла")
+
+
     def testCommandTest1 (self):
         self.parser.addCommand (TestCommand (self.parser))
         text = u"""(: test Параметр1 Параметр2=2 Параметр3=3 :)
