@@ -2,52 +2,57 @@
 # -*- coding: UTF-8 -*-
 
 from outwiker.core.pluginbase import Plugin
+from outwiker.core.commands import getCurrentVersion
+from outwiker.core.version import Version, StatusSet
 
 from .commandcounter import CommandCounter
 
-
-class PluginTestWikiCommand (Plugin):
-    """
-    Плагин, добавляющий обработку команды TestCommand в википарсер
-    """
-    def __init__ (self, application):
+# Для работы этого плагина требуется OutWiker 1.8.0.720
+if getCurrentVersion() < Version (1, 8, 0, 720, status=StatusSet.DEV):
+    print ("Style plugin. OutWiker version requirement: 1.8.0.720")
+else:
+    class PluginTestWikiCommand (Plugin):
         """
-        application - экземпляр класса core.application.ApplicationParams
+        Плагин, добавляющий обработку команды TestCommand в википарсер
         """
-        Plugin.__init__ (self, application)
+        def __init__ (self, application):
+            """
+            application - экземпляр класса core.application.ApplicationParams
+            """
+            Plugin.__init__ (self, application)
 
 
-    def __onWikiParserPrepare (self, parser):
-        parser.addCommand (CommandCounter (parser))
+        def __onWikiParserPrepare (self, parser):
+            parser.addCommand (CommandCounter (parser))
 
 
-    ###################################################
-    # Свойства и методы, которые необходимо определить
-    ###################################################
+        ###################################################
+        # Свойства и методы, которые необходимо определить
+        ###################################################
 
-    @property
-    def name (self):
-        return u"Counter"
+        @property
+        def name (self):
+            return u"Counter"
 
-    
-    @property
-    def description (self):
-        return u"Add command (:counter:) in wiki parser"
-
-
-    @property
-    def version (self):
-        return u"1.0"
+        
+        @property
+        def description (self):
+            return u"Add command (:counter:) in wiki parser"
 
 
-    def initialize(self):
-        self._application.onWikiParserPrepare += self.__onWikiParserPrepare
+        @property
+        def version (self):
+            return u"1.0"
 
 
-    def destroy (self):
-        """
-        Уничтожение (выгрузка) плагина. Здесь плагин должен отписаться от всех событий
-        """
-        self._application.onWikiParserPrepare -= self.__onWikiParserPrepare
+        def initialize(self):
+            self._application.onWikiParserPrepare += self.__onWikiParserPrepare
 
-    #############################################
+
+        def destroy (self):
+            """
+            Уничтожение (выгрузка) плагина. Здесь плагин должен отписаться от всех событий
+            """
+            self._application.onWikiParserPrepare -= self.__onWikiParserPrepare
+
+        #############################################

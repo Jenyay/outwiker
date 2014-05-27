@@ -2,17 +2,24 @@
 # -*- coding: UTF-8 -*-
 
 from outwiker.pages.wiki.parser.command import Command
+from .params import *
+
 
 class CommandCounter (Command):
     """
     Викикоманда, которая вместо себя вставляет последовательное число 1, 2,...
+    Параметры команды:
+    name - имя счетчика. Счетчики с разными именами считают независимо друг от друга
     """
     def __init__ (self, parser):
         """
         parser - экземпляр парсера
         """
         Command.__init__ (self, parser)
-        self.__counter = 1
+
+        # Счетчики на странице.
+        # Ключ - имя счетчика, значение - экземпляр класса _Counter
+        self._counters = {}
 
     
     @property
@@ -28,7 +35,33 @@ class CommandCounter (Command):
         Запустить команду на выполнение. 
         Метод возвращает текст, который будет вставлен на место команды в вики-нотации
         """
-        result = str (self.__counter)
-        self.__counter += 1
+        params_dict = Command.parseParams (params)
+
+        name = params_dict[NAME_PARAM_NAME].strip() if NAME_PARAM_NAME in params_dict else u""
+
+        if name not in self._counters:
+            self._counters[name] = _Counter()
+
+        counter = self._counters[name]
+
+        result = counter.toString()
+        counter.increment()
 
         return result
+
+
+
+class _Counter (object):
+    """
+    Хранит информацию об одном счетчике (с определенным именем)
+    """
+    def __init__ (self):
+        self._counter = 1
+
+
+    def toString (self):
+        return unicode (str (self._counter), "utf8")
+
+
+    def increment (self):
+        self._counter += 1

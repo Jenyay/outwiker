@@ -48,7 +48,21 @@ class CounterTest (unittest.TestCase):
         self.assertEqual ( len (self.loader), 1)
 
 
-    def testCounter (self):
+    def testCounter_01 (self):
+        text = u"(:counter:)"
+        validResult = u"1"
+
+        result = self.parser.toHtml (text)
+        self.assertEqual (result, validResult)
+
+        # Проверим, что для нового парсера счетчик сбрасывается
+        parser2 = self.factory.make (self.testPage, Application.config)
+
+        result2 = parser2.toHtml (text)
+        self.assertEqual (result2, validResult)
+
+
+    def testCounter_02 (self):
         text = u"(:counter:) (:counter:)"
         validResult = u"1 2"
 
@@ -60,3 +74,75 @@ class CounterTest (unittest.TestCase):
 
         result2 = parser2.toHtml (text)
         self.assertEqual (result2, validResult)
+
+
+    def testName_01 (self):
+        text = u'(:counter name="Абырвалг":) (:counter name="Абырвалг":)'
+        validResult = u"1 2"
+
+        result = self.parser.toHtml (text)
+        self.assertEqual (result, validResult)
+
+
+    def testName_02 (self):
+        text = u'(:counter name="Абырвалг":) (:counter:)'
+        validResult = u"1 1"
+
+        result = self.parser.toHtml (text)
+        self.assertEqual (result, validResult)
+
+
+    def testName_03 (self):
+        text = u'(:counter name="Абырвалг":) (:counter:) (:counter name="Абырвалг":)'
+        validResult = u"1 1 2"
+
+        result = self.parser.toHtml (text)
+        self.assertEqual (result, validResult)
+
+
+    def testName_04 (self):
+        text = u'(:counter name="Абырвалг":) (:counter:) (:counter name="Абырвалг":) (:counter:)'
+        validResult = u"1 1 2 2"
+
+        result = self.parser.toHtml (text)
+        self.assertEqual (result, validResult)
+
+
+    def testName_05 (self):
+        text = u'(:counter name="Абырвалг":) (:counter name:) (:counter name="Абырвалг":) (:counter name:)'
+        validResult = u"1 1 2 2"
+
+        result = self.parser.toHtml (text)
+        self.assertEqual (result, validResult)
+
+
+    def testName_06 (self):
+        text = u'(:counter name="Абырвалг":) (:counter name="":) (:counter name="Абырвалг":) (:counter name="":)'
+        validResult = u"1 1 2 2"
+
+        result = self.parser.toHtml (text)
+        self.assertEqual (result, validResult)
+
+
+    def testName_07 (self):
+        text = u'(:counter name="Абырвалг":) (:counter name="Новый счетчик":) (:counter name="Абырвалг":) (:counter name="Новый счетчик":)'
+        validResult = u"1 1 2 2"
+
+        result = self.parser.toHtml (text)
+        self.assertEqual (result, validResult)
+
+
+    def testName_08 (self):
+        text = u'(:counter name=" Абырвалг":) (:counter name="Новый счетчик ":) (:counter name="Абырвалг":) (:counter name="Новый счетчик":)'
+        validResult = u"1 1 2 2"
+
+        result = self.parser.toHtml (text)
+        self.assertEqual (result, validResult)
+
+
+    def testName_09 (self):
+        text = u'(:counter name="  Абырвалг":) (:counter name="Новый счетчик  ":) (:counter name=" Абырвалг ":) (:counter name="Новый счетчик ":)'
+        validResult = u"1 1 2 2"
+
+        result = self.parser.toHtml (text)
+        self.assertEqual (result, validResult)
