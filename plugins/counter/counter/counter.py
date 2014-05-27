@@ -7,9 +7,9 @@ from outwiker.core.version import Version, StatusSet
 
 from .commandcounter import CommandCounter
 
-# Для работы этого плагина требуется OutWiker 1.8.0.720
-if getCurrentVersion() < Version (1, 8, 0, 720, status=StatusSet.DEV):
-    print ("Style plugin. OutWiker version requirement: 1.8.0.720")
+# Для работы этого плагина требуется OutWiker 1.8.0.729
+if getCurrentVersion() < Version (1, 8, 0, 729, status=StatusSet.DEV):
+    print ("Style plugin. OutWiker version requirement: 1.8.0.729")
 else:
     class PluginTestWikiCommand (Plugin):
         """
