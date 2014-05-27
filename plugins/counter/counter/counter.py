@@ -27,7 +27,7 @@ class PluginTestWikiCommand (Plugin):
 
     @property
     def name (self):
-        return u"CounterWikiCommand"
+        return u"Counter"
 
     
     @property
@@ -37,7 +37,7 @@ class PluginTestWikiCommand (Plugin):
 
     @property
     def version (self):
-        return u"0.1"
+        return u"1.0"
 
 
     def initialize(self):

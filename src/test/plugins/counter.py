@@ -13,21 +13,21 @@ from outwiker.pages.wiki.parserfactory import ParserFactory
 from test.utils import removeWiki
 
 
-class WikiCounterCommandTest (unittest.TestCase):
+class CounterTest (unittest.TestCase):
     def setUp(self):
         self.encoding = "utf8"
 
         self.filesPath = u"../test/samplefiles/"
         self.__createWiki()
 
-        dirlist = [u"../plugins/testcounter"]
+        dirlist = [u"../plugins/counter"]
 
         self.loader = PluginsLoader(Application)
         self.loader.load (dirlist)
-        
+
         self.factory = ParserFactory()
         self.parser = self.factory.make (self.testPage, Application.config)
-    
+
 
     def __createWiki (self):
         # Здесь будет создаваться вики
@@ -38,7 +38,7 @@ class WikiCounterCommandTest (unittest.TestCase):
 
         WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
         self.testPage = self.rootwiki[u"Страница 1"]
-        
+
 
     def tearDown(self):
         removeWiki (self.path)

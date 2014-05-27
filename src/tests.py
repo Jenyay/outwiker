@@ -75,7 +75,6 @@ if __name__ == '__main__':
     from test.parsertests.wikicommandinclude import WikiIncludeCommandTest
     from test.parsertests.wikicommandchildlist import WikiChildListCommandTest
     from test.parsertests.wikicommandattachlist import WikiAttachListCommandTest
-    from test.parsertests.wikicommandcounter import WikiCounterCommandTest
 
     from test.wxthumbmaker import WxThumbmakerTest
     from test.pagethumbmaker import PageThumbmakerTest
@@ -144,6 +143,7 @@ if __name__ == '__main__':
     from test.plugins.pagestatistics import PageStatisticsTest
     from test.plugins.treestatistics import TreeStatisticsTest
     from test.plugins.updatenotifier import UpdateNotifierTest
+    from test.plugins.counter import CounterTest
 
     from test.plugins.source.source import SourcePluginTest
     from test.plugins.source.sourceencoding import SourceEncodingPluginTest
