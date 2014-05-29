@@ -5,3 +5,6 @@ NAME_PARAM_NAME = u"name"
 
 # Имя параметра для задания начального значения счетчика
 START_PARAM_NAME = u"start"
+
+# Имя параметра для задания родительского счетчика
+PARENT_PARAM_NAME = u"parent"

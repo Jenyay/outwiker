@@ -202,3 +202,159 @@ class CounterTest (unittest.TestCase):
 
         result = self.parser.toHtml (text)
         self.assertEqual (result, validResult)
+
+
+
+
+    def testParent_01 (self):
+        text = u'''(:counter name="level 1":)
+(:counter name="level 2" parent="level 1":)
+(:counter name="level 2" parent="level 1":)
+(:counter name="level 2" parent="level 1":)'''
+
+        validResult = u'''1
+1.1
+1.2
+1.3'''
+
+        result = self.parser.toHtml (text)
+        self.assertEqual (result, validResult)
+
+
+    def testParent_02 (self):
+        text = u'''(:counter name="level 1":)
+(:counter name="level 2" parent="level 1":)
+(:counter name="level 3" parent="level 2":)
+(:counter name="level 3" parent="level 2":)'''
+
+        validResult = u'''1
+1.1
+1.1.1
+1.1.2'''
+
+        result = self.parser.toHtml (text)
+        self.assertEqual (result, validResult)
+
+
+    def testParent_03 (self):
+        text = u'''(:counter name="level 1":)
+(:counter name="level 2" parent="level 1":)
+(:counter name="level 1":)
+(:counter name="level 2" parent="level 1":)
+(:counter name="level 2" parent="level 1":)'''
+
+        validResult = u'''1
+1.1
+2
+2.1
+2.2'''
+
+        result = self.parser.toHtml (text)
+        self.assertEqual (result, validResult)
+
+
+    def testParent_04 (self):
+        text = u'''(:counter name="level 1":)
+(:counter name="level 2" parent="level 1":)
+(:counter name="level 3" parent="level 2":)
+(:counter name="level 3" parent="level 2":)
+
+(:counter name="level 2" parent="level 1":)
+(:counter name="level 3" parent="level 2":)
+(:counter name="level 3" parent="level 2":)
+
+(:counter name="level 1":)
+(:counter name="level 2" parent="level 1":)
+(:counter name="level 3" parent="level 2":)
+(:counter name="level 3" parent="level 2":)'''
+
+        validResult = u'''1
+1.1
+1.1.1
+1.1.2
+
+1.2
+1.2.1
+1.2.2
+
+2
+2.1
+2.1.1
+2.1.2'''
+
+        result = self.parser.toHtml (text)
+        self.assertEqual (result, validResult)
+
+
+    def testInvalidParent_01 (self):
+        text = u'''(:counter name="level 1" parent="level 1":)'''
+
+        validResult = u'''1'''
+        result = self.parser.toHtml (text)
+        self.assertEqual (result, validResult)
+
+
+    def testInvalidParent_02 (self):
+        text = u'''(:counter name="level 1":)
+(:counter name="level 2" parent="level 1":)
+(:counter name="level 1" parent="level 2":)
+(:counter name="level 2" parent="level 1":)'''
+
+        validResult = u'''1
+1.1
+1.1.1
+1.1.1.1'''
+        result = self.parser.toHtml (text)
+        self.assertEqual (result, validResult)
+
+
+    def testInvalidParent_03 (self):
+        text = u'''(:counter name="level 1" parent="invalid":)
+(:counter name="level 1" parent="invalid":)'''
+
+        validResult = u'''1
+2'''
+
+        result = self.parser.toHtml (text)
+        self.assertEqual (result, validResult)
+
+
+    def testFull_01 (self):
+        text = u'''Раздел (:counter name="level 1":)
+Раздел (:counter name="level 1":)
+Раздел (:counter name="level 2" parent="level 1":)
+Раздел (:counter name="level 3" parent="level 2":)
+Раздел (:counter name="level 3" parent="level 2":)
+Раздел (:counter name="level 3" parent="level 2":)
+Раздел (:counter name="level 2" parent="level 1":)
+Раздел (:counter name="level 2" parent="level 1":)
+Раздел (:counter name="level 3" parent="level 2":)
+Раздел (:counter name="level 3" parent="level 2":)
+Раздел (:counter name="level 3" parent="level 2":)
+Раздел (:counter name="level 4" parent="level 3":)
+Раздел (:counter name="level 4" parent="level 3":)
+Раздел (:counter name="level 4" parent="level 3":)
+Раздел (:counter name="level 1":)
+Раздел (:counter name="level 2" parent="level 1":)
+Раздел (:counter name="level 2" parent="level 1":)
+Раздел (:counter name="level 2" parent="level 1":)'''
+
+
+        validResult = u'''Раздел 1
+Раздел 2
+Раздел 2.1
+Раздел 2.1.1
+Раздел 2.1.2
+Раздел 2.1.3
+Раздел 2.2
+Раздел 2.3
+Раздел 2.3.1
+Раздел 2.3.2
+Раздел 2.3.3
+Раздел 2.3.3.1
+Раздел 2.3.3.2
+Раздел 2.3.3.3
+Раздел 3
+Раздел 3.1
+Раздел 3.2
+Раздел 3.3'''
