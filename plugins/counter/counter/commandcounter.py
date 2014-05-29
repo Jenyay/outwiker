@@ -9,9 +9,14 @@ class CommandCounter (Command):
     """
     Викикоманда, которая вместо себя вставляет последовательное число 1, 2,...
     Параметры команды:
+    
     name - имя счетчика. Счетчики с разными именами считают независимо друг от друга
+
     start - значение, с которого нужно начинать новый отсчет. Это значение не обязательно должно быть в самом первом упоминании счетчика. С помощью этого параметра можно "сбрасывать" счетчикк нужному значению даже в середине страницы.
+
     parent - имя родительского счетчика для создания нумерации вроде 1.1, 1.2.3 и т.п.
+
+    hide - счетчик нужно скрыть, но при этом увеличить его значение
     """
     def __init__ (self, parser):
         """
@@ -42,6 +47,7 @@ class CommandCounter (Command):
         name = self._getNameParam (params_dict)
         start = self._getStartParam (params_dict)
         parent = self._getParentParam (params_dict)
+        hide = self._getHideParam (params_dict)
 
         if name not in self._counters:
             self._counters[name] = _Counter()
@@ -53,7 +59,7 @@ class CommandCounter (Command):
         else:
             counter.next(parent)
 
-        return counter.toString()
+        return u"" if hide else counter.toString() 
 
 
     def _getNameParam (self, params_dict):
@@ -88,6 +94,10 @@ class CommandCounter (Command):
             parent = self._counters[parent_name] if parent_name in self._counters else None
 
         return parent
+
+
+    def _getHideParam (self, params_dict):
+        return HIDE_PARAM_NAME in params_dict
 
 
 class _Counter (object):

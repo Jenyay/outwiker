@@ -422,3 +422,40 @@ class CounterTest (unittest.TestCase):
 
         result = self.parser.toHtml (text)
         self.assertEqual (result, validResult)
+
+
+    def testHide_01 (self):
+        text = u'''(:counter hide:)'''
+
+        validResult = u''''''
+
+        result = self.parser.toHtml (text)
+        self.assertEqual (result, validResult)
+
+
+    def testHide_03 (self):
+        text = u'''Раздел (:counter name="level 1":)
+Раздел (:counter name="level 2" parent="level 1":)
+Раздел (:counter name="level 2" parent="level 1" hide:)
+Раздел (:counter name="level 2" parent="level 1":)
+Раздел (:counter name="level 2" parent="level 1" start=10 hide:)
+Раздел (:counter name="level 2" parent="level 1":)'''
+
+        validResult = u'''Раздел 1
+Раздел 1.1
+Раздел 
+Раздел 1.3
+Раздел 
+Раздел 1.11'''
+
+        result = self.parser.toHtml (text)
+        self.assertEqual (result, validResult)
+
+
+    def testHide_04 (self):
+        text = u'''(:counter start=100 hide:)(:counter:)'''
+
+        validResult = u'''101'''
+
+        result = self.parser.toHtml (text)
+        self.assertEqual (result, validResult)
