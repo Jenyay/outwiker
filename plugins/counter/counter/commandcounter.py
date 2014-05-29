@@ -19,6 +19,8 @@ class CommandCounter (Command):
     parent - имя родительского счетчика для создания нумерации вроде 1.1, 1.2.3 и т.п.
 
     hide - счетчик нужно скрыть, но при этом увеличить его значение
+
+    separator - разделитель между данным счетчиком и родительским (по умолчанию - ".")
     """
     def __init__ (self, parser):
         """
@@ -51,6 +53,7 @@ class CommandCounter (Command):
         step = self._getStepParam (params_dict)
         parent = self._getParentParam (params_dict)
         hide = self._getHideParam (params_dict)
+        separator = self._getSeparatorParam (params_dict)
 
         if name not in self._counters:
             self._counters[name] = _Counter()
@@ -58,9 +61,9 @@ class CommandCounter (Command):
         counter = self._counters[name]
 
         if start != None:
-            counter.reset (start, parent)
+            counter.reset (start, parent, separator)
         else:
-            counter.next(step, parent)
+            counter.next(step, parent, separator)
 
         return u"" if hide else counter.toString() 
 
@@ -68,6 +71,10 @@ class CommandCounter (Command):
     def _getNameParam (self, params_dict):
         name = params_dict[NAME_PARAM_NAME].strip() if NAME_PARAM_NAME in params_dict else u""
         return name
+
+
+    def _getSeparatorParam (self, params_dict):
+        return params_dict[SEPARATOR_PARAM_NAME].strip() if SEPARATOR_PARAM_NAME in params_dict else u"."
 
 
     def _getStartParam (self, params_dict):
@@ -128,7 +135,6 @@ class _Counter (object):
     def __init__ (self):
         self._counter = 0
         self._string = None
-        self._separator = u"."
 
         # Используется для определения, нужно ли сбрасывать свое значение, 
         # если изменился родительские значения
@@ -141,27 +147,27 @@ class _Counter (object):
         return self._string
 
 
-    def next (self, step, parent=None):
+    def next (self, step, parent, separator):
         """
         Установить следующее значение счетчика
         """
         self._counter += step
-        self._createString (parent, startval=step)
+        self._createString (parent, startval=step, separator=separator)
 
 
-    def reset (self, startval, parent=None):
+    def reset (self, startval, parent, separator):
         """
         Установить счетчик в значение startval
         """
         self._counter = startval
-        self._createString (parent, startval)
+        self._createString (parent, startval, separator=separator)
 
 
     def _getMyString (self):
         return unicode (str (self._counter), "utf8")
 
 
-    def _createString (self, parent, startval=1):
+    def _createString (self, parent, startval=1, separator=u"."):
         myString = self._getMyString()
 
         if parent == None:
@@ -174,4 +180,4 @@ class _Counter (object):
                 self._oldParentString = parentString
                 myString = self._getMyString()
 
-            self._string = self._separator.join ([parentString, myString])
+            self._string = separator.join ([parentString, myString])

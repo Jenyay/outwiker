@@ -15,3 +15,6 @@ HIDE_PARAM_NAME = u"hide"
 
 # Имя параметра для задания шага изменения счетчика
 STEP_PARAM_NAME = u"step"
+
+# Имя параметра для задания разделителя между своим значением и родительским
+SEPARATOR_PARAM_NAME = u"separator"

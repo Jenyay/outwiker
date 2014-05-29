@@ -550,3 +550,49 @@ class CounterTest (unittest.TestCase):
 
         result = self.parser.toHtml (text)
         self.assertEqual (result, validResult)
+
+
+    def testStep_07 (self):
+        text = u'''(:counter start=0 step=2:)'''
+
+        validResult = u'''0'''
+
+        result = self.parser.toHtml (text)
+        self.assertEqual (result, validResult)
+
+
+    def testSeparator_01 (self):
+        text = u'''Раздел (:counter name="level 1":)
+Раздел (:counter name="level 2" parent="level 1" separator="/":)
+Раздел (:counter name="level 2" parent="level 1" separator="/":)
+Раздел (:counter name="level 2" parent="level 1" separator="/":)'''
+
+        validResult = u'''Раздел 1
+Раздел 1/1
+Раздел 1/2
+Раздел 1/3'''
+
+        result = self.parser.toHtml (text)
+        self.assertEqual (result, validResult)
+
+
+    def testSeparator_02 (self):
+        text = u'''Раздел (:counter:)
+Раздел (:counter name="level 2" parent="" separator=":":)
+Раздел (:counter name="level 3" parent="level 2" separator="-":)
+Раздел (:counter name="level 3" parent="level 2" separator="-":)
+Раздел (:counter name="level 3" parent="level 2" separator="-":)
+Раздел (:counter name="level 2" parent="" separator=":":)
+Раздел (:counter name="level 2" parent="" separator="-":)'''
+
+
+        validResult = u'''Раздел 1
+Раздел 1:1
+Раздел 1:1-1
+Раздел 1:1-2
+Раздел 1:1-3
+Раздел 1:2
+Раздел 1-3'''
+
+        result = self.parser.toHtml (text)
+        self.assertEqual (result, validResult)
