@@ -14,6 +14,8 @@ class CommandCounter (Command):
 
     start - значение, с которого нужно начинать новый отсчет. Это значение не обязательно должно быть в самом первом упоминании счетчика. С помощью этого параметра можно "сбрасывать" счетчикк нужному значению даже в середине страницы.
 
+    step - приращение для значения счетчика
+
     parent - имя родительского счетчика для создания нумерации вроде 1.1, 1.2.3 и т.п.
 
     hide - счетчик нужно скрыть, но при этом увеличить его значение
@@ -46,6 +48,7 @@ class CommandCounter (Command):
 
         name = self._getNameParam (params_dict)
         start = self._getStartParam (params_dict)
+        step = self._getStepParam (params_dict)
         parent = self._getParentParam (params_dict)
         hide = self._getHideParam (params_dict)
 
@@ -57,7 +60,7 @@ class CommandCounter (Command):
         if start != None:
             counter.reset (start, parent)
         else:
-            counter.next(parent)
+            counter.next(step, parent)
 
         return u"" if hide else counter.toString() 
 
@@ -71,15 +74,33 @@ class CommandCounter (Command):
         """
         Возвращает значение параметра start (в виде целого числа) или None, если он не задан
         """
-        if START_PARAM_NAME not in params_dict:
+        return self._getIntParam (params_dict, START_PARAM_NAME)
+
+
+    def _getStepParam (self, params_dict):
+        """
+        Возвращает значение параметра step (в виде целого числа) или None, если он не задан
+        """
+        step = self._getIntParam (params_dict, STEP_PARAM_NAME)
+        if step == None:
+            step = 1
+
+        return step
+
+
+    def _getIntParam (self, params_dict, param_name):
+        """
+        Метод, возвращающий целочисленное значение параметра с именем param_name или None, если он не задан
+        """
+        if param_name not in params_dict:
             return None
 
         try:
-            start = int (params_dict[START_PARAM_NAME].strip())
+            value = int (params_dict[param_name].strip())
         except ValueError:
-            start = None
+            value = None
 
-        return start
+        return value
 
 
     def _getParentParam (self, params_dict):
@@ -113,9 +134,6 @@ class _Counter (object):
         # если изменился родительские значения
         self._oldParentString = None
 
-        # Начальное значение по умолчанию
-        self._defaultStartVal = 1
-
         self._createString (None)
 
 
@@ -123,12 +141,12 @@ class _Counter (object):
         return self._string
 
 
-    def next (self, parent=None):
+    def next (self, step, parent=None):
         """
         Установить следующее значение счетчика
         """
-        self._counter += 1
-        self._createString (parent)
+        self._counter += step
+        self._createString (parent, startval=step)
 
 
     def reset (self, startval, parent=None):
@@ -136,14 +154,14 @@ class _Counter (object):
         Установить счетчик в значение startval
         """
         self._counter = startval
-        self._createString (parent)
+        self._createString (parent, startval)
 
 
     def _getMyString (self):
         return unicode (str (self._counter), "utf8")
 
 
-    def _createString (self, parent):
+    def _createString (self, parent, startval=1):
         myString = self._getMyString()
 
         if parent == None:
@@ -152,7 +170,7 @@ class _Counter (object):
             parentString = parent.toString()
 
             if parentString != self._oldParentString:
-                self._counter = self._defaultStartVal
+                self._counter = startval
                 self._oldParentString = parentString
                 myString = self._getMyString()
 

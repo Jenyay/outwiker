@@ -424,6 +424,23 @@ class CounterTest (unittest.TestCase):
         self.assertEqual (result, validResult)
 
 
+    def testFull_04 (self):
+        text = u'''Раздел (:counter name="level 1":)
+Раздел (:counter name="level 2" parent="level 1" start=10:)
+Раздел (:counter name="level 2" parent="level 1":)
+Раздел (:counter name="level 2" parent="level 1":)
+Раздел (:counter name="level 2" parent="level 1":)'''
+
+        validResult = u'''Раздел 1
+Раздел 1.10
+Раздел 1.11
+Раздел 1.12
+Раздел 1.13'''
+
+        result = self.parser.toHtml (text)
+        self.assertEqual (result, validResult)
+
+
     def testHide_01 (self):
         text = u'''(:counter hide:)'''
 
@@ -456,6 +473,80 @@ class CounterTest (unittest.TestCase):
         text = u'''(:counter start=100 hide:)(:counter:)'''
 
         validResult = u'''101'''
+
+        result = self.parser.toHtml (text)
+        self.assertEqual (result, validResult)
+
+
+    def testStep_01 (self):
+        text = u'''(:counter:) (:counter step=2:)'''
+
+        validResult = u'''1 3'''
+
+        result = self.parser.toHtml (text)
+        self.assertEqual (result, validResult)
+
+
+    def testStep_02 (self):
+        text = u'''(:counter step=2:)'''
+
+        validResult = u'''2'''
+
+        result = self.parser.toHtml (text)
+        self.assertEqual (result, validResult)
+
+
+    def testStep_03 (self):
+        text = u'''(:counter step=2:) (:counter step=3:) (:counter step=4:)'''
+
+        validResult = u'''2 5 9'''
+
+        result = self.parser.toHtml (text)
+        self.assertEqual (result, validResult)
+
+
+    def testStep_04 (self):
+        text = u'''Раздел (:counter name="level 1":)
+Раздел (:counter name="level 2" parent="level 1" step=2:)
+Раздел (:counter name="level 2" parent="level 1" step=2:)'''
+
+        validResult = u'''Раздел 1
+Раздел 1.2
+Раздел 1.4'''
+
+        result = self.parser.toHtml (text)
+        self.assertEqual (result, validResult)
+
+
+    def testStep_05 (self):
+        text = u'''Раздел (:counter name="level 1":)
+Раздел (:counter name="level 2" parent="level 1" start=10 step="100":)
+Раздел (:counter name="level 2" parent="level 1" step="100":)
+Раздел (:counter name="level 2" parent="level 1" step="100":)
+Раздел (:counter name="level 2" parent="level 1" step="100":)'''
+
+        validResult = u'''Раздел 1
+Раздел 1.10
+Раздел 1.110
+Раздел 1.210
+Раздел 1.310'''
+
+        result = self.parser.toHtml (text)
+        self.assertEqual (result, validResult)
+
+
+    def testStep_06 (self):
+        text = u'''Раздел (:counter name="level 1":)
+Раздел (:counter name="level 2" parent="level 1" start=0:)
+Раздел (:counter name="level 2" parent="level 1" step=-100:)
+Раздел (:counter name="level 2" parent="level 1" step=-100:)
+Раздел (:counter name="level 2" parent="level 1" step=-100:)'''
+
+        validResult = u'''Раздел 1
+Раздел 1.0
+Раздел 1.-100
+Раздел 1.-200
+Раздел 1.-300'''
 
         result = self.parser.toHtml (text)
         self.assertEqual (result, validResult)
