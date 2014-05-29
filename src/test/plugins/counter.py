@@ -433,7 +433,7 @@ class CounterTest (unittest.TestCase):
         self.assertEqual (result, validResult)
 
 
-    def testHide_03 (self):
+    def testHide_02 (self):
         text = u'''Раздел (:counter name="level 1":)
 Раздел (:counter name="level 2" parent="level 1":)
 Раздел (:counter name="level 2" parent="level 1" hide:)
@@ -452,7 +452,7 @@ class CounterTest (unittest.TestCase):
         self.assertEqual (result, validResult)
 
 
-    def testHide_04 (self):
+    def testHide_03 (self):
         text = u'''(:counter start=100 hide:)(:counter:)'''
 
         validResult = u'''101'''
