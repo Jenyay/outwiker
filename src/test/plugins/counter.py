@@ -358,3 +358,67 @@ class CounterTest (unittest.TestCase):
 Раздел 3.1
 Раздел 3.2
 Раздел 3.3'''
+
+        result = self.parser.toHtml (text)
+        self.assertEqual (result, validResult)
+
+
+    def testFull_02 (self):
+        text = u'''Раздел (:counter:)
+Раздел (:counter:)
+Раздел (:counter name="level 2" parent="":)
+Раздел (:counter name="level 3" parent="level 2":)
+Раздел (:counter name="level 3" parent="level 2":)
+Раздел (:counter name="level 3" parent="level 2":)
+Раздел (:counter name="level 2" parent="":)
+Раздел (:counter name="level 2" parent="":)
+Раздел (:counter name="level 3" parent="level 2":)
+Раздел (:counter name="level 3" parent="level 2":)
+Раздел (:counter name="level 3" parent="level 2":)
+Раздел (:counter name="level 4" parent="level 3":)
+Раздел (:counter name="level 4" parent="level 3":)
+Раздел (:counter name="level 4" parent="level 3":)
+Раздел (:counter:)
+Раздел (:counter name="level 2" parent="":)
+Раздел (:counter name="level 2" parent="":)
+Раздел (:counter name="level 2" parent="":)'''
+
+
+        validResult = u'''Раздел 1
+Раздел 2
+Раздел 2.1
+Раздел 2.1.1
+Раздел 2.1.2
+Раздел 2.1.3
+Раздел 2.2
+Раздел 2.3
+Раздел 2.3.1
+Раздел 2.3.2
+Раздел 2.3.3
+Раздел 2.3.3.1
+Раздел 2.3.3.2
+Раздел 2.3.3.3
+Раздел 3
+Раздел 3.1
+Раздел 3.2
+Раздел 3.3'''
+
+        result = self.parser.toHtml (text)
+        self.assertEqual (result, validResult)
+
+
+    def testFull_03 (self):
+        text = u'''Раздел (:counter name="level 1":)
+Раздел (:counter name="level 2" parent="level 1":)
+Раздел (:counter name="level 2" parent="level 1":)
+Раздел (:counter name="level 2" parent="level 1" start=10:)
+Раздел (:counter name="level 2" parent="level 1":)'''
+
+        validResult = u'''Раздел 1
+Раздел 1.1
+Раздел 1.2
+Раздел 1.10
+Раздел 1.11'''
+
+        result = self.parser.toHtml (text)
+        self.assertEqual (result, validResult)
