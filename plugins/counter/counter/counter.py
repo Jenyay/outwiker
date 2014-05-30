@@ -1,11 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
+import os.path
+
 from outwiker.core.pluginbase import Plugin
 from outwiker.core.commands import getCurrentVersion
 from outwiker.core.version import Version, StatusSet
+from outwiker.core.system import getOS
 
 from .commandcounter import CommandCounter
+from .i18n import set_
+
 
 # Для работы этого плагина требуется OutWiker 1.8.0.729
 if getCurrentVersion() < Version (1, 8, 0, 729, status=StatusSet.DEV):
@@ -34,10 +39,38 @@ else:
         def name (self):
             return u"Counter"
 
-        
+
         @property
         def description (self):
-            return u"Add command (:counter:) in wiki parser"
+            description = _(u'''Plugin adds wiki-command [=(:counter:)=], allowing the automatic numbering anything on the page.''')
+
+            usage = _(u'''<b>Usage:</b>:
+(:counter parameters... :)''')
+
+            params = _(u'''<b>Parameters:</b>
+All parameters are optional.
+<ul>
+<li><b>name</b> - sets the name of the counter. Counters with different names have independent current values.</li>
+<li><b>start</b> - value, with which to start a new count. With this option, you can "reset" the counter to the required value.</li>
+<li><b>step</b> - increment for the counter.</li>
+<li><b>parent</b> - name of the parent counter to create a numbering like 1.1, 1.2.3, etc.</li>
+<li><b>separator</b> - separator between a given counter and the parent counter (the default value - dot).</li>
+<li><b>hide</b> - parameter indicates that the counter need to hide, but to increase its value.</li>
+</ul>''')
+
+            return u"""{description}
+
+{usage}
+
+{params}
+""".format (description=description,
+        usage=usage,
+        params=params)
+
+
+        @property
+        def url (self):
+            return _(u"http://jenyay.net/Outwiker/CounterEn")
 
 
         @property
@@ -46,7 +79,21 @@ else:
 
 
         def initialize(self):
+            self._initlocale(u"counter")
+
             self._application.onWikiParserPrepare += self.__onWikiParserPrepare
+
+
+        def _initlocale (self, domain):
+            langdir = unicode (os.path.join (os.path.dirname (__file__), "locale"), getOS().filesEncoding)
+            global _
+
+            try:
+                _ = self._init_i18n (domain, langdir)
+            except BaseException as e:
+                print e
+
+            set_(_)
 
 
         def destroy (self):
