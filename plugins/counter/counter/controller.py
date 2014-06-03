@@ -11,6 +11,9 @@ import outwiker.core.exceptions
 from .i18n import get_
 from .guicreator import GuiCreator
 from .commandcounter import CommandCounter
+from .insertdialog import InsertDialog
+from .insertdialogcontroller import InsertDialogController
+from .config import CounterConfig
 
 
 class Controller (object):
@@ -102,7 +105,19 @@ class Controller (object):
         if self._application.selectedPage.readonly:
             raise outwiker.core.exceptions.ReadonlyException
 
-        print "qqqq"
+        dlg = InsertDialog (self._application.mainWindow)
+
+        dlgController = InsertDialogController (dlg, 
+                CounterConfig (self._application.config))
+
+        resultDlg = dlgController.showDialog ()
+
+        if resultDlg == wx.ID_OK:
+            command = dlgController.getCommandString()
+            self._getPageView().codeEditor.replaceText (command)
+
+        dlg.Destroy()
+
 
     def _getPageView (self):
         """
