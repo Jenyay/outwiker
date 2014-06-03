@@ -8,11 +8,10 @@ from outwiker.core.commands import getCurrentVersion
 from outwiker.core.version import Version, StatusSet
 from outwiker.core.system import getOS
 
-from .commandcounter import CommandCounter
 from .i18n import set_
+from .controller import Controller
 
 
-# Для работы этого плагина требуется OutWiker 1.8.0.729
 if getCurrentVersion() < Version (1, 8, 0, 729, status=StatusSet.DEV):
     print ("Style plugin. OutWiker version requirement: 1.8.0.729")
 else:
@@ -25,10 +24,7 @@ else:
             application - экземпляр класса core.application.ApplicationParams
             """
             Plugin.__init__ (self, application)
-
-
-        def __onWikiParserPrepare (self, parser):
-            parser.addCommand (CommandCounter (parser))
+            self.__controller = Controller(self, application)
 
 
         ###################################################
@@ -79,9 +75,10 @@ All parameters are optional.
 
 
         def initialize(self):
-            self._initlocale(u"counter")
+            if self._application.mainWindow != None:
+                self._initlocale(u"counter")
 
-            self._application.onWikiParserPrepare += self.__onWikiParserPrepare
+            self.__controller.initialize()
 
 
         def _initlocale (self, domain):
@@ -100,6 +97,6 @@ All parameters are optional.
             """
             Уничтожение (выгрузка) плагина. Здесь плагин должен отписаться от всех событий
             """
-            self._application.onWikiParserPrepare -= self.__onWikiParserPrepare
+            self.__controller.destroy()
 
         #############################################
