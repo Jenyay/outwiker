@@ -31,11 +31,6 @@ class InsertDialogController (object):
 
         self.AUTO_LANGUAGE = _(u"Auto")
 
-        # Результат работы диалога
-        # Если пользователь в диалоге нажал кнопку Cancel, _result = None,
-        # иначе хранит кортеж из двух значений: (начало команды, завершение команды)
-        self._result = None
-
 
     def __bindEvents (self):
         self._dialog.fileCheckBox.Bind (wx.EVT_CHECKBOX, handler=self.__onfileChecked)
@@ -89,8 +84,7 @@ class InsertDialogController (object):
 
     def showDialog (self):
         """
-        Метод показывает диалог и возвращает кортеж из двух строк, которыми надо будет обернуть выделенный текст
-        Если пользователь нажимает кнопку "Cancel", возвращается None
+        Метод показывает диалог и возвращает результат метода ShowModal() диалога
         """
         self.loadState()
 

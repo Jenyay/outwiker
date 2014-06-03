@@ -30,7 +30,7 @@ else:
             Plugin.__init__ (self, application)
 
             self.__version = u"1.11.2"
-            self.__controler = Controller(self, application)
+            self.__controller = Controller(self, application)
 
 
         def initialize(self):
@@ -38,7 +38,7 @@ else:
 
             self.__correctSysPath()
 
-            self.__controler.initialize()
+            self.__controller.initialize()
 
 
         def __correctSysPath (self):
@@ -170,7 +170,7 @@ if __name__ == "__main__":
             """
             Уничтожение (выгрузка) плагина. Здесь плагин должен отписаться от всех событий
             """
-            self.__controler.destroy()
+            self.__controller.destroy()
 
 
         @property

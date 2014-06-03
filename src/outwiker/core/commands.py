@@ -140,7 +140,7 @@ def openWiki (path, readonly=False):
     # Если передан путь до файла настроек (а не до папки с вики), 
     # то оставим только папку
     if not os.path.isdir (path):
-        path = os.path.split (fname)[0]
+        path = os.path.split (path)[0]
 
     wikiroot = None
 
