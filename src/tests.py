@@ -144,6 +144,7 @@ if __name__ == '__main__':
     from test.plugins.treestatistics import TreeStatisticsTest
     from test.plugins.updatenotifier import UpdateNotifierTest
     from test.plugins.counter import CounterTest
+    from test.plugins.counterdialog import CounterDialogTest
 
     from test.plugins.source.source import SourcePluginTest
     from test.plugins.source.sourceencoding import SourceEncodingPluginTest

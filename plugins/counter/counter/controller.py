@@ -13,7 +13,6 @@ from .guicreator import GuiCreator
 from .commandcounter import CommandCounter
 from .insertdialog import InsertDialog
 from .insertdialogcontroller import InsertDialogController
-from .config import CounterConfig
 
 
 class Controller (object):
@@ -108,7 +107,7 @@ class Controller (object):
         dlg = InsertDialog (self._application.mainWindow)
 
         dlgController = InsertDialogController (dlg, 
-                CounterConfig (self._application.config))
+                self._application.config)
 
         resultDlg = dlgController.showDialog ()
 

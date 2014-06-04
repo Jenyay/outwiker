@@ -6,6 +6,8 @@ import wx
 
 import outwiker.core.exceptions
 
+from .config import CounterConfig
+
 
 class InsertDialogController (object):
     """
@@ -14,14 +16,10 @@ class InsertDialogController (object):
     def __init__ (self, dialog, config):
         """
         dialog - экземпляр класса InsertDialog, который надо будет показать пользователю.
-        config - экземпляр класса CounterConfig
+        config - экземпляр класса Config
         """
         self._dialog = dialog
-        self._config = config
-
-
-    def __bindEvents (self):
-        pass
+        self._config = CounterConfig (config)
 
 
     def showDialog (self):
@@ -42,7 +40,23 @@ class InsertDialogController (object):
         """
         Возвращает строку, соответствующую выбранным настройкам в диалоге
         """
-        return self._getStringForText()
+        name = self._getNameParam ()
+
+        result = u"(:counter{name}:)".format (
+                name = name)
+
+        return result
+
+
+    def _getNameParam (self):
+        """
+        Возвращает параметр команды (:counter:), соответствующий введенному имени счетчика в диалоге
+        """
+        name = self._dialog.counterName.strip()
+        result = u' name="{}"'.format (name) if len (name) != 0 else u''
+
+        return result
+
 
 
     def loadState (self):
@@ -50,7 +64,6 @@ class InsertDialogController (object):
         Загрузить настройки и установить их в диалоге
         """
         self._updateDialogSize()
-        self.__bindEvents()
 
 
     def _updateDialogSize (self):
@@ -62,10 +75,6 @@ class InsertDialogController (object):
         dialogHeight = max (self._config.dialogHeight.value, currentHeight)
 
         self._dialog.SetSizeWH (dialogWidth, dialogHeight)
-
-
-    def _getStringForText (self):
-        return ""
 
 
     def saveState (self):

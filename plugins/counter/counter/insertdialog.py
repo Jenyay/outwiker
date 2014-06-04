@@ -2,10 +2,12 @@
 
 import wx
 
+from outwiker.gui.testeddialog import TestedDialog
+
 from .i18n import get_
 
 
-class InsertDialog (wx.Dialog):
+class InsertDialog (TestedDialog):
     """
     Диалог для вставки команды (:counter:)
     """
@@ -23,6 +25,16 @@ class InsertDialog (wx.Dialog):
         self._createGui()
         self._counterName.SetFocus()
         self.Center(wx.CENTRE_ON_SCREEN)
+
+
+    @property
+    def counterName (self):
+        return self._counterName.GetValue()
+
+
+    @counterName.setter
+    def counterName (self, value):
+        self._counterName.SetValue (value)
 
 
     def _createGui(self):
@@ -142,7 +154,7 @@ class InsertDialog (wx.Dialog):
 
     def _createCounterNameGui (self):
         """
-        Создание элементы управления, связанных с вводом имени счетчика
+        Создание элементов управления, связанных с вводом имени счетчика
         """
         counterNameLabel = wx.StaticText (self, label = _(u"Counter name"))
         self._counterName = wx.ComboBox (self, style=wx.CB_DROPDOWN)
@@ -166,7 +178,6 @@ class InsertDialog (wx.Dialog):
         mainSizer.AddStretchSpacer()
         mainSizer.Add (
                 okCancel,
-                proportion=1,
                 flag=wx.ALL | wx.ALIGN_RIGHT | wx.ALIGN_BOTTOM,
-                border=2
+                border=4
                 )

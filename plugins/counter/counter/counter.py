@@ -10,6 +10,8 @@ from outwiker.core.system import getOS
 
 from .i18n import set_
 from .controller import Controller
+from .insertdialog import InsertDialog
+from .insertdialogcontroller import InsertDialogController
 
 
 if getCurrentVersion() < Version (1, 8, 0, 729, status=StatusSet.DEV):
@@ -100,3 +102,13 @@ All parameters are optional.
             self.__controller.destroy()
 
         #############################################
+
+        # Свойства, используемые при тестировании
+        @property
+        def InsertDialog (self):
+            return InsertDialog
+
+
+        @property
+        def InsertDialogController (self):
+            return InsertDialogController
