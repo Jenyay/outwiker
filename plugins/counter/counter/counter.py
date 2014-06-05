@@ -40,7 +40,7 @@ else:
 
         @property
         def description (self):
-            description = _(u'''Plugin adds wiki-command [=(:counter:)=], allowing the automatic numbering anything on the page.''')
+            description = _(u'''Plugin adds wiki-command (:counter:), allowing the automatic numbering anything on the page.''')
 
             usage = _(u'''<b>Usage:</b>:
 (:counter parameters... :)''')

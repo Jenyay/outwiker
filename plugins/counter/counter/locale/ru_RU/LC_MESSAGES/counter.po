@@ -1,0 +1,114 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Counter\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-06-05 10:05+0400\n"
+"PO-Revision-Date: 2014-06-05 10:08+0300\n"
+"Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
+"Language-Team: jenyay.net <jenyay.ilin@gmail.com>\n"
+"Language: Russian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+#: actions.py:24
+msgid "Counter (:counter ...:)"
+msgstr "Счетчик (:counter ...:)"
+
+#: actions.py:29
+msgid "Counter plugin. Insert (:counter... :) command"
+msgstr "Плагин Counter. Вставить команду (:counter:)"
+
+#: counter.py:43
+msgid ""
+"Plugin adds wiki-command (:counter:), allowing the automatic numbering "
+"anything on the page."
+msgstr ""
+"Плагин добавляет команду  (:counter:), позволяющую создавать автоматическую "
+"нумерацию на викистранице."
+
+#: counter.py:45
+msgid ""
+"<b>Usage:</b>:\n"
+"(:counter parameters... :)"
+msgstr ""
+"<b>Использование:</b>:\n"
+"(:counter параметры... :)"
+
+#: counter.py:48
+msgid ""
+"<b>Parameters:</b>\n"
+"All parameters are optional.\n"
+"<ul>\n"
+"<li><b>name</b> - sets the name of the counter. Counters with different "
+"names have independent current values.</li>\n"
+"<li><b>start</b> - value, with which to start a new count. With this option, "
+"you can \"reset\" the counter to the required value.</li>\n"
+"<li><b>step</b> - increment for the counter.</li>\n"
+"<li><b>parent</b> - name of the parent counter to create a numbering like "
+"1.1, 1.2.3, etc.</li>\n"
+"<li><b>separator</b> - separator between a given counter and the parent "
+"counter (the default value - dot).</li>\n"
+"<li><b>hide</b> - parameter indicates that the counter need to hide, but to "
+"increase its value.</li>\n"
+"</ul>"
+msgstr ""
+"<b>Параметры:</b>\n"
+"Все параметры являются необязательными.\n"
+"<ul>\n"
+"<li><b>name</b> - Устанавливает имя счетчика. Счетчики с разными именами "
+"имеют независимые текущие значения.</li>\n"
+"<li><b>start</b> - значение, с которого нужно начать новый отсчет. С помощью "
+"этого параметра вы можете \"сбрасывать\" счетчик к требуемому значению.</"
+"li>\n"
+"<li><b>step</b> - шаг счетчика.</li>\n"
+"<li><b>parent</b> - имя родительского счетчика для создания нумерации вида "
+"1.1, 1.2.3, и т.д..</li>\n"
+"<li><b>separator</b> - разделитель между данным и родительским счетчиком (по "
+"умолчанию - точка).</li>\n"
+"<li><b>hide</b> - параметр указывает, что счетчик дожен увеличить свое "
+"значение, но сам при этом не должен отображаться.</li>\n"
+"</ul>"
+
+#: counter.py:71
+msgid "http://jenyay.net/Outwiker/CounterEn"
+msgstr "http://jenyay.net/Outwiker/Counter"
+
+#: insertdialog.py:147
+msgid "Advanced"
+msgstr "Расширенное"
+
+#: insertdialog.py:149
+msgid "Start count from"
+msgstr "Начать отсчет с"
+
+#: insertdialog.py:152
+msgid "Step"
+msgstr "Шаг"
+
+#: insertdialog.py:155
+msgid "Hide counter"
+msgstr "Скрыть счетчик"
+
+#: insertdialog.py:192
+msgid "Nested counter"
+msgstr "Вложенный счетчик"
+
+#: insertdialog.py:194
+msgid "Parent counter name"
+msgstr "Имя родительского счетчика"
+
+#: insertdialog.py:198
+msgid "Separator"
+msgstr "Разделитель"
+
+#: insertdialog.py:232
+msgid "Counter name"
+msgstr "Имя счетчика"
