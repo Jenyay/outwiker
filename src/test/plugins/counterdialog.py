@@ -39,6 +39,7 @@ class CounterDialogTest (BaseMainWndTest):
 
         removeWiki (self.path)
         self._dlg.Destroy()
+        self._loader.clear()
 
 
     def __createWiki (self):

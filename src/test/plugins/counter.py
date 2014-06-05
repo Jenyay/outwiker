@@ -42,6 +42,7 @@ class CounterTest (unittest.TestCase):
 
     def tearDown(self):
         removeWiki (self.path)
+        self.loader.clear()
 
 
     def testPluginLoad (self):
