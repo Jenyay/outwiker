@@ -23,8 +23,18 @@ class InsertDialog (TestedDialog):
         self._fieldsWidth = 200
 
         self._createGui()
+
+        self.Bind (wx.EVT_CHECKBOX, handler=self._onSetReset, source=self._startCheckBox)
+
+        self._startCheckBox.SetValue (False)
+        self._startValue.Enable (False)
+
         self._counterName.SetFocus()
         self.Center(wx.CENTRE_ON_SCREEN)
+
+
+    def _onSetReset (self, event):
+        self._startValue.Enable (self._startCheckBox.IsChecked())
 
 
     @property
