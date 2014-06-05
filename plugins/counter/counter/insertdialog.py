@@ -38,6 +38,30 @@ class InsertDialog (TestedDialog):
 
 
     @property
+    def countersList (self):
+        """
+        Список имен счетчиков, взятый из _counterName. Считаем, что _counterName и _parentCounterName содержат один и тот же список имен.
+        """
+        return self._counterName.GetStrings()
+
+
+    @countersList.setter
+    def countersList (self, value):
+        """
+        Установить список счетчиков в диалоге. В списке обязательно превым должно присутствовать "пустое" имя. Этот список формируется в InsertDialogController
+        """
+        assert value[0] == u""
+
+        self._counterName.Clear()
+        self._counterName.AppendItems (value)
+        self._counterName.SetSelection (0)
+
+        self._parentCounterName.Clear()
+        self._parentCounterName.AppendItems (value)
+        self._parentCounterName.SetSelection (0)
+
+
+    @property
     def counterName (self):
         return self._counterName.GetValue()
 

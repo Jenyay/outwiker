@@ -30,7 +30,7 @@ class CounterDialogTest (BaseMainWndTest):
         self._dlg = self._loader["Counter"].InsertDialog (Application.mainWindow)
         self._dlg.SetModalResult (wx.ID_OK)
 
-        self._controller = self._loader["Counter"].InsertDialogController (self._dlg, Application.config)
+        self.testPage = self.rootwiki[u"Страница 1"]
 
 
     def tearDown(self):
@@ -50,12 +50,15 @@ class CounterDialogTest (BaseMainWndTest):
         self.rootwiki = WikiDocument.create (self.path)
 
         WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
-        self.testPage = self.rootwiki[u"Страница 1"]
 
 
     def testDefault (self):
-        result = self._controller.showDialog()
-        text = self._controller.getCommandString()
+        controller = self._loader["Counter"].InsertDialogController (self._dlg, 
+                Application.config, 
+                self.testPage)
+
+        result = controller.showDialog()
+        text = controller.getCommandString()
 
         self.assertEqual (result, wx.ID_OK)
         self.assertEqual (self._dlg.counterName, u"")
@@ -65,195 +68,340 @@ class CounterDialogTest (BaseMainWndTest):
         self.assertEqual (self._dlg.start, 1)
         self.assertEqual (self._dlg.step, 1)
         self.assertEqual (self._dlg.hide, False)
+        self.assertEqual (self._dlg.countersList, [u""])
 
         self.assertEqual (text, u'(:counter:)')
 
 
     def testSetEmptyName_01 (self):
+        controller = self._loader["Counter"].InsertDialogController (self._dlg, 
+                Application.config, 
+                self.testPage)
+
         self._dlg.counterName = u""
 
-        self._controller.showDialog()
-        text = self._controller.getCommandString()
+        controller.showDialog()
+        text = controller.getCommandString()
 
         self.assertEqual (text, u'(:counter:)')
 
 
     def testSetEmptyName_02 (self):
+        controller = self._loader["Counter"].InsertDialogController (self._dlg, 
+                Application.config, 
+                self.testPage)
+
         self._dlg.counterName = u"    "
 
-        self._controller.showDialog()
-        text = self._controller.getCommandString()
+        controller.showDialog()
+        text = controller.getCommandString()
 
         self.assertEqual (text, u'(:counter:)')
 
 
     def testSetName (self):
+        controller = self._loader["Counter"].InsertDialogController (self._dlg, 
+                Application.config, 
+                self.testPage)
+
         self._dlg.counterName = u"Имя счетчика"
 
-        self._controller.showDialog()
-        text = self._controller.getCommandString()
+        controller.showDialog()
+        text = controller.getCommandString()
 
         self.assertEqual (text, u'(:counter name="Имя счетчика":)')
 
 
     def testSetParentEmptyName_01 (self):
+        controller = self._loader["Counter"].InsertDialogController (self._dlg, 
+                Application.config, 
+                self.testPage)
+
         self._dlg.parentName = u""
 
-        self._controller.showDialog()
-        text = self._controller.getCommandString()
+        controller.showDialog()
+        text = controller.getCommandString()
 
         self.assertEqual (text, u'(:counter:)')
 
 
     def testSetParentEmptyName_02 (self):
+        controller = self._loader["Counter"].InsertDialogController (self._dlg, 
+                Application.config, 
+                self.testPage)
+
         self._dlg.parentName = u"     "
 
-        self._controller.showDialog()
-        text = self._controller.getCommandString()
+        controller.showDialog()
+        text = controller.getCommandString()
 
         self.assertEqual (text, u'(:counter:)')
 
 
     def testSetParentName (self):
+        controller = self._loader["Counter"].InsertDialogController (self._dlg, 
+                Application.config, 
+                self.testPage)
+
         self._dlg.parentName = u"Имя счетчика"
 
-        self._controller.showDialog()
-        text = self._controller.getCommandString()
+        controller.showDialog()
+        text = controller.getCommandString()
 
         self.assertEqual (text, u'(:counter parent="Имя счетчика":)')
 
 
     def testSetSeparatorDefault (self):
+        controller = self._loader["Counter"].InsertDialogController (self._dlg, 
+                Application.config, 
+                self.testPage)
+
         self._dlg.separator = u"."
 
-        self._controller.showDialog()
-        text = self._controller.getCommandString()
+        controller.showDialog()
+        text = controller.getCommandString()
 
         self.assertEqual (text, u'(:counter:)')
 
 
     def testSetSeparatorWithoutParent (self):
+        controller = self._loader["Counter"].InsertDialogController (self._dlg, 
+                Application.config, 
+                self.testPage)
+
         self._dlg.separator = u":"
 
-        self._controller.showDialog()
-        text = self._controller.getCommandString()
+        controller.showDialog()
+        text = controller.getCommandString()
 
         self.assertEqual (text, u'(:counter:)')
 
 
     def testSetSeparatorWithParent_01 (self):
+        controller = self._loader["Counter"].InsertDialogController (self._dlg, 
+                Application.config, 
+                self.testPage)
+
         self._dlg.separator = u":"
         self._dlg.parentName = u"Родительский счетчик"
 
-        self._controller.showDialog()
-        text = self._controller.getCommandString()
+        controller.showDialog()
+        text = controller.getCommandString()
 
         self.assertEqual (text, u'(:counter parent="Родительский счетчик" separator=":":)')
 
 
     def testNotReset_01 (self):
+        controller = self._loader["Counter"].InsertDialogController (self._dlg, 
+                Application.config, 
+                self.testPage)
+
         self._dlg.reset = False
         self._dlg.start = 0
 
-        self._controller.showDialog()
-        text = self._controller.getCommandString()
+        controller.showDialog()
+        text = controller.getCommandString()
 
         self.assertEqual (text, u'(:counter:)')
 
 
     def testNotReset_02 (self):
+        controller = self._loader["Counter"].InsertDialogController (self._dlg, 
+                Application.config, 
+                self.testPage)
+
         self._dlg.reset = False
         self._dlg.start = 100
 
-        self._controller.showDialog()
-        text = self._controller.getCommandString()
+        controller.showDialog()
+        text = controller.getCommandString()
 
         self.assertEqual (text, u'(:counter:)')
 
 
     def testReset_01 (self):
+        controller = self._loader["Counter"].InsertDialogController (self._dlg, 
+                Application.config, 
+                self.testPage)
+
         self._dlg.reset = True
         self._dlg.start = 0
 
-        self._controller.showDialog()
-        text = self._controller.getCommandString()
+        controller.showDialog()
+        text = controller.getCommandString()
 
         self.assertEqual (text, u'(:counter start=0:)')
 
 
     def testReset_02 (self):
+        controller = self._loader["Counter"].InsertDialogController (self._dlg, 
+                Application.config, 
+                self.testPage)
+
         self._dlg.reset = True
         self._dlg.start = -10
 
-        self._controller.showDialog()
-        text = self._controller.getCommandString()
+        controller.showDialog()
+        text = controller.getCommandString()
 
         self.assertEqual (text, u'(:counter start=-10:)')
 
 
     def testReset_03 (self):
+        controller = self._loader["Counter"].InsertDialogController (self._dlg, 
+                Application.config, 
+                self.testPage)
+
         self._dlg.reset = True
         self._dlg.start = 1
 
-        self._controller.showDialog()
-        text = self._controller.getCommandString()
+        controller.showDialog()
+        text = controller.getCommandString()
 
         self.assertEqual (text, u'(:counter start=1:)')
 
 
     def testReset_04 (self):
+        controller = self._loader["Counter"].InsertDialogController (self._dlg, 
+                Application.config, 
+                self.testPage)
+
         self._dlg.reset = True
         self._dlg.start = 10
 
-        self._controller.showDialog()
-        text = self._controller.getCommandString()
+        controller.showDialog()
+        text = controller.getCommandString()
 
         self.assertEqual (text, u'(:counter start=10:)')
 
 
     def testStep_01 (self):
+        controller = self._loader["Counter"].InsertDialogController (self._dlg, 
+                Application.config, 
+                self.testPage)
+
         self._dlg.step = 1
-        self._controller.showDialog()
-        text = self._controller.getCommandString()
+        controller.showDialog()
+        text = controller.getCommandString()
 
         self.assertEqual (text, u'(:counter:)')
 
 
     def testStep_02 (self):
+        controller = self._loader["Counter"].InsertDialogController (self._dlg, 
+                Application.config, 
+                self.testPage)
+
         self._dlg.step = 0
-        self._controller.showDialog()
-        text = self._controller.getCommandString()
+        controller.showDialog()
+        text = controller.getCommandString()
 
         self.assertEqual (text, u'(:counter step=0:)')
 
 
     def testStep_03 (self):
+        controller = self._loader["Counter"].InsertDialogController (self._dlg, 
+                Application.config, 
+                self.testPage)
+
         self._dlg.step = -10
-        self._controller.showDialog()
-        text = self._controller.getCommandString()
+        controller.showDialog()
+        text = controller.getCommandString()
 
         self.assertEqual (text, u'(:counter step=-10:)')
 
 
     def testStep_04 (self):
+        controller = self._loader["Counter"].InsertDialogController (self._dlg, 
+                Application.config, 
+                self.testPage)
+
         self._dlg.step = 10
-        self._controller.showDialog()
-        text = self._controller.getCommandString()
+        controller.showDialog()
+        text = controller.getCommandString()
 
         self.assertEqual (text, u'(:counter step=10:)')
 
 
     def testHide_01 (self):
+        controller = self._loader["Counter"].InsertDialogController (self._dlg, 
+                Application.config, 
+                self.testPage)
+
         self._dlg.hide = False
-        self._controller.showDialog()
-        text = self._controller.getCommandString()
+        controller.showDialog()
+        text = controller.getCommandString()
 
         self.assertEqual (text, u'(:counter:)')
 
 
     def testHide_02 (self):
+        controller = self._loader["Counter"].InsertDialogController (self._dlg, 
+                Application.config, 
+                self.testPage)
+
         self._dlg.hide = True
-        self._controller.showDialog()
-        text = self._controller.getCommandString()
+        controller.showDialog()
+        text = controller.getCommandString()
 
         self.assertEqual (text, u'(:counter hide:)')
+
+
+    def testCountersList_01 (self):
+        self.testPage.content = u'''(:counter:)'''
+
+        controller = self._loader["Counter"].InsertDialogController (self._dlg, 
+                Application.config, 
+                self.testPage)
+
+        self.assertEqual (self._dlg.countersList, [u""])
+
+
+    def testCountersList_02 (self):
+        self.testPage.content = u'''(:counter name="Счетчик":)'''
+
+        controller = self._loader["Counter"].InsertDialogController (self._dlg, 
+                Application.config, 
+                self.testPage)
+
+        self.assertEqual (self._dlg.countersList, [u"", u"Счетчик"])
+
+
+    def testCountersList_03 (self):
+        self.testPage.content = u'''(:counter name="Счетчик":) (:counter name="Счетчик":)'''
+
+        controller = self._loader["Counter"].InsertDialogController (self._dlg, 
+                Application.config, 
+                self.testPage)
+
+        self.assertEqual (self._dlg.countersList, [u"", u"Счетчик"])
+
+
+    def testCountersList_04 (self):
+        self.testPage.content = u'''(:counter name="Счетчик":) (:counter name="Абырвалг   ":)'''
+
+        controller = self._loader["Counter"].InsertDialogController (self._dlg, 
+                Application.config, 
+                self.testPage)
+
+        self.assertEqual (self._dlg.countersList, [u"", u"Абырвалг", u"Счетчик"])
+
+
+    def testCountersList_05 (self):
+        self.testPage.content = u'''(:counter name="Счетчик":) (:counter name='Абырвалг':) (:counter name="":)'''
+
+        controller = self._loader["Counter"].InsertDialogController (self._dlg, 
+                Application.config, 
+                self.testPage)
+
+        self.assertEqual (self._dlg.countersList, [u"", u"Абырвалг", u"Счетчик"])
+
+
+    def testCountersList_06 (self):
+        self.testPage.content = u'''(:counter name="Счетчик":) (:counter name=Абырвалг:) (:counter name="":)'''
+
+        controller = self._loader["Counter"].InsertDialogController (self._dlg, 
+                Application.config, 
+                self.testPage)
+
+        self.assertEqual (self._dlg.countersList, [u"", u"Абырвалг", u"Счетчик"])

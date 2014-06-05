@@ -107,7 +107,8 @@ class Controller (object):
         dlg = InsertDialog (self._application.mainWindow)
 
         dlgController = InsertDialogController (dlg, 
-                self._application.config)
+                self._application.config,
+                self._application.selectedPage)
 
         resultDlg = dlgController.showDialog ()
 

@@ -5,21 +5,28 @@ import os.path
 import wx
 
 import outwiker.core.exceptions
+from outwiker.pages.wiki.parser.wikiparser import Parser
 
 from .config import CounterConfig
+from .nameharvester import NameHarvester
 
 
 class InsertDialogController (object):
     """
     Класс для управления диалогом InsertDialog
     """
-    def __init__ (self, dialog, config):
+    def __init__ (self, dialog, config, page):
         """
         dialog - экземпляр класса InsertDialog, который надо будет показать пользователю.
         config - экземпляр класса Config
+        page - текущая страница, для которой показывается диалог
         """
         self._dialog = dialog
         self._config = CounterConfig (config)
+        self._page = page
+
+        countersList = self._getCountersList (self._page)
+        self._dialog.countersList = countersList
 
 
     def showDialog (self):
@@ -32,6 +39,16 @@ class InsertDialogController (object):
         result = self._dialog.ShowModal()
         if result == wx.ID_OK:
             self.saveState()
+
+        return result
+
+
+    def _getCountersList (self, page):
+        parser = Parser (page, self._config)
+        parser.addCommand (NameHarvester (parser))
+        parser.toHtml (page.content)
+
+        result = [u""] + sorted(list (NameHarvester.counters))
 
         return result
 
