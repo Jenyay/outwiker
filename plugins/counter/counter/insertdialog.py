@@ -28,6 +28,7 @@ class InsertDialog (TestedDialog):
 
         self._startCheckBox.SetValue (False)
         self._startValue.Enable (False)
+        self.SetMinSize ((470, -1))
 
         self._counterName.SetFocus()
         self.Center(wx.CENTRE_ON_SCREEN)
