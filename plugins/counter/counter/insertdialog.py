@@ -37,6 +37,69 @@ class InsertDialog (TestedDialog):
         self._counterName.SetValue (value)
 
 
+    @property
+    def parentName (self):
+        return self._parentCounterName.GetValue()
+
+
+    @parentName.setter
+    def parentName (self, value):
+        self._parentCounterName.SetValue (value)
+
+
+    @property
+    def separator (self):
+        return self._separator.GetValue()
+
+
+    @separator.setter
+    def separator (self, value):
+        return self._separator.SetValue (value)
+
+
+    @property
+    def reset (self):
+        """
+        Нужно ли устанавливать параметр start
+        """
+        return self._startCheckBox.IsChecked()
+
+
+    @reset.setter
+    def reset (self, value):
+        self._startCheckBox.SetValue (value)
+
+
+    @property
+    def start (self):
+        return self._startValue.GetValue()
+
+
+    @start.setter
+    def start (self, value):
+        self._startValue.SetValue (value)
+
+
+    @property
+    def step (self):
+        return self._stepValue.GetValue()
+
+
+    @step.setter
+    def step (self, value):
+        self._stepValue.SetValue (value)
+
+
+    @property
+    def hide (self):
+        return self._hideCheckBox.IsChecked()
+
+
+    @hide.setter
+    def hide (self, value):
+        self._hideCheckBox.SetValue (value)
+
+
     def _createGui(self):
         """
         Создать элементы управления
