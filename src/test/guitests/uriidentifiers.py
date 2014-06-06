@@ -176,12 +176,10 @@ class UriIdentifierIETest (UriIdentifierTest):
         contentfile = self._getContentFile (wikipage)
 
         path = u"".join ([self._getContentFile (wikipage), u"# Страница 5"])
-        #print path
 
         identifier = UriIdentifierIE (wikipage, contentfile)
 
         (url, page, filename, anchor) = identifier.identify (path)
-        #print page
 
         self.assertEqual (url, None)
         self.assertEqual (page, wikipage[u"# Страница 5"])
@@ -197,12 +195,10 @@ class UriIdentifierIETest (UriIdentifierTest):
         contentfile = self._getContentFile (wikipage)
 
         path = u"".join ([self._getContentFile (wikipage), u"# Страница 5", u"\\Страница 7"])
-        #print path
 
         identifier = UriIdentifierIE (wikipage, contentfile)
 
         (url, page, filename, anchor) = identifier.identify (path)
-        #print page
 
         self.assertEqual (url, None)
         self.assertEqual (page, wikipage[u"# Страница 5/Страница 7"])
@@ -218,12 +214,10 @@ class UriIdentifierIETest (UriIdentifierTest):
         contentfile = self._getContentFile (wikipage)
 
         path = u"".join ([self._getContentFile (wikipage), u"# Страница 666"])
-        #print path
 
         identifier = UriIdentifierIE (wikipage, contentfile)
 
         (url, page, filename, anchor) = identifier.identify (path)
-        #print page
 
         self.assertEqual (url, None)
         self.assertEqual (None, page)
@@ -247,6 +241,21 @@ class UriIdentifierIETest (UriIdentifierTest):
         self.assertEqual (page, None)
         self.assertEqual (filename, path)
         self.assertNotEqual (None, path)
+        self.assertEqual (anchor, None)
+
+
+    def testLinkPath (self):
+        """
+        Тест на распознавание ссылок на страницы по полному пути в вики
+        """
+        wikipage = self.rootwiki[u"Страница 1"]
+        contentfile = self._getContentFile (wikipage)
+        identifier = UriIdentifierIE (wikipage, contentfile)
+        (url, page, filename, anchor) = identifier.identify (wikipage.path)
+
+        self.assertEqual (url, None)
+        self.assertEqual (page, None)
+        self.assertEqual (filename, wikipage.path)
         self.assertEqual (anchor, None)
 
 

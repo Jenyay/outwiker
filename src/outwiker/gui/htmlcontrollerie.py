@@ -40,12 +40,10 @@ class UriIdentifierIE (UriIdentifier):
         if anchor != None and self._currentPage[anchor.replace("\\", "/")] != None:
             return self._currentPage[anchor.replace("\\", "/")]
 
-
         if subpath.startswith (self._currentPage.path):
             subpath = subpath[len (self._currentPage.path) + 1: ].replace ("\\", "/")
         elif len (subpath) > 1 and subpath[1] == ":":
             subpath = subpath[2:].replace ("\\", "/")
-            #print subpath
 
         if subpath.startswith ("about:"):
             subpath = self.__removeAboutBlank (subpath).replace ("\\", "/")
@@ -53,7 +51,7 @@ class UriIdentifierIE (UriIdentifier):
         if len (subpath) > 0 and subpath[0] == "/":
             # Поиск страниц осуществляем только с корня
             newSelectedPage = self._currentPage.root[subpath[1:] ]
-        else:
+        elif len (subpath) > 0:
             # Сначала попробуем найти вложенные страницы с таким subpath
             newSelectedPage = self._currentPage[subpath]
 
