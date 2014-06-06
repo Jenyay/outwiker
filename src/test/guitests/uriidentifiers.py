@@ -361,7 +361,6 @@ class UriIdentifierWebKitTest (UriIdentifierTest):
         identifier = UriIdentifierWebKit (currentpage, self._getBasePath (currentpage))
         link = u"file://{0}".format (os.path.join (currentpage.path, 
             u"Страница 3", u"# Страница 4") )
-        #print link
 
         (url, page, filename, anchor) = identifier.identify (link)
 
@@ -379,8 +378,6 @@ class UriIdentifierWebKitTest (UriIdentifierTest):
         currentpage = self.rootwiki[u"Страница 2"]
         identifier = UriIdentifierWebKit (currentpage, self._getBasePath (currentpage))
         link = u"file://{0}".format (os.path.join (currentpage.path, u"# Страница 666") )
-        #print link
-        #print self._getBasePath (currentpage)
 
         (url, page, filename, anchor) = identifier.identify (link)
 
@@ -408,4 +405,18 @@ class UriIdentifierWebKitTest (UriIdentifierTest):
         self.assertEqual (url, None)
         self.assertEqual (page, None)
         self.assertEqual (filename, path)
+        self.assertEqual (anchor, None)
+
+
+    def testLinkPath (self):
+        """
+        Тест на распознавание ссылок на страницы по полному пути в вики
+        """
+        currentpage = self.rootwiki[u"Страница 1"]
+        identifier = UriIdentifierWebKit (currentpage, self._getBasePath (currentpage))
+        (url, page, filename, anchor) = identifier.identify (currentpage.path)
+
+        self.assertEqual (url, None)
+        self.assertEqual (page, None)
+        self.assertEqual (filename, currentpage.path)
         self.assertEqual (anchor, None)

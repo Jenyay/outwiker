@@ -59,11 +59,13 @@ class UriIdentifierWebKit (UriIdentifier):
         if self._currentPage == None:
             return None
 
-        newSelectedPage = None
-
         if href.startswith (self._currentPage.path):
             href = href[len (self._currentPage.path) + 1: ]
 
+        if len (href) == 0:
+            return None
+
+        newSelectedPage = None
         if href[0] == "/":
             # Поиск страниц осуществляем только с корня
             newSelectedPage = self._currentPage.root[href[1:] ]
