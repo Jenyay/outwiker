@@ -590,7 +590,9 @@ class HtmlPageView (BaseHtmlPanel):
         else:
             text = page.content
 
-        result = tpl.substitute (content=text)
+        userhead = u"<title>{}</title>".format (page.title)
+        result = tpl.substitute (content = text,
+                                 userhead = userhead)
 
         with open (path, "wb") as fp:
             fp.write (result.encode ("utf-8"))
