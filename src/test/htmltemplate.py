@@ -57,6 +57,78 @@ class HtmlTemplateTest(unittest.TestCase):
         self.assertEqual (result, result_right, result)
 
 
+    def test_text_01 (self):
+        content = u"бла-бла-бла"
+        style = u"$userstyle $userhead $content"
+
+        result_right = u"  бла-бла-бла"
+
+        tpl = HtmlTemplate (style)
+        result = tpl.substitute (content=content)
+
+        self.assertEqual (result, result_right)
+
+
+    def test_text_02 (self):
+        content = u"бла-бла-бла"
+        style = u"$userstyle $userhead $content $unknown"
+
+        result_right = u"  бла-бла-бла $unknown"
+
+        tpl = HtmlTemplate (style)
+        result = tpl.substitute (content=content)
+
+        self.assertEqual (result, result_right)
+
+
+    def test_text_03 (self):
+        content = u"бла-бла-бла"
+        style = u"$userstyle $content"
+
+        result_right = u" бла-бла-бла"
+
+        tpl = HtmlTemplate (style)
+        result = tpl.substitute (content=content)
+
+        self.assertEqual (result, result_right)
+
+
+    def test_text_04 (self):
+        content = u"бла-бла-бла"
+        style = u"$userstyle $content $"
+
+        result_right = u" бла-бла-бла $"
+
+        tpl = HtmlTemplate (style)
+        result = tpl.substitute (content=content)
+
+        self.assertEqual (result, result_right)
+
+
+    def test_text_05 (self):
+        content = u"бла-бла-бла"
+        style = u"$userstyle $content $$"
+
+        result_right = u" бла-бла-бла $$"
+
+        tpl = HtmlTemplate (style)
+        result = tpl.substitute (content=content)
+
+        self.assertEqual (result, result_right)
+
+
+    def test_text_06 (self):
+        content = u"бла-бла-бла"
+        style = u"$userstyle $content $$ $unknown"
+
+        result_right = u" бла-бла-бла $$ $unknown"
+
+        tpl = HtmlTemplate (style)
+        result = tpl.substitute (content=content)
+
+        self.assertEqual (result, result_right)
+
+
     def testChangeFontName (self):
         self.config.fontName.value = u"Arial"
 
