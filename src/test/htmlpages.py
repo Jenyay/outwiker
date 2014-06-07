@@ -1,13 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-import os.path
 import unittest
 
-from outwiker.core.tree import RootWikiPage, WikiDocument
+from outwiker.core.tree import WikiDocument
 
-from outwiker.pages.html.htmlpage import HtmlPageFactory, HtmlWikiPage
-from outwiker.core.application import Application
+from outwiker.pages.html.htmlpage import HtmlPageFactory
 from test.utils import removeWiki
 
 
@@ -43,7 +41,7 @@ class HtmlPagesTest(unittest.TestCase):
 
     def testAutoLineWrap (self):
         self.assertTrue (self.rootwiki[u"Страница 1"].autoLineWrap)
-        
+
         self.rootwiki[u"Страница 1"].autoLineWrap = False
         self.assertFalse (self.rootwiki[u"Страница 1"].autoLineWrap)
 
@@ -70,5 +68,3 @@ class HtmlPagesTest(unittest.TestCase):
 
         self.assertEqual (self.__eventcount, 1)
         self.assertEqual (self.__eventSender, self.rootwiki[u"Страница 1"])
-
-
