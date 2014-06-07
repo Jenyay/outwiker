@@ -2,14 +2,12 @@
 # -*- coding: UTF-8 -*-
 
 import os.path
-import hashlib
 
-from outwiker.core.config import Config, StringOption
+from outwiker.core.config import StringOption
 from outwiker.core.htmlimprover import HtmlImprover
 from outwiker.core.htmltemplate import HtmlTemplate
 from outwiker.core.application import Application
-from outwiker.core.tree import RootWikiPage
-from outwiker.core.system import getTemplatesDir
+from outwiker.core.system import readTextFile
 
 from .parserfactory import ParserFactory
 from .wikiconfig import WikiConfig
@@ -44,7 +42,7 @@ class HtmlGenerator (object):
         text = HtmlImprover.run (parser.toHtml (content) )
         head = parser.head
 
-        tpl = HtmlTemplate (stylepath)
+        tpl = HtmlTemplate (readTextFile (stylepath) )
 
         result = tpl.substitute (content=text, userhead=head)
 

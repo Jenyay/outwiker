@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import os.path
@@ -6,7 +5,7 @@ import unittest
 
 from outwiker.core.application import Application
 from outwiker.core.htmltemplate import HtmlTemplate
-from outwiker.core.system import getTemplatesDir
+from outwiker.core.system import getTemplatesDir, readTextFile
 from outwiker.core.htmlimprover import HtmlImprover
 from outwiker.gui.guiconfig import HtmlRenderConfig
 
@@ -52,7 +51,7 @@ class HtmlTemplateTest(unittest.TestCase):
 </html>"""
 
         templatepath = os.path.join (getTemplatesDir(), "__default", "__style.html")
-        tpl = HtmlTemplate (templatepath)
+        tpl = HtmlTemplate (readTextFile (templatepath).strip() )
         result = tpl.substitute (content=content)
 
         self.assertEqual (result, result_right, result)
@@ -86,7 +85,7 @@ class HtmlTemplateTest(unittest.TestCase):
 </html>"""
 
         templatepath = os.path.join (getTemplatesDir(), "__default", "__style.html")
-        tpl = HtmlTemplate (templatepath)
+        tpl = HtmlTemplate (readTextFile (templatepath).strip() )
         result = tpl.substitute (content=content)
 
         self.assertEqual (result, result_right, result)
@@ -119,7 +118,7 @@ class HtmlTemplateTest(unittest.TestCase):
 </html>"""
 
         templatepath = os.path.join (getTemplatesDir(), "__default", "__style.html")
-        tpl = HtmlTemplate (templatepath)
+        tpl = HtmlTemplate (readTextFile (templatepath).strip() )
         result = tpl.substitute (content=content)
 
         self.assertEqual (result, result_right, result)
@@ -133,7 +132,7 @@ class HtmlTemplateTest(unittest.TestCase):
         content = u"бла-бла-бла"
         
         templatepath = os.path.join (getTemplatesDir(), "__default", "__style.html")
-        tpl = HtmlTemplate (templatepath)
+        tpl = HtmlTemplate (readTextFile (templatepath).strip() )
         result = tpl.substitute (content=content)
 
         self.assertTrue (style in result, result)
@@ -147,7 +146,7 @@ class HtmlTemplateTest(unittest.TestCase):
         content = u"бла-бла-бла"
         
         templatepath = os.path.join (getTemplatesDir(), "__default", "__style.html")
-        tpl = HtmlTemplate (templatepath)
+        tpl = HtmlTemplate (readTextFile (templatepath).strip() )
         result = tpl.substitute (content=content)
 
         self.assertTrue (style in result, result)
@@ -200,7 +199,7 @@ class HtmlTemplateTest(unittest.TestCase):
 </html>"""
 
         templatepath = os.path.join (getTemplatesDir(), "__default", "__style.html")
-        tpl = HtmlTemplate (templatepath)
+        tpl = HtmlTemplate (readTextFile (templatepath).strip() )
 
         result = tpl.substitute (HtmlImprover.run (src) )
         self.assertEqual (expectedResult, result, result)
@@ -240,12 +239,7 @@ Attach:file.odt<br>
 </html>"""
 
         templatepath = os.path.join (getTemplatesDir(), "__default", "__style.html")
-        tpl = HtmlTemplate (templatepath)
+        tpl = HtmlTemplate (readTextFile (templatepath).strip() )
 
         result = tpl.substitute (HtmlImprover.run (src) )
         self.assertEqual (expectedResult, result)
-
-
-    def testException (self):
-        templatepath = os.path.join (getTemplatesDir(), "html_invalid")
-        self.assertRaises (IOError, HtmlTemplate, templatepath)

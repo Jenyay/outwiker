@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import os
-import re
 
 import wx
 
@@ -11,6 +10,7 @@ from outwiker.core.htmlimprover import HtmlImprover
 from outwiker.core.htmltemplate import HtmlTemplate
 from outwiker.core.style import Style
 from outwiker.gui.htmltexteditor import HtmlTextEditor
+from outwiker.core.system import readTextFile
 
 from .htmltoolbar import HtmlToolBar
 from .basehtmlpanel import BaseHtmlPanel
@@ -32,7 +32,6 @@ class HtmlPageView (BaseHtmlPanel):
 
         self.mainWindow.toolbars[self._htmlPanelName] = HtmlToolBar(self.mainWindow, 
                 self.mainWindow.auiManager)
-        # self.mainWindow.toolbars[self._htmlPanelName].UpdateToolBar()
 
         # Список используемых полиморфных действий
         self.__polyActions = [
@@ -578,13 +577,13 @@ class HtmlPageView (BaseHtmlPanel):
         stylepath = style.getPageStyle (page)
 
         try:
-            tpl = HtmlTemplate (stylepath)
+            tpl = HtmlTemplate (readTextFile (stylepath))
         except:
             MessageBox (_(u"Page style Error. Style by default is used"),  
                     _(u"Error"),
                     wx.ICON_ERROR | wx.OK)
 
-            tpl = HtmlTemplate (style.getDefaultStyle())
+            tpl = HtmlTemplate (readTextFile (style.getDefaultStyle() ) )
 
         if page.autoLineWrap:
             text = HtmlImprover.run (page.content)
