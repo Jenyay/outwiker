@@ -9,7 +9,7 @@ class UriIdentifier (object):
     """
     Базовый класс для обработчиков ссылок HTML-движков
     """
-    
+
     __metaclass__ = ABCMeta
 
     def __init__ (self, currentpage, basepath):
@@ -25,9 +25,6 @@ class UriIdentifier (object):
         """
         Определить тип ссылки и вернуть кортеж (url, page, filename, anchor)
         """
-        #print href
-        #print self._basepath
-
         if self._isUrl (href):
             return (href, None, None, None)
 

@@ -7,11 +7,11 @@ import urllib
 
 import wx
 
-#import gobject
-#gobject.threads_init()
+# import gobject
+# gobject.threads_init()
 
-#import pygtk
-#pygtk.require('2.0')
+# import pygtk
+# pygtk.require('2.0')
 import gtk, gtk.gdk
 
 # pywebkitgtk (http://code.google.com/p/pywebkitgtk/)
@@ -75,14 +75,14 @@ class HtmlRenderWebKit(HtmlRender):
 
         self.ctrl.connect("navigation-policy-decision-requested", self.__onNavigate)
         self.ctrl.connect("hovering-over-link", self.__onHoveredOverLink)
-        #self.ctrl.connect("populate-popup", self._on_populate_popup)
+        # self.ctrl.connect("populate-popup", self._on_populate_popup)
 
         self.Bind (wx.EVT_MENU, self.__onCopyFromHtml, id = wx.ID_COPY)
         self.Bind (wx.EVT_MENU, self.__onCopyFromHtml, id = wx.ID_CUT)
 
         # self.ctrl.get_settings().set_property("enable-page-cache", False)
         self.ctrl.get_settings().set_property("tab-key-cycles-through-elements", False)
-        
+
 
     def Print (self):
         self.ctrl.get_main_frame().print_()
@@ -181,8 +181,8 @@ class HtmlRenderWebKit(HtmlRender):
             return True
 
         if self.canOpenUrl or href == curr_href:
-            # Если вызов uri осуществляется из программы или это запрос на обновление, то 
-            # разрешить обработать запрос компоненту 
+            # Если вызов uri осуществляется из программы или это запрос на обновление, то
+            # разрешить обработать запрос компоненту
             return False
         else:
             button = action.get_button()
@@ -193,7 +193,7 @@ class HtmlRenderWebKit(HtmlRender):
     def __onLinkClicked (self, href, button, modifier):
         """
         Клик по ссылке
-        Возвращает False, если обрабатывать ссылку разрешить компоненту, 
+        Возвращает False, если обрабатывать ссылку разрешить компоненту,
         в противном случае - True
         href - ссылка
         button - кнопка мыши, с помощью которой кликнули по ссылке (1 - левая, 2 - средняя, 3 - правая, -1 - не известно)

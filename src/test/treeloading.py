@@ -2,19 +2,17 @@
 # -*- coding: UTF-8 -*-
 
 import os.path
-import shutil
 import unittest
 
-from outwiker.core.event import Event
 from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
-from outwiker.core.tree import RootWikiPage, WikiDocument
+from outwiker.core.tree import WikiDocument
 from outwiker.core.config import StringOption
 
 from outwiker.pages.text.textpage import TextPageFactory, TextWikiPage
-from outwiker.pages.wiki.wikipage import WikiPageFactory, WikiWikiPage
-from outwiker.pages.html.htmlpage import HtmlPageFactory, HtmlWikiPage
-from outwiker.pages.search.searchpage import SearchPageFactory, SearchWikiPage
+from outwiker.pages.wiki.wikipage import WikiWikiPage
+from outwiker.pages.html.htmlpage import HtmlWikiPage
+from outwiker.pages.search.searchpage import SearchWikiPage
 
 from test.utils import removeWiki
 
@@ -29,11 +27,11 @@ class WikiPagesTest(unittest.TestCase):
 
 
     def testLoadWiki(self):
-        self.assertEqual ( len (self.root), 6)
+        self.assertEqual (len (self.root), 6)
 
 
     def testInvalidEncoding (self):
-        content = self.root["invalid encoding"].content
+        self.root["invalid encoding"].content
         self.assertEqual (len (self.root["invalid encoding"].tags), 1)
 
 
@@ -53,46 +51,46 @@ class WikiPagesTest(unittest.TestCase):
 
 
     def testPageAccess2 (self):
-        self.assertEqual (self.root[u"Страница 1"][u"Страница 2"], 
-                self.root[u"Страница 1/Страница 2"])
+        self.assertEqual (self.root[u"Страница 1"][u"Страница 2"],
+                          self.root[u"Страница 1/Страница 2"])
 
-        self.assertEqual (self.root[u"СтраНица 1"][u"стРаниЦА 2/СтраНицА 5"], 
-                self.root[u"СтраНица 1/стРаниЦА 2/СтраНицА 5"])
+        self.assertEqual (self.root[u"СтраНица 1"][u"стРаниЦА 2/СтраНицА 5"],
+                          self.root[u"СтраНица 1/стРаниЦА 2/СтраНицА 5"])
 
 
     def testPageAccess3 (self):
-        self.assertEqual (self.root[u"Страница 1"][u"/Страница 1/Страница 2"], 
-                self.root[u"Страница 1/Страница 2"])
+        self.assertEqual (self.root[u"Страница 1"][u"/Страница 1/Страница 2"],
+                          self.root[u"Страница 1/Страница 2"])
 
-        self.assertEqual (self.root[u"СтраНица 1"][u"/СтраНица 1/стРаниЦА 2/СтраНицА 5"], 
-                self.root[u"СтраНица 1/стРаниЦА 2/СтраНицА 5"])
+        self.assertEqual (self.root[u"СтраНица 1"][u"/СтраНица 1/стРаниЦА 2/СтраНицА 5"],
+                          self.root[u"СтраНица 1/стРаниЦА 2/СтраНицА 5"])
 
 
 
     def testAccessRoot (self):
         self.assertEqual (self.root[u"Страница 1"][u"/"], self.root)
 
-    
+
 
     def testPageType1 (self):
         self.assertEqual (type (self.root[u"Типы страниц/HTML-страница"]), HtmlWikiPage)
         self.assertEqual (type (self.root[u"Типы страниц/wiki-страница"]), WikiWikiPage)
         self.assertEqual (type (self.root[u"Типы страниц/Страница поиска"]), SearchWikiPage)
         self.assertEqual (type (self.root[u"Типы страниц/Текстовая страница"]), TextWikiPage)
-    
+
 
     def testPageType2 (self):
-        self.assertEqual (self.root[u"Типы страниц/HTML-страница"].getTypeString(), 
-                HtmlWikiPage.getTypeString())
+        self.assertEqual (self.root[u"Типы страниц/HTML-страница"].getTypeString(),
+                          HtmlWikiPage.getTypeString())
 
-        self.assertEqual (self.root[u"Типы страниц/wiki-страница"].getTypeString(), 
-                WikiWikiPage.getTypeString())
+        self.assertEqual (self.root[u"Типы страниц/wiki-страница"].getTypeString(),
+                          WikiWikiPage.getTypeString())
 
-        self.assertEqual (self.root[u"Типы страниц/Страница поиска"].getTypeString(), 
-                SearchWikiPage.getTypeString())
+        self.assertEqual (self.root[u"Типы страниц/Страница поиска"].getTypeString(),
+                          SearchWikiPage.getTypeString())
 
-        self.assertEqual (self.root[u"Типы страниц/Текстовая страница"].getTypeString(), 
-                TextWikiPage.getTypeString())
+        self.assertEqual (self.root[u"Типы страниц/Текстовая страница"].getTypeString(),
+                          TextWikiPage.getTypeString())
 
 
     def testPagesParent (self):
@@ -167,18 +165,37 @@ class WikiPagesTest(unittest.TestCase):
 
         self.assertEqual (typeOption.value, u"html")
         self.assertEqual (tagsOption.value, u"Тест, test, двойной тег")
-        
+
 
     def testGetRoot (self):
         self.assertEqual (self.root[u"Страница 1"].root, self.root)
         self.assertEqual (self.root[u"Страница 1/Страница 2/Страница 5"].root, self.root)
-    
+
 
     def testSubpath (self):
         self.assertEqual (self.root[u"Страница 1"].subpath, u"Страница 1")
 
-        self.assertEqual (self.root[u"Страница 1/Страница 2/Страница 5"].subpath, 
-                u"Страница 1/Страница 2/Страница 5")
+        self.assertEqual (self.root[u"Страница 1/Страница 2/Страница 5"].subpath,
+                          u"Страница 1/Страница 2/Страница 5")
+
+    def testSubpathParent_01 (self):
+        page = self.root[u"Страница 1/Страница 2/Страница 5"]
+        self.assertEqual (page[".."], self.root[u"Страница 1/Страница 2"])
+
+
+    def testSubpathParent_02 (self):
+        page = self.root[u"Страница 1/Страница 2"]
+        self.assertEqual (page[".."], self.root[u"Страница 1"])
+
+
+    def testSubpathParent_03 (self):
+        page = self.root[u"Страница 1"]
+        self.assertEqual (page[".."], self.root)
+
+
+    def testSubpathParent_04 (self):
+        page = self.root
+        self.assertEqual (page[".."], None)
 
 
     def testIsChild1 (self):
@@ -204,8 +221,8 @@ class SubWikiTest (unittest.TestCase):
         path = os.path.join (self.rootpath, u"Страница 1")
         root = WikiDocument.load (path)
 
-        self.assertEqual ( len (root), 1)
-        self.assertEqual ( root[u"Страница 2"].title, u"Страница 2")
+        self.assertEqual (len (root), 1)
+        self.assertEqual (root[u"Страница 2"].title, u"Страница 2")
 
 
 class TextPageAttachmentTest (unittest.TestCase):
@@ -249,12 +266,12 @@ class TextPageAttachmentTest (unittest.TestCase):
 
         # Прикрепим к двум страницам файлы
         Attachment (self.rootwiki[page1]).attach (fullFilesPath)
-        
+
         self.assertEqual (self.pageUpdateCount, 1)
         self.assertEqual (self.pageUpdateSender, self.rootwiki[page1])
 
         Attachment (self.rootwiki[page3]).attach ( [fullFilesPath[0], fullFilesPath[1] ] )
-        
+
         self.assertEqual (self.pageUpdateCount, 2)
         self.assertEqual (self.pageUpdateSender, self.rootwiki[page3])
 
@@ -294,7 +311,7 @@ class TextPageAttachmentTest (unittest.TestCase):
         self.assertTrue (attachPathPage1[0] in Attachment (wiki[page1]).attachmentFull)
         self.assertTrue (attachPathPage1[1] in Attachment (wiki[page1]).attachmentFull)
         self.assertTrue (attachPathPage1[2] in Attachment (wiki[page1]).attachmentFull)
-        
+
         self.assertTrue (attachPathPage3[0] in Attachment (wiki[page3]).attachmentFull)
         self.assertTrue (attachPathPage3[1] in Attachment (wiki[page3]).attachmentFull)
 
@@ -324,7 +341,7 @@ class TextPageAttachmentTest (unittest.TestCase):
         self.assertTrue (attachPathPage1[0] in Attachment (self.rootwiki[page1]).attachmentFull)
         self.assertTrue (attachPathPage1[1] in Attachment (self.rootwiki[page1]).attachmentFull)
         self.assertTrue (attachPathPage1[2] in Attachment (self.rootwiki[page1]).attachmentFull)
-        
+
         self.assertTrue (attachPathPage3[0] in Attachment (self.rootwiki[page3]).attachmentFull)
         self.assertTrue (attachPathPage3[1] in Attachment (self.rootwiki[page3]).attachmentFull)
 
@@ -341,6 +358,3 @@ class TextPageAttachmentTest (unittest.TestCase):
         result = [os.path.join (attachPath, fname) for fname in fnames]
 
         return result
-
-
-

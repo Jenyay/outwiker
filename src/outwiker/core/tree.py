@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import os
@@ -9,7 +8,6 @@ import datetime
 
 from .config import PageConfig
 from .bookmarks import Bookmarks
-from .tagslist import TagsList
 from .event import Event
 from .exceptions import ClearConfigError, RootFormatError, DublicateTitle, ReadonlyException, TreeException
 from .tagscommands import parseTagsList
@@ -21,7 +19,6 @@ class RootWikiPage (object):
     """
     Класс для корня вики
     """
-
     pageConfig = u"__page.opt"
     contentFile = u"__page.text"
     iconName = u"__icon"
@@ -40,7 +37,7 @@ class RootWikiPage (object):
 
         configpath = os.path.join (path, RootWikiPage.pageConfig)
         if (not self.readonly and
-                os.path.exists (configpath) and 
+                os.path.exists (configpath) and
                 not os.access (configpath, os.W_OK)):
             self.readonly = True
 
@@ -115,10 +112,14 @@ class RootWikiPage (object):
 
         for title in titles:
             found = False
-            for child in page.children:
-                if child.title.lower() == title.lower():
-                    page = child
-                    found = True
+            if title == u"..":
+                page = page.parent
+                found = (page is not None)
+            else:
+                for child in page.children:
+                    if child.title.lower() == title.lower():
+                        page = child
+                        found = True
 
             if not found:
                 page = None
@@ -144,7 +145,7 @@ class RootWikiPage (object):
             if not name.startswith ("__") and os.path.isdir (fullpath):
                 try:
                     page = WikiPage.load (fullpath, self, self.root.readonly)
-                except Exception as e:
+                except Exception:
                     continue
 
                 result.append (page)
@@ -275,10 +276,10 @@ class WikiDocument (RootWikiPage):
         self.onEndTreeUpdate = Event()
 
         # Обновление страницы
-        # Параметры: 
+        # Параметры:
         #     sender
         #     **kwargs
-        # kwargs содержит значение 'change', хранящее флаги того, что изменилось 
+        # kwargs содержит значение 'change', хранящее флаги того, что изменилось
         self.onPageUpdate = Event()
 
         # Изменение порядка страниц
@@ -402,7 +403,7 @@ class WikiPage (RootWikiPage):
     def __init__(self, path, title, parent, readonly = False):
         """
         Constructor.
-    
+
         path -- путь до страницы
         """
         if not RootWikiPage.testDublicate(parent, title):
@@ -517,7 +518,7 @@ class WikiPage (RootWikiPage):
         newpath = os.path.join (newparent.path, self.title)
 
         # Временное имя папки.
-        # Сначала попробуем переименовать папку во временную, 
+        # Сначала попробуем переименовать папку во временную,
         # а потом уже ее переместим в нужное место с нужным именем
         tempname = self._getTempName (oldpath)
 
@@ -532,7 +533,7 @@ class WikiPage (RootWikiPage):
         self._parent = newparent
         oldparent.removeFromChildren (self)
         newparent.addToChildren (self)
-    
+
         WikiPage.__renamePaths (self, newpath)
 
         self.root.onTreeUpdate (self)
@@ -629,7 +630,7 @@ class WikiPage (RootWikiPage):
     def _getIconFiles (self):
         files = os.listdir (self.path)
 
-        icons = [os.path.join (self.path, fname) for fname in files 
+        icons = [os.path.join (self.path, fname) for fname in files
                 if (fname.startswith (RootWikiPage.iconName) and
                     not os.path.isdir (fname))]
 
@@ -738,7 +739,7 @@ class WikiPage (RootWikiPage):
                 text = fp.read()
         except IOError:
             pass
-    
+
         return unicode (text, "utf8", errors="replace")
 
 
@@ -803,7 +804,7 @@ class WikiPage (RootWikiPage):
         self._removePageFromTree (self)
 
         # Если выбранная страница была удалена
-        if (oldSelectedPage != None and 
+        if (oldSelectedPage != None and
                 (oldSelectedPage == self or self.isChild (oldSelectedPage) ) ):
             # Новая выбранная страница взамен старой
             newselpage = oldSelectedPage
