@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 import os.path
 
@@ -19,14 +18,14 @@ class FormatCtrl (wx.Panel):
         """
         super (FormatCtrl, self).__init__ (parent)
 
-        # Список кортежей. 
+        # Список кортежей.
         # Первый элемент - подстановочный символ
         # Второй элемент - комментарий
         self._hints = hintsList[:]
 
         # Ключ - ID пункта меню, значение - элемент списка self._hints
         self._menuItemsId = {}
-        
+
         self.formatCtrl = wx.TextCtrl (self, -1, defaultFormat)
 
         hintBitmap = wx.Bitmap (os.path.join (getImagesDir(), u"wand.png"))
@@ -36,7 +35,7 @@ class FormatCtrl (wx.Panel):
 
         self.hintBtn.Bind (wx.EVT_BUTTON, self.__onHintClick)
         self.hintBtn.Bind (wx.EVT_MENU, self.__onHintMenuClick)
-        
+
         self.__layout()
 
 
@@ -80,4 +79,3 @@ class FormatCtrl (wx.Panel):
         mainSizer.Add (self.hintBtn, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.RIGHT, border=0)
 
         self.SetSizer (mainSizer)
-

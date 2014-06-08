@@ -6,9 +6,9 @@ import wx
 import configelements
 import outwiker.core.i18n
 from outwiker.core.application import Application
-from outwiker.core.i18n import I18nConfig
 from outwiker.gui.guiconfig import TrayConfig, GeneralGuiConfig, MainWindowConfig
 from outwiker.gui.formatctrl import FormatCtrl
+from outwiker.gui.datetimeformatctrl import DateTimeFormatCtrl
 
 
 class GeneralPanel (wx.ScrolledWindow):
@@ -19,7 +19,7 @@ class GeneralPanel (wx.ScrolledWindow):
         self.trayConfig = TrayConfig (Application.config)
         self.generalConfig = GeneralGuiConfig (Application.config)
         self.mainWindowConfig = MainWindowConfig (Application.config)
-        self.i18nConfig = I18nConfig (Application.config)
+        self.i18nConfig = outwiker.core.i18n.I18nConfig (Application.config)
 
         self.MIN_AUTOSAVE_INTERVAL = 0
         self.MAX_AUTOSAVE_INTERVAL = 3600
@@ -65,16 +65,16 @@ class GeneralPanel (wx.ScrolledWindow):
         Создать элементы, связанные с автосохранением
         """
         autosaveLabel = wx.StaticText(self, -1, _("Autosave interval in seconds (0 - disabled)"))
-        self.autosaveSpin = wx.SpinCtrl(self, 
-                -1, 
-                str (generalConfig.AUTOSAVE_INTERVAL_DEFAULT), 
-                min=self.MIN_AUTOSAVE_INTERVAL, 
-                max=self.MAX_AUTOSAVE_INTERVAL, 
-                style=wx.SP_ARROW_KEYS|wx.TE_PROCESS_ENTER|wx.TE_PROCESS_TAB|wx.TE_AUTO_URL)
+        self.autosaveSpin = wx.SpinCtrl(self,
+                                        -1,
+                                        str (generalConfig.AUTOSAVE_INTERVAL_DEFAULT),
+                                        min=self.MIN_AUTOSAVE_INTERVAL,
+                                        max=self.MAX_AUTOSAVE_INTERVAL,
+                                        style=wx.SP_ARROW_KEYS | wx.TE_PROCESS_ENTER | wx.TE_PROCESS_TAB | wx.TE_AUTO_URL)
 
         self.autosaveSizer = wx.FlexGridSizer(1, 2, 0, 0)
-        self.autosaveSizer.Add(autosaveLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
-        self.autosaveSizer.Add(self.autosaveSpin, 0, wx.ALL|wx.ALIGN_RIGHT, 2)
+        self.autosaveSizer.Add(autosaveLabel, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
+        self.autosaveSizer.Add(self.autosaveSpin, 0, wx.ALL | wx.ALIGN_RIGHT, 2)
         self.autosaveSizer.AddGrowableRow(0)
         self.autosaveSizer.AddGrowableCol(0)
         self.autosaveSizer.AddGrowableCol(1)
@@ -84,27 +84,10 @@ class GeneralPanel (wx.ScrolledWindow):
         """
         Создать элементы, связанные с выбором формата даты и времени
         """
+        initial = generalConfig.dateTimeFormat.value
         dateTimeLabel = wx.StaticText(self, -1, _("Date and time format"))
 
-        hints = [(u"%a", _(u"Abbreviated weekday name")),
-                (u"%A", _(u"Full weekday name")),
-                (u"%b", _(u"Abbreviated month name")),
-                (u"%B", _(u"Full month name")),
-                (u"%c", _(u"Appropriate date and time representation")),
-                (u"%d", _(u"Day of the month as a decimal number [01,31]")),
-                (u"%H", _(u"Hour (24-hour clock) as a decimal number [00,23]")),
-                (u"%I", _(u"Hour (12-hour clock) as a decimal number [01,12]")),
-                (u"%m", _(u"Month as a decimal number [01,12]")),
-                (u"%M", _(u"Minute as a decimal number [00,59]")),
-                (u"%p", _(u"AM or PM")),
-                (u"%S", _(u"Second as a decimal number [00,61]")),
-                (u"%x", _(u"Appropriate date representation")),
-                (u"%X", _(u"Appropriate time representation")),
-                (u"%y", _(u"Year without century [00,99]")),
-                (u"%Y", _(u"Year with century")),
-                (u"%%", _(u"A literal '%' character")),
-                ]
-        self.dateTimeFormatCtrl = FormatCtrl (self, generalConfig.dateTimeFormat.value, hints)
+        self.dateTimeFormatCtrl = DateTimeFormatCtrl (self, initial)
 
         self.dateTimeSizer = wx.FlexGridSizer(1, 2, 0, 0)
         self.dateTimeSizer.AddGrowableRow(0)
@@ -136,18 +119,18 @@ class GeneralPanel (wx.ScrolledWindow):
         Создать элементы интерфейса, связанные с историей открытых файлов
         """
         history_label = wx.StaticText(self, -1, _("Recent files history length (restart required)"))
-        self.historySpin = wx.SpinCtrl(self, 
-                -1, 
-                str (generalConfig.RECENT_WIKI_COUNT_DEFAULT), 
-                min=self.MIN_HISTORY_LENGTH, 
-                max=self.MAX_HISTORY_LENGTH, 
-                style=wx.SP_ARROW_KEYS|wx.TE_PROCESS_ENTER|wx.TE_PROCESS_TAB|wx.TE_AUTO_URL)
+        self.historySpin = wx.SpinCtrl(self,
+                                       -1,
+                                       str (generalConfig.RECENT_WIKI_COUNT_DEFAULT),
+                                       min=self.MIN_HISTORY_LENGTH,
+                                       max=self.MAX_HISTORY_LENGTH,
+                                       style=wx.SP_ARROW_KEYS | wx.TE_PROCESS_ENTER | wx.TE_PROCESS_TAB | wx.TE_AUTO_URL)
 
         self.autoopenCheckBox = wx.CheckBox(self, -1, _("Automatically open the recent file"))
 
         self.historySizer = wx.FlexGridSizer(1, 2, 0, 0)
-        self.historySizer.Add(history_label, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
-        self.historySizer.Add(self.historySpin, 0, wx.ALL|wx.ALIGN_RIGHT, 2)
+        self.historySizer.Add(history_label, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
+        self.historySizer.Add(self.historySpin, 0, wx.ALL | wx.ALIGN_RIGHT, 2)
         self.historySizer.AddGrowableRow(0)
         self.historySizer.AddGrowableCol(0)
         self.historySizer.AddGrowableCol(1)
@@ -159,16 +142,16 @@ class GeneralPanel (wx.ScrolledWindow):
         """
 
         hints = [(u"{file}", _(u"Wiki file name")),
-                (u"{page}", _(u"Page title"))
-            ]
+                 (u"{page}", _(u"Page title"))
+                 ]
 
         self.titleFormatLabel = wx.StaticText(self, -1, _("Main window title format"))
 
         self.titleFormatText = FormatCtrl(self, self.mainWindowConfig.titleFormat.value, hints)
 
         self.titleFormatSizer = wx.FlexGridSizer(1, 2, 0, 0)
-        self.titleFormatSizer.Add(self.titleFormatLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
-        self.titleFormatSizer.Add(self.titleFormatText, 0, wx.ALL|wx.EXPAND, 2)
+        self.titleFormatSizer.Add(self.titleFormatLabel, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
+        self.titleFormatSizer.Add(self.titleFormatText, 0, wx.ALL | wx.EXPAND, 2)
         self.titleFormatSizer.AddGrowableCol(1)
 
 
@@ -177,10 +160,10 @@ class GeneralPanel (wx.ScrolledWindow):
         Создать элементы интерфейса, связанные с выбором языка
         """
         self.langLabel = wx.StaticText(self, -1, _("Language (restart required)"))
-        self.langCombo = wx.ComboBox(self, -1, choices=[], style=wx.CB_DROPDOWN|wx.CB_DROPDOWN|wx.CB_READONLY)
+        self.langCombo = wx.ComboBox(self, -1, choices=[], style=wx.CB_DROPDOWN | wx.CB_DROPDOWN | wx.CB_READONLY)
         self.languageSizer = wx.FlexGridSizer(1, 2, 0, 0)
-        self.languageSizer.Add(self.langLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
-        self.languageSizer.Add(self.langCombo, 0, wx.ALL|wx.ALIGN_RIGHT|wx.ALIGN_CENTER_VERTICAL, 2)
+        self.languageSizer.Add(self.langLabel, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
+        self.languageSizer.Add(self.langCombo, 0, wx.ALL | wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL, 2)
         self.languageSizer.AddGrowableRow(0)
         self.languageSizer.AddGrowableCol(0)
         self.languageSizer.AddGrowableCol(1)
@@ -195,16 +178,16 @@ class GeneralPanel (wx.ScrolledWindow):
         main_sizer = wx.FlexGridSizer(cols=1)
         main_sizer.AddGrowableCol(0)
 
-        main_sizer.Add(self.minimizeCheckBox, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
+        main_sizer.Add(self.minimizeCheckBox, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
         main_sizer.Add(self.startIconizedCheckBox, 0, wx.ALL, 2)
         main_sizer.Add(self.alwaysInTrayCheckBox, 0, wx.ALL, 2)
         main_sizer.Add(self.minimizeOnCloseCheckBox, 0, wx.ALL, 2)
-        main_sizer.Add(self.askBeforeExitCheckBox, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
+        main_sizer.Add(self.askBeforeExitCheckBox, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
         main_sizer.Add (self.autosaveSizer, 1, wx.EXPAND, 0)
 
         self.__addStaticLine(main_sizer)
         main_sizer.Add(self.historySizer, 1, wx.EXPAND, 0)
-        main_sizer.Add(self.autoopenCheckBox, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
+        main_sizer.Add(self.autoopenCheckBox, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
 
         self.__addStaticLine(main_sizer)
         main_sizer.Add(self.titleFormatSizer, 1, wx.EXPAND, 0)
@@ -214,7 +197,7 @@ class GeneralPanel (wx.ScrolledWindow):
         main_sizer.Add(self.languageSizer, 1, wx.EXPAND, 0)
 
         self.SetSizer(main_sizer)
-    
+
 
     def LoadState (self):
         """
@@ -223,24 +206,24 @@ class GeneralPanel (wx.ScrolledWindow):
         self.__loadGeneralOptions()
         self.__loadRecentOptions()
 
-    
+
     def __loadRecentOptions (self):
         """
         Опции, связанные с последними открытыми файлами
         """
         # Длина истории последних открытых файлов
         self.historyLength = configelements.IntegerElement (
-                self.generalConfig.historyLength, 
-                self.historySpin, 
-                self.MIN_HISTORY_LENGTH, 
-                self.MAX_HISTORY_LENGTH
-                )
+            self.generalConfig.historyLength,
+            self.historySpin,
+            self.MIN_HISTORY_LENGTH,
+            self.MAX_HISTORY_LENGTH
+        )
 
         # Открывать последнюю вики при запуске?
         self.autoopen = configelements.BooleanElement (
-                self.generalConfig.autoopen, 
-                self.autoopenCheckBox
-                )
+            self.generalConfig.autoopen,
+            self.autoopenCheckBox
+        )
 
 
     def __loadGeneralOptions (self):
@@ -249,55 +232,55 @@ class GeneralPanel (wx.ScrolledWindow):
         """
         # Сворачивать в трей?
         self.minimizeToTray = configelements.BooleanElement (
-                self.trayConfig.minimizeToTray, 
-                self.minimizeCheckBox
-                )
+            self.trayConfig.minimizeToTray,
+            self.minimizeCheckBox
+        )
 
         # Всегда показывать иконку в трее
         self.alwaysInTray = configelements.BooleanElement (
-                self.trayConfig.alwaysShowTrayIcon, 
-                self.alwaysInTrayCheckBox
-                )
+            self.trayConfig.alwaysShowTrayIcon,
+            self.alwaysInTrayCheckBox
+        )
 
         # Сворачивать при закрытии
         self.minimizeOnClose = configelements.BooleanElement (
-                self.trayConfig.minimizeOnClose,
-                self.minimizeOnCloseCheckBox
-                )
+            self.trayConfig.minimizeOnClose,
+            self.minimizeOnCloseCheckBox
+        )
 
         # Запускаться свернутым?
         self.startIconized = configelements.BooleanElement (
-                self.trayConfig.startIconized, 
-                self.startIconizedCheckBox
-                )
+            self.trayConfig.startIconized,
+            self.startIconizedCheckBox
+        )
 
         # Задавать вопрос перед выходом из программы?
         self.askBeforeExit = configelements.BooleanElement (
-                self.generalConfig.askBeforeExit, 
-                self.askBeforeExitCheckBox
-                )
+            self.generalConfig.askBeforeExit,
+            self.askBeforeExitCheckBox
+        )
 
         # Формат заголовка страницы
         self.titleFormat = configelements.StringElement (
-                self.mainWindowConfig.titleFormat, 
-                self.titleFormatText
-                )
+            self.mainWindowConfig.titleFormat,
+            self.titleFormatText
+        )
 
         self.dateTimeFormat = configelements.StringElement (
-                self.generalConfig.dateTimeFormat, 
-                self.dateTimeFormatCtrl
-                )
+            self.generalConfig.dateTimeFormat,
+            self.dateTimeFormatCtrl
+        )
 
         # Автосохранение
         self.autosaveInterval = configelements.IntegerElement (
-                self.generalConfig.autosaveInterval, 
-                self.autosaveSpin, 
-                self.MIN_AUTOSAVE_INTERVAL, 
-                self.MAX_AUTOSAVE_INTERVAL
-                )
+            self.generalConfig.autosaveInterval,
+            self.autosaveSpin,
+            self.MIN_AUTOSAVE_INTERVAL,
+            self.MAX_AUTOSAVE_INTERVAL
+        )
 
         self.__loadLanguages()
-    
+
 
     def __loadLanguages (self):
         languages = outwiker.core.i18n.getLanguages()
@@ -336,7 +319,7 @@ class GeneralPanel (wx.ScrolledWindow):
         if self.titleFormat.isValueChanged() or self.alwaysInTray.isValueChanged():
             self.alwaysInTray.save()
             self.titleFormat.save()
-    
+
 
     def __saveLanguage (self):
         index = self.langCombo.GetSelection()
@@ -352,7 +335,7 @@ class GeneralPanel (wx.ScrolledWindow):
 
     def onMinimizeToTray(self, event):
         self.updateCheckState()
-    
+
 
     def updateCheckState (self):
         """
