@@ -145,6 +145,7 @@ if __name__ == '__main__':
     from test.plugins.updatenotifier import UpdateNotifierTest
     from test.plugins.counter import CounterTest
     from test.plugins.counterdialog import CounterDialogTest
+    from test.plugins.htmlheads import HtmlHeadsTest
 
     from test.plugins.source.source import SourcePluginTest
     from test.plugins.source.sourceencoding import SourceEncodingPluginTest
@@ -161,7 +162,7 @@ if __name__ == '__main__':
     else:
         from test.guitests.uriidentifiers import UriIdentifierWebKitTest
 
-    #f = open('tests.log', "w")
-    #runner = unittest.TextTestRunner(f)
-    #unittest.main(testRunner=runner)
+    # f = open('tests.log', "w")
+    # runner = unittest.TextTestRunner(f)
+    # unittest.main(testRunner=runner)
     unittest.main()
