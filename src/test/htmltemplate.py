@@ -27,25 +27,7 @@ class HtmlTemplateTest(unittest.TestCase):
 
     def testDefault (self):
         content = u"бла-бла-бла"
-        result_right = u"""<!DOCTYPE html>
-<html>
-<head>
-	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
-	<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
-
-	<style type='text/css'>
-		body, div, p, table {
-			font-size:10pt;
-			font-family:Verdana;
-		}
-
-		img{border:none}
-		
-	</style>
-	
-</head>
-
-<body>
+        result_right = ur"""<body>
 бла-бла-бла
 </body>
 </html>"""
@@ -54,7 +36,7 @@ class HtmlTemplateTest(unittest.TestCase):
         tpl = HtmlTemplate (readTextFile (templatepath).strip() )
         result = tpl.substitute (content=content)
 
-        self.assertEqual (result, result_right, result)
+        self.assertIn (result_right, result.replace ("\r\n", "\n"))
 
 
     def test_text_01 (self):
@@ -131,69 +113,23 @@ class HtmlTemplateTest(unittest.TestCase):
 
     def testChangeFontName (self):
         self.config.fontName.value = u"Arial"
-
         content = u"бла-бла-бла"
-        result_right = u"""<!DOCTYPE html>
-<html>
-<head>
-	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
-	<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
-
-	<style type='text/css'>
-		body, div, p, table {
-			font-size:10pt;
-			font-family:Arial;
-		}
-
-		img{border:none}
-		
-	</style>
-	
-</head>
-
-<body>
-бла-бла-бла
-</body>
-</html>"""
 
         templatepath = os.path.join (getTemplatesDir(), "__default", "__style.html")
         tpl = HtmlTemplate (readTextFile (templatepath).strip() )
         result = tpl.substitute (content=content)
 
-        self.assertEqual (result, result_right, result)
+        self.assertIn (u"font-family:Arial;", result)
 
 
     def testChangeFontSize (self):
         self.config.fontSize.value = 20
         content = u"бла-бла-бла"
-        result_right = u"""<!DOCTYPE html>
-<html>
-<head>
-	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
-	<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
-
-	<style type='text/css'>
-		body, div, p, table {
-			font-size:20pt;
-			font-family:Verdana;
-		}
-
-		img{border:none}
-		
-	</style>
-	
-</head>
-
-<body>
-бла-бла-бла
-</body>
-</html>"""
-
         templatepath = os.path.join (getTemplatesDir(), "__default", "__style.html")
         tpl = HtmlTemplate (readTextFile (templatepath).strip() )
         result = tpl.substitute (content=content)
 
-        self.assertEqual (result, result_right, result)
+        self.assertIn (u"font-size:20pt;", result)
 
 
     def testChangeUserStyle (self):
@@ -202,7 +138,7 @@ class HtmlTemplateTest(unittest.TestCase):
         self.config.userStyle.value = style
 
         content = u"бла-бла-бла"
-        
+
         templatepath = os.path.join (getTemplatesDir(), "__default", "__style.html")
         tpl = HtmlTemplate (readTextFile (templatepath).strip() )
         result = tpl.substitute (content=content)
@@ -216,7 +152,7 @@ class HtmlTemplateTest(unittest.TestCase):
         self.config.userStyle.value = style
 
         content = u"бла-бла-бла"
-        
+
         templatepath = os.path.join (getTemplatesDir(), "__default", "__style.html")
         tpl = HtmlTemplate (readTextFile (templatepath).strip() )
         result = tpl.substitute (content=content)
@@ -227,27 +163,7 @@ class HtmlTemplateTest(unittest.TestCase):
     def testImproved1 (self):
         src = u"""<ul><li>Несортированный список. Элемент 1</li><li>Несортированный список. Элемент 2</li><li>Несортированный список. Элемент 3</li><ol><li>Вложенный сортированный список. Элемент 1</li><li>Вложенный сортированный список. Элемент 2</li><li>Вложенный сортированный список. Элемент 3</li><li>Вложенный сортированный список. Элемент 4</li><ul><li>Совсем вложенный сортированный список. Элемент 1</li><li>Совсем вложенный сортированный список. Элемент 2</li></ul><li>Вложенный сортированный список. Элемент 5</li></ol><ul><li>Вложенный несортированный список. Элемент 1</li></ul></ul>"""
 
-        expectedResult = u"""<!DOCTYPE html>
-<html>
-<head>
-	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
-	<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
-
-	<style type='text/css'>
-		body, div, p, table {
-			font-size:10pt;
-			font-family:Verdana;
-		}
-
-		img{border:none}
-		
-	</style>
-	
-</head>
-
-<body>
-
-<ul>
+        expectedResult = u"""<ul>
 <li>Несортированный список. Элемент 1</li>
 <li>Несортированный список. Элемент 2</li>
 <li>Несортированный список. Элемент 3</li>
@@ -265,53 +181,27 @@ class HtmlTemplateTest(unittest.TestCase):
 <ul>
 <li>Вложенный несортированный список. Элемент 1</li>
 </ul>
-</ul>
-
-</body>
-</html>"""
+</ul>"""
 
         templatepath = os.path.join (getTemplatesDir(), "__default", "__style.html")
         tpl = HtmlTemplate (readTextFile (templatepath).strip() )
 
         result = tpl.substitute (HtmlImprover.run (src) )
-        self.assertEqual (expectedResult, result, result)
+        self.assertIn (expectedResult, result)
 
 
     def testImproved2 (self):
         src = ur"""<h2>Attach links</h2>Attach:file.odt<br><a href="__attach/file.odt">file.odt</a><br><a href="__attach/file.odt">alternative text</a><br><a href="__attach/file with spaces.pdf">file with spaces.pdf</a><h2>Images</h2>"""
 
-        expectedResult = ur"""<!DOCTYPE html>
-<html>
-<head>
-	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
-	<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
-
-	<style type='text/css'>
-		body, div, p, table {
-			font-size:10pt;
-			font-family:Verdana;
-		}
-
-		img{border:none}
-		
-	</style>
-	
-</head>
-
-<body>
-
-<h2>Attach links</h2>
+        expectedResult = ur"""<h2>Attach links</h2>
 Attach:file.odt<br>
 <a href="__attach/file.odt">file.odt</a><br>
 <a href="__attach/file.odt">alternative text</a><br>
 <a href="__attach/file with spaces.pdf">file with spaces.pdf</a>
-<h2>Images</h2>
-
-</body>
-</html>"""
+<h2>Images</h2>"""
 
         templatepath = os.path.join (getTemplatesDir(), "__default", "__style.html")
         tpl = HtmlTemplate (readTextFile (templatepath).strip() )
 
         result = tpl.substitute (HtmlImprover.run (src) )
-        self.assertEqual (expectedResult, result)
+        self.assertIn (expectedResult, result)
