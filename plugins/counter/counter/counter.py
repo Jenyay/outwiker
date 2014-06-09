@@ -15,7 +15,7 @@ from .insertdialogcontroller import InsertDialogController
 
 
 if getCurrentVersion() < Version (1, 8, 0, 729, status=StatusSet.DEV):
-    print ("Style plugin. OutWiker version requirement: 1.8.0.729")
+    print ("Counter plugin. OutWiker version requirement: 1.8.0.729")
 else:
     class PluginTestWikiCommand (Plugin):
         """
@@ -62,8 +62,8 @@ All parameters are optional.
 
 {params}
 """.format (description=description,
-        usage=usage,
-        params=params)
+            usage=usage,
+            params=params)
 
 
         @property
@@ -77,7 +77,7 @@ All parameters are optional.
 
 
         def initialize(self):
-            if self._application.mainWindow != None:
+            if self._application.mainWindow is not None:
                 self._initlocale(u"counter")
 
             self.__controller.initialize()
