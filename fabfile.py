@@ -7,7 +7,7 @@ import os.path
 from fabric.api import local, lcd
 
 # Поддерживаемые дистрибутивы Ubuntu
-distribs = ["trusty", "saucy", "quantal", "precise"]
+distribs = ["trusty", "saucy", "precise"]
 
 
 def _getVersion():
@@ -48,7 +48,7 @@ def _source():
     Создать папку с исходниками для сборки deb-пакета
     """
     _debclean()
-    
+
     dirname = os.path.join ("build", _getDebSourceDirName() )
     os.mkdir (dirname)
 
@@ -75,23 +75,23 @@ def debsourceinclude():
     Создать файлы для закачки в репозиторий, включающие в себя исходники
     """
     _debuild ("debuild -S -sa --source-option=--include-binaries --source-option=--auto-commit",
-            distribs)
+              distribs)
 
 
 def deb():
     """
     Создать deb-пакет
     """
-    _debuild ("debuild --source-option=--include-binaries --source-option=--auto-commit", 
-            distribs)
+    _debuild ("debuild --source-option=--include-binaries --source-option=--auto-commit",
+              distribs)
 
 
 def debsingle():
     """
     Создать deb-пакет только для первого дистрибутива в списке
     """
-    _debuild ("debuild --source-option=--include-binaries --source-option=--auto-commit", 
-            [distribs[0]])
+    _debuild ("debuild --source-option=--include-binaries --source-option=--auto-commit",
+              [distribs[0]])
 
 
 def _debuild (command, distriblist):
@@ -127,16 +127,16 @@ def plugins():
     Создание архивов с плагинами
     """
     plugins = ["source",
-            "style",
-            "export2html",
-            "spoiler",
-            "livejournal",
-            "lightbox",
-            "thumbgallery",
-            "externaltools",
-            "statistics",
-            "updatenotifier",
-            ]
+               "style",
+               "export2html",
+               "spoiler",
+               "livejournal",
+               "lightbox",
+               "thumbgallery",
+               "externaltools",
+               "statistics",
+               "updatenotifier",
+               ]
 
     local ("rm -f build/plugins/outwiker-plugins-all.zip")
 
@@ -234,8 +234,8 @@ def tests (params=""):
 
 def _makechangelog (distrib_src, distrib_new):
     """
-    Подправить changelog под текущий дистрибутив Ubuntu. 
-    
+    Подправить changelog под текущий дистрибутив Ubuntu.
+
     Считаем, что у нас в исходном состоянии changelog всегда создан под distrib_src, а мы в первой строке его название заменим на distrib_new.
     """
     fname = "debian/changelog"
