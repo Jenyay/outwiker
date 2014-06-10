@@ -31,3 +31,61 @@ class TitleCommand (Command):
         title = u"<title>{}</title>".format (params)
         self.parser.appendToHead (title)
         return u""
+
+
+class DescriptionCommand (Command):
+    """
+    Команда для вставки тега <meta name="description">
+    """
+    def __init__ (self, parser):
+        """
+        parser - экземпляр парсера
+        """
+        Command.__init__ (self, parser)
+
+
+    @property
+    def name (self):
+        """
+        Возвращает имя команды, которую обрабатывает класс
+        """
+        return u"description"
+
+
+    def execute (self, params, content):
+        """
+        Запустить команду на выполнение.
+        Метод возвращает текст, который будет вставлен на место команды в вики-нотации
+        """
+        head = u'<meta name="description" content="{}"/>'.format (params)
+        self.parser.appendToHead (head)
+        return u""
+
+
+class KeywordsCommand (Command):
+    """
+    Команда для вставки тега <meta name="keywords">
+    """
+    def __init__ (self, parser):
+        """
+        parser - экземпляр парсера
+        """
+        Command.__init__ (self, parser)
+
+
+    @property
+    def name (self):
+        """
+        Возвращает имя команды, которую обрабатывает класс
+        """
+        return u"keywords"
+
+
+    def execute (self, params, content):
+        """
+        Запустить команду на выполнение.
+        Метод возвращает текст, который будет вставлен на место команды в вики-нотации
+        """
+        head = u'<meta name="keywords" content="{}"/>'.format (params)
+        self.parser.appendToHead (head)
+        return u""

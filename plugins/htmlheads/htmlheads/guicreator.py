@@ -4,7 +4,7 @@
 Модуль с классами для добавления пунктов меню и кнопок на панель
 """
 from outwiker.pages.html.basehtmlpanel import EVT_PAGE_TAB_CHANGED
-from .actions import TitleAction
+from .actions import TitleAction, DescriptionAction, KeywordsAction
 
 
 class GuiCreator (object):
@@ -15,12 +15,13 @@ class GuiCreator (object):
         self._controller = controller
         self._application = application
 
+        self._actions = [TitleAction, DescriptionAction, KeywordsAction]
+
 
     def initialize (self):
         if self._application.mainWindow is not None:
-            self._application.actionController.register (
-                TitleAction (self._application, self._controller),
-                None)
+            map (lambda action: self._application.actionController.register (
+                action (self._application, self._controller), None), self._actions)
 
 
     def createTools (self):
@@ -31,21 +32,23 @@ class GuiCreator (object):
 
         pageView = self._getPageView()
 
-        self._application.actionController.appendMenuItem (
-            TitleAction.stringId,
-            pageView.commandsMenu)
+        map (lambda action: self._application.actionController.appendMenuItem (
+            action.stringId, pageView.commandsMenu), self._actions)
 
         pageView.Bind (EVT_PAGE_TAB_CHANGED, self._onTabChanged)
         self._enableTools()
 
 
     def removeTools (self):
-        self._application.actionController.removeMenuItem (TitleAction.stringId)
+        map (lambda action: self._application.actionController.removeMenuItem (action.stringId),
+             self._actions)
 
 
     def destroy (self):
         if self._application.mainWindow is not None:
-            self._application.actionController.removeAction (TitleAction.stringId)
+            map (lambda action: self._application.actionController.removeAction (action.stringId),
+                 self._actions)
+
             self._getPageView().Unbind (EVT_PAGE_TAB_CHANGED, handler=self._onTabChanged)
 
 

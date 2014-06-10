@@ -3,7 +3,7 @@
 
 from .i18n import get_
 from .guicreator import GuiCreator
-from .commands import TitleCommand
+from .commands import TitleCommand, DescriptionCommand, KeywordsCommand
 
 
 class Controller (object):
@@ -58,6 +58,8 @@ class Controller (object):
         Вызывается до разбора викитекста. Добавление команды (:counter:)
         """
         parser.addCommand (TitleCommand (parser))
+        parser.addCommand (DescriptionCommand (parser))
+        parser.addCommand (KeywordsCommand (parser))
 
 
     @property
