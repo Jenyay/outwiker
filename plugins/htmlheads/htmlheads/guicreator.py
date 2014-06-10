@@ -3,6 +3,8 @@
 """
 Модуль с классами для добавления пунктов меню и кнопок на панель
 """
+import wx
+
 from outwiker.pages.html.basehtmlpanel import EVT_PAGE_TAB_CHANGED
 from .actions import TitleAction, DescriptionAction, KeywordsAction
 
@@ -16,6 +18,10 @@ class GuiCreator (object):
         self._application = application
 
         self._actions = [TitleAction, DescriptionAction, KeywordsAction]
+        self._headsMenu = wx.Menu ()
+
+        # MenuItem создаваемого подменю
+        self._submenuItem = None
 
 
     def initialize (self):
@@ -30,18 +36,21 @@ class GuiCreator (object):
         if mainWindow is None:
             return
 
-        pageView = self._getPageView()
+        self._submenuItem = self._getParentMenu().AppendSubMenu (self._headsMenu, _(u"HTML Headers"))
 
         map (lambda action: self._application.actionController.appendMenuItem (
-            action.stringId, pageView.commandsMenu), self._actions)
+            action.stringId, self._headsMenu), self._actions)
 
-        pageView.Bind (EVT_PAGE_TAB_CHANGED, self._onTabChanged)
+        self._getPageView().Bind (EVT_PAGE_TAB_CHANGED, self._onTabChanged)
         self._enableTools()
 
 
     def removeTools (self):
-        map (lambda action: self._application.actionController.removeMenuItem (action.stringId),
-             self._actions)
+        if self._application.mainWindow is not None:
+            map (lambda action: self._application.actionController.removeMenuItem (action.stringId),
+                 self._actions)
+
+            self._getParentMenu().RemoveItem (self._submenuItem)
 
 
     def destroy (self):
@@ -63,6 +72,10 @@ class GuiCreator (object):
         pageView = self._getPageView()
         enabled = (pageView.selectedPageIndex == pageView.CODE_PAGE_INDEX)
         self._application.actionController.enableTools (TitleAction.stringId, enabled)
+
+
+    def _getParentMenu (self):
+        return self._getPageView().toolsMenu
 
 
     def _getPageView (self):
