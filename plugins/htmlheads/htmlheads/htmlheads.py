@@ -37,9 +37,20 @@ else:
 
         @property
         def description (self):
-            description = _(u'''Plugin adds wiki-commands (:title:), (:description:) and (:keywords:)''')
+            description = _(u'''Plugin adds wiki-commands (:title:), (:description:), (:keywords:) and (:htmlhead:)''')
 
             usage = _(u'''<b>Usage:</b>
+(:title Page title:)
+
+(:description Page description:)
+
+(:keywords keyword_1, keyword_2, other keyword:)
+
+(:htmlhead:)
+&lt;meta http-equiv='Content-Type' content='text/html; charset=utf-8' /&gt;
+
+&lt;meta name='robots' content='index,follow' /&gt;
+(:htmlheadend:)
 ''')
 
             return u"""{description}

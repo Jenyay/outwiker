@@ -1,0 +1,95 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: HtmlHeads\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-06-11 09:43+0400\n"
+"PO-Revision-Date: 2014-06-11 09:49+0300\n"
+"Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
+"Language-Team: jenyay.net <jenyay.ilin@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
+"Language: ru_RU\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+#: actions.py:37
+msgid "Title (:title ...:)"
+msgstr "Заголовок (:title ...:)"
+
+#: actions.py:42
+msgid "HtmlHeads plugin. Insert (:title... :) command"
+msgstr "Плагин HtmlHeads. Вставить команду (:title ...:)"
+
+#: actions.py:59
+msgid "Description (:description ...:)"
+msgstr "Описание (:description ...:)"
+
+#: actions.py:64
+msgid "HtmlHeads plugin. Insert (:description... :) command"
+msgstr "Плагин HtmlHeads. Вставить команду (:description ...:)"
+
+#: actions.py:81
+msgid "Keywords (:keywords ...:)"
+msgstr "Ключевые слова (:keywords ...:)"
+
+#: actions.py:86
+msgid "HtmlHeads plugin. Insert (:keywords... :) command"
+msgstr "Плагин HtmlHeads. Вставить команду (:keywords ...:)"
+
+#: actions.py:102
+msgid "Custom head (:htmlhead:)"
+msgstr "Произвольный заголовок (:htmlhead:)"
+
+#: actions.py:107
+msgid "HtmlHeads plugin. Insert (:htmlhead:) command"
+msgstr "Плагин HtmlHeads. Вставить команду (:htmlhead ...:)"
+
+#: guicreator.py:42
+msgid "HTML Headers"
+msgstr "Заголовки HTML"
+
+#: htmlheads.py:40
+msgid ""
+"Plugin adds wiki-commands (:title:), (:description:), (:keywords:) and (:"
+"htmlhead:)"
+msgstr ""
+"Плагин добавляет команды (:title:), (:description:), (:keywords:) и (:"
+"htmlhead:) для викистраниц."
+
+#: htmlheads.py:42
+msgid ""
+"<b>Usage:</b>\n"
+"(:title Page title:)\n"
+"\n"
+"(:description Page description:)\n"
+"\n"
+"(:keywords keyword_1, keyword_2, other keyword:)\n"
+"\n"
+"(:htmlhead:)\n"
+"&lt;meta http-equiv='Content-Type' content='text/html; charset=utf-8' /&gt;\n"
+"\n"
+"&lt;meta name='robots' content='index,follow' /&gt;\n"
+"(:htmlheadend:)\n"
+msgstr ""
+"<b>Использование:</b>\n"
+"(:title Заголовок страницы:)\n"
+"\n"
+"(:description Описание страницы:)\n"
+"\n"
+"(:keywords ключевое слово 1, ключевое слово 2, еще одно ключевое слово:)\n"
+"\n"
+"(:htmlhead:)\n"
+"&lt;meta http-equiv='Content-Type' content='text/html; charset=utf-8' /&gt;\n"
+"\n"
+"&lt;meta name='robots' content='index,follow' /&gt;\n"
+"(:htmlheadend:)\n"
+
+#: htmlheads.py:64
+msgid "http://jenyay.net/Outwiker/HtmlHeadsEn"
+msgstr "http://jenyay.net/Outwiker/HtmlHeads"

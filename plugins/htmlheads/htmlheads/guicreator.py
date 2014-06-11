@@ -7,6 +7,7 @@ import wx
 
 from outwiker.pages.html.basehtmlpanel import EVT_PAGE_TAB_CHANGED
 from .actions import TitleAction, DescriptionAction, KeywordsAction, CustomHeadsAction
+from .i18n import get_
 
 
 class GuiCreator (object):
@@ -25,6 +26,9 @@ class GuiCreator (object):
 
         # MenuItem создаваемого подменю
         self._submenuItem = None
+
+        global _
+        _ = get_()
 
 
     def initialize (self):
