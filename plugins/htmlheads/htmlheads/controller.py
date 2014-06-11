@@ -3,7 +3,7 @@
 
 from .i18n import get_
 from .guicreator import GuiCreator
-from .commands import TitleCommand, DescriptionCommand, KeywordsCommand
+from .commands import TitleCommand, DescriptionCommand, KeywordsCommand, CustomHeadsCommand
 
 
 class Controller (object):
@@ -19,6 +19,10 @@ class Controller (object):
         self._application = application
 
         self._guiCreator = None
+        self._commands = [TitleCommand,
+                          DescriptionCommand,
+                          KeywordsCommand,
+                          CustomHeadsCommand]
 
 
     def initialize (self):
@@ -57,9 +61,7 @@ class Controller (object):
         """
         Вызывается до разбора викитекста. Добавление команды (:counter:)
         """
-        parser.addCommand (TitleCommand (parser))
-        parser.addCommand (DescriptionCommand (parser))
-        parser.addCommand (KeywordsCommand (parser))
+        map (lambda command: parser.addCommand (command (parser)), self._commands)
 
 
     @property

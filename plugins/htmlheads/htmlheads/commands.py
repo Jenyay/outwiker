@@ -89,3 +89,33 @@ class KeywordsCommand (Command):
         head = u'<meta name="keywords" content="{}"/>'.format (params)
         self.parser.appendToHead (head)
         return u""
+
+
+class CustomHeadsCommand (Command):
+    """
+    Команда для вставки любых заголовков в тег <head>...</head>
+    """
+    def __init__ (self, parser):
+        """
+        parser - экземпляр парсера
+        """
+        Command.__init__ (self, parser)
+
+
+    @property
+    def name (self):
+        """
+        Возвращает имя команды, которую обрабатывает класс
+        """
+        return u"htmlhead"
+
+
+    def execute (self, params, content):
+        """
+        Запустить команду на выполнение.
+        Метод возвращает текст, который будет вставлен на место команды в вики-нотации
+        """
+        map (lambda head: self.parser.appendToHead (head.strip()),
+             content.split ("\n"))
+
+        return u""

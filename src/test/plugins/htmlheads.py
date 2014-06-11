@@ -98,6 +98,18 @@ class HtmlHeadsTest (unittest.TestCase):
         self.assertIn (u'<meta name="description" content="Бла-бла-бла абырвалг"/>', result)
 
 
+    def testDescription_03 (self):
+        text = u'(:description:)'
+
+        self.testPage.content = text
+
+        generator = HtmlGenerator (self.testPage)
+        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
+        result = readTextFile (htmlpath)
+
+        self.assertIn (u'<meta name="description" content=""/>', result)
+
+
     def testKeywords_01 (self):
         text = u'(:keywords Бла-бла-бла, абырвалг:)'
 
@@ -120,3 +132,57 @@ class HtmlHeadsTest (unittest.TestCase):
         result = readTextFile (htmlpath)
 
         self.assertIn (u'<meta name="keywords" content="Бла-бла-бла, абырвалг"/>', result)
+
+
+    def testKeywords_03 (self):
+        text = u'(:keywords:)'
+
+        self.testPage.content = text
+
+        generator = HtmlGenerator (self.testPage)
+        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
+        result = readTextFile (htmlpath)
+
+        self.assertIn (u'<meta name="keywords" content=""/>', result)
+
+
+    def testHtmlHead_01 (self):
+        text = u'''(:htmlhead:)<meta name="keywords" content="Бла-бла-бла, абырвалг"/>(:htmlheadend:)'''
+
+        self.testPage.content = text
+
+        generator = HtmlGenerator (self.testPage)
+        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
+        result = readTextFile (htmlpath)
+
+        self.assertIn (u'<meta name="keywords" content="Бла-бла-бла, абырвалг"/>', result)
+        self.assertNotIn ("(:htmlhead:)", result)
+
+
+    def testHtmlHead_02 (self):
+        text = u'''(:htmlhead:)
+        <meta name="keywords" content="Бла-бла-бла, абырвалг"/>
+        <meta name="description" content="Бла-бла-бла абырвалг"/>
+(:htmlheadend:)'''
+
+        self.testPage.content = text
+
+        generator = HtmlGenerator (self.testPage)
+        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
+        result = readTextFile (htmlpath)
+
+        self.assertIn (u'<meta name="keywords" content="Бла-бла-бла, абырвалг"/>', result)
+        self.assertIn (u'<meta name="description" content="Бла-бла-бла абырвалг"/>', result)
+        self.assertNotIn ("(:htmlhead:)", result)
+
+
+    def testHtmlHead_03 (self):
+        text = u'''(:htmlhead:)(:htmlheadend:)'''
+
+        self.testPage.content = text
+
+        generator = HtmlGenerator (self.testPage)
+        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
+        result = readTextFile (htmlpath)
+
+        self.assertNotIn ("(:htmlhead:)", result)

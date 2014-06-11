@@ -88,3 +88,24 @@ class KeywordsAction (BaseHeadAction):
 
     def run (self, params):
         self._getEditor().turnText (u"(:keywords ", u":)")
+
+
+class CustomHeadsAction (BaseHeadAction):
+    """
+    Вставить команду (:htmlhead:)
+    """
+    stringId = u"HtmlHeads_InsertHtmlHead"
+
+
+    @property
+    def title (self):
+        return _(u"Custom head (:htmlhead:)")
+
+
+    @property
+    def description (self):
+        return _(u"HtmlHeads plugin. Insert (:htmlhead:) command")
+
+
+    def run (self, params):
+        self._getEditor().turnText (u"(:htmlhead:)\n", u"\n(:htmlheadend:)")
