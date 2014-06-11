@@ -22,7 +22,7 @@ class GuiCreator (object):
                          DescriptionAction,
                          KeywordsAction,
                          CustomHeadsAction]
-        self._headsMenu = wx.Menu ()
+        self._headsMenu = None
 
         # MenuItem создаваемого подменю
         self._submenuItem = None
@@ -43,6 +43,8 @@ class GuiCreator (object):
         if mainWindow is None:
             return
 
+        self._headsMenu = wx.Menu()
+
         self._submenuItem = self._getParentMenu().AppendSubMenu (self._headsMenu, _(u"HTML Headers"))
 
         map (lambda action: self._application.actionController.appendMenuItem (
@@ -58,6 +60,7 @@ class GuiCreator (object):
                  self._actions)
 
             self._getParentMenu().RemoveItem (self._submenuItem)
+            self._headsMenu = None
 
 
     def destroy (self):
@@ -78,7 +81,9 @@ class GuiCreator (object):
     def _enableTools (self):
         pageView = self._getPageView()
         enabled = (pageView.selectedPageIndex == pageView.CODE_PAGE_INDEX)
-        self._application.actionController.enableTools (TitleAction.stringId, enabled)
+
+        map (lambda action: self._application.actionController.enableTools (action.stringId, enabled),
+             self._actions)
 
 
     def _getParentMenu (self):
