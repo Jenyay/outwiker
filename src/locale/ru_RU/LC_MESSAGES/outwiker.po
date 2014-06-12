@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-22 09:38+0400\n"
+"POT-Creation-Date: 2014-06-12 10:52+0400\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -136,7 +136,7 @@ msgstr "Вы не выбрали файл(ы) для удаления"
 #: outwiker/gui/attachpanel.py:255 outwiker/gui/attachpanel.py:276
 #: outwiker/gui/attachpanel.py:286 outwiker/gui/basetextpanel.py:183
 #: outwiker/gui/basetextpanel.py:196 outwiker/gui/currentpagepanel.py:88
-#: outwiker/gui/currentpagepanel.py:224 outwiker/gui/currentpagepanel.py:233
+#: outwiker/gui/currentpagepanel.py:226 outwiker/gui/currentpagepanel.py:235
 #: outwiker/gui/htmlrenderie.py:174 outwiker/gui/htmlrenderwebkit.py:221
 #: outwiker/gui/htmlrenderwx.py:107 outwiker/gui/mainwindow.py:507
 #: outwiker/gui/mainwndcontroller.py:215 outwiker/gui/notestree.py:283
@@ -146,7 +146,7 @@ msgstr "Вы не выбрали файл(ы) для удаления"
 #: outwiker/gui/renametagdialog.py:79 outwiker/gui/tabscontroller.py:244
 #: outwiker/pages/html/basehtmlpanel.py:302
 #: outwiker/pages/html/basehtmlpanel.py:306
-#: outwiker/pages/html/htmlpageview.py:584
+#: outwiker/pages/html/htmlpageview.py:583
 #: outwiker/pages/wiki/wikipageview.py:257
 #: outwiker/pages/wiki/wikipageview.py:261
 #: outwiker/pages/wiki/wikipageview.py:277
@@ -275,19 +275,87 @@ msgstr "Добавить в закладки"
 msgid "Remove from Bookmarks"
 msgstr "Удалить из закладок"
 
-#: outwiker/gui/currentpagepanel.py:224
+#: outwiker/gui/currentpagepanel.py:226
 msgid "Can't save page. Wiki folder not exists. Wiki will be closed."
 msgstr ""
 "Невозможно сохранить страницу. \n"
 "Папка с вики не существует. \n"
 "Вики будет закрыта"
 
-#: outwiker/gui/currentpagepanel.py:233
+#: outwiker/gui/currentpagepanel.py:235
 msgid "Can't save page. Page folder not exists. Wiki will be reloaded."
 msgstr ""
 "Невозможно сохранить страницу. \n"
 "Папка со страницей не существует. \n"
 "Вики будет перезагружена."
+
+#: outwiker/gui/datetimeformatctrl.py:20
+msgid "Abbreviated weekday name"
+msgstr "День недели сокращенно"
+
+#: outwiker/gui/datetimeformatctrl.py:21
+msgid "Full weekday name"
+msgstr "День недели полностью"
+
+#: outwiker/gui/datetimeformatctrl.py:22
+msgid "Abbreviated month name"
+msgstr "Название месяца сокращенно"
+
+#: outwiker/gui/datetimeformatctrl.py:23
+msgid "Full month name"
+msgstr "Название месяца полностью"
+
+#: outwiker/gui/datetimeformatctrl.py:24
+msgid "Appropriate date and time representation"
+msgstr "Привычное представление даты и времени"
+
+#: outwiker/gui/datetimeformatctrl.py:25
+msgid "Day of the month as a decimal number [01,31]"
+msgstr "Число месяца (в интервале 01 - 31)"
+
+#: outwiker/gui/datetimeformatctrl.py:26
+msgid "Hour (24-hour clock) as a decimal number [00,23]"
+msgstr "Часы (в интервале 00 - 24)"
+
+#: outwiker/gui/datetimeformatctrl.py:27
+msgid "Hour (12-hour clock) as a decimal number [01,12]"
+msgstr "Часы (в интервале 01-12)"
+
+#: outwiker/gui/datetimeformatctrl.py:28
+msgid "Month as a decimal number [01,12]"
+msgstr "Месяц (в интервале 01-12)"
+
+#: outwiker/gui/datetimeformatctrl.py:29
+msgid "Minute as a decimal number [00,59]"
+msgstr "Минуты"
+
+#: outwiker/gui/datetimeformatctrl.py:30
+msgid "AM or PM"
+msgstr "До полудня или после полудня"
+
+#: outwiker/gui/datetimeformatctrl.py:31
+msgid "Second as a decimal number [00,61]"
+msgstr "Секунды"
+
+#: outwiker/gui/datetimeformatctrl.py:32
+msgid "Appropriate date representation"
+msgstr "Привычное представление даты"
+
+#: outwiker/gui/datetimeformatctrl.py:33
+msgid "Appropriate time representation"
+msgstr "Привычное представление времени"
+
+#: outwiker/gui/datetimeformatctrl.py:34
+msgid "Year without century [00,99]"
+msgstr "Год (последние две цифры)"
+
+#: outwiker/gui/datetimeformatctrl.py:35
+msgid "Year with century"
+msgstr "Год (полностью)"
+
+#: outwiker/gui/datetimeformatctrl.py:36
+msgid "A literal '%' character"
+msgstr "Символ '%'"
 
 #: outwiker/gui/editorstyleslist.py:25 outwiker/core/commands.py:750
 #: outwiker/core/commands.py:751
@@ -565,7 +633,7 @@ msgstr "Заметки"
 #: outwiker/gui/preferences/editorpanel.py:34
 #: outwiker/gui/preferences/htmlrenderpanel.py:28
 #: outwiker/gui/preferences/textprintpanel.py:29
-#: outwiker/pages/html/htmlpageview.py:211
+#: outwiker/pages/html/htmlpageview.py:210
 #: outwiker/pages/wiki/wikipageview.py:634
 msgid "Font"
 msgstr "Шрифт"
@@ -606,123 +674,55 @@ msgstr "Цвет фона"
 msgid "Autosave interval in seconds (0 - disabled)"
 msgstr "Интервал автосохранения в секундах (0 - отключено)"
 
-#: outwiker/gui/preferences/generalpanel.py:87
+#: outwiker/gui/preferences/generalpanel.py:88
 msgid "Date and time format"
 msgstr "Формат даты и времени"
 
-#: outwiker/gui/preferences/generalpanel.py:89
-msgid "Abbreviated weekday name"
-msgstr "День недели сокращенно"
-
-#: outwiker/gui/preferences/generalpanel.py:90
-msgid "Full weekday name"
-msgstr "День недели полностью"
-
-#: outwiker/gui/preferences/generalpanel.py:91
-msgid "Abbreviated month name"
-msgstr "Название месяца сокращенно"
-
-#: outwiker/gui/preferences/generalpanel.py:92
-msgid "Full month name"
-msgstr "Название месяца полностью"
-
-#: outwiker/gui/preferences/generalpanel.py:93
-msgid "Appropriate date and time representation"
-msgstr "Привычное представление даты и времени"
-
-#: outwiker/gui/preferences/generalpanel.py:94
-msgid "Day of the month as a decimal number [01,31]"
-msgstr "Число месяца (в интервале 01 - 31)"
-
-#: outwiker/gui/preferences/generalpanel.py:95
-msgid "Hour (24-hour clock) as a decimal number [00,23]"
-msgstr "Часы (в интервале 00 - 24)"
-
-#: outwiker/gui/preferences/generalpanel.py:96
-msgid "Hour (12-hour clock) as a decimal number [01,12]"
-msgstr "Часы (в интервале 01-12)"
-
-#: outwiker/gui/preferences/generalpanel.py:97
-msgid "Month as a decimal number [01,12]"
-msgstr "Месяц (в интервале 01-12)"
-
-#: outwiker/gui/preferences/generalpanel.py:98
-msgid "Minute as a decimal number [00,59]"
-msgstr "Минуты"
-
-#: outwiker/gui/preferences/generalpanel.py:99
-msgid "AM or PM"
-msgstr "До полудня или после полудня"
-
-#: outwiker/gui/preferences/generalpanel.py:100
-msgid "Second as a decimal number [00,61]"
-msgstr "Секунды"
-
-#: outwiker/gui/preferences/generalpanel.py:101
-msgid "Appropriate date representation"
-msgstr "Привычное представление даты"
-
-#: outwiker/gui/preferences/generalpanel.py:102
-msgid "Appropriate time representation"
-msgstr "Привычное представление времени"
-
-#: outwiker/gui/preferences/generalpanel.py:103
-msgid "Year without century [00,99]"
-msgstr "Год (последние две цифры)"
-
 #: outwiker/gui/preferences/generalpanel.py:104
-msgid "Year with century"
-msgstr "Год (полностью)"
-
-#: outwiker/gui/preferences/generalpanel.py:105
-msgid "A literal '%' character"
-msgstr "Символ '%'"
-
-#: outwiker/gui/preferences/generalpanel.py:121
 msgid "Ask before exit"
 msgstr "Спрашивать подтверждение перед выходом"
 
-#: outwiker/gui/preferences/generalpanel.py:128
+#: outwiker/gui/preferences/generalpanel.py:111
 msgid "Minimize to tray"
 msgstr "Сворачивать в трей"
 
-#: outwiker/gui/preferences/generalpanel.py:129
+#: outwiker/gui/preferences/generalpanel.py:112
 msgid "Start iconized"
 msgstr "Запускаться свернутым в трей"
 
-#: outwiker/gui/preferences/generalpanel.py:130
+#: outwiker/gui/preferences/generalpanel.py:113
 msgid "Always show tray icon"
 msgstr "Всегда показывать иконку в трее"
 
-#: outwiker/gui/preferences/generalpanel.py:131
+#: outwiker/gui/preferences/generalpanel.py:114
 msgid "Minimize on close window"
 msgstr "Сворачивать при закрытии окна"
 
-#: outwiker/gui/preferences/generalpanel.py:138
+#: outwiker/gui/preferences/generalpanel.py:121
 msgid "Recent files history length (restart required)"
 msgstr "Длина истории открытых файлов (требуется перезапуск)"
 
-#: outwiker/gui/preferences/generalpanel.py:146
+#: outwiker/gui/preferences/generalpanel.py:129
 msgid "Automatically open the recent file"
 msgstr "При запуске открывать последний открытый файл"
 
-#: outwiker/gui/preferences/generalpanel.py:161
+#: outwiker/gui/preferences/generalpanel.py:144
 msgid "Wiki file name"
 msgstr "Имя файла загруженной вики"
 
-#: outwiker/gui/preferences/generalpanel.py:162
+#: outwiker/gui/preferences/generalpanel.py:145
 msgid "Page title"
 msgstr "Заголовок страницы"
 
-#: outwiker/gui/preferences/generalpanel.py:165
+#: outwiker/gui/preferences/generalpanel.py:148
 msgid "Main window title format"
 msgstr "Формат заголовка главного окна"
 
-#: outwiker/gui/preferences/generalpanel.py:179
+#: outwiker/gui/preferences/generalpanel.py:162
 msgid "Language (restart required)"
 msgstr "Язык (требуется перезапуск)"
 
-#: outwiker/gui/preferences/generalpanel.py:308
+#: outwiker/gui/preferences/generalpanel.py:291
 msgid "Auto"
 msgstr "Авто"
 
@@ -758,15 +758,23 @@ msgstr "Строка"
 msgid "Additional styles (CSS):"
 msgstr "Дополнительные стили (CSS):"
 
-#: outwiker/gui/preferences/pluginspanel.py:120
+#: outwiker/gui/preferences/pluginspanel.py:30
+msgid "Download more plugins"
+msgstr "Скачать другие плагины"
+
+#: outwiker/gui/preferences/pluginspanel.py:31
+msgid "http://jenyay.net/Outwiker/PluginsEn"
+msgstr "http://jenyay.net/Outwiker/Plugins"
+
+#: outwiker/gui/preferences/pluginspanel.py:131
 msgid "Version"
 msgstr "Версия"
 
-#: outwiker/gui/preferences/pluginspanel.py:124
+#: outwiker/gui/preferences/pluginspanel.py:135
 msgid "Description"
 msgstr "Описание"
 
-#: outwiker/gui/preferences/pluginspanel.py:129
+#: outwiker/gui/preferences/pluginspanel.py:140
 msgid "Site"
 msgstr "Сайт"
 
@@ -817,7 +825,7 @@ msgid "Page Options..."
 msgstr "Настройки страницы..."
 
 #: outwiker/gui/preferences/wikieditorpanel.py:39
-#: outwiker/pages/html/htmlpageview.py:210
+#: outwiker/pages/html/htmlpageview.py:209
 #: outwiker/pages/wiki/wikipageview.py:633
 msgid "Heading"
 msgstr "Заголовки"
@@ -857,41 +865,41 @@ msgstr ""
 msgid "HTML Page"
 msgstr "HTML-страница"
 
-#: outwiker/pages/html/htmlpageview.py:212
+#: outwiker/pages/html/htmlpageview.py:211
 #: outwiker/pages/wiki/wikipageview.py:635
 msgid "Alignment"
 msgstr "Выравнивание"
 
-#: outwiker/pages/html/htmlpageview.py:213
+#: outwiker/pages/html/htmlpageview.py:212
 #: outwiker/pages/wiki/wikipageview.py:636
 msgid "Formatting"
 msgstr "Форматирование"
 
-#: outwiker/pages/html/htmlpageview.py:214
+#: outwiker/pages/html/htmlpageview.py:213
 #: outwiker/pages/wiki/wikipageview.py:637
 msgid "Lists"
 msgstr "Списки"
 
-#: outwiker/pages/html/htmlpageview.py:215 outwiker/core/commands.py:928
+#: outwiker/pages/html/htmlpageview.py:214 outwiker/core/commands.py:928
 msgid "Table"
 msgstr "Таблица"
 
-#: outwiker/pages/html/htmlpageview.py:226
+#: outwiker/pages/html/htmlpageview.py:225
 msgid "Html"
 msgstr "Html"
 
-#: outwiker/pages/html/htmlpageview.py:583
+#: outwiker/pages/html/htmlpageview.py:582
 #: outwiker/pages/wiki/wikipageview.py:698
 msgid "Page style Error. Style by default is used"
 msgstr ""
 "Ошибка в файле стиля страницы. Будет использоваться стиль по умолчанию."
 
-#: outwiker/pages/search/htmlreport.py:75
+#: outwiker/pages/search/htmlreport.py:77
 #, python-brace-format
 msgid "Last modified date: {0}"
 msgstr "Дата последнего изменения: {0}"
 
-#: outwiker/pages/search/htmlreport.py:84
+#: outwiker/pages/search/htmlreport.py:86
 #: outwiker/pages/search/searchpanel.py:47
 msgid "Tags: "
 msgstr "Метки:"

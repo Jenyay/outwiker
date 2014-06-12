@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import wx
@@ -26,6 +25,11 @@ class PluginsPanel (wx.Panel):
         self.pluginsList = wx.CheckListBox (self, -1, style=wx.LB_SORT)
         self.pluginsList.SetMinSize ((50, -1))
 
+        self.__downloadLink = wx.HyperlinkCtrl (self,
+                                                -1,
+                                                _(u"Download more plugins"),
+                                                _(u"http://jenyay.net/Outwiker/PluginsEn"))
+
         # Панель, которая потом заменится на HTML-рендер
         self.__blankPanel = wx.Panel (self)
         self.__blankPanel.SetMinSize ((self.__htmlMinWidth, -1))
@@ -37,27 +41,34 @@ class PluginsPanel (wx.Panel):
 
     @property
     def pluginsInfo (self):
-        if self.__pluginsInfo == None:
+        if self.__pluginsInfo is None:
             # Удалим пустую панель, а вместо нее добавим HTML-рендер
-            self.mainSizer.Remove (self.__blankPanel)
+            self.pluginsSizer.Remove (self.__blankPanel)
             self.__blankPanel.Destroy()
 
             self.__pluginsInfo = getHtmlRender (self)
             self.__pluginsInfo.SetMinSize ((self.__htmlMinWidth, -1))
 
-            self.mainSizer.Add (self.__pluginsInfo, flag=wx.EXPAND)
+            self.pluginsSizer.Insert (1, self.__pluginsInfo, flag=wx.EXPAND)
             self.Layout()
 
         return self.__pluginsInfo
 
 
     def __layout (self):
-        self.mainSizer = wx.FlexGridSizer (1, 2)
+        self.mainSizer = wx.FlexGridSizer (cols=1)
         self.mainSizer.AddGrowableRow (0)
         self.mainSizer.AddGrowableCol (0)
-        self.mainSizer.AddGrowableCol (1)
-        self.mainSizer.Add (self.pluginsList, flag=wx.EXPAND)
-        self.mainSizer.Add (self.__blankPanel, flag=wx.EXPAND)
+
+        self.pluginsSizer = wx.FlexGridSizer (cols=2)
+        self.pluginsSizer.AddGrowableRow (0)
+        self.pluginsSizer.AddGrowableCol (0)
+        self.pluginsSizer.AddGrowableCol (1)
+        self.pluginsSizer.Add (self.pluginsList, flag=wx.EXPAND)
+        self.pluginsSizer.Add (self.__blankPanel, flag=wx.EXPAND)
+
+        self.mainSizer.Add (self.pluginsSizer, flag = wx.ALL | wx.EXPAND, border = 2)
+        self.mainSizer.Add (self.__downloadLink, flag = wx.ALL | wx.ALIGN_LEFT, border = 2)
 
         self.SetSizer (self.mainSizer)
 
@@ -91,7 +102,7 @@ class PluginsController (object):
         htmlContent = u""
         if event.IsSelection():
             plugin = self.__pluginsItems[event.GetString()]
-            assert plugin != None
+            assert plugin is not None
 
             htmlContent = self.__createPluginInfo (plugin)
 
@@ -99,7 +110,7 @@ class PluginsController (object):
 
 
     def __createPluginInfo (self, plugin):
-        assert plugin != None
+        assert plugin is not None
 
         infoTemplate = u"""<HTML>
 <HEAD>
@@ -117,26 +128,26 @@ class PluginsController (object):
         plugin_name = u"""<H3>{name}</H3>""".format (name=plugin.name)
 
         plugin_version = u"""<B>{version_header}:</B> {version}""".format (
-                version_header = _(u"Version"),
-                version=plugin.version)
+            version_header = _(u"Version"),
+            version=plugin.version)
 
         plugin_description = u"""<B>{description_head}:</B> {description}""".format (
-                description_head = _(u"Description"),
-                description = plugin.description.replace ("\n", "<BR>"))
+            description_head = _(u"Description"),
+            description = plugin.description.replace ("\n", "<BR>"))
 
         if "url" in dir (plugin):
             plugin_url = u"""<BR><B>{site_head}</B>: <A HREF="{url}">{url}</a><BR>""".format (
-                    site_head = _("Site"),
-                    url = plugin.url)
+                site_head = _("Site"),
+                url = plugin.url)
         else:
             plugin_url = u""
 
 
         result = infoTemplate.format (
-                name = plugin_name,
-                version = plugin_version,
-                description = plugin_description,
-                url = plugin_url)
+            name = plugin_name,
+            version = plugin_version,
+            description = plugin_description,
+            url = plugin_url)
 
         return result
 
@@ -188,4 +199,3 @@ class PluginsController (object):
                 disabledList.append (self.__pluginsItems[self.__owner.pluginsList.GetString (itemindex)].name)
 
         return disabledList
-
