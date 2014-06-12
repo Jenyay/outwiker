@@ -40,7 +40,7 @@ def _debclean():
     """
     Очистка папки build/<distversion>
     """
-    local ('rm -rf build/{}'.format (_getDebSourceDirName() ) )
+    local ('rm -rf build/{}'.format (_getDebSourceDirName()))
 
 
 def _source():
@@ -49,10 +49,10 @@ def _source():
     """
     _debclean()
 
-    dirname = os.path.join ("build", _getDebSourceDirName() )
+    dirname = os.path.join ("build", _getDebSourceDirName())
     os.mkdir (dirname)
 
-    local ("rsync -avz --exclude=.bzr --exclude=distrib --exclude=build --exclude=*.pyc --exclude=*.dll --exclude=*.exe * --exclude=src/.ropeproject --exclude=src/test --exclude=src/setup_win.py --exclude=src/setup_tests.py --exclude=src/profile.py --exclude=src/tests.py --exclude=src/Microsoft.VC90.CRT.manifest --exclude=src/profiles --exclude=src/tools --exclude=doc --exclude=plugins --exclude=profiles --exclude=test --exclude=_update_version_bzr.py --exclude=outwiker_setup.iss --exclude=updateversion --exclude=updateversion.py {dirname}/".format (dirname=dirname) )
+    local ("rsync -avz --exclude=.bzr --exclude=distrib --exclude=build --exclude=*.pyc --exclude=*.dll --exclude=*.exe * --exclude=src/.ropeproject --exclude=src/test --exclude=src/setup_win.py --exclude=src/setup_tests.py --exclude=src/profile.py --exclude=src/tests.py --exclude=src/Microsoft.VC90.CRT.manifest --exclude=src/profiles --exclude=src/tools --exclude=doc --exclude=plugins --exclude=profiles --exclude=test --exclude=_update_version_bzr.py --exclude=outwiker_setup.iss --exclude=updateversion --exclude=updateversion.py {dirname}/".format (dirname=dirname))
 
 
 def _orig (distname):
@@ -65,12 +65,12 @@ def _orig (distname):
     origname = _getOrigName(distname)
 
     with lcd ("build"):
-        local ("tar -cvf {} {}".format (origname, _getDebSourceDirName() ) )
+        local ("tar -cvf {} {}".format (origname, _getDebSourceDirName()))
 
-    local ("gzip -f build/{}".format (origname) )
+    local ("gzip -f build/{}".format (origname))
 
 
-def debsourceinclude():
+def debsource():
     """
     Создать файлы для закачки в репозиторий, включающие в себя исходники
     """
@@ -104,7 +104,7 @@ def _debuild (command, distriblist):
 
         _orig(distname)
 
-        with lcd ("build/{}/debian".format (_getDebSourceDirName() ) ):
+        with lcd ("build/{}/debian".format (_getDebSourceDirName())):
             local (command)
 
         # Вернем старый дистрибутив
@@ -118,8 +118,8 @@ def ppaunstable ():
     version = _getVersion()
 
     for distname in distribs:
-        with lcd ("build".format (_getDebSourceDirName() ) ):
-            local ("dput ppa:outwiker-team/unstable outwiker_{}+{}~{}_source.changes".format (version[0], version[1], distname) )
+        with lcd ("build".format (_getDebSourceDirName())):
+            local ("dput ppa:outwiker-team/unstable outwiker_{}+{}~{}_source.changes".format (version[0], version[1], distname))
 
 
 def plugins():
@@ -136,6 +136,8 @@ def plugins():
                "externaltools",
                "statistics",
                "updatenotifier",
+               "counter",
+               "htmlheads",
                ]
 
     local ("rm -f build/plugins/outwiker-plugins-all.zip")
@@ -144,7 +146,7 @@ def plugins():
         local ("rm -f build/plugins/{}.zip".format (plugin))
 
         with lcd ("plugins/{}".format (plugin)):
-            local ("7z a -r -aoa -xr!*.pyc ../../build/plugins/{}.zip ./*; 7z a -r -aoa -xr!*.pyc ../../build/plugins/outwiker-plugins-all.zip ./*".format (plugin) )
+            local ("7z a -r -aoa -xr!*.pyc -xr!.ropeproject ../../build/plugins/{}.zip ./*; 7z a -r -aoa -xr!*.pyc ../../build/plugins/outwiker-plugins-all.zip ./*".format (plugin))
 
 
 def win():
@@ -193,7 +195,7 @@ def nextversion():
     with open (fname, "w") as fp_out:
         fp_out.write (result)
 
-    local ('dch -v "{}+{}~{}"'.format (lines[0].strip(), lines[1].strip(), distribs[0] ) )
+    local ('dch -v "{}+{}~{}"'.format (lines[0].strip(), lines[1].strip(), distribs[0]))
 
 
 def debinstall():
@@ -205,7 +207,7 @@ def debinstall():
     version = _getVersion()
 
     with lcd ("build"):
-        local ("sudo dpkg -i outwiker_{}+{}~{}_all.deb".format (version[0], version[1], distribs[0] ) )
+        local ("sudo dpkg -i outwiker_{}+{}~{}_all.deb".format (version[0], version[1], distribs[0]))
 
 
 def locale():
@@ -224,7 +226,7 @@ def run ():
         local ("python runoutwiker.py")
 
 
-def tests (params=""):
+def test (params=""):
     """
     Запустить юнит-тесты
     """
