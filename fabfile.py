@@ -146,7 +146,7 @@ def plugins():
         local ("rm -f build/plugins/{}.zip".format (plugin))
 
         with lcd ("plugins/{}".format (plugin)):
-            local ("7z a -r -aoa -xr!*.pyc -xr!.ropeproject ../../build/plugins/{}.zip ./*; 7z a -r -aoa -xr!*.pyc ../../build/plugins/outwiker-plugins-all.zip ./*".format (plugin))
+            local ("7z a -r -aoa -xr!*.pyc -xr!.ropeproject ../../build/plugins/{}.zip ./*; 7z a -r -aoa -xr!*.pyc -xr!.ropeproject ../../build/plugins/outwiker-plugins-all.zip ./*".format (plugin))
 
 
 def win():
