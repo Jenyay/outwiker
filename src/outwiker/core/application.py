@@ -1,11 +1,11 @@
-#!/usr/bin/env python
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
-from .i18n import init_i18n, getLanguageFromConfig
-from .config import Config
-from .event import Event
-from .recent import RecentWiki
-from .pluginsloader import PluginsLoader
+from outwiker.core.i18n import init_i18n, getLanguageFromConfig
+from outwiker.core.config import Config
+from outwiker.core.event import Event
+from outwiker.core.recent import RecentWiki
+from outwiker.core.pluginsloader import PluginsLoader
+from outwiker.core.pageuiddepot import PageUidDepot
 
 
 class ApplicationParams (object):
@@ -19,6 +19,7 @@ class ApplicationParams (object):
         self.recentWiki = None
         self.actionController = None
         self.plugins = PluginsLoader (self)
+        self.pageUidDepot = PageUidDepot()
 
         # Создать экземпляры событий
 
@@ -31,10 +32,10 @@ class ApplicationParams (object):
         self.onWikiClose = Event()
 
         # Обновление страницы
-        # Параметры: 
+        # Параметры:
         #     sender
         #     **kwargs
-        # kwargs содержит значение 'change', хранящее флаги того, что изменилось 
+        # kwargs содержит значение 'change', хранящее флаги того, что изменилось
         self.onPageUpdate = Event()
 
         # Создание страницы
@@ -44,7 +45,7 @@ class ApplicationParams (object):
         # Обновление дерева
         # Параметры: sender - из-за кого обновляется дерево
         self.onTreeUpdate = Event()
-        
+
         # Выбор новой страницы
         # Параметры: новая выбранная страница
         self.onPageSelect = Event()
@@ -74,13 +75,13 @@ class ApplicationParams (object):
         self.onEndTreeUpdate = Event()
 
         # Начало рендеринга HTML
-        # Параметры: 
+        # Параметры:
         # page - страница, которую рендерят
         # htmlView - окно, где будет представлен HTML
         self.onHtmlRenderingBegin = Event()
 
         # Завершение рендеринга HTML
-        # Параметры: 
+        # Параметры:
         # page - страница, которую рендерят
         # htmlView - окно, где будет представлен HTML
         self.onHtmlRenderingEnd = Event()
@@ -124,7 +125,7 @@ class ApplicationParams (object):
         # tray - экземпля класса OutwikerTrayIcon
         self.onTrayPopupMenu = Event()
 
-    
+
     def init (self, configFilename):
         """
         Инициализировать конфиг и локаль
@@ -149,13 +150,14 @@ class ApplicationParams (object):
         """
         self.onWikiClose (self.__wikiroot)
 
-        if self.__wikiroot != None:
+        if self.__wikiroot is not None:
             self.__unbindWikiEvents (self.__wikiroot)
 
         self.__wikiroot = value
 
-        if self.__wikiroot != None:
+        if self.__wikiroot is not None:
             self.__bindWikiEvents (self.__wikiroot)
+            self.pageUidDepot = PageUidDepot(self.__wikiroot)
 
         self.onWikiOpen (self.__wikiroot)
 
@@ -213,7 +215,7 @@ class ApplicationParams (object):
         """
         Вернуть текущую страницу или None, если страница не выбрана или вики не открыта
         """
-        if self.__wikiroot == None:
+        if self.__wikiroot is None:
             return None
 
         return self.__wikiroot.selectedPage
@@ -224,7 +226,7 @@ class ApplicationParams (object):
         """
         Установить текущую страницу
         """
-        if self.__wikiroot != None and self.__wikiroot.selectedPage != page:
+        if self.__wikiroot is not None and self.__wikiroot.selectedPage != page:
             self.__wikiroot.selectedPage = page
 
 

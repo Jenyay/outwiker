@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 from abc import ABCMeta, abstractmethod
@@ -37,9 +36,9 @@ class Config (object):
         if not self.__config.has_section (section_encoded):
             self.__config.add_section (section_encoded)
 
-        self.__config.set (section_encoded, 
-                param.encode ("utf8"), 
-                unicode (value).encode ("utf8"))
+        self.__config.set (section_encoded,
+                           param.encode ("utf8"),
+                           unicode (value).encode ("utf8"))
 
         return self.save()
 
@@ -66,11 +65,11 @@ class Config (object):
         Возващает строку с прочитанным значением
         Может бросать исключения
         """
-        val = self.__config.get (section.encode ("utf8"), 
-                param.encode ("utf8"))
+        val = self.__config.get (section.encode ("utf8"),
+                                 param.encode ("utf8"))
         return unicode (val, "utf8", "replace")
 
-    
+
     def getint (self, section, param):
         """
         Получить целочисленное значение из конфига
@@ -116,8 +115,8 @@ class Config (object):
         section_encoded = section.encode ("utf8")
         option_encoded = option.encode ("utf8")
 
-        result1 = self.__config.remove_option (section_encoded, 
-                option_encoded)
+        result1 = self.__config.remove_option (section_encoded,
+                                               option_encoded)
 
         result2 = self.save()
 
@@ -151,7 +150,7 @@ class BaseOption (object):
         self.defaultValue = defaultValue
 
         # Указатель на последнее возникшее исключение
-        # Как правило исключения игнорируются, 
+        # Как правило исключения игнорируются,
         # поэтому это поле используется для отладки
         self.error = None
 
@@ -176,7 +175,7 @@ class BaseOption (object):
         """
         Устанавливает значение параметра
         """
-        self.config.set (self.section, self.param, self._prepareToWrite (val) )
+        self.config.set (self.section, self.param, self._prepareToWrite (val))
 
 
     @abstractmethod
@@ -256,8 +255,8 @@ class StcStyleOption (BaseOption):
         """
         Получить значение. В производных классах этот метод переопределяется
         """
-        style = StcStyle.parse (self.config.get (self.section, self.param) )
-        if style == None:
+        style = StcStyle.parse (self.config.get (self.section, self.param))
+        if style is None:
             raise ValueError
 
         return style
@@ -376,11 +375,11 @@ class StringListSection (object):
 
 
 class FontOption (object):
-    def __init__ (self, 
-            faceNameOption, 
-            sizeOption,
-            isBoldOption,
-            isItalicOption):
+    def __init__ (self,
+                  faceNameOption,
+                  sizeOption,
+                  isBoldOption,
+                  isItalicOption):
         """
         faceNameOption - экземепляр класса StringOption, где хранится значение начертания шрифта
         sizeOption - экземпляр класса IntegerOption, где хранится размер шрифта
@@ -403,21 +402,20 @@ class PageConfig (Config):
     def __init__ (self, fname, readonly=False):
         Config.__init__ (self, fname, readonly)
 
-        self.typeOption = StringOption (self, 
-                PageConfig.sectionName, 
-                u"type", u"")
+        self.typeOption = StringOption (self,
+                                        PageConfig.sectionName,
+                                        u"type", u"")
 
-        self.orderOption = IntegerOption (self, 
-                PageConfig.sectionName, 
-                PageConfig.orderParamName, -1)
+        self.orderOption = IntegerOption (self,
+                                          PageConfig.sectionName,
+                                          PageConfig.orderParamName, -1)
 
-        self.lastViewedPageOption = StringOption (self, 
-                u"History", 
-                u"LastViewedPage", 
-                u"")
+        self.lastViewedPageOption = StringOption (self,
+                                                  u"History",
+                                                  u"LastViewedPage",
+                                                  u"")
 
-        self.datetimeOption = DateTimeOption (self, 
-                PageConfig.sectionName, 
-                PageConfig.datetimeParamName, 
-                None)
-
+        self.datetimeOption = DateTimeOption (self,
+                                              PageConfig.sectionName,
+                                              PageConfig.datetimeParamName,
+                                              None)

@@ -101,8 +101,9 @@ if __name__ == '__main__':
     from test.hotkeyconfig import HotKeyConfigTest
     from test.history import HistoryTest
     from test.commandline import CommandLineTest
+    from test.pageuiddepot import PageUidDepotTest
 
-    #from test.guitests.tray import TrayNormalTest#, TrayIconizedTest
+    # from test.guitests.tray import TrayNormalTest#, TrayIconizedTest
     from test.guitests.mainwnd import MainWndTest
     from test.guitests.bookmarks import BookmarksGuiTest
     from test.guitests.attach import AttachPanelTest
