@@ -6,4 +6,10 @@ type = html
 order = 2
 tags = пользователям
 datetime = 2012-04-27 23:04:51.000000
+linewrap = True
+cursorposition = 0
+uid = __4e96bc6e-333b-49d2-bcbd-a63a5f28655f
+
+[Misc]
+pageindex = 1
 

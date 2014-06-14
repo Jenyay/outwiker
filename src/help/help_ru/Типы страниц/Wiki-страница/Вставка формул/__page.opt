@@ -1,9 +1,10 @@
 [wiki]
-md5_hash = f54ea79d69fd0a8cec2f59fdb6cfe4b5
+md5_hash = 23c25e5c20e759ad47548a66587db660
 
 [General]
 type = wiki
 order = 6
 tags = пользователям, wiki
 datetime = 2012-04-27 23:04:51.000000
+cursorposition = 0
 

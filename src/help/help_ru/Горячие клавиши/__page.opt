@@ -1,5 +1,5 @@
 [wiki]
-md5_hash = f4301ea306ae58eacead916d021d58ba
+md5_hash = 6d0ac5f814e270a7b0b5c6676a125892
 
 [Tree]
 expand = False
@@ -9,6 +9,7 @@ type = wiki
 order = 4
 tags = пользователям
 datetime = 2014-03-20 21:57:24.069451
+cursorposition = 0
 
 [Misc]
 pageindex = 1

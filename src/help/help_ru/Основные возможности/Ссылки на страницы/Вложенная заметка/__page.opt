@@ -5,4 +5,7 @@ expand = False
 type = html
 tags = пользователям
 datetime = 2012-04-27 23:04:51.000000
+linewrap = True
+cursorposition = 0
+uid = __10b622cd-7ea7-4267-97e9-697fcf869486
 

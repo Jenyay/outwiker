@@ -1,8 +1,10 @@
-<HTML>
-<HEAD>
-	<META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+	<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
 
-	<STYLE type="text/css">
+	<style type='text/css'>
 		body, div, p, table {
 			font-size:10pt;
 			font-family:Verdana;
@@ -10,17 +12,100 @@
 
 		img{border:none}
 		
-	</STYLE>
-</HEAD>
+	</style>
+	
+</head>
 
-<BODY>
-<P>В таблице приведены примеры оформления ссылок на адреса в интернете и на другие страницы дерева.
-<BR> 
-<BR><H2>Ссылки</H2></P>
-
-<P><TABLE border=1><TR><TD ALIGN="CENTER"><B>Синтаксис</B></TD><TD ALIGN="CENTER"><B>Результат</B></TD><TD ALIGN="CENTER"><B>Комментарий</B></TD></TR><TR><TD>http://example.com</TD><TD><A HREF="http://example.com">http://example.com</A></TD><TD>Ссылка на адрес в интернете</TD></TR><TR><TD>[[http://example.com]]</TD><TD><A HREF="http://example.com">http://example.com</A></TD><TD>Ссылка на адрес в интернете</TD></TR><TR><TD>[[Пример ссылки -> http://example.com]]</TD><TD><A HREF="http://example.com">Пример ссылки</A></TD><TD>Ссылка на адрес в интернете с заданным текстом</TD></TR><TR><TD>[[http://example.com | Пример ссылки]]</TD><TD><A HREF="http://example.com">Пример ссылки</A></TD><TD>Ссылка на адрес в интернете с заданным текстом</TD></TR><TR><TD>[[Пользователям/FAQ]]</TD><TD><A HREF="Пользователям/FAQ">Пользователям/FAQ</A></TD><TD>Ссылка на страницу дерева</TD></TR><TR><TD>[[Пользователям/FAQ | FAQ]]</TD><TD><A HREF="Пользователям/FAQ">FAQ</A></TD><TD>Ссылка на страницу дерева с комментарием</TD></TR><TR><TD>[[FAQ->Пользователям/FAQ]]</TD><TD><A HREF="Пользователям/FAQ">FAQ</A></TD><TD>Ссылка на страницу дерева с комментарием</TD></TR><TR><TD>http://jenyay.net/utils/small_image.jpg</TD><TD><IMG SRC="http://jenyay.net/utils/small_image.jpg"/></TD><TD>Картинка из интернета</TD></TR><TR><TD>[[http://jenyay.net/utils/small_image.jpg]]</TD><TD><A HREF="http://jenyay.net/utils/small_image.jpg">http://jenyay.net/utils/small_image.jpg</A></TD><TD>Ссылка на картинку из интернета</TD></TR></TABLE>
-<BR><H2>Якоря</H2></P>
-
-<P><TABLE border=1><TR><TD ALIGN="CENTER"><B>Синтаксис</B></TD><TD ALIGN="CENTER"><B>Результат</B></TD><TD ALIGN="CENTER"><B>Комментарий</B></TD></TR><TR><TD>[[#anchor]]</TD><TD>Якорь с именем #anchor <A NAME="anchor"></A></TD><TD>Результирующий HTML-код: &lt;A NAME=&quot;#anchor&quot;&gt;&lt;/A&gt;</TD></TR><TR><TD>[[#anchor | Ссылка на якорь]]</TD><TD><A HREF="#anchor">Ссылка на якорь</A></TD><TD>Ссылка на якорь с именем anchor</TD></TR><TR><TD>[[Ссылка на якорь -> #anchor]]</TD><TD><A HREF="#anchor">Ссылка на якорь</A></TD><TD>Ссылка на якорь с именем anchor</TD></TR></TABLE></P>
-</BODY>
-</HTML>
+<body>
+В таблице приведены примеры оформления ссылок на адреса в интернете и на другие страницы дерева.<br>
+ 
+<h2>Ссылки</h2>
+<br>
+<table border=1>
+<tr>
+<td align="center"><b>Синтаксис</b></td>
+<td align="center"><b>Результат</b></td>
+<td align="center"><b>Комментарий</b></td>
+</tr>
+<tr>
+<td>http://example.com</td>
+<td><a href="http://example.com">http://example.com</a></td>
+<td>Ссылка на адрес в интернете</td>
+</tr>
+<tr>
+<td>[[http://example.com]]</td>
+<td><a href="http://example.com">http://example.com</a></td>
+<td>Ссылка на адрес в интернете</td>
+</tr>
+<tr>
+<td>[[Пример ссылки -> http://example.com]]</td>
+<td><a href="http://example.com">Пример ссылки</a></td>
+<td>Ссылка на адрес в интернете с заданным текстом</td>
+</tr>
+<tr>
+<td>[[http://example.com | Пример ссылки]]</td>
+<td><a href="http://example.com">Пример ссылки</a></td>
+<td>Ссылка на адрес в интернете с заданным текстом</td>
+</tr>
+<tr>
+<td>[[page://__0d930b9d-ef64-4cd6-8f22-f87ab0f94b22]]</td>
+<td><a href="page://__0d930b9d-ef64-4cd6-8f22-f87ab0f94b22">page://__0d930b9d-ef64-4cd6-8f22-f87ab0f94b22</a></td>
+<td>Ссылка на страницу дерева по идентификатору</td>
+</tr>
+<tr>
+<td>[[page://__0d930b9d-ef64-4cd6-8f22-f87ab0f94b22 | Ссылка на эту страницу]]</td>
+<td><a href="page://__0d930b9d-ef64-4cd6-8f22-f87ab0f94b22">Ссылка на эту страницу</a></td>
+<td>Ссылка на страницу дерева  по идентификатору с комментарием</td>
+</tr>
+<tr>
+<td>[[Ссылка на эту страницу->page://__0d930b9d-ef64-4cd6-8f22-f87ab0f94b22]]</td>
+<td><a href="page://__0d930b9d-ef64-4cd6-8f22-f87ab0f94b22">Ссылка на эту страницу</a></td>
+<td>Ссылка на страницу дерева  по идентификатору с комментарием</td>
+</tr>
+<tr>
+<td>[[Типы страниц/Wiki-страница/Ссылки]]</td>
+<td><a href="Типы страниц/Wiki-страница/Ссылки">Типы страниц/Wiki-страница/Ссылки</a></td>
+<td>Ссылка на страницу дерева по имени</td>
+</tr>
+<tr>
+<td>[[Типы страниц/Wiki-страница/Ссылки | Ссылки]]</td>
+<td><a href="Типы страниц/Wiki-страница/Ссылки">Ссылки</a></td>
+<td>Ссылка на страницу дерева с комментарием по имени</td>
+</tr>
+<tr>
+<td>[[Ссылки -> Типы страниц/Wiki-страница/Ссылки]]</td>
+<td><a href="Типы страниц/Wiki-страница/Ссылки">Ссылки</a></td>
+<td>Ссылка на страницу дерева с комментарием по имени</td>
+</tr>
+<tr>
+<td>http://jenyay.net/utils/small_image.jpg</td>
+<td align="left"><img src="http://jenyay.net/uploads/Outwiker/Unstable/outwiker_100_white.png"/></td>
+<td>Картинка из интернета</td>
+</tr>
+</table><br>
+<h2>Якоря</h2>
+<br>
+<table border=1>
+<tr>
+<td align="center"><b>Синтаксис</b></td>
+<td align="center"><b>Результат</b></td>
+<td align="center"><b>Комментарий</b></td>
+</tr>
+<tr>
+<td>[[#anchor]]</td>
+<td>Якорь с именем #anchor <a id="anchor"></a></td>
+<td>Результирующий HTML-код: &lt;A NAME=&quot;#anchor&quot;&gt;&lt;/A&gt;</td>
+</tr>
+<tr>
+<td>[[#anchor | Ссылка на якорь]]</td>
+<td><a href="#anchor">Ссылка на якорь</a></td>
+<td>Ссылка на якорь с именем anchor</td>
+</tr>
+<tr>
+<td>[[Ссылка на якорь -> #anchor]]</td>
+<td><a href="#anchor">Ссылка на якорь</a></td>
+<td>Ссылка на якорь с именем anchor</td>
+</tr>
+</table>
+</body>
+</html>

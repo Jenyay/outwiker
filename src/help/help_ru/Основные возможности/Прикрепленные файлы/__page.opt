@@ -6,4 +6,9 @@ type = html
 order = 0
 tags = пользователям
 datetime = 2012-04-27 23:04:51.000000
+linewrap = True
+cursorposition = 0
+
+[Misc]
+pageindex = 1
 

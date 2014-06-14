@@ -1,9 +1,13 @@
 [wiki]
-md5_hash = 31be2ad7e7f835b2f26024d1e6f3bf26
+md5_hash = 3b5f4243ee1cd68b4c1641b03fc61000
 
 [General]
 type = wiki
 order = 0
 tags = продвинутым пользователям
-datetime = 2012-04-27 23:04:51.000000
+datetime = 2014-06-14 15:43:12.235680
+cursorposition = 75
+
+[Misc]
+pageindex = 1
 

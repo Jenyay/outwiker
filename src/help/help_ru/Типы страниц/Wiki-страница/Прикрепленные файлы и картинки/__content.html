@@ -1,57 +1,137 @@
-<HTML>
-<HEAD>
-	<META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+	<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
 
-	<STYLE type="text/css">
+	<style type='text/css'>
 		body, div, p, table {
 			font-size:10pt;
 			font-family:Verdana;
 		}
 
 		img{border:none}
-		li strike {color: RGB(200, 200, 200); }
-	</STYLE>
+		
+	</style>
 	
-</HEAD>
+</head>
 
-<BODY>
-<P><H2>Картинки </H2></P>
+<body>
 
-<P><TABLE border=1><TR><TD ALIGN="CENTER"><B>Синтаксис</B></TD><TD ALIGN="CENTER"><B>Результат</B></TD><TD ALIGN="CENTER"><B>Комментарий</B></TD></TR><TR><TD ALIGN="CENTER">http://jenyay.net/small_image.jpg</TD><TD ALIGN="CENTER"><IMG SRC="http://jenyay.net/small_image.jpg"/></TD><TD ALIGN="CENTER">Вставить картинку из интернета</TD></TR><TR><TD ALIGN="CENTER">Attach:small_image.jpg</TD><TD ALIGN="CENTER"><IMG SRC="__attach/small_image.jpg"/></TD><TD ALIGN="CENTER">Вставить прикрепленную картинку</TD></TR><TR><TD ALIGN="CENTER">[[http://jenyay.net | Attach:small_image.jpg]]</TD><TD ALIGN="CENTER"><A HREF="http://jenyay.net"><IMG SRC="__attach/small_image.jpg"/></A></TD><TD ALIGN="CENTER">Вставить ссылку в виде картинки</TD></TR><TR><TD ALIGN="CENTER">[[/Пользователям/FAQ | Attach:small_image.jpg]]</TD><TD ALIGN="CENTER"><A HREF="/Пользователям/FAQ"><IMG SRC="__attach/small_image.jpg"/></A></TD><TD ALIGN="CENTER">Вставить ссылку на другую страницу в виде картинки</TD></TR><TR><TD ALIGN="CENTER">%thumb%Attach:image.jpg%%</TD><TD ALIGN="CENTER"><A HREF="__attach/image.jpg"><IMG SRC="__attach/__thumb/th_maxsize_250_image.jpg"/></A></TD><TD ALIGN="CENTER">Вставить уменьшенную картинку со ссылкой на оригинал. 
-<BR>Уменьшенные копии картинок создаются в поддиректории __thumb директории с прикрепленными файлами</TD></TR><TR><TD ALIGN="CENTER">%width=200%Attach:image.jpg%%</TD><TD ALIGN="CENTER"><A HREF="__attach/image.jpg"><IMG SRC="__attach/__thumb/th_width_200_image.jpg"/></A></TD><TD ALIGN="CENTER">Вставить уменьшенную картинку с заданным размером по горизонтали со ссылкой на оригинал.
-<BR>
-<BR>Возможные варианты команды: 
-<BR>
-<BR><I>%width=200px%Attach:image.jpg%%</I> 
-<BR>
-<BR>или 
-<BR>
-<BR><I>%thumb width=200%Attach:image.jpg%%</I> 
-<BR>
-<BR>Уменьшенные копии картинок создаются в поддиректории __thumb директории с прикрепленными файлами</TD></TR><TR><TD ALIGN="CENTER">%height=200%Attach:image.jpg%%</TD><TD ALIGN="CENTER"><A HREF="__attach/image.jpg"><IMG SRC="__attach/__thumb/th_height_200_image.jpg"/></A></TD><TD ALIGN="CENTER">Вставить уменьшенную картинку с заданным размером по вертикали со ссылкой на оригинал.
-<BR>
-<BR>Возможные варианты команды: 
-<BR>
-<BR><I>%height=200px%Attach:image.jpg%%</I> 
-<BR>
-<BR>или 
-<BR><I>%thumb height=200%Attach:image.jpg%%</I> 
-<BR>
-<BR>Уменьшенные копии картинок создаются в поддиректории __thumb директории с прикрепленными файлами</TD></TR><TR><TD ALIGN="CENTER">%maxsize=200%Attach:image.jpg%%</TD><TD ALIGN="CENTER"><A HREF="__attach/image.jpg"><IMG SRC="__attach/__thumb/th_maxsize_200_image.jpg"/></A></TD><TD ALIGN="CENTER">Вставить уменьшенную картинку с заданным максимальным размером со ссылкой на оригинал.
-<BR>
-<BR>Возможные варианты команды: 
-<BR>
-<BR><I>%maxsize=200px%Attach:image.jpg%%</I> 
-<BR>
-<BR>или 
-<BR>
-<BR><I>%thumb maxsize=200%Attach:image.jpg%%</I> 
-<BR>
-<BR>Уменьшенные копии картинок создаются в поддиректории __thumb директории с прикрепленными файлами</TD></TR></TABLE>
-<BR><H2>Прикрепленные файлы других типов</H2></P>
-
-<P><TABLE border=1><TR><TD ALIGN="CENTER"><B>Синтаксис</B></TD><TD ALIGN="CENTER"><B>Результат</B></TD><TD ALIGN="CENTER"><B>Комментарий</B></TD></TR><TR><TD ALIGN="CENTER">Attach:file.txt</TD><TD ALIGN="CENTER"><A HREF="__attach/file.txt">file.txt</A></TD><TD ALIGN="CENTER">Ссылка на прикрепленный файл</TD></TR><TR><TD ALIGN="CENTER">[[Attach:file.txt]]</TD><TD ALIGN="CENTER"><A HREF="__attach/file.txt">file.txt</A></TD><TD ALIGN="CENTER">Ссылка на прикрепленный файл. 
-<BR>То же, что и предыдущая запись.</TD></TR><TR><TD ALIGN="CENTER">[[Attach:small_image.jpg]]</TD><TD ALIGN="CENTER"><A HREF="__attach/small_image.jpg">small_image.jpg</A></TD><TD ALIGN="CENTER">Ссылка на прикрепленную картинку</TD></TR><TR><TD ALIGN="RIGHT">[[Attach:file.txt | Прикрепленный файл]]</TD><TD ALIGN="CENTER"><A HREF="__attach/file.txt">Прикрепленный файл</A></TD><TD ALIGN="CENTER">Ссылка на прикрепленный файл с комментарием</TD></TR><TR><TD ALIGN="RIGHT">[[Прикрепленный файл -> Attach:file.txt]]</TD><TD ALIGN="CENTER"><A HREF="__attach/file.txt">Прикрепленный файл</A></TD><TD ALIGN="CENTER">Ссылка на прикрепленный файл с комментарием 
-<BR>То же, что и предыдущая запись.</TD></TR></TABLE></P>
-</BODY>
-</HTML>
+<h2>Картинки </h2>
+<br>
+<table border=1>
+<tr>
+<td align="center"><b>Синтаксис</b></td>
+<td align="center"><b>Результат</b></td>
+<td align="center"><b>Комментарий</b></td>
+</tr>
+<tr>
+<td align="center">http://jenyay.net/small_image.jpg</td>
+<td align="center"><img src="http://jenyay.net/small_image.jpg"/></td>
+<td align="center">Вставить картинку из интернета</td>
+</tr>
+<tr>
+<td align="center">Attach:small_image.jpg</td>
+<td align="center"><img src="__attach/small_image.jpg"/></td>
+<td align="center">Вставить прикрепленную картинку</td>
+</tr>
+<tr>
+<td align="center">[[http://jenyay.net | Attach:small_image.jpg]]</td>
+<td align="center"><a href="http://jenyay.net"><img src="__attach/small_image.jpg"/></a></td>
+<td align="center">Вставить ссылку в виде картинки</td>
+</tr>
+<tr>
+<td align="center">[[/Пользователям/FAQ | Attach:small_image.jpg]]</td>
+<td align="center"><a href="/Пользователям/FAQ"><img src="__attach/small_image.jpg"/></a></td>
+<td align="center">Вставить ссылку на другую страницу в виде картинки</td>
+</tr>
+<tr>
+<td align="center">%thumb%Attach:image.jpg%%</td>
+<td align="center"><a href="__attach/image.jpg"><img src="__attach/__thumb/th_maxsize_250_image.jpg"/></a></td>
+<td align="center">Вставить уменьшенную картинку со ссылкой на оригинал. <br>
+Уменьшенные копии картинок создаются в поддиректории __thumb директории с прикрепленными файлами</td>
+</tr>
+<tr>
+<td align="center">%width=200%Attach:image.jpg%%</td>
+<td align="center"><a href="__attach/image.jpg"><img src="__attach/__thumb/th_width_200_image.jpg"/></a></td>
+<td align="center">Вставить уменьшенную картинку с заданным размером по горизонтали со ссылкой на оригинал.<br>
+<br>
+Возможные варианты команды: <br>
+<br>
+<i>%width=200px%Attach:image.jpg%%</i> <br>
+<br>
+или <br>
+<br>
+<i>%thumb width=200%Attach:image.jpg%%</i> <br>
+<br>
+Уменьшенные копии картинок создаются в поддиректории __thumb директории с прикрепленными файлами</td>
+</tr>
+<tr>
+<td align="center">%height=200%Attach:image.jpg%%</td>
+<td align="center"><a href="__attach/image.jpg"><img src="__attach/__thumb/th_height_200_image.jpg"/></a></td>
+<td align="center">Вставить уменьшенную картинку с заданным размером по вертикали со ссылкой на оригинал.<br>
+<br>
+Возможные варианты команды: <br>
+<br>
+<i>%height=200px%Attach:image.jpg%%</i> <br>
+<br>
+или <br>
+<i>%thumb height=200%Attach:image.jpg%%</i> <br>
+<br>
+Уменьшенные копии картинок создаются в поддиректории __thumb директории с прикрепленными файлами</td>
+</tr>
+<tr>
+<td align="center">%maxsize=200%Attach:image.jpg%%</td>
+<td align="center"><a href="__attach/image.jpg"><img src="__attach/__thumb/th_maxsize_200_image.jpg"/></a></td>
+<td align="center">Вставить уменьшенную картинку с заданным максимальным размером со ссылкой на оригинал.<br>
+<br>
+Возможные варианты команды: <br>
+<br>
+<i>%maxsize=200px%Attach:image.jpg%%</i> <br>
+<br>
+или <br>
+<br>
+<i>%thumb maxsize=200%Attach:image.jpg%%</i> <br>
+<br>
+Уменьшенные копии картинок создаются в поддиректории __thumb директории с прикрепленными файлами</td>
+</tr>
+</table>
+<h2>Прикрепленные файлы других типов</h2>
+<br>
+<table border=1>
+<tr>
+<td align="center"><b>Синтаксис</b></td>
+<td align="center"><b>Результат</b></td>
+<td align="center"><b>Комментарий</b></td>
+</tr>
+<tr>
+<td align="center">Attach:file.txt</td>
+<td align="center"><a href="__attach/file.txt">file.txt</a></td>
+<td align="center">Ссылка на прикрепленный файл</td>
+</tr>
+<tr>
+<td align="center">[[Attach:file.txt]]</td>
+<td align="center"><a href="__attach/file.txt">file.txt</a></td>
+<td align="center">Ссылка на прикрепленный файл. <br>
+То же, что и предыдущая запись.</td>
+</tr>
+<tr>
+<td align="center">[[Attach:small_image.jpg]]</td>
+<td align="center"><a href="__attach/small_image.jpg">small_image.jpg</a></td>
+<td align="center">Ссылка на прикрепленную картинку</td>
+</tr>
+<tr>
+<td align="right">[[Attach:file.txt | Прикрепленный файл]]</td>
+<td align="center"><a href="__attach/file.txt">Прикрепленный файл</a></td>
+<td align="center">Ссылка на прикрепленный файл с комментарием</td>
+</tr>
+<tr>
+<td align="right">[[Прикрепленный файл -> Attach:file.txt]]</td>
+<td align="center"><a href="__attach/file.txt">Прикрепленный файл</a></td>
+<td align="center">Ссылка на прикрепленный файл с комментарием <br>
+То же, что и предыдущая запись.</td>
+</tr>
+</table>
+</body>
+</html>

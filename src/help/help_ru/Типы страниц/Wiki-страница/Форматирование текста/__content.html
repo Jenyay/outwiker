@@ -17,54 +17,184 @@
 </head>
 
 <body>
-<p>
-<br><table border=1><tr><td align="center"><b>Синтаксис</b></td><td align="center"><b>Результат</b></td><td align="center"><b>Комментарий</b></td></tr><tr><td align="left">''Курсив''</td><td align="left"><i>Курсив</i></td><td align="center">-</td></tr><tr><td align="left">'''Полужирный шрифт'''</td><td align="left"><b>Полужирный шрифт</b></td><td align="center">-</td></tr><tr><td align="left">''''Полужирный курсив''''</td><td align="left"><b><i>Полужирный курсив</i></b></td><td align="center">-</td></tr><tr><td align="left">@@Моноширинный шрифт@@</td><td align="left"><code>Моноширинный шрифт</code></td><td align="center">Текст обрамляется тегом &lt;code&gt;...&lt;/code&gt;</td></tr><tr><td align="left">'^Верхний индекс^'</td><td align="left"><sup>Верхний индекс</sup></td><td align="center">Для сравнения: обычный шрифт <sup>Верхний индекс</sup></td></tr><tr><td align="left">'_Нижний индекс_'</td><td align="left"><sub>Нижний индекс</sub></td><td align="center">Для сравнения: обычный шрифт <sub>Нижний индекс</sub></td></tr><tr><td align="left">[----Мелкий шрифт----]</td><td align="left"><span style="font-size:20%">Мелкий шрифт</span></td><td align="center">-</td></tr><tr><td align="left">[---Мелкий шрифт---]</td><td align="left"><span style="font-size:40%">Мелкий шрифт</span></td><td align="center">-</td></tr><tr><td align="left">[--Мелкий шрифт--]</td><td align="left"><span style="font-size:60%">Мелкий шрифт</span></td><td align="center">-</td></tr><tr><td align="left">[-Мелкий шрифт-]</td><td align="left"><span style="font-size:80%">Мелкий шрифт</span></td><td align="center">-</td></tr><tr><td align="left">[+Крупный шрифт+]</td><td align="left"><span style="font-size:120%">Крупный шрифт</span></td><td align="center">-</td></tr><tr><td align="left">[++Крупный шрифт++]</td><td align="left"><span style="font-size:140%">Крупный шрифт</span></td><td align="center">-</td></tr><tr><td align="left">[+++Крупный шрифт+++]</td><td align="left"><span style="font-size:160%">Крупный шрифт</span></td><td align="center">-</td></tr><tr><td align="left">[++++Крупный шрифт++++]</td><td align="left"><span style="font-size:180%">Крупный шрифт</span></td><td align="center">-</td></tr><tr><td align="left">[+++++Крупный шрифт+++++]</td><td align="left"><span style="font-size:200%">Крупный шрифт</span></td><td align="center">-</td></tr><tr><td align="left">{+Подчеркнутый текст+}</td><td align="left"><u>Подчеркнутый текст</u></td><td align="center">-</td></tr><tr><td align="left">{-Зачеркнутый текст-}</td><td align="left"><strike>Зачеркнутый текст</strike></td><td align="center">-</td></tr><tr><td align="left">[>Цитата<]</td><td align="left"><blockquote>Цитата</blockquote></td><td align="center">Текст обрамляется тегом &lt;blockquote&gt;...&lt;/blockquote&gt;</td></tr><tr><td align="left">[@Неформатируемый '''текст''' @]</td><td align="left">
-<pre>Неформатируемый '''текст''' </pre></td><td align="center">Внутри скобок не происходит замена спец. символов вики-нотации, текст обрамляется тегом &lt;pre&gt;...&lt;/pre&gt;</td></tr><tr><td align="left">
-<pre>[=Неформатируемый '''текст''' =]</pre></td><td align="left">Неформатируемый '''текст''' </td><td align="center">Внутри скобок не происходит замена спец. символов вики-нотации</td></tr><tr><td align="left">----</td><td align="center"><hr></td><td align="center">Горизонтальная линия</td></tr></table></p>
-
-<p>Существуют команды, связанные с переносом строк. Например, символ <b>\</b> в конце строки обозначает, что строка продолжается на следующей строке и перенос в этом месте делать не надо. Например:</p>
-
-<p>Это длинная строка, которая продолжается на следующей строке</p>
-
-<p>Команда <b>[[&lt;&lt;]]</b> обозначает, что на этом месте должен быть перенос строки. Эта команда работает в списках и таблицах, так как в них перенос строки обозначает создание нового элемента списка или новой строки таблицы. Например:</p>
-
-<p>Команды:</p>
-
-<p>
-<br># Первый элемент списка.
-<br># Второй элемент списка [[<<]]Вторая строка второго элемента списка.
-<br># Третий элемент списка [[<<]][[<<]] Вторая строка третьего элемента списка после двух отступов.
-<br># Четвертый элемент списка.</p>
-
-<p>
-<br>Результат:</p>
-
-<p>
+<br>
+<table border=1>
+<tr>
+<td align="center"><b>Синтаксис</b></td>
+<td align="center"><b>Результат</b></td>
+<td align="center"><b>Комментарий</b></td>
+</tr>
+<tr>
+<td align="left">''Курсив''</td>
+<td align="left"><i>Курсив</i></td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="left">'''Полужирный шрифт'''</td>
+<td align="left"><b>Полужирный шрифт</b></td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="left">''''Полужирный курсив''''</td>
+<td align="left"><b><i>Полужирный курсив</i></b></td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="left">@@Моноширинный шрифт@@</td>
+<td align="left"><code>Моноширинный шрифт</code></td>
+<td align="center">Текст обрамляется тегом &lt;code&gt;...&lt;/code&gt;</td>
+</tr>
+<tr>
+<td align="left">'^Верхний индекс^'</td>
+<td align="left"><sup>Верхний индекс</sup></td>
+<td align="center">Для сравнения: обычный шрифт <sup>Верхний индекс</sup></td>
+</tr>
+<tr>
+<td align="left">'_Нижний индекс_'</td>
+<td align="left"><sub>Нижний индекс</sub></td>
+<td align="center">Для сравнения: обычный шрифт <sub>Нижний индекс</sub></td>
+</tr>
+<tr>
+<td align="left">[----Мелкий шрифт----]</td>
+<td align="left"><span style="font-size:20%">Мелкий шрифт</span></td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="left">[---Мелкий шрифт---]</td>
+<td align="left"><span style="font-size:40%">Мелкий шрифт</span></td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="left">[--Мелкий шрифт--]</td>
+<td align="left"><span style="font-size:60%">Мелкий шрифт</span></td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="left">[-Мелкий шрифт-]</td>
+<td align="left"><span style="font-size:80%">Мелкий шрифт</span></td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="left">[+Крупный шрифт+]</td>
+<td align="left"><span style="font-size:120%">Крупный шрифт</span></td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="left">[++Крупный шрифт++]</td>
+<td align="left"><span style="font-size:140%">Крупный шрифт</span></td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="left">[+++Крупный шрифт+++]</td>
+<td align="left"><span style="font-size:160%">Крупный шрифт</span></td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="left">[++++Крупный шрифт++++]</td>
+<td align="left"><span style="font-size:180%">Крупный шрифт</span></td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="left">[+++++Крупный шрифт+++++]</td>
+<td align="left"><span style="font-size:200%">Крупный шрифт</span></td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="left">{+Подчеркнутый текст+}</td>
+<td align="left"><u>Подчеркнутый текст</u></td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="left">{-Зачеркнутый текст-}</td>
+<td align="left"><strike>Зачеркнутый текст</strike></td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="left">[>Цитата<]</td>
+<td align="left"><blockquote>Цитата</blockquote></td>
+<td align="center">Текст обрамляется тегом &lt;blockquote&gt;...&lt;/blockquote&gt;</td>
+</tr>
+<tr>
+<td align="left">[@Неформатируемый '''текст''' @]</td>
+<td align="left">
+<pre>Неформатируемый '''текст''' </pre>
+</td>
+<td align="center">Внутри скобок не происходит замена спец. символов вики-нотации, текст обрамляется тегом &lt;pre&gt;...&lt;/pre&gt;</td>
+</tr>
+<tr>
+<td align="left">
+<pre>[=Неформатируемый '''текст''' =]</pre>
+</td>
+<td align="left">Неформатируемый '''текст''' </td>
+<td align="center">Внутри скобок не происходит замена спец. символов вики-нотации</td>
+</tr>
+<tr>
+<td align="left">----</td>
+<td align="center">
+<hr>
+</td>
+<td align="center">Горизонтальная линия</td>
+</tr>
+</table><br>
+<br>
+Существуют команды, связанные с переносом строк. Например, символ <b>\</b> в конце строки обозначает, что строка продолжается на следующей строке и перенос в этом месте делать не надо. Например:<br>
+<br>
+Это длинная строка, которая продолжается на следующей строке<br>
+<br>
+Команда <b>[[&lt;&lt;]]</b> обозначает, что на этом месте должен быть перенос строки. Эта команда работает в списках и таблицах, так как в них перенос строки обозначает создание нового элемента списка или новой строки таблицы. Например:<br>
+<br>
+Команды:<br>
+<br>
+<br>
+# Первый элемент списка.<br>
+# Второй элемент списка [[<<]]Вторая строка второго элемента списка.<br>
+# Третий элемент списка [[<<]][[<<]] Вторая строка третьего элемента списка после двух отступов.<br>
+# Четвертый элемент списка.<br>
+<br>
+<br>
+Результат:<br>
 <ol>
 <li>Первый элемент списка.</li>
-<li>Второй элемент списка 
-<br>Вторая строка второго элемента списка.</li>
-<li>Третий элемент списка 
+<li>Второй элемент списка <br>
+Вторая строка второго элемента списка.</li>
+<li>Третий элемент списка <br>
 <br>
-<br> Вторая строка третьего элемента списка после двух отступов.</li>
+ Вторая строка третьего элемента списка после двух отступов.</li>
 <li>Четвертый элемент списка.</li>
-</ol>
-<br>или команды:</p>
-
-<p>
-<br>|| border=1
-<br>||Первая строка|| бла-бла-бла ||
-<br>||Вторая строка [[<<]]продолжение второй строки|| бла-бла-бла ||
-<br>||Третья строка [[<<]][[<<]] Продолжение третьей строки || бла-бла-бла ||
-<br>||Четвертая \
-<br>строка || бла-бла-бла ||</p>
-
-<p>
-<br>результат:</p>
-
-<p><table border=1><tr><td>Первая строка</td><td align="center">бла-бла-бла</td></tr><tr><td>Вторая строка 
-<br>продолжение второй строки</td><td align="center">бла-бла-бла</td></tr><tr><td align="left">Третья строка 
+</ol><br>
+или команды:<br>
 <br>
-<br> Продолжение третьей строки</td><td align="center">бла-бла-бла</td></tr><tr><td align="left">Четвертая строка</td><td align="center">бла-бла-бла</td></tr></table></p>
+<br>
+|| border=1<br>
+||Первая строка|| бла-бла-бла ||<br>
+||Вторая строка [[<<]]продолжение второй строки|| бла-бла-бла ||<br>
+||Третья строка [[<<]][[<<]] Продолжение третьей строки || бла-бла-бла ||<br>
+||Четвертая \<br>
+строка || бла-бла-бла ||<br>
+<br>
+<br>
+результат:<br>
+<br>
+<table border=1>
+<tr>
+<td>Первая строка</td>
+<td align="center">бла-бла-бла</td>
+</tr>
+<tr>
+<td>Вторая строка <br>
+продолжение второй строки</td>
+<td align="center">бла-бла-бла</td>
+</tr>
+<tr>
+<td align="left">Третья строка <br>
+<br>
+ Продолжение третьей строки</td>
+<td align="center">бла-бла-бла</td>
+</tr>
+<tr>
+<td align="left">Четвертая строка</td>
+<td align="center">бла-бла-бла</td>
+</tr>
+</table>
 </body>
 </html>

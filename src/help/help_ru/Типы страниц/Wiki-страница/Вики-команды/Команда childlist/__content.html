@@ -1,52 +1,67 @@
-<HTML>
-<HEAD>
-	<META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+	<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
 
-	<STYLE type="text/css">
+	<style type='text/css'>
 		body, div, p, table {
 			font-size:10pt;
 			font-family:Verdana;
 		}
 
 		img{border:none}
-
 		
-	</STYLE>
-</HEAD>
+	</style>
+	
+</head>
 
-<BODY>
-<P><H2>Назначение и синтаксис команды (:childlist:)</H2></P>
+<body>
 
-<P>Команда (:childlist:) предназначена для вставки в вики-страницу списка дочерних страниц:</P>
-
-<P>(:childlist [params...]:)</P>
-
-<P>Дополнительно в команде (:childlist:) может быть использован параметр <I>sort</I>, который указывает порядок сортировки. Параметр <I>sort</I> может принимать следующие значения:</P>
-
-<P>
-<UL>
-<LI><I>name</I> - дочерние страницы в выводимом списке будут отсортированы по алфавиту;</LI>
-<LI><I>descendname</I> - дочерние страницы в выводимом списке будут отсортированы по алфавиту в обратном порядке;</LI>
-<LI><I>descendorder</I> - дочерние страницы в выводимом списке будут иметь порядок, противоположный порядку следования страниц в дереве.</LI>
-</UL>
-<BR>Если параметр <I>sort</I> не указан, то страницы в списке будут выводиться в том же порядке, как они расположены в дереве.</P>
-
-<P><H2>Примеры</H2></P>
-
-<P>У данной страницы имеются четыре дочерние страницы, следующая таблица показывает результат работы команды (:childlist:) с различными значениями параметра <I>sort</I>:</P>
-
-<P><TABLE width=850 border=1><TR><TD ALIGN="CENTER"><B>Команда</B></TD><TD ALIGN="CENTER">(:childlist:)</TD><TD ALIGN="CENTER">(:childlist sort=name:)</TD><TD ALIGN="CENTER">(:childlist sort=descendname:)</TD><TD ALIGN="CENTER">(:childlist sort=descendorder:)</TD></TR><TR><TD ALIGN="CENTER"><B>Результат</B></TD><TD ALIGN="CENTER"><A HREF="Страница 4">Страница 4</A>
-<BR><A HREF="Страница 2">Страница 2</A>
-<BR><A HREF="Страница 3">Страница 3</A>
-<BR><A HREF="Страница 1">Страница 1</A></TD><TD ALIGN="CENTER"><A HREF="Страница 1">Страница 1</A>
-<BR><A HREF="Страница 2">Страница 2</A>
-<BR><A HREF="Страница 3">Страница 3</A>
-<BR><A HREF="Страница 4">Страница 4</A></TD><TD ALIGN="CENTER"><A HREF="Страница 4">Страница 4</A>
-<BR><A HREF="Страница 3">Страница 3</A>
-<BR><A HREF="Страница 2">Страница 2</A>
-<BR><A HREF="Страница 1">Страница 1</A></TD><TD ALIGN="CENTER"><A HREF="Страница 1">Страница 1</A>
-<BR><A HREF="Страница 3">Страница 3</A>
-<BR><A HREF="Страница 2">Страница 2</A>
-<BR><A HREF="Страница 4">Страница 4</A></TD></TR></TABLE></P>
-</BODY>
-</HTML>
+<h2>Назначение и синтаксис команды (:childlist:)</h2>
+<br>
+Команда (:childlist:) предназначена для вставки в вики-страницу списка дочерних страниц:<br>
+<br>
+(:childlist [params...]:)<br>
+<br>
+Дополнительно в команде (:childlist:) может быть использован параметр <i>sort</i>, который указывает порядок сортировки. Параметр <i>sort</i> может принимать следующие значения:<br>
+<ul>
+<li><i>name</i> - дочерние страницы в выводимом списке будут отсортированы по алфавиту;</li>
+<li><i>descendname</i> - дочерние страницы в выводимом списке будут отсортированы по алфавиту в обратном порядке;</li>
+<li><i>descendorder</i> - дочерние страницы в выводимом списке будут иметь порядок, противоположный порядку следования страниц в дереве.</li>
+</ul>
+Если параметр <i>sort</i> не указан, то страницы в списке будут выводиться в том же порядке, как они расположены в дереве.<br>
+<h2>Примеры</h2>
+<br>
+У данной страницы имеются четыре дочерние страницы, следующая таблица показывает результат работы команды (:childlist:) с различными значениями параметра <i>sort</i>:<br>
+<br>
+<table width=850 border=1>
+<tr>
+<td align="center"><b>Команда</b></td>
+<td align="center">(:childlist:)</td>
+<td align="center">(:childlist sort=name:)</td>
+<td align="center">(:childlist sort=descendname:)</td>
+<td align="center">(:childlist sort=descendorder:)</td>
+</tr>
+<tr>
+<td align="center"><b>Результат</b></td>
+<td align="center"><a href="Страница 4">Страница 4</a><br>
+<a href="Страница 2">Страница 2</a><br>
+<a href="Страница 3">Страница 3</a><br>
+<a href="Страница 1">Страница 1</a></td>
+<td align="center"><a href="Страница 1">Страница 1</a><br>
+<a href="Страница 2">Страница 2</a><br>
+<a href="Страница 3">Страница 3</a><br>
+<a href="Страница 4">Страница 4</a></td>
+<td align="center"><a href="Страница 4">Страница 4</a><br>
+<a href="Страница 3">Страница 3</a><br>
+<a href="Страница 2">Страница 2</a><br>
+<a href="Страница 1">Страница 1</a></td>
+<td align="center"><a href="Страница 1">Страница 1</a><br>
+<a href="Страница 3">Страница 3</a><br>
+<a href="Страница 2">Страница 2</a><br>
+<a href="Страница 4">Страница 4</a></td>
+</tr>
+</table>
+</body>
+</html>

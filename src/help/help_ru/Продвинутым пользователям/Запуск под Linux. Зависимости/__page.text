@@ -1,6 +1,6 @@
 Под Linux должны быть установлены следующие пакеты:
 
-* '''python''' (версии 2.6 или 2.7)
+* '''python''' (версия 2.7)
 * '''python-wxgtk2.8''' (реализация wxPython под Linux)
 * '''python-wxversion'''
 * '''python-webkit-dev'''
