@@ -2,6 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 import os.path
+import urllib
 
 from .htmlcontroller import UriIdentifier
 
@@ -18,11 +19,26 @@ class UriIdentifierIE (UriIdentifier):
         UriIdentifier.__init__ (self, currentpage, basepath)
 
 
+    def __removeFileProtokol (self, href):
+        """
+        Избавиться от протокола file:///, то избавимся от этой надписи
+        """
+        fileprotocol = u"file:///"
+        if href.startswith (fileprotocol):
+            return href[len (fileprotocol): ]
+
+        return href
+
+
     def _prepareHref (self, href):
         """
         Обработать ссылку, если требуется
         """
-        return href
+        result = self.__removeFileProtokol (href)
+        result = urllib.unquote (result)
+        result = result.replace ("/", u"\\")
+
+        return result
 
 
     def _findWikiPage (self, subpath):
@@ -47,7 +63,7 @@ class UriIdentifierIE (UriIdentifier):
 
         if subpath.startswith ("about:"):
             subpath = self.__removeAboutBlank (subpath).replace ("\\", "/")
-        
+
         if len (subpath) > 0 and subpath[0] == "/":
             # Поиск страниц осуществляем только с корня
             newSelectedPage = self._currentPage.root[subpath[1:] ]

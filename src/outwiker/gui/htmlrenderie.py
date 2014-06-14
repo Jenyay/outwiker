@@ -84,7 +84,7 @@ class HtmlRenderIE (HtmlRender):
         self.SetSizer(self.box)
         self.Layout()
 
-    
+
     def LoadPage (self, fname):
         self.canOpenUrl = True
         self.render.Navigate (fname)
@@ -112,7 +112,7 @@ class HtmlRenderIE (HtmlRender):
         return href
 
 
-    def BeforeNavigate2 (self, this, pDisp, URL, Flags, 
+    def BeforeNavigate2 (self, this, pDisp, URL, Flags,
             TargetFrameName, PostData, Headers, Cancel):
         href = URL[0]
         curr_href = self.__cleanUpUrl (self.render.locationurl)
@@ -144,10 +144,10 @@ class HtmlRenderIE (HtmlRender):
         """
         href_clear = self.__cleanUpUrl (href)
 
-        identifier = UriIdentifierIE (self._currentPage, 
+        identifier = UriIdentifierIE (self._currentPage,
             self.__cleanUpUrl (self.render.locationurl) )
 
-        return identifier.identify (href_clear)
+        return identifier.identify (href)
 
 
     def __onLinkClicked (self, href):
