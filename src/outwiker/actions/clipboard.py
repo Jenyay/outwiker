@@ -23,10 +23,10 @@ class CopyPageTitleAction (BaseAction):
     @property
     def description (self):
         return _(u"Copy current page title to clipboard")
-    
+
 
     def run (self, params):
-        assert self._application.selectedPage != None
+        assert self._application.selectedPage is not None
         copyTitleToClipboard (self._application.selectedPage)
 
 
@@ -49,10 +49,10 @@ class CopyPagePathAction (BaseAction):
     @property
     def description (self):
         return _(u"Copy path to current page to clipboard")
-    
+
 
     def run (self, params):
-        assert self._application.selectedPage != None
+        assert self._application.selectedPage is not None
         copyPathToClipboard (self._application.selectedPage)
 
 
@@ -74,10 +74,10 @@ class CopyAttachPathAction (BaseAction):
     @property
     def description (self):
         return _(u"Copy path to attachments for current page to clipboard")
-    
+
 
     def run (self, params):
-        assert self._application.selectedPage != None
+        assert self._application.selectedPage is not None
         copyAttachPathToClipboard (self._application.selectedPage)
 
 
@@ -100,8 +100,8 @@ class CopyPageLinkAction (BaseAction):
     @property
     def description (self):
         return _(u"Copy link to current page to clipboard")
-    
+
 
     def run (self, params):
-        assert self._application.selectedPage != None
+        assert self._application.selectedPage is not None
         copyLinkToClipboard (self._application.selectedPage)

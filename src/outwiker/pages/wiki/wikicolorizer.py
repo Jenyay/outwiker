@@ -2,6 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 import wx
+import wx.lib.newevent
 import wx.stc
 
 import threading
