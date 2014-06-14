@@ -53,7 +53,12 @@ class UriIdentifier (object):
 
         if href.startswith (protocol):
             uid = href[len (protocol):]
-            uid = unicode (uid.decode ("idna"))
+
+            try:
+                uid = unicode (uid.decode ("idna"))
+            except UnicodeError:
+                # Под IE ссылки не преобразуются в кодировку IDNA
+                pass
 
             if uid.endswith ("/"):
                 uid = uid[:-1]
