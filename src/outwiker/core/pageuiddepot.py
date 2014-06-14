@@ -97,7 +97,7 @@ class PageUidDepot (object):
 
     def changeUid (self, page, newUid):
         """
-        Изменить идентификатор страницы. Если новый идентификатор уже существует, бросается исключение ValueError
+        Изменить идентификатор страницы. Если новый идентификатор уже существует, бросается исключение KeyError. Если идентификатор содержит только пробелы или содержит символ "/", бросается исключение ValueError
         """
         if len (newUid.strip()) == 0:
             raise ValueError
@@ -107,11 +107,14 @@ class PageUidDepot (object):
             return
 
         if newUid in self.__uids:
+            raise KeyError
+
+        # Запрещено использовать "/" в идентификаторе
+        if u"/" in newUid:
             raise ValueError
 
         if page.readonly:
             raise ReadonlyException
-
 
         if oldUid in self.__uids:
             del self.__uids[oldUid]

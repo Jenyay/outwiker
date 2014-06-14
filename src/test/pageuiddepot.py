@@ -147,7 +147,7 @@ class PageUidDepotTest (unittest.TestCase):
         new_uid = u"Абырвалг"
         depot.changeUid (page, new_uid)
 
-        self.assertRaises (ValueError,
+        self.assertRaises (KeyError,
                            depot.changeUid, self.rootwiki[u"Страница 1"], new_uid)
 
 
@@ -171,6 +171,23 @@ class PageUidDepotTest (unittest.TestCase):
 
         page.remove()
         self.assertEqual (depot[new_uid], None)
+
+
+    def testChangeUid_06 (self):
+        depot = PageUidDepot()
+        page = self.rootwiki[u"Страница 2/Страница 3"]
+
+        new_uid = u"  "
+        self.assertRaises (ValueError, depot.changeUid, page, new_uid)
+
+
+    def testChangeUid_07 (self):
+        depot = PageUidDepot()
+        page = self.rootwiki[u"Страница 2/Страница 3"]
+
+        # Запрещено использовать "/" в идентификаторах
+        new_uid = u"Абырвалг/фвыафыва"
+        self.assertRaises (ValueError, depot.changeUid, page, new_uid)
 
 
     def testApplication_01 (self):
