@@ -53,6 +53,8 @@ class UriIdentifier (object):
 
         if href.startswith (protocol):
             uid = href[len (protocol):]
+            uid = unicode (uid.decode ("idna"))
+
             if uid.endswith ("/"):
                 uid = uid[:-1]
 

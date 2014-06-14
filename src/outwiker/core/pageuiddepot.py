@@ -47,7 +47,7 @@ class PageUidDepot (object):
         uid = StringOption (page.params,
                             self.__configSection,
                             self.__configParamName,
-                            u"").value
+                            u"").value.lower()
 
         if len (uid.strip()) == 0:
             uid = None
@@ -56,6 +56,8 @@ class PageUidDepot (object):
 
 
     def __getitem__ (self, uid):
+        uid = uid.lower()
+
         page = self.__uids.get (uid, None)
 
         if page is not None and page.isRemoved:
@@ -101,6 +103,8 @@ class PageUidDepot (object):
         """
         if len (newUid.strip()) == 0:
             raise ValueError
+
+        newUid = newUid.lower()
 
         oldUid = self.__getUid (page)
         if newUid == oldUid:

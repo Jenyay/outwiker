@@ -53,6 +53,12 @@ class PageUidDepotTest (unittest.TestCase):
         self.assertEqual (uid, uid_new)
 
 
+    def testCreateUid_03 (self):
+        depot = PageUidDepot()
+        uid = depot.createUid (self.rootwiki[u"Страница 1"])
+        self.assertEqual (depot[uid.upper()], self.rootwiki[u"Страница 1"])
+
+
     def testSaveLoad_01 (self):
         depot = PageUidDepot()
         uid = depot.createUid (self.rootwiki[u"Страница 1"])
@@ -190,6 +196,29 @@ class PageUidDepotTest (unittest.TestCase):
         self.assertRaises (ValueError, depot.changeUid, page, new_uid)
 
 
+    def testChangeUid_08 (self):
+        depot = PageUidDepot()
+        page = self.rootwiki[u"Страница 2/Страница 3"]
+
+        new_uid = u"Абырвалг"
+        depot.changeUid (page, new_uid)
+
+        self.assertRaises (KeyError,
+                           depot.changeUid,
+                           self.rootwiki[u"Страница 1"],
+                           u"абырвалг")
+
+
+    def testChangeUid_09 (self):
+        depot = PageUidDepot()
+        page = self.rootwiki[u"Страница 2/Страница 3"]
+
+        new_uid = u"АБЫРВАЛГ"
+        depot.changeUid (page, new_uid)
+
+        self.assertEqual (depot[u"абырвалг"].title, u"Страница 3")
+
+
     def testApplication_01 (self):
         depot = PageUidDepot()
         page = self.rootwiki[u"Страница 2/Страница 3"]
@@ -262,7 +291,7 @@ class PageUidDepotTest (unittest.TestCase):
 
         link = generateLink (Application, page)
         self.assertIn ("page://", link)
-        self.assertIn (newUid, link)
+        self.assertIn (u"абырвалг", link)
 
 
     def testGenerateLink_03 (self):
@@ -275,7 +304,7 @@ class PageUidDepotTest (unittest.TestCase):
 
         link = generateLink (Application, page)
         self.assertIn ("page://", link)
-        self.assertIn (newUid, link)
+        self.assertIn (u"абырвалг", link)
 
 
     def testReadOnly_01 (self):
