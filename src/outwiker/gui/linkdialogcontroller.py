@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 
 from .linkdialog import LinkDialog
@@ -23,9 +22,10 @@ class LinkDialogContoller (object):
 
     def _isLink (self, text):
         lowerString = text.lower()
-        return (lowerString.startswith (u"http://") or 
+        return (lowerString.startswith (u"http://") or
                 lowerString.startswith (u"https://") or
-                lowerString.startswith (u"ftp://"))
+                lowerString.startswith (u"ftp://") or
+                lowerString.startswith (u"page://"))
 
 
     def showDialog (self):
@@ -58,7 +58,7 @@ class LinkDialogContoller (object):
             return self.selectedString
 
         clipboardText = getClipboardText()
-        if clipboardText != None and self._isLink (clipboardText):
+        if clipboardText is not None and self._isLink (clipboardText):
             return clipboardText
 
         return u""

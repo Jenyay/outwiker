@@ -4,6 +4,8 @@
 from abc import ABCMeta, abstractmethod
 import os.path
 
+from outwiker.core.application import Application
+
 
 class UriIdentifier (object):
     """
@@ -28,6 +30,11 @@ class UriIdentifier (object):
         if self._isUrl (href):
             return (href, None, None, None)
 
+        page = self._getPageByProtocol (href)
+
+        if page is not None:
+            return (None, page, None, None)
+
         href_clear = self._prepareHref (href)
 
         page = self._findWikiPage (href_clear)
@@ -35,6 +42,23 @@ class UriIdentifier (object):
         anchor = self._findAnchor (href_clear)
 
         return (None, page, filename, anchor)
+
+
+    def _getPageByProtocol (self, href):
+        """
+        Возвращает страницу, если href - протокол вида page://, и None в противном случае
+        """
+        protocol = u"page://"
+        page = None
+
+        if href.startswith (protocol):
+            uid = href[len (protocol):]
+            if uid.endswith ("/"):
+                uid = uid[:-1]
+
+            page = Application.pageUidDepot[uid]
+
+        return page
 
 
     @abstractmethod
@@ -86,8 +110,7 @@ class UriIdentifier (object):
         """
         Является ли href ссылкой на интернет?
         """
-        return href.lower().startswith ("http:") or \
-                href.lower().startswith ("https:") or \
-                href.lower().startswith ("ftp:") or \
-                href.lower().startswith ("mailto:")
-
+        return (href.lower().startswith ("http:") or
+                href.lower().startswith ("https:") or
+                href.lower().startswith ("ftp:") or
+                href.lower().startswith ("mailto:"))

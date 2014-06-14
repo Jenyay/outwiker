@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-import os.path
 from .htmlcontroller import UriIdentifier
+
 
 class UriIdentifierWebKit (UriIdentifier):
     """
@@ -21,7 +21,7 @@ class UriIdentifierWebKit (UriIdentifier):
         Удалить якорь из адреса текущей загруженной страницы
         То есть из /bla-bla-bla/#anchor сделать /bla-bla-bla/
         """
-        if currentpage == None:
+        if currentpage is None:
             return href
 
         result = self.__removeFileProtokol (href)
@@ -47,7 +47,7 @@ class UriIdentifierWebKit (UriIdentifier):
         """
         fileprotocol = u"file://"
         if href.startswith (fileprotocol):
-            return href[len (fileprotocol): ]
+            return href[len (fileprotocol):]
 
         return href
 
@@ -56,11 +56,11 @@ class UriIdentifierWebKit (UriIdentifier):
         """
         Попытка найти страницу вики, если ссылка, на которую щелкнули не интернетная (http, ftp, mailto)
         """
-        if self._currentPage == None:
+        if self._currentPage is None:
             return None
 
         if href.startswith (self._currentPage.path):
-            href = href[len (self._currentPage.path) + 1: ]
+            href = href[len (self._currentPage.path) + 1:]
 
         if len (href) == 0:
             return None
@@ -68,12 +68,12 @@ class UriIdentifierWebKit (UriIdentifier):
         newSelectedPage = None
         if href[0] == "/":
             # Поиск страниц осуществляем только с корня
-            newSelectedPage = self._currentPage.root[href[1:] ]
+            newSelectedPage = self._currentPage.root[href[1:]]
         else:
             # Сначала попробуем найти вложенные страницы с таким href
             newSelectedPage = self._currentPage[href]
 
-            if newSelectedPage == None:
+            if newSelectedPage is None:
                 # Если страница не найдена, попробуем поискать, начиная с корня
                 newSelectedPage = self._currentPage.root[href]
 

@@ -1,8 +1,7 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 from outwiker.gui.linkdialogcontroller import LinkDialogContoller
-from outwiker.core.commands import copyTextToClipboard, getClipboardText
+from outwiker.core.commands import copyTextToClipboard
 from .basemainwnd import BaseMainWndTest
 
 
@@ -57,6 +56,17 @@ class LinkDialogControllerTest (BaseMainWndTest):
     def testSelectedHttpLink (self):
         parent = None
         selectedString = u"http://jenyay.net"
+
+        controller = TestController (parent, selectedString)
+        controller.showDialog()
+
+        self.assertEqual (controller.link, selectedString)
+        self.assertEqual (controller.comment, selectedString)
+
+
+    def testSelectedPageLink (self):
+        parent = None
+        selectedString = u"page://__adsfadfasdf"
 
         controller = TestController (parent, selectedString)
         controller.showDialog()
@@ -152,6 +162,19 @@ class LinkDialogControllerTest (BaseMainWndTest):
         parent = None
         selectedString = u""
         clipboardText = u"ftp://jenyay.net"
+        copyTextToClipboard (clipboardText)
+
+        controller = TestController (parent, selectedString)
+        controller.showDialog()
+
+        self.assertEqual (controller.link, clipboardText)
+        self.assertEqual (controller.comment, clipboardText)
+
+
+    def testClipboardPageLink (self):
+        parent = None
+        selectedString = u""
+        clipboardText = u"page://_asdfasdfasdf"
         copyTextToClipboard (clipboardText)
 
         controller = TestController (parent, selectedString)

@@ -12,8 +12,8 @@ def insertLink (application):
     codeEditor = application.mainWindow.pagePanel.pageView.codeEditor
     config = WikiConfig (application.config)
 
-    linkController = LinkDialogContoller (application.mainWindow, 
-            codeEditor.GetSelectedText())
+    linkController = LinkDialogContoller (application.mainWindow,
+                                          codeEditor.GetSelectedText())
 
     if linkController.showDialog() == wx.ID_OK:
         linkCreator = LinkCreator (config)
