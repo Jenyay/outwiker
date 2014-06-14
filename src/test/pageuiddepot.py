@@ -3,7 +3,7 @@
 import unittest
 
 from outwiker.core.pageuiddepot import PageUidDepot
-
+from outwiker.core.commands import generateLink
 from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
 from outwiker.pages.text.textpage import TextPageFactory
@@ -115,6 +115,63 @@ class PageUidDepotTest (unittest.TestCase):
         self.assertEqual (depot_new[uid].parent, self.rootwiki)
 
 
+    def testChangeUid_01 (self):
+        depot = PageUidDepot()
+        page = self.rootwiki[u"Страница 2/Страница 3"]
+
+        new_uid = u"Абырвалг"
+        depot.changeUid (page, new_uid)
+
+        self.assertEqual (depot[new_uid].title, u"Страница 3")
+
+        depot_new = PageUidDepot(self.rootwiki)
+        self.assertEqual (depot_new[new_uid].title, u"Страница 3")
+
+
+    def testChangeUid_02 (self):
+        depot = PageUidDepot()
+        page = self.rootwiki[u"Страница 2/Страница 3"]
+
+        new_uid = u"Абырвалг"
+        depot.changeUid (page, new_uid)
+        depot.changeUid (page, new_uid)
+
+        self.assertEqual (depot[new_uid].title, u"Страница 3")
+
+
+    def testChangeUid_03 (self):
+        depot = PageUidDepot()
+        page = self.rootwiki[u"Страница 2/Страница 3"]
+
+        new_uid = u"Абырвалг"
+        depot.changeUid (page, new_uid)
+
+        self.assertRaises (ValueError,
+                           depot.changeUid, self.rootwiki[u"Страница 1"], new_uid)
+
+
+    def testChangeUid_04 (self):
+        depot = PageUidDepot()
+        page = self.rootwiki[u"Страница 2/Страница 3"]
+
+        new_uid = u"Абырвалг"
+        depot.changeUid (page, new_uid)
+
+        self.assertRaises (ValueError,
+                           depot.changeUid, self.rootwiki[u"Страница 1"], u"")
+
+
+    def testChangeUid_05 (self):
+        depot = PageUidDepot()
+        page = self.rootwiki[u"Страница 2/Страница 3"]
+
+        new_uid = u"Абырвалг"
+        depot.changeUid (page, new_uid)
+
+        page.remove()
+        self.assertEqual (depot[new_uid], None)
+
+
     def testApplication_01 (self):
         depot = PageUidDepot()
         page = self.rootwiki[u"Страница 2/Страница 3"]
@@ -166,3 +223,38 @@ class PageUidDepotTest (unittest.TestCase):
         page.moveTo (self.rootwiki)
         self.assertEqual (Application.pageUidDepot[uid].title, u"Страница 3")
         self.assertEqual (Application.pageUidDepot[uid].parent, self.rootwiki)
+
+
+    def testGenerateLink_01 (self):
+        Application.wikiroot = self.rootwiki
+        page = self.rootwiki[u"Страница 2/Страница 3"]
+        uid = Application.pageUidDepot.createUid (page)
+
+        link = generateLink (Application, page)
+        self.assertIn ("page://", link)
+        self.assertIn (uid, link)
+
+
+    def testGenerateLink_02 (self):
+        Application.wikiroot = self.rootwiki
+        page = self.rootwiki[u"Страница 2/Страница 3"]
+
+        newUid = u"Абырвалг"
+        Application.pageUidDepot.changeUid (page, newUid)
+
+        link = generateLink (Application, page)
+        self.assertIn ("page://", link)
+        self.assertIn (newUid, link)
+
+
+    def testGenerateLink_03 (self):
+        Application.wikiroot = self.rootwiki
+        page = self.rootwiki[u"Страница 2/Страница 3"]
+        Application.pageUidDepot.createUid (page)
+
+        newUid = u"Абырвалг"
+        Application.pageUidDepot.changeUid (page, newUid)
+
+        link = generateLink (Application, page)
+        self.assertIn ("page://", link)
+        self.assertIn (newUid, link)

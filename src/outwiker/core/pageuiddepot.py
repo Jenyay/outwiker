@@ -83,13 +83,33 @@ class PageUidDepot (object):
         # экстрасенсорные способности :) )
         while uid in self.__uids:
             print u" Wow! O_o "
-            uid = uuid.uuid4()
+            uid = "__" + unicode (uuid.uuid4())
 
-        self.__uids[uid] = page
+        self.changeUid (page, uid)
+
+        return uid
+
+
+    def changeUid (self, page, newUid):
+        """
+        Изменить идентификатор страницы. Если новый идентификатор уже существует, бросается исключение ValueError
+        """
+        if len (newUid.strip()) == 0:
+            raise ValueError
+
+        oldUid = self.__getUid (page)
+        if newUid == oldUid:
+            return
+
+        if newUid in self.__uids:
+            raise ValueError
+
+        if oldUid in self.__uids:
+            del self.__uids[oldUid]
+
+        self.__uids[newUid] = page
 
         StringOption (page.params,
                       self.__configSection,
                       self.__configParamName,
-                      u"").value = uid
-
-        return uid
+                      u"").value = newUid
