@@ -41,7 +41,7 @@ def testreadonly (func):
     """
     def readOnlyWrap (*args, **kwargs):
         try:
-            func (*args, **kwargs)
+            return func (*args, **kwargs)
         except outwiker.core.exceptions.ReadonlyException:
             MessageBox (_(u"Page is opened as read-only"),
                         _(u"Error"),
@@ -297,6 +297,7 @@ def copyAttachPathToClipboard (page):
     copyTextToClipboard (Attachment(page).getAttachPath(create=True))
 
 
+@testreadonly
 def generateLink (application, page):
     """
     Создать ссылку на страницу по UID
@@ -310,7 +311,10 @@ def copyLinkToClipboard (page):
     Копировать ссылку на страницу в буфер обмена
     """
     assert page is not None
-    copyTextToClipboard (generateLink (Application, page))
+
+    link = generateLink (Application, page)
+    if link is not None:
+        copyTextToClipboard (link)
 
 
 def copyTitleToClipboard (page):

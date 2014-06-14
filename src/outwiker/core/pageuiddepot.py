@@ -4,6 +4,7 @@ import uuid
 
 from outwiker.core.config import StringOption
 from outwiker.core.tree import RootWikiPage
+from outwiker.core.exceptions import ReadonlyException
 
 
 class PageUidDepot (object):
@@ -76,18 +77,22 @@ class PageUidDepot (object):
             return uid
 
         # Добавим "__", чтобы было понятно, что в ссылке находится не страница
-        uid = "__" + unicode (uuid.uuid4())
+        uid = self.__generateUid()
 
         # На случай, если вдруг кто-то поменяет UID страницы, и новый UID с ним
         # совпадет (в этом случае угадавшему UID нужно срочно проверить
         # экстрасенсорные способности :) )
         while uid in self.__uids:
             print u" Wow! O_o "
-            uid = "__" + unicode (uuid.uuid4())
+            uid = self.__generateUid()
 
         self.changeUid (page, uid)
 
         return uid
+
+
+    def __generateUid (self):
+        return "__" + unicode (uuid.uuid4())
 
 
     def changeUid (self, page, newUid):
@@ -103,6 +108,10 @@ class PageUidDepot (object):
 
         if newUid in self.__uids:
             raise ValueError
+
+        if page.readonly:
+            raise ReadonlyException
+
 
         if oldUid in self.__uids:
             del self.__uids[oldUid]

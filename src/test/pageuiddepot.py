@@ -8,6 +8,7 @@ from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
 from outwiker.pages.text.textpage import TextPageFactory
 from test.utils import removeWiki
+from outwiker.core.exceptions import ReadonlyException
 
 
 class PageUidDepotTest (unittest.TestCase):
@@ -258,3 +259,21 @@ class PageUidDepotTest (unittest.TestCase):
         link = generateLink (Application, page)
         self.assertIn ("page://", link)
         self.assertIn (newUid, link)
+
+
+    def testReadOnly_01 (self):
+        depot = PageUidDepot()
+        page = self.rootwiki[u"Страница 2/Страница 3"]
+        page.readonly = True
+
+        self.assertRaises (ReadonlyException, depot.createUid, page)
+
+
+    def testReadOnly_02 (self):
+        depot = PageUidDepot()
+        page = self.rootwiki[u"Страница 2/Страница 3"]
+        depot.createUid (page)
+
+        page.readonly = True
+
+        depot.createUid (page)
