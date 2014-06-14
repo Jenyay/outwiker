@@ -157,8 +157,8 @@ class ApplicationParams (object):
 
         if self.__wikiroot is not None:
             self.__bindWikiEvents (self.__wikiroot)
-            self.pageUidDepot = PageUidDepot(self.__wikiroot)
 
+        self.pageUidDepot = PageUidDepot(self.__wikiroot)
         self.onWikiOpen (self.__wikiroot)
 
 

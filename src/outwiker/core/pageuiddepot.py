@@ -21,6 +21,8 @@ class PageUidDepot (object):
         # Ключ - уникальный идентификатор, значение - указатель на страницу
         self.__uids = {}
 
+        self.__wikiroot = wikiroot
+
         if wikiroot is not None:
             self.__load (wikiroot)
 
@@ -67,11 +69,14 @@ class PageUidDepot (object):
         Сгенерить уникальный идентификатор для страницы и вернуть его в качестве значения.
         Если у страницы уже есть идентификатор, возвращаем его
         """
+        assert self.__wikiroot is None or page.root == self.__wikiroot
+
         uid = self.__getUid (page)
         if uid is not None:
             return uid
 
-        uid = unicode (uuid.uuid4())
+        # Добавим "__", чтобы было понятно, что в ссылке находится не страница
+        uid = "__" + unicode (uuid.uuid4())
 
         # На случай, если вдруг кто-то поменяет UID страницы, и новый UID с ним
         # совпадет (в этом случае угадавшему UID нужно срочно проверить
