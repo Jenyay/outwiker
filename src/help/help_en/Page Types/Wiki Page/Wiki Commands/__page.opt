@@ -1,5 +1,5 @@
 [wiki]
-md5_hash = 448e69a46193fbf30a1d3fd2fb51824c
+md5_hash = bbc056c9467f795ca384fb99ff00e270
 
 [Tree]
 expand = True
@@ -8,4 +8,10 @@ expand = True
 type = wiki
 order = 7
 tags = for users, wiki, commands
+cursorposition = 0
+datetime = 2013-05-22 18:02:11.373394
+uid = __b016f2ed-a6c0-4dca-8d17-508955f4cc7c
+
+[Misc]
+pageindex = 1
 

@@ -1,12 +1,41 @@
-You can insert a link to another page in each note.
-Examples of links:
+Inside each note, you can insert a link to another note. You can refer to the page in two ways:
+* By name.
+* By identifier.
 
-The search of page begins at the root of the tree  - <a href="/Key Features/Search">/Key Features/Search</a>.
+You can create a link any type with &lt;a href="..."&gt; tag or with [[wiki notation -> page://__97bae762-abb7-489e-a1f4-1b0c9f6916d1]] on wiki pages.
 
-The search of page begins from the current note, but as "Key Features" note does not exist, search begins from the root again - <a href="Key Features/Search">Key Features/Search</a>
 
-Link to the subpage (subnote): <a href="Nested Page">Nested Page</a>
+!!! Link by unique identifier
 
-If a link begins with a forward slash (/Page 1/Page 2…), a search of this page begins from the tree root. If a initial forward slash does not exist (Page 1/Page 2…), then the program will search a page beginning from a current page, and if it's not found - then the search beging from the tree root again. If the page is not found - nothing happens.
+From version 1.8 added function to refer to pages by identifier. The identifiers don't depend on name of page or path to page therefore after rename or move notes links as before work.
 
-[[Wiki pages -> /Page Types/Wiki Page]] support its own [[link syntax -> /Page Types/Wiki Page/Links]].
+To copy link to page in clipboard it is necessary to select the menu item "Tools -> Copy page link" or select the item of popup menu of the same name.
+
+For example for this page such link is page://__a9b6359a-ec35-4113-a097-ae12c7cc7ec2.
+
+Any link begin with "page://" and follow further page identifier. Such link can use in the same way just as any other links (http://, ftp:// and other).
+
+Examples:
+
+* [[page://__b016f2ed-a6c0-4dca-8d17-508955f4cc7c | Wiki Commands]] (wiki)
+* [[Nested page -> page://__7eeecc1f-cffb-4fbd-9d7a-d5f79adda92d]] (wiki)
+
+
+!!! Link by name
+
+A links by name like file path for UNIX system and look thus: {+/Page name 1/Page name 2/.../Purpose page+}.
+
+If link starts with "/" then search of page begin from root of tree else firstly search of page begin from current page.
+
+Examples:
+
+* <a href="/Page Types/Wiki page/Wiki Commands">/Page Types/Wiki page/Wiki Commands</a> (HTML)
+* <a href="Page Types/Wiki page/Wiki Commands">Page Types/Wiki page/Wiki Commands</a> (HTML)
+* <a href="Nested Page">Nested Page</a> (HTML)
+
+
+* [[/Page Types/Wiki page/Wiki Commands]] (wiki)
+* [[Page Types/Wiki page/Wiki Commands]] (wiki)
+* [[Nested Page]] (wiki)
+
+This link type is outdated since after move or rename purpose page links bekom invalid.

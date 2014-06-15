@@ -1,8 +1,10 @@
-<HTML>
-<HEAD>
-	<META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+	<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
 
-	<STYLE type="text/css">
+	<style type='text/css'>
 		body, div, p, table {
 			font-size:10pt;
 			font-family:Verdana;
@@ -10,17 +12,100 @@
 
 		img{border:none}
 		
-	</STYLE>
-</HEAD>
+	</style>
+	
+</head>
 
-<BODY>
-<P>The following table shows examples of links to the Internet address and to other pages in the tree.
-<BR> 
-<BR><H2>Links</H2></P>
-
-<P><TABLE border=1><TR><TD ALIGN="CENTER"><B>Syntax</B></TD><TD ALIGN="CENTER"><B>Result</B></TD><TD ALIGN="CENTER"><B>Comment</B></TD></TR><TR><TD>http://example.com</TD><TD><A HREF="http://example.com">http://example.com</A></TD><TD>A link to the Internet address</TD></TR><TR><TD>[[http://example.com]]</TD><TD><A HREF="http://example.com">http://example.com</A></TD><TD>A link to the Internet address</TD></TR><TR><TD>[[Link sample -> http://example.com]]</TD><TD><A HREF="http://example.com">Link sample</A></TD><TD>A link to the Internet address with a comment</TD></TR><TR><TD>[[http://example.com | Link sample]]</TD><TD><A HREF="http://example.com">Link sample</A></TD><TD>A link to the Internet address with a comment</TD></TR><TR><TD>[[/Page Types/Wiki Page/Links]]</TD><TD><A HREF="/Page Types/Wiki Page/Links">/Page Types/Wiki Page/Links</A></TD><TD>A link to tree page</TD></TR><TR><TD>[[/Page Types/Wiki Page/Links | Page link]]</TD><TD><A HREF="/Page Types/Wiki Page/Links">Page link</A></TD><TD>A link to tree page with a comment</TD></TR><TR><TD>[[FAQ->Пользователям/FAQ]]</TD><TD><A HREF="Пользователям/FAQ">FAQ</A></TD><TD>A link to tree page with a comment</TD></TR><TR><TD>http://jenyay.net/utils/small_image.jpg</TD><TD><IMG SRC="http://jenyay.net/utils/small_image.jpg"/></TD><TD>A picture from the Internet</TD></TR><TR><TD>[[http://jenyay.net/utils/small_image.jpg]]</TD><TD><A HREF="http://jenyay.net/utils/small_image.jpg">http://jenyay.net/utils/small_image.jpg</A></TD><TD>A link to picture from the Internet</TD></TR></TABLE>
-<BR><H2>Anchors</H2></P>
-
-<P><TABLE border=1><TR><TD ALIGN="CENTER"><B>Syntax</B></TD><TD ALIGN="CENTER"><B>Result</B></TD><TD ALIGN="CENTER"><B>Comment</B></TD></TR><TR><TD>[[#anchor]]</TD><TD>Anchor "#anchor" <A NAME="anchor"></A></TD><TD>HTML code: &lt;A NAME=&quot;#anchor&quot;&gt;&lt;/A&gt;</TD></TR><TR><TD>[[#anchor | A link to the anchor]]</TD><TD><A HREF="#anchor">A link to the anchor</A></TD><TD>A link to the anchor "#anchor"</TD></TR><TR><TD>[[ link to the anchor -> #anchor]]</TD><TD><A HREF="#anchor">A link to the anchor</A></TD><TD>A link to the anchor "#anchor"</TD></TR></TABLE></P>
-</BODY>
-</HTML>
+<body>
+The following table shows examples of links to the Internet address and to other pages in the tree.<br>
+ 
+<h2>Links</h2>
+<br>
+<table border=1>
+<tr>
+<td align="center"><b>Syntax</b></td>
+<td align="center"><b>Result</b></td>
+<td align="center"><b>Comment</b></td>
+</tr>
+<tr>
+<td>http://example.com</td>
+<td><a href="http://example.com">http://example.com</a></td>
+<td>A link to the Internet address</td>
+</tr>
+<tr>
+<td>[[http://example.com]]</td>
+<td><a href="http://example.com">http://example.com</a></td>
+<td>A link to the Internet address</td>
+</tr>
+<tr>
+<td>[[Link sample -> http://example.com]]</td>
+<td><a href="http://example.com">Link sample</a></td>
+<td>A link to the Internet address with a comment</td>
+</tr>
+<tr>
+<td>[[http://example.com | Link sample]]</td>
+<td><a href="http://example.com">Link sample</a></td>
+<td>A link to the Internet address with a comment</td>
+</tr>
+<tr>
+<td>[[page://__97bae762-abb7-489e-a1f4-1b0c9f6916d1]]</td>
+<td><a href="page://__97bae762-abb7-489e-a1f4-1b0c9f6916d1">page://__97bae762-abb7-489e-a1f4-1b0c9f6916d1</a></td>
+<td align="left">Link to page by identifier</td>
+</tr>
+<tr>
+<td>[[page://__97bae762-abb7-489e-a1f4-1b0c9f6916d1 | Link to this page]]</td>
+<td><a href="ppage://__97bae762-abb7-489e-a1f4-1b0c9f6916d1">Ссылка на эту страницу</a></td>
+<td align="left">Link to page by identifier with comment (variant 1)</td>
+</tr>
+<tr>
+<td>[[Link to this page -> ppage://__97bae762-abb7-489e-a1f4-1b0c9f6916d1]]</td>
+<td><a href="page://__97bae762-abb7-489e-a1f4-1b0c9f6916d1">Link to this page</a></td>
+<td align="left">Link to page by identifier with comment (variant 2)</td>
+</tr>
+<tr>
+<td>[[/Page Types/Wiki Page/Links]]</td>
+<td><a href="/Page Types/Wiki Page/Links">/Page Types/Wiki Page/Links</a></td>
+<td align="left">Link to page by name</td>
+</tr>
+<tr>
+<td>[[/Page Types/Wiki Page/Links | Links]]</td>
+<td><a href="/Page Types/Wiki Page/Links">Links</a></td>
+<td>Link to page by name with comment</td>
+</tr>
+<tr>
+<td>[[Links -> /Page Types/Wiki Page/Links]]</td>
+<td align="left"><a href="/Page Types/Wiki Page/Links">Links</a></td>
+<td align="left">Link to page by name with comment</td>
+</tr>
+<tr>
+<td>http://jenyay.net/utils/small_image.jpg</td>
+<td align="left"><img src="http://jenyay.net/uploads/Outwiker/Unstable/outwiker_100_white.png"/></td>
+<td align="left">Picture from Internet</td>
+</tr>
+</table>
+<h2>Anchors</h2>
+<br>
+<table border=1>
+<tr>
+<td align="center"><b>Syntax</b></td>
+<td align="center"><b>Result</b></td>
+<td align="center"><b>Comment</b></td>
+</tr>
+<tr>
+<td>[[#anchor]]</td>
+<td>Anchor "#anchor" <a id="anchor"></a></td>
+<td>HTML code: &lt;A NAME=&quot;#anchor&quot;&gt;&lt;/A&gt;</td>
+</tr>
+<tr>
+<td>[[#anchor | A link to the anchor]]</td>
+<td><a href="#anchor">A link to the anchor</a></td>
+<td>A link to the anchor "#anchor"</td>
+</tr>
+<tr>
+<td>[[ link to the anchor -> #anchor]]</td>
+<td><a href="#anchor">A link to the anchor</a></td>
+<td>A link to the anchor "#anchor"</td>
+</tr>
+</table>
+</body>
+</html>

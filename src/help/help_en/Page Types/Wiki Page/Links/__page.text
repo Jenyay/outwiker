@@ -8,11 +8,20 @@ The following table shows examples of links to the Internet address and to other
 ||[=[[http://example.com]]=]||[[http://example.com]]||A link to the Internet address||
 ||[=[[Link sample -> http://example.com]]=]||[[Link sample -> http://example.com]]||A link to the Internet address with a comment||
 ||[=[[http://example.com | Link sample]]=]||[[http://example.com | Link sample]]||A link to the Internet address with a comment||
-||[=[[/Page Types/Wiki Page/Links]]=]||[[/Page Types/Wiki Page/Links]]||A link to tree page||
-||[=[[/Page Types/Wiki Page/Links | Page link]]=]||[[/Page Types/Wiki Page/Links | Page link]]||A link to tree page with a comment||
-||[=[[FAQ->Пользователям/FAQ]]=]||[[FAQ->Пользователям/FAQ]]||A link to tree page with a comment||
-||[=http://jenyay.net/utils/small_image.jpg=]||http://jenyay.net/utils/small_image.jpg||A picture from the Internet||
-||[=[[http://jenyay.net/utils/small_image.jpg]]=]||[[http://jenyay.net/utils/small_image.jpg]]||A link to picture from the Internet||
+
+||[=[[page://__97bae762-abb7-489e-a1f4-1b0c9f6916d1]]=]||[[page://__97bae762-abb7-489e-a1f4-1b0c9f6916d1]]||Link to page by identifier ||
+
+||[=[[page://__97bae762-abb7-489e-a1f4-1b0c9f6916d1 | Link to this page]]=]||[[ppage://__97bae762-abb7-489e-a1f4-1b0c9f6916d1 | Ссылка на эту страницу]]||Link to page by identifier with comment (variant 1) ||
+
+||[=[[Link to this page -> ppage://__97bae762-abb7-489e-a1f4-1b0c9f6916d1]]=]||[[Link to this page  -> page://__97bae762-abb7-489e-a1f4-1b0c9f6916d1]]||Link to page by identifier with comment (variant 2) ||
+
+||[=[[/Page Types/Wiki Page/Links]]=]||[[/Page Types/Wiki Page/Links]]||Link to page by name ||
+
+||[=[[/Page Types/Wiki Page/Links | Links]]=]||[[/Page Types/Wiki Page/Links | Links]]||Link to page by name with comment||
+
+||[=[[Links -> /Page Types/Wiki Page/Links]]=]||[[Links -> /Page Types/Wiki Page/Links]] ||Link to page by name with comment ||
+
+||[=http://jenyay.net/utils/small_image.jpg=]||http://jenyay.net/uploads/Outwiker/Unstable/outwiker_100_white.png ||Picture from Internet ||
 
 !!! Anchors
 

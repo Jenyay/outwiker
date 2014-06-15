@@ -1,8 +1,10 @@
-<HTML>
-<HEAD>
-	<META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+	<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
 
-	<STYLE type="text/css">
+	<style type='text/css'>
 		body, div, p, table {
 			font-size:10pt;
 			font-family:Verdana;
@@ -10,21 +12,50 @@
 
 		img{border:none}
 		
-	</STYLE>
-</HEAD>
+	</style>
+	
+</head>
 
-<BODY>
-<P>You can insert a link to another page in each note.
-<BR>Examples of links:</P>
-
-<P>The search of page begins at the root of the tree  - <a href="/Key Features/Search">/Key Features/Search</a>.</P>
-
-<P>The search of page begins from the current note, but as "Key Features" note does not exist, search begins from the root again - <a href="Key Features/Search">Key Features/Search</a></P>
-
-<P>Link to the subpage (subnote): <a href="Nested Page">Nested Page</a></P>
-
-<P>If a link begins with a forward slash (/Page 1/Page 2…), a search of this page begins from the tree root. If a initial forward slash does not exist (Page 1/Page 2…), then the program will search a page beginning from a current page, and if it's not found - then the search beging from the tree root again. If the page is not found - nothing happens.</P>
-
-<P><A HREF="/Page Types/Wiki Page">Wiki pages</A> support its own <A HREF="/Page Types/Wiki Page/Links">link syntax</A>.</P>
-</BODY>
-</HTML>
+<body>
+Inside each note, you can insert a link to another note. You can refer to the page in two ways:
+<ul>
+<li>By name.</li>
+<li>By identifier.</li>
+</ul>
+You can create a link any type with &lt;a href="..."&gt; tag or with <a href="page://__97bae762-abb7-489e-a1f4-1b0c9f6916d1">wiki notation</a> on wiki pages.<br>
+<br>
+<h2>Link by unique identifier</h2>
+<br>
+From version 1.8 added function to refer to pages by identifier. The identifiers don't depend on name of page or path to page therefore after rename or move notes links as before work.<br>
+<br>
+To copy link to page in clipboard it is necessary to select the menu item "Tools -> Copy page link" or select the item of popup menu of the same name.<br>
+<br>
+For example for this page such link is <a href="page://__a9b6359a-ec35-4113-a097-ae12c7cc7ec2">page://__a9b6359a-ec35-4113-a097-ae12c7cc7ec2</a>.<br>
+<br>
+Any link begin with "page://" and follow further page identifier. Such link can use in the same way just as any other links (http://, ftp:// and other).<br>
+<br>
+Examples:<br>
+<ul>
+<li><a href="page://__b016f2ed-a6c0-4dca-8d17-508955f4cc7c">Wiki Commands</a> (wiki)</li>
+<li><a href="page://__7eeecc1f-cffb-4fbd-9d7a-d5f79adda92d">Nested page</a> (wiki)</li>
+</ul>
+<h2>Link by name</h2>
+<br>
+A links by name like file path for UNIX system and look thus: <u>/Page name 1/Page name 2/.../Purpose page</u>.<br>
+<br>
+If link starts with "/" then search of page begin from root of tree else firstly search of page begin from current page.<br>
+<br>
+Examples:<br>
+<ul>
+<li><a href="/Page Types/Wiki page/Wiki Commands">/Page Types/Wiki page/Wiki Commands</a> (HTML)</li>
+<li><a href="Page Types/Wiki page/Wiki Commands">Page Types/Wiki page/Wiki Commands</a> (HTML)</li>
+<li><a href="Nested Page">Nested Page</a> (HTML)</li>
+</ul>
+<ul>
+<li><a href="/Page Types/Wiki page/Wiki Commands">/Page Types/Wiki page/Wiki Commands</a> (wiki)</li>
+<li><a href="Page Types/Wiki page/Wiki Commands">Page Types/Wiki page/Wiki Commands</a> (wiki)</li>
+<li><a href="Nested Page">Nested Page</a> (wiki)</li>
+</ul>
+This link type is outdated since after move or rename purpose page links bekom invalid.
+</body>
+</html>
