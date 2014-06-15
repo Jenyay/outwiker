@@ -219,6 +219,19 @@ class PageUidDepotTest (unittest.TestCase):
         self.assertEqual (depot[u"абырвалг"].title, u"Страница 3")
 
 
+    def testChangeUid_10 (self):
+        depot = PageUidDepot()
+
+        new_uid = u"Абырвалг"
+        depot.changeUid (self.rootwiki[u"Страница 2/Страница 3"], new_uid)
+
+        depot2 = PageUidDepot()
+        depot2.changeUid (self.rootwiki[u"Страница 2"], new_uid)
+
+        depot3 = PageUidDepot (self.rootwiki)
+        self.assertEqual (depot3[new_uid].title, u"Страница 3")
+
+
     def testApplication_01 (self):
         depot = PageUidDepot()
         page = self.rootwiki[u"Страница 2/Страница 3"]
