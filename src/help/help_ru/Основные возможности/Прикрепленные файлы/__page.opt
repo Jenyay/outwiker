@@ -5,9 +5,9 @@ expand = False
 type = html
 order = 0
 tags = пользователям
-datetime = 2012-04-27 23:04:51.000000
+datetime = 2014-06-15 21:13:23.389796
 linewrap = True
-cursorposition = 0
+cursorposition = 496
 
 [Misc]
 pageindex = 1
