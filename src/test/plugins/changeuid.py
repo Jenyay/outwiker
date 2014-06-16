@@ -36,5 +36,6 @@ class ChangeUidTest (unittest.TestCase):
         WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
         self.testPage = self.rootwiki[u"Страница 1"]
 
+
     def testPluginLoad (self):
         self.assertEqual (len (self.loader), 1)

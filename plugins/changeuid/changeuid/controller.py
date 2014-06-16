@@ -30,7 +30,8 @@ class Controller (object):
         self._application.onPageViewCreate += self.__onPageViewCreate
         self._application.onPageViewDestroy += self.__onPageViewDestroy
 
-        self.__onPageViewCreate (self._application.selectedPage)
+        if self._application.mainWindow is not None:
+            self.__onPageViewCreate (self._application.selectedPage)
 
 
     def destroy (self):

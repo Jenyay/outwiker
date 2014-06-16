@@ -20,9 +20,6 @@ class GuiCreator (object):
         # Сюда добавить все Actions
         self._actions = [ChangePageUIDAction]
 
-        # MenuItem создаваемого подменю
-        self._submenuItem = None
-
         global _
         _ = get_()
 
