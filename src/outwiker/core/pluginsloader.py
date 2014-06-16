@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import os
@@ -60,7 +59,7 @@ class PluginsLoader (object):
         # что попали в черный список
         self.__disableEnabledPlugins (options.disabledPlugins.value)
 
-        # Пройтись по отключенным плагинам и включить те, 
+        # Пройтись по отключенным плагинам и включить те,
         # что не попали в "черный список"
         self.__enableDisabledPlugins (options.disabledPlugins.value)
 
@@ -98,21 +97,21 @@ class PluginsLoader (object):
         Каждый вызов метода load() добавляет плагины в список загруженных плагинов, не очищая его
         dirlist - список директорий, где могут располагаться плагины. Каждый плагин расположен в своей поддиректории
         """
-        assert dirlist != None
+        assert dirlist is not None
 
         for currentDir in dirlist:
             if os.path.exists (currentDir):
-                dirPackets = sorted (os.listdir (currentDir) )
+                dirPackets = sorted (os.listdir (currentDir))
 
                 # Добавить путь до currentDir в sys.path
                 fullpath = os.path.abspath (currentDir)
-                # TODO: Разобраться с Unicode в следующей строке. 
+                # TODO: Разобраться с Unicode в следующей строке.
                 # Иногда выскакивает предупреждение:
                 # ...\outwiker\core\pluginsloader.py:41: UnicodeWarning: Unicode equal comparison failed to convert both arguments to Unicode - interpreting them as being unequal
 
-                syspath = [unicode (item, getOS().filesEncoding) 
-                        if type (item) != unicode else item 
-                        for item in sys.path]
+                syspath = [unicode (item, getOS().filesEncoding)
+                           if type (item) != unicode else item
+                           for item in sys.path]
 
                 if fullpath not in syspath:
                     sys.path.insert (0, fullpath)
@@ -138,7 +137,7 @@ class PluginsLoader (object):
         baseDir - директория, где расположены пакеты
         dirPackagesList - список директорий (только имена директорий), возможно являющихся пакетами
         """
-        assert dirPackagesList != None
+        assert dirPackagesList is not None
 
         modules = []
 
@@ -154,19 +153,19 @@ class PluginsLoader (object):
 
             # Проверить, что это директория
             if os.path.isdir (packagePath):
-                # Переберем все файлы внутри packagePath 
+                # Переберем все файлы внутри packagePath
                 # и попытаемся их импортировать
                 for fileName in sorted (os.listdir (packagePath)):
                     try:
                         module = self._importSingleModule (packageName, fileName)
-                        if module != None:
+                        if module is not None:
                             modules.append (module)
                             success = True
-                    except ImportError as e:
+                    except ImportError, e:
                         errors.append ("*** Plugin loading error ***\n{package}/{fileName}\n{error}".format (
-                            package = packageName, 
+                            package = packageName,
                             fileName = fileName,
-                            error=str(e) ))
+                            error=str(e)))
 
             if not success:
                 self._print (u"\n\n".join (errors) + u"\n")
@@ -195,15 +194,15 @@ class PluginsLoader (object):
         """
         Найти классы плагинов и создать их экземпляры
         """
-        assert modules != None
+        assert modules is not None
 
         options = PluginsConfig (self.__application.config)
 
         for module in modules:
             for name in dir (module):
-                self.__createObject (module, 
-                        name, 
-                        options.disabledPlugins.value)
+                self.__createObject (module,
+                                     name,
+                                     options.disabledPlugins.value)
 
 
     def __createObject (self, module, name, disabledPlugins):
@@ -222,8 +221,8 @@ class PluginsLoader (object):
                 plugin = obj (self.__application)
             except BaseException as e:
                 self._print ("*** Plugin loading error ***\n{classname}\n{error}\n".format (
-                    classname=name, 
-                    error=str(e) ) )
+                    classname=name,
+                    error=str(e)))
                 return
 
             if not self.__isNewPlugin (plugin.name):
@@ -241,7 +240,7 @@ class PluginsLoader (object):
         Проверка того, что плагин с таким именем еще не был загружен
         newplugin - плагин, который надо проверить
         """
-        return (pluginname not in self.__plugins and 
+        return (pluginname not in self.__plugins and
                 pluginname not in self.__disabledPlugins)
 
 
