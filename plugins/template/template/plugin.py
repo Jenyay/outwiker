@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import os.path
@@ -9,10 +8,11 @@ from outwiker.core.version import Version, StatusSet
 from outwiker.core.system import getOS
 
 from .i18n import set_
+from .controller import Controller
 
 
-if getCurrentVersion() < Version (1, 7, 0, 684, status=StatusSet.DEV):
-    print ("Spoiler plugin. OutWiker version requirement: 1.7.0.684")
+if getCurrentVersion() < Version (1, 8, 0, 731, status=StatusSet.DEV):
+    print ("ChangeUID plugin. OutWiker version requirement: 1.8.0.731")
 else:
     class PluginName (Plugin):
         def __init__ (self, application):
@@ -20,6 +20,7 @@ else:
             application - экземпляр класса core.application.ApplicationParams
             """
             Plugin.__init__ (self, application)
+            self.__controller = Controller(self, application)
 
 
         @property
@@ -35,7 +36,7 @@ else:
         def name (self):
             return u"PluginName"
 
-        
+
         @property
         def description (self):
             return _(u"Plugin description")
@@ -49,17 +50,18 @@ else:
         @property
         def url (self):
             return _(u"http://jenyay.net")
-        
-        
+
+
         def initialize(self):
             self._initlocale(u"pluginname")
+            self.__controller.initialize()
 
 
         def destroy (self):
             """
             Уничтожение (выгрузка) плагина. Здесь плагин должен отписаться от всех событий
             """
-            pass
+            self.__controller.destroy()
 
         #############################################
 
