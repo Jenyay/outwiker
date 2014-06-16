@@ -8,6 +8,7 @@ from outwiker.core.version import Version, StatusSet
 from outwiker.core.system import getOS
 
 from .i18n import set_
+from .controller import Controller
 
 
 if getCurrentVersion() < Version (1, 8, 0, 731, status=StatusSet.DEV):
@@ -19,6 +20,7 @@ else:
             application - экземпляр класса core.application.ApplicationParams
             """
             Plugin.__init__ (self, application)
+            self.__controller = Controller(self, application)
 
 
         @property
@@ -52,13 +54,14 @@ else:
 
         def initialize(self):
             self._initlocale(u"changeuid")
+            self.__controller.initialize()
 
 
         def destroy (self):
             """
             Уничтожение (выгрузка) плагина. Здесь плагин должен отписаться от всех событий
             """
-            pass
+            self.__controller.destroy()
 
         #############################################
 
