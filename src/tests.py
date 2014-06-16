@@ -147,6 +147,7 @@ if __name__ == '__main__':
     from test.plugins.counter import CounterTest
     from test.plugins.counterdialog import CounterDialogTest
     from test.plugins.htmlheads import HtmlHeadsTest
+    from test.plugins.changeuid import ChangeUidTest
 
     from test.plugins.source.source import SourcePluginTest
     from test.plugins.source.sourceencoding import SourceEncodingPluginTest

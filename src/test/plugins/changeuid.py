@@ -1,3 +1,4 @@
+#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import unittest
@@ -9,12 +10,12 @@ from outwiker.pages.wiki.wikipage import WikiPageFactory
 from test.utils import removeWiki
 
 
-class PluginNameTest (unittest.TestCase):
-    """Тесты плагина PluginName"""
+class ChangeUidTest (unittest.TestCase):
+    """Тесты плагина ChangeUid"""
     def setUp (self):
         self.__createWiki()
 
-        dirlist = [u"../plugins/pluginname"]
+        dirlist = [u"../plugins/changeuid"]
 
         self.loader = PluginsLoader(Application)
         self.loader.load (dirlist)
