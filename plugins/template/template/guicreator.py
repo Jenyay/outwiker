@@ -76,7 +76,7 @@ class GuiCreator (object):
             map (lambda action: self._application.actionController.removeMenuItem (action.stringId),
                  self._actions)
 
-            map (lambda action: self._application.actionController.removeToolbarItem (action.stringId),
+            map (lambda action: self._application.actionController.removeToolbarButton (action.stringId),
                  self._actions)
 
 
