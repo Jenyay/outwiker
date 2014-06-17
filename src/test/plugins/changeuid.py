@@ -67,7 +67,7 @@ class ChangeUidTest (BaseMainWndTest):
         uid = Application.pageUidDepot.createUid (self.testPage)
 
         # Не изменяем свой идентификатора
-        self.assertTrue (controller.validate (uid))
+        self.assertEqual (len (controller.validate (uid)), 0)
 
 
     def testUid_02 (self):
@@ -75,16 +75,16 @@ class ChangeUidTest (BaseMainWndTest):
         uid = Application.pageUidDepot.createUid (self.rootwiki[u"Страница 2"])
 
         # Такой идентификатор уже есть
-        self.assertFalse (controller.validate (uid))
+        self.assertNotEqual (len (controller.validate (uid)), 0)
 
 
     def testUid_03 (self):
         controller = self._createDialogController()
 
-        self.assertTrue (controller.validate (u"asdfsdfasdf_124323"))
-        self.assertTrue (controller.validate (u"__Абырвалг"))
-        self.assertFalse (controller.validate (u"adfadf/"))
-        self.assertFalse (controller.validate (u"adfadf asdfasdf"))
+        self.assertEqual (len (controller.validate (u"asdfsdfasdf_124323")), 0)
+        self.assertEqual (len (controller.validate (u"__Абырвалг")), 0)
+        self.assertNotEqual (len (controller.validate (u"adfadf/")), 0)
+        self.assertNotEqual (len (controller.validate (u"adfadf asdfasdf")), 0)
 
 
     def _createDialogController (self):

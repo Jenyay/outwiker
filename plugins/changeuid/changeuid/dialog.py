@@ -3,6 +3,7 @@
 import wx
 
 from outwiker.gui.testeddialog import TestedDialog
+from outwiker.core.commands import MessageBox
 
 from .i18n import get_
 
@@ -27,6 +28,19 @@ class ChangeUidDialog (TestedDialog):
         self.newUidText.SetSelection (0, -1)
 
         self.Center(wx.CENTRE_ON_SCREEN)
+
+        self.Bind (wx.EVT_BUTTON, self.__onOk, id=wx.ID_OK)
+
+
+    def __onOk (self, event):
+        result = u"" if self.uidValidator is None else self.uidValidator (self.uid)
+
+        if len (result) == 0:
+            self.EndModal (wx.ID_OK)
+        else:
+            MessageBox (result,
+                        _(u"Error"),
+                        wx.ICON_ERROR | wx.OK)
 
 
     def _createGui(self):

@@ -35,14 +35,18 @@ class DialogController (object):
 
     def validate (self, newiud):
         """
-        Возвращает True, если newiud соответствует требованиям к идентификаторам и False в противном случае
+        Возвращает пустую строку, если newiud соответствует требованиям к идентификаторам.
+        Возвращает строку с описанием ошибки, если что-то неверно.
         """
         otherpage = self._application.pageUidDepot[newiud]
 
         if (otherpage is not None and otherpage != self._page):
-            return False
+            return _(u"Same identifier exist already")
 
         regexp = re.compile (r"^[-\w,\$\.\+\!\*\(\):@|&=\?~\#\%]+$", re.I | re.U)
         match = regexp.match (newiud)
 
-        return match is not None
+        if match is None:
+            return _(u"Identifier contain invalid character")
+
+        return u""
