@@ -12,20 +12,20 @@ from test.guitests.basemainwnd import BaseMainWndTest
 from test.utils import removeWiki
 
 
-class ChangeUidTest (BaseMainWndTest):
-    """Тесты плагина ChangeUid"""
+class ChangePageUidTest (BaseMainWndTest):
+    """Тесты плагина ChangePageUid"""
     def setUp (self):
         BaseMainWndTest.setUp (self)
 
         self.filesPath = u"../test/samplefiles/"
         self.__createWiki()
 
-        dirlist = [u"../plugins/changeuid"]
+        dirlist = [u"../plugins/changepageuid"]
 
         self._loader = PluginsLoader(Application)
         self._loader.load (dirlist)
 
-        self._dlg = self._loader["ChangeUID"].ChangeUidDialog (Application.mainWindow)
+        self._dlg = self._loader["ChangePageUID"].ChangeUidDialog (Application.mainWindow)
         self._dlg.SetModalResult (wx.ID_OK)
 
         self.testPage = self.rootwiki[u"Страница 1"]
@@ -88,4 +88,4 @@ class ChangeUidTest (BaseMainWndTest):
 
 
     def _createDialogController (self):
-        return self._loader["ChangeUID"].DialogController (Application, self._dlg, self.testPage)
+        return self._loader["ChangePageUID"].DialogController (Application, self._dlg, self.testPage)

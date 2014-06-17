@@ -15,7 +15,7 @@ class ChangePageUIDAction (BaseAction):
         global _
         _ = get_()
 
-    stringId = u"ChangeUID_ChangePageUID"
+    stringId = u"ChangePageUID_ChangePageUID"
 
 
     @property
@@ -25,7 +25,7 @@ class ChangePageUIDAction (BaseAction):
 
     @property
     def description (self):
-        return _(u"Change Page Identifier")
+        return _(u"ChangePageUID plugin. Change Page Identifier")
 
 
     def run (self, params):

@@ -36,7 +36,7 @@ else:
 
         @property
         def name (self):
-            return u"ChangeUID"
+            return u"ChangePageUID"
 
 
         @property
@@ -51,11 +51,11 @@ else:
 
         @property
         def url (self):
-            return _(u"http://jenyay.net/Outwiker/ChangeUidEn")
+            return _(u"http://jenyay.net/Outwiker/ChangePageUidEn")
 
 
         def initialize(self):
-            self._initlocale(u"changeuid")
+            self._initlocale(u"changepageuid")
             self.__controller.initialize()
 
 
