@@ -23,6 +23,8 @@ class Controller (object):
 
         self._guiCreator = None
 
+        self.CHANGE_PAGE_UID = wx.NewId()
+
 
     def initialize (self):
         """
@@ -36,6 +38,7 @@ class Controller (object):
 
         self._application.onPageViewCreate += self.__onPageViewCreate
         self._application.onPageViewDestroy += self.__onPageViewDestroy
+        self._application.onTreePopupMenu += self.__onTreePopupMenu
 
         if self._application.mainWindow is not None:
             self.__onPageViewCreate (self._application.selectedPage)
@@ -47,9 +50,24 @@ class Controller (object):
         """
         self._application.onPageViewCreate -= self.__onPageViewCreate
         self._application.onPageViewDestroy -= self.__onPageViewDestroy
+        self._application.onTreePopupMenu -= self.__onTreePopupMenu
 
         self._guiCreator.removeTools()
         self._guiCreator.destroy ()
+
+
+    def __onTreePopupMenu (self, menu, page):
+        menu.Append (self.CHANGE_PAGE_UID, _(u"Change page identifier"))
+
+        self._application.mainWindow.Bind (wx.EVT_MENU,
+                                           id=self.CHANGE_PAGE_UID,
+                                           handler=self.__onPopupClick)
+
+
+    def __onPopupClick (self, event):
+        self.changeUidWithDialog()
+        self._application.mainWindow.Unbind (wx.EVT_MENU,
+                                             id=self.CHANGE_PAGE_UID)
 
 
     @testreadonly
