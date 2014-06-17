@@ -1,0 +1,55 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ChangePageUid\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-06-17 19:51+0400\n"
+"PO-Revision-Date: 2014-06-17 19:54+0300\n"
+"Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
+"Language-Team: jenyay.net <jenyay.ilin@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
+"Language: ru_RU\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+#: actions.py:23
+msgid "Change Page Identifier"
+msgstr "Изменить идентификатор страницы"
+
+#: actions.py:28
+msgid "ChangePageUID plugin. Change Page Identifier"
+msgstr "Плагин ChangePageUID. Изменить идентификатор страницы"
+
+#: changepageuid.py:44
+msgid "Plugin for edit a page indentifiers"
+msgstr "Плагин для редактирования идентификаторов страницы"
+
+#: changepageuid.py:54
+msgid "http://jenyay.net/Outwiker/ChangePageUidEn"
+msgstr "http://jenyay.net/Outwiker/ChangePageUid"
+
+#: controller.py:60
+msgid "Change page identifier"
+msgstr "Изменить идентификатор страницы"
+
+#: dialog.py:42
+msgid "Error"
+msgstr "Ошибка"
+
+#: dialog.py:53
+msgid "Enter new page identifier"
+msgstr "Введите новый идентификатор страницы"
+
+#: dialogcontroller.py:44
+msgid "Same identifier exist already"
+msgstr "Такой идентификатор уже существует"
+
+#: dialogcontroller.py:50
+msgid "Identifier contain invalid character"
+msgstr "Идентификатор содержит запрещенные символы"
