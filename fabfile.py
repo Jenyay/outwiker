@@ -218,6 +218,14 @@ def locale():
         local (r"xgettext -o locale/outwiker.pot outwiker/gui/*.py outwiker/gui/*/*.py outwiker/pages/*/*.py outwiker/pages/*/*/*.py outwiker/core/*.py outwiker/actions/*.py")
 
 
+def localeplugin (pluginname):
+    """
+    Создать или обновить локализацию для плагина pluginname
+    """
+    with lcd (os.path.join ("plugins", pluginname, pluginname)):
+        local (r"xgettext -o locale/{}.pot *.py".format (pluginname))
+
+
 def run ():
     """
     Запустить OutWiker
