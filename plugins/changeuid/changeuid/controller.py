@@ -1,7 +1,14 @@
 # -*- coding: UTF-8 -*-
 
+import wx
+
+from outwiker.core.commands import testreadonly
+from outwiker.core.exceptions import ReadonlyException
+
 from .i18n import get_
 from .guicreator import GuiCreator
+from .dialog import ChangeUidDialog
+from .dialogcontroller import DialogController
 
 
 class Controller (object):
@@ -43,6 +50,35 @@ class Controller (object):
 
         self._guiCreator.removeTools()
         self._guiCreator.destroy ()
+
+
+    @testreadonly
+    def changeUidWithDialog (self):
+        """
+        Вызвать диалог для изменения UID страницы
+        """
+        page = self._application.selectedPage
+
+        if page is None:
+            return
+
+        if page.readonly:
+            raise ReadonlyException
+
+        dlg = ChangeUidDialog (self._application.mainWindow)
+
+        dlgController = DialogController (self._application,
+                                          dlg,
+                                          self._application.selectedPage)
+
+        resultDlg = dlgController.showDialog ()
+
+        if resultDlg == wx.ID_OK:
+            # Не отлавливаем исключения, поскольку считаем,
+            # что правильность идентификатора проверил DialogController
+            self._application.pageUidDepot.changeUid (page, dlg.uid)
+
+        dlg.Destroy()
 
 
     def __onPageViewCreate(self, page):

@@ -1,29 +1,43 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-import unittest
+import wx
 
-from outwiker.core.pluginsloader import PluginsLoader
-from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
+from outwiker.core.tree import WikiDocument
+from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.pages.wiki.wikipage import WikiPageFactory
+
+from test.guitests.basemainwnd import BaseMainWndTest
 from test.utils import removeWiki
 
 
-class ChangeUidTest (unittest.TestCase):
+class ChangeUidTest (BaseMainWndTest):
     """Тесты плагина ChangeUid"""
     def setUp (self):
+        BaseMainWndTest.setUp (self)
+
+        self.filesPath = u"../test/samplefiles/"
         self.__createWiki()
 
         dirlist = [u"../plugins/changeuid"]
 
-        self.loader = PluginsLoader(Application)
-        self.loader.load (dirlist)
+        self._loader = PluginsLoader(Application)
+        self._loader.load (dirlist)
+
+        self._dlg = self._loader["ChangeUID"].ChangeUidDialog (Application.mainWindow)
+        self._dlg.SetModalResult (wx.ID_OK)
+
+        self.testPage = self.rootwiki[u"Страница 1"]
 
 
-    def tearDown (self):
+    def tearDown(self):
+        BaseMainWndTest.tearDown (self)
+        Application.wikiroot = None
+
         removeWiki (self.path)
-        self.loader.clear()
+        self._dlg.Destroy()
+        self._loader.clear()
 
 
     def __createWiki (self):
@@ -34,8 +48,44 @@ class ChangeUidTest (unittest.TestCase):
         self.rootwiki = WikiDocument.create (self.path)
 
         WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
-        self.testPage = self.rootwiki[u"Страница 1"]
+        WikiPageFactory.create (self.rootwiki, u"Страница 2", [])
 
 
     def testPluginLoad (self):
-        self.assertEqual (len (self.loader), 1)
+        self.assertEqual (len (self._loader), 1)
+
+
+    def testUidDefault (self):
+        self._createDialogController()
+        uid = Application.pageUidDepot.createUid (self.testPage)
+
+        self.assertEqual (self._dlg.uid, uid)
+
+
+    def testUid_01 (self):
+        controller = self._createDialogController()
+        uid = Application.pageUidDepot.createUid (self.testPage)
+
+        # Не изменяем свой идентификатора
+        self.assertTrue (controller.validate (uid))
+
+
+    def testUid_02 (self):
+        controller = self._createDialogController()
+        uid = Application.pageUidDepot.createUid (self.rootwiki[u"Страница 2"])
+
+        # Такой идентификатор уже есть
+        self.assertFalse (controller.validate (uid))
+
+
+    def testUid_03 (self):
+        controller = self._createDialogController()
+
+        self.assertTrue (controller.validate (u"asdfsdfasdf_124323"))
+        self.assertTrue (controller.validate (u"__Абырвалг"))
+        self.assertFalse (controller.validate (u"adfadf/"))
+        self.assertFalse (controller.validate (u"adfadf asdfasdf"))
+
+
+    def _createDialogController (self):
+        return self._loader["ChangeUID"].DialogController (Application, self._dlg, self.testPage)

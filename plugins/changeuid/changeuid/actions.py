@@ -8,8 +8,9 @@ class ChangePageUIDAction (BaseAction):
     """
     Описание действия
     """
-    def __init__ (self, application):
+    def __init__ (self, application, controller):
         self._application = application
+        self._controller = controller
 
         global _
         _ = get_()
@@ -28,4 +29,4 @@ class ChangePageUIDAction (BaseAction):
 
 
     def run (self, params):
-        print "Run!"
+        self._controller.changeUidWithDialog()

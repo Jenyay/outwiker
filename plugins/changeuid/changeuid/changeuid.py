@@ -9,6 +9,8 @@ from outwiker.core.system import getOS
 
 from .i18n import set_
 from .controller import Controller
+from .dialog import ChangeUidDialog
+from .dialogcontroller import DialogController
 
 
 if getCurrentVersion() < Version (1, 8, 0, 731, status=StatusSet.DEV):
@@ -75,3 +77,13 @@ else:
                 print e
 
             set_(_)
+
+
+        @property
+        def ChangeUidDialog (self):
+            return ChangeUidDialog
+
+
+        @property
+        def DialogController (self):
+            return DialogController

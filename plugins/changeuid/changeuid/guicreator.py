@@ -1,11 +1,9 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 """
 Модуль с классами для добавления пунктов меню и кнопок на панель
 """
 from .i18n import get_
 
-# Импортировать все Actions
 from .actions import ChangePageUIDAction
 
 
@@ -27,7 +25,7 @@ class GuiCreator (object):
     def initialize (self):
         if self._application.mainWindow is not None:
             map (lambda action: self._application.actionController.register (
-                action (self._application), None), self._actions)
+                action (self._application, self._controller), None), self._actions)
 
 
     def createTools (self):
