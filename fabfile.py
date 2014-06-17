@@ -138,6 +138,7 @@ def plugins():
                "updatenotifier",
                "counter",
                "htmlheads",
+               "changepageuid",
                ]
 
     local ("rm -f build/plugins/outwiker-plugins-all.zip")
