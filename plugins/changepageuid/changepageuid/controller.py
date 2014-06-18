@@ -36,20 +36,16 @@ class Controller (object):
         self._guiCreator = GuiCreator (self, self._application)
         self._guiCreator.initialize()
 
-        self._application.onPageViewCreate += self.__onPageViewCreate
-        self._application.onPageViewDestroy += self.__onPageViewDestroy
         self._application.onTreePopupMenu += self.__onTreePopupMenu
 
         if self._application.mainWindow is not None:
-            self.__onPageViewCreate (self._application.selectedPage)
+            self._guiCreator.createTools()
 
 
     def destroy (self):
         """
         Вызывается при отключении плагина
         """
-        self._application.onPageViewCreate -= self.__onPageViewCreate
-        self._application.onPageViewDestroy -= self.__onPageViewDestroy
         self._application.onTreePopupMenu -= self.__onTreePopupMenu
 
         self._guiCreator.removeTools()
@@ -97,17 +93,3 @@ class Controller (object):
             self._application.pageUidDepot.changeUid (page, dlg.uid)
 
         dlg.Destroy()
-
-
-    def __onPageViewCreate(self, page):
-        """Обработка события после создания представления страницы"""
-        assert self._application.mainWindow is not None
-        self._guiCreator.createTools()
-
-
-    def __onPageViewDestroy (self, page):
-        """
-        Обработка события перед удалением вида страницы
-        """
-        assert self._application.mainWindow is not None
-        self._guiCreator.removeTools()
