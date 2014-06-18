@@ -746,6 +746,13 @@ def registerActions (application):
         HotKey ("Right", ctrl=True))
 
 
+    # Применить стиль страницы ко всей ветке
+    from outwiker.actions.applystyle import SetStyleToBranchAction
+    application.actionController.register (
+        SetStyleToBranchAction (application),
+        None)
+
+
     _registerPolyActions (application)
 
 
