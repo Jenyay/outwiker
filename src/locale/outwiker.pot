@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-19 09:55+0400\n"
+"POT-Creation-Date: 2014-06-19 21:55+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -216,7 +216,7 @@ msgstr ""
 msgid "Do not change"
 msgstr ""
 
-#: outwiker/gui/basepagedialog.py:95 outwiker/actions/applystyle.py:114
+#: outwiker/gui/basepagedialog.py:95 outwiker/actions/applystyle.py:124
 msgid "Default"
 msgstr ""
 
@@ -1532,19 +1532,23 @@ msgstr ""
 msgid "Add sibling page"
 msgstr ""
 
-#: outwiker/actions/applystyle.py:27
+#: outwiker/actions/applystyle.py:28
 msgid "Set Style to Branch…"
 msgstr ""
 
-#: outwiker/actions/applystyle.py:32
+#: outwiker/actions/applystyle.py:33 outwiker/actions/applystyle.py:64
 msgid "Set Style to Branch"
 msgstr ""
 
-#: outwiker/actions/applystyle.py:84
+#: outwiker/actions/applystyle.py:65
+msgid "Please wait..."
+msgstr ""
+
+#: outwiker/actions/applystyle.py:94
 msgid "Set style to branch"
 msgstr ""
 
-#: outwiker/actions/applystyle.py:87
+#: outwiker/actions/applystyle.py:97
 msgid "Style"
 msgstr ""
 

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-19 09:55+0400\n"
+"POT-Creation-Date: 2014-06-19 21:55+0400\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -214,7 +214,7 @@ msgstr "Создать страницу"
 msgid "Do not change"
 msgstr "Не изменять"
 
-#: outwiker/gui/basepagedialog.py:95 outwiker/actions/applystyle.py:114
+#: outwiker/gui/basepagedialog.py:95 outwiker/actions/applystyle.py:124
 msgid "Default"
 msgstr "По умолчанию"
 
@@ -1578,19 +1578,23 @@ msgstr "Добавить страницу того же уровня…"
 msgid "Add sibling page"
 msgstr "Добавить страницу того же уровня"
 
-#: outwiker/actions/applystyle.py:27
+#: outwiker/actions/applystyle.py:28
 msgid "Set Style to Branch…"
 msgstr "Установить стиль для ветки..."
 
-#: outwiker/actions/applystyle.py:32
+#: outwiker/actions/applystyle.py:33 outwiker/actions/applystyle.py:64
 msgid "Set Style to Branch"
 msgstr "Установить стиль для ветки"
 
-#: outwiker/actions/applystyle.py:84
+#: outwiker/actions/applystyle.py:65
+msgid "Please wait..."
+msgstr "Пожалуйста, подождите..."
+
+#: outwiker/actions/applystyle.py:94
 msgid "Set style to branch"
 msgstr "Установить стиль для ветки"
 
-#: outwiker/actions/applystyle.py:87
+#: outwiker/actions/applystyle.py:97
 msgid "Style"
 msgstr "Стиль"
 

@@ -6,6 +6,7 @@ import wx
 
 from outwiker.gui.baseaction import BaseAction
 from outwiker.gui.testeddialog import TestedDialog
+from outwiker.gui.longprocessrunner import LongProcessRunner
 from outwiker.core.commands import testreadonly
 from outwiker.core.style import Style
 from outwiker.core.styleslist import StylesList
@@ -53,10 +54,19 @@ class SetStyleToBranchAction (BaseAction):
         """
         with AddStyleDialog (self._application.mainWindow) as dlg:
             if dlg.ShowModal() == wx.ID_OK:
-                self.__applyStyle (page, dlg.style)
-                if self._application.selectedPage is not None:
-                    # Чтобы обновить текущую страницу
-                    self._application.selectedPage.root.selectedPage = self._application.selectedPage
+                wiki = self._application.wikiroot
+
+                # Чтобы не вызывались никакие события при обновлении стиля
+                self._application.wikiroot = None
+
+                runner = LongProcessRunner (self.__applyStyle,
+                                            self._application.mainWindow,
+                                            _(u"Set Style to Branch"),
+                                            _(u"Please wait..."))
+
+                runner.run (page, dlg.style)
+                # Вернем открытую вики
+                self._application.wikiroot = wiki
 
 
     def __applyStyle (self, page, style):
