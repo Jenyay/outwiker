@@ -81,7 +81,7 @@ class AddStyleDialog (TestedDialog):
 
 
     def __createGui (self):
-        self.SetTitle (u"Set style to branch")
+        self.SetTitle (_(u"Set style to branch"))
 
         styleLabel = wx.StaticText (parent = self,
                                     label = _(u"Style"))
