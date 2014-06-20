@@ -1,18 +1,14 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import os
 import os.path
 import unittest
-import hashlib
 
 from test.utils import removeWiki
 
 from outwiker.core.tree import WikiDocument
 from outwiker.core.attachment import Attachment
 from outwiker.core.application import Application
-
-from outwiker.pages.wiki.parser.wikiparser import Parser
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
 from outwiker.pages.wiki.wikiconfig import WikiConfig
@@ -28,13 +24,13 @@ class ParserThumbTest (unittest.TestCase):
         self.pageComments = [u"Страницо 1", u"Страницо 1", u"Страницо 3"]
 
         self.__createWiki()
-        
+
         factory = ParserFactory()
         self.__wikiconfig = WikiConfig (Application.config)
         self.__wikiconfig.thumbSizeOptions.value = WikiConfig.THUMB_SIZE_DEFAULT
 
         self.parser = factory.make (self.testPage, Application.config)
-    
+
 
     def __createWiki (self):
         # Здесь будет создаваться вики
@@ -42,13 +38,13 @@ class ParserThumbTest (unittest.TestCase):
         removeWiki (self.path)
 
         self.rootwiki = WikiDocument.create (self.path)
-        WikiPageFactory.create (self.rootwiki, u"Страница 2", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 2", [])
         self.testPage = self.rootwiki[u"Страница 2"]
-        
-        files = [u"accept.png", u"add.png", u"anchor.png", u"filename.tmp", 
-                u"файл с пробелами.tmp", u"картинка с пробелами.png", 
-                u"image.jpg", u"image.jpeg", u"image.png", u"image.tif", u"image.tiff", u"image.gif",
-                u"image_01.JPG", u"dir", u"dir.xxx", u"dir.png", "particle_01.PNG"]
+
+        files = [u"accept.png", u"add.png", u"anchor.png", u"filename.tmp",
+                 u"файл с пробелами.tmp", u"картинка с пробелами.png",
+                 u"image.jpg", u"image.jpeg", u"image.png", u"image.tif", u"image.tiff", u"image.gif",
+                 u"image_01.JPG", u"dir", u"dir.xxx", u"dir.png", "particle_01.PNG"]
 
         fullFilesPath = [os.path.join (self.filesPath, fname) for fname in files]
 
@@ -56,7 +52,7 @@ class ParserThumbTest (unittest.TestCase):
 
         # Прикрепим к двум страницам файлы
         Attachment (self.testPage).attach (fullFilesPath)
-    
+
 
     def tearDown(self):
         self.__wikiconfig.thumbSizeOptions.value = WikiConfig.THUMB_SIZE_DEFAULT
@@ -73,7 +69,7 @@ class ParserThumbTest (unittest.TestCase):
 
         path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_width_100_image.jpg")
         self.assertTrue (os.path.exists (path), path.encode (self.encoding))
-    
+
 
     def testThumbWidthJpg2 (self):
         text = u'бла-бла-бла \nкхм % thumb width = 100 px % Attach:image.jpg %% бла-бла-бла\nбла-бла-бла'
@@ -85,7 +81,7 @@ class ParserThumbTest (unittest.TestCase):
 
         path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_width_100_image.jpg")
         self.assertTrue (os.path.exists (path), path.encode (self.encoding))
-    
+
 
     def testThumbWidthJpeg (self):
         text = u'бла-бла-бла \nкхм % width = 100 px % Attach:image.jpeg %% бла-бла-бла\nбла-бла-бла'
@@ -98,7 +94,7 @@ class ParserThumbTest (unittest.TestCase):
         path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_width_100_image.jpeg")
         self.assertTrue (os.path.exists (path), path.encode (self.encoding))
 
-    
+
     def testThumbWidthGif (self):
         text = u'бла-бла-бла \nкхм % width = 100 px % Attach:image.gif %% бла-бла-бла\nбла-бла-бла'
         path = os.path.join ("__attach", "__thumb", "th_width_100_image.png")
@@ -109,7 +105,7 @@ class ParserThumbTest (unittest.TestCase):
 
         path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_width_100_image.png")
         self.assertTrue (os.path.exists (path), path.encode (self.encoding))
-    
+
 
     def testThumbWidthPng (self):
         text = u'бла-бла-бла \nкхм % width = 100 px % Attach:image.png %% бла-бла-бла\nбла-бла-бла'
@@ -121,7 +117,7 @@ class ParserThumbTest (unittest.TestCase):
 
         path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_width_100_image.png")
         self.assertTrue (os.path.exists (path), path.encode (self.encoding))
-    
+
 
     def testThumbHeightJpg (self):
         text = u'бла-бла-бла \nкхм % height = 100 px % Attach:image.jpg %% бла-бла-бла\nбла-бла-бла'
@@ -134,7 +130,7 @@ class ParserThumbTest (unittest.TestCase):
         path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_height_100_image.jpg")
         self.assertTrue (os.path.exists (path), path.encode (self.encoding))
 
-    
+
     def testThumbHeightJpg2 (self):
         text = u'бла-бла-бла \nкхм % thumb height = 100 px % Attach:image.jpg %% бла-бла-бла\nбла-бла-бла'
         path = os.path.join ("__attach", "__thumb", "th_height_100_image.jpg")
@@ -158,7 +154,7 @@ class ParserThumbTest (unittest.TestCase):
         path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_height_100_image.jpeg")
         self.assertTrue (os.path.exists (path), path.encode (self.encoding))
 
-    
+
     def testThumbHeightGif (self):
         text = u'бла-бла-бла \nкхм % height = 100 px % Attach:image.gif %% бла-бла-бла\nбла-бла-бла'
         path = os.path.join ("__attach", "__thumb", "th_height_100_image.png")
@@ -168,7 +164,7 @@ class ParserThumbTest (unittest.TestCase):
 
         path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_height_100_image.png")
         self.assertTrue (os.path.exists (path), path.encode (self.encoding))
-    
+
 
     def testThumbHeightPng (self):
         text = u'бла-бла-бла \nкхм % height = 100 px % Attach:image.png %% бла-бла-бла\nбла-бла-бла'
@@ -180,7 +176,7 @@ class ParserThumbTest (unittest.TestCase):
 
         path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_height_100_image.png")
         self.assertTrue (os.path.exists (path), path.encode (self.encoding))
-    
+
 
     def testThumbJpg (self):
         text = u'бла-бла-бла \nкхм % thumb % Attach:image.jpg %% бла-бла-бла\nбла-бла-бла'
@@ -193,7 +189,7 @@ class ParserThumbTest (unittest.TestCase):
         path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_maxsize_250_image.jpg")
         self.assertTrue (os.path.exists (path), path.encode (self.encoding))
 
-    
+
     def testThumbJpeg (self):
         text = u'бла-бла-бла \nкхм % thumb % Attach:image.jpeg %% бла-бла-бла\nбла-бла-бла'
         path = os.path.join ("__attach", "__thumb", "th_maxsize_250_image.jpeg")
@@ -225,11 +221,11 @@ class ParserThumbTest (unittest.TestCase):
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-        path = os.path.join (self.attach_page2.getAttachPath(), 
-                "__thumb/th_maxsize_250_particle_01.PNG")
+        path = os.path.join (self.attach_page2.getAttachPath(),
+                             "__thumb/th_maxsize_250_particle_01.PNG")
 
         self.assertTrue (os.path.exists (path), path.encode (self.encoding))
-    
+
     def testThumbGif (self):
         text = u'бла-бла-бла \nкхм % thumb % Attach:image.gif %% бла-бла-бла\nбла-бла-бла'
         path = os.path.join ("__attach", "__thumb", "th_maxsize_250_image.png")
@@ -240,7 +236,7 @@ class ParserThumbTest (unittest.TestCase):
 
         path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_maxsize_250_image.png")
         self.assertTrue (os.path.exists (path), path.encode (self.encoding))
-    
+
 
     def testThumbMaxSizeJpg (self):
         text = u'бла-бла-бла \nкхм % maxsize = 300 % Attach:image.jpg %% бла-бла-бла\nбла-бла-бла'
@@ -265,7 +261,7 @@ class ParserThumbTest (unittest.TestCase):
         path = os.path.join (self.attach_page2.getAttachPath(), "__thumb/th_maxsize_300_image.jpg")
         self.assertTrue (os.path.exists (path), path.encode (self.encoding))
 
-    
+
     def testThumbMaxSizePng (self):
         text = u'бла-бла-бла \nкхм % maxsize = 300 % Attach:image.png %% бла-бла-бла\nбла-бла-бла'
         path = os.path.join ("__attach", "__thumb", "th_maxsize_300_image.png")

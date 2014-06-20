@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import wx
@@ -27,7 +26,7 @@ class ChildListDialogTest (BaseMainWndTest):
 
     def testSortByOrder (self):
         controller = ChildListDialogController (self._dialog)
-        
+
         self._dialog.SetModalResult (wx.ID_OK)
         self._dialog.selectedSort = 0
         self._dialog.isDescend = False
@@ -39,7 +38,7 @@ class ChildListDialogTest (BaseMainWndTest):
 
     def testSortByOrderDescend (self):
         controller = ChildListDialogController (self._dialog)
-        
+
         self._dialog.SetModalResult (wx.ID_OK)
         self._dialog.selectedSort = 0
         self._dialog.isDescend = True
@@ -51,7 +50,7 @@ class ChildListDialogTest (BaseMainWndTest):
 
     def testSortByName (self):
         controller = ChildListDialogController (self._dialog)
-        
+
         self._dialog.SetModalResult (wx.ID_OK)
         self._dialog.selectedSort = 1
         self._dialog.isDescend = False
@@ -63,7 +62,7 @@ class ChildListDialogTest (BaseMainWndTest):
 
     def testSortByNameDescend (self):
         controller = ChildListDialogController (self._dialog)
-        
+
         self._dialog.SetModalResult (wx.ID_OK)
         self._dialog.selectedSort = 1
         self._dialog.isDescend = True

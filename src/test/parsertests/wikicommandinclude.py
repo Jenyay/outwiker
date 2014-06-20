@@ -1,16 +1,12 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import os
 import unittest
-import hashlib
 
 from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
-from outwiker.pages.wiki.parser.wikiparser import Parser
 from outwiker.pages.wiki.wikipage import WikiPageFactory
-from outwiker.pages.wiki.parser.command import Command
 from outwiker.pages.wiki.parserfactory import ParserFactory
 from test.utils import removeWiki
 
@@ -21,10 +17,10 @@ class WikiIncludeCommandTest (unittest.TestCase):
 
         self.filesPath = u"../test/samplefiles/"
         self.__createWiki()
-        
+
         factory = ParserFactory()
         self.parser = factory.make (self.testPage, Application.config)
-    
+
 
     def __createWiki (self):
         # Здесь будет создаваться вики
@@ -33,18 +29,18 @@ class WikiIncludeCommandTest (unittest.TestCase):
 
         self.rootwiki = WikiDocument.create (self.path)
 
-        WikiPageFactory.create (self.rootwiki, u"Страница 2", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 2", [])
         self.testPage = self.rootwiki[u"Страница 2"]
-        
-        files = [u"text_utf8.txt", u"text_utf8.txt2", u"image.gif", 
-                u"текст_utf8.txt", u"text_1251.txt", u"html.txt", 
-                u"html_1251.txt", u"wiki.txt"]
+
+        files = [u"text_utf8.txt", u"text_utf8.txt2", u"image.gif",
+                 u"текст_utf8.txt", u"text_1251.txt", u"html.txt",
+                 u"html_1251.txt", u"wiki.txt"]
 
         fullFilesPath = [os.path.join (self.filesPath, fname) for fname in files]
 
         # Прикрепим к двум страницам файлы
         Attachment (self.testPage).attach (fullFilesPath)
-    
+
 
     def tearDown(self):
         removeWiki (self.path)
@@ -174,7 +170,7 @@ class WikiIncludeCommandTest (unittest.TestCase):
 
         result = self.parser.toHtml (text)
         self.assertEqual (result, result_right, result)
-        
+
 
     def testIncludeCommand12 (self):
         text = u"""бла-бла-бла (:include Attach:wiki.txt wikiparse:)"""

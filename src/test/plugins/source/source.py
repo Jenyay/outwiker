@@ -1,17 +1,11 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import unittest
-import os.path
-
-import wx
 
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
 from outwiker.core.style import Style
-from outwiker.core.attachment import Attachment
-from outwiker.pages.wiki.parser.wikiparser import Parser
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
 from outwiker.pages.wiki.htmlgenerator import HtmlGenerator
@@ -35,7 +29,7 @@ class SourcePluginTest (unittest.TestCase):
         self.config = self.loader[self.__pluginname].config
         self.config.tabWidth.value = 4
         self.config.defaultLanguage.remove_option()
-        
+
         self.factory = ParserFactory()
         self.parser = self.factory.make (self.testPage, Application.config)
 
@@ -45,7 +39,7 @@ class SourcePluginTest (unittest.TestCase):
             result = unicode (fp.read(), "utf8")
 
         return result
-    
+
 
     def __createWiki (self):
         # Здесь будет создаваться вики
@@ -54,9 +48,9 @@ class SourcePluginTest (unittest.TestCase):
 
         self.rootwiki = WikiDocument.create (self.path)
 
-        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 1", [])
         self.testPage = self.rootwiki[u"Страница 1"]
-        
+
 
     def tearDown(self):
         self.config.tabWidth.value = 4
@@ -65,7 +59,7 @@ class SourcePluginTest (unittest.TestCase):
 
 
     def testPluginLoad (self):
-        self.assertEqual ( len (self.loader), 1)
+        self.assertEqual (len (self.loader), 1)
         self.assertGreater (len (self.loader[self.__pluginname].url), 0)
 
 
@@ -128,7 +122,7 @@ def hello (count):
         innerString1 = u".highlight-default .go { color: #888888 } /* Generic.Output */"
         innerString2 = u'          <span class="k">print</span> <span class="s">&quot;Hello world!!!&quot;</span>'
         innerString3 = u'<span class="kn">import</span> <span class="nn">os</span>'
-        
+
         self.assertTrue (innerString1 in result)
         self.assertTrue (innerString2 in result)
         self.assertTrue (innerString3 in result)
@@ -157,7 +151,7 @@ def hello (count):
         innerString1 = u".highlight-default .go { color: #888888 } /* Generic.Output */"
         innerString2 = u'       <span class="k">print</span> <span class="s">&quot;Hello world!!!&quot;</span>'
         innerString3 = u'<span class="kn">import</span> <span class="nn">os</span>'
-        
+
         self.assertTrue (innerString1 in result)
         self.assertTrue (innerString2 in result)
         self.assertTrue (innerString3 in result)
@@ -187,7 +181,7 @@ def hello (count):
         innerString1 = u".highlight-default .go { color: #888888 } /* Generic.Output */"
         innerString2 = u'       <span class="k">print</span> <span class="s">&quot;Hello world!!!&quot;</span>'
         innerString3 = u'<span class="kn">import</span> <span class="nn">os</span>'
-        
+
         self.assertTrue (innerString1 in result)
         self.assertTrue (innerString2 in result)
         self.assertTrue (innerString3 in result)
@@ -216,7 +210,7 @@ def hello (count):
         innerString1 = u".highlight-default .go { color: #888888 } /* Generic.Output */"
         innerString2 = u'        print &quot;Hello world!!!&quot;'
         innerString3 = u'def hello (count):'
-        
+
         self.assertTrue (innerString1 in result, result)
         self.assertTrue (innerString2 in result)
         self.assertTrue (innerString3 in result)
@@ -246,7 +240,7 @@ def hello (count):
         innerString1 = u".highlight-default .go { color: #888888 } /* Generic.Output */"
         innerString2 = u'        print &quot;Hello world!!!&quot;'
         innerString3 = u'def hello (count):'
-        
+
         self.assertTrue (innerString1 in result)
         self.assertTrue (innerString2 in result)
         self.assertTrue (innerString3 in result)
@@ -276,7 +270,7 @@ def hello (count):
         innerString1 = u".highlight-default .go { color: #888888 } /* Generic.Output */"
         innerString2 = u'        print &quot;Hello world!!!&quot;'
         innerString3 = u'def hello (count):'
-        
+
         self.assertTrue (innerString1 in result)
         self.assertTrue (innerString2 in result)
         self.assertTrue (innerString3 in result)
@@ -321,9 +315,9 @@ def hello (count):
         innerString3 = u'def hello (count):'
         innerString4 = u'       <span class="k">print</span> <span class="s">&quot;Hello world!!!&quot;</span>'
         innerString5 = u'<span class="kn">import</span> <span class="nn">os</span>'
-        
+
         self.assertTrue (innerString1 in result)
-    
+
         # Проверка того, что стиль добавился только один раз
         self.assertTrue (result.find (innerString1) == result.rfind (innerString1))
 
@@ -358,7 +352,7 @@ def hello (count):
         innerString1 = u".highlight-default .go { color: #888888 } /* Generic.Output */"
         innerString2 = u'          for i in range (10)'
         innerString3 = u'def hello (count):'
-        
+
         self.assertTrue (innerString1 in result)
         self.assertTrue (innerString2 in result)
         self.assertTrue (innerString3 in result)
@@ -389,7 +383,7 @@ def hello (count):
         innerString1 = u".highlight-default .go { color: #888888 } /* Generic.Output */"
         innerString2 = u'          for i in range (10)'
         innerString3 = u'def hello (count):'
-        
+
         self.assertTrue (innerString1 in result)
         self.assertTrue (innerString2 in result)
         self.assertTrue (innerString3 in result)
@@ -420,7 +414,7 @@ def hello (count):
         innerString1 = u".highlight-default .go { color: #888888 } /* Generic.Output */"
         innerString2 = u'    for i in range (10)'
         innerString3 = u'def hello (count):'
-        
+
         self.assertTrue (innerString1 in result)
         self.assertTrue (innerString2 in result)
         self.assertTrue (innerString3 in result)
@@ -451,7 +445,7 @@ def hello (count):
         innerString1 = u".highlight-default .go { color: #888888 } /* Generic.Output */"
         innerString2 = u'    for i in range (10)'
         innerString3 = u'def hello (count):'
-        
+
         self.assertTrue (innerString1 in result)
         self.assertTrue (innerString2 in result)
         self.assertTrue (innerString3 in result)
@@ -492,5 +486,5 @@ def hello (count):
  9
 10
 11"""
-        
+
         self.assertTrue (innerString1 in result)

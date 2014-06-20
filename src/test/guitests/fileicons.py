@@ -1,10 +1,6 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-import os.path
-
 from basemainwnd import BaseMainWndTest
-from outwiker.core.application import Application
 from outwiker.gui.fileicons import UnixFileIcons, WindowsFileIcons
 
 

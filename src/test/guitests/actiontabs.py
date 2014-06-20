@@ -1,15 +1,13 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 from outwiker.actions.tabs import AddTabAction, CloseTabAction, PreviousTabAction, NextTabAction
 from outwiker.core.application import Application
-from outwiker.core.tree import RootWikiPage, WikiDocument
-from outwiker.gui.mainwindow import MainWindow
-from outwiker.gui.guiconfig import MainWindowConfig
+from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
 
 from .basemainwnd import BaseMainWndTest
 from test.utils import removeWiki
+
 
 class ActionTabsTest(BaseMainWndTest):
     def setUp (self):
@@ -20,11 +18,12 @@ class ActionTabsTest(BaseMainWndTest):
 
         self.wikiroot = WikiDocument.create (self.path)
 
-        TextPageFactory.create (self.wikiroot, u"Страница 1", [])
-        TextPageFactory.create (self.wikiroot, u"Страница 2", [])
-        TextPageFactory.create (self.wikiroot[u"Страница 2"], u"Страница 3", [])
-        TextPageFactory.create (self.wikiroot[u"Страница 2/Страница 3"], u"Страница 4", [])
-        TextPageFactory.create (self.wikiroot[u"Страница 1"], u"Страница 5", [])
+        factory = TextPageFactory()
+        factory.create (self.wikiroot, u"Страница 1", [])
+        factory.create (self.wikiroot, u"Страница 2", [])
+        factory.create (self.wikiroot[u"Страница 2"], u"Страница 3", [])
+        factory.create (self.wikiroot[u"Страница 2/Страница 3"], u"Страница 4", [])
+        factory.create (self.wikiroot[u"Страница 1"], u"Страница 5", [])
 
         self._tabsController = Application.mainWindow.tabsController
         self._actionController = Application.actionController
@@ -81,8 +80,8 @@ class ActionTabsTest(BaseMainWndTest):
         self.assertEqual (self._tabsController.getPage(1), self.wikiroot[u"Страница 2"])
         self.assertEqual (self._tabsController.getTabTitle (1), u"Страница 2")
 
-        self.assertEqual (self._tabsController.getPage(2), 
-                self.wikiroot[u"Страница 2/Страница 3/Страница 4"])
+        self.assertEqual (self._tabsController.getPage(2),
+                          self.wikiroot[u"Страница 2/Страница 3/Страница 4"])
         self.assertEqual (self._tabsController.getTabTitle (2), u"Страница 4")
 
 
@@ -92,7 +91,7 @@ class ActionTabsTest(BaseMainWndTest):
         """
         Application.wikiroot = self.wikiroot
         self.assertEqual (self._tabsController.getTabsCount(), 1)
-        
+
         self._actionController.getAction (CloseTabAction.stringId).run(None)
         self.assertEqual (self._tabsController.getTabsCount(), 1)
 
@@ -103,7 +102,7 @@ class ActionTabsTest(BaseMainWndTest):
         self._tabsController.openInTab (self.wikiroot[u"Страница 2"], True)
         self._tabsController.openInTab (self.wikiroot[u"Страница 2/Страница 3"], True)
 
-        self.assertEqual (self._tabsController.getTabsCount(), 3) 
+        self.assertEqual (self._tabsController.getTabsCount(), 3)
 
         self._actionController.getAction (CloseTabAction.stringId).run(None)
 

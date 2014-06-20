@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import unittest
@@ -30,7 +29,7 @@ class ParserUrlTest (unittest.TestCase):
         removeWiki (self.path)
 
         self.rootwiki = WikiDocument.create (self.path)
-        WikiPageFactory.create (self.rootwiki, u"Страница 2", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 2", [])
         self.testPage = self.rootwiki[u"Страница 2"]
 
 

@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import unittest
@@ -23,8 +22,9 @@ class HtmlPagesTest(unittest.TestCase):
 
         self.rootwiki = WikiDocument.create (self.path)
 
-        HtmlPageFactory.create (self.rootwiki, u"Страница 1", [])
-        HtmlPageFactory.create (self.rootwiki, u"Страница 2", [])
+        factory = HtmlPageFactory()
+        factory.create (self.rootwiki, u"Страница 1", [])
+        factory.create (self.rootwiki, u"Страница 2", [])
 
         self.rootwiki.onPageUpdate += self.__onPageUpdate
 

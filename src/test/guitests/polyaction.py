@@ -1,9 +1,4 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
-
-import unittest
-
-import wx
 
 from outwiker.gui.polyaction import PolyAction
 from outwiker.gui.actioncontroller import ActionController
@@ -50,7 +45,7 @@ class PolyActionTest (BaseMainWndTest):
 
         self.assertEqual (self.actionController.getAction (strid).title, title)
         self.assertEqual (self.actionController.getAction (strid).description, description)
-        
+
         polyaction.run (None)
 
 

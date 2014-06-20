@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import unittest
@@ -17,11 +16,12 @@ class TagsPanelTest (unittest.TestCase):
 
         self.wikiroot = WikiDocument.create (self.path)
 
-        TextPageFactory.create (self.wikiroot, u"Страница 1", [u"тег 1"])
-        TextPageFactory.create (self.wikiroot, u"Страница 2", [u"тег 1", u"тег 2"])
-        TextPageFactory.create (self.wikiroot[u"Страница 2"], u"Страница 3", [u"тег 3"])
-        TextPageFactory.create (self.wikiroot[u"Страница 2/Страница 3"], u"Страница 4", [])
-        TextPageFactory.create (self.wikiroot[u"Страница 1"], u"Страница 5", [u"тег 4", u"тег 1"])
+        factory = TextPageFactory()
+        factory.create (self.wikiroot, u"Страница 1", [u"тег 1"])
+        factory.create (self.wikiroot, u"Страница 2", [u"тег 1", u"тег 2"])
+        factory.create (self.wikiroot[u"Страница 2"], u"Страница 3", [u"тег 3"])
+        factory.create (self.wikiroot[u"Страница 2/Страница 3"], u"Страница 4", [])
+        factory.create (self.wikiroot[u"Страница 1"], u"Страница 5", [u"тег 4", u"тег 1"])
 
 
     def tearDown (self):
@@ -35,7 +35,7 @@ class TagsPanelTest (unittest.TestCase):
 
         self.assertEqual (panel.tags, [])
 
-        controller = TagsPanelController (panel, application)
+        TagsPanelController (panel, application)
 
         self.assertTrue (u"тег 1" in panel.tags)
         self.assertTrue (u"тег 2" in panel.tags)
@@ -49,7 +49,7 @@ class TagsPanelTest (unittest.TestCase):
         application = ApplicationParams()
         application.wikiroot = self.wikiroot
         panel = FakeTagsPanel()
-        controller = TagsPanelController (panel, application)
+        TagsPanelController (panel, application)
 
         self.wikiroot.selectedPage = self.wikiroot[u"Страница 1"]
         self.assertTrue (u"тег 1" in panel.marks)
@@ -69,7 +69,7 @@ class TagsPanelTest (unittest.TestCase):
         application = ApplicationParams()
         application.wikiroot = self.wikiroot
         panel = FakeTagsPanel()
-        controller = TagsPanelController (panel, application)
+        TagsPanelController (panel, application)
 
         self.wikiroot.selectedPage = self.wikiroot[u"Страница 1"]
         self.assertTrue (u"тег 1" in panel.marks)
@@ -82,7 +82,7 @@ class TagsPanelTest (unittest.TestCase):
         application = ApplicationParams()
         application.wikiroot = self.wikiroot
         panel = FakeTagsPanel()
-        controller = TagsPanelController (panel, application)
+        TagsPanelController (panel, application)
 
         self.wikiroot.selectedPage = self.wikiroot[u"Страница 1"]
         self.assertTrue (u"тег 1" in panel.marks)
@@ -98,7 +98,7 @@ class TagsPanelTest (unittest.TestCase):
         application = ApplicationParams()
         application.wikiroot = self.wikiroot
         panel = FakeTagsPanel()
-        controller = TagsPanelController (panel, application)
+        TagsPanelController (panel, application)
 
         self.wikiroot[u"Страница 2"].tags = [u"бла-бла-бла"]
 
@@ -114,7 +114,7 @@ class TagsPanelTest (unittest.TestCase):
         application.wikiroot = self.wikiroot
 
         panel = FakeTagsPanel()
-        controller = TagsPanelController (panel, application)
+        TagsPanelController (panel, application)
 
         self.wikiroot[u"Страница 2"].remove()
 
@@ -129,9 +129,9 @@ class TagsPanelTest (unittest.TestCase):
         application.wikiroot = self.wikiroot
 
         panel = FakeTagsPanel()
-        controller = TagsPanelController (panel, application)
+        TagsPanelController (panel, application)
 
-        TextPageFactory.create (self.wikiroot, u"Страница 10", [u"тег 10"])
+        TextPageFactory().create (self.wikiroot, u"Страница 10", [u"тег 10"])
 
         self.assertTrue (u"тег 10" in panel.tags)
         self.assertTrue (u"тег 1" in panel.tags)
@@ -145,7 +145,7 @@ class TagsPanelTest (unittest.TestCase):
         application.wikiroot = self.wikiroot
 
         panel = FakeTagsPanel()
-        controller = TagsPanelController (panel, application)
+        TagsPanelController (panel, application)
 
         self.assertTrue (len (panel.tags) > 0)
 

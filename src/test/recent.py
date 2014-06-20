@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import unittest
@@ -20,7 +19,7 @@ class RecentWikiTest (unittest.TestCase):
         if os.path.exists (self.path):
             os.remove (self.path)
 
-    
+
     def testAdd1 (self):
         config = Config (self.path)
         recent = RecentWiki (config)
@@ -59,7 +58,7 @@ class RecentWikiTest (unittest.TestCase):
         self.assertEqual (recent2[0], "path3")
         self.assertEqual (recent2[1], "path2")
         self.assertEqual (recent2[2], "path1")
-    
+
 
     def testSave (self):
         config = Config (self.path)
@@ -69,14 +68,14 @@ class RecentWikiTest (unittest.TestCase):
         recent.add ("path3")
 
         config2 = Config (self.path)
-        recent2 = RecentWiki (config)
+        recent2 = RecentWiki (config2)
 
         self.assertEqual (len (recent2), 3)
         self.assertEqual (recent2[0], "path3")
         self.assertEqual (recent2[1], "path2")
         self.assertEqual (recent2[2], "path1")
-    
-    
+
+
     def testRepeat1 (self):
         """
         Проверка случая, когда один и тот же файл открывается несолько раз
@@ -110,7 +109,7 @@ class RecentWikiTest (unittest.TestCase):
         self.assertEqual (recent[1], "path3")
         self.assertEqual (recent[2], "path2")
 
-    
+
     def testRepeat3 (self):
         """
         Проверка случая, когда один и тот же файл открывается несолько раз
@@ -127,7 +126,7 @@ class RecentWikiTest (unittest.TestCase):
         self.assertEqual (recent[1], "path3")
         self.assertEqual (recent[2], "path1")
 
-    
+
     def testLength1 (self):
         """
         Тесты, связанные с длиной списка последних открытых вики
@@ -151,4 +150,3 @@ class RecentWikiTest (unittest.TestCase):
         self.assertEqual (recent[2], "path4")
         self.assertEqual (recent[3], "path3")
         self.assertEqual (recent[4], "path2")
-

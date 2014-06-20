@@ -1,10 +1,8 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 from outwiker.core.application import Application
-from outwiker.gui.mainwindow import MainWindow
 from outwiker.gui.guiconfig import MainWindowConfig
-from outwiker.core.tree import RootWikiPage, WikiDocument
+from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
 
 from .basemainwnd import BaseMainWndTest
@@ -20,11 +18,12 @@ class MainWndTest(BaseMainWndTest):
 
         self.rootwiki = WikiDocument.create (self.path)
 
-        TextPageFactory.create (self.rootwiki, u"Страница 1", [])
-        TextPageFactory.create (self.rootwiki, u"Страница 2", [])
-        TextPageFactory.create (self.rootwiki[u"Страница 2"], u"Страница 3", [])
-        TextPageFactory.create (self.rootwiki[u"Страница 2/Страница 3"], u"Страница 4", [])
-        TextPageFactory.create (self.rootwiki[u"Страница 1"], u"Страница 5", [])
+        factory = TextPageFactory()
+        factory.create (self.rootwiki, u"Страница 1", [])
+        factory.create (self.rootwiki, u"Страница 2", [])
+        factory.create (self.rootwiki[u"Страница 2"], u"Страница 3", [])
+        factory.create (self.rootwiki[u"Страница 2/Страница 3"], u"Страница 4", [])
+        factory.create (self.rootwiki[u"Страница 1"], u"Страница 5", [])
 
 
     def tearDown (self):

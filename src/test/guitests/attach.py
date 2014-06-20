@@ -1,10 +1,9 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import os.path
 
 from basemainwnd import BaseMainWndTest
-from outwiker.core.tree import RootWikiPage, WikiDocument
+from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.core.application import Application
 from test.utils import removeWiki
@@ -23,9 +22,10 @@ class AttachPanelTest (BaseMainWndTest):
 
         self.wikiroot = WikiDocument.create (self.path)
 
-        TextPageFactory.create (self.wikiroot, u"Страница 1", [])
-        TextPageFactory.create (self.wikiroot, u"Страница 2", [])
-        TextPageFactory.create (self.wikiroot[u"Страница 2"], u"Страница 3", [])
+        factory = TextPageFactory()
+        factory.create (self.wikiroot, u"Страница 1", [])
+        factory.create (self.wikiroot, u"Страница 2", [])
+        factory.create (self.wikiroot[u"Страница 2"], u"Страница 3", [])
 
         self.page = self.wikiroot[u"Страница 2/Страница 3"]
 
@@ -154,12 +154,12 @@ class AttachPanelTest (BaseMainWndTest):
         newpath = u"../test/testwiki2"
         newwikiroot = WikiDocument.create (newpath)
 
-        TextPageFactory.create (newwikiroot, u"Новая страница 1", [])
-        TextPageFactory.create (newwikiroot, u"Новая страница 2", [])
+        TextPageFactory().create (newwikiroot, u"Новая страница 1", [])
+        TextPageFactory().create (newwikiroot, u"Новая страница 2", [])
 
         filesPath = u"../test/samplefiles/"
         newfiles = [u"accept.png", u"add.png", u"anchor.png"]
-        newfullFilesPath = [os.path.join (filesPath, fname) for fname in newfiles]    
+        newfullFilesPath = [os.path.join (filesPath, fname) for fname in newfiles]
 
         newattach = Attachment (newwikiroot[u"Новая страница 1"])
         newattach.attach (newfullFilesPath)

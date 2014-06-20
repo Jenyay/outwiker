@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import unittest
@@ -68,4 +67,3 @@ class EmptyContentTest (unittest.TestCase):
         # Проверим, что есть какое-то непустое значение по умолчанию
         self.assertEqual (content2.content, self.text)
         self.assertEqual (content2.content, content1.content)
-

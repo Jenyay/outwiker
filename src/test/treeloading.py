@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import os.path
@@ -109,9 +108,9 @@ class WikiPagesTest(unittest.TestCase):
         """
         Проверка правильности путей до страниц
         """
-        self.assertEqual (self.root[u"page 4"].path, os.path.join (self.path, u"page 4") )
-        self.assertEqual (self.root[u"Страница 1"].path, os.path.join (self.path, u"Страница 1") )
-        self.assertEqual (self.root[u"Страница 3"].path, os.path.join (self.path, u"Страница 3") )
+        self.assertEqual (self.root[u"page 4"].path, os.path.join (self.path, u"page 4"))
+        self.assertEqual (self.root[u"Страница 1"].path, os.path.join (self.path, u"Страница 1"))
+        self.assertEqual (self.root[u"Страница 3"].path, os.path.join (self.path, u"Страница 3"))
 
         fullpath = os.path.join (self.path, u"Страница 1")
         fullpath = os.path.join (fullpath, u"Страница 2")
@@ -199,15 +198,15 @@ class WikiPagesTest(unittest.TestCase):
 
 
     def testIsChild1 (self):
-        self.assertTrue (self.root.isChild (self.root[u"Страница 1"]) )
+        self.assertTrue (self.root.isChild (self.root[u"Страница 1"]))
 
 
     def testIsChild2 (self):
-        self.assertTrue (self.root.isChild (self.root) )
+        self.assertTrue (self.root.isChild (self.root))
 
 
     def testIsChild3 (self):
-        self.assertTrue (self.root[u"Страница 1"].isChild (self.root[u"Страница 1/Страница 2/Страница 5"]) )
+        self.assertTrue (self.root[u"Страница 1"].isChild (self.root[u"Страница 1/Страница 2/Страница 5"]))
 
 
 class SubWikiTest (unittest.TestCase):
@@ -241,11 +240,12 @@ class TextPageAttachmentTest (unittest.TestCase):
         self.rootwiki = WikiDocument.create (self.path)
         Application.wikiroot = self.rootwiki
 
-        TextPageFactory.create (self.rootwiki, u"Страница 1", [])
-        TextPageFactory.create (self.rootwiki, u"Страница 2", [])
-        TextPageFactory.create (self.rootwiki[u"Страница 2"], u"Страница 3", [])
-        TextPageFactory.create (self.rootwiki[u"Страница 2/Страница 3"], u"Страница 4", [])
-        TextPageFactory.create (self.rootwiki[u"Страница 1"], u"Страница 5", [])
+        factory = TextPageFactory()
+        factory.create (self.rootwiki, u"Страница 1", [])
+        factory.create (self.rootwiki, u"Страница 2", [])
+        factory.create (self.rootwiki[u"Страница 2"], u"Страница 3", [])
+        factory.create (self.rootwiki[u"Страница 2/Страница 3"], u"Страница 4", [])
+        factory.create (self.rootwiki[u"Страница 1"], u"Страница 5", [])
 
     def tearDown(self):
         removeWiki (self.path)
@@ -270,7 +270,7 @@ class TextPageAttachmentTest (unittest.TestCase):
         self.assertEqual (self.pageUpdateCount, 1)
         self.assertEqual (self.pageUpdateSender, self.rootwiki[page1])
 
-        Attachment (self.rootwiki[page3]).attach ( [fullFilesPath[0], fullFilesPath[1] ] )
+        Attachment (self.rootwiki[page3]).attach ([fullFilesPath[0], fullFilesPath[1]])
 
         self.assertEqual (self.pageUpdateCount, 2)
         self.assertEqual (self.pageUpdateSender, self.rootwiki[page3])
@@ -294,7 +294,7 @@ class TextPageAttachmentTest (unittest.TestCase):
 
         # Прикрепим к двум страницам файлы
         Attachment (self.rootwiki[page1]).attach (fullFilesPath)
-        Attachment (self.rootwiki[page3]).attach ( [fullFilesPath[0], fullFilesPath[1] ] )
+        Attachment (self.rootwiki[page3]).attach ([fullFilesPath[0], fullFilesPath[1]])
 
         # Заново загрузим вики
         wiki = WikiDocument.load (self.path)
@@ -327,7 +327,7 @@ class TextPageAttachmentTest (unittest.TestCase):
 
         # Прикрепим к двум страницам файлы
         Attachment (self.rootwiki[page1]).attach (fullFilesPath)
-        Attachment (self.rootwiki[page3]).attach ( [fullFilesPath[0], fullFilesPath[1] ] )
+        Attachment (self.rootwiki[page3]).attach ([fullFilesPath[0], fullFilesPath[1]])
 
         # Проверим, что файлы прикрепились к тем страницам, куда прикрепляли
         self.assertEqual (len (Attachment (self.rootwiki[page1]).attachmentFull), 3)

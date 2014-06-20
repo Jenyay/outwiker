@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import os
@@ -14,11 +13,6 @@ class WxThumbmakerTest (unittest.TestCase):
     """
     Тесты для создателя превьюшек с помощью WxThumbmaker
     """
-
-    def setUp (self):
-        pass
-    
-
     def testWxThumbWidthJpeg (self):
         self.fname_in = "../test/images/first.jpg"
         self.fname_out = "../test/images/first_th.jpg"
@@ -59,7 +53,7 @@ class WxThumbmakerTest (unittest.TestCase):
 
         if os.path.exists (self.fname_out):
             os.remove (self.fname_out)
-    
+
 
     def testWxThumbWidthPngJpg (self):
         self.fname_in = "../test/images/outwiker_1.1.0_02.png"
@@ -80,7 +74,7 @@ class WxThumbmakerTest (unittest.TestCase):
 
         if os.path.exists (self.fname_out):
             os.remove (self.fname_out)
-    
+
 
     def testWxThumbWidthTiff (self):
         self.fname_in = "../test/images/outwiker_1.1.0_02.tiff"
@@ -101,7 +95,7 @@ class WxThumbmakerTest (unittest.TestCase):
 
         if os.path.exists (self.fname_out):
             os.remove (self.fname_out)
-    
+
 
     def testWxThumbHeightJpeg (self):
         self.fname_in = "../test/images/first.jpg"
@@ -122,7 +116,7 @@ class WxThumbmakerTest (unittest.TestCase):
 
         if os.path.exists (self.fname_out):
             os.remove (self.fname_out)
-    
+
 
     def testWxThumbHeightJpegPng (self):
         self.fname_in = "../test/images/first.jpg"
@@ -143,7 +137,7 @@ class WxThumbmakerTest (unittest.TestCase):
 
         if os.path.exists (self.fname_out):
             os.remove (self.fname_out)
-    
+
 
     def testWxThumbMaxSizeJpeg1 (self):
         self.fname_in = "../test/images/first.jpg"
@@ -166,7 +160,7 @@ class WxThumbmakerTest (unittest.TestCase):
 
         if os.path.exists (self.fname_out):
             os.remove (self.fname_out)
-    
+
 
     def testWxThumbMaxSizeJpeg2 (self):
         self.fname_in = "../test/images/first_vertical.jpeg"
@@ -189,7 +183,7 @@ class WxThumbmakerTest (unittest.TestCase):
 
         if os.path.exists (self.fname_out):
             os.remove (self.fname_out)
-    
+
 
     def testwxThumbRaises (self):
         self.fname_in = "../test/images/first_vertical_error.jpeg"
@@ -201,4 +195,3 @@ class WxThumbmakerTest (unittest.TestCase):
         self.assertRaises (ThumbException, self.thumbmaker.thumbByWidth, self.fname_in, newsize, self.fname_out)
         self.assertRaises (ThumbException, self.thumbmaker.thumbByHeight, self.fname_in, newsize, self.fname_out)
         self.assertRaises (ThumbException, self.thumbmaker.thumbByMaxSize, self.fname_in, newsize, self.fname_out)
-

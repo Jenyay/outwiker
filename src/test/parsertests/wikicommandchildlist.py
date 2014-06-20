@@ -1,18 +1,13 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-import os
 import unittest
-import hashlib
 
 from outwiker.core.tree import WikiDocument
-from outwiker.pages.wiki.parser.wikiparser import Parser
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from test.utils import removeWiki
 from outwiker.core.application import Application
 from outwiker.pages.wiki.parser.commandchildlist import ChildListCommand
 from outwiker.pages.wiki.parserfactory import ParserFactory
-
 
 
 class WikiChildListCommandTest (unittest.TestCase):
@@ -21,10 +16,10 @@ class WikiChildListCommandTest (unittest.TestCase):
 
         self.filesPath = u"../test/samplefiles/"
         self.__createWiki()
-        
+
         factory = ParserFactory()
         self.parser = factory.make (self.testPage, Application.config)
-    
+
 
     def __createWiki (self):
         # Здесь будет создаваться вики
@@ -33,13 +28,14 @@ class WikiChildListCommandTest (unittest.TestCase):
 
         self.rootwiki = WikiDocument.create (self.path)
 
-        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
-        WikiPageFactory.create (self.rootwiki[u"Страница 1"], u"Страница 2", [])
-        WikiPageFactory.create (self.rootwiki[u"Страница 1"], u"СТРАНИЦА 3", [])
-        WikiPageFactory.create (self.rootwiki[u"Страница 1"], u"Страница 4", [])
+        factory = WikiPageFactory()
+        factory.create (self.rootwiki, u"Страница 1", [])
+        factory.create (self.rootwiki[u"Страница 1"], u"Страница 2", [])
+        factory.create (self.rootwiki[u"Страница 1"], u"СТРАНИЦА 3", [])
+        factory.create (self.rootwiki[u"Страница 1"], u"Страница 4", [])
 
         self.testPage = self.rootwiki[u"Страница 1"]
-        
+
 
     def tearDown(self):
         removeWiki (self.path)
@@ -118,4 +114,3 @@ class WikiChildListCommandTest (unittest.TestCase):
 <a href="Страница 4">Страница 4</a>"""
 
         self.assertEqual (result_right, result, result)
-

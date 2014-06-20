@@ -1,17 +1,13 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import unittest
 import os.path
-
-import wx
 
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
 from outwiker.core.style import Style
 from outwiker.core.attachment import Attachment
-from outwiker.pages.wiki.parser.wikiparser import Parser
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
 from outwiker.pages.wiki.htmlgenerator import HtmlGenerator
@@ -48,7 +44,7 @@ def hello (count):
         self.config.tabWidth.value = 4
         self.config.defaultLanguage.remove_option()
         Application.config.remove_section (self.config.section)
-        
+
         self.factory = ParserFactory()
         self.parser = self.factory.make (self.testPage, Application.config)
 
@@ -58,7 +54,7 @@ def hello (count):
             result = unicode (fp.read(), "utf8")
 
         return result
-    
+
 
     def __createWiki (self):
         # Здесь будет создаваться вики
@@ -67,9 +63,9 @@ def hello (count):
 
         self.rootwiki = WikiDocument.create (self.path)
 
-        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 1", [])
         self.testPage = self.rootwiki[u"Страница 1"]
-        
+
 
     def tearDown(self):
         self.config.tabWidth.value = 4
@@ -91,7 +87,7 @@ def hello (count):
         innerString2 = u".highlight-default .c { color: #408080; font-style: italic } /* Comment */"
         innerString3 = u'        <span class="k">print</span> <span class="s">&quot;Hello world!!!&quot;</span>'
         innerString4 = u'<span class="kn">import</span> <span class="nn">os</span>'
-        
+
         self.assertTrue (innerString1 in result)
         self.assertTrue (innerString2 in result)
         self.assertTrue (innerString3 in result)
@@ -113,7 +109,7 @@ def hello (count):
         innerString2 = u".highlight-default .c { color: #408080; font-style: italic } /* Comment */"
         innerString3 = u'        <span class="k">print</span> <span class="s">&quot;Hello world!!!&quot;</span>'
         innerString4 = u'<span class="kn">import</span> <span class="nn">os</span>'
-        
+
         self.assertTrue (innerString1 in result)
         self.assertTrue (innerString2 in result)
         self.assertTrue (innerString3 in result)
@@ -135,7 +131,7 @@ def hello (count):
         innerString2 = u".highlight-default .c { color: #408080; font-style: italic } /* Comment */"
         innerString3 = u'        <span class="k">print</span> <span class="s">&quot;Hello world!!!&quot;</span>'
         innerString4 = u'<span class="kn">import</span> <span class="nn">os</span>'
-        
+
         self.assertTrue (innerString1 in result)
         self.assertTrue (innerString2 in result)
         self.assertTrue (innerString3 in result)
@@ -157,7 +153,7 @@ def hello (count):
         innerString2 = u".highlight-vim .c { color: #000080 } /* Comment */"
         innerString3 = u'        <span class="k">print</span> <span class="s">&quot;Hello world!!!&quot;</span>'
         innerString4 = u'<span class="kn">import</span> <span class="nn">os</span>'
-        
+
         self.assertTrue (innerString1 in result)
         self.assertTrue (innerString2 in result)
         self.assertTrue (innerString3 in result)
@@ -177,7 +173,7 @@ def hello (count):
         innerString2 = u".highlight-default .c { color: #408080; font-style: italic } /* Comment */"
         innerString3 = u'        <span class="k">print</span> <span class="s">&quot;Hello world!!!&quot;</span>'
         innerString4 = u'<span class="kn">import</span> <span class="nn">os</span>'
-        
+
         self.assertTrue (innerString1 in result)
         self.assertTrue (innerString2 in result)
         self.assertTrue (innerString3 in result)
@@ -197,7 +193,7 @@ def hello (count):
         innerString2 = u".highlight-vim .c { color: #000080 } /* Comment */"
         innerString3 = u'        <span class="k">print</span> <span class="s">&quot;Hello world!!!&quot;</span>'
         innerString4 = u'<span class="kn">import</span> <span class="nn">os</span>'
-        
+
         self.assertTrue (innerString1 in result)
         self.assertTrue (innerString2 in result)
         self.assertTrue (innerString3 in result)
@@ -206,7 +202,7 @@ def hello (count):
 
     def testSeveralStyles (self):
         text = u'''(:source lang="python" tabwidth=4 style="vim":){0}(:sourceend:)
-        
+
 (:source lang="python" tabwidth=4:){0}(:sourceend:)'''.format (self.pythonSource)
 
         self.testPage.content = text
@@ -223,7 +219,7 @@ def hello (count):
         innerString6 = u".highlight-default .c { color: #408080; font-style: italic } /* Comment */"
         innerString7 = u'<div class="highlight-default">'
         innerString8 = u'<div class="highlight-vim">'
-        
+
         self.assertTrue (innerString1 in result)
         self.assertTrue (innerString2 in result)
         self.assertTrue (innerString3 in result)
@@ -246,7 +242,7 @@ def hello (count):
 
         innerString1 = u".highlight-default .c"
         innerString2 = u".highlight-default .c { color: #408080; font-style: italic } /* Comment */"
-        
+
         self.assertTrue (innerString1 in result)
         self.assertTrue (innerString2 in result)
 
@@ -265,7 +261,7 @@ def hello (count):
 
         innerString1 = u".highlight-default .c"
         innerString2 = u".highlight-default .c { color: #408080; font-style: italic } /* Comment */"
-        
+
         self.assertTrue (innerString1 in result)
         self.assertTrue (innerString2 in result)
 
@@ -284,7 +280,7 @@ def hello (count):
 
         innerString1 = u".highlight-default .c"
         innerString2 = u".highlight-default .c { color: #408080; font-style: italic } /* Comment */"
-        
+
         self.assertTrue (innerString1 in result)
         self.assertTrue (innerString2 in result)
 
@@ -302,7 +298,7 @@ def hello (count):
 
         innerString1 = u".highlight-vim .c"
         innerString2 = u".highlight-vim .c { color: #000080 } /* Comment */"
-        
+
         self.assertTrue (innerString1 in result)
         self.assertTrue (innerString2 in result)
 
@@ -319,7 +315,7 @@ def hello (count):
 
         innerString1 = u".highlight-vim pre {padding: 0px; border: none; color: inherit; background-color: inherit; margin:0px; }"
         innerString2 = u".highlight-vim {color: inherit; background-color: inherit }"
-        
+
         self.assertTrue (innerString1 in result)
         self.assertTrue (innerString2 not in result)
 
@@ -339,7 +335,7 @@ def hello (count):
         innerString3 = u'<div class="highlight-vim-parentbg">'
         innerString4 = u".highlight-vim {color: inherit; background-color: inherit }"
         innerString5 = u'<div class="highlight-vim">'
-        
+
         self.assertTrue (innerString1 in result)
         self.assertTrue (innerString2 in result)
         self.assertTrue (innerString3 in result)
@@ -362,7 +358,7 @@ def hello (count):
         innerString3 = u'<div class="highlight-vim-parentbg">'
         innerString4 = u".highlight-vim {color: inherit; background-color: inherit }"
         innerString5 = u'<div class="highlight-vim">'
-        
+
         self.assertTrue (innerString1 in result)
         self.assertTrue (innerString2 in result)
         self.assertTrue (innerString3 in result)
@@ -372,7 +368,7 @@ def hello (count):
 
     def testParentBg4 (self):
         text = u'''(:source lang="python" tabwidth=4:){0}(:sourceend:)
-        
+
         (:source lang="python" tabwidth=4 parentbg:){0}(:sourceend:)'''.format (self.pythonSource)
 
         self.testPage.content = text
@@ -387,7 +383,7 @@ def hello (count):
         innerString3 = u'<div class="highlight-vim-parentbg">'
         innerString4 = u".highlight-vim {color: inherit; background-color: inherit }"
         innerString5 = u'<div class="highlight-vim">'
-        
+
         self.assertTrue (innerString1 in result)
         self.assertTrue (innerString2 in result)
         self.assertTrue (innerString3 in result)

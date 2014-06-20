@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import wx
@@ -19,7 +18,7 @@ class AttachListDialogTest (BaseMainWndTest):
 
     def testCancel (self):
         controller = AttachListDialogController (self._dialog)
-        
+
         self._dialog.SetModalResult (wx.ID_CANCEL)
         result = controller.getDialogResult()
 
@@ -28,7 +27,7 @@ class AttachListDialogTest (BaseMainWndTest):
 
     def testSortByName (self):
         controller = AttachListDialogController (self._dialog)
-        
+
         self._dialog.SetModalResult (wx.ID_OK)
         self._dialog.selectedSort = 0
         self._dialog.isDescend = False
@@ -40,7 +39,7 @@ class AttachListDialogTest (BaseMainWndTest):
 
     def testSortByNameDescend (self):
         controller = AttachListDialogController (self._dialog)
-        
+
         self._dialog.SetModalResult (wx.ID_OK)
         self._dialog.selectedSort = 0
         self._dialog.isDescend = True
@@ -52,7 +51,7 @@ class AttachListDialogTest (BaseMainWndTest):
 
     def testSortByExt (self):
         controller = AttachListDialogController (self._dialog)
-        
+
         self._dialog.SetModalResult (wx.ID_OK)
         self._dialog.selectedSort = 1
         self._dialog.isDescend = False
@@ -64,7 +63,7 @@ class AttachListDialogTest (BaseMainWndTest):
 
     def testSortByExtDescend (self):
         controller = AttachListDialogController (self._dialog)
-        
+
         self._dialog.SetModalResult (wx.ID_OK)
         self._dialog.selectedSort = 1
         self._dialog.isDescend = True
@@ -76,7 +75,7 @@ class AttachListDialogTest (BaseMainWndTest):
 
     def testSortBySize (self):
         controller = AttachListDialogController (self._dialog)
-        
+
         self._dialog.SetModalResult (wx.ID_OK)
         self._dialog.selectedSort = 2
         self._dialog.isDescend = False
@@ -88,7 +87,7 @@ class AttachListDialogTest (BaseMainWndTest):
 
     def testSortBySizeDescend (self):
         controller = AttachListDialogController (self._dialog)
-        
+
         self._dialog.SetModalResult (wx.ID_OK)
         self._dialog.selectedSort = 2
         self._dialog.isDescend = True
@@ -100,7 +99,7 @@ class AttachListDialogTest (BaseMainWndTest):
 
     def testSortByDate (self):
         controller = AttachListDialogController (self._dialog)
-        
+
         self._dialog.SetModalResult (wx.ID_OK)
         self._dialog.selectedSort = 3
         self._dialog.isDescend = False
@@ -112,7 +111,7 @@ class AttachListDialogTest (BaseMainWndTest):
 
     def testSortByDateDescend (self):
         controller = AttachListDialogController (self._dialog)
-        
+
         self._dialog.SetModalResult (wx.ID_OK)
         self._dialog.selectedSort = 3
         self._dialog.isDescend = True

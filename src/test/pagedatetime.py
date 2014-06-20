@@ -1,10 +1,9 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import unittest
 import datetime
 
-from outwiker.core.tree import RootWikiPage, WikiDocument, WikiPage
+from outwiker.core.tree import WikiDocument
 from outwiker.core.config import PageConfig
 from outwiker.core.style import Style
 from outwiker.core.attachment import Attachment
@@ -30,14 +29,14 @@ class PageDateTimeTest (unittest.TestCase):
 
 
     def testDeleteDate (self):
-        TextPageFactory.create (self.rootwiki, u"Страница 1", [])
+        TextPageFactory().create (self.rootwiki, u"Страница 1", [])
         self.rootwiki[u"Страница 1"].params.remove_option (PageConfig.sectionName, PageConfig.datetimeParamName)
         self.assertEqual (self.rootwiki[u"Страница 1"].datetime, None)
 
 
     def testCreateDate (self):
         now = datetime.datetime.now()
-        TextPageFactory.create (self.rootwiki, u"Страница 1", [])
+        TextPageFactory().create (self.rootwiki, u"Страница 1", [])
 
         self.assertNotEqual (self.rootwiki[u"Страница 1"].datetime, None)
 
@@ -46,7 +45,7 @@ class PageDateTimeTest (unittest.TestCase):
 
 
     def testSetDate (self):
-        TextPageFactory.create (self.rootwiki, u"Страница 1", [])
+        TextPageFactory().create (self.rootwiki, u"Страница 1", [])
         newdate = datetime.datetime (2012, 8, 24)
         self.rootwiki[u"Страница 1"].datetime = newdate
 
@@ -54,7 +53,7 @@ class PageDateTimeTest (unittest.TestCase):
 
 
     def testChangeContent (self):
-        TextPageFactory.create (self.rootwiki, u"Страница 1", [])
+        TextPageFactory().create (self.rootwiki, u"Страница 1", [])
         newdate = datetime.datetime (2012, 8, 24)
         self.rootwiki[u"Страница 1"].datetime = newdate
 
@@ -67,7 +66,7 @@ class PageDateTimeTest (unittest.TestCase):
 
 
     def testLoadWiki (self):
-        TextPageFactory.create (self.rootwiki, u"Страница 1", [])
+        TextPageFactory().create (self.rootwiki, u"Страница 1", [])
         newdate = datetime.datetime (2012, 8, 24)
         self.rootwiki[u"Страница 1"].datetime = newdate
 
@@ -81,7 +80,7 @@ class PageDateTimeTest (unittest.TestCase):
         newcontent2 = u"Бла-бла-бла-бла-бла"
         now = datetime.datetime.now()
 
-        TextPageFactory.create (self.rootwiki, u"Страница 1", [])
+        TextPageFactory().create (self.rootwiki, u"Страница 1", [])
         self.rootwiki[u"Страница 1"].content = newcontent
         self.rootwiki[u"Страница 1"].datetime = newdate
 
@@ -97,7 +96,7 @@ class PageDateTimeTest (unittest.TestCase):
     def testsavePage (self):
         newdate = datetime.datetime (2012, 8, 24)
 
-        TextPageFactory.create (self.rootwiki, u"Страница 1", [])
+        TextPageFactory().create (self.rootwiki, u"Страница 1", [])
         self.rootwiki[u"Страница 1"].content = u"Бла-бла-бла"
         self.rootwiki[u"Страница 1"].datetime = newdate
 
@@ -108,12 +107,12 @@ class PageDateTimeTest (unittest.TestCase):
     def testChangeOrder (self):
         newdate = datetime.datetime (2012, 8, 24)
 
-        TextPageFactory.create (self.rootwiki, u"Страница 1", [])
+        TextPageFactory().create (self.rootwiki, u"Страница 1", [])
         self.rootwiki[u"Страница 1"].content = u"Бла-бла-бла"
 
         self.rootwiki[u"Страница 1"].datetime = newdate
 
-        TextPageFactory.create (self.rootwiki, u"Страница 2", [])
+        TextPageFactory().create (self.rootwiki, u"Страница 2", [])
         self.rootwiki[u"Страница 2"].content = u"Бла-бла"
 
         self.assertEqual (self.rootwiki[u"Страница 1"].datetime, newdate)
@@ -124,10 +123,8 @@ class PageDateTimeTest (unittest.TestCase):
 
     def testChangeIcon (self):
         newdate = datetime.datetime (2012, 8, 24)
-        newcontent = u"Бла-бла-бла"
-        now = datetime.datetime.now()
 
-        TextPageFactory.create (self.rootwiki, u"Страница 1", [])
+        TextPageFactory().create (self.rootwiki, u"Страница 1", [])
         self.rootwiki[u"Страница 1"].datetime = newdate
 
         self.assertEqual (self.rootwiki[u"Страница 1"].datetime, newdate)
@@ -140,10 +137,8 @@ class PageDateTimeTest (unittest.TestCase):
 
     def testChangeTags(self):
         newdate = datetime.datetime (2012, 8, 24)
-        newcontent = u"Бла-бла-бла"
-        now = datetime.datetime.now()
 
-        TextPageFactory.create (self.rootwiki, u"Страница 1", [])
+        TextPageFactory().create (self.rootwiki, u"Страница 1", [])
         self.rootwiki[u"Страница 1"].datetime = newdate
 
         self.assertEqual (self.rootwiki[u"Страница 1"].datetime, newdate)
@@ -168,7 +163,7 @@ class PageDateTimeTest (unittest.TestCase):
         exampleStyleDir = u"../test/styles/example_jblog/example_jblog"
         newdate = datetime.datetime (2012, 8, 24)
 
-        HtmlPageFactory.create (self.rootwiki, u"Страница 1", [])
+        HtmlPageFactory().create (self.rootwiki, u"Страница 1", [])
         self.rootwiki[u"Страница 1"].datetime = newdate
 
         style = Style()
@@ -185,12 +180,12 @@ class PageDateTimeTest (unittest.TestCase):
         newdate = datetime.datetime (2012, 8, 24)
         newcontent = u"Бла-бла-бла"
 
-        TextPageFactory.create (self.rootwiki, u"Страница 1", [])
+        TextPageFactory().create (self.rootwiki, u"Страница 1", [])
         self.rootwiki[u"Страница 1"].content = newcontent
         self.rootwiki[u"Страница 1"].datetime = newdate
         self.assertEqual (self.rootwiki[u"Страница 1"].datetime, newdate)
 
-        TextPageFactory.create (self.rootwiki[u"Страница 1"], u"Страница 2", [])
+        TextPageFactory().create (self.rootwiki[u"Страница 1"], u"Страница 2", [])
         self.assertEqual (self.rootwiki[u"Страница 1"].datetime, newdate)
 
         self.rootwiki[u"Страница 1/Страница 2"].content = u"Бла-бла"
@@ -201,7 +196,7 @@ class PageDateTimeTest (unittest.TestCase):
         newdate = datetime.datetime (2012, 8, 24)
         newcontent = u"Бла-бла-бла"
 
-        TextPageFactory.create (self.rootwiki, u"Страница 1", [])
+        TextPageFactory().create (self.rootwiki, u"Страница 1", [])
         self.rootwiki[u"Страница 1"].content = newcontent
         self.rootwiki[u"Страница 1"].datetime = newdate
         self.assertEqual (self.rootwiki[u"Страница 1"].datetime, newdate)

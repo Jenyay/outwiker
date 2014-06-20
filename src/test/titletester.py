@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import unittest
@@ -7,13 +6,6 @@ from outwiker.core.pagetitletester import WindowsPageTitleTester, LinuxPageTitle
 
 
 class PageTitleTesterTest (unittest.TestCase):
-    def setUp (self):
-        pass
-
-    def tearDown (self):
-        pass
-
-
     def testValidWin (self):
         title = u"Обычный нормальный заголовок %gg"
 
@@ -105,11 +97,11 @@ class PageTitleTesterTest (unittest.TestCase):
 
     def testWarningPercentWindows (self):
         titleList = [u"Заголовок %10 бла-бла-бла",
-                u"Заголовок %aa бла-бла-бла",
-                u"Заголовок %AA бла-бла-бла",
-                u"Заголовок %1f бла-бла-бла",
-                u"Заголовок %1F бла-бла-бла"
-                ]
+                     u"Заголовок %aa бла-бла-бла",
+                     u"Заголовок %AA бла-бла-бла",
+                     u"Заголовок %1f бла-бла-бла",
+                     u"Заголовок %1F бла-бла-бла"
+                     ]
 
         tester = WindowsPageTitleTester()
         for title in titleList:
@@ -118,11 +110,11 @@ class PageTitleTesterTest (unittest.TestCase):
 
     def testWarningPercentLinux (self):
         titleList = [u"Заголовок %10 бла-бла-бла",
-                u"Заголовок %aa бла-бла-бла",
-                u"Заголовок %AA бла-бла-бла",
-                u"Заголовок %1f бла-бла-бла",
-                u"Заголовок %1F бла-бла-бла"
-                ]
+                     u"Заголовок %aa бла-бла-бла",
+                     u"Заголовок %AA бла-бла-бла",
+                     u"Заголовок %1f бла-бла-бла",
+                     u"Заголовок %1F бла-бла-бла"
+                     ]
 
         tester = LinuxPageTitleTester()
         for title in titleList:

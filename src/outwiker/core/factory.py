@@ -12,6 +12,12 @@ class PageFactory (object):
     """
     __metaclass__ = ABCMeta
 
+    def create (self, parent, title, tags):
+        """
+        Создать страницу. Вызывать этот метод вместо конструктора
+        """
+        return PageFactory._createPage (self.getPageType(), parent, title, tags)
+
 
     @abstractmethod
     def getPageType (self):

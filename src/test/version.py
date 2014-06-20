@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import unittest
@@ -14,12 +13,12 @@ class StatusTest (unittest.TestCase):
     def testEqual (self):
         self.assertTrue (StatusSet.DEV == StatusSet.DEV)
         self.assertTrue (StatusSet.BETA == StatusSet.BETA)
-    
+
 
     def testNotEqual (self):
         self.assertTrue (StatusSet.DEV != StatusSet.BETA)
         self.assertTrue (StatusSet.STABLE != StatusSet.BETA)
-    
+
 
     def testCustomCompare (self):
         self.assertTrue (StatusSet.DEV > Status ("custom", -1))
@@ -27,7 +26,7 @@ class StatusTest (unittest.TestCase):
 
         self.assertTrue (StatusSet.DEV >= Status ("custom", -1))
         self.assertTrue (StatusSet.BETA <= Status ("custom", 10000))
-    
+
 
     def testLess (self):
         self.assertTrue (StatusSet.BETA < StatusSet.STABLE)
@@ -60,7 +59,7 @@ class VersionTest(unittest.TestCase):
     def setUp(self):
         pass
 
-    
+
     def testToString1 (self):
         ver = Version (1)
         self.assertEqual (str(ver), "1")
@@ -69,12 +68,12 @@ class VersionTest(unittest.TestCase):
     def testToString2 (self):
         ver = Version (1, 0, 3)
         self.assertEqual (str(ver), "1.0.3")
-    
+
 
     def testToString3 (self):
         ver = Version (1, 0, 6, status=StatusSet.BETA)
         self.assertEqual (str(ver), "1.0.6 beta")
-    
+
 
     def testToString4 (self):
         ver = Version (1, 0, 6)
@@ -85,37 +84,37 @@ class VersionTest(unittest.TestCase):
         self.assertTrue (Version (1) == Version (1))
         self.assertTrue (Version (1, 2, 3) == Version (1, 2, 3))
         self.assertTrue (Version (1, 2, 3, status=StatusSet.BETA) == Version (1, 2, 3, status=StatusSet.BETA))
-    
+
 
     def testCompareNotEqual (self):
         self.assertTrue (Version (1) != Version (2))
         self.assertTrue (Version (1, 2, 3) != Version (1, 2, 4))
         self.assertTrue (Version (1, 2, 3, status=StatusSet.BETA) != Version (1, 2, 3, status=StatusSet.ALPHA))
-    
+
 
     def testCompareGreat (self):
         self.assertTrue (Version (2) > Version (1))
         self.assertTrue (Version (1, 2, 4) > Version (1, 2, 3))
         self.assertTrue (Version (2, 2, 4) > Version (1, 2, 3))
         self.assertTrue (Version (1, 2, 3, status=StatusSet.STABLE) > Version (1, 2, 3, status=StatusSet.BETA))
-        self.assertTrue (Version (2, 2, 3, status=StatusSet.ALPHA) > Version (1, 2, 3, status=StatusSet.BETA) )
+        self.assertTrue (Version (2, 2, 3, status=StatusSet.ALPHA) > Version (1, 2, 3, status=StatusSet.BETA))
 
-    
+
     def testCompareGreatEqual (self):
         self.assertTrue (Version (2) >= Version (1))
         self.assertTrue (Version (1, 2, 4) >= Version (1, 2, 3))
         self.assertTrue (Version (2, 2, 4) >= Version (1, 2, 3))
         self.assertTrue (Version (1, 2, 3, status=StatusSet.STABLE) >= Version (1, 2, 3, status=StatusSet.BETA))
-        self.assertTrue (Version (2, 2, 3, status=StatusSet.ALPHA) >= Version (1, 2, 3, status=StatusSet.BETA) )
+        self.assertTrue (Version (2, 2, 3, status=StatusSet.ALPHA) >= Version (1, 2, 3, status=StatusSet.BETA))
 
-    
+
     def testCompareLess (self):
         self.assertTrue (Version (1) < Version (2))
         self.assertTrue (Version (1, 2, 2) < Version (1, 2, 3))
         self.assertTrue (Version (2, 2, 4) < Version (2, 6, 3))
         self.assertTrue (Version (1, 2, 3, status=StatusSet.ALPHA) < Version (1, 2, 3, status=StatusSet.BETA))
         self.assertTrue (Version (1, 2, 3, status=StatusSet.BETA) < Version (2, 2, 3, status=StatusSet.ALPHA))
-    
+
 
     def testCompareLessEqual (self):
         self.assertTrue (Version (1) <= Version (2))
@@ -123,7 +122,7 @@ class VersionTest(unittest.TestCase):
         self.assertTrue (Version (2, 2, 4) <= Version (2, 6, 3))
         self.assertTrue (Version (1, 2, 3, status=StatusSet.ALPHA) <= Version (1, 2, 3, status=StatusSet.BETA))
         self.assertTrue (Version (1, 2, 3, status=StatusSet.BETA) <= Version (2, 2, 3, status=StatusSet.ALPHA))
-    
+
 
     def testParse1 (self):
         self.assertTrue (Version.parse ("1") == Version (1))
@@ -132,12 +131,12 @@ class VersionTest(unittest.TestCase):
     def testParse2 (self):
         self.assertTrue (Version.parse ("1.2.3") == Version (1, 2, 3), str (Version.parse ("1.2.3")))
 
-    
+
     def testParse3 (self):
         self.assertTrue (Version.parse ("1.2.3 beta") == Version (1, 2, 3, status=StatusSet.BETA))
         self.assertTrue (Version.parse (" 1.2.3 dev") == Version (1, 2, 3, status=StatusSet.DEV))
         self.assertTrue (Version.parse ("1.2.3  stable ") == Version (1, 2, 3, status=StatusSet.STABLE))
-    
+
 
     def testParse4 (self):
         self.assertRaises (ValueError, Version.parse, "abyrvalg")

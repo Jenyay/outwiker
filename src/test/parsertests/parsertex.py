@@ -1,17 +1,12 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import os
 import unittest
-import hashlib
 
 from test.utils import removeWiki
 
 from outwiker.core.tree import WikiDocument
-from outwiker.core.attachment import Attachment
 from outwiker.core.application import Application
-
-from outwiker.pages.wiki.parser.wikiparser import Parser
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.thumbnails import Thumbnails
 from outwiker.pages.wiki.texrender import getTexRender
@@ -23,11 +18,11 @@ class ParserTexTest (unittest.TestCase):
         self.encoding = "utf8"
 
         self.__createWiki()
-        
+
         factory = ParserFactory()
         self.testPage = self.rootwiki[u"Страница 2"]
         self.parser = factory.make (self.testPage, Application.config)
-    
+
 
     def __createWiki (self):
         # Здесь будет создаваться вики
@@ -35,12 +30,12 @@ class ParserTexTest (unittest.TestCase):
         removeWiki (self.path)
 
         self.rootwiki = WikiDocument.create (self.path)
-        WikiPageFactory.create (self.rootwiki, u"Страница 2", [])
-        
+        WikiPageFactory().create (self.rootwiki, u"Страница 2", [])
+
 
     def tearDown(self):
         removeWiki (self.path)
-    
+
 
     def testTex1 (self):
         thumb = Thumbnails (self.parser.page)
@@ -59,7 +54,7 @@ class ParserTexTest (unittest.TestCase):
         self.assertEqual (result_right, result, result)
 
         full_path = os.path.join (self.parser.page.path, path)
-        self.assertTrue (os.path.exists (full_path), full_path )
+        self.assertTrue (os.path.exists (full_path), full_path)
 
 
     def testTex2 (self):
@@ -84,9 +79,9 @@ class ParserTexTest (unittest.TestCase):
         path3 = os.path.join (Thumbnails.getRelativeThumbDir(), fname3)
 
         result_right = u'''бла-бла-бла
-<ul><li>бла-бла-бла <img src="{path1}"/> 1111</li><li>бла-бла-бла <img src="{path2}"/> 222</li><li>бла-бла-бла <img src="{path3}"/> 333</li></ul>'''.format (path1=path1.replace ("\\", "/"), 
-        path2=path2.replace ("\\", "/"),
-        path3=path3.replace ("\\", "/"))
+<ul><li>бла-бла-бла <img src="{path1}"/> 1111</li><li>бла-бла-бла <img src="{path2}"/> 222</li><li>бла-бла-бла <img src="{path3}"/> 333</li></ul>'''.format (path1=path1.replace ("\\", "/"),
+                                                                                                                                                                                        path2=path2.replace ("\\", "/"),
+                                                                                                                                                                                        path3=path3.replace ("\\", "/"))
 
 
         result = self.parser.toHtml (text)
@@ -119,7 +114,7 @@ class ParserTexTest (unittest.TestCase):
         self.assertEqual (result_right, result, result)
 
         full_path = os.path.join (self.parser.page.path, path)
-        self.assertTrue (os.path.exists (full_path), full_path )
+        self.assertTrue (os.path.exists (full_path), full_path)
 
 
     def testTex4 (self):
@@ -139,7 +134,7 @@ class ParserTexTest (unittest.TestCase):
         self.assertEqual (result_right, result, result)
 
         full_path = os.path.join (self.parser.page.path, path)
-        self.assertTrue (os.path.exists (full_path), full_path )
+        self.assertTrue (os.path.exists (full_path), full_path)
 
 
     def testTex5 (self):
@@ -168,8 +163,4 @@ class ParserTexTest (unittest.TestCase):
         self.assertEqual (result_right, result, result)
 
         full_path = os.path.join (self.parser.page.path, path)
-        self.assertTrue (os.path.exists (full_path), full_path )
-
-
-
-    
+        self.assertTrue (os.path.exists (full_path), full_path)

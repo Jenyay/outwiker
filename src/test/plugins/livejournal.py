@@ -1,14 +1,11 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import unittest
-import os.path
 
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
 from outwiker.core.style import Style
-from outwiker.pages.wiki.parser.wikiparser import Parser
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
 from outwiker.pages.wiki.htmlgenerator import HtmlGenerator
@@ -25,7 +22,7 @@ class LivejournalPluginTest (unittest.TestCase):
 
         self.loader = PluginsLoader(Application)
         self.loader.load (dirlist)
-        
+
         self.factory = ParserFactory()
         self.parser = self.factory.make (self.testPage, Application.config)
 
@@ -44,9 +41,9 @@ class LivejournalPluginTest (unittest.TestCase):
 
         self.rootwiki = WikiDocument.create (self.path)
 
-        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 1", [])
         self.testPage = self.rootwiki[u"Страница 1"]
-        
+
 
     def tearDown(self):
         removeWiki (self.path)
@@ -54,7 +51,7 @@ class LivejournalPluginTest (unittest.TestCase):
 
 
     def testPluginLoad (self):
-        self.assertEqual ( len (self.loader), 1)
+        self.assertEqual (len (self.loader), 1)
 
 
     def testUser1 (self):

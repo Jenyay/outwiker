@@ -33,7 +33,7 @@ class HtmlTemplateTest(unittest.TestCase):
 </html>"""
 
         templatepath = os.path.join (getTemplatesDir(), "__default", "__style.html")
-        tpl = HtmlTemplate (readTextFile (templatepath).strip() )
+        tpl = HtmlTemplate (readTextFile (templatepath).strip())
         result = tpl.substitute (content=content)
 
         self.assertIn (result_right, result.replace ("\r\n", "\n"))
@@ -116,7 +116,7 @@ class HtmlTemplateTest(unittest.TestCase):
         content = u"бла-бла-бла"
 
         templatepath = os.path.join (getTemplatesDir(), "__default", "__style.html")
-        tpl = HtmlTemplate (readTextFile (templatepath).strip() )
+        tpl = HtmlTemplate (readTextFile (templatepath).strip())
         result = tpl.substitute (content=content)
 
         self.assertIn (u"font-family:Arial;", result)
@@ -126,7 +126,7 @@ class HtmlTemplateTest(unittest.TestCase):
         self.config.fontSize.value = 20
         content = u"бла-бла-бла"
         templatepath = os.path.join (getTemplatesDir(), "__default", "__style.html")
-        tpl = HtmlTemplate (readTextFile (templatepath).strip() )
+        tpl = HtmlTemplate (readTextFile (templatepath).strip())
         result = tpl.substitute (content=content)
 
         self.assertIn (u"font-size:20pt;", result)
@@ -140,7 +140,7 @@ class HtmlTemplateTest(unittest.TestCase):
         content = u"бла-бла-бла"
 
         templatepath = os.path.join (getTemplatesDir(), "__default", "__style.html")
-        tpl = HtmlTemplate (readTextFile (templatepath).strip() )
+        tpl = HtmlTemplate (readTextFile (templatepath).strip())
         result = tpl.substitute (content=content)
 
         self.assertTrue (style in result, result)
@@ -154,7 +154,7 @@ class HtmlTemplateTest(unittest.TestCase):
         content = u"бла-бла-бла"
 
         templatepath = os.path.join (getTemplatesDir(), "__default", "__style.html")
-        tpl = HtmlTemplate (readTextFile (templatepath).strip() )
+        tpl = HtmlTemplate (readTextFile (templatepath).strip())
         result = tpl.substitute (content=content)
 
         self.assertTrue (style in result, result)
@@ -184,9 +184,9 @@ class HtmlTemplateTest(unittest.TestCase):
 </ul>"""
 
         templatepath = os.path.join (getTemplatesDir(), "__default", "__style.html")
-        tpl = HtmlTemplate (readTextFile (templatepath).strip() )
+        tpl = HtmlTemplate (readTextFile (templatepath).strip())
 
-        result = tpl.substitute (HtmlImprover.run (src) )
+        result = tpl.substitute (HtmlImprover.run (src))
         self.assertIn (expectedResult, result)
 
 
@@ -201,7 +201,7 @@ Attach:file.odt<br>
 <h2>Images</h2>"""
 
         templatepath = os.path.join (getTemplatesDir(), "__default", "__style.html")
-        tpl = HtmlTemplate (readTextFile (templatepath).strip() )
+        tpl = HtmlTemplate (readTextFile (templatepath).strip())
 
-        result = tpl.substitute (HtmlImprover.run (src) )
+        result = tpl.substitute (HtmlImprover.run (src))
         self.assertIn (expectedResult, result)

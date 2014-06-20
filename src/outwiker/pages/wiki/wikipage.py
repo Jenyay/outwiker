@@ -53,14 +53,6 @@ class WikiPageFactory (PageFactory):
     """
     Фабрика для создания викистраниц и их представлений
     """
-    @staticmethod
-    def create (parent, title, tags):
-        """
-        Создать страницу. Вызывать этот метод вместо конструктора
-        """
-        return PageFactory._createPage (WikiWikiPage, parent, title, tags)
-
-
     def getPageType(self):
         return WikiWikiPage
 

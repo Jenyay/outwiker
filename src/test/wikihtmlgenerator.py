@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import os
@@ -9,7 +8,6 @@ import time
 from outwiker.core.tree import WikiDocument
 from outwiker.core.attachment import Attachment
 from outwiker.core.application import Application
-from outwiker.core.config import Config
 from outwiker.core.style import Style
 from outwiker.gui.guiconfig import HtmlRenderConfig
 
@@ -27,7 +25,7 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
 
         self.filesPath = u"../test/samplefiles/"
         self.__createWiki()
-        
+
         files = [u"image.jpg", u"dir"]
 
         fullFilesPath = [os.path.join (self.filesPath, fname) for fname in files]
@@ -38,25 +36,25 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
         Attachment (self.testPage).attach (fullFilesPath)
 
         self.wikitext = u"""Бла-бла-бла
-%thumb maxsize=250%Attach:image.jpg%%
-Бла-бла-бла"""
+        %thumb maxsize=250%Attach:image.jpg%%
+        Бла-бла-бла"""
 
         self.testPage.content = self.wikitext
-        
+
         self.__htmlconfig = HtmlRenderConfig (Application.config)
         self.__setDefaultConfig()
 
 
     def __setDefaultConfig (self):
         # Установим размер превьюшки, не совпадающий с размером по умолчанию
-        Application.config.set (WikiConfig.WIKI_SECTION, 
-                WikiConfig.THUMB_SIZE_PARAM, 
-                WikiConfig.THUMB_SIZE_DEFAULT)
+        Application.config.set (WikiConfig.WIKI_SECTION,
+                                WikiConfig.THUMB_SIZE_PARAM,
+                                WikiConfig.THUMB_SIZE_DEFAULT)
 
-        Application.config.set (HtmlRenderConfig.HTML_SECTION, 
-                HtmlRenderConfig.FONT_FACE_NAME_PARAM, 
-                HtmlRenderConfig.FONT_NAME_DEFAULT)
-    
+        Application.config.set (HtmlRenderConfig.HTML_SECTION,
+                                HtmlRenderConfig.FONT_FACE_NAME_PARAM,
+                                HtmlRenderConfig.FONT_NAME_DEFAULT)
+
 
     def __createWiki (self):
         # Здесь будет создаваться вики
@@ -65,9 +63,9 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
 
         self.rootwiki = WikiDocument.create (self.path)
 
-        WikiPageFactory.create (self.rootwiki, u"Страница 2", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 2", [])
         self.testPage = self.rootwiki[u"Страница 2"]
-        
+
 
     def tearDown(self):
         self.__setDefaultConfig()
@@ -115,7 +113,7 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
         ftime = os.stat(path).st_mtime
         time.sleep (0.1)
 
-        path2 = generator.makeHtml (Style().getPageStyle (self.testPage))
+        generator.makeHtml (Style().getPageStyle (self.testPage))
         ftime2 = os.stat(path).st_mtime
 
         self.assertEqual (ftime, ftime2)
@@ -123,13 +121,13 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
 
         # Изменили содержимое страницы, опять нельзя кешировать
         self.testPage.content = u"бла-бла-бла"
-        path3 = generator.makeHtml (Style().getPageStyle (self.testPage))
+        generator.makeHtml (Style().getPageStyle (self.testPage))
         ftime3 = os.stat(path).st_mtime
 
         self.assertNotEqual (ftime2, ftime3)
         time.sleep (0.1)
 
-        path4 = generator.makeHtml (Style().getPageStyle (self.testPage))
+        generator.makeHtml (Style().getPageStyle (self.testPage))
         ftime4 = os.stat(path).st_mtime
 
         self.assertEqual (ftime3, ftime4)
@@ -139,13 +137,13 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
         attach = Attachment (self.testPage)
         attach.attach ([os.path.join (self.filesPath, u"add.png")])
 
-        path5 = generator.makeHtml (Style().getPageStyle (self.testPage))
+        generator.makeHtml (Style().getPageStyle (self.testPage))
         ftime5 = os.stat(path).st_mtime
 
         self.assertNotEqual (ftime4, ftime5)
         time.sleep (0.1)
 
-        path6 = generator.makeHtml (Style().getPageStyle (self.testPage))
+        generator.makeHtml (Style().getPageStyle (self.testPage))
         ftime6 = os.stat(path).st_mtime
 
         self.assertEqual (ftime5, ftime6)
@@ -215,7 +213,7 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
         self.assertTrue (generator.canReadFromCache())
 
         # Добавим файл в dir
-        with open (os.path.join (attach.getAttachPath(), "dir", "temp.tmp"), "w" ) as fp:
+        with open (os.path.join (attach.getAttachPath(), "dir", "temp.tmp"), "w") as fp:
             fp.write ("bla-bla-bla")
 
         self.assertFalse (generator.canReadFromCache())
@@ -228,7 +226,7 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
         generator.makeHtml (Style().getPageStyle (self.testPage))
 
         # Добавим файл в dir/subdir_2
-        with open (os.path.join (subdir, "temp2.tmp"), "w" ) as fp:
+        with open (os.path.join (subdir, "temp2.tmp"), "w") as fp:
             fp.write ("bla-bla-bla")
 
         self.assertFalse (generator.canReadFromCache())
@@ -246,7 +244,7 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
         self.assertTrue (generator.canReadFromCache())
 
         # Добавляем новую подстраницу
-        WikiPageFactory.create (self.testPage, u"Подстраница 1", [])
+        WikiPageFactory().create (self.testPage, u"Подстраница 1", [])
         self.assertFalse (generator.canReadFromCache())
 
         generator.makeHtml (Style().getPageStyle (self.testPage))
@@ -367,7 +365,7 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
         Application.plugins.clear()
 
         self.assertFalse (generator.canReadFromCache())
-        
+
         # Перезагрузим плагины в другом порядке
         Application.plugins.load ([u"../plugins/testempty1"])
         Application.plugins.load ([u"../plugins/testempty2"])
@@ -415,9 +413,9 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
         # После того, как один раз сгенерили страницу, если ничего не изменилось, можно кешировать
         self.assertTrue (generator.canReadFromCache())
 
-        Application.config.set (HtmlRenderConfig.HTML_SECTION, 
-                HtmlRenderConfig.FONT_FACE_NAME_PARAM, 
-                u"Бла-бла-бла")
+        Application.config.set (HtmlRenderConfig.HTML_SECTION,
+                                HtmlRenderConfig.FONT_FACE_NAME_PARAM,
+                                u"Бла-бла-бла")
 
         self.assertFalse (generator.canReadFromCache())
         generator.makeHtml (Style().getPageStyle (self.testPage))
@@ -451,31 +449,3 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
 
         generator.resetHash()
         self.assertFalse (generator.canReadFromCache())
-
-
-
-    # def testFontNameInvalidEncoding (self):
-    #     """
-    #     Тест на то, что на кэширование влияет изменение размера превьюшки по умолчанию
-    #     """
-    #     Application.config.set (HtmlRenderConfig.HTML_SECTION, 
-    #             HtmlRenderConfig.FONT_FACE_NAME_PARAM, 
-    #             u"Arial")
-
-    #     # Только создали страницу, кешировать нельзя
-    #     generator = HtmlGenerator (self.testPage)
-    #     self.assertFalse (generator.canReadFromCache())
-
-    #     generator.makeHtml (Style().getPageStyle (self.testPage))
-    #     # После того, как один раз сгенерили страницу, если ничего не изменилось, можно кешировать
-    #     self.assertTrue (generator.canReadFromCache())
-
-    #     fontname = u"Бла-бла-бла"
-
-    #     Application.config.set (HtmlRenderConfig.HTML_SECTION, 
-    #             HtmlRenderConfig.FONT_FACE_NAME_PARAM, 
-    #             fontname.encode ("cp1251"))
-
-    #     self.assertFalse (generator.canReadFromCache())
-    #     generator.makeHtml (Style().getPageStyle (self.testPage))
-    #     self.assertTrue (generator.canReadFromCache())

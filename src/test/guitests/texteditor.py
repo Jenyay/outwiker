@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 from basemainwnd import BaseMainWndTest
@@ -6,6 +5,7 @@ from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
 from outwiker.pages.text.textpage import TextPageFactory
 from test.utils import removeWiki
+
 
 class TextEditorTest (BaseMainWndTest):
     """
@@ -18,7 +18,7 @@ class TextEditorTest (BaseMainWndTest):
         removeWiki (self.path)
 
         self.wikiroot = WikiDocument.create (self.path)
-        TextPageFactory.create (self.wikiroot, u"Страница", [])
+        TextPageFactory().create (self.wikiroot, u"Страница", [])
 
         self.testpage = self.wikiroot[u"Страница"]
 
@@ -60,21 +60,20 @@ class TextEditorTest (BaseMainWndTest):
 
 
     def testGetSelectionEmpty (self):
-        selText = self._getEditor().GetSelectedText()
         self.assertEqual (len (self._getEditor().GetText()), 0)
 
 
     def testSelection (self):
-        text = u"""Абырвалг 
+        text = u"""Абырвалг
 проверка
-раз два три 
+раз два три
 четыре
 """
         self._getEditor().SetText (text)
-        self.assertEqual (len (self._getEditor().GetSelectedText() ), 0)
+        self.assertEqual (len (self._getEditor().GetSelectedText()), 0)
 
         self._getEditor().SetSelection (0, 0)
-        self.assertEqual (len (self._getEditor().GetSelectedText() ), 0)
+        self.assertEqual (len (self._getEditor().GetSelectedText()), 0)
 
         self._getEditor().SetSelection (0, 1)
         self.assertEqual (self._getEditor().GetSelectedText(), u"А")
@@ -90,9 +89,9 @@ class TextEditorTest (BaseMainWndTest):
 
 
     def testReplaceText (self):
-        text = u"""Абырвалг 
+        text = u"""Абырвалг
 проверка
-раз два три 
+раз два три
 четыре
 """
 
@@ -102,34 +101,34 @@ class TextEditorTest (BaseMainWndTest):
 
         self._getEditor().SetText (text)
         self._getEditor().replaceText (u"Абырвалг")
-        self.assertEqual (self._getEditor().GetText(), u"""АбырвалгАбырвалг 
+        self.assertEqual (self._getEditor().GetText(), u"""АбырвалгАбырвалг
 проверка
-раз два три 
+раз два три
 четыре
 """)
 
         self._getEditor().SetText (text)
         self._getEditor().SetSelection (0, 3)
         self._getEditor().replaceText (u"Замена")
-        self.assertEqual (self._getEditor().GetText(), u"""Заменарвалг 
+        self.assertEqual (self._getEditor().GetText(), u"""Заменарвалг
 проверка
-раз два три 
+раз два три
 четыре
 """)
 
         self._getEditor().SetText (text)
         self._getEditor().SetSelection (1, 5)
         self._getEditor().replaceText (u"Замена")
-        self.assertEqual (self._getEditor().GetText(), u"""АЗаменаалг 
+        self.assertEqual (self._getEditor().GetText(), u"""АЗаменаалг
 проверка
-раз два три 
+раз два три
 четыре
 """)
 
 
     def testEscapeHtmlEmpty (self):
         self._getEditor().escapeHtml()
-        self.assertEqual (len (self._getEditor().GetText() ), 0)
+        self.assertEqual (len (self._getEditor().GetText()), 0)
 
 
     def testEscapeHtml (self):
@@ -282,15 +281,15 @@ class TextEditorTest (BaseMainWndTest):
         searchController.setSearchPhrase (u"ыыы")
         self.assertEqual (editor.GetSelectionStart(), 0)
         self.assertEqual (editor.GetSelectionEnd(), 3)
-        
+
         searchController.nextSearch()
         self.assertEqual (editor.GetSelectionStart(), 3)
         self.assertEqual (editor.GetSelectionEnd(), 6)
-        
+
         searchController.nextSearch()
         self.assertEqual (editor.GetSelectionStart(), 6)
         self.assertEqual (editor.GetSelectionEnd(), 9)
-        
+
         searchController.nextSearch()
         self.assertEqual (editor.GetSelectionStart(), 0)
         self.assertEqual (editor.GetSelectionEnd(), 3)
@@ -307,11 +306,11 @@ class TextEditorTest (BaseMainWndTest):
         searchController.prevSearch()
         self.assertEqual (editor.GetSelectionStart(), 6)
         self.assertEqual (editor.GetSelectionEnd(), 9)
-        
+
         searchController.prevSearch()
         self.assertEqual (editor.GetSelectionStart(), 3)
         self.assertEqual (editor.GetSelectionEnd(), 6)
-        
+
         searchController.prevSearch()
         self.assertEqual (editor.GetSelectionStart(), 0)
         self.assertEqual (editor.GetSelectionEnd(), 3)

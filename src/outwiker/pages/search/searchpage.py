@@ -134,14 +134,6 @@ class SearchPageFactory (PageFactory):
     """
     Фабрика для создания страниц поиска и их представлений
     """
-    @staticmethod
-    def create (parent, title, tags):
-        """
-        Создать страницу. Вызывать этот метод вместо конструктора
-        """
-        return PageFactory._createPage (SearchWikiPage, parent, title, tags)
-
-
     def getPageType(self):
         return SearchWikiPage
 
@@ -183,7 +175,7 @@ class GlobalSearch (object):
         while page is None:
             page = root[title]
             if page is None:
-                page = SearchPageFactory.create (root, title, [])
+                page = SearchPageFactory().create (root, title, [])
                 page.icon = os.path.join (imagesDir, "global_search.png")
             elif page.getTypeString() != SearchWikiPage.getTypeString():
                 number += 1

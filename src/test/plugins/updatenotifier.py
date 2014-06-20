@@ -1,13 +1,10 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import unittest
-import os.path
 
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.application import Application
 from outwiker.core.version import Version
-from test.utils import removeWiki
 
 
 class UpdateNotifierTest (unittest.TestCase):
@@ -25,7 +22,7 @@ class UpdateNotifierTest (unittest.TestCase):
 
     def testPluginLoad (self):
         self.loader.load ([u"../plugins/updatenotifier"])
-        self.assertEqual ( len (self.loader), 1)
+        self.assertEqual (len (self.loader), 1)
 
 
     def testExtractVersion_1 (self):

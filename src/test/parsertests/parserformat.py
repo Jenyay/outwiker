@@ -1,16 +1,11 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-import os
 import unittest
-import hashlib
 
 from test.utils import removeWiki
 
 from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
-
-from outwiker.pages.wiki.parser.wikiparser import Parser
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
 
@@ -22,10 +17,10 @@ class ParserFormatTest (unittest.TestCase):
         self.filesPath = u"../test/samplefiles/"
 
         self.__createWiki()
-        
+
         factory = ParserFactory()
         self.parser = factory.make (self.testPage, Application.config)
-    
+
 
     def __createWiki (self):
         # Здесь будет создаваться вики
@@ -33,16 +28,16 @@ class ParserFormatTest (unittest.TestCase):
         removeWiki (self.path)
 
         self.rootwiki = WikiDocument.create (self.path)
-        WikiPageFactory.create (self.rootwiki, u"Страница 2", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 2", [])
         self.testPage = self.rootwiki[u"Страница 2"]
-        
+
 
     def testMonospaced (self):
         text = u"бла-бла-бла @@моноширинный текст@@ бла-бла-бла"
         result = u"бла-бла-бла <code>моноширинный текст</code> бла-бла-бла"
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
-    
+
 
     def testPreformat1 (self):
         text = u"[@ '''Полужирный''' \n''Курсив'' @]"
@@ -56,7 +51,7 @@ class ParserFormatTest (unittest.TestCase):
         result = u"бла-бла-бла <pre> &lt;a href=&quot;http://jenyay.net/&amp;param&quot;&gt;jenyay.net&lt;/a&gt; </pre> foo bar"
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
-    
+
 
     def testNoformat (self):
         text = u"[= '''Полужирный''' \n''Курсив'' =]"

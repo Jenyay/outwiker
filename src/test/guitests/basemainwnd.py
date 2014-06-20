@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import unittest
@@ -9,12 +8,7 @@ from outwiker.core.application import Application
 from outwiker.core.commands import registerActions
 from outwiker.gui.mainwindow import MainWindow
 from outwiker.gui.guiconfig import GeneralGuiConfig, MainWindowConfig
-from outwiker.pages.html.htmlpage import HtmlPageFactory
 from outwiker.gui.actioncontroller import ActionController
-
-from outwiker.actions.showhideattaches import ShowHideAttachesAction
-from outwiker.actions.showhidetree import ShowHideTreeAction
-from outwiker.actions.showhidetags import ShowHideTagsAction
 
 
 class BaseMainWndTest(unittest.TestCase):
@@ -24,9 +18,8 @@ class BaseMainWndTest(unittest.TestCase):
         """
         count = 0
 
-        loop = wx.EventLoop.GetActive()
         app = wx.GetApp()
-        
+
         while app.Pending():
             count += 1
             app.Dispatch()

@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import os
@@ -35,13 +34,13 @@ class FakeThumbDialog (object):
 
 
 class TestThumbDialogController (ThumbDialogController):
-    def __init__ (self, 
-            parent, 
-            page, 
-            selectedText, 
-            thumbSize, 
-            fileName, 
-            scaleType):
+    def __init__ (self,
+                  parent,
+                  page,
+                  selectedText,
+                  thumbSize,
+                  fileName,
+                  scaleType):
         """
         thumbSize - размер, якобы выбранный в диалоге
         fileName - имя файла, якобы выбанное в диалоге
@@ -56,12 +55,12 @@ class TestThumbDialogController (ThumbDialogController):
 
 
     def _createDialog (self, parent, filesList, selectedFile):
-        self.dlg = FakeThumbDialog (parent, 
-                filesList, 
-                selectedFile, 
-                self._thumbSize, 
-                self._fileName,
-                self._scaleType)
+        self.dlg = FakeThumbDialog (parent,
+                                    filesList,
+                                    selectedFile,
+                                    self._thumbSize,
+                                    self._fileName,
+                                    self._scaleType)
 
         return self.dlg
 
@@ -73,15 +72,15 @@ class ThumbDialogControllerTest (unittest.TestCase):
 
         self.wikiroot = WikiDocument.create (self.path)
 
-        WikiPageFactory.create (self.wikiroot, u"Страница 1", [])
+        WikiPageFactory().create (self.wikiroot, u"Страница 1", [])
         self.testPage = self.wikiroot[u"Страница 1"]
 
         filesPath = u"../test/samplefiles/"
         self.files = [u"accept.png", u"add.png", u"first.jpg", u"image.jpeg", u"файл с пробелами.tmp"]
         self.fullFilesPath = [os.path.join (filesPath, fname) for fname in self.files]
 
-    
-    
+
+
     def tearDown (self):
         removeWiki (self.path)
 
@@ -139,48 +138,48 @@ class ThumbDialogControllerTest (unittest.TestCase):
 
 
     def testResult1 (self):
-        controller = TestThumbDialogController (None, 
-                self.testPage, 
-                u"",
-                0, 
-                u"accept.png", 
-                ThumbDialog.WIDTH)
+        controller = TestThumbDialogController (None,
+                                                self.testPage,
+                                                u"",
+                                                0,
+                                                u"accept.png",
+                                                ThumbDialog.WIDTH)
         controller.showDialog()
 
         self.assertEqual (controller.result, u"%thumb%Attach:accept.png%%")
 
 
     def testResultWidth (self):
-        controller = TestThumbDialogController (None, 
-                self.testPage, 
-                u"",
-                100, 
-                u"accept.png", 
-                ThumbDialog.WIDTH)
+        controller = TestThumbDialogController (None,
+                                                self.testPage,
+                                                u"",
+                                                100,
+                                                u"accept.png",
+                                                ThumbDialog.WIDTH)
         controller.showDialog()
 
         self.assertEqual (controller.result, u"%thumb width=100%Attach:accept.png%%")
 
 
     def testResultHeight (self):
-        controller = TestThumbDialogController (None, 
-                self.testPage, 
-                u"",
-                100, 
-                u"accept.png", 
-                ThumbDialog.HEIGHT)
+        controller = TestThumbDialogController (None,
+                                                self.testPage,
+                                                u"",
+                                                100,
+                                                u"accept.png",
+                                                ThumbDialog.HEIGHT)
         controller.showDialog()
 
         self.assertEqual (controller.result, u"%thumb height=100%Attach:accept.png%%")
 
 
     def testResultMaxSize (self):
-        controller = TestThumbDialogController (None, 
-                self.testPage, 
-                u"",
-                100, 
-                u"accept.png", 
-                ThumbDialog.MAX_SIZE)
+        controller = TestThumbDialogController (None,
+                                                self.testPage,
+                                                u"",
+                                                100,
+                                                u"accept.png",
+                                                ThumbDialog.MAX_SIZE)
         controller.showDialog()
 
         self.assertEqual (controller.result, u"%thumb maxsize=100%Attach:accept.png%%")

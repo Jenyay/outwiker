@@ -1,8 +1,7 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 from basemainwnd import BaseMainWndTest
-from outwiker.core.tree import RootWikiPage, WikiDocument
+from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.core.application import Application
 from test.utils import removeWiki
@@ -18,12 +17,12 @@ class BookmarksGuiTest (BaseMainWndTest):
 
         self.rootwiki = WikiDocument.create (self.path)
 
-        TextPageFactory.create (self.rootwiki, u"Страница 1", [])
-        TextPageFactory.create (self.rootwiki, u"Страница 2", [])
-        TextPageFactory.create (self.rootwiki[u"Страница 2"], u"Страница 3", [])
-        TextPageFactory.create (self.rootwiki[u"Страница 2/Страница 3"], u"Страница 4", [])
-        TextPageFactory.create (self.rootwiki[u"Страница 1"], u"Страница 5", [])
-
+        factory = TextPageFactory()
+        factory.create (self.rootwiki, u"Страница 1", [])
+        factory.create (self.rootwiki, u"Страница 2", [])
+        factory.create (self.rootwiki[u"Страница 2"], u"Страница 3", [])
+        factory.create (self.rootwiki[u"Страница 2/Страница 3"], u"Страница 4", [])
+        factory.create (self.rootwiki[u"Страница 1"], u"Страница 5", [])
 
 
     def tearDown (self):
@@ -86,10 +85,10 @@ class BookmarksGuiTest (BaseMainWndTest):
         self.assertEqual (bookmarksMenu.GetMenuItemCount(), 3)
 
         newitems = bookmarksMenu.GetMenuItems()
-        self.assertFalse (items[0].IsSeparator())
-        self.assertTrue (items[1].IsSeparator())
+        self.assertFalse (newitems[0].IsSeparator())
+        self.assertTrue (newitems[1].IsSeparator())
 
-        self.assertEqual (self._getItemText (items[2]), u"Страница 3 [Страница 2]")
+        self.assertEqual (self._getItemText (newitems[2]), u"Страница 3 [Страница 2]")
 
 
     def testTitleBookmarks (self):

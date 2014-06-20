@@ -31,13 +31,14 @@ class UriIdentifierTest (unittest.TestCase):
         # - Страница 2
         #   - Страница 3
         #     - # Страница 4
-        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
-        WikiPageFactory.create (self.rootwiki, u"Страница 2", [])
-        WikiPageFactory.create (self.rootwiki[u"Страница 2"], u"Страница 3", [])
-        WikiPageFactory.create (self.rootwiki[u"Страница 2/Страница 3"], u"# Страница 4", [])
-        WikiPageFactory.create (self.rootwiki[u"Страница 1"], u"# Страница 5", [])
-        WikiPageFactory.create (self.rootwiki[u"Страница 1"], u"Страница 6", [])
-        WikiPageFactory.create (self.rootwiki[u"Страница 1/# Страница 5"], u"Страница 7", [])
+        factory = WikiPageFactory()
+        factory.create (self.rootwiki, u"Страница 1", [])
+        factory.create (self.rootwiki, u"Страница 2", [])
+        factory.create (self.rootwiki[u"Страница 2"], u"Страница 3", [])
+        factory.create (self.rootwiki[u"Страница 2/Страница 3"], u"# Страница 4", [])
+        factory.create (self.rootwiki[u"Страница 1"], u"# Страница 5", [])
+        factory.create (self.rootwiki[u"Страница 1"], u"Страница 6", [])
+        factory.create (self.rootwiki[u"Страница 1/# Страница 5"], u"Страница 7", [])
 
         filesPath = u"../test/samplefiles/"
         self.files = [u"accept.png", u"add.png", u"anchor.png", u"файл с пробелами.tmp", u"dir"]

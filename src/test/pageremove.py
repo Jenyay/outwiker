@@ -1,13 +1,12 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import unittest
 import os.path
 
-from outwiker.core.tree import RootWikiPage, WikiDocument
+from outwiker.core.tree import WikiDocument
 from outwiker.core.attachment import Attachment
 from outwiker.core.application import Application
-from outwiker.pages.text.textpage import TextPageFactory, TextWikiPage
+from outwiker.pages.text.textpage import TextPageFactory
 from test.utils import removeWiki
 
 
@@ -19,12 +18,13 @@ class RemovePagesTest (unittest.TestCase):
 
         self.rootwiki = WikiDocument.create (self.path)
 
-        TextPageFactory.create (self.rootwiki, u"Страница 1", [])
-        TextPageFactory.create (self.rootwiki, u"Страница 2", [])
-        TextPageFactory.create (self.rootwiki[u"Страница 2"], u"Страница 3", [])
-        TextPageFactory.create (self.rootwiki[u"Страница 2/Страница 3"], u"Страница 4", [])
-        TextPageFactory.create (self.rootwiki[u"Страница 1"], u"Страница 5", [])
-        TextPageFactory.create (self.rootwiki, u"Страница 6", [])
+        factory = TextPageFactory()
+        factory.create (self.rootwiki, u"Страница 1", [])
+        factory.create (self.rootwiki, u"Страница 2", [])
+        factory.create (self.rootwiki[u"Страница 2"], u"Страница 3", [])
+        factory.create (self.rootwiki[u"Страница 2/Страница 3"], u"Страница 4", [])
+        factory.create (self.rootwiki[u"Страница 1"], u"Страница 5", [])
+        factory.create (self.rootwiki, u"Страница 6", [])
 
         self.pageRemoveCount = 0
         Application.wikiroot = None
@@ -40,7 +40,7 @@ class RemovePagesTest (unittest.TestCase):
         """
         self.pageRemoveCount += 1
 
-    
+
     def testRemove1 (self):
         Application.onPageRemove += self.onPageRemove
         Application.wikiroot = self.rootwiki
@@ -64,7 +64,7 @@ class RemovePagesTest (unittest.TestCase):
         self.assertTrue (page3.isRemoved)
         self.assertTrue (page4.isRemoved)
         self.assertEqual (self.pageRemoveCount, 3)
-        
+
         Application.onPageRemove -= self.onPageRemove
 
 
@@ -107,7 +107,7 @@ class RemovePagesTest (unittest.TestCase):
         self.assertEqual (self.pageRemoveCount, 0)
 
         Application.onPageRemove -= self.onPageRemove
-    
+
 
     def testIsRemoved (self):
         """
@@ -141,7 +141,7 @@ class RemovePagesTest (unittest.TestCase):
         self.rootwiki.selectedPage = self.rootwiki[u"Страница 2/Страница 3/Страница 4"]
         self.rootwiki.selectedPage.remove()
         self.assertEqual (self.rootwiki.selectedPage, self.rootwiki[u"Страница 2/Страница 3"])
-    
+
 
     def testRemoveSelectedPage2 (self):
         """
@@ -162,7 +162,7 @@ class RemovePagesTest (unittest.TestCase):
         page.remove()
 
         self.assertFalse (self.rootwiki.bookmarks.pageMarked (page))
-    
+
 
     def testRemoveFromBookmarks2 (self):
         """
@@ -191,19 +191,19 @@ class RemovePagesTest (unittest.TestCase):
         attachname = u"add.png"
         attach.attach ([os.path.join (u"../test/samplefiles", attachname)])
 
-        with open (attach.getFullPath ("111.txt", True), "w") as fp:
+        with open (attach.getFullPath ("111.txt", True), "w"):
             try:
                 page.remove()
             except IOError:
-                self.assertTrue (os.path.exists (pagepath) )
+                self.assertTrue (os.path.exists (pagepath))
                 self.assertNotEqual (self.rootwiki[u"Страница 2"], None)
-                self.assertTrue (os.path.exists (self.rootwiki[u"Страница 2"].path) )
+                self.assertTrue (os.path.exists (self.rootwiki[u"Страница 2"].path))
                 self.assertEqual (len (self.rootwiki), 3)
                 self.assertNotEqual (self.rootwiki[u"Страница 2/Страница 3"], None)
                 self.assertNotEqual (self.rootwiki[u"Страница 2/Страница 3/Страница 4"], None)
             else:
                 self.assertEqual (self.rootwiki[u"Страница 2"], None)
-                self.assertFalse (os.path.exists (pagepath) )
+                self.assertFalse (os.path.exists (pagepath))
 
 
     def testRemoveError2 (self):
@@ -216,16 +216,16 @@ class RemovePagesTest (unittest.TestCase):
         attachname = u"add.png"
         attach2.attach ([os.path.join (u"../test/samplefiles", attachname)])
 
-        with open (attach2.getFullPath ("111.txt", True), "w") as fp:
+        with open (attach2.getFullPath ("111.txt", True), "w"):
             try:
                 page1.remove()
             except IOError:
-                self.assertTrue (os.path.exists (pagepath) )
+                self.assertTrue (os.path.exists (pagepath))
                 self.assertNotEqual (self.rootwiki[u"Страница 2"], None)
-                self.assertTrue (os.path.exists (self.rootwiki[u"Страница 2"].path) )
+                self.assertTrue (os.path.exists (self.rootwiki[u"Страница 2"].path))
                 self.assertEqual (len (self.rootwiki), 3)
                 self.assertNotEqual (self.rootwiki[u"Страница 2/Страница 3"], None)
                 self.assertNotEqual (self.rootwiki[u"Страница 2/Страница 3/Страница 4"], None)
             else:
                 self.assertEqual (self.rootwiki[u"Страница 2"], None)
-                self.assertFalse (os.path.exists (pagepath) )
+                self.assertFalse (os.path.exists (pagepath))

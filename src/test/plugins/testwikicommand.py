@@ -1,8 +1,6 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import unittest
-import os.path
 
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.application import Application
@@ -23,10 +21,10 @@ class PluginWikiCommandTest(unittest.TestCase):
 
         loader = PluginsLoader(Application)
         loader.load (dirlist)
-        
+
         factory = ParserFactory()
         self.parser = factory.make (self.testPage, Application.config)
-    
+
 
     def __createWiki (self):
         # Здесь будет создаваться вики
@@ -35,9 +33,9 @@ class PluginWikiCommandTest(unittest.TestCase):
 
         self.rootwiki = WikiDocument.create (self.path)
 
-        WikiPageFactory.create (self.rootwiki, u"Страница 2", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 2", [])
         self.testPage = self.rootwiki[u"Страница 2"]
-        
+
 
     def tearDown(self):
         removeWiki (self.path)

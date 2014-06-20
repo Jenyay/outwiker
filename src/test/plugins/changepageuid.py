@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import wx
@@ -47,8 +46,8 @@ class ChangePageUidTest (BaseMainWndTest):
 
         self.rootwiki = WikiDocument.create (self.path)
 
-        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
-        WikiPageFactory.create (self.rootwiki, u"Страница 2", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 1", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 2", [])
 
 
     def testPluginLoad (self):

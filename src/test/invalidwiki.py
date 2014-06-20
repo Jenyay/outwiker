@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 """
@@ -10,20 +9,18 @@ import os.path
 import shutil
 import unittest
 
-from outwiker.core.event import Event
 from outwiker.core.attachment import Attachment
-from outwiker.core.tree import RootWikiPage, WikiDocument
+from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
-from outwiker.pages.html.htmlpage import HtmlPageFactory
 from test.utils import removeWiki
 from outwiker.core.exceptions import RootFormatError
 
 
-path = u"../test/invalidwiki"
 
 class InvalidWikiTest (unittest.TestCase):
     def setUp (self):
         self.defaultdate = datetime.datetime (2020, 1, 1)
+        self.path = u"../test/invalidwiki"
 
 
     def testInvalidWikiRoot1 (self):
@@ -37,8 +34,9 @@ class InvalidWikiTest (unittest.TestCase):
 
             rootwiki = WikiDocument.create (path)
 
-            TextPageFactory.create (rootwiki, u"Страница 1", [])
-            TextPageFactory.create (rootwiki[u"Страница 1"], u"Страница 2", [])
+            factory = TextPageFactory()
+            factory.create (rootwiki, u"Страница 1", [])
+            factory.create (rootwiki[u"Страница 1"], u"Страница 2", [])
 
             # Испортим файл __page.opt
             with open (os.path.join (rootwiki.path, u"__page.opt"), "w") as fp:
@@ -69,8 +67,9 @@ class InvalidWikiTest (unittest.TestCase):
 
             rootwiki = WikiDocument.create (path)
 
-            TextPageFactory.create (rootwiki, u"Страница 1", [])
-            TextPageFactory.create (rootwiki[u"Страница 1"], u"Страница 2", [])
+            factory = TextPageFactory()
+            factory.create (rootwiki, u"Страница 1", [])
+            factory.create (rootwiki[u"Страница 1"], u"Страница 2", [])
 
             # Испортим файл __page.opt
             with open (os.path.join (rootwiki.path, u"__page.opt"), "w") as fp:
@@ -94,21 +93,21 @@ class InvalidWikiTest (unittest.TestCase):
         """
         Тест папок, которые не являются страницами
         """
-        wiki = WikiDocument.load (path)
+        wiki = WikiDocument.load (self.path)
         page = wiki[u"Просто папка"]
         self.assertEqual (page, None)
 
-    
+
     def testEmptyAttaches (self):
         """
         Тест страницы без папки с аттачами
         """
-        wiki = WikiDocument.load (path)
+        wiki = WikiDocument.load (self.path)
         page = wiki[u"Страница без аттачей"]
-        self.assertEqual ( len (Attachment (page).attachmentFull), 0)
+        self.assertEqual (len (Attachment (page).attachmentFull), 0)
         page.datetime = self.defaultdate
 
-    
+
     def testEmptyAttaches2 (self):
         """
         Попытка прикрепления файлов к странице без папки __attach
@@ -117,7 +116,7 @@ class InvalidWikiTest (unittest.TestCase):
         files = [u"accept.png", u"add.png", u"anchor.png"]
         attaches = [os.path.join (filesPath, fname) for fname in files]
 
-        wiki = WikiDocument.load (path)
+        wiki = WikiDocument.load (self.path)
         Attachment (wiki[u"Страница без аттачей"]).attach (attaches)
 
         self.assertEqual (len (Attachment (wiki[u"Страница без аттачей"]).attachmentFull), 3)
@@ -132,10 +131,10 @@ class InvalidWikiTest (unittest.TestCase):
         """
         Тест страницы без файла контента
         """
-        wiki = WikiDocument.load (path)
+        wiki = WikiDocument.load (self.path)
         page = wiki[u"Страница без контента"]
         self.assertEqual (page.content, "")
-    
+
 
     def testInvalidPath (self):
         """
@@ -143,6 +142,3 @@ class InvalidWikiTest (unittest.TestCase):
         """
         invalidpath = u"../testsss/invalidwiki"
         self.assertRaises (IOError, WikiDocument.load, invalidpath)
-    
-
-

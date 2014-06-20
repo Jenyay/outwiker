@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import unittest
@@ -17,7 +16,7 @@ class Export2HtmlTest (unittest.TestCase):
 
         self.path = u"../test/samplewiki"
         self.root = WikiDocument.load (self.path)
-        
+
         dirlist = [u"../plugins/export2html"]
 
         self.loader = PluginsLoader(Application)
@@ -57,20 +56,20 @@ class Export2HtmlTest (unittest.TestCase):
 
         exporter = self.__tester.exporterFactory.getExporter (self.root[pagename])
         exporter.export (outdir = self.outputdir,
-                exportname=pagename,
-                imagesonly=False,
-                alwaysOverwrite=False)
+                         exportname=pagename,
+                         imagesonly=False,
+                         alwaysOverwrite=False)
 
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename + ".html") ) )
-        self.assertTrue (os.path.isfile (os.path.join (self.outputdir, pagename + ".html") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename + ".html")))
+        self.assertTrue (os.path.isfile (os.path.join (self.outputdir, pagename + ".html")))
 
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename) ) )
-        self.assertTrue (os.path.isdir (os.path.join (self.outputdir, pagename) ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename)))
+        self.assertTrue (os.path.isdir (os.path.join (self.outputdir, pagename)))
 
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "__icon.png") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "__icon.png")))
 
-        self.assertFalse (os.path.exists (os.path.join (self.outputdir, "__index.html") ) )
-        self.assertFalse (os.path.exists (os.path.join (self.outputdir, "__content.html") ) )
+        self.assertFalse (os.path.exists (os.path.join (self.outputdir, "__index.html")))
+        self.assertFalse (os.path.exists (os.path.join (self.outputdir, "__content.html")))
 
 
     def testExportWithName (self):
@@ -82,17 +81,17 @@ class Export2HtmlTest (unittest.TestCase):
 
         exporter = self.__tester.exporterFactory.getExporter (self.root[pagename])
         exporter.export (outdir = self.outputdir,
-                exportname=exportname,
-                imagesonly=False,
-                alwaysOverwrite=False)
+                         exportname=exportname,
+                         imagesonly=False,
+                         alwaysOverwrite=False)
 
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, exportname + ".html") ) )
-        self.assertTrue (os.path.isfile (os.path.join (self.outputdir, exportname + ".html") ) )
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, exportname) ) )
-        self.assertTrue (os.path.isdir (os.path.join (self.outputdir, exportname) ) )
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, exportname, "__icon.png") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, exportname + ".html")))
+        self.assertTrue (os.path.isfile (os.path.join (self.outputdir, exportname + ".html")))
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, exportname)))
+        self.assertTrue (os.path.isdir (os.path.join (self.outputdir, exportname)))
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, exportname, "__icon.png")))
 
-    
+
     def testAttachesSinglePage (self):
         """
         Тест на то, что прикрепленные файлы копируются
@@ -100,16 +99,16 @@ class Export2HtmlTest (unittest.TestCase):
         pagename = u"Страница 1"
         exporter = self.__tester.exporterFactory.getExporter (self.root[pagename])
         exporter.export (outdir = self.outputdir,
-                exportname=pagename,
-                imagesonly=False,
-                alwaysOverwrite=False)
+                         exportname=pagename,
+                         imagesonly=False,
+                         alwaysOverwrite=False)
 
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "__init__.py") ) )
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "source.py") ) )
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "add.png") ) )
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "memorial.gif") ) )
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "wall.gif") ) )
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "image.tif") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "__init__.py")))
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "source.py")))
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "add.png")))
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "memorial.gif")))
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "wall.gif")))
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "image.tif")))
 
 
     def testAttachesImagesSinglePage (self):
@@ -120,16 +119,16 @@ class Export2HtmlTest (unittest.TestCase):
 
         exporter = self.__tester.exporterFactory.getExporter (self.root[pagename])
         exporter.export (outdir = self.outputdir,
-                exportname=pagename,
-                imagesonly=True,
-                alwaysOverwrite=False)
+                         exportname=pagename,
+                         imagesonly=True,
+                         alwaysOverwrite=False)
 
-        self.assertFalse (os.path.exists (os.path.join (self.outputdir, pagename, "__init__.py") ) )
-        self.assertFalse (os.path.exists (os.path.join (self.outputdir, pagename, "source.py") ) )
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "add.png") ) )
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "memorial.gif") ) )
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "wall.gif") ) )
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "image.tif") ) )
+        self.assertFalse (os.path.exists (os.path.join (self.outputdir, pagename, "__init__.py")))
+        self.assertFalse (os.path.exists (os.path.join (self.outputdir, pagename, "source.py")))
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "add.png")))
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "memorial.gif")))
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "wall.gif")))
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "image.tif")))
 
 
     def __getFileContent (self, fname):
@@ -137,7 +136,7 @@ class Export2HtmlTest (unittest.TestCase):
 
         with open (fname) as fp:
             text = unicode (fp.read(), "utf8")
-        return text
+            return text
 
 
     def testLinkChangeHtml (self):
@@ -149,9 +148,9 @@ class Export2HtmlTest (unittest.TestCase):
 
         exporter = self.__tester.exporterFactory.getExporter (self.root[pagename])
         exporter.export (outdir = self.outputdir,
-                exportname=pagename,
-                imagesonly=True,
-                alwaysOverwrite=False)
+                         exportname=pagename,
+                         imagesonly=True,
+                         alwaysOverwrite=False)
 
         text = self.__getFileContent (os.path.join (self.outputdir, pagename + ".html"))
 
@@ -180,9 +179,9 @@ class Export2HtmlTest (unittest.TestCase):
 
         exporter = self.__tester.exporterFactory.getExporter (self.root[pagename])
         exporter.export (outdir = self.outputdir,
-                exportname=exportname,
-                imagesonly=True,
-                alwaysOverwrite=False)
+                         exportname=exportname,
+                         imagesonly=True,
+                         alwaysOverwrite=False)
 
         text = self.__getFileContent (os.path.join (self.outputdir, exportname + ".html"))
 
@@ -201,9 +200,9 @@ class Export2HtmlTest (unittest.TestCase):
 
         exporter = self.__tester.exporterFactory.getExporter (self.root[fullpagename])
         exporter.export (outdir = self.outputdir,
-                exportname=pagename,
-                imagesonly=True,
-                alwaysOverwrite=False)
+                         exportname=pagename,
+                         imagesonly=True,
+                         alwaysOverwrite=False)
 
         text = self.__getFileContent (os.path.join (self.outputdir, pagename + ".html"))
 
@@ -219,18 +218,17 @@ class Export2HtmlTest (unittest.TestCase):
         Проверка на вики-странице
         """
         fullpagename = u"Типы страниц/wiki-страница"
-        pagename = u"wiki-страница"
         exportname = u"Бла-бла-бла"
 
         exporter = self.__tester.exporterFactory.getExporter (self.root[fullpagename])
         exporter.export (outdir = self.outputdir,
-                exportname=exportname,
-                imagesonly=True,
-                alwaysOverwrite=False)
+                         exportname=exportname,
+                         imagesonly=True,
+                         alwaysOverwrite=False)
 
         text = u""
 
-        with open (os.path.join (self.outputdir, exportname + ".html") ) as fp:
+        with open (os.path.join (self.outputdir, exportname + ".html")) as fp:
             text = unicode (fp.read(), "utf8")
 
         self.assertTrue (u'<IMG SRC="{pagename}/add.png"/>'.format (pagename=exportname) in text)
@@ -249,12 +247,12 @@ class Export2HtmlTest (unittest.TestCase):
 
         exporter = self.__tester.exporterFactory.getExporter (self.root[fullpagename])
         exporter.export (outdir = self.outputdir,
-                exportname=pagename,
-                imagesonly=True,
-                alwaysOverwrite=False)
+                         exportname=pagename,
+                         imagesonly=True,
+                         alwaysOverwrite=False)
 
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "image.jpg") ) )
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "__thumb") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "image.jpg")))
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "__thumb")))
 
 
     def testFilesExportTextPage (self):
@@ -266,14 +264,14 @@ class Export2HtmlTest (unittest.TestCase):
 
         exporter = self.__tester.exporterFactory.getExporter (self.root[fullpagename])
         exporter.export (outdir = self.outputdir,
-                exportname=pagename,
-                imagesonly=False,
-                alwaysOverwrite=False)
+                         exportname=pagename,
+                         imagesonly=False,
+                         alwaysOverwrite=False)
 
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename + ".html") ) )
-        self.assertTrue (os.path.isfile (os.path.join (self.outputdir, pagename + ".html") ) )
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename) ) )
-        self.assertTrue (os.path.isdir (os.path.join (self.outputdir, pagename) ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename + ".html")))
+        self.assertTrue (os.path.isfile (os.path.join (self.outputdir, pagename + ".html")))
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename)))
+        self.assertTrue (os.path.isdir (os.path.join (self.outputdir, pagename)))
 
 
     def testAttachesExportTextPage (self):
@@ -285,15 +283,15 @@ class Export2HtmlTest (unittest.TestCase):
 
         exporter = self.__tester.exporterFactory.getExporter (self.root[fullpagename])
         exporter.export (outdir = self.outputdir,
-                exportname=pagename,
-                imagesonly=False,
-                alwaysOverwrite=False)
+                         exportname=pagename,
+                         imagesonly=False,
+                         alwaysOverwrite=False)
 
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "__init__.py") ) )
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "source.py") ) )
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "anchor.png") ) )
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "application.png") ) )
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "box.png") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "__init__.py")))
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "source.py")))
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "anchor.png")))
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "application.png")))
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "box.png")))
 
 
     def testHtmlFromTextPage (self):
@@ -306,13 +304,13 @@ class Export2HtmlTest (unittest.TestCase):
 
         exporter = self.__tester.exporterFactory.getExporter (self.root[fullpagename])
         exporter.export (outdir = self.outputdir,
-                exportname=pagename,
-                imagesonly=True,
-                alwaysOverwrite=False)
+                         exportname=pagename,
+                         imagesonly=True,
+                         alwaysOverwrite=False)
 
         text = u""
 
-        with open (os.path.join (self.outputdir, pagename + ".html") ) as fp:
+        with open (os.path.join (self.outputdir, pagename + ".html")) as fp:
             text = unicode (fp.read(), "utf8")
 
         self.assertTrue (u'&lt;a href="http://jenyay.net"&gt;bla-bla-bla&lt;/a&gt;' in text)
@@ -329,13 +327,13 @@ class Export2HtmlTest (unittest.TestCase):
         exporter = self.__tester.exporterFactory.getExporter (self.root[fullpagename])
 
         exporter.export (outdir = self.outputdir,
-                exportname=pagename,
-                imagesonly=True,
-                alwaysOverwrite=False)
+                         exportname=pagename,
+                         imagesonly=True,
+                         alwaysOverwrite=False)
 
         text = u""
 
-        with open (os.path.join (self.outputdir, pagename + ".html") ) as fp:
+        with open (os.path.join (self.outputdir, pagename + ".html")) as fp:
             text = unicode (fp.read(), "utf8")
 
         self.assertTrue (u'<head>' in text)
@@ -356,15 +354,15 @@ class Export2HtmlTest (unittest.TestCase):
 
         exporter = self.__tester.exporterFactory.getExporter (self.root[fullpagename])
         exporter.export (outdir = self.outputdir,
-                exportname=pagename,
-                imagesonly=True,
-                alwaysOverwrite=False)
+                         exportname=pagename,
+                         imagesonly=True,
+                         alwaysOverwrite=False)
 
-        self.assertFalse (os.path.exists (os.path.join (self.outputdir, pagename, "__init__.py") ) )
-        self.assertFalse (os.path.exists (os.path.join (self.outputdir, pagename, "source.py") ) )
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "anchor.png") ) )
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "application.png") ) )
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "box.png") ) )
+        self.assertFalse (os.path.exists (os.path.join (self.outputdir, pagename, "__init__.py")))
+        self.assertFalse (os.path.exists (os.path.join (self.outputdir, pagename, "source.py")))
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "anchor.png")))
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "application.png")))
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "box.png")))
 
 
     def testFileExists (self):
@@ -375,21 +373,21 @@ class Export2HtmlTest (unittest.TestCase):
         exporter = self.__tester.exporterFactory.getExporter (self.root[pagename])
 
         exporter.export (outdir = self.outputdir,
-                exportname=pagename,
-                imagesonly=False,
-                alwaysOverwrite=False)
+                         exportname=pagename,
+                         imagesonly=False,
+                         alwaysOverwrite=False)
 
-        self.assertRaises (BaseException, 
-                exporter.export, 
-                outdir = self.outputdir,
-                exportname=pagename,
-                imagesonly=False,
-                alwaysOverwrite=False)
+        self.assertRaises (BaseException,
+                           exporter.export,
+                           outdir = self.outputdir,
+                           exportname=pagename,
+                           imagesonly=False,
+                           alwaysOverwrite=False)
 
         exporter.export (outdir = self.outputdir,
-                exportname=pagename,
-                imagesonly=False,
-                alwaysOverwrite=True)
+                         exportname=pagename,
+                         imagesonly=False,
+                         alwaysOverwrite=True)
 
 
     def testInvalidFormat (self):
@@ -398,9 +396,9 @@ class Export2HtmlTest (unittest.TestCase):
         """
         pagename = u"Типы страниц/Страница поиска"
 
-        self.assertRaises (BaseException, 
-                self.__tester.exporterFactory.getExporter, 
-                page=self.root[pagename])
+        self.assertRaises (BaseException,
+                           self.__tester.exporterFactory.getExporter,
+                           page=self.root[pagename])
 
 
     # def testHtmlNotFound (self):
@@ -421,8 +419,8 @@ class Export2HtmlTest (unittest.TestCase):
 
     #     exporter = self.__tester.exporterFactory.getExporter (self.root[pagename])
 
-    #     self.assertRaises (BaseException, 
-    #             exporter.export, 
+    #     self.assertRaises (BaseException,
+    #             exporter.export,
     #             outdir = self.outputdir,
     #             exportname=pagename,
     #             imagesonly=False,
@@ -440,53 +438,53 @@ class Export2HtmlTest (unittest.TestCase):
         branchExporter = self.__tester.branchExporter (self.root[pagename], namegenerator)
 
         result = branchExporter.export (
-                outdir=self.outputdir,
-                imagesonly=False,
-                alwaysOverwrite=False
-                )
+            outdir=self.outputdir,
+            imagesonly=False,
+            alwaysOverwrite=False
+        )
 
         self.assertEqual (len (result), 0)
 
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
-            pagename) ) )
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
-            pagename + ".html") ) )
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
-            pagename, "__icon.png") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir,
+                                                       pagename)))
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir,
+                                                       pagename + ".html")))
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir,
+                                                       pagename, "__icon.png")))
 
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
-            pagename + u"_Страница 2") ) )
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
-            pagename + u"_Страница 2.html") ) )
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
-            pagename + u"_Страница 2", "__icon.gif") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir,
+                                                       pagename + u"_Страница 2")))
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir,
+                                                       pagename + u"_Страница 2.html")))
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir,
+                                                       pagename + u"_Страница 2", "__icon.gif")))
 
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
-            pagename + u"_Страница 2_Страница 5") ) )
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
-            pagename + u"_Страница 2_Страница 5.html") ) )
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
-            pagename + u"_Страница 2_Страница 5", "__icon.gif") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir,
+                                                       pagename + u"_Страница 2_Страница 5")))
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir,
+                                                       pagename + u"_Страница 2_Страница 5.html")))
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir,
+                                                       pagename + u"_Страница 2_Страница 5", "__icon.gif")))
 
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
-            pagename + u"_Страница 2_Страница 6") ) )
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
-            pagename + u"_Страница 2_Страница 6.html") ) )
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
-            pagename + u"_Страница 2_Страница 6", "__icon.png") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir,
+                                                       pagename + u"_Страница 2_Страница 6")))
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir,
+                                                       pagename + u"_Страница 2_Страница 6.html")))
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir,
+                                                       pagename + u"_Страница 2_Страница 6", "__icon.png")))
 
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
-            pagename + u"_Страница 2_Страница 6_Страница 7") ) )
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
-            pagename + u"_Страница 2_Страница 6_Страница 7.html") ) )
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
-            pagename + u"_Страница 2_Страница 6_Страница 7", "__icon.png") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir,
+                                                       pagename + u"_Страница 2_Страница 6_Страница 7")))
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir,
+                                                       pagename + u"_Страница 2_Страница 6_Страница 7.html")))
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir,
+                                                       pagename + u"_Страница 2_Страница 6_Страница 7", "__icon.png")))
 
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, "__index.html") ) )
-        self.assertTrue (os.path.isfile (os.path.join (self.outputdir, "__index.html") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, "__index.html")))
+        self.assertTrue (os.path.isfile (os.path.join (self.outputdir, "__index.html")))
 
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, "__content.html") ) )
-        self.assertTrue (os.path.isfile (os.path.join (self.outputdir, "__content.html") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, "__content.html")))
+        self.assertTrue (os.path.isfile (os.path.join (self.outputdir, "__content.html")))
 
 
     def testExportBranchRoot (self):
@@ -498,38 +496,38 @@ class Export2HtmlTest (unittest.TestCase):
         branchExporter = self.__tester.branchExporter (self.root, namegenerator)
 
         result = branchExporter.export (
-                outdir=self.outputdir,
-                imagesonly=False,
-                alwaysOverwrite=False
-                )
+            outdir=self.outputdir,
+            imagesonly=False,
+            alwaysOverwrite=False
+        )
 
         self.assertEqual (len (result), 1)
         self.assertTrue (u"Страница поиска" in result[0])
 
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
-            wikiname + u"_Страница 1") ) )
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
-            wikiname + u"_Страница 1.html") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir,
+                                                       wikiname + u"_Страница 1")))
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir,
+                                                       wikiname + u"_Страница 1.html")))
 
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
-            wikiname + u"_Страница 1_Страница 2") ) )
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
-            wikiname + u"_Страница 1_Страница 2.html") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir,
+                                                       wikiname + u"_Страница 1_Страница 2")))
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir,
+                                                       wikiname + u"_Страница 1_Страница 2.html")))
 
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
-            wikiname + u"_Страница 1_Страница 2_Страница 5") ) )
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
-            wikiname + u"_Страница 1_Страница 2_Страница 5.html") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir,
+                                                       wikiname + u"_Страница 1_Страница 2_Страница 5")))
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir,
+                                                       wikiname + u"_Страница 1_Страница 2_Страница 5.html")))
 
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
-            wikiname + u"_Страница 1_Страница 2_Страница 6") ) )
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
-            wikiname + u"_Страница 1_Страница 2_Страница 6.html") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir,
+                                                       wikiname + u"_Страница 1_Страница 2_Страница 6")))
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir,
+                                                       wikiname + u"_Страница 1_Страница 2_Страница 6.html")))
 
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
-            wikiname + u"_Страница 1_Страница 2_Страница 6_Страница 7") ) )
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
-            wikiname + u"_Страница 1_Страница 2_Страница 6_Страница 7.html") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir,
+                                                       wikiname + u"_Страница 1_Страница 2_Страница 6_Страница 7")))
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir,
+                                                       wikiname + u"_Страница 1_Страница 2_Страница 6_Страница 7.html")))
 
 
     def testExportBranchFilesTitleNames (self):
@@ -541,53 +539,53 @@ class Export2HtmlTest (unittest.TestCase):
         branchExporter = self.__tester.branchExporter (self.root[pagename], namegenerator)
 
         result = branchExporter.export (
-                outdir=self.outputdir,
-                imagesonly=False,
-                alwaysOverwrite=False
-                )
+            outdir=self.outputdir,
+            imagesonly=False,
+            alwaysOverwrite=False
+        )
 
-        self.assertEqual (len (result), 0, str (result) )
+        self.assertEqual (len (result), 0, str (result))
 
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
-            pagename) ) )
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
-            pagename + ".html") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir,
+                                                       pagename)))
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir,
+                                                       pagename + ".html")))
 
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
-            u"Страница 2") ) )
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
-            u"Страница 2.html") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir,
+                                                       u"Страница 2")))
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir,
+                                                       u"Страница 2.html")))
 
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
-            u"Страница 2 (1)") ) )
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
-            u"Страница 2 (1).html") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir,
+                                                       u"Страница 2 (1)")))
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir,
+                                                       u"Страница 2 (1).html")))
 
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
-            u"Страница 2 (2)") ) )
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
-            u"Страница 2 (2).html") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir,
+                                                       u"Страница 2 (2)")))
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir,
+                                                       u"Страница 2 (2).html")))
 
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
-            u"Страница 5") ) )
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
-            u"Страница 5.html") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir,
+                                                       u"Страница 5")))
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir,
+                                                       u"Страница 5.html")))
 
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
-            u"Страница 6") ) )
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
-            u"Страница 6.html") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir,
+                                                       u"Страница 6")))
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir,
+                                                       u"Страница 6.html")))
 
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
-            u"Страница 7") ) )
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, 
-            u"Страница 7.html") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir,
+                                                       u"Страница 7")))
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir,
+                                                       u"Страница 7.html")))
 
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, "__index.html") ) )
-        self.assertTrue (os.path.isfile (os.path.join (self.outputdir, "__index.html") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, "__index.html")))
+        self.assertTrue (os.path.isfile (os.path.join (self.outputdir, "__index.html")))
 
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, "__content.html") ) )
-        self.assertTrue (os.path.isfile (os.path.join (self.outputdir, "__content.html") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, "__content.html")))
+        self.assertTrue (os.path.isfile (os.path.join (self.outputdir, "__content.html")))
 
 
     def testBranchContentTitleNames1 (self):
@@ -598,11 +596,11 @@ class Export2HtmlTest (unittest.TestCase):
         namegenerator = self.__tester.titleNameGenerator (self.outputdir)
         branchExporter = self.__tester.branchExporter (self.root[pagename], namegenerator)
 
-        result = branchExporter.export (
-                outdir=self.outputdir,
-                imagesonly=False,
-                alwaysOverwrite=False
-                )
+        branchExporter.export (
+            outdir=self.outputdir,
+            imagesonly=False,
+            alwaysOverwrite=False
+        )
 
         text = self.__getFileContent (os.path.join (self.outputdir, u"Страница 2 (1).html"))
 
@@ -618,11 +616,11 @@ class Export2HtmlTest (unittest.TestCase):
         namegenerator = self.__tester.titleNameGenerator (self.outputdir)
         branchExporter = self.__tester.branchExporter (self.root[pagename], namegenerator)
 
-        result = branchExporter.export (
-                outdir=self.outputdir,
-                imagesonly=False,
-                alwaysOverwrite=False
-                )
+        branchExporter.export (
+            outdir=self.outputdir,
+            imagesonly=False,
+            alwaysOverwrite=False
+        )
 
         text = self.__getFileContent (os.path.join (self.outputdir, u"Страница 2 (2).html"))
 
@@ -638,13 +636,13 @@ class Export2HtmlTest (unittest.TestCase):
         namegenerator = self.__tester.longNameGenerator (self.root[pagename])
         branchExporter = self.__tester.branchExporter (self.root[pagename], namegenerator)
 
-        result = branchExporter.export (
-                outdir=self.outputdir,
-                imagesonly=False,
-                alwaysOverwrite=False
-                )
-        
-        text =  self.__getFileContent (os.path.join (self.outputdir, u"Страница 1_Страница 2_Страница 6.html"))
+        branchExporter.export (
+            outdir=self.outputdir,
+            imagesonly=False,
+            alwaysOverwrite=False
+        )
+
+        text = self.__getFileContent (os.path.join (self.outputdir, u"Страница 1_Страница 2_Страница 6.html"))
 
         self.assertTrue (u'<A HREF="/Типы страниц">/Типы страниц</A>' in text)
 
@@ -669,13 +667,13 @@ class Export2HtmlTest (unittest.TestCase):
         namegenerator = self.__tester.titleNameGenerator (self.outputdir)
         branchExporter = self.__tester.branchExporter (self.root[pagename], namegenerator)
 
-        result = branchExporter.export (
-                outdir=self.outputdir,
-                imagesonly=False,
-                alwaysOverwrite=False
-                )
-        
-        text =  self.__getFileContent (os.path.join (self.outputdir, u"Страница 6.html"))
+        branchExporter.export (
+            outdir=self.outputdir,
+            imagesonly=False,
+            alwaysOverwrite=False
+        )
+
+        text = self.__getFileContent (os.path.join (self.outputdir, u"Страница 6.html"))
 
         self.assertTrue (u'<A HREF="/Типы страниц">/Типы страниц</A>' in text)
 

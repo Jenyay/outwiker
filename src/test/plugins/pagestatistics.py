@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import unittest
@@ -46,11 +45,11 @@ class PageStatisticsTest (unittest.TestCase):
 
 
     def testPluginLoad (self):
-        self.assertEqual ( len (self.loader), 1)
+        self.assertEqual (len (self.loader), 1)
 
 
     def testSymbolsCountWiki (self):
-        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 1", [])
         testPage = self.rootwiki[u"Страница 1"]
 
         testPage.content = u"Бла бла бла"
@@ -60,7 +59,7 @@ class PageStatisticsTest (unittest.TestCase):
 
 
     def testSymbolsCountHtml (self):
-        HtmlPageFactory.create (self.rootwiki, u"Страница 1", [])
+        HtmlPageFactory().create (self.rootwiki, u"Страница 1", [])
         testPage = self.rootwiki[u"Страница 1"]
 
         testPage.content = u"Бла бла бла"
@@ -70,7 +69,7 @@ class PageStatisticsTest (unittest.TestCase):
 
 
     def testSymbolsCountText (self):
-        TextPageFactory.create (self.rootwiki, u"Страница 1", [])
+        TextPageFactory().create (self.rootwiki, u"Страница 1", [])
         testPage = self.rootwiki[u"Страница 1"]
 
         testPage.content = u"Бла бла бла"
@@ -81,7 +80,7 @@ class PageStatisticsTest (unittest.TestCase):
 
     def testSymbolsCountSearch (self):
         def runTest ():
-            SearchPageFactory.create (self.rootwiki, u"Страница 1", [])
+            SearchPageFactory().create (self.rootwiki, u"Страница 1", [])
             testPage = self.rootwiki[u"Страница 1"]
 
             pageStat = self.loader[self.__pluginname].getPageStat (testPage)
@@ -91,7 +90,7 @@ class PageStatisticsTest (unittest.TestCase):
 
 
     def testSymbolsNotWhiteSpacesWiki (self):
-        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 1", [])
         testPage = self.rootwiki[u"Страница 1"]
 
         testPage.content = u"Бла бла бла\r\n\t\t\tАбырвалг  "
@@ -101,7 +100,7 @@ class PageStatisticsTest (unittest.TestCase):
 
 
     def testSymbolsNotWhiteSpacesHtml (self):
-        HtmlPageFactory.create (self.rootwiki, u"Страница 1", [])
+        HtmlPageFactory().create (self.rootwiki, u"Страница 1", [])
         testPage = self.rootwiki[u"Страница 1"]
 
         testPage.content = u"Бла бла бла\r\n\t\t\tАбырвалг  "
@@ -111,7 +110,7 @@ class PageStatisticsTest (unittest.TestCase):
 
 
     def testSymbolsNotWhiteSpacesText (self):
-        TextPageFactory.create (self.rootwiki, u"Страница 1", [])
+        TextPageFactory().create (self.rootwiki, u"Страница 1", [])
         testPage = self.rootwiki[u"Страница 1"]
 
         testPage.content = u"Бла бла бла\r\n\t\t\tАбырвалг  "
@@ -122,7 +121,7 @@ class PageStatisticsTest (unittest.TestCase):
 
     def testSymbolsNotWhiteSpacesSearch (self):
         def runTest ():
-            SearchPageFactory.create (self.rootwiki, u"Страница 1", [])
+            SearchPageFactory().create (self.rootwiki, u"Страница 1", [])
             testPage = self.rootwiki[u"Страница 1"]
 
             pageStat = self.loader[self.__pluginname].getPageStat (testPage)
@@ -132,7 +131,7 @@ class PageStatisticsTest (unittest.TestCase):
 
 
     def testLinesWiki1 (self):
-        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 1", [])
         testPage = self.rootwiki[u"Страница 1"]
 
         testPage.content = u"""Бла бла бла
@@ -146,7 +145,7 @@ class PageStatisticsTest (unittest.TestCase):
 
 
     def testLinesWiki2 (self):
-        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 1", [])
         testPage = self.rootwiki[u"Страница 1"]
 
         testPage.content = u"""Бла бла бла
@@ -164,7 +163,7 @@ class PageStatisticsTest (unittest.TestCase):
 
 
     def testLinesHtml1 (self):
-        HtmlPageFactory.create (self.rootwiki, u"Страница 1", [])
+        HtmlPageFactory().create (self.rootwiki, u"Страница 1", [])
         testPage = self.rootwiki[u"Страница 1"]
 
         testPage.content = u"""Бла бла бла
@@ -178,7 +177,7 @@ class PageStatisticsTest (unittest.TestCase):
 
 
     def testLinesHtml2 (self):
-        HtmlPageFactory.create (self.rootwiki, u"Страница 1", [])
+        HtmlPageFactory().create (self.rootwiki, u"Страница 1", [])
         testPage = self.rootwiki[u"Страница 1"]
 
         testPage.content = u"""Бла бла бла
@@ -196,7 +195,7 @@ class PageStatisticsTest (unittest.TestCase):
 
 
     def testLinesText1 (self):
-        TextPageFactory.create (self.rootwiki, u"Страница 1", [])
+        TextPageFactory().create (self.rootwiki, u"Страница 1", [])
         testPage = self.rootwiki[u"Страница 1"]
 
         testPage.content = u"""Бла бла бла
@@ -210,7 +209,7 @@ class PageStatisticsTest (unittest.TestCase):
 
 
     def testLinesText2 (self):
-        TextPageFactory.create (self.rootwiki, u"Страница 1", [])
+        TextPageFactory().create (self.rootwiki, u"Страница 1", [])
         testPage = self.rootwiki[u"Страница 1"]
 
         testPage.content = u"""Бла бла бла
@@ -228,7 +227,7 @@ class PageStatisticsTest (unittest.TestCase):
 
 
     def testWordsWiki1 (self):
-        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 1", [])
         testPage = self.rootwiki[u"Страница 1"]
 
         testPage.content = u"""Бла бла бла
@@ -246,7 +245,7 @@ class PageStatisticsTest (unittest.TestCase):
 
 
     def testWordsWiki2 (self):
-        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 1", [])
         testPage = self.rootwiki[u"Страница 1"]
 
         testPage.content = u"""Бла бла бла.
@@ -264,7 +263,7 @@ class PageStatisticsTest (unittest.TestCase):
 
 
     def testWordsHtml1 (self):
-        HtmlPageFactory.create (self.rootwiki, u"Страница 1", [])
+        HtmlPageFactory().create (self.rootwiki, u"Страница 1", [])
         testPage = self.rootwiki[u"Страница 1"]
 
         testPage.content = u"""Бла бла бла
@@ -282,7 +281,7 @@ class PageStatisticsTest (unittest.TestCase):
 
 
     def testWordsHtml2 (self):
-        HtmlPageFactory.create (self.rootwiki, u"Страница 1", [])
+        HtmlPageFactory().create (self.rootwiki, u"Страница 1", [])
         testPage = self.rootwiki[u"Страница 1"]
 
         testPage.content = u"""Бла бла бла.
@@ -300,7 +299,7 @@ class PageStatisticsTest (unittest.TestCase):
 
 
     def testWordsText1 (self):
-        TextPageFactory.create (self.rootwiki, u"Страница 1", [])
+        TextPageFactory().create (self.rootwiki, u"Страница 1", [])
         testPage = self.rootwiki[u"Страница 1"]
 
         testPage.content = u"""Бла бла бла
@@ -318,7 +317,7 @@ class PageStatisticsTest (unittest.TestCase):
 
 
     def testWordsText2 (self):
-        TextPageFactory.create (self.rootwiki, u"Страница 1", [])
+        TextPageFactory().create (self.rootwiki, u"Страница 1", [])
         testPage = self.rootwiki[u"Страница 1"]
 
         testPage.content = u"""Бла бла бла.
@@ -337,7 +336,7 @@ class PageStatisticsTest (unittest.TestCase):
 
     def testWordsSearch (self):
         def runTest ():
-            SearchPageFactory.create (self.rootwiki, u"Страница 1", [])
+            SearchPageFactory().create (self.rootwiki, u"Страница 1", [])
             testPage = self.rootwiki[u"Страница 1"]
 
             pageStat = self.loader[self.__pluginname].getPageStat (testPage)
@@ -347,7 +346,7 @@ class PageStatisticsTest (unittest.TestCase):
 
 
     def testAttachmentsCountWiki1 (self):
-        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 1", [])
         testPage = self.rootwiki[u"Страница 1"]
 
         pageStat = self.loader[self.__pluginname].getPageStat (testPage)
@@ -356,7 +355,7 @@ class PageStatisticsTest (unittest.TestCase):
 
 
     def testAttachmentsCountWiki2 (self):
-        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 1", [])
         testPage = self.rootwiki[u"Страница 1"]
         Attachment (testPage).attach (self.fullFilesPath[0:1])
 
@@ -366,7 +365,7 @@ class PageStatisticsTest (unittest.TestCase):
 
 
     def testAttachmentsCountWiki3 (self):
-        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 1", [])
         testPage = self.rootwiki[u"Страница 1"]
         Attachment (testPage).attach (self.fullFilesPath[0:3])
 
@@ -376,7 +375,7 @@ class PageStatisticsTest (unittest.TestCase):
 
 
     def testAttachmentsCountWiki4 (self):
-        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 1", [])
         testPage = self.rootwiki[u"Страница 1"]
         Attachment (testPage).attach (self.fullFilesPath)
 
@@ -386,7 +385,7 @@ class PageStatisticsTest (unittest.TestCase):
 
 
     def testAttachmentsCountSearch1 (self):
-        SearchPageFactory.create (self.rootwiki, u"Страница 1", [])
+        SearchPageFactory().create (self.rootwiki, u"Страница 1", [])
         testPage = self.rootwiki[u"Страница 1"]
         Attachment (testPage).attach (self.fullFilesPath)
 
@@ -396,7 +395,7 @@ class PageStatisticsTest (unittest.TestCase):
 
 
     def testAttachmentsSizeWiki1 (self):
-        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 1", [])
         testPage = self.rootwiki[u"Страница 1"]
 
         pageStat = self.loader[self.__pluginname].getPageStat (testPage)
@@ -405,7 +404,7 @@ class PageStatisticsTest (unittest.TestCase):
 
 
     def testAttachmentsSizeWiki2 (self):
-        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 1", [])
         testPage = self.rootwiki[u"Страница 1"]
         Attachment (testPage).attach (self.fullFilesPath[0:1])
 
@@ -415,7 +414,7 @@ class PageStatisticsTest (unittest.TestCase):
 
 
     def testAttachmentsSizeWiki3 (self):
-        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 1", [])
         testPage = self.rootwiki[u"Страница 1"]
         Attachment (testPage).attach (self.fullFilesPath[0:3])
 
@@ -425,7 +424,7 @@ class PageStatisticsTest (unittest.TestCase):
 
 
     def testAttachmentsSizeWiki4 (self):
-        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 1", [])
         testPage = self.rootwiki[u"Страница 1"]
         Attachment (testPage).attach (self.fullFilesPath)
 
@@ -435,7 +434,7 @@ class PageStatisticsTest (unittest.TestCase):
 
 
     def testAttachmentsSizeSearch1 (self):
-        SearchPageFactory.create (self.rootwiki, u"Страница 1", [])
+        SearchPageFactory().create (self.rootwiki, u"Страница 1", [])
         testPage = self.rootwiki[u"Страница 1"]
         Attachment (testPage).attach (self.fullFilesPath)
 

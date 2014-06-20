@@ -1,14 +1,13 @@
 # -*- coding: UTF-8 -*-
 
 from outwiker.core.application import Application
-from outwiker.gui.mainwindow import MainWindow
-from outwiker.gui.guiconfig import MainWindowConfig
-from outwiker.core.tree import RootWikiPage, WikiDocument
+from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.actions.history import HistoryBackAction, HistoryForwardAction
 
 from .basemainwnd import BaseMainWndTest
 from test.utils import removeWiki
+
 
 class TabsTest(BaseMainWndTest):
     def setUp (self):
@@ -19,11 +18,12 @@ class TabsTest(BaseMainWndTest):
 
         self.wikiroot = WikiDocument.create (self.path)
 
-        TextPageFactory.create (self.wikiroot, u"Страница 1", [])
-        TextPageFactory.create (self.wikiroot, u"Страница 2", [])
-        TextPageFactory.create (self.wikiroot[u"Страница 2"], u"Страница 3", [])
-        TextPageFactory.create (self.wikiroot[u"Страница 2/Страница 3"], u"Страница 4", [])
-        TextPageFactory.create (self.wikiroot[u"Страница 1"], u"Страница 5", [])
+        factory = TextPageFactory()
+        factory.create (self.wikiroot, u"Страница 1", [])
+        factory.create (self.wikiroot, u"Страница 2", [])
+        factory.create (self.wikiroot[u"Страница 2"], u"Страница 3", [])
+        factory.create (self.wikiroot[u"Страница 2/Страница 3"], u"Страница 4", [])
+        factory.create (self.wikiroot[u"Страница 1"], u"Страница 5", [])
 
         self._tabsController = Application.mainWindow.tabsController
 
@@ -96,8 +96,8 @@ class TabsTest(BaseMainWndTest):
 
         # Выберем более вложенную страницу
         Application.selectedPage = self.wikiroot[u"Страница 2/Страница 3/Страница 4"]
-        self.assertEqual (self._tabsController.getPage(0), 
-                self.wikiroot[u"Страница 2/Страница 3/Страница 4"])
+        self.assertEqual (self._tabsController.getPage(0),
+                          self.wikiroot[u"Страница 2/Страница 3/Страница 4"])
         self.assertEqual (self._tabsController.getTabTitle (0), u"Страница 4")
 
 
@@ -133,8 +133,8 @@ class TabsTest(BaseMainWndTest):
         self.assertEqual (self._tabsController.getPage(1), self.wikiroot[u"Страница 2"])
         self.assertEqual (self._tabsController.getTabTitle (1), u"Страница 2")
 
-        self.assertEqual (self._tabsController.getPage(2), 
-                self.wikiroot[u"Страница 2/Страница 3/Страница 4"])
+        self.assertEqual (self._tabsController.getPage(2),
+                          self.wikiroot[u"Страница 2/Страница 3/Страница 4"])
         self.assertEqual (self._tabsController.getTabTitle (2), u"Страница 4")
 
 
@@ -268,13 +268,13 @@ class TabsTest(BaseMainWndTest):
         Application.selectedPage = self.wikiroot[u"Страница 1"]
         self._tabsController.openInTab (self.wikiroot[u"Страница 2/Страница 3/Страница 4"], True)
 
-        self.assertEqual (Application.selectedPage, 
-                self.wikiroot[u"Страница 2/Страница 3/Страница 4"])
+        self.assertEqual (Application.selectedPage,
+                          self.wikiroot[u"Страница 2/Страница 3/Страница 4"])
 
         self.assertEqual (self._tabsController.getSelection(), 1)
 
-        self.assertEqual (self._tabsController.getPage(1), 
-                self.wikiroot[u"Страница 2/Страница 3/Страница 4"])
+        self.assertEqual (self._tabsController.getPage(1),
+                          self.wikiroot[u"Страница 2/Страница 3/Страница 4"])
 
         self.assertEqual (self._tabsController.getTabTitle (1), u"Страница 4")
 
@@ -290,8 +290,8 @@ class TabsTest(BaseMainWndTest):
         self.assertEqual (self._tabsController.getPage(0), self.wikiroot[u"Страница 1"])
         self.assertEqual (self._tabsController.getTabTitle (0), u"Страница 1")
 
-        self.assertEqual (self._tabsController.getPage(1), 
-                self.wikiroot[u"Страница 2/Страница 3/Страница 4"])
+        self.assertEqual (self._tabsController.getPage(1),
+                          self.wikiroot[u"Страница 2/Страница 3/Страница 4"])
         self.assertEqual (self._tabsController.getTabTitle (1), u"Страница 4")
 
 
@@ -304,12 +304,12 @@ class TabsTest(BaseMainWndTest):
         self._tabsController.setSelection (0)
         self._tabsController.openInTab (self.wikiroot[u"Страница 2/Страница 3/Страница 4"], True)
 
-        self.assertEqual (Application.selectedPage, 
-                self.wikiroot[u"Страница 2/Страница 3/Страница 4"])
+        self.assertEqual (Application.selectedPage,
+                          self.wikiroot[u"Страница 2/Страница 3/Страница 4"])
 
         self.assertEqual (self._tabsController.getSelection(), 1)
-        self.assertEqual (self._tabsController.getPage(1), 
-                self.wikiroot[u"Страница 2/Страница 3/Страница 4"])
+        self.assertEqual (self._tabsController.getPage(1),
+                          self.wikiroot[u"Страница 2/Страница 3/Страница 4"])
 
         self.assertEqual (self._tabsController.getTabTitle (1), u"Страница 4")
 
@@ -330,11 +330,11 @@ class TabsTest(BaseMainWndTest):
         self.assertEqual (self._tabsController.getPage(2), self.wikiroot[u"Страница 2"])
 
         self._tabsController.setSelection (1)
-        self.assertEqual (Application.selectedPage, 
-                self.wikiroot[u"Страница 2/Страница 3/Страница 4"])
+        self.assertEqual (Application.selectedPage,
+                          self.wikiroot[u"Страница 2/Страница 3/Страница 4"])
         self.assertEqual (self._tabsController.getSelection(), 1)
-        self.assertEqual (self._tabsController.getPage(1), 
-                self.wikiroot[u"Страница 2/Страница 3/Страница 4"])
+        self.assertEqual (self._tabsController.getPage(1),
+                          self.wikiroot[u"Страница 2/Страница 3/Страница 4"])
 
 
     def testCloseWiki (self):
@@ -375,8 +375,8 @@ class TabsTest(BaseMainWndTest):
 
         self.assertEqual (self._tabsController.getPage(0), otherwiki[u"Страница 1"])
         self.assertEqual (self._tabsController.getTabTitle (0), u"Страница 1")
-        self.assertEqual (self._tabsController.getPage(1), 
-                otherwiki[u"Страница 2/Страница 3/Страница 4"])
+        self.assertEqual (self._tabsController.getPage(1),
+                          otherwiki[u"Страница 2/Страница 3/Страница 4"])
         self.assertEqual (self._tabsController.getPage(2), otherwiki[u"Страница 2"])
 
 
@@ -398,8 +398,8 @@ class TabsTest(BaseMainWndTest):
 
         self.assertEqual (self._tabsController.getPage(0), otherwiki[u"Страница 1"])
         self.assertEqual (self._tabsController.getTabTitle (0), u"Страница 1")
-        self.assertEqual (self._tabsController.getPage(1), 
-                otherwiki[u"Страница 2/Страница 3/Страница 4"])
+        self.assertEqual (self._tabsController.getPage(1),
+                          otherwiki[u"Страница 2/Страница 3/Страница 4"])
         self.assertEqual (self._tabsController.getPage(2), otherwiki[u"Страница 2"])
 
 
@@ -422,8 +422,8 @@ class TabsTest(BaseMainWndTest):
 
         self.assertEqual (self._tabsController.getPage(0), otherwiki[u"Страница 1"])
         self.assertEqual (self._tabsController.getTabTitle (0), u"Страница 1")
-        self.assertEqual (self._tabsController.getPage(1), 
-                otherwiki[u"Страница 2/Страница 3"])
+        self.assertEqual (self._tabsController.getPage(1),
+                          otherwiki[u"Страница 2/Страница 3"])
         self.assertEqual (self._tabsController.getPage(2), otherwiki[u"Страница 2"])
 
 
@@ -515,7 +515,7 @@ class TabsTest(BaseMainWndTest):
         """
         Application.wikiroot = self.wikiroot
         self.assertEqual (self._tabsController.getTabsCount(), 1)
-        
+
         self._tabsController.closeTab (0)
         self.assertEqual (self._tabsController.getTabsCount(), 1)
 
@@ -525,8 +525,8 @@ class TabsTest(BaseMainWndTest):
         Application.selectedPage = self.wikiroot[u"Страница 1"]
         self._tabsController.openInTab (self.wikiroot[u"Страница 2"], True)
         self._tabsController.openInTab (self.wikiroot[u"Страница 2/Страница 3"], True)
-        
-        self.assertEqual (self._tabsController.getTabsCount(), 3) 
+
+        self.assertEqual (self._tabsController.getTabsCount(), 3)
         self.assertEqual (Application.selectedPage, self.wikiroot[u"Страница 2/Страница 3"])
 
         self._tabsController.closeTab (0)
@@ -547,7 +547,7 @@ class TabsTest(BaseMainWndTest):
         self._tabsController.openInTab (self.wikiroot[u"Страница 2"], True)
         self._tabsController.openInTab (self.wikiroot[u"Страница 2/Страница 3"], True)
 
-        self.assertEqual (self._tabsController.getTabsCount(), 3) 
+        self.assertEqual (self._tabsController.getTabsCount(), 3)
 
         self._tabsController.closeTab (2)
 
@@ -668,8 +668,8 @@ class TabsTest(BaseMainWndTest):
         self.assertRaises (ValueError, self._tabsController.setSelection, -1)
         self.assertRaises (ValueError, self._tabsController.setSelection, 3)
         self.assertRaises (ValueError, self._tabsController.setSelection, 5)
-        
-    
+
+
     def testGetPageInvalid (self):
         Application.wikiroot = self.wikiroot
         Application.selectedPage = self.wikiroot[u"Страница 1"]
@@ -828,26 +828,26 @@ class TabsTest(BaseMainWndTest):
         Application.selectedPage = self.wikiroot[u"Страница 2/Страница 3/Страница 4"]
         Application.selectedPage = None
 
-        
-        Application.actionController.getAction (HistoryBackAction.stringId).run (None)
-
-        self.assertEqual (Application.selectedPage, 
-                self.wikiroot[u"Страница 2/Страница 3/Страница 4"])
 
         Application.actionController.getAction (HistoryBackAction.stringId).run (None)
 
-        self.assertEqual (Application.selectedPage, 
-                self.wikiroot[u"Страница 2/Страница 3"])
+        self.assertEqual (Application.selectedPage,
+                          self.wikiroot[u"Страница 2/Страница 3/Страница 4"])
 
         Application.actionController.getAction (HistoryBackAction.stringId).run (None)
 
-        self.assertEqual (Application.selectedPage, 
-                self.wikiroot[u"Страница 2"])
+        self.assertEqual (Application.selectedPage,
+                          self.wikiroot[u"Страница 2/Страница 3"])
 
         Application.actionController.getAction (HistoryBackAction.stringId).run (None)
 
-        self.assertEqual (Application.selectedPage, 
-                self.wikiroot[u"Страница 1"])
+        self.assertEqual (Application.selectedPage,
+                          self.wikiroot[u"Страница 2"])
+
+        Application.actionController.getAction (HistoryBackAction.stringId).run (None)
+
+        self.assertEqual (Application.selectedPage,
+                          self.wikiroot[u"Страница 1"])
 
 
         info_back = actionController.getActionInfo (HistoryBackAction.stringId)
@@ -859,18 +859,18 @@ class TabsTest(BaseMainWndTest):
 
         Application.actionController.getAction (HistoryForwardAction.stringId).run (None)
 
-        self.assertEqual (Application.selectedPage, 
-                self.wikiroot[u"Страница 2"])
+        self.assertEqual (Application.selectedPage,
+                          self.wikiroot[u"Страница 2"])
 
         Application.actionController.getAction (HistoryForwardAction.stringId).run (None)
 
-        self.assertEqual (Application.selectedPage, 
-                self.wikiroot[u"Страница 2/Страница 3"])
+        self.assertEqual (Application.selectedPage,
+                          self.wikiroot[u"Страница 2/Страница 3"])
 
         Application.actionController.getAction (HistoryForwardAction.stringId).run (None)
 
-        self.assertEqual (Application.selectedPage, 
-                self.wikiroot[u"Страница 2/Страница 3/Страница 4"])
+        self.assertEqual (Application.selectedPage,
+                          self.wikiroot[u"Страница 2/Страница 3/Страница 4"])
 
         Application.actionController.getAction (HistoryForwardAction.stringId).run (None)
 
@@ -893,11 +893,11 @@ class TabsTest(BaseMainWndTest):
         Application.selectedPage = self.wikiroot[u"Страница 2/Страница 3/Страница 4"]
         Application.selectedPage = None
 
-        
+
         Application.actionController.getAction (HistoryBackAction.stringId).run (None)
 
-        self.assertEqual (Application.selectedPage, 
-                self.wikiroot[u"Страница 2/Страница 3/Страница 4"])
+        self.assertEqual (Application.selectedPage,
+                          self.wikiroot[u"Страница 2/Страница 3/Страница 4"])
 
         Application.actionController.getAction (HistoryBackAction.stringId).run (None)
 
@@ -905,13 +905,13 @@ class TabsTest(BaseMainWndTest):
 
         Application.actionController.getAction (HistoryBackAction.stringId).run (None)
 
-        self.assertEqual (Application.selectedPage, 
-                self.wikiroot[u"Страница 2"])
+        self.assertEqual (Application.selectedPage,
+                          self.wikiroot[u"Страница 2"])
 
         Application.actionController.getAction (HistoryBackAction.stringId).run (None)
 
-        self.assertEqual (Application.selectedPage, 
-                self.wikiroot[u"Страница 1"])
+        self.assertEqual (Application.selectedPage,
+                          self.wikiroot[u"Страница 1"])
 
 
         info_back = actionController.getActionInfo (HistoryBackAction.stringId)
@@ -923,8 +923,8 @@ class TabsTest(BaseMainWndTest):
 
         Application.actionController.getAction (HistoryForwardAction.stringId).run (None)
 
-        self.assertEqual (Application.selectedPage, 
-                self.wikiroot[u"Страница 2"])
+        self.assertEqual (Application.selectedPage,
+                          self.wikiroot[u"Страница 2"])
 
         Application.actionController.getAction (HistoryForwardAction.stringId).run (None)
 
@@ -932,8 +932,8 @@ class TabsTest(BaseMainWndTest):
 
         Application.actionController.getAction (HistoryForwardAction.stringId).run (None)
 
-        self.assertEqual (Application.selectedPage, 
-                self.wikiroot[u"Страница 2/Страница 3/Страница 4"])
+        self.assertEqual (Application.selectedPage,
+                          self.wikiroot[u"Страница 2/Страница 3/Страница 4"])
 
         Application.actionController.getAction (HistoryForwardAction.stringId).run (None)
 

@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import wx.aui
@@ -9,7 +8,6 @@ from outwiker.actions.showhidetags import ShowHideTagsAction
 
 from outwiker.core.application import Application
 from basemainwnd import BaseMainWndTest
-from outwiker.gui.guiconfig import MainWindowConfig
 
 
 class MainPanesTest (BaseMainWndTest):
@@ -52,7 +50,7 @@ class MainPanesTest (BaseMainWndTest):
 
         # Небольшой хак с генерацией события о закрытии панели
         event = wx.aui.AuiManagerEvent (wx.aui.wxEVT_AUI_PANE_CLOSE)
-        event.SetPane(panel.pane);
+        event.SetPane(panel.pane)
         self.wnd.auiManager.ProcessEvent (event)
 
         self.assertFalse (actionInfo.menuItem.IsChecked())

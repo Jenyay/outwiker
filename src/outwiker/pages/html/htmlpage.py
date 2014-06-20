@@ -59,14 +59,6 @@ class HtmlPageFactory (PageFactory):
     Фабрика для создания HTML-страниц и их представлений
     """
     @staticmethod
-    def create (parent, title, tags):
-        """
-        Создать страницу. Вызывать этот метод вместо конструктора
-        """
-        return PageFactory._createPage (HtmlWikiPage, parent, title, tags)
-
-
-    @staticmethod
     def registerActions (application):
         """
         Зарегистрировать все действия, связанные с HTML-страницей

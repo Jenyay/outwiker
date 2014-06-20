@@ -1,16 +1,11 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-import os
 import unittest
-import hashlib
 
 from test.utils import removeWiki
 
 from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
-
-from outwiker.pages.wiki.parser.wikiparser import Parser
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
 
@@ -22,10 +17,10 @@ class ParserFontTest (unittest.TestCase):
         self.filesPath = u"../test/samplefiles/"
 
         self.__createWiki()
-        
+
         factory = ParserFactory()
         self.parser = factory.make (self.testPage, Application.config)
-    
+
 
     def __createWiki (self):
         # Здесь будет создаваться вики
@@ -33,9 +28,9 @@ class ParserFontTest (unittest.TestCase):
         removeWiki (self.path)
 
         self.rootwiki = WikiDocument.create (self.path)
-        WikiPageFactory.create (self.rootwiki, u"Страница 2", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 2", [])
         self.testPage = self.rootwiki[u"Страница 2"]
-        
+
 
     def tearDown(self):
         removeWiki (self.path)
@@ -54,13 +49,13 @@ class ParserFontTest (unittest.TestCase):
 
         self.assertEqual (self.parser.toHtml (text), result)
 
-    
+
     def testBoldItalic (self):
         text = u"''''Полужирный курсив''''"
         result = u"<b><i>Полужирный курсив</i></b>"
 
         self.assertEqual (self.parser.toHtml (text), result)
-    
+
 
     def testComboBoldItalic (self):
         text = u"Обычный текст \n''курсив'' \n'''полужирный ''внутри \nкурсив'' ''' 111"
@@ -88,7 +83,7 @@ class ParserFontTest (unittest.TestCase):
         result = u'бла-бла-бла \nкхм <strike><u>это зачеркнутый подчеркнутый текст</u></strike> %% бла-бла-бла\nбла-бла-бла'
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
-    
+
 
     def testSuperscript (self):
         text = u"бла-бла-бла \nкхм '^ это верхний индекс^' бла-бла-бла\nбла-бла-бла"
@@ -96,7 +91,7 @@ class ParserFontTest (unittest.TestCase):
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-    
+
     def testSubscript (self):
         text = u"бла-бла-бла \nкхм '_ это нижний индекс_' бла-бла-бла\nбла-бла-бла"
         result = u'бла-бла-бла \nкхм <sub> это нижний индекс</sub> бла-бла-бла\nбла-бла-бла'

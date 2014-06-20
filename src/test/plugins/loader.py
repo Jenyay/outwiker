@@ -1,8 +1,6 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import unittest
-import os.path
 
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.application import Application
@@ -49,17 +47,17 @@ class PluginsLoaderTest(unittest.TestCase):
 
     def testLoadInvalid (self):
         dirlist = [u"../plugins/testinvalid",            # Нет такой директории
-                u"../plugins/testinvalid1",
-                u"../plugins/testinvalid2",
-                u"../plugins/testinvalid3",
-                u"../plugins/testinvalid4",
-                u"../plugins/testinvalid5",
-                u"../plugins/testinvalid6",
-                u"../plugins/testinvalid7",
-                u"../plugins/testempty1", 
-                u"../plugins/testempty2",
-                u"../plugins/testempty2",                # Ссылка на плагин testempty2 повторяется еще раз
-                u"../plugins/testwikicommand"]
+                   u"../plugins/testinvalid1",
+                   u"../plugins/testinvalid2",
+                   u"../plugins/testinvalid3",
+                   u"../plugins/testinvalid4",
+                   u"../plugins/testinvalid5",
+                   u"../plugins/testinvalid6",
+                   u"../plugins/testinvalid7",
+                   u"../plugins/testempty1",
+                   u"../plugins/testempty2",
+                   u"../plugins/testempty2",                # Ссылка на плагин testempty2 повторяется еще раз
+                   u"../plugins/testwikicommand"]
 
         loader = PluginsLoader(Application)
         loader.enableOutput = False
@@ -82,9 +80,9 @@ class PluginsLoaderTest(unittest.TestCase):
         # Добавим плагин TestEmpty1 в черный список
         self.config.disabledPlugins.value = [u"TestEmpty1"]
 
-        dirlist = [u"../plugins/testempty1", 
-                u"../plugins/testempty2",
-                u"../plugins/testwikicommand"]
+        dirlist = [u"../plugins/testempty1",
+                   u"../plugins/testempty2",
+                   u"../plugins/testwikicommand"]
 
         loader = PluginsLoader(Application)
         loader.load (dirlist)
@@ -105,9 +103,9 @@ class PluginsLoaderTest(unittest.TestCase):
 
     def testOnOffPlugins1 (self):
         # Тест на включение/выключение плагинов
-        dirlist = [u"../plugins/testempty1", 
-                u"../plugins/testempty2",
-                u"../plugins/testwikicommand"]
+        dirlist = [u"../plugins/testempty1",
+                   u"../plugins/testempty2",
+                   u"../plugins/testwikicommand"]
 
         loader = PluginsLoader(Application)
         loader.load (dirlist)
@@ -118,7 +116,7 @@ class PluginsLoaderTest(unittest.TestCase):
         # Отключим плагин TestEmpty1
         self.config.disabledPlugins.value = [u"TestEmpty1"]
         loader.updateDisableList()
-        
+
         self.assertEqual (len (loader), 2)
         self.assertEqual (len (loader.disabledPlugins), 1)
 
@@ -128,9 +126,9 @@ class PluginsLoaderTest(unittest.TestCase):
 
     def testOnOffPlugins2 (self):
         # Тест на включение/выключение плагинов
-        dirlist = [u"../plugins/testempty1", 
-                u"../plugins/testempty2",
-                u"../plugins/testwikicommand"]
+        dirlist = [u"../plugins/testempty1",
+                   u"../plugins/testempty2",
+                   u"../plugins/testwikicommand"]
 
         loader = PluginsLoader(Application)
         loader.load (dirlist)
@@ -140,16 +138,16 @@ class PluginsLoaderTest(unittest.TestCase):
 
         # Обновим черный список без изменений
         loader.updateDisableList()
-        
+
         self.assertEqual (len (loader), 3)
         self.assertEqual (len (loader.disabledPlugins), 0)
 
 
     def testOnOffPlugins3 (self):
         # Тест на включение/выключение плагинов
-        dirlist = [u"../plugins/testempty1", 
-                u"../plugins/testempty2",
-                u"../plugins/testwikicommand"]
+        dirlist = [u"../plugins/testempty1",
+                   u"../plugins/testempty2",
+                   u"../plugins/testwikicommand"]
 
         loader = PluginsLoader(Application)
         loader.load (dirlist)
@@ -160,16 +158,16 @@ class PluginsLoaderTest(unittest.TestCase):
         # Добавим в черный список плагины, которые не существуют
         self.config.disabledPlugins.value = [u"TestEmpty1111"]
         loader.updateDisableList()
-        
+
         self.assertEqual (len (loader), 3)
         self.assertEqual (len (loader.disabledPlugins), 0)
 
 
     def testOnOffPlugins4 (self):
         # Тест на включение/выключение плагинов
-        dirlist = [u"../plugins/testempty1", 
-                u"../plugins/testempty2",
-                u"../plugins/testwikicommand"]
+        dirlist = [u"../plugins/testempty1",
+                   u"../plugins/testempty2",
+                   u"../plugins/testwikicommand"]
 
         # Сразу заблокируем все плагины
         self.config.disabledPlugins.value = [u"TestEmpty1", u"TestEmpty2", u"TestWikiCommand"]
@@ -182,16 +180,16 @@ class PluginsLoaderTest(unittest.TestCase):
 
         # Обновим плагины без изменений
         loader.updateDisableList()
-        
+
         self.assertEqual (len (loader), 0)
         self.assertEqual (len (loader.disabledPlugins), 3)
 
 
     def testOnOffPlugins5 (self):
         # Тест на включение/выключение плагинов
-        dirlist = [u"../plugins/testempty1", 
-                u"../plugins/testempty2",
-                u"../plugins/testwikicommand"]
+        dirlist = [u"../plugins/testempty1",
+                   u"../plugins/testempty2",
+                   u"../plugins/testwikicommand"]
 
         # Сразу заблокируем все плагины
         self.config.disabledPlugins.value = [u"TestEmpty1", u"TestEmpty2", u"TestWikiCommand"]
@@ -205,16 +203,16 @@ class PluginsLoaderTest(unittest.TestCase):
         # Включим все плагины
         self.config.disabledPlugins.value = []
         loader.updateDisableList()
-        
+
         self.assertEqual (len (loader), 3)
         self.assertEqual (len (loader.disabledPlugins), 0)
 
 
     def testOnOffPlugins6 (self):
         # Тест на включение/выключение плагинов
-        dirlist = [u"../plugins/testempty1", 
-                u"../plugins/testempty2",
-                u"../plugins/testwikicommand"]
+        dirlist = [u"../plugins/testempty1",
+                   u"../plugins/testempty2",
+                   u"../plugins/testwikicommand"]
 
         loader = PluginsLoader(Application)
         loader.load (dirlist)

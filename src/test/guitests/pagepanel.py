@@ -1,9 +1,8 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 
 from basemainwnd import BaseMainWndTest
-from outwiker.core.tree import RootWikiPage, WikiDocument
+from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
 from test.utils import removeWiki
 
@@ -32,17 +31,17 @@ class PagePanelTest (BaseMainWndTest):
 
         self.wikiroot = WikiDocument.create (self.path)
 
-        TextPageFactory.create (self.wikiroot, u"Текстовая страница", [])
-        TextPageFactory.create (self.wikiroot, u"Текстовая страница 2", [])
+        TextPageFactory().create (self.wikiroot, u"Текстовая страница", [])
+        TextPageFactory().create (self.wikiroot, u"Текстовая страница 2", [])
 
-        HtmlPageFactory.create (self.wikiroot, u"HTML-страница", [])
-        HtmlPageFactory.create (self.wikiroot, u"HTML-страница 2", [])
+        HtmlPageFactory().create (self.wikiroot, u"HTML-страница", [])
+        HtmlPageFactory().create (self.wikiroot, u"HTML-страница 2", [])
 
-        WikiPageFactory.create (self.wikiroot, u"Викистраница", [])
-        WikiPageFactory.create (self.wikiroot, u"Викистраница 2", [])
+        WikiPageFactory().create (self.wikiroot, u"Викистраница", [])
+        WikiPageFactory().create (self.wikiroot, u"Викистраница 2", [])
 
-        SearchPageFactory.create (self.wikiroot, u"Поисковая страница", [])
-        SearchPageFactory.create (self.wikiroot, u"Поисковая страница 2", [])
+        SearchPageFactory().create (self.wikiroot, u"Поисковая страница", [])
+        SearchPageFactory().create (self.wikiroot, u"Поисковая страница 2", [])
 
 
     def tearDown (self):

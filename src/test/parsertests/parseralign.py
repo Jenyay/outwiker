@@ -1,17 +1,13 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import os
 import unittest
-import hashlib
 
 from test.utils import removeWiki
 
 from outwiker.core.tree import WikiDocument
 from outwiker.core.attachment import Attachment
 from outwiker.core.application import Application
-
-from outwiker.pages.wiki.parser.wikiparser import Parser
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
 
@@ -26,10 +22,10 @@ class ParserAlignTest (unittest.TestCase):
         self.pageComments = [u"Страницо 1", u"Страницо 1", u"Страницо 3"]
 
         self.__createWiki()
-        
+
         factory = ParserFactory()
         self.parser = factory.make (self.testPage, Application.config)
-    
+
 
     def __createWiki (self):
         # Здесь будет создаваться вики
@@ -37,13 +33,13 @@ class ParserAlignTest (unittest.TestCase):
         removeWiki (self.path)
 
         self.rootwiki = WikiDocument.create (self.path)
-        WikiPageFactory.create (self.rootwiki, u"Страница 2", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 2", [])
         self.testPage = self.rootwiki[u"Страница 2"]
-        
-        files = [u"accept.png", u"add.png", u"anchor.png", u"filename.tmp", 
-                u"файл с пробелами.tmp", u"картинка с пробелами.png", 
-                u"image.jpg", u"image.jpeg", u"image.png", u"image.tif", u"image.tiff", u"image.gif",
-                u"image_01.JPG", u"dir", u"dir.xxx", u"dir.png"]
+
+        files = [u"accept.png", u"add.png", u"anchor.png", u"filename.tmp",
+                 u"файл с пробелами.tmp", u"картинка с пробелами.png",
+                 u"image.jpg", u"image.jpeg", u"image.png", u"image.tif", u"image.tiff", u"image.gif",
+                 u"image_01.JPG", u"dir", u"dir.xxx", u"dir.png"]
 
         fullFilesPath = [os.path.join (self.filesPath, fname) for fname in files]
 
@@ -51,7 +47,7 @@ class ParserAlignTest (unittest.TestCase):
 
         # Прикрепим к двум страницам файлы
         Attachment (self.testPage).attach (fullFilesPath)
-    
+
 
     def tearDown(self):
         removeWiki (self.path)
@@ -76,7 +72,7 @@ class ParserAlignTest (unittest.TestCase):
         result = u'<div align="center">бла-бла-бла \nкхм бла-бла-бла</div>\n\nбла-бла-бла'
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
-    
+
 
     def testCenter4 (self):
         text = u"%center%бла-бла-бла \n'''кхм''' бла-бла-бла\n\nбла-бла-бла"
@@ -84,13 +80,13 @@ class ParserAlignTest (unittest.TestCase):
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-    
+
     def testCenter5 (self):
         text = u"бла-бла-бла \n\n% center %Attach:accept.png\n\nбла-бла-бла\nбла-бла-бла"
         result = u'бла-бла-бла \n\n<div align="center"><img src="__attach/accept.png"/></div>\n\nбла-бла-бла\nбла-бла-бла'
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
-    
+
 
     def testRight1 (self):
         text = u"бла-бла-бла \n% right %кхм бла-бла-бла\nбла-бла-бла"

@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 from basemainwnd import BaseMainWndTest
@@ -8,6 +7,7 @@ from outwiker.pages.html.htmlpage import HtmlPageFactory
 from outwiker.actions.polyactionsid import *
 from test.utils import removeWiki
 
+
 class HtmlActionsTest (BaseMainWndTest):
     """
     Тесты действий для HTML-страницы
@@ -16,46 +16,46 @@ class HtmlActionsTest (BaseMainWndTest):
         BaseMainWndTest.setUp (self)
 
         self._turnSyntax = [
-                (BOLD_STR_ID, "<b>", "</b>"),
-                (ITALIC_STR_ID, "<i>", "</i>"),
-                (BOLD_ITALIC_STR_ID, "<b><i>", "</i></b>"),
-                (UNDERLINE_STR_ID, "<u>", "</u>"),
-                (STRIKE_STR_ID, "<strike>", "</strike>"),
-                (SUBSCRIPT_STR_ID, "<sub>", "</sub>"),
-                (SUPERSCRIPT_STR_ID, "<sup>", "</sup>"),
-                (ALIGN_LEFT_STR_ID, '<div align="left">', '</div>'),
-                (ALIGN_CENTER_STR_ID, '<div align="center">', '</div>'),
-                (ALIGN_RIGHT_STR_ID, '<div align="right">', '</div>'),
-                (ALIGN_JUSTIFY_STR_ID, '<div align="justify">', '</div>'),
-                (HEADING_1_STR_ID, "<h1>", "</h1>"),
-                (HEADING_2_STR_ID, "<h2>", "</h2>"),
-                (HEADING_3_STR_ID, "<h3>", "</h3>"),
-                (HEADING_4_STR_ID, "<h4>", "</h4>"),
-                (HEADING_5_STR_ID, "<h5>", "</h5>"),
-                (HEADING_6_STR_ID, "<h6>", "</h6>"),
-                (PREFORMAT_STR_ID, "<pre>", "</pre>"),
-                (CODE_STR_ID, "<code>", "</code>"),
-                (ANCHOR_STR_ID, u'<a name="', u'"></a>'),
-                (TABLE_STR_ID, u'<table>', u'</table>'),
-                (TABLE_ROW_STR_ID, u'<tr>', u'</tr>'),
-                (TABLE_CELL_STR_ID, u'<td>', u'</td>'),
-                (QUOTE_STR_ID, u'<blockquote>', u'</blockquote>'),
-                (IMAGE_STR_ID, u'<img src="', u'"/>'),
-                ]
+            (BOLD_STR_ID, "<b>", "</b>"),
+            (ITALIC_STR_ID, "<i>", "</i>"),
+            (BOLD_ITALIC_STR_ID, "<b><i>", "</i></b>"),
+            (UNDERLINE_STR_ID, "<u>", "</u>"),
+            (STRIKE_STR_ID, "<strike>", "</strike>"),
+            (SUBSCRIPT_STR_ID, "<sub>", "</sub>"),
+            (SUPERSCRIPT_STR_ID, "<sup>", "</sup>"),
+            (ALIGN_LEFT_STR_ID, '<div align="left">', '</div>'),
+            (ALIGN_CENTER_STR_ID, '<div align="center">', '</div>'),
+            (ALIGN_RIGHT_STR_ID, '<div align="right">', '</div>'),
+            (ALIGN_JUSTIFY_STR_ID, '<div align="justify">', '</div>'),
+            (HEADING_1_STR_ID, "<h1>", "</h1>"),
+            (HEADING_2_STR_ID, "<h2>", "</h2>"),
+            (HEADING_3_STR_ID, "<h3>", "</h3>"),
+            (HEADING_4_STR_ID, "<h4>", "</h4>"),
+            (HEADING_5_STR_ID, "<h5>", "</h5>"),
+            (HEADING_6_STR_ID, "<h6>", "</h6>"),
+            (PREFORMAT_STR_ID, "<pre>", "</pre>"),
+            (CODE_STR_ID, "<code>", "</code>"),
+            (ANCHOR_STR_ID, u'<a name="', u'"></a>'),
+            (TABLE_STR_ID, u'<table>', u'</table>'),
+            (TABLE_ROW_STR_ID, u'<tr>', u'</tr>'),
+            (TABLE_CELL_STR_ID, u'<td>', u'</td>'),
+            (QUOTE_STR_ID, u'<blockquote>', u'</blockquote>'),
+            (IMAGE_STR_ID, u'<img src="', u'"/>'),
+        ]
 
         self._replaceSyntax = [
-                (HORLINE_STR_ID, u"<hr>"),
-                ]
+            (HORLINE_STR_ID, u"<hr>"),
+        ]
 
         self.path = u"../test/testwiki"
         removeWiki (self.path)
 
         self.wikiroot = WikiDocument.create (self.path)
-        HtmlPageFactory.create (self.wikiroot, u"HTML-страница", [])
-        HtmlPageFactory.create (self.wikiroot, u"temp", [])
+        HtmlPageFactory().create (self.wikiroot, u"HTML-страница", [])
+        HtmlPageFactory().create (self.wikiroot, u"temp", [])
 
         # Страница, куда будем переключаться перед изменением содержимого основной страницы
-        # Можно было бы вместо temppage использовать None, но тогда программе 
+        # Можно было бы вместо temppage использовать None, но тогда программе
         # пришлось бы каждый раз удалять и создавать панели инструментов, что медленно
         self.temppage = self.wikiroot[u"temp"]
         self.testpage = self.wikiroot[u"HTML-страница"]
@@ -147,7 +147,7 @@ class HtmlActionsTest (BaseMainWndTest):
             self._getEditor().SetSelection (4, 7)
 
             Application.actionController.getAction (syntax[0]).run(None)
-            self.assertEqual (self._getEditor().GetText(), u"Бла-{}-бла".format (syntax[1]) )
+            self.assertEqual (self._getEditor().GetText(), u"Бла-{}-бла".format (syntax[1]))
 
 
     def testListBulletsEmpty (self):

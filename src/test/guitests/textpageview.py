@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 from basemainwnd import BaseMainWndTest
@@ -22,8 +21,9 @@ class TextPageViewTest (BaseMainWndTest):
 
         self.wikiroot = WikiDocument.create (self.path)
 
-        TextPageFactory.create (self.wikiroot, u"Страница", [])
-        TextPageFactory.create (self.wikiroot, u"Страница 2", [])
+        factory = TextPageFactory()
+        factory.create (self.wikiroot, u"Страница", [])
+        factory.create (self.wikiroot, u"Страница 2", [])
 
 
     def tearDown (self):

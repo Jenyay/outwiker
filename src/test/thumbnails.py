@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import unittest
@@ -27,9 +26,9 @@ class ThumbnailsTest (unittest.TestCase):
         self.pageComments = [u"Страницо 1", u"Страницо 1", u"Страницо 3"]
 
         self.__createWiki()
-        
+
         self.parser = Parser(self.testPage, Application.config)
-    
+
 
     def __createWiki (self):
         # Здесь будет создаваться вики
@@ -37,9 +36,9 @@ class ThumbnailsTest (unittest.TestCase):
         removeWiki (self.path)
 
         self.rootwiki = WikiDocument.create (self.path)
-        WikiPageFactory.create (self.rootwiki, u"Страница 2", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 2", [])
         self.testPage = self.rootwiki[u"Страница 2"]
-        
+
 
     def tearDown(self):
         removeWiki (self.path)
@@ -48,9 +47,9 @@ class ThumbnailsTest (unittest.TestCase):
         thumb = Thumbnails (self.parser.page)
         thumbDir = thumb.getThumbPath (create=False)
 
-        self.assertEqual (thumbDir, 
-                os.path.join (Attachment (self.parser.page).getAttachPath(), Thumbnails.thumbDir ),
-                thumbDir)
+        self.assertEqual (thumbDir,
+                          os.path.join (Attachment (self.parser.page).getAttachPath(), Thumbnails.thumbDir),
+                          thumbDir)
 
 
     def testThumbnails2 (self):
@@ -73,42 +72,42 @@ class ThumbnailsTest (unittest.TestCase):
 
         self.assertFalse (os.path.exists (thumb.getThumbPath (create=False)))
 
-    
+
     def testThumbnailsClear2 (self):
         thumb = Thumbnails (self.parser.page)
-        
+
         eqn = "y = f(x)"
 
         text = "{$ %s $}" % (eqn)
         self.parser.toHtml (text)
 
-        self.assertFalse (len (os.listdir (thumb.getThumbPath (False) ) ) == 0)
+        self.assertFalse (len (os.listdir (thumb.getThumbPath (False))) == 0)
 
         thumb.clearDir()
 
-        self.assertEqual (len (os.listdir (thumb.getThumbPath (False) ) ), 0 )
+        self.assertEqual (len (os.listdir (thumb.getThumbPath (False))), 0)
 
-    
+
     def testThumbnailsClear3 (self):
         thumb = Thumbnails (self.parser.page)
-        
+
         eqn1 = "y = f(x)"
         eqn2 = "y = f_2(x)"
 
         self.parser.toHtml ("{$ %s $}" % (eqn1))
-        self.assertEqual (len (os.listdir (thumb.getThumbPath (False) ) ), 2 )
+        self.assertEqual (len (os.listdir (thumb.getThumbPath (False))), 2)
 
         self.parser.toHtml ("{$ %s $}" % (eqn2))
-        self.assertEqual (len (os.listdir (thumb.getThumbPath (False) ) ), 2 )
+        self.assertEqual (len (os.listdir (thumb.getThumbPath (False))), 2)
 
 
     def testThumbnails1_attach (self):
         thumb = Thumbnails (self.parser.page)
         thumbDir = thumb.getThumbPath (create=False)
 
-        self.assertEqual (thumbDir, 
-                os.path.join (Attachment (self.parser.page).getAttachPath(), Thumbnails.thumbDir ),
-                thumbDir)
+        self.assertEqual (thumbDir,
+                          os.path.join (Attachment (self.parser.page).getAttachPath(), Thumbnails.thumbDir),
+                          thumbDir)
 
 
     def testThumbnails2_attach (self):
@@ -143,38 +142,38 @@ class ThumbnailsTest (unittest.TestCase):
 
         self.assertFalse (os.path.exists (thumb.getThumbPath (create=False)))
 
-    
+
     def testThumbnailsClear2_attach (self):
         fname = u"accept.png"
         attachPath = os.path.join (self.filesPath, fname)
         Attachment (self.parser.page).attach ([attachPath])
 
         thumb = Thumbnails (self.parser.page)
-        
+
         eqn = "y = f(x)"
 
         text = "{$ %s $}" % (eqn)
         self.parser.toHtml (text)
 
-        self.assertFalse (len (os.listdir (thumb.getThumbPath (False) ) ) == 0)
+        self.assertFalse (len (os.listdir (thumb.getThumbPath (False))) == 0)
 
         thumb.clearDir()
 
-        self.assertEqual (len (os.listdir (thumb.getThumbPath (False) ) ), 0 )
+        self.assertEqual (len (os.listdir (thumb.getThumbPath (False))), 0)
 
-    
+
     def testThumbnailsClear3_attach (self):
         fname = u"accept.png"
         attachPath = os.path.join (self.filesPath, fname)
         Attachment (self.parser.page).attach ([attachPath])
 
         thumb = Thumbnails (self.parser.page)
-        
+
         eqn1 = "y = f(x)"
         eqn2 = "y = f_2(x)"
 
         self.parser.toHtml ("{$ %s $}" % (eqn1))
-        self.assertEqual (len (os.listdir (thumb.getThumbPath (False) ) ), 2 )
+        self.assertEqual (len (os.listdir (thumb.getThumbPath (False))), 2)
 
         self.parser.toHtml ("{$ %s $}" % (eqn2))
-        self.assertEqual (len (os.listdir (thumb.getThumbPath (False) ) ), 2 )
+        self.assertEqual (len (os.listdir (thumb.getThumbPath (False))), 2)

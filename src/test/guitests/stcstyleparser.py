@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 from unittest import TestCase
@@ -219,7 +218,7 @@ class StcStyleParserTest (TestCase):
         self.assertTrue (StcStyle.checkColorString (u" #000000 "))
         self.assertTrue (StcStyle.checkColorString (u"#AA00FF"))
         self.assertTrue (StcStyle.checkColorString (u"#aa00ff"))
-        
+
         self.assertFalse (StcStyle.checkColorString (u"AA00FF"))
         self.assertFalse (StcStyle.checkColorString (u"#AA00FF0"))
         self.assertFalse (StcStyle.checkColorString (u"#AA00GG"))

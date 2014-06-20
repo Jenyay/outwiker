@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import os
@@ -9,8 +8,6 @@ from test.utils import removeWiki
 from outwiker.core.tree import WikiDocument
 from outwiker.core.attachment import Attachment
 from outwiker.core.application import Application
-
-from outwiker.pages.wiki.parser.wikiparser import Parser
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
 
@@ -25,10 +22,10 @@ class ParserAttachTest (unittest.TestCase):
         self.pageComments = [u"Страницо 1", u"Страницо 1", u"Страницо 3"]
 
         self.__createWiki()
-        
+
         factory = ParserFactory()
         self.parser = factory.make (self.testPage, Application.config)
-    
+
 
     def __createWiki (self):
         # Здесь будет создаваться вики
@@ -36,13 +33,13 @@ class ParserAttachTest (unittest.TestCase):
         removeWiki (self.path)
 
         self.rootwiki = WikiDocument.create (self.path)
-        WikiPageFactory.create (self.rootwiki, u"Страница 2", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 2", [])
         self.testPage = self.rootwiki[u"Страница 2"]
-        
-        files = [u"accept.png", u"add.png", u"anchor.png", u"filename.tmp", 
-                u"файл с пробелами.tmp", u"картинка с пробелами.png", 
-                u"image.jpg", u"image.jpeg", u"image.png", u"image.tif", u"image.tiff", u"image.gif",
-                u"image_01.JPG", u"dir", u"dir.xxx", u"dir.png"]
+
+        files = [u"accept.png", u"add.png", u"anchor.png", u"filename.tmp",
+                 u"файл с пробелами.tmp", u"картинка с пробелами.png",
+                 u"image.jpg", u"image.jpeg", u"image.png", u"image.tif", u"image.tiff", u"image.gif",
+                 u"image_01.JPG", u"dir", u"dir.xxx", u"dir.png"]
 
         fullFilesPath = [os.path.join (self.filesPath, fname) for fname in files]
 
@@ -50,7 +47,7 @@ class ParserAttachTest (unittest.TestCase):
 
         # Прикрепим к двум страницам файлы
         Attachment (self.testPage).attach (fullFilesPath)
-    
+
 
     def tearDown(self):
         removeWiki (self.path)
@@ -62,7 +59,7 @@ class ParserAttachTest (unittest.TestCase):
         result = u'бла-бла-бла \n<a href="__attach/%s">%s</a> бла-бла-бла\nбла-бла-бла' % (fname, fname)
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
-    
+
 
     def testAttach02 (self):
         fname = u"accept.png"
@@ -70,7 +67,7 @@ class ParserAttachTest (unittest.TestCase):
         result = u'бла-бла-бла \n<img src="__attach/%s"/> бла-бла-бла\nбла-бла-бла' % (fname)
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
-    
+
 
     def testAttach03 (self):
         fname = u"filename.tmp"
@@ -78,7 +75,7 @@ class ParserAttachTest (unittest.TestCase):
         result = u'бла-бла-бла \n<a href="__attach/%s">%s</a> бла-бла-бла\nбла-бла-бла' % (fname, fname)
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
-    
+
 
     def testAttach04 (self):
         fname = u"файл с пробелами.tmp"
@@ -86,7 +83,7 @@ class ParserAttachTest (unittest.TestCase):
         result = u'бла-бла-бла \n<a href="__attach/%s">%s</a> бла-бла-бла\nбла-бла-бла' % (fname, fname)
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
-    
+
 
     def testAttach05 (self):
         fname = u"файл с пробелами.tmp"
@@ -94,7 +91,7 @@ class ParserAttachTest (unittest.TestCase):
         result = u'бла-бла-бла \n<a href="__attach/%s">%s</a> бла-бла-бла\nбла-бла-бла' % (fname, fname)
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
-    
+
 
     def testAttach06 (self):
         fname = u"картинка с пробелами.png"
@@ -103,7 +100,7 @@ class ParserAttachTest (unittest.TestCase):
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-    
+
     def testAttach07 (self):
         fname = u"accept.png"
         text = u"бла-бла-бла \n[[Attach:%s]] бла-бла-бла\nбла-бла-бла" % (fname)
@@ -127,7 +124,7 @@ class ParserAttachTest (unittest.TestCase):
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-    
+
     def testAttach10 (self):
         fname = u"accept.png"
         text = u"бла-бла-бла \n[[Комментарий -> Attach:%s]] бла-бла-бла\nбла-бла-бла" % (fname)
@@ -135,14 +132,14 @@ class ParserAttachTest (unittest.TestCase):
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-    
+
     def testAttach11 (self):
         fname = u"файл с пробелами.tmp"
         text = u"бла-бла-бла \n[[Комментарий -> Attach:%s]] бла-бла-бла\nбла-бла-бла" % (fname)
         result = u'бла-бла-бла \n<a href="__attach/%s">Комментарий</a> бла-бла-бла\nбла-бла-бла' % (fname)
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
-    
+
     def testAttach12 (self):
         fname = u"image_01.JPG"
         text = u"бла-бла-бла \nAttach:%s бла-бла-бла\nбла-бла-бла" % (fname)
@@ -156,20 +153,20 @@ class ParserAttachTest (unittest.TestCase):
         text = u"бла-бла-бла \nAttach:%s бла-бла-бла\nбла-бла-бла" % (fname)
         result = u'бла-бла-бла \n<a href="__attach/%s">%s</a> бла-бла-бла\nбла-бла-бла' % (fname, fname)
 
-        self.assertEqual (self.parser.toHtml (text), 
-                result, 
-                self.parser.toHtml (text).encode (self.encoding) + "\n" + result.encode (self.encoding))
-    
+        self.assertEqual (self.parser.toHtml (text),
+                          result,
+                          self.parser.toHtml (text).encode (self.encoding) + "\n" + result.encode (self.encoding))
+
 
     def testAttach14 (self):
         fname = u"dir"
         text = u"бла-бла-бла \nAttach:%s бла-бла-бла\nбла-бла-бла" % (fname)
         result = u'бла-бла-бла \n<a href="__attach/%s">%s</a> бла-бла-бла\nбла-бла-бла' % (fname, fname)
 
-        self.assertEqual (self.parser.toHtml (text), 
-                result, 
-                self.parser.toHtml (text).encode (self.encoding) + "\n" + result.encode (self.encoding))
-    
+        self.assertEqual (self.parser.toHtml (text),
+                          result,
+                          self.parser.toHtml (text).encode (self.encoding) + "\n" + result.encode (self.encoding))
+
 
     def testAttach15 (self):
         fname = u"dir.png"

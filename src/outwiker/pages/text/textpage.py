@@ -25,20 +25,8 @@ class TextPageFactory (PageFactory):
     """
     Фабрика для создания текстовой страницы и ее представления
     """
-    @staticmethod
-    def create (parent, title, tags):
-        """
-        Создать страницу. Вызывать этот метод вместо конструктора
-        """
-        return PageFactory._createPage (TextWikiPage, parent, title, tags)
-
-
     def getPageType(self):
         return TextWikiPage
-
-
-    def getTypeString (self):
-        return self.getPageType().getTypeString()
 
 
     @property

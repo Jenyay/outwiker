@@ -1,12 +1,6 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-import unittest
-
-import wx
-
 from outwiker.core.application import Application
-from outwiker.gui.mainwindow import MainWindow
 from outwiker.gui.guiconfig import TrayConfig
 from .basemainwnd import BaseMainWndTest
 
@@ -35,7 +29,6 @@ class TrayNormalTest(BaseMainWndTest):
         self.wnd.taskBarIcon.config.alwaysShowTrayIcon.value = False
         self.wnd.taskBarIcon.config.startIconized.value = False
         Application.onPreferencesDialogClose(None)
-        #self._processEvents()
 
         self.wnd.Iconize(True)
         self._processEvents()
@@ -55,7 +48,6 @@ class TrayNormalTest(BaseMainWndTest):
         self.wnd.taskBarIcon.config.alwaysShowTrayIcon.value = False
         self.wnd.taskBarIcon.config.startIconized.value = False
         Application.onPreferencesDialogClose(None)
-        #self._processEvents()
 
         self.wnd.Iconize(True)
         self._processEvents()

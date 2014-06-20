@@ -5,7 +5,7 @@ import unittest
 from outwiker.core.history import History, HistoryEmptyException
 
 from outwiker.core.application import Application
-from outwiker.core.tree import RootWikiPage, WikiDocument
+from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
 from test.utils import removeWiki
 
@@ -22,11 +22,12 @@ class HistoryTest (unittest.TestCase):
 
         self.wiki = WikiDocument.create (self.path)
 
-        TextPageFactory.create (self.wiki, u"Страница 1", [])
-        TextPageFactory.create (self.wiki, u"Страница 2", [])
-        TextPageFactory.create (self.wiki[u"Страница 2"], u"Страница 3", [])
-        TextPageFactory.create (self.wiki[u"Страница 2/Страница 3"], u"Страница 4", [])
-        TextPageFactory.create (self.wiki[u"Страница 1"], u"Страница 5", [])
+        factory = TextPageFactory()
+        factory.create (self.wiki, u"Страница 1", [])
+        factory.create (self.wiki, u"Страница 2", [])
+        factory.create (self.wiki[u"Страница 2"], u"Страница 3", [])
+        factory.create (self.wiki[u"Страница 2/Страница 3"], u"Страница 4", [])
+        factory.create (self.wiki[u"Страница 1"], u"Страница 5", [])
 
         Application.wikiroot = None
 

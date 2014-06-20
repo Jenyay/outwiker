@@ -1,10 +1,7 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import unittest
 import os.path
-
-import wx
 
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.tree import WikiDocument
@@ -46,9 +43,9 @@ class SourceAttachmentPluginTest (unittest.TestCase):
 
         self.rootwiki = WikiDocument.create (self.path)
 
-        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 1", [])
         self.testPage = self.rootwiki[u"Страница 1"]
-        
+
 
     def tearDown(self):
         removeWiki (self.path)
@@ -72,8 +69,8 @@ class SourceAttachmentPluginTest (unittest.TestCase):
 
         self.assertEqual (self.dialog.attachmentComboBox.GetSelection(), 0)
         self.assertEqual (self.dialog.attachmentComboBox.GetCount(), 2)
-        self.assertEqual (self.dialog.attachmentComboBox.GetItems(), 
-                [u"source_cp1251.cs", u"source_utf8.py"])
+        self.assertEqual (self.dialog.attachmentComboBox.GetItems(),
+                          [u"source_cp1251.cs", u"source_utf8.py"])
 
 
     def testAttachment3 (self):

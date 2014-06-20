@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import unittest
@@ -45,9 +44,9 @@ class SourceGuiPluginTest (unittest.TestCase):
 
         self.rootwiki = WikiDocument.create (self.path)
 
-        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 1", [])
         self.testPage = self.rootwiki[u"Страница 1"]
-        
+
 
     def tearDown(self):
         self._clearConfig (self.config)
@@ -187,8 +186,8 @@ class SourceGuiPluginTest (unittest.TestCase):
         self.assertEqual (self.config.tabWidth.value, 8)
         self.assertEqual (self.config.dialogWidth.value, 100)
         self.assertEqual (self.config.dialogHeight.value, 200)
-        self.assertEqual (self.config.languageList.value, 
-                [u"python", u"cpp", u"haskell"])
+        self.assertEqual (self.config.languageList.value,
+                          [u"python", u"cpp", u"haskell"])
 
 
     def testDialogLanguageValues1 (self):
@@ -197,8 +196,8 @@ class SourceGuiPluginTest (unittest.TestCase):
 
         self.controller.showDialog()
 
-        self.assertEqual (self.dialog.languageComboBox.GetItems(), 
-                [u"cpp", u"haskell", u"python"])
+        self.assertEqual (self.dialog.languageComboBox.GetItems(),
+                          [u"cpp", u"haskell", u"python"])
 
         self.assertEqual (self.dialog.languageComboBox.GetSelection(), 1)
         self.assertEqual (self.dialog.languageComboBox.GetValue(), u"haskell")
@@ -236,8 +235,8 @@ class SourceGuiPluginTest (unittest.TestCase):
 
         self.controller.showDialog()
 
-        self.assertEqual (self.dialog.languageComboBox.GetItems(), 
-                [u"cpp", u"haskell", u"python"])
+        self.assertEqual (self.dialog.languageComboBox.GetItems(),
+                          [u"cpp", u"haskell", u"python"])
 
         self.assertEqual (self.dialog.languageComboBox.GetSelection(), 1)
         self.assertEqual (self.dialog.languageComboBox.GetValue(), u"haskell")

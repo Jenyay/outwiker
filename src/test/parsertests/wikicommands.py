@@ -1,14 +1,10 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-import os
 import unittest
-import hashlib
 
 from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
 from outwiker.pages.wiki.parser.commandtest import TestCommand, ExceptionCommand
-from outwiker.pages.wiki.parser.wikiparser import Parser
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parser.command import Command
 from outwiker.pages.wiki.parserfactory import ParserFactory
@@ -21,10 +17,10 @@ class WikiCommandsTest (unittest.TestCase):
 
         self.filesPath = u"../test/samplefiles/"
         self.__createWiki()
-        
+
         factory = ParserFactory()
         self.parser = factory.make (self.testPage, Application.config)
-    
+
 
     def __createWiki (self):
         # Здесь будет создаваться вики
@@ -33,9 +29,9 @@ class WikiCommandsTest (unittest.TestCase):
 
         self.rootwiki = WikiDocument.create (self.path)
 
-        WikiPageFactory.create (self.rootwiki, u"Страница 2", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 2", [])
         self.testPage = self.rootwiki[u"Страница 2"]
-        
+
 
     def tearDown(self):
         removeWiki (self.path)
@@ -205,7 +201,7 @@ content: Контент"""
 
         parser = factory.make (self.testPage, Application.config)
 
-        
+
         text = u"""(: test Параметр1 Параметр2=2 Параметр3=3 :)
 Текст внутри
 команды
@@ -255,4 +251,3 @@ content: Контент"""
         result = parser.toHtml(text)
         # Исключение не должно бросаться, а должно быть выведено в результирующий текст
         self.assertTrue ("Exception" in result, result)
-

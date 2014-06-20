@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import datetime
@@ -10,8 +9,6 @@ from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
 from outwiker.pages.wiki.wikipage import WikiPageFactory
-from outwiker.pages.html.htmlpage import HtmlPageFactory
-from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.pages.search.searchpage import SearchPageFactory
 from test.utils import removeWiki
 
@@ -47,7 +44,7 @@ class TreeStatisticsTest (unittest.TestCase):
 
 
     def testPageCount1 (self):
-        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 1", [])
 
         treeStat = self.loader[self.__pluginname].getTreeStat (self.rootwiki)
 
@@ -55,7 +52,7 @@ class TreeStatisticsTest (unittest.TestCase):
 
 
     def testPageCount2 (self):
-        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 1", [])
         testPage = self.rootwiki[u"Страница 1"]
 
         treeStat = self.loader[self.__pluginname].getTreeStat (testPage)
@@ -64,9 +61,9 @@ class TreeStatisticsTest (unittest.TestCase):
 
 
     def testPageCount3 (self):
-        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
-        WikiPageFactory.create (self.rootwiki, u"Страница 2", [])
-        WikiPageFactory.create (self.rootwiki, u"Страница 3", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 1", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 2", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 3", [])
 
         treeStat = self.loader[self.__pluginname].getTreeStat (self.rootwiki)
 
@@ -74,9 +71,9 @@ class TreeStatisticsTest (unittest.TestCase):
 
 
     def testPageCount4 (self):
-        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
-        WikiPageFactory.create (self.rootwiki[u"Страница 1"], u"Страница 2", [])
-        WikiPageFactory.create (self.rootwiki[u"Страница 1/Страница 2"], u"Страница 3", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 1", [])
+        WikiPageFactory().create (self.rootwiki[u"Страница 1"], u"Страница 2", [])
+        WikiPageFactory().create (self.rootwiki[u"Страница 1/Страница 2"], u"Страница 3", [])
 
         treeStat = self.loader[self.__pluginname].getTreeStat (self.rootwiki)
 
@@ -84,11 +81,11 @@ class TreeStatisticsTest (unittest.TestCase):
 
 
     def testPageCount5 (self):
-        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
-        WikiPageFactory.create (self.rootwiki[u"Страница 1"], u"Страница 2", [])
-        WikiPageFactory.create (self.rootwiki[u"Страница 1/Страница 2"], u"Страница 3", [])
-        WikiPageFactory.create (self.rootwiki, u"Страница 4", [])
-        WikiPageFactory.create (self.rootwiki[u"Страница 1"], u"Страница 5", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 1", [])
+        WikiPageFactory().create (self.rootwiki[u"Страница 1"], u"Страница 2", [])
+        WikiPageFactory().create (self.rootwiki[u"Страница 1/Страница 2"], u"Страница 3", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 4", [])
+        WikiPageFactory().create (self.rootwiki[u"Страница 1"], u"Страница 5", [])
 
         treeStat = self.loader[self.__pluginname].getTreeStat (self.rootwiki)
 
@@ -96,7 +93,7 @@ class TreeStatisticsTest (unittest.TestCase):
 
 
     def testMaxDepth1 (self):
-        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 1", [])
 
         treeStat = self.loader[self.__pluginname].getTreeStat (self.rootwiki)
 
@@ -107,8 +104,8 @@ class TreeStatisticsTest (unittest.TestCase):
 
 
     def testMaxDepth2 (self):
-        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
-        WikiPageFactory.create (self.rootwiki[u"Страница 1"], u"Страница 2", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 1", [])
+        WikiPageFactory().create (self.rootwiki[u"Страница 1"], u"Страница 2", [])
 
         treeStat = self.loader[self.__pluginname].getTreeStat (self.rootwiki)
 
@@ -118,8 +115,8 @@ class TreeStatisticsTest (unittest.TestCase):
 
 
     def testMaxDepth3 (self):
-        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
-        WikiPageFactory.create (self.rootwiki, u"Страница 2", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 1", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 2", [])
 
         treeStat = self.loader[self.__pluginname].getTreeStat (self.rootwiki)
 
@@ -128,11 +125,11 @@ class TreeStatisticsTest (unittest.TestCase):
 
 
     def testMaxDepth4 (self):
-        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
-        WikiPageFactory.create (self.rootwiki[u"Страница 1"], u"Страница 2", [])
-        WikiPageFactory.create (self.rootwiki[u"Страница 1/Страница 2"], u"Страница 3", [])
-        WikiPageFactory.create (self.rootwiki, u"Страница 4", [])
-        WikiPageFactory.create (self.rootwiki[u"Страница 1"], u"Страница 5", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 1", [])
+        WikiPageFactory().create (self.rootwiki[u"Страница 1"], u"Страница 2", [])
+        WikiPageFactory().create (self.rootwiki[u"Страница 1/Страница 2"], u"Страница 3", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 4", [])
+        WikiPageFactory().create (self.rootwiki[u"Страница 1"], u"Страница 5", [])
 
         treeStat = self.loader[self.__pluginname].getTreeStat (self.rootwiki)
 
@@ -148,7 +145,7 @@ class TreeStatisticsTest (unittest.TestCase):
 
 
     def testTagsCount1 (self):
-        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 1", [])
 
         treeStat = self.loader[self.__pluginname].getTreeStat (self.rootwiki)
 
@@ -156,7 +153,7 @@ class TreeStatisticsTest (unittest.TestCase):
 
 
     def testTagsCount2 (self):
-        WikiPageFactory.create (self.rootwiki, u"Страница 1", [u"Тег 1"])
+        WikiPageFactory().create (self.rootwiki, u"Страница 1", [u"Тег 1"])
 
         treeStat = self.loader[self.__pluginname].getTreeStat (self.rootwiki)
 
@@ -164,7 +161,7 @@ class TreeStatisticsTest (unittest.TestCase):
 
 
     def testTagsCount3 (self):
-        WikiPageFactory.create (self.rootwiki, u"Страница 1", [u"Тег 1", u"Тег 2", u"Тег 3"])
+        WikiPageFactory().create (self.rootwiki, u"Страница 1", [u"Тег 1", u"Тег 2", u"Тег 3"])
 
         treeStat = self.loader[self.__pluginname].getTreeStat (self.rootwiki)
 
@@ -172,11 +169,11 @@ class TreeStatisticsTest (unittest.TestCase):
 
 
     def testTagsCount4 (self):
-        WikiPageFactory.create (self.rootwiki, u"Страница 1", [u"Тег 1", u"Тег 2", u"Тег 3"])
-        WikiPageFactory.create (self.rootwiki[u"Страница 1"], u"Страница 2", [u"Тег 4"])
-        WikiPageFactory.create (self.rootwiki[u"Страница 1/Страница 2"], u"Страница 3", [u"Тег 1", u"Тег 2"])
-        WikiPageFactory.create (self.rootwiki, u"Страница 4", [])
-        WikiPageFactory.create (self.rootwiki[u"Страница 1"], u"Страница 5", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 1", [u"Тег 1", u"Тег 2", u"Тег 3"])
+        WikiPageFactory().create (self.rootwiki[u"Страница 1"], u"Страница 2", [u"Тег 4"])
+        WikiPageFactory().create (self.rootwiki[u"Страница 1/Страница 2"], u"Страница 3", [u"Тег 1", u"Тег 2"])
+        WikiPageFactory().create (self.rootwiki, u"Страница 4", [])
+        WikiPageFactory().create (self.rootwiki[u"Страница 1"], u"Страница 5", [])
 
         treeStat = self.loader[self.__pluginname].getTreeStat (self.rootwiki)
 
@@ -184,7 +181,7 @@ class TreeStatisticsTest (unittest.TestCase):
 
 
     def testFrequentTags1 (self):
-        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 1", [])
 
         treeStat = self.loader[self.__pluginname].getTreeStat (self.rootwiki)
 
@@ -192,7 +189,7 @@ class TreeStatisticsTest (unittest.TestCase):
 
 
     def testFrequentTags2 (self):
-        WikiPageFactory.create (self.rootwiki, u"Страница 1", [u"тег 1"])
+        WikiPageFactory().create (self.rootwiki, u"Страница 1", [u"тег 1"])
 
         treeStat = self.loader[self.__pluginname].getTreeStat (self.rootwiki)
 
@@ -202,7 +199,7 @@ class TreeStatisticsTest (unittest.TestCase):
 
 
     def testFrequentTags3 (self):
-        WikiPageFactory.create (self.rootwiki, u"Страница 1", [u"тег 1", u"тег2"])
+        WikiPageFactory().create (self.rootwiki, u"Страница 1", [u"тег 1", u"тег2"])
 
         treeStat = self.loader[self.__pluginname].getTreeStat (self.rootwiki)
 
@@ -210,11 +207,11 @@ class TreeStatisticsTest (unittest.TestCase):
 
 
     def testFrequentTags4 (self):
-        WikiPageFactory.create (self.rootwiki, u"Страница 1", [u"тег 1", u"тег 2", u"тег 3"])
-        WikiPageFactory.create (self.rootwiki[u"Страница 1"], u"Страница 2", [u"тег 1", u"тег 3"])
-        WikiPageFactory.create (self.rootwiki[u"Страница 1/Страница 2"], u"Страница 3", [u"тег 3"])
-        WikiPageFactory.create (self.rootwiki, u"Страница 4", [])
-        WikiPageFactory.create (self.rootwiki[u"Страница 1"], u"Страница 5", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 1", [u"тег 1", u"тег 2", u"тег 3"])
+        WikiPageFactory().create (self.rootwiki[u"Страница 1"], u"Страница 2", [u"тег 1", u"тег 3"])
+        WikiPageFactory().create (self.rootwiki[u"Страница 1/Страница 2"], u"Страница 3", [u"тег 3"])
+        WikiPageFactory().create (self.rootwiki, u"Страница 4", [])
+        WikiPageFactory().create (self.rootwiki[u"Страница 1"], u"Страница 5", [])
 
         treeStat = self.loader[self.__pluginname].getTreeStat (self.rootwiki)
 
@@ -237,7 +234,7 @@ class TreeStatisticsTest (unittest.TestCase):
 
     def testPageDate2 (self):
         treeStat = self.loader[self.__pluginname].getTreeStat (self.rootwiki)
-        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 1", [])
 
         self.assertEqual (len (treeStat.pageDate), 1)
         self.assertEqual (treeStat.pageDate[0], self.rootwiki[u"Страница 1"])
@@ -245,9 +242,9 @@ class TreeStatisticsTest (unittest.TestCase):
 
     def testPageDate3 (self):
         treeStat = self.loader[self.__pluginname].getTreeStat (self.rootwiki)
-        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
-        WikiPageFactory.create (self.rootwiki[u"Страница 1"], u"Страница 2", [])
-        WikiPageFactory.create (self.rootwiki[u"Страница 1/Страница 2"], u"Страница 3", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 1", [])
+        WikiPageFactory().create (self.rootwiki[u"Страница 1"], u"Страница 2", [])
+        WikiPageFactory().create (self.rootwiki[u"Страница 1/Страница 2"], u"Страница 3", [])
 
         self.rootwiki[u"Страница 1"].datetime = datetime.datetime (2013, 4, 23)
         self.rootwiki[u"Страница 1/Страница 2"].datetime = datetime.datetime (2013, 4, 20)
@@ -261,11 +258,11 @@ class TreeStatisticsTest (unittest.TestCase):
 
     def testPageDate4 (self):
         treeStat = self.loader[self.__pluginname].getTreeStat (self.rootwiki)
-        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
-        WikiPageFactory.create (self.rootwiki[u"Страница 1"], u"Страница 2", [])
-        WikiPageFactory.create (self.rootwiki[u"Страница 1/Страница 2"], u"Страница 3", [])
-        WikiPageFactory.create (self.rootwiki, u"Страница 4", [])
-        WikiPageFactory.create (self.rootwiki[u"Страница 4"], u"Страница 5", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 1", [])
+        WikiPageFactory().create (self.rootwiki[u"Страница 1"], u"Страница 2", [])
+        WikiPageFactory().create (self.rootwiki[u"Страница 1/Страница 2"], u"Страница 3", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 4", [])
+        WikiPageFactory().create (self.rootwiki[u"Страница 4"], u"Страница 5", [])
 
         self.rootwiki[u"Страница 1"].datetime = datetime.datetime (2013, 4, 23)
         self.rootwiki[u"Страница 1/Страница 2"].datetime = datetime.datetime (2013, 4, 20)
@@ -289,7 +286,7 @@ class TreeStatisticsTest (unittest.TestCase):
 
 
     def testPageContentLength2 (self):
-        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 1", [])
         self.rootwiki[u"Страница 1"].content = u"Бла"
 
         treeStat = self.loader[self.__pluginname].getTreeStat (self.rootwiki)
@@ -302,10 +299,10 @@ class TreeStatisticsTest (unittest.TestCase):
 
 
     def testPageContentLength3 (self):
-        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
-        WikiPageFactory.create (self.rootwiki[u"Страница 1"], u"Страница 2", [])
-        WikiPageFactory.create (self.rootwiki[u"Страница 1/Страница 2"], u"Страница 3", [])
-        WikiPageFactory.create (self.rootwiki, u"Страница 4", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 1", [])
+        WikiPageFactory().create (self.rootwiki[u"Страница 1"], u"Страница 2", [])
+        WikiPageFactory().create (self.rootwiki[u"Страница 1/Страница 2"], u"Страница 3", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 4", [])
 
         self.rootwiki[u"Страница 1"].content = u"Бла"
         self.rootwiki[u"Страница 1/Страница 2"].content = u"   Бла-бла-бла   "
@@ -317,7 +314,7 @@ class TreeStatisticsTest (unittest.TestCase):
         pagesList = treeStat.pageContentLength
 
         self.assertEqual (len (pagesList), 4)
-        
+
         self.assertEqual (pagesList[0][0], self.rootwiki[u"Страница 1/Страница 2"])
         self.assertEqual (pagesList[0][1], 11)
 
@@ -332,11 +329,11 @@ class TreeStatisticsTest (unittest.TestCase):
 
 
     def testPageContentLength4 (self):
-        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
-        WikiPageFactory.create (self.rootwiki[u"Страница 1"], u"Страница 2", [])
-        WikiPageFactory.create (self.rootwiki[u"Страница 1/Страница 2"], u"Страница 3", [])
-        WikiPageFactory.create (self.rootwiki, u"Страница 4", [])
-        SearchPageFactory.create (self.rootwiki, u"Страница 5", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 1", [])
+        WikiPageFactory().create (self.rootwiki[u"Страница 1"], u"Страница 2", [])
+        WikiPageFactory().create (self.rootwiki[u"Страница 1/Страница 2"], u"Страница 3", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 4", [])
+        SearchPageFactory().create (self.rootwiki, u"Страница 5", [])
 
         self.rootwiki[u"Страница 1"].content = u"Бла"
         self.rootwiki[u"Страница 1/Страница 2"].content = u"   Бла-бла-бла   "
@@ -362,7 +359,7 @@ class TreeStatisticsTest (unittest.TestCase):
 
     def testAttachmentSize2 (self):
         treeStat = self.loader[self.__pluginname].getTreeStat (self.rootwiki)
-        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 1", [])
 
         pagesList = treeStat.pageAttachmentsSize
 
@@ -373,7 +370,7 @@ class TreeStatisticsTest (unittest.TestCase):
 
     def testAttachmentSize3 (self):
         treeStat = self.loader[self.__pluginname].getTreeStat (self.rootwiki)
-        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 1", [])
         Attachment (self.rootwiki[u"Страница 1"]).attach (self.fullFilesPath[0:1])
 
         pagesList = treeStat.pageAttachmentsSize
@@ -384,11 +381,11 @@ class TreeStatisticsTest (unittest.TestCase):
 
 
     def testAttachmentSize4 (self):
-        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
-        WikiPageFactory.create (self.rootwiki[u"Страница 1"], u"Страница 2", [])
-        WikiPageFactory.create (self.rootwiki[u"Страница 1/Страница 2"], u"Страница 3", [])
-        WikiPageFactory.create (self.rootwiki, u"Страница 4", [])
-        SearchPageFactory.create (self.rootwiki, u"Страница 5", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 1", [])
+        WikiPageFactory().create (self.rootwiki[u"Страница 1"], u"Страница 2", [])
+        WikiPageFactory().create (self.rootwiki[u"Страница 1/Страница 2"], u"Страница 3", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 4", [])
+        SearchPageFactory().create (self.rootwiki, u"Страница 5", [])
 
         Attachment (self.rootwiki[u"Страница 1"]).attach ([])
         Attachment (self.rootwiki[u"Страница 1/Страница 2"]).attach (self.fullFilesPath[0:1])

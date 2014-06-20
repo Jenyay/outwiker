@@ -1,11 +1,10 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import unittest
 
 from outwiker.core.application import Application
 from test.utils import removeWiki
-from outwiker.core.tree import RootWikiPage, WikiDocument
+from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
 
 
@@ -22,14 +21,15 @@ class TreeSortTest(unittest.TestCase):
 
         self.rootwiki = WikiDocument.create (self.path)
 
-        TextPageFactory.create (self.rootwiki, u"Страница 8", [])
-        TextPageFactory.create (self.rootwiki, u"Страница 2", [])
-        TextPageFactory.create (self.rootwiki, u"Страница 5", [])
-        TextPageFactory.create (self.rootwiki, u"Страница 4", [])
-        TextPageFactory.create (self.rootwiki, u"Страница 6", [])
-        TextPageFactory.create (self.rootwiki, u"Страница 1", [])
-        TextPageFactory.create (self.rootwiki, u"Страница 3", [])
-        TextPageFactory.create (self.rootwiki, u"Страница 7", [])
+        factory = TextPageFactory()
+        factory.create (self.rootwiki, u"Страница 8", [])
+        factory.create (self.rootwiki, u"Страница 2", [])
+        factory.create (self.rootwiki, u"Страница 5", [])
+        factory.create (self.rootwiki, u"Страница 4", [])
+        factory.create (self.rootwiki, u"Страница 6", [])
+        factory.create (self.rootwiki, u"Страница 1", [])
+        factory.create (self.rootwiki, u"Страница 3", [])
+        factory.create (self.rootwiki, u"Страница 7", [])
 
         self.rootwiki[u"Страница 8"].order = 0
         self.rootwiki[u"Страница 2"].order = 1
@@ -61,7 +61,7 @@ class TreeSortTest(unittest.TestCase):
         self.assertEqual (children[5], self.rootwiki[u"Страница 6"])
         self.assertEqual (children[6], self.rootwiki[u"Страница 7"])
         self.assertEqual (children[7], self.rootwiki[u"Страница 8"])
-    
+
 
     def testSortAlphabetical2(self):
         """
@@ -77,7 +77,7 @@ class TreeSortTest(unittest.TestCase):
         self.assertEqual (5, self.rootwiki[u"Страница 6"].order)
         self.assertEqual (6, self.rootwiki[u"Страница 7"].order)
         self.assertEqual (7, self.rootwiki[u"Страница 8"].order)
-    
+
 
     def testSortAlphabeticalEvent (self):
         Application.wikiroot = self.rootwiki
@@ -114,14 +114,15 @@ class TreeSortTest(unittest.TestCase):
         """
         Сортировка заметок, находящихся на более глубоком уровне вложения
         """
-        TextPageFactory.create (self.rootwiki[u"Страница 1"], u"Вложенная страница 8", [])
-        TextPageFactory.create (self.rootwiki[u"Страница 1"], u"Вложенная страница 2", [])
-        TextPageFactory.create (self.rootwiki[u"Страница 1"], u"Вложенная страница 5", [])
-        TextPageFactory.create (self.rootwiki[u"Страница 1"], u"Вложенная страница 4", [])
-        TextPageFactory.create (self.rootwiki[u"Страница 1"], u"Вложенная страница 6", [])
-        TextPageFactory.create (self.rootwiki[u"Страница 1"], u"Вложенная страница 1", [])
-        TextPageFactory.create (self.rootwiki[u"Страница 1"], u"Вложенная страница 3", [])
-        TextPageFactory.create (self.rootwiki[u"Страница 1"], u"Вложенная страница 7", [])
+        factory = TextPageFactory()
+        factory.create (self.rootwiki[u"Страница 1"], u"Вложенная страница 8", [])
+        factory.create (self.rootwiki[u"Страница 1"], u"Вложенная страница 2", [])
+        factory.create (self.rootwiki[u"Страница 1"], u"Вложенная страница 5", [])
+        factory.create (self.rootwiki[u"Страница 1"], u"Вложенная страница 4", [])
+        factory.create (self.rootwiki[u"Страница 1"], u"Вложенная страница 6", [])
+        factory.create (self.rootwiki[u"Страница 1"], u"Вложенная страница 1", [])
+        factory.create (self.rootwiki[u"Страница 1"], u"Вложенная страница 3", [])
+        factory.create (self.rootwiki[u"Страница 1"], u"Вложенная страница 7", [])
 
         self.rootwiki[u"Страница 1/Вложенная страница 8"].order = 0
         self.rootwiki[u"Страница 1/Вложенная страница 2"].order = 1
@@ -148,14 +149,15 @@ class TreeSortTest(unittest.TestCase):
         """
         Сортировка заметок, находящихся на более глубоком уровне вложения
         """
-        TextPageFactory.create (self.rootwiki[u"Страница 1"], u"Вложенная страница 8", [])
-        TextPageFactory.create (self.rootwiki[u"Страница 1"], u"Вложенная страница 2", [])
-        TextPageFactory.create (self.rootwiki[u"Страница 1"], u"Вложенная страница 5", [])
-        TextPageFactory.create (self.rootwiki[u"Страница 1"], u"Вложенная страница 4", [])
-        TextPageFactory.create (self.rootwiki[u"Страница 1"], u"Вложенная страница 6", [])
-        TextPageFactory.create (self.rootwiki[u"Страница 1"], u"Вложенная страница 1", [])
-        TextPageFactory.create (self.rootwiki[u"Страница 1"], u"Вложенная страница 3", [])
-        TextPageFactory.create (self.rootwiki[u"Страница 1"], u"Вложенная страница 7", [])
+        factory = TextPageFactory()
+        factory.create (self.rootwiki[u"Страница 1"], u"Вложенная страница 8", [])
+        factory.create (self.rootwiki[u"Страница 1"], u"Вложенная страница 2", [])
+        factory.create (self.rootwiki[u"Страница 1"], u"Вложенная страница 5", [])
+        factory.create (self.rootwiki[u"Страница 1"], u"Вложенная страница 4", [])
+        factory.create (self.rootwiki[u"Страница 1"], u"Вложенная страница 6", [])
+        factory.create (self.rootwiki[u"Страница 1"], u"Вложенная страница 1", [])
+        factory.create (self.rootwiki[u"Страница 1"], u"Вложенная страница 3", [])
+        factory.create (self.rootwiki[u"Страница 1"], u"Вложенная страница 7", [])
 
         self.rootwiki[u"Страница 1/Вложенная страница 8"].order = 0
         self.rootwiki[u"Страница 1/Вложенная страница 2"].order = 1

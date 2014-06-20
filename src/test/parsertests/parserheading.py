@@ -1,16 +1,11 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-import os
 import unittest
-import hashlib
 
 from test.utils import removeWiki
 
 from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
-
-from outwiker.pages.wiki.parser.wikiparser import Parser
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
 
@@ -25,10 +20,10 @@ class ParserHeadingTest (unittest.TestCase):
         self.pageComments = [u"Страницо 1", u"Страницо 1", u"Страницо 3"]
 
         self.__createWiki()
-        
+
         factory = ParserFactory()
         self.parser = factory.make (self.testPage, Application.config)
-    
+
 
     def __createWiki (self):
         # Здесь будет создаваться вики
@@ -36,7 +31,7 @@ class ParserHeadingTest (unittest.TestCase):
         removeWiki (self.path)
 
         self.rootwiki = WikiDocument.create (self.path)
-        WikiPageFactory.create (self.rootwiki, u"Страница 2", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 2", [])
         self.testPage = self.rootwiki[u"Страница 2"]
 
 
@@ -50,7 +45,7 @@ class ParserHeadingTest (unittest.TestCase):
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-    
+
     def testHeader2 (self):
         text = u"бла-бла-бла \n!!! Заголовок бла-бла-бла\nбла-бла-бла"
         result = u'бла-бла-бла \n<h2>Заголовок бла-бла-бла</h2>\nбла-бла-бла'
@@ -63,7 +58,7 @@ class ParserHeadingTest (unittest.TestCase):
         result = u'бла-бла-бла \n<h3>Заголовок бла-бла-бла</h3>\nбла-бла-бла'
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
-    
+
 
     def testHeader4 (self):
         text = u"бла-бла-бла \n!!!!! Заголовок бла-бла-бла\nбла-бла-бла"
@@ -71,27 +66,27 @@ class ParserHeadingTest (unittest.TestCase):
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-    
+
     def testHeader5 (self):
         text = u"бла-бла-бла \n!!!!!! Заголовок бла-бла-бла\nбла-бла-бла"
         result = u'бла-бла-бла \n<h5>Заголовок бла-бла-бла</h5>\nбла-бла-бла'
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-    
+
     def testHeader6 (self):
         text = u"бла-бла-бла \n!!!!!!! Заголовок бла-бла-бла\nбла-бла-бла"
         result = u'бла-бла-бла \n<h6>Заголовок бла-бла-бла</h6>\nбла-бла-бла'
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
-    
+
 
     def testHeader7 (self):
         text = u"бла-бла-бла \nкхм !! Заголовок бла-бла-бла\nбла-бла-бла"
         result = u'бла-бла-бла \nкхм !! Заголовок бла-бла-бла\nбла-бла-бла'
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
-    
+
 
     def testHeader8 (self):
         text = u"бла-бла-бла \nкхм !!! Заголовок бла-бла-бла\nбла-бла-бла"
@@ -99,21 +94,21 @@ class ParserHeadingTest (unittest.TestCase):
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-    
+
     def testHeader9 (self):
         text = u"бла-бла-бла \nкхм !!!! Заголовок бла-бла-бла\nбла-бла-бла"
         result = u'бла-бла-бла \nкхм !!!! Заголовок бла-бла-бла\nбла-бла-бла'
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-    
+
     def testHeader10 (self):
         text = u"бла-бла-бла \nкхм !!!!! Заголовок бла-бла-бла\nбла-бла-бла"
         result = u'бла-бла-бла \nкхм !!!!! Заголовок бла-бла-бла\nбла-бла-бла'
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
-    
+
     def testHeader11 (self):
         text = u"бла-бла-бла \nкхм !!!!!! Заголовок бла-бла-бла\nбла-бла-бла"
         result = u'бла-бла-бла \nкхм !!!!!! Заголовок бла-бла-бла\nбла-бла-бла'
@@ -237,7 +232,7 @@ class ParserHeadingTest (unittest.TestCase):
         text = u"бла-бла-бла \n!!! Заголовок {$e^x$}\nбла-бла-бла"
         result_parse = self.parser.toHtml (text)
 
-        self.assertTrue (result_parse.startswith (u'бла-бла-бла \n<h2>Заголовок <img src="__attach/__thumb/eqn_') )
+        self.assertTrue (result_parse.startswith (u'бла-бла-бла \n<h2>Заголовок <img src="__attach/__thumb/eqn_'))
 
 
     def testHeaderLink1 (self):

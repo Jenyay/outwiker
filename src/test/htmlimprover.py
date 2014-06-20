@@ -1,9 +1,9 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import unittest
 
 from outwiker.core.htmlimprover import HtmlImprover
+
 
 class HtmlImproverTest (unittest.TestCase):
     def setUp (self):
@@ -314,3 +314,6 @@ Attach:file.odt<BR>
 <td>Абырвалг</td>
 </tr>
 </table>'''
+
+        result = HtmlImprover.run (src)
+        self.assertEqual (expectedResult, result)

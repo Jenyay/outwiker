@@ -20,11 +20,12 @@ class PageUidDepotTest (unittest.TestCase):
 
         self.rootwiki = WikiDocument.create (self.path)
 
-        TextPageFactory.create (self.rootwiki, u"Страница 1", [])
-        TextPageFactory.create (self.rootwiki, u"Страница 2", [])
-        TextPageFactory.create (self.rootwiki[u"Страница 2"], u"Страница 3", [])
-        TextPageFactory.create (self.rootwiki[u"Страница 2/Страница 3"], u"Страница 4", [])
-        TextPageFactory.create (self.rootwiki[u"Страница 1"], u"Страница 5", [])
+        factory = TextPageFactory()
+        factory.create (self.rootwiki, u"Страница 1", [])
+        factory.create (self.rootwiki, u"Страница 2", [])
+        factory.create (self.rootwiki[u"Страница 2"], u"Страница 3", [])
+        factory.create (self.rootwiki[u"Страница 2/Страница 3"], u"Страница 4", [])
+        factory.create (self.rootwiki[u"Страница 1"], u"Страница 5", [])
 
         Application.wikiroot = None
 

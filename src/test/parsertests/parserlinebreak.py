@@ -1,17 +1,11 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-import os
 import unittest
-import hashlib
 
 from test.utils import removeWiki
 
 from outwiker.core.tree import WikiDocument
-from outwiker.core.attachment import Attachment
 from outwiker.core.application import Application
-
-from outwiker.pages.wiki.parser.wikiparser import Parser
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
 
@@ -26,10 +20,10 @@ class ParserLineBreakTest (unittest.TestCase):
         self.pageComments = [u"Страницо 1", u"Страницо 1", u"Страницо 3"]
 
         self.__createWiki()
-        
+
         factory = ParserFactory()
         self.parser = factory.make (self.testPage, Application.config)
-    
+
 
     def __createWiki (self):
         # Здесь будет создаваться вики
@@ -37,13 +31,13 @@ class ParserLineBreakTest (unittest.TestCase):
         removeWiki (self.path)
 
         self.rootwiki = WikiDocument.create (self.path)
-        WikiPageFactory.create (self.rootwiki, u"Страница 2", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 2", [])
         self.testPage = self.rootwiki[u"Страница 2"]
-        
+
 
     def tearDown(self):
         removeWiki (self.path)
-    
+
 
     def testLineBreak1 (self):
         text = u"Строка 1[[<<]]Строка 2"
@@ -51,7 +45,7 @@ class ParserLineBreakTest (unittest.TestCase):
         result = self.parser.toHtml (text)
 
         self.assertEqual (result, result_right, result)
-    
+
 
     def testLineBreak2 (self):
         text = u"Строка 1[[&lt;&lt;]]Строка 2"
@@ -68,7 +62,7 @@ class ParserLineBreakTest (unittest.TestCase):
 
         self.assertEqual (result, result_right, result)
 
-    
+
     def testLineBreak4 (self):
         text = ur"""# Первый элемент списка.
 # Второй элемент списка [[<<]]Вторая строка второго элемента списка.

@@ -1,16 +1,11 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-import os
 import unittest
-import hashlib
 
 from test.utils import removeWiki
 
 from outwiker.core.tree import WikiDocument
-from outwiker.core.attachment import Attachment
 from outwiker.core.application import Application
-
 from outwiker.pages.wiki.parser.wikiparser import Parser
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
@@ -23,10 +18,10 @@ class ParserMiscTest (unittest.TestCase):
         self.filesPath = u"../test/samplefiles/"
 
         self.__createWiki()
-        
+
         factory = ParserFactory()
         self.parser = factory.make (self.testPage, Application.config)
-    
+
 
     def __createWiki (self):
         # Здесь будет создаваться вики
@@ -34,9 +29,9 @@ class ParserMiscTest (unittest.TestCase):
         removeWiki (self.path)
 
         self.rootwiki = WikiDocument.create (self.path)
-        WikiPageFactory.create (self.rootwiki, u"Страница 2", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 2", [])
         self.testPage = self.rootwiki[u"Страница 2"]
-        
+
 
     def tearDown(self):
         removeWiki (self.path)
@@ -51,8 +46,8 @@ class ParserMiscTest (unittest.TestCase):
 
     def testParseWithoutAttaches (self):
         pagetitle = u"Страница 666"
-        
-        WikiPageFactory.create (self.rootwiki, pagetitle, [])
+
+        WikiPageFactory().create (self.rootwiki, pagetitle, [])
         parser = Parser(self.rootwiki[pagetitle], Application.config)
 
         parser.toHtml (u"Attach:bla-bla-bla")

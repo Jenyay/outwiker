@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import unittest
@@ -20,26 +19,26 @@ class HotKeyParserTest (unittest.TestCase):
         self.assertEqual (HotKeyParser.toString (HotKey (u"A")), u"A")
         self.assertEqual (HotKeyParser.toString (HotKey (u"F1")), u"F1")
 
-        self.assertEqual (HotKeyParser.toString (HotKey (u"A", ctrl=True)), 
-                u"Ctrl+A")
+        self.assertEqual (HotKeyParser.toString (HotKey (u"A", ctrl=True)),
+                          u"Ctrl+A")
 
-        self.assertEqual (HotKeyParser.toString (HotKey (u"A", shift=True)), 
-                u"Shift+A")
+        self.assertEqual (HotKeyParser.toString (HotKey (u"A", shift=True)),
+                          u"Shift+A")
 
-        self.assertEqual (HotKeyParser.toString (HotKey (u"A", alt=True)), 
-                u"Alt+A")
+        self.assertEqual (HotKeyParser.toString (HotKey (u"A", alt=True)),
+                          u"Alt+A")
 
-        self.assertEqual (HotKeyParser.toString (HotKey (u"A", ctrl=True, alt=True)), 
-                u"Ctrl+Alt+A")
+        self.assertEqual (HotKeyParser.toString (HotKey (u"A", ctrl=True, alt=True)),
+                          u"Ctrl+Alt+A")
 
-        self.assertEqual (HotKeyParser.toString (HotKey (u"A", ctrl=True, shift=True)), 
-                u"Ctrl+Shift+A")
+        self.assertEqual (HotKeyParser.toString (HotKey (u"A", ctrl=True, shift=True)),
+                          u"Ctrl+Shift+A")
 
-        self.assertEqual (HotKeyParser.toString (HotKey (u"A", alt=True, shift=True)), 
-                u"Shift+Alt+A")
+        self.assertEqual (HotKeyParser.toString (HotKey (u"A", alt=True, shift=True)),
+                          u"Shift+Alt+A")
 
-        self.assertEqual (HotKeyParser.toString (HotKey (u"A", ctrl=True, alt=True, shift=True)), 
-                u"Ctrl+Shift+Alt+A")
+        self.assertEqual (HotKeyParser.toString (HotKey (u"A", ctrl=True, alt=True, shift=True)),
+                          u"Ctrl+Shift+Alt+A")
 
 
     def testParse1 (self):

@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 """
 Тесты, связанные с конфигом
@@ -38,7 +37,7 @@ class ConfigTest (unittest.TestCase):
         self.assertEqual (config.get (u"Секция 1", u"Параметр 1"), u"Значение 1")
         self.assertEqual (config.getint (u"Секция 1", u"Параметр 2"), 111)
 
-    
+
     def testWrite (self):
         """
         Тесты на то, что измененные значения сразу сохраняются в файл
@@ -51,17 +50,17 @@ class ConfigTest (unittest.TestCase):
         self.assertEqual (config2.get (u"Секция 1", u"Параметр 1"), u"Значение 1")
         self.assertEqual (config2.getint (u"Секция 1", u"Параметр 2"), 111)
 
-    
+
     def testRemoveSection (self):
         config = Config (self.path)
         config.set (u"Секция 1", u"Параметр 1", u"Значение 1")
         config.set (u"Секция 1", u"Параметр 2", 111)
 
-        result = config.remove_section (u"Секция 1")
+        config.remove_section (u"Секция 1")
 
         config2 = Config (self.path)
         self.assertRaises (ConfigParser.NoSectionError, config2.get, u"Секция 1", u"Параметр 1")
-    
+
 
     def testHasSection (self):
         config = Config (self.path)
@@ -69,10 +68,10 @@ class ConfigTest (unittest.TestCase):
         config.set (u"Секция 1", u"Параметр 2", 111)
 
         self.assertEqual (config.has_section (u"Секция 1"), True)
-        
-        result = config.remove_section (u"Секция 1")
+
+        config.remove_section (u"Секция 1")
         self.assertEqual (config.has_section (u"Секция 1"), False)
-    
+
 
     def testPortableConfig (self):
         """
@@ -87,14 +86,14 @@ class ConfigTest (unittest.TestCase):
         # Создадим файл рядом с запускаемым файлом
         fp = open (localPath, "w")
         fp.close()
-        
+
         fullpath = getConfigPath(dirname, fname)
 
         self.assertEqual (localPath, fullpath)
 
         # Удалим созданный файл
         os.remove (localPath)
-    
+
 
     def testNotPortableConfig1 (self):
         """
@@ -159,11 +158,11 @@ class ConfigOptionsTest (unittest.TestCase):
             fp.write (u"list12=элемент 1|\n".encode ("utf-8"))
 
         self.config = Config (self.path)
-    
+
 
     def tearDown (self):
         os.remove (self.path)
-    
+
 
     # Строковые опции
     def testStringOpt1 (self):
@@ -193,7 +192,7 @@ class ConfigOptionsTest (unittest.TestCase):
         opt.value = u"проверка"
 
         self.assertEqual (newopt.value, u"проверка")
-    
+
 
     # Целочисленные опции
     def testIntOpt1 (self):
@@ -214,7 +213,7 @@ class ConfigOptionsTest (unittest.TestCase):
         newopt = IntegerOption (newconfig, u"Test", u"intval3", 888)
 
         self.assertEqual (newopt.value, 666)
-    
+
 
     def testIntOpt4 (self):
         opt = IntegerOption (self.config, u"Test", u"intval3", 777)
@@ -230,14 +229,14 @@ class ConfigOptionsTest (unittest.TestCase):
         strdatetime = "2012-08-25 16:18:24.171654"
 
         opt = DateTimeOption (self.config, u"Test", u"datetimeval", None)
-        self.assertEqual (opt.value, 
-                datetime.datetime.strptime (strdatetime, DateTimeOption.formatDate))
-    
+        self.assertEqual (opt.value,
+                          datetime.datetime.strptime (strdatetime, DateTimeOption.formatDate))
+
 
     def testDateTimeOpt2 (self):
         opt = DateTimeOption (self.config, u"Test", u"datetimeval_invalid", None)
         self.assertEqual (opt.value, None)
-    
+
 
     def testDateTimeOpt3 (self):
         defaultValue = datetime.datetime (2012, 8, 25)
@@ -262,7 +261,7 @@ class ConfigOptionsTest (unittest.TestCase):
 
         opt = DateTimeOption (self.config, u"Test", u"datetimeerror", defaultValue)
         self.assertEqual (opt.value, defaultValue)
-    
+
 
     # Булевы опции
     def testBoolOpt1 (self):
@@ -283,7 +282,7 @@ class ConfigOptionsTest (unittest.TestCase):
         newopt = BooleanOption (newconfig, u"Test", u"Boolval3", False)
 
         self.assertEqual (newopt.value, True)
-    
+
 
     def testBoolOpt4 (self):
         opt = BooleanOption (self.config, u"Test", u"Boolval3", False)
@@ -337,7 +336,7 @@ class ConfigOptionsTest (unittest.TestCase):
         opt7 = ListOption (self.config, u"Test", u"list7", [])
         self.assertEqual (opt7.value, [])
 
-    
+
     def testListOption2 (self):
         opt8 = ListOption (self.config, u"Test", u"list8", [], separator="|")
         self.assertEqual (opt8.value, [u"элемент 1", u"элемент 2", u"элемент 3"])
@@ -356,17 +355,17 @@ class ConfigOptionsTest (unittest.TestCase):
 
 
     def testSaveListOption1 (self):
-        testlist = [u"элемент 1", u"элемент 2", u"элемент 3"] 
+        testlist = [u"элемент 1", u"элемент 2", u"элемент 3"]
 
         opt = ListOption (self.config, u"Test", u"savelist", [])
         opt.value = testlist
 
         newconfig = Config (self.path)
-        newopt = ListOption (self.config, u"Test", u"savelist", [])
+        newopt = ListOption (newconfig, u"Test", u"savelist", [])
 
         self.assertEqual (newopt.value, testlist)
 
-        stringopt = StringOption (self.config, u"Test", u"savelist", "")
+        stringopt = StringOption (newconfig, u"Test", u"savelist", "")
         self.assertEqual (stringopt.value.strip(), u"элемент 1;элемент 2;элемент 3")
 
 
@@ -377,11 +376,11 @@ class ConfigOptionsTest (unittest.TestCase):
         opt.value = testlist
 
         newconfig = Config (self.path)
-        newopt = ListOption (self.config, u"Test", u"savelist", [])
+        newopt = ListOption (newconfig, u"Test", u"savelist", [])
 
         self.assertEqual (newopt.value, testlist)
 
-        stringopt = StringOption (self.config, u"Test", u"savelist", "")
+        stringopt = StringOption (newconfig, u"Test", u"savelist", "")
         self.assertEqual (stringopt.value.strip(), u"элемент 1")
 
 
@@ -392,26 +391,26 @@ class ConfigOptionsTest (unittest.TestCase):
         opt.value = testlist
 
         newconfig = Config (self.path)
-        newopt = ListOption (self.config, u"Test", u"savelist", [])
+        newopt = ListOption (newconfig, u"Test", u"savelist", [])
 
         self.assertEqual (newopt.value, [u""])
 
-        stringopt = StringOption (self.config, u"Test", u"savelist", "")
+        stringopt = StringOption (newconfig, u"Test", u"savelist", "")
         self.assertEqual (stringopt.value.strip(), u"")
 
 
     def testSaveListOption4 (self):
-        testlist = [u"элемент 1", u"элемент 2", u"элемент 3"] 
+        testlist = [u"элемент 1", u"элемент 2", u"элемент 3"]
 
         opt = ListOption (self.config, u"Test", u"savelist", [], separator="|")
         opt.value = testlist
 
         newconfig = Config (self.path)
-        newopt = ListOption (self.config, u"Test", u"savelist", [], separator="|")
+        newopt = ListOption (newconfig, u"Test", u"savelist", [], separator="|")
 
         self.assertEqual (newopt.value, testlist)
 
-        stringopt = StringOption (self.config, u"Test", u"savelist", "")
+        stringopt = StringOption (newconfig, u"Test", u"savelist", "")
         self.assertEqual (stringopt.value.strip(), u"элемент 1|элемент 2|элемент 3")
 
 
@@ -422,11 +421,11 @@ class ConfigOptionsTest (unittest.TestCase):
         opt.value = testlist
 
         newconfig = Config (self.path)
-        newopt = ListOption (self.config, u"Test", u"savelist", [], separator="|")
+        newopt = ListOption (newconfig, u"Test", u"savelist", [], separator="|")
 
         self.assertEqual (newopt.value, testlist)
 
-        stringopt = StringOption (self.config, u"Test", u"savelist", "")
+        stringopt = StringOption (newconfig, u"Test", u"savelist", "")
         self.assertEqual (stringopt.value.strip(), u"элемент 1")
 
 
@@ -437,11 +436,11 @@ class ConfigOptionsTest (unittest.TestCase):
         opt.value = testlist
 
         newconfig = Config (self.path)
-        newopt = ListOption (self.config, u"Test", u"savelist", [], separator="|")
+        newopt = ListOption (newconfig, u"Test", u"savelist", [], separator="|")
 
         self.assertEqual (newopt.value, [""])
 
-        stringopt = StringOption (self.config, u"Test", u"savelist", "")
+        stringopt = StringOption (newconfig, u"Test", u"savelist", "")
         self.assertEqual (stringopt.value.strip(), u"")
 
 
@@ -452,11 +451,11 @@ class ConfigOptionsTest (unittest.TestCase):
         opt.value = testlist
 
         newconfig = Config (self.path)
-        newopt = ListOption (self.config, u"Test", u"savelist", [], separator="|")
+        newopt = ListOption (newconfig, u"Test", u"savelist", [], separator="|")
 
         self.assertEqual (newopt.value, testlist)
 
-        stringopt = StringOption (self.config, u"Test", u"savelist", "")
+        stringopt = StringOption (newconfig, u"Test", u"savelist", "")
         self.assertEqual (stringopt.value.strip(), u"")
 
 
@@ -467,7 +466,7 @@ class ConfigOptionsTest (unittest.TestCase):
         opt.value = testlist
 
         newconfig = Config (self.path)
-        newopt = ListOption (self.config, u"Test", u"savelist", [])
+        newopt = ListOption (newconfig, u"Test", u"savelist", [])
 
         self.assertEqual (newopt.value, testlist)
 
@@ -482,7 +481,7 @@ class ConfigOptionsTest (unittest.TestCase):
         opt.value = testlist
 
         newconfig = Config (self.path)
-        newopt = ListOption (self.config, u"Test", u"savelist", [], separator="|")
+        newopt = ListOption (newconfig, u"Test", u"savelist", [], separator="|")
 
         self.assertEqual (newopt.value, testlist)
 
@@ -495,8 +494,8 @@ class ConfigOptionsTest (unittest.TestCase):
         paramname = u"param_"
 
         testlist = [u"Бла-бла-бла",
-                u"Строка 1",
-                u"Строка 2"]
+                    u"Строка 1",
+                    u"Строка 2"]
 
         self.config.remove_section (section)
         opt = StringListSection (self.config, section, paramname)
@@ -521,8 +520,8 @@ class ConfigOptionsTest (unittest.TestCase):
         paramname = u"param_"
 
         testlist = [u"Бла-бла-бла",
-                u"Строка 1",
-                u"Строка 2"]
+                    u"Строка 1",
+                    u"Строка 2"]
 
         self.config.remove_section (section)
         opt = StringListSection (self.config, section, paramname)
@@ -590,7 +589,7 @@ class TrayConfigTest (unittest.TestCase):
         self.config = Config (self.path)
 
         self.trayConfig = TrayConfig (self.config)
-    
+
 
     def tearDown (self):
         if os.path.exists (self.path):
@@ -601,7 +600,7 @@ class TrayConfigTest (unittest.TestCase):
         self.assertEqual (self.trayConfig.minimizeToTray.value, True)
         self.assertEqual (self.trayConfig.startIconized.value, False)
         self.assertEqual (self.trayConfig.alwaysShowTrayIcon.value, False)
-    
+
 
     def testChange (self):
         newConfig = TrayConfig (self.config)
@@ -623,12 +622,12 @@ class EditorConfigTest (unittest.TestCase):
         self.config = Config (self.path)
 
         self.editorConfig = EditorConfig (self.config)
-    
+
 
     def tearDown (self):
         if os.path.exists (self.path):
             os.remove (self.path)
-    
+
 
     def testDefault (self):
         self.assertEqual (self.editorConfig.lineNumbers.value, False)

@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 from basemainwnd import BaseMainWndTest
@@ -8,6 +7,7 @@ from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.actions.polyactionsid import *
 from test.utils import removeWiki
 
+
 class WikiActionsTest (BaseMainWndTest):
     """
     Тесты действий для викистраницы
@@ -16,43 +16,43 @@ class WikiActionsTest (BaseMainWndTest):
         BaseMainWndTest.setUp (self)
 
         self._turnSyntax = [
-                (BOLD_STR_ID, "'''", "'''"),
-                (ITALIC_STR_ID, "''", "''"),
-                (BOLD_ITALIC_STR_ID, "''''", "''''"),
-                (UNDERLINE_STR_ID, "{+", "+}"),
-                (STRIKE_STR_ID, "{-", "-}"),
-                (SUBSCRIPT_STR_ID, "'_", "_'"),
-                (SUPERSCRIPT_STR_ID, "'^", "^'"),
-                (ALIGN_LEFT_STR_ID, "%left%", ""),
-                (ALIGN_CENTER_STR_ID, "%center%", ""),
-                (ALIGN_RIGHT_STR_ID, "%right%", ""),
-                (ALIGN_JUSTIFY_STR_ID, "%justify%", ""),
-                (HEADING_1_STR_ID, "!! ", ""),
-                (HEADING_2_STR_ID, "!!! ", ""),
-                (HEADING_3_STR_ID, "!!!! ", ""),
-                (HEADING_4_STR_ID, "!!!!! ", ""),
-                (HEADING_5_STR_ID, "!!!!!! ", ""),
-                (HEADING_6_STR_ID, "!!!!!!! ", ""),
-                (PREFORMAT_STR_ID, "[@", "@]"),
-                (CODE_STR_ID, "@@", "@@"),
-                (ANCHOR_STR_ID, "[[#", "]]"),
-                (QUOTE_STR_ID, "[>", "<]"),
-                ]
+            (BOLD_STR_ID, "'''", "'''"),
+            (ITALIC_STR_ID, "''", "''"),
+            (BOLD_ITALIC_STR_ID, "''''", "''''"),
+            (UNDERLINE_STR_ID, "{+", "+}"),
+            (STRIKE_STR_ID, "{-", "-}"),
+            (SUBSCRIPT_STR_ID, "'_", "_'"),
+            (SUPERSCRIPT_STR_ID, "'^", "^'"),
+            (ALIGN_LEFT_STR_ID, "%left%", ""),
+            (ALIGN_CENTER_STR_ID, "%center%", ""),
+            (ALIGN_RIGHT_STR_ID, "%right%", ""),
+            (ALIGN_JUSTIFY_STR_ID, "%justify%", ""),
+            (HEADING_1_STR_ID, "!! ", ""),
+            (HEADING_2_STR_ID, "!!! ", ""),
+            (HEADING_3_STR_ID, "!!!! ", ""),
+            (HEADING_4_STR_ID, "!!!!! ", ""),
+            (HEADING_5_STR_ID, "!!!!!! ", ""),
+            (HEADING_6_STR_ID, "!!!!!!! ", ""),
+            (PREFORMAT_STR_ID, "[@", "@]"),
+            (CODE_STR_ID, "@@", "@@"),
+            (ANCHOR_STR_ID, "[[#", "]]"),
+            (QUOTE_STR_ID, "[>", "<]"),
+        ]
 
         self._replaceSyntax = [
-                (HORLINE_STR_ID, u"----"),
-                ]
+            (HORLINE_STR_ID, u"----"),
+        ]
 
 
         self.path = u"../test/testwiki"
         removeWiki (self.path)
 
         self.wikiroot = WikiDocument.create (self.path)
-        WikiPageFactory.create (self.wikiroot, u"Викистраница", [])
-        WikiPageFactory.create (self.wikiroot, u"temp", [])
+        WikiPageFactory().create (self.wikiroot, u"Викистраница", [])
+        WikiPageFactory().create (self.wikiroot, u"temp", [])
 
         # Страница, куда будем переключаться перед изменением содержимого основной страницы
-        # Можно было бы вместо temppage использовать None, но тогда программе 
+        # Можно было бы вместо temppage использовать None, но тогда программе
         # пришлось бы каждый раз удалять и создавать панели инструментов, что медленно
         self.temppage = self.wikiroot[u"temp"]
         self.testpage = self.wikiroot[u"Викистраница"]
@@ -144,7 +144,7 @@ class WikiActionsTest (BaseMainWndTest):
             self._getEditor().SetSelection (4, 7)
 
             Application.actionController.getAction (syntax[0]).run(None)
-            self.assertEqual (self._getEditor().GetText(), u"Бла-{}-бла".format (syntax[1]) )
+            self.assertEqual (self._getEditor().GetText(), u"Бла-{}-бла".format (syntax[1]))
 
 
     def testListBulletsEmpty (self):

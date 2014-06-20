@@ -1,7 +1,4 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
-
-import wx.aui
 
 from outwiker.actions.showhidetree import ShowHideTreeAction
 from outwiker.actions.showhideattaches import ShowHideAttachesAction
@@ -10,14 +7,13 @@ from outwiker.actions.fullscreen import FullScreenAction
 
 from outwiker.core.application import Application
 from basemainwnd import BaseMainWndTest
-from outwiker.gui.guiconfig import MainWindowConfig
 
 
 class FullScreenTest (BaseMainWndTest):
     def setUp (self):
         BaseMainWndTest.setUp (self)
 
-    
+
     def testFullScreenStart (self):
         fullScreenActionInfo = Application.actionController.getActionInfo (FullScreenAction.stringId)
 
@@ -34,7 +30,7 @@ class FullScreenTest (BaseMainWndTest):
         showHideTagsActionInfo = Application.actionController.getActionInfo (ShowHideTagsAction.stringId)
 
         Application.actionController.check (FullScreenAction.stringId, True)
-        
+
         self.assertTrue (self.wnd.IsFullScreen())
         self.assertFalse (self.wnd.treePanel.isShown())
         self.assertFalse (self.wnd.attachPanel.isShown())

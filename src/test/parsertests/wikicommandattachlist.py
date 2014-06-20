@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import os
@@ -8,8 +7,6 @@ import unittest
 from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
-
-from outwiker.pages.wiki.parser.wikiparser import Parser
 from outwiker.pages.wiki.parser.commandattachlist import AttachListCommand
 from outwiker.pages.wiki.parserfactory import ParserFactory
 from outwiker.pages.wiki.thumbnails import Thumbnails
@@ -18,14 +15,13 @@ from outwiker.pages.wiki.wikipage import WikiPageFactory
 from test.utils import removeWiki
 
 
-
 class WikiAttachListCommandTest (unittest.TestCase):
     def setUp(self):
         self.encoding = "utf8"
 
         self.__createWiki()
         self.testPage = self.rootwiki[u"Страница 1"]
-        
+
         factory = ParserFactory()
         self.parser = factory.make (self.testPage, Application.config)
 
@@ -38,7 +34,7 @@ class WikiAttachListCommandTest (unittest.TestCase):
     def _attachFiles (self):
         attach = Attachment (self.testPage)
         attach.attach (self.fullFilesPath)
-    
+
 
     def __createWiki (self):
         # Здесь будет создаваться вики
@@ -46,7 +42,7 @@ class WikiAttachListCommandTest (unittest.TestCase):
         removeWiki (self.path)
 
         self.rootwiki = WikiDocument.create (self.path)
-        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 1", [])
 
 
     def tearDown(self):
@@ -57,8 +53,8 @@ class WikiAttachListCommandTest (unittest.TestCase):
         attachdir = u"__attach"
         template = u'<a href="{path}">{title}</a>\n'
 
-        result_right = u"".join ([template.format (path = os.path.join (attachdir, name).replace ("\\", "/"), title=title) 
-            for (name, title) in zip (names, titles) ] ).rstrip()
+        result_right = u"".join ([template.format (path = os.path.join (attachdir, name).replace ("\\", "/"), title=title)
+                                  for (name, title) in zip (names, titles)]).rstrip()
 
         self.assertEqual (result_right, result)
 
@@ -72,9 +68,9 @@ class WikiAttachListCommandTest (unittest.TestCase):
         names = [u"dir", u"for_sort", u"add.png", u"anchor.png", u"image.jpg", u"файл с пробелами.tmp"]
 
         self._compareResult (titles, names, result)
-    
 
-    
+
+
     def testParse1 (self):
         self._attachFiles ()
         text = u"(:attachlist:)"
@@ -190,10 +186,10 @@ class WikiAttachListCommandTest (unittest.TestCase):
 
 
     def testParseSortByDate (self):
-        files = [u"add.png", u"Anchor.png", 
-                u"image2.png", u"image.png", 
-                u"add.png2", u"файл с пробелами.tmp", 
-                u"filename"]
+        files = [u"add.png", u"Anchor.png",
+                 u"image2.png", u"image.png",
+                 u"add.png2", u"файл с пробелами.tmp",
+                 u"filename"]
 
         fullFilesPath = [os.path.join (u"../test/samplefiles/for_sort", fname) for fname in files]
 
@@ -219,10 +215,10 @@ class WikiAttachListCommandTest (unittest.TestCase):
 
 
     def testParseSortDescendDate (self):
-        files = [u"add.png", u"Anchor.png", 
-                u"image2.png", u"image.png", 
-                u"add.png2", u"файл с пробелами.tmp", 
-                u"filename"]
+        files = [u"add.png", u"Anchor.png",
+                 u"image2.png", u"image.png",
+                 u"add.png2", u"файл с пробелами.tmp",
+                 u"filename"]
 
         fullFilesPath = [os.path.join (u"../test/samplefiles/for_sort", fname) for fname in files]
 
@@ -245,4 +241,3 @@ class WikiAttachListCommandTest (unittest.TestCase):
         titles = names[:]
 
         self._compareResult (titles, names, result)
-

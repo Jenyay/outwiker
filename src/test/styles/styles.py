@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import unittest
@@ -6,11 +5,11 @@ import os.path
 import shutil
 
 from outwiker.core.style import Style
-from outwiker.core.tree import RootWikiPage, WikiDocument
+from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
-from outwiker.pages.wiki.wikipage import WikiPageFactory, WikiWikiPage
+from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.htmlgenerator import HtmlGenerator
-from outwiker.pages.html.htmlpage import HtmlPageFactory, HtmlWikiPage
+from outwiker.pages.html.htmlpage import HtmlPageFactory
 from test.utils import removeWiki
 
 
@@ -26,8 +25,8 @@ class StylesTest (unittest.TestCase):
         self.eventcount = 0
 
         self.rootwiki = WikiDocument.create (self.path)
-        WikiPageFactory.create (self.rootwiki, u"Викистраница 1", [])
-        HtmlPageFactory.create (self.rootwiki, u"Html-страница 2", [])
+        WikiPageFactory().create (self.rootwiki, u"Викистраница 1", [])
+        HtmlPageFactory().create (self.rootwiki, u"Html-страница 2", [])
 
         self._styleFname = u"__style.html"
         self._styleDir = u"__style"
@@ -56,8 +55,8 @@ class StylesTest (unittest.TestCase):
         """
         style = Style()
         defaultStyle = style.getDefaultStyle()
-        self.assertEqual (os.path.abspath (defaultStyle), 
-                os.path.abspath ("styles/__default/__style.html") )
+        self.assertEqual (os.path.abspath (defaultStyle),
+                          os.path.abspath ("styles/__default/__style.html"))
 
 
     def testStylePageDefault (self):
@@ -98,7 +97,7 @@ class StylesTest (unittest.TestCase):
     def testFakeStyle (self):
         style = Style()
         page = self.rootwiki[u"Викистраница 1"]
-        os.mkdir (os.path.join (page.path, self._styleFname) )
+        os.mkdir (os.path.join (page.path, self._styleFname))
 
         validStyle = os.path.abspath (style.getDefaultStyle())
         pageStyle = os.path.abspath (style.getPageStyle (page))
@@ -137,7 +136,7 @@ class StylesTest (unittest.TestCase):
         self.assertFalse (os.path.exists (pageStyleDir))
         self.assertFalse (os.path.exists (pageStyleFname))
 
-        style.setPageStyle (page, os.path.join (self._exampleStyleDir, self._styleFname) )
+        style.setPageStyle (page, os.path.join (self._exampleStyleDir, self._styleFname))
 
         self.assertTrue (os.path.exists (pageStyleDir))
         self.assertTrue (os.path.exists (pageStyleFname))
@@ -210,8 +209,8 @@ class StylesTest (unittest.TestCase):
         page = self.rootwiki[u"Викистраница 1"]
         style.setPageStyle (page, style.getPageStyle (page))
 
-        self.assertEqual (os.path.abspath (style.getPageStyle(page) ),
-                os.path.abspath (style.getDefaultStyle() ) )
+        self.assertEqual (os.path.abspath (style.getPageStyle(page)),
+                          os.path.abspath (style.getDefaultStyle()))
 
 
     def testSelfSpecial (self):
@@ -224,7 +223,7 @@ class StylesTest (unittest.TestCase):
     def testInvalidStyle1 (self):
         style = Style()
         page = self.rootwiki[u"Викистраница 1"]
-        
+
         fname = os.path.join (page.path, style._styleFname)
         with open (fname, "w") as fp:
             fp.write (u"""<HTML>
@@ -240,4 +239,4 @@ $invalidkey
 """)
 
         generator = HtmlGenerator (page)
-        htmlpath = generator.makeHtml (Style().getPageStyle (page))
+        generator.makeHtml (Style().getPageStyle (page))

@@ -1,21 +1,18 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import os.path
-import shutil
 import unittest
 
-from outwiker.core.tree import RootWikiPage, WikiDocument
+from outwiker.core.tree import WikiDocument
 from outwiker.core.exceptions import ReadonlyException
-from outwiker.core.event import Event
 from outwiker.core.attachment import Attachment
 from outwiker.core.style import Style
 from outwiker.core.config import StringOption
 
 from outwiker.pages.text.textpage import TextPageFactory, TextWikiPage
-from outwiker.pages.wiki.wikipage import WikiPageFactory, WikiWikiPage
-from outwiker.pages.html.htmlpage import HtmlPageFactory, HtmlWikiPage
-from outwiker.pages.search.searchpage import SearchPageFactory, SearchWikiPage
+from outwiker.pages.wiki.wikipage import WikiWikiPage
+from outwiker.pages.html.htmlpage import HtmlWikiPage
+from outwiker.pages.search.searchpage import SearchWikiPage
 
 from test.utils import removeWiki
 
@@ -30,28 +27,28 @@ class ReadonlyLoadTest (unittest.TestCase):
 
 
     def testLoadWiki(self):
-        self.assertEqual ( len (self.root), 6)
-    
+        self.assertEqual (len (self.root), 6)
+
 
     def testPageType1 (self):
         self.assertEqual (type (self.root[u"Типы страниц/HTML-страница"]), HtmlWikiPage)
         self.assertEqual (type (self.root[u"Типы страниц/wiki-страница"]), WikiWikiPage)
         self.assertEqual (type (self.root[u"Типы страниц/Страница поиска"]), SearchWikiPage)
         self.assertEqual (type (self.root[u"Типы страниц/Текстовая страница"]), TextWikiPage)
-    
+
 
     def testPageType2 (self):
-        self.assertEqual (self.root[u"Типы страниц/HTML-страница"].getTypeString(), 
-                HtmlWikiPage.getTypeString())
+        self.assertEqual (self.root[u"Типы страниц/HTML-страница"].getTypeString(),
+                          HtmlWikiPage.getTypeString())
 
-        self.assertEqual (self.root[u"Типы страниц/wiki-страница"].getTypeString(), 
-                WikiWikiPage.getTypeString())
+        self.assertEqual (self.root[u"Типы страниц/wiki-страница"].getTypeString(),
+                          WikiWikiPage.getTypeString())
 
-        self.assertEqual (self.root[u"Типы страниц/Страница поиска"].getTypeString(), 
-                SearchWikiPage.getTypeString())
+        self.assertEqual (self.root[u"Типы страниц/Страница поиска"].getTypeString(),
+                          SearchWikiPage.getTypeString())
 
-        self.assertEqual (self.root[u"Типы страниц/Текстовая страница"].getTypeString(), 
-                TextWikiPage.getTypeString())
+        self.assertEqual (self.root[u"Типы страниц/Текстовая страница"].getTypeString(),
+                          TextWikiPage.getTypeString())
 
 
     def testPagesAccess (self):
@@ -84,9 +81,9 @@ class ReadonlyLoadTest (unittest.TestCase):
         """
         Проверка правильности путей до страниц
         """
-        self.assertEqual (self.root[u"page 4"].path, os.path.join (self.path, u"page 4") )
-        self.assertEqual (self.root[u"Страница 1"].path, os.path.join (self.path, u"Страница 1") )
-        self.assertEqual (self.root[u"Страница 3"].path, os.path.join (self.path, u"Страница 3") )
+        self.assertEqual (self.root[u"page 4"].path, os.path.join (self.path, u"page 4"))
+        self.assertEqual (self.root[u"Страница 1"].path, os.path.join (self.path, u"Страница 1"))
+        self.assertEqual (self.root[u"Страница 3"].path, os.path.join (self.path, u"Страница 3"))
 
         fullpath = os.path.join (self.path, u"Страница 1")
         fullpath = os.path.join (fullpath, u"Страница 2")
@@ -140,19 +137,19 @@ class ReadonlyLoadTest (unittest.TestCase):
 
         self.assertEqual (typeOption.value, u"html")
         self.assertEqual (tagsOption.value, u"Тест, test, двойной тег")
-        
+
 
     def testGetRoot (self):
         self.assertEqual (self.root[u"Страница 1"].root, self.root)
         self.assertEqual (self.root[u"Страница 1/Страница 2/Страница 5"].root, self.root)
-    
+
 
     def testSubpath (self):
         self.assertEqual (self.root[u"Страница 1"].subpath, u"Страница 1")
 
-        self.assertEqual (self.root[u"Страница 1/Страница 2/Страница 5"].subpath, 
-                u"Страница 1/Страница 2/Страница 5")
-    
+        self.assertEqual (self.root[u"Страница 1/Страница 2/Страница 5"].subpath,
+                          u"Страница 1/Страница 2/Страница 5")
+
 
 class ReadonlyChangeTest (unittest.TestCase):
     """
@@ -168,12 +165,13 @@ class ReadonlyChangeTest (unittest.TestCase):
 
         wiki = WikiDocument.create (self.path)
 
-        TextPageFactory.create (wiki, u"Страница 1", [])
-        TextPageFactory.create (wiki, u"Страница 2", [])
-        TextPageFactory.create (wiki[u"Страница 2"], u"Страница 3", [])
-        TextPageFactory.create (wiki[u"Страница 2/Страница 3"], u"Страница 4", [])
-        TextPageFactory.create (wiki[u"Страница 1"], u"Страница 5", [])
-        TextPageFactory.create (wiki, u"страница 4", [])
+        factory = TextPageFactory()
+        factory.create (wiki, u"Страница 1", [])
+        factory.create (wiki, u"Страница 2", [])
+        factory.create (wiki[u"Страница 2"], u"Страница 3", [])
+        factory.create (wiki[u"Страница 2/Страница 3"], u"Страница 4", [])
+        factory.create (wiki[u"Страница 1"], u"Страница 5", [])
+        factory.create (wiki, u"страница 4", [])
 
         filesPath = u"../test/samplefiles/"
         files = [u"accept.png", u"add.png", u"anchor.png"]
@@ -184,7 +182,7 @@ class ReadonlyChangeTest (unittest.TestCase):
         Attachment (wiki[u"Страница 1/Страница 5"]).attach (fullFilesPath)
 
         self.wiki = WikiDocument.load (self.path, readonly=True)
-    
+
 
     def tearDown(self):
         removeWiki (self.path)
@@ -208,7 +206,7 @@ class ReadonlyChangeTest (unittest.TestCase):
     def __changeOrder (self, page, neworder):
         page.order = neworder
 
-    
+
     def testMoveTo (self):
         self.assertRaises (ReadonlyException, self.wiki[u"Страница 1/Страница 5"].moveTo, self.wiki)
 
@@ -219,7 +217,7 @@ class ReadonlyChangeTest (unittest.TestCase):
 
     def testChangeTitle2 (self):
         self.assertRaises (ReadonlyException, self.__changeTitle, self.wiki[u"Страница 2/Страница 3"], u"Страница 666")
-    
+
 
     def testChangeTags1 (self):
         self.assertRaises (ReadonlyException, self.__changeTags, self.wiki[u"Страница 1"], ["111", "222"])
@@ -227,7 +225,7 @@ class ReadonlyChangeTest (unittest.TestCase):
 
     def testChangeTags2 (self):
         self.assertRaises (ReadonlyException, self.__changeTags, self.wiki[u"Страница 2/Страница 3"], ["111", "222"])
-    
+
 
     def testSetParameter1 (self):
         param = StringOption (self.wiki[u"Страница 1"].params, "section", "param", u"")
@@ -238,7 +236,7 @@ class ReadonlyChangeTest (unittest.TestCase):
         param = StringOption (self.wiki[u"Страница 2/Страница 3"].params, "section", "param", u"")
         param.value = u"value"
 
-    
+
     def testChangeIcon1 (self):
         self.assertRaises (ReadonlyException, self.__changeIcon, self.wiki[u"Страница 1"], u"../test/images/feed.gif")
 
@@ -254,7 +252,7 @@ class ReadonlyChangeTest (unittest.TestCase):
         fullFilesPath = [os.path.join (filesPath, fname) for fname in files]
 
         self.assertRaises (ReadonlyException, Attachment (self.wiki[u"Страница 1"]).attach, fullFilesPath)
-    
+
 
     def testAttach2 (self):
         filesPath = u"../test/samplefiles/"
@@ -268,47 +266,47 @@ class ReadonlyChangeTest (unittest.TestCase):
     def testChangeStyle1 (self):
         style = Style ()
         self.assertRaises (ReadonlyException,
-            style.setPageStyle, self.wiki[u"Страница 1"], self._exampleStyleDir)
-    
+                           style.setPageStyle, self.wiki[u"Страница 1"], self._exampleStyleDir)
+
 
     def testChangeStyle2 (self):
         style = Style ()
         self.assertRaises (ReadonlyException,
-            style.setPageStyleDefault, self.wiki[u"Страница 1"])
-    
+                           style.setPageStyleDefault, self.wiki[u"Страница 1"])
+
 
     def testRemoveAttach1 (self):
         self.assertRaises (ReadonlyException, Attachment (self.wiki[u"Страница 4"]).removeAttach, u"add.png")
-    
+
 
     def testRemoveAttach2 (self):
         self.assertRaises (ReadonlyException, Attachment (self.wiki[u"Страница 1/Страница 5"]).removeAttach, u"anchor.png")
-    
+
 
     def testCreate1 (self):
-        self.assertRaises (ReadonlyException, TextPageFactory.create, self.wiki[u"Страница 1"], u"Страница 666", [])
+        self.assertRaises (ReadonlyException, TextPageFactory().create, self.wiki[u"Страница 1"], u"Страница 666", [])
 
 
     def testCreate2 (self):
-        self.assertRaises (ReadonlyException, TextPageFactory.create, self.wiki[u"Страница 2/Страница 3"], u"Страница 666", [])
+        self.assertRaises (ReadonlyException, TextPageFactory().create, self.wiki[u"Страница 2/Страница 3"], u"Страница 666", [])
 
 
     def testChangeContent1 (self):
         self.assertRaises (ReadonlyException, self.__changeContent, self.wiki[u"Страница 1"], u"бла-бла-бла")
-    
+
 
     def testChangeContent2 (self):
         self.assertRaises (ReadonlyException, self.__changeContent, self.wiki[u"Страница 2/Страница 3"], u"бла-бла-бла")
-    
+
 
     def testSelectedPage1 (self):
         self.wiki.root.selectedPage = self.wiki[u"Страница 1"]
 
-    
+
     def testSelectedPage2 (self):
         self.wiki.root.selectedPage = self.wiki[u"Страница 2/Страница 3"]
 
-    
+
     def testRemove1 (self):
         self.assertRaises (ReadonlyException, self.wiki[u"Страница 1"].remove)
         self.assertNotEqual (self.wiki[u"Страница 1"], None)
@@ -317,8 +315,7 @@ class ReadonlyChangeTest (unittest.TestCase):
     def testRemove2 (self):
         self.assertRaises (ReadonlyException, self.wiki[u"Страница 2/Страница 3"].remove)
         self.assertNotEqual (self.wiki[u"Страница 2/Страница 3"], None)
-    
+
 
     def testOrder1 (self):
         self.assertRaises (ReadonlyException, self.__changeOrder, self.wiki[u"Страница 1"], 3)
-

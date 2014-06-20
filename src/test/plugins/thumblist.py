@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import unittest
@@ -8,11 +7,8 @@ from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
-from outwiker.pages.wiki.parser.wikiparser import Parser
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
-from outwiker.pages.wiki.htmlgenerator import HtmlGenerator
-# from outwiker.pages.wiki.wikiconfig import WikiConfig
 from test.utils import removeWiki
 
 
@@ -28,10 +24,10 @@ class ThumbListPluginTest (unittest.TestCase):
 
         self.loader = PluginsLoader(Application)
         self.loader.load (dirlist)
-        
+
         self.factory = ParserFactory()
         self.parser = self.factory.make (self.testPage, Application.config)
-    
+
 
     def __createWiki (self):
         # Здесь будет создаваться вики
@@ -40,9 +36,9 @@ class ThumbListPluginTest (unittest.TestCase):
 
         self.rootwiki = WikiDocument.create (self.path)
 
-        WikiPageFactory.create (self.rootwiki, u"Страница 1", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 1", [])
         self.testPage = self.rootwiki[u"Страница 1"]
-        
+
 
     def tearDown(self):
         removeWiki (self.path)
@@ -50,7 +46,7 @@ class ThumbListPluginTest (unittest.TestCase):
 
 
     def testPluginLoad (self):
-        self.assertEqual ( len (self.loader), 1)
+        self.assertEqual (len (self.loader), 1)
 
 
     def testContentParseEmpty (self):
@@ -64,8 +60,8 @@ class ThumbListPluginTest (unittest.TestCase):
 
 
     def testAttachFull1 (self):
-        text = u"""Бла-бла-бла 
-        (:thumblist:) 
+        text = u"""Бла-бла-бла
+        (:thumblist:)
         бла-бла-бла"""
 
         files = [u"first.jpg"]
@@ -78,13 +74,13 @@ class ThumbListPluginTest (unittest.TestCase):
         self.assertTrue (u"__thumb" in result)
         self.assertTrue (u"_first.jpg" in result)
 
-        self.assertTrue (os.path.exists (os.path.join (self.testPage.path, "__attach", "__thumb") ) )
+        self.assertTrue (os.path.exists (os.path.join (self.testPage.path, "__attach", "__thumb")))
         self.assertTrue (u"<table" not in result)
 
 
     def testAttachThumbListFull2 (self):
-        text = u"""Бла-бла-бла 
-        (:thumblist:) 
+        text = u"""Бла-бла-бла
+        (:thumblist:)
         бла-бла-бла"""
 
         files = [u"first.jpg", u"image_01.JPG", u"html.txt"]
@@ -105,8 +101,8 @@ class ThumbListPluginTest (unittest.TestCase):
 
 
     def testAttachGalleryFull2 (self):
-        text = u"""Бла-бла-бла 
-        (:thumbgallery:) 
+        text = u"""Бла-бла-бла
+        (:thumbgallery:)
         бла-бла-бла"""
 
         files = [u"first.jpg", u"image_01.JPG", u"html.txt"]
@@ -127,9 +123,9 @@ class ThumbListPluginTest (unittest.TestCase):
 
 
     def testAttachEmpty1 (self):
-        text = u"""Бла-бла-бла 
-        (:thumblist:) 
-        (:thumblistend:) 
+        text = u"""Бла-бла-бла
+        (:thumblist:)
+        (:thumblistend:)
         бла-бла-бла"""
 
         files = [u"first.jpg", u"image_01.JPG", u"html.txt"]
@@ -150,9 +146,9 @@ class ThumbListPluginTest (unittest.TestCase):
 
 
     def testAttachGalleryEmpty1 (self):
-        text = u"""Бла-бла-бла 
-        (:thumbgallery:) 
-        (:thumbgalleryend:) 
+        text = u"""Бла-бла-бла
+        (:thumbgallery:)
+        (:thumbgalleryend:)
         бла-бла-бла"""
 
         files = [u"first.jpg", u"image_01.JPG", u"html.txt"]
@@ -173,11 +169,11 @@ class ThumbListPluginTest (unittest.TestCase):
 
 
     def testAttachList1 (self):
-        text = u"""Бла-бла-бла 
-        (:thumblist:) 
+        text = u"""Бла-бла-бла
+        (:thumblist:)
             first.jpg
             particle_01.PNG
-        (:thumblistend:) 
+        (:thumblistend:)
         бла-бла-бла"""
 
         files = [u"first.jpg", u"image_01.JPG", u"particle_01.PNG", u"image.png", u"html.txt"]
@@ -201,11 +197,11 @@ class ThumbListPluginTest (unittest.TestCase):
 
 
     def testAttachList2 (self):
-        text = u"""Бла-бла-бла 
-        (:thumblist:) 
+        text = u"""Бла-бла-бла
+        (:thumblist:)
             Attach:first.jpg
             Attach:particle_01.PNG
-        (:thumblistend:) 
+        (:thumblistend:)
         бла-бла-бла"""
 
         files = [u"first.jpg", u"image_01.JPG", u"particle_01.PNG", u"image.png", u"html.txt"]
@@ -229,11 +225,11 @@ class ThumbListPluginTest (unittest.TestCase):
 
 
     def testAttachGalleryList2 (self):
-        text = u"""Бла-бла-бла 
-        (:thumbgallery:) 
+        text = u"""Бла-бла-бла
+        (:thumbgallery:)
             Attach:first.jpg
             Attach:particle_01.PNG
-        (:thumbgalleryend:) 
+        (:thumbgalleryend:)
         бла-бла-бла"""
 
         files = [u"first.jpg", u"image_01.JPG", u"particle_01.PNG", u"image.png", u"html.txt"]
@@ -257,8 +253,8 @@ class ThumbListPluginTest (unittest.TestCase):
 
 
     def testAttachList3 (self):
-        text = u"""Бла-бла-бла 
-        (:thumblist:) 
+        text = u"""Бла-бла-бла
+        (:thumblist:)
 
             Attach:first.jpg
 
@@ -266,7 +262,7 @@ class ThumbListPluginTest (unittest.TestCase):
             Attach:particle_01.PNG
 
 
-        (:thumblistend:) 
+        (:thumblistend:)
         бла-бла-бла"""
 
         files = [u"first.jpg", u"image_01.JPG", u"particle_01.PNG", u"image.png", u"html.txt"]
@@ -290,8 +286,8 @@ class ThumbListPluginTest (unittest.TestCase):
 
 
     def testAttachGallery3 (self):
-        text = u"""Бла-бла-бла 
-        (:thumbgallery:) 
+        text = u"""Бла-бла-бла
+        (:thumbgallery:)
 
             Attach:first.jpg
 
@@ -299,7 +295,7 @@ class ThumbListPluginTest (unittest.TestCase):
             Attach:particle_01.PNG
 
 
-        (:thumbgalleryend:) 
+        (:thumbgalleryend:)
         бла-бла-бла"""
 
         files = [u"first.jpg", u"image_01.JPG", u"particle_01.PNG", u"image.png", u"html.txt"]
@@ -323,8 +319,8 @@ class ThumbListPluginTest (unittest.TestCase):
 
 
     def testAttachGallerySpaces1 (self):
-        text = u"""Бла-бла-бла 
-        (:thumbgallery:) 
+        text = u"""Бла-бла-бла
+        (:thumbgallery:)
 
             Attach:first.jpg
 
@@ -332,7 +328,7 @@ class ThumbListPluginTest (unittest.TestCase):
             Attach:картинка с пробелами.png
 
 
-        (:thumbgalleryend:) 
+        (:thumbgalleryend:)
         бла-бла-бла"""
 
         files = [u"first.jpg", u"image_01.JPG", u"particle_01.PNG", u"image.png", u"html.txt", u"картинка с пробелами.png"]
@@ -356,8 +352,8 @@ class ThumbListPluginTest (unittest.TestCase):
 
 
     def testAttachGallerySpaces2 (self):
-        text = u"""Бла-бла-бла 
-        (:thumbgallery:) 
+        text = u"""Бла-бла-бла
+        (:thumbgallery:)
 
             Attach:first.jpg
 
@@ -365,7 +361,7 @@ class ThumbListPluginTest (unittest.TestCase):
             картинка с пробелами.png
 
 
-        (:thumbgalleryend:) 
+        (:thumbgalleryend:)
         бла-бла-бла"""
 
         files = [u"first.jpg", u"image_01.JPG", u"particle_01.PNG", u"image.png", u"html.txt", u"картинка с пробелами.png"]
@@ -389,8 +385,8 @@ class ThumbListPluginTest (unittest.TestCase):
 
 
     def testAttachGallerySize1 (self):
-        text = u"""Бла-бла-бла 
-        (:thumbgallery maxsize=100:) 
+        text = u"""Бла-бла-бла
+        (:thumbgallery maxsize=100:)
 
             Attach:first.jpg
 
@@ -398,7 +394,7 @@ class ThumbListPluginTest (unittest.TestCase):
             Attach:particle_01.PNG
             Attach:картинка с пробелами.png
 
-        (:thumbgalleryend:) 
+        (:thumbgalleryend:)
         бла-бла-бла"""
 
         files = [u"first.jpg", u"image_01.JPG", u"particle_01.PNG", u"image.png", u"html.txt", u"картинка с пробелами.png"]
@@ -425,8 +421,8 @@ class ThumbListPluginTest (unittest.TestCase):
 
 
     def testAttachGallerySize2 (self):
-        text = u"""Бла-бла-бла 
-        (:thumbgallery px=100:) 
+        text = u"""Бла-бла-бла
+        (:thumbgallery px=100:)
 
             Attach:first.jpg
 
@@ -434,7 +430,7 @@ class ThumbListPluginTest (unittest.TestCase):
             Attach:particle_01.PNG
 
 
-        (:thumbgalleryend:) 
+        (:thumbgalleryend:)
         бла-бла-бла"""
 
         files = [u"first.jpg", u"image_01.JPG", u"particle_01.PNG", u"image.png", u"html.txt"]
@@ -458,8 +454,8 @@ class ThumbListPluginTest (unittest.TestCase):
 
 
     def testAttachListSize1 (self):
-        text = u"""Бла-бла-бла 
-        (:thumblist maxsize=100:) 
+        text = u"""Бла-бла-бла
+        (:thumblist maxsize=100:)
 
             Attach:first.jpg
 
@@ -467,7 +463,7 @@ class ThumbListPluginTest (unittest.TestCase):
             Attach:particle_01.PNG
 
 
-        (:thumblistend:) 
+        (:thumblistend:)
         бла-бла-бла"""
 
         files = [u"first.jpg", u"image_01.JPG", u"particle_01.PNG", u"image.png", u"html.txt"]
@@ -491,8 +487,8 @@ class ThumbListPluginTest (unittest.TestCase):
 
 
     def testAttachListSize2 (self):
-        text = u"""Бла-бла-бла 
-        (:thumblist px=100:) 
+        text = u"""Бла-бла-бла
+        (:thumblist px=100:)
 
             Attach:first.jpg
 
@@ -500,7 +496,7 @@ class ThumbListPluginTest (unittest.TestCase):
             Attach:particle_01.PNG
 
 
-        (:thumblistend:) 
+        (:thumblistend:)
         бла-бла-бла"""
 
         files = [u"first.jpg", u"image_01.JPG", u"particle_01.PNG", u"image.png", u"html.txt"]
@@ -524,8 +520,8 @@ class ThumbListPluginTest (unittest.TestCase):
 
 
     def testAttachListComments1 (self):
-        text = u"""Бла-бла-бла 
-        (:thumblist px=100:) 
+        text = u"""Бла-бла-бла
+        (:thumblist px=100:)
 
             Attach:first.jpg    | Первый
 
@@ -533,7 +529,7 @@ class ThumbListPluginTest (unittest.TestCase):
             Attach:particle_01.PNG|Комментарий к картинке
 
 
-        (:thumblistend:) 
+        (:thumblistend:)
         бла-бла-бла"""
 
         files = [u"first.jpg", u"image_01.JPG", u"particle_01.PNG", u"image.png", u"html.txt"]
@@ -557,11 +553,11 @@ class ThumbListPluginTest (unittest.TestCase):
 
 
     def testAttachListComments2 (self):
-        text = u"""Бла-бла-бла 
-        (:thumblist:) 
+        text = u"""Бла-бла-бла
+        (:thumblist:)
             Attach:first.jpg    | Первый
             Attach:particle_01.PNG|Комментарий к картинке
-        (:thumblistend:) 
+        (:thumblistend:)
         бла-бла-бла"""
 
         files = [u"first.jpg", u"image_01.JPG", u"particle_01.PNG", u"image.png", u"html.txt"]
@@ -581,7 +577,7 @@ class ThumbListPluginTest (unittest.TestCase):
 
 
     def testTable1 (self):
-        text = u"""Бла-бла-бла 
+        text = u"""Бла-бла-бла
         (:thumblist cols=2:)
         бла-бла-бла"""
 
@@ -602,11 +598,11 @@ class ThumbListPluginTest (unittest.TestCase):
         self.assertTrue (u"<table" in result)
 
         # В таблице две строки
-        self.assertEqual (len (result.split ("<tr") ), 2 + 1)
+        self.assertEqual (len (result.split ("<tr")), 2 + 1)
 
 
     def testTable2 (self):
-        text = u"""Бла-бла-бла 
+        text = u"""Бла-бла-бла
         (:thumblist cols=1:)
         бла-бла-бла"""
 
@@ -627,12 +623,12 @@ class ThumbListPluginTest (unittest.TestCase):
         self.assertTrue (u"<table" in result)
 
         # В таблице две строки
-        self.assertEqual (len (result.split ("<tr") ), 4 + 1)
+        self.assertEqual (len (result.split ("<tr")), 4 + 1)
 
 
     def testInvalidCols1 (self):
-        text = u"""Бла-бла-бла 
-        (:thumblist cols:) 
+        text = u"""Бла-бла-бла
+        (:thumblist cols:)
         бла-бла-бла"""
 
         files = [u"first.jpg", u"image_01.JPG", u"html.txt"]
@@ -653,8 +649,8 @@ class ThumbListPluginTest (unittest.TestCase):
 
 
     def testInvalidCols2 (self):
-        text = u"""Бла-бла-бла 
-        (:thumblist cols=:) 
+        text = u"""Бла-бла-бла
+        (:thumblist cols=:)
         бла-бла-бла"""
 
         files = [u"first.jpg", u"image_01.JPG", u"html.txt"]
@@ -675,8 +671,8 @@ class ThumbListPluginTest (unittest.TestCase):
 
 
     def testInvalidCols3 (self):
-        text = u"""Бла-бла-бла 
-        (:thumblist cols=abyrvalg:) 
+        text = u"""Бла-бла-бла
+        (:thumblist cols=abyrvalg:)
         бла-бла-бла"""
 
         files = [u"first.jpg", u"image_01.JPG", u"html.txt"]
@@ -697,8 +693,8 @@ class ThumbListPluginTest (unittest.TestCase):
 
 
     def testInvalidThumbSizeStream (self):
-        text = u"""Абырвалг 
-        (:thumblist px=abyrvalg:) 
+        text = u"""Абырвалг
+        (:thumblist px=abyrvalg:)
         бла-бла-бла"""
 
         files = [u"first.jpg", u"image_01.JPG", u"html.txt"]
@@ -717,8 +713,8 @@ class ThumbListPluginTest (unittest.TestCase):
 
 
     def testInvalidThumbSizeTable (self):
-        text = u"""Абырвалг 
-        (:thumblist px=abyrvalg сщды=3:) 
+        text = u"""Абырвалг
+        (:thumblist px=abyrvalg сщды=3:)
         бла-бла-бла"""
 
         files = [u"first.jpg", u"image_01.JPG", u"html.txt"]

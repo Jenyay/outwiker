@@ -1,15 +1,12 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import os
 import os.path
 import unittest
-import time
 
 from outwiker.core.tree import WikiDocument
 from outwiker.core.attachment import Attachment
 from outwiker.core.application import Application
-from outwiker.core.config import Config
 from outwiker.core.style import Style
 from outwiker.gui.guiconfig import HtmlRenderConfig
 
@@ -27,7 +24,7 @@ class WikiHashTest (unittest.TestCase):
 
         self.filesPath = u"../test/samplefiles/"
         self.__createWiki()
-        
+
         files = [u"image.jpg", u"dir"]
 
         fullFilesPath = [os.path.join (self.filesPath, fname) for fname in files]
@@ -38,11 +35,11 @@ class WikiHashTest (unittest.TestCase):
         Attachment (self.testPage).attach (fullFilesPath)
 
         self.wikitext = u"""Бла-бла-бла
-%thumb maxsize=250%Attach:image.jpg%%
-Бла-бла-бла"""
+        %thumb maxsize=250%Attach:image.jpg%%
+        Бла-бла-бла"""
 
         self.testPage.content = self.wikitext
-        
+
         self.__htmlconfig = HtmlRenderConfig (Application.config)
         self.__setDefaultConfig()
 
@@ -51,13 +48,13 @@ class WikiHashTest (unittest.TestCase):
         self.__htmlconfig.userStyle.value = u""
 
         # Установим размер превьюшки, не совпадающий с размером по умолчанию
-        Application.config.set (WikiConfig.WIKI_SECTION, 
-                WikiConfig.THUMB_SIZE_PARAM, 
-                WikiConfig.THUMB_SIZE_DEFAULT)
+        Application.config.set (WikiConfig.WIKI_SECTION,
+                                WikiConfig.THUMB_SIZE_PARAM,
+                                WikiConfig.THUMB_SIZE_DEFAULT)
 
-        Application.config.set (HtmlRenderConfig.HTML_SECTION, 
-                HtmlRenderConfig.FONT_FACE_NAME_PARAM, 
-                HtmlRenderConfig.FONT_NAME_DEFAULT)
+        Application.config.set (HtmlRenderConfig.HTML_SECTION,
+                                HtmlRenderConfig.FONT_FACE_NAME_PARAM,
+                                HtmlRenderConfig.FONT_NAME_DEFAULT)
 
 
     def __createWiki (self):
@@ -67,9 +64,9 @@ class WikiHashTest (unittest.TestCase):
 
         self.rootwiki = WikiDocument.create (self.path)
 
-        WikiPageFactory.create (self.rootwiki, u"Страница 2", [])
+        WikiPageFactory().create (self.rootwiki, u"Страница 2", [])
         self.testPage = self.rootwiki[u"Страница 2"]
-        
+
 
     def tearDown(self):
         Application.config.remove_section (HtmlRenderConfig.HTML_SECTION)
@@ -124,7 +121,7 @@ class WikiHashTest (unittest.TestCase):
         self.testPage.title = u"Страница 2"
         hash3 = hashCalculator.getHash (self.testPage)
         self.assertEqual (hash_src, hash3)
-        
+
 
 
     def testCacheEmpty (self):
@@ -157,7 +154,7 @@ class WikiHashTest (unittest.TestCase):
         hash_src = hashCalculator.getHash (self.testPage)
 
         # Добавим файл в dir
-        with open (os.path.join (attach.getAttachPath(), "dir", "temp.tmp"), "w" ) as fp:
+        with open (os.path.join (attach.getAttachPath(), "dir", "temp.tmp"), "w") as fp:
             fp.write ("bla-bla-bla")
 
         hash2 = hashCalculator.getHash (self.testPage)
@@ -172,7 +169,7 @@ class WikiHashTest (unittest.TestCase):
         self.assertNotEqual (hash_src, hash3)
 
         # Добавим файл в dir/subdir_2
-        with open (os.path.join (subdir, "temp2.tmp"), "w" ) as fp:
+        with open (os.path.join (subdir, "temp2.tmp"), "w") as fp:
             fp.write ("bla-bla-bla")
 
         hash4 = hashCalculator.getHash (self.testPage)
@@ -189,7 +186,7 @@ class WikiHashTest (unittest.TestCase):
         hash_src = hashCalculator.getHash (self.testPage)
 
         # Добавляем новую подстраницу
-        WikiPageFactory.create (self.testPage, u"Подстраница 1", [])
+        WikiPageFactory().create (self.testPage, u"Подстраница 1", [])
         hash2 = hashCalculator.getHash (self.testPage)
         self.assertNotEqual (hash2, hash_src)
 
@@ -222,7 +219,7 @@ class WikiHashTest (unittest.TestCase):
         self.assertNotEqual (hash2, hash3)
         self.assertNotEqual (hash3, hash_src)
 
-        # Изменим стиль на тот же 
+        # Изменим стиль на тот же
         style.setPageStyle (self.testPage, exampleStyleDir2)
         hash4 = hashCalculator.getHash (self.testPage)
         self.assertEqual (hash4, hash3)
@@ -285,16 +282,16 @@ class WikiHashTest (unittest.TestCase):
         hashCalculator = WikiHashCalculator (Application)
         hash_src = hashCalculator.getHash (self.testPage)
 
-        Application.config.set (WikiConfig.WIKI_SECTION, 
-                WikiConfig.THUMB_SIZE_PARAM, 
-                WikiConfig.THUMB_SIZE_DEFAULT + 100)
+        Application.config.set (WikiConfig.WIKI_SECTION,
+                                WikiConfig.THUMB_SIZE_PARAM,
+                                WikiConfig.THUMB_SIZE_DEFAULT + 100)
 
         hash2 = hashCalculator.getHash (self.testPage)
         self.assertNotEqual (hash2, hash_src)
 
-        Application.config.set (WikiConfig.WIKI_SECTION, 
-                WikiConfig.THUMB_SIZE_PARAM, 
-                u"Бла-бла-бла")
+        Application.config.set (WikiConfig.WIKI_SECTION,
+                                WikiConfig.THUMB_SIZE_PARAM,
+                                u"Бла-бла-бла")
 
         hash3 = hashCalculator.getHash (self.testPage)
         self.assertNotEqual (hash3, hash2)
@@ -308,9 +305,9 @@ class WikiHashTest (unittest.TestCase):
         hashCalculator = WikiHashCalculator (Application)
         hash_src = hashCalculator.getHash (self.testPage)
 
-        Application.config.set (HtmlRenderConfig.HTML_SECTION, 
-                HtmlRenderConfig.FONT_FACE_NAME_PARAM, 
-                u"Бла-бла-бла")
+        Application.config.set (HtmlRenderConfig.HTML_SECTION,
+                                HtmlRenderConfig.FONT_FACE_NAME_PARAM,
+                                u"Бла-бла-бла")
 
         hash2 = hashCalculator.getHash (self.testPage)
         self.assertNotEqual (hash2, hash_src)
@@ -334,11 +331,11 @@ class WikiHashTest (unittest.TestCase):
         Тест на корректную обработку некорректных настроек размера шрифта
         """
         hashCalculator = WikiHashCalculator (Application)
-        hash_src = hashCalculator.getHash (self.testPage)
+        hashCalculator.getHash (self.testPage)
 
-        Application.config.set (HtmlRenderConfig.HTML_SECTION, 
-                HtmlRenderConfig.FONT_SIZE_PARAM, 
-                u"Бла-бла-бла")
+        Application.config.set (HtmlRenderConfig.HTML_SECTION,
+                                HtmlRenderConfig.FONT_SIZE_PARAM,
+                                u"Бла-бла-бла")
 
         hashCalculator.getHash (self.testPage)
 
@@ -348,11 +345,11 @@ class WikiHashTest (unittest.TestCase):
         Тест на корректную обработку некорректных настроек шрифта
         """
         hashCalculator = WikiHashCalculator (Application)
-        hash_src = hashCalculator.getHash (self.testPage)
+        hashCalculator.getHash (self.testPage)
 
-        Application.config.set (HtmlRenderConfig.HTML_SECTION, 
-                HtmlRenderConfig.FONT_BOLD_PARAM, 
-                u"Бла-бла-бла")
+        Application.config.set (HtmlRenderConfig.HTML_SECTION,
+                                HtmlRenderConfig.FONT_BOLD_PARAM,
+                                u"Бла-бла-бла")
 
         hashCalculator.getHash (self.testPage)
 
@@ -362,10 +359,10 @@ class WikiHashTest (unittest.TestCase):
         Тест на корректную обработку некорректных настроек шрифта
         """
         hashCalculator = WikiHashCalculator (Application)
-        hash_src = hashCalculator.getHash (self.testPage)
+        hashCalculator.getHash (self.testPage)
 
-        Application.config.set (HtmlRenderConfig.HTML_SECTION, 
-                HtmlRenderConfig.FONT_ITALIC_PARAM, 
-                u"Бла-бла-бла")
+        Application.config.set (HtmlRenderConfig.HTML_SECTION,
+                                HtmlRenderConfig.FONT_ITALIC_PARAM,
+                                u"Бла-бла-бла")
 
         hashCalculator.getHash (self.testPage)

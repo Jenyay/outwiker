@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 """
@@ -10,6 +9,7 @@ import shutil
 import time
 
 import wx
+
 
 def removeWiki (path):
     """
@@ -25,7 +25,7 @@ def removeWiki (path):
 
 def getImageSize (fname):
     """
-    Получить размер картинки. 
+    Получить размер картинки.
     Возвращает кортеж (ширина, высота)
     """
     image = wx.Image (fname)
@@ -33,5 +33,3 @@ def getImageSize (fname):
     height = image.GetHeight()
 
     return (width, height)
-
-

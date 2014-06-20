@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 import unittest
 import os.path
@@ -10,11 +9,11 @@ from outwiker.core.styleslist import StylesList
 class StylesListTest (unittest.TestCase):
     def setUp (self):
         self._dirlist = [
-                u"../test/styles/example_jblog/",
-                u"../test/styles/example_jnet/"
-                ]
-    
-        
+            u"../test/styles/example_jblog/",
+            u"../test/styles/example_jnet/"
+        ]
+
+
     def testEmpty (self):
         styleslist = StylesList ([])
         self.assertEqual (len (styleslist), 0)

@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import unittest
@@ -19,13 +18,14 @@ class TagsListTest (unittest.TestCase):
 
         self.rootwiki = WikiDocument.create (self.path)
 
-        TextPageFactory.create (self.rootwiki, u"page 1", [u"Метка 1", u"Метка 2"])
-        TextPageFactory.create (self.rootwiki, u"Страница 2", [u"Метка 1", u"Метка 3"])
-        TextPageFactory.create (self.rootwiki[u"Страница 2"], u"Страница 3", [u"Метка 2"])
-        TextPageFactory.create (self.rootwiki[u"Страница 2/Страница 3"], u"Страница 4", [u"Метка 1"])
-        TextPageFactory.create (self.rootwiki[u"page 1"], u"page 5", [u"Метка 4"])
+        factory = TextPageFactory()
+        factory.create (self.rootwiki, u"page 1", [u"Метка 1", u"Метка 2"])
+        factory.create (self.rootwiki, u"Страница 2", [u"Метка 1", u"Метка 3"])
+        factory.create (self.rootwiki[u"Страница 2"], u"Страница 3", [u"Метка 2"])
+        factory.create (self.rootwiki[u"Страница 2/Страница 3"], u"Страница 4", [u"Метка 1"])
+        factory.create (self.rootwiki[u"page 1"], u"page 5", [u"Метка 4"])
 
-    
+
     def test1 (self):
         tags = TagsList (self.rootwiki)
 
@@ -35,7 +35,7 @@ class TagsListTest (unittest.TestCase):
         self.assertTrue (self.rootwiki[u"page 1"] in tags[u"Метка 1"])
         self.assertTrue (self.rootwiki[u"Страница 2"] in tags[u"Метка 1"])
         self.assertTrue (self.rootwiki[u"Страница 2/Страница 3/Страница 4"] in tags[u"Метка 1"])
-    
+
 
     def testParseTags (self):
         tagsString = u" метка 1 , Метка 2, метка 3,, , "
@@ -182,7 +182,7 @@ class TagsListTest (unittest.TestCase):
         self.assertEqual (len (self.rootwiki[u"Страница 2"].tags), 2)
         self.assertEqual (len (self.rootwiki[u"Страница 2/Страница 3"].tags), 1)
         self.assertEqual (len (self.rootwiki[u"Страница 2/Страница 3/Страница 4"].tags), 1)
-        
+
 
 
     def testRenameTag (self):

@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import os.path
@@ -8,7 +7,7 @@ import wx
 from basemainwnd import BaseMainWndTest
 from outwiker.pages.wiki.actions.include import IncludeDialog, IncludeDialogController
 from outwiker.core.application import Application
-from outwiker.core.tree import RootWikiPage, WikiDocument
+from outwiker.core.tree import WikiDocument
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.core.attachment import Attachment
 from test.utils import removeWiki
@@ -27,7 +26,7 @@ class IncludeDialogTest (BaseMainWndTest):
 
         self.wikiroot = WikiDocument.create (self.path)
 
-        WikiPageFactory.create (self.wikiroot, u"Викистраница", [])
+        WikiPageFactory().create (self.wikiroot, u"Викистраница", [])
         self.testedPage = self.wikiroot[u"Викистраница"]
 
         filesPath = u"../test/samplefiles/"
@@ -54,7 +53,7 @@ class IncludeDialogTest (BaseMainWndTest):
 
     def test_01 (self):
         controller = IncludeDialogController (self._dialog, self.testedPage)
-        
+
         self._dialog.SetModalResult (wx.ID_OK)
         self._dialog.selectedAttachment = 0
         self._dialog.selectedEncoding = 0
@@ -68,7 +67,7 @@ class IncludeDialogTest (BaseMainWndTest):
 
     def test_02 (self):
         controller = IncludeDialogController (self._dialog, self.testedPage)
-        
+
         self._dialog.SetModalResult (wx.ID_OK)
         self._dialog.selectedAttachment = 1
         self._dialog.selectedEncoding = 0
@@ -82,7 +81,7 @@ class IncludeDialogTest (BaseMainWndTest):
 
     def test_03 (self):
         controller = IncludeDialogController (self._dialog, self.testedPage)
-        
+
         self._dialog.SetModalResult (wx.ID_OK)
         self._dialog.selectedAttachment = 3
         self._dialog.selectedEncoding = 0
@@ -96,7 +95,7 @@ class IncludeDialogTest (BaseMainWndTest):
 
     def test_04 (self):
         controller = IncludeDialogController (self._dialog, self.testedPage)
-        
+
         self._dialog.SetModalResult (wx.ID_OK)
         self._dialog.selectedAttachment = 4
         self._dialog.selectedEncoding = 0
@@ -110,7 +109,7 @@ class IncludeDialogTest (BaseMainWndTest):
 
     def test_05 (self):
         controller = IncludeDialogController (self._dialog, self.testedPage)
-        
+
         self._dialog.SetModalResult (wx.ID_OK)
         self._dialog.selectedAttachment = 400
         self._dialog.selectedEncoding = 0
@@ -124,7 +123,7 @@ class IncludeDialogTest (BaseMainWndTest):
 
     def test_encoding_01 (self):
         controller = IncludeDialogController (self._dialog, self.testedPage)
-        
+
         self._dialog.SetModalResult (wx.ID_OK)
         self._dialog.selectedAttachment = 0
         self._dialog.selectedEncoding = 1
@@ -138,7 +137,7 @@ class IncludeDialogTest (BaseMainWndTest):
 
     def test_encoding_02 (self):
         controller = IncludeDialogController (self._dialog, self.testedPage)
-        
+
         self._dialog.SetModalResult (wx.ID_OK)
         self._dialog.selectedAttachment = 0
         self._dialog.selectedEncoding = 6
@@ -152,7 +151,7 @@ class IncludeDialogTest (BaseMainWndTest):
 
     def test_encoding_04 (self):
         controller = IncludeDialogController (self._dialog, self.testedPage)
-        
+
         self._dialog.SetModalResult (wx.ID_OK)
         self._dialog.selectedAttachment = 0
         self._dialog.selectedEncoding = 600
@@ -166,7 +165,7 @@ class IncludeDialogTest (BaseMainWndTest):
 
     def test_escapeHtml_01 (self):
         controller = IncludeDialogController (self._dialog, self.testedPage)
-        
+
         self._dialog.SetModalResult (wx.ID_OK)
         self._dialog.selectedAttachment = 0
         self._dialog.selectedEncoding = 0
@@ -180,7 +179,7 @@ class IncludeDialogTest (BaseMainWndTest):
 
     def test_escapeHtml_02 (self):
         controller = IncludeDialogController (self._dialog, self.testedPage)
-        
+
         self._dialog.SetModalResult (wx.ID_OK)
         self._dialog.selectedAttachment = 0
         self._dialog.selectedEncoding = 1
@@ -194,7 +193,7 @@ class IncludeDialogTest (BaseMainWndTest):
 
     def test_wikiparse_01 (self):
         controller = IncludeDialogController (self._dialog, self.testedPage)
-        
+
         self._dialog.SetModalResult (wx.ID_OK)
         self._dialog.selectedAttachment = 0
         self._dialog.selectedEncoding = 0
@@ -208,7 +207,7 @@ class IncludeDialogTest (BaseMainWndTest):
 
     def test_wikiparse_02 (self):
         controller = IncludeDialogController (self._dialog, self.testedPage)
-        
+
         self._dialog.SetModalResult (wx.ID_OK)
         self._dialog.selectedAttachment = 0
         self._dialog.selectedEncoding = 1
@@ -222,7 +221,7 @@ class IncludeDialogTest (BaseMainWndTest):
 
     def test_wikiparse_escapehtml (self):
         controller = IncludeDialogController (self._dialog, self.testedPage)
-        
+
         self._dialog.SetModalResult (wx.ID_OK)
         self._dialog.selectedAttachment = 0
         self._dialog.selectedEncoding = 1
