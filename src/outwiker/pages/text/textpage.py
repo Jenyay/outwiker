@@ -1,10 +1,7 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 """
 Необходимые классы для создания страниц с текстом
 """
-
-import os.path
 
 from outwiker.core.tree import WikiPage
 from outwiker.pages.text.textpanel import TextPanel
@@ -17,7 +14,7 @@ class TextWikiPage (WikiPage):
     """
     def __init__(self, path, title, parent, readonly = False):
         WikiPage.__init__ (self, path, title, parent, readonly)
-    
+
 
     @staticmethod
     def getTypeString ():
@@ -25,40 +22,39 @@ class TextWikiPage (WikiPage):
 
 
 class TextPageFactory (PageFactory):
-    @staticmethod
-    def getPageType():
-        return TextWikiPage
-
-    @staticmethod
-    def getTypeString ():
-        return TextPageFactory.getPageType().getTypeString()
-
-    # Название страницы, показываемое пользователю
-    title = _(u"Text Page")
-
-    def __init__ (self):
-        pass
-
-
+    """
+    Фабрика для создания текстовой страницы и ее представления
+    """
     @staticmethod
     def create (parent, title, tags):
         """
         Создать страницу. Вызывать этот метод вместо конструктора
         """
-        return PageFactory.createPage (TextPageFactory.getPageType(), parent, title, tags)
+        return PageFactory._createPage (TextWikiPage, parent, title, tags)
 
 
-    @staticmethod
-    def getPageView (parent):
+    def getPageType(self):
+        return TextWikiPage
+
+
+    def getTypeString (self):
+        return self.getPageType().getTypeString()
+
+
+    @property
+    def title (self):
         """
-        Вернуть контрол, котоырй будет отображать и редактировать страницу
+        Название страницы, показываемое пользователю
         """
-        panel = TextPanel (parent)
-
-        return panel
+        return _(u"Text Page")
 
 
-    @staticmethod
-    def getPrefPanels (parent):
+    def getPageView (self, parent):
+        """
+        Вернуть контрол, который будет отображать и редактировать страницу
+        """
+        return TextPanel (parent)
+
+
+    def getPrefPanels (self, parent):
         return []
-

@@ -1,16 +1,52 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
+from abc import ABCMeta, abstractmethod, abstractproperty
 import os.path
 
 from .exceptions import ReadonlyException
+
 
 class PageFactory (object):
     """
     Класс для создания страниц
     """
+    __metaclass__ = ABCMeta
+
+
+    @abstractmethod
+    def getPageType (self):
+        """
+        Метод возвращает тип создаваемой страницы (не экземпляр страницы)
+        """
+        pass
+
+
+    @abstractproperty
+    def title (self):
+        """
+        Название страницы, показываемое пользователю
+        """
+        pass
+
+
+    @abstractmethod
+    def getPageView (self, parent):
+        """
+        Метод возвращает контрол, который будет отображать и редактировать страницу
+        """
+        pass
+
+
+    @abstractmethod
+    def getPrefPanels (self, parent):
+        """
+        Метод возвращает список страниц для окна настроек (или пустой список)
+        """
+        pass
+
+
     @staticmethod
-    def createPage (pageType, parent, title, tags):
+    def _createPage (pageType, parent, title, tags):
         """
         Создать страницу по ее типу
         """
@@ -30,3 +66,6 @@ class PageFactory (object):
 
         return page
 
+
+    def getTypeString (self):
+        return self.getPageType().getTypeString()

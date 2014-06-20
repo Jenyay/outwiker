@@ -1,10 +1,7 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 """
 Необходимые классы для создания страниц с HTML
 """
-
-import os.path
 
 from outwiker.core.events import PAGE_UPDATE_CONTENT
 from outwiker.core.config import BooleanOption
@@ -17,9 +14,9 @@ from actions.autolinewrap import HtmlAutoLineWrap
 from actions.switchcoderesult import SwitchCodeResultAction
 
 _actions = [
-        (HtmlAutoLineWrap, None),
-        (SwitchCodeResultAction, HotKey ("F4")),
-        ]
+    (HtmlAutoLineWrap, None),
+    (SwitchCodeResultAction, HotKey ("F4")),
+]
 
 
 class HtmlWikiPage (WikiPage):
@@ -32,7 +29,7 @@ class HtmlWikiPage (WikiPage):
         self.__autoLineWrapSection = u"General"
         self.__autoLineWrapParam = u"LineWrap"
 
-    
+
     @property
     def autoLineWrap (self):
         """
@@ -51,21 +48,22 @@ class HtmlWikiPage (WikiPage):
         option.value = value
         self.root.onPageUpdate (self, change=PAGE_UPDATE_CONTENT)
 
-    
+
     @staticmethod
     def getTypeString ():
         return u"html"
 
 
 class HtmlPageFactory (PageFactory):
+    """
+    Фабрика для создания HTML-страниц и их представлений
+    """
     @staticmethod
-    def getPageType():
-        return HtmlWikiPage
-
-
-    @staticmethod
-    def getTypeString ():
-        return HtmlPageFactory.getPageType().getTypeString()
+    def create (parent, title, tags):
+        """
+        Создать страницу. Вызывать этот метод вместо конструктора
+        """
+        return PageFactory._createPage (HtmlWikiPage, parent, title, tags)
 
 
     @staticmethod
@@ -73,7 +71,7 @@ class HtmlPageFactory (PageFactory):
         """
         Зарегистрировать все действия, связанные с HTML-страницей
         """
-        map (lambda actionTuple: application.actionController.register (actionTuple[0](application), actionTuple[1] ), _actions)
+        map (lambda actionTuple: application.actionController.register (actionTuple[0](application), actionTuple[1]), _actions)
 
 
     @staticmethod
@@ -81,28 +79,24 @@ class HtmlPageFactory (PageFactory):
         map (lambda actionTuple: application.actionController.removeAction (actionTuple[0].stringId), _actions)
 
 
-    # Название страницы, показываемое пользователю
-    title = _(u"HTML Page")
+    def getPageType(self):
+        return HtmlWikiPage
 
 
-    @staticmethod
-    def create (parent, title, tags):
+    @property
+    def title (self):
         """
-        Создать страницу. Вызывать этот метод вместо конструктора
+        Название страницы, показываемое пользователю
         """
-        return PageFactory.createPage (HtmlPageFactory.getPageType(), parent, title, tags)
+        return _(u"HTML Page")
 
 
-    @staticmethod
-    def getPageView (parent):
+    def getPageView (self, parent):
         """
         Вернуть контрол, который будет отображать и редактировать страницу
         """
-        panel = HtmlPageView (parent)
-
-        return panel
+        return HtmlPageView (parent)
 
 
-    @staticmethod
-    def getPrefPanels (parent):
+    def getPrefPanels (self, parent):
         return []

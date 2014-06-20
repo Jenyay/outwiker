@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 """
 Необходимые классы для создания страниц с HTML
@@ -24,17 +23,17 @@ from actions.include import WikiIncludeAction
 
 
 _actions = [
-        (WikiFontSizeBigAction, HotKey (".", ctrl=True)),
-        (WikiFontSizeSmallAction, HotKey (",", ctrl=True)),
-        (WikiNonParsedAction, None),
-        (WikiThumbAction, HotKey ("M", ctrl=True)),
-        (WikiEquationAction, HotKey ("Q", ctrl=True)),
-        (WikiOpenHtmlCodeAction, HotKey ("F4", shift=True)),
-        (WikiUpdateHtmlAction, HotKey ("F4", ctrl=True)),
-        (WikiAttachListAction, None),
-        (WikiChildListAction, None),
-        (WikiIncludeAction, None),
-        ]
+    (WikiFontSizeBigAction, HotKey (".", ctrl=True)),
+    (WikiFontSizeSmallAction, HotKey (",", ctrl=True)),
+    (WikiNonParsedAction, None),
+    (WikiThumbAction, HotKey ("M", ctrl=True)),
+    (WikiEquationAction, HotKey ("Q", ctrl=True)),
+    (WikiOpenHtmlCodeAction, HotKey ("F4", shift=True)),
+    (WikiUpdateHtmlAction, HotKey ("F4", ctrl=True)),
+    (WikiAttachListAction, None),
+    (WikiChildListAction, None),
+    (WikiIncludeAction, None),
+]
 
 
 class WikiWikiPage (WikiPage):
@@ -43,7 +42,7 @@ class WikiWikiPage (WikiPage):
     """
     def __init__ (self, path, title, parent, readonly = False):
         WikiPage.__init__ (self, path, title, parent, readonly)
-    
+
 
     @staticmethod
     def getTypeString ():
@@ -51,46 +50,44 @@ class WikiWikiPage (WikiPage):
 
 
 class WikiPageFactory (PageFactory):
-    @staticmethod
-    def getPageType():
-        return WikiWikiPage
-
-    # Обрабатываемый этой фабрикой тип страниц (имеется в виду тип, описываемый строкой)
-    @staticmethod
-    def getTypeString ():
-        return WikiPageFactory.getPageType().getTypeString()
-
-    # Название страницы, показываемое пользователю
-    title = _(u"Wiki Page")
-
-
+    """
+    Фабрика для создания викистраниц и их представлений
+    """
     @staticmethod
     def create (parent, title, tags):
         """
         Создать страницу. Вызывать этот метод вместо конструктора
         """
-        return PageFactory.createPage (WikiPageFactory.getPageType(), parent, title, tags)
+        return PageFactory._createPage (WikiWikiPage, parent, title, tags)
 
 
-    @staticmethod
-    def getPageView (parent):
+    def getPageType(self):
+        return WikiWikiPage
+
+
+    @property
+    def title (self, title):
+        """
+        Название страницы, показываемое пользователю
+        """
+        return _(u"Wiki Page")
+
+
+    def getPageView (self, parent):
         """
         Вернуть контрол, который будет отображать и редактировать страницу
         """
-        panel = WikiPageView (parent)
-
-        return panel
+        return WikiPageView (parent)
 
 
-    @staticmethod
-    def getPrefPanels (parent):
+    def getPrefPanels (self, parent):
         """
         Получить список панелей для окна настроек
         Возвращает список кортежей ("название", Панель)
         """
         generalPanel = WikiPrefGeneralPanel (parent)
 
-        return [ PreferencePanelInfo (generalPanel, _(u"General") ) ]
+        return [PreferencePanelInfo (generalPanel, _(u"General"))]
 
 
     @staticmethod
@@ -98,9 +95,12 @@ class WikiPageFactory (PageFactory):
         """
         Зарегистрировать все действия, связанные с викистраницей
         """
-        map (lambda actionTuple: application.actionController.register (actionTuple[0](application), actionTuple[1] ), _actions)
+        map (lambda actionTuple: application.actionController.register (actionTuple[0](application),
+                                                                        actionTuple[1]),
+             _actions)
 
 
     @staticmethod
     def removeActions (application):
-        map (lambda actionTuple: application.actionController.removeAction (actionTuple[0].stringId), _actions)
+        map (lambda actionTuple: application.actionController.removeAction (actionTuple[0].stringId),
+             _actions)

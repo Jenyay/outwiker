@@ -1,11 +1,5 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-"""
-Необходимые классы для создания страниц с поиском
-"""
-
 import os.path
-#import shutil
 
 from outwiker.core.tree import WikiPage
 from outwiker.core.search import AllTagsSearchStrategy, AnyTagSearchStrategy
@@ -14,7 +8,6 @@ from outwiker.core.application import Application
 from outwiker.core.factory import PageFactory
 from outwiker.core.exceptions import ReadonlyException
 from outwiker.core.config import StringOption, IntegerOption
-from outwiker.core.tagslist import TagsList
 from outwiker.core.tagscommands import parseTagsList, getTagsString
 from outwiker.core.events import PAGE_UPDATE_CONTENT
 
@@ -41,12 +34,11 @@ class SearchWikiPage (WikiPage):
         self._strategy = self._getStrategy()
 
 
-
     @staticmethod
     def getTypeString ():
         return u"search"
 
-    
+
     @property
     def phrase (self):
         return self._phrase
@@ -67,7 +59,7 @@ class SearchWikiPage (WikiPage):
             pass
 
         Application.onPageUpdate (self, change=PAGE_UPDATE_CONTENT)
-    
+
 
     def _getSearchTags (self):
         """
@@ -100,24 +92,24 @@ class SearchWikiPage (WikiPage):
             pass
 
         Application.onPageUpdate (self, change=PAGE_UPDATE_CONTENT)
-    
+
 
     def _getStrategy (self):
         strategyOption = IntegerOption (self.params, self.paramsSection, u"strategy", 0)
         return self._strategyByCode (strategyOption.value)
-    
+
 
     def _strategyByCode (self, code):
         if code == 0:
             return AnyTagSearchStrategy
         else:
             return AllTagsSearchStrategy
-    
+
 
     @property
     def strategy (self):
         return self._strategy
-    
+
 
     @strategy.setter
     def strategy (self, strategy):
@@ -139,42 +131,39 @@ class SearchWikiPage (WikiPage):
 
 
 class SearchPageFactory (PageFactory):
-    @staticmethod
-    def getPageType():
-        return SearchWikiPage
-
-    @staticmethod
-    def getTypeString ():
-        return SearchPageFactory.getPageType().getTypeString()
-
-    # Название страницы, показываемое пользователю
-    title = _(u"Search Page")
-
-    def __init__ (self):
-        pass
-
-
+    """
+    Фабрика для создания страниц поиска и их представлений
+    """
     @staticmethod
     def create (parent, title, tags):
         """
         Создать страницу. Вызывать этот метод вместо конструктора
         """
-        return PageFactory.createPage (SearchPageFactory.getPageType(), parent, title, tags)
+        return PageFactory._createPage (SearchWikiPage, parent, title, tags)
 
 
-    @staticmethod
-    def getPageView (parent):
+    def getPageType(self):
+        return SearchWikiPage
+
+
+    @property
+    def title (self):
+        """
+        Название страницы, показываемое пользователю
+        """
+        return _(u"Search Page")
+
+
+    def getPageView (self, parent):
         """
         Вернуть контрол, который будет отображать и редактировать страницу
         """
-        panel = SearchPanel (parent)
-
-        return panel
+        return SearchPanel (parent)
 
 
-    @staticmethod
-    def getPrefPanels (parent):
+    def getPrefPanels (self, parent):
         return []
+
 
 
 class GlobalSearch (object):
@@ -191,26 +180,20 @@ class GlobalSearch (object):
 
         imagesDir = getImagesDir()
 
-        while page == None:
+        while page is None:
             page = root[title]
-            if page == None:
+            if page is None:
                 page = SearchPageFactory.create (root, title, [])
                 page.icon = os.path.join (imagesDir, "global_search.png")
-            elif page.getTypeString() != SearchPageFactory.getTypeString():
+            elif page.getTypeString() != SearchWikiPage.getTypeString():
                 number += 1
                 title = u"%s %d" % (GlobalSearch.pageTitle, number)
                 page = None
-        
+
         page.phrase = phrase
         page.searchTags = [tag for tag in tags]
         page.strategy = strategy
 
-        # Скопируем картинку для тегов
-        #if not page.readonly:
-        #    tagiconpath = os.path.join (getImagesDir(), "tag.png")
-        #    shutil.copy (tagiconpath, os.path.join (page.path, "__tag.png") )
-
         page.root.selectedPage = page
 
         return page
-

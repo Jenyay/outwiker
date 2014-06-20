@@ -10,12 +10,13 @@ class FactorySelector (object):
     """
     Класс, который выбирает нужную фабрику для каждой страницы
     """
-    factories = [WikiPageFactory(),
-                 HtmlPageFactory(),
-                 TextPageFactory(),
-                 SearchPageFactory()]
+    # Фабрики, базовые для программы
+    _coreFactories = [WikiPageFactory(),
+                      HtmlPageFactory(),
+                      TextPageFactory(),
+                      SearchPageFactory()]
 
-    defaultFactory = TextPageFactory
+    _defaultFactory = TextPageFactory()
 
 
     @staticmethod
@@ -24,9 +25,9 @@ class FactorySelector (object):
         Найти фабрику, которая работает с переданным типом страницы (со страницей данного типа).
         Или вернуть фабрику по умолчанию
         """
-        selFactory = FactorySelector.defaultFactory
+        selFactory = FactorySelector._defaultFactory
 
-        for factory in FactorySelector.factories:
+        for factory in FactorySelector._coreFactories:
             if pageType == factory.getTypeString():
                 selFactory = factory
                 break
