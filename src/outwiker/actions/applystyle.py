@@ -7,7 +7,6 @@ import wx
 from outwiker.gui.baseaction import BaseAction
 from outwiker.gui.testeddialog import TestedDialog
 from outwiker.gui.longprocessrunner import LongProcessRunner
-from outwiker.core.commands import testreadonly
 from outwiker.core.style import Style
 from outwiker.core.styleslist import StylesList
 from outwiker.core.system import getStylesDirList
@@ -47,7 +46,6 @@ class SetStyleToBranchAction (BaseAction):
                                       self._application.mainWindow)
 
 
-    @testreadonly
     def addStyleToBranchGui (self, page, parent):
         """
         Установить стиль для всей ветки, в том числе и для текущей страницы
@@ -70,8 +68,8 @@ class SetStyleToBranchAction (BaseAction):
 
 
     def __applyStyle (self, page, style):
-        if page.parent is not None:
-            # Если это не корень вики
+        if page.parent is not None and not page.readonly:
+            # Если это не корень вики и страница открыта не только для чтения
             Style().setPageStyle (page, style)
 
         map (lambda child: self.__applyStyle (child, style), page.children)
