@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 from outwiker.pages.text.textpage import TextPageFactory
@@ -11,15 +10,13 @@ class FactorySelector (object):
     """
     Класс, который выбирает нужную фабрику для каждой страницы
     """
-    factories = [WikiPageFactory, 
-            HtmlPageFactory, 
-            TextPageFactory, 
-            SearchPageFactory]
+    factories = [WikiPageFactory(),
+                 HtmlPageFactory(),
+                 TextPageFactory(),
+                 SearchPageFactory()]
 
     defaultFactory = TextPageFactory
 
-    def __init__ (self):
-        pass
 
     @staticmethod
     def getFactory (pageType):
@@ -35,4 +32,3 @@ class FactorySelector (object):
                 break
 
         return selFactory
-
