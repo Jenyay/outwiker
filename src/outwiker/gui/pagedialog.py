@@ -5,10 +5,8 @@ import wx
 
 import outwiker.core.commands
 from .basepagedialog import BasePageDialog
-from outwiker.core.tagslist import TagsList
 from outwiker.core.tree import RootWikiPage
 from outwiker.core.application import Application
-from outwiker.core.factoryselector import FactorySelector
 from outwiker.core.config import StringOption
 from outwiker.core.commands import testPageTitle, pageExists, MessageBox
 from outwiker.core.style import Style
@@ -26,17 +24,13 @@ def editPage (parentWnd, currentPage):
 
     if not pageExists (currentPage):
         MessageBox (_(u'Page "%s" not found') % currentPage.title,
-                _(u"Error"),
-                wx.OK  | wx.ICON_ERROR)
+                    _(u"Error"),
+                    wx.OK | wx.ICON_ERROR)
         return
 
     dlg = EditPageDialog (currentPage, currentPage.parent, parent = parentWnd)
-    page = None
 
     if dlg.ShowModal() == wx.ID_OK:
-        factory = dlg.selectedFactory
-        tags = dlg.tags
-
         currentPage.tags = dlg.tags
         currentPage.icon = dlg.icon
 
@@ -62,7 +56,7 @@ def createPageWithDialog (parentwnd, parentpage):
     """
     if parentpage.readonly:
         raise outwiker.core.exceptions.ReadonlyException
-    
+
     dlg = CreatePageDialog (parentpage, parentwnd)
     page = None
 
@@ -73,14 +67,14 @@ def createPageWithDialog (parentwnd, parentpage):
 
         try:
             page = factory.create (parentpage, title, tags)
-            
+
             assert page != None
 
             page.icon = dlg.icon
             Style().setPageStyle (page, dlg.style)
             page.root.selectedPage = page
 
-        except OSError, IOError:
+        except (OSError, IOError):
             outwiker.core.commands.MessageBox (_(u"Can't create page"), "Error", wx.ICON_ERROR | wx.OK)
 
     dlg.Destroy()
@@ -130,7 +124,7 @@ class CreatePageDialog (BasePageDialog):
             self.generalPanel.tagsSelector.tags = parentPage.tags
 
         self._fillStyleCombo (self._stylesList, None)
-    
+
 
     def onOk (self, event):
         if not testPageTitle (self.pageTitle):
@@ -140,8 +134,8 @@ class CreatePageDialog (BasePageDialog):
 
         if (self.parentPage != None and
                 not RootWikiPage.testDublicate(self.parentPage, self.pageTitle)):
-            outwiker.core.commands.MessageBox (_(u"A page with this title already exists"), _(u"Error"), wx.ICON_ERROR | wx.OK)
-            return
+                    outwiker.core.commands.MessageBox (_(u"A page with this title already exists"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+                    return
 
         self.saveParams()
         self.lastCreatedPageType.value = self.selectedFactory.getTypeString()
@@ -177,7 +171,7 @@ class EditPageDialog (BasePageDialog):
         Подготовить диалог к редактированию свойств страницы
         """
         self.generalPanel.tagsSelector.tags = currentPage.tags
-        
+
         # Запретить изменять заголовок
         self.generalPanel.titleTextCtrl.SetValue (currentPage.title)
 
@@ -198,9 +192,9 @@ class EditPageDialog (BasePageDialog):
             return
 
         if not self.currentPage.canRename (self.pageTitle):
-            outwiker.core.commands.MessageBox (_(u"Can't rename page when page with that title already exists"), 
-                    _(u"Error"), 
-                    wx.ICON_ERROR | wx.OK)
+            outwiker.core.commands.MessageBox (_(u"Can't rename page when page with that title already exists"),
+                                               _(u"Error"),
+                                               wx.ICON_ERROR | wx.OK)
             return
 
         self.saveParams()
@@ -216,4 +210,3 @@ class EditPageDialog (BasePageDialog):
             return Style().getDefaultStyle()
 
         return self._stylesList[selItem - 2]
-
