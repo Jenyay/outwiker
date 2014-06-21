@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import os
@@ -9,7 +8,6 @@ import wx
 from outwiker.core.factoryselector import FactorySelector
 from outwiker.core.application import Application
 from outwiker.core.tagslist import TagsList
-from outwiker.core.style import Style
 from outwiker.core.styleslist import StylesList
 from outwiker.core.system import getStylesDirList
 from .guiconfig import PageDialogConfig
@@ -73,7 +71,6 @@ class BasePageDialog(wx.Dialog):
         self.config.width.value = width
         self.config.height.value = height
 
-        styleIndex =  self.appearancePanel.styleCombo.GetSelection()
         styleName = self.appearancePanel.styleCombo.GetStringSelection()
 
         # Не будем изменять стиль по умолчанию в случае, 
@@ -132,7 +129,7 @@ class BasePageDialog(wx.Dialog):
 
     def _fillComboType (self):
         self.generalPanel.typeCombo.Clear()
-        for factory in FactorySelector.factories:
+        for factory in FactorySelector.getFactories():
             self.generalPanel.typeCombo.Append (factory.title, factory)
 
         if not self.generalPanel.typeCombo.IsEmpty():
@@ -144,7 +141,7 @@ class BasePageDialog(wx.Dialog):
         Установить тип страницы в диалоге по строке, описывающей тип страницы
         """
         n = 0
-        for factory in FactorySelector.factories:
+        for factory in FactorySelector.getFactories():
             if factory.getTypeString() == FactorySelector.getFactory(pageTypeString).getTypeString():
                 self.generalPanel.typeCombo.SetSelection (n)
                 break

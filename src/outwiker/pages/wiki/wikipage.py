@@ -58,7 +58,7 @@ class WikiPageFactory (PageFactory):
 
 
     @property
-    def title (self, title):
+    def title (self):
         """
         Название страницы, показываемое пользователю
         """

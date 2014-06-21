@@ -20,6 +20,11 @@ class FactorySelector (object):
 
 
     @staticmethod
+    def getFactories ():
+        return FactorySelector._coreFactories
+
+
+    @staticmethod
     def getFactory (pageType):
         """
         Найти фабрику, которая работает с переданным типом страницы (со страницей данного типа).
