@@ -25,7 +25,7 @@ class PrefDialog(wx.Dialog):
     Класс диалога настроек
     """
     def __init__(self, *args, **kwds):
-        kwds["style"] = wx.DEFAULT_DIALOG_STYLE|wx.RESIZE_BORDER|wx.THICK_FRAME
+        kwds["style"] = wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.THICK_FRAME
         wx.Dialog.__init__(self, *args, **kwds)
         self.__treeBook = wx.Treebook(self, -1)
 
@@ -108,13 +108,13 @@ class PrefDialog(wx.Dialog):
         main_sizer = wx.FlexGridSizer(rows=2)
         main_sizer.AddGrowableRow(0)
         main_sizer.AddGrowableCol(0)
-        main_sizer.Add(self.__treeBook, 1, wx.ALL|wx.EXPAND, 4)
+        main_sizer.Add(self.__treeBook, 1, wx.ALL | wx.EXPAND, 4)
 
         self.__createOkCancelButtons(main_sizer)
 
         self.SetSizer(main_sizer)
         self.Layout()
-    
+
 
     def __createInterfaceGroup (self):
         """
@@ -125,8 +125,8 @@ class PrefDialog(wx.Dialog):
         self.__textPrintPage = TextPrintPanel (self.__treeBook)
 
         interfacePanelsList = [PreferencePanelInfo (self.__generalPage, _(u"General")),
-                PreferencePanelInfo (self.__htmlRenderPage, _(u"Preview")),
-                PreferencePanelInfo (self.__textPrintPage, _(u"Text Printout"))]
+                               PreferencePanelInfo (self.__htmlRenderPage, _(u"Preview")),
+                               PreferencePanelInfo (self.__textPrintPage, _(u"Text Printout"))]
 
         self.appendPreferenceGroup (_(u"Interface"), interfacePanelsList)
 
@@ -140,22 +140,22 @@ class PrefDialog(wx.Dialog):
         self.__wikiEditorPage = WikiEditorPanel (self.__treeBook)
 
         editorPanesList = [
-                PreferencePanelInfo (self.__editorPage, _(u"General")),
-                PreferencePanelInfo (self.__htmlEditorPage, _(u"HTML Editor")),
-                PreferencePanelInfo (self.__wikiEditorPage, _(u"Wiki Editor")),
-                ]
+            PreferencePanelInfo (self.__editorPage, _(u"General")),
+            PreferencePanelInfo (self.__htmlEditorPage, _(u"HTML Editor")),
+            PreferencePanelInfo (self.__wikiEditorPage, _(u"Wiki Editor")),
+        ]
 
         self.appendPreferenceGroup (_(u"Editor"), editorPanesList)
 
 
     def __createPluginsPage (self):
         self.__pluginsPage = PluginsPanel (self.__treeBook)
-        self.__treeBook.AddPage (self.__pluginsPage, _(u"Plugins") )
+        self.__treeBook.AddPage (self.__pluginsPage, _(u"Plugins"))
 
 
     def __createHotKeysPage (self):
         self.__hotkeysPage = HotKeysPanel (self.__treeBook)
-        self.__treeBook.AddPage (self.__hotkeysPage, _(u"Hotkeys") )
+        self.__treeBook.AddPage (self.__hotkeysPage, _(u"Hotkeys"))
 
 
     def __createPages (self):
@@ -181,13 +181,13 @@ class PrefDialog(wx.Dialog):
         for pageIndex in range (self.__treeBook.GetPageCount()):
             page = self.__treeBook.GetPage (pageIndex)
             page.LoadState()
-    
+
 
     def __createPagesForPages (self):
         """
         Создать страницы настроек для типов страниц
         """
-        for factory in FactorySelector.factories:
+        for factory in FactorySelector.getFactories():
             # Список экземпляров класса PreferencePanelInfo
             panelsList = factory.getPrefPanels(self.__treeBook)
 
@@ -213,9 +213,9 @@ class PrefDialog(wx.Dialog):
 
         self.Bind (wx.EVT_BUTTON, self.__onOk, id=wx.ID_OK)
         self.Bind (wx.EVT_BUTTON, self.__onCancel, id=wx.ID_CANCEL)
-        
+
         self.Layout()
-    
+
 
     def __onOk (self, event):
         try:
@@ -231,15 +231,15 @@ class PrefDialog(wx.Dialog):
     def __onCancel (self, event):
         Application.onPreferencesDialogClose(self)
         self.EndModal(wx.ID_CANCEL)
-    
+
 
     def __saveCurrentPage (self):
         selectedPage = self.__treeBook.GetCurrentPage()
 
-        if selectedPage == None:
+        if selectedPage is None:
             return
 
-        # У страницы должен быть метод Save, который сохраняет настройки 
+        # У страницы должен быть метод Save, который сохраняет настройки
         # или бросает исключение outwiker.core.exceptions.PreferencesException
         selectedPage.Save()
 
@@ -253,13 +253,6 @@ class PrefDialog(wx.Dialog):
             page.Save()
 
 
-    # def __onPageChanging (self, event):
-    #     try:
-    #         self.__saveCurrentPage()
-    #     except PreferencesException:
-    #         event.Veto()
-
-
     def __onPageChanged (self, event):
         pageIndex = event.GetSelection()
 
@@ -268,7 +261,7 @@ class PrefDialog(wx.Dialog):
 
         selectedPage = self.__treeBook.GetPage (pageIndex)
 
-        if selectedPage == None:
+        if selectedPage is None:
             return
 
         # selectedPage.LoadState()
