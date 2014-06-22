@@ -1,5 +1,9 @@
 # -*- coding: UTF-8 -*-
 
+from outwiker.core.factoryselector import FactorySelector
+
+from .testnotespage import TestPageFactory
+
 
 class Controller (object):
     """
@@ -16,11 +20,11 @@ class Controller (object):
         """
         Инициализация контроллера при активации плагина. Подписка на нужные события
         """
-        pass
+        FactorySelector.addFactory (TestPageFactory())
 
 
     def destroy (self):
         """
         Вызывается при отключении плагина
         """
-        pass
+        FactorySelector.removeFactory (TestPageFactory().getTypeString())

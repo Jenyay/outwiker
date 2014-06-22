@@ -1,40 +1,55 @@
 # -*- coding: UTF-8 -*-
 
-import unittest
-
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
-from outwiker.pages.wiki.wikipage import WikiPageFactory
+from outwiker.core.factoryselector import FactorySelector
+from outwiker.pages.text.textpage import TextPageFactory
+
 from test.utils import removeWiki
+from test.guitests.basemainwnd import BaseMainWndTest
 
 
-class TestPageTest (unittest.TestCase):
+class TestPageTest (BaseMainWndTest):
     """Тесты плагина TestPage"""
     def setUp (self):
-        self.__createWiki()
+        super (TestPageTest, self).setUp ()
 
-        dirlist = [u"../plugins/testpage"]
+        self.path = u"../test/testwiki"
+        self.dirlist = [u"../plugins/testpage"]
 
         self.loader = PluginsLoader(Application)
-        self.loader.load (dirlist)
+        self.loader.load (self.dirlist)
 
 
     def tearDown (self):
+        BaseMainWndTest.tearDown (self)
+        Application.wikiroot = None
         removeWiki (self.path)
         self.loader.clear()
 
 
-    def __createWiki (self):
-        # Здесь будет создаваться вики
-        self.path = u"../test/testwiki"
-        removeWiki (self.path)
-
-        self.rootwiki = WikiDocument.create (self.path)
-
-        WikiPageFactory().create (self.rootwiki, u"Страница 1", [])
-        self.testPage = self.rootwiki[u"Страница 1"]
-
-
     def testPluginLoad (self):
         self.assertEqual (len (self.loader), 1)
+
+
+    def testAddRemoveFactory (self):
+        plugin = self.loader[u"TestPage"]
+
+        path = u"../test/samplewiki"
+        wikiroot = WikiDocument.load (path)
+
+        test_page = wikiroot[u"Типы страниц/TestPage"]
+        self.assertEqual (type (test_page), plugin.TestPage)
+
+        self.assertEqual (type (FactorySelector.getFactory (plugin.TestPage.getTypeString())),
+                          plugin.TestPageFactory)
+
+        self.loader.clear()
+        self.assertEqual (type (FactorySelector.getFactory (plugin.TestPage.getTypeString())),
+                          TextPageFactory)
+
+        self.loader.load (self.dirlist)
+
+        self.assertEqual (type (FactorySelector.getFactory (plugin.TestPage.getTypeString())),
+                          plugin.TestPageFactory)
