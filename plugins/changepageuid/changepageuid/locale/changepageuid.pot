@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-17 19:51+0400\n"
+"POT-Creation-Date: 2014-06-22 21:22+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,8 +17,8 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: actions.py:23
-msgid "Change Page Identifier"
+#: actions.py:23 controller.py:56
+msgid "Change Page Identifier..."
 msgstr ""
 
 #: actions.py:28
@@ -31,10 +31,6 @@ msgstr ""
 
 #: changepageuid.py:54
 msgid "http://jenyay.net/Outwiker/ChangePageUidEn"
-msgstr ""
-
-#: controller.py:60
-msgid "Change page identifier"
 msgstr ""
 
 #: dialog.py:42

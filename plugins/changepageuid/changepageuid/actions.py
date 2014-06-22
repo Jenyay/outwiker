@@ -20,7 +20,7 @@ class ChangePageUIDAction (BaseAction):
 
     @property
     def title (self):
-        return _(u"Change Page Identifier")
+        return _(u"Change Page Identifier...")
 
 
     @property

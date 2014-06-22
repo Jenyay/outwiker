@@ -53,7 +53,7 @@ class Controller (object):
 
 
     def __onTreePopupMenu (self, menu, page):
-        menu.Append (self.CHANGE_PAGE_UID, _(u"Change page identifier"))
+        menu.Append (self.CHANGE_PAGE_UID, _(u"Change Page Identifier..."))
 
         self._application.mainWindow.Bind (wx.EVT_MENU,
                                            id=self.CHANGE_PAGE_UID,
