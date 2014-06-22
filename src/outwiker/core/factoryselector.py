@@ -10,18 +10,19 @@ class FactorySelector (object):
     """
     Класс, который выбирает нужную фабрику для каждой страницы
     """
-    # Фабрики, базовые для программы
-    _coreFactories = [WikiPageFactory(),
+    _defaultFactory = TextPageFactory()
+
+    _factories = {factory.getTypeString(): factory
+                  for factory
+                  in [WikiPageFactory(),
                       HtmlPageFactory(),
                       TextPageFactory(),
-                      SearchPageFactory()]
-
-    _defaultFactory = TextPageFactory()
+                      SearchPageFactory()]}
 
 
     @staticmethod
     def getFactories ():
-        return FactorySelector._coreFactories
+        return FactorySelector._factories.values()
 
 
     @staticmethod
@@ -30,11 +31,34 @@ class FactorySelector (object):
         Найти фабрику, которая работает с переданным типом страницы (со страницей данного типа).
         Или вернуть фабрику по умолчанию
         """
-        selFactory = FactorySelector._defaultFactory
+        return FactorySelector._factories.get (pageType, FactorySelector._defaultFactory)
 
-        for factory in FactorySelector._coreFactories:
-            if pageType == factory.getTypeString():
-                selFactory = factory
-                break
 
-        return selFactory
+    @staticmethod
+    def reset ():
+        """
+        Установить словарь фабрик в первоначальное состояние. Используется для тестирования.
+        Это не конструктор. В случае изменения списка фабрик, установленных по умолчанию, нужно изменять этот метод.
+        """
+        FactorySelector._factories = {factory.getTypeString(): factory
+                                      for factory
+                                      in [WikiPageFactory(),
+                                          HtmlPageFactory(),
+                                          TextPageFactory(),
+                                          SearchPageFactory()]}
+
+
+    @staticmethod
+    def addFactory (newFactory):
+        """
+        Добавить новую фабрику. При этом у фабрики может быть новый создаваемый тип страниц, в то же время фабрика может заменить существующую фабрику.
+        """
+        FactorySelector._factories[newFactory.getTypeString()] = newFactory
+
+
+    @staticmethod
+    def removeFactory (typeString):
+        """
+        Удаляет фабрику из словаря
+        """
+        FactorySelector._factories.pop (typeString, None)
