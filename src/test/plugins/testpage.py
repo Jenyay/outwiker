@@ -9,12 +9,12 @@ from outwiker.pages.wiki.wikipage import WikiPageFactory
 from test.utils import removeWiki
 
 
-class PluginNameTest (unittest.TestCase):
-    """Тесты плагина PluginName"""
+class TestPageTest (unittest.TestCase):
+    """Тесты плагина TestPage"""
     def setUp (self):
         self.__createWiki()
 
-        dirlist = [u"../plugins/pluginname"]
+        dirlist = [u"../plugins/testpage"]
 
         self.loader = PluginsLoader(Application)
         self.loader.load (dirlist)
