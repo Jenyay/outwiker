@@ -27,7 +27,7 @@ class LongProcessRunner (object):
         self._dialogText = dialogText
 
         # Интервал обновления диалога, с
-        self.updateGaugeInterval = 0.05
+        self.updateGaugeInterval = 0.1
 
         # Размер бегающей чисти линии прогресса
         self.gaugeProportion = 0.2
