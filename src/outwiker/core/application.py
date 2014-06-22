@@ -125,6 +125,12 @@ class ApplicationParams (object):
         # tray - экземпля класса OutwikerTrayIcon
         self.onTrayPopupMenu = Event()
 
+        # Событие вызывается, когда изменяется список фабрик для создания страниц.
+        # Параметры:
+        #     newfactory - новая фабрика, если она добавляется, если фабрика
+        #         удаляется, то этот параметр равен None
+        self.onPageFactoryListChange = Event()
+
 
     def init (self, configFilename):
         """

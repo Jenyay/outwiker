@@ -14,15 +14,30 @@ from outwiker.pages.text.textpanel import TextPanel
 from outwiker.core.tree import WikiDocument, WikiPage
 from outwiker.core.factory import PageFactory
 from outwiker.core.factoryselector import FactorySelector
+from outwiker.core.application import Application
 
 
 class FactorySelectorTest (unittest.TestCase):
     def setUp (self):
         self.path = u"../test/samplewiki"
+        self.addEventsCount = 0
+        self.removeEventCount = 0
+        self.eventFactory = None
 
 
     def tearDown (self):
         FactorySelector.reset()
+
+
+    def __onFactoryChange (self, *args, **kwargs):
+        factory = kwargs["newfactory"]
+
+        if factory is None:
+            self.removeEventCount += 1
+        else:
+            self.addEventsCount += 1
+
+        self.eventFactory = factory
 
 
     def testSelection (self):
@@ -76,6 +91,30 @@ class FactorySelectorTest (unittest.TestCase):
         wiki_page = wikiroot[u"Типы страниц/wiki-страница"]
         self.assertEqual (type (FactorySelector.getFactory (wiki_page.getTypeString())),
                           TextPageFactory)
+
+
+    def testEvent_01 (self):
+        Application.onPageFactoryListChange += self.__onFactoryChange
+
+        FactorySelector.addFactory (TestPageFactory())
+
+        self.assertEqual (self.addEventsCount, 1)
+        self.assertEqual (self.removeEventCount, 0)
+        self.assertEqual (self.eventFactory, FactorySelector.getFactory (TestPage.getTypeString()))
+
+        Application.onPageFactoryListChange += self.__onFactoryChange
+
+        FactorySelector.removeFactory (TestPageFactory().getTypeString())
+
+        self.assertEqual (self.addEventsCount, 1)
+        self.assertEqual (self.removeEventCount, 1)
+        self.assertEqual (self.eventFactory, None)
+
+        FactorySelector.reset()
+
+        self.assertEqual (self.addEventsCount, 1)
+        self.assertEqual (self.removeEventCount, 2)
+        self.assertEqual (self.eventFactory, None)
 
 
 
