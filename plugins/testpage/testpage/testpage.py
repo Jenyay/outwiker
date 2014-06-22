@@ -6,6 +6,7 @@ from outwiker.core.version import Version, StatusSet
 
 from .controller import Controller
 from .testnotespage import TestPage, TestPageFactory
+from .testpageview import TestPageView
 
 
 if getCurrentVersion() < Version (1, 8, 0, 731, status=StatusSet.DEV):
@@ -69,3 +70,8 @@ else:
         @property
         def TestPageFactory (self):
             return TestPageFactory
+
+
+        @property
+        def TestPageView (self):
+            return TestPageView
