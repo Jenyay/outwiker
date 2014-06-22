@@ -23,7 +23,8 @@ class FactorySelector (object):
 
     @staticmethod
     def getFactories ():
-        return FactorySelector._factories.values()
+        return sorted (FactorySelector._factories.values(),
+                       cmp = lambda x, y: cmp (x.title, y.title))
 
 
     @staticmethod
