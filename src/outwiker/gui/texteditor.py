@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import codecs
-import os.path
 import cgi
 import math
 
@@ -15,6 +14,7 @@ from outwiker.core.textprinter import TextPrinter
 from searchreplacecontroller import SearchReplaceController
 from searchreplacepanel import SearchReplacePanel
 from .mainid import MainId
+
 
 class TextEditor(wx.Panel):
     _fontConfigSection = "Font"
@@ -34,7 +34,7 @@ class TextEditor(wx.Panel):
         self.__createCoders()
 
         self.config = EditorConfig (Application.config)
-        self.__showlinenumbers =  self.config.lineNumbers.value
+        self.__showlinenumbers = self.config.lineNumbers.value
 
         self.setDefaultSettings()
 
@@ -46,7 +46,7 @@ class TextEditor(wx.Panel):
         self.textCtrl.Bind (wx.EVT_CHAR, self.__OnChar_ImeWorkaround)
         self.textCtrl.Bind (wx.EVT_KEY_DOWN, self.__onKeyDown)
 
-        # При перехвате этого сообщения в других классах, нужно вызывать event.Skip(), 
+        # При перехвате этого сообщения в других классах, нужно вызывать event.Skip(),
         # чтобы это сообщение дошло досюда
         self.textCtrl.Bind (wx.stc.EVT_STC_CHANGE, self.__onChange)
 
@@ -82,11 +82,11 @@ class TextEditor(wx.Panel):
     def __onPasteToEditor (self, event):
         self.textCtrl.Paste()
 
-    
+
     def __onUndo (self, event):
         self.textCtrl.Undo()
 
-    
+
     def __onRedo (self, event):
         self.textCtrl.Redo()
 
@@ -133,6 +133,8 @@ class TextEditor(wx.Panel):
         self.textCtrl.StyleSetForeground (0, fontColor)
         self.textCtrl.StyleSetBackground (0, backColor)
 
+        self.textCtrl.SetCaretForeground (fontColor)
+        self.textCtrl.SetCaretLineBack (backColor)
 
         # Заблокируем горячую клавишу Ctrl+D, чтобы использовать ее как добавление закладки
         self.textCtrl.CmdKeyClear (ord ("D"), wx.stc.STC_SCMOD_CTRL)
@@ -145,38 +147,38 @@ class TextEditor(wx.Panel):
 
         if self.config.homeEndKeys.value == EditorConfig.HOME_END_OF_LINE:
             # Клавиши Home / End переносят курсор на начало / конец строки
-            self.textCtrl.CmdKeyAssign (wx.stc.STC_KEY_HOME, 
-                    0, 
-                    wx.stc.STC_CMD_HOMEDISPLAY)
+            self.textCtrl.CmdKeyAssign (wx.stc.STC_KEY_HOME,
+                                        0,
+                                        wx.stc.STC_CMD_HOMEDISPLAY)
 
-            self.textCtrl.CmdKeyAssign (wx.stc.STC_KEY_HOME, 
-                    wx.stc.STC_SCMOD_ALT, 
-                    wx.stc.STC_CMD_HOME)
+            self.textCtrl.CmdKeyAssign (wx.stc.STC_KEY_HOME,
+                                        wx.stc.STC_SCMOD_ALT,
+                                        wx.stc.STC_CMD_HOME)
 
-            self.textCtrl.CmdKeyAssign (wx.stc.STC_KEY_END, 
-                    0, 
-                    wx.stc.STC_CMD_LINEENDDISPLAY)
+            self.textCtrl.CmdKeyAssign (wx.stc.STC_KEY_END,
+                                        0,
+                                        wx.stc.STC_CMD_LINEENDDISPLAY)
 
-            self.textCtrl.CmdKeyAssign (wx.stc.STC_KEY_END, 
-                    wx.stc.STC_SCMOD_ALT, 
-                    wx.stc.STC_CMD_LINEEND)
+            self.textCtrl.CmdKeyAssign (wx.stc.STC_KEY_END,
+                                        wx.stc.STC_SCMOD_ALT,
+                                        wx.stc.STC_CMD_LINEEND)
         else:
             # Клавиши Home / End переносят курсор на начало / конец абзаца
-            self.textCtrl.CmdKeyAssign (wx.stc.STC_KEY_HOME, 
-                    0, 
-                    wx.stc.STC_CMD_HOME)
+            self.textCtrl.CmdKeyAssign (wx.stc.STC_KEY_HOME,
+                                        0,
+                                        wx.stc.STC_CMD_HOME)
 
-            self.textCtrl.CmdKeyAssign (wx.stc.STC_KEY_HOME, 
-                    wx.stc.STC_SCMOD_ALT, 
-                    wx.stc.STC_CMD_HOMEDISPLAY)
+            self.textCtrl.CmdKeyAssign (wx.stc.STC_KEY_HOME,
+                                        wx.stc.STC_SCMOD_ALT,
+                                        wx.stc.STC_CMD_HOMEDISPLAY)
 
-            self.textCtrl.CmdKeyAssign (wx.stc.STC_KEY_END, 
-                    0, 
-                    wx.stc.STC_CMD_LINEEND)
+            self.textCtrl.CmdKeyAssign (wx.stc.STC_KEY_END,
+                                        0,
+                                        wx.stc.STC_CMD_LINEEND)
 
-            self.textCtrl.CmdKeyAssign (wx.stc.STC_KEY_END, 
-                    wx.stc.STC_SCMOD_ALT, 
-                    wx.stc.STC_CMD_LINEENDDISPLAY)
+            self.textCtrl.CmdKeyAssign (wx.stc.STC_KEY_END,
+                                        wx.stc.STC_SCMOD_ALT,
+                                        wx.stc.STC_CMD_LINEENDDISPLAY)
 
 
     def __setMarginWidth (self, editor):
@@ -215,7 +217,7 @@ class TextEditor(wx.Panel):
 
     def calcBytePos (self, text, pos):
         """Преобразовать позицию в символах в позицию в байтах"""
-        return len(self.encoder (text[: pos] )[0] )
+        return len(self.encoder (text[: pos])[0])
 
 
     def __createCoders (self):
@@ -327,21 +329,21 @@ class TextEditor(wx.Panel):
         """
         Возвращает номер символа (а не байта), перед которых находится курсор
         """
-        return self.__calcCharPos (self.textCtrl.GetCurrentPos() )
+        return self.__calcCharPos (self.textCtrl.GetCurrentPos())
 
 
     def GetSelectionStart (self):
         """
         Возвращает позицию начала выбранной области в символах, а не в байтах
         """
-        return self.__calcCharPos (self.textCtrl.GetSelectionStart() )
+        return self.__calcCharPos (self.textCtrl.GetSelectionStart())
 
 
     def GetSelectionEnd (self):
         """
         Возвращает позицию конца выбранной области в символах, а не в байтах
         """
-        return self.__calcCharPos (self.textCtrl.GetSelectionEnd() )
+        return self.__calcCharPos (self.textCtrl.GetSelectionEnd())
 
 
     def SetFocus (self):
