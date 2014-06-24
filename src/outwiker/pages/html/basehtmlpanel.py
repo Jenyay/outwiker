@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 import os
 from abc import ABCMeta, abstractmethod, abstractproperty
@@ -9,7 +8,7 @@ import wx.lib.newevent
 
 from outwiker.core.application import Application
 from outwiker.core.commands import MessageBox, setStatusText
-from outwiker.core.system import getTemplatesDir, getImagesDir
+from outwiker.core.system import getImagesDir
 from outwiker.core.attachment import Attachment
 from outwiker.core.config import IntegerOption
 from outwiker.gui.basetextpanel import BaseTextPanel
@@ -27,7 +26,7 @@ class BaseHtmlPanel(BaseTextPanel):
     CODE_PAGE_INDEX = 0
     RESULT_PAGE_INDEX = 1
 
-    
+
     def __init__(self, parent, *args, **kwds):
         super (BaseHtmlPanel, self).__init__ (parent, *args, **kwds)
 
@@ -74,16 +73,16 @@ class BaseHtmlPanel(BaseTextPanel):
         pass
 
 
-    def addTool (self, 
-            menu, 
-            idstring, 
-            func, 
-            menuText, 
-            buttonText, 
-            image, 
-            alwaysEnabled=False,
-            fullUpdate=True,
-            panelname="plugins"):
+    def addTool (self,
+                 menu,
+                 idstring,
+                 func,
+                 menuText,
+                 buttonText,
+                 image,
+                 alwaysEnabled=False,
+                 fullUpdate=True,
+                 panelname="plugins"):
         """
         !!! Внимание. Это устаревший способ добавления элементов интерфейса. Сохраняется только для совместимости со старыми версиями плагинов и в будущих версиях программы может быть убран.
 
@@ -96,23 +95,23 @@ class BaseHtmlPanel(BaseTextPanel):
         image -- имя файла с картинкой
         alwaysEnabled -- Кнопка должна быть всегда активна
         """
-        super (BaseHtmlPanel, self).addTool (menu, 
-            idstring, 
-            func, 
-            menuText, 
-            buttonText, 
-            image, 
-            alwaysEnabled,
-            fullUpdate,
-            panelname)
-        
+        super (BaseHtmlPanel, self).addTool (menu,
+                                             idstring,
+                                             func,
+                                             menuText,
+                                             buttonText,
+                                             image,
+                                             alwaysEnabled,
+                                             fullUpdate,
+                                             panelname)
+
         tool = self._tools[idstring]
         self.enableTool (tool, self._isEnabledTool (tool))
 
 
     def Print (self):
         currpanel = self.notebook.GetCurrentPage()
-        if currpanel != None:
+        if currpanel is not None:
             currpanel.Print()
 
 
@@ -142,15 +141,15 @@ class BaseHtmlPanel(BaseTextPanel):
     def pageCount (self):
         return self.notebook.GetPageCount ()
 
-    
+
     def addPage (self, parent, title):
         self.notebook.AddPage(parent, title)
 
-    
+
     def onPreferencesDialogClose (self, prefDialog):
         self.codeEditor.setDefaultSettings()
 
-    
+
     def onClose (self, event):
         self.htmlWindow.Close()
 
@@ -160,7 +159,7 @@ class BaseHtmlPanel(BaseTextPanel):
         self.codeEditor.AddText (text)
         self.codeEditor.SetFocus()
 
-    
+
     def UpdateView (self, page):
         self.Freeze()
 
@@ -212,11 +211,6 @@ class BaseHtmlPanel(BaseTextPanel):
         pass
 
 
-    @abstractmethod
-    def onTabChanged(self):
-        pass
-
-
     def getHtmlPath (self, path):
         """
         Получить путь до результирующего файла HTML
@@ -226,7 +220,7 @@ class BaseHtmlPanel(BaseTextPanel):
 
 
     def _getDefaultPage(self):
-        assert self._currentpage != None
+        assert self._currentpage is not None
 
         if (len (self._currentpage.content) > 0 or
                 len (Attachment (self._currentpage).attachmentFull) > 0):
@@ -236,8 +230,6 @@ class BaseHtmlPanel(BaseTextPanel):
 
 
     def _onTabChanged (self, event):
-        self.onTabChanged()
-
         newevent = PageTabChangedEvent (tab = self.selectedPageIndex)
         wx.PostEvent(self, newevent)
 
@@ -246,7 +238,7 @@ class BaseHtmlPanel(BaseTextPanel):
         """
         Соханить текущую вкладку (код, просмотр и т.п.) в настройки страницы
         """
-        assert page != None
+        assert page is not None
         tabOption = IntegerOption (page.params, self.tabSectionName, self.tabParamName, -1)
         tabOption.value = self.selectedPageIndex
 
@@ -255,7 +247,7 @@ class BaseHtmlPanel(BaseTextPanel):
         """
         Прочитать из страницы настройки текущей вкладки (код, просмотр и т.п.)
         """
-        assert page != None
+        assert page is not None
         tabOption = IntegerOption (page.params, self.tabSectionName, self.tabParamName, -1)
         return tabOption.value
 
@@ -286,8 +278,8 @@ class BaseHtmlPanel(BaseTextPanel):
         """
         Подготовить и показать HTML текущей страницы
         """
-        assert self._currentpage != None
-        
+        assert self._currentpage is not None
+
         status_item = 0
 
         setStatusText (_(u"Page rendered. Please wait…"), status_item)
@@ -298,17 +290,17 @@ class BaseHtmlPanel(BaseTextPanel):
             self.htmlWindow.LoadPage (self.currentHtmlFile)
         except IOError as e:
             # TODO: Проверить под Windows
-            MessageBox (_(u"Can't save file %s") % (unicode (e.filename)), 
-                    _(u"Error"), 
-                    wx.ICON_ERROR | wx.OK)
+            MessageBox (_(u"Can't save file %s") % (unicode (e.filename)),
+                        _(u"Error"),
+                        wx.ICON_ERROR | wx.OK)
         except OSError as e:
-            MessageBox (_(u"Can't save HTML-file\n\n%s") % (unicode (e)), 
-                    _(u"Error"), 
-                    wx.ICON_ERROR | wx.OK)
+            MessageBox (_(u"Can't save HTML-file\n\n%s") % (unicode (e)),
+                        _(u"Error"),
+                        wx.ICON_ERROR | wx.OK)
 
         setStatusText (u"", status_item)
         Application.onHtmlRenderingEnd (self._currentpage, self.htmlWindow)
-    
+
 
     def _enableAllTools (self):
         """
@@ -330,7 +322,7 @@ class BaseHtmlPanel(BaseTextPanel):
         actionController.enableTools (SearchPrevAction.stringId, searchEnabled)
 
         self.mainWindow.UpdateAuiManager()
-        
+
         self.mainWindow.Thaw()
 
 
@@ -338,11 +330,11 @@ class BaseHtmlPanel(BaseTextPanel):
         if "notebook" not in dir (self):
             return True
 
-        assert self.notebook != None
+        assert self.notebook is not None
         assert self.selectedPageIndex != -1
 
         enabled = (tool.alwaysEnabled or
-                self.selectedPageIndex == self.CODE_PAGE_INDEX)
+                   self.selectedPageIndex == self.CODE_PAGE_INDEX)
 
         return enabled
 
@@ -354,15 +346,11 @@ class BaseHtmlPanel(BaseTextPanel):
         return None
 
 
-    def __switchView (self, event):
-        self.switchCodeResult()
-
-
     def switchCodeResult (self):
         """
         Переключение между кодом и результатом
         """
-        if self._currentpage == None:
+        if self._currentpage is None:
             return
 
         if self.selectedPageIndex == self.CODE_PAGE_INDEX:

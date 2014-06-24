@@ -1,5 +1,7 @@
 # -*- coding: UTF-8 -*-
 
+import wx
+
 from basemainwnd import BaseMainWndTest
 from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
@@ -132,6 +134,7 @@ class HtmlPageViewTest (BaseMainWndTest):
         """
         self.wikiroot[u"HTML-страница"].content = u"Бла-бла-бла"
         self.wikiroot[u"HTML-страница 2"].content = u"Бла-бла-бла 2"
+
         Application.wikiroot = self.wikiroot
         Application.selectedPage = self.wikiroot[u"HTML-страница"]
 
@@ -142,18 +145,31 @@ class HtmlPageViewTest (BaseMainWndTest):
         # Переключимся на вкладку с кодом
         Application.mainWindow.pagePanel.pageView.selectedPageIndex = HtmlPageView.CODE_PAGE_INDEX
 
+        Application.selectedPage = self.wikiroot[u"HTML-страница"]
+        wx.GetApp().Yield()
+
+        self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
+                          HtmlPageView.CODE_PAGE_INDEX)
+
+
         # Переключимся на другую страницу. Опять должна быть выбрана вкладка с просмотром
         Application.selectedPage = self.wikiroot[u"HTML-страница 2"]
+        wx.GetApp().Yield()
+
         self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
                           HtmlPageView.RESULT_PAGE_INDEX)
 
-        # А при возврате на предыдущую страницу, должна быть выбана страница с кодом
+        # А при возврате на предыдущую страницу, должна быть выбрана страница с кодом
         Application.selectedPage = self.wikiroot[u"HTML-страница"]
+        wx.GetApp().Yield()
+
         self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
                           HtmlPageView.CODE_PAGE_INDEX)
 
         # При переключении на другую страницу, выбиается вкладка с результирующим HTML
         Application.selectedPage = self.wikiroot[u"HTML-страница 2"]
+        wx.GetApp().Yield()
+
         self.assertEqual (Application.mainWindow.pagePanel.pageView.selectedPageIndex,
                           HtmlPageView.RESULT_PAGE_INDEX)
 

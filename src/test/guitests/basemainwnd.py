@@ -43,6 +43,7 @@ class BaseMainWndTest(unittest.TestCase):
 
 
     def tearDown (self):
+        wx.GetApp().Yield()
         self.wnd.Close()
         self.wnd.Hide()
         self._processEvents()
