@@ -171,11 +171,17 @@ class WikiPagesTest(unittest.TestCase):
         self.assertEqual (self.root[u"Страница 1/Страница 2/Страница 5"].root, self.root)
 
 
-    def testSubpath (self):
+    def testSubpath_01 (self):
         self.assertEqual (self.root[u"Страница 1"].subpath, u"Страница 1")
 
         self.assertEqual (self.root[u"Страница 1/Страница 2/Страница 5"].subpath,
                           u"Страница 1/Страница 2/Страница 5")
+
+
+    def testSubpath_02 (self):
+        page = self.root[u"Страница 1"]
+        self.assertEqual (page[""], None)
+
 
     def testSubpathParent_01 (self):
         page = self.root[u"Страница 1/Страница 2/Страница 5"]
@@ -195,6 +201,16 @@ class WikiPagesTest(unittest.TestCase):
     def testSubpathParent_04 (self):
         page = self.root
         self.assertEqual (page[".."], None)
+
+
+    def testSubpathParent_05 (self):
+        page = page = self.root[u"Страница 1"]
+        self.assertEqual (page["../.."], None)
+
+
+    def testSubpathParent_06 (self):
+        page = self.root
+        self.assertEqual (page["../.."], None)
 
 
     def testIsChild1 (self):

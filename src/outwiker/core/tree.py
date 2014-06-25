@@ -75,7 +75,7 @@ class RootWikiPage (object):
         Найти корень дерева по странице
         """
         result = self
-        while result.parent != None:
+        while result.parent is not None:
             result = result.parent
 
         return result
@@ -99,6 +99,9 @@ class RootWikiPage (object):
         """
         Получить нужную страницу по относительному пути в дереве
         """
+        if len (path) == 0:
+            return None
+
         if path == "/":
             return self.root
 
@@ -172,7 +175,7 @@ class RootWikiPage (object):
         """
         Проверить заголовок страницы на то, что в родителе нет страницы с таким заголовком
         """
-        return parent[title] == None
+        return parent[title] is None
 
 
     def _changeChildOrder (self, page, neworder):
@@ -212,7 +215,7 @@ class RootWikiPage (object):
         Проверить, является ли page дочерней (вложенной) страницей для self
         """
         currentpage = page
-        while currentpage != None:
+        while currentpage is not None:
             if currentpage == self:
                 return True
             currentpage = currentpage.parent
@@ -226,7 +229,7 @@ class RootWikiPage (object):
         Получить дату и время изменения страницы в виде экземпляра класса datetime.datetime
         """
         date = self.params.datetimeOption.value
-        if date == None:
+        if date is None:
             # Если дата не установлена, то возвратим дату последнего изменения файла с контентом,
             # при этом запишем эту дату в файл настроек
             contentpath = os.path.join (self.path, RootWikiPage.contentFile)
@@ -360,9 +363,7 @@ class WikiDocument (RootWikiPage):
 
     @selectedPage.setter
     def selectedPage (self, page):
-        subpath = "/"
-
-        if isinstance (page, type(self)) or page == None:
+        if isinstance (page, type(self)) or page is None:
             # Экземпляр класса WikiDocument выбирать нельзя
             self._selectedPage = None
         else:
@@ -476,7 +477,7 @@ class WikiPage (RootWikiPage):
 
     def canRename (self, newtitle):
         return (self.title.lower() == newtitle.lower() or
-                self.parent[newtitle] == None)
+                self.parent[newtitle] is None)
 
 
     @staticmethod
@@ -508,7 +509,7 @@ class WikiPage (RootWikiPage):
             raise TreeException
 
         # Проверка на то, что в новом родителе нет записи с таким же заголовком
-        if newparent[self.title] != None:
+        if newparent[self.title] is not None:
             raise DublicateTitle
 
         oldpath = self.path
@@ -552,7 +553,7 @@ class WikiPage (RootWikiPage):
         number = 0
         newname = template.format (title=title, number=number)
 
-        while (os.path.exists (os.path.join (path, newname) ) ):
+        while (os.path.exists (os.path.join (path, newname))):
             number += 1
             newname = template.format (title=title, number=number)
 
@@ -570,7 +571,7 @@ class WikiPage (RootWikiPage):
         if self.readonly:
             raise ReadonlyException
 
-        if self.icon != None and os.path.abspath (self.icon) == os.path.abspath (iconpath):
+        if self.icon is not None and os.path.abspath (self.icon) == os.path.abspath (iconpath):
             return
 
         self._removeOldIcons()
@@ -631,8 +632,8 @@ class WikiPage (RootWikiPage):
         files = os.listdir (self.path)
 
         icons = [os.path.join (self.path, fname) for fname in files
-                if (fname.startswith (RootWikiPage.iconName) and
-                    not os.path.isdir (fname))]
+                 if (fname.startswith (RootWikiPage.iconName) and
+                     not os.path.isdir (fname))]
 
         return icons
 
@@ -687,7 +688,7 @@ class WikiPage (RootWikiPage):
         # Тип
         self._params.typeOption.value = self.getTypeString()
 
-        #Теги
+        # Теги
         self._saveTags()
 
         # Порядок страницы
@@ -698,7 +699,7 @@ class WikiPage (RootWikiPage):
         tags = reduce (lambda full, tag: full + ", " + tag, self._tags, "")
 
         # Удалим начальные ", "
-        tags = tags[2: ]
+        tags = tags[2:]
         self._params.set (RootWikiPage.sectionGeneral, WikiPage.paramTags, tags)
 
 
@@ -773,7 +774,7 @@ class WikiPage (RootWikiPage):
         result = self.title
         page = self.parent
 
-        while page.parent != None:
+        while page.parent is not None:
             # Пока не дойдем до корня, у которого нет заголовка, и родитель - None
             result = page.title + "/" + result
             page = page.parent
@@ -804,15 +805,15 @@ class WikiPage (RootWikiPage):
         self._removePageFromTree (self)
 
         # Если выбранная страница была удалена
-        if (oldSelectedPage != None and
-                (oldSelectedPage == self or self.isChild (oldSelectedPage) ) ):
+        if (oldSelectedPage is not None and
+                (oldSelectedPage == self or self.isChild (oldSelectedPage))):
             # Новая выбранная страница взамен старой
             newselpage = oldSelectedPage
-            while newselpage.parent != None and newselpage.isRemoved:
+            while newselpage.parent is not None and newselpage.isRemoved:
                 newselpage = newselpage.parent
 
             # Если попали в корень дерева
-            if newselpage.parent == None:
+            if newselpage.parent is None:
                 newselpage = None
 
             self.root.selectedPage = newselpage
