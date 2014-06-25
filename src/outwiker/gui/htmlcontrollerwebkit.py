@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 from .htmlcontroller import UriIdentifier
@@ -66,6 +65,14 @@ class UriIdentifierWebKit (UriIdentifier):
             return None
 
         newSelectedPage = None
+
+        if href[0] == "/":
+            if href.startswith (self._currentPage.root.path):
+                href = href[len (self._currentPage.root.path):]
+
+            if len (href) > 1 and href.endswith ("/"):
+                href = href[:-1]
+
         if href[0] == "/":
             # Поиск страниц осуществляем только с корня
             newSelectedPage = self._currentPage.root[href[1:]]
