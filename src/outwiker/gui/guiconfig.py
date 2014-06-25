@@ -1,7 +1,4 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-
-import locale
 
 import wx
 
@@ -36,34 +33,34 @@ class GeneralGuiConfig (object):
         self.config = config
 
         # Спрашивать подтверждение выхода?
-        self.askBeforeExit = BooleanOption (self.config, 
-                GeneralGuiConfig.GENERAL_SECTION, 
-                GeneralGuiConfig.ASK_BEFORE_EXIT_PARAM, 
-                GeneralGuiConfig.ASK_BEFORE_EXIT_DEFAULT)
+        self.askBeforeExit = BooleanOption (self.config,
+                                            GeneralGuiConfig.GENERAL_SECTION,
+                                            GeneralGuiConfig.ASK_BEFORE_EXIT_PARAM,
+                                            GeneralGuiConfig.ASK_BEFORE_EXIT_DEFAULT)
 
         # Интервал, через которое происходит автосохранение страницы. Если значение <= 0, значит автосохранение отключено
-        self.autosaveInterval = IntegerOption (self.config, 
-                GeneralGuiConfig.GENERAL_SECTION, 
-                GeneralGuiConfig.AUTOSAVE_INTERVAL_PARAM, 
-                GeneralGuiConfig.AUTOSAVE_INTERVAL_DEFAULT)
+        self.autosaveInterval = IntegerOption (self.config,
+                                               GeneralGuiConfig.GENERAL_SECTION,
+                                               GeneralGuiConfig.AUTOSAVE_INTERVAL_PARAM,
+                                               GeneralGuiConfig.AUTOSAVE_INTERVAL_DEFAULT)
 
         # Количество последних открытых вики
-        self.historyLength = IntegerOption (self.config, 
-                GeneralGuiConfig.RECENT_SECTION, 
-                GeneralGuiConfig.RECENT_WIKI_COUNT_PARAM, 
-                GeneralGuiConfig.RECENT_WIKI_COUNT_DEFAULT)
+        self.historyLength = IntegerOption (self.config,
+                                            GeneralGuiConfig.RECENT_SECTION,
+                                            GeneralGuiConfig.RECENT_WIKI_COUNT_PARAM,
+                                            GeneralGuiConfig.RECENT_WIKI_COUNT_DEFAULT)
 
         # Открывать последнуюю открытую вики при старте?
-        self.autoopen = BooleanOption (self.config, 
-                GeneralGuiConfig.RECENT_SECTION, 
-                GeneralGuiConfig.RECENT_AUTOOPEN_PARAM, 
-                GeneralGuiConfig.RECENT_AUTOOPEN_DEFAULT)
+        self.autoopen = BooleanOption (self.config,
+                                       GeneralGuiConfig.RECENT_SECTION,
+                                       GeneralGuiConfig.RECENT_AUTOOPEN_PARAM,
+                                       GeneralGuiConfig.RECENT_AUTOOPEN_DEFAULT)
 
         # Формат для представления даты и времени модификиции страниц
-        self.dateTimeFormat = StringOption (self.config, 
-                GeneralGuiConfig.GENERAL_SECTION, 
-                GeneralGuiConfig.DATETIME_FORMAT_PARAM, 
-                GeneralGuiConfig.DATETIME_FORMAT_DEFAULT)
+        self.dateTimeFormat = StringOption (self.config,
+                                            GeneralGuiConfig.GENERAL_SECTION,
+                                            GeneralGuiConfig.DATETIME_FORMAT_PARAM,
+                                            GeneralGuiConfig.DATETIME_FORMAT_DEFAULT)
 
 
 class PluginsConfig (object):
@@ -77,11 +74,11 @@ class PluginsConfig (object):
     def __init__ (self, config):
         self.config = config
 
-        self.disabledPlugins = ListOption (self.config, 
-                PluginsConfig.PLUGINS_SECTION,
-                PluginsConfig.DISABLED_PARAM,
-                [],
-                separator=u";")
+        self.disabledPlugins = ListOption (self.config,
+                                           PluginsConfig.PLUGINS_SECTION,
+                                           PluginsConfig.DISABLED_PARAM,
+                                           [],
+                                           separator=u";")
 
 
 
@@ -106,28 +103,28 @@ class TrayConfig (object):
         self.config = config
 
         # Сворачивать в трей?
-        self.minimizeToTray = BooleanOption (self.config, 
-                GeneralGuiConfig.GENERAL_SECTION, 
-                TrayConfig.MINIMIZE_TO_TRAY_PARAM, 
-                TrayConfig.MINIMIZE_TO_TRAY_DEFAULT)
+        self.minimizeToTray = BooleanOption (self.config,
+                                             GeneralGuiConfig.GENERAL_SECTION,
+                                             TrayConfig.MINIMIZE_TO_TRAY_PARAM,
+                                             TrayConfig.MINIMIZE_TO_TRAY_DEFAULT)
 
         # Запускаться свернутым?
-        self.startIconized = BooleanOption (self.config, 
-                GeneralGuiConfig.GENERAL_SECTION, 
-                TrayConfig.START_ICONIZED_PARAM, 
-                TrayConfig.START_ICONIZED_DEFAULT)
+        self.startIconized = BooleanOption (self.config,
+                                            GeneralGuiConfig.GENERAL_SECTION,
+                                            TrayConfig.START_ICONIZED_PARAM,
+                                            TrayConfig.START_ICONIZED_DEFAULT)
 
         # Всегда показывать иконку в трее?
-        self.alwaysShowTrayIcon = BooleanOption (self.config, 
-                GeneralGuiConfig.GENERAL_SECTION, 
-                TrayConfig.ALWAYS_SHOW_TRAY_ICON_PARAM, 
-                TrayConfig.ALWAYS_SHOW_TRAY_ICON_DEFAULT)
+        self.alwaysShowTrayIcon = BooleanOption (self.config,
+                                                 GeneralGuiConfig.GENERAL_SECTION,
+                                                 TrayConfig.ALWAYS_SHOW_TRAY_ICON_PARAM,
+                                                 TrayConfig.ALWAYS_SHOW_TRAY_ICON_DEFAULT)
 
         # Сворачивать окно программы при закрытии главного окна
         self.minimizeOnClose = BooleanOption (self.config,
-                GeneralGuiConfig.GENERAL_SECTION,
-                TrayConfig.MINIMIZE_ON_CLOSE_PARAM,
-                TrayConfig.MINIMIZE_ON_CLOSE_DEFAULT)
+                                              GeneralGuiConfig.GENERAL_SECTION,
+                                              TrayConfig.MINIMIZE_ON_CLOSE_PARAM,
+                                              TrayConfig.MINIMIZE_ON_CLOSE_DEFAULT)
 
 
 
@@ -155,7 +152,7 @@ class EditorConfig (object):
     FONT_ITALIC_SECTION = u"italic"
     FONT_ITALIC_DEFAULT = False
 
-    # Поведение клавиш Home / End. 
+    # Поведение клавиш Home / End.
     HOME_END_OF_LINE = 0
     HOME_END_OF_PARAGRAPH = 1
 
@@ -175,54 +172,54 @@ class EditorConfig (object):
         self.config = config
 
         # Показывать номера строк в редакторе?
-        self.lineNumbers = BooleanOption (self.config, 
-                GeneralGuiConfig.GENERAL_SECTION, 
-                EditorConfig.SHOW_LINE_NUMBERS_SECTION, 
-                EditorConfig.SHOW_LINE_NUMBERS_DEFAULT)
+        self.lineNumbers = BooleanOption (self.config,
+                                          GeneralGuiConfig.GENERAL_SECTION,
+                                          EditorConfig.SHOW_LINE_NUMBERS_SECTION,
+                                          EditorConfig.SHOW_LINE_NUMBERS_DEFAULT)
 
         # Размер табуляции
-        self.tabWidth = IntegerOption (self.config, 
-                GeneralGuiConfig.GENERAL_SECTION, 
-                EditorConfig.TAB_WIDTH_SECTION, 
-                EditorConfig.TAB_WIDTH_DEFAULT)
-        
+        self.tabWidth = IntegerOption (self.config,
+                                       GeneralGuiConfig.GENERAL_SECTION,
+                                       EditorConfig.TAB_WIDTH_SECTION,
+                                       EditorConfig.TAB_WIDTH_DEFAULT)
+
         # Размер шрифта
-        self.fontSize = IntegerOption (self.config, 
-                EditorConfig.FONT_SECTION, 
-                EditorConfig.FONT_SIZE_SECTION, 
-                EditorConfig.FONT_SIZE_DEFAULT)
+        self.fontSize = IntegerOption (self.config,
+                                       EditorConfig.FONT_SECTION,
+                                       EditorConfig.FONT_SIZE_SECTION,
+                                       EditorConfig.FONT_SIZE_DEFAULT)
 
         # Начертание шрифта
-        self.fontName = StringOption (self.config, 
-                EditorConfig.FONT_SECTION, 
-                EditorConfig.FONT_NAME_SECTION, 
-                EditorConfig.FONT_NAME_DEFAULT)
+        self.fontName = StringOption (self.config,
+                                      EditorConfig.FONT_SECTION,
+                                      EditorConfig.FONT_NAME_SECTION,
+                                      EditorConfig.FONT_NAME_DEFAULT)
 
-        self.fontIsBold = BooleanOption (self.config, 
-                EditorConfig.FONT_SECTION, 
-                EditorConfig.FONT_BOLD_SECTION, 
-                EditorConfig.FONT_BOLD_DEFAULT)
+        self.fontIsBold = BooleanOption (self.config,
+                                         EditorConfig.FONT_SECTION,
+                                         EditorConfig.FONT_BOLD_SECTION,
+                                         EditorConfig.FONT_BOLD_DEFAULT)
 
-        self.fontIsItalic = BooleanOption (self.config, 
-                EditorConfig.FONT_SECTION, 
-                EditorConfig.FONT_ITALIC_SECTION, 
-                EditorConfig.FONT_ITALIC_DEFAULT)
+        self.fontIsItalic = BooleanOption (self.config,
+                                           EditorConfig.FONT_SECTION,
+                                           EditorConfig.FONT_ITALIC_SECTION,
+                                           EditorConfig.FONT_ITALIC_DEFAULT)
 
         # Поведение клавиш Home / End
         self.homeEndKeys = IntegerOption (self.config,
-                GeneralGuiConfig.GENERAL_SECTION,
-                EditorConfig.HOME_END_KEYS_SECTION,
-                EditorConfig.HOME_END_KEYS_DEFAULT)
+                                          GeneralGuiConfig.GENERAL_SECTION,
+                                          EditorConfig.HOME_END_KEYS_SECTION,
+                                          EditorConfig.HOME_END_KEYS_DEFAULT)
 
         self.fontColor = StringOption (self.config,
-                GeneralGuiConfig.GENERAL_SECTION,
-                EditorConfig.FONT_COLOR_SECTION,
-                EditorConfig.FONT_COLOR_DEFAULT)
+                                       GeneralGuiConfig.GENERAL_SECTION,
+                                       EditorConfig.FONT_COLOR_SECTION,
+                                       EditorConfig.FONT_COLOR_DEFAULT)
 
         self.backColor = StringOption (self.config,
-                GeneralGuiConfig.GENERAL_SECTION,
-                EditorConfig.BACK_COLOR_SECTION,
-                EditorConfig.BACK_COLOR_DEFAULT)
+                                       GeneralGuiConfig.GENERAL_SECTION,
+                                       EditorConfig.BACK_COLOR_SECTION,
+                                       EditorConfig.BACK_COLOR_DEFAULT)
 
 
 class HtmlEditorStylesConfig (object):
@@ -256,40 +253,40 @@ class HtmlEditorStylesConfig (object):
     def __init__ (self, config):
         self.config = config
 
-        self.tag = StcStyleOption (self.config, 
-                HtmlEditorStylesConfig.HTML_STYLES_SECTION, 
-                HtmlEditorStylesConfig.STYLE_TAG_SECTION, 
-                HtmlEditorStylesConfig.STYLE_TAG_DEFAULT)
+        self.tag = StcStyleOption (self.config,
+                                   HtmlEditorStylesConfig.HTML_STYLES_SECTION,
+                                   HtmlEditorStylesConfig.STYLE_TAG_SECTION,
+                                   HtmlEditorStylesConfig.STYLE_TAG_DEFAULT)
 
-        self.tagUnknown = StcStyleOption (self.config, 
-                HtmlEditorStylesConfig.HTML_STYLES_SECTION, 
-                HtmlEditorStylesConfig.STYLE_TAG_UNKNOWN_SECTION, 
-                HtmlEditorStylesConfig.STYLE_TAG_UNKNOWN_DEFAULT)
+        self.tagUnknown = StcStyleOption (self.config,
+                                          HtmlEditorStylesConfig.HTML_STYLES_SECTION,
+                                          HtmlEditorStylesConfig.STYLE_TAG_UNKNOWN_SECTION,
+                                          HtmlEditorStylesConfig.STYLE_TAG_UNKNOWN_DEFAULT)
 
-        self.attribute = StcStyleOption (self.config, 
-                HtmlEditorStylesConfig.HTML_STYLES_SECTION, 
-                HtmlEditorStylesConfig.STYLE_ATTRIBUTE_SECTION, 
-                HtmlEditorStylesConfig.STYLE_ATTRIBUTE_DEFAULT)
+        self.attribute = StcStyleOption (self.config,
+                                         HtmlEditorStylesConfig.HTML_STYLES_SECTION,
+                                         HtmlEditorStylesConfig.STYLE_ATTRIBUTE_SECTION,
+                                         HtmlEditorStylesConfig.STYLE_ATTRIBUTE_DEFAULT)
 
-        self.attributeUnknown = StcStyleOption (self.config, 
-                HtmlEditorStylesConfig.HTML_STYLES_SECTION, 
-                HtmlEditorStylesConfig.STYLE_ATTRIBUTE_UNKNOWN_SECTION, 
-                HtmlEditorStylesConfig.STYLE_ATTRIBUTE_UNKNOWN_DEFAULT)
+        self.attributeUnknown = StcStyleOption (self.config,
+                                                HtmlEditorStylesConfig.HTML_STYLES_SECTION,
+                                                HtmlEditorStylesConfig.STYLE_ATTRIBUTE_UNKNOWN_SECTION,
+                                                HtmlEditorStylesConfig.STYLE_ATTRIBUTE_UNKNOWN_DEFAULT)
 
-        self.number = StcStyleOption (self.config, 
-                HtmlEditorStylesConfig.HTML_STYLES_SECTION, 
-                HtmlEditorStylesConfig.STYLE_NUMBER_SECTION, 
-                HtmlEditorStylesConfig.STYLE_NUMBER_DEFAULT)
+        self.number = StcStyleOption (self.config,
+                                      HtmlEditorStylesConfig.HTML_STYLES_SECTION,
+                                      HtmlEditorStylesConfig.STYLE_NUMBER_SECTION,
+                                      HtmlEditorStylesConfig.STYLE_NUMBER_DEFAULT)
 
-        self.string = StcStyleOption (self.config, 
-                HtmlEditorStylesConfig.HTML_STYLES_SECTION, 
-                HtmlEditorStylesConfig.STYLE_STRING_SECTION, 
-                HtmlEditorStylesConfig.STYLE_STRING_DEFAULT)
+        self.string = StcStyleOption (self.config,
+                                      HtmlEditorStylesConfig.HTML_STYLES_SECTION,
+                                      HtmlEditorStylesConfig.STYLE_STRING_SECTION,
+                                      HtmlEditorStylesConfig.STYLE_STRING_DEFAULT)
 
-        self.comment = StcStyleOption (self.config, 
-                HtmlEditorStylesConfig.HTML_STYLES_SECTION, 
-                HtmlEditorStylesConfig.STYLE_COMMENT_SECTION, 
-                HtmlEditorStylesConfig.STYLE_COMMENT_DEFAULT)
+        self.comment = StcStyleOption (self.config,
+                                       HtmlEditorStylesConfig.HTML_STYLES_SECTION,
+                                       HtmlEditorStylesConfig.STYLE_COMMENT_SECTION,
+                                       HtmlEditorStylesConfig.STYLE_COMMENT_DEFAULT)
 
 
 class HtmlRenderConfig (object):
@@ -317,30 +314,30 @@ class HtmlRenderConfig (object):
     def __init__ (self, config):
         self.config = config
 
-        self.fontSize = IntegerOption (self.config, 
-                HtmlRenderConfig.HTML_SECTION, 
-                HtmlRenderConfig.FONT_SIZE_PARAM, 
-                HtmlRenderConfig.FONT_SIZE_DEFAULT)
+        self.fontSize = IntegerOption (self.config,
+                                       HtmlRenderConfig.HTML_SECTION,
+                                       HtmlRenderConfig.FONT_SIZE_PARAM,
+                                       HtmlRenderConfig.FONT_SIZE_DEFAULT)
 
-        self.fontName = StringOption (self.config, 
-                HtmlRenderConfig.HTML_SECTION, 
-                HtmlRenderConfig.FONT_FACE_NAME_PARAM, 
-                HtmlRenderConfig.FONT_NAME_DEFAULT)
+        self.fontName = StringOption (self.config,
+                                      HtmlRenderConfig.HTML_SECTION,
+                                      HtmlRenderConfig.FONT_FACE_NAME_PARAM,
+                                      HtmlRenderConfig.FONT_NAME_DEFAULT)
 
-        self.fontIsBold = BooleanOption (self.config, 
-                HtmlRenderConfig.HTML_SECTION, 
-                HtmlRenderConfig.FONT_BOLD_PARAM, 
-                HtmlRenderConfig.FONT_BOLD_DEFAULT)
+        self.fontIsBold = BooleanOption (self.config,
+                                         HtmlRenderConfig.HTML_SECTION,
+                                         HtmlRenderConfig.FONT_BOLD_PARAM,
+                                         HtmlRenderConfig.FONT_BOLD_DEFAULT)
 
-        self.fontIsItalic = BooleanOption (self.config, 
-                HtmlRenderConfig.HTML_SECTION, 
-                HtmlRenderConfig.FONT_ITALIC_PARAM, 
-                HtmlRenderConfig.FONT_ITALIC_DEFAULT)
+        self.fontIsItalic = BooleanOption (self.config,
+                                           HtmlRenderConfig.HTML_SECTION,
+                                           HtmlRenderConfig.FONT_ITALIC_PARAM,
+                                           HtmlRenderConfig.FONT_ITALIC_DEFAULT)
 
-        self.userStyle = StringOption (self.config, 
-                HtmlRenderConfig.HTML_SECTION, 
-                HtmlRenderConfig.USER_STYLE_PARAM, 
-                HtmlRenderConfig.USER_STYLE_DEFAULT)
+        self.userStyle = StringOption (self.config,
+                                       HtmlRenderConfig.HTML_SECTION,
+                                       HtmlRenderConfig.USER_STYLE_PARAM,
+                                       HtmlRenderConfig.USER_STYLE_DEFAULT)
 
 
 class TextPrintConfig (object):
@@ -380,50 +377,50 @@ class TextPrintConfig (object):
         self.config = config
 
         # Настройки шрифта
-        self.fontName = StringOption (self.config, 
-                TextPrintConfig.PRINT_SECTION, 
-                TextPrintConfig.FONT_NAME_SECTION, 
-                TextPrintConfig.FONT_NAME_DEFAULT)
+        self.fontName = StringOption (self.config,
+                                      TextPrintConfig.PRINT_SECTION,
+                                      TextPrintConfig.FONT_NAME_SECTION,
+                                      TextPrintConfig.FONT_NAME_DEFAULT)
 
-        self.fontSize = IntegerOption (self.config, 
-                TextPrintConfig.PRINT_SECTION, 
-                TextPrintConfig.FONT_SIZE_SECTION,
-                TextPrintConfig.FONT_SIZE_DEFAULT)
+        self.fontSize = IntegerOption (self.config,
+                                       TextPrintConfig.PRINT_SECTION,
+                                       TextPrintConfig.FONT_SIZE_SECTION,
+                                       TextPrintConfig.FONT_SIZE_DEFAULT)
 
-        self.fontIsBold = BooleanOption (self.config, 
-                TextPrintConfig.PRINT_SECTION, 
-                TextPrintConfig.FONT_BOLD_SECTION,
-                TextPrintConfig.FONT_BOLD_DEFAULT)
+        self.fontIsBold = BooleanOption (self.config,
+                                         TextPrintConfig.PRINT_SECTION,
+                                         TextPrintConfig.FONT_BOLD_SECTION,
+                                         TextPrintConfig.FONT_BOLD_DEFAULT)
 
-        self.fontIsItalic = BooleanOption (self.config, 
-                TextPrintConfig.PRINT_SECTION, 
-                TextPrintConfig.FONT_ITALIC_SECTION,
-                TextPrintConfig.FONT_ITALIC_DEFAULT)
+        self.fontIsItalic = BooleanOption (self.config,
+                                           TextPrintConfig.PRINT_SECTION,
+                                           TextPrintConfig.FONT_ITALIC_SECTION,
+                                           TextPrintConfig.FONT_ITALIC_DEFAULT)
 
-        self.paperId = IntegerOption (self.config, 
-                TextPrintConfig.PRINT_SECTION, 
-                TextPrintConfig.PAPPER_SIZE_SECTION,
-                TextPrintConfig.PAPPER_SIZE_DEFAULT)
+        self.paperId = IntegerOption (self.config,
+                                      TextPrintConfig.PRINT_SECTION,
+                                      TextPrintConfig.PAPPER_SIZE_SECTION,
+                                      TextPrintConfig.PAPPER_SIZE_DEFAULT)
 
-        self.marginTop = IntegerOption (self.config, 
-                TextPrintConfig.PRINT_SECTION, 
-                TextPrintConfig.MARGIN_TOP_SECTION,
-                TextPrintConfig.MARGIN_TOP_DEFAULT)
+        self.marginTop = IntegerOption (self.config,
+                                        TextPrintConfig.PRINT_SECTION,
+                                        TextPrintConfig.MARGIN_TOP_SECTION,
+                                        TextPrintConfig.MARGIN_TOP_DEFAULT)
 
-        self.marginBottom = IntegerOption (self.config, 
-                TextPrintConfig.PRINT_SECTION, 
-                TextPrintConfig.MARGIN_BOTTOM_SECTION,
-                TextPrintConfig.MARGIN_BOTTOM_DEFAULT)
+        self.marginBottom = IntegerOption (self.config,
+                                           TextPrintConfig.PRINT_SECTION,
+                                           TextPrintConfig.MARGIN_BOTTOM_SECTION,
+                                           TextPrintConfig.MARGIN_BOTTOM_DEFAULT)
 
-        self.marginLeft = IntegerOption (self.config, 
-                TextPrintConfig.PRINT_SECTION, 
-                TextPrintConfig.MARGIN_LEFT_SECTION,
-                TextPrintConfig.MARGIN_LEFT_DEFAULT)
-        
-        self.marginRight = IntegerOption (self.config, 
-                TextPrintConfig.PRINT_SECTION, 
-                TextPrintConfig.MARGIN_RIGHT_SECTION,
-                TextPrintConfig.MARGIN_RIGHT_DEFAULT)
+        self.marginLeft = IntegerOption (self.config,
+                                         TextPrintConfig.PRINT_SECTION,
+                                         TextPrintConfig.MARGIN_LEFT_SECTION,
+                                         TextPrintConfig.MARGIN_LEFT_DEFAULT)
+
+        self.marginRight = IntegerOption (self.config,
+                                          TextPrintConfig.PRINT_SECTION,
+                                          TextPrintConfig.MARGIN_RIGHT_SECTION,
+                                          TextPrintConfig.MARGIN_RIGHT_DEFAULT)
 
 
 class MainWindowConfig (object):
@@ -453,44 +450,54 @@ class MainWindowConfig (object):
     MAXIMIZED_SECTION = u"maximized"
     MAXIMIZED_DEFAULT = False
 
+    # Размер области в статусной панели для показа даты изменения текущей
+    # страницы
+    DATETIME_STATUS_WIDTH_SECTION = "datetime_status_width"
+    DATETIME_STATUS_WIDTH_DEFAULT = 250
+
 
     def __init__ (self, config):
         self.config = config
 
-        self.titleFormat = StringOption (self.config, 
-                MainWindowConfig.MAIN_WINDOW_SECTION, 
-                self.TITLE_FORMAT_SECTION,
-                self.TITLE_FORMAT_DEFAULT)
+        self.titleFormat = StringOption (self.config,
+                                         MainWindowConfig.MAIN_WINDOW_SECTION,
+                                         self.TITLE_FORMAT_SECTION,
+                                         self.TITLE_FORMAT_DEFAULT)
 
-        self.width = IntegerOption (self.config, 
-                MainWindowConfig.MAIN_WINDOW_SECTION, 
-                self.WIDTH_SECTION,
-                self.WIDTH_DEFAULT)
+        self.width = IntegerOption (self.config,
+                                    MainWindowConfig.MAIN_WINDOW_SECTION,
+                                    self.WIDTH_SECTION,
+                                    self.WIDTH_DEFAULT)
 
-        self.height = IntegerOption (self.config, 
-                MainWindowConfig.MAIN_WINDOW_SECTION, 
-                self.HEIGHT_SECTION,
-                self.HEIGHT_DEFAULT)
+        self.height = IntegerOption (self.config,
+                                     MainWindowConfig.MAIN_WINDOW_SECTION,
+                                     self.HEIGHT_SECTION,
+                                     self.HEIGHT_DEFAULT)
 
-        self.xPos = IntegerOption (self.config, 
-                MainWindowConfig.MAIN_WINDOW_SECTION, 
-                self.XPOS_SECTION,
-                self.XPOS_DEFAULT)
+        self.xPos = IntegerOption (self.config,
+                                   MainWindowConfig.MAIN_WINDOW_SECTION,
+                                   self.XPOS_SECTION,
+                                   self.XPOS_DEFAULT)
 
-        self.yPos = IntegerOption (self.config, 
-                MainWindowConfig.MAIN_WINDOW_SECTION, 
-                self.YPOS_SECTION,
-                self.YPOS_DEFAULT)
+        self.yPos = IntegerOption (self.config,
+                                   MainWindowConfig.MAIN_WINDOW_SECTION,
+                                   self.YPOS_SECTION,
+                                   self.YPOS_DEFAULT)
 
-        self.fullscreen = BooleanOption (self.config, 
-                MainWindowConfig.MAIN_WINDOW_SECTION, 
-                self.FULLSCREEN_SECTION,
-                self.FULLSCREEN_DEFAULT)
+        self.fullscreen = BooleanOption (self.config,
+                                         MainWindowConfig.MAIN_WINDOW_SECTION,
+                                         self.FULLSCREEN_SECTION,
+                                         self.FULLSCREEN_DEFAULT)
 
-        self.maximized = BooleanOption (self.config, 
-                MainWindowConfig.MAIN_WINDOW_SECTION, 
-                self.MAXIMIZED_SECTION,
-                self.MAXIMIZED_DEFAULT)
+        self.maximized = BooleanOption (self.config,
+                                        MainWindowConfig.MAIN_WINDOW_SECTION,
+                                        self.MAXIMIZED_SECTION,
+                                        self.MAXIMIZED_DEFAULT)
+
+        self.datetimeStatusWidth = IntegerOption (self.config,
+                                                  MainWindowConfig.MAIN_WINDOW_SECTION,
+                                                  self.DATETIME_STATUS_WIDTH_SECTION,
+                                                  self.DATETIME_STATUS_WIDTH_DEFAULT)
 
 
 
@@ -510,21 +517,21 @@ class TreeConfig (object):
     def __init__ (self, config):
         self.config = config
 
-        self.width = IntegerOption (self.config, 
-                MainWindowConfig.MAIN_WINDOW_SECTION, 
-                TreeConfig.WIDTH_SECTION,
-                TreeConfig.WIDTH_DEFAULT)
+        self.width = IntegerOption (self.config,
+                                    MainWindowConfig.MAIN_WINDOW_SECTION,
+                                    TreeConfig.WIDTH_SECTION,
+                                    TreeConfig.WIDTH_DEFAULT)
 
-        self.height = IntegerOption (self.config, 
-                MainWindowConfig.MAIN_WINDOW_SECTION, 
-                TreeConfig.HEIGHT_SECTION,
-                TreeConfig.HEIGHT_DEFAULT)
+        self.height = IntegerOption (self.config,
+                                     MainWindowConfig.MAIN_WINDOW_SECTION,
+                                     TreeConfig.HEIGHT_SECTION,
+                                     TreeConfig.HEIGHT_DEFAULT)
 
         # Параметры панели с деревом
-        self.pane = StringOption (self.config, 
-                MainWindowConfig.MAIN_WINDOW_SECTION, 
-                TreeConfig.PANE_OPTIONS_SECTION,
-                TreeConfig.PANE_OPTIONS_DEFAULT)
+        self.pane = StringOption (self.config,
+                                  MainWindowConfig.MAIN_WINDOW_SECTION,
+                                  TreeConfig.PANE_OPTIONS_SECTION,
+                                  TreeConfig.PANE_OPTIONS_DEFAULT)
 
 
 
@@ -544,20 +551,20 @@ class AttachConfig (object):
     def __init__ (self, config):
         self.config = config
 
-        self.width = IntegerOption (self.config, 
-                MainWindowConfig.MAIN_WINDOW_SECTION, 
-                self.WIDTH_SECTION,
-                self.WIDTH_DEFAULT)
+        self.width = IntegerOption (self.config,
+                                    MainWindowConfig.MAIN_WINDOW_SECTION,
+                                    self.WIDTH_SECTION,
+                                    self.WIDTH_DEFAULT)
 
-        self.height = IntegerOption (self.config, 
-                MainWindowConfig.MAIN_WINDOW_SECTION, 
-                self.HEIGHT_SECTION,
-                self.HEIGHT_DEFAULT)
+        self.height = IntegerOption (self.config,
+                                     MainWindowConfig.MAIN_WINDOW_SECTION,
+                                     self.HEIGHT_SECTION,
+                                     self.HEIGHT_DEFAULT)
 
-        self.pane = StringOption (self.config, 
-                MainWindowConfig.MAIN_WINDOW_SECTION, 
-                self.PANE_OPTIONS_SECTION,
-                self.PANE_OPTIONS_DEFAULT)
+        self.pane = StringOption (self.config,
+                                  MainWindowConfig.MAIN_WINDOW_SECTION,
+                                  self.PANE_OPTIONS_SECTION,
+                                  self.PANE_OPTIONS_DEFAULT)
 
 
 
@@ -577,21 +584,21 @@ class TagsCloudConfig (object):
     def __init__ (self, config):
         self.config = config
 
-        self.width = IntegerOption (self.config, 
-                MainWindowConfig.MAIN_WINDOW_SECTION, 
-                self.WIDTH_SECTION,
-                self.WIDTH_DEFAULT)
+        self.width = IntegerOption (self.config,
+                                    MainWindowConfig.MAIN_WINDOW_SECTION,
+                                    self.WIDTH_SECTION,
+                                    self.WIDTH_DEFAULT)
 
-        self.height = IntegerOption (self.config, 
-                MainWindowConfig.MAIN_WINDOW_SECTION, 
-                self.HEIGHT_SECTION,
-                self.HEIGHT_DEFAULT)
+        self.height = IntegerOption (self.config,
+                                     MainWindowConfig.MAIN_WINDOW_SECTION,
+                                     self.HEIGHT_SECTION,
+                                     self.HEIGHT_DEFAULT)
 
         # Параметры панели с деревом
-        self.pane = StringOption (self.config, 
-                MainWindowConfig.MAIN_WINDOW_SECTION, 
-                self.PANE_OPTIONS_SECTION,
-                self.PANE_OPTIONS_DEFAULT)
+        self.pane = StringOption (self.config,
+                                  MainWindowConfig.MAIN_WINDOW_SECTION,
+                                  self.PANE_OPTIONS_SECTION,
+                                  self.PANE_OPTIONS_DEFAULT)
 
 
 class PageDialogConfig (object):
@@ -608,18 +615,17 @@ class PageDialogConfig (object):
     def __init__ (self, config):
         self.config = config
 
-        self.width = IntegerOption (self.config, 
-                MainWindowConfig.MAIN_WINDOW_SECTION, 
-                self.WIDTH_SECTION,
-                self.WIDTH_DEFAULT)
+        self.width = IntegerOption (self.config,
+                                    MainWindowConfig.MAIN_WINDOW_SECTION,
+                                    self.WIDTH_SECTION,
+                                    self.WIDTH_DEFAULT)
 
-        self.height = IntegerOption (self.config, 
-                MainWindowConfig.MAIN_WINDOW_SECTION, 
-                self.HEIGHT_SECTION,
-                self.HEIGHT_DEFAULT)
+        self.height = IntegerOption (self.config,
+                                     MainWindowConfig.MAIN_WINDOW_SECTION,
+                                     self.HEIGHT_SECTION,
+                                     self.HEIGHT_DEFAULT)
 
         self.recentStyle = StringOption (self.config,
-                GeneralGuiConfig.GENERAL_SECTION,
-                self.RECENT_STYLE_SECTION,
-                self.RECENT_STYLE_DEFAULT)
-
+                                         GeneralGuiConfig.GENERAL_SECTION,
+                                         self.RECENT_STYLE_SECTION,
+                                         self.RECENT_STYLE_DEFAULT)

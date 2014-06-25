@@ -457,9 +457,10 @@ class MainWindow(wx.Frame):
         """
         self.statusbar = wx.StatusBar(self, -1)
 
+        datetime_width = self.mainWindowConfig.datetimeStatusWidth.value
         items_count = 2
         self.statusbar.SetFieldsCount(items_count)
-        self.statusbar.SetStatusWidths ([-1, 200])
+        self.statusbar.SetStatusWidths ([-1, datetime_width])
         self.SetStatusBar (self.statusbar)
 
 
