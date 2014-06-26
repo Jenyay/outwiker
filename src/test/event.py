@@ -11,7 +11,7 @@ from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.core.event import Event
 from outwiker.core.application import Application
 from test.utils import removeWiki
-from outwiker.core.events import *
+from outwiker.core.events import PAGE_UPDATE_CONTENT, PAGE_UPDATE_TAGS, PAGE_UPDATE_ICON
 
 
 class EventTest (unittest.TestCase):
@@ -19,15 +19,24 @@ class EventTest (unittest.TestCase):
         self.value1 = 0
         self.value2 = 0
         self.value3 = 0
+        self.value4 = 0
+
 
     def event1 (self):
         self.value1 = 1
 
+
     def event2 (self, param):
         self.value2 = 2
 
+
     def event3 (self, param):
         self.value3 = 3
+
+
+    def event4 (self, param):
+        self.value4 += 1
+
 
     def testAdd1 (self):
         event = Event()
@@ -60,6 +69,20 @@ class EventTest (unittest.TestCase):
         self.assertEqual (self.value3, 3)
 
 
+    def testAdd4 (self):
+        event = Event()
+        event += self.event4
+        event += self.event4
+
+        event(111)
+
+        self.assertEqual (self.value4, 1)
+
+        event -= self.event4
+
+        self.assertRaises (ValueError, event.__isub__, self.event1)
+
+
     def testRemove1 (self):
         event = Event()
         event += self.event1
@@ -79,6 +102,33 @@ class EventTest (unittest.TestCase):
 
         self.assertEqual (self.value2, 0)
         self.assertEqual (self.value3, 3)
+
+
+    def testRemove3 (self):
+        event = Event()
+        self.assertRaises (ValueError, event.__isub__, self.event1)
+
+
+    def testClear1 (self):
+        event = Event()
+        self.assertEqual (len (event), 0)
+
+        event.clear()
+        self.assertEqual (len (event), 0)
+
+
+    def testClear2 (self):
+        event = Event()
+        event += self.event1
+        event += self.event2
+
+        event.clear()
+        self.assertEqual (len (event), 0)
+
+        event (111)
+
+        self.assertEqual (self.value1, 0)
+        self.assertEqual (self.value2, 0)
 
 
 class EventsTest (unittest.TestCase):
