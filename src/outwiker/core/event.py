@@ -6,15 +6,17 @@ class Event:
     Класс событий
     """
     def __init__ (self):
-        self._handlers = set()
+        self._handlers = []
 
 
     def clear (self):
-        self._handlers.clear()
+        del self._handlers[:]
 
 
     def _handle (self, handler):
-        self._handlers.add(handler)
+        if handler not in self._handlers:
+            self._handlers.append(handler)
+
         return self
 
 
