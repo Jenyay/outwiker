@@ -290,6 +290,21 @@ class UriIdentifierIETest (UriIdentifierTest):
         self.assertEqual (anchor, None)
 
 
+    def testLinkPage_03 (self):
+        Application.wikiroot = self.rootwiki
+        currentpage = self.rootwiki[u"Страница 2/Страница 3"]
+        contentfile = self._getContentFile (currentpage)
+        link = generateLink (Application, currentpage) + "/#anchor"
+
+        identifier = UriIdentifierIE (currentpage, contentfile)
+        (url, page, filename, anchor) = identifier.identify (link)
+
+        self.assertEqual (url, None)
+        self.assertEqual (page, currentpage)
+        self.assertEqual (filename, None)
+        self.assertEqual (anchor, u"#anchor")
+
+
 class UriIdentifierWebKitTest (UriIdentifierTest):
     """
     Тесты идентификации ссылок для WebKit
@@ -488,3 +503,17 @@ class UriIdentifierWebKitTest (UriIdentifierTest):
         self.assertEqual (page, currentpage)
         self.assertEqual (filename, None)
         self.assertEqual (anchor, None)
+
+
+    def testLinkPage_03 (self):
+        Application.wikiroot = self.rootwiki
+        currentpage = self.rootwiki[u"Страница 2/Страница 3"]
+        link = generateLink (Application, currentpage) + "/#anchor"
+
+        identifier = UriIdentifierWebKit (currentpage, self._getBasePath (currentpage))
+        (url, page, filename, anchor) = identifier.identify (link)
+
+        self.assertEqual (url, None)
+        self.assertEqual (page, currentpage)
+        self.assertEqual (filename, None)
+        self.assertEqual (anchor, u"#anchor")

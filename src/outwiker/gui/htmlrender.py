@@ -8,6 +8,7 @@ import wx
 
 import outwiker.core
 
+
 class HtmlRender (wx.Panel):
     """
     Базовый класс для HTML-рендеров
@@ -20,6 +21,9 @@ class HtmlRender (wx.Panel):
         # Номер элемента статусной панели, куда выводится текст
         self._status_item = 0
         self._currentPage = None
+
+        # На случай если при переходе на страницу используется якорь
+        self._anchor = None
 
 
     @abstractmethod

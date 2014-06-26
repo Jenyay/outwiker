@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import os
@@ -12,7 +11,8 @@ import wx
 
 # import pygtk
 # pygtk.require('2.0')
-import gtk, gtk.gdk
+import gtk
+import gtk.gdk
 
 # pywebkitgtk (http://code.google.com/p/pywebkitgtk/)
 # http://webkitgtk.org/reference/webkitgtk/stable/webkitgtk-webkitwebview.html
@@ -69,19 +69,25 @@ class HtmlRenderWebKit(HtmlRender):
 
         self.canOpenUrl = False                # Можно ли открывать ссылки
 
-        # settings = webkit.WebSettings()
-        # settings.set_property ("enable-offline-web-application-cache", "FALSE")
-        # self.ctrl.set_settings (settings)
-
         self.ctrl.connect("navigation-policy-decision-requested", self.__onNavigate)
         self.ctrl.connect("hovering-over-link", self.__onHoveredOverLink)
-        # self.ctrl.connect("populate-popup", self._on_populate_popup)
+        self.ctrl.connect("notify::load-status", self.__onLoadStatus)
 
         self.Bind (wx.EVT_MENU, self.__onCopyFromHtml, id = wx.ID_COPY)
         self.Bind (wx.EVT_MENU, self.__onCopyFromHtml, id = wx.ID_CUT)
 
-        # self.ctrl.get_settings().set_property("enable-page-cache", False)
         self.ctrl.get_settings().set_property("tab-key-cycles-through-elements", False)
+
+        self._path = None
+
+
+    def __onLoadStatus (self, frame, status):
+        loadstatus = self.ctrl.get_load_status()
+
+        if self._anchor is not None and loadstatus.value_nick == "finished":
+            assert self._path is not None
+            self.ctrl.load_uri (self._path + "{}".format (self._anchor))
+            self._anchor = None
 
 
     def Print (self):
@@ -103,9 +109,12 @@ class HtmlRenderWebKit(HtmlRender):
 
     def SetPage (self, htmltext, basepath):
         self.canOpenUrl = True
-        path = "file://" + urllib.quote (basepath.encode ("utf8")) + "/"
+        self._path = "file://" + urllib.quote (basepath.encode ("utf8")) + "/"
 
-        self.ctrl.load_string (htmltext, "text/html", "utf8", path)
+        self.ctrl.load_string (htmltext,
+                               "text/html",
+                               "utf8",
+                               self._path)
         self.canOpenUrl = False
 
 
@@ -114,26 +123,23 @@ class HtmlRenderWebKit(HtmlRender):
         event.Skip()
 
 
-    #def _on_populate_popup (self, view, menu):
-    #    for i in menu.get_children():
-    #        action = i.get_children()[0].get_label()
-    #        print i.get_children()[0]["id"]
-
-
-
     def __identifyUri (self, href):
         """
         Определить тип ссылки и вернуть кортеж (url, page, filename)
         """
-        # basepath = unicode (self.ctrl.get_main_frame().get_uri(), "utf8")
-        basepath = unicode (urllib.unquote (self.ctrl.get_main_frame().get_uri()), "utf8")
-        identifier = UriIdentifierWebKit (self._currentPage, basepath)
+        uri = self.ctrl.get_main_frame().get_uri()
 
-        return identifier.identify (href)
+        if uri is not None:
+            basepath = unicode (urllib.unquote (self.ctrl.get_main_frame().get_uri()), "utf8")
+            identifier = UriIdentifierWebKit (self._currentPage, basepath)
+
+            return identifier.identify (href)
+
+        return (None, None, None, None)
 
 
     def __onHoveredOverLink (self, view, title, uri):
-        if uri == None:
+        if uri is None:
             outwiker.core.commands.setStatusText (u"", self._status_item)
             return
 
@@ -145,19 +151,23 @@ class HtmlRenderWebKit(HtmlRender):
 
         (url, page, filename, anchor) = self.__identifyUri (href)
 
-        if url != None:
+        if url is not None:
             outwiker.core.commands.setStatusText (url, self._status_item)
             return
 
-        if page != None:
-            outwiker.core.commands.setStatusText (page.subpath, self._status_item)
+        if page is not None:
+            text = page.subpath
+            if anchor is not None:
+                text += "/" + anchor
+
+            outwiker.core.commands.setStatusText (text, self._status_item)
             return
 
-        if filename != None:
+        if filename is not None:
             outwiker.core.commands.setStatusText (filename, self._status_item)
             return
 
-        if anchor != None:
+        if anchor is not None:
             outwiker.core.commands.setStatusText (anchor, self._status_item)
             return
 
@@ -204,23 +214,24 @@ class HtmlRenderWebKit(HtmlRender):
 
         (url, page, filename, anchor) = self.__identifyUri (href)
 
-        if url != None:
+        if url is not None:
             self.openUrl (url)
 
-        elif page != None and (button == middle_button or modifier == ctrl_key):
+        elif page is not None and (button == middle_button or modifier == ctrl_key):
             Application.mainWindow.tabsController.openInTab (page, True)
 
-        elif page != None:
+        elif page is not None:
+            self._anchor = anchor
             self._currentPage.root.selectedPage = page
 
-        elif filename != None:
+        elif filename is not None:
             try:
                 outwiker.core.system.getOS().startFile (filename)
             except OSError:
                 text = _(u"Can't execute file '%s'") % filename
                 outwiker.core.commands.MessageBox (text, _(u"Error"), wx.ICON_ERROR | wx.OK)
 
-        elif anchor != None:
+        elif anchor is not None:
             return False
 
         return True

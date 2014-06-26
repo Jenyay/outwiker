@@ -33,7 +33,8 @@ class UriIdentifier (object):
         page = self._getPageByProtocol (href)
 
         if page is not None:
-            return (None, page, None, None)
+            anchor = self._getAnchorByProtocol (href)
+            return (None, page, None, anchor)
 
         href_clear = self._prepareHref (href)
 
@@ -44,12 +45,28 @@ class UriIdentifier (object):
         return (None, page, filename, anchor)
 
 
+    def _getAnchorByProtocol (self, href):
+        """
+        Попытаться найти якорь, если используется ссылка вида page://...
+        """
+        pos = href.rfind ("/#")
+        if pos != -1:
+            return href[pos + 1:]
+
+        return None
+
+
     def _getPageByProtocol (self, href):
         """
         Возвращает страницу, если href - протокол вида page://, и None в противном случае
         """
         protocol = u"page://"
         page = None
+
+        # Если есть якорь, то отсечем его
+        anchorpos = href.rfind ("/#")
+        if anchorpos != -1:
+            href = href[:anchorpos]
 
         if href.startswith (protocol):
             uid = href[len (protocol):]
