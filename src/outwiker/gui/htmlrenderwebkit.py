@@ -84,10 +84,10 @@ class HtmlRenderWebKit(HtmlRender):
     def __onLoadStatus (self, frame, status):
         loadstatus = self.ctrl.get_load_status()
 
-        if self._anchor is not None and loadstatus.value_nick == "finished":
+        if Application.anchor is not None and loadstatus.value_nick == "finished":
             assert self._path is not None
-            self.ctrl.load_uri (self._path + "{}".format (self._anchor))
-            self._anchor = None
+            self.ctrl.load_uri (self._path + "{}".format (Application.anchor))
+            Application.anchor = None
 
 
     def Print (self):
@@ -221,7 +221,7 @@ class HtmlRenderWebKit(HtmlRender):
             Application.mainWindow.tabsController.openInTab (page, True)
 
         elif page is not None:
-            self._anchor = anchor
+            Application.anchor = anchor
             self._currentPage.root.selectedPage = page
 
         elif filename is not None:

@@ -21,6 +21,9 @@ class ApplicationParams (object):
         self.plugins = PluginsLoader (self)
         self.pageUidDepot = PageUidDepot()
 
+        # Якорь, на который должны перейти при переходе на другую страницу
+        self._anchor = None
+
         # Создать экземпляры событий
 
         # Открытие вики
@@ -139,6 +142,16 @@ class ApplicationParams (object):
         self.config = Config (configFilename)
         self.recentWiki = RecentWiki (self.config)
         self.__initLocale()
+
+
+    @property
+    def anchor (self):
+        return self._anchor
+
+
+    @anchor.setter
+    def anchor (self, value):
+        self._anchor = value
 
 
     @property

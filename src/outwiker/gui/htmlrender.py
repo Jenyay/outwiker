@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 from abc import abstractmethod
@@ -21,9 +20,6 @@ class HtmlRender (wx.Panel):
         # Номер элемента статусной панели, куда выводится текст
         self._status_item = 0
         self._currentPage = None
-
-        # На случай если при переходе на страницу используется якорь
-        self._anchor = None
 
 
     @abstractmethod

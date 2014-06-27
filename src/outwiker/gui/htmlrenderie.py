@@ -91,9 +91,9 @@ class HtmlRenderIE (HtmlRender):
         self.canOpenUrl = True
         path = fname
 
-        if self._anchor is not None:
-            path += self._anchor
-            self._anchor = None
+        if Application.anchor is not None:
+            path += Application.anchor
+            Application.anchor = None
 
         self.render.Navigate (path)
 
@@ -167,11 +167,11 @@ class HtmlRenderIE (HtmlRender):
             self.openUrl (url)
 
         elif page is not None and ctrlstate:
-            self._anchor = anchor
+            Application.anchor = anchor
             Application.mainWindow.tabsController.openInTab (page, True)
 
         elif page is not None:
-            self._anchor = anchor
+            Application.anchor = anchor
             self._currentPage.root.selectedPage = page
 
         elif filename is not None:
