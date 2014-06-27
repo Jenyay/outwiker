@@ -39,13 +39,6 @@ class SourceEncodingPluginTest (unittest.TestCase):
         self.parser = self.factory.make (self.testPage, Application.config)
 
 
-    def __readFile (self, path):
-        with open (path) as fp:
-            result = unicode (fp.read(), "utf8")
-
-        return result
-
-
     def __createWiki (self):
         # Здесь будет создаваться вики
         self.path = u"../test/testwiki"
@@ -71,8 +64,7 @@ class SourceEncodingPluginTest (unittest.TestCase):
         self.testPage.content = content
 
         generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
-        result = self.__readFile (htmlpath)
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
         self.assertTrue (u'<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>' in result)
         self.assertTrue (u'Ошибка соединения с сервером' in result)
@@ -87,8 +79,7 @@ class SourceEncodingPluginTest (unittest.TestCase):
         self.testPage.content = content
 
         generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
-        result = self.__readFile (htmlpath)
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
         self.assertTrue (u'<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>' not in result)
         self.assertTrue (u'Ошибка соединения с сервером' not in result)
@@ -105,8 +96,7 @@ class SourceEncodingPluginTest (unittest.TestCase):
         self.testPage.content = content
 
         generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
-        result = self.__readFile (htmlpath)
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
         self.assertTrue (u'<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>' not in result)
         self.assertTrue (u'Ошибка соединения с сервером' not in result)
@@ -123,8 +113,7 @@ class SourceEncodingPluginTest (unittest.TestCase):
         self.testPage.content = content
 
         generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
-        result = self.__readFile (htmlpath)
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
         self.assertTrue (u'<span class="kn">import</span> <span class="nn">os.path</span>' not in result)
 

@@ -14,6 +14,7 @@ from outwiker.core.config import IntegerOption
 from outwiker.gui.basetextpanel import BaseTextPanel
 from outwiker.gui.htmlrenderfactory import getHtmlRender
 from outwiker.actions.search import SearchAction, SearchNextAction, SearchPrevAction, SearchAndReplaceAction
+from outwiker.core.system import writeTextFile
 
 # Событие вызывается, когда переключаются вкладки страницы (код, HTML, ...)
 PageTabChangedEvent, EVT_PAGE_TAB_CHANGED = wx.lib.newevent.NewEvent()
@@ -31,7 +32,10 @@ class BaseHtmlPanel(BaseTextPanel):
         super (BaseHtmlPanel, self).__init__ (parent, *args, **kwds)
 
         self._htmlFile = "__content.html"
-        self.currentHtmlFile = None
+
+        # Предыдущее содержимое результирующего HTML, чтобы не переписывать
+        # его каждый раз
+        self._oldHtmlResult = u""
 
         # Где хранить параметы текущей страницы страницы (код, просмотр и т.д.)
         self.tabSectionName = u"Misc"
@@ -211,7 +215,7 @@ class BaseHtmlPanel(BaseTextPanel):
         pass
 
 
-    def getHtmlPath (self, path):
+    def getHtmlPath (self):
         """
         Получить путь до результирующего файла HTML
         """
@@ -286,8 +290,12 @@ class BaseHtmlPanel(BaseTextPanel):
         Application.onHtmlRenderingBegin (self._currentpage, self.htmlWindow)
 
         try:
-            self.currentHtmlFile = self.generateHtml (self._currentpage)
-            self.htmlWindow.LoadPage (self.currentHtmlFile)
+            html = self.generateHtml (self._currentpage)
+            if self._oldHtmlResult != html:
+                path = self.getHtmlPath()
+                writeTextFile (path, html)
+                self.htmlWindow.LoadPage (path)
+                self._oldHtmlResult = html
         except IOError as e:
             # TODO: Проверить под Windows
             MessageBox (_(u"Can't save file %s") % (unicode (e.filename)),

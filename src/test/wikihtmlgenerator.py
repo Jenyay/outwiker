@@ -3,13 +3,13 @@
 import os
 import os.path
 import unittest
-import time
 
 from outwiker.core.tree import WikiDocument
 from outwiker.core.attachment import Attachment
 from outwiker.core.application import Application
 from outwiker.core.style import Style
 from outwiker.gui.guiconfig import HtmlRenderConfig
+from outwiker.core.system import writeTextFile
 
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.htmlgenerator import HtmlGenerator
@@ -44,6 +44,8 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
         self.__htmlconfig = HtmlRenderConfig (Application.config)
         self.__setDefaultConfig()
 
+        self.resultPath = os.path.join (self.testPage.path, u"__content.html")
+
 
     def __setDefaultConfig (self):
         # Установим размер превьюшки, не совпадающий с размером по умолчанию
@@ -72,20 +74,14 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
         removeWiki (self.path)
 
 
-    def test1 (self):
-        generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
-
-        self.assertEqual (htmlpath, os.path.join (self.testPage.path, u"__content.html"))
-        self.assertTrue (os.path.exists (htmlpath))
-
-
     def testCache1 (self):
         # Только создали страницу, кешировать нельзя
         generator = HtmlGenerator (self.testPage)
         self.assertFalse (generator.canReadFromCache())
 
-        generator.makeHtml (Style().getPageStyle (self.testPage))
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
+        writeTextFile (self.resultPath, result)
+
         # После того, как один раз сгенерили страницу, если ничего не изменилось, можно кешировать
         self.assertTrue (generator.canReadFromCache())
 
@@ -93,7 +89,9 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
 
         # Изменили содержимое страницы, опять нельзя кешировать
         self.assertFalse (generator.canReadFromCache())
-        generator.makeHtml (Style().getPageStyle (self.testPage))
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
+        writeTextFile (self.resultPath, result)
+
         self.assertTrue (generator.canReadFromCache())
 
         # Добавим файл
@@ -101,52 +99,10 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
         attach.attach ([os.path.join (self.filesPath, u"add.png")])
 
         self.assertFalse (generator.canReadFromCache())
-        generator.makeHtml (Style().getPageStyle (self.testPage))
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
+        writeTextFile (self.resultPath, result)
+
         self.assertTrue (generator.canReadFromCache())
-
-
-    def testCache2 (self):
-        # Только создали страницу, кешировать нельзя
-        generator = HtmlGenerator (self.testPage)
-
-        path = generator.makeHtml (Style().getPageStyle (self.testPage))
-        ftime = os.stat(path).st_mtime
-        time.sleep (0.1)
-
-        generator.makeHtml (Style().getPageStyle (self.testPage))
-        ftime2 = os.stat(path).st_mtime
-
-        self.assertEqual (ftime, ftime2)
-        time.sleep (0.1)
-
-        # Изменили содержимое страницы, опять нельзя кешировать
-        self.testPage.content = u"бла-бла-бла"
-        generator.makeHtml (Style().getPageStyle (self.testPage))
-        ftime3 = os.stat(path).st_mtime
-
-        self.assertNotEqual (ftime2, ftime3)
-        time.sleep (0.1)
-
-        generator.makeHtml (Style().getPageStyle (self.testPage))
-        ftime4 = os.stat(path).st_mtime
-
-        self.assertEqual (ftime3, ftime4)
-        time.sleep (0.1)
-
-        # Добавим файл
-        attach = Attachment (self.testPage)
-        attach.attach ([os.path.join (self.filesPath, u"add.png")])
-
-        generator.makeHtml (Style().getPageStyle (self.testPage))
-        ftime5 = os.stat(path).st_mtime
-
-        self.assertNotEqual (ftime4, ftime5)
-        time.sleep (0.1)
-
-        generator.makeHtml (Style().getPageStyle (self.testPage))
-        ftime6 = os.stat(path).st_mtime
-
-        self.assertEqual (ftime5, ftime6)
 
 
     def testCacheRename (self):
@@ -154,7 +110,9 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
         generator = HtmlGenerator (self.testPage)
         self.assertFalse (generator.canReadFromCache())
 
-        generator.makeHtml (Style().getPageStyle (self.testPage))
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
+        writeTextFile (self.resultPath, result)
+
         # После того, как один раз сгенерили страницу, если ничего не изменилось, можно кешировать
         self.assertTrue (generator.canReadFromCache())
 
@@ -162,7 +120,8 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
 
         # Изменили содержимое страницы, опять нельзя кешировать
         self.assertFalse (generator.canReadFromCache())
-        generator.makeHtml (Style().getPageStyle (self.testPage))
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
+
         self.assertTrue (generator.canReadFromCache())
 
         # Изменили заголовок
@@ -170,7 +129,8 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
 
         # Добавим файл
         self.assertFalse (generator.canReadFromCache())
-        generator.makeHtml (Style().getPageStyle (self.testPage))
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
+
         self.assertTrue (generator.canReadFromCache())
 
 
@@ -181,20 +141,23 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
         # Только создали страницу, кешировать нельзя
         generator = HtmlGenerator (self.testPage)
         self.assertFalse (generator.canReadFromCache())
-        generator.makeHtml (Style().getPageStyle (self.testPage))
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
+        writeTextFile (self.resultPath, result)
 
         # Страница пустая, изменился шаблон для путой записи
         emptycontent.content = u"1111"
         self.assertFalse (generator.canReadFromCache())
-        generator.makeHtml (Style().getPageStyle (self.testPage))
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
+        writeTextFile (self.resultPath, result)
 
         # Изменилось содержимое страницы
         self.testPage.content = u"Бла-бла-бла"
         self.assertFalse (generator.canReadFromCache())
-        generator.makeHtml (Style().getPageStyle (self.testPage))
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
+        writeTextFile (self.resultPath, result)
 
         self.assertTrue (generator.canReadFromCache())
-        generator.makeHtml (Style().getPageStyle (self.testPage))
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
         # Изменился шаблон страницы, но страница уже не пустая
         emptycontent.content = u"2222"
@@ -208,7 +171,9 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
         generator = HtmlGenerator (self.testPage)
         self.assertFalse (generator.canReadFromCache())
 
-        generator.makeHtml (Style().getPageStyle (self.testPage))
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
+        writeTextFile (self.resultPath, result)
+
         # После того, как один раз сгенерили страницу, если ничего не изменилось, можно кешировать
         self.assertTrue (generator.canReadFromCache())
 
@@ -223,7 +188,8 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
         os.mkdir (subdir)
         self.assertFalse (generator.canReadFromCache())
 
-        generator.makeHtml (Style().getPageStyle (self.testPage))
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
+        writeTextFile (self.resultPath, result)
 
         # Добавим файл в dir/subdir_2
         with open (os.path.join (subdir, "temp2.tmp"), "w") as fp:
@@ -240,14 +206,17 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
         generator = HtmlGenerator (self.testPage)
         self.assertFalse (generator.canReadFromCache())
 
-        generator.makeHtml (Style().getPageStyle (self.testPage))
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
+        writeTextFile (self.resultPath, result)
+
         self.assertTrue (generator.canReadFromCache())
 
         # Добавляем новую подстраницу
         WikiPageFactory().create (self.testPage, u"Подстраница 1", [])
         self.assertFalse (generator.canReadFromCache())
 
-        generator.makeHtml (Style().getPageStyle (self.testPage))
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
+        writeTextFile (self.resultPath, result)
         self.assertTrue (generator.canReadFromCache())
 
 
@@ -261,7 +230,8 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
         generator = HtmlGenerator (self.testPage)
         self.assertFalse (generator.canReadFromCache())
 
-        generator.makeHtml (Style().getPageStyle (self.testPage))
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
+        writeTextFile (self.resultPath, result)
         self.assertTrue (generator.canReadFromCache())
 
         exampleStyleDir = u"../test/styles/example_jblog/example_jblog"
@@ -271,21 +241,24 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
         style.setPageStyle (self.testPage, exampleStyleDir)
 
         self.assertFalse (generator.canReadFromCache())
-        generator.makeHtml (Style().getPageStyle (self.testPage))
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
+        writeTextFile (self.resultPath, result)
         self.assertTrue (generator.canReadFromCache())
 
         # Еще раз изменим стиль
         style.setPageStyle (self.testPage, exampleStyleDir2)
 
         self.assertFalse (generator.canReadFromCache())
-        generator.makeHtml (Style().getPageStyle (self.testPage))
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
+        writeTextFile (self.resultPath, result)
         self.assertTrue (generator.canReadFromCache())
 
         # Установим стиль по умолчанию
         style.setPageStyleDefault (self.testPage)
 
         self.assertFalse (generator.canReadFromCache())
-        generator.makeHtml (Style().getPageStyle (self.testPage))
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
+        writeTextFile (self.resultPath, result)
         self.assertTrue (generator.canReadFromCache())
 
 
@@ -299,11 +272,7 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
         self.testPage.content = u""
 
         generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml(Style().getPageStyle (self.testPage))
-
-        # Проверим, что в результирующем файле есть содержимое text
-        with open (htmlpath) as fp:
-            result = unicode (fp.read(), "utf8")
+        result = generator.makeHtml(Style().getPageStyle (self.testPage))
 
         self.assertTrue (text in result)
 
@@ -318,11 +287,7 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
         self.testPage.content = u""
 
         generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml(Style().getPageStyle (self.testPage))
-
-        # Проверим, что в результирующем файле есть содержимое text
-        with open (htmlpath) as fp:
-            result = unicode (fp.read(), "utf8")
+        result = generator.makeHtml(Style().getPageStyle (self.testPage))
 
         self.assertTrue (u"image.jpg" in result)
 
@@ -335,7 +300,8 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
         generator = HtmlGenerator (self.testPage)
         self.assertFalse (generator.canReadFromCache())
 
-        generator.makeHtml (Style().getPageStyle (self.testPage))
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
+        writeTextFile (self.resultPath, result)
         # После того, как один раз сгенерили страницу, если ничего не изменилось, можно кешировать
         self.assertTrue (generator.canReadFromCache())
 
@@ -360,7 +326,8 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
         generator = HtmlGenerator (self.testPage)
         self.assertFalse (generator.canReadFromCache())
 
-        generator.makeHtml (Style().getPageStyle (self.testPage))
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
+        writeTextFile (self.resultPath, result)
 
         Application.plugins.clear()
 
@@ -383,20 +350,22 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
         generator = HtmlGenerator (self.testPage)
         self.assertFalse (generator.canReadFromCache())
 
-        generator.makeHtml (Style().getPageStyle (self.testPage))
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
+        writeTextFile (self.resultPath, result)
         # После того, как один раз сгенерили страницу, если ничего не изменилось, можно кешировать
         self.assertTrue (generator.canReadFromCache())
 
         Application.config.set (WikiConfig.WIKI_SECTION, WikiConfig.THUMB_SIZE_PARAM, WikiConfig.THUMB_SIZE_DEFAULT + 100)
 
         self.assertFalse (generator.canReadFromCache())
-        generator.makeHtml (Style().getPageStyle (self.testPage))
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
+        writeTextFile (self.resultPath, result)
         self.assertTrue (generator.canReadFromCache())
 
         Application.config.set (WikiConfig.WIKI_SECTION, WikiConfig.THUMB_SIZE_PARAM, u"Бла-бла-бла")
         self.assertFalse (generator.canReadFromCache())
 
-        generator.makeHtml (Style().getPageStyle (self.testPage))
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
         Application.config.set (WikiConfig.WIKI_SECTION, WikiConfig.THUMB_SIZE_PARAM, WikiConfig.THUMB_SIZE_DEFAULT)
         self.assertTrue (generator.canReadFromCache())
 
@@ -409,7 +378,8 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
         generator = HtmlGenerator (self.testPage)
         self.assertFalse (generator.canReadFromCache())
 
-        generator.makeHtml (Style().getPageStyle (self.testPage))
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
+        writeTextFile (self.resultPath, result)
         # После того, как один раз сгенерили страницу, если ничего не изменилось, можно кешировать
         self.assertTrue (generator.canReadFromCache())
 
@@ -418,7 +388,7 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
                                 u"Бла-бла-бла")
 
         self.assertFalse (generator.canReadFromCache())
-        generator.makeHtml (Style().getPageStyle (self.testPage))
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
         self.assertTrue (generator.canReadFromCache())
 
 
@@ -427,7 +397,8 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
         generator = HtmlGenerator (self.testPage)
         self.assertFalse (generator.canReadFromCache())
 
-        generator.makeHtml (Style().getPageStyle (self.testPage))
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
+        writeTextFile (self.resultPath, result)
 
         # После того, как один раз сгенерили страницу, если ничего не изменилось, можно кешировать
         self.assertTrue (generator.canReadFromCache())
@@ -439,10 +410,12 @@ class WikiHtmlGeneratorTest (unittest.TestCase):
     def testResetHash2 (self):
         # Только создали страницу, кешировать нельзя
         generator = HtmlGenerator (self.testPage)
+
         self.assertFalse (generator.canReadFromCache())
         generator.resetHash()
 
-        generator.makeHtml (Style().getPageStyle (self.testPage))
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
+        writeTextFile (self.resultPath, result)
 
         # После того, как один раз сгенерили страницу, если ничего не изменилось, можно кешировать
         self.assertTrue (generator.canReadFromCache())

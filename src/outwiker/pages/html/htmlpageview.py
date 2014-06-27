@@ -570,7 +570,7 @@ class HtmlPageView (BaseHtmlPanel):
 
 
     def generateHtml (self, page):
-        path = self.getHtmlPath (page)
+        path = self.getHtmlPath ()
 
         if page.readonly and os.path.exists (path):
             # Если страница открыта только для чтения и html-файл уже существует, то покажем его
@@ -597,10 +597,10 @@ class HtmlPageView (BaseHtmlPanel):
         result = tpl.substitute (content = text,
                                  userhead = userhead)
 
-        with open (path, "wb") as fp:
-            fp.write (result.encode ("utf-8"))
+        # with open (path, "wb") as fp:
+        #     fp.write (result.encode ("utf-8"))
 
-        return path
+        return result
 
 
     def removeGui (self):

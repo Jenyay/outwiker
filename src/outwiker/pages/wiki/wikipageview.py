@@ -247,8 +247,8 @@ class WikiPageView (BaseHtmlPanel):
         self._application.onHtmlRenderingBegin (self._currentpage, self.htmlWindow)
 
         try:
-            self.currentHtmlFile = self.generateHtml (self._currentpage)
-            self._showHtmlCode(self.currentHtmlFile)
+            html = self.generateHtml (self._currentpage)
+            self._showHtmlCode(html)
         except IOError as e:
             # TODO: Проверить под Windows
             MessageBox (_(u"Can't save file %s") % (unicode (e.filename)),
@@ -263,14 +263,11 @@ class WikiPageView (BaseHtmlPanel):
         self._application.onHtmlRenderingEnd (self._currentpage, self.htmlWindow)
 
 
-    def _showHtmlCode (self, path):
+    def _showHtmlCode (self, html):
         try:
-            with open (path) as fp:
-                text = unicode (fp.read(), "utf8")
-
-                self.htmlCodeWindow.SetReadOnly (False)
-                self.htmlCodeWindow.SetText (text)
-                self.htmlCodeWindow.SetReadOnly (True)
+            self.htmlCodeWindow.SetReadOnly (False)
+            self.htmlCodeWindow.SetText (html)
+            self.htmlCodeWindow.SetReadOnly (True)
         except IOError:
             MessageBox (_(u"Can't load HTML-file"), _(u"Error"), wx.ICON_ERROR | wx.OK)
         except OSError:

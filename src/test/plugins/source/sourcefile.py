@@ -39,13 +39,6 @@ class SourceFilePluginTest (unittest.TestCase):
         self.parser = self.factory.make (self.testPage, Application.config)
 
 
-    def __readFile (self, path):
-        with open (path) as fp:
-            result = unicode (fp.read(), "utf8")
-
-        return result
-
-
     def __createWiki (self):
         # Здесь будет создаваться вики
         self.path = u"../test/testwiki"
@@ -68,8 +61,7 @@ class SourceFilePluginTest (unittest.TestCase):
         self.testPage.content = content
 
         generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
-        result = self.__readFile (htmlpath)
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
         self.assertTrue (u"__correctSysPath()" in result)
         self.assertTrue (u"Плагин, добавляющий обработку команды (:source:) в википарсер" in result)
@@ -81,8 +73,7 @@ class SourceFilePluginTest (unittest.TestCase):
         self.testPage.content = content
 
         generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
-        result = self.__readFile (htmlpath)
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
         self.assertTrue (u"__correctSysPath()" in result)
         self.assertTrue (u"Плагин, добавляющий обработку команды (:source:) в википарсер" in result)
@@ -94,8 +85,7 @@ class SourceFilePluginTest (unittest.TestCase):
         self.testPage.content = content
 
         generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
-        result = self.__readFile (htmlpath)
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
         self.assertTrue (u"__correctSysPath()" in result)
         self.assertTrue (u"Плагин, добавляющий обработку команды (:source:) в википарсер" in result)
@@ -107,8 +97,7 @@ class SourceFilePluginTest (unittest.TestCase):
         self.testPage.content = content
 
         generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
-        result = self.__readFile (htmlpath)
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
         self.assertTrue (u"__correctSysPath()" in result)
         self.assertTrue (u"Плагин, добавляющий обработку команды (:source:) в википарсер" in result)
@@ -120,8 +109,7 @@ class SourceFilePluginTest (unittest.TestCase):
         self.testPage.content = content
 
         generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
-        result = self.__readFile (htmlpath)
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
         self.assertTrue (u"__correctSysPath()" in result)
         self.assertTrue (u"Плагин, добавляющий обработку команды (:source:) в википарсер" in result)
@@ -133,8 +121,7 @@ class SourceFilePluginTest (unittest.TestCase):
         self.testPage.content = content
 
         generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
-        result = self.__readFile (htmlpath)
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
         self.assertTrue (u"__correctSysPath()" in result)
         self.assertTrue (u"Плагин, добавляющий обработку команды (:source:) в википарсер" in result)
@@ -150,8 +137,7 @@ class SourceFilePluginTest (unittest.TestCase):
         self.testPage.content = content
 
         generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
-        result = self.__readFile (htmlpath)
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
         self.assertTrue (u'<span class="kn">import</span> <span class="nn">os.path</span>' in result)
         self.assertTrue (u'<span class="bp">self</span><span class="o">.</span><span class="n">__correctSysPath</span><span class="p">()</span>' in result)
@@ -166,8 +152,7 @@ class SourceFilePluginTest (unittest.TestCase):
         self.testPage.content = content
 
         generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
-        result = self.__readFile (htmlpath)
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
         self.assertTrue (u'<span class="kn">import</span> <span class="nn">os.path</span>' in result)
         self.assertTrue (u'<span class="bp">self</span><span class="o">.</span><span class="n">__correctSysPath</span><span class="p">()</span>' in result)
@@ -182,8 +167,7 @@ class SourceFilePluginTest (unittest.TestCase):
         self.testPage.content = content
 
         generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
-        result = self.__readFile (htmlpath)
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
         self.assertTrue (u'<span class="kn">import</span> <span class="nn">os.path</span>' not in result)
         self.assertTrue (u'import os.path' in result)
@@ -200,7 +184,6 @@ class SourceFilePluginTest (unittest.TestCase):
         self.testPage.content = content
 
         generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
-        result = self.__readFile (htmlpath)
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
         self.assertTrue (u'source_utf8111.py' in result, result)

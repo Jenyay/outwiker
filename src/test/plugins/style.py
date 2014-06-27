@@ -76,8 +76,7 @@ body {font-size: 33px}
         self.testPage.content = text
 
         generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
-        result = self.__readFile (htmlpath)
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
         validStyle = u"<STYLE>body {font-size: 33px}</STYLE>"
 
@@ -101,18 +100,10 @@ body {font-size: 10px}
         self.testPage.content = text
 
         generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
-        result = self.__readFile (htmlpath)
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
         validStyle1 = u"<STYLE>body {font-size: 33px}</STYLE>"
         validStyle2 = u"<STYLE>body {font-size: 10px}</STYLE>"
 
         self.assertTrue (validStyle1 in result, result)
         self.assertTrue (validStyle2 in result, result)
-
-
-    def __readFile (self, path):
-        with open (path) as fp:
-            result = unicode (fp.read(), "utf8")
-
-        return result

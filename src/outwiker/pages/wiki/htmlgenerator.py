@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import os.path
@@ -32,23 +31,19 @@ class HtmlGenerator (object):
         path = self.getResultPath()
 
         if self.canReadFromCache():
-            return path
+            return readTextFile (path)
 
         factory = ParserFactory ()
         parser = factory.make(self.page, Application.config)
 
         content = self.page.content if len (self.page.content) > 0 else self._generateEmptyContent (parser)
 
-        text = HtmlImprover.run (parser.toHtml (content) )
+        text = HtmlImprover.run (parser.toHtml (content))
         head = parser.head
 
-        tpl = HtmlTemplate (readTextFile (stylepath) )
+        tpl = HtmlTemplate (readTextFile (stylepath))
 
         result = tpl.substitute (content=text, userhead=head)
-
-
-        with open (path, "wb") as fp:
-            fp.write (result.encode ("utf-8"))
 
         try:
             self._getHashOption().value = self.getHash()
@@ -57,7 +52,7 @@ class HtmlGenerator (object):
             # Максимум, что грозит пользователю, каждый раз генерить старницу
             pass
 
-        return path
+        return result
 
 
     def _generateEmptyContent (self, parser):
@@ -93,8 +88,7 @@ class HtmlGenerator (object):
 
 
     def _getHashOption (self):
-        return StringOption (
-                self.page.params,
-                self._configSection, 
-                self._hashKey, 
-                u"")
+        return StringOption (self.page.params,
+                             self._configSection,
+                             self._hashKey,
+                             u"")

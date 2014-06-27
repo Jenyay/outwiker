@@ -49,13 +49,6 @@ def hello (count):
         self.parser = self.factory.make (self.testPage, Application.config)
 
 
-    def __readFile (self, path):
-        with open (path) as fp:
-            result = unicode (fp.read(), "utf8")
-
-        return result
-
-
     def __createWiki (self):
         # Здесь будет создаваться вики
         self.path = u"../test/testwiki"
@@ -80,8 +73,7 @@ def hello (count):
         self.testPage.content = text
 
         generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
-        result = self.__readFile (htmlpath)
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
         innerString1 = u".highlight-default .c"
         innerString2 = u".highlight-default .c { color: #408080; font-style: italic } /* Comment */"
@@ -102,8 +94,7 @@ def hello (count):
         self.config.defaultStyle.value = "invalid_blablabla"
 
         generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
-        result = self.__readFile (htmlpath)
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
         innerString1 = u".highlight-default .c"
         innerString2 = u".highlight-default .c { color: #408080; font-style: italic } /* Comment */"
@@ -124,8 +115,7 @@ def hello (count):
         self.config.defaultStyle.value = ""
 
         generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
-        result = self.__readFile (htmlpath)
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
         innerString1 = u".highlight-default .c"
         innerString2 = u".highlight-default .c { color: #408080; font-style: italic } /* Comment */"
@@ -146,8 +136,7 @@ def hello (count):
         self.config.defaultStyle.value = "vim"
 
         generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
-        result = self.__readFile (htmlpath)
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
         innerString1 = u".highlight-vim .c"
         innerString2 = u".highlight-vim .c { color: #000080 } /* Comment */"
@@ -166,8 +155,7 @@ def hello (count):
         self.testPage.content = text
 
         generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
-        result = self.__readFile (htmlpath)
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
         innerString1 = u".highlight-default .c"
         innerString2 = u".highlight-default .c { color: #408080; font-style: italic } /* Comment */"
@@ -186,8 +174,7 @@ def hello (count):
         self.testPage.content = text
 
         generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
-        result = self.__readFile (htmlpath)
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
         innerString1 = u".highlight-vim .c"
         innerString2 = u".highlight-vim .c { color: #000080 } /* Comment */"
@@ -208,8 +195,7 @@ def hello (count):
         self.testPage.content = text
 
         generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
-        result = self.__readFile (htmlpath)
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
         innerString1 = u".highlight-vim .c"
         innerString2 = u".highlight-vim .c { color: #000080 } /* Comment */"
@@ -237,8 +223,7 @@ def hello (count):
         self.testPage.content = text
 
         generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
-        result = self.__readFile (htmlpath)
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
         innerString1 = u".highlight-default .c"
         innerString2 = u".highlight-default .c { color: #408080; font-style: italic } /* Comment */"
@@ -256,8 +241,7 @@ def hello (count):
         self.config.defaultStyle.value = "invalid_blablabla"
 
         generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
-        result = self.__readFile (htmlpath)
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
         innerString1 = u".highlight-default .c"
         innerString2 = u".highlight-default .c { color: #408080; font-style: italic } /* Comment */"
@@ -275,8 +259,7 @@ def hello (count):
         self.config.defaultStyle.value = ""
 
         generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
-        result = self.__readFile (htmlpath)
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
         innerString1 = u".highlight-default .c"
         innerString2 = u".highlight-default .c { color: #408080; font-style: italic } /* Comment */"
@@ -293,8 +276,7 @@ def hello (count):
         self.config.defaultStyle.value = "vim"
 
         generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
-        result = self.__readFile (htmlpath)
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
         innerString1 = u".highlight-vim .c"
         innerString2 = u".highlight-vim .c { color: #000080 } /* Comment */"
@@ -310,8 +292,7 @@ def hello (count):
         self.config.defaultStyle.value = "vim"
 
         generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
-        result = self.__readFile (htmlpath)
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
         innerString1 = u".highlight-vim pre {padding: 0px; border: none; color: inherit; background-color: inherit; margin:0px; }"
         innerString2 = u".highlight-vim {color: inherit; background-color: inherit }"
@@ -327,8 +308,7 @@ def hello (count):
         self.config.defaultStyle.value = "vim"
 
         generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
-        result = self.__readFile (htmlpath)
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
         innerString1 = u".highlight-vim-parentbg pre {padding: 0px; border: none; color: inherit; background-color: inherit; margin:0px; }"
         innerString2 = u".highlight-vim-parentbg {color: inherit; background-color: inherit }"
@@ -350,8 +330,7 @@ def hello (count):
         self.config.defaultStyle.value = "vim"
 
         generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
-        result = self.__readFile (htmlpath)
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
         innerString1 = u".highlight-vim-parentbg pre {padding: 0px; border: none; color: inherit; background-color: inherit; margin:0px; }"
         innerString2 = u".highlight-vim-parentbg {color: inherit; background-color: inherit }"
@@ -375,8 +354,7 @@ def hello (count):
         self.config.defaultStyle.value = "vim"
 
         generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
-        result = self.__readFile (htmlpath)
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
         innerString1 = u".highlight-vim-parentbg pre {padding: 0px; border: none; color: inherit; background-color: inherit; margin:0px; }"
         innerString2 = u".highlight-vim-parentbg {color: inherit; background-color: inherit }"

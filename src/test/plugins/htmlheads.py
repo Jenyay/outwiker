@@ -5,7 +5,6 @@ import unittest
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
-from outwiker.core.system import readTextFile
 from outwiker.core.style import Style
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
@@ -55,8 +54,7 @@ class HtmlHeadsTest (unittest.TestCase):
         self.testPage.content = text
 
         generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
-        result = readTextFile (htmlpath)
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
         self.assertIn (u"<title>Бла-бла-бла</title>", result)
 
@@ -67,8 +65,7 @@ class HtmlHeadsTest (unittest.TestCase):
         self.testPage.content = text
 
         generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
-        result = readTextFile (htmlpath)
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
         self.assertIn (u"<title>Бла-бла-бла бла-бла</title>", result)
 
@@ -79,8 +76,7 @@ class HtmlHeadsTest (unittest.TestCase):
         self.testPage.content = text
 
         generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
-        result = readTextFile (htmlpath)
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
         self.assertIn (u'<meta name="description" content="Бла-бла-бла абырвалг"/>', result)
 
@@ -91,8 +87,7 @@ class HtmlHeadsTest (unittest.TestCase):
         self.testPage.content = text
 
         generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
-        result = readTextFile (htmlpath)
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
         self.assertIn (u'<meta name="description" content="Бла-бла-бла абырвалг"/>', result)
 
@@ -103,8 +98,7 @@ class HtmlHeadsTest (unittest.TestCase):
         self.testPage.content = text
 
         generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
-        result = readTextFile (htmlpath)
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
         self.assertIn (u'<meta name="description" content=""/>', result)
 
@@ -115,8 +109,7 @@ class HtmlHeadsTest (unittest.TestCase):
         self.testPage.content = text
 
         generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
-        result = readTextFile (htmlpath)
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
         self.assertIn (u'<meta name="keywords" content="Бла-бла-бла, абырвалг"/>', result)
 
@@ -127,8 +120,7 @@ class HtmlHeadsTest (unittest.TestCase):
         self.testPage.content = text
 
         generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
-        result = readTextFile (htmlpath)
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
         self.assertIn (u'<meta name="keywords" content="Бла-бла-бла, абырвалг"/>', result)
 
@@ -139,8 +131,7 @@ class HtmlHeadsTest (unittest.TestCase):
         self.testPage.content = text
 
         generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
-        result = readTextFile (htmlpath)
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
         self.assertIn (u'<meta name="keywords" content=""/>', result)
 
@@ -151,8 +142,7 @@ class HtmlHeadsTest (unittest.TestCase):
         self.testPage.content = text
 
         generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
-        result = readTextFile (htmlpath)
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
         self.assertIn (u'<meta name="keywords" content="Бла-бла-бла, абырвалг"/>', result)
         self.assertNotIn ("(:htmlhead:)", result)
@@ -167,8 +157,7 @@ class HtmlHeadsTest (unittest.TestCase):
         self.testPage.content = text
 
         generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
-        result = readTextFile (htmlpath)
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
         self.assertIn (u'<meta name="keywords" content="Бла-бла-бла, абырвалг"/>', result)
         self.assertIn (u'<meta name="description" content="Бла-бла-бла абырвалг"/>', result)
@@ -181,7 +170,6 @@ class HtmlHeadsTest (unittest.TestCase):
         self.testPage.content = text
 
         generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
-        result = readTextFile (htmlpath)
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
         self.assertNotIn ("(:htmlhead:)", result)

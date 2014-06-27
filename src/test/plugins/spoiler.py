@@ -27,13 +27,6 @@ class SpoilerPluginTest (unittest.TestCase):
         self.parser = self.factory.make (self.testPage, Application.config)
 
 
-    def __readFile (self, path):
-        with open (path) as fp:
-            result = unicode (fp.read(), "utf8")
-
-        return result
-
-
     def __createWiki (self):
         # Здесь будет создаваться вики
         self.path = u"../test/testwiki"
@@ -76,8 +69,7 @@ class SpoilerPluginTest (unittest.TestCase):
         self.testPage.content = text
 
         generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
-        result = self.__readFile (htmlpath)
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
         self.assertTrue (u"bla-bla-bla" in result)
 
@@ -88,8 +80,7 @@ class SpoilerPluginTest (unittest.TestCase):
         self.testPage.content = text
 
         generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
-        result = self.__readFile (htmlpath)
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
         self.assertTrue (u"бла-бла-бла" in result)
         self.assertTrue (u"Текст</div></div></div>" in result)
@@ -102,8 +93,7 @@ class SpoilerPluginTest (unittest.TestCase):
             self.testPage.content = text
 
             generator = HtmlGenerator (self.testPage)
-            htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
-            result = self.__readFile (htmlpath)
+            result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
             self.assertTrue (u"бла-бла-бла" in result)
             self.assertTrue (u"Текст</div></div></div>" in result)
@@ -115,8 +105,7 @@ class SpoilerPluginTest (unittest.TestCase):
         self.testPage.content = text
 
         generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
-        result = self.__readFile (htmlpath)
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
         self.assertTrue (u"бла-бла-бла" in result)
         self.assertTrue (u"<b>Текст</b></div></div></div>" in result)
@@ -128,8 +117,7 @@ class SpoilerPluginTest (unittest.TestCase):
         self.testPage.content = text
 
         generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
-        result = self.__readFile (htmlpath)
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
         self.assertTrue (u"бла-бла-бла" in result)
         self.assertTrue (u"Текст</div></div></div>" in result)
@@ -142,8 +130,7 @@ class SpoilerPluginTest (unittest.TestCase):
         self.testPage.content = text
 
         generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
-        result = self.__readFile (htmlpath)
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
         self.assertTrue (u"бла-бла-бла" in result)
         self.assertTrue (u"Текст</div></div></div>" in result)
@@ -156,8 +143,7 @@ class SpoilerPluginTest (unittest.TestCase):
         self.testPage.content = text
 
         generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
-        result = self.__readFile (htmlpath)
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
         self.assertTrue (u"бла-бла-бла" in result)
         self.assertTrue (u"Текст</div></div></div>" in result)
@@ -171,8 +157,7 @@ class SpoilerPluginTest (unittest.TestCase):
         self.testPage.content = text
 
         generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
-        result = self.__readFile (htmlpath)
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
         self.assertTrue (u"бла-бла-бла" in result)
         self.assertFalse (u"Текст</div></div></div>" in result)
@@ -185,8 +170,7 @@ class SpoilerPluginTest (unittest.TestCase):
         self.testPage.content = text
 
         generator = HtmlGenerator (self.testPage)
-        htmlpath = generator.makeHtml (Style().getPageStyle (self.testPage))
-        result = self.__readFile (htmlpath)
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
         self.assertTrue (u"бла-бла-бла" in result)
         self.assertFalse (u"Текст</div></div></div>" in result)
