@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-import os
 import urllib
 
 import wx
@@ -11,7 +10,6 @@ from .htmlrender import HtmlRender
 import outwiker.core.system
 import outwiker.core.commands
 from outwiker.core.application import Application
-from outwiker.core.commands import MessageBox
 from .htmlcontrollerie import UriIdentifierIE
 
 
@@ -54,11 +52,15 @@ class HtmlRenderIE (HtmlRender):
         if len (status) != 0:
             (url, page, filename, anchor) = self.__identifyUri (status)
 
-            if page != None:
-                outwiker.core.commands.setStatusText (page.subpath, self._status_item)
-            elif filename != None:
+            if page is not None:
+                text = page.subpath
+                if anchor is not None:
+                    text = u"{}/{}".format (text, anchor)
+
+                outwiker.core.commands.setStatusText (text, self._status_item)
+            elif filename is not None:
                 outwiker.core.commands.setStatusText (filename, self._status_item)
-            elif anchor != None:
+            elif anchor is not None:
                 outwiker.core.commands.setStatusText (anchor, self._status_item)
             else:
                 outwiker.core.commands.setStatusText (status, self._status_item)
@@ -70,9 +72,9 @@ class HtmlRenderIE (HtmlRender):
         document = self.render.document
         selection = document.selection
 
-        if selection != None:
+        if selection is not None:
             selrange = selection.createRange()
-            if selrange != None:
+            if selrange is not None:
                 outwiker.core.commands.copyTextToClipboard (selrange.text)
                 event.Skip()
 
@@ -87,7 +89,13 @@ class HtmlRenderIE (HtmlRender):
 
     def LoadPage (self, fname):
         self.canOpenUrl = True
-        self.render.Navigate (fname)
+        path = fname
+
+        if self._anchor is not None:
+            path += self._anchor
+            self._anchor = None
+
+        self.render.Navigate (path)
 
 
     def __cleanUpUrl (self, href):
@@ -107,13 +115,13 @@ class HtmlRenderIE (HtmlRender):
         """
         fileprotocol = u"file:///"
         if href.startswith (fileprotocol):
-            return href[len (fileprotocol): ]
+            return href[len (fileprotocol):]
 
         return href
 
 
     def BeforeNavigate2 (self, this, pDisp, URL, Flags,
-            TargetFrameName, PostData, Headers, Cancel):
+                         TargetFrameName, PostData, Headers, Cancel):
         href = URL[0]
         curr_href = self.__cleanUpUrl (self.render.locationurl)
 
@@ -134,7 +142,7 @@ class HtmlRenderIE (HtmlRender):
         Cancel[0] = True
 
         (url, page, filename, anchor) = self.__identifyUri (href)
-        if page != None:
+        if page is not None:
             Application.mainWindow.tabsController.openInTab (page, True)
 
 
@@ -142,10 +150,8 @@ class HtmlRenderIE (HtmlRender):
         """
         Определить тип ссылки и вернуть кортеж (url, page, filename)
         """
-        href_clear = self.__cleanUpUrl (href)
-
         identifier = UriIdentifierIE (self._currentPage,
-            self.__cleanUpUrl (self.render.locationurl) )
+                                      self.__cleanUpUrl (self.render.locationurl))
 
         return identifier.identify (href)
 
@@ -157,21 +163,23 @@ class HtmlRenderIE (HtmlRender):
         (url, page, filename, anchor) = self.__identifyUri (href)
         ctrlstate = wx.GetKeyState(wx.WXK_CONTROL)
 
-        if url != None:
+        if url is not None:
             self.openUrl (url)
 
-        elif page != None and ctrlstate:
+        elif page is not None and ctrlstate:
+            self._anchor = anchor
             Application.mainWindow.tabsController.openInTab (page, True)
 
-        elif page != None:
+        elif page is not None:
+            self._anchor = anchor
             self._currentPage.root.selectedPage = page
 
-        elif filename != None:
+        elif filename is not None:
             try:
                 outwiker.core.system.getOS().startFile (filename)
             except OSError:
                 text = _(u"Can't execute file '%s'") % filename
                 outwiker.core.commands.MessageBox (text, _(u"Error"), wx.ICON_ERROR | wx.OK)
 
-        elif anchor != None:
+        elif anchor is not None:
             self.LoadPage (href)
