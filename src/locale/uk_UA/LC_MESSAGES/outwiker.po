@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-19 09:55+0400\n"
-"PO-Revision-Date: 2014-06-19 10:04+0300\n"
+"POT-Creation-Date: 2014-06-19 21:55+0400\n"
+"PO-Revision-Date: 2014-06-30 09:31+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
@@ -214,7 +214,7 @@ msgstr "Створити сторінку"
 msgid "Do not change"
 msgstr "Не змінювати"
 
-#: outwiker/gui/basepagedialog.py:95 outwiker/actions/applystyle.py:114
+#: outwiker/gui/basepagedialog.py:95 outwiker/actions/applystyle.py:124
 msgid "Default"
 msgstr "За замовчуванням"
 
@@ -1299,11 +1299,11 @@ msgid ""
 "and others.\n"
 "                       "
 msgstr ""
-"!! First Wiki Page\n"
+"!! Перша вікісторінка\n"
 "\n"
-"                       This is the first page. You can use a text formating: "
-"'''bold''', ''italic'', {+underlined text+}, [[http://jenyay.net | link]] "
-"and others.\n"
+"                       Це перша сторінка. Тут Ви можете використовувати "
+"форматування тексту, наприклад: '''жирний шрифт''', ''курсив'', "
+"{+підкреслений текст+}, [[http://jenyay.net | посилання]] тощо.\n"
 "                       "
 
 #: outwiker/core/commands.py:232
@@ -1573,21 +1573,25 @@ msgstr "Додати сторінку того ж рівня…"
 msgid "Add sibling page"
 msgstr "Додати сторінку того ж рівня"
 
-#: outwiker/actions/applystyle.py:27
+#: outwiker/actions/applystyle.py:28
 msgid "Set Style to Branch…"
-msgstr "Set Style to Branch…"
+msgstr "Встановити стиль для гілки…"
 
-#: outwiker/actions/applystyle.py:32
+#: outwiker/actions/applystyle.py:33 outwiker/actions/applystyle.py:64
 msgid "Set Style to Branch"
-msgstr "Set Style to Branch"
+msgstr "Встановити стиль для гілки"
 
-#: outwiker/actions/applystyle.py:84
+#: outwiker/actions/applystyle.py:65
+msgid "Please wait..."
+msgstr "Будь ласка, зачекайте..."
+
+#: outwiker/actions/applystyle.py:94
 msgid "Set style to branch"
-msgstr "Set style to branch"
+msgstr "Встановити стиль для гілки"
 
-#: outwiker/actions/applystyle.py:87
+#: outwiker/actions/applystyle.py:97
 msgid "Style"
-msgstr "Style"
+msgstr "Стиль"
 
 #: outwiker/actions/attachfiles.py:28
 msgid "Attach files to current page"
