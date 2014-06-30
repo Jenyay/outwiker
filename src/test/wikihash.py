@@ -14,6 +14,7 @@ from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.emptycontent import EmptyContent
 from outwiker.pages.wiki.wikiconfig import WikiConfig
 from outwiker.pages.wiki.wikihashcalculator import WikiHashCalculator
+from outwiker.pages.wiki.htmlcache import HtmlCache
 
 from utils import removeWiki
 

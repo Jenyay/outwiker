@@ -9,10 +9,12 @@ from outwiker.core.style import Style
 
 from .wikieditor import WikiEditor
 from .wikitoolbar import WikiToolBar
+from .htmlcache import HtmlCache
 from outwiker.gui.htmltexteditor import HtmlTextEditor
 from outwiker.pages.html.basehtmlpanel import BaseHtmlPanel, EVT_PAGE_TAB_CHANGED
 from wikiconfig import WikiConfig
 from htmlgenerator import HtmlGenerator
+from outwiker.core.system import readTextFile
 from outwiker.actions.polyactionsid import *
 
 from actions.fontsizebig import WikiFontSizeBigAction
@@ -683,18 +685,24 @@ class WikiPageView (BaseHtmlPanel):
 
 
     def generateHtml (self, page):
+        resultFileName = self.getHtmlPath()
+
+        cache = HtmlCache (page, Application)
+        # Проверим, можно ли прочитать уже готовый HTML
+        if cache.canReadFromCache() and os.path.exists (resultFileName):
+            return readTextFile (resultFileName)
+
         style = Style()
         stylepath = style.getPageStyle (page)
         generator = HtmlGenerator (page)
 
         try:
             html = generator.makeHtml(stylepath)
-        except:
-            MessageBox (_(u"Page style Error. Style by default is used"),
+            cache.saveHash()
+        except IOError:
+            MessageBox (_(u"Can't create HTML file"),
                         _(u"Error"),
                         wx.ICON_ERROR | wx.OK)
-
-            html = generator.makeHtml (style.getDefaultStyle())
 
         return html
 

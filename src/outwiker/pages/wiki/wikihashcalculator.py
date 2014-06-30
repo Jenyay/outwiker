@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import os.path
@@ -26,7 +25,7 @@ class WikiHashCalculator (object):
 
 
     def getHash (self, page):
-        return hashlib.md5(self.__getFullContent (page) ).hexdigest()
+        return hashlib.md5(self.__getFullContent (page)).hexdigest()
 
 
     def __getFullContent (self, page):
@@ -52,8 +51,8 @@ class WikiHashCalculator (object):
         content.append (str (self._wikiConfig.thumbSizeOptions.value))
 
         # Настройки отображения HTML-страницы
-        content.append (str (self.__htmlConfig.fontSize.value) )
-        content.append (self.__htmlConfig.fontName.value.encode(self._unicodeEncoding) )
+        content.append (str (self.__htmlConfig.fontSize.value))
+        content.append (self.__htmlConfig.fontName.value.encode(self._unicodeEncoding))
         content.append (self.__htmlConfig.userStyle.value.encode(self._unicodeEncoding))
 
         # Список подстраниц

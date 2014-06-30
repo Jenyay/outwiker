@@ -80,6 +80,7 @@ if __name__ == '__main__':
     from test.pagethumbmaker import PageThumbmakerTest
     from test.thumbnails import ThumbnailsTest
     from test.htmlimprover import HtmlImproverTest
+    from test.wikihtmlcache import WikiHtmlCacheTest
     from test.wikihtmlgenerator import WikiHtmlGeneratorTest
     from test.wikihash import WikiHashTest
     from test.htmltemplate import HtmlTemplateTest
