@@ -574,7 +574,7 @@ class HtmlPageView (BaseHtmlPanel):
 
         if page.readonly and os.path.exists (path):
             # Если страница открыта только для чтения и html-файл уже существует, то покажем его
-            return path
+            return readTextFile (path)
 
         style = Style()
         stylepath = style.getPageStyle (page)
