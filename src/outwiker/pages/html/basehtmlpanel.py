@@ -293,16 +293,19 @@ class BaseHtmlPanel(BaseTextPanel):
             html = self.generateHtml (self._currentpage)
             if self._oldHtmlResult != html:
                 path = self.getHtmlPath()
-                writeTextFile (path, html)
+
+                if not self._currentpage.readonly:
+                    writeTextFile (path, html)
+
                 self.htmlWindow.LoadPage (path)
                 self._oldHtmlResult = html
         except IOError as e:
             # TODO: Проверить под Windows
-            MessageBox (_(u"Can't save file %s") % (unicode (e.filename)),
+            MessageBox (_(u"Can't save file {}").format (unicode (e.filename)),
                         _(u"Error"),
                         wx.ICON_ERROR | wx.OK)
         except OSError as e:
-            MessageBox (_(u"Can't save HTML-file\n\n%s") % (unicode (e)),
+            MessageBox (_(u"Can't save HTML-file\n\n{}").format (unicode (e)),
                         _(u"Error"),
                         wx.ICON_ERROR | wx.OK)
 

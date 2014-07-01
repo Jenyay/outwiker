@@ -597,9 +597,6 @@ class HtmlPageView (BaseHtmlPanel):
         result = tpl.substitute (content = text,
                                  userhead = userhead)
 
-        # with open (path, "wb") as fp:
-        #     fp.write (result.encode ("utf-8"))
-
         return result
 
 
