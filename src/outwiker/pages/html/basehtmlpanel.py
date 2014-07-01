@@ -301,11 +301,11 @@ class BaseHtmlPanel(BaseTextPanel):
                 self._oldHtmlResult = html
         except IOError as e:
             # TODO: Проверить под Windows
-            MessageBox (_(u"Can't save file {}").format (unicode (e.filename)),
+            MessageBox (_(u"Can't save file\n\n{}").format (unicode (e.filename)),
                         _(u"Error"),
                         wx.ICON_ERROR | wx.OK)
         except OSError as e:
-            MessageBox (_(u"Can't save HTML-file\n\n{}").format (unicode (e)),
+            MessageBox (_(u"Can't save file\n\n{}").format (unicode (e)),
                         _(u"Error"),
                         wx.ICON_ERROR | wx.OK)
 

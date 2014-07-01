@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-01 09:22+0400\n"
+"POT-Creation-Date: 2014-07-01 09:44+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -146,8 +146,8 @@ msgstr ""
 #: outwiker/gui/pagedialog.py:45 outwiker/gui/pagedialog.py:137
 #: outwiker/gui/pagedialog.py:196 outwiker/gui/renametagdialog.py:75
 #: outwiker/gui/renametagdialog.py:79 outwiker/gui/tabscontroller.py:244
-#: outwiker/pages/html/basehtmlpanel.py:302
-#: outwiker/pages/html/basehtmlpanel.py:306
+#: outwiker/pages/html/basehtmlpanel.py:305
+#: outwiker/pages/html/basehtmlpanel.py:309
 #: outwiker/pages/html/htmlpageview.py:586
 #: outwiker/pages/wiki/wikipageview.py:257
 #: outwiker/pages/wiki/wikipageview.py:261
@@ -256,8 +256,7 @@ msgid "Owerwrite?"
 msgstr ""
 
 #: outwiker/gui/basetextpanel.py:182 outwiker/gui/basetextpanel.py:195
-#: outwiker/gui/tabscontroller.py:243 outwiker/pages/html/basehtmlpanel.py:301
-#: outwiker/pages/wiki/wikipageview.py:256
+#: outwiker/gui/tabscontroller.py:243 outwiker/pages/wiki/wikipageview.py:256
 #, python-format
 msgid "Can't save file %s"
 msgstr ""
@@ -835,13 +834,12 @@ msgstr ""
 msgid "Page rendered. Please wait…"
 msgstr ""
 
-#: outwiker/pages/html/basehtmlpanel.py:305
-#: outwiker/pages/wiki/wikipageview.py:260
-#, python-format
+#: outwiker/pages/html/basehtmlpanel.py:304
+#: outwiker/pages/html/basehtmlpanel.py:308
 msgid ""
-"Can't save HTML-file\n"
+"Can't save file\n"
 "\n"
-"%s"
+"{}"
 msgstr ""
 
 #: outwiker/pages/html/htmlpage.py:83
@@ -991,6 +989,14 @@ msgstr ""
 #: outwiker/pages/wiki/wikipageview.py:647
 #: outwiker/pages/wiki/wikitoolbar.py:30
 msgid "Wiki"
+msgstr ""
+
+#: outwiker/pages/wiki/wikipageview.py:260
+#, python-format
+msgid ""
+"Can't save HTML-file\n"
+"\n"
+"%s"
 msgstr ""
 
 #: outwiker/pages/wiki/wikipageview.py:274
