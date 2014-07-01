@@ -21,12 +21,27 @@ The following table shows examples of links to the Internet address and to other
 
 ||[=[[Links -> /Page Types/Wiki Page/Links]]=]||[[Links -> /Page Types/Wiki Page/Links]] ||Link to page by name with comment ||
 
+||[=[[../../HTML Page]]=] ||[[../../HTML Page]] ||Link to page by related path ||
+
+||[=[[../../HTML Page | HTML Page]]=] ||[[../../HTML Page | HTML Page]] ||Link to page by related path with comment ||
+
+||[=[[HTML Page -> ../../HTML Page]]=] ||[[HTML Page -> ../../HTML Page]] ||Link to page by related path with comment ||
+
 ||[=http://jenyay.net/utils/small_image.jpg=]||http://jenyay.net/uploads/Outwiker/Unstable/outwiker_100_white.png ||Picture from Internet ||
+
 
 !!! Anchors
 
 || border=1
 || '''Syntax''' || '''Result''' || '''Comment''' ||
-||[=[[#anchor]]=]||Anchor "#anchor" [[#anchor]]||HTML code: &lt;A NAME=&quot;#anchor&quot;&gt;&lt;/A&gt;||
+||[=[[#anchor]]=]||Add the anchor "#anchor" [[#anchor]]||HTML code: &lt;A NAME=&quot;#anchor&quot;&gt;&lt;/A&gt;||
+
 ||[=[[#anchor | A link to the anchor]]=]||[[#anchor | A link to the anchor]]||A link to the anchor "#anchor"||
+
 ||[=[[ link to the anchor -> #anchor]]=]||[[#anchor | A link to the anchor]]||A link to the anchor "#anchor"||
+
+||[=[[page://__d0ed44d4-0772-4f04-80ca-98fc55530667/#anchor]]=]||[[page://__d0ed44d4-0772-4f04-80ca-98fc55530667/#anchor]] ||A link to the anchor "#anchor" in other page||
+
+||[=[[page://__d0ed44d4-0772-4f04-80ca-98fc55530667/#anchor | link to the anchor in other page]]=]||[[page://__d0ed44d4-0772-4f04-80ca-98fc55530667/#anchor | link to the anchor in other page]] ||A link to the anchor "#anchor" in other page||
+
+||[=[[link to the anchor in other page -> page://__d0ed44d4-0772-4f04-80ca-98fc55530667/#anchor]]=]||[[link to the anchor in other page -> page://__d0ed44d4-0772-4f04-80ca-98fc55530667/#anchor]] ||A link to the anchor "#anchor" in other page||

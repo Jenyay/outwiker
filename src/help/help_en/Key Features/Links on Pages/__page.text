@@ -20,6 +20,8 @@ Examples:
 * [[page://__b016f2ed-a6c0-4dca-8d17-508955f4cc7c | Wiki Commands]] (wiki)
 * [[Nested page -> page://__7eeecc1f-cffb-4fbd-9d7a-d5f79adda92d]] (wiki)
 
+When using links on the unique identifier can only be not only on a different page, but also to anchor on another page. In this case, the link will look like this: page://__d0ed44d4-0772-4f04-80ca-98fc55530667/#anchor
+
 
 !!! Link by name
 
@@ -39,3 +41,10 @@ Examples:
 * [[Nested Page]] (wiki)
 
 This link type is outdated since after move or rename purpose page links bekom invalid.
+
+
+!!! Related links
+
+Relative links are a particular case of references by name. In the references, you can use the path of the form [[../../Page Types/Html Page -> ../../Page Types/Html Page]].
+
+If the as a link enter dot ([[.]]) it will be interpreted as a reference to the directory of the current page.
