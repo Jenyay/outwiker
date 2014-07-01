@@ -27,10 +27,7 @@ class HtmlCache (object):
         """
         hashoption = self._getHashOption()
 
-        if self.getHash (self._page) == hashoption.value or self._page.readonly:
-            return True
-
-        return False
+        return (self.getHash (self._page) == hashoption.value)
 
 
     def resetHash (self):

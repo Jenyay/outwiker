@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-30 21:47+0400\n"
+"POT-Creation-Date: 2014-07-01 09:22+0400\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -151,7 +151,8 @@ msgstr "You did not select a file to remove"
 #: outwiker/pages/wiki/wikipageview.py:261
 #: outwiker/pages/wiki/wikipageview.py:274
 #: outwiker/pages/wiki/wikipageview.py:276
-#: outwiker/pages/wiki/wikipageview.py:704
+#: outwiker/pages/wiki/wikipageview.py:697
+#: outwiker/pages/wiki/wikipageview.py:710
 #: outwiker/pages/wiki/actions/include.py:38 outwiker/core/commands.py:46
 #: outwiker/core/commands.py:106 outwiker/core/commands.py:200
 #: outwiker/core/commands.py:240 outwiker/core/commands.py:248
@@ -1014,7 +1015,11 @@ msgstr "Can't load HTML-file"
 msgid "Commands"
 msgstr "Commands"
 
-#: outwiker/pages/wiki/wikipageview.py:703
+#: outwiker/pages/wiki/wikipageview.py:696
+msgid "Can't read file {}"
+msgstr "Can't read file {}"
+
+#: outwiker/pages/wiki/wikipageview.py:709
 msgid "Can't create HTML file"
 msgstr "Can't create HTML file"
 

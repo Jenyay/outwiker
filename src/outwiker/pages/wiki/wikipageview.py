@@ -689,8 +689,14 @@ class WikiPageView (BaseHtmlPanel):
 
         cache = HtmlCache (page, Application)
         # Проверим, можно ли прочитать уже готовый HTML
-        if cache.canReadFromCache() and os.path.exists (resultFileName):
-            return readTextFile (resultFileName)
+        if (cache.canReadFromCache() and os.path.exists (resultFileName)) or page.readonly:
+            try:
+                return readTextFile (resultFileName)
+            except IOError:
+                MessageBox (_(u"Can't read file {}".format (resultFileName)),
+                            _(u"Error"),
+                            wx.ICON_ERROR | wx.OK)
+                return u""
 
         style = Style()
         stylepath = style.getPageStyle (page)
