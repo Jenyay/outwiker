@@ -7,13 +7,13 @@ from outwiker.core.commands import getCurrentVersion
 from outwiker.core.version import Version, StatusSet
 from outwiker.core.system import getOS
 
-from .i18n import set_
-from .controller import Controller
-
 
 if getCurrentVersion() < Version (1, 8, 0, 729, status=StatusSet.DEV):
-    print ("HrmlHeads plugin. OutWiker version requirement: 1.8.0.729")
+    print ("HtmlHeads plugin. OutWiker version requirement: 1.8.0.729")
 else:
+    from .i18n import set_
+    from .controller import Controller
+
     class PluginTestWikiCommand (Plugin):
         """
         Плагин, добавляющий обработку команды TestCommand в википарсер
@@ -66,7 +66,7 @@ else:
 
         @property
         def version (self):
-            return u"1.0"
+            return u"1.0.1"
 
 
         def initialize(self):

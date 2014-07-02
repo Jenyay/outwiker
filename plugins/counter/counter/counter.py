@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import os.path
@@ -8,15 +7,15 @@ from outwiker.core.commands import getCurrentVersion
 from outwiker.core.version import Version, StatusSet
 from outwiker.core.system import getOS
 
-from .i18n import set_
-from .controller import Controller
-from .insertdialog import InsertDialog
-from .insertdialogcontroller import InsertDialogController
-
 
 if getCurrentVersion() < Version (1, 8, 0, 729, status=StatusSet.DEV):
     print ("Counter plugin. OutWiker version requirement: 1.8.0.729")
 else:
+    from .i18n import set_
+    from .controller import Controller
+    from .insertdialog import InsertDialog
+    from .insertdialogcontroller import InsertDialogController
+
     class PluginTestWikiCommand (Plugin):
         """
         Плагин, добавляющий обработку команды TestCommand в википарсер
@@ -61,9 +60,7 @@ All parameters are optional.
 {usage}
 
 {params}
-""".format (description=description,
-            usage=usage,
-            params=params)
+""".format (description=description, usage=usage, params=params)
 
 
         @property
@@ -73,7 +70,7 @@ All parameters are optional.
 
         @property
         def version (self):
-            return u"1.0"
+            return u"1.0.1"
 
 
         def initialize(self):

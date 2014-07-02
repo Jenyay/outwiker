@@ -7,15 +7,15 @@ from outwiker.core.commands import getCurrentVersion
 from outwiker.core.version import Version, StatusSet
 from outwiker.core.system import getOS
 
-from .i18n import set_
-from .controller import Controller
-from .dialog import ChangeUidDialog
-from .dialogcontroller import DialogController
-
 
 if getCurrentVersion() < Version (1, 8, 0, 731, status=StatusSet.DEV):
     print ("ChangeUID plugin. OutWiker version requirement: 1.8.0.731")
 else:
+    from .i18n import set_
+    from .controller import Controller
+    from .dialog import ChangeUidDialog
+    from .dialogcontroller import DialogController
+
     class PluginName (Plugin):
         def __init__ (self, application):
             """
