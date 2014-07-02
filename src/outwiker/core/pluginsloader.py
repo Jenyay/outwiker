@@ -117,10 +117,7 @@ class PluginsLoader (object):
                     sys.path.insert (0, fullpath)
 
                 # Все поддиректории попытаемся открыть как пакеты
-                modules = self.__importModules (currentDir, dirPackets)
-
-                # Загрузим классы плагинов из модулей
-                self.__loadPlugins (modules)
+                self.__importModules (currentDir, dirPackets)
 
 
     def clear (self):
@@ -139,38 +136,39 @@ class PluginsLoader (object):
         """
         assert dirPackagesList is not None
 
-        modules = []
-
         for packageName in dirPackagesList:
             packagePath = os.path.join (baseDir, packageName)
 
-            # Флаг, обозначающий, что удалось импортировать хотя бы один модуль
-            success = False
-
-            # Список строк, описывающий возникшие ошибки во время импортирования
-            # Выводятся только если не удалось импортировать ни одного модуля
-            errors = []
-
             # Проверить, что это директория
             if os.path.isdir (packagePath):
+                # Список строк, описывающий возникшие ошибки во время импортирования
+                # Выводятся только если не удалось импортировать ни одного модуля
+                errors = []
+
+                # Количество загруженных плагинов до импорта нового
+                oldPluginsCount = len (self.__plugins) + len (self.__disabledPlugins)
+
                 # Переберем все файлы внутри packagePath
                 # и попытаемся их импортировать
                 for fileName in sorted (os.listdir (packagePath)):
                     try:
                         module = self._importSingleModule (packageName, fileName)
                         if module is not None:
-                            modules.append (module)
-                            success = True
-                    except ImportError, e:
-                        errors.append ("*** Plugin loading error ***\n{package}/{fileName}\n{error}".format (
+                            self.__loadPlugin (module)
+                    except BaseException, e:
+                        errors.append ("*** Plugin {package} loading error ***\n{package}/{fileName}\n{error}".format (
                             package = packageName,
                             fileName = fileName,
                             error=str(e)))
 
-            if not success:
-                self._print (u"\n\n".join (errors) + u"\n")
+                # Проверим, удалось ли загрузить плагин
+                newPluginsCount = len (self.__plugins) + len (self.__disabledPlugins)
 
-        return modules
+                # Вывод ошибок, если ни одного плагина из пакета не удалось
+                # импортировать
+                if newPluginsCount == oldPluginsCount and len (errors) != 0:
+                    self._print (u"\n\n".join (errors))
+                    self._print (u"**********\n")
 
 
     def _importSingleModule (self, packageName, fileName):
@@ -190,19 +188,18 @@ class PluginsLoader (object):
         return result
 
 
-    def __loadPlugins (self, modules):
+    def __loadPlugin (self, module):
         """
         Найти классы плагинов и создать их экземпляры
         """
-        assert modules is not None
+        assert module is not None
 
         options = PluginsConfig (self.__application.config)
 
-        for module in modules:
-            for name in dir (module):
-                self.__createObject (module,
-                                     name,
-                                     options.disabledPlugins.value)
+        for name in dir (module):
+            self.__createObject (module,
+                                 name,
+                                 options.disabledPlugins.value)
 
 
     def __createObject (self, module, name, disabledPlugins):
@@ -217,14 +214,7 @@ class PluginsLoader (object):
             if obj == Plugin or not issubclass (obj, Plugin):
                 return
 
-            try:
-                plugin = obj (self.__application)
-            except BaseException as e:
-                self._print ("*** Plugin loading error ***\n{classname}\n{error}\n".format (
-                    classname=name,
-                    error=str(e)))
-                return
-
+            plugin = obj (self.__application)
             if not self.__isNewPlugin (plugin.name):
                 return
 
