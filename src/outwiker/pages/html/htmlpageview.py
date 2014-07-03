@@ -84,7 +84,7 @@ class HtmlPageView (BaseHtmlPanel):
         self.Bind (EVT_PAGE_TAB_CHANGED, handler=self.onTabChanged)
 
 
-    def GetTextEditor(self):
+    def getTextEditor(self):
         return HtmlTextEditor
 
 

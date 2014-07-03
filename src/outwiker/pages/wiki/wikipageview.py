@@ -3,18 +3,12 @@
 import wx
 import os
 
-from outwiker.core.commands import MessageBox, setStatusText
-from outwiker.core.application import Application
-from outwiker.core.style import Style
-
 from .wikieditor import WikiEditor
 from .wikitoolbar import WikiToolBar
-from .htmlcache import HtmlCache
-from outwiker.gui.htmltexteditor import HtmlTextEditor
-from outwiker.pages.html.basehtmlpanel import BaseHtmlPanel, EVT_PAGE_TAB_CHANGED
+
 from wikiconfig import WikiConfig
 from htmlgenerator import HtmlGenerator
-from outwiker.core.system import readTextFile
+
 from outwiker.actions.polyactionsid import *
 
 from actions.fontsizebig import WikiFontSizeBigAction
@@ -23,30 +17,57 @@ from actions.nonparsed import WikiNonParsedAction
 from actions.thumb import WikiThumbAction
 from actions.link import insertLink
 from actions.equation import WikiEquationAction
-from actions.openhtmlcode import WikiOpenHtmlCodeAction
 from actions.updatehtml import WikiUpdateHtmlAction
 from actions.attachlist import WikiAttachListAction
 from actions.childlist import WikiChildListAction
 from actions.include import WikiIncludeAction
-from outwiker.pages.html.actions.switchcoderesult import SwitchCodeResultAction
+
+from .basewikipageview import BaseWikiPageView
 
 
-class WikiPageView (BaseHtmlPanel):
-    HTML_RESULT_PAGE_INDEX = BaseHtmlPanel.RESULT_PAGE_INDEX + 1
-
-
+class WikiPageView (BaseWikiPageView):
     def __init__ (self, parent, *args, **kwds):
         super (WikiPageView, self).__init__ (parent, *args, **kwds)
 
-        self._application = Application
 
-        self._configSection = u"wiki"
-        self._hashKey = u"md5_hash"
-        self.__WIKI_MENU_INDEX = 7
-        self.__toolbarName = "wiki"
+    def _getHtmlGenerator (self, page):
+        return HtmlGenerator (page)
 
-        # Список используемых полиморфных действий
-        self.__polyActions = [
+
+    def getTextEditor(self):
+        return WikiEditor
+
+
+    def _getName (self):
+        return u"wiki"
+
+
+    def _getPageTitle (self):
+        return _(u"Wiki")
+
+
+    def _getMenuTitle (self):
+        return _(u"Wiki")
+
+
+    def _getConfig (self, config):
+        return WikiConfig (config)
+
+
+    def _createToolbar (self, mainWindow):
+        return WikiToolBar(mainWindow, mainWindow.auiManager)
+
+
+    @property
+    def commandsMenu (self):
+        """
+        Свойство возвращает меню с викикомандами
+        """
+        return self._commandsMenu
+
+
+    def _getPolyActions (self):
+        return [
             BOLD_STR_ID,
             ITALIC_STR_ID,
             BOLD_ITALIC_STR_ID,
@@ -76,9 +97,9 @@ class WikiPageView (BaseHtmlPanel):
             HTML_ESCAPE_STR_ID,
         ]
 
-        # Список действий, которые нужно удалять с панелей и из меню.
-        # А еще их надо дизаблить при переходе на вкладки просмотра результата или HTML
-        self.__wikiNotationActions = [
+
+    def _getSpecificActions (self):
+        return [
             WikiFontSizeBigAction,
             WikiFontSizeSmallAction,
             WikiNonParsedAction,
@@ -89,199 +110,57 @@ class WikiPageView (BaseHtmlPanel):
             WikiIncludeAction,
         ]
 
-        self._wikiPanelName = "wiki"
 
-        self.mainWindow.toolbars[self._wikiPanelName] = WikiToolBar(self.mainWindow, self.mainWindow.auiManager)
+    def _createWikiTools (self):
+        assert self.mainWindow is not None
 
-        self.notebook.SetPageText (0, _(u"Wiki"))
+        self._headingMenu = wx.Menu()
+        self._fontMenu = wx.Menu()
+        self._alignMenu = wx.Menu()
+        self._formatMenu = wx.Menu()
+        self._listMenu = wx.Menu()
+        self._commandsMenu = wx.Menu()
 
-        self.htmlSizer = wx.FlexGridSizer(1, 1, 0, 0)
-        self.htmlSizer.AddGrowableRow(0)
-        self.htmlSizer.AddGrowableCol(0)
+        self._addRenderTools()
 
-        # Номер вкладки с кодом HTML. -1, если вкладки нет
-        self.htmlcodePageIndex = -1
+        # Обновить код HTML
+        self._application.actionController.appendMenuItem (WikiUpdateHtmlAction.stringId, self.toolsMenu)
 
-        self.config = WikiConfig (self._application.config)
+        self.toolsMenu.AppendSeparator()
 
-        self.__createCustomTools()
-        self._application.mainWindow.updateShortcuts()
-        self.mainWindow.UpdateAuiManager()
+        self.toolsMenu.AppendSubMenu (self._headingMenu, _(u"Heading"))
+        self.toolsMenu.AppendSubMenu (self._fontMenu, _(u"Font"))
+        self.toolsMenu.AppendSubMenu (self._alignMenu, _(u"Alignment"))
+        self.toolsMenu.AppendSubMenu (self._formatMenu, _(u"Formatting"))
+        self.toolsMenu.AppendSubMenu (self._listMenu, _(u"Lists"))
+        self.toolsMenu.AppendSubMenu (self._commandsMenu, _(u"Commands"))
 
-        # Редактор с просмотром получившегося HTML (ессли есть)
-        self.htmlCodeWindow = None
-
-        if self.config.showHtmlCodeOptions.value:
-            self.htmlcodePageIndex = self.__createHtmlCodePanel(self.htmlSizer)
-
-        self.Layout()
-
-        self.Bind (EVT_PAGE_TAB_CHANGED, handler=self.onTabChanged)
-
-
-    def onPreferencesDialogClose (self, prefDialog):
-        super (WikiPageView, self).onPreferencesDialogClose (prefDialog)
-        if self.htmlCodeWindow is not None:
-            self.htmlCodeWindow.setDefaultSettings()
+        self.__addCommandsTools()
+        self.__addFontTools()
+        self.__addAlignTools()
+        self.__addHTools()
+        self.__addListTools()
+        self.__addFormatTools()
+        self.__addOtherTools()
 
 
-    def onClose (self, event):
-        self._removeActionTools()
-        self.Unbind (EVT_PAGE_TAB_CHANGED, handler=self.onTabChanged)
+    def __addCommandsTools (self):
+        # Команда (:attachlist:)
+        self._application.actionController.appendMenuItem (WikiAttachListAction.stringId, self.commandsMenu)
 
-        if self._wikiPanelName in self.mainWindow.toolbars:
-            self.mainWindow.toolbars.destroyToolBar (self._wikiPanelName)
+        # Команда (:childlist:)
+        self._application.actionController.appendMenuItem (WikiChildListAction.stringId, self.commandsMenu)
 
-        super (WikiPageView, self).onClose (event)
-
-
-    def _removeActionTools (self):
-        actionController = self._application.actionController
-
-        # Удалим элементы меню
-        map (lambda action: actionController.removeMenuItem (action.stringId),
-             self.__wikiNotationActions)
-
-        # Удалим элементы меню полиморфных действий
-        map (lambda strid: actionController.removeMenuItem (strid),
-             self.__polyActions)
-
-        actionController.removeMenuItem (WikiOpenHtmlCodeAction.stringId)
-        actionController.removeMenuItem (WikiUpdateHtmlAction.stringId)
-        actionController.removeMenuItem (SwitchCodeResultAction.stringId)
-
-        # Удалим кнопки с панелей инструментов
-        if self._wikiPanelName in self.mainWindow.toolbars:
-            map (lambda action: actionController.removeToolbarButton (action.stringId),
-                 self.__wikiNotationActions)
-
-            map (lambda strid: actionController.removeToolbarButton (strid),
-                 self.__polyActions)
-
-            actionController.removeToolbarButton (WikiOpenHtmlCodeAction.stringId)
-            actionController.removeToolbarButton (SwitchCodeResultAction.stringId)
-
-        # Обнулим функции действия в полиморфных действиях
-        map (lambda strid: actionController.getAction (strid).setFunc (None),
-             self.__polyActions)
-
-
-    @property
-    def toolsMenu (self):
-        return self.__wikiMenu
-
-
-    def __createHtmlCodePanel (self, parentSizer):
-        # Окно для просмотра получившегося кода HTML
-        self.htmlCodeWindow = HtmlTextEditor(self.notebook, -1)
-        self.htmlCodeWindow.SetReadOnly (True)
-        parentSizer.Add(self.htmlCodeWindow, 1, wx.TOP | wx.BOTTOM | wx.EXPAND, 2)
-
-        self.addPage (self.htmlCodeWindow, _("HTML"))
-        return self.pageCount - 1
-
-
-    def GetTextEditor(self):
-        return WikiEditor
-
-
-    def GetSearchPanel (self):
-        if self.selectedPageIndex == self.CODE_PAGE_INDEX:
-            return self.codeEditor.searchPanel
-        elif self.selectedPageIndex == self.htmlcodePageIndex:
-            return self.htmlCodeWindow.searchPanel
-
-        return None
-
-
-    def onTabChanged (self, event):
-        # import pudb; pudb.set_trace()  # XXX BREAKPOINT
-        if self._currentpage is not None:
-            if event.tab == self.CODE_PAGE_INDEX:
-                self._onSwitchToCode()
-
-            elif event.tab == self.RESULT_PAGE_INDEX:
-                self._onSwitchToPreview()
-
-            elif event.tab == self.htmlcodePageIndex:
-                self._onSwitchCodeHtml()
-
-            self.savePageTab(self._currentpage)
-
-        event.Skip()
-
-
-    def _enableActions (self, enabled):
-        actionController = self._application.actionController
-
-        # Активируем / дизактивируем собственные действия
-        map (lambda action: actionController.enableTools (action.stringId, enabled),
-             self.__wikiNotationActions)
-
-        # Активируем / дизактивируем полиморфные действия
-        map (lambda strid: actionController.enableTools (strid, enabled),
-             self.__polyActions)
-
-
-    def _onSwitchCodeHtml (self):
-        assert self._currentpage is not None
-
-        self._enableActions (False)
-        self._updateHtmlCode ()
-        self._enableAllTools ()
-        self.htmlCodeWindow.SetFocus()
-        self.htmlCodeWindow.Update()
-
-
-    def _updateResult (self):
-        super (WikiPageView, self)._updateResult ()
-        self._updateHtmlCode()
-
-
-    def _updateHtmlCode (self):
-        if self.htmlcodePageIndex == -1:
-            # Нет вкладки с кодом HTML. Ничего не делаем
-            return
-
-        self.Save()
-        status_item = 0
-        setStatusText (_(u"Page rendered. Please wait…"), status_item)
-        self._application.onHtmlRenderingBegin (self._currentpage, self.htmlWindow)
-
-        try:
-            html = self.generateHtml (self._currentpage)
-            self._showHtmlCode(html)
-        except IOError as e:
-            # TODO: Проверить под Windows
-            MessageBox (_(u"Can't save file %s") % (unicode (e.filename)),
-                        _(u"Error"),
-                        wx.ICON_ERROR | wx.OK)
-        except OSError as e:
-            MessageBox (_(u"Can't save HTML-file\n\n%s") % (unicode (e)),
-                        _(u"Error"),
-                        wx.ICON_ERROR | wx.OK)
-
-        setStatusText (u"", status_item)
-        self._application.onHtmlRenderingEnd (self._currentpage, self.htmlWindow)
-
-
-    def _showHtmlCode (self, html):
-        try:
-            self.htmlCodeWindow.SetReadOnly (False)
-            self.htmlCodeWindow.SetText (html)
-            self.htmlCodeWindow.SetReadOnly (True)
-        except IOError:
-            MessageBox (_(u"Can't load HTML-file"), _(u"Error"), wx.ICON_ERROR | wx.OK)
-        except OSError:
-            MessageBox (_(u"Can't load HTML-file"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+        # Команда (:include:)
+        self._application.actionController.appendMenuItem (WikiIncludeAction.stringId, self.commandsMenu)
 
 
     def __addFontTools (self):
         """
         Добавить инструменты, связанные со шрифтами
         """
-        toolbar = self.mainWindow.toolbars[self.__toolbarName]
-        menu = self.__fontMenu
+        toolbar = self.mainWindow.toolbars[self._getName()]
+        menu = self._fontMenu
 
         # Полужирный шрифт
         self._application.actionController.getAction (BOLD_STR_ID).setFunc (lambda param: self.turnText (u"'''", u"'''"))
@@ -369,8 +248,8 @@ class WikiPageView (BaseHtmlPanel):
 
 
     def __addAlignTools (self):
-        toolbar = self.mainWindow.toolbars[self.__toolbarName]
-        menu = self.__alignMenu
+        toolbar = self.mainWindow.toolbars[self._getName()]
+        menu = self._alignMenu
 
         # Выравнивание по левому краю
         self._application.actionController.getAction (ALIGN_LEFT_STR_ID).setFunc (lambda param: self.turnText (u"%left%", u""))
@@ -412,71 +291,12 @@ class WikiPageView (BaseHtmlPanel):
                                                                 fullUpdate=False)
 
 
-    def __addFormatTools (self):
-        menu = self.__formatMenu
-        toolbar = self.mainWindow.toolbars[self.__toolbarName]
-
-        # Текст, который не нужно разбирать википарсером
-        self._application.actionController.appendMenuItem (WikiNonParsedAction.stringId, menu)
-
-        # Форматированный текст
-        self._application.actionController.getAction (PREFORMAT_STR_ID).setFunc (lambda param: self.turnText (u"[@", u"@]"))
-        self._application.actionController.appendMenuItem (PREFORMAT_STR_ID, menu)
-
-        # Цитата
-        self._application.actionController.getAction (QUOTE_STR_ID).setFunc (lambda param: self.turnText (u'[>', u'<]'))
-
-        self._application.actionController.appendMenuItem (QUOTE_STR_ID, menu)
-        self._application.actionController.appendToolbarButton (QUOTE_STR_ID,
-                                                                toolbar,
-                                                                os.path.join (self.imagesDir, "quote.png"),
-                                                                fullUpdate=False)
-
-
-        # Моноширинный шрифт
-        self._application.actionController.getAction (CODE_STR_ID).setFunc (lambda param: self.turnText (u'@@', u'@@'))
-
-        self._application.actionController.appendMenuItem (CODE_STR_ID, menu)
-        self._application.actionController.appendToolbarButton (CODE_STR_ID,
-                                                                toolbar,
-                                                                os.path.join (self.imagesDir, "code.png"),
-                                                                fullUpdate=False)
-
-
-
-    def __addListTools (self):
-        """
-        Добавить инструменты, связанные со списками
-        """
-        toolbar = self.mainWindow.toolbars[self.__toolbarName]
-        menu = self.__listMenu
-
-        # Ненумерованный список
-        self._application.actionController.getAction (LIST_BULLETS_STR_ID).setFunc (lambda param: self._application.mainWindow.pagePanel.pageView.codeEditor.turnList ("* "))
-
-        self._application.actionController.appendMenuItem (LIST_BULLETS_STR_ID, menu)
-        self._application.actionController.appendToolbarButton (LIST_BULLETS_STR_ID,
-                                                                toolbar,
-                                                                os.path.join (self.imagesDir, "text_list_bullets.png"),
-                                                                fullUpdate=False)
-
-
-        # Нумерованный список
-        self._application.actionController.getAction (LIST_NUMBERS_STR_ID).setFunc (lambda param: self._application.mainWindow.pagePanel.pageView.codeEditor.turnList ("# "))
-
-        self._application.actionController.appendMenuItem (LIST_NUMBERS_STR_ID, menu)
-        self._application.actionController.appendToolbarButton (LIST_NUMBERS_STR_ID,
-                                                                toolbar,
-                                                                os.path.join (self.imagesDir, "text_list_numbers.png"),
-                                                                fullUpdate=False)
-
-
     def __addHTools (self):
         """
         Добавить инструменты для заголовочных тегов <H>
         """
-        toolbar = self.mainWindow.toolbars[self.__toolbarName]
-        menu = self.__headingMenu
+        toolbar = self.mainWindow.toolbars[self._getName()]
+        menu = self._headingMenu
 
         self._application.actionController.getAction (HEADING_1_STR_ID).setFunc (lambda param: self.turnText (u"!! ", u""))
         self._application.actionController.getAction (HEADING_2_STR_ID).setFunc (lambda param: self.turnText (u"!!! ", u""))
@@ -522,14 +342,71 @@ class WikiPageView (BaseHtmlPanel):
                                                                 fullUpdate=False)
 
 
+    def __addListTools (self):
+        """
+        Добавить инструменты, связанные со списками
+        """
+        toolbar = self.mainWindow.toolbars[self._getName()]
+        menu = self._listMenu
+
+        # Ненумерованный список
+        self._application.actionController.getAction (LIST_BULLETS_STR_ID).setFunc (lambda param: self._application.mainWindow.pagePanel.pageView.codeEditor.turnList ("* "))
+
+        self._application.actionController.appendMenuItem (LIST_BULLETS_STR_ID, menu)
+        self._application.actionController.appendToolbarButton (LIST_BULLETS_STR_ID,
+                                                                toolbar,
+                                                                os.path.join (self.imagesDir, "text_list_bullets.png"),
+                                                                fullUpdate=False)
+
+
+        # Нумерованный список
+        self._application.actionController.getAction (LIST_NUMBERS_STR_ID).setFunc (lambda param: self._application.mainWindow.pagePanel.pageView.codeEditor.turnList ("# "))
+
+        self._application.actionController.appendMenuItem (LIST_NUMBERS_STR_ID, menu)
+        self._application.actionController.appendToolbarButton (LIST_NUMBERS_STR_ID,
+                                                                toolbar,
+                                                                os.path.join (self.imagesDir, "text_list_numbers.png"),
+                                                                fullUpdate=False)
+
+
+    def __addFormatTools (self):
+        menu = self._formatMenu
+        toolbar = self.mainWindow.toolbars[self._getName()]
+
+        # Текст, который не нужно разбирать википарсером
+        self._application.actionController.appendMenuItem (WikiNonParsedAction.stringId, menu)
+
+        # Форматированный текст
+        self._application.actionController.getAction (PREFORMAT_STR_ID).setFunc (lambda param: self.turnText (u"[@", u"@]"))
+        self._application.actionController.appendMenuItem (PREFORMAT_STR_ID, menu)
+
+        # Цитата
+        self._application.actionController.getAction (QUOTE_STR_ID).setFunc (lambda param: self.turnText (u'[>', u'<]'))
+
+        self._application.actionController.appendMenuItem (QUOTE_STR_ID, menu)
+        self._application.actionController.appendToolbarButton (QUOTE_STR_ID,
+                                                                toolbar,
+                                                                os.path.join (self.imagesDir, "quote.png"),
+                                                                fullUpdate=False)
+
+
+        # Моноширинный шрифт
+        self._application.actionController.getAction (CODE_STR_ID).setFunc (lambda param: self.turnText (u'@@', u'@@'))
+
+        self._application.actionController.appendMenuItem (CODE_STR_ID, menu)
+        self._application.actionController.appendToolbarButton (CODE_STR_ID,
+                                                                toolbar,
+                                                                os.path.join (self.imagesDir, "code.png"),
+                                                                fullUpdate=False)
+
 
     def __addOtherTools (self):
         """
         Добавить остальные инструменты
         """
         # Добавить миниатюру
-        toolbar = self.mainWindow.toolbars[self.__toolbarName]
-        menu = self.__wikiMenu
+        toolbar = self.mainWindow.toolbars[self._getName()]
+        menu = self.toolsMenu
 
         self._application.actionController.appendMenuItem (WikiThumbAction.stringId, menu)
         self._application.actionController.appendToolbarButton (WikiThumbAction.stringId,
@@ -586,161 +463,8 @@ class WikiPageView (BaseHtmlPanel):
                                                                 fullUpdate=False)
 
 
-        self.__wikiMenu.AppendSeparator()
+        self.toolsMenu.AppendSeparator()
 
         # Преобразовать некоторые символы в и их HTML-представление
         self._application.actionController.getAction (HTML_ESCAPE_STR_ID).setFunc (lambda param: self.escapeHtml ())
         self._application.actionController.appendMenuItem (HTML_ESCAPE_STR_ID, menu)
-
-
-    def _addRenderTools (self):
-        self._application.actionController.appendMenuItem (SwitchCodeResultAction.stringId, self.toolsMenu)
-        self._application.actionController.appendToolbarButton (SwitchCodeResultAction.stringId,
-                                                                self.mainWindow.toolbars[self.mainWindow.GENERAL_TOOLBAR_STR],
-                                                                os.path.join (self.imagesDir, "render.png"),
-                                                                fullUpdate=False)
-
-
-    def __createCustomTools (self):
-        assert self.mainWindow is not None
-
-        self.__wikiMenu = wx.Menu()
-
-        self.__headingMenu = wx.Menu()
-        self.__fontMenu = wx.Menu()
-        self.__alignMenu = wx.Menu()
-        self.__formatMenu = wx.Menu()
-        self.__listMenu = wx.Menu()
-        self.__commandsMenu = wx.Menu()
-
-        self._addRenderTools()
-
-        # Переключиться на код HTML
-        self._application.actionController.appendMenuItem (WikiOpenHtmlCodeAction.stringId, self.__wikiMenu)
-        self._application.actionController.appendToolbarButton (WikiOpenHtmlCodeAction.stringId,
-                                                                self.mainWindow.toolbars[self.mainWindow.GENERAL_TOOLBAR_STR],
-                                                                os.path.join (self.imagesDir, "html.png"),
-                                                                fullUpdate=False)
-
-        # Обновить код HTML
-        self._application.actionController.appendMenuItem (WikiUpdateHtmlAction.stringId, self.__wikiMenu)
-
-        self.toolsMenu.AppendSeparator()
-
-        self.__wikiMenu.AppendSubMenu (self.__headingMenu, _(u"Heading"))
-        self.__wikiMenu.AppendSubMenu (self.__fontMenu, _(u"Font"))
-        self.__wikiMenu.AppendSubMenu (self.__alignMenu, _(u"Alignment"))
-        self.__wikiMenu.AppendSubMenu (self.__formatMenu, _(u"Formatting"))
-        self.__wikiMenu.AppendSubMenu (self.__listMenu, _(u"Lists"))
-        self.__wikiMenu.AppendSubMenu (self.__commandsMenu, _(u"Commands"))
-
-        self.__addCommandsTools()
-        self.__addFontTools()
-        self.__addAlignTools()
-        self.__addHTools()
-        self.__addListTools()
-        self.__addFormatTools()
-        self.__addOtherTools()
-
-        self.mainWindow.mainMenu.Insert (self.__WIKI_MENU_INDEX,
-                                         self.__wikiMenu,
-                                         _(u"Wiki"))
-
-
-    @property
-    def commandsMenu (self):
-        """
-        Свойство возвращает меню с викикомандами
-        """
-        return self.__commandsMenu
-
-
-    def __addCommandsTools (self):
-        # Команда (:attachlist:)
-        self._application.actionController.appendMenuItem (WikiAttachListAction.stringId, self.commandsMenu)
-
-        # Команда (:childlist:)
-        self._application.actionController.appendMenuItem (WikiChildListAction.stringId, self.commandsMenu)
-
-        # Команда (:include:)
-        self._application.actionController.appendMenuItem (WikiIncludeAction.stringId, self.commandsMenu)
-
-
-    @BaseHtmlPanel.selectedPageIndex.setter
-    def selectedPageIndex (self, index):
-        """
-        Устанавливает выбранную страницу (код, просмотр или полученный HTML)
-        """
-        if index == self.HTML_RESULT_PAGE_INDEX and self.htmlcodePageIndex == -1:
-            self.htmlcodePageIndex = self.__createHtmlCodePanel(self.htmlSizer)
-            selectedPage = self.htmlcodePageIndex
-        else:
-            selectedPage = index
-
-        BaseHtmlPanel.selectedPageIndex.fset (self, selectedPage)
-
-
-    def openHtmlCode (self):
-        self.selectedPageIndex = self.HTML_RESULT_PAGE_INDEX
-
-
-    def generateHtml (self, page):
-        resultFileName = self.getHtmlPath()
-
-        cache = HtmlCache (page, Application)
-        # Проверим, можно ли прочитать уже готовый HTML
-        if (cache.canReadFromCache() and os.path.exists (resultFileName)) or page.readonly:
-            try:
-                return readTextFile (resultFileName)
-            except IOError:
-                MessageBox (_(u"Can't read file {}".format (resultFileName)),
-                            _(u"Error"),
-                            wx.ICON_ERROR | wx.OK)
-                return u""
-
-        style = Style()
-        stylepath = style.getPageStyle (page)
-        generator = HtmlGenerator (page)
-
-        try:
-            html = generator.makeHtml(stylepath)
-            cache.saveHash()
-        except IOError:
-            MessageBox (_(u"Can't create HTML file"),
-                        _(u"Error"),
-                        wx.ICON_ERROR | wx.OK)
-
-        return html
-
-
-    def removeGui (self):
-        super (WikiPageView, self).removeGui ()
-        self.mainWindow.mainMenu.Remove (self.__WIKI_MENU_INDEX - 1)
-
-
-    def _getAttachString (self, fnames):
-        """
-        Функция возвращает текст, который будет вставлен на страницу при вставке выбранных прикрепленных файлов из панели вложений
-
-        Перегрузка метода из BaseTextPanel
-        """
-        text = ""
-        count = len (fnames)
-
-        for n in range (count):
-            text += "Attach:" + fnames[n]
-            if n != count - 1:
-                text += "\n"
-
-        return text
-
-
-    def updateHtml (self):
-        """
-        Сбросить кэш для того, чтобы заново сделать HTML
-        """
-        HtmlGenerator (self._currentpage).resetHash()
-        if self.selectedPageIndex == self.RESULT_PAGE_INDEX:
-            self._onSwitchToPreview()
-        elif self.selectedPageIndex == self.HTML_RESULT_PAGE_INDEX:
-            self._onSwitchCodeHtml()

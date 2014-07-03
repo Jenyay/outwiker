@@ -44,7 +44,7 @@ class BaseHtmlPanel(BaseTextPanel):
         self.imagesDir = getImagesDir()
 
         self.notebook = wx.Notebook(self, -1, style=wx.NB_BOTTOM)
-        self._codeEditor = self.GetTextEditor()(self.notebook)
+        self._codeEditor = self.getTextEditor()(self.notebook)
         self.htmlWindow = getHtmlRender (self.notebook)
 
         self.__do_layout()
@@ -119,8 +119,8 @@ class BaseHtmlPanel(BaseTextPanel):
             currpanel.Print()
 
 
-    @abstractproperty
-    def GetTextEditor(self):
+    @abstractmethod
+    def getTextEditor(self):
         pass
 
 
