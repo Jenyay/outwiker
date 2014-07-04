@@ -2,13 +2,12 @@
 
 import wx
 import os
-from abc import ABCMeta, abstractmethod, abstractproperty
+from abc import ABCMeta, abstractmethod
 
 from outwiker.core.commands import MessageBox, setStatusText
 from outwiker.core.application import Application
 from outwiker.core.style import Style
 
-from .htmlcache import HtmlCache
 from outwiker.gui.htmltexteditor import HtmlTextEditor
 from outwiker.pages.html.basehtmlpanel import BaseHtmlPanel, EVT_PAGE_TAB_CHANGED
 from outwiker.core.system import readTextFile
@@ -49,7 +48,7 @@ class BaseWikiPageView (BaseHtmlPanel):
         # Номер вкладки с кодом HTML. -1, если вкладки нет
         self.htmlcodePageIndex = -1
 
-        self.config = self._getConfig (self._application.config)
+        self._wikiMenu = wx.Menu()
 
         self._createCommonTools()
         self._createWikiTools()
@@ -60,7 +59,7 @@ class BaseWikiPageView (BaseHtmlPanel):
         # Редактор с просмотром получившегося HTML (если есть)
         self.htmlCodeWindow = None
 
-        if self.config.showHtmlCodeOptions.value:
+        if self._isHtmlCodeShown():
             self.htmlcodePageIndex = self.__createHtmlCodePanel(self.htmlSizer)
 
         self.Layout()
@@ -68,44 +67,80 @@ class BaseWikiPageView (BaseHtmlPanel):
         self.Bind (EVT_PAGE_TAB_CHANGED, handler=self.onTabChanged)
 
 
-    @abstractmethod
-    def _getConfig (self, config):
-        pass
-
+    # Методы, которые необходимо переопределить в производном классе
 
     @abstractmethod
     def _getPageTitle (self):
+        """
+        Метод должен возвращать строку, показываемую на вкладке страницы с кодом
+        """
         pass
 
 
     @abstractmethod
     def _getMenuTitle (self):
+        """
+        Метод должен возвращать заголовок меню
+        """
         pass
 
 
     @abstractmethod
     def _createToolbar (self, mainWindow):
+        """
+        Метод должен возвращать экземпляр панели инструментов
+        """
         pass
 
 
     @abstractmethod
     def _getPolyActions (self):
+        """
+        Метод должен возвращать список используемых полиморфных actions (или пустой список)
+        """
         pass
 
 
     @abstractmethod
     def _getSpecificActions (self):
+        """
+        Метод должен возвращать список actions, которые нужно дизаблить при переходе на страницу просмотра (или пустой список)
+        """
         pass
 
 
     @abstractmethod
     def _getName (self):
+        """
+        Метод должен возвращать имя, которое будет использоваться в названии панели инструментов
+        """
         pass
 
 
     @abstractmethod
     def _getHtmlGenerator (self, page):
+        """
+        Метод должен возвращать экземпляр генератора, создающий код HTML для страницы
+        """
         pass
+
+
+    @abstractmethod
+    def _getCacher (self, page, application):
+        """
+        Метод должен возвращать экземпляр класса, отвечающий за кэширование созданного HTML
+        """
+        pass
+
+
+    @abstractmethod
+    def _isHtmlCodeShown (self):
+        """
+        Возвращает True, если нужно показывать вкладку с кодом HTML, и False в противном случае
+        """
+        pass
+
+    # Конец методов, которые необходимо переопределить в производном классе
 
 
     def onPreferencesDialogClose (self, prefDialog):
@@ -261,21 +296,8 @@ class BaseWikiPageView (BaseHtmlPanel):
             MessageBox (_(u"Can't load HTML-file"), _(u"Error"), wx.ICON_ERROR | wx.OK)
 
 
-    def _addRenderTools (self):
-        self._application.actionController.appendMenuItem (SwitchCodeResultAction.stringId, self.toolsMenu)
-        self._application.actionController.appendToolbarButton (SwitchCodeResultAction.stringId,
-                                                                self.mainWindow.toolbars[self.mainWindow.GENERAL_TOOLBAR_STR],
-                                                                os.path.join (self.imagesDir, "render.png"),
-                                                                fullUpdate=False)
-
-
     @abstractmethod
     def _createWikiTools (self):
-        pass
-
-
-    @abstractproperty
-    def commandsMenu (self):
         pass
 
 
@@ -300,7 +322,7 @@ class BaseWikiPageView (BaseHtmlPanel):
     def generateHtml (self, page):
         resultFileName = self.getHtmlPath()
 
-        cache = HtmlCache (page, Application)
+        cache = self._getCacher (page, Application)
         # Проверим, можно ли прочитать уже готовый HTML
         if (cache.canReadFromCache() and os.path.exists (resultFileName)) or page.readonly:
             try:
@@ -352,7 +374,8 @@ class BaseWikiPageView (BaseHtmlPanel):
         """
         Сбросить кэш для того, чтобы заново сделать HTML
         """
-        self._getHtmlGenerator (self._currentpage).resetHash()
+        self._getCacher (self._currentpage, Application).resetHash()
+
         if self.selectedPageIndex == self.RESULT_PAGE_INDEX:
             self._onSwitchToPreview()
         elif self.selectedPageIndex == self.HTML_RESULT_PAGE_INDEX:
@@ -360,11 +383,16 @@ class BaseWikiPageView (BaseHtmlPanel):
 
 
     def _createCommonTools (self):
-        self._wikiMenu = wx.Menu()
-
         self.mainWindow.mainMenu.Insert (self.__WIKI_MENU_INDEX,
                                          self.toolsMenu,
                                          self._getMenuTitle())
+
+        # Переключиться с кода на результат и обратно
+        self._application.actionController.appendMenuItem (SwitchCodeResultAction.stringId, self.toolsMenu)
+        self._application.actionController.appendToolbarButton (SwitchCodeResultAction.stringId,
+                                                                self.mainWindow.toolbars[self.mainWindow.GENERAL_TOOLBAR_STR],
+                                                                os.path.join (self.imagesDir, "render.png"),
+                                                                fullUpdate=False)
 
         # Переключиться на код HTML
         self._application.actionController.appendMenuItem (WikiOpenHtmlCodeAction.stringId, self.toolsMenu)
@@ -372,3 +400,6 @@ class BaseWikiPageView (BaseHtmlPanel):
                                                                 self.mainWindow.toolbars[self.mainWindow.GENERAL_TOOLBAR_STR],
                                                                 os.path.join (self.imagesDir, "html.png"),
                                                                 fullUpdate=False)
+
+        # Обновить код HTML
+        self._application.actionController.appendMenuItem (WikiUpdateHtmlAction.stringId, self.toolsMenu)

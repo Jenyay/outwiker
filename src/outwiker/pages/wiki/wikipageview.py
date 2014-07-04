@@ -6,8 +6,9 @@ import os
 from .wikieditor import WikiEditor
 from .wikitoolbar import WikiToolBar
 
-from wikiconfig import WikiConfig
-from htmlgenerator import HtmlGenerator
+from .wikiconfig import WikiConfig
+from .htmlgenerator import HtmlGenerator
+from .htmlcache import HtmlCache
 
 from outwiker.actions.polyactionsid import *
 
@@ -17,7 +18,6 @@ from actions.nonparsed import WikiNonParsedAction
 from actions.thumb import WikiThumbAction
 from actions.link import insertLink
 from actions.equation import WikiEquationAction
-from actions.updatehtml import WikiUpdateHtmlAction
 from actions.attachlist import WikiAttachListAction
 from actions.childlist import WikiChildListAction
 from actions.include import WikiIncludeAction
@@ -50,12 +50,16 @@ class WikiPageView (BaseWikiPageView):
         return _(u"Wiki")
 
 
-    def _getConfig (self, config):
-        return WikiConfig (config)
+    def _isHtmlCodeShown (self):
+        return WikiConfig (self._application.config).showHtmlCodeOptions.value
 
 
     def _createToolbar (self, mainWindow):
         return WikiToolBar(mainWindow, mainWindow.auiManager)
+
+
+    def _getCacher (self, page, application):
+        return HtmlCache (page, application)
 
 
     @property
@@ -120,11 +124,6 @@ class WikiPageView (BaseWikiPageView):
         self._formatMenu = wx.Menu()
         self._listMenu = wx.Menu()
         self._commandsMenu = wx.Menu()
-
-        self._addRenderTools()
-
-        # Обновить код HTML
-        self._application.actionController.appendMenuItem (WikiUpdateHtmlAction.stringId, self.toolsMenu)
 
         self.toolsMenu.AppendSeparator()
 

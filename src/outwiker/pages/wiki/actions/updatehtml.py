@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 from outwiker.gui.baseaction import BaseAction
@@ -22,10 +21,10 @@ class WikiUpdateHtmlAction (BaseAction):
     @property
     def description (self):
         return _(u"Update HTML code for wiki page")
-    
+
 
     def run (self, params):
-        assert self._application.mainWindow != None
-        assert self._application.mainWindow.pagePanel != None
+        assert self._application.mainWindow is not None
+        assert self._application.mainWindow.pagePanel is not None
 
-        codeEditor = self._application.mainWindow.pagePanel.pageView.updateHtml()
+        self._application.mainWindow.pagePanel.pageView.updateHtml()
