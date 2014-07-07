@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-19 21:55+0400\n"
-"PO-Revision-Date: 2014-06-30 09:31+0300\n"
+"POT-Creation-Date: 2014-07-01 09:44+0400\n"
+"PO-Revision-Date: 2014-07-07 19:45+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
@@ -137,28 +137,29 @@ msgstr "Ви не обрали файл(и) для вилучення"
 #: outwiker/gui/attachpanel.py:286 outwiker/gui/basetextpanel.py:183
 #: outwiker/gui/basetextpanel.py:196 outwiker/gui/currentpagepanel.py:88
 #: outwiker/gui/currentpagepanel.py:226 outwiker/gui/currentpagepanel.py:235
-#: outwiker/gui/htmlrenderie.py:174 outwiker/gui/htmlrenderwebkit.py:221
-#: outwiker/gui/htmlrenderwx.py:107 outwiker/gui/mainwindow.py:507
+#: outwiker/gui/htmlrenderie.py:182 outwiker/gui/htmlrenderwebkit.py:232
+#: outwiker/gui/htmlrenderwx.py:107 outwiker/gui/mainwindow.py:508
 #: outwiker/gui/mainwndcontroller.py:215 outwiker/gui/notestree.py:283
-#: outwiker/gui/pagedialog.py:29 outwiker/gui/pagedialog.py:46
-#: outwiker/gui/pagedialog.py:51 outwiker/gui/pagedialog.py:143
-#: outwiker/gui/pagedialog.py:202 outwiker/gui/renametagdialog.py:75
+#: outwiker/gui/pagedialog.py:27 outwiker/gui/pagedialog.py:40
+#: outwiker/gui/pagedialog.py:45 outwiker/gui/pagedialog.py:137
+#: outwiker/gui/pagedialog.py:196 outwiker/gui/renametagdialog.py:75
 #: outwiker/gui/renametagdialog.py:79 outwiker/gui/tabscontroller.py:244
-#: outwiker/pages/html/basehtmlpanel.py:302
-#: outwiker/pages/html/basehtmlpanel.py:306
-#: outwiker/pages/html/htmlpageview.py:583
+#: outwiker/pages/html/basehtmlpanel.py:305
+#: outwiker/pages/html/basehtmlpanel.py:309
+#: outwiker/pages/html/htmlpageview.py:586
 #: outwiker/pages/wiki/wikipageview.py:257
 #: outwiker/pages/wiki/wikipageview.py:261
-#: outwiker/pages/wiki/wikipageview.py:277
-#: outwiker/pages/wiki/wikipageview.py:279
-#: outwiker/pages/wiki/wikipageview.py:699
-#: outwiker/pages/wiki/actions/include.py:38 outwiker/core/commands.py:47
-#: outwiker/core/commands.py:107 outwiker/core/commands.py:201
-#: outwiker/core/commands.py:241 outwiker/core/commands.py:249
-#: outwiker/core/commands.py:257 outwiker/core/commands.py:267
-#: outwiker/core/commands.py:341 outwiker/core/commands.py:347
-#: outwiker/core/commands.py:368 outwiker/core/commands.py:379
-#: outwiker/core/commands.py:396 outwiker/core/commands.py:401
+#: outwiker/pages/wiki/wikipageview.py:274
+#: outwiker/pages/wiki/wikipageview.py:276
+#: outwiker/pages/wiki/wikipageview.py:697
+#: outwiker/pages/wiki/wikipageview.py:710
+#: outwiker/pages/wiki/actions/include.py:38 outwiker/core/commands.py:46
+#: outwiker/core/commands.py:106 outwiker/core/commands.py:200
+#: outwiker/core/commands.py:240 outwiker/core/commands.py:248
+#: outwiker/core/commands.py:256 outwiker/core/commands.py:266
+#: outwiker/core/commands.py:340 outwiker/core/commands.py:346
+#: outwiker/core/commands.py:367 outwiker/core/commands.py:378
+#: outwiker/core/commands.py:395 outwiker/core/commands.py:400
 #: outwiker/core/textprinter.py:106 outwiker/actions/globalsearch.py:42
 #: outwiker/actions/movepagedown.py:41 outwiker/actions/movepageup.py:41
 #: outwiker/actions/openattachfolder.py:39
@@ -184,50 +185,50 @@ msgid "You did not select a file to execute"
 msgstr "Ви не обрали файл(и), що будуть виконанні"
 
 #: outwiker/gui/attachpanel.py:285 outwiker/gui/htmlrender.py:59
-#: outwiker/gui/htmlrenderie.py:173 outwiker/gui/htmlrenderwebkit.py:220
+#: outwiker/gui/htmlrenderie.py:181 outwiker/gui/htmlrenderwebkit.py:231
 #: outwiker/gui/htmlrenderwx.py:106 outwiker/gui/htmlrenderwx.py:153
 #, python-format
 msgid "Can't execute file '%s'"
 msgstr "Помилка виконання файла '%s'"
 
-#: outwiker/gui/basepagedialog.py:39
+#: outwiker/gui/basepagedialog.py:37
 #: outwiker/gui/preferences/prefdialog.py:127
 #: outwiker/gui/preferences/prefdialog.py:143
 #: outwiker/gui/toolbars/generaltoolbar.py:30
-#: outwiker/pages/wiki/wikipage.py:93
+#: outwiker/pages/wiki/wikipage.py:82
 msgid "General"
 msgstr "Загальні"
 
-#: outwiker/gui/basepagedialog.py:40
+#: outwiker/gui/basepagedialog.py:38
 msgid "Icon"
 msgstr "Піктограма"
 
-#: outwiker/gui/basepagedialog.py:41
+#: outwiker/gui/basepagedialog.py:39
 msgid "Appearance"
 msgstr "Зовнішній вигляд"
 
-#: outwiker/gui/basepagedialog.py:56
+#: outwiker/gui/basepagedialog.py:54
 msgid "Create Page"
 msgstr "Створити сторінку"
 
-#: outwiker/gui/basepagedialog.py:93
+#: outwiker/gui/basepagedialog.py:90
 msgid "Do not change"
 msgstr "Не змінювати"
 
-#: outwiker/gui/basepagedialog.py:95 outwiker/actions/applystyle.py:124
+#: outwiker/gui/basepagedialog.py:92 outwiker/actions/applystyle.py:122
 msgid "Default"
 msgstr "За замовчуванням"
 
-#: outwiker/gui/basepagedialog.py:210
+#: outwiker/gui/basepagedialog.py:207
 #: outwiker/pages/search/sortstrategies.py:55
 msgid "Title"
 msgstr "Заголовок"
 
-#: outwiker/gui/basepagedialog.py:221
+#: outwiker/gui/basepagedialog.py:218
 msgid "Page type"
 msgstr "Тип сторінки"
 
-#: outwiker/gui/basepagedialog.py:251
+#: outwiker/gui/basepagedialog.py:248
 msgid "Page style"
 msgstr "Стиль сторінки"
 
@@ -253,8 +254,7 @@ msgid "Owerwrite?"
 msgstr "Перезаписати?"
 
 #: outwiker/gui/basetextpanel.py:182 outwiker/gui/basetextpanel.py:195
-#: outwiker/gui/tabscontroller.py:243 outwiker/pages/html/basehtmlpanel.py:301
-#: outwiker/pages/wiki/wikipageview.py:256
+#: outwiker/gui/tabscontroller.py:243 outwiker/pages/wiki/wikipageview.py:256
 #, python-format
 msgid "Can't save file %s"
 msgstr "Помилка запису в файл %s"
@@ -353,18 +353,18 @@ msgstr "Рік (повністю)"
 msgid "A literal '%' character"
 msgstr "Символ '%'"
 
-#: outwiker/gui/editorstyleslist.py:25 outwiker/core/commands.py:764
-#: outwiker/core/commands.py:765
+#: outwiker/gui/editorstyleslist.py:25 outwiker/core/commands.py:763
+#: outwiker/core/commands.py:764
 msgid "Bold"
 msgstr "Жирний"
 
-#: outwiker/gui/editorstyleslist.py:26 outwiker/core/commands.py:770
-#: outwiker/core/commands.py:771
+#: outwiker/gui/editorstyleslist.py:26 outwiker/core/commands.py:769
+#: outwiker/core/commands.py:770
 msgid "Italic"
 msgstr "Курсив"
 
-#: outwiker/gui/editorstyleslist.py:27 outwiker/core/commands.py:782
-#: outwiker/core/commands.py:783
+#: outwiker/gui/editorstyleslist.py:27 outwiker/core/commands.py:781
+#: outwiker/core/commands.py:782
 msgid "Underline"
 msgstr "Підкреслений"
 
@@ -384,7 +384,7 @@ msgstr "Shift"
 msgid "Alt"
 msgstr "Alt"
 
-#: outwiker/gui/htmlrenderwebkit.py:98
+#: outwiker/gui/htmlrenderwebkit.py:104
 #, python-format
 msgid "Can't read file %s"
 msgstr "Помилка читання файлу %s"
@@ -399,7 +399,7 @@ msgstr "Іконка за замовчуванням"
 
 #: outwiker/gui/linkdialog.py:17 outwiker/gui/linkdialog.py:35
 #: outwiker/gui/preferences/wikieditorpanel.py:38
-#: outwiker/core/commands.py:896
+#: outwiker/core/commands.py:895
 msgid "Link"
 msgstr "Посилання"
 
@@ -452,7 +452,7 @@ msgstr "Вирізати"
 msgid "Copy"
 msgstr "Копіювати"
 
-#: outwiker/gui/mainwindow.py:506
+#: outwiker/gui/mainwindow.py:507
 #, python-format
 msgid ""
 "Can't save config\n"
@@ -505,32 +505,32 @@ msgstr "&Скасувати"
 msgid "Overwrite Files"
 msgstr "Перезапис файлів"
 
-#: outwiker/gui/pagedialog.py:28
+#: outwiker/gui/pagedialog.py:26
 #, python-format
 msgid "Page \"%s\" not found"
 msgstr "Сторінка \"%s\" не знайдена"
 
-#: outwiker/gui/pagedialog.py:46
+#: outwiker/gui/pagedialog.py:40
 msgid "Can't rename page\n"
 msgstr "Неможливо перейменувати сторінку\n"
 
-#: outwiker/gui/pagedialog.py:51
+#: outwiker/gui/pagedialog.py:45
 msgid "Can't change page style\n"
 msgstr "Неможливо змінити стиль сторінки\n"
 
-#: outwiker/gui/pagedialog.py:84 outwiker/actions/globalsearch.py:41
+#: outwiker/gui/pagedialog.py:78 outwiker/actions/globalsearch.py:41
 msgid "Can't create page"
 msgstr "Неможливо створити сторінку"
 
-#: outwiker/gui/pagedialog.py:143
+#: outwiker/gui/pagedialog.py:137
 msgid "A page with this title already exists"
 msgstr "Сторінка з таким заголовком вже існує"
 
-#: outwiker/gui/pagedialog.py:167 outwiker/actions/editpageprop.py:27
+#: outwiker/gui/pagedialog.py:161 outwiker/actions/editpageprop.py:27
 msgid "Edit page properties"
 msgstr "Редагувати властивості сторінки"
 
-#: outwiker/gui/pagedialog.py:201
+#: outwiker/gui/pagedialog.py:195
 msgid "Can't rename page when page with that title already exists"
 msgstr ""
 "Неможливо перейменувати сторінку, оскільки сторінка з таким заголовком вже "
@@ -629,8 +629,8 @@ msgstr "Нотатки"
 #: outwiker/gui/preferences/editorpanel.py:34
 #: outwiker/gui/preferences/htmlrenderpanel.py:28
 #: outwiker/gui/preferences/textprintpanel.py:29
-#: outwiker/pages/html/htmlpageview.py:210
-#: outwiker/pages/wiki/wikipageview.py:634
+#: outwiker/pages/html/htmlpageview.py:213
+#: outwiker/pages/wiki/wikipageview.py:631
 msgid "Font"
 msgstr "Шрифт"
 
@@ -779,7 +779,7 @@ msgid "Preferences"
 msgstr "Параметри"
 
 #: outwiker/gui/preferences/prefdialog.py:128
-#: outwiker/pages/html/basehtmlpanel.py:194
+#: outwiker/pages/html/basehtmlpanel.py:197
 msgid "Preview"
 msgstr "Перегляд"
 
@@ -821,8 +821,8 @@ msgid "Page Options..."
 msgstr "Налаштування сторінки..."
 
 #: outwiker/gui/preferences/wikieditorpanel.py:39
-#: outwiker/pages/html/htmlpageview.py:209
-#: outwiker/pages/wiki/wikipageview.py:633
+#: outwiker/pages/html/htmlpageview.py:212
+#: outwiker/pages/wiki/wikipageview.py:630
 msgid "Heading"
 msgstr "Заголовки"
 
@@ -834,58 +834,56 @@ msgstr "Команда"
 msgid "&Toolbars"
 msgstr "Панелі &інструментів"
 
-#: outwiker/pages/html/basehtmlpanel.py:193
+#: outwiker/pages/html/basehtmlpanel.py:196
 #: outwiker/pages/html/htmltoolbar.py:30
-#: outwiker/pages/wiki/wikipageview.py:181
+#: outwiker/pages/wiki/wikipageview.py:180
 msgid "HTML"
 msgstr "HTML"
 
-#: outwiker/pages/html/basehtmlpanel.py:293
+#: outwiker/pages/html/basehtmlpanel.py:289
 #: outwiker/pages/wiki/wikipageview.py:248
 msgid "Page rendered. Please wait…"
 msgstr "Сторінка формується для відображення. Будь-ласка, зачекайте…"
 
-#: outwiker/pages/html/basehtmlpanel.py:305
-#: outwiker/pages/wiki/wikipageview.py:260
-#, python-format
+#: outwiker/pages/html/basehtmlpanel.py:304
+#: outwiker/pages/html/basehtmlpanel.py:308
 msgid ""
-"Can't save HTML-file\n"
+"Can't save file\n"
 "\n"
-"%s"
+"{}"
 msgstr ""
-"Неможливо зберегти HTML-файл\n"
+"Помилка запису у файл\n"
 "\n"
-"%s"
+"{}"
 
-#: outwiker/pages/html/htmlpage.py:85
+#: outwiker/pages/html/htmlpage.py:83
 msgid "HTML Page"
 msgstr "HTML-сторінка"
 
-#: outwiker/pages/html/htmlpageview.py:211
-#: outwiker/pages/wiki/wikipageview.py:635
+#: outwiker/pages/html/htmlpageview.py:214
+#: outwiker/pages/wiki/wikipageview.py:632
 msgid "Alignment"
 msgstr "Вирівнювання"
 
-#: outwiker/pages/html/htmlpageview.py:212
-#: outwiker/pages/wiki/wikipageview.py:636
+#: outwiker/pages/html/htmlpageview.py:215
+#: outwiker/pages/wiki/wikipageview.py:633
 msgid "Formatting"
 msgstr "Форматування"
 
-#: outwiker/pages/html/htmlpageview.py:213
-#: outwiker/pages/wiki/wikipageview.py:637
+#: outwiker/pages/html/htmlpageview.py:216
+#: outwiker/pages/wiki/wikipageview.py:634
 msgid "Lists"
 msgstr "Списки"
 
-#: outwiker/pages/html/htmlpageview.py:214 outwiker/core/commands.py:942
+#: outwiker/pages/html/htmlpageview.py:217 outwiker/core/commands.py:941
 msgid "Table"
 msgstr "Таблиця"
 
-#: outwiker/pages/html/htmlpageview.py:225
+#: outwiker/pages/html/htmlpageview.py:228
 msgid "Html"
 msgstr "Html"
 
-#: outwiker/pages/html/htmlpageview.py:582
-#: outwiker/pages/wiki/wikipageview.py:698
+#: outwiker/pages/html/htmlpageview.py:585
 msgid "Page style Error. Style by default is used"
 msgstr ""
 "Помилка в файлі стилю сторінки. Буде використаний стиль за замовчуванням."
@@ -900,11 +898,11 @@ msgstr "Дата останньої зміни: {0}"
 msgid "Tags: "
 msgstr "Мітки:"
 
-#: outwiker/pages/search/searchpage.py:151
+#: outwiker/pages/search/searchpage.py:146
 msgid "Search Page"
 msgstr "Сторінка пошуку"
 
-#: outwiker/pages/search/searchpage.py:181
+#: outwiker/pages/search/searchpage.py:162
 msgid "# Search"
 msgstr "# Пошук"
 
@@ -1003,24 +1001,43 @@ msgstr "Максимальний розмір"
 msgid "0 - default size"
 msgstr "0 - розмір за замовчуванням"
 
-#: outwiker/pages/wiki/wikipage.py:64
+#: outwiker/pages/wiki/wikipage.py:65
 msgid "Wiki Page"
 msgstr "Вікісторінка"
 
-#: outwiker/pages/wiki/wikipageview.py:100
-#: outwiker/pages/wiki/wikipageview.py:650
+#: outwiker/pages/wiki/wikipageview.py:96
+#: outwiker/pages/wiki/wikipageview.py:647
 #: outwiker/pages/wiki/wikitoolbar.py:30
 msgid "Wiki"
 msgstr "Вікі"
 
-#: outwiker/pages/wiki/wikipageview.py:277
-#: outwiker/pages/wiki/wikipageview.py:279
+#: outwiker/pages/wiki/wikipageview.py:260
+#, python-format
+msgid ""
+"Can't save HTML-file\n"
+"\n"
+"%s"
+msgstr ""
+"Неможливо зберегти HTML-файл\n"
+"\n"
+"%s"
+
+#: outwiker/pages/wiki/wikipageview.py:274
+#: outwiker/pages/wiki/wikipageview.py:276
 msgid "Can't load HTML-file"
 msgstr "Помилка відкриття файлу HTML"
 
-#: outwiker/pages/wiki/wikipageview.py:638
+#: outwiker/pages/wiki/wikipageview.py:635
 msgid "Commands"
 msgstr "Команди"
+
+#: outwiker/pages/wiki/wikipageview.py:696
+msgid "Can't read file {}"
+msgstr "Помилка читання файлу {}"
+
+#: outwiker/pages/wiki/wikipageview.py:709
+msgid "Can't create HTML file"
+msgstr "Помилка створення HTML-файлу"
 
 #: outwiker/pages/wiki/wikipreferences.py:23
 msgid "Show HTML Code Tab"
@@ -1225,16 +1242,16 @@ msgstr ""
 "<b>Не вдалося створити мініатюру: \n"
 "%s</b>"
 
-#: outwiker/core/commands.py:46
+#: outwiker/core/commands.py:45
 msgid "Page is opened as read-only"
 msgstr "Сторінка відкрита лише для читання"
 
-#: outwiker/core/commands.py:73
+#: outwiker/core/commands.py:72
 #, python-format
 msgid "File '%s' exists already"
 msgstr "Файл '%s' уже існує"
 
-#: outwiker/core/commands.py:86 outwiker/core/commands.py:88
+#: outwiker/core/commands.py:85 outwiker/core/commands.py:87
 #, python-brace-format
 msgid ""
 "Error copying files\n"
@@ -1243,33 +1260,33 @@ msgstr ""
 "Помилка копіювання файлів\n"
 "{0}"
 
-#: outwiker/core/commands.py:98
+#: outwiker/core/commands.py:97
 #, python-format
 msgid "Remove page '%s' and all subpages?"
 msgstr "Видалити сторінку '%s' і всі дочірні сторінки?"
 
-#: outwiker/core/commands.py:101
+#: outwiker/core/commands.py:100
 msgid "Remove page?"
 msgstr "Видалити сторінку?"
 
-#: outwiker/core/commands.py:106
+#: outwiker/core/commands.py:105
 msgid "Can't remove page"
 msgstr "Неможливо видалити сторінку"
 
-#: outwiker/core/commands.py:152
+#: outwiker/core/commands.py:151
 msgid "Loading"
 msgstr "Завантаження"
 
-#: outwiker/core/commands.py:153
+#: outwiker/core/commands.py:152
 msgid "Opening notes tree..."
 msgstr "Відкриття дерева нотаток..."
 
-#: outwiker/core/commands.py:200
+#: outwiker/core/commands.py:199
 #, python-format
 msgid "Can't load wiki '%s'"
 msgstr "Неможливо завантажити вікі '%s'"
 
-#: outwiker/core/commands.py:209
+#: outwiker/core/commands.py:208
 #, python-format
 msgid ""
 "Can't load wiki '%s'\n"
@@ -1282,15 +1299,15 @@ msgstr ""
 "Очистити даний файл і перезавантажити вікі?\n"
 "При цьому закладки будуть втрачені."
 
-#: outwiker/core/commands.py:210
+#: outwiker/core/commands.py:209
 msgid "__page.opt error"
 msgstr "Помилка в файлі __page.opt"
 
-#: outwiker/core/commands.py:221
+#: outwiker/core/commands.py:220
 msgid "First Wiki Page"
 msgstr "Перша вікісторінка"
 
-#: outwiker/core/commands.py:222
+#: outwiker/core/commands.py:221
 msgid ""
 "!! First Wiki Page\n"
 "\n"
@@ -1306,41 +1323,41 @@ msgstr ""
 "{+підкреслений текст+}, [[http://jenyay.net | посилання]] тощо.\n"
 "                       "
 
-#: outwiker/core/commands.py:232
+#: outwiker/core/commands.py:231
 msgid "test"
 msgstr "Перевірка"
 
-#: outwiker/core/commands.py:240
+#: outwiker/core/commands.py:239
 msgid "Can't create wiki\n"
 msgstr "Неможливо створити вікі\n"
 
-#: outwiker/core/commands.py:248 outwiker/core/commands.py:266
+#: outwiker/core/commands.py:247 outwiker/core/commands.py:265
 msgid "Can't open clipboard"
 msgstr "Неможливо відкрити буфер обміну"
 
-#: outwiker/core/commands.py:256
+#: outwiker/core/commands.py:255
 msgid "Can't copy text to clipboard"
 msgstr "Помилка копіювання тексту в буфер обміну"
 
-#: outwiker/core/commands.py:340 outwiker/core/commands.py:395
+#: outwiker/core/commands.py:339 outwiker/core/commands.py:394
 msgid "Can't move page when page with that title already exists"
 msgstr ""
 "Неможливо перемістити сторінку, так як сторінка з накою назвою вже існує"
 
-#: outwiker/core/commands.py:346
+#: outwiker/core/commands.py:345
 msgid "Can't move page"
 msgstr "Неможливо перемістити сторінку"
 
-#: outwiker/core/commands.py:368
+#: outwiker/core/commands.py:367
 #, python-format
 msgid "Can't open file %s"
 msgstr "Помилка відкриття файлу %s"
 
-#: outwiker/core/commands.py:378
+#: outwiker/core/commands.py:377
 msgid "Can't parse version"
 msgstr "Помилка аналізу версії"
 
-#: outwiker/core/commands.py:400
+#: outwiker/core/commands.py:399
 #, python-format
 msgid ""
 "Can't rename page\n"
@@ -1349,11 +1366,11 @@ msgstr ""
 "Неможливо перейменувати сторінку\n"
 "'%s'"
 
-#: outwiker/core/commands.py:416
+#: outwiker/core/commands.py:415
 msgid "The invalid page title"
 msgstr "Назва сторінки невірна"
 
-#: outwiker/core/commands.py:421
+#: outwiker/core/commands.py:420
 #, python-brace-format
 msgid ""
 "{0}\n"
@@ -1362,151 +1379,151 @@ msgstr ""
 "{0}\n"
 "Продовжити?"
 
-#: outwiker/core/commands.py:424
+#: outwiker/core/commands.py:423
 msgid "The page title"
 msgstr "Заголовок сторінки"
 
-#: outwiker/core/commands.py:776 outwiker/core/commands.py:777
+#: outwiker/core/commands.py:775 outwiker/core/commands.py:776
 msgid "Bold italic"
 msgstr "Жирний курсив"
 
-#: outwiker/core/commands.py:788 outwiker/core/commands.py:789
+#: outwiker/core/commands.py:787 outwiker/core/commands.py:788
 msgid "Strikethrough"
 msgstr "Закреслений"
 
-#: outwiker/core/commands.py:794 outwiker/core/commands.py:795
+#: outwiker/core/commands.py:793 outwiker/core/commands.py:794
 msgid "Subscript"
 msgstr "Нижній індекс"
 
-#: outwiker/core/commands.py:800 outwiker/core/commands.py:801
+#: outwiker/core/commands.py:799 outwiker/core/commands.py:800
 msgid "Superscript"
 msgstr "Верхній індекс"
 
-#: outwiker/core/commands.py:806 outwiker/core/commands.py:807
+#: outwiker/core/commands.py:805 outwiker/core/commands.py:806
 msgid "Preformatted text"
 msgstr "Форматований текст"
 
-#: outwiker/core/commands.py:812
+#: outwiker/core/commands.py:811
 msgid "Insert code"
 msgstr "Вставити код"
 
-#: outwiker/core/commands.py:813
+#: outwiker/core/commands.py:812
 msgid "Insert code (monospaced font)"
 msgstr "Вставити код (моноширинний шрифт)"
 
-#: outwiker/core/commands.py:821 outwiker/core/commands.py:822
+#: outwiker/core/commands.py:820 outwiker/core/commands.py:821
 msgid "Align text left"
 msgstr "Вирівнювання по лівому краю"
 
-#: outwiker/core/commands.py:827 outwiker/core/commands.py:828
+#: outwiker/core/commands.py:826 outwiker/core/commands.py:827
 msgid "Center"
 msgstr "Вирівнювання по центру"
 
-#: outwiker/core/commands.py:833 outwiker/core/commands.py:834
+#: outwiker/core/commands.py:832 outwiker/core/commands.py:833
 msgid "Align text right"
 msgstr "Вирівнювання по правому краю"
 
-#: outwiker/core/commands.py:839 outwiker/core/commands.py:840
+#: outwiker/core/commands.py:838 outwiker/core/commands.py:839
 msgid "Justify"
 msgstr "Вирівнювання по ширині"
 
-#: outwiker/core/commands.py:847 outwiker/core/commands.py:848
+#: outwiker/core/commands.py:846 outwiker/core/commands.py:847
 msgid "First-level heading"
 msgstr "Заголовок першого рівня"
 
-#: outwiker/core/commands.py:853 outwiker/core/commands.py:854
+#: outwiker/core/commands.py:852 outwiker/core/commands.py:853
 msgid "Second-level heading"
 msgstr "Заголовок другого рівня"
 
-#: outwiker/core/commands.py:859 outwiker/core/commands.py:860
+#: outwiker/core/commands.py:858 outwiker/core/commands.py:859
 msgid "Subtitle three"
 msgstr "Заголовок третього рівня"
 
-#: outwiker/core/commands.py:865 outwiker/core/commands.py:866
+#: outwiker/core/commands.py:864 outwiker/core/commands.py:865
 msgid "Subtitle four"
 msgstr "Заголовок четвертого рівня"
 
-#: outwiker/core/commands.py:871 outwiker/core/commands.py:872
+#: outwiker/core/commands.py:870 outwiker/core/commands.py:871
 msgid "Subtitle five"
 msgstr "Заголовок п’ятого рівня"
 
-#: outwiker/core/commands.py:877 outwiker/core/commands.py:878
+#: outwiker/core/commands.py:876 outwiker/core/commands.py:877
 msgid "Subtitle six"
 msgstr "Заголовок шостого рівня"
 
-#: outwiker/core/commands.py:884 outwiker/core/commands.py:885
+#: outwiker/core/commands.py:883 outwiker/core/commands.py:884
 msgid "Anchor"
 msgstr "Якір"
 
-#: outwiker/core/commands.py:890 outwiker/core/commands.py:891
+#: outwiker/core/commands.py:889 outwiker/core/commands.py:890
 msgid "Horizontal rule"
 msgstr "Горизонтальна лінія"
 
-#: outwiker/core/commands.py:897
+#: outwiker/core/commands.py:896
 msgid "Insert Link"
 msgstr "Вставити посилання"
 
-#: outwiker/core/commands.py:902
+#: outwiker/core/commands.py:901
 msgid "Quote"
 msgstr "Цитування"
 
-#: outwiker/core/commands.py:903
+#: outwiker/core/commands.py:902
 msgid "Insert a quote block"
 msgstr "Вставити цитату"
 
-#: outwiker/core/commands.py:908
+#: outwiker/core/commands.py:907
 msgid "Image"
 msgstr "Зображення"
 
-#: outwiker/core/commands.py:909
+#: outwiker/core/commands.py:908
 msgid "Insert image"
 msgstr "Вставити зображення"
 
-#: outwiker/core/commands.py:916
+#: outwiker/core/commands.py:915
 msgid "Bullets list"
 msgstr "Маркірований список"
 
-#: outwiker/core/commands.py:917
+#: outwiker/core/commands.py:916
 msgid "Insert a bullets list"
 msgstr "Вставити ненумерований список"
 
-#: outwiker/core/commands.py:922
+#: outwiker/core/commands.py:921
 msgid "Numbers list"
 msgstr "Нумерований список"
 
-#: outwiker/core/commands.py:923
+#: outwiker/core/commands.py:922
 msgid "Insert a numbers list"
 msgstr "Вставити нумерований список"
 
-#: outwiker/core/commands.py:928
+#: outwiker/core/commands.py:927
 msgid "Line break"
 msgstr "Розрив рядка"
 
-#: outwiker/core/commands.py:929
+#: outwiker/core/commands.py:928
 msgid "Insert a line break"
 msgstr "Вставити розрив рядка"
 
-#: outwiker/core/commands.py:934 outwiker/core/commands.py:935
+#: outwiker/core/commands.py:933 outwiker/core/commands.py:934
 msgid "Convert HTML Symbols"
 msgstr "Конвертувати символи в HTML"
 
-#: outwiker/core/commands.py:943
+#: outwiker/core/commands.py:942
 msgid "Insert a table"
 msgstr "Вставити таблицю"
 
-#: outwiker/core/commands.py:948
+#: outwiker/core/commands.py:947
 msgid "Table row"
 msgstr "Рядок таблиці"
 
-#: outwiker/core/commands.py:949
+#: outwiker/core/commands.py:948
 msgid "Insert a table row"
 msgstr "Вставити рядок таблиці"
 
-#: outwiker/core/commands.py:954
+#: outwiker/core/commands.py:953
 msgid "Table cell"
 msgstr "Комірка таблиці"
 
-#: outwiker/core/commands.py:955
+#: outwiker/core/commands.py:954
 msgid "Insert a table cell"
 msgstr "Вставити комірку таблиці"
 
@@ -1573,23 +1590,23 @@ msgstr "Додати сторінку того ж рівня…"
 msgid "Add sibling page"
 msgstr "Додати сторінку того ж рівня"
 
-#: outwiker/actions/applystyle.py:28
+#: outwiker/actions/applystyle.py:27
 msgid "Set Style to Branch…"
 msgstr "Встановити стиль для гілки…"
 
-#: outwiker/actions/applystyle.py:33 outwiker/actions/applystyle.py:64
+#: outwiker/actions/applystyle.py:32 outwiker/actions/applystyle.py:62
 msgid "Set Style to Branch"
 msgstr "Встановити стиль для гілки"
 
-#: outwiker/actions/applystyle.py:65
+#: outwiker/actions/applystyle.py:63
 msgid "Please wait..."
 msgstr "Будь ласка, зачекайте..."
 
-#: outwiker/actions/applystyle.py:94
+#: outwiker/actions/applystyle.py:92
 msgid "Set style to branch"
 msgstr "Встановити стиль для гілки"
 
-#: outwiker/actions/applystyle.py:97
+#: outwiker/actions/applystyle.py:95
 msgid "Style"
 msgstr "Стиль"
 
