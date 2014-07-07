@@ -228,7 +228,7 @@ def createNewWiki (parentwnd):
             from outwiker.pages.wiki.wikipage import WikiPageFactory
 
             newwiki = WikiDocument.create (dlg.GetPath ())
-            WikiPageFactory.create (newwiki, newPageTitle, [_(u"test")])
+            WikiPageFactory().create (newwiki, newPageTitle, [_(u"test")])
             firstPage = newwiki[newPageTitle]
             firstPage.content = newPageContent
 
