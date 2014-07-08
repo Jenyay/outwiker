@@ -1,6 +1,10 @@
 # -*- coding: UTF-8 -*-
 
 import re
+import traceback
+
+from tokens.tokenfonts import FontsFactory
+from tokens.tokentext import TextFactory
 
 
 class Parser (object):
@@ -28,8 +32,20 @@ class Parser (object):
             r"\\textlengthmark": u"ː",
             r"<<": u"&laquo;",
             r">>": u"&raquo;",
+            r"``": u"&laquo;",
+            r"''": u"&raquo;",
             r"~": u" ",
         }
+
+        self._error_template = u"<b>{error}</b>"
+
+        self.italicized = FontsFactory.makeItalic (self)
+        self.text = TextFactory.make(self)
+
+        self._texMarkup = (
+            self.text |
+            self.italicized
+        )
 
 
     def convert (self, text):
@@ -39,6 +55,12 @@ class Parser (object):
         result = self._replaceSymbols (text)
         result = self._removeTranscriptions (result)
         result = self._replaceDash (result)
+        result = self._clearTex (result)
+
+        try:
+            result = self._texMarkup.transformString (result)
+        except Exception:
+            result = self._error_template.format (error = traceback.format_exc())
 
         return result
 
@@ -64,5 +86,22 @@ class Parser (object):
     def _replaceDash (self, text):
         result = text.replace (u"---", u"&mdash;")
         result = result.replace (u"--", u"&ndash;")
+
+        return result
+
+
+    def _clearTex (self, text):
+        """
+        Удаление остатков TeX, которые не нужно преобразовывать
+        """
+        # Список регулярных выражений
+        commands = [
+            ur"\\large\s+",
+        ]
+
+        result = text
+
+        for command in commands:
+            result = re.sub (command, u"", result, flags=re.U | re.S | re.M)
 
         return result
