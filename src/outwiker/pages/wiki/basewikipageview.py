@@ -68,6 +68,10 @@ class BaseWikiPageView (BaseHtmlPanel):
 
 
     # Методы, которые необходимо переопределить в производном классе
+    @abstractmethod
+    def _createWikiTools (self):
+        pass
+
 
     @abstractmethod
     def _getPageTitle (self):
@@ -246,8 +250,9 @@ class BaseWikiPageView (BaseHtmlPanel):
     def _onSwitchCodeHtml (self):
         assert self._currentpage is not None
 
+        self.Save()
         self._enableActions (False)
-        self._updateHtmlCode ()
+        self._updateResult ()
         self._enableAllTools ()
         self.htmlCodeWindow.SetFocus()
         self.htmlCodeWindow.Update()
@@ -294,11 +299,6 @@ class BaseWikiPageView (BaseHtmlPanel):
             MessageBox (_(u"Can't load HTML-file"), _(u"Error"), wx.ICON_ERROR | wx.OK)
         except OSError:
             MessageBox (_(u"Can't load HTML-file"), _(u"Error"), wx.ICON_ERROR | wx.OK)
-
-
-    @abstractmethod
-    def _createWikiTools (self):
-        pass
 
 
     @BaseHtmlPanel.selectedPageIndex.setter
