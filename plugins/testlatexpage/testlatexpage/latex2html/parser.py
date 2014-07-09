@@ -5,6 +5,7 @@ import traceback
 
 from tokens.tokenfonts import FontsFactory
 from tokens.tokentext import TextFactory
+from tokens.tokentable import TableFactory
 
 
 class Parser (object):
@@ -39,12 +40,14 @@ class Parser (object):
 
         self._error_template = u"<b>{error}</b>"
 
-        self.italicized = FontsFactory.makeItalic (self)
+        self.italicized = FontsFactory.make (self)
+        self.table = TableFactory.make(self)
         self.text = TextFactory.make(self)
 
         self._texMarkup = (
             self.text |
-            self.italicized
+            self.italicized |
+            self.table
         )
 
 

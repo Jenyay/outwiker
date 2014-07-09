@@ -10,7 +10,7 @@ class FontsFactory (object):
     Фабрика для создания шрифтовых / блочных токенов
     """
     @staticmethod
-    def makeItalic (parser):
+    def make (parser):
         """
         Создать токен для курсивного шрифта
         """
