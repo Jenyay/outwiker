@@ -105,8 +105,9 @@ class BranchExporter (object):
                 continue
 
             linkToPage = None
+            anchor = None
 
-            linkToPage = self.__getPageByProtocol (url)
+            linkToPage, anchor = self.__getPageByProtocol (url)
 
             # Это ссылка на подстраницу?
             if linkToPage is None:
@@ -126,6 +127,9 @@ class BranchExporter (object):
             # Эта страница нам подходит
             # Новая ссылка
             newhref = self.__renames[linkToPage] + ".html"
+            if anchor is not None:
+                newhref += anchor
+
             newFullLink = match[fullMatchIndex].replace (url, newhref)
 
             result = result.replace (match[fullMatchIndex], newFullLink)
@@ -140,23 +144,35 @@ class BranchExporter (object):
         # Т.к. поддержка этого протокола появилась только в версии 1.8.0,
         # то нужно проверить, есть ли в self.__application член pageUidDepot
         if "pageUidDepot" not in self.__application.__dict__:
-            return None
+            return (None, None)
 
         protocol = u"page://"
-        page = None
 
-        if href.startswith (protocol):
-            # Отсечем протокол
-            uid = href[len (protocol):]
+        if not href.startswith (protocol):
+            return (None, None)
 
-            # Отсечем все, что после /
-            slashPos = uid.find ("/")
-            if slashPos != -1:
-                uid = uid[: slashPos]
+        # Отсечем протокол
+        uid = href[len (protocol):]
 
-            page = self.__application.pageUidDepot[uid]
+        # Отсечем все, что после /
+        slashPos = uid.find ("/")
+        uid_clean = uid[: slashPos] if slashPos != -1 else uid
 
-        return page
+        page = self.__application.pageUidDepot[uid_clean]
+        anchor = self.__getAnchor (uid)
+
+        return (page, anchor)
+
+
+    def __getAnchor (self, href):
+        """
+        Попытаться найти якорь, если используется ссылка вида page://...
+        """
+        pos = href.rfind ("/#")
+        if pos != -1:
+            return href[pos + 1:]
+
+        return None
 
 
     def __isInternetUrl (self, url):
