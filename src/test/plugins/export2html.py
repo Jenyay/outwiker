@@ -686,9 +686,28 @@ class Export2HtmlTest (unittest.TestCase):
         """
         Тест на проверку того, что заменяются ссылки вида page://...
         """
-        pagename = u"Страница 1"
+        Application.wikiroot = self.root
+        namegenerator = self.__tester.longNameGenerator (self.root)
+        branchExporter = self.__tester.branchExporter (self.root, namegenerator, Application)
+
+        branchExporter.export (
+            outdir=self.outputdir,
+            imagesonly=False,
+            alwaysOverwrite=False
+        )
+
+        text = readTextFile (os.path.join (self.outputdir, u"samplewiki_Страница 1.html"))
+
+        self.assertIn (u'<a href="samplewiki_Страница 1_Страница 2_Страница 6_Страница 7_Страница 2.html">', text)
+
+
+    def testLinkToPageByProticolTitleNames_01 (self):
+        """
+        Тест на проверку того, что заменяются ссылки вида page://...
+        """
+        Application.wikiroot = self.root
         namegenerator = self.__tester.titleNameGenerator (self.outputdir)
-        branchExporter = self.__tester.branchExporter (self.root[pagename], namegenerator, Application)
+        branchExporter = self.__tester.branchExporter (self.root, namegenerator, Application)
 
         branchExporter.export (
             outdir=self.outputdir,
@@ -698,4 +717,42 @@ class Export2HtmlTest (unittest.TestCase):
 
         text = readTextFile (os.path.join (self.outputdir, u"Страница 1.html"))
 
-        self.assertTrue (u'<a href="Страница 1_Страница 2_Страница 6_Страница 7_Страница 2.html">Еще одна ссылка</a>' in text)
+        self.assertIn (u'<a href="Страница 2 (2).html">', text)
+
+
+    def testLinkToPageByProticolTitleNames_02 (self):
+        """
+        Тест на проверку того, что заменяются ссылки вида page://...
+        """
+        Application.wikiroot = self.root
+        namegenerator = self.__tester.titleNameGenerator (self.outputdir)
+        branchExporter = self.__tester.branchExporter (self.root, namegenerator, Application)
+
+        branchExporter.export (
+            outdir=self.outputdir,
+            imagesonly=False,
+            alwaysOverwrite=False
+        )
+
+        text = readTextFile (os.path.join (self.outputdir, u"Страница 2 (2).html"))
+
+        self.assertIn (u'<a href="Страница 2 (1).html">', text)
+
+
+    def testLinkToPageByProticolTitleNames_03 (self):
+        """
+        Тест на проверку того, что заменяются ссылки вида page://...
+        """
+        Application.wikiroot = self.root
+        namegenerator = self.__tester.titleNameGenerator (self.outputdir)
+        branchExporter = self.__tester.branchExporter (self.root, namegenerator, Application)
+
+        branchExporter.export (
+            outdir=self.outputdir,
+            imagesonly=False,
+            alwaysOverwrite=False
+        )
+
+        text = readTextFile (os.path.join (self.outputdir, u"Страница 2 (2).html"))
+
+        self.assertIn (u'<a href="Страница 3.html">', text)

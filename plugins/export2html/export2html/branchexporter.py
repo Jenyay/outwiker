@@ -104,8 +104,13 @@ class BranchExporter (object):
             if self.__isFileLink (url, outdir):
                 continue
 
+            linkToPage = None
+
+            linkToPage = self.__getPageByProtocol (url)
+
             # Это ссылка на подстраницу?
-            linkToPage = page[url]
+            if linkToPage is None:
+                linkToPage = page[url]
 
             if linkToPage is None:
                 # Это ссылка на страницу из корня?
@@ -126,6 +131,32 @@ class BranchExporter (object):
             result = result.replace (match[fullMatchIndex], newFullLink)
 
         return result
+
+
+    def __getPageByProtocol (self, href):
+        """
+        Если href - протокол вида page://..., то возвращает страницу, на которую ведет ссылка (если она существует), в противном случае возвращает None.
+        """
+        # Т.к. поддержка этого протокола появилась только в версии 1.8.0,
+        # то нужно проверить, есть ли в self.__application член pageUidDepot
+        if "pageUidDepot" not in self.__application.__dict__:
+            return None
+
+        protocol = u"page://"
+        page = None
+
+        if href.startswith (protocol):
+            # Отсечем протокол
+            uid = href[len (protocol):]
+
+            # Отсечем все, что после /
+            slashPos = uid.find ("/")
+            if slashPos != -1:
+                uid = uid[: slashPos]
+
+            page = self.__application.pageUidDepot[uid]
+
+        return page
 
 
     def __isInternetUrl (self, url):

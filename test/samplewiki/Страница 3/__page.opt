@@ -1,3 +1,11 @@
 [General]
 tags = test, тест
 type = html
+datetime = 2013-05-22 18:02:11.473394
+linewrap = True
+cursorposition = 0
+uid = __8c6e1e01-76f3-47b6-aba4-ab5692c592db
+
+[Misc]
+pageindex = 1
+
