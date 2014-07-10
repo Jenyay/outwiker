@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import os.path
@@ -34,7 +33,7 @@ class PluginExport2Html (Plugin):
     def name (self):
         return u"Export2Html"
 
-    
+
     @property
     def description (self):
         return _(u"Export pages to HTML")
@@ -42,9 +41,9 @@ class PluginExport2Html (Plugin):
 
     @property
     def version (self):
-        return u"1.2.2"
+        return u"1.3"
 
-    
+
     def initialize(self):
         self.__initlocale()
         self.__controller.initialize ()
@@ -80,6 +79,6 @@ class PluginExport2Html (Plugin):
     @property
     def tester(self):
         """
-        Возвращает экземпляр класса Tester, предназначеный для тестирования 
+        Возвращает экземпляр класса Tester, предназначеный для тестирования
         """
         return Tester()
