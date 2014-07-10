@@ -775,3 +775,41 @@ class Export2HtmlTest (unittest.TestCase):
         text = readTextFile (os.path.join (self.outputdir, u"Страница 2 (2).html"))
 
         self.assertIn (u'<a href="Страница 7.html#anchor">', text)
+
+
+    def testRelativeLinkTitleNames_01 (self):
+        """
+        Тест на проверку того, что заменяются ссылки вида page://...
+        """
+        Application.wikiroot = self.root
+        namegenerator = self.__tester.titleNameGenerator (self.outputdir)
+        branchExporter = self.__tester.branchExporter (self.root, namegenerator, Application)
+
+        branchExporter.export (
+            outdir=self.outputdir,
+            imagesonly=False,
+            alwaysOverwrite=False
+        )
+
+        text = readTextFile (os.path.join (self.outputdir, u"Страница 2 (2).html"))
+
+        self.assertIn (u'<a href="Страница 2 (1).html">', text)
+
+
+    def testRelativeLinkTitleNames_02 (self):
+        """
+        Тест на проверку того, что заменяются ссылки вида page://...
+        """
+        Application.wikiroot = self.root
+        namegenerator = self.__tester.titleNameGenerator (self.outputdir)
+        branchExporter = self.__tester.branchExporter (self.root, namegenerator, Application)
+
+        branchExporter.export (
+            outdir=self.outputdir,
+            imagesonly=False,
+            alwaysOverwrite=False
+        )
+
+        text = readTextFile (os.path.join (self.outputdir, u"Страница 2 (2).html"))
+
+        self.assertIn (u'<a href="Страница 7.html">', text)
