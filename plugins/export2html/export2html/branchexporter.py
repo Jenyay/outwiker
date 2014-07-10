@@ -51,7 +51,11 @@ class BranchExporter (object):
                        alwaysOverwrite)
 
         self.__replacePageLinks (outdir)
-        self.__createIndex (outdir, alwaysOverwrite)
+        try:
+            self.__createIndex (outdir, alwaysOverwrite)
+        except IOError, e:
+            str (e)
+
         return self.log
 
 
