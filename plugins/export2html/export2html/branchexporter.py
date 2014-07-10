@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import os.path
@@ -10,8 +9,9 @@ from outwiker.core.tree import WikiDocument
 
 
 class BranchExporter (object):
-    def __init__ (self, startpage, nameGenerator):
+    def __init__ (self, startpage, nameGenerator, application):
         self.__startpage = startpage
+        self.__application = application
 
         self.__indexfname = u"__index.html"
         self.__contentfname = u"__content.html"
@@ -26,8 +26,8 @@ class BranchExporter (object):
             (.*?)
             href\s*=['"](.*?)['"]
             (.*?)>)
-            """, 
-            re.IGNORECASE | re.MULTILINE | re.DOTALL | re.VERBOSE )
+            """,
+            re.IGNORECASE | re.MULTILINE | re.DOTALL | re.VERBOSE)
 
 
         # Словарь, который сохраняет, как была названа каждая страница при экспорте
@@ -44,11 +44,11 @@ class BranchExporter (object):
         self.__log = []
         self.__renames = {}
 
-        self.__export (self.__startpage, 
-                self.__startpage, 
-                outdir, 
-                imagesonly, 
-                alwaysOverwrite)
+        self.__export (self.__startpage,
+                       self.__startpage,
+                       outdir,
+                       imagesonly,
+                       alwaysOverwrite)
 
         self.__replacePageLinks (outdir)
         self.__createIndex (outdir, alwaysOverwrite)
@@ -82,7 +82,7 @@ class BranchExporter (object):
                 with open (fullname, "wb") as fp:
                     fp.write (newtext.encode ("utf8"))
             except BaseException, error:
-                self.__log.append (u"{0}: {1}".format (page.title, unicode (error) ) )
+                self.__log.append (u"{0}: {1}".format (page.title, unicode (error)))
 
 
 
@@ -107,12 +107,12 @@ class BranchExporter (object):
             # Это ссылка на подстраницу?
             linkToPage = page[url]
 
-            if linkToPage == None:
+            if linkToPage is None:
                 # Это ссылка на страницу из корня?
                 correcturl = url[1:] if url[0] == "/" else url
                 linkToPage = page.root[correcturl]
 
-            if linkToPage == None:
+            if linkToPage is None:
                 continue
 
             if linkToPage not in self.__renames.keys():
@@ -122,17 +122,17 @@ class BranchExporter (object):
             # Новая ссылка
             newhref = self.__renames[linkToPage] + ".html"
             newFullLink = match[fullMatchIndex].replace (url, newhref)
-    
+
             result = result.replace (match[fullMatchIndex], newFullLink)
 
         return result
 
 
     def __isInternetUrl (self, url):
-        return url.startswith ("http://") or \
-                    url.startswith ("https://") or \
-                    url.startswith ("ftp://") or \
-                    url.startswith ("mailto:")
+        return (url.startswith ("http://") or
+                url.startswith ("https://") or
+                url.startswith ("ftp://") or
+                url.startswith ("mailto:"))
 
 
     def __isFileLink (self, url, outdir):
@@ -140,12 +140,12 @@ class BranchExporter (object):
         return os.path.exists (fname) and os.path.isfile (fname)
 
 
-    def __export (self, 
-            page, 
-            root, 
-            outdir, 
-            imagesonly, 
-            alwaysOverwrite):
+    def __export (self,
+                  page,
+                  root,
+                  outdir,
+                  imagesonly,
+                  alwaysOverwrite):
         """
         page - страница, начиная с которой надо начать экспортирование
         root - корневая страница, откуда началось общее экспортирование (для определения имени файлов)
@@ -161,12 +161,12 @@ class BranchExporter (object):
 
                 exporter.export (outdir, exportname, imagesonly, alwaysOverwrite)
             except BaseException, error:
-                self.__log.append (u"{0}: {1}".format (page.title, unicode (error) ) )
+                self.__log.append (u"{0}: {1}".format (page.title, unicode (error)))
 
         for child in page.children:
             self.__export (
-                    child,
-                    root, 
-                    outdir,
-                    imagesonly,
-                    alwaysOverwrite)
+                child,
+                root,
+                outdir,
+                imagesonly,
+                alwaysOverwrite)

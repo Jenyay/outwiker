@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import wx
@@ -15,9 +14,10 @@ class ExportBranchDialog (ExportDialog):
     """
     Класс диалога для экспорта ветки страниц
     """
-    def __init__ (self, parent, rootpage, config):
-        ExportDialog.__init__ (self, parent, config)
+    def __init__ (self, application, rootpage):
+        ExportDialog.__init__ (self, application.mainWindow, application.config)
         self.__rootpage = rootpage
+        self.__application = application
 
         from .i18n import _
         global _
@@ -46,14 +46,14 @@ class ExportBranchDialog (ExportDialog):
         """
         Добавить чекбокс "Создавать файлы с длинными именами (включать заголовки родителей)"
         """
-        self.__longNameFormatCheckBox = wx.CheckBox (self, 
-                -1, 
-                _(u"Use long file names (include parent name)"))
+        self.__longNameFormatCheckBox = wx.CheckBox (self,
+                                                     -1,
+                                                     _(u"Use long file names (include parent name)"))
 
-        self._mainSizer.Insert (4, 
-                self.__longNameFormatCheckBox, 
-                flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, 
-                border=2)
+        self._mainSizer.Insert (4,
+                                self.__longNameFormatCheckBox,
+                                flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+                                border=2)
 
 
     def __getNameGenerator (self):
@@ -76,17 +76,17 @@ class ExportBranchDialog (ExportDialog):
         self._config.overwrite = self.overwrite
 
         namegenerator = self.__getNameGenerator()
-        exporter = BranchExporter (self.__rootpage, namegenerator)
+        exporter = BranchExporter (self.__rootpage, namegenerator, self.__application)
 
         runner = LongProcessRunner (self._threadExport,
-                self,
-                _(u"Export to HTML"),
-                _(u"Please wait..."))
+                                    self,
+                                    _(u"Export to HTML"),
+                                    _(u"Please wait..."))
 
-        result = runner.run (exporter, 
-                self.path,
-                self.imagesOnly,
-                self.overwrite)
+        result = runner.run (exporter,
+                             self.path,
+                             self.imagesOnly,
+                             self.overwrite)
 
         if len (result) != 0:
             logdlg = LogDialog (self, result)

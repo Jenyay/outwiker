@@ -427,7 +427,7 @@ class Export2HtmlTest (unittest.TestCase):
         """
         pagename = u"Страница 1"
         namegenerator = self.__tester.longNameGenerator (self.root[pagename])
-        branchExporter = self.__tester.branchExporter (self.root[pagename], namegenerator)
+        branchExporter = self.__tester.branchExporter (self.root[pagename], namegenerator, Application)
 
         result = branchExporter.export (
             outdir=self.outputdir,
@@ -485,7 +485,7 @@ class Export2HtmlTest (unittest.TestCase):
         """
         wikiname = u"samplewiki"
         namegenerator = self.__tester.longNameGenerator (self.root)
-        branchExporter = self.__tester.branchExporter (self.root, namegenerator)
+        branchExporter = self.__tester.branchExporter (self.root, namegenerator, Application)
 
         result = branchExporter.export (
             outdir=self.outputdir,
@@ -528,7 +528,7 @@ class Export2HtmlTest (unittest.TestCase):
         """
         pagename = u"Страница 1"
         namegenerator = self.__tester.titleNameGenerator (self.outputdir)
-        branchExporter = self.__tester.branchExporter (self.root[pagename], namegenerator)
+        branchExporter = self.__tester.branchExporter (self.root[pagename], namegenerator, Application)
 
         result = branchExporter.export (
             outdir=self.outputdir,
@@ -586,7 +586,7 @@ class Export2HtmlTest (unittest.TestCase):
         """
         pagename = u"Страница 1"
         namegenerator = self.__tester.titleNameGenerator (self.outputdir)
-        branchExporter = self.__tester.branchExporter (self.root[pagename], namegenerator)
+        branchExporter = self.__tester.branchExporter (self.root[pagename], namegenerator, Application)
 
         branchExporter.export (
             outdir=self.outputdir,
@@ -606,7 +606,7 @@ class Export2HtmlTest (unittest.TestCase):
         """
         pagename = u"Страница 1"
         namegenerator = self.__tester.titleNameGenerator (self.outputdir)
-        branchExporter = self.__tester.branchExporter (self.root[pagename], namegenerator)
+        branchExporter = self.__tester.branchExporter (self.root[pagename], namegenerator, Application)
 
         branchExporter.export (
             outdir=self.outputdir,
@@ -626,7 +626,7 @@ class Export2HtmlTest (unittest.TestCase):
         """
         pagename = u"Страница 1"
         namegenerator = self.__tester.longNameGenerator (self.root[pagename])
-        branchExporter = self.__tester.branchExporter (self.root[pagename], namegenerator)
+        branchExporter = self.__tester.branchExporter (self.root[pagename], namegenerator, Application)
 
         branchExporter.export (
             outdir=self.outputdir,
@@ -657,7 +657,7 @@ class Export2HtmlTest (unittest.TestCase):
         """
         pagename = u"Страница 1"
         namegenerator = self.__tester.titleNameGenerator (self.outputdir)
-        branchExporter = self.__tester.branchExporter (self.root[pagename], namegenerator)
+        branchExporter = self.__tester.branchExporter (self.root[pagename], namegenerator, Application)
 
         branchExporter.export (
             outdir=self.outputdir,
@@ -688,7 +688,7 @@ class Export2HtmlTest (unittest.TestCase):
         """
         pagename = u"Страница 1"
         namegenerator = self.__tester.titleNameGenerator (self.outputdir)
-        branchExporter = self.__tester.branchExporter (self.root[pagename], namegenerator)
+        branchExporter = self.__tester.branchExporter (self.root[pagename], namegenerator, Application)
 
         branchExporter.export (
             outdir=self.outputdir,
@@ -698,4 +698,4 @@ class Export2HtmlTest (unittest.TestCase):
 
         text = readTextFile (os.path.join (self.outputdir, u"Страница 1.html"))
 
-        self.assertTrue (u'<A HREF="Страница 1_Страница 2_Страница 6_Страница 7_Страница 2.html">Еще одна ссылка</A>' in text)
+        self.assertTrue (u'<a href="Страница 1_Страница 2_Страница 6_Страница 7_Страница 2.html">Еще одна ссылка</a>' in text)

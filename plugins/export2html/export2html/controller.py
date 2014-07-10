@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import wx
@@ -28,54 +27,52 @@ class Controller (object):
 
     def __addExportItems (self, menu):
         self.__exportSingleItem = menu.Append (id=self.EXPORT_SINGLE,
-                text=_(u"Export Page To HTML..."))
+                                               text=_(u"Export Page To HTML..."))
 
         self.__exportBranchItem = menu.Append (id=self.EXPORT_BRANCH,
-                text=_(u"Export Branch To HTML..."))
+                                               text=_(u"Export Branch To HTML..."))
 
         self.__application.mainWindow.Bind (wx.EVT_MENU, self.__onSingleExport, id=self.EXPORT_SINGLE)
         self.__application.mainWindow.Bind (wx.EVT_MENU, self.__onBranchExport, id=self.EXPORT_BRANCH)
 
 
     def __onSingleExport (self, event):
-        assert self.__application.mainWindow != None
+        assert self.__application.mainWindow is not None
 
-        if self.__application.selectedPage == None:
-            MessageBox (_(u"Please, select page"), 
-                    _(u"Error"),
-                    wx.OK | wx.ICON_ERROR )
+        if self.__application.selectedPage is None:
+            MessageBox (_(u"Please, select page"),
+                        _(u"Error"),
+                        wx.OK | wx.ICON_ERROR)
             return
 
         try:
             exporter = ExporterFactory.getExporter (self.__application.selectedPage)
-        except InvalidPageFormat, error:
-            MessageBox (_(u"This page type not support export to HTML"), 
-                    _(u"Error"),
-                    wx.OK | wx.ICON_ERROR )
+        except InvalidPageFormat:
+            MessageBox (_(u"This page type not support export to HTML"),
+                        _(u"Error"),
+                        wx.OK | wx.ICON_ERROR)
             return
 
-        dlg = ExportPageDialog (self.__application.mainWindow, 
-                exporter,
-                self.__application.config)
+        dlg = ExportPageDialog (self.__application.mainWindow,
+                                exporter,
+                                self.__application.config)
 
         dlg.ShowModal()
         dlg.Destroy()
 
 
     def __onBranchExport (self, event):
-        assert self.__application.mainWindow != None
+        assert self.__application.mainWindow is not None
 
-        if self.__application.wikiroot == None:
-            MessageBox (_(u"Wiki is not open"), 
-                    _(u"Error"),
-                    wx.OK | wx.ICON_ERROR )
+        if self.__application.wikiroot is None:
+            MessageBox (_(u"Wiki is not open"),
+                        _(u"Error"),
+                        wx.OK | wx.ICON_ERROR)
             return
 
         root = self.__getRootPage()
 
-        dlg = ExportBranchDialog (self.__application.mainWindow, 
-                root,
-                self.__application.config)
+        dlg = ExportBranchDialog (self.__application, root)
         dlg.ShowModal()
         dlg.Destroy()
 
@@ -84,7 +81,7 @@ class Controller (object):
         """
         Возвращает страницу, которая будет считаться корнем ветки при экспорте
         """
-        if self.__application.selectedPage == None:
+        if self.__application.selectedPage is None:
             return self.__application.wikiroot
 
         return self.__application.selectedPage
@@ -94,12 +91,12 @@ class Controller (object):
         """
         Создать меню, если есть главное окно
         """
-        assert self.__application.mainWindow != None
+        assert self.__application.mainWindow is not None
 
         factory = ExportMenuFactory (self.__application.mainWindow.mainMenu)
         self.__exportMenu = factory.getExportMenu()
 
-        if self.__exportMenu != None:
+        if self.__exportMenu is not None:
             self.__addExportItems (self.__exportMenu)
 
 
@@ -107,12 +104,12 @@ class Controller (object):
         from .i18n import _
         global _
 
-        if self.__application.mainWindow != None:
+        if self.__application.mainWindow is not None:
             self.__createMenu()
 
 
     def destroy (self):
-        if self.__exportMenu == None:
+        if self.__exportMenu is None:
             return
 
         self.__application.mainWindow.Unbind (wx.EVT_MENU, id=self.EXPORT_SINGLE, handler=self.__onSingleExport)
