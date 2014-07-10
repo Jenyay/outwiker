@@ -6,7 +6,12 @@ param1 = абырвалг
 type = html
 tags = Тест, test, двойной тег
 linewrap = True
+datetime = 2014-07-10 09:37:34.378704
+cursorposition = 421
 
 [Tree]
 expand = True
+
+[Misc]
+pageindex = 1
 

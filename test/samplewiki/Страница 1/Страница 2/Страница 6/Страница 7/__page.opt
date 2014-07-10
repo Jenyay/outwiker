@@ -2,9 +2,12 @@
 type = wiki
 tags = test
 order = 2
+datetime = 2013-05-22 18:02:11.473394
+cursorposition = 0
+uid = __7759cad0-ccdd-442e-ac6b-b8a9956cf4eb
 
 [wiki]
-md5_hash = b8942a34e032112ebae163dcf6dfa860
+md5_hash = b5745b094fc8d46b51fb4b5cbb166906
 
 [Tree]
 expand = True

@@ -2,11 +2,12 @@
 
 import unittest
 import os.path
-import shutil
 
 from outwiker.core.tree import WikiDocument
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.application import Application
+from outwiker.core.system import readTextFile
+from test.utils import removeWiki
 
 
 class Export2HtmlTest (unittest.TestCase):
@@ -23,17 +24,16 @@ class Export2HtmlTest (unittest.TestCase):
         self.loader.load (dirlist)
         self.__tester = self.loader[self.pluginname].tester
 
-        self.__removeTempDir()
+        removeWiki (self.outputdir)
+
         os.mkdir (self.outputdir)
+
+        Application.wikiroot = None
 
 
     def tearDown (self):
-        self.__removeTempDir()
-
-
-    def __removeTempDir (self):
-        if os.path.exists (self.outputdir):
-            shutil.rmtree (self.outputdir)
+        Application.wikiroot = None
+        removeWiki (self.outputdir)
 
 
     def testLoading (self):
@@ -131,15 +131,7 @@ class Export2HtmlTest (unittest.TestCase):
         self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "image.tif")))
 
 
-    def __getFileContent (self, fname):
-        text = u""
-
-        with open (fname) as fp:
-            text = unicode (fp.read(), "utf8")
-            return text
-
-
-    def testLinkChangeHtml (self):
+    def testLinkToFilesHtml (self):
         """
         Тест на то, что ссылки на прикрепленные файлы изменяютcя.
         Проверка на HTML-странице
@@ -152,7 +144,7 @@ class Export2HtmlTest (unittest.TestCase):
                          imagesonly=True,
                          alwaysOverwrite=False)
 
-        text = self.__getFileContent (os.path.join (self.outputdir, pagename + ".html"))
+        text = readTextFile (os.path.join (self.outputdir, pagename + ".html"))
 
         self.assertTrue (u'<img src="{pagename}/add.png">'.format (pagename=pagename) in text)
 
@@ -169,7 +161,7 @@ class Export2HtmlTest (unittest.TestCase):
         self.assertFalse (u'<img src="__attach/add.png">' in text)
 
 
-    def testLinkChangeHtmlWithName (self):
+    def testLinkToFilesHtmlWithName (self):
         """
         Тест на то, что ссылки на прикрепленные файлы изменяютcя.
         Проверка на HTML-странице
@@ -183,14 +175,14 @@ class Export2HtmlTest (unittest.TestCase):
                          imagesonly=True,
                          alwaysOverwrite=False)
 
-        text = self.__getFileContent (os.path.join (self.outputdir, exportname + ".html"))
+        text = readTextFile (os.path.join (self.outputdir, exportname + ".html"))
 
         self.assertTrue (u'<img src="{pagename}/add.png">'.format (pagename=exportname) in text)
         self.assertTrue (u'<a href="{pagename}/wall1.gif">ссылка на файл</a>.'.format (pagename=exportname) in text)
         self.assertTrue (u'А этот __attach/ содержится в тексте' in text)
 
 
-    def testLinkChangeWiki (self):
+    def testLinkToFilesWiki (self):
         """
         Тест на то, что ссылки на прикрепленные файлы изменяютcя.
         Проверка на вики-странице
@@ -204,7 +196,7 @@ class Export2HtmlTest (unittest.TestCase):
                          imagesonly=True,
                          alwaysOverwrite=False)
 
-        text = self.__getFileContent (os.path.join (self.outputdir, pagename + ".html"))
+        text = readTextFile (os.path.join (self.outputdir, pagename + ".html"))
 
         self.assertTrue (u'<IMG SRC="{pagename}/add.png"/>'.format (pagename=pagename) in text)
         self.assertTrue (u'<A HREF="{pagename}/wall1.gif">ссылка на файл</A>'.format (pagename=pagename) in text)
@@ -212,7 +204,7 @@ class Export2HtmlTest (unittest.TestCase):
         self.assertTrue (u'<A HREF="{pagename}/image.jpg"><IMG SRC="{pagename}/__thumb/th_maxsize_250_image.jpg"/></A>'.format (pagename=pagename) in text)
 
 
-    def testLinkChangeWikiWithName (self):
+    def testLinkToFilesWikiWithName (self):
         """
         Тест на то, что ссылки на прикрепленные файлы изменяютcя.
         Проверка на вики-странице
@@ -602,10 +594,10 @@ class Export2HtmlTest (unittest.TestCase):
             alwaysOverwrite=False
         )
 
-        text = self.__getFileContent (os.path.join (self.outputdir, u"Страница 2 (1).html"))
+        text = readTextFile (os.path.join (self.outputdir, u"Страница 2 (1).html"))
 
-        self.assertTrue (u'<IMG SRC="Страница 2 (1)/cake.png"/>' in text)
-        self.assertTrue (u'<A HREF="Страница 2 (1)/calendar.png">calendar.png</A>' in text)
+        self.assertTrue (u'<img src="Страница 2 (1)/cake.png"/>' in text)
+        self.assertTrue (u'<a href="Страница 2 (1)/calendar.png">calendar.png</a>' in text)
 
 
     def testBranchContentTitleNames2 (self):
@@ -622,13 +614,13 @@ class Export2HtmlTest (unittest.TestCase):
             alwaysOverwrite=False
         )
 
-        text = self.__getFileContent (os.path.join (self.outputdir, u"Страница 2 (2).html"))
+        text = readTextFile (os.path.join (self.outputdir, u"Страница 2 (2).html"))
 
-        self.assertTrue (u'<IMG SRC="Страница 2 (2)/cd.png"/>' in text)
-        self.assertTrue (u'<A HREF="Страница 2 (2)/cd_go.png">cd_go.png</A>' in text)
+        self.assertTrue (u'<img src="Страница 2 (2)/cd.png"/>' in text)
+        self.assertTrue (u'<a href="Страница 2 (2)/cd_go.png">cd_go.png</a>' in text)
 
 
-    def testLinkToPagesChangeHtmlLongNames (self):
+    def testLinkToPagesHtmlLongNames (self):
         """
         Тест для проверки того, как исправляются ссылки на страницы
         """
@@ -642,7 +634,7 @@ class Export2HtmlTest (unittest.TestCase):
             alwaysOverwrite=False
         )
 
-        text = self.__getFileContent (os.path.join (self.outputdir, u"Страница 1_Страница 2_Страница 6.html"))
+        text = readTextFile (os.path.join (self.outputdir, u"Страница 1_Страница 2_Страница 6.html"))
 
         self.assertTrue (u'<A HREF="/Типы страниц">/Типы страниц</A>' in text)
 
@@ -659,7 +651,7 @@ class Export2HtmlTest (unittest.TestCase):
         self.assertTrue (u'<A HREF="Страница 1_Страница 2_Страница 6_Страница 7.html" title="бла-бла-бла">Ссылка на Страницу 7</A>' in text)
 
 
-    def testLinkToPagesChangeHtmlTitleNames (self):
+    def testLinkToPagesHtmlTitleNames (self):
         """
         Тест для проверки того, как исправляются ссылки на страницы
         """
@@ -673,7 +665,7 @@ class Export2HtmlTest (unittest.TestCase):
             alwaysOverwrite=False
         )
 
-        text = self.__getFileContent (os.path.join (self.outputdir, u"Страница 6.html"))
+        text = readTextFile (os.path.join (self.outputdir, u"Страница 6.html"))
 
         self.assertTrue (u'<A HREF="/Типы страниц">/Типы страниц</A>' in text)
 
@@ -688,3 +680,22 @@ class Export2HtmlTest (unittest.TestCase):
         self.assertTrue (u'<A HREF="Страница 2 (2).html" title="бла-бла-бла">Ссылка на /Страница 1/Страница 2/Страница 6/Страница 7/Страница 2</A>' in text)
 
         self.assertTrue (u'<A HREF="Страница 7.html" title="бла-бла-бла">Ссылка на Страницу 7</A>' in text)
+
+
+    def testLinkToPageByProticolLongNames (self):
+        """
+        Тест на проверку того, что заменяются ссылки вида page://...
+        """
+        pagename = u"Страница 1"
+        namegenerator = self.__tester.titleNameGenerator (self.outputdir)
+        branchExporter = self.__tester.branchExporter (self.root[pagename], namegenerator)
+
+        branchExporter.export (
+            outdir=self.outputdir,
+            imagesonly=False,
+            alwaysOverwrite=False
+        )
+
+        text = readTextFile (os.path.join (self.outputdir, u"Страница 1.html"))
+
+        self.assertTrue (u'<A HREF="Страница 1_Страница 2_Страница 6_Страница 7_Страница 2.html">Еще одна ссылка</A>' in text)

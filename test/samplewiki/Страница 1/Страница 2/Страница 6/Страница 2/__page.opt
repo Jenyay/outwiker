@@ -2,7 +2,10 @@
 type = wiki
 tags = test
 order = 1
+datetime = 2013-05-22 18:02:11.473394
+cursorposition = 0
+uid = __7d41f9fd-5cd6-4f60-9f4c-de0582a5eab4
 
 [wiki]
-md5_hash = 0ee42d02b8778d436ee030fd24753715
+md5_hash = 3b87fe5f14eca34c8a86dae072342c2d
 
