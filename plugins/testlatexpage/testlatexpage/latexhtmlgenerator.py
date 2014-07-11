@@ -4,7 +4,7 @@ from outwiker.core.htmlimprover import HtmlImprover
 from outwiker.core.htmltemplate import HtmlTemplate
 from outwiker.core.system import readTextFile
 
-from .parser import Parser
+from latex2html.parser import Parser
 
 
 class LatexHtmlGenerator (object):
