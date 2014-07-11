@@ -1,10 +1,13 @@
 # -*- coding: UTF-8 -*-
 
+import os.path
+
 import wx
 
 from basemainwnd import BaseMainWndTest
 from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
+from outwiker.core.system import readTextFile
 from test.utils import removeWiki
 
 from outwiker.pages.html.htmlpage import HtmlPageFactory
@@ -17,6 +20,7 @@ class HtmlPageViewTest (BaseMainWndTest):
     """
     def setUp (self):
         BaseMainWndTest.setUp (self)
+        Application.onHtmlPostprocessing.clear()
 
         self.path = u"../test/testwiki"
         removeWiki (self.path)
@@ -29,6 +33,7 @@ class HtmlPageViewTest (BaseMainWndTest):
 
     def tearDown (self):
         BaseMainWndTest.tearDown (self)
+        Application.onHtmlPostprocessing.clear()
         Application.wikiroot = None
         removeWiki (self.path)
 
@@ -223,9 +228,87 @@ class HtmlPageViewTest (BaseMainWndTest):
         self.assertEqual (self._getCodeEditor().GetCurrentPosition(), 3)
 
 
+    def testPostprocessing_01 (self):
+        """
+        Тест на работу постпроцессинга
+        """
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"HTML-страница"]
+        Application.onHtmlPostprocessing += self._onPostProcessing
+
+        pageView = Application.mainWindow.pagePanel.pageView
+
+        # В начале по умолчанию выбирается вкладка с просмотром
+        wx.GetApp().Yield()
+
+        # Переключимся на вкладку с кодом
+        pageView.selectedPageIndex = HtmlPageView.CODE_PAGE_INDEX
+        wx.GetApp().Yield()
+
+        pageView.codeEditor.SetText (u"Абырвалг")
+
+        # Переключимся на результирующий HTML
+        pageView.selectedPageIndex = HtmlPageView.RESULT_PAGE_INDEX
+        wx.GetApp().Yield()
+
+        Application.onHtmlPostprocessing -= self._onPostProcessing
+
+        result = readTextFile (os.path.join (self.wikiroot[u"HTML-страница"].path, u"__content.html"))
+
+        self.assertTrue (result.endswith (u" 111"))
+
+
+    def testPostprocessing_02 (self):
+        """
+        Тест на работу постпроцессинга
+        """
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"HTML-страница"]
+        Application.onHtmlPostprocessing += self._onPostProcessing
+
+        pageView = Application.mainWindow.pagePanel.pageView
+
+        # В начале по умолчанию выбирается вкладка с просмотром
+        wx.GetApp().Yield()
+
+        # Переключимся на вкладку с кодом
+        pageView.selectedPageIndex = HtmlPageView.CODE_PAGE_INDEX
+        wx.GetApp().Yield()
+
+        pageView.codeEditor.SetText (u"Абырвалг")
+
+        # Попереключаемся между вкладками
+        pageView.selectedPageIndex = HtmlPageView.RESULT_PAGE_INDEX
+        wx.GetApp().Yield()
+
+        pageView.selectedPageIndex = HtmlPageView.CODE_PAGE_INDEX
+        wx.GetApp().Yield()
+
+        pageView.selectedPageIndex = HtmlPageView.RESULT_PAGE_INDEX
+        wx.GetApp().Yield()
+
+        pageView.selectedPageIndex = HtmlPageView.CODE_PAGE_INDEX
+        wx.GetApp().Yield()
+
+        Application.onHtmlPostprocessing -= self._onPostProcessing
+
+        result = readTextFile (os.path.join (self.wikiroot[u"HTML-страница"].path, u"__content.html"))
+
+        self.assertTrue (result.endswith (u" 111"))
+        self.assertFalse (result.endswith (u" 111 111"))
+
+
     def _getPageView (self):
         return Application.mainWindow.pagePanel.pageView
 
 
     def _getCodeEditor (self):
         return self._getPageView().codeEditor
+
+
+    def _onPostProcessing (self, page, result):
+        result[0] += u" 111"
+
+
+    def _onPostProcessing2 (self, page, result):
+        result[0] += u" 222"

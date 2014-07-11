@@ -278,6 +278,16 @@ class BaseHtmlPanel(BaseTextPanel):
         self._updateResult()
 
 
+    def _runPostprocessing (self, html):
+        """
+        Запускает постпроцессинг для сгенерированного HTML
+        """
+        # Дадим возможность изменить результат в построцессинге
+        result = [html]
+        Application.onHtmlPostprocessing (self._currentpage, result)
+        return result[0]
+
+
     def _updateResult (self):
         """
         Подготовить и показать HTML текущей страницы
@@ -291,6 +301,7 @@ class BaseHtmlPanel(BaseTextPanel):
 
         try:
             html = self.generateHtml (self._currentpage)
+
             if self._oldHtmlResult != html:
                 path = self.getHtmlPath()
 

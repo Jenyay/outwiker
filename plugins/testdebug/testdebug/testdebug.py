@@ -1,9 +1,6 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import os.path
-import urllib
-import urllib2
 
 import wx
 
@@ -36,7 +33,7 @@ class PluginDebug (Plugin):
     def __createTestAction (self):
         mainWindow = self._application.mainWindow
 
-        if mainWindow != None and mainWindow.PLUGINS_TOOLBAR_STR in mainWindow.toolbars:
+        if mainWindow is not None and mainWindow.PLUGINS_TOOLBAR_STR in mainWindow.toolbars:
             action = DebugAction(self._application)
             hotkey = HotKey ("T", ctrl=True, shift=True, alt=True)
             toolbar = mainWindow.toolbars[mainWindow.PLUGINS_TOOLBAR_STR]
@@ -47,9 +44,9 @@ class PluginDebug (Plugin):
             controller.register (action, hotkey=hotkey)
 
             controller.appendMenuCheckItem (DebugAction.stringId, self.menu)
-            controller.appendToolbarCheckButton (DebugAction.stringId, 
-                    toolbar,
-                    image)
+            controller.appendToolbarCheckButton (DebugAction.stringId,
+                                                 toolbar,
+                                                 image)
 
 
     def getImagePath (self, imageName):
@@ -67,28 +64,32 @@ class PluginDebug (Plugin):
         """
         if page.getTypeString() == "wiki":
             menu.Append (self.__ID_TREE_POPUP, _(u"Message For Wiki Page"))
-            menu.Bind(wx.EVT_MENU, 
-                    lambda event: MessageBox (_("Wiki Message"), _(u"This is wiki page")), 
-                    id=self.__ID_TREE_POPUP)
+            menu.Bind(wx.EVT_MENU,
+                      lambda event: MessageBox (_("Wiki Message"), _(u"This is wiki page")),
+                      id=self.__ID_TREE_POPUP)
 
         elif page.getTypeString() == "html":
             menu.Append (self.__ID_TREE_POPUP, _(u"Message For HTML Page"))
-            menu.Bind(wx.EVT_MENU, 
-                    lambda event: MessageBox (_("HTML Message"), _(u"This is HTML page")), 
-                    id=self.__ID_TREE_POPUP)
+            menu.Bind(wx.EVT_MENU,
+                      lambda event: MessageBox (_("HTML Message"), _(u"This is HTML page")),
+                      id=self.__ID_TREE_POPUP)
 
         elif page.getTypeString() == "text":
             menu.Append (self.__ID_TREE_POPUP, _(u"Message For Text Page"))
-            menu.Bind(wx.EVT_MENU, 
-                    lambda event: MessageBox (_("Text Message"), _(u"This is Text page")), 
-                    id=self.__ID_TREE_POPUP)
+            menu.Bind(wx.EVT_MENU,
+                      lambda event: MessageBox (_("Text Message"), _(u"This is Text page")),
+                      id=self.__ID_TREE_POPUP)
 
 
     def __onTrayPopupMenu (self, menu, tray):
         menu.Insert (0, self.__ID_TRAY_POPUP, _(u"Tray Menu From Plugin"))
-        menu.Bind(wx.EVT_MENU, 
-                lambda event: MessageBox (_("Tray Icon"), _(u"This is tray icon")), 
-                id=self.__ID_TRAY_POPUP)
+        menu.Bind(wx.EVT_MENU,
+                  lambda event: MessageBox (_("Tray Icon"), _(u"This is tray icon")),
+                  id=self.__ID_TRAY_POPUP)
+
+
+    def __onPostProcessing (self, page, result):
+        result[0] = result[0].replace (u"<body>", u"<body><h1>Debug!!!</h1>")
 
 
     def __onButtonsDialog (self, event):
@@ -116,14 +117,14 @@ class PluginDebug (Plugin):
     def name (self):
         return u"Debug Plugin"
 
-    
+
     @property
     def description (self):
         return _(u"""Debug Plugin
-<a href="http://jenyay.net">http://jenyay.net</a>
+                 <a href="http://jenyay.net">http://jenyay.net</a>
 
-<a href="/111">Link to page</a>
-""")
+                 <a href="/111">Link to page</a>
+                 """)
 
 
     @property
@@ -139,8 +140,8 @@ class PluginDebug (Plugin):
     @url.setter
     def url (self, value):
         self._url = value
-    
-    
+
+
     def initialize(self):
         domain = u"testdebug"
         self.__ID_TREE_POPUP = wx.NewId()
@@ -159,12 +160,13 @@ class PluginDebug (Plugin):
 
         self.__menuName = _(u"Debug")
 
-        if self._application.mainWindow != None:
+        if self._application.mainWindow is not None:
             self.__createMenu()
             self.__createTestAction()
 
             self._application.onTreePopupMenu += self.__onTreePopupMenu
             self._application.onTrayPopupMenu += self.__onTrayPopupMenu
+            self._application.onHtmlPostprocessing += self.__onPostProcessing
 
 
     def destroy (self):
@@ -172,7 +174,7 @@ class PluginDebug (Plugin):
         Уничтожение (выгрузка) плагина. Здесь плагин должен отписаться от всех событий
         """
         mainWindow = self._application.mainWindow
-        if mainWindow != None and mainWindow.PLUGINS_TOOLBAR_STR in mainWindow.toolbars:
+        if mainWindow is not None and mainWindow.PLUGINS_TOOLBAR_STR in mainWindow.toolbars:
             self._application.actionController.removeMenuItem (DebugAction.stringId)
             self._application.actionController.removeToolbarButton (DebugAction.stringId)
             self._application.actionController.removeAction (DebugAction.stringId)
@@ -184,5 +186,9 @@ class PluginDebug (Plugin):
             assert index != wx.NOT_FOUND
 
             index = self._application.mainWindow.mainMenu.Remove (index)
+
+            self._application.onTreePopupMenu -= self.__onTreePopupMenu
+            self._application.onTrayPopupMenu = self.__onTrayPopupMenu
+            self._application.onHtmlPostprocessing -= self.__onPostProcessing
 
     #############################################

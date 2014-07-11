@@ -597,6 +597,7 @@ class HtmlPageView (BaseHtmlPanel):
         result = tpl.substitute (content = text,
                                  userhead = userhead)
 
+        result = self._runPostprocessing (result)
         return result
 
 

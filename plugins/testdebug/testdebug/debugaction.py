@@ -23,7 +23,7 @@ class DebugAction (BaseAction):
     @property
     def description (self):
         return u"DebugAction"
-    
+
 
     def run (self, params):
         print u"DebugAction.run({0})".format (params)

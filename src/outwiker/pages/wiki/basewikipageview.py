@@ -4,7 +4,7 @@ import wx
 import os
 from abc import ABCMeta, abstractmethod
 
-from outwiker.core.commands import MessageBox, setStatusText
+from outwiker.core.commands import MessageBox
 from outwiker.core.application import Application
 from outwiker.core.style import Style
 
@@ -267,37 +267,16 @@ class BaseWikiPageView (BaseHtmlPanel):
             # Нет вкладки с кодом HTML. Ничего не делаем
             return
 
-        self.Save()
-        status_item = 0
-        setStatusText (_(u"Page rendered. Please wait…"), status_item)
-        self._application.onHtmlRenderingBegin (self._currentpage, self.htmlWindow)
-
         try:
-            html = self.generateHtml (self._currentpage)
-            self._showHtmlCode(html)
-        except IOError as e:
-            # TODO: Проверить под Windows
-            MessageBox (_(u"Can't save file %s") % (unicode (e.filename)),
-                        _(u"Error"),
-                        wx.ICON_ERROR | wx.OK)
-        except OSError as e:
-            MessageBox (_(u"Can't save HTML-file\n\n%s") % (unicode (e)),
+            html = readTextFile (self.getHtmlPath())
+        except IOError, e:
+            MessageBox (_(u"Can't load file %s") % (unicode (e.filename)),
                         _(u"Error"),
                         wx.ICON_ERROR | wx.OK)
 
-        setStatusText (u"", status_item)
-        self._application.onHtmlRenderingEnd (self._currentpage, self.htmlWindow)
-
-
-    def _showHtmlCode (self, html):
-        try:
-            self.htmlCodeWindow.SetReadOnly (False)
-            self.htmlCodeWindow.SetText (html)
-            self.htmlCodeWindow.SetReadOnly (True)
-        except IOError:
-            MessageBox (_(u"Can't load HTML-file"), _(u"Error"), wx.ICON_ERROR | wx.OK)
-        except OSError:
-            MessageBox (_(u"Can't load HTML-file"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+        self.htmlCodeWindow.SetReadOnly (False)
+        self.htmlCodeWindow.SetText (html)
+        self.htmlCodeWindow.SetReadOnly (True)
 
 
     @BaseHtmlPanel.selectedPageIndex.setter
@@ -344,6 +323,7 @@ class BaseWikiPageView (BaseHtmlPanel):
                         _(u"Error"),
                         wx.ICON_ERROR | wx.OK)
 
+        html = self._runPostprocessing (html)
         return html
 
 

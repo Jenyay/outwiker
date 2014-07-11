@@ -18,6 +18,7 @@ class WikiPageViewTest (BaseMainWndTest):
     """
     def setUp (self):
         BaseMainWndTest.setUp (self)
+        Application.onHtmlPostprocessing.clear()
 
         self.path = u"../test/testwiki"
         removeWiki (self.path)
@@ -31,6 +32,7 @@ class WikiPageViewTest (BaseMainWndTest):
     def tearDown (self):
         BaseMainWndTest.tearDown (self)
         Application.wikiroot = None
+        Application.onHtmlPostprocessing.clear()
         removeWiki (self.path)
 
 
@@ -315,9 +317,133 @@ class WikiPageViewTest (BaseMainWndTest):
         self.assertEqual (self._getCodeEditor().GetCurrentPosition(), 3)
 
 
+    def testPostprocessing_01 (self):
+        """
+        Тест на работу постпроцессинга
+        """
+        config = WikiConfig (Application.config)
+        config.showHtmlCodeOptions.value = True
+
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Викистраница"]
+        Application.onHtmlPostprocessing += self._onPostProcessing
+
+        pageView = Application.mainWindow.pagePanel.pageView
+
+        # В начале по умолчанию выбирается вкладка с просмотром
+        wx.GetApp().Yield()
+
+        # Переключимся на вкладку с кодом
+        pageView.selectedPageIndex = WikiPageView.CODE_PAGE_INDEX
+        wx.GetApp().Yield()
+
+        pageView.codeEditor.SetText (u"Абырвалг")
+
+        # Переключимся на результирующий HTML
+        pageView.selectedPageIndex = WikiPageView.HTML_RESULT_PAGE_INDEX
+        wx.GetApp().Yield()
+
+        Application.onHtmlPostprocessing -= self._onPostProcessing
+
+        result = pageView.htmlCodeWindow.GetText()
+
+        self.assertTrue (result.endswith (u" 111"))
+
+
+    def testPostprocessing_02 (self):
+        """
+        Тест на работу постпроцессинга
+        """
+        config = WikiConfig (Application.config)
+        config.showHtmlCodeOptions.value = True
+
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Викистраница"]
+
+        Application.onHtmlPostprocessing += self._onPostProcessing
+        Application.onHtmlPostprocessing += self._onPostProcessing2
+
+        pageView = Application.mainWindow.pagePanel.pageView
+
+        # В начале по умолчанию выбирается вкладка с просмотром
+        wx.GetApp().Yield()
+
+        # Переключимся на вкладку с кодом
+        pageView.selectedPageIndex = WikiPageView.CODE_PAGE_INDEX
+        wx.GetApp().Yield()
+
+        pageView.codeEditor.SetText (u"Абырвалг")
+
+        # Переключимся на результирующий HTML
+        pageView.selectedPageIndex = WikiPageView.HTML_RESULT_PAGE_INDEX
+        wx.GetApp().Yield()
+
+        Application.onHtmlPostprocessing -= self._onPostProcessing
+        Application.onHtmlPostprocessing -= self._onPostProcessing2
+
+        result = pageView.htmlCodeWindow.GetText()
+
+        self.assertTrue (result.endswith (u" 111 222"))
+
+
+    def testPostprocessing_03 (self):
+        """
+        Тест на работу постпроцессинга
+        """
+        config = WikiConfig (Application.config)
+        config.showHtmlCodeOptions.value = True
+
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Викистраница"]
+        Application.onHtmlPostprocessing += self._onPostProcessing
+
+        pageView = Application.mainWindow.pagePanel.pageView
+
+        # В начале по умолчанию выбирается вкладка с просмотром
+        wx.GetApp().Yield()
+
+        # Переключимся на вкладку с кодом
+        pageView.selectedPageIndex = WikiPageView.CODE_PAGE_INDEX
+        wx.GetApp().Yield()
+
+        pageView.codeEditor.SetText (u"Абырвалг")
+
+        # Попереключаемся по вкладкам и проверим, что результат
+        # постпроцессинга применен однократно
+        pageView.selectedPageIndex = WikiPageView.HTML_RESULT_PAGE_INDEX
+        wx.GetApp().Yield()
+
+        pageView.selectedPageIndex = WikiPageView.CODE_PAGE_INDEX
+        wx.GetApp().Yield()
+
+        pageView.selectedPageIndex = WikiPageView.HTML_RESULT_PAGE_INDEX
+        wx.GetApp().Yield()
+
+        pageView.selectedPageIndex = WikiPageView.CODE_PAGE_INDEX
+        wx.GetApp().Yield()
+
+        pageView.selectedPageIndex = WikiPageView.HTML_RESULT_PAGE_INDEX
+        wx.GetApp().Yield()
+
+        Application.onHtmlPostprocessing -= self._onPostProcessing
+
+        result = pageView.htmlCodeWindow.GetText()
+
+        self.assertTrue (result.endswith (u" 111"))
+        self.assertFalse (result.endswith (u" 111 111"))
+
+
     def _getPageView (self):
         return Application.mainWindow.pagePanel.pageView
 
 
     def _getCodeEditor (self):
         return self._getPageView().codeEditor
+
+
+    def _onPostProcessing (self, page, result):
+        result[0] += u" 111"
+
+
+    def _onPostProcessing2 (self, page, result):
+        result[0] += u" 222"
