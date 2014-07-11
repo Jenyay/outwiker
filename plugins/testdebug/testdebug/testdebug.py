@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 import os.path
+import re
 
 import wx
 
@@ -89,7 +90,11 @@ class PluginDebug (Plugin):
 
 
     def __onPostProcessing (self, page, result):
-        result[0] = result[0].replace (u"<body>", u"<body><h1>Debug!!!</h1>")
+        result[0] = re.compile(re.escape(u"абырвалг"), re.I | re.U).sub (u"Главрыба", result[0])
+
+
+    def __onPreProcessing (self, page, result):
+        result[0] = "!! Debug!!!\n" + result[0]
 
 
     def __onButtonsDialog (self, event):
@@ -167,6 +172,7 @@ class PluginDebug (Plugin):
             self._application.onTreePopupMenu += self.__onTreePopupMenu
             self._application.onTrayPopupMenu += self.__onTrayPopupMenu
             self._application.onPostprocessing += self.__onPostProcessing
+            self._application.onPreprocessing += self.__onPreProcessing
 
 
     def destroy (self):
@@ -189,6 +195,6 @@ class PluginDebug (Plugin):
 
             self._application.onTreePopupMenu -= self.__onTreePopupMenu
             self._application.onTrayPopupMenu = self.__onTrayPopupMenu
-            self._application.onPostprocessing -= self.__onPostProcessing
+            self._application.onPreprocessing -= self.__onPreProcessing
 
     #############################################

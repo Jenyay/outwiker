@@ -21,6 +21,7 @@ class HtmlPageViewTest (BaseMainWndTest):
     def setUp (self):
         BaseMainWndTest.setUp (self)
         Application.onPostprocessing.clear()
+        Application.onPreprocessing.clear()
 
         self.path = u"../test/testwiki"
         removeWiki (self.path)
@@ -34,6 +35,7 @@ class HtmlPageViewTest (BaseMainWndTest):
     def tearDown (self):
         BaseMainWndTest.tearDown (self)
         Application.onPostprocessing.clear()
+        Application.onPreprocessing.clear()
         Application.wikiroot = None
         removeWiki (self.path)
 
@@ -298,6 +300,36 @@ class HtmlPageViewTest (BaseMainWndTest):
         self.assertFalse (result.endswith (u" 111 111"))
 
 
+    def testPreprocessing_01 (self):
+        """
+        Тест на работу препроцессинга
+        """
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"HTML-страница"]
+        Application.onPreprocessing += self._onPreProcessing
+
+        pageView = Application.mainWindow.pagePanel.pageView
+
+        # Сначала по умолчанию выбирается вкладка с просмотром
+        wx.GetApp().Yield()
+
+        # Переключимся на вкладку с кодом
+        pageView.selectedPageIndex = HtmlPageView.CODE_PAGE_INDEX
+        wx.GetApp().Yield()
+
+        pageView.codeEditor.SetText (u"Абырвалг")
+
+        # Переключимся на результирующий HTML
+        pageView.selectedPageIndex = HtmlPageView.RESULT_PAGE_INDEX
+        wx.GetApp().Yield()
+
+        Application.onPreprocessing -= self._onPreProcessing
+
+        result = readTextFile (os.path.join (self.wikiroot[u"HTML-страница"].path, u"__content.html"))
+
+        self.assertIn (u"Абырвалг 000", result)
+
+
     def _getPageView (self):
         return Application.mainWindow.pagePanel.pageView
 
@@ -310,5 +342,5 @@ class HtmlPageViewTest (BaseMainWndTest):
         result[0] += u" 111"
 
 
-    def _onPostProcessing2 (self, page, result):
-        result[0] += u" 222"
+    def _onPreProcessing (self, page, result):
+        result[0] += u" 000"

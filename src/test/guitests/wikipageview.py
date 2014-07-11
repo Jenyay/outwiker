@@ -19,6 +19,7 @@ class WikiPageViewTest (BaseMainWndTest):
     def setUp (self):
         BaseMainWndTest.setUp (self)
         Application.onPostprocessing.clear()
+        Application.onPreprocessing.clear()
 
         self.path = u"../test/testwiki"
         removeWiki (self.path)
@@ -33,6 +34,7 @@ class WikiPageViewTest (BaseMainWndTest):
         BaseMainWndTest.tearDown (self)
         Application.wikiroot = None
         Application.onPostprocessing.clear()
+        Application.onPreprocessing.clear()
         removeWiki (self.path)
 
 
@@ -433,6 +435,39 @@ class WikiPageViewTest (BaseMainWndTest):
         self.assertFalse (result.endswith (u" 111 111"))
 
 
+    def testPreprocessing_01 (self):
+        """
+        Тест на работу препроцессинга
+        """
+        config = WikiConfig (Application.config)
+        config.showHtmlCodeOptions.value = True
+
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Викистраница"]
+        Application.onPreprocessing += self._onPreProcessing
+
+        pageView = Application.mainWindow.pagePanel.pageView
+
+        # В начале по умолчанию выбирается вкладка с просмотром
+        wx.GetApp().Yield()
+
+        # Переключимся на вкладку с кодом
+        pageView.selectedPageIndex = WikiPageView.CODE_PAGE_INDEX
+        wx.GetApp().Yield()
+
+        pageView.codeEditor.SetText (u"Абырвалг")
+
+        # Переключимся на результирующий HTML
+        pageView.selectedPageIndex = WikiPageView.HTML_RESULT_PAGE_INDEX
+        wx.GetApp().Yield()
+
+        Application.onPreprocessing -= self._onPreProcessing
+
+        result = pageView.htmlCodeWindow.GetText()
+
+        self.assertIn (u"Абырвалг 000", result)
+
+
     def _getPageView (self):
         return Application.mainWindow.pagePanel.pageView
 
@@ -447,3 +482,7 @@ class WikiPageViewTest (BaseMainWndTest):
 
     def _onPostProcessing2 (self, page, result):
         result[0] += u" 222"
+
+
+    def _onPreProcessing (self, page, result):
+        result[0] += u" 000"
