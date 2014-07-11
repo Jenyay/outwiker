@@ -37,6 +37,9 @@ class BaseHtmlPanel(BaseTextPanel):
         # его каждый раз
         self._oldHtmlResult = u""
 
+        # Страница, для которой уже есть сгенерированный HTML
+        self._oldPage = None
+
         # Где хранить параметы текущей страницы страницы (код, просмотр и т.д.)
         self.tabSectionName = u"Misc"
         self.tabParamName = u"PageIndex"
@@ -312,7 +315,8 @@ class BaseHtmlPanel(BaseTextPanel):
         try:
             html = self.generateHtml (self._currentpage)
 
-            if self._oldHtmlResult != html:
+            if (self._oldPage != self._currentpage or
+                    self._oldHtmlResult != html):
                 path = self.getHtmlPath()
 
                 if not self._currentpage.readonly:
@@ -320,6 +324,7 @@ class BaseHtmlPanel(BaseTextPanel):
 
                 self.htmlWindow.LoadPage (path)
                 self._oldHtmlResult = html
+                self._oldPage = self._currentpage
         except IOError as e:
             # TODO: Проверить под Windows
             MessageBox (_(u"Can't save file\n\n{}").format (unicode (e.filename)),

@@ -269,14 +269,14 @@ class BaseWikiPageView (BaseHtmlPanel):
 
         try:
             html = readTextFile (self.getHtmlPath())
+
+            self.htmlCodeWindow.SetReadOnly (False)
+            self.htmlCodeWindow.SetText (html)
+            self.htmlCodeWindow.SetReadOnly (True)
         except IOError, e:
             MessageBox (_(u"Can't load file %s") % (unicode (e.filename)),
                         _(u"Error"),
                         wx.ICON_ERROR | wx.OK)
-
-        self.htmlCodeWindow.SetReadOnly (False)
-        self.htmlCodeWindow.SetText (html)
-        self.htmlCodeWindow.SetReadOnly (True)
 
 
     @BaseHtmlPanel.selectedPageIndex.setter

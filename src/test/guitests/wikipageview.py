@@ -21,6 +21,8 @@ class WikiPageViewTest (BaseMainWndTest):
         Application.onPostprocessing.clear()
         Application.onPreprocessing.clear()
 
+        WikiConfig (Application.config).showHtmlCodeOptions.value = False
+
         self.path = u"../test/testwiki"
         removeWiki (self.path)
 
@@ -39,6 +41,22 @@ class WikiPageViewTest (BaseMainWndTest):
 
 
     def testType (self):
+        Application.wikiroot = self.wikiroot
+        self.assertEqual (None, Application.mainWindow.pagePanel.pageView)
+
+        Application.selectedPage = self.wikiroot[u"Викистраница"]
+        self.assertEqual (WikiPageView, type (Application.mainWindow.pagePanel.pageView))
+
+        Application.selectedPage = self.wikiroot[u"Викистраница 2"]
+        self.assertEqual (WikiPageView, type (Application.mainWindow.pagePanel.pageView))
+
+        Application.selectedPage = None
+        self.assertEqual (None, Application.mainWindow.pagePanel.pageView)
+
+
+    def testSwitch (self):
+        WikiConfig (Application.config).showHtmlCodeOptions.value = True
+
         Application.wikiroot = self.wikiroot
         self.assertEqual (None, Application.mainWindow.pagePanel.pageView)
 
@@ -122,9 +140,6 @@ class WikiPageViewTest (BaseMainWndTest):
         """
         Тест на наличие / отсутствие вкладки с результирующим HTML-кодом
         """
-        config = WikiConfig (Application.config)
-        config.showHtmlCodeOptions.value = False
-
         Application.wikiroot = self.wikiroot
 
         Application.selectedPage = self.wikiroot[u"Викистраница"]
@@ -227,9 +242,6 @@ class WikiPageViewTest (BaseMainWndTest):
         """
         Тест на сохранение текущей вкладки страницы
         """
-        config = WikiConfig (Application.config)
-        config.showHtmlCodeOptions.value = False
-
         self.wikiroot[u"Викистраница"].content = u"Бла-бла-бла"
         self.wikiroot[u"Викистраница 2"].content = u"Бла-бла-бла 2"
         Application.wikiroot = self.wikiroot
@@ -466,6 +478,54 @@ class WikiPageViewTest (BaseMainWndTest):
         result = pageView.htmlCodeWindow.GetText()
 
         self.assertIn (u"Абырвалг 000", result)
+
+
+    def testSave_01 (self):
+        config = WikiConfig (Application.config)
+        config.showHtmlCodeOptions.value = True
+
+        page = self.wikiroot[u"Викистраница"]
+        page.content = u""
+
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = page
+
+        pageView = Application.mainWindow.pagePanel.pageView
+
+        # В начале по умолчанию выбирается вкладка с просмотром
+        wx.GetApp().Yield()
+
+        pageView.codeEditor.SetText (u"Абырвалг")
+
+        # Переключимся на результирующий HTML
+        pageView.selectedPageIndex = WikiPageView.HTML_RESULT_PAGE_INDEX
+        wx.GetApp().Yield()
+
+        self.assertEqual (page.content, u"Абырвалг")
+
+
+    def testSave_02 (self):
+        config = WikiConfig (Application.config)
+        config.showHtmlCodeOptions.value = True
+
+        page = self.wikiroot[u"Викистраница"]
+        page.content = u""
+
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = page
+
+        pageView = Application.mainWindow.pagePanel.pageView
+
+        # В начале по умолчанию выбирается вкладка с просмотром
+        wx.GetApp().Yield()
+
+        pageView.codeEditor.SetText (u"Абырвалг")
+
+        # Переключимся на результирующий HTML
+        pageView.selectedPageIndex = WikiPageView.RESULT_PAGE_INDEX
+        wx.GetApp().Yield()
+
+        self.assertEqual (page.content, u"Абырвалг")
 
 
     def _getPageView (self):
