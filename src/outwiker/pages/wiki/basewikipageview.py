@@ -219,7 +219,6 @@ class BaseWikiPageView (BaseHtmlPanel):
 
 
     def onTabChanged (self, event):
-        # import pudb; pudb.set_trace()  # XXX BREAKPOINT
         if self._currentpage is not None:
             if event.tab == self.CODE_PAGE_INDEX:
                 self._onSwitchToCode()
