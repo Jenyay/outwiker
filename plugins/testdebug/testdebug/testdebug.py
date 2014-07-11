@@ -166,7 +166,7 @@ class PluginDebug (Plugin):
 
             self._application.onTreePopupMenu += self.__onTreePopupMenu
             self._application.onTrayPopupMenu += self.__onTrayPopupMenu
-            self._application.onHtmlPostprocessing += self.__onPostProcessing
+            self._application.onPostprocessing += self.__onPostProcessing
 
 
     def destroy (self):
@@ -189,6 +189,6 @@ class PluginDebug (Plugin):
 
             self._application.onTreePopupMenu -= self.__onTreePopupMenu
             self._application.onTrayPopupMenu = self.__onTrayPopupMenu
-            self._application.onHtmlPostprocessing -= self.__onPostProcessing
+            self._application.onPostprocessing -= self.__onPostProcessing
 
     #############################################

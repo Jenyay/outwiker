@@ -284,7 +284,7 @@ class BaseHtmlPanel(BaseTextPanel):
         """
         # Дадим возможность изменить результат в построцессинге
         result = [html]
-        Application.onHtmlPostprocessing (self._currentpage, result)
+        Application.onPostprocessing (self._currentpage, result)
         return result[0]
 
 

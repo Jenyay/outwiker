@@ -125,7 +125,7 @@ class ApplicationParams (object):
 
         # Событие вызывается в конце создания всплывающего меню при нажатии правой кнопки на иконку в трее
         # Параметр: menu - созданное всплывающее меню,
-        # tray - экземпля класса OutwikerTrayIcon
+        # tray - экземпляра класса OutwikerTrayIcon
         self.onTrayPopupMenu = Event()
 
         # Событие вызывается, когда изменяется список фабрик для создания страниц.
@@ -143,7 +143,7 @@ class ApplicationParams (object):
         #        сгенерированный код HTML. Его могут менять обработчики
         #        событий, в этом случае в качестве результата, который увидит
         #        пользователь, будет эта строка после всех правок.
-        self.onHtmlPostprocessing = Event()
+        self.onPostprocessing = Event()
 
 
     def init (self, configFilename):

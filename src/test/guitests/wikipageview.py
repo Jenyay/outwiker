@@ -18,7 +18,7 @@ class WikiPageViewTest (BaseMainWndTest):
     """
     def setUp (self):
         BaseMainWndTest.setUp (self)
-        Application.onHtmlPostprocessing.clear()
+        Application.onPostprocessing.clear()
 
         self.path = u"../test/testwiki"
         removeWiki (self.path)
@@ -32,7 +32,7 @@ class WikiPageViewTest (BaseMainWndTest):
     def tearDown (self):
         BaseMainWndTest.tearDown (self)
         Application.wikiroot = None
-        Application.onHtmlPostprocessing.clear()
+        Application.onPostprocessing.clear()
         removeWiki (self.path)
 
 
@@ -326,7 +326,7 @@ class WikiPageViewTest (BaseMainWndTest):
 
         Application.wikiroot = self.wikiroot
         Application.selectedPage = self.wikiroot[u"Викистраница"]
-        Application.onHtmlPostprocessing += self._onPostProcessing
+        Application.onPostprocessing += self._onPostProcessing
 
         pageView = Application.mainWindow.pagePanel.pageView
 
@@ -343,7 +343,7 @@ class WikiPageViewTest (BaseMainWndTest):
         pageView.selectedPageIndex = WikiPageView.HTML_RESULT_PAGE_INDEX
         wx.GetApp().Yield()
 
-        Application.onHtmlPostprocessing -= self._onPostProcessing
+        Application.onPostprocessing -= self._onPostProcessing
 
         result = pageView.htmlCodeWindow.GetText()
 
@@ -360,8 +360,8 @@ class WikiPageViewTest (BaseMainWndTest):
         Application.wikiroot = self.wikiroot
         Application.selectedPage = self.wikiroot[u"Викистраница"]
 
-        Application.onHtmlPostprocessing += self._onPostProcessing
-        Application.onHtmlPostprocessing += self._onPostProcessing2
+        Application.onPostprocessing += self._onPostProcessing
+        Application.onPostprocessing += self._onPostProcessing2
 
         pageView = Application.mainWindow.pagePanel.pageView
 
@@ -378,8 +378,8 @@ class WikiPageViewTest (BaseMainWndTest):
         pageView.selectedPageIndex = WikiPageView.HTML_RESULT_PAGE_INDEX
         wx.GetApp().Yield()
 
-        Application.onHtmlPostprocessing -= self._onPostProcessing
-        Application.onHtmlPostprocessing -= self._onPostProcessing2
+        Application.onPostprocessing -= self._onPostProcessing
+        Application.onPostprocessing -= self._onPostProcessing2
 
         result = pageView.htmlCodeWindow.GetText()
 
@@ -395,7 +395,7 @@ class WikiPageViewTest (BaseMainWndTest):
 
         Application.wikiroot = self.wikiroot
         Application.selectedPage = self.wikiroot[u"Викистраница"]
-        Application.onHtmlPostprocessing += self._onPostProcessing
+        Application.onPostprocessing += self._onPostProcessing
 
         pageView = Application.mainWindow.pagePanel.pageView
 
@@ -425,7 +425,7 @@ class WikiPageViewTest (BaseMainWndTest):
         pageView.selectedPageIndex = WikiPageView.HTML_RESULT_PAGE_INDEX
         wx.GetApp().Yield()
 
-        Application.onHtmlPostprocessing -= self._onPostProcessing
+        Application.onPostprocessing -= self._onPostProcessing
 
         result = pageView.htmlCodeWindow.GetText()
 

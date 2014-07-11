@@ -20,7 +20,7 @@ class HtmlPageViewTest (BaseMainWndTest):
     """
     def setUp (self):
         BaseMainWndTest.setUp (self)
-        Application.onHtmlPostprocessing.clear()
+        Application.onPostprocessing.clear()
 
         self.path = u"../test/testwiki"
         removeWiki (self.path)
@@ -33,7 +33,7 @@ class HtmlPageViewTest (BaseMainWndTest):
 
     def tearDown (self):
         BaseMainWndTest.tearDown (self)
-        Application.onHtmlPostprocessing.clear()
+        Application.onPostprocessing.clear()
         Application.wikiroot = None
         removeWiki (self.path)
 
@@ -234,7 +234,7 @@ class HtmlPageViewTest (BaseMainWndTest):
         """
         Application.wikiroot = self.wikiroot
         Application.selectedPage = self.wikiroot[u"HTML-страница"]
-        Application.onHtmlPostprocessing += self._onPostProcessing
+        Application.onPostprocessing += self._onPostProcessing
 
         pageView = Application.mainWindow.pagePanel.pageView
 
@@ -251,7 +251,7 @@ class HtmlPageViewTest (BaseMainWndTest):
         pageView.selectedPageIndex = HtmlPageView.RESULT_PAGE_INDEX
         wx.GetApp().Yield()
 
-        Application.onHtmlPostprocessing -= self._onPostProcessing
+        Application.onPostprocessing -= self._onPostProcessing
 
         result = readTextFile (os.path.join (self.wikiroot[u"HTML-страница"].path, u"__content.html"))
 
@@ -264,7 +264,7 @@ class HtmlPageViewTest (BaseMainWndTest):
         """
         Application.wikiroot = self.wikiroot
         Application.selectedPage = self.wikiroot[u"HTML-страница"]
-        Application.onHtmlPostprocessing += self._onPostProcessing
+        Application.onPostprocessing += self._onPostProcessing
 
         pageView = Application.mainWindow.pagePanel.pageView
 
@@ -290,7 +290,7 @@ class HtmlPageViewTest (BaseMainWndTest):
         pageView.selectedPageIndex = HtmlPageView.CODE_PAGE_INDEX
         wx.GetApp().Yield()
 
-        Application.onHtmlPostprocessing -= self._onPostProcessing
+        Application.onPostprocessing -= self._onPostProcessing
 
         result = readTextFile (os.path.join (self.wikiroot[u"HTML-страница"].path, u"__content.html"))
 
