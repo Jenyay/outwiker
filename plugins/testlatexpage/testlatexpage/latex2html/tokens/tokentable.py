@@ -27,10 +27,10 @@ class TableToken (object):
 
 
     def getToken (self):
-        reg = r'''\\begin\{longtable\}
-        (?P<params>\{.*\})\n
-        (?P<body>.*)
-        \\end\{longtable\}'''
+        reg = r'''\\begin\{(?P<type>longtable|tabular)\}
+        (?P<params>\{.*?\})\n
+        (?P<body>.*?)
+        \\end\{\1\}'''
 
         token = Regex (reg, flags=re.M | re.S | re.I | re.U | re.X)
         token.setParseAction (self._convertToHTML)

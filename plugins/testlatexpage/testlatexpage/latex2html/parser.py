@@ -10,7 +10,7 @@ from tokens.tokentable import TableFactory
 
 class Parser (object):
     def __init__ (self):
-        self._symbols = {
+        self._transctiption = {
             r"\\textturnv": u"ʌ",
             r"\\textschwa": u"ə",
             r"\\ae": u"æ",
@@ -31,6 +31,9 @@ class Parser (object):
             r"\\textsecstress": u"ˌ",
             r"\\textscriptg": u"ɡ",
             r"\\textlengthmark": u"ː",
+        }
+
+        self._symbols = {
             r"<<": u"&laquo;",
             r">>": u"&raquo;",
             r"``": u"&laquo;",
@@ -70,11 +73,14 @@ class Parser (object):
 
     def _replaceSymbols (self, text):
         """
-        Функция делает замены команды TeX в Unicode
+        Функция делает замены некоторых команд TeX
         """
         result = text
-        for symbol, html in self._symbols.items():
+        for symbol, html in self._transctiption.items():
             result = re.sub (symbol + r"\s*", html, result, flags=re.I | re.M | re.U)
+
+        for symbol, html in self._symbols.items():
+            result = result.replace (symbol, html)
 
         return result
 
