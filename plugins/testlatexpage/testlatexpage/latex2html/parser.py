@@ -43,13 +43,17 @@ class Parser (object):
 
         self._error_template = u"<b>{error}</b>"
 
-        self.italicized = FontsFactory.make (self)
+        self.italic = FontsFactory.makeItalic (self)
+        self.bold = FontsFactory.makeBold (self)
+        self.section = FontsFactory.makeSection (self)
         self.table = TableFactory.make(self)
         self.text = TextFactory.make(self)
 
         self._texMarkup = (
             self.text |
-            self.italicized |
+            self.italic |
+            self.bold |
+            self.section |
             self.table
         )
 
@@ -58,15 +62,18 @@ class Parser (object):
         """
         В переданном тексте функция преобразует транскрипции TeX в Unicode и возвращает результат
         """
-        result = self._replaceSymbols (text)
-        result = self._removeTranscriptions (result)
-        result = self._replaceDash (result)
-        result = self._clearTex (result)
+        result = text
+
 
         try:
             result = self._texMarkup.transformString (result)
         except Exception:
             result = self._error_template.format (error = traceback.format_exc())
+
+        result = self._replaceDash (result)
+        result = self._replaceSymbols (result)
+        result = self._removeTranscriptions (result)
+        result = self._clearTex (result)
 
         return result
 
@@ -106,6 +113,7 @@ class Parser (object):
         # Список регулярных выражений
         commands = [
             ur"\\large\s+",
+            ur"\\small\s+",
         ]
 
         result = text
