@@ -284,5 +284,59 @@ class SessionsTest (BaseMainWndTest):
         self.assertEqual (session.currentTab, 0)
 
 
+    def testRestore_01 (self):
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+
+        tabsController = Application.mainWindow.tabsController
+        tabsController.openInTab (self.wikiroot[u"Страница 2"], True)
+
+        controller = self.loader[u"Sessions"].SessionController(Application)
+        session = controller.getCurrentSession()
+
+        uid1 = self._getPageLink (self.wikiroot[u"Страница 1"])
+        uid2 = self._getPageLink (self.wikiroot[u"Страница 2"])
+
+        Application.wikiroot = None
+        self.assertEqual (tabsController.getTabsCount(), 0)
+
+        controller.restore (session)
+
+        self.assertEqual (os.path.abspath (Application.wikiroot.path), os.path.abspath (self.path))
+        self.assertEqual (tabsController.getTabsCount(), 2)
+        self.assertEqual (tabsController.getSelection(), 1)
+
+        newsession = controller.getCurrentSession()
+        self.assertEqual (newsession.pages[0], uid1)
+        self.assertEqual (newsession.pages[1], uid2)
+
+
+    def testRestore_02 (self):
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+
+        tabsController = Application.mainWindow.tabsController
+        tabsController.openInTab (self.wikiroot[u"Страница 2"], False)
+
+        controller = self.loader[u"Sessions"].SessionController(Application)
+        session = controller.getCurrentSession()
+
+        uid1 = self._getPageLink (self.wikiroot[u"Страница 1"])
+        uid2 = self._getPageLink (self.wikiroot[u"Страница 2"])
+
+        Application.wikiroot = None
+        self.assertEqual (tabsController.getTabsCount(), 0)
+
+        controller.restore (session)
+
+        self.assertEqual (os.path.abspath (Application.wikiroot.path), os.path.abspath (self.path))
+        self.assertEqual (tabsController.getTabsCount(), 2)
+        self.assertEqual (tabsController.getSelection(), 0)
+
+        newsession = controller.getCurrentSession()
+        self.assertEqual (newsession.pages[0], uid1)
+        self.assertEqual (newsession.pages[1], uid2)
+
+
     def _getPageLink (self, page):
         return u"page://" + Application.pageUidDepot.createUid (page)
