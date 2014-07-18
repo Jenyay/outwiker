@@ -134,17 +134,6 @@ class MainWindow(wx.Frame):
         menu = Application.mainWindow.mainMenu.fileMenu
         actionController = Application.actionController
 
-        # Открыть...
-        actionController.appendMenuItem (
-            OpenAction.stringId,
-            menu)
-
-        actionController.appendToolbarButton (
-            OpenAction.stringId,
-            toolbar,
-            os.path.join (imagesDir, u"open.png"),
-            True)
-
         # Создать...
         actionController.appendMenuItem (
             NewAction.stringId,
@@ -154,6 +143,17 @@ class MainWindow(wx.Frame):
             NewAction.stringId,
             toolbar,
             os.path.join (imagesDir, u"new.png"),
+            True)
+
+        # Открыть...
+        actionController.appendMenuItem (
+            OpenAction.stringId,
+            menu)
+
+        actionController.appendToolbarButton (
+            OpenAction.stringId,
+            toolbar,
+            os.path.join (imagesDir, u"open.png"),
             True)
 
         # Открыть только для чтения
