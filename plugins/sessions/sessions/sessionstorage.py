@@ -1,8 +1,5 @@
 # -*- coding: UTF-8 -*-
 
-import os.path
-
-from outwiker.core.exceptions import ReadonlyException
 from outwiker.core.config import IntegerOption, StringOption
 
 
@@ -46,7 +43,6 @@ class SessionStorage (object):
 
     def __init__ (self, application):
         self._application = application
-        self._protocol = u"page://"
 
         # Словарь с сессиями. Ключ - имя сессии, значение - экземпляр класса SessionInfo
         self._sessions = self._loadAllSessions(self._application.config)
@@ -126,12 +122,8 @@ class SessionStorage (object):
         sessions[name] = SessionInfo (path, links, currentTab)
 
 
-    def save (self, name):
-        assert self._application.mainWindow is not None
-
-        session = self.getSessionInfo()
+    def save (self, session, name):
         self._sessions[name] = session
-
         self._saveAllSessions()
 
 
@@ -167,37 +159,6 @@ class SessionStorage (object):
         for page, nPage in zip (session.pages, range (len (session.pages))):
             paramTabName = self.SESSION_TAB.format (nSession, nPage)
             config.set (self.SECTION_NAME, paramTabName, page)
-
-
-    def _getPageLink (self, page):
-        """
-        Функция возвращает ссылку на страницу. Если страница открыта в режиме только для чтения и не содержит UID, то функция возвращает ссылку в старом стиле в виде пути. Если страница уже имеет UID или открыта в обычном режиме, возвращается ссылка вида page://...
-        """
-        try:
-            link = self._protocol + self._application.pageUidDepot.createUid (page)
-        except ReadonlyException:
-            link = page.subpath
-
-        return link
-
-
-
-    def getSessionInfo (self):
-        assert self._application.mainWindow is not None
-
-        if self._application.wikiroot is None:
-            return SessionInfo (u"", [], 0)
-
-        path = os.path.abspath (self._application.wikiroot.path)
-
-        tabsController = self._application.mainWindow.tabsController
-
-        pages = [self._getPageLink (tabsController.getPage (n))
-                 for n in range (tabsController.getTabsCount())]
-
-        currentTab = tabsController.getSelection()
-
-        return SessionInfo (path, pages, currentTab)
 
 
     def _deleteSection (self, config):

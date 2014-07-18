@@ -12,8 +12,9 @@ if getCurrentVersion() < Version (1, 8, 0, 732, status=StatusSet.DEV):
     print ("Sessions plugin. OutWiker version requirement: 1.8.0.732")
 else:
     from .i18n import set_
-    from .controller import Controller
+    from .plugincontroller import PluginController
     from .sessionstorage import SessionStorage
+    from .sessioncontroller import SessionController
 
 
     class PluginSessions (Plugin):
@@ -22,7 +23,7 @@ else:
             application - экземпляр класса core.application.ApplicationParams
             """
             Plugin.__init__ (self, application)
-            self.__controller = Controller(self, application)
+            self.__controller = PluginController(self, application)
 
 
         @property
@@ -85,3 +86,11 @@ else:
             Используется для тестирования
             """
             return SessionStorage
+
+
+        @property
+        def SessionController (self):
+            """
+            Используется для тестирования
+            """
+            return SessionController

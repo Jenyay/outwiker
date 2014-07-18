@@ -62,9 +62,10 @@ class SessionsTest (BaseMainWndTest):
 
         sessionName = u"Имя сессии"
 
+        controller = self.loader[u"Sessions"].SessionController(Application)
         storage = self.loader[u"Sessions"].SessionStorage(Application)
-        storage.save (sessionName)
 
+        storage.save (controller.getCurrentSession(), sessionName)
         sessions = storage.getSessions()
 
         self.assertEqual (len (sessions), 1)
@@ -79,7 +80,8 @@ class SessionsTest (BaseMainWndTest):
 
         sessionName = u"Имя сессии"
 
-        self.loader[u"Sessions"].SessionStorage(Application).save (sessionName)
+        controller = self.loader[u"Sessions"].SessionController (Application)
+        self.loader[u"Sessions"].SessionStorage(Application).save (controller.getCurrentSession(), sessionName)
 
         otherStorage = self.loader[u"Sessions"].SessionStorage(Application)
 
@@ -100,7 +102,8 @@ class SessionsTest (BaseMainWndTest):
 
         sessionName = u"Имя сессии"
 
-        self.loader[u"Sessions"].SessionStorage(Application).save (sessionName)
+        controller = self.loader[u"Sessions"].SessionController (Application)
+        self.loader[u"Sessions"].SessionStorage(Application).save (controller.getCurrentSession(), sessionName)
 
         otherStorage = self.loader[u"Sessions"].SessionStorage(Application)
 
@@ -122,7 +125,8 @@ class SessionsTest (BaseMainWndTest):
 
         sessionName = u"Имя сессии"
 
-        self.loader[u"Sessions"].SessionStorage(Application).save (sessionName)
+        controller = self.loader[u"Sessions"].SessionController (Application)
+        self.loader[u"Sessions"].SessionStorage(Application).save (controller.getCurrentSession(), sessionName)
 
         otherStorage = self.loader[u"Sessions"].SessionStorage(Application)
 
@@ -144,12 +148,14 @@ class SessionsTest (BaseMainWndTest):
 
         Application.selectedPage = self.wikiroot[u"Страница 1"]
 
+        controller = self.loader[u"Sessions"].SessionController (Application)
+
         # Сохраним сессию с одной страницей
-        self.loader[u"Sessions"].SessionStorage(Application).save (sessionName1)
+        self.loader[u"Sessions"].SessionStorage(Application).save (controller.getCurrentSession(), sessionName1)
 
         # Сохраним сессию с двумя страницами
         tabsController.openInTab (self.wikiroot[u"Страница 2"], True)
-        self.loader[u"Sessions"].SessionStorage(Application).save (sessionName2)
+        self.loader[u"Sessions"].SessionStorage(Application).save (controller.getCurrentSession(), sessionName2)
 
         otherStorage = self.loader[u"Sessions"].SessionStorage(Application)
 
@@ -175,10 +181,12 @@ class SessionsTest (BaseMainWndTest):
         tabsController.openInTab (self.wikiroot[u"Страница 2"], True)
 
         sessionName = u"Имя сессии"
+        controller = self.loader[u"Sessions"].SessionController (Application)
+        session = controller.getCurrentSession()
 
         # Сохраним сессию дважды под одним и тем же именем
-        self.loader[u"Sessions"].SessionStorage(Application).save (sessionName)
-        self.loader[u"Sessions"].SessionStorage(Application).save (sessionName)
+        self.loader[u"Sessions"].SessionStorage(Application).save (session, sessionName)
+        self.loader[u"Sessions"].SessionStorage(Application).save (session, sessionName)
 
         otherStorage = self.loader[u"Sessions"].SessionStorage(Application)
 
@@ -195,9 +203,9 @@ class SessionsTest (BaseMainWndTest):
         Application.wikiroot = self.wikiroot
         Application.selectedPage = self.wikiroot[u"Страница 1"]
 
-        storage = self.loader[u"Sessions"].SessionStorage(Application)
+        controller = self.loader[u"Sessions"].SessionController(Application)
 
-        session = storage.getSessionInfo()
+        session = controller.getCurrentSession()
 
         self.assertEqual (session.path, os.path.abspath (self.wikiroot.path))
         self.assertEqual (len (session.pages), 1)
@@ -212,9 +220,9 @@ class SessionsTest (BaseMainWndTest):
         tabsController = Application.mainWindow.tabsController
         tabsController.openInTab (self.wikiroot[u"Страница 2"], False)
 
-        storage = self.loader[u"Sessions"].SessionStorage(Application)
+        controller = self.loader[u"Sessions"].SessionController(Application)
 
-        session = storage.getSessionInfo()
+        session = controller.getCurrentSession()
 
         self.assertEqual (session.path, os.path.abspath (self.wikiroot.path))
         self.assertEqual (len (session.pages), 2)
@@ -230,9 +238,9 @@ class SessionsTest (BaseMainWndTest):
         tabsController = Application.mainWindow.tabsController
         tabsController.openInTab (self.wikiroot[u"Страница 2"], True)
 
-        storage = self.loader[u"Sessions"].SessionStorage(Application)
+        controller = self.loader[u"Sessions"].SessionController(Application)
 
-        session = storage.getSessionInfo()
+        session = controller.getCurrentSession()
 
         self.assertEqual (session.path, os.path.abspath (self.wikiroot.path))
         self.assertEqual (len (session.pages), 2)
@@ -251,9 +259,9 @@ class SessionsTest (BaseMainWndTest):
         self.wikiroot[u"Страница 1"].readonly = True
         self.wikiroot[u"Страница 2"].readonly = True
 
-        storage = self.loader[u"Sessions"].SessionStorage(Application)
+        controller = self.loader[u"Sessions"].SessionController(Application)
 
-        session = storage.getSessionInfo()
+        session = controller.getCurrentSession()
 
         self.assertEqual (session.path, os.path.abspath (self.wikiroot.path))
         self.assertEqual (len (session.pages), 2)
@@ -267,9 +275,9 @@ class SessionsTest (BaseMainWndTest):
         Если нет открытых вики
         """
         Application.wikiroot = None
-        storage = self.loader[u"Sessions"].SessionStorage(Application)
+        controller = self.loader[u"Sessions"].SessionController(Application)
 
-        session = storage.getSessionInfo()
+        session = controller.getCurrentSession()
 
         self.assertEqual (session.path, u"")
         self.assertEqual (len (session.pages), 0)

@@ -4,7 +4,7 @@ from .i18n import get_
 from .guicreator import GuiCreator
 
 
-class Controller (object):
+class PluginController (object):
     """
     Класс отвечает за основную работу интерфейса плагина
     """
