@@ -51,7 +51,7 @@ class SessionsTest (BaseMainWndTest):
 
 
     def testEmptySessions (self):
-        storage = self.loader[u"Sessions"].SessionStorage(Application)
+        storage = self.loader[u"Sessions"].SessionStorage(Application.config)
 
         self.assertEqual (storage.getSessions(), {})
 
@@ -63,7 +63,7 @@ class SessionsTest (BaseMainWndTest):
         sessionName = u"Имя сессии"
 
         controller = self.loader[u"Sessions"].SessionController(Application)
-        storage = self.loader[u"Sessions"].SessionStorage(Application)
+        storage = self.loader[u"Sessions"].SessionStorage(Application.config)
 
         storage.save (controller.getCurrentSession(), sessionName)
         sessions = storage.getSessions()
@@ -81,9 +81,9 @@ class SessionsTest (BaseMainWndTest):
         sessionName = u"Имя сессии"
 
         controller = self.loader[u"Sessions"].SessionController (Application)
-        self.loader[u"Sessions"].SessionStorage(Application).save (controller.getCurrentSession(), sessionName)
+        self.loader[u"Sessions"].SessionStorage(Application.config).save (controller.getCurrentSession(), sessionName)
 
-        otherStorage = self.loader[u"Sessions"].SessionStorage(Application)
+        otherStorage = self.loader[u"Sessions"].SessionStorage(Application.config)
 
         sessions = otherStorage.getSessions()
 
@@ -103,9 +103,9 @@ class SessionsTest (BaseMainWndTest):
         sessionName = u"Имя сессии"
 
         controller = self.loader[u"Sessions"].SessionController (Application)
-        self.loader[u"Sessions"].SessionStorage(Application).save (controller.getCurrentSession(), sessionName)
+        self.loader[u"Sessions"].SessionStorage(Application.config).save (controller.getCurrentSession(), sessionName)
 
-        otherStorage = self.loader[u"Sessions"].SessionStorage(Application)
+        otherStorage = self.loader[u"Sessions"].SessionStorage(Application.config)
 
         sessions = otherStorage.getSessions()
 
@@ -126,9 +126,9 @@ class SessionsTest (BaseMainWndTest):
         sessionName = u"Имя сессии"
 
         controller = self.loader[u"Sessions"].SessionController (Application)
-        self.loader[u"Sessions"].SessionStorage(Application).save (controller.getCurrentSession(), sessionName)
+        self.loader[u"Sessions"].SessionStorage(Application.config).save (controller.getCurrentSession(), sessionName)
 
-        otherStorage = self.loader[u"Sessions"].SessionStorage(Application)
+        otherStorage = self.loader[u"Sessions"].SessionStorage(Application.config)
 
         sessions = otherStorage.getSessions()
 
@@ -151,13 +151,13 @@ class SessionsTest (BaseMainWndTest):
         controller = self.loader[u"Sessions"].SessionController (Application)
 
         # Сохраним сессию с одной страницей
-        self.loader[u"Sessions"].SessionStorage(Application).save (controller.getCurrentSession(), sessionName1)
+        self.loader[u"Sessions"].SessionStorage(Application.config).save (controller.getCurrentSession(), sessionName1)
 
         # Сохраним сессию с двумя страницами
         tabsController.openInTab (self.wikiroot[u"Страница 2"], True)
-        self.loader[u"Sessions"].SessionStorage(Application).save (controller.getCurrentSession(), sessionName2)
+        self.loader[u"Sessions"].SessionStorage(Application.config).save (controller.getCurrentSession(), sessionName2)
 
-        otherStorage = self.loader[u"Sessions"].SessionStorage(Application)
+        otherStorage = self.loader[u"Sessions"].SessionStorage(Application.config)
 
         sessions = otherStorage.getSessions()
 
@@ -185,10 +185,10 @@ class SessionsTest (BaseMainWndTest):
         session = controller.getCurrentSession()
 
         # Сохраним сессию дважды под одним и тем же именем
-        self.loader[u"Sessions"].SessionStorage(Application).save (session, sessionName)
-        self.loader[u"Sessions"].SessionStorage(Application).save (session, sessionName)
+        self.loader[u"Sessions"].SessionStorage(Application.config).save (session, sessionName)
+        self.loader[u"Sessions"].SessionStorage(Application.config).save (session, sessionName)
 
-        otherStorage = self.loader[u"Sessions"].SessionStorage(Application)
+        otherStorage = self.loader[u"Sessions"].SessionStorage(Application.config)
 
         sessions = otherStorage.getSessions()
 

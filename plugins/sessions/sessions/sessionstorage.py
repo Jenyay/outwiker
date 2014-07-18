@@ -41,19 +41,15 @@ class SessionStorage (object):
     CURRENT_TAB = u"CurrentTab_{}"
 
 
-    def __init__ (self, application):
-        self._application = application
+    def __init__ (self, config):
+        self._config = config
 
         # Словарь с сессиями. Ключ - имя сессии, значение - экземпляр класса SessionInfo
-        self._sessions = self._loadAllSessions(self._application.config)
+        self._sessions = self._loadAllSessions(self._config)
 
 
     def getSessions (self):
         return self._sessions
-
-
-    def _getConfig (self):
-        return self._application.config
 
 
     def _loadAllSessions (self, config):
@@ -61,8 +57,6 @@ class SessionStorage (object):
         Загрузить список сессий из конфига
         """
         result = {}
-
-        config = self._application.config
 
         sessionsCount = IntegerOption (config, self.SECTION_NAME, self.SESSIONS_COUNT, 0).value
         for n in range (sessionsCount):
@@ -75,10 +69,8 @@ class SessionStorage (object):
         """
         Прочитать сессию с номером nSession из конфига и добавить ее в словарь sessions. Ключ в словаре - имя сессии
         """
-        config = self._getConfig()
-
         # Прочитаем имя сессии
-        name = StringOption (config,
+        name = StringOption (self._config,
                              self.SECTION_NAME,
                              self.SESSION_NAME.format (nSession),
                              u"").value
@@ -86,7 +78,7 @@ class SessionStorage (object):
             return
 
         # Прочитаем путь до вики
-        path = StringOption (config,
+        path = StringOption (self._config,
                              self.SECTION_NAME,
                              self.SESSION_PATH.format (nSession),
                              u"").value
@@ -97,21 +89,21 @@ class SessionStorage (object):
         links = []
 
         # Прочитаем количество вкладок
-        tabsCount = IntegerOption (config,
+        tabsCount = IntegerOption (self._config,
                                    self.SECTION_NAME,
                                    self.TABS_COUNT.format (nSession),
                                    0).value
 
 
         # Прочитаем номер выбранной вкладки
-        currentTab = IntegerOption (config,
+        currentTab = IntegerOption (self._config,
                                     self.SECTION_NAME,
                                     self.CURRENT_TAB.format (nSession),
                                     0).value
 
         # Прочитаем список страниц
         for nPage in range (tabsCount):
-            link = StringOption (config,
+            link = StringOption (self._config,
                                  self.SECTION_NAME,
                                  self.SESSION_TAB.format (nSession, nPage),
                                  u"").value
@@ -128,14 +120,13 @@ class SessionStorage (object):
 
 
     def _saveAllSessions (self):
-        config = self._application.config
-        config.remove_section (self.SECTION_NAME)
+        self._config.remove_section (self.SECTION_NAME)
 
         sessionNames = sorted (self._sessions.keys())
 
         # Сохраняем в конфиг количество сессий
         count = len (self._sessions)
-        config.set (self.SECTION_NAME, self.SESSIONS_COUNT, count)
+        self._config.set (self.SECTION_NAME, self.SESSIONS_COUNT, count)
 
         for name, n in zip (sessionNames, range (count)):
             self._saveSession (name, n, self._sessions[name])
@@ -144,25 +135,15 @@ class SessionStorage (object):
     def _saveSession (self, name, nSession, session):
         """
         Сохранить одну сессию в конфиг.
-        config - конфиг из Application.config, куда сохраняется сессия
         name - имя сессии.
         nSession - порядковый номер сессии
         session - экземпляр класса SessionInfo
         """
-        config = self._application.config
-
-        config.set (self.SECTION_NAME, self.SESSION_NAME.format(nSession), name)
-        config.set (self.SECTION_NAME, self.SESSION_PATH.format(nSession), session.path)
-        config.set (self.SECTION_NAME, self.TABS_COUNT.format(nSession), len (session.pages))
-        config.set (self.SECTION_NAME, self.CURRENT_TAB.format(nSession), session.currentTab)
+        self._config.set (self.SECTION_NAME, self.SESSION_NAME.format(nSession), name)
+        self._config.set (self.SECTION_NAME, self.SESSION_PATH.format(nSession), session.path)
+        self._config.set (self.SECTION_NAME, self.TABS_COUNT.format(nSession), len (session.pages))
+        self._config.set (self.SECTION_NAME, self.CURRENT_TAB.format(nSession), session.currentTab)
 
         for page, nPage in zip (session.pages, range (len (session.pages))):
             paramTabName = self.SESSION_TAB.format (nSession, nPage)
-            config.set (self.SECTION_NAME, paramTabName, page)
-
-
-    def _deleteSection (self, config):
-        """
-        Удалить секцию в окне параметров, чтобы начинать заполнять ее заново
-        """
-        config.remove_section (self.SECTION_NAME)
+            self._config.set (self.SECTION_NAME, paramTabName, page)
