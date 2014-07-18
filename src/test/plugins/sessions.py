@@ -343,6 +343,106 @@ class SessionsTest (BaseMainWndTest):
         self.assertEqual (newsession.pages[2], uid3)
         self.assertEqual (newsession.pages[3], uid4)
 
+        self.assertEqual (tabsController.getPage (0).title, u"Страница 1")
+        self.assertEqual (tabsController.getPage (1).title, u"Страница 2")
+        self.assertEqual (tabsController.getPage (2).title, u"Страница 4")
+        self.assertEqual (tabsController.getPage (3).title, u"Страница 3")
+
+
+    def testRestore_03 (self):
+        wiki = WikiDocument.load (self.path, readonly=False)
+        Application.wikiroot = wiki
+        Application.selectedPage = wiki[u"Страница 1"]
+
+        tabsController = Application.mainWindow.tabsController
+        tabsController.openInTab (wiki[u"Страница 2"], True)
+        tabsController.openInTab (wiki[u"Страница 1/Страница 3/Страница 4"], True)
+        tabsController.openInTab (wiki[u"Страница 1/Страница 3"], False)
+
+        controller = self.loader[u"Sessions"].SessionController(Application)
+        session = controller.getCurrentSession()
+
+        tabsController.closeTab (1)
+        tabsController.closeTab (1)
+        tabsController.closeTab (1)
+
+        controller.restore (session)
+
+        self.assertEqual (os.path.abspath (Application.wikiroot.path), os.path.abspath (self.path))
+        self.assertFalse (Application.wikiroot.readonly)
+
+        self.assertEqual (os.path.abspath (Application.wikiroot.path), os.path.abspath (self.path))
+        self.assertEqual (tabsController.getTabsCount(), 4)
+        self.assertEqual (tabsController.getSelection(), 2)
+
+        self.assertEqual (tabsController.getPage (0).title, u"Страница 1")
+        self.assertEqual (tabsController.getPage (1).title, u"Страница 2")
+        self.assertEqual (tabsController.getPage (2).title, u"Страница 4")
+        self.assertEqual (tabsController.getPage (3).title, u"Страница 3")
+
+
+    def testRestoreReadonly_01 (self):
+        wiki = WikiDocument.load (self.path, readonly=True)
+        Application.wikiroot = wiki
+        Application.selectedPage = wiki[u"Страница 1"]
+
+        tabsController = Application.mainWindow.tabsController
+        tabsController.openInTab (wiki[u"Страница 2"], True)
+        tabsController.openInTab (wiki[u"Страница 1/Страница 3/Страница 4"], True)
+        tabsController.openInTab (wiki[u"Страница 1/Страница 3"], False)
+
+        controller = self.loader[u"Sessions"].SessionController(Application)
+        session = controller.getCurrentSession()
+
+        Application.wikiroot = None
+        self.assertEqual (tabsController.getTabsCount(), 0)
+
+        controller.restore (session)
+
+        self.assertEqual (os.path.abspath (Application.wikiroot.path), os.path.abspath (self.path))
+        self.assertTrue (Application.wikiroot.readonly)
+
+        self.assertEqual (os.path.abspath (Application.wikiroot.path), os.path.abspath (self.path))
+        self.assertEqual (tabsController.getTabsCount(), 4)
+        self.assertEqual (tabsController.getSelection(), 2)
+
+        self.assertEqual (tabsController.getPage (0).title, u"Страница 1")
+        self.assertEqual (tabsController.getPage (1).title, u"Страница 2")
+        self.assertEqual (tabsController.getPage (2).title, u"Страница 4")
+        self.assertEqual (tabsController.getPage (3).title, u"Страница 3")
+
+
+    def testRestoreReadonly_02 (self):
+        wiki = WikiDocument.load (self.path, readonly=True)
+        Application.wikiroot = wiki
+        Application.selectedPage = wiki[u"Страница 1"]
+
+        tabsController = Application.mainWindow.tabsController
+        tabsController.openInTab (wiki[u"Страница 2"], True)
+        tabsController.openInTab (wiki[u"Страница 1/Страница 3/Страница 4"], True)
+        tabsController.openInTab (wiki[u"Страница 1/Страница 3"], False)
+
+        controller = self.loader[u"Sessions"].SessionController(Application)
+        session = controller.getCurrentSession()
+
+        tabsController.closeTab (1)
+        tabsController.closeTab (1)
+        tabsController.closeTab (1)
+
+        controller.restore (session)
+
+        self.assertEqual (os.path.abspath (Application.wikiroot.path), os.path.abspath (self.path))
+        self.assertTrue (Application.wikiroot.readonly)
+
+        self.assertEqual (os.path.abspath (Application.wikiroot.path), os.path.abspath (self.path))
+        self.assertEqual (tabsController.getTabsCount(), 4)
+        self.assertEqual (tabsController.getSelection(), 2)
+
+        self.assertEqual (tabsController.getPage (0).title, u"Страница 1")
+        self.assertEqual (tabsController.getPage (1).title, u"Страница 2")
+        self.assertEqual (tabsController.getPage (2).title, u"Страница 4")
+        self.assertEqual (tabsController.getPage (3).title, u"Страница 3")
+
 
     def _getPageLink (self, page):
         return u"page://" + Application.pageUidDepot.createUid (page)

@@ -34,7 +34,7 @@ class SessionController (object):
         assert self._application.mainWindow is not None
 
         if self._application.wikiroot is None:
-            return SessionInfo (u"", [], 0)
+            return SessionInfo (u"", [], 0, True)
 
         path = os.path.abspath (self._application.wikiroot.path)
 
@@ -45,7 +45,7 @@ class SessionController (object):
 
         currentTab = tabsController.getSelection()
 
-        return SessionInfo (path, pages, currentTab)
+        return SessionInfo (path, pages, currentTab, self._application.wikiroot.readonly)
 
 
     def restore (self, session):
@@ -54,11 +54,11 @@ class SessionController (object):
         """
         # Закрыть вики
         if (self._application.wikiroot is not None and
-                os.path.abspath (self._application.wikiroot) != os.path.abspath (session.path)):
+                os.path.abspath (self._application.wikiroot.path) != os.path.abspath (session.path)):
             self._application.actionController.GetAction (CloseAction.stringId).run(None)
 
         # Открыть новую вики
-        wiki = openWiki (os.path.abspath (session.path))
+        wiki = openWiki (os.path.abspath (session.path), session.readonly)
         if wiki is None:
             return
 

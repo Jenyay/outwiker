@@ -1,13 +1,13 @@
 # -*- coding: UTF-8 -*-
 
-from outwiker.core.config import IntegerOption, StringOption
+from outwiker.core.config import IntegerOption, StringOption, BooleanOption
 
 
 class SessionInfo (object):
     """
     Информация о текущей сессии
     """
-    def __init__ (self, path, pages, currentTab):
+    def __init__ (self, path, pages, currentTab, readonly):
         """
         path - путь до открытой вики
         pages - список ссылок на страницы, открытые во вкладках. Элментами списка могут быть ссылки вида page://... или путь относительно корня вики
@@ -16,6 +16,7 @@ class SessionInfo (object):
         self.path = path
         self.pages = pages
         self.currentTab = currentTab
+        self.readonly = readonly
 
 
 class SessionStorage (object):
@@ -39,6 +40,9 @@ class SessionStorage (object):
 
     # Параметр в файле настроек. Текущая открытая вкладка
     CURRENT_TAB = u"CurrentTab_{}"
+
+    # Параметр в файле настроек. Открывать вики только для чтения?
+    SESSION_READONLY = u"Readonly_{}"
 
 
     def __init__ (self, config):
@@ -101,6 +105,12 @@ class SessionStorage (object):
                                     self.CURRENT_TAB.format (nSession),
                                     0).value
 
+        # Открывать вики в режиме "только для чтения"?
+        readonly = BooleanOption (self._config,
+                                  self.SECTION_NAME,
+                                  self.SESSION_READONLY.format (nSession),
+                                  False).value
+
         # Прочитаем список страниц
         for nPage in range (tabsCount):
             link = StringOption (self._config,
@@ -111,7 +121,7 @@ class SessionStorage (object):
             if len (link) != 0:
                 links.append (link)
 
-        sessions[name] = SessionInfo (path, links, currentTab)
+        sessions[name] = SessionInfo (path, links, currentTab, readonly)
 
 
     def save (self, session, name):
