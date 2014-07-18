@@ -73,7 +73,7 @@ class SessionController (object):
         self._application.selectedPage = self._getPage (session.pages[0])
 
         for n in range (1, len (session.pages)):
-            tabsController.openInTab (self._getPage (session.pages[n]), False)
+            tabsController.openInTab (self._getPage (session.pages[-n]), False)
 
         # Выбрать нужную вкладку
         tabsController.setSelection (session.currentTab)

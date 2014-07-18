@@ -5,7 +5,7 @@ import os.path
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
-from outwiker.pages.wiki.wikipage import WikiPageFactory
+from outwiker.pages.text.textpage import TextPageFactory
 
 from test.guitests.basemainwnd import BaseMainWndTest
 from test.utils import removeWiki
@@ -40,10 +40,10 @@ class SessionsTest (BaseMainWndTest):
 
         self.wikiroot = WikiDocument.create (self.path)
 
-        WikiPageFactory().create (self.wikiroot, u"Страница 1", [])
-        WikiPageFactory().create (self.wikiroot, u"Страница 2", [])
-        WikiPageFactory().create (self.wikiroot[u"Страница 1"], u"Страница 3", [])
-        WikiPageFactory().create (self.wikiroot[u"Страница 1/Страница 3"], u"Страница 4", [])
+        TextPageFactory().create (self.wikiroot, u"Страница 1", [])
+        TextPageFactory().create (self.wikiroot, u"Страница 2", [])
+        TextPageFactory().create (self.wikiroot[u"Страница 1"], u"Страница 3", [])
+        TextPageFactory().create (self.wikiroot[u"Страница 1/Страница 3"], u"Страница 4", [])
 
 
     def testPluginLoad (self):
@@ -316,13 +316,17 @@ class SessionsTest (BaseMainWndTest):
         Application.selectedPage = self.wikiroot[u"Страница 1"]
 
         tabsController = Application.mainWindow.tabsController
-        tabsController.openInTab (self.wikiroot[u"Страница 2"], False)
+        tabsController.openInTab (self.wikiroot[u"Страница 2"], True)
+        tabsController.openInTab (self.wikiroot[u"Страница 1/Страница 3/Страница 4"], True)
+        tabsController.openInTab (self.wikiroot[u"Страница 1/Страница 3"], False)
 
         controller = self.loader[u"Sessions"].SessionController(Application)
         session = controller.getCurrentSession()
 
         uid1 = self._getPageLink (self.wikiroot[u"Страница 1"])
         uid2 = self._getPageLink (self.wikiroot[u"Страница 2"])
+        uid3 = self._getPageLink (self.wikiroot[u"Страница 1/Страница 3/Страница 4"])
+        uid4 = self._getPageLink (self.wikiroot[u"Страница 1/Страница 3"])
 
         Application.wikiroot = None
         self.assertEqual (tabsController.getTabsCount(), 0)
@@ -330,12 +334,14 @@ class SessionsTest (BaseMainWndTest):
         controller.restore (session)
 
         self.assertEqual (os.path.abspath (Application.wikiroot.path), os.path.abspath (self.path))
-        self.assertEqual (tabsController.getTabsCount(), 2)
-        self.assertEqual (tabsController.getSelection(), 0)
+        self.assertEqual (tabsController.getTabsCount(), 4)
+        self.assertEqual (tabsController.getSelection(), 2)
 
         newsession = controller.getCurrentSession()
         self.assertEqual (newsession.pages[0], uid1)
         self.assertEqual (newsession.pages[1], uid2)
+        self.assertEqual (newsession.pages[2], uid3)
+        self.assertEqual (newsession.pages[3], uid4)
 
 
     def _getPageLink (self, page):
