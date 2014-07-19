@@ -263,8 +263,10 @@ class SessionsTest (BaseMainWndTest):
         session = controller.getCurrentSession()
 
         # Сохраним сессию дважды под одним и тем же именем
-        self.loader[u"Sessions"].SessionStorage(Application.config).save (session, sessionName)
-        self.loader[u"Sessions"].SessionStorage(Application.config).save (session, sessionName)
+        storage = self.loader[u"Sessions"].SessionStorage(Application.config)
+
+        storage.save (session, sessionName)
+        storage.save (session, sessionName)
 
         otherStorage = self.loader[u"Sessions"].SessionStorage(Application.config)
 
@@ -276,6 +278,60 @@ class SessionsTest (BaseMainWndTest):
         self.assertEqual (sessions[sessionName].pages[1], self._getPageLink (wiki[u"Страница 2"]))
         self.assertEqual (sessions[sessionName].currentTab, 1)
         self.assertTrue (sessions[sessionName].readonly)
+
+
+    def testSaveSession_08 (self):
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+
+        controller = self.loader[u"Sessions"].SessionController (Application)
+        storage = self.loader[u"Sessions"].SessionStorage(Application.config)
+
+        storage.save (controller.getCurrentSession(), u"session1")
+        storage.save (controller.getCurrentSession(), u"session2")
+
+        otherStorage = self.loader[u"Sessions"].SessionStorage(Application.config)
+
+        sessions = otherStorage.getSessions()
+
+        self.assertEqual (len (sessions), 2)
+
+        self.assertEqual (len (sessions["session1"].pages), 1)
+        self.assertEqual (sessions["session1"].pages[0], self._getPageLink (self.wikiroot[u"Страница 1"]))
+        self.assertEqual (sessions["session1"].currentTab, 0)
+
+        self.assertEqual (len (sessions["session2"].pages), 1)
+        self.assertEqual (sessions["session2"].pages[0], self._getPageLink (self.wikiroot[u"Страница 1"]))
+        self.assertEqual (sessions["session2"].currentTab, 0)
+
+
+    def testSaveSession_09 (self):
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+
+        controller = self.loader[u"Sessions"].SessionController (Application)
+        storage = self.loader[u"Sessions"].SessionStorage(Application.config)
+
+        storage.save (controller.getCurrentSession(), u"session1")
+
+        tabsController = Application.mainWindow.tabsController
+        tabsController.openInTab (self.wikiroot[u"Страница 2"], True)
+        storage.save (controller.getCurrentSession(), u"session2")
+
+        otherStorage = self.loader[u"Sessions"].SessionStorage(Application.config)
+
+        sessions = otherStorage.getSessions()
+
+        self.assertEqual (len (sessions), 2)
+
+        self.assertEqual (len (sessions["session1"].pages), 1)
+        self.assertEqual (sessions["session1"].pages[0], self._getPageLink (self.wikiroot[u"Страница 1"]))
+        self.assertEqual (sessions["session1"].currentTab, 0)
+
+        self.assertEqual (len (sessions["session2"].pages), 2)
+        self.assertEqual (sessions["session2"].pages[0], self._getPageLink (self.wikiroot[u"Страница 1"]))
+        self.assertEqual (sessions["session2"].pages[1], self._getPageLink (self.wikiroot[u"Страница 2"]))
+        self.assertEqual (sessions["session2"].currentTab, 1)
 
 
     def testGetSessionInfo_01 (self):
