@@ -55,7 +55,7 @@ class SessionController (object):
         # Закрыть вики
         if (self._application.wikiroot is not None and
                 os.path.abspath (self._application.wikiroot.path) != os.path.abspath (session.path)):
-            self._application.actionController.GetAction (CloseAction.stringId).run(None)
+            self._application.actionController.getAction (CloseAction.stringId).run(None)
 
         # Открыть новую вики
         wiki = openWiki (os.path.abspath (session.path), session.readonly)

@@ -132,7 +132,7 @@ class SessionStorage (object):
     def _saveAllSessions (self):
         self._config.remove_section (self.SECTION_NAME)
 
-        sessionNames = sorted (self._sessions.keys())
+        sessionNames = sorted (self._sessions.keys(), key=unicode.lower)
 
         # Сохраняем в конфиг количество сессий
         count = len (self._sessions)
@@ -153,6 +153,7 @@ class SessionStorage (object):
         self._config.set (self.SECTION_NAME, self.SESSION_PATH.format(nSession), session.path)
         self._config.set (self.SECTION_NAME, self.TABS_COUNT.format(nSession), len (session.pages))
         self._config.set (self.SECTION_NAME, self.CURRENT_TAB.format(nSession), session.currentTab)
+        self._config.set (self.SECTION_NAME, self.SESSION_READONLY.format(nSession), session.readonly)
 
         for page, nPage in zip (session.pages, range (len (session.pages))):
             paramTabName = self.SESSION_TAB.format (nSession, nPage)

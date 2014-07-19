@@ -15,13 +15,14 @@ class SaveSessionAction (BaseAction):
     """
     Действие для сохранения сессии
     """
-    def __init__ (self, application):
+    stringId = u"Sessions_SaveSession"
+
+    def __init__ (self, application, guicreator):
         self._application = application
+        self._guicreator = guicreator
 
         global _
         _ = get_()
-
-    stringId = u"Sessions_SaveSession"
 
 
     @property
@@ -42,6 +43,7 @@ class SaveSessionAction (BaseAction):
             if dlg.ShowModal() == wx.ID_OK:
                 session = SessionController(self._application).getCurrentSession()
                 storage.save (session, dlg.sessionName)
+                self._guicreator.updateMenu()
 
 
 class SaveSessionDialog (TestedDialog):

@@ -8,8 +8,9 @@ class RemoveSessionAction (BaseAction):
     """
     Действие для удаления сессии
     """
-    def __init__ (self, application):
+    def __init__ (self, application, guicreator):
         self._application = application
+        self._guicreator = guicreator
 
         global _
         _ = get_()
