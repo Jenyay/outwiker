@@ -8,7 +8,8 @@ import wx
 from .i18n import get_
 
 # Импортировать все Actions
-from .actions import SaveSessionAction, RemoveSessionAction
+from .saveaction import SaveSessionAction
+from .removeaction import RemoveSessionAction
 
 
 class GuiCreator (object):
