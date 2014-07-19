@@ -8,6 +8,7 @@ from outwiker.core.commands import MessageBox
 
 from .i18n import get_
 from .sessionstorage import SessionStorage
+from .sessioncontroller import SessionController
 
 
 class SaveSessionAction (BaseAction):
@@ -39,8 +40,8 @@ class SaveSessionAction (BaseAction):
 
         with SaveSessionDialog (self._application.mainWindow, self._application, names) as dlg:
             if dlg.ShowModal() == wx.ID_OK:
-                print "Save!"
-
+                session = SessionController(self._application).getCurrentSession()
+                storage.save (session, dlg.sessionName)
 
 
 class SaveSessionDialog (TestedDialog):
@@ -71,9 +72,9 @@ class SaveSessionDialog (TestedDialog):
             return
 
         if (name in self._names and
-            MessageBox (_(u'Session with name "{}" exists. Overwrite?'),
+            MessageBox (_(u'Session with name "{}" exists. Overwrite?').format (name),
                         _(u"Overwrite session?"),
-                        wx.ICON_QUESTION | wx.YESNO) != wx.ID_YES):
+                        wx.ICON_QUESTION | wx.YES | wx.NO) != wx.YES):
             return
 
         event.Skip()

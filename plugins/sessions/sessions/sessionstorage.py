@@ -24,7 +24,7 @@ class SessionStorage (object):
     SECTION_NAME = u"Plugin_Sessions"
 
     # Параметр в файле настроек. Количество сессий
-    SESSIONS_COUNT = u"SessionsCount_{}"
+    SESSIONS_COUNT = u"SessionsCount"
 
     # Параметр в файле настроек. Имя сессии
     SESSION_NAME = u"SessionName_{}"
