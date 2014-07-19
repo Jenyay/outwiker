@@ -15,6 +15,9 @@ class SessionsTest (BaseMainWndTest):
     """Тесты плагина Sessions"""
     def setUp (self):
         super (SessionsTest, self).setUp ()
+        self.path = u"../test/testwiki"
+        self.path2 = u"../test/testwiki2"
+
         self.__createWiki()
 
         dirlist = [u"../plugins/sessions"]
@@ -31,11 +34,11 @@ class SessionsTest (BaseMainWndTest):
         Application.config.remove_section (self.loader[u"Sessions"].SessionStorage.SECTION_NAME)
         self.loader.clear()
         removeWiki (self.path)
+        removeWiki (self.path2)
 
 
     def __createWiki (self):
         # Здесь будет создаваться вики
-        self.path = u"../test/testwiki"
         removeWiki (self.path)
 
         self.wikiroot = WikiDocument.create (self.path)
@@ -44,6 +47,15 @@ class SessionsTest (BaseMainWndTest):
         TextPageFactory().create (self.wikiroot, u"Страница 2", [])
         TextPageFactory().create (self.wikiroot[u"Страница 1"], u"Страница 3", [])
         TextPageFactory().create (self.wikiroot[u"Страница 1/Страница 3"], u"Страница 4", [])
+
+
+    def __createWiki2 (self):
+        # Здесь будет создаваться вики
+        removeWiki (self.path2)
+
+        wiki2 = WikiDocument.create (self.path2)
+        TextPageFactory().create (wiki2, u"Page 1", [])
+        TextPageFactory().create (wiki2, u"Page 2", [])
 
 
     def testPluginLoad (self):
@@ -197,6 +209,73 @@ class SessionsTest (BaseMainWndTest):
         self.assertEqual (sessions[sessionName].pages[0], self._getPageLink (self.wikiroot[u"Страница 1"]))
         self.assertEqual (sessions[sessionName].pages[1], self._getPageLink (self.wikiroot[u"Страница 2"]))
         self.assertEqual (sessions[sessionName].currentTab, 1)
+        self.assertFalse (sessions[sessionName].readonly)
+
+
+    def testSaveSession_06 (self):
+        tabsController = Application.mainWindow.tabsController
+
+        uid1 = self._getPageLink (self.wikiroot[u"Страница 1"])
+        uid2 = self._getPageLink (self.wikiroot[u"Страница 2"])
+
+        wiki = WikiDocument.load (self.path, True)
+        Application.wikiroot = wiki
+
+        Application.selectedPage = wiki[u"Страница 1"]
+        tabsController.openInTab (wiki[u"Страница 2"], True)
+
+        sessionName = u"Имя сессии"
+        controller = self.loader[u"Sessions"].SessionController (Application)
+        session = controller.getCurrentSession()
+
+        # Сохраним сессию дважды под одним и тем же именем
+        self.loader[u"Sessions"].SessionStorage(Application.config).save (session, sessionName)
+        self.loader[u"Sessions"].SessionStorage(Application.config).save (session, sessionName)
+
+        otherStorage = self.loader[u"Sessions"].SessionStorage(Application.config)
+
+        sessions = otherStorage.getSessions()
+
+        self.assertEqual (len (sessions), 1)
+        self.assertEqual (len (sessions[sessionName].pages), 2)
+        self.assertEqual (sessions[sessionName].pages[0], uid1)
+        self.assertEqual (sessions[sessionName].pages[1], uid2)
+        self.assertEqual (sessions[sessionName].currentTab, 1)
+        self.assertTrue (sessions[sessionName].readonly)
+
+
+    def testSaveSession_07 (self):
+        tabsController = Application.mainWindow.tabsController
+
+        # Создадим UID, а потом проверим, что они нормально прочитаются в
+        # режиме только для чтения
+        self._getPageLink (self.wikiroot[u"Страница 1"])
+        self._getPageLink (self.wikiroot[u"Страница 2"])
+
+        wiki = WikiDocument.load (self.path, True)
+        Application.wikiroot = wiki
+
+        Application.selectedPage = wiki[u"Страница 1"]
+        tabsController.openInTab (wiki[u"Страница 2"], True)
+
+        sessionName = u"Имя сессии"
+        controller = self.loader[u"Sessions"].SessionController (Application)
+        session = controller.getCurrentSession()
+
+        # Сохраним сессию дважды под одним и тем же именем
+        self.loader[u"Sessions"].SessionStorage(Application.config).save (session, sessionName)
+        self.loader[u"Sessions"].SessionStorage(Application.config).save (session, sessionName)
+
+        otherStorage = self.loader[u"Sessions"].SessionStorage(Application.config)
+
+        sessions = otherStorage.getSessions()
+
+        self.assertEqual (len (sessions), 1)
+        self.assertEqual (len (sessions[sessionName].pages), 2)
+        self.assertEqual (sessions[sessionName].pages[0], self._getPageLink (wiki[u"Страница 1"]))
+        self.assertEqual (sessions[sessionName].pages[1], self._getPageLink (wiki[u"Страница 2"]))
+        self.assertEqual (sessions[sessionName].currentTab, 1)
+        self.assertTrue (sessions[sessionName].readonly)
 
 
     def testGetSessionInfo_01 (self):
@@ -379,6 +458,66 @@ class SessionsTest (BaseMainWndTest):
         self.assertEqual (tabsController.getPage (1).title, u"Страница 2")
         self.assertEqual (tabsController.getPage (2).title, u"Страница 4")
         self.assertEqual (tabsController.getPage (3).title, u"Страница 3")
+
+
+    def testRestore_04 (self):
+        self.__createWiki2()
+        wiki2 = WikiDocument.load (self.path2, False)
+
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+
+        tabsController = Application.mainWindow.tabsController
+        tabsController.openInTab (self.wikiroot[u"Страница 2"], True)
+
+        controller = self.loader[u"Sessions"].SessionController(Application)
+        session = controller.getCurrentSession()
+
+        uid1 = self._getPageLink (self.wikiroot[u"Страница 1"])
+        uid2 = self._getPageLink (self.wikiroot[u"Страница 2"])
+
+        Application.wikiroot = wiki2
+        self.assertEqual (tabsController.getTabsCount(), 1)
+
+        controller.restore (session)
+
+        self.assertEqual (os.path.abspath (Application.wikiroot.path), os.path.abspath (self.path))
+        self.assertEqual (tabsController.getTabsCount(), 2)
+        self.assertEqual (tabsController.getSelection(), 1)
+
+        newsession = controller.getCurrentSession()
+        self.assertEqual (newsession.pages[0], uid1)
+        self.assertEqual (newsession.pages[1], uid2)
+
+
+    def testRestore_05 (self):
+        self.__createWiki2()
+        wiki2 = WikiDocument.load (self.path2, True)
+
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+
+        tabsController = Application.mainWindow.tabsController
+        tabsController.openInTab (self.wikiroot[u"Страница 2"], True)
+
+        controller = self.loader[u"Sessions"].SessionController(Application)
+        session = controller.getCurrentSession()
+
+        uid1 = self._getPageLink (self.wikiroot[u"Страница 1"])
+        uid2 = self._getPageLink (self.wikiroot[u"Страница 2"])
+
+        Application.wikiroot = wiki2
+        self.assertEqual (tabsController.getTabsCount(), 1)
+
+        controller.restore (session)
+
+        self.assertEqual (os.path.abspath (Application.wikiroot.path), os.path.abspath (self.path))
+        self.assertEqual (tabsController.getTabsCount(), 2)
+        self.assertEqual (tabsController.getSelection(), 1)
+
+        newsession = controller.getCurrentSession()
+        self.assertEqual (newsession.pages[0], uid1)
+        self.assertEqual (newsession.pages[1], uid2)
 
 
     def testRestoreReadonly_01 (self):
