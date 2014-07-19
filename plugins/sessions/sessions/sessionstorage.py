@@ -129,6 +129,12 @@ class SessionStorage (object):
         self._saveAllSessions()
 
 
+    def remove (self, name):
+        if name in self._sessions:
+            del self._sessions[name]
+            self._saveAllSessions()
+
+
     def _saveAllSessions (self):
         self._config.remove_section (self.SECTION_NAME)
 

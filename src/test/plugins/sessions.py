@@ -334,6 +334,55 @@ class SessionsTest (BaseMainWndTest):
         self.assertEqual (sessions["session2"].currentTab, 1)
 
 
+    def testRemoveSession_01 (self):
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+
+        controller = self.loader[u"Sessions"].SessionController (Application)
+        storage = self.loader[u"Sessions"].SessionStorage(Application.config)
+
+        storage.save (controller.getCurrentSession(), u"session1")
+        storage.save (controller.getCurrentSession(), u"session2")
+
+        otherStorage = self.loader[u"Sessions"].SessionStorage(Application.config)
+        sessions = otherStorage.getSessions()
+        self.assertEqual (len (sessions), 2)
+
+        # Удалим несуществующую сессию. При этом ничего не должно происходить
+        storage.remove (u"session_invalid")
+
+        otherStorage = self.loader[u"Sessions"].SessionStorage(Application.config)
+        sessions = otherStorage.getSessions()
+        self.assertEqual (len (sessions), 2)
+
+
+    def testRemoveSession_02 (self):
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+
+        controller = self.loader[u"Sessions"].SessionController (Application)
+        storage = self.loader[u"Sessions"].SessionStorage(Application.config)
+
+        storage.save (controller.getCurrentSession(), u"session1")
+        storage.save (controller.getCurrentSession(), u"session2")
+
+        otherStorage = self.loader[u"Sessions"].SessionStorage(Application.config)
+        sessions = otherStorage.getSessions()
+        self.assertEqual (len (sessions), 2)
+
+        # Удалим несуществующую сессию. При этом ничего не должно происходить
+        storage.remove (u"session1")
+
+        otherStorage = self.loader[u"Sessions"].SessionStorage(Application.config)
+        sessions = otherStorage.getSessions()
+        self.assertEqual (len (sessions), 1)
+        self.assertEqual (sessions.keys()[0], u"session2")
+
+        sessions = storage.getSessions()
+        self.assertEqual (len (sessions), 1)
+        self.assertEqual (sessions.keys()[0], u"session2")
+
+
     def testGetSessionInfo_01 (self):
         Application.wikiroot = self.wikiroot
         Application.selectedPage = self.wikiroot[u"Страница 1"]
