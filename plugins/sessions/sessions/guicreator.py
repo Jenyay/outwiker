@@ -11,7 +11,7 @@ from .sessioncontroller import SessionController
 
 # Импортировать все Actions
 from .saveaction import SaveSessionAction
-from .removeaction import RemoveSessionAction
+from .editaction import EditSessionsAction
 
 
 class GuiCreator (object):
@@ -23,7 +23,7 @@ class GuiCreator (object):
         self._application = application
 
         # Сюда добавить все Actions
-        self._actions = [SaveSessionAction, RemoveSessionAction]
+        self._actions = [SaveSessionAction, EditSessionsAction]
 
         # Номер позиции в меню, куда будем добавлять свои пункты
         self._menuIndex = 3
