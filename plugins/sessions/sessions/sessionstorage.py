@@ -135,6 +135,21 @@ class SessionStorage (object):
             self._saveAllSessions()
 
 
+    def rename (self, name, newname):
+        newname = newname.strip()
+
+        if name == newname:
+            return
+
+        if newname in self._sessions:
+            raise ValueError ('Session "{}" already exists'.format (newname))
+
+        session = self._sessions[name]
+        del self._sessions[name]
+        self._sessions[newname] = session
+        self._saveAllSessions()
+
+
     def _saveAllSessions (self):
         self._config.remove_section (self.SECTION_NAME)
 

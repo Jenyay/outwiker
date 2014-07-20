@@ -77,6 +77,7 @@ class EditSessionsDialog (TestedDialog):
         self.SetSize ((350, 250))
 
         self.Bind (wx.EVT_BUTTON, handler=self._onRemove, id=self.REMOVE_ID)
+        self.Bind (wx.EVT_BUTTON, handler=self._onRename, id=self.RENAME_ID)
 
 
     def _updateSessionsList (self):
@@ -96,6 +97,32 @@ class EditSessionsDialog (TestedDialog):
             self._storage.remove (name)
             self._updateSessionsList()
             self._guicreator.updateMenu()
+
+
+    def _onRename (self, event):
+        name = self._actionsList.GetStringSelection()
+        if len (name) == 0:
+            return
+
+        with wx.TextEntryDialog (self,
+                                 _(u"Enter new session name"),
+                                 _(u"Rename session"),
+                                 name) as dlg:
+            if dlg.ShowModal() == wx.ID_OK:
+                newname = dlg.GetValue().strip()
+
+                # Проверим, что не ввели имя сессии, совпадающее с существующей
+                # сессией (кроме случая, что не изменили имя)
+                if (newname != name and
+                        newname in self._storage.getSessions()):
+                    MessageBox (_(u'Session "{}" already exists').format (newname),
+                                _(u"Invalid session name"),
+                                wx.ICON_ERROR | wx.OK)
+                    return
+
+                self._storage.rename (name, newname)
+                self._updateSessionsList()
+                self._guicreator.updateMenu()
 
 
     def __createGui (self):
