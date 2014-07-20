@@ -120,5 +120,6 @@ class GuiCreator (object):
         """
         for menuId in self._sessionsMenuId:
             self._menu.Remove (menuId)
+            self._application.mainWindow.Unbind (wx.EVT_MENU, id=menuId)
 
         self._sessionsMenuId = []
