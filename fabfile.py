@@ -139,6 +139,7 @@ def plugins():
                "counter",
                "htmlheads",
                "changepageuid",
+               "sessions",
                ]
 
     local ("rm -f build/plugins/outwiker-plugins-all.zip")
