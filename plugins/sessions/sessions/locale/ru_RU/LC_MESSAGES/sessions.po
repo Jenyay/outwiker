@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: sessions\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-07-20 17:59+0400\n"
-"PO-Revision-Date: 2014-07-20 18:00+0300\n"
+"PO-Revision-Date: 2014-07-20 18:02+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -88,7 +88,7 @@ msgstr "Сохранить открытые в данный момент вкл�
 
 #: saveaction.py:61
 msgid "Save Session"
-msgstr "Сохранить сессию..."
+msgstr "Сохранение сессии"
 
 #: saveaction.py:71
 msgid "The session name must not be empty"
