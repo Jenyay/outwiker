@@ -141,6 +141,9 @@ class SessionStorage (object):
         if name == newname:
             return
 
+        if len (newname) == 0:
+            raise ValueError (u"Session name is empty")
+
         if newname in self._sessions:
             raise ValueError ('Session "{}" already exists'.format (newname))
 

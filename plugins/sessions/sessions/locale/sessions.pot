@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-16 09:08+0400\n"
+"POT-Creation-Date: 2014-07-20 17:59+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,18 +17,98 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: actions.py:22
-msgid "Save session..."
+#: editaction.py:30
+msgid "Edit sessions..."
 msgstr ""
 
-#: actions.py:27
+#: editaction.py:35
+msgid "Edit (rename or delete) sessions"
+msgstr ""
+
+#: editaction.py:43
+msgid "Not created any session"
+msgstr ""
+
+#: editaction.py:44 saveaction.py:72
+msgid "Error"
+msgstr ""
+
+#: editaction.py:72
+msgid "Edit Sessions"
+msgstr ""
+
+#: editaction.py:94
+msgid "Remove session \"{}\"?"
+msgstr ""
+
+#: editaction.py:95
+msgid "Remove session?"
+msgstr ""
+
+#: editaction.py:108
+msgid "Enter new session name"
+msgstr ""
+
+#: editaction.py:109
+msgid "Rename session"
+msgstr ""
+
+#: editaction.py:115
+msgid "Session name is empty"
+msgstr ""
+
+#: editaction.py:116 editaction.py:125
+msgid "Invalid session name"
+msgstr ""
+
+#: editaction.py:124
+msgid "Session \"{}\" already exists"
+msgstr ""
+
+#: editaction.py:152
+msgid "Rename session..."
+msgstr ""
+
+#: editaction.py:158
+msgid "Remove session..."
+msgstr ""
+
+#: guicreator.py:63
+msgid "Sessions"
+msgstr ""
+
+#: saveaction.py:30
+msgid "Save current session..."
+msgstr ""
+
+#: saveaction.py:35
 msgid "Save currently opened tabs"
 msgstr ""
 
-#: sessions.py:42
+#: saveaction.py:61
+msgid "Save Session"
+msgstr ""
+
+#: saveaction.py:71
+msgid "The session name must not be empty"
+msgstr ""
+
+#: saveaction.py:77
+msgid "Session with name \"{}\" exists. Overwrite?"
+msgstr ""
+
+#: saveaction.py:78
+msgid "Overwrite session?"
+msgstr ""
+
+#: saveaction.py:86
+msgid "Enter session name"
+msgstr ""
+
+#: sessions.py:45
 msgid "Save and restore tabs"
 msgstr ""
 
-#: sessions.py:52
+#: sessions.py:55
 msgid "http://jenyay.net/Outwiker/SessionEn"
 msgstr ""

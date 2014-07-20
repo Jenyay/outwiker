@@ -27,7 +27,7 @@ class SaveSessionAction (BaseAction):
 
     @property
     def title (self):
-        return _(u"Save session...")
+        return _(u"Save current session...")
 
 
     @property

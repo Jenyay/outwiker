@@ -7,29 +7,109 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sessions\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-16 09:08+0400\n"
-"PO-Revision-Date: 2014-07-16 09:09+0300\n"
+"POT-Creation-Date: 2014-07-20 17:59+0400\n"
+"PO-Revision-Date: 2014-07-20 17:59+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: \n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.5.4\n"
-"Language: en\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-#: actions.py:22
-msgid "Save session..."
-msgstr "Save session..."
+#: editaction.py:30
+msgid "Edit sessions..."
+msgstr "Edit sessions..."
 
-#: actions.py:27
+#: editaction.py:35
+msgid "Edit (rename or delete) sessions"
+msgstr "Edit (rename or delete) sessions"
+
+#: editaction.py:43
+msgid "Not created any session"
+msgstr "Not created any session"
+
+#: editaction.py:44 saveaction.py:72
+msgid "Error"
+msgstr "Error"
+
+#: editaction.py:72
+msgid "Edit Sessions"
+msgstr "Edit Sessions"
+
+#: editaction.py:94
+msgid "Remove session \"{}\"?"
+msgstr "Remove session \"{}\"?"
+
+#: editaction.py:95
+msgid "Remove session?"
+msgstr "Remove session?"
+
+#: editaction.py:108
+msgid "Enter new session name"
+msgstr "Enter new session name"
+
+#: editaction.py:109
+msgid "Rename session"
+msgstr "Rename session"
+
+#: editaction.py:115
+msgid "Session name is empty"
+msgstr "Session name is empty"
+
+#: editaction.py:116 editaction.py:125
+msgid "Invalid session name"
+msgstr "Invalid session name"
+
+#: editaction.py:124
+msgid "Session \"{}\" already exists"
+msgstr "Session \"{}\" already exists"
+
+#: editaction.py:152
+msgid "Rename session..."
+msgstr "Rename session..."
+
+#: editaction.py:158
+msgid "Remove session..."
+msgstr "Remove session..."
+
+#: guicreator.py:63
+msgid "Sessions"
+msgstr "Sessions"
+
+#: saveaction.py:30
+msgid "Save current session..."
+msgstr "Save current session..."
+
+#: saveaction.py:35
 msgid "Save currently opened tabs"
 msgstr "Save currently opened tabs"
 
-#: sessions.py:42
+#: saveaction.py:61
+msgid "Save Session"
+msgstr "Save Session"
+
+#: saveaction.py:71
+msgid "The session name must not be empty"
+msgstr "The session name must not be empty"
+
+#: saveaction.py:77
+msgid "Session with name \"{}\" exists. Overwrite?"
+msgstr "Session with name \"{}\" exists. Overwrite?"
+
+#: saveaction.py:78
+msgid "Overwrite session?"
+msgstr "Overwrite session?"
+
+#: saveaction.py:86
+msgid "Enter session name"
+msgstr "Enter session name"
+
+#: sessions.py:45
 msgid "Save and restore tabs"
 msgstr "Save and restore tabs"
 
-#: sessions.py:52
+#: sessions.py:55
 msgid "http://jenyay.net/Outwiker/SessionEn"
 msgstr "http://jenyay.net/Outwiker/SessionEn"

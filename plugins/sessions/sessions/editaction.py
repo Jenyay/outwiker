@@ -32,7 +32,7 @@ class EditSessionsAction (BaseAction):
 
     @property
     def description (self):
-        return _(u"Edit (remove or delete) sessions")
+        return _(u"Edit (rename or delete) sessions")
 
 
     def run (self, params):
@@ -111,6 +111,12 @@ class EditSessionsDialog (TestedDialog):
             if dlg.ShowModal() == wx.ID_OK:
                 newname = dlg.GetValue().strip()
 
+                if len (newname) == 0:
+                    MessageBox (_(u'Session name is empty').format (newname),
+                                _(u"Invalid session name"),
+                                wx.ICON_ERROR | wx.OK)
+                    return
+
                 # Проверим, что не ввели имя сессии, совпадающее с существующей
                 # сессией (кроме случая, что не изменили имя)
                 if (newname != name and
@@ -143,13 +149,13 @@ class EditSessionsDialog (TestedDialog):
                                               self.RENAME_ID,
                                               wx.Bitmap (getImagePath (u"rename.png")))
 
-        self._renameButton.SetToolTipString (_(u"Rename session"))
+        self._renameButton.SetToolTipString (_(u"Rename session..."))
 
         self._removeButton = wx.BitmapButton (self,
                                               self.REMOVE_ID,
                                               wx.Bitmap (getImagePath (u"remove.png")))
 
-        self._removeButton.SetToolTipString (_(u"Remove session"))
+        self._removeButton.SetToolTipString (_(u"Remove session..."))
 
         mainButtonsSizer.Add (self._renameButton, 0, wx.ALL, border=2)
         mainButtonsSizer.Add (self._removeButton, 0, wx.ALL, border=2)

@@ -479,6 +479,32 @@ class SessionsTest (BaseMainWndTest):
 
         storage.save (controller.getCurrentSession(), u"session1")
         storage.save (controller.getCurrentSession(), u"session2")
+
+        self.assertRaises (ValueError, storage.rename, u"session1", u"")
+
+
+    def testRename_07 (self):
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+
+        controller = self.loader[u"Sessions"].SessionController (Application)
+        storage = self.loader[u"Sessions"].SessionStorage(Application.config)
+
+        storage.save (controller.getCurrentSession(), u"session1")
+        storage.save (controller.getCurrentSession(), u"session2")
+
+        self.assertRaises (ValueError, storage.rename, u"session1", u"   ")
+
+
+    def testRename_08 (self):
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+
+        controller = self.loader[u"Sessions"].SessionController (Application)
+        storage = self.loader[u"Sessions"].SessionStorage(Application.config)
+
+        storage.save (controller.getCurrentSession(), u"session1")
+        storage.save (controller.getCurrentSession(), u"session2")
         storage.rename (u"session1", u"Абырвалг   ")
 
         otherStorage = self.loader[u"Sessions"].SessionStorage(Application.config)
