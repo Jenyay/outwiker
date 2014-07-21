@@ -4,14 +4,14 @@ import os
 import os.path
 import unittest
 
-from outwiker.core.wxthumbmaker import WxThumbmaker
+from outwiker.core.thumbmakerwx import ThumbmakerWx
 from outwiker.core.thumbexception import ThumbException
 from test.utils import getImageSize
 
 
-class WxThumbmakerTest (unittest.TestCase):
+class ThumbmakerWxTest (unittest.TestCase):
     """
-    Тесты для создателя превьюшек с помощью WxThumbmaker
+    Тесты для создателя превьюшек с помощью ThumbmakerWx
     """
     def testWxThumbWidthJpeg (self):
         self.fname_in = "../test/images/first.jpg"
@@ -20,7 +20,7 @@ class WxThumbmakerTest (unittest.TestCase):
         if os.path.exists (self.fname_out):
             os.remove (self.fname_out)
 
-        self.thumbmaker = WxThumbmaker()
+        self.thumbmaker = ThumbmakerWx()
         newwidth = 250
         newheight = 182
 
@@ -41,7 +41,7 @@ class WxThumbmakerTest (unittest.TestCase):
         if os.path.exists (self.fname_out):
             os.remove (self.fname_out)
 
-        self.thumbmaker = WxThumbmaker()
+        self.thumbmaker = ThumbmakerWx()
         newwidth = 250
         newheight = 215
 
@@ -62,7 +62,7 @@ class WxThumbmakerTest (unittest.TestCase):
         if os.path.exists (self.fname_out):
             os.remove (self.fname_out)
 
-        self.thumbmaker = WxThumbmaker()
+        self.thumbmaker = ThumbmakerWx()
         newwidth = 250
         newheight = 215
 
@@ -83,7 +83,7 @@ class WxThumbmakerTest (unittest.TestCase):
         if os.path.exists (self.fname_out):
             os.remove (self.fname_out)
 
-        self.thumbmaker = WxThumbmaker()
+        self.thumbmaker = ThumbmakerWx()
         newwidth = 250
         newheight = 215
 
@@ -104,7 +104,7 @@ class WxThumbmakerTest (unittest.TestCase):
         if os.path.exists (self.fname_out):
             os.remove (self.fname_out)
 
-        self.thumbmaker = WxThumbmaker()
+        self.thumbmaker = ThumbmakerWx()
         newheight = 180
         newwidth = 246
 
@@ -125,7 +125,7 @@ class WxThumbmakerTest (unittest.TestCase):
         if os.path.exists (self.fname_out):
             os.remove (self.fname_out)
 
-        self.thumbmaker = WxThumbmaker()
+        self.thumbmaker = ThumbmakerWx()
         newheight = 180
         newwidth = 246
 
@@ -146,7 +146,7 @@ class WxThumbmakerTest (unittest.TestCase):
         if os.path.exists (self.fname_out):
             os.remove (self.fname_out)
 
-        self.thumbmaker = WxThumbmaker()
+        self.thumbmaker = ThumbmakerWx()
         newsize = 250
 
         newwidth = 250
@@ -169,7 +169,7 @@ class WxThumbmakerTest (unittest.TestCase):
         if os.path.exists (self.fname_out):
             os.remove (self.fname_out)
 
-        self.thumbmaker = WxThumbmaker()
+        self.thumbmaker = ThumbmakerWx()
         newsize = 250
 
         newwidth = 182
@@ -190,7 +190,7 @@ class WxThumbmakerTest (unittest.TestCase):
         self.fname_out = "../test/images/first_vertical_error_th.jpg"
         newsize = 250
 
-        self.thumbmaker = WxThumbmaker()
+        self.thumbmaker = ThumbmakerWx()
 
         self.assertRaises (ThumbException, self.thumbmaker.thumbByWidth, self.fname_in, newsize, self.fname_out)
         self.assertRaises (ThumbException, self.thumbmaker.thumbByHeight, self.fname_in, newsize, self.fname_out)
