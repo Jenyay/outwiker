@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 
+import time
 import unittest
 
 from outwiker.core.tree import WikiDocument
@@ -31,8 +32,8 @@ class WikiChildListCommandTest (unittest.TestCase):
         factory = WikiPageFactory()
         factory.create (self.rootwiki, u"Страница 1", [])
         factory.create (self.rootwiki[u"Страница 1"], u"Страница 2", [])
-        factory.create (self.rootwiki[u"Страница 1"], u"СТРАНИЦА 3", [])
         factory.create (self.rootwiki[u"Страница 1"], u"Страница 4", [])
+        factory.create (self.rootwiki[u"Страница 1"], u"СТРАНИЦА 3", [])
 
         self.testPage = self.rootwiki[u"Страница 1"]
 
@@ -112,5 +113,77 @@ class WikiChildListCommandTest (unittest.TestCase):
         result_right = u"""<a href="СТРАНИЦА 3">СТРАНИЦА 3</a>
 <a href="Страница 2">Страница 2</a>
 <a href="Страница 4">Страница 4</a>"""
+
+        self.assertEqual (result_right, result, result)
+
+
+    def testSortCreation_01 (self):
+        text = u"(:childlist sort=creation:)"
+        result = self.parser.toHtml (text)
+
+        result_right = u"""<a href="Страница 2">Страница 2</a>
+<a href="Страница 4">Страница 4</a>
+<a href="СТРАНИЦА 3">СТРАНИЦА 3</a>"""
+
+        self.assertEqual (result_right, result, result)
+
+
+    def testSortCreation_02 (self):
+        text = u"(:childlist sort=descendcreation:)"
+        result = self.parser.toHtml (text)
+
+        result_right = u"""<a href="СТРАНИЦА 3">СТРАНИЦА 3</a>
+<a href="Страница 4">Страница 4</a>
+<a href="Страница 2">Страница 2</a>"""
+
+        self.assertEqual (result_right, result, result)
+
+
+    def testSortEdit_01 (self):
+        text = u"(:childlist sort=edit:)"
+
+        self.rootwiki[u"Страница 1/Страница 2"].content = u"111"
+        time.sleep (0.1)
+        self.rootwiki[u"Страница 1/СТРАНИЦА 3"].content = u"111"
+        time.sleep (0.1)
+        self.rootwiki[u"Страница 1/Страница 4"].content = u"111"
+
+        result = self.parser.toHtml (text)
+
+        result_right = u"""<a href="Страница 2">Страница 2</a>
+<a href="СТРАНИЦА 3">СТРАНИЦА 3</a>
+<a href="Страница 4">Страница 4</a>"""
+
+        self.assertEqual (result_right, result, result)
+
+
+    def testSortEdit_02 (self):
+        text = u"(:childlist sort=descendedit:)"
+
+        self.rootwiki[u"Страница 1/Страница 2"].content = u"111"
+        time.sleep (0.1)
+        self.rootwiki[u"Страница 1/СТРАНИЦА 3"].content = u"111"
+        time.sleep (0.1)
+        self.rootwiki[u"Страница 1/Страница 4"].content = u"111"
+
+        result = self.parser.toHtml (text)
+
+        result_right = u"""<a href="Страница 4">Страница 4</a>
+<a href="СТРАНИЦА 3">СТРАНИЦА 3</a>
+<a href="Страница 2">Страница 2</a>"""
+
+        self.assertEqual (result_right, result, result)
+
+
+    def testSortEdit_03 (self):
+        text = u"(:childlist sort=edit:)"
+
+        self.rootwiki[u"Страница 1/СТРАНИЦА 3"].content = u"111"
+
+        result = self.parser.toHtml (text)
+
+        result_right = u"""<a href="Страница 2">Страница 2</a>
+<a href="Страница 4">Страница 4</a>
+<a href="СТРАНИЦА 3">СТРАНИЦА 3</a>"""
 
         self.assertEqual (result_right, result, result)

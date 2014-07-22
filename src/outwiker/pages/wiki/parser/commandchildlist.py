@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 from command import Command
@@ -14,7 +13,7 @@ class SimpleView (object):
         children - список упорядоченных дочерних страниц
         """
         template = u'<a href="{link}">{title}</a>\n'
-        result = u"".join ([template.format (link=page.title, title=page.title) for page in children ] )
+        result = u"".join ([template.format (link=page.title, title=page.title) for page in children])
 
         # Выкинем последний перевод строки
         return result[: -1]
@@ -22,12 +21,16 @@ class SimpleView (object):
 
 class ChildListCommand (Command):
     """
-    Команда для вставки списка дочерних команд. 
+    Команда для вставки списка дочерних команд.
     Синтсаксис: (:childlist [params...]:)
     Параметры:
         sort=name - сортировка по имени
-        sort=descendname - сортировка по имени в обратном направлении
+        sort=descendname - сортировка по имени в обратном порядке
         sort=descendorder - сортировка по положению страницы в обратном порядке
+        sort=edit - сортировка по дате редактирования
+        sort=descendedit - сортировка по дате редактирования в обратном порядке
+        sort=creation - сортировка по дате создания
+        sort=descendcreation - сортировка по дате создания в обратном порядке
     """
     def __init__ (self, parser):
         Command.__init__ (self, parser)
@@ -46,13 +49,20 @@ class ChildListCommand (Command):
         return SimpleView.make (children, self.parser, params)
 
 
-    @staticmethod
-    def _sortByName (page1, page2):
-        if page1.title.lower() > page2.title.lower():
-            return 1
-        elif page1.title.lower() < page2.title.lower():
-            return -1
-        return 0
+    def _sortByNameKey (self, page):
+        return page.title.lower()
+
+
+    def _sortByEditDate (self, page):
+        return page.datetime
+
+
+    def _sortByCreationDate (self, page):
+        return page.creationdatetime
+
+
+    def _sortByOrder (self, page):
+        return page.order
 
 
     def _sortChildren (self, children, params_dict):
@@ -64,9 +74,19 @@ class ChildListCommand (Command):
 
         sort = params_dict["sort"].lower()
 
-        if sort == "name":
-            children.sort (ChildListCommand._sortByName)
-        if sort == "descendname":
-            children.sort (ChildListCommand._sortByName, reverse=True)
-        if sort == "descendorder":
-            children.reverse()
+        # Ключ - название сортировки,
+        # значение - кортеж из (функция ключа сортировки, reverse)
+        sortdict = {
+            u"name":             (self._sortByNameKey, False),
+            u"descendname":      (self._sortByNameKey, True),
+            u"order":            (self._sortByOrder, False),
+            u"descendorder":     (self._sortByOrder, True),
+            u"edit":             (self._sortByEditDate, False),
+            u"descendedit":      (self._sortByEditDate, True),
+            u"creation":         (self._sortByCreationDate, False),
+            u"descendcreation":  (self._sortByCreationDate, True),
+        }
+
+        if sort in sortdict:
+            func, reverse = sortdict[sort]
+            children.sort (key = func, reverse = reverse)
