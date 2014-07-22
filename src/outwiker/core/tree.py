@@ -246,6 +246,21 @@ class RootWikiPage (object):
         self.params.datetimeOption.value = date
 
 
+    @property
+    def creationdatetime (self):
+        date = self.params.creationDatetimeOption.value
+        if date is None:
+            date = self.datetime
+            self.creationdatetime = date
+
+        return date
+
+
+    @creationdatetime.setter
+    def creationdatetime (self, date):
+        self.params.creationDatetimeOption.value = date
+
+
     def updateDateTime (self):
         """
         Установить дату изменения страницы в текущую дату/время
@@ -709,6 +724,7 @@ class WikiPage (RootWikiPage):
         """
         self._tags = tags[:]
         self.save()
+        self.creationdatetime = datetime.datetime.now()
         self.updateDateTime()
         self.parent.saveChildrenParams()
         self.root.onPageCreate(self)

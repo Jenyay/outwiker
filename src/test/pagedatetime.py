@@ -2,6 +2,7 @@
 
 import unittest
 import datetime
+import time
 
 from outwiker.core.tree import WikiDocument
 from outwiker.core.config import PageConfig
@@ -19,7 +20,7 @@ class PageDateTimeTest (unittest.TestCase):
         removeWiki (self.path)
 
         # Максимальная погрешность при расчете времени
-        self._maxDelta = datetime.timedelta (seconds=30)
+        self._maxDelta = datetime.timedelta (seconds=5)
 
         self.rootwiki = WikiDocument.create (self.path)
 
@@ -34,14 +35,62 @@ class PageDateTimeTest (unittest.TestCase):
         self.assertEqual (self.rootwiki[u"Страница 1"].datetime, None)
 
 
-    def testCreateDate (self):
+    def testCreateDate_01 (self):
         now = datetime.datetime.now()
         TextPageFactory().create (self.rootwiki, u"Страница 1", [])
 
         self.assertNotEqual (self.rootwiki[u"Страница 1"].datetime, None)
+        self.assertNotEqual (self.rootwiki[u"Страница 1"].creationdatetime, None)
 
         delta = now - self.rootwiki[u"Страница 1"].datetime
         self.assertLess (delta, self._maxDelta)
+
+        delta = now - self.rootwiki[u"Страница 1"].creationdatetime
+        self.assertLess (delta, self._maxDelta)
+
+
+    def testCreateDate_02 (self):
+        page = TextPageFactory().create (self.rootwiki, u"Страница 1", [])
+
+        time.sleep (0.1)
+        page.content = u"Абырвалг"
+
+        self.assertNotEqual (page.datetime, page.creationdatetime)
+
+
+    def testCreateDate_03 (self):
+        page = TextPageFactory().create (self.rootwiki, u"Страница 1", [])
+        creationDateTime = page.creationdatetime
+
+        time.sleep (0.1)
+
+        newwiki = WikiDocument.load (self.path, False)
+        self.assertEqual (creationDateTime, newwiki[u"Страница 1"].creationdatetime)
+
+
+    def testCreateDate_04 (self):
+        page = TextPageFactory().create (self.rootwiki, u"Страница 1", [])
+        creationDateTime = page.creationdatetime
+
+        time.sleep (0.1)
+
+        newwiki = WikiDocument.load (self.path, False)
+        newwiki[u"Страница 1"].content = u"Абырвалг"
+
+        self.assertEqual (creationDateTime, newwiki[u"Страница 1"].creationdatetime)
+
+
+    def testCreateDate_05 (self):
+        page = TextPageFactory().create (self.rootwiki, u"Страница 1", [])
+        creationDateTime = page.creationdatetime
+
+        time.sleep (0.1)
+        page.content = u"111"
+
+        newwiki = WikiDocument.load (self.path, False)
+        newwiki[u"Страница 1"].content = u"Абырвалг"
+
+        self.assertEqual (creationDateTime, newwiki[u"Страница 1"].creationdatetime)
 
 
     def testSetDate (self):

@@ -398,6 +398,7 @@ class PageConfig (Config):
     sectionName = u"General"
     orderParamName = u"order"
     datetimeParamName = u"datetime"
+    creationDatetimeParamName = u"creationdatetime"
 
     def __init__ (self, fname, readonly=False):
         Config.__init__ (self, fname, readonly)
@@ -419,3 +420,8 @@ class PageConfig (Config):
                                               PageConfig.sectionName,
                                               PageConfig.datetimeParamName,
                                               None)
+
+        self.creationDatetimeOption = DateTimeOption (self,
+                                                      PageConfig.sectionName,
+                                                      PageConfig.creationDatetimeParamName,
+                                                      None)
