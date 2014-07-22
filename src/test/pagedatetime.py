@@ -93,6 +93,28 @@ class PageDateTimeTest (unittest.TestCase):
         self.assertEqual (creationDateTime, newwiki[u"Страница 1"].creationdatetime)
 
 
+    def testCreateDate_06 (self):
+        page = TextPageFactory().create (self.rootwiki, u"Страница 1", [])
+        page.params.creationDatetimeOption.remove_option()
+
+        date = page.datetime
+
+        newwiki = WikiDocument.load (self.path, False)
+        self.assertEqual (newwiki[u"Страница 1"].creationdatetime, date)
+        self.assertEqual (newwiki[u"Страница 1"].params.creationDatetimeOption.value, date)
+
+
+    def testCreateDateReadonly (self):
+        page = TextPageFactory().create (self.rootwiki, u"Страница 1", [])
+        page.params.creationDatetimeOption.remove_option()
+
+        date = page.datetime
+
+        newwiki = WikiDocument.load (self.path, True)
+        self.assertEqual (newwiki[u"Страница 1"].creationdatetime, date)
+        self.assertEqual (newwiki[u"Страница 1"].params.creationDatetimeOption.value, None)
+
+
     def testSetDate (self):
         TextPageFactory().create (self.rootwiki, u"Страница 1", [])
         newdate = datetime.datetime (2012, 8, 24)
