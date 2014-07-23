@@ -4,14 +4,17 @@ Command [= (: childlist:) =] is designed to be inserted into a wiki page list of
 
 [=(:childlist [params...]:)=]
 
-In the [=(:childlist:)=] command can be used ''sort'' parameter, which specifies the sort order. Parameter ''sort'' can be the following:
+In the [=(:childlist:)=] command can be used '''sort''' parameter, which specifies the sort order. Parameter '''sort''' can be the following:
 
-* ''name'' - page names in the list will be sortet alphabetally;
-* ''descendname'' - page names in the list will be sortet alphabetally in descend order;
-страниц в дереве.
-* ''descendorder'' - page names in the list will be sorted as in the tree, but opposite order.
+* '''name''' - pages in the list will be sortet alphabetally;
+* '''descendname''' - pages in the list will be sorted alphabetally in descend order;
+* '''creation''' - pages in the list will be sorted by creation date (oldest page will be placed on the top)
+* '''descendcreation''' - pages in the list will be sorted by creation date (newest page will be placed on the top)
+* '''edit''' - pages in the list will be sorted by changing date (last edited page will be on bottom)
+* '''descendedit''' - pages in the list will be sorted by changing date (last edited page will be on top)
+* '''descendorder''' - pages in the list will be sorted as in the tree, but opposite order.
 
-If ''sort'' parameter is not specified, then page names in the list will be sorted as in the tree.
+If '''sort''' parameter is not specified, then page names in the list will be sorted as in the tree.
 
 !!! Examples
 

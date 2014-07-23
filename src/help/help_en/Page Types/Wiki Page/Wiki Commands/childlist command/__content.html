@@ -1,8 +1,10 @@
-<HTML>
-<HEAD>
-	<META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+	<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
 
-	<STYLE type="text/css">
+	<style type='text/css'>
 		body, div, p, table {
 			font-size:10pt;
 			font-family:Verdana;
@@ -10,45 +12,61 @@
 
 		img{border:none}
 		
-	</STYLE>
-</HEAD>
+	</style>
+	
+</head>
 
-<BODY>
-<P><H2>Purpose and syntax (:childlist:) command</H2></P>
+<body>
 
-<P>Command  (: childlist:)  is designed to be inserted into a wiki page list of nested pages:</P>
-
-<P>(:childlist [params...]:)</P>
-
-<P>In the (:childlist:) command can be used <I>sort</I> parameter, which specifies the sort order. Parameter <I>sort</I> can be the following:</P>
-
-<P>
-<UL>
-<LI><I>name</I> - page names in the list will be sortet alphabetally;</LI>
-<LI><I>descendname</I> - page names in the list will be sortet alphabetally in descend order;</LI>
-</UL>страниц в дереве.
-<BR>
-<UL>
-<LI><I>descendorder</I> - page names in the list will be sorted as in the tree, but opposite order.</LI>
-</UL>
-<BR>If <I>sort</I> parameter is not specified, then page names in the list will be sorted as in the tree.</P>
-
-<P><H2>Examples</H2></P>
-
-<P>In this page there are four child pages. The following table shows the output of the command  (: childlist:)  with different values ​​of the <I>sort</I> parameter:</P>
-
-<P><TABLE width=850 border=1><TR><TD ALIGN="CENTER"><B>Command</B></TD><TD ALIGN="CENTER">(:childlist:)</TD><TD ALIGN="CENTER">(:childlist sort=name:)</TD><TD ALIGN="CENTER">(:childlist sort=descendname:)</TD><TD ALIGN="CENTER">(:childlist sort=descendorder:)</TD></TR><TR><TD ALIGN="CENTER"><B>Result</B></TD><TD ALIGN="CENTER"><A HREF="page 4">page 4</A>
-<BR><A HREF="page 2">page 2</A>
-<BR><A HREF="page 3">page 3</A>
-<BR><A HREF="page 1">page 1</A></TD><TD ALIGN="CENTER"><A HREF="page 1">page 1</A>
-<BR><A HREF="page 2">page 2</A>
-<BR><A HREF="page 3">page 3</A>
-<BR><A HREF="page 4">page 4</A></TD><TD ALIGN="CENTER"><A HREF="page 4">page 4</A>
-<BR><A HREF="page 3">page 3</A>
-<BR><A HREF="page 2">page 2</A>
-<BR><A HREF="page 1">page 1</A></TD><TD ALIGN="CENTER"><A HREF="page 1">page 1</A>
-<BR><A HREF="page 3">page 3</A>
-<BR><A HREF="page 2">page 2</A>
-<BR><A HREF="page 4">page 4</A></TD></TR></TABLE></P>
-</BODY>
-</HTML>
+<h2>Purpose and syntax (:childlist:) command</h2>
+<br>
+Command  (: childlist:)  is designed to be inserted into a wiki page list of nested pages:<br>
+<br>
+(:childlist [params...]:)<br>
+<br>
+In the (:childlist:) command can be used <b>sort</b> parameter, which specifies the sort order. Parameter <b>sort</b> can be the following:<br>
+<ul>
+<li><b>name</b> - pages in the list will be sortet alphabetally;</li>
+<li><b>descendname</b> - pages in the list will be sorted alphabetally in descend order;</li>
+<li><b>creation</b> - pages in the list will be sorted by creation date (oldest page will be placed on the top)</li>
+<li><b>descendcreation</b> - pages in the list will be sorted by creation date (newest page will be placed on the top)</li>
+<li><b>edit</b> - pages in the list will be sorted by changing date (last edited page will be on bottom)</li>
+<li><b>descendedit</b> - pages in the list will be sorted by changing date (last edited page will be on top)</li>
+<li><b>descendorder</b> - pages in the list will be sorted as in the tree, but opposite order.</li>
+</ul>
+<br>
+If <b>sort</b> parameter is not specified, then page names in the list will be sorted as in the tree.<br>
+<h2>Examples</h2>
+<br>
+In this page there are four child pages. The following table shows the output of the command  (: childlist:)  with different values ​​of the <i>sort</i> parameter:<br>
+<br>
+<table width=850 border=1>
+<tr>
+<td align="center"><b>Command</b></td>
+<td align="center">(:childlist:)</td>
+<td align="center">(:childlist sort=name:)</td>
+<td align="center">(:childlist sort=descendname:)</td>
+<td align="center">(:childlist sort=descendorder:)</td>
+</tr>
+<tr>
+<td align="center"><b>Result</b></td>
+<td align="center"><a href="page 4">page 4</a><br>
+<a href="page 2">page 2</a><br>
+<a href="page 3">page 3</a><br>
+<a href="page 1">page 1</a></td>
+<td align="center"><a href="page 1">page 1</a><br>
+<a href="page 2">page 2</a><br>
+<a href="page 3">page 3</a><br>
+<a href="page 4">page 4</a></td>
+<td align="center"><a href="page 4">page 4</a><br>
+<a href="page 3">page 3</a><br>
+<a href="page 2">page 2</a><br>
+<a href="page 1">page 1</a></td>
+<td align="center"><a href="page 1">page 1</a><br>
+<a href="page 3">page 3</a><br>
+<a href="page 2">page 2</a><br>
+<a href="page 4">page 4</a></td>
+</tr>
+</table>
+</body>
+</html>
