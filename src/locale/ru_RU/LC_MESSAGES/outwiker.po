@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-23 09:05+0400\n"
+"POT-Creation-Date: 2014-07-23 09:38+0400\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -139,7 +139,7 @@ msgstr "Вы не выбрали файл(ы) для удаления"
 #: outwiker/gui/currentpagepanel.py:226 outwiker/gui/currentpagepanel.py:235
 #: outwiker/gui/htmlrenderie.py:182 outwiker/gui/htmlrenderwebkit.py:232
 #: outwiker/gui/htmlrenderwx.py:107 outwiker/gui/mainwindow.py:508
-#: outwiker/gui/mainwndcontroller.py:215 outwiker/gui/notestree.py:283
+#: outwiker/gui/mainwndcontroller.py:213 outwiker/gui/notestree.py:283
 #: outwiker/gui/pagedialog.py:27 outwiker/gui/pagedialog.py:40
 #: outwiker/gui/pagedialog.py:45 outwiker/gui/pagedialog.py:137
 #: outwiker/gui/pagedialog.py:196 outwiker/gui/renametagdialog.py:75
@@ -217,7 +217,7 @@ msgid "Default"
 msgstr "По умолчанию"
 
 #: outwiker/gui/basepagedialog.py:207
-#: outwiker/pages/search/sortstrategies.py:55
+#: outwiker/pages/search/sortstrategies.py:56
 msgid "Title"
 msgstr "Заголовок"
 
@@ -462,7 +462,7 @@ msgstr ""
 "Невозможно сохранить настройки\n"
 "%s"
 
-#: outwiker/gui/mainwndcontroller.py:214
+#: outwiker/gui/mainwndcontroller.py:212
 #, python-format
 msgid ""
 "Can't add wiki to recent list.\n"
@@ -935,17 +935,25 @@ msgstr "Сортировать по"
 msgid "Search pages..."
 msgstr "Поиск страниц..."
 
-#: outwiker/pages/search/sortstrategies.py:68
+#: outwiker/pages/search/sortstrategies.py:69
 msgid "Title (inverse)"
 msgstr "Заголовок (обратный порядок)"
 
-#: outwiker/pages/search/sortstrategies.py:81
-msgid "Date (newest first)"
-msgstr "Дата (новые сверху)"
+#: outwiker/pages/search/sortstrategies.py:82
+msgid "Changing the date (newest first)"
+msgstr "Дата изменения (новые сверху)"
 
-#: outwiker/pages/search/sortstrategies.py:94
-msgid "Date (oldest first)"
-msgstr "Дата (старые сверху)"
+#: outwiker/pages/search/sortstrategies.py:95
+msgid "Changing the date (oldest first)"
+msgstr "Дата изменения (старые сверху)"
+
+#: outwiker/pages/search/sortstrategies.py:108
+msgid "Creation the date (newest first)"
+msgstr "Дата создания (новые сверху)"
+
+#: outwiker/pages/search/sortstrategies.py:121
+msgid "Creation the date (oldest first)"
+msgstr "Дата создания (старые сверху)"
 
 #: outwiker/pages/text/textpage.py:37
 msgid "Text Page"

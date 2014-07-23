@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-23 09:05+0400\n"
+"POT-Creation-Date: 2014-07-23 09:38+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -141,7 +141,7 @@ msgstr ""
 #: outwiker/gui/currentpagepanel.py:226 outwiker/gui/currentpagepanel.py:235
 #: outwiker/gui/htmlrenderie.py:182 outwiker/gui/htmlrenderwebkit.py:232
 #: outwiker/gui/htmlrenderwx.py:107 outwiker/gui/mainwindow.py:508
-#: outwiker/gui/mainwndcontroller.py:215 outwiker/gui/notestree.py:283
+#: outwiker/gui/mainwndcontroller.py:213 outwiker/gui/notestree.py:283
 #: outwiker/gui/pagedialog.py:27 outwiker/gui/pagedialog.py:40
 #: outwiker/gui/pagedialog.py:45 outwiker/gui/pagedialog.py:137
 #: outwiker/gui/pagedialog.py:196 outwiker/gui/renametagdialog.py:75
@@ -219,7 +219,7 @@ msgid "Default"
 msgstr ""
 
 #: outwiker/gui/basepagedialog.py:207
-#: outwiker/pages/search/sortstrategies.py:55
+#: outwiker/pages/search/sortstrategies.py:56
 msgid "Title"
 msgstr ""
 
@@ -456,7 +456,7 @@ msgid ""
 "%s"
 msgstr ""
 
-#: outwiker/gui/mainwndcontroller.py:214
+#: outwiker/gui/mainwndcontroller.py:212
 #, python-format
 msgid ""
 "Can't add wiki to recent list.\n"
@@ -916,16 +916,24 @@ msgstr ""
 msgid "Search pages..."
 msgstr ""
 
-#: outwiker/pages/search/sortstrategies.py:68
+#: outwiker/pages/search/sortstrategies.py:69
 msgid "Title (inverse)"
 msgstr ""
 
-#: outwiker/pages/search/sortstrategies.py:81
-msgid "Date (newest first)"
+#: outwiker/pages/search/sortstrategies.py:82
+msgid "Changing the date (newest first)"
 msgstr ""
 
-#: outwiker/pages/search/sortstrategies.py:94
-msgid "Date (oldest first)"
+#: outwiker/pages/search/sortstrategies.py:95
+msgid "Changing the date (oldest first)"
+msgstr ""
+
+#: outwiker/pages/search/sortstrategies.py:108
+msgid "Creation the date (newest first)"
+msgstr ""
+
+#: outwiker/pages/search/sortstrategies.py:121
+msgid "Creation the date (oldest first)"
 msgstr ""
 
 #: outwiker/pages/text/textpage.py:37

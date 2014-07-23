@@ -6,7 +6,7 @@
 
 from abc import ABCMeta, abstractmethod, abstractproperty
 
-from outwiker.core.sortfunctions import sortAlphabeticalFunction, sortDateFunction
+from outwiker.core.sortfunctions import sortAlphabeticalFunction, sortDateFunction, sortCreationDateFunction
 
 
 def getSortStrategies ():
@@ -16,7 +16,9 @@ def getSortStrategies ():
     return [TitleAlphabeticalSort(),
             TitleAlphabeticalInverseSort(),
             DateDescendingSort(),
-            DateAscendingSort()]
+            DateAscendingSort(),
+            CreationDateDescendingSort(),
+            CreationDateAscendingSort()]
 
 
 class BaseSortStrategy (object):
@@ -24,7 +26,6 @@ class BaseSortStrategy (object):
     Базовый абстрактрый класс для стратегий сортировки
     """
     __metaclass__ = ABCMeta
-    
 
     @abstractmethod
     def sort (self, page1, page2):
@@ -70,7 +71,7 @@ class TitleAlphabeticalInverseSort (BaseSortStrategy):
 
 class DateDescendingSort (BaseSortStrategy):
     """
-    Стратегия для сортировки страниц по дате (сверху - самые новые)
+    Стратегия для сортировки страниц по дате последней правки (сверху - самые новые)
     """
     def sort (self, page1, page2):
         return sortDateFunction (page2, page1)
@@ -78,12 +79,12 @@ class DateDescendingSort (BaseSortStrategy):
 
     @property
     def title (self):
-        return _(u"Date (newest first)")
+        return _(u"Changing the date (newest first)")
 
 
 class DateAscendingSort (BaseSortStrategy):
     """
-    Стратегия для сортировки страниц по дате (сверху - самые новые)
+    Стратегия для сортировки страниц по дате последней правки (сверху - самые новые)
     """
     def sort (self, page1, page2):
         return sortDateFunction (page1, page2)
@@ -91,4 +92,30 @@ class DateAscendingSort (BaseSortStrategy):
 
     @property
     def title (self):
-        return _(u"Date (oldest first)")
+        return _(u"Changing the date (oldest first)")
+
+
+class CreationDateDescendingSort (BaseSortStrategy):
+    """
+    Стратегия для сортировки страниц по дате создания (сверху - самые новые)
+    """
+    def sort (self, page1, page2):
+        return sortCreationDateFunction (page2, page1)
+
+
+    @property
+    def title (self):
+        return _(u"Creation the date (newest first)")
+
+
+class CreationDateAscendingSort (BaseSortStrategy):
+    """
+    Стратегия для сортировки страниц по дате создания (сверху - самые новые)
+    """
+    def sort (self, page1, page2):
+        return sortCreationDateFunction (page1, page2)
+
+
+    @property
+    def title (self):
+        return _(u"Creation the date (oldest first)")
