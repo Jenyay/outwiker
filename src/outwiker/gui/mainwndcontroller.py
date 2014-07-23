@@ -1,7 +1,5 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-import os.path
 import datetime
 
 import wx
@@ -50,44 +48,44 @@ class MainWndController (object):
 
         # Идентификаторы пунктов меню и кнопок, которые надо задизаблить, если не открыта вики
         self.disabledTools = [
-                MainId.ID_UNDO, 
-                MainId.ID_REDO, 
-                MainId.ID_CUT, 
-                MainId.ID_COPY, 
-                MainId.ID_PASTE,
-                ]
+            MainId.ID_UNDO,
+            MainId.ID_REDO,
+            MainId.ID_CUT,
+            MainId.ID_COPY,
+            MainId.ID_PASTE,
+        ]
 
 
         # Действия, которые надо дизаблить, если не открыта вики
         self._disabledActions = [
-                SaveAction,
-                CloseAction,
-                PrintAction,
-                AddSiblingPageAction,
-                AddChildPageAction,
-                MovePageDownAction,
-                MovePageUpAction,
-                SortChildAlphabeticalAction,
-                SortSiblingsAlphabeticalAction,
-                RenamePageAction,
-                RemovePageAction,
-                EditPagePropertiesAction,
-                AddBookmarkAction,
-                AddTabAction,
-                CloseTabAction,
-                PreviousTabAction,
-                NextTabAction,
-                GlobalSearchAction,
-                AttachFilesAction,
-                clipboard.CopyPageTitleAction,
-                clipboard.CopyPagePathAction,
-                clipboard.CopyAttachPathAction,
-                clipboard.CopyPageLinkAction,
-                tags.AddTagsToBranchAction,
-                tags.RemoveTagsFromBranchAction,
-                tags.RenameTagAction,
-                ReloadWikiAction,
-                ]
+            SaveAction,
+            CloseAction,
+            PrintAction,
+            AddSiblingPageAction,
+            AddChildPageAction,
+            MovePageDownAction,
+            MovePageUpAction,
+            SortChildAlphabeticalAction,
+            SortSiblingsAlphabeticalAction,
+            RenamePageAction,
+            RemovePageAction,
+            EditPagePropertiesAction,
+            AddBookmarkAction,
+            AddTabAction,
+            CloseTabAction,
+            PreviousTabAction,
+            NextTabAction,
+            GlobalSearchAction,
+            AttachFilesAction,
+            clipboard.CopyPageTitleAction,
+            clipboard.CopyPagePathAction,
+            clipboard.CopyAttachPathAction,
+            clipboard.CopyPageLinkAction,
+            tags.AddTagsToBranchAction,
+            tags.RemoveTagsFromBranchAction,
+            tags.RenameTagAction,
+            ReloadWikiAction,
+        ]
 
         # Идентификаторы для пунктов меню последних открытых вики
         # Ключ - id, значение - путь до вики
@@ -149,9 +147,9 @@ class MainWndController (object):
         dateFormat = config.dateTimeFormat.value
         text = u""
 
-        if (Application.selectedPage != None and 
-            Application.selectedPage.datetime != None):
-                text = datetime.datetime.strftime (Application.selectedPage.datetime, dateFormat)
+        if (Application.selectedPage is not None and
+                Application.selectedPage.datetime is not None):
+            text = datetime.datetime.strftime (Application.selectedPage.datetime, dateFormat)
 
         setStatusText (text, statusbar_item)
 
@@ -205,14 +203,14 @@ class MainWndController (object):
         """
         Обновить окно после того как загрузили вики
         """
-        if wikiroot != None and not wikiroot.readonly:
+        if wikiroot is not None and not wikiroot.readonly:
             try:
                 Application.recentWiki.add (wikiroot.path)
                 self.updateRecentMenu()
             except IOError as e:
                 outwiker.core.commands.MessageBox (
-                        _(u"Can't add wiki to recent list.\nCan't save config.\n%s") % (unicode (e)),
-                        _(u"Error"), wx.ICON_ERROR | wx.OK)
+                    _(u"Can't add wiki to recent list.\nCan't save config.\n%s") % (unicode (e)),
+                    _(u"Error"), wx.ICON_ERROR | wx.OK)
 
         self.enableGui()
         self.bookmarks.updateBookmarks()
@@ -234,7 +232,7 @@ class MainWndController (object):
 
     def _updateBookmarksState (self):
         Application.actionController.enableTools (AddBookmarkAction.stringId,
-                Application.selectedPage != None)
+                                                  Application.selectedPage is not None)
 
 
     def __onPreferencesDialogClose (self, prefDialog):
@@ -243,8 +241,8 @@ class MainWndController (object):
         """
         self.updateTitle()
         self.updatePageDateTime()
-    #
-    ###################################################
+        #
+        ###################################################
 
 
     ###################################################
@@ -254,7 +252,7 @@ class MainWndController (object):
         """
         Проверить открыта ли вики и включить или выключить кнопки на панели
         """
-        enabled = Application.wikiroot != None
+        enabled = Application.wikiroot is not None
 
         self.__enableTools (enabled)
         self.mainWindow.pagePanel.panel.Enable(enabled)
@@ -266,14 +264,14 @@ class MainWndController (object):
 
     def __enableTools (self, enabled):
         for toolId in self.disabledTools:
-            if self.mainWindow.mainToolbar.FindById (toolId) != None:
+            if self.mainWindow.mainToolbar.FindById (toolId) is not None:
                 self.mainWindow.mainToolbar.EnableTool (toolId, enabled)
 
-            if self.mainMenu.FindItemById (toolId) != None:
+            if self.mainMenu.FindItemById (toolId) is not None:
                 self.mainMenu.Enable (toolId, enabled)
 
         map (lambda action: Application.actionController.enableTools (action.stringId, enabled),
-                self._disabledActions)
+             self._disabledActions)
 
     #
     ###################################################
@@ -297,7 +295,7 @@ class MainWndController (object):
 
         xpos = self.mainWindow.mainWindowConfig.xPos.value
         ypos = self.mainWindow.mainWindowConfig.yPos.value
-        
+
         self.mainWindow.SetDimensions (xpos, ypos, width, height, sizeFlags=wx.SIZE_FORCE)
 
         self.mainWindow.Layout()
@@ -322,9 +320,9 @@ class MainWndController (object):
             title = path if n + 1 > 9 else u"&{n}. {path}".format (n=n+1, path=path)
 
             self.mainMenu.fileMenu.Append (id, title, "", wx.ITEM_NORMAL)
-            
+
             self.mainWindow.Bind(wx.EVT_MENU, self.__onRecent, id=id)
-    
+
 
     def __onRecent (self, event):
         """
