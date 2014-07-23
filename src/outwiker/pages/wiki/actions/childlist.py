@@ -55,7 +55,7 @@ class ChildListDialogController (object):
             _(u"as in tree"),
             _(u"by name"),
             _(u"by creation date"),
-            _(u"by last editing date"),
+            _(u"by changing date"),
         ]
 
         self._dialog = dialog

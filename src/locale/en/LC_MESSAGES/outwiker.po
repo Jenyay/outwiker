@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-23 09:38+0400\n"
+"POT-Creation-Date: 2014-07-23 09:44+0400\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -929,20 +929,20 @@ msgid "Title (inverse)"
 msgstr "Title (inverse)"
 
 #: outwiker/pages/search/sortstrategies.py:82
-msgid "Changing the date (newest first)"
-msgstr "Changing the date (newest first)"
+msgid "Changing date (newest first)"
+msgstr "Changing date (newest first)"
 
 #: outwiker/pages/search/sortstrategies.py:95
-msgid "Changing the date (oldest first)"
-msgstr "Changing the date (oldest first)"
+msgid "Changing date (oldest first)"
+msgstr "Changing date (oldest first)"
 
 #: outwiker/pages/search/sortstrategies.py:108
-msgid "Creation the date (newest first)"
-msgstr "Creation the date (newest first)"
+msgid "Creation date (newest first)"
+msgstr "Creation date (newest first)"
 
 #: outwiker/pages/search/sortstrategies.py:121
-msgid "Creation the date (oldest first)"
-msgstr "Creation the date (oldest first)"
+msgid "Creation date (oldest first)"
+msgstr "Creation date (oldest first)"
 
 #: outwiker/pages/text/textpage.py:37
 msgid "Text Page"
@@ -1121,8 +1121,8 @@ msgid "by creation date"
 msgstr "by creation date"
 
 #: outwiker/pages/wiki/actions/childlist.py:58
-msgid "by last editing date"
-msgstr "by last editing date"
+msgid "by changing date"
+msgstr "by changing date"
 
 #: outwiker/pages/wiki/actions/childlist.py:111
 msgid "Sort"
@@ -1918,6 +1918,9 @@ msgstr "Remove Tags from Branch"
 #: outwiker/actions/tags.py:135
 msgid "Rename Tag…"
 msgstr "Rename Tag…"
+
+#~ msgid "by last editing date"
+#~ msgstr "by last editing date"
 
 #~ msgid ""
 #~ "Can't save HTML-file\n"

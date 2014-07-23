@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-23 09:38+0400\n"
+"POT-Creation-Date: 2014-07-23 09:45+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -921,19 +921,19 @@ msgid "Title (inverse)"
 msgstr ""
 
 #: outwiker/pages/search/sortstrategies.py:82
-msgid "Changing the date (newest first)"
+msgid "Changing date (newest first)"
 msgstr ""
 
 #: outwiker/pages/search/sortstrategies.py:95
-msgid "Changing the date (oldest first)"
+msgid "Changing date (oldest first)"
 msgstr ""
 
 #: outwiker/pages/search/sortstrategies.py:108
-msgid "Creation the date (newest first)"
+msgid "Creation date (newest first)"
 msgstr ""
 
 #: outwiker/pages/search/sortstrategies.py:121
-msgid "Creation the date (oldest first)"
+msgid "Creation date (oldest first)"
 msgstr ""
 
 #: outwiker/pages/text/textpage.py:37
@@ -1108,7 +1108,7 @@ msgid "by creation date"
 msgstr ""
 
 #: outwiker/pages/wiki/actions/childlist.py:58
-msgid "by last editing date"
+msgid "by changing date"
 msgstr ""
 
 #: outwiker/pages/wiki/actions/childlist.py:111

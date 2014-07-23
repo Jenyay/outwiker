@@ -79,7 +79,7 @@ class DateDescendingSort (BaseSortStrategy):
 
     @property
     def title (self):
-        return _(u"Changing the date (newest first)")
+        return _(u"Changing date (newest first)")
 
 
 class DateAscendingSort (BaseSortStrategy):
@@ -92,7 +92,7 @@ class DateAscendingSort (BaseSortStrategy):
 
     @property
     def title (self):
-        return _(u"Changing the date (oldest first)")
+        return _(u"Changing date (oldest first)")
 
 
 class CreationDateDescendingSort (BaseSortStrategy):
@@ -105,7 +105,7 @@ class CreationDateDescendingSort (BaseSortStrategy):
 
     @property
     def title (self):
-        return _(u"Creation the date (newest first)")
+        return _(u"Creation date (newest first)")
 
 
 class CreationDateAscendingSort (BaseSortStrategy):
@@ -118,4 +118,4 @@ class CreationDateAscendingSort (BaseSortStrategy):
 
     @property
     def title (self):
-        return _(u"Creation the date (oldest first)")
+        return _(u"Creation date (oldest first)")
