@@ -28,14 +28,14 @@ class WikiChildListAction (BaseAction):
 
 
     def run (self, params):
-        assert self._application.mainWindow != None
-        assert self._application.mainWindow.pagePanel != None
+        assert self._application.mainWindow is not None
+        assert self._application.mainWindow.pagePanel is not None
 
         with ChildListDialog (self._application.mainWindow) as dlg:
             controller = ChildListDialogController (dlg)
 
             text = controller.getDialogResult()
-            if text != None:
+            if text is not None:
                 self._application.mainWindow.pagePanel.pageView.codeEditor.replaceText (text)
 
 
@@ -44,15 +44,19 @@ class ChildListDialogController (object):
     def __init__ (self, dialog):
         # Параметры сортировки
         self._sortStrings = [
-                u"order",
-                u"name",
-                ]
+            u"order",
+            u"name",
+            u"creation",
+            u"edit",
+        ]
 
         # Строки сортировки, которые будут показаны в комбобоксе диалога
         self._dialogSortStrings = [
-                _(u"as in tree"),
-                _(u"by name"),
-                ]
+            _(u"as in tree"),
+            _(u"by name"),
+            _(u"by creation date"),
+            _(u"by last editing date"),
+        ]
 
         self._dialog = dialog
         self._dialog.setSortOrders (self._dialogSortStrings)

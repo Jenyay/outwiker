@@ -70,3 +70,51 @@ class ChildListDialogTest (BaseMainWndTest):
         result = controller.getDialogResult()
 
         self.assertEqual (result, u"(:childlist sort=descendname:)")
+
+
+    def testSortByCreation (self):
+        controller = ChildListDialogController (self._dialog)
+
+        self._dialog.SetModalResult (wx.ID_OK)
+        self._dialog.selectedSort = 2
+        self._dialog.isDescend = False
+
+        result = controller.getDialogResult()
+
+        self.assertEqual (result, u"(:childlist sort=creation:)")
+
+
+    def testSortByCreationDescend (self):
+        controller = ChildListDialogController (self._dialog)
+
+        self._dialog.SetModalResult (wx.ID_OK)
+        self._dialog.selectedSort = 2
+        self._dialog.isDescend = True
+
+        result = controller.getDialogResult()
+
+        self.assertEqual (result, u"(:childlist sort=descendcreation:)")
+
+
+    def testSortByEdit (self):
+        controller = ChildListDialogController (self._dialog)
+
+        self._dialog.SetModalResult (wx.ID_OK)
+        self._dialog.selectedSort = 3
+        self._dialog.isDescend = False
+
+        result = controller.getDialogResult()
+
+        self.assertEqual (result, u"(:childlist sort=edit:)")
+
+
+    def testSortByEditDescend (self):
+        controller = ChildListDialogController (self._dialog)
+
+        self._dialog.SetModalResult (wx.ID_OK)
+        self._dialog.selectedSort = 3
+        self._dialog.isDescend = True
+
+        result = controller.getDialogResult()
+
+        self.assertEqual (result, u"(:childlist sort=descendedit:)")

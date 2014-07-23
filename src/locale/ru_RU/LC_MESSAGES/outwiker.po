@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-01 09:44+0400\n"
+"POT-Creation-Date: 2014-07-23 09:05+0400\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -144,15 +144,12 @@ msgstr "Вы не выбрали файл(ы) для удаления"
 #: outwiker/gui/pagedialog.py:45 outwiker/gui/pagedialog.py:137
 #: outwiker/gui/pagedialog.py:196 outwiker/gui/renametagdialog.py:75
 #: outwiker/gui/renametagdialog.py:79 outwiker/gui/tabscontroller.py:244
-#: outwiker/pages/html/basehtmlpanel.py:305
-#: outwiker/pages/html/basehtmlpanel.py:309
-#: outwiker/pages/html/htmlpageview.py:586
-#: outwiker/pages/wiki/wikipageview.py:257
-#: outwiker/pages/wiki/wikipageview.py:261
-#: outwiker/pages/wiki/wikipageview.py:274
-#: outwiker/pages/wiki/wikipageview.py:276
-#: outwiker/pages/wiki/wikipageview.py:697
-#: outwiker/pages/wiki/wikipageview.py:710
+#: outwiker/pages/html/basehtmlpanel.py:331
+#: outwiker/pages/html/basehtmlpanel.py:335
+#: outwiker/pages/html/htmlpageview.py:585
+#: outwiker/pages/wiki/basewikipageview.py:278
+#: outwiker/pages/wiki/basewikipageview.py:310
+#: outwiker/pages/wiki/basewikipageview.py:323
 #: outwiker/pages/wiki/actions/include.py:38 outwiker/core/commands.py:46
 #: outwiker/core/commands.py:106 outwiker/core/commands.py:200
 #: outwiker/core/commands.py:240 outwiker/core/commands.py:248
@@ -254,7 +251,7 @@ msgid "Owerwrite?"
 msgstr "Перезаписать?"
 
 #: outwiker/gui/basetextpanel.py:182 outwiker/gui/basetextpanel.py:195
-#: outwiker/gui/tabscontroller.py:243 outwiker/pages/wiki/wikipageview.py:256
+#: outwiker/gui/tabscontroller.py:243
 #, python-format
 msgid "Can't save file %s"
 msgstr "Ошибка записи в файл %s"
@@ -634,7 +631,7 @@ msgstr "Заметки"
 #: outwiker/gui/preferences/htmlrenderpanel.py:28
 #: outwiker/gui/preferences/textprintpanel.py:29
 #: outwiker/pages/html/htmlpageview.py:213
-#: outwiker/pages/wiki/wikipageview.py:631
+#: outwiker/pages/wiki/wikipageview.py:131
 msgid "Font"
 msgstr "Шрифт"
 
@@ -783,7 +780,7 @@ msgid "Preferences"
 msgstr "Параметры"
 
 #: outwiker/gui/preferences/prefdialog.py:128
-#: outwiker/pages/html/basehtmlpanel.py:197
+#: outwiker/pages/html/basehtmlpanel.py:200
 msgid "Preview"
 msgstr "Просмотр"
 
@@ -826,7 +823,7 @@ msgstr "Настройки страницы..."
 
 #: outwiker/gui/preferences/wikieditorpanel.py:39
 #: outwiker/pages/html/htmlpageview.py:212
-#: outwiker/pages/wiki/wikipageview.py:630
+#: outwiker/pages/wiki/wikipageview.py:130
 msgid "Heading"
 msgstr "Заголовки"
 
@@ -838,19 +835,18 @@ msgstr "Команда"
 msgid "&Toolbars"
 msgstr "Панели &инструментов"
 
-#: outwiker/pages/html/basehtmlpanel.py:196
+#: outwiker/pages/html/basehtmlpanel.py:199
 #: outwiker/pages/html/htmltoolbar.py:30
-#: outwiker/pages/wiki/wikipageview.py:180
+#: outwiker/pages/wiki/basewikipageview.py:208
 msgid "HTML"
 msgstr "HTML"
 
-#: outwiker/pages/html/basehtmlpanel.py:289
-#: outwiker/pages/wiki/wikipageview.py:248
+#: outwiker/pages/html/basehtmlpanel.py:312
 msgid "Page rendered. Please wait…"
 msgstr "Страница подготавливается. Пожалуйста, подождите…"
 
-#: outwiker/pages/html/basehtmlpanel.py:304
-#: outwiker/pages/html/basehtmlpanel.py:308
+#: outwiker/pages/html/basehtmlpanel.py:330
+#: outwiker/pages/html/basehtmlpanel.py:334
 msgid ""
 "Can't save file\n"
 "\n"
@@ -865,17 +861,17 @@ msgid "HTML Page"
 msgstr "HTML-страница"
 
 #: outwiker/pages/html/htmlpageview.py:214
-#: outwiker/pages/wiki/wikipageview.py:632
+#: outwiker/pages/wiki/wikipageview.py:132
 msgid "Alignment"
 msgstr "Выравнивание"
 
 #: outwiker/pages/html/htmlpageview.py:215
-#: outwiker/pages/wiki/wikipageview.py:633
+#: outwiker/pages/wiki/wikipageview.py:133
 msgid "Formatting"
 msgstr "Форматирование"
 
 #: outwiker/pages/html/htmlpageview.py:216
-#: outwiker/pages/wiki/wikipageview.py:634
+#: outwiker/pages/wiki/wikipageview.py:134
 msgid "Lists"
 msgstr "Списки"
 
@@ -887,7 +883,7 @@ msgstr "Таблица"
 msgid "Html"
 msgstr "Html"
 
-#: outwiker/pages/html/htmlpageview.py:585
+#: outwiker/pages/html/htmlpageview.py:584
 msgid "Page style Error. Style by default is used"
 msgstr ""
 "Ошибка в файле стиля страницы. Будет использоваться стиль по умолчанию."
@@ -955,6 +951,19 @@ msgstr "Дата (старые сверху)"
 msgid "Text Page"
 msgstr "Текстовая страница"
 
+#: outwiker/pages/wiki/basewikipageview.py:277
+#, python-format
+msgid "Can't load file %s"
+msgstr "Ошибка чтения файла %s"
+
+#: outwiker/pages/wiki/basewikipageview.py:309
+msgid "Can't read file {}"
+msgstr "Ошибка чтения файла {}"
+
+#: outwiker/pages/wiki/basewikipageview.py:322
+msgid "Can't create HTML file"
+msgstr "Ошибка создания HTML-файла"
+
 #: outwiker/pages/wiki/emptycontent.py:13
 msgid ""
 "!!! Attachment\n"
@@ -1009,39 +1018,15 @@ msgstr "0 - размер по умолчанию"
 msgid "Wiki Page"
 msgstr "Викистраница"
 
-#: outwiker/pages/wiki/wikipageview.py:96
-#: outwiker/pages/wiki/wikipageview.py:647
+#: outwiker/pages/wiki/wikipageview.py:46
+#: outwiker/pages/wiki/wikipageview.py:50
 #: outwiker/pages/wiki/wikitoolbar.py:30
 msgid "Wiki"
 msgstr "Вики"
 
-#: outwiker/pages/wiki/wikipageview.py:260
-#, python-format
-msgid ""
-"Can't save HTML-file\n"
-"\n"
-"%s"
-msgstr ""
-"Невозможно сохранить HTML-файл\n"
-"\n"
-"%s"
-
-#: outwiker/pages/wiki/wikipageview.py:274
-#: outwiker/pages/wiki/wikipageview.py:276
-msgid "Can't load HTML-file"
-msgstr "Ошибка открытия файла HTML"
-
-#: outwiker/pages/wiki/wikipageview.py:635
+#: outwiker/pages/wiki/wikipageview.py:135
 msgid "Commands"
 msgstr "Команды"
-
-#: outwiker/pages/wiki/wikipageview.py:696
-msgid "Can't read file {}"
-msgstr "Ошибка чтения файла {}"
-
-#: outwiker/pages/wiki/wikipageview.py:709
-msgid "Can't create HTML file"
-msgstr "Ошибка создания HTML-файла"
 
 #: outwiker/pages/wiki/wikipreferences.py:23
 msgid "Show HTML Code Tab"
@@ -1113,7 +1098,7 @@ msgid "Sort by"
 msgstr "Сортировать по"
 
 #: outwiker/pages/wiki/actions/attachlist.py:104
-#: outwiker/pages/wiki/actions/childlist.py:110
+#: outwiker/pages/wiki/actions/childlist.py:114
 msgid "Descending sort"
 msgstr "Сортировать по убыванию"
 
@@ -1122,19 +1107,27 @@ msgid "Children (:childlist:)"
 msgstr "Дочерние страницы (:childlist:)"
 
 #: outwiker/pages/wiki/actions/childlist.py:27
-#: outwiker/pages/wiki/actions/childlist.py:95
+#: outwiker/pages/wiki/actions/childlist.py:99
 msgid "Insert (:childlist:) command"
 msgstr "Вставить команду (:childlist:)"
 
-#: outwiker/pages/wiki/actions/childlist.py:53
+#: outwiker/pages/wiki/actions/childlist.py:55
 msgid "as in tree"
 msgstr "как в дереве"
 
-#: outwiker/pages/wiki/actions/childlist.py:54
+#: outwiker/pages/wiki/actions/childlist.py:56
 msgid "by name"
 msgstr "по имени"
 
-#: outwiker/pages/wiki/actions/childlist.py:107
+#: outwiker/pages/wiki/actions/childlist.py:57
+msgid "by creation date"
+msgstr "по дате создания"
+
+#: outwiker/pages/wiki/actions/childlist.py:58
+msgid "by last editing date"
+msgstr "по дате последней правки"
+
+#: outwiker/pages/wiki/actions/childlist.py:111
 msgid "Sort"
 msgstr "Сортировка"
 
@@ -1206,11 +1199,11 @@ msgstr "Миниатюра"
 msgid "Insert thumbnail"
 msgstr "Вставить миниатюру"
 
-#: outwiker/pages/wiki/actions/updatehtml.py:19
+#: outwiker/pages/wiki/actions/updatehtml.py:18
 msgid "Update HTML Code"
 msgstr "Обновить код HTML"
 
-#: outwiker/pages/wiki/actions/updatehtml.py:24
+#: outwiker/pages/wiki/actions/updatehtml.py:23
 msgid "Update HTML code for wiki page"
 msgstr "Обновить код HTML для викистраницы"
 
@@ -1929,6 +1922,18 @@ msgstr "Удаление меток из ветки"
 #: outwiker/actions/tags.py:135
 msgid "Rename Tag…"
 msgstr "Переименовать метку…"
+
+#~ msgid ""
+#~ "Can't save HTML-file\n"
+#~ "\n"
+#~ "%s"
+#~ msgstr ""
+#~ "Невозможно сохранить HTML-файл\n"
+#~ "\n"
+#~ "%s"
+
+#~ msgid "Can't load HTML-file"
+#~ msgstr "Ошибка открытия файла HTML"
 
 #~ msgid "Copy Attaches Path"
 #~ msgstr "Копировать путь до прикрепленных файлов"

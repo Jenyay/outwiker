@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-01 09:44+0400\n"
+"POT-Creation-Date: 2014-07-23 09:05+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -146,15 +146,12 @@ msgstr ""
 #: outwiker/gui/pagedialog.py:45 outwiker/gui/pagedialog.py:137
 #: outwiker/gui/pagedialog.py:196 outwiker/gui/renametagdialog.py:75
 #: outwiker/gui/renametagdialog.py:79 outwiker/gui/tabscontroller.py:244
-#: outwiker/pages/html/basehtmlpanel.py:305
-#: outwiker/pages/html/basehtmlpanel.py:309
-#: outwiker/pages/html/htmlpageview.py:586
-#: outwiker/pages/wiki/wikipageview.py:257
-#: outwiker/pages/wiki/wikipageview.py:261
-#: outwiker/pages/wiki/wikipageview.py:274
-#: outwiker/pages/wiki/wikipageview.py:276
-#: outwiker/pages/wiki/wikipageview.py:697
-#: outwiker/pages/wiki/wikipageview.py:710
+#: outwiker/pages/html/basehtmlpanel.py:331
+#: outwiker/pages/html/basehtmlpanel.py:335
+#: outwiker/pages/html/htmlpageview.py:585
+#: outwiker/pages/wiki/basewikipageview.py:278
+#: outwiker/pages/wiki/basewikipageview.py:310
+#: outwiker/pages/wiki/basewikipageview.py:323
 #: outwiker/pages/wiki/actions/include.py:38 outwiker/core/commands.py:46
 #: outwiker/core/commands.py:106 outwiker/core/commands.py:200
 #: outwiker/core/commands.py:240 outwiker/core/commands.py:248
@@ -256,7 +253,7 @@ msgid "Owerwrite?"
 msgstr ""
 
 #: outwiker/gui/basetextpanel.py:182 outwiker/gui/basetextpanel.py:195
-#: outwiker/gui/tabscontroller.py:243 outwiker/pages/wiki/wikipageview.py:256
+#: outwiker/gui/tabscontroller.py:243
 #, python-format
 msgid "Can't save file %s"
 msgstr ""
@@ -621,7 +618,7 @@ msgstr ""
 #: outwiker/gui/preferences/htmlrenderpanel.py:28
 #: outwiker/gui/preferences/textprintpanel.py:29
 #: outwiker/pages/html/htmlpageview.py:213
-#: outwiker/pages/wiki/wikipageview.py:631
+#: outwiker/pages/wiki/wikipageview.py:131
 msgid "Font"
 msgstr ""
 
@@ -768,7 +765,7 @@ msgid "Preferences"
 msgstr ""
 
 #: outwiker/gui/preferences/prefdialog.py:128
-#: outwiker/pages/html/basehtmlpanel.py:197
+#: outwiker/pages/html/basehtmlpanel.py:200
 msgid "Preview"
 msgstr ""
 
@@ -811,7 +808,7 @@ msgstr ""
 
 #: outwiker/gui/preferences/wikieditorpanel.py:39
 #: outwiker/pages/html/htmlpageview.py:212
-#: outwiker/pages/wiki/wikipageview.py:630
+#: outwiker/pages/wiki/wikipageview.py:130
 msgid "Heading"
 msgstr ""
 
@@ -823,19 +820,18 @@ msgstr ""
 msgid "&Toolbars"
 msgstr ""
 
-#: outwiker/pages/html/basehtmlpanel.py:196
+#: outwiker/pages/html/basehtmlpanel.py:199
 #: outwiker/pages/html/htmltoolbar.py:30
-#: outwiker/pages/wiki/wikipageview.py:180
+#: outwiker/pages/wiki/basewikipageview.py:208
 msgid "HTML"
 msgstr ""
 
-#: outwiker/pages/html/basehtmlpanel.py:289
-#: outwiker/pages/wiki/wikipageview.py:248
+#: outwiker/pages/html/basehtmlpanel.py:312
 msgid "Page rendered. Please wait…"
 msgstr ""
 
-#: outwiker/pages/html/basehtmlpanel.py:304
-#: outwiker/pages/html/basehtmlpanel.py:308
+#: outwiker/pages/html/basehtmlpanel.py:330
+#: outwiker/pages/html/basehtmlpanel.py:334
 msgid ""
 "Can't save file\n"
 "\n"
@@ -847,17 +843,17 @@ msgid "HTML Page"
 msgstr ""
 
 #: outwiker/pages/html/htmlpageview.py:214
-#: outwiker/pages/wiki/wikipageview.py:632
+#: outwiker/pages/wiki/wikipageview.py:132
 msgid "Alignment"
 msgstr ""
 
 #: outwiker/pages/html/htmlpageview.py:215
-#: outwiker/pages/wiki/wikipageview.py:633
+#: outwiker/pages/wiki/wikipageview.py:133
 msgid "Formatting"
 msgstr ""
 
 #: outwiker/pages/html/htmlpageview.py:216
-#: outwiker/pages/wiki/wikipageview.py:634
+#: outwiker/pages/wiki/wikipageview.py:134
 msgid "Lists"
 msgstr ""
 
@@ -869,7 +865,7 @@ msgstr ""
 msgid "Html"
 msgstr ""
 
-#: outwiker/pages/html/htmlpageview.py:585
+#: outwiker/pages/html/htmlpageview.py:584
 msgid "Page style Error. Style by default is used"
 msgstr ""
 
@@ -936,6 +932,19 @@ msgstr ""
 msgid "Text Page"
 msgstr ""
 
+#: outwiker/pages/wiki/basewikipageview.py:277
+#, python-format
+msgid "Can't load file %s"
+msgstr ""
+
+#: outwiker/pages/wiki/basewikipageview.py:309
+msgid "Can't read file {}"
+msgstr ""
+
+#: outwiker/pages/wiki/basewikipageview.py:322
+msgid "Can't create HTML file"
+msgstr ""
+
 #: outwiker/pages/wiki/emptycontent.py:13
 msgid ""
 "!!! Attachment\n"
@@ -985,35 +994,14 @@ msgstr ""
 msgid "Wiki Page"
 msgstr ""
 
-#: outwiker/pages/wiki/wikipageview.py:96
-#: outwiker/pages/wiki/wikipageview.py:647
+#: outwiker/pages/wiki/wikipageview.py:46
+#: outwiker/pages/wiki/wikipageview.py:50
 #: outwiker/pages/wiki/wikitoolbar.py:30
 msgid "Wiki"
 msgstr ""
 
-#: outwiker/pages/wiki/wikipageview.py:260
-#, python-format
-msgid ""
-"Can't save HTML-file\n"
-"\n"
-"%s"
-msgstr ""
-
-#: outwiker/pages/wiki/wikipageview.py:274
-#: outwiker/pages/wiki/wikipageview.py:276
-msgid "Can't load HTML-file"
-msgstr ""
-
-#: outwiker/pages/wiki/wikipageview.py:635
+#: outwiker/pages/wiki/wikipageview.py:135
 msgid "Commands"
-msgstr ""
-
-#: outwiker/pages/wiki/wikipageview.py:696
-msgid "Can't read file {}"
-msgstr ""
-
-#: outwiker/pages/wiki/wikipageview.py:709
-msgid "Can't create HTML file"
 msgstr ""
 
 #: outwiker/pages/wiki/wikipreferences.py:23
@@ -1086,7 +1074,7 @@ msgid "Sort by"
 msgstr ""
 
 #: outwiker/pages/wiki/actions/attachlist.py:104
-#: outwiker/pages/wiki/actions/childlist.py:110
+#: outwiker/pages/wiki/actions/childlist.py:114
 msgid "Descending sort"
 msgstr ""
 
@@ -1095,19 +1083,27 @@ msgid "Children (:childlist:)"
 msgstr ""
 
 #: outwiker/pages/wiki/actions/childlist.py:27
-#: outwiker/pages/wiki/actions/childlist.py:95
+#: outwiker/pages/wiki/actions/childlist.py:99
 msgid "Insert (:childlist:) command"
 msgstr ""
 
-#: outwiker/pages/wiki/actions/childlist.py:53
+#: outwiker/pages/wiki/actions/childlist.py:55
 msgid "as in tree"
 msgstr ""
 
-#: outwiker/pages/wiki/actions/childlist.py:54
+#: outwiker/pages/wiki/actions/childlist.py:56
 msgid "by name"
 msgstr ""
 
-#: outwiker/pages/wiki/actions/childlist.py:107
+#: outwiker/pages/wiki/actions/childlist.py:57
+msgid "by creation date"
+msgstr ""
+
+#: outwiker/pages/wiki/actions/childlist.py:58
+msgid "by last editing date"
+msgstr ""
+
+#: outwiker/pages/wiki/actions/childlist.py:111
 msgid "Sort"
 msgstr ""
 
@@ -1179,11 +1175,11 @@ msgstr ""
 msgid "Insert thumbnail"
 msgstr ""
 
-#: outwiker/pages/wiki/actions/updatehtml.py:19
+#: outwiker/pages/wiki/actions/updatehtml.py:18
 msgid "Update HTML Code"
 msgstr ""
 
-#: outwiker/pages/wiki/actions/updatehtml.py:24
+#: outwiker/pages/wiki/actions/updatehtml.py:23
 msgid "Update HTML code for wiki page"
 msgstr ""
 
