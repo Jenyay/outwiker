@@ -7,7 +7,9 @@ import os.path
 
 from outwiker.core.system import getOS
 from outwiker.pages.html.basehtmlpanel import EVT_PAGE_TAB_CHANGED
+
 from .i18n import get_
+from .diagramtoolbar import DiagramToolBar
 
 # Импортировать все Actions
 from .actioninsertdiagram import InsertDiagramAction
@@ -27,6 +29,9 @@ class GuiCreator (object):
         # MenuItem создаваемого подменю
         self._submenuItem = None
 
+        self.__toolbarCreated = False
+        self.ID_TOOLBAR = u"Diagrammer"
+
         global _
         _ = get_()
 
@@ -43,6 +48,8 @@ class GuiCreator (object):
         if mainWindow is None:
             return
 
+        self.__createToolBar()
+
         # Меню, куда будут добавляться команды
         menu = self._getPageView().commandsMenu
 
@@ -51,7 +58,7 @@ class GuiCreator (object):
 
 
         # При необходимости добавить кнопки на панель
-        toolbar = mainWindow.toolbars[mainWindow.PLUGINS_TOOLBAR_STR]
+        toolbar = mainWindow.toolbars[self.ID_TOOLBAR]
 
         self._application.actionController.appendToolbarButton (
             InsertDiagramAction.stringId,
@@ -60,6 +67,26 @@ class GuiCreator (object):
 
         self._getPageView().Bind (EVT_PAGE_TAB_CHANGED, self._onTabChanged)
         self._enableTools()
+
+
+    def __createToolBar (self):
+        """
+        Создание панели с кнопками, если она еще не была создана
+        """
+        if not self.__toolbarCreated:
+            mainWnd = self._application.mainWindow
+            mainWnd.toolbars[self.ID_TOOLBAR] = DiagramToolBar (mainWnd, mainWnd.auiManager)
+
+            self.__toolbarCreated = True
+
+
+    def __destroyToolBar (self):
+        """
+        Уничтожение панели с кнопками
+        """
+        if self.__toolbarCreated:
+            self._application.mainWindow.toolbars.destroyToolBar (self.ID_TOOLBAR)
+            self.__toolbarCreated = False
 
 
     def _getImagePath (self, imageName):
@@ -78,6 +105,8 @@ class GuiCreator (object):
 
             map (lambda action: self._application.actionController.removeToolbarButton (action.stringId),
                  self._actions)
+
+            self.__destroyToolBar()
 
 
 
