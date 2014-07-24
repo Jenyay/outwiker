@@ -37,7 +37,7 @@ class CommandInsertDiagram (Command):
         thumb = Thumbnails(self.parser.page)
         thumbPath = thumb.getThumbPath(True)
 
-        md5 = hashlib.md5 (content).hexdigest()
+        md5 = hashlib.md5 (content.encode ("utf-8")).hexdigest()
         fname = self._fileNameFormat.format (md5)
         imagePath = os.path.join (thumbPath, fname)
 
