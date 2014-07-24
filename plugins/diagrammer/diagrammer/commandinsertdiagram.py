@@ -5,6 +5,7 @@ import hashlib
 
 from outwiker.pages.wiki.parser.command import Command
 from outwiker.pages.wiki.thumbnails import Thumbnails
+from outwiker.core.system import getOS
 
 
 class CommandInsertDiagram (Command):
@@ -56,10 +57,18 @@ class CommandInsertDiagram (Command):
         from blockdiag.parser import parse_string
         from blockdiag.drawer import DiagramDraw
         from blockdiag.builder import ScreenNodeBuilder
+        from blockdiag.utils.fontmap import FontMap
+
+        font = os.path.join (unicode (os.path.dirname(os.path.abspath(__file__)),
+                                      getOS().filesEncoding),
+                             u"fonts", u"Ubuntu-R.ttf")
+
+        fontmap = FontMap()
+        fontmap.set_default_font (font)
 
         tree = parse_string (content)
         diagram = ScreenNodeBuilder.build (tree)
 
-        draw = DiagramDraw ("png", diagram, imagePath)
+        draw = DiagramDraw ("png", diagram, imagePath, fontmap=fontmap)
         draw.draw()
         draw.save()
