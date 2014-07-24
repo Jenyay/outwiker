@@ -1,0 +1,5 @@
+diagram {
+  A -> B -> C -> A
+  A      -> C
+  Z
+}

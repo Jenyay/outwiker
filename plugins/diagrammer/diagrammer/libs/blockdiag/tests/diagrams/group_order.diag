@@ -1,0 +1,8 @@
+diagram{
+  A; B; C;
+  group { B; }
+
+  A -> B;
+  A -> C;
+  Z;
+}

@@ -1,0 +1,19 @@
+blockdiag {
+  node_width = 160;
+  node_height = 160;
+  span_width = 32;
+  span_height = 32;
+  default_fontsize = 16;
+  default_shape = diamond
+  default_node_style = dotted
+  default_node_color = red
+  default_group_color = blue
+  default_linecolor = gray
+  default_textcolor = green
+  default_label_orientation = vertical
+
+  A -> B;
+  group {
+    B;
+  }
+}

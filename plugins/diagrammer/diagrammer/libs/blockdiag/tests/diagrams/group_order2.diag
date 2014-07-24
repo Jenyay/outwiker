@@ -1,0 +1,13 @@
+{
+  A -> B;
+  A -> C -> D;
+  A -> E -> F;
+  Z;
+
+  group {
+    C; D
+  }
+  group {
+    E; F
+  }
+}

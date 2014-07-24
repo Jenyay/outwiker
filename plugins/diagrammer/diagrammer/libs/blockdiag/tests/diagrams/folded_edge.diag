@@ -1,0 +1,6 @@
+diagram {
+  A -> B -> C [nofolded]
+       B -> D -> E[folded]
+  D -> F
+  Z
+}

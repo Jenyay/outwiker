@@ -1,0 +1,8 @@
+{
+  shape_namespace = "flowchart";
+
+  A [shape = "flowchart.condition"];
+  B [shape = "condition"];
+
+  Z;
+}

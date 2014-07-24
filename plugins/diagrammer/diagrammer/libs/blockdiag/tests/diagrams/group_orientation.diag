@@ -1,0 +1,10 @@
+{
+  A -> B;
+  Z;
+
+  group {
+    orientation = portrait
+    B -> C;
+    B -> D;
+  }
+}

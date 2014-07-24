@@ -1,0 +1,7 @@
+{
+  A [background = "http://python.org/images/python-logo.gif"];
+  B [background = "http://blockdiag.com/favicon.ico"];
+  C [background = "http://upload.wikimedia.org/wikipedia/commons/9/9b/Scalable_Vector_Graphics_Circle2.svg"];
+  D [background = "http://people.sc.fsu.edu/~jburkardt/data/eps/circle.eps"];
+  Z;
+}

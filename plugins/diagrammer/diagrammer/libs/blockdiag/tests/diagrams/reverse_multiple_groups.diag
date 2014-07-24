@@ -1,0 +1,16 @@
+diagram {
+  group {
+    A;  B;  C;  D
+  }
+  group {
+    E;  F;  G
+  }
+  group {
+    H;  I
+  }
+  group {
+    J
+  }
+  J -> H -> E -> A
+  Z
+}

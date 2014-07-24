@@ -1,0 +1,5 @@
+diagram {
+  A [shape = "roundedbox", style = "dotted"];
+  B [shape = "ellipse", style = "dashed"];
+  C [shape = "flowchart.database", style = "dashed"];
+}

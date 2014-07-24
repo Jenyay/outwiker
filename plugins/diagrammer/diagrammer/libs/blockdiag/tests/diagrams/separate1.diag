@@ -1,0 +1,16 @@
+{
+  A -> B -> C -> D;
+
+  group outer {
+    label = "outer"
+    B; D;
+
+    group inner {
+      label = "inner"
+      color = skyblue;
+
+      C -> E -> F;
+    }
+  }
+  Z;
+}

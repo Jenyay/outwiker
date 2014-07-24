@@ -1,0 +1,7 @@
+diagram {
+  A -> B                -> F -> G
+       B -> C      -> E -> F
+            C -> D -> E
+  F -> A
+  Z
+}

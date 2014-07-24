@@ -1,0 +1,6 @@
+{
+  plugin attributes [test_attr1, test_attr2 = name, test_attr3 = name];
+
+  A [test_attr1 = 1, test_attr2 = 2, test_attr3 = 3];
+  B;
+}

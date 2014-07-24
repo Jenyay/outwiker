@@ -1,0 +1,7 @@
+{
+  A [style = "2,2,4,2"];
+  B [shape = diamond, style = "2,2,4,2"];
+  C [shape = ellipse, style = "2,2,4,2"];
+  D [shape = flowchart.database, style = "2,2,4,2"];
+}
+

@@ -1,0 +1,3 @@
+diagram {
+  A -> B -> C;
+}

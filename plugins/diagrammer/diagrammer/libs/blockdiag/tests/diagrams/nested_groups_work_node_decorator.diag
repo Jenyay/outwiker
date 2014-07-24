@@ -1,0 +1,11 @@
+diagram {
+  A; B;
+
+  group {
+    A
+    group {
+      B
+    }
+  }
+  Z
+}

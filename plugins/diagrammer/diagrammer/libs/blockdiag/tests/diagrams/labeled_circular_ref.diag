@@ -1,0 +1,7 @@
+{
+  A [label = "foo"];
+  B [label = "bar"];
+  C [label = "baz"];
+
+  A -> C -> B -> C;
+}

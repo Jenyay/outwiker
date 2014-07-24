@@ -1,0 +1,5 @@
+diagram {
+  A -> B -> C [color = red]
+  D -> E [dir = none]
+  F -> G [thick]
+}

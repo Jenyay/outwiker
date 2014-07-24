@@ -1,0 +1,8 @@
+{
+  class emphasis [style = dashed, color = red];
+
+  A -> B -> C;
+
+  A -> B [class = emphasis];
+  A [class = emphasis];
+}

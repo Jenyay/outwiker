@@ -1,0 +1,22 @@
+diagram {
+  A -> B;
+  A -> C;
+
+  E -> F;
+  C -> G;
+  D -> H;
+
+  group outer {
+    label = "group 1";
+    B -> E -> C;
+
+    group inner {
+      label = "sub group 1";
+      color = skyblue
+
+      C -> D;
+    }
+  }
+
+  Z;
+}

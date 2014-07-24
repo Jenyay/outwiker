@@ -1,0 +1,9 @@
+diagram {
+  A -> B -> C
+  A -> B -> D
+  A -> E
+  group {
+    A; B; D; E
+  }
+  Z
+}

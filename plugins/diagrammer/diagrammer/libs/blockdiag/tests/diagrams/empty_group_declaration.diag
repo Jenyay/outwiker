@@ -1,0 +1,10 @@
+{
+  group foo {
+    color = red;
+  }
+
+  group foo {
+    A;
+  }
+  Z;
+}

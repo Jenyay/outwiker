@@ -1,0 +1,16 @@
+diagram admin {
+  A;
+  group {
+    B;
+    C;
+    D;
+  }
+  E;
+  Z;
+
+  A -> B;
+  A -> E;
+
+  B -> C -> B;
+  B -> D -> B;
+}

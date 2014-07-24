@@ -1,0 +1,29 @@
+{
+  A [shape = "box"];
+  B [shape = "roundedbox"];
+  C [shape = "diamond"];
+  D [shape = "ellipse"];
+  E [shape = "note"];
+  F [shape = "cloud"];
+  G [shape = "mail"];
+  H [shape = "beginpoint"];
+  I [shape = "endpoint"];
+  J [shape = "minidiamond"];
+
+  K [shape = "flowchart.condition"];
+  L [shape = "flowchart.database"];
+  M [shape = "flowchart.input"];
+  N [shape = "flowchart.loopin"];
+  O [shape = "flowchart.loopout"];
+
+  P [shape = "actor"];
+  Q [shape = "flowchart.terminator"];
+  R [shape = "textbox"];
+  S [shape = "dots"];
+  T [shape = "none"];
+
+  U [shape = "square"];
+  V [shape = "circle"];
+
+  Z;
+}

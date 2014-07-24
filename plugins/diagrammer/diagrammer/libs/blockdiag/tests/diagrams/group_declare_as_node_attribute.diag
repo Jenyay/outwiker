@@ -1,0 +1,11 @@
+{
+  C [group = foo];
+  D [group = foo];
+
+  A -> B -> C;
+  D;
+  group foo {
+    E;
+  }
+  Z;
+}

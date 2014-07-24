@@ -1,0 +1,5 @@
+{
+  orientation = portrait;
+
+  A [shape = dots];
+}

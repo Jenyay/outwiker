@@ -1,0 +1,7 @@
+{
+  A [rotate = 0];
+  B [rotate = 90];
+  C [rotate = 180];
+  D [rotate = 270];
+  E [rotate = 360];
+}

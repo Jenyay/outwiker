@@ -1,0 +1,6 @@
+{
+  A -> B;
+
+  A [label = "aaaaaaaaaaaaaaaaa", icon = "/usr/share/pixmaps/debian-logo.png"];
+  B [label = "aaaaaaaaaaaaaaaaa", icon = "http://blockdiag.com/favicon.ico"];
+}
