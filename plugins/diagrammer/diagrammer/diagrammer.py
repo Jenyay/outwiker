@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 import os.path
+import sys
 
 from outwiker.core.pluginbase import Plugin
 from outwiker.core.commands import getCurrentVersion
@@ -54,7 +55,21 @@ else:
 
         def initialize(self):
             self._initlocale(self.name.lower())
+            self.__correctSysPath()
             self.__controller.initialize()
+
+
+        def __correctSysPath (self):
+            cmd_folder = os.path.join (unicode (os.path.dirname(os.path.abspath(__file__)),
+                                                getOS().filesEncoding),
+                                       u"libs")
+
+            syspath = [unicode (item, getOS().filesEncoding)
+                       if type (item) != type(u"")
+                       else item for item in sys.path]
+
+            if cmd_folder not in syspath:
+                sys.path.insert(0, cmd_folder)
 
 
         def destroy (self):

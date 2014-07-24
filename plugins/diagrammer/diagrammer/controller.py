@@ -28,6 +28,8 @@ class Controller (object):
         global _
         _ = get_()
 
+        self.__initBlockdiag()
+
         self._guiCreator = GuiCreator (self, self._application)
         self._guiCreator.initialize()
 
@@ -37,6 +39,47 @@ class Controller (object):
 
         if self._isCurrentWikiPage:
             self.__onPageViewCreate (self._application.selectedPage)
+
+
+    def __initBlockdiag (self):
+        import blockdiag.noderenderer.actor
+        import blockdiag.noderenderer.beginpoint
+        import blockdiag.noderenderer.box
+        import blockdiag.noderenderer.circle
+        import blockdiag.noderenderer.cloud
+        import blockdiag.noderenderer.diamond
+        import blockdiag.noderenderer.dots
+        import blockdiag.noderenderer.ellipse
+        import blockdiag.noderenderer.endpoint
+        import blockdiag.noderenderer.mail
+        import blockdiag.noderenderer.minidiamond
+        import blockdiag.noderenderer.none
+        import blockdiag.noderenderer.roundedbox
+        import blockdiag.noderenderer.square
+        import blockdiag.noderenderer.textbox
+
+        from blockdiag.imagedraw.png import setup
+
+        setup(None)
+        # init_imagedrawers()
+        # init_renderers()
+        # imagedraw.init_imagedrawers()
+        # imagedraw.create("png", fname, debug=True)
+        blockdiag.noderenderer.actor.setup(None)
+        blockdiag.noderenderer.beginpoint.setup(None)
+        blockdiag.noderenderer.box.setup(None)
+        blockdiag.noderenderer.circle.setup(None)
+        blockdiag.noderenderer.cloud.setup(None)
+        blockdiag.noderenderer.diamond.setup(None)
+        blockdiag.noderenderer.dots.setup(None)
+        blockdiag.noderenderer.ellipse.setup(None)
+        blockdiag.noderenderer.endpoint.setup(None)
+        blockdiag.noderenderer.mail.setup(None)
+        blockdiag.noderenderer.minidiamond.setup(None)
+        blockdiag.noderenderer.none.setup(None)
+        blockdiag.noderenderer.roundedbox.setup(None)
+        blockdiag.noderenderer.square.setup(None)
+        blockdiag.noderenderer.textbox.setup(None)
 
 
     def destroy (self):
