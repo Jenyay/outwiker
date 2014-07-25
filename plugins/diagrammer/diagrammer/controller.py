@@ -54,9 +54,15 @@ class Controller (object):
         import blockdiag.noderenderer.mail
         import blockdiag.noderenderer.minidiamond
         import blockdiag.noderenderer.none
+        import blockdiag.noderenderer.note
         import blockdiag.noderenderer.roundedbox
         import blockdiag.noderenderer.square
         import blockdiag.noderenderer.textbox
+        import blockdiag.noderenderer.flowchart.database
+        import blockdiag.noderenderer.flowchart.input
+        import blockdiag.noderenderer.flowchart.loopin
+        import blockdiag.noderenderer.flowchart.loopout
+        import blockdiag.noderenderer.flowchart.terminator
 
         from blockdiag.imagedraw.png import setup
 
@@ -77,9 +83,16 @@ class Controller (object):
         blockdiag.noderenderer.mail.setup(None)
         blockdiag.noderenderer.minidiamond.setup(None)
         blockdiag.noderenderer.none.setup(None)
+        blockdiag.noderenderer.note.setup(None)
         blockdiag.noderenderer.roundedbox.setup(None)
         blockdiag.noderenderer.square.setup(None)
         blockdiag.noderenderer.textbox.setup(None)
+
+        blockdiag.noderenderer.flowchart.database.setup(None)
+        blockdiag.noderenderer.flowchart.input.setup(None)
+        blockdiag.noderenderer.flowchart.loopin.setup(None)
+        blockdiag.noderenderer.flowchart.loopout.setup(None)
+        blockdiag.noderenderer.flowchart.terminator.setup(None)
 
 
     def destroy (self):
