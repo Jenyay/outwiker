@@ -13,13 +13,13 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-from pkg_resources import iter_entry_points
 
 node_handlers = []
 general_handlers = {}
 
 
 def load(plugins, diagram, **kwargs):
+    from pkg_resources import iter_entry_points
     for name in plugins:
         for ep in iter_entry_points('blockdiag_plugins', name):
             module = ep.load()

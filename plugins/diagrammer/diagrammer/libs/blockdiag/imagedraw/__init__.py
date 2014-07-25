@@ -13,13 +13,13 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-import pkg_resources
 from blockdiag.utils.logging import warning
 
 drawers = {}
 
 
 def init_imagedrawers(debug=False):
+    import pkg_resources
     for drawer in pkg_resources.iter_entry_points('blockdiag_imagedrawers'):
         try:
             module = drawer.load()

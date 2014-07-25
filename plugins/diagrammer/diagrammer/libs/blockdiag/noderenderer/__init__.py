@@ -14,7 +14,6 @@
 #  limitations under the License.
 
 from __future__ import division
-import pkg_resources
 from blockdiag.noderenderer.base import NodeShape  # NOQA: backward compatibility
 
 renderers = {}
@@ -22,6 +21,7 @@ searchpath = []
 
 
 def init_renderers():
+    import pkg_resources
     for plugin in pkg_resources.iter_entry_points('blockdiag_noderenderer'):
         module = plugin.load()
         if hasattr(module, 'setup'):
