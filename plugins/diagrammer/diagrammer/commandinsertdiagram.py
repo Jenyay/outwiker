@@ -69,6 +69,6 @@ class CommandInsertDiagram (Command):
         tree = parse_string (content)
         diagram = ScreenNodeBuilder.build (tree)
 
-        draw = DiagramDraw ("png", diagram, imagePath, fontmap=fontmap)
+        draw = DiagramDraw ("png", diagram, imagePath, fontmap=fontmap, antialias=True)
         draw.draw()
         draw.save()
