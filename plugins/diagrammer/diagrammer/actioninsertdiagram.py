@@ -28,4 +28,5 @@ class InsertDiagramAction (BaseAction):
 
 
     def run (self, params):
-        print "Run!"
+        codeEditor = self._application.mainWindow.pagePanel.pageView.codeEditor
+        codeEditor.turnText (u'(:diagram:)\n', u'\n(:diagramend:)')
