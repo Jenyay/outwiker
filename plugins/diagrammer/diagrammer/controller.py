@@ -2,7 +2,7 @@
 
 from .i18n import get_
 from .guicreator import GuiCreator
-from .commandinsertdiagram import CommandInsertDiagram
+from .commanddiagram import CommandDiagram
 
 
 class Controller (object):
@@ -18,7 +18,7 @@ class Controller (object):
         self._guiCreator = None
 
         # В этот список добавить новые викикоманды, если они нужны
-        self._commands = [CommandInsertDiagram]
+        self._commands = [CommandDiagram]
 
 
     def initialize (self):

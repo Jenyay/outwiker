@@ -8,7 +8,7 @@ from outwiker.pages.wiki.thumbnails import Thumbnails
 from outwiker.core.system import getOS
 
 
-class CommandInsertDiagram (Command):
+class CommandDiagram (Command):
     """
     Команда (:diagram:) для википарсера
     """
@@ -34,7 +34,7 @@ class CommandInsertDiagram (Command):
         Запустить команду на выполнение.
         Метод возвращает текст, который будет вставлен на место команды в вики-нотации
         """
-        # params_dict = Command.parseParams (params)
+        from blockdiag.parser import ParseException
         thumb = Thumbnails(self.parser.page)
         thumbPath = thumb.getThumbPath(True)
 
@@ -44,7 +44,10 @@ class CommandInsertDiagram (Command):
 
         self._diagramNumber += 1
 
-        self._createDiagram (content, imagePath)
+        try:
+            self._createDiagram (content, imagePath)
+        except ParseException, e:
+            return u"<b>{}</b>".format (e)
 
         return u'<img src="{}/{}"/>'.format (thumb.getRelativeThumbDir(), fname)
 
@@ -66,7 +69,9 @@ class CommandInsertDiagram (Command):
         fontmap = FontMap()
         fontmap.set_default_font (font)
 
-        tree = parse_string (content)
+        text = u"blockdiag {{ {content} }}".format (content=content)
+
+        tree = parse_string (text)
         diagram = ScreenNodeBuilder.build (tree)
 
         draw = DiagramDraw ("png", diagram, imagePath, fontmap=fontmap, antialias=True)
