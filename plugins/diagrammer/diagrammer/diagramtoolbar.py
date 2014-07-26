@@ -12,7 +12,7 @@ class DiagramToolBar (BaseToolBar):
 
 
     def _createPane (self):
-        return wx.aui.AuiPaneInfo().Name(self.name).Caption(self.caption).ToolbarPane().Top().Position(0)
+        return wx.aui.AuiPaneInfo().Name(self.name).Caption(self.caption).ToolbarPane().Top().Position(300)
 
 
     @property
