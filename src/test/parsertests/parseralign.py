@@ -95,6 +95,27 @@ class ParserAlignTest (unittest.TestCase):
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
 
+    def testRight2 (self):
+        text = u"бла-бла-бла \n% right %(:command:)"
+        result = u'бла-бла-бла \n<div align="right">(:command:)</div>'
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testRight3 (self):
+        text = u"бла-бла-бла \n% right %(:command:)\nАбырвалг"
+        result = u'бла-бла-бла \n<div align="right">(:command:)</div>\nАбырвалг'
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testRight4 (self):
+        text = u"бла-бла-бла \n% right %Абырвалг (:command:)\nАбырвалг"
+        result = u'бла-бла-бла \n<div align="right">Абырвалг (:command:)\nАбырвалг</div>'
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
     def testLeft1 (self):
         text = u"%left%бла-бла-бла \n'''кхм''' бла-бла-бла\n\nбла-бла-бла"
         result = u'<div align="left">бла-бла-бла \n<b>кхм</b> бла-бла-бла</div>\n\nбла-бла-бла'
