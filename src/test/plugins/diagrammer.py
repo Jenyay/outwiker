@@ -59,5 +59,68 @@ class DiagrammerTest (unittest.TestCase):
         result = self.parser.toHtml (text)
         self.assertIn (validResult, result)
 
+        # Признак ошибки
+        self.assertNotIn (u"<b>", result)
+
         self.assertTrue (os.path.exists (self.thumbFullPath))
         self.assertEqual (len (os.listdir(self.thumbFullPath)), 1)
+
+
+    def test_simple (self):
+        text = u"(:diagram:)Абырвалг -> Блаблабла(:diagramend:)"
+        validResult = u'<img src="{}/__diagram_'.format (self.thumbDir)
+
+        result = self.parser.toHtml (text)
+        self.assertIn (validResult, result)
+
+        # Признак ошибки
+        self.assertNotIn (u"<b>", result)
+
+        self.assertTrue (os.path.exists (self.thumbFullPath))
+        self.assertEqual (len (os.listdir(self.thumbFullPath)), 1)
+
+
+    def test_double (self):
+        text = u"""(:diagram:)Абырвалг -> Блаблабла(:diagramend:)
+(:diagram:)Абыр -> валг -> Блаблабла(:diagramend:)"""
+
+        validResult = u'<img src="{}/__diagram_'.format (self.thumbDir)
+
+        result = self.parser.toHtml (text)
+        self.assertIn (validResult, result)
+
+        # Признак ошибки
+        self.assertNotIn (u"<b>", result)
+
+        self.assertTrue (os.path.exists (self.thumbFullPath))
+        self.assertEqual (len (os.listdir(self.thumbFullPath)), 2)
+
+
+    def test_copy (self):
+        text = u"""(:diagram:)Абырвалг -> Блаблабла(:diagramend:)
+(:diagram:)Абырвалг -> Блаблабла(:diagramend:)"""
+
+        validResult = u'<img src="{}/__diagram_'.format (self.thumbDir)
+
+        result = self.parser.toHtml (text)
+        self.assertIn (validResult, result)
+
+        # Признак ошибки
+        self.assertNotIn (u"<b>", result)
+
+        self.assertTrue (os.path.exists (self.thumbFullPath))
+        self.assertEqual (len (os.listdir(self.thumbFullPath)), 1)
+
+
+    def testError (self):
+        text = u"(:diagram:)a - b(:diagramend:)"
+        validResult = u'<img src="{}/__diagram_'.format (self.thumbDir)
+
+        result = self.parser.toHtml (text)
+        self.assertNotIn (validResult, result)
+
+        # Признак ошибки
+        self.assertIn (u"<b>", result)
+
+        # Папка для превьюшек все равно создается
+        self.assertTrue (os.path.exists (self.thumbFullPath))

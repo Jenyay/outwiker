@@ -7,6 +7,8 @@ from outwiker.pages.wiki.parser.command import Command
 from outwiker.pages.wiki.thumbnails import Thumbnails
 from outwiker.core.system import getOS
 
+from .i18n import get_
+
 
 class CommandDiagram (Command):
     """
@@ -19,6 +21,9 @@ class CommandDiagram (Command):
         Command.__init__ (self, parser)
         self._diagramNumber = 0
         self._fileNameFormat = u"__diagram_{}"
+
+        global _
+        _ = get_()
 
 
     @property
@@ -46,8 +51,8 @@ class CommandDiagram (Command):
 
         try:
             self._createDiagram (content, imagePath)
-        except ParseException, e:
-            return u"<b>{}</b>".format (e)
+        except ParseException:
+            return u"<b>{}</b>".format(_(u"Diagram parsing error"))
 
         return u'<img src="{}/{}"/>'.format (thumb.getRelativeThumbDir(), fname)
 
