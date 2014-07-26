@@ -19,7 +19,6 @@ class CommandDiagram (Command):
         parser - экземпляр парсера
         """
         Command.__init__ (self, parser)
-        self._diagramNumber = 0
         self._fileNameFormat = u"__diagram_{}"
 
         global _
@@ -47,12 +46,11 @@ class CommandDiagram (Command):
         fname = self._fileNameFormat.format (md5)
         imagePath = os.path.join (thumbPath, fname)
 
-        self._diagramNumber += 1
-
-        try:
-            self._createDiagram (content, imagePath)
-        except ParseException:
-            return u"<b>{}</b>".format(_(u"Diagram parsing error"))
+        if not os.path.exists (imagePath):
+            try:
+                self._createDiagram (content, imagePath)
+            except ParseException:
+                return u"<b>{}</b>".format(_(u"Diagram parsing error"))
 
         return u'<img src="{}/{}"/>'.format (thumb.getRelativeThumbDir(), fname)
 
