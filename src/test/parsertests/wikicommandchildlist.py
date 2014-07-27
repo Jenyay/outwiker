@@ -31,8 +31,11 @@ class WikiChildListCommandTest (unittest.TestCase):
 
         factory = WikiPageFactory()
         factory.create (self.rootwiki, u"Страница 1", [])
+        time.sleep (0.1)
         factory.create (self.rootwiki[u"Страница 1"], u"Страница 2", [])
+        time.sleep (0.1)
         factory.create (self.rootwiki[u"Страница 1"], u"Страница 4", [])
+        time.sleep (0.1)
         factory.create (self.rootwiki[u"Страница 1"], u"СТРАНИЦА 3", [])
 
         self.testPage = self.rootwiki[u"Страница 1"]
@@ -178,6 +181,10 @@ class WikiChildListCommandTest (unittest.TestCase):
     def testSortEdit_03 (self):
         text = u"(:childlist sort=edit:)"
 
+        self.rootwiki[u"Страница 1/Страница 2"].content = u"111"
+        time.sleep (0.1)
+        self.rootwiki[u"Страница 1/Страница 4"].content = u"111"
+        time.sleep (0.1)
         self.rootwiki[u"Страница 1/СТРАНИЦА 3"].content = u"111"
 
         result = self.parser.toHtml (text)

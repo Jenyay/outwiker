@@ -27,7 +27,7 @@ class DiagrammerTest (unittest.TestCase):
         self.factory = ParserFactory()
         self.parser = self.factory.make (self.testPage, Application.config)
 
-        self.thumbDir = u"__attach/__thumb"
+        self.thumbDir = os.path.join (u"__attach", u"__thumb")
         self.thumbFullPath = os.path.join (self.testPage.path, self.thumbDir)
 
 
