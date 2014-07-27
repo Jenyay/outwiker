@@ -124,3 +124,45 @@ class DiagrammerTest (unittest.TestCase):
 
         # Папка для превьюшек все равно создается
         self.assertTrue (os.path.exists (self.thumbFullPath))
+
+
+    def testShapes (self):
+        template = u'a{n}[shape = {shape}]'
+        shapes = [
+                "actor",
+                "beginpoint",
+                "box",
+                "circle",
+                "cloud",
+                "diamond",
+                "dots",
+                "ellipse",
+                "endpoint",
+                "mail",
+                "minidiamond",
+                "none",
+                "note",
+                "roundedbox",
+                "square",
+                "textbox",
+                "flowchart.database",
+                "flowchart.input",
+                "flowchart.loopin",
+                "flowchart.loopout",
+                "flowchart.terminator",
+                ]
+
+        lines = [u"(:diagram:)"]
+
+        for n, shape in zip (range (len (shapes)), shapes):
+            lines.append (template.format (n = n, shape = shape))
+
+        lines .append (u"(:diagramend:)")
+        text = u"\n".join (lines)
+
+        validResult = u'<img src="{}/__diagram_'.format (self.thumbDir)
+        result = self.parser.toHtml (text)
+        self.assertIn (validResult, result)
+
+        # Признак ошибки
+        self.assertNotIn (u"<b>", result)
