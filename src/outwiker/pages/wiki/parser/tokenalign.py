@@ -34,16 +34,17 @@ class AlignToken (object):
         start = Regex ("%\\s*(?P<align>(left)|(right)|(center)|(justify))\\s*%",
                 re.I | re.U)
 
-        text = Regex ("(?P<text>.*?)(?P<end>(\n\n)|\Z)", re.M | re.S | re.I | re.U)
-        command = CommandFactory.make(self.parser)
+        text = Regex (r'''(?P<text>
+        .*?
+        (\(:\s*(?P<name>\w+).*?:\)
+        (.*?                           # Контент между (:name:) и (:nameend:)
+        \(:\s*(?P=name)end\s*:\))?.*?)
+        |(.*?))
+                (?P<end>(\n\n)|\Z)''',
+                re.M | re.S | re.I | re.U | re.X)
 
         alignText = start + text
         alignText.setParseAction(self._alignText)
+        alignText = alignText(u"alignment")
 
-        alignCommand = start + command
-        alignCommand.setParseAction (self._alignCommand)
-
-        align = alignCommand | alignText
-        align = align(u"alignment")
-
-        return align
+        return alignText

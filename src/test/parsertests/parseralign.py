@@ -104,7 +104,7 @@ class ParserAlignTest (unittest.TestCase):
 
     def testRight3 (self):
         text = u"бла-бла-бла \n% right %(:command:)\nАбырвалг"
-        result = u'бла-бла-бла \n<div align="right">(:command:)</div>\nАбырвалг'
+        result = u'бла-бла-бла \n<div align="right">(:command:)\nАбырвалг</div>'
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
@@ -112,6 +112,34 @@ class ParserAlignTest (unittest.TestCase):
     def testRight4 (self):
         text = u"бла-бла-бла \n% right %Абырвалг (:command:)\nАбырвалг"
         result = u'бла-бла-бла \n<div align="right">Абырвалг (:command:)\nАбырвалг</div>'
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testRight5 (self):
+        text = u"бла-бла-бла \n% right %(:command:) Абырвалг"
+        result = u'бла-бла-бла \n<div align="right">(:command:) Абырвалг</div>'
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testRight6 (self):
+        text = u"бла-бла-бла \n% right %(:command:) Абырвалг\n\n111"
+        result = u'бла-бла-бла \n<div align="right">(:command:) Абырвалг</div>\n\n111'
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testRight7 (self):
+        text = u"бла-бла-бла \n% right %(:command:)qqq\n\nwww\n(:commandend:) Абырвалг\n\n111"
+        result = u'бла-бла-бла \n<div align="right">(:command:)qqq\n\nwww\n(:commandend:) Абырвалг</div>\n\n111'
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testRight8 (self):
+        text = u"бла-бла-бла \n% right %1111 (:command:)qqq\n\nwww\n(:commandend:) Абырвалг\n\n111"
+        result = u'бла-бла-бла \n<div align="right">1111 (:command:)qqq\n\nwww\n(:commandend:) Абырвалг</div>\n\n111'
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
