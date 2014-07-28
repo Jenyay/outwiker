@@ -5,9 +5,9 @@ import hashlib
 
 from outwiker.pages.wiki.parser.command import Command
 from outwiker.pages.wiki.thumbnails import Thumbnails
-from outwiker.core.system import getOS
 
 from .i18n import get_
+from .diagramrender import DiagramRender
 
 
 class CommandDiagram (Command):
@@ -46,37 +46,12 @@ class CommandDiagram (Command):
         fname = self._fileNameFormat.format (md5)
         imagePath = os.path.join (thumbPath, fname)
 
+        render = DiagramRender()
+
         if not os.path.exists (imagePath):
             try:
-                self._createDiagram (content, imagePath)
+                render.renderToFile (content, imagePath)
             except ParseException:
                 return u"<b>{}</b>".format(_(u"Diagram parsing error"))
 
         return u'<img src="{}/{}"/>'.format (thumb.getRelativeThumbDir(), fname)
-
-
-    def _createDiagram (self, content, imagePath):
-        """
-        content - текст, описывающий диаграмму
-        imagePath - полный путь до создаваемого файла
-        """
-        from blockdiag.parser import parse_string
-        from blockdiag.drawer import DiagramDraw
-        from blockdiag.builder import ScreenNodeBuilder
-        from blockdiag.utils.fontmap import FontMap
-
-        font = os.path.join (unicode (os.path.dirname(os.path.abspath(__file__)),
-                                      getOS().filesEncoding),
-                             u"fonts", u"Ubuntu-R.ttf")
-
-        fontmap = FontMap()
-        fontmap.set_default_font (font)
-
-        text = u"blockdiag {{ {content} }}".format (content=content)
-
-        tree = parse_string (text)
-        diagram = ScreenNodeBuilder.build (tree)
-
-        draw = DiagramDraw ("png", diagram, imagePath, fontmap=fontmap, antialias=True)
-        draw.draw()
-        draw.save()
