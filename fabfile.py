@@ -7,7 +7,7 @@ import os.path
 from fabric.api import local, lcd
 
 # Поддерживаемые дистрибутивы Ubuntu
-distribs = ["trusty", "saucy", "precise", "utopic"]
+distribs = ["trusty", "precise", "utopic"]
 
 
 def _getVersion():
