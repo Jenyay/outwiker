@@ -12,7 +12,8 @@ from .i18n import get_
 from .diagramtoolbar import DiagramToolBar
 
 # Импортировать все Actions
-from .actioninsertdiagram import InsertDiagramAction
+from .actions.insertdiagram import InsertDiagramAction
+from .actions.help import HelpAction
 
 
 class GuiCreator (object):
@@ -24,7 +25,7 @@ class GuiCreator (object):
         self._application = application
 
         # Сюда добавить все Actions
-        self._actions = [InsertDiagramAction]
+        self._actions = [InsertDiagramAction, HelpAction]
 
         # MenuItem создаваемого подменю
         self._submenuItem = None
@@ -64,6 +65,12 @@ class GuiCreator (object):
             InsertDiagramAction.stringId,
             toolbar,
             self._getImagePath ("diagram.png"))
+
+
+        self._application.actionController.appendToolbarButton (
+            HelpAction.stringId,
+            toolbar,
+            self._getImagePath ("help.png"))
 
         self._getPageView().Bind (EVT_PAGE_TAB_CHANGED, self._onTabChanged)
         self._enableTools()

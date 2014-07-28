@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 from outwiker.gui.baseaction import BaseAction
-from .i18n import get_
+from ..i18n import get_
 
 
 class InsertDiagramAction (BaseAction):
