@@ -36,9 +36,8 @@ class AlignToken (object):
         .*?
         (\(:\s*(?P<name>\w+).*?:\)
         (.*?                           # Контент между (:name:) и (:nameend:)
-        \(:\s*(?P=name)end\s*:\))?.*?)*?
-        |(.*?))
-                (?P<end>(\n\n)|\Z)''',
+        \(:\s*(?P=name)end\s*:\))?.*?)*?)
+        (?P<end>(\n\n)|\Z)''',
                       re.M | re.S | re.I | re.U | re.X)
 
         alignText = start + text
