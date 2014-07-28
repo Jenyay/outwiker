@@ -7,20 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: diagrammer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-26 16:30+0400\n"
-"PO-Revision-Date: 2014-07-26 16:33+0300\n"
-"Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
+"POT-Creation-Date: 2014-07-28 21:13+0400\n"
+"PO-Revision-Date: 2014-07-28 21:14+0300\n"
+"Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: jenyay.net <jenyay.ilin@gmail.com>\n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.5.4\n"
-"Language: en\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-
-#: actioninsertdiagram.py:22 actioninsertdiagram.py:27
-msgid "Insert diagram"
-msgstr "Insert diagram"
 
 #: commanddiagram.py:55
 msgid "Diagram parsing error"
@@ -37,3 +33,22 @@ msgstr "http://jenyay.net/Outwiker/DiagrammerEn"
 #: diagramtoolbar.py:25
 msgid "Diagrammer"
 msgstr "Diagrammer"
+
+#: actions/help.py:24
+msgid "Online Help"
+msgstr "Online Help"
+
+#: actions/help.py:29
+msgid "Diagrammer. Go to blockdiag webpage"
+msgstr "Diagrammer. Go to blockdiag webpage"
+
+#: actions/insertdiagram.py:22
+msgid "Insert diagram"
+msgstr "Insert diagram"
+
+#: actions/insertdiagram.py:27
+msgid "Diagrammer. Insert diagram"
+msgstr "Diagrammer. Insert diagram"
+
+#~ msgid "Go to help webpage"
+#~ msgstr "Go to help webpage"

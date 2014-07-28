@@ -24,7 +24,7 @@ class InsertDiagramAction (BaseAction):
 
     @property
     def description (self):
-        return _(u"Insert diagram")
+        return _(u"Diagrammer. Insert diagram")
 
 
     def run (self, params):

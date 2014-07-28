@@ -26,7 +26,7 @@ class HelpAction (BaseAction):
 
     @property
     def description (self):
-        return _(u"Go to help webpage")
+        return _(u"Diagrammer. Go to blockdiag webpage")
 
 
     def run (self, params):
