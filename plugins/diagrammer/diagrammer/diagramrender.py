@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 
+import os
 import os.path
 
 from outwiker.core.system import getOS
@@ -14,54 +15,60 @@ class DiagramRender (object):
 
 
     @staticmethod
+    def _initPackage (packagename, modulename):
+        """
+        Инициализировать пакет с рендерами узлов
+        packagename - например, "blockdiag.noderenderer", а modulename - "circle"
+        """
+        packageFullName = ".".join ([packagename, modulename])
+
+        # Импортируем модуль, чтобы узнать полное имя файла до него
+        try:
+            rootmodule = __import__ (packageFullName, fromlist=[modulename])
+        except (ImportError, ValueError):
+            return
+
+        if rootmodule is None:
+            return
+
+        path = unicode (os.path.dirname(os.path.abspath(rootmodule.__file__)),
+                        getOS().filesEncoding)
+
+        extension = ".py"
+
+        # Перебираем все модули внутри пакета
+        for fname in os.listdir (path):
+            fullpath = os.path.join (path, fname)
+
+            # Все папки пытаемся открыть как вложенный пакет
+            if os.path.isdir (fullpath):
+                DiagramRender._initPackage (packageFullName, fname.encode (getOS().filesEncoding))
+            else:
+                # Проверим, что файл может быть модулем
+                if fname.endswith (extension) and fname != "__init__.py":
+                    nestedmodulename = fname[: -len (extension)]
+                    # Попытаться импортировать функцию setup из модуля
+                    try:
+                        currentmodulename = packageFullName + "." + nestedmodulename
+                        module = __import__ (currentmodulename, fromlist=["setup"])
+                    except ImportError:
+                        continue
+
+                    try:
+                        module.setup(module)
+                    except AttributeError:
+                        continue
+
+
+    @staticmethod
     def initialize ():
-        import blockdiag.noderenderer.actor
-        import blockdiag.noderenderer.beginpoint
-        import blockdiag.noderenderer.box
-        import blockdiag.noderenderer.circle
-        import blockdiag.noderenderer.cloud
-        import blockdiag.noderenderer.diamond
-        import blockdiag.noderenderer.dots
-        import blockdiag.noderenderer.ellipse
-        import blockdiag.noderenderer.endpoint
-        import blockdiag.noderenderer.mail
-        import blockdiag.noderenderer.minidiamond
-        import blockdiag.noderenderer.none
-        import blockdiag.noderenderer.note
-        import blockdiag.noderenderer.roundedbox
-        import blockdiag.noderenderer.square
-        import blockdiag.noderenderer.textbox
-        import blockdiag.noderenderer.flowchart.database
-        import blockdiag.noderenderer.flowchart.input
-        import blockdiag.noderenderer.flowchart.loopin
-        import blockdiag.noderenderer.flowchart.loopout
-        import blockdiag.noderenderer.flowchart.terminator
+        """
+        Инициализировать blockdiag. Нужно вызывать хотя бы один раз за время работы программы до рендеринга диаграмм.
+        """
+        DiagramRender._initPackage ("blockdiag", "noderenderer")
 
         from blockdiag.imagedraw.png import setup
-
         setup(None)
-        blockdiag.noderenderer.actor.setup(None)
-        blockdiag.noderenderer.beginpoint.setup(None)
-        blockdiag.noderenderer.box.setup(None)
-        blockdiag.noderenderer.circle.setup(None)
-        blockdiag.noderenderer.cloud.setup(None)
-        blockdiag.noderenderer.diamond.setup(None)
-        blockdiag.noderenderer.dots.setup(None)
-        blockdiag.noderenderer.ellipse.setup(None)
-        blockdiag.noderenderer.endpoint.setup(None)
-        blockdiag.noderenderer.mail.setup(None)
-        blockdiag.noderenderer.minidiamond.setup(None)
-        blockdiag.noderenderer.none.setup(None)
-        blockdiag.noderenderer.note.setup(None)
-        blockdiag.noderenderer.roundedbox.setup(None)
-        blockdiag.noderenderer.square.setup(None)
-        blockdiag.noderenderer.textbox.setup(None)
-
-        blockdiag.noderenderer.flowchart.database.setup(None)
-        blockdiag.noderenderer.flowchart.input.setup(None)
-        blockdiag.noderenderer.flowchart.loopin.setup(None)
-        blockdiag.noderenderer.flowchart.loopout.setup(None)
-        blockdiag.noderenderer.flowchart.terminator.setup(None)
 
 
     def renderToFile (self, content, imagePath):
