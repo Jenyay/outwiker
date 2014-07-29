@@ -52,7 +52,7 @@ else:
 
         @property
         def url (self):
-            return _(u"http://jenyay.net/Outwiker/SessionEn")
+            return _(u"http://jenyay.net/Outwiker/SessionsEn")
 
 
         def initialize(self):
