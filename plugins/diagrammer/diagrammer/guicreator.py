@@ -14,6 +14,7 @@ from .diagramtoolbar import DiagramToolBar
 # Импортировать все Actions
 from .actions.insertdiagram import InsertDiagramAction
 from .actions.help import HelpAction
+from .actions.insertnode import InsertNodeAction
 
 
 class GuiCreator (object):
@@ -25,7 +26,7 @@ class GuiCreator (object):
         self._application = application
 
         # Сюда добавить все Actions
-        self._actions = [InsertDiagramAction, HelpAction]
+        self._actions = [InsertDiagramAction, InsertNodeAction, HelpAction]
 
         # MenuItem создаваемого подменю
         self._submenuItem = None
@@ -65,6 +66,12 @@ class GuiCreator (object):
             InsertDiagramAction.stringId,
             toolbar,
             self._getImagePath ("diagram.png"))
+
+
+        self._application.actionController.appendToolbarButton (
+            InsertNodeAction.stringId,
+            toolbar,
+            self._getImagePath ("node.png"))
 
 
         self._application.actionController.appendToolbarButton (
