@@ -5,6 +5,8 @@
 """
 import os.path
 
+import wx
+
 from outwiker.core.system import getOS
 from outwiker.pages.html.basehtmlpanel import EVT_PAGE_TAB_CHANGED
 
@@ -30,6 +32,7 @@ class GuiCreator (object):
 
         # MenuItem создаваемого подменю
         self._submenuItem = None
+        self._menu = wx.Menu()
 
         self.__toolbarCreated = False
         self.ID_TOOLBAR = u"Diagrammer"
@@ -53,7 +56,9 @@ class GuiCreator (object):
         self.__createToolBar()
 
         # Меню, куда будут добавляться команды
-        menu = self._getPageView().commandsMenu
+        # menu = self._getPageView().commandsMenu
+        menu = self._menu
+        self._submenuItem = self.__getParentMenu().AppendSubMenu (self._menu, _(u"Diagrammer"))
 
         map (lambda action: self._application.actionController.appendMenuItem (
             action.stringId, menu), self._actions)
@@ -81,6 +86,10 @@ class GuiCreator (object):
 
         self._getPageView().Bind (EVT_PAGE_TAB_CHANGED, self._onTabChanged)
         self._enableTools()
+
+
+    def __getParentMenu (self):
+        return self._getPageView().toolsMenu
 
 
     def __createToolBar (self):
@@ -121,6 +130,8 @@ class GuiCreator (object):
                  self._actions)
 
             self.__destroyToolBar()
+
+            self.__getParentMenu().RemoveItem (self._submenuItem)
 
 
 
