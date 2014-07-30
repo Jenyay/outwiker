@@ -39,4 +39,5 @@ class InsertNodeAction (BaseAction):
             result = controller.showDialog()
 
             if result == wx.ID_OK:
-                pass
+                codeEditor = self._application.mainWindow.pagePanel.pageView.codeEditor
+                codeEditor.replaceText (controller.getResult())

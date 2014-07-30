@@ -28,6 +28,11 @@ class InsertNodeDialog (TestedDialog):
         return self._name.GetValue()
 
 
+    @name.setter
+    def name (self, value):
+        return self._name.SetValue (value)
+
+
     def __onOk (self, event):
         if len (self.name.strip()) == 0:
             MessageBox (_(u"Node name can't be empty"),
@@ -46,6 +51,7 @@ class InsertNodeDialog (TestedDialog):
         self.__createNameRow (mainSizer)
         self.__createOkCancelButtons (mainSizer)
         self.SetSizer (mainSizer)
+        self._name.SetFocus()
 
 
     def __createNameRow (self, mainSizer):
@@ -87,4 +93,24 @@ class InsertNodeController (object):
 
     def showDialog (self):
         result = self._dialog.ShowModal()
+        return result
+
+
+    def getResult (self):
+        """
+        Возвращает строку для создания нового узла в соответствии с параметрами, установленными в диалоге.
+        Считается, что этот метод вызывают после того, как showDialog вернул значение wx.ID_OK
+        """
+        name = self._dialog.name
+        params = self._getParamString (self._dialog).strip()
+
+        if len (params) == 0:
+            return name
+        else:
+            return u"{}[{}];".format (name, params)
+
+
+    def _getParamString (self, dialog):
+        result = u""
+
         return result

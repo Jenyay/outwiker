@@ -14,6 +14,7 @@ if getCurrentVersion() < Version (1, 8, 0, 735, status=StatusSet.DEV):
 else:
     from .i18n import set_
     from .controller import Controller
+    from .actions.insertnodedialog import InsertNodeDialog, InsertNodeController
 
     class PluginDiagrammer (Plugin):
         def __init__ (self, application):
@@ -90,3 +91,13 @@ else:
                 print e
 
             set_(_)
+
+
+        @property
+        def InsertNodeDialog (self):
+            return InsertNodeDialog
+
+
+        @property
+        def InsertNodeController (self):
+            return InsertNodeController
