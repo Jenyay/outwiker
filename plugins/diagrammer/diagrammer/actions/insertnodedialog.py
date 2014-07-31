@@ -32,10 +32,16 @@ class InsertNodeDialog (TestedDialog):
         self.Bind (wx.EVT_BUTTON, self.__onOk, id = wx.ID_OK)
         self.Bind (wx.EVT_COLLAPSIBLEPANE_CHANGED, self.__onPaneChanged)
         self.Bind (wx.EVT_TEXT, self.__onNameChanged, self._name)
-        self.Bind (wx.EVT_CHECKBOX, self.__onBackChecked, self._backColorCheckBox)
+        self.Bind (wx.EVT_CHECKBOX, self.__onBackColorChecked, self._backColorCheckBox)
+        self.Bind (wx.EVT_CHECKBOX, self.__onTextColorChecked, self._textColorCheckBox)
 
         self._backColorCheckBox.SetValue (False)
         self._backColor.Enabled = False
+
+        self._textColorCheckBox.SetValue (False)
+        self._textColor.Enabled = False
+
+        self.Center(wx.CENTRE_ON_SCREEN)
 
 
     @property
@@ -125,6 +131,26 @@ class InsertNodeDialog (TestedDialog):
         self._backColor.SetColour (value)
 
 
+    @property
+    def isTextColorChanged (self):
+        return self._textColorCheckBox.GetValue()
+
+
+    @isTextColorChanged.setter
+    def isTextColorChanged (self, value):
+        self._textColorCheckBox.SetValue (value)
+
+
+    @property
+    def textColor (self):
+        return self._textColor.GetColour().GetAsString (wx.C2S_NAME | wx.C2S_HTML_SYNTAX)
+
+
+    @textColor.setter
+    def textColor (self, value):
+        self._textColor.SetColour (value)
+
+
     def __onPaneChanged (self, event):
         self.Fit()
 
@@ -133,8 +159,12 @@ class InsertNodeDialog (TestedDialog):
         self._label.SetValue (self._name.GetValue())
 
 
-    def __onBackChecked (self, event):
+    def __onBackColorChecked (self, event):
         self._backColor.Enabled = self._backColorCheckBox.GetValue()
+
+
+    def __onTextColorChecked (self, event):
+        self._textColor.Enabled = self._textColorCheckBox.GetValue()
 
 
     def __onOk (self, event):
@@ -166,6 +196,7 @@ class InsertNodeDialog (TestedDialog):
         self.__createLabelRow (optionsSizer)
         self.__createBorderStyleRow (optionsSizer)
         self.__createBackColorRow (optionsSizer)
+        self.__createTextColorRow (optionsSizer)
 
         self._paramsPanel.GetPane().SetSizer (optionsSizer)
 
@@ -309,6 +340,27 @@ class InsertNodeDialog (TestedDialog):
                           )
 
 
+    def __createTextColorRow (self, optionsSizer):
+        """
+        Создать элементы для выбора цвета текста узла
+        """
+        self._textColorCheckBox = wx.CheckBox (self._paramsPanel.GetPane(),
+                                               label = _(u"Set background color"))
+
+        self._textColor = wx.ColourPickerCtrl (self._paramsPanel.GetPane(),
+                                               col=u"black")
+
+        optionsSizer.Add (self._textColorCheckBox,
+                          flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+                          border = 2
+                          )
+
+        optionsSizer.Add (self._textColor,
+                          flag = wx.ALL | wx.EXPAND,
+                          border = 2
+                          )
+
+
     def __createOkCancelButtons (self, optionsSizer):
         okCancel = self.CreateButtonSizer (wx.OK | wx.CANCEL)
         optionsSizer.AddStretchSpacer()
@@ -352,7 +404,8 @@ class InsertNodeController (object):
         params.append (self._getBorderStyleParam (dialog))
         params.append (self._getStackedParam (dialog))
         params.append (self._getLabelParam (dialog))
-        params.append (self._getbackColorParam (dialog))
+        params.append (self._getBackColorParam (dialog))
+        params.append (self._getTextColorParam (dialog))
 
         return u", ".join ([param for param in params if len (param.strip()) != 0])
 
@@ -396,5 +449,9 @@ class InsertNodeController (object):
         return u'label = "{}"'.format (dialog.label) if dialog.label != dialog.name else u""
 
 
-    def _getbackColorParam (self, dialog):
+    def _getBackColorParam (self, dialog):
         return u'color = "{}"'.format (dialog.backColor) if dialog.isBackColorChanged else u""
+
+
+    def _getTextColorParam (self, dialog):
+        return u'textcolor = "{}"'.format (dialog.textColor) if dialog.isTextColorChanged else u""

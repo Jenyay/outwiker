@@ -355,3 +355,56 @@ class InsertNodeTest (unittest.TestCase):
 
         result = controller.getResult ()
         self.assertEqual (result, u'Абырвалг [shape = actor, color = "#AAAAAA"];')
+
+
+    def testTextColor_01 (self):
+        dlg = self.plugin.InsertNodeDialog(None)
+        controller = self.plugin.InsertNodeController (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.name = u"Абырвалг"
+        dlg.isTextColorChanged = True
+        dlg.textColor = u"black"
+
+        result = controller.getResult ()
+        self.assertEqual (result, u'Абырвалг [textcolor = "black"];')
+
+
+    def testTextColor_02 (self):
+        dlg = self.plugin.InsertNodeDialog(None)
+        controller = self.plugin.InsertNodeController (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.name = u"Абырвалг"
+        dlg.isTextColorChanged = True
+        dlg.textColor = u"#AAAAAA"
+
+        result = controller.getResult ()
+        self.assertEqual (result, u'Абырвалг [textcolor = "#AAAAAA"];')
+
+
+    def testTextColor_03 (self):
+        dlg = self.plugin.InsertNodeDialog(None)
+        controller = self.plugin.InsertNodeController (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.name = u"Абырвалг"
+        dlg.isTextColorChanged = False
+        dlg.textColor = u"#AAAAAA"
+
+        result = controller.getResult ()
+        self.assertEqual (result, u'Абырвалг')
+
+
+    def testTextColor_04 (self):
+        dlg = self.plugin.InsertNodeDialog(None)
+        controller = self.plugin.InsertNodeController (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.name = u"Абырвалг"
+        dlg.setShapeSelection (1)
+        dlg.isTextColorChanged = True
+        dlg.textColor = u"#AAAAAA"
+
+        result = controller.getResult ()
+        self.assertEqual (result, u'Абырвалг [shape = actor, textcolor = "#AAAAAA"];')
