@@ -18,6 +18,13 @@ class InsertNodeDialog (TestedDialog):
                                                  style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.THICK_FRAME,
                                                  title=_(u"Insert Node"))
 
+        self._borderStyles = [
+            (_(u"Default"), u""),
+            (_(u"Solid"), u"solid"),
+            (_(u"Dotted"), u"dotted"),
+            (_(u"Dashed"), u"dashed"),
+        ]
+
         self.__createGui()
 
         self.Bind (wx.EVT_BUTTON, self.__onOk, id=wx.ID_OK)
@@ -49,6 +56,27 @@ class InsertNodeDialog (TestedDialog):
         self._shape.SetSelection (index)
 
 
+    @property
+    def borderStyle (self):
+        """
+        Возвращает стиль рамки
+        """
+        index = self._borderStyle.GetSelection()
+        if index == wx.NOT_FOUND:
+            return self._borderStyle.GetValue()
+
+        return self._borderStyles[index][1]
+
+
+    @borderStyle.setter
+    def borderStyle (self, value):
+        self._borderStyle.SetValue (value)
+
+
+    def setBorderStyleIndex (self, value):
+        self._borderStyle.SetSelection (value)
+
+
     def __onOk (self, event):
         if len (self.name.strip()) == 0:
             MessageBox (_(u"Node name can't be empty"),
@@ -66,6 +94,7 @@ class InsertNodeDialog (TestedDialog):
 
         self.__createNameRow (mainSizer)
         self.__createShapeRow (mainSizer)
+        self.__createBorderStyleRow (mainSizer)
         self.__createOkCancelButtons (mainSizer)
 
         self.SetSizer (mainSizer)
@@ -115,6 +144,29 @@ class InsertNodeDialog (TestedDialog):
                        )
 
 
+    def __createBorderStyleRow (self, mainSizer):
+        """
+        Создать элементы для выбора стиля рамки
+        """
+        styleLabel = wx.StaticText (self, label = _(u"Border style"))
+        self._borderStyle = wx.ComboBox (self, style = wx.CB_DROPDOWN)
+        styles = [style[0] for style in self._borderStyles]
+
+        self._borderStyle.Clear()
+        self._borderStyle.AppendItems (styles)
+        self._borderStyle.SetSelection (0)
+
+        mainSizer.Add (styleLabel,
+                       flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+                       border = 2
+                       )
+
+        mainSizer.Add (self._borderStyle,
+                       flag = wx.ALL | wx.EXPAND,
+                       border = 2
+                       )
+
+
     def __createOkCancelButtons (self, mainSizer):
         okCancel = self.CreateButtonSizer (wx.OK | wx.CANCEL)
         mainSizer.AddStretchSpacer()
@@ -155,11 +207,30 @@ class InsertNodeController (object):
     def _getParamString (self, dialog):
         params = []
         params.append (self._getShapeParam (dialog))
+        params.append (self._getBorderStyleParam (dialog))
 
         return u", ".join ([param for param in params if len (param.strip()) != 0])
 
 
     def _getShapeParam (self, dialog):
+        """
+        Возвращает строку с параметром, задающим фигуру
+        """
         shape = dialog.shape
 
         return u"shape = {}".format (shape) if len (shape) != 0 else u""
+
+
+    def _getBorderStyleParam (self, dialog):
+        """
+        Возвращает строку с параметром, задающим стиль рамки
+        """
+        style = dialog.borderStyle.lower().strip().replace (u" ", u"")
+
+        if len (style) == 0:
+            return u""
+
+        if style[0].isdigit():
+            return u'style = "{}"'.format (style)
+
+        return u"style = {}".format (style)
