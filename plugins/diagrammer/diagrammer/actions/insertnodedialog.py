@@ -228,8 +228,8 @@ class InsertNodeDialog (TestedDialog):
 
     def __onOk (self, event):
         if len (self.name.strip()) == 0:
-            MessageBox (_(u"Node name can't be empty"),
-                        u"Node name is empty",
+            MessageBox (_(u"Name of a node can't be empty"),
+                        u"Name of a node is empty",
                         wx.ICON_ERROR | wx.OK)
             return
 

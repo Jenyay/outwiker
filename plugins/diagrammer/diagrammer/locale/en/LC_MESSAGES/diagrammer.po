@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: diagrammer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-28 21:13+0400\n"
-"PO-Revision-Date: 2014-07-28 21:14+0300\n"
+"POT-Creation-Date: 2014-07-31 17:22+0400\n"
+"PO-Revision-Date: 2014-07-31 17:23+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: jenyay.net <jenyay.ilin@gmail.com>\n"
 "Language: en\n"
@@ -22,15 +22,15 @@ msgstr ""
 msgid "Diagram parsing error"
 msgstr "Diagram parsing error"
 
-#: diagrammer.py:43
+#: diagrammer.py:46
 msgid "Plugin for the construction of diagrams"
 msgstr "Plugin for the construction of diagrams"
 
-#: diagrammer.py:53
+#: diagrammer.py:56
 msgid "http://jenyay.net/Outwiker/DiagrammerEn"
 msgstr "http://jenyay.net/Outwiker/DiagrammerEn"
 
-#: diagramtoolbar.py:25
+#: diagramtoolbar.py:25 guicreator.py:61
 msgid "Diagrammer"
 msgstr "Diagrammer"
 
@@ -49,6 +49,82 @@ msgstr "Insert diagram"
 #: actions/insertdiagram.py:27
 msgid "Diagrammer. Insert diagram"
 msgstr "Diagrammer. Insert diagram"
+
+#: actions/insertnode.py:26
+msgid "Insert node"
+msgstr "Insert node"
+
+#: actions/insertnode.py:31
+msgid "Diagrammer. Insert new node"
+msgstr "Diagrammer. Insert new node"
+
+#: actions/insertnodedialog.py:19
+msgid "Insert Node"
+msgstr "Insert Node"
+
+#: actions/insertnodedialog.py:22 actions/insertnodedialog.py:331
+msgid "Default"
+msgstr "Default"
+
+#: actions/insertnodedialog.py:23
+msgid "Solid"
+msgstr "Solid"
+
+#: actions/insertnodedialog.py:24
+msgid "Dotted"
+msgstr "Dotted"
+
+#: actions/insertnodedialog.py:25
+msgid "Dashed"
+msgstr "Dashed"
+
+#: actions/insertnodedialog.py:231
+msgid "Name of a node can't be empty"
+msgstr "Name of a node can't be empty"
+
+#: actions/insertnodedialog.py:241
+msgid "Options"
+msgstr "Options"
+
+#: actions/insertnodedialog.py:284
+msgid "Node name"
+msgstr "Node name"
+
+#: actions/insertnodedialog.py:311
+msgid "Label"
+msgstr "Label"
+
+#: actions/insertnodedialog.py:329
+msgid "Shape"
+msgstr "Shape"
+
+#: actions/insertnodedialog.py:353
+msgid "Stacked"
+msgstr "Stacked"
+
+#: actions/insertnodedialog.py:365
+msgid "Border style"
+msgstr "Border style"
+
+#: actions/insertnodedialog.py:389
+msgid "Set background color"
+msgstr "Set background color"
+
+#: actions/insertnodedialog.py:413
+msgid "Set text color"
+msgstr "Set text color"
+
+#: actions/insertnodedialog.py:437
+msgid "Set font size"
+msgstr "Set font size"
+
+#: actions/insertnodedialog.py:463
+msgid "Set width"
+msgstr "Set width"
+
+#: actions/insertnodedialog.py:489
+msgid "Set height"
+msgstr "Set height"
 
 #~ msgid "Go to help webpage"
 #~ msgstr "Go to help webpage"

@@ -28,7 +28,7 @@ class InsertNodeAction (BaseAction):
 
     @property
     def description (self):
-        return _(u"Diagrammer. Insert add node")
+        return _(u"Diagrammer. Insert new node")
 
 
     def run (self, params):
