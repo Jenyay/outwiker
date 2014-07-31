@@ -33,11 +33,22 @@ class InsertNodeDialog (TestedDialog):
         self.Bind (wx.EVT_COLLAPSIBLEPANE_CHANGED, self.__onPaneChanged)
         self.Bind (wx.EVT_TEXT, self.__onNameChanged, self._name)
 
-        self.Bind (wx.EVT_CHECKBOX, self.__onBackColorChecked, self._backColorCheckBox)
-        self.Bind (wx.EVT_CHECKBOX, self.__onTextColorChecked, self._textColorCheckBox)
-        self.Bind (wx.EVT_CHECKBOX, self.__onFontSizeChecked, self._fontSizeCheckBox)
+        self.__bindEnabled (self._backColorCheckBox, self._backColor)
+        self.__bindEnabled (self._textColorCheckBox, self._textColor)
+        self.__bindEnabled (self._fontSizeCheckBox, self._fontSize)
+        self.__bindEnabled (self._widthCheckBox, self._width)
+        self.__bindEnabled (self._heightCheckBox, self._height)
 
         self.Center(wx.CENTRE_ON_SCREEN)
+
+
+    def __bindEnabled (self, checkbox, control):
+        def handler (event):
+            control.Enabled = checkbox.GetValue()
+
+        self.Bind (wx.EVT_CHECKBOX,
+                   handler = handler,
+                   source = checkbox)
 
 
     @property
@@ -167,24 +178,52 @@ class InsertNodeDialog (TestedDialog):
         self._fontSize.SetValue (value)
 
 
+    @property
+    def isWidthChanged (self):
+        return self._widthCheckBox.GetValue()
+
+
+    @isWidthChanged.setter
+    def isWidthChanged (self, value):
+        self._widthCheckBox.SetValue (value)
+
+
+    @property
+    def width (self):
+        return self._width.GetValue()
+
+
+    @width.setter
+    def width (self, value):
+        self._width.SetValue (value)
+
+
+    @property
+    def isHeightChanged (self):
+        return self._heightCheckBox.GetValue()
+
+
+    @isHeightChanged.setter
+    def isHeightChanged (self, value):
+        self._heightCheckBox.SetValue (value)
+
+
+    @property
+    def height (self):
+        return self._height.GetValue()
+
+
+    @height.setter
+    def height (self, value):
+        self._height.SetValue (value)
+
+
     def __onPaneChanged (self, event):
         self.Fit()
 
 
     def __onNameChanged (self, event):
         self._label.SetValue (self._name.GetValue())
-
-
-    def __onBackColorChecked (self, event):
-        self._backColor.Enabled = self._backColorCheckBox.GetValue()
-
-
-    def __onTextColorChecked (self, event):
-        self._textColor.Enabled = self._textColorCheckBox.GetValue()
-
-
-    def __onFontSizeChecked (self, event):
-        self._fontSize.Enabled = self._fontSizeCheckBox.GetValue()
 
 
     def __onOk (self, event):
@@ -218,6 +257,8 @@ class InsertNodeDialog (TestedDialog):
         self.__createBackColorRow (optionsSizer)
         self.__createTextColorRow (optionsSizer)
         self.__createFontSizeRow (optionsSizer)
+        self.__createWidthRow (optionsSizer)
+        self.__createHeightRow (optionsSizer)
 
         self._paramsPanel.GetPane().SetSizer (optionsSizer)
 
@@ -414,6 +455,58 @@ class InsertNodeDialog (TestedDialog):
                           )
 
 
+    def __createWidthRow (self, optionsSizer):
+        """
+        Создать элементы для выбора ширины узла
+        """
+        self._widthCheckBox = wx.CheckBox (self._paramsPanel.GetPane(),
+                                           label = _(u"Set width"))
+
+        self._width = wx.SpinCtrl (self._paramsPanel.GetPane(),
+                                   min = 1,
+                                   max = 1000,
+                                   initial = 128)
+
+        self._widthCheckBox.SetValue (False)
+        self._width.Enabled = False
+
+        optionsSizer.Add (self._widthCheckBox,
+                          flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+                          border = 2
+                          )
+
+        optionsSizer.Add (self._width,
+                          flag = wx.ALL | wx.EXPAND,
+                          border = 2
+                          )
+
+
+    def __createHeightRow (self, optionsSizer):
+        """
+        Создать элементы для выбора высоты узла
+        """
+        self._heightCheckBox = wx.CheckBox (self._paramsPanel.GetPane(),
+                                            label = _(u"Set height"))
+
+        self._height = wx.SpinCtrl (self._paramsPanel.GetPane(),
+                                    min = 1,
+                                    max = 1000,
+                                    initial = 40)
+
+        self._heightCheckBox.SetValue (False)
+        self._height.Enabled = False
+
+        optionsSizer.Add (self._heightCheckBox,
+                          flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+                          border = 2
+                          )
+
+        optionsSizer.Add (self._height,
+                          flag = wx.ALL | wx.EXPAND,
+                          border = 2
+                          )
+
+
     def __createOkCancelButtons (self, optionsSizer):
         okCancel = self.CreateButtonSizer (wx.OK | wx.CANCEL)
         optionsSizer.AddStretchSpacer()
@@ -460,6 +553,8 @@ class InsertNodeController (object):
         params.append (self._getBackColorParam (dialog))
         params.append (self._getTextColorParam (dialog))
         params.append (self._getFontSizeParam (dialog))
+        params.append (self._getWidthParam (dialog))
+        params.append (self._getHeightParam (dialog))
 
         return u", ".join ([param for param in params if len (param.strip()) != 0])
 
@@ -513,3 +608,11 @@ class InsertNodeController (object):
 
     def _getFontSizeParam (self, dialog):
         return u'fontsize = {}'.format (dialog.fontSize) if dialog.isFontSizeChanged else u""
+
+
+    def _getWidthParam (self, dialog):
+        return u'width = {}'.format (dialog.width) if dialog.isWidthChanged else u""
+
+
+    def _getHeightParam (self, dialog):
+        return u'height = {}'.format (dialog.height) if dialog.isHeightChanged else u""

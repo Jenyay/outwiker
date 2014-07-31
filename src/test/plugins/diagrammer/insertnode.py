@@ -448,3 +448,83 @@ class InsertNodeTest (unittest.TestCase):
 
         result = controller.getResult ()
         self.assertEqual (result, u'Абырвалг [shape = actor, fontsize = 20];')
+
+
+    def testWidth_01 (self):
+        dlg = self.plugin.InsertNodeDialog(None)
+        controller = self.plugin.InsertNodeController (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.name = u"Абырвалг"
+        dlg.isWidthChanged = True
+        dlg.width = 200
+
+        result = controller.getResult ()
+        self.assertEqual (result, u'Абырвалг [width = 200];')
+
+
+    def testWidth_02 (self):
+        dlg = self.plugin.InsertNodeDialog(None)
+        controller = self.plugin.InsertNodeController (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.name = u"Абырвалг"
+        dlg.isWidthChanged = False
+        dlg.width = 200
+
+        result = controller.getResult ()
+        self.assertEqual (result, u'Абырвалг')
+
+
+    def testWidth_03 (self):
+        dlg = self.plugin.InsertNodeDialog(None)
+        controller = self.plugin.InsertNodeController (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.name = u"Абырвалг"
+        dlg.setShapeSelection (1)
+        dlg.isWidthChanged = True
+        dlg.width = 200
+
+        result = controller.getResult ()
+        self.assertEqual (result, u'Абырвалг [shape = actor, width = 200];')
+
+
+    def testHeight_01 (self):
+        dlg = self.plugin.InsertNodeDialog(None)
+        controller = self.plugin.InsertNodeController (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.name = u"Абырвалг"
+        dlg.isHeightChanged = True
+        dlg.height = 200
+
+        result = controller.getResult ()
+        self.assertEqual (result, u'Абырвалг [height = 200];')
+
+
+    def testHeight_02 (self):
+        dlg = self.plugin.InsertNodeDialog(None)
+        controller = self.plugin.InsertNodeController (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.name = u"Абырвалг"
+        dlg.isHeightChanged = False
+        dlg.height = 200
+
+        result = controller.getResult ()
+        self.assertEqual (result, u'Абырвалг')
+
+
+    def testHeight_03 (self):
+        dlg = self.plugin.InsertNodeDialog(None)
+        controller = self.plugin.InsertNodeController (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.name = u"Абырвалг"
+        dlg.setShapeSelection (1)
+        dlg.isHeightChanged = True
+        dlg.height = 200
+
+        result = controller.getResult ()
+        self.assertEqual (result, u'Абырвалг [shape = actor, height = 200];')
