@@ -408,3 +408,43 @@ class InsertNodeTest (unittest.TestCase):
 
         result = controller.getResult ()
         self.assertEqual (result, u'Абырвалг [shape = actor, textcolor = "#AAAAAA"];')
+
+
+    def testFontSize_01 (self):
+        dlg = self.plugin.InsertNodeDialog(None)
+        controller = self.plugin.InsertNodeController (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.name = u"Абырвалг"
+        dlg.isFontSizeChanged = True
+        dlg.fontSize = 20
+
+        result = controller.getResult ()
+        self.assertEqual (result, u'Абырвалг [fontsize = 20];')
+
+
+    def testFontSize_02 (self):
+        dlg = self.plugin.InsertNodeDialog(None)
+        controller = self.plugin.InsertNodeController (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.name = u"Абырвалг"
+        dlg.isFontSizeChanged = False
+        dlg.fontSize = 20
+
+        result = controller.getResult ()
+        self.assertEqual (result, u'Абырвалг')
+
+
+    def testFontSize_03 (self):
+        dlg = self.plugin.InsertNodeDialog(None)
+        controller = self.plugin.InsertNodeController (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.name = u"Абырвалг"
+        dlg.setShapeSelection (1)
+        dlg.isFontSizeChanged = True
+        dlg.fontSize = 20
+
+        result = controller.getResult ()
+        self.assertEqual (result, u'Абырвалг [shape = actor, fontsize = 20];')

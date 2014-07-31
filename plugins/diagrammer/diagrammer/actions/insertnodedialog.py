@@ -32,14 +32,10 @@ class InsertNodeDialog (TestedDialog):
         self.Bind (wx.EVT_BUTTON, self.__onOk, id = wx.ID_OK)
         self.Bind (wx.EVT_COLLAPSIBLEPANE_CHANGED, self.__onPaneChanged)
         self.Bind (wx.EVT_TEXT, self.__onNameChanged, self._name)
+
         self.Bind (wx.EVT_CHECKBOX, self.__onBackColorChecked, self._backColorCheckBox)
         self.Bind (wx.EVT_CHECKBOX, self.__onTextColorChecked, self._textColorCheckBox)
-
-        self._backColorCheckBox.SetValue (False)
-        self._backColor.Enabled = False
-
-        self._textColorCheckBox.SetValue (False)
-        self._textColor.Enabled = False
+        self.Bind (wx.EVT_CHECKBOX, self.__onFontSizeChecked, self._fontSizeCheckBox)
 
         self.Center(wx.CENTRE_ON_SCREEN)
 
@@ -151,6 +147,26 @@ class InsertNodeDialog (TestedDialog):
         self._textColor.SetColour (value)
 
 
+    @property
+    def isFontSizeChanged (self):
+        return self._fontSizeCheckBox.GetValue()
+
+
+    @isFontSizeChanged.setter
+    def isFontSizeChanged (self, value):
+        self._fontSizeCheckBox.SetValue (value)
+
+
+    @property
+    def fontSize (self):
+        return self._fontSize.GetValue()
+
+
+    @fontSize.setter
+    def fontSize (self, value):
+        self._fontSize.SetValue (value)
+
+
     def __onPaneChanged (self, event):
         self.Fit()
 
@@ -165,6 +181,10 @@ class InsertNodeDialog (TestedDialog):
 
     def __onTextColorChecked (self, event):
         self._textColor.Enabled = self._textColorCheckBox.GetValue()
+
+
+    def __onFontSizeChecked (self, event):
+        self._fontSize.Enabled = self._fontSizeCheckBox.GetValue()
 
 
     def __onOk (self, event):
@@ -197,6 +217,7 @@ class InsertNodeDialog (TestedDialog):
         self.__createBorderStyleRow (optionsSizer)
         self.__createBackColorRow (optionsSizer)
         self.__createTextColorRow (optionsSizer)
+        self.__createFontSizeRow (optionsSizer)
 
         self._paramsPanel.GetPane().SetSizer (optionsSizer)
 
@@ -329,6 +350,9 @@ class InsertNodeDialog (TestedDialog):
         self._backColor = wx.ColourPickerCtrl (self._paramsPanel.GetPane(),
                                                col=u"white")
 
+        self._backColorCheckBox.SetValue (False)
+        self._backColor.Enabled = False
+
         optionsSizer.Add (self._backColorCheckBox,
                           flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
                           border = 2
@@ -345,10 +369,13 @@ class InsertNodeDialog (TestedDialog):
         Создать элементы для выбора цвета текста узла
         """
         self._textColorCheckBox = wx.CheckBox (self._paramsPanel.GetPane(),
-                                               label = _(u"Set background color"))
+                                               label = _(u"Set text color"))
 
         self._textColor = wx.ColourPickerCtrl (self._paramsPanel.GetPane(),
                                                col=u"black")
+
+        self._textColorCheckBox.SetValue (False)
+        self._textColor.Enabled = False
 
         optionsSizer.Add (self._textColorCheckBox,
                           flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
@@ -356,6 +383,32 @@ class InsertNodeDialog (TestedDialog):
                           )
 
         optionsSizer.Add (self._textColor,
+                          flag = wx.ALL | wx.EXPAND,
+                          border = 2
+                          )
+
+
+    def __createFontSizeRow (self, optionsSizer):
+        """
+        Создать элементы для выбора размера шрифта
+        """
+        self._fontSizeCheckBox = wx.CheckBox (self._paramsPanel.GetPane(),
+                                              label = _(u"Set font size"))
+
+        self._fontSize = wx.SpinCtrl (self._paramsPanel.GetPane(),
+                                      min = 1,
+                                      max = 100,
+                                      initial = 11)
+
+        self._fontSizeCheckBox.SetValue (False)
+        self._fontSize.Enabled = False
+
+        optionsSizer.Add (self._fontSizeCheckBox,
+                          flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+                          border = 2
+                          )
+
+        optionsSizer.Add (self._fontSize,
                           flag = wx.ALL | wx.EXPAND,
                           border = 2
                           )
@@ -406,6 +459,7 @@ class InsertNodeController (object):
         params.append (self._getLabelParam (dialog))
         params.append (self._getBackColorParam (dialog))
         params.append (self._getTextColorParam (dialog))
+        params.append (self._getFontSizeParam (dialog))
 
         return u", ".join ([param for param in params if len (param.strip()) != 0])
 
@@ -455,3 +509,7 @@ class InsertNodeController (object):
 
     def _getTextColorParam (self, dialog):
         return u'textcolor = "{}"'.format (dialog.textColor) if dialog.isTextColorChanged else u""
+
+
+    def _getFontSizeParam (self, dialog):
+        return u'fontsize = {}'.format (dialog.fontSize) if dialog.isFontSizeChanged else u""
