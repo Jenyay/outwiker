@@ -10,12 +10,16 @@ class DiagramRender (object):
     """
     Класс для создания диаграмм с помощью blockdiag
     """
+    # Список возможных фигур
+    shapes = []
+
+
     def __init__ (self):
         self._fontDefault = u"Ubuntu-R.ttf"
 
 
-    @staticmethod
-    def _initPackage (packagename, modulename):
+    @classmethod
+    def _initPackage (cls, packagename, modulename):
         """
         Инициализировать пакет с рендерами узлов
         packagename - например, "blockdiag.noderenderer", а modulename - "circle"
@@ -59,13 +63,28 @@ class DiagramRender (object):
                     except AttributeError:
                         continue
 
+                    cls._addShape (packageFullName + "." + nestedmodulename)
 
-    @staticmethod
-    def initialize ():
+    @classmethod
+    def _addShape (cls, modulename):
+        """
+        Добавить фигуру в shapes по имени модуля
+        """
+        parent = u"blockdiag.noderenderer."
+
+        assert parent in modulename
+
+        cls.shapes.append (modulename[len (parent):])
+
+
+    @classmethod
+    def initialize (cls):
         """
         Инициализировать blockdiag. Нужно вызывать хотя бы один раз за время работы программы до рендеринга диаграмм.
         """
-        DiagramRender._initPackage ("blockdiag", "noderenderer")
+        cls.shapes = []
+        cls._initPackage ("blockdiag", "noderenderer")
+        cls.shapes.sort()
 
         from blockdiag.imagedraw.png import setup
         setup(None)

@@ -126,31 +126,31 @@ class DiagrammerTest (unittest.TestCase):
         self.assertTrue (os.path.exists (self.thumbFullPath))
 
 
-    def testShapes (self):
+    def testShapes_01 (self):
         template = u'a{n}[shape = {shape}]'
         shapes = [
-                "actor",
-                "beginpoint",
-                "box",
-                "circle",
-                "cloud",
-                "diamond",
-                "dots",
-                "ellipse",
-                "endpoint",
-                "mail",
-                "minidiamond",
-                "none",
-                "note",
-                "roundedbox",
-                "square",
-                "textbox",
-                "flowchart.database",
-                "flowchart.input",
-                "flowchart.loopin",
-                "flowchart.loopout",
-                "flowchart.terminator",
-                ]
+            "actor",
+            "beginpoint",
+            "box",
+            "circle",
+            "cloud",
+            "diamond",
+            "dots",
+            "ellipse",
+            "endpoint",
+            "mail",
+            "minidiamond",
+            "none",
+            "note",
+            "roundedbox",
+            "square",
+            "textbox",
+            "flowchart.database",
+            "flowchart.input",
+            "flowchart.loopin",
+            "flowchart.loopout",
+            "flowchart.terminator",
+        ]
 
         lines = [u"(:diagram:)"]
 
@@ -166,3 +166,33 @@ class DiagrammerTest (unittest.TestCase):
 
         # Признак ошибки
         self.assertNotIn (u"<b>", result)
+
+
+    def testShapes_02 (self):
+        shapes = sorted ([
+            "actor",
+            "beginpoint",
+            "box",
+            "circle",
+            "cloud",
+            "diamond",
+            "dots",
+            "ellipse",
+            "endpoint",
+            "mail",
+            "minidiamond",
+            "none",
+            "note",
+            "roundedbox",
+            "square",
+            "textbox",
+            "flowchart.database",
+            "flowchart.input",
+            "flowchart.loopin",
+            "flowchart.loopout",
+            "flowchart.terminator",
+        ])
+
+        diagramShapers = self.loader[u"Diagrammer"].DiagramRender.shapes
+
+        self.assertEqual (shapes, diagramShapers)

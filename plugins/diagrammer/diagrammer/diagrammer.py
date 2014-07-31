@@ -15,6 +15,8 @@ else:
     from .i18n import set_
     from .controller import Controller
     from .actions.insertnodedialog import InsertNodeDialog, InsertNodeController
+    from .diagramrender import DiagramRender
+
 
     class PluginDiagrammer (Plugin):
         def __init__ (self, application):
@@ -101,3 +103,8 @@ else:
         @property
         def InsertNodeController (self):
             return InsertNodeController
+
+
+        @property
+        def DiagramRender (self):
+            return DiagramRender
