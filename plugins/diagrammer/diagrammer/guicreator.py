@@ -32,7 +32,6 @@ class GuiCreator (object):
 
         # MenuItem создаваемого подменю
         self._submenuItem = None
-        self._menu = wx.Menu()
 
         self.__toolbarCreated = False
         self.ID_TOOLBAR = u"Diagrammer"
@@ -57,8 +56,8 @@ class GuiCreator (object):
 
         # Меню, куда будут добавляться команды
         # menu = self._getPageView().commandsMenu
-        menu = self._menu
-        self._submenuItem = self.__getParentMenu().AppendSubMenu (self._menu, _(u"Diagrammer"))
+        menu = wx.Menu()
+        self._submenuItem = self.__getParentMenu().AppendSubMenu (menu, _(u"Diagrammer"))
 
         map (lambda action: self._application.actionController.appendMenuItem (
             action.stringId, menu), self._actions)
