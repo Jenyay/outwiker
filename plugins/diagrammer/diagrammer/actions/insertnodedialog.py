@@ -26,8 +26,11 @@ class InsertNodeDialog (TestedDialog):
         ]
 
         self.__createGui()
+        self._paramsPanel.Collapse()
+        self.Fit()
 
-        self.Bind (wx.EVT_BUTTON, self.__onOk, id=wx.ID_OK)
+        self.Bind (wx.EVT_BUTTON, self.__onOk, id = wx.ID_OK)
+        self.Bind (wx.EVT_COLLAPSIBLEPANE_CHANGED, self.__onPaneChanged)
 
 
     @property
@@ -87,6 +90,10 @@ class InsertNodeDialog (TestedDialog):
         self._stacked.SetValue (value)
 
 
+    def __onPaneChanged (self, event):
+        self.Fit()
+
+
     def __onOk (self, event):
         if len (self.name.strip()) == 0:
             MessageBox (_(u"Node name can't be empty"),
@@ -98,26 +105,40 @@ class InsertNodeDialog (TestedDialog):
 
 
     def __createGui (self):
-        mainSizer = wx.FlexGridSizer (cols=2)
+        self._paramsPanel = wx.CollapsiblePane (self,
+                                                label = _(u"Options"),
+                                                style = wx.CP_DEFAULT_STYLE | wx.CP_NO_TLW_RESIZE)
+
+        mainSizer = wx.FlexGridSizer (cols = 1)
         mainSizer.AddGrowableCol (0)
-        mainSizer.AddGrowableCol (1)
+        mainSizer.AddGrowableRow (1)
+
+        optionsSizer = wx.FlexGridSizer (cols=2)
+        optionsSizer.AddGrowableCol (0)
+        optionsSizer.AddGrowableCol (1)
 
         self.__createNameRow (mainSizer)
-        self.__addSpaceRow (mainSizer)
-        self.__createShapeRow (mainSizer)
-        self.__createStackedRow (mainSizer)
-        self.__createBorderStyleRow (mainSizer)
+        self.__addSpaceRow (optionsSizer)
+        self.__createShapeRow (optionsSizer)
+        self.__createStackedRow (optionsSizer)
+        self.__createBorderStyleRow (optionsSizer)
+
+        self._paramsPanel.GetPane().SetSizer (optionsSizer)
+
+        mainSizer.Add (self._paramsPanel,
+                       flag = wx.EXPAND | wx.ALL,
+                       border = 2)
         self.__createOkCancelButtons (mainSizer)
 
         self.SetSizer (mainSizer)
-        self.Fit()
+        # self.Fit()
         self._name.SetFocus()
 
 
-    def __addSpaceRow (self, mainSizer):
+    def __addSpaceRow (self, optionsSizer):
         size = 20
-        mainSizer.AddSpacer (size)
-        mainSizer.AddSpacer (size)
+        optionsSizer.AddSpacer (size)
+        optionsSizer.AddSpacer (size)
 
 
     def __createNameRow (self, mainSizer):
@@ -128,83 +149,91 @@ class InsertNodeDialog (TestedDialog):
         self._name = wx.TextCtrl (self)
         self._name.SetMinSize ((250, -1))
 
-        mainSizer.Add (titleLabel,
+        nameSizer = wx.FlexGridSizer (cols=2)
+        nameSizer.AddGrowableCol (1)
+        nameSizer.AddGrowableRow (0)
+
+        nameSizer.Add (titleLabel,
                        flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
                        border = 2
                        )
 
-        mainSizer.Add (self._name,
+        nameSizer.Add (self._name,
                        flag = wx.ALL | wx.EXPAND,
                        border = 2
                        )
 
+        mainSizer.Add (nameSizer,
+                       flag = wx.ALL | wx.EXPAND,
+                       border = 2)
 
-    def __createShapeRow (self, mainSizer):
+
+    def __createShapeRow (self, optionsSizer):
         """
         Создать элементы для выбора формы узла
         """
-        shapeLabel = wx.StaticText (self, label = _(u"Shape"))
-        self._shape = wx.ComboBox (self, style = wx.CB_DROPDOWN | wx.CB_READONLY)
+        shapeLabel = wx.StaticText (self._paramsPanel.GetPane(), label = _(u"Shape"))
+        self._shape = wx.ComboBox (self._paramsPanel.GetPane(), style = wx.CB_DROPDOWN | wx.CB_READONLY)
         shapes = [_(u"Default")] + DiagramRender.shapes
 
         self._shape.Clear()
         self._shape.AppendItems (shapes)
         self._shape.SetSelection (0)
 
-        mainSizer.Add (shapeLabel,
-                       flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                       border = 2
-                       )
+        optionsSizer.Add (shapeLabel,
+                          flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+                          border = 2
+                          )
 
-        mainSizer.Add (self._shape,
-                       flag = wx.ALL | wx.EXPAND,
-                       border = 2
-                       )
+        optionsSizer.Add (self._shape,
+                          flag = wx.ALL | wx.EXPAND,
+                          border = 2
+                          )
 
 
-    def __createStackedRow (self, mainSizer):
+    def __createStackedRow (self, optionsSizer):
         """
         Создать элементы для параметра stacked
         """
-        mainSizer.AddSpacer (1)
-        self._stacked = wx.CheckBox (self, label = _(u"Stacked"))
+        optionsSizer.AddSpacer (1)
+        self._stacked = wx.CheckBox (self._paramsPanel.GetPane(), label = _(u"Stacked"))
 
-        mainSizer.Add (self._stacked,
-                       flag = wx.ALL | wx.ALIGN_RIGHT,
-                       border = 2
-                       )
+        optionsSizer.Add (self._stacked,
+                          flag = wx.ALL | wx.ALIGN_RIGHT,
+                          border = 2
+                          )
 
 
-    def __createBorderStyleRow (self, mainSizer):
+    def __createBorderStyleRow (self, optionsSizer):
         """
         Создать элементы для выбора стиля рамки
         """
-        styleLabel = wx.StaticText (self, label = _(u"Border style"))
-        self._borderStyle = wx.ComboBox (self, style = wx.CB_DROPDOWN)
+        styleLabel = wx.StaticText (self._paramsPanel.GetPane(), label = _(u"Border style"))
+        self._borderStyle = wx.ComboBox (self._paramsPanel.GetPane(), style = wx.CB_DROPDOWN)
         styles = [style[0] for style in self._borderStyles]
 
         self._borderStyle.Clear()
         self._borderStyle.AppendItems (styles)
         self._borderStyle.SetSelection (0)
 
-        mainSizer.Add (styleLabel,
-                       flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                       border = 2
-                       )
+        optionsSizer.Add (styleLabel,
+                          flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+                          border = 2
+                          )
 
-        mainSizer.Add (self._borderStyle,
-                       flag = wx.ALL | wx.EXPAND,
-                       border = 2
-                       )
+        optionsSizer.Add (self._borderStyle,
+                          flag = wx.ALL | wx.EXPAND,
+                          border = 2
+                          )
 
 
-    def __createOkCancelButtons (self, mainSizer):
+    def __createOkCancelButtons (self, optionsSizer):
         okCancel = self.CreateButtonSizer (wx.OK | wx.CANCEL)
-        mainSizer.AddStretchSpacer()
-        mainSizer.Add (okCancel,
-                       flag=wx.ALL | wx.ALIGN_RIGHT | wx.ALIGN_BOTTOM,
-                       border=4
-                       )
+        optionsSizer.AddStretchSpacer()
+        optionsSizer.Add (okCancel,
+                          flag=wx.ALL | wx.ALIGN_RIGHT | wx.ALIGN_BOTTOM,
+                          border=4
+                          )
 
 
 
