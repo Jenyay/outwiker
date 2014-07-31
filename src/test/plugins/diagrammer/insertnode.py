@@ -21,7 +21,7 @@ class InsertNodeTest (unittest.TestCase):
         self.loader.clear()
 
 
-    def testDefault (self):
+    def testName_01 (self):
         dlg = self.plugin.InsertNodeDialog(None)
         controller = self.plugin.InsertNodeController (dlg)
 
@@ -31,6 +31,18 @@ class InsertNodeTest (unittest.TestCase):
         result = controller.getResult ()
 
         self.assertEqual (result, u"Абырвалг")
+
+
+    def testName_02 (self):
+        dlg = self.plugin.InsertNodeDialog(None)
+        controller = self.plugin.InsertNodeController (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.name = u"Абырвалг 111"
+
+        result = controller.getResult ()
+
+        self.assertEqual (result, u'"Абырвалг 111"')
 
 
     def testShapeSelection_01 (self):
@@ -253,3 +265,40 @@ class InsertNodeTest (unittest.TestCase):
 
         result = controller.getResult ()
         self.assertEqual (result, u"Абырвалг [shape = actor, stacked];")
+
+
+    def testLabel_01 (self):
+        dlg = self.plugin.InsertNodeDialog(None)
+        controller = self.plugin.InsertNodeController (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.name = u"Абырвалг"
+        dlg.label = u"Превед"
+
+        result = controller.getResult ()
+        self.assertEqual (result, u'Абырвалг [label = "Превед"];')
+
+
+    def testLabel_02 (self):
+        dlg = self.plugin.InsertNodeDialog(None)
+        controller = self.plugin.InsertNodeController (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.name = u"Абырвалг"
+        dlg.setShapeSelection (1)
+        dlg.label = u"Превед"
+
+        result = controller.getResult ()
+        self.assertEqual (result, u'Абырвалг [shape = actor, label = "Превед"];')
+
+
+    def testLabel_03 (self):
+        dlg = self.plugin.InsertNodeDialog(None)
+        controller = self.plugin.InsertNodeController (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.name = u"Абырвалг"
+        dlg.label = u"Абырвалг"
+
+        result = controller.getResult ()
+        self.assertEqual (result, u'Абырвалг')

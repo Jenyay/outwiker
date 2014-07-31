@@ -31,6 +31,7 @@ class InsertNodeDialog (TestedDialog):
 
         self.Bind (wx.EVT_BUTTON, self.__onOk, id = wx.ID_OK)
         self.Bind (wx.EVT_COLLAPSIBLEPANE_CHANGED, self.__onPaneChanged)
+        self.Bind (wx.EVT_TEXT, self.__onNameChanged, self._name)
 
 
     @property
@@ -90,8 +91,22 @@ class InsertNodeDialog (TestedDialog):
         self._stacked.SetValue (value)
 
 
+    @property
+    def label (self):
+        return self._label.GetValue()
+
+
+    @label.setter
+    def label (self, value):
+        self._label.SetValue (value)
+
+
     def __onPaneChanged (self, event):
         self.Fit()
+
+
+    def __onNameChanged (self, event):
+        self._label.SetValue (self._name.GetValue())
 
 
     def __onOk (self, event):
@@ -118,9 +133,9 @@ class InsertNodeDialog (TestedDialog):
         optionsSizer.AddGrowableCol (1)
 
         self.__createNameRow (mainSizer)
-        self.__addSpaceRow (optionsSizer)
         self.__createShapeRow (optionsSizer)
         self.__createStackedRow (optionsSizer)
+        self.__createLabelRow (optionsSizer)
         self.__createBorderStyleRow (optionsSizer)
 
         self._paramsPanel.GetPane().SetSizer (optionsSizer)
@@ -131,7 +146,6 @@ class InsertNodeDialog (TestedDialog):
         self.__createOkCancelButtons (mainSizer)
 
         self.SetSizer (mainSizer)
-        # self.Fit()
         self._name.SetFocus()
 
 
@@ -166,6 +180,24 @@ class InsertNodeDialog (TestedDialog):
         mainSizer.Add (nameSizer,
                        flag = wx.ALL | wx.EXPAND,
                        border = 2)
+
+
+    def __createLabelRow (self, optionsSizer):
+        """
+        Создать элементы для ввода имени узла
+        """
+        labelLabel = wx.StaticText (self._paramsPanel.GetPane(), label = _(u"Label"))
+        self._label = wx.TextCtrl (self._paramsPanel.GetPane())
+
+        optionsSizer.Add (labelLabel,
+                          flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+                          border = 2
+                          )
+
+        optionsSizer.Add (self._label,
+                          flag = wx.ALL | wx.EXPAND,
+                          border = 2
+                          )
 
 
     def __createShapeRow (self, optionsSizer):
@@ -255,7 +287,7 @@ class InsertNodeController (object):
         Возвращает строку для создания нового узла в соответствии с параметрами, установленными в диалоге.
         Считается, что этот метод вызывают после того, как showDialog вернул значение wx.ID_OK
         """
-        name = self._dialog.name
+        name = self._getName (self._dialog)
         params = self._getParamString (self._dialog).strip()
 
         if len (params) == 0:
@@ -269,8 +301,16 @@ class InsertNodeController (object):
         params.append (self._getShapeParam (dialog))
         params.append (self._getBorderStyleParam (dialog))
         params.append (self._getStackedParam (dialog))
+        params.append (self._getLabelParam (dialog))
 
         return u", ".join ([param for param in params if len (param.strip()) != 0])
+
+
+    def _getName (self, dialog):
+        if u" " in dialog.name:
+            return u'"{}"'.format (dialog.name)
+
+        return dialog.name
 
 
     def _getShapeParam (self, dialog):
@@ -299,3 +339,7 @@ class InsertNodeController (object):
 
     def _getStackedParam (self, dialog):
         return u"stacked" if dialog.stacked else u""
+
+
+    def _getLabelParam (self, dialog):
+        return u'label = "{}"'.format (dialog.label) if dialog.label != dialog.name else u""
