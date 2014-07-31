@@ -302,3 +302,56 @@ class InsertNodeTest (unittest.TestCase):
 
         result = controller.getResult ()
         self.assertEqual (result, u'Абырвалг')
+
+
+    def testColor_01 (self):
+        dlg = self.plugin.InsertNodeDialog(None)
+        controller = self.plugin.InsertNodeController (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.name = u"Абырвалг"
+        dlg.isBackColorChanged = True
+        dlg.backColor = u"white"
+
+        result = controller.getResult ()
+        self.assertEqual (result, u'Абырвалг [color = "white"];')
+
+
+    def testColor_02 (self):
+        dlg = self.plugin.InsertNodeDialog(None)
+        controller = self.plugin.InsertNodeController (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.name = u"Абырвалг"
+        dlg.isBackColorChanged = True
+        dlg.backColor = u"#AAAAAA"
+
+        result = controller.getResult ()
+        self.assertEqual (result, u'Абырвалг [color = "#AAAAAA"];')
+
+
+    def testColor_03 (self):
+        dlg = self.plugin.InsertNodeDialog(None)
+        controller = self.plugin.InsertNodeController (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.name = u"Абырвалг"
+        dlg.isBackColorChanged = False
+        dlg.backColor = u"#AAAAAA"
+
+        result = controller.getResult ()
+        self.assertEqual (result, u'Абырвалг')
+
+
+    def testColor_04 (self):
+        dlg = self.plugin.InsertNodeDialog(None)
+        controller = self.plugin.InsertNodeController (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.name = u"Абырвалг"
+        dlg.setShapeSelection (1)
+        dlg.isBackColorChanged = True
+        dlg.backColor = u"#AAAAAA"
+
+        result = controller.getResult ()
+        self.assertEqual (result, u'Абырвалг [shape = actor, color = "#AAAAAA"];')

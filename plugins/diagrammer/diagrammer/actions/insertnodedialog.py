@@ -32,6 +32,10 @@ class InsertNodeDialog (TestedDialog):
         self.Bind (wx.EVT_BUTTON, self.__onOk, id = wx.ID_OK)
         self.Bind (wx.EVT_COLLAPSIBLEPANE_CHANGED, self.__onPaneChanged)
         self.Bind (wx.EVT_TEXT, self.__onNameChanged, self._name)
+        self.Bind (wx.EVT_CHECKBOX, self.__onBackChecked, self._backColorCheckBox)
+
+        self._backColorCheckBox.SetValue (False)
+        self._backColor.Enabled = False
 
 
     @property
@@ -101,12 +105,36 @@ class InsertNodeDialog (TestedDialog):
         self._label.SetValue (value)
 
 
+    @property
+    def isBackColorChanged (self):
+        return self._backColorCheckBox.GetValue()
+
+
+    @isBackColorChanged.setter
+    def isBackColorChanged (self, value):
+        self._backColorCheckBox.SetValue (value)
+
+
+    @property
+    def backColor (self):
+        return self._backColor.GetColour().GetAsString (wx.C2S_NAME | wx.C2S_HTML_SYNTAX)
+
+
+    @backColor.setter
+    def backColor (self, value):
+        self._backColor.SetColour (value)
+
+
     def __onPaneChanged (self, event):
         self.Fit()
 
 
     def __onNameChanged (self, event):
         self._label.SetValue (self._name.GetValue())
+
+
+    def __onBackChecked (self, event):
+        self._backColor.Enabled = self._backColorCheckBox.GetValue()
 
 
     def __onOk (self, event):
@@ -137,6 +165,7 @@ class InsertNodeDialog (TestedDialog):
         self.__createStackedRow (optionsSizer)
         self.__createLabelRow (optionsSizer)
         self.__createBorderStyleRow (optionsSizer)
+        self.__createBackColorRow (optionsSizer)
 
         self._paramsPanel.GetPane().SetSizer (optionsSizer)
 
@@ -259,6 +288,27 @@ class InsertNodeDialog (TestedDialog):
                           )
 
 
+    def __createBackColorRow (self, optionsSizer):
+        """
+        Создать элементы для выбора цвета фона узла
+        """
+        self._backColorCheckBox = wx.CheckBox (self._paramsPanel.GetPane(),
+                                               label = _(u"Set background color"))
+
+        self._backColor = wx.ColourPickerCtrl (self._paramsPanel.GetPane(),
+                                               col=u"white")
+
+        optionsSizer.Add (self._backColorCheckBox,
+                          flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+                          border = 2
+                          )
+
+        optionsSizer.Add (self._backColor,
+                          flag = wx.ALL | wx.EXPAND,
+                          border = 2
+                          )
+
+
     def __createOkCancelButtons (self, optionsSizer):
         okCancel = self.CreateButtonSizer (wx.OK | wx.CANCEL)
         optionsSizer.AddStretchSpacer()
@@ -302,6 +352,7 @@ class InsertNodeController (object):
         params.append (self._getBorderStyleParam (dialog))
         params.append (self._getStackedParam (dialog))
         params.append (self._getLabelParam (dialog))
+        params.append (self._getbackColorParam (dialog))
 
         return u", ".join ([param for param in params if len (param.strip()) != 0])
 
@@ -343,3 +394,7 @@ class InsertNodeController (object):
 
     def _getLabelParam (self, dialog):
         return u'label = "{}"'.format (dialog.label) if dialog.label != dialog.name else u""
+
+
+    def _getbackColorParam (self, dialog):
+        return u'color = "{}"'.format (dialog.backColor) if dialog.isBackColorChanged else u""
