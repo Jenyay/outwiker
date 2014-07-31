@@ -77,6 +77,16 @@ class InsertNodeDialog (TestedDialog):
         self._borderStyle.SetSelection (value)
 
 
+    @property
+    def stacked (self):
+        return self._stacked.GetValue()
+
+
+    @stacked.setter
+    def stacked (self, value):
+        self._stacked.SetValue (value)
+
+
     def __onOk (self, event):
         if len (self.name.strip()) == 0:
             MessageBox (_(u"Node name can't be empty"),
@@ -93,13 +103,21 @@ class InsertNodeDialog (TestedDialog):
         mainSizer.AddGrowableCol (1)
 
         self.__createNameRow (mainSizer)
+        self.__addSpaceRow (mainSizer)
         self.__createShapeRow (mainSizer)
+        self.__createStackedRow (mainSizer)
         self.__createBorderStyleRow (mainSizer)
         self.__createOkCancelButtons (mainSizer)
 
         self.SetSizer (mainSizer)
         self.Fit()
         self._name.SetFocus()
+
+
+    def __addSpaceRow (self, mainSizer):
+        size = 20
+        mainSizer.AddSpacer (size)
+        mainSizer.AddSpacer (size)
 
 
     def __createNameRow (self, mainSizer):
@@ -140,6 +158,19 @@ class InsertNodeDialog (TestedDialog):
 
         mainSizer.Add (self._shape,
                        flag = wx.ALL | wx.EXPAND,
+                       border = 2
+                       )
+
+
+    def __createStackedRow (self, mainSizer):
+        """
+        Создать элементы для параметра stacked
+        """
+        mainSizer.AddSpacer (1)
+        self._stacked = wx.CheckBox (self, label = _(u"Stacked"))
+
+        mainSizer.Add (self._stacked,
+                       flag = wx.ALL | wx.ALIGN_RIGHT,
                        border = 2
                        )
 
@@ -208,6 +239,7 @@ class InsertNodeController (object):
         params = []
         params.append (self._getShapeParam (dialog))
         params.append (self._getBorderStyleParam (dialog))
+        params.append (self._getStackedParam (dialog))
 
         return u", ".join ([param for param in params if len (param.strip()) != 0])
 
@@ -234,3 +266,7 @@ class InsertNodeController (object):
             return u'style = "{}"'.format (style)
 
         return u"style = {}".format (style)
+
+
+    def _getStackedParam (self, dialog):
+        return u"stacked" if dialog.stacked else u""

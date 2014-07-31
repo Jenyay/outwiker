@@ -228,3 +228,28 @@ class InsertNodeTest (unittest.TestCase):
 
         result = controller.getResult ()
         self.assertEqual (result, u"Абырвалг [shape = actor, style = dotted];")
+
+
+    def testStacked_01 (self):
+        dlg = self.plugin.InsertNodeDialog(None)
+        controller = self.plugin.InsertNodeController (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.name = u"Абырвалг"
+        dlg.stacked = True
+
+        result = controller.getResult ()
+        self.assertEqual (result, u"Абырвалг [stacked];")
+
+
+    def testStacked_02 (self):
+        dlg = self.plugin.InsertNodeDialog(None)
+        controller = self.plugin.InsertNodeController (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.name = u"Абырвалг"
+        dlg.stacked = True
+        dlg.setShapeSelection (1)
+
+        result = controller.getResult ()
+        self.assertEqual (result, u"Абырвалг [shape = actor, stacked];")

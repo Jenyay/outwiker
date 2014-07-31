@@ -51,7 +51,7 @@ class CommandDiagram (Command):
         if not os.path.exists (imagePath):
             try:
                 render.renderToFile (content, imagePath)
-            except ParseException:
+            except (ParseException, AttributeError):
                 return u"<b>{}</b>".format(_(u"Diagram parsing error"))
 
         return u'<img src="{}/{}"/>'.format (thumb.getRelativeThumbDir(), fname)
