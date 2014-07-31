@@ -31,3 +31,42 @@ class InsertNodeTest (unittest.TestCase):
         result = controller.getResult ()
 
         self.assertEqual (result, u"Абырвалг")
+
+
+    def testShapeSelection_01 (self):
+        dlg = self.plugin.InsertNodeDialog(None)
+        controller = self.plugin.InsertNodeController (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.name = u"Абырвалг"
+        dlg.setShapeSelection (0)
+
+        result = controller.getResult ()
+
+        self.assertEqual (result, u"Абырвалг")
+
+
+    def testShapeSelection_02 (self):
+        dlg = self.plugin.InsertNodeDialog(None)
+        controller = self.plugin.InsertNodeController (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.name = u"Абырвалг"
+        dlg.setShapeSelection (1)
+
+        result = controller.getResult ()
+
+        self.assertEqual (result, u"Абырвалг [shape = actor];")
+
+
+    def testShapeSelection_03 (self):
+        dlg = self.plugin.InsertNodeDialog(None)
+        controller = self.plugin.InsertNodeController (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.name = u"Абырвалг"
+        dlg.setShapeSelection (10)
+
+        result = controller.getResult ()
+
+        self.assertEqual (result, u"Абырвалг [shape = flowchart.database];")

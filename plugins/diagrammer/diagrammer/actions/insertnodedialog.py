@@ -6,6 +6,7 @@ from outwiker.gui.testeddialog import TestedDialog
 from outwiker.core.commands import MessageBox
 
 from ..i18n import get_
+from ..diagramrender import DiagramRender
 
 
 class InsertNodeDialog (TestedDialog):
@@ -18,7 +19,6 @@ class InsertNodeDialog (TestedDialog):
                                                  title=_(u"Insert Node"))
 
         self.__createGui()
-        self.SetSize ((500, 350))
 
         self.Bind (wx.EVT_BUTTON, self.__onOk, id=wx.ID_OK)
 
@@ -31,6 +31,22 @@ class InsertNodeDialog (TestedDialog):
     @name.setter
     def name (self, value):
         return self._name.SetValue (value)
+
+
+    @property
+    def shape (self):
+        """
+        Возвращает пустую строку, если выбрано значение по умолчанию или строку с именем фигуры
+        """
+        return self._shape.GetStringSelection() if self._shape.GetSelection() != 0 else u""
+
+
+    def setShapeSelection (self, index):
+        """
+        Выбирает фигуру из списка с заданным номером. 0 - значение по умолчанию.
+        Метод используется для тестирования
+        """
+        self._shape.SetSelection (index)
 
 
     def __onOk (self, event):
@@ -49,8 +65,11 @@ class InsertNodeDialog (TestedDialog):
         mainSizer.AddGrowableCol (1)
 
         self.__createNameRow (mainSizer)
+        self.__createShapeRow (mainSizer)
         self.__createOkCancelButtons (mainSizer)
+
         self.SetSizer (mainSizer)
+        self.Fit()
         self._name.SetFocus()
 
 
@@ -68,6 +87,29 @@ class InsertNodeDialog (TestedDialog):
                        )
 
         mainSizer.Add (self._name,
+                       flag = wx.ALL | wx.EXPAND,
+                       border = 2
+                       )
+
+
+    def __createShapeRow (self, mainSizer):
+        """
+        Создать элементы для выбора формы узла
+        """
+        shapeLabel = wx.StaticText (self, label = _(u"Shape"))
+        self._shape = wx.ComboBox (self, style = wx.CB_DROPDOWN | wx.CB_READONLY)
+        shapes = [_(u"Default")] + DiagramRender.shapes
+
+        self._shape.Clear()
+        self._shape.AppendItems (shapes)
+        self._shape.SetSelection (0)
+
+        mainSizer.Add (shapeLabel,
+                       flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+                       border = 2
+                       )
+
+        mainSizer.Add (self._shape,
                        flag = wx.ALL | wx.EXPAND,
                        border = 2
                        )
@@ -107,10 +149,17 @@ class InsertNodeController (object):
         if len (params) == 0:
             return name
         else:
-            return u"{}[{}];".format (name, params)
+            return u"{} [{}];".format (name, params)
 
 
     def _getParamString (self, dialog):
-        result = u""
+        params = []
+        params.append (self._getShapeParam (dialog))
 
-        return result
+        return u", ".join ([param for param in params if len (param.strip()) != 0])
+
+
+    def _getShapeParam (self, dialog):
+        shape = dialog.shape
+
+        return u"shape = {}".format (shape) if len (shape) != 0 else u""
