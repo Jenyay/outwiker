@@ -1,31 +1,42 @@
 # -*- coding: UTF-8 -*-
 
+from abc import ABCMeta, abstractmethod, abstractproperty
+
 import wx
 
 from outwiker.gui.testeddialog import TestedDialog
 
 from ..i18n import get_
-from ..diagramrender import DiagramRender
 
 
 class BaseParamsDialog (TestedDialog):
     """
     Базовый класс для диалогов с параметрами
     """
+    __metaclass__ = ABCMeta
+
     def __init__ (self, parent):
         global _
         _ = get_()
 
         super (BaseParamsDialog, self).__init__ (parent,
-                                                 style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.THICK_FRAME,
-                                                 title=_(u"Insert Node"))
+                                                 style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.THICK_FRAME)
 
-        self._borderStyles = [
-            (_(u"Default"), u""),
-            (_(u"Solid"), u"solid"),
-            (_(u"Dotted"), u"dotted"),
-            (_(u"Dashed"), u"dashed"),
-        ]
+
+    @abstractmethod
+    def _getShapesList (self):
+        """
+        Метод должен вернуть список фигур, который нужно добавить в комбобокс _shape
+        """
+        pass
+
+
+    @abstractproperty
+    def isShapeDefault (self):
+        """
+        Свойство должно вернуть True, если выбрана фигура по умолчанию, и False в противном случае
+        """
+        pass
 
 
     def _bindEnabled (self, checkbox, control):
@@ -41,7 +52,7 @@ class BaseParamsDialog (TestedDialog):
         """
         Возвращает пустую строку, если выбрано значение по умолчанию или строку с именем фигуры
         """
-        return self._shape.GetStringSelection() if self._shape.GetSelection() != 0 else u""
+        return self._shape.GetStringSelection() if not self.isShapeDefault else u""
 
 
     def setShapeSelection (self, index):
@@ -152,16 +163,15 @@ class BaseParamsDialog (TestedDialog):
         self._height.SetValue (value)
 
 
-    def _createShapeRow (self, optionsSizer):
+    def _createShapeRow (self, parent, optionsSizer):
         """
         Создать элементы для выбора формы узла
         """
-        shapeLabel = wx.StaticText (self._paramsPanel.GetPane(), label = _(u"Shape"))
-        self._shape = wx.ComboBox (self._paramsPanel.GetPane(), style = wx.CB_DROPDOWN | wx.CB_READONLY)
-        shapes = [_(u"Default")] + DiagramRender.shapes
+        shapeLabel = wx.StaticText (parent, label = _(u"Shape"))
+        self._shape = wx.ComboBox (parent, style = wx.CB_DROPDOWN | wx.CB_READONLY)
 
         self._shape.Clear()
-        self._shape.AppendItems (shapes)
+        self._shape.AppendItems (self._getShapesList())
         self._shape.SetSelection (0)
 
         optionsSizer.Add (shapeLabel,
@@ -175,14 +185,14 @@ class BaseParamsDialog (TestedDialog):
                           )
 
 
-    def _createBackColorRow (self, optionsSizer):
+    def _createBackColorRow (self, parent, optionsSizer):
         """
         Создать элементы для выбора цвета фона узла
         """
-        self._backColorCheckBox = wx.CheckBox (self._paramsPanel.GetPane(),
+        self._backColorCheckBox = wx.CheckBox (parent,
                                                label = _(u"Set background color"))
 
-        self._backColor = wx.ColourPickerCtrl (self._paramsPanel.GetPane(),
+        self._backColor = wx.ColourPickerCtrl (parent,
                                                col=u"white")
 
         self._backColorCheckBox.SetValue (False)
@@ -201,14 +211,14 @@ class BaseParamsDialog (TestedDialog):
         self._bindEnabled (self._backColorCheckBox, self._backColor)
 
 
-    def _createTextColorRow (self, optionsSizer):
+    def _createTextColorRow (self, parent, optionsSizer):
         """
         Создать элементы для выбора цвета текста узла
         """
-        self._textColorCheckBox = wx.CheckBox (self._paramsPanel.GetPane(),
+        self._textColorCheckBox = wx.CheckBox (parent,
                                                label = _(u"Set text color"))
 
-        self._textColor = wx.ColourPickerCtrl (self._paramsPanel.GetPane(),
+        self._textColor = wx.ColourPickerCtrl (parent,
                                                col=u"black")
 
         self._textColorCheckBox.SetValue (False)
@@ -227,14 +237,14 @@ class BaseParamsDialog (TestedDialog):
         self._bindEnabled (self._textColorCheckBox, self._textColor)
 
 
-    def _createFontSizeRow (self, optionsSizer):
+    def _createFontSizeRow (self, parent, optionsSizer):
         """
         Создать элементы для выбора размера шрифта
         """
-        self._fontSizeCheckBox = wx.CheckBox (self._paramsPanel.GetPane(),
+        self._fontSizeCheckBox = wx.CheckBox (parent,
                                               label = _(u"Set font size"))
 
-        self._fontSize = wx.SpinCtrl (self._paramsPanel.GetPane(),
+        self._fontSize = wx.SpinCtrl (parent,
                                       min = 1,
                                       max = 100,
                                       initial = 11)
@@ -254,14 +264,14 @@ class BaseParamsDialog (TestedDialog):
         self._bindEnabled (self._fontSizeCheckBox, self._fontSize)
 
 
-    def _createWidthRow (self, optionsSizer):
+    def _createWidthRow (self, parent, optionsSizer):
         """
         Создать элементы для выбора ширины узла
         """
-        self._widthCheckBox = wx.CheckBox (self._paramsPanel.GetPane(),
+        self._widthCheckBox = wx.CheckBox (parent,
                                            label = _(u"Set width"))
 
-        self._width = wx.SpinCtrl (self._paramsPanel.GetPane(),
+        self._width = wx.SpinCtrl (parent,
                                    min = 1,
                                    max = 1000,
                                    initial = 128)
@@ -281,14 +291,14 @@ class BaseParamsDialog (TestedDialog):
         self._bindEnabled (self._widthCheckBox, self._width)
 
 
-    def _createHeightRow (self, optionsSizer):
+    def _createHeightRow (self, parent, optionsSizer):
         """
         Создать элементы для выбора высоты узла
         """
-        self._heightCheckBox = wx.CheckBox (self._paramsPanel.GetPane(),
+        self._heightCheckBox = wx.CheckBox (parent,
                                             label = _(u"Set height"))
 
-        self._height = wx.SpinCtrl (self._paramsPanel.GetPane(),
+        self._height = wx.SpinCtrl (parent,
                                     min = 1,
                                     max = 1000,
                                     initial = 40)

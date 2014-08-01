@@ -1,7 +1,11 @@
 # -*- coding: UTF-8 -*-
 
+import wx
+
 from outwiker.gui.baseaction import BaseAction
+
 from ..i18n import get_
+from ..gui.insertdiagramdialog import InsertDiagramDialog, InsertDiagramController
 
 
 class InsertDiagramAction (BaseAction):
@@ -28,5 +32,13 @@ class InsertDiagramAction (BaseAction):
 
 
     def run (self, params):
-        codeEditor = self._application.mainWindow.pagePanel.pageView.codeEditor
-        codeEditor.turnText (u'(:diagram:)\n', u'\n(:diagramend:)')
+        assert self._application.mainWindow is not None
+
+        with InsertDiagramDialog (self._application.mainWindow) as dlg:
+            controller = InsertDiagramController (dlg)
+            result = controller.showDialog()
+
+            if result == wx.ID_OK:
+                begin, end = controller.getResult()
+                codeEditor = self._application.mainWindow.pagePanel.pageView.codeEditor
+                codeEditor.turnText (begin, end)

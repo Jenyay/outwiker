@@ -5,6 +5,8 @@ import wx
 from outwiker.core.commands import MessageBox
 
 from ..i18n import get_
+from ..diagramrender import DiagramRender
+
 from .baseparamsdialog import BaseParamsDialog
 
 
@@ -13,6 +15,15 @@ class InsertNodeDialog (BaseParamsDialog):
         super (InsertNodeDialog, self).__init__ (parent)
         global _
         _ = get_()
+
+        self.SetTitle (_(u"Insert Node"))
+
+        self._borderStyles = [
+            (_(u"Default"), u""),
+            (_(u"Solid"), u"solid"),
+            (_(u"Dotted"), u"dotted"),
+            (_(u"Dashed"), u"dashed"),
+        ]
 
         self.__createGui()
         self._paramsPanel.Collapse()
@@ -23,6 +34,53 @@ class InsertNodeDialog (BaseParamsDialog):
         self.Bind (wx.EVT_TEXT, self.__onNameChanged, self._name)
 
         self.Center(wx.CENTRE_ON_SCREEN)
+
+
+    def _getShapesList (self):
+        return [_(u"Default")] + DiagramRender.shapes
+
+
+    @property
+    def isShapeDefault (self):
+        """
+        Свойство должно вернуть True, если выбрана фигура по умолчанию, и False в противном случае
+        """
+        return self._shape.GetSelection() == 0
+
+
+    def __createGui (self):
+        self._paramsPanel = wx.CollapsiblePane (self,
+                                                label = _(u"Options"),
+                                                style = wx.CP_DEFAULT_STYLE | wx.CP_NO_TLW_RESIZE)
+
+        mainSizer = wx.FlexGridSizer (cols = 1)
+        mainSizer.AddGrowableCol (0)
+        mainSizer.AddGrowableRow (1)
+
+        optionsSizer = wx.FlexGridSizer (cols=2)
+        optionsSizer.AddGrowableCol (0)
+        optionsSizer.AddGrowableCol (1)
+
+        self._createNameRow (self, mainSizer)
+        self._createLabelRow (self._paramsPanel.GetPane(), optionsSizer)
+        self._createShapeRow (self._paramsPanel.GetPane(), optionsSizer)
+        self._createStackedRow (self._paramsPanel.GetPane(), optionsSizer)
+        self._createBorderStyleRow (self._paramsPanel.GetPane(), optionsSizer)
+        self._createBackColorRow (self._paramsPanel.GetPane(), optionsSizer)
+        self._createTextColorRow (self._paramsPanel.GetPane(), optionsSizer)
+        self._createFontSizeRow (self._paramsPanel.GetPane(), optionsSizer)
+        self._createWidthRow (self._paramsPanel.GetPane(), optionsSizer)
+        self._createHeightRow (self._paramsPanel.GetPane(), optionsSizer)
+
+        self._paramsPanel.GetPane().SetSizer (optionsSizer)
+
+        mainSizer.Add (self._paramsPanel,
+                       flag = wx.EXPAND | wx.ALL,
+                       border = 2)
+        self._createOkCancelButtons (mainSizer)
+
+        self.SetSizer (mainSizer)
+        self._name.SetFocus()
 
 
     @property
@@ -94,47 +152,12 @@ class InsertNodeDialog (BaseParamsDialog):
         event.Skip()
 
 
-    def __createGui (self):
-        self._paramsPanel = wx.CollapsiblePane (self,
-                                                label = _(u"Options"),
-                                                style = wx.CP_DEFAULT_STYLE | wx.CP_NO_TLW_RESIZE)
-
-        mainSizer = wx.FlexGridSizer (cols = 1)
-        mainSizer.AddGrowableCol (0)
-        mainSizer.AddGrowableRow (1)
-
-        optionsSizer = wx.FlexGridSizer (cols=2)
-        optionsSizer.AddGrowableCol (0)
-        optionsSizer.AddGrowableCol (1)
-
-        self._createNameRow (mainSizer)
-        self._createLabelRow (optionsSizer)
-        self._createShapeRow (optionsSizer)
-        self._createStackedRow (optionsSizer)
-        self._createBorderStyleRow (optionsSizer)
-        self._createBackColorRow (optionsSizer)
-        self._createTextColorRow (optionsSizer)
-        self._createFontSizeRow (optionsSizer)
-        self._createWidthRow (optionsSizer)
-        self._createHeightRow (optionsSizer)
-
-        self._paramsPanel.GetPane().SetSizer (optionsSizer)
-
-        mainSizer.Add (self._paramsPanel,
-                       flag = wx.EXPAND | wx.ALL,
-                       border = 2)
-        self._createOkCancelButtons (mainSizer)
-
-        self.SetSizer (mainSizer)
-        self._name.SetFocus()
-
-
-    def _createNameRow (self, mainSizer):
+    def _createNameRow (self, parent, mainSizer):
         """
         Создать элементы для ввода имени узла
         """
-        titleLabel = wx.StaticText (self, label = _(u"Node name"))
-        self._name = wx.TextCtrl (self)
+        titleLabel = wx.StaticText (parent, label = _(u"Node name"))
+        self._name = wx.TextCtrl (parent)
         self._name.SetMinSize ((250, -1))
 
         nameSizer = wx.FlexGridSizer (cols=2)
@@ -156,12 +179,12 @@ class InsertNodeDialog (BaseParamsDialog):
                        border = 2)
 
 
-    def _createLabelRow (self, optionsSizer):
+    def _createLabelRow (self, parent, optionsSizer):
         """
         Создать элементы для ввода имени узла
         """
-        labelLabel = wx.StaticText (self._paramsPanel.GetPane(), label = _(u"Label"))
-        self._label = wx.TextCtrl (self._paramsPanel.GetPane())
+        labelLabel = wx.StaticText (parent, label = _(u"Label"))
+        self._label = wx.TextCtrl (parent)
 
         optionsSizer.Add (labelLabel,
                           flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
@@ -174,12 +197,12 @@ class InsertNodeDialog (BaseParamsDialog):
                           )
 
 
-    def _createStackedRow (self, optionsSizer):
+    def _createStackedRow (self, parent, optionsSizer):
         """
         Создать элементы для параметра stacked
         """
         optionsSizer.AddSpacer (1)
-        self._stacked = wx.CheckBox (self._paramsPanel.GetPane(), label = _(u"Stacked"))
+        self._stacked = wx.CheckBox (parent, label = _(u"Stacked"))
 
         optionsSizer.Add (self._stacked,
                           flag = wx.ALL | wx.ALIGN_RIGHT,
@@ -187,12 +210,12 @@ class InsertNodeDialog (BaseParamsDialog):
                           )
 
 
-    def _createBorderStyleRow (self, optionsSizer):
+    def _createBorderStyleRow (self, parent, optionsSizer):
         """
         Создать элементы для выбора стиля рамки
         """
-        styleLabel = wx.StaticText (self._paramsPanel.GetPane(), label = _(u"Border style"))
-        self._borderStyle = wx.ComboBox (self._paramsPanel.GetPane(), style = wx.CB_DROPDOWN)
+        styleLabel = wx.StaticText (parent, label = _(u"Border style"))
+        self._borderStyle = wx.ComboBox (parent, style = wx.CB_DROPDOWN)
         styles = [style[0] for style in self._borderStyles]
 
         self._borderStyle.Clear()

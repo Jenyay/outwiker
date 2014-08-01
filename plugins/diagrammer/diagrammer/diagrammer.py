@@ -15,6 +15,7 @@ else:
     from .i18n import set_
     from .controller import Controller
     from .gui.insertnodedialog import InsertNodeDialog, InsertNodeController
+    from .gui.insertdiagramdialog import InsertDiagramDialog, InsertDiagramController
     from .diagramrender import DiagramRender
 
 
@@ -103,6 +104,16 @@ else:
         @property
         def InsertNodeController (self):
             return InsertNodeController
+
+
+        @property
+        def InsertDiagramDialog (self):
+            return InsertDiagramDialog
+
+
+        @property
+        def InsertDiagramController (self):
+            return InsertDiagramController
 
 
         @property
