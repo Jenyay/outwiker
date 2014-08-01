@@ -2,28 +2,17 @@
 
 import wx
 
-from outwiker.gui.testeddialog import TestedDialog
 from outwiker.core.commands import MessageBox
 
 from .i18n import get_
-from .diagramrender import DiagramRender
+from .baseparamsdialog import BaseParamsDialog
 
 
-class InsertNodeDialog (TestedDialog):
+class InsertNodeDialog (BaseParamsDialog):
     def __init__ (self, parent):
+        super (InsertNodeDialog, self).__init__ (parent)
         global _
         _ = get_()
-
-        super (InsertNodeDialog, self).__init__ (parent,
-                                                 style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.THICK_FRAME,
-                                                 title=_(u"Insert Node"))
-
-        self._borderStyles = [
-            (_(u"Default"), u""),
-            (_(u"Solid"), u"solid"),
-            (_(u"Dotted"), u"dotted"),
-            (_(u"Dashed"), u"dashed"),
-        ]
 
         self.__createGui()
         self._paramsPanel.Collapse()
@@ -33,22 +22,7 @@ class InsertNodeDialog (TestedDialog):
         self.Bind (wx.EVT_COLLAPSIBLEPANE_CHANGED, self.__onPaneChanged)
         self.Bind (wx.EVT_TEXT, self.__onNameChanged, self._name)
 
-        self.__bindEnabled (self._backColorCheckBox, self._backColor)
-        self.__bindEnabled (self._textColorCheckBox, self._textColor)
-        self.__bindEnabled (self._fontSizeCheckBox, self._fontSize)
-        self.__bindEnabled (self._widthCheckBox, self._width)
-        self.__bindEnabled (self._heightCheckBox, self._height)
-
         self.Center(wx.CENTRE_ON_SCREEN)
-
-
-    def __bindEnabled (self, checkbox, control):
-        def handler (event):
-            control.Enabled = checkbox.GetValue()
-
-        self.Bind (wx.EVT_CHECKBOX,
-                   handler = handler,
-                   source = checkbox)
 
 
     @property
@@ -59,22 +33,6 @@ class InsertNodeDialog (TestedDialog):
     @name.setter
     def name (self, value):
         return self._name.SetValue (value)
-
-
-    @property
-    def shape (self):
-        """
-        Возвращает пустую строку, если выбрано значение по умолчанию или строку с именем фигуры
-        """
-        return self._shape.GetStringSelection() if self._shape.GetSelection() != 0 else u""
-
-
-    def setShapeSelection (self, index):
-        """
-        Выбирает фигуру из списка с заданным номером. 0 - значение по умолчанию.
-        Метод используется для тестирования
-        """
-        self._shape.SetSelection (index)
 
 
     @property
@@ -118,106 +76,6 @@ class InsertNodeDialog (TestedDialog):
         self._label.SetValue (value)
 
 
-    @property
-    def isBackColorChanged (self):
-        return self._backColorCheckBox.GetValue()
-
-
-    @isBackColorChanged.setter
-    def isBackColorChanged (self, value):
-        self._backColorCheckBox.SetValue (value)
-
-
-    @property
-    def backColor (self):
-        return self._backColor.GetColour().GetAsString (wx.C2S_NAME | wx.C2S_HTML_SYNTAX)
-
-
-    @backColor.setter
-    def backColor (self, value):
-        self._backColor.SetColour (value)
-
-
-    @property
-    def isTextColorChanged (self):
-        return self._textColorCheckBox.GetValue()
-
-
-    @isTextColorChanged.setter
-    def isTextColorChanged (self, value):
-        self._textColorCheckBox.SetValue (value)
-
-
-    @property
-    def textColor (self):
-        return self._textColor.GetColour().GetAsString (wx.C2S_NAME | wx.C2S_HTML_SYNTAX)
-
-
-    @textColor.setter
-    def textColor (self, value):
-        self._textColor.SetColour (value)
-
-
-    @property
-    def isFontSizeChanged (self):
-        return self._fontSizeCheckBox.GetValue()
-
-
-    @isFontSizeChanged.setter
-    def isFontSizeChanged (self, value):
-        self._fontSizeCheckBox.SetValue (value)
-
-
-    @property
-    def fontSize (self):
-        return self._fontSize.GetValue()
-
-
-    @fontSize.setter
-    def fontSize (self, value):
-        self._fontSize.SetValue (value)
-
-
-    @property
-    def isWidthChanged (self):
-        return self._widthCheckBox.GetValue()
-
-
-    @isWidthChanged.setter
-    def isWidthChanged (self, value):
-        self._widthCheckBox.SetValue (value)
-
-
-    @property
-    def width (self):
-        return self._width.GetValue()
-
-
-    @width.setter
-    def width (self, value):
-        self._width.SetValue (value)
-
-
-    @property
-    def isHeightChanged (self):
-        return self._heightCheckBox.GetValue()
-
-
-    @isHeightChanged.setter
-    def isHeightChanged (self, value):
-        self._heightCheckBox.SetValue (value)
-
-
-    @property
-    def height (self):
-        return self._height.GetValue()
-
-
-    @height.setter
-    def height (self, value):
-        self._height.SetValue (value)
-
-
     def __onPaneChanged (self, event):
         self.Fit()
 
@@ -249,35 +107,29 @@ class InsertNodeDialog (TestedDialog):
         optionsSizer.AddGrowableCol (0)
         optionsSizer.AddGrowableCol (1)
 
-        self.__createNameRow (mainSizer)
-        self.__createShapeRow (optionsSizer)
-        self.__createStackedRow (optionsSizer)
-        self.__createLabelRow (optionsSizer)
-        self.__createBorderStyleRow (optionsSizer)
-        self.__createBackColorRow (optionsSizer)
-        self.__createTextColorRow (optionsSizer)
-        self.__createFontSizeRow (optionsSizer)
-        self.__createWidthRow (optionsSizer)
-        self.__createHeightRow (optionsSizer)
+        self._createNameRow (mainSizer)
+        self._createLabelRow (optionsSizer)
+        self._createShapeRow (optionsSizer)
+        self._createStackedRow (optionsSizer)
+        self._createBorderStyleRow (optionsSizer)
+        self._createBackColorRow (optionsSizer)
+        self._createTextColorRow (optionsSizer)
+        self._createFontSizeRow (optionsSizer)
+        self._createWidthRow (optionsSizer)
+        self._createHeightRow (optionsSizer)
 
         self._paramsPanel.GetPane().SetSizer (optionsSizer)
 
         mainSizer.Add (self._paramsPanel,
                        flag = wx.EXPAND | wx.ALL,
                        border = 2)
-        self.__createOkCancelButtons (mainSizer)
+        self._createOkCancelButtons (mainSizer)
 
         self.SetSizer (mainSizer)
         self._name.SetFocus()
 
 
-    def __addSpaceRow (self, optionsSizer):
-        size = 20
-        optionsSizer.AddSpacer (size)
-        optionsSizer.AddSpacer (size)
-
-
-    def __createNameRow (self, mainSizer):
+    def _createNameRow (self, mainSizer):
         """
         Создать элементы для ввода имени узла
         """
@@ -304,7 +156,7 @@ class InsertNodeDialog (TestedDialog):
                        border = 2)
 
 
-    def __createLabelRow (self, optionsSizer):
+    def _createLabelRow (self, optionsSizer):
         """
         Создать элементы для ввода имени узла
         """
@@ -322,30 +174,7 @@ class InsertNodeDialog (TestedDialog):
                           )
 
 
-    def __createShapeRow (self, optionsSizer):
-        """
-        Создать элементы для выбора формы узла
-        """
-        shapeLabel = wx.StaticText (self._paramsPanel.GetPane(), label = _(u"Shape"))
-        self._shape = wx.ComboBox (self._paramsPanel.GetPane(), style = wx.CB_DROPDOWN | wx.CB_READONLY)
-        shapes = [_(u"Default")] + DiagramRender.shapes
-
-        self._shape.Clear()
-        self._shape.AppendItems (shapes)
-        self._shape.SetSelection (0)
-
-        optionsSizer.Add (shapeLabel,
-                          flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                          border = 2
-                          )
-
-        optionsSizer.Add (self._shape,
-                          flag = wx.ALL | wx.EXPAND,
-                          border = 2
-                          )
-
-
-    def __createStackedRow (self, optionsSizer):
+    def _createStackedRow (self, optionsSizer):
         """
         Создать элементы для параметра stacked
         """
@@ -358,7 +187,7 @@ class InsertNodeDialog (TestedDialog):
                           )
 
 
-    def __createBorderStyleRow (self, optionsSizer):
+    def _createBorderStyleRow (self, optionsSizer):
         """
         Создать элементы для выбора стиля рамки
         """
@@ -378,141 +207,6 @@ class InsertNodeDialog (TestedDialog):
         optionsSizer.Add (self._borderStyle,
                           flag = wx.ALL | wx.EXPAND,
                           border = 2
-                          )
-
-
-    def __createBackColorRow (self, optionsSizer):
-        """
-        Создать элементы для выбора цвета фона узла
-        """
-        self._backColorCheckBox = wx.CheckBox (self._paramsPanel.GetPane(),
-                                               label = _(u"Set background color"))
-
-        self._backColor = wx.ColourPickerCtrl (self._paramsPanel.GetPane(),
-                                               col=u"white")
-
-        self._backColorCheckBox.SetValue (False)
-        self._backColor.Enabled = False
-
-        optionsSizer.Add (self._backColorCheckBox,
-                          flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                          border = 2
-                          )
-
-        optionsSizer.Add (self._backColor,
-                          flag = wx.ALL | wx.EXPAND,
-                          border = 2
-                          )
-
-
-    def __createTextColorRow (self, optionsSizer):
-        """
-        Создать элементы для выбора цвета текста узла
-        """
-        self._textColorCheckBox = wx.CheckBox (self._paramsPanel.GetPane(),
-                                               label = _(u"Set text color"))
-
-        self._textColor = wx.ColourPickerCtrl (self._paramsPanel.GetPane(),
-                                               col=u"black")
-
-        self._textColorCheckBox.SetValue (False)
-        self._textColor.Enabled = False
-
-        optionsSizer.Add (self._textColorCheckBox,
-                          flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                          border = 2
-                          )
-
-        optionsSizer.Add (self._textColor,
-                          flag = wx.ALL | wx.EXPAND,
-                          border = 2
-                          )
-
-
-    def __createFontSizeRow (self, optionsSizer):
-        """
-        Создать элементы для выбора размера шрифта
-        """
-        self._fontSizeCheckBox = wx.CheckBox (self._paramsPanel.GetPane(),
-                                              label = _(u"Set font size"))
-
-        self._fontSize = wx.SpinCtrl (self._paramsPanel.GetPane(),
-                                      min = 1,
-                                      max = 100,
-                                      initial = 11)
-
-        self._fontSizeCheckBox.SetValue (False)
-        self._fontSize.Enabled = False
-
-        optionsSizer.Add (self._fontSizeCheckBox,
-                          flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                          border = 2
-                          )
-
-        optionsSizer.Add (self._fontSize,
-                          flag = wx.ALL | wx.EXPAND,
-                          border = 2
-                          )
-
-
-    def __createWidthRow (self, optionsSizer):
-        """
-        Создать элементы для выбора ширины узла
-        """
-        self._widthCheckBox = wx.CheckBox (self._paramsPanel.GetPane(),
-                                           label = _(u"Set width"))
-
-        self._width = wx.SpinCtrl (self._paramsPanel.GetPane(),
-                                   min = 1,
-                                   max = 1000,
-                                   initial = 128)
-
-        self._widthCheckBox.SetValue (False)
-        self._width.Enabled = False
-
-        optionsSizer.Add (self._widthCheckBox,
-                          flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                          border = 2
-                          )
-
-        optionsSizer.Add (self._width,
-                          flag = wx.ALL | wx.EXPAND,
-                          border = 2
-                          )
-
-
-    def __createHeightRow (self, optionsSizer):
-        """
-        Создать элементы для выбора высоты узла
-        """
-        self._heightCheckBox = wx.CheckBox (self._paramsPanel.GetPane(),
-                                            label = _(u"Set height"))
-
-        self._height = wx.SpinCtrl (self._paramsPanel.GetPane(),
-                                    min = 1,
-                                    max = 1000,
-                                    initial = 40)
-
-        self._heightCheckBox.SetValue (False)
-        self._height.Enabled = False
-
-        optionsSizer.Add (self._heightCheckBox,
-                          flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                          border = 2
-                          )
-
-        optionsSizer.Add (self._height,
-                          flag = wx.ALL | wx.EXPAND,
-                          border = 2
-                          )
-
-
-    def __createOkCancelButtons (self, optionsSizer):
-        okCancel = self.CreateButtonSizer (wx.OK | wx.CANCEL)
-        optionsSizer.AddStretchSpacer()
-        optionsSizer.Add (okCancel,
-                          flag=wx.ALL | wx.ALIGN_RIGHT | wx.ALIGN_BOTTOM,
-                          border=4
                           )
 
 
