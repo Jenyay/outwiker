@@ -163,11 +163,11 @@ class BaseParamsDialog (TestedDialog):
         self._height.SetValue (value)
 
 
-    def _createShapeRow (self, parent, optionsSizer):
+    def _createShapeRow (self, parent, optionsSizer, label):
         """
         Создать элементы для выбора формы узла
         """
-        shapeLabel = wx.StaticText (parent, label = _(u"Shape"))
+        shapeLabel = wx.StaticText (parent, label = label)
         self._shape = wx.ComboBox (parent, style = wx.CB_DROPDOWN | wx.CB_READONLY)
 
         self._shape.Clear()
@@ -185,12 +185,11 @@ class BaseParamsDialog (TestedDialog):
                           )
 
 
-    def _createBackColorRow (self, parent, optionsSizer):
+    def _createBackColorRow (self, parent, optionsSizer, label):
         """
         Создать элементы для выбора цвета фона узла
         """
-        self._backColorCheckBox = wx.CheckBox (parent,
-                                               label = _(u"Set background color"))
+        self._backColorCheckBox = wx.CheckBox (parent, label = label)
 
         self._backColor = wx.ColourPickerCtrl (parent,
                                                col=u"white")
@@ -211,12 +210,11 @@ class BaseParamsDialog (TestedDialog):
         self._bindEnabled (self._backColorCheckBox, self._backColor)
 
 
-    def _createTextColorRow (self, parent, optionsSizer):
+    def _createTextColorRow (self, parent, optionsSizer, label):
         """
         Создать элементы для выбора цвета текста узла
         """
-        self._textColorCheckBox = wx.CheckBox (parent,
-                                               label = _(u"Set text color"))
+        self._textColorCheckBox = wx.CheckBox (parent, label = label)
 
         self._textColor = wx.ColourPickerCtrl (parent,
                                                col=u"black")
@@ -237,12 +235,11 @@ class BaseParamsDialog (TestedDialog):
         self._bindEnabled (self._textColorCheckBox, self._textColor)
 
 
-    def _createFontSizeRow (self, parent, optionsSizer):
+    def _createFontSizeRow (self, parent, optionsSizer, label):
         """
         Создать элементы для выбора размера шрифта
         """
-        self._fontSizeCheckBox = wx.CheckBox (parent,
-                                              label = _(u"Set font size"))
+        self._fontSizeCheckBox = wx.CheckBox (parent, label = label)
 
         self._fontSize = wx.SpinCtrl (parent,
                                       min = 1,
@@ -264,12 +261,11 @@ class BaseParamsDialog (TestedDialog):
         self._bindEnabled (self._fontSizeCheckBox, self._fontSize)
 
 
-    def _createWidthRow (self, parent, optionsSizer):
+    def _createWidthRow (self, parent, optionsSizer, label):
         """
         Создать элементы для выбора ширины узла
         """
-        self._widthCheckBox = wx.CheckBox (parent,
-                                           label = _(u"Set width"))
+        self._widthCheckBox = wx.CheckBox (parent, label = label)
 
         self._width = wx.SpinCtrl (parent,
                                    min = 1,
@@ -291,12 +287,11 @@ class BaseParamsDialog (TestedDialog):
         self._bindEnabled (self._widthCheckBox, self._width)
 
 
-    def _createHeightRow (self, parent, optionsSizer):
+    def _createHeightRow (self, parent, optionsSizer, label):
         """
         Создать элементы для выбора высоты узла
         """
-        self._heightCheckBox = wx.CheckBox (parent,
-                                            label = _(u"Set height"))
+        self._heightCheckBox = wx.CheckBox (parent, label = label)
 
         self._height = wx.SpinCtrl (parent,
                                     min = 1,

@@ -40,12 +40,13 @@ class InsertDiagramDialog (BaseParamsDialog):
         mainSizer.AddGrowableCol (0)
         mainSizer.AddGrowableCol (1)
 
-        self._createShapeRow (self, mainSizer)
-        self._createBackColorRow (self, mainSizer)
-        self._createTextColorRow (self, mainSizer)
-        self._createFontSizeRow (self, mainSizer)
-        self._createWidthRow (self, mainSizer)
-        self._createHeightRow (self, mainSizer)
+        self._createShapeRow (self, mainSizer, _(u"Default nodes shape"))
+        self._createBackColorRow (self, mainSizer, _(u"Set default nodes background color"))
+        self._createTextColorRow (self, mainSizer, _(u"Set default text color"))
+        self._createFontSizeRow (self, mainSizer, _(u"Set default font size"))
+        self._createWidthRow (self, mainSizer, _(u"Set default nodes width"))
+        self._createHeightRow (self, mainSizer, _(u"Set default nodes height"))
+
         self._createOkCancelButtons (mainSizer)
 
         # Выберем по умолчанию в качестве фигуры box

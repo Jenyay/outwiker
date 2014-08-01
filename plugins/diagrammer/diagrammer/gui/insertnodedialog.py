@@ -62,15 +62,15 @@ class InsertNodeDialog (BaseParamsDialog):
         optionsSizer.AddGrowableCol (1)
 
         self._createNameRow (self, mainSizer)
-        self._createLabelRow (self._paramsPanel.GetPane(), optionsSizer)
-        self._createShapeRow (self._paramsPanel.GetPane(), optionsSizer)
-        self._createStackedRow (self._paramsPanel.GetPane(), optionsSizer)
-        self._createBorderStyleRow (self._paramsPanel.GetPane(), optionsSizer)
-        self._createBackColorRow (self._paramsPanel.GetPane(), optionsSizer)
-        self._createTextColorRow (self._paramsPanel.GetPane(), optionsSizer)
-        self._createFontSizeRow (self._paramsPanel.GetPane(), optionsSizer)
-        self._createWidthRow (self._paramsPanel.GetPane(), optionsSizer)
-        self._createHeightRow (self._paramsPanel.GetPane(), optionsSizer)
+        self._createLabelRow (self._paramsPanel.GetPane(), optionsSizer, _(u"Label"))
+        self._createShapeRow (self._paramsPanel.GetPane(), optionsSizer, _(u"Shape"))
+        self._createStackedRow (self._paramsPanel.GetPane(), optionsSizer, _(u"Stacked"))
+        self._createBorderStyleRow (self._paramsPanel.GetPane(), optionsSizer, _(u"Border style"))
+        self._createBackColorRow (self._paramsPanel.GetPane(), optionsSizer, _(u"Set background color"))
+        self._createTextColorRow (self._paramsPanel.GetPane(), optionsSizer, _(u"Set text color"))
+        self._createFontSizeRow (self._paramsPanel.GetPane(), optionsSizer, _(u"Set font size"))
+        self._createWidthRow (self._paramsPanel.GetPane(), optionsSizer, _(u"Set width"))
+        self._createHeightRow (self._paramsPanel.GetPane(), optionsSizer, _(u"Set height"))
 
         self._paramsPanel.GetPane().SetSizer (optionsSizer)
 
@@ -179,11 +179,11 @@ class InsertNodeDialog (BaseParamsDialog):
                        border = 2)
 
 
-    def _createLabelRow (self, parent, optionsSizer):
+    def _createLabelRow (self, parent, optionsSizer, label):
         """
         Создать элементы для ввода имени узла
         """
-        labelLabel = wx.StaticText (parent, label = _(u"Label"))
+        labelLabel = wx.StaticText (parent, label = label)
         self._label = wx.TextCtrl (parent)
 
         optionsSizer.Add (labelLabel,
@@ -197,12 +197,12 @@ class InsertNodeDialog (BaseParamsDialog):
                           )
 
 
-    def _createStackedRow (self, parent, optionsSizer):
+    def _createStackedRow (self, parent, optionsSizer, label):
         """
         Создать элементы для параметра stacked
         """
         optionsSizer.AddSpacer (1)
-        self._stacked = wx.CheckBox (parent, label = _(u"Stacked"))
+        self._stacked = wx.CheckBox (parent, label = label)
 
         optionsSizer.Add (self._stacked,
                           flag = wx.ALL | wx.ALIGN_RIGHT,
@@ -210,11 +210,11 @@ class InsertNodeDialog (BaseParamsDialog):
                           )
 
 
-    def _createBorderStyleRow (self, parent, optionsSizer):
+    def _createBorderStyleRow (self, parent, optionsSizer, label):
         """
         Создать элементы для выбора стиля рамки
         """
-        styleLabel = wx.StaticText (parent, label = _(u"Border style"))
+        styleLabel = wx.StaticText (parent, label = label)
         self._borderStyle = wx.ComboBox (parent, style = wx.CB_DROPDOWN)
         styles = [style[0] for style in self._borderStyles]
 
