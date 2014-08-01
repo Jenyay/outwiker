@@ -14,7 +14,7 @@ if getCurrentVersion() < Version (1, 8, 0, 735, status=StatusSet.DEV):
 else:
     from .i18n import set_
     from .controller import Controller
-    from .actions.insertnodedialog import InsertNodeDialog, InsertNodeController
+    from .insertnodedialog import InsertNodeDialog, InsertNodeController
     from .diagramrender import DiagramRender
 
 

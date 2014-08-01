@@ -4,7 +4,7 @@ import wx
 
 from outwiker.gui.baseaction import BaseAction
 
-from .insertnodedialog import InsertNodeDialog, InsertNodeController
+from ..insertnodedialog import InsertNodeDialog, InsertNodeController
 from ..i18n import get_
 
 
