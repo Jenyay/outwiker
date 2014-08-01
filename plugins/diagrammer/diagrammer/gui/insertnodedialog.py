@@ -4,7 +4,7 @@ import wx
 
 from outwiker.core.commands import MessageBox
 
-from .i18n import get_
+from ..i18n import get_
 from .baseparamsdialog import BaseParamsDialog
 
 

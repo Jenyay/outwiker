@@ -4,8 +4,8 @@ import wx
 
 from outwiker.gui.testeddialog import TestedDialog
 
-from .i18n import get_
-from .diagramrender import DiagramRender
+from ..i18n import get_
+from ..diagramrender import DiagramRender
 
 
 class BaseParamsDialog (TestedDialog):
