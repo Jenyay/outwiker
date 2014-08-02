@@ -16,6 +16,11 @@ class InsertDiagramDialog (BaseParamsDialog):
         global _
         _ = get_()
 
+        self.orientations = [
+            (_(u"Landscape"), u"landscape"),
+            (_(u"Portrait"), u"portrait"),
+        ]
+
         self.SetTitle (_(u"Insert Diagram"))
 
         self.__createGui()
@@ -35,11 +40,24 @@ class InsertDiagramDialog (BaseParamsDialog):
         return self._shape.GetStringSelection() == self.defaultShape
 
 
+    def setOrientationSelection (self, index):
+        self._orientation.SetSelection(index)
+
+
+    @property
+    def orientation (self):
+        index = self._orientation.GetSelection()
+        assert index != wx.NOT_FOUND
+
+        return self.orientations[index][1]
+
+
     def __createGui (self):
         mainSizer = wx.FlexGridSizer (cols = 2)
         mainSizer.AddGrowableCol (0)
         mainSizer.AddGrowableCol (1)
 
+        self._createOrientationRow (self, mainSizer, _(u"Orientation"))
         self._createShapeRow (self, mainSizer, _(u"Default nodes shape"))
         self._createBackColorRow (self, mainSizer, _(u"Set default nodes background color"))
         self._createTextColorRow (self, mainSizer, _(u"Set default text color"))
@@ -57,31 +75,27 @@ class InsertDiagramDialog (BaseParamsDialog):
         self.SetSizer (mainSizer)
 
 
-    def _createNameRow (self, mainSizer):
+    def _createOrientationRow (self, parent, mainSizer, label):
         """
-        Создать элементы для ввода имени узла
+        Создать элементы управления, связанные с установкой ориентации диаграммы
         """
-        titleLabel = wx.StaticText (self, label = _(u"Node name"))
-        self._name = wx.TextCtrl (self)
-        self._name.SetMinSize ((250, -1))
+        orientationLabel = wx.StaticText (parent, label = label)
+        self._orientation = wx.ComboBox (parent, style = wx.CB_DROPDOWN | wx.CB_READONLY)
 
-        nameSizer = wx.FlexGridSizer (cols=2)
-        nameSizer.AddGrowableCol (1)
-        nameSizer.AddGrowableRow (0)
+        self._orientation.SetMinSize ((250, -1))
+        self._orientation.Clear()
+        self._orientation.AppendItems ([orientation[0] for orientation in self.orientations])
+        self._orientation.SetSelection (0)
 
-        nameSizer.Add (titleLabel,
+        mainSizer.Add (orientationLabel,
                        flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
                        border = 2
                        )
 
-        nameSizer.Add (self._name,
+        mainSizer.Add (self._orientation,
                        flag = wx.ALL | wx.EXPAND,
                        border = 2
                        )
-
-        mainSizer.Add (nameSizer,
-                       flag = wx.ALL | wx.EXPAND,
-                       border = 2)
 
 
 
@@ -115,6 +129,7 @@ class InsertDiagramController (object):
 
     def _getParamString (self, dialog):
         params = []
+        params.append (self._getOrientationParam (dialog))
         params.append (self._getShapeParam (dialog))
         params.append (self._getBackColorParam (dialog))
         params.append (self._getTextColorParam (dialog))
@@ -152,3 +167,7 @@ class InsertDiagramController (object):
 
     def _getHeightParam (self, dialog):
         return u'node_height = {};'.format (dialog.height) if dialog.isHeightChanged else u""
+
+
+    def _getOrientationParam (self, dialog):
+        return u'orientation = {};'.format (dialog.orientation) if dialog.orientation != dialog.orientations[0][1] else u""

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: diagrammer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-01 16:53+0400\n"
-"PO-Revision-Date: 2014-08-01 16:53+0300\n"
+"POT-Creation-Date: 2014-08-02 22:17+0400\n"
+"PO-Revision-Date: 2014-08-02 22:18+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: jenyay.net <jenyay.ilin@gmail.com>\n"
 "Language: en\n"
@@ -58,37 +58,45 @@ msgstr "Insert node"
 msgid "Diagrammer. Insert new node"
 msgstr "Diagrammer. Insert new node"
 
-#: gui/insertdiagramdialog.py:19
+#: gui/insertdiagramdialog.py:15
+msgid "Landscape"
+msgstr "Landscape"
+
+#: gui/insertdiagramdialog.py:16
+msgid "Portrait"
+msgstr "Portrait"
+
+#: gui/insertdiagramdialog.py:24
 msgid "Insert Diagram"
 msgstr "Insert Diagram"
 
-#: gui/insertdiagramdialog.py:43
+#: gui/insertdiagramdialog.py:60
+msgid "Orientation"
+msgstr "Orientation"
+
+#: gui/insertdiagramdialog.py:61
 msgid "Default nodes shape"
 msgstr "Default nodes shape"
 
-#: gui/insertdiagramdialog.py:44
+#: gui/insertdiagramdialog.py:62
 msgid "Set default nodes background color"
 msgstr "Set default nodes background color"
 
-#: gui/insertdiagramdialog.py:45
+#: gui/insertdiagramdialog.py:63
 msgid "Set default text color"
 msgstr "Set default text color"
 
-#: gui/insertdiagramdialog.py:46
+#: gui/insertdiagramdialog.py:64
 msgid "Set default font size"
 msgstr "Set default font size"
 
-#: gui/insertdiagramdialog.py:47
+#: gui/insertdiagramdialog.py:65
 msgid "Set default nodes width"
 msgstr "Set default nodes width"
 
-#: gui/insertdiagramdialog.py:48
+#: gui/insertdiagramdialog.py:66
 msgid "Set default nodes height"
 msgstr "Set default nodes height"
-
-#: gui/insertdiagramdialog.py:64 gui/insertnodedialog.py:159
-msgid "Node name"
-msgstr "Node name"
 
 #: gui/insertnodedialog.py:19
 msgid "Insert Node"
@@ -153,6 +161,10 @@ msgstr "Set height"
 #: gui/insertnodedialog.py:147
 msgid "Name of a node can't be empty"
 msgstr "Name of a node can't be empty"
+
+#: gui/insertnodedialog.py:159
+msgid "Node name"
+msgstr "Node name"
 
 #~ msgid "Go to help webpage"
 #~ msgstr "Go to help webpage"

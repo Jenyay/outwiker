@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-01 16:53+0400\n"
+"POT-Creation-Date: 2014-08-02 22:17+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -57,36 +57,44 @@ msgstr ""
 msgid "Diagrammer. Insert new node"
 msgstr ""
 
-#: gui/insertdiagramdialog.py:19
+#: gui/insertdiagramdialog.py:15
+msgid "Landscape"
+msgstr ""
+
+#: gui/insertdiagramdialog.py:16
+msgid "Portrait"
+msgstr ""
+
+#: gui/insertdiagramdialog.py:24
 msgid "Insert Diagram"
 msgstr ""
 
-#: gui/insertdiagramdialog.py:43
+#: gui/insertdiagramdialog.py:60
+msgid "Orientation"
+msgstr ""
+
+#: gui/insertdiagramdialog.py:61
 msgid "Default nodes shape"
 msgstr ""
 
-#: gui/insertdiagramdialog.py:44
+#: gui/insertdiagramdialog.py:62
 msgid "Set default nodes background color"
 msgstr ""
 
-#: gui/insertdiagramdialog.py:45
+#: gui/insertdiagramdialog.py:63
 msgid "Set default text color"
 msgstr ""
 
-#: gui/insertdiagramdialog.py:46
+#: gui/insertdiagramdialog.py:64
 msgid "Set default font size"
 msgstr ""
 
-#: gui/insertdiagramdialog.py:47
+#: gui/insertdiagramdialog.py:65
 msgid "Set default nodes width"
 msgstr ""
 
-#: gui/insertdiagramdialog.py:48
+#: gui/insertdiagramdialog.py:66
 msgid "Set default nodes height"
-msgstr ""
-
-#: gui/insertdiagramdialog.py:64 gui/insertnodedialog.py:159
-msgid "Node name"
 msgstr ""
 
 #: gui/insertnodedialog.py:19
@@ -151,4 +159,8 @@ msgstr ""
 
 #: gui/insertnodedialog.py:147
 msgid "Name of a node can't be empty"
+msgstr ""
+
+#: gui/insertnodedialog.py:159
+msgid "Node name"
 msgstr ""

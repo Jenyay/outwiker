@@ -385,3 +385,55 @@ node_height = 200;
 
         self.assertEqual (begin, valid_begin)
         self.assertEqual (end, u'\n(:diagramend:)')
+
+
+    def testOrientation_01 (self):
+        dlg = self.plugin.InsertDiagramDialog(None)
+        controller = self.plugin.InsertDiagramController (dlg)
+        dlg.setOrientationSelection (0)
+
+        dlg.SetModalResult (wx.ID_OK)
+
+        begin, end = controller.getResult ()
+
+        valid_begin = u'''(:diagram:)
+'''
+
+        self.assertEqual (begin, valid_begin)
+        self.assertEqual (end, u'\n(:diagramend:)')
+
+
+    def testOrientation_02 (self):
+        dlg = self.plugin.InsertDiagramDialog(None)
+        controller = self.plugin.InsertDiagramController (dlg)
+        dlg.setOrientationSelection (1)
+
+        dlg.SetModalResult (wx.ID_OK)
+
+        begin, end = controller.getResult ()
+
+        valid_begin = u'''(:diagram:)
+orientation = portrait;
+'''
+
+        self.assertEqual (begin, valid_begin)
+        self.assertEqual (end, u'\n(:diagramend:)')
+
+
+    def testOrientation_03 (self):
+        dlg = self.plugin.InsertDiagramDialog(None)
+        controller = self.plugin.InsertDiagramController (dlg)
+        dlg.setOrientationSelection (1)
+        dlg.setShapeSelection (0)
+
+        dlg.SetModalResult (wx.ID_OK)
+
+        begin, end = controller.getResult ()
+
+        valid_begin = u'''(:diagram:)
+orientation = portrait;
+default_shape = actor;
+'''
+
+        self.assertEqual (begin, valid_begin)
+        self.assertEqual (end, u'\n(:diagramend:)')
