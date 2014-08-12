@@ -65,6 +65,11 @@ class InsertEdgeDialog (TestedDialog):
                                      optionsSizer,
                                      _(u"Line style"))
 
+        PropertyFactory.createArrowStyle (self,
+                                          self._paramsPanel.GetPane(),
+                                          optionsSizer,
+                                          _(u"Arrow style"))
+
         self._paramsPanel.GetPane().SetSizer (optionsSizer)
 
         mainSizer.Add (self._paramsPanel,
@@ -194,6 +199,7 @@ class InsertEdgeControllerBase (object):
         params = []
         params.append (self._getLabelParam (dialog))
         params.append (self._getLineStyleParam (dialog))
+        params.append (self._getArrowStyleParam (dialog))
 
         return u", ".join ([param for param in params if len (param.strip()) != 0])
 
@@ -230,6 +236,21 @@ class InsertEdgeControllerBase (object):
             return u'style = "{}"'.format (style)
 
         return u"style = {}".format (style)
+
+
+    def _getArrowStyleParam (self, dialog):
+        """
+        Возвращает строку с параметром, задающим стиль линии
+        """
+        style = dialog.arrowStyle.lower().strip().replace (u" ", u"")
+
+        if len (style) == 0:
+            return u""
+
+        if style[0].isdigit():
+            return u'hstyle = "{}"'.format (style)
+
+        return u"hstyle = {}".format (style)
 
 
 

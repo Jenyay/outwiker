@@ -343,7 +343,7 @@ class PropertyFactory (object):
     @staticmethod
     def createStyle (obj, parent, optionsSizer, label):
         """
-        Создать элементы для выбора стиля рамки
+        Создать элементы для выбора стиля рамки или линии
         """
         stylesList = [
             (_(u"Default"), u""),
@@ -368,7 +368,7 @@ class PropertyFactory (object):
             self._style.SetValue (value)
 
 
-        def setBorderStyleIndex (self, value):
+        def setStyleIndex (self, value):
             self._style.SetSelection (value)
 
 
@@ -391,7 +391,61 @@ class PropertyFactory (object):
                           )
 
         type (obj).style = property (styleGetter, styleSetter)
-        type (obj).setBorderStyleIndex = setBorderStyleIndex
+        type (obj).setStyleIndex = setStyleIndex
+
+
+    @staticmethod
+    def createArrowStyle (obj, parent, optionsSizer, label):
+        """
+        Создать элементы для выбора стиля стрелки
+        """
+        stylesList = [
+            (_(u"Default"), u""),
+            (_(u"Generalization"), u"generalization"),
+            (_(u"Composition"), u"composition"),
+            (_(u"Aggregation"), u"aggregation"),
+        ]
+
+
+        def styleGetter (self):
+            """
+            Возвращает стиль рамки
+            """
+            index = self._arrowStyle.GetSelection()
+            if index == wx.NOT_FOUND:
+                return self._arrowStyle.GetValue()
+
+            return stylesList[index][1]
+
+
+        def styleSetter (self, value):
+            self._arrowStyle.SetValue (value)
+
+
+        def setArrowStyleIndex (self, value):
+            self._arrowStyle.SetSelection (value)
+
+
+        styleLabel = wx.StaticText (parent, label = label)
+        obj._arrowStyle = wx.ComboBox (parent, style = wx.CB_DROPDOWN | wx.CB_READONLY)
+        styles = [style[0] for style in stylesList]
+
+        obj._arrowStyle.Clear()
+        obj._arrowStyle.AppendItems (styles)
+        obj._arrowStyle.SetSelection (0)
+
+        optionsSizer.Add (styleLabel,
+                          flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+                          border = 2
+                          )
+
+        optionsSizer.Add (obj._arrowStyle,
+                          flag = wx.ALL | wx.EXPAND,
+                          border = 2
+                          )
+
+        type (obj).arrowStyle = property (styleGetter, styleSetter)
+        type (obj).setArrowStyleIndex = setArrowStyleIndex
 
 
     @staticmethod

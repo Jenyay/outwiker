@@ -138,7 +138,7 @@ class InsertEdgeTest (unittest.TestCase):
         dlg.SetModalResult (wx.ID_OK)
         dlg.firstName = u"А"
         dlg.secondName = u"Б"
-        dlg.setBorderStyleIndex (0)
+        dlg.setStyleIndex (0)
 
         result = controller.getResult ()
 
@@ -152,7 +152,7 @@ class InsertEdgeTest (unittest.TestCase):
         dlg.SetModalResult (wx.ID_OK)
         dlg.firstName = u"А"
         dlg.secondName = u"Б"
-        dlg.setBorderStyleIndex (1)
+        dlg.setStyleIndex (1)
 
         result = controller.getResult ()
 
@@ -166,7 +166,7 @@ class InsertEdgeTest (unittest.TestCase):
         dlg.SetModalResult (wx.ID_OK)
         dlg.firstName = u"А"
         dlg.secondName = u"Б"
-        dlg.setBorderStyleIndex (2)
+        dlg.setStyleIndex (2)
 
         result = controller.getResult ()
 
@@ -180,7 +180,7 @@ class InsertEdgeTest (unittest.TestCase):
         dlg.SetModalResult (wx.ID_OK)
         dlg.firstName = u"А"
         dlg.secondName = u"Б"
-        dlg.setBorderStyleIndex (3)
+        dlg.setStyleIndex (3)
 
         result = controller.getResult ()
 
@@ -195,8 +195,79 @@ class InsertEdgeTest (unittest.TestCase):
         dlg.firstName = u"А"
         dlg.secondName = u"Б"
         dlg.label = u"Абырвалг"
-        dlg.setBorderStyleIndex (3)
+        dlg.setStyleIndex (3)
 
         result = controller.getResult ()
 
         self.assertEqual (result, u'А -> Б [label = "Абырвалг", style = dashed]')
+
+
+    def testStyleArrow_01 (self):
+        dlg = self.plugin.InsertEdgeDialog(None)
+        controller = self.plugin.InsertEdgeControllerRight (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.firstName = u"А"
+        dlg.secondName = u"Б"
+        dlg.setArrowStyleIndex (0)
+
+        result = controller.getResult ()
+
+        self.assertEqual (result, u'А -> Б')
+
+
+    def testStyleArrow_02 (self):
+        dlg = self.plugin.InsertEdgeDialog(None)
+        controller = self.plugin.InsertEdgeControllerRight (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.firstName = u"А"
+        dlg.secondName = u"Б"
+        dlg.setArrowStyleIndex (1)
+
+        result = controller.getResult ()
+
+        self.assertEqual (result, u'А -> Б [hstyle = generalization]')
+
+
+    def testStyleArrow_03 (self):
+        dlg = self.plugin.InsertEdgeDialog(None)
+        controller = self.plugin.InsertEdgeControllerRight (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.firstName = u"А"
+        dlg.secondName = u"Б"
+        dlg.setArrowStyleIndex (2)
+
+        result = controller.getResult ()
+
+        self.assertEqual (result, u'А -> Б [hstyle = composition]')
+
+
+    def testStyleArrow_04 (self):
+        dlg = self.plugin.InsertEdgeDialog(None)
+        controller = self.plugin.InsertEdgeControllerRight (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.firstName = u"А"
+        dlg.secondName = u"Б"
+        dlg.setArrowStyleIndex (3)
+
+        result = controller.getResult ()
+
+        self.assertEqual (result, u'А -> Б [hstyle = aggregation]')
+
+
+    def testStyleArrow_05 (self):
+        dlg = self.plugin.InsertEdgeDialog(None)
+        controller = self.plugin.InsertEdgeControllerRight (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.firstName = u"А"
+        dlg.secondName = u"Б"
+        dlg.setStyleIndex (3)
+        dlg.setArrowStyleIndex (3)
+
+        result = controller.getResult ()
+
+        self.assertEqual (result, u'А -> Б [style = dashed, hstyle = aggregation]')

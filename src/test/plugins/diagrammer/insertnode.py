@@ -92,7 +92,7 @@ class InsertNodeTest (unittest.TestCase):
         dlg.SetModalResult (wx.ID_OK)
         dlg.name = u"Абырвалг"
 
-        dlg.setBorderStyleIndex (0)
+        dlg.setStyleIndex (0)
 
         result = controller.getResult ()
         self.assertEqual (result, u"Абырвалг")
@@ -105,7 +105,7 @@ class InsertNodeTest (unittest.TestCase):
         dlg.SetModalResult (wx.ID_OK)
         dlg.name = u"Абырвалг"
 
-        dlg.setBorderStyleIndex (1)
+        dlg.setStyleIndex (1)
 
         result = controller.getResult ()
         self.assertEqual (result, u"Абырвалг [style = solid];")
@@ -118,7 +118,7 @@ class InsertNodeTest (unittest.TestCase):
         dlg.SetModalResult (wx.ID_OK)
         dlg.name = u"Абырвалг"
 
-        dlg.setBorderStyleIndex (2)
+        dlg.setStyleIndex (2)
 
         result = controller.getResult ()
         self.assertEqual (result, u"Абырвалг [style = dotted];")
