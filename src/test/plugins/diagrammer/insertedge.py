@@ -115,3 +115,17 @@ class InsertEdgeTest (unittest.TestCase):
         self.assertIn (u"1", result)
         self.assertNotIn (u"2", result)
         self.assertIn (u"Б", result)
+
+
+    def testLabel_01 (self):
+        dlg = self.plugin.InsertEdgeDialog(None)
+        controller = self.plugin.InsertEdgeControllerRight (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.firstName = u"А"
+        dlg.secondName = u"Б"
+        dlg.label = u"Абырвалг"
+
+        result = controller.getResult ()
+
+        self.assertEqual (result, u'А -> Б [label = "Абырвалг"]')

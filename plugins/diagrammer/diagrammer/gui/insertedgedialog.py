@@ -29,6 +29,16 @@ class InsertEdgeDialog (TestedDialog):
         self.Bind (wx.EVT_COLLAPSIBLEPANE_CHANGED, self.__onPaneChanged)
 
 
+    @property
+    def label (self):
+        return self._label.GetValue()
+
+
+    @label.setter
+    def label (self, value):
+        self._label.SetValue (value)
+
+
     def __createGui (self):
         self._paramsPanel = wx.CollapsiblePane (self,
                                                 label = _(u"Options"),
@@ -43,7 +53,7 @@ class InsertEdgeDialog (TestedDialog):
         optionsSizer.AddGrowableCol (1)
 
         self._createNodesRows (self, mainSizer)
-        # self._createLabelRow (self._paramsPanel.GetPane(), optionsSizer, _(u"Label"))
+        self._createLabelRow (self._paramsPanel.GetPane(), optionsSizer, _(u"Label"))
         # self._createShapeRow (self._paramsPanel.GetPane(), optionsSizer, _(u"Shape"))
         # self._createStackedRow (self._paramsPanel.GetPane(), optionsSizer, _(u"Stacked"))
         # self._createBorderStyleRow (self._paramsPanel.GetPane(), optionsSizer, _(u"Border style"))
@@ -103,6 +113,24 @@ class InsertEdgeDialog (TestedDialog):
         sizer.Add (nameSizer,
                    flag = wx.ALL | wx.EXPAND,
                    border = 2)
+
+
+    def _createLabelRow (self, parent, optionsSizer, label):
+        """
+        Создать элементы для ввода имени узла
+        """
+        labelLabel = wx.StaticText (parent, label = label)
+        self._label = wx.TextCtrl (parent)
+
+        optionsSizer.Add (labelLabel,
+                          flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+                          border = 2
+                          )
+
+        optionsSizer.Add (self._label,
+                          flag = wx.ALL | wx.EXPAND,
+                          border = 2
+                          )
 
 
     def _createOkCancelButtons (self, optionsSizer):
@@ -188,7 +216,7 @@ class InsertEdgeControllerBase (object):
 
     def _getParamString (self, dialog):
         params = []
-        # params.append (self._getShapeParam (dialog))
+        params.append (self._getLabelParam (dialog))
 
         return u", ".join ([param for param in params if len (param.strip()) != 0])
 
@@ -206,6 +234,10 @@ class InsertEdgeControllerBase (object):
 
     def _getSecondName (self, dialog):
         return self.__getNameNotation (dialog.secondName)
+
+
+    def _getLabelParam (self, dialog):
+        return u'label = "{}"'.format (dialog.label) if len (dialog.label) != 0 else u""
 
 
 
