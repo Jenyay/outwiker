@@ -83,15 +83,21 @@ class InsertNodeDialog (BaseShapesDialog):
                                      optionsSizer,
                                      _(u"Border style"))
 
-        PropertyFactory.createBackColor (self,
-                                         self._paramsPanel.GetPane(),
-                                         optionsSizer,
-                                         _(u"Set background color"))
+        PropertyFactory.createColor (self,
+                                     self._paramsPanel.GetPane(),
+                                     optionsSizer,
+                                     _(u"Set background color"),
+                                     "white",
+                                     "backColor",
+                                     "isBackColorChanged")
 
-        PropertyFactory.createTextColor  (self,
-                                          self._paramsPanel.GetPane(),
-                                          optionsSizer,
-                                          _(u"Set text color"))
+        PropertyFactory.createColor  (self,
+                                      self._paramsPanel.GetPane(),
+                                      optionsSizer,
+                                      _(u"Set text color"),
+                                      "black",
+                                      "textColor",
+                                      "isTextColorChanged")
 
         PropertyFactory.createFontSize  (self,
                                          self._paramsPanel.GetPane(),

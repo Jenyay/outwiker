@@ -271,3 +271,64 @@ class InsertEdgeTest (unittest.TestCase):
         result = controller.getResult ()
 
         self.assertEqual (result, u'А -> Б [style = dashed, hstyle = aggregation]')
+
+
+    def testLineColor_01 (self):
+        dlg = self.plugin.InsertEdgeDialog(None)
+        controller = self.plugin.InsertEdgeControllerRight (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.firstName = u"А"
+        dlg.secondName = u"Б"
+        dlg.isLineColorChanged = True
+        dlg.lineColor = u"yellow"
+
+        result = controller.getResult ()
+
+        self.assertEqual (result, u'А -> Б [color = "yellow"]')
+
+
+    def testLineColor_02 (self):
+        dlg = self.plugin.InsertEdgeDialog(None)
+        controller = self.plugin.InsertEdgeControllerRight (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.firstName = u"А"
+        dlg.secondName = u"Б"
+        dlg.isLineColorChanged = False
+        dlg.lineColor = u"yellow"
+
+        result = controller.getResult ()
+
+        self.assertEqual (result, u'А -> Б')
+
+
+    def testLineColor_03 (self):
+        dlg = self.plugin.InsertEdgeDialog(None)
+        controller = self.plugin.InsertEdgeControllerRight (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.firstName = u"А"
+        dlg.secondName = u"Б"
+        dlg.isLineColorChanged = True
+        dlg.lineColor = u"#AAAAAA"
+
+        result = controller.getResult ()
+
+        self.assertEqual (result, u'А -> Б [color = "#AAAAAA"]')
+
+
+    def testLineColor_04 (self):
+        dlg = self.plugin.InsertEdgeDialog(None)
+        controller = self.plugin.InsertEdgeControllerRight (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.firstName = u"А"
+        dlg.secondName = u"Б"
+        dlg.isLineColorChanged = True
+        dlg.lineColor = u"#AAAAAA"
+        dlg.setArrowStyleIndex (3)
+
+        result = controller.getResult ()
+
+        self.assertEqual (result, u'А -> Б [hstyle = aggregation, color = "#AAAAAA"]')

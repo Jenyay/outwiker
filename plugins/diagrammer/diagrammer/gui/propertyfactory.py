@@ -45,48 +45,68 @@ class PropertyFactory (object):
 
 
     @staticmethod
-    def createBackColor (obj, parent, optionsSizer, label):
+    def createColor (obj,
+                     parent,
+                     optionsSizer,
+                     label,
+                     defaultColor,
+                     prop,
+                     changeProp):
         """
         Создать элементы для выбора цвета фона узла
+        obj - объект диалога, для которого добавляются контролы и члены
+        optionsSizer - сайзер, куда нужно поместить контролы
+        label - имя метки перед свойством
+        defaultColor - цвет по умолчанию
+        prop - имя свойства, которое будет добавлено в класс объекта obj для получения и изменения цвета
+        changeProp - имя свойства, котороу будет добавлено в класс объекта obj для определения того, что цвет изменился
         """
-        def isBackColorChangedGetter (self):
-            return self._backColorCheckBox.GetValue()
+        _colorCheckBox = wx.CheckBox (parent, label = label)
+        _colorPicker = wx.ColourPickerCtrl (parent, col = defaultColor)
+
+        _colorCheckBox.SetValue (False)
+        _colorPicker.Enabled = False
+
+        def isColorChangedGetter (self):
+            return _colorCheckBox.GetValue()
 
 
-        def isBackColorChangedSetter (self, value):
-            self._backColorCheckBox.SetValue (value)
+        def isColorChangedSetter (self, value):
+            _colorCheckBox.SetValue (value)
 
 
-        def backColorGetter (self):
-            return self._backColor.GetColour().GetAsString (wx.C2S_NAME | wx.C2S_HTML_SYNTAX)
+        def colorGetter (self):
+            return _colorPicker.GetColour().GetAsString (wx.C2S_NAME | wx.C2S_HTML_SYNTAX)
 
 
-        def backColorSetter (self, value):
-            self._backColor.SetColour (value)
+        def colorSetter (self, value):
+            _colorPicker.SetColour (value)
 
 
-        obj._backColorCheckBox = wx.CheckBox (parent, label = label)
-
-        obj._backColor = wx.ColourPickerCtrl (parent,
-                                              col=u"white")
-
-        obj._backColorCheckBox.SetValue (False)
-        obj._backColor.Enabled = False
-
-        optionsSizer.Add (obj._backColorCheckBox,
+        optionsSizer.Add (_colorCheckBox,
                           flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
                           border = 2
                           )
 
-        optionsSizer.Add (obj._backColor,
+        optionsSizer.Add (_colorPicker,
                           flag = wx.ALL | wx.EXPAND,
                           border = 2
                           )
 
-        PropertyFactory.bindEnabled (obj, obj._backColorCheckBox, obj._backColor)
+        PropertyFactory.bindEnabled (obj, _colorCheckBox, _colorPicker)
 
-        type(obj).isBackColorChanged = property (isBackColorChangedGetter, isBackColorChangedSetter)
-        type(obj).backColor = property (backColorGetter, backColorSetter)
+        # Добавим свойства с заданными именами
+        setattr (type(obj),
+                 prop,
+                 property (colorGetter, colorSetter)
+                 )
+
+        setattr (type(obj),
+                 changeProp,
+                 property (isColorChangedGetter, isColorChangedSetter)
+                 )
+
+        return (_colorCheckBox, _colorPicker)
 
 
     @staticmethod
@@ -229,49 +249,6 @@ class PropertyFactory (object):
         type (obj).height = property (heightGetter, heightSetter)
         type (obj).isHeightChanged = property (isHeightChangedGetter, isHeightChangedSetter)
 
-
-    @staticmethod
-    def createTextColor (obj, parent, optionsSizer, label):
-        """
-        Создать элементы для выбора цвета текста узла
-        """
-        def isTextColorChangedGetter (self):
-            return self._textColorCheckBox.GetValue()
-
-
-        def isTextColorChangedSetter (self, value):
-            self._textColorCheckBox.SetValue (value)
-
-
-        def textColorGetter (self):
-            return self._textColor.GetColour().GetAsString (wx.C2S_NAME | wx.C2S_HTML_SYNTAX)
-
-
-        def textColorSetter (self, value):
-            self._textColor.SetColour (value)
-
-
-        obj._textColorCheckBox = wx.CheckBox (parent, label = label)
-
-        obj._textColor = wx.ColourPickerCtrl (parent,
-                                              col=u"black")
-
-        obj._textColorCheckBox.SetValue (False)
-        obj._textColor.Enabled = False
-
-        optionsSizer.Add (obj._textColorCheckBox,
-                          flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                          border = 2
-                          )
-
-        optionsSizer.Add (obj._textColor,
-                          flag = wx.ALL | wx.EXPAND,
-                          border = 2
-                          )
-
-        PropertyFactory.bindEnabled (obj, obj._textColorCheckBox, obj._textColor)
-        type (obj).isTextColorChanged = property (isTextColorChangedGetter, isTextColorChangedSetter)
-        type (obj).textColor = property (textColorGetter, textColorSetter)
 
 
     @staticmethod

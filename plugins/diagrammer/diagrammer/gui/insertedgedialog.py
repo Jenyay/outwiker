@@ -70,6 +70,14 @@ class InsertEdgeDialog (TestedDialog):
                                           optionsSizer,
                                           _(u"Arrow style"))
 
+        PropertyFactory.createColor  (self,
+                                      self._paramsPanel.GetPane(),
+                                      optionsSizer,
+                                      _(u"Set line color"),
+                                      "black",
+                                      "lineColor",
+                                      "isLineColorChanged")
+
         self._paramsPanel.GetPane().SetSizer (optionsSizer)
 
         mainSizer.Add (self._paramsPanel,
@@ -200,6 +208,7 @@ class InsertEdgeControllerBase (object):
         params.append (self._getLabelParam (dialog))
         params.append (self._getLineStyleParam (dialog))
         params.append (self._getArrowStyleParam (dialog))
+        params.append (self._getLineColorParam (dialog))
 
         return u", ".join ([param for param in params if len (param.strip()) != 0])
 
@@ -251,6 +260,10 @@ class InsertEdgeControllerBase (object):
             return u'hstyle = "{}"'.format (style)
 
         return u"hstyle = {}".format (style)
+
+
+    def _getLineColorParam (self, dialog):
+        return u'color = "{}"'.format (dialog.lineColor) if dialog.isLineColorChanged else u""
 
 
 

@@ -50,15 +50,21 @@ class InsertDiagramDialog (BaseShapesDialog):
                               mainSizer,
                               _(u"Default nodes shape"))
 
-        PropertyFactory.createBackColor (self,
-                                         self,
-                                         mainSizer,
-                                         _(u"Set default nodes background color"))
+        PropertyFactory.createColor (self,
+                                     self,
+                                     mainSizer,
+                                     _(u"Set default nodes background color"),
+                                     "white",
+                                     "backColor",
+                                     "isBackColorChanged")
 
-        PropertyFactory.createTextColor  (self,
-                                          self,
-                                          mainSizer,
-                                          _(u"Set default text color"))
+        PropertyFactory.createColor  (self,
+                                      self,
+                                      mainSizer,
+                                      _(u"Set default text color"),
+                                      "black",
+                                      "textColor",
+                                      "isTextColorChanged")
 
         PropertyFactory.createFontSize  (self,
                                          self,
