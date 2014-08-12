@@ -19,13 +19,6 @@ class InsertNodeDialog (BaseShapesDialog):
 
         self.SetTitle (_(u"Insert Node"))
 
-        # self._styles = [
-        #     (_(u"Default"), u""),
-        #     (_(u"Solid"), u"solid"),
-        #     (_(u"Dotted"), u"dotted"),
-        #     (_(u"Dashed"), u"dashed"),
-        # ]
-
         self.__createGui()
         self._paramsPanel.Collapse()
         self.Fit()
@@ -62,12 +55,26 @@ class InsertNodeDialog (BaseShapesDialog):
         optionsSizer.AddGrowableCol (0)
         optionsSizer.AddGrowableCol (1)
 
-        self._createName (self, mainSizer)
+        nameSizer = wx.FlexGridSizer (cols=2)
+        nameSizer.AddGrowableCol (1)
+        nameSizer.AddGrowableRow (0)
 
-        PropertyFactory.createLabel (self,
-                                     self._paramsPanel.GetPane(),
-                                     optionsSizer,
-                                     _(u"Label"))
+        self._name = PropertyFactory.createText (self,
+                                                 self,
+                                                 nameSizer,
+                                                 _(u"Node name"),
+                                                 "name")
+        mainSizer.Add (nameSizer,
+                       flag = wx.ALL | wx.EXPAND,
+                       border = 2)
+
+
+
+        self._label = PropertyFactory.createText (self,
+                                                  self._paramsPanel.GetPane(),
+                                                  optionsSizer,
+                                                  _(u"Label"),
+                                                  "label")
 
         self._createShapeRow (self._paramsPanel.GetPane(),
                               optionsSizer,
@@ -136,27 +143,6 @@ class InsertNodeDialog (BaseShapesDialog):
         return self._name.SetValue (value)
 
 
-    # @property
-    # def borderStyle (self):
-    #     """
-    #     Возвращает стиль рамки
-    #     """
-    #     index = self._style.GetSelection()
-    #     if index == wx.NOT_FOUND:
-    #         return self._style.GetValue()
-    #
-    #     return self._styles[index][1]
-    #
-    #
-    # @borderStyle.setter
-    # def borderStyle (self, value):
-    #     self._style.SetValue (value)
-    #
-    #
-    # def setBorderStyleIndex (self, value):
-    #     self._style.SetSelection (value)
-
-
     def __onPaneChanged (self, event):
         self.Fit()
 
@@ -173,56 +159,6 @@ class InsertNodeDialog (BaseShapesDialog):
             return
 
         event.Skip()
-
-
-    def _createName (self, parent, mainSizer):
-        """
-        Создать элементы для ввода имени узла
-        """
-        titleLabel = wx.StaticText (parent, label = _(u"Node name"))
-        self._name = wx.TextCtrl (parent)
-        self._name.SetMinSize ((250, -1))
-
-        nameSizer = wx.FlexGridSizer (cols=2)
-        nameSizer.AddGrowableCol (1)
-        nameSizer.AddGrowableRow (0)
-
-        nameSizer.Add (titleLabel,
-                       flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                       border = 2
-                       )
-
-        nameSizer.Add (self._name,
-                       flag = wx.ALL | wx.EXPAND,
-                       border = 2
-                       )
-
-        mainSizer.Add (nameSizer,
-                       flag = wx.ALL | wx.EXPAND,
-                       border = 2)
-
-
-    # def _createStyleRow (self, parent, optionsSizer, label):
-    #     """
-    #     Создать элементы для выбора стиля рамки
-    #     """
-    #     styleLabel = wx.StaticText (parent, label = label)
-    #     self._style = wx.ComboBox (parent, style = wx.CB_DROPDOWN)
-    #     styles = [style[0] for style in self._styles]
-    #
-    #     self._style.Clear()
-    #     self._style.AppendItems (styles)
-    #     self._style.SetSelection (0)
-    #
-    #     optionsSizer.Add (styleLabel,
-    #                       flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-    #                       border = 2
-    #                       )
-    #
-    #     optionsSizer.Add (self._style,
-    #                       flag = wx.ALL | wx.EXPAND,
-    #                       border = 2
-    #                       )
 
 
 

@@ -16,38 +16,48 @@ class PropertyFactory (object):
                      handler = handler,
                      source = checkbox)
 
+
     @staticmethod
-    def createLabel (obj, parent, optionsSizer, label):
+    def createText (obj, parent, sizer, label, propName):
         """
-        Создать элементы для ввода имени узла
+        Создать элементы для ввода текста
+        obj - диалог, в который добавляются свойства
+        parent - родительский контрол
+        sizer - родительский сайзер
+        label - метка перед полем ввода
+        propName - свойство, которое будет добавлено к классу объекта obj для доступа к значению введенного текста
         """
+        _label = wx.TextCtrl (parent)
+        _label.SetMinSize ((250, -1))
+
         def getter (self):
-            return self._label.GetValue()
+            return _label.GetValue()
 
 
         def setter (self, value):
-            self._label.SetValue (value)
+            _label.SetValue (value)
 
         labelLabel = wx.StaticText (parent, label = label)
-        obj._label = wx.TextCtrl (parent)
 
-        optionsSizer.Add (labelLabel,
-                          flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                          border = 2
-                          )
+        sizer.Add (labelLabel,
+                   flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+                   border = 2
+                   )
 
-        optionsSizer.Add (obj._label,
-                          flag = wx.ALL | wx.EXPAND,
-                          border = 2
-                          )
+        sizer.Add (_label,
+                   flag = wx.ALL | wx.EXPAND,
+                   border = 2
+                   )
 
-        type (obj).label = property (getter, setter)
+        setattr (type (obj), propName, property (getter, setter))
+
+        return _label
 
 
     @staticmethod
     def createColor (obj,
                      parent,
-                     optionsSizer,
+                     sizer,
                      label,
                      defaultColor,
                      prop,
@@ -55,7 +65,7 @@ class PropertyFactory (object):
         """
         Создать элементы для выбора цвета фона узла
         obj - объект диалога, для которого добавляются контролы и члены
-        optionsSizer - сайзер, куда нужно поместить контролы
+        sizer - сайзер, куда нужно поместить контролы
         label - имя метки перед свойством
         defaultColor - цвет по умолчанию
         prop - имя свойства, которое будет добавлено в класс объекта obj для получения и изменения цвета
@@ -83,15 +93,15 @@ class PropertyFactory (object):
             _colorPicker.SetColour (value)
 
 
-        optionsSizer.Add (_colorCheckBox,
-                          flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                          border = 2
-                          )
+        sizer.Add (_colorCheckBox,
+                   flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+                   border = 2
+                   )
 
-        optionsSizer.Add (_colorPicker,
-                          flag = wx.ALL | wx.EXPAND,
-                          border = 2
-                          )
+        sizer.Add (_colorPicker,
+                   flag = wx.ALL | wx.EXPAND,
+                   border = 2
+                   )
 
         PropertyFactory.bindEnabled (obj, _colorCheckBox, _colorPicker)
 
@@ -110,7 +120,7 @@ class PropertyFactory (object):
 
 
     @staticmethod
-    def createFontSize (obj, parent, optionsSizer, label):
+    def createFontSize (obj, parent, sizer, label):
         """
         Создать элементы для выбора размера шрифта
         """
@@ -140,15 +150,15 @@ class PropertyFactory (object):
         obj._fontSizeCheckBox.SetValue (False)
         obj._fontSize.Enabled = False
 
-        optionsSizer.Add (obj._fontSizeCheckBox,
-                          flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                          border = 2
-                          )
+        sizer.Add (obj._fontSizeCheckBox,
+                   flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+                   border = 2
+                   )
 
-        optionsSizer.Add (obj._fontSize,
-                          flag = wx.ALL | wx.EXPAND,
-                          border = 2
-                          )
+        sizer.Add (obj._fontSize,
+                   flag = wx.ALL | wx.EXPAND,
+                   border = 2
+                   )
 
         PropertyFactory.bindEnabled (obj, obj._fontSizeCheckBox, obj._fontSize)
 
@@ -157,7 +167,7 @@ class PropertyFactory (object):
 
 
     @staticmethod
-    def createWidth (obj, parent, optionsSizer, label):
+    def createWidth (obj, parent, sizer, label):
         """
         Создать элементы для выбора ширины узла
         """
@@ -187,15 +197,15 @@ class PropertyFactory (object):
         obj._widthCheckBox.SetValue (False)
         obj._width.Enabled = False
 
-        optionsSizer.Add (obj._widthCheckBox,
-                          flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                          border = 2
-                          )
+        sizer.Add (obj._widthCheckBox,
+                   flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+                   border = 2
+                   )
 
-        optionsSizer.Add (obj._width,
-                          flag = wx.ALL | wx.EXPAND,
-                          border = 2
-                          )
+        sizer.Add (obj._width,
+                   flag = wx.ALL | wx.EXPAND,
+                   border = 2
+                   )
 
         PropertyFactory.bindEnabled (obj, obj._widthCheckBox, obj._width)
 
@@ -204,7 +214,7 @@ class PropertyFactory (object):
 
 
     @staticmethod
-    def createHeight (obj, parent, optionsSizer, label):
+    def createHeight (obj, parent, sizer, label):
         """
         Создать элементы для выбора высоты узла
         """
@@ -234,15 +244,15 @@ class PropertyFactory (object):
         obj._heightCheckBox.SetValue (False)
         obj._height.Enabled = False
 
-        optionsSizer.Add (obj._heightCheckBox,
-                          flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                          border = 2
-                          )
+        sizer.Add (obj._heightCheckBox,
+                   flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+                   border = 2
+                   )
 
-        optionsSizer.Add (obj._height,
-                          flag = wx.ALL | wx.EXPAND,
-                          border = 2
-                          )
+        sizer.Add (obj._height,
+                   flag = wx.ALL | wx.EXPAND,
+                   border = 2
+                   )
 
         PropertyFactory.bindEnabled (obj, obj._heightCheckBox, obj._height)
 
@@ -252,7 +262,7 @@ class PropertyFactory (object):
 
 
     @staticmethod
-    def createOrientation (obj, parent, mainSizer, label):
+    def createOrientation (obj, parent, sizer, label):
         """
         Создать элементы управления, связанные с установкой ориентации диаграммы
         """
@@ -280,22 +290,22 @@ class PropertyFactory (object):
         obj._orientation.AppendItems ([orientation[0] for orientation in obj.orientations])
         obj._orientation.SetSelection (0)
 
-        mainSizer.Add (orientationLabel,
-                       flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                       border = 2
-                       )
+        sizer.Add (orientationLabel,
+                   flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+                   border = 2
+                   )
 
-        mainSizer.Add (obj._orientation,
-                       flag = wx.ALL | wx.EXPAND,
-                       border = 2
-                       )
+        sizer.Add (obj._orientation,
+                   flag = wx.ALL | wx.EXPAND,
+                   border = 2
+                   )
 
         type (obj).setOrientationSelection = setOrientationSelection
         type (obj).orientation = property (orientationGetter)
 
 
     @staticmethod
-    def createStacked (obj, parent, optionsSizer, label):
+    def createStacked (obj, parent, sizer, label):
         """
         Создать элементы для параметра stacked
         """
@@ -306,19 +316,19 @@ class PropertyFactory (object):
         def stackedSetter (self, value):
             self._stacked.SetValue (value)
 
-        optionsSizer.AddSpacer (1)
+        sizer.AddSpacer (1)
         obj._stacked = wx.CheckBox (parent, label = label)
 
-        optionsSizer.Add (obj._stacked,
-                          flag = wx.ALL | wx.ALIGN_RIGHT,
-                          border = 2
-                          )
+        sizer.Add (obj._stacked,
+                   flag = wx.ALL | wx.ALIGN_RIGHT,
+                   border = 2
+                   )
 
         type (obj).stacked = property (stackedGetter, stackedSetter)
 
 
     @staticmethod
-    def createStyle (obj, parent, optionsSizer, label):
+    def createStyle (obj, parent, sizer, label):
         """
         Создать элементы для выбора стиля рамки или линии
         """
@@ -357,22 +367,22 @@ class PropertyFactory (object):
         obj._style.AppendItems (styles)
         obj._style.SetSelection (0)
 
-        optionsSizer.Add (styleLabel,
-                          flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                          border = 2
-                          )
+        sizer.Add (styleLabel,
+                   flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+                   border = 2
+                   )
 
-        optionsSizer.Add (obj._style,
-                          flag = wx.ALL | wx.EXPAND,
-                          border = 2
-                          )
+        sizer.Add (obj._style,
+                   flag = wx.ALL | wx.EXPAND,
+                   border = 2
+                   )
 
         type (obj).style = property (styleGetter, styleSetter)
         type (obj).setStyleIndex = setStyleIndex
 
 
     @staticmethod
-    def createArrowStyle (obj, parent, optionsSizer, label):
+    def createArrowStyle (obj, parent, sizer, label):
         """
         Создать элементы для выбора стиля стрелки
         """
@@ -411,25 +421,25 @@ class PropertyFactory (object):
         obj._arrowStyle.AppendItems (styles)
         obj._arrowStyle.SetSelection (0)
 
-        optionsSizer.Add (styleLabel,
-                          flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                          border = 2
-                          )
+        sizer.Add (styleLabel,
+                   flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+                   border = 2
+                   )
 
-        optionsSizer.Add (obj._arrowStyle,
-                          flag = wx.ALL | wx.EXPAND,
-                          border = 2
-                          )
+        sizer.Add (obj._arrowStyle,
+                   flag = wx.ALL | wx.EXPAND,
+                   border = 2
+                   )
 
         type (obj).arrowStyle = property (styleGetter, styleSetter)
         type (obj).setArrowStyleIndex = setArrowStyleIndex
 
 
     @staticmethod
-    def createOkCancelButtons (obj, optionsSizer):
+    def createOkCancelButtons (obj, sizer):
         okCancel = obj.CreateButtonSizer (wx.OK | wx.CANCEL)
-        optionsSizer.AddStretchSpacer()
-        optionsSizer.Add (okCancel,
-                          flag=wx.ALL | wx.ALIGN_RIGHT | wx.ALIGN_BOTTOM,
-                          border=4
-                          )
+        sizer.AddStretchSpacer()
+        sizer.Add (okCancel,
+                   flag=wx.ALL | wx.ALIGN_RIGHT | wx.ALIGN_BOTTOM,
+                   border=4
+                   )

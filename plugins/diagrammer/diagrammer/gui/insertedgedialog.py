@@ -30,16 +30,6 @@ class InsertEdgeDialog (TestedDialog):
         self.Bind (wx.EVT_COLLAPSIBLEPANE_CHANGED, self.__onPaneChanged)
 
 
-    @property
-    def label (self):
-        return self._label.GetValue()
-
-
-    @label.setter
-    def label (self, value):
-        self._label.SetValue (value)
-
-
     def __createGui (self):
         self._paramsPanel = wx.CollapsiblePane (self,
                                                 label = _(u"Options"),
@@ -49,16 +39,34 @@ class InsertEdgeDialog (TestedDialog):
         mainSizer.AddGrowableCol (0)
         mainSizer.AddGrowableRow (1)
 
+        nameSizer = wx.FlexGridSizer (cols=2)
+        nameSizer.AddGrowableCol (1)
+        nameSizer.AddGrowableRow (0)
+
+        self._firstName = PropertyFactory.createText (self,
+                                                      self,
+                                                      nameSizer,
+                                                      _(u"First node name"),
+                                                      "firstName")
+
+        self._secondName = PropertyFactory.createText (self,
+                                                       self,
+                                                       nameSizer,
+                                                       _(u"Second node name"),
+                                                       "secondName")
+        mainSizer.Add (nameSizer,
+                       flag = wx.ALL | wx.EXPAND,
+                       border = 2)
+
         optionsSizer = wx.FlexGridSizer (cols=2)
         optionsSizer.AddGrowableCol (0)
         optionsSizer.AddGrowableCol (1)
 
-        self._createNodesRows (self, mainSizer)
-
-        PropertyFactory.createLabel (self,
-                                     self._paramsPanel.GetPane(),
-                                     optionsSizer,
-                                     _(u"Label"))
+        PropertyFactory.createText (self,
+                                    self._paramsPanel.GetPane(),
+                                    optionsSizer,
+                                    _(u"Label"),
+                                    "label")
 
         PropertyFactory.createStyle (self,
                                      self._paramsPanel.GetPane(),
@@ -90,69 +98,8 @@ class InsertEdgeDialog (TestedDialog):
         self._firstName.SetFocus()
 
 
-    def _createNodesRows (self, parent, sizer):
-        """
-        Создать элементы для ввода имен узлов
-        """
-        firstTitleLabel = wx.StaticText (parent, label = _(u"First node name"))
-        self._firstName = wx.TextCtrl (parent)
-        self._firstName.SetMinSize ((250, -1))
-
-        secondTitleLabel = wx.StaticText (parent, label = _(u"Second node name"))
-        self._secondName = wx.TextCtrl (parent)
-        self._secondName.SetMinSize ((250, -1))
-
-        nameSizer = wx.FlexGridSizer (cols=2)
-        nameSizer.AddGrowableCol (1)
-        nameSizer.AddGrowableRow (0)
-
-        nameSizer.Add (firstTitleLabel,
-                       flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                       border = 2
-                       )
-
-        nameSizer.Add (self._firstName,
-                       flag = wx.ALL | wx.EXPAND,
-                       border = 2
-                       )
-
-        nameSizer.Add (secondTitleLabel,
-                       flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                       border = 2
-                       )
-
-        nameSizer.Add (self._secondName,
-                       flag = wx.ALL | wx.EXPAND,
-                       border = 2
-                       )
-
-        sizer.Add (nameSizer,
-                   flag = wx.ALL | wx.EXPAND,
-                   border = 2)
-
-
     def __onPaneChanged (self, event):
         self.Fit()
-
-
-    @property
-    def firstName (self):
-        return self._firstName.GetValue()
-
-
-    @firstName.setter
-    def firstName (self, value):
-        return self._firstName.SetValue (value)
-
-
-    @property
-    def secondName (self):
-        return self._secondName.GetValue()
-
-
-    @secondName.setter
-    def secondName (self, value):
-        return self._secondName.SetValue (value)
 
 
 
