@@ -62,12 +62,6 @@ class InsertEdgeDialog (TestedDialog):
         optionsSizer.AddGrowableCol (0)
         optionsSizer.AddGrowableCol (1)
 
-        PropertyFactory.createText (self,
-                                    self._paramsPanel.GetPane(),
-                                    optionsSizer,
-                                    _(u"Label"),
-                                    "label")
-
         PropertyFactory.createStyle (self,
                                      self._paramsPanel.GetPane(),
                                      optionsSizer,
@@ -85,6 +79,30 @@ class InsertEdgeDialog (TestedDialog):
                                       "black",
                                       "lineColor",
                                       "isLineColorChanged")
+
+        PropertyFactory.createText (self,
+                                    self._paramsPanel.GetPane(),
+                                    optionsSizer,
+                                    _(u"Label"),
+                                    "label")
+
+        PropertyFactory.createInteger  (self,
+                                        self._paramsPanel.GetPane(),
+                                        optionsSizer,
+                                        _(u"Set font size"),
+                                        "fontSize",
+                                        "isFontSizeChanged",
+                                        1,
+                                        100,
+                                        11)
+
+        PropertyFactory.createColor  (self,
+                                      self._paramsPanel.GetPane(),
+                                      optionsSizer,
+                                      _(u"Set text color"),
+                                      "black",
+                                      "textColor",
+                                      "isTextColorChanged")
 
         self._paramsPanel.GetPane().SetSizer (optionsSizer)
 
@@ -153,9 +171,11 @@ class InsertEdgeControllerBase (object):
     def _getParamString (self, dialog):
         params = []
         params.append (self._getLabelParam (dialog))
+        params.append (self._getFontSizeParam (dialog))
         params.append (self._getLineStyleParam (dialog))
         params.append (self._getArrowStyleParam (dialog))
         params.append (self._getLineColorParam (dialog))
+        params.append (self._getTextColorParam (dialog))
 
         return u", ".join ([param for param in params if len (param.strip()) != 0])
 
@@ -177,6 +197,10 @@ class InsertEdgeControllerBase (object):
 
     def _getLabelParam (self, dialog):
         return u'label = "{}"'.format (dialog.label) if len (dialog.label) != 0 else u""
+
+
+    def _getFontSizeParam (self, dialog):
+        return u'fontsize = {}'.format (dialog.fontSize) if dialog.isFontSizeChanged else u""
 
 
     def _getLineStyleParam (self, dialog):
@@ -211,6 +235,10 @@ class InsertEdgeControllerBase (object):
 
     def _getLineColorParam (self, dialog):
         return u'color = "{}"'.format (dialog.lineColor) if dialog.isLineColorChanged else u""
+
+
+    def _getTextColorParam (self, dialog):
+        return u'textcolor = "{}"'.format (dialog.textColor) if dialog.isTextColorChanged else u""
 
 
 

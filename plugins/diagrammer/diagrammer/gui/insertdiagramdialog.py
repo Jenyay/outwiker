@@ -66,20 +66,35 @@ class InsertDiagramDialog (BaseShapesDialog):
                                       "textColor",
                                       "isTextColorChanged")
 
-        PropertyFactory.createFontSize  (self,
-                                         self,
-                                         mainSizer,
-                                         _(u"Set default font size"))
+        PropertyFactory.createInteger  (self,
+                                        self,
+                                        mainSizer,
+                                        _(u"Set default font size"),
+                                        "fontSize",
+                                        "isFontSizeChanged",
+                                        1,
+                                        100,
+                                        11)
 
-        PropertyFactory.createWidth  (self,
-                                      self,
-                                      mainSizer,
-                                      _(u"Set default nodes width"))
+        PropertyFactory.createInteger  (self,
+                                        self,
+                                        mainSizer,
+                                        _(u"Set default nodes width"),
+                                        "width",
+                                        "isWidthChanged",
+                                        1,
+                                        1000,
+                                        128)
 
-        PropertyFactory.createHeight  (self,
-                                       self,
-                                       mainSizer,
-                                       _(u"Set default nodes height"))
+        PropertyFactory.createInteger  (self,
+                                        self,
+                                        mainSizer,
+                                        _(u"Set default nodes height"),
+                                        "height",
+                                        "isHeightChanged",
+                                        1,
+                                        1000,
+                                        40)
 
         PropertyFactory.createOkCancelButtons (self, mainSizer)
 

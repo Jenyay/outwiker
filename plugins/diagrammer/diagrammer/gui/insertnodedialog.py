@@ -106,20 +106,35 @@ class InsertNodeDialog (BaseShapesDialog):
                                       "textColor",
                                       "isTextColorChanged")
 
-        PropertyFactory.createFontSize  (self,
-                                         self._paramsPanel.GetPane(),
-                                         optionsSizer,
-                                         _(u"Set font size"))
+        PropertyFactory.createInteger  (self,
+                                        self._paramsPanel.GetPane(),
+                                        optionsSizer,
+                                        _(u"Set font size"),
+                                        "fontSize",
+                                        "isFontSizeChanged",
+                                        1,
+                                        100,
+                                        11)
 
-        PropertyFactory.createWidth  (self,
-                                      self._paramsPanel.GetPane(),
-                                      optionsSizer,
-                                      _(u"Set width"))
+        PropertyFactory.createInteger  (self,
+                                        self._paramsPanel.GetPane(),
+                                        optionsSizer,
+                                        _(u"Set width"),
+                                        "width",
+                                        "isWidthChanged",
+                                        1,
+                                        1000,
+                                        128)
 
-        PropertyFactory.createHeight  (self,
-                                       self._paramsPanel.GetPane(),
-                                       optionsSizer,
-                                       _(u"Set height"))
+        PropertyFactory.createInteger  (self,
+                                        self._paramsPanel.GetPane(),
+                                        optionsSizer,
+                                        _(u"Set height"),
+                                        "height",
+                                        "isHeightChanged",
+                                        1,
+                                        1000,
+                                        40)
 
         self._paramsPanel.GetPane().SetSizer (optionsSizer)
 

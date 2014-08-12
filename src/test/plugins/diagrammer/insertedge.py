@@ -332,3 +332,110 @@ class InsertEdgeTest (unittest.TestCase):
         result = controller.getResult ()
 
         self.assertEqual (result, u'А -> Б [hstyle = aggregation, color = "#AAAAAA"]')
+
+
+    def testFontSize_01 (self):
+        dlg = self.plugin.InsertEdgeDialog(None)
+        controller = self.plugin.InsertEdgeControllerRight (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.firstName = u"А"
+        dlg.secondName = u"Б"
+        dlg.isFontSizeChanged = True
+        dlg.fontSize = 11
+
+        result = controller.getResult ()
+
+        self.assertEqual (result, u'А -> Б [fontsize = 11]')
+
+
+    def testFontSize_02 (self):
+        dlg = self.plugin.InsertEdgeDialog(None)
+        controller = self.plugin.InsertEdgeControllerRight (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.firstName = u"А"
+        dlg.secondName = u"Б"
+        dlg.isFontSizeChanged = False
+        dlg.fontSize = 15
+
+        result = controller.getResult ()
+
+        self.assertEqual (result, u'А -> Б')
+
+
+    def testFontSize_03 (self):
+        dlg = self.plugin.InsertEdgeDialog(None)
+        controller = self.plugin.InsertEdgeControllerRight (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.firstName = u"А"
+        dlg.secondName = u"Б"
+        dlg.isFontSizeChanged = True
+        dlg.fontSize = 11
+        dlg.label = u"Абырвалг"
+
+        result = controller.getResult ()
+
+        self.assertEqual (result, u'А -> Б [label = "Абырвалг", fontsize = 11]')
+
+
+    def testTextColor_01 (self):
+        dlg = self.plugin.InsertEdgeDialog(None)
+        controller = self.plugin.InsertEdgeControllerRight (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.firstName = u"А"
+        dlg.secondName = u"Б"
+        dlg.isTextColorChanged = True
+        dlg.textColor = u"yellow"
+
+        result = controller.getResult ()
+
+        self.assertEqual (result, u'А -> Б [textcolor = "yellow"]')
+
+
+    def testTextColor_02 (self):
+        dlg = self.plugin.InsertEdgeDialog(None)
+        controller = self.plugin.InsertEdgeControllerRight (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.firstName = u"А"
+        dlg.secondName = u"Б"
+        dlg.isTextColorChanged = False
+        dlg.textColor = u"yellow"
+
+        result = controller.getResult ()
+
+        self.assertEqual (result, u'А -> Б')
+
+
+    def testTextColor_03 (self):
+        dlg = self.plugin.InsertEdgeDialog(None)
+        controller = self.plugin.InsertEdgeControllerRight (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.firstName = u"А"
+        dlg.secondName = u"Б"
+        dlg.isTextColorChanged = True
+        dlg.textColor = u"#AAAAAA"
+
+        result = controller.getResult ()
+
+        self.assertEqual (result, u'А -> Б [textcolor = "#AAAAAA"]')
+
+
+    def testTextColor_04 (self):
+        dlg = self.plugin.InsertEdgeDialog(None)
+        controller = self.plugin.InsertEdgeControllerRight (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.firstName = u"А"
+        dlg.secondName = u"Б"
+        dlg.isTextColorChanged = True
+        dlg.textColor = u"#AAAAAA"
+        dlg.setArrowStyleIndex (3)
+
+        result = controller.getResult ()
+
+        self.assertEqual (result, u'А -> Б [hstyle = aggregation, textcolor = "#AAAAAA"]')

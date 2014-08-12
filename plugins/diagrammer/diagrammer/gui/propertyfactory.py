@@ -120,145 +120,60 @@ class PropertyFactory (object):
 
 
     @staticmethod
-    def createFontSize (obj, parent, sizer, label):
+    def createInteger (obj,
+                       parent,
+                       sizer,
+                       label,
+                       propName,
+                       changePropName,
+                       minVal,
+                       maxVal,
+                       initialVal):
         """
-        Создать элементы для выбора размера шрифта
+        Создать элементы для выбора целочисленного параметра
         """
-        def fontSizeGetter (self):
-            return self._fontSize.GetValue()
+        _checkBox = wx.CheckBox (parent, label = label)
+        _checkBox.SetValue (False)
+
+        _spin = wx.SpinCtrl (parent,
+                             min = minVal,
+                             max = maxVal,
+                             initial = initialVal)
+        _spin.Enabled = False
 
 
-        def fontSizeSetter (self, value):
-            self._fontSize.SetValue (value)
+        def getter (self):
+            return _spin.GetValue()
 
 
-        def isFontSizeChangedGetter (self):
-            return self._fontSizeCheckBox.GetValue()
+        def setter (self, value):
+            _spin.SetValue (value)
 
 
-        def isFontSizeChangedSetter (self, value):
-            self._fontSizeCheckBox.SetValue (value)
+        def isChangedGetter (self):
+            return _checkBox.GetValue()
 
 
-        obj._fontSizeCheckBox = wx.CheckBox (parent, label = label)
+        def isChangedSetter (self, value):
+            _checkBox.SetValue (value)
 
-        obj._fontSize = wx.SpinCtrl (parent,
-                                     min = 1,
-                                     max = 100,
-                                     initial = 11)
 
-        obj._fontSizeCheckBox.SetValue (False)
-        obj._fontSize.Enabled = False
-
-        sizer.Add (obj._fontSizeCheckBox,
+        sizer.Add (_checkBox,
                    flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
                    border = 2
                    )
 
-        sizer.Add (obj._fontSize,
+        sizer.Add (_spin,
                    flag = wx.ALL | wx.EXPAND,
                    border = 2
                    )
 
-        PropertyFactory.bindEnabled (obj, obj._fontSizeCheckBox, obj._fontSize)
+        PropertyFactory.bindEnabled (obj, _checkBox, _spin)
 
-        type (obj).fontSize = property (fontSizeGetter, fontSizeSetter)
-        type (obj).isFontSizeChanged = property (isFontSizeChangedGetter, isFontSizeChangedSetter)
+        setattr (type (obj), propName, property (getter, setter))
+        setattr (type (obj), changePropName, property (isChangedGetter, isChangedSetter))
 
-
-    @staticmethod
-    def createWidth (obj, parent, sizer, label):
-        """
-        Создать элементы для выбора ширины узла
-        """
-        def widthGetter (self):
-            return self._width.GetValue()
-
-
-        def widthSetter (self, value):
-            self._width.SetValue (value)
-
-
-        def isWidthChangedGetter (self):
-            return self._widthCheckBox.GetValue()
-
-
-        def isWidthChangedSetter (self, value):
-            self._widthCheckBox.SetValue (value)
-
-
-        obj._widthCheckBox = wx.CheckBox (parent, label = label)
-
-        obj._width = wx.SpinCtrl (parent,
-                                  min = 1,
-                                  max = 1000,
-                                  initial = 128)
-
-        obj._widthCheckBox.SetValue (False)
-        obj._width.Enabled = False
-
-        sizer.Add (obj._widthCheckBox,
-                   flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                   border = 2
-                   )
-
-        sizer.Add (obj._width,
-                   flag = wx.ALL | wx.EXPAND,
-                   border = 2
-                   )
-
-        PropertyFactory.bindEnabled (obj, obj._widthCheckBox, obj._width)
-
-        type (obj).width = property (widthGetter, widthSetter)
-        type (obj).isWidthChanged = property (isWidthChangedGetter, isWidthChangedSetter)
-
-
-    @staticmethod
-    def createHeight (obj, parent, sizer, label):
-        """
-        Создать элементы для выбора высоты узла
-        """
-        def isHeightChangedGetter (self):
-            return self._heightCheckBox.GetValue()
-
-
-        def isHeightChangedSetter (self, value):
-            self._heightCheckBox.SetValue (value)
-
-
-        def heightGetter (self):
-            return self._height.GetValue()
-
-
-        def heightSetter (self, value):
-            self._height.SetValue (value)
-
-
-        obj._heightCheckBox = wx.CheckBox (parent, label = label)
-
-        obj._height = wx.SpinCtrl (parent,
-                                   min = 1,
-                                   max = 1000,
-                                   initial = 40)
-
-        obj._heightCheckBox.SetValue (False)
-        obj._height.Enabled = False
-
-        sizer.Add (obj._heightCheckBox,
-                   flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                   border = 2
-                   )
-
-        sizer.Add (obj._height,
-                   flag = wx.ALL | wx.EXPAND,
-                   border = 2
-                   )
-
-        PropertyFactory.bindEnabled (obj, obj._heightCheckBox, obj._height)
-
-        type (obj).height = property (heightGetter, heightSetter)
-        type (obj).isHeightChanged = property (isHeightChangedGetter, isHeightChangedSetter)
-
+        return (_checkBox, _spin)
 
 
     @staticmethod
