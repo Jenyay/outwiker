@@ -7,10 +7,11 @@ from outwiker.core.commands import MessageBox
 from ..i18n import get_
 from ..diagramrender import DiagramRender
 
-from .baseparamsdialog import BaseParamsDialog
+from .baseshapesdialog import BaseShapesDialog
+from .propertyfactory import PropertyFactory
 
 
-class InsertNodeDialog (BaseParamsDialog):
+class InsertNodeDialog (BaseShapesDialog):
     def __init__ (self, parent):
         super (InsertNodeDialog, self).__init__ (parent)
         global _
@@ -62,22 +63,57 @@ class InsertNodeDialog (BaseParamsDialog):
         optionsSizer.AddGrowableCol (1)
 
         self._createNameRow (self, mainSizer)
-        self._createLabelRow (self._paramsPanel.GetPane(), optionsSizer, _(u"Label"))
-        self._createShapeRow (self._paramsPanel.GetPane(), optionsSizer, _(u"Shape"))
-        self._createStackedRow (self._paramsPanel.GetPane(), optionsSizer, _(u"Stacked"))
-        self._createBorderStyleRow (self._paramsPanel.GetPane(), optionsSizer, _(u"Border style"))
-        self._createBackColorRow (self._paramsPanel.GetPane(), optionsSizer, _(u"Set background color"))
-        self._createTextColorRow (self._paramsPanel.GetPane(), optionsSizer, _(u"Set text color"))
-        self._createFontSizeRow (self._paramsPanel.GetPane(), optionsSizer, _(u"Set font size"))
-        self._createWidthRow (self._paramsPanel.GetPane(), optionsSizer, _(u"Set width"))
-        self._createHeightRow (self._paramsPanel.GetPane(), optionsSizer, _(u"Set height"))
+
+        PropertyFactory.createLabel (self,
+                                     self._paramsPanel.GetPane(),
+                                     optionsSizer,
+                                     _(u"Label"))
+
+        self._createShapeRow (self._paramsPanel.GetPane(),
+                              optionsSizer,
+                              _(u"Shape"))
+
+        PropertyFactory.createStacked (self,
+                                       self._paramsPanel.GetPane(),
+                                       optionsSizer,
+                                       _(u"Stacked"))
+
+        self._createBorderStyleRow (self._paramsPanel.GetPane(),
+                                    optionsSizer,
+                                    _(u"Border style"))
+
+        PropertyFactory.createBackColor (self,
+                                         self._paramsPanel.GetPane(),
+                                         optionsSizer,
+                                         _(u"Set background color"))
+
+        PropertyFactory.createTextColor  (self,
+                                          self._paramsPanel.GetPane(),
+                                          optionsSizer,
+                                          _(u"Set text color"))
+
+        PropertyFactory.createFontSize  (self,
+                                         self._paramsPanel.GetPane(),
+                                         optionsSizer,
+                                         _(u"Set font size"))
+
+        PropertyFactory.createWidth  (self,
+                                      self._paramsPanel.GetPane(),
+                                      optionsSizer,
+                                      _(u"Set width"))
+
+        PropertyFactory.createHeight  (self,
+                                       self._paramsPanel.GetPane(),
+                                       optionsSizer,
+                                       _(u"Set height"))
 
         self._paramsPanel.GetPane().SetSizer (optionsSizer)
 
         mainSizer.Add (self._paramsPanel,
                        flag = wx.EXPAND | wx.ALL,
                        border = 2)
-        self._createOkCancelButtons (mainSizer)
+
+        PropertyFactory.createOkCancelButtons (self, mainSizer)
 
         self.SetSizer (mainSizer)
         self._name.SetFocus()
@@ -112,26 +148,6 @@ class InsertNodeDialog (BaseParamsDialog):
 
     def setBorderStyleIndex (self, value):
         self._borderStyle.SetSelection (value)
-
-
-    @property
-    def stacked (self):
-        return self._stacked.GetValue()
-
-
-    @stacked.setter
-    def stacked (self, value):
-        self._stacked.SetValue (value)
-
-
-    @property
-    def label (self):
-        return self._label.GetValue()
-
-
-    @label.setter
-    def label (self, value):
-        self._label.SetValue (value)
 
 
     def __onPaneChanged (self, event):
@@ -177,37 +193,6 @@ class InsertNodeDialog (BaseParamsDialog):
         mainSizer.Add (nameSizer,
                        flag = wx.ALL | wx.EXPAND,
                        border = 2)
-
-
-    def _createLabelRow (self, parent, optionsSizer, label):
-        """
-        Создать элементы для ввода имени узла
-        """
-        labelLabel = wx.StaticText (parent, label = label)
-        self._label = wx.TextCtrl (parent)
-
-        optionsSizer.Add (labelLabel,
-                          flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                          border = 2
-                          )
-
-        optionsSizer.Add (self._label,
-                          flag = wx.ALL | wx.EXPAND,
-                          border = 2
-                          )
-
-
-    def _createStackedRow (self, parent, optionsSizer, label):
-        """
-        Создать элементы для параметра stacked
-        """
-        optionsSizer.AddSpacer (1)
-        self._stacked = wx.CheckBox (parent, label = label)
-
-        optionsSizer.Add (self._stacked,
-                          flag = wx.ALL | wx.ALIGN_RIGHT,
-                          border = 2
-                          )
 
 
     def _createBorderStyleRow (self, parent, optionsSizer, label):

@@ -5,21 +5,17 @@ import wx
 from ..i18n import get_
 from ..diagramrender import DiagramRender
 
-from .baseparamsdialog import BaseParamsDialog
+from .baseshapesdialog import BaseShapesDialog
+from .propertyfactory import PropertyFactory
 
 
-class InsertDiagramDialog (BaseParamsDialog):
+class InsertDiagramDialog (BaseShapesDialog):
     defaultShape = u"box"
 
     def __init__ (self, parent):
         super (InsertDiagramDialog, self).__init__ (parent)
         global _
         _ = get_()
-
-        self.orientations = [
-            (_(u"Landscape"), u"landscape"),
-            (_(u"Portrait"), u"portrait"),
-        ]
 
         self.SetTitle (_(u"Insert Diagram"))
 
@@ -40,32 +36,46 @@ class InsertDiagramDialog (BaseParamsDialog):
         return self._shape.GetStringSelection() == self.defaultShape
 
 
-    def setOrientationSelection (self, index):
-        self._orientation.SetSelection(index)
-
-
-    @property
-    def orientation (self):
-        index = self._orientation.GetSelection()
-        assert index != wx.NOT_FOUND
-
-        return self.orientations[index][1]
-
-
     def __createGui (self):
         mainSizer = wx.FlexGridSizer (cols = 2)
         mainSizer.AddGrowableCol (0)
         mainSizer.AddGrowableCol (1)
 
-        self._createOrientationRow (self, mainSizer, _(u"Orientation"))
-        self._createShapeRow (self, mainSizer, _(u"Default nodes shape"))
-        self._createBackColorRow (self, mainSizer, _(u"Set default nodes background color"))
-        self._createTextColorRow (self, mainSizer, _(u"Set default text color"))
-        self._createFontSizeRow (self, mainSizer, _(u"Set default font size"))
-        self._createWidthRow (self, mainSizer, _(u"Set default nodes width"))
-        self._createHeightRow (self, mainSizer, _(u"Set default nodes height"))
+        PropertyFactory.createOrientation  (self,
+                                            self,
+                                            mainSizer,
+                                            _(u"Orientation"))
 
-        self._createOkCancelButtons (mainSizer)
+        self._createShapeRow (self,
+                              mainSizer,
+                              _(u"Default nodes shape"))
+
+        PropertyFactory.createBackColor (self,
+                                         self,
+                                         mainSizer,
+                                         _(u"Set default nodes background color"))
+
+        PropertyFactory.createTextColor  (self,
+                                          self,
+                                          mainSizer,
+                                          _(u"Set default text color"))
+
+        PropertyFactory.createFontSize  (self,
+                                         self,
+                                         mainSizer,
+                                         _(u"Set default font size"))
+
+        PropertyFactory.createWidth  (self,
+                                      self,
+                                      mainSizer,
+                                      _(u"Set default nodes width"))
+
+        PropertyFactory.createHeight  (self,
+                                       self,
+                                       mainSizer,
+                                       _(u"Set default nodes height"))
+
+        PropertyFactory.createOkCancelButtons (self, mainSizer)
 
         # Выберем по умолчанию в качестве фигуры box
         boxIndex = self._shape.FindString (self.defaultShape)
@@ -73,29 +83,6 @@ class InsertDiagramDialog (BaseParamsDialog):
             self._shape.SetSelection (boxIndex)
 
         self.SetSizer (mainSizer)
-
-
-    def _createOrientationRow (self, parent, mainSizer, label):
-        """
-        Создать элементы управления, связанные с установкой ориентации диаграммы
-        """
-        orientationLabel = wx.StaticText (parent, label = label)
-        self._orientation = wx.ComboBox (parent, style = wx.CB_DROPDOWN | wx.CB_READONLY)
-
-        self._orientation.SetMinSize ((250, -1))
-        self._orientation.Clear()
-        self._orientation.AppendItems ([orientation[0] for orientation in self.orientations])
-        self._orientation.SetSelection (0)
-
-        mainSizer.Add (orientationLabel,
-                       flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                       border = 2
-                       )
-
-        mainSizer.Add (self._orientation,
-                       flag = wx.ALL | wx.EXPAND,
-                       border = 2
-                       )
 
 
 

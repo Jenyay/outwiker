@@ -7,6 +7,7 @@ import wx
 from outwiker.gui.testeddialog import TestedDialog
 
 from ..i18n import get_
+from .propertyfactory import PropertyFactory
 
 
 class InsertEdgeDialog (TestedDialog):
@@ -53,22 +54,15 @@ class InsertEdgeDialog (TestedDialog):
         optionsSizer.AddGrowableCol (1)
 
         self._createNodesRows (self, mainSizer)
-        self._createLabelRow (self._paramsPanel.GetPane(), optionsSizer, _(u"Label"))
-        # self._createShapeRow (self._paramsPanel.GetPane(), optionsSizer, _(u"Shape"))
-        # self._createStackedRow (self._paramsPanel.GetPane(), optionsSizer, _(u"Stacked"))
-        # self._createBorderStyleRow (self._paramsPanel.GetPane(), optionsSizer, _(u"Border style"))
-        # self._createBackColorRow (self._paramsPanel.GetPane(), optionsSizer, _(u"Set background color"))
-        # self._createTextColorRow (self._paramsPanel.GetPane(), optionsSizer, _(u"Set text color"))
-        # self._createFontSizeRow (self._paramsPanel.GetPane(), optionsSizer, _(u"Set font size"))
-        # self._createWidthRow (self._paramsPanel.GetPane(), optionsSizer, _(u"Set width"))
-        # self._createHeightRow (self._paramsPanel.GetPane(), optionsSizer, _(u"Set height"))
+        PropertyFactory.createLabel (self, self._paramsPanel.GetPane(), optionsSizer, _(u"Label"))
 
         self._paramsPanel.GetPane().SetSizer (optionsSizer)
 
         mainSizer.Add (self._paramsPanel,
                        flag = wx.EXPAND | wx.ALL,
                        border = 2)
-        self._createOkCancelButtons (mainSizer)
+
+        PropertyFactory.createOkCancelButtons (self, mainSizer)
 
         self.SetSizer (mainSizer)
         self._firstName.SetFocus()
@@ -113,33 +107,6 @@ class InsertEdgeDialog (TestedDialog):
         sizer.Add (nameSizer,
                    flag = wx.ALL | wx.EXPAND,
                    border = 2)
-
-
-    def _createLabelRow (self, parent, optionsSizer, label):
-        """
-        Создать элементы для ввода имени узла
-        """
-        labelLabel = wx.StaticText (parent, label = label)
-        self._label = wx.TextCtrl (parent)
-
-        optionsSizer.Add (labelLabel,
-                          flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                          border = 2
-                          )
-
-        optionsSizer.Add (self._label,
-                          flag = wx.ALL | wx.EXPAND,
-                          border = 2
-                          )
-
-
-    def _createOkCancelButtons (self, optionsSizer):
-        okCancel = self.CreateButtonSizer (wx.OK | wx.CANCEL)
-        optionsSizer.AddStretchSpacer()
-        optionsSizer.Add (okCancel,
-                          flag=wx.ALL | wx.ALIGN_RIGHT | wx.ALIGN_BOTTOM,
-                          border=4
-                          )
 
 
     def __onPaneChanged (self, event):
