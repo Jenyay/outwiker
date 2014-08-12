@@ -17,6 +17,7 @@ from .diagramtoolbar import DiagramToolBar
 from .actions.insertdiagram import InsertDiagramAction
 from .actions.help import HelpAction
 from .actions.insertnode import InsertNodeAction
+from .actions.insertedge import InsertEdgeNoneAction, InsertEdgeRightAction, InsertEdgeLeftAction, InsertEdgeBothAction
 
 
 class GuiCreator (object):
@@ -28,7 +29,13 @@ class GuiCreator (object):
         self._application = application
 
         # Сюда добавить все Actions
-        self._actions = [InsertDiagramAction, InsertNodeAction, HelpAction]
+        self._actions = [InsertDiagramAction,
+                         InsertNodeAction,
+                         InsertEdgeNoneAction,
+                         InsertEdgeLeftAction,
+                         InsertEdgeRightAction,
+                         InsertEdgeBothAction,
+                         HelpAction]
 
         # MenuItem создаваемого подменю
         self._submenuItem = None
@@ -76,6 +83,30 @@ class GuiCreator (object):
             InsertNodeAction.stringId,
             toolbar,
             self._getImagePath ("node.png"))
+
+
+        self._application.actionController.appendToolbarButton (
+            InsertEdgeNoneAction.stringId,
+            toolbar,
+            self._getImagePath ("edge-none.png"))
+
+
+        self._application.actionController.appendToolbarButton (
+            InsertEdgeLeftAction.stringId,
+            toolbar,
+            self._getImagePath ("edge-left.png"))
+
+
+        self._application.actionController.appendToolbarButton (
+            InsertEdgeRightAction.stringId,
+            toolbar,
+            self._getImagePath ("edge-right.png"))
+
+
+        self._application.actionController.appendToolbarButton (
+            InsertEdgeBothAction.stringId,
+            toolbar,
+            self._getImagePath ("edge-both.png"))
 
 
         self._application.actionController.appendToolbarButton (
