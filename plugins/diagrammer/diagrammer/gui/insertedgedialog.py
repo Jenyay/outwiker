@@ -54,7 +54,16 @@ class InsertEdgeDialog (TestedDialog):
         optionsSizer.AddGrowableCol (1)
 
         self._createNodesRows (self, mainSizer)
-        PropertyFactory.createLabel (self, self._paramsPanel.GetPane(), optionsSizer, _(u"Label"))
+
+        PropertyFactory.createLabel (self,
+                                     self._paramsPanel.GetPane(),
+                                     optionsSizer,
+                                     _(u"Label"))
+
+        PropertyFactory.createStyle (self,
+                                     self._paramsPanel.GetPane(),
+                                     optionsSizer,
+                                     _(u"Line style"))
 
         self._paramsPanel.GetPane().SetSizer (optionsSizer)
 
@@ -184,6 +193,7 @@ class InsertEdgeControllerBase (object):
     def _getParamString (self, dialog):
         params = []
         params.append (self._getLabelParam (dialog))
+        params.append (self._getLineStyleParam (dialog))
 
         return u", ".join ([param for param in params if len (param.strip()) != 0])
 
@@ -205,6 +215,21 @@ class InsertEdgeControllerBase (object):
 
     def _getLabelParam (self, dialog):
         return u'label = "{}"'.format (dialog.label) if len (dialog.label) != 0 else u""
+
+
+    def _getLineStyleParam (self, dialog):
+        """
+        Возвращает строку с параметром, задающим стиль линии
+        """
+        style = dialog.style.lower().strip().replace (u" ", u"")
+
+        if len (style) == 0:
+            return u""
+
+        if style[0].isdigit():
+            return u'style = "{}"'.format (style)
+
+        return u"style = {}".format (style)
 
 
 

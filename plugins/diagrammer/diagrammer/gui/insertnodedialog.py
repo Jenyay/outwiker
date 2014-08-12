@@ -19,12 +19,12 @@ class InsertNodeDialog (BaseShapesDialog):
 
         self.SetTitle (_(u"Insert Node"))
 
-        self._borderStyles = [
-            (_(u"Default"), u""),
-            (_(u"Solid"), u"solid"),
-            (_(u"Dotted"), u"dotted"),
-            (_(u"Dashed"), u"dashed"),
-        ]
+        # self._styles = [
+        #     (_(u"Default"), u""),
+        #     (_(u"Solid"), u"solid"),
+        #     (_(u"Dotted"), u"dotted"),
+        #     (_(u"Dashed"), u"dashed"),
+        # ]
 
         self.__createGui()
         self._paramsPanel.Collapse()
@@ -62,7 +62,7 @@ class InsertNodeDialog (BaseShapesDialog):
         optionsSizer.AddGrowableCol (0)
         optionsSizer.AddGrowableCol (1)
 
-        self._createNameRow (self, mainSizer)
+        self._createName (self, mainSizer)
 
         PropertyFactory.createLabel (self,
                                      self._paramsPanel.GetPane(),
@@ -78,9 +78,10 @@ class InsertNodeDialog (BaseShapesDialog):
                                        optionsSizer,
                                        _(u"Stacked"))
 
-        self._createBorderStyleRow (self._paramsPanel.GetPane(),
-                                    optionsSizer,
-                                    _(u"Border style"))
+        PropertyFactory.createStyle (self,
+                                     self._paramsPanel.GetPane(),
+                                     optionsSizer,
+                                     _(u"Border style"))
 
         PropertyFactory.createBackColor (self,
                                          self._paramsPanel.GetPane(),
@@ -129,25 +130,25 @@ class InsertNodeDialog (BaseShapesDialog):
         return self._name.SetValue (value)
 
 
-    @property
-    def borderStyle (self):
-        """
-        Возвращает стиль рамки
-        """
-        index = self._borderStyle.GetSelection()
-        if index == wx.NOT_FOUND:
-            return self._borderStyle.GetValue()
-
-        return self._borderStyles[index][1]
-
-
-    @borderStyle.setter
-    def borderStyle (self, value):
-        self._borderStyle.SetValue (value)
-
-
-    def setBorderStyleIndex (self, value):
-        self._borderStyle.SetSelection (value)
+    # @property
+    # def borderStyle (self):
+    #     """
+    #     Возвращает стиль рамки
+    #     """
+    #     index = self._style.GetSelection()
+    #     if index == wx.NOT_FOUND:
+    #         return self._style.GetValue()
+    #
+    #     return self._styles[index][1]
+    #
+    #
+    # @borderStyle.setter
+    # def borderStyle (self, value):
+    #     self._style.SetValue (value)
+    #
+    #
+    # def setBorderStyleIndex (self, value):
+    #     self._style.SetSelection (value)
 
 
     def __onPaneChanged (self, event):
@@ -168,7 +169,7 @@ class InsertNodeDialog (BaseShapesDialog):
         event.Skip()
 
 
-    def _createNameRow (self, parent, mainSizer):
+    def _createName (self, parent, mainSizer):
         """
         Создать элементы для ввода имени узла
         """
@@ -195,27 +196,27 @@ class InsertNodeDialog (BaseShapesDialog):
                        border = 2)
 
 
-    def _createBorderStyleRow (self, parent, optionsSizer, label):
-        """
-        Создать элементы для выбора стиля рамки
-        """
-        styleLabel = wx.StaticText (parent, label = label)
-        self._borderStyle = wx.ComboBox (parent, style = wx.CB_DROPDOWN)
-        styles = [style[0] for style in self._borderStyles]
-
-        self._borderStyle.Clear()
-        self._borderStyle.AppendItems (styles)
-        self._borderStyle.SetSelection (0)
-
-        optionsSizer.Add (styleLabel,
-                          flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                          border = 2
-                          )
-
-        optionsSizer.Add (self._borderStyle,
-                          flag = wx.ALL | wx.EXPAND,
-                          border = 2
-                          )
+    # def _createStyleRow (self, parent, optionsSizer, label):
+    #     """
+    #     Создать элементы для выбора стиля рамки
+    #     """
+    #     styleLabel = wx.StaticText (parent, label = label)
+    #     self._style = wx.ComboBox (parent, style = wx.CB_DROPDOWN)
+    #     styles = [style[0] for style in self._styles]
+    #
+    #     self._style.Clear()
+    #     self._style.AppendItems (styles)
+    #     self._style.SetSelection (0)
+    #
+    #     optionsSizer.Add (styleLabel,
+    #                       flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+    #                       border = 2
+    #                       )
+    #
+    #     optionsSizer.Add (self._style,
+    #                       flag = wx.ALL | wx.EXPAND,
+    #                       border = 2
+    #                       )
 
 
 
@@ -281,7 +282,7 @@ class InsertNodeController (object):
         """
         Возвращает строку с параметром, задающим стиль рамки
         """
-        style = dialog.borderStyle.lower().strip().replace (u" ", u"")
+        style = dialog.style.lower().strip().replace (u" ", u"")
 
         if len (style) == 0:
             return u""

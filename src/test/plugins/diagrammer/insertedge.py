@@ -129,3 +129,74 @@ class InsertEdgeTest (unittest.TestCase):
         result = controller.getResult ()
 
         self.assertEqual (result, u'А -> Б [label = "Абырвалг"]')
+
+
+    def testStyleLine_01 (self):
+        dlg = self.plugin.InsertEdgeDialog(None)
+        controller = self.plugin.InsertEdgeControllerRight (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.firstName = u"А"
+        dlg.secondName = u"Б"
+        dlg.setBorderStyleIndex (0)
+
+        result = controller.getResult ()
+
+        self.assertEqual (result, u'А -> Б')
+
+
+    def testStyleLine_02 (self):
+        dlg = self.plugin.InsertEdgeDialog(None)
+        controller = self.plugin.InsertEdgeControllerRight (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.firstName = u"А"
+        dlg.secondName = u"Б"
+        dlg.setBorderStyleIndex (1)
+
+        result = controller.getResult ()
+
+        self.assertEqual (result, u'А -> Б [style = solid]')
+
+
+    def testStyleLine_03 (self):
+        dlg = self.plugin.InsertEdgeDialog(None)
+        controller = self.plugin.InsertEdgeControllerRight (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.firstName = u"А"
+        dlg.secondName = u"Б"
+        dlg.setBorderStyleIndex (2)
+
+        result = controller.getResult ()
+
+        self.assertEqual (result, u'А -> Б [style = dotted]')
+
+
+    def testStyleLine_04 (self):
+        dlg = self.plugin.InsertEdgeDialog(None)
+        controller = self.plugin.InsertEdgeControllerRight (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.firstName = u"А"
+        dlg.secondName = u"Б"
+        dlg.setBorderStyleIndex (3)
+
+        result = controller.getResult ()
+
+        self.assertEqual (result, u'А -> Б [style = dashed]')
+
+
+    def testStyleLine_05 (self):
+        dlg = self.plugin.InsertEdgeDialog(None)
+        controller = self.plugin.InsertEdgeControllerRight (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.firstName = u"А"
+        dlg.secondName = u"Б"
+        dlg.label = u"Абырвалг"
+        dlg.setBorderStyleIndex (3)
+
+        result = controller.getResult ()
+
+        self.assertEqual (result, u'А -> Б [label = "Абырвалг", style = dashed]')

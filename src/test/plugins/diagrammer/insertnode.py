@@ -92,7 +92,7 @@ class InsertNodeTest (unittest.TestCase):
         dlg.SetModalResult (wx.ID_OK)
         dlg.name = u"Абырвалг"
 
-        dlg.setBorderStyleIndex = 0
+        dlg.setBorderStyleIndex (0)
 
         result = controller.getResult ()
         self.assertEqual (result, u"Абырвалг")
@@ -131,7 +131,7 @@ class InsertNodeTest (unittest.TestCase):
         dlg.SetModalResult (wx.ID_OK)
         dlg.name = u"Абырвалг"
 
-        dlg.borderStyle = u""
+        dlg.style = u""
 
         result = controller.getResult ()
         self.assertEqual (result, u"Абырвалг")
@@ -144,7 +144,7 @@ class InsertNodeTest (unittest.TestCase):
         dlg.SetModalResult (wx.ID_OK)
         dlg.name = u"Абырвалг"
 
-        dlg.borderStyle = u"solid"
+        dlg.style = u"solid"
 
         result = controller.getResult ()
         self.assertEqual (result, u"Абырвалг [style = solid];")
@@ -157,7 +157,7 @@ class InsertNodeTest (unittest.TestCase):
         dlg.SetModalResult (wx.ID_OK)
         dlg.name = u"Абырвалг"
 
-        dlg.borderStyle = u"Solid"
+        dlg.style = u"Solid"
 
         result = controller.getResult ()
         self.assertEqual (result, u"Абырвалг [style = solid];")
@@ -170,7 +170,7 @@ class InsertNodeTest (unittest.TestCase):
         dlg.SetModalResult (wx.ID_OK)
         dlg.name = u"Абырвалг"
 
-        dlg.borderStyle = u" Solid "
+        dlg.style = u" Solid "
 
         result = controller.getResult ()
         self.assertEqual (result, u"Абырвалг [style = solid];")
@@ -183,7 +183,7 @@ class InsertNodeTest (unittest.TestCase):
         dlg.SetModalResult (wx.ID_OK)
         dlg.name = u"Абырвалг"
 
-        dlg.borderStyle = u"1,2,3"
+        dlg.style = u"1,2,3"
 
         result = controller.getResult ()
         self.assertEqual (result, u'Абырвалг [style = "1,2,3"];')
@@ -196,7 +196,7 @@ class InsertNodeTest (unittest.TestCase):
         dlg.SetModalResult (wx.ID_OK)
         dlg.name = u"Абырвалг"
 
-        dlg.borderStyle = u"1, 2, 3"
+        dlg.style = u"1, 2, 3"
 
         result = controller.getResult ()
         self.assertEqual (result, u'Абырвалг [style = "1,2,3"];')
@@ -209,7 +209,7 @@ class InsertNodeTest (unittest.TestCase):
         dlg.SetModalResult (wx.ID_OK)
         dlg.name = u"Абырвалг"
 
-        dlg.borderStyle = u" 1, 2, 3 "
+        dlg.style = u" 1, 2, 3 "
 
         result = controller.getResult ()
         self.assertEqual (result, u'Абырвалг [style = "1,2,3"];')
@@ -222,7 +222,7 @@ class InsertNodeTest (unittest.TestCase):
         dlg.SetModalResult (wx.ID_OK)
         dlg.name = u"Абырвалг"
 
-        dlg.borderStyle = u'"1,2,3"'
+        dlg.style = u'"1,2,3"'
 
         result = controller.getResult ()
         self.assertEqual (result, u'Абырвалг [style = "1,2,3"];')
@@ -236,7 +236,7 @@ class InsertNodeTest (unittest.TestCase):
         dlg.name = u"Абырвалг"
 
         dlg.setShapeSelection (1)
-        dlg.borderStyle = u"dotted"
+        dlg.style = u"dotted"
 
         result = controller.getResult ()
         self.assertEqual (result, u"Абырвалг [shape = actor, style = dotted];")

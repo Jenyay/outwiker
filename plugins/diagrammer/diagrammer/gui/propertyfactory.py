@@ -341,6 +341,60 @@ class PropertyFactory (object):
 
 
     @staticmethod
+    def createStyle (obj, parent, optionsSizer, label):
+        """
+        Создать элементы для выбора стиля рамки
+        """
+        stylesList = [
+            (_(u"Default"), u""),
+            (_(u"Solid"), u"solid"),
+            (_(u"Dotted"), u"dotted"),
+            (_(u"Dashed"), u"dashed"),
+        ]
+
+
+        def styleGetter (self):
+            """
+            Возвращает стиль рамки
+            """
+            index = self._style.GetSelection()
+            if index == wx.NOT_FOUND:
+                return self._style.GetValue()
+
+            return stylesList[index][1]
+
+
+        def styleSetter (self, value):
+            self._style.SetValue (value)
+
+
+        def setBorderStyleIndex (self, value):
+            self._style.SetSelection (value)
+
+
+        styleLabel = wx.StaticText (parent, label = label)
+        obj._style = wx.ComboBox (parent, style = wx.CB_DROPDOWN)
+        styles = [style[0] for style in stylesList]
+
+        obj._style.Clear()
+        obj._style.AppendItems (styles)
+        obj._style.SetSelection (0)
+
+        optionsSizer.Add (styleLabel,
+                          flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+                          border = 2
+                          )
+
+        optionsSizer.Add (obj._style,
+                          flag = wx.ALL | wx.EXPAND,
+                          border = 2
+                          )
+
+        type (obj).style = property (styleGetter, styleSetter)
+        type (obj).setBorderStyleIndex = setBorderStyleIndex
+
+
+    @staticmethod
     def createOkCancelButtons (obj, optionsSizer):
         okCancel = obj.CreateButtonSizer (wx.OK | wx.CANCEL)
         optionsSizer.AddStretchSpacer()
