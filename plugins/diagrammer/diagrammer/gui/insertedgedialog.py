@@ -103,6 +103,11 @@ class InsertEdgeDialog (TestedDialog):
                                  "textColor",
                                  "isTextColorChanged")
 
+        propFactory.createBoolean (self._paramsPanel.GetPane(),
+                                   optionsSizer,
+                                   _(u"Folded"),
+                                   "folded")
+
         self._paramsPanel.GetPane().SetSizer (optionsSizer)
 
         mainSizer.Add (self._paramsPanel,
@@ -176,6 +181,7 @@ class InsertEdgeControllerBase (object):
         params.append (self._getArrowStyleParam (dialog))
         params.append (self._getLineColorParam (dialog))
         params.append (self._getTextColorParam (dialog))
+        params.append (self._getFoldedParam (dialog))
 
         return u", ".join ([param for param in params if len (param.strip()) != 0])
 
@@ -243,6 +249,10 @@ class InsertEdgeControllerBase (object):
 
     def _getThickParam (self, dialog):
         return u"thick" if dialog.thick else u""
+
+
+    def _getFoldedParam (self, dialog):
+        return u"folded" if dialog.folded else u""
 
 
 

@@ -482,3 +482,46 @@ class InsertEdgeTest (unittest.TestCase):
         result = controller.getResult ()
 
         self.assertEqual (result, u'А -> Б [style = solid, thick]')
+
+
+    def testFolded_01 (self):
+        dlg = self.plugin.InsertEdgeDialog(None)
+        controller = self.plugin.InsertEdgeControllerRight (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.firstName = u"А"
+        dlg.secondName = u"Б"
+        dlg.folded = True
+
+        result = controller.getResult ()
+
+        self.assertEqual (result, u'А -> Б [folded]')
+
+
+    def testFolded_02 (self):
+        dlg = self.plugin.InsertEdgeDialog(None)
+        controller = self.plugin.InsertEdgeControllerRight (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.firstName = u"А"
+        dlg.secondName = u"Б"
+        dlg.folded = False
+
+        result = controller.getResult ()
+
+        self.assertEqual (result, u'А -> Б')
+
+
+    def testFolded_03 (self):
+        dlg = self.plugin.InsertEdgeDialog(None)
+        controller = self.plugin.InsertEdgeControllerRight (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.firstName = u"А"
+        dlg.secondName = u"Б"
+        dlg.folded = True
+        dlg.setStyleIndex (1)
+
+        result = controller.getResult ()
+
+        self.assertEqual (result, u'А -> Б [style = solid, folded]')
