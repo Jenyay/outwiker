@@ -439,3 +439,46 @@ class InsertEdgeTest (unittest.TestCase):
         result = controller.getResult ()
 
         self.assertEqual (result, u'А -> Б [hstyle = aggregation, textcolor = "#AAAAAA"]')
+
+
+    def testThick_01 (self):
+        dlg = self.plugin.InsertEdgeDialog(None)
+        controller = self.plugin.InsertEdgeControllerRight (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.firstName = u"А"
+        dlg.secondName = u"Б"
+        dlg.thick = True
+
+        result = controller.getResult ()
+
+        self.assertEqual (result, u'А -> Б [thick]')
+
+
+    def testThick_02 (self):
+        dlg = self.plugin.InsertEdgeDialog(None)
+        controller = self.plugin.InsertEdgeControllerRight (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.firstName = u"А"
+        dlg.secondName = u"Б"
+        dlg.thick = False
+
+        result = controller.getResult ()
+
+        self.assertEqual (result, u'А -> Б')
+
+
+    def testThick_03 (self):
+        dlg = self.plugin.InsertEdgeDialog(None)
+        controller = self.plugin.InsertEdgeControllerRight (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.firstName = u"А"
+        dlg.secondName = u"Б"
+        dlg.thick = True
+        dlg.setStyleIndex (1)
+
+        result = controller.getResult ()
+
+        self.assertEqual (result, u'А -> Б [style = solid, thick]')

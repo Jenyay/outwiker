@@ -226,26 +226,29 @@ class PropertyFactory (object):
         type (self._obj).orientation = property (orientationGetter)
 
 
-    def createStacked (self, parent, sizer, label):
+    def createBoolean (self, parent, sizer, label, propName):
         """
-        Создать элементы для параметра stacked
+        Создать элементы для булевого параметра
         """
-        def stackedGetter (self):
-            return self._stacked.GetValue()
+        _checkbox = wx.CheckBox (parent, label = label)
+
+        def getter (self):
+            return _checkbox.GetValue()
 
 
-        def stackedSetter (self, value):
-            self._stacked.SetValue (value)
+        def setter (self, value):
+            _checkbox.SetValue (value)
 
         sizer.AddSpacer (1)
-        self._obj._stacked = wx.CheckBox (parent, label = label)
 
-        sizer.Add (self._obj._stacked,
+        sizer.Add (_checkbox,
                    flag = wx.ALL | wx.ALIGN_RIGHT,
                    border = 2
                    )
 
-        type (self._obj).stacked = property (stackedGetter, stackedSetter)
+        setattr (type (self._obj), propName, property (getter, setter))
+
+        return _checkbox
 
 
     def createStyle (self, parent, sizer, label):

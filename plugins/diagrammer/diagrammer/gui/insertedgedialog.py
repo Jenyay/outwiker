@@ -66,6 +66,11 @@ class InsertEdgeDialog (TestedDialog):
                                  optionsSizer,
                                  _(u"Line style"))
 
+        propFactory.createBoolean (self._paramsPanel.GetPane(),
+                                   optionsSizer,
+                                   _(u"Thick line"),
+                                   "thick")
+
         propFactory.createArrowStyle (self._paramsPanel.GetPane(),
                                       optionsSizer,
                                       _(u"Arrow style"))
@@ -167,6 +172,7 @@ class InsertEdgeControllerBase (object):
         params.append (self._getLabelParam (dialog))
         params.append (self._getFontSizeParam (dialog))
         params.append (self._getLineStyleParam (dialog))
+        params.append (self._getThickParam (dialog))
         params.append (self._getArrowStyleParam (dialog))
         params.append (self._getLineColorParam (dialog))
         params.append (self._getTextColorParam (dialog))
@@ -233,6 +239,10 @@ class InsertEdgeControllerBase (object):
 
     def _getTextColorParam (self, dialog):
         return u'textcolor = "{}"'.format (dialog.textColor) if dialog.isTextColorChanged else u""
+
+
+    def _getThickParam (self, dialog):
+        return u"thick" if dialog.thick else u""
 
 
 

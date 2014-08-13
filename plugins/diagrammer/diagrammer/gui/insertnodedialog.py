@@ -80,9 +80,10 @@ class InsertNodeDialog (BaseShapesDialog):
                               optionsSizer,
                               _(u"Shape"))
 
-        propFactory.createStacked (self._paramsPanel.GetPane(),
+        propFactory.createBoolean (self._paramsPanel.GetPane(),
                                    optionsSizer,
-                                   _(u"Stacked"))
+                                   _(u"Stacked"),
+                                   "stacked")
 
         propFactory.createStyle (self._paramsPanel.GetPane(),
                                  optionsSizer,
