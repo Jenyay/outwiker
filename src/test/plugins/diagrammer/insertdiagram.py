@@ -437,3 +437,113 @@ default_shape = actor;
 
         self.assertEqual (begin, valid_begin)
         self.assertEqual (end, u'\n(:diagramend:)')
+
+
+    def testSpanWidth_01 (self):
+        dlg = self.plugin.InsertDiagramDialog(None)
+        controller = self.plugin.InsertDiagramController (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.isSpanWidthChanged = True
+        dlg.spanWidth = 200
+
+        begin, end = controller.getResult ()
+
+        valid_begin = u'''(:diagram:)
+span_width = 200;
+'''
+
+        self.assertEqual (begin, valid_begin)
+        self.assertEqual (end, u'\n(:diagramend:)')
+
+
+    def testSpanWidth_02 (self):
+        dlg = self.plugin.InsertDiagramDialog(None)
+        controller = self.plugin.InsertDiagramController (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.isSpanWidthChanged = False
+        dlg.spanWidth = 200
+
+        begin, end = controller.getResult ()
+
+        valid_begin = u'''(:diagram:)
+'''
+
+        self.assertEqual (begin, valid_begin)
+        self.assertEqual (end, u'\n(:diagramend:)')
+
+
+    def testSpanWidth_03 (self):
+        dlg = self.plugin.InsertDiagramDialog(None)
+        controller = self.plugin.InsertDiagramController (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.setShapeSelection (0)
+        dlg.isSpanWidthChanged = True
+        dlg.spanWidth = 200
+
+        begin, end = controller.getResult ()
+
+        valid_begin = u'''(:diagram:)
+default_shape = actor;
+span_width = 200;
+'''
+
+        self.assertEqual (begin, valid_begin)
+        self.assertEqual (end, u'\n(:diagramend:)')
+
+
+    def testSpanHeight_01 (self):
+        dlg = self.plugin.InsertDiagramDialog(None)
+        controller = self.plugin.InsertDiagramController (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.isSpanHeightChanged = True
+        dlg.spanHeight = 200
+
+        begin, end = controller.getResult ()
+
+        valid_begin = u'''(:diagram:)
+span_height = 200;
+'''
+
+        self.assertEqual (begin, valid_begin)
+        self.assertEqual (end, u'\n(:diagramend:)')
+
+
+    def testSpanHeight_02 (self):
+        dlg = self.plugin.InsertDiagramDialog(None)
+        controller = self.plugin.InsertDiagramController (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.isSpanHeightChanged = False
+        dlg.spanHeight = 200
+
+        begin, end = controller.getResult ()
+
+        valid_begin = u'''(:diagram:)
+'''
+
+        self.assertEqual (begin, valid_begin)
+        self.assertEqual (end, u'\n(:diagramend:)')
+
+
+    def testSpanHeight_03 (self):
+        dlg = self.plugin.InsertDiagramDialog(None)
+        controller = self.plugin.InsertDiagramController (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.setShapeSelection (0)
+        dlg.isSpanHeightChanged = True
+        dlg.spanHeight = 200
+
+        begin, end = controller.getResult ()
+
+        valid_begin = u'''(:diagram:)
+default_shape = actor;
+span_height = 200;
+'''
+
+        self.assertEqual (begin, valid_begin)
+        self.assertEqual (end, u'\n(:diagramend:)')

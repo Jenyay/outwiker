@@ -92,6 +92,24 @@ class InsertDiagramDialog (BaseShapesDialog):
                                    1000,
                                    40)
 
+        propFactory.createInteger (self,
+                                   mainSizer,
+                                   _(u"Set default horizontal span between nodes"),
+                                   "spanWidth",
+                                   "isSpanWidthChanged",
+                                   0,
+                                   1000,
+                                   64)
+
+        propFactory.createInteger (self,
+                                   mainSizer,
+                                   _(u"Set default vertical span between nodes"),
+                                   "spanHeight",
+                                   "isSpanHeightChanged",
+                                   0,
+                                   1000,
+                                   40)
+
         propFactory.createOkCancelButtons (mainSizer)
 
         # Выберем по умолчанию в качестве фигуры box
@@ -140,6 +158,8 @@ class InsertDiagramController (object):
         params.append (self._getFontSizeParam (dialog))
         params.append (self._getWidthParam (dialog))
         params.append (self._getHeightParam (dialog))
+        params.append (self._getSpanWidthParam (dialog))
+        params.append (self._getSpanHeightParam (dialog))
 
         return u"\n".join ([param for param in params if len (param.strip()) != 0])
 
@@ -171,6 +191,13 @@ class InsertDiagramController (object):
 
     def _getHeightParam (self, dialog):
         return u'node_height = {};'.format (dialog.height) if dialog.isHeightChanged else u""
+
+    def _getSpanWidthParam (self, dialog):
+        return u'span_width = {};'.format (dialog.spanWidth) if dialog.isSpanWidthChanged else u""
+
+
+    def _getSpanHeightParam (self, dialog):
+        return u'span_height = {};'.format (dialog.spanHeight) if dialog.isSpanHeightChanged else u""
 
 
     def _getOrientationParam (self, dialog):
