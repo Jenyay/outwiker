@@ -2,11 +2,23 @@
 
 import wx
 
+from ..i18n import get_
+
 
 class PropertyFactory (object):
     """
     Класс для создания элементов управления для свойств, общих для разных диалогов
     """
+    def __init__ (self, obj):
+        """
+        obj - диалог, в который добавляются свойства
+        """
+        global _
+        _ = get_()
+
+        self._obj = obj
+
+
     @staticmethod
     def bindEnabled (parent, checkbox, control):
         def handler (event):
@@ -17,11 +29,9 @@ class PropertyFactory (object):
                      source = checkbox)
 
 
-    @staticmethod
-    def createText (obj, parent, sizer, label, propName):
+    def createText (self, parent, sizer, label, propName):
         """
         Создать элементы для ввода текста
-        obj - диалог, в который добавляются свойства
         parent - родительский контрол
         sizer - родительский сайзер
         label - метка перед полем ввода
@@ -49,13 +59,12 @@ class PropertyFactory (object):
                    border = 2
                    )
 
-        setattr (type (obj), propName, property (getter, setter))
+        setattr (type (self._obj), propName, property (getter, setter))
 
         return _label
 
 
-    @staticmethod
-    def createColor (obj,
+    def createColor (self,
                      parent,
                      sizer,
                      label,
@@ -64,12 +73,12 @@ class PropertyFactory (object):
                      changeProp):
         """
         Создать элементы для выбора цвета фона узла
-        obj - объект диалога, для которого добавляются контролы и члены
+        self._obj - объект диалога, для которого добавляются контролы и члены
         sizer - сайзер, куда нужно поместить контролы
         label - имя метки перед свойством
         defaultColor - цвет по умолчанию
-        prop - имя свойства, которое будет добавлено в класс объекта obj для получения и изменения цвета
-        changeProp - имя свойства, котороу будет добавлено в класс объекта obj для определения того, что цвет изменился
+        prop - имя свойства, которое будет добавлено в класс объекта self._obj для получения и изменения цвета
+        changeProp - имя свойства, котороу будет добавлено в класс объекта self._obj для определения того, что цвет изменился
         """
         _colorCheckBox = wx.CheckBox (parent, label = label)
         _colorPicker = wx.ColourPickerCtrl (parent, col = defaultColor)
@@ -103,15 +112,15 @@ class PropertyFactory (object):
                    border = 2
                    )
 
-        PropertyFactory.bindEnabled (obj, _colorCheckBox, _colorPicker)
+        PropertyFactory.bindEnabled (self._obj, _colorCheckBox, _colorPicker)
 
         # Добавим свойства с заданными именами
-        setattr (type(obj),
+        setattr (type(self._obj),
                  prop,
                  property (colorGetter, colorSetter)
                  )
 
-        setattr (type(obj),
+        setattr (type(self._obj),
                  changeProp,
                  property (isColorChangedGetter, isColorChangedSetter)
                  )
@@ -119,8 +128,7 @@ class PropertyFactory (object):
         return (_colorCheckBox, _colorPicker)
 
 
-    @staticmethod
-    def createInteger (obj,
+    def createInteger (self,
                        parent,
                        sizer,
                        label,
@@ -168,20 +176,19 @@ class PropertyFactory (object):
                    border = 2
                    )
 
-        PropertyFactory.bindEnabled (obj, _checkBox, _spin)
+        PropertyFactory.bindEnabled (self._obj, _checkBox, _spin)
 
-        setattr (type (obj), propName, property (getter, setter))
-        setattr (type (obj), changePropName, property (isChangedGetter, isChangedSetter))
+        setattr (type (self._obj), propName, property (getter, setter))
+        setattr (type (self._obj), changePropName, property (isChangedGetter, isChangedSetter))
 
         return (_checkBox, _spin)
 
 
-    @staticmethod
-    def createOrientation (obj, parent, sizer, label):
+    def createOrientation (self, parent, sizer, label):
         """
         Создать элементы управления, связанные с установкой ориентации диаграммы
         """
-        obj.orientations = [
+        self._obj.orientations = [
             (_(u"Landscape"), u"landscape"),
             (_(u"Portrait"), u"portrait"),
         ]
@@ -198,29 +205,28 @@ class PropertyFactory (object):
 
 
         orientationLabel = wx.StaticText (parent, label = label)
-        obj._orientation = wx.ComboBox (parent, style = wx.CB_DROPDOWN | wx.CB_READONLY)
+        self._obj._orientation = wx.ComboBox (parent, style = wx.CB_DROPDOWN | wx.CB_READONLY)
 
-        obj._orientation.SetMinSize ((250, -1))
-        obj._orientation.Clear()
-        obj._orientation.AppendItems ([orientation[0] for orientation in obj.orientations])
-        obj._orientation.SetSelection (0)
+        self._obj._orientation.SetMinSize ((250, -1))
+        self._obj._orientation.Clear()
+        self._obj._orientation.AppendItems ([orientation[0] for orientation in self._obj.orientations])
+        self._obj._orientation.SetSelection (0)
 
         sizer.Add (orientationLabel,
                    flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
                    border = 2
                    )
 
-        sizer.Add (obj._orientation,
+        sizer.Add (self._obj._orientation,
                    flag = wx.ALL | wx.EXPAND,
                    border = 2
                    )
 
-        type (obj).setOrientationSelection = setOrientationSelection
-        type (obj).orientation = property (orientationGetter)
+        type (self._obj).setOrientationSelection = setOrientationSelection
+        type (self._obj).orientation = property (orientationGetter)
 
 
-    @staticmethod
-    def createStacked (obj, parent, sizer, label):
+    def createStacked (self, parent, sizer, label):
         """
         Создать элементы для параметра stacked
         """
@@ -232,18 +238,17 @@ class PropertyFactory (object):
             self._stacked.SetValue (value)
 
         sizer.AddSpacer (1)
-        obj._stacked = wx.CheckBox (parent, label = label)
+        self._obj._stacked = wx.CheckBox (parent, label = label)
 
-        sizer.Add (obj._stacked,
+        sizer.Add (self._obj._stacked,
                    flag = wx.ALL | wx.ALIGN_RIGHT,
                    border = 2
                    )
 
-        type (obj).stacked = property (stackedGetter, stackedSetter)
+        type (self._obj).stacked = property (stackedGetter, stackedSetter)
 
 
-    @staticmethod
-    def createStyle (obj, parent, sizer, label):
+    def createStyle (self, parent, sizer, label):
         """
         Создать элементы для выбора стиля рамки или линии
         """
@@ -275,29 +280,28 @@ class PropertyFactory (object):
 
 
         styleLabel = wx.StaticText (parent, label = label)
-        obj._style = wx.ComboBox (parent, style = wx.CB_DROPDOWN)
+        self._obj._style = wx.ComboBox (parent, style = wx.CB_DROPDOWN)
         styles = [style[0] for style in stylesList]
 
-        obj._style.Clear()
-        obj._style.AppendItems (styles)
-        obj._style.SetSelection (0)
+        self._obj._style.Clear()
+        self._obj._style.AppendItems (styles)
+        self._obj._style.SetSelection (0)
 
         sizer.Add (styleLabel,
                    flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
                    border = 2
                    )
 
-        sizer.Add (obj._style,
+        sizer.Add (self._obj._style,
                    flag = wx.ALL | wx.EXPAND,
                    border = 2
                    )
 
-        type (obj).style = property (styleGetter, styleSetter)
-        type (obj).setStyleIndex = setStyleIndex
+        type (self._obj).style = property (styleGetter, styleSetter)
+        type (self._obj).setStyleIndex = setStyleIndex
 
 
-    @staticmethod
-    def createArrowStyle (obj, parent, sizer, label):
+    def createArrowStyle (self, parent, sizer, label):
         """
         Создать элементы для выбора стиля стрелки
         """
@@ -329,30 +333,29 @@ class PropertyFactory (object):
 
 
         styleLabel = wx.StaticText (parent, label = label)
-        obj._arrowStyle = wx.ComboBox (parent, style = wx.CB_DROPDOWN | wx.CB_READONLY)
+        self._obj._arrowStyle = wx.ComboBox (parent, style = wx.CB_DROPDOWN | wx.CB_READONLY)
         styles = [style[0] for style in stylesList]
 
-        obj._arrowStyle.Clear()
-        obj._arrowStyle.AppendItems (styles)
-        obj._arrowStyle.SetSelection (0)
+        self._obj._arrowStyle.Clear()
+        self._obj._arrowStyle.AppendItems (styles)
+        self._obj._arrowStyle.SetSelection (0)
 
         sizer.Add (styleLabel,
                    flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
                    border = 2
                    )
 
-        sizer.Add (obj._arrowStyle,
+        sizer.Add (self._obj._arrowStyle,
                    flag = wx.ALL | wx.EXPAND,
                    border = 2
                    )
 
-        type (obj).arrowStyle = property (styleGetter, styleSetter)
-        type (obj).setArrowStyleIndex = setArrowStyleIndex
+        type (self._obj).arrowStyle = property (styleGetter, styleSetter)
+        type (self._obj).setArrowStyleIndex = setArrowStyleIndex
 
 
-    @staticmethod
-    def createOkCancelButtons (obj, sizer):
-        okCancel = obj.CreateButtonSizer (wx.OK | wx.CANCEL)
+    def createOkCancelButtons (self, sizer):
+        okCancel = self._obj.CreateButtonSizer (wx.OK | wx.CANCEL)
         sizer.AddStretchSpacer()
         sizer.Add (okCancel,
                    flag=wx.ALL | wx.ALIGN_RIGHT | wx.ALIGN_BOTTOM,

@@ -59,82 +59,75 @@ class InsertNodeDialog (BaseShapesDialog):
         nameSizer.AddGrowableCol (1)
         nameSizer.AddGrowableRow (0)
 
-        self._name = PropertyFactory.createText (self,
-                                                 self,
-                                                 nameSizer,
-                                                 _(u"Node name"),
-                                                 "name")
+        propFactory = PropertyFactory (self)
+
+        self._name = propFactory.createText (self,
+                                             nameSizer,
+                                             _(u"Node name"),
+                                             "name")
         mainSizer.Add (nameSizer,
                        flag = wx.ALL | wx.EXPAND,
                        border = 2)
 
 
 
-        self._label = PropertyFactory.createText (self,
-                                                  self._paramsPanel.GetPane(),
-                                                  optionsSizer,
-                                                  _(u"Label"),
-                                                  "label")
+        self._label = propFactory.createText (self._paramsPanel.GetPane(),
+                                              optionsSizer,
+                                              _(u"Label"),
+                                              "label")
 
         self._createShapeRow (self._paramsPanel.GetPane(),
                               optionsSizer,
                               _(u"Shape"))
 
-        PropertyFactory.createStacked (self,
-                                       self._paramsPanel.GetPane(),
-                                       optionsSizer,
-                                       _(u"Stacked"))
+        propFactory.createStacked (self._paramsPanel.GetPane(),
+                                   optionsSizer,
+                                   _(u"Stacked"))
 
-        PropertyFactory.createStyle (self,
-                                     self._paramsPanel.GetPane(),
-                                     optionsSizer,
-                                     _(u"Border style"))
+        propFactory.createStyle (self._paramsPanel.GetPane(),
+                                 optionsSizer,
+                                 _(u"Border style"))
 
-        PropertyFactory.createColor (self,
-                                     self._paramsPanel.GetPane(),
-                                     optionsSizer,
-                                     _(u"Set background color"),
-                                     "white",
-                                     "backColor",
-                                     "isBackColorChanged")
+        propFactory.createColor (self._paramsPanel.GetPane(),
+                                 optionsSizer,
+                                 _(u"Set background color"),
+                                 "white",
+                                 "backColor",
+                                 "isBackColorChanged")
 
-        PropertyFactory.createColor  (self,
-                                      self._paramsPanel.GetPane(),
-                                      optionsSizer,
-                                      _(u"Set text color"),
-                                      "black",
-                                      "textColor",
-                                      "isTextColorChanged")
+        propFactory.createColor (self._paramsPanel.GetPane(),
+                                 optionsSizer,
+                                 _(u"Set text color"),
+                                 "black",
+                                 "textColor",
+                                 "isTextColorChanged")
 
-        PropertyFactory.createInteger  (self,
-                                        self._paramsPanel.GetPane(),
-                                        optionsSizer,
-                                        _(u"Set font size"),
-                                        "fontSize",
-                                        "isFontSizeChanged",
-                                        1,
-                                        100,
-                                        11)
+        propFactory.createInteger (self._paramsPanel.GetPane(),
+                                   optionsSizer,
+                                   _(u"Set font size"),
+                                   "fontSize",
+                                   "isFontSizeChanged",
+                                   1,
+                                   100,
+                                   11)
 
-        PropertyFactory.createInteger  (self,
-                                        self._paramsPanel.GetPane(),
-                                        optionsSizer,
-                                        _(u"Set width"),
-                                        "width",
-                                        "isWidthChanged",
-                                        1,
-                                        1000,
-                                        128)
+        propFactory.createInteger (self._paramsPanel.GetPane(),
+                                   optionsSizer,
+                                   _(u"Set width"),
+                                   "width",
+                                   "isWidthChanged",
+                                   1,
+                                   1000,
+                                   128)
 
-        PropertyFactory.createInteger  (self,
-                                        self._paramsPanel.GetPane(),
-                                        optionsSizer,
-                                        _(u"Set height"),
-                                        "height",
-                                        "isHeightChanged",
-                                        1,
-                                        1000,
-                                        40)
+        propFactory.createInteger (self._paramsPanel.GetPane(),
+                                   optionsSizer,
+                                   _(u"Set height"),
+                                   "height",
+                                   "isHeightChanged",
+                                   1,
+                                   1000,
+                                   40)
 
         self._paramsPanel.GetPane().SetSizer (optionsSizer)
 
@@ -142,7 +135,7 @@ class InsertNodeDialog (BaseShapesDialog):
                        flag = wx.EXPAND | wx.ALL,
                        border = 2)
 
-        PropertyFactory.createOkCancelButtons (self, mainSizer)
+        propFactory.createOkCancelButtons (mainSizer)
 
         self.SetSizer (mainSizer)
         self._name.SetFocus()

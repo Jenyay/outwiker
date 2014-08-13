@@ -43,17 +43,17 @@ class InsertEdgeDialog (TestedDialog):
         nameSizer.AddGrowableCol (1)
         nameSizer.AddGrowableRow (0)
 
-        self._firstName = PropertyFactory.createText (self,
-                                                      self,
-                                                      nameSizer,
-                                                      _(u"First node name"),
-                                                      "firstName")
+        propFactory = PropertyFactory (self)
 
-        self._secondName = PropertyFactory.createText (self,
-                                                       self,
-                                                       nameSizer,
-                                                       _(u"Second node name"),
-                                                       "secondName")
+        self._firstName = propFactory.createText (self,
+                                                  nameSizer,
+                                                  _(u"First node name"),
+                                                  "firstName")
+
+        self._secondName = propFactory.createText (self,
+                                                   nameSizer,
+                                                   _(u"Second node name"),
+                                                   "secondName")
         mainSizer.Add (nameSizer,
                        flag = wx.ALL | wx.EXPAND,
                        border = 2)
@@ -62,47 +62,41 @@ class InsertEdgeDialog (TestedDialog):
         optionsSizer.AddGrowableCol (0)
         optionsSizer.AddGrowableCol (1)
 
-        PropertyFactory.createStyle (self,
-                                     self._paramsPanel.GetPane(),
-                                     optionsSizer,
-                                     _(u"Line style"))
+        propFactory.createStyle (self._paramsPanel.GetPane(),
+                                 optionsSizer,
+                                 _(u"Line style"))
 
-        PropertyFactory.createArrowStyle (self,
-                                          self._paramsPanel.GetPane(),
-                                          optionsSizer,
-                                          _(u"Arrow style"))
-
-        PropertyFactory.createColor  (self,
-                                      self._paramsPanel.GetPane(),
+        propFactory.createArrowStyle (self._paramsPanel.GetPane(),
                                       optionsSizer,
-                                      _(u"Set line color"),
-                                      "black",
-                                      "lineColor",
-                                      "isLineColorChanged")
+                                      _(u"Arrow style"))
 
-        PropertyFactory.createText (self,
-                                    self._paramsPanel.GetPane(),
-                                    optionsSizer,
-                                    _(u"Label"),
-                                    "label")
+        propFactory.createColor (self._paramsPanel.GetPane(),
+                                 optionsSizer,
+                                 _(u"Set line color"),
+                                 "black",
+                                 "lineColor",
+                                 "isLineColorChanged")
 
-        PropertyFactory.createInteger  (self,
-                                        self._paramsPanel.GetPane(),
-                                        optionsSizer,
-                                        _(u"Set font size"),
-                                        "fontSize",
-                                        "isFontSizeChanged",
-                                        1,
-                                        100,
-                                        11)
+        propFactory.createText (self._paramsPanel.GetPane(),
+                                optionsSizer,
+                                _(u"Label"),
+                                "label")
 
-        PropertyFactory.createColor  (self,
-                                      self._paramsPanel.GetPane(),
-                                      optionsSizer,
-                                      _(u"Set text color"),
-                                      "black",
-                                      "textColor",
-                                      "isTextColorChanged")
+        propFactory.createInteger (self._paramsPanel.GetPane(),
+                                   optionsSizer,
+                                   _(u"Set font size"),
+                                   "fontSize",
+                                   "isFontSizeChanged",
+                                   1,
+                                   100,
+                                   11)
+
+        propFactory.createColor (self._paramsPanel.GetPane(),
+                                 optionsSizer,
+                                 _(u"Set text color"),
+                                 "black",
+                                 "textColor",
+                                 "isTextColorChanged")
 
         self._paramsPanel.GetPane().SetSizer (optionsSizer)
 
@@ -110,7 +104,7 @@ class InsertEdgeDialog (TestedDialog):
                        flag = wx.EXPAND | wx.ALL,
                        border = 2)
 
-        PropertyFactory.createOkCancelButtons (self, mainSizer)
+        propFactory.createOkCancelButtons (mainSizer)
 
         self.SetSizer (mainSizer)
         self._firstName.SetFocus()

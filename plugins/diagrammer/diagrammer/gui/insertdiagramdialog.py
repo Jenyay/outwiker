@@ -41,62 +41,58 @@ class InsertDiagramDialog (BaseShapesDialog):
         mainSizer.AddGrowableCol (0)
         mainSizer.AddGrowableCol (1)
 
-        PropertyFactory.createOrientation  (self,
-                                            self,
-                                            mainSizer,
-                                            _(u"Orientation"))
+        propFactory = PropertyFactory (self)
+
+        propFactory.createOrientation (self,
+                                       mainSizer,
+                                       _(u"Orientation"))
 
         self._createShapeRow (self,
                               mainSizer,
                               _(u"Default nodes shape"))
 
-        PropertyFactory.createColor (self,
-                                     self,
-                                     mainSizer,
-                                     _(u"Set default nodes background color"),
-                                     "white",
-                                     "backColor",
-                                     "isBackColorChanged")
+        propFactory.createColor (self,
+                                 mainSizer,
+                                 _(u"Set default nodes background color"),
+                                 "white",
+                                 "backColor",
+                                 "isBackColorChanged")
 
-        PropertyFactory.createColor  (self,
-                                      self,
-                                      mainSizer,
-                                      _(u"Set default text color"),
-                                      "black",
-                                      "textColor",
-                                      "isTextColorChanged")
+        propFactory.createColor (self,
+                                 mainSizer,
+                                 _(u"Set default text color"),
+                                 "black",
+                                 "textColor",
+                                 "isTextColorChanged")
 
-        PropertyFactory.createInteger  (self,
-                                        self,
-                                        mainSizer,
-                                        _(u"Set default font size"),
-                                        "fontSize",
-                                        "isFontSizeChanged",
-                                        1,
-                                        100,
-                                        11)
+        propFactory.createInteger (self,
+                                   mainSizer,
+                                   _(u"Set default font size"),
+                                   "fontSize",
+                                   "isFontSizeChanged",
+                                   1,
+                                   100,
+                                   11)
 
-        PropertyFactory.createInteger  (self,
-                                        self,
-                                        mainSizer,
-                                        _(u"Set default nodes width"),
-                                        "width",
-                                        "isWidthChanged",
-                                        1,
-                                        1000,
-                                        128)
+        propFactory.createInteger (self,
+                                   mainSizer,
+                                   _(u"Set default nodes width"),
+                                   "width",
+                                   "isWidthChanged",
+                                   1,
+                                   1000,
+                                   128)
 
-        PropertyFactory.createInteger  (self,
-                                        self,
-                                        mainSizer,
-                                        _(u"Set default nodes height"),
-                                        "height",
-                                        "isHeightChanged",
-                                        1,
-                                        1000,
-                                        40)
+        propFactory.createInteger (self,
+                                   mainSizer,
+                                   _(u"Set default nodes height"),
+                                   "height",
+                                   "isHeightChanged",
+                                   1,
+                                   1000,
+                                   40)
 
-        PropertyFactory.createOkCancelButtons (self, mainSizer)
+        propFactory.createOkCancelButtons (mainSizer)
 
         # Выберем по умолчанию в качестве фигуры box
         boxIndex = self._shape.FindString (self.defaultShape)
