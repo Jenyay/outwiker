@@ -17,6 +17,7 @@ from .diagramtoolbar import DiagramToolBar
 from .actions.insertdiagram import InsertDiagramAction
 from .actions.help import HelpAction
 from .actions.insertnode import InsertNodeAction
+from .actions.insertgroup import InsertGroupAction
 from .actions.insertedge import InsertEdgeNoneAction, InsertEdgeRightAction, InsertEdgeLeftAction, InsertEdgeBothAction
 
 
@@ -31,6 +32,7 @@ class GuiCreator (object):
         # Сюда добавить все Actions
         self._actions = [InsertDiagramAction,
                          InsertNodeAction,
+                         InsertGroupAction,
                          InsertEdgeNoneAction,
                          InsertEdgeLeftAction,
                          InsertEdgeRightAction,
@@ -83,6 +85,12 @@ class GuiCreator (object):
             InsertNodeAction.stringId,
             toolbar,
             self._getImagePath ("node.png"))
+
+
+        self._application.actionController.appendToolbarButton (
+            InsertGroupAction.stringId,
+            toolbar,
+            self._getImagePath ("group.png"))
 
 
         self._application.actionController.appendToolbarButton (

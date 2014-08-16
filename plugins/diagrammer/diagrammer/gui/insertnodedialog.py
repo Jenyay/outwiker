@@ -65,11 +65,10 @@ class InsertNodeDialog (BaseShapesDialog):
                                              nameSizer,
                                              _(u"Node name"),
                                              "name")
+
         mainSizer.Add (nameSizer,
                        flag = wx.ALL | wx.EXPAND,
                        border = 2)
-
-
 
         self._label = propFactory.createText (self._paramsPanel.GetPane(),
                                               optionsSizer,

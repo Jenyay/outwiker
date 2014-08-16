@@ -17,6 +17,7 @@ else:
     from .controller import Controller
     from .gui.insertnodedialog import InsertNodeDialog, InsertNodeController
     from .gui.insertdiagramdialog import InsertDiagramDialog, InsertDiagramController
+    from .gui.insertgroupdialog import InsertGroupDialog, InsertGroupController
     from .gui.insertedgedialog import (InsertEdgeDialog,
                                        InsertEdgeControllerNone,
                                        InsertEdgeControllerLeft,
@@ -149,3 +150,13 @@ else:
         @property
         def InsertEdgeControllerRight (self):
             return InsertEdgeControllerRight
+
+
+        @property
+        def InsertGroupDialog (self):
+            return InsertGroupDialog
+
+
+        @property
+        def InsertGroupController (self):
+            return InsertGroupController
