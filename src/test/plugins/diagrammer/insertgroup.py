@@ -65,7 +65,6 @@ class InsertGroupTest (unittest.TestCase):
         valid_begin = u'''group {
 color = "blue";
 
-
 '''
 
         self.assertEqual (begin, valid_begin)
@@ -102,7 +101,6 @@ color = "blue";
         valid_begin = u'''group {
 color = "#AAAAAA";
 
-
 '''
 
         self.assertEqual (begin, valid_begin)
@@ -122,7 +120,6 @@ color = "#AAAAAA";
         valid_begin = u'''group {
 orientation = landscape;
 
-
 '''
 
         self.assertEqual (begin, valid_begin)
@@ -140,7 +137,6 @@ orientation = landscape;
 
         valid_begin = u'''group {
 orientation = portrait;
-
 
 '''
 
@@ -178,7 +174,6 @@ orientation = portrait;
         valid_begin = u'''group {
 color = "blue";
 orientation = portrait;
-
 
 '''
 

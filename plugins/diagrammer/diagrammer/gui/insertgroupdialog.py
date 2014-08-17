@@ -79,7 +79,7 @@ class InsertGroupController (object):
         begin += u" {\n"
 
         if len (params) != 0:
-            begin += params + u"\n\n\n"
+            begin += params + u"\n\n"
 
         return (begin, u"\n}")
 
