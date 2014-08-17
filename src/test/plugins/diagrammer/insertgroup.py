@@ -317,3 +317,146 @@ class InsertGroupTest (unittest.TestCase):
     '''
 
         self.assertEqual (begin, valid_begin)
+
+
+    def testBorderStyle_01 (self):
+        dlg = self.plugin.InsertGroupDialog(None)
+        controller = self.plugin.InsertGroupController (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.isBorderShapeChanged = True
+        dlg.borderShapeIndex = 1
+
+        dlg.setStyleIndex (1)
+
+        begin, end = controller.getResult ()
+
+        valid_begin = u'''group {
+    shape = line;
+    style = solid;
+
+    '''
+
+        self.assertEqual (begin, valid_begin)
+
+
+    def testBorderStyle_02 (self):
+        dlg = self.plugin.InsertGroupDialog(None)
+        controller = self.plugin.InsertGroupController (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.isBorderShapeChanged = False
+        dlg.borderShapeIndex = 1
+
+        dlg.setStyleIndex (1)
+
+        begin, end = controller.getResult ()
+
+        valid_begin = u'''group {
+    '''
+
+        self.assertEqual (begin, valid_begin)
+
+
+    def testBorderStyle_03 (self):
+        dlg = self.plugin.InsertGroupDialog(None)
+        controller = self.plugin.InsertGroupController (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.isBorderShapeChanged = True
+        dlg.borderShapeIndex = 0
+
+        dlg.setStyleIndex (1)
+
+        begin, end = controller.getResult ()
+
+        valid_begin = u'''group {
+    shape = box;
+
+    '''
+
+        self.assertEqual (begin, valid_begin)
+
+
+    def testBorderStyle_04 (self):
+        dlg = self.plugin.InsertGroupDialog(None)
+        controller = self.plugin.InsertGroupController (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.isBorderShapeChanged = True
+        dlg.borderShapeIndex = 1
+
+        dlg.setStyleIndex (2)
+
+        begin, end = controller.getResult ()
+
+        valid_begin = u'''group {
+    shape = line;
+    style = dotted;
+
+    '''
+
+        self.assertEqual (begin, valid_begin)
+
+
+    def testBorderStyle_05 (self):
+        dlg = self.plugin.InsertGroupDialog(None)
+        controller = self.plugin.InsertGroupController (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.isBorderShapeChanged = True
+        dlg.borderShapeIndex = 1
+
+        dlg.setStyleIndex (3)
+
+        begin, end = controller.getResult ()
+
+        valid_begin = u'''group {
+    shape = line;
+    style = dashed;
+
+    '''
+
+        self.assertEqual (begin, valid_begin)
+
+
+    def testBorderStyle_06 (self):
+        dlg = self.plugin.InsertGroupDialog(None)
+        controller = self.plugin.InsertGroupController (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.isBorderShapeChanged = True
+        dlg.borderShapeIndex = 1
+
+        dlg.style = u"1,2,3,4"
+
+        begin, end = controller.getResult ()
+
+        valid_begin = u'''group {
+    shape = line;
+    style = "1,2,3,4";
+
+    '''
+
+        self.assertEqual (begin, valid_begin)
+
+
+    def testBorderStyle_07 (self):
+        dlg = self.plugin.InsertGroupDialog(None)
+        controller = self.plugin.InsertGroupController (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.isBorderShapeChanged = True
+        dlg.borderShapeIndex = 1
+
+        dlg.style = u" 1, 2, 3, 4 "
+
+        begin, end = controller.getResult ()
+
+        valid_begin = u'''group {
+    shape = line;
+    style = "1,2,3,4";
+
+    '''
+
+        self.assertEqual (begin, valid_begin)

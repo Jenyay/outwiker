@@ -47,15 +47,6 @@ class InsertGroupDialog (TestedDialog):
                                               mainSizer,
                                               _(u"Orientation"))
 
-        propFactory.createComboBoxChecked (self,
-                                           mainSizer,
-                                           _(u"Border shape"),
-                                           self._borderShapes,
-                                           "borderShape",
-                                           "borderShapeIndex",
-                                           "isBorderShapeChanged"
-                                           )
-
         propFactory.createColor (self,
                                  mainSizer,
                                  _(u"Set background color"),
@@ -69,6 +60,19 @@ class InsertGroupDialog (TestedDialog):
                                  "black",
                                  "textColor",
                                  "isTextColorChanged")
+
+        propFactory.createComboBoxChecked (self,
+                                           mainSizer,
+                                           _(u"Border shape"),
+                                           self._borderShapes,
+                                           "borderShape",
+                                           "borderShapeIndex",
+                                           "isBorderShapeChanged"
+                                           )
+
+        propFactory.createStyle (self,
+                                 mainSizer,
+                                 _(u"Border style"))
 
         propFactory.createOkCancelButtons (mainSizer)
 
@@ -119,6 +123,7 @@ class InsertGroupController (object):
         params.append (self._getOrientationParam (dialog))
         params.append (self._getTextColorParam (dialog))
         params.append (self._getBorderShapeParam (dialog))
+        params.append (self._getBorderStyleParam (dialog))
 
         result = u"\n    ".join ([param for param in params if len (param.strip()) != 0])
 
@@ -146,3 +151,20 @@ class InsertGroupController (object):
 
     def _getBorderShapeParam (self, dialog):
         return u'shape = {};'.format (dialog.borderShape) if dialog.isBorderShapeChanged else u""
+
+
+    def _getBorderStyleParam (self, dialog):
+        """
+        Возвращает строку с параметром, задающим стиль рамки
+        """
+        style = dialog.style.lower().strip().replace (u" ", u"")
+
+        if (not dialog.isBorderShapeChanged or
+                dialog.borderShapeIndex != 1 or
+                len (style) == 0):
+            return u""
+
+        if style[0].isdigit():
+            return u'style = "{}";'.format (style)
+
+        return u"style = {};".format (style)

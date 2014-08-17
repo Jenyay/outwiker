@@ -352,46 +352,49 @@ class PropertyFactory (object):
             (_(u"Dashed"), u"dashed"),
         ]
 
+        _style = wx.ComboBox (parent, style = wx.CB_DROPDOWN)
+
 
         def styleGetter (self):
             """
             Возвращает стиль рамки
             """
-            index = self._style.GetSelection()
+            index = _style.GetSelection()
             if index == wx.NOT_FOUND:
-                return self._style.GetValue()
+                return _style.GetValue()
 
             return stylesList[index][1]
 
 
         def styleSetter (self, value):
-            self._style.SetValue (value)
+            _style.SetValue (value)
 
 
         def setStyleIndex (self, value):
-            self._style.SetSelection (value)
+            _style.SetSelection (value)
 
 
         styleLabel = wx.StaticText (parent, label = label)
-        self._obj._style = wx.ComboBox (parent, style = wx.CB_DROPDOWN)
         styles = [style[0] for style in stylesList]
 
-        self._obj._style.Clear()
-        self._obj._style.AppendItems (styles)
-        self._obj._style.SetSelection (0)
+        _style.Clear()
+        _style.AppendItems (styles)
+        _style.SetSelection (0)
 
         sizer.Add (styleLabel,
                    flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
                    border = 2
                    )
 
-        sizer.Add (self._obj._style,
+        sizer.Add (_style,
                    flag = wx.ALL | wx.EXPAND,
                    border = 2
                    )
 
         type (self._obj).style = property (styleGetter, styleSetter)
         type (self._obj).setStyleIndex = setStyleIndex
+
+        return _style
 
 
     def createArrowStyle (self, parent, sizer, label):
