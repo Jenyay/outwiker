@@ -178,3 +178,90 @@ class InsertGroupTest (unittest.TestCase):
     '''
 
         self.assertEqual (begin, valid_begin)
+
+
+    def testLabel_01 (self):
+        dlg = self.plugin.InsertGroupDialog(None)
+        controller = self.plugin.InsertGroupController (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.label = u"Абырвалг"
+
+        begin, end = controller.getResult ()
+
+        valid_begin = u'''group {
+    label = "Абырвалг";
+
+    '''
+
+        self.assertEqual (begin, valid_begin)
+
+
+    def testLabel_02 (self):
+        dlg = self.plugin.InsertGroupDialog(None)
+        controller = self.plugin.InsertGroupController (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.label = u""
+
+        begin, end = controller.getResult ()
+
+        valid_begin = u'''group {
+    '''
+
+        self.assertEqual (begin, valid_begin)
+
+
+    def testTextColor_01 (self):
+        dlg = self.plugin.InsertGroupDialog(None)
+        controller = self.plugin.InsertGroupController (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.isTextColorChanged = True
+        dlg.textColor = u"blue"
+
+        begin, end = controller.getResult ()
+
+        valid_begin = u'''group {
+    textcolor = "blue";
+
+    '''
+
+        self.assertEqual (begin, valid_begin)
+        self.assertEqual (end, u"\n}")
+
+
+    def testTextColor_02 (self):
+        dlg = self.plugin.InsertGroupDialog(None)
+        controller = self.plugin.InsertGroupController (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.isTextColorChanged = False
+        dlg.textColor = u"blue"
+
+        begin, end = controller.getResult ()
+
+        valid_begin = u'''group {
+    '''
+
+        self.assertEqual (begin, valid_begin)
+        self.assertEqual (end, u"\n}")
+
+
+    def testTextColor_03 (self):
+        dlg = self.plugin.InsertGroupDialog(None)
+        controller = self.plugin.InsertGroupController (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.isTextColorChanged = True
+        dlg.textColor = u"#AAAAAA"
+
+        begin, end = controller.getResult ()
+
+        valid_begin = u'''group {
+    textcolor = "#AAAAAA";
+
+    '''
+
+        self.assertEqual (begin, valid_begin)
+        self.assertEqual (end, u"\n}")

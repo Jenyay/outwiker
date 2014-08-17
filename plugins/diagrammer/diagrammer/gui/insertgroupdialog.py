@@ -33,6 +33,11 @@ class InsertGroupDialog (TestedDialog):
                                              _(u"Node name"),
                                              "name")
 
+        propFactory.createText (self,
+                                mainSizer,
+                                _(u"Label"),
+                                "label")
+
         propFactory.createOrientationChecked (self,
                                               mainSizer,
                                               _(u"Orientation"))
@@ -43,6 +48,13 @@ class InsertGroupDialog (TestedDialog):
                                  "#F39903",
                                  "backColor",
                                  "isBackColorChanged")
+
+        propFactory.createColor (self,
+                                 mainSizer,
+                                 _(u"Set text color"),
+                                 "black",
+                                 "textColor",
+                                 "isTextColorChanged")
 
         propFactory.createOkCancelButtons (mainSizer)
 
@@ -88,8 +100,10 @@ class InsertGroupController (object):
 
     def _getParamString (self, dialog):
         params = []
+        params.append (self._getLabelParam (dialog))
         params.append (self._getBackColorParam (dialog))
         params.append (self._getOrientationParam (dialog))
+        params.append (self._getTextColorParam (dialog))
 
         result = u"\n    ".join ([param for param in params if len (param.strip()) != 0])
 
@@ -105,3 +119,11 @@ class InsertGroupController (object):
 
     def _getOrientationParam (self, dialog):
         return u'orientation = {};'.format (dialog.orientation) if dialog.isOrientationChanged else u""
+
+
+    def _getLabelParam (self, dialog):
+        return u'label = "{}";'.format (dialog.label) if len (dialog.label) != 0 else u""
+
+
+    def _getTextColorParam (self, dialog):
+        return u'textcolor = "{}";'.format (dialog.textColor) if dialog.isTextColorChanged else u""
