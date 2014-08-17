@@ -201,4 +201,4 @@ class InsertDiagramController (object):
 
 
     def _getOrientationParam (self, dialog):
-        return u'orientation = {};'.format (dialog.orientation) if dialog.orientation != dialog.orientations[0][1] else u""
+        return u'orientation = {};'.format (dialog.orientation) if dialog.orientationIndex != 0 else u""

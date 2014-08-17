@@ -390,7 +390,7 @@ node_height = 200;
     def testOrientation_01 (self):
         dlg = self.plugin.InsertDiagramDialog(None)
         controller = self.plugin.InsertDiagramController (dlg)
-        dlg.setOrientationSelection (0)
+        dlg.orientationIndex = 0
 
         dlg.SetModalResult (wx.ID_OK)
 
@@ -406,7 +406,7 @@ node_height = 200;
     def testOrientation_02 (self):
         dlg = self.plugin.InsertDiagramDialog(None)
         controller = self.plugin.InsertDiagramController (dlg)
-        dlg.setOrientationSelection (1)
+        dlg.orientationIndex = 1
 
         dlg.SetModalResult (wx.ID_OK)
 
@@ -423,7 +423,7 @@ orientation = portrait;
     def testOrientation_03 (self):
         dlg = self.plugin.InsertDiagramDialog(None)
         controller = self.plugin.InsertDiagramController (dlg)
-        dlg.setOrientationSelection (1)
+        dlg.orientationIndex = 1
         dlg.setShapeSelection (0)
 
         dlg.SetModalResult (wx.ID_OK)

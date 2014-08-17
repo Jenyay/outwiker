@@ -113,7 +113,7 @@ class InsertGroupTest (unittest.TestCase):
 
         dlg.SetModalResult (wx.ID_OK)
         dlg.isOrientationChanged = True
-        dlg.setOrientationSelection (0)
+        dlg.orientationIndex = 0
 
         begin, end = controller.getResult ()
 
@@ -131,7 +131,7 @@ class InsertGroupTest (unittest.TestCase):
 
         dlg.SetModalResult (wx.ID_OK)
         dlg.isOrientationChanged = True
-        dlg.setOrientationSelection (1)
+        dlg.orientationIndex = 1
 
         begin, end = controller.getResult ()
 
@@ -149,7 +149,7 @@ class InsertGroupTest (unittest.TestCase):
 
         dlg.SetModalResult (wx.ID_OK)
         dlg.isOrientationChanged = False
-        dlg.setOrientationSelection (1)
+        dlg.orientationIndex = 1
 
         begin, end = controller.getResult ()
 
@@ -165,7 +165,7 @@ class InsertGroupTest (unittest.TestCase):
 
         dlg.SetModalResult (wx.ID_OK)
         dlg.isOrientationChanged = True
-        dlg.setOrientationSelection (1)
+        dlg.orientationIndex = 1
         dlg.isBackColorChanged = True
         dlg.backColor = u"blue"
 

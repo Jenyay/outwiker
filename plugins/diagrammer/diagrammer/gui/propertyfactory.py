@@ -193,8 +193,12 @@ class PropertyFactory (object):
         """
         Создать элементы управления, связанные с установкой ориентации диаграммы
         """
-        orientationLabel = wx.StaticText (parent, label = label)
-        return self._createOrientation (parent, sizer, orientationLabel)
+        return self.createComboBox (parent,
+                                    sizer,
+                                    label,
+                                    self._orientations,
+                                    "orientation",
+                                    "orientationIndex")
 
 
     def createOrientationChecked (self, parent, sizer, label):
@@ -202,10 +206,43 @@ class PropertyFactory (object):
         Создать элементы управления, связанные с установкой ориентации диаграммы.
         При этом добавляется чекбокс, с помощью которого выбитается, нужно ли устанавливать этот параметр
         """
+        return self.createComboBoxChecked (parent,
+                                           sizer,
+                                           label,
+                                           self._orientations,
+                                           "orientation",
+                                           "orientationIndex",
+                                           "isOrientationChanged")
+
+
+    def createComboBoxChecked (self,
+                               parent,
+                               sizer,
+                               label,
+                               itemsList,
+                               propName,
+                               propIndexName,
+                               changePropName):
+        """
+        Создать элементы управления в виде связки CheckBox - Combobox
+        parent - родительский контрол
+        sizer - родительский сайзер
+        label - текст для комбобокса
+        itemsList - список кортежей для комбобокса. Первый элемент каждого кортежа - то, что показывается пользователю, второй элемент - то, что будет являться значением параметра
+        propName - имя свойства для доступа к значению результата (только для чтения)
+        propIndexName - имя свойства для чтения и записи индекса выбранного элемента
+        changePropName - имя свойства для чтения / установки того, нужно ли задавать параметр
+        """
         _checkBox = wx.CheckBox (parent, label = label)
         _checkBox.SetValue (False)
 
-        _comboBox = self._createOrientation (parent, sizer, _checkBox)
+        _comboBox = self._createComboBox (parent,
+                                          sizer,
+                                          _checkBox,
+                                          itemsList,
+                                          propName,
+                                          propIndexName)
+
         _comboBox.Enabled = False
 
         def isChangedGetter (self):
@@ -217,49 +254,66 @@ class PropertyFactory (object):
 
         PropertyFactory.bindEnabled (self._obj, _checkBox, _comboBox)
 
-        setattr (type (self._obj), "isOrientationChanged", property (isChangedGetter, isChangedSetter))
+        setattr (type (self._obj), changePropName, property (isChangedGetter, isChangedSetter))
 
         return (_checkBox, _comboBox)
 
 
-    def _createOrientation (self, parent, sizer, labelCtrl):
+    def createComboBox (self, parent, sizer, label, itemsList, propName, propIndexName):
+        """
+        Создать элементы управления в виде связки StaticText - Combobox
+        """
+        orientationLabel = wx.StaticText (parent, label = label)
+
+        return self._createComboBox (parent,
+                                     sizer,
+                                     orientationLabel,
+                                     itemsList,
+                                     propName,
+                                     propIndexName)
+
+
+    def _createComboBox (self, parent, sizer, labelCtrl, itemsList, propName, propIndexName):
         """
         Создать элементы управления, связанные с установкой ориентации диаграммы
+        itemsList - список кортежей для заполнения списка. Первый элемент - то, что видит пользователь, второй элемент - значение создаваемого параметра.
         """
-        self._obj.orientations = self._orientations
+        _comboBox = wx.ComboBox (parent, style = wx.CB_DROPDOWN | wx.CB_READONLY)
 
-        def setOrientationSelection (self, index):
-            self._orientation.SetSelection(index)
-
-
-        def orientationGetter (self):
-            index = self._orientation.GetSelection()
+        def getter (self):
+            index = _comboBox.GetSelection()
             assert index != wx.NOT_FOUND
 
-            return self.orientations[index][1]
+            return itemsList[index][1]
 
 
-        self._obj._orientation = wx.ComboBox (parent, style = wx.CB_DROPDOWN | wx.CB_READONLY)
+        def getterIndex (self):
+            return _comboBox.GetSelection()
 
-        self._obj._orientation.SetMinSize ((250, -1))
-        self._obj._orientation.Clear()
-        self._obj._orientation.AppendItems ([orientation[0] for orientation in self._obj.orientations])
-        self._obj._orientation.SetSelection (0)
+
+        def setterIndex (self, index):
+            _comboBox.SetSelection(index)
+
+
+        _comboBox.SetMinSize ((250, -1))
+        _comboBox.Clear()
+        _comboBox.AppendItems ([item[0] for item in itemsList])
+        _comboBox.SetSelection (0)
 
         sizer.Add (labelCtrl,
                    flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
                    border = 2
                    )
 
-        sizer.Add (self._obj._orientation,
+        sizer.Add (_comboBox,
                    flag = wx.ALL | wx.EXPAND,
                    border = 2
                    )
 
-        type (self._obj).setOrientationSelection = setOrientationSelection
-        type (self._obj).orientation = property (orientationGetter)
+        setattr (type (self._obj), propName, property (getter))
+        setattr (type (self._obj), propIndexName, property (getterIndex, setterIndex))
 
-        return self._obj._orientation
+        return _comboBox
 
 
     def createBoolean (self, parent, sizer, label, propName):
