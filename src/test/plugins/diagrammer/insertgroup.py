@@ -30,7 +30,7 @@ class InsertGroupTest (unittest.TestCase):
         begin, end = controller.getResult ()
 
         valid_begin = u'''group {
-'''
+    '''
 
         self.assertEqual (begin, valid_begin)
         self.assertEqual (end, u"\n}")
@@ -46,7 +46,7 @@ class InsertGroupTest (unittest.TestCase):
         begin, end = controller.getResult ()
 
         valid_begin = u'''group Абырвалг {
-'''
+    '''
 
         self.assertEqual (begin, valid_begin)
         self.assertEqual (end, u"\n}")
@@ -63,9 +63,9 @@ class InsertGroupTest (unittest.TestCase):
         begin, end = controller.getResult ()
 
         valid_begin = u'''group {
-color = "blue";
+    color = "blue";
 
-'''
+    '''
 
         self.assertEqual (begin, valid_begin)
         self.assertEqual (end, u"\n}")
@@ -82,7 +82,7 @@ color = "blue";
         begin, end = controller.getResult ()
 
         valid_begin = u'''group {
-'''
+    '''
 
         self.assertEqual (begin, valid_begin)
         self.assertEqual (end, u"\n}")
@@ -99,9 +99,9 @@ color = "blue";
         begin, end = controller.getResult ()
 
         valid_begin = u'''group {
-color = "#AAAAAA";
+    color = "#AAAAAA";
 
-'''
+    '''
 
         self.assertEqual (begin, valid_begin)
         self.assertEqual (end, u"\n}")
@@ -118,9 +118,9 @@ color = "#AAAAAA";
         begin, end = controller.getResult ()
 
         valid_begin = u'''group {
-orientation = landscape;
+    orientation = landscape;
 
-'''
+    '''
 
         self.assertEqual (begin, valid_begin)
 
@@ -136,9 +136,9 @@ orientation = landscape;
         begin, end = controller.getResult ()
 
         valid_begin = u'''group {
-orientation = portrait;
+    orientation = portrait;
 
-'''
+    '''
 
         self.assertEqual (begin, valid_begin)
 
@@ -154,7 +154,7 @@ orientation = portrait;
         begin, end = controller.getResult ()
 
         valid_begin = u'''group {
-'''
+    '''
 
         self.assertEqual (begin, valid_begin)
 
@@ -172,9 +172,9 @@ orientation = portrait;
         begin, end = controller.getResult ()
 
         valid_begin = u'''group {
-color = "blue";
-orientation = portrait;
+    color = "blue";
+    orientation = portrait;
 
-'''
+    '''
 
         self.assertEqual (begin, valid_begin)

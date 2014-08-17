@@ -68,7 +68,7 @@ class InsertGroupController (object):
         Возвращает кортеж из строк: (начало викикоманды с параметрами, конец викикоманды)
         Считается, что этот метод вызывают после того, как showDialog вернул значение wx.ID_OK
         """
-        params = self._getParamString (self._dialog).strip()
+        params = self._getParamString (self._dialog)
         name = self._dialog.name.strip()
 
         begin = u"group"
@@ -81,6 +81,8 @@ class InsertGroupController (object):
         if len (params) != 0:
             begin += params + u"\n\n"
 
+        begin += u"    "
+
         return (begin, u"\n}")
 
 
@@ -89,7 +91,12 @@ class InsertGroupController (object):
         params.append (self._getBackColorParam (dialog))
         params.append (self._getOrientationParam (dialog))
 
-        return u"\n".join ([param for param in params if len (param.strip()) != 0])
+        result = u"\n    ".join ([param for param in params if len (param.strip()) != 0])
+
+        if len (result) != 0:
+            result = u"    " + result
+
+        return result
 
 
     def _getBackColorParam (self, dialog):
