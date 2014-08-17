@@ -18,6 +18,11 @@ class PropertyFactory (object):
 
         self._obj = obj
 
+        self._orientations = [
+            (_(u"Landscape"), u"landscape"),
+            (_(u"Portrait"), u"portrait"),
+        ]
+
 
     @staticmethod
     def bindEnabled (parent, checkbox, control):
@@ -188,10 +193,40 @@ class PropertyFactory (object):
         """
         Создать элементы управления, связанные с установкой ориентации диаграммы
         """
-        self._obj.orientations = [
-            (_(u"Landscape"), u"landscape"),
-            (_(u"Portrait"), u"portrait"),
-        ]
+        orientationLabel = wx.StaticText (parent, label = label)
+        return self._createOrientation (parent, sizer, orientationLabel)
+
+
+    def createOrientationChecked (self, parent, sizer, label):
+        """
+        Создать элементы управления, связанные с установкой ориентации диаграммы.
+        При этом добавляется чекбокс, с помощью которого выбитается, нужно ли устанавливать этот параметр
+        """
+        _checkBox = wx.CheckBox (parent, label = label)
+        _checkBox.SetValue (False)
+
+        _comboBox = self._createOrientation (parent, sizer, _checkBox)
+        _comboBox.Enabled = False
+
+        def isChangedGetter (self):
+            return _checkBox.GetValue()
+
+
+        def isChangedSetter (self, value):
+            _checkBox.SetValue (value)
+
+        PropertyFactory.bindEnabled (self._obj, _checkBox, _comboBox)
+
+        setattr (type (self._obj), "isOrientationChanged", property (isChangedGetter, isChangedSetter))
+
+        return (_checkBox, _comboBox)
+
+
+    def _createOrientation (self, parent, sizer, labelCtrl):
+        """
+        Создать элементы управления, связанные с установкой ориентации диаграммы
+        """
+        self._obj.orientations = self._orientations
 
         def setOrientationSelection (self, index):
             self._orientation.SetSelection(index)
@@ -204,7 +239,6 @@ class PropertyFactory (object):
             return self.orientations[index][1]
 
 
-        orientationLabel = wx.StaticText (parent, label = label)
         self._obj._orientation = wx.ComboBox (parent, style = wx.CB_DROPDOWN | wx.CB_READONLY)
 
         self._obj._orientation.SetMinSize ((250, -1))
@@ -212,7 +246,7 @@ class PropertyFactory (object):
         self._obj._orientation.AppendItems ([orientation[0] for orientation in self._obj.orientations])
         self._obj._orientation.SetSelection (0)
 
-        sizer.Add (orientationLabel,
+        sizer.Add (labelCtrl,
                    flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
                    border = 2
                    )
@@ -224,6 +258,8 @@ class PropertyFactory (object):
 
         type (self._obj).setOrientationSelection = setOrientationSelection
         type (self._obj).orientation = property (orientationGetter)
+
+        return self._obj._orientation
 
 
     def createBoolean (self, parent, sizer, label, propName):

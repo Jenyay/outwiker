@@ -107,3 +107,79 @@ color = "#AAAAAA";
 
         self.assertEqual (begin, valid_begin)
         self.assertEqual (end, u"\n}")
+
+
+    def testOrientation_01 (self):
+        dlg = self.plugin.InsertGroupDialog(None)
+        controller = self.plugin.InsertGroupController (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.isOrientationChanged = True
+        dlg.setOrientationSelection (0)
+
+        begin, end = controller.getResult ()
+
+        valid_begin = u'''group {
+orientation = landscape;
+
+
+'''
+
+        self.assertEqual (begin, valid_begin)
+
+
+    def testOrientation_02 (self):
+        dlg = self.plugin.InsertGroupDialog(None)
+        controller = self.plugin.InsertGroupController (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.isOrientationChanged = True
+        dlg.setOrientationSelection (1)
+
+        begin, end = controller.getResult ()
+
+        valid_begin = u'''group {
+orientation = portrait;
+
+
+'''
+
+        self.assertEqual (begin, valid_begin)
+
+
+    def testOrientation_03 (self):
+        dlg = self.plugin.InsertGroupDialog(None)
+        controller = self.plugin.InsertGroupController (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.isOrientationChanged = False
+        dlg.setOrientationSelection (1)
+
+        begin, end = controller.getResult ()
+
+        valid_begin = u'''group {
+'''
+
+        self.assertEqual (begin, valid_begin)
+
+
+    def testOrientation_04 (self):
+        dlg = self.plugin.InsertGroupDialog(None)
+        controller = self.plugin.InsertGroupController (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.isOrientationChanged = True
+        dlg.setOrientationSelection (1)
+        dlg.isBackColorChanged = True
+        dlg.backColor = u"blue"
+
+        begin, end = controller.getResult ()
+
+        valid_begin = u'''group {
+color = "blue";
+orientation = portrait;
+
+
+'''
+
+        self.assertEqual (begin, valid_begin)

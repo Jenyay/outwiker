@@ -5,7 +5,6 @@ import wx
 from ..i18n import get_
 from outwiker.gui.testeddialog import TestedDialog
 
-from .baseshapesdialog import BaseShapesDialog
 from .propertyfactory import PropertyFactory
 
 
@@ -34,9 +33,9 @@ class InsertGroupDialog (TestedDialog):
                                              _(u"Node name"),
                                              "name")
 
-        propFactory.createOrientation (self,
-                                       mainSizer,
-                                       _(u"Orientation"))
+        propFactory.createOrientationChecked (self,
+                                              mainSizer,
+                                              _(u"Orientation"))
 
         propFactory.createColor (self,
                                  mainSizer,
@@ -98,4 +97,4 @@ class InsertGroupController (object):
 
 
     def _getOrientationParam (self, dialog):
-        return u'orientation = {};'.format (dialog.orientation) if dialog.orientation != dialog.orientations[0][1] else u""
+        return u'orientation = {};'.format (dialog.orientation) if dialog.isOrientationChanged else u""
