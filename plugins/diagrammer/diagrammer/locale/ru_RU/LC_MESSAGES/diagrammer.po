@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: diagrammer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-02 22:17+0400\n"
-"PO-Revision-Date: 2014-08-02 22:20+0300\n"
+"POT-Creation-Date: 2014-08-17 22:30+0400\n"
+"PO-Revision-Date: 2014-08-17 22:45+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: jenyay.net <jenyay.iln@gmail.com>\n"
 "Language: ru_RU\n"
@@ -22,15 +22,15 @@ msgstr ""
 msgid "Diagram parsing error"
 msgstr "Ошибка разбора диаграммы"
 
-#: diagrammer.py:47
+#: diagrammer.py:53
 msgid "Plugin for the construction of diagrams"
 msgstr "Плагин для создания диаграмм"
 
-#: diagrammer.py:57
+#: diagrammer.py:63
 msgid "http://jenyay.net/Outwiker/DiagrammerEn"
 msgstr "http://jenyay.net/Outwiker/Diagrammer"
 
-#: diagramtoolbar.py:25 guicreator.py:60
+#: diagramtoolbar.py:25 guicreator.py:69
 msgid "Diagrammer"
 msgstr "Diagrammer"
 
@@ -50,6 +50,46 @@ msgstr "Вставить диаграмму"
 msgid "Diagrammer. Insert diagram"
 msgstr "Diagrammer. Вставить диаграмму"
 
+#: actions/insertedge.py:59
+msgid "Insert edge without any arrow"
+msgstr "Вставить ребро без стрелок"
+
+#: actions/insertedge.py:64
+msgid "Diagrammer. Insert edge without any arrow"
+msgstr "Diagrammer. Вставить ребро без стрелок"
+
+#: actions/insertedge.py:87
+msgid "Insert edge with the right arrow"
+msgstr "Вставить ребро со стрелкой направо"
+
+#: actions/insertedge.py:92
+msgid "Diagrammer. Insert edge with the right arrow"
+msgstr "Diagrammer. Вставить ребро со стрелкой направо"
+
+#: actions/insertedge.py:115
+msgid "Insert edge with the left arrow"
+msgstr "Вставить ребро со стрелкой налево"
+
+#: actions/insertedge.py:120
+msgid "Diagrammer. Insert edge with the left arrow"
+msgstr "Diagrammer. Вставить ребро со стрелкой налево"
+
+#: actions/insertedge.py:142
+msgid "Insert edge with the both arrows"
+msgstr "Вставить двунаправленное ребро"
+
+#: actions/insertedge.py:147
+msgid "Diagrammer. Insert edge with the both arrows"
+msgstr "Diagrammer. Вставить двунаправленное ребро"
+
+#: actions/insertgroup.py:26
+msgid "Insert group"
+msgstr "Вставить группу"
+
+#: actions/insertgroup.py:31
+msgid "Diagrammer. Insert new group"
+msgstr "Diagrammer. Вставить новую группу"
+
 #: actions/insertnode.py:26
 msgid "Insert node"
 msgstr "Вставить узел"
@@ -58,110 +98,190 @@ msgstr "Вставить узел"
 msgid "Diagrammer. Insert new node"
 msgstr "Diagrammer. Вставить новый узел"
 
-#: gui/insertdiagramdialog.py:15
-msgid "Landscape"
-msgstr "Пейзажная (landscape)"
-
-#: gui/insertdiagramdialog.py:16
-msgid "Portrait"
-msgstr "Портретная (portrait)"
-
-#: gui/insertdiagramdialog.py:24
+#: gui/insertdiagramdialog.py:20
 msgid "Insert Diagram"
 msgstr "Вставить диаграмму"
 
-#: gui/insertdiagramdialog.py:60
+#: gui/insertdiagramdialog.py:48 gui/insertgroupdialog.py:48
 msgid "Orientation"
-msgstr "Ориентация"
+msgstr "Ориентация (orientation)"
 
-#: gui/insertdiagramdialog.py:61
+#: gui/insertdiagramdialog.py:52
 msgid "Default nodes shape"
-msgstr "Форма узлов по умолчанию"
+msgstr "Форма узлов по умолчанию (default_shape)"
 
-#: gui/insertdiagramdialog.py:62
+#: gui/insertdiagramdialog.py:56
 msgid "Set default nodes background color"
-msgstr "Установить цвет фона узлов по умолчанию"
+msgstr "Установить цвет фона узлов по умолчанию (default_node_color)"
 
 #: gui/insertdiagramdialog.py:63
 msgid "Set default text color"
-msgstr "Установить цвет текста по умолчанию"
+msgstr "Установить цвет текста по умолчанию (default_textcolor)"
 
-#: gui/insertdiagramdialog.py:64
+#: gui/insertdiagramdialog.py:70
 msgid "Set default font size"
-msgstr "Установить размер шрифта по умолчанию"
+msgstr "Установить размер шрифта по умолчанию (default_fontsize)"
 
-#: gui/insertdiagramdialog.py:65
+#: gui/insertdiagramdialog.py:79
 msgid "Set default nodes width"
-msgstr "Установить ширину узлов по умолчанию"
+msgstr "Установить ширину узлов по умолчанию (node_width)"
 
-#: gui/insertdiagramdialog.py:66
+#: gui/insertdiagramdialog.py:88
 msgid "Set default nodes height"
-msgstr "Установить высоту узлов по умолчанию"
+msgstr "Установить высоту узлов по умолчанию (node_height)"
 
-#: gui/insertnodedialog.py:19
-msgid "Insert Node"
-msgstr "Вставить узел"
+#: gui/insertdiagramdialog.py:97
+msgid "Set default horizontal span between nodes"
+msgstr ""
+"Установить горизонтальный отступ между узлами по умолчанию (span_width)"
 
-#: gui/insertnodedialog.py:22 gui/insertnodedialog.py:40
-msgid "Default"
-msgstr "По умолчанию"
+#: gui/insertdiagramdialog.py:106
+msgid "Set default vertical span between nodes"
+msgstr "Установить вертикальный отступ между узлами по умолчанию (span_height)"
 
-#: gui/insertnodedialog.py:23
-msgid "Solid"
-msgstr "Сплошной (solid)"
+#: gui/insertedgedialog.py:24
+msgid "Insert edge"
+msgstr "Вставить ребро"
 
-#: gui/insertnodedialog.py:24
-msgid "Dotted"
-msgstr "Пунктирный (dotted)"
-
-#: gui/insertnodedialog.py:25
-msgid "Dashed"
-msgstr "Штриховой (dashed)"
-
-#: gui/insertnodedialog.py:53
+#: gui/insertedgedialog.py:35 gui/insertnodedialog.py:47
 msgid "Options"
 msgstr "Параметры"
 
-#: gui/insertnodedialog.py:65
+#: gui/insertedgedialog.py:50
+msgid "First node name"
+msgstr "Имя первого узла"
+
+#: gui/insertedgedialog.py:55
+msgid "Second node name"
+msgstr "Имя второго узла"
+
+#: gui/insertedgedialog.py:67
+msgid "Line style"
+msgstr "Стиль линии (style)"
+
+#: gui/insertedgedialog.py:71
+msgid "Thick line"
+msgstr "Толстая линия (thick)"
+
+#: gui/insertedgedialog.py:76
+msgid "Arrow style"
+msgstr "Стиль стрелки (hstyle)"
+
+#: gui/insertedgedialog.py:80
+msgid "Set line color"
+msgstr "Установить цвет линии (color)"
+
+#: gui/insertedgedialog.py:87 gui/insertgroupdialog.py:43
+#: gui/insertnodedialog.py:75
 msgid "Label"
 msgstr "Метка (label)"
 
-#: gui/insertnodedialog.py:66
-msgid "Shape"
-msgstr "Фигура (shape)"
-
-#: gui/insertnodedialog.py:67
-msgid "Stacked"
-msgstr "Отображать стопкой (shaped)"
-
-#: gui/insertnodedialog.py:68
-msgid "Border style"
-msgstr "Стиль рамки (style)"
-
-#: gui/insertnodedialog.py:69
-msgid "Set background color"
-msgstr "Установить цвет фона (color)"
-
-#: gui/insertnodedialog.py:70
-msgid "Set text color"
-msgstr "Установить цвет текста (textcolor)"
-
-#: gui/insertnodedialog.py:71
+#: gui/insertedgedialog.py:92 gui/insertnodedialog.py:107
 msgid "Set font size"
 msgstr "Установить размер шрифта (fontsize)"
 
-#: gui/insertnodedialog.py:72
+#: gui/insertedgedialog.py:101 gui/insertgroupdialog.py:59
+#: gui/insertnodedialog.py:100
+msgid "Set text color"
+msgstr "Установить цвет текста (textcolor)"
+
+#: gui/insertedgedialog.py:108
+msgid "Folded"
+msgstr "Перенос (folded)"
+
+#: gui/insertedgedialog.py:155
+msgid "Node1"
+msgstr "Узел1"
+
+#: gui/insertedgedialog.py:159
+msgid "Node2"
+msgstr "Узел2"
+
+#: gui/insertgroupdialog.py:17
+msgid "Insert Group"
+msgstr "Вставить группу"
+
+#: gui/insertgroupdialog.py:20
+msgid "Box"
+msgstr "Прямоугольник"
+
+#: gui/insertgroupdialog.py:21
+msgid "Line"
+msgstr "Линия"
+
+#: gui/insertgroupdialog.py:38 gui/insertnodedialog.py:66
+msgid "Node name"
+msgstr "Имя узла"
+
+#: gui/insertgroupdialog.py:52 gui/insertnodedialog.py:93
+msgid "Set background color"
+msgstr "Установить цвет фона (color)"
+
+#: gui/insertgroupdialog.py:66
+msgid "Border shape"
+msgstr "Форма рамки (shape)"
+
+#: gui/insertgroupdialog.py:75 gui/insertnodedialog.py:89
+msgid "Border style"
+msgstr "Стиль рамки (style)"
+
+#: gui/insertnodedialog.py:20
+msgid "Insert Node"
+msgstr "Вставить узел"
+
+#: gui/insertnodedialog.py:34 gui/propertyfactory.py:349
+#: gui/propertyfactory.py:405
+msgid "Default"
+msgstr "По умолчанию"
+
+#: gui/insertnodedialog.py:80
+msgid "Shape"
+msgstr "Фигура (shape)"
+
+#: gui/insertnodedialog.py:84
+msgid "Stacked"
+msgstr "Отображать стопкой (shaped)"
+
+#: gui/insertnodedialog.py:116
 msgid "Set width"
 msgstr "Установить ширину (width)"
 
-#: gui/insertnodedialog.py:73
+#: gui/insertnodedialog.py:125
 msgid "Set height"
 msgstr "Установить высоту (height)"
 
-#: gui/insertnodedialog.py:147
+#: gui/insertnodedialog.py:164
 msgid "Name of a node can't be empty"
 msgstr "Имя узла не должно быть пустым"
 
-#: gui/insertnodedialog.py:159
-msgid "Node name"
-msgstr "Имя узла"
+#: gui/propertyfactory.py:22
+msgid "Landscape"
+msgstr "Пейзажная (landscape)"
+
+#: gui/propertyfactory.py:23
+msgid "Portrait"
+msgstr "Портретная (portrait)"
+
+#: gui/propertyfactory.py:350
+msgid "Solid"
+msgstr "Сплошной (solid)"
+
+#: gui/propertyfactory.py:351
+msgid "Dotted"
+msgstr "Пунктирный (dotted)"
+
+#: gui/propertyfactory.py:352
+msgid "Dashed"
+msgstr "Штриховой (dashed)"
+
+#: gui/propertyfactory.py:406
+msgid "Generalization"
+msgstr "Наследование"
+
+#: gui/propertyfactory.py:407
+msgid "Composition"
+msgstr "Композиция"
+
+#: gui/propertyfactory.py:408
+msgid "Aggregation"
+msgstr "Агрегация"

@@ -329,12 +329,12 @@ class PropertyFactory (object):
         def setter (self, value):
             _checkbox.SetValue (value)
 
-        sizer.AddSpacer (1)
-
         sizer.Add (_checkbox,
-                   flag = wx.ALL | wx.ALIGN_RIGHT,
+                   flag = wx.ALL | wx.ALIGN_LEFT | wx.ALIGN_CENTER_VERTICAL,
                    border = 2
                    )
+
+        sizer.AddSpacer (1)
 
         setattr (type (self._obj), propName, property (getter, setter))
 
