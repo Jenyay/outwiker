@@ -16,6 +16,11 @@ class InsertGroupDialog (TestedDialog):
 
         self.SetTitle (_(u"Insert Group"))
 
+        self._borderShapes = [
+            (_(u"Box"), u"box"),
+            (_(u"Line"), u"line"),
+        ]
+
         self.__createGui()
         self.Fit()
         self.Center(wx.CENTRE_ON_SCREEN)
@@ -41,6 +46,15 @@ class InsertGroupDialog (TestedDialog):
         propFactory.createOrientationChecked (self,
                                               mainSizer,
                                               _(u"Orientation"))
+
+        propFactory.createComboBoxChecked (self,
+                                           mainSizer,
+                                           _(u"Border shape"),
+                                           self._borderShapes,
+                                           "borderShape",
+                                           "borderShapeIndex",
+                                           "isBorderShapeChanged"
+                                           )
 
         propFactory.createColor (self,
                                  mainSizer,
@@ -104,6 +118,7 @@ class InsertGroupController (object):
         params.append (self._getBackColorParam (dialog))
         params.append (self._getOrientationParam (dialog))
         params.append (self._getTextColorParam (dialog))
+        params.append (self._getBorderShapeParam (dialog))
 
         result = u"\n    ".join ([param for param in params if len (param.strip()) != 0])
 
@@ -127,3 +142,7 @@ class InsertGroupController (object):
 
     def _getTextColorParam (self, dialog):
         return u'textcolor = "{}";'.format (dialog.textColor) if dialog.isTextColorChanged else u""
+
+
+    def _getBorderShapeParam (self, dialog):
+        return u'shape = {};'.format (dialog.borderShape) if dialog.isBorderShapeChanged else u""

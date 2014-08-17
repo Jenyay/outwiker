@@ -265,3 +265,55 @@ class InsertGroupTest (unittest.TestCase):
 
         self.assertEqual (begin, valid_begin)
         self.assertEqual (end, u"\n}")
+
+
+    def testBorderShape_01 (self):
+        dlg = self.plugin.InsertGroupDialog(None)
+        controller = self.plugin.InsertGroupController (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.isBorderShapeChanged = True
+        dlg.borderShapeIndex = 0
+
+        begin, end = controller.getResult ()
+
+        valid_begin = u'''group {
+    shape = box;
+
+    '''
+
+        self.assertEqual (begin, valid_begin)
+
+
+    def testBorderShape_02 (self):
+        dlg = self.plugin.InsertGroupDialog(None)
+        controller = self.plugin.InsertGroupController (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.isBorderShapeChanged = True
+        dlg.borderShapeIndex = 1
+
+        begin, end = controller.getResult ()
+
+        valid_begin = u'''group {
+    shape = line;
+
+    '''
+
+        self.assertEqual (begin, valid_begin)
+
+
+    def testBorderShape_03 (self):
+        dlg = self.plugin.InsertGroupDialog(None)
+        controller = self.plugin.InsertGroupController (dlg)
+
+        dlg.SetModalResult (wx.ID_OK)
+        dlg.isBorderShapeChanged = False
+        dlg.borderShapeIndex = 1
+
+        begin, end = controller.getResult ()
+
+        valid_begin = u'''group {
+    '''
+
+        self.assertEqual (begin, valid_begin)
