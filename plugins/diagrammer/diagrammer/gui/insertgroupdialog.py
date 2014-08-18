@@ -74,6 +74,17 @@ class InsertGroupDialog (TestedDialog):
                                  mainSizer,
                                  _(u"Border style"))
 
+        helpLink = wx.HyperlinkCtrl (self,
+                                     -1,
+                                     _(u"Open the documentation page"),
+                                     u"http://blockdiag.com/en/blockdiag/examples.html#grouping-nodes")
+
+        mainSizer.Add (helpLink,
+                       flag = wx.ALIGN_LEFT | wx.ALL,
+                       border = 4)
+
+        mainSizer.AddSpacer (1)
+
         propFactory.createOkCancelButtons (mainSizer)
 
         self.SetSizer (mainSizer)

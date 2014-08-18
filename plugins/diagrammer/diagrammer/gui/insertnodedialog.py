@@ -129,11 +129,20 @@ class InsertNodeDialog (BaseShapesDialog):
                                    1000,
                                    40)
 
+        helpLink = wx.HyperlinkCtrl (self,
+                                     -1,
+                                     _(u"Open the documentation page"),
+                                     u"http://blockdiag.com/en/blockdiag/attributes/node.attributes.html")
+
         self._paramsPanel.GetPane().SetSizer (optionsSizer)
 
         mainSizer.Add (self._paramsPanel,
                        flag = wx.EXPAND | wx.ALL,
                        border = 2)
+
+        mainSizer.Add (helpLink,
+                       flag = wx.ALIGN_LEFT | wx.ALL,
+                       border = 4)
 
         propFactory.createOkCancelButtons (mainSizer)
 

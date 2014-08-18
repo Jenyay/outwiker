@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: diagrammer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-17 22:30+0400\n"
-"PO-Revision-Date: 2014-08-17 22:45+0300\n"
+"POT-Creation-Date: 2014-08-18 09:45+0400\n"
+"PO-Revision-Date: 2014-08-18 09:45+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: jenyay.net <jenyay.iln@gmail.com>\n"
 "Language: ru_RU\n"
@@ -139,6 +139,11 @@ msgstr ""
 msgid "Set default vertical span between nodes"
 msgstr "Установить вертикальный отступ между узлами по умолчанию (span_height)"
 
+#: gui/insertdiagramdialog.py:115 gui/insertedgedialog.py:113
+#: gui/insertgroupdialog.py:79 gui/insertnodedialog.py:134
+msgid "Open the documentation page"
+msgstr "Открыть страницу документации"
+
 #: gui/insertedgedialog.py:24
 msgid "Insert edge"
 msgstr "Вставить ребро"
@@ -189,11 +194,11 @@ msgstr "Установить цвет текста (textcolor)"
 msgid "Folded"
 msgstr "Перенос (folded)"
 
-#: gui/insertedgedialog.py:155
+#: gui/insertedgedialog.py:164
 msgid "Node1"
 msgstr "Узел1"
 
-#: gui/insertedgedialog.py:159
+#: gui/insertedgedialog.py:168
 msgid "Node2"
 msgstr "Узел2"
 
@@ -250,7 +255,7 @@ msgstr "Установить ширину (width)"
 msgid "Set height"
 msgstr "Установить высоту (height)"
 
-#: gui/insertnodedialog.py:164
+#: gui/insertnodedialog.py:173
 msgid "Name of a node can't be empty"
 msgstr "Имя узла не должно быть пустым"
 

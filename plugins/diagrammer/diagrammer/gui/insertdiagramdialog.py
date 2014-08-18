@@ -110,6 +110,17 @@ class InsertDiagramDialog (BaseShapesDialog):
                                    1000,
                                    40)
 
+        helpLink = wx.HyperlinkCtrl (self,
+                                     -1,
+                                     _(u"Open the documentation page"),
+                                     u"http://blockdiag.com/en/blockdiag/attributes/diagram.attributes.html")
+
+        mainSizer.Add (helpLink,
+                       flag = wx.ALIGN_LEFT | wx.ALL,
+                       border = 4)
+
+        mainSizer.AddSpacer (1)
+
         propFactory.createOkCancelButtons (mainSizer)
 
         # Выберем по умолчанию в качестве фигуры box
