@@ -126,21 +126,23 @@ def plugins():
     """
     Создание архивов с плагинами
     """
-    plugins = ["source",
-               "style",
-               "export2html",
-               "spoiler",
-               "livejournal",
-               "lightbox",
-               "thumbgallery",
-               "externaltools",
-               "statistics",
-               "updatenotifier",
-               "counter",
-               "htmlheads",
-               "changepageuid",
-               "sessions",
-               ]
+    plugins = [
+        "changepageuid",
+        "counter",
+        "diagrammer",
+        "export2html",
+        "externaltools",
+        "htmlheads",
+        "lightbox",
+        "livejournal",
+        "sessions",
+        "source",
+        "spoiler",
+        "statistics",
+        "style",
+        "thumbgallery",
+        "updatenotifier",
+    ]
 
     local ("rm -f build/plugins/outwiker-plugins-all.zip")
 
