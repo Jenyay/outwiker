@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ChangePageUid\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-22 21:22+0400\n"
-"PO-Revision-Date: 2014-06-22 21:23+0300\n"
+"POT-Creation-Date: 2014-08-19 11:29+0400\n"
+"PO-Revision-Date: 2014-08-19 11:31+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: jenyay.net <jenyay.ilin@gmail.com>\n"
 "Language: ru_RU\n"
@@ -18,13 +18,29 @@ msgstr ""
 "X-Generator: Poedit 1.5.4\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-#: actions.py:23 controller.py:56
+#: dialog.py:42
+msgid "Error"
+msgstr "Ошибка"
+
+#: dialog.py:53
+msgid "Enter new page identifier"
+msgstr "Введите новый идентификатор страницы"
+
+#: dialog.py:109
+msgid "Enter new identifier for page \"{}\""
+msgstr "Введите новый идентификатор для страницы \"{}\""
+
+#: dialogcontroller.py:45
+msgid "Same identifier exist already"
+msgstr "Такой идентификатор уже существует"
+
+#: dialogcontroller.py:51
+msgid "Identifier contain invalid character"
+msgstr "Идентификатор содержит запрещенные символы"
+
+#: controller.py:56 actions.py:23
 msgid "Change Page Identifier..."
 msgstr "Изменить идентификатор страницы..."
-
-#: actions.py:28
-msgid "ChangePageUID plugin. Change Page Identifier"
-msgstr "Плагин ChangePageUID. Изменить идентификатор страницы"
 
 #: changepageuid.py:44
 msgid "Plugin for edit a page indentifiers"
@@ -34,21 +50,9 @@ msgstr "Плагин для редактирования идентификат�
 msgid "http://jenyay.net/Outwiker/ChangePageUidEn"
 msgstr "http://jenyay.net/Outwiker/ChangePageUid"
 
-#: dialog.py:42
-msgid "Error"
-msgstr "Ошибка"
-
-#: dialog.py:53
-msgid "Enter new page identifier"
-msgstr "Введите новый идентификатор страницы"
-
-#: dialogcontroller.py:44
-msgid "Same identifier exist already"
-msgstr "Такой идентификатор уже существует"
-
-#: dialogcontroller.py:50
-msgid "Identifier contain invalid character"
-msgstr "Идентификатор содержит запрещенные символы"
+#: actions.py:28
+msgid "ChangePageUID plugin. Change Page Identifier"
+msgstr "Плагин ChangePageUID. Изменить идентификатор страницы"
 
 #~ msgid "Change page identifier"
 #~ msgstr "Изменить идентификатор страницы"

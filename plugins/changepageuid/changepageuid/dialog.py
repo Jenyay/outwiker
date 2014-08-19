@@ -24,8 +24,8 @@ class ChangeUidDialog (TestedDialog):
         self.uidValidator = None
 
         self._createGui()
-        self.newUidText.SetFocus()
-        self.newUidText.SetSelection (0, -1)
+        self._newUidText.SetFocus()
+        self._newUidText.SetSelection (0, -1)
 
         self.Center(wx.CENTRE_ON_SCREEN)
 
@@ -50,25 +50,25 @@ class ChangeUidDialog (TestedDialog):
         mainSizer = wx.FlexGridSizer (cols=1)
         mainSizer.AddGrowableCol (0)
 
-        questionLabel = wx.StaticText (self, label = _(u"Enter new page identifier"))
+        self._questionLabel = wx.StaticText (self, label = _(u"Enter new page identifier"))
 
         newUidSizer = wx.FlexGridSizer (cols=2)
         newUidSizer.AddGrowableCol (1)
 
         protocolLabel = wx.StaticText (self, label = u"page://")
-        self.newUidText = wx.TextCtrl (self)
-        self.newUidText.SetMinSize ((320, -1))
+        self._newUidText = wx.TextCtrl (self)
+        self._newUidText.SetMinSize ((320, -1))
 
         newUidSizer.Add (protocolLabel,
                          flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
                          border = 2)
 
-        newUidSizer.Add (self.newUidText,
+        newUidSizer.Add (self._newUidText,
                          flag = wx.ALL | wx.EXPAND,
                          border = 2)
 
 
-        mainSizer.Add (questionLabel,
+        mainSizer.Add (self._questionLabel,
                        flag = wx.ALL,
                        border = 2)
 
@@ -94,7 +94,7 @@ class ChangeUidDialog (TestedDialog):
 
     @property
     def uid (self):
-        newuid = self.newUidText.GetValue().strip()
+        newuid = self._newUidText.GetValue().strip()
 
         assert len (newuid) != 0
         return newuid
@@ -102,4 +102,9 @@ class ChangeUidDialog (TestedDialog):
 
     @uid.setter
     def uid (self, value):
-        self.newUidText.SetValue (value.strip())
+        self._newUidText.SetValue (value.strip())
+
+
+    def setPageTitle (self, pageTitle):
+        self._questionLabel.SetLabel (_(u'Enter new identifier for page "{}"').format (pageTitle))
+        self.Fit()

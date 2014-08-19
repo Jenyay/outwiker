@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-22 21:22+0400\n"
+"POT-Creation-Date: 2014-08-19 11:29+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,12 +17,28 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: actions.py:23 controller.py:56
-msgid "Change Page Identifier..."
+#: dialog.py:42
+msgid "Error"
 msgstr ""
 
-#: actions.py:28
-msgid "ChangePageUID plugin. Change Page Identifier"
+#: dialog.py:53
+msgid "Enter new page identifier"
+msgstr ""
+
+#: dialog.py:109
+msgid "Enter new identifier for page \"{}\""
+msgstr ""
+
+#: dialogcontroller.py:45
+msgid "Same identifier exist already"
+msgstr ""
+
+#: dialogcontroller.py:51
+msgid "Identifier contain invalid character"
+msgstr ""
+
+#: controller.py:56 actions.py:23
+msgid "Change Page Identifier..."
 msgstr ""
 
 #: changepageuid.py:44
@@ -33,18 +49,6 @@ msgstr ""
 msgid "http://jenyay.net/Outwiker/ChangePageUidEn"
 msgstr ""
 
-#: dialog.py:42
-msgid "Error"
-msgstr ""
-
-#: dialog.py:53
-msgid "Enter new page identifier"
-msgstr ""
-
-#: dialogcontroller.py:44
-msgid "Same identifier exist already"
-msgstr ""
-
-#: dialogcontroller.py:50
-msgid "Identifier contain invalid character"
+#: actions.py:28
+msgid "ChangePageUID plugin. Change Page Identifier"
 msgstr ""

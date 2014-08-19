@@ -20,6 +20,7 @@ class DialogController (object):
         self._dialog = dialog
         self._page = page
         self._dialog.uid = self._application.pageUidDepot.createUid (self._page)
+        self._dialog.setPageTitle (self._page.title)
         self._dialog.uidValidator = self.validate
 
 
