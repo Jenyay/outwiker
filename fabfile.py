@@ -227,7 +227,7 @@ def localeplugin (pluginname):
     Создать или обновить локализацию для плагина pluginname
     """
     with lcd (os.path.join ("plugins", pluginname, pluginname)):
-        local (r"xgettext -o locale/{}.pot *.py **/*.py".format (pluginname))
+        local (r'find . -iname "*.py" | xargs xgettext -o locale/{}.pot'.format (pluginname))
 
 
 def run ():
