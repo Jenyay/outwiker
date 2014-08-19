@@ -219,7 +219,7 @@ def locale():
     Обновить файлы локализации (outwiker.pot)
     """
     with lcd ("src"):
-        local (r"xgettext -o locale/outwiker.pot outwiker/gui/*.py outwiker/gui/*/*.py outwiker/pages/*/*.py outwiker/pages/*/*/*.py outwiker/core/*.py outwiker/actions/*.py")
+        local (r'find . -iname "*.py" | xargs xgettext -o locale/outwiker.pot')
 
 
 def localeplugin (pluginname):
