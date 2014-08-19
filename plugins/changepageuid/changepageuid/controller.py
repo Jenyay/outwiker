@@ -23,6 +23,10 @@ class Controller (object):
 
         self._guiCreator = None
 
+        # Здесь хранится указатель на страницу, над которой щелкнули правой
+        # кнопкой мыши
+        self._selectedPage = None
+
         self.CHANGE_PAGE_UID = wx.NewId()
 
 
@@ -53,6 +57,8 @@ class Controller (object):
 
 
     def __onTreePopupMenu (self, menu, page):
+        self._selectedPage = page
+
         menu.Append (self.CHANGE_PAGE_UID, _(u"Change Page Identifier..."))
 
         self._application.mainWindow.Bind (wx.EVT_MENU,
@@ -61,18 +67,20 @@ class Controller (object):
 
 
     def __onPopupClick (self, event):
-        self.changeUidWithDialog()
+        assert self._selectedPage is not None
+
+        self.changeUidWithDialog (self._selectedPage)
         self._application.mainWindow.Unbind (wx.EVT_MENU,
                                              id=self.CHANGE_PAGE_UID)
 
+        self._selectedPage = None
+
 
     @testreadonly
-    def changeUidWithDialog (self):
+    def changeUidWithDialog (self, page):
         """
         Вызвать диалог для изменения UID страницы
         """
-        page = self._application.selectedPage
-
         if page is None:
             return
 
@@ -83,7 +91,7 @@ class Controller (object):
 
         dlgController = DialogController (self._application,
                                           dlg,
-                                          self._application.selectedPage)
+                                          page)
 
         resultDlg = dlgController.showDialog ()
 
