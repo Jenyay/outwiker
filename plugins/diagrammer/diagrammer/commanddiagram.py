@@ -19,7 +19,7 @@ class CommandDiagram (Command):
         parser - экземпляр парсера
         """
         Command.__init__ (self, parser)
-        self._fileNameFormat = u"__diagram_{}"
+        self._fileNameFormat = u"__diagram_{}.png"
 
         global _
         _ = get_()
