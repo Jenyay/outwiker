@@ -145,7 +145,7 @@ class TestPageFactory (PageFactory):
         """
         Название страницы, показываемое пользователю
         """
-        return _(u"Test Page")
+        return u"Test Page"
 
 
     def getPageView (self, parent):
