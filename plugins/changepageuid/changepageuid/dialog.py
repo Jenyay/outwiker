@@ -30,6 +30,7 @@ class ChangeUidDialog (TestedDialog):
         self.Center(wx.CENTRE_ON_SCREEN)
 
         self.Bind (wx.EVT_BUTTON, self.__onOk, id=wx.ID_OK)
+        self.Bind (wx.EVT_TEXT, self.__onTextChanged, self._newUidText)
 
 
     def __onOk (self, event):
@@ -41,6 +42,16 @@ class ChangeUidDialog (TestedDialog):
             MessageBox (result,
                         _(u"Error"),
                         wx.ICON_ERROR | wx.OK)
+
+
+    def __onTextChanged (self, event):
+        self.Unbind (wx.EVT_TEXT, self._newUidText)
+
+        selFrom, selTo = self._newUidText.GetSelection()
+        self._newUidText.Value = self._newUidText.Value.replace (u" ", u"_")
+        self._newUidText.SetSelection (selTo, selTo)
+
+        self.Bind (wx.EVT_TEXT, self.__onTextChanged, self._newUidText)
 
 
     def _createGui(self):
