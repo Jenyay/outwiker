@@ -16,6 +16,7 @@ else:
     from .comboboxdialog import ComboBoxDialog
     from .dialogcontroller import UserDialogController, CommunityDialogController
     from .ljconfig import LJConfig
+    from .i18n import set_
 
     class PluginLivejournal (Plugin):
         """
@@ -48,6 +49,8 @@ else:
                 _ = self._init_i18n (domain, langdir)
             except BaseException as e:
                 print e
+
+            set_ (_)
 
 
         @property
