@@ -2,11 +2,15 @@
 
 import os.path
 
+import wx
+
 from outwiker.core.system import getOS
 
 from .i18n import get_
 from .ljcommand import LjUserCommand, LjCommunityCommand
 from .ljtoolbar import LJToolBar
+from .comboboxdialog import ComboBoxDialog
+from .dialogcontroller import UserDialogController, CommunityDialogController
 
 
 class Controller (object):
@@ -68,14 +72,15 @@ class Controller (object):
         """
         Создание панели с кнопками, если она еще не была создана
         """
-        if not self.__toolbarCreated:
-            mainWnd = self._application.mainWindow
+        mainWnd = self._application.mainWindow
+
+        if mainWnd is not None and not self.__toolbarCreated:
             mainWnd.toolbars[self.ID_TOOLBAR] = LJToolBar (mainWnd, mainWnd.auiManager)
 
             pageView = self._getPageView()
             pageView.addTool (pageView.commandsMenu,
                               self.ID_LJUSER,
-                              self.__turnLJUser,
+                              self.__onLJUser,
                               _(u"Livejournal User (:ljuser ...:)"),
                               _(u"Livejournal User (:ljuser ...:)"),
                               self._getImagePath ("ljuser.gif"),
@@ -84,7 +89,7 @@ class Controller (object):
 
             pageView.addTool (pageView.commandsMenu,
                               self.ID_LJCOMMUNITY,
-                              self.__turnLJCommunity,
+                              self.__onLJCommunity,
                               _(u"Livejournal Community (:ljcomm ...:)"),
                               _(u"Livejournal Community (:ljcomm ...:)"),
                               self._getImagePath ("ljcommunity.gif"),
@@ -110,27 +115,43 @@ class Controller (object):
                 self._application.selectedPage.getTypeString() == u"wiki")
 
 
-    def __turnLJUser (self, event):
+    def __insertCommand (self, title, controllerType):
+        assert self._application.mainWindow is not None
+
+        with ComboBoxDialog (self._application.mainWindow,
+                             title,
+                             title,
+                             wx.CB_DROPDOWN | wx.CB_SORT) as dlg:
+            editor = self._getPageView().codeEditor
+
+            selText = editor.GetSelectedText()
+
+            controller = controllerType (dlg, self._application, selText)
+            if controller.showDialog () == wx.ID_OK:
+                editor.replaceText (controller.result)
+
+
+    def __onLJUser (self, event):
         """
         Обработчик нажатия кнопки для вставки ЖЖ-пользователя
         """
-        pageView = self._getPageView()
-        pageView.codeEditor.turnText (u"(:ljuser ", u":)")
+        assert self._application.mainWindow is not None
+        self.__insertCommand (_(u"Livejournal user"), UserDialogController)
 
 
-    def __turnLJCommunity (self, event):
+    def __onLJCommunity (self, event):
         """
         Обработчик нажатия кнопки для вставки ЖЖ-сообщества
         """
-        pageView = self._getPageView()
-        pageView.codeEditor.turnText (u"(:ljcomm ", u":)")
+        assert self._application.mainWindow is not None
+        self.__insertCommand (_(u"Livejournal community"), CommunityDialogController)
 
 
     def __destroyToolBar (self):
         """
         Уничтожение панели с кнопками
         """
-        if self.__toolbarCreated:
+        if self._application.mainWindow is not None and self.__toolbarCreated:
             self._application.mainWindow.toolbars.destroyToolBar (self.ID_TOOLBAR)
             self.__toolbarCreated = False
 

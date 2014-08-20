@@ -13,6 +13,10 @@ if getCurrentVersion() < Version (1, 7, 0, 670, status=StatusSet.DEV):
 else:
     from .controller import Controller
 
+    from .comboboxdialog import ComboBoxDialog
+    from .dialogcontroller import UserDialogController, CommunityDialogController
+    from .ljconfig import LJConfig
+
     class PluginLivejournal (Plugin):
         """
         Плагин, добавляющий обработку команды spoiler в википарсер
@@ -71,3 +75,23 @@ else:
             Уничтожение (выгрузка) плагина. Здесь плагин должен отписаться от всех событий
             """
             self._controller.destroy()
+
+
+        @property
+        def ComboBoxDialog (self):
+            return ComboBoxDialog
+
+
+        @property
+        def UserDialogController (self):
+            return UserDialogController
+
+
+        @property
+        def CommunityDialogController (self):
+            return CommunityDialogController
+
+
+        @property
+        def LJConfig (self):
+            return LJConfig
