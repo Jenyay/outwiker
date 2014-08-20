@@ -1,11 +1,11 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
+from outwiker.core.application import Application
 from parser.wikiparser import Parser
 from parser.commandinclude import IncludeCommand
 from parser.commandchildlist import ChildListCommand
 from parser.commandattachlist import AttachListCommand
-from outwiker.core.application import Application
+from parser.commanddates import CommandDateCreation
 
 
 class ParserFactory (object):
@@ -14,7 +14,11 @@ class ParserFactory (object):
     """
     def __init__ (self):
         # Список типов команд. Экземпляры команд создаются при заполнении командами парсера
-        self.__commands = [IncludeCommand, ChildListCommand, AttachListCommand]
+        self.__commands = [IncludeCommand,
+                           ChildListCommand,
+                           AttachListCommand,
+                           CommandDateCreation,
+                           ]
 
 
     def make (self, page, config):

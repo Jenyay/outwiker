@@ -20,6 +20,7 @@ from actions.updatehtml import WikiUpdateHtmlAction
 from actions.attachlist import WikiAttachListAction
 from actions.childlist import WikiChildListAction
 from actions.include import WikiIncludeAction
+from actions.dates import WikiDateCreation
 
 
 _actions = [
@@ -33,6 +34,7 @@ _actions = [
     (WikiAttachListAction, None),
     (WikiChildListAction, None),
     (WikiIncludeAction, None),
+    (WikiDateCreation, None),
 ]
 
 

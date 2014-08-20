@@ -473,7 +473,7 @@ def insertCurrentDate (parent, editor):
                            _(u"Date format"),
                            initial) as dlg:
         if dlg.ShowModal() == wx.ID_OK:
-            dateStr = unicode (datetime.now().strftime (dlg.Value),
+            dateStr = unicode (datetime.now().strftime (dlg.Value.encode ("utf8")),
                                getOS().filesEncoding)
             editor.replaceText (dateStr)
             config.recentDateTimeFormat.value = dlg.Value

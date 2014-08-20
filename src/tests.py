@@ -75,6 +75,7 @@ if __name__ == '__main__':
     from test.parsertests.wikicommandinclude import WikiIncludeCommandTest
     from test.parsertests.wikicommandchildlist import WikiChildListCommandTest
     from test.parsertests.wikicommandattachlist import WikiAttachListCommandTest
+    from test.parsertests.wikicommanddates import WikiCommandDatesTest
 
     from test.thumbmakerwx import ThumbmakerWxTest
     from test.thumbmakerpil import ThumbmakerPilTest
