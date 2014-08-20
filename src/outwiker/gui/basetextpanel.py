@@ -1,20 +1,22 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 from abc import ABCMeta, abstractmethod
 import os
+from datetime import datetime
 
 import wx
 
-import outwiker.core.system
-from outwiker.core.commands import MessageBox, openWiki, pageExists
+from outwiker.actions.search import SearchAction, SearchNextAction, SearchPrevAction, SearchAndReplaceAction
+from outwiker.core.system import getImagesDir, getOS
+from outwiker.core.commands import MessageBox, pageExists
 from outwiker.core.attachment import Attachment
 from outwiker.core.application import Application
-from outwiker.gui.buttonsdialog import ButtonsDialog
 from outwiker.core.config import IntegerOption
 from outwiker.core.tree import RootWikiPage
-from outwiker.actions.search import SearchAction, SearchNextAction, SearchPrevAction, SearchAndReplaceAction
-from .basepagepanel import BasePagePanel
+from outwiker.gui.basepagepanel import BasePagePanel
+from outwiker.gui.dateformatdialog import DateFormatDialog
+from outwiker.gui.buttonsdialog import ButtonsDialog
+from outwiker.gui.guiconfig import GeneralGuiConfig
 
 
 class BaseTextPanel (BasePagePanel):
@@ -61,7 +63,7 @@ class BaseTextPanel (BasePagePanel):
 
         self.searchMenu = None
 
-        # Предыдущее сохраненное состояние. 
+        # Предыдущее сохраненное состояние.
         # Используется для выявления изменения страницы внешними средствами
         self._oldContent = None
 
@@ -70,7 +72,7 @@ class BaseTextPanel (BasePagePanel):
         self.externalEditDialog = None
 
         self.searchMenuIndex = 2
-        self.imagesDir = outwiker.core.system.getImagesDir()
+        self.imagesDir = getImagesDir()
 
         self._addSearchTools ()
 
@@ -96,7 +98,7 @@ class BaseTextPanel (BasePagePanel):
         """
         Сохранить страницу
         """
-        if self.page == None:
+        if self.page is None:
             return
 
         if not pageExists (self.page):
@@ -110,7 +112,7 @@ class BaseTextPanel (BasePagePanel):
         """
         Проверить, что страница не изменена внешними средствами
         """
-        if self._oldContent != None and self._oldContent != self.page.content:
+        if self._oldContent is not None and self._oldContent != self.page.content:
             # Старое содержимое не совпадает с содержимым страницы.
             # Значит содержимое страницы кто-то изменил
             self.__externalEdit()
@@ -123,7 +125,7 @@ class BaseTextPanel (BasePagePanel):
         """
         Спросить у пользователя, что делать, если страница изменилась внешними средствами
         """
-        if self.externalEditDialog == None:
+        if self.externalEditDialog is None:
             result = self.__showExternalEditDialog()
 
             if result == 0:
@@ -135,24 +137,24 @@ class BaseTextPanel (BasePagePanel):
                 self.__updateOldContent()
                 self.UpdateView(self.page)
 
-    
+
     def __showExternalEditDialog (self):
         """
         Показать диалог о том, что страница изменена сторонними программами и вернуть результат диалога:
-        0 - перезаписать
-        1 - перезагрузить
-        2 - ничего не делать
+            0 - перезаписать
+            1 - перезагрузить
+            2 - ничего не делать
         """
         buttons = [_(u"Overwrite"), _("Load"), _("Cancel")]
 
         message = _(u'Page "%s" is changed by the external program') % self.page.title
-        self.externalEditDialog = ButtonsDialog (self, 
-                message,
-                _(u"Owerwrite?"),
-                buttons,
-                default = 0,
-                cancel = 2)
-        
+        self.externalEditDialog = ButtonsDialog (self,
+                                                 message,
+                                                 _(u"Owerwrite?"),
+                                                 buttons,
+                                                 default = 0,
+                                                 cancel = 2)
+
         result = self.externalEditDialog.ShowModal()
         self.externalEditDialog.Destroy()
         self.externalEditDialog = None
@@ -171,7 +173,7 @@ class BaseTextPanel (BasePagePanel):
         """
         Сохранение содержимого страницы
         """
-        if (page == None or
+        if (page is None or
                 page.isRemoved or
                 page.readonly):
             return
@@ -179,22 +181,22 @@ class BaseTextPanel (BasePagePanel):
         try:
             self._getCursorPositionOption(page).value = self.GetCursorPosition()
         except IOError, e:
-            MessageBox (_(u"Can't save file %s") % (unicode (e.filename)), 
-                _(u"Error"), 
-                wx.ICON_ERROR | wx.OK)
+            MessageBox (_(u"Can't save file %s") % (unicode (e.filename)),
+                        _(u"Error"),
+                        wx.ICON_ERROR | wx.OK)
             return
 
-        if self.__stringsAreEqual (page.content, 
-                    self.GetContentFromGui() ):
+        if self.__stringsAreEqual (page.content,
+                                   self.GetContentFromGui()):
             return
 
         try:
             page.content = self.GetContentFromGui()
         except IOError, e:
             # TODO: Проверить под Windows
-            MessageBox (_(u"Can't save file %s") % (unicode (e.filename)), 
-                _(u"Error"), 
-                wx.ICON_ERROR | wx.OK)
+            MessageBox (_(u"Can't save file %s") % (unicode (e.filename)),
+                        _(u"Error"),
+                        wx.ICON_ERROR | wx.OK)
 
 
     def _getCursorPositionOption (self, page):
@@ -203,10 +205,10 @@ class BaseTextPanel (BasePagePanel):
         default = 0
 
         return IntegerOption (page.params,
-                section,
-                cursor_section,
-                default)
-    
+                              section,
+                              cursor_section,
+                              default)
+
 
     def _getAttachString (self, fnames):
         """
@@ -217,7 +219,7 @@ class BaseTextPanel (BasePagePanel):
 
         for n in range (count):
             text += Attachment.attachDir + "/" + fnames[n]
-            if n != count -1:
+            if n != count - 1:
                 text += "\n"
 
         return text
@@ -238,9 +240,9 @@ class BaseTextPanel (BasePagePanel):
         """
         Убрать за собой элементы управления
         """
-        assert self.mainWindow != None
+        assert self.mainWindow is not None
         assert self.mainWindow.mainMenu.GetMenuCount() >= 3
-        assert self.searchMenu != None
+        assert self.searchMenu is not None
 
         Application.actionController.removeMenuItem (SearchAction.stringId)
         Application.actionController.removeMenuItem (SearchAndReplaceAction.stringId)
@@ -259,28 +261,46 @@ class BaseTextPanel (BasePagePanel):
 
 
     def _addSearchTools (self):
-        assert self.mainWindow != None
+        assert self.mainWindow is not None
         self.searchMenu = wx.Menu()
-        self.mainWindow.mainMenu.Insert (self.searchMenuIndex, self.searchMenu, _("&Search") )
+        self.mainWindow.mainMenu.Insert (self.searchMenuIndex, self.searchMenu, _("&Search"))
 
         toolbar = self.mainWindow.toolbars[self.mainWindow.GENERAL_TOOLBAR_STR]
 
         # Начать поиск на странице
         Application.actionController.appendMenuItem (SearchAction.stringId, self.searchMenu)
-        Application.actionController.appendToolbarButton (SearchAction.stringId, 
-                toolbar,
-                os.path.join (self.imagesDir, "local_search.png"),
-                fullUpdate=False)
+        Application.actionController.appendToolbarButton (SearchAction.stringId,
+                                                          toolbar,
+                                                          os.path.join (self.imagesDir, "local_search.png"),
+                                                          fullUpdate=False)
 
         # Начать поиск и замену на странице
         Application.actionController.appendMenuItem (SearchAndReplaceAction.stringId, self.searchMenu)
-        Application.actionController.appendToolbarButton (SearchAndReplaceAction.stringId, 
-                toolbar,
-                os.path.join (self.imagesDir, "local_replace.png"),
-                fullUpdate=False)
+        Application.actionController.appendToolbarButton (SearchAndReplaceAction.stringId,
+                                                          toolbar,
+                                                          os.path.join (self.imagesDir, "local_replace.png"),
+                                                          fullUpdate=False)
 
         # Продолжить поиск вперед на странице
         Application.actionController.appendMenuItem (SearchNextAction.stringId, self.searchMenu)
 
         # Продолжить поиск назад на странице
         Application.actionController.appendMenuItem (SearchPrevAction.stringId, self.searchMenu)
+
+
+    def insertCurrentDate (self, editor):
+        """
+        editor - текстовое поле ввода, куда надо вставить дату (экземпляр класса TextEditor)
+        """
+        config = GeneralGuiConfig (Application.config)
+        initial = config.recentDateTimeFormat.value
+
+        with DateFormatDialog (self.mainWindow,
+                               _(u"Enter format of the date"),
+                               _(u"Date format"),
+                               initial) as dlg:
+            if dlg.ShowModal() == wx.ID_OK:
+                dateStr = unicode (datetime.now().strftime (dlg.Value),
+                                   getOS().filesEncoding)
+                editor.replaceText (dateStr)
+                config.recentDateTimeFormat.value = dlg.Value

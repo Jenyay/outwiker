@@ -86,3 +86,6 @@ QUOTE_STR_ID = "Quote"
 
 # Картинка
 IMAGE_STR_ID = "Image"
+
+# Вставить текущую дату
+CURRENT_DATE = "CurrentDate"

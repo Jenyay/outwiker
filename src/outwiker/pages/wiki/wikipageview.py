@@ -99,6 +99,7 @@ class WikiPageView (BaseWikiPageView):
             LIST_NUMBERS_STR_ID,
             LINE_BREAK_STR_ID,
             HTML_ESCAPE_STR_ID,
+            CURRENT_DATE,
         ]
 
 
@@ -459,6 +460,15 @@ class WikiPageView (BaseWikiPageView):
         self._application.actionController.appendToolbarButton (WikiEquationAction.stringId,
                                                                 toolbar,
                                                                 os.path.join (self.imagesDir, "equation.png"),
+                                                                fullUpdate=False)
+
+        # Текущая дата
+        self._application.actionController.getAction (CURRENT_DATE).setFunc (lambda param: self.insertCurrentDate (self.codeEditor))
+
+        self._application.actionController.appendMenuItem (CURRENT_DATE, menu)
+        self._application.actionController.appendToolbarButton (CURRENT_DATE,
+                                                                toolbar,
+                                                                os.path.join (self.imagesDir, "date.png"),
                                                                 fullUpdate=False)
 
 

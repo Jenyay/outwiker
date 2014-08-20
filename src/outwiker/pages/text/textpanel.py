@@ -31,23 +31,22 @@ class TextPanel (BaseTextPanel):
         """
         return self.textEditor.GetCurrentPosition()
 
-    
+
     def Print (self):
         self.textEditor.Print()
 
-    
+
     def onPreferencesDialogClose (self, prefDialog):
         self.textEditor.setDefaultSettings()
-    
+
 
     def UpdateView (self, page):
         self.textEditor.SetText (self._currentpage.content)
         self.textEditor.EmptyUndoBuffer()
         self.textEditor.SetReadOnly (page.readonly)
-        self.SetCursorPosition (
-                self._getCursorPositionOption (page).value)
+        self.SetCursorPosition (self._getCursorPositionOption (page).value)
         self.textEditor.SetFocus()
-    
+
 
     def __createGui (self):
         self.textEditor = TextEditor(self, -1)
@@ -67,7 +66,7 @@ class TextPanel (BaseTextPanel):
 
 
     def GetContentFromGui (self):
-        return  self.textEditor.GetText()
+        return self.textEditor.GetText()
 
 
     def GetSearchPanel (self):

@@ -66,6 +66,7 @@ class HtmlPageView (BaseHtmlPanel):
             TABLE_CELL_STR_ID,
             QUOTE_STR_ID,
             IMAGE_STR_ID,
+            CURRENT_DATE,
         ]
 
         # Список действий, которые нужно удалять с панелей и из меню.
@@ -558,6 +559,15 @@ class HtmlPageView (BaseHtmlPanel):
         self._application.actionController.appendToolbarButton (LINE_BREAK_STR_ID,
                                                                 toolbar,
                                                                 os.path.join (self.imagesDir, "linebreak.png"),
+                                                                fullUpdate=False)
+
+        # Текущая дата
+        self._application.actionController.getAction (CURRENT_DATE).setFunc (lambda param: self.insertCurrentDate (self.codeEditor))
+
+        self._application.actionController.appendMenuItem (CURRENT_DATE, menu)
+        self._application.actionController.appendToolbarButton (CURRENT_DATE,
+                                                                toolbar,
+                                                                os.path.join (self.imagesDir, "date.png"),
                                                                 fullUpdate=False)
 
 

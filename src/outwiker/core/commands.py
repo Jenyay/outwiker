@@ -953,3 +953,9 @@ def _registerPolyActions (application):
                                                        _(u"Table cell"),
                                                        _(u"Insert a table cell")),
                                            HotKey ("Y", ctrl=True, shift=True))
+
+    application.actionController.register (PolyAction (application,
+                                                       CURRENT_DATE,
+                                                       _(u"Current date"),
+                                                       _(u"Insert the current date")),
+                                           None)

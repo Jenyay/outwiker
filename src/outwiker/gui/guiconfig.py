@@ -28,6 +28,9 @@ class GeneralGuiConfig (object):
     DATETIME_FORMAT_PARAM = u"DateTimeFormat"
     DATETIME_FORMAT_DEFAULT = u"%c"
 
+    # Последний используемый формат представления даты
+    RECENT_DATETIME_FORMAT_PARAM = u"RecentDateTimeFormat"
+
 
     def __init__ (self, config):
         self.config = config
@@ -61,6 +64,12 @@ class GeneralGuiConfig (object):
                                             GeneralGuiConfig.GENERAL_SECTION,
                                             GeneralGuiConfig.DATETIME_FORMAT_PARAM,
                                             GeneralGuiConfig.DATETIME_FORMAT_DEFAULT)
+
+        # Последний используемый формат для представления даты и времени модификиции страниц
+        self.recentDateTimeFormat = StringOption (self.config,
+                                                  GeneralGuiConfig.GENERAL_SECTION,
+                                                  GeneralGuiConfig.RECENT_DATETIME_FORMAT_PARAM,
+                                                  self.dateTimeFormat.value)
 
 
 class PluginsConfig (object):
