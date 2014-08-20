@@ -4,7 +4,7 @@ import os
 
 import wx
 
-from outwiker.core.commands import MessageBox
+from outwiker.core.commands import MessageBox, insertCurrentDate
 from outwiker.core.application import Application
 from outwiker.core.htmlimprover import HtmlImprover
 from outwiker.core.htmltemplate import HtmlTemplate
@@ -562,7 +562,8 @@ class HtmlPageView (BaseHtmlPanel):
                                                                 fullUpdate=False)
 
         # Текущая дата
-        self._application.actionController.getAction (CURRENT_DATE).setFunc (lambda param: self.insertCurrentDate (self.codeEditor))
+        self._application.actionController.getAction (CURRENT_DATE).setFunc (lambda param: insertCurrentDate (self.mainWindow,
+                                                                                                              self.codeEditor))
 
         self._application.actionController.appendMenuItem (CURRENT_DATE, menu)
         self._application.actionController.appendToolbarButton (CURRENT_DATE,

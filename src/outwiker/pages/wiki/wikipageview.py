@@ -11,6 +11,7 @@ from .htmlgenerator import HtmlGenerator
 from .htmlcache import HtmlCache
 
 from outwiker.actions.polyactionsid import *
+from outwiker.core.commands import insertCurrentDate
 
 from actions.fontsizebig import WikiFontSizeBigAction
 from actions.fontsizesmall import WikiFontSizeSmallAction
@@ -463,7 +464,8 @@ class WikiPageView (BaseWikiPageView):
                                                                 fullUpdate=False)
 
         # Текущая дата
-        self._application.actionController.getAction (CURRENT_DATE).setFunc (lambda param: self.insertCurrentDate (self.codeEditor))
+        self._application.actionController.getAction (CURRENT_DATE).setFunc (lambda param: insertCurrentDate (self.mainWindow,
+                                                                                                              self.codeEditor))
 
         self._application.actionController.appendMenuItem (CURRENT_DATE, menu)
         self._application.actionController.appendToolbarButton (CURRENT_DATE,

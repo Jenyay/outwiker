@@ -2,21 +2,18 @@
 
 from abc import ABCMeta, abstractmethod
 import os
-from datetime import datetime
 
 import wx
 
 from outwiker.actions.search import SearchAction, SearchNextAction, SearchPrevAction, SearchAndReplaceAction
-from outwiker.core.system import getImagesDir, getOS
+from outwiker.core.system import getImagesDir
 from outwiker.core.commands import MessageBox, pageExists
 from outwiker.core.attachment import Attachment
 from outwiker.core.application import Application
 from outwiker.core.config import IntegerOption
 from outwiker.core.tree import RootWikiPage
 from outwiker.gui.basepagepanel import BasePagePanel
-from outwiker.gui.dateformatdialog import DateFormatDialog
 from outwiker.gui.buttonsdialog import ButtonsDialog
-from outwiker.gui.guiconfig import GeneralGuiConfig
 
 
 class BaseTextPanel (BasePagePanel):
@@ -286,21 +283,3 @@ class BaseTextPanel (BasePagePanel):
 
         # Продолжить поиск назад на странице
         Application.actionController.appendMenuItem (SearchPrevAction.stringId, self.searchMenu)
-
-
-    def insertCurrentDate (self, editor):
-        """
-        editor - текстовое поле ввода, куда надо вставить дату (экземпляр класса TextEditor)
-        """
-        config = GeneralGuiConfig (Application.config)
-        initial = config.recentDateTimeFormat.value
-
-        with DateFormatDialog (self.mainWindow,
-                               _(u"Enter format of the date"),
-                               _(u"Date format"),
-                               initial) as dlg:
-            if dlg.ShowModal() == wx.ID_OK:
-                dateStr = unicode (datetime.now().strftime (dlg.Value),
-                                   getOS().filesEncoding)
-                editor.replaceText (dateStr)
-                config.recentDateTimeFormat.value = dlg.Value

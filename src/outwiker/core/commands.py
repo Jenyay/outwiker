@@ -4,12 +4,14 @@
 Команды для интерфейса
 """
 
+from datetime import datetime
 import os.path
 import shutil
 
 import wx
 
 import outwiker.core.exceptions
+from outwiker.actions.polyactionsid import *
 from outwiker.core.system import getOS
 from outwiker.core.version import Version
 from outwiker.core.tree import WikiDocument
@@ -20,7 +22,8 @@ from outwiker.gui.overwritedialog import OverwriteDialog
 from outwiker.gui.longprocessrunner import LongProcessRunner
 from outwiker.gui.hotkey import HotKey
 from outwiker.gui.polyaction import PolyAction
-from outwiker.actions.polyactionsid import *
+from outwiker.gui.dateformatdialog import DateFormatDialog
+from outwiker.gui.guiconfig import GeneralGuiConfig
 
 
 def MessageBox (*args, **kwargs):
@@ -453,6 +456,27 @@ def getMainWindowTitle (application):
         result = template.replace ("{file}", filename).replace ("{page}", pageTitle)
 
     return result
+
+
+def insertCurrentDate (parent, editor):
+    """
+    Вызвать диалог для выбора формата даты и вставить в редактор текущую дату согласно выбранному формату.
+
+    parent - родительское окно для диалога
+    editor - текстовое поле ввода, куда надо вставить дату (экземпляр класса TextEditor)
+    """
+    config = GeneralGuiConfig (Application.config)
+    initial = config.recentDateTimeFormat.value
+
+    with DateFormatDialog (parent,
+                           _(u"Enter format of the date"),
+                           _(u"Date format"),
+                           initial) as dlg:
+        if dlg.ShowModal() == wx.ID_OK:
+            dateStr = unicode (datetime.now().strftime (dlg.Value),
+                               getOS().filesEncoding)
+            editor.replaceText (dateStr)
+            config.recentDateTimeFormat.value = dlg.Value
 
 
 def registerActions (application):
