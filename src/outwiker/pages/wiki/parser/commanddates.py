@@ -46,7 +46,7 @@ class CommandDateBase (Command):
             formatStr = GeneralGuiConfig (Application.config).dateTimeFormat.value
 
         result = unicode (
-            self._getDate().strftime (formatStr.encode ("utf8")),
+            self._getDate().strftime (formatStr.encode (getOS().filesEncoding)),
             getOS().filesEncoding
         )
 
