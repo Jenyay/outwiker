@@ -25,7 +25,7 @@ class WikiDateBaseAction (BaseAction):
         assert self._application.mainWindow.pagePanel is not None
 
         with DateFormatDialog (self._application.mainWindow,
-                               _(u"Enter format of the date\n(empty string - format from program setting)"),
+                               _(u"Date format\n(empty string - format from program setting)"),
                                _(u"Date format"),
                                u"") as dlg:
             if dlg.ShowModal() == wx.ID_OK:
@@ -49,7 +49,7 @@ class WikiDateCreationAction (WikiDateBaseAction):
 
     @property
     def description (self):
-        return _(u"Insert the creation date command (:crdate:)")
+        return _(u"Insert command (:crdate:) for show date of creation of the page")
 
 
     def getCommandName (self):
@@ -73,7 +73,7 @@ class WikiDateEditionAction (WikiDateBaseAction):
 
     @property
     def description (self):
-        return _(u"Insert the edition date command (:eddate:)")
+        return _(u"Insert command (:eddate:) for show date of last modification of the page")
 
 
     def getCommandName (self):
