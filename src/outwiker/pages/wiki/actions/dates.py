@@ -3,7 +3,7 @@
 from outwiker.gui.baseaction import BaseAction
 
 
-class WikiDateCreation (BaseAction):
+class WikiDateCreationAction (BaseAction):
     """
     Вставка команды для вывода даты создания страницы
     """
@@ -28,5 +28,34 @@ class WikiDateCreation (BaseAction):
         assert self._application.mainWindow.pagePanel is not None
 
         text = u"(:crdate:)"
+
+        self._application.mainWindow.pagePanel.pageView.codeEditor.replaceText (text)
+
+
+class WikiDateEditionAction (BaseAction):
+    """
+    Вставка команды для вывода даты последнего редактирования страницы
+    """
+    stringId = u"WikiDateEdit"
+
+    def __init__ (self, application):
+        self._application = application
+
+
+    @property
+    def title (self):
+        return _(u"Edition date (:eddate:)")
+
+
+    @property
+    def description (self):
+        return _(u"Insert the edition date command (:eddate:)")
+
+
+    def run (self, params):
+        assert self._application.mainWindow is not None
+        assert self._application.mainWindow.pagePanel is not None
+
+        text = u"(:eddate:)"
 
         self._application.mainWindow.pagePanel.pageView.codeEditor.replaceText (text)

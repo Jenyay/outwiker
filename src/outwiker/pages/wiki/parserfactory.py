@@ -5,7 +5,7 @@ from parser.wikiparser import Parser
 from parser.commandinclude import IncludeCommand
 from parser.commandchildlist import ChildListCommand
 from parser.commandattachlist import AttachListCommand
-from parser.commanddates import CommandDateCreation
+from parser.commanddates import CommandDateCreation, CommandDateEdition
 
 
 class ParserFactory (object):
@@ -18,6 +18,7 @@ class ParserFactory (object):
                            ChildListCommand,
                            AttachListCommand,
                            CommandDateCreation,
+                           CommandDateEdition,
                            ]
 
 

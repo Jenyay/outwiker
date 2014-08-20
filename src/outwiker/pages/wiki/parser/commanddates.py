@@ -1,36 +1,36 @@
 # -*- coding: UTF-8 -*-
 
+from abc import ABCMeta, abstractmethod
+
 from command import Command
 from outwiker.gui.guiconfig import GeneralGuiConfig
 from outwiker.core.system import getOS
 from outwiker.core.application import Application
 
 
-class CommandDateCreation (Command):
+class CommandDateBase (Command):
     """
-    Команда для отображения даты создания страницы.
+    Базовый класс для вставки дат
     Параметры:
         format - формат представления даты. Если этот параметр не задан, используется формат из настроек программы
     """
+    __metaclass__ = ABCMeta
+
     def __init__ (self, parser):
         """
         parser - экземпляр парсера
         """
-        super (CommandDateCreation, self).__init__ (parser)
+        super (CommandDateBase, self).__init__ (parser)
 
         self.FORMAT_PARAM = u"format"
 
 
-    @property
-    def name (self):
-        """
-        Возвращает имя команды, которую обрабатывает класс
-        """
-        return u"crdate"
-
-
+    @abstractmethod
     def _getDate (self):
-        return self.parser.page.creationdatetime
+        """
+        Метод должен возвращать дату (datetime), которую нужно вставить на страницу
+        """
+        pass
 
 
     def execute (self, params, content):
@@ -51,3 +51,39 @@ class CommandDateCreation (Command):
         )
 
         return result
+
+
+class CommandDateCreation (CommandDateBase):
+    """
+    Команда для отображения даты создания страницы.
+    Параметры:
+        format - формат представления даты. Если этот параметр не задан, используется формат из настроек программы
+    """
+    @property
+    def name (self):
+        """
+        Возвращает имя команды, которую обрабатывает класс
+        """
+        return u"crdate"
+
+
+    def _getDate (self):
+        return self.parser.page.creationdatetime
+
+
+class CommandDateEdition (CommandDateBase):
+    """
+    Команда для отображения даты изменения страницы.
+    Параметры:
+        format - формат представления даты. Если этот параметр не задан, используется формат из настроек программы
+    """
+    @property
+    def name (self):
+        """
+        Возвращает имя команды, которую обрабатывает класс
+        """
+        return u"eddate"
+
+
+    def _getDate (self):
+        return self.parser.page.datetime

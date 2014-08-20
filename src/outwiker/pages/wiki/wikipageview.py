@@ -22,7 +22,7 @@ from actions.equation import WikiEquationAction
 from actions.attachlist import WikiAttachListAction
 from actions.childlist import WikiChildListAction
 from actions.include import WikiIncludeAction
-from actions.dates import WikiDateCreation
+from actions.dates import WikiDateCreationAction, WikiDateEditionAction
 
 from .basewikipageview import BaseWikiPageView
 
@@ -115,7 +115,8 @@ class WikiPageView (BaseWikiPageView):
             WikiAttachListAction,
             WikiChildListAction,
             WikiIncludeAction,
-            WikiDateCreation,
+            WikiDateCreationAction,
+            WikiDateEditionAction
         ]
 
 
@@ -158,7 +159,10 @@ class WikiPageView (BaseWikiPageView):
         self._application.actionController.appendMenuItem (WikiIncludeAction.stringId, self.commandsMenu)
 
         # Команда (:crdate:))
-        self._application.actionController.appendMenuItem (WikiDateCreation.stringId, self.commandsMenu)
+        self._application.actionController.appendMenuItem (WikiDateCreationAction.stringId, self.commandsMenu)
+
+        # Команда (:eddate:))
+        self._application.actionController.appendMenuItem (WikiDateEditionAction.stringId, self.commandsMenu)
 
 
     def __addFontTools (self):
