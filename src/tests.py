@@ -159,6 +159,7 @@ if __name__ == '__main__':
     from test.plugins.diagrammer.insertdiagram import InsertDiagramTest
     from test.plugins.diagrammer.insertedge import InsertEdgeTest
     from test.plugins.diagrammer.insertgroup import InsertGroupTest
+    from test.plugins.tableofcontents.tableofcontents import TableOfContentsTest
 
     from test.plugins.source.source import SourcePluginTest
     from test.plugins.source.sourceencoding import SourceEncodingPluginTest
