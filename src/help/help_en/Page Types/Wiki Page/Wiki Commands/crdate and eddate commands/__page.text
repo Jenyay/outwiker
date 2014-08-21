@@ -1,0 +1,7 @@
+Commands [=(:crdate:) и (:eddate:)=] are needed for to insert date of the creating or date of the editing the current page respectively.
+
+If these commands are used without any parameters then format was readed from program setting. If you wish to change the format then you can use the ''format'' parameter.
+
+Date format can to set in the dialog which will shown after click on menu item "''[=Wiki - Commands - Creation date (:crdate:)=]''" or "''[=Wiki - Commands - Edition date (:eddate:)=]''". The dialog shown hereinafter.
+
+%center% Attach:dialog.png
