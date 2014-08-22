@@ -14,6 +14,7 @@ class TableOfContentsTest (unittest.TestCase):
     def setUp (self):
         self.__createWiki()
 
+        self.pluginname = u"TableOfContents"
         dirlist = [u"../plugins/tableofcontents"]
 
         self.loader = PluginsLoader(Application)
@@ -38,3 +39,48 @@ class TableOfContentsTest (unittest.TestCase):
 
     def testPluginLoad (self):
         self.assertEqual (len (self.loader), 1)
+
+
+    def testParser_01 (self):
+        parser = self.loader[self.pluginname].ContentsParser()
+
+        text = u""
+
+        contents = parser.parse (text)
+
+        self.assertEqual (contents, [])
+
+
+    def testParser_02 (self):
+        parser = self.loader[self.pluginname].ContentsParser()
+
+        text = u'''  !! Абырвалг'''
+
+        contents = parser.parse (text)
+
+        self.assertEqual (contents, [])
+
+    def testParser_03 (self):
+        parser = self.loader[self.pluginname].ContentsParser()
+
+        text = u'''!! Абырвалг'''
+
+        contents = parser.parse (text)
+
+        self.assertEqual (len (contents), 1)
+        self.assertEqual (contents[0].title, u"Абырвалг")
+        self.assertEqual (contents[0].level, 1)
+        self.assertEqual (contents[0].anchor, u"")
+
+
+    def testParser_04 (self):
+        parser = self.loader[self.pluginname].ContentsParser()
+
+        text = u'''!!    Абырвалг    '''
+
+        contents = parser.parse (text)
+
+        self.assertEqual (len (contents), 1)
+        self.assertEqual (contents[0].title, u"Абырвалг")
+        self.assertEqual (contents[0].level, 1)
+        self.assertEqual (contents[0].anchor, u"")
