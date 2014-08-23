@@ -24,12 +24,12 @@ class ContentsParser (object):
     """
     def __init__ (self):
         self.heading = re.compile (r'''
-                (?:^|\n)(?P<anchor2>\[\[\#.*?\]\])?\s*
-                (?:^|\n)(?P<header>!!+)\s+
+                ^(?P<anchor2>\[\[\#.*?\]\])?\s*
+                ^(?P<header>!!+)\s+
                 (?P<anchor1>\[\[\#.*?\]\])?\s*
                 (?P<title>(\\\n|.)*?)\s*
                 (?P<anchor3>\[\[\#.*?\]\])?\s*
-                (?:\n|$)''',
+                $''',
                 re.X | re.M)
 
 
@@ -37,23 +37,29 @@ class ContentsParser (object):
         """
         Возвращает список экземпляров класса Section
         """
-        text = self._prepareText (text)
-
         matches = self.heading.finditer (text)
 
-        result = [self._makeSection (match) for match in matches]
+        result = [self._makeSection (match) for match in matches if not self._inNoFormat (match, text)]
 
         return result
 
 
-    def _prepareText (self, text):
+    def _inNoFormat (self, match, text):
         """
-        Предварительная обработка текста (вырезание участков, которые не должны учитываться при получении оглавления)
+        Возвращает True, если найденный заголовок содержится внутри тегов [= ... =]
         """
-        # Вырезание блоков [=...=]. Вырезание грубое, не учитывается вложенность этих блоков в другие блоки
-        noformat = re.compile (r'\[=.*?=\]', re.MULTILINE | re.DOTALL)
-        text = noformat.sub (u"", text)
-        return text
+        start = u"[="
+        end = u"=]"
+
+        leftStart = text[: match.start()].rfind (start)
+        leftEnd = text[: match.start()].rfind (end)
+
+        rightEnd = text[match.end(): ].find (end)
+
+        inside = (leftStart != -1 and rightEnd != -1 and 
+                (leftEnd == -1 or leftEnd < leftStart))
+
+        return inside
 
 
     def _makeSection (self, match):
