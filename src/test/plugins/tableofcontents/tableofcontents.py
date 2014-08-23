@@ -102,14 +102,13 @@ class TableOfContentsTest (unittest.TestCase):
     def testParser_06 (self):
         parser = self.loader[self.pluginname].ContentsParser()
 
-        text = u'''!! Абырвалг 123\
+        text = u'''!! Абырвалг\\
  123'''
 
         contents = parser.parse (text)
 
         self.assertEqual (len (contents), 1)
-        self.assertEqual (contents[0].title, u'''Абырвалг 123\
- 123''')
+        self.assertEqual (contents[0].title, u'''Абырвалг 123''')
         self.assertEqual (contents[0].level, 1)
         self.assertEqual (contents[0].anchor, u"")
 
@@ -232,3 +231,89 @@ asdf
         self.assertEqual (contents[1].title, u"Абырвалг 234")
         self.assertEqual (contents[1].level, 2)
         self.assertEqual (contents[1].anchor, u"")
+
+
+    def testParser_12 (self):
+        parser = self.loader[self.pluginname].ContentsParser()
+
+        text = u'''ывп ыфвп ваы
+
+!! Абырвалг 123
+
+ывапыва ывп выап
+выапывп ываап ывап 
+
+!!! Абырвалг 234
+
+фывафыва
+
+!!!! Еще один заголовок
+
+фывафыва
+'''
+
+        contents = parser.parse (text)
+
+        self.assertEqual (len (contents), 3)
+
+
+    def testParser_13 (self):
+        parser = self.loader[self.pluginname].ContentsParser()
+
+        text = u'''ывп ыфвп ваы
+
+!! [[#якорь1]]Абырвалг 123
+
+ывапыва ывп выап
+выапывп ываап ывап 
+
+!!! [[#якорь2]] Абырвалг 234
+
+фывафыва
+
+!!!! Еще один заголовок
+
+фывафыва
+'''
+
+        contents = parser.parse (text)
+
+        self.assertEqual (len (contents), 3)
+        self.assertEqual (contents[0].title, u"Абырвалг 123")
+        self.assertEqual (contents[0].level, 1)
+        self.assertEqual (contents[0].anchor, u"якорь1")
+
+        self.assertEqual (contents[1].title, u"Абырвалг 234")
+        self.assertEqual (contents[1].level, 2)
+        self.assertEqual (contents[1].anchor, u"якорь2")
+
+
+    def testParser_14 (self):
+        parser = self.loader[self.pluginname].ContentsParser()
+
+        text = u'''ывп ыфвп ваы
+
+!! [[# якорь1  ]]Абырвалг 123
+
+ывапыва ывп выап
+выапывп ываап ывап 
+
+!!! [[#  якорь2   ]] Абырвалг 234
+
+фывафыва
+
+!!!! Еще один заголовок
+
+фывафыва
+'''
+
+        contents = parser.parse (text)
+
+        self.assertEqual (len (contents), 3)
+        self.assertEqual (contents[0].title, u"Абырвалг 123")
+        self.assertEqual (contents[0].level, 1)
+        self.assertEqual (contents[0].anchor, u"якорь1")
+
+        self.assertEqual (contents[1].title, u"Абырвалг 234")
+        self.assertEqual (contents[1].level, 2)
+        self.assertEqual (contents[1].anchor, u"якорь2")

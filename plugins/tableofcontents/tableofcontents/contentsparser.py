@@ -25,6 +25,7 @@ class ContentsParser (object):
     def __init__ (self):
         self.heading = re.compile (r'''(?:^|\n)
                 (?P<header>!!+)\s+
+                (?P<anchor1>\[\[\#.*?\]\])?\s*
                 (?P<title>(\\\n|.)*?)\s*
                 (?:\n|$)''',
                 re.X | re.M)
@@ -55,7 +56,16 @@ class ContentsParser (object):
 
     def _makeSection (self, match):
         title = match.group ("title")
+        title = title.replace (u"\\\n", u"")
+
         level = len (match.group ("header")) - 1
-        anchor = u""
+        anchor = match.group ("anchor1")
+
+        if anchor is None:
+            anchor = u""
+        else:
+            # Вырежем символы, обозначающие якорь - [[# и ]]
+            assert len (anchor) >= 5
+            anchor = anchor[3: -2].strip()
 
         return Section (title, level, anchor)
