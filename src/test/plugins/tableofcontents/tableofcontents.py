@@ -84,3 +84,151 @@ class TableOfContentsTest (unittest.TestCase):
         self.assertEqual (contents[0].title, u"Абырвалг")
         self.assertEqual (contents[0].level, 1)
         self.assertEqual (contents[0].anchor, u"")
+
+
+    def testParser_05 (self):
+        parser = self.loader[self.pluginname].ContentsParser()
+
+        text = u'''!! Абырвалг 123'''
+
+        contents = parser.parse (text)
+
+        self.assertEqual (len (contents), 1)
+        self.assertEqual (contents[0].title, u"Абырвалг 123")
+        self.assertEqual (contents[0].level, 1)
+        self.assertEqual (contents[0].anchor, u"")
+
+
+    def testParser_06 (self):
+        parser = self.loader[self.pluginname].ContentsParser()
+
+        text = u'''!! Абырвалг 123\
+ 123'''
+
+        contents = parser.parse (text)
+
+        self.assertEqual (len (contents), 1)
+        self.assertEqual (contents[0].title, u'''Абырвалг 123\
+ 123''')
+        self.assertEqual (contents[0].level, 1)
+        self.assertEqual (contents[0].anchor, u"")
+
+
+    def testParser_07 (self):
+        parser = self.loader[self.pluginname].ContentsParser()
+
+        text = u'''!! Абырвалг 123
+!!! Абырвалг 234'''
+
+        contents = parser.parse (text)
+
+        self.assertEqual (len (contents), 2)
+        self.assertEqual (contents[0].title, u"Абырвалг 123")
+        self.assertEqual (contents[0].level, 1)
+        self.assertEqual (contents[0].anchor, u"")
+
+        self.assertEqual (contents[1].title, u"Абырвалг 234")
+        self.assertEqual (contents[1].level, 2)
+        self.assertEqual (contents[1].anchor, u"")
+
+
+    def testParser_08 (self):
+        parser = self.loader[self.pluginname].ContentsParser()
+
+        text = u'''!! Абырвалг 123
+
+!!! Абырвалг 234'''
+
+        contents = parser.parse (text)
+
+        self.assertEqual (len (contents), 2)
+        self.assertEqual (contents[0].title, u"Абырвалг 123")
+        self.assertEqual (contents[0].level, 1)
+        self.assertEqual (contents[0].anchor, u"")
+
+        self.assertEqual (contents[1].title, u"Абырвалг 234")
+        self.assertEqual (contents[1].level, 2)
+        self.assertEqual (contents[1].anchor, u"")
+
+
+    def testParser_09 (self):
+        parser = self.loader[self.pluginname].ContentsParser()
+
+        text = u'''ывп ыфвп ваы
+
+!! Абырвалг 123
+
+ывапыва ывп выап
+выапывп ываап ывап 
+
+!!! Абырвалг 234'''
+
+        contents = parser.parse (text)
+
+        self.assertEqual (len (contents), 2)
+        self.assertEqual (contents[0].title, u"Абырвалг 123")
+        self.assertEqual (contents[0].level, 1)
+        self.assertEqual (contents[0].anchor, u"")
+
+        self.assertEqual (contents[1].title, u"Абырвалг 234")
+        self.assertEqual (contents[1].level, 2)
+        self.assertEqual (contents[1].anchor, u"")
+
+
+    def testParser_10 (self):
+        parser = self.loader[self.pluginname].ContentsParser()
+
+        text = u'''ывп ыфвп ваы
+
+!! Абырвалг 123
+
+[=
+!! Это не заголовок
+=]
+
+ывапыва ывп выап
+выапывп ываап ывап 
+
+!!! Абырвалг 234'''
+
+        contents = parser.parse (text)
+
+        self.assertEqual (len (contents), 2)
+        self.assertEqual (contents[0].title, u"Абырвалг 123")
+        self.assertEqual (contents[0].level, 1)
+        self.assertEqual (contents[0].anchor, u"")
+
+        self.assertEqual (contents[1].title, u"Абырвалг 234")
+        self.assertEqual (contents[1].level, 2)
+        self.assertEqual (contents[1].anchor, u"")
+
+
+    def testParser_11 (self):
+        parser = self.loader[self.pluginname].ContentsParser()
+
+        text = u'''ывп ыфвп ваы
+
+!! Абырвалг 123
+
+[=
+dsfasdf
+!! Это не заголовок
+
+asdf
+=]
+
+ывапыва ывп выап
+выапывп ываап ывап 
+
+!!! Абырвалг 234'''
+
+        contents = parser.parse (text)
+
+        self.assertEqual (len (contents), 2)
+        self.assertEqual (contents[0].title, u"Абырвалг 123")
+        self.assertEqual (contents[0].level, 1)
+        self.assertEqual (contents[0].anchor, u"")
+
+        self.assertEqual (contents[1].title, u"Абырвалг 234")
+        self.assertEqual (contents[1].level, 2)
+        self.assertEqual (contents[1].anchor, u"")
