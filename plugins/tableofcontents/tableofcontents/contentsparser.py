@@ -23,10 +23,12 @@ class ContentsParser (object):
     Класс для получения содержания по тексту
     """
     def __init__ (self):
-        self.heading = re.compile (r'''(?:^|\n)
-                (?P<header>!!+)\s+
+        self.heading = re.compile (r'''
+                (?:^|\n)(?P<anchor2>\[\[\#.*?\]\])?\s*
+                (?:^|\n)(?P<header>!!+)\s+
                 (?P<anchor1>\[\[\#.*?\]\])?\s*
                 (?P<title>(\\\n|.)*?)\s*
+                (?P<anchor3>\[\[\#.*?\]\])?\s*
                 (?:\n|$)''',
                 re.X | re.M)
 
@@ -60,6 +62,12 @@ class ContentsParser (object):
 
         level = len (match.group ("header")) - 1
         anchor = match.group ("anchor1")
+
+        if anchor is None:
+            anchor = match.group ("anchor2")
+
+        if anchor is None:
+            anchor = match.group ("anchor3")
 
         if anchor is None:
             anchor = u""
