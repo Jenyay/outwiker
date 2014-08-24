@@ -141,6 +141,7 @@ def plugins():
         "statistics",
         "style",
         "thumbgallery",
+        "tableofcontents",
         "updatenotifier",
     ]
 
