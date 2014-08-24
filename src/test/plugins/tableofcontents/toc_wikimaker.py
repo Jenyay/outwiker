@@ -227,3 +227,32 @@ class TOC_WikiMakerTest (unittest.TestCase):
 ** [[#якорь2 | Абырвалг 234]]'''
 
         self.assertEqual (result, result_valid)
+
+
+    def test_11 (self):
+        WikiConfig (Application.config).linkStyleOptions.value = 1
+        text = u'''ывп ыфвп ваы
+
+[=
+ывп ывап ыва
+=]
+
+!!!! Абырвалг 123 [[#якорь1]]
+
+[=
+!! Это не заголовок
+=]
+
+ывапыва ывп выап
+выапывп ываап ывап
+
+[[#якорь2]]
+!!!!! Абырвалг 234'''
+
+        maker = self.plugin.TocWikiMaker (Application.config)
+        result = maker.make (text)
+
+        result_valid = u'''* [[#якорь1 | Абырвалг 123]]
+** [[#якорь2 | Абырвалг 234]]'''
+
+        self.assertEqual (result, result_valid)

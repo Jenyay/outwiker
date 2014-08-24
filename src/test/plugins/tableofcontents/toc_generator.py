@@ -109,6 +109,36 @@ class TOC_GeneratorTest (unittest.TestCase):
         self.assertEqual (result, result_valid)
 
 
+    def testToc_06 (self):
+        generator = self.plugin.TOCWikiGenerator(Application.config)
+        items = [
+            self.plugin.Section (u"Абырвалг 123", 2, u""),
+            self.plugin.Section (u"Абырвалг 12345", 3, u""),
+        ]
+
+        result = generator.make (items)
+
+        result_valid = u'''* Абырвалг 123
+** Абырвалг 12345'''
+
+        self.assertEqual (result, result_valid)
+
+
+    def testToc_07 (self):
+        generator = self.plugin.TOCWikiGenerator(Application.config)
+        items = [
+            self.plugin.Section (u"Абырвалг 123", 5, u""),
+            self.plugin.Section (u"Абырвалг 12345", 5, u""),
+        ]
+
+        result = generator.make (items)
+
+        result_valid = u'''* Абырвалг 123
+* Абырвалг 12345'''
+
+        self.assertEqual (result, result_valid)
+
+
     def testAnchors_01 (self):
         WikiConfig (Application.config).linkStyleOptions.value = 0
 

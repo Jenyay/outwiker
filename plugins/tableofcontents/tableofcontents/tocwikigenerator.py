@@ -1,4 +1,5 @@
 # -*- coding: UTF-8 -*-
+
 from outwiker.pages.wiki.wikiconfig import WikiConfig
 
 
@@ -11,13 +12,17 @@ class TOCWikiGenerator (object):
 
 
     def make (self, sections):
-        result = u"\n".join ([self._makeStrItem (section) for section in sections])
+        if len (sections) == 0:
+            return u""
+
+        minLevel = min (sections, key = lambda x: x.level).level
+        result = u"\n".join ([self._makeStrItem (section, minLevel) for section in sections])
         return result
 
 
-    def _makeStrItem (self, section):
+    def _makeStrItem (self, section, minLevel):
         return u"{mark} {title}".format (
-            mark = u"*" * section.level,
+            mark = u"*" * (section.level - minLevel + 1),
             title = self._makeTitle (section.title, section.anchor))
 
 
