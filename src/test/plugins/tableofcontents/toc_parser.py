@@ -9,7 +9,7 @@ from outwiker.pages.wiki.wikipage import WikiPageFactory
 from test.utils import removeWiki
 
 
-class TableOfContentsTest (unittest.TestCase):
+class TOC_ParserTest (unittest.TestCase):
     """Тесты плагина TableOfContents"""
     def setUp (self):
         self.__createWiki()
@@ -655,3 +655,38 @@ asdfasdf   =]
         self.assertEqual (contents[1].title, u"Абырвалг 234")
         self.assertEqual (contents[1].level, 2)
         self.assertEqual (contents[1].anchor, u"")
+
+
+    def testParser_26 (self):
+        parser = self.loader[self.pluginname].ContentsParser()
+
+        text = u'''ывп ыфвп ваы
+
+[[#якорь1_2]]   
+!! [[#якорь1_1]] Абырвалг 123
+
+ывапыва ывп выап
+выапывп ываап ывап 
+
+[[#якорь2_2]]   
+!!! Абырвалг 234 [[#якорь2_3]]
+
+фывафыва
+
+!!!! Еще один заголовок
+
+фывафыва
+'''
+
+        contents = parser.parse (text)
+
+        self.assertEqual (len (contents), 3)
+        self.assertEqual (contents[0].title, u"Абырвалг 123")
+        self.assertEqual (contents[0].level, 1)
+        self.assertEqual (contents[0].anchor, u"якорь1_1")
+
+        self.assertEqual (contents[1].title, u"Абырвалг 234")
+        self.assertEqual (contents[1].level, 2)
+        self.assertEqual (contents[1].anchor, u"якорь2_2")
+
+
