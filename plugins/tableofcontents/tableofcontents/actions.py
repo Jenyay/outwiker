@@ -52,12 +52,12 @@ class InsertTOCCommand (BaseAction):
 
     @property
     def title (self):
-        return _(u"Insert wiki command")
+        return _(u"Insert wiki command (:toc:)")
 
 
     @property
     def description (self):
-        return _(u"TableOfContents. Insert the wiki command for dynamic generation of the table of content")
+        return _(u"TableOfContents. Insert the wiki command (:toc:) for dynamic generation of the table of content")
 
 
     def run (self, params):

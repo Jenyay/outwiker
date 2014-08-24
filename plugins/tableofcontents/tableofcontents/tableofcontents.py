@@ -42,7 +42,7 @@ else:
 
         @property
         def description (self):
-            return _(u"Plugin description")
+            return _(u'''Plugin add the menu "Wiki - Table of contents" and the wiki command (:toc:) for generation of the table of contents.''')
 
 
         @property
