@@ -161,6 +161,7 @@ if __name__ == '__main__':
     from test.plugins.diagrammer.insertgroup import InsertGroupTest
     from test.plugins.tableofcontents.toc_parser import TOC_ParserTest
     from test.plugins.tableofcontents.toc_generator import TOC_GeneratorTest
+    from test.plugins.tableofcontents.toc_wikimaker import TOC_WikiMakerTest
 
     from test.plugins.source.source import SourcePluginTest
     from test.plugins.source.sourceencoding import SourceEncodingPluginTest

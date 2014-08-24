@@ -15,6 +15,7 @@ else:
     from .controller import Controller
     from .contentsparser import ContentsParser, Section
     from .tocwikigenerator import TOCWikiGenerator
+    from .tocwikimaker import TocWikiMaker
 
     class PluginTableOfContents (Plugin):
         def __init__ (self, application):
@@ -88,7 +89,12 @@ else:
         def Section (self):
             return Section
 
-        
+
         @property
         def TOCWikiGenerator (self):
             return TOCWikiGenerator
+
+
+        @property
+        def TocWikiMaker (self):
+            return TocWikiMaker
