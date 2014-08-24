@@ -13,7 +13,8 @@ if getCurrentVersion() < Version (1, 8, 0, 731, status=StatusSet.DEV):
 else:
     from .i18n import set_
     from .controller import Controller
-    from .contentsparser import ContentsParser
+    from .contentsparser import ContentsParser, Section
+    from .tocwikigenerator import TOCWikiGenerator
 
     class PluginTableOfContents (Plugin):
         def __init__ (self, application):
@@ -81,3 +82,13 @@ else:
         @property
         def ContentsParser (self):
             return ContentsParser
+
+
+        @property
+        def Section (self):
+            return Section
+
+        
+        @property
+        def TOCWikiGenerator (self):
+            return TOCWikiGenerator
