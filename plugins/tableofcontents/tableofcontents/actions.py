@@ -6,7 +6,7 @@ from i18n import get_
 from tocwikimaker import TocWikiMaker
 
 
-class GenerateToC (BaseAction):
+class GenerateTOC (BaseAction):
     """
     Создать и вставить оглавление
     """
@@ -21,7 +21,7 @@ class GenerateToC (BaseAction):
 
     @property
     def title (self):
-        return _(u"Generate table of contents")
+        return _(u"Generate")
 
 
     @property
@@ -35,3 +35,33 @@ class GenerateToC (BaseAction):
 
         result = TocWikiMaker (self._application.config).make (self._application.selectedPage.content)
         self._application.mainWindow.pagePanel.pageView.codeEditor.replaceText (result)
+
+
+class InsertTOCCommand (BaseAction):
+    """
+    Создать и вставить оглавление
+    """
+    def __init__ (self, application):
+        self._application = application
+
+        global _
+        _ = get_()
+
+    stringId = u"TableOfContents_InsertToCCommand"
+
+
+    @property
+    def title (self):
+        return _(u"Insert wiki command")
+
+
+    @property
+    def description (self):
+        return _(u"TableOfContents. Insert the wiki command for dynamic generation of the table of content")
+
+
+    def run (self, params):
+        assert self._application.mainWindow is not None
+        assert self._application.selectedPage is not None
+
+        self._application.mainWindow.pagePanel.pageView.codeEditor.replaceText (u"(:toc:)")

@@ -2,7 +2,7 @@
 
 from .i18n import get_
 from .guicreator import GuiCreator
-from .commands import CommandPlugin
+from .commands import TOCCommand
 
 
 class Controller (object):
@@ -18,7 +18,7 @@ class Controller (object):
         self._guiCreator = None
 
         # В этот список добавить новые викикоманды, если они нужны
-        self._commands = [CommandPlugin]
+        self._commands = [TOCCommand]
 
 
     def initialize (self):
@@ -57,7 +57,7 @@ class Controller (object):
         """
         Вызывается до разбора викитекста. Добавление команды (:counter:)
         """
-        map (lambda command: parser.addCommand (command (parser)), self._commands)
+        map (lambda command: parser.addCommand (command (parser, self._application)), self._commands)
 
 
     @property

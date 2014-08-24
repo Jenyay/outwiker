@@ -2,15 +2,19 @@
 
 from outwiker.pages.wiki.parser.command import Command
 
+from tocwikimaker import TocWikiMaker
 
-class CommandPlugin (Command):
+
+class TOCCommand (Command):
     """
+    Вставить оглавление
     """
-    def __init__ (self, parser):
+    def __init__ (self, parser, application):
         """
         parser - экземпляр парсера
         """
         Command.__init__ (self, parser)
+        self._application = application
 
 
     @property
@@ -18,7 +22,7 @@ class CommandPlugin (Command):
         """
         Возвращает имя команды, которую обрабатывает класс
         """
-        return u"PluginCommand"
+        return u"toc"
 
 
     def execute (self, params, content):
@@ -26,6 +30,7 @@ class CommandPlugin (Command):
         Запустить команду на выполнение.
         Метод возвращает текст, который будет вставлен на место команды в вики-нотации
         """
-        params_dict = Command.parseParams (params)
+        toc = TocWikiMaker (self._application.config).make (self._application.selectedPage.content)
+        result = self.parser.parseWikiMarkup (toc)
 
-        return u"Plugin Command Result"
+        return result

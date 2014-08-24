@@ -12,7 +12,7 @@ from outwiker.pages.html.basehtmlpanel import EVT_PAGE_TAB_CHANGED
 from .i18n import get_
 
 # Импортировать все Actions
-from .actions import GenerateToC
+from .actions import GenerateTOC, InsertTOCCommand
 
 
 class GuiCreator (object):
@@ -24,7 +24,7 @@ class GuiCreator (object):
         self._application = application
 
         # Сюда добавить все Actions
-        self._actions = [GenerateToC]
+        self._actions = [GenerateTOC, InsertTOCCommand]
 
         # MenuItem создаваемого подменю
         self._submenuItem = None
