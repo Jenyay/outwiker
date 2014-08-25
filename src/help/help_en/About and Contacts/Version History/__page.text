@@ -1,11 +1,39 @@
 !!! [=1.8.0=]
 
-* The opening notes and search pages in a separate thread.
-* The ability to configure keyboard shortcuts.
-* Added a new wiki tag for the quote: [=[>...<]=].
-* Added new styles.
-* Various fixes in wikiparser.
-* Bug fixes.
+
+
+* Added the ability to customize keyboard shortcuts.
+* Added the ability to refer to a page using unique identifiers.
+* Added the ability to navigate through the links to pages with the anchors ({+[=page://bla-bla-bla/#anchor=]+}).
+* Added the ability to use relative paths in the links on the pages ({+[=../../page 1/page 2=]+}).
+* Added the ability to change the page style for branch of the pages at the same time.
+* Added the ability of search and replace on the page.
+* Added the buttons "Forward" and "Back" for the return to the previous pages.
+* Added the ability to change the editor colors.
+* Added the ability to change the behaviour of the Home / End keys id the editor (go to begin / end of the string or the paragraph).
+* Added a new tag of the wiki syntax for quoting: [=[>...<]=].
+* Added the button and menu item insertion the current date and time
+* Added the commands [=(:crdate:) and (:eddate:)=] for insertion the creation and edition dates of the page respectively.
+* Added the dialogs for the comands [=(:attachlist:), (:childlist:) and (:include:)=].
+* Added the ability to sort child pages for the creation and edition date in the command [=(:childlist:)=].
+* On the global search page added the ability to sort child pages for the creation date.
+* Added new command line parameter "-r" or "--readonly" for the opening the notes tree readonly.
+* Added the popup tooltips for icons in the property dialog for page.
+* Added a new styles for page design.
+* Added the button and menu item for opening a folder with a attached files in a system file manager.
+* Added the saving recent used page style.
+* Added the saving cursor position for page before closing.
+* Added the Italian localization.
+* Now in the attachments panel showed the files icons.
+* Changed the hyphenation algorithm (''br'' tags instead of ''p'').
+* Now opening the notes tree and global search cunduct in a separate thread.
+* Now for every page saved the creation date.
+* Now all HTML tags, which the wiki parser create, in a lowercase.
+* Now help will be open in a separate window.
+* Added new icons for pages.
+* Many accelerations.
+* Bug fixes and improvments.
+
 
 
 !!! [=1.7.0.684 (01.12.2012)=]
