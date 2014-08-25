@@ -9,6 +9,7 @@ type = wiki
 tags = продвинутым пользователям
 datetime = 2014-06-14 15:44:34.319237
 cursorposition = 874
+order = 2
 
 [Misc]
 pageindex = 1

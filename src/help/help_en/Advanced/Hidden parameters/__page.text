@@ -1,0 +1,3 @@
+This section describe settings which can't change from program interface. This settings can set in outwiker.ini. If outwiker.ini does not contain a setting then you can add this parameter.
+
+* '''[MainWindow] / datetime_status_width''' - Integer. The parameter define width of the region in status bar for the representation date change of the page. Default value = 250

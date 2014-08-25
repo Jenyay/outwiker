@@ -6,7 +6,7 @@ expand = False
 
 [General]
 type = wiki
-order = 2
+order = 3
 tags = advanced
 cursorposition = 208
 datetime = 2014-05-20 21:13:53.343420
