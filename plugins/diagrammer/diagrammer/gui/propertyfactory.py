@@ -367,6 +367,7 @@ class PropertyFactory (object):
 
 
         def styleSetter (self, value):
+            _style.SetSelection (wx.NOT_FOUND)
             _style.SetValue (value)
 
 
