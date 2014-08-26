@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: tableofcontents\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-08-24 21:59+0400\n"
-"PO-Revision-Date: 2014-08-24 21:59+0300\n"
+"PO-Revision-Date: 2014-08-26 15:40+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: jenyay.net <jenyay.ilin@gmail.com>\n"
 "Language: ru_RU\n"
@@ -23,8 +23,8 @@ msgid ""
 "Plugin add the menu \"Wiki - Table of contents\" and the wiki command (:"
 "toc:) for generation of the table of contents."
 msgstr ""
-"Плагин добавляет меню \"Вики - Содержание\" и викикоманду (:toc:) для "
-"создания содержания."
+"Плагин добавляет меню \"Вики - Оглавление\" и викикоманду (:toc:) для "
+"создания оглавления."
 
 #: tableofcontents.py:55
 msgid "http://jenyay.net/Outwiker/ContentsEn"
@@ -32,7 +32,7 @@ msgstr "http://jenyay.net/Outwiker/Contents"
 
 #: guicreator.py:54
 msgid "Table of contents"
-msgstr "Содержание"
+msgstr "Оглавление"
 
 #: actions.py:24
 msgid "Generate"
@@ -40,7 +40,7 @@ msgstr "Создать"
 
 #: actions.py:29
 msgid "TableOfContents. Generate table of contents"
-msgstr "TableOfContents. Создать содержание"
+msgstr "TableOfContents. Создать оглавление"
 
 #: actions.py:55
 msgid "Insert wiki command (:toc:)"
@@ -52,4 +52,4 @@ msgid ""
 "the table of content"
 msgstr ""
 "TableOfContents. Вставить викикоманду (:toc:) для динамического создания "
-"содержания"
+"оглавления"
