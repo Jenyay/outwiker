@@ -1,7 +1,5 @@
 !!! [=1.8.0=]
 
-
-
 * Added the ability to customize keyboard shortcuts.
 * Added the ability to refer to a page using unique identifiers.
 * Added the ability to navigate through the links to pages with the anchors ({+[=page://bla-bla-bla/#anchor=]+}).
@@ -33,7 +31,6 @@
 * Added new icons for pages.
 * Many accelerations.
 * Bug fixes and improvments.
-
 
 
 !!! [=1.7.0.684 (01.12.2012)=]
