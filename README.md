@@ -88,4 +88,4 @@ OutWiker может содержать страницы разного типа,
 OutWiker распространяется с исходными текстами под лицензией GPL 3.
 Автор не несет ответственность за последствия использования программы.
 
-Особая благодарность разработчикам сайтов `famfamfam.com <http://www.famfamfam.com/lab/icons/silk/>`_ и `yusukekamiyamane.com <http://p.yusukekamiyamane.com/>`_ за бесплатные иконки, которые используются в OutWiker'е.
+Особая благодарность разработчикам сайтов [famfamfam.com](<http://www.famfamfam.com/lab/icons/silk/>) и [yusukekamiyamane.com](<http://p.yusukekamiyamane.com/>) за бесплатные иконки, которые используются в OutWiker'е.
