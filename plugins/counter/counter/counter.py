@@ -70,7 +70,7 @@ All parameters are optional.
 
         @property
         def version (self):
-            return u"1.0.1"
+            return u"1.0.2"
 
 
         def initialize(self):

@@ -70,7 +70,7 @@ else:
 
         @property
         def version (self):
-            return u"1.3"
+            return u"1.3.1"
 
 
         def destroy (self):

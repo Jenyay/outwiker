@@ -35,7 +35,7 @@ class PluginExternalTools (Plugin):
     def name (self):
         return u"ExternalTools"
 
-    
+
     @property
     def description (self):
         return _(u"Open notes files with external editor")
@@ -43,7 +43,7 @@ class PluginExternalTools (Plugin):
 
     @property
     def version (self):
-        return u"1.2"
+        return u"1.2.1"
 
 
     def initialize(self):
@@ -69,5 +69,5 @@ class PluginExternalTools (Plugin):
             _ = self._init_i18n (domain, langdir)
 
             set_(_)
-        except BaseException as e:
+        except BaseException:
             pass
