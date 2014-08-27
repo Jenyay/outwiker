@@ -673,3 +673,63 @@ asdfasdf   =]
         self.assertEqual (contents[1].anchor, u"якорь2_2")
 
 
+    def testParser_27 (self):
+        parser = self.loader[self.pluginname].ContentsParser()
+
+        text = u'''ывп ыфвп ваы
+
+!! Абырвалг 123
+
+[@
+!! Это не заголовок
+@]
+
+ывапыва ывп выап
+выапывп ываап ывап
+
+!!! Абырвалг 234'''
+
+        contents = parser.parse (text)
+
+        self.assertEqual (len (contents), 2)
+        self.assertEqual (contents[0].title, u"Абырвалг 123")
+        self.assertEqual (contents[0].level, 1)
+        self.assertEqual (contents[0].anchor, u"")
+
+        self.assertEqual (contents[1].title, u"Абырвалг 234")
+        self.assertEqual (contents[1].level, 2)
+        self.assertEqual (contents[1].anchor, u"")
+
+
+    def testParser_28 (self):
+        parser = self.loader[self.pluginname].ContentsParser()
+
+        text = u'''ывп ыфвп ваы
+
+[=
+!! Это не заголовок
+=]
+
+!! Абырвалг 123
+
+[=
+[@
+!! Это не заголовок
+@]
+=]
+
+ывапыва ывп выап
+выапывп ываап ывап
+
+!!! Абырвалг 234'''
+
+        contents = parser.parse (text)
+
+        self.assertEqual (len (contents), 2)
+        self.assertEqual (contents[0].title, u"Абырвалг 123")
+        self.assertEqual (contents[0].level, 1)
+        self.assertEqual (contents[0].anchor, u"")
+
+        self.assertEqual (contents[1].title, u"Абырвалг 234")
+        self.assertEqual (contents[1].level, 2)
+        self.assertEqual (contents[1].anchor, u"")

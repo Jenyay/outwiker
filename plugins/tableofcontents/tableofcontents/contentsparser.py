@@ -23,14 +23,15 @@ class ContentsParser (object):
     Класс для получения содержания по тексту
     """
     def __init__ (self):
-        self.heading = re.compile (r'''
-                ^(?P<anchor2>\[\[\#.*?\]\])?\s*
-                ^(?P<header>!!+)\s+
-                (?P<anchor1>\[\[\#.*?\]\])?\s*
-                (?P<title>(\\\n|.)*?)\s*
-                (?P<anchor3>\[\[\#.*?\]\])?\s*
-                $''',
-                re.X | re.M)
+        self.heading = re.compile (
+            r'''
+            ^(?P<anchor2>\[\[\#.*?\]\])?\s*
+            ^(?P<header>!!+)\s+
+            (?P<anchor1>\[\[\#.*?\]\])?\s*
+            (?P<title>(\\\n|.)*?)\s*
+            (?P<anchor3>\[\[\#.*?\]\])?\s*
+            $''',
+            re.X | re.M)
 
 
     def parse (self, text):
@@ -48,18 +49,21 @@ class ContentsParser (object):
         """
         Возвращает True, если найденный заголовок содержится внутри тегов [= ... =]
         """
-        start = u"[="
-        end = u"=]"
+        tags = [(u"[=", u"=]"),
+                (u"[@", u"@]"),
+                ]
 
-        leftStart = text[: match.start()].rfind (start)
-        leftEnd = text[: match.start()].rfind (end)
+        for start, end in tags:
+            leftStart = text[: match.start()].rfind (start)
+            leftEnd = text[: match.start()].rfind (end)
 
-        rightEnd = text[match.end(): ].find (end)
+            rightEnd = text[match.end():].find (end)
 
-        inside = (leftStart != -1 and rightEnd != -1 and 
-                (leftEnd == -1 or leftEnd < leftStart))
+            if (leftStart != -1 and rightEnd != -1 and
+                    (leftEnd == -1 or leftEnd < leftStart)):
+                return True
 
-        return inside
+        return False
 
 
     def _makeSection (self, match):
