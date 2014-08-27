@@ -2,36 +2,49 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-25 17:55+0400\n"
-"PO-Revision-Date: 2014-02-10 21:41+0300\n"
+"POT-Creation-Date: 2014-08-20 22:56+0400\n"
+"PO-Revision-Date: 2014-08-27 18:21+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-SourceCharset: utf-8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.5.4\n"
 
-#: livejournal.py:79 livejournal.py:80
+#: ljtoolbar.py:30
+msgid "LiveJournal"
+msgstr "LiveJournal"
+
+#: controller.py:84 controller.py:85
 msgid "Livejournal User (:ljuser ...:)"
 msgstr "Utente LiveJournal (:ljuser ...:)"
 
-#: livejournal.py:87 livejournal.py:88
+#: controller.py:93 controller.py:94
 msgid "Livejournal Community (:ljcomm ...:)"
 msgstr "Community LiveJournal (:ljcomm ...:)"
 
-#: livejournal.py:112
+#: controller.py:139
+msgid "Livejournal user"
+msgstr "Utente LiveJournal"
+
+#: controller.py:147
+msgid "Livejournal community"
+msgstr "Community LiveJournal"
+
+#: livejournal.py:60
 msgid ""
 "Add commands (:ljuser:) and (:ljcomm:) in wiki parser.\n"
 "\n"
-"<B>Usage:</B>\n"
-"(:ljuser username:)\n"
-"(:ljcomm communityname:)\n"
+"                     <B>Usage:</B>\n"
+"                     (:ljuser username:)\n"
+"                     (:ljcomm communityname:)\n"
+"                     "
 msgstr ""
-"Aggiunge i comandi (:ljuser:) e (:ljcomm:) al parser wiki parser.\n"
+"Aggiunge i comandi (:ljuser:) e (:ljcomm:) al parser wiki.\n"
 "\n"
-" <B>Utilizzo:</B> \n"
-"(:ljuser username:)\n"
-"(:ljcomm communityname:)\n"
+" <B>Utilizzo:</B>\n"
+" (:ljuser username:)\n"
+" (:ljcomm nomeCommunity:)\n"
+"                     "

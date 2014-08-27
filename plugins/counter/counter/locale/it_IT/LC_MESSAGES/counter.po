@@ -1,0 +1,108 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: outwiker\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-06-05 10:05+0400\n"
+"PO-Revision-Date: 2014-08-27 18:13+0300\n"
+"Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
+"Language-Team: Italian\n"
+"Language: it_IT\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.5.4\n"
+
+#: actions.py:24
+msgid "Counter (:counter ...:)"
+msgstr "Contatore (:counter ...:)"
+
+#: actions.py:29
+msgid "Counter plugin. Insert (:counter... :) command"
+msgstr "Plugin Counter. Inserisce il comando (:counter... :)"
+
+#: counter.py:43
+msgid ""
+"Plugin adds wiki-command (:counter:), allowing the automatic numbering "
+"anything on the page."
+msgstr ""
+"Il plugin aggiunge un comando wiki (:counter:) che consente la numerazione "
+"di un qualsiasi elemento della pagina."
+
+#: counter.py:45
+msgid ""
+"<b>Usage:</b>:\n"
+"(:counter parameters... :)"
+msgstr ""
+"<b>Utilizzo:</b>:\n"
+"(:counter parametri... :)"
+
+#: counter.py:48
+msgid ""
+"<b>Parameters:</b>\n"
+"All parameters are optional.\n"
+"<ul>\n"
+"<li><b>name</b> - sets the name of the counter. Counters with different "
+"names have independent current values.</li>\n"
+"<li><b>start</b> - value, with which to start a new count. With this option, "
+"you can \"reset\" the counter to the required value.</li>\n"
+"<li><b>step</b> - increment for the counter.</li>\n"
+"<li><b>parent</b> - name of the parent counter to create a numbering like "
+"1.1, 1.2.3, etc.</li>\n"
+"<li><b>separator</b> - separator between a given counter and the parent "
+"counter (the default value - dot).</li>\n"
+"<li><b>hide</b> - parameter indicates that the counter need to hide, but to "
+"increase its value.</li>\n"
+"</ul>"
+msgstr ""
+"<b>Parametri:</b> \n"
+"Tutti i parametri sono facoltativi. \n"
+" <ul>\n"
+" <li><b>nome</b> - imposta il nome del contatore. Contatori con nomi "
+"differenti hanno valori attuali indipendenti.</li>\n"
+" il valore <li><b>start</b>, con cui iniziare un nuovo conteggio. Con questa "
+"opzione, si può \"resettare\" il contatore al valore richiesto.</li>\n"
+" l'incremento del contatore è dato da <li><b>step</b>.</li>\n"
+" <li><b>parent</b> -rappresenta il nome del contatore superiore che consente "
+"la creazione di una numerazione del tipo 1.1, 1.2.3, ecc</li>\n"
+" <li><b>separator</b> indica il carattere di separazione tra un determinato "
+"contatori e il superiore (il valore predefinito è un punto).</li>\n"
+" <li><b>hide</b> indica che il contatore deve essere nascosto a meno che il "
+"suo valore non incrementi.</li>\n"
+"</ul>"
+
+#: counter.py:71
+msgid "http://jenyay.net/Outwiker/CounterEn"
+msgstr "http://jenyay.net/Outwiker/CounterEn"
+
+#: insertdialog.py:147
+msgid "Advanced"
+msgstr "Avanzata"
+
+#: insertdialog.py:149
+msgid "Start count from"
+msgstr "Iniziare il conteggio da"
+
+#: insertdialog.py:152
+msgid "Step"
+msgstr "Incremento"
+
+#: insertdialog.py:155
+msgid "Hide counter"
+msgstr "Contatore nascosto"
+
+#: insertdialog.py:192
+msgid "Nested counter"
+msgstr "Contatore nidificato"
+
+#: insertdialog.py:194
+msgid "Parent counter name"
+msgstr "Nome del contatore superiore"
+
+#: insertdialog.py:198
+msgid "Separator"
+msgstr "Separatore"
+
+#: insertdialog.py:232
+msgid "Counter name"
+msgstr "Nome del contatore"
