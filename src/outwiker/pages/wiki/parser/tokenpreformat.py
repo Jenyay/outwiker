@@ -1,10 +1,8 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import cgi
 
 from outwiker.libs.pyparsing import QuotedString
-from utils import noConvert
 
 
 class PreFormatFactory (object):
@@ -25,10 +23,10 @@ class PreFormatToken (object):
 
 
     def getToken (self):
-        return QuotedString(PreFormatToken.preFormatStart, 
-                endQuoteChar = PreFormatToken.preFormatEnd, 
-                multiline = True).setParseAction(self.__convertPreformat)("preformat")
-    
-    
+        return QuotedString(PreFormatToken.preFormatStart,
+                            endQuoteChar = PreFormatToken.preFormatEnd,
+                            multiline = True).setParseAction(self.__convertPreformat)("preformat")
+
+
     def __convertPreformat (self, s, l, t):
         return u"<pre>" + cgi.escape (t[0], True) + u"</pre>"

@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import wx
@@ -14,6 +13,7 @@ from parser.tokenlink import LinkFactory
 from parser.tokenurl import UrlFactory
 from parser.tokenlinebreak import LineBreakFactory
 from parser.tokennoformat import NoFormatFactory
+from parser.tokenpreformat import PreFormatFactory
 from parser.tokentext import TextFactory
 
 
@@ -35,34 +35,39 @@ class WikiColorizer (object):
         self.url = UrlFactory.make (None).setParseAction(lambda s, l, t: None)
         self.linebreak = LineBreakFactory.make (None).setParseAction(lambda s, l, t: None)
         self.noformat = NoFormatFactory.make (None).setParseAction(lambda s, l, t: None)
+        self.preformat = PreFormatFactory.make (None).setParseAction(lambda s, l, t: None)
 
-        self.colorParser = (self.url |
-                self.text |
-                self.linebreak | 
-                self.link |
-                self.noformat |
-                self.command | 
-                self.bold_italic | 
-                self.bold | 
-                self.italic | 
-                self.underline | 
-                self.heading)
+        self.colorParser = (
+            self.url |
+            self.text |
+            self.linebreak |
+            self.link |
+            self.noformat |
+            self.preformat |
+            self.command |
+            self.bold_italic |
+            self.bold |
+            self.italic |
+            self.underline |
+            self.heading)
 
-        self.insideBlockParser = (self.url |
-                self.text |
-                self.linebreak | 
-                self.link |
-                self.noformat |
-                self.bold_italic | 
-                self.bold | 
-                self.italic | 
-                self.underline)
+        self.insideBlockParser = (
+            self.url |
+            self.text |
+            self.linebreak |
+            self.link |
+            self.noformat |
+            self.preformat |
+            self.bold_italic |
+            self.bold |
+            self.italic |
+            self.underline)
 
         self._thread = None
 
 
     def start (self, text):
-        if (self._thread == None or
+        if (self._thread is None or
                 not self._thread.isAlive()):
             self._thread = threading.Thread (None, self._threadFunc, args=(text,))
             self._thread.start()
@@ -95,8 +100,9 @@ class WikiColorizer (object):
             # print tokenname
 
             if (tokenname == "text" or
-                tokenname == "linebreak" or
-                tokenname == "noformat"):
+                    tokenname == "linebreak" or
+                    tokenname == "noformat" or
+                    tokenname == "preformat"):
                 continue
 
             # Нас интересует позиция в байтах, а не в символах
@@ -139,7 +145,7 @@ class WikiColorizer (object):
         """
         style_src = stylelist[bytepos_start: bytepos_end]
         style_new = [styleid if style == wx.stc.STC_STYLE_DEFAULT else style | styleid for style in style_src]
-        
+
         stylelist[bytepos_start: bytepos_end] = style_new
 
 
