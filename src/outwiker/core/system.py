@@ -24,8 +24,15 @@ PLUGINS_DIR = u"plugins"
 # Имя файла настроек по умолчанию
 DEFAULT_CONFIG_NAME = u"outwiker.ini"
 
-# Имя по умолчанию для папки с настройками в профиле пользователя
-DEFAULT_CONFIG_DIR = u".outwiker"
+# Имя по умолчанию для папки с настройками в профиле пользователя(устарело)
+DEFAULT_OLD_CONFIG_DIR = u".outwiker"
+
+# Новая местоположение конфигурационной директории
+# По стандарту, если переменная XDG_CONFIG_HOME не задана в окружении,
+# то берется значение по умолчанию т.е. ~/.config
+# http://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html
+DEFAULT_CONFIG_DIR = os.path.join(os.environ.get("XDG_CONFIG_HOME", u".config"), u"outwiker") 
+
 
 
 class Windows (object):
