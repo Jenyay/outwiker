@@ -1,7 +1,8 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
-"""Модуль с классом, описывающим панели с настройками
 """
+Модуль с классом, описывающим панели с настройками
+"""
+
 
 class PreferencePanelInfo (object):
     def __init__ (self, panel, name):

@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 from .control import Control
@@ -20,7 +19,7 @@ class ComboBox (Control):
     def AppendItems(self, strings):
         self._items += strings
 
-        if self.Selection == None:
+        if self.Selection is None:
             self.Selection = 0
 
 
@@ -42,5 +41,5 @@ class ComboBox (Control):
 
 
     def GetValue (self):
-        if self.Selection != None:
+        if self.Selection is not None:
             return self._items[self.Selection]

@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import wx
@@ -26,7 +25,7 @@ class ExitAction (BaseAction):
     @property
     def description (self):
         return _(u"Close OutWiker")
-    
+
 
     def run (self, params):
         if (self.__allowExit()):
@@ -40,7 +39,7 @@ class ExitAction (BaseAction):
         generalConfig = GeneralGuiConfig (self._application.config)
         askBeforeExit = generalConfig.askBeforeExit.value
 
-        return (not askBeforeExit or 
-                MessageBox (_(u"Really exit?"), 
-                    _(u"Exit"), 
-                    wx.YES_NO  | wx.ICON_QUESTION ) == wx.YES )
+        return (not askBeforeExit or
+                MessageBox (_(u"Really exit?"),
+                            _(u"Exit"),
+                            wx.YES_NO | wx.ICON_QUESTION) == wx.YES)

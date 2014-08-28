@@ -1,7 +1,4 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
-
-import wx
 
 from outwiker.gui.baseaction import BaseAction
 from outwiker.gui.preferences.prefdialog import PrefDialog
@@ -25,7 +22,7 @@ class PreferencesAction (BaseAction):
     @property
     def description (self):
         return _(u"Open the preferences dialog")
-    
+
 
     def run (self, params):
         dlg = PrefDialog (self._application.mainWindow)

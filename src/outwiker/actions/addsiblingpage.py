@@ -1,7 +1,4 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
-
-import wx
 
 from outwiker.gui.baseaction import BaseAction
 from outwiker.gui.pagedialog import createSiblingPage
@@ -25,8 +22,8 @@ class AddSiblingPageAction (BaseAction):
     @property
     def description (self):
         return _(u"Add sibling page")
-    
+
 
     def run (self, params):
         createSiblingPage (self._application.mainWindow,
-                self._application.selectedPage)
+                           self._application.selectedPage)

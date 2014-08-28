@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 """
 Версия 1.1
@@ -25,12 +24,12 @@ class Shortcuter (object):
 
     def checkDuplicateShortcuts (self):
         """
-        Проверить шорткаты на повторы. 
+        Проверить шорткаты на повторы.
         Возвращает множество заголовков с дублирующимися шорткатами
         """
         duplicates = set()
         self._checkDuplicatesShortcuts (self._menubar, duplicates)
-        
+
         result = list (duplicates)
         result.sort (key=lambda item: self._extractShortcut (item))
 
@@ -39,7 +38,7 @@ class Shortcuter (object):
 
     def checkDuplacateHotKeys (self):
         """
-        Проверить горячие клавиши на повторы во всем меню. 
+        Проверить горячие клавиши на повторы во всем меню.
         Возвращает множество заголовков с дублирующимися горячими клавишами
         """
         duplicates = set()
@@ -71,7 +70,7 @@ class Shortcuter (object):
                 hotkeysDict[hotkey] = title
 
             submenu = self._getSubMenu (menuitem)
-            if submenu != None:
+            if submenu is not None:
                 self._checkDuplicatesHotKeys (submenu, duplicates, hotkeysDict)
 
 
@@ -86,7 +85,7 @@ class Shortcuter (object):
 
         for menuitem in menuitems:
             submenu = self._getSubMenu (menuitem)
-            if submenu != None:
+            if submenu is not None:
                 self._checkDuplicatesShortcuts (submenu, duplicates)
 
 
@@ -143,7 +142,7 @@ class Shortcuter (object):
                     self._setText (menuitem, newtitle, position)
 
             submenu = self._getSubMenu (menuitem)
-            if submenu != None:
+            if submenu is not None:
                 self._assignMenuShortcuts (submenu)
 
 
@@ -163,7 +162,7 @@ class Shortcuter (object):
         if isinstance (menu, wx.Menu):
             return menu.GetMenuItems()
         elif isinstance (menu, wx.MenuBar):
-            return [menu for menu, title in menu.GetMenus()]
+            return [currentmenu for currentmenu, title in menu.GetMenus()]
 
 
     @staticmethod
@@ -228,7 +227,7 @@ class Shortcuter (object):
                 break
 
         return newtitle, newshortcut
-        
+
 
 
     @staticmethod
@@ -246,7 +245,7 @@ class Shortcuter (object):
         index = cleartitle.find (u"&")
         if index == -1 or index == len (cleartitle) - 1:
             return u""
-        
+
         return cleartitle[index + 1].lower()
 
 

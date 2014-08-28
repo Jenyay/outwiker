@@ -1,7 +1,4 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
-
-import wx
 
 from outwiker.gui.baseaction import BaseAction
 
@@ -24,7 +21,7 @@ class RenamePageAction (BaseAction):
     @property
     def description (self):
         return _(u"Rename current page")
-    
+
 
     def run (self, params):
         self._application.mainWindow.treePanel.beginRename()

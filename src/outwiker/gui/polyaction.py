@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 from baseaction import BaseAction
@@ -8,17 +7,17 @@ class PolyAction (BaseAction):
     """
     Класс для полиморфного действия, поведение которого можно менять во время работы
     """
-    def __init__ (self, 
-            application,
-            strid,
-            title,
-            description):
+    def __init__ (self,
+                  application,
+                  strid,
+                  title,
+                  description):
         self._application = application
         self._strid = strid
         self._title = title
         self._description = description
 
-        # Функция, которая будет вызываться из метода run(), если _func != None
+        # Функция, которая будет вызываться из метода run(), если _func is not None
         self._func = None
 
 
@@ -38,7 +37,7 @@ class PolyAction (BaseAction):
 
 
     def run (self, params):
-        if self._func != None:
+        if self._func is not None:
             self._func (params)
 
 

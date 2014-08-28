@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import wx
@@ -52,4 +51,3 @@ class TagsCloudPanel (wx.Panel):
         mainSizer.AddGrowableRow (0)
         mainSizer.Add (self.__tagscloud, 0, wx.ALL | wx.EXPAND, 4)
         self.SetSizer (mainSizer)
-

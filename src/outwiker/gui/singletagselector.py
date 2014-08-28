@@ -1,10 +1,7 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-import wx
-
 from .tagscloud import TagsCloud
-from .taglabel import EVT_TAG_LEFT_CLICK, EVT_TAG_MIDDLE_CLICK
+from .taglabel import EVT_TAG_LEFT_CLICK
 
 
 class SingleTagSelector (TagsCloud):

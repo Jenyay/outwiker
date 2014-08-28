@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import wx
@@ -9,8 +8,10 @@ from .tagsselector import TagsSelector
 
 class TagsDialog (wx.Dialog):
     def __init__ (self, parent, application):
-        super (TagsDialog, self).__init__ (parent, 
-                style=wx.DEFAULT_DIALOG_STYLE|wx.RESIZE_BORDER|wx.THICK_FRAME)
+        super (TagsDialog, self).__init__ (
+            parent,
+            style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.THICK_FRAME)
+
         self.__application = application
 
         self.__createControls()
@@ -20,12 +21,12 @@ class TagsDialog (wx.Dialog):
 
 
     def __setTagsList (self):
-        assert self.__application.wikiroot != None
+        assert self.__application.wikiroot is not None
 
         tagslist = TagsList (self.__application.wikiroot)
         self.__tagsSelector.setTagsList (tagslist)
 
-    
+
     def __createControls (self):
         self.__tagsSelector = TagsSelector (self)
         buttonsSizer = self.CreateButtonSizer (wx.OK | wx.CANCEL)

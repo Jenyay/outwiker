@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import os
@@ -109,7 +108,7 @@ class TagsCloud (wx.ScrolledWindow):
 
 
     def __calcSizeRatio (self, count):
-        assert self.__tags != None
+        assert self.__tags is not None
 
         maxcount = self.__getMaxCount()
         ratio = 1
@@ -133,7 +132,7 @@ class TagsCloud (wx.ScrolledWindow):
         """
         Расположение тегов в окне
         """
-        if self.__tags == None:
+        if self.__tags is None:
             return
 
         self.__setSizeLabels()
@@ -183,7 +182,7 @@ class TagsCloud (wx.ScrolledWindow):
             commonheight = currenty + self.__getMaxHeight (currentLine)[0] + self.__space
             lineheight = commonheight / linesCount
 
-            self.SetScrollbars (0, 
-                    lineheight,
-                    0,
-                    linesCount + 1)
+            self.SetScrollbars (0,
+                                lineheight,
+                                0,
+                                linesCount + 1)

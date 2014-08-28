@@ -1,9 +1,7 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-import wx
-
 from outwiker.gui.baseaction import BaseAction
+
 
 class BaseSearchAction (BaseAction):
     """
@@ -41,7 +39,7 @@ class SearchAction (BaseSearchAction):
     def run (self, params):
         searchPanel = self._getSearchPanel()
 
-        if searchPanel != None:
+        if searchPanel is not None:
             searchPanel.switchToSearchMode()
             searchPanel.show()
             searchPanel.startSearch()
@@ -66,7 +64,7 @@ class SearchNextAction (BaseSearchAction):
     def run (self, params):
         searchPanel = self._getSearchPanel()
 
-        if searchPanel != None:
+        if searchPanel is not None:
             searchPanel.show()
             searchPanel.nextSearch()
 
@@ -90,7 +88,7 @@ class SearchPrevAction (BaseSearchAction):
     def run (self, params):
         searchPanel = self._getSearchPanel()
 
-        if searchPanel != None:
+        if searchPanel is not None:
             searchPanel.show()
             searchPanel.prevSearch()
 
@@ -114,7 +112,7 @@ class SearchAndReplaceAction (BaseSearchAction):
     def run (self, params):
         searchPanel = self._getSearchPanel()
 
-        if searchPanel != None:
+        if searchPanel is not None:
             searchPanel.switchToReplaceMode()
             searchPanel.show()
             searchPanel.startSearch()

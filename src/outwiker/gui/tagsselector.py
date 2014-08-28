@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import os.path
@@ -19,8 +18,8 @@ class TagsSelector (wx.Panel):
         self.__tagsWidth = 350
         self.__tagsHeight = 150
 
-        self.__tagBitmap = wx.Bitmap (os.path.join (getImagesDir(), "tag.png"), 
-                wx.BITMAP_TYPE_PNG)
+        self.__tagBitmap = wx.Bitmap (os.path.join (getImagesDir(), "tag.png"),
+                                      wx.BITMAP_TYPE_PNG)
 
         self.label_tags = wx.StaticText(self, -1, _(u"Tags (comma separated)"))
 
@@ -51,12 +50,12 @@ class TagsSelector (wx.Panel):
         titleTextSizer = wx.FlexGridSizer (1, 2, 0, 0)
         titleTextSizer.AddGrowableCol(1)
 
-        titleTextSizer.Add(self.label_tags, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 4)
-        titleTextSizer.Add(self.tagsTextCtrl, 0, wx.ALL|wx.EXPAND, 0)
+        titleTextSizer.Add(self.label_tags, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 4)
+        titleTextSizer.Add(self.tagsTextCtrl, 0, wx.ALL | wx.EXPAND, 0)
 
         mainSizer = wx.FlexGridSizer (2, 1, 0, 0)
-        mainSizer.Add (titleTextSizer, 0, wx.ALL|wx.EXPAND, 4)
-        mainSizer.Add (self.__tagsCloud, 0, wx.ALL|wx.EXPAND, 4)
+        mainSizer.Add (titleTextSizer, 0, wx.ALL | wx.EXPAND, 4)
+        mainSizer.Add (self.__tagsCloud, 0, wx.ALL | wx.EXPAND, 4)
         mainSizer.AddGrowableCol(0)
         mainSizer.AddGrowableRow(1)
 

@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import os
@@ -46,6 +45,6 @@ class StylesList (object):
             return []
 
         style = Style ()
-        return [os.path.join (path, styledir) 
-                for styledir in os.listdir(path) 
-                if not styledir.startswith ("__") and style.check (os.path.join (path, styledir) ) ]
+        return [os.path.join (path, styledir)
+                for styledir in os.listdir(path)
+                if not styledir.startswith ("__") and style.check (os.path.join (path, styledir))]

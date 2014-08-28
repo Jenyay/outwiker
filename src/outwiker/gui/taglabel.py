@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import wx
@@ -13,11 +12,11 @@ class TagLabel (wx.HyperlinkCtrl):
     Класс для представления одной метки
     """
     def __init__ (self, parent, title):
-        super (TagLabel, self).__init__ (parent, 
-                wx.ID_ANY, 
-                title, 
-                title, 
-                style=wx.HL_ALIGN_CENTRE | wx.NO_BORDER)
+        super (TagLabel, self).__init__ (parent,
+                                         wx.ID_ANY,
+                                         title,
+                                         title,
+                                         style=wx.HL_ALIGN_CENTRE | wx.NO_BORDER)
 
         self.__propagationLevel = 10
 
@@ -63,11 +62,11 @@ class TagLabel (wx.HyperlinkCtrl):
         """
         fontsize = int (self.__minFontSize + ratio * (self.__maxFontSize - self.__minFontSize))
 
-        font = wx.Font (fontsize, 
-                wx.FONTFAMILY_DEFAULT,
-                wx.FONTSTYLE_NORMAL,
-                wx.FONTWEIGHT_NORMAL,
-                underline=False)
+        font = wx.Font (fontsize,
+                        wx.FONTFAMILY_DEFAULT,
+                        wx.FONTSTYLE_NORMAL,
+                        wx.FONTWEIGHT_NORMAL,
+                        underline=False)
 
         self.SetFont (font)
         self.InvalidateBestSize()
@@ -78,7 +77,7 @@ class TagLabel (wx.HyperlinkCtrl):
         self.__isMarked = marked
         self.__format()
 
-    
+
     @property
     def isMarked (self):
         return self.__isMarked

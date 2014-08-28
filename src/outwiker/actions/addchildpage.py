@@ -1,7 +1,4 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
-
-import wx
 
 from outwiker.gui.baseaction import BaseAction
 from outwiker.gui.pagedialog import createChildPage
@@ -25,8 +22,8 @@ class AddChildPageAction (BaseAction):
     @property
     def description (self):
         return _(u"Add child page")
-    
+
 
     def run (self, params):
         createChildPage (self._application.mainWindow,
-                self._application.selectedPage)
+                         self._application.selectedPage)

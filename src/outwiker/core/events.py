@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 # Константы, обозначающие события внутри onPageUpdate

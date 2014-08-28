@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 from outwiker.gui.baseaction import BaseAction
@@ -24,10 +23,10 @@ class AboutAction (BaseAction):
     @property
     def description (self):
         return _(u'Open "About" dialog')
-    
+
 
     def run (self, params):
-        assert self._application.mainWindow != None
+        assert self._application.mainWindow is not None
 
         version = getCurrentVersion()
         dlg = AboutDialog (version, self._application.mainWindow)

@@ -1,7 +1,4 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
-
-import wx
 
 from outwiker.gui.baseaction import BaseAction
 from outwiker.core.commands import openWikiWithDialog
@@ -25,7 +22,7 @@ class OpenReadOnlyAction (BaseAction):
     @property
     def description (self):
         return _(u"Open tree notes read only")
-    
+
 
     def run (self, params):
         openWikiWithDialog (self._application.mainWindow, True)

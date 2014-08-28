@@ -1,7 +1,4 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
-
-import wx
 
 from outwiker.gui.baseaction import BaseAction
 
@@ -24,7 +21,7 @@ class SaveAction (BaseAction):
     @property
     def description (self):
         return _(u"Save current note")
-    
+
 
     def run (self, params):
         self._application.onForceSave()

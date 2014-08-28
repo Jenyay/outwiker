@@ -1,9 +1,6 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 from abc import abstractmethod, ABCMeta
-
-import wx
 
 from outwiker.gui.baseaction import BaseAction
 

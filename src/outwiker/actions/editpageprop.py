@@ -1,7 +1,4 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
-
-import wx
 
 from outwiker.gui.baseaction import BaseAction
 from outwiker.gui.pagedialog import editPage
@@ -25,9 +22,9 @@ class EditPagePropertiesAction (BaseAction):
     @property
     def description (self):
         return _(u"Edit page properties")
-    
+
 
     def run (self, params):
-        if self._application.selectedPage != None:
+        if self._application.selectedPage is not None:
             editPage (self._application.mainWindow,
-                    self._application.selectedPage)
+                      self._application.selectedPage)

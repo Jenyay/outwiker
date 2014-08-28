@@ -1,9 +1,8 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import re
 
-from outwiker.libs.pyparsing import Regex, Word, CharsNotIn, OneOrMore
+from outwiker.libs.pyparsing import Regex
 
 
 class TextFactory (object):

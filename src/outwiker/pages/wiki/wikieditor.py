@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 from datetime import datetime, timedelta
@@ -28,7 +27,7 @@ class WikiEditor (TextEditor):
         # Начинаем раскраску кода не менее чем через это время с момента его изменения
         self.__DELAY = timedelta (milliseconds=300)
 
-        # Время последней модификации текста страницы. 
+        # Время последней модификации текста страницы.
         # Используется для замера времени после модификации, чтобы не парсить текст
         # после каждой введенной буквы
         self.__lastEdit = datetime.now() - self.__DELAY * 2
@@ -46,34 +45,34 @@ class WikiEditor (TextEditor):
         self.STYLE_COMMAND_ID = 125
 
         # Комбинации стилей
-        self.STYLE_BOLD_ITALIC_UNDERLINE_ID = (self.STYLE_BOLD_ID | 
-                self.STYLE_ITALIC_ID | 
-                self.STYLE_UNDERLINE_ID)
+        self.STYLE_BOLD_ITALIC_UNDERLINE_ID = (self.STYLE_BOLD_ID |
+                                               self.STYLE_ITALIC_ID |
+                                               self.STYLE_UNDERLINE_ID)
 
         self.STYLE_BOLD_ITALIC_ID = self.STYLE_BOLD_ID | self.STYLE_ITALIC_ID
         self.STYLE_BOLD_UNDERLINE_ID = self.STYLE_BOLD_ID | self.STYLE_UNDERLINE_ID
         self.STYLE_ITALIC_UNDERLINE_ID = self.STYLE_ITALIC_ID | self.STYLE_UNDERLINE_ID
 
-        self.STYLE_LINK_BOLD_ITALIC_UNDERLINE_ID = (self.STYLE_BOLD_ID | 
-                self.STYLE_ITALIC_ID |
-                self.STYLE_UNDERLINE_ID |
-                self.STYLE_LINK_ID )
+        self.STYLE_LINK_BOLD_ITALIC_UNDERLINE_ID = (self.STYLE_BOLD_ID |
+                                                    self.STYLE_ITALIC_ID |
+                                                    self.STYLE_UNDERLINE_ID |
+                                                    self.STYLE_LINK_ID)
 
-        self.STYLE_LINK_ITALIC_UNDERLINE_ID = (self.STYLE_ITALIC_ID | 
-                self.STYLE_UNDERLINE_ID |
-                self.STYLE_LINK_ID )
+        self.STYLE_LINK_ITALIC_UNDERLINE_ID = (self.STYLE_ITALIC_ID |
+                                               self.STYLE_UNDERLINE_ID |
+                                               self.STYLE_LINK_ID)
 
-        self.STYLE_LINK_BOLD_UNDERLINE_ID = (self.STYLE_BOLD_ID | 
-                self.STYLE_UNDERLINE_ID |
-                self.STYLE_LINK_ID )
+        self.STYLE_LINK_BOLD_UNDERLINE_ID = (self.STYLE_BOLD_ID |
+                                             self.STYLE_UNDERLINE_ID |
+                                             self.STYLE_LINK_ID)
 
-        self.STYLE_LINK_BOLD_ITALIC_ID = (self.STYLE_BOLD_ID | 
-                self.STYLE_ITALIC_ID |
-                self.STYLE_LINK_ID )
+        self.STYLE_LINK_BOLD_ITALIC_ID = (self.STYLE_BOLD_ID |
+                                          self.STYLE_ITALIC_ID |
+                                          self.STYLE_LINK_ID)
 
-        self.STYLE_LINK_ITALIC_ID = self.STYLE_ITALIC_ID | self.STYLE_LINK_ID 
+        self.STYLE_LINK_ITALIC_ID = self.STYLE_ITALIC_ID | self.STYLE_LINK_ID
 
-        self.STYLE_LINK_UNDERLINE_ID = self.STYLE_UNDERLINE_ID | self.STYLE_LINK_ID 
+        self.STYLE_LINK_UNDERLINE_ID = self.STYLE_UNDERLINE_ID | self.STYLE_LINK_ID
 
         self.STYLE_LINK_BOLD_ID = self.STYLE_BOLD_ID | self.STYLE_LINK_ID
 
@@ -147,7 +146,7 @@ class WikiEditor (TextEditor):
     def __onApplyStyle (self, event):
         if event.text == self.__getTextForParse():
             self.__applyStyles (event.stylebytes)
-    
+
 
     def __applyStyles (self, stylebytes):
         self.textCtrl.StartStyling (0, 0xff)
@@ -160,7 +159,7 @@ class WikiEditor (TextEditor):
         Создать список
         """
         selText = self.textCtrl.GetSelectedText()
-        items = filter (lambda item: len (item.strip()) > 0, selText.split ("\n") )
+        items = filter (lambda item: len (item.strip()) > 0, selText.split ("\n"))
 
         # Собираем все элементы
         if len (items) > 0:

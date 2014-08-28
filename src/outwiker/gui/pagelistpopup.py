@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import wx
@@ -8,7 +7,7 @@ from .pagelist import PageList, EVT_PAGE_CLICK
 
 class PageListPopup (wx.PopupTransientWindow):
     def __init__ (self, parent):
-        super (PageListPopup, self).__init__ (parent, style=wx.BORDER_SUNKEN )
+        super (PageListPopup, self).__init__ (parent, style = wx.BORDER_SUNKEN)
 
         self.__pagelist = PageList (self)
         self.__layout ()

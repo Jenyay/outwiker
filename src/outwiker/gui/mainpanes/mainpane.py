@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 from abc import ABCMeta, abstractmethod, abstractproperty
@@ -47,15 +46,15 @@ class MainPane (object):
         pane = wx.aui.AuiPaneInfo()
         try:
             self._auiManager.LoadPaneInfo (string_info, pane)
-        except Exception, e:
+        except Exception:
             return
 
         return pane
 
 
     def loadPaneSize (self):
-        self.pane.BestSize ((self.config.width.value, 
-            self.config.height.value))
+        self.pane.BestSize ((self.config.width.value,
+                             self.config.height.value))
 
 
     def show (self):
@@ -75,8 +74,8 @@ class MainPane (object):
 
 
     def saveParams (self):
-        self._savePaneInfo (self.config.pane, 
-                self._auiManager.GetPane (self.panel))
+        self._savePaneInfo (self.config.pane,
+                            self._auiManager.GetPane (self.panel))
 
         self.config.width.value = self.panel.GetSizeTuple()[0]
         self.config.height.value = self.panel.GetSizeTuple()[1]
@@ -121,4 +120,3 @@ class MainPane (object):
     @property
     def pane (self):
         return self._auiManager.GetPane (self.panel)
-

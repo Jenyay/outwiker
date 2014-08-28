@@ -1,7 +1,7 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import wx
+
 
 class LinkDialog (wx.Dialog):
     """
@@ -12,9 +12,9 @@ class LinkDialog (wx.Dialog):
         link - Ссылка по умолчанию
         comment - Комментарий к ссылке по умолчанию
         """
-        super (LinkDialog, self).__init__ (parent, 
-                style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER,
-                title=_("Link"))
+        super (LinkDialog, self).__init__ (parent,
+                                           style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER,
+                                           title=_("Link"))
         self.__linkDefault = link
         self.__commentDefault = comment
 

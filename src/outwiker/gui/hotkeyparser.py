@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import re
@@ -10,7 +9,7 @@ class HotKeyParser (object):
     """Класс для создания экземпляра класса HotKey из строки и создания строки по HotKey"""
     # Регулярное выражение для получения горячей клавиши по строке
     _regex = re.compile ("((?P<ctrl>\s*ctrl\s*\+)|(?P<shift>\s*shift\s*\+)|(?P<alt>\s*alt\s*\+))*(?P<key>.*)",
-            re.I | re.U)
+                         re.I | re.U)
 
 
     @staticmethod
@@ -23,10 +22,10 @@ class HotKeyParser (object):
         altStr = u"Alt+" if hotkey.alt else u""
 
         return u"{ctrl}{shift}{alt}{key}".format (
-                ctrl=ctrlStr,
-                shift=shiftStr,
-                alt=altStr,
-                key=hotkey.key)
+            ctrl=ctrlStr,
+            shift=shiftStr,
+            alt=altStr,
+            key=hotkey.key)
 
 
     @staticmethod
@@ -35,18 +34,18 @@ class HotKeyParser (object):
         Создание экземпляра класса HotKey по строке
         """
         match = HotKeyParser._regex.match (hotkeyStr)
-        if match == None:
+        if match is None:
             raise ValueError ("Invalid hot key string")
 
         elements = match.groupdict()
         key = elements["key"].strip()
 
-        ctrl = elements["ctrl"] != None
-        shift = elements["shift"] != None
-        alt = elements["alt"] != None
+        ctrl = elements["ctrl"] is not None
+        shift = elements["shift"] is not None
+        alt = elements["alt"] is not None
 
         if (len (key) == 0 and
-                (ctrl or shift or alt) ):
+                (ctrl or shift or alt)):
             raise ValueError ("Invalid hot key string")
 
         return HotKey (key, ctrl=ctrl, shift=shift, alt=alt)

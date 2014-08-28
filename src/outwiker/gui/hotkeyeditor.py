@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import wx
@@ -19,7 +18,7 @@ class HotkeyEditor (wx.Panel):
         hotkeys = r"""F1 F2 F3 F4 F5 F6 F7 F8 F9 F10 F11 F12
 0 1 2 3 4 5 6 7 8 9
 A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
-Insert Enter Delete Home End Pageup Pagedown 
+Insert Enter Delete Home End Pageup Pagedown
 Up Down Left Right
 / \ * - + . _ = ` , ?"""
 
@@ -42,15 +41,15 @@ Up Down Left Right
         hotkey - экземпляр класса HotKey или None
         """
         self.clear()
-        if (hotkey == None or 
-            hotkey.key == None or
-            len (hotkey.key) == 0):
+        if (hotkey is None or
+                hotkey.key is None or
+                len (hotkey.key) == 0):
             return
 
         self._ctrl.Value = hotkey.ctrl
         self._shift.Value = hotkey.shift
         self._alt.Value = hotkey.alt
-        self._key.SetSelection (self.__findKeyItem (hotkey.key) )
+        self._key.SetSelection (self.__findKeyItem (hotkey.key))
 
 
     def getHotkey (self):
@@ -61,9 +60,9 @@ Up Down Left Right
             return None
 
         return HotKey (self._key.Value,
-                self._ctrl.Value,
-                self._alt.Value,
-                self._shift.Value)
+                       self._ctrl.Value,
+                       self._alt.Value,
+                       self._shift.Value)
 
 
     def __onEdit (self, event):

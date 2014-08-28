@@ -1,7 +1,4 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
-
-import wx
 
 from outwiker.gui.baseaction import BaseAction
 from outwiker.core.commands import createNewWiki
@@ -25,7 +22,7 @@ class NewAction (BaseAction):
     @property
     def description (self):
         return _(u"Create a new tree notes")
-    
+
 
     def run (self, params):
         createNewWiki (self._application.mainWindow)

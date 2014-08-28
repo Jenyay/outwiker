@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import wx.aui
@@ -26,7 +25,7 @@ class TagsCloudMainPane (MainPane):
         """
         pane = self._loadPaneInfo (self.config.pane)
 
-        if pane == None:
+        if pane is None:
             pane = self._getPaneDefault()
 
         # Из-за глюка http://trac.wxwidgets.org/ticket/12422 придется пока отказаться от плавающих панелек
@@ -34,8 +33,8 @@ class TagsCloudMainPane (MainPane):
         pane.CloseButton()
         pane.Caption(self.caption)
 
-        pane.BestSize ((self.config.width.value, 
-            self.config.height.value))
+        pane.BestSize ((self.config.width.value,
+                        self.config.height.value))
 
         return pane
 

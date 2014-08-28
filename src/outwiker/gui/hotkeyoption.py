@@ -1,8 +1,6 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 from outwiker.core.config import BaseOption
-from outwiker.gui.hotkey import HotKey
 from outwiker.gui.hotkeyparser import HotKeyParser
 
 
@@ -19,4 +17,4 @@ class HotKeyOption (BaseOption):
 
 
     def _prepareToWrite (self, value):
-        return u"" if value == None else HotKeyParser.toString (value)
+        return u"" if value is None else HotKeyParser.toString (value)

@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import wx
@@ -52,38 +51,38 @@ class PagePopupMenu (object):
 
 
     def __onAddChild (self, event):
-        assert self.popupPage != None
+        assert self.popupPage is not None
         createChildPage (self.parent, self.popupPage)
 
 
     def __onAddSibling (self, event):
-        assert self.popupPage != None
+        assert self.popupPage is not None
         createSiblingPage (self.parent, self.popupPage)
 
 
     def __onPropertiesPopup (self, event):
-        assert self.popupPage != None
-        if self.popupPage.parent != None:
+        assert self.popupPage is not None
+        if self.popupPage.parent is not None:
             outwiker.gui.pagedialog.editPage (self.parent, self.popupPage)
 
 
     def __createPopupMenu (self, popupPage):
         self.popupPage = popupPage
-        actionController =  self._application.actionController
+        actionController = self._application.actionController
 
         popupMenu = wx.Menu ()
 
-        popupMenu.Append (self.ID_ADD_CHILD, 
-                actionController.getTitle (AddChildPageAction.stringId))
+        popupMenu.Append (self.ID_ADD_CHILD,
+                          actionController.getTitle (AddChildPageAction.stringId))
 
-        popupMenu.Append (self.ID_ADD_SIBLING, 
-                actionController.getTitle (AddSiblingPageAction.stringId))
+        popupMenu.Append (self.ID_ADD_SIBLING,
+                          actionController.getTitle (AddSiblingPageAction.stringId))
 
-        popupMenu.Append (self.ID_REMOVE, 
-                actionController.getTitle (RemovePageAction.stringId))
+        popupMenu.Append (self.ID_REMOVE,
+                          actionController.getTitle (RemovePageAction.stringId))
 
-        popupMenu.Append (self.ID_RENAME, 
-                actionController.getTitle (RenamePageAction.stringId))
+        popupMenu.Append (self.ID_RENAME,
+                          actionController.getTitle (RenamePageAction.stringId))
 
         popupMenu.AppendSeparator()
 
@@ -94,8 +93,8 @@ class PagePopupMenu (object):
         popupMenu.Append (self.ID_OPEN_ATTACH_FOLDER, _(u"Open Attachments Folder"))
         popupMenu.AppendSeparator()
 
-        popupMenu.Append (self.ID_PROPERTIES_POPUP, 
-                actionController.getTitle (EditPagePropertiesAction.stringId))
+        popupMenu.Append (self.ID_PROPERTIES_POPUP,
+                          actionController.getTitle (EditPagePropertiesAction.stringId))
 
         self.__bindPopupMenuEvents (popupMenu)
 
@@ -106,8 +105,8 @@ class PagePopupMenu (object):
         """
         Удалить страницу
         """
-        assert self.popupPage != None
-        if self.popupPage != None:
+        assert self.popupPage is not None
+        if self.popupPage is not None:
             outwiker.core.commands.removePage (self.popupPage)
 
 
@@ -115,7 +114,7 @@ class PagePopupMenu (object):
         """
         Переименовать страницу
         """
-        assert self.popupPage != None
+        assert self.popupPage is not None
         self._application.mainWindow.treePanel.beginRename (self.popupPage)
 
 
@@ -123,12 +122,12 @@ class PagePopupMenu (object):
         """
         Копировать ссылку на страницу в буфер обмена
         """
-        assert self.popupPage != None
+        assert self.popupPage is not None
         outwiker.core.commands.copyLinkToClipboard (self.popupPage)
 
 
     def __onOpenAttachFolder (self, event):
-        assert self.popupPage != None
+        assert self.popupPage is not None
         self._application.actionController.getAction (OpenAttachFolderAction.stringId).run (None)
 
 
@@ -136,7 +135,7 @@ class PagePopupMenu (object):
         """
         Копировать заголовок страницы в буфер обмена
         """
-        assert self.popupPage != None
+        assert self.popupPage is not None
         outwiker.core.commands.copyTitleToClipboard (self.popupPage)
 
 
@@ -144,7 +143,7 @@ class PagePopupMenu (object):
         """
         Копировать путь до страницы в буфер обмена
         """
-        assert self.popupPage != None
+        assert self.popupPage is not None
         outwiker.core.commands.copyPathToClipboard (self.popupPage)
 
 
@@ -152,6 +151,5 @@ class PagePopupMenu (object):
         """
         Копировать путь до прикрепленных файлов в буфер обмена
         """
-        assert self.popupPage != None
+        assert self.popupPage is not None
         outwiker.core.commands.copyAttachPathToClipboard (self.popupPage)
-

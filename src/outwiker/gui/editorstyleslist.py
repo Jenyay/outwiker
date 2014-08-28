@@ -1,7 +1,7 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import wx
+
 
 class EditorStylesList (wx.Panel):
     """
@@ -71,7 +71,7 @@ class EditorStylesList (wx.Panel):
 
     def _updateSelection (self):
         index = self._stylesList.GetSelection()
-        
+
         if index >= 0:
             self._colorPicker.SetColour (self._styles[index].fore)
             self._bold.SetValue (self._styles[index].bold)

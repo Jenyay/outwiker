@@ -1,6 +1,4 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
-
 
 import wx
 
@@ -43,8 +41,8 @@ class ActionController (object):
     @property
     def configSection (self):
         return self._configSection
-    
-    
+
+
     def getActionsStrId (self):
         """
         Возвращает все зарегистрированные strid
@@ -73,7 +71,7 @@ class ActionController (object):
         # Не должно быть одинаковых идентификаторов действий
         assert action.stringId not in self._actionsInfo
 
-        actionInfo = ActionInfo (action, self._getHotKeyForAction (action, hotkey) )
+        actionInfo = ActionInfo (action, self._getHotKeyForAction (action, hotkey))
         self._actionsInfo[action.stringId] = actionInfo
 
 
@@ -82,9 +80,9 @@ class ActionController (object):
         Получить горячую клавишу. Или берется клавиша из конфига, или defaultHotKey
         """
         return HotKeyOption (self._config,
-                self.configSection,
-                action.stringId,
-                defaultHotKey).value
+                             self.configSection,
+                             action.stringId,
+                             defaultHotKey).value
 
 
     def saveHotKeys (self):
@@ -93,9 +91,9 @@ class ActionController (object):
         """
         for actionInfo in self._actionsInfo.values():
             option = HotKeyOption (self._config,
-                self.configSection,
-                actionInfo.action.stringId,
-                None)
+                                   self.configSection,
+                                   actionInfo.action.stringId,
+                                   None)
             option.value = actionInfo.hotkey
 
 
@@ -111,10 +109,10 @@ class ActionController (object):
 
         actionInfo.hotkey = hotkey
         if updateTools:
-            if actionInfo.menuItem != None:
+            if actionInfo.menuItem is not None:
                 actionInfo.menuItem.SetItemLabel (self._getMenuItemTitle (strid))
 
-            if actionInfo.toolbar != None and actionInfo.toolItemId != None:
+            if actionInfo.toolbar is not None and actionInfo.toolItemId is not None:
                 title = self._getToolbarItemTitle (strid)
                 actionInfo.toolbar.SetToolLabel (actionInfo.toolItemId, title)
                 actionInfo.toolbar.SetToolShortHelp (actionInfo.toolItemId, title)
@@ -169,7 +167,7 @@ class ActionController (object):
         """
         actionInfo = self._actionsInfo[strid]
 
-        if actionInfo.toolbar != None:
+        if actionInfo.toolbar is not None:
             toolid = self._actionsInfo[strid].toolItemId
             self._actionsInfo[strid].toolbar.DeleteTool (toolid, False)
             self._actionsInfo[strid].toolbar.Realize()
@@ -181,7 +179,7 @@ class ActionController (object):
     def removeMenuItem (self, strid):
         actionInfo = self._actionsInfo[strid]
 
-        if actionInfo.menuItem != None:
+        if actionInfo.menuItem is not None:
             actionInfo.menuItem.Menu.DeleteItem (actionInfo.menuItem)
             self._mainWindow.Unbind (wx.EVT_MENU, id=actionInfo.menuItem.GetId())
             actionInfo.menuItem = None
@@ -235,11 +233,11 @@ class ActionController (object):
         """
         # Установим флажки на соответствующем пункте меню и зажмем соответствующую кнопку
         menuItem = self._actionsInfo[action.stringId].menuItem
-        if (menuItem != None):
+        if (menuItem is not None):
             menuItem.Check (checked)
 
         toolbar = self._actionsInfo[action.stringId].toolbar
-        if toolbar != None:
+        if toolbar is not None:
             toolbar.Freeze()
             toolbar.ToggleTool (self._actionsInfo[action.stringId].toolItemId, checked)
             toolbar.Realize()
@@ -258,11 +256,11 @@ class ActionController (object):
         bitmap = wx.Bitmap (image)
 
         toolbar.AddTool(actionid,
-            title,
-            bitmap,
-            short_help_string=title,
-            kind=buttonType,
-            fullUpdate=fullUpdate)
+                        title,
+                        bitmap,
+                        short_help_string=title,
+                        kind=buttonType,
+                        fullUpdate=fullUpdate)
 
         self._actionsInfo[strid].toolbar = toolbar
         self._actionsInfo[strid].toolItemId = actionid
@@ -271,11 +269,11 @@ class ActionController (object):
     def enableTools (self, strid, enabled=True):
         actionInfo = self._actionsInfo[strid]
 
-        if actionInfo.toolItemId != None:
+        if actionInfo.toolItemId is not None:
             actionInfo.toolbar.EnableTool (actionInfo.toolItemId, enabled)
             actionInfo.toolbar.Realize()
 
-        if actionInfo.menuItem != None:
+        if actionInfo.menuItem is not None:
             actionInfo.menuItem.Enable (enabled)
 
 
@@ -297,7 +295,7 @@ class ActionController (object):
         hotkey = self.getHotKey (strid)
         title = self.getTitle (strid)
 
-        if hotkey == None:
+        if hotkey is None:
             return title
 
         return u"{0}\t{1}".format (title, HotKeyParser.toString (hotkey))
@@ -307,7 +305,7 @@ class ActionController (object):
         hotkey = self.getHotKey (strid)
         title = self.getTitle (strid)
 
-        if hotkey == None:
+        if hotkey is None:
             return title
 
         return u"{0} ({1})".format (title, HotKeyParser.toString (hotkey))

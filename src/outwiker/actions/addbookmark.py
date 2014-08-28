@@ -1,7 +1,4 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
-
-import wx
 
 from outwiker.gui.baseaction import BaseAction
 
@@ -24,10 +21,10 @@ class AddBookmarkAction (BaseAction):
     @property
     def description (self):
         return _(u"Add/Remove Bookmark")
-    
+
 
     def run (self, params):
-        if self._application.selectedPage != None:
+        if self._application.selectedPage is not None:
             wikiroot = self._application.wikiroot
             selectedPage = wikiroot.selectedPage
 

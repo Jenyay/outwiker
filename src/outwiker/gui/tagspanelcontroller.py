@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import wx
@@ -7,7 +6,6 @@ from .pagelist import EVT_PAGE_CLICK
 from .taglabel import EVT_TAG_LEFT_CLICK, EVT_TAG_MIDDLE_CLICK
 
 from outwiker.core.tagslist import TagsList
-from outwiker.core.tree import RootWikiPage
 from outwiker.core.tagscommands import removeTag, appendTag
 from outwiker.core.sortfunctions import sortAlphabeticalFunction
 
@@ -56,7 +54,7 @@ class TagsPanelController (object):
 
 
     def __onTagLeftClick (self, event):
-        assert self.__currentTags != None
+        assert self.__currentTags is not None
 
         pages = self.__currentTags[event.text][:]
         pages.sort (sortAlphabeticalFunction)
@@ -69,7 +67,7 @@ class TagsPanelController (object):
         Средний клик по тегу
         """
         selectedPage = self.__application.selectedPage
-        if selectedPage != None:
+        if selectedPage is not None:
             tag = event.text
 
             if tag in selectedPage.tags:
@@ -79,7 +77,7 @@ class TagsPanelController (object):
 
 
     def __onPageClick (self, event):
-        assert event.page != None
+        assert event.page is not None
         self.__application.selectedPage = event.page
 
 
@@ -111,7 +109,7 @@ class TagsPanelController (object):
         """
         Возвращает True, если списки тегов одинаковые, и False в противном случае
         """
-        if taglist1 == None or taglist2 == None:
+        if taglist1 is None or taglist2 is None:
             return False
 
         keys1 = taglist1.tags
@@ -128,7 +126,7 @@ class TagsPanelController (object):
 
 
     def updateTags (self):
-        if self.__application.wikiroot == None:
+        if self.__application.wikiroot is None:
             self.__tagsPanel.clearMarks()
             self.__tagsPanel.clearTags()
             return
@@ -144,6 +142,6 @@ class TagsPanelController (object):
     def __markTags (self):
         self.__tagsPanel.clearMarks()
 
-        if self.__application.selectedPage != None:
+        if self.__application.selectedPage is not None:
             for tag in self.__application.selectedPage.tags:
                 self.__tagsPanel.mark (tag)

@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import os.path
@@ -27,9 +26,9 @@ class BaseFileIcons (object):
         from outwiker.core.system import getImagesDir
         imagesDir = getImagesDir()
         self._imageList.Add (wx.Bitmap(os.path.join (imagesDir, "file_icon_default.png"),
-                    wx.BITMAP_TYPE_ANY))
+                                       wx.BITMAP_TYPE_ANY))
         self._imageList.Add (wx.Bitmap(os.path.join (imagesDir, "folder.png"),
-                    wx.BITMAP_TYPE_ANY))
+                                       wx.BITMAP_TYPE_ANY))
 
 
     def getFileImage (self, filepath):
@@ -94,7 +93,7 @@ class UnixFileIcons (BaseFileIcons):
 
         bmp = self.__getSystemIcon (ext)
 
-        if bmp == None:
+        if bmp is None:
             return self.DEFAULT_FILE_ICON
 
         index = self.imageList.Add (bmp)
@@ -133,10 +132,10 @@ class WindowsFileIcons (BaseFileIcons):
         if not icon.Ok():
             return None
 
-        bmp = wx.EmptyBitmap(16,16)
+        bmp = wx.EmptyBitmap(16, 16)
         bmp.CopyFromIcon(icon)
         bmp = bmp.ConvertToImage()
-        bmp.Rescale(16,16)
+        bmp.Rescale(16, 16)
         bmp = wx.BitmapFromImage(bmp)
 
         return bmp
@@ -147,21 +146,21 @@ class WindowsFileIcons (BaseFileIcons):
         Возвращает картинку, связанную  расширением ext в системе. Если с расширением не связана картинка, возвращется None
         """
         filetype = wx.TheMimeTypesManager.GetFileTypeFromExtension(ext)
-        if filetype == None:
+        if filetype is None:
             return None
 
         nntype = filetype.GetIconInfo()
-        if nntype == None:
+        if nntype is None:
             return None
 
         icon = nntype[0]
         if not icon.Ok():
             return None
 
-        bmp = wx.EmptyBitmap(16,16)
+        bmp = wx.EmptyBitmap(16, 16)
         bmp.CopyFromIcon(icon)
         bmp = bmp.ConvertToImage()
-        bmp.Rescale(16,16)
+        bmp.Rescale(16, 16)
         bmp = wx.BitmapFromImage(bmp)
         return bmp
 
@@ -194,7 +193,7 @@ class WindowsFileIcons (BaseFileIcons):
         else:
             bmp = self.__getSystemIcon (ext)
 
-        if bmp == None:
+        if bmp is None:
             return self.DEFAULT_FILE_ICON
 
         index = self.imageList.Add (bmp)

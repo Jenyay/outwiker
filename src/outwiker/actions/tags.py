@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import wx
@@ -29,26 +28,26 @@ class AddTagsToBranchAction (BaseAction):
     @property
     def description (self):
         return _(u"Add tags to branch")
-    
+
 
     def run (self, params):
-        assert self._application.mainWindow != None
+        assert self._application.mainWindow is not None
 
-        if self._application.wikiroot == None:
+        if self._application.wikiroot is None:
             return
 
-        if self._application.selectedPage == None:
-            self.addTagsToBranchGui (self._application.wikiroot, 
-                    self._application.mainWindow)
+        if self._application.selectedPage is None:
+            self.addTagsToBranchGui (self._application.wikiroot,
+                                     self._application.mainWindow)
         else:
-            self.addTagsToBranchGui (self._application.selectedPage, 
-                    self._application.mainWindow)
+            self.addTagsToBranchGui (self._application.selectedPage,
+                                     self._application.mainWindow)
 
 
     @testreadonly
     def addTagsToBranchGui (self, page, parent):
         """
-        Добавить теги к ветке, начинающейся со страницы page. 
+        Добавить теги к ветке, начинающейся со страницы page.
         Теги к самой странице page тоже добавляются
         """
         dlg = TagsDialog (parent, self._application)
@@ -83,22 +82,22 @@ class RemoveTagsFromBranchAction (BaseAction):
     @property
     def description (self):
         return _(u"Remove tags from branch")
-    
+
 
     def run (self, params):
-        assert self._application.mainWindow != None
+        assert self._application.mainWindow is not None
 
-        if self._application.wikiroot == None:
+        if self._application.wikiroot is None:
             return
 
-        if self._application.selectedPage == None:
+        if self._application.selectedPage is None:
             self.removeTagsFromBranchGui (
-                    self._application.wikiroot, 
-                    self._application.mainWindow)
+                self._application.wikiroot,
+                self._application.mainWindow)
         else:
             self.removeTagsFromBranchGui (
-                    self._application.selectedPage, 
-                    self._application.mainWindow)
+                self._application.selectedPage,
+                self._application.mainWindow)
 
 
     @testreadonly
@@ -138,15 +137,15 @@ class RenameTagAction (BaseAction):
     @property
     def description (self):
         return _(u"Rename tag")
-    
+
 
     def run (self, params):
-        assert self._application.mainWindow != None
+        assert self._application.mainWindow is not None
 
-        if self._application.wikiroot != None:
+        if self._application.wikiroot is not None:
             self.renameTagGui (
-                    self._application.wikiroot, 
-                    self._application.mainWindow)
+                self._application.wikiroot,
+                self._application.mainWindow)
 
 
     @testreadonly

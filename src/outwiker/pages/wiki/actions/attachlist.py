@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import wx
@@ -28,14 +27,14 @@ class WikiAttachListAction (BaseAction):
 
 
     def run (self, params):
-        assert self._application.mainWindow != None
-        assert self._application.mainWindow.pagePanel != None
+        assert self._application.mainWindow is not None
+        assert self._application.mainWindow.pagePanel is not None
 
         with AttachListDialog (self._application.mainWindow) as dlg:
             controller = AttachListDialogController (dlg)
 
             text = controller.getDialogResult()
-            if text != None:
+            if text is not None:
                 self._application.mainWindow.pagePanel.pageView.codeEditor.replaceText (text)
 
 
@@ -43,18 +42,18 @@ class WikiAttachListAction (BaseAction):
 class AttachListDialogController (object):
     def __init__ (self, dialog):
         self._sortStringsDialog = [
-                _(u"Name"),
-                _(u"Extension"),
-                _(u"Size"),
-                _(u"Date"),
-                ]
+            _(u"Name"),
+            _(u"Extension"),
+            _(u"Size"),
+            _(u"Date"),
+        ]
 
         self._sortStrings = [
-                u"name",
-                u"ext",
-                u"size",
-                u"date",
-                ]
+            u"name",
+            u"ext",
+            u"size",
+            u"date",
+        ]
 
         self._dialog = dialog
         self._dialog.setSortStrings (self._sortStringsDialog)

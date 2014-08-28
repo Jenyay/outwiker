@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 from abc import ABCMeta, abstractmethod, abstractproperty
@@ -6,7 +5,7 @@ from abc import ABCMeta, abstractmethod, abstractproperty
 
 class BaseAction (object):
     __metaclass__ = ABCMeta
-    
+
     @abstractproperty
     def title (self):
         """

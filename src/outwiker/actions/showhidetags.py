@@ -1,7 +1,4 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
-
-import wx
 
 from outwiker.actions.showhidebase import ShowHideBaseAction
 
@@ -24,7 +21,7 @@ class ShowHideTagsAction (ShowHideBaseAction):
     @property
     def description (self):
         return _(u"Show / hide a tags panel")
-    
+
 
     def getPanel (self):
         return self._application.mainWindow.tagsCloudPanel

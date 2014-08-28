@@ -1,5 +1,5 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
+
 
 class TagsList (object):
     """
@@ -21,12 +21,12 @@ class TagsList (object):
         """
         return self._tags.keys()
 
-    
+
     def _findTags (self, page):
         """
         Поиск тегов для страницы page и ее дочерних страниц
         """
-        if page.parent != None:
+        if page.parent is not None:
             for tag in page.tags:
                 tag_lower = tag.lower()
 
@@ -37,7 +37,7 @@ class TagsList (object):
 
         for child in page.children:
             self._findTags (child)
-    
+
 
     def __len__ (self):
         return len (self._tags.keys())

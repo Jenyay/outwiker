@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import wx
@@ -13,8 +12,9 @@ class RenameTagDialog(wx.Dialog):
         parent - родительское окно
         tagsList - список тегов для облака тегов (экземпляр класса TagsList)
         """
-        super(RenameTagDialog, self).__init__(parent, 
-                style=wx.DEFAULT_DIALOG_STYLE|wx.RESIZE_BORDER|wx.THICK_FRAME)
+        super(RenameTagDialog, self).__init__(
+            parent,
+            style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.THICK_FRAME)
 
         self.SetTitle (_(u"Rename tag"))
 
@@ -23,7 +23,7 @@ class RenameTagDialog(wx.Dialog):
         self.Center(wx.CENTRE_ON_SCREEN)
 
         self.Bind (wx.EVT_BUTTON, self.__onOk, id=wx.ID_OK)
-        
+
 
     def __createControls (self, tagsList):
         self.__tagSelector = SingleTagSelector (self)
@@ -71,7 +71,7 @@ class RenameTagDialog(wx.Dialog):
     def __onOk (self, event):
         from outwiker.core.commands import MessageBox
 
-        if self.oldTagName == None:
+        if self.oldTagName is None:
             MessageBox (_(u"Select tag for rename"), _(u"Error"), wx.ICON_ERROR | wx.OK)
             return
 

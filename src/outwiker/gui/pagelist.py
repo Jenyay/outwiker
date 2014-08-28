@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import wx
@@ -47,13 +46,13 @@ class PageList (wx.ScrolledWindow):
             unitY = len (self.__titleItems) + 1
 
             self.SetScrollbars (pixelPerUnitX,
-                    pixelPerUnitY,
-                    unitX,
-                    unitY,
-                    0,
-                    0)
+                                pixelPerUnitY,
+                                unitX,
+                                unitY,
+                                0,
+                                0)
 
-            
+
     def __getItemMaxWidth (self):
         maxwidth = 0
         for item in self.__titleItems:
@@ -108,11 +107,11 @@ class PageTitleItem (wx.Panel):
         self.SetBackgroundColour (self.__backColor)
 
         url = "/" + page.subpath
-        self.__label = wx.HyperlinkCtrl (self, 
-                -1, 
-                page.title, 
-                url, 
-                style=wx.HL_ALIGN_CENTRE | wx.NO_BORDER)
+        self.__label = wx.HyperlinkCtrl (self,
+                                         -1,
+                                         page.title,
+                                         url,
+                                         style=wx.HL_ALIGN_CENTRE | wx.NO_BORDER)
 
         self.__formatLabel (self.__label)
         self.__label.Bind (wx.EVT_HYPERLINK, self.__pageClicked)
@@ -131,15 +130,14 @@ class PageTitleItem (wx.Panel):
 
 
     def __formatLabel (self, label):
-        font = wx.Font (self.__fontSize, 
-                wx.FONTFAMILY_DEFAULT,
-                wx.FONTSTYLE_NORMAL,
-                wx.FONTWEIGHT_NORMAL,
-                underline=False)
+        font = wx.Font (self.__fontSize,
+                        wx.FONTFAMILY_DEFAULT,
+                        wx.FONTSTYLE_NORMAL,
+                        wx.FONTWEIGHT_NORMAL,
+                        underline=False)
 
         label.SetFont (font)
         label.SetToolTipString (self.__page.subpath.replace ("/", " / "))
         label.SetBackgroundColour (self.__backColor)
         label.SetVisitedColour (label.GetNormalColour())
         label.SetSize (label.GetBestSize())
-

@@ -1,7 +1,7 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 from outwiker.gui.baseaction import BaseAction
+
 
 class CloseTabAction (BaseAction):
     """
@@ -21,10 +21,10 @@ class CloseTabAction (BaseAction):
     @property
     def description (self):
         return _(u"Close current tab")
-    
+
 
     def run (self, params):
-        assert self._application.mainWindow != None
+        assert self._application.mainWindow is not None
 
         index = self._application.mainWindow.tabsController.getSelection()
         if index != -1:
@@ -50,10 +50,10 @@ class AddTabAction (BaseAction):
     @property
     def description (self):
         return _(u"Add tab")
-    
+
 
     def run (self, params):
-        assert self._application.mainWindow != None
+        assert self._application.mainWindow is not None
         self._application.mainWindow.tabsController.cloneTab()
 
 
@@ -76,10 +76,10 @@ class NextTabAction (BaseAction):
     @property
     def description (self):
         return _(u"Go to next tab")
-    
+
 
     def run (self, params):
-        assert self._application.mainWindow != None
+        assert self._application.mainWindow is not None
         self._application.mainWindow.tabsController.nextTab()
 
 
@@ -102,8 +102,8 @@ class PreviousTabAction (BaseAction):
     @property
     def description (self):
         return _(u"Go to previous tab")
-    
+
 
     def run (self, params):
-        assert self._application.mainWindow != None
+        assert self._application.mainWindow is not None
         self._application.mainWindow.tabsController.previousTab()

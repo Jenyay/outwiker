@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import wx
@@ -25,12 +24,12 @@ class ReloadWikiAction (BaseAction):
     @property
     def description (self):
         return _(u"Reload wiki")
-    
+
 
     def run (self, params):
-        if self._application.wikiroot != None:
-            result = (MessageBox (_(u"Save current page before reload?"), 
-                _(u"Save?"), wx.YES_NO | wx.CANCEL  | wx.ICON_QUESTION ))
+        if self._application.wikiroot is not None:
+            result = (MessageBox (_(u"Save current page before reload?"),
+                                  _(u"Save?"), wx.YES_NO | wx.CANCEL | wx.ICON_QUESTION))
 
             if result == wx.CANCEL:
                 return

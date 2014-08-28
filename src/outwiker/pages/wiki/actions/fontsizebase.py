@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 from outwiker.gui.baseaction import BaseAction
@@ -16,7 +15,7 @@ class WikiFontSizeBaseAction (BaseAction):
     def selectFontSize (self, selIndex):
         fontSizeSelector = FontSizeSelector (self._application.mainWindow)
         notation = fontSizeSelector.selectFontSize (selIndex)
-        
-        if notation != None:
+
+        if notation is not None:
             codeEditor = self._application.mainWindow.pagePanel.pageView.codeEditor
             codeEditor.turnText (notation[0], notation[1])

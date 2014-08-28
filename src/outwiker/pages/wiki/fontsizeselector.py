@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import wx
@@ -12,15 +11,17 @@ class FontSizeSelector (object):
         self._parentWnd = parentWnd
 
         self._fontSizeList = [u"20%", u"40%", u"60%", u"80%", u"120%", u"140%", u"160%", u"180%", u"200%"]
-        self._fontSizeFormat = [(u"[----", u"----]"),
-                (u"[---", u"---]"),
-                (u"[--", u"--]"),
-                (u"[-", u"-]"),
-                (u"[+", u"+]"),
-                (u"[++", u"++]"),
-                (u"[+++", u"+++]"),
-                (u"[++++", u"++++]"),
-                (u"[+++++", u"+++++]")]
+        self._fontSizeFormat = [
+            (u"[----", u"----]"),
+            (u"[---", u"---]"),
+            (u"[--", u"--]"),
+            (u"[-", u"-]"),
+            (u"[+", u"+]"),
+            (u"[++", u"++]"),
+            (u"[+++", u"+++]"),
+            (u"[++++", u"++++]"),
+            (u"[+++++", u"+++++]")
+        ]
 
 
     def selectFontSize (self, selIndex):
@@ -29,10 +30,10 @@ class FontSizeSelector (object):
         selIndex - первоначально выбранный индекс
         возвращает кортеж из тегов, которые форматируют текст под нужный размер, или None, если пользователь нажал на Отмену
         """
-        dlg = wx.SingleChoiceDialog (self._parentWnd, 
-                _(u"Select font size"),
-                _(u"Font size"),
-                self._fontSizeList)
+        dlg = wx.SingleChoiceDialog (self._parentWnd,
+                                     _(u"Select font size"),
+                                     _(u"Font size"),
+                                     self._fontSizeList)
 
         dlg.SetSelection (selIndex)
         result = None
@@ -41,6 +42,6 @@ class FontSizeSelector (object):
             sizeIndex = dlg.GetSelection()
             result = self._fontSizeFormat[sizeIndex]
 
-        dlg.Destroy() 
+        dlg.Destroy()
 
         return result

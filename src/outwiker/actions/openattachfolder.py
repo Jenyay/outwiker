@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import wx
@@ -30,7 +29,7 @@ class OpenAttachFolderAction (BaseAction):
 
 
     def run (self, params):
-        if self._application.selectedPage != None:
+        if self._application.selectedPage is not None:
             folder = Attachment (self._application.selectedPage).getAttachPath (create=True)
             try:
                 getOS().startFile (folder)

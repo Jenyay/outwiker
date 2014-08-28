@@ -1,7 +1,4 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
-
-import wx
 
 from outwiker.gui.baseaction import BaseAction
 from outwiker.core.commands import removePage
@@ -25,8 +22,8 @@ class RemovePageAction (BaseAction):
     @property
     def description (self):
         return _(u"Remove current page and all children")
-    
+
 
     def run (self, params):
-        if self._application.selectedPage != None:
+        if self._application.selectedPage is not None:
             removePage (self._application.wikiroot.selectedPage)

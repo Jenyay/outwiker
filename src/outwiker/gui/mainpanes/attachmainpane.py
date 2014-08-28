@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import wx.aui
@@ -25,7 +24,7 @@ class AttachMainPane (MainPane):
     def _createPane (self):
         pane = self._loadPaneInfo (self.config.pane)
 
-        if pane == None:
+        if pane is None:
             pane = self._getPaneDefault()
 
         # Из-за глюка http://trac.wxwidgets.org/ticket/12422 придется пока отказаться от плавающих панелек
@@ -40,4 +39,3 @@ class AttachMainPane (MainPane):
         pane = wx.aui.AuiPaneInfo().Name("attachesPane").Caption(self.caption).Gripper(False).CaptionVisible(True).Layer(0).Position(0).CloseButton(True).MaximizeButton(False).Bottom().Dock()
 
         return pane
-

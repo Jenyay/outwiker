@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import wx
@@ -25,7 +24,7 @@ class SortChildAlphabeticalAction (BaseAction):
     @property
     def description (self):
         return _(u"Sort children pages alphabetically")
-    
+
 
     def run (self, params):
         self.sortChildren()
@@ -33,13 +32,13 @@ class SortChildAlphabeticalAction (BaseAction):
 
     @testreadonly
     def sortChildren (self):
-        if self._application.wikiroot == None:
-            MessageBox (_(u"Wiki is not open"), 
-                    _(u"Error"), 
-                    wx.ICON_ERROR | wx.OK)
+        if self._application.wikiroot is None:
+            MessageBox (_(u"Wiki is not open"),
+                        _(u"Error"),
+                        wx.ICON_ERROR | wx.OK)
             return
 
-        if self._application.wikiroot.selectedPage != None:
+        if self._application.wikiroot.selectedPage is not None:
             self._application.wikiroot.selectedPage.sortChildrenAlphabetical ()
         else:
             self._application.wikiroot.sortChildrenAlphabetical ()

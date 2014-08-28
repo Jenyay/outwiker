@@ -1,5 +1,5 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
+
 
 class HotKey (object):
     """
@@ -33,7 +33,7 @@ class HotKey (object):
 
 
     def __eq__ (self, other):
-        return (other != None and
+        return (other is not None and
                 self._key == other._key and
                 self._ctrl == other._ctrl and
                 self._alt == other._alt and

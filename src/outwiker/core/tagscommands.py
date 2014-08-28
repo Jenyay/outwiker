@@ -1,6 +1,4 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
-
 
 from .tagslist import TagsList
 
@@ -9,7 +7,7 @@ def parseTagsList (tagsString):
     """
     Преобразовать строку тегов, разделенных запятой, в список
     """
-    tags = [tag.strip() for tag in tagsString.split (",") 
+    tags = [tag.strip() for tag in tagsString.split (",")
             if len (tag.strip()) > 0]
 
     return tags
@@ -78,7 +76,7 @@ def removeTagsFromBranch (parentPage, tags):
         map (lambda tag: removeTag (parentPage, tag), tags)
 
     map (lambda child: removeTagsFromBranch (child, tags), parentPage.children)
-    
+
 
 def renameTag (wikiroot, oldName, newName):
     """
@@ -88,4 +86,3 @@ def renameTag (wikiroot, oldName, newName):
     for page in tags[oldName]:
         removeTag (page, oldName)
         appendTag (page, newName)
-

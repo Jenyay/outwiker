@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import wx
@@ -14,9 +13,9 @@ class MainPanesController (object):
         self.__mainWindow = mainWindow
         self.auiManager = mainWindow.auiManager
 
-        self.__actions = [ShowHideTreeAction, 
-                ShowHideTagsAction,
-                ShowHideAttachesAction]
+        self.__actions = [ShowHideTreeAction,
+                          ShowHideTagsAction,
+                          ShowHideAttachesAction]
 
         self.auiManager.Bind (wx.aui.EVT_AUI_PANE_CLOSE, self.__onPaneClose)
 
@@ -24,8 +23,9 @@ class MainPanesController (object):
 
 
     def createViewMenuItems (self):
-        map (lambda action: self.__application.actionController.appendMenuCheckItem (action.stringId, 
-                self.__mainWindow.mainMenu.viewMenu), self.__actions)
+        map (lambda action: self.__application.actionController.appendMenuCheckItem (
+            action.stringId,
+            self.__mainWindow.mainMenu.viewMenu), self.__actions)
 
 
     def __onPaneClose (self, event):
@@ -88,13 +88,13 @@ class MainPanesController (object):
         """
         Установить флажки напротив нужных пунктов меню "Вид", относящихся к панелям
         """
-        self.__application.actionController.check (ShowHideAttachesAction.stringId, 
-                self.__mainWindow.attachPanel.isShown())
+        self.__application.actionController.check (ShowHideAttachesAction.stringId,
+                                                   self.__mainWindow.attachPanel.isShown())
 
-        self.__application.actionController.check (ShowHideTreeAction.stringId, 
-                self.__mainWindow.treePanel.isShown())
+        self.__application.actionController.check (ShowHideTreeAction.stringId,
+                                                   self.__mainWindow.treePanel.isShown())
 
-        self.__application.actionController.check (ShowHideTagsAction.stringId, 
-                self.__mainWindow.tagsCloudPanel.isShown())
+        self.__application.actionController.check (ShowHideTagsAction.stringId,
+                                                   self.__mainWindow.tagsCloudPanel.isShown())
 
         self.auiManager.Update()

@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import wx
@@ -26,7 +25,7 @@ class GlobalSearchAction (BaseAction):
     @property
     def description (self):
         return _(u"Create or open page for global search")
-    
+
 
     def run (self, params):
         self._openGlobalSearch ()
@@ -34,10 +33,10 @@ class GlobalSearchAction (BaseAction):
 
     @testreadonly
     def _openGlobalSearch (self):
-        if self._application.wikiroot != None:
+        if self._application.wikiroot is not None:
             try:
                 GlobalSearch.create (self._application.wikiroot)
             except IOError:
-                MessageBox (_(u"Can't create page"), 
-                        _(u"Error"), 
-                        wx.ICON_ERROR | wx.OK)
+                MessageBox (_(u"Can't create page"),
+                            _(u"Error"),
+                            wx.ICON_ERROR | wx.OK)

@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 from .window import Window
@@ -19,4 +18,3 @@ class Dialog (Window):
 
     def ShowModal (self):
         return self.ReturnCode
-
