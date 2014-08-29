@@ -31,7 +31,7 @@ DEFAULT_OLD_CONFIG_DIR = u".outwiker"
 # По стандарту, если переменная XDG_CONFIG_HOME не задана в окружении,
 # то берется значение по умолчанию т.е. ~/.config
 # http://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html
-DEFAULT_CONFIG_DIR = os.path.join(os.environ.get("XDG_CONFIG_HOME", u".config"), u"outwiker") 
+DEFAULT_CONFIG_DIR =  u"outwiker"
 
 
 
@@ -184,23 +184,32 @@ def getConfigPath (dirname=DEFAULT_CONFIG_DIR, fname=DEFAULT_CONFIG_NAME):
     1. Если в папке с программой есть файл настроек, то вернуть путь до него
     2. Иначе настройки будут храниться в домашней поддиректории. При этом создать директорию .outwiker в домашней директории.
     """
-    someDir = os.path.join (getCurrentDir(), fname)
-    if os.path.exists (someDir):
-        path = someDir
-    else:
-        homeDir = os.path.join (unicode (os.path.expanduser("~"), getOS().filesEncoding), dirname)
-        if not os.path.exists (homeDir):
-            os.mkdir (homeDir)
+    confSrcDir = os.path.join (getCurrentDir(), fname)
 
-        pluginsDir = os.path.join (homeDir, PLUGINS_DIR)
+    if os.path.exists (confSrcDir):
+        path = confSrcDir
+    else:
+        confDir = os.path.join(os.environ.get(u"XDG_CONFIG_HOME", u".config"),\
+                               dirname)
+
+        if not os.path.isabs(confDir): 
+            confDir = os.path.join(unicode (os.path.expanduser("~"), getOS().filesEncoding),\
+                                   confDir)
+
+        if not os.path.exists (confDir):
+            os.mkdir (confDir)
+
+        pluginsDir = os.path.join (confDir, PLUGINS_DIR)
+
         if not os.path.exists (pluginsDir):
             os.mkdir (pluginsDir)
 
-        stylesDir = os.path.join (homeDir, STYLES_DIR)
+        stylesDir = os.path.join (confDir, STYLES_DIR)
+        
         if not os.path.exists (stylesDir):
             os.mkdir (stylesDir)
 
-        path = os.path.join (homeDir, fname)
+        path = os.path.join (confDir, fname)
 
     return path
 
