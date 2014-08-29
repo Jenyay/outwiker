@@ -4,11 +4,11 @@
 Действия, которые зависят от ОС, на которой запущена программа
 """
 
+import codecs
+import locale
 import os
 import os.path
 import sys
-import locale
-import codecs
 
 import wx
 
