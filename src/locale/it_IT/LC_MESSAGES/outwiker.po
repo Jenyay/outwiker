@@ -3,15 +3,15 @@ msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-08-20 15:00+0400\n"
-"PO-Revision-Date: 2014-08-27 17:53+0300\n"
-"Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
+"PO-Revision-Date: 2014-08-29 16:09+0400\n"
+"Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 1.6.8\n"
 
 #: outwiker/core/pagetitletester.py:51
 #, python-format
@@ -269,7 +269,7 @@ msgstr "Inserire codice"
 
 #: outwiker/core/commands.py:836
 msgid "Insert code (monospaced font)"
-msgstr "Inserire codice (carattere monospazio)"
+msgstr "Inserisci codice (carattere monospazio)"
 
 #: outwiker/core/commands.py:844 outwiker/core/commands.py:845
 msgid "Align text left"
@@ -297,19 +297,19 @@ msgstr "Intestazione di secondo livello"
 
 #: outwiker/core/commands.py:882 outwiker/core/commands.py:883
 msgid "Subtitle three"
-msgstr "SottoTitolo 3"
+msgstr "Sottotitolo 3"
 
 #: outwiker/core/commands.py:888 outwiker/core/commands.py:889
 msgid "Subtitle four"
-msgstr "SottoTitolo 4"
+msgstr "Sottotitolo 4"
 
 #: outwiker/core/commands.py:894 outwiker/core/commands.py:895
 msgid "Subtitle five"
-msgstr "SottoTitolo 5"
+msgstr "Sottotitolo 5"
 
 #: outwiker/core/commands.py:900 outwiker/core/commands.py:901
 msgid "Subtitle six"
-msgstr "SottoTitolo 6"
+msgstr "Sottotitolo 6"
 
 #: outwiker/core/commands.py:907 outwiker/core/commands.py:908
 msgid "Anchor"
@@ -323,11 +323,11 @@ msgstr "Righello orizzontale"
 #: outwiker/gui/linkdialog.py:35
 #: outwiker/gui/preferences/wikieditorpanel.py:38
 msgid "Link"
-msgstr "Collegamento"
+msgstr "Link"
 
 #: outwiker/core/commands.py:920
 msgid "Insert Link"
-msgstr "Inserire Collegamento"
+msgstr "Inserire Link"
 
 #: outwiker/core/commands.py:925
 msgid "Quote"
@@ -335,7 +335,7 @@ msgstr "Citazione"
 
 #: outwiker/core/commands.py:926
 msgid "Insert a quote block"
-msgstr "Inserire un blocco di citazione"
+msgstr "Inserisci citazione"
 
 #: outwiker/core/commands.py:931
 msgid "Image"
@@ -351,7 +351,7 @@ msgstr "Elenco puntato"
 
 #: outwiker/core/commands.py:940
 msgid "Insert a bullets list"
-msgstr "Inserire un elenco puntato"
+msgstr "Inserisci elenco puntato"
 
 #: outwiker/core/commands.py:945
 msgid "Numbers list"
@@ -359,7 +359,7 @@ msgstr "Elenco numerato"
 
 #: outwiker/core/commands.py:946
 msgid "Insert a numbers list"
-msgstr "Inserire un elenco numerato"
+msgstr "Inserisci elenco numerato"
 
 #: outwiker/core/commands.py:951
 msgid "Line break"
@@ -367,7 +367,7 @@ msgstr "Interruzione di riga"
 
 #: outwiker/core/commands.py:952
 msgid "Insert a line break"
-msgstr "Inserire un'interruzione di riga"
+msgstr "Inserisci interruzione di riga"
 
 #: outwiker/core/commands.py:957 outwiker/core/commands.py:958
 msgid "Convert HTML Symbols"
@@ -379,7 +379,7 @@ msgstr "Table"
 
 #: outwiker/core/commands.py:966
 msgid "Insert a table"
-msgstr "Inserire una tabella"
+msgstr "Inserisci tabella"
 
 #: outwiker/core/commands.py:971
 msgid "Table row"
@@ -387,7 +387,7 @@ msgstr "Riga della tabella"
 
 #: outwiker/core/commands.py:972
 msgid "Insert a table row"
-msgstr "Inserire una riga di tabella"
+msgstr "Inserire una riga"
 
 #: outwiker/core/commands.py:977
 msgid "Table cell"
@@ -395,7 +395,7 @@ msgstr "Celle della tabella"
 
 #: outwiker/core/commands.py:978
 msgid "Insert a table cell"
-msgstr "Inserire la cella della tabella"
+msgstr "Inserire una cella"
 
 #: outwiker/core/commands.py:983
 msgid "Current date"
@@ -411,11 +411,11 @@ msgstr "Errore di stampa"
 
 #: outwiker/actions/movepageup.py:22
 msgid "Move Page Up"
-msgstr "Spostare la pagina su"
+msgstr "Sposta la pagina su"
 
 #: outwiker/actions/movepageup.py:27
 msgid "Move page up"
-msgstr "Spostare la pagina su"
+msgstr "Sposta la pagina in alto"
 
 #: outwiker/actions/movepageup.py:40 outwiker/actions/sortsiblingsalpha.py:37
 #: outwiker/actions/movepagedown.py:40 outwiker/actions/sortchildalpha.py:37
@@ -424,11 +424,11 @@ msgstr "Wiki non aperta"
 
 #: outwiker/actions/sortsiblingsalpha.py:22
 msgid "Sort Siblings Pages Alphabetically"
-msgstr "Ordinare alfabeticamente le pagine allo stesso livello"
+msgstr "Ordina alfabeticamente le pagine sullo stesso livello"
 
 #: outwiker/actions/sortsiblingsalpha.py:27
 msgid "Sort siblings pages alphabetically"
-msgstr "Ordinare alfabeticamente le pagine allo stesso livello"
+msgstr "Ordina alfabeticamente le pagine sullo stesso livello"
 
 #: outwiker/actions/clipboard.py:20 outwiker/gui/pagepopupmenu.py:90
 msgid "Copy Page Title"
@@ -457,19 +457,19 @@ msgstr ""
 
 #: outwiker/actions/clipboard.py:97 outwiker/gui/pagepopupmenu.py:93
 msgid "Copy Page Link"
-msgstr "Copia il collegamento alla pagina"
+msgstr "Copia il link alla pagina"
 
 #: outwiker/actions/clipboard.py:102
 msgid "Copy link to current page to clipboard"
-msgstr "Copia il collegamento alla pagina corrente negli Appunti"
+msgstr "Copia il link alla pagina corrente negli appunti"
 
 #: outwiker/actions/movepagedown.py:22
 msgid "Move Page Down"
-msgstr "Spostare la pagina giù"
+msgstr "Sposta la pagina in basso"
 
 #: outwiker/actions/movepagedown.py:27
 msgid "Move page down"
-msgstr "Spostare la pagina giù"
+msgstr "Sposta la pagina in basso"
 
 #: outwiker/actions/preferences.py:22
 msgid "Preferences…"
@@ -477,7 +477,7 @@ msgstr "Preferenze…"
 
 #: outwiker/actions/preferences.py:27
 msgid "Open the preferences dialog"
-msgstr "Aprire la finestra di dialogo Preferenze"
+msgstr "Apri la finestra di dialogo Preferenze"
 
 #: outwiker/actions/reloadwiki.py:22
 msgid "Reload Wiki…"
@@ -522,7 +522,7 @@ msgstr "Trova precedente nella pagina"
 
 #: outwiker/actions/search.py:106
 msgid "Search and Replace"
-msgstr "Ricerca e Sostituzione"
+msgstr "Cerca e sostituisci"
 
 #: outwiker/actions/search.py:111
 msgid "Begin search and replace on page"
@@ -661,7 +661,7 @@ msgstr "Struttura note aperta in sola lettura"
 
 #: outwiker/actions/addbookmark.py:21 outwiker/actions/addbookmark.py:26
 msgid "Add/Remove Bookmark"
-msgstr "Aggiungi/Rimuovi preferiti"
+msgstr "Aggiungi/Rimuovi dai preferiti"
 
 #: outwiker/actions/open.py:22
 msgid "Open…"
@@ -682,11 +682,11 @@ msgstr "Modalità Fullscreen on/off"
 #: outwiker/actions/openattachfolder.py:24 outwiker/gui/attachpanel.py:136
 #: outwiker/gui/attachpanel.py:141 outwiker/gui/pagepopupmenu.py:94
 msgid "Open Attachments Folder"
-msgstr "Aprire la cartella Allegati"
+msgstr "Apri la cartella allegati"
 
 #: outwiker/actions/openattachfolder.py:29
 msgid "Open folder with attached files"
-msgstr "Aprire la cartella con i file allegati"
+msgstr "Apri la cartella con i file allegati"
 
 #: outwiker/actions/openattachfolder.py:38
 msgid "Can't open folder '{}'"
@@ -699,7 +699,7 @@ msgstr "Allega file…"
 
 #: outwiker/actions/attachfiles.py:28
 msgid "Attach files to current page"
-msgstr "Allegare il file alla pagina corrente"
+msgstr "Allega il file alla pagina corrente"
 
 #: outwiker/actions/editpageprop.py:22
 msgid "Page Properties…"
@@ -707,7 +707,7 @@ msgstr "Proprietà della pagina…"
 
 #: outwiker/actions/editpageprop.py:27 outwiker/gui/pagedialog.py:161
 msgid "Edit page properties"
-msgstr "Modificare le proprietà della pagina"
+msgstr "Modifica le proprietà della pagina"
 
 #: outwiker/actions/history.py:23
 msgid "Back"
@@ -715,7 +715,7 @@ msgstr "Indietro"
 
 #: outwiker/actions/history.py:28
 msgid "Open previous page"
-msgstr "Aprire pagina precedente"
+msgstr "Apri pagina precedente"
 
 #: outwiker/actions/history.py:47
 msgid "Forward"
@@ -723,7 +723,7 @@ msgstr "Avanti"
 
 #: outwiker/actions/history.py:52
 msgid "Open next page"
-msgstr "Aprire pagina successiva"
+msgstr "Apri pagina successiva"
 
 #: outwiker/actions/printaction.py:21
 msgid "Print"
@@ -743,11 +743,11 @@ msgstr "Chiude struttura note"
 
 #: outwiker/actions/renamepage.py:21
 msgid "Rename Page"
-msgstr "Rinominare la pagina"
+msgstr "Rinomina la pagina"
 
 #: outwiker/actions/renamepage.py:26
 msgid "Rename current page"
-msgstr "Rinominare la pagina corrente"
+msgstr "Rinomina la pagina corrente"
 
 #: outwiker/actions/new.py:22
 msgid "New…"
@@ -759,11 +759,11 @@ msgstr "Creare una nuova struttura di note"
 
 #: outwiker/actions/sortchildalpha.py:22
 msgid "Sort Children Pages Alphabetically"
-msgstr "Ordinare alfabeticamente le pagine discendenti"
+msgstr "Ordina alfabeticamente le pagine discendenti"
 
 #: outwiker/actions/sortchildalpha.py:27
 msgid "Sort children pages alphabetically"
-msgstr "Ordinare alfabeticamente le pagine discendenti"
+msgstr "Ordina alfabeticamente le pagine discendenti"
 
 #: outwiker/actions/tabs.py:18
 msgid "Close Tab"
@@ -811,19 +811,19 @@ msgstr "Aggiungi tag al Ramo"
 
 #: outwiker/actions/tags.py:80
 msgid "Remove Tags from Branch…"
-msgstr "Eliminare le tag dal ramo…"
+msgstr "Elimina le tag dal ramo…"
 
 #: outwiker/actions/tags.py:85
 msgid "Remove tags from branch"
-msgstr "Eliminare le tag dal ramo"
+msgstr "Elimina le tag dal ramo"
 
 #: outwiker/actions/tags.py:110
 msgid "Remove Tags from Branch"
-msgstr "Eliminare le tag dal ramo"
+msgstr "Elimina le tag dal ramo"
 
 #: outwiker/actions/tags.py:135
 msgid "Rename Tag…"
-msgstr "Rinominare tag…"
+msgstr "Rinomina tag…"
 
 #: outwiker/actions/tags.py:140 outwiker/gui/renametagdialog.py:19
 msgid "Rename tag"
@@ -831,11 +831,11 @@ msgstr "Rinomina tag"
 
 #: outwiker/actions/removepage.py:22
 msgid "Remove Page…"
-msgstr "Eliminare la pagina…"
+msgstr "Elimina la pagina…"
 
 #: outwiker/actions/removepage.py:27
 msgid "Remove current page and all children"
-msgstr "Eliminare la pagina corrente e tutte le discendenti"
+msgstr "Elimina la pagina corrente e tutte le discendenti"
 
 #: outwiker/gui/mainpanes/pagemainpane.py:23
 msgid "Note"
@@ -908,7 +908,7 @@ msgid ""
 "%s"
 msgstr ""
 "Impossibile aggiungere wiki recenti nella lista. \n"
-"Non è stato possibile salvare config.\n"
+"Impossibile salvare la configurazione\n"
 "%s"
 
 #: outwiker/gui/mainwindow.py:507
@@ -1209,7 +1209,7 @@ msgstr "Lunghezza della cronologia dei file recenti (riavvio richiesto)"
 
 #: outwiker/gui/preferences/generalpanel.py:129
 msgid "Automatically open the recent file"
-msgstr "Aprire automaticamente il file più recente"
+msgstr "Apri automaticamente il file più recente"
 
 #: outwiker/gui/preferences/generalpanel.py:144
 msgid "Wiki file name"
@@ -1403,7 +1403,7 @@ msgstr "Non è stato selezionato un file da eseguire"
 
 #: outwiker/gui/currentpagepanel.py:88
 msgid "Can't open page. Page folder not exists"
-msgstr "Impossibile aprire la pagina. La cartella non esiste"
+msgstr "Impossibile aprire la pagina. La cartella della pagina è inesistente"
 
 #: outwiker/gui/currentpagepanel.py:106
 msgid "Add to Bookmarks"
@@ -1633,15 +1633,15 @@ msgstr "Modello di pagina vuota"
 
 #: outwiker/pages/wiki/wikipreferences.py:35
 msgid "Default link style"
-msgstr "Stile di collegamento predefinito"
+msgstr "Stile predefinito del link"
 
 #: outwiker/pages/wiki/wikipreferences.py:38
 msgid "[[comment -> link]]"
-msgstr "[[commento -> collegamento]]"
+msgstr "[[commento -> link]]"
 
 #: outwiker/pages/wiki/wikipreferences.py:39
 msgid "[[link | comment]]"
-msgstr "[[collegamento | commento]]"
+msgstr "[[link| commento]]"
 
 #: outwiker/pages/wiki/thumbdialog.py:21
 msgid "Thumbnails"
@@ -1703,7 +1703,7 @@ msgstr "Anteprima immagini"
 
 #: outwiker/pages/wiki/actions/thumb.py:27
 msgid "Insert thumbnail"
-msgstr "Inserire l'anteprima immagini"
+msgstr "Inserisci anteprima immagini"
 
 #: outwiker/pages/wiki/actions/fontsizesmall.py:15
 #: outwiker/pages/wiki/actions/fontsizesmall.py:20
@@ -1717,7 +1717,7 @@ msgstr "Includere (:include ...:)"
 #: outwiker/pages/wiki/actions/include.py:29
 #: outwiker/pages/wiki/actions/include.py:108
 msgid "Insert (:include:) command"
-msgstr "Inserire il comando (:include:)"
+msgstr "Inserisci il comando (:include:)"
 
 #: outwiker/pages/wiki/actions/include.py:37
 msgid "Current page does not have any attachments"
@@ -1754,7 +1754,7 @@ msgstr "Allegato (:attachlist:)"
 #: outwiker/pages/wiki/actions/attachlist.py:27
 #: outwiker/pages/wiki/actions/attachlist.py:88
 msgid "Insert (:attachlist:) command"
-msgstr "Inserire il comando (:attachlist:)"
+msgstr "Inserisci il comando (:attachlist:)"
 
 #: outwiker/pages/wiki/actions/attachlist.py:46
 msgid "Name"
@@ -1779,7 +1779,7 @@ msgstr "Ordina per"
 #: outwiker/pages/wiki/actions/attachlist.py:104
 #: outwiker/pages/wiki/actions/childlist.py:114
 msgid "Descending sort"
-msgstr "Ordinamento decrescente"
+msgstr "Ordinamento discendente"
 
 #: outwiker/pages/wiki/actions/equation.py:19
 #: outwiker/pages/wiki/actions/equation.py:24
@@ -1809,7 +1809,7 @@ msgstr "Data creazione (:crdate:)"
 #: outwiker/pages/wiki/actions/dates.py:52
 msgid "Insert command (:crdate:) for show date of creation of the page"
 msgstr ""
-"Inserire il comando (:crdate:) per visualizzare la data di creazione della "
+"Inserisci il comando (:crdate:) per visualizzare la data di creazione della "
 "pagina"
 
 #: outwiker/pages/wiki/actions/dates.py:71
@@ -1820,7 +1820,7 @@ msgstr "Data di modifica (:eddate:)"
 msgid ""
 "Insert command (:eddate:) for show date of last modification of the page"
 msgstr ""
-"Inserire il comando (:eddate:) per visualizza la data dell'ultima modifica "
+"Inserisci il comando (:eddate:) per visualizza la data dell'ultima modifica "
 "della pagina"
 
 #: outwiker/pages/wiki/actions/childlist.py:22
@@ -1830,7 +1830,7 @@ msgstr "Discendenti (:childlist:)"
 #: outwiker/pages/wiki/actions/childlist.py:27
 #: outwiker/pages/wiki/actions/childlist.py:99
 msgid "Insert (:childlist:) command"
-msgstr "Inserire il comando (:childlist:)"
+msgstr "Inserisci il comando (:childlist:)"
 
 #: outwiker/pages/wiki/actions/childlist.py:55
 msgid "as in tree"
@@ -1950,15 +1950,15 @@ msgstr "Titolo (inverso)"
 
 #: outwiker/pages/search/sortstrategies.py:82
 msgid "Changing date (newest first)"
-msgstr "Modifica data (dalla più recente)"
+msgstr "Data di modifica (dalla più recente)"
 
 #: outwiker/pages/search/sortstrategies.py:95
 msgid "Changing date (oldest first)"
-msgstr "Modifica data (dal meno recente)"
+msgstr "Data di modifica (dalla meno recente)"
 
 #: outwiker/pages/search/sortstrategies.py:108
 msgid "Creation date (newest first)"
-msgstr "Data creazione (dalla più recente)"
+msgstr "Data di creazione (dalla più recente)"
 
 #: outwiker/pages/search/sortstrategies.py:121
 msgid "Creation date (oldest first)"

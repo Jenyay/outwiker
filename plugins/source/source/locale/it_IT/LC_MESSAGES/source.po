@@ -3,15 +3,15 @@ msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-01-05 18:22+0400\n"
-"PO-Revision-Date: 2014-08-27 18:24+0300\n"
-"Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
+"PO-Revision-Date: 2014-08-29 16:14+0400\n"
+"Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 1.6.8\n"
 
 #: actions.py:24 guicreators.py:105
 msgid "Source Code (:source ...:)"
@@ -62,7 +62,7 @@ msgstr "Utilizzare lo sfondo della pagina per il blocco di codice"
 
 #: insertdialog.py:162
 msgid "Enable line numbers"
-msgstr "Abilitare i numeri di riga"
+msgstr "Abilita i numeri di riga"
 
 #: insertdialog.py:179
 msgid "Language"
@@ -78,7 +78,7 @@ msgstr "Stile"
 
 #: insertdialog.py:287
 msgid "Insert source from file"
-msgstr "Inserire il sorgente da un file"
+msgstr "Inserisci il sorgente da un file"
 
 #: insertdialog.py:300
 msgid "Attached file"

@@ -3,15 +3,15 @@ msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-06-05 10:05+0400\n"
-"PO-Revision-Date: 2014-08-27 18:13+0300\n"
-"Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
+"PO-Revision-Date: 2014-08-29 16:14+0400\n"
+"Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 1.6.8\n"
 
 #: actions.py:24
 msgid "Counter (:counter ...:)"
@@ -77,7 +77,7 @@ msgstr "http://jenyay.net/Outwiker/CounterEn"
 
 #: insertdialog.py:147
 msgid "Advanced"
-msgstr "Avanzata"
+msgstr "Avanzato"
 
 #: insertdialog.py:149
 msgid "Start count from"
@@ -89,7 +89,7 @@ msgstr "Incremento"
 
 #: insertdialog.py:155
 msgid "Hide counter"
-msgstr "Contatore nascosto"
+msgstr "Nascondi contatore"
 
 #: insertdialog.py:192
 msgid "Nested counter"
