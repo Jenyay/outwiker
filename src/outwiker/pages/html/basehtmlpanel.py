@@ -14,7 +14,7 @@ from outwiker.core.config import IntegerOption
 from outwiker.gui.basetextpanel import BaseTextPanel
 from outwiker.gui.htmlrenderfactory import getHtmlRender
 from outwiker.actions.search import SearchAction, SearchNextAction, SearchPrevAction, SearchAndReplaceAction
-from outwiker.core.system import writeTextFile
+from outwiker.core.system import writeTextFile, getOS
 
 # Событие вызывается, когда переключаются вкладки страницы (код, HTML, ...)
 PageTabChangedEvent, EVT_PAGE_TAB_CHANGED = wx.lib.newevent.NewEvent()
@@ -327,11 +327,11 @@ class BaseHtmlPanel(BaseTextPanel):
                 self._oldPage = self._currentpage
         except IOError as e:
             # TODO: Проверить под Windows
-            MessageBox (_(u"Can't save file\n\n{}").format (unicode (e.filename)),
+            MessageBox (_(u"Can't save file\n\n{}").format (unicode (e.filename, getOS().filesEncoding)),
                         _(u"Error"),
                         wx.ICON_ERROR | wx.OK)
         except OSError as e:
-            MessageBox (_(u"Can't save file\n\n{}").format (unicode (e)),
+            MessageBox (_(u"Can't save file\n\n{}").format (unicode (e.strerror, getOS().filesEncoding)),
                         _(u"Error"),
                         wx.ICON_ERROR | wx.OK)
 
