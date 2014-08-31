@@ -4,11 +4,12 @@
 Действия, которые зависят от ОС, на которой запущена программа
 """
 
-import os
-import os.path
-import sys
-import locale
 import codecs
+import locale
+import os
+import os.path as op
+import shutil
+import sys
 
 import wx
 
@@ -24,11 +25,22 @@ PLUGINS_DIR = u"plugins"
 # Имя файла настроек по умолчанию
 DEFAULT_CONFIG_NAME = u"outwiker.ini"
 
-# Имя по умолчанию для папки с настройками в профиле пользователя
-DEFAULT_CONFIG_DIR = u".outwiker"
+# Имя по умолчанию для папки с настройками в профиле пользователя(устарело)
+DEFAULT_OLD_CONFIG_DIR = u".outwiker"
+
+# Новая местоположение конфигурационной директории
+# По стандарту, если переменная XDG_CONFIG_HOME не задана в окружении,
+# то берется значение по умолчанию т.е. ~/.config
+# http://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html
+DEFAULT_CONFIG_DIR =  u"outwiker"
+
+class OsEgregor(object):
+    def moveConfig(self, oldConfDir, newConfDir):
+        shutil.move(oldConfDir, newConfDir)
 
 
-class Windows (object):
+
+class Windows (OsEgregor):
     def __init__ (self):
         pass
 
@@ -77,7 +89,7 @@ class Windows (object):
 
 
 
-class Unix (object):
+class Unix (OsEgregor):
     def __init__ (self):
         pass
 
@@ -101,6 +113,26 @@ class Unix (object):
         """
         runcmd = "xdg-open '%s'" % path
         wx.Execute (runcmd)
+
+
+    def migrateConfig(self, oldConfDirName=DEFAULT_OLD_CONFIG_DIR,
+                            newConfDirName=DEFAULT_CONFIG_DIR):
+        """
+        Метод migrateConfig переносит конфигурационную директорию из старого местоположения (HOME$/.outwiker)
+        в новое ($XDG_CONFIG_HOME/outwiker или .config/outwiker если переменная окружения не задана)
+        """
+        confDir = op.join(os.environ.get(u"XDG_CONFIG_HOME", u".config"),\
+                          newConfDirName)
+
+        homeDir = unicode (op.expanduser("~"), getOS().filesEncoding)
+
+        oldConfDir = op.join(homeDir, oldConfDirName)
+
+        if not op.isabs(confDir):
+            confDir = op.join(homeDir, confDir)
+
+        if op.exists(oldConfDir) and not op.exists(confDir):
+            shutil.move(oldConfDir, confDir)
 
 
     @property
@@ -167,7 +199,7 @@ def getOS ():
 
 
 def getCurrentDir ():
-    return unicode (os.path.dirname (sys.argv[0]), getOS().filesEncoding)
+    return unicode (op.dirname (sys.argv[0]), getOS().filesEncoding)
 
 
 def getConfigPath (dirname=DEFAULT_CONFIG_DIR, fname=DEFAULT_CONFIG_NAME):
@@ -175,35 +207,52 @@ def getConfigPath (dirname=DEFAULT_CONFIG_DIR, fname=DEFAULT_CONFIG_NAME):
     Вернуть полный путь до файла настроек.
     Поиск пути осуществляется следующим образом:
     1. Если в папке с программой есть файл настроек, то вернуть путь до него
-    2. Иначе настройки будут храниться в домашней поддиректории. При этом создать директорию .outwiker в домашней директории.
+    2. Иначе настройки будут храниться в домашней конфигурационной директории outwiker (Пример: .conf/outwiker)
     """
-    someDir = os.path.join (getCurrentDir(), fname)
-    if os.path.exists (someDir):
-        path = someDir
+    confSrcDir = op.join (getCurrentDir(), fname)
+
+    if op.exists (confSrcDir):
+        path = confSrcDir
+
     else:
-        homeDir = os.path.join (unicode (os.path.expanduser("~"), getOS().filesEncoding), dirname)
-        if not os.path.exists (homeDir):
-            os.mkdir (homeDir)
+        homeDir = unicode(op.expanduser("~"), getOS().filesEncoding)
 
-        pluginsDir = os.path.join (homeDir, PLUGINS_DIR)
-        if not os.path.exists (pluginsDir):
-            os.mkdir (pluginsDir)
+        confDir = op.join(os.environ.get(u"XDG_CONFIG_HOME", u".config"),\
+                          dirname)
 
-        stylesDir = os.path.join (homeDir, STYLES_DIR)
-        if not os.path.exists (stylesDir):
-            os.mkdir (stylesDir)
+        if not op.isabs(confDir):
+            confDir = op.join(homeDir, confDir)
 
-        path = os.path.join (homeDir, fname)
+        oldConfDir = op.join(homeDir, DEFAULT_OLD_CONFIG_DIR)
 
-    return path
+        if op.exists(oldConfDir):
+            mainConfDir = oldConfDir
+            confPath = op.join(oldConfDir, fname)
+
+        else:
+            mainConfDir = confDir
+            confPath = op.join(confDir, fname)
+
+        pluginsDir = op.join (mainConfDir, PLUGINS_DIR)
+
+        stylesDir = op.join (mainConfDir, STYLES_DIR)
+
+
+        if not op.exists(pluginsDir):
+            os.mkdir(pluginsDir)
+
+        if not op.exists(stylesDir):
+            os.mkdir(stylesDir)
+
+    return confPath
 
 
 def getImagesDir ():
-    return os.path.join (getCurrentDir(), IMAGES_DIR)
+    return op.join (getCurrentDir(), IMAGES_DIR)
 
 
 def getTemplatesDir ():
-    return os.path.join (getCurrentDir(), STYLES_DIR)
+    return op.join (getCurrentDir(), STYLES_DIR)
 
 
 def getExeFile ():
@@ -235,14 +284,14 @@ def getSpecialDirList (dirname,
     Возвращает список "специальных" директорий (директорий для плагинов, стилей и т.п., расположение которых зависит от расположения файла настроек)
     """
     # Директория рядом с запускаемым файлом
-    programSpecialDir = os.path.join (getCurrentDir(), dirname)
+    programSpecialDir = op.join (getCurrentDir(), dirname)
 
     # Директория рядом с файлом настроек
-    configdir = os.path.dirname (getConfigPath (configDirName, configFileName))
-    specialDir = os.path.join (configdir, dirname)
+    configdir = op.dirname (getConfigPath (configDirName, configFileName))
+    specialDir = op.join (configdir, dirname)
 
     dirlist = [programSpecialDir]
-    if os.path.abspath (programSpecialDir) != os.path.abspath (specialDir):
+    if op.abspath (programSpecialDir) != op.abspath (specialDir):
         dirlist.append (specialDir)
 
     return dirlist
