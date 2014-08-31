@@ -35,7 +35,10 @@ DEFAULT_OLD_CONFIG_DIR = u".outwiker"
 DEFAULT_CONFIG_DIR =  u"outwiker"
 
 class OsEgregor(object):
-    pass
+    def moveConfig(self, oldConfDir, newConfDir):
+        shutil.move(oldConfDir, newConfDir)
+
+
 
 class Windows (OsEgregor):
     def __init__ (self):
@@ -110,6 +113,26 @@ class Unix (OsEgregor):
         """
         runcmd = "xdg-open '%s'" % path
         wx.Execute (runcmd)
+
+
+    def migrateConfig(self, oldConfDirName=DEFAULT_OLD_CONFIG_DIR,
+                            newConfDirName=DEFAULT_CONFIG_DIR):
+        """
+        Метод migrateConfig переносит конфигурационную директорию из старого местоположения (HOME$/.outwiker)
+        в новое ($XDG_CONFIG_HOME/outwiker или .config/outwiker если переменная окружения не задана)
+        """
+        confDir = op.join(os.environ.get(u"XDG_CONFIG_HOME", u".config"),\
+                          newConfDirName)
+
+        homeDir = unicode (op.expanduser("~"), getOS().filesEncoding)
+
+        oldConfDir = op.join(homeDir, oldConfDirName)
+
+        if not op.isabs(confDir):
+            confDir = op.join(homeDir, confDir)
+
+        if op.exists(oldConfDir) and not op.exists(confDir):
+            shutil.move(oldConfDir, confDir)
 
 
     @property
@@ -190,29 +213,32 @@ def getConfigPath (dirname=DEFAULT_CONFIG_DIR, fname=DEFAULT_CONFIG_NAME):
 
     if op.exists (confSrcDir):
         path = confSrcDir
+
     else:
+        homeDir = unicode(op.expanduser("~"), getOS().filesEncoding)
+
         confDir = op.join(os.environ.get(u"XDG_CONFIG_HOME", u".config"),\
                           dirname)
-        homeDir = unicode (op.expanduser("~"), getOS().filesEncoding)
+
+        if not op.isabs(confDir):
+            confDir = op.join(homeDir, confDir)
 
         oldConfDir = op.join(homeDir, DEFAULT_OLD_CONFIG_DIR)
 
-        if not op.isabs(confDir): 
-            confDir = op.join(homeDir, confDir)
+        if op.exists(oldConfDir):
+            mainConfDir = oldConfDir
+            confPath = op.join(oldConfDir, fname)
 
-        pluginsDir = op.join (confDir, PLUGINS_DIR)
+        else:
+            mainConfDir = confDir
+            confPath = op.join(confDir, fname)
 
-        stylesDir = op.join (confDir, STYLES_DIR)
+        pluginsDir = op.join (mainConfDir, PLUGINS_DIR)
 
-        confPath = op.join (confDir, fname)
+        stylesDir = op.join (mainConfDir, STYLES_DIR)
 
-        if not op.exists (confDir):
-            if op.exists(oldConfDir):
-                shutil.move(oldConfDir, confDir)
-            else:
-                os.mkdir (confDir)
 
-        if not op.exists (pluginsDir):
+        if not op.exists(pluginsDir):
             os.mkdir(pluginsDir)
 
         if not op.exists(stylesDir):
