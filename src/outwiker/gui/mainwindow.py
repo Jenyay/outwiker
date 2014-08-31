@@ -540,6 +540,9 @@ class MainWindow(wx.Frame):
         self.controller.destroy()
         self.auiManager.Destroy()
 
+        self.SetMenuBar (None)
+        self.mainMenu.Destroy()
+
         super (MainWindow, self).Destroy()
 
 
