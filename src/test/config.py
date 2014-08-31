@@ -11,7 +11,7 @@ import shutil
 import datetime
 
 from outwiker.core.config import Config, StringOption, IntegerOption, DateTimeOption, BooleanOption, ListOption, StringListSection, StcStyleOption
-from outwiker.core.system import getCurrentDir, getConfigPath
+from outwiker.core.system import getCurrentDir, getConfigPath, getOS
 
 from outwiker.gui.guiconfig import TrayConfig, EditorConfig
 from outwiker.gui.stcstyle import StcStyle
@@ -109,7 +109,7 @@ class ConfigTest (unittest.TestCase):
         if os.path.exists (localPath):
             os.remove (localPath)
 
-        homeDir = os.path.join (os.path.expanduser("~"), dirname)
+        homeDir = os.path.join (getOS().settingsDir, dirname)
         homePath = os.path.join (homeDir, fname)
 
         # Удалим папку в профиле
@@ -124,6 +124,7 @@ class ConfigTest (unittest.TestCase):
         # Удалим папку в профиле
         if os.path.exists (homeDir):
             shutil.rmtree (homeDir)
+
 
 
 class ConfigOptionsTest (unittest.TestCase):

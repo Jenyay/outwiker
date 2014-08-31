@@ -36,8 +36,19 @@ DEFAULT_CONFIG_DIR = u"outwiker"
 
 
 class System (object):
-    def moveConfig(self, oldConfDir, newConfDir):
-        shutil.move(oldConfDir, newConfDir)
+    def migrateConfig (self,
+                       oldConfDirName=DEFAULT_OLD_CONFIG_DIR,
+                       newConfDirName=DEFAULT_CONFIG_DIR):
+        """
+        Метод migrateConfig переносит конфигурационную директорию из старого местоположения (HOME$/.outwiker) в новое (зависит от ОС)
+        """
+        confDir = op.join(self.settingsDir, newConfDirName)
+
+        homeDir = unicode (op.expanduser("~"), getOS().filesEncoding)
+        oldConfDir = op.join(homeDir, oldConfDirName)
+
+        if op.exists(oldConfDir) and not op.exists(confDir):
+            shutil.move(oldConfDir, confDir)
 
 
 
@@ -89,8 +100,13 @@ class Windows (System):
         return WindowsFileIcons()
 
 
-    def migrateConfig(self):
-        pass
+    @property
+    def settingsDir (self):
+        """
+        Возвращает папку, внутри которой хранятся настройки всех программ, и где будет создаваться папка для хранения настроек OutWiker
+        """
+        homeDir = unicode (op.expanduser("~"), getOS().filesEncoding)
+        return homeDir
 
 
 
@@ -120,23 +136,19 @@ class Unix (System):
         wx.Execute (runcmd)
 
 
-    def migrateConfig(self):
+    @property
+    def settingsDir (self):
         """
-        Метод migrateConfig переносит конфигурационную директорию из старого местоположения (HOME$/.outwiker)
-        в новое ($XDG_CONFIG_HOME/outwiker или .config/outwiker если переменная окружения не задана)
+        Возвращает папку, внутри которой хранятся настройки всех программ, и где будет создаваться папка для хранения настроек OutWiker.
+        ($XDG_CONFIG_HOME/outwiker или .config/outwiker)
         """
-        confDir = op.join(os.environ.get(u"XDG_CONFIG_HOME", u".config"),
-                          DEFAULT_CONFIG_DIR)
-
         homeDir = unicode (op.expanduser("~"), getOS().filesEncoding)
+        settingsDir = os.environ.get (u"XDG_CONFIG_HOME", u".config")
 
-        oldConfDir = op.join(homeDir, DEFAULT_OLD_CONFIG_DIR)
+        if not op.isabs (settingsDir):
+            settingsDir = op.join (homeDir, settingsDir)
 
-        if not op.isabs(confDir):
-            confDir = op.join(homeDir, confDir)
-
-        if op.exists(oldConfDir) and not op.exists(confDir):
-            shutil.move(oldConfDir, confDir)
+        return settingsDir
 
 
     @property
@@ -218,23 +230,11 @@ def getConfigPath (dirname=DEFAULT_CONFIG_DIR, fname=DEFAULT_CONFIG_NAME):
     if op.exists (confSrc):
         confPath = confSrc
     else:
-        homeDir = unicode (op.expanduser("~"), getOS().filesEncoding)
+        mainConfDir = op.join (getOS().settingsDir, dirname)
+        confPath = op.join (mainConfDir, fname)
 
-        confDir = op.join (os.environ.get (u"XDG_CONFIG_HOME", u".config"),
-                           dirname)
-
-        if not op.isabs (confDir):
-            confDir = op.join (homeDir, confDir)
-
-        oldConfDir = op.join (homeDir, DEFAULT_OLD_CONFIG_DIR)
-        oldConfPath = op.join (oldConfDir, fname)
-
-        if op.exists (oldConfPath):
-            mainConfDir = oldConfDir
-            confPath = oldConfPath
-        else:
-            mainConfDir = confDir
-            confPath = op.join (confDir, fname)
+        if not op.exists (mainConfDir):
+            os.mkdir (mainConfDir)
 
         pluginsDir = op.join (mainConfDir, PLUGINS_DIR)
         if not op.exists (pluginsDir):
