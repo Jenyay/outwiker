@@ -34,9 +34,10 @@ DEFAULT_OLD_CONFIG_DIR = u".outwiker"
 # http://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html
 DEFAULT_CONFIG_DIR =  u"outwiker"
 
+class OsEgregor(object):
+    pass
 
-
-class Windows (object):
+class Windows (OsEgregor):
     def __init__ (self):
         pass
 
@@ -85,7 +86,7 @@ class Windows (object):
 
 
 
-class Unix (object):
+class Unix (OsEgregor):
     def __init__ (self):
         pass
 
