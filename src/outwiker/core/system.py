@@ -105,8 +105,9 @@ class Windows (System):
         """
         Возвращает папку, внутри которой хранятся настройки всех программ, и где будет создаваться папка для хранения настроек OutWiker
         """
-        homeDir = unicode (op.expanduser("~"), getOS().filesEncoding)
-        return homeDir
+        homeDir = unicode (op.expanduser("~"), self.filesEncoding)
+        appdata = unicode (os.environ["APPDATA"], self.filesEncoding) if "APPDATA" in os.environ else homeDir
+        return appdata
 
 
 
