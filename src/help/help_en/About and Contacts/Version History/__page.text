@@ -28,6 +28,7 @@
 * Now for every page saved the creation date.
 * Now all HTML tags, which the wiki parser create, in a lowercase.
 * Now help will be open in a separate window.
+* Settings moved from ~/.outwiker more ideologically correct place (depending on the operating system).
 * Added new icons for pages.
 * Many accelerations.
 * Bug fixes and improvments.
