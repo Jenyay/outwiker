@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-08-20 15:00+0400\n"
-"PO-Revision-Date: 2014-08-29 20:44+0300\n"
+"PO-Revision-Date: 2014-09-01 21:25+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -273,7 +273,7 @@ msgstr "Inserisci codice (carattere monospazio)"
 
 #: outwiker/core/commands.py:844 outwiker/core/commands.py:845
 msgid "Align text left"
-msgstr "Allineare testo sinistra"
+msgstr "Allinea testo a sinistra"
 
 #: outwiker/core/commands.py:850 outwiker/core/commands.py:851
 msgid "Center"
@@ -281,11 +281,11 @@ msgstr "Centrato"
 
 #: outwiker/core/commands.py:856 outwiker/core/commands.py:857
 msgid "Align text right"
-msgstr "Allineare il testo a destra"
+msgstr "Allinea testo a destra"
 
 #: outwiker/core/commands.py:862 outwiker/core/commands.py:863
 msgid "Justify"
-msgstr "Giustificare"
+msgstr "Giustifica"
 
 #: outwiker/core/commands.py:870 outwiker/core/commands.py:871
 msgid "First-level heading"
@@ -799,7 +799,7 @@ msgstr "Vai alla scheda precedente"
 
 #: outwiker/actions/tags.py:26
 msgid "Add Tags to Branch…"
-msgstr "Aggiungi tag al Ramo…"
+msgstr "Aggiungi tag al ramo…"
 
 #: outwiker/actions/tags.py:31
 msgid "Add tags to branch"
