@@ -58,7 +58,7 @@ class BaseToolBar (wx.aui.AuiToolBar):
         self.UpdateToolBar()
         if fullUpdate:
             self._parent.UpdateAuiManager()
-            self.Thaw()
+        self.Thaw()
 
 
     def AddTool(self,
@@ -74,7 +74,7 @@ class BaseToolBar (wx.aui.AuiToolBar):
         if fullUpdate:
             self._parent.UpdateAuiManager()
             self.updatePaneInfo()
-            self.Thaw()
+        self.Thaw()
 
 
     @property
