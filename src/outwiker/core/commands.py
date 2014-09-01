@@ -776,6 +776,12 @@ def registerActions (application):
         None)
 
 
+    from outwiker.actions.openpluginsfolder import OpenPluginsFolderAction
+    application.actionController.register (
+        OpenPluginsFolderAction (application),
+        None)
+
+
     _registerPolyActions (application)
 
 

@@ -57,6 +57,7 @@ from outwiker.actions.about import AboutAction
 from outwiker.actions.openattachfolder import OpenAttachFolderAction
 from outwiker.actions.history import HistoryBackAction, HistoryForwardAction
 from outwiker.actions.applystyle import SetStyleToBranchAction
+from outwiker.actions.openpluginsfolder import OpenPluginsFolderAction
 
 
 class MainWindow(wx.Frame):
@@ -370,6 +371,10 @@ class MainWindow(wx.Frame):
 
         actionController.appendMenuItem (
             AboutAction.stringId,
+            menu)
+
+        actionController.appendMenuItem (
+            OpenPluginsFolderAction.stringId,
             menu)
 
 
