@@ -1,8 +1,4 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-
-import os
-import datetime
 
 from outwiker.gui.guiconfig import GeneralGuiConfig
 from outwiker.core.system import getOS
@@ -45,14 +41,14 @@ class HtmlReport (object):
 
         result = shell % items
         return result
-    
+
 
     def generataPageView (self, page):
         """
         Вернуть представление для одной страницы
         """
         item = u"<b><a href='/%s'>%s</a></b>" % (page.subpath, page.title)
-        if page.parent.parent != None:
+        if page.parent.parent is not None:
             item += u" (%s)" % page.parent.subpath
 
         item += u"<br>" + self.generatePageInfo (page) + "<p></p>"
@@ -72,8 +68,8 @@ class HtmlReport (object):
 
     def generateDate (self, page):
         config = GeneralGuiConfig (self.__application.config)
-        dateStr = unicode (page.datetime.strftime (config.dateTimeFormat.value), 
-                getOS().filesEncoding)
+        dateStr = unicode (page.datetime.strftime (config.dateTimeFormat.value),
+                           getOS().filesEncoding)
         result = _(u"Last modified date: {0}").format (dateStr)
 
         return result

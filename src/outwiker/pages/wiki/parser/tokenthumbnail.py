@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import re
@@ -27,7 +26,7 @@ class ThumbnailToken (object):
     def __init__ (self, parser):
         self.parser = parser
         self.thumbmaker = PageThumbmaker()
-    
+
 
     def getToken (self):
         result = Regex (r"""% *?(((thumb +)?width *?= *?(?P<width>\d+) *?(px)?)|((thumb +)?height *?= *?(?P<height>\d+) *?(px)?)|((thumb +)?maxsize *?= *?(?P<maxsize>\d+) *?(px)?)|(thumb *?)) *?% *?Attach:(?P<fname>.*?\.(jpe?g|bmp|gif|tiff?|png)) *?%%""", re.IGNORECASE)
@@ -36,7 +35,7 @@ class ThumbnailToken (object):
 
 
     def __convertThumb (self, s, l, t):
-        if t["width"] != None:
+        if t["width"] is not None:
             try:
                 size = int (t["width"])
             except ValueError:
@@ -44,7 +43,7 @@ class ThumbnailToken (object):
 
             func = self.thumbmaker.createThumbByWidth
 
-        elif t["height"] != None:
+        elif t["height"] is not None:
             try:
                 size = int (t["height"])
             except ValueError:
@@ -52,7 +51,7 @@ class ThumbnailToken (object):
 
             func = self.thumbmaker.createThumbByHeight
 
-        elif t["maxsize"] != None:
+        elif t["maxsize"] is not None:
             try:
                 size = int (t["maxsize"])
             except ValueError:

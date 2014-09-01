@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 from abc import ABCMeta, abstractmethod
@@ -6,7 +5,6 @@ import os.path
 
 import wx
 
-from outwiker.core.commands import MessageBox
 from outwiker.core.event import Event
 from outwiker.gui.toolsinfo import ToolsInfo
 from outwiker.core.application import Application
@@ -29,7 +27,7 @@ class BasePagePanel (wx.Panel):
         # Параметр: новая страница
         self._onSetPage = Event ()
 
-        # Словарь, хранящий информацию о созданных инструментах 
+        # Словарь, хранящий информацию о созданных инструментах
         # Ключ - строка, описывающая инструмент
         # Значение - экземпляр класса ToolsInfo
         self._tools = {}
@@ -57,26 +55,26 @@ class BasePagePanel (wx.Panel):
         tool = self._tools[idstring]
 
         if (tool.panelname in self.mainWindow.toolbars and
-            self.mainWindow.toolbars[tool.panelname].FindById (tool.id) != None):
-                self.mainWindow.toolbars[tool.panelname].DeleteTool (tool.id, fullUpdate=fullUpdate)
+                self.mainWindow.toolbars[tool.panelname].FindById (tool.id) is not None):
+            self.mainWindow.toolbars[tool.panelname].DeleteTool (tool.id, fullUpdate=fullUpdate)
 
         tool.menu.Remove (tool.id)
-        
+
         self.mainWindow.Unbind(wx.EVT_MENU, id=tool.id)
 
         del self._tools[idstring]
 
 
-    def addTool (self, 
-            menu, 
-            idstring, 
-            func, 
-            menuText, 
-            buttonText, 
-            image, 
-            alwaysEnabled=False,
-            fullUpdate=False,
-            panelname="plugins"):
+    def addTool (self,
+                 menu,
+                 idstring,
+                 func,
+                 menuText,
+                 buttonText,
+                 image,
+                 alwaysEnabled=False,
+                 fullUpdate=False,
+                 panelname="plugins"):
         """
         !!! Внимание. Это устаревший способ добавления элементов интерфейса. Сохраняется только для совместимости со старыми версиями плагинов и в будущих версиях программы может быть убран.
 
@@ -101,12 +99,13 @@ class BasePagePanel (wx.Panel):
         menu.Append (id, menuText, "", wx.ITEM_NORMAL)
         self.mainWindow.Bind(wx.EVT_MENU, func, id = id)
 
-        if image != None and len (image) != 0:
-            self.mainWindow.toolbars[tool.panelname].AddTool(id, 
-                    buttonText, 
-                    wx.Bitmap(image, wx.BITMAP_TYPE_ANY), 
-                    buttonText,
-                    fullUpdate=fullUpdate)
+        if image is not None and len (image) != 0:
+            self.mainWindow.toolbars[tool.panelname].AddTool(
+                id,
+                buttonText,
+                wx.Bitmap(image, wx.BITMAP_TYPE_ANY),
+                buttonText,
+                fullUpdate=fullUpdate)
 
 
     def enableTool (self, tool, enabled):
@@ -116,7 +115,7 @@ class BasePagePanel (wx.Panel):
         """
         tool.menu.Enable (tool.id, enabled)
 
-        if self.mainWindow.toolbars[tool.panelname].FindById (tool.id) != None:
+        if self.mainWindow.toolbars[tool.panelname].FindById (tool.id) is not None:
             toolbar = self.mainWindow.toolbars[tool.panelname]
             toolbar.Freeze()
             toolbar.EnableTool (tool.id, enabled)
@@ -198,17 +197,17 @@ class BasePagePanel (wx.Panel):
 
     def Close (self):
         """
-        Закрытие панели. 
+        Закрытие панели.
         Вызывать вручную!!!
         """
         self.mainWindow.toolbars.updatePanesInfo()
         self.Save()
         self.CloseWithoutSave()
-    
+
 
     def CloseWithoutSave (self):
         """
-        Закрытие панели без сохранения. 
+        Закрытие панели без сохранения.
         """
         self.Clear()
         wx.Panel.Close (self)

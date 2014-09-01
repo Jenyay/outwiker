@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import wx
@@ -19,7 +18,7 @@ class TextPrintPanel(wx.Panel):
         self.__do_layout()
 
         self.Bind(wx.EVT_BUTTON, self.onPageOptions, self.pageOptionsBtn)
-        
+
         self.config = TextPrintConfig (Application.config)
         self.LoadState()
 
@@ -42,7 +41,7 @@ class TextPrintPanel(wx.Panel):
 
     def __do_layout(self):
         fontSizer = wx.FlexGridSizer(1, 2, 0, 0)
-        fontSizer.Add(self.fontLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
+        fontSizer.Add(self.fontLabel, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
         fontSizer.Add(self.fontPicker, 1, wx.EXPAND, 0)
         fontSizer.AddGrowableCol(1)
 
@@ -58,8 +57,8 @@ class TextPrintPanel(wx.Panel):
         pd = wx.PrintData ()
         psdd = wx.PageSetupDialogData (pd)
 
-        psdd.SetMarginTopLeft (wx.Point (self.config.marginLeft.value, self.config.marginTop.value) )
-        psdd.SetMarginBottomRight (wx.Point (self.config.marginRight.value, self.config.marginBottom.value) )
+        psdd.SetMarginTopLeft (wx.Point (self.config.marginLeft.value, self.config.marginTop.value))
+        psdd.SetMarginBottomRight (wx.Point (self.config.marginRight.value, self.config.marginBottom.value))
         psdd.SetPaperId (self.config.paperId.value)
 
         dlg = wx.PageSetupDialog (self, psdd)
@@ -81,14 +80,13 @@ class TextPrintPanel(wx.Panel):
 
     def LoadState(self):
         # Обычный шрифт
-        fontOption = FontOption (self.config.fontName, 
-                self.config.fontSize, 
-                self.config.fontIsBold, 
-                self.config.fontIsItalic)
+        fontOption = FontOption (self.config.fontName,
+                                 self.config.fontSize,
+                                 self.config.fontIsBold,
+                                 self.config.fontIsItalic)
 
         self.font = configelements.FontElement (fontOption, self.fontPicker)
 
 
     def Save (self):
         self.font.save()
-

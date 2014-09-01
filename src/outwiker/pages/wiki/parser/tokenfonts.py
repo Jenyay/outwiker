@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import re
@@ -6,6 +5,7 @@ import re
 from outwiker.libs.pyparsing import QuotedString, Regex
 
 from tokenblock import BlockToken
+
 
 class FontsFactory (object):
     """
@@ -104,9 +104,9 @@ class CodeToken (BlockToken):
 
 
     def getToken (self):
-        return QuotedString (CodeToken.codeStart, 
-                endQuoteChar = CodeToken.codeEnd, 
-                multiline = True).setParseAction(self.convertToHTML("<code>","</code>"))("code")
+        return QuotedString (CodeToken.codeStart,
+                             endQuoteChar = CodeToken.codeEnd,
+                             multiline = True).setParseAction(self.convertToHTML("<code>", "</code>"))("code")
 
 
 class SuperscriptToken (BlockToken):
@@ -121,9 +121,9 @@ class SuperscriptToken (BlockToken):
 
 
     def getToken (self):
-        return QuotedString (SuperscriptToken.superscriptStart, 
-                endQuoteChar = SuperscriptToken.superscriptEnd, 
-                multiline = True).setParseAction(self.convertToHTML("<sup>","</sup>"))("superscript")
+        return QuotedString (SuperscriptToken.superscriptStart,
+                             endQuoteChar = SuperscriptToken.superscriptEnd,
+                             multiline = True).setParseAction(self.convertToHTML("<sup>", "</sup>"))("superscript")
 
 
 class SubscriptToken (BlockToken):
@@ -138,9 +138,9 @@ class SubscriptToken (BlockToken):
 
 
     def getToken (self):
-        return QuotedString (SubscriptToken.subscriptStart, 
-                endQuoteChar = SubscriptToken.subscriptEnd, 
-                multiline = True).setParseAction(self.convertToHTML("<sub>","</sub>"))("subscript")
+        return QuotedString (SubscriptToken.subscriptStart,
+                             endQuoteChar = SubscriptToken.subscriptEnd,
+                             multiline = True).setParseAction(self.convertToHTML("<sub>", "</sub>"))("subscript")
 
 
 class UnderlineToken (BlockToken):
@@ -155,9 +155,9 @@ class UnderlineToken (BlockToken):
 
 
     def getToken (self):
-        return QuotedString (UnderlineToken.underlineStart, 
-                endQuoteChar = UnderlineToken.underlineEnd, 
-                multiline = True).setParseAction(self.convertToHTML("<u>","</u>"))("underline")
+        return QuotedString (UnderlineToken.underlineStart,
+                             endQuoteChar = UnderlineToken.underlineEnd,
+                             multiline = True).setParseAction(self.convertToHTML("<u>", "</u>"))("underline")
 
 
 class StrikeToken (BlockToken):
@@ -172,9 +172,9 @@ class StrikeToken (BlockToken):
 
 
     def getToken (self):
-        return QuotedString (StrikeToken.strikeStart, 
-                endQuoteChar = StrikeToken.strikeEnd, 
-                multiline = True).setParseAction(self.convertToHTML("<strike>","</strike>"))("strike")
+        return QuotedString (StrikeToken.strikeStart,
+                             endQuoteChar = StrikeToken.strikeEnd,
+                             multiline = True).setParseAction(self.convertToHTML("<strike>", "</strike>"))("strike")
 
 
 
@@ -190,10 +190,10 @@ class ItalicToken (BlockToken):
 
 
     def getToken (self):
-        return QuotedString (ItalicToken.italicStart, 
-                endQuoteChar = ItalicToken.italicEnd, 
-                multiline = True).setParseAction(self.convertToHTML("<i>","</i>"))("italic")
-    
+        return QuotedString (ItalicToken.italicStart,
+                             endQuoteChar = ItalicToken.italicEnd,
+                             multiline = True).setParseAction(self.convertToHTML("<i>", "</i>"))("italic")
+
 
 class BoldToken (BlockToken):
     """
@@ -207,9 +207,9 @@ class BoldToken (BlockToken):
 
 
     def getToken (self):
-        return QuotedString (BoldToken.boldStart, 
-                endQuoteChar = BoldToken.boldEnd, 
-                multiline = True).setParseAction(self.convertToHTML("<b>","</b>"))("bold")
+        return QuotedString (BoldToken.boldStart,
+                             endQuoteChar = BoldToken.boldEnd,
+                             multiline = True).setParseAction(self.convertToHTML("<b>", "</b>"))("bold")
 
 
 class BoldItalicToken (BlockToken):
@@ -224,9 +224,9 @@ class BoldItalicToken (BlockToken):
 
 
     def getToken (self):
-        return QuotedString (BoldItalicToken.boldItalicStart, 
-                endQuoteChar = BoldItalicToken.boldItalicEnd, 
-                multiline = True).setParseAction(self.convertToHTML("<b><i>","</i></b>"))("bold_italic")
+        return QuotedString (BoldItalicToken.boldItalicStart,
+                             endQuoteChar = BoldItalicToken.boldItalicEnd,
+                             multiline = True).setParseAction(self.convertToHTML("<b><i>", "</i></b>"))("bold_italic")
 
 
 class SmallFontToken (BlockToken):

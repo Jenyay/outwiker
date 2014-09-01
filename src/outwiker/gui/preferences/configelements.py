@@ -1,9 +1,9 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 """
 Классы для взаимодействия конфига и GUI
 """
 import wx
+
 
 class StringElement (object):
     def __init__ (self, option, control):
@@ -43,7 +43,7 @@ class StringElement (object):
         """
         self.control.SetValue (self.option.value)
 
-    
+
 
 class BooleanElement (StringElement):
     """
@@ -110,11 +110,11 @@ class FontElement (object):
         fontIsBold = self.option.bold.value
         fontIsItalic = self.option.italic.value
 
-        font = wx.Font (fontSize, wx.FONTFAMILY_DEFAULT, 
-                wx.FONTSTYLE_ITALIC if fontIsItalic else wx.FONTSTYLE_NORMAL, 
-                wx.FONTWEIGHT_BOLD if fontIsBold else wx.FONTWEIGHT_NORMAL, 
-                False,
-                fontFaceName,
-                wx.FONTENCODING_DEFAULT)
+        font = wx.Font (fontSize, wx.FONTFAMILY_DEFAULT,
+                        wx.FONTSTYLE_ITALIC if fontIsItalic else wx.FONTSTYLE_NORMAL,
+                        wx.FONTWEIGHT_BOLD if fontIsBold else wx.FONTWEIGHT_NORMAL,
+                        False,
+                        fontFaceName,
+                        wx.FONTENCODING_DEFAULT)
 
         self.control.SetSelectedFont (font)

@@ -1,8 +1,6 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 from abc import ABCMeta, abstractmethod, abstractproperty
-import gettext
 
 from outwiker.core.i18n import getLanguageFromConfig, loadLanguage
 
@@ -36,7 +34,7 @@ class Plugin (object):
     def name (self):
         pass
 
-    
+
     @abstractproperty
     def description (self):
         pass

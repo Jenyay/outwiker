@@ -1,7 +1,7 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 from outwiker.libs.pyparsing import NoMatch
+
 
 def noConvert (s, l, t):
     return t[0]
@@ -27,7 +27,7 @@ def convertToHTML (opening, closing, parser):
     closing - закрывающийся тег(и)
     parser - парсер, у которого есть метод parseWikiMarkup()
     """
-    def conversionParseAction(s,l,t):
+    def conversionParseAction(s, l, t):
         return opening + parser.parseWikiMarkup (t[0]) + closing
     return conversionParseAction
 

@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import os.path
@@ -8,10 +7,7 @@ from outwiker.actions.addbookmark import AddBookmarkAction
 from outwiker.core.application import Application
 from outwiker.core.factoryselector import FactorySelector
 from outwiker.core.commands import pageExists, openWiki, MessageBox
-from outwiker.core.tree import RootWikiPage
-from outwiker.core.tagscommands import getTagsString
 import outwiker.core.system
-from .pagedialog import editPage
 from .tabsctrl import TabsCtrl
 
 
@@ -24,7 +20,7 @@ class CurrentPagePanel(wx.Panel):
         self.__saveProcessing = False
 
         self.imagesDir = outwiker.core.system.getImagesDir()
-        
+
         self.grayStarImage = os.path.join (self.imagesDir, "star_gray.png")
         self.goldStarImage = os.path.join (self.imagesDir, "star.png")
 
@@ -55,10 +51,10 @@ class CurrentPagePanel(wx.Panel):
 
 
     def Print (self):
-        if Application.selectedPage != None and self.__pageView != None:
+        if Application.selectedPage is not None and self.__pageView is not None:
             self.__pageView.Print()
 
-    
+
     def __onClose (self, event):
         Application.onWikiOpen -= self.__onWikiOpen
         Application.onPageSelect -= self.__onPageSelect
@@ -67,7 +63,7 @@ class CurrentPagePanel(wx.Panel):
         Application.onForceSave -= self.__onForceSave
         Application.onBookmarksChanged -= self.__onBookmarksChanged
 
-        if self.__pageView != None:
+        if self.__pageView is not None:
             self.__pageView.Close()
         self.Destroy()
 
@@ -77,14 +73,14 @@ class CurrentPagePanel(wx.Panel):
 
 
     def __onWikiOpen (self, root):
-        self.__onPageSelect (root.selectedPage if root != None else None)
+        self.__onPageSelect (root.selectedPage if root is not None else None)
 
 
     def __onPageSelect (self, page):
         """
         Событие при выборе страницы
         """
-        if page != None and not pageExists (page):
+        if page is not None and not pageExists (page):
             MessageBox (_(u"Can't open page. Page folder not exists"), _("Error"), wx.OK | wx.ICON_ERROR)
             Application.selectedPage = None
             return
@@ -92,20 +88,20 @@ class CurrentPagePanel(wx.Panel):
         self.Freeze()
         self.__updatePageView (page)
         self.__updatePageInfo (page)
-        self.bookmarkButton.Enable (page != None)
+        self.bookmarkButton.Enable (page is not None)
         self.Thaw()
 
 
     def __onPageUpdate (self, page, **kwargs):
-        if Application.selectedPage != None and Application.selectedPage == page:
+        if Application.selectedPage is not None and Application.selectedPage == page:
             self.__updatePageInfo (page)
-    
+
 
     def __updateBookmarkBtn (self):
         imagePath = self.grayStarImage
         tooltip = _(u"Add to Bookmarks")
 
-        if Application.selectedPage != None and Application.selectedPage.root.bookmarks.pageMarked (Application.selectedPage):
+        if Application.selectedPage is not None and Application.selectedPage.root.bookmarks.pageMarked (Application.selectedPage):
             imagePath = self.goldStarImage
             tooltip = _(u"Remove from Bookmarks")
 
@@ -127,7 +123,7 @@ class CurrentPagePanel(wx.Panel):
             self.__createPageView(page)
 
         # Если представление создано, то загрузим в него новую страницу
-        if self.__pageView != None:
+        if self.__pageView is not None:
             self.__pageView.page = page
 
         # Запомнить страницу, чтобы потом можно было бы сравнивать ее тип с новой страницей
@@ -138,12 +134,12 @@ class CurrentPagePanel(wx.Panel):
         """
         Создать панель просмотра для страницы
         """
-        if page != None:
+        if page is not None:
             factory = FactorySelector.getFactory (page.getTypeString())
             self.__pageView = factory.getPageView (self)
             self.__pageView.page = page
 
-            assert self.__pageView != None
+            assert self.__pageView is not None
 
             self.contentSizer.Add (self.__pageView, 1, wx.EXPAND, 0)
             self.Layout()
@@ -156,13 +152,13 @@ class CurrentPagePanel(wx.Panel):
         """
         self.Freeze()
         try:
-            if page != None:
+            if page is not None:
                 self.__updateBookmarkBtn()
             self.Layout()
         finally:
             self.Thaw()
 
-    
+
     def __set_properties(self):
         self.bookmarkButton.SetSize(self.bookmarkButton.GetBestSize())
 
@@ -189,7 +185,7 @@ class CurrentPagePanel(wx.Panel):
         """
         Уничтожить текущий контрол
         """
-        if self.__pageView != None:
+        if self.__pageView is not None:
             Application.onPageViewDestroy (self.__currentPage)
 
             self.contentSizer.Detach (self.__pageView)
@@ -197,20 +193,20 @@ class CurrentPagePanel(wx.Panel):
             self.__pageView = None
             self.__currentPage = None
 
-    
+
     def destroyWithoutSave (self):
         """
         Уничтожить панель без сохранения изменений.
         Нужно для перезагрузки вики
         """
-        if self.__pageView != None:
+        if self.__pageView is not None:
             Application.onPageViewDestroy (self.__currentPage)
 
             self.contentSizer.Detach (self.__pageView)
             self.__pageView.CloseWithoutSave()
             self.__pageView = None
             self.__currentPage = None
-    
+
 
     def Save (self):
         """
@@ -219,7 +215,7 @@ class CurrentPagePanel(wx.Panel):
         if self.__saveProcessing:
             return
 
-        if self.__pageView != None:
+        if self.__pageView is not None:
             if not pageExists (Application.selectedPage.root):
                 # Нет папки с деревом
                 self.__saveProcessing = True

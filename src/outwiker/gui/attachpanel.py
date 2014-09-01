@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import os.path
@@ -25,7 +24,7 @@ class AttachPanel(wx.Panel):
 
         wx.Panel.__init__(self, *args, **kwds)
         self.__toolbar = self.__createToolBar(self, -1)
-        self.__attachList = wx.ListCtrl(self, -1, style=wx.LC_LIST|wx.SUNKEN_BORDER)
+        self.__attachList = wx.ListCtrl(self, -1, style=wx.LC_LIST | wx.SUNKEN_BORDER)
 
         self.__set_properties()
         self.__do_layout()
@@ -63,7 +62,7 @@ class AttachPanel(wx.Panel):
         Application.onPageUpdate += self.__onPageUpdate
         Application.onWikiOpen += self.__onWikiOpen
 
-    
+
     def __unbindAppEvents (self):
         Application.onPageSelect -= self.__onPageSelect
         Application.onPageUpdate -= self.__onPageUpdate
@@ -83,63 +82,63 @@ class AttachPanel(wx.Panel):
 
         toolbar = wx.ToolBar (parent, id, style=wx.TB_DOCKABLE)
 
-        toolbar.AddLabelTool(self.ID_REFRESH, 
-                _(u"Refresh"), 
-                wx.Bitmap(os.path.join (imagesDir, "reload.png"),
-                    wx.BITMAP_TYPE_ANY),
-                wx.NullBitmap, 
-                wx.ITEM_NORMAL,
-                _(u"Refresh"), 
-                "")
+        toolbar.AddLabelTool(self.ID_REFRESH,
+                             _(u"Refresh"),
+                             wx.Bitmap(os.path.join (imagesDir, "reload.png"),
+                                       wx.BITMAP_TYPE_ANY),
+                             wx.NullBitmap,
+                             wx.ITEM_NORMAL,
+                             _(u"Refresh"),
+                             "")
 
         toolbar.AddSeparator()
 
-        toolbar.AddLabelTool(self.ID_ATTACH, 
-                _(u"Attach Files…"), 
-                wx.Bitmap(os.path.join (imagesDir, "attach.png"),
-                    wx.BITMAP_TYPE_ANY),
-                wx.NullBitmap, 
-                wx.ITEM_NORMAL,
-                _(u"Attach Files…"), 
-                "")
+        toolbar.AddLabelTool(self.ID_ATTACH,
+                             _(u"Attach Files…"),
+                             wx.Bitmap(os.path.join (imagesDir, "attach.png"),
+                                       wx.BITMAP_TYPE_ANY),
+                             wx.NullBitmap,
+                             wx.ITEM_NORMAL,
+                             _(u"Attach Files…"),
+                             "")
 
-        toolbar.AddLabelTool(self.ID_REMOVE, 
-                _(u"Remove Files…"), 
-                wx.Bitmap(os.path.join (imagesDir, "delete.png"),
-                    wx.BITMAP_TYPE_ANY),
-                wx.NullBitmap, 
-                wx.ITEM_NORMAL,
-                _(u"Remove Files…"), 
-                "")
+        toolbar.AddLabelTool(self.ID_REMOVE,
+                             _(u"Remove Files…"),
+                             wx.Bitmap(os.path.join (imagesDir, "delete.png"),
+                                       wx.BITMAP_TYPE_ANY),
+                             wx.NullBitmap,
+                             wx.ITEM_NORMAL,
+                             _(u"Remove Files…"),
+                             "")
 
         toolbar.AddSeparator()
 
-        toolbar.AddLabelTool(self.ID_PASTE, 
-                _(u"Paste"), 
-                wx.Bitmap(os.path.join (imagesDir, "paste.png"),
-                    wx.BITMAP_TYPE_ANY),
-                wx.NullBitmap, 
-                wx.ITEM_NORMAL,
-                _(u"Paste"), 
-                "")
+        toolbar.AddLabelTool(self.ID_PASTE,
+                             _(u"Paste"),
+                             wx.Bitmap(os.path.join (imagesDir, "paste.png"),
+                                       wx.BITMAP_TYPE_ANY),
+                             wx.NullBitmap,
+                             wx.ITEM_NORMAL,
+                             _(u"Paste"),
+                             "")
 
-        toolbar.AddLabelTool(self.ID_EXECUTE, 
-                _(u"Execute"), 
-                wx.Bitmap(os.path.join (imagesDir, "execute.png"),
-                    wx.BITMAP_TYPE_ANY),
-                wx.NullBitmap, 
-                wx.ITEM_NORMAL,
-                _(u"Execute"), 
-                "")
+        toolbar.AddLabelTool(self.ID_EXECUTE,
+                             _(u"Execute"),
+                             wx.Bitmap(os.path.join (imagesDir, "execute.png"),
+                                       wx.BITMAP_TYPE_ANY),
+                             wx.NullBitmap,
+                             wx.ITEM_NORMAL,
+                             _(u"Execute"),
+                             "")
 
-        toolbar.AddLabelTool(self.ID_OPEN_FOLDER, 
-                _(u"Open Attachments Folder"), 
-                wx.Bitmap(os.path.join (imagesDir, "folder.png"),
-                    wx.BITMAP_TYPE_ANY),
-                wx.NullBitmap, 
-                wx.ITEM_NORMAL,
-                _(u"Open Attachments Folder"), 
-                "")
+        toolbar.AddLabelTool(self.ID_OPEN_FOLDER,
+                             _(u"Open Attachments Folder"),
+                             wx.Bitmap(os.path.join (imagesDir, "folder.png"),
+                                       wx.BITMAP_TYPE_ANY),
+                             wx.NullBitmap,
+                             wx.ITEM_NORMAL,
+                             _(u"Open Attachments Folder"),
+                             "")
 
 
 
@@ -153,7 +152,7 @@ class AttachPanel(wx.Panel):
     def __do_layout(self):
         attachSizer_copy = wx.FlexGridSizer(2, 1, 0, 0)
         attachSizer_copy.Add(self.__toolbar, 1, wx.EXPAND, 0)
-        attachSizer_copy.Add(self.__attachList, 1, wx.ALL|wx.EXPAND, 2)
+        attachSizer_copy.Add(self.__attachList, 1, wx.ALL | wx.EXPAND, 2)
         self.SetSizer(attachSizer_copy)
         attachSizer_copy.Fit(self)
         attachSizer_copy.AddGrowableRow(1)
@@ -172,7 +171,7 @@ class AttachPanel(wx.Panel):
 
 
     def __onPageUpdate (self, page, **kwargs):
-        if (Application.selectedPage != None and 
+        if (Application.selectedPage is not None and
                 Application.selectedPage == page and
                 kwargs['change'] == PAGE_UPDATE_ATTACHMENT):
             self.updateAttachments ()
@@ -184,7 +183,7 @@ class AttachPanel(wx.Panel):
         """
         self.__attachList.Freeze()
         self.__attachList.ClearAll()
-        if Application.selectedPage != None:
+        if Application.selectedPage is not None:
             files = Attachment (Application.selectedPage).attachmentFull
             files.sort(Attachment.sortByName, reverse=True)
 
@@ -225,18 +224,18 @@ class AttachPanel(wx.Panel):
 
 
     def __onRemove(self, event):
-        if Application.selectedPage != None:
+        if Application.selectedPage is not None:
             files = self.__getSelectedFiles ()
 
             if len (files) == 0:
-                MessageBox (_(u"You did not select a file to remove"), 
-                    _(u"Error"),
-                    wx.OK  | wx.ICON_ERROR)
+                MessageBox (_(u"You did not select a file to remove"),
+                            _(u"Error"),
+                            wx.OK | wx.ICON_ERROR)
                 return
 
-            if MessageBox (_(u"Remove selected files?"), 
-                    _(u"Remove files?"),
-                    wx.YES_NO  | wx.ICON_QUESTION) == wx.YES:
+            if MessageBox (_(u"Remove selected files?"),
+                           _(u"Remove files?"),
+                           wx.YES_NO | wx.ICON_QUESTION) == wx.YES:
                 try:
                     Attachment (Application.selectedPage).removeAttach (files)
                 except IOError as e:
@@ -251,9 +250,9 @@ class AttachPanel(wx.Panel):
         """
         files = self.__getSelectedFiles ()
         if len (files) == 0:
-            MessageBox (_(u"You did not select a file to paste"), 
-                _(u"Error"),
-                wx.OK  | wx.ICON_ERROR)
+            MessageBox (_(u"You did not select a file to paste"),
+                        _(u"Error"),
+                        wx.OK | wx.ICON_ERROR)
             return
 
         Application.onAttachmentPaste (files)
@@ -268,13 +267,13 @@ class AttachPanel(wx.Panel):
 
 
     def __onExecute(self, event):
-        if Application.selectedPage != None:
+        if Application.selectedPage is not None:
             files = self.__getSelectedFiles()
 
             if len (files) == 0:
-                MessageBox (_(u"You did not select a file to execute"), 
-                    _(u"Error"),
-                    wx.OK  | wx.ICON_ERROR)
+                MessageBox (_(u"You did not select a file to execute"),
+                            _(u"Error"),
+                            wx.OK | wx.ICON_ERROR)
                 return
 
             for file in files:
@@ -290,11 +289,9 @@ class AttachPanel(wx.Panel):
         data = getOS().dragFileDataObject()
 
         for fname in self.__getSelectedFiles():
-            data.AddFile (os.path.join (Attachment (Application.selectedPage).getAttachPath(), fname) )
+            data.AddFile (os.path.join (Attachment (Application.selectedPage).getAttachPath(), fname))
 
         dragSource = wx.DropSource (self)
         dragSource.SetData(data)
 
-        result = dragSource.DoDragDrop ()
-
-
+        dragSource.DoDragDrop ()

@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import os
@@ -22,7 +21,7 @@ class Attachment (object):
         """
         self.page = page
 
-    
+
     def getAttachPath (self, create=False):
         """
         Возвращает путь до папки с прикрепленными файлами
@@ -44,7 +43,7 @@ class Attachment (object):
         """
         path = self.getAttachPath()
 
-        return [os.path.join (path, fname) 
+        return [os.path.join (path, fname)
                 for fname in self.getAttachRelative()]
 
 
@@ -76,7 +75,7 @@ class Attachment (object):
         for name in files:
             if os.path.isdir (name):
                 basename = os.path.basename (name)
-                shutil.copytree (name, os.path.join (attachPath, basename) )
+                shutil.copytree (name, os.path.join (attachPath, basename))
             else:
                 shutil.copy (name, attachPath)
 
@@ -136,14 +135,14 @@ class Attachment (object):
             return 1
         elif ext1 < ext2:
             return -1
-        
+
         return Attachment.sortByName (fname1, fname2)
 
 
     @staticmethod
     def sortByDate (fname1, fname2):
         """
-        Метод для сортировки файлов по дате. 
+        Метод для сортировки файлов по дате.
         Пути до файлов должны быть полные
         """
         stat1 = os.stat (fname1)
@@ -160,7 +159,7 @@ class Attachment (object):
     @staticmethod
     def sortBySize (fname1, fname2):
         """
-        Метод для сортировки файлов по размеру. 
+        Метод для сортировки файлов по размеру.
         Пути до файлов должны быть полные
         """
         stat1 = os.stat (fname1)
@@ -176,11 +175,11 @@ class Attachment (object):
 
     def sortBySizeRelative (self, fname1, fname2):
         """
-        Метод для сортировки файлов по дате. 
+        Метод для сортировки файлов по дате.
         Пути до файлов - относительные
         """
-        stat1 = os.stat (self.getFullPath (fname1) )
-        stat2 = os.stat (self.getFullPath (fname2) )
+        stat1 = os.stat (self.getFullPath (fname1))
+        stat2 = os.stat (self.getFullPath (fname2))
 
         if stat1.st_size > stat2.st_size:
             return 1
@@ -192,11 +191,11 @@ class Attachment (object):
 
     def sortByDateRelative (self, fname1, fname2):
         """
-        Метод для сортировки файлов по дате. 
+        Метод для сортировки файлов по дате.
         Пути до файлов - относительные
         """
-        stat1 = os.stat (self.getFullPath (fname1) )
-        stat2 = os.stat (self.getFullPath (fname2) )
+        stat1 = os.stat (self.getFullPath (fname1))
+        stat2 = os.stat (self.getFullPath (fname2))
 
         if stat1.st_mtime > stat2.st_mtime:
             return 1

@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import wx
@@ -46,8 +45,8 @@ class AutosaveTimer (wx.PyEvtHandler):
         """
         Этот метод вызывается, когда срабатывает таймер
         """
-        # Если приложение не активно, ничего не сохраняем, 
-        # потому что все-равно при неактивном окне заметка 
+        # Если приложение не активно, ничего не сохраняем,
+        # потому что все-равно при неактивном окне заметка
         # не может измениться средствами outwiker'а.
         # А при потере фокуса сохранение происходит и так.
         if wx.GetApp().IsActive():
@@ -60,4 +59,3 @@ class AutosaveTimer (wx.PyEvtHandler):
         self.__application.onPreferencesDialogCreate -= self.__onPreferencesDialogCreate
         self.__application.onPreferencesDialogClose -= self.__onPreferencesDialogClose
         self.Unbind (wx.EVT_TIMER, self.__onTick)
-

@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import os.path
@@ -53,7 +52,7 @@ class IconButton (wx.PyControl):
     def __onPaint (self, event):
         dc = wx.PaintDC (self)
 
-        dc.SetBrush (wx.Brush (self.selectedBackground if self.selected else self.normalBackground) )
+        dc.SetBrush (wx.Brush (self.selectedBackground if self.selected else self.normalBackground))
         dc.SetPen(wx.TRANSPARENT_PEN)
         dc.DrawRectangle (0, 0, self.Size[0], self.Size[1])
 
@@ -102,10 +101,9 @@ class IconListCtrl (wx.ScrolledWindow):
 
         self.__updateList()
 
-        #self.SetFocus()
         self.Bind (wx.EVT_SIZE, self.onSize)
 
-    
+
     def onSize (self, event):
         self.__layout()
 
@@ -142,7 +140,7 @@ class IconListCtrl (wx.ScrolledWindow):
 
         return button
 
-    
+
     def __onButtonClick (self, event):
         for button in self.buttons:
             if button.GetId() == event.GetId():
@@ -178,7 +176,7 @@ class IconListCtrl (wx.ScrolledWindow):
     @property
     def icon (self):
         selButton = self.__selectedButton
-        if selButton != None:
+        if selButton is not None:
             return selButton.fname
 
 
@@ -186,8 +184,8 @@ class IconListCtrl (wx.ScrolledWindow):
         """
         Добавить иконку и сделать ее выбранной по умолчанию
         """
-        assert fname != None
-        
+        assert fname is not None
+
         button = self.__addButton (fname)
         self.__layout()
         self.__selectedButton.selected = False

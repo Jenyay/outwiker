@@ -1,7 +1,4 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-
-import ConfigParser
 
 from .event import Event
 from .config import StringListSection
@@ -19,9 +16,10 @@ class Bookmarks (object):
         self.root = wikiroot
         self.configSection = u"Bookmarks"
         self.configOption = u"bookmark_"
-        
-        self.__bookmarksConfig = StringListSection (config, 
-                self.configSection, self.configOption)
+
+        self.__bookmarksConfig = StringListSection (
+            config,
+            self.configSection, self.configOption)
 
         # Страницы в закладках
         self.__pages = self.__bookmarksConfig.value
@@ -33,7 +31,7 @@ class Bookmarks (object):
         wikiroot.onPageRemove += self.onPageRemove
         wikiroot.onPageRename += self.onPageRename
 
-    
+
     def onPageRemove (self, page):
         """
         Обработчик события при удалении страниц
@@ -66,7 +64,7 @@ class Bookmarks (object):
         self.__pages.append (page.subpath)
         self.save()
         self.onBookmarksChanged (self)
-    
+
 
     def save (self):
         self.__bookmarksConfig.value = self.__pages
@@ -76,7 +74,7 @@ class Bookmarks (object):
         self.__pages.remove (page.subpath)
         self.onBookmarksChanged (self)
         self.save()
-    
+
 
     def pageMarked (self, page):
         """

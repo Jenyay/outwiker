@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import re
@@ -18,7 +17,7 @@ class CommandToken (object):
     Команда может состоять только из первой скобки (:commandname params... :)
     Параметры (params...) необязательны
 
-    Этот токен находит в тексте команду, а затем в парсере ищет обработчика данной команды. 
+    Этот токен находит в тексте команду, а затем в парсере ищет обработчика данной команды.
     Если обработчика нет, возвращается исходный текст команды
     """
     def __init__ (self, parser):
@@ -41,10 +40,10 @@ class CommandToken (object):
         params = t["params"]
         content = t["content"]
 
-        if params == None:
+        if params is None:
             params = u""
 
-        if content == None:
+        if content is None:
             content = u""
 
         try:

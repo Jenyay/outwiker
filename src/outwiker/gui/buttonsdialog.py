@@ -1,7 +1,7 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import wx
+
 
 class ButtonsDialog (wx.Dialog):
     """
@@ -36,7 +36,7 @@ class ButtonsDialog (wx.Dialog):
 
     def __createButtons (self, buttons, default, cancel):
         """Создание кнопок"""
-        self.__buttons = [wx.Button (self, index, text) for text, index in zip (buttons, range (len (buttons)) )]
+        self.__buttons = [wx.Button (self, index, text) for text, index in zip (buttons, range (len (buttons)))]
 
         if default >= 0:
             self.SetAffirmativeId (self.__buttons[default].GetId())
@@ -59,7 +59,7 @@ class ButtonsDialog (wx.Dialog):
         sizer_2 = wx.BoxSizer(wx.HORIZONTAL)
 
         sizer_1.Add(self.__textLabel, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_CENTER_HORIZONTAL, 4)
-        
+
         for button in self.__buttons:
             sizer_2.Add(button, 0, wx.ALL, 2)
 
@@ -67,4 +67,3 @@ class ButtonsDialog (wx.Dialog):
         self.SetSizer(sizer_1)
         sizer_1.Fit(self)
         self.Layout()
-

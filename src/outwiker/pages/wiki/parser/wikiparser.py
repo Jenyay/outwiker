@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import traceback
@@ -73,108 +72,108 @@ class Parser (object):
         self.text = TextFactory.make(self)
 
         self.listItemMarkup = (self.attaches |
-                self.urlImage |
-                self.url |
-                self.text | 
-                self.lineBreak |
-                self.lineJoin |
-                self.link |
-                self.boldItalicized |
-                self.bolded |
-                self.italicized |
-                self.code |
-                self.small |
-                self.big |
-                self.preformat |
-                self.noformat |
-                self.thumb |
-                self.underlined |
-                self.strike |
-                self.subscript |
-                self.superscript |
-                self.attaches |
-                self.tex |
-                self.command
-                )
+                               self.urlImage |
+                               self.url |
+                               self.text |
+                               self.lineBreak |
+                               self.lineJoin |
+                               self.link |
+                               self.boldItalicized |
+                               self.bolded |
+                               self.italicized |
+                               self.code |
+                               self.small |
+                               self.big |
+                               self.preformat |
+                               self.noformat |
+                               self.thumb |
+                               self.underlined |
+                               self.strike |
+                               self.subscript |
+                               self.superscript |
+                               self.attaches |
+                               self.tex |
+                               self.command
+                               )
 
 
         self.wikiMarkup = (self.attaches |
-                self.urlImage |
-                self.url |
-                self.text | 
-                self.lineBreak |
-                self.lineJoin |
-                self.link |
-                self.adhoctokens |
-                self.subscript |
-                self.superscript |
-                self.boldItalicized |
-                self.bolded |
-                self.italicized |
-                self.code |
-                self.small |
-                self.big |
-                self.quote |
-                self.preformat |
-                self.noformat |
-                self.thumb |
-                self.underlined |
-                self.strike |
-                self.horline |
-                self.align |
-                self.lists |
-                self.table |
-                self.headings |
-                self.tex |
-                self.command
-                )
+                           self.urlImage |
+                           self.url |
+                           self.text |
+                           self.lineBreak |
+                           self.lineJoin |
+                           self.link |
+                           self.adhoctokens |
+                           self.subscript |
+                           self.superscript |
+                           self.boldItalicized |
+                           self.bolded |
+                           self.italicized |
+                           self.code |
+                           self.small |
+                           self.big |
+                           self.quote |
+                           self.preformat |
+                           self.noformat |
+                           self.thumb |
+                           self.underlined |
+                           self.strike |
+                           self.horline |
+                           self.align |
+                           self.lists |
+                           self.table |
+                           self.headings |
+                           self.tex |
+                           self.command
+                           )
 
         # Нотация для ссылок
         self.linkMarkup = (self.attachImages |
-                self.urlImage |
-                self.text | 
-                self.adhoctokens |
-                self.subscript |
-                self.superscript |
-                self.boldItalicized |
-                self.bolded |
-                self.italicized |
-                self.underlined |
-                self.small |
-                self.big |
-                self.strike |
-                self.tex |
-                self.command |
-                self.lineBreak |
-                self.lineJoin |
-                self.noformat
-                )
+                           self.urlImage |
+                           self.text |
+                           self.adhoctokens |
+                           self.subscript |
+                           self.superscript |
+                           self.boldItalicized |
+                           self.bolded |
+                           self.italicized |
+                           self.underlined |
+                           self.small |
+                           self.big |
+                           self.strike |
+                           self.tex |
+                           self.command |
+                           self.lineBreak |
+                           self.lineJoin |
+                           self.noformat
+                           )
 
         # Нотация для заголовков
         self.headingMarkup = (self.attaches |
-                self.urlImage |
-                self.url |
-                self.text | 
-                self.lineBreak |
-                self.lineJoin |
-                self.link |
-                self.adhoctokens |
-                self.subscript |
-                self.superscript |
-                self.boldItalicized |
-                self.bolded |
-                self.italicized |
-                self.small |
-                self.big |
-                self.noformat |
-                self.thumb |
-                self.underlined |
-                self.strike |
-                self.horline |
-                self.align |
-                self.tex |
-                self.command
-                )
+                              self.urlImage |
+                              self.url |
+                              self.text |
+                              self.lineBreak |
+                              self.lineJoin |
+                              self.link |
+                              self.adhoctokens |
+                              self.subscript |
+                              self.superscript |
+                              self.boldItalicized |
+                              self.bolded |
+                              self.italicized |
+                              self.small |
+                              self.big |
+                              self.noformat |
+                              self.thumb |
+                              self.underlined |
+                              self.strike |
+                              self.horline |
+                              self.align |
+                              self.tex |
+                              self.command
+                              )
 
 
     @property
@@ -205,28 +204,28 @@ class Parser (object):
     def parseWikiMarkup (self, text):
         try:
             return self.wikiMarkup.transformString (text)
-        except Exception, e:
+        except Exception:
             return self.error_template.format (error = traceback.format_exc())
 
 
     def parseListItemMarkup (self, text):
         try:
             return self.listItemMarkup.transformString (text)
-        except Exception, e:
+        except Exception:
             return self.error_template.format (error = traceback.format_exc())
 
 
     def parseLinkMarkup (self, text):
         try:
             return self.linkMarkup.transformString (text)
-        except Exception, e:
+        except Exception:
             return self.error_template.format (error = traceback.format_exc())
 
 
     def parseHeadingMarkup (self, text):
         try:
             return self.headingMarkup.transformString (text)
-        except Exception, e:
+        except Exception:
             return self.error_template.format (error = traceback.format_exc())
 
 

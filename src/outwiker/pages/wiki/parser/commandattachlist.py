@@ -1,10 +1,10 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import os.path
 
 from command import Command
 from outwiker.core.attachment import Attachment
+
 
 class SimpleView (object):
     """
@@ -20,15 +20,15 @@ class SimpleView (object):
 
         titles = [u"[%s]" % (name) if os.path.isdir (os.path.join (attachdir, name)) else name for name in fnames]
 
-        result = u"".join ([template.format (link = os.path.join (Attachment.attachDir, name).replace ("\\", "/"), title=title) 
-            for (name, title) in zip (fnames, titles) ] ).rstrip()
+        result = u"".join ([template.format (link = os.path.join (Attachment.attachDir, name).replace ("\\", "/"), title=title)
+                            for (name, title) in zip (fnames, titles)]).rstrip()
 
         return result
 
 
 class AttachListCommand (Command):
     """
-    Команда для вставки списка дочерних команд. 
+    Команда для вставки списка дочерних команд.
     Синтсаксис: (:attachlist [params...]:)
     Параметры:
         sort=name - сортировка по имени
@@ -65,8 +65,8 @@ class AttachListCommand (Command):
         """
         Разделить файлы и директории, заодно отбросить директории, начинающиеся с "__"
         """
-        dirs = [name for name in attachlist if os.path.isdir (os.path.join (attachpath, name) ) and not name.startswith ("__") ]
-        files = [name for name in attachlist if not os.path.isdir (os.path.join (attachpath, name) ) ]
+        dirs = [name for name in attachlist if os.path.isdir (os.path.join (attachpath, name)) and not name.startswith ("__")]
+        files = [name for name in attachlist if not os.path.isdir (os.path.join (attachpath, name))]
 
         return (dirs, files)
 
@@ -76,7 +76,6 @@ class AttachListCommand (Command):
         Отсортировать дочерние страницы, если нужно
         """
         attach = Attachment (self.parser.page)
-        names_full = [os.path.join (attach.getAttachPath(), name) for name in names]
 
         if u"sort" not in params_dict:
             names.sort (Attachment.sortByName)
@@ -102,4 +101,3 @@ class AttachListCommand (Command):
             names.sort (attach.sortByDateRelative, reverse=True)
         else:
             names.sort (Attachment.sortByName)
-

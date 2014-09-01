@@ -1,14 +1,13 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import sys
-import os.path
 
 from outwiker.core.application import Application
 from outwiker.gui.guiconfig import GeneralGuiConfig
 from outwiker.core.commands import openWiki
 from outwiker.core.commandline import CommandLine, CommandLineException
 from outwiker.core.commands import getCurrentVersion
+
 
 class StarterExit (BaseException):
     """
@@ -23,14 +22,14 @@ class Starter (object):
     """
     def __init__ (self):
         self._commandLine = self.__parseCommandLine (sys.argv[1:])
-    
+
 
     def processGUI (self):
         """
         Выполнить команды после создания GUI
         """
         # Открытие дерева с заметками
-        if self._commandLine == None or self._commandLine.wikipath == None:
+        if self._commandLine is None or self._commandLine.wikipath is None:
             self.__openRecentWiki ()
         else:
             openWiki (self._commandLine.wikipath, self._commandLine.readonly)
@@ -40,7 +39,7 @@ class Starter (object):
         """
         Выполнить команды командной строки до создания интерфейса
         """
-        if self._commandLine != None:
+        if self._commandLine is not None:
             self.__processConsoleCommands()
 
 
@@ -66,9 +65,9 @@ class Starter (object):
 
         # Вывод информации о версии
         if self._commandLine.version:
-            print ur"""OutWiker {ver}""".format (ver = str (getCurrentVersion()) )
+            print ur"""OutWiker {ver}""".format (ver = str (getCurrentVersion()))
             raise StarterExit
-        
+
 
     def __openRecentWiki (self):
         """

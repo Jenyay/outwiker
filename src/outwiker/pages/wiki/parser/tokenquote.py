@@ -1,7 +1,4 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-
-import cgi
 
 from outwiker.libs.pyparsing import QuotedString
 from tokenblock import BlockToken
@@ -25,6 +22,7 @@ class QuoteToken (BlockToken):
 
 
     def getToken (self):
-        return QuotedString (QuoteToken.quoteStart, 
-                endQuoteChar = QuoteToken.quoteEnd, 
-                multiline = True).setParseAction(self.convertToHTML("<blockquote>","</blockquote>"))("quote")
+        return QuotedString (
+            QuoteToken.quoteStart,
+            endQuoteChar = QuoteToken.quoteEnd,
+            multiline = True).setParseAction(self.convertToHTML("<blockquote>", "</blockquote>"))("quote")

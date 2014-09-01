@@ -1,6 +1,4 @@
-#!/usr/bin/env python
-#-*- coding: utf-8 -*-
-
+# -*- coding: utf-8 -*-
 
 import wx
 
@@ -19,11 +17,11 @@ class HtmlTextEditor (TextEditor):
         super (HtmlTextEditor, self).setDefaultSettings()
         self.setupHtmlStyles (self.textCtrl)
 
-    
+
     def setupHtmlStyles (self, textCtrl):
         # Устанавливаемые стили
         styles = self.loadStyles()
-        
+
         textCtrl.SetLexer (wx.stc.STC_LEX_HTML)
         textCtrl.StyleClearAll()
 
@@ -69,7 +67,7 @@ class HtmlTextEditor (TextEditor):
             file hidden image"
 
         textCtrl.SetKeyWords (0, tags + attributes)
-    
+
 
     def loadStyles (self):
         """
@@ -90,13 +88,13 @@ class HtmlTextEditor (TextEditor):
 
         return styles
 
-    
+
     def turnList (self, start, end, itemStart, itemEnd):
         """
         Создать список
         """
         selText = self.textCtrl.GetSelectedText()
-        items = filter (lambda item: len (item.strip()) > 0, selText.split ("\n") )
+        items = filter (lambda item: len (item.strip()) > 0, selText.split ("\n"))
 
         # Собираем все элементы
         if len (items) > 0:
@@ -107,7 +105,7 @@ class HtmlTextEditor (TextEditor):
         result = start + itemsList + end
 
         if len (end) == 0:
-            # Если нет завершающего тега (как в викинотации), 
+            # Если нет завершающего тега (как в викинотации),
             # то не нужен перевод строки у последнего элемента
             result = result[: -1]
 
@@ -118,4 +116,3 @@ class HtmlTextEditor (TextEditor):
 
             newPos = self.GetSelectionEnd() - len (endText)
             self.SetSelection (newPos, newPos)
-

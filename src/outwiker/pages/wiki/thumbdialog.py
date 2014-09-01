@@ -1,6 +1,4 @@
-#!/usr/bin/env python
-#-*- coding: utf-8 -*-
-
+# -*- coding: utf-8 -*-
 
 import wx
 
@@ -16,9 +14,9 @@ class ThumbDialog (wx.Dialog):
         filesList - список файлов, отображаемых в диалоге
         selectedFile - файл выбранный по умолчанию. Если selectedFile == None, никакой файл по умолчанию не выбирается
         """
-        super (ThumbDialog, self).__init__ (parent, 
-                style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER,
-                title=_("Thumbnails"))
+        super (ThumbDialog, self).__init__ (parent,
+                                            style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER,
+                                            title=_("Thumbnails"))
 
         self.__filesList = filesList
         self.__selectedFile = selectedFile
@@ -46,9 +44,9 @@ class ThumbDialog (wx.Dialog):
     def __createGui (self):
         # Элементы для выбор имени файла
         filenameLabel = wx.StaticText (self, label=_(u"File name"))
-        self.filesListCombo = wx.ComboBox (self, 
-                choices = [u""] + self.__filesList,
-                style=wx.CB_READONLY)
+        self.filesListCombo = wx.ComboBox (self,
+                                           choices = [u""] + self.__filesList,
+                                           style=wx.CB_READONLY)
         self.filesListCombo.SetSelection (0)
         self.filesListCombo.SetMinSize ((250, -1))
 
@@ -60,9 +58,9 @@ class ThumbDialog (wx.Dialog):
         scaleLabel = wx.StaticText (self, label=_(u"Thumbnail size"))
 
         scaleItems = [_(u"Width"), _(u"Height"), _(u"Max size")]
-        self.scaleCombo =  wx.ComboBox (self, 
-                choices = scaleItems,
-                style=wx.CB_READONLY)
+        self.scaleCombo = wx.ComboBox (self,
+                                       choices = scaleItems,
+                                       style=wx.CB_READONLY)
         self.scaleCombo.SetSelection (0)
         self.scaleCombo.SetMinSize ((250, -1))
 

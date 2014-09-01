@@ -1,7 +1,6 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-from outwiker.libs.pyparsing import Literal, Regex
+from outwiker.libs.pyparsing import Regex
 
 
 class LineJoinFactory (object):

@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import wx
@@ -6,7 +5,7 @@ import wx
 import configelements
 from outwiker.core.application import Application
 from outwiker.gui.guiconfig import HtmlRenderConfig
-from outwiker.core.config import FontOption, StringOption
+from outwiker.core.config import FontOption
 
 
 class HtmlRenderPanel(wx.Panel):
@@ -28,7 +27,10 @@ class HtmlRenderPanel(wx.Panel):
         self.fontLabel = wx.StaticText(self, -1, _("Font"))
         self.fontPicker = wx.FontPickerCtrl(self, -1)
         self.userStyleLabel = wx.StaticText(self, -1, _("Additional styles (CSS):"))
-        self.userStyleTextBox = wx.TextCtrl(self, -1, "", style=wx.TE_PROCESS_ENTER|wx.TE_MULTILINE|wx.HSCROLL|wx.TE_LINEWRAP|wx.TE_WORDWRAP)
+        self.userStyleTextBox = wx.TextCtrl(self,
+                                            -1,
+                                            "",
+                                            style = wx.TE_PROCESS_ENTER | wx.TE_MULTILINE | wx.HSCROLL | wx.TE_LINEWRAP | wx.TE_WORDWRAP)
 
 
     def __set_properties(self):
@@ -37,14 +39,14 @@ class HtmlRenderPanel(wx.Panel):
 
     def __do_layout(self):
         fontSizer = wx.FlexGridSizer(cols=2)
-        fontSizer.Add(self.fontLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
+        fontSizer.Add(self.fontLabel, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
         fontSizer.Add(self.fontPicker, 1, wx.EXPAND, 0)
         fontSizer.AddGrowableCol(1)
 
         mainSizer = wx.FlexGridSizer(cols=1)
         mainSizer.Add(fontSizer, 1, wx.EXPAND, 0)
-        mainSizer.Add(self.userStyleLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
-        mainSizer.Add(self.userStyleTextBox, 0, wx.ALL|wx.EXPAND, 2)
+        mainSizer.Add(self.userStyleLabel, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
+        mainSizer.Add(self.userStyleTextBox, 0, wx.ALL | wx.EXPAND, 2)
         mainSizer.AddGrowableRow(2)
         mainSizer.AddGrowableCol(0)
 
@@ -53,10 +55,10 @@ class HtmlRenderPanel(wx.Panel):
 
     def LoadState(self):
         # Шрифт для HTML-рендера
-        fontOption = FontOption (self.config.fontName, 
-                self.config.fontSize, 
-                self.config.fontIsBold, 
-                self.config.fontIsItalic)
+        fontOption = FontOption (self.config.fontName,
+                                 self.config.fontSize,
+                                 self.config.fontIsBold,
+                                 self.config.fontIsItalic)
 
         self.fontEditor = configelements.FontElement (fontOption, self.fontPicker)
 

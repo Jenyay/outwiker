@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 from outwiker.libs.pyparsing import Regex
@@ -16,4 +15,3 @@ class HorLineToken (object):
     """
     def getToken (self):
         return Regex("----+").setParseAction (lambda s, l, t: "<hr>")("horline")
-

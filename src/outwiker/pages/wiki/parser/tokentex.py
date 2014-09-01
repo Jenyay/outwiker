@@ -1,13 +1,12 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import os
 import os.path
 
 from outwiker.libs.pyparsing import QuotedString
-from outwiker.core.tree import RootWikiPage
 from ..texrender import getTexRender
 from ..thumbnails import Thumbnails
+
 
 class TexFactory (object):
     @staticmethod
@@ -27,9 +26,9 @@ class TexToken (object):
 
 
     def getToken (self):
-        return QuotedString (TexToken.texStart, 
-                endQuoteChar = TexToken.texEnd, 
-                multiline = True).setParseAction(self.makeTexEquation)("tex")
+        return QuotedString (TexToken.texStart,
+                             endQuoteChar = TexToken.texEnd,
+                             multiline = True).setParseAction(self.makeTexEquation)("tex")
 
 
     def makeTexEquation (self, s, l, t):
@@ -50,9 +49,8 @@ class TexToken (object):
             image_fname = tex.makeImage (eqn)
         except IOError:
             return _(u"<b>Can't create image file</b>")
-        
+
         image_path = os.path.join (Thumbnails.getRelativeThumbDir(), image_fname)
         result = u'<img src="{image}"/>'.format (image=image_path.replace ("\\", "/"))
 
         return result
-

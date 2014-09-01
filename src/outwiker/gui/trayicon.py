@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 import os
 
@@ -8,7 +7,7 @@ import wx
 import outwiker.core.system
 import outwiker.core.commands
 from outwiker.core.application import Application
-from .guiconfig import TrayConfig, GeneralGuiConfig
+from .guiconfig import TrayConfig
 from outwiker.actions.exit import ExitAction
 
 
@@ -27,23 +26,22 @@ class OutwikerTrayIcon (wx.TaskBarIcon):
         self.icon = wx.Icon(os.path.join (outwiker.core.system.getImagesDir(), "outwiker.ico"), wx.BITMAP_TYPE_ANY)
 
         self.__bind()
-    
+
 
     def updateTrayIcon (self):
         """
         Показать или скрыть иконку в трее в зависимости от настроек
         """
-        if (self.config.alwaysShowTrayIcon.value or 
-                (self.config.minimizeToTray.value and self.mainWnd.IsIconized() ) ):
+        if (self.config.alwaysShowTrayIcon.value or
+                (self.config.minimizeToTray.value and self.mainWnd.IsIconized())):
             self.ShowTrayIcon()
         else:
             self.removeTrayIcon()
-    
+
 
     def __bind (self):
         self.Bind (wx.EVT_TASKBAR_LEFT_DOWN, self.__OnTrayLeftClick)
         self.mainWnd.Bind (wx.EVT_ICONIZE, self.__onIconize)
-        # self.mainWnd.Bind (wx.EVT_CLOSE, self.__onClose)
         self.mainWnd.Bind (wx.EVT_IDLE, self.__onIdle)
 
         self.Bind(wx.EVT_MENU, self.__onExit, id=self.ID_EXIT)
@@ -53,12 +51,11 @@ class OutwikerTrayIcon (wx.TaskBarIcon):
         Application.onPageSelect += self.__OnTaskBarUpdate
         Application.onTreeUpdate += self.__OnTaskBarUpdate
         Application.onEndTreeUpdate += self.__OnTaskBarUpdate
-    
+
 
     def __unbind (self):
         self.Unbind (wx.EVT_TASKBAR_LEFT_DOWN, handler = self.__OnTrayLeftClick)
         self.mainWnd.Unbind (wx.EVT_ICONIZE, handler = self.__onIconize)
-        # self.mainWnd.Unbind (wx.EVT_CLOSE, handler=self.__onClose)
 
         self.Unbind(wx.EVT_MENU, handler = self.__onExit, id=self.ID_EXIT)
         self.Unbind(wx.EVT_MENU, handler = self.__onRestore, id=self.ID_RESTORE)
@@ -88,7 +85,7 @@ class OutwikerTrayIcon (wx.TaskBarIcon):
             self.mainWnd.Iconize (True)
         else:
             self.mainWnd.Show()
-    
+
 
     def __onIconize (self, event):
         if event.Iconized():
@@ -98,7 +95,7 @@ class OutwikerTrayIcon (wx.TaskBarIcon):
             self.restoreWindow()
 
         self.updateTrayIcon()
-    
+
 
     def __iconizeWindow (self):
         """
@@ -127,7 +124,7 @@ class OutwikerTrayIcon (wx.TaskBarIcon):
             self.restoreWindow()
         else:
             self.mainWnd.Iconize()
-    
+
 
     def restoreWindow (self):
         self.mainWnd.Show ()
@@ -137,7 +134,7 @@ class OutwikerTrayIcon (wx.TaskBarIcon):
         self.mainWnd.Raise()
         self.mainWnd.SetFocus()
 
-    
+
     def __onExit (self, event):
         Application.actionController.getAction (ExitAction.stringId).run(None)
 

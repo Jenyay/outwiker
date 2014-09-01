@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 from .toolbarinfo import ToolBarInfo
 
@@ -61,7 +60,7 @@ class ToolBarsController (object):
 
     def __onToolBarMenuClick (self, event):
         toolbarinfo = self._getToolBar (event.GetId())
-        assert toolbarinfo != None
+        assert toolbarinfo is not None
 
         if toolbarinfo.toolbar.IsShown():
             toolbarinfo.toolbar.Hide()

@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 from outwiker.libs.pyparsing import QuotedString
@@ -23,6 +22,6 @@ class NoFormatToken (object):
 
 
     def getToken (self):
-        return QuotedString(NoFormatToken.noFormatStart, 
-                endQuoteChar = NoFormatToken.noFormatEnd, 
-                multiline = True).setParseAction(noConvert)("noformat")
+        return QuotedString (NoFormatToken.noFormatStart,
+                             endQuoteChar = NoFormatToken.noFormatEnd,
+                             multiline = True).setParseAction(noConvert)("noformat")

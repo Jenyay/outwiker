@@ -1,9 +1,8 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 import wx
 
-from outwiker.gui.preferences.configelements import BooleanElement, IntegerElement, StringElement
+from outwiker.gui.preferences.configelements import BooleanElement, IntegerElement
 from outwiker.core.application import Application
 from wikiconfig import WikiConfig
 from emptycontent import EmptyContent
@@ -13,7 +12,7 @@ class WikiPrefGeneralPanel(wx.Panel):
     def __init__(self, *args, **kwds):
         kwds["style"] = wx.TAB_TRAVERSAL
         wx.Panel.__init__(self, *args, **kwds)
-        
+
         self.__createGui()
         self.config = WikiConfig (Application.config)
 
@@ -28,8 +27,8 @@ class WikiPrefGeneralPanel(wx.Panel):
 
         # Шаблон для пустых страниц
         self.emptyTplLabel = wx.StaticText(self, -1, _(u"Template for empty page"))
-        self.emptyTplTextCtrl = wx.TextCtrl(self, -1, "", 
-                style=wx.TE_MULTILINE|wx.HSCROLL|wx.TE_LINEWRAP|wx.TE_WORDWRAP)
+        self.emptyTplTextCtrl = wx.TextCtrl(self, -1, "",
+                                            style=wx.TE_MULTILINE | wx.HSCROLL | wx.TE_LINEWRAP | wx.TE_WORDWRAP)
 
         # Стиль ссылок по умолчанию (при создании через диалог)
         self.linkStyleLabel = wx.StaticText (self, label=_(u"Default link style"))
@@ -37,7 +36,7 @@ class WikiPrefGeneralPanel(wx.Panel):
         self.linkStyleCombo.AppendItems ([
             _(u"[[comment -> link]]"),
             _(u"[[link | comment]]")
-            ])
+        ])
         self.linkStyleCombo.SetSelection (0)
 
         self.__do_layout()
@@ -49,33 +48,33 @@ class WikiPrefGeneralPanel(wx.Panel):
         mainSizer.AddGrowableCol(0)
 
         # Показывать ли результирующий HTML?
-        mainSizer.Add(self.htmlCodeCheckbox, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
+        mainSizer.Add(self.htmlCodeCheckbox, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
 
         # Размер миниатюр
         thumbSizer = wx.FlexGridSizer(1, 2)
         thumbSizer.AddGrowableCol(0)
         thumbSizer.AddGrowableCol(1)
-        thumbSizer.Add(self.thumbSizeLabel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 2)
-        thumbSizer.Add(self.thumbSize, 0, wx.ALL|wx.EXPAND, 2)
+        thumbSizer.Add(self.thumbSizeLabel, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
+        thumbSizer.Add(self.thumbSize, 0, wx.ALL | wx.EXPAND, 2)
         mainSizer.Add(thumbSizer, 1, wx.EXPAND, 0)
 
         # Стиль ссылок по умолчанию (при создании через диалог)
         linkStyleSizer = wx.FlexGridSizer(1, 2)
         linkStyleSizer.AddGrowableCol(0)
         linkStyleSizer.AddGrowableCol(1)
-        linkStyleSizer.Add (self.linkStyleLabel, 0, 
-                flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
-        linkStyleSizer.Add (self.linkStyleCombo, 0, 
-                flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND, border=2)
+        linkStyleSizer.Add (self.linkStyleLabel, 0,
+                            flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
+        linkStyleSizer.Add (self.linkStyleCombo, 0,
+                            flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND, border=2)
         mainSizer.Add(linkStyleSizer, 1, wx.EXPAND, 0)
 
         # Шаблон для пустых страниц
         mainSizer.Add(self.emptyTplLabel, 0, wx.ALL, 4)
-        mainSizer.Add(self.emptyTplTextCtrl, 0, wx.ALL|wx.EXPAND, 4)
+        mainSizer.Add(self.emptyTplTextCtrl, 0, wx.ALL | wx.EXPAND, 4)
 
         self.SetSizer(mainSizer)
         self.Layout()
-    
+
 
     def LoadState(self):
         # Показывать ли вкладку с кодом HTML
@@ -91,16 +90,16 @@ class WikiPrefGeneralPanel(wx.Panel):
         # Стиль ссылок по умолчанию
         linkStyle = self.config.linkStyleOptions.value
         self.linkStyleCombo.SetSelection (
-                linkStyle if linkStyle >= 0 and linkStyle < self.linkStyleCombo.GetCount() else 0)
+            linkStyle if linkStyle >= 0 and linkStyle < self.linkStyleCombo.GetCount() else 0)
 
 
     def Save (self):
         changed = (self.showHtmlCodeOption.isValueChanged() or
-            self.thumbSizeOption.isValueChanged() )
+                   self.thumbSizeOption.isValueChanged())
 
         self.showHtmlCodeOption.save()
         self.thumbSizeOption.save()
-        
+
         emptycontent = EmptyContent (Application.config)
         emptycontent.content = self.emptyTplTextCtrl.GetValue()
         self.config.linkStyleOptions.value = self.linkStyleCombo.GetSelection()

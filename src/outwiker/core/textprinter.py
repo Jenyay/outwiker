@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import cgi
@@ -26,11 +25,11 @@ class TextPrinter (object):
         # Поля на странице: верхнее, нижнее, левое, правое, расстояние между шапкой/подвалом и текстом в мм
         headerspace = 0.0
 
-        self.margins = (self.config.marginTop.value, 
-                self.config.marginBottom.value, 
-                self.config.marginLeft.value, 
-                self.config.marginRight.value, 
-                headerspace)
+        self.margins = (self.config.marginTop.value,
+                        self.config.marginBottom.value,
+                        self.config.marginLeft.value,
+                        self.config.marginRight.value,
+                        headerspace)
 
 
         self.paperId = self.config.paperId.value
@@ -93,11 +92,11 @@ class TextPrinter (object):
         pdd = self._getPrintDialogData (pd)
 
         # По-хорошему, надо было бы примерно таким образом (еще учесть предпросмотр), но под Linux'ом падает libgnomeprint
-        #dlg = wx.PrintDialog (self.parent, None)
-        #if dlg.ShowModal () == wx.ID_OK:
-        #    pdd_new = dlg.GetPrintDialogData()
-        #    printer = wx.Printer(pdd_new)
-        #    printer.Print(self.parent, printout, False)
+        # dlg = wx.PrintDialog (self.parent, None)
+        # if dlg.ShowModal () == wx.ID_OK:
+        #     pdd_new = dlg.GetPrintDialogData()
+        #     printer = wx.Printer(pdd_new)
+        #     printer.Print(self.parent, printout, False)
 
         printer = wx.Printer(pdd)
         printer.Print(self.parent, printout, True)

@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import os
@@ -35,7 +34,7 @@ class MimeTex (object):
 
         self.fontsize = 3
 
-    
+
     def makeImage (self, eqn):
         """
         eqn - выражение, которое нужно отрендерить
@@ -52,16 +51,15 @@ class MimeTex (object):
             return imageName
 
         with open (temp_path, "w") as fp:
-            #fp.write (eqn.encode("1251"))
             fp.write (eqn.encode("utf8"))
 
         # mimeTexPath нужно определить в производных классах
         mimeTexPath = self.mimeTexPath
 
-        args = [mimeTexPath.encode (currentOS.filesEncoding), 
-            "-f", temp_path.encode (currentOS.filesEncoding), 
-            "-e", image_path.encode (currentOS.filesEncoding),
-            "-s", str (self.fontsize)]
+        args = [mimeTexPath.encode (currentOS.filesEncoding),
+                "-f", temp_path.encode (currentOS.filesEncoding),
+                "-e", image_path.encode (currentOS.filesEncoding),
+                "-s", str (self.fontsize)]
 
         self.run (args)
         return imageName
@@ -82,7 +80,7 @@ class MimeTexWindows (MimeTex):
     def mimeTexPath (self):
         return os.path.join (getCurrentDir(), "tools\\mimetex\\mimetex.exe")
 
-    
+
     def run (self, args):
         """
         Вызов MimeTex
@@ -90,7 +88,7 @@ class MimeTexWindows (MimeTex):
         STARTF_USESHOWWINDOW = 1
         startupinfo = subprocess.STARTUPINFO()
         startupinfo.dwFlags |= STARTF_USESHOWWINDOW
-        
+
         p = subprocess.Popen(args, startupinfo=startupinfo, shell=False)
         p.communicate()
 

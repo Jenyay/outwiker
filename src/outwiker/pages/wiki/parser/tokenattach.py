@@ -1,10 +1,9 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import os.path
 from abc import ABCMeta, abstractmethod
 
-from outwiker.libs.pyparsing import replaceWith, Literal
+from outwiker.libs.pyparsing import Literal
 from outwiker.core.attachment import Attachment
 
 from utils import concatenate, isImage
@@ -58,7 +57,7 @@ class AttachToken (object):
             return '<img src="%s/%s"/>' % (Attachment.attachDir, fname)
         else:
             return '<a href="%s/%s">%s</a>' % (Attachment.attachDir, fname, fname)
-    
+
 
     # TODO: Вынести в отдельный модуль
     def sortByLength (self, fname1, fname2):

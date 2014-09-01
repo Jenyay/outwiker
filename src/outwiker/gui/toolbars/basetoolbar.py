@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 from abc import ABCMeta, abstractmethod, abstractproperty
 
@@ -32,7 +31,7 @@ class BaseToolBar (wx.aui.AuiToolBar):
             self._auiManager.LoadPaneInfo (paneinfo, pane)
             pane.Caption(self.caption)
             pane.Dock()
-        except BaseException, e:
+        except BaseException:
             pane = self._createPane()
 
         return pane
@@ -59,23 +58,23 @@ class BaseToolBar (wx.aui.AuiToolBar):
         self.UpdateToolBar()
         if fullUpdate:
             self._parent.UpdateAuiManager()
-        self.Thaw()
+            self.Thaw()
 
 
-    def AddTool(self, 
-            tool_id, 
-            label, 
-            bitmap, 
-            short_help_string=wx.EmptyString, 
-            kind=wx.ITEM_NORMAL,
-            fullUpdate=True):
+    def AddTool(self,
+                tool_id,
+                label,
+                bitmap,
+                short_help_string=wx.EmptyString,
+                kind=wx.ITEM_NORMAL,
+                fullUpdate=True):
         self.Freeze()
         super (BaseToolBar, self).AddTool (tool_id, label, bitmap, short_help_string, kind)
         self.UpdateToolBar()
         if fullUpdate:
             self._parent.UpdateAuiManager()
             self.updatePaneInfo()
-        self.Thaw()
+            self.Thaw()
 
 
     @property

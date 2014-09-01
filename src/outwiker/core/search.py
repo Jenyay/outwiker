@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 """
@@ -58,7 +57,7 @@ class Searcher (object):
         self.phrase = phrase
         self.tags = [tag.lower() for tag in tags]
         self.tagsStrategy = tagsStrategy
-    
+
 
     def find (self, root):
         """
@@ -67,8 +66,8 @@ class Searcher (object):
         result = []
 
         for page in root.children:
-            if (self.tagsStrategy.testTags (self.tags, page) and 
-                    self.__testFullContent(page) ):
+            if (self.tagsStrategy.testTags (self.tags, page) and
+                    self.__testFullContent(page)):
                 result.append (page)
 
             result += self.find (page)
@@ -80,10 +79,10 @@ class Searcher (object):
         """
         Поиск искомого текста в разных частях заметки (содержимом, заголовке, тегах)
         """
-        return (self.__testTitle (page) or 
-                self.__testContent (page) or 
+        return (self.__testTitle (page) or
+                self.__testContent (page) or
                 self.__testTagsContent (page) or
-                self.__testAttachment (page) )
+                self.__testAttachment (page))
 
 
     def __testTitle (self, page):
@@ -124,11 +123,10 @@ class Searcher (object):
         lowerPhrase = self.phrase.lower()
 
         for root, subfolders, files in os.walk(attach.getAttachPath()):
-            filterfiles = (filter (lambda fname: lowerPhrase in fname.lower(), files) )
-            filterdirs = (filter (lambda dirname: lowerPhrase in dirname.lower(), 
-                        subfolders))
+            filterfiles = (filter (lambda fname: lowerPhrase in fname.lower(), files))
+            filterdirs = (filter (lambda dirname: lowerPhrase in dirname.lower(), subfolders))
 
-            if (len (filterfiles) != 0 or len (filterdirs) != 0 ):
+            if (len (filterfiles) != 0 or len (filterdirs) != 0):
                 return True
 
         return False

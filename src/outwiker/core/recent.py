@@ -1,7 +1,7 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 from .config import IntegerOption
+
 
 class RecentWiki (object):
     """
@@ -18,7 +18,7 @@ class RecentWiki (object):
         self._sectionName = u"RecentWiki"
         self._paramTemplate = u"Path_%d"
 
-        # Имя параметра, в котором хранится размер истории 
+        # Имя параметра, в котором хранится размер истории
         # последних открытых вики
         self._maxLenParamName = u"maxcount"
 
@@ -29,10 +29,10 @@ class RecentWiki (object):
         """
         Обработчик события на открытие вики
         """
-        if wikiroot != None and not wikiroot.readonly:
+        if wikiroot is not None and not wikiroot.readonly:
             self.add (wikiroot.path)
 
-    
+
     def _load (self):
         """
         Загрузка последних открытых вики из файла конфига
@@ -56,7 +56,7 @@ class RecentWiki (object):
         """
         Сохранение списка последних открытых вики
         """
-        for n in range (len (self._recentes) ):
+        for n in range (len (self._recentes)):
             param = self._paramTemplate % (n + 1)
             self._config.set (self._sectionName, param, self._recentes[n])
 
@@ -75,7 +75,7 @@ class RecentWiki (object):
 
         self._save()
 
-    
+
     def __len__ (self):
         return len (self._recentes)
 
@@ -90,10 +90,6 @@ class RecentWiki (object):
         Возвращает размер списка последних открытых вики (значение из конфига)
         """
         return IntegerOption (self._config,
-                self._sectionName, 
-                self._maxLenParamName,
-                self.MAXLEN_DEFAULT).value
-
-
-
-
+                              self._sectionName,
+                              self._maxLenParamName,
+                              self.MAXLEN_DEFAULT).value

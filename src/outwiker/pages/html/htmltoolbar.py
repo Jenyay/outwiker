@@ -1,14 +1,9 @@
-#!/usr/bin/env python
-#-*- coding: utf-8 -*-
-
-
-import os.path
+# -*- coding: utf-8 -*-
 
 import wx
 import wx.aui
 
 from outwiker.gui.toolbars.basetoolbar import BaseToolBar
-from outwiker.core.system import getImagesDir
 
 
 class HtmlToolBar (BaseToolBar):

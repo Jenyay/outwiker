@@ -1,10 +1,8 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import os
-import cProfile
 
-from outwiker.core.tree import RootWikiPage, WikiDocument
+from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
 from outwiker.pages.wiki.parser.wikiparser import Parser
@@ -25,7 +23,7 @@ class ParseSample (object):
         self.__createWiki()
 
         self.parser = Parser(self.testPage, Application.config)
-    
+
 
     def __createWiki (self):
         # Здесь будет создаваться вики
@@ -38,18 +36,18 @@ class ParseSample (object):
 
         self.testPage = self.rootwiki[u"Страница 2"]
         self.testPage.content = self.content
-        
-        files = [u"accept.png", u"add.png", u"anchor.png", u"filename.tmp", 
-                u"файл с пробелами.tmp", u"картинка с пробелами.png", 
-                "image.jpg", "image.jpeg", "image.png", "image.tif", "image.tiff", "image.gif", "first.jpg", "first_rotate.jpg"]
+
+        files = [u"accept.png", u"add.png", u"anchor.png", u"filename.tmp",
+                 u"файл с пробелами.tmp", u"картинка с пробелами.png",
+                 "image.jpg", "image.jpeg", "image.png", "image.tif", "image.tiff", "image.gif", "first.jpg", "first_rotate.jpg"]
 
         fullFilesPath = [os.path.join (self.filesPath, fname) for fname in files]
 
         # Прикрепим к двум страницам файлы
         Attachment (self.testPage).attach (fullFilesPath)
 
-    
+
     def run (self):
-        result = self.parser.toHtml (self.testPage.content)
+        self.parser.toHtml (self.testPage.content)
 
         removeWiki (self.path)

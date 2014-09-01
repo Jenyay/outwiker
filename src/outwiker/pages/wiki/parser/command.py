@@ -1,8 +1,8 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 from abc import ABCMeta, abstractmethod, abstractproperty
 import re
+
 
 class Command (object):
     """
@@ -16,7 +16,7 @@ class Command (object):
         """
         self.parser = parser
 
-    
+
     @abstractproperty
     def name (self):
         """
@@ -28,7 +28,7 @@ class Command (object):
     @abstractmethod
     def execute (self, params, content):
         """
-        Запустить команду на выполнение. 
+        Запустить команду на выполнение.
         Метод возвращает текст, который будет вставлен на место команды в вики-нотации
         """
         pass
@@ -43,7 +43,7 @@ class Command (object):
         """
         pattern = ur"""((?P<name>\w+)
 (\s*=\s*(?P<param>([-_\w]+)|((?P<quote>["']).*?(?P=quote)) ) )?\s*)"""
-        
+
         result = {}
 
         regex = re.compile (pattern, re.IGNORECASE | re.MULTILINE | re.DOTALL | re.VERBOSE | re.UNICODE)
@@ -52,7 +52,7 @@ class Command (object):
         for match in matches:
             name = match.group ("name")
             param = match.group ("param")
-            if param == None:
+            if param is None:
                 param = u""
 
             result[name] = Command.removeQuotes (param)
@@ -67,8 +67,7 @@ class Command (object):
         """
         if (len (text) > 0 and
                 (text[0] == text[-1] == "'" or
-                text[0] == text[-1] == '"') ):
-                return text[1:-1]
+                    text[0] == text[-1] == '"')):
+            return text[1:-1]
 
         return text
-

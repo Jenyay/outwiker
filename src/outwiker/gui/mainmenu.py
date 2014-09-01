@@ -1,12 +1,8 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-
-import os.path
 
 import wx
 
 from .mainid import MainId
-from outwiker.core.system import getImagesDir
 
 
 class MainMenu (wx.MenuBar):
@@ -41,31 +37,31 @@ class MainMenu (wx.MenuBar):
     def __createEditMenu (self):
         editMenu = wx.Menu()
 
-        editMenu.Append (MainId.ID_UNDO, 
-                _("Undo") + "\tCtrl+Z", 
-                "", 
-                wx.ITEM_NORMAL)
+        editMenu.Append (MainId.ID_UNDO,
+                         _("Undo") + "\tCtrl+Z",
+                         "",
+                         wx.ITEM_NORMAL)
 
-        editMenu.Append (MainId.ID_REDO, 
-                _("Redo") + "\tCtrl+Y", 
-                "", 
-                wx.ITEM_NORMAL)
+        editMenu.Append (MainId.ID_REDO,
+                         _("Redo") + "\tCtrl+Y",
+                         "",
+                         wx.ITEM_NORMAL)
 
         editMenu.AppendSeparator()
 
-        editMenu.Append (MainId.ID_CUT, 
-                _("Cut") + "\tCtrl+X", 
-                "", 
-                wx.ITEM_NORMAL)
+        editMenu.Append (MainId.ID_CUT,
+                         _("Cut") + "\tCtrl+X",
+                         "",
+                         wx.ITEM_NORMAL)
 
-        editMenu.Append (MainId.ID_COPY, 
-                _("Copy") + "\tCtrl+C", 
-                "", 
-                wx.ITEM_NORMAL)
+        editMenu.Append (MainId.ID_COPY,
+                         _("Copy") + "\tCtrl+C",
+                         "",
+                         wx.ITEM_NORMAL)
 
-        editMenu.Append (MainId.ID_PASTE, 
-                _("Paste") + "\tCtrl+V", 
-                "", 
-                wx.ITEM_NORMAL)
+        editMenu.Append (MainId.ID_PASTE,
+                         _("Paste") + "\tCtrl+V",
+                         "",
+                         wx.ITEM_NORMAL)
 
         return editMenu

@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import wx
@@ -29,7 +28,7 @@ class HotKeysPanel (wx.Panel):
 
     def __onHotkeyEdit (self, event):
         strid = self.__getSelectedStrid()
-        if strid != None:
+        if strid is not None:
             self.__hotkeys[strid] = event.hotkey
             self.__findConflicts ()
 
@@ -72,7 +71,7 @@ class HotKeysPanel (wx.Panel):
 
         leftSizer.Add (self.__filterText, flag=wx.EXPAND | wx.ALL, border=2)
 
-        # Сайзер для размещения элементов в правой части: 
+        # Сайзер для размещения элементов в правой части:
         # выбор горячей клавиши и описание action
         rightSizer = wx.FlexGridSizer (cols=1)
         rightSizer.AddGrowableCol (0)
@@ -83,14 +82,14 @@ class HotKeysPanel (wx.Panel):
         self.__hotkey.Disable()
 
         # Описание action
-        self.__descriptionText = wx.TextCtrl (self, 
-                style=wx.TE_WORDWRAP | wx.TE_MULTILINE | wx.TE_READONLY )
+        self.__descriptionText = wx.TextCtrl (self,
+                                              style=wx.TE_WORDWRAP | wx.TE_MULTILINE | wx.TE_READONLY)
         self.__descriptionText.SetMinSize ((200, -1))
 
         # Список actions с такими же горячими клавишами
         self.__conflictLabel = wx.StaticText (self, label=_(u"Actions with the same hotkey"))
         self.__conflictActionsText = wx.TextCtrl (self,
-                style=wx.TE_WORDWRAP | wx.TE_MULTILINE | wx.TE_READONLY )
+                                                  style=wx.TE_WORDWRAP | wx.TE_MULTILINE | wx.TE_READONLY)
         self.__conflictActionsText.SetMinSize ((-1, 100))
 
         rightSizer.Add (self.__hotkey, flag=wx.EXPAND | wx.ALL, border=2)
@@ -142,7 +141,7 @@ class HotKeysPanel (wx.Panel):
         self.__descriptionText.Value = u""
 
         strid = event.GetClientData()
-        if strid != None:
+        if strid is not None:
             self.__descriptionText.Value = Application.actionController.getAction(strid).description
             self.__hotkey.Enable()
             self.__hotkey.setHotkey (self.__hotkeys[strid])
@@ -159,7 +158,7 @@ class HotKeysPanel (wx.Panel):
         # Список кортежей (заголовок, strid)
         # Отбросим те actions, что не удовлетворяют фильтру
         titleStridList = [(actionController.getTitle (strid), strid) for strid in strIdList
-                if self.__filter (actionController.getTitle (strid))]
+                          if self.__filter (actionController.getTitle (strid))]
         titleStridList.sort()
 
         self.__actionsList.Clear()
@@ -181,7 +180,7 @@ class HotKeysPanel (wx.Panel):
                 # Не будем менять до перезапуска горячую клавишу для вызова настроек.
                 # Это связано с тем, что потом придется удалять этот пункт меню, чтобы
                 # расставить подчеркивания с помощью Shortcuter, но возникнут проблемы,
-                # т.к. в это место кода мы попадаем из обработчика события, связанного 
+                # т.к. в это место кода мы попадаем из обработчика события, связанного
                 # с этим пунктом меню
                 if Application.actionController.getHotKey (strid) != hotkey:
                     Application.actionController.setHotKey (strid, hotkey, strid != PreferencesAction.stringId)
@@ -189,6 +188,5 @@ class HotKeysPanel (wx.Panel):
                 # Плагин могли уже отключить
                 pass
 
-        if Application.mainWindow != None:
+        if Application.mainWindow is not None:
             Application.mainWindow.updateShortcuts()
-

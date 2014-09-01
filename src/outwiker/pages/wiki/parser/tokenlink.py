@@ -1,13 +1,10 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-import re
 import cgi
 
 from outwiker.libs.pyparsing import QuotedString
 
 from tokenattach import AttachToken
-from utils import isImage
 from outwiker.core.attachment import Attachment
 
 
@@ -27,10 +24,10 @@ class LinkToken (object):
 
 
     def getToken (self):
-        return QuotedString(LinkToken.linkStart, 
-                endQuoteChar = LinkToken.linkEnd, 
-                multiline = False).setParseAction(self.__convertToLink)("link")
-    
+        return QuotedString(LinkToken.linkStart,
+                            endQuoteChar = LinkToken.linkEnd,
+                            multiline = False).setParseAction(self.__convertToLink)("link")
+
 
     def __convertToLink (self, s, l, t):
         """
@@ -51,14 +48,14 @@ class LinkToken (object):
         comment, url = text.rsplit ("->", 1)
         realurl = self.__prepareUrl (url)
 
-        return self.__getUrlTag (realurl, cgi.escape (comment) )
+        return self.__getUrlTag (realurl, cgi.escape (comment))
 
 
     def __convertLinkLine (self, text):
         """
         Преобразовать ссылки в виде [[url | comment]]
         """
-        # Т.к. символ | может быть в ссылке и в тексте, 
+        # Т.к. символ | может быть в ссылке и в тексте,
         # считаем, что после ссылки пользователь поставит пробел
         if " |" in text:
             url, comment = text.split (" |", 1)
@@ -66,7 +63,7 @@ class LinkToken (object):
             url, comment = text.rsplit ("|", 1)
         realurl = self.__prepareUrl (url)
 
-        return self.__getUrlTag (realurl, cgi.escape (comment) )
+        return self.__getUrlTag (realurl, cgi.escape (comment))
 
 
     def __prepareUrl (self, url):
@@ -80,7 +77,7 @@ class LinkToken (object):
 
 
     def __getUrlTag (self, url, comment):
-        return '<a href="%s">%s</a>' % (url.strip(), self.parser.parseLinkMarkup (comment.strip()) )
+        return '<a href="%s">%s</a>' % (url.strip(), self.parser.parseLinkMarkup (comment.strip()))
 
 
     def __convertEmptyLink (self, text):
@@ -94,9 +91,9 @@ class LinkToken (object):
             url = textStrip.replace (AttachToken.attachString, Attachment.attachDir + "/", 1)
             comment = textStrip.replace (AttachToken.attachString, "")
 
-        elif (textStrip.startswith ("#") and 
-                self.parser.page != None and
-                self.parser.page[textStrip] == None):
+        elif (textStrip.startswith ("#") and
+                self.parser.page is not None and
+                self.parser.page[textStrip] is None):
             # Ссылка начинается на #, но сложенных страниц с таким именем нет,
             # значит это якорь
             return '<a id="%s"></a>' % (textStrip[1:])
@@ -105,4 +102,4 @@ class LinkToken (object):
             url = text.strip()
             comment = text.strip()
 
-        return '<a href="%s">%s</a>' % (url, cgi.escape (comment) )
+        return '<a href="%s">%s</a>' % (url, cgi.escape (comment))

@@ -1,5 +1,5 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
+
 
 class SearchReplaceController (object):
     _recentSearch = u""
@@ -39,10 +39,10 @@ class SearchReplaceController (object):
         Возвращает True, если удалось сделать замену
         """
         phrase = self.getSearchPhrase()
-        searchResult = SearchResult (self.editor.GetSelectionStart(), 
-                self.editor.GetSelectedText())
+        searchResult = SearchResult (self.editor.GetSelectionStart(),
+                                     self.editor.GetSelectedText())
 
-        if (len (phrase) > 0 and self._searcher.inResult (searchResult) ):
+        if (len (phrase) > 0 and self._searcher.inResult (searchResult)):
             self.editor.replaceText (self.getReplacePhrase())
             self.nextSearch()
             return True
@@ -63,7 +63,7 @@ class SearchReplaceController (object):
 
         if len (self._searcher.result) == 0:
             return
-        
+
         replace = self.getReplacePhrase()
 
         newtext = u""
@@ -82,7 +82,7 @@ class SearchReplaceController (object):
         self.editor.SetText (newtext)
         self.editor.SetSelection (lastreplace, lastreplace)
         self.editor.SetFocus()
-    
+
 
     def startSearch (self):
         """
@@ -146,11 +146,11 @@ class SearchReplaceController (object):
         Переключиться в режим поиска
         """
         self.panel.Close()
-        # Если редактор находится в режиме "только для чтения", 
+        # Если редактор находится в режиме "только для чтения",
         # то не показывать GUI предназначенный для замены
         self.panel.setReplaceGuiVisible (not self.editor.GetReadOnly())
         self.show()
-    
+
 
     def _searchTo (self, direction):
         """
@@ -167,15 +167,15 @@ class SearchReplaceController (object):
 
         text = self.editor.GetText()
         result = direction (text, phrase)
-        if result != None:
+        if result is not None:
             self.panel.resultLabel.SetLabel (u"")
-            self.editor.SetSelection (result.position, result.position + len (result.phrase) )
+            self.editor.SetSelection (result.position, result.position + len (result.phrase))
         else:
             self.panel.resultLabel.SetLabel (_(u"Not found"))
 
         self.panel.Layout()
 
-    
+
     def _findNext (self, text, phrase):
         """
         Найти следующее вхождение
@@ -191,7 +191,7 @@ class SearchReplaceController (object):
                 result = currResult
                 break
 
-        if result == None and len (self._searcher.result) > 0:
+        if result is None and len (self._searcher.result) > 0:
             result = self._searcher.result[0]
 
         return result
@@ -211,7 +211,7 @@ class SearchReplaceController (object):
             if currResult.position < currpos:
                 result = currResult
 
-        if result == None and len (self._searcher.result) > 0:
+        if result is None and len (self._searcher.result) > 0:
             result = self._searcher.result[-1]
 
         return result
@@ -232,7 +232,7 @@ class SearchReplaceController (object):
                 result = currResult
                 break
 
-        if result == None and len (self._searcher.result) > 0:
+        if result is None and len (self._searcher.result) > 0:
             result = self._searcher.result[0]
 
         return result
@@ -274,7 +274,7 @@ class LocalSearcher (object):
         index = text_lower.find (phrase_lower)
 
         while index != -1:
-            self._result.append (SearchResult (index, phrase_lower) )
+            self._result.append (SearchResult (index, phrase_lower))
             index = text_lower.find (phrase_lower, index + len (phrase_lower))
 
 

@@ -26,7 +26,7 @@ includefiles = ['images', 'locale', 'version.txt', 'tools', 'styles']
 includes = []
 excludes = []
 
-# Добавляем 'outwiker.pages.wiki.wikipanel', 
+# Добавляем 'outwiker.pages.wiki.wikipanel',
 # т.к. этот модуль используется только в старых версиях плагинов
 packages = ['urllib', 'urllib2', 'outwiker.pages.wiki.wikipanel']
 
@@ -37,11 +37,10 @@ setup(
     description = "tests",
     options = {
         'build_exe': {
-            'excludes':excludes, 
-            'packages':packages, 
-            'include_files':includefiles, 
-            'build_exe':'../tests_win',
+            'excludes': excludes,
+            'packages': packages,
+            'include_files': includefiles,
+            'build_exe': '../tests_win',
             'include_msvcr': True,
-            }},
+        }},
     executables = [Executable("tests.py", base = 'Console')])
-

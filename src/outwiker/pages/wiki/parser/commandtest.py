@@ -1,7 +1,7 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 from command import Command
+
 
 class TestCommand (Command):
     """
@@ -17,7 +17,7 @@ class TestCommand (Command):
         """
         Command.__init__ (self, parser)
 
-    
+
     @property
     def name (self):
         """
@@ -28,11 +28,11 @@ class TestCommand (Command):
 
     def execute (self, params, content):
         """
-        Запустить команду на выполнение. 
+        Запустить команду на выполнение.
         Метод возвращает текст, который будет вставлен на место команды в вики-нотации
         """
-        params_result = params if params != None else u""
-        content_result = content if content != None else u""
+        params_result = params if params is not None else u""
+        content_result = content if content is not None else u""
 
         result = u"""Command name: test
 params: {params}
@@ -51,7 +51,7 @@ class ExceptionCommand (Command):
         """
         Command.__init__ (self, parser)
 
-    
+
     @property
     def name (self):
         """

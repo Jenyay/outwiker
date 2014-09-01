@@ -1,6 +1,4 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-
 """
 Классы для работы с версией программы
 """
@@ -17,7 +15,7 @@ class Status (object):
         """
         self.name = name
         self.number = number
-    
+
 
     def __eq__ (self, other):
         return self.number == other.number
@@ -34,7 +32,7 @@ class Status (object):
     def __le__ (self, other):
         return self.__lt__ (other) or self.__eq__ (other)
 
-    
+
     def __gt__ (self, other):
         return self.number > other.number
 
@@ -83,7 +81,7 @@ class Version (object):
         self.NONSTATUS = Status (u"", 10000)
         self.version = [major] + [int (arg) for arg in args]
         self.status = kwargs["status"] if "status" in kwargs else self.NONSTATUS
-    
+
 
     def __eq__ (self, other):
         return self.status == other.status and self.version == other.version
@@ -100,7 +98,7 @@ class Version (object):
     def __le__ (self, other):
         return self.__lt__ (other) or self.__eq__ (other)
 
-    
+
     def __gt__ (self, other):
         return self.version > other.version or (self.version == other.version and self.status > other.status)
 
@@ -143,9 +141,10 @@ class Version (object):
             raise ValueError
 
         major = int (m.group ("major"))
-        minors = [int(minor) for minor in m.group ("minor").split(".") if len (minor.strip()) > 0] if m.group ("minor") != None else []
+        minors = [int(minor) for minor in
+                  m.group ("minor").split(".")
+                  if len (minor.strip()) > 0] if m.group ("minor") is not None else []
 
-        status = Version.parseStatus (m.group("status").strip()) if m.group("status") != None else None
+        status = Version.parseStatus (m.group("status").strip()) if m.group("status") is not None else None
 
         return Version (major, *minors, status=status) if status else Version (major, *minors)
-

@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import os
@@ -8,7 +7,6 @@ import wx.html
 
 import outwiker.core.system
 import outwiker.core.commands
-from outwiker.core.application import Application
 
 
 class HtmlRenderWX (wx.Panel):
@@ -41,7 +39,7 @@ class HtmlRenderWX (wx.Panel):
         self.SetSizer(self.box)
         self.Layout()
 
-    
+
     def LoadPage (self, fname):
         self.render.LoadPage (fname)
 
@@ -64,7 +62,7 @@ class HtmlRenderWX (wx.Panel):
     def onMouseEnter (self, event):
         self.render.SetFocus()
 
-    
+
     def onCopyFromHtml(self, event):
         text = self.render.SelectionToText()
         if len(text) == 0:
@@ -72,7 +70,7 @@ class HtmlRenderWX (wx.Panel):
 
         outwiker.core.commands.copyTextToClipboard(text)
         event.Skip()
-    
+
 
     @property
     def page (self):
@@ -82,7 +80,7 @@ class HtmlRenderWX (wx.Panel):
     @page.setter
     def page (self, value):
         self._currentPage = value
-    
+
 
     def onLinkClicked (self, event):
         """
@@ -97,23 +95,23 @@ class HtmlRenderWX (wx.Panel):
             page = self.__findWikiPage (href)
             file = self.__findFile (href)
 
-            if page != None:
+            if page is not None:
                 self._currentPage.root.selectedPage = page
-            elif file != None:
+            elif file is not None:
                 try:
                     outwiker.core.system.getOS().startFile (file)
                 except OSError:
                     text = _(u"Can't execute file '%s'") % file
                     outwiker.core.commands.MessageBox (text, _(u"Error"), wx.ICON_ERROR | wx.OK)
 
-    
+
 
     def __isUrl (self, href):
-        return href.lower().startswith ("http://") or \
-                href.lower().startswith ("https://") or \
-                href.lower().startswith ("ftp://") or \
-                href.lower().startswith ("mailto:")
-    
+        return (href.lower().startswith ("http://") or
+                href.lower().startswith ("https://") or
+                href.lower().startswith ("ftp://") or
+                href.lower().startswith ("mailto:"))
+
 
     def __findFile (self, href):
         path = os.path.join (self._currentPage.path, href)
@@ -125,23 +123,23 @@ class HtmlRenderWX (wx.Panel):
         """
         Попытка найти страницу вики, если ссылка, на которую щелкнули не интернетная (http, ftp, mailto)
         """
-        assert self._currentPage != None
-        
+        assert self._currentPage is not None
+
         newSelectedPage = None
 
         if subpath[0] == "/":
             # Поиск страниц осуществляем только с корня
-            newSelectedPage = self._currentPage.root[subpath[1:] ]
+            newSelectedPage = self._currentPage.root[subpath[1:]]
         else:
             # Сначала попробуем найти вложенные страницы с таким subpath
             newSelectedPage = self._currentPage[subpath]
 
-            if newSelectedPage == None:
+            if newSelectedPage is None:
                 # Если страница не найдена, попробуем поискать, начиная с корня
                 newSelectedPage = self._currentPage.root[subpath]
 
         return newSelectedPage
-        
+
 
     def openUrl (self, href):
         """

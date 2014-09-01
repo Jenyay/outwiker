@@ -1,9 +1,9 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-from outwiker.libs.pyparsing import Regex, LineStart, LineEnd, OneOrMore
+from outwiker.libs.pyparsing import Regex, OneOrMore
 from outwiker.pages.wiki.parser.utils import noConvert
 import re
+
 
 class ListFactory (object):
     @staticmethod
@@ -29,8 +29,8 @@ class ListToken (object):
     orderList = "#"
 
     def __init__ (self, parser):
-        self.allListsParams = [ListParams (ListToken.unorderList, u"<ul>", u"</ul>"), 
-                ListParams (ListToken.orderList, u"<ol>", u"</ol>")]
+        self.allListsParams = [ListParams (ListToken.unorderList, u"<ul>", u"</ul>"),
+                               ListParams (ListToken.orderList, u"<ol>", u"</ol>")]
         self.parser = parser
 
 
@@ -47,7 +47,7 @@ class ListToken (object):
             currItem.append (item[0])
 
         return result
-    
+
 
     def __closeLists (self, depth, currItem):
         """
@@ -60,8 +60,8 @@ class ListToken (object):
             del currItem[-1]
 
         return result
-    
-    
+
+
     def __closeListStartList (self, level, item, currItem):
         result = u""
 
@@ -126,7 +126,7 @@ class ListToken (object):
 
         regex += r"]+) *(?P<item>(?:\\\n|.)*?)$\n{0,2}"
 
-        item =  Regex (regex, re.MULTILINE).setParseAction (noConvert).leaveWhitespace()
+        item = Regex (regex, re.MULTILINE).setParseAction (noConvert).leaveWhitespace()
 
         fullList = OneOrMore (item).setParseAction (self.__convertList)("list")
 
@@ -165,7 +165,7 @@ class ListToken (object):
         itemText = self.parser.parseListItemMarkup (text)
 
         return u"<li>%s</li>" % (itemText)
-    
+
 
     def __getStartListTag (self, symbol, params):
         """
@@ -174,7 +174,7 @@ class ListToken (object):
         for listparam in params:
             if listparam.symbol == symbol:
                 return listparam.startTag
-    
+
 
     def __getEndListTag (self, symbol, params):
         """

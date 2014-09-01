@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import os
@@ -50,7 +49,7 @@ def loadLanguage (language, langdir, domain):
         lang = gettext.translation(domain, langdir, languages=[reallanguage])
     except IOError:
         lang = gettext.translation(domain, langdir, languages=["en"])
-        
+
     return lang
 
 
@@ -95,6 +94,3 @@ def getLanguages ():
             languages.append (folder)
 
     return languages
-
-
-

@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import wx
@@ -25,11 +24,11 @@ class BookmarksController (object):
         self.controller.removeMenuItemsById (self.controller.mainMenu.bookmarksMenu, self._bookmarksId.keys())
         self._bookmarksId = {}
 
-        if Application.wikiroot != None:
+        if Application.wikiroot is not None:
             for n in range (len (Application.wikiroot.bookmarks)):
                 id = wx.NewId()
                 page = Application.wikiroot.bookmarks[n]
-                if page == None:
+                if page is None:
                     continue
 
                 subpath = page.subpath
@@ -38,7 +37,7 @@ class BookmarksController (object):
                 # Найдем родителя
                 parentPage = page.parent
 
-                if parentPage.parent != None:
+                if parentPage.parent is not None:
                     label = "%s [%s]" % (page.title, parentPage.subpath)
                 else:
                     label = page.title
@@ -53,5 +52,5 @@ class BookmarksController (object):
         subpath = self._bookmarksId[event.Id]
         page = Application.wikiroot[subpath]
 
-        if page != None:
+        if page is not None:
             Application.wikiroot.selectedPage = Application.wikiroot[subpath]

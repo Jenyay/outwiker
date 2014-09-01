@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 from outwiker.core.config import BooleanOption, IntegerOption, StcStyleOption
@@ -48,41 +47,41 @@ class WikiConfig (object):
         self.config = config
 
         # Показывать вкладку с HTML-кодом?
-        self.showHtmlCodeOptions = BooleanOption (self.config, 
-                WikiConfig.WIKI_SECTION, 
-                WikiConfig.SHOW_HTML_CODE_PARAM,
-                True)
+        self.showHtmlCodeOptions = BooleanOption (self.config,
+                                                  WikiConfig.WIKI_SECTION,
+                                                  WikiConfig.SHOW_HTML_CODE_PARAM,
+                                                  True)
 
         # Размер превьюшек по умолчанию
-        self.thumbSizeOptions = IntegerOption (self.config, 
-                WikiConfig.WIKI_SECTION, 
-                WikiConfig.THUMB_SIZE_PARAM, 
-                WikiConfig.THUMB_SIZE_DEFAULT)
-        
+        self.thumbSizeOptions = IntegerOption (self.config,
+                                               WikiConfig.WIKI_SECTION,
+                                               WikiConfig.THUMB_SIZE_PARAM,
+                                               WikiConfig.THUMB_SIZE_DEFAULT)
+
         # Показывать список прикрепленных файлов вместо пустой страницы?
-        self.showAttachInsteadBlankOptions = BooleanOption (self.config, 
-                WikiConfig.WIKI_SECTION, 
-                WikiConfig.SHOW_ATTACH_BLANK_PARAM, 
-                True)
+        self.showAttachInsteadBlankOptions = BooleanOption (self.config,
+                                                            WikiConfig.WIKI_SECTION,
+                                                            WikiConfig.SHOW_ATTACH_BLANK_PARAM,
+                                                            True)
 
         # Стиль ссылок по умолчанию
-        self.linkStyleOptions = IntegerOption (self.config, 
-                WikiConfig.WIKI_SECTION, 
-                WikiConfig.LINK_STYLE_PARAM, 
-                WikiConfig.LINK_STYLE_DEFAULT)
+        self.linkStyleOptions = IntegerOption (self.config,
+                                               WikiConfig.WIKI_SECTION,
+                                               WikiConfig.LINK_STYLE_PARAM,
+                                               WikiConfig.LINK_STYLE_DEFAULT)
 
         # Стили редактора
-        self.link = StcStyleOption (self.config, 
-                WikiConfig.STYLES_SECTION, 
-                WikiConfig.STYLE_LINK_SECTION, 
-                WikiConfig.STYLE_LINK_DEFAULT)
+        self.link = StcStyleOption (self.config,
+                                    WikiConfig.STYLES_SECTION,
+                                    WikiConfig.STYLE_LINK_SECTION,
+                                    WikiConfig.STYLE_LINK_DEFAULT)
 
-        self.heading = StcStyleOption (self.config, 
-                WikiConfig.STYLES_SECTION, 
-                WikiConfig.STYLE_HEADING_SECTION, 
-                WikiConfig.STYLE_HEADING_DEFAULT)
+        self.heading = StcStyleOption (self.config,
+                                       WikiConfig.STYLES_SECTION,
+                                       WikiConfig.STYLE_HEADING_SECTION,
+                                       WikiConfig.STYLE_HEADING_DEFAULT)
 
-        self.command = StcStyleOption (self.config, 
-                WikiConfig.STYLES_SECTION, 
-                WikiConfig.STYLE_COMMAND_SECTION, 
-                WikiConfig.STYLE_COMMAND_DEFAULT)
+        self.command = StcStyleOption (self.config,
+                                       WikiConfig.STYLES_SECTION,
+                                       WikiConfig.STYLE_COMMAND_SECTION,
+                                       WikiConfig.STYLE_COMMAND_DEFAULT)

@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import os
@@ -16,7 +15,7 @@ class Thumbnails (object):
     def __init__ (self, page):
         self.page = page
 
-    
+
     @staticmethod
     def getRelativeThumbDir ():
         return os.path.join (Attachment.attachDir, Thumbnails.thumbDir)

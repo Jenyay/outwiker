@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import os.path
@@ -6,6 +5,7 @@ import cgi
 
 from command import Command
 from outwiker.core.attachment import Attachment
+
 
 class IncludeCommand (Command):
     """
@@ -22,7 +22,7 @@ class IncludeCommand (Command):
         """
         Command.__init__ (self, parser)
 
-    
+
     @property
     def name (self):
         """
@@ -33,11 +33,11 @@ class IncludeCommand (Command):
 
     def execute (self, params, content):
         """
-        Запустить команду на выполнение. 
+        Запустить команду на выполнение.
         Метод возвращает текст, который будет вставлен на место команды в вики-нотации
         """
         (path, params_tail) = self._getAttach (params)
-        if path == None:
+        if path is None:
             return u""
 
         params_dict = Command.parseParams (params_tail)
@@ -50,7 +50,7 @@ class IncludeCommand (Command):
         except IOError:
             return _(u"<b>Can't open file %s</b>" % path)
         except:
-            return _(u"<b>Encoding error in file %s</b>" % os.path.basename (path) )
+            return _(u"<b>Encoding error in file %s</b>" % os.path.basename (path))
 
         return self._postprocessText (text, params_dict)
 
@@ -89,7 +89,7 @@ class IncludeCommand (Command):
 
         # Выделим конец строки после Attach:
         if params.startswith (attach_begin):
-            params_end = params[len (attach_begin) :]
+            params_end = params[len (attach_begin):]
         else:
             return (None, params_tail)
 
@@ -101,12 +101,12 @@ class IncludeCommand (Command):
         for fname in attaches:
             if params_end.startswith (os.path.basename (fname)):
                 path = fname
-                params_tail = params_end[len (os.path.basename (fname)) :]
+                params_tail = params_end[len (os.path.basename (fname)):]
                 break
 
         return (path, params_tail)
 
-    
+
     # TODO: Вынести в отдельный модуль
     @staticmethod
     def sortByLength (fname1, fname2):

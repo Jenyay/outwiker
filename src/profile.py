@@ -1,8 +1,8 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import cProfile
 import pstats
+import os
 
 import wxversion
 
@@ -19,6 +19,7 @@ import wx
 from outwiker.core.application import Application
 from runoutwiker import OutWiker
 
+
 def wikiparserProfile ():
     from profiles import pro_parser
 
@@ -29,7 +30,7 @@ def wikiparserProfile ():
     global pparser
     pparser = pro_parser.ParseSample (fname)
 
-    #pparser.run()
+    # pparser.run()
     cProfile.run('pparser.run()', profile_fname)
 
     stats = pstats.Stats(profile_fname)
@@ -44,7 +45,7 @@ def outwikerProfile ():
     cProfile.run('outwiker.MainLoop()', profile_fname)
 
     stats = pstats.Stats(profile_fname)
-    #stats.strip_dirs().sort_stats('calls').print_stats(30)
+    # stats.strip_dirs().sort_stats('calls').print_stats(30)
     stats.strip_dirs().sort_stats('time').print_stats(100)
 
 

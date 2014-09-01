@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 from outwiker.core.attachment import Attachment
 
@@ -14,7 +13,7 @@ class ThumbDialogController (object):
         page - текущая страница (не может быть равна None)
         selectedText - текст, выбанный в редакторе
         """
-        assert page != None
+        assert page is not None
 
         self._parent = parent
         self._page = page
@@ -71,4 +70,3 @@ class ThumbDialogController (object):
 
         result = u"%thumb{scale}%{fname}%%".format (scale=scaleText, fname=fileText)
         return result
-

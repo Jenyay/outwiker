@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import re
@@ -37,8 +36,8 @@ class TableToken (object):
         text = toks["text"]
 
         leftAlign = toks["text"][-1] in " \t"
-        
-        # Условие в скобках связано с тем, что первый пробел попадает 
+
+        # Условие в скобках связано с тем, что первый пробел попадает
         # или не попадает в токен в зависимости от того, первая ячейка в строке или нет
         rightAlign = loc > 0 and (s[loc - 1] in " \t" or s[loc] in " \t")
 
@@ -51,7 +50,7 @@ class TableToken (object):
         elif rightAlign:
             align = u' align="right"'
 
-        result = u'<td%s>%s</td>' % (align, self.parser.parseWikiMarkup (text.strip() ) )
+        result = u'<td%s>%s</td>' % (align, self.parser.parseWikiMarkup (text.strip()))
 
         return result
 
