@@ -30,7 +30,6 @@ class OpenPluginsFolderAction (BaseAction):
     def run (self, params):
         # 0 - папка рядом с запускаемым файлом, затем идут другие папки, если они есть
         pluginsDir = getPluginsDirList ()[-1]
-        print getPluginsDirList ()
         try:
             getOS().startFile (pluginsDir)
         except OSError:
