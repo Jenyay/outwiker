@@ -28,11 +28,11 @@ class OpenPluginsFolderAction (BaseAction):
 
 
     def run (self, params):
-        if self._application.selectedPage is not None:
-            # 0 - папка рядом с запускаемым файлом, затем идут другие папки, если они есть
-            pluginsDir = getPluginsDirList ()[-1]
-            try:
-                getOS().startFile (pluginsDir)
-            except OSError:
-                text = _(u"Can't open folder '{}'".format (pluginsDir))
-                MessageBox (text, _(u"Error"), wx.ICON_ERROR | wx.OK)
+        # 0 - папка рядом с запускаемым файлом, затем идут другие папки, если они есть
+        pluginsDir = getPluginsDirList ()[-1]
+        print getPluginsDirList ()
+        try:
+            getOS().startFile (pluginsDir)
+        except OSError:
+            text = _(u"Can't open folder '{}'".format (pluginsDir))
+            MessageBox (text, _(u"Error"), wx.ICON_ERROR | wx.OK)
