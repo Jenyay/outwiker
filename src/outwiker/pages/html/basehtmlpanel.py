@@ -57,8 +57,6 @@ class BaseHtmlPanel(BaseTextPanel):
 
     def Clear (self):
         self.Unbind(wx.EVT_NOTEBOOK_PAGE_CHANGED, source = self.notebook, handler = self._onTabChanged)
-        self.htmlWindow.Destroy()
-        self.codeEditor.Destroy()
         super (BaseHtmlPanel, self).Clear()
 
 
