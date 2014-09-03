@@ -31,12 +31,13 @@ class ChangePageUidTest (BaseMainWndTest):
 
 
     def tearDown(self):
-        BaseMainWndTest.tearDown (self)
         Application.wikiroot = None
 
         removeWiki (self.path)
         self._dlg.Destroy()
         self._loader.clear()
+
+        BaseMainWndTest.tearDown (self)
 
 
     def __createWiki (self):
@@ -52,6 +53,11 @@ class ChangePageUidTest (BaseMainWndTest):
 
     def testPluginLoad (self):
         self.assertEqual (len (self._loader), 1)
+
+
+    def testDestroy (self):
+        Application.wikiroot = None
+        self._loader.clear()
 
 
     def testUidDefault (self):

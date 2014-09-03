@@ -4,7 +4,6 @@
 Модуль с классами для добавления пунктов меню и кнопок на панель
 """
 from .misc import getImagePath
-from .i18n import get_
 
 from outwiker.pages.html.basehtmlpanel import EVT_PAGE_TAB_CHANGED
 from .actions import InsertCounterAction
@@ -20,16 +19,16 @@ class GuiCreator (object):
 
 
     def initialize (self):
-        if self._application.mainWindow != None:
+        if self._application.mainWindow is not None:
             self._application.actionController.register (
-                    InsertCounterAction (self._application, self._controller), 
-                    None)
+                InsertCounterAction (self._application, self._controller),
+                None)
 
 
     def createTools (self):
         mainWindow = self._application.mainWindow
 
-        if mainWindow == None:
+        if mainWindow is None:
             return
 
         toolbar = mainWindow.toolbars[mainWindow.PLUGINS_TOOLBAR_STR]
@@ -37,13 +36,13 @@ class GuiCreator (object):
         pageView = self._getPageView()
 
         self._application.actionController.appendMenuItem (
-                InsertCounterAction.stringId, 
-                pageView.commandsMenu)
+            InsertCounterAction.stringId,
+            pageView.commandsMenu)
 
         self._application.actionController.appendToolbarButton (
-                InsertCounterAction.stringId,
-                toolbar,
-                getImagePath ("counter.png"))
+            InsertCounterAction.stringId,
+            toolbar,
+            getImagePath ("counter.png"))
 
         pageView.Bind (EVT_PAGE_TAB_CHANGED, self._onTabChanged)
         self._enableTools()
@@ -55,14 +54,17 @@ class GuiCreator (object):
 
 
     def destroy (self):
-        if self._application.mainWindow != None:
+        if self._application.mainWindow is not None:
             self._application.actionController.removeAction (InsertCounterAction.stringId)
-            self._getPageView().Unbind (EVT_PAGE_TAB_CHANGED, handler=self._onTabChanged)
+
+            pageView = self._getPageView()
+            if pageView is not None:
+                self._getPageView().Unbind (EVT_PAGE_TAB_CHANGED, handler=self._onTabChanged)
 
 
     def _onTabChanged (self, event):
         self._enableTools()
-        
+
         # Разрешить распространение события дальше
         event.Skip()
 

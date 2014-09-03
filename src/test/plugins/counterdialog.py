@@ -33,12 +33,12 @@ class CounterDialogTest (BaseMainWndTest):
 
 
     def tearDown(self):
-        BaseMainWndTest.tearDown (self)
         Application.wikiroot = None
-
         removeWiki (self.path)
         self._dlg.Destroy()
         self._loader.clear()
+
+        BaseMainWndTest.tearDown (self)
 
 
     def __createWiki (self):
@@ -70,6 +70,11 @@ class CounterDialogTest (BaseMainWndTest):
         self.assertEqual (self._dlg.countersList, [u""])
 
         self.assertEqual (text, u'(:counter:)')
+
+
+    def testDestroy (self):
+        Application.wikiroot = None
+        self._loader.clear()
 
 
     def testSetEmptyName_01 (self):

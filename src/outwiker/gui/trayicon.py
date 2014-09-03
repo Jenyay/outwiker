@@ -56,6 +56,7 @@ class OutwikerTrayIcon (wx.TaskBarIcon):
     def __unbind (self):
         self.Unbind (wx.EVT_TASKBAR_LEFT_DOWN, handler = self.__OnTrayLeftClick)
         self.mainWnd.Unbind (wx.EVT_ICONIZE, handler = self.__onIconize)
+        self.mainWnd.Unbind (wx.EVT_IDLE, handler=self.__onIdle)
 
         self.Unbind(wx.EVT_MENU, handler = self.__onExit, id=self.ID_EXIT)
         self.Unbind(wx.EVT_MENU, handler = self.__onRestore, id=self.ID_RESTORE)
