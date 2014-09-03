@@ -32,6 +32,10 @@ class WikiPageView (BaseWikiPageView):
         super (WikiPageView, self).__init__ (parent, *args, **kwds)
 
 
+    def Clear (self):
+        super (WikiPageView, self).Clear ()
+
+
     def _getHtmlGenerator (self, page):
         return HtmlGenerator (page)
 

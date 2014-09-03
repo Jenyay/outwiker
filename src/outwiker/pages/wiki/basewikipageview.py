@@ -147,20 +147,21 @@ class BaseWikiPageView (BaseHtmlPanel):
     # Конец методов, которые необходимо переопределить в производном классе
 
 
-    def onPreferencesDialogClose (self, prefDialog):
-        super (BaseWikiPageView, self).onPreferencesDialogClose (prefDialog)
-        if self.htmlCodeWindow is not None:
-            self.htmlCodeWindow.setDefaultSettings()
-
-
-    def onClose (self, event):
+    def Clear (self):
         self._removeActionTools()
         self.Unbind (EVT_PAGE_TAB_CHANGED, handler=self.onTabChanged)
+        # self.htmlCodeWindow.Destroy()
 
         if self._getName() in self.mainWindow.toolbars:
             self.mainWindow.toolbars.destroyToolBar (self._getName())
 
-        super (BaseWikiPageView, self).onClose (event)
+        super (BaseWikiPageView, self).Clear()
+
+
+    def onPreferencesDialogClose (self, prefDialog):
+        super (BaseWikiPageView, self).onPreferencesDialogClose (prefDialog)
+        if self.htmlCodeWindow is not None:
+            self.htmlCodeWindow.setDefaultSettings()
 
 
     def _removeActionTools (self):
@@ -214,8 +215,6 @@ class BaseWikiPageView (BaseHtmlPanel):
             return self.codeEditor.searchPanel
         elif self.selectedPageIndex == self.htmlcodePageIndex:
             return self.htmlCodeWindow.searchPanel
-
-        return None
 
 
     def onTabChanged (self, event):

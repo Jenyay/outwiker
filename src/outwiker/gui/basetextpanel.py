@@ -231,6 +231,7 @@ class BaseTextPanel (BasePagePanel):
         self._onSetPage -= self.__onSetPage
 
         self.removeGui()
+        super (BaseTextPanel, self).Clear()
 
 
     def removeGui (self):

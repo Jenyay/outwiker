@@ -17,6 +17,10 @@ class TextPanel (BaseTextPanel):
         self.__createGui()
 
 
+    def Clear (self):
+        super (TextPanel, self).Clear()
+
+
     def SetCursorPosition (self, position):
         """
         Установить курсор в текстовом редакторе в положение position

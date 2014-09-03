@@ -53,7 +53,13 @@ class BaseHtmlPanel(BaseTextPanel):
         self.__do_layout()
 
         self.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED, self._onTabChanged, self.notebook)
-        self.Bind (wx.EVT_CLOSE, self.onClose)
+
+
+    def Clear (self):
+        self.Unbind(wx.EVT_NOTEBOOK_PAGE_CHANGED, source = self.notebook, handler = self._onTabChanged)
+        self.htmlWindow.Destroy()
+        self.codeEditor.Destroy()
+        super (BaseHtmlPanel, self).Clear()
 
 
     def SetCursorPosition (self, position):
@@ -155,10 +161,6 @@ class BaseHtmlPanel(BaseTextPanel):
 
     def onPreferencesDialogClose (self, prefDialog):
         self.codeEditor.setDefaultSettings()
-
-
-    def onClose (self, event):
-        self.htmlWindow.Close()
 
 
     def onAttachmentPaste (self, fnames):

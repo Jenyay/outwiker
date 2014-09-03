@@ -106,7 +106,7 @@ class HtmlPageView (BaseHtmlPanel):
         event.Skip()
 
 
-    def onClose (self, event):
+    def Clear (self):
         self._application.onPageUpdate -= self.__onPageUpdate
         self.Unbind (EVT_PAGE_TAB_CHANGED, handler=self.onTabChanged)
 
@@ -115,7 +115,7 @@ class HtmlPageView (BaseHtmlPanel):
         if self._htmlPanelName in self.mainWindow.toolbars:
             self.mainWindow.toolbars.destroyToolBar (self._htmlPanelName)
 
-        super (HtmlPageView, self).onClose (event)
+        super (HtmlPageView, self).Clear()
 
 
     def _removeActionTools (self):
