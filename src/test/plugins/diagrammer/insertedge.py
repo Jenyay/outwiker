@@ -15,19 +15,20 @@ class InsertEdgeTest (unittest.TestCase):
         self.loader = PluginsLoader(Application)
         self.loader.load (dirlist)
         self.plugin = self.loader[u"Diagrammer"]
+        self._dlg = self.plugin.InsertEdgeDialog(None)
 
 
     def tearDown(self):
         self.loader.clear()
+        self._dlg.Destroy()
 
 
     def testArrows_01 (self):
-        dlg = self.plugin.InsertEdgeDialog(None)
-        controller = self.plugin.InsertEdgeControllerNone (dlg)
+        controller = self.plugin.InsertEdgeControllerNone (self._dlg)
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.firstName = u"А"
-        dlg.secondName = u"Б"
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.firstName = u"А"
+        self._dlg.secondName = u"Б"
 
         result = controller.getResult ()
 
@@ -35,12 +36,11 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testArrows_02 (self):
-        dlg = self.plugin.InsertEdgeDialog(None)
-        controller = self.plugin.InsertEdgeControllerLeft (dlg)
+        controller = self.plugin.InsertEdgeControllerLeft (self._dlg)
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.firstName = u"А"
-        dlg.secondName = u"Б"
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.firstName = u"А"
+        self._dlg.secondName = u"Б"
 
         result = controller.getResult ()
 
@@ -48,12 +48,11 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testArrows_03 (self):
-        dlg = self.plugin.InsertEdgeDialog(None)
-        controller = self.plugin.InsertEdgeControllerRight (dlg)
+        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.firstName = u"А"
-        dlg.secondName = u"Б"
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.firstName = u"А"
+        self._dlg.secondName = u"Б"
 
         result = controller.getResult ()
 
@@ -61,12 +60,11 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testArrows_04 (self):
-        dlg = self.plugin.InsertEdgeDialog(None)
-        controller = self.plugin.InsertEdgeControllerBoth (dlg)
+        controller = self.plugin.InsertEdgeControllerBoth (self._dlg)
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.firstName = u"А"
-        dlg.secondName = u"Б"
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.firstName = u"А"
+        self._dlg.secondName = u"Б"
 
         result = controller.getResult ()
 
@@ -74,12 +72,11 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testEmptyNames_01 (self):
-        dlg = self.plugin.InsertEdgeDialog(None)
-        controller = self.plugin.InsertEdgeControllerBoth (dlg)
+        controller = self.plugin.InsertEdgeControllerBoth (self._dlg)
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.firstName = u""
-        dlg.secondName = u""
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.firstName = u""
+        self._dlg.secondName = u""
 
         result = controller.getResult ()
 
@@ -88,12 +85,11 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testEmptyNames_02 (self):
-        dlg = self.plugin.InsertEdgeDialog(None)
-        controller = self.plugin.InsertEdgeControllerBoth (dlg)
+        controller = self.plugin.InsertEdgeControllerBoth (self._dlg)
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.firstName = u"А"
-        dlg.secondName = u""
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.firstName = u"А"
+        self._dlg.secondName = u""
 
         result = controller.getResult ()
 
@@ -103,12 +99,11 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testEmptyNames_03 (self):
-        dlg = self.plugin.InsertEdgeDialog(None)
-        controller = self.plugin.InsertEdgeControllerBoth (dlg)
+        controller = self.plugin.InsertEdgeControllerBoth (self._dlg)
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.firstName = u""
-        dlg.secondName = u"Б"
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.firstName = u""
+        self._dlg.secondName = u"Б"
 
         result = controller.getResult ()
 
@@ -118,13 +113,12 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testLabel_01 (self):
-        dlg = self.plugin.InsertEdgeDialog(None)
-        controller = self.plugin.InsertEdgeControllerRight (dlg)
+        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.firstName = u"А"
-        dlg.secondName = u"Б"
-        dlg.label = u"Абырвалг"
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.firstName = u"А"
+        self._dlg.secondName = u"Б"
+        self._dlg.label = u"Абырвалг"
 
         result = controller.getResult ()
 
@@ -132,13 +126,12 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testStyleLine_01 (self):
-        dlg = self.plugin.InsertEdgeDialog(None)
-        controller = self.plugin.InsertEdgeControllerRight (dlg)
+        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.firstName = u"А"
-        dlg.secondName = u"Б"
-        dlg.setStyleIndex (0)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.firstName = u"А"
+        self._dlg.secondName = u"Б"
+        self._dlg.setStyleIndex (0)
 
         result = controller.getResult ()
 
@@ -146,13 +139,12 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testStyleLine_02 (self):
-        dlg = self.plugin.InsertEdgeDialog(None)
-        controller = self.plugin.InsertEdgeControllerRight (dlg)
+        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.firstName = u"А"
-        dlg.secondName = u"Б"
-        dlg.setStyleIndex (1)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.firstName = u"А"
+        self._dlg.secondName = u"Б"
+        self._dlg.setStyleIndex (1)
 
         result = controller.getResult ()
 
@@ -160,13 +152,12 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testStyleLine_03 (self):
-        dlg = self.plugin.InsertEdgeDialog(None)
-        controller = self.plugin.InsertEdgeControllerRight (dlg)
+        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.firstName = u"А"
-        dlg.secondName = u"Б"
-        dlg.setStyleIndex (2)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.firstName = u"А"
+        self._dlg.secondName = u"Б"
+        self._dlg.setStyleIndex (2)
 
         result = controller.getResult ()
 
@@ -174,13 +165,12 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testStyleLine_04 (self):
-        dlg = self.plugin.InsertEdgeDialog(None)
-        controller = self.plugin.InsertEdgeControllerRight (dlg)
+        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.firstName = u"А"
-        dlg.secondName = u"Б"
-        dlg.setStyleIndex (3)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.firstName = u"А"
+        self._dlg.secondName = u"Б"
+        self._dlg.setStyleIndex (3)
 
         result = controller.getResult ()
 
@@ -188,14 +178,13 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testStyleLine_05 (self):
-        dlg = self.plugin.InsertEdgeDialog(None)
-        controller = self.plugin.InsertEdgeControllerRight (dlg)
+        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.firstName = u"А"
-        dlg.secondName = u"Б"
-        dlg.label = u"Абырвалг"
-        dlg.setStyleIndex (3)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.firstName = u"А"
+        self._dlg.secondName = u"Б"
+        self._dlg.label = u"Абырвалг"
+        self._dlg.setStyleIndex (3)
 
         result = controller.getResult ()
 
@@ -203,13 +192,12 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testStyleArrow_01 (self):
-        dlg = self.plugin.InsertEdgeDialog(None)
-        controller = self.plugin.InsertEdgeControllerRight (dlg)
+        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.firstName = u"А"
-        dlg.secondName = u"Б"
-        dlg.setArrowStyleIndex (0)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.firstName = u"А"
+        self._dlg.secondName = u"Б"
+        self._dlg.setArrowStyleIndex (0)
 
         result = controller.getResult ()
 
@@ -217,13 +205,12 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testStyleArrow_02 (self):
-        dlg = self.plugin.InsertEdgeDialog(None)
-        controller = self.plugin.InsertEdgeControllerRight (dlg)
+        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.firstName = u"А"
-        dlg.secondName = u"Б"
-        dlg.setArrowStyleIndex (1)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.firstName = u"А"
+        self._dlg.secondName = u"Б"
+        self._dlg.setArrowStyleIndex (1)
 
         result = controller.getResult ()
 
@@ -231,13 +218,12 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testStyleArrow_03 (self):
-        dlg = self.plugin.InsertEdgeDialog(None)
-        controller = self.plugin.InsertEdgeControllerRight (dlg)
+        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.firstName = u"А"
-        dlg.secondName = u"Б"
-        dlg.setArrowStyleIndex (2)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.firstName = u"А"
+        self._dlg.secondName = u"Б"
+        self._dlg.setArrowStyleIndex (2)
 
         result = controller.getResult ()
 
@@ -245,13 +231,12 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testStyleArrow_04 (self):
-        dlg = self.plugin.InsertEdgeDialog(None)
-        controller = self.plugin.InsertEdgeControllerRight (dlg)
+        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.firstName = u"А"
-        dlg.secondName = u"Б"
-        dlg.setArrowStyleIndex (3)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.firstName = u"А"
+        self._dlg.secondName = u"Б"
+        self._dlg.setArrowStyleIndex (3)
 
         result = controller.getResult ()
 
@@ -259,14 +244,13 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testStyleArrow_05 (self):
-        dlg = self.plugin.InsertEdgeDialog(None)
-        controller = self.plugin.InsertEdgeControllerRight (dlg)
+        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.firstName = u"А"
-        dlg.secondName = u"Б"
-        dlg.setStyleIndex (3)
-        dlg.setArrowStyleIndex (3)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.firstName = u"А"
+        self._dlg.secondName = u"Б"
+        self._dlg.setStyleIndex (3)
+        self._dlg.setArrowStyleIndex (3)
 
         result = controller.getResult ()
 
@@ -274,14 +258,13 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testLineColor_01 (self):
-        dlg = self.plugin.InsertEdgeDialog(None)
-        controller = self.plugin.InsertEdgeControllerRight (dlg)
+        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.firstName = u"А"
-        dlg.secondName = u"Б"
-        dlg.isLineColorChanged = True
-        dlg.lineColor = u"yellow"
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.firstName = u"А"
+        self._dlg.secondName = u"Б"
+        self._dlg.isLineColorChanged = True
+        self._dlg.lineColor = u"yellow"
 
         result = controller.getResult ()
 
@@ -289,14 +272,13 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testLineColor_02 (self):
-        dlg = self.plugin.InsertEdgeDialog(None)
-        controller = self.plugin.InsertEdgeControllerRight (dlg)
+        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.firstName = u"А"
-        dlg.secondName = u"Б"
-        dlg.isLineColorChanged = False
-        dlg.lineColor = u"yellow"
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.firstName = u"А"
+        self._dlg.secondName = u"Б"
+        self._dlg.isLineColorChanged = False
+        self._dlg.lineColor = u"yellow"
 
         result = controller.getResult ()
 
@@ -304,14 +286,13 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testLineColor_03 (self):
-        dlg = self.plugin.InsertEdgeDialog(None)
-        controller = self.plugin.InsertEdgeControllerRight (dlg)
+        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.firstName = u"А"
-        dlg.secondName = u"Б"
-        dlg.isLineColorChanged = True
-        dlg.lineColor = u"#AAAAAA"
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.firstName = u"А"
+        self._dlg.secondName = u"Б"
+        self._dlg.isLineColorChanged = True
+        self._dlg.lineColor = u"#AAAAAA"
 
         result = controller.getResult ()
 
@@ -319,15 +300,14 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testLineColor_04 (self):
-        dlg = self.plugin.InsertEdgeDialog(None)
-        controller = self.plugin.InsertEdgeControllerRight (dlg)
+        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.firstName = u"А"
-        dlg.secondName = u"Б"
-        dlg.isLineColorChanged = True
-        dlg.lineColor = u"#AAAAAA"
-        dlg.setArrowStyleIndex (3)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.firstName = u"А"
+        self._dlg.secondName = u"Б"
+        self._dlg.isLineColorChanged = True
+        self._dlg.lineColor = u"#AAAAAA"
+        self._dlg.setArrowStyleIndex (3)
 
         result = controller.getResult ()
 
@@ -335,14 +315,13 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testFontSize_01 (self):
-        dlg = self.plugin.InsertEdgeDialog(None)
-        controller = self.plugin.InsertEdgeControllerRight (dlg)
+        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.firstName = u"А"
-        dlg.secondName = u"Б"
-        dlg.isFontSizeChanged = True
-        dlg.fontSize = 11
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.firstName = u"А"
+        self._dlg.secondName = u"Б"
+        self._dlg.isFontSizeChanged = True
+        self._dlg.fontSize = 11
 
         result = controller.getResult ()
 
@@ -350,14 +329,13 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testFontSize_02 (self):
-        dlg = self.plugin.InsertEdgeDialog(None)
-        controller = self.plugin.InsertEdgeControllerRight (dlg)
+        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.firstName = u"А"
-        dlg.secondName = u"Б"
-        dlg.isFontSizeChanged = False
-        dlg.fontSize = 15
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.firstName = u"А"
+        self._dlg.secondName = u"Б"
+        self._dlg.isFontSizeChanged = False
+        self._dlg.fontSize = 15
 
         result = controller.getResult ()
 
@@ -365,15 +343,14 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testFontSize_03 (self):
-        dlg = self.plugin.InsertEdgeDialog(None)
-        controller = self.plugin.InsertEdgeControllerRight (dlg)
+        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.firstName = u"А"
-        dlg.secondName = u"Б"
-        dlg.isFontSizeChanged = True
-        dlg.fontSize = 11
-        dlg.label = u"Абырвалг"
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.firstName = u"А"
+        self._dlg.secondName = u"Б"
+        self._dlg.isFontSizeChanged = True
+        self._dlg.fontSize = 11
+        self._dlg.label = u"Абырвалг"
 
         result = controller.getResult ()
 
@@ -381,14 +358,13 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testTextColor_01 (self):
-        dlg = self.plugin.InsertEdgeDialog(None)
-        controller = self.plugin.InsertEdgeControllerRight (dlg)
+        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.firstName = u"А"
-        dlg.secondName = u"Б"
-        dlg.isTextColorChanged = True
-        dlg.textColor = u"yellow"
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.firstName = u"А"
+        self._dlg.secondName = u"Б"
+        self._dlg.isTextColorChanged = True
+        self._dlg.textColor = u"yellow"
 
         result = controller.getResult ()
 
@@ -396,14 +372,13 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testTextColor_02 (self):
-        dlg = self.plugin.InsertEdgeDialog(None)
-        controller = self.plugin.InsertEdgeControllerRight (dlg)
+        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.firstName = u"А"
-        dlg.secondName = u"Б"
-        dlg.isTextColorChanged = False
-        dlg.textColor = u"yellow"
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.firstName = u"А"
+        self._dlg.secondName = u"Б"
+        self._dlg.isTextColorChanged = False
+        self._dlg.textColor = u"yellow"
 
         result = controller.getResult ()
 
@@ -411,14 +386,13 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testTextColor_03 (self):
-        dlg = self.plugin.InsertEdgeDialog(None)
-        controller = self.plugin.InsertEdgeControllerRight (dlg)
+        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.firstName = u"А"
-        dlg.secondName = u"Б"
-        dlg.isTextColorChanged = True
-        dlg.textColor = u"#AAAAAA"
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.firstName = u"А"
+        self._dlg.secondName = u"Б"
+        self._dlg.isTextColorChanged = True
+        self._dlg.textColor = u"#AAAAAA"
 
         result = controller.getResult ()
 
@@ -426,15 +400,14 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testTextColor_04 (self):
-        dlg = self.plugin.InsertEdgeDialog(None)
-        controller = self.plugin.InsertEdgeControllerRight (dlg)
+        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.firstName = u"А"
-        dlg.secondName = u"Б"
-        dlg.isTextColorChanged = True
-        dlg.textColor = u"#AAAAAA"
-        dlg.setArrowStyleIndex (3)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.firstName = u"А"
+        self._dlg.secondName = u"Б"
+        self._dlg.isTextColorChanged = True
+        self._dlg.textColor = u"#AAAAAA"
+        self._dlg.setArrowStyleIndex (3)
 
         result = controller.getResult ()
 
@@ -442,13 +415,12 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testThick_01 (self):
-        dlg = self.plugin.InsertEdgeDialog(None)
-        controller = self.plugin.InsertEdgeControllerRight (dlg)
+        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.firstName = u"А"
-        dlg.secondName = u"Б"
-        dlg.thick = True
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.firstName = u"А"
+        self._dlg.secondName = u"Б"
+        self._dlg.thick = True
 
         result = controller.getResult ()
 
@@ -456,13 +428,12 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testThick_02 (self):
-        dlg = self.plugin.InsertEdgeDialog(None)
-        controller = self.plugin.InsertEdgeControllerRight (dlg)
+        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.firstName = u"А"
-        dlg.secondName = u"Б"
-        dlg.thick = False
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.firstName = u"А"
+        self._dlg.secondName = u"Б"
+        self._dlg.thick = False
 
         result = controller.getResult ()
 
@@ -470,14 +441,13 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testThick_03 (self):
-        dlg = self.plugin.InsertEdgeDialog(None)
-        controller = self.plugin.InsertEdgeControllerRight (dlg)
+        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.firstName = u"А"
-        dlg.secondName = u"Б"
-        dlg.thick = True
-        dlg.setStyleIndex (1)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.firstName = u"А"
+        self._dlg.secondName = u"Б"
+        self._dlg.thick = True
+        self._dlg.setStyleIndex (1)
 
         result = controller.getResult ()
 
@@ -485,13 +455,12 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testFolded_01 (self):
-        dlg = self.plugin.InsertEdgeDialog(None)
-        controller = self.plugin.InsertEdgeControllerRight (dlg)
+        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.firstName = u"А"
-        dlg.secondName = u"Б"
-        dlg.folded = True
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.firstName = u"А"
+        self._dlg.secondName = u"Б"
+        self._dlg.folded = True
 
         result = controller.getResult ()
 
@@ -499,13 +468,12 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testFolded_02 (self):
-        dlg = self.plugin.InsertEdgeDialog(None)
-        controller = self.plugin.InsertEdgeControllerRight (dlg)
+        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.firstName = u"А"
-        dlg.secondName = u"Б"
-        dlg.folded = False
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.firstName = u"А"
+        self._dlg.secondName = u"Б"
+        self._dlg.folded = False
 
         result = controller.getResult ()
 
@@ -513,14 +481,13 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testFolded_03 (self):
-        dlg = self.plugin.InsertEdgeDialog(None)
-        controller = self.plugin.InsertEdgeControllerRight (dlg)
+        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.firstName = u"А"
-        dlg.secondName = u"Б"
-        dlg.folded = True
-        dlg.setStyleIndex (1)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.firstName = u"А"
+        self._dlg.secondName = u"Б"
+        self._dlg.folded = True
+        self._dlg.setStyleIndex (1)
 
         result = controller.getResult ()
 

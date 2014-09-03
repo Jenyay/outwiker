@@ -26,3 +26,8 @@ class TestedDialog (wx.Dialog):
             return self.__modalResult
 
         return super (TestedDialog, self).ShowModal()
+
+
+    def Destroy (self):
+        self.GetSizer().Clear (True)
+        super (TestedDialog, self).Destroy()

@@ -19,8 +19,9 @@ class BaseShapesDialog (TestedDialog):
         global _
         _ = get_()
 
-        super (BaseShapesDialog, self).__init__ (parent,
-                                                 style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.THICK_FRAME)
+        super (BaseShapesDialog, self).__init__ (
+            parent,
+            style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.THICK_FRAME)
 
 
     @abstractmethod

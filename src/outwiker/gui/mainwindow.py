@@ -548,6 +548,8 @@ class MainWindow(wx.Frame):
         self.SetMenuBar (None)
         self.mainMenu.Destroy()
 
+        self.DestroyChildren()
+
         super (MainWindow, self).Destroy()
 
 

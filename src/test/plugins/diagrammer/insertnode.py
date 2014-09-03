@@ -6,6 +6,7 @@ import wx
 
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.application import Application
+from test.guitests.basemainwnd import BaseMainWndTest
 
 
 class InsertNodeTest (unittest.TestCase):
@@ -16,515 +17,408 @@ class InsertNodeTest (unittest.TestCase):
         self.loader.load (dirlist)
         self.plugin = self.loader[u"Diagrammer"]
 
+        self._dlg = self.plugin.InsertNodeDialog(None)
+        self._controller = self.plugin.InsertNodeController (self._dlg)
+
 
     def tearDown(self):
+        self._dlg.Destroy()
+        self.loader.clear()
+
+
+    def testDestroy (self):
+        Application.wikiroot = None
         self.loader.clear()
 
 
     def testName_01 (self):
-        dlg = self.plugin.InsertNodeDialog(None)
-        controller = self.plugin.InsertNodeController (dlg)
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.name = u"Абырвалг"
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.name = u"Абырвалг"
 
-        result = controller.getResult ()
+        result = self._controller.getResult ()
 
         self.assertEqual (result, u"Абырвалг")
 
 
     def testName_02 (self):
-        dlg = self.plugin.InsertNodeDialog(None)
-        controller = self.plugin.InsertNodeController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.name = u"Абырвалг 111"
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.name = u"Абырвалг 111"
-
-        result = controller.getResult ()
+        result = self._controller.getResult ()
 
         self.assertEqual (result, u'"Абырвалг 111"')
 
 
     def testShapeSelection_01 (self):
-        dlg = self.plugin.InsertNodeDialog(None)
-        controller = self.plugin.InsertNodeController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.name = u"Абырвалг"
+        self._dlg.setShapeSelection (0)
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.name = u"Абырвалг"
-        dlg.setShapeSelection (0)
-
-        result = controller.getResult ()
+        result = self._controller.getResult ()
 
         self.assertEqual (result, u"Абырвалг")
 
 
     def testShapeSelection_02 (self):
-        dlg = self.plugin.InsertNodeDialog(None)
-        controller = self.plugin.InsertNodeController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.name = u"Абырвалг"
+        self._dlg.setShapeSelection (1)
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.name = u"Абырвалг"
-        dlg.setShapeSelection (1)
-
-        result = controller.getResult ()
+        result = self._controller.getResult ()
 
         self.assertEqual (result, u"Абырвалг [shape = actor];")
 
 
     def testShapeSelection_03 (self):
-        dlg = self.plugin.InsertNodeDialog(None)
-        controller = self.plugin.InsertNodeController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.name = u"Абырвалг"
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.name = u"Абырвалг"
+        self._dlg.setShapeSelection (10)
 
-        dlg.setShapeSelection (10)
-
-        result = controller.getResult ()
+        result = self._controller.getResult ()
 
         self.assertEqual (result, u"Абырвалг [shape = flowchart.database];")
 
 
     def testBorderStyle_01 (self):
-        dlg = self.plugin.InsertNodeDialog(None)
-        controller = self.plugin.InsertNodeController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.name = u"Абырвалг"
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.name = u"Абырвалг"
+        self._dlg.setStyleIndex (0)
 
-        dlg.setStyleIndex (0)
-
-        result = controller.getResult ()
+        result = self._controller.getResult ()
         self.assertEqual (result, u"Абырвалг")
 
 
     def testBorderStyle_02 (self):
-        dlg = self.plugin.InsertNodeDialog(None)
-        controller = self.plugin.InsertNodeController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.name = u"Абырвалг"
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.name = u"Абырвалг"
+        self._dlg.setStyleIndex (1)
 
-        dlg.setStyleIndex (1)
-
-        result = controller.getResult ()
+        result = self._controller.getResult ()
         self.assertEqual (result, u"Абырвалг [style = solid];")
 
 
     def testBorderStyle_03 (self):
-        dlg = self.plugin.InsertNodeDialog(None)
-        controller = self.plugin.InsertNodeController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.name = u"Абырвалг"
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.name = u"Абырвалг"
+        self._dlg.setStyleIndex (2)
 
-        dlg.setStyleIndex (2)
-
-        result = controller.getResult ()
+        result = self._controller.getResult ()
         self.assertEqual (result, u"Абырвалг [style = dotted];")
 
 
     def testBorderStyle_04 (self):
-        dlg = self.plugin.InsertNodeDialog(None)
-        controller = self.plugin.InsertNodeController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.name = u"Абырвалг"
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.name = u"Абырвалг"
+        self._dlg.style = u""
 
-        dlg.style = u""
-
-        result = controller.getResult ()
+        result = self._controller.getResult ()
         self.assertEqual (result, u"Абырвалг")
 
 
     def testBorderStyle_05 (self):
-        dlg = self.plugin.InsertNodeDialog(None)
-        controller = self.plugin.InsertNodeController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.name = u"Абырвалг"
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.name = u"Абырвалг"
+        self._dlg.style = u"solid"
 
-        dlg.style = u"solid"
-
-        result = controller.getResult ()
+        result = self._controller.getResult ()
         self.assertEqual (result, u"Абырвалг [style = solid];")
 
 
     def testBorderStyle_06 (self):
-        dlg = self.plugin.InsertNodeDialog(None)
-        controller = self.plugin.InsertNodeController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.name = u"Абырвалг"
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.name = u"Абырвалг"
+        self._dlg.style = u"Solid"
 
-        dlg.style = u"Solid"
-
-        result = controller.getResult ()
+        result = self._controller.getResult ()
         self.assertEqual (result, u"Абырвалг [style = solid];")
 
 
     def testBorderStyle_07 (self):
-        dlg = self.plugin.InsertNodeDialog(None)
-        controller = self.plugin.InsertNodeController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.name = u"Абырвалг"
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.name = u"Абырвалг"
+        self._dlg.style = u" Solid "
 
-        dlg.style = u" Solid "
-
-        result = controller.getResult ()
+        result = self._controller.getResult ()
         self.assertEqual (result, u"Абырвалг [style = solid];")
 
 
     def testBorderStyle_08 (self):
-        dlg = self.plugin.InsertNodeDialog(None)
-        controller = self.plugin.InsertNodeController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.name = u"Абырвалг"
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.name = u"Абырвалг"
+        self._dlg.style = u"1,2,3"
 
-        dlg.style = u"1,2,3"
-
-        result = controller.getResult ()
+        result = self._controller.getResult ()
         self.assertEqual (result, u'Абырвалг [style = "1,2,3"];')
 
 
     def testBorderStyle_09 (self):
-        dlg = self.plugin.InsertNodeDialog(None)
-        controller = self.plugin.InsertNodeController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.name = u"Абырвалг"
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.name = u"Абырвалг"
+        self._dlg.style = u"1, 2, 3"
 
-        dlg.style = u"1, 2, 3"
-
-        result = controller.getResult ()
+        result = self._controller.getResult ()
         self.assertEqual (result, u'Абырвалг [style = "1,2,3"];')
 
 
     def testBorderStyle_10 (self):
-        dlg = self.plugin.InsertNodeDialog(None)
-        controller = self.plugin.InsertNodeController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.name = u"Абырвалг"
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.name = u"Абырвалг"
+        self._dlg.style = u" 1, 2, 3 "
 
-        dlg.style = u" 1, 2, 3 "
-
-        result = controller.getResult ()
+        result = self._controller.getResult ()
         self.assertEqual (result, u'Абырвалг [style = "1,2,3"];')
 
 
     def testBorderStyle_11 (self):
-        dlg = self.plugin.InsertNodeDialog(None)
-        controller = self.plugin.InsertNodeController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.name = u"Абырвалг"
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.name = u"Абырвалг"
+        self._dlg.style = u'"1,2,3"'
 
-        dlg.style = u'"1,2,3"'
-
-        result = controller.getResult ()
+        result = self._controller.getResult ()
         self.assertEqual (result, u'Абырвалг [style = "1,2,3"];')
 
 
     def testBorderStyle_12 (self):
-        dlg = self.plugin.InsertNodeDialog(None)
-        controller = self.plugin.InsertNodeController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.name = u"Абырвалг"
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.name = u"Абырвалг"
+        self._dlg.setShapeSelection (1)
+        self._dlg.style = u"dotted"
 
-        dlg.setShapeSelection (1)
-        dlg.style = u"dotted"
-
-        result = controller.getResult ()
+        result = self._controller.getResult ()
         self.assertEqual (result, u"Абырвалг [shape = actor, style = dotted];")
 
 
     def testStacked_01 (self):
-        dlg = self.plugin.InsertNodeDialog(None)
-        controller = self.plugin.InsertNodeController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.name = u"Абырвалг"
+        self._dlg.stacked = True
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.name = u"Абырвалг"
-        dlg.stacked = True
-
-        result = controller.getResult ()
+        result = self._controller.getResult ()
         self.assertEqual (result, u"Абырвалг [stacked];")
 
 
     def testStacked_02 (self):
-        dlg = self.plugin.InsertNodeDialog(None)
-        controller = self.plugin.InsertNodeController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.name = u"Абырвалг"
+        self._dlg.stacked = True
+        self._dlg.setShapeSelection (1)
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.name = u"Абырвалг"
-        dlg.stacked = True
-        dlg.setShapeSelection (1)
-
-        result = controller.getResult ()
+        result = self._controller.getResult ()
         self.assertEqual (result, u"Абырвалг [shape = actor, stacked];")
 
 
     def testLabel_01 (self):
-        dlg = self.plugin.InsertNodeDialog(None)
-        controller = self.plugin.InsertNodeController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.name = u"Абырвалг"
+        self._dlg.label = u"Превед"
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.name = u"Абырвалг"
-        dlg.label = u"Превед"
-
-        result = controller.getResult ()
+        result = self._controller.getResult ()
         self.assertEqual (result, u'Абырвалг [label = "Превед"];')
 
 
     def testLabel_02 (self):
-        dlg = self.plugin.InsertNodeDialog(None)
-        controller = self.plugin.InsertNodeController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.name = u"Абырвалг"
+        self._dlg.setShapeSelection (1)
+        self._dlg.label = u"Превед"
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.name = u"Абырвалг"
-        dlg.setShapeSelection (1)
-        dlg.label = u"Превед"
-
-        result = controller.getResult ()
+        result = self._controller.getResult ()
         self.assertEqual (result, u'Абырвалг [shape = actor, label = "Превед"];')
 
 
     def testLabel_03 (self):
-        dlg = self.plugin.InsertNodeDialog(None)
-        controller = self.plugin.InsertNodeController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.name = u"Абырвалг"
+        self._dlg.label = u"Абырвалг"
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.name = u"Абырвалг"
-        dlg.label = u"Абырвалг"
-
-        result = controller.getResult ()
+        result = self._controller.getResult ()
         self.assertEqual (result, u'Абырвалг')
 
 
     def testColor_01 (self):
-        dlg = self.plugin.InsertNodeDialog(None)
-        controller = self.plugin.InsertNodeController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.name = u"Абырвалг"
+        self._dlg.isBackColorChanged = True
+        self._dlg.backColor = u"white"
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.name = u"Абырвалг"
-        dlg.isBackColorChanged = True
-        dlg.backColor = u"white"
-
-        result = controller.getResult ()
+        result = self._controller.getResult ()
         self.assertEqual (result, u'Абырвалг [color = "white"];')
 
 
     def testColor_02 (self):
-        dlg = self.plugin.InsertNodeDialog(None)
-        controller = self.plugin.InsertNodeController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.name = u"Абырвалг"
+        self._dlg.isBackColorChanged = True
+        self._dlg.backColor = u"#AAAAAA"
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.name = u"Абырвалг"
-        dlg.isBackColorChanged = True
-        dlg.backColor = u"#AAAAAA"
-
-        result = controller.getResult ()
+        result = self._controller.getResult ()
         self.assertEqual (result, u'Абырвалг [color = "#AAAAAA"];')
 
 
     def testColor_03 (self):
-        dlg = self.plugin.InsertNodeDialog(None)
-        controller = self.plugin.InsertNodeController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.name = u"Абырвалг"
+        self._dlg.isBackColorChanged = False
+        self._dlg.backColor = u"#AAAAAA"
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.name = u"Абырвалг"
-        dlg.isBackColorChanged = False
-        dlg.backColor = u"#AAAAAA"
-
-        result = controller.getResult ()
+        result = self._controller.getResult ()
         self.assertEqual (result, u'Абырвалг')
 
 
     def testColor_04 (self):
-        dlg = self.plugin.InsertNodeDialog(None)
-        controller = self.plugin.InsertNodeController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.name = u"Абырвалг"
+        self._dlg.setShapeSelection (1)
+        self._dlg.isBackColorChanged = True
+        self._dlg.backColor = u"#AAAAAA"
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.name = u"Абырвалг"
-        dlg.setShapeSelection (1)
-        dlg.isBackColorChanged = True
-        dlg.backColor = u"#AAAAAA"
-
-        result = controller.getResult ()
+        result = self._controller.getResult ()
         self.assertEqual (result, u'Абырвалг [shape = actor, color = "#AAAAAA"];')
 
 
     def testTextColor_01 (self):
-        dlg = self.plugin.InsertNodeDialog(None)
-        controller = self.plugin.InsertNodeController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.name = u"Абырвалг"
+        self._dlg.isTextColorChanged = True
+        self._dlg.textColor = u"black"
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.name = u"Абырвалг"
-        dlg.isTextColorChanged = True
-        dlg.textColor = u"black"
-
-        result = controller.getResult ()
+        result = self._controller.getResult ()
         self.assertEqual (result, u'Абырвалг [textcolor = "black"];')
 
 
     def testTextColor_02 (self):
-        dlg = self.plugin.InsertNodeDialog(None)
-        controller = self.plugin.InsertNodeController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.name = u"Абырвалг"
+        self._dlg.isTextColorChanged = True
+        self._dlg.textColor = u"#AAAAAA"
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.name = u"Абырвалг"
-        dlg.isTextColorChanged = True
-        dlg.textColor = u"#AAAAAA"
-
-        result = controller.getResult ()
+        result = self._controller.getResult ()
         self.assertEqual (result, u'Абырвалг [textcolor = "#AAAAAA"];')
 
 
     def testTextColor_03 (self):
-        dlg = self.plugin.InsertNodeDialog(None)
-        controller = self.plugin.InsertNodeController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.name = u"Абырвалг"
+        self._dlg.isTextColorChanged = False
+        self._dlg.textColor = u"#AAAAAA"
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.name = u"Абырвалг"
-        dlg.isTextColorChanged = False
-        dlg.textColor = u"#AAAAAA"
-
-        result = controller.getResult ()
+        result = self._controller.getResult ()
         self.assertEqual (result, u'Абырвалг')
 
 
     def testTextColor_04 (self):
-        dlg = self.plugin.InsertNodeDialog(None)
-        controller = self.plugin.InsertNodeController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.name = u"Абырвалг"
+        self._dlg.setShapeSelection (1)
+        self._dlg.isTextColorChanged = True
+        self._dlg.textColor = u"#AAAAAA"
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.name = u"Абырвалг"
-        dlg.setShapeSelection (1)
-        dlg.isTextColorChanged = True
-        dlg.textColor = u"#AAAAAA"
-
-        result = controller.getResult ()
+        result = self._controller.getResult ()
         self.assertEqual (result, u'Абырвалг [shape = actor, textcolor = "#AAAAAA"];')
 
 
     def testFontSize_01 (self):
-        dlg = self.plugin.InsertNodeDialog(None)
-        controller = self.plugin.InsertNodeController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.name = u"Абырвалг"
+        self._dlg.isFontSizeChanged = True
+        self._dlg.fontSize = 20
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.name = u"Абырвалг"
-        dlg.isFontSizeChanged = True
-        dlg.fontSize = 20
-
-        result = controller.getResult ()
+        result = self._controller.getResult ()
         self.assertEqual (result, u'Абырвалг [fontsize = 20];')
 
 
     def testFontSize_02 (self):
-        dlg = self.plugin.InsertNodeDialog(None)
-        controller = self.plugin.InsertNodeController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.name = u"Абырвалг"
+        self._dlg.isFontSizeChanged = False
+        self._dlg.fontSize = 20
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.name = u"Абырвалг"
-        dlg.isFontSizeChanged = False
-        dlg.fontSize = 20
-
-        result = controller.getResult ()
+        result = self._controller.getResult ()
         self.assertEqual (result, u'Абырвалг')
 
 
     def testFontSize_03 (self):
-        dlg = self.plugin.InsertNodeDialog(None)
-        controller = self.plugin.InsertNodeController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.name = u"Абырвалг"
+        self._dlg.setShapeSelection (1)
+        self._dlg.isFontSizeChanged = True
+        self._dlg.fontSize = 20
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.name = u"Абырвалг"
-        dlg.setShapeSelection (1)
-        dlg.isFontSizeChanged = True
-        dlg.fontSize = 20
-
-        result = controller.getResult ()
+        result = self._controller.getResult ()
         self.assertEqual (result, u'Абырвалг [shape = actor, fontsize = 20];')
 
 
     def testWidth_01 (self):
-        dlg = self.plugin.InsertNodeDialog(None)
-        controller = self.plugin.InsertNodeController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.name = u"Абырвалг"
+        self._dlg.isWidthChanged = True
+        self._dlg.width = 200
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.name = u"Абырвалг"
-        dlg.isWidthChanged = True
-        dlg.width = 200
-
-        result = controller.getResult ()
+        result = self._controller.getResult ()
         self.assertEqual (result, u'Абырвалг [width = 200];')
 
 
     def testWidth_02 (self):
-        dlg = self.plugin.InsertNodeDialog(None)
-        controller = self.plugin.InsertNodeController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.name = u"Абырвалг"
+        self._dlg.isWidthChanged = False
+        self._dlg.width = 200
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.name = u"Абырвалг"
-        dlg.isWidthChanged = False
-        dlg.width = 200
-
-        result = controller.getResult ()
+        result = self._controller.getResult ()
         self.assertEqual (result, u'Абырвалг')
 
 
     def testWidth_03 (self):
-        dlg = self.plugin.InsertNodeDialog(None)
-        controller = self.plugin.InsertNodeController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.name = u"Абырвалг"
+        self._dlg.setShapeSelection (1)
+        self._dlg.isWidthChanged = True
+        self._dlg.width = 200
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.name = u"Абырвалг"
-        dlg.setShapeSelection (1)
-        dlg.isWidthChanged = True
-        dlg.width = 200
-
-        result = controller.getResult ()
+        result = self._controller.getResult ()
         self.assertEqual (result, u'Абырвалг [shape = actor, width = 200];')
 
 
     def testHeight_01 (self):
-        dlg = self.plugin.InsertNodeDialog(None)
-        controller = self.plugin.InsertNodeController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.name = u"Абырвалг"
+        self._dlg.isHeightChanged = True
+        self._dlg.height = 200
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.name = u"Абырвалг"
-        dlg.isHeightChanged = True
-        dlg.height = 200
-
-        result = controller.getResult ()
+        result = self._controller.getResult ()
         self.assertEqual (result, u'Абырвалг [height = 200];')
 
 
     def testHeight_02 (self):
-        dlg = self.plugin.InsertNodeDialog(None)
-        controller = self.plugin.InsertNodeController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.name = u"Абырвалг"
+        self._dlg.isHeightChanged = False
+        self._dlg.height = 200
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.name = u"Абырвалг"
-        dlg.isHeightChanged = False
-        dlg.height = 200
-
-        result = controller.getResult ()
+        result = self._controller.getResult ()
         self.assertEqual (result, u'Абырвалг')
 
 
     def testHeight_03 (self):
-        dlg = self.plugin.InsertNodeDialog(None)
-        controller = self.plugin.InsertNodeController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.name = u"Абырвалг"
+        self._dlg.setShapeSelection (1)
+        self._dlg.isHeightChanged = True
+        self._dlg.height = 200
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.name = u"Абырвалг"
-        dlg.setShapeSelection (1)
-        dlg.isHeightChanged = True
-        dlg.height = 200
-
-        result = controller.getResult ()
+        result = self._controller.getResult ()
         self.assertEqual (result, u'Абырвалг [shape = actor, height = 200];')

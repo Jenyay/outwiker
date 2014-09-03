@@ -16,31 +16,29 @@ class InsertDiagramTest (unittest.TestCase):
         self.loader.load (dirlist)
         self.plugin = self.loader[u"Diagrammer"]
 
+        self._dlg = self.plugin.InsertDiagramDialog(None)
+        self._controller = self.plugin.InsertDiagramController (self._dlg)
+
 
     def tearDown(self):
+        self._dlg.Destroy()
         self.loader.clear()
 
 
     def testDefault (self):
-        dlg = self.plugin.InsertDiagramDialog(None)
-        controller = self.plugin.InsertDiagramController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
 
-        dlg.SetModalResult (wx.ID_OK)
-
-        begin, end = controller.getResult ()
+        begin, end = self._controller.getResult ()
 
         self.assertEqual (begin, u"(:diagram:)\n")
         self.assertEqual (end, u"\n(:diagramend:)")
 
 
     def testShape_01 (self):
-        dlg = self.plugin.InsertDiagramDialog(None)
-        controller = self.plugin.InsertDiagramController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.setShapeSelection (0)
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.setShapeSelection (0)
-
-        begin, end = controller.getResult ()
+        begin, end = self._controller.getResult ()
 
         valid_begin = u'''(:diagram:)
 default_shape = actor;
@@ -51,13 +49,10 @@ default_shape = actor;
 
 
     def testShape_02 (self):
-        dlg = self.plugin.InsertDiagramDialog(None)
-        controller = self.plugin.InsertDiagramController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.setShapeSelection (1)
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.setShapeSelection (1)
-
-        begin, end = controller.getResult ()
+        begin, end = self._controller.getResult ()
 
         valid_begin = u'''(:diagram:)
 default_shape = beginpoint;
@@ -68,29 +63,23 @@ default_shape = beginpoint;
 
 
     def testShape_03 (self):
-        dlg = self.plugin.InsertDiagramDialog(None)
-        controller = self.plugin.InsertDiagramController (dlg)
-
-        dlg.SetModalResult (wx.ID_OK)
+        self._dlg.SetModalResult (wx.ID_OK)
 
         # Значение по умолчанию
-        dlg.setShapeSelection (2)
+        self._dlg.setShapeSelection (2)
 
-        begin, end = controller.getResult ()
+        begin, end = self._controller.getResult ()
 
         self.assertEqual (begin, u"(:diagram:)\n")
         self.assertEqual (end, u"\n(:diagramend:)")
 
 
     def testNodeColor_01 (self):
-        dlg = self.plugin.InsertDiagramDialog(None)
-        controller = self.plugin.InsertDiagramController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.isBackColorChanged = True
+        self._dlg.backColor = u"white"
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.isBackColorChanged = True
-        dlg.backColor = u"white"
-
-        begin, end = controller.getResult ()
+        begin, end = self._controller.getResult ()
 
         valid_begin = u'''(:diagram:)
 default_node_color = "white";
@@ -101,28 +90,22 @@ default_node_color = "white";
 
 
     def testNodeColor_02 (self):
-        dlg = self.plugin.InsertDiagramDialog(None)
-        controller = self.plugin.InsertDiagramController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.isBackColorChanged = False
+        self._dlg.backColor = u"black"
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.isBackColorChanged = False
-        dlg.backColor = u"black"
-
-        begin, end = controller.getResult ()
+        begin, end = self._controller.getResult ()
 
         self.assertEqual (begin, u'(:diagram:)\n')
         self.assertEqual (end, u'\n(:diagramend:)')
 
 
     def testNodeColor_03 (self):
-        dlg = self.plugin.InsertDiagramDialog(None)
-        controller = self.plugin.InsertDiagramController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.isBackColorChanged = True
+        self._dlg.backColor = u"#AAAAAA"
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.isBackColorChanged = True
-        dlg.backColor = u"#AAAAAA"
-
-        begin, end = controller.getResult ()
+        begin, end = self._controller.getResult ()
 
         valid_begin = u'''(:diagram:)
 default_node_color = "#AAAAAA";
@@ -133,15 +116,12 @@ default_node_color = "#AAAAAA";
 
 
     def testNodeColor_04 (self):
-        dlg = self.plugin.InsertDiagramDialog(None)
-        controller = self.plugin.InsertDiagramController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.isBackColorChanged = True
+        self._dlg.backColor = u"#AAAAAA"
+        self._dlg.setShapeSelection (0)
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.isBackColorChanged = True
-        dlg.backColor = u"#AAAAAA"
-        dlg.setShapeSelection (0)
-
-        begin, end = controller.getResult ()
+        begin, end = self._controller.getResult ()
 
         valid_begin = u'''(:diagram:)
 default_shape = actor;
@@ -153,14 +133,11 @@ default_node_color = "#AAAAAA";
 
 
     def testTextColor_01 (self):
-        dlg = self.plugin.InsertDiagramDialog(None)
-        controller = self.plugin.InsertDiagramController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.isTextColorChanged = True
+        self._dlg.textColor = u"white"
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.isTextColorChanged = True
-        dlg.textColor = u"white"
-
-        begin, end = controller.getResult ()
+        begin, end = self._controller.getResult ()
 
         valid_begin = u'''(:diagram:)
 default_textcolor = "white";
@@ -171,28 +148,22 @@ default_textcolor = "white";
 
 
     def testTextColor_02 (self):
-        dlg = self.plugin.InsertDiagramDialog(None)
-        controller = self.plugin.InsertDiagramController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.isTextColorChanged = False
+        self._dlg.textColor = u"black"
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.isTextColorChanged = False
-        dlg.textColor = u"black"
-
-        begin, end = controller.getResult ()
+        begin, end = self._controller.getResult ()
 
         self.assertEqual (begin, u'(:diagram:)\n')
         self.assertEqual (end, u'\n(:diagramend:)')
 
 
     def testTextColor_03 (self):
-        dlg = self.plugin.InsertDiagramDialog(None)
-        controller = self.plugin.InsertDiagramController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.isTextColorChanged = True
+        self._dlg.textColor = u"#AAAAAA"
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.isTextColorChanged = True
-        dlg.textColor = u"#AAAAAA"
-
-        begin, end = controller.getResult ()
+        begin, end = self._controller.getResult ()
 
         valid_begin = u'''(:diagram:)
 default_textcolor = "#AAAAAA";
@@ -203,15 +174,12 @@ default_textcolor = "#AAAAAA";
 
 
     def testTextColor_04 (self):
-        dlg = self.plugin.InsertDiagramDialog(None)
-        controller = self.plugin.InsertDiagramController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.isTextColorChanged = True
+        self._dlg.textColor = u"#AAAAAA"
+        self._dlg.setShapeSelection (0)
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.isTextColorChanged = True
-        dlg.textColor = u"#AAAAAA"
-        dlg.setShapeSelection (0)
-
-        begin, end = controller.getResult ()
+        begin, end = self._controller.getResult ()
 
         valid_begin = u'''(:diagram:)
 default_shape = actor;
@@ -223,14 +191,11 @@ default_textcolor = "#AAAAAA";
 
 
     def testFontSize_01 (self):
-        dlg = self.plugin.InsertDiagramDialog(None)
-        controller = self.plugin.InsertDiagramController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.isFontSizeChanged = True
+        self._dlg.fontSize = 20
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.isFontSizeChanged = True
-        dlg.fontSize = 20
-
-        begin, end = controller.getResult ()
+        begin, end = self._controller.getResult ()
 
         valid_begin = u'''(:diagram:)
 default_fontsize = 20;
@@ -241,14 +206,11 @@ default_fontsize = 20;
 
 
     def testFontSize_02 (self):
-        dlg = self.plugin.InsertDiagramDialog(None)
-        controller = self.plugin.InsertDiagramController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.isFontSizeChanged = False
+        self._dlg.fontSize = 20
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.isFontSizeChanged = False
-        dlg.fontSize = 20
-
-        begin, end = controller.getResult ()
+        begin, end = self._controller.getResult ()
 
         valid_begin = u'''(:diagram:)
 '''
@@ -258,15 +220,12 @@ default_fontsize = 20;
 
 
     def testFontSize_03 (self):
-        dlg = self.plugin.InsertDiagramDialog(None)
-        controller = self.plugin.InsertDiagramController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.setShapeSelection (0)
+        self._dlg.isFontSizeChanged = True
+        self._dlg.fontSize = 20
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.setShapeSelection (0)
-        dlg.isFontSizeChanged = True
-        dlg.fontSize = 20
-
-        begin, end = controller.getResult ()
+        begin, end = self._controller.getResult ()
 
         valid_begin = u'''(:diagram:)
 default_shape = actor;
@@ -278,14 +237,11 @@ default_fontsize = 20;
 
 
     def testWidth_01 (self):
-        dlg = self.plugin.InsertDiagramDialog(None)
-        controller = self.plugin.InsertDiagramController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.isWidthChanged = True
+        self._dlg.width = 200
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.isWidthChanged = True
-        dlg.width = 200
-
-        begin, end = controller.getResult ()
+        begin, end = self._controller.getResult ()
 
         valid_begin = u'''(:diagram:)
 node_width = 200;
@@ -296,14 +252,11 @@ node_width = 200;
 
 
     def testWidth_02 (self):
-        dlg = self.plugin.InsertDiagramDialog(None)
-        controller = self.plugin.InsertDiagramController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.isWidthChanged = False
+        self._dlg.width = 200
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.isWidthChanged = False
-        dlg.width = 200
-
-        begin, end = controller.getResult ()
+        begin, end = self._controller.getResult ()
 
         valid_begin = u'''(:diagram:)
 '''
@@ -313,15 +266,12 @@ node_width = 200;
 
 
     def testWidth_03 (self):
-        dlg = self.plugin.InsertDiagramDialog(None)
-        controller = self.plugin.InsertDiagramController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.setShapeSelection (0)
+        self._dlg.isWidthChanged = True
+        self._dlg.width = 200
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.setShapeSelection (0)
-        dlg.isWidthChanged = True
-        dlg.width = 200
-
-        begin, end = controller.getResult ()
+        begin, end = self._controller.getResult ()
 
         valid_begin = u'''(:diagram:)
 default_shape = actor;
@@ -333,14 +283,11 @@ node_width = 200;
 
 
     def testHeight_01 (self):
-        dlg = self.plugin.InsertDiagramDialog(None)
-        controller = self.plugin.InsertDiagramController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.isHeightChanged = True
+        self._dlg.height = 200
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.isHeightChanged = True
-        dlg.height = 200
-
-        begin, end = controller.getResult ()
+        begin, end = self._controller.getResult ()
 
         valid_begin = u'''(:diagram:)
 node_height = 200;
@@ -351,14 +298,11 @@ node_height = 200;
 
 
     def testHeight_02 (self):
-        dlg = self.plugin.InsertDiagramDialog(None)
-        controller = self.plugin.InsertDiagramController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.isHeightChanged = False
+        self._dlg.height = 200
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.isHeightChanged = False
-        dlg.height = 200
-
-        begin, end = controller.getResult ()
+        begin, end = self._controller.getResult ()
 
         valid_begin = u'''(:diagram:)
 '''
@@ -368,15 +312,12 @@ node_height = 200;
 
 
     def testHeight_03 (self):
-        dlg = self.plugin.InsertDiagramDialog(None)
-        controller = self.plugin.InsertDiagramController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.setShapeSelection (0)
+        self._dlg.isHeightChanged = True
+        self._dlg.height = 200
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.setShapeSelection (0)
-        dlg.isHeightChanged = True
-        dlg.height = 200
-
-        begin, end = controller.getResult ()
+        begin, end = self._controller.getResult ()
 
         valid_begin = u'''(:diagram:)
 default_shape = actor;
@@ -388,13 +329,11 @@ node_height = 200;
 
 
     def testOrientation_01 (self):
-        dlg = self.plugin.InsertDiagramDialog(None)
-        controller = self.plugin.InsertDiagramController (dlg)
-        dlg.orientationIndex = 0
+        self._dlg.orientationIndex = 0
 
-        dlg.SetModalResult (wx.ID_OK)
+        self._dlg.SetModalResult (wx.ID_OK)
 
-        begin, end = controller.getResult ()
+        begin, end = self._controller.getResult ()
 
         valid_begin = u'''(:diagram:)
 '''
@@ -404,13 +343,11 @@ node_height = 200;
 
 
     def testOrientation_02 (self):
-        dlg = self.plugin.InsertDiagramDialog(None)
-        controller = self.plugin.InsertDiagramController (dlg)
-        dlg.orientationIndex = 1
+        self._dlg.orientationIndex = 1
 
-        dlg.SetModalResult (wx.ID_OK)
+        self._dlg.SetModalResult (wx.ID_OK)
 
-        begin, end = controller.getResult ()
+        begin, end = self._controller.getResult ()
 
         valid_begin = u'''(:diagram:)
 orientation = portrait;
@@ -421,14 +358,12 @@ orientation = portrait;
 
 
     def testOrientation_03 (self):
-        dlg = self.plugin.InsertDiagramDialog(None)
-        controller = self.plugin.InsertDiagramController (dlg)
-        dlg.orientationIndex = 1
-        dlg.setShapeSelection (0)
+        self._dlg.orientationIndex = 1
+        self._dlg.setShapeSelection (0)
 
-        dlg.SetModalResult (wx.ID_OK)
+        self._dlg.SetModalResult (wx.ID_OK)
 
-        begin, end = controller.getResult ()
+        begin, end = self._controller.getResult ()
 
         valid_begin = u'''(:diagram:)
 orientation = portrait;
@@ -440,14 +375,11 @@ default_shape = actor;
 
 
     def testSpanWidth_01 (self):
-        dlg = self.plugin.InsertDiagramDialog(None)
-        controller = self.plugin.InsertDiagramController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.isSpanWidthChanged = True
+        self._dlg.spanWidth = 200
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.isSpanWidthChanged = True
-        dlg.spanWidth = 200
-
-        begin, end = controller.getResult ()
+        begin, end = self._controller.getResult ()
 
         valid_begin = u'''(:diagram:)
 span_width = 200;
@@ -458,14 +390,11 @@ span_width = 200;
 
 
     def testSpanWidth_02 (self):
-        dlg = self.plugin.InsertDiagramDialog(None)
-        controller = self.plugin.InsertDiagramController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.isSpanWidthChanged = False
+        self._dlg.spanWidth = 200
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.isSpanWidthChanged = False
-        dlg.spanWidth = 200
-
-        begin, end = controller.getResult ()
+        begin, end = self._controller.getResult ()
 
         valid_begin = u'''(:diagram:)
 '''
@@ -475,15 +404,12 @@ span_width = 200;
 
 
     def testSpanWidth_03 (self):
-        dlg = self.plugin.InsertDiagramDialog(None)
-        controller = self.plugin.InsertDiagramController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.setShapeSelection (0)
+        self._dlg.isSpanWidthChanged = True
+        self._dlg.spanWidth = 200
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.setShapeSelection (0)
-        dlg.isSpanWidthChanged = True
-        dlg.spanWidth = 200
-
-        begin, end = controller.getResult ()
+        begin, end = self._controller.getResult ()
 
         valid_begin = u'''(:diagram:)
 default_shape = actor;
@@ -495,14 +421,11 @@ span_width = 200;
 
 
     def testSpanHeight_01 (self):
-        dlg = self.plugin.InsertDiagramDialog(None)
-        controller = self.plugin.InsertDiagramController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.isSpanHeightChanged = True
+        self._dlg.spanHeight = 200
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.isSpanHeightChanged = True
-        dlg.spanHeight = 200
-
-        begin, end = controller.getResult ()
+        begin, end = self._controller.getResult ()
 
         valid_begin = u'''(:diagram:)
 span_height = 200;
@@ -513,14 +436,11 @@ span_height = 200;
 
 
     def testSpanHeight_02 (self):
-        dlg = self.plugin.InsertDiagramDialog(None)
-        controller = self.plugin.InsertDiagramController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.isSpanHeightChanged = False
+        self._dlg.spanHeight = 200
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.isSpanHeightChanged = False
-        dlg.spanHeight = 200
-
-        begin, end = controller.getResult ()
+        begin, end = self._controller.getResult ()
 
         valid_begin = u'''(:diagram:)
 '''
@@ -530,15 +450,12 @@ span_height = 200;
 
 
     def testSpanHeight_03 (self):
-        dlg = self.plugin.InsertDiagramDialog(None)
-        controller = self.plugin.InsertDiagramController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.setShapeSelection (0)
+        self._dlg.isSpanHeightChanged = True
+        self._dlg.spanHeight = 200
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.setShapeSelection (0)
-        dlg.isSpanHeightChanged = True
-        dlg.spanHeight = 200
-
-        begin, end = controller.getResult ()
+        begin, end = self._controller.getResult ()
 
         valid_begin = u'''(:diagram:)
 default_shape = actor;

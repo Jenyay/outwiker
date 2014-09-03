@@ -16,18 +16,19 @@ class InsertGroupTest (unittest.TestCase):
         self.loader.load (dirlist)
         self.plugin = self.loader[u"Diagrammer"]
 
+        self._dlg = self.plugin.InsertGroupDialog(None)
+        self._controller = self.plugin.InsertGroupController (self._dlg)
+
 
     def tearDown(self):
         self.loader.clear()
+        self._dlg.Destroy()
 
 
     def testDefault (self):
-        dlg = self.plugin.InsertGroupDialog(None)
-        controller = self.plugin.InsertGroupController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
 
-        dlg.SetModalResult (wx.ID_OK)
-
-        begin, end = controller.getResult ()
+        begin, end = self._controller.getResult ()
 
         valid_begin = u'''group {
     '''
@@ -37,13 +38,10 @@ class InsertGroupTest (unittest.TestCase):
 
 
     def testName_01 (self):
-        dlg = self.plugin.InsertGroupDialog(None)
-        controller = self.plugin.InsertGroupController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.name = u"Абырвалг"
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.name = u"Абырвалг"
-
-        begin, end = controller.getResult ()
+        begin, end = self._controller.getResult ()
 
         valid_begin = u'''group Абырвалг {
     '''
@@ -53,14 +51,11 @@ class InsertGroupTest (unittest.TestCase):
 
 
     def testBackColor_01 (self):
-        dlg = self.plugin.InsertGroupDialog(None)
-        controller = self.plugin.InsertGroupController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.isBackColorChanged = True
+        self._dlg.backColor = u"blue"
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.isBackColorChanged = True
-        dlg.backColor = u"blue"
-
-        begin, end = controller.getResult ()
+        begin, end = self._controller.getResult ()
 
         valid_begin = u'''group {
     color = "blue";
@@ -72,14 +67,11 @@ class InsertGroupTest (unittest.TestCase):
 
 
     def testBackColor_02 (self):
-        dlg = self.plugin.InsertGroupDialog(None)
-        controller = self.plugin.InsertGroupController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.isBackColorChanged = False
+        self._dlg.backColor = u"blue"
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.isBackColorChanged = False
-        dlg.backColor = u"blue"
-
-        begin, end = controller.getResult ()
+        begin, end = self._controller.getResult ()
 
         valid_begin = u'''group {
     '''
@@ -89,14 +81,11 @@ class InsertGroupTest (unittest.TestCase):
 
 
     def testBackColor_03 (self):
-        dlg = self.plugin.InsertGroupDialog(None)
-        controller = self.plugin.InsertGroupController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.isBackColorChanged = True
+        self._dlg.backColor = u"#AAAAAA"
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.isBackColorChanged = True
-        dlg.backColor = u"#AAAAAA"
-
-        begin, end = controller.getResult ()
+        begin, end = self._controller.getResult ()
 
         valid_begin = u'''group {
     color = "#AAAAAA";
@@ -108,14 +97,11 @@ class InsertGroupTest (unittest.TestCase):
 
 
     def testOrientation_01 (self):
-        dlg = self.plugin.InsertGroupDialog(None)
-        controller = self.plugin.InsertGroupController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.isOrientationChanged = True
+        self._dlg.orientationIndex = 0
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.isOrientationChanged = True
-        dlg.orientationIndex = 0
-
-        begin, end = controller.getResult ()
+        begin, end = self._controller.getResult ()
 
         valid_begin = u'''group {
     orientation = landscape;
@@ -126,14 +112,11 @@ class InsertGroupTest (unittest.TestCase):
 
 
     def testOrientation_02 (self):
-        dlg = self.plugin.InsertGroupDialog(None)
-        controller = self.plugin.InsertGroupController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.isOrientationChanged = True
+        self._dlg.orientationIndex = 1
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.isOrientationChanged = True
-        dlg.orientationIndex = 1
-
-        begin, end = controller.getResult ()
+        begin, end = self._controller.getResult ()
 
         valid_begin = u'''group {
     orientation = portrait;
@@ -144,14 +127,11 @@ class InsertGroupTest (unittest.TestCase):
 
 
     def testOrientation_03 (self):
-        dlg = self.plugin.InsertGroupDialog(None)
-        controller = self.plugin.InsertGroupController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.isOrientationChanged = False
+        self._dlg.orientationIndex = 1
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.isOrientationChanged = False
-        dlg.orientationIndex = 1
-
-        begin, end = controller.getResult ()
+        begin, end = self._controller.getResult ()
 
         valid_begin = u'''group {
     '''
@@ -160,16 +140,13 @@ class InsertGroupTest (unittest.TestCase):
 
 
     def testOrientation_04 (self):
-        dlg = self.plugin.InsertGroupDialog(None)
-        controller = self.plugin.InsertGroupController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.isOrientationChanged = True
+        self._dlg.orientationIndex = 1
+        self._dlg.isBackColorChanged = True
+        self._dlg.backColor = u"blue"
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.isOrientationChanged = True
-        dlg.orientationIndex = 1
-        dlg.isBackColorChanged = True
-        dlg.backColor = u"blue"
-
-        begin, end = controller.getResult ()
+        begin, end = self._controller.getResult ()
 
         valid_begin = u'''group {
     color = "blue";
@@ -181,13 +158,10 @@ class InsertGroupTest (unittest.TestCase):
 
 
     def testLabel_01 (self):
-        dlg = self.plugin.InsertGroupDialog(None)
-        controller = self.plugin.InsertGroupController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.label = u"Абырвалг"
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.label = u"Абырвалг"
-
-        begin, end = controller.getResult ()
+        begin, end = self._controller.getResult ()
 
         valid_begin = u'''group {
     label = "Абырвалг";
@@ -198,13 +172,10 @@ class InsertGroupTest (unittest.TestCase):
 
 
     def testLabel_02 (self):
-        dlg = self.plugin.InsertGroupDialog(None)
-        controller = self.plugin.InsertGroupController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.label = u""
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.label = u""
-
-        begin, end = controller.getResult ()
+        begin, end = self._controller.getResult ()
 
         valid_begin = u'''group {
     '''
@@ -213,14 +184,11 @@ class InsertGroupTest (unittest.TestCase):
 
 
     def testTextColor_01 (self):
-        dlg = self.plugin.InsertGroupDialog(None)
-        controller = self.plugin.InsertGroupController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.isTextColorChanged = True
+        self._dlg.textColor = u"blue"
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.isTextColorChanged = True
-        dlg.textColor = u"blue"
-
-        begin, end = controller.getResult ()
+        begin, end = self._controller.getResult ()
 
         valid_begin = u'''group {
     textcolor = "blue";
@@ -232,14 +200,11 @@ class InsertGroupTest (unittest.TestCase):
 
 
     def testTextColor_02 (self):
-        dlg = self.plugin.InsertGroupDialog(None)
-        controller = self.plugin.InsertGroupController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.isTextColorChanged = False
+        self._dlg.textColor = u"blue"
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.isTextColorChanged = False
-        dlg.textColor = u"blue"
-
-        begin, end = controller.getResult ()
+        begin, end = self._controller.getResult ()
 
         valid_begin = u'''group {
     '''
@@ -249,14 +214,11 @@ class InsertGroupTest (unittest.TestCase):
 
 
     def testTextColor_03 (self):
-        dlg = self.plugin.InsertGroupDialog(None)
-        controller = self.plugin.InsertGroupController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.isTextColorChanged = True
+        self._dlg.textColor = u"#AAAAAA"
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.isTextColorChanged = True
-        dlg.textColor = u"#AAAAAA"
-
-        begin, end = controller.getResult ()
+        begin, end = self._controller.getResult ()
 
         valid_begin = u'''group {
     textcolor = "#AAAAAA";
@@ -268,14 +230,11 @@ class InsertGroupTest (unittest.TestCase):
 
 
     def testBorderShape_01 (self):
-        dlg = self.plugin.InsertGroupDialog(None)
-        controller = self.plugin.InsertGroupController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.isBorderShapeChanged = True
+        self._dlg.borderShapeIndex = 0
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.isBorderShapeChanged = True
-        dlg.borderShapeIndex = 0
-
-        begin, end = controller.getResult ()
+        begin, end = self._controller.getResult ()
 
         valid_begin = u'''group {
     shape = box;
@@ -286,14 +245,11 @@ class InsertGroupTest (unittest.TestCase):
 
 
     def testBorderShape_02 (self):
-        dlg = self.plugin.InsertGroupDialog(None)
-        controller = self.plugin.InsertGroupController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.isBorderShapeChanged = True
+        self._dlg.borderShapeIndex = 1
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.isBorderShapeChanged = True
-        dlg.borderShapeIndex = 1
-
-        begin, end = controller.getResult ()
+        begin, end = self._controller.getResult ()
 
         valid_begin = u'''group {
     shape = line;
@@ -304,14 +260,11 @@ class InsertGroupTest (unittest.TestCase):
 
 
     def testBorderShape_03 (self):
-        dlg = self.plugin.InsertGroupDialog(None)
-        controller = self.plugin.InsertGroupController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.isBorderShapeChanged = False
+        self._dlg.borderShapeIndex = 1
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.isBorderShapeChanged = False
-        dlg.borderShapeIndex = 1
-
-        begin, end = controller.getResult ()
+        begin, end = self._controller.getResult ()
 
         valid_begin = u'''group {
     '''
@@ -320,16 +273,13 @@ class InsertGroupTest (unittest.TestCase):
 
 
     def testBorderStyle_01 (self):
-        dlg = self.plugin.InsertGroupDialog(None)
-        controller = self.plugin.InsertGroupController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.isBorderShapeChanged = True
+        self._dlg.borderShapeIndex = 1
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.isBorderShapeChanged = True
-        dlg.borderShapeIndex = 1
+        self._dlg.setStyleIndex (1)
 
-        dlg.setStyleIndex (1)
-
-        begin, end = controller.getResult ()
+        begin, end = self._controller.getResult ()
 
         valid_begin = u'''group {
     shape = line;
@@ -341,16 +291,13 @@ class InsertGroupTest (unittest.TestCase):
 
 
     def testBorderStyle_02 (self):
-        dlg = self.plugin.InsertGroupDialog(None)
-        controller = self.plugin.InsertGroupController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.isBorderShapeChanged = False
+        self._dlg.borderShapeIndex = 1
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.isBorderShapeChanged = False
-        dlg.borderShapeIndex = 1
+        self._dlg.setStyleIndex (1)
 
-        dlg.setStyleIndex (1)
-
-        begin, end = controller.getResult ()
+        begin, end = self._controller.getResult ()
 
         valid_begin = u'''group {
     '''
@@ -359,16 +306,13 @@ class InsertGroupTest (unittest.TestCase):
 
 
     def testBorderStyle_03 (self):
-        dlg = self.plugin.InsertGroupDialog(None)
-        controller = self.plugin.InsertGroupController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.isBorderShapeChanged = True
+        self._dlg.borderShapeIndex = 0
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.isBorderShapeChanged = True
-        dlg.borderShapeIndex = 0
+        self._dlg.setStyleIndex (1)
 
-        dlg.setStyleIndex (1)
-
-        begin, end = controller.getResult ()
+        begin, end = self._controller.getResult ()
 
         valid_begin = u'''group {
     shape = box;
@@ -379,16 +323,13 @@ class InsertGroupTest (unittest.TestCase):
 
 
     def testBorderStyle_04 (self):
-        dlg = self.plugin.InsertGroupDialog(None)
-        controller = self.plugin.InsertGroupController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.isBorderShapeChanged = True
+        self._dlg.borderShapeIndex = 1
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.isBorderShapeChanged = True
-        dlg.borderShapeIndex = 1
+        self._dlg.setStyleIndex (2)
 
-        dlg.setStyleIndex (2)
-
-        begin, end = controller.getResult ()
+        begin, end = self._controller.getResult ()
 
         valid_begin = u'''group {
     shape = line;
@@ -400,16 +341,13 @@ class InsertGroupTest (unittest.TestCase):
 
 
     def testBorderStyle_05 (self):
-        dlg = self.plugin.InsertGroupDialog(None)
-        controller = self.plugin.InsertGroupController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.isBorderShapeChanged = True
+        self._dlg.borderShapeIndex = 1
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.isBorderShapeChanged = True
-        dlg.borderShapeIndex = 1
+        self._dlg.setStyleIndex (3)
 
-        dlg.setStyleIndex (3)
-
-        begin, end = controller.getResult ()
+        begin, end = self._controller.getResult ()
 
         valid_begin = u'''group {
     shape = line;
@@ -421,16 +359,13 @@ class InsertGroupTest (unittest.TestCase):
 
 
     def testBorderStyle_06 (self):
-        dlg = self.plugin.InsertGroupDialog(None)
-        controller = self.plugin.InsertGroupController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.isBorderShapeChanged = True
+        self._dlg.borderShapeIndex = 1
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.isBorderShapeChanged = True
-        dlg.borderShapeIndex = 1
+        self._dlg.style = u"1,2,3,4"
 
-        dlg.style = u"1,2,3,4"
-
-        begin, end = controller.getResult ()
+        begin, end = self._controller.getResult ()
 
         valid_begin = u'''group {
     shape = line;
@@ -442,16 +377,13 @@ class InsertGroupTest (unittest.TestCase):
 
 
     def testBorderStyle_07 (self):
-        dlg = self.plugin.InsertGroupDialog(None)
-        controller = self.plugin.InsertGroupController (dlg)
+        self._dlg.SetModalResult (wx.ID_OK)
+        self._dlg.isBorderShapeChanged = True
+        self._dlg.borderShapeIndex = 1
 
-        dlg.SetModalResult (wx.ID_OK)
-        dlg.isBorderShapeChanged = True
-        dlg.borderShapeIndex = 1
+        self._dlg.style = u" 1, 2, 3, 4 "
 
-        dlg.style = u" 1, 2, 3, 4 "
-
-        begin, end = controller.getResult ()
+        begin, end = self._controller.getResult ()
 
         valid_begin = u'''group {
     shape = line;

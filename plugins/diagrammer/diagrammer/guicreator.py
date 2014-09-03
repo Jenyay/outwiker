@@ -178,7 +178,9 @@ class GuiCreator (object):
             map (lambda action: self._application.actionController.removeAction (action.stringId),
                  self._actions)
 
-            self._getPageView().Unbind (EVT_PAGE_TAB_CHANGED, handler=self._onTabChanged)
+            pageview = self._getPageView()
+            if pageview is not None:
+                pageview.Unbind (EVT_PAGE_TAB_CHANGED, handler=self._onTabChanged)
 
 
     def _onTabChanged (self, event):
