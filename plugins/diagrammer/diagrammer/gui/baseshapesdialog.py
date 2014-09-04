@@ -4,12 +4,12 @@ from abc import ABCMeta, abstractmethod, abstractproperty
 
 import wx
 
-from outwiker.gui.testeddialog import TestedDialog
+from .basedialog import BaseDialog
 
 from ..i18n import get_
 
 
-class BaseShapesDialog (TestedDialog):
+class BaseShapesDialog (BaseDialog):
     """
     Базовый класс для диалогов с параметрами
     """
@@ -19,9 +19,7 @@ class BaseShapesDialog (TestedDialog):
         global _
         _ = get_()
 
-        super (BaseShapesDialog, self).__init__ (
-            parent,
-            style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.THICK_FRAME)
+        super (BaseShapesDialog, self).__init__ (parent)
 
 
     @abstractmethod

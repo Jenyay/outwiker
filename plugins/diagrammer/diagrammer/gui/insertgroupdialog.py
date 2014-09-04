@@ -3,12 +3,12 @@
 import wx
 
 from ..i18n import get_
-from outwiker.gui.testeddialog import TestedDialog
 
 from .propertyfactory import PropertyFactory
+from .basedialog import BaseDialog
 
 
-class InsertGroupDialog (TestedDialog):
+class InsertGroupDialog (BaseDialog):
     def __init__ (self, parent):
         super (InsertGroupDialog, self).__init__ (parent)
         global _
