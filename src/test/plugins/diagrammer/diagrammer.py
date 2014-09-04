@@ -47,11 +47,6 @@ class DiagrammerTest (unittest.TestCase):
         self.loader.clear()
 
 
-    def testPluginLoad (self):
-        self.assertEqual (len (self.loader), 1)
-        self.assertNotEqual (self.loader["Diagrammer"], None)
-
-
     def testEmpty (self):
         text = u"(:diagram:)(:diagramend:)"
         validResult = u'<img src="{}/__diagram_'.format (self.thumbDir)

@@ -171,16 +171,15 @@ class GuiCreator (object):
 
             self.__getParentMenu().RemoveItem (self._submenuItem)
 
+            pageview = self._getPageView()
+            if pageview is not None:
+                pageview.Unbind (EVT_PAGE_TAB_CHANGED, handler=self._onTabChanged)
 
 
     def destroy (self):
         if self._application.mainWindow is not None:
             map (lambda action: self._application.actionController.removeAction (action.stringId),
                  self._actions)
-
-            pageview = self._getPageView()
-            if pageview is not None:
-                pageview.Unbind (EVT_PAGE_TAB_CHANGED, handler=self._onTabChanged)
 
 
     def _onTabChanged (self, event):

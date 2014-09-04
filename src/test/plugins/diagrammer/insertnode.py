@@ -6,7 +6,6 @@ import wx
 
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.application import Application
-from test.guitests.basemainwnd import BaseMainWndTest
 
 
 class InsertNodeTest (unittest.TestCase):
