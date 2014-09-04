@@ -170,6 +170,7 @@ if __name__ == '__main__':
     from test.plugins.source.sourcegui import SourceGuiPluginTest
     from test.plugins.source.sourceattachment import SourceAttachmentPluginTest
     from test.plugins.source.sourcestyle import SourceStyleTest
+    from test.plugins.source.loading import SourceLoadingTest
 
     from test.styles.styles import StylesTest
     from test.styles.styleslist import StylesListTest
