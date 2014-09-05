@@ -180,8 +180,8 @@ class ActionController (object):
         actionInfo = self._actionsInfo[strid]
 
         if actionInfo.menuItem is not None:
-            actionInfo.menuItem.Menu.DeleteItem (actionInfo.menuItem)
             self._mainWindow.Unbind (wx.EVT_MENU, id=actionInfo.menuItem.GetId())
+            actionInfo.menuItem.Menu.DestroyItem (actionInfo.menuItem)
             actionInfo.menuItem = None
 
 
