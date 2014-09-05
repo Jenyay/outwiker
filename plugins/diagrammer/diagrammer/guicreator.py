@@ -169,7 +169,8 @@ class GuiCreator (object):
 
             self.__destroyToolBar()
 
-            self.__getParentMenu().RemoveItem (self._submenuItem)
+            self.__getParentMenu().DestroyItem (self._submenuItem)
+            self._submenuItem = None
 
             pageview = self._getPageView()
             if pageview is not None:
