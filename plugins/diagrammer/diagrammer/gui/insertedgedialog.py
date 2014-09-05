@@ -4,22 +4,20 @@ from abc import ABCMeta, abstractmethod
 
 import wx
 
-from outwiker.gui.testeddialog import TestedDialog
-
 from ..i18n import get_
 from .propertyfactory import PropertyFactory
+from .basedialog import BaseDialog
 
 
-class InsertEdgeDialog (TestedDialog):
+class InsertEdgeDialog (BaseDialog):
     """
     Диалог для выбора параметров ребра
     """
     def __init__ (self, parent):
+        super (InsertEdgeDialog, self).__init__ (parent)
+
         global _
         _ = get_()
-
-        super (InsertEdgeDialog, self).__init__ (parent,
-                                                 style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.THICK_FRAME)
 
         self.SetTitle (_(u"Insert edge"))
 
