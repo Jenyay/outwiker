@@ -29,7 +29,7 @@ else:
             """
             Plugin.__init__ (self, application)
 
-            self.__version = u"1.11.2"
+            self.__version = u"1.11.3"
             self.__controller = Controller(self, application)
 
 
@@ -42,11 +42,11 @@ else:
 
 
         def __correctSysPath (self):
-            cmd_folder = unicode (os.path.dirname(os.path.abspath(__file__)), getOS().filesEncoding )
+            cmd_folder = unicode (os.path.dirname(os.path.abspath(__file__)), getOS().filesEncoding)
 
-            syspath = [unicode (item, getOS().filesEncoding) 
-                    if type (item) != type(u"") 
-                    else item for item in sys.path]
+            syspath = [unicode (item, getOS().filesEncoding)
+                       if type (item) != type(u"")
+                       else item for item in sys.path]
 
             if cmd_folder not in syspath:
                 sys.path.insert(0, cmd_folder)
@@ -135,20 +135,20 @@ if __name__ == "__main__":
 {example4}
 
 {example5}""".format (description=description,
-        usage=usage,
-        params=params,
-        example1=example1,
-        example2=example2,
-        example3=example3,
-        example4=example4,
-        example5=example5)
+                      usage=usage,
+                      params=params,
+                      example1=example1,
+                      example2=example2,
+                      example3=example3,
+                      example4=example4,
+                      example5=example5)
 
 
         @property
         def version (self):
             return self.__version
 
-        
+
         @property
         def url (self):
             return _(u"http://jenyay.net/Outwiker/SourcePluginEn")
