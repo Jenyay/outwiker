@@ -74,15 +74,16 @@ class GuiCreator (object):
             map (lambda action: self._application.actionController.removeToolbarButton (action.stringId),
                  self._actions)
 
-            self._getPageView().toolsMenu.RemoveItem (self._submenuItem)
+            self._getPageView().toolsMenu.DestroyItem (self._submenuItem)
+            self._submenuItem = None
+
+            self._getPageView().Unbind (EVT_PAGE_TAB_CHANGED, handler=self._onTabChanged)
 
 
     def destroy (self):
         if self._application.mainWindow is not None:
             map (lambda action: self._application.actionController.removeAction (action.stringId),
                  self._actions)
-
-            self._getPageView().Unbind (EVT_PAGE_TAB_CHANGED, handler=self._onTabChanged)
 
 
     def _onTabChanged (self, event):

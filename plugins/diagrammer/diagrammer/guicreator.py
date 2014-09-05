@@ -172,9 +172,7 @@ class GuiCreator (object):
             self.__getParentMenu().DestroyItem (self._submenuItem)
             self._submenuItem = None
 
-            pageview = self._getPageView()
-            if pageview is not None:
-                pageview.Unbind (EVT_PAGE_TAB_CHANGED, handler=self._onTabChanged)
+            self._getPageView().Unbind (EVT_PAGE_TAB_CHANGED, handler=self._onTabChanged)
 
 
     def destroy (self):
