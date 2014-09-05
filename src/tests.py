@@ -105,6 +105,7 @@ if __name__ == '__main__':
     from test.history import HistoryTest
     from test.commandline import CommandLineTest
     from test.pageuiddepot import PageUidDepotTest
+    from test.loader import PluginsLoaderTest
 
     # from test.guitests.tray import TrayNormalTest#, TrayIconizedTest
     from test.guitests.mainwnd import MainWndTest
@@ -136,25 +137,24 @@ if __name__ == '__main__':
     if os.name == "nt":
         from test.guitests.fileicons import FileIconsTestWindows
 
-    from test.plugins.loader import PluginsLoaderTest
-    from test.plugins.testwikicommand import PluginWikiCommandTest
-    from test.plugins.style import StylePluginTest
-    from test.plugins.export2html import Export2HtmlTest
-    from test.plugins.spoiler import SpoilerPluginTest
-    from test.plugins.livejournal import LivejournalPluginTest
-    from test.plugins.lightbox import LightboxPluginTest
-    from test.plugins.thumblist import ThumbListPluginTest
-    from test.plugins.pagestatistics import PageStatisticsTest
-    from test.plugins.treestatistics import TreeStatisticsTest
-    from test.plugins.updatenotifier import UpdateNotifierTest
-    from test.plugins.counter import CounterTest
-    from test.plugins.counterdialog import CounterDialogTest
-    from test.plugins.htmlheads import HtmlHeadsTest
+    from test.plugins.testplugin.testpage import TestPageTest
+    from test.plugins.testplugin.testwikicommand import PluginWikiCommandTest
+    from test.plugins.style.style import StylePluginTest
+    from test.plugins.export2html.export2html import Export2HtmlTest
+    from test.plugins.spoiler.spoiler import SpoilerPluginTest
+    from test.plugins.livejournal.livejournal import LivejournalPluginTest
+    from test.plugins.lightbox.lightbox import LightboxPluginTest
+    from test.plugins.thumblist.thumblist import ThumbListPluginTest
+    from test.plugins.pagestatistics.pagestatistics import PageStatisticsTest
+    from test.plugins.statistics.treestatistics import TreeStatisticsTest
+    from test.plugins.updatenotifier.updatenotifier import UpdateNotifierTest
+    from test.plugins.counter.counter import CounterTest
+    from test.plugins.counter.counterdialog import CounterDialogTest
+    from test.plugins.htmlheads.htmlheads import HtmlHeadsTest
     from test.plugins.changepageuid.changepageuid import ChangePageUidTest
     from test.plugins.changepageuid.loading import ChangePageUIDLoadingTest
     from test.plugins.template import TemplateTest
-    from test.plugins.testpage import TestPageTest
-    from test.plugins.sessions import SessionsTest
+    from test.plugins.sessions.sessions import SessionsTest
     from test.plugins.diagrammer.diagrammer import DiagrammerTest
     from test.plugins.diagrammer.insertnode import InsertNodeTest
     from test.plugins.diagrammer.insertdiagram import InsertDiagramTest
