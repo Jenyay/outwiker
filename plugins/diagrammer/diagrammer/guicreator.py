@@ -161,6 +161,8 @@ class GuiCreator (object):
 
     def removeTools (self):
         if self._application.mainWindow is not None:
+            assert self._getPageView() is not None
+
             map (lambda action: self._application.actionController.removeMenuItem (action.stringId),
                  self._actions)
 
