@@ -52,14 +52,12 @@ class GuiCreator (object):
         self._application.actionController.removeMenuItem (InsertCounterAction.stringId)
         self._application.actionController.removeToolbarButton (InsertCounterAction.stringId)
 
+        self._getPageView().Unbind (EVT_PAGE_TAB_CHANGED, handler=self._onTabChanged)
+
 
     def destroy (self):
         if self._application.mainWindow is not None:
             self._application.actionController.removeAction (InsertCounterAction.stringId)
-
-            pageView = self._getPageView()
-            if pageView is not None:
-                self._getPageView().Unbind (EVT_PAGE_TAB_CHANGED, handler=self._onTabChanged)
 
 
     def _onTabChanged (self, event):
