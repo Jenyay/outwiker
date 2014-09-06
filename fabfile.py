@@ -247,6 +247,16 @@ def test (params=""):
         local ("python tests.py " + params)
 
 
+def testcoverage (params=""):
+    """
+    Запустить юнит-тесты и измерить их покрытие
+    """
+    with lcd ("src"):
+        local (u"coverage run tests.py " + params)
+        local (u"rm -rf ../doc/coverage")
+        local (u'coverage html --omit=outwiker/libs/*,/usr/share/pyshared/*,../plugins/source/source/pygments/* -d "../doc/coverage"')
+
+
 def _makechangelog (distrib_src, distrib_new):
     """
     Подправить changelog под текущий дистрибутив Ubuntu.
