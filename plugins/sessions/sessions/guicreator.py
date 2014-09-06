@@ -68,7 +68,8 @@ class GuiCreator (object):
             map (lambda action: self._application.actionController.removeMenuItem (action.stringId),
                  self._actions)
 
-            self._getParentMenu().RemoveItem (self._menuItem)
+            self._getParentMenu().DestroyItem (self._menuItem)
+            self._menuItem = None
 
 
     def _getParentMenu (self):
