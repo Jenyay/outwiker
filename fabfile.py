@@ -145,13 +145,14 @@ def plugins():
         "updatenotifier",
     ]
 
-    local ("rm -f build/plugins/outwiker-plugins-all.zip")
+    _removeFile (u"build/plugins/outwiker-plugins-all.zip")
 
     for plugin in plugins:
-        local ("rm -f build/plugins/{}.zip".format (plugin))
+        _removeFile (u"build/plugins/{}.zip".format (plugin))
 
         with lcd ("plugins/{}".format (plugin)):
-            local ("7z a -r -aoa -xr!*.pyc -xr!.ropeproject ../../build/plugins/{}.zip ./*; 7z a -r -aoa -xr!*.pyc -xr!.ropeproject ../../build/plugins/outwiker-plugins-all.zip ./*".format (plugin))
+            local ("7z a -r -aoa -xr!*.pyc -xr!.ropeproject ../../build/plugins/{}.zip ./*".format (plugin))
+            local ("7z a -r -aoa -xr!*.pyc -xr!.ropeproject -w../ ../../build/plugins/outwiker-plugins-all.zip ./*".format (plugin))
 
 
 def win():
@@ -272,3 +273,11 @@ def _makechangelog (distrib_src, distrib_new):
 
     with open (fname, "w") as fp:
         fp.write (u"".join (lines))
+
+
+def _removeFile (fname):
+    """
+    Удаляет файл, если он существует. Функция исключения не обрабатывает.
+    """
+    if os.path.exists (fname):
+        os.remove (fname)
