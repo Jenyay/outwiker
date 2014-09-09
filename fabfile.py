@@ -155,6 +155,29 @@ def plugins():
             local ("7z a -r -aoa -xr!*.pyc -xr!.ropeproject -w../ ../../build/plugins/outwiker-plugins-all.zip ./*".format (plugin))
 
 
+def source ():
+    """
+    Сделать архивы с исходниками
+    """
+    version = _getVersion()
+
+    sourcesdir = os.path.join ("build", "sources")
+
+    if not os.path.exists (sourcesdir):
+        os.mkdir (sourcesdir)
+
+    fullfname = u"outwiker-src-full.zip"
+    srcfname = u"outwiker-src.zip"
+
+    _removeFile (fullfname)
+    _removeFile (srcfname)
+
+    local ('git archive --prefix=outwiker-{}.{}/ -o "{}/{}" HEAD'.format (version[0], version[1], sourcesdir, fullfname))
+
+    with lcd ("src"):
+        local ("7z a -r -aoa -xr!*.pyc -xr!.ropeproject -xr!tests.py -xr!profile.py -xr!setup_tests.py -xr!setup_win.py -xr!test -xr!profiles ../{}/{} ./*".format (sourcesdir, srcfname))
+
+
 def win():
     """
     Создание сборок под Windows
