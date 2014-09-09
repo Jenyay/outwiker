@@ -167,7 +167,7 @@ def source ():
         os.mkdir (sourcesdir)
 
     fullfname = u"outwiker-src-full.zip"
-    srcfname = u"outwiker-src.zip"
+    srcfname = u"outwiker-src-min.zip"
 
     _removeFile (fullfname)
     _removeFile (srcfname)
