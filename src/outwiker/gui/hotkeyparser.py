@@ -34,8 +34,9 @@ class HotKeyParser (object):
         Создание экземпляра класса HotKey по строке
         """
         match = HotKeyParser._regex.match (hotkeyStr)
-        if match is None:
-            raise ValueError ("Invalid hot key string")
+
+        # match всегда находится из-за выражения (?P<key>.*) в конце _regex
+        assert match is not None
 
         elements = match.groupdict()
         key = elements["key"].strip()
@@ -46,6 +47,10 @@ class HotKeyParser (object):
 
         if (len (key) == 0 and
                 (ctrl or shift or alt)):
+            raise ValueError ("Invalid hot key string")
+
+        if (u" " in key or
+                u"\t" in key):
             raise ValueError ("Invalid hot key string")
 
         return HotKey (key, ctrl=ctrl, shift=shift, alt=alt)
