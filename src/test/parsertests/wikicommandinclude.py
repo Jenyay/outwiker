@@ -206,3 +206,12 @@ class WikiIncludeCommandTest (unittest.TestCase):
 
         result = self.parser.toHtml (text)
         self.assertEqual (result, result_right, result)
+
+
+    def testIncludeCommandInvalid4 (self):
+        text = u"""бла-бла-бла (:include text_utf8.txt :) абырвалг"""
+
+        result_right = u"""бла-бла-бла  абырвалг"""
+
+        result = self.parser.toHtml (text)
+        self.assertEqual (result, result_right, result)

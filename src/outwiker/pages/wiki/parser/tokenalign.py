@@ -23,10 +23,6 @@ class AlignToken (object):
         return u'<div align="' + t["align"].lower() + '">' + self.parser.parseWikiMarkup (t["text"]) + '</div>' + t["end"]
 
 
-    def _alignCommand (self, s, l, t):
-        return u'<div align="' + t["align"].lower() + '">' + t[1] + '</div>'
-
-
     def getToken (self):
         start = Regex ("%\\s*(?P<align>(left)|(right)|(center)|(justify))\\s*%",
                        re.I | re.U)

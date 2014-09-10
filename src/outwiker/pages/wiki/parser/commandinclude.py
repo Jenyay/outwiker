@@ -49,7 +49,7 @@ class IncludeCommand (Command):
                 text = unicode (fp.read (), encoding).rstrip()
         except IOError:
             return _(u"<b>Can't open file %s</b>" % path)
-        except:
+        except (UnicodeDecodeError, TypeError):
             return _(u"<b>Encoding error in file %s</b>" % os.path.basename (path))
 
         return self._postprocessText (text, params_dict)
