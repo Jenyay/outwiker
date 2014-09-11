@@ -33,7 +33,7 @@ def MessageBox (*args, **kwargs):
     """
     func = Tester.dialogTester.pop()
     if func is not None:
-        return func (self)
+        return func (None)
 
     wx.GetApp().unbindActivateApp()
     result = wx.MessageBox (*args, **kwargs)

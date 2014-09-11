@@ -25,27 +25,39 @@ class DialogTester (object):
 
 
     @staticmethod
-    def _clickOk (dialog):
-        return wx.ID_OK
+    def _returnResult (result):
+        def func (dialog):
+            return result
 
-
-    @staticmethod
-    def _clickCancel (dialog):
-        return wx.ID_CANCEL
+        return func
 
 
     def appendOk (self):
         """
         Метод добавляет в _dialogActions функцию, которая только возвращает wx.ID_OK
         """
-        self.append (self._clickOk)
+        self.append (self._returnResult (wx.ID_OK))
 
 
     def appendCancel (self):
         """
         Метод добавляет в _dialogActions функцию, которая только возвращает wx.ID_CANCEL
         """
-        self.append (self._clickCancel)
+        self.append (self._returnResult (wx.ID_CANCEL))
+
+
+    def appendYes (self):
+        """
+        Метод добавляет в _dialogActions функцию, которая только возвращает wx.YES
+        """
+        self.append (self._returnResult (wx.YES))
+
+
+    def appendNo (self):
+        """
+        Метод добавляет в _dialogActions функцию, которая только возвращает wx.YES
+        """
+        self.append (self._returnResult (wx.NO))
 
 
     def pop (self):
@@ -56,6 +68,11 @@ class DialogTester (object):
             return None
 
         return self._dialogActions.pop (0)
+
+
+    @property
+    def count (self):
+        return len (self._dialogActions)
 
 
 
