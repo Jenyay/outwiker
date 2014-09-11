@@ -15,16 +15,6 @@ class TestedDialog (wx.Dialog):
         super (TestedDialog, self).__init__ (*args, **kwargs)
 
 
-    # def SetModalResult (self, result):
-    #     """
-    #     Установить будущий результат вызова ShowModal
-    #     """
-    #     def click (dialog):
-    #         return result
-    #
-    #     Tester.dialogTester.append (click)
-
-
     def ShowModal (self):
         func = Tester.dialogTester.pop()
         if func is not None:
