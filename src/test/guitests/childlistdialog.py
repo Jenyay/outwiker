@@ -1,10 +1,9 @@
 # -*- coding: UTF-8 -*-
 
-import wx
-
 from basemainwnd import BaseMainWndTest
 from outwiker.pages.wiki.actions.childlist import ChildListDialog, ChildListDialogController
 from outwiker.core.application import Application
+from outwiker.gui.tester import Tester
 
 
 class ChildListDialogTest (BaseMainWndTest):
@@ -14,11 +13,12 @@ class ChildListDialogTest (BaseMainWndTest):
     def setUp (self):
         BaseMainWndTest.setUp (self)
         self._dialog = ChildListDialog (Application.mainWindow)
+        Tester.dialogTester.clear()
 
 
     def testCancel (self):
         controller = ChildListDialogController (self._dialog)
-        self._dialog.SetModalResult (wx.ID_CANCEL)
+        Tester.dialogTester.appendCancel()
         result = controller.getDialogResult()
 
         self.assertEqual (result, None)
@@ -27,7 +27,7 @@ class ChildListDialogTest (BaseMainWndTest):
     def testSortByOrder (self):
         controller = ChildListDialogController (self._dialog)
 
-        self._dialog.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dialog.selectedSort = 0
         self._dialog.isDescend = False
 
@@ -39,7 +39,7 @@ class ChildListDialogTest (BaseMainWndTest):
     def testSortByOrderDescend (self):
         controller = ChildListDialogController (self._dialog)
 
-        self._dialog.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dialog.selectedSort = 0
         self._dialog.isDescend = True
 
@@ -51,7 +51,7 @@ class ChildListDialogTest (BaseMainWndTest):
     def testSortByName (self):
         controller = ChildListDialogController (self._dialog)
 
-        self._dialog.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dialog.selectedSort = 1
         self._dialog.isDescend = False
 
@@ -63,7 +63,7 @@ class ChildListDialogTest (BaseMainWndTest):
     def testSortByNameDescend (self):
         controller = ChildListDialogController (self._dialog)
 
-        self._dialog.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dialog.selectedSort = 1
         self._dialog.isDescend = True
 
@@ -75,7 +75,7 @@ class ChildListDialogTest (BaseMainWndTest):
     def testSortByCreation (self):
         controller = ChildListDialogController (self._dialog)
 
-        self._dialog.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dialog.selectedSort = 2
         self._dialog.isDescend = False
 
@@ -87,7 +87,7 @@ class ChildListDialogTest (BaseMainWndTest):
     def testSortByCreationDescend (self):
         controller = ChildListDialogController (self._dialog)
 
-        self._dialog.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dialog.selectedSort = 2
         self._dialog.isDescend = True
 
@@ -99,7 +99,7 @@ class ChildListDialogTest (BaseMainWndTest):
     def testSortByEdit (self):
         controller = ChildListDialogController (self._dialog)
 
-        self._dialog.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dialog.selectedSort = 3
         self._dialog.isDescend = False
 
@@ -111,7 +111,7 @@ class ChildListDialogTest (BaseMainWndTest):
     def testSortByEditDescend (self):
         controller = ChildListDialogController (self._dialog)
 
-        self._dialog.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dialog.selectedSort = 3
         self._dialog.isDescend = True
 

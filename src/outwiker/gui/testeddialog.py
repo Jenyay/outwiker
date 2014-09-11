@@ -2,6 +2,8 @@
 
 import wx
 
+from .tester import Tester
+
 
 class TestedDialog (wx.Dialog):
     """
@@ -11,18 +13,21 @@ class TestedDialog (wx.Dialog):
         kwargs["style"] = wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.THICK_FRAME
 
         super (TestedDialog, self).__init__ (*args, **kwargs)
-        self.__modalResult = None
 
 
-    def SetModalResult (self, result):
-        """
-        Установить будущий результат вызова ShowModal
-        """
-        self.__modalResult = result
+    # def SetModalResult (self, result):
+    #     """
+    #     Установить будущий результат вызова ShowModal
+    #     """
+    #     def click (dialog):
+    #         return result
+    #
+    #     Tester.dialogTester.append (click)
 
 
     def ShowModal (self):
-        if self.__modalResult is not None:
-            return self.__modalResult
+        func = Tester.dialogTester.pop()
+        if func is not None:
+            return func (self)
 
         return super (TestedDialog, self).ShowModal()

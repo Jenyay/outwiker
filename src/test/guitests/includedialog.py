@@ -2,8 +2,6 @@
 
 import os.path
 
-import wx
-
 from basemainwnd import BaseMainWndTest
 from outwiker.pages.wiki.actions.include import IncludeDialog, IncludeDialogController
 from outwiker.core.application import Application
@@ -11,6 +9,7 @@ from outwiker.core.tree import WikiDocument
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.core.attachment import Attachment
 from test.utils import removeWiki
+from outwiker.gui.tester import Tester
 
 
 class IncludeDialogTest (BaseMainWndTest):
@@ -34,6 +33,7 @@ class IncludeDialogTest (BaseMainWndTest):
         self.fullFilesPath = [os.path.join (filesPath, fname) for fname in self.files]
 
         Attachment (self.testedPage).attach (self.fullFilesPath)
+        Tester.dialogTester.clear()
 
 
     def tearDown (self):
@@ -44,7 +44,7 @@ class IncludeDialogTest (BaseMainWndTest):
 
     def testCancel (self):
         controller = IncludeDialogController (self._dialog, self.testedPage)
-        self._dialog.SetModalResult (wx.ID_CANCEL)
+        Tester.dialogTester.appendCancel()
         result = controller.getDialogResult()
 
         self.assertEqual (result, None)
@@ -54,7 +54,7 @@ class IncludeDialogTest (BaseMainWndTest):
     def test_01 (self):
         controller = IncludeDialogController (self._dialog, self.testedPage)
 
-        self._dialog.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dialog.selectedAttachment = 0
         self._dialog.selectedEncoding = 0
         self._dialog.escapeHtml = False
@@ -68,7 +68,7 @@ class IncludeDialogTest (BaseMainWndTest):
     def test_02 (self):
         controller = IncludeDialogController (self._dialog, self.testedPage)
 
-        self._dialog.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dialog.selectedAttachment = 1
         self._dialog.selectedEncoding = 0
         self._dialog.escapeHtml = False
@@ -82,7 +82,7 @@ class IncludeDialogTest (BaseMainWndTest):
     def test_03 (self):
         controller = IncludeDialogController (self._dialog, self.testedPage)
 
-        self._dialog.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dialog.selectedAttachment = 3
         self._dialog.selectedEncoding = 0
         self._dialog.escapeHtml = False
@@ -96,7 +96,7 @@ class IncludeDialogTest (BaseMainWndTest):
     def test_04 (self):
         controller = IncludeDialogController (self._dialog, self.testedPage)
 
-        self._dialog.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dialog.selectedAttachment = 4
         self._dialog.selectedEncoding = 0
         self._dialog.escapeHtml = False
@@ -110,7 +110,7 @@ class IncludeDialogTest (BaseMainWndTest):
     def test_05 (self):
         controller = IncludeDialogController (self._dialog, self.testedPage)
 
-        self._dialog.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dialog.selectedAttachment = 400
         self._dialog.selectedEncoding = 0
         self._dialog.escapeHtml = False
@@ -124,7 +124,7 @@ class IncludeDialogTest (BaseMainWndTest):
     def test_encoding_01 (self):
         controller = IncludeDialogController (self._dialog, self.testedPage)
 
-        self._dialog.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dialog.selectedAttachment = 0
         self._dialog.selectedEncoding = 1
         self._dialog.escapeHtml = False
@@ -138,7 +138,7 @@ class IncludeDialogTest (BaseMainWndTest):
     def test_encoding_02 (self):
         controller = IncludeDialogController (self._dialog, self.testedPage)
 
-        self._dialog.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dialog.selectedAttachment = 0
         self._dialog.selectedEncoding = 6
         self._dialog.escapeHtml = False
@@ -152,7 +152,7 @@ class IncludeDialogTest (BaseMainWndTest):
     def test_encoding_04 (self):
         controller = IncludeDialogController (self._dialog, self.testedPage)
 
-        self._dialog.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dialog.selectedAttachment = 0
         self._dialog.selectedEncoding = 600
         self._dialog.escapeHtml = False
@@ -166,7 +166,7 @@ class IncludeDialogTest (BaseMainWndTest):
     def test_escapeHtml_01 (self):
         controller = IncludeDialogController (self._dialog, self.testedPage)
 
-        self._dialog.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dialog.selectedAttachment = 0
         self._dialog.selectedEncoding = 0
         self._dialog.escapeHtml = True
@@ -180,7 +180,7 @@ class IncludeDialogTest (BaseMainWndTest):
     def test_escapeHtml_02 (self):
         controller = IncludeDialogController (self._dialog, self.testedPage)
 
-        self._dialog.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dialog.selectedAttachment = 0
         self._dialog.selectedEncoding = 1
         self._dialog.escapeHtml = True
@@ -194,7 +194,7 @@ class IncludeDialogTest (BaseMainWndTest):
     def test_wikiparse_01 (self):
         controller = IncludeDialogController (self._dialog, self.testedPage)
 
-        self._dialog.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dialog.selectedAttachment = 0
         self._dialog.selectedEncoding = 0
         self._dialog.escapeHtml = False
@@ -208,7 +208,7 @@ class IncludeDialogTest (BaseMainWndTest):
     def test_wikiparse_02 (self):
         controller = IncludeDialogController (self._dialog, self.testedPage)
 
-        self._dialog.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dialog.selectedAttachment = 0
         self._dialog.selectedEncoding = 1
         self._dialog.escapeHtml = False
@@ -222,7 +222,7 @@ class IncludeDialogTest (BaseMainWndTest):
     def test_wikiparse_escapehtml (self):
         controller = IncludeDialogController (self._dialog, self.testedPage)
 
-        self._dialog.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dialog.selectedAttachment = 0
         self._dialog.selectedEncoding = 1
         self._dialog.escapeHtml = True

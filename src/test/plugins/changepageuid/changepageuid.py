@@ -1,7 +1,5 @@
 # -*- coding: UTF-8 -*-
 
-import wx
-
 from outwiker.core.application import Application
 from outwiker.core.tree import WikiDocument
 from outwiker.core.pluginsloader import PluginsLoader
@@ -9,6 +7,7 @@ from outwiker.pages.wiki.wikipage import WikiPageFactory
 
 from test.guitests.basemainwnd import BaseMainWndTest
 from test.utils import removeWiki
+from outwiker.gui.tester import Tester
 
 
 class ChangePageUidTest (BaseMainWndTest):
@@ -25,7 +24,7 @@ class ChangePageUidTest (BaseMainWndTest):
         self._loader.load (dirlist)
 
         self._dlg = self._loader["ChangePageUID"].ChangeUidDialog (Application.mainWindow)
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.clear()
 
         self.testPage = self.rootwiki[u"Страница 1"]
 

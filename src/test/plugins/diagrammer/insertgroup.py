@@ -2,10 +2,9 @@
 
 import unittest
 
-import wx
-
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.application import Application
+from outwiker.gui.tester import Tester
 
 
 class InsertGroupTest (unittest.TestCase):
@@ -18,6 +17,7 @@ class InsertGroupTest (unittest.TestCase):
 
         self._dlg = self.plugin.InsertGroupDialog(None)
         self._controller = self.plugin.InsertGroupController (self._dlg)
+        Tester.dialogTester.clear()
 
 
     def tearDown(self):
@@ -26,7 +26,7 @@ class InsertGroupTest (unittest.TestCase):
 
 
     def testDefault (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
 
         begin, end = self._controller.getResult ()
 
@@ -38,7 +38,7 @@ class InsertGroupTest (unittest.TestCase):
 
 
     def testName_01 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.name = u"Абырвалг"
 
         begin, end = self._controller.getResult ()
@@ -51,7 +51,7 @@ class InsertGroupTest (unittest.TestCase):
 
 
     def testBackColor_01 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.isBackColorChanged = True
         self._dlg.backColor = u"blue"
 
@@ -67,7 +67,7 @@ class InsertGroupTest (unittest.TestCase):
 
 
     def testBackColor_02 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.isBackColorChanged = False
         self._dlg.backColor = u"blue"
 
@@ -81,7 +81,7 @@ class InsertGroupTest (unittest.TestCase):
 
 
     def testBackColor_03 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.isBackColorChanged = True
         self._dlg.backColor = u"#AAAAAA"
 
@@ -97,7 +97,7 @@ class InsertGroupTest (unittest.TestCase):
 
 
     def testOrientation_01 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.isOrientationChanged = True
         self._dlg.orientationIndex = 0
 
@@ -112,7 +112,7 @@ class InsertGroupTest (unittest.TestCase):
 
 
     def testOrientation_02 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.isOrientationChanged = True
         self._dlg.orientationIndex = 1
 
@@ -127,7 +127,7 @@ class InsertGroupTest (unittest.TestCase):
 
 
     def testOrientation_03 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.isOrientationChanged = False
         self._dlg.orientationIndex = 1
 
@@ -140,7 +140,7 @@ class InsertGroupTest (unittest.TestCase):
 
 
     def testOrientation_04 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.isOrientationChanged = True
         self._dlg.orientationIndex = 1
         self._dlg.isBackColorChanged = True
@@ -158,7 +158,7 @@ class InsertGroupTest (unittest.TestCase):
 
 
     def testLabel_01 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.label = u"Абырвалг"
 
         begin, end = self._controller.getResult ()
@@ -172,7 +172,7 @@ class InsertGroupTest (unittest.TestCase):
 
 
     def testLabel_02 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.label = u""
 
         begin, end = self._controller.getResult ()
@@ -184,7 +184,7 @@ class InsertGroupTest (unittest.TestCase):
 
 
     def testTextColor_01 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.isTextColorChanged = True
         self._dlg.textColor = u"blue"
 
@@ -200,7 +200,7 @@ class InsertGroupTest (unittest.TestCase):
 
 
     def testTextColor_02 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.isTextColorChanged = False
         self._dlg.textColor = u"blue"
 
@@ -214,7 +214,7 @@ class InsertGroupTest (unittest.TestCase):
 
 
     def testTextColor_03 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.isTextColorChanged = True
         self._dlg.textColor = u"#AAAAAA"
 
@@ -230,7 +230,7 @@ class InsertGroupTest (unittest.TestCase):
 
 
     def testBorderShape_01 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.isBorderShapeChanged = True
         self._dlg.borderShapeIndex = 0
 
@@ -245,7 +245,7 @@ class InsertGroupTest (unittest.TestCase):
 
 
     def testBorderShape_02 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.isBorderShapeChanged = True
         self._dlg.borderShapeIndex = 1
 
@@ -260,7 +260,7 @@ class InsertGroupTest (unittest.TestCase):
 
 
     def testBorderShape_03 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.isBorderShapeChanged = False
         self._dlg.borderShapeIndex = 1
 
@@ -273,7 +273,7 @@ class InsertGroupTest (unittest.TestCase):
 
 
     def testBorderStyle_01 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.isBorderShapeChanged = True
         self._dlg.borderShapeIndex = 1
 
@@ -291,7 +291,7 @@ class InsertGroupTest (unittest.TestCase):
 
 
     def testBorderStyle_02 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.isBorderShapeChanged = False
         self._dlg.borderShapeIndex = 1
 
@@ -306,7 +306,7 @@ class InsertGroupTest (unittest.TestCase):
 
 
     def testBorderStyle_03 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.isBorderShapeChanged = True
         self._dlg.borderShapeIndex = 0
 
@@ -323,7 +323,7 @@ class InsertGroupTest (unittest.TestCase):
 
 
     def testBorderStyle_04 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.isBorderShapeChanged = True
         self._dlg.borderShapeIndex = 1
 
@@ -341,7 +341,7 @@ class InsertGroupTest (unittest.TestCase):
 
 
     def testBorderStyle_05 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.isBorderShapeChanged = True
         self._dlg.borderShapeIndex = 1
 
@@ -359,7 +359,7 @@ class InsertGroupTest (unittest.TestCase):
 
 
     def testBorderStyle_06 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.isBorderShapeChanged = True
         self._dlg.borderShapeIndex = 1
 
@@ -377,7 +377,7 @@ class InsertGroupTest (unittest.TestCase):
 
 
     def testBorderStyle_07 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.isBorderShapeChanged = True
         self._dlg.borderShapeIndex = 1
 

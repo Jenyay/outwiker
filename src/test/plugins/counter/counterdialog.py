@@ -9,6 +9,7 @@ from outwiker.pages.wiki.wikipage import WikiPageFactory
 
 from test.guitests.basemainwnd import BaseMainWndTest
 from test.utils import removeWiki
+from outwiker.gui.tester import Tester
 
 
 class CounterDialogTest (BaseMainWndTest):
@@ -27,7 +28,8 @@ class CounterDialogTest (BaseMainWndTest):
         self._loader.load (dirlist)
 
         self._dlg = self._loader["Counter"].InsertDialog (Application.mainWindow)
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.clear()
+        Tester.dialogTester.appendOk()
 
         self.testPage = self.rootwiki[u"Страница 1"]
 

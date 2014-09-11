@@ -31,9 +31,6 @@ class LivejournalPluginTest (BaseMainWndTest):
         self._plugin.LJConfig (Application.config).users.value = []
         self._plugin.LJConfig (Application.config).communities.value = []
 
-        # Application.wikiroot = self.wikiroot
-        # Application.selectedPage = self.testPage
-
 
     def __createWiki (self):
         # Здесь будет создаваться вики
@@ -47,8 +44,6 @@ class LivejournalPluginTest (BaseMainWndTest):
 
     def tearDown(self):
         BaseMainWndTest.tearDown (self)
-        # Application.selectedPage = None
-        # Application.wikiroot = None
         removeWiki (self.path)
         self._plugin.LJConfig (Application.config).users.value = []
         self._plugin.LJConfig (Application.config).communities.value = []

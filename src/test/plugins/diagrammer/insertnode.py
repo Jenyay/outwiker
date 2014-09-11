@@ -2,10 +2,9 @@
 
 import unittest
 
-import wx
-
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.application import Application
+from outwiker.gui.tester import Tester
 
 
 class InsertNodeTest (unittest.TestCase):
@@ -18,6 +17,7 @@ class InsertNodeTest (unittest.TestCase):
 
         self._dlg = self.plugin.InsertNodeDialog(None)
         self._controller = self.plugin.InsertNodeController (self._dlg)
+        Tester.dialogTester.clear()
 
 
     def tearDown(self):
@@ -32,7 +32,7 @@ class InsertNodeTest (unittest.TestCase):
 
     def testName_01 (self):
 
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.name = u"Абырвалг"
 
         result = self._controller.getResult ()
@@ -41,7 +41,7 @@ class InsertNodeTest (unittest.TestCase):
 
 
     def testName_02 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.name = u"Абырвалг 111"
 
         result = self._controller.getResult ()
@@ -50,7 +50,7 @@ class InsertNodeTest (unittest.TestCase):
 
 
     def testShapeSelection_01 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.name = u"Абырвалг"
         self._dlg.setShapeSelection (0)
 
@@ -60,7 +60,7 @@ class InsertNodeTest (unittest.TestCase):
 
 
     def testShapeSelection_02 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.name = u"Абырвалг"
         self._dlg.setShapeSelection (1)
 
@@ -70,7 +70,7 @@ class InsertNodeTest (unittest.TestCase):
 
 
     def testShapeSelection_03 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.name = u"Абырвалг"
 
         self._dlg.setShapeSelection (10)
@@ -81,7 +81,7 @@ class InsertNodeTest (unittest.TestCase):
 
 
     def testBorderStyle_01 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.name = u"Абырвалг"
 
         self._dlg.setStyleIndex (0)
@@ -91,7 +91,7 @@ class InsertNodeTest (unittest.TestCase):
 
 
     def testBorderStyle_02 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.name = u"Абырвалг"
 
         self._dlg.setStyleIndex (1)
@@ -101,7 +101,7 @@ class InsertNodeTest (unittest.TestCase):
 
 
     def testBorderStyle_03 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.name = u"Абырвалг"
 
         self._dlg.setStyleIndex (2)
@@ -111,7 +111,7 @@ class InsertNodeTest (unittest.TestCase):
 
 
     def testBorderStyle_04 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.name = u"Абырвалг"
 
         self._dlg.style = u""
@@ -121,7 +121,7 @@ class InsertNodeTest (unittest.TestCase):
 
 
     def testBorderStyle_05 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.name = u"Абырвалг"
 
         self._dlg.style = u"solid"
@@ -131,7 +131,7 @@ class InsertNodeTest (unittest.TestCase):
 
 
     def testBorderStyle_06 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.name = u"Абырвалг"
 
         self._dlg.style = u"Solid"
@@ -141,7 +141,7 @@ class InsertNodeTest (unittest.TestCase):
 
 
     def testBorderStyle_07 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.name = u"Абырвалг"
 
         self._dlg.style = u" Solid "
@@ -151,7 +151,7 @@ class InsertNodeTest (unittest.TestCase):
 
 
     def testBorderStyle_08 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.name = u"Абырвалг"
 
         self._dlg.style = u"1,2,3"
@@ -161,7 +161,7 @@ class InsertNodeTest (unittest.TestCase):
 
 
     def testBorderStyle_09 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.name = u"Абырвалг"
 
         self._dlg.style = u"1, 2, 3"
@@ -171,7 +171,7 @@ class InsertNodeTest (unittest.TestCase):
 
 
     def testBorderStyle_10 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.name = u"Абырвалг"
 
         self._dlg.style = u" 1, 2, 3 "
@@ -181,7 +181,7 @@ class InsertNodeTest (unittest.TestCase):
 
 
     def testBorderStyle_11 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.name = u"Абырвалг"
 
         self._dlg.style = u'"1,2,3"'
@@ -191,7 +191,7 @@ class InsertNodeTest (unittest.TestCase):
 
 
     def testBorderStyle_12 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.name = u"Абырвалг"
 
         self._dlg.setShapeSelection (1)
@@ -202,7 +202,7 @@ class InsertNodeTest (unittest.TestCase):
 
 
     def testStacked_01 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.name = u"Абырвалг"
         self._dlg.stacked = True
 
@@ -211,7 +211,7 @@ class InsertNodeTest (unittest.TestCase):
 
 
     def testStacked_02 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.name = u"Абырвалг"
         self._dlg.stacked = True
         self._dlg.setShapeSelection (1)
@@ -221,7 +221,7 @@ class InsertNodeTest (unittest.TestCase):
 
 
     def testLabel_01 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.name = u"Абырвалг"
         self._dlg.label = u"Превед"
 
@@ -230,7 +230,7 @@ class InsertNodeTest (unittest.TestCase):
 
 
     def testLabel_02 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.name = u"Абырвалг"
         self._dlg.setShapeSelection (1)
         self._dlg.label = u"Превед"
@@ -240,7 +240,7 @@ class InsertNodeTest (unittest.TestCase):
 
 
     def testLabel_03 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.name = u"Абырвалг"
         self._dlg.label = u"Абырвалг"
 
@@ -249,7 +249,7 @@ class InsertNodeTest (unittest.TestCase):
 
 
     def testColor_01 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.name = u"Абырвалг"
         self._dlg.isBackColorChanged = True
         self._dlg.backColor = u"white"
@@ -259,7 +259,7 @@ class InsertNodeTest (unittest.TestCase):
 
 
     def testColor_02 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.name = u"Абырвалг"
         self._dlg.isBackColorChanged = True
         self._dlg.backColor = u"#AAAAAA"
@@ -269,7 +269,7 @@ class InsertNodeTest (unittest.TestCase):
 
 
     def testColor_03 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.name = u"Абырвалг"
         self._dlg.isBackColorChanged = False
         self._dlg.backColor = u"#AAAAAA"
@@ -279,7 +279,7 @@ class InsertNodeTest (unittest.TestCase):
 
 
     def testColor_04 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.name = u"Абырвалг"
         self._dlg.setShapeSelection (1)
         self._dlg.isBackColorChanged = True
@@ -290,7 +290,7 @@ class InsertNodeTest (unittest.TestCase):
 
 
     def testTextColor_01 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.name = u"Абырвалг"
         self._dlg.isTextColorChanged = True
         self._dlg.textColor = u"black"
@@ -300,7 +300,7 @@ class InsertNodeTest (unittest.TestCase):
 
 
     def testTextColor_02 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.name = u"Абырвалг"
         self._dlg.isTextColorChanged = True
         self._dlg.textColor = u"#AAAAAA"
@@ -310,7 +310,7 @@ class InsertNodeTest (unittest.TestCase):
 
 
     def testTextColor_03 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.name = u"Абырвалг"
         self._dlg.isTextColorChanged = False
         self._dlg.textColor = u"#AAAAAA"
@@ -320,7 +320,7 @@ class InsertNodeTest (unittest.TestCase):
 
 
     def testTextColor_04 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.name = u"Абырвалг"
         self._dlg.setShapeSelection (1)
         self._dlg.isTextColorChanged = True
@@ -331,7 +331,7 @@ class InsertNodeTest (unittest.TestCase):
 
 
     def testFontSize_01 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.name = u"Абырвалг"
         self._dlg.isFontSizeChanged = True
         self._dlg.fontSize = 20
@@ -341,7 +341,7 @@ class InsertNodeTest (unittest.TestCase):
 
 
     def testFontSize_02 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.name = u"Абырвалг"
         self._dlg.isFontSizeChanged = False
         self._dlg.fontSize = 20
@@ -351,7 +351,7 @@ class InsertNodeTest (unittest.TestCase):
 
 
     def testFontSize_03 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.name = u"Абырвалг"
         self._dlg.setShapeSelection (1)
         self._dlg.isFontSizeChanged = True
@@ -362,7 +362,7 @@ class InsertNodeTest (unittest.TestCase):
 
 
     def testWidth_01 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.name = u"Абырвалг"
         self._dlg.isWidthChanged = True
         self._dlg.width = 200
@@ -372,7 +372,7 @@ class InsertNodeTest (unittest.TestCase):
 
 
     def testWidth_02 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.name = u"Абырвалг"
         self._dlg.isWidthChanged = False
         self._dlg.width = 200
@@ -382,7 +382,7 @@ class InsertNodeTest (unittest.TestCase):
 
 
     def testWidth_03 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.name = u"Абырвалг"
         self._dlg.setShapeSelection (1)
         self._dlg.isWidthChanged = True
@@ -393,7 +393,7 @@ class InsertNodeTest (unittest.TestCase):
 
 
     def testHeight_01 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.name = u"Абырвалг"
         self._dlg.isHeightChanged = True
         self._dlg.height = 200
@@ -403,7 +403,7 @@ class InsertNodeTest (unittest.TestCase):
 
 
     def testHeight_02 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.name = u"Абырвалг"
         self._dlg.isHeightChanged = False
         self._dlg.height = 200
@@ -413,7 +413,7 @@ class InsertNodeTest (unittest.TestCase):
 
 
     def testHeight_03 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.name = u"Абырвалг"
         self._dlg.setShapeSelection (1)
         self._dlg.isHeightChanged = True

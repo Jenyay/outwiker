@@ -2,10 +2,9 @@
 
 import unittest
 
-import wx
-
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.application import Application
+from outwiker.gui.tester import Tester
 
 
 class InsertDiagramTest (unittest.TestCase):
@@ -18,6 +17,7 @@ class InsertDiagramTest (unittest.TestCase):
 
         self._dlg = self.plugin.InsertDiagramDialog(None)
         self._controller = self.plugin.InsertDiagramController (self._dlg)
+        Tester.dialogTester.clear()
 
 
     def tearDown(self):
@@ -26,7 +26,7 @@ class InsertDiagramTest (unittest.TestCase):
 
 
     def testDefault (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
 
         begin, end = self._controller.getResult ()
 
@@ -35,7 +35,7 @@ class InsertDiagramTest (unittest.TestCase):
 
 
     def testShape_01 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.setShapeSelection (0)
 
         begin, end = self._controller.getResult ()
@@ -49,7 +49,7 @@ default_shape = actor;
 
 
     def testShape_02 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.setShapeSelection (1)
 
         begin, end = self._controller.getResult ()
@@ -63,7 +63,7 @@ default_shape = beginpoint;
 
 
     def testShape_03 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
 
         # Значение по умолчанию
         self._dlg.setShapeSelection (2)
@@ -75,7 +75,7 @@ default_shape = beginpoint;
 
 
     def testNodeColor_01 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.isBackColorChanged = True
         self._dlg.backColor = u"white"
 
@@ -90,7 +90,7 @@ default_node_color = "white";
 
 
     def testNodeColor_02 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.isBackColorChanged = False
         self._dlg.backColor = u"black"
 
@@ -101,7 +101,7 @@ default_node_color = "white";
 
 
     def testNodeColor_03 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.isBackColorChanged = True
         self._dlg.backColor = u"#AAAAAA"
 
@@ -116,7 +116,7 @@ default_node_color = "#AAAAAA";
 
 
     def testNodeColor_04 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.isBackColorChanged = True
         self._dlg.backColor = u"#AAAAAA"
         self._dlg.setShapeSelection (0)
@@ -133,7 +133,7 @@ default_node_color = "#AAAAAA";
 
 
     def testTextColor_01 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.isTextColorChanged = True
         self._dlg.textColor = u"white"
 
@@ -148,7 +148,7 @@ default_textcolor = "white";
 
 
     def testTextColor_02 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.isTextColorChanged = False
         self._dlg.textColor = u"black"
 
@@ -159,7 +159,7 @@ default_textcolor = "white";
 
 
     def testTextColor_03 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.isTextColorChanged = True
         self._dlg.textColor = u"#AAAAAA"
 
@@ -174,7 +174,7 @@ default_textcolor = "#AAAAAA";
 
 
     def testTextColor_04 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.isTextColorChanged = True
         self._dlg.textColor = u"#AAAAAA"
         self._dlg.setShapeSelection (0)
@@ -191,7 +191,7 @@ default_textcolor = "#AAAAAA";
 
 
     def testFontSize_01 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.isFontSizeChanged = True
         self._dlg.fontSize = 20
 
@@ -206,7 +206,7 @@ default_fontsize = 20;
 
 
     def testFontSize_02 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.isFontSizeChanged = False
         self._dlg.fontSize = 20
 
@@ -220,7 +220,7 @@ default_fontsize = 20;
 
 
     def testFontSize_03 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.setShapeSelection (0)
         self._dlg.isFontSizeChanged = True
         self._dlg.fontSize = 20
@@ -237,7 +237,7 @@ default_fontsize = 20;
 
 
     def testWidth_01 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.isWidthChanged = True
         self._dlg.width = 200
 
@@ -252,7 +252,7 @@ node_width = 200;
 
 
     def testWidth_02 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.isWidthChanged = False
         self._dlg.width = 200
 
@@ -266,7 +266,7 @@ node_width = 200;
 
 
     def testWidth_03 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.setShapeSelection (0)
         self._dlg.isWidthChanged = True
         self._dlg.width = 200
@@ -283,7 +283,7 @@ node_width = 200;
 
 
     def testHeight_01 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.isHeightChanged = True
         self._dlg.height = 200
 
@@ -298,7 +298,7 @@ node_height = 200;
 
 
     def testHeight_02 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.isHeightChanged = False
         self._dlg.height = 200
 
@@ -312,7 +312,7 @@ node_height = 200;
 
 
     def testHeight_03 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.setShapeSelection (0)
         self._dlg.isHeightChanged = True
         self._dlg.height = 200
@@ -331,7 +331,7 @@ node_height = 200;
     def testOrientation_01 (self):
         self._dlg.orientationIndex = 0
 
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
 
         begin, end = self._controller.getResult ()
 
@@ -345,7 +345,7 @@ node_height = 200;
     def testOrientation_02 (self):
         self._dlg.orientationIndex = 1
 
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
 
         begin, end = self._controller.getResult ()
 
@@ -361,7 +361,7 @@ orientation = portrait;
         self._dlg.orientationIndex = 1
         self._dlg.setShapeSelection (0)
 
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
 
         begin, end = self._controller.getResult ()
 
@@ -375,7 +375,7 @@ default_shape = actor;
 
 
     def testSpanWidth_01 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.isSpanWidthChanged = True
         self._dlg.spanWidth = 200
 
@@ -390,7 +390,7 @@ span_width = 200;
 
 
     def testSpanWidth_02 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.isSpanWidthChanged = False
         self._dlg.spanWidth = 200
 
@@ -404,7 +404,7 @@ span_width = 200;
 
 
     def testSpanWidth_03 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.setShapeSelection (0)
         self._dlg.isSpanWidthChanged = True
         self._dlg.spanWidth = 200
@@ -421,7 +421,7 @@ span_width = 200;
 
 
     def testSpanHeight_01 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.isSpanHeightChanged = True
         self._dlg.spanHeight = 200
 
@@ -436,7 +436,7 @@ span_height = 200;
 
 
     def testSpanHeight_02 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.isSpanHeightChanged = False
         self._dlg.spanHeight = 200
 
@@ -450,7 +450,7 @@ span_height = 200;
 
 
     def testSpanHeight_03 (self):
-        self._dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self._dlg.setShapeSelection (0)
         self._dlg.isSpanHeightChanged = True
         self._dlg.spanHeight = 200

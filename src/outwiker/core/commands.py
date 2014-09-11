@@ -24,12 +24,17 @@ from outwiker.gui.hotkey import HotKey
 from outwiker.gui.polyaction import PolyAction
 from outwiker.gui.dateformatdialog import DateFormatDialog
 from outwiker.gui.guiconfig import GeneralGuiConfig
+from outwiker.gui.tester import Tester
 
 
 def MessageBox (*args, **kwargs):
     """
     Замена стандартного MessageBox. Перед показом диалога отключает приложение от события EVT_ACTIVATE_APP.
     """
+    func = Tester.dialogTester.pop()
+    if func is not None:
+        return func (self)
+
     wx.GetApp().unbindActivateApp()
     result = wx.MessageBox (*args, **kwargs)
     wx.GetApp().bindActivateApp()
