@@ -7,8 +7,9 @@ from outwiker.core.application import Application
 from outwiker.core.tree import WikiDocument
 from outwiker.core.commands import removePage
 from outwiker.pages.text.textpage import TextPageFactory
-from test.utils import removeWiki
 from outwiker.gui.tester import Tester
+from test.utils import removeWiki
+from outwiker.actions.removepage import RemovePageAction
 
 
 class RemovePageGuiTest (BaseMainWndTest):
@@ -110,3 +111,37 @@ class RemovePageGuiTest (BaseMainWndTest):
 
         # Убедимся, что были показаны все сообщения
         self.assertEqual (Tester.dialogTester.count, 0)
+
+
+    def testActionRemovePage_01 (self):
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = None
+
+        Application.actionController.getAction (RemovePageAction.stringId).run (None)
+
+        self.assertNotEqual (self.wikiroot[u"Страница 1"], None)
+        self.assertNotEqual (self.wikiroot[u"Страница 2"], None)
+
+
+    def testActionRemovePage_02 (self):
+        Tester.dialogTester.appendYes()
+
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+
+        Application.actionController.getAction (RemovePageAction.stringId).run (None)
+
+        self.assertEqual (self.wikiroot[u"Страница 1"], None)
+        self.assertNotEqual (self.wikiroot[u"Страница 2"], None)
+
+
+    def testActionRemovePage_03 (self):
+        Tester.dialogTester.appendYes()
+
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 2/Страница 3"]
+
+        Application.actionController.getAction (RemovePageAction.stringId).run (None)
+
+        self.assertEqual (self.wikiroot[u"Страница 2/Страница 3"], None)
+        self.assertNotEqual (self.wikiroot[u"Страница 2"], None)
