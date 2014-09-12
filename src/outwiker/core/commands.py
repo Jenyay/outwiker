@@ -403,8 +403,8 @@ def renamePage (page, newtitle):
                     _(u"Error"),
                     wx.ICON_ERROR | wx.OK)
 
-    except OSError as e:
-        MessageBox (_(u"Can't rename page\n%s") % unicode (e),
+    except OSError:
+        MessageBox (_(u'Can\'t rename page "{}" to "{}"').format (page.title, newtitle),
                     _(u"Error"),
                     wx.ICON_ERROR | wx.OK)
 
