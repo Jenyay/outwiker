@@ -1,11 +1,11 @@
 # -*- coding: UTF-8 -*-
 
-from test.fakewx.spinctrl import SpinCtrl
-from test.fakewx.combobox import ComboBox
-from test.fakewx.dialog import Dialog
-from test.fakewx.statictext import StaticText
-from test.fakewx.checkbox import CheckBox
-from test.fakewx.button import Button
+from .fakewx.spinctrl import SpinCtrl
+from .fakewx.combobox import ComboBox
+from .fakewx.dialog import Dialog
+from .fakewx.statictext import StaticText
+from .fakewx.checkbox import CheckBox
+from .fakewx.button import Button
 
 
 class FakeInsertDialog (Dialog):
