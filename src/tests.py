@@ -135,6 +135,7 @@ if __name__ == '__main__':
     from test.guitests.includedialog import IncludeDialogTest
     from test.guitests.sortpages import SortPagesTest
     from test.guitests.removepage import RemovePageGuiTest
+    from test.guitests.movepage import MovePageGuiTest
 
     if os.name == "nt":
         from test.guitests.fileicons import FileIconsTestWindows

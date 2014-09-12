@@ -513,7 +513,7 @@ class WikiPage (RootWikiPage):
         """
         Переместить запись к другому родителю
         """
-        if self.readonly:
+        if (self.readonly or newparent.readonly):
             raise ReadonlyException
 
         if self._parent == newparent:
