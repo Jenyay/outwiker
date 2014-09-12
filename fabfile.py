@@ -124,7 +124,7 @@ def ppaunstable ():
 
 def plugins():
     """
-    Создание архивов с плагинами
+    Создание архивов с плагинами (требуется 7z)
     """
     plugins = [
         "changepageuid",
@@ -157,7 +157,7 @@ def plugins():
 
 def source ():
     """
-    Сделать архивы с исходниками
+    Сделать архивы с исходниками (требуется git и 7z)
     """
     version = _getVersion()
 
@@ -201,7 +201,7 @@ def win():
 
 def wintests():
     """
-    Сборка тестов в exe-шники
+    Сборка тестов в exe-шник
     """
     with lcd ("src"):
         local ("python setup_tests.py build")
@@ -241,7 +241,7 @@ def debinstall():
 
 def locale():
     """
-    Обновить файлы локализации (outwiker.pot)
+    Обновить файл локализации (outwiker.pot)
     """
     with lcd ("src"):
         local (r'find . -iname "*.py" | xargs xgettext -o locale/outwiker.pot')
@@ -273,7 +273,7 @@ def test (params=""):
 
 def testcoverage (params=""):
     """
-    Запустить юнит-тесты и измерить их покрытие
+    Запустить юнит-тесты и измерить их покрытие (требуется coverage)
     """
     with lcd ("src"):
         local (u"coverage run tests.py " + params)
