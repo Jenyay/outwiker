@@ -137,6 +137,7 @@ if __name__ == '__main__':
     from test.guitests.removepage import RemovePageGuiTest
     from test.guitests.renamepage import RenamePageGuiTest
     from test.guitests.movepage import MovePageGuiTest
+    from test.guitests.openwiki import OpenWikiGuiTest
 
     if os.name == "nt":
         from test.guitests.fileicons import FileIconsTestWindows

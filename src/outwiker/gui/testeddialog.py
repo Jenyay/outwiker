@@ -21,3 +21,34 @@ class TestedDialog (wx.Dialog):
             return func (self)
 
         return super (TestedDialog, self).ShowModal()
+
+
+
+class TestedFileDialog (wx.FileDialog):
+    """
+    Диалог для выбора файлов, который можно тестировать
+    """
+    def __init__ (self, *args, **kwargs):
+        super (TestedFileDialog, self).__init__ (*args, **kwargs)
+
+        # Занчение используется для тестирования (для принудительной установки выбранного файла)
+        self._testedValue = None
+
+
+    def ShowModal (self):
+        func = Tester.dialogTester.pop()
+        if func is not None:
+            return func (self)
+
+        return super (TestedFileDialog, self).ShowModal()
+
+
+    def SetPathForTest (self, value):
+        """
+        Установить якобы выбранныый файл, путь до которого будет возвращем методом GetPath()
+        """
+        self._testedValue = value
+
+
+    def GetPath (self):
+        return self._testedValue if self._testedValue is not None else super (TestedFileDialog, self).GetPath()

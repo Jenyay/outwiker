@@ -25,6 +25,7 @@ from outwiker.gui.polyaction import PolyAction
 from outwiker.gui.dateformatdialog import DateFormatDialog
 from outwiker.gui.guiconfig import GeneralGuiConfig
 from outwiker.gui.tester import Tester
+from outwiker.gui.testeddialog import TestedFileDialog
 
 
 def MessageBox (*args, **kwargs):
@@ -122,16 +123,13 @@ def openWikiWithDialog (parent, readonly=False):
     """
     wikiroot = None
 
-    dialog = wx.FileDialog (parent,
-                            wildcard = "__page.opt|__page.opt",
-                            style = wx.FD_OPEN | wx.FD_FILE_MUST_EXIST)
-
-    if dialog.ShowModal() == wx.ID_OK:
-        fullpath = dialog.GetPath()
-        path = os.path.dirname(fullpath)
-        wikiroot = openWiki (path, readonly)
-
-    dialog.Destroy()
+    with TestedFileDialog (parent,
+                           wildcard = "__page.opt|__page.opt",
+                           style = wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as dialog:
+        if dialog.ShowModal() == wx.ID_OK:
+            fullpath = dialog.GetPath()
+            path = os.path.dirname(fullpath)
+            wikiroot = openWiki (path, readonly)
 
     return wikiroot
 
