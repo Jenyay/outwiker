@@ -3,7 +3,6 @@
 from basemainwnd import BaseMainWndTest
 from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
-from test.utils import removeWiki
 
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.pages.text.textpanel import TextPanel
@@ -16,20 +15,9 @@ class TextPageViewTest (BaseMainWndTest):
     def setUp (self):
         BaseMainWndTest.setUp (self)
 
-        self.path = u"../test/testwiki"
-        removeWiki (self.path)
-
-        self.wikiroot = WikiDocument.create (self.path)
-
         factory = TextPageFactory()
         factory.create (self.wikiroot, u"Страница", [])
         factory.create (self.wikiroot, u"Страница 2", [])
-
-
-    def tearDown (self):
-        BaseMainWndTest.tearDown (self)
-        Application.wikiroot = None
-        removeWiki (self.path)
 
 
     def testType (self):

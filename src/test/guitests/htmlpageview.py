@@ -8,7 +8,6 @@ from basemainwnd import BaseMainWndTest
 from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
 from outwiker.core.system import readTextFile
-from test.utils import removeWiki
 
 from outwiker.pages.html.htmlpage import HtmlPageFactory
 from outwiker.pages.html.htmlpageview import HtmlPageView
@@ -23,11 +22,6 @@ class HtmlPageViewTest (BaseMainWndTest):
         Application.onPostprocessing.clear()
         Application.onPreprocessing.clear()
 
-        self.path = u"../test/testwiki"
-        removeWiki (self.path)
-
-        self.wikiroot = WikiDocument.create (self.path)
-
         HtmlPageFactory().create (self.wikiroot, u"HTML-страница", [])
         HtmlPageFactory().create (self.wikiroot, u"HTML-страница 2", [])
 
@@ -36,8 +30,6 @@ class HtmlPageViewTest (BaseMainWndTest):
         BaseMainWndTest.tearDown (self)
         Application.onPostprocessing.clear()
         Application.onPreprocessing.clear()
-        Application.wikiroot = None
-        removeWiki (self.path)
 
 
     def testType (self):

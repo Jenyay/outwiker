@@ -1,10 +1,7 @@
 # -*- coding: UTF-8 -*-
 
-
 from basemainwnd import BaseMainWndTest
-from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
-from test.utils import removeWiki
 
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.pages.text.textpanel import TextPanel
@@ -26,11 +23,6 @@ class PagePanelTest (BaseMainWndTest):
     def setUp (self):
         BaseMainWndTest.setUp (self)
 
-        self.path = u"../test/testwiki"
-        removeWiki (self.path)
-
-        self.wikiroot = WikiDocument.create (self.path)
-
         TextPageFactory().create (self.wikiroot, u"Текстовая страница", [])
         TextPageFactory().create (self.wikiroot, u"Текстовая страница 2", [])
 
@@ -42,12 +34,6 @@ class PagePanelTest (BaseMainWndTest):
 
         SearchPageFactory().create (self.wikiroot, u"Поисковая страница", [])
         SearchPageFactory().create (self.wikiroot, u"Поисковая страница 2", [])
-
-
-    def tearDown (self):
-        BaseMainWndTest.tearDown (self)
-        Application.wikiroot = None
-        removeWiki (self.path)
 
 
     def testEmpty (self):

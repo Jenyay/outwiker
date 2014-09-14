@@ -37,13 +37,13 @@ class ParserLinkTest (unittest.TestCase):
         self.path = u"../test/testwiki"
         removeWiki (self.path)
 
-        self.rootwiki = WikiDocument.create (self.path)
+        self.wikiroot = WikiDocument.create (self.path)
 
         factory = WikiPageFactory()
-        factory.create (self.rootwiki, u"Страница 2", [])
-        factory.create (self.rootwiki[u"Страница 2"], u"#Страница3", [])
-        factory.create (self.rootwiki[u"Страница 2"], u"# Страница 4", [])
-        self.testPage = self.rootwiki[u"Страница 2"]
+        factory.create (self.wikiroot, u"Страница 2", [])
+        factory.create (self.wikiroot[u"Страница 2"], u"#Страница3", [])
+        factory.create (self.wikiroot[u"Страница 2"], u"# Страница 4", [])
+        self.testPage = self.wikiroot[u"Страница 2"]
 
         files = [u"accept.png", u"add.png", u"anchor.png", u"filename.tmp",
                  u"файл с пробелами.tmp", u"картинка с пробелами.png",

@@ -18,18 +18,18 @@ class ConfigPagesTest (unittest.TestCase):
         self.path = u"../test/testwiki"
         removeWiki (self.path)
 
-        self.rootwiki = WikiDocument.create (self.path)
+        self.wikiroot = WikiDocument.create (self.path)
 
         factory = TextPageFactory()
-        factory.create (self.rootwiki, u"Страница 1", [])
-        factory.create (self.rootwiki, u"Страница 2", [])
-        factory.create (self.rootwiki[u"Страница 2"], u"Страница 3", [])
-        factory.create (self.rootwiki[u"Страница 2/Страница 3"], u"Страница 4", [])
-        factory.create (self.rootwiki[u"Страница 1"], u"Страница 5", [])
+        factory.create (self.wikiroot, u"Страница 1", [])
+        factory.create (self.wikiroot, u"Страница 2", [])
+        factory.create (self.wikiroot[u"Страница 2"], u"Страница 3", [])
+        factory.create (self.wikiroot[u"Страница 2/Страница 3"], u"Страница 4", [])
+        factory.create (self.wikiroot[u"Страница 1"], u"Страница 5", [])
 
 
     def testSetRootParams (self):
-        param = StringOption (self.rootwiki.params, u"TestSection_1", u"value1", u"")
+        param = StringOption (self.wikiroot.params, u"TestSection_1", u"value1", u"")
         param.value = u"Значение 1"
 
         self.assertEqual (param.value, u"Значение 1")
@@ -42,10 +42,10 @@ class ConfigPagesTest (unittest.TestCase):
 
 
     def testSetPageParams (self):
-        param = StringOption (self.rootwiki[u"Страница 1"].params, u"TestSection_1", u"value1", u"")
+        param = StringOption (self.wikiroot[u"Страница 1"].params, u"TestSection_1", u"value1", u"")
         param.value = u"Значение 1"
 
-        param2 = StringOption (self.rootwiki[u"Страница 1"].params, u"TestSection_1", u"value1", u"")
+        param2 = StringOption (self.wikiroot[u"Страница 1"].params, u"TestSection_1", u"value1", u"")
         self.assertEqual (param.value, u"Значение 1")
         self.assertEqual (param2.value, u"Значение 1")
 
@@ -60,7 +60,7 @@ class ConfigPagesTest (unittest.TestCase):
         """
         Проверка того, что установка параметров страницы как полноценной вики не портит исходные параметры
         """
-        param = StringOption (self.rootwiki[u"Страница 1"].params, u"TestSection_1", u"value1", u"")
+        param = StringOption (self.wikiroot[u"Страница 1"].params, u"TestSection_1", u"value1", u"")
         param.value = u"Значение 1"
 
         path = os.path.join (self.path, u"Страница 1")

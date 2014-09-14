@@ -9,6 +9,9 @@ from outwiker.core.commands import registerActions
 from outwiker.gui.mainwindow import MainWindow
 from outwiker.gui.guiconfig import GeneralGuiConfig, MainWindowConfig
 from outwiker.gui.actioncontroller import ActionController
+from outwiker.gui.tester import Tester
+from outwiker.core.tree import WikiDocument
+from test.utils import removeWiki
 
 
 class BaseMainWndTest(unittest.TestCase):
@@ -28,6 +31,8 @@ class BaseMainWndTest(unittest.TestCase):
 
 
     def setUp(self):
+        self.path = u"../test/Пример вики бла-бла-бла"
+
         Application.config.remove_section (MainWindowConfig.MAIN_WINDOW_SECTION)
 
         generalConfig = GeneralGuiConfig (Application.config)
@@ -41,10 +46,20 @@ class BaseMainWndTest(unittest.TestCase):
         registerActions (Application)
         self.wnd.createGui()
 
+        removeWiki (self.path)
+        self.wikiroot = WikiDocument.create (self.path)
+
+        Tester.dialogTester.clear()
+        Application.wikiroot = None
+
 
     def tearDown (self):
         wx.GetApp().Yield()
         self.wnd.Close()
         self.wnd.Hide()
         self._processEvents()
+
         Application.mainWindow = None
+        Application.selectedPage = None
+        Application.wikiroot = None
+        removeWiki (self.path)

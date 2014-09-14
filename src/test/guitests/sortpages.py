@@ -1,32 +1,14 @@
 # -*- coding: UTF-8 -*-
 
 from outwiker.core.application import Application
-from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.actions.sortchildalpha import SortChildAlphabeticalAction
 from outwiker.actions.sortsiblingsalpha import SortSiblingsAlphabeticalAction
 
 from .basemainwnd import BaseMainWndTest
-from test.utils import removeWiki
 
 
 class SortPagesTest(BaseMainWndTest):
-    def setUp (self):
-        BaseMainWndTest.setUp (self)
-
-        self.path = u"../test/testwiki"
-        removeWiki (self.path)
-
-        self.wikiroot = WikiDocument.create (self.path)
-
-
-    def tearDown (self):
-        BaseMainWndTest.tearDown (self)
-        Application.selectedPage = None
-        Application.wikiroot = None
-        removeWiki (self.path)
-
-
     def testChildrenRoot (self):
         factory = TextPageFactory()
         factory.create (self.wikiroot, u"Страница 1", [])

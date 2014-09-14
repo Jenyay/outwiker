@@ -17,25 +17,25 @@ class ManualEditTest (unittest.TestCase):
         self.path = u"../test/testwiki"
         removeWiki (self.path)
 
-        self.rootwiki = WikiDocument.create (self.path)
+        self.wikiroot = WikiDocument.create (self.path)
 
         factory = TextPageFactory()
-        factory.create (self.rootwiki, u"Страница 1", [])
-        factory.create (self.rootwiki, u"Страница 2", [])
-        factory.create (self.rootwiki[u"Страница 2"], u"Страница 3", [])
-        factory.create (self.rootwiki[u"Страница 2/Страница 3"], u"Страница 4", [])
-        factory.create (self.rootwiki[u"Страница 1"], u"Страница 5", [])
+        factory.create (self.wikiroot, u"Страница 1", [])
+        factory.create (self.wikiroot, u"Страница 2", [])
+        factory.create (self.wikiroot[u"Страница 2"], u"Страница 3", [])
+        factory.create (self.wikiroot[u"Страница 2/Страница 3"], u"Страница 4", [])
+        factory.create (self.wikiroot[u"Страница 1"], u"Страница 5", [])
 
-        self.rootwiki[u"Страница 1"].content = u"1234567"
-        self.rootwiki[u"Страница 2/Страница 3"].content = u"Абырвалг"
-        self.rootwiki[u"Страница 2/Страница 3/Страница 4"].content = u"Тарам-пам-пам"
-        self.rootwiki[u"Страница 1/Страница 5"].content = u"111111"
+        self.wikiroot[u"Страница 1"].content = u"1234567"
+        self.wikiroot[u"Страница 2/Страница 3"].content = u"Абырвалг"
+        self.wikiroot[u"Страница 2/Страница 3/Страница 4"].content = u"Тарам-пам-пам"
+        self.wikiroot[u"Страница 1/Страница 5"].content = u"111111"
 
-        self.rootwiki[u"Страница 1"].tags = [u"метка 1"]
-        self.rootwiki[u"Страница 2/Страница 3"].tags = [u"метка 2", u"метка 3"]
-        self.rootwiki[u"Страница 2/Страница 3/Страница 4"].tags = [u"метка 1", u"метка 2", u"метка 4"]
+        self.wikiroot[u"Страница 1"].tags = [u"метка 1"]
+        self.wikiroot[u"Страница 2/Страница 3"].tags = [u"метка 2", u"метка 3"]
+        self.wikiroot[u"Страница 2/Страница 3/Страница 4"].tags = [u"метка 1", u"метка 2", u"метка 4"]
 
-        self.rootwiki[u"Страница 2/Страница 3/Страница 4"].icon = "../test/images/feed.gif"
+        self.wikiroot[u"Страница 2/Страница 3/Страница 4"].icon = "../test/images/feed.gif"
 
 
     def tearDown(self):
@@ -47,7 +47,7 @@ class ManualEditTest (unittest.TestCase):
 
 
     def testContentRenamedPage (self):
-        page = self.rootwiki[u"Страница 1"]
+        page = self.wikiroot[u"Страница 1"]
 
         newtitle = u"Новый заголовок"
         newpath = os.path.join (page.root.path, newtitle)
@@ -58,7 +58,7 @@ class ManualEditTest (unittest.TestCase):
 
 
     def testTagsRenamedPage (self):
-        page = self.rootwiki[u"Страница 1"]
+        page = self.wikiroot[u"Страница 1"]
 
         newtitle = u"Новый заголовок"
         newpath = os.path.join (page.root.path, newtitle)
@@ -67,11 +67,11 @@ class ManualEditTest (unittest.TestCase):
 
         page.tags = [u"bla-bla-bla"]
         self.assertTrue (os.path.exists (page.path))
-        self.assertEqual (self.rootwiki[u"Страница 1"], page)
+        self.assertEqual (self.wikiroot[u"Страница 1"], page)
 
 
     def testReloadWiki (self):
-        page = self.rootwiki[u"Страница 1"]
+        page = self.wikiroot[u"Страница 1"]
 
         newtitle = u"Новый заголовок"
         newpath = os.path.join (page.root.path, newtitle)

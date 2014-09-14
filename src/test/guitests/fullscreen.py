@@ -10,10 +10,6 @@ from basemainwnd import BaseMainWndTest
 
 
 class FullScreenTest (BaseMainWndTest):
-    def setUp (self):
-        BaseMainWndTest.setUp (self)
-
-
     def testFullScreenStart (self):
         fullScreenActionInfo = Application.actionController.getActionInfo (FullScreenAction.stringId)
 

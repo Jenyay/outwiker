@@ -1,12 +1,9 @@
 # -*- coding: UTF-8 -*-
 
 from basemainwnd import BaseMainWndTest
-from outwiker.core.application import Application
-from outwiker.core.tree import WikiDocument
 from outwiker.core.commands import renamePage
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.gui.tester import Tester
-from test.utils import removeWiki
 
 
 class RenamePageGuiTest (BaseMainWndTest):
@@ -16,24 +13,10 @@ class RenamePageGuiTest (BaseMainWndTest):
     def setUp (self):
         BaseMainWndTest.setUp (self)
 
-        self.path = u"../test/testwiki"
-        removeWiki (self.path)
-
-        self.wikiroot = WikiDocument.create (self.path)
-
         factory = TextPageFactory()
         factory.create (self.wikiroot, u"Страница 1", [])
         factory.create (self.wikiroot, u"Страница 2", [])
         factory.create (self.wikiroot[u"Страница 2"], u"Страница 3", [])
-
-        Tester.dialogTester.clear()
-
-
-    def tearDown (self):
-        BaseMainWndTest.tearDown (self)
-        Application.selectedPage = None
-        Application.wikiroot = None
-        removeWiki (self.path)
 
 
     def testCommand_01 (self):

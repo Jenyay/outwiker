@@ -5,7 +5,6 @@ import wx
 from basemainwnd import BaseMainWndTest
 from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
-from test.utils import removeWiki
 
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.wikipageview import WikiPageView
@@ -23,21 +22,14 @@ class WikiPageViewTest (BaseMainWndTest):
 
         WikiConfig (Application.config).showHtmlCodeOptions.value = False
 
-        self.path = u"../test/testwiki"
-        removeWiki (self.path)
-
-        self.wikiroot = WikiDocument.create (self.path)
-
         WikiPageFactory().create (self.wikiroot, u"Викистраница", [])
         WikiPageFactory().create (self.wikiroot, u"Викистраница 2", [])
 
 
     def tearDown (self):
         BaseMainWndTest.tearDown (self)
-        Application.wikiroot = None
         Application.onPostprocessing.clear()
         Application.onPreprocessing.clear()
-        removeWiki (self.path)
 
 
     def testType (self):

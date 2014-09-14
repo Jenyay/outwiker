@@ -20,17 +20,17 @@ class HtmlPagesTest(unittest.TestCase):
         self.__eventcount = 0
         self.__eventSender = None
 
-        self.rootwiki = WikiDocument.create (self.path)
+        self.wikiroot = WikiDocument.create (self.path)
 
         factory = HtmlPageFactory()
-        factory.create (self.rootwiki, u"Страница 1", [])
-        factory.create (self.rootwiki, u"Страница 2", [])
+        factory.create (self.wikiroot, u"Страница 1", [])
+        factory.create (self.wikiroot, u"Страница 2", [])
 
-        self.rootwiki.onPageUpdate += self.__onPageUpdate
+        self.wikiroot.onPageUpdate += self.__onPageUpdate
 
 
     def tearDown(self):
-        self.rootwiki.onPageUpdate -= self.__onPageUpdate
+        self.wikiroot.onPageUpdate -= self.__onPageUpdate
         removeWiki (self.path)
 
 
@@ -40,31 +40,31 @@ class HtmlPagesTest(unittest.TestCase):
 
 
     def testAutoLineWrap (self):
-        self.assertTrue (self.rootwiki[u"Страница 1"].autoLineWrap)
+        self.assertTrue (self.wikiroot[u"Страница 1"].autoLineWrap)
 
-        self.rootwiki[u"Страница 1"].autoLineWrap = False
-        self.assertFalse (self.rootwiki[u"Страница 1"].autoLineWrap)
+        self.wikiroot[u"Страница 1"].autoLineWrap = False
+        self.assertFalse (self.wikiroot[u"Страница 1"].autoLineWrap)
 
 
     def testAutoLineWrapReload (self):
-        self.rootwiki[u"Страница 1"].autoLineWrap = False
-        self.assertFalse (self.rootwiki[u"Страница 1"].autoLineWrap)
+        self.wikiroot[u"Страница 1"].autoLineWrap = False
+        self.assertFalse (self.wikiroot[u"Страница 1"].autoLineWrap)
 
         wiki = WikiDocument.load (self.path)
         self.assertFalse (wiki[u"Страница 1"].autoLineWrap)
 
 
     def testAutoLineWrapRename (self):
-        self.rootwiki[u"Страница 1"].autoLineWrap = False
-        self.rootwiki[u"Страница 1"].title = u"Страница 666"
-        self.assertFalse (self.rootwiki[u"Страница 666"].autoLineWrap)
+        self.wikiroot[u"Страница 1"].autoLineWrap = False
+        self.wikiroot[u"Страница 1"].title = u"Страница 666"
+        self.assertFalse (self.wikiroot[u"Страница 666"].autoLineWrap)
 
         wiki = WikiDocument.load (self.path)
         self.assertFalse (wiki[u"Страница 666"].autoLineWrap)
 
 
     def testLineWrapEvent (self):
-        self.rootwiki[u"Страница 1"].autoLineWrap = False
+        self.wikiroot[u"Страница 1"].autoLineWrap = False
 
         self.assertEqual (self.__eventcount, 1)
-        self.assertEqual (self.__eventSender, self.rootwiki[u"Страница 1"])
+        self.assertEqual (self.__eventSender, self.wikiroot[u"Страница 1"])

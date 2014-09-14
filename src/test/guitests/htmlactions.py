@@ -1,11 +1,9 @@
 # -*- coding: UTF-8 -*-
 
 from basemainwnd import BaseMainWndTest
-from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
 from outwiker.pages.html.htmlpage import HtmlPageFactory
 from outwiker.actions.polyactionsid import *
-from test.utils import removeWiki
 
 
 class HtmlActionsTest (BaseMainWndTest):
@@ -47,10 +45,6 @@ class HtmlActionsTest (BaseMainWndTest):
             (HORLINE_STR_ID, u"<hr>"),
         ]
 
-        self.path = u"../test/testwiki"
-        removeWiki (self.path)
-
-        self.wikiroot = WikiDocument.create (self.path)
         HtmlPageFactory().create (self.wikiroot, u"HTML-страница", [])
         HtmlPageFactory().create (self.wikiroot, u"temp", [])
 
@@ -62,12 +56,6 @@ class HtmlActionsTest (BaseMainWndTest):
 
         Application.wikiroot = self.wikiroot
         Application.selectedPage = self.testpage
-
-
-    def tearDown (self):
-        BaseMainWndTest.tearDown (self)
-        Application.wikiroot = None
-        removeWiki (self.path)
 
 
     def _getEditor (self):

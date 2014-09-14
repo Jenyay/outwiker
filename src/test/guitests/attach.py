@@ -17,11 +17,6 @@ class AttachPanelTest (BaseMainWndTest):
     def setUp (self):
         BaseMainWndTest.setUp (self)
 
-        self.path = u"../test/testwiki"
-        removeWiki (self.path)
-
-        self.wikiroot = WikiDocument.create (self.path)
-
         factory = TextPageFactory()
         factory.create (self.wikiroot, u"Страница 1", [])
         factory.create (self.wikiroot, u"Страница 2", [])
@@ -32,12 +27,6 @@ class AttachPanelTest (BaseMainWndTest):
         filesPath = u"../test/samplefiles/"
         self.files = [u"accept.png", u"add.png", u"anchor.png", u"файл с пробелами.tmp", u"dir"]
         self.fullFilesPath = [os.path.join (filesPath, fname) for fname in self.files]
-
-
-    def tearDown (self):
-        BaseMainWndTest.tearDown (self)
-        Application.wikiroot = None
-        removeWiki (self.path)
 
 
     def testEmpty (self):

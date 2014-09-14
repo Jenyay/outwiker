@@ -2,21 +2,14 @@
 
 from outwiker.actions.tabs import AddTabAction, CloseTabAction, PreviousTabAction, NextTabAction
 from outwiker.core.application import Application
-from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
 
 from .basemainwnd import BaseMainWndTest
-from test.utils import removeWiki
 
 
 class ActionTabsTest(BaseMainWndTest):
     def setUp (self):
         BaseMainWndTest.setUp (self)
-
-        self.path = u"../test/testwiki"
-        removeWiki (self.path)
-
-        self.wikiroot = WikiDocument.create (self.path)
 
         factory = TextPageFactory()
         factory.create (self.wikiroot, u"Страница 1", [])
@@ -27,12 +20,6 @@ class ActionTabsTest(BaseMainWndTest):
 
         self._tabsController = Application.mainWindow.tabsController
         self._actionController = Application.actionController
-
-
-    def tearDown (self):
-        BaseMainWndTest.tearDown (self)
-        Application.wikiroot = None
-        removeWiki (self.path)
 
 
     def testCloneEmpty2 (self):

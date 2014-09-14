@@ -22,7 +22,7 @@ class WikiCommandDatesTest (unittest.TestCase):
         self._config = GeneralGuiConfig (Application.config)
         self._srcDateFormat = self._config.dateTimeFormat.value
 
-        self.testPage = self.rootwiki[u"Страница 1"]
+        self.testPage = self.wikiroot[u"Страница 1"]
         self.testPage.creationdatetime = datetime (2014, 8, 20, 11, 59, 1)
         self.testPage.datetime = datetime (2015, 9, 21, 12, 10, 20)
 
@@ -35,10 +35,10 @@ class WikiCommandDatesTest (unittest.TestCase):
         self.path = u"../test/testwiki"
         removeWiki (self.path)
 
-        self.rootwiki = WikiDocument.create (self.path)
+        self.wikiroot = WikiDocument.create (self.path)
 
         factory = WikiPageFactory()
-        factory.create (self.rootwiki, u"Страница 1", [])
+        factory.create (self.wikiroot, u"Страница 1", [])
 
 
     def tearDown(self):

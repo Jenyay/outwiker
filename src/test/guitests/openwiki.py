@@ -20,12 +20,8 @@ class OpenWikiGuiTest (BaseMainWndTest):
     def setUp (self):
         BaseMainWndTest.setUp (self)
 
-        self.path = u"../test/testwiki"
         self.path2 = u"../test/testwiki2"
-        removeWiki (self.path)
         removeWiki (self.path2)
-
-        self.wikiroot = WikiDocument.create (self.path)
 
         factory = TextPageFactory()
         factory.create (self.wikiroot, u"Страница 1", [])
@@ -37,9 +33,6 @@ class OpenWikiGuiTest (BaseMainWndTest):
 
     def tearDown (self):
         BaseMainWndTest.tearDown (self)
-        Application.selectedPage = None
-        Application.wikiroot = None
-        removeWiki (self.path)
         removeWiki (self.path2)
 
 

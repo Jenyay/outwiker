@@ -21,17 +21,17 @@ class AttachmentTest (unittest.TestCase):
         self.path = u"../test/testwiki"
         removeWiki (self.path)
 
-        self.rootwiki = WikiDocument.create (self.path)
+        self.wikiroot = WikiDocument.create (self.path)
 
-        TextPageFactory().create (self.rootwiki, u"Страница 1", [])
-        self.page = self.rootwiki[u"Страница 1"]
+        TextPageFactory().create (self.wikiroot, u"Страница 1", [])
+        self.page = self.wikiroot[u"Страница 1"]
 
         filesPath = u"../test/samplefiles/"
         self.files = [u"accept.png", u"add.png", u"anchor.png", u"файл с пробелами.tmp", u"dir"]
         self.fullFilesPath = [os.path.join (filesPath, fname) for fname in self.files]
 
         self.prev_kwargs = None
-        Application.wikiroot = self.rootwiki
+        Application.wikiroot = self.wikiroot
 
 
     def tearDown (self):

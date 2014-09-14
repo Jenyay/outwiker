@@ -2,11 +2,9 @@
 
 from basemainwnd import BaseMainWndTest
 from outwiker.core.application import Application
-from outwiker.core.tree import WikiDocument
 from outwiker.core.commands import movePage
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.gui.tester import Tester
-from test.utils import removeWiki
 
 
 class MovePageGuiTest (BaseMainWndTest):
@@ -16,27 +14,12 @@ class MovePageGuiTest (BaseMainWndTest):
     def setUp (self):
         BaseMainWndTest.setUp (self)
 
-        self.path = u"../test/testwiki"
-        removeWiki (self.path)
-
-        self.wikiroot = WikiDocument.create (self.path)
-
         factory = TextPageFactory()
         factory.create (self.wikiroot, u"Страница 1", [])
         factory.create (self.wikiroot, u"Страница 2", [])
         factory.create (self.wikiroot, u"Страница 3", [])
         factory.create (self.wikiroot[u"Страница 2"], u"Страница 3", [])
         factory.create (self.wikiroot[u"Страница 2"], u"Страница 4", [])
-
-        Tester.dialogTester.clear()
-        Application.wikiroot = None
-
-
-    def tearDown (self):
-        BaseMainWndTest.tearDown (self)
-        Application.selectedPage = None
-        Application.wikiroot = None
-        removeWiki (self.path)
 
 
     def testCommandMove_01 (self):

@@ -32,9 +32,9 @@ class ParserAlignTest (unittest.TestCase):
         self.path = u"../test/testwiki"
         removeWiki (self.path)
 
-        self.rootwiki = WikiDocument.create (self.path)
-        WikiPageFactory().create (self.rootwiki, u"Страница 2", [])
-        self.testPage = self.rootwiki[u"Страница 2"]
+        self.wikiroot = WikiDocument.create (self.path)
+        WikiPageFactory().create (self.wikiroot, u"Страница 2", [])
+        self.testPage = self.wikiroot[u"Страница 2"]
 
         files = [u"accept.png", u"add.png", u"anchor.png", u"filename.tmp",
                  u"файл с пробелами.tmp", u"картинка с пробелами.png",
@@ -43,7 +43,7 @@ class ParserAlignTest (unittest.TestCase):
 
         fullFilesPath = [os.path.join (self.filesPath, fname) for fname in files]
 
-        self.attach_page2 = Attachment (self.rootwiki[u"Страница 2"])
+        self.attach_page2 = Attachment (self.wikiroot[u"Страница 2"])
 
         # Прикрепим к двум страницам файлы
         Attachment (self.testPage).attach (fullFilesPath)

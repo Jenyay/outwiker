@@ -13,7 +13,6 @@ class ChildListDialogTest (BaseMainWndTest):
     def setUp (self):
         BaseMainWndTest.setUp (self)
         self._dialog = ChildListDialog (Application.mainWindow)
-        Tester.dialogTester.clear()
 
 
     def testCancel (self):

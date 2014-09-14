@@ -1,28 +1,11 @@
 # -*- coding: UTF-8 -*-
 
 from basemainwnd import BaseMainWndTest
-from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.core.application import Application
-from test.utils import removeWiki
 
 
 class TreeTest (BaseMainWndTest):
-    def setUp (self):
-        BaseMainWndTest.setUp (self)
-
-        self.path = u"../test/testwiki"
-        removeWiki (self.path)
-
-        self.wikiroot = WikiDocument.create (self.path)
-
-
-    def tearDown (self):
-        BaseMainWndTest.tearDown (self)
-        Application.wikiroot = None
-        removeWiki (self.path)
-
-
     def _getTreeCtrl (self):
         return self.wnd.treePanel.panel.treeCtrl
 
@@ -127,7 +110,7 @@ class TreeTest (BaseMainWndTest):
         Application.wikiroot = self.wikiroot
 
         rootitem = tree.GetRootItem()
-        self.assertEqual (tree.GetItemText (rootitem), u"testwiki")
+        self.assertEqual (tree.GetItemText (rootitem), u"Пример вики бла-бла-бла")
         self.assertEqual (tree.GetChildrenCount (rootitem), 0)
         self.assertEqual (tree.GetItemData(rootitem).GetData(), self.wikiroot)
 

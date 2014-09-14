@@ -30,25 +30,25 @@ class TextPageCreationTest(unittest.TestCase):
         removeWiki (self.path)
         self.eventcount = 0
 
-        self.rootwiki = WikiDocument.create (self.path)
+        self.wikiroot = WikiDocument.create (self.path)
 
         factory = TextPageFactory()
-        factory.create (self.rootwiki, u"Страница 1", [])
-        factory.create (self.rootwiki, u"Страница 2", [])
-        factory.create (self.rootwiki[u"Страница 2"], u"Страница 3", [])
-        factory.create (self.rootwiki[u"Страница 2/Страница 3"], u"Страница 4", [])
-        factory.create (self.rootwiki[u"Страница 1"], u"Страница 5", [])
+        factory.create (self.wikiroot, u"Страница 1", [])
+        factory.create (self.wikiroot, u"Страница 2", [])
+        factory.create (self.wikiroot[u"Страница 2"], u"Страница 3", [])
+        factory.create (self.wikiroot[u"Страница 2/Страница 3"], u"Страница 4", [])
+        factory.create (self.wikiroot[u"Страница 1"], u"Страница 5", [])
 
-        self.rootwiki[u"Страница 1"].content = u"1234567"
-        self.rootwiki[u"Страница 2/Страница 3"].content = u"Абырвалг"
-        self.rootwiki[u"Страница 2/Страница 3/Страница 4"].content = u"Тарам-пам-пам"
-        self.rootwiki[u"Страница 1/Страница 5"].content = u"111111"
+        self.wikiroot[u"Страница 1"].content = u"1234567"
+        self.wikiroot[u"Страница 2/Страница 3"].content = u"Абырвалг"
+        self.wikiroot[u"Страница 2/Страница 3/Страница 4"].content = u"Тарам-пам-пам"
+        self.wikiroot[u"Страница 1/Страница 5"].content = u"111111"
 
-        self.rootwiki[u"Страница 1"].tags = [u"метка 1"]
-        self.rootwiki[u"Страница 2/Страница 3"].tags = [u"метка 2", u"метка 3"]
-        self.rootwiki[u"Страница 2/Страница 3/Страница 4"].tags = [u"метка 1", u"метка 2", u"метка 4"]
+        self.wikiroot[u"Страница 1"].tags = [u"метка 1"]
+        self.wikiroot[u"Страница 2/Страница 3"].tags = [u"метка 2", u"метка 3"]
+        self.wikiroot[u"Страница 2/Страница 3/Страница 4"].tags = [u"метка 1", u"метка 2", u"метка 4"]
 
-        self.rootwiki[u"Страница 2/Страница 3/Страница 4"].icon = "../test/images/feed.gif"
+        self.wikiroot[u"Страница 2/Страница 3/Страница 4"].icon = "../test/images/feed.gif"
 
         self.icons = ["../test/images/icon.gif",
                       "../test/images/icon.png",
@@ -60,11 +60,11 @@ class TextPageCreationTest(unittest.TestCase):
 
     def tearDown(self):
         Application.wikiroot = None
-        os.chmod (self._getConfigPath (self.rootwiki), stat.S_IRUSR | stat.S_IXUSR | stat.S_IWUSR)
-        os.chmod (self._getConfigPath (self.rootwiki[u"Страница 1"]), stat.S_IRUSR | stat.S_IXUSR | stat.S_IWUSR)
+        os.chmod (self._getConfigPath (self.wikiroot), stat.S_IRUSR | stat.S_IXUSR | stat.S_IWUSR)
+        os.chmod (self._getConfigPath (self.wikiroot[u"Страница 1"]), stat.S_IRUSR | stat.S_IXUSR | stat.S_IWUSR)
 
-        if self.rootwiki[u"Страница 2"] is not None:
-            os.chmod (self._getConfigPath (self.rootwiki[u"Страница 2"]), stat.S_IRUSR | stat.S_IXUSR | stat.S_IWUSR)
+        if self.wikiroot[u"Страница 2"] is not None:
+            os.chmod (self._getConfigPath (self.wikiroot[u"Страница 2"]), stat.S_IRUSR | stat.S_IXUSR | stat.S_IWUSR)
 
         removeWiki (self.path)
 
@@ -74,10 +74,10 @@ class TextPageCreationTest(unittest.TestCase):
 
 
     def testEventChangeContent (self):
-        Application.wikiroot = self.rootwiki
+        Application.wikiroot = self.wikiroot
         Application.onPageUpdate += self.onPageUpdate
 
-        self.rootwiki[u"Страница 1"].content = u"тарам-там-там"
+        self.wikiroot[u"Страница 1"].content = u"тарам-там-там"
         self.assertEqual (self.eventcount, 1)
 
         Application.onPageUpdate -= self.onPageUpdate
@@ -86,21 +86,21 @@ class TextPageCreationTest(unittest.TestCase):
     def testNoEventChangeContent (self):
         Application.onPageUpdate += self.onPageUpdate
 
-        self.rootwiki[u"Страница 1"].content = u"тарам-там-там"
+        self.wikiroot[u"Страница 1"].content = u"тарам-там-там"
         self.assertEqual (self.eventcount, 0)
 
         Application.onPageUpdate -= self.onPageUpdate
 
 
     def testEventChangeTags (self):
-        Application.wikiroot = self.rootwiki
+        Application.wikiroot = self.wikiroot
         Application.onPageUpdate += self.onPageUpdate
 
-        self.rootwiki[u"Страница 1"].tags = [u"метка 1", u"метка 2", u"метка 4"]
+        self.wikiroot[u"Страница 1"].tags = [u"метка 1", u"метка 2", u"метка 4"]
         self.assertEqual (self.eventcount, 1)
 
         # То же самое содержимое
-        self.rootwiki[u"Страница 1"].tags = [u"метка 1", u"метка 2", u"метка 4"]
+        self.wikiroot[u"Страница 1"].tags = [u"метка 1", u"метка 2", u"метка 4"]
         self.assertEqual (self.eventcount, 1)
 
         Application.onPageUpdate -= self.onPageUpdate
@@ -109,7 +109,7 @@ class TextPageCreationTest(unittest.TestCase):
     def testNoEventChangeTags (self):
         Application.onPageUpdate += self.onPageUpdate
 
-        self.rootwiki[u"Страница 1"].tags = [u"метка 1", u"метка 2", u"метка 4"]
+        self.wikiroot[u"Страница 1"].tags = [u"метка 1", u"метка 2", u"метка 4"]
         self.assertEqual (self.eventcount, 0)
 
         Application.onPageUpdate -= self.onPageUpdate
@@ -117,35 +117,35 @@ class TextPageCreationTest(unittest.TestCase):
 
     def testAttach1 (self):
         # Получить путь до прикрепленных файлов, не создавая ее
-        path = Attachment (self.rootwiki[u"Страница 2"]).getAttachPath()
+        path = Attachment (self.wikiroot[u"Страница 2"]).getAttachPath()
         # Вложенных файлов еще нет, поэтому нет и папки
         self.assertFalse (os.path.exists (path))
 
 
     def testAttach2 (self):
         # Получить путь до прикрепленных файлов, не создавая ее
-        path = Attachment (self.rootwiki[u"Страница 2"]).getAttachPath(create=False)
+        path = Attachment (self.wikiroot[u"Страница 2"]).getAttachPath(create=False)
         # Вложенных файлов еще нет, поэтому нет и папки
         self.assertFalse (os.path.exists (path))
 
     def testAttach3 (self):
         # Получить путь до прикрепленных файлов, создав ее
-        path = Attachment (self.rootwiki[u"Страница 2"]).getAttachPath(create=True)
+        path = Attachment (self.wikiroot[u"Страница 2"]).getAttachPath(create=True)
         # Вложенных файлов еще нет, поэтому нет и папки
         self.assertTrue (os.path.exists (path))
 
 
     def testTypeCreation (self):
-        textPage = TextPageFactory().create (self.rootwiki, u"Текстовая страница", [])
+        textPage = TextPageFactory().create (self.wikiroot, u"Текстовая страница", [])
         self.assertEqual (TextWikiPage, type(textPage))
 
-        wikiPage = WikiPageFactory().create (self.rootwiki, u"Вики-страница", [])
+        wikiPage = WikiPageFactory().create (self.wikiroot, u"Вики-страница", [])
         self.assertEqual (WikiWikiPage, type(wikiPage))
 
-        htmlPage = HtmlPageFactory().create (self.rootwiki, u"HTML-страница", [])
+        htmlPage = HtmlPageFactory().create (self.wikiroot, u"HTML-страница", [])
         self.assertEqual (HtmlWikiPage, type(htmlPage))
 
-        searchPage = SearchPageFactory().create (self.rootwiki, u"Поисковая страница", [])
+        searchPage = SearchPageFactory().create (self.wikiroot, u"Поисковая страница", [])
         self.assertEqual (SearchWikiPage, type(searchPage))
 
 
@@ -202,17 +202,17 @@ class TextPageCreationTest(unittest.TestCase):
 
 
     def testInvalidPageName (self):
-        children = len (self.rootwiki.children)
-        self.assertRaises (Exception, TextPageFactory.create, self.rootwiki, u"+*5name:/\0", [])
-        self.assertEqual (len (self.rootwiki.children), children)
+        children = len (self.wikiroot.children)
+        self.assertRaises (Exception, TextPageFactory.create, self.wikiroot, u"+*5name:/\0", [])
+        self.assertEqual (len (self.wikiroot.children), children)
 
 
     def testInvalidPageName2 (self):
         self.assertRaises (DublicateTitle,
-                           TextPageFactory().create, self.rootwiki, u"страНица 1", [])
+                           TextPageFactory().create, self.wikiroot, u"страНица 1", [])
 
         self.assertRaises (DublicateTitle,
-                           TextPageFactory().create, self.rootwiki[u"Страница 1"], u"страНица 5", [])
+                           TextPageFactory().create, self.wikiroot[u"Страница 1"], u"страНица 5", [])
 
 
     def testPageCreate (self):
@@ -231,20 +231,20 @@ class TextPageCreationTest(unittest.TestCase):
 
 
     def testSelection1 (self):
-        self.rootwiki.selectedPage = self.rootwiki[u"Страница 2/Страница 3"]
-        self.assertEqual (self.rootwiki.selectedPage, self.rootwiki[u"Страница 2/Страница 3"])
+        self.wikiroot.selectedPage = self.wikiroot[u"Страница 2/Страница 3"]
+        self.assertEqual (self.wikiroot.selectedPage, self.wikiroot[u"Страница 2/Страница 3"])
 
 
     def testSelection3 (self):
-        self.rootwiki.selectedPage = None
+        self.wikiroot.selectedPage = None
         wiki2 = WikiDocument.load (self.path)
 
         self.assertEqual (wiki2.selectedPage, None)
 
 
     def testSelection5 (self):
-        self.rootwiki.selectedPage = self.rootwiki[u"Страница 2/Страница 3"]
-        self.rootwiki[u"Страница 2"].remove()
+        self.wikiroot.selectedPage = self.wikiroot[u"Страница 2/Страница 3"]
+        self.wikiroot[u"Страница 2"].remove()
 
         wiki2 = WikiDocument.load (self.path)
 
@@ -252,7 +252,7 @@ class TextPageCreationTest(unittest.TestCase):
 
 
     def testReadOnly_01 (self):
-        os.chmod (self._getConfigPath (self.rootwiki[u"Страница 1"]), stat.S_IRUSR | stat.S_IXUSR)
+        os.chmod (self._getConfigPath (self.wikiroot[u"Страница 1"]), stat.S_IRUSR | stat.S_IXUSR)
 
         wiki2 = WikiDocument.load (self.path)
         self.assertTrue (wiki2[u"Страница 1"].readonly)
@@ -261,7 +261,7 @@ class TextPageCreationTest(unittest.TestCase):
 
 
     def testReadOnly_02 (self):
-        os.chmod (self._getConfigPath (self.rootwiki), stat.S_IRUSR | stat.S_IXUSR)
+        os.chmod (self._getConfigPath (self.wikiroot), stat.S_IRUSR | stat.S_IXUSR)
 
         wiki2 = WikiDocument.load (self.path)
         self.assertTrue (wiki2[u"Страница 1"].readonly)
@@ -270,7 +270,7 @@ class TextPageCreationTest(unittest.TestCase):
 
 
     def testReadOnly_03 (self):
-        os.chmod (self._getConfigPath (self.rootwiki[u"Страница 2"]), stat.S_IRUSR | stat.S_IXUSR)
+        os.chmod (self._getConfigPath (self.wikiroot[u"Страница 2"]), stat.S_IRUSR | stat.S_IXUSR)
 
         wiki2 = WikiDocument.load (self.path)
         self.assertTrue (wiki2[u"Страница 2"].readonly)

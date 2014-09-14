@@ -19,14 +19,14 @@ class PageThumbmakerTest (unittest.TestCase):
         self.path = u"../test/testwiki"
         removeWiki (self.path)
 
-        self.rootwiki = WikiDocument.create (self.path)
+        self.wikiroot = WikiDocument.create (self.path)
 
         factory = TextPageFactory()
-        factory.create (self.rootwiki, u"Страница 1", [])
-        factory.create (self.rootwiki, u"Страница 2", [])
-        factory.create (self.rootwiki[u"Страница 2"], u"Страница 3", [])
-        factory.create (self.rootwiki[u"Страница 2/Страница 3"], u"Страница 4", [])
-        factory.create (self.rootwiki[u"Страница 1"], u"Страница 5", [])
+        factory.create (self.wikiroot, u"Страница 1", [])
+        factory.create (self.wikiroot, u"Страница 2", [])
+        factory.create (self.wikiroot[u"Страница 2"], u"Страница 3", [])
+        factory.create (self.wikiroot[u"Страница 2/Страница 3"], u"Страница 4", [])
+        factory.create (self.wikiroot[u"Страница 1"], u"Страница 5", [])
 
 
     def tearDown(self):
@@ -37,7 +37,7 @@ class PageThumbmakerTest (unittest.TestCase):
         images_dir = "../test/images"
 
         fname_in = "first.jpg"
-        page = self.rootwiki[u"Страница 1"]
+        page = self.wikiroot[u"Страница 1"]
 
         Attachment (page).attach ([os.path.join (images_dir, fname_in)])
 
@@ -58,7 +58,7 @@ class PageThumbmakerTest (unittest.TestCase):
         images_dir = "../test/images"
 
         fname_in = "outwiker_1.1.0_02.png"
-        page = self.rootwiki[u"Страница 1"]
+        page = self.wikiroot[u"Страница 1"]
 
         Attachment (page).attach ([os.path.join (images_dir, fname_in)])
 
@@ -79,7 +79,7 @@ class PageThumbmakerTest (unittest.TestCase):
         images_dir = "../test/images"
 
         fname_in = "first.jpg"
-        page = self.rootwiki[u"Страница 1"]
+        page = self.wikiroot[u"Страница 1"]
 
         Attachment (page).attach ([os.path.join (images_dir, fname_in)])
 
@@ -100,7 +100,7 @@ class PageThumbmakerTest (unittest.TestCase):
         images_dir = "../test/images"
 
         fname_in = "outwiker_1.1.0_02.png"
-        page = self.rootwiki[u"Страница 1"]
+        page = self.wikiroot[u"Страница 1"]
 
         Attachment (page).attach ([os.path.join (images_dir, fname_in)])
 
@@ -121,7 +121,7 @@ class PageThumbmakerTest (unittest.TestCase):
         images_dir = "../test/images"
 
         fname_in = "first.jpg"
-        page = self.rootwiki[u"Страница 1"]
+        page = self.wikiroot[u"Страница 1"]
 
         Attachment (page).attach ([os.path.join (images_dir, fname_in)])
 
@@ -144,7 +144,7 @@ class PageThumbmakerTest (unittest.TestCase):
         images_dir = "../test/images"
 
         fname_in = "first_vertical.jpeg"
-        page = self.rootwiki[u"Страница 1"]
+        page = self.wikiroot[u"Страница 1"]
 
         Attachment (page).attach ([os.path.join (images_dir, fname_in)])
 
@@ -167,7 +167,7 @@ class PageThumbmakerTest (unittest.TestCase):
         images_dir = "../test/images"
 
         fname_in = "outwiker_1.1.0_02.png"
-        page = self.rootwiki[u"Страница 1"]
+        page = self.wikiroot[u"Страница 1"]
 
         Attachment (page).attach ([os.path.join (images_dir, fname_in)])
 

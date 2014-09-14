@@ -20,7 +20,7 @@ class WikiAttachListCommandTest (unittest.TestCase):
         self.encoding = "utf8"
 
         self.__createWiki()
-        self.testPage = self.rootwiki[u"Страница 1"]
+        self.testPage = self.wikiroot[u"Страница 1"]
 
         factory = ParserFactory()
         self.parser = factory.make (self.testPage, Application.config)
@@ -41,8 +41,8 @@ class WikiAttachListCommandTest (unittest.TestCase):
         self.path = u"../test/testwiki"
         removeWiki (self.path)
 
-        self.rootwiki = WikiDocument.create (self.path)
-        WikiPageFactory().create (self.rootwiki, u"Страница 1", [])
+        self.wikiroot = WikiDocument.create (self.path)
+        WikiPageFactory().create (self.wikiroot, u"Страница 1", [])
 
 
     def tearDown(self):

@@ -27,18 +27,18 @@ class WikiChildListCommandTest (unittest.TestCase):
         self.path = u"../test/testwiki"
         removeWiki (self.path)
 
-        self.rootwiki = WikiDocument.create (self.path)
+        self.wikiroot = WikiDocument.create (self.path)
 
         factory = WikiPageFactory()
-        factory.create (self.rootwiki, u"Страница 1", [])
+        factory.create (self.wikiroot, u"Страница 1", [])
         time.sleep (0.1)
-        factory.create (self.rootwiki[u"Страница 1"], u"Страница 2", [])
+        factory.create (self.wikiroot[u"Страница 1"], u"Страница 2", [])
         time.sleep (0.1)
-        factory.create (self.rootwiki[u"Страница 1"], u"Страница 4", [])
+        factory.create (self.wikiroot[u"Страница 1"], u"Страница 4", [])
         time.sleep (0.1)
-        factory.create (self.rootwiki[u"Страница 1"], u"СТРАНИЦА 3", [])
+        factory.create (self.wikiroot[u"Страница 1"], u"СТРАНИЦА 3", [])
 
-        self.testPage = self.rootwiki[u"Страница 1"]
+        self.testPage = self.wikiroot[u"Страница 1"]
 
 
     def tearDown(self):
@@ -70,7 +70,7 @@ class WikiChildListCommandTest (unittest.TestCase):
 
     def test3 (self):
         text = u"(:childlist:)"
-        self.rootwiki[u"Страница 1/Страница 4"].order = 0
+        self.wikiroot[u"Страница 1/Страница 4"].order = 0
 
         result = self.parser.toHtml (text)
 
@@ -83,7 +83,7 @@ class WikiChildListCommandTest (unittest.TestCase):
 
     def test4 (self):
         text = u"(:childlist sort=name:)"
-        self.rootwiki[u"Страница 1/Страница 4"].order = 0
+        self.wikiroot[u"Страница 1/Страница 4"].order = 0
 
         result = self.parser.toHtml (text)
 
@@ -96,7 +96,7 @@ class WikiChildListCommandTest (unittest.TestCase):
 
     def test5 (self):
         text = u"(:childlist sort=descendname:)"
-        self.rootwiki[u"Страница 1/Страница 4"].order = 0
+        self.wikiroot[u"Страница 1/Страница 4"].order = 0
 
         result = self.parser.toHtml (text)
 
@@ -109,7 +109,7 @@ class WikiChildListCommandTest (unittest.TestCase):
 
     def test6 (self):
         text = u"(:childlist sort=descendorder:)"
-        self.rootwiki[u"Страница 1/Страница 4"].order = 0
+        self.wikiroot[u"Страница 1/Страница 4"].order = 0
 
         result = self.parser.toHtml (text)
 
@@ -145,11 +145,11 @@ class WikiChildListCommandTest (unittest.TestCase):
     def testSortEdit_01 (self):
         text = u"(:childlist sort=edit:)"
 
-        self.rootwiki[u"Страница 1/Страница 2"].content = u"111"
+        self.wikiroot[u"Страница 1/Страница 2"].content = u"111"
         time.sleep (0.1)
-        self.rootwiki[u"Страница 1/СТРАНИЦА 3"].content = u"111"
+        self.wikiroot[u"Страница 1/СТРАНИЦА 3"].content = u"111"
         time.sleep (0.1)
-        self.rootwiki[u"Страница 1/Страница 4"].content = u"111"
+        self.wikiroot[u"Страница 1/Страница 4"].content = u"111"
 
         result = self.parser.toHtml (text)
 
@@ -163,11 +163,11 @@ class WikiChildListCommandTest (unittest.TestCase):
     def testSortEdit_02 (self):
         text = u"(:childlist sort=descendedit:)"
 
-        self.rootwiki[u"Страница 1/Страница 2"].content = u"111"
+        self.wikiroot[u"Страница 1/Страница 2"].content = u"111"
         time.sleep (0.1)
-        self.rootwiki[u"Страница 1/СТРАНИЦА 3"].content = u"111"
+        self.wikiroot[u"Страница 1/СТРАНИЦА 3"].content = u"111"
         time.sleep (0.1)
-        self.rootwiki[u"Страница 1/Страница 4"].content = u"111"
+        self.wikiroot[u"Страница 1/Страница 4"].content = u"111"
 
         result = self.parser.toHtml (text)
 
@@ -181,11 +181,11 @@ class WikiChildListCommandTest (unittest.TestCase):
     def testSortEdit_03 (self):
         text = u"(:childlist sort=edit:)"
 
-        self.rootwiki[u"Страница 1/Страница 2"].content = u"111"
+        self.wikiroot[u"Страница 1/Страница 2"].content = u"111"
         time.sleep (0.1)
-        self.rootwiki[u"Страница 1/Страница 4"].content = u"111"
+        self.wikiroot[u"Страница 1/Страница 4"].content = u"111"
         time.sleep (0.1)
-        self.rootwiki[u"Страница 1/СТРАНИЦА 3"].content = u"111"
+        self.wikiroot[u"Страница 1/СТРАНИЦА 3"].content = u"111"
 
         result = self.parser.toHtml (text)
 

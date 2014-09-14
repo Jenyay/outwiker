@@ -27,9 +27,9 @@ class ParserListTest (unittest.TestCase):
         self.path = u"../test/testwiki"
         removeWiki (self.path)
 
-        self.rootwiki = WikiDocument.create (self.path)
-        WikiPageFactory().create (self.rootwiki, u"Страница 2", [])
-        self.testPage = self.rootwiki[u"Страница 2"]
+        self.wikiroot = WikiDocument.create (self.path)
+        WikiPageFactory().create (self.wikiroot, u"Страница 2", [])
+        self.testPage = self.wikiroot[u"Страница 2"]
 
 
     def tearDown(self):

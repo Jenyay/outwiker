@@ -16,15 +16,15 @@ class RemovePagesTest (unittest.TestCase):
         removeWiki (self.path)
         Application.wikiroot = None
 
-        self.rootwiki = WikiDocument.create (self.path)
+        self.wikiroot = WikiDocument.create (self.path)
 
         factory = TextPageFactory()
-        factory.create (self.rootwiki, u"Страница 1", [])
-        factory.create (self.rootwiki, u"Страница 2", [])
-        factory.create (self.rootwiki[u"Страница 2"], u"Страница 3", [])
-        factory.create (self.rootwiki[u"Страница 2/Страница 3"], u"Страница 4", [])
-        factory.create (self.rootwiki[u"Страница 1"], u"Страница 5", [])
-        factory.create (self.rootwiki, u"Страница 6", [])
+        factory.create (self.wikiroot, u"Страница 1", [])
+        factory.create (self.wikiroot, u"Страница 2", [])
+        factory.create (self.wikiroot[u"Страница 2"], u"Страница 3", [])
+        factory.create (self.wikiroot[u"Страница 2/Страница 3"], u"Страница 4", [])
+        factory.create (self.wikiroot[u"Страница 1"], u"Страница 5", [])
+        factory.create (self.wikiroot, u"Страница 6", [])
 
         self.pageRemoveCount = 0
         Application.wikiroot = None
@@ -43,24 +43,24 @@ class RemovePagesTest (unittest.TestCase):
 
     def testRemove1 (self):
         Application.onPageRemove += self.onPageRemove
-        Application.wikiroot = self.rootwiki
+        Application.wikiroot = self.wikiroot
 
         # Удаляем страницу из корня
-        page6 = self.rootwiki[u"Страница 6"]
+        page6 = self.wikiroot[u"Страница 6"]
         page6.remove()
-        self.assertEqual (len (self.rootwiki), 2)
-        self.assertEqual (self.rootwiki[u"Страница 6"], None)
+        self.assertEqual (len (self.wikiroot), 2)
+        self.assertEqual (self.wikiroot[u"Страница 6"], None)
         self.assertTrue (page6.isRemoved)
         self.assertEqual (self.pageRemoveCount, 1)
 
         # Удаляем подстраницу
-        page3 = self.rootwiki[u"Страница 2/Страница 3"]
-        page4 = self.rootwiki[u"Страница 2/Страница 3/Страница 4"]
+        page3 = self.wikiroot[u"Страница 2/Страница 3"]
+        page4 = self.wikiroot[u"Страница 2/Страница 3/Страница 4"]
         page3.remove()
 
-        self.assertEqual (len (self.rootwiki[u"Страница 2"]), 0)
-        self.assertEqual (self.rootwiki[u"Страница 2/Страница 3"], None)
-        self.assertEqual (self.rootwiki[u"Страница 2/Страница 3/Страница 4"], None)
+        self.assertEqual (len (self.wikiroot[u"Страница 2"]), 0)
+        self.assertEqual (self.wikiroot[u"Страница 2/Страница 3"], None)
+        self.assertEqual (self.wikiroot[u"Страница 2/Страница 3/Страница 4"], None)
         self.assertTrue (page3.isRemoved)
         self.assertTrue (page4.isRemoved)
         self.assertEqual (self.pageRemoveCount, 3)
@@ -69,28 +69,28 @@ class RemovePagesTest (unittest.TestCase):
 
 
     def testRemove2 (self):
-        Application.wikiroot = self.rootwiki
-        Application.selectedPage = self.rootwiki[u"Страница 2"]
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 2"]
 
-        self.rootwiki[u"Страница 2"].remove()
+        self.wikiroot[u"Страница 2"].remove()
 
         self.assertEqual (Application.selectedPage, None)
 
 
     def testRemove3 (self):
-        Application.wikiroot = self.rootwiki
-        Application.selectedPage = self.rootwiki[u"Страница 2/Страница 3/Страница 4"]
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 2/Страница 3/Страница 4"]
 
-        self.rootwiki[u"Страница 2"].remove()
+        self.wikiroot[u"Страница 2"].remove()
 
         self.assertEqual (Application.selectedPage, None)
 
 
     def testRemove4 (self):
-        Application.wikiroot = self.rootwiki
-        Application.selectedPage = self.rootwiki[u"Страница 2/Страница 3"]
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 2/Страница 3"]
 
-        self.rootwiki[u"Страница 2"].remove()
+        self.wikiroot[u"Страница 2"].remove()
 
         self.assertEqual (Application.selectedPage, None)
 
@@ -99,10 +99,10 @@ class RemovePagesTest (unittest.TestCase):
         Application.onPageRemove += self.onPageRemove
 
         # Удаляем страницу из корня
-        page6 = self.rootwiki[u"Страница 6"]
+        page6 = self.wikiroot[u"Страница 6"]
         page6.remove()
-        self.assertEqual (len (self.rootwiki), 2)
-        self.assertEqual (self.rootwiki[u"Страница 6"], None)
+        self.assertEqual (len (self.wikiroot), 2)
+        self.assertEqual (self.wikiroot[u"Страница 6"], None)
         self.assertTrue (page6.isRemoved)
         self.assertEqual (self.pageRemoveCount, 0)
 
@@ -113,34 +113,34 @@ class RemovePagesTest (unittest.TestCase):
         """
         Провкерка свойства isRemoved
         """
-        page6 = self.rootwiki[u"Страница 6"]
+        page6 = self.wikiroot[u"Страница 6"]
         page6.remove()
         self.assertTrue (page6.isRemoved)
 
         # Удаляем подстраницу
-        page3 = self.rootwiki[u"Страница 2/Страница 3"]
-        page4 = self.rootwiki[u"Страница 2/Страница 3/Страница 4"]
+        page3 = self.wikiroot[u"Страница 2/Страница 3"]
+        page4 = self.wikiroot[u"Страница 2/Страница 3/Страница 4"]
         page3.remove()
 
         self.assertTrue (page3.isRemoved)
         self.assertTrue (page4.isRemoved)
 
-        self.assertFalse (self.rootwiki[u"Страница 2"].isRemoved)
+        self.assertFalse (self.wikiroot[u"Страница 2"].isRemoved)
 
     def testRemoveSelectedPage1 (self):
         """
         Удаление выбранной страницы
         """
         # Если удаляется страница из корня, то никакая страница не выбирается
-        self.rootwiki.selectedPage = self.rootwiki[u"Страница 6"]
-        self.rootwiki[u"Страница 6"].remove()
+        self.wikiroot.selectedPage = self.wikiroot[u"Страница 6"]
+        self.wikiroot[u"Страница 6"].remove()
 
-        self.assertEqual (self.rootwiki.selectedPage, None)
+        self.assertEqual (self.wikiroot.selectedPage, None)
 
         # Если удаляется страница более глубокая, то выбранной страницей становится родитель
-        self.rootwiki.selectedPage = self.rootwiki[u"Страница 2/Страница 3/Страница 4"]
-        self.rootwiki.selectedPage.remove()
-        self.assertEqual (self.rootwiki.selectedPage, self.rootwiki[u"Страница 2/Страница 3"])
+        self.wikiroot.selectedPage = self.wikiroot[u"Страница 2/Страница 3/Страница 4"]
+        self.wikiroot.selectedPage.remove()
+        self.assertEqual (self.wikiroot.selectedPage, self.wikiroot[u"Страница 2/Страница 3"])
 
 
     def testRemoveSelectedPage2 (self):
@@ -148,43 +148,43 @@ class RemovePagesTest (unittest.TestCase):
         Удаление выбранной страницы
         """
         # Если удаляется страница более глубокая, то выбранной страницей становится родитель
-        self.rootwiki.selectedPage = self.rootwiki[u"Страница 2/Страница 3/Страница 4"]
-        self.rootwiki.selectedPage.remove()
-        self.assertEqual (self.rootwiki.selectedPage, self.rootwiki[u"Страница 2/Страница 3"])
+        self.wikiroot.selectedPage = self.wikiroot[u"Страница 2/Страница 3/Страница 4"]
+        self.wikiroot.selectedPage.remove()
+        self.assertEqual (self.wikiroot.selectedPage, self.wikiroot[u"Страница 2/Страница 3"])
 
 
     def testRemoveFromBookmarks1 (self):
         """
         Проверка того, что страница удаляется из закладок
         """
-        page = self.rootwiki[u"Страница 6"]
-        self.rootwiki.bookmarks.add (page)
+        page = self.wikiroot[u"Страница 6"]
+        self.wikiroot.bookmarks.add (page)
         page.remove()
 
-        self.assertFalse (self.rootwiki.bookmarks.pageMarked (page))
+        self.assertFalse (self.wikiroot.bookmarks.pageMarked (page))
 
 
     def testRemoveFromBookmarks2 (self):
         """
         Проверка того, что подстраница удаленной страницы удаляется из закладок
         """
-        page2 = self.rootwiki[u"Страница 2"]
-        page3 = self.rootwiki[u"Страница 2/Страница 3"]
-        page4 = self.rootwiki[u"Страница 2/Страница 3/Страница 4"]
+        page2 = self.wikiroot[u"Страница 2"]
+        page3 = self.wikiroot[u"Страница 2/Страница 3"]
+        page4 = self.wikiroot[u"Страница 2/Страница 3/Страница 4"]
 
-        self.rootwiki.bookmarks.add (page2)
-        self.rootwiki.bookmarks.add (page3)
-        self.rootwiki.bookmarks.add (page4)
+        self.wikiroot.bookmarks.add (page2)
+        self.wikiroot.bookmarks.add (page3)
+        self.wikiroot.bookmarks.add (page4)
 
         page2.remove()
 
-        self.assertFalse (self.rootwiki.bookmarks.pageMarked (page2))
-        self.assertFalse (self.rootwiki.bookmarks.pageMarked (page3))
-        self.assertFalse (self.rootwiki.bookmarks.pageMarked (page4))
+        self.assertFalse (self.wikiroot.bookmarks.pageMarked (page2))
+        self.assertFalse (self.wikiroot.bookmarks.pageMarked (page3))
+        self.assertFalse (self.wikiroot.bookmarks.pageMarked (page4))
 
 
     def testRemoveError1 (self):
-        page = self.rootwiki[u"Страница 2"]
+        page = self.wikiroot[u"Страница 2"]
         pagepath = page.path
 
         attach = Attachment (page)
@@ -196,19 +196,19 @@ class RemovePagesTest (unittest.TestCase):
                 page.remove()
             except IOError:
                 self.assertTrue (os.path.exists (pagepath))
-                self.assertNotEqual (self.rootwiki[u"Страница 2"], None)
-                self.assertTrue (os.path.exists (self.rootwiki[u"Страница 2"].path))
-                self.assertEqual (len (self.rootwiki), 3)
-                self.assertNotEqual (self.rootwiki[u"Страница 2/Страница 3"], None)
-                self.assertNotEqual (self.rootwiki[u"Страница 2/Страница 3/Страница 4"], None)
+                self.assertNotEqual (self.wikiroot[u"Страница 2"], None)
+                self.assertTrue (os.path.exists (self.wikiroot[u"Страница 2"].path))
+                self.assertEqual (len (self.wikiroot), 3)
+                self.assertNotEqual (self.wikiroot[u"Страница 2/Страница 3"], None)
+                self.assertNotEqual (self.wikiroot[u"Страница 2/Страница 3/Страница 4"], None)
             else:
-                self.assertEqual (self.rootwiki[u"Страница 2"], None)
+                self.assertEqual (self.wikiroot[u"Страница 2"], None)
                 self.assertFalse (os.path.exists (pagepath))
 
 
     def testRemoveError2 (self):
-        page1 = self.rootwiki[u"Страница 2"]
-        page2 = self.rootwiki[u"Страница 2/Страница 3"]
+        page1 = self.wikiroot[u"Страница 2"]
+        page2 = self.wikiroot[u"Страница 2/Страница 3"]
 
         pagepath = page1.path
 
@@ -221,11 +221,11 @@ class RemovePagesTest (unittest.TestCase):
                 page1.remove()
             except IOError:
                 self.assertTrue (os.path.exists (pagepath))
-                self.assertNotEqual (self.rootwiki[u"Страница 2"], None)
-                self.assertTrue (os.path.exists (self.rootwiki[u"Страница 2"].path))
-                self.assertEqual (len (self.rootwiki), 3)
-                self.assertNotEqual (self.rootwiki[u"Страница 2/Страница 3"], None)
-                self.assertNotEqual (self.rootwiki[u"Страница 2/Страница 3/Страница 4"], None)
+                self.assertNotEqual (self.wikiroot[u"Страница 2"], None)
+                self.assertTrue (os.path.exists (self.wikiroot[u"Страница 2"].path))
+                self.assertEqual (len (self.wikiroot), 3)
+                self.assertNotEqual (self.wikiroot[u"Страница 2/Страница 3"], None)
+                self.assertNotEqual (self.wikiroot[u"Страница 2/Страница 3/Страница 4"], None)
             else:
-                self.assertEqual (self.rootwiki[u"Страница 2"], None)
+                self.assertEqual (self.wikiroot[u"Страница 2"], None)
                 self.assertFalse (os.path.exists (pagepath))

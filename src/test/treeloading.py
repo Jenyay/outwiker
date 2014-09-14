@@ -253,15 +253,15 @@ class TextPageAttachmentTest (unittest.TestCase):
         self.path = u"../test/testwiki"
         removeWiki (self.path)
 
-        self.rootwiki = WikiDocument.create (self.path)
-        Application.wikiroot = self.rootwiki
+        self.wikiroot = WikiDocument.create (self.path)
+        Application.wikiroot = self.wikiroot
 
         factory = TextPageFactory()
-        factory.create (self.rootwiki, u"Страница 1", [])
-        factory.create (self.rootwiki, u"Страница 2", [])
-        factory.create (self.rootwiki[u"Страница 2"], u"Страница 3", [])
-        factory.create (self.rootwiki[u"Страница 2/Страница 3"], u"Страница 4", [])
-        factory.create (self.rootwiki[u"Страница 1"], u"Страница 5", [])
+        factory.create (self.wikiroot, u"Страница 1", [])
+        factory.create (self.wikiroot, u"Страница 2", [])
+        factory.create (self.wikiroot[u"Страница 2"], u"Страница 3", [])
+        factory.create (self.wikiroot[u"Страница 2/Страница 3"], u"Страница 4", [])
+        factory.create (self.wikiroot[u"Страница 1"], u"Страница 5", [])
 
     def tearDown(self):
         removeWiki (self.path)
@@ -281,15 +281,15 @@ class TextPageAttachmentTest (unittest.TestCase):
         fullFilesPath = [os.path.join (filesPath, fname) for fname in files]
 
         # Прикрепим к двум страницам файлы
-        Attachment (self.rootwiki[page1]).attach (fullFilesPath)
+        Attachment (self.wikiroot[page1]).attach (fullFilesPath)
 
         self.assertEqual (self.pageUpdateCount, 1)
-        self.assertEqual (self.pageUpdateSender, self.rootwiki[page1])
+        self.assertEqual (self.pageUpdateSender, self.wikiroot[page1])
 
-        Attachment (self.rootwiki[page3]).attach ([fullFilesPath[0], fullFilesPath[1]])
+        Attachment (self.wikiroot[page3]).attach ([fullFilesPath[0], fullFilesPath[1]])
 
         self.assertEqual (self.pageUpdateCount, 2)
-        self.assertEqual (self.pageUpdateSender, self.rootwiki[page3])
+        self.assertEqual (self.pageUpdateSender, self.wikiroot[page3])
 
         Application.onPageUpdate -= self.onPageUpdate
 
@@ -309,8 +309,8 @@ class TextPageAttachmentTest (unittest.TestCase):
         fullFilesPath = [os.path.join (filesPath, fname) for fname in files]
 
         # Прикрепим к двум страницам файлы
-        Attachment (self.rootwiki[page1]).attach (fullFilesPath)
-        Attachment (self.rootwiki[page3]).attach ([fullFilesPath[0], fullFilesPath[1]])
+        Attachment (self.wikiroot[page1]).attach (fullFilesPath)
+        Attachment (self.wikiroot[page3]).attach ([fullFilesPath[0], fullFilesPath[1]])
 
         # Заново загрузим вики
         wiki = WikiDocument.load (self.path)
@@ -342,24 +342,24 @@ class TextPageAttachmentTest (unittest.TestCase):
         fullFilesPath = [os.path.join (filesPath, fname) for fname in files]
 
         # Прикрепим к двум страницам файлы
-        Attachment (self.rootwiki[page1]).attach (fullFilesPath)
-        Attachment (self.rootwiki[page3]).attach ([fullFilesPath[0], fullFilesPath[1]])
+        Attachment (self.wikiroot[page1]).attach (fullFilesPath)
+        Attachment (self.wikiroot[page3]).attach ([fullFilesPath[0], fullFilesPath[1]])
 
         # Проверим, что файлы прикрепились к тем страницам, куда прикрепляли
-        self.assertEqual (len (Attachment (self.rootwiki[page1]).attachmentFull), 3)
-        self.assertEqual (len (Attachment (self.rootwiki[page3]).attachmentFull), 2)
-        self.assertEqual (len (Attachment (self.rootwiki[u"Страница 2"]).attachmentFull), 0)
+        self.assertEqual (len (Attachment (self.wikiroot[page1]).attachmentFull), 3)
+        self.assertEqual (len (Attachment (self.wikiroot[page3]).attachmentFull), 2)
+        self.assertEqual (len (Attachment (self.wikiroot[u"Страница 2"]).attachmentFull), 0)
 
         # Проверим пути до прикрепленных файлов
-        attachPathPage1 = TextPageAttachmentTest.getFullAttachPath (self.rootwiki, page1, files)
-        attachPathPage3 = TextPageAttachmentTest.getFullAttachPath (self.rootwiki, page3, files)
+        attachPathPage1 = TextPageAttachmentTest.getFullAttachPath (self.wikiroot, page1, files)
+        attachPathPage3 = TextPageAttachmentTest.getFullAttachPath (self.wikiroot, page3, files)
 
-        self.assertTrue (attachPathPage1[0] in Attachment (self.rootwiki[page1]).attachmentFull)
-        self.assertTrue (attachPathPage1[1] in Attachment (self.rootwiki[page1]).attachmentFull)
-        self.assertTrue (attachPathPage1[2] in Attachment (self.rootwiki[page1]).attachmentFull)
+        self.assertTrue (attachPathPage1[0] in Attachment (self.wikiroot[page1]).attachmentFull)
+        self.assertTrue (attachPathPage1[1] in Attachment (self.wikiroot[page1]).attachmentFull)
+        self.assertTrue (attachPathPage1[2] in Attachment (self.wikiroot[page1]).attachmentFull)
 
-        self.assertTrue (attachPathPage3[0] in Attachment (self.rootwiki[page3]).attachmentFull)
-        self.assertTrue (attachPathPage3[1] in Attachment (self.rootwiki[page3]).attachmentFull)
+        self.assertTrue (attachPathPage3[0] in Attachment (self.wikiroot[page3]).attachmentFull)
+        self.assertTrue (attachPathPage3[1] in Attachment (self.wikiroot[page3]).attachmentFull)
 
 
     @staticmethod

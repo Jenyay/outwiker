@@ -55,9 +55,9 @@ class TokenNamesTest (unittest.TestCase):
 
         removeWiki (self.path)
 
-        self.rootwiki = WikiDocument.create (self.path)
-        WikiPageFactory().create (self.rootwiki, u"Страница 2", [])
-        self.testPage = self.rootwiki[u"Страница 2"]
+        self.wikiroot = WikiDocument.create (self.path)
+        WikiPageFactory().create (self.wikiroot, u"Страница 2", [])
+        self.testPage = self.wikiroot[u"Страница 2"]
 
         files = [u"accept.png", u"add.png", u"anchor.png", u"filename.tmp",
                  u"файл с пробелами.tmp", u"картинка с пробелами.png",

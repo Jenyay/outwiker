@@ -2,34 +2,21 @@
 
 from outwiker.core.application import Application
 from outwiker.gui.guiconfig import MainWindowConfig
-from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
 
 from .basemainwnd import BaseMainWndTest
-from test.utils import removeWiki
 
 
 class MainWndTest(BaseMainWndTest):
     def setUp (self):
         BaseMainWndTest.setUp (self)
 
-        self.path = u"../test/testwiki"
-        removeWiki (self.path)
-
-        self.rootwiki = WikiDocument.create (self.path)
-
         factory = TextPageFactory()
-        factory.create (self.rootwiki, u"Страница 1", [])
-        factory.create (self.rootwiki, u"Страница 2", [])
-        factory.create (self.rootwiki[u"Страница 2"], u"Страница 3", [])
-        factory.create (self.rootwiki[u"Страница 2/Страница 3"], u"Страница 4", [])
-        factory.create (self.rootwiki[u"Страница 1"], u"Страница 5", [])
-
-
-    def tearDown (self):
-        BaseMainWndTest.tearDown (self)
-        Application.wikiroot = None
-        removeWiki (self.path)
+        factory.create (self.wikiroot, u"Страница 1", [])
+        factory.create (self.wikiroot, u"Страница 2", [])
+        factory.create (self.wikiroot[u"Страница 2"], u"Страница 3", [])
+        factory.create (self.wikiroot[u"Страница 2/Страница 3"], u"Страница 4", [])
+        factory.create (self.wikiroot[u"Страница 1"], u"Страница 5", [])
 
 
     def testProperties (self):
@@ -51,14 +38,14 @@ class MainWndTest(BaseMainWndTest):
 
         self.assertEqual (self.wnd.GetTitle(), u"OutWiker")
 
-        Application.wikiroot = self.rootwiki
-        self.assertEqual (self.wnd.GetTitle(), u"OutWiker -  - testwiki")
+        Application.wikiroot = self.wikiroot
+        self.assertEqual (self.wnd.GetTitle(), u"OutWiker -  - Пример вики бла-бла-бла")
 
-        self.rootwiki.selectedPage = self.rootwiki[u"Страница 1"]
-        self.assertEqual (self.wnd.GetTitle(), u"OutWiker - Страница 1 - testwiki")
+        self.wikiroot.selectedPage = self.wikiroot[u"Страница 1"]
+        self.assertEqual (self.wnd.GetTitle(), u"OutWiker - Страница 1 - Пример вики бла-бла-бла")
 
-        self.rootwiki.selectedPage = self.rootwiki[u"Страница 2/Страница 3"]
-        self.assertEqual (self.wnd.GetTitle(), u"OutWiker - Страница 3 - testwiki")
+        self.wikiroot.selectedPage = self.wikiroot[u"Страница 2/Страница 3"]
+        self.assertEqual (self.wnd.GetTitle(), u"OutWiker - Страница 3 - Пример вики бла-бла-бла")
 
 
     def testTitle2 (self):
@@ -67,11 +54,11 @@ class MainWndTest(BaseMainWndTest):
 
         self.assertEqual (self.wnd.GetTitle(), u"OutWiker")
 
-        Application.wikiroot = self.rootwiki
-        self.assertEqual (self.wnd.GetTitle(), u"testwiki -  - OutWiker")
+        Application.wikiroot = self.wikiroot
+        self.assertEqual (self.wnd.GetTitle(), u"Пример вики бла-бла-бла -  - OutWiker")
 
-        self.rootwiki.selectedPage = self.rootwiki[u"Страница 1"]
-        self.assertEqual (self.wnd.GetTitle(), u"testwiki - Страница 1 - OutWiker")
+        self.wikiroot.selectedPage = self.wikiroot[u"Страница 1"]
+        self.assertEqual (self.wnd.GetTitle(), u"Пример вики бла-бла-бла - Страница 1 - OutWiker")
 
-        self.rootwiki.selectedPage = self.rootwiki[u"Страница 2/Страница 3"]
-        self.assertEqual (self.wnd.GetTitle(), u"testwiki - Страница 3 - OutWiker")
+        self.wikiroot.selectedPage = self.wikiroot[u"Страница 2/Страница 3"]
+        self.assertEqual (self.wnd.GetTitle(), u"Пример вики бла-бла-бла - Страница 3 - OutWiker")

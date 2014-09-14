@@ -48,11 +48,11 @@ class BasePluginLoadingTest (BaseMainWndTest):
         # Здесь будет создаваться вики
         removeWiki (wikipath)
 
-        self.rootwiki = WikiDocument.create (wikipath)
-        WikiPageFactory().create (self.rootwiki, u"Викистраница", [])
-        TextPageFactory().create (self.rootwiki, u"Текст", [])
-        HtmlPageFactory().create (self.rootwiki, u"HTML", [])
-        SearchPageFactory().create (self.rootwiki, u"Search", [])
+        self.wikiroot = WikiDocument.create (wikipath)
+        WikiPageFactory().create (self.wikiroot, u"Викистраница", [])
+        TextPageFactory().create (self.wikiroot, u"Текст", [])
+        HtmlPageFactory().create (self.wikiroot, u"HTML", [])
+        SearchPageFactory().create (self.wikiroot, u"Search", [])
 
 
     def tearDown(self):
@@ -74,30 +74,30 @@ class BasePluginLoadingTest (BaseMainWndTest):
 
 
     def testDestroy_02 (self):
-        Application.wikiroot = self.rootwiki
+        Application.wikiroot = self.wikiroot
         Application.selectedPage = None
         self.loader.clear()
 
 
     def testDestroy_03 (self):
-        Application.wikiroot = self.rootwiki
-        Application.selectedPage = self.rootwiki[u"Викистраница"]
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Викистраница"]
         self.loader.clear()
 
 
     def testDestroy_04 (self):
-        Application.wikiroot = self.rootwiki
-        Application.selectedPage = self.rootwiki[u"Текст"]
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Текст"]
         self.loader.clear()
 
 
     def testDestroy_05 (self):
-        Application.wikiroot = self.rootwiki
-        Application.selectedPage = self.rootwiki[u"HTML"]
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"HTML"]
         self.loader.clear()
 
 
     def testDestroy_06 (self):
-        Application.wikiroot = self.rootwiki
-        Application.selectedPage = self.rootwiki[u"Search"]
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Search"]
         self.loader.clear()

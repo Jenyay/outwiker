@@ -5,10 +5,8 @@ import os.path
 from basemainwnd import BaseMainWndTest
 from outwiker.pages.wiki.actions.include import IncludeDialog, IncludeDialogController
 from outwiker.core.application import Application
-from outwiker.core.tree import WikiDocument
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.core.attachment import Attachment
-from test.utils import removeWiki
 from outwiker.gui.tester import Tester
 
 
@@ -20,11 +18,6 @@ class IncludeDialogTest (BaseMainWndTest):
         BaseMainWndTest.setUp (self)
         self._dialog = IncludeDialog (Application.mainWindow)
 
-        self.path = u"../test/testwiki"
-        removeWiki (self.path)
-
-        self.wikiroot = WikiDocument.create (self.path)
-
         WikiPageFactory().create (self.wikiroot, u"Викистраница", [])
         self.testedPage = self.wikiroot[u"Викистраница"]
 
@@ -34,12 +27,6 @@ class IncludeDialogTest (BaseMainWndTest):
 
         Attachment (self.testedPage).attach (self.fullFilesPath)
         Tester.dialogTester.clear()
-
-
-    def tearDown (self):
-        BaseMainWndTest.tearDown (self)
-        Application.wikiroot = None
-        removeWiki (self.path)
 
 
     def testCancel (self):

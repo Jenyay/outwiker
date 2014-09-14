@@ -1,10 +1,8 @@
 # -*- coding: UTF-8 -*-
 
 from basemainwnd import BaseMainWndTest
-from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
 from outwiker.pages.text.textpage import TextPageFactory
-from test.utils import removeWiki
 
 
 class TextEditorTest (BaseMainWndTest):
@@ -14,22 +12,12 @@ class TextEditorTest (BaseMainWndTest):
     def setUp (self):
         BaseMainWndTest.setUp (self)
 
-        self.path = u"../test/testwiki"
-        removeWiki (self.path)
-
-        self.wikiroot = WikiDocument.create (self.path)
         TextPageFactory().create (self.wikiroot, u"Страница", [])
 
         self.testpage = self.wikiroot[u"Страница"]
 
         Application.wikiroot = self.wikiroot
         Application.selectedPage = self.testpage
-
-
-    def tearDown (self):
-        BaseMainWndTest.tearDown (self)
-        Application.wikiroot = None
-        removeWiki (self.path)
 
 
     def _getEditor (self):

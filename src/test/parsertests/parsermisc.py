@@ -28,9 +28,9 @@ class ParserMiscTest (unittest.TestCase):
         self.path = u"../test/testwiki"
         removeWiki (self.path)
 
-        self.rootwiki = WikiDocument.create (self.path)
-        WikiPageFactory().create (self.rootwiki, u"Страница 2", [])
-        self.testPage = self.rootwiki[u"Страница 2"]
+        self.wikiroot = WikiDocument.create (self.path)
+        WikiPageFactory().create (self.wikiroot, u"Страница 2", [])
+        self.testPage = self.wikiroot[u"Страница 2"]
 
 
     def tearDown(self):
@@ -47,7 +47,7 @@ class ParserMiscTest (unittest.TestCase):
     def testParseWithoutAttaches (self):
         pagetitle = u"Страница 666"
 
-        WikiPageFactory().create (self.rootwiki, pagetitle, [])
-        parser = Parser(self.rootwiki[pagetitle], Application.config)
+        WikiPageFactory().create (self.wikiroot, pagetitle, [])
+        parser = Parser(self.wikiroot[pagetitle], Application.config)
 
         parser.toHtml (u"Attach:bla-bla-bla")
