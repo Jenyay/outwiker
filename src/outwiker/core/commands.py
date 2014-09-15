@@ -242,7 +242,7 @@ def createNewWiki (parentwnd):
             Application.wikiroot.selectedPage = firstPage
         except (IOError, OSError) as e:
             # TODO: проверить под Windows
-            MessageBox (_(u"Can't create wiki\n") + unicode (str (e), "utf8"),
+            MessageBox (_(u"Can't create wiki\n") + unicode (e.filename.encode (getOS().filesEncoding), "utf8"),
                         _(u"Error"), wx.OK | wx.ICON_ERROR)
 
     dlg.Destroy()
