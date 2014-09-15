@@ -12,7 +12,7 @@ from outwiker.actions.removepage import RemovePageAction
 
 class RemovePageGuiTest (BaseMainWndTest):
     """
-    Тесты окна со списком прикрепленных файлов
+    Тесты удаления страниц через интерфейс
     """
     def setUp (self):
         BaseMainWndTest.setUp (self)

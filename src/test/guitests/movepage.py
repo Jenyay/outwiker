@@ -9,7 +9,7 @@ from outwiker.gui.tester import Tester
 
 class MovePageGuiTest (BaseMainWndTest):
     """
-    Тесты окна со списком прикрепленных файлов
+    Тесты перемещения страниц
     """
     def setUp (self):
         BaseMainWndTest.setUp (self)

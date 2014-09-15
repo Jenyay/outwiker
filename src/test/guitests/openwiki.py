@@ -15,7 +15,7 @@ from test.utils import removeWiki
 
 class OpenWikiGuiTest (BaseMainWndTest):
     """
-    Тесты окна со списком прикрепленных файлов
+    Тесты открытия вики через интерфейс
     """
     def setUp (self):
         BaseMainWndTest.setUp (self)

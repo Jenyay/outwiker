@@ -8,7 +8,7 @@ from outwiker.gui.tester import Tester
 
 class RenamePageGuiTest (BaseMainWndTest):
     """
-    Тесты окна со списком прикрепленных файлов
+    Тесты переименования страниц
     """
     def setUp (self):
         BaseMainWndTest.setUp (self)
