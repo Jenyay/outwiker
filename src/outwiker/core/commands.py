@@ -221,7 +221,7 @@ def createNewWiki (parentwnd):
     Создать новую вики
     parentwnd - окно-владелец диалога выбора файла
     """
-    dlg = wx.FileDialog (parentwnd, style = wx.FD_SAVE)
+    dlg = TestedFileDialog (parentwnd, style = wx.FD_SAVE)
 
     newPageTitle = _(u"First Wiki Page")
     newPageContent = _(u"""!! First Wiki Page
