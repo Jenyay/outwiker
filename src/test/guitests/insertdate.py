@@ -8,6 +8,7 @@ from basemainwnd import BaseMainWndTest
 from outwiker.core.application import Application
 from outwiker.gui.tester import Tester
 from outwiker.pages.wiki.wikipage import WikiPageFactory
+from outwiker.pages.html.htmlpage import HtmlPageFactory
 from outwiker.actions.polyactionsid import CURRENT_DATE
 from outwiker.gui.guiconfig import GeneralGuiConfig
 
@@ -19,14 +20,17 @@ class InsertDateTest (BaseMainWndTest):
     def setUp (self):
         super (InsertDateTest, self).setUp()
 
-        factory = WikiPageFactory()
-        factory.create (self.wikiroot, u"Страница 1", [])
+        WikiPageFactory().create (self.wikiroot, u"Викистраница", [])
+        HtmlPageFactory().create (self.wikiroot, u"HTML", [])
 
-        self.page = self.wikiroot[u"Страница 1"]
-        self.page.content = u""
+        self._wikipage = self.wikiroot[u"Викистраница"]
+        self._wikipage.content = u""
+
+        self._htmlpage = self.wikiroot[u"Викистраница"]
+        self._htmlpage.content = u""
 
         Application.wikiroot = self.wikiroot
-        Application.selectedPage = self.page
+        Application.selectedPage = self._wikipage
 
 
     def _setFormat_01 (self, dialog):
@@ -44,18 +48,33 @@ class InsertDateTest (BaseMainWndTest):
         return wx.ID_OK
 
 
-    def testInsertDate_01 (self):
+    def testInsertDate_01_wiki (self):
         Tester.dialogTester.append (self._setFormat_01)
 
         Application.actionController.getAction (CURRENT_DATE).run (None)
 
         # For saving current page
         Application.selectedPage = None
-        Application.selectedPage = self.page
+        Application.selectedPage = self._wikipage
 
         rightResult = datetime.now().strftime ("%d; %m; %Y")
 
-        self.assertEqual (self.page.content, rightResult)
+        self.assertEqual (self._wikipage.content, rightResult)
+        self.assertEqual (Tester.dialogTester.count, 0)
+
+
+    def testInsertDate_01_html (self):
+        Tester.dialogTester.append (self._setFormat_01)
+
+        Application.actionController.getAction (CURRENT_DATE).run (None)
+
+        # For saving current page
+        Application.selectedPage = None
+        Application.selectedPage = self._htmlpage
+
+        rightResult = datetime.now().strftime ("%d; %m; %Y")
+
+        self.assertEqual (self._htmlpage.content, rightResult)
         self.assertEqual (Tester.dialogTester.count, 0)
 
 
@@ -66,9 +85,9 @@ class InsertDateTest (BaseMainWndTest):
 
         # For saving current page
         Application.selectedPage = None
-        Application.selectedPage = self.page
+        Application.selectedPage = self._wikipage
 
-        self.assertEqual (self.page.content, u"")
+        self.assertEqual (self._wikipage.content, u"")
         self.assertEqual (Tester.dialogTester.count, 0)
 
 
@@ -79,9 +98,9 @@ class InsertDateTest (BaseMainWndTest):
 
         # For saving current page
         Application.selectedPage = None
-        Application.selectedPage = self.page
+        Application.selectedPage = self._wikipage
 
-        self.assertEqual (self.page.content, u"")
+        self.assertEqual (self._wikipage.content, u"")
         self.assertEqual (Tester.dialogTester.count, 0)
 
 
@@ -94,11 +113,11 @@ class InsertDateTest (BaseMainWndTest):
 
         # For saving current page
         Application.selectedPage = None
-        Application.selectedPage = self.page
+        Application.selectedPage = self._wikipage
 
         rightResult = datetime.now().strftime ("%d - %m - %Y")
 
-        self.assertEqual (self.page.content, rightResult)
+        self.assertEqual (self._wikipage.content, rightResult)
         self.assertEqual (Tester.dialogTester.count, 0)
 
 
@@ -111,9 +130,9 @@ class InsertDateTest (BaseMainWndTest):
 
         # For saving current page
         Application.selectedPage = None
-        Application.selectedPage = self.page
+        Application.selectedPage = self._wikipage
 
         rightResult = datetime.now().strftime ("%d; %m; %Y")
 
-        self.assertEqual (self.page.content, rightResult)
+        self.assertEqual (self._wikipage.content, rightResult)
         self.assertEqual (Tester.dialogTester.count, 0)
