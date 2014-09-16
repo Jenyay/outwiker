@@ -139,6 +139,7 @@ if __name__ == '__main__':
     from test.guitests.movepage import MovePageGuiTest
     from test.guitests.openwiki import OpenWikiGuiTest
     from test.guitests.newwiki import NewWikiGuiTest
+    from test.guitests.insertdate import InsertDateTest
 
     if os.name == "nt":
         from test.guitests.fileicons import FileIconsTestWindows
