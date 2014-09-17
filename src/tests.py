@@ -35,6 +35,8 @@ if __name__ == '__main__':
 
     import unittest
 
+    from test.actions.wikidate import WikiDateActionTest
+
     from test.treeloading import WikiPagesTest, SubWikiTest, TextPageAttachmentTest
     from test.treeloading_readonly import ReadonlyLoadTest, ReadonlyChangeTest
     from test.treecreation import TextPageCreationTest
