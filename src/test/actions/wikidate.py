@@ -11,7 +11,7 @@ from outwiker.pages.wiki.actions.dates import WikiDateCreationAction, WikiDateEd
 
 class WikiDateActionTest (BaseMainWndTest):
     """
-    Tests for a inserting of the current date
+    Tests for a inserting commands (:crdate:) and (:eddate:)
     """
     def setUp (self):
         super (WikiDateActionTest, self).setUp()
