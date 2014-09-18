@@ -4,7 +4,7 @@ from outwiker.actions.tabs import AddTabAction, CloseTabAction, PreviousTabActio
 from outwiker.core.application import Application
 from outwiker.pages.text.textpage import TextPageFactory
 
-from .basemainwnd import BaseMainWndTest
+from test.guitests.basemainwnd import BaseMainWndTest
 
 
 class ActionTabsTest(BaseMainWndTest):

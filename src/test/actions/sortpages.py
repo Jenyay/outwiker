@@ -5,7 +5,7 @@ from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.actions.sortchildalpha import SortChildAlphabeticalAction
 from outwiker.actions.sortsiblingsalpha import SortSiblingsAlphabeticalAction
 
-from .basemainwnd import BaseMainWndTest
+from test.guitests.basemainwnd import BaseMainWndTest
 
 
 class SortPagesTest(BaseMainWndTest):

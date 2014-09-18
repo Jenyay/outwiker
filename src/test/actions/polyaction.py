@@ -4,7 +4,7 @@ from outwiker.gui.polyaction import PolyAction
 from outwiker.gui.actioncontroller import ActionController
 from outwiker.gui.hotkey import HotKey
 from outwiker.core.application import Application
-from basemainwnd import BaseMainWndTest
+from test.guitests.basemainwnd import BaseMainWndTest
 
 
 class PolyActionTest (BaseMainWndTest):
