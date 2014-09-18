@@ -161,6 +161,36 @@ class TextEditorTest (BaseMainWndTest):
         self.assertEqual (self._getEditor().GetText(), u"ЛевоПроверка абырвалгПраво")
 
 
+    def testTurnTextSelection_01 (self):
+        text = u"Проверка абырвалг"
+
+        self._getEditor().SetText (text)
+        self._getEditor().SetSelection (9, 17)
+
+        self.assertEqual (self._getEditor().GetSelectedText (), u"абырвалг")
+
+        self._getEditor().turnText (u"Лево ", u" Право")
+
+        self.assertEqual (self._getEditor().GetSelectedText (), u"абырвалг")
+
+        self.assertEqual (self._getEditor().GetText(), u"Проверка Лево абырвалг Право")
+
+
+    def testTurnTextSelection_02 (self):
+        text = u"Проверка  абырвалг"
+
+        self._getEditor().SetText (text)
+        self._getEditor().SetSelection (9, 9)
+
+        self.assertEqual (self._getEditor().GetSelectedText (), u"")
+
+        self._getEditor().turnText (u"Лево ", u" Право")
+
+        self.assertEqual (self._getEditor().GetSelectedText (), u"")
+
+        self.assertEqual (self._getEditor().GetText(), u"Проверка Лево  Право абырвалг")
+
+
     def testGetCurrentPositionEmpty (self):
         self.assertEqual (self._getEditor().GetCurrentPosition(), 0)
 

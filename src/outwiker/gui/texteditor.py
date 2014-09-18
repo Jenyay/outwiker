@@ -270,16 +270,16 @@ class TextEditor(wx.Panel):
         newtext = lefttext + selText + righttext
         self.textCtrl.ReplaceSelection (newtext)
 
+        currPos = self.GetSelectionEnd()
         if len (selText) == 0:
             """
             Если не оборачиваем текст, а делаем пустой тег, то поместим каретку до закрывающегося тега
             """
-            currPos = self.textCtrl.GetSelectionEnd()
-            len_bytes = self.calcByteLen (righttext)
-
-            newPos = currPos - len_bytes
-
-            self.textCtrl.SetSelection (newPos, newPos)
+            newpos = currPos - len (righttext)
+            self.SetSelection (newpos, newpos)
+        else:
+            self.SetSelection (currPos - len (selText) - len (righttext),
+                               currPos - len (righttext))
 
 
     def escapeHtml (self):
