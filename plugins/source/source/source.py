@@ -14,6 +14,8 @@ from .controller import Controller
 from .i18n import set_
 from .insertdialogcontroller import InsertDialogController
 
+__version__ = u"1.11.4"
+
 
 # Для работы этого плагина требуется OutWiker 1.7
 if getCurrentVersion() < Version (1, 7, 0, 680, status=StatusSet.DEV):
@@ -29,7 +31,6 @@ else:
             """
             Plugin.__init__ (self, application)
 
-            self.__version = u"1.11.3"
             self.__controller = Controller(self, application)
 
 
@@ -146,7 +147,7 @@ if __name__ == "__main__":
 
         @property
         def version (self):
-            return self.__version
+            return __version__
 
 
         @property

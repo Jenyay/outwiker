@@ -192,7 +192,8 @@ class GuiCreator (object):
 
     def _enableTools (self):
         pageView = self._getPageView()
-        enabled = (pageView.selectedPageIndex == pageView.CODE_PAGE_INDEX)
+        enabled = (pageView.selectedPageIndex == pageView.CODE_PAGE_INDEX and
+                   not self._application.selectedPage.readonly)
 
         map (lambda action: self._application.actionController.enableTools (action.stringId, enabled),
              self._actions)

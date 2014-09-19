@@ -7,6 +7,8 @@ from outwiker.core.commands import getCurrentVersion
 from outwiker.core.version import Version, StatusSet
 from outwiker.core.system import getOS
 
+__version__ = u"1.0.3"
+
 
 if getCurrentVersion() < Version (1, 8, 0, 729, status=StatusSet.DEV):
     print ("Counter plugin. OutWiker version requirement: 1.8.0.729")
@@ -70,7 +72,7 @@ All parameters are optional.
 
         @property
         def version (self):
-            return u"1.0.2"
+            return __version__
 
 
         def initialize(self):

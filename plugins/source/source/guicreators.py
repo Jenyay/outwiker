@@ -113,7 +113,8 @@ class ActionGuiCreator (BaseGuiCreator):
     def _enableTools (self):
         from .actions import InsertSourceAction
         pageView = self._getPageView()
-        enabled = (pageView.selectedPageIndex == pageView.CODE_PAGE_INDEX)
+        enabled = (pageView.selectedPageIndex == pageView.CODE_PAGE_INDEX and
+                   not self._application.selectedPage.readonly)
         self._application.actionController.enableTools (InsertSourceAction.stringId, enabled)
 
 
