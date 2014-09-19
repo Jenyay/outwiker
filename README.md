@@ -4,7 +4,7 @@ OutWiker
 Description
 -----------
 
-OutWiker is a crossplatform programm for keeping your notes in a tree. Similar programs call "outliner", "tree-like editor" or personal wiki. Main difference OutWiker from other programs is a keeping notes as folders on disk. A notes can to have attached files. OutWiker can contain pages of different types, currently supports three types of pages: plain text, HTML pages and wiki pages.
+OutWiker is a cross-platform software for keeping your notes in a tree. Similar programs call "outliner", "tree-like editor" or personal wiki. Main difference OutWiker from other programs is a keeping notes as folders on disk. A notes can to have attached files. OutWiker can contain pages of different types, currently supports three types of pages: plain text, HTML pages and wiki pages.
 
 Links
 ------
