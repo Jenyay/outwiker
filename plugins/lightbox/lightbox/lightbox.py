@@ -10,6 +10,8 @@ from outwiker.core.version import Version, StatusSet
 
 from .lightboxcommand import LightboxCommand
 
+__version__ = u"1.1.2"
+
 
 # Для работы этого плагина требуется OutWiker 1.7.0.653 и выше
 if getCurrentVersion() < Version (1, 7, 0, 653, status=StatusSet.DEV):
@@ -36,7 +38,7 @@ else:
         def name (self):
             return u"Lightbox"
 
-        
+
         @property
         def description (self):
             return _(u"""This plugin adds a command (:lightbox:), after adding a images from thumbnails will open in a preview window, rather than in an external program.
@@ -53,7 +55,7 @@ bla-bla-bla...
 
         @property
         def version (self):
-            return u"1.1.1"
+            return __version__
 
 
         def initialize(self):
@@ -77,7 +79,7 @@ bla-bla-bla...
 
         def __onPageViewCreate(self, page):
             """Обработка события после создания представления страницы"""
-            assert self._application.mainWindow != None
+            assert self._application.mainWindow is not None
 
             if not self._isCurrentWikiPage:
                 return
@@ -86,13 +88,13 @@ bla-bla-bla...
 
             helpString = _(u"Use lightbox (:lightbox:)")
 
-            pageView.addTool (pageView.commandsMenu, 
-                    self.LIGHTBOX_TOOL_ID, 
-                    self.__onInsertCommand, 
-                    helpString, 
-                    helpString, 
-                    None)
-            
+            pageView.addTool (pageView.commandsMenu,
+                              self.LIGHTBOX_TOOL_ID,
+                              self.__onInsertCommand,
+                              helpString,
+                              helpString,
+                              None)
+
 
         def __onInsertCommand (self, event):
             command = u'(:lightbox:)'
@@ -110,7 +112,7 @@ bla-bla-bla...
 
         @property
         def _isCurrentWikiPage (self):
-            return (self._application.selectedPage != None and
+            return (self._application.selectedPage is not None and
                     self._application.selectedPage.getTypeString() == u"wiki")
 
 
