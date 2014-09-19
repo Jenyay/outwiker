@@ -202,7 +202,14 @@ if __name__ == '__main__':
     else:
         from test.guitests.uriidentifiers import UriIdentifierWebKitTest
 
-    # f = open('tests.log', "w")
-    # runner = unittest.TextTestRunner(f)
-    # unittest.main(testRunner=runner)
+    # import cProfile
+    # import pstats
+    # profile_fname = "../profiles/tests.profile"
+    #
+    # cProfile.run('unittest.main()', profile_fname)
+    # stats = pstats.Stats(profile_fname)
+    # stats.strip_dirs().sort_stats('cumtime').print_stats(100)
+    # stats.strip_dirs().sort_stats('calls').print_stats(100)
+    # stats.strip_dirs().sort_stats('time').print_stats(100)
+
     unittest.main()
