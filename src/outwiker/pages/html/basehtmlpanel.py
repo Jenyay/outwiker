@@ -14,6 +14,8 @@ from outwiker.core.config import IntegerOption
 from outwiker.gui.basetextpanel import BaseTextPanel
 from outwiker.gui.htmlrenderfactory import getHtmlRender
 from outwiker.actions.search import SearchAction, SearchNextAction, SearchPrevAction, SearchAndReplaceAction
+from outwiker.actions.attachfiles import AttachFilesAction
+from outwiker.actions.globalsearch import GlobalSearchAction
 from outwiker.core.system import writeTextFile, getOS
 
 # Событие вызывается, когда переключаются вкладки страницы (код, HTML, ...)
@@ -263,7 +265,7 @@ class BaseHtmlPanel(BaseTextPanel):
         """
         Обработка события при переключении на код страницы
         """
-        self._enableActions (True)
+        self._enableActions (not Application.selectedPage.readonly)
         self.checkForExternalEditAndSave()
         self._enableAllTools ()
         self.codeEditor.SetFocus()
@@ -353,10 +355,19 @@ class BaseHtmlPanel(BaseTextPanel):
         searchEnabled = self.selectedPageIndex != self.RESULT_PAGE_INDEX
 
         actionController = Application.actionController
+
         actionController.enableTools (SearchAction.stringId, searchEnabled)
-        actionController.enableTools (SearchAndReplaceAction.stringId, searchEnabled)
         actionController.enableTools (SearchNextAction.stringId, searchEnabled)
         actionController.enableTools (SearchPrevAction.stringId, searchEnabled)
+
+        actionController.enableTools (SearchAndReplaceAction.stringId, searchEnabled
+                                      and not Application.selectedPage.readonly)
+
+        actionController.enableTools (AttachFilesAction.stringId, searchEnabled
+                                      and not Application.selectedPage.readonly)
+
+        actionController.enableTools (GlobalSearchAction.stringId, searchEnabled
+                                      and not Application.selectedPage.readonly)
 
         self.mainWindow.UpdateAuiManager()
 
