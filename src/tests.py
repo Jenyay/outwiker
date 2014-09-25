@@ -42,6 +42,7 @@ if __name__ == '__main__':
     from test.actions.htmlactions import HtmlActionsTest
     from test.actions.insertdate import InsertDateTest
     from test.actions.polyaction import PolyActionTest
+    from test.actions.globalsearch import GlobalSearchActionTest
 
     from test.treeloading import WikiPagesTest, SubWikiTest, TextPageAttachmentTest
     from test.treeloading_readonly import ReadonlyLoadTest, ReadonlyChangeTest
