@@ -94,9 +94,9 @@ class AddStyleDialog (TestedDialog):
         styleLabel = wx.StaticText (parent = self,
                                     label = _(u"Style"))
 
-        self.__stylesCombo = wx.ComboBox (parent = self,
+        self.stylesCombo = wx.ComboBox (parent = self,
                                           style=wx.CB_DROPDOWN | wx.CB_READONLY)
-        self.__stylesCombo.SetMinSize ((200, -1))
+        self.stylesCombo.SetMinSize ((200, -1))
 
         mainSizer = wx.FlexGridSizer (cols=2)
         mainSizer.AddGrowableCol (1)
@@ -106,7 +106,7 @@ class AddStyleDialog (TestedDialog):
                        flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
                        border = 4)
 
-        mainSizer.Add (self.__stylesCombo,
+        mainSizer.Add (self.stylesCombo,
                        flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND,
                        border = 4)
 
@@ -115,7 +115,7 @@ class AddStyleDialog (TestedDialog):
         self.SetSizer (mainSizer)
         self.Fit()
 
-        self.__fillStyles (self.__stylesCombo)
+        self.__fillStyles (self.stylesCombo)
 
 
     def __fillStyles (self, combobox):
@@ -140,7 +140,7 @@ class AddStyleDialog (TestedDialog):
 
     @property
     def style (self):
-        selItem = self.__stylesCombo.GetSelection()
+        selItem = self.stylesCombo.GetSelection()
         if selItem == 0:
             return Style().getDefaultStyle()
 
