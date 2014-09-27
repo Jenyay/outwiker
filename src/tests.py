@@ -45,6 +45,7 @@ if __name__ == '__main__':
     from test.actions.globalsearch import GlobalSearchActionTest
     from test.actions.description import DescriptionActionTest
     from test.actions.applystyle import ApplyStyleActionTest
+    from test.actions.moveupdown import MovePageUpDownActionTest
 
     from test.treeloading import WikiPagesTest, SubWikiTest, TextPageAttachmentTest
     from test.treeloading_readonly import ReadonlyLoadTest, ReadonlyChangeTest
