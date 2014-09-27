@@ -1,7 +1,5 @@
 # -*- coding: UTF-8 -*-
 
-import wx
-
 from test.guitests.basemainwnd import BaseMainWndTest
 from outwiker.core.application import Application
 
