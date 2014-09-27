@@ -88,3 +88,20 @@ class MovePageUpDownActionTest (BaseMainWndTest):
 
         Application.actionController.getAction (MovePageDownAction.stringId).run(None)
         self.assertTrue (self.wikiroot[u"Страница 1"].order > self.wikiroot[u"Страница 2"].order)
+
+
+    def testMoveReadonly_01 (self):
+        WikiPageFactory().create (self.wikiroot, u"Страница 1", [])
+        WikiPageFactory().create (self.wikiroot, u"Страница 2", [])
+
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1"]
+        self.wikiroot[u"Страница 1"].readonly = True
+
+        Tester.dialogTester.appendOk()
+        Application.actionController.getAction (MovePageDownAction.stringId).run(None)
+        self.assertEqual (Tester.dialogTester.count, 0)
+
+        Tester.dialogTester.appendOk()
+        Application.actionController.getAction (MovePageUpAction.stringId).run(None)
+        self.assertEqual (Tester.dialogTester.count, 0)
