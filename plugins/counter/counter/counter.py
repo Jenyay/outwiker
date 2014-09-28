@@ -18,9 +18,9 @@ else:
     from .insertdialog import InsertDialog
     from .insertdialogcontroller import InsertDialogController
 
-    class PluginTestWikiCommand (Plugin):
+    class PluginCounter (Plugin):
         """
-        Плагин, добавляющий обработку команды TestCommand в википарсер
+        Плагин, добавляющий обработку команды (:counter:) в википарсер
         """
         def __init__ (self, application):
             """
