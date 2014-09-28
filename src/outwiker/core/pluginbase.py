@@ -32,30 +32,47 @@ class Plugin (object):
 
     @abstractproperty
     def name (self):
+        """
+        Свойство должно возвращать имя плагина
+        """
         pass
 
 
     @abstractproperty
     def description (self):
+        """
+        Свойство должно возвращать описание плагина
+        """
         pass
 
 
     @abstractproperty
     def version (self):
+        """
+        Свойство должно возвращать строку, описывающую версию плагина в формате "x.y.z"
+        """
         pass
+
+
+    @property
+    def url (self):
+        return None
 
 
     @abstractmethod
     def initialize (self):
         """
         Этот метод вызывается, когда плагин прошел все проверки.
-        Именно здесь плагин может начинать влиять на программу
+        Именно здесь плагин может начинать взаимодействовать с программой
         """
         pass
 
 
     @abstractmethod
     def destroy (self):
+        """
+        Этот метод вызывается при отключении плагина
+        """
         pass
 
     #############################################

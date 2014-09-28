@@ -135,7 +135,8 @@ class PluginsController (object):
             description_head = _(u"Description"),
             description = plugin.description.replace ("\n", "<BR>"))
 
-        if "url" in dir (plugin):
+        if ("url" in dir (plugin) and
+                plugin.url is not None):
             plugin_url = u"""<BR><B>{site_head}</B>: <A HREF="{url}">{url}</a><BR>""".format (
                 site_head = _("Site"),
                 url = plugin.url)
@@ -148,6 +149,7 @@ class PluginsController (object):
             version = plugin_version,
             description = plugin_description,
             url = plugin_url)
+
 
         return result
 
