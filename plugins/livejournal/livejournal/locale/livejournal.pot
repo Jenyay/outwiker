@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-20 22:56+0400\n"
+"POT-Creation-Date: 2014-10-03 21:32+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,7 +37,7 @@ msgstr ""
 msgid "Livejournal community"
 msgstr ""
 
-#: livejournal.py:60
+#: livejournal.py:63
 msgid ""
 "Add commands (:ljuser:) and (:ljcomm:) in wiki parser.\n"
 "\n"
@@ -45,4 +45,8 @@ msgid ""
 "                     (:ljuser username:)\n"
 "                     (:ljcomm communityname:)\n"
 "                     "
+msgstr ""
+
+#: livejournal.py:78
+msgid "http://jenyay.net/Outwiker/LivejournalPluginEn"
 msgstr ""

@@ -58,6 +58,11 @@ bla-bla-bla...
             return __version__
 
 
+        @property
+        def url (self):
+            return _(u"http://jenyay.net/Outwiker/LightboxEn")
+
+
         def initialize(self):
             self._application.onWikiParserPrepare += self.__onWikiParserPrepare
             self._application.onPageViewCreate += self.__onPageViewCreate
@@ -73,7 +78,7 @@ bla-bla-bla...
 
             try:
                 _ = self._init_i18n (domain, langdir)
-            except BaseException as e:
+            except BaseException, e:
                 print e
 
 

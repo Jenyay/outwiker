@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import datetime
@@ -34,7 +33,7 @@ class UpdatesChecker (object):
 
         # Экземпляр потока, который будет проверять новые версии
         self._silenceThread = None
-        if self._application.mainWindow != None:
+        if self._application.mainWindow is not None:
             self._application.mainWindow.Bind (EVT_UPDATE_VERSIONS, handler=self._onSilenceVersionUpdate)
 
 
@@ -54,20 +53,20 @@ class UpdatesChecker (object):
         updateDialog = UpdateDialog (self._application.mainWindow)
         updateDialog.setCurrentOutWikerVersion (currentVersion)
 
-        if stableVersion != None:
+        if stableVersion is not None:
             updateDialog.setLatestStableOutwikerVersion (stableVersion, currentVersion < stableVersion)
         else:
             updateDialog.setLatestStableOutwikerVersion (currentVersion, False)
 
-        if unstableVersion != None:
+        if unstableVersion is not None:
             updateDialog.setLatestUnstableOutwikerVersion (unstableVersion, currentVersion < unstableVersion)
         else:
             updateDialog.setLatestUnstableOutwikerVersion (currentVersion, False)
 
         for plugin in updatedPlugins:
             updateDialog.addPluginInfo (plugin,
-                    verList.getPluginVersion (plugin.name),
-                    verList.getPluginUrl (plugin.name))
+                                        verList.getPluginVersion (plugin.name),
+                                        verList.getPluginUrl (plugin.name))
 
         updateDialog.ShowModal()
         updateDialog.Destroy()
@@ -81,17 +80,17 @@ class UpdatesChecker (object):
         stableVersion = verList.stableVersion
         unstableVersion = verList.unstableVersion
 
-        assert stableVersion != None
-        assert unstableVersion != None
+        assert stableVersion is not None
+        assert unstableVersion is not None
 
         updatedPlugins = self.getUpdatedPlugins (verList)
 
         # Обновилась ли нестабильная версия (или игнорируем ее)
         unstableUpdate = (currentVersion < unstableVersion) and not self._config.ignoreUnstable
 
-        result = ((currentVersion < stableVersion) or 
-                unstableUpdate or 
-                len (updatedPlugins) != 0)
+        result = ((currentVersion < stableVersion) or
+                  unstableUpdate or
+                  len (updatedPlugins) != 0)
 
         return result
 
@@ -111,11 +110,11 @@ class UpdatesChecker (object):
                 continue
 
             try:
-                pluginUrl = verList.getPluginUrl (plugin.name)
+                verList.getPluginUrl (plugin.name)
             except KeyError:
                 continue
 
-            if (pluginVersion != None and
+            if (pluginVersion is not None and
                     pluginVersion > currentPluginVersion):
                 updatedPlugins.append (plugin)
 
@@ -138,8 +137,8 @@ class UpdatesChecker (object):
         """
         Возвращает True, если удалось загрузить номера версий, False в проитвнмо случае
         """
-        return (verList.stableVersion != None and
-                verList.unstableVersion != None)
+        return (verList.stableVersion is not None and
+                verList.unstableVersion is not None)
 
 
     def _touchLastUpdateDate (self):
@@ -156,7 +155,7 @@ class UpdatesChecker (object):
         if self._application.mainWindow:
             wx.PostEvent (self._application.mainWindow, event)
 
-            
+
     def checkForUpdatesSilence (self):
         """
         Молчаливое обновление списка версий
@@ -164,7 +163,7 @@ class UpdatesChecker (object):
         setStatusText (_(u"Check for new versions..."))
         verList = VersionList (self._application.plugins)
 
-        if (self._silenceThread == None or
+        if (self._silenceThread is None or
                 not self._silenceThread.isAlive()):
 
             self._silenceThread = threading.Thread (None, self._silenceThreadFunc, args=(verList,))
@@ -178,10 +177,10 @@ class UpdatesChecker (object):
         verList = VersionList (self._application.plugins)
         setStatusText (_(u"Check for new versions..."))
 
-        progressRunner = LongProcessRunner (verList.updateVersions, 
-                self._application.mainWindow,
-                dialogTitle = u"UpdateNotifier",
-                dialogText = _(u"Check for new versions..."))
+        progressRunner = LongProcessRunner (verList.updateVersions,
+                                            self._application.mainWindow,
+                                            dialogTitle = u"UpdateNotifier",
+                                            dialogText = _(u"Check for new versions..."))
 
         progressRunner.run()
 
@@ -192,4 +191,4 @@ class UpdatesChecker (object):
                 self._showUpdates (verList)
             else:
                 MessageBox (_(u"Updates not found"),
-                        u"UpdateNotifier")
+                            u"UpdateNotifier")

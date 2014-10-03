@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-07 09:09+0400\n"
+"POT-Creation-Date: 2014-10-03 21:26+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,12 +18,13 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: lightboxcommand.py:71
+#, python-brace-format
 msgid ""
 "<B>Can't copy script files</B>\n"
 "{0}"
 msgstr ""
 
-#: lightbox.py:43
+#: lightbox.py:44
 msgid ""
 "This plugin adds a command (:lightbox:), after adding a images from "
 "thumbnails will open in a preview window, rather than in an external "
@@ -38,6 +39,10 @@ msgid ""
 "%thumb%Attach:image_2.png%%\n"
 msgstr ""
 
-#: lightbox.py:88
+#: lightbox.py:63
+msgid "http://jenyay.net/Outwiker/LightboxEn"
+msgstr ""
+
+#: lightbox.py:94
 msgid "Use lightbox (:lightbox:)"
 msgstr ""

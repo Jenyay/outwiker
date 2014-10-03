@@ -1,7 +1,4 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-
-import os.path
 
 from outwiker.pages.wiki.parser.command import Command
 from outwiker.core.attachment import Attachment
@@ -38,11 +35,11 @@ class ThumbListCommand (Command):
 
     def execute (self, params, content):
         """
-        Запустить команду на выполнение. 
+        Запустить команду на выполнение.
         Метод возвращает текст, который будет вставлен на место команды в вики-нотации
         """
         paramsDict = Command.parseParams (params)
-        thumbsize = self._getThumbSize(paramsDict);
+        thumbsize = self._getThumbSize(paramsDict)
         columnsCount = self._getColumnsCount(paramsDict)
 
         lineItems = self._parseContent (content)
@@ -65,9 +62,9 @@ class ThumbListCommand (Command):
         if len (content) == 0:
             files = [(fname, u"") for fname in allFiles if isImage (fname)]
         else:
-            files = [lineitem for lineitem 
-                    in filesList 
-                    if isImage (lineitem[0]) and lineitem[0] in allFiles]
+            files = [lineitem for lineitem
+                     in filesList
+                     if isImage (lineitem[0]) and lineitem[0] in allFiles]
 
         return files
 
@@ -84,9 +81,9 @@ class ThumbListCommand (Command):
             attachPhrase = u"attach:"
             return line[len (attachPhrase):] if line.lower().startswith (attachPhrase) else line
 
-        lines = [self._splitLine (_removeAttach (fname.strip() ) )
-                for fname in content.split(u"\n") 
-                if len (fname.strip()) != 0]
+        lines = [self._splitLine (_removeAttach (fname.strip()))
+                 for fname in content.split(u"\n")
+                 if len (fname.strip()) != 0]
 
         return lines
 

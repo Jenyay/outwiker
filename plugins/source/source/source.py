@@ -14,7 +14,7 @@ from .controller import Controller
 from .i18n import set_
 from .insertdialogcontroller import InsertDialogController
 
-__version__ = u"1.11.4"
+__version__ = u"1.11.5"
 
 
 # Для работы этого плагина требуется OutWiker 1.7
@@ -161,7 +161,7 @@ if __name__ == "__main__":
 
             try:
                 _ = self._init_i18n (domain, langdir)
-            except BaseException as e:
+            except BaseException, e:
                 print e
 
             set_(_)

@@ -1,7 +1,4 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
-
-from outwiker.gui.guiconfig import GeneralGuiConfig
 
 from .i18n import get_
 
@@ -31,7 +28,7 @@ class PageAttachmentSizeInfo (object):
 
 
     def _getGratestPages (self):
-        pageList = self._pageListAll[0: min (self._itemsCount, len (self._pageListAll) ) ]
+        pageList = self._pageListAll[0: min (self._itemsCount, len (self._pageListAll))]
         return self._getPageListHtml (pageList)
 
 
@@ -42,10 +39,11 @@ class PageAttachmentSizeInfo (object):
         # Локализованные единицы изменения размеров файлов
         kb = _(u"kB")
 
-        items = [u"<li><a href='{url}'>{title}</a> ({size} {kb})</li>".format (url=u"/" + page.subpath,
+        items = [u"<li><a href='{url}'>{title}</a> ({size} {kb})</li>".format (
+            url=u"/" + page.subpath,
             title=page.title,
             size="{0:,.2f}".format (size / 1024.0).replace (",", " "),
             kb=kb)
-                for page, size in pageList]
+            for page, size in pageList]
 
         return u"<ul>" + u"".join (items) + u"</ul>"

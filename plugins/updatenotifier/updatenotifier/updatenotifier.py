@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import os.path
@@ -12,6 +11,9 @@ from .i18n import set_
 from .versionextractor import extractVersion
 from .versionlist import VersionList
 from .controller import Controller
+
+
+__version__ = u"1.1.1"
 
 
 if getCurrentVersion() < Version (1, 7, 0, 684, status=StatusSet.DEV):
@@ -42,7 +44,7 @@ else:
         def name (self):
             return u"UpdateNotifier"
 
-        
+
         @property
         def description (self):
             return _(u'''Check for update OutWiker and plug-ins for it. Append menu item "Help -> Check for Updates..."''')
@@ -50,14 +52,14 @@ else:
 
         @property
         def version (self):
-            return u"1.1"
+            return __version__
 
 
         @property
         def url (self):
             return _(u"http://jenyay.net/Outwiker/UpdateNotifierEn")
-        
-        
+
+
         def initialize(self):
             self._initlocale(u"updatenotifier")
             self._controller.initialize()
@@ -77,7 +79,7 @@ else:
 
             try:
                 _ = self._init_i18n (domain, langdir)
-            except BaseException as e:
+            except BaseException, e:
                 print e
 
             set_(_)

@@ -1,11 +1,6 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-import os.path
-
 import wx
-
-from outwiker.gui.preferences.configelements import IntegerElement
 
 from .i18n import get_
 from .prefpanelcontroller import PrefPanelController
@@ -45,23 +40,23 @@ class PreferencePanel (wx.Panel):
         intervalSizer.AddGrowableCol (0)
         intervalSizer.AddGrowableCol (1)
 
-        intervalSizer.Add (intervalLabel, 
-                1, 
-                flag=wx.ALIGN_CENTER_VERTICAL | wx.ALL,
-                border=4)
+        intervalSizer.Add (intervalLabel,
+                           1,
+                           flag=wx.ALIGN_CENTER_VERTICAL | wx.ALL,
+                           border=4)
 
-        intervalSizer.Add (self.intervalComboBox, 
-                1, 
-                flag=wx.EXPAND | wx.ALIGN_CENTER_VERTICAL | wx.ALL,
-                border=4)
+        intervalSizer.Add (self.intervalComboBox,
+                           1,
+                           flag=wx.EXPAND | wx.ALIGN_CENTER_VERTICAL | wx.ALL,
+                           border=4)
 
         mainSizer.Add (intervalSizer, 1, flag=wx.EXPAND | wx.ALL, border=4)
 
         # Игнорировать нестибильные версии?
         self.ignoreUnstableCheckBox = wx.CheckBox (self, label=_(u"Ignore updates unstable versions"))
         mainSizer.Add (self.ignoreUnstableCheckBox,
-                flag=wx.ALIGN_CENTER_VERTICAL | wx.ALL,
-                border=4)
+                       flag=wx.ALIGN_CENTER_VERTICAL | wx.ALL,
+                       border=4)
 
         self.SetSizer(mainSizer)
         self.Layout()

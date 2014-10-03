@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import os.path
@@ -18,9 +17,9 @@ class Controller (object):
     """
     def __init__ (self, application):
         self.THUMBLIST_TOOL_ID = u"PLUGIN_THUMBLIST_TOOL_ID"
-        self._application = application        
+        self._application = application
 
-        
+
     def __onWikiParserPrepare (self, parser):
         parser.addCommand (ThumbListCommand (parser))
         parser.addCommand (ThumbGalleryCommand (parser))
@@ -46,7 +45,7 @@ class Controller (object):
 
     def __onPageViewCreate(self, page):
         """Обработка события после создания представления страницы"""
-        assert self._application.mainWindow != None
+        assert self._application.mainWindow is not None
 
         if not self._isCurrentWikiPage:
             return
@@ -55,23 +54,23 @@ class Controller (object):
 
         helpString = _(u"Thumbnails Gallery (:thumbgallery:)")
 
-        pageView.addTool (pageView.commandsMenu, 
-                self.THUMBLIST_TOOL_ID, 
-                self._onInsertCommand, 
-                helpString, 
-                helpString, 
-                self._getImagePath (u"gallery.png"),
-                False)
-        
+        pageView.addTool (pageView.commandsMenu,
+                          self.THUMBLIST_TOOL_ID,
+                          self._onInsertCommand,
+                          helpString,
+                          helpString,
+                          self._getImagePath (u"gallery.png"),
+                          False)
+
 
     def _onInsertCommand (self, event):
         """
         Событие при нажатии на кнопку вставки галереи
         """
-        dlg = ThumbDialog (self._application.mainWindow, 
-                self._application.selectedPage, 
-                _,
-                self._application)
+        dlg = ThumbDialog (self._application.mainWindow,
+                           self._application.selectedPage,
+                           _,
+                           self._application)
 
         # Вручную задизаблим главное окно из-за глюка под Linux,
         # где главное окно становится активным, если есть полоса прокрутки
@@ -144,13 +143,12 @@ class Controller (object):
 
 
     def _getImagePath (self, fname):
-        imagedir = unicode (os.path.join (os.path.dirname (__file__), "images"), 
-                getOS().filesEncoding)
+        imagedir = unicode (os.path.join (os.path.dirname (__file__), "images"),
+                            getOS().filesEncoding)
         return os.path.join (imagedir, fname)
 
 
     @property
     def _isCurrentWikiPage (self):
-        return (self._application.selectedPage != None and
+        return (self._application.selectedPage is not None and
                 self._application.selectedPage.getTypeString() == u"wiki")
-

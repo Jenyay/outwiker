@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import re
@@ -6,8 +5,8 @@ import re
 
 def extractVersion (text):
     versionRegEx = re.compile (
-            r"<!--\s*#version\s+(?P<key>\w+)\s+(?P<version>\d+(.\d+){0,3})\s*-->",
-            re.IGNORECASE | re.MULTILINE | re.UNICODE)
+        r"<!--\s*#version\s+(?P<key>\w+)\s+(?P<version>\d+(.\d+){0,3})\s*-->",
+        re.IGNORECASE | re.MULTILINE | re.UNICODE)
     versionsDict = {}
 
     matches = versionRegEx.finditer (text)

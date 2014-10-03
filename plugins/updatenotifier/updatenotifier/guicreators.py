@@ -1,5 +1,5 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
+
 """
 Модули с классами для создания GUI (пунктов меню): для старой версии API и с использованием actions
 """
@@ -21,12 +21,12 @@ class OldGuiCreator (object):
 
 
     def initialize (self):
-        if self._application.mainWindow != None:
+        if self._application.mainWindow is not None:
             self._createMenu()
 
 
     def destroy (self):
-        if self._application.mainWindow != None:
+        if self._application.mainWindow is not None:
             self._destroyMenu()
 
 
@@ -40,7 +40,7 @@ class OldGuiCreator (object):
 
     def _createMenu (self):
         """Добавление пункта меню для проверки обновлений"""
-        assert self._application.mainWindow != None
+        assert self._application.mainWindow is not None
 
         self._helpMenu.Append (id=self.UPDATE_ID, text=_(u"Check for Updates..."))
         self._application.mainWindow.Bind (wx.EVT_MENU, self.__onCheckUpdate, id=self.UPDATE_ID)
@@ -61,7 +61,7 @@ class OldGuiCreator (object):
 
     def __onSilenceCheckUpdate (self, event):
         self._controller.checkForUpdatesSilence()
-    
+
 
 
 class ActionGuiCreator (object):
@@ -76,19 +76,19 @@ class ActionGuiCreator (object):
     def initialize (self):
         from .actions import CheckForUpdatesAction, CheckForUpdatesSilenceAction
 
-        if self._application.mainWindow != None:
+        if self._application.mainWindow is not None:
             self._application.actionController.register (
-                    CheckForUpdatesAction (self._application, self._controller) )
+                CheckForUpdatesAction (self._application, self._controller))
 
             self._application.actionController.appendMenuItem (
-                    CheckForUpdatesAction.stringId,
-                    self._helpMenu)
+                CheckForUpdatesAction.stringId,
+                self._helpMenu)
 
 
         if (self._controller.debug and
-                self._application.mainWindow != None):
+                self._application.mainWindow is not None):
             self._application.actionController.register (
-                CheckForUpdatesSilenceAction (self._application, self._controller) )
+                CheckForUpdatesSilenceAction (self._application, self._controller))
 
             self._application.actionController.appendMenuItem (
                 CheckForUpdatesSilenceAction.stringId,
@@ -98,13 +98,13 @@ class ActionGuiCreator (object):
     def destroy (self):
         from .actions import CheckForUpdatesAction, CheckForUpdatesSilenceAction
 
-        if self._application.mainWindow != None:
+        if self._application.mainWindow is not None:
             self._application.actionController.removeMenuItem (CheckForUpdatesAction.stringId)
             self._application.actionController.removeAction (CheckForUpdatesAction.stringId)
 
         # Убрать меню проверки обновлений в молчаливом режиме
         if (self._controller.debug and
-                self._application.mainWindow != None):
+                self._application.mainWindow is not None):
             self._application.actionController.removeMenuItem (CheckForUpdatesSilenceAction.stringId)
             self._application.actionController.removeAction (CheckForUpdatesSilenceAction.stringId)
 

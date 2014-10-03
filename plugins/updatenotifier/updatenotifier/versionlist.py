@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import urllib2
@@ -40,8 +39,8 @@ class VersionList (object):
         Получить номера версий всех плагинов и самой программы из интернета
         """
         self._outwikerStableVersion = self._getVersionFromPage (self._outwikerStablePage, "stable")
-        self._outwikerUnstableVersion = self._getVersionFromPage (self._outwikerUnstablePage, 
-                "unstable", status="dev")
+        self._outwikerUnstableVersion = self._getVersionFromPage (self._outwikerUnstablePage,
+                                                                  "unstable", status="dev")
 
         for plugin in self._plugins:
             version = self._getVersionFromPage (self._pluginPages[plugin.name], "stable")
@@ -61,12 +60,12 @@ class VersionList (object):
         Составить словарь, где ключем будет имя плагина, а значением ссылка на страницу плагина. При этом учитывается, что в старых плагинах не было свойства url
         """
         oldPluginPages = {u"ExternalTools": _(u"http://jenyay.net/Outwiker/ExternalToolsEn"),
-                u"Lightbox": _(u"http://jenyay.net/Outwiker/LightboxEn"),
-                u"Livejournal": _(u"http://jenyay.net/Outwiker/LivejournalPluginEn"),
-                u"Spoiler": _(u"http://jenyay.net/Outwiker/SpoilerEn"),
-                u"Style": _(u"http://jenyay.net/Outwiker/StylePluginEn"),
-                u"ThumbGallery": _(u"http://jenyay.net/Outwiker/ThumbGalleryEn"),
-                }
+                          u"Lightbox": _(u"http://jenyay.net/Outwiker/LightboxEn"),
+                          u"Livejournal": _(u"http://jenyay.net/Outwiker/LivejournalPluginEn"),
+                          u"Spoiler": _(u"http://jenyay.net/Outwiker/SpoilerEn"),
+                          u"Style": _(u"http://jenyay.net/Outwiker/StylePluginEn"),
+                          u"ThumbGallery": _(u"http://jenyay.net/Outwiker/ThumbGalleryEn"),
+                          }
 
         pluginPages = {}
 
@@ -88,7 +87,7 @@ class VersionList (object):
         url - ссылка, откуда получается номер версии
         versionname - название версии (stable, unstable и т.п.)
         """
-        if url == None:
+        if url is None:
             return None
 
         text = self._loadPage (url)
@@ -102,7 +101,7 @@ class VersionList (object):
 
     def _loadPage (self, url):
         """
-        Загрузка страницы. 
+        Загрузка страницы.
         Возвращает текст страницы или пустую строку в случае ошибки
         """
         try:
@@ -115,7 +114,7 @@ class VersionList (object):
             text = u""
 
         return text
-        
+
 
     def getPluginVersion (self, pluginname):
         return self._pluginsVersion[pluginname]

@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 from outwiker.gui.baseaction import BaseAction
@@ -27,7 +26,7 @@ class CheckForUpdatesAction (BaseAction):
     @property
     def description (self):
         return _(u"UpdateNotifier plugin. Check for updates")
-    
+
 
     def run (self, params):
         self._controller.checkForUpdates()
@@ -55,7 +54,7 @@ class CheckForUpdatesSilenceAction (BaseAction):
     @property
     def description (self):
         return _(u"UpdateNotifier plugin. Check for updates. Silence mode")
-    
+
 
     def run (self, params):
         self._controller.checkForUpdatesSilence()

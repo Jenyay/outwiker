@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-30 09:31+0300\n"
-"PO-Revision-Date: 2014-08-29 20:49+0300\n"
+"POT-Creation-Date: 2014-10-03 21:18+0400\n"
+"PO-Revision-Date: 2014-10-03 21:19+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -17,13 +17,17 @@ msgstr ""
 "X-Generator: Poedit 1.5.4\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: menumaker.py:44
-msgid "Open Content File with..."
-msgstr "Apri il contenuto del file con..."
+#: controller.py:89
+msgid "Can't execute tools"
+msgstr "Impossibile eseguire il programma"
 
-#: menumaker.py:57
-msgid "Open Result HTML File with..."
-msgstr "Apri il file HTML generato con..."
+#: controller.py:90 preferencespanel.py:90
+msgid "Error"
+msgstr "Errore"
+
+#: controller.py:98
+msgid "External Tools [Plugin]"
+msgstr "External Tools [Plugin]"
 
 #: toolslistpanel.py:110
 msgid "Open file dialog..."
@@ -41,10 +45,6 @@ msgstr "Eseguibili (*.exe)|*.exe|Tutti i file|*.*"
 msgid "All Files|*"
 msgstr "Tutti i file| *"
 
-#: externaltools.py:41
-msgid "Open notes files with external editor"
-msgstr "Apri il file delle note con un editor esterno"
-
 #: preferencespanel.py:36
 msgid "Tools List"
 msgstr "Elenco dei programmi"
@@ -57,14 +57,18 @@ msgstr "Accoda programma"
 msgid "Can't save options"
 msgstr "Impossibile salvare le opzioni"
 
-#: preferencespanel.py:90 controller.py:90
-msgid "Error"
-msgstr "Errore"
+#: externaltools.py:41
+msgid "Open notes files with external editor"
+msgstr "Apri il file delle note con un editor esterno"
 
-#: controller.py:89
-msgid "Can't execute tools"
-msgstr "Impossibile eseguire il programma"
+#: externaltools.py:62
+msgid "http://jenyay.net/Outwiker/ExternalToolsEn"
+msgstr "http://jenyay.net/Outwiker/ExternalToolsEn"
 
-#: controller.py:98
-msgid "External Tools [Plugin]"
-msgstr "External Tools [Plugin]"
+#: menumaker.py:44
+msgid "Open Content File with..."
+msgstr "Apri il contenuto del file con..."
+
+#: menumaker.py:57
+msgid "Open Result HTML File with..."
+msgstr "Apri il file HTML generato con..."

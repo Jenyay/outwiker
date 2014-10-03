@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 from outwiker.pages.wiki.parser.pagethumbmaker import PageThumbmaker
@@ -26,9 +25,10 @@ class BaseThumbGenerator (object):
         """
         thumbmaker = PageThumbmaker()
 
-        return thumbmaker.createThumbByMaxSize (page, 
-                fname, 
-                self._thumbsize).replace ("\\", "/")
+        return thumbmaker.createThumbByMaxSize (
+            page,
+            fname,
+            self._thumbsize).replace ("\\", "/")
 
 
     def _parseThumbSize (self, thumbsize):
@@ -41,4 +41,3 @@ class BaseThumbGenerator (object):
             # Получим значение из настроек
             config = WikiConfig (self._parser.config)
             return config.thumbSizeOptions.value
-

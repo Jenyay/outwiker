@@ -2,12 +2,6 @@
 # -*- coding: UTF-8 -*-
 
 # Плагин для вставки свернутого текста
-# История версий
-# 1.1
-#    * Исправлены ошибки, связанные с отключением плагина
-#    * Требуется минимальная версия OutWiker - 1.6.0.632
-# 1.0
-#    * Первый релиз
 
 
 import os.path
@@ -18,6 +12,10 @@ from outwiker.core.commands import getCurrentVersion
 from outwiker.core.version import Version, StatusSet
 
 from .commandspoiler import SpoilerCommand
+
+
+__version__ = u"1.4.2"
+
 
 # Для работы этого плагина требуется OutWiker 1.6.0.632
 if getCurrentVersion() < Version (1, 6, 0, 632, status=StatusSet.DEV):
@@ -41,7 +39,7 @@ else:
 
             for index in range (self.__maxCommandIndex + 1):
                 commandname = "spoiler{index}".format (index=index)
-                parser.addCommand (SpoilerCommand (parser, commandname, _) )
+                parser.addCommand (SpoilerCommand (parser, commandname, _))
 
 
         def initialize(self):
@@ -59,19 +57,19 @@ else:
 
             try:
                 _ = self._init_i18n (domain, langdir)
-            except BaseException as e:
+            except BaseException, e:
                 print e
 
 
         @property
         def _isCurrentWikiPage (self):
-            return (self._application.selectedPage != None and
+            return (self._application.selectedPage is not None and
                     self._application.selectedPage.getTypeString() == u"wiki")
 
 
         def __onPageViewCreate(self, page):
             """Обработка события после создания представления страницы"""
-            assert self._application.mainWindow != None
+            assert self._application.mainWindow is not None
 
             if not self._isCurrentWikiPage:
                 return
@@ -81,13 +79,13 @@ else:
             helpString = _(u"Collapse text (:spoiler:)")
             image = self._getImagePath ()
 
-            pageView.addTool (pageView.commandsMenu, 
-                    self.SPOILER_TOOL_ID, 
-                    self.__onInsertCommand, 
-                    helpString, 
-                    helpString, 
-                    image)
-            
+            pageView.addTool (pageView.commandsMenu,
+                              self.SPOILER_TOOL_ID,
+                              self.__onInsertCommand,
+                              helpString,
+                              helpString,
+                              image)
+
 
         def _getImagePath (self):
             imagedir = unicode (os.path.join (os.path.dirname (__file__), "images"), getOS().filesEncoding)
@@ -114,7 +112,7 @@ else:
         def name (self):
             return u"Spoiler"
 
-        
+
         @property
         def description (self):
             return _(u"""Add command (:spoiler:) in wiki parser.
@@ -150,7 +148,12 @@ Text
 
         @property
         def version (self):
-            return u"1.4.1"
+            return __version__
+
+
+        @property
+        def url (self):
+            return _(u"http://jenyay.net/Outwiker/SpoilerEn")
 
 
         def destroy (self):

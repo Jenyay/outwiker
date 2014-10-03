@@ -1,7 +1,7 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 from .thumblistcommand import ThumbListCommand
+
 
 class ThumbGalleryCommand (ThumbListCommand):
     """

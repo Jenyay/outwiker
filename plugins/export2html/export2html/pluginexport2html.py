@@ -10,6 +10,8 @@ from .tester import Tester
 
 from .i18n import _, set_
 
+__version__ = u"1.3.1"
+
 
 class PluginExport2Html (Plugin):
     def __init__ (self, application):
@@ -41,8 +43,7 @@ class PluginExport2Html (Plugin):
 
     @property
     def version (self):
-        return u"1.3"
-
+        return __version__
 
     def initialize(self):
         self.__initlocale()
@@ -72,7 +73,7 @@ class PluginExport2Html (Plugin):
             global _
             _ = self._init_i18n (domain, langdir)
             set_(_)
-        except BaseException as e:
+        except BaseException, e:
             print e
 
 

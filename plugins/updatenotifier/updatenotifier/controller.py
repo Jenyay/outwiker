@@ -1,7 +1,5 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-import os.path
 import datetime
 
 import wx
@@ -50,9 +48,9 @@ class Controller (object):
 
         self._guiCreator.initialize()
 
-        if self._application.mainWindow != None:
+        if self._application.mainWindow is not None:
             self._application.mainWindow.Bind (wx.EVT_IDLE, handler=self.__onIdle)
-        
+
         self._application.onPreferencesDialogCreate += self.__onPreferencesDialogCreate
 
 
@@ -89,7 +87,7 @@ class Controller (object):
         config = UpdatesConfig (self._application.config)
 
         if (config.updateInterval > 0 and
-                datetime.datetime.today() - config.lastUpdate  >= datetime.timedelta (config.updateInterval)):
+                datetime.datetime.today() - config.lastUpdate >= datetime.timedelta (config.updateInterval)):
             self.checkForUpdatesSilence()
 
 

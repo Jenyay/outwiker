@@ -1,7 +1,4 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
-
-from outwiker.gui.guiconfig import GeneralGuiConfig
 
 from .i18n import get_
 
@@ -31,7 +28,7 @@ class PageContentLengthInfo (object):
 
 
     def _getLongestPages (self):
-        pageList = self._pageListAll[0: min (self._itemsCount, len (self._pageListAll) ) ]
+        pageList = self._pageListAll[0: min (self._itemsCount, len (self._pageListAll))]
         return self._getPageListHtml (pageList)
 
 
@@ -40,9 +37,10 @@ class PageContentLengthInfo (object):
         Оформить список страниц в виде HTML
         """
 
-        items = [u"<li><a href='{url}'>{title}</a> ({length})</li>".format (url=u"/" + page.subpath,
+        items = [u"<li><a href='{url}'>{title}</a> ({length})</li>".format (
+            url=u"/" + page.subpath,
             title=page.title,
             length=length)
-                for page, length in pageList]
+            for page, length in pageList]
 
         return u"<ul>" + u"".join (items) + u"</ul>"

@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import wx
@@ -12,8 +11,8 @@ from .utilites import isImage
 
 class ThumbDialog (wx.Dialog):
     def __init__ (self, parent, page, lang, application):
-        super (ThumbDialog, self).__init__ (parent, 
-                style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.THICK_FRAME)
+        super (ThumbDialog, self).__init__ (parent,
+                                            style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.THICK_FRAME)
         global _
         _ = lang
 
@@ -29,12 +28,12 @@ class ThumbDialog (wx.Dialog):
         self.CLEAR_BUTTON = wx.NewId()
 
         # Контролы для выбора количества столбцов
-        self.columnsLabel = wx.StaticText (self, -1, _(u"Columns count (0 - without table)") )
+        self.columnsLabel = wx.StaticText (self, -1, _(u"Columns count (0 - without table)"))
         self.columns = wx.SpinCtrl (self, min=0, max=self._config.COLUMNS_COUNT_MAX)
         self.columns.SetMinSize ((150, -1))
 
         # Контролы для указания размера превьюшек
-        self.thumbSizeLabel = wx.StaticText (self, -1, _(u"Thumbnails size (0 - default size)") )
+        self.thumbSizeLabel = wx.StaticText (self, -1, _(u"Thumbnails size (0 - default size)"))
         self.thumbSizeCtrl = wx.SpinCtrl (self, min=0, max=self._config.THUMB_SIZE_MAX)
         self.thumbSizeCtrl.SetMinSize ((150, -1))
 
@@ -61,7 +60,7 @@ class ThumbDialog (wx.Dialog):
 
 
     def _onAll (self, event):
-        self.attachFiles.SetChecked (range (self.attachFiles.GetCount()) )
+        self.attachFiles.SetChecked (range (self.attachFiles.GetCount()))
 
 
     def _onClear (self, event):
@@ -84,26 +83,26 @@ class ThumbDialog (wx.Dialog):
         buttonsSizer.AddGrowableCol (0)
         buttonsSizer.AddGrowableCol (1)
 
-        buttonsSizer.Add (self.allFilesButton, 
-                flag = wx.EXPAND | wx.LEFT | wx.RIGHT | wx.BOTTOM,
-                border = 2)
-        
-        buttonsSizer.Add (self.clearFilesButton, 
-                flag = wx.EXPAND | wx.LEFT | wx.RIGHT | wx.BOTTOM,
-                border = 2)
+        buttonsSizer.Add (self.allFilesButton,
+                          flag = wx.EXPAND | wx.LEFT | wx.RIGHT | wx.BOTTOM,
+                          border = 2)
+
+        buttonsSizer.Add (self.clearFilesButton,
+                          flag = wx.EXPAND | wx.LEFT | wx.RIGHT | wx.BOTTOM,
+                          border = 2)
 
 
         attachSizer = wx.FlexGridSizer (1, 1)
         attachSizer.AddGrowableCol (0)
         attachSizer.AddGrowableRow (0)
 
-        attachSizer.Add (self.attachFiles, 
-                flag = wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP,
-                border = 2)
+        attachSizer.Add (self.attachFiles,
+                         flag = wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP,
+                         border = 2)
 
-        attachSizer.Add (buttonsSizer, 
-                flag = wx.EXPAND | wx.BOTTOM,
-                border = 2)
+        attachSizer.Add (buttonsSizer,
+                         flag = wx.EXPAND | wx.BOTTOM,
+                         border = 2)
 
         return attachSizer
 
@@ -114,13 +113,13 @@ class ThumbDialog (wx.Dialog):
         columnsSizer.AddGrowableCol (0)
         columnsSizer.AddGrowableCol (1)
 
-        columnsSizer.Add (self.columnsLabel, 
-                flag = wx.ALIGN_CENTER_VERTICAL | wx. ALIGN_LEFT | wx.ALL,
-                border = 2)
+        columnsSizer.Add (self.columnsLabel,
+                          flag = wx.ALIGN_CENTER_VERTICAL | wx. ALIGN_LEFT | wx.ALL,
+                          border = 2)
 
-        columnsSizer.Add (self.columns, 
-                flag = wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT | wx.ALL,
-                border = 2)
+        columnsSizer.Add (self.columns,
+                          flag = wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT | wx.ALL,
+                          border = 2)
 
         return columnsSizer
 
@@ -131,13 +130,13 @@ class ThumbDialog (wx.Dialog):
         thumbSizer.AddGrowableCol (0)
         thumbSizer.AddGrowableCol (1)
 
-        thumbSizer.Add (self.thumbSizeLabel, 
-                flag = wx.ALIGN_CENTER_VERTICAL | wx. ALIGN_LEFT | wx.ALL,
-                border = 2)
+        thumbSizer.Add (self.thumbSizeLabel,
+                        flag = wx.ALIGN_CENTER_VERTICAL | wx. ALIGN_LEFT | wx.ALL,
+                        border = 2)
 
-        thumbSizer.Add (self.thumbSizeCtrl, 
-                flag = wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT | wx.ALL,
-                border = 2)
+        thumbSizer.Add (self.thumbSizeCtrl,
+                        flag = wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT | wx.ALL,
+                        border = 2)
 
         return thumbSizer
 
@@ -200,15 +199,15 @@ class ThumbDialog (wx.Dialog):
 
 
     def LoadState(self):
-        self.columnsCountConfigElement = IntegerElement (self._config.columnsCount, 
-                self.columns, 
-                0, 
-                self._config.COLUMNS_COUNT_MAX)
-    
-        self.thumbSizeConfigElement = IntegerElement (self._config.thumbSize, 
-                self.thumbSizeCtrl, 
-                0, 
-                self._config.THUMB_SIZE_MAX)
+        self.columnsCountConfigElement = IntegerElement (self._config.columnsCount,
+                                                         self.columns,
+                                                         0,
+                                                         self._config.COLUMNS_COUNT_MAX)
+
+        self.thumbSizeConfigElement = IntegerElement (self._config.thumbSize,
+                                                      self.thumbSizeCtrl,
+                                                      0,
+                                                      self._config.THUMB_SIZE_MAX)
 
 
     def Save (self):

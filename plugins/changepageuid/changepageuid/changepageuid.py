@@ -8,6 +8,9 @@ from outwiker.core.version import Version, StatusSet
 from outwiker.core.system import getOS
 
 
+__version__ = u"1.0.3"
+
+
 if getCurrentVersion() < Version (1, 8, 0, 731, status=StatusSet.DEV):
     print ("ChangeUID plugin. OutWiker version requirement: 1.8.0.731")
 else:
@@ -46,7 +49,7 @@ else:
 
         @property
         def version (self):
-            return u"1.0.2"
+            return __version__
 
 
         @property
@@ -73,7 +76,7 @@ else:
 
             try:
                 _ = self._init_i18n (domain, langdir)
-            except BaseException as e:
+            except BaseException, e:
                 print e
 
             set_(_)

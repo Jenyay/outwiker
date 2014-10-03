@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 from outwiker.core.attachment import Attachment
@@ -27,7 +26,7 @@ class ThumbTableGenerator (BaseThumbGenerator):
 
         self._singleThumbTemplate = u'<td class="thumblist-td"><div class="thumblist-table-item"><div class="thumblist-table-image">{thumbimage}</div><div class="thumblist-table-comment">{comment}</div></div></td>'
 
-        self._style ="""<!-- Begin Thumblist styles -->
+        self._style = """<!-- Begin Thumblist styles -->
 <style>
     table.thumblist-table {
         border: 1px solid #DDD;
@@ -65,7 +64,7 @@ class ThumbTableGenerator (BaseThumbGenerator):
 
         return self._fullTemplate.format (content = resultContent)
 
-    
+
     def _generateItemText (self, item):
         """
         Возвращает оформленный элемент таблицы
@@ -73,7 +72,7 @@ class ThumbTableGenerator (BaseThumbGenerator):
         image = u"""<A HREF="{attachdir}/{imagename}"><IMG SRC="{thumbpath}"/></A>""".format (
                 attachdir=Attachment.attachDir,
                 imagename = item[0],
-                thumbpath=self._getThumbnail (self._parser.page, item[0]) )
+                thumbpath=self._getThumbnail (self._parser.page, item[0]))
 
         return self._singleThumbTemplate.format (thumbimage=image, comment=item[1])
 

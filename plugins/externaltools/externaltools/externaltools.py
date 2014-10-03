@@ -13,6 +13,9 @@ from .controller import Controller
 from .i18n import set_
 
 
+__version__ = u"1.2.2"
+
+
 class PluginExternalTools (Plugin):
     def __init__ (self, application):
         """
@@ -43,7 +46,7 @@ class PluginExternalTools (Plugin):
 
     @property
     def version (self):
-        return u"1.2.1"
+        return __version__
 
 
     def initialize(self):
@@ -56,6 +59,11 @@ class PluginExternalTools (Plugin):
         Уничтожение (выгрузка) плагина. Здесь плагин должен отписаться от всех событий
         """
         self.__controller.destroy()
+
+
+    @property
+    def url (self):
+        return _(u"http://jenyay.net/Outwiker/ExternalToolsEn")
 
     #############################################
 

@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import os
@@ -64,7 +63,7 @@ class PageStat (object):
         """
         self._testPageType ()
         return len (self._wordsRegExp.findall (self._page.content))
-        
+
 
     @property
     def attachmentsCount (self):

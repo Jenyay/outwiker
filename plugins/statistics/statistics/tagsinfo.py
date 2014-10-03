@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 from .i18n import get_
@@ -15,7 +14,7 @@ class TagsInfo (object):
 
         global _
         _ = get_()
-       
+
 
     @property
     def content (self):
@@ -60,6 +59,6 @@ class TagsInfo (object):
         Оформить список тегов в виде HTML
         """
         items = [u"<li>{title} ({count})</li>".format (title=tagName, count=count)
-                for tagName, count in tagsList]
+                 for tagName, count in tagsList]
 
         return u"<ul>" + u"".join (items) + u"</ul>"

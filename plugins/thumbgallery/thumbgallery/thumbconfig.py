@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 from outwiker.core.config import IntegerOption
@@ -19,12 +18,12 @@ class ThumbConfig (object):
     def __init__ (self, config):
         self.config = config
 
-        self.columnsCount = IntegerOption (self.config, 
-                ThumbConfig.CONFIG_SECTION, 
-                ThumbConfig.COLUMNS_COUNT_PARAMNAME,
-                ThumbConfig.COLUMNS_COUNT_DEFAULT)
+        self.columnsCount = IntegerOption (self.config,
+                                           ThumbConfig.CONFIG_SECTION,
+                                           ThumbConfig.COLUMNS_COUNT_PARAMNAME,
+                                           ThumbConfig.COLUMNS_COUNT_DEFAULT)
 
-        self.thumbSize = IntegerOption (self.config, 
-                ThumbConfig.CONFIG_SECTION, 
-                ThumbConfig.THUMB_SIZE_PARAMNAME,
-                ThumbConfig.THUMB_SIZE_DEFAULT)
+        self.thumbSize = IntegerOption (self.config,
+                                        ThumbConfig.CONFIG_SECTION,
+                                        ThumbConfig.THUMB_SIZE_PARAMNAME,
+                                        ThumbConfig.THUMB_SIZE_DEFAULT)

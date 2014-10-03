@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import os.path
@@ -9,6 +8,9 @@ from outwiker.core.commands import getCurrentVersion
 from outwiker.core.version import Version, StatusSet
 
 from .controller import Controller
+
+
+__version__ = u"1.1.2"
 
 
 # Для работы этого плагина требуется OutWiker 1.6.0.632
@@ -31,7 +33,7 @@ else:
         def name (self):
             return u"ThumbGallery"
 
-        
+
         @property
         def description (self):
             return self._loadDescription()
@@ -39,7 +41,7 @@ else:
 
         @property
         def version (self):
-            return u"1.1.1"
+            return __version__
 
 
         def initialize(self):
@@ -53,8 +55,7 @@ else:
 
             try:
                 _ = self._init_i18n (domain, langdir)
-            except BaseException as e:
-                # print e
+            except BaseException:
                 pass
 
 
@@ -63,6 +64,11 @@ else:
             Уничтожение (выгрузка) плагина. Здесь плагин должен отписаться от всех событий
             """
             self._controller.destroy()
+
+
+        @property
+        def url (self):
+            return _(u"http://jenyay.net/Outwiker/ThumbGalleryEn")
 
 
         def _loadDescription (self):

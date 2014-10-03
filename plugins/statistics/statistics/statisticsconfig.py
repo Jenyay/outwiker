@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 from outwiker.core.config import IntegerOption
@@ -17,15 +16,15 @@ class StatisticsConfig (object):
         treeDialogWidthOption = u"TreeDialogWidth"
         treeDialogHeightOption = u"TreeDialogHeight"
 
-        self.__treeDialogWidth = IntegerOption (self.__config, 
-                self.section, 
-                treeDialogWidthOption, 
-                self.DEFAULT_TREE_DIALOG_WIDTH)
+        self.__treeDialogWidth = IntegerOption (self.__config,
+                                                self.section,
+                                                treeDialogWidthOption,
+                                                self.DEFAULT_TREE_DIALOG_WIDTH)
 
-        self.__treeDialogHeight = IntegerOption (self.__config, 
-                self.section, 
-                treeDialogHeightOption, 
-                self.DEFAULT_TREE_DIALOG_HEIGHT)
+        self.__treeDialogHeight = IntegerOption (self.__config,
+                                                 self.section,
+                                                 treeDialogHeightOption,
+                                                 self.DEFAULT_TREE_DIALOG_HEIGHT)
 
 
     @property

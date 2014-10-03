@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 from outwiker.core.attachment import Attachment
@@ -24,7 +23,7 @@ class ThumbStreamGenerator (BaseThumbGenerator):
         # Обертка для одной картинки
         self._singleThumbTemplate = u'<div class="thumblist-thumb"><div class="thumblist-image"><A HREF="{attachdir}/{imagename}"><IMG SRC="{thumbpath}"/></A></div></div>'
 
-        self._style ="""<!-- Begin Thumblist styles -->
+        self._style = """<!-- Begin Thumblist styles -->
 <style>
     div.thumblist {
         }
@@ -49,15 +48,11 @@ class ThumbStreamGenerator (BaseThumbGenerator):
         Возвращает строку, содержащую HTML-текст галереи
         """
         resultContent = u"".join ([self._singleThumbTemplate.format (attachdir=Attachment.attachDir,
-            imagename = item[0],
-            thumbpath=self._getThumbnail (self._parser.page, item[0]))
-                for item in self._items])
+                                                                     imagename = item[0],
+                                                                     thumbpath=self._getThumbnail (self._parser.page, item[0]))
+                                   for item in self._items])
 
         if self._style not in self._parser.head:
             self._parser.appendToHead (self._style)
 
         return self._fullTemplate.format (content = resultContent)
-
-
-
-

@@ -98,7 +98,7 @@ else:
 
             try:
                 _ = self._init_i18n (domain, langdir)
-            except BaseException as e:
+            except BaseException, e:
                 print e
 
             set_(_)

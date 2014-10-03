@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 from .i18n import get_
@@ -18,19 +17,19 @@ class PrefPanelController (object):
         _ = get_()
 
         # Список возможных интервалов обновлений
-        # Через интерфейс не будем давать возможность задавать 
+        # Через интерфейс не будем давать возможность задавать
         # произвольный интервал обновлений, хотя это можно сделать
         # через файл настроек. В этом случае появится дополнительный
         # пункт "Custom"
         self.intervalList = {
-                0: _(u"Never"),
-                1: _(u"Every day"),
-                2: _(u"Every two days"),
-                3: _(u"Every three days"),
-                7: _(u"Every week"),
-                14: _(u"Every two weeks"),
-                30: _(u"Every month"),
-                }
+            0: _(u"Never"),
+            1: _(u"Every day"),
+            2: _(u"Every two days"),
+            3: _(u"Every three days"),
+            7: _(u"Every week"),
+            14: _(u"Every two weeks"),
+            30: _(u"Every month"),
+        }
 
 
     def loadState (self):

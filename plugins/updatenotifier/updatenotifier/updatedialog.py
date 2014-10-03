@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import wx
@@ -10,15 +9,16 @@ from .scrolledpanel import ScrolledPanel
 class UpdateDialog(wx.Dialog):
     """Диалог для показа списка обновленных плагинов"""
     def __init__(self, parent):
-        super(UpdateDialog, self).__init__(parent, 
-                style=wx.DEFAULT_DIALOG_STYLE|wx.RESIZE_BORDER|wx.THICK_FRAME)
+        super(UpdateDialog, self).__init__(
+            parent,
+            style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.THICK_FRAME)
 
         global _
         _ = get_()
 
         self._activeUrlColor = wx.BLUE
         self._inactiveUrlColor = wx.BLACK
-        
+
         self.SetSize ((500, 400))
         self.SetTitle (_(u"UpdateNotifier"))
         self._createGui ()
@@ -34,13 +34,13 @@ class UpdateDialog(wx.Dialog):
         outwikerCurrentSizer = wx.FlexGridSizer (cols=2)
         outwikerCurrentSizer.AddGrowableCol (1)
 
-        outwikerCurrentSizer.Add (self.outwikerCurrentLabel, 
-                flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, 
-                border=4)
+        outwikerCurrentSizer.Add (self.outwikerCurrentLabel,
+                                  flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+                                  border=4)
 
         outwikerCurrentSizer.Add (self.outwikerCurrentVersion,
-                flag = wx.ALIGN_CENTER_VERTICAL | wx.ALL | wx.ALIGN_RIGHT, 
-                border=4)
+                                  flag = wx.ALIGN_CENTER_VERTICAL | wx.ALL | wx.ALIGN_RIGHT,
+                                  border=4)
 
         sizer.Add (outwikerCurrentSizer, flag=wx.ALL | wx.EXPAND, border=0)
 
@@ -55,13 +55,13 @@ class UpdateDialog(wx.Dialog):
         outwikerStableSizer = wx.FlexGridSizer (cols=2)
         outwikerStableSizer.AddGrowableCol (1)
 
-        outwikerStableSizer.Add (self.outwikerStableLabel, 
-                flag = wx.ALIGN_CENTER_VERTICAL | wx.ALL, 
-                border=4)
+        outwikerStableSizer.Add (self.outwikerStableLabel,
+                                 flag = wx.ALIGN_CENTER_VERTICAL | wx.ALL,
+                                 border=4)
 
-        outwikerStableSizer.Add (self.outwikerStableLink, 
-                flag = wx.ALIGN_CENTER_VERTICAL | wx.ALL | wx.ALIGN_RIGHT, 
-                border=4)
+        outwikerStableSizer.Add (self.outwikerStableLink,
+                                 flag = wx.ALIGN_CENTER_VERTICAL | wx.ALL | wx.ALIGN_RIGHT,
+                                 border=4)
 
         sizer.Add (outwikerStableSizer, flag=wx.ALL | wx.EXPAND, border=0)
 
@@ -76,13 +76,13 @@ class UpdateDialog(wx.Dialog):
         outwikerUnstableSizer = wx.FlexGridSizer (cols=2)
         outwikerUnstableSizer.AddGrowableCol (0)
 
-        outwikerUnstableSizer.Add (self.outwikerUnstableLabel, 
-                flag = wx.ALIGN_CENTER_VERTICAL | wx.ALL, 
-                border=4)
+        outwikerUnstableSizer.Add (self.outwikerUnstableLabel,
+                                   flag = wx.ALIGN_CENTER_VERTICAL | wx.ALL,
+                                   border=4)
 
-        outwikerUnstableSizer.Add (self.outwikerUnstableLink, 
-                flag = wx.ALIGN_CENTER_VERTICAL | wx.ALL | wx.ALIGN_RIGHT, 
-                border=4)
+        outwikerUnstableSizer.Add (self.outwikerUnstableLink,
+                                   flag = wx.ALIGN_CENTER_VERTICAL | wx.ALL | wx.ALIGN_RIGHT,
+                                   border=4)
 
         sizer.Add (outwikerUnstableSizer, flag=wx.ALL | wx.EXPAND, border=0)
 
@@ -94,10 +94,10 @@ class UpdateDialog(wx.Dialog):
         pluginsLabel = wx.StaticText (self, -1, _(u"Updated plugins:"))
         self._mainSizer.Add (pluginsLabel, flag = wx.ALL | wx.EXPAND, border = 4)
 
-        self.pluginsPanel = ScrolledPanel (self, -1, style = wx.TAB_TRAVERSAL|wx.SUNKEN_BORDER)
+        self.pluginsPanel = ScrolledPanel (self, -1, style = wx.TAB_TRAVERSAL | wx.SUNKEN_BORDER)
         self.pluginsPanel.SetMinSize ((-1, 200))
         self.pluginsPanel.SetupScrolling (scroll_x=False)
-        
+
         self.pluginsSizer = wx.FlexGridSizer (cols=2)
         self.pluginsSizer.AddGrowableCol (1)
         self.pluginsPanel.SetSizer (self.pluginsSizer)
@@ -138,14 +138,14 @@ class UpdateDialog(wx.Dialog):
         """
         newLabel = wx.StaticText (self.pluginsPanel, -1, plugin.name)
 
-        self.pluginsSizer.Add (newLabel, 
-                flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                border=4)
+        self.pluginsSizer.Add (newLabel,
+                               flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+                               border=4)
 
         newLink = wx.HyperlinkCtrl (self.pluginsPanel, -1, str(newversion), url)
-        self.pluginsSizer.Add (newLink, 
-                flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT,
-                border=4)
+        self.pluginsSizer.Add (newLink,
+                               flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT,
+                               border=4)
 
         self.Layout()
 
@@ -154,7 +154,7 @@ class UpdateDialog(wx.Dialog):
         """
         Установить в диалоге номер текущей версии OutWiker
         """
-        self.outwikerCurrentVersion.SetLabel (u"{0}".format (version) )
+        self.outwikerCurrentVersion.SetLabel (u"{0}".format (version))
         self.Layout()
 
 
@@ -163,7 +163,7 @@ class UpdateDialog(wx.Dialog):
         Установить в диалоге номер последней стабильной версии
         """
         self.outwikerStableLink.SetLabel (u"{0}".format (version))
-        
+
         color = self._activeUrlColor if isNewVersion else self._inactiveUrlColor
         self.outwikerStableLink.SetNormalColour (color)
 
@@ -175,7 +175,7 @@ class UpdateDialog(wx.Dialog):
         Установить в диалоге номер последней нестабильной версии
         """
         self.outwikerUnstableLink.SetLabel (u"{0}".format (version))
-        
+
         color = self._activeUrlColor if isNewVersion else self._inactiveUrlColor
         self.outwikerUnstableLink.SetNormalColour (color)
 

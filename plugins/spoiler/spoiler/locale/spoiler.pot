@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-25 22:02+0400\n"
+"POT-Creation-Date: 2014-10-03 21:44+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,11 +25,11 @@ msgstr ""
 msgid "Collapse"
 msgstr ""
 
-#: spoiler.py:82
+#: spoiler.py:75
 msgid "Collapse text (:spoiler:)"
 msgstr ""
 
-#: spoiler.py:121
+#: spoiler.py:114
 msgid ""
 "Add command (:spoiler:) in wiki parser.\n"
 "\n"
@@ -62,4 +62,8 @@ msgid ""
 "<PRE>(:spoiler expandtext=\"More...\" collapsetext=\"Less\" inline :)\n"
 "Text\n"
 "(:spoilerend:)</PRE>\n"
+msgstr ""
+
+#: spoiler.py:152
+msgid "http://jenyay.net/Outwiker/SpoilerEn"
 msgstr ""

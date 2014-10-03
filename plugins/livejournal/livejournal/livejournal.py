@@ -8,6 +8,9 @@ from outwiker.core.commands import getCurrentVersion
 from outwiker.core.version import Version, StatusSet
 
 
+__version__ = u"1.3.2"
+
+
 if getCurrentVersion() < Version (1, 7, 0, 670, status=StatusSet.DEV):
     print ("Livejournal plugin. OutWiker version requirement: 1.7.0.670")
 else:
@@ -47,7 +50,7 @@ else:
 
             try:
                 _ = self._init_i18n (domain, langdir)
-            except BaseException as e:
+            except BaseException, e:
                 print e
 
             set_ (_)
@@ -70,7 +73,12 @@ else:
 
         @property
         def version (self):
-            return u"1.3.1"
+            return __version__
+
+
+        @property
+        def url (self):
+            return _(u"http://jenyay.net/Outwiker/LivejournalPluginEn")
 
 
         def destroy (self):

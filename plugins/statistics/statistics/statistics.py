@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import os.path
@@ -15,6 +14,9 @@ from .pagestat import PageStat
 from .treestat import TreeStat
 from .pagestatdialog import PageStatDialog
 from .treestatdialog import TreeStatDialog
+
+
+__version__ = u"1.0.1"
 
 
 if getCurrentVersion() < Version (1, 7, 0, 684, status=StatusSet.DEV):
@@ -43,7 +45,7 @@ else:
         def name (self):
             return u"Statistics"
 
-        
+
         @property
         def description (self):
             return _(u"""The plugin to display statistics. 
@@ -53,18 +55,18 @@ Statistics plugin append menu items <b>Tools -> Page Statistic</b> and <b>Tools 
 
         @property
         def version (self):
-            return u"1.0"
+            return __version__
 
 
         @property
         def url (self):
             return _(u"http://jenyay.net/Outwiker/StatisticsEn")
-        
-        
+
+
         def initialize(self):
             self._initlocale(u"statistics")
 
-            if self._application.mainWindow != None:
+            if self._application.mainWindow is not None:
                 self._addMenuItems ()
 
 
@@ -72,7 +74,7 @@ Statistics plugin append menu items <b>Tools -> Page Statistic</b> and <b>Tools 
             """
             Уничтожение (выгрузка) плагина. Здесь плагин должен отписаться от всех событий
             """
-            if self._application.mainWindow != None:
+            if self._application.mainWindow is not None:
                 self._removeMenu ()
 
 
@@ -84,7 +86,7 @@ Statistics plugin append menu items <b>Tools -> Page Statistic</b> and <b>Tools 
 
             try:
                 _ = self._init_i18n (domain, langdir)
-            except BaseException as e:
+            except BaseException, e:
                 print e
 
             set_(_)
@@ -99,9 +101,9 @@ Statistics plugin append menu items <b>Tools -> Page Statistic</b> and <b>Tools 
             """
             Добавить пункты, связанные со статистикой в меню 'Инструменты'
             """
-            assert self._separatorMenuItem == None
-            assert self._pageStatMenuItem == None
-            assert self._treeStatMenuItem == None
+            assert self._separatorMenuItem is None
+            assert self._pageStatMenuItem is None
+            assert self._treeStatMenuItem is None
 
             self._separatorMenuItem = self.toolsMenu.AppendSeparator()
 
@@ -116,9 +118,9 @@ Statistics plugin append menu items <b>Tools -> Page Statistic</b> and <b>Tools 
             """
             Удалить добавленные пункты меню
             """
-            assert self._separatorMenuItem != None
-            assert self._pageStatMenuItem != None
-            assert self._treeStatMenuItem != None
+            assert self._separatorMenuItem is not None
+            assert self._pageStatMenuItem is not None
+            assert self._treeStatMenuItem is not None
 
             self._application.mainWindow.Unbind (wx.EVT_MENU, handler=self._onPageStat)
             self._application.mainWindow.Unbind (wx.EVT_MENU, handler=self._onTreeStat)
@@ -133,7 +135,7 @@ Statistics plugin append menu items <b>Tools -> Page Statistic</b> and <b>Tools 
 
 
         def _onPageStat (self, event):
-            if self._application.selectedPage != None:
+            if self._application.selectedPage is not None:
                 pageStat = PageStat (self._application.selectedPage)
 
                 with PageStatDialog (self._application.mainWindow, pageStat) as dlg:
@@ -141,7 +143,7 @@ Statistics plugin append menu items <b>Tools -> Page Statistic</b> and <b>Tools 
 
 
         def _onTreeStat (self, event):
-            if self._application.wikiroot != None:
+            if self._application.wikiroot is not None:
                 treeStat = TreeStat (self._application.wikiroot)
                 with TreeStatDialog (self._application.mainWindow, self._application, treeStat) as dlg:
                     dlg.ShowModal()

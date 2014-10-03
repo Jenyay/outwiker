@@ -1,8 +1,4 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
-
-import threading
-import time
 
 import wx
 
@@ -25,8 +21,10 @@ class TreeStatDialog (wx.Dialog):
         """
         treestat - экземпляр класса TreeStat
         """
-        super (TreeStatDialog, self).__init__ (parent, 
-                style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.THICK_FRAME)
+        super (TreeStatDialog, self).__init__ (
+            parent,
+            style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.THICK_FRAME)
+
         self._application = application
         self._treestat = treestat
         self._config = StatisticsConfig (self._application.config)
@@ -72,7 +70,7 @@ class TreeStatDialog (wx.Dialog):
         # Если бы ему это было не обязательно, то достаточно было бы использовать только следующую строку
         # self._htmlRender.page = self._application.selectedPage
 
-        if self._application.selectedPage != None:
+        if self._application.selectedPage is not None:
             self._htmlRender.page = self._application.selectedPage
         elif len (self._application.wikiroot.children) != 0:
             self._htmlRender.page = self._application.wikiroot.children[0]
@@ -92,16 +90,16 @@ class TreeStatDialog (wx.Dialog):
 
     def _updateStatistics (self):
         # Шаманство, связанное с тем, что HTML-рендер ожидает, что есть выбранная страница
-        if self._htmlRender.page == None:
+        if self._htmlRender.page is None:
             self._setHtml (_(u"A tree has no pages"))
             return
 
         self._setHtml (_(u"Collecting statistics. Please wait..."))
 
-        runner = LongProcessRunner (self._getContent, 
-                self, 
-                _(u"Statistics"), 
-                _(u"Collecting statistics..."))
+        runner = LongProcessRunner (self._getContent,
+                                    self,
+                                    _(u"Statistics"),
+                                    _(u"Collecting statistics..."))
 
         resultList = runner.run ()
 
@@ -118,11 +116,11 @@ class TreeStatDialog (wx.Dialog):
         Создать HTML со статистикой. То, что должно быть внутри тега <body>
         """
         infoList = [PageCountInfo (self._treestat.pageCount),
-                MaxDepthInfo (self._treestat.maxDepth),
-                TagsInfo (self._treestat.frequentTags, self._itemsCount),
-                DatePageInfo (self._treestat.pageDate, self._itemsCount, self._application.config),
-                PageContentLengthInfo (self._treestat.pageContentLength, self._itemsCount),
-                PageAttachmentSizeInfo (self._treestat.pageAttachmentsSize, self._itemsCount)]
+                    MaxDepthInfo (self._treestat.maxDepth),
+                    TagsInfo (self._treestat.frequentTags, self._itemsCount),
+                    DatePageInfo (self._treestat.pageDate, self._itemsCount, self._application.config),
+                    PageContentLengthInfo (self._treestat.pageContentLength, self._itemsCount),
+                    PageAttachmentSizeInfo (self._treestat.pageAttachmentsSize, self._itemsCount)]
 
         return u"".join ([info.content for info in infoList])
 

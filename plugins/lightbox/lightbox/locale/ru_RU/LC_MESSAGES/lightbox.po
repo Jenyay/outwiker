@@ -7,18 +7,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lightbox\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-07 09:09+0400\n"
-"PO-Revision-Date: 2012-11-16 21:16+0300\n"
+"POT-Creation-Date: 2014-10-03 21:26+0400\n"
+"PO-Revision-Date: 2014-10-03 21:28+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: jenyay.net <jenyay.ilin@gmail.com>\n"
-"Language: \n"
+"Language: ru_RU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: Russian\n"
-"X-Poedit-Country: RUSSIAN FEDERATION\n"
+"X-Generator: Poedit 1.5.4\n"
 
 #: lightboxcommand.py:71
+#, python-brace-format
 msgid ""
 "<B>Can't copy script files</B>\n"
 "{0}"
@@ -26,9 +26,11 @@ msgstr ""
 "<B>Ошибка копирования файлов</B>\n"
 "{0}"
 
-#: lightbox.py:43
+#: lightbox.py:44
 msgid ""
-"This plugin adds a command (:lightbox:), after adding a images from thumbnails will open in a preview window, rather than in an external program.\n"
+"This plugin adds a command (:lightbox:), after adding a images from "
+"thumbnails will open in a preview window, rather than in an external "
+"program.\n"
 "                    \n"
 "<B>Usage</B>\n"
 "\n"
@@ -38,7 +40,9 @@ msgid ""
 "bla-bla-bla...\n"
 "%thumb%Attach:image_2.png%%\n"
 msgstr ""
-"Плагин добавляет команду (:lightbox:), которая указывает, что полноразмерные картинки при клике на миниатюры нужно открывать в самом окне просмотра, а не во внешней программе.\n"
+"Плагин добавляет команду (:lightbox:), которая указывает, что полноразмерные "
+"картинки при клике на миниатюры нужно открывать в самом окне просмотра, а не "
+"во внешней программе.\n"
 "                    \n"
 "<B>Использование</B>\n"
 "\n"
@@ -48,7 +52,10 @@ msgstr ""
 "бла-бла-бла...\n"
 "%thumb%Attach:image_2.png%%\n"
 
-#: lightbox.py:88
+#: lightbox.py:63
+msgid "http://jenyay.net/Outwiker/LightboxEn"
+msgstr "http://jenyay.net/Outwiker/Lightbox"
+
+#: lightbox.py:94
 msgid "Use lightbox (:lightbox:)"
 msgstr "Использовать lightbox (:lightbox:)"
-

@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-30 09:31+0300\n"
-"PO-Revision-Date: 2012-08-25 14:12+0300\n"
-"Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
+"POT-Creation-Date: 2014-10-03 21:18+0400\n"
+"PO-Revision-Date: 2014-10-03 21:20+0300\n"
+"Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
 "MIME-Version: 1.0\n"
@@ -12,19 +12,21 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: _;gettext;gettext_noop\n"
 "X-Poedit-Basepath: ../../..\n"
-"X-Poedit-Language: Ukrainian\n"
-"X-Poedit-Country: UKRAINE\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: crowdin.net\n"
+"X-Generator: Poedit 1.5.4\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: menumaker.py:44
-msgid "Open Content File with..."
-msgstr "Відкрити файл змісту з..."
+#: controller.py:89
+msgid "Can't execute tools"
+msgstr "Не вдалося запустити застосунок"
 
-#: menumaker.py:57
-msgid "Open Result HTML File with..."
-msgstr "Відкрити результуючий HTML файл з..."
+#: controller.py:90 preferencespanel.py:90
+msgid "Error"
+msgstr "Помилка"
+
+#: controller.py:98
+msgid "External Tools [Plugin]"
+msgstr "External Tools [Розширення]"
 
 #: toolslistpanel.py:110
 msgid "Open file dialog..."
@@ -42,10 +44,6 @@ msgstr "Виконувані файли (*.exe)|*.exe|Всі файли|*.*"
 msgid "All Files|*"
 msgstr "Всі Файли|*"
 
-#: externaltools.py:41
-msgid "Open notes files with external editor"
-msgstr "Відкрити файли нотатків у зовнішньому редакторі"
-
 #: preferencespanel.py:36
 msgid "Tools List"
 msgstr "Список засобів"
@@ -58,16 +56,18 @@ msgstr "Додати застосунок"
 msgid "Can't save options"
 msgstr "Не вдалося зберегти параметри"
 
-#: preferencespanel.py:90
-#: controller.py:90
-msgid "Error"
-msgstr "Помилка"
+#: externaltools.py:41
+msgid "Open notes files with external editor"
+msgstr "Відкрити файли нотатків у зовнішньому редакторі"
 
-#: controller.py:89
-msgid "Can't execute tools"
-msgstr "Не вдалося запустити застосунок"
+#: externaltools.py:62
+msgid "http://jenyay.net/Outwiker/ExternalToolsEn"
+msgstr "http://jenyay.net/Outwiker/ExternalTools"
 
-#: controller.py:98
-msgid "External Tools [Plugin]"
-msgstr "External Tools [Розширення]"
+#: menumaker.py:44
+msgid "Open Content File with..."
+msgstr "Відкрити файл змісту з..."
 
+#: menumaker.py:57
+msgid "Open Result HTML File with..."
+msgstr "Відкрити результуючий HTML файл з..."

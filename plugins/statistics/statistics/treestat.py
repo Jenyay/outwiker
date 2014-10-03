@@ -1,11 +1,10 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-from outwiker.core.attachment import Attachment
 from outwiker.core.tree import WikiDocument
 from outwiker.core.tagslist import TagsList
 
 from .pagestat import PageStat
+
 
 class TreeStat (object):
     """

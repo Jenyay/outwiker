@@ -2,48 +2,49 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-29 13:10+0400\n"
-"PO-Revision-Date: 2012-08-07 19:09+0300\n"
-"Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
+"POT-Creation-Date: 2014-10-03 22:11+0400\n"
+"PO-Revision-Date: 2014-10-03 22:13+0300\n"
+"Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Ukrainian\n"
-"Language: \n"
+"Language: uk_UA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: crowdin.net\n"
-"X-Poedit-Language: Ukrainian\n"
-"X-Poedit-Country: UKRAINE\n"
+"X-Generator: Poedit 1.5.4\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#: controller.py:57
+#: controller.py:56
 msgid "Thumbnails Gallery (:thumbgallery:)"
 msgstr "Галерея ескізів (:thumbgalley:)"
 
-#: thumbdialog.py:20
+#: thumbdialog.py:24
 msgid "Gallery"
 msgstr "Галерея"
 
-#: thumbdialog.py:31
+#: thumbdialog.py:32
 msgid "Columns count (0 - without table)"
 msgstr "Кількість стовпців (0 - без таблиці)"
 
-#: thumbdialog.py:36
+#: thumbdialog.py:37
 msgid "Thumbnails size (0 - default size)"
 msgstr "Розмір мініатюр (0 - стандартний розмір)"
 
-#: thumbdialog.py:43
+#: thumbdialog.py:44
 msgid "All Images"
 msgstr "Всі зображення"
 
-#: thumbdialog.py:44
+#: thumbdialog.py:45
 msgid "Clear"
 msgstr "Очистити"
 
-#: thumbgallery.py:72
+#: thumbgallery.py:71
+msgid "http://jenyay.net/Outwiker/ThumbGalleryEn"
+msgstr "http://jenyay.net/Outwiker/ThumbGallery"
+
+#: thumbgallery.py:78
 msgid "locale/description.html"
 msgstr "locale/uk_UA/description.html"
 
-#: thumbgallery.py:80
+#: thumbgallery.py:86
 msgid "Can't load description"
 msgstr "Не вдалося завантажити опис"
-

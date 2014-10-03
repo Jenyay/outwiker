@@ -1,9 +1,9 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import datetime
 
 from outwiker.core.config import IntegerOption, DateTimeOption, BooleanOption
+
 
 class UpdatesConfig (object):
     def __init__ (self, config):
@@ -17,10 +17,10 @@ class UpdatesConfig (object):
         # Интервал проверки обновлений по умолчанию
         UPDATE_INTERVAL_DEFAULT = 7
 
-        self.__updateInterval = IntegerOption (self.__config, 
-                self.section, 
-                UPDATE_INTERVAL_OPTION, 
-                UPDATE_INTERVAL_DEFAULT)
+        self.__updateInterval = IntegerOption (self.__config,
+                                               self.section,
+                                               UPDATE_INTERVAL_OPTION,
+                                               UPDATE_INTERVAL_DEFAULT)
 
 
         # Дата последней проверки обновлений
@@ -30,9 +30,9 @@ class UpdatesConfig (object):
         LAST_UPDATE_DEFAULT = datetime.datetime (1961, 4, 12)
 
         self.__lastUpdate = DateTimeOption (self.__config,
-                self.section,
-                LAST_UPDATE_OPTION,
-                LAST_UPDATE_DEFAULT)
+                                            self.section,
+                                            LAST_UPDATE_OPTION,
+                                            LAST_UPDATE_DEFAULT)
 
 
         # Игнорировать обновления нестабильной версии OutWiker?
@@ -41,9 +41,9 @@ class UpdatesConfig (object):
         IGNORE_UNSTABLE_DEFAULT = False
 
         self.__ignoreUnstable = BooleanOption (self.__config,
-                self.section,
-                IGNORE_UNSTABLE_OPTION,
-                IGNORE_UNSTABLE_DEFAULT)
+                                               self.section,
+                                               IGNORE_UNSTABLE_OPTION,
+                                               IGNORE_UNSTABLE_DEFAULT)
 
 
     @property
@@ -81,8 +81,8 @@ class UpdatesConfig (object):
     @property
     def ignoreUnstable (self):
         return self.__ignoreUnstable.value
-    
-    
+
+
     @ignoreUnstable.setter
     def ignoreUnstable (self, value):
         self.__ignoreUnstable.value = value

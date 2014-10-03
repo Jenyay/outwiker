@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 from .i18n import get_
@@ -15,4 +14,4 @@ class PageCountInfo (object):
 
     @property
     def content (self):
-        return u"<p>" + _(u"Page count: {0}").format (self._pageCount) + "</p><hr/>";
+        return u"<p>" + _(u"Page count: {0}").format (self._pageCount) + "</p><hr/>"

@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 from outwiker.gui.guiconfig import GeneralGuiConfig
@@ -33,7 +32,7 @@ class DatePageInfo (object):
 
     def _getRecentEditedPages (self):
         title = _(u"Recent edited pages:")
-        pageList = self._pageDateList[0: min (self._itemsCount, len (self._pageDateList) )]
+        pageList = self._pageDateList[0: min (self._itemsCount, len (self._pageDateList))]
 
         itemsHtml = self._getPageListHtml (pageList)
         return u"""<p>{title}<br>{items}</p>""".format (title=title, items=itemsHtml)
@@ -44,7 +43,7 @@ class DatePageInfo (object):
         pageListRevert = self._pageDateList[:]
         pageListRevert.reverse()
 
-        pageList = pageListRevert[0: min (self._itemsCount, len (self._pageDateList) )]
+        pageList = pageListRevert[0: min (self._itemsCount, len (self._pageDateList))]
 
         itemsHtml = self._getPageListHtml (pageList)
         return u"""<p>{title}<br>{items}</p>""".format (title=title, items=itemsHtml)
@@ -54,9 +53,10 @@ class DatePageInfo (object):
         """
         Оформить список страниц в виде HTML
         """
-        items = [u"<li><a href='{url}'>{title}</a> ({date})</li>".format (url=u"/" + page.subpath,
+        items = [u"<li><a href='{url}'>{title}</a> ({date})</li>".format (
+            url=u"/" + page.subpath,
             title=page.title,
             date=page.datetime.strftime (self._dateTimeFormat))
-                for page in pageList]
+            for page in pageList]
 
         return u"<ul>" + u"".join (items) + u"</ul>"

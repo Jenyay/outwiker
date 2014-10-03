@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import os.path
@@ -9,6 +8,8 @@ from outwiker.core.commands import getCurrentVersion
 from outwiker.core.version import Version, StatusSet
 
 from .stylecommand import StyleCommand
+
+__version__ = u"1.2.1"
 
 
 # Для работы этого плагина требуется OutWiker 1.6.0.632
@@ -35,7 +36,7 @@ else:
         def name (self):
             return u"Style"
 
-        
+
         @property
         def description (self):
             return _(u"""Add command (:style:) to wiki parser. This command allow the setting of a user CSS style for a page.
@@ -54,7 +55,7 @@ body {background-color: #EEE;}
 
         @property
         def version (self):
-            return u"1.2"
+            return __version__
 
 
         def initialize(self):
@@ -72,13 +73,13 @@ body {background-color: #EEE;}
 
             try:
                 _ = self._init_i18n (domain, langdir)
-            except BaseException as e:
+            except BaseException, e:
                 print e
 
 
         def __onPageViewCreate(self, page):
             """Обработка события после создания представления страницы"""
-            assert self._application.mainWindow != None
+            assert self._application.mainWindow is not None
 
             if not self._isCurrentWikiPage:
                 return
@@ -87,13 +88,13 @@ body {background-color: #EEE;}
 
             helpString = _(u"Custom Style (:style:)")
 
-            pageView.addTool (pageView.commandsMenu, 
-                    self.STYLE_TOOL_ID, 
-                    self.__onInsertCommand, 
-                    helpString, 
-                    helpString, 
-                    None)
-            
+            pageView.addTool (pageView.commandsMenu,
+                              self.STYLE_TOOL_ID,
+                              self.__onInsertCommand,
+                              helpString,
+                              helpString,
+                              None)
+
 
         def __onInsertCommand (self, event):
             startCommand = u'(:style:)\n'
@@ -112,8 +113,13 @@ body {background-color: #EEE;}
 
         @property
         def _isCurrentWikiPage (self):
-            return (self._application.selectedPage != None and
+            return (self._application.selectedPage is not None and
                     self._application.selectedPage.getTypeString() == u"wiki")
+
+
+        @property
+        def url (self):
+            return _(u"http://jenyay.net/Outwiker/StylePluginEn")
 
 
         def destroy (self):
