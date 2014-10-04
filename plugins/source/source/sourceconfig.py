@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 from outwiker.core.config import StringOption, IntegerOption, ListOption, BooleanOption
@@ -15,37 +14,37 @@ class SourceConfig (object):
         # Размер табуляции по умолчанию
         tabWidthOption = u"TabWidth"
 
-        self.__tabWidth = IntegerOption (self.__config, 
-                self.section, 
-                tabWidthOption, 
-                TAB_WIDTH_DEFAULT)
+        self.__tabWidth = IntegerOption (self.__config,
+                                         self.section,
+                                         tabWidthOption,
+                                         TAB_WIDTH_DEFAULT)
 
 
         # Язык программирования по умолчанию
         defaultLanguageOption = u"DefaultLanguage"
 
-        self.__defaultLanguage = StringOption (self.__config, 
-                self.section, 
-                defaultLanguageOption, 
-                LANGUAGE_DEFAULT)
+        self.__defaultLanguage = StringOption (self.__config,
+                                               self.section,
+                                               defaultLanguageOption,
+                                               LANGUAGE_DEFAULT)
 
 
         # Список выбранных языков программирования
         languageListOption = u"LanguageList"
 
-        self.__languageList = ListOption (self.__config, 
-                self.section, 
-                languageListOption, 
-                LANGUAGE_LIST_DEFAULT)
+        self.__languageList = ListOption (self.__config,
+                                          self.section,
+                                          languageListOption,
+                                          LANGUAGE_LIST_DEFAULT)
 
 
         # Стиль, используемый по умолчанию (если стиль не указан явно)
         defaultStyleOption = u"DefaultStyle"
 
-        self.__defaultStyle = StringOption (self.__config, 
-                self.section, 
-                defaultStyleOption, 
-                STYLE_DEFAULT)
+        self.__defaultStyle = StringOption (self.__config,
+                                            self.section,
+                                            defaultStyleOption,
+                                            STYLE_DEFAULT)
 
         # Размеры диалога для вставки команды (:source:)
         self.DEFAULT_DIALOG_WIDTH = -1
@@ -54,15 +53,15 @@ class SourceConfig (object):
         dialogWidthOption = u"DialogWidth"
         dialogHeightOption = u"DialogHeight"
 
-        self.__dialogWidth = IntegerOption (self.__config, 
-                self.section, 
-                dialogWidthOption, 
-                self.DEFAULT_DIALOG_WIDTH)
+        self.__dialogWidth = IntegerOption (self.__config,
+                                            self.section,
+                                            dialogWidthOption,
+                                            self.DEFAULT_DIALOG_WIDTH)
 
-        self.__dialogHeight = IntegerOption (self.__config, 
-                self.section, 
-                dialogHeightOption, 
-                self.DEFAULT_DIALOG_HEIGHT)
+        self.__dialogHeight = IntegerOption (self.__config,
+                                             self.section,
+                                             dialogHeightOption,
+                                             self.DEFAULT_DIALOG_HEIGHT)
 
 
         # Настройка "Использовать фон страницы в блоке кода"
@@ -70,9 +69,9 @@ class SourceConfig (object):
         parentBgOption = u"ParentBg"
 
         self.__parentBg = BooleanOption (self.__config,
-                self.section,
-                parentBgOption,
-                self.DEFAULT_PARENT_BACKGROUND)
+                                         self.section,
+                                         parentBgOption,
+                                         self.DEFAULT_PARENT_BACKGROUND)
 
 
         # Настройка для добавления нумерации строк
@@ -80,9 +79,9 @@ class SourceConfig (object):
         lineNumOption = u"LineNum"
 
         self.__lineNum = BooleanOption (self.__config,
-                self.section,
-                lineNumOption,
-                self.DEFAULT_LINE_NUM)
+                                        self.section,
+                                        lineNumOption,
+                                        self.DEFAULT_LINE_NUM)
 
 
 
@@ -116,13 +115,13 @@ class SourceConfig (object):
         styleOption = u"Style"
 
         # Стиль, выбранный в диалоге по умолчанию
-        # Переменная, отвечающая за параметр создается здесь, 
-        # чтобы можно было использовать значение по умолчанию, 
+        # Переменная, отвечающая за параметр создается здесь,
+        # чтобы можно было использовать значение по умолчанию,
         # прочитанное из defaultStyle
-        style = StringOption (self.__config, 
-                self.section, 
-                styleOption, 
-                self.defaultStyle.value)
+        style = StringOption (self.__config,
+                              self.section,
+                              styleOption,
+                              self.defaultStyle.value)
 
         return style
 

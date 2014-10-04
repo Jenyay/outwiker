@@ -1,8 +1,9 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
+
 """
 Небольшие функции, которые могут быть использованы в разных классах
 """
+
 import os.path
 
 from outwiker.pages.wiki.parser.tokenattach import AttachToken
@@ -19,7 +20,7 @@ def getFileName (fileParam):
     fname = fileParam.strip()
 
     if fname.startswith (AttachToken.attachString):
-        fname = fname[len (AttachToken.attachString): ]
+        fname = fname[len (AttachToken.attachString):]
 
     return fname
 

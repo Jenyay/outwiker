@@ -1,7 +1,4 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
-
-import os.path
 
 import wx
 
@@ -54,30 +51,30 @@ class PreferencePanel (wx.Panel):
         tabWidthLabel = wx.StaticText(self, -1, _(u"Default Tab Width"))
 
         self.tabWidthSpin = wx.SpinCtrl (
-                self, 
-                style=wx.SP_ARROW_KEYS | wx.TE_AUTO_URL
-                )
+            self,
+            style=wx.SP_ARROW_KEYS | wx.TE_AUTO_URL
+        )
         self.tabWidthSpin.SetMinSize (wx.Size (150, -1))
 
         tabSizer.Add (
-                tabWidthLabel, 
-                proportion=1,
-                flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                border=2
-                )
+            tabWidthLabel,
+            proportion=1,
+            flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+            border=2
+        )
 
         tabSizer.Add (
-                self.tabWidthSpin, 
-                proportion=1,
-                flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT,
-                border=2
-                )
+            self.tabWidthSpin,
+            proportion=1,
+            flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT,
+            border=2
+        )
 
         mainSizer.Add (
-                tabSizer,
-                proportion=1,
-                flag=wx.ALL | wx.EXPAND,
-                border=2)
+            tabSizer,
+            proportion=1,
+            flag=wx.ALL | wx.EXPAND,
+            border=2)
 
 
     def __createDefaultStyleGui (self, mainSizer):
@@ -93,24 +90,24 @@ class PreferencePanel (wx.Panel):
         self.styleComboBox.SetMinSize ((150, -1))
 
         styleSizer.Add (
-                styleLabel, 
-                proportion=1,
-                flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                border=2
-                )
+            styleLabel,
+            proportion=1,
+            flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+            border=2
+        )
 
         styleSizer.Add (
-                self.styleComboBox, 
-                proportion=1,
-                flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT,
-                border=2
-                )
+            self.styleComboBox,
+            proportion=1,
+            flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT,
+            border=2
+        )
 
         mainSizer.Add (
-                styleSizer,
-                proportion=1,
-                flag=wx.ALL | wx.EXPAND,
-                border=2)
+            styleSizer,
+            proportion=1,
+            flag=wx.ALL | wx.EXPAND,
+            border=2)
 
 
 
@@ -121,10 +118,10 @@ class PreferencePanel (wx.Panel):
         # Метка с комментарием о том, что это за языки в списке
         languageLabel = wx.StaticText(self, -1, _(u"Used Languages"))
         mainSizer.Add (
-                languageLabel, 
-                proportion=1,
-                flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                border=2)
+            languageLabel,
+            proportion=1,
+            flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+            border=2)
 
         # Сайзер для расположения списка языков и кнопок
         langSizer = wx.FlexGridSizer (0, 2)
@@ -133,10 +130,10 @@ class PreferencePanel (wx.Panel):
 
         self.langList = wx.CheckListBox (self, -1)
         langSizer.Add (
-                self.langList,
-                proportion=1,
-                flag = wx.ALL | wx.EXPAND,
-                border=2)
+            self.langList,
+            proportion=1,
+            flag = wx.ALL | wx.EXPAND,
+            border=2)
 
         # Кнопки
         buttonsSizer = wx.BoxSizer (wx.VERTICAL)
@@ -144,28 +141,28 @@ class PreferencePanel (wx.Panel):
         self.clearButton = wx.Button (self, label=_(u"Clear"))
 
         buttonsSizer.Add (
-                self.selectAllButton,
-                proportion=1,
-                flag=wx.ALL | wx.EXPAND,
-                border=2)
+            self.selectAllButton,
+            proportion=1,
+            flag=wx.ALL | wx.EXPAND,
+            border=2)
 
         buttonsSizer.Add (
-                self.clearButton,
-                proportion=1,
-                flag=wx.ALL | wx.EXPAND,
-                border=2)
+            self.clearButton,
+            proportion=1,
+            flag=wx.ALL | wx.EXPAND,
+            border=2)
 
         langSizer.Add (
-                buttonsSizer,
-                proportion=1,
-                flag=wx.ALL,
-                border=2)
+            buttonsSizer,
+            proportion=1,
+            flag=wx.ALL,
+            border=2)
 
         mainSizer.Add (
-                langSizer,
-                proportion=1,
-                flag=wx.ALL | wx.EXPAND,
-                border=2)
+            langSizer,
+            proportion=1,
+            flag=wx.ALL | wx.EXPAND,
+            border=2)
 
 
     def LoadState(self):
@@ -194,15 +191,15 @@ class PrefPanelController (object):
 
     def loadState (self):
         self._tabWidthOption = IntegerElement (
-                self.__config.tabWidth, 
-                self.__owner.tabWidthSpin, 
-                self.MIN_TAB_WIDTH, 
-                self.MAX_TAB_WIDTH
-                )
+            self.__config.tabWidth,
+            self.__owner.tabWidthSpin,
+            self.MIN_TAB_WIDTH,
+            self.MAX_TAB_WIDTH
+        )
 
-        fillStyleComboBox (self.__config, 
-                self.__owner.styleComboBox, 
-                self.__config.defaultStyle.value.strip())
+        fillStyleComboBox (self.__config,
+                           self.__owner.styleComboBox,
+                           self.__config.defaultStyle.value.strip())
 
         allLanguages = self._getAllLanguages ()
         self.__owner.langList.Clear()
@@ -264,5 +261,3 @@ class PrefPanelController (object):
                 bestname = name
 
         return bestname
-
-

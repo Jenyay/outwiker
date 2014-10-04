@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import os.path
@@ -61,8 +60,8 @@ class InsertDialogController (object):
             raise outwiker.core.exceptions.ReadonlyException
 
         # Кусок ниже практически полностью скопирован из функции outwiker.core.commands.attachFilesWithDialog
-        dlg = wx.FileDialog (self._dialog, 
-            style = wx.FD_OPEN | wx.FD_FILE_MUST_EXIST | wx.FD_MULTIPLE)
+        dlg = wx.FileDialog (self._dialog,
+                             style = wx.FD_OPEN | wx.FD_FILE_MUST_EXIST | wx.FD_MULTIPLE)
 
         if dlg.ShowModal() == wx.ID_OK:
             files = dlg.GetPaths()
@@ -132,9 +131,9 @@ class InsertDialogController (object):
         linenum = self._getLineNum()
 
         return commonparams.format (tabwidth=tabWidthStr,
-                style=styleStr,
-                parentbg=parentbg,
-                linenum=linenum)
+                                    style=styleStr,
+                                    parentbg=parentbg,
+                                    linenum=linenum)
 
 
     def _getStringsForText (self):
@@ -145,7 +144,7 @@ class InsertDialogController (object):
         commonparams = self._getCommonParams()
 
         startCommand = u'(:source{lang}{commonparams}:)\n'.format (lang=langStr,
-                commonparams=commonparams)
+                                                                   commonparams=commonparams)
 
         endCommand = u'\n(:sourceend:)'
 
@@ -162,14 +161,14 @@ class InsertDialogController (object):
 
         fnameStr = u' file="Attach:{fname}"'.format (fname=fname)
         encodingStr = u'' if encoding == "utf8" else u' encoding="{encoding}"'.format (encoding=encoding)
-        langStr = u'' if language == None else u' lang="{lang}"'.format (lang=language)
+        langStr = u'' if language is None else u' lang="{lang}"'.format (lang=language)
 
         commonparams = self._getCommonParams()
 
         startCommand = u'(:source{file}{encoding}{lang}{commonparams}:)'.format (file=fnameStr,
-                encoding=encodingStr,
-                lang=langStr, 
-                commonparams=commonparams)
+                                                                                 encoding=encodingStr,
+                                                                                 lang=langStr,
+                                                                                 commonparams=commonparams)
 
         endCommand = u'(:sourceend:)'
 
@@ -240,9 +239,9 @@ class InsertDialogController (object):
 
 
     def _loadStyleState (self):
-        fillStyleComboBox (self._config, 
-                self._dialog.styleComboBox, 
-                self._config.style.value.strip())
+        fillStyleComboBox (self._config,
+                           self._dialog.styleComboBox,
+                           self._config.style.value.strip())
 
 
     def _loadEncodingState (self):
@@ -287,7 +286,7 @@ class InsertDialogController (object):
         """
         Сохранить настройки диалога
         """
-        if (not self._dialog.insertFromFile or 
+        if (not self._dialog.insertFromFile or
                 self._dialog.languageComboBox.GetSelection() != 0):
             self._config.defaultLanguage.value = self._dialog.language
 
@@ -311,13 +310,13 @@ class InsertDialogController (object):
 
     def getEncodingList (self):
         return [
-                "utf8",
-                "cp1250",
-                "cp1251",
-                "cp1252",
-                "cp866",
-                "koi8_r",
-                "mac_cyrillic",
-                "ascii",
-                "latin_1"
-                ]
+            "utf8",
+            "cp1250",
+            "cp1251",
+            "cp1252",
+            "cp866",
+            "koi8_r",
+            "mac_cyrillic",
+            "ascii",
+            "latin_1"
+        ]

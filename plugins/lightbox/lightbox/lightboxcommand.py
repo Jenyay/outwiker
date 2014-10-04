@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import os.path
@@ -20,7 +19,7 @@ class LightboxCommand (Command):
         Command.__init__ (self, parser)
         self.__scriptAppend = False
 
-    
+
     @property
     def name (self):
         """
@@ -36,13 +35,13 @@ class LightboxCommand (Command):
         scriptdir = unicode (os.path.join (os.path.dirname (__file__), "scripts"), getOS().filesEncoding)
         thumbDir = Thumbnails (self.parser.page).getThumbPath (True)
 
-        files = ["jquery.fancybox.css", 
-                "blank.gif", 
-                "fancybox_loading.gif",
-                "jquery-1.7.2.min.js",
-                "jquery.fancybox.pack.js",
-                "fancybox_sprite.png"
-                ]
+        files = ["jquery.fancybox.css",
+                 "blank.gif",
+                 "fancybox_loading.gif",
+                 "jquery-1.7.2.min.js",
+                 "jquery.fancybox.pack.js",
+                 "fancybox_sprite.png"
+                 ]
 
         for fname in files:
             srcPath = os.path.join (scriptdir, fname)
@@ -52,7 +51,7 @@ class LightboxCommand (Command):
 
     def execute (self, params, content):
         """
-        Запустить команду на выполнение. 
+        Запустить команду на выполнение.
         Метод возвращает текст, который будет вставлен на место команды в вики-нотации
         """
 

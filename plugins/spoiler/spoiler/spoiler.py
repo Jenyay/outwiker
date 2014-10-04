@@ -1,8 +1,6 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 # Плагин для вставки свернутого текста
-
 
 import os.path
 

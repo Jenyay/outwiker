@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 from outwiker.gui.baseaction import BaseAction
@@ -27,7 +26,7 @@ class InsertSourceAction (BaseAction):
     @property
     def description (self):
         return _(u"Source plugin. Insert (: source... :) command for source code highlighting")
-    
+
 
     def run (self, params):
         self._controller.insertCommand()

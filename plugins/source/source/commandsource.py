@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 from outwiker.pages.wiki.parser.command import Command
@@ -11,7 +10,17 @@ from pygments.styles import STYLE_MAP
 from .sourceconfig import SourceConfig
 from .lexermaker import LexerMaker
 from .i18n import get_
-from .params import FILE_PARAM_NAME, ENCODING_PARAM_NAME, ENCODING_DEFAULT, TAB_WIDTH_PARAM_NAME, HIGHLIGHT_STYLE, TAB_WIDTH_DEFAULT, STYLE_PARAM_NAME, STYLE_DEFAULT, PARENT_BACKGROUND_PARAM_NAME, LINE_NUM_PARAM_NAME, CUSTOM_STYLES
+from .params import (FILE_PARAM_NAME,
+                     ENCODING_PARAM_NAME,
+                     ENCODING_DEFAULT,
+                     TAB_WIDTH_PARAM_NAME,
+                     HIGHLIGHT_STYLE,
+                     TAB_WIDTH_DEFAULT,
+                     STYLE_PARAM_NAME,
+                     PARENT_BACKGROUND_PARAM_NAME,
+                     LINE_NUM_PARAM_NAME,
+                     CUSTOM_STYLES
+                     )
 from .misc import getFileName, getDefaultStyle
 
 
@@ -43,7 +52,7 @@ class CommandSource (Command):
         global _
         _ = get_()
 
-    
+
     @property
     def name (self):
         """
@@ -54,7 +63,7 @@ class CommandSource (Command):
 
     def execute (self, params, content):
         """
-        Запустить команду на выполнение. 
+        Запустить команду на выполнение.
         Оформление исходных текстов
         """
         params_dict = Command.parseParams (params)
@@ -171,7 +180,7 @@ class CommandSource (Command):
 
             styleTemplate = u"<STYLE>{0}</STYLE>"
             self.parser.appendToHead (styleTemplate.format (sourceStyle))
-            self.parser.appendToHead (styleTemplate.format ("".join (["div.", cssclass, HIGHLIGHT_STYLE]) ) )
+            self.parser.appendToHead (styleTemplate.format ("".join (["div.", cssclass, HIGHLIGHT_STYLE])))
 
             self.__appendCssClasses.append (cssclass)
 
@@ -181,4 +190,3 @@ class CommandSource (Command):
         result = result.replace ("\n</td>", "</td>")
 
         return result
-        

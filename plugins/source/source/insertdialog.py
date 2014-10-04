@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import wx
@@ -15,9 +14,9 @@ class InsertDialog (wx.Dialog):
         global _
         _ = get_()
 
-        super (InsertDialog, self).__init__ (parent, 
-                style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.THICK_FRAME,
-                title=_(u"Source code"))
+        super (InsertDialog, self).__init__ (parent,
+                                             style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.THICK_FRAME,
+                                             title=_(u"Source code"))
 
         # Размер отступа
         self._indent = 50
@@ -84,11 +83,11 @@ class InsertDialog (wx.Dialog):
         mainSizer.AddGrowableRow(0)
 
         mainSizer.Add (
-                self.notebook,
-                proportion=1,
-                flag=wx.ALL | wx.EXPAND,
-                border=2
-                )
+            self.notebook,
+            proportion=1,
+            flag=wx.ALL | wx.EXPAND,
+            border=2
+        )
 
         self.generalPanel = self.__createGeneralPanel()
         self.appearancePanel = self.__createAppearancePanel()
@@ -134,11 +133,11 @@ class InsertDialog (wx.Dialog):
         okCancel = self.CreateButtonSizer (wx.OK | wx.CANCEL)
         mainSizer.AddStretchSpacer()
         mainSizer.Add (
-                okCancel,
-                proportion=1,
-                flag=wx.ALL | wx.ALIGN_RIGHT | wx.ALIGN_BOTTOM,
-                border=2
-                )
+            okCancel,
+            proportion=1,
+            flag=wx.ALL | wx.ALIGN_RIGHT | wx.ALIGN_BOTTOM,
+            border=2
+        )
 
 
     def __createParentBgGui (self, mainSizer, parent):
@@ -148,11 +147,11 @@ class InsertDialog (wx.Dialog):
         self.parentBgCheckBox = wx.CheckBox (parent, -1, _(u"Use the page background for the code block"))
 
         mainSizer.Add (
-                self.parentBgCheckBox, 
-                proportion=1,
-                flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND,
-                border=4
-                )
+            self.parentBgCheckBox,
+            proportion=1,
+            flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND,
+            border=4
+        )
 
 
     def __createLineNumGui (self, mainSizer, parent):
@@ -162,11 +161,11 @@ class InsertDialog (wx.Dialog):
         self.lineNumCheckBox = wx.CheckBox (parent, -1, _(u"Enable line numbers"))
 
         mainSizer.Add (
-                self.lineNumCheckBox, 
-                proportion=1,
-                flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND,
-                border=4
-                )
+            self.lineNumCheckBox,
+            proportion=1,
+            flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND,
+            border=4
+        )
 
 
     def __createLanguageGui (self, mainSizer, parent):
@@ -177,32 +176,32 @@ class InsertDialog (wx.Dialog):
         langSizer.AddGrowableCol(1)
 
         languageLabel = wx.StaticText(parent, -1, _(u"Language"))
-        self.languageComboBox = wx.ComboBox (parent, 
-                style=wx.CB_DROPDOWN | wx.CB_READONLY)
+        self.languageComboBox = wx.ComboBox (parent,
+                                             style=wx.CB_DROPDOWN | wx.CB_READONLY)
 
         self.languageComboBox.SetMinSize (wx.Size (self._fieldsWidth, -1))
 
         langSizer.Add (
-                languageLabel,
-                proportion=1,
-                flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                border=2
-                )
+            languageLabel,
+            proportion=1,
+            flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+            border=2
+        )
 
 
         langSizer.Add (
-                self.languageComboBox,
-                proportion=1,
-                flag=wx.ALL | wx.ALIGN_RIGHT,
-                border=2
-                )
+            self.languageComboBox,
+            proportion=1,
+            flag=wx.ALL | wx.ALIGN_RIGHT,
+            border=2
+        )
 
         mainSizer.Add (
-                langSizer, 
-                proportion=1,
-                flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND,
-                border=2
-                )
+            langSizer,
+            proportion=1,
+            flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND,
+            border=2
+        )
 
 
     def __createTabWidthGui (self, mainSizer, parent):
@@ -214,32 +213,32 @@ class InsertDialog (wx.Dialog):
 
         tabWidthLabel = wx.StaticText(parent, -1, _(u"Tab Width (0 - Default Value)"))
         self.tabWidthSpin = wx.SpinCtrl (
-                parent, 
-                style=wx.SP_ARROW_KEYS|wx.TE_AUTO_URL
-                )
+            parent,
+            style=wx.SP_ARROW_KEYS | wx.TE_AUTO_URL
+        )
         self.tabWidthSpin.SetMinSize (wx.Size (self._fieldsWidth, -1))
 
 
         tabSizer.Add (
-                tabWidthLabel, 
-                proportion=1,
-                flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                border=2
-                )
+            tabWidthLabel,
+            proportion=1,
+            flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+            border=2
+        )
 
         tabSizer.Add (
-                self.tabWidthSpin, 
-                proportion=1,
-                flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT,
-                border=2
-                )
+            self.tabWidthSpin,
+            proportion=1,
+            flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT,
+            border=2
+        )
 
         mainSizer.Add (
-                tabSizer, 
-                proportion=1,
-                flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT | wx.EXPAND,
-                border=2
-                )
+            tabSizer,
+            proportion=1,
+            flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT | wx.EXPAND,
+            border=2
+        )
 
 
     def __createStyleGui (self, mainSizer, parent):
@@ -250,32 +249,32 @@ class InsertDialog (wx.Dialog):
         styleSizer.AddGrowableCol(1)
 
         styleLabel = wx.StaticText(parent, -1, _(u"Style"))
-        self.styleComboBox = wx.ComboBox (parent, 
-                style=wx.CB_DROPDOWN | wx.CB_READONLY)
+        self.styleComboBox = wx.ComboBox (parent,
+                                          style=wx.CB_DROPDOWN | wx.CB_READONLY)
 
         self.styleComboBox.SetMinSize (wx.Size (self._fieldsWidth, -1))
 
         styleSizer.Add (
-                styleLabel,
-                proportion=1,
-                flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                border=2
-                )
+            styleLabel,
+            proportion=1,
+            flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+            border=2
+        )
 
 
         styleSizer.Add (
-                self.styleComboBox,
-                proportion=1,
-                flag=wx.ALL | wx.ALIGN_RIGHT,
-                border=2
-                )
+            self.styleComboBox,
+            proportion=1,
+            flag=wx.ALL | wx.ALIGN_RIGHT,
+            border=2
+        )
 
         mainSizer.Add (
-                styleSizer, 
-                proportion=1,
-                flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND,
-                border=2
-                )
+            styleSizer,
+            proportion=1,
+            flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND,
+            border=2
+        )
 
 
     def __createFileGui (self, mainSizer, parent):
@@ -283,15 +282,15 @@ class InsertDialog (wx.Dialog):
         Создать интерфейс, связанный со вставкой исходников из вложенных файлов
         """
         self.fileCheckBox = wx.CheckBox (
-                parent,
-                label = _(u"Insert source from file"))
+            parent,
+            label = _(u"Insert source from file"))
 
         mainSizer.Add (
-                self.fileCheckBox, 
-                proportion=1,
-                flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT | wx.EXPAND,
-                border=2
-                )
+            self.fileCheckBox,
+            proportion=1,
+            flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT | wx.EXPAND,
+            border=2
+        )
 
         fileSizer = wx.FlexGridSizer (0, 4)
         fileSizer.AddGrowableCol (2)
@@ -299,7 +298,7 @@ class InsertDialog (wx.Dialog):
         # Список для выбора прикрепленных файлов
         self.attachmentLabel = wx.StaticText(parent, -1, _(u"Attached file"))
         self.attachmentComboBox = wx.ComboBox (parent,
-                style=wx.CB_DROPDOWN | wx.CB_READONLY)
+                                               style=wx.CB_DROPDOWN | wx.CB_READONLY)
 
         self.attachmentComboBox.SetMinSize ((self._fieldsWidth, -1))
 
@@ -307,11 +306,11 @@ class InsertDialog (wx.Dialog):
 
 
         fileSizer.Add (
-                self.attachmentLabel, 
-                proportion=1,
-                flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                border=2
-                )
+            self.attachmentLabel,
+            proportion=1,
+            flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+            border=2
+        )
 
         # Кнопка для прикрепления нового файла
         attachImage = wx.Bitmap (getImagePath ("attach.png"))
@@ -319,50 +318,48 @@ class InsertDialog (wx.Dialog):
         self.attachButton.SetToolTipString (_(u"Attach new files"))
 
         fileSizer.Add (
-                self.attachButton,
-                proportion = 1,
-                flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT,
-                border = 2
-                )
+            self.attachButton,
+            proportion = 1,
+            flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT,
+            border = 2
+        )
 
         fileSizer.Add (
-                self.attachmentComboBox, 
-                proportion=1,
-                flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT,
-                border=2
-                )
+            self.attachmentComboBox,
+            proportion=1,
+            flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT,
+            border=2
+        )
 
 
         # Выбор кодировки файла
         self.encodingLabel = wx.StaticText(parent, -1, _(u"File encoding"))
         self.encodingComboBox = wx.ComboBox (parent,
-                style=wx.CB_DROPDOWN)
+                                             style=wx.CB_DROPDOWN)
 
         self.encodingComboBox.SetMinSize ((self._fieldsWidth, -1))
 
         fileSizer.Add ((self._indent, 0))
 
         fileSizer.Add (
-                self.encodingLabel, 
-                proportion=1,
-                flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                border=2
-                )
+            self.encodingLabel,
+            proportion=1,
+            flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+            border=2
+        )
 
         fileSizer.Add ((self._indent, 0))
 
         fileSizer.Add (
-                self.encodingComboBox, 
-                proportion=1,
-                flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT,
-                border=2
-                )
+            self.encodingComboBox,
+            proportion=1,
+            flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT,
+            border=2
+        )
 
         mainSizer.Add (
-                fileSizer, 
-                proportion=1,
-                flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT | wx.EXPAND,
-                border=2
-                )
-
-
+            fileSizer,
+            proportion=1,
+            flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT | wx.EXPAND,
+            border=2
+        )

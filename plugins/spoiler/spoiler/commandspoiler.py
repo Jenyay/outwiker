@@ -1,7 +1,7 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 from outwiker.pages.wiki.parser.command import Command
+
 
 class SpoilerCommand (Command):
     """

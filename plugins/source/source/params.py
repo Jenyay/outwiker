@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 """
@@ -51,20 +50,21 @@ HIGHLIGHT_STYLE = u'{padding: 1em; }'
 
 # Список языков программирования по умолчанию
 LANGUAGE_LIST_DEFAULT = [
-            u"text",
-            u"c",
-            u"cpp",
-            u"csharp",
-            u"php",
-            u"python",
-            u"html",
-            u"css",
-            u"ruby",
-            u"java",
-            u"javascript",
-            u"objective-c",
-            u"perl",
-            u"vb.net"]
+    u"text",
+    u"c",
+    u"cpp",
+    u"csharp",
+    u"php",
+    u"python",
+    u"html",
+    u"css",
+    u"ruby",
+    u"java",
+    u"javascript",
+    u"objective-c",
+    u"perl",
+    u"vb.net"
+]
 
 
 CUSTOM_STYLES = u"""

@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 from pygments.lexers import get_lexer_by_name, get_lexer_for_filename
@@ -28,7 +27,7 @@ class LexerMaker (object):
         Возвращает лексер для нужного языка программирования в зависимости от параметров
         """
         lang = params_dict[LANGUAGE_PARAM_NAME] if LANGUAGE_PARAM_NAME in params_dict else LANGUAGE_DEFAULT
-        
+
         try:
             lexer = get_lexer_by_name(lang, stripall=True)
         except ClassNotFound:

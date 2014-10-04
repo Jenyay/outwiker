@@ -1,7 +1,4 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
-
-import os.path
 
 import wx
 
@@ -38,7 +35,7 @@ class Controller (object):
         global _
         _ = get_()
 
-        # Создание класса для создания GUI в зависимости от того, 
+        # Создание класса для создания GUI в зависимости от того,
         # есть ли поддержка actions
         try:
             from outwiker.gui.baseaction import BaseAction
@@ -96,13 +93,13 @@ class Controller (object):
         """
         Возвращает True, если текущая страница - это викистраница, и False в противном случае
         """
-        return (self._application.selectedPage != None and
+        return (self._application.selectedPage is not None and
                 self._application.selectedPage.getTypeString() == u"wiki")
 
 
     def __onPageViewCreate(self, page):
         """Обработка события после создания представления страницы"""
-        assert self._application.mainWindow != None
+        assert self._application.mainWindow is not None
 
         if page.getTypeString() == u"wiki":
             self._guiCreator.createTools()
@@ -112,7 +109,7 @@ class Controller (object):
         """
         Обработка события перед удалением вида страницы
         """
-        assert self._application.mainWindow != None
+        assert self._application.mainWindow is not None
 
         if page.getTypeString() == u"wiki":
             self._guiCreator.removeTools()
@@ -146,5 +143,3 @@ class Controller (object):
         Получить указатель на панель представления страницы
         """
         return self._application.mainWindow.pagePanel.pageView
-
-
