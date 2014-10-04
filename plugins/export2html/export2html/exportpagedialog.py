@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import wx
@@ -25,15 +24,15 @@ class ExportPageDialog (ExportDialog):
         self._config.overwrite = self.overwrite
 
         try:
-            self.__exporter.export (self.path, 
-                    self.__exporter.page.title,
-                    self.imagesOnly, 
-                    self.overwrite)
+            self.__exporter.export (self.path,
+                                    self.__exporter.page.title,
+                                    self.imagesOnly,
+                                    self.overwrite)
 
         except BaseException, error:
-            MessageBox (unicode(error), 
-                _(u"Error"),
-                wx.OK | wx.ICON_ERROR )
+            MessageBox (unicode(error),
+                        _(u"Error"),
+                        wx.OK | wx.ICON_ERROR)
             return
 
         self.EndModal (wx.ID_OK)

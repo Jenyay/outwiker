@@ -1,7 +1,7 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import wx
+
 
 class ExportMenuFactory (object):
     """
@@ -44,7 +44,7 @@ class ExportMenuFactory (object):
         """
         filemenu = self.__getFileMenu()
 
-        if filemenu == None:
+        if filemenu is None:
             print _(u"File menu not found")
             return
 
@@ -57,10 +57,10 @@ class ExportMenuFactory (object):
         Возвращает -1, если идентификатор не найден
         """
         filemenu = self.__getFileMenu()
-        if filemenu == None:
+        if filemenu is None:
             return -1
 
-        exportId = filemenu.FindItem (_(u"Export") )
+        exportId = filemenu.FindItem (_(u"Export"))
         return exportId
 
 
@@ -71,14 +71,14 @@ class ExportMenuFactory (object):
         """
         menu = self.__getFileMenu()
 
-        if menu == None:
+        if menu is None:
             print _(u"File menu not found")
             return
 
         exportmenu = wx.Menu ()
-        menu.InsertMenu (pos=self.__exportMenuPosition, 
-                id=self.EXPORT_ID, 
-                text=_(u"Export"),
-                submenu=exportmenu,
-                help=u"")
+        menu.InsertMenu (pos=self.__exportMenuPosition,
+                         id=self.EXPORT_ID,
+                         text=_(u"Export"),
+                         submenu=exportmenu,
+                         help=u"")
         return exportmenu

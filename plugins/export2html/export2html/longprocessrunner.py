@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 
@@ -12,7 +11,7 @@ from .pyprogress import PyProgress
 
 class LongProcessRunner (object):
     """Класс для запуска длительных операций в отдельном потоке и показ диалога с ожиданием без прогресса на время выполнения.
-    
+
     Показываемый диалог будет модальынм и блокировать текущее окно.
     Диалог нельзя закрыть до завершения функции.
     """
@@ -39,19 +38,21 @@ class LongProcessRunner (object):
 
 
     def run (self, *args, **kwargs):
-        progressDlg = PyProgress(self._parent, -1, self._dialogTitle,
-                            self._dialogText,
-                            agwStyle = wx.PD_APP_MODAL)
+        progressDlg = PyProgress(self._parent,
+                                 -1,
+                                 self._dialogTitle,
+                                 self._dialogText,
+                                 agwStyle = wx.PD_APP_MODAL)
 
         progressDlg.SetGaugeProportion(self.gaugeProportion)
         progressDlg.SetGaugeSteps(self.gaugeSteps)
         progressDlg.UpdatePulse()
 
         result = []
-        thread = threading.Thread (None, 
-                lambda *args, **kwargs: result.append (self._threadFunc(*args, **kwargs)),
-                args = args,
-                kwargs = kwargs)
+        thread = threading.Thread (None,
+                                   lambda *args, **kwargs: result.append (self._threadFunc(*args, **kwargs)),
+                                   args = args,
+                                   kwargs = kwargs)
         thread.start()
 
         while thread.isAlive ():

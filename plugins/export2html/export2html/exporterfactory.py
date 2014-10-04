@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 from .exceptions import InvalidPageFormat
@@ -24,5 +23,5 @@ class ExporterFactory (object):
         else:
             raise InvalidPageFormat (_(u"This page type not support export to HTML"))
 
-        assert exporter != None
+        assert exporter is not None
         return exporter

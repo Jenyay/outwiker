@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import os
@@ -33,13 +32,13 @@ class BaseExporter (object):
         pass
 
 
-    def _exportContent (self, 
-            page, 
-            content, 
-            exportname, 
-            outdir, 
-            imagesonly, 
-            alwaisOverwrite):
+    def _exportContent (self,
+                        page,
+                        content,
+                        exportname,
+                        outdir,
+                        imagesonly,
+                        alwaisOverwrite):
         """
         Экспортировать обработанное содержимое и вложения
         """
@@ -47,7 +46,7 @@ class BaseExporter (object):
         exportdir = os.path.join (outdir, exportname)
 
         if not alwaisOverwrite and os.path.exists (exportfile):
-            raise FileAlreadyExists (_(u"File {0} already exists").format (exportfile) )
+            raise FileAlreadyExists (_(u"File {0} already exists").format (exportfile))
 
         if not os.path.exists (outdir):
             raise FolderNotExists (_(u"Folder {0} not exists").format (outdir))
@@ -70,7 +69,7 @@ class BaseExporter (object):
 
         for fname in attach.attachmentFull:
             if not imagesonly or self.__isImage (fname):
-                newpath = os.path.join (exportdir, os.path.basename (fname) )
+                newpath = os.path.join (exportdir, os.path.basename (fname))
                 self.__checkForExists (newpath, alwaisOverwrite)
                 self.__copy (fname, newpath)
 
@@ -78,7 +77,7 @@ class BaseExporter (object):
     def __exportIcon (self, page, exportdir, alwaisOverwrite):
         assert os.path.exists (exportdir)
 
-        if page.icon == None:
+        if page.icon is None:
             return
 
         newIconPath = os.path.join (exportdir, os.path.basename (page.icon))
@@ -113,7 +112,7 @@ class BaseExporter (object):
         """
         if os.path.exists (path):
             if not alwaisOverwrite:
-                raise FileAlreadyExists (_(u"File {0} already exists").format (path) )
+                raise FileAlreadyExists (_(u"File {0} already exists").format (path))
             else:
                 self.__delete (path)
 

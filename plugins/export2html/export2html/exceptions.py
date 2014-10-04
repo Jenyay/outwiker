@@ -1,5 +1,5 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
+
 
 class Export2HtmlException (BaseException):
     def __init__ (self, message):

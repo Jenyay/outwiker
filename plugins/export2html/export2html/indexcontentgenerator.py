@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import cgi
@@ -30,10 +29,10 @@ class IndexContentGenerator (object):
         resultList = []
 
         resultList.append ("<ul>")
-        result = self.__addpage (resultList, self.__rootpage, 1)
+        self.__addpage (resultList, self.__rootpage, 1)
         resultList.append ("</ul>")
 
-        finalresult = self.__prepareResult (u"\n".join (resultList) )
+        finalresult = self.__prepareResult (u"\n".join (resultList))
 
         with open (fname, "w") as fp:
             fp.write (finalresult.encode ("utf8"))
@@ -49,12 +48,12 @@ class IndexContentGenerator (object):
         """
         Возвращает путь до сохраненной иконки или None, если ее нет
         """
-        if page.icon == None:
+        if page.icon is None:
             return
 
         dirname = self.__renames[page]
-        iconpath = u"{dirname}/{iconname}".format (dirname=dirname, 
-                iconname=os.path.basename (page.icon))
+        iconpath = u"{dirname}/{iconname}".format (dirname=dirname,
+                                                   iconname=os.path.basename (page.icon))
 
         return iconpath
 
@@ -78,18 +77,18 @@ class IndexContentGenerator (object):
 
         templateIcon = u"{indent}<li><span style='white-space:nowrap'><a href='{url}' target='main'><img src='{iconpath}'></a><a href='{url}' target='main'>{title}</a></span></li>"
 
-        if page.icon == None:
+        if page.icon is None:
             itemstring = template.format (indent=self.__indent * level,
-                url=self.__prepareUrl (self.__renames[page] + ".html"), 
-                title=cgi.escape(page.title) )
+                                          url=self.__prepareUrl (self.__renames[page] + ".html"),
+                                          title=cgi.escape(page.title))
         else:
             iconpath = self.__getIcon (page)
 
             itemstring = templateIcon.format (indent=self.__indent * level,
-                url=self.__prepareUrl (self.__renames[page] + ".html"), 
-                title=cgi.escape(page.title),
-                iconpath=self.__prepareUrl (iconpath) )
-        
+                                              url=self.__prepareUrl (self.__renames[page] + ".html"),
+                                              title=cgi.escape(page.title),
+                                              iconpath=self.__prepareUrl (iconpath))
+
         return itemstring
 
 

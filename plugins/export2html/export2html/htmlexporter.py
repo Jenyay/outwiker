@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import os.path
@@ -6,7 +5,6 @@ import re
 
 # from BeautifulSoup import BeautifulSoup
 
-from .exceptions import HtmlNotFoundError
 from .baseexporter import BaseExporter
 
 
@@ -25,27 +23,26 @@ class HtmlExporter (BaseExporter):
         """
         Экспорт HTML-страниц
         """
-        assert (self._page.getTypeString() == "html" or 
-                self._page.getTypeString() == "wiki" )
+        assert (self._page.getTypeString() == "html" or
+                self._page.getTypeString() == "wiki")
 
         self.__htmlFileName = u"__content.html"
 
         # Чтение файла с содержимым
         try:
-            with open (os.path.join (self._page.path, self.__htmlFileName) ) as fp:
+            with open (os.path.join (self._page.path, self.__htmlFileName)) as fp:
                 content = unicode (fp.read(), "utf8")
         except IOError:
-            # raise HtmlNotFoundError (_(u"{0} not found").format (self.__htmlFileName) )
             content = u""
 
         changedContent = self.__prepareHtmlContent (content, exportname)
 
-        self._exportContent (self._page, 
-                changedContent,
-                exportname,
-                outdir,
-                imagesonly,
-                alwaysOverwrite)
+        self._exportContent (self._page,
+                             changedContent,
+                             exportname,
+                             outdir,
+                             imagesonly,
+                             alwaysOverwrite)
 
 
     def __replaceAttaches (self, content, tag, attrib, exportname):
@@ -53,7 +50,7 @@ class HtmlExporter (BaseExporter):
         Заменить ссылки на папку __attach на новую папку с вложениями
         """
         __attachDir = "__attach"
- 
+
         tag_regex = """<\s*({tag})\s+
             (.*?)
             ({attrib})\s*=['"]{attach}(.*?)['"]
@@ -61,7 +58,7 @@ class HtmlExporter (BaseExporter):
             (/?)>
             """.format (tag=tag, attrib=attrib, attach=__attachDir)
 
-        regex = re.compile (tag_regex, re.IGNORECASE | re.MULTILINE | re.DOTALL | re.VERBOSE )
+        regex = re.compile (tag_regex, re.IGNORECASE | re.MULTILINE | re.DOTALL | re.VERBOSE)
 
         replace = u'<\\1 \\2\\3="{exportname}\\4"\\5\\6>'.format (exportname=exportname)
         content = regex.sub (replace, content)
@@ -75,15 +72,6 @@ class HtmlExporter (BaseExporter):
         Заменить ссылки на прикрепленные файлы
         Используется при экспорте HTML-страниц
         """
-        # soup = BeautifulSoup (content)
-        # images = soup.findAll ("img")
-        # self.__replaceAttaches (images, "src", exportname)
-
-        # links = soup.findAll ("a")
-        # self.__replaceAttaches (links, "href", exportname)
-
-        # return unicode (soup.renderContents(), "utf8")
-
         content = self.__replaceAttaches (content, "a", "href", exportname)
         content = self.__replaceAttaches (content, "img", "src", exportname)
 

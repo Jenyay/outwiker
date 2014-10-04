@@ -1,22 +1,22 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import wx
+
 
 class LogDialog (wx.Dialog):
     def __init__ (self, parent, logList):
         from .i18n import _
         global _
 
-        wx.Dialog.__init__ (self, 
-                parent, 
-                title=_(u"Errors List"), 
-                style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER )
+        wx.Dialog.__init__ (self,
+                            parent,
+                            title=_(u"Errors List"),
+                            style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
 
         logMinWidth = 550
         logMinHeight = 350
-        self.__logText = wx.TextCtrl (self, 
-                style=wx.TE_MULTILINE | wx.TE_READONLY)
+        self.__logText = wx.TextCtrl (self,
+                                      style=wx.TE_MULTILINE | wx.TE_READONLY)
         self.__logText.SetMinSize ((logMinWidth, logMinHeight))
 
         log = u"\n\n".join (logList)

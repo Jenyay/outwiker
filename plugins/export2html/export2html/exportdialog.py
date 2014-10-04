@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 from abc import abstractmethod, ABCMeta
@@ -29,10 +28,10 @@ class ExportDialog (wx.Dialog):
         textBoxWidth = 350
         self.__folderTextCtrl.SetMinSize ((textBoxWidth, -1))
 
-        self.__selFolderButton = wx.Button (self, 
-                self.__SEL_FOLDER,
-                label=u"...",
-                style=wx.BU_EXACTFIT)
+        self.__selFolderButton = wx.Button (self,
+                                            self.__SEL_FOLDER,
+                                            label=u"...",
+                                            style=wx.BU_EXACTFIT)
 
         self.__overwriteCheckBox = wx.CheckBox (self, -1, _(u"Overwrite Existing Files"))
         self.__imagesOnlyCheckBox = wx.CheckBox (self, -1, _(u"Attaches. Save Only Images"))
@@ -47,7 +46,7 @@ class ExportDialog (wx.Dialog):
         self.__loadParams ()
         self._setFocusDefault()
 
-    
+
     def __loadParams (self):
         self.overwrite = self._config.overwrite
         self.imagesOnly = self._config.imagesOnly
@@ -56,7 +55,7 @@ class ExportDialog (wx.Dialog):
     def _setFocusDefault (self):
         self.__folderTextCtrl.SetFocus()
 
-    
+
     def __centerWindow (self):
         """
         Расположить окно по центру родителя
@@ -70,7 +69,6 @@ class ExportDialog (wx.Dialog):
         posY = parentY + (parentHeight - selfHeight) / 2
 
         self.SetPosition ((posX, posY))
-    
 
 
     @property
@@ -105,9 +103,9 @@ class ExportDialog (wx.Dialog):
 
     def __onOkPressed (self, event):
         if len (self.path) == 0:
-            MessageBox (_(u"Please, select folder for export"), 
-                    _(u"Error"),
-                    wx.OK | wx.ICON_ERROR )
+            MessageBox (_(u"Please, select folder for export"),
+                        _(u"Error"),
+                        wx.OK | wx.ICON_ERROR)
             self._setFocusDefault()
             return
 
@@ -143,4 +141,3 @@ class ExportDialog (wx.Dialog):
         self.SetSizer (self._mainSizer)
         self.Fit()
         self.Layout()
-

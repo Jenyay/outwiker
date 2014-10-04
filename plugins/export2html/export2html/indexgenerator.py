@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import os.path
@@ -35,7 +34,7 @@ class IndexGenerator (object):
 
         # Создать файл с фреймами, отображающий все оглавление
         indextemplate = loadTemplate (self.__templatename)
-        indexresult = indextemplate.substitute (contentfname=os.path.basename (contentfname) )
+        indexresult = indextemplate.substitute (contentfname=os.path.basename (contentfname))
 
         with open (indexfname, "w") as fp:
             fp.write (indexresult)
