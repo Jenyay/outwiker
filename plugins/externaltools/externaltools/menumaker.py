@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 import wx
 
@@ -39,11 +38,11 @@ class MenuMaker (object):
         self.__appendToolsMenu (contentMenu, self.__onOpenContentFile, self._controller.tools)
 
         itemsCount = len (self._menu.GetMenuItems())
-        self._menu.InsertMenu (itemsCount - self._popupPosition, 
-                -1, 
-                _(u"Open Content File with..."), 
-                contentMenu, 
-                u"")
+        self._menu.InsertMenu (itemsCount - self._popupPosition,
+                               -1,
+                               _(u"Open Content File with..."),
+                               contentMenu,
+                               u"")
 
 
     def insertResultMenuItem (self):
@@ -52,11 +51,11 @@ class MenuMaker (object):
         self.__appendToolsMenu (resultMenu, self.__onOpenResultFile, self._controller.tools)
 
         itemsCount = len (self._menu.GetMenuItems())
-        self._menu.InsertMenu (itemsCount - self._popupPosition, 
-                -1, 
-                _(u"Open Result HTML File with..."), 
-                resultMenu, 
-                u"")
+        self._menu.InsertMenu (itemsCount - self._popupPosition,
+                               -1,
+                               _(u"Open Result HTML File with..."),
+                               resultMenu,
+                               u"")
 
 
     def insertSeparator (self):
@@ -73,7 +72,7 @@ class MenuMaker (object):
         for toolItem in tools:
             menuId = wx.NewId()
 
-            menuItem = menu.Append (menuId, toolItem.title)
+            menu.Append (menuId, toolItem.title)
             self._parent.Bind (wx.EVT_MENU, id=menuId, handler=function)
             self._menuId[menuId] = toolItem
 
@@ -91,10 +90,8 @@ class MenuMaker (object):
     def __onOpenContentFile (self, event):
         self._controller.openContentFile (self._menuId[event.GetId()])
         self.__unbindAll()
-    
+
 
     def __onOpenResultFile (self, event):
         self._controller.openResultFile (self._menuId[event.GetId()])
         self.__unbindAll()
-
-

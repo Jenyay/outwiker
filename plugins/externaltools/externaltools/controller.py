@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import os.path
@@ -11,7 +10,6 @@ from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
 from outwiker.core.commands import MessageBox
 from outwiker.core.system import getOS
 
-from .toolsinfo import ToolsInfo
 from .menumaker import MenuMaker
 from .toolsconfig import ToolsConfig
 from .i18n import get_
@@ -65,7 +63,7 @@ class Controller (object):
         """
         Открыть файл контента текущей страницы с помощью tools
         """
-        assert self._page != None
+        assert self._page is not None
         contentFname = os.path.join (self._page.path, RootWikiPage.contentFile)
         self.__executeTools (tools.command, contentFname)
 
@@ -74,7 +72,7 @@ class Controller (object):
         """
         Открыть файл результата текущей страницы с помощью tools
         """
-        assert self._page != None
+        assert self._page is not None
         contentFname = os.path.join (self._page.path, "__content.html")
         self.__executeTools (tools.command, contentFname)
 
@@ -83,12 +81,12 @@ class Controller (object):
         encoding = getOS().filesEncoding
 
         try:
-            subprocess.call ([command.encode (encoding), 
-                fname.encode (encoding)])
+            subprocess.call ([command.encode (encoding),
+                              fname.encode (encoding)])
         except OSError:
-            MessageBox (_(u"Can't execute tools"), 
-                    _(u"Error"),
-                    wx.OK | wx.ICON_ERROR )
+            MessageBox (_(u"Can't execute tools"),
+                        _(u"Error"),
+                        wx.OK | wx.ICON_ERROR)
 
 
     def __onPreferencesDialogCreate (self, dialog):

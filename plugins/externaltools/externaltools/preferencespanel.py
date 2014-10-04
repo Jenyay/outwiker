@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 import ConfigParser
 
@@ -86,7 +85,7 @@ class PrefController (object):
         try:
             toolsConfig.tools = self._prefPanel.toolsListPanel.tools
         except ConfigParser.Error:
-            MessageBox (_(u"Can't save options"), 
-                    _(u"Error"),
-                    wx.OK | wx.ICON_ERROR )
+            MessageBox (_(u"Can't save options"),
+                        _(u"Error"),
+                        wx.OK | wx.ICON_ERROR)
             raise PreferencesException()

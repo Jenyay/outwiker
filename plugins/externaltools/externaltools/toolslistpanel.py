@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 import os
 import os.path
@@ -26,7 +25,7 @@ class ToolsListPanel (ScrolledPanel):
 
         global _
         _ = get_()
-        
+
         # Интерфейсные элементы для инструментов (экземпляры класса ToolsItemCtrl)
         self._toolsGuiElements = []
 
@@ -40,8 +39,8 @@ class ToolsListPanel (ScrolledPanel):
 
     @property
     def tools (self):
-        return [toolGuiElement.toolItem for 
-                toolGuiElement in self._toolsGuiElements 
+        return [toolGuiElement.toolItem for
+                toolGuiElement in self._toolsGuiElements
                 if len (toolGuiElement.toolItem.command.strip()) != 0]
 
 
@@ -98,21 +97,21 @@ class ToolsItemCtrl (wx.Panel):
 
         self._toolItem = toolItem
 
-        if self._toolItem == None:
+        if self._toolItem is None:
             self._pathTextCtrl = wx.TextCtrl (self, -1, u"")
         else:
             self._pathTextCtrl = wx.TextCtrl (self, -1, toolItem.command)
 
         browseBitmap = wx.Bitmap (self.__getImagePath ("browse.png"))
-        self._browseButton = wx.BitmapButton (self, 
-                self._BROWSE_ID, 
-                browseBitmap)
+        self._browseButton = wx.BitmapButton (self,
+                                              self._BROWSE_ID,
+                                              browseBitmap)
         self._browseButton.SetToolTipString (_(u"Open file dialog..."))
 
         removeBitmap = wx.Bitmap (self.__getImagePath ("cross.png"))
-        self._removeButton = wx.BitmapButton (self, 
-                self._REMOVE_ID, 
-                removeBitmap)
+        self._removeButton = wx.BitmapButton (self,
+                                              self._REMOVE_ID,
+                                              removeBitmap)
         self._removeButton.SetToolTipString (_(u"Remove tool"))
 
         self._browseButton.Bind(wx.EVT_BUTTON, self.__onBrowse)
@@ -128,8 +127,8 @@ class ToolsItemCtrl (wx.Panel):
             wildcard = _(u"All Files|*")
 
         dlg = wx.FileDialog (self,
-                wildcard=wildcard,
-                style=wx.FD_OPEN)
+                             wildcard=wildcard,
+                             style=wx.FD_OPEN)
 
         if dlg.ShowModal() == wx.ID_OK:
             self._pathTextCtrl.Value = dlg.Path
@@ -145,7 +144,7 @@ class ToolsItemCtrl (wx.Panel):
 
     def __getImagePath (self, fname):
         return unicode (os.path.join (os.path.dirname (__file__), "images", fname),
-                getOS().filesEncoding)
+                        getOS().filesEncoding)
 
 
     def __layout (self):
@@ -169,7 +168,7 @@ class ToolsItemCtrl (wx.Panel):
         command = self._pathTextCtrl.Value.strip()
         title = os.path.basename (command)
 
-        if self._toolItem == None:
+        if self._toolItem is None:
             return ToolsInfo (command, title, wx.NewId())
         else:
             return ToolsInfo (command, title, self._toolItem.toolsid)
