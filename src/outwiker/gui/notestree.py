@@ -331,8 +331,15 @@ class NotesTree(wx.Panel):
         """
         Начать переименование страницы в дереве. Если page == None, то начать переименование текущей страницы
         """
-        selectedItem = self.treeCtrl.GetSelection() if page == None else self._pageCache[page]
+        pageToRename = page if page is not None else Application.selectedPage
 
+        if pageToRename is None or pageToRename.parent is None:
+            outwiker.core.commands.MessageBox (_(u"You can't rename the root"),
+                                               _(u"Error"),
+                                               wx.ICON_ERROR | wx.OK)
+            return
+
+        selectedItem = self._pageCache[pageToRename]
         if not selectedItem.IsOk():
             return
 

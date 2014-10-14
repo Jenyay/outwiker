@@ -390,17 +390,21 @@ def getCurrentVersion ():
 
 @testreadonly
 def renamePage (page, newtitle):
+    if page.parent is None:
+        MessageBox (_(u"You can't to rename the root"),
+                    _(u"Error"),
+                    wx.ICON_ERROR | wx.OK)
+        return
+
     if not testPageTitle (newtitle):
         return
 
     try:
         page.title = newtitle
-
     except outwiker.core.exceptions.DublicateTitle:
         MessageBox (_(u"Can't move page when page with that title already exists"),
                     _(u"Error"),
                     wx.ICON_ERROR | wx.OK)
-
     except OSError:
         MessageBox (_(u'Can\'t rename page "{}" to "{}"').format (page.title, newtitle),
                     _(u"Error"),
