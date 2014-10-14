@@ -36,11 +36,11 @@ class NotesTree(wx.Panel):
 
         kwds["style"] = wx.TAB_TRAVERSAL
         wx.Panel.__init__(self, *args, **kwds)
-        self.toolbar = wx.ToolBar (self, -1, style=wx.TB_HORIZONTAL|wx.TB_FLAT|wx.TB_DOCKABLE)
+        self.toolbar = wx.ToolBar (self,
+                                   -1,
+                                   style=wx.TB_HORIZONTAL | wx.TB_FLAT | wx.TB_DOCKABLE)
 
-        treeStyle = (wx.TR_HAS_BUTTONS | 
-                wx.TR_EDIT_LABELS | 
-                wx.SUNKEN_BORDER)
+        treeStyle = (wx.TR_HAS_BUTTONS | wx.TR_EDIT_LABELS | wx.SUNKEN_BORDER)
 
         self.treeCtrl = wx.TreeCtrl(self, style=treeStyle)
 
@@ -130,12 +130,12 @@ class NotesTree(wx.Panel):
 
     def __loadIcon (self, page):
         """
-        Добавляет иконку страницы в ImageList и возвращает ее идентификатор. 
+        Добавляет иконку страницы в ImageList и возвращает ее идентификатор.
         Если иконки нет, то возвращает идентификатор иконки по умолчанию
         """
         icon = page.icon
 
-        if icon != None:
+        if icon is not None:
             image = wx.Bitmap (icon)
             image.SetHeight (self.iconHeight)
             imageId = self.imagelist.Add (image)
@@ -151,7 +151,7 @@ class NotesTree(wx.Panel):
             return
 
         self.treeCtrl.SetItemImage (self._pageCache[page],
-            self.__loadIcon (page) )
+                                    self.__loadIcon (page))
 
 
     def __BindGuiEvents (self):
@@ -237,12 +237,12 @@ class NotesTree(wx.Panel):
 
 
     def __onMoveUp (self, event):
-        if Application.wikiroot.selectedPage != None:
+        if Application.wikiroot.selectedPage is not None:
             Application.actionController.getAction (MovePageUpAction.stringId).run (None)
 
 
     def __onMoveDown (self, event):
-        if Application.wikiroot.selectedPage != None:
+        if Application.wikiroot.selectedPage is not None:
             Application.actionController.getAction (MovePageDownAction.stringId).run (None)
 
 
@@ -279,18 +279,19 @@ class NotesTree(wx.Panel):
         try:
             expandedOption.value = expanded
         except IOError as e:
-            outwiker.core.commands.MessageBox (_(u"Can't save page options\n%s") % (unicode (e)),
-                    _(u"Error"), wx.ICON_ERROR | wx.OK)
+            outwiker.core.commands.MessageBox (
+                _(u"You can't to save page options\n%s") % (unicode (e)),
+                _(u"Error"), wx.ICON_ERROR | wx.OK)
 
 
     def __getItemExpandState (self, page):
         """
         Проверить, раскрыт ли элемент в дереве для страницы page
         """
-        if page == None:
+        if page is None:
             return True
 
-        if page.parent == None:
+        if page.parent is None:
             return True
 
         return self.treeCtrl.IsExpanded (self._pageCache[page])
@@ -300,10 +301,10 @@ class NotesTree(wx.Panel):
         """
         Проверить состояние "раскрытости" страницы (что по этому поводу написано в настройках страницы)
         """
-        if page == None:
+        if page is None:
             return True
 
-        if page.parent == None:
+        if page.parent is None:
             return True
 
         try:
@@ -329,7 +330,7 @@ class NotesTree(wx.Panel):
 
     def beginRename (self, page=None):
         """
-        Начать переименование страницы в дереве. Если page == None, то начать переименование текущей страницы
+        Начать переименование страницы в дереве. Если page is None, то начать переименование текущей страницы
         """
         pageToRename = page if page is not None else Application.selectedPage
 
@@ -373,7 +374,7 @@ class NotesTree(wx.Panel):
         Application.onPageOrderChange -= self.__onPageOrderChange
         self.Unbind (wx.EVT_TREE_SEL_CHANGED, handler = self.__onSelChanged)
 
-    
+
     def __onEndTreeUpdate (self, root):
         self.__bindUpdateEvents()
         self.__treeUpdate (Application.wikiroot)
@@ -394,7 +395,7 @@ class NotesTree(wx.Panel):
 
 
     def __onEndDrag (self, event):
-        if self.dragItem != None:
+        if self.dragItem is not None:
             # Элемент, на который перетащили другой элемент (self.dragItem)
             endDragItem = event.GetItem()
 
@@ -426,7 +427,7 @@ class NotesTree(wx.Panel):
             if currpage != page:
                 self.selectedPage = page
         finally:
-           self.__externalPageSelect = False
+            self.__externalPageSelect = False
 
 
     def __onSelChanged (self, event):
@@ -455,21 +456,21 @@ class NotesTree(wx.Panel):
             page = self.treeCtrl.GetItemData (item).GetData()
 
             # Проверка того, что выбрали не корневой элемент
-            if page.parent == None:
+            if page.parent is None:
                 page = None
-        
+
         return page
 
 
     @selectedPage.setter
     def selectedPage (self, newSelPage):
-        if newSelPage == None:
+        if newSelPage is None:
             item = self.treeCtrl.GetRootItem()
         else:
             self.__expandToPage (newSelPage)
             item = self.getTreeItem (newSelPage)
 
-        if item != None:
+        if item is not None:
             self.treeCtrl.SelectItem (item)
 
 
@@ -480,7 +481,7 @@ class NotesTree(wx.Panel):
         # Список родительских страниц, которые нужно добавить в дерево
         pages = []
         currentPage = page.parent
-        while currentPage != None:
+        while currentPage is not None:
             pages.append (currentPage)
             currentPage = currentPage.parent
 
@@ -503,7 +504,7 @@ class NotesTree(wx.Panel):
 
     def expand (self, page):
         item = self.getTreeItem (page)
-        if item != None:
+        if item is not None:
             self.treeCtrl.Expand (item)
 
 
@@ -518,11 +519,12 @@ class NotesTree(wx.Panel):
         # Ключ - страница, значение - экземпляр класса TreeItemId
         self._pageCache = {}
 
-        if rootPage != None:
+        if rootPage is not None:
             rootname = os.path.basename (rootPage.path)
-            rootItem = self.treeCtrl.AddRoot (rootname, 
-                    data = wx.TreeItemData (rootPage),
-                    image = self.defaultImageId)
+            rootItem = self.treeCtrl.AddRoot (
+                rootname,
+                data = wx.TreeItemData (rootPage),
+                image = self.defaultImageId)
 
             self._pageCache[rootPage] = rootItem
             self.__mountItem (rootItem, rootPage)
@@ -537,7 +539,6 @@ class NotesTree(wx.Panel):
         Добавить детей в дерево
         parentPage - родительская страница, куда добавляем дочерние страницы
         """
-        parentExpanded = self.__getItemExpandState (parentPage)
         grandParentExpanded = self.__getItemExpandState (parentPage.parent)
 
         if grandParentExpanded:
@@ -564,14 +565,14 @@ class NotesTree(wx.Panel):
         Вставить одну дочерниюю страницу (child) в ветвь
         """
         parentItem = self.getTreeItem (child.parent)
-        assert parentItem != None
+        assert parentItem is not None
 
-        item = self.treeCtrl.InsertItemBefore (parentItem, 
-                child.order, 
-                child.title, 
-                data = wx.TreeItemData(child) )
+        item = self.treeCtrl.InsertItemBefore (parentItem,
+                                               child.order,
+                                               child.title,
+                                               data = wx.TreeItemData(child))
 
-        self.treeCtrl.SetItemImage (item, self.__loadIcon (child) )
+        self.treeCtrl.SetItemImage (item, self.__loadIcon (child))
 
         self._pageCache[child] = item
         self.__mountItem (item, child)
@@ -588,7 +589,7 @@ class NotesTree(wx.Panel):
             self.__removePageItem (child)
 
         item = self.getTreeItem (page)
-        if item != None:
+        if item is not None:
             del self._pageCache[page]
             self.treeCtrl.Delete (item)
 
@@ -621,7 +622,7 @@ class NotesTree(wx.Panel):
         Если текущая страница вылезла за пределы видимости, то прокрутить к ней
         """
         selectedPage = Application.selectedPage
-        if selectedPage == None:
+        if selectedPage is None:
             return
 
         item = self.getTreeItem (selectedPage)
@@ -635,75 +636,74 @@ class NotesTree(wx.Panel):
         Т.к. текст подсказок берется из Actions, этот метод вызывается после создания окна
         """
         imagesDir = outwiker.core.system.getImagesDir()
-        actionController =  Application.actionController
+        actionController = Application.actionController
 
         moveDownTitle = actionController.getTitle (MovePageDownAction.stringId)
-        self.toolbar.AddLabelTool(self.ID_MOVE_DOWN, 
-                moveDownTitle, 
-                wx.Bitmap(os.path.join (imagesDir, "move_down.png"),
-                    wx.BITMAP_TYPE_ANY),
-                wx.NullBitmap, 
-                wx.ITEM_NORMAL,
-                moveDownTitle, 
-                "")
+        self.toolbar.AddLabelTool(self.ID_MOVE_DOWN,
+                                  moveDownTitle,
+                                  wx.Bitmap(os.path.join (imagesDir, "move_down.png"),
+                                            wx.BITMAP_TYPE_ANY),
+                                  wx.NullBitmap,
+                                  wx.ITEM_NORMAL,
+                                  moveDownTitle,
+                                  "")
 
 
         moveUpTitle = actionController.getTitle (MovePageUpAction.stringId)
-        self.toolbar.AddLabelTool(self.ID_MOVE_UP, 
-                moveUpTitle, 
-                wx.Bitmap(os.path.join (imagesDir, "move_up.png"),
-                    wx.BITMAP_TYPE_ANY),
-                wx.NullBitmap, 
-                wx.ITEM_NORMAL,
-                moveUpTitle, 
-                "")
+        self.toolbar.AddLabelTool(self.ID_MOVE_UP,
+                                  moveUpTitle,
+                                  wx.Bitmap(os.path.join (imagesDir, "move_up.png"),
+                                            wx.BITMAP_TYPE_ANY),
+                                  wx.NullBitmap,
+                                  wx.ITEM_NORMAL,
+                                  moveUpTitle,
+                                  "")
         self.toolbar.AddSeparator()
 
 
         siblingTitle = actionController.getTitle (AddSiblingPageAction.stringId)
         self.toolbar.AddLabelTool(self.ID_ADD_SIBLING_PAGE,
-                siblingTitle, 
-                wx.Bitmap(os.path.join (imagesDir, "node-insert-next.png"),
-                    wx.BITMAP_TYPE_ANY),
-                wx.NullBitmap, 
-                wx.ITEM_NORMAL,
-                siblingTitle, 
-                "")
+                                  siblingTitle,
+                                  wx.Bitmap(os.path.join (imagesDir, "node-insert-next.png"),
+                                            wx.BITMAP_TYPE_ANY),
+                                  wx.NullBitmap,
+                                  wx.ITEM_NORMAL,
+                                  siblingTitle,
+                                  "")
 
 
         childTitle = actionController.getTitle (AddChildPageAction.stringId)
         self.toolbar.AddLabelTool(self.ID_ADD_CHILD_PAGE,
-                childTitle, 
-                wx.Bitmap(os.path.join (imagesDir, "node-insert-child.png"),
-                    wx.BITMAP_TYPE_ANY),
-                wx.NullBitmap, 
-                wx.ITEM_NORMAL,
-                childTitle, 
-                "")
+                                  childTitle,
+                                  wx.Bitmap(os.path.join (imagesDir, "node-insert-child.png"),
+                                            wx.BITMAP_TYPE_ANY),
+                                  wx.NullBitmap,
+                                  wx.ITEM_NORMAL,
+                                  childTitle,
+                                  "")
 
 
         removeTitle = actionController.getTitle (RemovePageAction.stringId)
         self.toolbar.AddLabelTool(self.ID_REMOVE_PAGE,
-                removeTitle, 
-                wx.Bitmap(os.path.join (imagesDir, "node-delete.png"),
-                    wx.BITMAP_TYPE_ANY),
-                wx.NullBitmap, 
-                wx.ITEM_NORMAL,
-                removeTitle, 
-                "")
+                                  removeTitle,
+                                  wx.Bitmap(os.path.join (imagesDir, "node-delete.png"),
+                                            wx.BITMAP_TYPE_ANY),
+                                  wx.NullBitmap,
+                                  wx.ITEM_NORMAL,
+                                  removeTitle,
+                                  "")
 
         self.toolbar.AddSeparator()
 
 
         propertiesTitle = actionController.getTitle (EditPagePropertiesAction.stringId)
         self.toolbar.AddLabelTool(self.ID_PROPERTIES_BUTTON,
-                propertiesTitle, 
-                wx.Bitmap(os.path.join (imagesDir, "edit.png"),
-                    wx.BITMAP_TYPE_ANY),
-                wx.NullBitmap, 
-                wx.ITEM_NORMAL,
-                propertiesTitle, 
-                "")
-
+                                  propertiesTitle,
+                                  wx.Bitmap(os.path.join (imagesDir, "edit.png"),
+                                            wx.BITMAP_TYPE_ANY),
+                                  wx.NullBitmap,
+                                  wx.ITEM_NORMAL,
+                                  propertiesTitle,
+                                  "")
 
         self.toolbar.Realize()
