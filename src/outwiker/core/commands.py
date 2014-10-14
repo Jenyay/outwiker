@@ -106,7 +106,7 @@ def removePage (page):
         raise outwiker.core.exceptions.ReadonlyException
 
     if page.parent is None:
-        MessageBox (_(u"You can't remove the root"),
+        MessageBox (_(u"You can't remove the root element"),
                     _(u"Error"),
                     wx.ICON_ERROR | wx.OK)
         return
@@ -397,7 +397,7 @@ def getCurrentVersion ():
 @testreadonly
 def renamePage (page, newtitle):
     if page.parent is None:
-        MessageBox (_(u"You can't rename the root"),
+        MessageBox (_(u"You can't rename the root element"),
                     _(u"Error"),
                     wx.ICON_ERROR | wx.OK)
         return

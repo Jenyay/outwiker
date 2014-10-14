@@ -278,9 +278,9 @@ class NotesTree(wx.Panel):
 
         try:
             expandedOption.value = expanded
-        except IOError as e:
+        except IOError, e:
             outwiker.core.commands.MessageBox (
-                _(u"You can't to save page options\n%s") % (unicode (e)),
+                _(u"Can't save page options\n{}").format(unicode (e)),
                 _(u"Error"), wx.ICON_ERROR | wx.OK)
 
 
@@ -335,7 +335,7 @@ class NotesTree(wx.Panel):
         pageToRename = page if page is not None else Application.selectedPage
 
         if pageToRename is None or pageToRename.parent is None:
-            outwiker.core.commands.MessageBox (_(u"You can't rename the root"),
+            outwiker.core.commands.MessageBox (_(u"You can't rename the root element"),
                                                _(u"Error"),
                                                wx.ICON_ERROR | wx.OK)
             return
