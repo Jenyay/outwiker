@@ -193,8 +193,8 @@ def win():
         local ("python setup_win.py build")
 
     with lcd ("build/outwiker_win"):
-        local ("7z a ..\outwiker_win32_unstable.zip .\* .\plugins -r -aoa")
-        local ("7z a ..\outwiker_win32_unstable.7z .\* .\plugins -r -aoa")
+        local ("7z a ..\outwiker_win_unstable.zip .\* .\plugins -r -aoa")
+        local ("7z a ..\outwiker_win_unstable.7z .\* .\plugins -r -aoa")
 
     local ("iscc outwiker_setup.iss")
 
