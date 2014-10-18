@@ -1,4 +1,9 @@
-!!! [=1.8.0=]
+!!! [=1.8.1.752=]
+
+* Bug fixes.
+
+
+!!! [=1.8.0.750 (11.10.2014)=]
 
 * Added the ability to customize keyboard shortcuts.
 * Added the ability to refer to a page using unique identifiers.
