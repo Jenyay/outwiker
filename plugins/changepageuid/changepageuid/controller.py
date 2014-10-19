@@ -81,7 +81,7 @@ class Controller (object):
         """
         Вызвать диалог для изменения UID страницы
         """
-        if page is None:
+        if page is None or page.parent is None:
             return
 
         if page.readonly:
