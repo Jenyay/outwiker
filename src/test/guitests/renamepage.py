@@ -130,3 +130,11 @@ class RenamePageGuiTest (BaseMainWndTest):
         self.assertIsNotNone (self.wikiroot[u"Страница 2/Страница 3"])
         self.assertIsNone (self.wikiroot[u".."])
         self.assertEqual (Tester.dialogTester.count, 0)
+
+
+    def testCommand_14_root (self):
+        Tester.dialogTester.appendOk()
+        renamePage (self.wikiroot, u"Абырвалг")
+
+        self.assertEqual (Tester.dialogTester.count, 0)
+        self.assertEqual (self.wikiroot.title, u"Пример вики бла-бла-бла")

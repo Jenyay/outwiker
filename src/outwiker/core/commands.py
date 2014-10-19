@@ -100,12 +100,18 @@ def attachFiles (parent, page, files):
 
 @testreadonly
 def removePage (page):
+    assert page is not None
+
     if page.readonly:
         raise outwiker.core.exceptions.ReadonlyException
 
-    text = _(u"Remove page '%s' and all subpages?") % (page.title)
+    if page.parent is None:
+        MessageBox (_(u"You can't remove the root element"),
+                    _(u"Error"),
+                    wx.ICON_ERROR | wx.OK)
+        return
 
-    if (MessageBox (text,
+    if (MessageBox (_(u'Remove page "{}" and all subpages?').format (page.title),
                     _(u"Remove page?"),
                     wx.YES_NO | wx.ICON_QUESTION) == wx.YES):
         try:
@@ -390,17 +396,21 @@ def getCurrentVersion ():
 
 @testreadonly
 def renamePage (page, newtitle):
+    if page.parent is None:
+        MessageBox (_(u"You can't rename the root element"),
+                    _(u"Error"),
+                    wx.ICON_ERROR | wx.OK)
+        return
+
     if not testPageTitle (newtitle):
         return
 
     try:
         page.title = newtitle
-
     except outwiker.core.exceptions.DublicateTitle:
         MessageBox (_(u"Can't move page when page with that title already exists"),
                     _(u"Error"),
                     wx.ICON_ERROR | wx.OK)
-
     except OSError:
         MessageBox (_(u'Can\'t rename page "{}" to "{}"').format (page.title, newtitle),
                     _(u"Error"),

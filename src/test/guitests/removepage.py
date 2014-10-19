@@ -84,6 +84,12 @@ class RemovePageGuiTest (BaseMainWndTest):
         self.assertNotEqual (self.wikiroot[u"Страница 2"], None)
 
 
+    def testCommandRemove_08_root (self):
+        Tester.dialogTester.appendYes()
+        removePage (self.wikiroot)
+        self.assertEqual (Tester.dialogTester.count, 0)
+
+
     def testCommandRemove_07_IOError (self):
         def removeBeforeRemove (dialog):
             self.wikiroot[u"Страница 2/Страница 3"].remove()
