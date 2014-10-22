@@ -10,7 +10,7 @@ from outwiker.core.system import getImagesDir, getIconsDirList
 
 class IconButton (wx.PyControl):
     """
-    Кнопка с одной иконкой
+    Button with single icons
     """
     def __init__ (self, parent, fname, width, height):
         wx.PyControl.__init__ (self, parent, id=wx.NewId(), style=wx.BORDER_NONE)
@@ -32,7 +32,7 @@ class IconButton (wx.PyControl):
 
     def __getToolTipText (self, fname):
         """
-        Возвращет текст всплывающей подсказки для кнопки по имени файла
+        Return the text of the tooltip with file name
         """
         text = os.path.basename (fname)
 
@@ -77,7 +77,7 @@ class IconButton (wx.PyControl):
 
 class IconListCtrl (wx.ScrolledWindow):
     """
-    Список иконок
+    Control with icons for pages
     """
     def __init__ (self, parent):
         wx.ScrolledWindow.__init__ (self, parent, style = wx.BORDER_THEME)
@@ -128,10 +128,11 @@ class IconListCtrl (wx.ScrolledWindow):
 
             for fname in files:
                 fullpath = os.path.join (iconspath, fname)
-                button = self.__addButton (fullpath)
+                if os.path.isfile (fullpath):
+                    button = self.__addButton (fullpath)
 
-                if fname == self.defaultImage:
-                    button.selected = True
+                    if fname == self.defaultImage:
+                        button.selected = True
 
         self.__layout()
         self.__getSelectedButton().SetFocus()
@@ -139,7 +140,7 @@ class IconListCtrl (wx.ScrolledWindow):
 
     def __addButton (self, fname):
         """
-        Добавить кнопку с картинкой fname (полный путь)
+        Add the button with icons fname (full path)
         """
         button = IconButton (self, fname, self.cellWidth, self.cellHeight)
         button.Bind (wx.EVT_LEFT_DOWN, self.__onButtonClick)
@@ -189,7 +190,7 @@ class IconListCtrl (wx.ScrolledWindow):
 
     def addCurrentIcon (self, fname):
         """
-        Добавить иконку и сделать ее выбранной по умолчанию
+        Add the icon and make it selected default
         """
         assert fname is not None
 
