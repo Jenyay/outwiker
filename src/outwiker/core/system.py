@@ -20,6 +20,7 @@ from outwiker.gui.fileicons import WindowsFileIcons, UnixFileIcons
 IMAGES_DIR = u"images"
 STYLES_DIR = u"styles"
 PLUGINS_DIR = u"plugins"
+ICONS_DIR = u"iconset"
 
 # Имя файла настроек по умолчанию
 DEFAULT_CONFIG_NAME = u"outwiker.ini"
@@ -244,6 +245,10 @@ def getConfigPath (dirname=DEFAULT_CONFIG_DIR, fname=DEFAULT_CONFIG_NAME):
         if not op.exists (stylesDir):
             os.mkdir (stylesDir)
 
+        iconsDir = op.join (mainConfDir, ICONS_DIR)
+        if not op.exists (iconsDir):
+            os.mkdir (iconsDir)
+
     return confPath
 
 
@@ -267,6 +272,13 @@ def getPluginsDirList (configDirName=DEFAULT_CONFIG_DIR, configFileName=DEFAULT_
     Возвращает список директорий, откуда должны грузиться плагины
     """
     return getSpecialDirList (PLUGINS_DIR, configDirName, configFileName)
+
+
+def getIconsDirList (configDirName=DEFAULT_CONFIG_DIR, configFileName=DEFAULT_CONFIG_NAME):
+    """
+    Возвращает список директорий, где могут располагаться иконки для страниц
+    """
+    return getSpecialDirList (ICONS_DIR, configDirName, configFileName)
 
 
 def getStylesDirList (configDirName=DEFAULT_CONFIG_DIR,

@@ -93,11 +93,11 @@ class IconListCtrl (wx.ScrolledWindow):
         self.buttons = []
 
         self.imagesDir = outwiker.core.system.getImagesDir()
-        self.iconspath = os.path.join (outwiker.core.system.getCurrentDir(), "iconset")
+        # self.iconspath = os.path.join (outwiker.core.system.getCurrentDir(), "iconset")
         self.defaultIcon = os.path.join (self.imagesDir, "page.png")
 
         # Иконка по умолчанию
-        self.defalultImage = u"_page.png"
+        self.defaultImage = u"_page.png"
 
         self.__updateList()
 
@@ -116,15 +116,16 @@ class IconListCtrl (wx.ScrolledWindow):
 
         self.buttons = []
 
-        files = [fname for fname in os.listdir (self.iconspath)]
-        files.sort(reverse=True)
+        for iconspath in outwiker.core.system.getIconsDirList():
+            files = [fname for fname in os.listdir (iconspath)]
+            files.sort(reverse=True)
 
-        for fname in files:
-            fullpath = os.path.join (self.iconspath, fname)
-            button = self.__addButton (fullpath)
+            for fname in files:
+                fullpath = os.path.join (iconspath, fname)
+                button = self.__addButton (fullpath)
 
-            if fname == self.defalultImage:
-                button.selected = True
+                if fname == self.defaultImage:
+                    button.selected = True
 
         self.__layout()
         self.__selectedButton.SetFocus()
