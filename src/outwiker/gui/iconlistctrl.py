@@ -93,7 +93,7 @@ class IconListCtrl (wx.ScrolledWindow):
         self.buttons = []
 
         self.imagesDir = outwiker.core.system.getImagesDir()
-        self.iconspath = os.path.join (self.imagesDir, "iconset")
+        self.iconspath = os.path.join (outwiker.core.system.getCurrentDir(), "iconset")
         self.defaultIcon = os.path.join (self.imagesDir, "page.png")
 
         # Иконка по умолчанию
