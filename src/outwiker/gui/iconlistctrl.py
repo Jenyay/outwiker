@@ -5,7 +5,7 @@ import os.path
 import wx
 import wx.grid
 
-import outwiker.core.system
+from outwiker.core.system import getImagesDir, getIconsDirList
 
 
 class IconButton (wx.PyControl):
@@ -92,8 +92,7 @@ class IconListCtrl (wx.ScrolledWindow):
         # Список картинок, которые хранятся в окне
         self.buttons = []
 
-        self.imagesDir = outwiker.core.system.getImagesDir()
-        # self.iconspath = os.path.join (outwiker.core.system.getCurrentDir(), "iconset")
+        self.imagesDir = getImagesDir()
         self.defaultIcon = os.path.join (self.imagesDir, "page.png")
 
         # Иконка по умолчанию
@@ -108,7 +107,10 @@ class IconListCtrl (wx.ScrolledWindow):
         self.__layout()
 
 
-    def __updateList (self):
+    def __clearIconButtons (self):
+        """
+        Remove old buttons with icons.
+        """
         for button in self.buttons:
             button.Unbind (wx.EVT_LEFT_DOWN, self.__onButtonClick)
             button.Hide()
@@ -116,7 +118,11 @@ class IconListCtrl (wx.ScrolledWindow):
 
         self.buttons = []
 
-        for iconspath in outwiker.core.system.getIconsDirList():
+
+    def __updateList (self):
+        self.__clearIconButtons()
+
+        for iconspath in getIconsDirList():
             files = [fname for fname in os.listdir (iconspath)]
             files.sort(reverse=True)
 
@@ -128,7 +134,7 @@ class IconListCtrl (wx.ScrolledWindow):
                     button.selected = True
 
         self.__layout()
-        self.__selectedButton.SetFocus()
+        self.__getSelectedButton().SetFocus()
 
 
     def __addButton (self, fname):
@@ -176,7 +182,7 @@ class IconListCtrl (wx.ScrolledWindow):
 
     @property
     def icon (self):
-        selButton = self.__selectedButton
+        selButton = self.__getSelectedButton()
         if selButton is not None:
             return selButton.fname
 
@@ -189,13 +195,12 @@ class IconListCtrl (wx.ScrolledWindow):
 
         button = self.__addButton (fname)
         self.__layout()
-        self.__selectedButton.selected = False
+        self.__getSelectedButton().selected = False
         button.selected = True
         button.SetFocus()
 
 
-    @property
-    def __selectedButton (self):
+    def __getSelectedButton (self):
         for button in self.buttons:
             if button.selected:
                 return button
