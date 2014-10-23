@@ -260,7 +260,7 @@ class IconPanel (wx.Panel):
 
 
     def __appendGroups (self):
-        self.groupCtrl.Append (_(u"Not in groups"))
+        self.groupCtrl.Append (_(u"Not in groups"), self._getRootImage())
         self.groupCtrl.Append (_(u"All"))
 
         self._groupsTranslate = {self._localize(group): group for group in self._iconsCollection.getGroups()}
@@ -286,13 +286,22 @@ class IconPanel (wx.Panel):
         """
         Return bitmap for combobox item
         """
-        icons = sorted (self._iconsCollection.getIcons (self._groupsTranslate[groupname]))
-        if len (icons) != 0:
-            bitmap = self._getImageForGroup (icons[0])
-        else:
-            bitmap = wx.NullBitmap
+        fname = self._iconsCollection.getGroupCover (self._groupsTranslate[groupname])
+        if fname is not None:
+            return self._getImageForGroup (fname)
 
-        return bitmap
+        return wx.NullBitmap
+
+
+    def _getRootImage (self):
+        """
+        Return bitmap for combobox item
+        """
+        fname = self._iconsCollection.getRootCover ()
+        if fname is not None:
+            return self._getImageForGroup (fname)
+
+        return wx.NullBitmap
 
 
     def __onGroupSelect (self, event):
