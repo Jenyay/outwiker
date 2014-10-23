@@ -4,6 +4,7 @@ import os
 import os.path
 
 import wx
+import wx.combo
 
 from outwiker.core.factoryselector import FactorySelector
 from outwiker.core.application import Application
@@ -241,7 +242,7 @@ class IconPanel (wx.Panel):
         self.iconsList.SetMinSize((200, 150))
 
         # Control for selection icons group
-        self.groupCtrl = wx.ComboBox (self, style=wx.CB_READONLY)
+        self.groupCtrl = wx.combo.BitmapComboBox (self, style=wx.CB_READONLY)
         self.groupCtrl.Bind (wx.EVT_COMBOBOX, handler=self.__onGroupSelect)
 
         self.__layout()
@@ -263,7 +264,35 @@ class IconPanel (wx.Panel):
         self.groupCtrl.Append (_(u"All"))
 
         self._groupsTranslate = {self._localize(group): group for group in self._iconsCollection.getGroups()}
-        self.groupCtrl.AppendItems (sorted (self._groupsTranslate.keys()))
+
+        for groupname in sorted (self._groupsTranslate.keys()):
+            self.groupCtrl.Append (groupname, self._getGroupImage (groupname))
+
+
+    def _getImageForGroup (self, fname):
+        neww = 16
+        newh = 18
+        image = wx.Image (fname)
+
+        posx = (neww - image.Width) / 2
+        posy = (newh - image.Height) / 2
+        image.Resize ((neww, newh), (posx, posy), 255, 255, 255)
+        bitmap = wx.BitmapFromImage (image)
+
+        return bitmap
+
+
+    def _getGroupImage (self, groupname):
+        """
+        Return bitmap for combobox item
+        """
+        icons = sorted (self._iconsCollection.getIcons (self._groupsTranslate[groupname]))
+        if len (icons) != 0:
+            bitmap = self._getImageForGroup (icons[0])
+        else:
+            bitmap = wx.NullBitmap
+
+        return bitmap
 
 
     def __onGroupSelect (self, event):
