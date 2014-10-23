@@ -114,6 +114,7 @@ class IconListCtrl (wx.ScrolledWindow):
             button.Close()
 
         self.buttons = []
+        self.Scroll (0, 0)
 
 
     def setIconsList (self, icons):
@@ -125,6 +126,7 @@ class IconListCtrl (wx.ScrolledWindow):
         self.addCurrentIcon (self._currentIcon)
 
         self.__layout()
+        self.Scroll (0, 0)
 
 
     def __addButton (self, fname):
@@ -151,9 +153,7 @@ class IconListCtrl (wx.ScrolledWindow):
     def __layout (self):
         currx = 0
         curry = 0
-
         rowcount = 1
-
         windowWidth = self.GetClientSizeTuple()[0]
 
         for button in self.buttons:
