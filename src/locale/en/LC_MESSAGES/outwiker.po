@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-14 21:32+0400\n"
+"POT-Creation-Date: 2014-10-23 20:11+0400\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -45,6 +45,58 @@ msgid ""
 msgstr ""
 "The page title contains invalid characters for Microsoft Windows operating "
 "system"
+
+#: outwiker/core/iconscollection.py:16
+msgid "awards"
+msgstr "awards"
+
+#: outwiker/core/iconscollection.py:17
+msgid "battery"
+msgstr "battery"
+
+#: outwiker/core/iconscollection.py:18
+msgid "books"
+msgstr "books"
+
+#: outwiker/core/iconscollection.py:19
+msgid "computer"
+msgstr "computer"
+
+#: outwiker/core/iconscollection.py:20
+msgid "emotions"
+msgstr "emotions"
+
+#: outwiker/core/iconscollection.py:21
+msgid "flags"
+msgstr "flags"
+
+#: outwiker/core/iconscollection.py:22
+msgid "folders"
+msgstr "folders"
+
+#: outwiker/core/iconscollection.py:23
+msgid "money"
+msgstr "money"
+
+#: outwiker/core/iconscollection.py:24
+msgid "people"
+msgstr "people"
+
+#: outwiker/core/iconscollection.py:25
+msgid "signs"
+msgstr "signs"
+
+#: outwiker/core/iconscollection.py:26
+msgid "software"
+msgstr "software"
+
+#: outwiker/core/iconscollection.py:27
+msgid "tags"
+msgstr "tags"
+
+#: outwiker/core/iconscollection.py:28
+msgid "weather"
+msgstr "weather"
 
 #: outwiker/core/commands.py:54
 msgid "Page is opened as read-only"
@@ -628,7 +680,7 @@ msgstr "Set style to branch"
 msgid "Style"
 msgstr "Style"
 
-#: outwiker/actions/applystyle.py:122 outwiker/gui/basepagedialog.py:92
+#: outwiker/actions/applystyle.py:122 outwiker/gui/basepagedialog.py:93
 msgid "Default"
 msgstr "Default"
 
@@ -857,7 +909,7 @@ msgid "Notes"
 msgstr "Notes"
 
 #: outwiker/gui/toolbars/generaltoolbar.py:25
-#: outwiker/gui/basepagedialog.py:37
+#: outwiker/gui/basepagedialog.py:38
 #: outwiker/gui/preferences/prefdialog.py:127
 #: outwiker/gui/preferences/prefdialog.py:143
 #: outwiker/pages/wiki/wikipage.py:85
@@ -937,32 +989,40 @@ msgstr ""
 msgid "Can't execute file '%s'"
 msgstr "Can't execute file '%s'"
 
-#: outwiker/gui/basepagedialog.py:38
+#: outwiker/gui/basepagedialog.py:39
 msgid "Icon"
 msgstr "Icon"
 
-#: outwiker/gui/basepagedialog.py:39
+#: outwiker/gui/basepagedialog.py:40
 msgid "Appearance"
 msgstr "Appearance"
 
-#: outwiker/gui/basepagedialog.py:54
+#: outwiker/gui/basepagedialog.py:55
 msgid "Create Page"
 msgstr "Create Page"
 
-#: outwiker/gui/basepagedialog.py:90
+#: outwiker/gui/basepagedialog.py:91
 msgid "Do not change"
 msgstr "Do not change"
 
-#: outwiker/gui/basepagedialog.py:207
+#: outwiker/gui/basepagedialog.py:208
 #: outwiker/pages/search/sortstrategies.py:55
 msgid "Title"
 msgstr "Title"
 
-#: outwiker/gui/basepagedialog.py:218
+#: outwiker/gui/basepagedialog.py:219
 msgid "Page type"
 msgstr "Page type"
 
-#: outwiker/gui/basepagedialog.py:248
+#: outwiker/gui/basepagedialog.py:262
+msgid "Not in groups"
+msgstr "Not in groups"
+
+#: outwiker/gui/basepagedialog.py:263
+msgid "All"
+msgstr "All"
+
+#: outwiker/gui/basepagedialog.py:302
 msgid "Page style"
 msgstr "Page style"
 

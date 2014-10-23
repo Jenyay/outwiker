@@ -5,7 +5,7 @@ import os.path
 import wx
 import wx.grid
 
-from outwiker.core.system import getImagesDir, getIconsDirList
+from outwiker.core.system import getImagesDir
 
 
 class IconButton (wx.PyControl):
@@ -86,24 +86,21 @@ class IconListCtrl (wx.ScrolledWindow):
         self.cellHeight = 32
         self.margin = 1
 
+        # Path to current page icon
+        self._currentIcon = None
+
         self.SetScrollRate (0, 0)
         self.SetBackgroundColour (wx.Colour (255, 255, 255))
 
         # Список картинок, которые хранятся в окне
         self.buttons = []
 
-        self.imagesDir = getImagesDir()
-        self.defaultIcon = os.path.join (self.imagesDir, "page.png")
+        self.defaultIcon = os.path.join (getImagesDir(), "page.png")
 
-        # Иконка по умолчанию
-        self.defaultImage = u"_page.png"
-
-        self.__updateList()
-
-        self.Bind (wx.EVT_SIZE, self.onSize)
+        self.Bind (wx.EVT_SIZE, self.__onSize)
 
 
-    def onSize (self, event):
+    def __onSize (self, event):
         self.__layout()
 
 
@@ -112,30 +109,22 @@ class IconListCtrl (wx.ScrolledWindow):
         Remove old buttons with icons.
         """
         for button in self.buttons:
-            button.Unbind (wx.EVT_LEFT_DOWN, self.__onButtonClick)
+            button.Unbind (wx.EVT_LEFT_DOWN, handler=self.__onButtonClick)
             button.Hide()
             button.Close()
 
         self.buttons = []
 
 
-    def __updateList (self):
+    def setIconsList (self, icons):
         self.__clearIconButtons()
 
-        for iconspath in getIconsDirList():
-            files = [fname for fname in os.listdir (iconspath)]
-            files.sort(reverse=True)
+        for fname in reversed (icons):
+            self.__addButton (fname)
 
-            for fname in files:
-                fullpath = os.path.join (iconspath, fname)
-                if os.path.isfile (fullpath):
-                    button = self.__addButton (fullpath)
-
-                    if fname == self.defaultImage:
-                        button.selected = True
+        self.addCurrentIcon (self._currentIcon)
 
         self.__layout()
-        self.__getSelectedButton().SetFocus()
 
 
     def __addButton (self, fname):
@@ -192,11 +181,17 @@ class IconListCtrl (wx.ScrolledWindow):
         """
         Add the icon and make it selected default
         """
-        assert fname is not None
+        self._currentIcon = fname
+        if self._currentIcon is None:
+            self._currentIcon = self.defaultIcon
 
-        button = self.__addButton (fname)
+        button = self.__addButton (self._currentIcon)
         self.__layout()
-        self.__getSelectedButton().selected = False
+
+        currentSelButton = self.__getSelectedButton()
+        if currentSelButton is not None:
+            currentSelButton.selected = False
+
         button.selected = True
         button.SetFocus()
 
@@ -205,3 +200,5 @@ class IconListCtrl (wx.ScrolledWindow):
         for button in self.buttons:
             if button.selected:
                 return button
+
+        return None

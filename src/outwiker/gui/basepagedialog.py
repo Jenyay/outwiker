@@ -9,7 +9,8 @@ from outwiker.core.factoryselector import FactorySelector
 from outwiker.core.application import Application
 from outwiker.core.tagslist import TagsList
 from outwiker.core.styleslist import StylesList
-from outwiker.core.system import getStylesDirList
+from outwiker.core.system import getStylesDirList, getIconsDirList
+from outwiker.core.iconscollection import IconsCollection
 from .guiconfig import PageDialogConfig
 from .iconlistctrl import IconListCtrl
 from .tagsselector import TagsSelector
@@ -220,25 +221,78 @@ class GeneralPanel (wx.Panel):
 
 class IconPanel (wx.Panel):
     """
-    Класс панели, расположенной на вкладке "Значок"
+    Class of the panel in the "Icon" tab.
     """
     def __init__ (self, parent):
         super (IconPanel, self).__init__ (parent)
+        self._iconsCollection = IconsCollection(getIconsDirList())
+        self.__createGui()
 
+        # Key - localized group name, value - source group name
+        self._groupsTranslate = {}
+
+        self.__appendGroups ()
+        self.groupCtrl.SetSelection (0)
+        self.__switchToCurrentGroup()
+
+
+    def __createGui (self):
         self.iconsList = IconListCtrl (self)
         self.iconsList.SetMinSize((200, 150))
+
+        # Control for selection icons group
+        self.groupCtrl = wx.ComboBox (self, style=wx.CB_READONLY)
+        self.groupCtrl.Bind (wx.EVT_COMBOBOX, handler=self.__onGroupSelect)
 
         self.__layout()
 
 
     def __layout (self):
-        iconSizer = wx.FlexGridSizer(1, 1, 0, 0)
-        iconSizer.AddGrowableRow(0)
+        iconSizer = wx.FlexGridSizer(rows=2)
+        iconSizer.AddGrowableRow(1)
         iconSizer.AddGrowableCol(0)
+        iconSizer.Add(self.groupCtrl, 1, wx.ALL | wx.EXPAND, 2)
         iconSizer.Add(self.iconsList, 1, wx.ALL | wx.EXPAND, 2)
 
         self.SetSizer (iconSizer)
         self.Layout()
+
+
+    def __appendGroups (self):
+        self.groupCtrl.Append (_(u"Not in groups"))
+        self.groupCtrl.Append (_(u"All"))
+
+        self._groupsTranslate = {self._localize(group): group for group in self._iconsCollection.getGroups()}
+        self.groupCtrl.AppendItems (sorted (self._groupsTranslate.keys()))
+
+
+    def __onGroupSelect (self, event):
+        self.__switchToCurrentGroup()
+
+
+    def __getCurrentIcons (self):
+        if self.groupCtrl.GetSelection() == 0:
+            icons = self._iconsCollection.getRoot()
+        elif self.groupCtrl.GetSelection() == 1:
+            icons = self._iconsCollection.getAll()
+        else:
+            icons = self._iconsCollection.getIcons (self._groupsTranslate[self.groupCtrl.GetValue()])
+
+        icons.sort()
+        return icons
+
+
+    def __switchToCurrentGroup (self):
+        icons = self.__getCurrentIcons()
+        self.iconsList.setIconsList (icons)
+
+
+    def _localize (self, groupname):
+        name = _(groupname)
+        if len (name) > 0:
+            name = name[0].upper() + name[1:]
+
+        return name
 
 
 class AppearancePanel (wx.Panel):
