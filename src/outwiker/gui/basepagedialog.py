@@ -261,7 +261,6 @@ class IconPanel (wx.Panel):
 
     def __appendGroups (self):
         self.groupCtrl.Append (_(u"Not in groups"), self._getRootImage())
-        self.groupCtrl.Append (_(u"All"))
 
         self._groupsTranslate = {self._localize(group): group for group in self._iconsCollection.getGroups()}
 
@@ -311,8 +310,6 @@ class IconPanel (wx.Panel):
     def __getCurrentIcons (self):
         if self.groupCtrl.GetSelection() == 0:
             icons = self._iconsCollection.getRoot()
-        elif self.groupCtrl.GetSelection() == 1:
-            icons = self._iconsCollection.getAll()
         else:
             icons = self._iconsCollection.getIcons (self._groupsTranslate[self.groupCtrl.GetValue()])
 
@@ -322,6 +319,7 @@ class IconPanel (wx.Panel):
 
     def __switchToCurrentGroup (self):
         icons = self.__getCurrentIcons()
+        icons.sort (key=os.path.basename)
         self.iconsList.setIconsList (icons)
 
 

@@ -123,7 +123,8 @@ class IconListCtrl (wx.ScrolledWindow):
         for fname in reversed (icons):
             self.__addButton (fname)
 
-        self.addCurrentIcon (self._currentIcon)
+        self.setCurrentIcon (self._currentIcon)
+        self.__selectButton (0)
 
         self.__layout()
         self.Scroll (0, 0)
@@ -177,17 +178,21 @@ class IconListCtrl (wx.ScrolledWindow):
             return selButton.fname
 
 
-    def addCurrentIcon (self, fname):
+    def setCurrentIcon (self, fname):
         """
         Add the icon and make it selected default
         """
         self._currentIcon = fname
         if self._currentIcon is None:
-            self._currentIcon = self.defaultIcon
+            return
 
-        button = self.__addButton (self._currentIcon)
+        self.__addButton (self._currentIcon)
         self.__layout()
+        self.__selectButton (0)
 
+
+    def __selectButton (self, index):
+        button = self.buttons[index]
         currentSelButton = self.__getSelectedButton()
         if currentSelButton is not None:
             currentSelButton.selected = False

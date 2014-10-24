@@ -182,7 +182,7 @@ class EditPageDialog (BasePageDialog):
         # Добавить текущую иконку
         icon = currentPage.icon
         if icon != None:
-            self.iconPanel.iconsList.addCurrentIcon (icon)
+            self.iconPanel.iconsList.setCurrentIcon (icon)
 
 
     def onOk (self, event):
