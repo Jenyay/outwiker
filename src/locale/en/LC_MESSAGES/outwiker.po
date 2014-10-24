@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-24 09:58+0400\n"
+"POT-Creation-Date: 2014-10-24 12:02+0400\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -75,30 +75,34 @@ msgid "folders"
 msgstr "folders"
 
 #: outwiker/core/iconscollection.py:23
+msgid "food"
+msgstr "food"
+
+#: outwiker/core/iconscollection.py:24
 msgid "internet"
 msgstr "internet"
 
-#: outwiker/core/iconscollection.py:24
+#: outwiker/core/iconscollection.py:25
 msgid "money"
 msgstr "money"
 
-#: outwiker/core/iconscollection.py:25
+#: outwiker/core/iconscollection.py:26
 msgid "people"
 msgstr "people"
 
-#: outwiker/core/iconscollection.py:26
+#: outwiker/core/iconscollection.py:27
 msgid "signs"
 msgstr "signs"
 
-#: outwiker/core/iconscollection.py:27
+#: outwiker/core/iconscollection.py:28
 msgid "software"
 msgstr "software"
 
-#: outwiker/core/iconscollection.py:28
+#: outwiker/core/iconscollection.py:29
 msgid "tags"
 msgstr "tags"
 
-#: outwiker/core/iconscollection.py:29
+#: outwiker/core/iconscollection.py:30
 msgid "weather"
 msgstr "weather"
 

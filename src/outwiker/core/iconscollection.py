@@ -20,6 +20,7 @@ class IconsCollection (object):
         _(u"emotions")
         _(u"flags")
         _(u"folders")
+        _(u"food")
         _(u"internet")
         _(u"money")
         _(u"people")
