@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-23 20:11+0400\n"
+"POT-Creation-Date: 2014-10-24 09:58+0400\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -73,26 +73,30 @@ msgid "folders"
 msgstr "папки"
 
 #: outwiker/core/iconscollection.py:23
+msgid "internet"
+msgstr "Интернет"
+
+#: outwiker/core/iconscollection.py:24
 msgid "money"
 msgstr "деньги"
 
-#: outwiker/core/iconscollection.py:24
+#: outwiker/core/iconscollection.py:25
 msgid "people"
 msgstr "люди"
 
-#: outwiker/core/iconscollection.py:25
+#: outwiker/core/iconscollection.py:26
 msgid "signs"
 msgstr "знаки"
 
-#: outwiker/core/iconscollection.py:26
+#: outwiker/core/iconscollection.py:27
 msgid "software"
 msgstr "программы"
 
-#: outwiker/core/iconscollection.py:27
+#: outwiker/core/iconscollection.py:28
 msgid "tags"
 msgstr "ярлыки"
 
-#: outwiker/core/iconscollection.py:28
+#: outwiker/core/iconscollection.py:29
 msgid "weather"
 msgstr "погода"
 
@@ -681,7 +685,7 @@ msgstr "Установить стиль для ветки"
 msgid "Style"
 msgstr "Стиль"
 
-#: outwiker/actions/applystyle.py:122 outwiker/gui/basepagedialog.py:93
+#: outwiker/actions/applystyle.py:122 outwiker/gui/basepagedialog.py:94
 msgid "Default"
 msgstr "По умолчанию"
 
@@ -910,7 +914,7 @@ msgid "Notes"
 msgstr "Заметки"
 
 #: outwiker/gui/toolbars/generaltoolbar.py:25
-#: outwiker/gui/basepagedialog.py:38
+#: outwiker/gui/basepagedialog.py:39
 #: outwiker/gui/preferences/prefdialog.py:127
 #: outwiker/gui/preferences/prefdialog.py:143
 #: outwiker/pages/wiki/wikipage.py:85
@@ -990,40 +994,36 @@ msgstr ""
 msgid "Can't execute file '%s'"
 msgstr "Ошибка запуска файла '%s'"
 
-#: outwiker/gui/basepagedialog.py:39
+#: outwiker/gui/basepagedialog.py:40
 msgid "Icon"
 msgstr "Значок"
 
-#: outwiker/gui/basepagedialog.py:40
+#: outwiker/gui/basepagedialog.py:41
 msgid "Appearance"
 msgstr "Внешний вид"
 
-#: outwiker/gui/basepagedialog.py:55
+#: outwiker/gui/basepagedialog.py:56
 msgid "Create Page"
 msgstr "Создать страницу"
 
-#: outwiker/gui/basepagedialog.py:91
+#: outwiker/gui/basepagedialog.py:92
 msgid "Do not change"
 msgstr "Не изменять"
 
-#: outwiker/gui/basepagedialog.py:208
+#: outwiker/gui/basepagedialog.py:209
 #: outwiker/pages/search/sortstrategies.py:55
 msgid "Title"
 msgstr "Заголовок"
 
-#: outwiker/gui/basepagedialog.py:219
+#: outwiker/gui/basepagedialog.py:220
 msgid "Page type"
 msgstr "Тип страницы"
 
-#: outwiker/gui/basepagedialog.py:262
+#: outwiker/gui/basepagedialog.py:263
 msgid "Not in groups"
 msgstr "Без групп"
 
-#: outwiker/gui/basepagedialog.py:263
-msgid "All"
-msgstr "Все"
-
-#: outwiker/gui/basepagedialog.py:302
+#: outwiker/gui/basepagedialog.py:338
 msgid "Page style"
 msgstr "Стиль страницы"
 
@@ -2044,6 +2044,9 @@ msgstr "# Поиск"
 #: outwiker/pages/text/textpage.py:37
 msgid "Text Page"
 msgstr "Текстовая страница"
+
+#~ msgid "All"
+#~ msgstr "Все"
 
 #~ msgid ""
 #~ "Can't rename page\n"

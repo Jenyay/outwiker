@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-23 20:11+0400\n"
+"POT-Creation-Date: 2014-10-24 09:58+0400\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -75,26 +75,30 @@ msgid "folders"
 msgstr "folders"
 
 #: outwiker/core/iconscollection.py:23
+msgid "internet"
+msgstr "internet"
+
+#: outwiker/core/iconscollection.py:24
 msgid "money"
 msgstr "money"
 
-#: outwiker/core/iconscollection.py:24
+#: outwiker/core/iconscollection.py:25
 msgid "people"
 msgstr "people"
 
-#: outwiker/core/iconscollection.py:25
+#: outwiker/core/iconscollection.py:26
 msgid "signs"
 msgstr "signs"
 
-#: outwiker/core/iconscollection.py:26
+#: outwiker/core/iconscollection.py:27
 msgid "software"
 msgstr "software"
 
-#: outwiker/core/iconscollection.py:27
+#: outwiker/core/iconscollection.py:28
 msgid "tags"
 msgstr "tags"
 
-#: outwiker/core/iconscollection.py:28
+#: outwiker/core/iconscollection.py:29
 msgid "weather"
 msgstr "weather"
 
@@ -680,7 +684,7 @@ msgstr "Set style to branch"
 msgid "Style"
 msgstr "Style"
 
-#: outwiker/actions/applystyle.py:122 outwiker/gui/basepagedialog.py:93
+#: outwiker/actions/applystyle.py:122 outwiker/gui/basepagedialog.py:94
 msgid "Default"
 msgstr "Default"
 
@@ -909,7 +913,7 @@ msgid "Notes"
 msgstr "Notes"
 
 #: outwiker/gui/toolbars/generaltoolbar.py:25
-#: outwiker/gui/basepagedialog.py:38
+#: outwiker/gui/basepagedialog.py:39
 #: outwiker/gui/preferences/prefdialog.py:127
 #: outwiker/gui/preferences/prefdialog.py:143
 #: outwiker/pages/wiki/wikipage.py:85
@@ -989,40 +993,36 @@ msgstr ""
 msgid "Can't execute file '%s'"
 msgstr "Can't execute file '%s'"
 
-#: outwiker/gui/basepagedialog.py:39
+#: outwiker/gui/basepagedialog.py:40
 msgid "Icon"
 msgstr "Icon"
 
-#: outwiker/gui/basepagedialog.py:40
+#: outwiker/gui/basepagedialog.py:41
 msgid "Appearance"
 msgstr "Appearance"
 
-#: outwiker/gui/basepagedialog.py:55
+#: outwiker/gui/basepagedialog.py:56
 msgid "Create Page"
 msgstr "Create Page"
 
-#: outwiker/gui/basepagedialog.py:91
+#: outwiker/gui/basepagedialog.py:92
 msgid "Do not change"
 msgstr "Do not change"
 
-#: outwiker/gui/basepagedialog.py:208
+#: outwiker/gui/basepagedialog.py:209
 #: outwiker/pages/search/sortstrategies.py:55
 msgid "Title"
 msgstr "Title"
 
-#: outwiker/gui/basepagedialog.py:219
+#: outwiker/gui/basepagedialog.py:220
 msgid "Page type"
 msgstr "Page type"
 
-#: outwiker/gui/basepagedialog.py:262
+#: outwiker/gui/basepagedialog.py:263
 msgid "Not in groups"
 msgstr "Not in groups"
 
-#: outwiker/gui/basepagedialog.py:263
-msgid "All"
-msgstr "All"
-
-#: outwiker/gui/basepagedialog.py:302
+#: outwiker/gui/basepagedialog.py:338
 msgid "Page style"
 msgstr "Page style"
 
@@ -2032,6 +2032,9 @@ msgstr "# Search"
 #: outwiker/pages/text/textpage.py:37
 msgid "Text Page"
 msgstr "Text Page"
+
+#~ msgid "All"
+#~ msgstr "All"
 
 #~ msgid ""
 #~ "Can't rename page\n"

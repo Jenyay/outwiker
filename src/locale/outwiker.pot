@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-23 20:11+0400\n"
+"POT-Creation-Date: 2014-10-24 09:58+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -75,26 +75,30 @@ msgid "folders"
 msgstr ""
 
 #: outwiker/core/iconscollection.py:23
-msgid "money"
+msgid "internet"
 msgstr ""
 
 #: outwiker/core/iconscollection.py:24
-msgid "people"
+msgid "money"
 msgstr ""
 
 #: outwiker/core/iconscollection.py:25
-msgid "signs"
+msgid "people"
 msgstr ""
 
 #: outwiker/core/iconscollection.py:26
-msgid "software"
+msgid "signs"
 msgstr ""
 
 #: outwiker/core/iconscollection.py:27
-msgid "tags"
+msgid "software"
 msgstr ""
 
 #: outwiker/core/iconscollection.py:28
+msgid "tags"
+msgstr ""
+
+#: outwiker/core/iconscollection.py:29
 msgid "weather"
 msgstr ""
 
@@ -666,7 +670,7 @@ msgstr ""
 msgid "Style"
 msgstr ""
 
-#: outwiker/actions/applystyle.py:122 outwiker/gui/basepagedialog.py:93
+#: outwiker/actions/applystyle.py:122 outwiker/gui/basepagedialog.py:94
 msgid "Default"
 msgstr ""
 
@@ -895,7 +899,7 @@ msgid "Notes"
 msgstr ""
 
 #: outwiker/gui/toolbars/generaltoolbar.py:25
-#: outwiker/gui/basepagedialog.py:38
+#: outwiker/gui/basepagedialog.py:39
 #: outwiker/gui/preferences/prefdialog.py:127
 #: outwiker/gui/preferences/prefdialog.py:143
 #: outwiker/pages/wiki/wikipage.py:85
@@ -968,40 +972,36 @@ msgstr ""
 msgid "Can't execute file '%s'"
 msgstr ""
 
-#: outwiker/gui/basepagedialog.py:39
+#: outwiker/gui/basepagedialog.py:40
 msgid "Icon"
 msgstr ""
 
-#: outwiker/gui/basepagedialog.py:40
+#: outwiker/gui/basepagedialog.py:41
 msgid "Appearance"
 msgstr ""
 
-#: outwiker/gui/basepagedialog.py:55
+#: outwiker/gui/basepagedialog.py:56
 msgid "Create Page"
 msgstr ""
 
-#: outwiker/gui/basepagedialog.py:91
+#: outwiker/gui/basepagedialog.py:92
 msgid "Do not change"
 msgstr ""
 
-#: outwiker/gui/basepagedialog.py:208
+#: outwiker/gui/basepagedialog.py:209
 #: outwiker/pages/search/sortstrategies.py:55
 msgid "Title"
 msgstr ""
 
-#: outwiker/gui/basepagedialog.py:219
+#: outwiker/gui/basepagedialog.py:220
 msgid "Page type"
 msgstr ""
 
-#: outwiker/gui/basepagedialog.py:262
+#: outwiker/gui/basepagedialog.py:263
 msgid "Not in groups"
 msgstr ""
 
-#: outwiker/gui/basepagedialog.py:263
-msgid "All"
-msgstr ""
-
-#: outwiker/gui/basepagedialog.py:302
+#: outwiker/gui/basepagedialog.py:338
 msgid "Page style"
 msgstr ""
 
