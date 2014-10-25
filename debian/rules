@@ -24,4 +24,4 @@
 # 	dh_pysupport
 
 %:
-	dh $@ 
+	dh $@ --with python2
