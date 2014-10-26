@@ -22,7 +22,8 @@ class IconButton (wx.PyControl):
 
         # Оформление
         self.normalBackground = wx.Colour (255, 255, 255)
-        self.selectedBackground = wx.Colour (200, 200, 200)
+        self.selectedBackground = wx.Colour (160, 190, 255)
+        self.borderColor = wx.Colour (0, 0, 255)
 
         self.SetToolTipString (self.__getToolTipText (fname))
 
@@ -61,6 +62,11 @@ class IconButton (wx.PyControl):
         posy = (ysize - self.image.GetHeight()) / 2
 
         dc.DrawBitmap(self.image, posx, posy, True)
+
+        if self.selected:
+            dc.SetPen (wx.Pen (self.borderColor))
+            dc.SetBrush (wx.TRANSPARENT_BRUSH)
+            dc.DrawRectangle (0, 0, self.Size[0], self.Size[1])
 
 
     @property
