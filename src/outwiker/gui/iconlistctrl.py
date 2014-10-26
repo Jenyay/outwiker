@@ -15,7 +15,15 @@ class IconButton (wx.PyControl):
     def __init__ (self, parent, fname, width, height):
         wx.PyControl.__init__ (self, parent, id=wx.NewId(), style=wx.BORDER_NONE)
         self.fname = fname
+
+        # Disable wxPython message about the invalid picture format
+        wx.Log_EnableLogging(False)
         self.image = wx.Bitmap (fname)
+        wx.Log_EnableLogging(True)
+
+        if not self.image.IsOk():
+            print _(u'Invalid icon file: {}').format (fname)
+            raise ValueError
 
         # Выбрана ли данная иконка?
         self.__selected = False
@@ -51,6 +59,8 @@ class IconButton (wx.PyControl):
 
 
     def __onPaint (self, event):
+        assert self.image.IsOk()
+
         dc = wx.PaintDC (self)
 
         dc.SetBrush (wx.Brush (self.selectedBackground if self.selected else self.normalBackground))
@@ -140,11 +150,13 @@ class IconListCtrl (wx.ScrolledWindow):
         """
         Add the button with icons fname (full path)
         """
-        button = IconButton (self, fname, self.cellWidth, self.cellHeight)
+        try:
+            button = IconButton (self, fname, self.cellWidth, self.cellHeight)
+        except ValueError:
+            return
+
         button.Bind (wx.EVT_LEFT_DOWN, self.__onButtonClick)
         self.buttons.insert (0, button)
-
-        return button
 
 
     def __onButtonClick (self, event):

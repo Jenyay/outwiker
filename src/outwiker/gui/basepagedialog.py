@@ -265,20 +265,28 @@ class IconPanel (wx.Panel):
         self._groupsTranslate = {self._localize(group): group for group in self._iconsCollection.getGroups()}
 
         for groupname in sorted (self._groupsTranslate.keys()):
-            self.groupCtrl.Append (groupname, self._getGroupImage (groupname))
+            image = self._getGroupImage (groupname)
+            if not image.IsNull():
+                self.groupCtrl.Append (groupname, self._getGroupImage (groupname))
 
 
     def _getImageForGroup (self, fname):
         neww = 16
         newh = 18
+
+        wx.Log_EnableLogging(False)
         image = wx.Image (fname)
+        wx.Log_EnableLogging(True)
+
+        if not image.IsOk():
+            print _(u'Invalid icon file: {}').format (fname)
+            return wx.NullBitmap
 
         posx = (neww - image.Width) / 2
         posy = (newh - image.Height) / 2
         image.Resize ((neww, newh), (posx, posy), 255, 255, 255)
-        bitmap = wx.BitmapFromImage (image)
 
-        return bitmap
+        return wx.BitmapFromImage (image)
 
 
     def _getGroupImage (self, groupname):

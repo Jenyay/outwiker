@@ -49,7 +49,6 @@ class OutWiker(wx.App):
 
         from outwiker.gui.mainwindow import MainWindow
 
-        wx.InitAllImageHandlers()
         self.mainWnd = MainWindow(None, -1, "")
         self.SetTopWindow (self.mainWnd)
 
