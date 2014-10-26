@@ -127,7 +127,7 @@ class IconListCtrl (wx.ScrolledWindow):
         for button in self.buttons:
             button.Unbind (wx.EVT_LEFT_DOWN, handler=self.__onButtonClick)
             button.Hide()
-            button.Close()
+            button.Destroy()
 
         self.buttons = []
         self.Scroll (0, 0)
