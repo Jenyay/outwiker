@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-24 09:58+0400\n"
-"PO-Revision-Date: 2014-10-24 11:43+0300\n"
+"POT-Creation-Date: 2014-10-26 16:16+0300\n"
+"PO-Revision-Date: 2014-10-27 09:05+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
@@ -72,30 +72,34 @@ msgid "folders"
 msgstr "папки"
 
 #: outwiker/core/iconscollection.py:23
+msgid "food"
+msgstr "продукти"
+
+#: outwiker/core/iconscollection.py:24
 msgid "internet"
 msgstr "інтернет"
 
-#: outwiker/core/iconscollection.py:24
+#: outwiker/core/iconscollection.py:25
 msgid "money"
 msgstr "гроші"
 
-#: outwiker/core/iconscollection.py:25
+#: outwiker/core/iconscollection.py:26
 msgid "people"
 msgstr "люди"
 
-#: outwiker/core/iconscollection.py:26
+#: outwiker/core/iconscollection.py:27
 msgid "signs"
 msgstr "символи"
 
-#: outwiker/core/iconscollection.py:27
+#: outwiker/core/iconscollection.py:28
 msgid "software"
 msgstr "програми"
 
-#: outwiker/core/iconscollection.py:28
+#: outwiker/core/iconscollection.py:29
 msgid "tags"
 msgstr "мітки"
 
-#: outwiker/core/iconscollection.py:29
+#: outwiker/core/iconscollection.py:30
 msgid "weather"
 msgstr "погода"
 
@@ -1020,7 +1024,11 @@ msgstr "Тип сторінки"
 msgid "Not in groups"
 msgstr "без групи"
 
-#: outwiker/gui/basepagedialog.py:338
+#: outwiker/gui/basepagedialog.py:282 outwiker/gui/iconlistctrl.py:25
+msgid "Invalid icon file: {}"
+msgstr "Помилка в файлі іконки: {}"
+
+#: outwiker/gui/basepagedialog.py:346
 msgid "Page style"
 msgstr "Стиль сторінки"
 
@@ -1028,11 +1036,11 @@ msgstr "Стиль сторінки"
 msgid "Not found"
 msgstr "Не знайдено"
 
-#: outwiker/gui/iconlistctrl.py:45
+#: outwiker/gui/iconlistctrl.py:54
 msgid "Curent icon"
 msgstr "Встановлена іконка"
 
-#: outwiker/gui/iconlistctrl.py:47
+#: outwiker/gui/iconlistctrl.py:56
 msgid "Default icon"
 msgstr "Іконка за замовчуванням"
 
