@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-14 21:32+0400\n"
-"PO-Revision-Date: 2014-10-17 21:57+0300\n"
+"POT-Creation-Date: 2014-10-26 16:16+0300\n"
+"PO-Revision-Date: 2014-10-27 09:06+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -45,6 +45,66 @@ msgid ""
 msgstr ""
 "Il titolo della pagina contiene caratteri non validi per il sistema "
 "operativo Microsoft Windows"
+
+#: outwiker/core/iconscollection.py:16
+msgid "awards"
+msgstr "premi"
+
+#: outwiker/core/iconscollection.py:17
+msgid "battery"
+msgstr "batteria"
+
+#: outwiker/core/iconscollection.py:18
+msgid "books"
+msgstr "libri"
+
+#: outwiker/core/iconscollection.py:19
+msgid "computer"
+msgstr "computer"
+
+#: outwiker/core/iconscollection.py:20
+msgid "emotions"
+msgstr "emozioni"
+
+#: outwiker/core/iconscollection.py:21
+msgid "flags"
+msgstr "bandiere"
+
+#: outwiker/core/iconscollection.py:22
+msgid "folders"
+msgstr "cartelle"
+
+#: outwiker/core/iconscollection.py:23
+msgid "food"
+msgstr "cibo"
+
+#: outwiker/core/iconscollection.py:24
+msgid "internet"
+msgstr "internet"
+
+#: outwiker/core/iconscollection.py:25
+msgid "money"
+msgstr "soldi"
+
+#: outwiker/core/iconscollection.py:26
+msgid "people"
+msgstr "persone"
+
+#: outwiker/core/iconscollection.py:27
+msgid "signs"
+msgstr "segnali"
+
+#: outwiker/core/iconscollection.py:28
+msgid "software"
+msgstr "software"
+
+#: outwiker/core/iconscollection.py:29
+msgid "tags"
+msgstr "tag"
+
+#: outwiker/core/iconscollection.py:30
+msgid "weather"
+msgstr "meteo"
 
 #: outwiker/core/commands.py:54
 msgid "Page is opened as read-only"
@@ -631,7 +691,7 @@ msgstr "Imposta stile al ramo"
 msgid "Style"
 msgstr "Stile"
 
-#: outwiker/actions/applystyle.py:122 outwiker/gui/basepagedialog.py:92
+#: outwiker/actions/applystyle.py:122 outwiker/gui/basepagedialog.py:94
 msgid "Default"
 msgstr "Predefinito"
 
@@ -860,7 +920,7 @@ msgid "Notes"
 msgstr "Note"
 
 #: outwiker/gui/toolbars/generaltoolbar.py:25
-#: outwiker/gui/basepagedialog.py:37
+#: outwiker/gui/basepagedialog.py:39
 #: outwiker/gui/preferences/prefdialog.py:127
 #: outwiker/gui/preferences/prefdialog.py:143
 #: outwiker/pages/wiki/wikipage.py:85
@@ -940,32 +1000,40 @@ msgstr ""
 msgid "Can't execute file '%s'"
 msgstr "Impossibile eseguire il file '%s'"
 
-#: outwiker/gui/basepagedialog.py:38
+#: outwiker/gui/basepagedialog.py:40
 msgid "Icon"
 msgstr "Icona"
 
-#: outwiker/gui/basepagedialog.py:39
+#: outwiker/gui/basepagedialog.py:41
 msgid "Appearance"
 msgstr "Aspetto"
 
-#: outwiker/gui/basepagedialog.py:54
+#: outwiker/gui/basepagedialog.py:56
 msgid "Create Page"
 msgstr "Creare una pagina"
 
-#: outwiker/gui/basepagedialog.py:90
+#: outwiker/gui/basepagedialog.py:92
 msgid "Do not change"
 msgstr "Non cambiare"
 
-#: outwiker/gui/basepagedialog.py:207
+#: outwiker/gui/basepagedialog.py:209
 #: outwiker/pages/search/sortstrategies.py:55
 msgid "Title"
 msgstr "Titolo"
 
-#: outwiker/gui/basepagedialog.py:218
+#: outwiker/gui/basepagedialog.py:220
 msgid "Page type"
 msgstr "Tipo di pagina"
 
-#: outwiker/gui/basepagedialog.py:248
+#: outwiker/gui/basepagedialog.py:263
+msgid "Not in groups"
+msgstr "In nessun gruppo"
+
+#: outwiker/gui/basepagedialog.py:282 outwiker/gui/iconlistctrl.py:25
+msgid "Invalid icon file: {}"
+msgstr "File icona non valido: {}"
+
+#: outwiker/gui/basepagedialog.py:346
 msgid "Page style"
 msgstr "Stile pagina"
 
@@ -973,11 +1041,11 @@ msgstr "Stile pagina"
 msgid "Not found"
 msgstr "Non trovato"
 
-#: outwiker/gui/iconlistctrl.py:45
+#: outwiker/gui/iconlistctrl.py:54
 msgid "Curent icon"
 msgstr "Icona attuale"
 
-#: outwiker/gui/iconlistctrl.py:47
+#: outwiker/gui/iconlistctrl.py:56
 msgid "Default icon"
 msgstr "Icona predefinita"
 

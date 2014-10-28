@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-14 21:32+0400\n"
-"PO-Revision-Date: 2014-10-15 22:47+0300\n"
+"POT-Creation-Date: 2014-10-26 16:16+0300\n"
+"PO-Revision-Date: 2014-10-27 09:05+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
@@ -42,6 +42,66 @@ msgid ""
 "The page title contains invalid characters for Microsoft Windows operating "
 "system"
 msgstr "Заголовок сторінки містить заборонені в Microsoft Windows символи"
+
+#: outwiker/core/iconscollection.py:16
+msgid "awards"
+msgstr "нагороди"
+
+#: outwiker/core/iconscollection.py:17
+msgid "battery"
+msgstr "батарейка"
+
+#: outwiker/core/iconscollection.py:18
+msgid "books"
+msgstr "книжки"
+
+#: outwiker/core/iconscollection.py:19
+msgid "computer"
+msgstr "комп'ютер"
+
+#: outwiker/core/iconscollection.py:20
+msgid "emotions"
+msgstr "емоції"
+
+#: outwiker/core/iconscollection.py:21
+msgid "flags"
+msgstr "прапори"
+
+#: outwiker/core/iconscollection.py:22
+msgid "folders"
+msgstr "папки"
+
+#: outwiker/core/iconscollection.py:23
+msgid "food"
+msgstr "продукти"
+
+#: outwiker/core/iconscollection.py:24
+msgid "internet"
+msgstr "інтернет"
+
+#: outwiker/core/iconscollection.py:25
+msgid "money"
+msgstr "гроші"
+
+#: outwiker/core/iconscollection.py:26
+msgid "people"
+msgstr "люди"
+
+#: outwiker/core/iconscollection.py:27
+msgid "signs"
+msgstr "символи"
+
+#: outwiker/core/iconscollection.py:28
+msgid "software"
+msgstr "програми"
+
+#: outwiker/core/iconscollection.py:29
+msgid "tags"
+msgstr "мітки"
+
+#: outwiker/core/iconscollection.py:30
+msgid "weather"
+msgstr "погода"
 
 #: outwiker/core/commands.py:54
 msgid "Page is opened as read-only"
@@ -626,7 +686,7 @@ msgstr "Встановити стиль для гілки"
 msgid "Style"
 msgstr "Стиль"
 
-#: outwiker/actions/applystyle.py:122 outwiker/gui/basepagedialog.py:92
+#: outwiker/actions/applystyle.py:122 outwiker/gui/basepagedialog.py:94
 msgid "Default"
 msgstr "За замовчуванням"
 
@@ -855,7 +915,7 @@ msgid "Notes"
 msgstr "Нотатки"
 
 #: outwiker/gui/toolbars/generaltoolbar.py:25
-#: outwiker/gui/basepagedialog.py:37
+#: outwiker/gui/basepagedialog.py:39
 #: outwiker/gui/preferences/prefdialog.py:127
 #: outwiker/gui/preferences/prefdialog.py:143
 #: outwiker/pages/wiki/wikipage.py:85
@@ -935,32 +995,40 @@ msgstr ""
 msgid "Can't execute file '%s'"
 msgstr "Помилка виконання файла '%s'"
 
-#: outwiker/gui/basepagedialog.py:38
+#: outwiker/gui/basepagedialog.py:40
 msgid "Icon"
 msgstr "Піктограма"
 
-#: outwiker/gui/basepagedialog.py:39
+#: outwiker/gui/basepagedialog.py:41
 msgid "Appearance"
 msgstr "Зовнішній вигляд"
 
-#: outwiker/gui/basepagedialog.py:54
+#: outwiker/gui/basepagedialog.py:56
 msgid "Create Page"
 msgstr "Створити сторінку"
 
-#: outwiker/gui/basepagedialog.py:90
+#: outwiker/gui/basepagedialog.py:92
 msgid "Do not change"
 msgstr "Не змінювати"
 
-#: outwiker/gui/basepagedialog.py:207
+#: outwiker/gui/basepagedialog.py:209
 #: outwiker/pages/search/sortstrategies.py:55
 msgid "Title"
 msgstr "Заголовок"
 
-#: outwiker/gui/basepagedialog.py:218
+#: outwiker/gui/basepagedialog.py:220
 msgid "Page type"
 msgstr "Тип сторінки"
 
-#: outwiker/gui/basepagedialog.py:248
+#: outwiker/gui/basepagedialog.py:263
+msgid "Not in groups"
+msgstr "без групи"
+
+#: outwiker/gui/basepagedialog.py:282 outwiker/gui/iconlistctrl.py:25
+msgid "Invalid icon file: {}"
+msgstr "Помилка в файлі іконки: {}"
+
+#: outwiker/gui/basepagedialog.py:346
 msgid "Page style"
 msgstr "Стиль сторінки"
 
@@ -968,11 +1036,11 @@ msgstr "Стиль сторінки"
 msgid "Not found"
 msgstr "Не знайдено"
 
-#: outwiker/gui/iconlistctrl.py:45
+#: outwiker/gui/iconlistctrl.py:54
 msgid "Curent icon"
 msgstr "Встановлена іконка"
 
-#: outwiker/gui/iconlistctrl.py:47
+#: outwiker/gui/iconlistctrl.py:56
 msgid "Default icon"
 msgstr "Іконка за замовчуванням"
 

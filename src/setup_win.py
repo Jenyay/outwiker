@@ -27,6 +27,7 @@ includefiles = ['images',
                 'version.txt',
                 'tools',
                 'styles',
+                'iconset',
                 'plugins']
 
 includes = []

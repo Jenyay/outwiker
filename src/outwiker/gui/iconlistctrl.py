@@ -5,24 +5,33 @@ import os.path
 import wx
 import wx.grid
 
-import outwiker.core.system
+from outwiker.core.system import getImagesDir
 
 
 class IconButton (wx.PyControl):
     """
-    Кнопка с одной иконкой
+    Button with single icons
     """
     def __init__ (self, parent, fname, width, height):
         wx.PyControl.__init__ (self, parent, id=wx.NewId(), style=wx.BORDER_NONE)
         self.fname = fname
+
+        # Disable wxPython message about the invalid picture format
+        wx.Log_EnableLogging(False)
         self.image = wx.Bitmap (fname)
+        wx.Log_EnableLogging(True)
+
+        if not self.image.IsOk():
+            print _(u'Invalid icon file: {}').format (fname)
+            raise ValueError
 
         # Выбрана ли данная иконка?
         self.__selected = False
 
         # Оформление
         self.normalBackground = wx.Colour (255, 255, 255)
-        self.selectedBackground = wx.Colour (200, 200, 200)
+        self.selectedBackground = wx.Colour (160, 190, 255)
+        self.borderColor = wx.Colour (0, 0, 255)
 
         self.SetToolTipString (self.__getToolTipText (fname))
 
@@ -32,7 +41,7 @@ class IconButton (wx.PyControl):
 
     def __getToolTipText (self, fname):
         """
-        Возвращет текст всплывающей подсказки для кнопки по имени файла
+        Return the text of the tooltip with file name
         """
         text = os.path.basename (fname)
 
@@ -50,6 +59,8 @@ class IconButton (wx.PyControl):
 
 
     def __onPaint (self, event):
+        assert self.image.IsOk()
+
         dc = wx.PaintDC (self)
 
         dc.SetBrush (wx.Brush (self.selectedBackground if self.selected else self.normalBackground))
@@ -61,6 +72,11 @@ class IconButton (wx.PyControl):
         posy = (ysize - self.image.GetHeight()) / 2
 
         dc.DrawBitmap(self.image, posx, posy, True)
+
+        if self.selected:
+            dc.SetPen (wx.Pen (self.borderColor))
+            dc.SetBrush (wx.TRANSPARENT_BRUSH)
+            dc.DrawRectangle (0, 0, self.Size[0], self.Size[1])
 
 
     @property
@@ -77,7 +93,7 @@ class IconButton (wx.PyControl):
 
 class IconListCtrl (wx.ScrolledWindow):
     """
-    Список иконок
+    Control with icons for pages
     """
     def __init__ (self, parent):
         wx.ScrolledWindow.__init__ (self, parent, style = wx.BORDER_THEME)
@@ -86,59 +102,61 @@ class IconListCtrl (wx.ScrolledWindow):
         self.cellHeight = 32
         self.margin = 1
 
+        # Path to current page icon
+        self._currentIcon = None
+
         self.SetScrollRate (0, 0)
         self.SetBackgroundColour (wx.Colour (255, 255, 255))
 
         # Список картинок, которые хранятся в окне
         self.buttons = []
 
-        self.imagesDir = outwiker.core.system.getImagesDir()
-        self.iconspath = os.path.join (self.imagesDir, "iconset")
-        self.defaultIcon = os.path.join (self.imagesDir, "page.png")
+        self.defaultIcon = os.path.join (getImagesDir(), "page.png")
 
-        # Иконка по умолчанию
-        self.defalultImage = u"_page.png"
-
-        self.__updateList()
-
-        self.Bind (wx.EVT_SIZE, self.onSize)
+        self.Bind (wx.EVT_SIZE, self.__onSize)
 
 
-    def onSize (self, event):
+    def __onSize (self, event):
         self.__layout()
 
 
-    def __updateList (self):
+    def __clearIconButtons (self):
+        """
+        Remove old buttons with icons.
+        """
         for button in self.buttons:
-            button.Unbind (wx.EVT_LEFT_DOWN, self.__onButtonClick)
+            button.Unbind (wx.EVT_LEFT_DOWN, handler=self.__onButtonClick)
             button.Hide()
-            button.Close()
+            button.Destroy()
 
         self.buttons = []
+        self.Scroll (0, 0)
 
-        files = [fname for fname in os.listdir (self.iconspath)]
-        files.sort(reverse=True)
 
-        for fname in files:
-            fullpath = os.path.join (self.iconspath, fname)
-            button = self.__addButton (fullpath)
+    def setIconsList (self, icons):
+        self.__clearIconButtons()
 
-            if fname == self.defalultImage:
-                button.selected = True
+        for fname in reversed (icons):
+            self.__addButton (fname)
+
+        self.setCurrentIcon (self._currentIcon)
+        self.__selectButton (0)
 
         self.__layout()
-        self.__selectedButton.SetFocus()
+        self.Scroll (0, 0)
 
 
     def __addButton (self, fname):
         """
-        Добавить кнопку с картинкой fname (полный путь)
+        Add the button with icons fname (full path)
         """
-        button = IconButton (self, fname, self.cellWidth, self.cellHeight)
+        try:
+            button = IconButton (self, fname, self.cellWidth, self.cellHeight)
+        except ValueError:
+            return
+
         button.Bind (wx.EVT_LEFT_DOWN, self.__onButtonClick)
         self.buttons.insert (0, button)
-
-        return button
 
 
     def __onButtonClick (self, event):
@@ -154,9 +172,7 @@ class IconListCtrl (wx.ScrolledWindow):
     def __layout (self):
         currx = 0
         curry = 0
-
         rowcount = 1
-
         windowWidth = self.GetClientSizeTuple()[0]
 
         for button in self.buttons:
@@ -175,26 +191,37 @@ class IconListCtrl (wx.ScrolledWindow):
 
     @property
     def icon (self):
-        selButton = self.__selectedButton
+        selButton = self.__getSelectedButton()
         if selButton is not None:
             return selButton.fname
 
 
-    def addCurrentIcon (self, fname):
+    def setCurrentIcon (self, fname):
         """
-        Добавить иконку и сделать ее выбранной по умолчанию
+        Add the icon and make it selected default
         """
-        assert fname is not None
+        self._currentIcon = fname
+        if self._currentIcon is None:
+            return
 
-        button = self.__addButton (fname)
+        self.__addButton (self._currentIcon)
         self.__layout()
-        self.__selectedButton.selected = False
+        self.__selectButton (0)
+
+
+    def __selectButton (self, index):
+        button = self.buttons[index]
+        currentSelButton = self.__getSelectedButton()
+        if currentSelButton is not None:
+            currentSelButton.selected = False
+
         button.selected = True
         button.SetFocus()
 
 
-    @property
-    def __selectedButton (self):
+    def __getSelectedButton (self):
         for button in self.buttons:
             if button.selected:
                 return button
+
+        return None
