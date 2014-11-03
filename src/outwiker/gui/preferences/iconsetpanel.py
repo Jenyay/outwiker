@@ -4,8 +4,9 @@ import os.path
 
 import wx
 
-from outwiker.core.system import getImagesDir
+from outwiker.core.system import getImagesDir, getIconsDirList
 from outwiker.gui.iconlistctrl import IconListCtrl
+from outwiker.core.iconscollection import IconsCollection
 
 
 class IconsetPanel (wx.Panel):
@@ -20,8 +21,11 @@ class IconsetPanel (wx.Panel):
         self.ADD_ICONS = wx.NewId()
         self.REMOVE_ICONS = wx.NewId()
         self.SET_COVER = wx.NewId()
+        self.REMOVE_COVER = wx.NewId()
 
         self.__createGuiElements()
+        self._groups.Bind (wx.EVT_TREE_SEL_CHANGED, handler=self.__onGroupSelect)
+        self.__updateGroups()
 
 
     def __fillGroupsToolbar (self):
@@ -78,11 +82,20 @@ class IconsetPanel (wx.Panel):
 
         self._iconsToolbar.AddLabelTool(
             self.SET_COVER,
-            _(u"Set icon as group's cover"),
+            _(u"Set icon as group cover"),
             wx.Bitmap(os.path.join (imagesDir, "picture.png"), wx.BITMAP_TYPE_ANY),
             wx.NullBitmap,
             wx.ITEM_NORMAL,
-            _(u"Set icon as group's cover"),
+            _(u"Set icon as group cover"),
+            "")
+
+        self._iconsToolbar.AddLabelTool(
+            self.REMOVE_COVER,
+            _(u"Clear group cover"),
+            wx.Bitmap(os.path.join (imagesDir, "picture_delete.png"), wx.BITMAP_TYPE_ANY),
+            wx.NullBitmap,
+            wx.ITEM_NORMAL,
+            _(u"Clear group cover"),
             "")
 
 
@@ -99,8 +112,11 @@ class IconsetPanel (wx.Panel):
 
         self._groups = wx.TreeCtrl (
             self,
-            style = wx.TR_EDIT_LABELS | wx.TR_LINES_AT_ROOT | wx.TR_SINGLE | wx.SUNKEN_BORDER)
+            style = wx.TR_HAS_BUTTONS | wx.TR_EDIT_LABELS | wx.SUNKEN_BORDER)
         self._groups.SetMinSize ((200, -1))
+
+        self._imagelist = wx.ImageList(16, 16)
+        self._groups.AssignImageList (self._imagelist)
 
         # Toolbar for groups
         self._groupsToolbar = wx.ToolBar (
@@ -144,4 +160,56 @@ class IconsetPanel (wx.Panel):
 
 
     def LoadState (self):
+        # self.__updateGroups ()
         pass
+
+
+    def __updateGroups (self):
+        self._groups.DeleteAllItems()
+        self._imagelist.RemoveAll()
+
+        collection = self.__getIconsCollection()
+
+        # Add the root element ("Not in group")
+        rootimage = collection.getRootCover()
+        imageIndex = -1 if rootimage is None else self._imagelist.Add (wx.Bitmap (rootimage))
+        rootItem = self._groups.AddRoot (_(u"Not in groups"), imageIndex)
+
+        # Add child groups
+        for group in collection.getGroups():
+            image = collection.getGroupCover (group)
+            imageIndex = -1 if image is None else self._imagelist.Add (wx.Bitmap (image))
+
+            self._groups.AppendItem (rootItem, group, imageIndex, data = wx.TreeItemData(group))
+
+        self._groups.Expand (rootItem)
+        self._groups.SelectItem (rootItem)
+        self.__onGroupSelect (None)
+
+
+    def __getIconsCollection (self):
+        iconsdir = getIconsDirList()[-1]
+        return IconsCollection ([iconsdir])
+
+
+    def __showIcons (self, groupname):
+        """
+        Show icons from group groupname.
+        If groupname is None then icons from root will be showned
+        """
+        self._iconsList.clear()
+        collection = self.__getIconsCollection()
+        icons = collection.getRoot() if groupname is None else collection.getIcons (groupname)
+        self._iconsList.setIconsList (icons)
+
+
+    def __onGroupSelect (self, event):
+        """
+        User select other group
+        """
+        selItem = self._groups.GetSelection()
+        if not selItem.IsOk():
+            return
+
+        group = self._groups.GetItemData (selItem).GetData()
+        self.__showIcons (group)

@@ -6,7 +6,7 @@ import os.path
 
 class IconsCollection (object):
     """
-    Class for the wortking with groups of the icons
+    Class for the working with groups of the icons
     """
     def __init__ (self, iconsDirList):
         """

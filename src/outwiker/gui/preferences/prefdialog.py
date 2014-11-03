@@ -162,7 +162,7 @@ class PrefDialog(wx.Dialog):
 
     def __createIconsetPage (self):
         self.__iconsetPage = IconsetPanel (self.__treeBook)
-        self.__treeBook.AddPage (self.__iconsetPage, _(u"Iconset"))
+        self.__treeBook.AddPage (self.__iconsetPage, _(u"User's iconset"))
 
 
     def __createPages (self):

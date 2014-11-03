@@ -120,7 +120,7 @@ class IconListCtrl (wx.ScrolledWindow):
         self.__layout()
 
 
-    def __clearIconButtons (self):
+    def clear (self):
         """
         Remove old buttons with icons.
         """
@@ -134,13 +134,14 @@ class IconListCtrl (wx.ScrolledWindow):
 
 
     def setIconsList (self, icons):
-        self.__clearIconButtons()
+        self.clear()
 
         for fname in reversed (icons):
             self.__addButton (fname)
 
         self.setCurrentIcon (self._currentIcon)
-        self.__selectButton (0)
+        if len (self.buttons) != 0:
+            self.__selectButton (0)
 
         self.__layout()
         self.Scroll (0, 0)
