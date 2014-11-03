@@ -23,7 +23,6 @@ class EditorPanel(wx.Panel):
         self.__config = EditorConfig (Application.config)
         self.__createGuiElements (self.__config)
 
-        self.__set_properties()
         self.__do_layout()
 
         self.LoadState()
@@ -55,13 +54,6 @@ class EditorPanel(wx.Panel):
         # Цвет фона
         self.backColorLabel = wx.StaticText (self, label = _(u"Background color"))
         self.backColorPicker = wx.ColourPickerCtrl(self, style=wx.CLRP_SHOW_LABEL)
-
-
-    def __set_properties(self):
-        self.DEFAULT_WIDTH = 400
-        self.DEFAULT_HEIGHT = 250
-
-        self.SetSize((self.DEFAULT_WIDTH, self.DEFAULT_HEIGHT))
 
 
     def __do_layout(self):
