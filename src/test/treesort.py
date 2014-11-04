@@ -3,7 +3,7 @@
 import unittest
 
 from outwiker.core.application import Application
-from test.utils import removeWiki
+from test.utils import removeDir
 from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
 
@@ -17,7 +17,7 @@ class TreeSortTest(unittest.TestCase):
 
         # Здесь будет создаваться вики
         self.path = u"../test/testwiki"
-        removeWiki (self.path)
+        removeDir (self.path)
 
         self.wikiroot = WikiDocument.create (self.path)
 

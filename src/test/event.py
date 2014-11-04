@@ -10,7 +10,7 @@ from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.core.event import Event
 from outwiker.core.application import Application
-from test.utils import removeWiki
+from test.utils import removeDir
 from outwiker.core.events import PAGE_UPDATE_CONTENT, PAGE_UPDATE_TAGS, PAGE_UPDATE_ICON
 
 
@@ -158,7 +158,7 @@ class EventsTest (unittest.TestCase):
 
     def tearDown(self):
         Application.wikiroot = None
-        removeWiki (self.path)
+        removeDir (self.path)
 
     def pageUpdate (self, sender, **kwargs):
         self.isPageUpdate = True
@@ -203,7 +203,7 @@ class EventsTest (unittest.TestCase):
         Application.onTreeUpdate += self.treeUpdate
         Application.onPageCreate += self.pageCreate
 
-        removeWiki (self.path)
+        removeDir (self.path)
 
         self.assertFalse(self.isTreeUpdate)
         self.assertFalse(self.isPageUpdate)
@@ -252,7 +252,7 @@ class EventsTest (unittest.TestCase):
         Application.onTreeUpdate += self.treeUpdate
         Application.onPageCreate += self.pageCreate
 
-        removeWiki (self.path)
+        removeDir (self.path)
 
         self.assertFalse(self.isTreeUpdate)
         self.assertFalse(self.isPageUpdate)
@@ -280,7 +280,7 @@ class EventsTest (unittest.TestCase):
         """
         Application.onPageUpdate += self.pageUpdate
 
-        removeWiki (self.path)
+        removeDir (self.path)
 
         self.assertFalse(self.isTreeUpdate)
         self.assertFalse(self.isPageUpdate)
@@ -309,7 +309,7 @@ class EventsTest (unittest.TestCase):
         """
         Application.onPageUpdate += self.pageUpdate
 
-        removeWiki (self.path)
+        removeDir (self.path)
 
         self.assertFalse(self.isTreeUpdate)
         self.assertFalse(self.isPageUpdate)
@@ -334,7 +334,7 @@ class EventsTest (unittest.TestCase):
         """
         Application.onPageUpdate += self.pageUpdate
 
-        removeWiki (self.path)
+        removeDir (self.path)
 
         self.assertFalse(self.isTreeUpdate)
         self.assertFalse(self.isPageUpdate)
@@ -362,7 +362,7 @@ class EventsTest (unittest.TestCase):
         """
         Application.onPageUpdate += self.pageUpdate
 
-        removeWiki (self.path)
+        removeDir (self.path)
 
         self.assertFalse(self.isTreeUpdate)
         self.assertFalse(self.isPageUpdate)
@@ -388,7 +388,7 @@ class EventsTest (unittest.TestCase):
         Application.onPageUpdate += self.pageUpdate
         Application.onTreeUpdate += self.treeUpdate
 
-        removeWiki (self.path)
+        removeDir (self.path)
 
         self.assertFalse(self.isTreeUpdate)
         self.assertFalse(self.isPageUpdate)
@@ -422,7 +422,7 @@ class EventsTest (unittest.TestCase):
         Application.onPageUpdate += self.pageUpdate
         Application.onTreeUpdate += self.treeUpdate
 
-        removeWiki (self.path)
+        removeDir (self.path)
 
         self.assertFalse(self.isTreeUpdate)
         self.assertFalse(self.isPageUpdate)
@@ -449,7 +449,7 @@ class EventsTest (unittest.TestCase):
     def testPageSelectCreate (self):
         Application.onPageSelect += self.pageSelect
 
-        removeWiki (self.path)
+        removeDir (self.path)
 
         rootwiki = WikiDocument.create (self.path)
         TextPageFactory().create (rootwiki, u"Страница 1", [])
@@ -480,7 +480,7 @@ class EventsTest (unittest.TestCase):
     def testPageSelectCreateNoEvent (self):
         Application.onPageSelect += self.pageSelect
 
-        removeWiki (self.path)
+        removeDir (self.path)
 
         rootwiki = WikiDocument.create (self.path)
         TextPageFactory().create (rootwiki, u"Страница 1", [])
@@ -500,7 +500,7 @@ class EventsTest (unittest.TestCase):
     def testPageSelectLoad (self):
         Application.onPageSelect += self.pageSelect
 
-        removeWiki (self.path)
+        removeDir (self.path)
 
         rootwiki = WikiDocument.create (self.path)
         TextPageFactory().create (rootwiki, u"Страница 1", [])

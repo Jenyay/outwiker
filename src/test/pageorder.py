@@ -10,7 +10,7 @@ from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.core.application import Application
 from outwiker.core.config import PageConfig
 from outwiker.core.config import IntegerOption
-from test.utils import removeWiki
+from test.utils import removeDir
 
 
 class PageOrderTest (unittest.TestCase):
@@ -24,7 +24,7 @@ class PageOrderTest (unittest.TestCase):
 
         # Здесь будет создаваться вики
         self.path = u"../test/testwiki"
-        removeWiki (self.path)
+        removeDir (self.path)
 
         self.wikiroot = WikiDocument.create (self.path)
         Application.onPageOrderChange += self.onPageOrder
@@ -34,7 +34,7 @@ class PageOrderTest (unittest.TestCase):
     def tearDown(self):
         Application.onPageOrderChange -= self.onPageOrder
         Application.wikiroot = None
-        removeWiki (self.path)
+        removeDir (self.path)
 
 
     def onPageOrder (self, sender):

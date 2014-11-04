@@ -6,7 +6,7 @@ from basemainwnd import BaseMainWndTest
 from outwiker.core.application import Application
 from outwiker.core.commands import createNewWiki
 from outwiker.gui.tester import Tester
-from test.utils import removeWiki
+from test.utils import removeDir
 
 
 class NewWikiGuiTest (BaseMainWndTest):
@@ -15,7 +15,7 @@ class NewWikiGuiTest (BaseMainWndTest):
     """
     def setUp (self):
         super (NewWikiGuiTest, self).setUp()
-        removeWiki (self.path)
+        removeDir (self.path)
 
 
     def _selectFile (self, dialog):

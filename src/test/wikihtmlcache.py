@@ -15,7 +15,7 @@ from outwiker.pages.wiki.htmlcache import HtmlCache
 from outwiker.pages.wiki.emptycontent import EmptyContent
 from outwiker.pages.wiki.wikiconfig import WikiConfig
 
-from utils import removeWiki
+from utils import removeDir
 
 
 class WikiHtmlCacheTest (unittest.TestCase):
@@ -58,7 +58,7 @@ class WikiHtmlCacheTest (unittest.TestCase):
     def __createWiki (self):
         # Здесь будет создаваться вики
         self.path = u"../test/testwiki"
-        removeWiki (self.path)
+        removeDir (self.path)
 
         self.wikiroot = WikiDocument.create (self.path)
 
@@ -68,7 +68,7 @@ class WikiHtmlCacheTest (unittest.TestCase):
 
     def tearDown(self):
         self.__setDefaultConfig()
-        removeWiki (self.path)
+        removeDir (self.path)
 
 
     def testCache1 (self):

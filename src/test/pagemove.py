@@ -13,7 +13,7 @@ from outwiker.core.tree import WikiDocument
 from outwiker.core.attachment import Attachment
 
 from outwiker.pages.text.textpage import TextPageFactory
-from test.utils import removeWiki
+from test.utils import removeDir
 
 
 class MoveTest (unittest.TestCase):
@@ -27,7 +27,7 @@ class MoveTest (unittest.TestCase):
 
         # Здесь будет создаваться вики
         self.path = u"../test/testwiki"
-        removeWiki (self.path)
+        removeDir (self.path)
 
         self.wiki = WikiDocument.create (self.path)
 
@@ -44,7 +44,7 @@ class MoveTest (unittest.TestCase):
 
 
     def tearDown(self):
-        removeWiki (self.path)
+        removeDir (self.path)
         Application.wikiroot = None
 
 

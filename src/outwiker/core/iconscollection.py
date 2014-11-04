@@ -12,6 +12,8 @@ class IconsCollection (object):
         """
         iconsDirList - list of the root directories with icons
         """
+        self._iconsDirList = iconsDirList
+
         # Folder names for localization
         _(u"awards")
         _(u"battery")

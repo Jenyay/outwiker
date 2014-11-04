@@ -17,7 +17,7 @@ from outwiker.pages.text.textpage import TextPageFactory, TextWikiPage
 from outwiker.pages.html.htmlpage import HtmlPageFactory, HtmlWikiPage
 from outwiker.pages.search.searchpage import SearchPageFactory, SearchWikiPage
 from outwiker.pages.wiki.wikipage import WikiPageFactory, WikiWikiPage
-from test.utils import removeWiki
+from test.utils import removeDir
 
 
 class TextPageCreationTest(unittest.TestCase):
@@ -27,7 +27,7 @@ class TextPageCreationTest(unittest.TestCase):
     def setUp(self):
         # Здесь будет создаваться вики
         self.path = u"../test/testwiki"
-        removeWiki (self.path)
+        removeDir (self.path)
         self.eventcount = 0
 
         self.wikiroot = WikiDocument.create (self.path)
@@ -66,7 +66,7 @@ class TextPageCreationTest(unittest.TestCase):
         if self.wikiroot[u"Страница 2"] is not None:
             os.chmod (self._getConfigPath (self.wikiroot[u"Страница 2"]), stat.S_IRUSR | stat.S_IXUSR | stat.S_IWUSR)
 
-        removeWiki (self.path)
+        removeDir (self.path)
 
 
     def onPageUpdate (self, page, **kwargs):

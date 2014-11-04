@@ -8,7 +8,7 @@ from outwiker.pages.wiki.parser.commandtest import TestCommand, ExceptionCommand
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parser.command import Command
 from outwiker.pages.wiki.parserfactory import ParserFactory
-from test.utils import removeWiki
+from test.utils import removeDir
 
 
 class WikiCommandsTest (unittest.TestCase):
@@ -25,7 +25,7 @@ class WikiCommandsTest (unittest.TestCase):
     def __createWiki (self):
         # Здесь будет создаваться вики
         self.path = u"../test/testwiki"
-        removeWiki (self.path)
+        removeDir (self.path)
 
         self.wikiroot = WikiDocument.create (self.path)
 
@@ -34,7 +34,7 @@ class WikiCommandsTest (unittest.TestCase):
 
 
     def tearDown(self):
-        removeWiki (self.path)
+        removeDir (self.path)
 
 
     def testParamsParsing1 (self):

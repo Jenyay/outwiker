@@ -8,7 +8,7 @@ from outwiker.core.attachment import Attachment
 from outwiker.core.tree import WikiDocument
 from outwiker.pages.wiki.parser.pagethumbmaker import PageThumbmaker
 from outwiker.pages.text.textpage import TextPageFactory
-from utils import removeWiki, getImageSize
+from utils import removeDir, getImageSize
 
 
 class PageThumbmakerTest (unittest.TestCase):
@@ -17,7 +17,7 @@ class PageThumbmakerTest (unittest.TestCase):
 
         # Здесь будет создаваться вики
         self.path = u"../test/testwiki"
-        removeWiki (self.path)
+        removeDir (self.path)
 
         self.wikiroot = WikiDocument.create (self.path)
 
@@ -30,7 +30,7 @@ class PageThumbmakerTest (unittest.TestCase):
 
 
     def tearDown(self):
-        removeWiki (self.path)
+        removeDir (self.path)
 
 
     def testThumbByWidthJpeg (self):

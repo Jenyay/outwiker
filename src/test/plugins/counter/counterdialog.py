@@ -8,7 +8,7 @@ from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 
 from test.guitests.basemainwnd import BaseMainWndTest
-from test.utils import removeWiki
+from test.utils import removeDir
 from outwiker.gui.tester import Tester
 
 
@@ -36,7 +36,7 @@ class CounterDialogTest (BaseMainWndTest):
 
     def tearDown(self):
         Application.wikiroot = None
-        removeWiki (self.path)
+        removeDir (self.path)
         self._dlg.Destroy()
         self._loader.clear()
 
@@ -46,7 +46,7 @@ class CounterDialogTest (BaseMainWndTest):
     def __createWiki (self):
         # Здесь будет создаваться вики
         self.path = u"../test/testwiki"
-        removeWiki (self.path)
+        removeDir (self.path)
 
         self.wikiroot = WikiDocument.create (self.path)
 

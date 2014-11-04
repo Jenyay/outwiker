@@ -8,7 +8,7 @@ from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
-from test.utils import removeWiki
+from test.utils import removeDir
 
 
 class WikiIncludeCommandTest (unittest.TestCase):
@@ -25,7 +25,7 @@ class WikiIncludeCommandTest (unittest.TestCase):
     def __createWiki (self):
         # Здесь будет создаваться вики
         self.path = u"../test/testwiki"
-        removeWiki (self.path)
+        removeDir (self.path)
 
         self.wikiroot = WikiDocument.create (self.path)
 
@@ -43,7 +43,7 @@ class WikiIncludeCommandTest (unittest.TestCase):
 
 
     def tearDown(self):
-        removeWiki (self.path)
+        removeDir (self.path)
 
 
     def testIncludeCommand1 (self):

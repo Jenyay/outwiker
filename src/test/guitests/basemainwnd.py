@@ -11,7 +11,7 @@ from outwiker.gui.guiconfig import GeneralGuiConfig, MainWindowConfig
 from outwiker.gui.actioncontroller import ActionController
 from outwiker.gui.tester import Tester
 from outwiker.core.tree import WikiDocument
-from test.utils import removeWiki
+from test.utils import removeDir
 
 
 class BaseMainWndTest(unittest.TestCase):
@@ -46,7 +46,7 @@ class BaseMainWndTest(unittest.TestCase):
         registerActions (Application)
         self.wnd.createGui()
 
-        removeWiki (self.path)
+        removeDir (self.path)
         self.wikiroot = WikiDocument.create (self.path)
 
         Tester.dialogTester.clear()
@@ -62,4 +62,4 @@ class BaseMainWndTest(unittest.TestCase):
         Application.mainWindow = None
         Application.selectedPage = None
         Application.wikiroot = None
-        removeWiki (self.path)
+        removeDir (self.path)

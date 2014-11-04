@@ -5,7 +5,7 @@ import os.path
 
 from outwiker.core.search import Searcher, AllTagsSearchStrategy, AnyTagSearchStrategy
 from outwiker.pages.search.searchpage import GlobalSearch
-from test.utils import removeWiki
+from test.utils import removeDir
 from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.core.attachment import Attachment
@@ -15,7 +15,7 @@ class SearcherTest(unittest.TestCase):
     def setUp(self):
         # Здесь будет создаваться вики
         self.path = u"../test/testwiki"
-        removeWiki (self.path)
+        removeDir (self.path)
 
         self.wikiroot = WikiDocument.create (self.path)
 
@@ -94,7 +94,7 @@ class SearcherTest(unittest.TestCase):
 
     def teatDown (self):
         if os.path.exists (self.path):
-            removeWiki (self.path)
+            removeDir (self.path)
 
 
     def testSearchAttach3 (self):
@@ -288,7 +288,7 @@ class SearchPageTest (unittest.TestCase):
     def setUp(self):
         # Здесь будет создаваться вики
         self.path = u"../test/testwiki"
-        removeWiki (self.path)
+        removeDir (self.path)
 
         self.wikiroot = WikiDocument.create (self.path)
 

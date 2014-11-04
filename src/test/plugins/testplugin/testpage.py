@@ -6,7 +6,7 @@ from outwiker.core.application import Application
 from outwiker.core.factoryselector import FactorySelector
 from outwiker.pages.text.textpage import TextPageFactory
 
-from test.utils import removeWiki
+from test.utils import removeDir
 from test.guitests.basemainwnd import BaseMainWndTest
 
 
@@ -25,7 +25,7 @@ class TestPageTest (BaseMainWndTest):
     def tearDown (self):
         BaseMainWndTest.tearDown (self)
         Application.wikiroot = None
-        removeWiki (self.path)
+        removeDir (self.path)
         self.loader.clear()
 
 

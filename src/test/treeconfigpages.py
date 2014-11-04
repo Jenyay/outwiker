@@ -6,7 +6,7 @@ import unittest
 from outwiker.core.tree import WikiDocument
 from outwiker.core.config import StringOption
 from outwiker.pages.text.textpage import TextPageFactory
-from .utils import removeWiki
+from .utils import removeDir
 
 
 class ConfigPagesTest (unittest.TestCase):
@@ -16,7 +16,7 @@ class ConfigPagesTest (unittest.TestCase):
     def setUp(self):
         # Здесь будет создаваться вики
         self.path = u"../test/testwiki"
-        removeWiki (self.path)
+        removeDir (self.path)
 
         self.wikiroot = WikiDocument.create (self.path)
 

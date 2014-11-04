@@ -23,7 +23,7 @@ from outwiker.pages.wiki.parser.tokentex import TexFactory
 from outwiker.pages.wiki.parser.tokencommand import CommandFactory
 from outwiker.pages.wiki.parser.tokentext import TextFactory
 
-from test.utils import removeWiki
+from test.utils import removeDir
 
 from outwiker.core.tree import WikiDocument
 from outwiker.core.attachment import Attachment
@@ -53,7 +53,7 @@ class TokenNamesTest (unittest.TestCase):
         self.path = u"../test/testwiki"
         self.filesPath = u"../test/samplefiles/"
 
-        removeWiki (self.path)
+        removeDir (self.path)
 
         self.wikiroot = WikiDocument.create (self.path)
         WikiPageFactory().create (self.wikiroot, u"Страница 2", [])
@@ -403,7 +403,7 @@ class TokenNamesTest (unittest.TestCase):
         validname = u"attach"
 
         self._checkToken (testtoken, text, validname)
-        removeWiki (self.path)
+        removeDir (self.path)
 
 
     def testImageAttachment (self):
@@ -413,4 +413,4 @@ class TokenNamesTest (unittest.TestCase):
         validname = u"attach"
 
         self._checkToken (testtoken, text, validname)
-        removeWiki (self.path)
+        removeDir (self.path)

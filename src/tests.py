@@ -101,7 +101,6 @@ if __name__ == '__main__':
     from test.htmlpages import HtmlPagesTest
     from test.wikilinkcreator import WikiLinkCreatorTest
 
-    from test.utils import removeWiki
     from test.event import EventTest, EventsTest
     from test.config import ConfigTest, ConfigOptionsTest, TrayConfigTest, EditorConfigTest
     from test.recent import RecentWikiTest

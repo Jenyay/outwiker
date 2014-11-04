@@ -5,7 +5,7 @@ import unittest
 
 from outwiker.core.tree import WikiDocument
 from outwiker.pages.wiki.wikipage import WikiPageFactory
-from test.utils import removeWiki
+from test.utils import removeDir
 from outwiker.core.application import Application
 from outwiker.pages.wiki.parser.commandchildlist import ChildListCommand
 from outwiker.pages.wiki.parserfactory import ParserFactory
@@ -25,7 +25,7 @@ class WikiChildListCommandTest (unittest.TestCase):
     def __createWiki (self):
         # Здесь будет создаваться вики
         self.path = u"../test/testwiki"
-        removeWiki (self.path)
+        removeDir (self.path)
 
         self.wikiroot = WikiDocument.create (self.path)
 
@@ -42,7 +42,7 @@ class WikiChildListCommandTest (unittest.TestCase):
 
 
     def tearDown(self):
-        removeWiki (self.path)
+        removeDir (self.path)
 
 
     def test1 (self):
