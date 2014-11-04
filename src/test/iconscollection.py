@@ -1,11 +1,23 @@
 # -*- coding: UTF-8 -*-
 
+import os
 import unittest
 
 from outwiker.core.iconscollection import IconsCollection
+from test.utils import removeDir
 
 
 class IconsCollectionTest (unittest.TestCase):
+    def setUp (self):
+        self.tempDir1 = u"../test/testIcons1"
+        self.tempDir2 = u"../test/testIcons2"
+
+
+    def tearDown (self):
+        removeDir (self.tempDir1)
+        removeDir (self.tempDir2)
+
+
     def testEmpty (self):
         collection = IconsCollection ([u"../test/icons/Без иконок"])
 
@@ -114,3 +126,124 @@ class IconsCollectionTest (unittest.TestCase):
         self.assertEqual (len (collection.getIcons (u"Группа 1")), 3)
         self.assertEqual (len (collection.getIcons (u"Группа 2")), 4)
         self.assertIsNotNone (collection.getRootCover())
+
+
+    def testAddGroup_01 (self):
+        os.mkdir (self.tempDir1)
+        os.mkdir (self.tempDir2)
+
+        collection = IconsCollection ([self.tempDir1, self.tempDir2])
+        self.assertEqual (collection.getGroups(), [])
+
+        collection.addGroup (u"Новая группа")
+        self.assertEqual (collection.getGroups(), [u"Новая группа"])
+
+        newcollection1 = IconsCollection ([self.tempDir1])
+        newcollection2 = IconsCollection ([self.tempDir2])
+
+        self.assertEqual (newcollection1.getGroups(), [])
+        self.assertEqual (newcollection2.getGroups(), [u"Новая группа"])
+
+
+    def testAddGroup_02 (self):
+        os.mkdir (self.tempDir1)
+        os.mkdir (self.tempDir2)
+
+        collection = IconsCollection ([self.tempDir1, self.tempDir2])
+        self.assertEqual (collection.getGroups(), [])
+
+        collection.addGroup (u"Новая группа", -1)
+        self.assertEqual (collection.getGroups(), [u"Новая группа"])
+
+        newcollection1 = IconsCollection ([self.tempDir1])
+        newcollection2 = IconsCollection ([self.tempDir2])
+
+        self.assertEqual (newcollection1.getGroups(), [])
+        self.assertEqual (newcollection2.getGroups(), [u"Новая группа"])
+
+
+    def testAddGroup_03 (self):
+        os.mkdir (self.tempDir1)
+        os.mkdir (self.tempDir2)
+
+        collection = IconsCollection ([self.tempDir1, self.tempDir2])
+        self.assertEqual (collection.getGroups(), [])
+
+        collection.addGroup (u"Новая группа", 1)
+        self.assertEqual (collection.getGroups(), [u"Новая группа"])
+
+        newcollection1 = IconsCollection ([self.tempDir1])
+        newcollection2 = IconsCollection ([self.tempDir2])
+
+        self.assertEqual (newcollection1.getGroups(), [])
+        self.assertEqual (newcollection2.getGroups(), [u"Новая группа"])
+
+
+    def testAddGroup_04 (self):
+        os.mkdir (self.tempDir1)
+        os.mkdir (self.tempDir2)
+
+        collection = IconsCollection ([self.tempDir1, self.tempDir2])
+        self.assertEqual (collection.getGroups(), [])
+
+        collection.addGroup (u"Новая группа", 0)
+        self.assertEqual (collection.getGroups(), [u"Новая группа"])
+
+        newcollection1 = IconsCollection ([self.tempDir1])
+        newcollection2 = IconsCollection ([self.tempDir2])
+
+        self.assertEqual (newcollection1.getGroups(), [u"Новая группа"])
+        self.assertEqual (newcollection2.getGroups(), [])
+
+
+    def testAddGroup_05_invalid (self):
+        os.mkdir (self.tempDir1)
+        collection = IconsCollection ([self.tempDir1])
+
+        self.assertRaises (ValueError, collection.addGroup, u"Абырвалг\\Абырвалг")
+        self.assertRaises (ValueError, collection.addGroup, u"Абырвалг/Абырвалг")
+
+
+    def testAddGroup_06 (self):
+        os.mkdir (self.tempDir1)
+
+        collection = IconsCollection ([self.tempDir1])
+        self.assertEqual (collection.getGroups(), [])
+
+        collection.addGroup (u"Новая группа", 0)
+        self.assertEqual (collection.getGroups(), [u"Новая группа"])
+
+        newcollection = IconsCollection ([self.tempDir1])
+        self.assertEqual (newcollection.getGroups(), [u"Новая группа"])
+
+
+    def testAddGroup_07 (self):
+        os.mkdir (self.tempDir1)
+
+        collection = IconsCollection ([self.tempDir1])
+        self.assertEqual (collection.getGroups(), [])
+
+        collection.addGroup (u"Новая группа", 0)
+        collection.addGroup (u"Новая группа", 0)
+        self.assertEqual (collection.getGroups(), [u"Новая группа"])
+
+        newcollection = IconsCollection ([self.tempDir1])
+        self.assertEqual (newcollection.getGroups(), [u"Новая группа"])
+
+
+    def testAddGroup_08 (self):
+        os.mkdir (self.tempDir1)
+        os.mkdir (self.tempDir2)
+
+        collection = IconsCollection ([self.tempDir1, self.tempDir2])
+        self.assertEqual (collection.getGroups(), [])
+
+        collection.addGroup (u"Новая группа", 0)
+        collection.addGroup (u"Новая группа", 1)
+        self.assertEqual (collection.getGroups(), [u"Новая группа"])
+
+        newcollection1 = IconsCollection ([self.tempDir1])
+        newcollection2 = IconsCollection ([self.tempDir2])
+
+        self.assertEqual (newcollection1.getGroups(), [u"Новая группа"])
+        self.assertEqual (newcollection2.getGroups(), [u"Новая группа"])

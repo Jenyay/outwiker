@@ -159,3 +159,22 @@ class IconsCollection (object):
         Raise KeyError if group not exists
         """
         return self._groups[group]
+
+
+    def addGroup (self, groupname, dirindex=-1):
+        """
+        Add new group (and directory) of the icons. dirindex - item index in _iconsDirList.
+        If directory exists the method does nothing.
+        The method can raise ValueError, IOError and SystemError exceptions.
+        """
+        if "\\" in groupname or "/" in groupname:
+            raise ValueError
+
+        parent = self._iconsDirList[dirindex]
+        newdir = os.path.join (parent, groupname)
+
+        if os.path.exists (newdir):
+            return
+
+        os.mkdir (newdir)
+        self._groups[groupname] = []
