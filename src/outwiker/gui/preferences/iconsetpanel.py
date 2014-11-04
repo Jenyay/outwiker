@@ -25,6 +25,8 @@ class IconsetPanel (wx.Panel):
 
         self.__createGuiElements()
         self._groups.Bind (wx.EVT_TREE_SEL_CHANGED, handler=self.__onGroupSelect)
+        self.Bind(wx.EVT_MENU, handler=self.__onAddGroup, id=self.ADD_GROUP)
+
         self.__updateGroups()
 
 
@@ -160,7 +162,6 @@ class IconsetPanel (wx.Panel):
 
 
     def LoadState (self):
-        # self.__updateGroups ()
         pass
 
 
@@ -213,3 +214,47 @@ class IconsetPanel (wx.Panel):
 
         group = self._groups.GetItemData (selItem).GetData()
         self.__showIcons (group)
+
+
+    def __onAddGroup (self, event):
+        collection = self.__getIconsCollection()
+        newGroupName = self.__getNewGroupName (collection.getGroups())
+        collection.addGroup (newGroupName)
+        self.__updateGroups()
+        self.__selectGroupItem (newGroupName)
+
+
+    def __selectGroupItem (self, groupname):
+        """
+        Select group in _groups tree. If groupname is None then select root element.
+        If groupname not exists then method does nothing.
+        """
+        rootItem = self._groups.GetRootItem()
+        assert rootItem.IsOk()
+
+        if groupname is None:
+            self._groups.SelectItem (rootItem)
+
+        nextGroupItem, cookie = self._groups.GetFirstChild (rootItem)
+
+        while nextGroupItem.IsOk():
+            if self._groups.GetItemData(nextGroupItem).GetData() == groupname:
+                self._groups.SelectItem (nextGroupItem)
+                break
+
+            nextGroupItem, cookie = self._groups.GetNextChild (rootItem, cookie)
+
+
+    def __getNewGroupName (self, groups):
+        """
+        Return name for new group
+        """
+        newGroupTemplate = _(u"New group{}")
+        newGroupName = newGroupTemplate.format (u"")
+        if newGroupName in groups:
+            # Generate new group name in format "New group (1)", "New group (2)" etc
+            index = 0
+            while newGroupName in groups:
+                index += 1
+                newGroupName = newGroupTemplate.format (u" ({})".format (index))
+        return newGroupName
