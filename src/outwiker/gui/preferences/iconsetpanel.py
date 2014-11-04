@@ -6,7 +6,8 @@ import wx
 
 from outwiker.core.system import getImagesDir, getIconsDirList
 from outwiker.gui.iconlistctrl import IconListCtrl
-from outwiker.core.iconscollection import IconsCollection
+from outwiker.core.iconscollection import IconsCollection, DuplicateGroupError
+from outwiker.core.commands import MessageBox
 
 
 class IconsetPanel (wx.Panel):
@@ -24,8 +25,13 @@ class IconsetPanel (wx.Panel):
         self.REMOVE_COVER = wx.NewId()
 
         self.__createGuiElements()
+        
         self._groups.Bind (wx.EVT_TREE_SEL_CHANGED, handler=self.__onGroupSelect)
+        self._groups.Bind (wx.EVT_TREE_BEGIN_LABEL_EDIT, self.__onBeginLabelEdit)
+        self._groups.Bind (wx.EVT_TREE_END_LABEL_EDIT, self.__onEndLabelEdit)
+
         self.Bind(wx.EVT_MENU, handler=self.__onAddGroup, id=self.ADD_GROUP)
+        self.Bind(wx.EVT_MENU, handler=self.__onRenameGroup, id=self.RENAME_GROUP)
 
         self.__updateGroups()
 
@@ -219,9 +225,15 @@ class IconsetPanel (wx.Panel):
     def __onAddGroup (self, event):
         collection = self.__getIconsCollection()
         newGroupName = self.__getNewGroupName (collection.getGroups())
-        collection.addGroup (newGroupName)
-        self.__updateGroups()
-        self.__selectGroupItem (newGroupName)
+        try:
+            collection.addGroup (newGroupName)
+            self.__updateGroups()
+            self.__selectGroupItem (newGroupName)
+        except (IOError, SystemError):
+            MessageBox (
+                _(u"Can't create directory for icons group"),
+                _(u"Error"),
+                wx.OK | wx.ICON_ERROR)
 
 
     def __selectGroupItem (self, groupname):
@@ -258,3 +270,56 @@ class IconsetPanel (wx.Panel):
                 index += 1
                 newGroupName = newGroupTemplate.format (u" ({})".format (index))
         return newGroupName
+
+
+    def __onEndLabelEdit (self, event):
+        if event.IsEditCancelled():
+            return
+
+        event.Veto()
+        oldGroupName = self._groups.GetItemData (event.GetItem()).GetData()
+        newGroupName = event.GetLabel().strip()
+
+        assert oldGroupName is not None
+
+        collection = self.__getIconsCollection()
+
+        try:
+            collection.renameGroup (oldGroupName, newGroupName)
+        except (IOError, SystemError):
+            MessageBox (
+                _(u"Can't rename directory for icons group"),
+                _(u"Error"),
+                wx.OK | wx.ICON_ERROR)
+            return
+        except DuplicateGroupError:
+            MessageBox (
+                _(u'Group with name "{}" exists already').format (newGroupName),
+                _(u"Error"),
+                wx.OK | wx.ICON_ERROR)
+            return
+        except ValueError:
+            MessageBox (
+                _(u'Invalid group name "{}"').format (newGroupName),
+                _(u"Error"),
+                wx.OK | wx.ICON_ERROR)
+            return
+
+        self.__updateGroups()
+        self.__selectGroupItem (newGroupName)
+
+
+    def __onBeginLabelEdit (self, event):
+        item = event.GetItem()
+        group = self._groups.GetItemData (item).GetData()
+        if group is None:
+            # Root element
+            event.Veto()
+
+
+    def __onRenameGroup (self, event):
+        selItem = self._groups.GetSelection()
+        rootItem = self._groups.GetRootItem()
+
+        if selItem.IsOk() and selItem != rootItem:
+            self._groups.EditLabel (selItem)

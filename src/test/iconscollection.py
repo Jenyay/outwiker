@@ -3,7 +3,7 @@
 import os
 import unittest
 
-from outwiker.core.iconscollection import IconsCollection
+from outwiker.core.iconscollection import IconsCollection, DuplicateGroupError
 from test.utils import removeDir
 
 
@@ -202,6 +202,7 @@ class IconsCollectionTest (unittest.TestCase):
 
         self.assertRaises (ValueError, collection.addGroup, u"Абырвалг\\Абырвалг")
         self.assertRaises (ValueError, collection.addGroup, u"Абырвалг/Абырвалг")
+        self.assertRaises (ValueError, collection.addGroup, u"")
 
 
     def testAddGroup_06 (self):
@@ -247,3 +248,155 @@ class IconsCollectionTest (unittest.TestCase):
 
         self.assertEqual (newcollection1.getGroups(), [u"Новая группа"])
         self.assertEqual (newcollection2.getGroups(), [u"Новая группа"])
+
+
+    def testRenameGroup_01 (self):
+        os.mkdir (self.tempDir1)
+        os.mkdir (self.tempDir2)
+
+        collection = IconsCollection ([self.tempDir1, self.tempDir2])
+        collection.addGroup (u"Новая группа", -1)
+        self.assertEqual (collection.getGroups(), [u"Новая группа"])
+
+        collection.renameGroup (u"Новая группа", u"Переименованная группа")
+        self.assertEqual (collection.getGroups(), [u"Переименованная группа"])
+
+        newcollection1 = IconsCollection ([self.tempDir1])
+        newcollection2 = IconsCollection ([self.tempDir2])
+        self.assertEqual (newcollection1.getGroups(), [])
+        self.assertEqual (newcollection2.getGroups(), [u"Переименованная группа"])
+
+
+    def testRenameGroup_02 (self):
+        os.mkdir (self.tempDir1)
+        os.mkdir (self.tempDir2)
+
+        collection = IconsCollection ([self.tempDir1, self.tempDir2])
+        collection.addGroup (u"Новая группа", -1)
+        self.assertEqual (collection.getGroups(), [u"Новая группа"])
+
+        collection.renameGroup (u"Новая группа", u"Переименованная группа", -1)
+        self.assertEqual (collection.getGroups(), [u"Переименованная группа"])
+
+        newcollection1 = IconsCollection ([self.tempDir1])
+        newcollection2 = IconsCollection ([self.tempDir2])
+        self.assertEqual (newcollection1.getGroups(), [])
+        self.assertEqual (newcollection2.getGroups(), [u"Переименованная группа"])
+
+
+    def testRenameGroup_03 (self):
+        os.mkdir (self.tempDir1)
+        os.mkdir (self.tempDir2)
+
+        collection = IconsCollection ([self.tempDir1, self.tempDir2])
+        collection.addGroup (u"Новая группа", 0)
+        self.assertEqual (collection.getGroups(), [u"Новая группа"])
+
+        collection.renameGroup (u"Новая группа", u"Переименованная группа", 0)
+        self.assertEqual (collection.getGroups(), [u"Переименованная группа"])
+
+        newcollection1 = IconsCollection ([self.tempDir1])
+        newcollection2 = IconsCollection ([self.tempDir2])
+        self.assertEqual (newcollection1.getGroups(), [u"Переименованная группа"])
+        self.assertEqual (newcollection2.getGroups(), [])
+
+
+    def testRenameGroup_04_invalid (self):
+        os.mkdir (self.tempDir1)
+        os.mkdir (self.tempDir2)
+
+        collection = IconsCollection ([self.tempDir1, self.tempDir2])
+        collection.addGroup (u"Новая группа", 0)
+
+        self.assertRaises (
+            ValueError,
+            collection.renameGroup,
+            u"Новая группа",
+            u"",
+            0)
+
+        self.assertRaises (
+            ValueError,
+            collection.renameGroup,
+            u"Новая группа",
+            u"Абырвалг/Абырвалг",
+            0)
+
+        self.assertRaises (
+            ValueError,
+            collection.renameGroup,
+            u"Новая группа",
+            u"Абырвалг\\Абырвалг",
+            0)
+
+
+    def testRenameGroup_05_invalid (self):
+        os.mkdir (self.tempDir1)
+        os.mkdir (self.tempDir2)
+
+        collection = IconsCollection ([self.tempDir1, self.tempDir2])
+        collection.addGroup (u"Новая группа", 0)
+
+        self.assertRaises (
+            KeyError,
+            collection.renameGroup,
+            u"Новая группа",
+            u"Абырвалг",
+            1)
+
+        self.assertRaises (
+            KeyError,
+            collection.renameGroup,
+            u"Абырвалг",
+            u"123",
+            0)
+
+
+    def testRenameGroup_06_self (self):
+        os.mkdir (self.tempDir1)
+        os.mkdir (self.tempDir2)
+
+        collection = IconsCollection ([self.tempDir1, self.tempDir2])
+        collection.addGroup (u"Новая группа", 0)
+
+        collection.renameGroup (u"Новая группа", u"Новая группа", 0)
+        self.assertEqual (collection.getGroups(), [u"Новая группа"])
+
+        newcollection = IconsCollection ([self.tempDir1, self.tempDir2])
+        self.assertEqual (newcollection.getGroups(), [u"Новая группа"])
+
+
+    def testRenameGroup_07_invalid (self):
+        os.mkdir (self.tempDir1)
+        os.mkdir (self.tempDir2)
+
+        collection = IconsCollection ([self.tempDir1, self.tempDir2])
+        collection.addGroup (u"Новая группа", 0)
+        collection.addGroup (u"Абырвалг", 0)
+
+        self.assertRaises (
+            DuplicateGroupError,
+            collection.renameGroup,
+            u"Новая группа",
+            u"Абырвалг",
+            0)
+
+
+    def testRenameGroup_08 (self):
+        os.mkdir (self.tempDir1)
+        os.mkdir (self.tempDir2)
+
+        collection = IconsCollection ([self.tempDir1, self.tempDir2])
+        collection.addGroup (u"Новая группа", 0)
+        collection.addGroup (u"Другая группа", 1)
+
+        collection.renameGroup (u"Новая группа", u"Другая группа", 0)
+        self.assertEqual (collection.getGroups(), [u"Другая группа"])
+
+        newcollection = IconsCollection ([self.tempDir1, self.tempDir2])
+        self.assertEqual (newcollection.getGroups(), [u"Другая группа"])
+
+        newcollection1 = IconsCollection ([self.tempDir1])
+        newcollection2 = IconsCollection ([self.tempDir2])
+        self.assertEqual (newcollection1.getGroups(), [u"Другая группа"])
+        self.assertEqual (newcollection2.getGroups(), [u"Другая группа"])

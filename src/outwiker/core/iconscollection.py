@@ -4,6 +4,10 @@ import os
 import os.path
 
 
+class DuplicateGroupError (BaseException):
+    pass
+
+
 class IconsCollection (object):
     """
     Class for the working with groups of the icons
@@ -167,7 +171,7 @@ class IconsCollection (object):
         If directory exists the method does nothing.
         The method can raise ValueError, IOError and SystemError exceptions.
         """
-        if "\\" in groupname or "/" in groupname:
+        if not self.__checkGroupName (groupname):
             raise ValueError
 
         parent = self._iconsDirList[dirindex]
@@ -178,3 +182,33 @@ class IconsCollection (object):
 
         os.mkdir (newdir)
         self._groups[groupname] = []
+
+
+    def renameGroup (self, groupname, newgroupname, dirindex=-1):
+        """
+        dirindex - item index in _iconsDirList.
+        The method can raise DuplicateGroupError, KeyError, ValueError, IOError and SystemError exceptions.
+        """
+        if groupname == newgroupname:
+            return
+
+        if not self.__checkGroupName (newgroupname):
+            raise ValueError
+
+        oldGroupPath = os.path.join (self._iconsDirList[dirindex], groupname)
+        newGroupPath = os.path.join (self._iconsDirList[dirindex], newgroupname)
+
+        if not os.path.exists (oldGroupPath):
+            raise KeyError
+
+        if os.path.exists (newGroupPath):
+            raise DuplicateGroupError
+
+        os.rename (oldGroupPath, newGroupPath)
+        self._scanIconsDirs (self._iconsDirList)
+
+
+    def __checkGroupName (self, groupname):
+        return (len (groupname) != 0 and
+                "\\" not in groupname and
+                "/" not in groupname)
