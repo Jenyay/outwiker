@@ -8,6 +8,7 @@ from outwiker.core.system import getImagesDir, getIconsDirList
 from outwiker.gui.iconlistctrl import IconListCtrl
 from outwiker.core.iconscollection import IconsCollection, DuplicateGroupError
 from outwiker.core.commands import MessageBox
+from outwiker.gui.testeddialog import TestedFileDialog
 
 
 class IconsetPanel (wx.Panel):
@@ -33,6 +34,8 @@ class IconsetPanel (wx.Panel):
         self.Bind(wx.EVT_MENU, handler=self.__onAddGroup, id=self.ADD_GROUP)
         self.Bind(wx.EVT_MENU, handler=self.__onRenameGroup, id=self.RENAME_GROUP)
         self.Bind(wx.EVT_MENU, handler=self.__onRemoveGroup, id=self.REMOVE_GROUP)
+
+        self.Bind(wx.EVT_MENU, handler=self.__onAddIcons, id=self.ADD_ICONS)
 
         self.__updateGroups()
 
@@ -349,3 +352,24 @@ class IconsetPanel (wx.Panel):
                     wx.OK | wx.ICON_ERROR)
                 return
             self.__updateGroups()
+
+
+    def __onAddIcons (self, event):
+        item = self._groups.GetSelection ()
+        group = self._groups.GetItemData (item).GetData()
+
+        wildcard = u"{images} (*.png; *.jpg; *.jpeg; *.gif; *.bmp)|*.png; *.jpg; *.jpeg; *.gif; *.bmp|*.png|*.png|*.jpg; *.jpeg|*.jpg;*.jpeg|*.gif|*.gif|*.bmp|*.bmp|{all} (*.*)|*.*".format (images = _(u"All image files"),
+            all = _(u"All files"))
+
+        style = wx.FD_OPEN | wx.FD_MULTIPLE | wx.FD_FILE_MUST_EXIST
+
+        with TestedFileDialog (
+                self,
+                _(u"Select images"),
+                wildcard = wildcard,
+                style = style) as dlg:
+            if dlg.ShowModal() == wx.ID_OK:
+                collection = self.__getIconsCollection()
+                collection.addIcons (group, dlg.GetPaths())
+                self.__updateGroups()
+                self.__selectGroupItem (group)

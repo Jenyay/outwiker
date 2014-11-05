@@ -257,7 +257,10 @@ class IconsCollection (object):
         newIconName = self._getNewIconName (grouppath, iconname)
         newIconPath = os.path.join (grouppath, newIconName)
 
-        shutil.copy (iconpath, newIconPath)
+        try:
+            shutil.copy (iconpath, newIconPath)
+        except (IOError, ValueError):
+            pass
 
 
     def _getNewIconName (self, grouppath, fname):
