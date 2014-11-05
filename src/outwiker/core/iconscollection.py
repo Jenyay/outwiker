@@ -4,6 +4,8 @@ import os
 import os.path
 import shutil
 
+from outwiker.core.commands import isImage
+
 
 class DuplicateGroupError (BaseException):
     pass
@@ -144,7 +146,7 @@ class IconsCollection (object):
         return result
 
 
-    def getRoot (self):
+    def getRootIcons (self):
         """
         Return icons from all roots
         """
@@ -172,7 +174,7 @@ class IconsCollection (object):
         If directory exists the method does nothing.
         The method can raise ValueError, IOError and SystemError exceptions.
         """
-        if not self.__checkGroupName (groupname):
+        if not self._checkGroupName (groupname):
             raise ValueError
 
         parent = self._iconsDirList[dirindex]
@@ -193,7 +195,7 @@ class IconsCollection (object):
         if groupname == newgroupname:
             return
 
-        if not self.__checkGroupName (newgroupname):
+        if not self._checkGroupName (newgroupname):
             raise ValueError
 
         oldGroupPath = os.path.join (self._iconsDirList[dirindex], groupname)
@@ -223,7 +225,62 @@ class IconsCollection (object):
         self._scanIconsDirs (self._iconsDirList)
 
 
-    def __checkGroupName (self, groupname):
+    def addIcons (self, groupname, files, dirindex=-1):
+        """
+        Add icons into group.
+        files - list of full paths to icon files
+        """
+        if groupname is None:
+            groupname = u""
+
+        grouppath = os.path.join (self._iconsDirList[dirindex], groupname)
+
+        if not os.path.exists (grouppath):
+            raise KeyError
+
+        for iconpath in files:
+            self._addIconToDir (grouppath, iconpath)
+
+        self._scanIconsDirs (self._iconsDirList)
+
+
+    def _addIconToDir (self, grouppath, iconpath):
+        """
+        Add single icon with full path iconpath into folder groupPath.
+        Not images is skipped.
+        """
+        if (not isImage (iconpath) or
+                not os.path.exists (iconpath)):
+            return
+
+        iconname = os.path.basename (iconpath)
+        newIconName = self._getNewIconName (grouppath, iconname)
+        newIconPath = os.path.join (grouppath, newIconName)
+
+        shutil.copy (iconpath, newIconPath)
+
+
+    def _getNewIconName (self, grouppath, fname):
+        """
+        Return unique name for icon on basis of fname.
+        fname is basename of the full path to icon
+        """
+        newname = fname
+        dotPos = fname.rfind (u".")
+
+        # Here we get only for picture "fname".
+        assert dotPos != -1
+
+        index = 1
+
+        while os.path.exists (os.path.join (grouppath, newname)):
+            newname = fname[:dotPos] + u"_({})".format (index) + fname[dotPos:]
+            index += 1
+
+        return newname
+
+
+    def _checkGroupName (self, groupname):
         return (len (groupname) != 0 and
                 "\\" not in groupname and
                 "/" not in groupname)

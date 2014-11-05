@@ -11,6 +11,7 @@ class IconsCollectionTest (unittest.TestCase):
     def setUp (self):
         self.tempDir1 = u"../test/testIcons1"
         self.tempDir2 = u"../test/testIcons2"
+        self.imagesDir = u"../test/images"
 
 
     def tearDown (self):
@@ -22,7 +23,7 @@ class IconsCollectionTest (unittest.TestCase):
         collection = IconsCollection ([u"../test/icons/Без иконок"])
 
         self.assertEqual (collection.getAll(), [])
-        self.assertEqual (collection.getRoot(), [])
+        self.assertEqual (collection.getRootIcons(), [])
         self.assertEqual (collection.getGroups(), [])
         self.assertRaises (KeyError, collection.getIcons, u"Группа")
         self.assertRaises (KeyError, collection.getGroupCover, u"Группа")
@@ -32,7 +33,7 @@ class IconsCollectionTest (unittest.TestCase):
     def testSingleRoot (self):
         collection = IconsCollection ([u"../test/icons/Без групп"])
 
-        self.assertEqual (len (collection.getRoot()), 4)
+        self.assertEqual (len (collection.getRootIcons()), 4)
         self.assertEqual (len (collection.getAll()), 4)
         self.assertEqual (collection.getGroups(), [])
         self.assertTrue (collection.getRootCover().endswith (u"__cover.png"))
@@ -41,7 +42,7 @@ class IconsCollectionTest (unittest.TestCase):
     def testSingleRoot_clone (self):
         collection = IconsCollection ([u"../test/icons/Без групп", u"../test/icons/Без групп"])
 
-        self.assertEqual (len (collection.getRoot()), 8)
+        self.assertEqual (len (collection.getRootIcons()), 8)
         self.assertEqual (len (collection.getAll()), 8)
         self.assertEqual (collection.getGroups(), [])
         self.assertTrue (collection.getRootCover().endswith (u"__cover.png"))
@@ -50,7 +51,7 @@ class IconsCollectionTest (unittest.TestCase):
     def testGroups_01 (self):
         collection = IconsCollection ([u"../test/icons/Иконки и группы"])
 
-        self.assertEqual (len (collection.getRoot()), 4)
+        self.assertEqual (len (collection.getRootIcons()), 4)
         self.assertEqual (len (collection.getAll()), 11)
         self.assertEqual (collection.getGroups(), [u"Группа 1", u"Группа 2"])
         self.assertEqual (len (collection.getIcons (u"Группа 1")), 3)
@@ -63,7 +64,7 @@ class IconsCollectionTest (unittest.TestCase):
     def testGroups_02 (self):
         collection = IconsCollection ([u"../test/icons/Иконки и группы", u"../test/icons/Иконки и группы"])
 
-        self.assertEqual (len (collection.getRoot()), 8)
+        self.assertEqual (len (collection.getRootIcons()), 8)
         self.assertEqual (len (collection.getAll()), 22)
         self.assertEqual (collection.getGroups(), [u"Группа 1", u"Группа 2"])
         self.assertEqual (len (collection.getIcons (u"Группа 1")), 6)
@@ -74,7 +75,7 @@ class IconsCollectionTest (unittest.TestCase):
     def testGroups_03 (self):
         collection = IconsCollection ([u"../test/icons/Только группы"])
 
-        self.assertEqual (len (collection.getRoot()), 0)
+        self.assertEqual (len (collection.getRootIcons()), 0)
         self.assertEqual (len (collection.getAll()), 7)
         self.assertEqual (collection.getGroups(), [u"Группа 3", u"Группа 4"])
         self.assertEqual (len (collection.getIcons (u"Группа 3")), 3)
@@ -85,7 +86,7 @@ class IconsCollectionTest (unittest.TestCase):
     def testGroups_04 (self):
         collection = IconsCollection ([u"../test/icons/Без групп", u"../test/icons/Иконки и группы"])
 
-        self.assertEqual (len (collection.getRoot()), 8)
+        self.assertEqual (len (collection.getRootIcons()), 8)
         self.assertEqual (len (collection.getAll()), 15)
         self.assertEqual (collection.getGroups(), [u"Группа 1", u"Группа 2"])
         self.assertEqual (len (collection.getIcons (u"Группа 1")), 3)
@@ -96,7 +97,7 @@ class IconsCollectionTest (unittest.TestCase):
     def testGroups_05 (self):
         collection = IconsCollection ([u"../test/icons/Без групп", u"../test/icons/Только группы"])
 
-        self.assertEqual (len (collection.getRoot()), 4)
+        self.assertEqual (len (collection.getRootIcons()), 4)
         self.assertEqual (len (collection.getAll()), 11)
         self.assertEqual (collection.getGroups(), [u"Группа 3", u"Группа 4"])
         self.assertEqual (len (collection.getIcons (u"Группа 3")), 3)
@@ -107,7 +108,7 @@ class IconsCollectionTest (unittest.TestCase):
     def testGroups_06 (self):
         collection = IconsCollection ([u"../test/icons/Иконки и группы", u"../test/icons/Только группы"])
 
-        self.assertEqual (len (collection.getRoot()), 4)
+        self.assertEqual (len (collection.getRootIcons()), 4)
         self.assertEqual (len (collection.getAll()), 18)
         self.assertEqual (collection.getGroups(), [u"Группа 1", u"Группа 2", u"Группа 3", u"Группа 4"])
         self.assertEqual (len (collection.getIcons (u"Группа 1")), 3)
@@ -120,7 +121,7 @@ class IconsCollectionTest (unittest.TestCase):
     def testGroups_07 (self):
         collection = IconsCollection ([u"../test/icons/Иконки и группы", u"../test/icons/Без групп"])
 
-        self.assertEqual (len (collection.getRoot()), 8)
+        self.assertEqual (len (collection.getRootIcons()), 8)
         self.assertEqual (len (collection.getAll()), 15)
         self.assertEqual (collection.getGroups(), [u"Группа 1", u"Группа 2"])
         self.assertEqual (len (collection.getIcons (u"Группа 1")), 3)
@@ -504,3 +505,211 @@ class IconsCollectionTest (unittest.TestCase):
             KeyError,
             collection.removeGroup,
             u"")
+
+
+    def testAddIcons_01_empty (self):
+        files = []
+        fullPaths = [os.path.join (self.imagesDir, fname) for fname in files]
+
+        os.mkdir (self.tempDir1)
+        collection = IconsCollection ([self.tempDir1])
+        collection.addGroup (u"Новая группа", 0)
+
+        collection.addIcons (u"Новая группа", fullPaths)
+        self.assertEqual (collection.getIcons (u"Новая группа"), [])
+
+
+    def testAddIcons_02_empty (self):
+        files = []
+        fullPaths = [os.path.join (self.imagesDir, fname) for fname in files]
+
+        os.mkdir (self.tempDir1)
+        collection = IconsCollection ([self.tempDir1])
+        collection.addGroup (u"Новая группа", 0)
+
+        collection.addIcons (u"Новая группа", fullPaths, 0)
+        self.assertEqual (collection.getIcons (u"Новая группа"), [])
+
+
+    def testAddIcons_03_empty (self):
+        files = []
+        fullPaths = [os.path.join (self.imagesDir, fname) for fname in files]
+
+        os.mkdir (self.tempDir1)
+        collection = IconsCollection ([self.tempDir1])
+
+        collection.addIcons (u"", fullPaths, 0)
+        self.assertEqual (collection.getRootIcons (), [])
+
+
+    def testAddIcons_04_invalid (self):
+        files = [u"new.png"]
+        fullPaths = [os.path.join (self.imagesDir, fname) for fname in files]
+
+        os.mkdir (self.tempDir1)
+        collection = IconsCollection ([self.tempDir1])
+
+        self.assertRaises (
+            KeyError,
+            collection.addIcons,
+            u"Другая группа",
+            fullPaths,
+            0)
+
+
+    def testAddIcons_05 (self):
+        files = [u"new.png"]
+        fullPaths = [os.path.join (self.imagesDir, fname) for fname in files]
+
+        os.mkdir (self.tempDir1)
+        collection = IconsCollection ([self.tempDir1])
+
+        collection.addIcons (u"", fullPaths, 0)
+
+        icons = collection.getRootIcons ()
+        self.assertIn (u"new.png", icons[0])
+
+
+    def testAddIcons_06 (self):
+        files = [u"new.png"]
+        fullPaths = [os.path.join (self.imagesDir, fname) for fname in files]
+
+        os.mkdir (self.tempDir1)
+        collection = IconsCollection ([self.tempDir1])
+
+        collection.addIcons (None, fullPaths, 0)
+
+        icons = collection.getRootIcons ()
+        self.assertIn (u"new.png", icons[0])
+
+
+    def testAddIcons_07 (self):
+        files = [u"new.png"]
+        fullPaths = [os.path.join (self.imagesDir, fname) for fname in files]
+
+        os.mkdir (self.tempDir1)
+        collection = IconsCollection ([self.tempDir1])
+
+        collection.addIcons (None, fullPaths, -1)
+
+        icons = collection.getRootIcons ()
+        self.assertIn (u"new.png", icons[0])
+
+
+    def testAddIcons_08 (self):
+        files = [u"new.png"]
+        fullPaths = [os.path.join (self.imagesDir, fname) for fname in files]
+
+        os.mkdir (self.tempDir1)
+        collection = IconsCollection ([self.tempDir1])
+
+        collection.addIcons (None, fullPaths)
+
+        icons = collection.getRootIcons ()
+        self.assertIn (u"new.png", icons[0])
+
+
+    def testAddIcons_09 (self):
+        files = [u"new.png", u"image_01.JPG"]
+        fullPaths = [os.path.join (self.imagesDir, fname) for fname in files]
+
+        os.mkdir (self.tempDir1)
+        collection = IconsCollection ([self.tempDir1])
+
+        collection.addIcons (None, fullPaths)
+
+        icons = sorted (collection.getRootIcons ())
+        self.assertIn (u"image_01.JPG", icons[0])
+        self.assertIn (u"new.png", icons[1])
+
+
+    def testAddIcons_10 (self):
+        files = [u"new.png", u"image_01.JPG"]
+        fullPaths = [os.path.join (self.imagesDir, fname) for fname in files]
+
+        groupname = u"Новая группа"
+
+        os.mkdir (self.tempDir1)
+        collection = IconsCollection ([self.tempDir1])
+        collection.addGroup (groupname)
+
+        collection.addIcons (groupname, fullPaths)
+
+        icons = sorted (collection.getIcons (groupname))
+        self.assertEqual (len (icons), 2)
+        self.assertIn (u"image_01.JPG", icons[0])
+        self.assertIn (u"new.png", icons[1])
+
+
+    def testAddIcons_11 (self):
+        files = [u"new.png", u"image_01.JPG", u"__init__.py"]
+        fullPaths = [os.path.join (self.imagesDir, fname) for fname in files]
+
+        groupname = u"Новая группа"
+
+        os.mkdir (self.tempDir1)
+        collection = IconsCollection ([self.tempDir1])
+        collection.addGroup (groupname)
+
+        collection.addIcons (groupname, fullPaths)
+
+        icons = sorted (collection.getIcons (groupname))
+        self.assertEqual (len (icons), 2)
+        self.assertIn (u"image_01.JPG", icons[0])
+        self.assertIn (u"new.png", icons[1])
+
+
+    def testAddIcons_12_not_exists (self):
+        files = [u"new.png", u"image_01.JPG", u"notexists.png"]
+        fullPaths = [os.path.join (self.imagesDir, fname) for fname in files]
+
+        groupname = u"Новая группа"
+
+        os.mkdir (self.tempDir1)
+        collection = IconsCollection ([self.tempDir1])
+        collection.addGroup (groupname)
+
+        collection.addIcons (groupname, fullPaths)
+
+        icons = sorted (collection.getIcons (groupname))
+        self.assertEqual (len (icons), 2)
+        self.assertIn (u"image_01.JPG", icons[0])
+        self.assertIn (u"new.png", icons[1])
+
+
+    def testAddIcons_13 (self):
+        files = [u"new.png", u"new.png"]
+        fullPaths = [os.path.join (self.imagesDir, fname) for fname in files]
+
+        groupname = u"Новая группа"
+
+        os.mkdir (self.tempDir1)
+        collection = IconsCollection ([self.tempDir1])
+        collection.addGroup (groupname)
+
+        collection.addIcons (groupname, fullPaths)
+
+        icons = sorted (collection.getIcons (groupname))
+        self.assertEqual (len (icons), 2)
+        self.assertIn (u"new.png", icons[0])
+        self.assertIn (u"new_(1).png", icons[1])
+
+
+    def testAddIcons_14 (self):
+        files = [u"new.png", u"new.png", u"new.png", u"new.png"]
+        fullPaths = [os.path.join (self.imagesDir, fname) for fname in files]
+
+        groupname = u"Новая группа"
+
+        os.mkdir (self.tempDir1)
+        collection = IconsCollection ([self.tempDir1])
+        collection.addGroup (groupname)
+
+        collection.addIcons (groupname, fullPaths)
+
+        icons = sorted (collection.getIcons (groupname))
+        self.assertEqual (len (icons), 4)
+        self.assertIn (u"new.png", icons[0])
+        self.assertIn (u"new_(1).png", icons[1])
+        self.assertIn (u"new_(2).png", icons[2])
+        self.assertIn (u"new_(3).png", icons[3])

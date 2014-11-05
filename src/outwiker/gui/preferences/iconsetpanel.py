@@ -207,7 +207,7 @@ class IconsetPanel (wx.Panel):
         """
         self._iconsList.clear()
         collection = self.__getIconsCollection()
-        icons = collection.getRoot() if groupname is None else collection.getIcons (groupname)
+        icons = collection.getRootIcons() if groupname is None else collection.getIcons (groupname)
         self._iconsList.setIconsList (icons)
 
 

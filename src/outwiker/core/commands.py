@@ -492,6 +492,20 @@ def insertCurrentDate (parent, editor):
             config.recentDateTimeFormat.value = dlg.Value
 
 
+def isImage (fname):
+    """
+    If fname is image then the function return True. Otherwise - False.
+    """
+    fnameLower = fname.lower()
+
+    return (fnameLower.endswith (".png") or
+            fnameLower.endswith (".jpg") or
+            fnameLower.endswith (".jpeg") or
+            fnameLower.endswith (".bmp") or
+            fnameLower.endswith (".gif"))
+
+
+
 def registerActions (application):
     """
     Зарегистрировать действия

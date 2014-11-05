@@ -317,7 +317,7 @@ class IconPanel (wx.Panel):
 
     def __getCurrentIcons (self):
         if self.groupCtrl.GetSelection() == 0:
-            icons = self._iconsCollection.getRoot()
+            icons = self._iconsCollection.getRootIcons()
         else:
             icons = self._iconsCollection.getIcons (self._groupsTranslate[self.groupCtrl.GetValue()])
 
