@@ -400,3 +400,107 @@ class IconsCollectionTest (unittest.TestCase):
         newcollection2 = IconsCollection ([self.tempDir2])
         self.assertEqual (newcollection1.getGroups(), [u"Другая группа"])
         self.assertEqual (newcollection2.getGroups(), [u"Другая группа"])
+
+
+    def testRemoveGroup_01 (self):
+        os.mkdir (self.tempDir1)
+        os.mkdir (self.tempDir2)
+
+        collection = IconsCollection ([self.tempDir1, self.tempDir2])
+        collection.addGroup (u"Новая группа", 0)
+        collection.addGroup (u"Другая группа", 1)
+
+        collection.removeGroup (u"Новая группа", 0)
+        self.assertEqual (collection.getGroups(), [u"Другая группа"])
+
+        newcollection1 = IconsCollection ([self.tempDir1])
+        newcollection2 = IconsCollection ([self.tempDir2])
+        self.assertEqual (newcollection1.getGroups(), [])
+        self.assertEqual (newcollection2.getGroups(), [u"Другая группа"])
+
+
+    def testRemoveGroup_02 (self):
+        os.mkdir (self.tempDir1)
+        os.mkdir (self.tempDir2)
+
+        collection = IconsCollection ([self.tempDir1, self.tempDir2])
+        collection.addGroup (u"Новая группа", 0)
+        collection.addGroup (u"Другая группа", 1)
+
+        collection.removeGroup (u"Другая группа", -1)
+        self.assertEqual (collection.getGroups(), [u"Новая группа"])
+
+        newcollection1 = IconsCollection ([self.tempDir1])
+        newcollection2 = IconsCollection ([self.tempDir2])
+        self.assertEqual (newcollection1.getGroups(), [u"Новая группа"])
+        self.assertEqual (newcollection2.getGroups(), [])
+
+
+    def testRemoveGroup_03 (self):
+        os.mkdir (self.tempDir1)
+        os.mkdir (self.tempDir2)
+
+        collection = IconsCollection ([self.tempDir1, self.tempDir2])
+        collection.addGroup (u"Новая группа", 0)
+        collection.addGroup (u"Другая группа", 1)
+
+        collection.removeGroup (u"Другая группа")
+        self.assertEqual (collection.getGroups(), [u"Новая группа"])
+
+        newcollection1 = IconsCollection ([self.tempDir1])
+        newcollection2 = IconsCollection ([self.tempDir2])
+        self.assertEqual (newcollection1.getGroups(), [u"Новая группа"])
+        self.assertEqual (newcollection2.getGroups(), [])
+
+
+    def testRemoveGroup_04 (self):
+        os.mkdir (self.tempDir1)
+        os.mkdir (self.tempDir2)
+
+        collection = IconsCollection ([self.tempDir1, self.tempDir2])
+        collection.addGroup (u"Новая группа", 0)
+        collection.addGroup (u"Новая группа", 1)
+
+        collection.removeGroup (u"Новая группа")
+        self.assertEqual (collection.getGroups(), [u"Новая группа"])
+
+        newcollection1 = IconsCollection ([self.tempDir1])
+        newcollection2 = IconsCollection ([self.tempDir2])
+        self.assertEqual (newcollection1.getGroups(), [u"Новая группа"])
+        self.assertEqual (newcollection2.getGroups(), [])
+
+
+    def testRemoveGroup_05 (self):
+        os.mkdir (self.tempDir1)
+        os.mkdir (self.tempDir2)
+
+        collection = IconsCollection ([self.tempDir1, self.tempDir2])
+        collection.addGroup (u"Новая группа")
+
+        collection.removeGroup (u"Новая группа")
+        self.assertEqual (collection.getGroups(), [])
+
+
+    def testRemoveGroup_06_invalid (self):
+        os.mkdir (self.tempDir1)
+        os.mkdir (self.tempDir2)
+
+        collection = IconsCollection ([self.tempDir1, self.tempDir2])
+        collection.addGroup (u"Новая группа", 0)
+        collection.addGroup (u"Другая группа", 1)
+
+        self.assertRaises (
+            KeyError,
+            collection.removeGroup,
+            u"Абырвалг")
+
+        self.assertRaises (
+            KeyError,
+            collection.removeGroup,
+            u"Новая группа",
+            1)
+
+        self.assertRaises (
+            KeyError,
+            collection.removeGroup,
+            u"")

@@ -32,6 +32,7 @@ class IconsetPanel (wx.Panel):
 
         self.Bind(wx.EVT_MENU, handler=self.__onAddGroup, id=self.ADD_GROUP)
         self.Bind(wx.EVT_MENU, handler=self.__onRenameGroup, id=self.RENAME_GROUP)
+        self.Bind(wx.EVT_MENU, handler=self.__onRemoveGroup, id=self.REMOVE_GROUP)
 
         self.__updateGroups()
 
@@ -323,3 +324,28 @@ class IconsetPanel (wx.Panel):
 
         if selItem.IsOk() and selItem != rootItem:
             self._groups.EditLabel (selItem)
+
+
+    def __onRemoveGroup (self, event):
+        selItem = self._groups.GetSelection()
+        rootItem = self._groups.GetRootItem()
+
+        if not selItem.IsOk() or selItem == rootItem:
+            return
+
+        groupname = self._groups.GetItemData(selItem).GetData()
+        assert groupname is not None
+
+        if MessageBox (
+                _(u'Remove group "{}" and all icons inside it?').format (groupname),
+                _(u"Remove group?"),
+                wx.YES_NO | wx.ICON_QUESTION) == wx.YES:
+            try:
+                self.__getIconsCollection ().removeGroup (groupname)
+            except (IOError, SystemError):
+                MessageBox (
+                    _(u"Can't remove group directory"),
+                    _(u"Error"),
+                    wx.OK | wx.ICON_ERROR)
+                return
+            self.__updateGroups()

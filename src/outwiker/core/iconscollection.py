@@ -2,6 +2,7 @@
 
 import os
 import os.path
+import shutil
 
 
 class DuplicateGroupError (BaseException):
@@ -205,6 +206,20 @@ class IconsCollection (object):
             raise DuplicateGroupError
 
         os.rename (oldGroupPath, newGroupPath)
+        self._scanIconsDirs (self._iconsDirList)
+
+
+    def removeGroup (self, groupname, dirindex=-1):
+        """
+        Remove icon group and all icons inside it.
+        """
+        oldGroupPath = os.path.join (self._iconsDirList[dirindex], groupname)
+        if (len (groupname) == 0 or
+                not os.path.exists (oldGroupPath) or
+                groupname not in self._groups):
+            raise KeyError
+
+        shutil.rmtree (oldGroupPath)
         self._scanIconsDirs (self._iconsDirList)
 
 
