@@ -5,6 +5,7 @@ import os.path
 import shutil
 
 from outwiker.core.commands import isImage
+from outwiker.core.thumbmakerpil import ThumbmakerPil
 
 
 class DuplicateGroupError (BaseException):
@@ -34,6 +35,9 @@ class IconsCollection (object):
         self._rootCover = None
 
         self._scanIconsDirs (iconsDirList)
+
+        self._thumbmaker = ThumbmakerPil ()
+        self._maxIconSize = 16
 
 
     def getRootCover (self):
@@ -241,7 +245,11 @@ class IconsCollection (object):
         newIconPath = os.path.join (grouppath, newIconName)
 
         try:
-            shutil.copy (iconpath, newIconPath)
+            self._thumbmaker.thumbByMaxSize (
+                iconpath,
+                self._maxIconSize,
+                newIconPath,
+                larger = False)
         except (IOError, ValueError):
             pass
 
@@ -263,7 +271,8 @@ class IconsCollection (object):
             newname = fname[:dotPos] + u"_({})".format (index) + fname[dotPos:]
             index += 1
 
-        return newname
+        # Return png always
+        return newname[:newname.rfind (u".")] + ".png"
 
 
     def _checkGroupName (self, groupname):

@@ -619,7 +619,7 @@ class IconsCollectionTest (unittest.TestCase):
         collection.addIcons (None, fullPaths)
 
         icons = sorted (collection.getRootIcons ())
-        self.assertIn (u"image_01.JPG", icons[0])
+        self.assertIn (u"image_01.png", icons[0])
         self.assertIn (u"new.png", icons[1])
 
 
@@ -637,7 +637,7 @@ class IconsCollectionTest (unittest.TestCase):
 
         icons = sorted (collection.getIcons (groupname))
         self.assertEqual (len (icons), 2)
-        self.assertIn (u"image_01.JPG", icons[0])
+        self.assertIn (u"image_01.png", icons[0])
         self.assertIn (u"new.png", icons[1])
 
 
@@ -655,7 +655,7 @@ class IconsCollectionTest (unittest.TestCase):
 
         icons = sorted (collection.getIcons (groupname))
         self.assertEqual (len (icons), 2)
-        self.assertIn (u"image_01.JPG", icons[0])
+        self.assertIn (u"image_01.png", icons[0])
         self.assertIn (u"new.png", icons[1])
 
 
@@ -673,7 +673,7 @@ class IconsCollectionTest (unittest.TestCase):
 
         icons = sorted (collection.getIcons (groupname))
         self.assertEqual (len (icons), 2)
-        self.assertIn (u"image_01.JPG", icons[0])
+        self.assertIn (u"image_01.png", icons[0])
         self.assertIn (u"new.png", icons[1])
 
 

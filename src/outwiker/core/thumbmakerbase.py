@@ -57,9 +57,10 @@ class ThumbmakerBase (object):
         self._rescale (image_src, width_new, height_new, fname_new)
 
 
-    def thumbByMaxSize (self, fname_src, maxsize_res, fname_new):
+    def thumbByMaxSize (self, fname_src, maxsize_res, fname_new, larger=True):
         """
         Создать превьюшку с заданным максимальным размером
+        larger - увеличивать ли картинку, если она меньше заданного размера?
         """
         if not os.path.exists (fname_src):
             raise ThumbException (u"Error: %s not found" % os.path.basename (fname_src))
@@ -68,7 +69,11 @@ class ThumbmakerBase (object):
 
         width_src, height_src = self._getSize (image_src)
 
-        if width_src > height_src:
+        if (not larger and
+                width_src <= maxsize_res and
+                height_src <= maxsize_res):
+            self._rescale (image_src, width_src, height_src, fname_new)
+        elif width_src > height_src:
             self.thumbByWidth (fname_src, maxsize_res, fname_new)
         else:
             self.thumbByHeight (fname_src, maxsize_res, fname_new)
