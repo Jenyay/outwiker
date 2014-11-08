@@ -780,3 +780,53 @@ class IconsCollectionTest (unittest.TestCase):
         self.assertNotIn (u"__sample.png", icons[0])
         self.assertIn (u"sample.png", icons[0])
         self.assertIn (u"sample_(1).png", icons[1])
+
+
+    def testAddIcons_18_invalid (self):
+        files = [u"invalid.png"]
+        fullPaths = [os.path.join (self.imagesDir, fname) for fname in files]
+
+        groupname = u"Новая группа"
+
+        os.mkdir (self.tempDir1)
+        collection = IconsCollection ([self.tempDir1])
+        collection.addGroup (groupname)
+
+        collection.addIcons (groupname, fullPaths)
+
+        icons = sorted (collection.getIcons (groupname))
+        self.assertEqual (len (icons), 0)
+
+
+    def testAddIcons_19_invalid (self):
+        files = [u"invalid.png", u"new.png"]
+        fullPaths = [os.path.join (self.imagesDir, fname) for fname in files]
+
+        groupname = u"Новая группа"
+
+        os.mkdir (self.tempDir1)
+        collection = IconsCollection ([self.tempDir1])
+        collection.addGroup (groupname)
+
+        collection.addIcons (groupname, fullPaths)
+
+        icons = sorted (collection.getIcons (groupname))
+        self.assertEqual (len (icons), 1)
+        self.assertIn (u"new.png", icons[0])
+
+
+    def testAddIcons_20_invalid (self):
+        files = [u"new.png", u"invalid.png"]
+        fullPaths = [os.path.join (self.imagesDir, fname) for fname in files]
+
+        groupname = u"Новая группа"
+
+        os.mkdir (self.tempDir1)
+        collection = IconsCollection ([self.tempDir1])
+        collection.addGroup (groupname)
+
+        collection.addIcons (groupname, fullPaths)
+
+        icons = sorted (collection.getIcons (groupname))
+        self.assertEqual (len (icons), 1)
+        self.assertIn (u"new.png", icons[0])
