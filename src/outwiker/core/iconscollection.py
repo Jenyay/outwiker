@@ -259,16 +259,22 @@ class IconsCollection (object):
         Return unique name for icon on basis of fname.
         fname is basename of the full path to icon
         """
-        newname = fname
-        dotPos = fname.rfind (u".")
+        # Remove "__"
+        prefix = u"__"
+        clearname = fname
+        while clearname.startswith (prefix):
+            clearname = clearname[len (prefix):]
+
+        dotPos = clearname.rfind (u".")
 
         # Here we get only for picture "fname".
         assert dotPos != -1
 
         index = 1
 
+        newname = clearname
         while os.path.exists (os.path.join (grouppath, newname)):
-            newname = fname[:dotPos] + u"_({})".format (index) + fname[dotPos:]
+            newname = clearname[:dotPos] + u"_({})".format (index) + clearname[dotPos:]
             index += 1
 
         # Return png always

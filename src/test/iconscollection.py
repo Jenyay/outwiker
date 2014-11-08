@@ -713,3 +713,59 @@ class IconsCollectionTest (unittest.TestCase):
         self.assertIn (u"new_(1).png", icons[1])
         self.assertIn (u"new_(2).png", icons[2])
         self.assertIn (u"new_(3).png", icons[3])
+
+
+    def testAddIcons_15 (self):
+        files = [u"__sample.png"]
+        fullPaths = [os.path.join (self.imagesDir, fname) for fname in files]
+
+        groupname = u"Новая группа"
+
+        os.mkdir (self.tempDir1)
+        collection = IconsCollection ([self.tempDir1])
+        collection.addGroup (groupname)
+
+        collection.addIcons (groupname, fullPaths)
+
+        icons = sorted (collection.getIcons (groupname))
+        self.assertEqual (len (icons), 1)
+        self.assertNotIn (u"__sample.png", icons[0])
+        self.assertIn (u"sample.png", icons[0])
+
+
+    def testAddIcons_16 (self):
+        files = [u"______sample.png"]
+        fullPaths = [os.path.join (self.imagesDir, fname) for fname in files]
+
+        groupname = u"Новая группа"
+
+        os.mkdir (self.tempDir1)
+        collection = IconsCollection ([self.tempDir1])
+        collection.addGroup (groupname)
+
+        collection.addIcons (groupname, fullPaths)
+
+        icons = sorted (collection.getIcons (groupname))
+        self.assertEqual (len (icons), 1)
+        self.assertNotIn (u"______sample.png", icons[0])
+        self.assertNotIn (u"__sample.png", icons[0])
+        self.assertIn (u"sample.png", icons[0])
+
+
+    def testAddIcons_17 (self):
+        files = [u"______sample.png", "__sample.png"]
+        fullPaths = [os.path.join (self.imagesDir, fname) for fname in files]
+
+        groupname = u"Новая группа"
+
+        os.mkdir (self.tempDir1)
+        collection = IconsCollection ([self.tempDir1])
+        collection.addGroup (groupname)
+
+        collection.addIcons (groupname, fullPaths)
+
+        icons = sorted (collection.getIcons (groupname))
+        self.assertEqual (len (icons), 2)
+        self.assertNotIn (u"__sample.png", icons[0])
+        self.assertIn (u"sample.png", icons[0])
+        self.assertIn (u"sample_(1).png", icons[1])
