@@ -168,7 +168,10 @@ class BasePageDialog(wx.Dialog):
 
     @property
     def icon (self):
-        return self.iconPanel.iconsList.icon
+        selection = self.iconPanel.iconsList.getSelection()
+        assert len (selection) != 0
+
+        return selection[0]
 
 
 

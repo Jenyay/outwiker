@@ -147,7 +147,7 @@ class IconsetPanel (wx.Panel):
         iconsSizer.AddGrowableRow (0)
         iconsSizer.AddGrowableCol (0)
 
-        self._iconsList = IconListCtrl (self)
+        self._iconsList = IconListCtrl (self, True)
 
         # Toolbar for icons in the group
         self._iconsToolbar = wx.ToolBar (
