@@ -133,13 +133,6 @@ class IconsCollection (object):
         return result
 
 
-    def getRootIcons (self):
-        """
-        Return icons from all roots
-        """
-        return self._root
-
-
     def getGroups (self):
         """
         Return all group names
@@ -152,7 +145,10 @@ class IconsCollection (object):
         Return all icons (full paths) for groups with name group
         Raise KeyError if group not exists
         """
-        return self._groups[group]
+        if group is None or len (group) == 0:
+            return self._root
+        else:
+            return self._groups[group]
 
 
     def addGroup (self, groupname, dirindex=-1):

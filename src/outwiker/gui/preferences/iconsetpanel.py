@@ -26,7 +26,7 @@ class IconsetPanel (wx.Panel):
         self.REMOVE_COVER = wx.NewId()
 
         self.__createGuiElements()
-        
+
         self._groups.Bind (wx.EVT_TREE_SEL_CHANGED, handler=self.__onGroupSelect)
         self._groups.Bind (wx.EVT_TREE_BEGIN_LABEL_EDIT, self.__onBeginLabelEdit)
         self._groups.Bind (wx.EVT_TREE_END_LABEL_EDIT, self.__onEndLabelEdit)
@@ -210,7 +210,7 @@ class IconsetPanel (wx.Panel):
         """
         self._iconsList.clear()
         collection = self.__getIconsCollection()
-        icons = collection.getRootIcons() if groupname is None else collection.getIcons (groupname)
+        icons = collection.getIcons(groupname)
         self._iconsList.setIconsList (icons)
 
 
@@ -358,7 +358,8 @@ class IconsetPanel (wx.Panel):
         item = self._groups.GetSelection ()
         group = self._groups.GetItemData (item).GetData()
 
-        wildcard = u"{images} (*.png; *.jpg; *.jpeg; *.gif; *.bmp)|*.png; *.jpg; *.jpeg; *.gif; *.bmp|*.png|*.png|*.jpg; *.jpeg|*.jpg;*.jpeg|*.gif|*.gif|*.bmp|*.bmp|{all} (*.*)|*.*".format (images = _(u"All image files"),
+        wildcard = u"{images} (*.png; *.jpg; *.jpeg; *.gif; *.bmp)|*.png; *.jpg; *.jpeg; *.gif; *.bmp|*.png|*.png|*.jpg; *.jpeg|*.jpg;*.jpeg|*.gif|*.gif|*.bmp|*.bmp|{all} (*.*)|*.*".format (
+            images = _(u"All image files"),
             all = _(u"All files"))
 
         style = wx.FD_OPEN | wx.FD_MULTIPLE | wx.FD_FILE_MUST_EXIST

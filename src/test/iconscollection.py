@@ -19,11 +19,22 @@ class IconsCollectionTest (unittest.TestCase):
         removeDir (self.tempDir2)
 
 
-    def testEmpty (self):
+    def testEmpty_01 (self):
         collection = IconsCollection ([u"../test/icons/Без иконок"])
 
         self.assertEqual (collection.getAll(), [])
-        self.assertEqual (collection.getRootIcons(), [])
+        self.assertEqual (collection.getIcons(""), [])
+        self.assertEqual (collection.getGroups(), [])
+        self.assertRaises (KeyError, collection.getIcons, u"Группа")
+        self.assertRaises (KeyError, collection.getGroupCover, u"Группа")
+        self.assertIsNone (collection.getRootCover())
+
+
+    def testEmpty_02 (self):
+        collection = IconsCollection ([u"../test/icons/Без иконок"])
+
+        self.assertEqual (collection.getAll(), [])
+        self.assertEqual (collection.getIcons(None), [])
         self.assertEqual (collection.getGroups(), [])
         self.assertRaises (KeyError, collection.getIcons, u"Группа")
         self.assertRaises (KeyError, collection.getGroupCover, u"Группа")
@@ -33,7 +44,7 @@ class IconsCollectionTest (unittest.TestCase):
     def testSingleRoot (self):
         collection = IconsCollection ([u"../test/icons/Без групп"])
 
-        self.assertEqual (len (collection.getRootIcons()), 4)
+        self.assertEqual (len (collection.getIcons(None)), 4)
         self.assertEqual (len (collection.getAll()), 4)
         self.assertEqual (collection.getGroups(), [])
         self.assertTrue (collection.getRootCover().endswith (u"__cover.png"))
@@ -42,7 +53,7 @@ class IconsCollectionTest (unittest.TestCase):
     def testSingleRoot_clone (self):
         collection = IconsCollection ([u"../test/icons/Без групп", u"../test/icons/Без групп"])
 
-        self.assertEqual (len (collection.getRootIcons()), 8)
+        self.assertEqual (len (collection.getIcons(u"")), 8)
         self.assertEqual (len (collection.getAll()), 8)
         self.assertEqual (collection.getGroups(), [])
         self.assertTrue (collection.getRootCover().endswith (u"__cover.png"))
@@ -51,7 +62,7 @@ class IconsCollectionTest (unittest.TestCase):
     def testGroups_01 (self):
         collection = IconsCollection ([u"../test/icons/Иконки и группы"])
 
-        self.assertEqual (len (collection.getRootIcons()), 4)
+        self.assertEqual (len (collection.getIcons(None)), 4)
         self.assertEqual (len (collection.getAll()), 11)
         self.assertEqual (collection.getGroups(), [u"Группа 1", u"Группа 2"])
         self.assertEqual (len (collection.getIcons (u"Группа 1")), 3)
@@ -64,7 +75,7 @@ class IconsCollectionTest (unittest.TestCase):
     def testGroups_02 (self):
         collection = IconsCollection ([u"../test/icons/Иконки и группы", u"../test/icons/Иконки и группы"])
 
-        self.assertEqual (len (collection.getRootIcons()), 8)
+        self.assertEqual (len (collection.getIcons(u"")), 8)
         self.assertEqual (len (collection.getAll()), 22)
         self.assertEqual (collection.getGroups(), [u"Группа 1", u"Группа 2"])
         self.assertEqual (len (collection.getIcons (u"Группа 1")), 6)
@@ -75,7 +86,7 @@ class IconsCollectionTest (unittest.TestCase):
     def testGroups_03 (self):
         collection = IconsCollection ([u"../test/icons/Только группы"])
 
-        self.assertEqual (len (collection.getRootIcons()), 0)
+        self.assertEqual (len (collection.getIcons(None)), 0)
         self.assertEqual (len (collection.getAll()), 7)
         self.assertEqual (collection.getGroups(), [u"Группа 3", u"Группа 4"])
         self.assertEqual (len (collection.getIcons (u"Группа 3")), 3)
@@ -86,7 +97,7 @@ class IconsCollectionTest (unittest.TestCase):
     def testGroups_04 (self):
         collection = IconsCollection ([u"../test/icons/Без групп", u"../test/icons/Иконки и группы"])
 
-        self.assertEqual (len (collection.getRootIcons()), 8)
+        self.assertEqual (len (collection.getIcons(u"")), 8)
         self.assertEqual (len (collection.getAll()), 15)
         self.assertEqual (collection.getGroups(), [u"Группа 1", u"Группа 2"])
         self.assertEqual (len (collection.getIcons (u"Группа 1")), 3)
@@ -97,7 +108,7 @@ class IconsCollectionTest (unittest.TestCase):
     def testGroups_05 (self):
         collection = IconsCollection ([u"../test/icons/Без групп", u"../test/icons/Только группы"])
 
-        self.assertEqual (len (collection.getRootIcons()), 4)
+        self.assertEqual (len (collection.getIcons(u"")), 4)
         self.assertEqual (len (collection.getAll()), 11)
         self.assertEqual (collection.getGroups(), [u"Группа 3", u"Группа 4"])
         self.assertEqual (len (collection.getIcons (u"Группа 3")), 3)
@@ -108,7 +119,7 @@ class IconsCollectionTest (unittest.TestCase):
     def testGroups_06 (self):
         collection = IconsCollection ([u"../test/icons/Иконки и группы", u"../test/icons/Только группы"])
 
-        self.assertEqual (len (collection.getRootIcons()), 4)
+        self.assertEqual (len (collection.getIcons(None)), 4)
         self.assertEqual (len (collection.getAll()), 18)
         self.assertEqual (collection.getGroups(), [u"Группа 1", u"Группа 2", u"Группа 3", u"Группа 4"])
         self.assertEqual (len (collection.getIcons (u"Группа 1")), 3)
@@ -121,7 +132,7 @@ class IconsCollectionTest (unittest.TestCase):
     def testGroups_07 (self):
         collection = IconsCollection ([u"../test/icons/Иконки и группы", u"../test/icons/Без групп"])
 
-        self.assertEqual (len (collection.getRootIcons()), 8)
+        self.assertEqual (len (collection.getIcons(None)), 8)
         self.assertEqual (len (collection.getAll()), 15)
         self.assertEqual (collection.getGroups(), [u"Группа 1", u"Группа 2"])
         self.assertEqual (len (collection.getIcons (u"Группа 1")), 3)
@@ -539,7 +550,7 @@ class IconsCollectionTest (unittest.TestCase):
         collection = IconsCollection ([self.tempDir1])
 
         collection.addIcons (u"", fullPaths, 0)
-        self.assertEqual (collection.getRootIcons (), [])
+        self.assertEqual (collection.getIcons (None), [])
 
 
     def testAddIcons_04_invalid (self):
@@ -566,7 +577,7 @@ class IconsCollectionTest (unittest.TestCase):
 
         collection.addIcons (u"", fullPaths, 0)
 
-        icons = collection.getRootIcons ()
+        icons = collection.getIcons (None)
         self.assertIn (u"new.png", icons[0])
 
 
@@ -579,7 +590,7 @@ class IconsCollectionTest (unittest.TestCase):
 
         collection.addIcons (None, fullPaths, 0)
 
-        icons = collection.getRootIcons ()
+        icons = collection.getIcons (None)
         self.assertIn (u"new.png", icons[0])
 
 
@@ -592,7 +603,7 @@ class IconsCollectionTest (unittest.TestCase):
 
         collection.addIcons (None, fullPaths, -1)
 
-        icons = collection.getRootIcons ()
+        icons = collection.getIcons (None)
         self.assertIn (u"new.png", icons[0])
 
 
@@ -605,7 +616,7 @@ class IconsCollectionTest (unittest.TestCase):
 
         collection.addIcons (None, fullPaths)
 
-        icons = collection.getRootIcons ()
+        icons = collection.getIcons (None)
         self.assertIn (u"new.png", icons[0])
 
 
@@ -618,7 +629,7 @@ class IconsCollectionTest (unittest.TestCase):
 
         collection.addIcons (None, fullPaths)
 
-        icons = sorted (collection.getRootIcons ())
+        icons = sorted (collection.getIcons (None))
         self.assertIn (u"image_01.png", icons[0])
         self.assertIn (u"new.png", icons[1])
 
