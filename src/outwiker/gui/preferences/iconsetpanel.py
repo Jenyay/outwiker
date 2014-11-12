@@ -23,7 +23,6 @@ class IconsetPanel (wx.Panel):
         self.ADD_ICONS = wx.NewId()
         self.REMOVE_ICONS = wx.NewId()
         self.SET_COVER = wx.NewId()
-        self.REMOVE_COVER = wx.NewId()
 
         self.__createGuiElements()
 
@@ -37,6 +36,7 @@ class IconsetPanel (wx.Panel):
 
         self.Bind(wx.EVT_MENU, handler=self.__onAddIcons, id=self.ADD_ICONS)
         self.Bind(wx.EVT_MENU, handler=self.__onRemoveIcons, id=self.REMOVE_ICONS)
+        self.Bind(wx.EVT_MENU, handler=self.__onSetCover, id=self.SET_COVER)
 
         self.__updateGroups()
 
@@ -100,15 +100,6 @@ class IconsetPanel (wx.Panel):
             wx.NullBitmap,
             wx.ITEM_NORMAL,
             _(u"Set icon as group cover"),
-            "")
-
-        self._iconsToolbar.AddLabelTool(
-            self.REMOVE_COVER,
-            _(u"Clear group cover"),
-            wx.Bitmap(os.path.join (imagesDir, "picture_delete.png"), wx.BITMAP_TYPE_ANY),
-            wx.NullBitmap,
-            wx.ITEM_NORMAL,
-            _(u"Clear group cover"),
             "")
 
 
@@ -399,3 +390,22 @@ class IconsetPanel (wx.Panel):
             group = self._groups.GetItemData (item).GetData()
             self.__updateGroups()
             self.__selectGroupItem (group)
+
+
+    def __onSetCover (self, event):
+        icons = self._iconsList.getSelection()
+        if not icons:
+            MessageBox (
+                _(u"You have not selected any icons"),
+                _(u"Select icons"),
+                wx.OK | wx.ICON_ERROR)
+            return
+
+        item = self._groups.GetSelection ()
+        group = self._groups.GetItemData (item).GetData()
+
+        collection = self.__getIconsCollection()
+        collection.setCover (group, icons[0])
+
+        self.__updateGroups()
+        self.__selectGroupItem (group)
