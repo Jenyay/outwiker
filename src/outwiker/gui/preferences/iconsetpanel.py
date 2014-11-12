@@ -36,6 +36,7 @@ class IconsetPanel (wx.Panel):
         self.Bind(wx.EVT_MENU, handler=self.__onRemoveGroup, id=self.REMOVE_GROUP)
 
         self.Bind(wx.EVT_MENU, handler=self.__onAddIcons, id=self.ADD_ICONS)
+        self.Bind(wx.EVT_MENU, handler=self.__onRemoveIcons, id=self.REMOVE_ICONS)
 
         self.__updateGroups()
 
@@ -355,13 +356,9 @@ class IconsetPanel (wx.Panel):
 
 
     def __onAddIcons (self, event):
-        item = self._groups.GetSelection ()
-        group = self._groups.GetItemData (item).GetData()
-
         wildcard = u"{images} (*.png; *.jpg; *.jpeg; *.gif; *.bmp)|*.png; *.jpg; *.jpeg; *.gif; *.bmp|*.png|*.png|*.jpg; *.jpeg|*.jpg;*.jpeg|*.gif|*.gif|*.bmp|*.bmp|{all} (*.*)|*.*".format (
             images = _(u"All image files"),
             all = _(u"All files"))
-
         style = wx.FD_OPEN | wx.FD_MULTIPLE | wx.FD_FILE_MUST_EXIST
 
         with TestedFileDialog (
@@ -370,7 +367,35 @@ class IconsetPanel (wx.Panel):
                 wildcard = wildcard,
                 style = style) as dlg:
             if dlg.ShowModal() == wx.ID_OK:
+                item = self._groups.GetSelection ()
+                group = self._groups.GetItemData (item).GetData()
+
                 collection = self.__getIconsCollection()
                 collection.addIcons (group, dlg.GetPaths())
                 self.__updateGroups()
                 self.__selectGroupItem (group)
+
+
+    def __onRemoveIcons (self, event):
+        icons = self._iconsList.getSelection()
+        if not icons:
+            MessageBox (
+                _(u"You have not selected any icons"),
+                _(u"Select icons"),
+                wx.OK | wx.ICON_INFORMATION)
+            return
+
+        if MessageBox (
+                _(u"Remove selected icons?"),
+                _(u"Remove icons"),
+                wx.YES_NO | wx.ICON_QUESTION) == wx.YES:
+            for fname in icons:
+                try:
+                    os.remove (fname)
+                except (IOError, SystemError):
+                    pass
+
+            item = self._groups.GetSelection ()
+            group = self._groups.GetItemData (item).GetData()
+            self.__updateGroups()
+            self.__selectGroupItem (group)
