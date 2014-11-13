@@ -45,6 +45,10 @@ class IconsCollection (object):
         self._scanIconsDirs (iconsDirList)
 
 
+    def __contains__ (self, groupname):
+        return groupname in self._groups
+
+
     def getRootCover (self):
         return self._rootCover
 

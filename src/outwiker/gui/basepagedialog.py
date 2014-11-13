@@ -229,7 +229,8 @@ class IconPanel (wx.Panel):
     """
     def __init__ (self, parent):
         super (IconPanel, self).__init__ (parent)
-        self._iconsCollection = IconsCollection(getIconsDirList())
+
+        self._iconsCollections = [IconsCollection ([path]) for path in getIconsDirList()]
         self.__createGui()
 
         # Key - localized group name, value - source group name
@@ -263,14 +264,17 @@ class IconPanel (wx.Panel):
 
 
     def __appendGroups (self):
-        self.groupCtrl.Append (_(u"Not in groups"), self._getRootImage())
+        self.groupCtrl.Append (_(u"Not in groups"), self._getRootCover())
 
-        self._groupsTranslate = {self._localize(group): group for group in self._iconsCollection.getGroups()}
+        self._groupsTranslate = {}
+
+        for collection in self._iconsCollections:
+            self._groupsTranslate.update ({self._localize(group): group for group in collection.getGroups()})
 
         for groupname in sorted (self._groupsTranslate.keys()):
-            image = self._getGroupImage (groupname)
+            image = self._getGroupCover (groupname)
             if not image.IsNull():
-                self.groupCtrl.Append (groupname, self._getGroupImage (groupname))
+                self.groupCtrl.Append (groupname, self._getGroupCover (groupname))
 
 
     def _getImageForGroup (self, fname):
@@ -292,22 +296,29 @@ class IconPanel (wx.Panel):
         return wx.BitmapFromImage (image)
 
 
-    def _getGroupImage (self, groupname):
+    def _getGroupCover (self, groupname):
         """
         Return bitmap for combobox item
         """
-        fname = self._iconsCollection.getGroupCover (self._groupsTranslate[groupname])
+        realname = self._groupsTranslate[groupname]
+        fname = None
+
+        for collection in reversed (self._iconsCollections):
+            if realname in collection:
+                fname = (collection.getGroupCover (realname))
+                break
+
         if fname is not None:
             return self._getImageForGroup (fname)
 
         return wx.NullBitmap
 
 
-    def _getRootImage (self):
+    def _getRootCover (self):
         """
         Return bitmap for combobox item
         """
-        fname = self._iconsCollection.getRootCover ()
+        fname = self._iconsCollections[0].getRootCover ()
         if fname is not None:
             return self._getImageForGroup (fname)
 
@@ -319,10 +330,16 @@ class IconPanel (wx.Panel):
 
 
     def __getCurrentIcons (self):
-        if self.groupCtrl.GetSelection() == 0:
-            icons = self._iconsCollection.getIcons(None)
-        else:
-            icons = self._iconsCollection.getIcons (self._groupsTranslate[self.groupCtrl.GetValue()])
+        groupname = (None
+                     if self.groupCtrl.GetSelection() == 0
+                     else self._groupsTranslate[self.groupCtrl.GetValue()])
+
+        icons = []
+        for collection in self._iconsCollections:
+            try:
+                icons += collection.getIcons (groupname)
+            except KeyError:
+                pass
 
         icons.sort()
         return icons
