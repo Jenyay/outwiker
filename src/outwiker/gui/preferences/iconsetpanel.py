@@ -191,8 +191,7 @@ class IconsetPanel (wx.Panel):
 
 
     def __getIconsCollection (self):
-        iconsdir = getIconsDirList()[-1]
-        return IconsCollection ([iconsdir])
+        return IconsCollection (getIconsDirList()[-1])
 
 
     def __showIcons (self, groupname):

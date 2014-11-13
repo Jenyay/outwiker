@@ -21,11 +21,11 @@ class IconsCollection (object):
     COVER_FILE_NAME = u'__cover.png'
 
 
-    def __init__ (self, iconsDirList):
+    def __init__ (self, iconsDir):
         '''
-        iconsDirList - list of the root directories with icons
+        iconsDir - Root directory (absolute path) with the icons
         '''
-        self._iconsDirList = iconsDirList
+        self._iconsDir = iconsDir
 
         # Key - group name, value - list of the files (full paths)
         self._groups = {}
@@ -33,7 +33,7 @@ class IconsCollection (object):
         # Key - group name, value - full path to icon for group
         self._groupsCover = {}
 
-        # List of the files for root folders with icons
+        # List of the files for root folder with icons
         self._root = []
 
         # Full path to cover for root group
@@ -42,7 +42,7 @@ class IconsCollection (object):
         self._thumbmaker = ThumbmakerPil ()
         self._maxIconSize = 16
 
-        self._scanIconsDirs (iconsDirList)
+        self._scanIconsDir (self._iconsDir)
 
 
     def __contains__ (self, groupname):
@@ -60,7 +60,7 @@ class IconsCollection (object):
         return self._groupsCover.get (groupname, None)
 
 
-    def _scanIconsDirs (self, iconsDirList):
+    def _scanIconsDir (self, folder):
         '''
         Fill _groups and _root
         '''
@@ -69,18 +69,16 @@ class IconsCollection (object):
         self._rootCover = None
         self._groupsCover = {}
 
-        for folder in iconsDirList:
-            rootIcons, cover = self._findIcons (folder)
-            self._root += rootIcons
+        rootIcons, cover = self._findIcons (folder)
+        self._root += rootIcons
 
-            if cover is not None:
-                newBaseCover = os.path.basename (cover)
+        if cover is not None:
+            newBaseCover = os.path.basename (cover)
 
-                if self._rootCover is None or newBaseCover == self.COVER_FILE_NAME:
-                    self._rootCover = cover
+            if self._rootCover is None or newBaseCover == self.COVER_FILE_NAME:
+                self._rootCover = cover
 
-            self._findGroups (folder, self._groups)
-
+        self._findGroups (folder, self._groups)
         self._root.sort()
 
 
@@ -161,17 +159,16 @@ class IconsCollection (object):
             return self._groups[group]
 
 
-    def addGroup (self, groupname, dirindex=-1):
+    def addGroup (self, groupname):
         '''
-        Add new group (and directory) of the icons. dirindex - item index in _iconsDirList.
+        Add new group (and directory) of the icons.
         If directory exists the method does nothing.
         The method can raise ValueError, IOError and SystemError exceptions.
         '''
         if not self._checkGroupName (groupname):
             raise ValueError
 
-        parent = self._iconsDirList[dirindex]
-        newdir = os.path.join (parent, groupname)
+        newdir = os.path.join (self._iconsDir, groupname)
 
         if os.path.exists (newdir):
             return
@@ -180,9 +177,8 @@ class IconsCollection (object):
         self._groups[groupname] = []
 
 
-    def renameGroup (self, groupname, newgroupname, dirindex=-1):
+    def renameGroup (self, groupname, newgroupname):
         '''
-        dirindex - item index in _iconsDirList.
         The method can raise DuplicateGroupError, KeyError, ValueError, IOError and SystemError exceptions.
         '''
         if groupname == newgroupname:
@@ -191,8 +187,8 @@ class IconsCollection (object):
         if not self._checkGroupName (newgroupname):
             raise ValueError
 
-        oldGroupPath = os.path.join (self._iconsDirList[dirindex], groupname)
-        newGroupPath = os.path.join (self._iconsDirList[dirindex], newgroupname)
+        oldGroupPath = os.path.join (self._iconsDir, groupname)
+        newGroupPath = os.path.join (self._iconsDir, newgroupname)
 
         if not os.path.exists (oldGroupPath):
             raise KeyError
@@ -201,24 +197,24 @@ class IconsCollection (object):
             raise DuplicateGroupError
 
         os.rename (oldGroupPath, newGroupPath)
-        self._scanIconsDirs (self._iconsDirList)
+        self._scanIconsDir (self._iconsDir)
 
 
-    def removeGroup (self, groupname, dirindex=-1):
+    def removeGroup (self, groupname):
         '''
         Remove icon group and all icons inside it.
         '''
-        oldGroupPath = os.path.join (self._iconsDirList[dirindex], groupname)
+        oldGroupPath = os.path.join (self._iconsDir, groupname)
         if (len (groupname) == 0 or
                 not os.path.exists (oldGroupPath) or
                 groupname not in self._groups):
             raise KeyError
 
         shutil.rmtree (oldGroupPath)
-        self._scanIconsDirs (self._iconsDirList)
+        self._scanIconsDir (self._iconsDir)
 
 
-    def addIcons (self, groupname, files, dirindex=-1):
+    def addIcons (self, groupname, files):
         '''
         Add icons into group.
         files - list of full paths to icon files
@@ -226,7 +222,7 @@ class IconsCollection (object):
         if groupname is None:
             groupname = u''
 
-        grouppath = os.path.join (self._iconsDirList[dirindex], groupname)
+        grouppath = os.path.join (self._iconsDir, groupname)
 
         if not os.path.exists (grouppath):
             raise KeyError
@@ -234,7 +230,7 @@ class IconsCollection (object):
         for iconpath in files:
             self._addIconToDir (grouppath, iconpath)
 
-        self._scanIconsDirs (self._iconsDirList)
+        self._scanIconsDir (self._iconsDir)
 
 
     def _addIconToDir (self, grouppath, iconpath):
@@ -292,11 +288,11 @@ class IconsCollection (object):
                 '/' not in groupname)
 
 
-    def setCover (self, groupname, fname, dirindex=-1):
+    def setCover (self, groupname, fname):
         if groupname is None:
             groupname = u''
 
-        grouppath = os.path.join (self._iconsDirList[dirindex], groupname)
+        grouppath = os.path.join (self._iconsDir, groupname)
 
         if not os.path.exists (grouppath):
             raise KeyError
@@ -315,4 +311,4 @@ class IconsCollection (object):
         except (IOError, ValueError):
             pass
 
-        self._scanIconsDirs (self._iconsDirList)
+        self._scanIconsDir (self._iconsDir)

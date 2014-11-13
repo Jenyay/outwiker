@@ -230,7 +230,7 @@ class IconPanel (wx.Panel):
     def __init__ (self, parent):
         super (IconPanel, self).__init__ (parent)
 
-        self._iconsCollections = [IconsCollection ([path]) for path in getIconsDirList()]
+        self._iconsCollections = [IconsCollection (path) for path in getIconsDirList()]
         self.__createGui()
 
         # Key - localized group name, value - source group name
