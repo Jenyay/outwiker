@@ -497,6 +497,26 @@ class IconsCollectionTest (unittest.TestCase):
         self.assertIn (u'new.png', icons[0])
 
 
+    def testAddIcons_19_resize (self):
+        files = [u'new.png', u'8x8.png', u'8x16.png', u'16x8.png', u'first.png', u'first_vertical.png']
+        fullPaths = [os.path.join (self.imagesDir, fname) for fname in files]
+
+        os.mkdir (self.tempDir1)
+        collection = IconsCollection (self.tempDir1)
+        collection.addIcons (None, fullPaths)
+
+        icons = sorted (collection.getIcons (None))
+        self.assertEqual (len (icons), 6)
+
+        icons = {fname: os.path.join (self.tempDir1, fname) for fname in files}
+        self.assertEqual (getImageSize (icons[u'new.png']), (16, 16))
+        self.assertEqual (getImageSize (icons[u'8x8.png']), (8, 8))
+        self.assertEqual (getImageSize (icons[u'8x16.png']), (8, 16))
+        self.assertEqual (getImageSize (icons[u'16x8.png']), (16, 8))
+        self.assertEqual (getImageSize (icons[u'first.png']), (16, 11))
+        self.assertEqual (getImageSize (icons[u'first_vertical.png']), (11, 16))
+
+
     def testAddCover_01_group (self):
         files = []
         fullPaths = [os.path.join (self.imagesDir, fname) for fname in files]
