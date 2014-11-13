@@ -9,6 +9,7 @@ from outwiker.gui.iconlistctrl import IconListCtrl
 from outwiker.core.iconscollection import IconsCollection, DuplicateGroupError
 from outwiker.core.commands import MessageBox
 from outwiker.gui.testeddialog import TestedFileDialog
+from outwiker.core.defines import ICON_WIDTH, ICON_HEIGHT
 
 
 class IconsetPanel (wx.Panel):
@@ -121,7 +122,7 @@ class IconsetPanel (wx.Panel):
             style = wx.TR_HAS_BUTTONS | wx.TR_EDIT_LABELS | wx.SUNKEN_BORDER)
         self._groups.SetMinSize ((200, -1))
 
-        self._imagelist = wx.ImageList(16, 16)
+        self._imagelist = wx.ImageList(ICON_WIDTH, ICON_HEIGHT)
         self._groups.AssignImageList (self._imagelist)
 
         # Toolbar for groups

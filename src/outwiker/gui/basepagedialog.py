@@ -12,6 +12,7 @@ from outwiker.core.tagslist import TagsList
 from outwiker.core.styleslist import StylesList
 from outwiker.core.system import getStylesDirList, getIconsDirList
 from outwiker.core.iconscollection import IconsCollection
+from outwiker.core.defines import ICON_WIDTH, ICON_HEIGHT
 from .guiconfig import PageDialogConfig
 from .iconlistctrl import IconListCtrl
 from .tagsselector import TagsSelector
@@ -278,8 +279,8 @@ class IconPanel (wx.Panel):
 
 
     def _getImageForGroup (self, fname):
-        neww = 16
-        newh = 18
+        neww = ICON_WIDTH
+        newh = ICON_HEIGHT + 2
 
         wx.Log_EnableLogging(False)
         image = wx.Image (fname)

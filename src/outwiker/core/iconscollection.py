@@ -6,6 +6,7 @@ import shutil
 
 from outwiker.core.commands import isImage
 from outwiker.core.thumbmakerpil import ThumbmakerPil
+from outwiker.core.defines import ICON_WIDTH, ICON_HEIGHT
 
 
 class DuplicateGroupError (BaseException):
@@ -34,7 +35,7 @@ class IconsCollection (object):
         self._groupsCover = {}
 
         self._thumbmaker = ThumbmakerPil ()
-        self._maxIconSize = 16
+        self._maxIconSize = min (ICON_WIDTH, ICON_HEIGHT)
         self._rootGroupName = u''
 
         self._scanIconsDir (self._iconsDir)
