@@ -173,14 +173,14 @@ class IconsetPanel (wx.Panel):
 
         collection = self.__getIconsCollection()
 
-        # Add the root element ("Not in group")
-        rootimage = collection.getRootCover()
+        # Add the root element
+        rootimage = collection.getCover (None)
         imageIndex = -1 if rootimage is None else self._imagelist.Add (wx.Bitmap (rootimage))
         rootItem = self._groups.AddRoot (_(u"Not in groups"), imageIndex)
 
         # Add child groups
         for group in collection.getGroups():
-            image = collection.getGroupCover (group)
+            image = collection.getCover (group)
             imageIndex = -1 if image is None else self._imagelist.Add (wx.Bitmap (image))
 
             self._groups.AppendItem (rootItem, group, imageIndex, data = wx.TreeItemData(group))

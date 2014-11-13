@@ -272,9 +272,9 @@ class IconPanel (wx.Panel):
             self._groupsTranslate.update ({self._localize(group): group for group in collection.getGroups()})
 
         for groupname in sorted (self._groupsTranslate.keys()):
-            image = self._getGroupCover (groupname)
+            image = self._getCover (groupname)
             if not image.IsNull():
-                self.groupCtrl.Append (groupname, self._getGroupCover (groupname))
+                self.groupCtrl.Append (groupname, self._getCover (groupname))
 
 
     def _getImageForGroup (self, fname):
@@ -296,7 +296,7 @@ class IconPanel (wx.Panel):
         return wx.BitmapFromImage (image)
 
 
-    def _getGroupCover (self, groupname):
+    def _getCover (self, groupname):
         """
         Return bitmap for combobox item
         """
@@ -305,7 +305,7 @@ class IconPanel (wx.Panel):
 
         for collection in reversed (self._iconsCollections):
             if realname in collection:
-                fname = (collection.getGroupCover (realname))
+                fname = (collection.getCover (realname))
                 break
 
         if fname is not None:
@@ -318,7 +318,7 @@ class IconPanel (wx.Panel):
         """
         Return bitmap for combobox item
         """
-        fname = self._iconsCollections[0].getRootCover ()
+        fname = self._iconsCollections[0].getCover (None)
         if fname is not None:
             return self._getImageForGroup (fname)
 

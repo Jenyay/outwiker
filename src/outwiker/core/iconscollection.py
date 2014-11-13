@@ -33,14 +33,9 @@ class IconsCollection (object):
         # Key - group name, value - full path to icon for group
         self._groupsCover = {}
 
-        # List of the files for root folder with icons
-        self._root = []
-
-        # Full path to cover for root group
-        self._rootCover = None
-
         self._thumbmaker = ThumbmakerPil ()
         self._maxIconSize = 16
+        self._rootGroupName = u''
 
         self._scanIconsDir (self._iconsDir)
 
@@ -49,11 +44,10 @@ class IconsCollection (object):
         return groupname in self._groups
 
 
-    def getRootCover (self):
-        return self._rootCover
+    def getCover (self, groupname):
+        if groupname is None:
+            groupname = self._rootGroupName
 
-
-    def getGroupCover (self, groupname):
         if groupname not in self._groups:
             raise KeyError
 
@@ -62,42 +56,20 @@ class IconsCollection (object):
 
     def _scanIconsDir (self, folder):
         '''
-        Fill _groups and _root
+        Fill _groups and _groupsCover
         '''
-        self._root = []
         self._groups = {}
-        self._rootCover = None
         self._groupsCover = {}
 
-        rootIcons, cover = self._findIcons (folder)
-        self._root += rootIcons
+        files = [self._rootGroupName] + os.listdir (folder)
 
-        if cover is not None:
-            newBaseCover = os.path.basename (cover)
-
-            if self._rootCover is None or newBaseCover == self.COVER_FILE_NAME:
-                self._rootCover = cover
-
-        self._findGroups (folder, self._groups)
-        self._root.sort()
-
-
-    def _findGroups (self, folder, groups):
-        files = os.listdir (folder)
-
-        for fname in files:
-            fullpath = os.path.join (folder, fname)
+        for dirname in files:
+            fullpath = os.path.join (folder, dirname)
 
             if os.path.isdir (fullpath):
                 icons, cover = self._findIcons (os.path.join (fullpath))
-
-                if fname in groups:
-                    groups[fname] += icons
-                else:
-                    groups[fname] = icons
-
-                if cover is not None and fname not in self._groupsCover:
-                    self._groupsCover[fname] = cover
+                self._groups[dirname] = icons
+                self._groupsCover[dirname] = cover
 
 
     def _findIcons (self, folder):
@@ -131,32 +103,22 @@ class IconsCollection (object):
                 fname_lower.endswith (u'.bmp'))
 
 
-    def getAll (self):
-        '''
-        Return icons from all groups (root included)
-        '''
-        result = reduce (lambda x, y: x + y, self._groups.values(), []) + self._root
-        result.sort()
-
-        return result
-
-
     def getGroups (self):
         '''
         Return all group names
         '''
-        return sorted (self._groups.keys())
+        return [groupname for groupname in sorted (self._groups.keys()) if groupname != self._rootGroupName]
 
 
-    def getIcons (self, group):
+    def getIcons (self, groupname):
         '''
         Return all icons (full paths) for groups with name group
         Raise KeyError if group not exists
         '''
-        if group is None or len (group) == 0:
-            return self._root
-        else:
-            return self._groups[group]
+        if groupname is None:
+            groupname = self._rootGroupName
+
+        return self._groups[groupname]
 
 
     def addGroup (self, groupname):
@@ -220,7 +182,7 @@ class IconsCollection (object):
         files - list of full paths to icon files
         '''
         if groupname is None:
-            groupname = u''
+            groupname = self._rootGroupName
 
         grouppath = os.path.join (self._iconsDir, groupname)
 
@@ -290,7 +252,7 @@ class IconsCollection (object):
 
     def setCover (self, groupname, fname):
         if groupname is None:
-            groupname = u''
+            groupname = self._rootGroupName
 
         grouppath = os.path.join (self._iconsDir, groupname)
 

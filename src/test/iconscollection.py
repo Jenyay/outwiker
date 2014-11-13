@@ -20,56 +20,51 @@ class IconsCollectionTest (unittest.TestCase):
     def testEmpty_01 (self):
         collection = IconsCollection (u'../test/icons/Без иконок')
 
-        self.assertEqual (collection.getAll(), [])
         self.assertEqual (collection.getIcons(''), [])
         self.assertEqual (collection.getGroups(), [])
         self.assertRaises (KeyError, collection.getIcons, u'Группа')
-        self.assertRaises (KeyError, collection.getGroupCover, u'Группа')
-        self.assertIsNone (collection.getRootCover())
+        self.assertRaises (KeyError, collection.getCover, u'Группа')
+        self.assertIsNone (collection.getCover(None))
 
 
     def testEmpty_02 (self):
         collection = IconsCollection (u'../test/icons/Без иконок')
 
-        self.assertEqual (collection.getAll(), [])
         self.assertEqual (collection.getIcons(None), [])
         self.assertEqual (collection.getGroups(), [])
         self.assertRaises (KeyError, collection.getIcons, u'Группа')
-        self.assertRaises (KeyError, collection.getGroupCover, u'Группа')
-        self.assertIsNone (collection.getRootCover())
+        self.assertRaises (KeyError, collection.getCover, u'Группа')
+        self.assertIsNone (collection.getCover(u''))
 
 
     def testSingleRoot (self):
         collection = IconsCollection (u'../test/icons/Без групп')
 
         self.assertEqual (len (collection.getIcons(None)), 4)
-        self.assertEqual (len (collection.getAll()), 4)
         self.assertEqual (collection.getGroups(), [])
-        self.assertTrue (collection.getRootCover().endswith (u'__cover.png'))
+        self.assertTrue (collection.getCover(None).endswith (u'__cover.png'))
 
 
     def testGroups_01 (self):
         collection = IconsCollection (u'../test/icons/Иконки и группы')
 
         self.assertEqual (len (collection.getIcons(None)), 4)
-        self.assertEqual (len (collection.getAll()), 11)
         self.assertEqual (collection.getGroups(), [u'Группа 1', u'Группа 2'])
         self.assertEqual (len (collection.getIcons (u'Группа 1')), 3)
         self.assertEqual (len (collection.getIcons (u'Группа 2')), 4)
-        self.assertTrue (collection.getRootCover().endswith (u'gy.png'))
-        self.assertTrue (collection.getGroupCover(u'Группа 1').endswith (u'__cover.png'))
-        self.assertTrue (collection.getGroupCover(u'Группа 2').endswith (u'tg.png'))
+        self.assertTrue (collection.getCover(None).endswith (u'gy.png'))
+        self.assertTrue (collection.getCover(u'Группа 1').endswith (u'__cover.png'))
+        self.assertTrue (collection.getCover(u'Группа 2').endswith (u'tg.png'))
 
 
     def testGroups_02 (self):
         collection = IconsCollection (u'../test/icons/Только группы')
 
         self.assertEqual (len (collection.getIcons(None)), 0)
-        self.assertEqual (len (collection.getAll()), 7)
         self.assertEqual (collection.getGroups(), [u'Группа 3', u'Группа 4'])
         self.assertEqual (len (collection.getIcons (u'Группа 3')), 3)
         self.assertEqual (len (collection.getIcons (u'Группа 4')), 4)
-        self.assertIsNone (collection.getRootCover())
+        self.assertIsNone (collection.getCover(None))
 
 
     def testAddGroup_01 (self):
@@ -519,7 +514,7 @@ class IconsCollectionTest (unittest.TestCase):
 
         collection.setCover (groupname, coverpath)
         self.assertTrue (os.path.exists (newCoverPath))
-        self.assertEqual (os.path.abspath (newCoverPath), os.path.abspath (collection.getGroupCover (groupname)))
+        self.assertEqual (os.path.abspath (newCoverPath), os.path.abspath (collection.getCover (groupname)))
 
         collection.setCover (groupname, coverpath)
         self.assertTrue (os.path.exists (os.path.join (self.tempDir1, groupname, IconsCollection.COVER_FILE_NAME)))
@@ -535,7 +530,7 @@ class IconsCollectionTest (unittest.TestCase):
 
         collection.setCover (None, coverpath)
         self.assertTrue (os.path.exists (newCoverPath))
-        self.assertEqual (os.path.abspath (newCoverPath), os.path.abspath (collection.getRootCover()))
+        self.assertEqual (os.path.abspath (newCoverPath), os.path.abspath (collection.getCover (None)))
 
         collection.setCover (None, coverpath)
         self.assertTrue (os.path.exists (os.path.join (self.tempDir1, IconsCollection.COVER_FILE_NAME)))
@@ -551,7 +546,7 @@ class IconsCollectionTest (unittest.TestCase):
 
         collection.setCover (u'', coverpath)
         self.assertTrue (os.path.exists (newCoverPath))
-        self.assertEqual (os.path.abspath (newCoverPath), os.path.abspath (collection.getRootCover ()))
+        self.assertEqual (os.path.abspath (newCoverPath), os.path.abspath (collection.getCover (None)))
 
         collection.setCover (u'', coverpath)
         self.assertTrue (os.path.exists (os.path.join (self.tempDir1, IconsCollection.COVER_FILE_NAME)))
@@ -598,7 +593,7 @@ class IconsCollectionTest (unittest.TestCase):
 
         collection.setCover (groupname, coverpath)
         self.assertTrue (os.path.exists (newCoverPath))
-        self.assertEqual (os.path.abspath (newCoverPath), os.path.abspath (collection.getGroupCover (groupname)))
+        self.assertEqual (os.path.abspath (newCoverPath), os.path.abspath (collection.getCover (groupname)))
 
 
     def __getMaxImageSize (self, fname):
