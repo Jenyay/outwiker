@@ -38,6 +38,8 @@ class IconsetPanel (wx.Panel):
         self.Bind(wx.EVT_MENU, handler=self.__onRemoveIcons, id=self.REMOVE_ICONS)
         self.Bind(wx.EVT_MENU, handler=self.__onSetCover, id=self.SET_COVER)
 
+        self._groups.Bind (wx.EVT_KEY_DOWN, handler=self.__onKeyDown)
+
         self.__updateGroups()
 
 
@@ -408,3 +410,12 @@ class IconsetPanel (wx.Panel):
 
         self.__updateGroups()
         self.__selectGroupItem (group)
+
+
+    def __onKeyDown (self, event):
+        if (event.GetKeyCode() == wx.WXK_F2 and
+                not event.AltDown() and
+                not event.CmdDown() and
+                not event.ControlDown() and
+                not event.ShiftDown()):
+            self.__onRenameGroup (None)
