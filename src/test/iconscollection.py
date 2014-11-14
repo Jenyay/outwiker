@@ -210,6 +210,20 @@ class IconsCollectionTest (unittest.TestCase):
             u'')
 
 
+    def testRemoveGroup_04 (self):
+        files = [u'new.png', u'image_01.JPG']
+        fullPaths = [os.path.join (self.imagesDir, fname) for fname in files]
+
+        os.mkdir (self.tempDir1)
+
+        collection = IconsCollection (self.tempDir1)
+        collection.addGroup (u'Новая группа')
+        collection.addIcons (u'Новая группа', fullPaths)
+
+        collection.removeGroup (u'Новая группа')
+        self.assertEqual (collection.getGroups(), [])
+
+
     def testAddIcons_01_empty (self):
         files = []
         fullPaths = [os.path.join (self.imagesDir, fname) for fname in files]
