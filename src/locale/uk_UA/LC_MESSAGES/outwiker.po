@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-26 16:16+0300\n"
-"PO-Revision-Date: 2014-10-27 09:05+0300\n"
+"POT-Creation-Date: 2014-11-14 09:31+0300\n"
+"PO-Revision-Date: 2014-11-14 20:20+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
@@ -43,66 +43,6 @@ msgid ""
 "system"
 msgstr "Заголовок сторінки містить заборонені в Microsoft Windows символи"
 
-#: outwiker/core/iconscollection.py:16
-msgid "awards"
-msgstr "нагороди"
-
-#: outwiker/core/iconscollection.py:17
-msgid "battery"
-msgstr "батарейка"
-
-#: outwiker/core/iconscollection.py:18
-msgid "books"
-msgstr "книжки"
-
-#: outwiker/core/iconscollection.py:19
-msgid "computer"
-msgstr "комп'ютер"
-
-#: outwiker/core/iconscollection.py:20
-msgid "emotions"
-msgstr "емоції"
-
-#: outwiker/core/iconscollection.py:21
-msgid "flags"
-msgstr "прапори"
-
-#: outwiker/core/iconscollection.py:22
-msgid "folders"
-msgstr "папки"
-
-#: outwiker/core/iconscollection.py:23
-msgid "food"
-msgstr "продукти"
-
-#: outwiker/core/iconscollection.py:24
-msgid "internet"
-msgstr "інтернет"
-
-#: outwiker/core/iconscollection.py:25
-msgid "money"
-msgstr "гроші"
-
-#: outwiker/core/iconscollection.py:26
-msgid "people"
-msgstr "люди"
-
-#: outwiker/core/iconscollection.py:27
-msgid "signs"
-msgstr "символи"
-
-#: outwiker/core/iconscollection.py:28
-msgid "software"
-msgstr "програми"
-
-#: outwiker/core/iconscollection.py:29
-msgid "tags"
-msgstr "мітки"
-
-#: outwiker/core/iconscollection.py:30
-msgid "weather"
-msgstr "погода"
-
 #: outwiker/core/commands.py:54
 msgid "Page is opened as read-only"
 msgstr "Сторінка відкрита лише для читання"
@@ -119,20 +59,25 @@ msgstr "Сторінка відкрита лише для читання"
 #: outwiker/actions/sortsiblingsalpha.py:37
 #: outwiker/actions/movepagedown.py:40 outwiker/actions/globalsearch.py:41
 #: outwiker/actions/openattachfolder.py:38
-#: outwiker/actions/sortchildalpha.py:37 outwiker/gui/notestree.py:284
-#: outwiker/gui/notestree.py:339 outwiker/gui/mainwndcontroller.py:213
+#: outwiker/actions/sortchildalpha.py:37 outwiker/gui/notestree.py:285
+#: outwiker/gui/notestree.py:340 outwiker/gui/mainwndcontroller.py:213
 #: outwiker/gui/mainwindow.py:513 outwiker/gui/htmlrenderie.py:181
-#: outwiker/gui/htmlrenderwx.py:105 outwiker/gui/tabscontroller.py:244
-#: outwiker/gui/htmlrenderwebkit.py:232 outwiker/gui/attachpanel.py:232
-#: outwiker/gui/attachpanel.py:242 outwiker/gui/attachpanel.py:254
-#: outwiker/gui/attachpanel.py:275 outwiker/gui/attachpanel.py:285
-#: outwiker/gui/currentpagepanel.py:84 outwiker/gui/currentpagepanel.py:222
-#: outwiker/gui/currentpagepanel.py:231 outwiker/gui/pagedialog.py:27
-#: outwiker/gui/pagedialog.py:40 outwiker/gui/pagedialog.py:45
-#: outwiker/gui/pagedialog.py:137 outwiker/gui/pagedialog.py:196
-#: outwiker/gui/renametagdialog.py:75 outwiker/gui/renametagdialog.py:79
-#: outwiker/gui/basetextpanel.py:182 outwiker/gui/basetextpanel.py:195
-#: outwiker/pages/html/htmlpageview.py:596
+#: outwiker/gui/htmlrenderwx.py:105
+#: outwiker/gui/preferences/iconsetpanel.py:233
+#: outwiker/gui/preferences/iconsetpanel.py:290
+#: outwiker/gui/preferences/iconsetpanel.py:296
+#: outwiker/gui/preferences/iconsetpanel.py:302
+#: outwiker/gui/preferences/iconsetpanel.py:345
+#: outwiker/gui/tabscontroller.py:244 outwiker/gui/htmlrenderwebkit.py:232
+#: outwiker/gui/attachpanel.py:232 outwiker/gui/attachpanel.py:242
+#: outwiker/gui/attachpanel.py:254 outwiker/gui/attachpanel.py:275
+#: outwiker/gui/attachpanel.py:285 outwiker/gui/currentpagepanel.py:84
+#: outwiker/gui/currentpagepanel.py:222 outwiker/gui/currentpagepanel.py:231
+#: outwiker/gui/pagedialog.py:27 outwiker/gui/pagedialog.py:40
+#: outwiker/gui/pagedialog.py:45 outwiker/gui/pagedialog.py:137
+#: outwiker/gui/pagedialog.py:196 outwiker/gui/renametagdialog.py:75
+#: outwiker/gui/renametagdialog.py:79 outwiker/gui/basetextpanel.py:182
+#: outwiker/gui/basetextpanel.py:195 outwiker/pages/html/htmlpageview.py:596
 #: outwiker/pages/html/basehtmlpanel.py:333
 #: outwiker/pages/html/basehtmlpanel.py:337
 #: outwiker/pages/wiki/basewikipageview.py:277
@@ -256,7 +201,7 @@ msgstr "Помилка відкриття файлу %s"
 msgid "Can't parse version"
 msgstr "Помилка аналізу версії"
 
-#: outwiker/core/commands.py:400 outwiker/gui/notestree.py:338
+#: outwiker/core/commands.py:400 outwiker/gui/notestree.py:339
 msgid "You can't rename the root element"
 msgstr "Не можна перейменувати кореневий елемент"
 
@@ -289,180 +234,180 @@ msgstr "Введіть формат дати"
 msgid "Date format"
 msgstr "Формат дати"
 
-#: outwiker/core/commands.py:806 outwiker/core/commands.py:807
+#: outwiker/core/commands.py:820 outwiker/core/commands.py:821
 #: outwiker/gui/editorstyleslist.py:25
 msgid "Bold"
 msgstr "Жирний"
 
-#: outwiker/core/commands.py:812 outwiker/core/commands.py:813
+#: outwiker/core/commands.py:826 outwiker/core/commands.py:827
 #: outwiker/gui/editorstyleslist.py:26
 msgid "Italic"
 msgstr "Курсив"
 
-#: outwiker/core/commands.py:818 outwiker/core/commands.py:819
+#: outwiker/core/commands.py:832 outwiker/core/commands.py:833
 msgid "Bold italic"
 msgstr "Жирний курсив"
 
-#: outwiker/core/commands.py:824 outwiker/core/commands.py:825
+#: outwiker/core/commands.py:838 outwiker/core/commands.py:839
 #: outwiker/gui/editorstyleslist.py:27
 msgid "Underline"
 msgstr "Підкреслений"
 
-#: outwiker/core/commands.py:830 outwiker/core/commands.py:831
+#: outwiker/core/commands.py:844 outwiker/core/commands.py:845
 msgid "Strikethrough"
 msgstr "Закреслений"
 
-#: outwiker/core/commands.py:836 outwiker/core/commands.py:837
+#: outwiker/core/commands.py:850 outwiker/core/commands.py:851
 msgid "Subscript"
 msgstr "Нижній індекс"
 
-#: outwiker/core/commands.py:842 outwiker/core/commands.py:843
+#: outwiker/core/commands.py:856 outwiker/core/commands.py:857
 msgid "Superscript"
 msgstr "Верхній індекс"
 
-#: outwiker/core/commands.py:848 outwiker/core/commands.py:849
+#: outwiker/core/commands.py:862 outwiker/core/commands.py:863
 msgid "Preformatted text"
 msgstr "Форматований текст"
 
-#: outwiker/core/commands.py:854
+#: outwiker/core/commands.py:868
 msgid "Insert code"
 msgstr "Вставити код"
 
-#: outwiker/core/commands.py:855
+#: outwiker/core/commands.py:869
 msgid "Insert code (monospaced font)"
 msgstr "Вставити код (моноширинний шрифт)"
 
-#: outwiker/core/commands.py:863 outwiker/core/commands.py:864
+#: outwiker/core/commands.py:877 outwiker/core/commands.py:878
 msgid "Align text left"
 msgstr "Вирівнювання по лівому краю"
 
-#: outwiker/core/commands.py:869 outwiker/core/commands.py:870
+#: outwiker/core/commands.py:883 outwiker/core/commands.py:884
 msgid "Center"
 msgstr "Вирівнювання по центру"
 
-#: outwiker/core/commands.py:875 outwiker/core/commands.py:876
+#: outwiker/core/commands.py:889 outwiker/core/commands.py:890
 msgid "Align text right"
 msgstr "Вирівнювання по правому краю"
 
-#: outwiker/core/commands.py:881 outwiker/core/commands.py:882
+#: outwiker/core/commands.py:895 outwiker/core/commands.py:896
 msgid "Justify"
 msgstr "Вирівнювання по ширині"
 
-#: outwiker/core/commands.py:889 outwiker/core/commands.py:890
+#: outwiker/core/commands.py:903 outwiker/core/commands.py:904
 msgid "First-level heading"
 msgstr "Заголовок першого рівня"
 
-#: outwiker/core/commands.py:895 outwiker/core/commands.py:896
+#: outwiker/core/commands.py:909 outwiker/core/commands.py:910
 msgid "Second-level heading"
 msgstr "Заголовок другого рівня"
 
-#: outwiker/core/commands.py:901 outwiker/core/commands.py:902
+#: outwiker/core/commands.py:915 outwiker/core/commands.py:916
 msgid "Subtitle three"
 msgstr "Заголовок третього рівня"
 
-#: outwiker/core/commands.py:907 outwiker/core/commands.py:908
+#: outwiker/core/commands.py:921 outwiker/core/commands.py:922
 msgid "Subtitle four"
 msgstr "Заголовок четвертого рівня"
 
-#: outwiker/core/commands.py:913 outwiker/core/commands.py:914
+#: outwiker/core/commands.py:927 outwiker/core/commands.py:928
 msgid "Subtitle five"
 msgstr "Заголовок п’ятого рівня"
 
-#: outwiker/core/commands.py:919 outwiker/core/commands.py:920
+#: outwiker/core/commands.py:933 outwiker/core/commands.py:934
 msgid "Subtitle six"
 msgstr "Заголовок шостого рівня"
 
-#: outwiker/core/commands.py:926 outwiker/core/commands.py:927
+#: outwiker/core/commands.py:940 outwiker/core/commands.py:941
 msgid "Anchor"
 msgstr "Якір"
 
-#: outwiker/core/commands.py:932 outwiker/core/commands.py:933
+#: outwiker/core/commands.py:946 outwiker/core/commands.py:947
 msgid "Horizontal rule"
 msgstr "Горизонтальна лінія"
 
-#: outwiker/core/commands.py:938 outwiker/gui/linkdialog.py:17
+#: outwiker/core/commands.py:952 outwiker/gui/linkdialog.py:17
 #: outwiker/gui/linkdialog.py:35
 #: outwiker/gui/preferences/wikieditorpanel.py:37
 msgid "Link"
 msgstr "Посилання"
 
-#: outwiker/core/commands.py:939
+#: outwiker/core/commands.py:953
 msgid "Insert Link"
 msgstr "Вставити посилання"
 
-#: outwiker/core/commands.py:944
+#: outwiker/core/commands.py:958
 msgid "Quote"
 msgstr "Цитування"
 
-#: outwiker/core/commands.py:945
+#: outwiker/core/commands.py:959
 msgid "Insert a quote block"
 msgstr "Вставити цитату"
 
-#: outwiker/core/commands.py:950
+#: outwiker/core/commands.py:964
 msgid "Image"
 msgstr "Зображення"
 
-#: outwiker/core/commands.py:951
+#: outwiker/core/commands.py:965
 msgid "Insert image"
 msgstr "Вставити зображення"
 
-#: outwiker/core/commands.py:958
+#: outwiker/core/commands.py:972
 msgid "Bullets list"
 msgstr "Маркірований список"
 
-#: outwiker/core/commands.py:959
+#: outwiker/core/commands.py:973
 msgid "Insert a bullets list"
 msgstr "Вставити ненумерований список"
 
-#: outwiker/core/commands.py:964
+#: outwiker/core/commands.py:978
 msgid "Numbers list"
 msgstr "Нумерований список"
 
-#: outwiker/core/commands.py:965
+#: outwiker/core/commands.py:979
 msgid "Insert a numbers list"
 msgstr "Вставити нумерований список"
 
-#: outwiker/core/commands.py:970
+#: outwiker/core/commands.py:984
 msgid "Line break"
 msgstr "Розрив рядка"
 
-#: outwiker/core/commands.py:971
+#: outwiker/core/commands.py:985
 msgid "Insert a line break"
 msgstr "Вставити розрив рядка"
 
-#: outwiker/core/commands.py:976 outwiker/core/commands.py:977
+#: outwiker/core/commands.py:990 outwiker/core/commands.py:991
 msgid "Convert HTML Symbols"
 msgstr "Конвертувати символи в HTML"
 
-#: outwiker/core/commands.py:984 outwiker/pages/html/htmlpageview.py:218
+#: outwiker/core/commands.py:998 outwiker/pages/html/htmlpageview.py:218
 msgid "Table"
 msgstr "Таблиця"
 
-#: outwiker/core/commands.py:985
+#: outwiker/core/commands.py:999
 msgid "Insert a table"
 msgstr "Вставити таблицю"
 
-#: outwiker/core/commands.py:990
+#: outwiker/core/commands.py:1004
 msgid "Table row"
 msgstr "Рядок таблиці"
 
-#: outwiker/core/commands.py:991
+#: outwiker/core/commands.py:1005
 msgid "Insert a table row"
 msgstr "Вставити рядок таблиці"
 
-#: outwiker/core/commands.py:996
+#: outwiker/core/commands.py:1010
 msgid "Table cell"
 msgstr "Комірка таблиці"
 
-#: outwiker/core/commands.py:997
+#: outwiker/core/commands.py:1011
 msgid "Insert a table cell"
 msgstr "Вставити комірку таблиці"
 
-#: outwiker/core/commands.py:1002
+#: outwiker/core/commands.py:1016
 msgid "Current date"
 msgstr "Поточна дата"
 
-#: outwiker/core/commands.py:1003
+#: outwiker/core/commands.py:1017
 msgid "Insert the current date"
 msgstr "Вставити поточну дату"
 
@@ -686,7 +631,7 @@ msgstr "Встановити стиль для гілки"
 msgid "Style"
 msgstr "Стиль"
 
-#: outwiker/actions/applystyle.py:122 outwiker/gui/basepagedialog.py:94
+#: outwiker/actions/applystyle.py:122 outwiker/gui/basepagedialog.py:95
 msgid "Default"
 msgstr "За замовчуванням"
 
@@ -914,16 +859,76 @@ msgstr "Нотатка"
 msgid "Notes"
 msgstr "Нотатки"
 
+#: outwiker/gui/iconslocales.py:9
+msgid "awards"
+msgstr "нагороди"
+
+#: outwiker/gui/iconslocales.py:10
+msgid "battery"
+msgstr "батарейка"
+
+#: outwiker/gui/iconslocales.py:11
+msgid "books"
+msgstr "книжки"
+
+#: outwiker/gui/iconslocales.py:12
+msgid "computer"
+msgstr "комп'ютер"
+
+#: outwiker/gui/iconslocales.py:13
+msgid "emotions"
+msgstr "емоції"
+
+#: outwiker/gui/iconslocales.py:14
+msgid "flags"
+msgstr "прапори"
+
+#: outwiker/gui/iconslocales.py:15
+msgid "folders"
+msgstr "папки"
+
+#: outwiker/gui/iconslocales.py:16
+msgid "food"
+msgstr "продукти"
+
+#: outwiker/gui/iconslocales.py:17
+msgid "internet"
+msgstr "інтернет"
+
+#: outwiker/gui/iconslocales.py:18
+msgid "money"
+msgstr "гроші"
+
+#: outwiker/gui/iconslocales.py:19
+msgid "people"
+msgstr "люди"
+
+#: outwiker/gui/iconslocales.py:20
+msgid "signs"
+msgstr "символи"
+
+#: outwiker/gui/iconslocales.py:21
+msgid "software"
+msgstr "програми"
+
+#: outwiker/gui/iconslocales.py:22
+msgid "tags"
+msgstr "мітки"
+
+#: outwiker/gui/iconslocales.py:23
+msgid "weather"
+msgstr "погода"
+
 #: outwiker/gui/toolbars/generaltoolbar.py:25
-#: outwiker/gui/basepagedialog.py:39
-#: outwiker/gui/preferences/prefdialog.py:127
-#: outwiker/gui/preferences/prefdialog.py:143
+#: outwiker/gui/basepagedialog.py:40
+#: outwiker/gui/preferences/prefdialog.py:129
+#: outwiker/gui/preferences/prefdialog.py:145
 #: outwiker/pages/wiki/wikipage.py:85
 msgid "General"
 msgstr "Загальні"
 
 #: outwiker/gui/toolbars/pluginstoolbar.py:25
-#: outwiker/gui/preferences/prefdialog.py:153
+#: outwiker/gui/preferences/prefdialog.py:155
 msgid "Plugins"
 msgstr "Додатки"
 
@@ -960,7 +965,7 @@ msgstr "Замінити всі:"
 msgid "Comment"
 msgstr "Коментар"
 
-#: outwiker/gui/notestree.py:283
+#: outwiker/gui/notestree.py:284
 msgid ""
 "Can't save page options\n"
 "{}"
@@ -995,40 +1000,41 @@ msgstr ""
 msgid "Can't execute file '%s'"
 msgstr "Помилка виконання файла '%s'"
 
-#: outwiker/gui/basepagedialog.py:40
+#: outwiker/gui/basepagedialog.py:41
 msgid "Icon"
 msgstr "Піктограма"
 
-#: outwiker/gui/basepagedialog.py:41
+#: outwiker/gui/basepagedialog.py:42
 msgid "Appearance"
 msgstr "Зовнішній вигляд"
 
-#: outwiker/gui/basepagedialog.py:56
+#: outwiker/gui/basepagedialog.py:57
 msgid "Create Page"
 msgstr "Створити сторінку"
 
-#: outwiker/gui/basepagedialog.py:92
+#: outwiker/gui/basepagedialog.py:93
 msgid "Do not change"
 msgstr "Не змінювати"
 
-#: outwiker/gui/basepagedialog.py:209
+#: outwiker/gui/basepagedialog.py:213
 #: outwiker/pages/search/sortstrategies.py:55
 msgid "Title"
 msgstr "Заголовок"
 
-#: outwiker/gui/basepagedialog.py:220
+#: outwiker/gui/basepagedialog.py:224
 msgid "Page type"
 msgstr "Тип сторінки"
 
-#: outwiker/gui/basepagedialog.py:263
+#: outwiker/gui/basepagedialog.py:268
+#: outwiker/gui/preferences/iconsetpanel.py:182
 msgid "Not in groups"
 msgstr "без групи"
 
-#: outwiker/gui/basepagedialog.py:282 outwiker/gui/iconlistctrl.py:25
+#: outwiker/gui/basepagedialog.py:290 outwiker/gui/iconlistctrl.py:25
 msgid "Invalid icon file: {}"
 msgstr "Помилка в файлі іконки: {}"
 
-#: outwiker/gui/basepagedialog.py:346
+#: outwiker/gui/basepagedialog.py:367
 msgid "Page style"
 msgstr "Стиль сторінки"
 
@@ -1112,7 +1118,7 @@ msgstr "Рік (повністю)"
 msgid "A literal '%' character"
 msgstr "Символ '%'"
 
-#: outwiker/gui/preferences/editorpanel.py:33
+#: outwiker/gui/preferences/editorpanel.py:32
 #: outwiker/gui/preferences/textprintpanel.py:28
 #: outwiker/gui/preferences/htmlrenderpanel.py:27
 #: outwiker/pages/html/htmlpageview.py:214
@@ -1120,15 +1126,15 @@ msgstr "Символ '%'"
 msgid "Font"
 msgstr "Шрифт"
 
-#: outwiker/gui/preferences/editorpanel.py:35
+#: outwiker/gui/preferences/editorpanel.py:34
 msgid "Show line numbers"
 msgstr "Показувати номери рядків"
 
-#: outwiker/gui/preferences/editorpanel.py:36
+#: outwiker/gui/preferences/editorpanel.py:35
 msgid "Tab width"
 msgstr "Розмір табуляції"
 
-#: outwiker/gui/preferences/editorpanel.py:46
+#: outwiker/gui/preferences/editorpanel.py:45
 msgid ""
 "Home / End keys moves the cursor \n"
 "to the beginning / end of "
@@ -1136,25 +1142,117 @@ msgstr ""
 "Клавіші Home / End переводять курсор\n"
 "на початок "
 
-#: outwiker/gui/preferences/editorpanel.py:49
+#: outwiker/gui/preferences/editorpanel.py:48
 msgid "Line"
 msgstr "Рядка"
 
-#: outwiker/gui/preferences/editorpanel.py:49
+#: outwiker/gui/preferences/editorpanel.py:48
 msgid "Paragraph"
 msgstr "Параграфу"
 
-#: outwiker/gui/preferences/editorpanel.py:52
+#: outwiker/gui/preferences/editorpanel.py:51
 msgid "Font color"
 msgstr "Колір шрифту"
 
-#: outwiker/gui/preferences/editorpanel.py:56
+#: outwiker/gui/preferences/editorpanel.py:55
 msgid "Background color"
 msgstr "Колір фону"
 
 #: outwiker/gui/preferences/hotkeyspanel.py:90
 msgid "Actions with the same hotkey"
 msgstr "Дії з тією ж клавішею"
+
+#: outwiker/gui/preferences/iconsetpanel.py:52
+#: outwiker/gui/preferences/iconsetpanel.py:56
+msgid "Add new group"
+msgstr "Додати нову групу"
+
+#: outwiker/gui/preferences/iconsetpanel.py:61
+#: outwiker/gui/preferences/iconsetpanel.py:65
+msgid "Remove group"
+msgstr "Видалити групу"
+
+#: outwiker/gui/preferences/iconsetpanel.py:70
+#: outwiker/gui/preferences/iconsetpanel.py:74
+msgid "Rename group"
+msgstr "Перейменувати групу"
+
+#: outwiker/gui/preferences/iconsetpanel.py:83
+#: outwiker/gui/preferences/iconsetpanel.py:87
+msgid "Add icons"
+msgstr "Додати значки"
+
+#: outwiker/gui/preferences/iconsetpanel.py:92
+#: outwiker/gui/preferences/iconsetpanel.py:96
+msgid "Remove selected icons"
+msgstr "Видалити вибрані значки"
+
+#: outwiker/gui/preferences/iconsetpanel.py:101
+#: outwiker/gui/preferences/iconsetpanel.py:105
+msgid "Set icon as group cover"
+msgstr "Встановити значок як обкладинку групи"
+
+#: outwiker/gui/preferences/iconsetpanel.py:232
+msgid "Can't create directory for icons group"
+msgstr "Неможливо створити каталог для групи значків"
+
+#: outwiker/gui/preferences/iconsetpanel.py:262
+msgid "New group{}"
+msgstr "Нова група{}"
+
+#: outwiker/gui/preferences/iconsetpanel.py:289
+msgid "Can't rename directory for icons group"
+msgstr "Неможливо перейменувати каталог групи значків"
+
+#: outwiker/gui/preferences/iconsetpanel.py:295
+msgid "Group with name \"{}\" exists already"
+msgstr "Група з іменем \"{}\" вже існує"
+
+#: outwiker/gui/preferences/iconsetpanel.py:301
+msgid "Invalid group name \"{}\""
+msgstr "Неприпустиме ім'я групи  \"{}\""
+
+#: outwiker/gui/preferences/iconsetpanel.py:337
+msgid "Remove group \"{}\" and all icons inside it?"
+msgstr "Видалити групу \"{}\" і всі значки в ній?"
+
+#: outwiker/gui/preferences/iconsetpanel.py:338
+msgid "Remove group?"
+msgstr "Видалити групу?"
+
+#: outwiker/gui/preferences/iconsetpanel.py:344
+msgid "Can't remove group directory"
+msgstr "Неможливо видалити каталог групи"
+
+#: outwiker/gui/preferences/iconsetpanel.py:353
+msgid "All image files"
+msgstr "Всі файли зображень"
+
+#: outwiker/gui/preferences/iconsetpanel.py:354
+msgid "All files"
+msgstr "Всі файли"
+
+#: outwiker/gui/preferences/iconsetpanel.py:359
+msgid "Select images"
+msgstr "Виберіть зображення"
+
+#: outwiker/gui/preferences/iconsetpanel.py:376
+#: outwiker/gui/preferences/iconsetpanel.py:401
+msgid "You have not selected any icons"
+msgstr "Ви не вибрали жодного значка"
+
+#: outwiker/gui/preferences/iconsetpanel.py:377
+#: outwiker/gui/preferences/iconsetpanel.py:402
+msgid "Select icons"
+msgstr "Виберіть значки"
+
+#: outwiker/gui/preferences/iconsetpanel.py:382
+msgid "Remove selected icons?"
+msgstr "Видалити вибрані значки?"
+
+#: outwiker/gui/preferences/iconsetpanel.py:383
+msgid "Remove icons"
+msgstr "Видалити значки"
 
 #: outwiker/gui/preferences/htmleditorpanel.py:37
 msgid "Tag"
@@ -1188,38 +1286,42 @@ msgstr "Ці налаштування призначені виключно дл
 msgid "Page Options..."
 msgstr "Налаштування сторінки..."
 
-#: outwiker/gui/preferences/prefdialog.py:80
+#: outwiker/gui/preferences/prefdialog.py:82
 msgid "Preferences"
 msgstr "Параметри"
 
-#: outwiker/gui/preferences/prefdialog.py:128
+#: outwiker/gui/preferences/prefdialog.py:130
 #: outwiker/pages/html/basehtmlpanel.py:202
 msgid "Preview"
 msgstr "Перегляд"
 
-#: outwiker/gui/preferences/prefdialog.py:129
+#: outwiker/gui/preferences/prefdialog.py:131
 msgid "Text Printout"
 msgstr "Друк тексту"
 
-#: outwiker/gui/preferences/prefdialog.py:131
+#: outwiker/gui/preferences/prefdialog.py:133
 msgid "Interface"
 msgstr "Інтерфейс"
 
-#: outwiker/gui/preferences/prefdialog.py:144
+#: outwiker/gui/preferences/prefdialog.py:146
 msgid "HTML Editor"
 msgstr "HTML-редактор"
 
-#: outwiker/gui/preferences/prefdialog.py:145
+#: outwiker/gui/preferences/prefdialog.py:147
 msgid "Wiki Editor"
 msgstr "Вікіредактор"
 
-#: outwiker/gui/preferences/prefdialog.py:148
+#: outwiker/gui/preferences/prefdialog.py:150
 msgid "Editor"
 msgstr "Редактор"
 
-#: outwiker/gui/preferences/prefdialog.py:158
+#: outwiker/gui/preferences/prefdialog.py:160
 msgid "Hotkeys"
 msgstr "Гарячі клавіші"
+
+#: outwiker/gui/preferences/prefdialog.py:165
+msgid "User's iconset"
+msgstr "Значки користувача"
 
 #: outwiker/gui/preferences/wikieditorpanel.py:38
 #: outwiker/pages/html/htmlpageview.py:213
