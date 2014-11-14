@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-14 09:31+0300\n"
+"POT-Creation-Date: 2014-11-14 21:57+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1006,16 +1006,20 @@ msgstr ""
 msgid "Page type"
 msgstr ""
 
-#: outwiker/gui/basepagedialog.py:268
+#: outwiker/gui/basepagedialog.py:269
 #: outwiker/gui/preferences/iconsetpanel.py:182
 msgid "Not in groups"
 msgstr ""
 
-#: outwiker/gui/basepagedialog.py:290 outwiker/gui/iconlistctrl.py:25
+#: outwiker/gui/basepagedialog.py:271
+msgid "Not in groups [custom]"
+msgstr ""
+
+#: outwiker/gui/basepagedialog.py:291 outwiker/gui/iconlistctrl.py:25
 msgid "Invalid icon file: {}"
 msgstr ""
 
-#: outwiker/gui/basepagedialog.py:367
+#: outwiker/gui/basepagedialog.py:360
 msgid "Page style"
 msgstr ""
 

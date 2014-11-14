@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-14 09:31+0300\n"
+"POT-Creation-Date: 2014-11-14 21:57+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -1028,16 +1028,20 @@ msgstr "Заголовок"
 msgid "Page type"
 msgstr "Тип страницы"
 
-#: outwiker/gui/basepagedialog.py:268
+#: outwiker/gui/basepagedialog.py:269
 #: outwiker/gui/preferences/iconsetpanel.py:182
 msgid "Not in groups"
 msgstr "Без групп"
 
-#: outwiker/gui/basepagedialog.py:290 outwiker/gui/iconlistctrl.py:25
+#: outwiker/gui/basepagedialog.py:271
+msgid "Not in groups [custom]"
+msgstr "Без групп [пользовательские]"
+
+#: outwiker/gui/basepagedialog.py:291 outwiker/gui/iconlistctrl.py:25
 msgid "Invalid icon file: {}"
 msgstr "Ошибка в файле значка: {}"
 
-#: outwiker/gui/basepagedialog.py:367
+#: outwiker/gui/basepagedialog.py:360
 msgid "Page style"
 msgstr "Стиль страницы"
 
