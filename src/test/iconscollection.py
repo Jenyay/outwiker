@@ -155,6 +155,24 @@ class IconsCollectionTest (unittest.TestCase):
         self.assertEqual (newcollection.getGroups(), [u'Новая группа'])
 
 
+    def testRenameGroup_04_self (self):
+        files = [u'new.png', u'image_01.JPG']
+        fullPaths = [os.path.join (self.imagesDir, fname) for fname in files]
+        os.mkdir (self.tempDir1)
+
+        collection = IconsCollection (self.tempDir1)
+        collection.addGroup (u'Новая группа')
+        collection.addIcons (u'Новая группа', fullPaths)
+
+        collection.renameGroup (u'Новая группа', u'Новая группа')
+        self.assertEqual (collection.getGroups(), [u'Новая группа'])
+        self.assertEqual (len (collection.getIcons (u'Новая группа')), 2)
+
+        newcollection = IconsCollection (self.tempDir1)
+        self.assertEqual (newcollection.getGroups(), [u'Новая группа'])
+        self.assertEqual (len (newcollection.getIcons (u'Новая группа')), 2)
+
+
     def testRenameGroup_04_invalid (self):
         os.mkdir (self.tempDir1)
 
