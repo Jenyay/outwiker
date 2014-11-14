@@ -1324,7 +1324,7 @@ msgstr "Горячие клавиши"
 
 #: outwiker/gui/preferences/prefdialog.py:165
 msgid "User's iconset"
-msgstr "Пользовательские значки"
+msgstr "Значки пользователя"
 
 #: outwiker/gui/preferences/wikieditorpanel.py:38
 #: outwiker/pages/html/htmlpageview.py:213
