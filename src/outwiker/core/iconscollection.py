@@ -89,8 +89,6 @@ class IconsCollection (object):
                     cover = fullpath
                 else:
                     result.append (fullpath)
-                    if cover is None:
-                        cover = fullpath
 
         return (result, cover)
 

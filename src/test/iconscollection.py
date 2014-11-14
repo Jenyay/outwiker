@@ -52,9 +52,9 @@ class IconsCollectionTest (unittest.TestCase):
         self.assertEqual (collection.getGroups(), [u'Группа 1', u'Группа 2'])
         self.assertEqual (len (collection.getIcons (u'Группа 1')), 3)
         self.assertEqual (len (collection.getIcons (u'Группа 2')), 4)
-        self.assertTrue (collection.getCover(None).endswith (u'gy.png'))
+        self.assertIsNone (collection.getCover(None))
         self.assertTrue (collection.getCover(u'Группа 1').endswith (u'__cover.png'))
-        self.assertTrue (collection.getCover(u'Группа 2').endswith (u'tg.png'))
+        self.assertIsNone (collection.getCover(u'Группа 2'))
 
 
     def testGroups_02 (self):
@@ -270,6 +270,7 @@ class IconsCollectionTest (unittest.TestCase):
 
         icons = collection.getIcons (None)
         self.assertIn (u'new.png', icons[0])
+        self.assertIsNone (collection.getCover (None))
 
 
     def testAddIcons_06 (self):
@@ -315,6 +316,7 @@ class IconsCollectionTest (unittest.TestCase):
         self.assertEqual (len (icons), 2)
         self.assertIn (u'image_01.png', icons[0])
         self.assertIn (u'new.png', icons[1])
+        self.assertIsNone (collection.getCover (u'Новая группа'))
 
 
     def testAddIcons_09 (self):
