@@ -96,7 +96,7 @@ class IconListCtrl (wx.ScrolledWindow):
     Control with icons for pages
     """
     def __init__ (self, parent, multiselect=False):
-        wx.ScrolledWindow.__init__ (self, parent, style = wx.BORDER_THEME | wx.SUNKEN_BORDER)
+        wx.ScrolledWindow.__init__ (self, parent, style = wx.BORDER_THEME)
 
         self.cellWidth = 32
         self.cellHeight = 32

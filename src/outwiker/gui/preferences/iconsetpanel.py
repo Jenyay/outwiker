@@ -31,79 +31,17 @@ class IconsetPanel (wx.Panel):
         self._groups.Bind (wx.EVT_TREE_BEGIN_LABEL_EDIT, self.__onBeginLabelEdit)
         self._groups.Bind (wx.EVT_TREE_END_LABEL_EDIT, self.__onEndLabelEdit)
 
-        self.Bind(wx.EVT_MENU, handler=self.__onAddGroup, id=self.ADD_GROUP)
-        self.Bind(wx.EVT_MENU, handler=self.__onRenameGroup, id=self.RENAME_GROUP)
-        self.Bind(wx.EVT_MENU, handler=self.__onRemoveGroup, id=self.REMOVE_GROUP)
+        self.Bind(wx.EVT_BUTTON, handler=self.__onAddGroup, id=self.ADD_GROUP)
+        self.Bind(wx.EVT_BUTTON, handler=self.__onRenameGroup, id=self.RENAME_GROUP)
+        self.Bind(wx.EVT_BUTTON, handler=self.__onRemoveGroup, id=self.REMOVE_GROUP)
 
-        self.Bind(wx.EVT_MENU, handler=self.__onAddIcons, id=self.ADD_ICONS)
-        self.Bind(wx.EVT_MENU, handler=self.__onRemoveIcons, id=self.REMOVE_ICONS)
-        self.Bind(wx.EVT_MENU, handler=self.__onSetCover, id=self.SET_COVER)
+        self.Bind(wx.EVT_BUTTON, handler=self.__onAddIcons, id=self.ADD_ICONS)
+        self.Bind(wx.EVT_BUTTON, handler=self.__onRemoveIcons, id=self.REMOVE_ICONS)
+        self.Bind(wx.EVT_BUTTON, handler=self.__onSetCover, id=self.SET_COVER)
 
         self._groups.Bind (wx.EVT_KEY_DOWN, handler=self.__onKeyDown)
 
         self.__updateGroups()
-
-
-    def __fillGroupsToolbar (self):
-        imagesDir = getImagesDir()
-
-        self._groupsToolbar.AddLabelTool(
-            self.ADD_GROUP,
-            _(u"Add new group"),
-            wx.Bitmap(os.path.join (imagesDir, "add.png"), wx.BITMAP_TYPE_ANY),
-            wx.NullBitmap,
-            wx.ITEM_NORMAL,
-            _(u"Add new group"),
-            "")
-
-        self._groupsToolbar.AddLabelTool(
-            self.REMOVE_GROUP,
-            _(u"Remove group"),
-            wx.Bitmap(os.path.join (imagesDir, "remove.png"), wx.BITMAP_TYPE_ANY),
-            wx.NullBitmap,
-            wx.ITEM_NORMAL,
-            _(u"Remove group"),
-            "")
-
-        self._groupsToolbar.AddLabelTool(
-            self.RENAME_GROUP,
-            _(u"Rename group"),
-            wx.Bitmap(os.path.join (imagesDir, "pencil.png"), wx.BITMAP_TYPE_ANY),
-            wx.NullBitmap,
-            wx.ITEM_NORMAL,
-            _(u"Rename group"),
-            "")
-
-
-    def __fillIconsToolbar (self):
-        imagesDir = getImagesDir()
-
-        self._iconsToolbar.AddLabelTool(
-            self.ADD_ICONS,
-            _(u"Add icons"),
-            wx.Bitmap(os.path.join (imagesDir, "add.png"), wx.BITMAP_TYPE_ANY),
-            wx.NullBitmap,
-            wx.ITEM_NORMAL,
-            _(u"Add icons"),
-            "")
-
-        self._iconsToolbar.AddLabelTool(
-            self.REMOVE_ICONS,
-            _(u"Remove selected icons"),
-            wx.Bitmap(os.path.join (imagesDir, "remove.png"), wx.BITMAP_TYPE_ANY),
-            wx.NullBitmap,
-            wx.ITEM_NORMAL,
-            _(u"Remove selected icons"),
-            "")
-
-        self._iconsToolbar.AddLabelTool(
-            self.SET_COVER,
-            _(u"Set icon as group cover"),
-            wx.Bitmap(os.path.join (imagesDir, "picture.png"), wx.BITMAP_TYPE_ANY),
-            wx.NullBitmap,
-            wx.ITEM_NORMAL,
-            _(u"Set icon as group cover"),
-            "")
 
 
     def __createGuiElements (self):
@@ -125,16 +63,41 @@ class IconsetPanel (wx.Panel):
         self._imagelist = wx.ImageList(ICON_WIDTH, ICON_HEIGHT)
         self._groups.AssignImageList (self._imagelist)
 
-        # Toolbar for groups
-        self._groupsToolbar = wx.ToolBar (
-            self,
-            -1,
-            style = wx.TB_HORIZONTAL | wx.TB_FLAT)
+        imagesDir = getImagesDir()
 
-        self.__fillGroupsToolbar()
+        # Buttons for groups
+        groupButtonsSizer = wx.BoxSizer (wx.HORIZONTAL)
+
+        # Add a group
+        addGroupBtn = wx.BitmapButton (
+            self,
+            id=self.ADD_GROUP,
+            bitmap=wx.Bitmap (os.path.join (imagesDir, "add.png"))
+        )
+        addGroupBtn.SetToolTipString (_(u"Add new group"))
+
+        # Remove a group
+        removeGroupBtn = wx.BitmapButton (
+            self,
+            id=self.REMOVE_GROUP,
+            bitmap=wx.Bitmap (os.path.join (imagesDir, "remove.png"))
+        )
+        removeGroupBtn.SetToolTipString (_(u"Remove group"))
+
+        # Rename a group
+        renameGroupBtn = wx.BitmapButton (
+            self,
+            id=self.RENAME_GROUP,
+            bitmap=wx.Bitmap (os.path.join (imagesDir, "pencil.png"))
+        )
+        renameGroupBtn.SetToolTipString (_(u"Rename group"))
+
+        groupButtonsSizer.Add (addGroupBtn, flag=wx.ALL, border=0)
+        groupButtonsSizer.Add (removeGroupBtn, flag=wx.ALL, border=0)
+        groupButtonsSizer.Add (renameGroupBtn, flag=wx.ALL, border=0)
 
         groupsSizer.Add (self._groups, 1, wx.RIGHT | wx.EXPAND, border = 2)
-        groupsSizer.Add (self._groupsToolbar, 1, wx.RIGHT | wx.EXPAND, border = 2)
+        groupsSizer.Add (groupButtonsSizer, 1, wx.RIGHT | wx.EXPAND, border = 2)
 
         #
         # Controls for icons in the group
@@ -144,15 +107,39 @@ class IconsetPanel (wx.Panel):
 
         self._iconsList = IconListCtrl (self, True)
 
-        # Toolbar for icons in the group
-        self._iconsToolbar = wx.ToolBar (
-            self,
-            -1,
-            style = wx.TB_HORIZONTAL | wx.TB_FLAT)
+        # Buttons for icons in the group
+        iconsButtonsSizer = wx.BoxSizer (wx.HORIZONTAL)
 
-        self.__fillIconsToolbar()
+        # Add icons
+        addIconsBtn = wx.BitmapButton (
+            self,
+            id=self.ADD_ICONS,
+            bitmap=wx.Bitmap (os.path.join (imagesDir, "add.png"))
+        )
+        addIconsBtn.SetToolTipString (_(u"Add icons"))
+
+        # Remove icons
+        removeIconsBtn = wx.BitmapButton (
+            self,
+            id=self.REMOVE_ICONS,
+            bitmap=wx.Bitmap (os.path.join (imagesDir, "remove.png"))
+        )
+        removeIconsBtn.SetToolTipString (_(u"Remove selected icons"))
+
+        # Set icon as group cover
+        setCoverBtn = wx.BitmapButton (
+            self,
+            id=self.SET_COVER,
+            bitmap=wx.Bitmap (os.path.join (imagesDir, "picture.png"))
+        )
+        setCoverBtn.SetToolTipString (_(u"Set icon as group cover"))
+
+        iconsButtonsSizer.Add (addIconsBtn, flag=wx.ALL, border=0)
+        iconsButtonsSizer.Add (removeIconsBtn, flag=wx.ALL, border=0)
+        iconsButtonsSizer.Add (setCoverBtn, flag=wx.ALL, border=0)
+
         iconsSizer.Add (self._iconsList, 1, wx.LEFT | wx.EXPAND, border = 2)
-        iconsSizer.Add (self._iconsToolbar, 1, wx.LEFT | wx.EXPAND, border = 2)
+        iconsSizer.Add (iconsButtonsSizer, 1, wx.LEFT | wx.EXPAND, border = 2)
 
         # Main sizer
         mainSizer.Add (groupsSizer, 1, wx.ALL | wx.EXPAND, border = 0)
