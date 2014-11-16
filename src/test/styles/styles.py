@@ -10,7 +10,7 @@ from outwiker.core.application import Application
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.htmlgenerator import HtmlGenerator
 from outwiker.pages.html.htmlpage import HtmlPageFactory
-from test.utils import removeWiki
+from test.utils import removeDir
 
 
 class StylesTest (unittest.TestCase):
@@ -21,7 +21,7 @@ class StylesTest (unittest.TestCase):
 
         # Здесь будет создаваться вики
         self.path = u"../test/testwiki"
-        removeWiki (self.path)
+        removeDir (self.path)
         self.eventcount = 0
 
         self.wikiroot = WikiDocument.create (self.path)
@@ -46,7 +46,7 @@ class StylesTest (unittest.TestCase):
 
     def tearDown (self):
         Application.onPageUpdate -= self.onPageUpdate
-        removeWiki (self.path)
+        removeDir (self.path)
 
 
     def testDefault (self):

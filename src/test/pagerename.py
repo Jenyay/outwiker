@@ -10,13 +10,13 @@ from outwiker.core.application import Application
 from outwiker.core.exceptions import DublicateTitle
 from outwiker.core.tree import WikiDocument
 
-from test.utils import removeWiki
+from test.utils import removeDir
 
 
 class RenameTest (unittest.TestCase):
     def setUp (self):
         self.path = u"../test/testwiki"
-        removeWiki (self.path)
+        removeDir (self.path)
 
         self.wikiroot = WikiDocument.create (self.path)
 

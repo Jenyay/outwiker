@@ -2,32 +2,31 @@
 
 import os
 import os.path
+import shutil
+
+from outwiker.core.commands import isImage
+from outwiker.core.thumbmakerpil import ThumbmakerPil
+from outwiker.core.defines import ICON_WIDTH, ICON_HEIGHT
+
+
+class DuplicateGroupError (BaseException):
+    pass
 
 
 class IconsCollection (object):
-    """
-    Class for the wortking with groups of the icons
-    """
-    def __init__ (self, iconsDirList):
-        """
-        iconsDirList - list of the root directories with icons
-        """
-        # Folder names for localization
-        _(u"awards")
-        _(u"battery")
-        _(u"books")
-        _(u"computer")
-        _(u"emotions")
-        _(u"flags")
-        _(u"folders")
-        _(u"food")
-        _(u"internet")
-        _(u"money")
-        _(u"people")
-        _(u"signs")
-        _(u"software")
-        _(u"tags")
-        _(u"weather")
+    '''
+    Class for the working with groups of the icons
+    '''
+
+    # File name for cover of the group
+    COVER_FILE_NAME = u'__cover.png'
+
+
+    def __init__ (self, iconsDir):
+        '''
+        iconsDir - Root directory (absolute path) with the icons
+        '''
+        self._iconsDir = iconsDir
 
         # Key - group name, value - list of the files (full paths)
         self._groups = {}
@@ -35,70 +34,49 @@ class IconsCollection (object):
         # Key - group name, value - full path to icon for group
         self._groupsCover = {}
 
-        # List of the files for root folders with icons
-        self._root = []
+        self._thumbmaker = ThumbmakerPil ()
+        self._maxIconSize = min (ICON_WIDTH, ICON_HEIGHT)
+        self._rootGroupName = u''
 
-        # Full path to cover for root group
-        self._rootCover = None
-
-        self._scanIconsDirs (iconsDirList)
+        self._scanIconsDir (self._iconsDir)
 
 
-    def getRootCover (self):
-        return self._rootCover
+    def __contains__ (self, groupname):
+        return groupname in self._groups
 
 
-    def getGroupCover (self, groupname):
+    def getCover (self, groupname):
+        if groupname is None:
+            groupname = self._rootGroupName
+
         if groupname not in self._groups:
             raise KeyError
 
         return self._groupsCover.get (groupname, None)
 
 
-    def _scanIconsDirs (self, iconsDirList):
-        """
-        Fill _groups and _root
-        """
-        self._root = []
+    def _scanIconsDir (self, folder):
+        '''
+        Fill _groups and _groupsCover
+        '''
         self._groups = {}
+        self._groupsCover = {}
 
-        for folder in iconsDirList:
-            rootIcons, cover = self._findIcons (folder)
-            self._root += rootIcons
+        files = [self._rootGroupName] + os.listdir (folder)
 
-            if cover is not None:
-                newBaseCover = os.path.basename (cover)
-
-                if self._rootCover is None or newBaseCover.startswith ("__"):
-                    self._rootCover = cover
-
-            self._findGroups (folder, self._groups)
-
-        self._root.sort()
-
-
-    def _findGroups (self, folder, groups):
-        files = os.listdir (folder)
-
-        for fname in files:
-            fullpath = os.path.join (folder, fname)
+        for dirname in files:
+            fullpath = os.path.join (folder, dirname)
 
             if os.path.isdir (fullpath):
                 icons, cover = self._findIcons (os.path.join (fullpath))
-
-                if fname in groups:
-                    groups[fname] += icons
-                else:
-                    groups[fname] = icons
-
-                if cover is not None and fname not in self._groupsCover:
-                    self._groupsCover[fname] = cover
+                self._groups[dirname] = icons
+                self._groupsCover[dirname] = cover
 
 
     def _findIcons (self, folder):
-        """
-        Return files list (full paths) for icons in "folder" and cover icon
-        """
+        '''
+        Return files list (full paths) for icons in 'folder' and cover icon
+        '''
         cover = None
         result = []
         files = sorted (os.listdir (folder))
@@ -107,13 +85,10 @@ class IconsCollection (object):
             fullpath = os.path.join (folder, fname)
 
             if os.path.isfile (fullpath) and self._isIcon (fullpath):
-                if fname.startswith (u"__") and cover is None:
+                if fname == self.COVER_FILE_NAME:
                     cover = fullpath
-
-                if not fname.startswith (u"__"):
+                else:
                     result.append (fullpath)
-                    if cover is None:
-                        cover = fullpath
 
         return (result, cover)
 
@@ -121,39 +96,180 @@ class IconsCollection (object):
     def _isIcon (self, fname):
         fname_lower = fname.lower()
 
-        return (fname_lower.endswith (u".png") or
-                fname_lower.endswith (u".jpg") or
-                fname_lower.endswith (u".gif") or
-                fname_lower.endswith (u".bmp"))
-
-
-    def getAll (self):
-        """
-        Return icons from all groups (root included)
-        """
-        result = reduce (lambda x, y: x + y, self._groups.values(), []) + self._root
-        result.sort()
-
-        return result
-
-
-    def getRoot (self):
-        """
-        Return icons from all roots
-        """
-        return self._root
+        return (fname_lower.endswith (u'.png') or
+                fname_lower.endswith (u'.jpg') or
+                fname_lower.endswith (u'.gif') or
+                fname_lower.endswith (u'.bmp'))
 
 
     def getGroups (self):
-        """
+        '''
         Return all group names
-        """
-        return sorted (self._groups.keys())
+        '''
+        return [groupname for groupname in sorted (self._groups.keys()) if groupname != self._rootGroupName]
 
 
-    def getIcons (self, group):
-        """
+    def getIcons (self, groupname):
+        '''
         Return all icons (full paths) for groups with name group
         Raise KeyError if group not exists
-        """
-        return self._groups[group]
+        '''
+        if groupname is None:
+            groupname = self._rootGroupName
+
+        return self._groups[groupname]
+
+
+    def addGroup (self, groupname):
+        '''
+        Add new group (and directory) of the icons.
+        If directory exists the method does nothing.
+        The method can raise ValueError, IOError and SystemError exceptions.
+        '''
+        if not self._checkGroupName (groupname):
+            raise ValueError
+
+        newdir = os.path.join (self._iconsDir, groupname)
+
+        if os.path.exists (newdir):
+            return
+
+        os.mkdir (newdir)
+        self._groups[groupname] = []
+
+
+    def renameGroup (self, groupname, newgroupname):
+        '''
+        The method can raise DuplicateGroupError, KeyError, ValueError, IOError and SystemError exceptions.
+        '''
+        if groupname == newgroupname:
+            return
+
+        if not self._checkGroupName (newgroupname):
+            raise ValueError
+
+        oldGroupPath = os.path.join (self._iconsDir, groupname)
+        newGroupPath = os.path.join (self._iconsDir, newgroupname)
+
+        if not os.path.exists (oldGroupPath):
+            raise KeyError
+
+        if os.path.exists (newGroupPath):
+            raise DuplicateGroupError
+
+        os.rename (oldGroupPath, newGroupPath)
+        self._scanIconsDir (self._iconsDir)
+
+
+    def removeGroup (self, groupname):
+        '''
+        Remove icon group and all icons inside it.
+        '''
+        oldGroupPath = os.path.join (self._iconsDir, groupname)
+        if (len (groupname) == 0 or
+                not os.path.exists (oldGroupPath) or
+                groupname not in self._groups):
+            raise KeyError
+
+        shutil.rmtree (oldGroupPath)
+        self._scanIconsDir (self._iconsDir)
+
+
+    def addIcons (self, groupname, files):
+        '''
+        Add icons into group.
+        files - list of full paths to icon files
+        '''
+        if groupname is None:
+            groupname = self._rootGroupName
+
+        grouppath = os.path.join (self._iconsDir, groupname)
+
+        if not os.path.exists (grouppath):
+            raise KeyError
+
+        for iconpath in files:
+            self._addIconToDir (grouppath, iconpath)
+
+        self._scanIconsDir (self._iconsDir)
+
+
+    def _addIconToDir (self, grouppath, iconpath):
+        '''
+        Add single icon with full path iconpath into folder groupPath.
+        Not images is skipped.
+        '''
+        if (not isImage (iconpath) or not os.path.exists (iconpath)):
+            return
+
+        iconname = os.path.basename (iconpath)
+        newIconName = self._getNewIconName (grouppath, iconname)
+        newIconPath = os.path.join (grouppath, newIconName)
+
+        try:
+            self._thumbmaker.thumbByMaxSize (
+                iconpath,
+                self._maxIconSize,
+                newIconPath,
+                larger = False)
+        except (IOError, ValueError):
+            pass
+
+
+    def _getNewIconName (self, grouppath, fname):
+        '''
+        Return unique name for icon on basis of fname.
+        fname is basename of the full path to icon
+        '''
+        # Remove '__'
+        prefix = u'__'
+        clearname = fname
+        while clearname.startswith (prefix):
+            clearname = clearname[len (prefix):]
+
+        dotPos = clearname.rfind (u'.')
+
+        # Here we get only for picture 'fname'.
+        assert dotPos != -1
+
+        index = 1
+
+        newname = clearname
+        while os.path.exists (os.path.join (grouppath, newname)):
+            newname = clearname[:dotPos] + u'_({})'.format (index) + clearname[dotPos:]
+            index += 1
+
+        # Return png always
+        return newname[:newname.rfind (u'.')] + '.png'
+
+
+    def _checkGroupName (self, groupname):
+        return (len (groupname) != 0 and
+                '\\' not in groupname and
+                '/' not in groupname)
+
+
+    def setCover (self, groupname, fname):
+        if groupname is None:
+            groupname = self._rootGroupName
+
+        grouppath = os.path.join (self._iconsDir, groupname)
+
+        if not os.path.exists (grouppath):
+            raise KeyError
+
+        if (not isImage (fname) or not os.path.exists (fname)):
+            return
+
+        newIconPath = os.path.join (grouppath, self.COVER_FILE_NAME)
+
+        try:
+            self._thumbmaker.thumbByMaxSize (
+                fname,
+                self._maxIconSize,
+                newIconPath,
+                larger = False)
+        except (IOError, ValueError):
+            pass
+
+        self._scanIconsDir (self._iconsDir)

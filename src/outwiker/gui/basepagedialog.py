@@ -12,6 +12,7 @@ from outwiker.core.tagslist import TagsList
 from outwiker.core.styleslist import StylesList
 from outwiker.core.system import getStylesDirList, getIconsDirList
 from outwiker.core.iconscollection import IconsCollection
+from outwiker.core.defines import ICON_WIDTH, ICON_HEIGHT
 from .guiconfig import PageDialogConfig
 from .iconlistctrl import IconListCtrl
 from .tagsselector import TagsSelector
@@ -168,7 +169,10 @@ class BasePageDialog(wx.Dialog):
 
     @property
     def icon (self):
-        return self.iconPanel.iconsList.icon
+        selection = self.iconPanel.iconsList.getSelection()
+        assert len (selection) != 0
+
+        return selection[0]
 
 
 
@@ -226,11 +230,9 @@ class IconPanel (wx.Panel):
     """
     def __init__ (self, parent):
         super (IconPanel, self).__init__ (parent)
-        self._iconsCollection = IconsCollection(getIconsDirList())
-        self.__createGui()
 
-        # Key - localized group name, value - source group name
-        self._groupsTranslate = {}
+        self._iconsCollections = [IconsCollection (path) for path in getIconsDirList()]
+        self.__createGui()
 
         self.__appendGroups ()
         self.groupCtrl.SetSelection (0)
@@ -260,19 +262,26 @@ class IconPanel (wx.Panel):
 
 
     def __appendGroups (self):
-        self.groupCtrl.Append (_(u"Not in groups"), self._getRootImage())
+        for n, collection in enumerate (self._iconsCollections):
+            for group in [None] + collection.getGroups():
+                # Get group name
+                if group is None and n == 0:
+                    title = _(u'Not in groups')
+                elif group is None:
+                    title = _(u'Not in groups [custom]')
+                else:
+                    title = self._localize(group)
 
-        self._groupsTranslate = {self._localize(group): group for group in self._iconsCollection.getGroups()}
+                # Every item has tuple (collection index, group name)
+                self.groupCtrl.Append (title,
+                                       self._getCover (collection, group),
+                                       (n, group))
 
-        for groupname in sorted (self._groupsTranslate.keys()):
-            image = self._getGroupImage (groupname)
-            if not image.IsNull():
-                self.groupCtrl.Append (groupname, self._getGroupImage (groupname))
 
 
     def _getImageForGroup (self, fname):
-        neww = 16
-        newh = 18
+        neww = ICON_WIDTH
+        newh = ICON_HEIGHT + 2
 
         wx.Log_EnableLogging(False)
         image = wx.Image (fname)
@@ -289,22 +298,28 @@ class IconPanel (wx.Panel):
         return wx.BitmapFromImage (image)
 
 
-    def _getGroupImage (self, groupname):
+    def _getCover (self, collection, groupname):
         """
         Return bitmap for combobox item
         """
-        fname = self._iconsCollection.getGroupCover (self._groupsTranslate[groupname])
+        fname = collection.getCover (groupname)
         if fname is not None:
             return self._getImageForGroup (fname)
 
         return wx.NullBitmap
 
 
-    def _getRootImage (self):
+    def _getRootCover (self):
         """
         Return bitmap for combobox item
         """
-        fname = self._iconsCollection.getRootCover ()
+        # fname = self._iconsCollections[0].getCover (None)
+        fname = None
+        for collection in self._iconsCollections:
+            cover = collection.getCover (None)
+            if cover is not None:
+                fname = cover
+
         if fname is not None:
             return self._getImageForGroup (fname)
 
@@ -316,12 +331,11 @@ class IconPanel (wx.Panel):
 
 
     def __getCurrentIcons (self):
-        if self.groupCtrl.GetSelection() == 0:
-            icons = self._iconsCollection.getRoot()
-        else:
-            icons = self._iconsCollection.getIcons (self._groupsTranslate[self.groupCtrl.GetValue()])
+        index, groupname = self.groupCtrl.GetClientData (self.groupCtrl.GetSelection())
 
+        icons = self._iconsCollections[index].getIcons (groupname)
         icons.sort()
+
         return icons
 
 

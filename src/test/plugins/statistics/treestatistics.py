@@ -10,7 +10,7 @@ from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.search.searchpage import SearchPageFactory
-from test.utils import removeWiki
+from test.utils import removeDir
 
 
 class TreeStatisticsTest (unittest.TestCase):
@@ -31,14 +31,14 @@ class TreeStatisticsTest (unittest.TestCase):
 
 
     def tearDown (self):
-        removeWiki (self.path)
+        removeDir (self.path)
         self.loader.clear()
 
 
     def __createWiki (self):
         # Здесь будет создаваться вики
         self.path = u"../test/testwiki"
-        removeWiki (self.path)
+        removeDir (self.path)
 
         self.wikiroot = WikiDocument.create (self.path)
 

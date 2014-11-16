@@ -11,14 +11,14 @@ from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
 
 from outwiker.core.application import Application
-from test.utils import removeWiki
+from test.utils import removeDir
 
 
 class BookmarksTest (unittest.TestCase):
     def setUp(self):
         # Здесь будет создаваться вики
         self.path = u"../test/testwiki"
-        removeWiki (self.path)
+        removeDir (self.path)
 
         self.wikiroot = WikiDocument.create (self.path)
 
@@ -36,7 +36,7 @@ class BookmarksTest (unittest.TestCase):
 
     def tearDown (self):
         Application.wikiroot = None
-        removeWiki (self.path)
+        removeDir (self.path)
 
 
     def onBookmark (self, bookmarks):

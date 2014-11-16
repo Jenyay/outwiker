@@ -19,6 +19,7 @@ from outwiker.actions.movepagedown import MovePageDownAction
 from outwiker.actions.removepage import RemovePageAction
 from outwiker.actions.editpageprop import EditPagePropertiesAction
 from outwiker.core.events import PAGE_UPDATE_ICON
+from outwiker.core.defines import ICON_WIDTH, ICON_HEIGHT
 
 
 class NotesTree(wx.Panel):
@@ -48,7 +49,7 @@ class NotesTree(wx.Panel):
         self.__do_layout()
 
         self.defaultIcon = os.path.join (outwiker.core.system.getImagesDir(), "page.png")
-        self.iconHeight = 16
+        self.iconHeight = ICON_HEIGHT
 
         self.defaultBitmap = wx.Bitmap (self.defaultIcon)
         assert self.defaultBitmap.IsOk()
@@ -58,7 +59,7 @@ class NotesTree(wx.Panel):
         self.dragItem = None
 
         # Картинки для дерева
-        self.imagelist = wx.ImageList(16, self.iconHeight)
+        self.imagelist = wx.ImageList(ICON_WIDTH, self.iconHeight)
         self.treeCtrl.AssignImageList (self.imagelist)
 
         # Кеш для страниц, чтобы было проще искать элемент дерева по странице

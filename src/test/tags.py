@@ -7,14 +7,14 @@ from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.core.tagscommands import parseTagsList, appendTag, removeTag, tagBranch, appendTagsList, removeTagsFromBranch, renameTag
 
-from .utils import removeWiki
+from .utils import removeDir
 
 
 class TagsListTest (unittest.TestCase):
     def setUp(self):
         # Здесь будет создаваться вики
         self.path = u"../test/testwiki"
-        removeWiki (self.path)
+        removeDir (self.path)
 
         self.wikiroot = WikiDocument.create (self.path)
 

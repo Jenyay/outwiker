@@ -10,7 +10,7 @@ from outwiker.pages.html.htmlpage import HtmlPageFactory
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.pages.search.searchpage import SearchPageFactory
 from test.guitests.basemainwnd import BaseMainWndTest
-from test.utils import removeWiki
+from test.utils import removeDir
 
 
 class BasePluginLoadingTest (BaseMainWndTest):
@@ -46,7 +46,7 @@ class BasePluginLoadingTest (BaseMainWndTest):
 
     def __createWiki (self, wikipath):
         # Здесь будет создаваться вики
-        removeWiki (wikipath)
+        removeDir (wikipath)
 
         self.wikiroot = WikiDocument.create (wikipath)
         WikiPageFactory().create (self.wikiroot, u"Викистраница", [])
@@ -58,7 +58,7 @@ class BasePluginLoadingTest (BaseMainWndTest):
     def tearDown(self):
         Application.selectedPage = None
         Application.wikiroot = None
-        removeWiki (self.wikipath)
+        removeDir (self.wikipath)
         self.loader.clear()
         BaseMainWndTest.tearDown (self)
 

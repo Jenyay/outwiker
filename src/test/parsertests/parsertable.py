@@ -2,7 +2,7 @@
 
 import unittest
 
-from test.utils import removeWiki
+from test.utils import removeDir
 
 from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
@@ -24,7 +24,7 @@ class ParserTableTest (unittest.TestCase):
     def __createWiki (self):
         # Здесь будет создаваться вики
         self.path = u"../test/testwiki"
-        removeWiki (self.path)
+        removeDir (self.path)
 
         self.wikiroot = WikiDocument.create (self.path)
         WikiPageFactory().create (self.wikiroot, u"Страница 2", [])
@@ -32,7 +32,7 @@ class ParserTableTest (unittest.TestCase):
 
 
     def tearDown(self):
-        removeWiki (self.path)
+        removeDir (self.path)
 
 
     def testTable1 (self):

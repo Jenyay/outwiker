@@ -8,7 +8,7 @@ from outwiker.core.application import Application
 from outwiker.pages.text.textpage import TextPageFactory
 
 from test.guitests.basemainwnd import BaseMainWndTest
-from test.utils import removeWiki
+from test.utils import removeDir
 
 
 class SessionsTest (BaseMainWndTest):
@@ -33,13 +33,13 @@ class SessionsTest (BaseMainWndTest):
         Application.wikiroot = None
         Application.config.remove_section (self.loader[u"Sessions"].SessionStorage.SECTION_NAME)
         self.loader.clear()
-        removeWiki (self.path)
-        removeWiki (self.path2)
+        removeDir (self.path)
+        removeDir (self.path2)
 
 
     def __createWiki (self):
         # Здесь будет создаваться вики
-        removeWiki (self.path)
+        removeDir (self.path)
 
         self.wikiroot = WikiDocument.create (self.path)
 
@@ -51,7 +51,7 @@ class SessionsTest (BaseMainWndTest):
 
     def __createWiki2 (self):
         # Здесь будет создаваться вики
-        removeWiki (self.path2)
+        removeDir (self.path2)
 
         wiki2 = WikiDocument.create (self.path2)
         TextPageFactory().create (wiki2, u"Page 1", [])

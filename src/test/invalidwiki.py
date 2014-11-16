@@ -12,7 +12,7 @@ import unittest
 from outwiker.core.attachment import Attachment
 from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
-from test.utils import removeWiki
+from test.utils import removeDir
 from outwiker.core.exceptions import RootFormatError
 
 
@@ -30,7 +30,7 @@ class InvalidWikiTest (unittest.TestCase):
         def __createInvalidWiki1 ():
             # Здесь будет создаваться вики
             path = u"../test/testwiki"
-            removeWiki (path)
+            removeDir (path)
 
             rootwiki = WikiDocument.create (path)
 
@@ -53,7 +53,7 @@ class InvalidWikiTest (unittest.TestCase):
         # Теперь ошибок быть не должно
         WikiDocument.load (path)
 
-        removeWiki (path)
+        removeDir (path)
 
 
     def testInvalidWikiRoot2 (self):
@@ -63,7 +63,7 @@ class InvalidWikiTest (unittest.TestCase):
         def __createInvalidWiki2 ():
             # Здесь будет создаваться вики
             path = u"../test/testwiki"
-            removeWiki (path)
+            removeDir (path)
 
             rootwiki = WikiDocument.create (path)
 
@@ -86,7 +86,7 @@ class InvalidWikiTest (unittest.TestCase):
         # Теперь ошибок быть не должно
         WikiDocument.load (path)
 
-        removeWiki (path)
+        removeDir (path)
 
 
     def testNotPage (self):
