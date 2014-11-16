@@ -30,7 +30,6 @@ class NotesTree(wx.Panel):
         self.ID_ADD_SIBLING_PAGE = wx.NewId()
         self.ID_ADD_CHILD_PAGE = wx.NewId()
         self.ID_REMOVE_PAGE = wx.NewId()
-        self.ID_RENAME = wx.NewId()
 
         # Переключатель, устанавливается в True, если "внезапно" изменяется текущая страница
         self.__externalPageSelect = False
