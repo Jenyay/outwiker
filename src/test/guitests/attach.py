@@ -6,7 +6,7 @@ from basemainwnd import BaseMainWndTest
 from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.core.application import Application
-from test.utils import removeWiki
+from test.utils import removeDir
 from outwiker.core.attachment import Attachment
 
 
@@ -159,4 +159,4 @@ class AttachPanelTest (BaseMainWndTest):
 
         Application.wikiroot.selectedPage = None
         Application.wikiroot = None
-        removeWiki (newpath)
+        removeDir (newpath)

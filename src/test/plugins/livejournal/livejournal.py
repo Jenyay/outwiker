@@ -8,7 +8,7 @@ from outwiker.core.application import Application
 from outwiker.core.style import Style
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.htmlgenerator import HtmlGenerator
-from test.utils import removeWiki
+from test.utils import removeDir
 from test.guitests.basemainwnd import BaseMainWndTest
 
 
@@ -35,7 +35,7 @@ class LivejournalPluginTest (BaseMainWndTest):
     def __createWiki (self):
         # Здесь будет создаваться вики
         self.path = u"../test/testwiki"
-        removeWiki (self.path)
+        removeDir (self.path)
 
         self.wikiroot = WikiDocument.create (self.path)
 
@@ -44,7 +44,7 @@ class LivejournalPluginTest (BaseMainWndTest):
 
     def tearDown(self):
         BaseMainWndTest.tearDown (self)
-        removeWiki (self.path)
+        removeDir (self.path)
         self._plugin.LJConfig (Application.config).users.value = []
         self._plugin.LJConfig (Application.config).communities.value = []
         self.loader.clear()

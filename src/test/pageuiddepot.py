@@ -7,7 +7,7 @@ from outwiker.core.commands import generateLink
 from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
 from outwiker.pages.text.textpage import TextPageFactory
-from test.utils import removeWiki
+from test.utils import removeDir
 from outwiker.core.exceptions import ReadonlyException
 
 
@@ -16,7 +16,7 @@ class PageUidDepotTest (unittest.TestCase):
     def setUp(self):
         # Здесь будет создаваться вики
         self.path = u"../test/testwiki"
-        removeWiki (self.path)
+        removeDir (self.path)
 
         self.wikiroot = WikiDocument.create (self.path)
 
@@ -32,7 +32,7 @@ class PageUidDepotTest (unittest.TestCase):
 
     def tearDown(self):
         Application.wikiroot = None
-        removeWiki (self.path)
+        removeDir (self.path)
 
 
     def testEmpty (self):
@@ -86,7 +86,7 @@ class PageUidDepotTest (unittest.TestCase):
 
         self.assertEqual (depot_new[uid].title, u"Страница 1")
 
-        removeWiki (self.path)
+        removeDir (self.path)
 
 
     def testRenamePage (self):

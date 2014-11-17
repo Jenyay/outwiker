@@ -95,15 +95,18 @@ class IconListCtrl (wx.ScrolledWindow):
     """
     Control with icons for pages
     """
-    def __init__ (self, parent):
+    def __init__ (self, parent, multiselect=False):
         wx.ScrolledWindow.__init__ (self, parent, style = wx.BORDER_THEME)
 
         self.cellWidth = 32
         self.cellHeight = 32
         self.margin = 1
+        self.multiselect = multiselect
 
         # Path to current page icon
         self._currentIcon = None
+
+        self._lastClickedButton = None
 
         self.SetScrollRate (0, 0)
         self.SetBackgroundColour (wx.Colour (255, 255, 255))
@@ -120,7 +123,7 @@ class IconListCtrl (wx.ScrolledWindow):
         self.__layout()
 
 
-    def __clearIconButtons (self):
+    def clear (self):
         """
         Remove old buttons with icons.
         """
@@ -130,17 +133,19 @@ class IconListCtrl (wx.ScrolledWindow):
             button.Destroy()
 
         self.buttons = []
+        self._lastClickedButton = None
         self.Scroll (0, 0)
 
 
     def setIconsList (self, icons):
-        self.__clearIconButtons()
+        self.clear()
 
         for fname in reversed (icons):
             self.__addButton (fname)
 
         self.setCurrentIcon (self._currentIcon)
-        self.__selectButton (0)
+        if len (self.buttons) != 0:
+            self.__selectSingleButton (self.buttons[0].GetId())
 
         self.__layout()
         self.Scroll (0, 0)
@@ -160,13 +165,58 @@ class IconListCtrl (wx.ScrolledWindow):
 
 
     def __onButtonClick (self, event):
+        ctrl = wx.GetKeyState (wx.WXK_CONTROL)
+        shift = wx.GetKeyState (wx.WXK_SHIFT)
+
+        if (not self.multiselect or
+                (not ctrl and not shift)):
+            self.__selectSingleButton (event.GetId())
+        elif ctrl:
+            self.__toggleSelectionButton (event.GetId())
+        elif shift and self._lastClickedButton is not None:
+            self.__selectFromTo (self._lastClickedButton.GetId(), event.GetId())
+
+
+    def __selectSingleButton (self, buttonid):
         for button in self.buttons:
-            if button.GetId() == event.GetId():
+            if button.GetId() == buttonid:
                 button.selected = True
                 button.SetFocus()
+                self._lastClickedButton = button
             else:
                 button.selected = False
 
+
+    def __toggleSelectionButton (self, buttonid):
+        for button in self.buttons:
+            if button.GetId() == buttonid:
+                button.selected = not button.selected
+                button.SetFocus()
+                self._lastClickedButton = button
+                break
+
+
+    def __selectFromTo (self, fromId, toId):
+        fromIndex = -1
+        toIndex = -1
+
+        for index, button in enumerate (self.buttons):
+            if fromId == button.GetId():
+                fromIndex = index
+
+            if toId == button.GetId():
+                toIndex = index
+
+        assert fromIndex != -1
+        assert toIndex != -1
+
+        minIndex = min (fromIndex, toIndex)
+        maxIndex = max (fromIndex, toIndex)
+
+        for button in self.buttons[minIndex: maxIndex + 1]:
+            button.selected = True
+            button.SetFocus()
+            self._lastClickedButton = button
 
 
     def __layout (self):
@@ -189,11 +239,11 @@ class IconListCtrl (wx.ScrolledWindow):
         self.SetScrollbars (self.cellWidth, self.cellHeight, 1, rowcount + 1)
 
 
-    @property
-    def icon (self):
-        selButton = self.__getSelectedButton()
-        if selButton is not None:
-            return selButton.fname
+    def getSelection (self):
+        """
+        Return list of the selected icons
+        """
+        return [button.fname for button in self.buttons if button.selected]
 
 
     def setCurrentIcon (self, fname):
@@ -206,22 +256,4 @@ class IconListCtrl (wx.ScrolledWindow):
 
         self.__addButton (self._currentIcon)
         self.__layout()
-        self.__selectButton (0)
-
-
-    def __selectButton (self, index):
-        button = self.buttons[index]
-        currentSelButton = self.__getSelectedButton()
-        if currentSelButton is not None:
-            currentSelButton.selected = False
-
-        button.selected = True
-        button.SetFocus()
-
-
-    def __getSelectedButton (self):
-        for button in self.buttons:
-            if button.selected:
-                return button
-
-        return None
+        self.__selectSingleButton (self.buttons[0].GetId())

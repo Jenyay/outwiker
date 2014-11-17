@@ -8,7 +8,7 @@ from outwiker.pages.wiki.thumbdialog import ThumbDialog
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.core.tree import WikiDocument
 from outwiker.core.attachment import Attachment
-from ..utils import removeWiki
+from ..utils import removeDir
 
 
 class FakeThumbDialog (object):
@@ -68,7 +68,7 @@ class TestThumbDialogController (ThumbDialogController):
 class ThumbDialogControllerTest (unittest.TestCase):
     def setUp (self):
         self.path = u"../test/testwiki"
-        removeWiki (self.path)
+        removeDir (self.path)
 
         self.wikiroot = WikiDocument.create (self.path)
 
@@ -82,7 +82,7 @@ class ThumbDialogControllerTest (unittest.TestCase):
 
 
     def tearDown (self):
-        removeWiki (self.path)
+        removeDir (self.path)
 
 
     def testEmpty (self):

@@ -139,7 +139,7 @@ class ThumbmakerPilTest (unittest.TestCase):
             os.remove (self.fname_out)
 
 
-    def testWxThumbMaxSizeJpeg1 (self):
+    def testWxThumbMaxSize_01_jpeg (self):
         self.fname_in = "../test/images/first.jpg"
         self.fname_out = "../test/images/first_th.jpg"
 
@@ -162,7 +162,7 @@ class ThumbmakerPilTest (unittest.TestCase):
             os.remove (self.fname_out)
 
 
-    def testWxThumbMaxSizeJpeg2 (self):
+    def testWxThumbMaxSize_02_jpeg (self):
         self.fname_in = "../test/images/first_vertical.jpeg"
         self.fname_out = "../test/images/first_vertical_th.jpg"
 
@@ -176,6 +176,144 @@ class ThumbmakerPilTest (unittest.TestCase):
         newheight = 250
 
         self.thumbmaker.thumbByMaxSize (self.fname_in, newsize, self.fname_out)
+        (width, height) = getImageSize (self.fname_out)
+
+        self.assertEqual (width, newwidth)
+        self.assertEqual (height, newheight)
+
+        if os.path.exists (self.fname_out):
+            os.remove (self.fname_out)
+
+
+    def testWxThumbMaxSize_03_png (self):
+        self.fname_in = "../test/images/8x8.png"
+        self.fname_out = "../test/images/_thumb.png"
+
+        if os.path.exists (self.fname_out):
+            os.remove (self.fname_out)
+
+        self.thumbmaker = ThumbmakerPil()
+        newsize = 16
+
+        newwidth = 8
+        newheight = 8
+
+        self.thumbmaker.thumbByMaxSize (self.fname_in, newsize, self.fname_out, larger=False)
+        (width, height) = getImageSize (self.fname_out)
+
+        self.assertEqual (width, newwidth)
+        self.assertEqual (height, newheight)
+
+        if os.path.exists (self.fname_out):
+            os.remove (self.fname_out)
+
+
+    def testWxThumbMaxSize_04_png (self):
+        self.fname_in = "../test/images/8x8.png"
+        self.fname_out = "../test/images/_thumb.png"
+
+        if os.path.exists (self.fname_out):
+            os.remove (self.fname_out)
+
+        self.thumbmaker = ThumbmakerPil()
+        newsize = 16
+
+        newwidth = 16
+        newheight = 16
+
+        self.thumbmaker.thumbByMaxSize (self.fname_in, newsize, self.fname_out, larger=True)
+        (width, height) = getImageSize (self.fname_out)
+
+        self.assertEqual (width, newwidth)
+        self.assertEqual (height, newheight)
+
+        if os.path.exists (self.fname_out):
+            os.remove (self.fname_out)
+
+
+    def testWxThumbMaxSize_05_png (self):
+        self.fname_in = "../test/images/16x8.png"
+        self.fname_out = "../test/images/_thumb.png"
+
+        if os.path.exists (self.fname_out):
+            os.remove (self.fname_out)
+
+        self.thumbmaker = ThumbmakerPil()
+        newsize = 16
+
+        newwidth = 16
+        newheight = 8
+
+        self.thumbmaker.thumbByMaxSize (self.fname_in, newsize, self.fname_out, larger=False)
+        (width, height) = getImageSize (self.fname_out)
+
+        self.assertEqual (width, newwidth)
+        self.assertEqual (height, newheight)
+
+        if os.path.exists (self.fname_out):
+            os.remove (self.fname_out)
+
+
+    def testWxThumbMaxSize_06_png (self):
+        self.fname_in = "../test/images/16x8.png"
+        self.fname_out = "../test/images/_thumb.png"
+
+        if os.path.exists (self.fname_out):
+            os.remove (self.fname_out)
+
+        self.thumbmaker = ThumbmakerPil()
+        newsize = 16
+
+        newwidth = 16
+        newheight = 8
+
+        self.thumbmaker.thumbByMaxSize (self.fname_in, newsize, self.fname_out, larger=True)
+        (width, height) = getImageSize (self.fname_out)
+
+        self.assertEqual (width, newwidth)
+        self.assertEqual (height, newheight)
+
+        if os.path.exists (self.fname_out):
+            os.remove (self.fname_out)
+
+
+    def testWxThumbMaxSize_07_png (self):
+        self.fname_in = "../test/images/8x16.png"
+        self.fname_out = "../test/images/_thumb.png"
+
+        if os.path.exists (self.fname_out):
+            os.remove (self.fname_out)
+
+        self.thumbmaker = ThumbmakerPil()
+        newsize = 16
+
+        newwidth = 8
+        newheight = 16
+
+        self.thumbmaker.thumbByMaxSize (self.fname_in, newsize, self.fname_out, larger=True)
+        (width, height) = getImageSize (self.fname_out)
+
+        self.assertEqual (width, newwidth)
+        self.assertEqual (height, newheight)
+
+        if os.path.exists (self.fname_out):
+            os.remove (self.fname_out)
+
+
+    def testWxThumbMaxSize_08_png (self):
+        self.fname_in = "../test/images/8x16.png"
+        self.fname_out = "../test/images/_thumb.png"
+
+        if os.path.exists (self.fname_out):
+            os.remove (self.fname_out)
+
+        self.thumbmaker = ThumbmakerPil()
+        newsize = 16
+
+        newwidth = 8
+        newheight = 16
+
+        self.thumbmaker.thumbByMaxSize (self.fname_in, newsize, self.fname_out, larger=False)
         (width, height) = getImageSize (self.fname_out)
 
         self.assertEqual (width, newwidth)

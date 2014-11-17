@@ -13,7 +13,7 @@ from outwiker.pages.wiki.wikipage import WikiWikiPage
 from outwiker.pages.html.htmlpage import HtmlWikiPage
 from outwiker.pages.search.searchpage import SearchWikiPage
 
-from test.utils import removeWiki
+from test.utils import removeDir
 
 
 class WikiPagesTest(unittest.TestCase):
@@ -251,7 +251,7 @@ class TextPageAttachmentTest (unittest.TestCase):
 
         # Здесь будет создаваться вики
         self.path = u"../test/testwiki"
-        removeWiki (self.path)
+        removeDir (self.path)
 
         self.wikiroot = WikiDocument.create (self.path)
         Application.wikiroot = self.wikiroot
@@ -264,7 +264,7 @@ class TextPageAttachmentTest (unittest.TestCase):
         factory.create (self.wikiroot[u"Страница 1"], u"Страница 5", [])
 
     def tearDown(self):
-        removeWiki (self.path)
+        removeDir (self.path)
 
 
     def testEvent (self):

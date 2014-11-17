@@ -11,7 +11,7 @@ import time
 import wx
 
 
-def removeWiki (path):
+def removeDir (path):
     """
     Удалить вики из указанной папки
     """

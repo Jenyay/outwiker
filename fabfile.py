@@ -3,11 +3,15 @@
 
 import os
 import os.path
+import shutil
 
 from fabric.api import local, lcd
 
 # Поддерживаемые дистрибутивы Ubuntu
 distribs = ["utopic", "trusty", "precise"]
+
+# Отдельная папка для сборки deb-пакета под Ubuntu 12.04
+debian_precise = "debian_precise"
 
 
 def _getVersion():
@@ -52,7 +56,7 @@ def _source():
     dirname = os.path.join ("build", _getDebSourceDirName())
     os.mkdir (dirname)
 
-    local ("rsync -avz --exclude=.bzr --exclude=distrib --exclude=build --exclude=*.pyc --exclude=*.dll --exclude=*.exe * --exclude=src/.ropeproject --exclude=src/test --exclude=src/setup_win.py --exclude=src/setup_tests.py --exclude=src/profile.py --exclude=src/tests.py --exclude=src/Microsoft.VC90.CRT.manifest --exclude=src/profiles --exclude=src/tools --exclude=doc --exclude=plugins --exclude=profiles --exclude=test --exclude=_update_version_bzr.py --exclude=outwiker_setup.iss --exclude=updateversion --exclude=updateversion.py {dirname}/".format (dirname=dirname))
+    local ("rsync -avz --exclude=.bzr --exclude=distrib --exclude=build --exclude=*.pyc --exclude=*.dll --exclude=*.exe * --exclude=src/.ropeproject --exclude=src/test --exclude=src/setup_win.py --exclude=src/setup_tests.py --exclude=src/profile.py --exclude=src/tests.py --exclude=src/Microsoft.VC90.CRT.manifest --exclude=src/profiles --exclude=src/tools --exclude=doc --exclude=plugins --exclude=profiles --exclude=test --exclude=_update_version_bzr.py --exclude=outwiker_setup.iss --exclude=updateversion --exclude=updateversion.py --exclude=debian_tmp --exclude=debian_precise {dirname}/".format (dirname=dirname))
 
 
 def _orig (distname):
@@ -99,6 +103,12 @@ def _debuild (command, distriblist):
     Выполнение команд, связанные со сборкой deb с помощью debuild. Создает пакеты сразу для всех дистрибутивов, перечисленных в distriblist
     """
     for distname in distriblist:
+        debian_tmp = "debian_tmp"
+
+        if distname == u"precise":
+            os.rename ("debian", debian_tmp)
+            os.rename (debian_precise, "debian")
+
         # Поменяем дистрибутив в changelog
         _makechangelog (distribs[0], distname)
 
@@ -109,6 +119,10 @@ def _debuild (command, distriblist):
 
         # Вернем старый дистрибутив
         _makechangelog (distname, distribs[0])
+
+        if distname == u"precise":
+            os.rename ("debian", debian_precise)
+            os.rename (debian_tmp, "debian")
 
 
 def ppaunstable ():
@@ -225,6 +239,8 @@ def nextversion():
         fp_out.write (result)
 
     local ('dch -v "{}+{}~{}"'.format (lines[0].strip(), lines[1].strip(), distribs[0]))
+    shutil.copyfile ("debian/changelog", os.path.join (debian_precise, "changelog"))
+
 
 
 def debinstall():

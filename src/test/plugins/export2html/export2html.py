@@ -7,7 +7,7 @@ from outwiker.core.tree import WikiDocument
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.application import Application
 from outwiker.core.system import readTextFile
-from test.utils import removeWiki
+from test.utils import removeDir
 
 
 class Export2HtmlTest (unittest.TestCase):
@@ -24,7 +24,7 @@ class Export2HtmlTest (unittest.TestCase):
         self.loader.load (dirlist)
         self.__tester = self.loader[self.pluginname].tester
 
-        removeWiki (self.outputdir)
+        removeDir (self.outputdir)
 
         os.mkdir (self.outputdir)
 
@@ -33,7 +33,7 @@ class Export2HtmlTest (unittest.TestCase):
 
     def tearDown (self):
         Application.wikiroot = None
-        removeWiki (self.outputdir)
+        removeDir (self.outputdir)
 
 
     def testLoading (self):

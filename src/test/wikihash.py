@@ -15,7 +15,7 @@ from outwiker.pages.wiki.emptycontent import EmptyContent
 from outwiker.pages.wiki.wikiconfig import WikiConfig
 from outwiker.pages.wiki.wikihashcalculator import WikiHashCalculator
 
-from utils import removeWiki
+from utils import removeDir
 
 
 class WikiHashTest (unittest.TestCase):
@@ -60,7 +60,7 @@ class WikiHashTest (unittest.TestCase):
     def __createWiki (self):
         # Здесь будет создаваться вики
         self.path = u"../test/testwiki"
-        removeWiki (self.path)
+        removeDir (self.path)
 
         self.wikiroot = WikiDocument.create (self.path)
 
@@ -71,7 +71,7 @@ class WikiHashTest (unittest.TestCase):
     def tearDown(self):
         Application.config.remove_section (HtmlRenderConfig.HTML_SECTION)
         self.__setDefaultConfig()
-        removeWiki (self.path)
+        removeDir (self.path)
 
 
     def testHash1 (self):
