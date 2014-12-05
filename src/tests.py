@@ -118,6 +118,7 @@ if __name__ == '__main__':
     from test.pageuiddepot import PageUidDepotTest
     from test.loader import PluginsLoaderTest
     from test.iconscollection import IconsCollectionTest
+    from test.iconmaker import IconMakerTest
 
     # from test.guitests.tray import TrayNormalTest#, TrayIconizedTest
     from test.guitests.mainwnd import MainWndTest

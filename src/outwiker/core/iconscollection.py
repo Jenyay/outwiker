@@ -5,8 +5,7 @@ import os.path
 import shutil
 
 from outwiker.core.commands import isImage
-from outwiker.core.thumbmakerpil import ThumbmakerPil
-from outwiker.core.defines import ICON_WIDTH, ICON_HEIGHT
+from outwiker.core.iconmaker import IconMaker
 
 
 class DuplicateGroupError (BaseException):
@@ -34,8 +33,6 @@ class IconsCollection (object):
         # Key - group name, value - full path to icon for group
         self._groupsCover = {}
 
-        self._thumbmaker = ThumbmakerPil ()
-        self._maxIconSize = min (ICON_WIDTH, ICON_HEIGHT)
         self._rootGroupName = u''
 
         self._scanIconsDir (self._iconsDir)
@@ -207,11 +204,7 @@ class IconsCollection (object):
         newIconPath = os.path.join (grouppath, newIconName)
 
         try:
-            self._thumbmaker.thumbByMaxSize (
-                iconpath,
-                self._maxIconSize,
-                newIconPath,
-                larger = False)
+            IconMaker().create (iconpath, newIconPath)
         except (IOError, ValueError):
             pass
 
@@ -221,7 +214,6 @@ class IconsCollection (object):
         Return unique name for icon on basis of fname.
         fname is basename of the full path to icon
         '''
-        # Remove '__'
         prefix = u'__'
         clearname = fname
         while clearname.startswith (prefix):
@@ -264,11 +256,7 @@ class IconsCollection (object):
         newIconPath = os.path.join (grouppath, self.COVER_FILE_NAME)
 
         try:
-            self._thumbmaker.thumbByMaxSize (
-                fname,
-                self._maxIconSize,
-                newIconPath,
-                larger = False)
+            IconMaker().create (fname, newIconPath)
         except (IOError, ValueError):
             pass
 
