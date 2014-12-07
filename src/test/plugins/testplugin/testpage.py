@@ -1,23 +1,20 @@
 # -*- coding: UTF-8 -*-
 
-from tempfile import mkdtemp
-
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
 from outwiker.core.factoryselector import FactorySelector
 from outwiker.pages.text.textpage import TextPageFactory
 
-from test.utils import removeDir
 from test.guitests.basemainwnd import BaseMainWndTest
 
 
 class TestPageTest (BaseMainWndTest):
     """Тесты плагина TestPage"""
+
     def setUp (self):
         super (TestPageTest, self).setUp ()
 
-        self.path = mkdtemp (prefix=u'Абырвалг абыр')
         self.dirlist = [u"../plugins/testpage"]
 
         self.loader = PluginsLoader(Application)
@@ -27,7 +24,6 @@ class TestPageTest (BaseMainWndTest):
     def tearDown (self):
         BaseMainWndTest.tearDown (self)
         Application.wikiroot = None
-        removeDir (self.path)
         self.loader.clear()
 
 

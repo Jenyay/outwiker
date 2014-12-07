@@ -1,16 +1,12 @@
 # -*- coding: UTF-8 -*-
 
-from tempfile import mkdtemp
-
 import wx
 
 from outwiker.core.application import Application
-from outwiker.core.tree import WikiDocument
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 
 from test.guitests.basemainwnd import BaseMainWndTest
-from test.utils import removeDir
 from outwiker.gui.tester import Tester
 
 
@@ -22,7 +18,7 @@ class CounterDialogTest (BaseMainWndTest):
         BaseMainWndTest.setUp (self)
 
         self.filesPath = u"../test/samplefiles/"
-        self.__createWiki()
+        WikiPageFactory().create (self.wikiroot, u"Страница 1", [])
 
         dirlist = [u"../plugins/counter"]
 
@@ -38,26 +34,17 @@ class CounterDialogTest (BaseMainWndTest):
 
     def tearDown(self):
         Application.wikiroot = None
-        removeDir (self.path)
         self._dlg.Destroy()
         self._loader.clear()
 
         BaseMainWndTest.tearDown (self)
 
 
-    def __createWiki (self):
-        # Здесь будет создаваться вики
-        self.path = mkdtemp (prefix=u'Абырвалг абыр')
-
-        self.wikiroot = WikiDocument.create (self.path)
-
-        WikiPageFactory().create (self.wikiroot, u"Страница 1", [])
-
-
     def testDefault (self):
-        controller = self._loader["Counter"].InsertDialogController (self._dlg,
-                                                                     Application.config,
-                                                                     self.testPage)
+        controller = self._loader["Counter"].InsertDialogController (
+            self._dlg,
+            Application.config,
+            self.testPage)
 
         result = controller.showDialog()
         text = controller.getCommandString()

@@ -16,7 +16,6 @@ class SessionsTest (BaseMainWndTest):
     """Тесты плагина Sessions"""
     def setUp (self):
         super (SessionsTest, self).setUp ()
-        self.path = mkdtemp (prefix=u'Абырвалг абыр')
         self.path2 = mkdtemp (prefix=u'Абырвалг абырвалг')
 
         self.__createWiki()
@@ -34,14 +33,10 @@ class SessionsTest (BaseMainWndTest):
         Application.wikiroot = None
         Application.config.remove_section (self.loader[u"Sessions"].SessionStorage.SECTION_NAME)
         self.loader.clear()
-        removeDir (self.path)
         removeDir (self.path2)
 
 
     def __createWiki (self):
-        # Здесь будет создаваться вики
-        self.wikiroot = WikiDocument.create (self.path)
-
         TextPageFactory().create (self.wikiroot, u"Страница 1", [])
         TextPageFactory().create (self.wikiroot, u"Страница 2", [])
         TextPageFactory().create (self.wikiroot[u"Страница 1"], u"Страница 3", [])

@@ -1,16 +1,12 @@
 # -*- coding: UTF-8 -*-
 
-from tempfile import mkdtemp
-
 import wx
 
 from outwiker.core.pluginsloader import PluginsLoader
-from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
 from outwiker.core.style import Style
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.htmlgenerator import HtmlGenerator
-from test.utils import removeDir
 from test.guitests.basemainwnd import BaseMainWndTest
 
 
@@ -35,17 +31,11 @@ class LivejournalPluginTest (BaseMainWndTest):
 
 
     def __createWiki (self):
-        # Здесь будет создаваться вики
-        self.path = mkdtemp (prefix=u'Абырвалг абыр')
-
-        self.wikiroot = WikiDocument.create (self.path)
-
         WikiPageFactory().create (self.wikiroot, u"Страница 1", [])
 
 
     def tearDown(self):
         BaseMainWndTest.tearDown (self)
-        removeDir (self.path)
         self._plugin.LJConfig (Application.config).users.value = []
         self._plugin.LJConfig (Application.config).communities.value = []
         self.loader.clear()

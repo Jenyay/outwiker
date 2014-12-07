@@ -1,9 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-from tempfile import mkdtemp
-
 from outwiker.core.application import Application
-from outwiker.core.tree import WikiDocument
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 
@@ -42,11 +39,6 @@ class ChangePageUidTest (BaseMainWndTest):
 
 
     def __createWiki (self):
-        # Здесь будет создаваться вики
-        self.path = mkdtemp (prefix=u'Абырвалг абыр')
-
-        self.wikiroot = WikiDocument.create (self.path)
-
         WikiPageFactory().create (self.wikiroot, u"Страница 1", [])
         WikiPageFactory().create (self.wikiroot, u"Страница 2", [])
 
