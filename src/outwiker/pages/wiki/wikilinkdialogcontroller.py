@@ -6,8 +6,8 @@ from outwiker.pages.wiki.wikiconfig import WikiConfig
 
 
 class WikiLinkDialogController (BaseLinkDialogController):
-    def __init__ (self, application, dialog, selectedString):
-        super (WikiLinkDialogController, self).__init__ (dialog, selectedString)
+    def __init__ (self, application, page, dialog, selectedString):
+        super (WikiLinkDialogController, self).__init__ (page, dialog, selectedString)
         self._application = application
 
 
@@ -19,3 +19,10 @@ class WikiLinkDialogController (BaseLinkDialogController):
         """
         linkCreator = LinkCreator (WikiConfig (self._application))
         return linkCreator.create (self.link, self.comment)
+
+
+    def createFileLink (self, fname):
+        """
+        Создать ссылку на прикрепленный файл
+        """
+        return u'Attach:' + fname

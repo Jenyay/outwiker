@@ -21,8 +21,6 @@ class LinkDialog (TestedDialog):
         self.textWidth = 300
 
         self._createGui ()
-        self.linkText.SetSelection (0, 0)
-        self.linkText.SetSelection (0, len (self.linkText.GetValue()))
         self.linkText.SetFocus()
         self.Center(wx.CENTRE_ON_SCREEN)
 
@@ -33,7 +31,7 @@ class LinkDialog (TestedDialog):
         mainSizer.AddGrowableRow (2)
 
         linkLabel = wx.StaticText (self, label=_(u"Link"))
-        self.linkText = wx.TextCtrl (self)
+        self.linkText = wx.ComboBox (self, style=wx.CB_DROPDOWN)
         self.linkText.SetMinSize ((self.textWidth, -1))
         mainSizer.Add (linkLabel, 0, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=4)
         mainSizer.Add (self.linkText, 0, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND, border=4)

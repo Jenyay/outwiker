@@ -11,6 +11,7 @@ def insertLink (application):
 
     with LinkDialog (application.mainWindow) as dlg:
         linkController = WikiLinkDialogController (application,
+                                                   application.selectedPage,
                                                    dlg,
                                                    codeEditor.GetSelectedText())
 

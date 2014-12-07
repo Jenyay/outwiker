@@ -12,3 +12,10 @@ class HtmlLinkDialogController (BaseLinkDialogController):
         """
         return u'<a href="{link}">{comment}</a>'.format (comment=self.comment,
                                                          link=self.link)
+
+
+    def createFileLink (self, fname):
+        """
+        Создать ссылку на прикрепленный файл
+        """
+        return u'__attach/' + fname
