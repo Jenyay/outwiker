@@ -2,7 +2,8 @@
 
 import wx
 
-from outwiker.gui.linkdialogcontroller import LinkDialogContoller
+from outwiker.pages.html.htmllinkdialogcontroller import HtmlLinkDialogController
+from outwiker.gui.linkdialog import LinkDialog
 
 
 def insertLink (application):
@@ -11,10 +12,8 @@ def insertLink (application):
 
     codeEditor = application.mainWindow.pagePanel.pageView.codeEditor
 
-    linkController = LinkDialogContoller (application.mainWindow, codeEditor.GetSelectedText())
+    with LinkDialog (application.mainWindow) as dlg:
+        linkController = HtmlLinkDialogController (dlg, codeEditor.GetSelectedText())
 
-    if linkController.showDialog() == wx.ID_OK:
-        text = u'<a href="{link}">{comment}</a>'.format (comment=linkController.comment,
-                                                         link=linkController.link)
-
-        codeEditor.replaceText (text)
+        if linkController.showDialog() == wx.ID_OK:
+            codeEditor.replaceText (linkController.linkResult)
