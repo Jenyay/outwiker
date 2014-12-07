@@ -1,5 +1,7 @@
 # -*- coding: UTF-8 -*-
 
+from os.path import basename
+
 from basemainwnd import BaseMainWndTest
 from outwiker.core.commands import renamePage
 from outwiker.pages.text.textpage import TextPageFactory
@@ -137,4 +139,4 @@ class RenamePageGuiTest (BaseMainWndTest):
         renamePage (self.wikiroot, u"Абырвалг")
 
         self.assertEqual (Tester.dialogTester.count, 0)
-        self.assertEqual (self.wikiroot.title, u"Пример вики бла-бла-бла")
+        self.assertEqual (self.wikiroot.title, basename (self.path))

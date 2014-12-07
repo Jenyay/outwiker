@@ -2,6 +2,7 @@
 
 import unittest
 import os.path
+from tempfile import mkdtemp
 
 from outwiker.core.attachment import Attachment
 from utils import removeDir
@@ -18,8 +19,7 @@ class AttachmentTest (unittest.TestCase):
         self.pageUpdateSender = None
 
         # Здесь будет создаваться вики
-        self.path = u"../test/testwiki"
-        removeDir (self.path)
+        self.path = mkdtemp (prefix=u'Абырвалг абыр')
 
         self.wikiroot = WikiDocument.create (self.path)
 

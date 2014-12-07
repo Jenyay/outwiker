@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 import unittest
+from tempfile import mkdtemp
 
 from test.utils import removeDir
 from outwiker.core.tree import WikiDocument
@@ -11,8 +12,7 @@ from outwiker.gui.tagspanelcontroller import TagsPanelController
 
 class TagsPanelTest (unittest.TestCase):
     def setUp (self):
-        self.path = u"../test/testwiki"
-        removeDir (self.path)
+        self.path = mkdtemp (prefix=u'Абырвалг абыр')
 
         self.wikiroot = WikiDocument.create (self.path)
 

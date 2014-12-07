@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 from abc import ABCMeta, abstractmethod
+from tempfile import mkdtemp
 
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.application import Application
@@ -35,7 +36,7 @@ class BasePluginLoadingTest (BaseMainWndTest):
 
     def setUp(self):
         BaseMainWndTest.setUp (self)
-        self.wikipath = u"../test/testwiki"
+        self.wikipath = mkdtemp (prefix=u'Абырвалг абыр')
         self.__createWiki (self.wikipath)
 
         dirlist = [self.getPluginDir()]
@@ -46,8 +47,6 @@ class BasePluginLoadingTest (BaseMainWndTest):
 
     def __createWiki (self, wikipath):
         # Здесь будет создаваться вики
-        removeDir (wikipath)
-
         self.wikiroot = WikiDocument.create (wikipath)
         WikiPageFactory().create (self.wikiroot, u"Викистраница", [])
         TextPageFactory().create (self.wikiroot, u"Текст", [])

@@ -4,6 +4,7 @@
 """
 
 import unittest
+from tempfile import mkdtemp
 
 from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
@@ -23,8 +24,7 @@ class PageOrderTest (unittest.TestCase):
         self.orderUpdateSender = None
 
         # Здесь будет создаваться вики
-        self.path = u"../test/testwiki"
-        removeDir (self.path)
+        self.path = mkdtemp (prefix=u'Абырвалг абыр')
 
         self.wikiroot = WikiDocument.create (self.path)
         Application.onPageOrderChange += self.onPageOrder

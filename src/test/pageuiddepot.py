@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 import unittest
+from tempfile import mkdtemp
 
 from outwiker.core.pageuiddepot import PageUidDepot
 from outwiker.core.commands import generateLink
@@ -15,8 +16,7 @@ class PageUidDepotTest (unittest.TestCase):
     """Тест класса PageUidDepot"""
     def setUp(self):
         # Здесь будет создаваться вики
-        self.path = u"../test/testwiki"
-        removeDir (self.path)
+        self.path = mkdtemp (prefix=u'Абырвалг абыр')
 
         self.wikiroot = WikiDocument.create (self.path)
 

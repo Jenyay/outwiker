@@ -2,21 +2,19 @@
 
 import os.path
 import unittest
-
+from tempfile import mkdtemp
 
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.core.attachment import Attachment
 from outwiker.core.application import Application
 from outwiker.core.exceptions import DublicateTitle
 from outwiker.core.tree import WikiDocument
-
 from test.utils import removeDir
 
 
 class RenameTest (unittest.TestCase):
     def setUp (self):
-        self.path = u"../test/testwiki"
-        removeDir (self.path)
+        self.path = mkdtemp (prefix=u'Абырвалг абыр')
 
         self.wikiroot = WikiDocument.create (self.path)
 
@@ -41,6 +39,7 @@ class RenameTest (unittest.TestCase):
 
     def tearDown (self):
         Application.wikiroot = None
+        removeDir (self.path)
 
 
     def testRename1 (self):

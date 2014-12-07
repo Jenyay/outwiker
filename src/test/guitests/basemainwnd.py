@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 import unittest
+from tempfile import mkdtemp
 
 import wx
 
@@ -31,7 +32,7 @@ class BaseMainWndTest(unittest.TestCase):
 
 
     def setUp(self):
-        self.path = u"../test/Пример вики бла-бла-бла"
+        self.path = mkdtemp (prefix=u'Абырвалг абырвалг')
 
         Application.config.remove_section (MainWindowConfig.MAIN_WINDOW_SECTION)
 
@@ -46,7 +47,6 @@ class BaseMainWndTest(unittest.TestCase):
         registerActions (Application)
         self.wnd.createGui()
 
-        removeDir (self.path)
         self.wikiroot = WikiDocument.create (self.path)
 
         Tester.dialogTester.clear()

@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 import os.path
+from tempfile import mkdtemp
 
 import wx
 
@@ -20,8 +21,7 @@ class OpenWikiGuiTest (BaseMainWndTest):
     def setUp (self):
         BaseMainWndTest.setUp (self)
 
-        self.path2 = u"../test/testwiki2"
-        removeDir (self.path2)
+        self.path2 = mkdtemp (prefix=u'Абырвалг абырвалг')
 
         factory = TextPageFactory()
         factory.create (self.wikiroot, u"Страница 1", [])

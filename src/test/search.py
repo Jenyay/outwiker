@@ -2,6 +2,7 @@
 
 import unittest
 import os.path
+from tempfile import mkdtemp
 
 from outwiker.core.search import Searcher, AllTagsSearchStrategy, AnyTagSearchStrategy
 from outwiker.pages.search.searchpage import GlobalSearch
@@ -14,8 +15,7 @@ from outwiker.core.attachment import Attachment
 class SearcherTest(unittest.TestCase):
     def setUp(self):
         # Здесь будет создаваться вики
-        self.path = u"../test/testwiki"
-        removeDir (self.path)
+        self.path = mkdtemp (prefix=u'Абырвалг абыр')
 
         self.wikiroot = WikiDocument.create (self.path)
 
@@ -92,9 +92,8 @@ class SearcherTest(unittest.TestCase):
         self.assertTrue (self.wikiroot[u"Страница 2/Страница 3"] in pages)
 
 
-    def teatDown (self):
-        if os.path.exists (self.path):
-            removeDir (self.path)
+    def tearDown (self):
+        removeDir (self.path)
 
 
     def testSearchAttach3 (self):
@@ -287,8 +286,7 @@ class SearchPageTest (unittest.TestCase):
     """
     def setUp(self):
         # Здесь будет создаваться вики
-        self.path = u"../test/testwiki"
-        removeDir (self.path)
+        self.path = mkdtemp (prefix=u'Абырвалг абыр')
 
         self.wikiroot = WikiDocument.create (self.path)
 
@@ -314,6 +312,10 @@ class SearchPageTest (unittest.TestCase):
 
         self.wikiroot[u"Страница 2/Страница 3/Страница 4"].content = ur"2 Января. Фотографирован во время  улыбки при магнии. \
             Встал с постели и уверенно держался полчаса на задних лапах. Моего почти роста."
+
+
+    def tearDown (self):
+        removeDir (self.path)
 
 
     def testCreateDefaultPage (self):

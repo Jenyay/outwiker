@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 import unittest
+from tempfile import mkdtemp
 
 from outwiker.core.tagslist import TagsList
 from outwiker.core.tree import WikiDocument
@@ -13,8 +14,7 @@ from .utils import removeDir
 class TagsListTest (unittest.TestCase):
     def setUp(self):
         # Здесь будет создаваться вики
-        self.path = u"../test/testwiki"
-        removeDir (self.path)
+        self.path = mkdtemp (prefix=u'Абырвалг абыр')
 
         self.wikiroot = WikiDocument.create (self.path)
 
@@ -24,6 +24,10 @@ class TagsListTest (unittest.TestCase):
         factory.create (self.wikiroot[u"Страница 2"], u"Страница 3", [u"Метка 2"])
         factory.create (self.wikiroot[u"Страница 2/Страница 3"], u"Страница 4", [u"Метка 1"])
         factory.create (self.wikiroot[u"page 1"], u"page 5", [u"Метка 4"])
+
+
+    def tearDown (self):
+        removeDir (self.path)
 
 
     def test1 (self):

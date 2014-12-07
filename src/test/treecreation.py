@@ -8,6 +8,7 @@ import os
 import os.path
 import stat
 import unittest
+from tempfile import mkdtemp
 
 from outwiker.core.tree import RootWikiPage, WikiDocument
 from outwiker.core.attachment import Attachment
@@ -26,8 +27,7 @@ class TextPageCreationTest(unittest.TestCase):
     """
     def setUp(self):
         # Здесь будет создаваться вики
-        self.path = u"../test/testwiki"
-        removeDir (self.path)
+        self.path = mkdtemp (prefix=u'Абырвалг абыр')
         self.eventcount = 0
 
         self.wikiroot = WikiDocument.create (self.path)

@@ -5,6 +5,7 @@
 """
 
 import unittest
+from tempfile import mkdtemp
 
 from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
@@ -134,7 +135,7 @@ class EventTest (unittest.TestCase):
 class EventsTest (unittest.TestCase):
     def setUp (self):
         Application.wikiroot = None
-        self.path = u"../test/testwiki"
+        self.path = mkdtemp (prefix=u'Абырвалг абыр')
 
         self.isPageUpdate = False
         self.isPageCreate = False

@@ -1,5 +1,7 @@
 # -*- coding: UTF-8 -*-
 
+from tempfile import mkdtemp
+
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
@@ -15,7 +17,7 @@ class TestPageTest (BaseMainWndTest):
     def setUp (self):
         super (TestPageTest, self).setUp ()
 
-        self.path = u"../test/testwiki"
+        self.path = mkdtemp (prefix=u'Абырвалг абыр')
         self.dirlist = [u"../plugins/testpage"]
 
         self.loader = PluginsLoader(Application)

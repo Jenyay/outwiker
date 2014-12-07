@@ -3,6 +3,7 @@
 import os
 import os.path
 import unittest
+from tempfile import mkdtemp
 
 from outwiker.core.attachment import Attachment
 from outwiker.core.tree import WikiDocument
@@ -16,8 +17,7 @@ class PageThumbmakerTest (unittest.TestCase):
         self.thumbmaker = PageThumbmaker()
 
         # Здесь будет создаваться вики
-        self.path = u"../test/testwiki"
-        removeDir (self.path)
+        self.path = mkdtemp (prefix=u'Абырвалг абыр')
 
         self.wikiroot = WikiDocument.create (self.path)
 

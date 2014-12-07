@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 import os.path
+from tempfile import mkdtemp
 
 from basemainwnd import BaseMainWndTest
 from outwiker.core.tree import WikiDocument
@@ -140,7 +141,7 @@ class AttachPanelTest (BaseMainWndTest):
         self.assertEqual (self.wnd.attachPanel.panel.attachList.GetItemCount(), len (self.fullFilesPath))
 
         # Создадим другую независимую вики
-        newpath = u"../test/testwiki2"
+        newpath = mkdtemp (prefix=u'Абыр Абырвалг')
         newwikiroot = WikiDocument.create (newpath)
 
         TextPageFactory().create (newwikiroot, u"Новая страница 1", [])

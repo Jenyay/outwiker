@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 import unittest
+from tempfile import mkdtemp
 
 from outwiker.core.application import Application
 from test.utils import removeDir
@@ -16,8 +17,7 @@ class TreeSortTest(unittest.TestCase):
         Application.wikiroot = None
 
         # Здесь будет создаваться вики
-        self.path = u"../test/testwiki"
-        removeDir (self.path)
+        self.path = mkdtemp (prefix=u'Абырвалг абыр')
 
         self.wikiroot = WikiDocument.create (self.path)
 
@@ -43,6 +43,7 @@ class TreeSortTest(unittest.TestCase):
 
     def tearDown (self):
         Application.wikiroot = None
+        removeDir (self.path)
 
 
     def testSortAlphabetical1(self):
