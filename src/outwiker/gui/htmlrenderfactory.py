@@ -1,15 +1,11 @@
 # -*- coding: UTF-8 -*-
 
-import os
+from outwiker.core.system import getOS
 
 
 def getHtmlRender (parent):
     """
-    Возвращает используемый HTML-рендер
+    ! This function is deprecated. It used by Statistics plugin.
+    Function return HTML render for current system
     """
-    if os.name == "nt":
-        from htmlrenderie import HtmlRenderIE
-        return HtmlRenderIE (parent)
-    else:
-        from htmlrenderwebkit import HtmlRenderWebKit
-        return HtmlRenderWebKit (parent)
+    return getOS().getHtmlRender(parent)

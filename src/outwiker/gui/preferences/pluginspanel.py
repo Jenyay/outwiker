@@ -4,8 +4,7 @@ import wx
 
 from outwiker.core.application import Application
 from outwiker.gui.guiconfig import PluginsConfig
-from outwiker.gui.htmlrenderfactory import getHtmlRender
-from outwiker.core.system import getCurrentDir
+from outwiker.core.system import getCurrentDir, getOS
 
 
 class PluginsPanel (wx.Panel):
@@ -46,7 +45,7 @@ class PluginsPanel (wx.Panel):
             self.pluginsSizer.Remove (self.__blankPanel)
             self.__blankPanel.Destroy()
 
-            self.__pluginsInfo = getHtmlRender (self)
+            self.__pluginsInfo = getOS().getHtmlRender (self)
             self.__pluginsInfo.SetMinSize ((self.__htmlMinWidth, -1))
 
             self.pluginsSizer.Insert (1, self.__pluginsInfo, flag=wx.EXPAND)

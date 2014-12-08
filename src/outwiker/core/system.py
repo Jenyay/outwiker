@@ -53,12 +53,13 @@ class System (object):
 
 
 class Windows (System):
-    def __init__ (self):
-        pass
-
-
     def init (self):
         pass
+
+
+    @property
+    def name (self):
+        return u'windows'
 
 
     def startFile (self, path):
@@ -110,10 +111,16 @@ class Windows (System):
         return appdata
 
 
+    def getHtmlRender (self, parent):
+        from outwiker.gui.htmlrenderie import HtmlRenderIE
+        return HtmlRenderIE (parent)
+
+
 
 class Unix (System):
-    def __init__ (self):
-        pass
+    @property
+    def name (self):
+        return u'unix'
 
 
     def init (self):
@@ -206,6 +213,11 @@ class Unix (System):
     @property
     def fileIcons (self):
         return UnixFileIcons()
+
+
+    def getHtmlRender (self, parent):
+        from outwiker.gui.htmlrenderwebkit import HtmlRenderWebKit
+        return HtmlRenderWebKit (parent)
 
 
 def getOS ():
