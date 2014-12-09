@@ -3,6 +3,7 @@
 import unittest
 import os
 import os.path
+from tempfile import mkdtemp
 
 from outwiker.pages.wiki.thumbnails import Thumbnails
 from test.utils import removeDir
@@ -32,8 +33,7 @@ class ThumbnailsTest (unittest.TestCase):
 
     def __createWiki (self):
         # Здесь будет создаваться вики
-        self.path = u"../test/testwiki"
-        removeDir (self.path)
+        self.path = mkdtemp (prefix=u'Абырвалг абыр')
 
         self.wikiroot = WikiDocument.create (self.path)
         WikiPageFactory().create (self.wikiroot, u"Страница 2", [])

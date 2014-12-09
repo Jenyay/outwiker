@@ -2,19 +2,18 @@
 
 import wx
 
-from outwiker.gui.linkdialogcontroller import LinkDialogContoller
-from outwiker.pages.wiki.linkcreator import LinkCreator
-from outwiker.pages.wiki.wikiconfig import WikiConfig
+from outwiker.gui.linkdialog import LinkDialog
+from outwiker.pages.wiki.wikilinkdialogcontroller import WikiLinkDialogController
 
 
 def insertLink (application):
     codeEditor = application.mainWindow.pagePanel.pageView.codeEditor
-    config = WikiConfig (application.config)
 
-    linkController = LinkDialogContoller (application.mainWindow,
-                                          codeEditor.GetSelectedText())
+    with LinkDialog (application.mainWindow) as dlg:
+        linkController = WikiLinkDialogController (application,
+                                                   application.selectedPage,
+                                                   dlg,
+                                                   codeEditor.GetSelectedText())
 
-    if linkController.showDialog() == wx.ID_OK:
-        linkCreator = LinkCreator (config)
-        text = linkCreator.create (linkController.link, linkController.comment)
-        codeEditor.replaceText (text)
+        if linkController.showDialog() == wx.ID_OK:
+            codeEditor.replaceText (linkController.linkResult)

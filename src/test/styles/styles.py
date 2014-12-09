@@ -3,6 +3,7 @@
 import unittest
 import os.path
 import shutil
+from tempfile import mkdtemp
 
 from outwiker.core.style import Style
 from outwiker.core.tree import WikiDocument
@@ -20,8 +21,7 @@ class StylesTest (unittest.TestCase):
         self._pageUpdateSender = None
 
         # Здесь будет создаваться вики
-        self.path = u"../test/testwiki"
-        removeDir (self.path)
+        self.path = mkdtemp (prefix=u'Абырвалг абыр')
         self.eventcount = 0
 
         self.wikiroot = WikiDocument.create (self.path)

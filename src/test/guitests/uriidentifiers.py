@@ -2,6 +2,7 @@
 
 import os.path
 import unittest
+from tempfile import mkdtemp
 
 from outwiker.core.tree import WikiDocument
 from outwiker.pages.wiki.wikipage import WikiPageFactory
@@ -20,8 +21,7 @@ class UriIdentifierTest (unittest.TestCase):
     """
     def setUp(self):
         # Здесь будет создаваться вики
-        self.path = os.path.realpath (u"../test/testwiki")
-        removeDir (self.path)
+        self.path = mkdtemp (prefix=u'Абырвалг абыр')
 
         self.wikiroot = WikiDocument.create (self.path)
 

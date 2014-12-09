@@ -2,12 +2,14 @@
 
 import wx
 
+from outwiker.gui.testeddialog import TestedDialog
 
-class LinkDialog (wx.Dialog):
+
+class LinkDialog (TestedDialog):
     """
     Диалог для создания ссылок
     """
-    def __init__ (self, parent, link, comment):
+    def __init__ (self, parent):
         """
         link - Ссылка по умолчанию
         comment - Комментарий к ссылке по умолчанию
@@ -15,14 +17,10 @@ class LinkDialog (wx.Dialog):
         super (LinkDialog, self).__init__ (parent,
                                            style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER,
                                            title=_("Link"))
-        self.__linkDefault = link
-        self.__commentDefault = comment
 
         self.textWidth = 300
 
         self._createGui ()
-        self.linkText.SetSelection (0, 0)
-        self.linkText.SetSelection (0, len (self.linkText.GetValue()))
         self.linkText.SetFocus()
         self.Center(wx.CENTRE_ON_SCREEN)
 
@@ -33,13 +31,13 @@ class LinkDialog (wx.Dialog):
         mainSizer.AddGrowableRow (2)
 
         linkLabel = wx.StaticText (self, label=_(u"Link"))
-        self.linkText = wx.TextCtrl (self, value=self.__linkDefault)
+        self.linkText = wx.ComboBox (self, style=wx.CB_DROPDOWN)
         self.linkText.SetMinSize ((self.textWidth, -1))
         mainSizer.Add (linkLabel, 0, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=4)
         mainSizer.Add (self.linkText, 0, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND, border=4)
 
         commentLabel = wx.StaticText (self, label=_(u"Comment"))
-        self.commentText = wx.TextCtrl (self, value=self.__commentDefault)
+        self.commentText = wx.TextCtrl (self)
         self.commentText.SetMinSize ((self.textWidth, -1))
         mainSizer.Add (commentLabel, 0, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=4)
         mainSizer.Add (self.commentText, 0, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND, border=4)
@@ -58,6 +56,16 @@ class LinkDialog (wx.Dialog):
         return self.commentText.GetValue()
 
 
+    @comment.setter
+    def comment (self, value):
+        self.commentText.SetValue (value)
+
+
     @property
     def link (self):
         return self.linkText.GetValue()
+
+
+    @link.setter
+    def link (self, value):
+        self.linkText.SetValue (value)

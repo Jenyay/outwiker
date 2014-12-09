@@ -4,13 +4,11 @@ from abc import ABCMeta, abstractmethod
 
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.application import Application
-from outwiker.core.tree import WikiDocument
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.html.htmlpage import HtmlPageFactory
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.pages.search.searchpage import SearchPageFactory
 from test.guitests.basemainwnd import BaseMainWndTest
-from test.utils import removeDir
 
 
 class BasePluginLoadingTest (BaseMainWndTest):
@@ -35,8 +33,7 @@ class BasePluginLoadingTest (BaseMainWndTest):
 
     def setUp(self):
         BaseMainWndTest.setUp (self)
-        self.wikipath = u"../test/testwiki"
-        self.__createWiki (self.wikipath)
+        self.__createWiki ()
 
         dirlist = [self.getPluginDir()]
 
@@ -44,11 +41,8 @@ class BasePluginLoadingTest (BaseMainWndTest):
         self.loader.load (dirlist)
 
 
-    def __createWiki (self, wikipath):
+    def __createWiki (self):
         # Здесь будет создаваться вики
-        removeDir (wikipath)
-
-        self.wikiroot = WikiDocument.create (wikipath)
         WikiPageFactory().create (self.wikiroot, u"Викистраница", [])
         TextPageFactory().create (self.wikiroot, u"Текст", [])
         HtmlPageFactory().create (self.wikiroot, u"HTML", [])
@@ -58,7 +52,6 @@ class BasePluginLoadingTest (BaseMainWndTest):
     def tearDown(self):
         Application.selectedPage = None
         Application.wikiroot = None
-        removeDir (self.wikipath)
         self.loader.clear()
         BaseMainWndTest.tearDown (self)
 

@@ -1,5 +1,7 @@
 # -*- coding: UTF-8 -*-
 
+from os.path import basename
+
 from outwiker.core.application import Application
 from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
@@ -60,7 +62,7 @@ class TabsTest (BaseMainWndTest):
         self.assertEqual (self._tabsController.getPage(0), None)
 
         # Так как нет выбранной страницы, то заголовок вкладки содержит имя папки с вики
-        self.assertEqual (self._tabsController.getTabTitle (0), u"Пример вики бла-бла-бла")
+        self.assertEqual (self._tabsController.getTabTitle (0), basename (self.path))
 
 
     def testSelection (self):
@@ -134,7 +136,7 @@ class TabsTest (BaseMainWndTest):
         self.assertEqual (self._tabsController.getTabsCount(), 1)
         self.assertEqual (self._tabsController.getSelection(), 0)
         self.assertEqual (self._tabsController.getPage(0), None)
-        self.assertEqual (self._tabsController.getTabTitle (0), u"Пример вики бла-бла-бла")
+        self.assertEqual (self._tabsController.getTabTitle (0), basename (self.path))
 
 
     def testRemoveSelection2 (self):
@@ -148,7 +150,7 @@ class TabsTest (BaseMainWndTest):
         self.assertEqual (self._tabsController.getTabsCount(), 2)
         self.assertEqual (self._tabsController.getSelection(), 1)
         self.assertEqual (self._tabsController.getPage(1), None)
-        self.assertEqual (self._tabsController.getTabTitle (1), u"Пример вики бла-бла-бла")
+        self.assertEqual (self._tabsController.getTabTitle (1), basename (self.path))
 
 
     def testRemoveSelection3 (self):
@@ -161,7 +163,7 @@ class TabsTest (BaseMainWndTest):
         self.assertEqual (self._tabsController.getTabsCount(), 2)
         self.assertEqual (self._tabsController.getSelection(), 1)
         self.assertEqual (self._tabsController.getPage(1), None)
-        self.assertEqual (self._tabsController.getTabTitle (1), u"Пример вики бла-бла-бла")
+        self.assertEqual (self._tabsController.getTabTitle (1), basename (self.path))
 
 
     def testRenameSelection (self):
@@ -201,7 +203,7 @@ class TabsTest (BaseMainWndTest):
         self.assertEqual (self._tabsController.getTabsCount(), 1)
         self.assertEqual (self._tabsController.getSelection(), 0)
         self.assertEqual (self._tabsController.getPage(0), None)
-        self.assertEqual (self._tabsController.getTabTitle (0), u"Пример вики бла-бла-бла")
+        self.assertEqual (self._tabsController.getTabTitle (0), basename (self.path))
 
 
     def testRemove2 (self):
@@ -230,7 +232,7 @@ class TabsTest (BaseMainWndTest):
         self.assertEqual (self._tabsController.getSelection(), 0)
 
         self.assertEqual (self._tabsController.getPage(0), None)
-        self.assertEqual (self._tabsController.getTabTitle (0), u"Пример вики бла-бла-бла")
+        self.assertEqual (self._tabsController.getTabTitle (0), basename (self.path))
 
         self.assertEqual (self._tabsController.getPage(1), self.wikiroot[u"Страница 2"])
         self.assertEqual (self._tabsController.getTabTitle (1), u"Страница 2")

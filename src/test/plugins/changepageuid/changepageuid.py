@@ -1,7 +1,6 @@
 # -*- coding: UTF-8 -*-
 
 from outwiker.core.application import Application
-from outwiker.core.tree import WikiDocument
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 
@@ -40,12 +39,6 @@ class ChangePageUidTest (BaseMainWndTest):
 
 
     def __createWiki (self):
-        # Здесь будет создаваться вики
-        self.path = u"../test/testwiki"
-        removeDir (self.path)
-
-        self.wikiroot = WikiDocument.create (self.path)
-
         WikiPageFactory().create (self.wikiroot, u"Страница 1", [])
         WikiPageFactory().create (self.wikiroot, u"Страница 2", [])
 

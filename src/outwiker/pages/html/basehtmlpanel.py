@@ -12,7 +12,6 @@ from outwiker.core.system import getImagesDir
 from outwiker.core.attachment import Attachment
 from outwiker.core.config import IntegerOption
 from outwiker.gui.basetextpanel import BaseTextPanel
-from outwiker.gui.htmlrenderfactory import getHtmlRender
 from outwiker.actions.search import SearchAction, SearchNextAction, SearchPrevAction, SearchAndReplaceAction
 from outwiker.actions.attachfiles import AttachFilesAction
 from outwiker.actions.globalsearch import GlobalSearchAction
@@ -50,7 +49,7 @@ class BaseHtmlPanel(BaseTextPanel):
 
         self.notebook = wx.Notebook(self, -1, style=wx.NB_BOTTOM)
         self._codeEditor = self.getTextEditor()(self.notebook)
-        self.htmlWindow = getHtmlRender (self.notebook)
+        self.htmlWindow = getOS().getHtmlRender (self.notebook)
 
         self.__do_layout()
 

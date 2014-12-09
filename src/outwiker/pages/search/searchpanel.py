@@ -7,7 +7,7 @@ from outwiker.core.search import Searcher, AllTagsSearchStrategy, AnyTagSearchSt
 from outwiker.core.tagslist import TagsList
 from outwiker.core.commands import pageExists
 from outwiker.core.config import IntegerOption
-from outwiker.gui.htmlrenderfactory import getHtmlRender
+from outwiker.core.system import getOS
 from outwiker.gui.basepagepanel import BasePagePanel
 from outwiker.gui.tagscloud import TagsCloud
 from outwiker.gui.taglabel import EVT_TAG_LEFT_CLICK
@@ -56,7 +56,7 @@ class SearchPanel(BasePagePanel):
 
         self.clearTagsBtn = wx.Button(self, -1, _(u"Clear all tags"))
         self.searchBtn = wx.Button(self, -1, _(u"Find"))
-        self.resultWindow = getHtmlRender (self)
+        self.resultWindow = getOS().getHtmlRender (self)
 
         self.sortLabel = wx.StaticText(self, -1, _(u"Sort by "))
         self.sortStrategy = wx.ComboBox (self,

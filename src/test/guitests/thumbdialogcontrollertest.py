@@ -2,6 +2,7 @@
 
 import os
 import unittest
+from tempfile import mkdtemp
 
 from outwiker.pages.wiki.thumbdialogcontroller import ThumbDialogController
 from outwiker.pages.wiki.thumbdialog import ThumbDialog
@@ -67,8 +68,7 @@ class TestThumbDialogController (ThumbDialogController):
 
 class ThumbDialogControllerTest (unittest.TestCase):
     def setUp (self):
-        self.path = u"../test/testwiki"
-        removeDir (self.path)
+        self.path = mkdtemp (prefix=u'Абырвалг абыр')
 
         self.wikiroot = WikiDocument.create (self.path)
 

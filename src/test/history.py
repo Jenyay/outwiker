@@ -1,9 +1,9 @@
 # -*- coding: UTF-8 -*-
 
 import unittest
+from tempfile import mkdtemp
 
 from outwiker.core.history import History, HistoryEmptyException
-
 from outwiker.core.application import Application
 from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
@@ -17,8 +17,7 @@ class HistoryTest (unittest.TestCase):
         self.treeUpdateSender = None
 
         # Здесь будет создаваться вики
-        self.path = u"../test/testwiki"
-        removeDir (self.path)
+        self.path = mkdtemp (prefix=u'Абырвалг абыр')
 
         self.wiki = WikiDocument.create (self.path)
 

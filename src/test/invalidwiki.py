@@ -8,6 +8,7 @@ import datetime
 import os.path
 import shutil
 import unittest
+from tempfile import mkdtemp
 
 from outwiker.core.attachment import Attachment
 from outwiker.core.tree import WikiDocument
@@ -29,8 +30,7 @@ class InvalidWikiTest (unittest.TestCase):
         """
         def __createInvalidWiki1 ():
             # Здесь будет создаваться вики
-            path = u"../test/testwiki"
-            removeDir (path)
+            path = mkdtemp (prefix=u'Абырвалг абыр')
 
             rootwiki = WikiDocument.create (path)
 
@@ -62,7 +62,7 @@ class InvalidWikiTest (unittest.TestCase):
         """
         def __createInvalidWiki2 ():
             # Здесь будет создаваться вики
-            path = u"../test/testwiki"
+            path = mkdtemp (prefix=u'Абырвалг абыр')
             removeDir (path)
 
             rootwiki = WikiDocument.create (path)

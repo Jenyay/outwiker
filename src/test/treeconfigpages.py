@@ -2,6 +2,7 @@
 
 import os.path
 import unittest
+from tempfile import mkdtemp
 
 from outwiker.core.tree import WikiDocument
 from outwiker.core.config import StringOption
@@ -15,8 +16,7 @@ class ConfigPagesTest (unittest.TestCase):
     """
     def setUp(self):
         # Здесь будет создаваться вики
-        self.path = u"../test/testwiki"
-        removeDir (self.path)
+        self.path = mkdtemp (prefix=u'Абырвалг абыр')
 
         self.wikiroot = WikiDocument.create (self.path)
 
@@ -26,6 +26,10 @@ class ConfigPagesTest (unittest.TestCase):
         factory.create (self.wikiroot[u"Страница 2"], u"Страница 3", [])
         factory.create (self.wikiroot[u"Страница 2/Страница 3"], u"Страница 4", [])
         factory.create (self.wikiroot[u"Страница 1"], u"Страница 5", [])
+
+
+    def tearDown (self):
+        removeDir (self.path)
 
 
     def testSetRootParams (self):

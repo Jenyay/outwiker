@@ -1,5 +1,7 @@
 # -*- coding: UTF-8 -*-
 
+from os.path import basename
+
 from basemainwnd import BaseMainWndTest
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.core.application import Application
@@ -103,14 +105,13 @@ class TreeTest (BaseMainWndTest):
         self.assertNotEqual (tree.getTreeItem (self.wikiroot[u"Страница 2/Страница 3"]), None)
 
 
-
     def testTreeLoadingEmpty (self):
         tree = self._getTreeCtrl()
 
         Application.wikiroot = self.wikiroot
 
         rootitem = tree.GetRootItem()
-        self.assertEqual (tree.GetItemText (rootitem), u"Пример вики бла-бла-бла")
+        self.assertEqual (tree.GetItemText (rootitem), basename (self.path))
         self.assertEqual (tree.GetChildrenCount (rootitem), 0)
         self.assertEqual (tree.GetItemData(rootitem).GetData(), self.wikiroot)
 

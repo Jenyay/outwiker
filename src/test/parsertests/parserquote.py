@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 import unittest
+from tempfile import mkdtemp
 
 from test.utils import removeDir
 
@@ -20,10 +21,13 @@ class ParserQuoteTest (unittest.TestCase):
         self.parser = factory.make (self.testPage, Application.config)
 
 
+    def tearDown (self):
+        removeDir (self.path)
+
+
     def __createWiki (self):
         # Здесь будет создаваться вики
-        self.path = u"../test/testwiki"
-        removeDir (self.path)
+        self.path = mkdtemp (prefix=u'Абырвалг абыр')
 
         self.wikiroot = WikiDocument.create (self.path)
         WikiPageFactory().create (self.wikiroot, u"Страница 2", [])

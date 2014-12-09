@@ -263,7 +263,8 @@ class IconPanel (wx.Panel):
 
     def __appendGroups (self):
         for n, collection in enumerate (self._iconsCollections):
-            for group in [None] + collection.getGroups():
+            # First None is root directory
+            for group in [None] + sorted (collection.getGroups(), key=self._localize):
                 # Get group name
                 if group is None and n == 0:
                     title = _(u'Not in groups')
@@ -347,10 +348,7 @@ class IconPanel (wx.Panel):
 
     def _localize (self, groupname):
         name = _(groupname)
-        if len (name) > 0:
-            name = name[0].upper() + name[1:]
-
-        return name
+        return name.capitalize()
 
 
 class AppearancePanel (wx.Panel):

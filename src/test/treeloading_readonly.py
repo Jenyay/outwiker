@@ -2,6 +2,7 @@
 
 import os.path
 import unittest
+from tempfile import mkdtemp
 
 from outwiker.core.tree import WikiDocument
 from outwiker.core.exceptions import ReadonlyException
@@ -157,8 +158,7 @@ class ReadonlyChangeTest (unittest.TestCase):
     """
     def setUp (self):
         # Здесь будет создаваться вики
-        self.path = u"../test/testwiki"
-        removeDir (self.path)
+        self.path = mkdtemp (prefix=u'Абырвалг абыр')
 
         self._exampleStyleDir = u"../styles/example_jblog"
         self._exampleStyleDir2 = u"../styles/example_jnet"
