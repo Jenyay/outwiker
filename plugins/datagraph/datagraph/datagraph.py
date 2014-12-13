@@ -76,3 +76,9 @@ else:
                 print e
 
             set_(_)
+
+
+        @property
+        def PlotCommand (self):
+            from commands import PlotCommand
+            return PlotCommand

@@ -102,6 +102,23 @@ class WikiCommandsTest (unittest.TestCase):
         self.assertEqual (params[u"Параметр"], u"Бла_бла_бла")
 
 
+    def testParamsParsing10 (self):
+        params_text = u"""Параметр1.Подпараметр
+            Пар_аме_тр2 = 111
+            Параметр3.Еще.Подпар_аметр
+            Пар.ам.етр4 = " проверка 'бла бла бла' проверка"
+            Пар.аме.тр5 = ' проверка "bla-bla-bla" тест ' """
+
+        params = Command.parseParams (params_text)
+
+        self.assertEqual (len (params), 5)
+        self.assertEqual (params[u"Параметр1.Подпараметр"], u"")
+        self.assertEqual (params[u"Пар_аме_тр2"], u"111")
+        self.assertEqual (params[u"Параметр3.Еще.Подпар_аметр"], u"")
+        self.assertEqual (params[u"Пар.ам.етр4"], u" проверка 'бла бла бла' проверка")
+        self.assertEqual (params[u"Пар.аме.тр5"], u' проверка "bla-bla-bla" тест ')
+
+
     def testCommandTest1 (self):
         self.parser.addCommand (TestCommand (self.parser))
         text = u"""(: test Параметр1 Параметр2=2 Параметр3=3 :)

@@ -1,18 +1,47 @@
 # -*- coding: UTF-8 -*-
 
+import re
+
 from outwiker.pages.wiki.parser.command import Command
 
 
-class PlotCommand (Command):
-    """ Create graph by (:plot:) command
-    """
+class BasePlotCommand (Command):
     def __init__ (self, parser):
         """
         parser - экземпляр парсера
         """
-        Command.__init__ (self, parser)
+        super (BasePlotCommand, self).__init__ (parser)
 
 
+    @staticmethod
+    def parseGraphParams (params):
+        """
+        Parse params string into parts: key - value. Key may contain a dot.
+        Sample params:
+            param1 Параметр2.subparam = 111 Параметр3 = " bla bla bla" param4.sub.param2 = "111" param5 =' 222 ' param7 = " sample 'bla bla bla' example" param8 = ' test "bla-bla-bla" test '
+        """
+        pattern = ur"""((?P<name>[\w.]+)
+    (\s*=\s*(?P<param>([-_\w]+)|((?P<quote>["']).*?(?P=quote)) ) )?\s*)"""
+
+        result = {}
+
+        regex = re.compile (pattern, re.IGNORECASE | re.MULTILINE | re.DOTALL | re.VERBOSE | re.UNICODE)
+        matches = regex.finditer (params)
+
+        for match in matches:
+            name = match.group ("name")
+            param = match.group ("param")
+            if param is None:
+                param = u""
+
+            result[name] = Command.removeQuotes (param)
+
+        return result
+
+
+class PlotCommand (BasePlotCommand):
+    """ Create graph by (:plot:) command
+    """
     @property
     def name (self):
         """
@@ -26,6 +55,6 @@ class PlotCommand (Command):
         Запустить команду на выполнение.
         Метод возвращает текст, который будет вставлен на место команды в вики-нотации
         """
-        params_dict = Command.parseParams (params)
+        params_dict = self.parseGraphParams (params)
 
         return u"Plugin Command Result"
