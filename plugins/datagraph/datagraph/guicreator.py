@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 """
 Модуль с классами для добавления пунктов меню и кнопок на панель
@@ -10,7 +9,7 @@ from outwiker.pages.html.basehtmlpanel import EVT_PAGE_TAB_CHANGED
 from .i18n import get_
 
 # Импортировать все Actions
-from .actions import PluginAction
+from .actions import PlotAction
 
 
 class GuiCreator (object):
@@ -22,7 +21,7 @@ class GuiCreator (object):
         self._application = application
 
         # Сюда добавить все Actions
-        self._actions = [PluginAction]
+        self._actions = [PlotAction]
 
         # MenuItem создаваемого подменю
         self._submenuItem = None
@@ -54,9 +53,9 @@ class GuiCreator (object):
         toolbar = mainWindow.toolbars[mainWindow.PLUGINS_TOOLBAR_STR]
 
         self._application.actionController.appendToolbarButton (
-            PluginAction.stringId,
+            PlotAction.stringId,
             toolbar,
-            self._getImagePath ("image.png"))
+            self._getImagePath ("plot.png"))
 
         self._getPageView().Bind (EVT_PAGE_TAB_CHANGED, self._onTabChanged)
         self._enableTools()
@@ -80,7 +79,6 @@ class GuiCreator (object):
                  self._actions)
 
             self._getPageView().Unbind (EVT_PAGE_TAB_CHANGED, handler=self._onTabChanged)
-
 
 
     def destroy (self):
