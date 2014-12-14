@@ -15,14 +15,32 @@ class BaseGraphObject (object):
     """
     def __init__ (self):
         self._properties = {}
+        self._objects = {}
 
 
-    def getValue (self, key):
-        return self._properties.get (key.lower(), None)
+    def getProperty (self, key, default):
+        return self._properties.get (key.lower(), default)
 
 
-    def setValue (self, key, value):
+    def setProperty (self, key, value):
         self._properties[key.lower()] = value
+
+
+    def getObject (self, key):
+        return self._objects.get (self._prepareObjectKey (key), None)
+
+
+    def addObject (self, key, obj):
+        key = self._prepareObjectKey (key)
+        self._objects[key] = obj
+
+
+    def _prepareObjectKey (self, key):
+        if key[-1].isalpha():
+            key += u'1'
+
+        key = key.lower()
+        return key
 
 
 
@@ -31,8 +49,9 @@ class Graph (BaseGraphObject):
     Contain other parts of the graph."""
     def __init__(self):
         super (Graph, self).__init__()
-        self.setValue (defines.GRAPH_WIDTH_NAME, defines.GRAPH_WIDTH)
-        self.setValue (defines.GRAPH_HEIGHT_NAME, defines.GRAPH_HEIGHT)
+        self.setProperty (defines.GRAPH_WIDTH_NAME, defines.GRAPH_WIDTH)
+        self.setProperty (defines.GRAPH_HEIGHT_NAME, defines.GRAPH_HEIGHT)
+        self.addObject (defines.PANE_NAME, Pane())
 
 
 
@@ -47,8 +66,8 @@ class Curve (BaseGraphObject):
     """Single curve on the graph."""
     def __init__ (self, color):
         super (Curve, self).__init__()
-        self.setValue (defines.CURVE_WIDTH_NAME, defines.GRAPH_WIDTH)
-        self.setValue (defines.CURVE_COLOR_NAME, color)
+        self.setProperty (defines.CURVE_WIDTH_NAME, defines.GRAPH_WIDTH)
+        self.setProperty (defines.CURVE_COLOR_NAME, color)
 
 
 

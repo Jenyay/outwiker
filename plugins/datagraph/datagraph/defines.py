@@ -20,3 +20,9 @@ COLUMNS_SEPARATOR = r'\s+'
 
 ROWS_SEPARATOR_NAME = u'rowsep'
 ROWS_SEPARATOR = r'\r?\n'
+
+# Object name for Pane class instance
+PANE_NAME = u'pane'
+
+# Property name for title
+PANE_TITLE_NAME = u'title'
