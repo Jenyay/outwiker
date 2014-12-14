@@ -215,6 +215,7 @@ if __name__ == '__main__':
 
     from test.plugins.datagraph.loading import DataGraphLoadingTest
     from test.plugins.datagraph.paramsparsing import ParamsParsingTest
+    from test.plugins.datagraph.graphbuilder import GraphBuilderTest
 
     from test.styles.styles import StylesTest
     from test.styles.styleslist import StylesListTest

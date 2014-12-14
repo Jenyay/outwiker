@@ -82,3 +82,9 @@ else:
         def PlotCommand (self):
             from commands import PlotCommand
             return PlotCommand
+
+
+        @property
+        def GraphBuilder (self):
+            from graphbuilder import GraphBuilder
+            return GraphBuilder
