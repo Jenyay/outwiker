@@ -41,6 +41,9 @@ class GraphBuilderTest (unittest.TestCase):
         self.assertIsNotNone (graph.getObject (u'pane1'))
         self.assertIsNotNone (graph.getObject (u'PANE1'))
 
+        self.assertIsNone (graph.getObject (u'curve'))
+        self.assertIsNone (graph.getObject (u'curve1'))
+
 
     def testGraphProperties (self):
         params = {
@@ -73,3 +76,79 @@ class GraphBuilderTest (unittest.TestCase):
 
         self.assertEqual (graph.getProperty (u'abyrvalg', None), u'Абырвалг')
         self.assertEqual (graph.getProperty (u'Абырвалг', None), u'Главрыба')
+
+
+    def testCurvesCount_01 (self):
+        params = {
+            'curve': u'Абырвалг',
+            'curve1': u'Абырвалг',
+            'curve23sdf': u''
+        }
+        content = u''
+        page = None
+
+        builder = self.GraphBuilder (params, content, page)
+        graph = builder.graph
+
+        self.assertIsNone (graph.getObject (u'curve'))
+        self.assertIsNone (graph.getObject (u'curve1'))
+        self.assertIsNone (graph.getObject (u'curve23sdf'))
+
+
+    def testCurvesCount_02 (self):
+        params = {
+            'curve.property': u'Абырвалг',
+        }
+        content = u''
+        page = None
+
+        builder = self.GraphBuilder (params, content, page)
+        graph = builder.graph
+
+        self.assertIsNotNone (graph.getObject (u'curve'))
+        self.assertIsNotNone (graph.getObject (u'curve1'))
+
+
+    def testCurvesCount_03 (self):
+        params = {
+            'curve1.property': u'Абырвалг',
+        }
+        content = u''
+        page = None
+
+        builder = self.GraphBuilder (params, content, page)
+        graph = builder.graph
+
+        self.assertIsNotNone (graph.getObject (u'curve'))
+        self.assertIsNotNone (graph.getObject (u'curve1'))
+
+
+    def testCurvesCount_04 (self):
+        params = {
+            'curve2.property': u'Абырвалг',
+        }
+        content = u''
+        page = None
+
+        builder = self.GraphBuilder (params, content, page)
+        graph = builder.graph
+
+        self.assertIsNone (graph.getObject (u'curve'))
+        self.assertIsNone (graph.getObject (u'curve1'))
+        self.assertIsNotNone (graph.getObject (u'curve2'))
+
+
+    def testCurveProperties_01 (self):
+        params = {
+            'curve.property': u'Абырвалг',
+        }
+        content = u''
+        page = None
+
+        builder = self.GraphBuilder (params, content, page)
+        graph = builder.graph
+        curve = graph.getObject (u'curve')
+        curve1 = graph.getObject (u'curve1')
+
+        self.assertEqual (curve.getProperty (u'property', None), u'Абырвалг')
+        self.assertEqual (curve1.getProperty (u'property', None), u'Абырвалг')

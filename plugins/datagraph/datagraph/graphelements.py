@@ -64,10 +64,9 @@ class Pane (BaseGraphObject):
 
 class Curve (BaseGraphObject):
     """Single curve on the graph."""
-    def __init__ (self, color):
+    def __init__ (self):
         super (Curve, self).__init__()
         self.setProperty (defines.CURVE_WIDTH_NAME, defines.GRAPH_WIDTH)
-        self.setProperty (defines.CURVE_COLOR_NAME, color)
 
 
 
