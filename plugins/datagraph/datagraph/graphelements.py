@@ -67,6 +67,9 @@ class Curve (BaseGraphObject):
     def __init__ (self):
         super (Curve, self).__init__()
         self.setProperty (defines.CURVE_WIDTH_NAME, defines.GRAPH_WIDTH)
+        self.setProperty (defines.CURVE_YCOL_NUMBER_NAME, defines.CURVE_YCOL_NUMBER)
+        self.setProperty (defines.CURVE_XCOL_NUMBER_NAME, defines.CURVE_XCOL_NUMBER)
+        self.setProperty (defines.CURVE_DATA_NAME, defines.CURVE_DATA)
 
 
 

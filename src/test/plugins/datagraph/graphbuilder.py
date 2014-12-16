@@ -150,5 +150,9 @@ class GraphBuilderTest (unittest.TestCase):
         curve = graph.getObject (u'curve')
         curve1 = graph.getObject (u'curve1')
 
+        self.assertEqual (curve, curve1)
         self.assertEqual (curve.getProperty (u'property', None), u'Абырвалг')
-        self.assertEqual (curve1.getProperty (u'property', None), u'Абырвалг')
+
+        self.assertEqual (curve.getProperty (u'xcol', 42), None)
+        self.assertEqual (curve.getProperty (u'ycol', 42), 1)
+        self.assertEqual (curve.getProperty (u'data', 42), None)
