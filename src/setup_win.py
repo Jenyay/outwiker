@@ -37,6 +37,7 @@ excludes = []
 packages = ['urllib',
             'urllib2',
             'outwiker.pages.wiki.wikipanel',
+            'outwiker.gui.htmlrenderfactory',
             'PIL.Image',
             'PIL.ImageDraw',
             'PIL.ImageFont',
