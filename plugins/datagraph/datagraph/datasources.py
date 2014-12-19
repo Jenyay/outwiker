@@ -10,8 +10,12 @@ class BaseSource (object):
 
 
     def __init__ (self, colsep):
+        # colsep - reg. exp. for separate the columns
         self._colsep = colsep
-        self._rowSeparator = r'[\r\n]+'
+        self._rowSeparator = r'(?:\r\n)|(?:\n)|(?:\r)'
+
+        self._colRegExp = re.compile (self._colsep, re.I | re.M)
+        self._rowRegExp = re.compile (self._rowSeparator, re.I | re.M)
 
 
     @abstractmethod
@@ -24,9 +28,10 @@ class BaseSource (object):
 
     def splitItems (self, line):
         """Return list of the row elements
-        line - line (row) of the data
-        sep - separator between items"""
-        return line
+        line - line (row) of the data"""
+        items = [item.strip() for item in self._colRegExp.split (line) if len (item.strip()) != 0]
+
+        return items
 
 
 class StringSource (BaseSource):
@@ -46,28 +51,36 @@ class StringSource (BaseSource):
         start = 0
         finish = False
 
-        regexp = re.compile (self._rowSeparator, re.I | re.M)
+        self._rowRegExp = re.compile (self._rowSeparator, re.I | re.M)
 
         if len (self._text.strip()) == 0:
             raise StopIteration
 
         while not finish:
-            match = regexp.search (self._text, start)
+            match = self._rowRegExp.search (self._text, start)
 
             if match is None:
                 line = self._text[start:].strip()
                 finish = True
             else:
                 line = self._text[start: match.start()].strip()
-                start = match.end() + 1
+                start = match.end()
 
+            # Skip empty lines
             if len (line) == 0:
+                if finish:
+                    break
+                else:
+                    continue
+
+            # All rows must contain the same columns count
+            items = self.splitItems (line)
+            if colsCount is None:
+                colsCount = len (items)
+            elif len (items) != colsCount:
                 break
 
-            items = self.splitItems (line)
-
             yield items
-
 
 
 
