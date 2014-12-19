@@ -41,8 +41,8 @@ class GraphBuilderTest (unittest.TestCase):
         self.assertIsNotNone (graph.getObject (u'pane1'))
         self.assertIsNotNone (graph.getObject (u'PANE1'))
 
-        self.assertIsNone (graph.getObject (u'curve'))
-        self.assertIsNone (graph.getObject (u'curve1'))
+        self.assertIsNotNone (graph.getObject (u'curve'))
+        self.assertIsNotNone (graph.getObject (u'curve1'))
 
 
     def testGraphProperties (self):
@@ -80,8 +80,8 @@ class GraphBuilderTest (unittest.TestCase):
 
     def testCurvesCount_01 (self):
         params = {
-            'curve': u'Абырвалг',
-            'curve1': u'Абырвалг',
+            'curve2': u'Абырвалг',
+            'curve3': u'Абырвалг',
             'curve23sdf': u''
         }
         content = u''
@@ -90,8 +90,8 @@ class GraphBuilderTest (unittest.TestCase):
         builder = self.GraphBuilder (params, content, page)
         graph = builder.graph
 
-        self.assertIsNone (graph.getObject (u'curve'))
-        self.assertIsNone (graph.getObject (u'curve1'))
+        self.assertIsNone (graph.getObject (u'curve2'))
+        self.assertIsNone (graph.getObject (u'curve3'))
         self.assertIsNone (graph.getObject (u'curve23sdf'))
 
 
@@ -133,8 +133,8 @@ class GraphBuilderTest (unittest.TestCase):
         builder = self.GraphBuilder (params, content, page)
         graph = builder.graph
 
-        self.assertIsNone (graph.getObject (u'curve'))
-        self.assertIsNone (graph.getObject (u'curve1'))
+        self.assertIsNotNone (graph.getObject (u'curve'))
+        self.assertIsNotNone (graph.getObject (u'curve1'))
         self.assertIsNotNone (graph.getObject (u'curve2'))
 
 
@@ -156,3 +156,23 @@ class GraphBuilderTest (unittest.TestCase):
         self.assertEqual (curve.getProperty (u'xcol', 42), None)
         self.assertEqual (curve.getProperty (u'ycol', 42), 1)
         self.assertEqual (curve.getProperty (u'data', 42), None)
+
+
+    def testCurveData_01 (self):
+        params = {
+            u'curve.data.colsep': u',',
+        }
+        content = u''
+        page = None
+
+        builder = self.GraphBuilder (params, content, page)
+        graph = builder.graph
+        curve = graph.getObject (u'curve')
+
+        self.assertIsNotNone (curve)
+        self.assertIsNone (curve.getProperty (u'data', 'xxx'))
+
+        data = curve.getObject (u'data')
+        self.assertIsNotNone (data)
+
+        self.assertEqual (data.getProperty (u'colsep', None), u',')

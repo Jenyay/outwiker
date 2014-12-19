@@ -71,6 +71,8 @@ class Curve (BaseGraphObject):
         self.setProperty (defines.CURVE_XCOL_NUMBER_NAME, defines.CURVE_XCOL_NUMBER)
         self.setProperty (defines.CURVE_DATA_NAME, defines.CURVE_DATA)
 
+        self.addObject (defines.CURVE_DATA_OBJECT_NAME, Data())
+
 
 
 class Axis (BaseGraphObject):
@@ -84,3 +86,22 @@ class Legend (BaseGraphObject):
     """Legend for pane."""
     def __init__ (self):
         super (Legend, self).__init__()
+
+
+
+class Data (BaseGraphObject):
+    """Information for data parsing"""
+    def __init__ (self):
+        super (Data, self).__init__()
+        self._dataSource = None
+
+
+    def setDataSource (self, dataSource):
+        assert dataSource is not None
+        self._dataSource = dataSource
+
+
+    def getRowsIterator (self):
+        """Return iterator for rows."""
+        assert self.dataSource is not None
+        return self._dataSource.getRowsIterator()

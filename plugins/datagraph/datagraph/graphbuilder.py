@@ -45,9 +45,9 @@ class GraphBuilder (object):
 
 
     def _createCurves (self, params_dict):
-        """ Create curves by parameters """
+        """Create curves by parameters"""
         curvename = re.compile (r'^(?P<name>curve\d*)\.', re.IGNORECASE)
-        names = set()
+        names = set([u'curve'])
 
         for key in params_dict.keys():
             match = curvename.match (key)

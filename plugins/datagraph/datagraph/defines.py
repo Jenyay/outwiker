@@ -24,6 +24,7 @@ CURVE_XCOL_NUMBER = None
 
 # Data source
 CURVE_DATA_NAME = u'data'
+CURVE_DATA_OBJECT_NAME = u'data'
 
 # If CURVE_DATA is None, data reads from command content
 # else CURVE_DATA is name of the Attachment
@@ -32,9 +33,6 @@ CURVE_DATA = None
 
 COLUMNS_SEPARATOR_NAME = u'colsep'
 COLUMNS_SEPARATOR = r'\s+'
-
-ROWS_SEPARATOR_NAME = u'rowsep'
-ROWS_SEPARATOR = r'\r?\n'
 
 # Object name for Pane class instance
 PANE_NAME = u'pane'
