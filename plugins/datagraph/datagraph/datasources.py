@@ -3,6 +3,7 @@
 
 from abc import ABCMeta, abstractmethod
 import re
+import codecs
 
 
 class BaseSource (object):
@@ -51,8 +52,6 @@ class StringSource (BaseSource):
         start = 0
         finish = False
 
-        self._rowRegExp = re.compile (self._rowSeparator, re.I | re.M)
-
         if len (self._text.strip()) == 0:
             raise StopIteration
 
@@ -98,4 +97,23 @@ class FileSource (BaseSource):
         """
         Return iterator for rows
         """
-        pass
+        colsCount = None
+
+        with codecs.open (self._filename, 'r', 'utf8') as fp:
+            while True:
+                line = fp.readline()
+                if len (line) == 0:
+                    break
+
+                # Skip empty lines
+                if len (line.strip()) == 0:
+                    continue
+
+                # All rows must contain the same columns count
+                items = self.splitItems (line.strip())
+                if colsCount is None:
+                    colsCount = len (items)
+                elif len (items) != colsCount:
+                    break
+
+                yield items
