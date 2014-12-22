@@ -99,21 +99,24 @@ class FileSource (BaseSource):
         """
         colsCount = None
 
-        with codecs.open (self._filename, 'r', 'utf8') as fp:
-            while True:
-                line = fp.readline()
-                if len (line) == 0:
-                    break
+        try:
+            with codecs.open (self._filename, 'r', 'utf8') as fp:
+                while True:
+                    line = fp.readline()
+                    if len (line) == 0:
+                        break
 
-                # Skip empty lines
-                if len (line.strip()) == 0:
-                    continue
+                    # Skip empty lines
+                    if len (line.strip()) == 0:
+                        continue
 
-                # All rows must contain the same columns count
-                items = self.splitItems (line.strip())
-                if colsCount is None:
-                    colsCount = len (items)
-                elif len (items) != colsCount:
-                    break
+                    # All rows must contain the same columns count
+                    items = self.splitItems (line.strip())
+                    if colsCount is None:
+                        colsCount = len (items)
+                    elif len (items) != colsCount:
+                        break
 
-                yield items
+                    yield items
+        except (IOError, SystemError, UnicodeDecodeError):
+            pass

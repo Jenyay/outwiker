@@ -251,6 +251,34 @@ class FileSourceTest (unittest.TestCase):
         self.assertEqual (items[1], [u'234', u'100', u'111'])
 
 
+    def testFileSource_invalid_01 (self):
+        source = self.FileSource (u'invalid_fname.txt')
+
+        items = list (source.getRowsIterator())
+        self.assertEqual (len (items), 0)
+
+
+    def testFileSource_invalid_02 (self):
+        source = self.FileSource (u'../test/samplefiles/image.png')
+
+        items = list (source.getRowsIterator())
+        self.assertEqual (len (items), 0)
+
+
+    def testFileSource_invalid_03 (self):
+        source = self.FileSource (u'../test/samplefiles/invalid.exe')
+
+        items = list (source.getRowsIterator())
+        self.assertEqual (len (items), 0)
+
+
+    def testFileSource_invalid_04 (self):
+        source = self.FileSource (u'../test/samplefiles/text_1251.txt')
+
+        items = list (source.getRowsIterator())
+        self.assertEqual (len (items), 0)
+
+
 
 class StringSourceTest (unittest.TestCase):
     def setUp (self):
