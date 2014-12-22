@@ -96,12 +96,16 @@ class Data (BaseGraphObject):
         self._dataSource = None
 
 
-    def setDataSource (self, dataSource):
-        assert dataSource is not None
-        self._dataSource = dataSource
-
-
     def getRowsIterator (self):
         """Return iterator for rows."""
-        assert self.dataSource is not None
+        assert self._dataSource is not None
         return self._dataSource.getRowsIterator()
+
+
+    def setSource (self, source):
+        """Set source data (StringSource or FileSource)"""
+        self._dataSource = source
+
+
+    def getSource (self):
+        return self._dataSource

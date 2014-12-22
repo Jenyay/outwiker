@@ -1,9 +1,15 @@
 # -*- coding: UTF-8 -*-
 
 import unittest
+from tempfile import mkdtemp, NamedTemporaryFile
+import os.path
 
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.application import Application
+from outwiker.core.attachment import Attachment
+from outwiker.core.tree import WikiDocument
+from outwiker.pages.wiki.wikipage import WikiPageFactory
+from test.utils import removeDir
 
 
 class GraphBuilderTest (unittest.TestCase):
@@ -17,9 +23,16 @@ class GraphBuilderTest (unittest.TestCase):
         self._defaultWidth = 700
         self._defaultHeight = 400
 
+        self.path = mkdtemp (prefix=u'Абырвалг абыр')
+        self.wikiroot = WikiDocument.create (self.path)
+        self.page = WikiPageFactory().create (self.wikiroot, u"Страница 1", [])
+        Application.wikiroot = None
+
 
     def tearDown (self):
         self.loader.clear()
+        Application.wikiroot = None
+        removeDir (self.path)
 
 
     def testEmpty (self):
@@ -176,3 +189,149 @@ class GraphBuilderTest (unittest.TestCase):
         self.assertIsNotNone (data)
 
         self.assertEqual (data.getProperty (u'colsep', None), u',')
+
+
+    def testCurveData_02 (self):
+        params = {}
+        content = u'''123
+456
+789'''
+        page = None
+
+        builder = self.GraphBuilder (params, content, page)
+        graph = builder.graph
+        curve = graph.getObject (u'curve')
+
+        curveData = curve.getObject (u'data')
+
+        self.assertIsNotNone (curveData)
+        self.assertIsNotNone (curveData.getSource())
+
+        data = list (curveData.getRowsIterator())
+        self.assertEqual (data, [[u'123'], [u'456'], [u'789']])
+
+
+    def testCurveData_03 (self):
+        params = {}
+        content = u'''123    111
+456    222
+789    333'''
+        page = None
+
+        builder = self.GraphBuilder (params, content, page)
+        graph = builder.graph
+        curve = graph.getObject (u'curve')
+
+        curveData = curve.getObject (u'data')
+
+        self.assertIsNotNone (curveData)
+        self.assertIsNotNone (curveData.getSource())
+
+        data = list (curveData.getRowsIterator())
+        self.assertEqual (data, [[u'123', u'111'], [u'456', u'222'], [u'789', u'333']])
+
+
+    def testCurveAttachData_01 (self):
+        data = u'''123
+456
+789'''
+
+        attachname = self._saveDataAndAttach (self.page, data)
+        params = {
+            u'curve.data': 'Attach:{}'.format (attachname),
+        }
+        content = u''
+        page = self.page
+
+        builder = self.GraphBuilder (params, content, page)
+        graph = builder.graph
+        curve = graph.getObject (u'curve')
+
+        curveData = curve.getObject (u'data')
+
+        self.assertIsNotNone (curveData)
+        self.assertIsNotNone (curveData.getSource())
+
+        data = list (curveData.getRowsIterator())
+        self.assertEqual (data, [[u'123'], [u'456'], [u'789']])
+
+
+    def testCurveAttachData_02 (self):
+        data = u'''123
+456
+789'''
+
+        attachname = self._saveDataAndAttach (self.page, data)
+        params = {
+            u'curve.data': attachname,
+        }
+        content = u''
+        page = self.page
+
+        builder = self.GraphBuilder (params, content, page)
+        graph = builder.graph
+        curve = graph.getObject (u'curve')
+
+        curveData = curve.getObject (u'data')
+
+        self.assertIsNotNone (curveData)
+        self.assertIsNotNone (curveData.getSource())
+
+        data = list (curveData.getRowsIterator())
+        self.assertEqual (data, [[u'123'], [u'456'], [u'789']])
+
+
+    def testCurveAttachData_03 (self):
+        params = {
+            u'curve.data': u'invalid_fname.txt',
+        }
+        content = u''
+        page = self.page
+
+        builder = self.GraphBuilder (params, content, page)
+        graph = builder.graph
+        curve = graph.getObject (u'curve')
+
+        curveData = curve.getObject (u'data')
+
+        self.assertIsNotNone (curveData)
+        self.assertIsNotNone (curveData.getSource())
+
+        data = list (curveData.getRowsIterator())
+        self.assertEqual (data, [])
+
+
+    def testCurveAttachData_04 (self):
+        data = u'''123    111
+456    222
+789    333'''
+
+        attachname = self._saveDataAndAttach (self.page, data)
+        params = {
+            u'curve.data': 'Attach:{}'.format (attachname),
+        }
+        content = u''
+        page = self.page
+
+        builder = self.GraphBuilder (params, content, page)
+        graph = builder.graph
+        curve = graph.getObject (u'curve')
+
+        curveData = curve.getObject (u'data')
+
+        self.assertIsNotNone (curveData)
+        self.assertIsNotNone (curveData.getSource())
+
+        data = list (curveData.getRowsIterator())
+        self.assertEqual (data, [[u'123', u'111'], [u'456', u'222'], [u'789', u'333']])
+
+
+    def _saveDataAndAttach (self, page, data):
+        with NamedTemporaryFile ('w') as tempfile:
+            tempfile.write (data)
+            tempfile.flush()
+
+            Attachment(page).attach ([tempfile.name])
+            name = os.path.basename (tempfile.name)
+
+        return name
