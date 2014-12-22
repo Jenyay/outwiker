@@ -174,6 +174,8 @@ class GraphBuilderTest (unittest.TestCase):
     def testCurveData_01 (self):
         params = {
             u'curve.data.colsep': u',',
+            u'curve.data.coltype1': u'datetime',
+            u'curve.data.coltype3': u'float',
         }
         content = u''
         page = None
@@ -189,6 +191,8 @@ class GraphBuilderTest (unittest.TestCase):
         self.assertIsNotNone (data)
 
         self.assertEqual (data.getProperty (u'colsep', None), u',')
+        self.assertEqual (data.getProperty (u'coltype1', None), u'datetime')
+        self.assertEqual (data.getProperty (u'coltype3', None), u'float')
 
 
     def testCurveData_02 (self):
