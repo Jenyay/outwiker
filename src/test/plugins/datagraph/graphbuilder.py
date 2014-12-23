@@ -20,8 +20,8 @@ class GraphBuilderTest (unittest.TestCase):
         self.loader.load (dirlist)
         self.GraphBuilder = self.loader[u'DataGraph'].GraphBuilder
 
-        self._defaultWidth = 700
-        self._defaultHeight = 400
+        self._defaultWidth = '700'
+        self._defaultHeight = '400'
 
         self.path = mkdtemp (prefix=u'Абырвалг абыр')
         self.wikiroot = WikiDocument.create (self.path)
@@ -62,6 +62,7 @@ class GraphBuilderTest (unittest.TestCase):
         params = {
             u'width': 100,
             u'height': 150,
+            u'render': u'highchart',
 
             u'pane.title': u'Заголовок графика',
 
@@ -84,6 +85,7 @@ class GraphBuilderTest (unittest.TestCase):
 
         self.assertEqual (graph.getProperty (u'width', 0), 100)
         self.assertEqual (graph.getProperty (u'height', 0), 150)
+        self.assertEqual (graph.getProperty (u'render', u''), u'highchart')
 
         self.assertEqual (pane.getProperty (u'title', None), u'Заголовок графика')
 
@@ -167,7 +169,7 @@ class GraphBuilderTest (unittest.TestCase):
         self.assertEqual (curve.getProperty (u'property', None), u'Абырвалг')
 
         self.assertEqual (curve.getProperty (u'xcol', 42), None)
-        self.assertEqual (curve.getProperty (u'ycol', 42), 1)
+        self.assertEqual (curve.getProperty (u'ycol', 42), '1')
         self.assertEqual (curve.getProperty (u'data', 42), None)
 
 

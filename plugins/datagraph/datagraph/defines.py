@@ -2,10 +2,10 @@
 """Default values of the parameters"""
 
 GRAPH_WIDTH_NAME = u'width'
-GRAPH_WIDTH = 700
+GRAPH_WIDTH = u'700'
 
 GRAPH_HEIGHT_NAME = u'height'
-GRAPH_HEIGHT = 400
+GRAPH_HEIGHT = u'400'
 
 # Sequence of the default colors
 CURVE_COLOR_NAME = u'color'
@@ -13,11 +13,11 @@ CURVE_COLORS = [u'#0051FF', u'#FF8214', '#FF0000', u'#19D400', '#000000', '#B700
 
 # Default curve thickness
 CURVE_WIDTH_NAME = u'width'
-CURVE_WIDTH = 3
+CURVE_WIDTH = u'3'
 
 # Numbers of the columns in data
 CURVE_YCOL_NUMBER_NAME = u'ycol'
-CURVE_YCOL_NUMBER = 1
+CURVE_YCOL_NUMBER = u'1'
 
 CURVE_XCOL_NUMBER_NAME = u'xcol'
 CURVE_XCOL_NUMBER = None
@@ -39,3 +39,8 @@ PANE_NAME = u'pane'
 
 # Property name for title
 PANE_TITLE_NAME = u'title'
+
+# For selection render engine (at the time is not used)
+RENDER_NAME = u'render'
+
+RENDER_HIGHCHARTS = u'highcharts'

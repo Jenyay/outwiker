@@ -4,6 +4,10 @@ import re
 
 from outwiker.pages.wiki.parser.command import Command
 
+from renders.highcharts import HighChartsRender
+from graphbuilder import GraphBuilder
+import defines
+
 
 class BasePlotCommand (Command):
     def __init__ (self, parser):
@@ -11,6 +15,9 @@ class BasePlotCommand (Command):
         parser - экземпляр парсера
         """
         super (BasePlotCommand, self).__init__ (parser)
+        self._renders = {
+            u'highcharts': HighChartsRender (parser),
+        }
 
 
     @staticmethod
@@ -56,5 +63,14 @@ class PlotCommand (BasePlotCommand):
         Метод возвращает текст, который будет вставлен на место команды в вики-нотации
         """
         params_dict = self.parseGraphParams (params)
+        graph = GraphBuilder (params_dict, content, self.parser.page).graph
+        render = self._getRender (graph)
 
-        return u"Plugin Command Result"
+        return render.addGraph (graph)
+
+
+    def _getRender (self, graph):
+        rendername = graph.getProperty (defines.RENDER_NAME, defines.RENDER_HIGHCHARTS)
+        render = self._renders.get (rendername, self._renders[defines.RENDER_HIGHCHARTS])
+
+        return render
