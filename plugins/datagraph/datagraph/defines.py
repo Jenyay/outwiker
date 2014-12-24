@@ -17,7 +17,7 @@ CURVE_WIDTH = u'3'
 
 # Numbers of the columns in data
 CURVE_YCOL_NUMBER_NAME = u'ycol'
-CURVE_YCOL_NUMBER = u'1'
+CURVE_YCOL_NUMBER = None
 
 CURVE_XCOL_NUMBER_NAME = u'xcol'
 CURVE_XCOL_NUMBER = None

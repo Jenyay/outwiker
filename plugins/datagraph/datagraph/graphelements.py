@@ -54,6 +54,14 @@ class Graph (BaseGraphObject):
         self.addObject (defines.PANE_NAME, Pane())
 
 
+    def getCurves (self):
+        curves = [self._objects[name]
+                  for name
+                  in sorted (self._objects.keys())
+                  if name.lower().startswith (u'curve')]
+
+        return curves
+
 
 class Pane (BaseGraphObject):
     """Pane with the curves and axes."""

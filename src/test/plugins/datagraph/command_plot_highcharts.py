@@ -4,6 +4,7 @@ import unittest
 from tempfile import mkdtemp
 import os.path
 
+from outwiker.core.attachment import Attachment
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.application import Application
 from outwiker.core.tree import WikiDocument
@@ -43,4 +44,25 @@ class CommandPlotHighchartsTest (unittest.TestCase):
         generator = HtmlGenerator (self.page)
         result = generator.makeHtml (Style().getPageStyle (self.page))
 
+        attachpath = Attachment (self.page).getAttachPath ()
+
         self.assertIn (u'<div id="graph-0" style="width:700px; height:400px;"></div>', result)
+        self.assertIn (u'excanvas.js', result)
+        self.assertIn (u'jquery.min.js', result)
+        self.assertIn (u'highcharts.js', result)
+        self.assertIn (u"$('#graph-0').highcharts({", result)
+
+        self.assertTrue (os.path.exists (os.path.join (attachpath,
+                                                       u'__thumb',
+                                                       u'__js',
+                                                       u'excanvas.min.js')))
+
+        self.assertTrue (os.path.exists (os.path.join (attachpath,
+                                                       u'__thumb',
+                                                       u'__js',
+                                                       u'jquery.min.js')))
+
+        self.assertTrue (os.path.exists (os.path.join (attachpath,
+                                                       u'__thumb',
+                                                       u'__js',
+                                                       u'highcharts.js')))

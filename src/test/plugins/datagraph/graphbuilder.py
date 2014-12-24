@@ -332,6 +332,107 @@ class GraphBuilderTest (unittest.TestCase):
         self.assertEqual (data, [[u'123', u'111'], [u'456', u'222'], [u'789', u'333']])
 
 
+    def testCurveAttach_invalid_01 (self):
+        params = {
+            u'curve.data': 'Attach:invalid_fname.txt',
+        }
+        content = u''
+        page = self.page
+
+        builder = self.GraphBuilder (params, content, page)
+        graph = builder.graph
+        curve = graph.getObject (u'curve')
+
+        curveData = curve.getObject (u'data')
+
+        self.assertIsNotNone (curveData)
+        self.assertIsNotNone (curveData.getSource())
+
+        data = list (curveData.getRowsIterator())
+        self.assertEqual (data, [])
+
+
+    def testCurves_01 (self):
+        params = {
+        }
+        content = u''
+        page = self.page
+
+        builder = self.GraphBuilder (params, content, page)
+        graph = builder.graph
+
+        curves = graph.getCurves()
+
+        self.assertEqual (len (curves), 1)
+
+
+    def testCurves_02 (self):
+        params = {
+            u'curve.data': u'Attach:fname.txt'
+        }
+        content = u''
+        page = self.page
+
+        builder = self.GraphBuilder (params, content, page)
+        graph = builder.graph
+
+        curves = graph.getCurves()
+
+        self.assertEqual (len (curves), 1)
+
+
+    def testCurves_03 (self):
+        params = {
+            u'curve1.data': u'Attach:fname.txt'
+        }
+        content = u''
+        page = self.page
+
+        builder = self.GraphBuilder (params, content, page)
+        graph = builder.graph
+
+        curves = graph.getCurves()
+
+        self.assertEqual (len (curves), 1)
+
+
+    def testCurves_04 (self):
+        params = {
+            u'curve2.data': u'Attach:fname.txt'
+        }
+        content = u''
+        page = self.page
+
+        builder = self.GraphBuilder (params, content, page)
+        graph = builder.graph
+
+        curves = graph.getCurves()
+
+        self.assertEqual (len (curves), 2)
+
+
+    def testCurves_05 (self):
+        params = {
+            u'curve2.title': u'curve2',
+            u'curve1.title': u'curve1',
+            u'curve6.title': u'curve6',
+            u'curve3.title': u'curve3',
+        }
+        content = u''
+        page = self.page
+
+        builder = self.GraphBuilder (params, content, page)
+        graph = builder.graph
+
+        curves = graph.getCurves()
+
+        self.assertEqual (len (curves), 4)
+        self.assertEqual (curves[0].getProperty (u'title', u''), u'curve1')
+        self.assertEqual (curves[1].getProperty (u'title', u''), u'curve2')
+        self.assertEqual (curves[2].getProperty (u'title', u''), u'curve3')
+        self.assertEqual (curves[3].getProperty (u'title', u''), u'curve6')
+
+
     def _saveDataAndAttach (self, page, data):
         with NamedTemporaryFile ('w') as tempfile:
             tempfile.write (data)
