@@ -22,6 +22,9 @@ CURVE_YCOL_NUMBER = None
 CURVE_XCOL_NUMBER_NAME = u'xcol'
 CURVE_XCOL_NUMBER = None
 
+# X coordinates are the row number
+CURVE_XCOL_NUMBER_VALUE = u'number'
+
 # Data source
 CURVE_DATA_NAME = u'data'
 CURVE_DATA_OBJECT_NAME = u'data'

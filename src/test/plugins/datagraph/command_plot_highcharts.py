@@ -66,3 +66,321 @@ class CommandPlotHighchartsTest (unittest.TestCase):
                                                        u'__thumb',
                                                        u'__js',
                                                        u'highcharts.js')))
+
+
+    def testData_01 (self):
+        text = u'''(:plot:)
+10
+20
+30
+40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        text = u'[0, 10.0], [1, 20.0], [2, 30.0], [3, 40.0]'
+
+        self.assertIn (text, result)
+
+
+    def testData_02 (self):
+        text = u'''(:plot:)
+0.5    10
+1.5    20
+2.0    30
+4.0    40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        text = u'[0.5, 10.0], [1.5, 20.0], [2.0, 30.0], [4.0, 40.0]'
+
+        self.assertIn (text, result)
+
+
+    def testXCol_01 (self):
+        text = u'''(:plot curve.xcol="number":)
+0.5    10
+1.5    20
+2.0    30
+4.0    40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        text = u'[0, 10.0], [1, 20.0], [2, 30.0], [3, 40.0]'
+
+        self.assertIn (text, result)
+
+
+    def testXCol_02 (self):
+        text = u'''(:plot curve.xcol="  number  ":)
+0.5    10
+1.5    20
+2.0    30
+4.0    40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        text = u'[0, 10.0], [1, 20.0], [2, 30.0], [3, 40.0]'
+
+        self.assertIn (text, result)
+
+
+    def testXCol_03 (self):
+        text = u'''(:plot curve.xcol=10:)
+0.5    10
+1.5    20
+2.0    30
+4.0    40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        self.assertNotIn (u'"data"', result)
+        self.assertNotIn (u'"series"', result)
+
+
+    def testXCol_04 (self):
+        text = u'''(:plot curve.xcol=" 10 ":)
+0.5    10
+1.5    20
+2.0    30
+4.0    40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        self.assertNotIn (u'"data"', result)
+        self.assertNotIn (u'"series"', result)
+
+
+    def testXCol_05 (self):
+        text = u'''(:plot curve.xcol=1:)
+0.5    10
+1.5    20
+2.0    30
+4.0    40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        text = u'[0.5, 10.0], [1.5, 20.0], [2.0, 30.0], [4.0, 40.0]'
+
+        self.assertIn (text, result)
+
+
+    def testXCol_06 (self):
+        text = u'''(:plot curve.xcol=2:)
+0.5    10
+1.5    20
+2.0    30
+4.0    40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        text = u'[10.0, 10.0], [20.0, 20.0], [30.0, 30.0], [40.0, 40.0]'
+
+        self.assertIn (text, result)
+
+
+    def testXCol_07 (self):
+        text = u'''(:plot curve.xcol="0":)
+0.5    10
+1.5    20
+2.0    30
+4.0    40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        self.assertNotIn (u'"data"', result)
+        self.assertNotIn (u'"series"', result)
+
+
+    def testXCol_08 (self):
+        text = u'''(:plot curve.xcol="asdfasdf":)
+0.5    10
+1.5    20
+2.0    30
+4.0    40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        self.assertNotIn (u'"data"', result)
+        self.assertNotIn (u'"series"', result)
+
+
+    def testYCol_01 (self):
+        text = u'''(:plot curve.ycol=1:)
+0.5    10
+1.5    20
+2.0    30
+4.0    40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        text = u'[0.5, 0.5], [1.5, 1.5], [2.0, 2.0], [4.0, 4.0]'
+
+        self.assertIn (text, result)
+
+
+    def testYCol_02 (self):
+        text = u'''(:plot curve.ycol=2:)
+0.5    10
+1.5    20
+2.0    30
+4.0    40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        text = u'[0.5, 10.0], [1.5, 20.0], [2.0, 30.0], [4.0, 40.0]'
+
+        self.assertIn (text, result)
+
+
+    def testYCol_03 (self):
+        text = u'''(:plot curve.ycol=0:)
+0.5    10
+1.5    20
+2.0    30
+4.0    40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        self.assertNotIn (u'"data"', result)
+        self.assertNotIn (u'"series"', result)
+
+
+    def testYCol_04 (self):
+        text = u'''(:plot curve.ycol=3:)
+0.5    10
+1.5    20
+2.0    30
+4.0    40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        self.assertNotIn (u'"data"', result)
+        self.assertNotIn (u'"series"', result)
+
+
+    def testYCol_05 (self):
+        text = u'''(:plot curve.ycol=30:)
+0.5    10
+1.5    20
+2.0    30
+4.0    40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        self.assertNotIn (u'"data"', result)
+        self.assertNotIn (u'"series"', result)
+
+
+    def testYCol_06 (self):
+        text = u'''(:plot curve.ycol="абырвалг":)
+0.5    10
+1.5    20
+2.0    30
+4.0    40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        self.assertNotIn (u'"data"', result)
+        self.assertNotIn (u'"series"', result)
+
+
+    def testYCol_07 (self):
+        text = u'''(:plot curve.ycol=" 2  ":)
+0.5    10
+1.5    20
+2.0    30
+4.0    40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        text = u'[0.5, 10.0], [1.5, 20.0], [2.0, 30.0], [4.0, 40.0]'
+
+        self.assertIn (text, result)
+
+
+    def testCurves_01 (self):
+        text = u'''(:plot curve2.xcol="number":)
+0.5    10
+1.5    20
+2.0    30
+4.0    40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        text1 = u'[0.5, 10.0], [1.5, 20.0], [2.0, 30.0], [4.0, 40.0]'
+        text2 = u'[0, 10.0], [1, 20.0], [2, 30.0], [3, 40.0]'
+
+        self.assertIn (text1, result)
+        self.assertIn (text2, result)

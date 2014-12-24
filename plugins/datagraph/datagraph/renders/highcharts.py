@@ -103,7 +103,11 @@ $(function () {{ $('#{name}').highcharts({prop}); }});
         chartDict = {}
 
         chartDict[u'credits'] = {u'enabled': False}
-        chartDict[u'series'] = self._getSeries (graph)
+
+        series = self._getSeries (graph)
+        if series:
+            chartDict[u'series'] = series
+
         chartDict[u'tooltip'] = {u'enabled': False}
 
         return chartDict
@@ -113,6 +117,8 @@ $(function () {{ $('#{name}').highcharts({prop}); }});
         series = []
         for n, curve in enumerate (graph.getCurves()):
             data = self._getData (curve)
+            if not data:
+                continue
 
             singleSeries = {
                 u'data': data,
@@ -142,6 +148,10 @@ $(function () {{ $('#{name}').highcharts({prop}); }});
                 except ValueError:
                     break
 
+                if ((xcol is not None and xcol < 1) or
+                        (ycol is not None and ycol < 1)):
+                    break
+
             # Create point
             try:
                 yval = self._convertValue (curve, ycol, row[ycol - 1])
@@ -161,10 +171,11 @@ $(function () {{ $('#{name}').highcharts({prop}); }});
     def _getXCol (self, curve, firstrow):
         xcol = curve.getProperty (defines.CURVE_XCOL_NUMBER_NAME, defines.CURVE_XCOL_NUMBER)
 
-        if xcol is None and len (firstrow) > 1:
+        if xcol is not None and xcol.strip() == defines.CURVE_XCOL_NUMBER_VALUE:
+            xcol = None
+        elif xcol is None and len (firstrow) > 1:
             xcol = 1
-
-        if xcol is not None:
+        elif xcol is not None:
             xcol = int (xcol)
 
         return xcol
