@@ -5,7 +5,7 @@
 import shutil
 import os
 import os.path
-import json
+from datagraph.libs.json import dumps
 
 from datagraph import defines
 from outwiker.core.attachment import Attachment
@@ -94,7 +94,7 @@ $(function () {{ $('#{name}').highcharts({prop}); }});
 
     def _getJsonResult (self, graph):
         chartDict = self._buildChartDict (graph)
-        result = json.dumps (chartDict)
+        result = dumps (chartDict)
 
         return result
 
