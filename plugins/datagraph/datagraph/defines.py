@@ -5,7 +5,7 @@ GRAPH_WIDTH_NAME = u'width'
 GRAPH_WIDTH = u'700'
 
 GRAPH_HEIGHT_NAME = u'height'
-GRAPH_HEIGHT = u'400'
+GRAPH_HEIGHT = u'300'
 
 # Sequence of the default colors
 CURVE_COLOR_NAME = u'color'

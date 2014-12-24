@@ -102,15 +102,86 @@ $(function () {{ $('#{name}').highcharts({prop}); }});
     def _buildChartDict (self, graph):
         chartDict = {}
 
-        chartDict[u'credits'] = {u'enabled': False}
-
         series = self._getSeries (graph)
         if series:
             chartDict[u'series'] = series
 
-        chartDict[u'tooltip'] = {u'enabled': False}
+        chartDict[u'tooltip'] = self._getTooltip (graph)
+        chartDict[u'chart'] = self._getChart (graph)
+        chartDict[u'credits'] = self._getCredits (graph)
+        chartDict[u'xAxis'] = self._getXAxis (graph)
+        chartDict[u'yAxis'] = self._getYAxis (graph)
+        chartDict[u'title'] = self._getTitle (graph)
+        chartDict[u'legend'] = self._getLegend (graph)
 
         return chartDict
+
+
+    def _getTitle (self, graph):
+        title = {
+            u'text': None,
+        }
+
+        return title
+
+
+    def _getLegend (self, graph):
+        legend = {
+            u'enabled': False,
+        }
+
+        return legend
+
+
+    def _getXAxis (self, graph):
+        title = {
+            u'text': None,
+        }
+
+        xaxis = {
+            u'gridLineWidth': 1,
+            u'title': title,
+        }
+
+        return xaxis
+
+
+    def _getYAxis (self, graph):
+        title = {
+            u'text': None,
+        }
+
+        yaxis = {
+            u'gridLineWidth': 1,
+            u'title': title,
+        }
+
+        return yaxis
+
+
+    def _getTooltip (self, graph):
+        tooltip = {
+            u'enabled': False,
+        }
+
+        return tooltip
+
+
+    def _getCredits (self, graph):
+        credits = {
+            u'enabled': False,
+        }
+
+        return credits
+
+
+    def _getChart (self, graph):
+        chart = {
+            u'plotBorderWidth': 1,
+            u'animation': False,
+        }
+
+        return chart
 
 
     def _getSeries (self, graph):

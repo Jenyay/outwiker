@@ -21,7 +21,7 @@ class GraphBuilderTest (unittest.TestCase):
         self.GraphBuilder = self.loader[u'DataGraph'].GraphBuilder
 
         self._defaultWidth = '700'
-        self._defaultHeight = '400'
+        self._defaultHeight = '300'
 
         self.path = mkdtemp (prefix=u'Абырвалг абыр')
         self.wikiroot = WikiDocument.create (self.path)
@@ -169,7 +169,7 @@ class GraphBuilderTest (unittest.TestCase):
         self.assertEqual (curve.getProperty (u'property', None), u'Абырвалг')
 
         self.assertEqual (curve.getProperty (u'xcol', 42), None)
-        self.assertEqual (curve.getProperty (u'ycol', 42), '1')
+        self.assertEqual (curve.getProperty (u'ycol', 42), None)
         self.assertEqual (curve.getProperty (u'data', 42), None)
 
 
