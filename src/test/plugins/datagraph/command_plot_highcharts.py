@@ -46,7 +46,7 @@ class CommandPlotHighchartsTest (unittest.TestCase):
 
         attachpath = Attachment (self.page).getAttachPath ()
 
-        self.assertIn (u'<div id="graph-0" style="width:700px; height:400px;"></div>', result)
+        self.assertIn (u'<div id="graph-0" style="width:700px; height:300px;"></div>', result)
         self.assertIn (u'excanvas.js', result)
         self.assertIn (u'jquery.min.js', result)
         self.assertIn (u'highcharts.js', result)
@@ -381,6 +381,186 @@ class CommandPlotHighchartsTest (unittest.TestCase):
 
         text1 = u'[0.5, 10.0], [1.5, 20.0], [2.0, 30.0], [4.0, 40.0]'
         text2 = u'[0, 10.0], [1, 20.0], [2, 30.0], [3, 40.0]'
+
+        self.assertIn (text1, result)
+        self.assertIn (text2, result)
+
+
+    def testAxis_01 (self):
+        text = u'''(:plot:)
+10
+20
+30
+40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        text = u'"text": null'
+
+        self.assertIn (text, result)
+
+
+    def testAxisTitle_01 (self):
+        text = u'''(:plot x.title="Ось X" y.title="Ось Y":)
+10
+20
+30
+40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        text1 = u'"text": "\\u041e\\u0441\\u044c X"'
+        text2 = u'"text": "\\u041e\\u0441\\u044c Y"'
+
+        self.assertIn (text1, result)
+        self.assertIn (text2, result)
+
+
+    def testAxisTitle_02 (self):
+        text = u'''(:plot x.title="Ось X":)
+10
+20
+30
+40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        text1 = u'"text": "\\u041e\\u0441\\u044c X"'
+        text2 = u'"text": null'
+
+        self.assertIn (text1, result)
+        self.assertIn (text2, result)
+
+
+    def testAxisMinMax_01 (self):
+        text = u'''(:plot x.min=-2 x.max="5" y.min="-10" y.max="20":)
+10
+20
+30
+40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        text1 = u'"min": -2.0'
+        text2 = u'"max": 5.0'
+        text3 = u'"min": -10.0'
+        text4 = u'"max": 20.0'
+
+        self.assertIn (text1, result)
+        self.assertIn (text2, result)
+        self.assertIn (text3, result)
+        self.assertIn (text4, result)
+
+
+    def testAxisMinMax_02 (self):
+        text = u'''(:plot:)
+10
+20
+30
+40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        self.assertNotIn (u'"min"', result)
+        self.assertNotIn (u'"max"', result)
+
+
+    def testAxisMinMax_03 (self):
+        text = u'''(:plot x.min=-2 x.max="Абырвалг":)
+10
+20
+30
+40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        text1 = u'"min": -2.0'
+
+        self.assertIn (text1, result)
+        self.assertNotIn (u'"max"', result)
+
+
+    def testAxisMinMax_04 (self):
+        text = u'''(:plot x.min="Абырвалг" x.max=-2:)
+10
+20
+30
+40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        text1 = u'"max": -2.0'
+
+        self.assertIn (text1, result)
+        self.assertNotIn (u'"min"', result)
+
+
+    def testAxisMinMax_05 (self):
+        text = u'''(:plot x.min = -2.1 x.max = 2.3:)
+10
+20
+30
+40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        text1 = u'"min": -2.1'
+        text2 = u'"max": 2.3'
+
+        self.assertIn (text1, result)
+        self.assertIn (text2, result)
+
+
+    def testAxisMinMax_06 (self):
+        text = u'''(:plot
+x.min = -0.2
+x.max = 0.2
+:)
+10
+20
+30
+40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        text1 = u'"min": -0.2'
+        text2 = u'"max": 0.2'
 
         self.assertIn (text1, result)
         self.assertIn (text2, result)

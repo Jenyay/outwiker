@@ -51,7 +51,8 @@ class Graph (BaseGraphObject):
         super (Graph, self).__init__()
         self.setProperty (defines.GRAPH_WIDTH_NAME, defines.GRAPH_WIDTH)
         self.setProperty (defines.GRAPH_HEIGHT_NAME, defines.GRAPH_HEIGHT)
-        self.addObject (defines.PANE_NAME, Pane())
+        self.addObject (defines.GRAPH_XAXIS_NAME, Axis())
+        self.addObject (defines.GRAPH_YAXIS_NAME, Axis())
 
 
     def getCurves (self):
@@ -61,12 +62,6 @@ class Graph (BaseGraphObject):
                   if name.lower().startswith (u'curve')]
 
         return curves
-
-
-class Pane (BaseGraphObject):
-    """Pane with the curves and axes."""
-    def __init__ (self):
-        super (Pane, self).__init__()
 
 
 

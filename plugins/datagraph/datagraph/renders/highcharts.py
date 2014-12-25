@@ -134,29 +134,48 @@ $(function () {{ $('#{name}').highcharts({prop}); }});
 
 
     def _getXAxis (self, graph):
-        title = {
-            u'text': None,
-        }
+        assert graph is not None
 
-        xaxis = {
-            u'gridLineWidth': 1,
-            u'title': title,
-        }
-
-        return xaxis
+        axis = graph.getObject (defines.GRAPH_XAXIS_NAME)
+        return self._getAxis (axis)
 
 
     def _getYAxis (self, graph):
+        assert graph is not None
+
+        axis = graph.getObject (defines.GRAPH_YAXIS_NAME)
+        return self._getAxis (axis)
+
+
+    def _getAxis (self, axis):
+        assert axis is not None
+
+        text = axis.getProperty (defines.AXIS_TITLE_NAME, None)
+        minVal = axis.getProperty (defines.AXIS_MIN_NAME, None)
+        maxVal = axis.getProperty (defines.AXIS_MAX_NAME, None)
+
         title = {
-            u'text': None,
+            u'text': text,
         }
 
-        yaxis = {
+        result = {
             u'gridLineWidth': 1,
             u'title': title,
         }
 
-        return yaxis
+        if minVal is not None:
+            try:
+                result[u'min'] = self._convertAxisValue (minVal, axis)
+            except ValueError:
+                pass
+
+        if maxVal is not None:
+            try:
+                result[u'max'] = self._convertAxisValue (maxVal, axis)
+            except ValueError:
+                pass
+
+        return result
 
 
     def _getTooltip (self, graph):
@@ -269,4 +288,8 @@ $(function () {{ $('#{name}').highcharts({prop}); }});
     def _convertValue (self, curve, col, value):
         """ Convert data by column format settings
         """
+        return float (value)
+
+
+    def _convertAxisValue (self, value, axis):
         return float (value)

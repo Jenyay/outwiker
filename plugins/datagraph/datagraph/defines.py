@@ -7,6 +7,9 @@ GRAPH_WIDTH = u'700'
 GRAPH_HEIGHT_NAME = u'height'
 GRAPH_HEIGHT = u'300'
 
+GRAPH_XAXIS_NAME = u'x'
+GRAPH_YAXIS_NAME = u'y'
+
 # Sequence of the default colors
 CURVE_COLOR_NAME = u'color'
 CURVE_COLORS = [u'#0051FF', u'#FF8214', '#FF0000', u'#19D400', '#000000', '#B700FF']
@@ -37,13 +40,13 @@ CURVE_DATA = None
 COLUMNS_SEPARATOR_NAME = u'colsep'
 COLUMNS_SEPARATOR = r'\s+'
 
-# Object name for Pane class instance
-PANE_NAME = u'pane'
-
-# Property name for title
-PANE_TITLE_NAME = u'title'
-
 # For selection render engine (at the time is not used)
 RENDER_NAME = u'render'
 
 RENDER_HIGHCHARTS = u'highcharts'
+
+AXIS_TITLE_NAME = u'title'
+AXIS_MIN_NAME = u'min'
+AXIS_MAX_NAME = u'max'
+AXIS_TYPE_NAME = u'type'
+AXIS_TYPE_DATE = u'datetime'

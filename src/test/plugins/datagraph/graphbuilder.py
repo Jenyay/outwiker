@@ -49,11 +49,6 @@ class GraphBuilderTest (unittest.TestCase):
         self.assertEqual (graph.getProperty (u'Width', 0), self._defaultWidth)
         self.assertEqual (graph.getProperty (u'HEIGHT', 0), self._defaultHeight)
 
-        self.assertIsNotNone (graph.getObject (u'pane'))
-        self.assertIsNotNone (graph.getObject (u'PANE'))
-        self.assertIsNotNone (graph.getObject (u'pane1'))
-        self.assertIsNotNone (graph.getObject (u'PANE1'))
-
         self.assertIsNotNone (graph.getObject (u'curve'))
         self.assertIsNotNone (graph.getObject (u'curve1'))
 
@@ -64,7 +59,6 @@ class GraphBuilderTest (unittest.TestCase):
             u'height': 150,
             u'render': u'highchart',
 
-            u'pane.title': u'Заголовок графика',
 
             # invalid values
             u'pane': u'Бла-бла-бла',
@@ -78,16 +72,10 @@ class GraphBuilderTest (unittest.TestCase):
 
         builder = self.GraphBuilder (params, content, page)
         graph = builder.graph
-        pane = graph.getObject (u'pane')
-
-        self.assertIsNotNone (pane)
-        self.assertIsNotNone (graph.getObject(u'pane1'))
 
         self.assertEqual (graph.getProperty (u'width', 0), 100)
         self.assertEqual (graph.getProperty (u'height', 0), 150)
         self.assertEqual (graph.getProperty (u'render', u''), u'highchart')
-
-        self.assertEqual (pane.getProperty (u'title', None), u'Заголовок графика')
 
         self.assertEqual (graph.getProperty (u'abyrvalg', None), u'Абырвалг')
         self.assertEqual (graph.getProperty (u'Абырвалг', None), u'Главрыба')
@@ -431,6 +419,31 @@ class GraphBuilderTest (unittest.TestCase):
         self.assertEqual (curves[1].getProperty (u'title', u''), u'curve2')
         self.assertEqual (curves[2].getProperty (u'title', u''), u'curve3')
         self.assertEqual (curves[3].getProperty (u'title', u''), u'curve6')
+
+
+    def testAxis_01 (self):
+        params = {
+            'x.min': u'1.5',
+            'y.max': u'2.5',
+            'x.title': u'Абырвалг',
+            'y.type': u'datetime',
+        }
+        content = u''
+        page = None
+
+        builder = self.GraphBuilder (params, content, page)
+        graph = builder.graph
+
+        xaxis = graph.getObject (u'x')
+        yaxis = graph.getObject (u'y')
+
+        self.assertIsNotNone (xaxis)
+        self.assertIsNotNone (yaxis)
+
+        self.assertEqual (xaxis.getProperty (u'min', None), u'1.5')
+        self.assertEqual (yaxis.getProperty (u'max', None), u'2.5')
+        self.assertEqual (xaxis.getProperty (u'title', None), u'Абырвалг')
+        self.assertEqual (yaxis.getProperty (u'type', None), u'datetime')
 
 
     def _saveDataAndAttach (self, page, data):

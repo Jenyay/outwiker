@@ -28,7 +28,7 @@ class BasePlotCommand (Command):
             param1 Параметр2.subparam = 111 Параметр3 = " bla bla bla" param4.sub.param2 = "111" param5 =' 222 ' param7 = " sample 'bla bla bla' example" param8 = ' test "bla-bla-bla" test '
         """
         pattern = ur"""((?P<name>[\w.]+)
-    (\s*=\s*(?P<param>([-_\w]+)|((?P<quote>["']).*?(?P=quote)) ) )?\s*)"""
+    (\s*=\s*(?P<param>([-_\w.]+)|((?P<quote>["']).*?(?P=quote)) ) )?\s*)"""
 
         result = {}
 
