@@ -564,3 +564,51 @@ x.max = 0.2
 
         self.assertIn (text1, result)
         self.assertIn (text2, result)
+
+
+    def testAxisDateTime_01 (self):
+        text = u'''(:plot:)
+01.01.2014    10
+02.03.2014    20
+29.05.2014    30
+02.06.2015    40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        self.assertNotIn (u'"type"', result)
+
+
+    def testAxisDateTime_02 (self):
+        text = u'''(:plot x.type="datetime":)
+01.01.2014    10    01.02.1905
+02.03.2014    20    05.12.1905
+29.05.2014    30    06.05.1906
+02.06.2015    40    17.10.1917
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        self.assertIn (u'"type": "datetime"', result)
+
+
+    def testAxisDateTime_03 (self):
+        text = u'''(:plot y.type="datetime":)
+01.01.2014    10    01.02.1905
+02.03.2014    20    05.12.1905
+29.05.2014    30    06.05.1906
+02.06.2015    40    17.10.1917
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        self.assertIn (u'"type": "datetime"', result)

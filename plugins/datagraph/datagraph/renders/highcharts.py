@@ -2,9 +2,11 @@
 """ Module for the graph creation with HighCharts library
 """
 
-import shutil
+from datetime import datetime
 import os
 import os.path
+import shutil
+
 from datagraph.libs.json import dumps
 
 from datagraph import defines
@@ -151,8 +153,6 @@ $(function () {{ $('#{name}').highcharts({prop}); }});
         assert axis is not None
 
         text = axis.getProperty (defines.AXIS_TITLE_NAME, None)
-        minVal = axis.getProperty (defines.AXIS_MIN_NAME, None)
-        maxVal = axis.getProperty (defines.AXIS_MAX_NAME, None)
 
         title = {
             u'text': text,
@@ -163,6 +163,9 @@ $(function () {{ $('#{name}').highcharts({prop}); }});
             u'title': title,
         }
 
+        # Min / Max values
+        minVal = axis.getProperty (defines.AXIS_MIN_NAME, None)
+        maxVal = axis.getProperty (defines.AXIS_MAX_NAME, None)
         if minVal is not None:
             try:
                 result[u'min'] = self._convertAxisValue (minVal, axis)
@@ -174,6 +177,13 @@ $(function () {{ $('#{name}').highcharts({prop}); }});
                 result[u'max'] = self._convertAxisValue (maxVal, axis)
             except ValueError:
                 pass
+
+        # Axis type
+        axisType = axis.getProperty (defines.AXIS_TYPE_NAME, None)
+
+        if axisType == defines.AXIS_TYPE_DATE:
+            result[u'type'] = u'datetime'
+            result[u'labels'] = {u'format': u'{value:%d.%m.%Y}'}
 
         return result
 
@@ -228,6 +238,8 @@ $(function () {{ $('#{name}').highcharts({prop}); }});
         result = []
 
         data = curve.getObject (defines.CURVE_DATA_OBJECT_NAME)
+        xColFormat = None
+        yColFormat = None
 
         for n, row in enumerate (data.getRowsIterator()):
             # Calculate columns numbers if they are not assigned
@@ -242,14 +254,26 @@ $(function () {{ $('#{name}').highcharts({prop}); }});
                         (ycol is not None and ycol < 1)):
                     break
 
+                if xcol is not None:
+                    xColFormat = data.getProperty (
+                        u'{}{}'.format (defines.DATA_FORMAT_COL, xcol),
+                        None
+                    )
+
+                if ycol is not None:
+                    yColFormat = data.getProperty (
+                        u'{}{}'.format (defines.DATA_FORMAT_COL, ycol),
+                        None
+                    )
+
             # Create point
             try:
-                yval = self._convertValue (curve, ycol, row[ycol - 1])
+                yval = self._convertValue (yColFormat, row[ycol - 1])
 
                 if xcol is None:
                     xval = n
                 else:
-                    xval = self._convertValue (curve, xcol, row[xcol - 1])
+                    xval = self._convertValue (xColFormat, row[xcol - 1])
             except (IndexError, ValueError):
                 break
 
@@ -285,10 +309,16 @@ $(function () {{ $('#{name}').highcharts({prop}); }});
 
 
 
-    def _convertValue (self, curve, col, value):
+    def _convertValue (self, colFormat, value):
         """ Convert data by column format settings
         """
-        return float (value)
+        if colFormat is not None:
+            date = datetime.strptime (value, colFormat)
+            epoch = datetime.utcfromtimestamp(0)
+            delta = (date - epoch).total_seconds() * 1000.0
+            return delta
+        else:
+            return float (value)
 
 
     def _convertAxisValue (self, value, axis):

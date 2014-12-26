@@ -32,6 +32,8 @@ CURVE_XCOL_NUMBER_VALUE = u'number'
 CURVE_DATA_NAME = u'data'
 CURVE_DATA_OBJECT_NAME = u'data'
 
+DATA_FORMAT_COL = u'formatcol'
+
 # If CURVE_DATA is None, data reads from command content
 # else CURVE_DATA is name of the Attachment
 CURVE_DATA = None
@@ -42,11 +44,14 @@ COLUMNS_SEPARATOR = r'\s+'
 
 # For selection render engine (at the time is not used)
 RENDER_NAME = u'render'
-
 RENDER_HIGHCHARTS = u'highcharts'
 
+
+# Axis properties
 AXIS_TITLE_NAME = u'title'
 AXIS_MIN_NAME = u'min'
 AXIS_MAX_NAME = u'max'
+
+# Axis types
 AXIS_TYPE_NAME = u'type'
 AXIS_TYPE_DATE = u'datetime'
