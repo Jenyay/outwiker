@@ -226,6 +226,10 @@ $(function () {{ $('#{name}').highcharts({prop}); }});
                 u'states': {u'hover': {u'enabled': False}}
             }
 
+            color = curve.getProperty (defines.CURVE_COLOR_NAME, None)
+            if color is not None:
+                singleSeries[u'color'] = color
+
             series.append (singleSeries)
 
         return series

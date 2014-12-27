@@ -612,3 +612,20 @@ x.max = 0.2
         result = generator.makeHtml (Style().getPageStyle (self.page))
 
         self.assertIn (u'"type": "datetime"', result)
+
+
+    def testCurveColor_01 (self):
+        text = u'''(:plot curve.color="#aabbcc" curve2.color="#001100":)
+0.5    10
+1.5    20
+2.0    30
+4.0    40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        self.assertIn (u'"color": "#aabbcc"', result)
+        self.assertIn (u'"color": "#001100"', result)
