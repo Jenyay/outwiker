@@ -10,10 +10,11 @@ class BaseSource (object):
     __meta__ = ABCMeta
 
 
-    def __init__ (self, colsep):
+    def __init__ (self, colsep, skiprows=0):
         # colsep - reg. exp. for separate the columns
         self._colsep = colsep
         self._rowSeparator = r'(?:\r\n)|(?:\n)|(?:\r)'
+        self._skipRows = skiprows
 
         self._colRegExp = re.compile (self._colsep, re.I | re.M)
         self._rowRegExp = re.compile (self._rowSeparator, re.I | re.M)
@@ -39,8 +40,8 @@ class StringSource (BaseSource):
     """
     Get data from command context
     """
-    def __init__ (self, text, colsep=r'\s+'):
-        super (StringSource, self).__init__(colsep)
+    def __init__ (self, text, colsep=r'\s+', skiprows=0):
+        super (StringSource, self).__init__(colsep, skiprows)
         self._text = text
 
 
@@ -55,7 +56,10 @@ class StringSource (BaseSource):
         if len (self._text.strip()) == 0:
             raise StopIteration
 
+        linenumber = -1
         while not finish:
+            linenumber += 1
+
             match = self._rowRegExp.search (self._text, start)
 
             if match is None:
@@ -64,6 +68,9 @@ class StringSource (BaseSource):
             else:
                 line = self._text[start: match.start()].strip()
                 start = match.end()
+
+            if linenumber < self._skipRows:
+                continue
 
             # Skip empty lines
             if len (line) == 0:
@@ -83,13 +90,12 @@ class StringSource (BaseSource):
 
 
 
-
 class FileSource (BaseSource):
     """
     Get data from text file
     """
-    def __init__ (self, filename, colsep=r'\s+'):
-        super (FileSource, self).__init__(colsep)
+    def __init__ (self, filename, colsep=r'\s+', skiprows=0):
+        super (FileSource, self).__init__(colsep, skiprows)
         self._filename = filename
 
 
@@ -100,11 +106,17 @@ class FileSource (BaseSource):
         colsCount = None
 
         try:
+            linenumber = -1
             with codecs.open (self._filename, 'r', 'utf8') as fp:
                 while True:
+                    linenumber += 1
+
                     line = fp.readline()
                     if len (line) == 0:
                         break
+
+                    if linenumber < self._skipRows:
+                        continue
 
                     # Skip empty lines
                     if len (line.strip()) == 0:

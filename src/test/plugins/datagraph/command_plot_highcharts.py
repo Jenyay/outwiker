@@ -781,3 +781,87 @@ x.max = 0.2
         generator = HtmlGenerator (self.page)
         result = generator.makeHtml (Style().getPageStyle (self.page))
         self.assertIn (u'"legend": {"enabled": true}', result)
+
+
+    def testSkipRows_01 (self):
+        text = u'''(:plot curve.data.skiprows="3":)
+Бла-бла-бла
+Бла-бла
+----
+0.5    10
+1.5    20
+2.0    30
+4.0    40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        text = u'[0.5, 10.0], [1.5, 20.0], [2.0, 30.0], [4.0, 40.0]'
+
+        self.assertIn (text, result)
+
+
+    def testSkipRows_02 (self):
+        text = u'''(:plot curve.data.skiprows="6":)
+Бла-бла-бла
+Бла-бла
+----
+0.5    10
+1.5    20
+2.0    30
+4.0    40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        text = u'[4.0, 40.0]'
+
+        self.assertIn (text, result)
+
+
+    def testSkipRows_03 (self):
+        text = u'''(:plot curve.data.skiprows="7":)
+Бла-бла-бла
+Бла-бла
+----
+0.5    10
+1.5    20
+2.0    30
+4.0    40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        text = u'[4.0, 40.0]'
+
+        self.assertNotIn (text, result)
+
+
+    def testSkipRows_04 (self):
+        text = u'''(:plot curve.data.skiprows="70":)
+Бла-бла-бла
+Бла-бла
+----
+0.5    10
+1.5    20
+2.0    30
+4.0    40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        text = u'[4.0, 40.0]'
+
+        self.assertNotIn (text, result)

@@ -80,9 +80,14 @@ class GraphBuilder (object):
             data = curve.getObject (defines.CURVE_DATA_OBJECT_NAME)
             assert data is not None
 
+            try:
+                skiprows = int (data.getProperty (defines.DATA_SKIP_ROWS_NAME, '0'))
+            except ValueError:
+                skiprows = 0
+
             attachName = curve.getProperty (defines.CURVE_DATA_NAME, None)
             if attachName is None:
-                data.setSource (StringSource (content))
+                data.setSource (StringSource (content.strip(), skiprows=skiprows))
             else:
                 # Remove prefix "Attach:"
                 attachPrefix = u'Attach:'
@@ -91,7 +96,7 @@ class GraphBuilder (object):
 
                 # Get full path to the attached file
                 path = Attachment (page).getFullPath (attachName)
-                data.setSource (FileSource (path))
+                data.setSource (FileSource (path, skiprows=skiprows))
 
 
     @property

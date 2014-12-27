@@ -38,7 +38,6 @@ CURVE_XCOL_NUMBER_VALUE = u'number'
 CURVE_DATA_NAME = u'data'
 CURVE_DATA_OBJECT_NAME = u'data'
 
-DATA_FORMAT_COL = u'formatcol'
 
 # If CURVE_DATA is None, data reads from command content
 # else CURVE_DATA is name of the Attachment
@@ -63,3 +62,7 @@ AXIS_MAX_NAME = u'max'
 # Axis types
 AXIS_TYPE_NAME = u'type'
 AXIS_TYPE_DATE = u'datetime'
+
+# Data properties
+DATA_FORMAT_COL = u'formatcol'
+DATA_SKIP_ROWS_NAME = u'skiprows'
