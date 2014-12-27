@@ -44,6 +44,8 @@ DATA_FORMAT_COL = u'formatcol'
 # else CURVE_DATA is name of the Attachment
 CURVE_DATA = None
 
+CURVE_TITLE_NAME = u'title'
+
 
 COLUMNS_SEPARATOR_NAME = u'colsep'
 COLUMNS_SEPARATOR = r'\s+'

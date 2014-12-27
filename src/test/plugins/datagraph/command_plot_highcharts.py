@@ -675,3 +675,19 @@ x.max = 0.2
         generator = HtmlGenerator (self.page)
         result = generator.makeHtml (Style().getPageStyle (self.page))
         self.assertIn (u'"tooltip": {"enabled": true}', result)
+
+
+    def testCurveTitle_01 (self):
+        text = u'''(:plot curve.title="abyrvalg":)
+0.5    10
+1.5    20
+2.0    30
+4.0    40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        self.assertIn (u'"name": "abyrvalg"', result)
