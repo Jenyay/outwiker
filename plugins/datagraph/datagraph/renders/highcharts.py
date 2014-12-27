@@ -191,7 +191,7 @@ $(function () {{ $('#{name}').highcharts({prop}); }});
 
 
     def _getTooltip (self, graph):
-        enabled = (graph.getProperty (defines.GRAPH_TOOLTIP_NAME, None) is not None)
+        enabled = (graph.getProperty (defines.GRAPH_TOOLTIP_NAME, '0') != '0')
 
         tooltip = {
             u'enabled': enabled,

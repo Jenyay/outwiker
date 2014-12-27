@@ -677,6 +677,36 @@ x.max = 0.2
         self.assertIn (u'"tooltip": {"enabled": true}', result)
 
 
+    def testTooltip_03 (self):
+        text = u'''(:plot tooltip=0:)
+0.5    10
+1.5    20
+2.0    30
+4.0    40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+        self.assertIn (u'"tooltip": {"enabled": false}', result)
+
+
+    def testTooltip_04 (self):
+        text = u'''(:plot tooltip=42:)
+0.5    10
+1.5    20
+2.0    30
+4.0    40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+        self.assertIn (u'"tooltip": {"enabled": true}', result)
+
+
     def testCurveTitle_01 (self):
         text = u'''(:plot curve.title="abyrvalg":)
 0.5    10
