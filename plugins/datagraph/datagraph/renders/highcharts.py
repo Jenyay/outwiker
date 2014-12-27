@@ -190,7 +190,7 @@ $(function () {{ $('#{name}').highcharts({prop}); }});
 
     def _getTooltip (self, graph):
         tooltip = {
-            # u'enabled': False,
+            u'enabled': False,
         }
 
         return tooltip
