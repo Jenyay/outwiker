@@ -130,8 +130,10 @@ $(function () {{ $('#{name}').highcharts({prop}); }});
 
 
     def _getLegend (self, graph):
+        enabled = (graph.getProperty (defines.GRAPH_LEGEND_NAME, '0') != '0')
+
         legend = {
-            u'enabled': False,
+            u'enabled': enabled,
         }
 
         return legend

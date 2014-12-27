@@ -721,3 +721,63 @@ x.max = 0.2
         result = generator.makeHtml (Style().getPageStyle (self.page))
 
         self.assertIn (u'"name": "abyrvalg"', result)
+
+
+    def testLegend_01 (self):
+        text = u'''(:plot:)
+0.5    10
+1.5    20
+2.0    30
+4.0    40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+        self.assertIn (u'"legend": {"enabled": false}', result)
+
+
+    def testLegend_02 (self):
+        text = u'''(:plot legend:)
+0.5    10
+1.5    20
+2.0    30
+4.0    40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+        self.assertIn (u'"legend": {"enabled": true}', result)
+
+
+    def testLegend_03 (self):
+        text = u'''(:plot legend=0:)
+0.5    10
+1.5    20
+2.0    30
+4.0    40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+        self.assertIn (u'"legend": {"enabled": false}', result)
+
+
+    def testLegend_04 (self):
+        text = u'''(:plot legend=42:)
+0.5    10
+1.5    20
+2.0    30
+4.0    40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+        self.assertIn (u'"legend": {"enabled": true}', result)
