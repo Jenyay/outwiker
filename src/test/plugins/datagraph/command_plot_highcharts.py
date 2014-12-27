@@ -629,3 +629,49 @@ x.max = 0.2
 
         self.assertIn (u'"color": "#aabbcc"', result)
         self.assertIn (u'"color": "#001100"', result)
+
+
+    def testGraphTitle_01 (self):
+        text = u'''(:plot title="Abyrvalg":)
+0.5    10
+1.5    20
+2.0    30
+4.0    40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        self.assertIn (u'"text": "Abyrvalg"', result)
+
+
+    def testTooltip_01 (self):
+        text = u'''(:plot:)
+0.5    10
+1.5    20
+2.0    30
+4.0    40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+        self.assertIn (u'"tooltip": {"enabled": false}', result)
+
+
+    def testTooltip_02 (self):
+        text = u'''(:plot tooltip:)
+0.5    10
+1.5    20
+2.0    30
+4.0    40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+        self.assertIn (u'"tooltip": {"enabled": true}', result)

@@ -10,6 +10,10 @@ GRAPH_HEIGHT = u'300'
 GRAPH_XAXIS_NAME = u'x'
 GRAPH_YAXIS_NAME = u'y'
 
+GRAPH_TITLE_NAME = u'title'
+
+GRAPH_TOOLTIP_NAME = u'tooltip'
+
 # Sequence of the default colors
 CURVE_COLOR_NAME = u'color'
 CURVE_COLORS = [u'#0051FF', u'#FF0000', u'#19D400', u'#000000',

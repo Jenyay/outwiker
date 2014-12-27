@@ -120,8 +120,10 @@ $(function () {{ $('#{name}').highcharts({prop}); }});
 
 
     def _getTitle (self, graph):
+        text = graph.getProperty (defines.GRAPH_TITLE_NAME, None)
+
         title = {
-            u'text': None,
+            u'text': text,
         }
 
         return title
@@ -189,8 +191,10 @@ $(function () {{ $('#{name}').highcharts({prop}); }});
 
 
     def _getTooltip (self, graph):
+        enabled = (graph.getProperty (defines.GRAPH_TOOLTIP_NAME, None) is not None)
+
         tooltip = {
-            u'enabled': False,
+            u'enabled': enabled,
         }
 
         return tooltip
