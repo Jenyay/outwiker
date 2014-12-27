@@ -190,7 +190,7 @@ $(function () {{ $('#{name}').highcharts({prop}); }});
 
     def _getTooltip (self, graph):
         tooltip = {
-            u'enabled': False,
+            # u'enabled': False,
         }
 
         return tooltip
@@ -229,6 +229,8 @@ $(function () {{ $('#{name}').highcharts({prop}); }});
             color = curve.getProperty (defines.CURVE_COLOR_NAME, None)
             if color is not None:
                 singleSeries[u'color'] = color
+            else:
+                singleSeries[u'color'] = defines.CURVE_COLORS[n % len (defines.CURVE_COLORS)]
 
             series.append (singleSeries)
 

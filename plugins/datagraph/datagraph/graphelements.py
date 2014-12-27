@@ -58,10 +58,24 @@ class Graph (BaseGraphObject):
     def getCurves (self):
         curves = [self._objects[name]
                   for name
-                  in sorted (self._objects.keys())
+                  in sorted (self._objects.keys(), key=self._sortCurves)
                   if name.lower().startswith (u'curve')]
 
         return curves
+
+
+    def _sortCurves (self, curvename):
+        """
+        Sort curves by name: curve1 < curve2 < curve10
+        """
+        number = curvename.lower().replace (u'curve', u'')
+        if len (number) == 0:
+            number = '1'
+
+        try:
+            return int (number)
+        except ValueError:
+            return 0
 
 
 

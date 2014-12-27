@@ -141,6 +141,23 @@ class GraphBuilderTest (unittest.TestCase):
         self.assertIsNotNone (graph.getObject (u'curve2'))
 
 
+    def testCurvesCount_05 (self):
+        params = {
+            'curve2.property': u'Абырвалг',
+            'curve10.property': u'Абырвалг10',
+        }
+        content = u''
+        page = None
+
+        builder = self.GraphBuilder (params, content, page)
+        graph = builder.graph
+
+        self.assertIsNotNone (graph.getObject (u'curve'))
+        self.assertIsNotNone (graph.getObject (u'curve10'))
+        self.assertEqual (graph.getObject (u'curve10').getProperty (u'property', None),
+                          u'Абырвалг10')
+
+
     def testCurveProperties_01 (self):
         params = {
             'curve.property': u'Абырвалг',

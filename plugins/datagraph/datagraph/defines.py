@@ -12,7 +12,9 @@ GRAPH_YAXIS_NAME = u'y'
 
 # Sequence of the default colors
 CURVE_COLOR_NAME = u'color'
-CURVE_COLORS = [u'#0051FF', u'#FF8214', '#FF0000', u'#19D400', '#000000', '#B700FF']
+CURVE_COLORS = [u'#0051FF', u'#FF0000', u'#19D400', u'#000000',
+                u'#FF8214', u'#B700FF', u'#1E9E19', u'#9C571F',
+                u'#8C8741']
 
 # Default curve thickness
 CURVE_WIDTH_NAME = u'width'
