@@ -44,6 +44,7 @@ CURVE_DATA_OBJECT_NAME = u'data'
 CURVE_DATA = None
 
 CURVE_TITLE_NAME = u'title'
+CURVE_HIDE_NAME = u'hide'
 
 
 COLUMNS_SEPARATOR_NAME = u'colsep'

@@ -223,7 +223,8 @@ $(function () {{ $('#{name}').highcharts({prop}); }});
         series = []
         for n, curve in enumerate (graph.getCurves()):
             data = self._getData (curve)
-            if not data:
+            hide = curve.getProperty (defines.CURVE_HIDE_NAME, u'0')
+            if not data or hide != u'0':
                 continue
 
             singleSeries = {
@@ -241,8 +242,10 @@ $(function () {{ $('#{name}').highcharts({prop}); }});
 
             # Curve's title
             title = curve.getProperty (defines.CURVE_TITLE_NAME, None)
-            if title is not None:
-                singleSeries[u'name'] = title
+            if title is None:
+                title = _(u'Curve-{}').format (n + 1)
+
+            singleSeries[u'name'] = title
 
             series.append (singleSeries)
 

@@ -865,3 +865,35 @@ x.max = 0.2
         text = u'[4.0, 40.0]'
 
         self.assertNotIn (text, result)
+
+
+    def testCurveHide_01 (self):
+        text = u'''(:plot curve.title="abyrvalg" curve.hide :)
+0.5    10
+1.5    20
+2.0    30
+4.0    40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        self.assertNotIn (u'"name": "abyrvalg"', result)
+
+
+    def testCurveHide_02 (self):
+        text = u'''(:plot curve.title="abyrvalg" curve.hide = 0 :)
+0.5    10
+1.5    20
+2.0    30
+4.0    40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        self.assertIn (u'"name": "abyrvalg"', result)
