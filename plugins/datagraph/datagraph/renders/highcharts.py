@@ -115,8 +115,15 @@ $(function () {{ $('#{name}').highcharts({prop}); }});
         chartDict[u'yAxis'] = self._getYAxis (graph)
         chartDict[u'title'] = self._getTitle (graph)
         chartDict[u'legend'] = self._getLegend (graph)
+        chartDict[u'plotOptions'] = self._getPlotOptions (graph)
 
         return chartDict
+
+
+    def _getPlotOptions (self, graph):
+        plotOptions = {}
+
+        return plotOptions
 
 
     def _getTitle (self, graph):
@@ -230,7 +237,8 @@ $(function () {{ $('#{name}').highcharts({prop}); }});
             singleSeries = {
                 u'data': data,
                 u'animation': False,
-                u'states': {u'hover': {u'enabled': False}}
+                u'states': {u'hover': {u'enabled': False}},
+                u'marker': self._getMarker (curve, n),
             }
 
             # Curve's color
@@ -250,6 +258,14 @@ $(function () {{ $('#{name}').highcharts({prop}); }});
             series.append (singleSeries)
 
         return series
+
+
+    def _getMarker (self, curve, n):
+        marker = {
+            u'symbol': defines.CURVE_SYMBOLS[n % len (defines.CURVE_SYMBOLS)],
+        }
+
+        return marker
 
 
     def _getData (self, curve):

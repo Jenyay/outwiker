@@ -20,6 +20,8 @@ CURVE_COLORS = [u'#0051FF', u'#FF0000', u'#19D400', u'#000000',
                 u'#FF8214', u'#B700FF', u'#1E9E19', u'#9C571F',
                 u'#8C8741']
 
+CURVE_SYMBOLS = [u'circle', u'square', u'diamond', u'triangle', u'triangle-down']
+
 # Default curve thickness
 CURVE_WIDTH_NAME = u'width'
 CURVE_WIDTH = u'3'
