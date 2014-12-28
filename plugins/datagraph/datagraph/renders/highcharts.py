@@ -239,6 +239,7 @@ $(function () {{ $('#{name}').highcharts({prop}); }});
                 u'animation': False,
                 u'states': {u'hover': {u'enabled': False}},
                 u'marker': self._getMarker (curve, n),
+                u'dashStyle': u'Solid',
             }
 
             # Curve's color
@@ -263,6 +264,7 @@ $(function () {{ $('#{name}').highcharts({prop}); }});
     def _getMarker (self, curve, n):
         marker = {
             u'symbol': defines.CURVE_SYMBOLS[n % len (defines.CURVE_SYMBOLS)],
+            u'enabled': False,
         }
 
         return marker
