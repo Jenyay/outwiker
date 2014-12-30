@@ -17,7 +17,7 @@ from test.utils import removeDir
 
 class CommandPlotHighchartsTest (unittest.TestCase):
     def setUp(self):
-        dirlist = [u"../plugins/datagraph"]
+        dirlist = [u"../plugins/datagraph", u"../plugins/htmlheads"]
 
         self.loader = PluginsLoader(Application)
         self.loader.load (dirlist)
@@ -47,9 +47,9 @@ class CommandPlotHighchartsTest (unittest.TestCase):
         attachpath = Attachment (self.page).getAttachPath ()
 
         self.assertIn (u'<div id="graph-0" style="width:700px; height:300px;"></div>', result)
-        self.assertIn (u'excanvas.js', result)
-        self.assertIn (u'jquery.min.js', result)
-        self.assertIn (u'highcharts.js', result)
+        self.assertIn (u'excanvas.min.js">', result)
+        self.assertIn (u'jquery.min.js">', result)
+        self.assertIn (u'highcharts.js">', result)
         self.assertIn (u"$('#graph-0').highcharts({", result)
 
         self.assertTrue (os.path.exists (os.path.join (attachpath,
@@ -66,6 +66,156 @@ class CommandPlotHighchartsTest (unittest.TestCase):
                                                        u'__thumb',
                                                        u'__js',
                                                        u'highcharts.js')))
+
+
+    def testHeads_01 (self):
+        text = u'''(:htmlhead:)
+excanvas.min.js
+(:htmlheadend:)
+(:plot:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        attachpath = Attachment (self.page).getAttachPath ()
+
+        self.assertIn (u'<div id="graph-0" style="width:700px; height:300px;"></div>', result)
+
+        self.assertNotIn (u'excanvas.min.js">', result)
+        self.assertIn (u'jquery.min.js">', result)
+        self.assertIn (u'highcharts.js">', result)
+
+        self.assertIn (u"$('#graph-0').highcharts({", result)
+
+        self.assertFalse (os.path.exists (os.path.join (attachpath,
+                                                        u'__thumb',
+                                                        u'__js',
+                                                        u'excanvas.min.js')))
+
+        self.assertTrue (os.path.exists (os.path.join (attachpath,
+                                                       u'__thumb',
+                                                       u'__js',
+                                                       u'jquery.min.js')))
+
+        self.assertTrue (os.path.exists (os.path.join (attachpath,
+                                                       u'__thumb',
+                                                       u'__js',
+                                                       u'highcharts.js')))
+
+
+    def testHeads_02 (self):
+        text = u'''(:htmlhead:)
+jquery.min.js
+(:htmlheadend:)
+(:plot:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        attachpath = Attachment (self.page).getAttachPath ()
+
+        self.assertIn (u'<div id="graph-0" style="width:700px; height:300px;"></div>', result)
+
+        self.assertIn (u'excanvas.min.js">', result)
+        self.assertNotIn (u'jquery.min.js">', result)
+        self.assertIn (u'highcharts.js">', result)
+
+        self.assertIn (u"$('#graph-0').highcharts({", result)
+
+        self.assertTrue (os.path.exists (os.path.join (attachpath,
+                                                       u'__thumb',
+                                                       u'__js',
+                                                       u'excanvas.min.js')))
+
+        self.assertFalse (os.path.exists (os.path.join (attachpath,
+                                                        u'__thumb',
+                                                        u'__js',
+                                                        u'jquery.min.js')))
+
+        self.assertTrue (os.path.exists (os.path.join (attachpath,
+                                                       u'__thumb',
+                                                       u'__js',
+                                                       u'highcharts.js')))
+
+
+    def testHeads_03 (self):
+        text = u'''(:htmlhead:)
+highcharts.js
+(:htmlheadend:)
+(:plot:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        attachpath = Attachment (self.page).getAttachPath ()
+
+        self.assertIn (u'<div id="graph-0" style="width:700px; height:300px;"></div>', result)
+
+        self.assertIn (u'excanvas.min.js">', result)
+        self.assertIn (u'jquery.min.js">', result)
+        self.assertNotIn (u'highcharts.js">', result)
+
+        self.assertIn (u"$('#graph-0').highcharts({", result)
+
+        self.assertTrue (os.path.exists (os.path.join (attachpath,
+                                                       u'__thumb',
+                                                       u'__js',
+                                                       u'excanvas.min.js')))
+
+        self.assertTrue (os.path.exists (os.path.join (attachpath,
+                                                       u'__thumb',
+                                                       u'__js',
+                                                       u'jquery.min.js')))
+
+        self.assertFalse (os.path.exists (os.path.join (attachpath,
+                                                        u'__thumb',
+                                                        u'__js',
+                                                        u'highcharts.js')))
+
+
+    def testHeads_04 (self):
+        text = u'''(:htmlhead:)
+excanvas.min.js
+jquery.min.js
+highcharts.js
+(:htmlheadend:)
+(:plot:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        attachpath = Attachment (self.page).getAttachPath ()
+
+        self.assertIn (u'<div id="graph-0" style="width:700px; height:300px;"></div>', result)
+
+        self.assertNotIn (u'excanvas.min.js">', result)
+        self.assertNotIn (u'jquery.min.js">', result)
+        self.assertNotIn (u'highcharts.js">', result)
+
+        self.assertIn (u"$('#graph-0').highcharts({", result)
+
+        self.assertFalse (os.path.exists (os.path.join (attachpath,
+                                                        u'__thumb',
+                                                        u'__js',
+                                                        u'excanvas.min.js')))
+
+        self.assertFalse (os.path.exists (os.path.join (attachpath,
+                                                        u'__thumb',
+                                                        u'__js',
+                                                        u'jquery.min.js')))
+
+        self.assertFalse (os.path.exists (os.path.join (attachpath,
+                                                        u'__thumb',
+                                                        u'__js',
+                                                        u'highcharts.js')))
 
 
     def testData_01 (self):

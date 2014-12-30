@@ -23,9 +23,13 @@ class HighChartsRender (object):
         # Count of the graphs
         self._count = 0
 
-        self._headers = u'''<!--[if lt IE 9]><script language="javascript" type="text/javascript" src="__attach/__thumb/__js/excanvas.js"></script><![endif]-->
-\t<script language="javascript" type="text/javascript" src="__attach/__thumb/__js/jquery.min.js"></script>
-\t<script language="javascript" type="text/javascript" src="__attach/__thumb/__js/highcharts.js"></script>'''
+        self._headers = [
+            (u'excanvas.min.js', u'<!--[if lt IE 9]><script language="javascript" type="text/javascript" src="__attach/__thumb/__js/excanvas.min.js"></script><![endif]-->'),
+
+            (u'jquery.min.js', u'<script language="javascript" type="text/javascript" src="__attach/__thumb/__js/jquery.min.js"></script>'),
+
+            (u'highcharts.js', u'<script language="javascript" type="text/javascript" src="__attach/__thumb/__js/highcharts.js"></script>'),
+        ]
 
 
     def addGraph (self, graph):
@@ -47,11 +51,14 @@ class HighChartsRender (object):
             name = name, width = width, height = height)
 
         if self._count == 0:
-            self._wikiparser.appendToHead (self._headers)
-            try:
-                self._setup ()
-            except Exception, e:
-                return str (e)
+            # Check what jquery, excanvas or highcharts not append yet
+            for libname, header in self._headers:
+                if libname not in self._wikiparser.head:
+                    self._wikiparser.appendToHead (header)
+                    try:
+                        self._setup (libname)
+                    except Exception, e:
+                        return str (e)
 
         script = self._getGraphScript (graph, name)
         self._wikiparser.appendToHead (script)
@@ -71,22 +78,21 @@ $(function () {{ $('#{name}').highcharts({prop}); }});
         return result
 
 
-    def _setup (self):
+    def _setup (self, libname):
         """
         Prepare to using the library
         """
+        # Get path to JS files inside the plugin
         dirname = unicode (os.path.dirname(os.path.abspath(__file__)), getOS().filesEncoding)
-        libfiles = [u'excanvas.min.js', u'highcharts.js', u'jquery.min.js']
+        libpath = os.path.join (dirname, u'js', libname)
 
-        libpath = [os.path.join (dirname, u'js', fname) for fname in libfiles]
-
+        # Get destination path fo JS files
         jsdir = self._getJsDir ()
 
         if not os.path.exists(jsdir):
             os.makedirs (jsdir)
 
-        for fname in libpath:
-            shutil.copy (fname, jsdir)
+        shutil.copy (libpath, jsdir)
 
 
     def _getJsDir (self):
