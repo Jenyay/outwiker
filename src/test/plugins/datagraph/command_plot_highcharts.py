@@ -885,7 +885,7 @@ x.max = 0.2
 
         generator = HtmlGenerator (self.page)
         result = generator.makeHtml (Style().getPageStyle (self.page))
-        self.assertIn (u'"legend": {"enabled": false}', result)
+        self.assertIn (u'"legend": {"symbolWidth": 60, "enabled": false}', result)
 
 
     def testLegend_02 (self):
@@ -900,7 +900,7 @@ x.max = 0.2
 
         generator = HtmlGenerator (self.page)
         result = generator.makeHtml (Style().getPageStyle (self.page))
-        self.assertIn (u'"legend": {"enabled": true}', result)
+        self.assertIn (u'"legend": {"symbolWidth": 60, "enabled": true}', result)
 
 
     def testLegend_03 (self):
@@ -915,7 +915,7 @@ x.max = 0.2
 
         generator = HtmlGenerator (self.page)
         result = generator.makeHtml (Style().getPageStyle (self.page))
-        self.assertIn (u'"legend": {"enabled": false}', result)
+        self.assertIn (u'"legend": {"symbolWidth": 60, "enabled": false}', result)
 
 
     def testLegend_04 (self):
@@ -930,7 +930,7 @@ x.max = 0.2
 
         generator = HtmlGenerator (self.page)
         result = generator.makeHtml (Style().getPageStyle (self.page))
-        self.assertIn (u'"legend": {"enabled": true}', result)
+        self.assertIn (u'"legend": {"symbolWidth": 60, "enabled": true}', result)
 
 
     def testSkipRows_01 (self):
@@ -1047,3 +1047,149 @@ x.max = 0.2
         result = generator.makeHtml (Style().getPageStyle (self.page))
 
         self.assertIn (u'"name": "abyrvalg"', result)
+
+
+    def testCurveStyle_01 (self):
+        text = u'''(:plot:)
+0.5    10
+1.5    20
+2.0    30
+4.0    40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        self.assertIn (u'"dashStyle": "solid"', result)
+
+
+    def testCurveStyle_02 (self):
+        text = u'''(:plot curve.style="Dot":)
+0.5    10
+1.5    20
+2.0    30
+4.0    40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        self.assertIn (u'"dashStyle": "dot"', result)
+
+
+    def testCurveStyle_03 (self):
+        text = u'''(:plot curve.style="  Dot  ":)
+0.5    10
+1.5    20
+2.0    30
+4.0    40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        self.assertIn (u'"dashStyle": "dot"', result)
+
+
+    def testCurveStyle_04 (self):
+        text = u'''(:plot curve.style=1:)
+0.5    10
+1.5    20
+2.0    30
+4.0    40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        self.assertIn (u'"dashStyle": "solid"', result)
+
+
+    def testCurveStyle_05 (self):
+        text = u'''(:plot curve.style=5:)
+0.5    10
+1.5    20
+2.0    30
+4.0    40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        self.assertIn (u'"dashStyle": "shortdashdot"', result)
+
+
+    def testCurveStyle_06 (self):
+        text = u'''(:plot curve1.style=auto curve2.style=auto curve3.style=auto:)
+0.5    10
+1.5    20
+2.0    30
+4.0    40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        self.assertIn (u'"dashStyle": "solid"', result)
+        self.assertIn (u'"dashStyle": "longdash"', result)
+        self.assertIn (u'"dashStyle": "shortdash"', result)
+
+
+    def testCurveStyle_07 (self):
+        text = u'''(:plot curve.style=0:)
+0.5    10
+1.5    20
+2.0    30
+4.0    40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        self.assertIn (u'"dashStyle": "longdashdotdot"', result)
+
+
+    def testCurveStyle_08 (self):
+        text = u'''(:plot curve.style="-1":)
+0.5    10
+1.5    20
+2.0    30
+4.0    40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        self.assertIn (u'"dashStyle": "longdashdot"', result)
+
+
+    def testCurveStyle_09 (self):
+        text = u'''(:plot curve.style=12:)
+0.5    10
+1.5    20
+2.0    30
+4.0    40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        self.assertIn (u'"dashStyle": "solid"', result)

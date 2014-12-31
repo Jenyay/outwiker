@@ -22,6 +22,14 @@ CURVE_COLORS = [u'#0051FF', u'#FF0000', u'#19D400', u'#000000',
 
 CURVE_SYMBOLS = [u'circle', u'square', u'diamond', u'triangle', u'triangle-down']
 
+CURVE_STYLES = [u'solid', u'longdash', u'shortdash', u'shortdot',
+                u'shortdashdot', u'shortdashdotdot', u'dot', u'dash',
+                u'dashdot', u'longdashdot', u'longdashdotdot']
+
+CURVE_STYLE_NAME = u'style'
+
+CURVE_STYLE_AUTO = u'auto'
+
 # Default curve thickness
 CURVE_WIDTH_NAME = u'width'
 CURVE_WIDTH = u'3'

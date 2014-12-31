@@ -147,6 +147,7 @@ $(function () {{ $('#{name}').highcharts({prop}); }});
 
         legend = {
             u'enabled': enabled,
+            u'symbolWidth': 60,
         }
 
         return legend
@@ -245,7 +246,7 @@ $(function () {{ $('#{name}').highcharts({prop}); }});
                 u'animation': False,
                 u'states': {u'hover': {u'enabled': False}},
                 u'marker': self._getMarker (curve, n),
-                u'dashStyle': u'Solid',
+                u'dashStyle': self._getCurveStyle (curve, n),
             }
 
             # Curve's color
@@ -265,6 +266,22 @@ $(function () {{ $('#{name}').highcharts({prop}); }});
             series.append (singleSeries)
 
         return series
+
+
+    def _getCurveStyle (self, curve, n):
+        style = curve.getProperty (defines.CURVE_STYLE_NAME, defines.CURVE_STYLES[0]).strip().lower()
+
+        # If style is number
+        try:
+            styleNumber = int (style)
+            style = defines.CURVE_STYLES[(styleNumber - 1) % len (defines.CURVE_STYLES)]
+        except ValueError:
+            pass
+
+        if style == defines.CURVE_STYLE_AUTO:
+            style = defines.CURVE_STYLES[n % len (defines.CURVE_STYLES)]
+
+        return style
 
 
     def _getMarker (self, curve, n):
