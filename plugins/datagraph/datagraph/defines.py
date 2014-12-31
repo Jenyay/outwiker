@@ -77,3 +77,5 @@ AXIS_TYPE_DATE = u'datetime'
 # Data properties
 DATA_FORMAT_COL = u'formatcol'
 DATA_SKIP_ROWS_NAME = u'skiprows'
+
+AXIS_MAJOR_TICK_INTERVAL_NAME = u'tickstep'

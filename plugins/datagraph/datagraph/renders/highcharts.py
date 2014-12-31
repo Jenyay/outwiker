@@ -184,17 +184,25 @@ $(function () {{ $('#{name}').highcharts({prop}); }});
         # Min / Max values
         minVal = axis.getProperty (defines.AXIS_MIN_NAME, None)
         maxVal = axis.getProperty (defines.AXIS_MAX_NAME, None)
-        if minVal is not None:
-            try:
-                result[u'min'] = self._convertAxisValue (minVal, axis)
-            except ValueError:
-                pass
 
-        if maxVal is not None:
-            try:
-                result[u'max'] = self._convertAxisValue (maxVal, axis)
-            except ValueError:
-                pass
+        try:
+            result[u'min'] = self._convertAxisValue (minVal, axis)
+        except ValueError:
+            pass
+
+        try:
+            result[u'max'] = self._convertAxisValue (maxVal, axis)
+        except ValueError:
+            pass
+
+        # Major ticks
+        majorTickInterval = axis.getProperty (defines.AXIS_MAJOR_TICK_INTERVAL_NAME, None)
+        try:
+            interval = self._convertAxisValue (majorTickInterval, axis)
+            if interval > 0:
+                result[u'tickInterval'] = interval
+        except ValueError:
+            pass
 
         # Axis type
         axisType = axis.getProperty (defines.AXIS_TYPE_NAME, None)
@@ -384,4 +392,7 @@ $(function () {{ $('#{name}').highcharts({prop}); }});
 
 
     def _convertAxisValue (self, value, axis):
+        if value is None:
+            raise ValueError
+
         return float (value)

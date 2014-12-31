@@ -1193,3 +1193,99 @@ x.max = 0.2
         result = generator.makeHtml (Style().getPageStyle (self.page))
 
         self.assertIn (u'"dashStyle": "solid"', result)
+
+
+    def testTickInterval_01 (self):
+        text = u'''(:plot:)
+0.5    10
+1.5    20
+2.0    30
+4.0    40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        self.assertNotIn (u'"tickInterval"', result)
+
+
+    def testTickInterval_02 (self):
+        text = u'''(:plot x.tickstep="":)
+0.5    10
+1.5    20
+2.0    30
+4.0    40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        self.assertNotIn (u'"tickInterval"', result)
+
+
+    def testTickInterval_03 (self):
+        text = u'''(:plot x.tickstep="sadfasdf":)
+0.5    10
+1.5    20
+2.0    30
+4.0    40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        self.assertNotIn (u'"tickInterval"', result)
+
+
+    def testTickInterval_04 (self):
+        text = u'''(:plot x.tickstep="1":)
+0.5    10
+1.5    20
+2.0    30
+4.0    40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        self.assertIn (u'"tickInterval": 1.0', result)
+
+
+    def testTickInterval_05 (self):
+        text = u'''(:plot x.tickstep=-1:)
+0.5    10
+1.5    20
+2.0    30
+4.0    40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        self.assertNotIn (u'"tickInterval"', result)
+
+
+    def testTickInterval_06 (self):
+        text = u'''(:plot x.tickstep=0:)
+0.5    10
+1.5    20
+2.0    30
+4.0    40
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        self.assertNotIn (u'"tickInterval"', result)
