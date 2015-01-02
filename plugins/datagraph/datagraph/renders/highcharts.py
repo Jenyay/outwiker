@@ -7,11 +7,12 @@ import os
 import os.path
 import shutil
 
-from datagraph.libs.json import dumps
-
-from datagraph import defines
 from outwiker.core.attachment import Attachment
 from outwiker.core.system import getOS
+
+from datagraph.libs.json import dumps
+from datagraph import defines
+from datagraph.dateparser import createDateTime
 
 
 class HighChartsRender (object):
@@ -186,19 +187,19 @@ $(function () {{ $('#{name}').highcharts({prop}); }});
         maxVal = axis.getProperty (defines.AXIS_MAX_NAME, None)
 
         try:
-            result[u'min'] = self._convertAxisValue (minVal, axis)
+            result[u'min'] = self._convertMinMaxAxisValue (minVal, axis)
         except ValueError:
             pass
 
         try:
-            result[u'max'] = self._convertAxisValue (maxVal, axis)
+            result[u'max'] = self._convertMinMaxAxisValue (maxVal, axis)
         except ValueError:
             pass
 
         # Major ticks
         majorTickInterval = axis.getProperty (defines.AXIS_MAJOR_TICK_INTERVAL_NAME, None)
         try:
-            interval = self._convertAxisValue (majorTickInterval, axis)
+            interval = self._convertIntervalAxisValue (majorTickInterval, axis)
             if interval > 0:
                 result[u'tickInterval'] = interval
         except ValueError:
@@ -378,20 +379,33 @@ $(function () {{ $('#{name}').highcharts({prop}); }});
         return ycol
 
 
+    def _date2float (self, date):
+        epoch = datetime.utcfromtimestamp(0)
+        delta = (date - epoch).total_seconds() * 1000.0
+        return delta
+
 
     def _convertValue (self, colFormat, value):
         """ Convert data by column format settings
         """
         if colFormat is not None:
-            date = datetime.strptime (value, colFormat)
-            epoch = datetime.utcfromtimestamp(0)
-            delta = (date - epoch).total_seconds() * 1000.0
-            return delta
+            return self._date2float (datetime.strptime (value, colFormat))
         else:
             return float (value)
 
 
-    def _convertAxisValue (self, value, axis):
+    def _convertMinMaxAxisValue (self, value, axis):
+        if value is None:
+            raise ValueError
+
+        axisType = axis.getProperty (defines.AXIS_TYPE_NAME, None)
+        if axisType == defines.AXIS_TYPE_DATE:
+            return self._date2float (createDateTime (value))
+
+        return float (value)
+
+
+    def _convertIntervalAxisValue (self, value, axis):
         if value is None:
             raise ValueError
 
