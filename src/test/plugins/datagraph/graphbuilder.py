@@ -18,7 +18,6 @@ class GraphBuilderTest (unittest.TestCase):
 
         self.loader = PluginsLoader(Application)
         self.loader.load (dirlist)
-        self.GraphBuilder = self.loader[u'DataGraph'].GraphBuilder
 
         self._defaultWidth = '700'
         self._defaultHeight = '300'
@@ -36,11 +35,12 @@ class GraphBuilderTest (unittest.TestCase):
 
 
     def testEmpty (self):
+        from datagraph.graphbuilder import GraphBuilder
         params = {}
         content = u''
         page = None
 
-        builder = self.GraphBuilder(params, content, page)
+        builder = GraphBuilder(params, content, page)
         graph = builder.graph
 
         self.assertEqual (graph.getProperty (u'width', 0), self._defaultWidth)
@@ -54,6 +54,7 @@ class GraphBuilderTest (unittest.TestCase):
 
 
     def testGraphProperties (self):
+        from datagraph.graphbuilder import GraphBuilder
         params = {
             u'width': 100,
             u'height': 150,
@@ -70,7 +71,7 @@ class GraphBuilderTest (unittest.TestCase):
         content = u''
         page = None
 
-        builder = self.GraphBuilder (params, content, page)
+        builder = GraphBuilder (params, content, page)
         graph = builder.graph
 
         self.assertEqual (graph.getProperty (u'width', 0), 100)
@@ -82,6 +83,7 @@ class GraphBuilderTest (unittest.TestCase):
 
 
     def testCurvesCount_01 (self):
+        from datagraph.graphbuilder import GraphBuilder
         params = {
             'curve2': u'Абырвалг',
             'curve3': u'Абырвалг',
@@ -90,7 +92,7 @@ class GraphBuilderTest (unittest.TestCase):
         content = u''
         page = None
 
-        builder = self.GraphBuilder (params, content, page)
+        builder = GraphBuilder (params, content, page)
         graph = builder.graph
 
         self.assertIsNone (graph.getObject (u'curve2'))
@@ -99,13 +101,14 @@ class GraphBuilderTest (unittest.TestCase):
 
 
     def testCurvesCount_02 (self):
+        from datagraph.graphbuilder import GraphBuilder
         params = {
             'curve.property': u'Абырвалг',
         }
         content = u''
         page = None
 
-        builder = self.GraphBuilder (params, content, page)
+        builder = GraphBuilder (params, content, page)
         graph = builder.graph
 
         self.assertIsNotNone (graph.getObject (u'curve'))
@@ -113,13 +116,14 @@ class GraphBuilderTest (unittest.TestCase):
 
 
     def testCurvesCount_03 (self):
+        from datagraph.graphbuilder import GraphBuilder
         params = {
             'curve1.property': u'Абырвалг',
         }
         content = u''
         page = None
 
-        builder = self.GraphBuilder (params, content, page)
+        builder = GraphBuilder (params, content, page)
         graph = builder.graph
 
         self.assertIsNotNone (graph.getObject (u'curve'))
@@ -127,13 +131,14 @@ class GraphBuilderTest (unittest.TestCase):
 
 
     def testCurvesCount_04 (self):
+        from datagraph.graphbuilder import GraphBuilder
         params = {
             'curve2.property': u'Абырвалг',
         }
         content = u''
         page = None
 
-        builder = self.GraphBuilder (params, content, page)
+        builder = GraphBuilder (params, content, page)
         graph = builder.graph
 
         self.assertIsNotNone (graph.getObject (u'curve'))
@@ -142,6 +147,7 @@ class GraphBuilderTest (unittest.TestCase):
 
 
     def testCurvesCount_05 (self):
+        from datagraph.graphbuilder import GraphBuilder
         params = {
             'curve2.property': u'Абырвалг',
             'curve10.property': u'Абырвалг10',
@@ -149,7 +155,7 @@ class GraphBuilderTest (unittest.TestCase):
         content = u''
         page = None
 
-        builder = self.GraphBuilder (params, content, page)
+        builder = GraphBuilder (params, content, page)
         graph = builder.graph
 
         self.assertIsNotNone (graph.getObject (u'curve'))
@@ -159,13 +165,14 @@ class GraphBuilderTest (unittest.TestCase):
 
 
     def testCurveProperties_01 (self):
+        from datagraph.graphbuilder import GraphBuilder
         params = {
             'curve.property': u'Абырвалг',
         }
         content = u''
         page = None
 
-        builder = self.GraphBuilder (params, content, page)
+        builder = GraphBuilder (params, content, page)
         graph = builder.graph
         curve = graph.getObject (u'curve')
         curve1 = graph.getObject (u'curve1')
@@ -179,6 +186,7 @@ class GraphBuilderTest (unittest.TestCase):
 
 
     def testCurveData_01 (self):
+        from datagraph.graphbuilder import GraphBuilder
         params = {
             u'curve.data.colsep': u',',
             u'curve.data.coltype1': u'datetime',
@@ -187,7 +195,7 @@ class GraphBuilderTest (unittest.TestCase):
         content = u''
         page = None
 
-        builder = self.GraphBuilder (params, content, page)
+        builder = GraphBuilder (params, content, page)
         graph = builder.graph
         curve = graph.getObject (u'curve')
 
@@ -203,13 +211,14 @@ class GraphBuilderTest (unittest.TestCase):
 
 
     def testCurveData_02 (self):
+        from datagraph.graphbuilder import GraphBuilder
         params = {}
         content = u'''123
 456
 789'''
         page = None
 
-        builder = self.GraphBuilder (params, content, page)
+        builder = GraphBuilder (params, content, page)
         graph = builder.graph
         curve = graph.getObject (u'curve')
 
@@ -223,13 +232,14 @@ class GraphBuilderTest (unittest.TestCase):
 
 
     def testCurveData_03 (self):
+        from datagraph.graphbuilder import GraphBuilder
         params = {}
         content = u'''123    111
 456    222
 789    333'''
         page = None
 
-        builder = self.GraphBuilder (params, content, page)
+        builder = GraphBuilder (params, content, page)
         graph = builder.graph
         curve = graph.getObject (u'curve')
 
@@ -243,6 +253,7 @@ class GraphBuilderTest (unittest.TestCase):
 
 
     def testCurveAttachData_01 (self):
+        from datagraph.graphbuilder import GraphBuilder
         data = u'''123
 456
 789'''
@@ -254,7 +265,7 @@ class GraphBuilderTest (unittest.TestCase):
         content = u''
         page = self.page
 
-        builder = self.GraphBuilder (params, content, page)
+        builder = GraphBuilder (params, content, page)
         graph = builder.graph
         curve = graph.getObject (u'curve')
 
@@ -268,6 +279,7 @@ class GraphBuilderTest (unittest.TestCase):
 
 
     def testCurveAttachData_02 (self):
+        from datagraph.graphbuilder import GraphBuilder
         data = u'''123
 456
 789'''
@@ -279,7 +291,7 @@ class GraphBuilderTest (unittest.TestCase):
         content = u''
         page = self.page
 
-        builder = self.GraphBuilder (params, content, page)
+        builder = GraphBuilder (params, content, page)
         graph = builder.graph
         curve = graph.getObject (u'curve')
 
@@ -293,13 +305,14 @@ class GraphBuilderTest (unittest.TestCase):
 
 
     def testCurveAttachData_03 (self):
+        from datagraph.graphbuilder import GraphBuilder
         params = {
             u'curve.data': u'invalid_fname.txt',
         }
         content = u''
         page = self.page
 
-        builder = self.GraphBuilder (params, content, page)
+        builder = GraphBuilder (params, content, page)
         graph = builder.graph
         curve = graph.getObject (u'curve')
 
@@ -313,6 +326,7 @@ class GraphBuilderTest (unittest.TestCase):
 
 
     def testCurveAttachData_04 (self):
+        from datagraph.graphbuilder import GraphBuilder
         data = u'''123    111
 456    222
 789    333'''
@@ -324,7 +338,7 @@ class GraphBuilderTest (unittest.TestCase):
         content = u''
         page = self.page
 
-        builder = self.GraphBuilder (params, content, page)
+        builder = GraphBuilder (params, content, page)
         graph = builder.graph
         curve = graph.getObject (u'curve')
 
@@ -338,13 +352,14 @@ class GraphBuilderTest (unittest.TestCase):
 
 
     def testCurveAttach_invalid_01 (self):
+        from datagraph.graphbuilder import GraphBuilder
         params = {
             u'curve.data': 'Attach:invalid_fname.txt',
         }
         content = u''
         page = self.page
 
-        builder = self.GraphBuilder (params, content, page)
+        builder = GraphBuilder (params, content, page)
         graph = builder.graph
         curve = graph.getObject (u'curve')
 
@@ -358,12 +373,13 @@ class GraphBuilderTest (unittest.TestCase):
 
 
     def testCurves_01 (self):
+        from datagraph.graphbuilder import GraphBuilder
         params = {
         }
         content = u''
         page = self.page
 
-        builder = self.GraphBuilder (params, content, page)
+        builder = GraphBuilder (params, content, page)
         graph = builder.graph
 
         curves = graph.getCurves()
@@ -372,13 +388,14 @@ class GraphBuilderTest (unittest.TestCase):
 
 
     def testCurves_02 (self):
+        from datagraph.graphbuilder import GraphBuilder
         params = {
             u'curve.data': u'Attach:fname.txt'
         }
         content = u''
         page = self.page
 
-        builder = self.GraphBuilder (params, content, page)
+        builder = GraphBuilder (params, content, page)
         graph = builder.graph
 
         curves = graph.getCurves()
@@ -387,13 +404,14 @@ class GraphBuilderTest (unittest.TestCase):
 
 
     def testCurves_03 (self):
+        from datagraph.graphbuilder import GraphBuilder
         params = {
             u'curve1.data': u'Attach:fname.txt'
         }
         content = u''
         page = self.page
 
-        builder = self.GraphBuilder (params, content, page)
+        builder = GraphBuilder (params, content, page)
         graph = builder.graph
 
         curves = graph.getCurves()
@@ -402,13 +420,14 @@ class GraphBuilderTest (unittest.TestCase):
 
 
     def testCurves_04 (self):
+        from datagraph.graphbuilder import GraphBuilder
         params = {
             u'curve2.data': u'Attach:fname.txt'
         }
         content = u''
         page = self.page
 
-        builder = self.GraphBuilder (params, content, page)
+        builder = GraphBuilder (params, content, page)
         graph = builder.graph
 
         curves = graph.getCurves()
@@ -417,6 +436,7 @@ class GraphBuilderTest (unittest.TestCase):
 
 
     def testCurves_05 (self):
+        from datagraph.graphbuilder import GraphBuilder
         params = {
             u'curve2.title': u'curve2',
             u'curve1.title': u'curve1',
@@ -426,7 +446,7 @@ class GraphBuilderTest (unittest.TestCase):
         content = u''
         page = self.page
 
-        builder = self.GraphBuilder (params, content, page)
+        builder = GraphBuilder (params, content, page)
         graph = builder.graph
 
         curves = graph.getCurves()
@@ -439,6 +459,7 @@ class GraphBuilderTest (unittest.TestCase):
 
 
     def testAxis_01 (self):
+        from datagraph.graphbuilder import GraphBuilder
         params = {
             'x.min': u'1.5',
             'y.max': u'2.5',
@@ -448,7 +469,7 @@ class GraphBuilderTest (unittest.TestCase):
         content = u''
         page = None
 
-        builder = self.GraphBuilder (params, content, page)
+        builder = GraphBuilder (params, content, page)
         graph = builder.graph
 
         xaxis = graph.getObject (u'x')
