@@ -1,0 +1,9 @@
+[Tree]
+expand = True
+
+[General]
+selectedtab = 0
+
+[Tabs]
+tab_0 = О плагине DataGraph
+
