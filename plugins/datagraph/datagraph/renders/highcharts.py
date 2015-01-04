@@ -11,8 +11,9 @@ from outwiker.core.attachment import Attachment
 from outwiker.core.system import getOS
 
 from datagraph.libs.json import dumps
+from datagraph.libs.dateutil.parser import parser
 from datagraph import defines
-from datagraph.dateparser import createDateTime
+# from datagraph.dateparser import createDateTime
 
 
 class HighChartsRender (object):
@@ -400,7 +401,7 @@ $(function () {{ $('#{name}').highcharts({prop}); }});
 
         axisType = axis.getProperty (defines.AXIS_TYPE_NAME, None)
         if axisType == defines.AXIS_TYPE_DATE:
-            return self._date2float (createDateTime (value))
+            return self._date2float (self._createDateTime (value))
 
         return float (value)
 
@@ -410,3 +411,13 @@ $(function () {{ $('#{name}').highcharts({prop}); }});
             raise ValueError
 
         return float (value)
+
+
+    def _createDateTime (self, text):
+        if len (text.strip()) == 0:
+            raise ValueError
+
+        dateparser = parser()
+        date = dateparser.parse (text)
+
+        return date

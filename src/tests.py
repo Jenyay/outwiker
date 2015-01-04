@@ -218,7 +218,6 @@ if __name__ == '__main__':
     from test.plugins.datagraph.graphbuilder import GraphBuilderTest
     from test.plugins.datagraph.datasources import StringSourceTest, FileSourceTest
     from test.plugins.datagraph.command_plot_highcharts import CommandPlotHighchartsTest
-    from test.plugins.datagraph.dateparser import DateParserTest
 
     from test.styles.styles import StylesTest
     from test.styles.styleslist import StylesListTest
