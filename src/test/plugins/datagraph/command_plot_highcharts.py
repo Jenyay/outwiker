@@ -1289,3 +1289,29 @@ x.max = 0.2
         result = generator.makeHtml (Style().getPageStyle (self.page))
 
         self.assertNotIn (u'"tickInterval"', result)
+
+
+    def testColSep_01 (self):
+        text = u'''(:plot
+curve.data.colsep=",\s*"
+:)
+1, 10, 20, 30, 40
+2, 11, 22, 31, 41
+3, 13, 24, 33, 42
+4, 15, 25, 35, 43
+5, 16, 26, 36, 44
+6, 18, 27, 37, 45
+7, 20, 30, 38, 46
+8, 20, 30, 38, 46
+9, 20, 30, 38, 46
+10, 20, 30, 38, 46
+(:plotend:)'''
+
+        self.page.content = text
+
+        generator = HtmlGenerator (self.page)
+        result = generator.makeHtml (Style().getPageStyle (self.page))
+
+        self.assertIn (u'10.0', result)
+        self.assertIn (u'18.0', result)
+        self.assertIn (u'20.0', result)

@@ -5,5 +5,6 @@ expand = True
 selectedtab = 0
 
 [Tabs]
-tab_0 = О плагине DataGraph
+tab_0 = Команда plot/Параметры данных
+tab_1 = Команда plot/Параметры кривых
 
