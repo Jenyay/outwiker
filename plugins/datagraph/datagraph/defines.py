@@ -57,8 +57,8 @@ CURVE_TITLE_NAME = u'title'
 CURVE_HIDE_NAME = u'hide'
 
 
-COLUMNS_SEPARATOR_NAME = u'colsep'
-COLUMNS_SEPARATOR = r'\s+'
+DATA_COLUMNS_SEPARATOR_NAME = u'colsep'
+DATA_COLUMNS_SEPARATOR_DEFAULT = r'\s+'
 
 # For selection render engine (at the time is not used)
 RENDER_NAME = u'render'
