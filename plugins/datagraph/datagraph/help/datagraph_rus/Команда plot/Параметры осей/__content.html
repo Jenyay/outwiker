@@ -13,14 +13,146 @@
 		img{border:none}
 		
 	</style>
-	
+	<!--[if lt IE 9]><script language="javascript" type="text/javascript" src="__attach/__thumb/__js/excanvas.min.js"></script><![endif]-->
+<script language="javascript" type="text/javascript" src="__attach/__thumb/__js/jquery.min.js"></script>
+<script language="javascript" type="text/javascript" src="__attach/__thumb/__js/highcharts.js"></script>
+<script>
+$(function () { $('#graph-0').highcharts({"yAxis": {"max": 25.0, "title": {"text": null}, "min": 0.0, "gridLineWidth": 1}, "series": [{"dashStyle": "solid", "name": "Curve-1", "color": "#0051FF", "states": {"hover": {"enabled": false}}, "animation": false, "marker": {"symbol": "circle", "enabled": false}, "data": [[1388534400000.0, 0.0], [1391212800000.0, 2.0], [1393632000000.0, 10.0], [1396310400000.0, 15.0], [1398902400000.0, 13.0], [1401580800000.0, 15.0], [1404172800000.0, 16.0], [1406851200000.0, 20.0], [1409529600000.0, 20.0], [1412121600000.0, 18.0], [1414800000000.0, 22.0], [1417392000000.0, 24.0]]}], "title": {"text": null}, "chart": {"animation": false, "plotBorderWidth": 1}, "tooltip": {"enabled": false}, "credits": {"enabled": false}, "plotOptions": {}, "xAxis": {"title": {"text": null}, "max": 1420070400000.0, "labels": {"format": "{value:%d.%m.%Y}"}, "gridLineWidth": 1, "min": 1385856000000.0, "type": "datetime"}, "legend": {"symbolWidth": 60, "enabled": false}}); });
+</script>
+<script>
+$(function () { $('#graph-1').highcharts({"yAxis": {"title": {"text": "\u041f\u043e\u0434\u043f\u0438\u0441\u044c \u0434\u043b\u044f \u043e\u0441\u0438 Y"}, "gridLineWidth": 1}, "series": [{"dashStyle": "solid", "name": "Curve-1", "color": "#0051FF", "states": {"hover": {"enabled": false}}, "animation": false, "marker": {"symbol": "circle", "enabled": false}, "data": [[1.0, 10.0], [2.0, 11.0], [3.0, 13.0], [4.0, 15.0], [5.0, 16.0], [6.0, 18.0], [7.0, 20.0], [8.0, 20.0], [9.0, 20.0], [10.0, 20.0]]}], "title": {"text": null}, "chart": {"animation": false, "plotBorderWidth": 1}, "tooltip": {"enabled": false}, "credits": {"enabled": false}, "plotOptions": {}, "xAxis": {"title": {"text": "\u041f\u043e\u0434\u043f\u0438\u0441\u044c \u0434\u043b\u044f \u043e\u0441\u0438 X"}, "gridLineWidth": 1}, "legend": {"symbolWidth": 60, "enabled": false}}); });
+</script>
+<script>
+$(function () { $('#graph-2').highcharts({"yAxis": {"title": {"text": null}, "gridLineWidth": 1}, "series": [{"dashStyle": "solid", "name": "Curve-1", "color": "#0051FF", "states": {"hover": {"enabled": false}}, "animation": false, "marker": {"symbol": "circle", "enabled": false}, "data": [[1388534400000.0, 0.0], [1391212800000.0, 2.0], [1393632000000.0, 10.0], [1396310400000.0, 15.0], [1398902400000.0, 13.0], [1401580800000.0, 15.0], [1404172800000.0, 16.0], [1406851200000.0, 20.0], [1409529600000.0, 20.0], [1412121600000.0, 18.0], [1414800000000.0, 22.0], [1417392000000.0, 24.0]]}], "title": {"text": null}, "chart": {"animation": false, "plotBorderWidth": 1}, "tooltip": {"enabled": false}, "credits": {"enabled": false}, "plotOptions": {}, "xAxis": {"labels": {"format": "{value:%d.%m.%Y}"}, "title": {"text": null}, "type": "datetime", "gridLineWidth": 1}, "legend": {"symbolWidth": 60, "enabled": false}}); });
+</script>
+<script>
+$(function () { $('#graph-3').highcharts({"yAxis": {"title": {"text": null}, "tickInterval": 1.0, "gridLineWidth": 1}, "series": [{"dashStyle": "solid", "name": "Curve-1", "color": "#0051FF", "states": {"hover": {"enabled": false}}, "animation": false, "marker": {"symbol": "circle", "enabled": false}, "data": [[1.0, 10.0], [2.0, 11.0], [3.0, 13.0], [4.0, 15.0], [5.0, 16.0], [6.0, 18.0], [7.0, 20.0], [8.0, 20.0], [9.0, 20.0], [10.0, 20.0]]}], "title": {"text": null}, "chart": {"animation": false, "plotBorderWidth": 1}, "tooltip": {"enabled": false}, "credits": {"enabled": false}, "plotOptions": {}, "xAxis": {"title": {"text": null}, "tickInterval": 0.5, "gridLineWidth": 1}, "legend": {"symbolWidth": 60, "enabled": false}}); });
+</script>
 </head>
 
 <body>
 
-<h2>Вложенные файлы</h2>
+<h2>Оглавление раздела</h2>
+<ul>
+<li><a href="#names">Использование осей</a></li>
+<li><a href="#minmax">Параметры <i>min</i> / <i>max</i>.</a></li>
+<li><a href="#title">Параметр <i>title</i></a></li>
+<li><a href="#type">Параметр <i>type</i></a></li>
+<li><a href="#tickstep">Параметр <i>tickstep</i></a></li>
+</ul>
+<h2><a id="names"></a> Использование осей</h2>
+<br>
+График имеет две оси <i>x</i> и <i>y</i>, имеющие одинаковые параметры. Эти параметры устанавливаются в виде <i>x.paramname = ...</i> и <i>y.paramname = ...</i> соответственно.<br>
+<br>
+<h2><a id="minmax"></a> Параметры <i>min</i> / <i>max</i>.</h2>
+<br>
+С помощью параметров <i>min</i> и <i>max</i> можно установить интервал, отображаемый по осям. Этот параметр работает как для чисел с плавающей точкой, так и для календарных типов данных. Для календарных данных плагин понимает множество форматов данных, но рекомендуется использовать запись вида "ГГГГ-ММ-ЧЧ", а для времени "ЧЧ:ММ". Про календарные данные читайте раздел <a href="page://__afd7ce6a-f26f-4344-a3d7-a3e4634f4aec/#formatcol">Параметр <i>curve.data.formatcol</i></a>.<br>
+<br>
+
+<pre>(:plot
+curve.data.formatcol1=&quot;%d.%m.%Y&quot;
+x.type = &quot;datetime&quot;
+
+x.min = &quot;2013-12-01&quot;
+x.max = &quot;2015-01-01&quot;
+
+y.min = 0
+y.max = 25
+:)
+01.01.2014    0
+01.02.2014    2
+01.03.2014    10
+01.04.2014    15
+01.05.2014    13
+01.06.2014    15
+01.07.2014    16
+01.08.2014    20
+01.09.2014    20
+01.10.2014    18
+01.11.2014    22
+01.12.2014    24
+(:plotend:)</pre>
+<br>
+<br>
+<div id="graph-0" style="width:700px; height:300px;"></div><br>
 <hr>
-<h2>Дочерние страницы</h2>
+<br>
+<h2><a id="title"></a> Параметр <i>title</i></h2>
+<br>
+С помощью параметра <i>title</i> можно установить подпись для осей, поясняющие, какая величина отложена по данной оси.<br>
+<br>
+
+<pre>(:plot
+x.title = &quot;Подпись для оси X&quot;
+y.title = &quot;Подпись для оси Y&quot;
+:)
+1    10    20    30    40
+2    11    22    31    41
+3    13    24    33    42
+4    15    25    35    43
+5    16    26    36    44
+6    18    27    37    45
+7    20    30    38    46
+8    20    30    38    46
+9    20    30    38    46
+10   20    30    38    46
+(:plotend:)</pre>
+<br>
+<br>
+<div id="graph-1" style="width:700px; height:300px;"></div><br>
+<hr>
+<h2><a id="type"></a> Параметр <i>type</i></h2>
+<br>
+С помощью параметра <i>type</i> можно указать, что по данной оси нужно откладывать <a href="page://__afd7ce6a-f26f-4344-a3d7-a3e4634f4aec/#formatcol">календарных тип данных</a>. Для этого параметру <i>type</i> нужно присвоить значение "datetime".<br>
+<br>
+
+<pre>(:plot
+curve.data.formatcol1=&quot;%d.%m.%Y&quot;
+x.type=&quot;datetime&quot;
+:)
+01.01.2014    0
+01.02.2014    2
+01.03.2014    10
+01.04.2014    15
+01.05.2014    13
+01.06.2014    15
+01.07.2014    16
+01.08.2014    20
+01.09.2014    20
+01.10.2014    18
+01.11.2014    22
+01.12.2014    24
+(:plotend:)</pre>
+<br>
+<br>
+<div id="graph-2" style="width:700px; height:300px;"></div><br>
+<hr>
+<h2><a id="tickstep"></a> Параметр <i>tickstep</i></h2>
+<br>
+С помощью параметра <i>tickstep</i> можно изменить интервал между рисками на осях и, соответственно, шаг отображаемой сетки. Если этот параметр не установен, то шаг рисок выбирается автоматически. <br>
+<br>
+<blockquote>На данный момент этот параметр не работает с календарным типом данных.</blockquote><br>
+<br>
+
+<pre>(:plot
+x.tickstep = 0.5
+y.tickstep = 1
+:)
+1    10    20    30    40
+2    11    22    31    41
+3    13    24    33    42
+4    15    25    35    43
+5    16    26    36    44
+6    18    27    37    45
+7    20    30    38    46
+8    20    30    38    46
+9    20    30    38    46
+10   20    30    38    46
+(:plotend:)</pre>
+<br>
+<br>
+<br>
+<div id="graph-3" style="width:700px; height:300px;"></div><br>
 
 </body>
 </html>
