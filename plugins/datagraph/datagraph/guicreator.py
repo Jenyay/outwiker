@@ -10,7 +10,7 @@ from .i18n import get_
 from .toolbar import DataGraphToolBar
 
 # Импортировать все Actions
-from .actions import PlotAction
+from .actions import PlotAction, OpenHelpAction
 
 
 class GuiCreator (object):
@@ -22,7 +22,7 @@ class GuiCreator (object):
         self._application = application
 
         # Сюда добавить все Actions
-        self._actions = [PlotAction]
+        self._actions = [PlotAction, OpenHelpAction]
 
         # MenuItem создаваемого подменю
         self._submenuItem = None
@@ -61,6 +61,11 @@ class GuiCreator (object):
             PlotAction.stringId,
             toolbar,
             self._getImagePath ("plot.png"))
+
+        self._application.actionController.appendToolbarButton (
+            OpenHelpAction.stringId,
+            toolbar,
+            self._getImagePath ("help.png"))
 
         self._getPageView().Bind (EVT_PAGE_TAB_CHANGED, self._onTabChanged)
         self._enableTools()

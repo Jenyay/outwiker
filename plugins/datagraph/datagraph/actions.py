@@ -1,12 +1,16 @@
 # -*- coding: UTF-8 -*-
 
+import os.path
+import subprocess
+
 from outwiker.gui.baseaction import BaseAction
+from outwiker.core.system import getExeFile, getOS
 from .i18n import get_
 
 
 class PlotAction (BaseAction):
     """
-    Описание действия
+    Insert (:plot:) command action
     """
     def __init__ (self, application):
         self._application = application
@@ -37,6 +41,42 @@ class PlotAction (BaseAction):
 
     def _getPageView (self):
         """
-        Получить указатель на панель представления страницы
+        Return the page view from current apge panel
         """
         return self._application.mainWindow.pagePanel.pageView
+
+
+
+class OpenHelpAction (BaseAction):
+    """
+    Open DataGraph help action
+    """
+    stringId = u"DataGraph_Help"
+
+    def __init__ (self, application):
+        self._application = application
+
+
+    @property
+    def title (self):
+        return _(u"Open help")
+
+
+    @property
+    def description (self):
+        return _(u"[DataGraph] Open help in the new OutWiker window")
+
+
+    def run (self, params):
+        helpDirName = u"help"
+        currentdir = unicode (os.path.dirname (__file__),
+                              getOS().filesEncoding)
+
+        helpPath = os.path.join (currentdir, helpDirName, _("datagraph_eng"))
+
+        exeFile = getExeFile()
+        if exeFile.endswith (".exe"):
+            DETACHED_PROCESS = 0x00000008
+            subprocess.Popen ([exeFile, helpPath, "--readonly"], creationflags=DETACHED_PROCESS)
+        else:
+            subprocess.Popen (["python", exeFile, helpPath, "--readonly"])
