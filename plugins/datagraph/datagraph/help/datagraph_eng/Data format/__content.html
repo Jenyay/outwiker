@@ -18,9 +18,9 @@
 
 <body>
 
-<h2><a id="data"></a> Формат данных</h2>
+<h2><a id="data"></a> Data format</h2>
 <br>
-Плагин DataGraph работает с текстовыми данными, когда координаты точек, соединяемые между собой, задаются в одной строке, а каждая строка задает одну точку. При этом координаты, откладываемые по осям X и Y, разделены пробелами или символами табуляции. Например:<br>
+DataGraph plug-in works with textual data, which the point coordinates given as columns of the text, but every line is a single point. Default the coordinates (X and Y) of the points separated by spaces or tabs. For example:<br>
 <br>
 
 <pre>0.226892802759263    13    0.0817624574300915
@@ -35,6 +35,16 @@
 0.383972435438752    22    0.0752196463969073
 0.401425727958696    23    0.0743071936945169
 ...</pre>
+<br>
+<br>
+Separator can change with <a href="page://__afd7ce6a-f26f-4344-a3d7-a3e4634f4aec/#colsep">curve.data.colsep</a> parameter.<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 <br>
 <br>
 С помощью параметра <a href="page://__afd7ce6a-f26f-4344-a3d7-a3e4634f4aec/#colsep">curve.data.colsep</a> можно задать другой разделитель между столбцами.<br>

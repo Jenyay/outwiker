@@ -5,7 +5,7 @@ expand = True
 selectedtab = 0
 
 [Tabs]
-tab_0 = Команда plot/Таблица параметров
-tab_1 = Команда plot/Параметры данных
-tab_2 = Команда plot/Параметры кривых
+tab_0 = Data format
+tab_1 = Using plot command/Data Parameters
+tab_2 = Using plot command/Curve parameters
 

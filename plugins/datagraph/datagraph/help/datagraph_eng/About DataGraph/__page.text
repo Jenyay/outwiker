@@ -1,0 +1,5 @@
+The [[DataGraph -> http://jenyay.net/Outwiker/DataGraphEn]] plug-in designed for plotting by text data. The data reads from the attached file or from ''plot'' command content on wiki page.
+
+For plotting uses the [[[=(:plot:)=] -> page://__e1e1802f-8c19-4e35-8903-a43a1ea57d1d]] command. More details about data formats read in the [[Data Format -> page://__aff38bf8-6b61-43ec-97d0-48ae35ad64ef]] section.
+
+For drawing uses the [[Highcharts -> http://www.highcharts.com/]] library, moreover the DataGraph plugin uses [[python-dateutil -> https://pypi.python.org/pypi/python-dateutil]] library.
