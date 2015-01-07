@@ -37,27 +37,19 @@ DataGraph plug-in works with textual data, which the point coordinates given as 
 ...</pre>
 <br>
 <br>
-Separator can change with <a href="page://__afd7ce6a-f26f-4344-a3d7-a3e4634f4aec/#colsep">curve.data.colsep</a> parameter.<br>
+Columns separator could be changed with <a href="page://__afd7ce6a-f26f-4344-a3d7-a3e4634f4aec/#colsep">curve.data.colsep</a> parameter.<br>
 <br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-С помощью параметра <a href="page://__afd7ce6a-f26f-4344-a3d7-a3e4634f4aec/#colsep">curve.data.colsep</a> можно задать другой разделитель между столбцами.<br>
-<br>
-С помощью параметров <a href="page://__0e8277e9-e11f-46fd-a5b2-b67194cddd47">curve.xcol / curve.ycol</a> можно указывать, какой столбец задает координаты X, а какой Y. По умолчанию плагин работает следующим образом:<br>
+With <a href="page://__0e8277e9-e11f-46fd-a5b2-b67194cddd47">curve.xcol / curve.ycol</a> parameters could be selected columns for X and Y coordinates. Default plug-in work as follows:<br>
 <ul>
-<li>Если в данных содержится два и более столбцов, то первый столбец считается данными для координаты X, а второй столбец - для координаты Y.</li>
-<li>Если в данных содержится только один столбец, то считается, что он отвечает за координату Y, а в качестве координаты X используется последовательность целых чисел 0, 1, 2,...</li>
+<li>If data contains two or more columns, first column will be selected as column with X coordinate and second column as column with Y coordinate.</li>
+<li>If data contains one column only, this column will be selected as column with Y coordinate and X coordinate will use sequence 0, 1, 2, ...</li>
 </ul>
-Пустые строки в данных игнорируются. Данные могут быть заданы непосредственно в тексте страницы, например:<br>
+Empty lines are ignored. <br>
+<br>
+Data could be contained in the wiki page in the <i>plot</i> command as follows:<br>
 <br>
 
-<pre>(:plot &lt;параметры&gt;:)
+<pre>(:plot &lt;parameters&gt;:)
 0.226892802759263    13    0.0817624574300915
 0.244346095279206    14    0.0811911573526512
 0.261799387799149    15    0.0805797015932535
@@ -73,14 +65,14 @@ Separator can change with <a href="page://__afd7ce6a-f26f-4344-a3d7-a3e4634f4aec
 </pre>
 <br>
 <br>
-или в прикрепленном файле, в этом случае используется параметр <a href="page://__0e8277e9-e11f-46fd-a5b2-b67194cddd47">data.curve</a>:<br>
+Data could be contained in the attached file. In this case will be used <a href="page://__0e8277e9-e11f-46fd-a5b2-b67194cddd47">data.curve</a> parameter:<br>
 <br>
 
-<pre>(:plot curve.data=&quot;Attach:filename.txt&quot; &lt;другие параметры&gt;:)
+<pre>(:plot curve.data=&quot;Attach:filename.txt&quot; &lt;other parameters&gt;:)
 (:plotend:)</pre>
 <br>
 <br>
-Кроме чисел с плавающей точкой плагин может использовать <a href="page://__49db5dcc-378b-4752-b38d-729a01700b8b">календарный тип данных</a>.<br>
+Besides floating point number data can contain <a href="page://__afd7ce6a-f26f-4344-a3d7-a3e4634f4aec/#formatcol">calendar data type</a>.<br>
 
 </body>
 </html>

@@ -15,26 +15,18 @@ DataGraph plug-in works with textual data, which the point coordinates given as 
 0.401425727958696    23    0.0743071936945169
 ...@]
 
-Separator can change with [[curve.data.colsep -> page://__afd7ce6a-f26f-4344-a3d7-a3e4634f4aec/#colsep]] parameter.
+Columns separator could be changed with [[curve.data.colsep -> page://__afd7ce6a-f26f-4344-a3d7-a3e4634f4aec/#colsep]] parameter.
 
+With [[curve.xcol / curve.ycol -> page://__0e8277e9-e11f-46fd-a5b2-b67194cddd47]] parameters could be selected columns for X and Y coordinates. Default plug-in work as follows:
 
+* If data contains two or more columns, first column will be selected as column with X coordinate and second column as column with Y coordinate.
+* If data contains one column only, this column will be selected as column with Y coordinate and X coordinate will use sequence 0, 1, 2, ...
 
+Empty lines are ignored. 
 
+Data could be contained in the wiki page in the ''plot'' command as follows:
 
-
-
-
-
-С помощью параметра [[curve.data.colsep -> page://__afd7ce6a-f26f-4344-a3d7-a3e4634f4aec/#colsep]] можно задать другой разделитель между столбцами.
-
-С помощью параметров [[curve.xcol / curve.ycol -> page://__0e8277e9-e11f-46fd-a5b2-b67194cddd47]] можно указывать, какой столбец задает координаты X, а какой Y. По умолчанию плагин работает следующим образом:
-
-* Если в данных содержится два и более столбцов, то первый столбец считается данными для координаты X, а второй столбец - для координаты Y.
-* Если в данных содержится только один столбец, то считается, что он отвечает за координату Y, а в качестве координаты X используется последовательность целых чисел 0, 1, 2,...
-
-Пустые строки в данных игнорируются. Данные могут быть заданы непосредственно в тексте страницы, например:
-
-[@(:plot <параметры>:)
+[@(:plot <parameters>:)
 0.226892802759263    13    0.0817624574300915
 0.244346095279206    14    0.0811911573526512
 0.261799387799149    15    0.0805797015932535
@@ -49,9 +41,9 @@ Separator can change with [[curve.data.colsep -> page://__afd7ce6a-f26f-4344-a3d
 (:plotend:)
 @]
 
-или в прикрепленном файле, в этом случае используется параметр [[data.curve -> page://__0e8277e9-e11f-46fd-a5b2-b67194cddd47]]:
+Data could be contained in the attached file. In this case will be used [[data.curve -> page://__0e8277e9-e11f-46fd-a5b2-b67194cddd47]] parameter:
 
-[@(:plot curve.data="Attach:filename.txt" <другие параметры>:)
+[@(:plot curve.data="Attach:filename.txt" <other parameters>:)
 (:plotend:)@]
 
-Кроме чисел с плавающей точкой плагин может использовать [[календарный тип данных -> page://__49db5dcc-378b-4752-b38d-729a01700b8b]].
+Besides floating point number data can contain [[calendar data type -> page://__afd7ce6a-f26f-4344-a3d7-a3e4634f4aec/#formatcol]].

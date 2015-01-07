@@ -1,32 +1,33 @@
-!!! [[#plot]] Команда ''plot'' 
+!!! [[#plot]] ''plot'' command
 
-Команда ''plot'' предназначена для построения графиков в осях X и Y. Общий формат использования этой команды выглядит следующим образом:
+''plot'' command draw chart in the X / Y axis. ''plot'' command using notation is:
 
-[@(:plot <параметры>:)
-    <данные>
+[@(:plot <parameters>:)
+    <data>
 (:plotend:)
 @]
 
-С помощью параметров можно указать, откуда команда будет брать данные, задавать формат календарных данных, а также менять оформление графика.
+With parameters can select data source, calendar data format and change chart design.
 
-Например, команда
+For example, follow command:
 
 [@(:plot
     curve.data="Attach:example.txt"
 :)
 (:plotend:)@]
 
-создает следующий график по данным прикрепленного файла Attach:example.txt
+
+draw follow chart with data from attached file (Attach:example.txt).
 
 (:plot
     curve.data="Attach:example.txt"
 :)
 (:plotend:)
 
-График имеет несколько объектов, для которых можно устанавливать свойства через параметры команды ''plot''. Эти объекты показаны на следующей картинке.
+Chart contain a several objects (they showned in the follow picture). With parameters of the ''plot'' command can change properties this objects.
 
 %center%Attach:datagraph.png
 
-Все параметры команды ''plot'' и особенности объектов описаны в следующих разделах:
+All parameters of the ''plot'' command and theirs feature was described in follow sections:
 
 (:childlist:)

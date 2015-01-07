@@ -1,16 +1,19 @@
 
-* [[Параметры кривых -> #curves]]
-* [[Параметры данных -> #data]]
-* [[Параметры области графика -> #graph]]
-* [[Параметры осей -> #axis]]
+* [[Curves parameters -> #curves]]
+* [[Data parameters -> #data]]
+* [[Chart parameters -> #graph]]
+* [[Axis parameters -> #axis]]
 
-
-В данной таблице для обозначения того, что график содержит несколько объектов, используется запись вида ''curve[n].имя_параметра'', на практике надо использовать запись вида ''curve1.имя_параметра'', ''curve2.имя_параметра'' и т.д. 
+In this section will be used notation ''curve[n].param_name'' which signifies what chart contain several objects (curves). In practice will be used notations ''curve1.param_name'', ''curve2.param_name'', etc
 
 ----
 
 
-!!! [[#curves]] Параметры кривых
+!!! [[#curves]] Curves parameters
+
+||border=1
+
+
 
 ||border=1
 ||''''curve[n].data'''' ||Устанавливает источник данных для кривой ||

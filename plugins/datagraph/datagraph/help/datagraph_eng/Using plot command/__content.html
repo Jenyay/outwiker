@@ -23,20 +23,20 @@ $(function () { $('#graph-0').highcharts({"yAxis": {"title": {"text": null}, "gr
 
 <body>
 
-<h2><a id="plot"></a> Команда <i>plot</i> </h2>
+<h2><a id="plot"></a> <i>plot</i> command</h2>
 <br>
-Команда <i>plot</i> предназначена для построения графиков в осях X и Y. Общий формат использования этой команды выглядит следующим образом:<br>
+<i>plot</i> command draw chart in the X / Y axis. <i>plot</i> command using notation is:<br>
 <br>
 
-<pre>(:plot &lt;параметры&gt;:)
-    &lt;данные&gt;
+<pre>(:plot &lt;parameters&gt;:)
+    &lt;data&gt;
 (:plotend:)
 </pre>
 <br>
 <br>
-С помощью параметров можно указать, откуда команда будет брать данные, задавать формат календарных данных, а также менять оформление графика.<br>
+With parameters can select data source, calendar data format and change chart design.<br>
 <br>
-Например, команда<br>
+For example, follow command:<br>
 <br>
 
 <pre>(:plot
@@ -45,15 +45,16 @@ $(function () { $('#graph-0').highcharts({"yAxis": {"title": {"text": null}, "gr
 (:plotend:)</pre>
 <br>
 <br>
-создает следующий график по данным прикрепленного файла <a href="__attach/example.txt">example.txt</a><br>
+<br>
+draw follow chart with data from attached file (<a href="__attach/example.txt">example.txt</a>).<br>
 <br>
 <div id="graph-0" style="width:700px; height:300px;"></div><br>
 <br>
-График имеет несколько объектов, для которых можно устанавливать свойства через параметры команды <i>plot</i>. Эти объекты показаны на следующей картинке.<br>
+Chart contain a several objects (they showned in the follow picture). With parameters of the <i>plot</i> command can change properties this objects.<br>
 <br>
 <div align="center"><img src="__attach/datagraph.png"/></div><br>
 <br>
-Все параметры команды <i>plot</i> и особенности объектов описаны в следующих разделах:<br>
+All parameters of the <i>plot</i> command and theirs feature was described in follow sections:<br>
 <br>
 <a href="All parameters">All parameters</a><br>
 <a href="Curve parameters">Curve parameters</a><br>
