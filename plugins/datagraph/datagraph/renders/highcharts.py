@@ -13,7 +13,7 @@ from outwiker.core.system import getOS
 from datagraph.libs.json import dumps
 from datagraph.libs.dateutil.parser import parser
 from datagraph import defines
-# from datagraph.dateparser import createDateTime
+from datagraph.i18n import get_
 
 
 class HighChartsRender (object):
@@ -32,6 +32,9 @@ class HighChartsRender (object):
 
             (u'highcharts.js', u'<script language="javascript" type="text/javascript" src="__attach/__thumb/__js/highcharts.js"></script>'),
         ]
+
+        global _
+        _ = get_()
 
 
     def addGraph (self, graph):
@@ -269,7 +272,7 @@ $(function () {{ $('#{name}').highcharts({prop}); }});
             # Curve's title
             title = curve.getProperty (defines.CURVE_TITLE_NAME, None)
             if title is None:
-                title = _(u'Curve-{}').format (n + 1)
+                title = _(u'Curve {}').format (n + 1)
 
             singleSeries[u'name'] = title
 

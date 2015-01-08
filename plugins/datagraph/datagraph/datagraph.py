@@ -39,7 +39,7 @@ else:
 
         @property
         def description (self):
-            return _(u"Plugin description")
+            return _(u"DataGraph plug-in designed for creation a charts by text data.")
 
 
         @property
@@ -49,7 +49,7 @@ else:
 
         @property
         def url (self):
-            return _(u"http://jenyay.net")
+            return _(u"http://jenyay.net/Outwiker/DataGraphEn")
 
 
         def initialize(self):
