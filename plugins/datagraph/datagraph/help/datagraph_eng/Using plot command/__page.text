@@ -26,7 +26,7 @@ draw follow chart with data from attached file (Attach:example.txt).
 
 Chart contain a several objects (they showned in the follow picture). With parameters of the ''plot'' command can change properties this objects.
 
-%center%Attach:datagraph.png
+%center%Attach:datagraph_en.png
 
 All parameters of the ''plot'' command and theirs feature was described in follow sections:
 
