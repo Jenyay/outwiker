@@ -38,16 +38,18 @@ $(function () { $('#graph-5').highcharts({"yAxis": {"title": {"text": null}, "gr
 
 <body>
 
-<h2>Оглавление раздела</h2>
+<h2>Table of content</h2>
 <ul>
-<li><a href="#data">Установка источника данных</a></li>
-<li><a href="#colsep">Параметр <i>curve.data.colsep</i></a></li>
-<li><a href="#skiprows">Параметр <i>curve.data.skiprows</i></a></li>
-<li><a href="#formatcol">Параметр <i>curve.data.formatcol</i></a></li>
+<li><a href="#data">Select data source</a></li>
+<li><a href="#colsep"><i>curve.data.colsep</i> parameter</a></li>
+<li><a href="#skiprows"><i>curve.data.skiprows</i> parameter</a></li>
+<li><a href="#formatcol"><i>curve.data.formatcol</i> parameter</a></li>
 </ul>
-<h2><a id="data"></a> Установка источника данных</h2>
+<h2><a id="data"></a> Select data source</h2>
 <br>
-Данные могут браться из двух источников. По умолчанию данные берутся из тела команды (то, что находится между (:plot:) и (:plotend:)). Однако, данные могут также читаться из прикрепленных файлов, для этого используется параметр <a href="page://__0e8277e9-e11f-46fd-a5b2-b67194cddd47/#data"><i>curve.data</i></a>. <br>
+Data can be readed from two sources. Default data will be readed from <i>plot</i> command body (deside (:plot:) and (:plotend:)). Also data can be readed from attached file. To data will be readed from attached file, <a href="page://__0e8277e9-e11f-46fd-a5b2-b67194cddd47/#data"><i>curve.data</i></a> parameter should be set (value is link to attached file).<br>
+<br>
+For example:<br>
 <br>
 
 <pre>(:plot
@@ -63,16 +65,16 @@ curve2.ycol=3
 <br>
 <div id="graph-0" style="width:700px; height:300px;"></div><br>
 <br>
-Для разных кривых данные могут браться из разных источников - или из разных прикрепленных файлов, или для одних кривых данные могут браться из тела команды, для других читаться из файла.<br>
+Every curve may have eigen source data. For example, <i>curve1</i> may read data from command body and <i>curve2</i> from attached file.<br>
 <br>
-Дальнейшие параметры данных устанавливаются индивидуально для каждой <a href="page://__0e8277e9-e11f-46fd-a5b2-b67194cddd47">кривой</a>, т.е. используется запись вида <i>curve.data.имя_параметра</i>.<br>
+All data parameters are setted for every <a href="page://__0e8277e9-e11f-46fd-a5b2-b67194cddd47">curve</a> individually, at that is used notation in the form: <i>curve.data.param_name</i>.<br>
 <hr>
 <br>
-<h2><a id="colsep"></a> Параметр <i>curve.data.colsep</i></h2>
+<h2><a id="colsep"></a> <i>curve.data.colsep</i> parameter</h2>
 <br>
-По умолчанию элементы каждой строки данных разделяются между собой любым количеством пробелов или символов табуляции. Вы можете изменить это поведение, задав другой разделитель с помощью параметра <i>curve.data.colsep</i>. Этот параметр принимает <a href="https://docs.python.org/2/library/re.html">регулярное выражение</a>. Значение по умолчанию этого параметра "\s+".<br>
+Line items are separated by one or more spaces or tabs default. By <i>curve.data.colsep</i> parameter can change this behaviour and set other separator. The <i>curve.data.colsep</i> parameter may contain <a href="https://docs.python.org/2/library/re.html">regular expression</a> or simple string. The <i>curve.data.colsep</i> parameter contains "\s+" default.<br>
 <br>
-Следующий пример показывает, как сделать, чтобы элементы строки разделялись с помощью запятых и, возможно, пробелов.<br>
+The follow example shows how to make a string separated by comma and optional spaces:<br>
 <br>
 
 <pre>(:plot
@@ -95,7 +97,7 @@ curve.data.colsep=&quot;,\s*&quot;
 <div id="graph-1" style="width:700px; height:300px;"></div><br>
 <hr>
 <br>
-Учытывая особенность чтения данных, что пробелы всегда отбрасываются, предыдущий пример можно было бы сделать проще:<br>
+Since spaces will be stripped by reading the previous example may be more easy:<br>
 <br>
 
 <pre>(:plot
@@ -118,17 +120,18 @@ curve.data.colsep=&quot;,&quot;
 <div id="graph-2" style="width:700px; height:300px;"></div><br>
 <hr>
 <br>
-<h2><a id="skiprows"></a> Параметр <i>curve.data.skiprows</i></h2>
+<h2><a id="skiprows"></a> <i>curve.data.skiprows</i> parameter</h2>
 <br>
-Иногда в начале файла с текстовыми данными пишут заголовок, который может описывать представленные данные. Для корректной работы плагина DataGraph либо нужно удалить эти строки, либо воспользоваться параметром <i>curve.data.skiprows</i>, который указывает, сколько строк нужно проигнорировать при чтении данных. Этот параметр работает как для данных, загружаемых из файла, так и для данных из тела команды (:plot:).<br>
+Sometimes, at the beginning of the file may be header which may describe presented data. To plug-in work correctly, this lines must be removed or may be added the <i>curve.data.skiprows</i> parameter. The <i>curve.data.skiprows</i> parameter explains how many lines must be skipped by reading. This parameter is used with data which readed from attached file and from command (:plot:) body.<br>
 <br>
-
+<br>
+ 
 <pre>(:plot
 curve.data.skiprows = 3
 :)
-Этот текст
-не нужен для
-построения графиков
+This is header
+It is describe data
+Bla-bla-bla
 1    10    20    30    40
 2    11    22    31    41
 3    13    24    33    42
@@ -146,7 +149,7 @@ curve.data.skiprows = 3
 <div id="graph-3" style="width:700px; height:300px;"></div><br>
 <hr>
 <br>
-Также этот параметр можно использовать для того, чтобы некоторые начальные значения на графике.<br>
+The <i>curve.data.skiprows</i> parameter may be used to skip first values on the chart.<br>
 <br>
  
 <pre>(:plot
@@ -168,127 +171,129 @@ curve.data.skiprows = 3
 <div id="graph-4" style="width:700px; height:300px;"></div><br>
 <br>
 <hr>
-<h2><a id="formatcol"></a> Параметр <i>curve.data.formatcol</i></h2>
+<h2><a id="formatcol"></a> <i>curve.data.formatcol</i> parameter</h2>
 <br>
-Во всех приведенных выше примерах в качестве данных использовались числа с плавающей точкой, однако плагин DataGraph может строить графики и по календаным данным. Для этого с помощью параметра <i>curve.data.formatcol</i> нужно указать, в каком формате записаны календарные данные. Параметр <i>curve.data.formatcol[n]</i> в качестве значения принимает строку в формате, используемом во многих языках программирования для форматирования дат. Этот формат состоит из символов, следующих после символа "%". Значения этих символов, показаны в следующей таблице:<br>
+So far in the examples data were containing floating point numbers, but DataGraph can plot chart by calendar data. For this by <i>curve.data.formatcol</i> parameter should be set date format which used in the data. The <i>curve.data.formatcol</i> parameter contain a string in the format which used in many programming languages for date formatting. This format consists of "%" and symbols followed further. Meaning this symbols follow in the table (<a href="https://docs.python.org/2/library/datetime.html#strftime-and-strptime-behavior">source</a>):<br>
 <br>
 <br>
 <table border=1>
 <tr>
-<td align="center"><b>Символ</b></td>
-<td align="center"><b>Значение</b></td>
-<td align="center"><b>Пример</b></td>
+<td align="center"><b>Symbol</b></td>
+<td align="center"><b>Meaning</b></td>
+<td align="center"><b>Example</b></td>
 </tr>
 <tr>
 <td align="left">%a</td>
-<td align="left">День недели сокращенно (используется локализация)</td>
-<td align="left">Пн., Вт.,..., Вс. (для ru_RU),<br>
-Sun, Mon, ..., Sat (для en_US)</td>
+<td align="left">Weekday as locale’s abbreviated name.</td>
+<td align="left">Пн., Вт.,..., Вс. (ru_RU),<br>
+Sun, Mon, ..., Sat (en_US)</td>
 </tr>
 <tr>
 <td align="left">%A</td>
-<td align="left">День недели полностью (используется локализация)</td>
-<td align="left">Понедельник, Вторник, ..., Воскресенье (для ru_RU),<br>
-Sunday, Monday, ..., Saturday (для en_US)</td>
+<td align="left">Weekday as locale’s full name.</td>
+<td align="left">Понедельник, Вторник, ..., Воскресенье (ru_RU),<br>
+Sunday, Monday, ..., Saturday (en_US)</td>
 </tr>
 <tr>
 <td align="left">%w</td>
-<td align="left">Номер для недели от 0 (воскресенье) до 6 (суббота)</td>
+<td align="left">Weekday as a decimal number, where 0 is Sunday and 6 is Saturday.</td>
 <td align="left">0, 1,... 6</td>
 </tr>
 <tr>
 <td align="left">%d</td>
-<td align="left">Двухзначное число месяца</td>
+<td align="left">Day of the month as a zero-padded decimal number.</td>
 <td align="left">01, 02,... 31</td>
 </tr>
 <tr>
 <td align="left">%b</td>
-<td align="left">Название месяца сокращенно (используется локализация)</td>
-<td align="left">Янв., Фев., ..., Дек. (для ru_RU),<br>
-Jan, Feb, ..., Dec (для en_US)</td>
+<td align="left">Month as locale’s abbreviated name.</td>
+<td align="left">Янв., Фев., ..., Дек. (ru_RU),<br>
+Jan, Feb, ..., Dec (en_US)</td>
 </tr>
 <tr>
 <td align="left">%B</td>
-<td align="left">Название месяца полностью (используется локализация)</td>
-<td align="left">Январь, Февраль,..., Декабрь (для ru_RU),<br>
-January, February, ..., December (для en_US)</td>
+<td align="left">Month as locale’s full name.</td>
+<td align="left">Январь, Февраль,..., Декабрь (ru_RU),<br>
+January, February, ..., December (en_US)</td>
 </tr>
 <tr>
 <td align="left">%m</td>
-<td align="left">Двухзначный номер месяца</td>
+<td align="left">Month as a zero-padded decimal number.</td>
 <td align="left">01, 02, ..., 12</td>
 </tr>
 <tr>
 <td align="left">%y</td>
-<td align="left">Последние две цифры года</td>
+<td align="left">Year without century as a zero-padded decimal number.</td>
 <td align="left">00, 01, 99</td>
 </tr>
 <tr>
 <td align="left">%Y</td>
-<td align="left">Год полностью</td>
+<td align="left">Year with century as a decimal number.</td>
 <td align="left">1917, 2000, 2015</td>
 </tr>
 <tr>
 <td align="left">%H</td>
-<td align="left">Двухзначное значение часа в 24-часовом формате</td>
+<td align="left">Hour (24-hour clock) as a zero-padded decimal number.</td>
 <td align="left">00, 01, ..., 23</td>
 </tr>
 <tr>
 <td align="left">%I</td>
-<td align="left">Двухзначное значение часа в 12-часовом формате</td>
+<td align="left">Hour (12-hour clock) as a zero-padded decimal number.</td>
 <td align="left">00, 01, ..., 12</td>
 </tr>
 <tr>
 <td align="left">%p</td>
-<td align="left">Сокращенное обозначение "до полудня" / "после полудня" (используется локализация)</td>
+<td align="left">Locale’s equivalent of either AM or PM.</td>
 <td align="left">AM, PM (для en_US)</td>
 </tr>
 <tr>
 <td align="left">%M</td>
-<td align="left">Двухзначное количество минут</td>
+<td align="left">Minute as a zero-padded decimal number.</td>
 <td align="left">00, 01, ..., 59</td>
 </tr>
 <tr>
 <td align="left">%S</td>
-<td align="left">Двухзначное количество секунд</td>
+<td align="left">Second as a zero-padded decimal number.</td>
 <td align="left">00, 01, ..., 59</td>
 </tr>
 <tr>
 <td align="left">%f</td>
-<td align="left">Шестизначное количество микросекунд</td>
+<td align="left">Microsecond as a decimal number, zero-padded on the left.</td>
 <td align="left">000000, 000001, ..., 999999</td>
 </tr>
 <tr>
 <td align="left">%j</td>
-<td align="left">Трехзначный номер дня в году</td>
+<td align="left">Day of the year as a zero-padded decimal number.</td>
 <td align="left">001, 002, ..., 366</td>
 </tr>
 <tr>
 <td align="left">%U</td>
-<td align="left">Номер недели в году</td>
+<td align="left">Week number of the year (Sunday as the first day of the week) as a zero padded decimal number. All days in a new year preceding the first Sunday are considered to be in week 0.</td>
 <td align="left">00, 01, ..., 53</td>
 </tr>
 <tr>
 <td align="left">%c</td>
-<td align="left">Формат представления даты и времени в соответствии с локализацией</td>
-<td align="left">Вт. 06 янв. 2015 10:23:25 (для ru_RU),<br>
-Tue Aug 16 21:30:00 1988 (для en_US)</td>
+<td align="left">Locale’s appropriate date and time representation.</td>
+<td align="left">Вт. 06 янв. 2015 10:23:25 (ru_RU),<br>
+Tue Aug 16 21:30:00 1988 (en_US)</td>
 </tr>
 <tr>
 <td align="left">%x</td>
-<td align="left">Формат представления даты в соответствии с локализацией</td>
-<td align="left">06.01.2015 (для ru_RU),<br>
-08/16/1988 (для en_US)</td>
+<td align="left">Locale’s appropriate date representation.</td>
+<td align="left">06.01.2015 (ru_RU),<br>
+08/16/1988 (en_US)</td>
 </tr>
 <tr>
 <td align="left">%X</td>
-<td align="left">Формат представления времени в соответствии с локализацией</td>
-<td align="left">10:26:16 (для ru_RU и en_US)</td>
+<td align="left">Locale’s appropriate time representation.</td>
+<td align="left">10:26:16 (ru_RU, en_US)</td>
 </tr>
 </table><br>
-Для каждого столбца может быть установлен свой формат данных, поэтому параметр используется в виде <i>curve.data.formatcol1</i>, <i>curve.data.formatcol2</i> и т.д.<br>
+Every column can be represented in the own format therefore this parameter is setted individually: <i>curve.data.formatcol1</i>, <i>curve.data.formatcol2</i>, etc.<br>
 <br>
-<blockquote>Чтобы использовать календарный тип данных, также необходимо для оси, по которой будут откладываться, календарные данные установить параметру <a href="page://__24ff47cd-161e-4829-a4ca-affb6edd4067/#type"><i>type</i></a> значение "datetime".</blockquote><br>
+<blockquote>To use calendar data type, necessary for axis, on which will be showned date, set parameter <a href="page://__24ff47cd-161e-4829-a4ca-affb6edd4067/#type"><i>type</i></a> to "datetime". </blockquote><br>
+<br>
+For example:<br>
 <br>
 
 <pre>(:plot

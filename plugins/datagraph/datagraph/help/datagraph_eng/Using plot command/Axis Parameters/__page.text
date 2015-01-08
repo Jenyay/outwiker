@@ -1,20 +1,24 @@
-!!! Оглавление раздела
+!!! Table of contents
 
-* [[Использование осей -> #names]]
-* [[Параметры ''min'' / ''max''. -> #minmax]]
-* [[Параметр ''title'' -> #title]]
-* [[Параметр ''type'' -> #type]]
-* [[Параметр ''tickstep'' -> #tickstep]]
-
-
-!!! [[#names]] Использование осей
-
-График имеет две оси ''x'' и ''y'', имеющие одинаковые параметры. Эти параметры устанавливаются в виде ''x.paramname = ...'' и ''y.paramname = ...'' соответственно.
+* [[Axis using -> #names]]
+* [[''min'' / ''max'' parameters -> #minmax]]
+* [[''title'' parameter -> #title]]
+* [[''type'' parameter -> #type]]
+* [[''tickstep'' parameter -> #tickstep]]
 
 
-!!! [[#minmax]] Параметры ''min'' / ''max''.
+!!! [[#names]] Axis using
 
-С помощью параметров ''min'' и ''max'' можно установить интервал, отображаемый по осям. Этот параметр работает как для чисел с плавающей точкой, так и для календарных типов данных. Для календарных данных плагин понимает множество форматов данных, но рекомендуется использовать запись вида "ГГГГ-ММ-ЧЧ", а для времени "ЧЧ:ММ". Про календарные данные читайте раздел [[page://__afd7ce6a-f26f-4344-a3d7-a3e4634f4aec/#formatcol | Параметр ''curve.data.formatcol'']].
+The chart has two axis objects: ''x'' and ''y''. Both axis has same the parameters set. The parameters is setted as ''x.param_name'' and ''y.param_name'' accordingly.
+
+----
+
+
+!!! [[#minmax]] ''min'' / ''max'' parameters
+
+With the ''min'' / ''max'' parameters can set visible data interval on every axis. This parameters operates for floating point and calendar data types. For calendar data type plug-in understands lot of the formats, but recomended format is "YYYY-MM-DD", and for the time - "HH:MM". About calendar date type refer to [[page://__afd7ce6a-f26f-4344-a3d7-a3e4634f4aec/#formatcol | ''curve.data.formatcol'' parameter]] section.
+
+Example:
 
 [@(:plot
 curve.data.formatcol1="%d.%m.%Y"
@@ -67,13 +71,15 @@ y.max = 25
 ----
 
 
-!!! [[#title]] Параметр ''title''
+!!! [[#title]] ''title'' parameter
 
-С помощью параметра ''title'' можно установить подпись для осей, поясняющие, какая величина отложена по данной оси.
+With the ''title'' parameter can set title, showned near axis, for the explanation which value the axis shows.
+
+For example:
 
 [@(:plot
-x.title = "Подпись для оси X"
-y.title = "Подпись для оси Y"
+x.title = "Title for X"
+y.title = "Title for Y"
 :)
 1    10    20    30    40
 2    11    22    31    41
@@ -88,8 +94,8 @@ y.title = "Подпись для оси Y"
 (:plotend:)@]
 
 (:plot
-x.title = "Подпись для оси X"
-y.title = "Подпись для оси Y"
+x.title = "Title for X"
+y.title = "Title for Y"
 :)
 1    10    20    30    40
 2    11    22    31    41
@@ -105,9 +111,12 @@ y.title = "Подпись для оси Y"
 
 ----
 
-!!! [[#type]] Параметр ''type''
 
-С помощью параметра ''type'' можно указать, что по данной оси нужно откладывать [[календарных тип данных -> page://__afd7ce6a-f26f-4344-a3d7-a3e4634f4aec/#formatcol]]. Для этого параметру ''type'' нужно присвоить значение "datetime".
+!!! [[#type]] ''type'' parameter
+
+With ''type'' parameter can set, what the axis shows [[calendar data type -> page://__afd7ce6a-f26f-4344-a3d7-a3e4634f4aec/#formatcol]]. For this ''type'' parameter must contain value "datetime".
+
+For example:
 
 [@(:plot
 curve.data.formatcol1="%d.%m.%Y"
@@ -147,11 +156,13 @@ x.type="datetime"
 
 ----
 
-!!! [[#tickstep]] Параметр ''tickstep''
+!!! [[#tickstep]] ''tickstep'' parameter
 
-С помощью параметра ''tickstep'' можно изменить интервал между рисками на осях и, соответственно, шаг отображаемой сетки. Если этот параметр не установен, то шаг рисок выбирается автоматически. 
+With the ''tickstep'' parameter can change interval besides ticks on axis (and grid size). If this parameter is not setted, tick step will be selected automatically.
 
-[>На данный момент этот параметр не работает с календарным типом данных.<]
+[> Currently ''tickstep'' parameter do not operate with calendar data type. <]
+
+Example:
 
 [@(:plot
 x.tickstep = 0.5

@@ -6,6 +6,4 @@ selectedtab = 0
 
 [Tabs]
 tab_0 = Using plot command/All parameters
-tab_1 = Using plot command/Data Parameters
-tab_2 = Using plot command/Curve parameters
 

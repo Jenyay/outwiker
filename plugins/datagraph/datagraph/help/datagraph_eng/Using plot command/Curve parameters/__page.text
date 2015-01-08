@@ -1,19 +1,19 @@
-!!! Оглавление раздела
+!!! Table of content
 
-* [[Общие сведения о кривых -> #intro]]
-* [[Параметры ''curve.xcol'' / ''curve.ycol'' -> #col]]
-* [[Параметр ''curve.data'' -> #data]]
-* [[Параметр ''curve.color'' -> #curve.color]]
-* [[Параметр ''curve.style'' -> #style]]
-* [[Параметр ''curve.hide'' -> #hide]]
-* [[Параметр ''curve.title'' -> #title]]
+* [[General information about curves -> #intro]]
+* [[''curve.xcol'' / ''curve.ycol'' parameters -> #col]]
+* [[''curve.data'' parameter -> #data]]
+* [[''curve.color'' parameter -> #curve.color]]
+* [[''curve.style'' parameter -> #style]]
+* [[''curve.hide'' parameter -> #hide]]
+* [[''curve.title'' parameter -> #title]]
 
 
-!!! [[#intro]] Общие сведения о кривых
+!!! [[#intro]] General information about curves
 
-Под кривыми понимаются линии, которые соединяют точки, координаты которых заданы данными. Кривых на графике может быть неограниченное количество, при этом для задания параметров кривые имеют имена ''curve1'', ''curve2'' и т.д.; ''curve1'' можно называть просто ''curve''.
+The curves are lines which join the point. Point coordinates read from data (from command body or attached file). Chart can contain any count curves. The curves have names ''curve1'', ''curve2'', ''curve3'' etc. Synonym ''curve1'' is ''curve''.
 
-Простейший способ построить график - это задать данные в тексте викистраницы, внутри команды ''plot''. Рассмотрим команду:
+The simplest way to draw chart is to write data in ''plot'' command body. For example:
 
 [@(:plot:)
 1    10    20    30    40
@@ -28,7 +28,7 @@
 10   20    30    38    46
 (:plotend:)@]
 
-Результат будет выглядеть следующим образом:
+The result will look like this:
 
 (:plot:)
 1    10    20    30    40
@@ -43,14 +43,14 @@
 10   20    30    38    46
 (:plotend:)
 
-Поскольку мы не задали никаких параметров, а в данных содержится больше одного столбца, то в качестве координат точек по оси X используется первый столбец, а в качестве координат Y - второй. Для того, чтобы создать вторую кривую, достаточно установить какой-либо параметр для нее, что будет показано далее.
+Since in this example never was added any parameters and data contain more than one column, then X coordinates are the data from first column and Y coordinates are the data from second column. To add second curve suffice it to set any parameter for ''curve2''. This will be showned in the next section.
 
 ----
 
 
-!!! [[#col]] Параметры ''curve.xcol'' / ''curve.ycol''
+!!! [[#col]] ''curve.xcol'' / ''curve.ycol'' parameters
 
-Добавим вторую кривую, для которой координаты точек по оси Y задает третий столбец. Для этого используется параметр ''curve.ycol''.
+Append the second curve. For ''curve2'' Y coordinates will be readed from column number 3. For that is used ''curve.ycol'' parameter.
 
 [@(:plot
 curve2.ycol = 3
@@ -84,7 +84,7 @@ curve2.ycol = 3
 
 ----
 
-Аналогично можно изменить столбец с координатами Y для первой кривой, например, следующим образом:
+Similarly can change column number for Y coordinates of the first curve. For example:
 
 [@(:plot
 curve1.ycol = 4
@@ -120,9 +120,9 @@ curve2.ycol = 3
 
 ----
 
-В предыдущем примере вместо ''curve1.ycol = 4'' можно было бы написать просто ''curve.ycol = 4''.
+In the previous example expression ''curve1.ycol = 4'' can replace to ''curve.ycol = 4''.
 
-Аналогично с помощью параметра ''curve.xcol'' можно задавать столбец для координаты X:
+Similarly can change X coordinates with ''curve.xcol'' parameter:
 
 [@(:plot
 curve1.xcol = 2
@@ -158,7 +158,7 @@ curve1.ycol = 4
 
 ----
 
-Если столбец в данных единственный, то по умолчанию считается, что он задает координаты Y, а по оси X откладываются числа 0, 1, 2,... Например:
+If data contain only one column, default this column is selected as Y coordinate and X coordinates are sequence numbers 0, 1, 2,... For example:
 
 [@(:plot:)
 40
@@ -188,7 +188,7 @@ curve1.ycol = 4
 
 ----
 
-Если столбцов несколько, то аналогичного результата для оси X можно добиться, установив значение ''curve.xcol = number'':
+If data contain more than one column, such result can be achieved for axis X if give a parameter ''curve.xcol'' value ''number'' (''curve.xcol = number''). For example:
 
 [@(:plot
 curve1.xcol = number
@@ -224,9 +224,9 @@ curve1.ycol = 4
 
 ----
 
-!!! [[#data]] Параметр ''curve.data''
+!!! [[#data]] ''curve.data'' parameter
 
-В предыдущих примерах данные для графиков были вставлены непосредственно в текст страницы, но это может быть не удобно, если данных много. Поэтому данные могут читаться из прикрепленных файлов. В этом случае файл хранит данные в том же формате, что использовался ранее в примерах. Например, прикрепленный к этой странице файл [[Attach:example_5.txt]], и который будет использоваться в этом разделе, содержит следующие строки:
+In the prevoius examples data was written in the wiki page text. It may not be convenient for big data. The data can be readed from attached text file. This files should contain data in same format. For example, attached file [[Attach:example_5.txt]] contain follow lines (this file will be used in examples this section):
 
 [@1    10    20    30    40
 2    11    22    31    41
@@ -239,7 +239,7 @@ curve1.ycol = 4
 9    20    30    38    46
 10   20    30    38    46@]
 
-Для того, чтобы указать, что данные нужно брать из прикрепленного файла, а не из тела команды, нужно установить параметр ''curve.data'', как показано в следующем примере:
+To explain what data must be readed from attached file, but not in command body, must be seted the ''curve.data'' parameter. For example:
 
 [@(:plot
 curve.data="Attach:example_5.txt"
@@ -252,11 +252,11 @@ curve.data="Attach:example_5.txt"
 :)
 (:plotend:)
 
-Поскольку в значении параметра встречается символ ":", здесь необходимы кавычки.
+Since the parameter value contain symbol ":", value must be quoted.
 
 ----
 
-При этом остальные параметры работают точно также. Например:
+At that all others parameters are working as described above. For example:
 
 [@(:plot
 curve.data="Attach:example_5.txt"
@@ -283,9 +283,9 @@ curve2.ycol=3
 
 ----
 
-!!! [[#curve.color]] Параметр ''curve.color''
+!!! [[#curve.color]] ''curve.color'' parameter
 
-Чтобы изменить цвет кривой, используется параметр ''curve.color'', который задается теми же способами, как это принято в HTML. Например:
+To change curve color use ''curve.color'' parameter. Color is given with using HTML color formats:
 
 [@(:plot
 curve.color="#1CE81C"
@@ -341,14 +341,14 @@ curve4.ycol=5
 ----
 
 
-!!! [[#style]] Параметр ''curve.style''
+!!! [[#style]] ''curve.style'' parameter
 
-С помощью параметра ''curve.style'' можно задавать тип линий: сплошная линия, штриховая, пунктирная, штрихпунктирная и т.п.
+With ''curve.style'' parameter can change line style: solid line, dashed line, dotted line, dash-dot line etc.
 
-Параметру ''curve.style'' можно присваивать либо строковое значение, описывающее тип линии, либо номер этого стиля. Возможные значения показаны в следующей таблице:
+''curve.style'' parameter can be string style name or style number. Possible values is shown in follow table:
 
 || border=1
-|| '''Номер стиля''' || '''Название стиля''' ||
+|| '''Style number''' || '''Style name''' ||
 ||1 ||solid ||
 ||2 ||longdash ||
 ||3 ||shortdash ||
@@ -361,7 +361,7 @@ curve4.ycol=5
 ||10 ||longdashdot ||
 ||11 ||longdashdotdot ||
 
-Например:
+For example:
 
 [@(:plot
 curve.style="longdash"
@@ -416,9 +416,9 @@ curve4.ycol=5
 
 ----
 
-Кроме того, параметр ''curve.style'' может принимать значение ''auto'', который обозначает, что кривой присваивается номер стиля в соответствии с ее номером (если кривых больше 11, стили циклически повторяются).
+Furthermore, ''curve.style'' parameter can be ''auto'' value. This value mean that style number will be equal curve number (for curve12 style number will be 1, for curve 13 style number will be 2 etc).
 
-Например:
+For example:
 
 [@(:plot
 curve.style=auto
@@ -473,9 +473,10 @@ curve4.ycol=5
 
 ----
 
-!!! [[#hide]] Параметр ''curve.hide''
+!!! [[#hide]] ''curve.hide'' parameter
 
-Если нужно временно скрыть какую-либо кривую, не удаляя все упоминания ее из параметров команды ''plot'', можно воспользоваться параметром ''curve.hide''. В следующем примере установлены параметры для четырех кривых, но вторая из них скрыта. В этом примере также для наглядности используется параметр [[legend -> page://__9b833dea-895e-4867-a3a4-0cfb5915ebab/#legend]].
+To temporarily hide curve and do not remove all mention of it in ''plot'' command, can use ''curve.hide'' parameter. In follow example were setted parameters for four curves and second curve was hidded. In follow example for clarity used[[legend -> page://__9b833dea-895e-4867-a3a4-0cfb5915ebab/#legend]] parameter also.
+
 
 [@(:plot
 curve.ycol=2
@@ -520,23 +521,24 @@ curve2.hide
 10   20    30    38    46
 (:plotend:)
 
-Если установить параметр ''curve.hide=0'', то данный параметр будет игнорироваться, и кривая не будет скрываться.
+If ''curve.hide'' equal zero (''curve.hide=0''), this parameter will be ignored and curve will be not hidded.
 
 ----
 
-!!! [[#title]] Параметр ''curve.title''
+!!! [[#title]] ''curve.title'' parameter
 
-[[Выше -> #hide]] использовался параметр [[legend -> page://__9b833dea-895e-4867-a3a4-0cfb5915ebab/#legend]], отображающий легенду. Разумеется, названия кривых в легенде можно менять, для этого служит параметр ''curve.title''.
+In the [[previous example -> #hide]] used [[legend -> page://__9b833dea-895e-4867-a3a4-0cfb5915ebab/#legend]] parameter for showing of the legend. By ''curve.title'' parameter can change curve name.
+
 
 [@(:plot
 curve.ycol=2
-curve.title = "Первая кривая"
+curve.title = "The first curve"
 
 curve2.ycol=3
-curve2.title = "Вторая кривая"
+curve2.title = "The second curve"
 
 curve3.ycol=4
-curve3.title = "Третья кривая"
+curve3.title = "The third curve"
 
 legend
 :)
@@ -555,13 +557,13 @@ legend
 
 (:plot
 curve.ycol=2
-curve.title = "Первая кривая"
+curve.title = "The first curve"
 
 curve2.ycol=3
-curve2.title = "Вторая кривая"
+curve2.title = "The second curve"
 
 curve3.ycol=4
-curve3.title = "Третья кривая"
+curve3.title = "The third curve"
 
 legend
 :)

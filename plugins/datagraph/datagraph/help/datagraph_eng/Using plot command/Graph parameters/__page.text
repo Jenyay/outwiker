@@ -1,16 +1,16 @@
-!!! Оглавление раздела
+!!! Table of content
 
-* [[Параметры ''wight'' / ''height'' -> #size]]
-* [[Параметр ''title'' -> #title]]
-* [[Параметр ''tooltip'' -> #tooltip]]
-* [[Параметр ''legend'' -> #legend]]
+* [[''wight'' / ''height'' parameters -> #size]]
+* [[''title'' parameter -> #title]]
+* [[''tooltip'' parameter -> #tooltip]]
+* [[''legend'' parameter -> #legend]]
 
 
-!!! [[#size]] Параметры ''wight'' / ''height''
+!!! [[#size]] ''wight'' / ''height'' parameters
 
-Параметры ''wight'' и ''height'' задают соответственно ширину и высоту создаваемой области с графиком. Размеры задаются в пикселях. Этот размер относится ко всему графику в целом, включая [[оси -> page://__24ff47cd-161e-4829-a4ca-affb6edd4067]], [[легенду -> #legend]] и [[заголовок -> #title]], а не только к области, где отображаются [[кривые -> page://__0e8277e9-e11f-46fd-a5b2-b67194cddd47]].
+Parameters ''width'' and ''height'' set dimensions chart in pixels. Width and height given for whole chart including [[axis -> page://__24ff47cd-161e-4829-a4ca-affb6edd4067]], [[legend -> #legend]] and [[title -> #title]] but not only region with [[curves -> page://__0e8277e9-e11f-46fd-a5b2-b67194cddd47]].
 
-Например:
+For example:
 
 [@(:plot
 width=300
@@ -47,12 +47,12 @@ height=200
 
 ----
 
-!!! [[#title]] Параметр ''title''
+!!! [[#title]] ''title'' parameter
 
-Параметр ''title'' позволяет добавить заголовок ко всему графику. Например:
+The ''title'' parameter added title to chart. For example:
 
 [@(:plot
-title = "Заголовок над графиком"
+title = "This is chart title"
 :)
 1    10    20    30    40
 2    11    22    31    41
@@ -67,7 +67,7 @@ title = "Заголовок над графиком"
 (:plotend:)@]
 
 (:plot
-title = "Заголовок над графиком"
+title = "This is chart title"
 :)
 1    10    20    30    40
 2    11    22    31    41
@@ -86,7 +86,8 @@ title = "Заголовок над графиком"
 
 !!! [[#tooltip]] Параметр ''tooltip''
 
-По умолчанию графики не имеют какого-либо интерактива с пользователем, они представляют собой статическую картинку (с технической стороны это не картинка, а набор объектов, созданных с помощью JavaScript). Но после добавления параметра ''tooltip'' над графиком появится маркер, который будет отображать значение в точке на графике, ближайшей к курсору, а также заголовок кривой, если он задан с помощью параметра [[''curve.title'' -> page://__0e8277e9-e11f-46fd-a5b2-b67194cddd47/#title]]. 
+Chart have not any interactive with user default, it is a static picture (on the technical side chart is not image, but JavaScript objects set). After adding the ''tooltip'' parameter will be shown marker with values in selected point and [[curve name -> page://__0e8277e9-e11f-46fd-a5b2-b67194cddd47/#title]].
+
 
 [@(:plot
 tooltip
@@ -118,26 +119,27 @@ tooltip
 10   20    30    38    46
 (:plotend:)
 
-Внешний вид всплывающей подсказки и ее содержимое пока не регулируются, но в будущем могут появиться дополнительные параметры для нее.
-
+Design and contents of the tooltip is not changed at the point, but in future may be added advanced parameters for it.
 
 ----
 
-!!! [[#legend]] Параметр ''legend''
+!!! [[#legend]] ''legend'' parameter
 
-После добавления параметра ''legend'' у графика появится так называемая "легенда" - область, которая отображает названия кривых, установленные с помощью параметра [[''curve.title'' -> page://__0e8277e9-e11f-46fd-a5b2-b67194cddd47/#title]] и соответствующие им стили линий.
+After the adding ''legend'' parameter chart will be had a legend. The legend is the region with [[curves titles -> page://__0e8277e9-e11f-46fd-a5b2-b67194cddd47/#title]] and they line styles.
+
+For example:
 
 [@(:plot
 curve.ycol=2
-curve.title = "Первая кривая"
+curve.title = "The first curve"
 curve.style=1
 
 curve2.ycol=3
-curve2.title = "Вторая кривая"
+curve2.title = "The second curve"
 curve2.style=2
 
 curve3.ycol=4
-curve3.title = "Третья кривая"
+curve3.title = "The third curve"
 curve3.style=3
 
 legend
@@ -157,15 +159,15 @@ legend
 
 (:plot
 curve.ycol=2
-curve.title = "Первая кривая"
+curve.title = "The first curve"
 curve.style=1
 
 curve2.ycol=3
-curve2.title = "Вторая кривая"
+curve2.title = "The second curve"
 curve2.style=2
 
 curve3.ycol=4
-curve3.title = "Третья кривая"
+curve3.title = "The third curve"
 curve3.style=3
 
 legend

@@ -20,7 +20,7 @@
 $(function () { $('#graph-0').highcharts({"yAxis": {"max": 25.0, "title": {"text": null}, "min": 0.0, "gridLineWidth": 1}, "series": [{"dashStyle": "solid", "name": "Curve-1", "color": "#0051FF", "states": {"hover": {"enabled": false}}, "animation": false, "marker": {"symbol": "circle", "enabled": false}, "data": [[1388534400000.0, 0.0], [1391212800000.0, 2.0], [1393632000000.0, 10.0], [1396310400000.0, 15.0], [1398902400000.0, 13.0], [1401580800000.0, 15.0], [1404172800000.0, 16.0], [1406851200000.0, 20.0], [1409529600000.0, 20.0], [1412121600000.0, 18.0], [1414800000000.0, 22.0], [1417392000000.0, 24.0]]}], "title": {"text": null}, "chart": {"animation": false, "plotBorderWidth": 1}, "tooltip": {"enabled": false}, "credits": {"enabled": false}, "plotOptions": {}, "xAxis": {"title": {"text": null}, "max": 1420070400000.0, "labels": {"format": "{value:%d.%m.%Y}"}, "gridLineWidth": 1, "min": 1385856000000.0, "type": "datetime"}, "legend": {"symbolWidth": 60, "enabled": false}}); });
 </script>
 <script>
-$(function () { $('#graph-1').highcharts({"yAxis": {"title": {"text": "\u041f\u043e\u0434\u043f\u0438\u0441\u044c \u0434\u043b\u044f \u043e\u0441\u0438 Y"}, "gridLineWidth": 1}, "series": [{"dashStyle": "solid", "name": "Curve-1", "color": "#0051FF", "states": {"hover": {"enabled": false}}, "animation": false, "marker": {"symbol": "circle", "enabled": false}, "data": [[1.0, 10.0], [2.0, 11.0], [3.0, 13.0], [4.0, 15.0], [5.0, 16.0], [6.0, 18.0], [7.0, 20.0], [8.0, 20.0], [9.0, 20.0], [10.0, 20.0]]}], "title": {"text": null}, "chart": {"animation": false, "plotBorderWidth": 1}, "tooltip": {"enabled": false}, "credits": {"enabled": false}, "plotOptions": {}, "xAxis": {"title": {"text": "\u041f\u043e\u0434\u043f\u0438\u0441\u044c \u0434\u043b\u044f \u043e\u0441\u0438 X"}, "gridLineWidth": 1}, "legend": {"symbolWidth": 60, "enabled": false}}); });
+$(function () { $('#graph-1').highcharts({"yAxis": {"title": {"text": "Title for Y"}, "gridLineWidth": 1}, "series": [{"dashStyle": "solid", "name": "Curve-1", "color": "#0051FF", "states": {"hover": {"enabled": false}}, "animation": false, "marker": {"symbol": "circle", "enabled": false}, "data": [[1.0, 10.0], [2.0, 11.0], [3.0, 13.0], [4.0, 15.0], [5.0, 16.0], [6.0, 18.0], [7.0, 20.0], [8.0, 20.0], [9.0, 20.0], [10.0, 20.0]]}], "title": {"text": null}, "chart": {"animation": false, "plotBorderWidth": 1}, "tooltip": {"enabled": false}, "credits": {"enabled": false}, "plotOptions": {}, "xAxis": {"title": {"text": "Title for X"}, "gridLineWidth": 1}, "legend": {"symbolWidth": 60, "enabled": false}}); });
 </script>
 <script>
 $(function () { $('#graph-2').highcharts({"yAxis": {"title": {"text": null}, "gridLineWidth": 1}, "series": [{"dashStyle": "solid", "name": "Curve-1", "color": "#0051FF", "states": {"hover": {"enabled": false}}, "animation": false, "marker": {"symbol": "circle", "enabled": false}, "data": [[1388534400000.0, 0.0], [1391212800000.0, 2.0], [1393632000000.0, 10.0], [1396310400000.0, 15.0], [1398902400000.0, 13.0], [1401580800000.0, 15.0], [1404172800000.0, 16.0], [1406851200000.0, 20.0], [1409529600000.0, 20.0], [1412121600000.0, 18.0], [1414800000000.0, 22.0], [1417392000000.0, 24.0]]}], "title": {"text": null}, "chart": {"animation": false, "plotBorderWidth": 1}, "tooltip": {"enabled": false}, "credits": {"enabled": false}, "plotOptions": {}, "xAxis": {"labels": {"format": "{value:%d.%m.%Y}"}, "title": {"text": null}, "type": "datetime", "gridLineWidth": 1}, "legend": {"symbolWidth": 60, "enabled": false}}); });
@@ -32,21 +32,24 @@ $(function () { $('#graph-3').highcharts({"yAxis": {"title": {"text": null}, "ti
 
 <body>
 
-<h2>Оглавление раздела</h2>
+<h2>Table of contents</h2>
 <ul>
-<li><a href="#names">Использование осей</a></li>
-<li><a href="#minmax">Параметры <i>min</i> / <i>max</i>.</a></li>
-<li><a href="#title">Параметр <i>title</i></a></li>
-<li><a href="#type">Параметр <i>type</i></a></li>
-<li><a href="#tickstep">Параметр <i>tickstep</i></a></li>
+<li><a href="#names">Axis using</a></li>
+<li><a href="#minmax"><i>min</i> / <i>max</i> parameters</a></li>
+<li><a href="#title"><i>title</i> parameter</a></li>
+<li><a href="#type"><i>type</i> parameter</a></li>
+<li><a href="#tickstep"><i>tickstep</i> parameter</a></li>
 </ul>
-<h2><a id="names"></a> Использование осей</h2>
+<h2><a id="names"></a> Axis using</h2>
 <br>
-График имеет две оси <i>x</i> и <i>y</i>, имеющие одинаковые параметры. Эти параметры устанавливаются в виде <i>x.paramname = ...</i> и <i>y.paramname = ...</i> соответственно.<br>
+The chart has two axis objects: <i>x</i> and <i>y</i>. Both axis has same the parameters set. The parameters is setted as <i>x.param_name</i> and <i>y.param_name</i> accordingly.<br>
+<hr>
 <br>
-<h2><a id="minmax"></a> Параметры <i>min</i> / <i>max</i>.</h2>
+<h2><a id="minmax"></a> <i>min</i> / <i>max</i> parameters</h2>
 <br>
-С помощью параметров <i>min</i> и <i>max</i> можно установить интервал, отображаемый по осям. Этот параметр работает как для чисел с плавающей точкой, так и для календарных типов данных. Для календарных данных плагин понимает множество форматов данных, но рекомендуется использовать запись вида "ГГГГ-ММ-ЧЧ", а для времени "ЧЧ:ММ". Про календарные данные читайте раздел <a href="page://__afd7ce6a-f26f-4344-a3d7-a3e4634f4aec/#formatcol">Параметр <i>curve.data.formatcol</i></a>.<br>
+With the <i>min</i> / <i>max</i> parameters can set visible data interval on every axis. This parameters operates for floating point and calendar data types. For calendar data type plug-in understands lot of the formats, but recomended format is "YYYY-MM-DD", and for the time - "HH:MM". About calendar date type refer to <a href="page://__afd7ce6a-f26f-4344-a3d7-a3e4634f4aec/#formatcol"><i>curve.data.formatcol</i> parameter</a> section.<br>
+<br>
+Example:<br>
 <br>
 
 <pre>(:plot
@@ -77,14 +80,16 @@ y.max = 25
 <div id="graph-0" style="width:700px; height:300px;"></div><br>
 <hr>
 <br>
-<h2><a id="title"></a> Параметр <i>title</i></h2>
+<h2><a id="title"></a> <i>title</i> parameter</h2>
 <br>
-С помощью параметра <i>title</i> можно установить подпись для осей, поясняющие, какая величина отложена по данной оси.<br>
+With the <i>title</i> parameter can set title, showned near axis, for the explanation which value the axis shows.<br>
+<br>
+For example:<br>
 <br>
 
 <pre>(:plot
-x.title = &quot;Подпись для оси X&quot;
-y.title = &quot;Подпись для оси Y&quot;
+x.title = &quot;Title for X&quot;
+y.title = &quot;Title for Y&quot;
 :)
 1    10    20    30    40
 2    11    22    31    41
@@ -101,9 +106,12 @@ y.title = &quot;Подпись для оси Y&quot;
 <br>
 <div id="graph-1" style="width:700px; height:300px;"></div><br>
 <hr>
-<h2><a id="type"></a> Параметр <i>type</i></h2>
 <br>
-С помощью параметра <i>type</i> можно указать, что по данной оси нужно откладывать <a href="page://__afd7ce6a-f26f-4344-a3d7-a3e4634f4aec/#formatcol">календарных тип данных</a>. Для этого параметру <i>type</i> нужно присвоить значение "datetime".<br>
+<h2><a id="type"></a> <i>type</i> parameter</h2>
+<br>
+With <i>type</i> parameter can set, what the axis shows <a href="page://__afd7ce6a-f26f-4344-a3d7-a3e4634f4aec/#formatcol">calendar data type</a>. For this <i>type</i> parameter must contain value "datetime".<br>
+<br>
+For example:<br>
 <br>
 
 <pre>(:plot
@@ -127,11 +135,13 @@ x.type=&quot;datetime&quot;
 <br>
 <div id="graph-2" style="width:700px; height:300px;"></div><br>
 <hr>
-<h2><a id="tickstep"></a> Параметр <i>tickstep</i></h2>
+<h2><a id="tickstep"></a> <i>tickstep</i> parameter</h2>
 <br>
-С помощью параметра <i>tickstep</i> можно изменить интервал между рисками на осях и, соответственно, шаг отображаемой сетки. Если этот параметр не установен, то шаг рисок выбирается автоматически. <br>
+With the <i>tickstep</i> parameter can change interval besides ticks on axis (and grid size). If this parameter is not setted, tick step will be selected automatically.<br>
 <br>
-<blockquote>На данный момент этот параметр не работает с календарным типом данных.</blockquote><br>
+<blockquote> Currently <i>tickstep</i> parameter do not operate with calendar data type. </blockquote><br>
+<br>
+Example:<br>
 <br>
 
 <pre>(:plot

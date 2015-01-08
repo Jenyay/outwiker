@@ -1,14 +1,16 @@
-!!! Оглавление раздела
+!!! Table of content
 
-* [[Установка источника данных -> #data]]
-* [[Параметр ''curve.data.colsep'' -> #colsep]]
-* [[Параметр ''curve.data.skiprows'' -> #skiprows]]
-* [[Параметр ''curve.data.formatcol'' -> #formatcol]]
+* [[Select data source -> #data]]
+* [[''curve.data.colsep'' parameter -> #colsep]]
+* [[''curve.data.skiprows'' parameter -> #skiprows]]
+* [[''curve.data.formatcol'' parameter -> #formatcol]]
 
 
-!!! [[#data]] Установка источника данных
+!!! [[#data]] Select data source
 
-Данные могут браться из двух источников. По умолчанию данные берутся из тела команды (то, что находится между [=(:plot:)=] и [=(:plotend:)=]). Однако, данные могут также читаться из прикрепленных файлов, для этого используется параметр [[''curve.data'' -> page://__0e8277e9-e11f-46fd-a5b2-b67194cddd47/#data]]. 
+Data can be readed from two sources. Default data will be readed from ''plot'' command body (deside [=(:plot:)=] and [=(:plotend:)=]). Also data can be readed from attached file. To data will be readed from attached file, [[''curve.data'' -> page://__0e8277e9-e11f-46fd-a5b2-b67194cddd47/#data]] parameter should be set (value is link to attached file).
+
+For example:
 
 [@(:plot
 curve.data="Attach:example_5.txt"
@@ -29,18 +31,18 @@ curve2.ycol=3
 :)
 (:plotend:)
 
-Для разных кривых данные могут браться из разных источников - или из разных прикрепленных файлов, или для одних кривых данные могут браться из тела команды, для других читаться из файла.
+Every curve may have eigen source data. For example, ''curve1'' may read data from command body and ''curve2'' from attached file.
 
-Дальнейшие параметры данных устанавливаются индивидуально для каждой [[кривой -> page://__0e8277e9-e11f-46fd-a5b2-b67194cddd47]], т.е. используется запись вида ''curve.data.имя_параметра''.
+All data parameters are setted for every [[curve -> page://__0e8277e9-e11f-46fd-a5b2-b67194cddd47]] individually, at that is used notation in the form: ''curve.data.param_name''.
 
 ----
 
 
-!!! [[#colsep]] Параметр ''curve.data.colsep''
+!!! [[#colsep]] ''curve.data.colsep'' parameter
 
-По умолчанию элементы каждой строки данных разделяются между собой любым количеством пробелов или символов табуляции. Вы можете изменить это поведение, задав другой разделитель с помощью параметра ''curve.data.colsep''. Этот параметр принимает [[регулярное выражение -> https://docs.python.org/2/library/re.html]]. Значение по умолчанию этого параметра "\s+".
+Line items are separated by one or more spaces or tabs default. By ''curve.data.colsep'' parameter can change this behaviour and set other separator. The ''curve.data.colsep'' parameter may contain [[regular expression -> https://docs.python.org/2/library/re.html]] or simple string. The ''curve.data.colsep'' parameter contains "\s+" default.
 
-Следующий пример показывает, как сделать, чтобы элементы строки разделялись с помощью запятых и, возможно, пробелов.
+The follow example shows how to make a string separated by comma and optional spaces:
 
 [@(:plot
 curve.data.colsep=",\s*"
@@ -75,7 +77,7 @@ curve.data.colsep=",\s*"
 
 ----
 
-Учытывая особенность чтения данных, что пробелы всегда отбрасываются, предыдущий пример можно было бы сделать проще:
+Since spaces will be stripped by reading the previous example may be more easy:
 
 [@(:plot
 curve.data.colsep=","
@@ -111,16 +113,17 @@ curve.data.colsep=","
 ----
 
 
-!!! [[#skiprows]] Параметр ''curve.data.skiprows''
+!!! [[#skiprows]] ''curve.data.skiprows'' parameter
 
-Иногда в начале файла с текстовыми данными пишут заголовок, который может описывать представленные данные. Для корректной работы плагина DataGraph либо нужно удалить эти строки, либо воспользоваться параметром ''curve.data.skiprows'', который указывает, сколько строк нужно проигнорировать при чтении данных. Этот параметр работает как для данных, загружаемых из файла, так и для данных из тела команды [=(:plot:)=].
+Sometimes, at the beginning of the file may be header which may describe presented data. To plug-in work correctly, this lines must be removed or may be added the ''curve.data.skiprows'' parameter. The ''curve.data.skiprows'' parameter explains how many lines must be skipped by reading. This parameter is used with data which readed from attached file and from command [=(:plot:)=] body.
 
-[@(:plot
+
+ [@(:plot
 curve.data.skiprows = 3
 :)
-Этот текст
-не нужен для
-построения графиков
+This is header
+It is describe data
+Bla-bla-bla
 1    10    20    30    40
 2    11    22    31    41
 3    13    24    33    42
@@ -137,9 +140,9 @@ curve.data.skiprows = 3
 (:plot
 curve.data.skiprows = 3
 :)
-Этот текст
-не нужен для
-построения графиков
+This is header
+It is describe data
+Bla-bla-bla
 1    10    20    30    40
 2    11    22    31    41
 3    13    24    33    42
@@ -154,7 +157,7 @@ curve.data.skiprows = 3
 
 ----
 
-Также этот параметр можно использовать для того, чтобы некоторые начальные значения на графике.
+The ''curve.data.skiprows'' parameter may be used to skip first values on the chart.
 
  [@(:plot
 curve.data.skiprows = 3
@@ -189,37 +192,39 @@ curve.data.skiprows = 3
 
 ----
 
-!!! [[#formatcol]] Параметр ''curve.data.formatcol''
+!!! [[#formatcol]] ''curve.data.formatcol'' parameter
 
-Во всех приведенных выше примерах в качестве данных использовались числа с плавающей точкой, однако плагин DataGraph может строить графики и по календаным данным. Для этого с помощью параметра ''curve.data.formatcol'' нужно указать, в каком формате записаны календарные данные. Параметр ''curve.data.formatcol[n]'' в качестве значения принимает строку в формате, используемом во многих языках программирования для форматирования дат. Этот формат состоит из символов, следующих после символа "%". Значения этих символов, показаны в следующей таблице:
+So far in the examples data were containing floating point numbers, but DataGraph can plot chart by calendar data. For this by ''curve.data.formatcol'' parameter should be set date format which used in the data. The ''curve.data.formatcol'' parameter contain a string in the format which used in many programming languages for date formatting. This format consists of "%" and symbols followed further. Meaning this symbols follow in the table ([[source -> https://docs.python.org/2/library/datetime.html#strftime-and-strptime-behavior]]):
 
 
 ||border=1
-|| '''Символ''' || '''Значение''' || '''Пример''' ||
-||%a ||День недели сокращенно (используется локализация) ||Пн., Вт.,..., Вс. (для ru_RU),[[<<]]Sun, Mon, ..., Sat (для en_US) ||
-||%A ||День недели полностью (используется локализация) ||Понедельник, Вторник, ..., Воскресенье (для ru_RU),[[<<]]Sunday, Monday, ..., Saturday (для en_US) ||
-||%w ||Номер для недели от 0 (воскресенье) до 6 (суббота) ||0, 1,... 6 ||
-||%d ||Двухзначное число месяца ||01, 02,... 31 ||
-||%b ||Название месяца сокращенно (используется локализация) ||Янв., Фев., ..., Дек. (для ru_RU),[[<<]]Jan, Feb, ..., Dec (для en_US) ||
-||%B ||Название месяца полностью (используется локализация) ||Январь, Февраль,..., Декабрь (для ru_RU),[[<<]]January, February, ..., December (для en_US) ||
-||%m ||Двухзначный номер месяца ||01, 02, ..., 12 ||
-||%y ||Последние две цифры года ||00, 01, 99 ||
-||%Y ||Год полностью ||1917, 2000, 2015 ||
-||%H ||Двухзначное значение часа в 24-часовом формате ||00, 01, ..., 23 ||
-||%I ||Двухзначное значение часа в 12-часовом формате ||00, 01, ..., 12 ||
-||%p ||Сокращенное обозначение "до полудня" / "после полудня" (используется локализация) ||AM, PM (для en_US) ||
-||%M ||Двухзначное количество минут ||00, 01, ..., 59 ||
-||%S ||Двухзначное количество секунд ||00, 01, ..., 59 ||
-||%f ||Шестизначное количество микросекунд ||000000, 000001, ..., 999999 ||
-||%j ||Трехзначный номер дня в году ||001, 002, ..., 366 ||
-||%U ||Номер недели в году ||00, 01, ..., 53 ||
-||%c ||Формат представления даты и времени в соответствии с локализацией ||Вт. 06 янв. 2015 10:23:25 (для ru_RU),[[<<]]Tue Aug 16 21:30:00 1988 (для en_US) ||
-||%x ||Формат представления даты в соответствии с локализацией ||06.01.2015 (для ru_RU),[[<<]]08/16/1988 (для en_US) ||
-||%X ||Формат представления времени в соответствии с локализацией ||10:26:16 (для ru_RU и en_US) ||
+|| '''Symbol''' || '''Meaning''' || '''Example''' ||
+||%a ||Weekday as locale’s abbreviated name. ||Пн., Вт.,..., Вс. (ru_RU),[[<<]]Sun, Mon, ..., Sat (en_US) ||
+||%A ||Weekday as locale’s full name. ||Понедельник, Вторник, ..., Воскресенье (ru_RU),[[<<]]Sunday, Monday, ..., Saturday (en_US) ||
+||%w ||Weekday as a decimal number, where 0 is Sunday and 6 is Saturday. ||0, 1,... 6 ||
+||%d ||Day of the month as a zero-padded decimal number. ||01, 02,... 31 ||
+||%b ||Month as locale’s abbreviated name. ||Янв., Фев., ..., Дек. (ru_RU),[[<<]]Jan, Feb, ..., Dec (en_US) ||
+||%B ||Month as locale’s full name. ||Январь, Февраль,..., Декабрь (ru_RU),[[<<]]January, February, ..., December (en_US) ||
+||%m ||Month as a zero-padded decimal number. ||01, 02, ..., 12 ||
+||%y ||Year without century as a zero-padded decimal number. ||00, 01, 99 ||
+||%Y ||Year with century as a decimal number. ||1917, 2000, 2015 ||
+||%H ||Hour (24-hour clock) as a zero-padded decimal number. ||00, 01, ..., 23 ||
+||%I ||Hour (12-hour clock) as a zero-padded decimal number. ||00, 01, ..., 12 ||
+||%p ||Locale’s equivalent of either AM or PM. ||AM, PM (для en_US) ||
+||%M ||Minute as a zero-padded decimal number. ||00, 01, ..., 59 ||
+||%S ||Second as a zero-padded decimal number. ||00, 01, ..., 59 ||
+||%f ||Microsecond as a decimal number, zero-padded on the left. ||000000, 000001, ..., 999999 ||
+||%j ||Day of the year as a zero-padded decimal number. ||001, 002, ..., 366 ||
+||%U ||Week number of the year (Sunday as the first day of the week) as a zero padded decimal number. All days in a new year preceding the first Sunday are considered to be in week 0. ||00, 01, ..., 53 ||
+||%c ||Locale’s appropriate date and time representation. ||Вт. 06 янв. 2015 10:23:25 (ru_RU),[[<<]]Tue Aug 16 21:30:00 1988 (en_US) ||
+||%x ||Locale’s appropriate date representation. ||06.01.2015 (ru_RU),[[<<]]08/16/1988 (en_US) ||
+||%X ||Locale’s appropriate time representation. ||10:26:16 (ru_RU, en_US) ||
 
-Для каждого столбца может быть установлен свой формат данных, поэтому параметр используется в виде ''curve.data.formatcol1'', ''curve.data.formatcol2'' и т.д.
+Every column can be represented in the own format therefore this parameter is setted individually: ''curve.data.formatcol1'', ''curve.data.formatcol2'', etc.
 
-[>Чтобы использовать календарный тип данных, также необходимо для оси, по которой будут откладываться, календарные данные установить параметру [[''type'' -> page://__24ff47cd-161e-4829-a4ca-affb6edd4067/#type]] значение "datetime".<]
+[>To use calendar data type, necessary for axis, on which will be showned date, set parameter [[''type'' -> page://__24ff47cd-161e-4829-a4ca-affb6edd4067/#type]] to "datetime". <]
+
+For example:
 
 [@(:plot
 curve.data.formatcol1="%d.%m.%Y"

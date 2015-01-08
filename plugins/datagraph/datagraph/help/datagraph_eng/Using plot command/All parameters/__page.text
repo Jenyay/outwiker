@@ -12,50 +12,46 @@ In this section will be used notation ''curve[n].param_name'' which signifies wh
 !!! [[#curves]] Curves parameters
 
 ||border=1
-
-
-
-||border=1
-||''''curve[n].data'''' ||Устанавливает источник данных для кривой ||
-||''''curve[n].xcol'''' ||Устанавливает номер столбца данных, который содержит координаты X отображаемых точек. Столбцы нумеруются, начиная с 1 ||
-||''''curve[n].ycol'''' ||Устанавливает номер столбца данных, который содержит координаты Y отображаемых точек. Столбцы нумеруются, начиная с 1 ||
-||''''curve[n].color'''' ||Устанавливает цвет кривой (например, "#1CE81C", "#0BA", "rgb(180, 64, 180)", "black") ||
-||''''curve[n].style'''' ||Устанавливает стиль кривой по номеру или названию. Список стилей приведен в разделе [[Параметр ''curve.style'' -> page://__0e8277e9-e11f-46fd-a5b2-b67194cddd47/#style]] ||
-||''''curve[n].hide'''' ||Скрыть график ||
-||''''curve[n].title'''' ||Устанавливает название кривой ||
+||''''curve[n].data'''' ||Set data source for curve ||
+||''''curve[n].xcol'''' ||Set column number for X coordinates. The columns are numbered from 1. ||
+||''''curve[n].ycol'''' ||Set column number for Y coordinates. The columns are numbered from 1. ||
+||''''curve[n].color'''' ||Set curve color (for example "#1CE81C", "#0BA", "rgb(180, 64, 180)", "black") ||
+||''''curve[n].style'''' ||Set curve style by name or number. List of the styles is being given in the [[''curve.style'' parameter -> page://__0e8277e9-e11f-46fd-a5b2-b67194cddd47/#style]] section ||
+||''''curve[n].hide'''' ||Hide curve ||
+||''''curve[n].title'''' ||Set curve title ||
 
 ----
 
 
-!!! [[#data]] Параметры данных
+!!! [[#data]] Data parameters
 
 ||border=1
-||''''curve[n].data'''' ||Устанавливает источник данных для кривой ||
-||''''curve[n].colsep'''' ||Устанавливает регулярное выражение (или строку), используемое для разделения столбцов данных ||
-||''''curve[n].skiprows'''' ||Позволяет пропустить заданное количество строк в данных ||
-||''''curve[n].formatcol[m]'''' ||Позволяет задать формат календарных данных для столбца с номером m ||
+||''''curve[n].data'''' ||Set data source for curve ||
+||''''curve[n].data.colsep'''' ||Set regular expression or string which is used for separate data columns ||
+||''''curve[n].data.skiprows'''' ||Allow to skip specified number first lines in the data ||
+||''''curve[n].data.formatcol[m]'''' ||Set calendar data format for column number ''m'' ||
 
 ----
 
 
-!!! [[#graph]] Параметры области графика
+!!! [[#graph]] Chart parameters
 
 ||border=1
-||''''width'''' ||Устанавливает ширину графика ||
-||''''height'''' ||Устанавливает высоту графика ||
-||''''tooltip'''' ||Включает отображение всплывающей подсказки с данными ||
-||''''legend'''' ||Включает отображение легенды ||
+||''''width'''' ||Set chart width ||
+||''''height'''' ||Set chart height ||
+||''''tooltip'''' ||Turn on the tooltip with point data ||
+||''''legend'''' ||Turn on the legend ||
 
 ----
 
 
-!!! [[#axis]] Параметры осей
+!!! [[#axis]] Axis parameters
 
 ||border=1
-||''''x.min''''[[<<]]''''y.min'''' ||Устанавливает минимальное значение, отображаемое по оси X / Y ||
-||''''x.max''''[[<<]]''''y.max'''' ||Устанавливает максимальное значение, отображаемое по оси X / Y ||
-||''''x.type''''[[<<]]''''y.type'''' ||Если значение параметра равно "datetime", по оси откладываются календарные данные ||
-||''''x.title''''[[<<]]''''y.title'''' ||Устанавливает текст подписи по осям X / Y ||
-||''''x.tickstep''''[[<<]]''''y.tickstep'''' ||Устанавливает интервал между рисками (шаг сетки) по осям X / Y. Не работает для календарных данных ||
+||''''x.min''''[[<<]]''''y.min'''' ||Set min value for axis X / Y ||
+||''''x.max''''[[<<]]''''y.max'''' ||Set max value for axis X / Y ||
+||''''x.type''''[[<<]]''''y.type'''' ||If this value equals "datetime", on axis will be shown calendar data (turn on calendar axis type) ||
+||''''x.title''''[[<<]]''''y.title'''' ||Set title for X / Y axis ||
+||''''x.tickstep''''[[<<]]''''y.tickstep'''' ||Set interval besides ticks (grid step) for axis X / Y. Does not work for calendar data type ||
 
 ----

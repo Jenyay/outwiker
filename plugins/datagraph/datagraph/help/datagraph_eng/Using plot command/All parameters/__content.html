@@ -29,113 +29,109 @@ In this section will be used notation <i>curve[n].param_name</i> which signifies
 <br>
 <h2><a id="curves"></a> Curves parameters</h2>
 <br>
-||border=1<br>
-<br>
-<br>
-<br>
 <table border=1>
 <tr>
 <td align="left"><b><i>curve[n].data</i></b></td>
-<td align="left">Устанавливает источник данных для кривой</td>
+<td align="left">Set data source for curve</td>
 </tr>
 <tr>
 <td align="left"><b><i>curve[n].xcol</i></b></td>
-<td align="left">Устанавливает номер столбца данных, который содержит координаты X отображаемых точек. Столбцы нумеруются, начиная с 1</td>
+<td align="left">Set column number for X coordinates. The columns are numbered from 1.</td>
 </tr>
 <tr>
 <td align="left"><b><i>curve[n].ycol</i></b></td>
-<td align="left">Устанавливает номер столбца данных, который содержит координаты Y отображаемых точек. Столбцы нумеруются, начиная с 1</td>
+<td align="left">Set column number for Y coordinates. The columns are numbered from 1.</td>
 </tr>
 <tr>
 <td align="left"><b><i>curve[n].color</i></b></td>
-<td align="left">Устанавливает цвет кривой (например, "#1CE81C", "#0BA", "rgb(180, 64, 180)", "black")</td>
+<td align="left">Set curve color (for example "#1CE81C", "#0BA", "rgb(180, 64, 180)", "black")</td>
 </tr>
 <tr>
 <td align="left"><b><i>curve[n].style</i></b></td>
-<td align="left">Устанавливает стиль кривой по номеру или названию. Список стилей приведен в разделе <a href="page://__0e8277e9-e11f-46fd-a5b2-b67194cddd47/#style">Параметр <i>curve.style</i></a></td>
+<td align="left">Set curve style by name or number. List of the styles is being given in the <a href="page://__0e8277e9-e11f-46fd-a5b2-b67194cddd47/#style"><i>curve.style</i> parameter</a> section</td>
 </tr>
 <tr>
 <td align="left"><b><i>curve[n].hide</i></b></td>
-<td align="left">Скрыть график</td>
+<td align="left">Hide curve</td>
 </tr>
 <tr>
 <td align="left"><b><i>curve[n].title</i></b></td>
-<td align="left">Устанавливает название кривой</td>
+<td align="left">Set curve title</td>
 </tr>
 </table>
 <hr>
 <br>
-<h2><a id="data"></a> Параметры данных</h2>
+<h2><a id="data"></a> Data parameters</h2>
 <br>
 <table border=1>
 <tr>
 <td align="left"><b><i>curve[n].data</i></b></td>
-<td align="left">Устанавливает источник данных для кривой</td>
+<td align="left">Set data source for curve</td>
 </tr>
 <tr>
-<td align="left"><b><i>curve[n].colsep</i></b></td>
-<td align="left">Устанавливает регулярное выражение (или строку), используемое для разделения столбцов данных</td>
+<td align="left"><b><i>curve[n].data.colsep</i></b></td>
+<td align="left">Set regular expression or string which is used for separate data columns</td>
 </tr>
 <tr>
-<td align="left"><b><i>curve[n].skiprows</i></b></td>
-<td align="left">Позволяет пропустить заданное количество строк в данных</td>
+<td align="left"><b><i>curve[n].data.skiprows</i></b></td>
+<td align="left">Allow to skip specified number first lines in the data</td>
 </tr>
 <tr>
-<td align="left"><b><i>curve[n].formatcol[m]</i></b></td>
-<td align="left">Позволяет задать формат календарных данных для столбца с номером m</td>
+<td align="left"><b><i>curve[n].data.formatcol[m]</i></b></td>
+<td align="left">Set calendar data format for column number <i>m</i></td>
 </tr>
 </table>
 <hr>
 <br>
-<h2><a id="graph"></a> Параметры области графика</h2>
+<h2><a id="graph"></a> Chart parameters</h2>
 <br>
 <table border=1>
 <tr>
 <td align="left"><b><i>width</i></b></td>
-<td align="left">Устанавливает ширину графика</td>
+<td align="left">Set chart width</td>
 </tr>
 <tr>
 <td align="left"><b><i>height</i></b></td>
-<td align="left">Устанавливает высоту графика</td>
+<td align="left">Set chart height</td>
 </tr>
 <tr>
 <td align="left"><b><i>tooltip</i></b></td>
-<td align="left">Включает отображение всплывающей подсказки с данными</td>
+<td align="left">Turn on the tooltip with point data</td>
 </tr>
 <tr>
 <td align="left"><b><i>legend</i></b></td>
-<td align="left">Включает отображение легенды</td>
+<td align="left">Turn on the legend</td>
 </tr>
 </table>
 <hr>
 <br>
-<h2><a id="axis"></a> Параметры осей</h2>
+<h2><a id="axis"></a> Axis parameters</h2>
 <br>
 <table border=1>
 <tr>
 <td align="left"><b><i>x.min</i></b><br>
 <b><i>y.min</i></b></td>
-<td align="left">Устанавливает минимальное значение, отображаемое по оси X / Y</td>
+<td align="left">Set min value for axis X / Y</td>
 </tr>
 <tr>
 <td align="left"><b><i>x.max</i></b><br>
 <b><i>y.max</i></b></td>
-<td align="left">Устанавливает максимальное значение, отображаемое по оси X / Y</td>
+<td align="left">Set max value for axis X / Y</td>
 </tr>
 <tr>
 <td align="left"><b><i>x.type</i></b><br>
 <b><i>y.type</i></b></td>
-<td align="left">Если значение параметра равно "datetime", по оси откладываются календарные данные</td>
+<td align="left">If this value equals "datetime", on axis will be shown calendar data (turn on calendar axis type)</td>
 </tr>
 <tr>
 <td align="left"><b><i>x.title</i></b><br>
 <b><i>y.title</i></b></td>
-<td align="left">Устанавливает текст подписи по осям X / Y</td>
+<td align="left">Set title for X / Y axis</td>
 </tr>
 <tr>
 <td align="left"><b><i>x.tickstep</i></b><br>
 <b><i>y.tickstep</i></b></td>
-<td align="left">Устанавливает интервал между рисками (шаг сетки) по осям X / Y. Не работает для календарных данных</td>
+<td align="left">Set interval besides ticks (grid step) for axis X / Y. Does not work for calendar data type</td>
 </tr>
 </table>
 <hr>
