@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 
+import os
 import unittest
 from tempfile import NamedTemporaryFile
 
@@ -14,11 +15,13 @@ class FileSourceTest (unittest.TestCase):
         self.loader = PluginsLoader(Application)
         self.loader.load (dirlist)
 
-        self._dataFile = NamedTemporaryFile()
+        self._dataFile = NamedTemporaryFile(delete=False)
 
 
     def tearDown (self):
         self.loader.clear()
+        self._dataFile.close()
+        os.remove (self._dataFile.name)
         self._dataFile = None
 
 

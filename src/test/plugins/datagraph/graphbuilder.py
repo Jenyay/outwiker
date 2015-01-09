@@ -485,11 +485,14 @@ class GraphBuilderTest (unittest.TestCase):
 
 
     def _saveDataAndAttach (self, page, data):
-        with NamedTemporaryFile ('w') as tempfile:
+        fname = None
+        with NamedTemporaryFile ('w', delete=False) as tempfile:
             tempfile.write (data)
             tempfile.flush()
+            fname = tempfile.name
 
-            Attachment(page).attach ([tempfile.name])
-            name = os.path.basename (tempfile.name)
+        Attachment(page).attach ([fname])
+        name = os.path.basename (fname)
+        os.remove (fname)
 
         return name
