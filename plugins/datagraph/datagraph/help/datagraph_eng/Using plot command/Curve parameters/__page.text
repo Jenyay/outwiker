@@ -43,14 +43,14 @@ The result will look like this:
 10   20    30    38    46
 (:plotend:)
 
-Since in this example never was added any parameters and data contain more than one column, then X coordinates are the data from first column and Y coordinates are the data from second column. To add second curve suffice it to set any parameter for ''curve2''. This will be showned in the next section.
+Since in this example never was added any parameters and data contain more than one column, then X coordinates are the data from first column and Y coordinates are the data from second column. To add second curve suffice it to set any parameter for ''curve2''. This will be showed in the next section.
 
 ----
 
 
 !!! [[#col]] ''curve.xcol'' / ''curve.ycol'' parameters
 
-Append the second curve. For ''curve2'' Y coordinates will be readed from column number 3. For that is used ''curve.ycol'' parameter.
+Append the second curve. For ''curve2'' Y coordinates will be read from column number 3. For that is used ''curve.ycol'' parameter.
 
 [@(:plot
 curve2.ycol = 3
@@ -226,7 +226,7 @@ curve1.ycol = 4
 
 !!! [[#data]] ''curve.data'' parameter
 
-In the prevoius examples data was written in the wiki page text. It may not be convenient for big data. The data can be readed from attached text file. This files should contain data in same format. For example, attached file [[Attach:example_5.txt]] contain follow lines (this file will be used in examples this section):
+In the previous examples data was written in the wiki page text. It may not be convenient for big data. The data can be read from attached text file. This files should contain data in same format. For example, attached file [[Attach:example_5.txt]] contain follow lines (this file will be used in examples this section):
 
 [@1    10    20    30    40
 2    11    22    31    41
@@ -239,7 +239,7 @@ In the prevoius examples data was written in the wiki page text. It may not be c
 9    20    30    38    46
 10   20    30    38    46@]
 
-To explain what data must be readed from attached file, but not in command body, must be seted the ''curve.data'' parameter. For example:
+To explain what data must be read from attached file, but not in command body, must be set the ''curve.data'' parameter. For example:
 
 [@(:plot
 curve.data="Attach:example_5.txt"
@@ -475,7 +475,7 @@ curve4.ycol=5
 
 !!! [[#hide]] ''curve.hide'' parameter
 
-To temporarily hide curve and do not remove all mention of it in ''plot'' command, can use ''curve.hide'' parameter. In follow example were setted parameters for four curves and second curve was hidded. In follow example for clarity used[[legend -> page://__9b833dea-895e-4867-a3a4-0cfb5915ebab/#legend]] parameter also.
+To temporarily hide curve and do not remove all mention of it in ''plot'' command, can use ''curve.hide'' parameter. In follow example were set parameters for four curves and second curve was hided. In follow example for clarity used [[legend -> page://__9b833dea-895e-4867-a3a4-0cfb5915ebab/#legend]] parameter also.
 
 
 [@(:plot
@@ -521,7 +521,7 @@ curve2.hide
 10   20    30    38    46
 (:plotend:)
 
-If ''curve.hide'' equal zero (''curve.hide=0''), this parameter will be ignored and curve will be not hidded.
+If ''curve.hide'' equal zero (''curve.hide=0''), this parameter will be ignored and curve will be not hided.
 
 ----
 

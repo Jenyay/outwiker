@@ -9,7 +9,7 @@
 
 !!! [[#names]] Axis using
 
-The chart has two axis objects: ''x'' and ''y''. Both axis has same the parameters set. The parameters is setted as ''x.param_name'' and ''y.param_name'' accordingly.
+The chart has two axis objects: ''x'' and ''y''. Both axis has same the parameters set. The parameters is set as ''x.param_name'' and ''y.param_name'' accordingly.
 
 ----
 
@@ -73,7 +73,7 @@ y.max = 25
 
 !!! [[#title]] ''title'' parameter
 
-With the ''title'' parameter can set title, showned near axis, for the explanation which value the axis shows.
+With the ''title'' parameter can set title, shown near axis, for the explanation which value the axis shows.
 
 For example:
 
@@ -158,7 +158,7 @@ x.type="datetime"
 
 !!! [[#tickstep]] ''tickstep'' parameter
 
-With the ''tickstep'' parameter can change interval besides ticks on axis (and grid size). If this parameter is not setted, tick step will be selected automatically.
+With the ''tickstep'' parameter can change interval besides ticks on axis (and grid size). If this parameter is not set, tick step will be selected automatically.
 
 [> Currently ''tickstep'' parameter do not operate with calendar data type. <]
 

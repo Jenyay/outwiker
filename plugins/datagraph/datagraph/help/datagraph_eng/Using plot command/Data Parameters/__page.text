@@ -8,7 +8,7 @@
 
 !!! [[#data]] Select data source
 
-Data can be readed from two sources. Default data will be readed from ''plot'' command body (deside [=(:plot:)=] and [=(:plotend:)=]). Also data can be readed from attached file. To data will be readed from attached file, [[''curve.data'' -> page://__0e8277e9-e11f-46fd-a5b2-b67194cddd47/#data]] parameter should be set (value is link to attached file).
+Data can be read from two sources. Default data will be read from ''plot'' command body (beside [=(:plot:)=] and [=(:plotend:)=]). Also data can be read from attached file. To data will be read from attached file, [[''curve.data'' -> page://__0e8277e9-e11f-46fd-a5b2-b67194cddd47/#data]] parameter should be set (value is link to attached file).
 
 For example:
 
@@ -31,9 +31,9 @@ curve2.ycol=3
 :)
 (:plotend:)
 
-Every curve may have eigen source data. For example, ''curve1'' may read data from command body and ''curve2'' from attached file.
+Every curve may have own source data. For example, ''curve1'' may read data from command body and ''curve2'' from attached file.
 
-All data parameters are setted for every [[curve -> page://__0e8277e9-e11f-46fd-a5b2-b67194cddd47]] individually, at that is used notation in the form: ''curve.data.param_name''.
+All data parameters are set for every [[curve -> page://__0e8277e9-e11f-46fd-a5b2-b67194cddd47]] individually, at that is used notation in the form: ''curve.data.param_name''.
 
 ----
 
@@ -115,7 +115,7 @@ curve.data.colsep=","
 
 !!! [[#skiprows]] ''curve.data.skiprows'' parameter
 
-Sometimes, at the beginning of the file may be header which may describe presented data. To plug-in work correctly, this lines must be removed or may be added the ''curve.data.skiprows'' parameter. The ''curve.data.skiprows'' parameter explains how many lines must be skipped by reading. This parameter is used with data which readed from attached file and from command [=(:plot:)=] body.
+Sometimes, at the beginning of the file may be header which may describe presented data. To plug-in work correctly, this lines must be removed or may be added the ''curve.data.skiprows'' parameter. The ''curve.data.skiprows'' parameter explains how many lines must be skipped by reading. This parameter is used with data which read from attached file and from command [=(:plot:)=] body.
 
 
  [@(:plot
@@ -222,7 +222,7 @@ So far in the examples data were containing floating point numbers, but DataGrap
 
 Every column can be represented in the own format therefore this parameter is setted individually: ''curve.data.formatcol1'', ''curve.data.formatcol2'', etc.
 
-[>To use calendar data type, necessary for axis, on which will be showned date, set parameter [[''type'' -> page://__24ff47cd-161e-4829-a4ca-affb6edd4067/#type]] to "datetime". <]
+[>To use calendar data type, necessary for axis, on which will be shown date, set parameter [[''type'' -> page://__24ff47cd-161e-4829-a4ca-affb6edd4067/#type]] to "datetime". <]
 
 For example:
 

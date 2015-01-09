@@ -24,7 +24,7 @@ draw follow chart with data from attached file (Attach:example.txt).
 :)
 (:plotend:)
 
-Chart contain a several objects (they showned in the follow picture). With parameters of the ''plot'' command can change properties this objects.
+Chart contain a several objects (they showed in the follow picture). With parameters of the ''plot'' command can change properties this objects.
 
 %center%Attach:datagraph_en.png
 
