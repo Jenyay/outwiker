@@ -5,7 +5,7 @@
 * [[Chart parameters -> #graph]]
 * [[Axis parameters -> #axis]]
 
-In this section will be used notation ''curve[n].param_name'' which signifies what chart contain several objects (curves). In practice will be used notations ''curve1.param_name'', ''curve2.param_name'', etc
+In this section will be used notation ''curve[n].param_name'' which signifies what chart contain several objects (curves). In practice will be used notations ''curve1.param_name'', ''curve2.param_name'', etc.
 
 ----
 
@@ -14,8 +14,8 @@ In this section will be used notation ''curve[n].param_name'' which signifies wh
 
 ||border=1
 ||''''curve[n].data'''' ||Set data source for curve ||
-||''''curve[n].xcol'''' ||Set column number for X coordinates. The columns are numbered from 1. ||
-||''''curve[n].ycol'''' ||Set column number for Y coordinates. The columns are numbered from 1. ||
+||''''curve[n].xcol'''' ||Set column number for X coordinates. The columns are numbered from 1 ||
+||''''curve[n].ycol'''' ||Set column number for Y coordinates. The columns are numbered from 1 ||
 ||''''curve[n].color'''' ||Set curve color (for example "#1CE81C", "#0BA", "rgb(180, 64, 180)", "black") ||
 ||''''curve[n].style'''' ||Set curve style by name or number. List of the styles is being given in the [[''curve.style'' parameter -> page://__0e8277e9-e11f-46fd-a5b2-b67194cddd47/#style]] section ||
 ||''''curve[n].hide'''' ||Hide curve ||
