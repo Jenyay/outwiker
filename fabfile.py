@@ -144,6 +144,7 @@ def plugins():
         "changepageuid",
         "counter",
         "diagrammer",
+        "datagraph",
         "export2html",
         "externaltools",
         "htmlheads",
