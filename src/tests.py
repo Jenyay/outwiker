@@ -187,7 +187,7 @@ if __name__ == '__main__':
     from test.plugins.htmlheads.loading import HtmlHeadsLoadingTest
     from test.plugins.htmlheads.htmlheads import HtmlHeadsTest
 
-    from test.plugins.changepageuid.changepageuid import ChangePageUidTest
+    from test.plugins.changepageuid.changepageuid_test import ChangePageUidTest
     from test.plugins.changepageuid.loading import ChangePageUIDLoadingTest
 
     from test.plugins.sessions.loading import SessionsLoadingTest

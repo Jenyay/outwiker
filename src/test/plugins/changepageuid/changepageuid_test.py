@@ -22,7 +22,8 @@ class ChangePageUidTest (BaseMainWndTest):
         self._loader = PluginsLoader(Application)
         self._loader.load (dirlist)
 
-        self._dlg = self._loader["ChangePageUID"].ChangeUidDialog (Application.mainWindow)
+        from changepageuid.dialog import ChangeUidDialog
+        self._dlg = ChangeUidDialog (Application.mainWindow)
         Tester.dialogTester.clear()
 
         self.testPage = self.wikiroot[u"Страница 1"]
@@ -85,4 +86,5 @@ class ChangePageUidTest (BaseMainWndTest):
 
 
     def _createDialogController (self):
-        return self._loader["ChangePageUID"].DialogController (Application, self._dlg, self.testPage)
+        from changepageuid.dialogcontroller import DialogController
+        return DialogController (Application, self._dlg, self.testPage)
