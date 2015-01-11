@@ -13,10 +13,14 @@ class InsertDiagramTest (unittest.TestCase):
 
         self.loader = PluginsLoader(Application)
         self.loader.load (dirlist)
-        self.plugin = self.loader[u"Diagrammer"]
 
-        self._dlg = self.plugin.InsertDiagramDialog(None)
-        self._controller = self.plugin.InsertDiagramController (self._dlg)
+        from diagrammer.gui.insertdiagramdialog import (
+            InsertDiagramDialog,
+            InsertDiagramController
+        )
+
+        self._dlg = InsertDiagramDialog(None)
+        self._controller = InsertDiagramController (self._dlg)
         Tester.dialogTester.clear()
 
 

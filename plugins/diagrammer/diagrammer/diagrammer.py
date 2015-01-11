@@ -14,17 +14,8 @@ __version__ = u"1.0.2"
 if getCurrentVersion() < Version (1, 8, 0, 735, status=StatusSet.DEV):
     print ("ChangeUID plugin. OutWiker version requirement: 1.8.0.735")
 else:
-    from .diagramrender import DiagramRender
     from .i18n import set_
     from .controller import Controller
-    from .gui.insertnodedialog import InsertNodeDialog, InsertNodeController
-    from .gui.insertdiagramdialog import InsertDiagramDialog, InsertDiagramController
-    from .gui.insertgroupdialog import InsertGroupDialog, InsertGroupController
-    from .gui.insertedgedialog import (InsertEdgeDialog,
-                                       InsertEdgeControllerNone,
-                                       InsertEdgeControllerLeft,
-                                       InsertEdgeControllerRight,
-                                       InsertEdgeControllerBoth)
 
 
     class PluginDiagrammer (Plugin):
@@ -102,63 +93,3 @@ else:
                 print e
 
             set_(_)
-
-
-        @property
-        def InsertNodeDialog (self):
-            return InsertNodeDialog
-
-
-        @property
-        def InsertNodeController (self):
-            return InsertNodeController
-
-
-        @property
-        def InsertDiagramDialog (self):
-            return InsertDiagramDialog
-
-
-        @property
-        def InsertDiagramController (self):
-            return InsertDiagramController
-
-
-        @property
-        def DiagramRender (self):
-            return DiagramRender
-
-
-        @property
-        def InsertEdgeDialog (self):
-            return InsertEdgeDialog
-
-
-        @property
-        def InsertEdgeControllerNone (self):
-            return InsertEdgeControllerNone
-
-
-        @property
-        def InsertEdgeControllerLeft (self):
-            return InsertEdgeControllerLeft
-
-
-        @property
-        def InsertEdgeControllerBoth (self):
-            return InsertEdgeControllerBoth
-
-
-        @property
-        def InsertEdgeControllerRight (self):
-            return InsertEdgeControllerRight
-
-
-        @property
-        def InsertGroupDialog (self):
-            return InsertGroupDialog
-
-
-        @property
-        def InsertGroupController (self):
-            return InsertGroupController

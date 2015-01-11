@@ -188,6 +188,7 @@ class DiagrammerTest (unittest.TestCase):
             "flowchart.terminator",
         ])
 
-        diagramShapers = self.loader[u"Diagrammer"].DiagramRender.shapes
+        from diagrammer.diagramrender import DiagramRender
+        diagramShapers = DiagramRender.shapes
 
         self.assertEqual (shapes, diagramShapers)

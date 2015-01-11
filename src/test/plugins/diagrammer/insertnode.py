@@ -13,10 +13,14 @@ class InsertNodeTest (unittest.TestCase):
 
         self.loader = PluginsLoader(Application)
         self.loader.load (dirlist)
-        self.plugin = self.loader[u"Diagrammer"]
 
-        self._dlg = self.plugin.InsertNodeDialog(None)
-        self._controller = self.plugin.InsertNodeController (self._dlg)
+        from diagrammer.gui.insertnodedialog import (
+            InsertNodeDialog,
+            InsertNodeController
+        )
+
+        self._dlg = InsertNodeDialog(None)
+        self._controller = InsertNodeController (self._dlg)
         Tester.dialogTester.clear()
 
 

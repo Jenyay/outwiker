@@ -193,7 +193,7 @@ if __name__ == '__main__':
     from test.plugins.sessions.loading import SessionsLoadingTest
     from test.plugins.sessions.sessions import SessionsTest
 
-    from test.plugins.diagrammer.diagrammer import DiagrammerTest
+    from test.plugins.diagrammer.diagrammer_test import DiagrammerTest
     from test.plugins.diagrammer.insertnode import InsertNodeTest
     from test.plugins.diagrammer.insertdiagram import InsertDiagramTest
     from test.plugins.diagrammer.insertedge import InsertEdgeTest

@@ -13,10 +13,14 @@ class InsertGroupTest (unittest.TestCase):
 
         self.loader = PluginsLoader(Application)
         self.loader.load (dirlist)
-        self.plugin = self.loader[u"Diagrammer"]
 
-        self._dlg = self.plugin.InsertGroupDialog(None)
-        self._controller = self.plugin.InsertGroupController (self._dlg)
+        from diagrammer.gui.insertgroupdialog import (
+            InsertGroupDialog,
+            InsertGroupController
+        )
+
+        self._dlg = InsertGroupDialog(None)
+        self._controller = InsertGroupController (self._dlg)
         Tester.dialogTester.clear()
 
 
