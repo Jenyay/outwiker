@@ -165,7 +165,7 @@ if __name__ == '__main__':
     from test.plugins.spoiler.spoiler import SpoilerPluginTest
 
     from test.plugins.livejournal.loading import LivejournalLoadingTest
-    from test.plugins.livejournal.livejournal import LivejournalPluginTest
+    from test.plugins.livejournal.livejournal_test import LivejournalPluginTest
 
     from test.plugins.lightbox.loading import LightboxLoadingTest
     from test.plugins.lightbox.lightbox import LightboxPluginTest
