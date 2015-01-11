@@ -22,7 +22,6 @@ class Export2HtmlTest (unittest.TestCase):
 
         self.loader = PluginsLoader(Application)
         self.loader.load (dirlist)
-        self.__tester = self.loader[self.pluginname].tester
 
         removeDir (self.outputdir)
 
@@ -42,8 +41,10 @@ class Export2HtmlTest (unittest.TestCase):
 
 
     def testExporterPage (self):
+        from export2html.exporterfactory import ExporterFactory
+
         pagename = u"Страница 1"
-        exporter = self.__tester.exporterFactory.getExporter (self.root[pagename])
+        exporter = ExporterFactory.getExporter (self.root[pagename])
 
         self.assertEqual (exporter.page, self.root[pagename])
 
@@ -52,9 +53,11 @@ class Export2HtmlTest (unittest.TestCase):
         """
         Тест на создание файлов и страниц
         """
+        from export2html.exporterfactory import ExporterFactory
+
         pagename = u"Страница 1"
 
-        exporter = self.__tester.exporterFactory.getExporter (self.root[pagename])
+        exporter = ExporterFactory.getExporter (self.root[pagename])
         exporter.export (outdir = self.outputdir,
                          exportname=pagename,
                          imagesonly=False,
@@ -76,10 +79,12 @@ class Export2HtmlTest (unittest.TestCase):
         """
         Тест на то, что мы можем изменять имя файла и папки для экспорта
         """
+        from export2html.exporterfactory import ExporterFactory
+
         pagename = u"Страница 1"
         exportname = u"Бла-бла-бла"
 
-        exporter = self.__tester.exporterFactory.getExporter (self.root[pagename])
+        exporter = ExporterFactory.getExporter (self.root[pagename])
         exporter.export (outdir = self.outputdir,
                          exportname=exportname,
                          imagesonly=False,
@@ -96,8 +101,10 @@ class Export2HtmlTest (unittest.TestCase):
         """
         Тест на то, что прикрепленные файлы копируются
         """
+        from export2html.exporterfactory import ExporterFactory
+
         pagename = u"Страница 1"
-        exporter = self.__tester.exporterFactory.getExporter (self.root[pagename])
+        exporter = ExporterFactory.getExporter (self.root[pagename])
         exporter.export (outdir = self.outputdir,
                          exportname=pagename,
                          imagesonly=False,
@@ -115,9 +122,11 @@ class Export2HtmlTest (unittest.TestCase):
         """
         Тест на то, что копируются только прикрепленные картинки
         """
+        from export2html.exporterfactory import ExporterFactory
+
         pagename = u"Страница 1"
 
-        exporter = self.__tester.exporterFactory.getExporter (self.root[pagename])
+        exporter = ExporterFactory.getExporter (self.root[pagename])
         exporter.export (outdir = self.outputdir,
                          exportname=pagename,
                          imagesonly=True,
@@ -136,9 +145,11 @@ class Export2HtmlTest (unittest.TestCase):
         Тест на то, что ссылки на прикрепленные файлы изменяютcя.
         Проверка на HTML-странице
         """
+        from export2html.exporterfactory import ExporterFactory
+
         pagename = u"Страница 1"
 
-        exporter = self.__tester.exporterFactory.getExporter (self.root[pagename])
+        exporter = ExporterFactory.getExporter (self.root[pagename])
         exporter.export (outdir = self.outputdir,
                          exportname=pagename,
                          imagesonly=True,
@@ -166,10 +177,12 @@ class Export2HtmlTest (unittest.TestCase):
         Тест на то, что ссылки на прикрепленные файлы изменяютcя.
         Проверка на HTML-странице
         """
+        from export2html.exporterfactory import ExporterFactory
+
         pagename = u"Страница 1"
         exportname = u"Бла-бла-бла"
 
-        exporter = self.__tester.exporterFactory.getExporter (self.root[pagename])
+        exporter = ExporterFactory.getExporter (self.root[pagename])
         exporter.export (outdir = self.outputdir,
                          exportname=exportname,
                          imagesonly=True,
@@ -187,10 +200,12 @@ class Export2HtmlTest (unittest.TestCase):
         Тест на то, что ссылки на прикрепленные файлы изменяютcя.
         Проверка на вики-странице
         """
+        from export2html.exporterfactory import ExporterFactory
+
         fullpagename = u"Типы страниц/wiki-страница"
         pagename = u"wiki-страница"
 
-        exporter = self.__tester.exporterFactory.getExporter (self.root[fullpagename])
+        exporter = ExporterFactory.getExporter (self.root[fullpagename])
         exporter.export (outdir = self.outputdir,
                          exportname=pagename,
                          imagesonly=True,
@@ -209,10 +224,12 @@ class Export2HtmlTest (unittest.TestCase):
         Тест на то, что ссылки на прикрепленные файлы изменяютcя.
         Проверка на вики-странице
         """
+        from export2html.exporterfactory import ExporterFactory
+
         fullpagename = u"Типы страниц/wiki-страница"
         exportname = u"Бла-бла-бла"
 
-        exporter = self.__tester.exporterFactory.getExporter (self.root[fullpagename])
+        exporter = ExporterFactory.getExporter (self.root[fullpagename])
         exporter.export (outdir = self.outputdir,
                          exportname=exportname,
                          imagesonly=True,
@@ -234,10 +251,12 @@ class Export2HtmlTest (unittest.TestCase):
         """
         Проверка на то, что сохраняется папка __thumb
         """
+        from export2html.exporterfactory import ExporterFactory
+
         fullpagename = u"Типы страниц/wiki-страница"
         pagename = u"wiki-страница"
 
-        exporter = self.__tester.exporterFactory.getExporter (self.root[fullpagename])
+        exporter = ExporterFactory.getExporter (self.root[fullpagename])
         exporter.export (outdir = self.outputdir,
                          exportname=pagename,
                          imagesonly=True,
@@ -251,10 +270,12 @@ class Export2HtmlTest (unittest.TestCase):
         """
         Экспорт текстовой страницы
         """
+        from export2html.exporterfactory import ExporterFactory
+
         fullpagename = u"Типы страниц/Текстовая страница"
         pagename = u"Текстовая страница"
 
-        exporter = self.__tester.exporterFactory.getExporter (self.root[fullpagename])
+        exporter = ExporterFactory.getExporter (self.root[fullpagename])
         exporter.export (outdir = self.outputdir,
                          exportname=pagename,
                          imagesonly=False,
@@ -270,10 +291,12 @@ class Export2HtmlTest (unittest.TestCase):
         """
         Экспорт текстовой страницы
         """
+        from export2html.exporterfactory import ExporterFactory
+
         fullpagename = u"Типы страниц/Текстовая страница"
         pagename = u"Текстовая страница"
 
-        exporter = self.__tester.exporterFactory.getExporter (self.root[fullpagename])
+        exporter = ExporterFactory.getExporter (self.root[fullpagename])
         exporter.export (outdir = self.outputdir,
                          exportname=pagename,
                          imagesonly=False,
@@ -291,10 +314,12 @@ class Export2HtmlTest (unittest.TestCase):
         Тест на то, что ссылки на прикрепленные файлы изменяютcя.
         Проверка на вики-странице
         """
+        from export2html.exporterfactory import ExporterFactory
+
         fullpagename = u"Типы страниц/Текстовая страница"
         pagename = u"Текстовая страница"
 
-        exporter = self.__tester.exporterFactory.getExporter (self.root[fullpagename])
+        exporter = ExporterFactory.getExporter (self.root[fullpagename])
         exporter.export (outdir = self.outputdir,
                          exportname=pagename,
                          imagesonly=True,
@@ -313,10 +338,12 @@ class Export2HtmlTest (unittest.TestCase):
         Тест на то, что ссылки на прикрепленные файлы изменяютcя.
         Проверка на вики-странице
         """
+        from export2html.exporterfactory import ExporterFactory
+
         fullpagename = u"Типы страниц/Текстовая страница"
         pagename = u"Текстовая страница"
 
-        exporter = self.__tester.exporterFactory.getExporter (self.root[fullpagename])
+        exporter = ExporterFactory.getExporter (self.root[fullpagename])
 
         exporter.export (outdir = self.outputdir,
                          exportname=pagename,
@@ -341,10 +368,12 @@ class Export2HtmlTest (unittest.TestCase):
         """
         Экспорт текстовой страницы
         """
+        from export2html.exporterfactory import ExporterFactory
+
         fullpagename = u"Типы страниц/Текстовая страница"
         pagename = u"Текстовая страница"
 
-        exporter = self.__tester.exporterFactory.getExporter (self.root[fullpagename])
+        exporter = ExporterFactory.getExporter (self.root[fullpagename])
         exporter.export (outdir = self.outputdir,
                          exportname=pagename,
                          imagesonly=True,
@@ -361,8 +390,10 @@ class Export2HtmlTest (unittest.TestCase):
         """
         Тест на то, что создаваемый файл уже может существовать
         """
+        from export2html.exporterfactory import ExporterFactory
+
         pagename = u"Страница 1"
-        exporter = self.__tester.exporterFactory.getExporter (self.root[pagename])
+        exporter = ExporterFactory.getExporter (self.root[pagename])
 
         exporter.export (outdir = self.outputdir,
                          exportname=pagename,
@@ -386,48 +417,25 @@ class Export2HtmlTest (unittest.TestCase):
         """
         Проверка на попытку экспортировать страницу, которая не может быть сохранена в HTML (страница поиска)
         """
+        from export2html.exporterfactory import ExporterFactory
+
         pagename = u"Типы страниц/Страница поиска"
 
         self.assertRaises (BaseException,
-                           self.__tester.exporterFactory.getExporter,
+                           ExporterFactory.getExporter,
                            page=self.root[pagename])
-
-
-    # def testHtmlNotFound (self):
-    #     """
-    #     Проверка на случай, если нет сформированного HTML-а
-    #     """
-    #     pagename = u"Страница 1"
-
-    #     htmlname = u"__content.html"
-    #     tmpname = u"__tmp.html"
-
-    #     page = self.root[pagename]
-
-    #     srcname = os.path.join (page.path, htmlname)
-    #     newname = os.path.join (page.path, tmpname)
-
-    #     os.rename (srcname, newname)
-
-    #     exporter = self.__tester.exporterFactory.getExporter (self.root[pagename])
-
-    #     self.assertRaises (BaseException,
-    #             exporter.export,
-    #             outdir = self.outputdir,
-    #             exportname=pagename,
-    #             imagesonly=False,
-    #             alwaysOverwrite=False)
-
-    #     os.rename (newname, srcname)
 
 
     def testExportBranchFiles (self):
         """
         Экспорт дерева
         """
+        from export2html.longnamegenerator import LongNameGenerator
+        from export2html.branchexporter import BranchExporter
+
         pagename = u"Страница 1"
-        namegenerator = self.__tester.longNameGenerator (self.root[pagename])
-        branchExporter = self.__tester.branchExporter (self.root[pagename], namegenerator, Application)
+        namegenerator = LongNameGenerator (self.root[pagename])
+        branchExporter = BranchExporter (self.root[pagename], namegenerator, Application)
 
         result = branchExporter.export (
             outdir=self.outputdir,
@@ -483,9 +491,12 @@ class Export2HtmlTest (unittest.TestCase):
         """
         Экспорт, начиная с корня дерева
         """
+        from export2html.longnamegenerator import LongNameGenerator
+        from export2html.branchexporter import BranchExporter
+
         wikiname = u"samplewiki"
-        namegenerator = self.__tester.longNameGenerator (self.root)
-        branchExporter = self.__tester.branchExporter (self.root, namegenerator, Application)
+        namegenerator = LongNameGenerator (self.root)
+        branchExporter = BranchExporter (self.root, namegenerator, Application)
 
         result = branchExporter.export (
             outdir=self.outputdir,
@@ -526,9 +537,12 @@ class Export2HtmlTest (unittest.TestCase):
         """
         Экспорт дерева с короткими именами
         """
+        from export2html.titlenamegenerator import TitleNameGenerator
+        from export2html.branchexporter import BranchExporter
+
         pagename = u"Страница 1"
-        namegenerator = self.__tester.titleNameGenerator (self.outputdir)
-        branchExporter = self.__tester.branchExporter (self.root[pagename], namegenerator, Application)
+        namegenerator = TitleNameGenerator (self.outputdir)
+        branchExporter = BranchExporter (self.root[pagename], namegenerator, Application)
 
         result = branchExporter.export (
             outdir=self.outputdir,
@@ -584,9 +598,12 @@ class Export2HtmlTest (unittest.TestCase):
         """
         Экспорт дерева с короткими именами
         """
+        from export2html.titlenamegenerator import TitleNameGenerator
+        from export2html.branchexporter import BranchExporter
+
         pagename = u"Страница 1"
-        namegenerator = self.__tester.titleNameGenerator (self.outputdir)
-        branchExporter = self.__tester.branchExporter (self.root[pagename], namegenerator, Application)
+        namegenerator = TitleNameGenerator (self.outputdir)
+        branchExporter = BranchExporter (self.root[pagename], namegenerator, Application)
 
         branchExporter.export (
             outdir=self.outputdir,
@@ -604,9 +621,12 @@ class Export2HtmlTest (unittest.TestCase):
         """
         Экспорт дерева с короткими именами
         """
+        from export2html.titlenamegenerator import TitleNameGenerator
+        from export2html.branchexporter import BranchExporter
+
         pagename = u"Страница 1"
-        namegenerator = self.__tester.titleNameGenerator (self.outputdir)
-        branchExporter = self.__tester.branchExporter (self.root[pagename], namegenerator, Application)
+        namegenerator = TitleNameGenerator (self.outputdir)
+        branchExporter = BranchExporter (self.root[pagename], namegenerator, Application)
 
         branchExporter.export (
             outdir=self.outputdir,
@@ -624,9 +644,12 @@ class Export2HtmlTest (unittest.TestCase):
         """
         Тест для проверки того, как исправляются ссылки на страницы
         """
+        from export2html.longnamegenerator import LongNameGenerator
+        from export2html.branchexporter import BranchExporter
+
         pagename = u"Страница 1"
-        namegenerator = self.__tester.longNameGenerator (self.root[pagename])
-        branchExporter = self.__tester.branchExporter (self.root[pagename], namegenerator, Application)
+        namegenerator = LongNameGenerator (self.root[pagename])
+        branchExporter = BranchExporter (self.root[pagename], namegenerator, Application)
 
         branchExporter.export (
             outdir=self.outputdir,
@@ -655,9 +678,12 @@ class Export2HtmlTest (unittest.TestCase):
         """
         Тест для проверки того, как исправляются ссылки на страницы
         """
+        from export2html.titlenamegenerator import TitleNameGenerator
+        from export2html.branchexporter import BranchExporter
+
         pagename = u"Страница 1"
-        namegenerator = self.__tester.titleNameGenerator (self.outputdir)
-        branchExporter = self.__tester.branchExporter (self.root[pagename], namegenerator, Application)
+        namegenerator = TitleNameGenerator (self.outputdir)
+        branchExporter = BranchExporter (self.root[pagename], namegenerator, Application)
 
         branchExporter.export (
             outdir=self.outputdir,
@@ -686,9 +712,12 @@ class Export2HtmlTest (unittest.TestCase):
         """
         Тест на проверку того, что заменяются ссылки вида page://...
         """
+        from export2html.longnamegenerator import LongNameGenerator
+        from export2html.branchexporter import BranchExporter
+
         Application.wikiroot = self.root
-        namegenerator = self.__tester.longNameGenerator (self.root)
-        branchExporter = self.__tester.branchExporter (self.root, namegenerator, Application)
+        namegenerator = LongNameGenerator (self.root)
+        branchExporter = BranchExporter (self.root, namegenerator, Application)
 
         branchExporter.export (
             outdir=self.outputdir,
@@ -705,9 +734,12 @@ class Export2HtmlTest (unittest.TestCase):
         """
         Тест на проверку того, что заменяются ссылки вида page://...
         """
+        from export2html.titlenamegenerator import TitleNameGenerator
+        from export2html.branchexporter import BranchExporter
+
         Application.wikiroot = self.root
-        namegenerator = self.__tester.titleNameGenerator (self.outputdir)
-        branchExporter = self.__tester.branchExporter (self.root, namegenerator, Application)
+        namegenerator = TitleNameGenerator (self.outputdir)
+        branchExporter = BranchExporter (self.root, namegenerator, Application)
 
         branchExporter.export (
             outdir=self.outputdir,
@@ -724,9 +756,12 @@ class Export2HtmlTest (unittest.TestCase):
         """
         Тест на проверку того, что заменяются ссылки вида page://...
         """
+        from export2html.titlenamegenerator import TitleNameGenerator
+        from export2html.branchexporter import BranchExporter
+
         Application.wikiroot = self.root
-        namegenerator = self.__tester.titleNameGenerator (self.outputdir)
-        branchExporter = self.__tester.branchExporter (self.root, namegenerator, Application)
+        namegenerator = TitleNameGenerator (self.outputdir)
+        branchExporter = BranchExporter (self.root, namegenerator, Application)
 
         branchExporter.export (
             outdir=self.outputdir,
@@ -743,9 +778,12 @@ class Export2HtmlTest (unittest.TestCase):
         """
         Тест на проверку того, что заменяются ссылки вида page://...
         """
+        from export2html.titlenamegenerator import TitleNameGenerator
+        from export2html.branchexporter import BranchExporter
+
         Application.wikiroot = self.root
-        namegenerator = self.__tester.titleNameGenerator (self.outputdir)
-        branchExporter = self.__tester.branchExporter (self.root, namegenerator, Application)
+        namegenerator = TitleNameGenerator (self.outputdir)
+        branchExporter = BranchExporter (self.root, namegenerator, Application)
 
         branchExporter.export (
             outdir=self.outputdir,
@@ -762,9 +800,12 @@ class Export2HtmlTest (unittest.TestCase):
         """
         Тест на проверку того, что заменяются ссылки вида page://...
         """
+        from export2html.titlenamegenerator import TitleNameGenerator
+        from export2html.branchexporter import BranchExporter
+
         Application.wikiroot = self.root
-        namegenerator = self.__tester.titleNameGenerator (self.outputdir)
-        branchExporter = self.__tester.branchExporter (self.root, namegenerator, Application)
+        namegenerator = TitleNameGenerator (self.outputdir)
+        branchExporter = BranchExporter (self.root, namegenerator, Application)
 
         branchExporter.export (
             outdir=self.outputdir,
@@ -781,9 +822,12 @@ class Export2HtmlTest (unittest.TestCase):
         """
         Тест на проверку того, что заменяются ссылки вида page://...
         """
+        from export2html.titlenamegenerator import TitleNameGenerator
+        from export2html.branchexporter import BranchExporter
+
         Application.wikiroot = self.root
-        namegenerator = self.__tester.titleNameGenerator (self.outputdir)
-        branchExporter = self.__tester.branchExporter (self.root, namegenerator, Application)
+        namegenerator = TitleNameGenerator (self.outputdir)
+        branchExporter = BranchExporter (self.root, namegenerator, Application)
 
         branchExporter.export (
             outdir=self.outputdir,
@@ -800,9 +844,12 @@ class Export2HtmlTest (unittest.TestCase):
         """
         Тест на проверку того, что заменяются ссылки вида page://...
         """
+        from export2html.titlenamegenerator import TitleNameGenerator
+        from export2html.branchexporter import BranchExporter
+
         Application.wikiroot = self.root
-        namegenerator = self.__tester.titleNameGenerator (self.outputdir)
-        branchExporter = self.__tester.branchExporter (self.root, namegenerator, Application)
+        namegenerator = TitleNameGenerator (self.outputdir)
+        branchExporter = BranchExporter (self.root, namegenerator, Application)
 
         branchExporter.export (
             outdir=self.outputdir,

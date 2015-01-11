@@ -158,7 +158,7 @@ if __name__ == '__main__':
     from test.plugins.style.loading import StyleLoadingTest
     from test.plugins.style.style import StylePluginTest
 
-    from test.plugins.export2html.export2html import Export2HtmlTest
+    from test.plugins.export2html.export2html_test import Export2HtmlTest
     from test.plugins.export2html.loading import Export2HtmlLoadingTest
 
     from test.plugins.spoiler.loading import SpoilerLoadingTest

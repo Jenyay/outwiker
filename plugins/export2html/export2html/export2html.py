@@ -6,8 +6,6 @@ from outwiker.core.pluginbase import Plugin
 from outwiker.core.system import getOS
 
 from .controller import Controller
-from .tester import Tester
-
 from .i18n import _, set_
 
 __version__ = u"1.3.1"
@@ -75,11 +73,3 @@ class PluginExport2Html (Plugin):
             set_(_)
         except BaseException, e:
             print e
-
-
-    @property
-    def tester(self):
-        """
-        Возвращает экземпляр класса Tester, предназначеный для тестирования
-        """
-        return Tester()
