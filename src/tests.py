@@ -180,7 +180,7 @@ if __name__ == '__main__':
     from test.plugins.updatenotifier.loading import UpdateNotifierLoadingTest
     from test.plugins.updatenotifier.updatenotifier import UpdateNotifierTest
 
-    from test.plugins.counter.counter import CounterTest
+    from test.plugins.counter.counter_test import CounterTest
     from test.plugins.counter.counterdialog import CounterDialogTest
     from test.plugins.counter.loading import CounterLoadingTest
 
