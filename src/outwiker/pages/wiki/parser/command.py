@@ -44,7 +44,7 @@ class Command (object):
             Changes in 1.9.0.761: name may contain a dot.
         """
         pattern = ur"""((?P<name>[\w.]+)
-(\s*=\s*(?P<param>([-_\w]+)|((?P<quote>["']).*?(?P=quote)) ) )?\s*)"""
+    (\s*=\s*(?P<param>([-_\w.]+)|((?P<quote>["']).*?(?P=quote)) ) )?\s*)"""
 
         result = {}
 

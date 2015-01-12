@@ -38,11 +38,22 @@ class WikiCommandsTest (unittest.TestCase):
 
 
     def testParamsParsing1 (self):
-        params_text = u"""Параметр1 Параметр2 = 111 Параметр3 = " бла бла бла" Параметр4 Параметр5="111" Параметр6=' 222 ' Параметр7 = " проверка 'бла бла бла' проверка" Параметр8 = ' проверка "bla-bla-bla" тест ' """
+        params_text = u"""Параметр1
+Параметр2 = 111
+Параметр3 = " бла бла бла"
+Параметр4
+Параметр5="111"
+Параметр6=' 222 '
+Параметр7 = " проверка 'бла бла бла' проверка"
+Параметр8 = ' проверка "bla-bla-bla" тест '
+Параметр9 = -1
+Параметр10 = -10.5
+Параметр11 = 12.5
+"""
 
         params = Command.parseParams (params_text)
 
-        self.assertEqual (len (params), 8)
+        self.assertEqual (len (params), 11, params)
         self.assertEqual (params[u"Параметр1"], u"")
         self.assertEqual (params[u"Параметр2"], u"111")
         self.assertEqual (params[u"Параметр3"], u" бла бла бла")
@@ -51,6 +62,9 @@ class WikiCommandsTest (unittest.TestCase):
         self.assertEqual (params[u"Параметр6"], u" 222 ")
         self.assertEqual (params[u"Параметр7"], u" проверка 'бла бла бла' проверка")
         self.assertEqual (params[u"Параметр8"], u' проверка "bla-bla-bla" тест ')
+        self.assertEqual (params[u"Параметр9"], u"-1")
+        self.assertEqual (params[u"Параметр10"], u"-10.5")
+        self.assertEqual (params[u"Параметр11"], u"12.5")
 
 
     def testParamsParsing2 (self):
