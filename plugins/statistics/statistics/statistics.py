@@ -9,12 +9,6 @@ from outwiker.core.commands import getCurrentVersion
 from outwiker.core.version import Version, StatusSet
 from outwiker.core.system import getOS
 
-from .i18n import set_
-from .pagestat import PageStat
-from .treestat import TreeStat
-from .pagestatdialog import PageStatDialog
-from .treestatdialog import TreeStatDialog
-
 
 __version__ = u"1.0.1"
 
@@ -22,6 +16,12 @@ __version__ = u"1.0.1"
 if getCurrentVersion() < Version (1, 7, 0, 684, status=StatusSet.DEV):
     print ("Statistics plugin. OutWiker version requirement: 1.7.0.684")
 else:
+    from .i18n import set_
+    from .pagestat import PageStat
+    from .treestat import TreeStat
+    from .pagestatdialog import PageStatDialog
+    from .treestatdialog import TreeStatDialog
+
     class PluginStatistics (Plugin):
         def __init__ (self, application):
             """
@@ -147,17 +147,3 @@ Statistics plugin append menu items <b>Tools -> Page Statistic</b> and <b>Tools 
                 treeStat = TreeStat (self._application.wikiroot)
                 with TreeStatDialog (self._application.mainWindow, self._application, treeStat) as dlg:
                     dlg.ShowModal()
-
-
-        def getPageStat (self, page):
-            """
-            Получить экземпляр класса для сбора статистики по странице. Используется в тестах
-            """
-            return PageStat (page)
-
-
-        def getTreeStat (self, root):
-            """
-            Получить экземпляр класса для сбора статистики по дереву. Используется в тестах
-            """
-            return TreeStat (root)
