@@ -14,7 +14,6 @@ class TOC_WikiMakerTest (unittest.TestCase):
 
         self.loader = PluginsLoader(Application)
         self.loader.load (dirlist)
-        self.plugin = self.loader[u"TableOfContents"]
 
 
     def tearDown (self):
@@ -22,8 +21,10 @@ class TOC_WikiMakerTest (unittest.TestCase):
 
 
     def testEmpty (self):
+        from tableofcontents.tocwikimaker import TocWikiMaker
+
         text = u''''''
-        maker = self.plugin.TocWikiMaker (Application.config)
+        maker = TocWikiMaker (Application.config)
         result = maker.make (text)
 
         result_valid = u''''''
@@ -32,8 +33,10 @@ class TOC_WikiMakerTest (unittest.TestCase):
 
 
     def test_01 (self):
+        from tableofcontents.tocwikimaker import TocWikiMaker
+
         text = u'''  !! Абырвалг'''
-        maker = self.plugin.TocWikiMaker (Application.config)
+        maker = TocWikiMaker (Application.config)
         result = maker.make (text)
 
         result_valid = u''''''
@@ -42,8 +45,10 @@ class TOC_WikiMakerTest (unittest.TestCase):
 
 
     def test_02 (self):
+        from tableofcontents.tocwikimaker import TocWikiMaker
+
         text = u'''!! Абырвалг'''
-        maker = self.plugin.TocWikiMaker (Application.config)
+        maker = TocWikiMaker (Application.config)
         result = maker.make (text)
 
         result_valid = u'''* Абырвалг'''
@@ -52,8 +57,10 @@ class TOC_WikiMakerTest (unittest.TestCase):
 
 
     def test_03 (self):
+        from tableofcontents.tocwikimaker import TocWikiMaker
+
         text = u'''!!    Абырвалг    '''
-        maker = self.plugin.TocWikiMaker (Application.config)
+        maker = TocWikiMaker (Application.config)
         result = maker.make (text)
 
         result_valid = u'''* Абырвалг'''
@@ -62,10 +69,12 @@ class TOC_WikiMakerTest (unittest.TestCase):
 
 
     def test_04 (self):
+        from tableofcontents.tocwikimaker import TocWikiMaker
+
         text = u'''!! Абырвалг\\
  123'''
 
-        maker = self.plugin.TocWikiMaker (Application.config)
+        maker = TocWikiMaker (Application.config)
         result = maker.make (text)
 
         result_valid = u'''* Абырвалг 123'''
@@ -74,10 +83,12 @@ class TOC_WikiMakerTest (unittest.TestCase):
 
 
     def test_05 (self):
+        from tableofcontents.tocwikimaker import TocWikiMaker
+
         text = u'''!! Абырвалг 123
 !!! Абырвалг 234'''
 
-        maker = self.plugin.TocWikiMaker (Application.config)
+        maker = TocWikiMaker (Application.config)
         result = maker.make (text)
 
         result_valid = u'''* Абырвалг 123
@@ -87,6 +98,8 @@ class TOC_WikiMakerTest (unittest.TestCase):
 
 
     def test_06 (self):
+        from tableofcontents.tocwikimaker import TocWikiMaker
+
         text = u'''ывп ыфвп ваы
 
 [=
@@ -104,7 +117,7 @@ class TOC_WikiMakerTest (unittest.TestCase):
 
 !!! Абырвалг 234'''
 
-        maker = self.plugin.TocWikiMaker (Application.config)
+        maker = TocWikiMaker (Application.config)
         result = maker.make (text)
 
         result_valid = u'''* Абырвалг 123
@@ -114,6 +127,8 @@ class TOC_WikiMakerTest (unittest.TestCase):
 
 
     def test_07 (self):
+        from tableofcontents.tocwikimaker import TocWikiMaker
+
         WikiConfig (Application.config).linkStyleOptions.value = 0
         text = u'''ывп ыфвп ваы
 
@@ -133,7 +148,7 @@ class TOC_WikiMakerTest (unittest.TestCase):
 [[#якорь2]]
 !!! Абырвалг 234'''
 
-        maker = self.plugin.TocWikiMaker (Application.config)
+        maker = TocWikiMaker (Application.config)
         result = maker.make (text)
 
         result_valid = u'''* [[Абырвалг 123 -> #якорь1]]
@@ -143,6 +158,8 @@ class TOC_WikiMakerTest (unittest.TestCase):
 
 
     def test_08 (self):
+        from tableofcontents.tocwikimaker import TocWikiMaker
+
         WikiConfig (Application.config).linkStyleOptions.value = 1
         text = u'''ывп ыфвп ваы
 
@@ -162,7 +179,7 @@ class TOC_WikiMakerTest (unittest.TestCase):
 [[#якорь2]]
 !!! Абырвалг 234'''
 
-        maker = self.plugin.TocWikiMaker (Application.config)
+        maker = TocWikiMaker (Application.config)
         result = maker.make (text)
 
         result_valid = u'''* [[#якорь1 | Абырвалг 123]]
@@ -172,6 +189,8 @@ class TOC_WikiMakerTest (unittest.TestCase):
 
 
     def test_09 (self):
+        from tableofcontents.tocwikimaker import TocWikiMaker
+
         WikiConfig (Application.config).linkStyleOptions.value = 0
         text = u'''ывп ыфвп ваы
 
@@ -191,7 +210,7 @@ class TOC_WikiMakerTest (unittest.TestCase):
 [[#якорь2]]
 !!! Абырвалг 234'''
 
-        maker = self.plugin.TocWikiMaker (Application.config)
+        maker = TocWikiMaker (Application.config)
         result = maker.make (text)
 
         result_valid = u'''* [[Абырвалг 123 -> #якорь1]]
@@ -201,6 +220,8 @@ class TOC_WikiMakerTest (unittest.TestCase):
 
 
     def test_10 (self):
+        from tableofcontents.tocwikimaker import TocWikiMaker
+
         WikiConfig (Application.config).linkStyleOptions.value = 1
         text = u'''ывп ыфвп ваы
 
@@ -220,7 +241,7 @@ class TOC_WikiMakerTest (unittest.TestCase):
 [[#якорь2]]
 !!! Абырвалг 234'''
 
-        maker = self.plugin.TocWikiMaker (Application.config)
+        maker = TocWikiMaker (Application.config)
         result = maker.make (text)
 
         result_valid = u'''* [[#якорь1 | Абырвалг 123]]
@@ -230,6 +251,8 @@ class TOC_WikiMakerTest (unittest.TestCase):
 
 
     def test_11 (self):
+        from tableofcontents.tocwikimaker import TocWikiMaker
+
         WikiConfig (Application.config).linkStyleOptions.value = 1
         text = u'''ывп ыфвп ваы
 
@@ -249,7 +272,7 @@ class TOC_WikiMakerTest (unittest.TestCase):
 [[#якорь2]]
 !!!!! Абырвалг 234'''
 
-        maker = self.plugin.TocWikiMaker (Application.config)
+        maker = TocWikiMaker (Application.config)
         result = maker.make (text)
 
         result_valid = u'''* [[#якорь1 | Абырвалг 123]]
