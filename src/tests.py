@@ -191,7 +191,7 @@ if __name__ == '__main__':
     from test.plugins.changepageuid.loading import ChangePageUIDLoadingTest
 
     from test.plugins.sessions.loading import SessionsLoadingTest
-    from test.plugins.sessions.sessions import SessionsTest
+    from test.plugins.sessions.sessions_test import SessionsTest
 
     from test.plugins.diagrammer.diagrammer_test import DiagrammerTest
     from test.plugins.diagrammer.insertnode import InsertNodeTest

@@ -15,8 +15,6 @@ if getCurrentVersion() < Version (1, 8, 0, 732, status=StatusSet.DEV):
 else:
     from .i18n import set_
     from .plugincontroller import PluginController
-    from .sessionstorage import SessionStorage
-    from .sessioncontroller import SessionController
 
 
     class PluginSessions (Plugin):
@@ -80,19 +78,3 @@ else:
                 print e
 
             set_(_)
-
-
-        @property
-        def SessionStorage (self):
-            """
-            Используется для тестирования
-            """
-            return SessionStorage
-
-
-        @property
-        def SessionController (self):
-            """
-            Используется для тестирования
-            """
-            return SessionController

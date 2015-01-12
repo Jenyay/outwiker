@@ -25,13 +25,15 @@ class SessionsTest (BaseMainWndTest):
         self.loader = PluginsLoader(Application)
         self.loader.load (dirlist)
 
-        Application.config.remove_section (self.loader[u"Sessions"].SessionStorage.SECTION_NAME)
+        from sessions.sessionstorage import SessionStorage
+        Application.config.remove_section (SessionStorage.SECTION_NAME)
 
 
     def tearDown (self):
+        from sessions.sessionstorage import SessionStorage
         super (SessionsTest, self).tearDown ()
         Application.wikiroot = None
-        Application.config.remove_section (self.loader[u"Sessions"].SessionStorage.SECTION_NAME)
+        Application.config.remove_section (SessionStorage.SECTION_NAME)
         self.loader.clear()
         removeDir (self.path2)
 
@@ -55,19 +57,23 @@ class SessionsTest (BaseMainWndTest):
 
 
     def testEmptySessions (self):
-        storage = self.loader[u"Sessions"].SessionStorage(Application.config)
+        from sessions.sessionstorage import SessionStorage
+        storage = SessionStorage(Application.config)
 
         self.assertEqual (storage.getSessions(), {})
 
 
     def testSessionSingleTab (self):
+        from sessions.sessionstorage import SessionStorage
+        from sessions.sessioncontroller import SessionController
+
         Application.wikiroot = self.wikiroot
         Application.selectedPage = self.wikiroot[u"Страница 1"]
 
         sessionName = u"Имя сессии"
 
-        controller = self.loader[u"Sessions"].SessionController(Application)
-        storage = self.loader[u"Sessions"].SessionStorage(Application.config)
+        controller = SessionController(Application)
+        storage = SessionStorage(Application.config)
 
         storage.save (controller.getCurrentSession(), sessionName)
         sessions = storage.getSessions()
@@ -79,15 +85,18 @@ class SessionsTest (BaseMainWndTest):
 
 
     def testSaveSession_01 (self):
+        from sessions.sessionstorage import SessionStorage
+        from sessions.sessioncontroller import SessionController
+
         Application.wikiroot = self.wikiroot
         Application.selectedPage = self.wikiroot[u"Страница 1"]
 
         sessionName = u"Имя сессии"
 
-        controller = self.loader[u"Sessions"].SessionController (Application)
-        self.loader[u"Sessions"].SessionStorage(Application.config).save (controller.getCurrentSession(), sessionName)
+        controller = SessionController (Application)
+        SessionStorage(Application.config).save (controller.getCurrentSession(), sessionName)
 
-        otherStorage = self.loader[u"Sessions"].SessionStorage(Application.config)
+        otherStorage = SessionStorage(Application.config)
 
         sessions = otherStorage.getSessions()
 
@@ -98,6 +107,9 @@ class SessionsTest (BaseMainWndTest):
 
 
     def testSaveSession_02 (self):
+        from sessions.sessionstorage import SessionStorage
+        from sessions.sessioncontroller import SessionController
+
         tabsController = Application.mainWindow.tabsController
         Application.wikiroot = self.wikiroot
 
@@ -106,10 +118,10 @@ class SessionsTest (BaseMainWndTest):
 
         sessionName = u"Имя сессии"
 
-        controller = self.loader[u"Sessions"].SessionController (Application)
-        self.loader[u"Sessions"].SessionStorage(Application.config).save (controller.getCurrentSession(), sessionName)
+        controller = SessionController (Application)
+        SessionStorage(Application.config).save (controller.getCurrentSession(), sessionName)
 
-        otherStorage = self.loader[u"Sessions"].SessionStorage(Application.config)
+        otherStorage = SessionStorage(Application.config)
 
         sessions = otherStorage.getSessions()
 
@@ -121,6 +133,9 @@ class SessionsTest (BaseMainWndTest):
 
 
     def testSaveSession_03 (self):
+        from sessions.sessionstorage import SessionStorage
+        from sessions.sessioncontroller import SessionController
+
         tabsController = Application.mainWindow.tabsController
         Application.wikiroot = self.wikiroot
 
@@ -129,10 +144,10 @@ class SessionsTest (BaseMainWndTest):
 
         sessionName = u"Имя сессии"
 
-        controller = self.loader[u"Sessions"].SessionController (Application)
-        self.loader[u"Sessions"].SessionStorage(Application.config).save (controller.getCurrentSession(), sessionName)
+        controller = SessionController (Application)
+        SessionStorage(Application.config).save (controller.getCurrentSession(), sessionName)
 
-        otherStorage = self.loader[u"Sessions"].SessionStorage(Application.config)
+        otherStorage = SessionStorage(Application.config)
 
         sessions = otherStorage.getSessions()
 
@@ -144,6 +159,9 @@ class SessionsTest (BaseMainWndTest):
 
 
     def testSaveSession_04 (self):
+        from sessions.sessionstorage import SessionStorage
+        from sessions.sessioncontroller import SessionController
+
         sessionName1 = u"Имя сессии 1"
         sessionName2 = u"Имя сессии 2"
 
@@ -152,16 +170,16 @@ class SessionsTest (BaseMainWndTest):
 
         Application.selectedPage = self.wikiroot[u"Страница 1"]
 
-        controller = self.loader[u"Sessions"].SessionController (Application)
+        controller = SessionController (Application)
 
         # Сохраним сессию с одной страницей
-        self.loader[u"Sessions"].SessionStorage(Application.config).save (controller.getCurrentSession(), sessionName1)
+        SessionStorage(Application.config).save (controller.getCurrentSession(), sessionName1)
 
         # Сохраним сессию с двумя страницами
         tabsController.openInTab (self.wikiroot[u"Страница 2"], True)
-        self.loader[u"Sessions"].SessionStorage(Application.config).save (controller.getCurrentSession(), sessionName2)
+        SessionStorage(Application.config).save (controller.getCurrentSession(), sessionName2)
 
-        otherStorage = self.loader[u"Sessions"].SessionStorage(Application.config)
+        otherStorage = SessionStorage(Application.config)
 
         sessions = otherStorage.getSessions()
 
@@ -178,6 +196,9 @@ class SessionsTest (BaseMainWndTest):
 
 
     def testSaveSession_05 (self):
+        from sessions.sessionstorage import SessionStorage
+        from sessions.sessioncontroller import SessionController
+
         tabsController = Application.mainWindow.tabsController
         Application.wikiroot = self.wikiroot
 
@@ -185,14 +206,14 @@ class SessionsTest (BaseMainWndTest):
         tabsController.openInTab (self.wikiroot[u"Страница 2"], True)
 
         sessionName = u"Имя сессии"
-        controller = self.loader[u"Sessions"].SessionController (Application)
+        controller = SessionController (Application)
         session = controller.getCurrentSession()
 
         # Сохраним сессию дважды под одним и тем же именем
-        self.loader[u"Sessions"].SessionStorage(Application.config).save (session, sessionName)
-        self.loader[u"Sessions"].SessionStorage(Application.config).save (session, sessionName)
+        SessionStorage(Application.config).save (session, sessionName)
+        SessionStorage(Application.config).save (session, sessionName)
 
-        otherStorage = self.loader[u"Sessions"].SessionStorage(Application.config)
+        otherStorage = SessionStorage(Application.config)
 
         sessions = otherStorage.getSessions()
 
@@ -205,6 +226,9 @@ class SessionsTest (BaseMainWndTest):
 
 
     def testSaveSession_06 (self):
+        from sessions.sessionstorage import SessionStorage
+        from sessions.sessioncontroller import SessionController
+
         tabsController = Application.mainWindow.tabsController
 
         uid1 = self._getPageLink (self.wikiroot[u"Страница 1"])
@@ -217,14 +241,14 @@ class SessionsTest (BaseMainWndTest):
         tabsController.openInTab (wiki[u"Страница 2"], True)
 
         sessionName = u"Имя сессии"
-        controller = self.loader[u"Sessions"].SessionController (Application)
+        controller = SessionController (Application)
         session = controller.getCurrentSession()
 
         # Сохраним сессию дважды под одним и тем же именем
-        self.loader[u"Sessions"].SessionStorage(Application.config).save (session, sessionName)
-        self.loader[u"Sessions"].SessionStorage(Application.config).save (session, sessionName)
+        SessionStorage(Application.config).save (session, sessionName)
+        SessionStorage(Application.config).save (session, sessionName)
 
-        otherStorage = self.loader[u"Sessions"].SessionStorage(Application.config)
+        otherStorage = SessionStorage(Application.config)
 
         sessions = otherStorage.getSessions()
 
@@ -237,6 +261,9 @@ class SessionsTest (BaseMainWndTest):
 
 
     def testSaveSession_07 (self):
+        from sessions.sessionstorage import SessionStorage
+        from sessions.sessioncontroller import SessionController
+
         tabsController = Application.mainWindow.tabsController
 
         # Создадим UID, а потом проверим, что они нормально прочитаются в
@@ -251,16 +278,16 @@ class SessionsTest (BaseMainWndTest):
         tabsController.openInTab (wiki[u"Страница 2"], True)
 
         sessionName = u"Имя сессии"
-        controller = self.loader[u"Sessions"].SessionController (Application)
+        controller = SessionController (Application)
         session = controller.getCurrentSession()
 
         # Сохраним сессию дважды под одним и тем же именем
-        storage = self.loader[u"Sessions"].SessionStorage(Application.config)
+        storage = SessionStorage(Application.config)
 
         storage.save (session, sessionName)
         storage.save (session, sessionName)
 
-        otherStorage = self.loader[u"Sessions"].SessionStorage(Application.config)
+        otherStorage = SessionStorage(Application.config)
 
         sessions = otherStorage.getSessions()
 
@@ -273,16 +300,19 @@ class SessionsTest (BaseMainWndTest):
 
 
     def testSaveSession_08 (self):
+        from sessions.sessionstorage import SessionStorage
+        from sessions.sessioncontroller import SessionController
+
         Application.wikiroot = self.wikiroot
         Application.selectedPage = self.wikiroot[u"Страница 1"]
 
-        controller = self.loader[u"Sessions"].SessionController (Application)
-        storage = self.loader[u"Sessions"].SessionStorage(Application.config)
+        controller = SessionController (Application)
+        storage = SessionStorage(Application.config)
 
         storage.save (controller.getCurrentSession(), u"session1")
         storage.save (controller.getCurrentSession(), u"session2")
 
-        otherStorage = self.loader[u"Sessions"].SessionStorage(Application.config)
+        otherStorage = SessionStorage(Application.config)
 
         sessions = otherStorage.getSessions()
 
@@ -298,11 +328,14 @@ class SessionsTest (BaseMainWndTest):
 
 
     def testSaveSession_09 (self):
+        from sessions.sessionstorage import SessionStorage
+        from sessions.sessioncontroller import SessionController
+
         Application.wikiroot = self.wikiroot
         Application.selectedPage = self.wikiroot[u"Страница 1"]
 
-        controller = self.loader[u"Sessions"].SessionController (Application)
-        storage = self.loader[u"Sessions"].SessionStorage(Application.config)
+        controller = SessionController (Application)
+        storage = SessionStorage(Application.config)
 
         storage.save (controller.getCurrentSession(), u"session1")
 
@@ -310,7 +343,7 @@ class SessionsTest (BaseMainWndTest):
         tabsController.openInTab (self.wikiroot[u"Страница 2"], True)
         storage.save (controller.getCurrentSession(), u"session2")
 
-        otherStorage = self.loader[u"Sessions"].SessionStorage(Application.config)
+        otherStorage = SessionStorage(Application.config)
 
         sessions = otherStorage.getSessions()
 
@@ -327,45 +360,51 @@ class SessionsTest (BaseMainWndTest):
 
 
     def testRemoveSession_01 (self):
+        from sessions.sessionstorage import SessionStorage
+        from sessions.sessioncontroller import SessionController
+
         Application.wikiroot = self.wikiroot
         Application.selectedPage = self.wikiroot[u"Страница 1"]
 
-        controller = self.loader[u"Sessions"].SessionController (Application)
-        storage = self.loader[u"Sessions"].SessionStorage(Application.config)
+        controller = SessionController (Application)
+        storage = SessionStorage(Application.config)
 
         storage.save (controller.getCurrentSession(), u"session1")
         storage.save (controller.getCurrentSession(), u"session2")
 
-        otherStorage = self.loader[u"Sessions"].SessionStorage(Application.config)
+        otherStorage = SessionStorage(Application.config)
         sessions = otherStorage.getSessions()
         self.assertEqual (len (sessions), 2)
 
         # Удалим несуществующую сессию. При этом ничего не должно происходить
         storage.remove (u"session_invalid")
 
-        otherStorage = self.loader[u"Sessions"].SessionStorage(Application.config)
+        otherStorage = SessionStorage(Application.config)
         sessions = otherStorage.getSessions()
         self.assertEqual (len (sessions), 2)
 
 
     def testRemoveSession_02 (self):
+        from sessions.sessionstorage import SessionStorage
+        from sessions.sessioncontroller import SessionController
+
         Application.wikiroot = self.wikiroot
         Application.selectedPage = self.wikiroot[u"Страница 1"]
 
-        controller = self.loader[u"Sessions"].SessionController (Application)
-        storage = self.loader[u"Sessions"].SessionStorage(Application.config)
+        controller = SessionController (Application)
+        storage = SessionStorage(Application.config)
 
         storage.save (controller.getCurrentSession(), u"session1")
         storage.save (controller.getCurrentSession(), u"session2")
 
-        otherStorage = self.loader[u"Sessions"].SessionStorage(Application.config)
+        otherStorage = SessionStorage(Application.config)
         sessions = otherStorage.getSessions()
         self.assertEqual (len (sessions), 2)
 
         # Удалим несуществующую сессию. При этом ничего не должно происходить
         storage.remove (u"session1")
 
-        otherStorage = self.loader[u"Sessions"].SessionStorage(Application.config)
+        otherStorage = SessionStorage(Application.config)
         sessions = otherStorage.getSessions()
         self.assertEqual (len (sessions), 1)
         self.assertEqual (sessions.keys()[0], u"session2")
@@ -376,11 +415,14 @@ class SessionsTest (BaseMainWndTest):
 
 
     def testRename_01 (self):
+        from sessions.sessionstorage import SessionStorage
+        from sessions.sessioncontroller import SessionController
+
         Application.wikiroot = self.wikiroot
         Application.selectedPage = self.wikiroot[u"Страница 1"]
 
-        controller = self.loader[u"Sessions"].SessionController (Application)
-        storage = self.loader[u"Sessions"].SessionStorage(Application.config)
+        controller = SessionController (Application)
+        storage = SessionStorage(Application.config)
 
         storage.save (controller.getCurrentSession(), u"session1")
         storage.save (controller.getCurrentSession(), u"session2")
@@ -389,17 +431,20 @@ class SessionsTest (BaseMainWndTest):
 
 
     def testRename_02 (self):
+        from sessions.sessionstorage import SessionStorage
+        from sessions.sessioncontroller import SessionController
+
         Application.wikiroot = self.wikiroot
         Application.selectedPage = self.wikiroot[u"Страница 1"]
 
-        controller = self.loader[u"Sessions"].SessionController (Application)
-        storage = self.loader[u"Sessions"].SessionStorage(Application.config)
+        controller = SessionController (Application)
+        storage = SessionStorage(Application.config)
 
         storage.save (controller.getCurrentSession(), u"session1")
         storage.save (controller.getCurrentSession(), u"session2")
         storage.rename (u"session1", u"Абырвалг")
 
-        otherStorage = self.loader[u"Sessions"].SessionStorage(Application.config)
+        otherStorage = SessionStorage(Application.config)
 
         sessions = otherStorage.getSessions()
         self.assertEqual (len (sessions), 2)
@@ -413,17 +458,20 @@ class SessionsTest (BaseMainWndTest):
 
 
     def testRename_03 (self):
+        from sessions.sessionstorage import SessionStorage
+        from sessions.sessioncontroller import SessionController
+
         Application.wikiroot = self.wikiroot
         Application.selectedPage = self.wikiroot[u"Страница 1"]
 
-        controller = self.loader[u"Sessions"].SessionController (Application)
-        storage = self.loader[u"Sessions"].SessionStorage(Application.config)
+        controller = SessionController (Application)
+        storage = SessionStorage(Application.config)
 
         storage.save (controller.getCurrentSession(), u"session1")
         storage.save (controller.getCurrentSession(), u"session2")
         storage.rename (u"session1", u"session1")
 
-        otherStorage = self.loader[u"Sessions"].SessionStorage(Application.config)
+        otherStorage = SessionStorage(Application.config)
 
         sessions = otherStorage.getSessions()
         self.assertEqual (len (sessions), 2)
@@ -437,11 +485,14 @@ class SessionsTest (BaseMainWndTest):
 
 
     def testRename_04 (self):
+        from sessions.sessionstorage import SessionStorage
+        from sessions.sessioncontroller import SessionController
+
         Application.wikiroot = self.wikiroot
         Application.selectedPage = self.wikiroot[u"Страница 1"]
 
-        controller = self.loader[u"Sessions"].SessionController (Application)
-        storage = self.loader[u"Sessions"].SessionStorage(Application.config)
+        controller = SessionController (Application)
+        storage = SessionStorage(Application.config)
 
         storage.save (controller.getCurrentSession(), u"session1")
         storage.save (controller.getCurrentSession(), u"session2")
@@ -450,11 +501,14 @@ class SessionsTest (BaseMainWndTest):
 
 
     def testRename_05 (self):
+        from sessions.sessionstorage import SessionStorage
+        from sessions.sessioncontroller import SessionController
+
         Application.wikiroot = self.wikiroot
         Application.selectedPage = self.wikiroot[u"Страница 1"]
 
-        controller = self.loader[u"Sessions"].SessionController (Application)
-        storage = self.loader[u"Sessions"].SessionStorage(Application.config)
+        controller = SessionController (Application)
+        storage = SessionStorage(Application.config)
 
         storage.save (controller.getCurrentSession(), u"session1")
         storage.save (controller.getCurrentSession(), u"session2")
@@ -463,11 +517,14 @@ class SessionsTest (BaseMainWndTest):
 
 
     def testRename_06 (self):
+        from sessions.sessionstorage import SessionStorage
+        from sessions.sessioncontroller import SessionController
+
         Application.wikiroot = self.wikiroot
         Application.selectedPage = self.wikiroot[u"Страница 1"]
 
-        controller = self.loader[u"Sessions"].SessionController (Application)
-        storage = self.loader[u"Sessions"].SessionStorage(Application.config)
+        controller = SessionController (Application)
+        storage = SessionStorage(Application.config)
 
         storage.save (controller.getCurrentSession(), u"session1")
         storage.save (controller.getCurrentSession(), u"session2")
@@ -476,11 +533,14 @@ class SessionsTest (BaseMainWndTest):
 
 
     def testRename_07 (self):
+        from sessions.sessionstorage import SessionStorage
+        from sessions.sessioncontroller import SessionController
+
         Application.wikiroot = self.wikiroot
         Application.selectedPage = self.wikiroot[u"Страница 1"]
 
-        controller = self.loader[u"Sessions"].SessionController (Application)
-        storage = self.loader[u"Sessions"].SessionStorage(Application.config)
+        controller = SessionController (Application)
+        storage = SessionStorage(Application.config)
 
         storage.save (controller.getCurrentSession(), u"session1")
         storage.save (controller.getCurrentSession(), u"session2")
@@ -489,17 +549,20 @@ class SessionsTest (BaseMainWndTest):
 
 
     def testRename_08 (self):
+        from sessions.sessionstorage import SessionStorage
+        from sessions.sessioncontroller import SessionController
+
         Application.wikiroot = self.wikiroot
         Application.selectedPage = self.wikiroot[u"Страница 1"]
 
-        controller = self.loader[u"Sessions"].SessionController (Application)
-        storage = self.loader[u"Sessions"].SessionStorage(Application.config)
+        controller = SessionController (Application)
+        storage = SessionStorage(Application.config)
 
         storage.save (controller.getCurrentSession(), u"session1")
         storage.save (controller.getCurrentSession(), u"session2")
         storage.rename (u"session1", u"Абырвалг   ")
 
-        otherStorage = self.loader[u"Sessions"].SessionStorage(Application.config)
+        otherStorage = SessionStorage(Application.config)
 
         sessions = otherStorage.getSessions()
         self.assertEqual (len (sessions), 2)
@@ -513,10 +576,12 @@ class SessionsTest (BaseMainWndTest):
 
 
     def testGetSessionInfo_01 (self):
+        from sessions.sessioncontroller import SessionController
+
         Application.wikiroot = self.wikiroot
         Application.selectedPage = self.wikiroot[u"Страница 1"]
 
-        controller = self.loader[u"Sessions"].SessionController(Application)
+        controller = SessionController(Application)
 
         session = controller.getCurrentSession()
 
@@ -527,13 +592,15 @@ class SessionsTest (BaseMainWndTest):
 
 
     def testGetSessionInfo_02 (self):
+        from sessions.sessioncontroller import SessionController
+
         Application.wikiroot = self.wikiroot
         Application.selectedPage = self.wikiroot[u"Страница 1"]
 
         tabsController = Application.mainWindow.tabsController
         tabsController.openInTab (self.wikiroot[u"Страница 2"], False)
 
-        controller = self.loader[u"Sessions"].SessionController(Application)
+        controller = SessionController(Application)
 
         session = controller.getCurrentSession()
 
@@ -545,13 +612,15 @@ class SessionsTest (BaseMainWndTest):
 
 
     def testGetSessionInfo_03 (self):
+        from sessions.sessioncontroller import SessionController
+
         Application.wikiroot = self.wikiroot
         Application.selectedPage = self.wikiroot[u"Страница 1"]
 
         tabsController = Application.mainWindow.tabsController
         tabsController.openInTab (self.wikiroot[u"Страница 2"], True)
 
-        controller = self.loader[u"Sessions"].SessionController(Application)
+        controller = SessionController(Application)
 
         session = controller.getCurrentSession()
 
@@ -563,6 +632,8 @@ class SessionsTest (BaseMainWndTest):
 
 
     def testGetSessionInfo_04 (self):
+        from sessions.sessioncontroller import SessionController
+
         Application.wikiroot = self.wikiroot
         Application.selectedPage = self.wikiroot[u"Страница 1"]
 
@@ -572,7 +643,7 @@ class SessionsTest (BaseMainWndTest):
         self.wikiroot[u"Страница 1"].readonly = True
         self.wikiroot[u"Страница 2"].readonly = True
 
-        controller = self.loader[u"Sessions"].SessionController(Application)
+        controller = SessionController(Application)
 
         session = controller.getCurrentSession()
 
@@ -587,8 +658,10 @@ class SessionsTest (BaseMainWndTest):
         """
         Если нет открытых вики
         """
+        from sessions.sessioncontroller import SessionController
+
         Application.wikiroot = None
-        controller = self.loader[u"Sessions"].SessionController(Application)
+        controller = SessionController(Application)
 
         session = controller.getCurrentSession()
 
@@ -598,13 +671,15 @@ class SessionsTest (BaseMainWndTest):
 
 
     def testRestore_01 (self):
+        from sessions.sessioncontroller import SessionController
+
         Application.wikiroot = self.wikiroot
         Application.selectedPage = self.wikiroot[u"Страница 1"]
 
         tabsController = Application.mainWindow.tabsController
         tabsController.openInTab (self.wikiroot[u"Страница 2"], True)
 
-        controller = self.loader[u"Sessions"].SessionController(Application)
+        controller = SessionController(Application)
         session = controller.getCurrentSession()
 
         uid1 = self._getPageLink (self.wikiroot[u"Страница 1"])
@@ -625,6 +700,8 @@ class SessionsTest (BaseMainWndTest):
 
 
     def testRestore_02 (self):
+        from sessions.sessioncontroller import SessionController
+
         Application.wikiroot = self.wikiroot
         Application.selectedPage = self.wikiroot[u"Страница 1"]
 
@@ -633,7 +710,7 @@ class SessionsTest (BaseMainWndTest):
         tabsController.openInTab (self.wikiroot[u"Страница 1/Страница 3/Страница 4"], True)
         tabsController.openInTab (self.wikiroot[u"Страница 1/Страница 3"], False)
 
-        controller = self.loader[u"Sessions"].SessionController(Application)
+        controller = SessionController(Application)
         session = controller.getCurrentSession()
 
         uid1 = self._getPageLink (self.wikiroot[u"Страница 1"])
@@ -663,6 +740,8 @@ class SessionsTest (BaseMainWndTest):
 
 
     def testRestore_03 (self):
+        from sessions.sessioncontroller import SessionController
+
         wiki = WikiDocument.load (self.path, readonly=False)
         Application.wikiroot = wiki
         Application.selectedPage = wiki[u"Страница 1"]
@@ -672,7 +751,7 @@ class SessionsTest (BaseMainWndTest):
         tabsController.openInTab (wiki[u"Страница 1/Страница 3/Страница 4"], True)
         tabsController.openInTab (wiki[u"Страница 1/Страница 3"], False)
 
-        controller = self.loader[u"Sessions"].SessionController(Application)
+        controller = SessionController(Application)
         session = controller.getCurrentSession()
 
         tabsController.closeTab (1)
@@ -695,6 +774,8 @@ class SessionsTest (BaseMainWndTest):
 
 
     def testRestore_04 (self):
+        from sessions.sessioncontroller import SessionController
+
         self.__createWiki2()
         wiki2 = WikiDocument.load (self.path2, False)
 
@@ -704,7 +785,7 @@ class SessionsTest (BaseMainWndTest):
         tabsController = Application.mainWindow.tabsController
         tabsController.openInTab (self.wikiroot[u"Страница 2"], True)
 
-        controller = self.loader[u"Sessions"].SessionController(Application)
+        controller = SessionController(Application)
         session = controller.getCurrentSession()
 
         uid1 = self._getPageLink (self.wikiroot[u"Страница 1"])
@@ -725,6 +806,8 @@ class SessionsTest (BaseMainWndTest):
 
 
     def testRestore_05 (self):
+        from sessions.sessioncontroller import SessionController
+
         self.__createWiki2()
         wiki2 = WikiDocument.load (self.path2, True)
 
@@ -734,7 +817,7 @@ class SessionsTest (BaseMainWndTest):
         tabsController = Application.mainWindow.tabsController
         tabsController.openInTab (self.wikiroot[u"Страница 2"], True)
 
-        controller = self.loader[u"Sessions"].SessionController(Application)
+        controller = SessionController(Application)
         session = controller.getCurrentSession()
 
         uid1 = self._getPageLink (self.wikiroot[u"Страница 1"])
@@ -755,6 +838,8 @@ class SessionsTest (BaseMainWndTest):
 
 
     def testRestoreReadonly_01 (self):
+        from sessions.sessioncontroller import SessionController
+
         wiki = WikiDocument.load (self.path, readonly=True)
         Application.wikiroot = wiki
         Application.selectedPage = wiki[u"Страница 1"]
@@ -764,7 +849,7 @@ class SessionsTest (BaseMainWndTest):
         tabsController.openInTab (wiki[u"Страница 1/Страница 3/Страница 4"], True)
         tabsController.openInTab (wiki[u"Страница 1/Страница 3"], False)
 
-        controller = self.loader[u"Sessions"].SessionController(Application)
+        controller = SessionController(Application)
         session = controller.getCurrentSession()
 
         Application.wikiroot = None
@@ -786,6 +871,8 @@ class SessionsTest (BaseMainWndTest):
 
 
     def testRestoreReadonly_02 (self):
+        from sessions.sessioncontroller import SessionController
+
         wiki = WikiDocument.load (self.path, readonly=True)
         Application.wikiroot = wiki
         Application.selectedPage = wiki[u"Страница 1"]
@@ -795,7 +882,7 @@ class SessionsTest (BaseMainWndTest):
         tabsController.openInTab (wiki[u"Страница 1/Страница 3/Страница 4"], True)
         tabsController.openInTab (wiki[u"Страница 1/Страница 3"], False)
 
-        controller = self.loader[u"Sessions"].SessionController(Application)
+        controller = SessionController(Application)
         session = controller.getCurrentSession()
 
         tabsController.closeTab (1)
