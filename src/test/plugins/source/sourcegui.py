@@ -34,8 +34,9 @@ class SourceGuiPluginTest (unittest.TestCase):
         self.config = self.loader[self.__pluginname].config
         self._clearConfig (self.config)
 
+        from source.insertdialogcontroller import InsertDialogController
         self.dialog = FakeInsertDialog ()
-        self.controller = self.loader[self.__pluginname].insertDialogControllerClass(self.testPage, self.dialog, self.config)
+        self.controller = InsertDialogController(self.testPage, self.dialog, self.config)
 
 
     def __createWiki (self):
