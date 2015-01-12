@@ -10,8 +10,6 @@ from outwiker.core.version import Version
 class UpdateNotifierTest (unittest.TestCase):
     """Тесты плагина UpdateNotifier"""
     def setUp (self):
-        self.__pluginname = u"UpdateNotifier"
-
         self.loader = PluginsLoader(Application)
         self.loader.load ([u"../plugins/updatenotifier"])
 
@@ -21,47 +19,49 @@ class UpdateNotifierTest (unittest.TestCase):
 
 
     def testPluginLoad (self):
-        self.loader.load ([u"../plugins/updatenotifier"])
         self.assertEqual (len (self.loader), 1)
 
 
     def testExtractVersion_1 (self):
-        self.loader.load ([u"../plugins/updatenotifier"])
+        from updatenotifier.versionextractor import extractVersion
+
         text = u"""Бла-бла-бла 
 
 <!--  #version  stable   1.2.3.456  --> 
 
 Бла-бла-бла"""
-        
-        versions = self.loader[self.__pluginname].extractVersion (text)
+
+        versions = extractVersion (text)
 
         self.assertEqual (len (versions), 1)
         self.assertEqual (versions[u"stable"], u"1.2.3.456")
 
 
     def testExtractVersion_2 (self):
-        self.loader.load ([u"../plugins/updatenotifier"])
+        from updatenotifier.versionextractor import extractVersion
+
         text = u"""Бла-бла-бла 
 
 <!--#version  unstable   1.2.3.456--> 
 
 Бла-бла-бла"""
-        
-        versions = self.loader[self.__pluginname].extractVersion (text)
+
+        versions = extractVersion (text)
 
         self.assertEqual (len (versions), 1)
         self.assertEqual (versions[u"unstable"], u"1.2.3.456")
 
 
     def testExtractVersion_3 (self):
-        self.loader.load ([u"../plugins/updatenotifier"])
+        from updatenotifier.versionextractor import extractVersion
+
         text = u"""Бла-бла-бла 
 
 <!--  #version  stable   1.2.3.456  --><!--  #version  unstable   2.3.4.567  --> 
 
 Бла-бла-бла"""
-        
-        versions = self.loader[self.__pluginname].extractVersion (text)
+
+        versions = extractVersion (text)
 
         self.assertEqual (len (versions), 2)
         self.assertEqual (versions[u"stable"], u"1.2.3.456")
@@ -69,7 +69,8 @@ class UpdateNotifierTest (unittest.TestCase):
 
 
     def testExtractVersion_4 (self):
-        self.loader.load ([u"../plugins/updatenotifier"])
+        from updatenotifier.versionextractor import extractVersion
+
         text = u"""Бла-бла-бла 
 
 <!--  #version  stable   1.2.3.456  -->
@@ -79,8 +80,8 @@ class UpdateNotifierTest (unittest.TestCase):
 <!--  #version  unstable   2.3.4.567  --> 
 
 Бла-бла-бла"""
-        
-        versions = self.loader[self.__pluginname].extractVersion (text)
+
+        versions = extractVersion (text)
 
         self.assertEqual (len (versions), 2)
         self.assertEqual (versions[u"stable"], u"1.2.3.456")
@@ -88,111 +89,123 @@ class UpdateNotifierTest (unittest.TestCase):
 
 
     def testExtractVersion_5 (self):
-        self.loader.load ([u"../plugins/updatenotifier"])
+        from updatenotifier.versionextractor import extractVersion
+
         text = u"""Бла-бла-бла 
 
 <!--  #version  stable   1.2.3  --> 
 
 Бла-бла-бла"""
-        
-        versions = self.loader[self.__pluginname].extractVersion (text)
+
+        versions = extractVersion (text)
 
         self.assertEqual (len (versions), 1)
         self.assertEqual (versions[u"stable"], u"1.2.3")
 
 
     def testExtractVersion_6 (self):
-        self.loader.load ([u"../plugins/updatenotifier"])
+        from updatenotifier.versionextractor import extractVersion
+
         text = u"""Бла-бла-бла 
 
 <!--  #version  stable   1.2  --> 
 
 Бла-бла-бла"""
-        
-        versions = self.loader[self.__pluginname].extractVersion (text)
+
+        versions = extractVersion (text)
 
         self.assertEqual (len (versions), 1)
         self.assertEqual (versions[u"stable"], u"1.2")
 
 
     def testExtractVersion_7 (self):
-        self.loader.load ([u"../plugins/updatenotifier"])
+        from updatenotifier.versionextractor import extractVersion
+
         text = u"""Бла-бла-бла 
 
 <!--  #version  stable   1  --> 
 
 Бла-бла-бла"""
-        
-        versions = self.loader[self.__pluginname].extractVersion (text)
+
+        versions = extractVersion (text)
 
         self.assertEqual (len (versions), 1)
         self.assertEqual (versions[u"stable"], u"1")
 
 
     def testExtractVersionEmpty_1 (self):
-        self.loader.load ([u"../plugins/updatenotifier"])
+        from updatenotifier.versionextractor import extractVersion
+
         text = u"""Бла-бла-бла Бла-бла-бла"""
-        
-        versions = self.loader[self.__pluginname].extractVersion (text)
+
+        versions = extractVersion (text)
 
         self.assertEqual (len (versions), 0)
 
 
     def testExtractVersionEmpty_2 (self):
-        self.loader.load ([u"../plugins/updatenotifier"])
+        from updatenotifier.versionextractor import extractVersion
+
         text = u"""Бла-бла-бла 
         <!--  #version  1.2.3.456  -->
         
         Бла-бла-бла"""
-        
-        versions = self.loader[self.__pluginname].extractVersion (text)
+
+        versions = extractVersion (text)
 
         self.assertEqual (len (versions), 0)
 
 
     def testExtractVersionEmpty_3 (self):
-        self.loader.load ([u"../plugins/updatenotifier"])
+        from updatenotifier.versionextractor import extractVersion
+
         text = u"""Бла-бла-бла 
         <!--  #version  stable  -->
         
         Бла-бла-бла"""
-        
-        versions = self.loader[self.__pluginname].extractVersion (text)
+
+        versions = extractVersion (text)
 
         self.assertEqual (len (versions), 0)
 
 
     def testExtractVersionEmpty_4 (self):
-        self.loader.load ([u"../plugins/updatenotifier"])
+        from updatenotifier.versionextractor import extractVersion
+
         text = u"""Бла-бла-бла 
         <!--  #version  -->
         
         Бла-бла-бла"""
-        
-        versions = self.loader[self.__pluginname].extractVersion (text)
+
+        versions = extractVersion (text)
 
         self.assertEqual (len (versions), 0)
 
 
     def testExtractVersionEmpty_5 (self):
-        self.loader.load ([u"../plugins/updatenotifier"])
+        from updatenotifier.versionextractor import extractVersion
 
         text = u"""Бла-бла-бла 
         <!--  unstable   2.3.4.567  -->
         
         Бла-бла-бла"""
-        
-        versions = self.loader[self.__pluginname].extractVersion (text)
+
+        versions = extractVersion (text)
 
         self.assertEqual (len (versions), 0)
 
 
     def testVersionList_1 (self):
-        self.loader.load ([u"../plugins/updatenotifier",
-            u"../plugins/testdebug"])
+        from updatenotifier.versionlist import VersionList
+
+        self.loader.load ([
+            u"../plugins/updatenotifier",
+            u"../plugins/testdebug"
+        ])
+
         self.assertEqual ( len (self.loader), 2)
 
-        verlist = self.loader[self.__pluginname].VersionList (self.loader)
+        verlist = VersionList (self.loader)
 
         # Без обновления все версии равны None
         self.assertTrue (verlist.getPluginVersion (u"Debug Plugin") == None)
@@ -208,42 +221,56 @@ class UpdateNotifierTest (unittest.TestCase):
 
 
     def testVersionList_2 (self):
-        self.loader.load ([u"../plugins/updatenotifier",
-            u"../plugins/testdebug"])
+        from updatenotifier.versionlist import VersionList
+
+        self.loader.load ([
+            u"../plugins/updatenotifier",
+            u"../plugins/testdebug"
+        ])
+
         self.assertEqual ( len (self.loader), 2)
 
         self.loader[u"Debug Plugin"].url = u"http://jenyay.net/invalid"
 
-        verlist = self.loader[self.__pluginname].VersionList (self.loader)
+        verlist = VersionList (self.loader)
 
         verlist.updateVersions()
         self.assertTrue (verlist.getPluginVersion (u"Debug Plugin") == None)
 
 
     def testVersionList_3 (self):
-        self.loader.load ([u"../plugins/updatenotifier",
-            u"../plugins/testdebug"])
+        from updatenotifier.versionlist import VersionList
+
+        self.loader.load ([
+            u"../plugins/updatenotifier",
+            u"../plugins/testdebug"
+        ])
+
         self.assertEqual ( len (self.loader), 2)
 
         self.loader[u"Debug Plugin"].url = u"invalid"
 
-        verlist = self.loader[self.__pluginname].VersionList (self.loader)
+        verlist = VersionList (self.loader)
 
         verlist.updateVersions()
         self.assertTrue (verlist.getPluginVersion (u"Debug Plugin") == None)
 
 
     def testVersionListDisconnected (self):
-        self.loader.load ([u"../plugins/updatenotifier",
-            u"../plugins/testdebug"])
+        from updatenotifier.versionlist import VersionList
+        import updatenotifier.loaders
+
+        self.loader.load ([
+            u"../plugins/updatenotifier",
+            u"../plugins/testdebug"
+        ])
+
         self.assertEqual ( len (self.loader), 2)
 
         self.loader[u"Debug Plugin"].url = u"invalid"
 
-        plugin = self.loader[self.__pluginname]
-
-        verlist = plugin.VersionList (self.loader)
-        verlist.setLoader (plugin.loaders.DisconnectedLoader())
+        verlist = VersionList (self.loader)
+        verlist.setLoader (updatenotifier.loaders.DisconnectedLoader())
 
         verlist.updateVersions()
         self.assertEqual (verlist.stableVersion, None)

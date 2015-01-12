@@ -178,7 +178,7 @@ if __name__ == '__main__':
     from test.plugins.statistics.treestatistics import TreeStatisticsTest
 
     from test.plugins.updatenotifier.loading import UpdateNotifierLoadingTest
-    from test.plugins.updatenotifier.updatenotifier import UpdateNotifierTest
+    from test.plugins.updatenotifier.updatenotifier_test import UpdateNotifierTest
 
     from test.plugins.counter.counter_test import CounterTest
     from test.plugins.counter.counterdialog import CounterDialogTest
