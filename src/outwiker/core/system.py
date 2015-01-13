@@ -9,6 +9,7 @@ import os
 import os.path as op
 import shutil
 import sys
+import subprocess
 
 import wx
 
@@ -336,3 +337,19 @@ def writeTextFile (fname, text):
     """
     with codecs.open (fname, "w", "utf-8") as fp:
         return fp.write (text)
+
+
+def openInNewWindow (path, readonly=False):
+    """ Open wiki tree in the new OutWiker window
+    """
+    exeFile = getExeFile()
+
+    params = [exeFile, path]
+    if readonly:
+        params += ['--readonly']
+
+    if exeFile.endswith (".exe"):
+        DETACHED_PROCESS = 0x00000008
+        subprocess.Popen (params, creationflags=DETACHED_PROCESS)
+    else:
+        subprocess.Popen (["python"] + params)
