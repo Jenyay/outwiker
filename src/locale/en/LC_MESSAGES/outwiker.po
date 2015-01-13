@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-14 21:57+0300\n"
+"POT-Creation-Date: 2015-01-13 21:04+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -62,15 +62,15 @@ msgstr "Page is opened as read-only"
 #: outwiker/actions/sortsiblingsalpha.py:37
 #: outwiker/actions/movepagedown.py:40 outwiker/actions/globalsearch.py:41
 #: outwiker/actions/openattachfolder.py:38
-#: outwiker/actions/sortchildalpha.py:37 outwiker/gui/notestree.py:285
-#: outwiker/gui/notestree.py:340 outwiker/gui/mainwndcontroller.py:213
+#: outwiker/actions/sortchildalpha.py:37 outwiker/gui/notestree.py:284
+#: outwiker/gui/notestree.py:339 outwiker/gui/mainwndcontroller.py:213
 #: outwiker/gui/mainwindow.py:513 outwiker/gui/htmlrenderie.py:181
 #: outwiker/gui/htmlrenderwx.py:105
-#: outwiker/gui/preferences/iconsetpanel.py:233
-#: outwiker/gui/preferences/iconsetpanel.py:290
-#: outwiker/gui/preferences/iconsetpanel.py:296
-#: outwiker/gui/preferences/iconsetpanel.py:302
-#: outwiker/gui/preferences/iconsetpanel.py:345
+#: outwiker/gui/preferences/iconsetpanel.py:220
+#: outwiker/gui/preferences/iconsetpanel.py:277
+#: outwiker/gui/preferences/iconsetpanel.py:283
+#: outwiker/gui/preferences/iconsetpanel.py:289
+#: outwiker/gui/preferences/iconsetpanel.py:332
 #: outwiker/gui/tabscontroller.py:244 outwiker/gui/htmlrenderwebkit.py:232
 #: outwiker/gui/attachpanel.py:232 outwiker/gui/attachpanel.py:242
 #: outwiker/gui/attachpanel.py:254 outwiker/gui/attachpanel.py:275
@@ -81,8 +81,8 @@ msgstr "Page is opened as read-only"
 #: outwiker/gui/pagedialog.py:196 outwiker/gui/renametagdialog.py:75
 #: outwiker/gui/renametagdialog.py:79 outwiker/gui/basetextpanel.py:182
 #: outwiker/gui/basetextpanel.py:195 outwiker/pages/html/htmlpageview.py:596
-#: outwiker/pages/html/basehtmlpanel.py:333
-#: outwiker/pages/html/basehtmlpanel.py:337
+#: outwiker/pages/html/basehtmlpanel.py:332
+#: outwiker/pages/html/basehtmlpanel.py:336
 #: outwiker/pages/wiki/basewikipageview.py:277
 #: outwiker/pages/wiki/basewikipageview.py:309
 #: outwiker/pages/wiki/basewikipageview.py:322
@@ -203,7 +203,7 @@ msgstr "Can't open file %s"
 msgid "Can't parse version"
 msgstr "Can't parse version"
 
-#: outwiker/core/commands.py:400 outwiker/gui/notestree.py:339
+#: outwiker/core/commands.py:400 outwiker/gui/notestree.py:338
 msgid "You can't rename the root element"
 msgstr "You can't rename the root element"
 
@@ -327,8 +327,8 @@ msgstr "Anchor"
 msgid "Horizontal rule"
 msgstr "Horizontal rule"
 
-#: outwiker/core/commands.py:952 outwiker/gui/linkdialog.py:17
-#: outwiker/gui/linkdialog.py:35
+#: outwiker/core/commands.py:952 outwiker/gui/linkdialog.py:19
+#: outwiker/gui/linkdialog.py:33
 #: outwiker/gui/preferences/wikieditorpanel.py:37
 msgid "Link"
 msgstr "Link"
@@ -962,12 +962,12 @@ msgstr "Replace"
 msgid "Replace All"
 msgstr "Replace All"
 
-#: outwiker/gui/linkdialog.py:41
+#: outwiker/gui/linkdialog.py:39
 #: outwiker/gui/preferences/htmleditorpanel.py:43
 msgid "Comment"
 msgstr "Comment"
 
-#: outwiker/gui/notestree.py:284
+#: outwiker/gui/notestree.py:283
 msgid ""
 "Can't save page options\n"
 "{}"
@@ -1027,20 +1027,16 @@ msgstr "Title"
 msgid "Page type"
 msgstr "Page type"
 
-#: outwiker/gui/basepagedialog.py:269
-#: outwiker/gui/preferences/iconsetpanel.py:182
+#: outwiker/gui/basepagedialog.py:270
+#: outwiker/gui/preferences/iconsetpanel.py:169
 msgid "Not in groups"
 msgstr "Not in groups"
 
-#: outwiker/gui/basepagedialog.py:271
-msgid "Not in groups [custom]"
-msgstr "Not in groups [custom]"
-
-#: outwiker/gui/basepagedialog.py:291 outwiker/gui/iconlistctrl.py:25
+#: outwiker/gui/basepagedialog.py:292 outwiker/gui/iconlistctrl.py:25
 msgid "Invalid icon file: {}"
 msgstr "Invalid icon file: {}"
 
-#: outwiker/gui/basepagedialog.py:360
+#: outwiker/gui/basepagedialog.py:358
 msgid "Page style"
 msgstr "Page style"
 
@@ -1166,95 +1162,89 @@ msgstr "Background color"
 msgid "Actions with the same hotkey"
 msgstr "Actions with the same hotkey"
 
-#: outwiker/gui/preferences/iconsetpanel.py:52
-#: outwiker/gui/preferences/iconsetpanel.py:56
+#: outwiker/gui/preferences/iconsetpanel.py:77
 msgid "Add new group"
 msgstr "Add new group"
 
-#: outwiker/gui/preferences/iconsetpanel.py:61
-#: outwiker/gui/preferences/iconsetpanel.py:65
+#: outwiker/gui/preferences/iconsetpanel.py:85
 msgid "Remove group"
 msgstr "Remove group"
 
-#: outwiker/gui/preferences/iconsetpanel.py:70
-#: outwiker/gui/preferences/iconsetpanel.py:74
+#: outwiker/gui/preferences/iconsetpanel.py:93
 msgid "Rename group"
 msgstr "Rename group"
 
-#: outwiker/gui/preferences/iconsetpanel.py:83
-#: outwiker/gui/preferences/iconsetpanel.py:87
+#: outwiker/gui/preferences/iconsetpanel.py:119
 msgid "Add icons"
 msgstr "Add icons"
 
-#: outwiker/gui/preferences/iconsetpanel.py:92
-#: outwiker/gui/preferences/iconsetpanel.py:96
+#: outwiker/gui/preferences/iconsetpanel.py:127
 msgid "Remove selected icons"
 msgstr "Remove selected icons"
 
-#: outwiker/gui/preferences/iconsetpanel.py:101
-#: outwiker/gui/preferences/iconsetpanel.py:105
+#: outwiker/gui/preferences/iconsetpanel.py:135
 msgid "Set icon as group cover"
 msgstr "Set icon as group cover"
 
-#: outwiker/gui/preferences/iconsetpanel.py:232
+#: outwiker/gui/preferences/iconsetpanel.py:219
 msgid "Can't create directory for icons group"
 msgstr "Can't create directory for icons group"
 
-#: outwiker/gui/preferences/iconsetpanel.py:262
+#: outwiker/gui/preferences/iconsetpanel.py:249
 msgid "New group{}"
 msgstr "New group{}"
 
-#: outwiker/gui/preferences/iconsetpanel.py:289
+#: outwiker/gui/preferences/iconsetpanel.py:276
 msgid "Can't rename directory for icons group"
 msgstr "Can't rename directory for icons group"
 
-#: outwiker/gui/preferences/iconsetpanel.py:295
+#: outwiker/gui/preferences/iconsetpanel.py:282
 msgid "Group with name \"{}\" exists already"
 msgstr "Group with name \"{}\" exists already"
 
-#: outwiker/gui/preferences/iconsetpanel.py:301
+#: outwiker/gui/preferences/iconsetpanel.py:288
 msgid "Invalid group name \"{}\""
 msgstr "Invalid group name \"{}\""
 
-#: outwiker/gui/preferences/iconsetpanel.py:337
+#: outwiker/gui/preferences/iconsetpanel.py:324
 msgid "Remove group \"{}\" and all icons inside it?"
 msgstr "Remove group \"{}\" and all icons inside it?"
 
-#: outwiker/gui/preferences/iconsetpanel.py:338
+#: outwiker/gui/preferences/iconsetpanel.py:325
 msgid "Remove group?"
 msgstr "Remove group?"
 
-#: outwiker/gui/preferences/iconsetpanel.py:344
+#: outwiker/gui/preferences/iconsetpanel.py:331
 msgid "Can't remove group directory"
 msgstr "Can't remove group directory"
 
-#: outwiker/gui/preferences/iconsetpanel.py:353
+#: outwiker/gui/preferences/iconsetpanel.py:340
 msgid "All image files"
 msgstr "All image files"
 
-#: outwiker/gui/preferences/iconsetpanel.py:354
+#: outwiker/gui/preferences/iconsetpanel.py:341
 msgid "All files"
 msgstr "All files"
 
-#: outwiker/gui/preferences/iconsetpanel.py:359
+#: outwiker/gui/preferences/iconsetpanel.py:346
 msgid "Select images"
 msgstr "Select images"
 
-#: outwiker/gui/preferences/iconsetpanel.py:376
-#: outwiker/gui/preferences/iconsetpanel.py:401
+#: outwiker/gui/preferences/iconsetpanel.py:363
+#: outwiker/gui/preferences/iconsetpanel.py:388
 msgid "You have not selected any icons"
 msgstr "You have not selected any icons"
 
-#: outwiker/gui/preferences/iconsetpanel.py:377
-#: outwiker/gui/preferences/iconsetpanel.py:402
+#: outwiker/gui/preferences/iconsetpanel.py:364
+#: outwiker/gui/preferences/iconsetpanel.py:389
 msgid "Select icons"
 msgstr "Select icons"
 
-#: outwiker/gui/preferences/iconsetpanel.py:382
+#: outwiker/gui/preferences/iconsetpanel.py:369
 msgid "Remove selected icons?"
 msgstr "Remove selected icons?"
 
-#: outwiker/gui/preferences/iconsetpanel.py:383
+#: outwiker/gui/preferences/iconsetpanel.py:370
 msgid "Remove icons"
 msgstr "Remove icons"
 
@@ -1295,7 +1285,7 @@ msgid "Preferences"
 msgstr "Preferences"
 
 #: outwiker/gui/preferences/prefdialog.py:130
-#: outwiker/pages/html/basehtmlpanel.py:202
+#: outwiker/pages/html/basehtmlpanel.py:201
 msgid "Preview"
 msgstr "Preview"
 
@@ -1337,23 +1327,23 @@ msgstr "Heading"
 msgid "Command"
 msgstr "Command"
 
-#: outwiker/gui/preferences/pluginspanel.py:30
+#: outwiker/gui/preferences/pluginspanel.py:29
 msgid "Download more plugins"
 msgstr "Download more plugins"
 
-#: outwiker/gui/preferences/pluginspanel.py:31
+#: outwiker/gui/preferences/pluginspanel.py:30
 msgid "http://jenyay.net/Outwiker/PluginsEn"
 msgstr "http://jenyay.net/Outwiker/PluginsEn"
 
-#: outwiker/gui/preferences/pluginspanel.py:131
+#: outwiker/gui/preferences/pluginspanel.py:130
 msgid "Version"
 msgstr "Version"
 
-#: outwiker/gui/preferences/pluginspanel.py:135
+#: outwiker/gui/preferences/pluginspanel.py:134
 msgid "Description"
 msgstr "Description"
 
-#: outwiker/gui/preferences/pluginspanel.py:140
+#: outwiker/gui/preferences/pluginspanel.py:139
 msgid "Site"
 msgstr "Site"
 
@@ -1746,18 +1736,18 @@ msgstr "Html"
 msgid "Page style Error. Style by default is used"
 msgstr "Page style Error. Style by default is used"
 
-#: outwiker/pages/html/basehtmlpanel.py:201
+#: outwiker/pages/html/basehtmlpanel.py:200
 #: outwiker/pages/html/htmltoolbar.py:25
 #: outwiker/pages/wiki/basewikipageview.py:209
 msgid "HTML"
 msgstr "HTML"
 
-#: outwiker/pages/html/basehtmlpanel.py:314
+#: outwiker/pages/html/basehtmlpanel.py:313
 msgid "Page rendered. Please wait…"
 msgstr "Page rendered. Please wait…"
 
-#: outwiker/pages/html/basehtmlpanel.py:332
-#: outwiker/pages/html/basehtmlpanel.py:336
+#: outwiker/pages/html/basehtmlpanel.py:331
+#: outwiker/pages/html/basehtmlpanel.py:335
 msgid ""
 "Can't save file\n"
 "\n"
@@ -2146,6 +2136,9 @@ msgstr "# Search"
 #: outwiker/pages/text/textpage.py:37
 msgid "Text Page"
 msgstr "Text Page"
+
+#~ msgid "Not in groups [custom]"
+#~ msgstr "Not in groups [custom]"
 
 #~ msgid "All"
 #~ msgstr "All"

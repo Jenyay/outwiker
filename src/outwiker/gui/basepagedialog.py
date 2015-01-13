@@ -266,13 +266,13 @@ class IconPanel (wx.Panel):
             # First None is root directory
             for group in [None] + sorted (collection.getGroups(), key=self._localize):
                 # Get group name
-                if group is None and n == 0:
+                if group is None:
                     title = _(u'Not in groups')
-                elif group is None:
-                    title = _(u'Not in groups [custom]')
                 else:
                     title = self._localize(group)
 
+                if n != 0:
+                    title += u' *'
                 # Every item has tuple (collection index, group name)
                 self.groupCtrl.Append (title,
                                        self._getCover (collection, group),
