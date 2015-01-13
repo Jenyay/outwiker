@@ -8,7 +8,7 @@ from outwiker.core.system import getCurrentDir, openInNewWindow
 
 class OpenHelpAction (BaseAction):
     """
-    Открыть справку
+    Open the OutWiker help
     """
     stringId = u"Help"
 

@@ -41,7 +41,7 @@ class System (object):
                        oldConfDirName=DEFAULT_OLD_CONFIG_DIR,
                        newConfDirName=DEFAULT_CONFIG_DIR):
         """
-        Метод migrateConfig переносит конфигурационную директорию из старого местоположения (HOME$/.outwiker) в новое (зависит от ОС)
+        Remove config directory from HOME$/.outwiker to idealogic right place (depends of the OS)
         """
         confDir = op.join(self.settingsDir, newConfDirName)
 
@@ -324,8 +324,8 @@ def getSpecialDirList (dirname,
 
 def readTextFile (fname):
     """
-    Читать файл в кодировке UTF-8.
-    Возвращает unicode-строку
+    Read text content. Content must be in utf-8 encoding.
+    The function return unicode object
     """
     with codecs.open (fname, "r", "utf-8") as fp:
         return fp.read()
@@ -333,7 +333,7 @@ def readTextFile (fname):
 
 def writeTextFile (fname, text):
     """
-    Записать текст в кодировке utf-8
+    Write text with utf-8 encoding
     """
     with codecs.open (fname, "w", "utf-8") as fp:
         return fp.write (text)
