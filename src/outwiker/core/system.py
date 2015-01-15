@@ -72,7 +72,7 @@ class Windows (System):
 
     @property
     def filesEncoding (self):
-        return "1251"
+        return sys.getfilesystemencoding()
 
 
     @property
@@ -162,7 +162,7 @@ class Unix (System):
 
     @property
     def filesEncoding (self):
-        return "utf-8"
+        return sys.getfilesystemencoding()
 
 
     @property
