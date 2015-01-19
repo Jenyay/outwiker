@@ -1,0 +1,580 @@
+!!! Table of content
+
+* [[General information about curves -> #intro]]
+* [[''curve.xcol'' / ''curve.ycol'' parameters -> #col]]
+* [[''curve.data'' parameter -> #data]]
+* [[''curve.color'' parameter -> #curve.color]]
+* [[''curve.style'' parameter -> #style]]
+* [[''curve.hide'' parameter -> #hide]]
+* [[''curve.title'' parameter -> #title]]
+
+
+!!! [[#intro]] General information about curves
+
+The curves are lines which join the point. Point coordinates read from data (from command body or attached file). Chart can contain any count curves. The curves have names ''curve1'', ''curve2'', ''curve3'' etc. Synonym ''curve1'' is ''curve''.
+
+The simplest way to draw chart is to write data in ''plot'' command body. For example:
+
+[@(:plot:)
+1    10    20    30    40
+2    11    22    31    41
+3    13    24    33    42
+4    15    25    35    43
+5    16    26    36    44
+6    18    27    37    45
+7    20    30    38    46
+8    20    30    38    46
+9    20    30    38    46
+10   20    30    38    46
+(:plotend:)@]
+
+The result will look like this:
+
+(:plot:)
+1    10    20    30    40
+2    11    22    31    41
+3    13    24    33    42
+4    15    25    35    43
+5    16    26    36    44
+6    18    27    37    45
+7    20    30    38    46
+8    20    30    38    46
+9    20    30    38    46
+10   20    30    38    46
+(:plotend:)
+
+Since in this example never was added any parameters and data contain more than one column, then X coordinates are the data from first column and Y coordinates are the data from second column. To add second curve suffice it to set any parameter for ''curve2''. This will be showed in the next section.
+
+----
+
+
+!!! [[#col]] ''curve.xcol'' / ''curve.ycol'' parameters
+
+Append the second curve. For ''curve2'' Y coordinates will be read from column number 3. For that is used ''curve.ycol'' parameter.
+
+[@(:plot
+curve2.ycol = 3
+:)
+1    10    20    30    40
+2    11    22    31    41
+3    13    24    33    42
+4    15    25    35    43
+5    16    26    36    44
+6    18    27    37    45
+7    20    30    38    46
+8    20    30    38    46
+9    20    30    38    46
+10   20    30    38    46
+(:plotend:)@]
+
+(:plot
+curve2.ycol = 3
+:)
+1    10    20    30    40
+2    11    22    31    41
+3    13    24    33    42
+4    15    25    35    43
+5    16    26    36    44
+6    18    27    37    45
+7    20    30    38    46
+8    20    30    38    46
+9    20    30    38    46
+10   20    30    38    46
+(:plotend:)
+
+----
+
+Similarly can change column number for Y coordinates of the first curve. For example:
+
+[@(:plot
+curve1.ycol = 4
+curve2.ycol = 3
+:)
+1    10    20    30    40
+2    11    22    31    41
+3    13    24    33    42
+4    15    25    35    43
+5    16    26    36    44
+6    18    27    37    45
+7    20    30    38    46
+8    20    30    38    46
+9    20    30    38    46
+10   20    30    38    46
+(:plotend:)@]
+
+(:plot
+curve1.ycol = 4
+curve2.ycol = 3
+:)
+1    10    20    30    40
+2    11    22    31    41
+3    13    24    33    42
+4    15    25    35    43
+5    16    26    36    44
+6    18    27    37    45
+7    20    30    38    46
+8    20    30    38    46
+9    20    30    38    46
+10   20    30    38    46
+(:plotend:)
+
+----
+
+In the previous example expression ''curve1.ycol = 4'' can replace to ''curve.ycol = 4''.
+
+Similarly can change X coordinates with ''curve.xcol'' parameter:
+
+[@(:plot
+curve1.xcol = 2
+curve1.ycol = 4
+:)
+1    10    20    30    40
+2    11    22    31    41
+3    13    24    33    42
+4    15    25    35    43
+5    16    26    36    44
+6    18    27    37    45
+7    20    30    38    46
+8    20    30    38    46
+9    20    30    38    46
+10   20    30    38    46
+(:plotend:)@]
+
+(:plot
+curve1.xcol = 2
+curve1.ycol = 4
+:)
+1    10    20    30    40
+2    11    22    31    41
+3    13    24    33    42
+4    15    25    35    43
+5    16    26    36    44
+6    18    27    37    45
+7    20    30    38    46
+8    20    30    38    46
+9    20    30    38    46
+10   20    30    38    46
+(:plotend:)
+
+----
+
+If data contain only one column, default this column is selected as Y coordinate and X coordinates are sequence numbers 0, 1, 2,... For example:
+
+[@(:plot:)
+40
+41
+42
+43
+44
+45
+46
+46
+46
+46
+(:plotend:)@]
+
+(:plot:)
+40
+41
+42
+43
+44
+45
+46
+46
+46
+46
+(:plotend:)
+
+----
+
+If data contain more than one column, such result can be achieved for axis X if give a parameter ''curve.xcol'' value ''number'' (''curve.xcol = number''). For example:
+
+[@(:plot
+curve1.xcol = number
+curve1.ycol = 4
+:)
+1    10    20    30    40
+2    11    22    31    41
+3    13    24    33    42
+4    15    25    35    43
+5    16    26    36    44
+6    18    27    37    45
+7    20    30    38    46
+8    20    30    38    46
+9    20    30    38    46
+10   20    30    38    46
+(:plotend:)@]
+
+(:plot
+curve1.xcol = number
+curve1.ycol = 4
+:)
+1    10    20    30    40
+2    11    22    31    41
+3    13    24    33    42
+4    15    25    35    43
+5    16    26    36    44
+6    18    27    37    45
+7    20    30    38    46
+8    20    30    38    46
+9    20    30    38    46
+10   20    30    38    46
+(:plotend:)
+
+----
+
+!!! [[#data]] ''curve.data'' parameter
+
+In the previous examples data was written in the wiki page text. It may not be convenient for big data. The data can be read from attached text file. This files should contain data in same format. For example, attached file [[Attach:example_5.txt]] contain follow lines (this file will be used in examples this section):
+
+[@1    10    20    30    40
+2    11    22    31    41
+3    13    24    33    42
+4    15    25    35    43
+5    16    26    36    44
+6    18    27    37    45
+7    20    30    38    46
+8    20    30    38    46
+9    20    30    38    46
+10   20    30    38    46@]
+
+To explain what data must be read from attached file, but not in command body, must be set the ''curve.data'' parameter. For example:
+
+[@(:plot
+curve.data="Attach:example_5.txt"
+:)
+(:plotend:)@]
+
+
+(:plot
+curve.data="Attach:example_5.txt"
+:)
+(:plotend:)
+
+Since the parameter value contain symbol ":", value must be quoted.
+
+----
+
+At that all others parameters are working as described above. For example:
+
+[@(:plot
+curve.data="Attach:example_5.txt"
+curve.xcol=1
+curve.ycol=2
+
+curve2.data="Attach:example_5.txt"
+curve2.xcol=1
+curve2.ycol=3
+:)
+(:plotend:)@]
+
+
+(:plot
+curve.data="Attach:example_5.txt"
+curve.xcol=1
+curve.ycol=2
+
+curve2.data="Attach:example_5.txt"
+curve2.xcol=1
+curve2.ycol=3
+:)
+(:plotend:)
+
+----
+
+!!! [[#curve.color]] ''curve.color'' parameter
+
+To change curve color use ''curve.color'' parameter. Color is given with using HTML color formats:
+
+[@(:plot
+curve.color="#1CE81C"
+curve.ycol=2
+
+curve2.color="#0BA"
+curve2.ycol=3
+
+curve3.color="rgb(180, 64, 180)"
+curve3.ycol=4
+
+curve4.color="black"
+curve4.ycol=5
+:)
+1    10    20    30    40
+2    11    22    31    41
+3    13    24    33    42
+4    15    25    35    43
+5    16    26    36    44
+6    18    27    37    45
+7    20    30    38    46
+8    20    30    38    46
+9    20    30    38    46
+10   20    30    38    46
+(:plotend:)@]
+
+
+(:plot
+curve.color="#1CE81C"
+curve.ycol=2
+
+curve2.color="#0BA"
+curve2.ycol=3
+
+curve3.color="rgb(180, 64, 180)"
+curve3.ycol=4
+
+curve4.color="black"
+curve4.ycol=5
+:)
+1    10    20    30    40
+2    11    22    31    41
+3    13    24    33    42
+4    15    25    35    43
+5    16    26    36    44
+6    18    27    37    45
+7    20    30    38    46
+8    20    30    38    46
+9    20    30    38    46
+10   20    30    38    46
+(:plotend:)
+
+----
+
+
+!!! [[#style]] ''curve.style'' parameter
+
+With ''curve.style'' parameter can change line style: solid line, dashed line, dotted line, dash-dot line etc.
+
+''curve.style'' parameter can be string style name or style number. Possible values is shown in follow table:
+
+|| border=1
+|| '''Style number''' || '''Style name''' ||
+||1 ||solid ||
+||2 ||longdash ||
+||3 ||shortdash ||
+||4 ||shortdot ||
+||5 ||shortdashdot ||
+||6 ||shortdashdotdot ||
+||7 ||dot ||
+||8 ||dash ||
+||9 ||dashdot ||
+||10 ||longdashdot ||
+||11 ||longdashdotdot ||
+
+For example:
+
+[@(:plot
+curve.style="longdash"
+curve.ycol=2
+
+curve2.style=3
+curve2.ycol=3
+
+curve3.style="dashdot"
+curve3.ycol=4
+
+curve4.style="1"
+curve4.ycol=5
+:)
+1    10    20    30    40
+2    11    22    31    41
+3    13    24    33    42
+4    15    25    35    43
+5    16    26    36    44
+6    18    27    37    45
+7    20    30    38    46
+8    20    30    38    46
+9    20    30    38    46
+10   20    30    38    46
+(:plotend:)@]
+
+
+(:plot
+curve.style="longdash"
+curve.ycol=2
+
+curve2.style=3
+curve2.ycol=3
+
+curve3.style="dashdot"
+curve3.ycol=4
+
+curve4.style="1"
+curve4.ycol=5
+:)
+1    10    20    30    40
+2    11    22    31    41
+3    13    24    33    42
+4    15    25    35    43
+5    16    26    36    44
+6    18    27    37    45
+7    20    30    38    46
+8    20    30    38    46
+9    20    30    38    46
+10   20    30    38    46
+(:plotend:)
+
+----
+
+Furthermore, ''curve.style'' parameter can be ''auto'' value. This value mean that style number will be equal curve number (for curve12 style number will be 1, for curve 13 style number will be 2 etc).
+
+For example:
+
+[@(:plot
+curve.style=auto
+curve.ycol=2
+
+curve2.style=auto
+curve2.ycol=3
+
+curve3.style=auto
+curve3.ycol=4
+
+curve4.style=auto
+curve4.ycol=5
+:)
+1    10    20    30    40
+2    11    22    31    41
+3    13    24    33    42
+4    15    25    35    43
+5    16    26    36    44
+6    18    27    37    45
+7    20    30    38    46
+8    20    30    38    46
+9    20    30    38    46
+10   20    30    38    46
+(:plotend:)@]
+
+
+(:plot
+curve.style=auto
+curve.ycol=2
+
+curve2.style=auto
+curve2.ycol=3
+
+curve3.style=auto
+curve3.ycol=4
+
+curve4.style=auto
+curve4.ycol=5
+:)
+1    10    20    30    40
+2    11    22    31    41
+3    13    24    33    42
+4    15    25    35    43
+5    16    26    36    44
+6    18    27    37    45
+7    20    30    38    46
+8    20    30    38    46
+9    20    30    38    46
+10   20    30    38    46
+(:plotend:)
+
+----
+
+!!! [[#hide]] ''curve.hide'' parameter
+
+To temporarily hide curve and do not remove all mention of it in ''plot'' command, can use ''curve.hide'' parameter. In follow example were set parameters for four curves and second curve was hided. In follow example for clarity used [[legend -> page://__9b833dea-895e-4867-a3a4-0cfb5915ebab/#legend]] parameter also.
+
+
+[@(:plot
+curve.ycol=2
+curve2.ycol=3
+curve3.ycol=4
+curve4.ycol=5
+legend
+
+curve2.hide
+:)
+1    10    20    30    40
+2    11    22    31    41
+3    13    24    33    42
+4    15    25    35    43
+5    16    26    36    44
+6    18    27    37    45
+7    20    30    38    46
+8    20    30    38    46
+9    20    30    38    46
+10   20    30    38    46
+(:plotend:)@]
+
+
+(:plot
+curve.ycol=2
+curve2.ycol=3
+curve3.ycol=4
+curve4.ycol=5
+legend
+
+curve2.hide
+:)
+1    10    20    30    40
+2    11    22    31    41
+3    13    24    33    42
+4    15    25    35    43
+5    16    26    36    44
+6    18    27    37    45
+7    20    30    38    46
+8    20    30    38    46
+9    20    30    38    46
+10   20    30    38    46
+(:plotend:)
+
+If ''curve.hide'' equal zero (''curve.hide=0''), this parameter will be ignored and curve will be not hided.
+
+----
+
+!!! [[#title]] ''curve.title'' parameter
+
+In the [[previous example -> #hide]] used [[legend -> page://__9b833dea-895e-4867-a3a4-0cfb5915ebab/#legend]] parameter for showing of the legend. By ''curve.title'' parameter can change curve name.
+
+
+[@(:plot
+curve.ycol=2
+curve.title = "The first curve"
+
+curve2.ycol=3
+curve2.title = "The second curve"
+
+curve3.ycol=4
+curve3.title = "The third curve"
+
+legend
+:)
+1    10    20    30    40
+2    11    22    31    41
+3    13    24    33    42
+4    15    25    35    43
+5    16    26    36    44
+6    18    27    37    45
+7    20    30    38    46
+8    20    30    38    46
+9    20    30    38    46
+10   20    30    38    46
+(:plotend:)@]
+
+
+(:plot
+curve.ycol=2
+curve.title = "The first curve"
+
+curve2.ycol=3
+curve2.title = "The second curve"
+
+curve3.ycol=4
+curve3.title = "The third curve"
+
+legend
+:)
+1    10    20    30    40
+2    11    22    31    41
+3    13    24    33    42
+4    15    25    35    43
+5    16    26    36    44
+6    18    27    37    45
+7    20    30    38    46
+8    20    30    38    46
+9    20    30    38    46
+10   20    30    38    46
+(:plotend:)

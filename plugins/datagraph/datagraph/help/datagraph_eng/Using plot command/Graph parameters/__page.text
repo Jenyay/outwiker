@@ -1,0 +1,185 @@
+!!! Table of content
+
+* [[''wight'' / ''height'' parameters -> #size]]
+* [[''title'' parameter -> #title]]
+* [[''tooltip'' parameter -> #tooltip]]
+* [[''legend'' parameter -> #legend]]
+
+
+!!! [[#size]] ''wight'' / ''height'' parameters
+
+Parameters ''width'' and ''height'' set dimensions chart in pixels. Width and height given for whole chart including [[axis -> page://__24ff47cd-161e-4829-a4ca-affb6edd4067]], [[legend -> #legend]] and [[title -> #title]] but not only region with [[curves -> page://__0e8277e9-e11f-46fd-a5b2-b67194cddd47]].
+
+For example:
+
+[@(:plot
+width=300
+height=200
+:)
+1    10    20    30    40
+2    11    22    31    41
+3    13    24    33    42
+4    15    25    35    43
+5    16    26    36    44
+6    18    27    37    45
+7    20    30    38    46
+8    20    30    38    46
+9    20    30    38    46
+10   20    30    38    46
+(:plotend:)@]
+
+(:plot
+width=300
+height=200
+:)
+1    10    20    30    40
+2    11    22    31    41
+3    13    24    33    42
+4    15    25    35    43
+5    16    26    36    44
+6    18    27    37    45
+7    20    30    38    46
+8    20    30    38    46
+9    20    30    38    46
+10   20    30    38    46
+(:plotend:)
+
+
+----
+
+!!! [[#title]] ''title'' parameter
+
+The ''title'' parameter added title to chart. For example:
+
+[@(:plot
+title = "This is chart title"
+:)
+1    10    20    30    40
+2    11    22    31    41
+3    13    24    33    42
+4    15    25    35    43
+5    16    26    36    44
+6    18    27    37    45
+7    20    30    38    46
+8    20    30    38    46
+9    20    30    38    46
+10   20    30    38    46
+(:plotend:)@]
+
+(:plot
+title = "This is chart title"
+:)
+1    10    20    30    40
+2    11    22    31    41
+3    13    24    33    42
+4    15    25    35    43
+5    16    26    36    44
+6    18    27    37    45
+7    20    30    38    46
+8    20    30    38    46
+9    20    30    38    46
+10   20    30    38    46
+(:plotend:)
+
+
+----
+
+!!! [[#tooltip]] Параметр ''tooltip''
+
+Chart have not any interactive with user default, it is a static picture (on the technical side chart is not image, but JavaScript objects set). After adding the ''tooltip'' parameter will be shown marker with values in selected point and [[curve name -> page://__0e8277e9-e11f-46fd-a5b2-b67194cddd47/#title]].
+
+
+[@(:plot
+tooltip
+:)
+1    10    20    30    40
+2    11    22    31    41
+3    13    24    33    42
+4    15    25    35    43
+5    16    26    36    44
+6    18    27    37    45
+7    20    30    38    46
+8    20    30    38    46
+9    20    30    38    46
+10   20    30    38    46
+(:plotend:)@]
+
+(:plot
+tooltip
+:)
+1    10    20    30    40
+2    11    22    31    41
+3    13    24    33    42
+4    15    25    35    43
+5    16    26    36    44
+6    18    27    37    45
+7    20    30    38    46
+8    20    30    38    46
+9    20    30    38    46
+10   20    30    38    46
+(:plotend:)
+
+Design and contents of the tooltip is not changed at the point, but in future may be added advanced parameters for it.
+
+----
+
+!!! [[#legend]] ''legend'' parameter
+
+After the adding ''legend'' parameter chart will be had a legend. The legend is the region with [[curves titles -> page://__0e8277e9-e11f-46fd-a5b2-b67194cddd47/#title]] and they line styles.
+
+For example:
+
+[@(:plot
+curve.ycol=2
+curve.title = "The first curve"
+curve.style=1
+
+curve2.ycol=3
+curve2.title = "The second curve"
+curve2.style=2
+
+curve3.ycol=4
+curve3.title = "The third curve"
+curve3.style=3
+
+legend
+:)
+1    10    20    30    40
+2    11    22    31    41
+3    13    24    33    42
+4    15    25    35    43
+5    16    26    36    44
+6    18    27    37    45
+7    20    30    38    46
+8    20    30    38    46
+9    20    30    38    46
+10   20    30    38    46
+(:plotend:)@]
+
+
+(:plot
+curve.ycol=2
+curve.title = "The first curve"
+curve.style=1
+
+curve2.ycol=3
+curve2.title = "The second curve"
+curve2.style=2
+
+curve3.ycol=4
+curve3.title = "The third curve"
+curve3.style=3
+
+legend
+:)
+1    10    20    30    40
+2    11    22    31    41
+3    13    24    33    42
+4    15    25    35    43
+5    16    26    36    44
+6    18    27    37    45
+7    20    30    38    46
+8    20    30    38    46
+9    20    30    38    46
+10   20    30    38    46
+(:plotend:)

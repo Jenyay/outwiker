@@ -1,15 +1,14 @@
 # -*- coding: UTF-8 -*-
 
 import os.path
-import subprocess
 
 from outwiker.gui.baseaction import BaseAction
-from outwiker.core.system import getCurrentDir, getExeFile
+from outwiker.core.system import getCurrentDir, openInNewWindow
 
 
 class OpenHelpAction (BaseAction):
     """
-    Открыть справку
+    Open the OutWiker help
     """
     stringId = u"Help"
 
@@ -25,18 +24,13 @@ class OpenHelpAction (BaseAction):
     @property
     def description (self):
         return _(u"Open help")
-    
+
 
     def run (self, params):
         help_dir = u"help"
         current_help = _("help_en")
-        path = os.path.join (getCurrentDir(), 
-                help_dir, 
-                current_help)
+        path = os.path.join (getCurrentDir(),
+                             help_dir,
+                             current_help)
 
-        exeFile = getExeFile()
-        if exeFile.endswith (".exe"):
-            DETACHED_PROCESS = 0x00000008
-            subprocess.Popen ([exeFile, path, "--readonly"], creationflags=DETACHED_PROCESS)
-        else:
-            subprocess.Popen (["python", exeFile, path, "--readonly"])
+        openInNewWindow (path, readonly=True)

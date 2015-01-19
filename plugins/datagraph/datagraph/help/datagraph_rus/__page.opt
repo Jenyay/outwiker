@@ -1,0 +1,11 @@
+[Tree]
+expand = True
+
+[General]
+selectedtab = 0
+
+[Tabs]
+tab_0 = Команда plot/Список всех параметров
+tab_1 = Команда plot/Параметры данных
+tab_2 = Команда plot/Параметры кривых
+

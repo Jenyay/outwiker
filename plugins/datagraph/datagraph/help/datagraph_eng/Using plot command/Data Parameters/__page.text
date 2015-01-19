@@ -1,0 +1,264 @@
+!!! Table of content
+
+* [[Select data source -> #data]]
+* [[''curve.data.colsep'' parameter -> #colsep]]
+* [[''curve.data.skiprows'' parameter -> #skiprows]]
+* [[''curve.data.formatcol'' parameter -> #formatcol]]
+
+
+!!! [[#data]] Select data source
+
+Data can be read from two sources. Default data will be read from ''plot'' command body (beside [=(:plot:)=] and [=(:plotend:)=]). Also data can be read from attached file. To data will be read from attached file, [[''curve.data'' -> page://__0e8277e9-e11f-46fd-a5b2-b67194cddd47/#data]] parameter should be set (value is link to attached file).
+
+For example:
+
+[@(:plot
+curve.data="Attach:example_5.txt"
+curve.ycol=2
+
+curve2.data="Attach:example_5.txt"
+curve2.ycol=3
+:)
+(:plotend:)@]
+
+
+(:plot
+curve.data="Attach:example_5.txt"
+curve.ycol=2
+
+curve2.data="Attach:example_5.txt"
+curve2.ycol=3
+:)
+(:plotend:)
+
+Every curve may have own source data. For example, ''curve1'' may read data from command body and ''curve2'' from attached file.
+
+All data parameters are set for every [[curve -> page://__0e8277e9-e11f-46fd-a5b2-b67194cddd47]] individually, at that is used notation in the form: ''curve.data.param_name''.
+
+----
+
+
+!!! [[#colsep]] ''curve.data.colsep'' parameter
+
+Line items are separated by one or more spaces or tabs default. By ''curve.data.colsep'' parameter can change this behaviour and set other separator. The ''curve.data.colsep'' parameter may contain [[regular expression -> https://docs.python.org/2/library/re.html]] or simple string. The ''curve.data.colsep'' parameter contains "\s+" default.
+
+The follow example shows how to make a string separated by comma and optional spaces:
+
+[@(:plot
+curve.data.colsep=",\s*"
+:)
+1, 10, 20, 30, 40
+2, 11, 22, 31, 41
+3, 13, 24, 33, 42
+4, 15, 25, 35, 43
+5, 16, 26, 36, 44
+6, 18, 27, 37, 45
+7, 20, 30, 38, 46
+8, 20, 30, 38, 46
+9, 20, 30, 38, 46
+10, 20, 30, 38, 46
+(:plotend:)@]
+
+
+(:plot
+curve.data.colsep=",\s*"
+:)
+1, 10, 20, 30, 40
+2, 11, 22, 31, 41
+3, 13, 24, 33, 42
+4, 15, 25, 35, 43
+5, 16, 26, 36, 44
+6, 18, 27, 37, 45
+7, 20, 30, 38, 46
+8, 20, 30, 38, 46
+9, 20, 30, 38, 46
+10, 20, 30, 38, 46
+(:plotend:)
+
+----
+
+Since spaces will be stripped by reading the previous example may be more easy:
+
+[@(:plot
+curve.data.colsep=","
+:)
+1, 10, 20, 30, 40
+2, 11, 22, 31, 41
+3, 13, 24, 33, 42
+4, 15, 25, 35, 43
+5, 16, 26, 36, 44
+6, 18, 27, 37, 45
+7, 20, 30, 38, 46
+8, 20, 30, 38, 46
+9, 20, 30, 38, 46
+10, 20, 30, 38, 46
+(:plotend:)@]
+
+
+(:plot
+curve.data.colsep=","
+:)
+1, 10, 20, 30, 40
+2, 11, 22, 31, 41
+3, 13, 24, 33, 42
+4, 15, 25, 35, 43
+5, 16, 26, 36, 44
+6, 18, 27, 37, 45
+7, 20, 30, 38, 46
+8, 20, 30, 38, 46
+9, 20, 30, 38, 46
+10, 20, 30, 38, 46
+(:plotend:)
+
+----
+
+
+!!! [[#skiprows]] ''curve.data.skiprows'' parameter
+
+Sometimes, at the beginning of the file may be header which may describe presented data. To plug-in work correctly, this lines must be removed or may be added the ''curve.data.skiprows'' parameter. The ''curve.data.skiprows'' parameter explains how many lines must be skipped by reading. This parameter is used with data which read from attached file and from command [=(:plot:)=] body.
+
+
+ [@(:plot
+curve.data.skiprows = 3
+:)
+This is header
+It is describe data
+Bla-bla-bla
+1    10    20    30    40
+2    11    22    31    41
+3    13    24    33    42
+4    15    25    35    43
+5    16    26    36    44
+6    18    27    37    45
+7    20    30    38    46
+8    20    30    38    46
+9    20    30    38    46
+10   20    30    38    46
+(:plotend:)@]
+
+
+(:plot
+curve.data.skiprows = 3
+:)
+This is header
+It is describe data
+Bla-bla-bla
+1    10    20    30    40
+2    11    22    31    41
+3    13    24    33    42
+4    15    25    35    43
+5    16    26    36    44
+6    18    27    37    45
+7    20    30    38    46
+8    20    30    38    46
+9    20    30    38    46
+10   20    30    38    46
+(:plotend:)
+
+----
+
+The ''curve.data.skiprows'' parameter may be used to skip first values on the chart.
+
+ [@(:plot
+curve.data.skiprows = 3
+:)
+1    10    20    30    40
+2    11    22    31    41
+3    13    24    33    42
+4    15    25    35    43
+5    16    26    36    44
+6    18    27    37    45
+7    20    30    38    46
+8    20    30    38    46
+9    20    30    38    46
+10   20    30    38    46
+(:plotend:)@]
+
+(:plot
+curve.data.skiprows = 3
+:)
+1    10    20    30    40
+2    11    22    31    41
+3    13    24    33    42
+4    15    25    35    43
+5    16    26    36    44
+6    18    27    37    45
+7    20    30    38    46
+8    20    30    38    46
+9    20    30    38    46
+10   20    30    38    46
+(:plotend:)
+
+
+----
+
+!!! [[#formatcol]] ''curve.data.formatcol'' parameter
+
+So far in the examples data were containing floating point numbers, but DataGraph can plot chart by calendar data. For this by ''curve.data.formatcol'' parameter should be set date format which used in the data. The ''curve.data.formatcol'' parameter contain a string in the format which used in many programming languages for date formatting. This format consists of "%" and symbols followed further. Meaning this symbols follow in the table ([[source -> https://docs.python.org/2/library/datetime.html#strftime-and-strptime-behavior]]):
+
+
+||border=1
+|| '''Symbol''' || '''Meaning''' || '''Example''' ||
+||%a ||Weekday as locale’s abbreviated name. ||Пн., Вт.,..., Вс. (ru_RU),[[<<]]Sun, Mon, ..., Sat (en_US) ||
+||%A ||Weekday as locale’s full name. ||Понедельник, Вторник, ..., Воскресенье (ru_RU),[[<<]]Sunday, Monday, ..., Saturday (en_US) ||
+||%w ||Weekday as a decimal number, where 0 is Sunday and 6 is Saturday. ||0, 1,... 6 ||
+||%d ||Day of the month as a zero-padded decimal number. ||01, 02,... 31 ||
+||%b ||Month as locale’s abbreviated name. ||Янв., Фев., ..., Дек. (ru_RU),[[<<]]Jan, Feb, ..., Dec (en_US) ||
+||%B ||Month as locale’s full name. ||Январь, Февраль,..., Декабрь (ru_RU),[[<<]]January, February, ..., December (en_US) ||
+||%m ||Month as a zero-padded decimal number. ||01, 02, ..., 12 ||
+||%y ||Year without century as a zero-padded decimal number. ||00, 01, 99 ||
+||%Y ||Year with century as a decimal number. ||1917, 2000, 2015 ||
+||%H ||Hour (24-hour clock) as a zero-padded decimal number. ||00, 01, ..., 23 ||
+||%I ||Hour (12-hour clock) as a zero-padded decimal number. ||00, 01, ..., 12 ||
+||%p ||Locale’s equivalent of either AM or PM. ||AM, PM (для en_US) ||
+||%M ||Minute as a zero-padded decimal number. ||00, 01, ..., 59 ||
+||%S ||Second as a zero-padded decimal number. ||00, 01, ..., 59 ||
+||%f ||Microsecond as a decimal number, zero-padded on the left. ||000000, 000001, ..., 999999 ||
+||%j ||Day of the year as a zero-padded decimal number. ||001, 002, ..., 366 ||
+||%U ||Week number of the year (Sunday as the first day of the week) as a zero padded decimal number. All days in a new year preceding the first Sunday are considered to be in week 0. ||00, 01, ..., 53 ||
+||%c ||Locale’s appropriate date and time representation. ||Вт. 06 янв. 2015 10:23:25 (ru_RU),[[<<]]Tue Aug 16 21:30:00 1988 (en_US) ||
+||%x ||Locale’s appropriate date representation. ||06.01.2015 (ru_RU),[[<<]]08/16/1988 (en_US) ||
+||%X ||Locale’s appropriate time representation. ||10:26:16 (ru_RU, en_US) ||
+
+Every column can be represented in the own format therefore this parameter is setted individually: ''curve.data.formatcol1'', ''curve.data.formatcol2'', etc.
+
+[>To use calendar data type, necessary for axis, on which will be shown date, set parameter [[''type'' -> page://__24ff47cd-161e-4829-a4ca-affb6edd4067/#type]] to "datetime". <]
+
+For example:
+
+[@(:plot
+curve.data.formatcol1="%d.%m.%Y"
+x.type="datetime"
+:)
+01.01.2014    0
+01.02.2014    2
+01.03.2014    10
+01.04.2014    15
+01.05.2014    13
+01.06.2014    15
+01.07.2014    16
+01.08.2014    20
+01.09.2014    20
+01.10.2014    18
+01.11.2014    22
+01.12.2014    24
+(:plotend:)@]
+
+(:plot
+curve.data.formatcol1="%d.%m.%Y"
+x.type="datetime"
+:)
+01.01.2014    0
+01.02.2014    2
+01.03.2014    10
+01.04.2014    15
+01.05.2014    13
+01.06.2014    15
+01.07.2014    16
+01.08.2014    20
+01.09.2014    20
+01.10.2014    18
+01.11.2014    22
+01.12.2014    24
+(:plotend:)
+

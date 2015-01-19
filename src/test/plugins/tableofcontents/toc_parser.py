@@ -9,7 +9,6 @@ from outwiker.core.application import Application
 class TOC_ParserTest (unittest.TestCase):
     """Тесты плагина TableOfContents"""
     def setUp (self):
-        self.pluginname = u"TableOfContents"
         dirlist = [u"../plugins/tableofcontents"]
 
         self.loader = PluginsLoader(Application)
@@ -25,7 +24,9 @@ class TOC_ParserTest (unittest.TestCase):
 
 
     def testParser_01 (self):
-        parser = self.loader[self.pluginname].ContentsParser()
+        from tableofcontents.contentsparser import ContentsParser
+
+        parser = ContentsParser()
 
         text = u""
 
@@ -35,7 +36,9 @@ class TOC_ParserTest (unittest.TestCase):
 
 
     def testParser_02 (self):
-        parser = self.loader[self.pluginname].ContentsParser()
+        from tableofcontents.contentsparser import ContentsParser
+
+        parser = ContentsParser()
 
         text = u'''  !! Абырвалг'''
 
@@ -44,7 +47,9 @@ class TOC_ParserTest (unittest.TestCase):
         self.assertEqual (contents, [])
 
     def testParser_03 (self):
-        parser = self.loader[self.pluginname].ContentsParser()
+        from tableofcontents.contentsparser import ContentsParser
+
+        parser = ContentsParser()
 
         text = u'''!! Абырвалг'''
 
@@ -57,7 +62,9 @@ class TOC_ParserTest (unittest.TestCase):
 
 
     def testParser_04 (self):
-        parser = self.loader[self.pluginname].ContentsParser()
+        from tableofcontents.contentsparser import ContentsParser
+
+        parser = ContentsParser()
 
         text = u'''!!    Абырвалг    '''
 
@@ -70,7 +77,9 @@ class TOC_ParserTest (unittest.TestCase):
 
 
     def testParser_05 (self):
-        parser = self.loader[self.pluginname].ContentsParser()
+        from tableofcontents.contentsparser import ContentsParser
+
+        parser = ContentsParser()
 
         text = u'''!! Абырвалг 123'''
 
@@ -83,7 +92,9 @@ class TOC_ParserTest (unittest.TestCase):
 
 
     def testParser_06 (self):
-        parser = self.loader[self.pluginname].ContentsParser()
+        from tableofcontents.contentsparser import ContentsParser
+
+        parser = ContentsParser()
 
         text = u'''!! Абырвалг\\
  123'''
@@ -97,7 +108,9 @@ class TOC_ParserTest (unittest.TestCase):
 
 
     def testParser_07 (self):
-        parser = self.loader[self.pluginname].ContentsParser()
+        from tableofcontents.contentsparser import ContentsParser
+
+        parser = ContentsParser()
 
         text = u'''!! Абырвалг 123
 !!! Абырвалг 234'''
@@ -115,7 +128,9 @@ class TOC_ParserTest (unittest.TestCase):
 
 
     def testParser_08 (self):
-        parser = self.loader[self.pluginname].ContentsParser()
+        from tableofcontents.contentsparser import ContentsParser
+
+        parser = ContentsParser()
 
         text = u'''!! Абырвалг 123
 
@@ -134,7 +149,9 @@ class TOC_ParserTest (unittest.TestCase):
 
 
     def testParser_09 (self):
-        parser = self.loader[self.pluginname].ContentsParser()
+        from tableofcontents.contentsparser import ContentsParser
+
+        parser = ContentsParser()
 
         text = u'''ывп ыфвп ваы
 
@@ -158,7 +175,9 @@ class TOC_ParserTest (unittest.TestCase):
 
 
     def testParser_10 (self):
-        parser = self.loader[self.pluginname].ContentsParser()
+        from tableofcontents.contentsparser import ContentsParser
+
+        parser = ContentsParser()
 
         text = u'''ывп ыфвп ваы
 
@@ -186,7 +205,9 @@ class TOC_ParserTest (unittest.TestCase):
 
 
     def testParser_11 (self):
-        parser = self.loader[self.pluginname].ContentsParser()
+        from tableofcontents.contentsparser import ContentsParser
+
+        parser = ContentsParser()
 
         text = u'''ывп ыфвп ваы
 
@@ -217,7 +238,9 @@ asdf
 
 
     def testParser_12 (self):
-        parser = self.loader[self.pluginname].ContentsParser()
+        from tableofcontents.contentsparser import ContentsParser
+
+        parser = ContentsParser()
 
         text = u'''ывп ыфвп ваы
 
@@ -241,7 +264,9 @@ asdf
 
 
     def testParser_13 (self):
-        parser = self.loader[self.pluginname].ContentsParser()
+        from tableofcontents.contentsparser import ContentsParser
+
+        parser = ContentsParser()
 
         text = u'''ывп ыфвп ваы
 
@@ -272,7 +297,9 @@ asdf
 
 
     def testParser_14 (self):
-        parser = self.loader[self.pluginname].ContentsParser()
+        from tableofcontents.contentsparser import ContentsParser
+
+        parser = ContentsParser()
 
         text = u'''ывп ыфвп ваы
 
@@ -303,7 +330,9 @@ asdf
 
 
     def testParser_15 (self):
-        parser = self.loader[self.pluginname].ContentsParser()
+        from tableofcontents.contentsparser import ContentsParser
+
+        parser = ContentsParser()
 
         text = u'''ывп ыфвп ваы
 
@@ -336,7 +365,9 @@ asdf
 
 
     def testParser_16 (self):
-        parser = self.loader[self.pluginname].ContentsParser()
+        from tableofcontents.contentsparser import ContentsParser
+
+        parser = ContentsParser()
 
         text = u'''ывп ыфвп ваы
 
@@ -369,7 +400,9 @@ asdf
 
 
     def testParser_17 (self):
-        parser = self.loader[self.pluginname].ContentsParser()
+        from tableofcontents.contentsparser import ContentsParser
+
+        parser = ContentsParser()
 
         text = u'''ывп ыфвп ваы
 
@@ -401,7 +434,9 @@ asdf
 
 
     def testParser_18 (self):
-        parser = self.loader[self.pluginname].ContentsParser()
+        from tableofcontents.contentsparser import ContentsParser
+
+        parser = ContentsParser()
 
         text = u'''ывп ыфвп ваы
 
@@ -432,7 +467,9 @@ asdf
 
 
     def testParser_19 (self):
-        parser = self.loader[self.pluginname].ContentsParser()
+        from tableofcontents.contentsparser import ContentsParser
+
+        parser = ContentsParser()
 
         text = u'''ывп ыфвп ваы
 
@@ -463,7 +500,9 @@ asdf
 
 
     def testParser_20 (self):
-        parser = self.loader[self.pluginname].ContentsParser()
+        from tableofcontents.contentsparser import ContentsParser
+
+        parser = ContentsParser()
 
         text = u'''ывп ыфвп ваы
 
@@ -494,7 +533,9 @@ asdf
 
 
     def testParser_21 (self):
-        parser = self.loader[self.pluginname].ContentsParser()
+        from tableofcontents.contentsparser import ContentsParser
+
+        parser = ContentsParser()
 
         text = u'''ывп ыфвп ваы
 
@@ -523,9 +564,11 @@ asdfasdf   =]
         self.assertEqual (contents[1].level, 2)
         self.assertEqual (contents[1].anchor, u"")
 
-    
+
     def testParser_22 (self):
-        parser = self.loader[self.pluginname].ContentsParser()
+        from tableofcontents.contentsparser import ContentsParser
+
+        parser = ContentsParser()
 
         text = u'''ывп ыфвп ваы
 
@@ -558,7 +601,9 @@ asdfasdf   =]
 
 
     def testParser_23 (self):
-        parser = self.loader[self.pluginname].ContentsParser()
+        from tableofcontents.contentsparser import ContentsParser
+
+        parser = ContentsParser()
 
         text = u'''ывп ыфвп ваы
 
@@ -584,7 +629,9 @@ asdfasdf   =]
 
 
     def testParser_24 (self):
-        parser = self.loader[self.pluginname].ContentsParser()
+        from tableofcontents.contentsparser import ContentsParser
+
+        parser = ContentsParser()
 
         text = u'''ывп ыфвп ваы
 
@@ -612,7 +659,9 @@ asdfasdf   =]
 
 
     def testParser_25 (self):
-        parser = self.loader[self.pluginname].ContentsParser()
+        from tableofcontents.contentsparser import ContentsParser
+
+        parser = ContentsParser()
 
         text = u'''ывп ыфвп ваы
 
@@ -641,7 +690,9 @@ asdfasdf   =]
 
 
     def testParser_26 (self):
-        parser = self.loader[self.pluginname].ContentsParser()
+        from tableofcontents.contentsparser import ContentsParser
+
+        parser = ContentsParser()
 
         text = u'''ывп ыфвп ваы
 
@@ -674,7 +725,9 @@ asdfasdf   =]
 
 
     def testParser_27 (self):
-        parser = self.loader[self.pluginname].ContentsParser()
+        from tableofcontents.contentsparser import ContentsParser
+
+        parser = ContentsParser()
 
         text = u'''ывп ыфвп ваы
 
@@ -702,7 +755,9 @@ asdfasdf   =]
 
 
     def testParser_28 (self):
-        parser = self.loader[self.pluginname].ContentsParser()
+        from tableofcontents.contentsparser import ContentsParser
+
+        parser = ContentsParser()
 
         text = u'''ывп ыфвп ваы
 

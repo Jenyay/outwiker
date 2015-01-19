@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+	<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
+
+	<style type='text/css'>
+		body, div, p, table {
+			font-size:10pt;
+			font-family:Verdana;
+		}
+
+		img{border:none}
+		
+	</style>
+	
+</head>
+
+<body>
+
+<h2><a id="data"></a> Data format</h2>
+<br>
+DataGraph plug-in works with textual data, which the point coordinates given as columns of the text, but every line is a single point. Default the coordinates (X and Y) of the points separated by spaces or tabs. For example:<br>
+<br>
+
+<pre>0.226892802759263    13    0.0817624574300915
+0.244346095279206    14    0.0811911573526512
+0.261799387799149    15    0.0805797015932535
+0.279252680319093    16    0.07992856349624
+0.296705972839036    17    0.0792382528869541
+0.314159265358979    18    0.0785093170554063
+0.331612557878923    19    0.0777423418828899
+0.349065850398866    20    0.0769379531311851
+0.366519142918809    21    0.0760968179169069
+0.383972435438752    22    0.0752196463969073
+0.401425727958696    23    0.0743071936945169
+...</pre>
+<br>
+<br>
+Columns separator could be changed with <a href="page://__afd7ce6a-f26f-4344-a3d7-a3e4634f4aec/#colsep">curve.data.colsep</a> parameter.<br>
+<br>
+With <a href="page://__0e8277e9-e11f-46fd-a5b2-b67194cddd47">curve.xcol / curve.ycol</a> parameters could be selected columns for X and Y coordinates. Default plug-in work as follows:<br>
+<ul>
+<li>If data contains two or more columns, first column will be selected as column with X coordinate and second column as column with Y coordinate.</li>
+<li>If data contains one column only, this column will be selected as column with Y coordinate and X coordinate will use sequence 0, 1, 2, ...</li>
+</ul>
+Empty lines are ignored. <br>
+<br>
+Data could be contained in the wiki page in the <i>plot</i> command as follows:<br>
+<br>
+
+<pre>(:plot &lt;parameters&gt;:)
+0.226892802759263    13    0.0817624574300915
+0.244346095279206    14    0.0811911573526512
+0.261799387799149    15    0.0805797015932535
+0.279252680319093    16    0.07992856349624
+0.296705972839036    17    0.0792382528869541
+0.314159265358979    18    0.0785093170554063
+0.331612557878923    19    0.0777423418828899
+0.349065850398866    20    0.0769379531311851
+0.366519142918809    21    0.0760968179169069
+0.383972435438752    22    0.0752196463969073
+0.401425727958696    23    0.0743071936945169
+(:plotend:)
+</pre>
+<br>
+<br>
+Data could be contained in the attached file. In this case will be used <a href="page://__0e8277e9-e11f-46fd-a5b2-b67194cddd47">data.curve</a> parameter:<br>
+<br>
+
+<pre>(:plot curve.data=&quot;Attach:filename.txt&quot; &lt;other parameters&gt;:)
+(:plotend:)</pre>
+<br>
+<br>
+Besides floating point number data can contain <a href="page://__afd7ce6a-f26f-4344-a3d7-a3e4634f4aec/#formatcol">calendar data type</a>.<br>
+
+</body>
+</html>

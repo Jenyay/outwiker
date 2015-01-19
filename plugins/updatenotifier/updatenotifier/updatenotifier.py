@@ -7,11 +7,6 @@ from outwiker.core.commands import getCurrentVersion
 from outwiker.core.version import Version, StatusSet
 from outwiker.core.system import getOS
 
-from .i18n import set_
-from .versionextractor import extractVersion
-from .versionlist import VersionList
-from .controller import Controller
-
 
 __version__ = u"1.1.1"
 
@@ -19,6 +14,9 @@ __version__ = u"1.1.1"
 if getCurrentVersion() < Version (1, 7, 0, 684, status=StatusSet.DEV):
     print ("UpdateNotifier plugin. OutWiker version requirement: 1.7.0.684")
 else:
+    from .controller import Controller
+    from .i18n import set_
+
     class PluginUpdateNotifier (Plugin):
         """
         Класс плагина для слежения за появлением новых версий программы и плагинов
@@ -83,19 +81,3 @@ else:
                 print e
 
             set_(_)
-
-
-        @property
-        def extractVersion (self):
-            return extractVersion
-
-
-        @property
-        def VersionList (self):
-            return VersionList
-
-
-        @property
-        def loaders (self):
-            import loaders
-            return loaders

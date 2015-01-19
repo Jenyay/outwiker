@@ -37,12 +37,14 @@ class Command (object):
     @staticmethod
     def parseParams (params):
         """
-        Разобрать строку params на составные части ключ - значение.
-        Пример строки param:
-            Параметр1 Параметр2 = 111 Параметр3 = " бла бла бла" Параметр4 Параметр5="111" Параметр5=' 222 ' Параметр7 = " проверка 'бла бла бла' проверка" Параметр8 = ' проверка "bla-bla-bla" тест '
+        Parse params string into parts: key - value. Key may contain a dot.
+        Sample params:
+            param1 Параметр2.subparam = 111 Параметр3 = " bla bla bla" param4.sub.param2 = "111" param5 =' 222 ' param7 = " sample 'bla bla bla' example" param8 = ' test "bla-bla-bla" test '
+
+            Changes in 1.9.0.761: name may contain a dot.
         """
-        pattern = ur"""((?P<name>\w+)
-(\s*=\s*(?P<param>([-_\w]+)|((?P<quote>["']).*?(?P=quote)) ) )?\s*)"""
+        pattern = ur"""((?P<name>[\w.]+)
+    (\s*=\s*(?P<param>([-_\w.]+)|((?P<quote>["']).*?(?P=quote)) ) )?\s*)"""
 
         result = {}
 

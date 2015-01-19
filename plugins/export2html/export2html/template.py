@@ -3,6 +3,8 @@
 from string import Template
 import os.path
 
+from outwiker.core.system import getOS
+
 
 def loadTemplate (fname):
     """
@@ -10,9 +12,9 @@ def loadTemplate (fname):
     """
     templatedir = u"templates"
 
-    templateFileName = os.path.join (os.path.dirname (__file__),
-                                     templatedir,
-                                     fname)
+    currentdir = unicode ((os.path.dirname (__file__)), getOS().filesEncoding)
+
+    templateFileName = os.path.join (currentdir, templatedir, fname)
 
     with open (templateFileName) as fp:
         template = unicode (fp.read(), "utf8")

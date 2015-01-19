@@ -25,7 +25,8 @@ class CounterDialogTest (BaseMainWndTest):
         self._loader = PluginsLoader(Application)
         self._loader.load (dirlist)
 
-        self._dlg = self._loader["Counter"].InsertDialog (Application.mainWindow)
+        from counter.insertdialog import InsertDialog
+        self._dlg = InsertDialog (Application.mainWindow)
         Tester.dialogTester.clear()
         Tester.dialogTester.appendOk()
 
@@ -41,7 +42,9 @@ class CounterDialogTest (BaseMainWndTest):
 
 
     def testDefault (self):
-        controller = self._loader["Counter"].InsertDialogController (
+        from counter.insertdialogcontroller import InsertDialogController
+
+        controller = InsertDialogController (
             self._dlg,
             Application.config,
             self.testPage)
@@ -68,9 +71,11 @@ class CounterDialogTest (BaseMainWndTest):
 
 
     def testSetEmptyName_01 (self):
-        controller = self._loader["Counter"].InsertDialogController (self._dlg,
-                                                                     Application.config,
-                                                                     self.testPage)
+        from counter.insertdialogcontroller import InsertDialogController
+
+        controller = InsertDialogController (self._dlg,
+                                             Application.config,
+                                             self.testPage)
 
         self._dlg.counterName = u""
 
@@ -81,9 +86,11 @@ class CounterDialogTest (BaseMainWndTest):
 
 
     def testSetEmptyName_02 (self):
-        controller = self._loader["Counter"].InsertDialogController (self._dlg,
-                                                                     Application.config,
-                                                                     self.testPage)
+        from counter.insertdialogcontroller import InsertDialogController
+
+        controller = InsertDialogController (self._dlg,
+                                             Application.config,
+                                             self.testPage)
 
         self._dlg.counterName = u"    "
 
@@ -94,9 +101,11 @@ class CounterDialogTest (BaseMainWndTest):
 
 
     def testSetName (self):
-        controller = self._loader["Counter"].InsertDialogController (self._dlg,
-                                                                     Application.config,
-                                                                     self.testPage)
+        from counter.insertdialogcontroller import InsertDialogController
+
+        controller = InsertDialogController (self._dlg,
+                                             Application.config,
+                                             self.testPage)
 
         self._dlg.counterName = u"Имя счетчика"
 
@@ -107,9 +116,11 @@ class CounterDialogTest (BaseMainWndTest):
 
 
     def testSetParentEmptyName_01 (self):
-        controller = self._loader["Counter"].InsertDialogController (self._dlg,
-                                                                     Application.config,
-                                                                     self.testPage)
+        from counter.insertdialogcontroller import InsertDialogController
+
+        controller = InsertDialogController (self._dlg,
+                                             Application.config,
+                                             self.testPage)
 
         self._dlg.parentName = u""
 
@@ -120,9 +131,11 @@ class CounterDialogTest (BaseMainWndTest):
 
 
     def testSetParentEmptyName_02 (self):
-        controller = self._loader["Counter"].InsertDialogController (self._dlg,
-                                                                     Application.config,
-                                                                     self.testPage)
+        from counter.insertdialogcontroller import InsertDialogController
+
+        controller = InsertDialogController (self._dlg,
+                                             Application.config,
+                                             self.testPage)
 
         self._dlg.parentName = u"     "
 
@@ -133,9 +146,11 @@ class CounterDialogTest (BaseMainWndTest):
 
 
     def testSetParentName (self):
-        controller = self._loader["Counter"].InsertDialogController (self._dlg,
-                                                                     Application.config,
-                                                                     self.testPage)
+        from counter.insertdialogcontroller import InsertDialogController
+
+        controller = InsertDialogController (self._dlg,
+                                             Application.config,
+                                             self.testPage)
 
         self._dlg.parentName = u"Имя счетчика"
 
@@ -146,9 +161,11 @@ class CounterDialogTest (BaseMainWndTest):
 
 
     def testSetSeparatorDefault (self):
-        controller = self._loader["Counter"].InsertDialogController (self._dlg,
-                                                                     Application.config,
-                                                                     self.testPage)
+        from counter.insertdialogcontroller import InsertDialogController
+
+        controller = InsertDialogController (self._dlg,
+                                             Application.config,
+                                             self.testPage)
 
         self._dlg.separator = u"."
 
@@ -159,9 +176,11 @@ class CounterDialogTest (BaseMainWndTest):
 
 
     def testSetSeparatorWithoutParent (self):
-        controller = self._loader["Counter"].InsertDialogController (self._dlg,
-                                                                     Application.config,
-                                                                     self.testPage)
+        from counter.insertdialogcontroller import InsertDialogController
+
+        controller = InsertDialogController (self._dlg,
+                                             Application.config,
+                                             self.testPage)
 
         self._dlg.separator = u":"
 
@@ -172,9 +191,11 @@ class CounterDialogTest (BaseMainWndTest):
 
 
     def testSetSeparatorWithParent_01 (self):
-        controller = self._loader["Counter"].InsertDialogController (self._dlg,
-                                                                     Application.config,
-                                                                     self.testPage)
+        from counter.insertdialogcontroller import InsertDialogController
+
+        controller = InsertDialogController (self._dlg,
+                                             Application.config,
+                                             self.testPage)
 
         self._dlg.separator = u":"
         self._dlg.parentName = u"Родительский счетчик"
@@ -186,9 +207,11 @@ class CounterDialogTest (BaseMainWndTest):
 
 
     def testNotReset_01 (self):
-        controller = self._loader["Counter"].InsertDialogController (self._dlg,
-                                                                     Application.config,
-                                                                     self.testPage)
+        from counter.insertdialogcontroller import InsertDialogController
+
+        controller = InsertDialogController (self._dlg,
+                                             Application.config,
+                                             self.testPage)
 
         self._dlg.reset = False
         self._dlg.start = 0
@@ -200,9 +223,11 @@ class CounterDialogTest (BaseMainWndTest):
 
 
     def testNotReset_02 (self):
-        controller = self._loader["Counter"].InsertDialogController (self._dlg,
-                                                                     Application.config,
-                                                                     self.testPage)
+        from counter.insertdialogcontroller import InsertDialogController
+
+        controller = InsertDialogController (self._dlg,
+                                             Application.config,
+                                             self.testPage)
 
         self._dlg.reset = False
         self._dlg.start = 100
@@ -214,9 +239,11 @@ class CounterDialogTest (BaseMainWndTest):
 
 
     def testReset_01 (self):
-        controller = self._loader["Counter"].InsertDialogController (self._dlg,
-                                                                     Application.config,
-                                                                     self.testPage)
+        from counter.insertdialogcontroller import InsertDialogController
+
+        controller = InsertDialogController (self._dlg,
+                                             Application.config,
+                                             self.testPage)
 
         self._dlg.reset = True
         self._dlg.start = 0
@@ -228,9 +255,11 @@ class CounterDialogTest (BaseMainWndTest):
 
 
     def testReset_02 (self):
-        controller = self._loader["Counter"].InsertDialogController (self._dlg,
-                                                                     Application.config,
-                                                                     self.testPage)
+        from counter.insertdialogcontroller import InsertDialogController
+
+        controller = InsertDialogController (self._dlg,
+                                             Application.config,
+                                             self.testPage)
 
         self._dlg.reset = True
         self._dlg.start = -10
@@ -242,9 +271,11 @@ class CounterDialogTest (BaseMainWndTest):
 
 
     def testReset_03 (self):
-        controller = self._loader["Counter"].InsertDialogController (self._dlg,
-                                                                     Application.config,
-                                                                     self.testPage)
+        from counter.insertdialogcontroller import InsertDialogController
+
+        controller = InsertDialogController (self._dlg,
+                                             Application.config,
+                                             self.testPage)
 
         self._dlg.reset = True
         self._dlg.start = 1
@@ -256,9 +287,11 @@ class CounterDialogTest (BaseMainWndTest):
 
 
     def testReset_04 (self):
-        controller = self._loader["Counter"].InsertDialogController (self._dlg,
-                                                                     Application.config,
-                                                                     self.testPage)
+        from counter.insertdialogcontroller import InsertDialogController
+
+        controller = InsertDialogController (self._dlg,
+                                             Application.config,
+                                             self.testPage)
 
         self._dlg.reset = True
         self._dlg.start = 10
@@ -270,9 +303,11 @@ class CounterDialogTest (BaseMainWndTest):
 
 
     def testStep_01 (self):
-        controller = self._loader["Counter"].InsertDialogController (self._dlg,
-                                                                     Application.config,
-                                                                     self.testPage)
+        from counter.insertdialogcontroller import InsertDialogController
+
+        controller = InsertDialogController (self._dlg,
+                                             Application.config,
+                                             self.testPage)
 
         self._dlg.step = 1
         controller.showDialog()
@@ -282,9 +317,11 @@ class CounterDialogTest (BaseMainWndTest):
 
 
     def testStep_02 (self):
-        controller = self._loader["Counter"].InsertDialogController (self._dlg,
-                                                                     Application.config,
-                                                                     self.testPage)
+        from counter.insertdialogcontroller import InsertDialogController
+
+        controller = InsertDialogController (self._dlg,
+                                             Application.config,
+                                             self.testPage)
 
         self._dlg.step = 0
         controller.showDialog()
@@ -294,9 +331,11 @@ class CounterDialogTest (BaseMainWndTest):
 
 
     def testStep_03 (self):
-        controller = self._loader["Counter"].InsertDialogController (self._dlg,
-                                                                     Application.config,
-                                                                     self.testPage)
+        from counter.insertdialogcontroller import InsertDialogController
+
+        controller = InsertDialogController (self._dlg,
+                                             Application.config,
+                                             self.testPage)
 
         self._dlg.step = -10
         controller.showDialog()
@@ -306,9 +345,11 @@ class CounterDialogTest (BaseMainWndTest):
 
 
     def testStep_04 (self):
-        controller = self._loader["Counter"].InsertDialogController (self._dlg,
-                                                                     Application.config,
-                                                                     self.testPage)
+        from counter.insertdialogcontroller import InsertDialogController
+
+        controller = InsertDialogController (self._dlg,
+                                             Application.config,
+                                             self.testPage)
 
         self._dlg.step = 10
         controller.showDialog()
@@ -318,9 +359,11 @@ class CounterDialogTest (BaseMainWndTest):
 
 
     def testHide_01 (self):
-        controller = self._loader["Counter"].InsertDialogController (self._dlg,
-                                                                     Application.config,
-                                                                     self.testPage)
+        from counter.insertdialogcontroller import InsertDialogController
+
+        controller = InsertDialogController (self._dlg,
+                                             Application.config,
+                                             self.testPage)
 
         self._dlg.hide = False
         controller.showDialog()
@@ -330,9 +373,11 @@ class CounterDialogTest (BaseMainWndTest):
 
 
     def testHide_02 (self):
-        controller = self._loader["Counter"].InsertDialogController (self._dlg,
-                                                                     Application.config,
-                                                                     self.testPage)
+        from counter.insertdialogcontroller import InsertDialogController
+
+        controller = InsertDialogController (self._dlg,
+                                             Application.config,
+                                             self.testPage)
 
         self._dlg.hide = True
         controller.showDialog()
@@ -344,9 +389,9 @@ class CounterDialogTest (BaseMainWndTest):
     def testCountersList_01 (self):
         self.testPage.content = u'''(:counter:)'''
 
-        self._loader["Counter"].InsertDialogController (self._dlg,
-                                                        Application.config,
-                                                        self.testPage)
+        from counter.insertdialogcontroller import InsertDialogController
+
+        InsertDialogController (self._dlg, Application.config, self.testPage)
 
         self.assertEqual (self._dlg.countersList, [u""])
 
@@ -354,9 +399,9 @@ class CounterDialogTest (BaseMainWndTest):
     def testCountersList_02 (self):
         self.testPage.content = u'''(:counter name="Счетчик":)'''
 
-        self._loader["Counter"].InsertDialogController (self._dlg,
-                                                        Application.config,
-                                                        self.testPage)
+        from counter.insertdialogcontroller import InsertDialogController
+
+        InsertDialogController (self._dlg, Application.config, self.testPage)
 
         self.assertEqual (self._dlg.countersList, [u"", u"Счетчик"])
 
@@ -364,9 +409,9 @@ class CounterDialogTest (BaseMainWndTest):
     def testCountersList_03 (self):
         self.testPage.content = u'''(:counter name="Счетчик":) (:counter name="Счетчик":)'''
 
-        self._loader["Counter"].InsertDialogController (self._dlg,
-                                                        Application.config,
-                                                        self.testPage)
+        from counter.insertdialogcontroller import InsertDialogController
+
+        InsertDialogController (self._dlg, Application.config, self.testPage)
 
         self.assertEqual (self._dlg.countersList, [u"", u"Счетчик"])
 
@@ -374,9 +419,9 @@ class CounterDialogTest (BaseMainWndTest):
     def testCountersList_04 (self):
         self.testPage.content = u'''(:counter name="Счетчик":) (:counter name="Абырвалг   ":)'''
 
-        self._loader["Counter"].InsertDialogController (self._dlg,
-                                                        Application.config,
-                                                        self.testPage)
+        from counter.insertdialogcontroller import InsertDialogController
+
+        InsertDialogController (self._dlg, Application.config, self.testPage)
 
         self.assertEqual (self._dlg.countersList, [u"", u"Абырвалг", u"Счетчик"])
 
@@ -384,9 +429,9 @@ class CounterDialogTest (BaseMainWndTest):
     def testCountersList_05 (self):
         self.testPage.content = u'''(:counter name="Счетчик":) (:counter name='Абырвалг':) (:counter name="":)'''
 
-        self._loader["Counter"].InsertDialogController (self._dlg,
-                                                        Application.config,
-                                                        self.testPage)
+        from counter.insertdialogcontroller import InsertDialogController
+
+        InsertDialogController (self._dlg, Application.config, self.testPage)
 
         self.assertEqual (self._dlg.countersList, [u"", u"Абырвалг", u"Счетчик"])
 
@@ -394,8 +439,8 @@ class CounterDialogTest (BaseMainWndTest):
     def testCountersList_06 (self):
         self.testPage.content = u'''(:counter name="Счетчик":) (:counter name=Абырвалг:) (:counter name="":)'''
 
-        self._loader["Counter"].InsertDialogController (self._dlg,
-                                                        Application.config,
-                                                        self.testPage)
+        from counter.insertdialogcontroller import InsertDialogController
+
+        InsertDialogController (self._dlg, Application.config, self.testPage)
 
         self.assertEqual (self._dlg.countersList, [u"", u"Абырвалг", u"Счетчик"])

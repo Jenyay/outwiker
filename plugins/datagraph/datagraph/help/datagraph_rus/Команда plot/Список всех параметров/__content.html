@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+	<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
+
+	<style type='text/css'>
+		body, div, p, table {
+			font-size:10pt;
+			font-family:Verdana;
+		}
+
+		img{border:none}
+		
+	</style>
+	
+</head>
+
+<body>
+
+<ul>
+<li><a href="#curves">Параметры кривых</a></li>
+<li><a href="#data">Параметры данных</a></li>
+<li><a href="#graph">Параметры области графика</a></li>
+<li><a href="#axis">Параметры осей</a></li>
+</ul>
+<br>
+В данной таблице для обозначения того, что график содержит несколько объектов, используется запись вида <i>curve[n].имя_параметра</i>, на практике надо использовать запись вида <i>curve1.имя_параметра</i>, <i>curve2.имя_параметра</i> и т.д. <br>
+<hr>
+<br>
+<h2><a id="curves"></a> Параметры кривых</h2>
+<br>
+<table border=1>
+<tr>
+<td align="left"><b><i>curve[n].data</i></b></td>
+<td align="left">Устанавливает источник данных для кривой</td>
+</tr>
+<tr>
+<td align="left"><b><i>curve[n].xcol</i></b></td>
+<td align="left">Устанавливает номер столбца данных, который содержит координаты X отображаемых точек. Столбцы нумеруются, начиная с 1</td>
+</tr>
+<tr>
+<td align="left"><b><i>curve[n].ycol</i></b></td>
+<td align="left">Устанавливает номер столбца данных, который содержит координаты Y отображаемых точек. Столбцы нумеруются, начиная с 1</td>
+</tr>
+<tr>
+<td align="left"><b><i>curve[n].color</i></b></td>
+<td align="left">Устанавливает цвет кривой (например, "#1CE81C", "#0BA", "rgb(180, 64, 180)", "black")</td>
+</tr>
+<tr>
+<td align="left"><b><i>curve[n].style</i></b></td>
+<td align="left">Устанавливает стиль кривой по номеру или названию. Список стилей приведен в разделе <a href="page://__0e8277e9-e11f-46fd-a5b2-b67194cddd47/#style">Параметр <i>curve.style</i></a></td>
+</tr>
+<tr>
+<td align="left"><b><i>curve[n].hide</i></b></td>
+<td align="left">Скрыть кривую</td>
+</tr>
+<tr>
+<td align="left"><b><i>curve[n].title</i></b></td>
+<td align="left">Устанавливает название кривой</td>
+</tr>
+</table>
+<hr>
+<br>
+<h2><a id="data"></a> Параметры данных</h2>
+<br>
+<table border=1>
+<tr>
+<td align="left"><b><i>curve[n].data</i></b></td>
+<td align="left">Устанавливает источник данных для кривой</td>
+</tr>
+<tr>
+<td align="left"><b><i>curve[n].data.colsep</i></b></td>
+<td align="left">Устанавливает регулярное выражение (или строку), используемое для разделения столбцов данных</td>
+</tr>
+<tr>
+<td align="left"><b><i>curve[n].data.skiprows</i></b></td>
+<td align="left">Позволяет пропустить заданное количество строк в данных</td>
+</tr>
+<tr>
+<td align="left"><b><i>curve[n].data.formatcol[m]</i></b></td>
+<td align="left">Позволяет задать формат календарных данных для столбца с номером m</td>
+</tr>
+</table>
+<hr>
+<br>
+<h2><a id="graph"></a> Параметры области графика</h2>
+<br>
+<table border=1>
+<tr>
+<td align="left"><b><i>width</i></b></td>
+<td align="left">Устанавливает ширину графика</td>
+</tr>
+<tr>
+<td align="left"><b><i>height</i></b></td>
+<td align="left">Устанавливает высоту графика</td>
+</tr>
+<tr>
+<td align="left"><b><i>tooltip</i></b></td>
+<td align="left">Включает отображение всплывающей подсказки с данными</td>
+</tr>
+<tr>
+<td align="left"><b><i>legend</i></b></td>
+<td align="left">Включает отображение легенды</td>
+</tr>
+</table>
+<hr>
+<br>
+<h2><a id="axis"></a> Параметры осей</h2>
+<br>
+<table border=1>
+<tr>
+<td align="left"><b><i>x.min</i></b><br>
+<b><i>y.min</i></b></td>
+<td align="left">Устанавливает минимальное значение, отображаемое по оси X / Y</td>
+</tr>
+<tr>
+<td align="left"><b><i>x.max</i></b><br>
+<b><i>y.max</i></b></td>
+<td align="left">Устанавливает максимальное значение, отображаемое по оси X / Y</td>
+</tr>
+<tr>
+<td align="left"><b><i>x.type</i></b><br>
+<b><i>y.type</i></b></td>
+<td align="left">Если значение параметра равно "datetime", по оси откладываются календарные данные</td>
+</tr>
+<tr>
+<td align="left"><b><i>x.title</i></b><br>
+<b><i>y.title</i></b></td>
+<td align="left">Устанавливает текст подписи по осям X / Y</td>
+</tr>
+<tr>
+<td align="left"><b><i>x.tickstep</i></b><br>
+<b><i>y.tickstep</i></b></td>
+<td align="left">Устанавливает интервал между рисками (шаг сетки) по осям X / Y. Не работает для календарных данных</td>
+</tr>
+</table>
+<hr>
+
+</body>
+</html>

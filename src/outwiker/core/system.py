@@ -9,6 +9,7 @@ import os
 import os.path as op
 import shutil
 import sys
+import subprocess
 
 import wx
 
@@ -40,7 +41,7 @@ class System (object):
                        oldConfDirName=DEFAULT_OLD_CONFIG_DIR,
                        newConfDirName=DEFAULT_CONFIG_DIR):
         """
-        Метод migrateConfig переносит конфигурационную директорию из старого местоположения (HOME$/.outwiker) в новое (зависит от ОС)
+        Remove config directory from HOME$/.outwiker to idealogic right place (depends of the OS)
         """
         confDir = op.join(self.settingsDir, newConfDirName)
 
@@ -71,7 +72,7 @@ class Windows (System):
 
     @property
     def filesEncoding (self):
-        return "1251"
+        return sys.getfilesystemencoding()
 
 
     @property
@@ -161,7 +162,7 @@ class Unix (System):
 
     @property
     def filesEncoding (self):
-        return "utf-8"
+        return sys.getfilesystemencoding()
 
 
     @property
@@ -323,8 +324,8 @@ def getSpecialDirList (dirname,
 
 def readTextFile (fname):
     """
-    Читать файл в кодировке UTF-8.
-    Возвращает unicode-строку
+    Read text content. Content must be in utf-8 encoding.
+    The function return unicode object
     """
     with codecs.open (fname, "r", "utf-8") as fp:
         return fp.read()
@@ -332,7 +333,23 @@ def readTextFile (fname):
 
 def writeTextFile (fname, text):
     """
-    Записать текст в кодировке utf-8
+    Write text with utf-8 encoding
     """
     with codecs.open (fname, "w", "utf-8") as fp:
         return fp.write (text)
+
+
+def openInNewWindow (path, readonly=False):
+    """ Open wiki tree in the new OutWiker window
+    """
+    exeFile = getExeFile()
+
+    params = [exeFile, path]
+    if readonly:
+        params += ['--readonly']
+
+    if exeFile.endswith (".exe"):
+        DETACHED_PROCESS = 0x00000008
+        subprocess.Popen (params, creationflags=DETACHED_PROCESS)
+    else:
+        subprocess.Popen (["python"] + params)

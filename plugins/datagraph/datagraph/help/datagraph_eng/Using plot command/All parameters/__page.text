@@ -1,0 +1,58 @@
+!!! Table of content
+
+* [[Curves parameters -> #curves]]
+* [[Data parameters -> #data]]
+* [[Chart parameters -> #graph]]
+* [[Axis parameters -> #axis]]
+
+In this section will be used notation ''curve[n].param_name'' which signifies what chart contain several objects (curves). In practice will be used notations ''curve1.param_name'', ''curve2.param_name'', etc.
+
+----
+
+
+!!! [[#curves]] Curves parameters
+
+||border=1
+||''''curve[n].data'''' ||Set data source for curve ||
+||''''curve[n].xcol'''' ||Set column number for X coordinates. The columns are numbered from 1 ||
+||''''curve[n].ycol'''' ||Set column number for Y coordinates. The columns are numbered from 1 ||
+||''''curve[n].color'''' ||Set curve color (for example "#1CE81C", "#0BA", "rgb(180, 64, 180)", "black") ||
+||''''curve[n].style'''' ||Set curve style by name or number. List of the styles is being given in the [[''curve.style'' parameter -> page://__0e8277e9-e11f-46fd-a5b2-b67194cddd47/#style]] section ||
+||''''curve[n].hide'''' ||Hide curve ||
+||''''curve[n].title'''' ||Set curve title ||
+
+----
+
+
+!!! [[#data]] Data parameters
+
+||border=1
+||''''curve[n].data'''' ||Set data source for curve ||
+||''''curve[n].data.colsep'''' ||Set regular expression or string which is used for separate data columns ||
+||''''curve[n].data.skiprows'''' ||Allow to skip specified number first lines in the data ||
+||''''curve[n].data.formatcol[m]'''' ||Set calendar data format for column number ''m'' ||
+
+----
+
+
+!!! [[#graph]] Chart parameters
+
+||border=1
+||''''width'''' ||Set chart width ||
+||''''height'''' ||Set chart height ||
+||''''tooltip'''' ||Turn on the tooltip with point data ||
+||''''legend'''' ||Turn on the legend ||
+
+----
+
+
+!!! [[#axis]] Axis parameters
+
+||border=1
+||''''x.min''''[[<<]]''''y.min'''' ||Set min value for axis X / Y ||
+||''''x.max''''[[<<]]''''y.max'''' ||Set max value for axis X / Y ||
+||''''x.type''''[[<<]]''''y.type'''' ||If this value equals "datetime", on axis will be shown calendar data (turn on calendar axis type) ||
+||''''x.title''''[[<<]]''''y.title'''' ||Set title for X / Y axis ||
+||''''x.tickstep''''[[<<]]''''y.tickstep'''' ||Set interval besides ticks (grid step) for axis X / Y. Does not work for calendar data type ||
+
+----

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+	<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
+
+	<style type='text/css'>
+		body, div, p, table {
+			font-size:10pt;
+			font-family:Verdana;
+		}
+
+		img{border:none}
+		
+	</style>
+	<!--[if lt IE 9]><script language="javascript" type="text/javascript" src="__attach/__thumb/__js/excanvas.min.js"></script><![endif]-->
+<script language="javascript" type="text/javascript" src="__attach/__thumb/__js/jquery.min.js"></script>
+<script language="javascript" type="text/javascript" src="__attach/__thumb/__js/highcharts.js"></script>
+<script>
+$(function () { $('#graph-0').highcharts({"yAxis": {"max": 25.0, "title": {"text": null}, "min": 0.0, "gridLineWidth": 1}, "series": [{"dashStyle": "solid", "name": "\u041b\u0438\u043d\u0438\u044f 1", "color": "#0051FF", "states": {"hover": {"enabled": false}}, "animation": false, "marker": {"symbol": "circle", "enabled": false}, "data": [[1388534400000.0, 0.0], [1391212800000.0, 2.0], [1393632000000.0, 10.0], [1396310400000.0, 15.0], [1398902400000.0, 13.0], [1401580800000.0, 15.0], [1404172800000.0, 16.0], [1406851200000.0, 20.0], [1409529600000.0, 20.0], [1412121600000.0, 18.0], [1414800000000.0, 22.0], [1417392000000.0, 24.0]]}], "title": {"text": null}, "chart": {"animation": false, "plotBorderWidth": 1}, "tooltip": {"enabled": false}, "credits": {"enabled": false}, "plotOptions": {}, "xAxis": {"title": {"text": null}, "max": 1420070400000.0, "labels": {"format": "{value:%d.%m.%Y}"}, "gridLineWidth": 1, "min": 1385856000000.0, "type": "datetime"}, "legend": {"symbolWidth": 60, "enabled": false}}); });
+</script>
+<script>
+$(function () { $('#graph-1').highcharts({"yAxis": {"title": {"text": "Title for Y"}, "gridLineWidth": 1}, "series": [{"dashStyle": "solid", "name": "\u041b\u0438\u043d\u0438\u044f 1", "color": "#0051FF", "states": {"hover": {"enabled": false}}, "animation": false, "marker": {"symbol": "circle", "enabled": false}, "data": [[1.0, 10.0], [2.0, 11.0], [3.0, 13.0], [4.0, 15.0], [5.0, 16.0], [6.0, 18.0], [7.0, 20.0], [8.0, 20.0], [9.0, 20.0], [10.0, 20.0]]}], "title": {"text": null}, "chart": {"animation": false, "plotBorderWidth": 1}, "tooltip": {"enabled": false}, "credits": {"enabled": false}, "plotOptions": {}, "xAxis": {"title": {"text": "Title for X"}, "gridLineWidth": 1}, "legend": {"symbolWidth": 60, "enabled": false}}); });
+</script>
+<script>
+$(function () { $('#graph-2').highcharts({"yAxis": {"title": {"text": null}, "gridLineWidth": 1}, "series": [{"dashStyle": "solid", "name": "\u041b\u0438\u043d\u0438\u044f 1", "color": "#0051FF", "states": {"hover": {"enabled": false}}, "animation": false, "marker": {"symbol": "circle", "enabled": false}, "data": [[1388534400000.0, 0.0], [1391212800000.0, 2.0], [1393632000000.0, 10.0], [1396310400000.0, 15.0], [1398902400000.0, 13.0], [1401580800000.0, 15.0], [1404172800000.0, 16.0], [1406851200000.0, 20.0], [1409529600000.0, 20.0], [1412121600000.0, 18.0], [1414800000000.0, 22.0], [1417392000000.0, 24.0]]}], "title": {"text": null}, "chart": {"animation": false, "plotBorderWidth": 1}, "tooltip": {"enabled": false}, "credits": {"enabled": false}, "plotOptions": {}, "xAxis": {"labels": {"format": "{value:%d.%m.%Y}"}, "title": {"text": null}, "type": "datetime", "gridLineWidth": 1}, "legend": {"symbolWidth": 60, "enabled": false}}); });
+</script>
+<script>
+$(function () { $('#graph-3').highcharts({"yAxis": {"title": {"text": null}, "tickInterval": 1.0, "gridLineWidth": 1}, "series": [{"dashStyle": "solid", "name": "\u041b\u0438\u043d\u0438\u044f 1", "color": "#0051FF", "states": {"hover": {"enabled": false}}, "animation": false, "marker": {"symbol": "circle", "enabled": false}, "data": [[1.0, 10.0], [2.0, 11.0], [3.0, 13.0], [4.0, 15.0], [5.0, 16.0], [6.0, 18.0], [7.0, 20.0], [8.0, 20.0], [9.0, 20.0], [10.0, 20.0]]}], "title": {"text": null}, "chart": {"animation": false, "plotBorderWidth": 1}, "tooltip": {"enabled": false}, "credits": {"enabled": false}, "plotOptions": {}, "xAxis": {"title": {"text": null}, "tickInterval": 0.5, "gridLineWidth": 1}, "legend": {"symbolWidth": 60, "enabled": false}}); });
+</script>
+</head>
+
+<body>
+
+<h2>Table of contents</h2>
+<ul>
+<li><a href="#names">Axis using</a></li>
+<li><a href="#minmax"><i>min</i> / <i>max</i> parameters</a></li>
+<li><a href="#title"><i>title</i> parameter</a></li>
+<li><a href="#type"><i>type</i> parameter</a></li>
+<li><a href="#tickstep"><i>tickstep</i> parameter</a></li>
+</ul>
+<h2><a id="names"></a> Axis using</h2>
+<br>
+The chart has two axis objects: <i>x</i> and <i>y</i>. Both axis has same the parameters set. The parameters is set as <i>x.param_name</i> and <i>y.param_name</i> accordingly.<br>
+<hr>
+<br>
+<h2><a id="minmax"></a> <i>min</i> / <i>max</i> parameters</h2>
+<br>
+With the <i>min</i> / <i>max</i> parameters can set visible data interval on every axis. This parameters operates for floating point and calendar data types. For calendar data type plug-in understands lot of the formats, but recomended format is "YYYY-MM-DD", and for the time - "HH:MM". About calendar date type refer to <a href="page://__afd7ce6a-f26f-4344-a3d7-a3e4634f4aec/#formatcol"><i>curve.data.formatcol</i> parameter</a> section.<br>
+<br>
+Example:<br>
+<br>
+
+<pre>(:plot
+curve.data.formatcol1=&quot;%d.%m.%Y&quot;
+x.type = &quot;datetime&quot;
+
+x.min = &quot;2013-12-01&quot;
+x.max = &quot;2015-01-01&quot;
+
+y.min = 0
+y.max = 25
+:)
+01.01.2014    0
+01.02.2014    2
+01.03.2014    10
+01.04.2014    15
+01.05.2014    13
+01.06.2014    15
+01.07.2014    16
+01.08.2014    20
+01.09.2014    20
+01.10.2014    18
+01.11.2014    22
+01.12.2014    24
+(:plotend:)</pre>
+<br>
+<br>
+<div id="graph-0" style="width:700px; height:300px;"></div><br>
+<hr>
+<br>
+<h2><a id="title"></a> <i>title</i> parameter</h2>
+<br>
+With the <i>title</i> parameter can set title, shown near axis, for the explanation which value the axis shows.<br>
+<br>
+For example:<br>
+<br>
+
+<pre>(:plot
+x.title = &quot;Title for X&quot;
+y.title = &quot;Title for Y&quot;
+:)
+1    10    20    30    40
+2    11    22    31    41
+3    13    24    33    42
+4    15    25    35    43
+5    16    26    36    44
+6    18    27    37    45
+7    20    30    38    46
+8    20    30    38    46
+9    20    30    38    46
+10   20    30    38    46
+(:plotend:)</pre>
+<br>
+<br>
+<div id="graph-1" style="width:700px; height:300px;"></div><br>
+<hr>
+<br>
+<h2><a id="type"></a> <i>type</i> parameter</h2>
+<br>
+With <i>type</i> parameter can set, what the axis shows <a href="page://__afd7ce6a-f26f-4344-a3d7-a3e4634f4aec/#formatcol">calendar data type</a>. For this <i>type</i> parameter must contain value "datetime".<br>
+<br>
+For example:<br>
+<br>
+
+<pre>(:plot
+curve.data.formatcol1=&quot;%d.%m.%Y&quot;
+x.type=&quot;datetime&quot;
+:)
+01.01.2014    0
+01.02.2014    2
+01.03.2014    10
+01.04.2014    15
+01.05.2014    13
+01.06.2014    15
+01.07.2014    16
+01.08.2014    20
+01.09.2014    20
+01.10.2014    18
+01.11.2014    22
+01.12.2014    24
+(:plotend:)</pre>
+<br>
+<br>
+<div id="graph-2" style="width:700px; height:300px;"></div><br>
+<hr>
+<h2><a id="tickstep"></a> <i>tickstep</i> parameter</h2>
+<br>
+With the <i>tickstep</i> parameter can change interval besides ticks on axis (and grid size). If this parameter is not set, tick step will be selected automatically.<br>
+<br>
+<blockquote> Currently <i>tickstep</i> parameter do not operate with calendar data type. </blockquote><br>
+<br>
+Example:<br>
+<br>
+
+<pre>(:plot
+x.tickstep = 0.5
+y.tickstep = 1
+:)
+1    10    20    30    40
+2    11    22    31    41
+3    13    24    33    42
+4    15    25    35    43
+5    16    26    36    44
+6    18    27    37    45
+7    20    30    38    46
+8    20    30    38    46
+9    20    30    38    46
+10   20    30    38    46
+(:plotend:)</pre>
+<br>
+<br>
+<br>
+<div id="graph-3" style="width:700px; height:300px;"></div><br>
+
+</body>
+</html>

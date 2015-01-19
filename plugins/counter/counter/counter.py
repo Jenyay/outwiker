@@ -15,8 +15,6 @@ if getCurrentVersion() < Version (1, 8, 0, 729, status=StatusSet.DEV):
 else:
     from .i18n import set_
     from .controller import Controller
-    from .insertdialog import InsertDialog
-    from .insertdialogcontroller import InsertDialogController
 
     class PluginCounter (Plugin):
         """
@@ -101,13 +99,3 @@ All parameters are optional.
             self.__controller.destroy()
 
         #############################################
-
-        # Свойства, используемые при тестировании
-        @property
-        def InsertDialog (self):
-            return InsertDialog
-
-
-        @property
-        def InsertDialogController (self):
-            return InsertDialogController

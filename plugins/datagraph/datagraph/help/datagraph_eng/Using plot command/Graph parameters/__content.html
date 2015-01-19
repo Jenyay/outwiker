@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+	<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
+
+	<style type='text/css'>
+		body, div, p, table {
+			font-size:10pt;
+			font-family:Verdana;
+		}
+
+		img{border:none}
+		
+	</style>
+	<!--[if lt IE 9]><script language="javascript" type="text/javascript" src="__attach/__thumb/__js/excanvas.min.js"></script><![endif]-->
+<script language="javascript" type="text/javascript" src="__attach/__thumb/__js/jquery.min.js"></script>
+<script language="javascript" type="text/javascript" src="__attach/__thumb/__js/highcharts.js"></script>
+<script>
+$(function () { $('#graph-0').highcharts({"yAxis": {"title": {"text": null}, "gridLineWidth": 1}, "series": [{"dashStyle": "solid", "name": "Curve-1", "color": "#0051FF", "states": {"hover": {"enabled": false}}, "animation": false, "marker": {"symbol": "circle", "enabled": false}, "data": [[1.0, 10.0], [2.0, 11.0], [3.0, 13.0], [4.0, 15.0], [5.0, 16.0], [6.0, 18.0], [7.0, 20.0], [8.0, 20.0], [9.0, 20.0], [10.0, 20.0]]}], "title": {"text": null}, "chart": {"animation": false, "plotBorderWidth": 1}, "tooltip": {"enabled": false}, "credits": {"enabled": false}, "plotOptions": {}, "xAxis": {"title": {"text": null}, "gridLineWidth": 1}, "legend": {"symbolWidth": 60, "enabled": false}}); });
+</script>
+<script>
+$(function () { $('#graph-1').highcharts({"yAxis": {"title": {"text": null}, "gridLineWidth": 1}, "series": [{"dashStyle": "solid", "name": "Curve-1", "color": "#0051FF", "states": {"hover": {"enabled": false}}, "animation": false, "marker": {"symbol": "circle", "enabled": false}, "data": [[1.0, 10.0], [2.0, 11.0], [3.0, 13.0], [4.0, 15.0], [5.0, 16.0], [6.0, 18.0], [7.0, 20.0], [8.0, 20.0], [9.0, 20.0], [10.0, 20.0]]}], "title": {"text": "This is chart title"}, "chart": {"animation": false, "plotBorderWidth": 1}, "tooltip": {"enabled": false}, "credits": {"enabled": false}, "plotOptions": {}, "xAxis": {"title": {"text": null}, "gridLineWidth": 1}, "legend": {"symbolWidth": 60, "enabled": false}}); });
+</script>
+<script>
+$(function () { $('#graph-2').highcharts({"yAxis": {"title": {"text": null}, "gridLineWidth": 1}, "series": [{"dashStyle": "solid", "name": "Curve-1", "color": "#0051FF", "states": {"hover": {"enabled": false}}, "animation": false, "marker": {"symbol": "circle", "enabled": false}, "data": [[1.0, 10.0], [2.0, 11.0], [3.0, 13.0], [4.0, 15.0], [5.0, 16.0], [6.0, 18.0], [7.0, 20.0], [8.0, 20.0], [9.0, 20.0], [10.0, 20.0]]}], "title": {"text": null}, "chart": {"animation": false, "plotBorderWidth": 1}, "tooltip": {"enabled": true}, "credits": {"enabled": false}, "plotOptions": {}, "xAxis": {"title": {"text": null}, "gridLineWidth": 1}, "legend": {"symbolWidth": 60, "enabled": false}}); });
+</script>
+<script>
+$(function () { $('#graph-3').highcharts({"yAxis": {"title": {"text": null}, "gridLineWidth": 1}, "series": [{"dashStyle": "solid", "name": "The first curve", "color": "#0051FF", "states": {"hover": {"enabled": false}}, "animation": false, "marker": {"symbol": "circle", "enabled": false}, "data": [[1.0, 10.0], [2.0, 11.0], [3.0, 13.0], [4.0, 15.0], [5.0, 16.0], [6.0, 18.0], [7.0, 20.0], [8.0, 20.0], [9.0, 20.0], [10.0, 20.0]]}, {"dashStyle": "longdash", "name": "The second curve", "color": "#FF0000", "states": {"hover": {"enabled": false}}, "animation": false, "marker": {"symbol": "square", "enabled": false}, "data": [[1.0, 20.0], [2.0, 22.0], [3.0, 24.0], [4.0, 25.0], [5.0, 26.0], [6.0, 27.0], [7.0, 30.0], [8.0, 30.0], [9.0, 30.0], [10.0, 30.0]]}, {"dashStyle": "shortdash", "name": "The third curve", "color": "#19D400", "states": {"hover": {"enabled": false}}, "animation": false, "marker": {"symbol": "diamond", "enabled": false}, "data": [[1.0, 30.0], [2.0, 31.0], [3.0, 33.0], [4.0, 35.0], [5.0, 36.0], [6.0, 37.0], [7.0, 38.0], [8.0, 38.0], [9.0, 38.0], [10.0, 38.0]]}], "title": {"text": null}, "chart": {"animation": false, "plotBorderWidth": 1}, "tooltip": {"enabled": false}, "credits": {"enabled": false}, "plotOptions": {}, "xAxis": {"title": {"text": null}, "gridLineWidth": 1}, "legend": {"symbolWidth": 60, "enabled": true}}); });
+</script>
+</head>
+
+<body>
+
+<h2>Table of content</h2>
+<ul>
+<li><a href="#size"><i>wight</i> / <i>height</i> parameters</a></li>
+<li><a href="#title"><i>title</i> parameter</a></li>
+<li><a href="#tooltip"><i>tooltip</i> parameter</a></li>
+<li><a href="#legend"><i>legend</i> parameter</a></li>
+</ul>
+<h2><a id="size"></a> <i>wight</i> / <i>height</i> parameters</h2>
+<br>
+Parameters <i>width</i> and <i>height</i> set dimensions chart in pixels. Width and height given for whole chart including <a href="page://__24ff47cd-161e-4829-a4ca-affb6edd4067">axis</a>, <a href="#legend">legend</a> and <a href="#title">title</a> but not only region with <a href="page://__0e8277e9-e11f-46fd-a5b2-b67194cddd47">curves</a>.<br>
+<br>
+For example:<br>
+<br>
+
+<pre>(:plot
+width=300
+height=200
+:)
+1    10    20    30    40
+2    11    22    31    41
+3    13    24    33    42
+4    15    25    35    43
+5    16    26    36    44
+6    18    27    37    45
+7    20    30    38    46
+8    20    30    38    46
+9    20    30    38    46
+10   20    30    38    46
+(:plotend:)</pre>
+<br>
+<br>
+<div id="graph-0" style="width:300px; height:200px;"></div><br>
+<br>
+<hr>
+<h2><a id="title"></a> <i>title</i> parameter</h2>
+<br>
+The <i>title</i> parameter added title to chart. For example:<br>
+<br>
+
+<pre>(:plot
+title = &quot;This is chart title&quot;
+:)
+1    10    20    30    40
+2    11    22    31    41
+3    13    24    33    42
+4    15    25    35    43
+5    16    26    36    44
+6    18    27    37    45
+7    20    30    38    46
+8    20    30    38    46
+9    20    30    38    46
+10   20    30    38    46
+(:plotend:)</pre>
+<br>
+<br>
+<div id="graph-1" style="width:700px; height:300px;"></div><br>
+<br>
+<hr>
+<h2><a id="tooltip"></a> Параметр <i>tooltip</i></h2>
+<br>
+Chart have not any interactive with user default, it is a static picture (on the technical side chart is not image, but JavaScript objects set). After adding the <i>tooltip</i> parameter will be shown marker with values in selected point and <a href="page://__0e8277e9-e11f-46fd-a5b2-b67194cddd47/#title">curve name</a>.<br>
+<br>
+<br>
+
+<pre>(:plot
+tooltip
+:)
+1    10    20    30    40
+2    11    22    31    41
+3    13    24    33    42
+4    15    25    35    43
+5    16    26    36    44
+6    18    27    37    45
+7    20    30    38    46
+8    20    30    38    46
+9    20    30    38    46
+10   20    30    38    46
+(:plotend:)</pre>
+<br>
+<br>
+<div id="graph-2" style="width:700px; height:300px;"></div><br>
+<br>
+Design and contents of the tooltip is not changed at the point, but in future may be added advanced parameters for it.<br>
+<hr>
+<h2><a id="legend"></a> <i>legend</i> parameter</h2>
+<br>
+After the adding <i>legend</i> parameter chart will be had a legend. The legend is the region with <a href="page://__0e8277e9-e11f-46fd-a5b2-b67194cddd47/#title">curves titles</a> and they line styles.<br>
+<br>
+For example:<br>
+<br>
+
+<pre>(:plot
+curve.ycol=2
+curve.title = &quot;The first curve&quot;
+curve.style=1
+
+curve2.ycol=3
+curve2.title = &quot;The second curve&quot;
+curve2.style=2
+
+curve3.ycol=4
+curve3.title = &quot;The third curve&quot;
+curve3.style=3
+
+legend
+:)
+1    10    20    30    40
+2    11    22    31    41
+3    13    24    33    42
+4    15    25    35    43
+5    16    26    36    44
+6    18    27    37    45
+7    20    30    38    46
+8    20    30    38    46
+9    20    30    38    46
+10   20    30    38    46
+(:plotend:)</pre>
+<br>
+<br>
+<br>
+<div id="graph-3" style="width:700px; height:300px;"></div><br>
+
+</body>
+</html>

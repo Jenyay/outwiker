@@ -13,8 +13,10 @@ class InsertEdgeTest (unittest.TestCase):
 
         self.loader = PluginsLoader(Application)
         self.loader.load (dirlist)
-        self.plugin = self.loader[u"Diagrammer"]
-        self._dlg = self.plugin.InsertEdgeDialog(None)
+
+        from diagrammer.gui.insertedgedialog import InsertEdgeDialog
+
+        self._dlg = InsertEdgeDialog (None)
         Tester.dialogTester.clear()
 
 
@@ -24,7 +26,9 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testArrows_01 (self):
-        controller = self.plugin.InsertEdgeControllerNone (self._dlg)
+        import diagrammer.gui.insertedgedialog
+
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerNone (self._dlg)
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = u"А"
@@ -36,7 +40,9 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testArrows_02 (self):
-        controller = self.plugin.InsertEdgeControllerLeft (self._dlg)
+        import diagrammer.gui.insertedgedialog
+
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerLeft (self._dlg)
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = u"А"
@@ -48,7 +54,9 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testArrows_03 (self):
-        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
+        import diagrammer.gui.insertedgedialog
+
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight (self._dlg)
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = u"А"
@@ -60,7 +68,9 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testArrows_04 (self):
-        controller = self.plugin.InsertEdgeControllerBoth (self._dlg)
+        import diagrammer.gui.insertedgedialog
+
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerBoth (self._dlg)
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = u"А"
@@ -72,7 +82,9 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testEmptyNames_01 (self):
-        controller = self.plugin.InsertEdgeControllerBoth (self._dlg)
+        import diagrammer.gui.insertedgedialog
+
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerBoth (self._dlg)
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = u""
@@ -85,7 +97,9 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testEmptyNames_02 (self):
-        controller = self.plugin.InsertEdgeControllerBoth (self._dlg)
+        import diagrammer.gui.insertedgedialog
+
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerBoth (self._dlg)
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = u"А"
@@ -99,7 +113,9 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testEmptyNames_03 (self):
-        controller = self.plugin.InsertEdgeControllerBoth (self._dlg)
+        import diagrammer.gui.insertedgedialog
+
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerBoth (self._dlg)
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = u""
@@ -113,7 +129,9 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testLabel_01 (self):
-        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
+        import diagrammer.gui.insertedgedialog
+
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight (self._dlg)
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = u"А"
@@ -126,7 +144,9 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testStyleLine_01 (self):
-        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
+        import diagrammer.gui.insertedgedialog
+
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight (self._dlg)
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = u"А"
@@ -139,7 +159,9 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testStyleLine_02 (self):
-        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
+        import diagrammer.gui.insertedgedialog
+
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight (self._dlg)
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = u"А"
@@ -152,7 +174,9 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testStyleLine_03 (self):
-        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
+        import diagrammer.gui.insertedgedialog
+
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight (self._dlg)
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = u"А"
@@ -165,7 +189,9 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testStyleLine_04 (self):
-        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
+        import diagrammer.gui.insertedgedialog
+
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight (self._dlg)
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = u"А"
@@ -178,7 +204,9 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testStyleLine_05 (self):
-        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
+        import diagrammer.gui.insertedgedialog
+
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight (self._dlg)
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = u"А"
@@ -192,7 +220,9 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testStyleArrow_01 (self):
-        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
+        import diagrammer.gui.insertedgedialog
+
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight (self._dlg)
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = u"А"
@@ -205,7 +235,9 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testStyleArrow_02 (self):
-        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
+        import diagrammer.gui.insertedgedialog
+
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight (self._dlg)
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = u"А"
@@ -218,7 +250,9 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testStyleArrow_03 (self):
-        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
+        import diagrammer.gui.insertedgedialog
+
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight (self._dlg)
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = u"А"
@@ -231,7 +265,9 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testStyleArrow_04 (self):
-        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
+        import diagrammer.gui.insertedgedialog
+
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight (self._dlg)
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = u"А"
@@ -244,7 +280,9 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testStyleArrow_05 (self):
-        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
+        import diagrammer.gui.insertedgedialog
+
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight (self._dlg)
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = u"А"
@@ -258,7 +296,9 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testLineColor_01 (self):
-        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
+        import diagrammer.gui.insertedgedialog
+
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight (self._dlg)
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = u"А"
@@ -272,7 +312,9 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testLineColor_02 (self):
-        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
+        import diagrammer.gui.insertedgedialog
+
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight (self._dlg)
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = u"А"
@@ -286,7 +328,9 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testLineColor_03 (self):
-        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
+        import diagrammer.gui.insertedgedialog
+
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight (self._dlg)
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = u"А"
@@ -300,7 +344,9 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testLineColor_04 (self):
-        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
+        import diagrammer.gui.insertedgedialog
+
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight (self._dlg)
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = u"А"
@@ -315,7 +361,9 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testFontSize_01 (self):
-        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
+        import diagrammer.gui.insertedgedialog
+
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight (self._dlg)
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = u"А"
@@ -329,7 +377,9 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testFontSize_02 (self):
-        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
+        import diagrammer.gui.insertedgedialog
+
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight (self._dlg)
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = u"А"
@@ -343,7 +393,9 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testFontSize_03 (self):
-        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
+        import diagrammer.gui.insertedgedialog
+
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight (self._dlg)
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = u"А"
@@ -358,7 +410,9 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testTextColor_01 (self):
-        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
+        import diagrammer.gui.insertedgedialog
+
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight (self._dlg)
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = u"А"
@@ -372,7 +426,9 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testTextColor_02 (self):
-        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
+        import diagrammer.gui.insertedgedialog
+
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight (self._dlg)
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = u"А"
@@ -386,7 +442,9 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testTextColor_03 (self):
-        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
+        import diagrammer.gui.insertedgedialog
+
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight (self._dlg)
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = u"А"
@@ -400,7 +458,9 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testTextColor_04 (self):
-        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
+        import diagrammer.gui.insertedgedialog
+
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight (self._dlg)
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = u"А"
@@ -415,7 +475,9 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testThick_01 (self):
-        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
+        import diagrammer.gui.insertedgedialog
+
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight (self._dlg)
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = u"А"
@@ -428,7 +490,9 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testThick_02 (self):
-        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
+        import diagrammer.gui.insertedgedialog
+
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight (self._dlg)
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = u"А"
@@ -441,7 +505,9 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testThick_03 (self):
-        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
+        import diagrammer.gui.insertedgedialog
+
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight (self._dlg)
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = u"А"
@@ -455,7 +521,9 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testFolded_01 (self):
-        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
+        import diagrammer.gui.insertedgedialog
+
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight (self._dlg)
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = u"А"
@@ -468,7 +536,9 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testFolded_02 (self):
-        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
+        import diagrammer.gui.insertedgedialog
+
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight (self._dlg)
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = u"А"
@@ -481,7 +551,9 @@ class InsertEdgeTest (unittest.TestCase):
 
 
     def testFolded_03 (self):
-        controller = self.plugin.InsertEdgeControllerRight (self._dlg)
+        import diagrammer.gui.insertedgedialog
+
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight (self._dlg)
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = u"А"
