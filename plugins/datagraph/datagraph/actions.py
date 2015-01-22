@@ -68,15 +68,21 @@ class OpenHelpAction (BaseAction):
 
 
     def run (self, params):
+        encoding = getOS().filesEncoding
         helpDirName = u"help"
-        currentdir = unicode (os.path.dirname (__file__),
-                              getOS().filesEncoding)
+        currentdir = unicode (os.path.dirname (__file__), encoding)
 
         helpPath = os.path.join (currentdir, helpDirName, _("datagraph_eng"))
 
         exeFile = getExeFile()
         if exeFile.endswith (".exe"):
             DETACHED_PROCESS = 0x00000008
-            subprocess.Popen ([exeFile, helpPath, "--readonly"], creationflags=DETACHED_PROCESS)
+            subprocess.Popen ([exeFile.encode (encoding),
+                               helpPath.encode (encoding),
+                               "--readonly"],
+                              creationflags=DETACHED_PROCESS)
         else:
-            subprocess.Popen (["python", exeFile, helpPath, "--readonly"])
+            subprocess.Popen (["python",
+                               exeFile.encode (encoding),
+                               helpPath.encode (encoding),
+                               "--readonly"])

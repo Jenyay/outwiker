@@ -343,8 +343,11 @@ def openInNewWindow (path, readonly=False):
     """ Open wiki tree in the new OutWiker window
     """
     exeFile = getExeFile()
+    encoding = getOS().filesEncoding
 
-    params = [exeFile, path]
+    params = [exeFile.encode (encoding),
+              path.encode (encoding)]
+
     if readonly:
         params += ['--readonly']
 
