@@ -7,18 +7,18 @@ import shutil
 
 from fabric.api import local, lcd
 
-# Поддерживаемые дистрибутивы Ubuntu
+# Supported Ubuntu releases
 distribs = ["utopic", "trusty", "precise"]
 
-# Отдельная папка для сборки deb-пакета под Ubuntu 12.04
+# The separate folder for building under Ubuntu 12.04
 debian_precise = "debian_precise"
 
 
 def _getVersion():
     """
-    Возвращает кортеж вида (номер версии, номер сборки)
+    Return a tuple: (version number, build number)
     """
-    # Файл с номером версии
+    # The file with version number
     fname = u"src/version.txt"
 
     with open (fname) as fp_in:
@@ -29,7 +29,7 @@ def _getVersion():
 
 def _getDebSourceDirName():
     """
-    Возвращает имя папки, куда будут сохранены исходники для сборки deb-пакета
+    Return a folder name for sources for building the deb package
     """
     version = _getVersion()
     return "outwiker-{}+{}".format (version[0], version[1])
@@ -42,14 +42,14 @@ def _getOrigName (distname):
 
 def _debclean():
     """
-    Очистка папки build/<distversion>
+    Clean build/<distversion> folder
     """
     local ('rm -rf build/{}'.format (_getDebSourceDirName()))
 
 
 def _source():
     """
-    Создать папку с исходниками для сборки deb-пакета
+    Create a sources folder for building the deb package
     """
     _debclean()
 
@@ -61,8 +61,8 @@ def _source():
 
 def _orig (distname):
     """
-    Создать архив с "оригинальными" исходниками для сборки deb-пакета.
-    distname - имя дистрибутива Ubuntu
+    Create an archive for "original" sources for building the deb package
+    distname - Ubuntu release name
     """
     _source()
 
@@ -76,7 +76,7 @@ def _orig (distname):
 
 def debsource():
     """
-    Создать файлы для закачки в репозиторий, включающие в себя исходники
+    Create files for uploading in PPA (including sources)
     """
     _debuild ("debuild -S -sa --source-option=--include-binaries --source-option=--auto-commit",
               distribs)
@@ -84,7 +84,7 @@ def debsource():
 
 def deb():
     """
-    Создать deb-пакет
+    Assemble the deb package
     """
     _debuild ("debuild --source-option=--include-binaries --source-option=--auto-commit",
               distribs)
@@ -92,7 +92,7 @@ def deb():
 
 def debsingle():
     """
-    Создать deb-пакет только для первого дистрибутива в списке
+    Assemble the deb package for the first Ubuntu release in the distribs list
     """
     _debuild ("debuild --source-option=--include-binaries --source-option=--auto-commit",
               [distribs[0]])
@@ -100,7 +100,7 @@ def debsingle():
 
 def _debuild (command, distriblist):
     """
-    Выполнение команд, связанные со сборкой deb с помощью debuild. Создает пакеты сразу для всех дистрибутивов, перечисленных в distriblist
+    Run command with debuild. The function assembles the deb packages for all releases in distriblist.
     """
     for distname in distriblist:
         debian_tmp = "debian_tmp"
@@ -109,7 +109,7 @@ def _debuild (command, distriblist):
             os.rename ("debian", debian_tmp)
             os.rename (debian_precise, "debian")
 
-        # Поменяем дистрибутив в changelog
+        # Change release name in the changelog file
         _makechangelog (distribs[0], distname)
 
         _orig(distname)
@@ -117,7 +117,7 @@ def _debuild (command, distriblist):
         with lcd ("build/{}/debian".format (_getDebSourceDirName())):
             local (command)
 
-        # Вернем старый дистрибутив
+        # Return the source release name
         _makechangelog (distname, distribs[0])
 
         if distname == u"precise":
@@ -127,7 +127,7 @@ def _debuild (command, distriblist):
 
 def ppaunstable ():
     """
-    Закачка текущей версии OutWiker в PPA (unstable)
+    Upload the current OutWiker version in PPA (unstable)
     """
     version = _getVersion()
 
@@ -138,7 +138,7 @@ def ppaunstable ():
 
 def plugins():
     """
-    Создание архивов с плагинами (требуется 7z)
+    Create an archive with plugins (7z required)
     """
     plugins = [
         "changepageuid",
@@ -172,7 +172,7 @@ def plugins():
 
 def source ():
     """
-    Сделать архивы с исходниками (требуется git и 7z)
+    Create the sources archives.
     """
     version = _getVersion()
 
@@ -195,12 +195,11 @@ def source ():
 
 def win():
     """
-    Создание сборок под Windows
+    Assemble buildes under Windows
     """
     pluginsdir = os.path.join ("src", "plugins")
 
-    # Папка plugins всегда остается пустой, поэтому ее не удается добавить в git
-    # Надо ее создавать вручную
+    # Create the plugins folder (it is not appened to the git repository)
     if not os.path.exists (pluginsdir):
         os.mkdir (pluginsdir)
 
@@ -216,7 +215,7 @@ def win():
 
 def wintests():
     """
-    Сборка тестов в exe-шник
+    Assemble test in an exe file.
     """
     with lcd ("src"):
         local ("python setup_tests.py build")
@@ -224,9 +223,9 @@ def wintests():
 
 def nextversion():
     """
-    Увеличить номер сборки (запускать под Linux, поскольку еще увеличивается номер сборки deb-пакета)
+    Increment a version number (execute under Linux only, incremented the deb package version also)
     """
-    # Файл с номером версии
+    # The file with version number
     fname = u"src/version.txt"
 
     with open (fname) as fp_in:
@@ -246,7 +245,7 @@ def nextversion():
 
 def debinstall():
     """
-    Создание deb-пакета под дистрибутив distribs[0] и установка его
+    Assembling the first deb package in distribs and install it.
     """
     debsingle()
 
@@ -258,7 +257,7 @@ def debinstall():
 
 def locale():
     """
-    Обновить файл локализации (outwiker.pot)
+    Update the localization file (outwiker.pot)
     """
     with lcd ("src"):
         local (r'find . -iname "*.py" | xargs xgettext -o locale/outwiker.pot')
@@ -266,7 +265,7 @@ def locale():
 
 def localeplugin (pluginname):
     """
-    Создать или обновить локализацию для плагина pluginname
+    Create or update the localization file for pluginname plug-in
     """
     with lcd (os.path.join ("plugins", pluginname, pluginname)):
         local (r'find . -iname "*.py" | xargs xgettext -o locale/{}.pot'.format (pluginname))
@@ -274,7 +273,7 @@ def localeplugin (pluginname):
 
 def run ():
     """
-    Запустить OutWiker
+    Run OutWiker from sources
     """
     with lcd ("src"):
         local ("python runoutwiker.py")
@@ -282,7 +281,7 @@ def run ():
 
 def test (params=""):
     """
-    Запустить юнит-тесты
+    Run the unit tests
     """
     with lcd ("src"):
         local ("python tests.py " + params)
@@ -290,7 +289,7 @@ def test (params=""):
 
 def testcoverage (params=""):
     """
-    Запустить юнит-тесты и измерить их покрытие (требуется coverage)
+    Run the unit tests and measure the coverage (coverage required)
     """
     with lcd ("src"):
         local (u"coverage run tests.py " + params)
@@ -300,9 +299,7 @@ def testcoverage (params=""):
 
 def _makechangelog (distrib_src, distrib_new):
     """
-    Подправить changelog под текущий дистрибутив Ubuntu.
-
-    Считаем, что у нас в исходном состоянии changelog всегда создан под distrib_src, а мы в первой строке его название заменим на distrib_new.
+    Update the changelog file for current Ubuntu release.
     """
     fname = "debian/changelog"
 
@@ -317,7 +314,7 @@ def _makechangelog (distrib_src, distrib_new):
 
 def _removeFile (fname):
     """
-    Удаляет файл, если он существует. Функция исключения не обрабатывает.
+    Remove the fname file if it exists. The function not catch exceptions.
     """
     if os.path.exists (fname):
         os.remove (fname)
