@@ -99,6 +99,8 @@ class BranchExporter (object):
 
         for match in matches:
             url = match[hrefMatchIndex]
+            if not url:
+                continue
 
             # Проверить, что это не ссылка на сайт
             if self.__isInternetUrl (url):

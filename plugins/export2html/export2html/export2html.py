@@ -8,7 +8,7 @@ from outwiker.core.system import getOS
 from .controller import Controller
 from .i18n import _, set_
 
-__version__ = u"1.3.1"
+__version__ = u"1.3.2"
 
 
 class PluginExport2Html (Plugin):

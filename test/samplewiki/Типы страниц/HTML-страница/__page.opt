@@ -2,4 +2,10 @@
 type = html
 order = 0
 tags = тест
+datetime = 2015-01-23 19:41:58.373024
+linewrap = True
+cursorposition = 50
+
+[Misc]
+pageindex = 1
 

@@ -213,10 +213,10 @@ class Export2HtmlTest (unittest.TestCase):
 
         text = readTextFile (os.path.join (self.outputdir, pagename + ".html"))
 
-        self.assertTrue (u'<IMG SRC="{pagename}/add.png"/>'.format (pagename=pagename) in text)
-        self.assertTrue (u'<A HREF="{pagename}/wall1.gif">ссылка на файл</A>'.format (pagename=pagename) in text)
+        self.assertTrue (u'<img src="{pagename}/add.png"/>'.format (pagename=pagename) in text)
+        self.assertTrue (u'<a href="{pagename}/wall1.gif">ссылка на файл</a>'.format (pagename=pagename) in text)
         self.assertTrue (u'А этот __attach/ содержится в тексте' in text)
-        self.assertTrue (u'<A HREF="{pagename}/image.jpg"><IMG SRC="{pagename}/__thumb/th_maxsize_250_image.jpg"/></A>'.format (pagename=pagename) in text)
+        self.assertTrue (u'<a href="{pagename}/image.jpg"><img src="{pagename}/__thumb/th_maxsize_250_image.jpg"/></a>'.format (pagename=pagename) in text)
 
 
     def testLinkToFilesWikiWithName (self):
@@ -240,10 +240,10 @@ class Export2HtmlTest (unittest.TestCase):
         with open (os.path.join (self.outputdir, exportname + ".html")) as fp:
             text = unicode (fp.read(), "utf8")
 
-        self.assertTrue (u'<IMG SRC="{pagename}/add.png"/>'.format (pagename=exportname) in text)
-        self.assertTrue (u'<A HREF="{pagename}/wall1.gif">ссылка на файл</A>'.format (pagename=exportname) in text)
+        self.assertTrue (u'<img src="{pagename}/add.png"/>'.format (pagename=exportname) in text)
+        self.assertTrue (u'<a href="{pagename}/wall1.gif">ссылка на файл</a>'.format (pagename=exportname) in text)
         self.assertTrue (u'А этот __attach/ содержится в тексте' in text)
-        self.assertTrue (u'<A HREF="{pagename}/image.jpg"><IMG SRC="{pagename}/__thumb/th_maxsize_250_image.jpg"/></A>'.format (pagename=exportname) in text)
+        self.assertTrue (u'<a href="{pagename}/image.jpg"><img src="{pagename}/__thumb/th_maxsize_250_image.jpg"/></a>'.format (pagename=exportname) in text)
 
 
 
