@@ -245,7 +245,7 @@ def nextversion():
 
 def debinstall():
     """
-    Assembling the first deb package in distribs and install it.
+    Assemble the first deb package in distribs and install it.
     """
     debsingle()
 
