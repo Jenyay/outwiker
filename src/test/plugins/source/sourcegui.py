@@ -26,7 +26,7 @@ class SourceGuiPluginTest (unittest.TestCase):
         self.__createWiki()
 
         dirlist = [u"../plugins/source"]
-        self._stylesCount = 19
+        self._stylesCount = 23
 
         self.loader = PluginsLoader(Application)
         self.loader.load (dirlist)

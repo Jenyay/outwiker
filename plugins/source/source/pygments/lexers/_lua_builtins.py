@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-    pygments.lexers._luabuiltins
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    pygments.lexers._lua_builtins
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     This file contains the names and modules of lua functions
     It is able to re-generate itself, but for adding new functions you
@@ -9,11 +9,14 @@
 
     Do not edit the MODULES dict by hand.
 
-    :copyright: Copyright 2006-2013 by the Pygments team, see AUTHORS.
+    :copyright: Copyright 2006-2014 by the Pygments team, see AUTHORS.
     :license: BSD, see LICENSE for details.
 """
 
-MODULES = {'basic': ['_G',
+from __future__ import print_function
+
+
+MODULES = {'basic': ('_G',
            '_VERSION',
            'assert',
            'collectgarbage',
@@ -39,14 +42,14 @@ MODULES = {'basic': ['_G',
            'tostring',
            'type',
            'unpack',
-           'xpcall'],
- 'coroutine': ['coroutine.create',
+           'xpcall'),
+ 'coroutine': ('coroutine.create',
                'coroutine.resume',
                'coroutine.running',
                'coroutine.status',
                'coroutine.wrap',
-               'coroutine.yield'],
- 'debug': ['debug.debug',
+               'coroutine.yield'),
+ 'debug': ('debug.debug',
            'debug.getfenv',
            'debug.gethook',
            'debug.getinfo',
@@ -59,8 +62,8 @@ MODULES = {'basic': ['_G',
            'debug.setlocal',
            'debug.setmetatable',
            'debug.setupvalue',
-           'debug.traceback'],
- 'io': ['io.close',
+           'debug.traceback'),
+ 'io': ('io.close',
         'io.flush',
         'io.input',
         'io.lines',
@@ -70,8 +73,8 @@ MODULES = {'basic': ['_G',
         'io.read',
         'io.tmpfile',
         'io.type',
-        'io.write'],
- 'math': ['math.abs',
+        'io.write'),
+ 'math': ('math.abs',
           'math.acos',
           'math.asin',
           'math.atan2',
@@ -100,16 +103,16 @@ MODULES = {'basic': ['_G',
           'math.sin',
           'math.sqrt',
           'math.tanh',
-          'math.tan'],
- 'modules': ['module',
+          'math.tan'),
+ 'modules': ('module',
              'require',
              'package.cpath',
              'package.loaded',
              'package.loadlib',
              'package.path',
              'package.preload',
-             'package.seeall'],
- 'os': ['os.clock',
+             'package.seeall'),
+ 'os': ('os.clock',
         'os.date',
         'os.difftime',
         'os.execute',
@@ -119,8 +122,8 @@ MODULES = {'basic': ['_G',
         'os.rename',
         'os.setlocale',
         'os.time',
-        'os.tmpname'],
- 'string': ['string.byte',
+        'os.tmpname'),
+ 'string': ('string.byte',
             'string.char',
             'string.dump',
             'string.find',
@@ -133,16 +136,20 @@ MODULES = {'basic': ['_G',
             'string.rep',
             'string.reverse',
             'string.sub',
-            'string.upper'],
- 'table': ['table.concat',
+            'string.upper'),
+ 'table': ('table.concat',
            'table.insert',
            'table.maxn',
            'table.remove',
-           'table.sort']}
+           'table.sort')}
 
-if __name__ == '__main__':
+
+if __name__ == '__main__':  # pragma: no cover
     import re
-    import urllib
+    try:
+        from urllib import urlopen
+    except ImportError:
+        from urllib.request import urlopen
     import pprint
 
     # you can't generally find out what module a function belongs to if you
@@ -188,7 +195,7 @@ if __name__ == '__main__':
 
 
     def get_newest_version():
-        f = urllib.urlopen('http://www.lua.org/manual/')
+        f = urlopen('http://www.lua.org/manual/')
         r = re.compile(r'^<A HREF="(\d\.\d)/">Lua \1</A>')
         for line in f:
             m = r.match(line)
@@ -196,7 +203,7 @@ if __name__ == '__main__':
                 return m.groups()[0]
 
     def get_lua_functions(version):
-        f = urllib.urlopen('http://www.lua.org/manual/%s/' % version)
+        f = urlopen('http://www.lua.org/manual/%s/' % version)
         r = re.compile(r'^<A HREF="manual.html#pdf-(.+)">\1</A>')
         functions = []
         for line in f:
@@ -206,7 +213,7 @@ if __name__ == '__main__':
         return functions
 
     def get_function_module(name):
-        for mod, cb in module_callbacks().iteritems():
+        for mod, cb in module_callbacks().items():
             if cb(name):
                 return mod
         if '.' in name:
@@ -215,35 +222,30 @@ if __name__ == '__main__':
             return 'basic'
 
     def regenerate(filename, modules):
-        f = open(filename)
-        try:
-            content = f.read()
-        finally:
-            f.close()
+        with open(filename) as fp:
+            content = fp.read()
 
         header = content[:content.find('MODULES = {')]
         footer = content[content.find("if __name__ == '__main__':"):]
 
 
-        f = open(filename, 'w')
-        f.write(header)
-        f.write('MODULES = %s\n\n' % pprint.pformat(modules))
-        f.write(footer)
-        f.close()
+        with open(filename, 'w') as fp:
+            fp.write(header)
+            fp.write('MODULES = %s\n\n' % pprint.pformat(modules))
+            fp.write(footer)
 
     def run():
         version = get_newest_version()
-        print '> Downloading function index for Lua %s' % version
+        print('> Downloading function index for Lua %s' % version)
         functions = get_lua_functions(version)
-        print '> %d functions found:' % len(functions)
+        print('> %d functions found:' % len(functions))
 
         modules = {}
         for full_function_name in functions:
-            print '>> %s' % full_function_name
+            print('>> %s' % full_function_name)
             m = get_function_module(full_function_name)
             modules.setdefault(m, []).append(full_function_name)
 
         regenerate(__file__, modules)
-
 
     run()

@@ -12,7 +12,7 @@ from .sourceconfig import SourceConfig
 from .controller import Controller
 from .i18n import set_
 
-__version__ = u"1.11.5"
+__version__ = u"1.12"
 
 
 # Для работы этого плагина требуется OutWiker 1.7
