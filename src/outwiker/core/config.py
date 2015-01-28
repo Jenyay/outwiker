@@ -3,6 +3,7 @@
 from abc import ABCMeta, abstractmethod
 import ConfigParser
 import datetime
+import shutil
 
 from outwiker.gui.stcstyle import StcStyle
 
@@ -19,7 +20,21 @@ class Config (object):
         self.fname = fname
         self.__config = ConfigParser.ConfigParser()
 
-        self.__config.read (self.fname)
+        try:
+            self.__config.read (self.fname)
+        except ConfigParser.Error:
+            shutil.copyfile (self.fname, self.fname + ".bak")
+            with open (self.fname, "w") as fp:
+                fp.write (self.getDefaultContent())
+
+            self.__config.read (self.fname)
+
+
+    def getDefaultContent (self):
+        """
+        Значение, которое будет записано в конфиг по умолчанию
+        """
+        return u""
 
 
     def set (self, section, param, value):

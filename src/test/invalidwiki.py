@@ -45,12 +45,6 @@ class InvalidWikiTest (unittest.TestCase):
             return path
 
         path = __createInvalidWiki1 ()
-        self.assertRaises (RootFormatError, WikiDocument.load, path)
-
-        # Сбросим файл __page.opt
-        WikiDocument.clearConfigFile (path)
-
-        # Теперь ошибок быть не должно
         WikiDocument.load (path)
 
         removeDir (path)
@@ -78,12 +72,6 @@ class InvalidWikiTest (unittest.TestCase):
             return path
 
         path = __createInvalidWiki2 ()
-        self.assertRaises (RootFormatError, WikiDocument.load, path)
-
-        # Сбросим файл __page.opt
-        WikiDocument.clearConfigFile (path)
-
-        # Теперь ошибок быть не должно
         WikiDocument.load (path)
 
         removeDir (path)

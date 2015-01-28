@@ -9,24 +9,26 @@ import os.path
 import ConfigParser
 import shutil
 import datetime
+import tempfile
 
 from outwiker.core.config import Config, StringOption, IntegerOption, DateTimeOption, BooleanOption, ListOption, StringListSection, StcStyleOption
 from outwiker.core.system import getCurrentDir, getConfigPath, getOS
-
 from outwiker.gui.guiconfig import TrayConfig, EditorConfig
 from outwiker.gui.stcstyle import StcStyle
+
+from test.utils import removeDir
 
 
 class ConfigTest (unittest.TestCase):
     def setUp (self):
-        self.path = u"../test/testconfig.ini"
+        self.tempdir = tempfile.mkdtemp()
+        self.path = os.path.join (self.tempdir, u"testconfig.ini")
 
         if os.path.exists (self.path):
             os.remove (self.path)
 
     def tearDown (self):
-        if os.path.exists (self.path):
-            os.remove (self.path)
+        removeDir (self.tempdir)
 
 
     def testGetSet (self):
@@ -124,6 +126,19 @@ class ConfigTest (unittest.TestCase):
         # Удалим папку в профиле
         if os.path.exists (homeDir):
             shutil.rmtree (homeDir)
+
+
+    def testInvalidConfigFile (self):
+        invalid_fname = "outwiker_invalid.ini"
+        src_invalid_full_path = os.path.join (u"../test", u"samplefiles", invalid_fname)
+
+        shutil.copy (src_invalid_full_path, self.tempdir)
+
+        fullpath = os.path.join (self.tempdir, invalid_fname)
+
+        config = Config (fullpath)
+        self.assertTrue (os.path.exists (fullpath))
+        self.assertTrue (os.path.exists (fullpath + u".bak"))
 
 
 
