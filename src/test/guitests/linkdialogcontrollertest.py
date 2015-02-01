@@ -515,3 +515,43 @@ class LinkDialogControllerTest (BaseMainWndTest):
                           u'<a href="__attach/add.png">__attach/add.png</a>')
 
         self.assertEqual (parent.linkText.GetValue(), u'__attach/add.png')
+
+
+    def testLinkStyle_01 (self):
+        self._config.linkStyleOptions.value = 0
+
+        dlg = LinkDialog (self.wnd)
+        Tester.dialogTester.appendOk()
+        selectedString = u''
+
+        controller = WikiLinkDialogController (Application,
+                                               self._testpage,
+                                               dlg,
+                                               selectedString)
+
+        dlg.link = u'Ссылка'
+        dlg.comment = u'Коммент'
+
+        controller.showDialog()
+
+        self.assertEqual (controller.linkResult, u'[[Коммент -> Ссылка]]')
+
+
+    def testLinkStyle_02 (self):
+        self._config.linkStyleOptions.value = 1
+
+        dlg = LinkDialog (self.wnd)
+        Tester.dialogTester.appendOk()
+        selectedString = u''
+
+        controller = WikiLinkDialogController (Application,
+                                               self._testpage,
+                                               dlg,
+                                               selectedString)
+
+        dlg.link = u'Ссылка'
+        dlg.comment = u'Коммент'
+
+        controller.showDialog()
+
+        self.assertEqual (controller.linkResult, u'[[Ссылка | Коммент]]')

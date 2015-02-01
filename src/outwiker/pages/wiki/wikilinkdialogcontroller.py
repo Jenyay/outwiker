@@ -15,9 +15,9 @@ class WikiLinkDialogController (BaseLinkDialogController):
     def linkResult (self):
         """
         Возвращает строку, представляющую собой оформленную ссылку
-        в нужном представлении (HTMl, wiki и т.п.)
+        в нужном представлении (HTML, wiki и т.п.)
         """
-        linkCreator = LinkCreator (WikiConfig (self._application))
+        linkCreator = LinkCreator (WikiConfig (self._application.config))
         return linkCreator.create (self.link, self.comment)
 
 

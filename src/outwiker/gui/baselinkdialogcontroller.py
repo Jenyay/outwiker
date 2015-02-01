@@ -72,8 +72,11 @@ class BaseLinkDialogController (object):
         attachList.sort ()
         self._dlg.linkText.AppendItems (attachList)
 
-        self._dlg.comment = self._selectedString
-        self._dlg.link = self._findLink()
+        if not self._dlg.comment:
+            self._dlg.comment = self._selectedString
+
+        if not self._dlg.link:
+            self._dlg.link = self._findLink()
 
 
     def _findLink (self):
