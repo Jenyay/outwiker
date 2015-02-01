@@ -23,7 +23,7 @@ class GeneralGuiConfig (object):
     RECENT_WIKI_COUNT_DEFAULT = 5
 
     RECENT_AUTOOPEN_PARAM = u"AutoOpen"
-    RECENT_AUTOOPEN_DEFAULT = False
+    RECENT_AUTOOPEN_DEFAULT = True
 
     DATETIME_FORMAT_PARAM = u"DateTimeFormat"
     DATETIME_FORMAT_DEFAULT = u"%c"
