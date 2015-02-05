@@ -18,33 +18,34 @@
 
 <body>
 
-<h2>Оглавление</h2>
+<h2>Table of contents</h2>
 <ul>
-<li><a href="#ini">Расположение файла настроек</a></li>
-<li><a href="#general">Интерфейс - Общее</a></li>
-<li><a href="#view">Интерфейс - Просмотр</a></li>
-<li><a href="#print">Интерфейс - Печать текста</a></li>
-<li><a href="#editor">Редактор - Общее</a></li>
-<li><a href="#htmleditor">Редактор - HTML-редактор</a></li>
-<li><a href="#wikieditor">Редактор - Викиредактор</a></li>
-<li><a href="#wikipage">Викистраница</a></li>
-<li><a href="#icons">Значки пользователя</a></li>
-<li><a href="#plugins">Плагины</a></li>
-<li><a href="#hotkeys">Горячие клавиши</a></li>
+<li><a href="#ini">Settings file location</a></li>
+<li><a href="#general">Interface - General</a></li>
+<li><a href="#view">Interface - Preview</a></li>
+<li><a href="#print">Interface - Text Printout</a></li>
+<li><a href="#editor">Editor - General</a></li>
+<li><a href="#htmleditor">Editor - HTML Editor</a></li>
+<li><a href="#wikieditor">Editor - Wiki Editor</a></li>
+<li><a href="#wikipage">Wiki Page</a></li>
+<li><a href="#icons">User's iconset</a></li>
+<li><a href="#plugins">Plugins</a></li>
+<li><a href="#hotkeys">Hotkeys</a></li>
 </ul>
-<h2><a id="ini"></a> Расположение файла настроек</h2>
+<h2><a id="ini"></a> Settings file location</h2>
 <br>
-OutWiker хранит все настройки в файле <i>outwiker.ini</i>, расположение которого зависит от операционной системы и от режима работы программы (портабельный режим или обычный). <br>
+OutWiker keeps all settings in the <i>outwiker.ini</i> file. It may be located in the several places in depending on operating system and running mode (a portable or normal mode).<br>
 <br>
-Портабельный режим включается в том случае, если существует файл <i>outwiker.ini</i> около запускаемого файла <i>outwiker.exe</i>. В этом случае программа все настройки, плагины и стили страниц ищет исключительно в пределах папки с программой, и в этом случае программу можно безопасно запускать с флешки на чужом компьютере, не боясь, что какие-то файлы настроек останутся на этом компьютере после вас.<br>
+The portable mode switched on if <i>outwiker.ini</i> file exists in the same folder as executable file <i>outwiker.exe</i>. In the portable mode OutWiker looks all settings, plug-ins and page styles in the same folder solely. In this case the program may be secure executed from the flash drive on the foreign computer.<br>
 <br>
-Если вы не используете программу в портабельном режиме, то <b>под Windows 7</b> и выше файл <i>outwiker.ini</i> будет располагаться в папке <i>C:\Users\USERNAME\AppData\Roaming\outwiker</i> или аналогичной папке в профиле пользователя. Там же будут располагаться папки для хранения плагинов, пользовательских стилей и значков.<br>
+If OutWiker executed in the normal mode, under <b>Windows 7</b> and above the <i>outwiker.ini</i> file will be locating in the <i>C:\Users\USERNAME\AppData\Roaming\outwiker</i> or analogous user's profile folder. In the same place will be locating folders for the plug-ins, user's styles and icons.<br>
 <br>
-<b>Под Linux</b> расположение файла настроек может зависеть от переменной окружения <i>XDG_CONFIG_HOME</i> или, если она не задана, то путь до файла <i>outwiker.ini</i> будет выглядеть как <i>~/.config/outwiker/outwiker.ini</i>.<br>
+Under <b>Linux</b> settings file location is able to depend on the <i>XDG_CONFIG_HOME</i> environment variable. If the <i>XDG_CONFIG_HOME</i> environment variable is not setted, <i>outwiker.ini</i> file will be located from <i>~/.config/outwiker/outwiker.ini</i>.<br>
 <br>
-Далее показаны настройки программы OutWiker, диалог для изменения которых вызываются с помощью пункта меню <b>Правка - Параметры...</b><br>
+Later in this section will be described the preferences. The dialog for the change preferences is called by <b>Edit - Preferences...</b> menu item.<br>
+<br>
 <hr>
-<h2><a id="general"></a> Интерфейс - Общее</h2>
+<h2><a id="general"></a> Interface - General</h2>
 <br>
 <div align="center"><a href="__attach/outwiker_opt_01.png"><img src="__attach/__thumb/th_width_550_outwiker_opt_01.png"/></a></div><br>
 <br>
@@ -72,21 +73,21 @@ OutWiker хранит все настройки в файле <i>outwiker.ini</i
 <br>
 С помощью переключателя <b>Язык</b> можно выбрать один из поддерживаемых языков интерфейса. Если выбран пункт "Авто", то язык будет выбиратсья автоматически в зависимости от настроек операционной системы. Если вы хотите помочь перевести интерфейс программы на какой-нибудь еще язык, то это можно сделать с помощью веб-сервиса <a href="https://crowdin.com/project/outwiker">crowdin.com</a>.<br>
 <br>
-<h2><a id="view"></a> Интерфейс - Просмотр</h2>
+<h2><a id="view"></a> Interface - Preview</h2>
 <br>
 <div align="center"><a href="__attach/outwiker_opt_02.png"><img src="__attach/__thumb/th_width_550_outwiker_opt_02.png"/></a></div><br>
 <br>
-Данная вкладка отвечает за общий внешний вид <a href="page://__7bd312fb-c3e4-4d9d-9267-cc394dbb9f20">HTML-страницы</a> и <a href="page://__19866d72-8d95-4e2c-8df1-6df0bd8f06c0">викистраниц</a> в режиме просмотра. Здесь можно задать размер и начертание шрифта (группа параметров <b>Шрифт</b>), который будет использоваться на странице по умолчанию, а также добавить CSS-стили, которые будут вставлены во все страницы данного типа.<br>
+Данная вкладка отвечает за общий внешний вид <a href="page://__0cc8f2c6-754c-4aa8-b118-561b930e9955">HTML-страницы</a> и <a href="page://__dd8b23a1-6787-42bb-9b58-c78a656688e2">викистраниц</a> в режиме просмотра. Здесь можно задать размер и начертание шрифта (группа параметров <b>Шрифт</b>), который будет использоваться на странице по умолчанию, а также добавить CSS-стили, которые будут вставлены во все страницы данного типа.<br>
 <br>
-<h2><a id="print"></a> Интерфейс - Печать текста</h2>
+<h2><a id="print"></a> Interface - Text Printout</h2>
 <br>
 <div align="center"><a href="__attach/outwiker_opt_03.png"><img src="__attach/__thumb/th_width_550_outwiker_opt_03.png"/></a></div><br>
 <br>
-Данный раздел позволяет настроить параметры печати текстовых заметок, а также <a href="page://__7bd312fb-c3e4-4d9d-9267-cc394dbb9f20">HTML-страниц</a> в режиме <i>HTML</i> и <a href="page://__19866d72-8d95-4e2c-8df1-6df0bd8f06c0">викистраниц</a> в режимах <i>Вики</i> и <i>HTML</i>.<br>
+Данный раздел позволяет настроить параметры печати текстовых заметок, а также <a href="page://__0cc8f2c6-754c-4aa8-b118-561b930e9955">HTML-страниц</a> в режиме <i>HTML</i> и <a href="page://__dd8b23a1-6787-42bb-9b58-c78a656688e2">викистраниц</a> в режимах <i>Вики</i> и <i>HTML</i>.<br>
 <br>
 На этой вкладке можно настроить размер и начертание шрифта (группа параметров <b>Шрифт</b>), которым будет печататься текст, а также задать параметры страницы. Внешний вид диалога печати будет различаться в зависимости от операционной системы и драйверов к принтеру.<br>
 <br>
-<h2><a id="editor"></a> Редактор - Общее</h2>
+<h2><a id="editor"></a> Editor - General</h2>
 <br>
 <div align="center"><a href="__attach/outwiker_opt_04.png"><img src="__attach/__thumb/th_width_550_outwiker_opt_04.png"/></a></div><br>
 <br>
@@ -98,42 +99,42 @@ OutWiker хранит все настройки в файле <i>outwiker.ini</i
 <br>
 Текстовый редактор может реагировать на нажатие клавиш Home / End двумя способами, либо при нажатии этих клавиш курсор будет перемещаться на начало / в конец текущей строки, либо на начало / в конец текущего абзаца (с учетом переноса строк). Это поведение переключается с помощью выпадающего списка <b>Клавиши Home / End переносят курсор к началу / концу... Строки / Абзаца</b>.<br>
 <br>
-<h2><a id="htmleditor"></a> Редактор - HTML-редактор</h2>
+<h2><a id="htmleditor"></a> Editor - HTML Editor</h2>
 <br>
 <div align="center"><a href="__attach/outwiker_opt_05.png"><img src="__attach/__thumb/th_width_550_outwiker_opt_05.png"/></a></div><br>
 <br>
-Данный раздел содержит настройки для раскраски HTML-кода на <a href="page://__7bd312fb-c3e4-4d9d-9267-cc394dbb9f20">HTML-странице</a> или на вкладке <i>HTML</i> <a href="page://__19866d72-8d95-4e2c-8df1-6df0bd8f06c0">викистраницы</a>. Здесь можно задать цвета и начертание шрифта для HTML-тегов, их атрибутов, чисел, HTML-комментариев, строк в формате HTML, а также ошибочных HTML-элементов.<br>
+Данный раздел содержит настройки для раскраски HTML-кода на <a href="page://__0cc8f2c6-754c-4aa8-b118-561b930e9955">HTML-странице</a> или на вкладке <i>HTML</i> <a href="page://__dd8b23a1-6787-42bb-9b58-c78a656688e2">викистраницы</a>. Здесь можно задать цвета и начертание шрифта для HTML-тегов, их атрибутов, чисел, HTML-комментариев, строк в формате HTML, а также ошибочных HTML-элементов.<br>
 <br>
 Имя шрифта и его размер устанавливаются в разделе <a href="#editor">Редактор - Общее</a>.<br>
 <br>
-<h2><a id="wikieditor"></a> Редактор - Викиредактор</h2>
+<h2><a id="wikieditor"></a> Editor - Wiki Editor</h2>
 <br>
 <div align="center"><a href="__attach/outwiker_opt_06.png"><img src="__attach/__thumb/th_width_550_outwiker_opt_06.png"/></a></div><br>
 <br>
-Данный раздел содержит настройки для раскраски некоторых элементов викинотации: ссылок, заголовков и <a href="page://__93dc4b03-424f-4d7f-a344-f293c93230d9">викикоманд</a> (то, что располагается между скобками (: ... :) )<br>
+Данный раздел содержит настройки для раскраски некоторых элементов викинотации: ссылок, заголовков и <a href="page://__b016f2ed-a6c0-4dca-8d17-508955f4cc7c">викикоманд</a> (то, что располагается между скобками (: ... :) )<br>
 <br>
 Имя шрифта и его размер устанавливаются в разделе <a href="#editor">Редактор - Общее</a>.<br>
 <br>
-<h2><a id="wikipage"></a> Викистраница</h2>
+<h2><a id="wikipage"></a> Wiki Page</h2>
 <br>
 <div align="center"><a href="__attach/outwiker_opt_07.png"><img src="__attach/__thumb/th_width_550_outwiker_opt_07.png"/></a></div><br>
 <br>
-Данный раздел содержит параметры, влияющие на внешний вид <a href="page://__19866d72-8d95-4e2c-8df1-6df0bd8f06c0">викистраниц</a>. <br>
+Данный раздел содержит параметры, влияющие на внешний вид <a href="page://__dd8b23a1-6787-42bb-9b58-c78a656688e2">викистраниц</a>. <br>
 <br>
 Когда вы переключаетесь на викистранице в режим <i>Просмотр</i>, то незаметно для вас происходит страницы в формате HTML, именно на и отображается в упомянутом выше режиме. В большинстве случаев о том, как выглядит полученный HTML-код можно не задумываться. Однако для некоторых задач (например, если вы используете OutWiker для создания страниц сайта или записей в блоге) желательно получить "исходный" HTML-код. Для этого служит режим <i>HTML</i>, но поскольку этот режим нужен далеко не всем, то по умолчанию вкладка для переключения в этот режим скрыта. Чтобы ее показать, нужно установить флажок <b>Показывать вкладку с кодом HTML</b>.<br>
 <br>
-С помощью параметра <b>Размер миниатюр</b> можно установить размер миниатюр по умолчанию, которые будут создаваться с помощью викитега <a href="page://__81525846-01d4-443e-a631-cfd4010abf64">%thumb%Attach:имя_файла%%</a>, если размер миниатюры не задан явным образом в виде параметра этого викитега.<br>
+С помощью параметра <b>Размер миниатюр</b> можно установить размер миниатюр по умолчанию, которые будут создаваться с помощью викитега <a href="page://__22953e02-77ed-4b41-a5fe-a75e0d6a431e">%thumb%Attach:имя_файла%%</a>, если размер миниатюры не задан явным образом в виде параметра этого викитега.<br>
 <br>
-<a href="page://__0d930b9d-ef64-4cd6-8f22-f87ab0f94b22">Ссылки</a> на викистраницах могут быть представлены в двух форматах:<br>
+<a href="page://__97bae762-abb7-489e-a1f4-1b0c9f6916d1">Ссылки</a> на викистраницах могут быть представлены в двух форматах:<br>
 <ul>
 <li>[[Ссылка -> Комментарий ссылки]]</li>
 <li>[[Комментарий ссылки | Ссылка]]</li>
 </ul>
 При использовании диалога, вызываемого с помощью пункта меню <i>Вики - Ссылка</i> или соответствующей кнопки на панели инструментов, ссылка может создаваться и в том, и в другом формате. То, какой из этих форматов будет использован, задается с помощью параметра <b>Стиль ссылок по умолчанию</b>.<br>
 <br>
-Если вы создадите <a href="page://__19866d72-8d95-4e2c-8df1-6df0bd8f06c0">викистраницу</a> и оставите ее содержимое пустой (не должно быть даже пробелов), то при переключении в режим <i>Просмотр</i> вместо белого листа можно увидеть что-нибудь более полезное. Например, по умолчанию будет отображаться список прикрепленных файлов и список дочерних страниц. Это поведение можно изменить с помощью параметра <b>Шаблон для пустой страницы</b>.<br>
+Если вы создадите <a href="page://__dd8b23a1-6787-42bb-9b58-c78a656688e2">викистраницу</a> и оставите ее содержимое пустой (не должно быть даже пробелов), то при переключении в режим <i>Просмотр</i> вместо белого листа можно увидеть что-нибудь более полезное. Например, по умолчанию будет отображаться список прикрепленных файлов и список дочерних страниц. Это поведение можно изменить с помощью параметра <b>Шаблон для пустой страницы</b>.<br>
 <br>
-<h2><a id="icons"></a> Значки пользователя</h2>
+<h2><a id="icons"></a> User's iconset</h2>
 <br>
 <div align="center"><a href="__attach/outwiker_opt_08.png"><img src="__attach/__thumb/th_width_550_outwiker_opt_08.png"/></a></div><br>
 <br>
@@ -145,7 +146,7 @@ OutWiker хранит все настройки в файле <i>outwiker.ini</i
 <br>
 В правой части показываются значки в выбранном разделе. С помощью кнопок в нижней части окна можно добавлять и удалять значки, а также устанавливать значки в качестве обложки группы (в качестве значка, который будет отображаться слева от имени группы).<br>
 <br>
-<h2><a id="plugins"></a> Плагины</h2>
+<h2><a id="plugins"></a> Plugins</h2>
 <br>
 <div align="center"><a href="__attach/outwiker_opt_09.png"><img src="__attach/__thumb/th_width_550_outwiker_opt_09.png"/></a></div><br>
 <br>
@@ -153,7 +154,7 @@ OutWiker хранит все настройки в файле <i>outwiker.ini</i
 <br>
 Здесь же можно временно отключить ненужные в данный момент плагины (например, чтобы не захламлять интерфейс программы), не удаляя плагин.<br>
 <br>
-<h2><a id="hotkeys"></a> Горячие клавиши</h2>
+<h2><a id="hotkeys"></a> Hotkeys</h2>
 <br>
 <div align="center"><a href="__attach/outwiker_opt_10.png"><img src="__attach/__thumb/th_width_550_outwiker_opt_10.png"/></a></div><br>
 <br>

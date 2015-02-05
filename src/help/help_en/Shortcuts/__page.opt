@@ -6,7 +6,7 @@ expand = False
 
 [General]
 type = wiki
-order = 5
+order = 6
 tags = for users
 datetime = 2014-03-20 21:59:05.149730
 
