@@ -21,7 +21,7 @@ The portable mode switched on if ''outwiker.ini'' file exists in the same folder
 
 If OutWiker executed in the normal mode, under '''Windows 7''' and above the ''outwiker.ini'' file will be locating in the ''C:\Users\USERNAME\AppData\Roaming\outwiker'' or analogous user's profile folder. In the same place will be locating folders for the plug-ins, user's styles and icons.
 
-Under '''Linux''' settings file location is able to depend on the ''XDG_CONFIG_HOME'' environment variable. If the ''XDG_CONFIG_HOME'' environment variable is not setted, ''outwiker.ini'' file will be located from ''~/.config/outwiker/outwiker.ini''.
+Under '''Linux''' settings file location is able to depend on the ''XDG_CONFIG_HOME'' environment variable. If the ''XDG_CONFIG_HOME'' environment variable is not set, ''outwiker.ini'' file will be located from ''~/.config/outwiker/outwiker.ini''.
 
 Later in this section will be described the preferences. The dialog for the change preferences is called by '''Edit - Preferences...''' menu item.
 
@@ -32,122 +32,132 @@ Later in this section will be described the preferences. The dialog for the chan
 
 %center%%thumb width=550%Attach:outwiker_opt_01.png%%
 
-Первые несколько флажков предназначены для установки поведения иконки программы в трее (области рядом с часами под Windows).
+The first flags destined for the change behavior a program icon in the tray (the region near the system clock under Windows).
 
-Если установлен флажок '''Сворачивать в трей''', то при нажатии кнопки "Свернуть" главного окна, OutWiker не будет отображаться на панели задач, но появится значок в трее. Такое поведение удобно в тех случаях, когда программа у вас запущена бо&#769;льшую часть времени.
+If '''Minimize to tray''' flag is set, when the "Minimize" button of the main window will be clicked, the main window will be hidden on the taskbar, but program icon will be showed in the tray panel. Such behavior is convenient if OutWiker is launching most of the time.
 
-Флажок '''Запускаться свернутым в трей''' указывает программе, что при ее запуске нужно сразу скрыть главное окно. Это может быть удобно в тех случаях, если OutWiker у вас запускается из автозагрузки при старте операционной системы.
+The '''Start iconized''' flag indicates what OutWiker must hide main window by starting. Such behavior is convenient if OutWiker was added to system autorun.
 
-Флажок '''Всегда показывать иконку в трее''' указывает программе, что данная иконка должна быть видна всегда, а не только когда программа находится в свернутом состоянии.
+The '''Always show tray icon''' flag indicated what the tray icon must by showed always and not only in the minimized state.
 
-Если установлен флажок '''Сворачивать при закрытии окна''', то при нажатии кнопки закрытия главного окна программа не будет завершаться, а только лишь сворачиваться. Для выхода из программы нужно будет использовать пункт меню '''Файл - Выход...'''
+The '''Minimize on close window''' flag indicated what the program must not closed but minimize only. That to terminate OutWiker, it is necessary select '''File - Exit...''' menu item.
 
-Если установлен флажок '''Спрашивать подтверждение перед выходом''', то программа перед тем как завершить свою работу спросит у вас, действительно ли вы хотите выйти из программы. Поскольку все данные OutWiker сохраняет достаточно часто, а такие подтверждения нужны в первую очередь для того, чтобы не потерять введенные данные, то особого смысла от наличия этой настройки нет, возможно, в будущем она будет убрана.
+The '''Ask befor exit''' flag indicated what the program must ask the exit confirmation. So long as OutWiker saves the notes text sufficiently oft, and such confirmations in the others programs need to save the entered data, the purport of this behavior is no matter. Is possible this flag will be removed in the next versions.
 
-Поле ввода '''Интервал автосохранения''' устанавливает как часто будет сохраняться открытая в данный момент заметка. Эта величина задается в секундах, если она равна 0, то автосохранение по таймеру будет отключено. Кроме как по таймеру, заметки сохраняются и при других событиях: при выходе из программы, при переключении между заметками, при переключении между вкладками "Вики", "Просмотр" и "HTML" и др.
+The '''Autosave interval''' input field sets how often a current note will have saved. This value is set in seconds. If this value equal 0, autosaving will be disabled. Besides by timer the notes are saving by other events: by exit from program, switching between notes, switching between "Wiki", "Preview" and "HTML" tabs and other.
 
-Поле ввода '''Длина истории открытых файлов''' устанавливает насколько длинным должен быть список последних открытых вики в меню '''Файл'''.
+The '''Recent files history length''' input field sets so far as long must be list of the recent opened files in the '''File''' menu.
 
-Если установлен флажок '''При запуске открывать последний открытый файл''', то после перезапуска программы вам не придется заново искать и открывать список заметок, который был открыт в прошлый раз - он будет открыт автоматически.
+If the '''Automatically open the recent file''' flag have set, then after restart OutWiker the recent wiki will be opened automatically.
 
-Поле ввода '''Формат заголовка главного окна''' позволяет установить, как должен выглядеть заголовок главного окна программы. В данном поле можно использовать макросы подстановки '''{page}''' и '''{file}''', которые будут заменены на заголовок текущей страницы и дерева заметок в целом соответственно.
+The '''Main window title format''' input field sets how should look title of the main window. In this field can use the macros '''{page}''' and '''{file}''' what will be replaced to title of the current page and title of the notes tree accordingly.
 
-С помощью поля ввода '''Формат даты и времени''' можно установить формат, в котором будут отображаться даты создания и редактирования страниц в различных частях программы, например, справа в статусной панели. OutWiker использует формат даты и времени, [[применяемый в языке Python -> https://docs.python.org/2/library/datetime.html#strftime-and-strptime-behavior]], но запоминать его не нужно, поскольку справа от поля ввода есть кнопка, при нажатии на которую будет открыто меню, содержащее все возможные элементы данного формата.
+The '''Main window title format''' input field sets how should look the creation and modification dates in different program parts, for example to the right in statusbar. OutWiker uses date format from [[Python language -> https://docs.python.org/2/library/datetime.html#strftime-and-strptime-behavior]], but it should't remember since to the right of the input field disposes button, that invokes popup menu with all macros from this format.
 
-С помощью переключателя '''Язык''' можно выбрать один из поддерживаемых языков интерфейса. Если выбран пункт "Авто", то язык будет выбиратсья автоматически в зависимости от настроек операционной системы. Если вы хотите помочь перевести интерфейс программы на какой-нибудь еще язык, то это можно сделать с помощью веб-сервиса [[crowdin.com -> https://crowdin.com/project/outwiker]].
+The '''Language''' field sets the interface language. If this field was being set to "Auto", the language will be selected automatically depending on the operating system settings. If you want to translate interface to other language, you can use [[crowdin.com -> https://crowdin.com/project/outwiker]] web service.
+
 
 
 !!! [[#view]] Interface - Preview
 
 %center%%thumb width=550%Attach:outwiker_opt_02.png%%
 
-Данная вкладка отвечает за общий внешний вид [[HTML-страницы -> page://__0cc8f2c6-754c-4aa8-b118-561b930e9955]] и [[викистраниц -> page://__dd8b23a1-6787-42bb-9b58-c78a656688e2]] в режиме просмотра. Здесь можно задать размер и начертание шрифта (группа параметров '''Шрифт'''), который будет использоваться на странице по умолчанию, а также добавить CSS-стили, которые будут вставлены во все страницы данного типа.
+This section is responsible for the appearance [[HTML pages -> page://__0cc8f2c6-754c-4aa8-b118-561b930e9955]] and [[wiki pages -> page://__dd8b23a1-6787-42bb-9b58-c78a656688e2]] in preview mode. In this section can set default font size and style (by parameters group '''Font''') as well as add custom CSS styles which will be added to all pages referred above types.
+
 
 
 !!! [[#print]] Interface - Text Printout
 
 %center%%thumb width=550%Attach:outwiker_opt_03.png%%
 
-Данный раздел позволяет настроить параметры печати текстовых заметок, а также [[HTML-страниц -> page://__0cc8f2c6-754c-4aa8-b118-561b930e9955]] в режиме ''HTML'' и [[викистраниц -> page://__dd8b23a1-6787-42bb-9b58-c78a656688e2]] в режимах ''Вики'' и ''HTML''.
+This section allow to change parameters of the printing of the [[text pages -> page://__b32aa743-384d-493f-aad4-4c4cbf945fbb]] as well as [[HTML pages -> page://__0cc8f2c6-754c-4aa8-b118-561b930e9955]] in ''HTML'' mode and [[wiki pages -> page://__dd8b23a1-6787-42bb-9b58-c78a656688e2]] in ''Wiki'' and ''HTML'' modes.
 
-На этой вкладке можно настроить размер и начертание шрифта (группа параметров '''Шрифт'''), которым будет печататься текст, а также задать параметры страницы. Внешний вид диалога печати будет различаться в зависимости от операционной системы и драйверов к принтеру.
+In this section can change font size and style (the parameters group '''Font'''), using which will be printed text, also can change page parameters. Dialog appearance may vary depending on operating system and printer drivers.
 
+ 
 
 !!! [[#editor]] Editor - General
 
 %center%%thumb width=550%Attach:outwiker_opt_04.png%%
 
-Данный раздел содержит настройки текстового редактора, который используется для ввода заметок. Здесь можно задать начертание и размер шрифта (группа параметров '''Шрифт'''), а кроме того установить цвет фона редактора (параметр '''Цвет фона''') и подходящий для данного фона цвет шрифта (параметр '''Цвет шрифта'''). Например, вы можете установить инверсную цветовую гамму, когда фон отображается черным цветом, а шрифт белым.
+This section contains settings for the text editor, which uses for input the notes. Here can set font size, style and color (the parameters group '''Font''') and background color (the parameters group '''Font color'''). For example you can set inverted colors: black background and white text color.
 
-Здесь же можно включить или отключить отображение номеров строк заметок, установив или сбросив флажок '''Показывать номера строк'''. Номера строк располагаются слева от основного поля ввода заметок.
+Here can enable or disable the display of line numbers (by '''Show line numbers''' flag). The line numbers located on the left of the main input field.
 
-С помощью параметра '''Размер табуляции''' можно установить ширину символа табуляции.
+The '''Tab width''' parameter allow to change size of the tab symbol.
 
-Текстовый редактор может реагировать на нажатие клавиш Home / End двумя способами, либо при нажатии этих клавиш курсор будет перемещаться на начало / в конец текущей строки, либо на начало / в конец текущего абзаца (с учетом переноса строк). Это поведение переключается с помощью выпадающего списка '''Клавиши Home / End переносят курсор к началу / концу... Строки / Абзаца'''.
+Editor can respond on the Home / End keys two ways. When this keys are pressed the cursor will be moved to begin / end current line or current paragraph (in view of wrapping). This behavior can select with '''Home / End keys moves the cursor to the beginning / end of... ''' parameter.
+
 
 
 !!! [[#htmleditor]] Editor - HTML Editor
 
 %center%%thumb width=550%Attach:outwiker_opt_05.png%%
 
-Данный раздел содержит настройки для раскраски HTML-кода на [[HTML-странице -> page://__0cc8f2c6-754c-4aa8-b118-561b930e9955]] или на вкладке ''HTML'' [[викистраницы -> page://__dd8b23a1-6787-42bb-9b58-c78a656688e2]]. Здесь можно задать цвета и начертание шрифта для HTML-тегов, их атрибутов, чисел, HTML-комментариев, строк в формате HTML, а также ошибочных HTML-элементов.
+This section contains settings for HTML code highliting on the [[HTML page -> page://__0cc8f2c6-754c-4aa8-b118-561b930e9955]] and on ''HTML'' tab for [[wiki page -> page://__dd8b23a1-6787-42bb-9b58-c78a656688e2]]. Here can change font colors and styles for HTML tags, their attributes, numbers, comments, strings in HTML format and invalid HTML elements.
 
-Имя шрифта и его размер устанавливаются в разделе [[Редактор - Общее -> #editor]].
+The font name can change in [[Editor - General -> #editor]] section.
+
 
 
 !!! [[#wikieditor]] Editor - Wiki Editor
 
 %center%%thumb width=550%Attach:outwiker_opt_06.png%%
 
-Данный раздел содержит настройки для раскраски некоторых элементов викинотации: ссылок, заголовков и [[викикоманд -> page://__b016f2ed-a6c0-4dca-8d17-508955f4cc7c]] (то, что располагается между скобками (: ... :) )
+This section contains settings for some wiki code highlighting: links, headers, [[wiki commands -> page://__b016f2ed-a6c0-4dca-8d17-508955f4cc7c]] (that is located between the brackets (: ... :) )
 
-Имя шрифта и его размер устанавливаются в разделе [[Редактор - Общее -> #editor]].
+Font name and size can change in [[Editor - General -> #editor]] section.
+
 
 
 !!! [[#wikipage]] Wiki Page
 
 %center%%thumb width=550%Attach:outwiker_opt_07.png%%
 
-Данный раздел содержит параметры, влияющие на внешний вид [[викистраниц -> page://__dd8b23a1-6787-42bb-9b58-c78a656688e2]]. 
+This section contains parameters which influences on [[wiki page -> page://__dd8b23a1-6787-42bb-9b58-c78a656688e2]] appearance
 
-Когда вы переключаетесь на викистранице в режим ''Просмотр'', то незаметно для вас происходит страницы в формате HTML, именно на и отображается в упомянутом выше режиме. В большинстве случаев о том, как выглядит полученный HTML-код можно не задумываться. Однако для некоторых задач (например, если вы используете OutWiker для создания страниц сайта или записей в блоге) желательно получить "исходный" HTML-код. Для этого служит режим ''HTML'', но поскольку этот режим нужен далеко не всем, то по умолчанию вкладка для переключения в этот режим скрыта. Чтобы ее показать, нужно установить флажок '''Показывать вкладку с кодом HTML'''.
+During the switching to ''Preview'' mode on the wiki page is created HTML code transparent to the user. Exactly this code will be showed in ''Preview'' mode. In most time user needn’t think about this code. However for some tasks (for example, if you use OutWiker for blogging) it might be as well to get "raw" HTML code. For this the ''HTML'' mode intended. Since this mode need not for everyone, tab of this mode is hidden default. That show this tab need set '''Show HTML Code Tab''' flag.
 
-С помощью параметра '''Размер миниатюр''' можно установить размер миниатюр по умолчанию, которые будут создаваться с помощью викитега [[[=%thumb%Attach:имя_файла%%=] -> page://__22953e02-77ed-4b41-a5fe-a75e0d6a431e]], если размер миниатюры не задан явным образом в виде параметра этого викитега.
+By '''Thumbnail size''' parameter can set default thumbnails size. Thumbnails is created by  [[[=%thumb%Attach:filename%%=] -> page://__22953e02-77ed-4b41-a5fe-a75e0d6a431e]] wiki tag.
 
-[[Ссылки -> page://__97bae762-abb7-489e-a1f4-1b0c9f6916d1]] на викистраницах могут быть представлены в двух форматах:
+[[Links -> page://__97bae762-abb7-489e-a1f4-1b0c9f6916d1]] on the wiki pages can be in two formats:
 
-* [=[[Ссылка -> Комментарий ссылки]]=]
-* [=[[Комментарий ссылки | Ссылка]]=]
+* [=[[Link -> Comment]]=]
+* [=[[Comment | Link]]=]
 
-При использовании диалога, вызываемого с помощью пункта меню ''Вики - Ссылка'' или соответствующей кнопки на панели инструментов, ссылка может создаваться и в том, и в другом формате. То, какой из этих форматов будет использован, задается с помощью параметра '''Стиль ссылок по умолчанию'''.
+When dialog for inserting the link used (dialog invoked by ''Wiki - Link'' menu item or corresponding button on toolbar), link must be created in both formats. The preferable format selected by '''Default link style''' parameter.
 
-Если вы создадите [[викистраницу -> page://__dd8b23a1-6787-42bb-9b58-c78a656688e2]] и оставите ее содержимое пустой (не должно быть даже пробелов), то при переключении в режим ''Просмотр'' вместо белого листа можно увидеть что-нибудь более полезное. Например, по умолчанию будет отображаться список прикрепленных файлов и список дочерних страниц. Это поведение можно изменить с помощью параметра '''Шаблон для пустой страницы'''.
+If you create new [[wiki page -> page://__dd8b23a1-6787-42bb-9b58-c78a656688e2]] and leave its content empty (should not even be spaces), then after switching to ''Preview'' mode will be seeing something more useful than blank page. For example, default will be showed attachments list and child page list. This behavior can change with '''Template for empty page''' parameter.
+
 
 
 !!! [[#icons]] User's iconset
 
 %center%%thumb width=550%Attach:outwiker_opt_08.png%%
 
-Начиная с версии OutWiker 1.9, у пользователей появилась возможность выбирать для заметок не только значки, прилагающиеся к программе, но и добавлять свои. Для этого предназначен раздел ''Значки пользователя''.
+Since version OutWiker 1.9 you can set for pages not only predefined icons, but you can load own icons. For this intended the section '''User's iconset'''.
 
-Пользовательские значки, как и стандартные, делятся на группы. С программной точки зрения группы значков - это обычные папки, располагающиеся в папке ''icons'' внутри папки настроек (см. раздел [[Расположение файла настроек -> #ini]]). Но об этом можно не задумываться, поскольку все действия со значками и их группами осуществляются через пользовательский интерфейс данного раздела.
+User's and standard icons divide by groups. From the software standpoint icons groups are usual folders inside ''icons'' folder. The ''icons'' folder located inside settings folder (see [[Settings file location -> #ini]] section). User needn’t think about this since all actions with icons and groups can be accomplished by user interface this section.
 
-В левой части окна располагается список пользовательских групп (значки могут располагаться и вне групп, непосредственно в папке ''icons'', что соответствует пункту '''Без групп'''). С помощью кнопок в нижней части окна можно создавать, удалять или переименовывать группы.
+On the left located user's groups list. Icons can be located outside any group, direct in ''icons'' folder, than correspond to '''Not in groups''' item. By buttons in the bottom can create, remove and rename icons groups.
 
-В правой части показываются значки в выбранном разделе. С помощью кнопок в нижней части окна можно добавлять и удалять значки, а также устанавливать значки в качестве обложки группы (в качестве значка, который будет отображаться слева от имени группы).
+In the right located icons list for selected group. By buttons in the bottom can add and remove icons, as well as set icons as group cover (as well as icon, that will be showed on the left of group name).
+
 
 
 !!! [[#plugins]] Plugins
 
 %center%%thumb width=550%Attach:outwiker_opt_09.png%%
 
-В данном разделе можно посмотреть список установленных (удачно загруженных) плагинов. При выборе плагина будет отображаться информация о нем: название, номер версии, краткое описание и, если есть, ссылка на сайт этого плагина.
+In this section can view list installed (succesfully laoded) plug-ins. After plug-in selection will be showed information about: name, version number, short description and, if exists, link to plug-in page.
 
-Здесь же можно временно отключить ненужные в данный момент плагины (например, чтобы не захламлять интерфейс программы), не удаляя плагин.
+In this section can disable unnecessary currently plug-ins without removing its files.
+
 
 
 !!! [[#hotkeys]] Hotkeys
 
 %center%%thumb width=550%Attach:outwiker_opt_10.png%%
 
-В данном разделе можно поменять или установить горячие клавиши по умолчанию для вызова функций программы. В левой части окна располагается список всех возможных действий, для которых можно установить горячие клавиши, справа располагаются элементы управления для установки горячей клавиши и более подробное описание действия. Справа внизу отображается действие, которое уже использует данную горячую клавишу, чтобы видеть возможные конфликты.
+In this section can change or set hotkeys for calling program actions. In the left located list of the all actions. In the right located controls to set hotkey and more detailed description for this action. In the right bottom showed action which uses current hotkey by this time, that to see possible conflicts.
+
