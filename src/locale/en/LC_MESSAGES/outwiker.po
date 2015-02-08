@@ -534,7 +534,7 @@ msgstr "Find next on page"
 
 #: outwiker/actions/search.py:80
 msgid "Find previous"
-msgstr "OutWiker"
+msgstr "Find previous"
 
 #: outwiker/actions/search.py:85
 msgid "Find previous on page"
@@ -1140,7 +1140,9 @@ msgstr "Tab width"
 msgid ""
 "Home / End keys moves the cursor \n"
 "to the beginning / end of "
-msgstr "OutWiker"
+msgstr ""
+"Home / End keys moves the cursor \n"
+"to the beginning / end of "
 
 #: outwiker/gui/preferences/editorpanel.py:48
 msgid "Line"
