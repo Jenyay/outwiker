@@ -91,6 +91,7 @@ class Parser (object):
                                self.strike |
                                self.subscript |
                                self.superscript |
+                               self.quote |
                                self.attaches |
                                self.tex |
                                self.command
