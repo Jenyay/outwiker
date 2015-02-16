@@ -320,6 +320,10 @@ class HtmlRenderConfig (object):
     USER_STYLE_PARAM = u"UserStyle"
     USER_STYLE_DEFAULT = u""
 
+    HTML_IMPROVER_PARAM = u"HtmlImprover"
+    HTML_IMPROVER_DEFAULT = "brimprover"
+
+
     def __init__ (self, config):
         self.config = config
 
@@ -347,6 +351,11 @@ class HtmlRenderConfig (object):
                                        HtmlRenderConfig.HTML_SECTION,
                                        HtmlRenderConfig.USER_STYLE_PARAM,
                                        HtmlRenderConfig.USER_STYLE_DEFAULT)
+
+        self.HTMLImprover = StringOption (self.config,
+                                          HtmlRenderConfig.HTML_SECTION,
+                                          HtmlRenderConfig.HTML_IMPROVER_PARAM,
+                                          HtmlRenderConfig.HTML_IMPROVER_DEFAULT)
 
 
 class TextPrintConfig (object):

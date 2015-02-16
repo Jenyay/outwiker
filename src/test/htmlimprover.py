@@ -2,10 +2,10 @@
 
 import unittest
 
-from outwiker.core.htmlimprover import HtmlImprover
+from outwiker.core.htmlimprover import BrHtmlImprover
 
 
-class HtmlImproverTest (unittest.TestCase):
+class BrHtmlImproverTest (unittest.TestCase):
     def setUp (self):
         self.maxDiff = None
 
@@ -22,7 +22,7 @@ Attach:file.odt<br>
 <h2>Images</h2>
 """
 
-        result = HtmlImprover.run (src)
+        result = BrHtmlImprover().run (src)
         self.assertEqual (expectedResult, result)
 
 
@@ -52,7 +52,7 @@ qwewqeqwe wqe
 sdfsdf<br>
 sdf sdfsdf sdf"""
 
-        result = HtmlImprover.run (src)
+        result = BrHtmlImprover().run (src)
         self.assertEqual (expectedResult, result, result)
 
 
@@ -65,7 +65,148 @@ sdf sdfsdf sdf"""
 <pre><br><h1>111</h1></pre>
 """
 
-        result = HtmlImprover.run (src)
+        result = BrHtmlImprover().run (src)
+        self.assertEqual (expectedResult, result, result)
+
+
+    def test_pre_03 (self):
+        src = ur"""Абырвалг
+<pre>111</pre>
+Абырвалг
+<pre>222</pre>"""
+
+        expectedResult = ur"""Абырвалг
+<pre>111</pre>
+Абырвалг
+<pre>222</pre>
+"""
+
+        result = BrHtmlImprover().run (src)
+        self.assertEqual (expectedResult, result, result)
+
+
+    def test_pre_04 (self):
+        src = ur"""Абырвалг
+<   pre   >111
+Абырвалг
+йцукен</   pre   >
+<pre>222</pre>"""
+
+        expectedResult = ur"""Абырвалг
+<   pre   >111
+Абырвалг
+йцукен</   pre   >
+
+<pre>222</pre>
+"""
+
+        result = BrHtmlImprover().run (src)
+        self.assertEqual (expectedResult, result, result)
+
+
+    def test_script_01 (self):
+        src = ur"""Абырвалг<script>Абырвалг
+йцукен
+qwerty
+фыва
+</script>"""
+
+        expectedResult = ur"""Абырвалг
+<script>Абырвалг
+йцукен
+qwerty
+фыва
+</script>
+"""
+
+        result = BrHtmlImprover().run (src)
+        self.assertEqual (expectedResult, result, result)
+
+
+    def test_script_02 (self):
+        src = ur"""Абырвалг
+<script>Абырвалг
+йцукен
+qwerty
+фыва
+</script>"""
+
+        expectedResult = ur"""Абырвалг
+<script>Абырвалг
+йцукен
+qwerty
+фыва
+</script>
+"""
+
+        result = BrHtmlImprover().run (src)
+        self.assertEqual (expectedResult, result, result)
+
+
+    def test_script_03 (self):
+        src = ur"""Абырвалг
+<   script   >111
+Абырвалг
+йцукен</   script   >
+<script>222</script>"""
+
+        expectedResult = ur"""Абырвалг
+<   script   >111
+Абырвалг
+йцукен</   script   >
+
+<script>222</script>
+"""
+
+        result = BrHtmlImprover().run (src)
+        self.assertEqual (expectedResult, result, result)
+
+
+    def test_script_pre_01 (self):
+        src = ur"""Абырвалг
+<script>Абырвалг
+<pre>
+йцукен
+qwerty
+</pre>
+фыва
+</script>"""
+
+        expectedResult = ur"""Абырвалг
+<script>Абырвалг
+<pre>
+йцукен
+qwerty
+</pre>
+фыва
+</script>
+"""
+
+        result = BrHtmlImprover().run (src)
+        self.assertEqual (expectedResult, result, result)
+
+
+    def test_script_pre_02 (self):
+        src = ur"""Абырвалг
+<script>Абырвалг
+<pre>
+йцукен
+qwerty
+</pre>
+фыва
+</script>Абырвалг"""
+
+        expectedResult = ur"""Абырвалг
+<script>Абырвалг
+<pre>
+йцукен
+qwerty
+</pre>
+фыва
+</script>
+Абырвалг"""
+
+        result = BrHtmlImprover().run (src)
         self.assertEqual (expectedResult, result, result)
 
 
@@ -81,7 +222,7 @@ Attach:file.odt<BR>
 <H2>Images</H2>
 """
 
-        result = HtmlImprover.run (src)
+        result = BrHtmlImprover().run (src)
         self.assertEqual (expectedResult, result)
 
 
@@ -91,7 +232,7 @@ Attach:file.odt<BR>
         expectedResult = ur"""абырвалг<br>
 абырвалг"""
 
-        result = HtmlImprover.run (src)
+        result = BrHtmlImprover().run (src)
         self.assertEqual (expectedResult, result, result)
 
 
@@ -101,7 +242,7 @@ Attach:file.odt<BR>
         expectedResult = ur"""абырвалг<br />
 абырвалг"""
 
-        result = HtmlImprover.run (src)
+        result = BrHtmlImprover().run (src)
         self.assertEqual (expectedResult, result, result)
 
 
@@ -112,7 +253,7 @@ Attach:file.odt<BR>
         expectedResult = ur"""абырвалг<br>
 абырвалг"""
 
-        result = HtmlImprover.run (src)
+        result = BrHtmlImprover().run (src)
         self.assertEqual (expectedResult, result, result)
 
 
@@ -125,7 +266,7 @@ Attach:file.odt<BR>
 <br>
 абырвалг"""
 
-        result = HtmlImprover.run (src)
+        result = BrHtmlImprover().run (src)
         self.assertEqual (expectedResult, result, result)
 
 
@@ -136,7 +277,7 @@ Attach:file.odt<BR>
 <br>
 абырвалг"""
 
-        result = HtmlImprover.run (src)
+        result = BrHtmlImprover().run (src)
         self.assertEqual (expectedResult, result, result)
 
 
@@ -153,7 +294,7 @@ Attach:file.odt<BR>
 <br>
 абырвалг"""
 
-        result = HtmlImprover.run (src)
+        result = BrHtmlImprover().run (src)
         self.assertEqual (expectedResult, result, result)
 
 
@@ -164,7 +305,7 @@ Attach:file.odt<BR>
 <hr>
 абырвалг"""
 
-        result = HtmlImprover.run (src)
+        result = BrHtmlImprover().run (src)
         self.assertEqual (expectedResult, result, result)
 
 
@@ -177,7 +318,7 @@ Attach:file.odt<BR>
 <hr>
 абырвалг"""
 
-        result = HtmlImprover.run (src)
+        result = BrHtmlImprover().run (src)
         self.assertEqual (expectedResult, result, result)
 
 
@@ -188,7 +329,7 @@ Attach:file.odt<BR>
 <p>абырвалг</p>
 абырвалг"""
 
-        result = HtmlImprover.run (src)
+        result = BrHtmlImprover().run (src)
         self.assertEqual (expectedResult, result, result)
 
 
@@ -199,7 +340,7 @@ Attach:file.odt<BR>
 <h1>абырвалг</h1>
 абырвалг"""
 
-        result = HtmlImprover.run (src)
+        result = BrHtmlImprover().run (src)
         self.assertEqual (expectedResult, result, result)
 
 
@@ -212,7 +353,7 @@ Attach:file.odt<BR>
 <h1>абырвалг</h1>
 абырвалг"""
 
-        result = HtmlImprover.run (src)
+        result = BrHtmlImprover().run (src)
         self.assertEqual (expectedResult, result, result)
 
 
@@ -227,7 +368,7 @@ Attach:file.odt<BR>
 <br>
 абырвалг"""
 
-        result = HtmlImprover.run (src)
+        result = BrHtmlImprover().run (src)
         self.assertEqual (expectedResult, result, result)
 
 
@@ -242,7 +383,7 @@ Attach:file.odt<BR>
 </ul>
 """
 
-        result = HtmlImprover.run (src)
+        result = BrHtmlImprover().run (src)
         self.assertEqual (expectedResult, result, result)
 
 
@@ -271,7 +412,7 @@ Attach:file.odt<BR>
 </ul>
 """
 
-        result = HtmlImprover.run (src)
+        result = BrHtmlImprover().run (src)
         self.assertEqual (expectedResult, result, result)
 
 
@@ -300,7 +441,7 @@ Attach:file.odt<BR>
 </UL>
 """
 
-        result = HtmlImprover.run (src)
+        result = BrHtmlImprover().run (src)
         self.assertEqual (expectedResult, result)
 
 
@@ -315,5 +456,33 @@ Attach:file.odt<BR>
 </tr>
 </table>'''
 
-        result = HtmlImprover.run (src)
+        result = BrHtmlImprover().run (src)
         self.assertEqual (expectedResult, result)
+
+
+    def test_empty (self):
+        src = u""
+        expectedResult = u""
+
+        result = BrHtmlImprover().run (src)
+        self.assertEqual (expectedResult, result, result)
+
+
+    def test_pre_only (self):
+        src = u"<pre>Абырвалг</pre>"
+        expectedResult = u"""
+<pre>Абырвалг</pre>
+"""
+
+        result = BrHtmlImprover().run (src)
+        self.assertEqual (expectedResult, result, result)
+
+
+    def test_script_only (self):
+        src = u"<script>Абырвалг</script>"
+        expectedResult = u"""
+<script>Абырвалг</script>
+"""
+
+        result = BrHtmlImprover().run (src)
+        self.assertEqual (expectedResult, result, result)

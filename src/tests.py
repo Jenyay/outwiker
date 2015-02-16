@@ -93,7 +93,7 @@ if __name__ == '__main__':
     from test.thumbmakerpil import ThumbmakerPilTest
     from test.pagethumbmaker import PageThumbmakerTest
     from test.thumbnails import ThumbnailsTest
-    from test.htmlimprover import HtmlImproverTest
+    from test.htmlimprover import BrHtmlImproverTest
     from test.wikihtmlcache import WikiHtmlCacheTest
     from test.wikihtmlgenerator import WikiHtmlGeneratorTest
     from test.wikihash import WikiHashTest

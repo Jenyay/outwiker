@@ -6,7 +6,7 @@ import unittest
 from outwiker.core.application import Application
 from outwiker.core.htmltemplate import HtmlTemplate
 from outwiker.core.system import getTemplatesDir, readTextFile
-from outwiker.core.htmlimprover import HtmlImprover
+from outwiker.core.htmlimprover import BrHtmlImprover
 from outwiker.gui.guiconfig import HtmlRenderConfig
 
 
@@ -186,7 +186,7 @@ class HtmlTemplateTest(unittest.TestCase):
         templatepath = os.path.join (getTemplatesDir(), "__default", "__style.html")
         tpl = HtmlTemplate (readTextFile (templatepath).strip())
 
-        result = tpl.substitute (HtmlImprover.run (src))
+        result = tpl.substitute (BrHtmlImprover().run (src))
         self.assertIn (expectedResult, result)
 
 
@@ -203,5 +203,5 @@ Attach:file.odt<br>
         templatepath = os.path.join (getTemplatesDir(), "__default", "__style.html")
         tpl = HtmlTemplate (readTextFile (templatepath).strip())
 
-        result = tpl.substitute (HtmlImprover.run (src))
+        result = tpl.substitute (BrHtmlImprover().run (src))
         self.assertIn (expectedResult, result)

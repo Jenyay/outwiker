@@ -6,11 +6,12 @@ import wx
 
 from outwiker.core.commands import MessageBox, insertCurrentDate
 from outwiker.core.application import Application
-from outwiker.core.htmlimprover import HtmlImprover
+from outwiker.core.htmlimprover import getHtmlImprover
 from outwiker.core.htmltemplate import HtmlTemplate
 from outwiker.core.style import Style
-from outwiker.gui.htmltexteditor import HtmlTextEditor
 from outwiker.core.system import readTextFile
+from outwiker.gui.htmltexteditor import HtmlTextEditor
+from outwiker.gui.guiconfig import HtmlRenderConfig
 
 from .htmltoolbar import HtmlToolBar
 from .basehtmlpanel import BaseHtmlPanel, EVT_PAGE_TAB_CHANGED
@@ -601,7 +602,8 @@ class HtmlPageView (BaseHtmlPanel):
         content = self._runPreprocessing (page.content)
 
         if page.autoLineWrap:
-            text = HtmlImprover.run (content)
+            config = HtmlRenderConfig (Application.config)
+            text = getHtmlImprover (config.HTMLImprover.value).run (content)
         else:
             text = content
 
