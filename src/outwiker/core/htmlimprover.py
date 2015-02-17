@@ -5,13 +5,6 @@ import re
 from StringIO import StringIO
 
 
-def getHtmlImprover (improvername):
-    """
-    Return needed improver (for the time being always return BrHtmlImprover)
-    """
-    return BrHtmlImprover()
-
-
 class HtmlImprover (object):
     """
     Class make HTML code more readable and append line breaks.

@@ -6,7 +6,7 @@ import wx
 
 from outwiker.core.commands import MessageBox, insertCurrentDate
 from outwiker.core.application import Application
-from outwiker.core.htmlimprover import getHtmlImprover
+from outwiker.core.htmlimproverfactory import HtmlImproverFactory
 from outwiker.core.htmltemplate import HtmlTemplate
 from outwiker.core.style import Style
 from outwiker.core.system import readTextFile
@@ -603,7 +603,7 @@ class HtmlPageView (BaseHtmlPanel):
 
         if page.autoLineWrap:
             config = HtmlRenderConfig (Application.config)
-            text = getHtmlImprover (config.HTMLImprover.value).run (content)
+            text = HtmlImproverFactory().get (config.HTMLImprover.value).run (content)
         else:
             text = content
 

@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-from outwiker.core.htmlimprover import getHtmlImprover
+from outwiker.core.htmlimproverfactory import HtmlImproverFactory
 from outwiker.core.htmltemplate import HtmlTemplate
 from outwiker.core.application import Application
 from outwiker.core.system import readTextFile
@@ -29,7 +29,7 @@ class HtmlGenerator (object):
         content = self._runPreprocessing (content)
 
         config = HtmlRenderConfig (Application.config)
-        text = getHtmlImprover(config.HTMLImprover.value).run (parser.toHtml (content))
+        text = HtmlImproverFactory().get (config.HTMLImprover.value).run (parser.toHtml (content))
         head = parser.head
 
         tpl = HtmlTemplate (readTextFile (stylepath))

@@ -95,6 +95,7 @@ if __name__ == '__main__':
     from test.thumbnails import ThumbnailsTest
     from test.htmlimproverbr import BrHtmlImproverTest
     from test.htmlimproverp import ParagraphHtmlImproverTest
+    from test.htmlimproverfactory import HtmlImproverFactoryTest
     from test.wikihtmlcache import WikiHtmlCacheTest
     from test.wikihtmlgenerator import WikiHtmlGeneratorTest
     from test.wikihash import WikiHashTest
