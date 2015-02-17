@@ -65,3 +65,204 @@ Bar</p>'''
         result = ParagraphHtmlImprover().run (src)
 
         self.assertEqual (expectedResult, result)
+
+
+    def test_pre_01 (self):
+        src = ur"""qweqweqw qweqwe
+qwewqeqwe wqe
+
+qweqweqw qwe qweqwe<pre>
+аап ываыв ываываыываы ыва ыва
+ываыва выа выа
+
+ываыв фывфв фывфывыф ыфв
+вапвапввап вапвапвап
+
+вапвапвап вапваапва</pre>
+
+sdfsdf sdfsdf
+sdfsdf
+sdf sdfsdf sdf"""
+
+        expectedResult = ur"""<p>qweqweqw qweqwe<br/>
+qwewqeqwe wqe</p>
+<p>qweqweqw qwe qweqwe</p>
+
+<pre>
+аап ываыв ываываыываы ыва ыва
+ываыва выа выа
+
+ываыв фывфв фывфывыф ыфв
+вапвапввап вапвапвап
+
+вапвапвап вапваапва</pre>
+
+<p>sdfsdf sdfsdf<br/>
+sdfsdf<br/>
+sdf sdfsdf sdf</p>"""
+
+        result = ParagraphHtmlImprover().run (src)
+        self.assertEqual (expectedResult, result, result)
+
+
+    def test_pre_02 (self):
+        src = ur"""Абырвалг<pre><br/><h1>111</h1></pre>Абырвалг<pre><br/><h1>111</h1></pre>"""
+
+        expectedResult = ur"""<p>Абырвалг</p>
+
+<pre><br/><h1>111</h1></pre>
+
+<p>Абырвалг</p>
+
+<pre><br/><h1>111</h1></pre>"""
+
+        result = ParagraphHtmlImprover().run (src)
+        self.assertEqual (expectedResult, result, result)
+
+
+    def test_pre_03 (self):
+        src = ur"""Абырвалг
+<pre>111</pre>
+Абырвалг
+<pre>222</pre>"""
+
+        expectedResult = ur"""<p>Абырвалг</p>
+
+<pre>111</pre>
+
+<p>Абырвалг</p>
+
+<pre>222</pre>"""
+
+        result = ParagraphHtmlImprover().run (src)
+        self.assertEqual (expectedResult, result, result)
+
+
+    def test_pre_04 (self):
+        src = ur"""Абырвалг
+<   pre   >111
+Абырвалг
+йцукен</   pre   >
+<pre>222</pre>"""
+
+        expectedResult = ur"""<p>Абырвалг</p>
+
+<   pre   >111
+Абырвалг
+йцукен</   pre   >
+
+<pre>222</pre>"""
+
+        result = ParagraphHtmlImprover().run (src)
+        self.assertEqual (expectedResult, result, result)
+
+
+    def test_script_01 (self):
+        src = ur"""Абырвалг
+
+<script>Абырвалг
+йцукен
+qwerty
+фыва
+</script>"""
+
+        expectedResult = ur"""<p>Абырвалг</p>
+
+<script>Абырвалг
+йцукен
+qwerty
+фыва
+</script>"""
+
+        result = ParagraphHtmlImprover().run (src)
+        self.assertEqual (expectedResult, result, result)
+
+
+    def test_script_02 (self):
+        src = ur"""Абырвалг
+<script>Абырвалг
+йцукен
+qwerty
+фыва
+</script>"""
+
+        expectedResult = ur"""<p>Абырвалг</p>
+
+<script>Абырвалг
+йцукен
+qwerty
+фыва
+</script>"""
+
+        result = ParagraphHtmlImprover().run (src)
+        self.assertEqual (expectedResult, result, result)
+
+
+    def test_script_03 (self):
+        src = ur"""Абырвалг
+<   script   >111
+Абырвалг
+йцукен</   script   >
+<script>222</script>"""
+
+        expectedResult = ur"""<p>Абырвалг</p>
+
+<   script   >111
+Абырвалг
+йцукен</   script   >
+
+<script>222</script>"""
+
+        result = ParagraphHtmlImprover().run (src)
+
+        self.assertEqual (expectedResult, result, result)
+
+
+    def test_script_pre_01 (self):
+        src = ur"""Абырвалг
+<script>Абырвалг
+<pre>
+йцукен
+qwerty
+</pre>
+фыва
+</script>"""
+
+        expectedResult = ur"""<p>Абырвалг</p>
+
+<script>Абырвалг
+<pre>
+йцукен
+qwerty
+</pre>
+фыва
+</script>"""
+
+        result = ParagraphHtmlImprover().run (src)
+        self.assertEqual (expectedResult, result, result)
+
+
+    def test_script_pre_02 (self):
+        src = ur"""Абырвалг
+<script>Абырвалг
+<pre>
+йцукен
+qwerty
+</pre>
+фыва
+</script>Абырвалг"""
+
+        expectedResult = ur"""<p>Абырвалг</p>
+
+<script>Абырвалг
+<pre>
+йцукен
+qwerty
+</pre>
+фыва
+</script>
+
+<p>Абырвалг</p>"""
+
+        result = ParagraphHtmlImprover().run (src)
+        self.assertEqual (expectedResult, result, result)

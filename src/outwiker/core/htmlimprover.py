@@ -34,7 +34,7 @@ class HtmlImprover (object):
         result = text.replace ("\r\n", "\n")
         result = self._replaceEndlines (result)
 
-        return result
+        return result.strip()
 
 
     def _replaceEndlines (self, text):
@@ -157,6 +157,7 @@ class ParagraphHtmlImprover (HtmlImprover):
         result = self._coverParagraphs (text)
         result = self._addLineBreaks (result)
         result = self._improveRedability (result)
+
         return result
 
 
@@ -191,11 +192,11 @@ class ParagraphHtmlImprover (HtmlImprover):
         result = re.sub(append_p_before, "\\1<p>", result, flags=re.I | re.M)
 
         # Append line breaks before some elements (to improve readability)
-        append_eol_before = r"\n*(<li>|<h\d>|</?[uo]l>|<hr\s*/?>|<p>|</?table.*?>|</?tr.*?>|<td.*?>)"
+        append_eol_before = r"\n*(<li>|<h\d>|</?[uo]l>|<hr\s*/?>|<p>|<script>|</?table.*?>|</?tr.*?>|<td.*?>)"
         result = re.sub(append_eol_before, "\n\\1", result, flags=re.I | re.M)
 
         # Append line breaks after some elements (to improve readability)
-        append_eol_after = r"(<hr\s*/?>|<br\s*/?>|</\s*h\d>|</\s*p>|</\s*ul>)\n*"
+        append_eol_after = r"(<hr\s*/?>|<br\s*/?>|</\s*h\d>|</\s*p>|</\s*script>|</\s*ul>)\n*"
         result = re.sub(append_eol_after, "\\1\n", result, flags=re.I | re.M)
 
         # Remove </p> at the begin
@@ -206,7 +207,7 @@ class ParagraphHtmlImprover (HtmlImprover):
         remove_p_end = r"<p>$"
         result = re.sub(remove_p_end, "", result, flags=re.I | re.M)
 
-        return result.strip()
+        return result
 
 
     def _addLineBreaks (self, text):
