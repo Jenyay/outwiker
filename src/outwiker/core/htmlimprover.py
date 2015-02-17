@@ -208,7 +208,7 @@ class ParagraphHtmlImprover (HtmlImprover):
 
 
     def _coverParagraphs (self, text):
-        parRegExp = re.compile ("(.*(?:\s*\n\s*){2,})|$",
+        parRegExp = re.compile ("(.*?(?:\s*\n\s*){2,})|$",
                                 re.I | re.M | re.S | re.U)
         paragraphs = parRegExp.split (text)
 

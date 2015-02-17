@@ -39,10 +39,28 @@ Bar</p>'''
         self.assertEqual (expectedResult, result)
 
 
-    def test_text_p (self):
+    def test_text_p_01 (self):
         src = u'''Абырвалг
 
 Второй параграф'''
+
+        expectedResult = u'''<p>Абырвалг</p>
+<p>Второй параграф</p>'''
+
+        result = ParagraphHtmlImprover().run (src)
+
+        self.assertEqual (expectedResult, result)
+
+
+    def test_text_p_02 (self):
+        src = u'''Абырвалг
+
+Второй параграф
+
+
+
+
+'''
 
         expectedResult = u'''<p>Абырвалг</p>
 <p>Второй параграф</p>'''
