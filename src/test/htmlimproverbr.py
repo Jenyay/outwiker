@@ -11,13 +11,13 @@ class BrHtmlImproverTest (unittest.TestCase):
 
 
     def test1 (self):
-        src = ur"""<h2>Attach links</h2>Attach:file.odt<br><a href="__attach/file.odt">file.odt</a><br><a href="__attach/file.odt">alternative text</a><br><a href="__attach/file with spaces.pdf">file with spaces.pdf</a><h2>Images</h2>"""
+        src = ur"""<h2>Attach links</h2>Attach:file.odt<br/><a href="__attach/file.odt">file.odt</a><br/><a href="__attach/file.odt">alternative text</a><br/><a href="__attach/file with spaces.pdf">file with spaces.pdf</a><h2>Images</h2>"""
 
         expectedResult = ur"""
 <h2>Attach links</h2>
-Attach:file.odt<br>
-<a href="__attach/file.odt">file.odt</a><br>
-<a href="__attach/file.odt">alternative text</a><br>
+Attach:file.odt<br/>
+<a href="__attach/file.odt">file.odt</a><br/>
+<a href="__attach/file.odt">alternative text</a><br/>
 <a href="__attach/file with spaces.pdf">file with spaces.pdf</a>
 <h2>Images</h2>
 """
@@ -27,16 +27,16 @@ Attach:file.odt<br>
 
 
     def test_pre_01 (self):
-        src = ur"""qweqweqw qweqwe<br>qwewqeqwe wqe<p>qweqweqw qwe qweqwe<pre>
+        src = ur"""qweqweqw qweqwe<br/>qwewqeqwe wqe<p>qweqweqw qwe qweqwe<pre>
 аап ываыв ываываыываы ыва ыва
 ываыва выа выа
 
 ываыв фывфв фывфывыф ыфв
 вапвапввап вапвапвап
 
-вапвапвап вапваапва</pre><p>sdfsdf sdfsdf<br>sdfsdf<br>sdf sdfsdf sdf"""
+вапвапвап вапваапва</pre><p>sdfsdf sdfsdf<br/>sdfsdf<br/>sdf sdfsdf sdf"""
 
-        expectedResult = ur"""qweqweqw qweqwe<br>
+        expectedResult = ur"""qweqweqw qweqwe<br/>
 qwewqeqwe wqe
 <p>qweqweqw qwe qweqwe
 <pre>
@@ -48,8 +48,8 @@ qwewqeqwe wqe
 
 вапвапвап вапваапва</pre>
 
-<p>sdfsdf sdfsdf<br>
-sdfsdf<br>
+<p>sdfsdf sdfsdf<br/>
+sdfsdf<br/>
 sdf sdfsdf sdf"""
 
         result = BrHtmlImprover().run (src)
@@ -57,12 +57,12 @@ sdf sdfsdf sdf"""
 
 
     def test_pre_02 (self):
-        src = ur"""Абырвалг<pre><br><h1>111</h1></pre>Абырвалг<pre><br><h1>111</h1></pre>"""
+        src = ur"""Абырвалг<pre><br/><h1>111</h1></pre>Абырвалг<pre><br/><h1>111</h1></pre>"""
 
         expectedResult = ur"""Абырвалг
-<pre><br><h1>111</h1></pre>
+<pre><br/><h1>111</h1></pre>
 Абырвалг
-<pre><br><h1>111</h1></pre>
+<pre><br/><h1>111</h1></pre>
 """
 
         result = BrHtmlImprover().run (src)
@@ -211,13 +211,13 @@ qwerty
 
 
     def test3 (self):
-        src = ur"""<H2>Attach links</H2>Attach:file.odt<BR><A HREF="__attach/file.odt">file.odt</A><BR><A HREF="__attach/file.odt">alternative text</A><BR><A HREF="__attach/file with spaces.pdf">file with spaces.pdf</A><H2>Images</H2>"""
+        src = ur"""<H2>Attach links</H2>Attach:file.odt<br/><A HREF="__attach/file.odt">file.odt</A><br/><A HREF="__attach/file.odt">alternative text</A><br/><A HREF="__attach/file with spaces.pdf">file with spaces.pdf</A><H2>Images</H2>"""
 
         expectedResult = ur"""
 <H2>Attach links</H2>
-Attach:file.odt<BR>
-<A HREF="__attach/file.odt">file.odt</A><BR>
-<A HREF="__attach/file.odt">alternative text</A><BR>
+Attach:file.odt<br/>
+<A HREF="__attach/file.odt">file.odt</A><br/>
+<A HREF="__attach/file.odt">alternative text</A><br/>
 <A HREF="__attach/file with spaces.pdf">file with spaces.pdf</A>
 <H2>Images</H2>
 """
@@ -227,9 +227,9 @@ Attach:file.odt<BR>
 
 
     def test_br_01 (self):
-        src = ur"""абырвалг<br>абырвалг"""
+        src = ur"""абырвалг<br/>абырвалг"""
 
-        expectedResult = ur"""абырвалг<br>
+        expectedResult = ur"""абырвалг<br/>
 абырвалг"""
 
         result = BrHtmlImprover().run (src)
@@ -250,7 +250,7 @@ Attach:file.odt<BR>
         src = ur"""абырвалг
 абырвалг"""
 
-        expectedResult = ur"""абырвалг<br>
+        expectedResult = ur"""абырвалг<br/>
 абырвалг"""
 
         result = BrHtmlImprover().run (src)
@@ -262,8 +262,8 @@ Attach:file.odt<BR>
 
 абырвалг"""
 
-        expectedResult = ur"""абырвалг<br>
-<br>
+        expectedResult = ur"""абырвалг<br/>
+<br/>
 абырвалг"""
 
         result = BrHtmlImprover().run (src)
@@ -271,10 +271,10 @@ Attach:file.odt<BR>
 
 
     def test_br_05 (self):
-        src = ur"""абырвалг<br><br>абырвалг"""
+        src = ur"""абырвалг<br/><br/>абырвалг"""
 
-        expectedResult = ur"""абырвалг<br>
-<br>
+        expectedResult = ur"""абырвалг<br/>
+<br/>
 абырвалг"""
 
         result = BrHtmlImprover().run (src)
@@ -288,10 +288,10 @@ Attach:file.odt<BR>
 
 абырвалг"""
 
-        expectedResult = ur"""абырвалг<br>
-<br>
-<br>
-<br>
+        expectedResult = ur"""абырвалг<br/>
+<br/>
+<br/>
+<br/>
 абырвалг"""
 
         result = BrHtmlImprover().run (src)
@@ -365,7 +365,7 @@ Attach:file.odt<BR>
 
         expectedResult = ur"""абырвалг
 <h1>абырвалг</h1>
-<br>
+<br/>
 абырвалг"""
 
         result = BrHtmlImprover().run (src)

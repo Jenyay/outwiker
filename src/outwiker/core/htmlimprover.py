@@ -122,10 +122,10 @@ class BrHtmlImprover (HtmlImprover):
     """
     def _appendLineBreaks (self, text):
         """
-        Replace line breaks to <br> tags
+        Replace line breaks to <br/> tags
         """
         result = text
-        result = result.replace ("\n", "<br>")
+        result = result.replace ("\n", "<br/>")
 
         opentags = r"[uod]l|hr|h\d|tr|td"
         closetags = r"li|d[td]|t[rdh]|caption|thead|tfoot|tbody|colgroup|col|h\d"
@@ -147,3 +147,82 @@ class BrHtmlImprover (HtmlImprover):
         result = re.sub(append_eol_after, "\\1\n", result, flags=re.I)
 
         return result
+
+
+class ParagraphHtmlImprover (HtmlImprover):
+    """
+    Class cover paragraphes by <p> tags
+    """
+    def _appendLineBreaks (self, text):
+        result = self._coverParagraphs (text)
+        result = self._addLineBreaks (result)
+        result = self._improveRedability (result)
+        return result
+
+
+    def _improveRedability (self, text):
+        result = text
+
+        opentags = r"[uod]l|hr|h\d|tr|td"
+        closetags = r"li|d[td]|t[rdh]|caption|thead|tfoot|tbody|colgroup|col|h\d"
+
+        # Remove <br> tag before some block elements
+        remove_br_before = r"<br\s*/?>\s*(?=<(?:" + opentags + r")[ >])"
+        result = re.sub(remove_br_before, "", result, flags=re.I | re.M)
+
+        # Remove <br> tag after some block elements
+        remove_br_after = r"(<(?:" + opentags + r")[ >]|</(?:" + closetags + r")>)\s*<br\s*/?>"
+        result = re.sub(remove_br_after, r"\1", result, flags=re.I | re.M)
+
+        # Remove <p> tag before some block elements
+        remove_p_before = r"<p>\s*(?=<(?:" + opentags + r")[ >])"
+        result = re.sub(remove_p_before, "", result, flags=re.I | re.M)
+
+        # Remove <p> tag after some block elements
+        remove_p_after = r"(<(?:" + opentags + r")[ >]|</(?:" + closetags + r")>)\s*</p>"
+        result = re.sub(remove_p_after, r"\1", result, flags=re.I | re.M)
+
+        # Append </p> before some elements
+        append_p_before = r"(<h\d>)"
+        result = re.sub(append_p_before, "</p>\\1", result, flags=re.I | re.M)
+
+        # Append <p> after some elements
+        append_p_before = r"(</h\d>)"
+        result = re.sub(append_p_before, "\\1<p>", result, flags=re.I | re.M)
+
+        # Append line breaks before some elements (to improve readability)
+        append_eol_before = r"\n*(<li>|<h\d>|</?[uo]l>|<hr\s*/?>|<p>|</?table.*?>|</?tr.*?>|<td.*?>)"
+        result = re.sub(append_eol_before, "\n\\1", result, flags=re.I | re.M)
+
+        # Append line breaks after some elements (to improve readability)
+        append_eol_after = r"(<hr\s*/?>|<br\s*/?>|</\s*h\d>|</\s*p>|</\s*ul>)\n*"
+        result = re.sub(append_eol_after, "\\1\n", result, flags=re.I | re.M)
+
+        # Remove </p> at the begin
+        remove_p_start = r"^</p>"
+        result = re.sub(remove_p_start, "", result, flags=re.I | re.M)
+
+        # Remove <p> at the end
+        remove_p_end = r"<p>$"
+        result = re.sub(remove_p_end, "", result, flags=re.I | re.M)
+
+        return result.strip()
+
+
+    def _addLineBreaks (self, text):
+        return text.replace (u"\n", "<br/>")
+
+
+    def _coverParagraphs (self, text):
+        parRegExp = re.compile ("(.*(?:\s*\n\s*){2,})|$",
+                                re.I | re.M | re.S | re.U)
+        paragraphs = parRegExp.split (text)
+
+        buf = StringIO()
+        for par in paragraphs:
+            if len (par.strip()) != 0:
+                buf.write ("<p>")
+                buf.write (par.strip())
+                buf.write ("</p>")
+
+        return buf.getvalue()
