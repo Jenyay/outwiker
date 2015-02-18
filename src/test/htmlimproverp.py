@@ -284,3 +284,63 @@ qwerty
 
         result = ParagraphHtmlImprover().run (src)
         self.assertEqual (expectedResult, result, result)
+
+
+    def test_blockquote_01 (self):
+        src = ur"""<blockquote>Абырвалг</blockquote>"""
+
+        expectedResult = ur"""<blockquote>
+<p>Абырвалг</p>
+</blockquote>"""
+
+        result = ParagraphHtmlImprover().run (src)
+        self.assertEqual (expectedResult, result, result)
+
+
+    def test_blockquote_02 (self):
+        src = ur"""Абзац 1<blockquote>Абырвалг</blockquote>Абзац 2"""
+
+        expectedResult = ur"""<p>Абзац 1</p>
+<blockquote>
+<p>Абырвалг</p>
+</blockquote>
+<p>Абзац 2</p>"""
+
+        result = ParagraphHtmlImprover().run (src)
+        self.assertEqual (expectedResult, result, result)
+
+
+    def test_blockquote_03 (self):
+        src = ur"""Абзац 1
+
+<blockquote>Абырвалг</blockquote>
+
+Абзац 2"""
+
+        expectedResult = ur"""<p>Абзац 1</p>
+<blockquote>
+<p>Абырвалг</p>
+</blockquote>
+<p>Абзац 2</p>"""
+
+        result = ParagraphHtmlImprover().run (src)
+        self.assertEqual (expectedResult, result, result)
+
+
+    def test_blockquote_04 (self):
+        src = ur"""Абзац 1
+
+<blockquote>
+Абырвалг
+</blockquote>
+
+Абзац 2"""
+
+        expectedResult = ur"""<p>Абзац 1</p>
+<blockquote>
+<p>Абырвалг</p>
+</blockquote>
+<p>Абзац 2</p>"""
+
+        result = ParagraphHtmlImprover().run (src)
+        self.assertEqual (expectedResult, result, result)
