@@ -272,7 +272,7 @@ class ParserHeadingTest (unittest.TestCase):
 
     def testHeaderLinebreak (self):
         text = u"бла-бла-бла \n!!! Заголовок[[<<]] бла-бла-бла\nбла-бла-бла"
-        result = u'бла-бла-бла \n<h2>Заголовок<br> бла-бла-бла</h2>\nбла-бла-бла'
+        result = u'бла-бла-бла \n<h2>Заголовок<br/> бла-бла-бла</h2>\nбла-бла-бла'
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 

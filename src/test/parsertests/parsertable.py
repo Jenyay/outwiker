@@ -71,7 +71,7 @@ sdfsdf || centered || right aligned||
 ||left aligned [[<<]][[<<]] sdfsdfsdf || centered || right aligned||
 """
 
-        result = u'''<table border=1 width=350><tr><td align="left">left aligned sdfsdf</td><td align="center">centered</td><td align="right">right aligned</td></tr><tr><td align="left">left aligned <br> dsfsdf</td><td align="center">centered</td><td align="right">right aligned</td></tr><tr><td align="left">left aligned <br> dsfsdf</td><td align="center">centered</td><td align="right">right aligned</td></tr><tr><td align="left">left aligned <br><br> sdfsdfsdf</td><td align="center">centered</td><td align="right">right aligned</td></tr></table>'''
+        result = u'''<table border=1 width=350><tr><td align="left">left aligned sdfsdf</td><td align="center">centered</td><td align="right">right aligned</td></tr><tr><td align="left">left aligned <br/> dsfsdf</td><td align="center">centered</td><td align="right">right aligned</td></tr><tr><td align="left">left aligned <br/> dsfsdf</td><td align="center">centered</td><td align="right">right aligned</td></tr><tr><td align="left">left aligned <br/><br/> sdfsdfsdf</td><td align="center">centered</td><td align="right">right aligned</td></tr></table>'''
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
@@ -94,10 +94,10 @@ sdfsdf || centered || right aligned||
 ||left aligned [[<<]][[<<]] sdfsdfsdf || centered || right aligned||
 """
 
-        result = u'''<table border=1 width=350><tr><td align="left">left aligned sdfsdf</td><td align="center">centered</td><td align="right">right aligned</td></tr><tr><td align="left">left aligned <br> dsfsdf</td><td align="center">centered</td><td align="right">right aligned</td></tr><tr><td align="left">left aligned <br> dsfsdf</td><td align="center">centered</td><td align="right">right aligned</td></tr><tr><td align="left">left aligned <br><br> sdfsdfsdf</td><td align="center">centered</td><td align="right">right aligned</td></tr></table>
+        result = u'''<table border=1 width=350><tr><td align="left">left aligned sdfsdf</td><td align="center">centered</td><td align="right">right aligned</td></tr><tr><td align="left">left aligned <br/> dsfsdf</td><td align="center">centered</td><td align="right">right aligned</td></tr><tr><td align="left">left aligned <br/> dsfsdf</td><td align="center">centered</td><td align="right">right aligned</td></tr><tr><td align="left">left aligned <br/><br/> sdfsdfsdf</td><td align="center">centered</td><td align="right">right aligned</td></tr></table>
 Бла-бла-бла
 
-<table border=1 width=350><tr><td align="left">left aligned sdfsdf</td><td align="center">centered</td><td align="right">right aligned</td></tr><tr><td align="left">left aligned <br> dsfsdf</td><td align="center">centered</td><td align="right">right aligned</td></tr><tr><td align="left">left aligned <br> dsfsdf</td><td align="center">centered</td><td align="right">right aligned</td></tr><tr><td align="left">left aligned <br><br> sdfsdfsdf</td><td align="center">centered</td><td align="right">right aligned</td></tr></table>'''
+<table border=1 width=350><tr><td align="left">left aligned sdfsdf</td><td align="center">centered</td><td align="right">right aligned</td></tr><tr><td align="left">left aligned <br/> dsfsdf</td><td align="center">centered</td><td align="right">right aligned</td></tr><tr><td align="left">left aligned <br/> dsfsdf</td><td align="center">centered</td><td align="right">right aligned</td></tr><tr><td align="left">left aligned <br/><br/> sdfsdfsdf</td><td align="center">centered</td><td align="right">right aligned</td></tr></table>'''
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
