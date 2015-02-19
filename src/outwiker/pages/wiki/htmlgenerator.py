@@ -29,7 +29,7 @@ class HtmlGenerator (object):
         content = self._runPreprocessing (content)
 
         config = HtmlRenderConfig (Application.config)
-        text = HtmlImproverFactory().get (config.HTMLImprover.value).run (parser.toHtml (content))
+        text = HtmlImproverFactory()[config.HTMLImprover.value].run (parser.toHtml (content))
         head = parser.head
 
         tpl = HtmlTemplate (readTextFile (stylepath))

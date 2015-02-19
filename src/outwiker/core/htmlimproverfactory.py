@@ -37,11 +37,16 @@ class HtmlImproverFactory (object):
         self._improvers[key] = HtmlImproverInfo (key, obj, description)
 
 
-    def get (self, name):
+    def __getitem__ (self, name):
         return (self._improvers[name].obj
                 if name in self._improvers
                 else self._improvers[self._defaultImprover].obj)
 
 
-    def getDict (self):
-        return self._improvers
+    @property
+    def names (self):
+        return self._improvers.keys()
+
+
+    def getDescription (self, name):
+        return self._improvers[name].description

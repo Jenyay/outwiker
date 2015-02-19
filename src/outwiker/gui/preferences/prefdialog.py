@@ -227,7 +227,6 @@ class PrefDialog(wx.Dialog):
 
     def __onOk (self, event):
         try:
-            # self.__saveCurrentPage()
             self.__saveAll()
         except PreferencesException:
             pass
@@ -272,5 +271,4 @@ class PrefDialog(wx.Dialog):
         if selectedPage is None:
             return
 
-        # selectedPage.LoadState()
         selectedPage.SetFocus()

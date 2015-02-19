@@ -21,7 +21,7 @@ class WikiHashCalculator (object):
         self._application = application
         self._mainConfig = self._application.config
         self._wikiConfig = WikiConfig (self._mainConfig)
-        self.__htmlConfig = HtmlRenderConfig (self._mainConfig)
+        self._htmlConfig = HtmlRenderConfig (self._mainConfig)
 
 
     def getHash (self, page):
@@ -51,9 +51,10 @@ class WikiHashCalculator (object):
         content.append (str (self._wikiConfig.thumbSizeOptions.value))
 
         # Настройки отображения HTML-страницы
-        content.append (str (self.__htmlConfig.fontSize.value))
-        content.append (self.__htmlConfig.fontName.value.encode(self._unicodeEncoding))
-        content.append (self.__htmlConfig.userStyle.value.encode(self._unicodeEncoding))
+        content.append (str (self._htmlConfig.fontSize.value))
+        content.append (self._htmlConfig.fontName.value.encode(self._unicodeEncoding))
+        content.append (self._htmlConfig.userStyle.value.encode(self._unicodeEncoding))
+        content.append (self._htmlConfig.HTMLImprover.value.encode(self._unicodeEncoding))
 
         # Список подстраниц
         for child in page.children:

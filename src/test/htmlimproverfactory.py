@@ -8,30 +8,20 @@ from outwiker.core.htmlimproverfactory import HtmlImproverFactory
 
 class HtmlImproverFactoryTest (unittest.TestCase):
     def test_type_br (self):
-        improver = HtmlImproverFactory().get ('brimprover')
+        improver = HtmlImproverFactory()['brimprover']
         self.assertEqual (type (improver), BrHtmlImprover)
 
 
     def test_type_p (self):
-        improver = HtmlImproverFactory().get ('pimprover')
+        improver = HtmlImproverFactory()['pimprover']
         self.assertEqual (type (improver), ParagraphHtmlImprover)
 
 
     def test_type_default (self):
-        improver = HtmlImproverFactory().get ('')
+        improver = HtmlImproverFactory()['']
         self.assertEqual (type (improver), BrHtmlImprover)
 
 
     def test_type_None (self):
-        improver = HtmlImproverFactory().get (None)
+        improver = HtmlImproverFactory()[None]
         self.assertEqual (type (improver), BrHtmlImprover)
-
-
-    def test_dict (self):
-        improvers = HtmlImproverFactory().getDict()
-
-        self.assertIn ('brimprover', improvers)
-        self.assertIn ('pimprover', improvers)
-
-        self.assertEqual (type (improvers['brimprover'].obj), BrHtmlImprover)
-        self.assertEqual (type (improvers['pimprover'].obj), ParagraphHtmlImprover)
