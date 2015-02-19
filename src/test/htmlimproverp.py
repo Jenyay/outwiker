@@ -344,3 +344,54 @@ qwerty
 
         result = ParagraphHtmlImprover().run (src)
         self.assertEqual (expectedResult, result, result)
+
+
+    def test_table_01 (self):
+        src = ur"""Абзац 1<table><tr><td>Ячейка таблицы</td></tr></table>Абзац 2"""
+
+        expectedResult = ur"""<p>Абзац 1
+<table>
+<tr>
+<td>Ячейка таблицы</td>
+</tr>
+</table>
+Абзац 2</p>"""
+
+        result = ParagraphHtmlImprover().run (src)
+        self.assertEqual (expectedResult, result, result)
+
+
+    def test_table_02 (self):
+        src = ur"""Абзац 1
+<table><tr><td>Ячейка таблицы</td></tr></table>
+Абзац 2"""
+
+        expectedResult = ur"""<p>Абзац 1
+<table>
+<tr>
+<td>Ячейка таблицы</td>
+</tr>
+</table>
+Абзац 2</p>"""
+
+        result = ParagraphHtmlImprover().run (src)
+        self.assertEqual (expectedResult, result, result)
+
+
+    def test_table_03 (self):
+        src = ur"""Абзац 1
+
+<table><tr><td>Ячейка таблицы</td></tr></table>
+Абзац 2"""
+
+        expectedResult = ur"""<p>Абзац 1</p>
+<p>
+<table>
+<tr>
+<td>Ячейка таблицы</td>
+</tr>
+</table>
+Абзац 2</p>"""
+
+        result = ParagraphHtmlImprover().run (src)
+        self.assertEqual (expectedResult, result, result)

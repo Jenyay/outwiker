@@ -161,11 +161,11 @@ class ParagraphHtmlImprover (HtmlImprover):
         closetags = r"li|d[td]|t[rdh]|caption|thead|tfoot|tbody|colgroup|col|h\d|blockquote"
 
         # Remove <br> tag before some block elements
-        remove_br_before = r"<br\s*/?>\s*(?=<(?:" + opentags + r")[ >])"
+        remove_br_before = r"<br\s*/?>\s*(?=<(?:" + opentags + "|table" + r")[ >])"
         result = re.sub(remove_br_before, "", result, flags=re.I | re.M)
 
         # Remove <br> tag after some block elements
-        remove_br_after = r"(<(?:" + opentags + r")[ >]|</(?:" + closetags + r")>)\s*<br\s*/?>"
+        remove_br_after = r"(<(?:" + opentags + r")[ >]|</(?:" + closetags + "|table" r")>)\s*<br\s*/?>"
         result = re.sub(remove_br_after, r"\1", result, flags=re.I | re.M)
 
         # Remove <p> tag before some block elements
@@ -205,7 +205,7 @@ class ParagraphHtmlImprover (HtmlImprover):
         result = re.sub(append_eol_before, "\n\\1", result, flags=re.I | re.M)
 
         # Append line breaks after some elements (to improve readability)
-        append_eol_after = r"(<hr\s*/?>|<br\s*/?>|</\s*h\d>|</\s*p>|</\s*script>|</\s*ul>)\n*"
+        append_eol_after = r"(<hr\s*/?>|<br\s*/?>|</\s*h\d>|</\s*p>|</\s*script>|</\s*ul>|</\s*table>)\n*"
         result = re.sub(append_eol_after, "\\1\n", result, flags=re.I | re.M)
 
         # Remove </p> at the begin
