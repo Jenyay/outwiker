@@ -221,6 +221,8 @@ if __name__ == '__main__':
     from test.plugins.datagraph.datasources import StringSourceTest, FileSourceTest
     from test.plugins.datagraph.command_plot_highcharts import CommandPlotHighchartsTest
 
+    from test.plugins.htmlformatter.htmlformatter_test import HtmlFormatterTest
+
     from test.styles.styles import StylesTest
     from test.styles.styleslist import StylesListTest
 

@@ -2,7 +2,7 @@
 
 import unittest
 
-from outwiker.core.htmlimprover import BrHtmlImprover, ParagraphHtmlImprover
+from outwiker.core.htmlimprover import BrHtmlImprover
 from outwiker.core.htmlimproverfactory import HtmlImproverFactory
 from outwiker.core.application import Application
 from outwiker.core.htmlimprover import HtmlImprover
@@ -30,7 +30,7 @@ class HtmlImproverFactoryTest (unittest.TestCase):
     def test_type (self):
         factory = HtmlImproverFactory (Application)
         self.assertEqual (type (factory['brimprover']), BrHtmlImprover)
-        self.assertEqual (type (factory['pimprover']), ParagraphHtmlImprover)
+        self.assertEqual (type (factory['pimprover']), BrHtmlImprover)
         self.assertEqual (type (factory['test1']), BrHtmlImprover)
         self.assertEqual (type (factory['test2']), BrHtmlImprover)
 

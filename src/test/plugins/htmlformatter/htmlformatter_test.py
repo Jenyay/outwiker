@@ -5,16 +5,18 @@ import unittest
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
+from outwiker.core.htmlimproverfactory import HtmlImproverFactory
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from test.utils import removeDir
 
 
-class PluginNameTest (unittest.TestCase):
-    """Тесты плагина PluginName"""
+
+class HtmlFormatterTest (unittest.TestCase):
+    """Тесты плагина HtmlFormatter"""
     def setUp (self):
         self.__createWiki()
 
-        dirlist = [u"../plugins/pluginname"]
+        dirlist = [u"../plugins/htmlformatter"]
 
         self.loader = PluginsLoader(Application)
         self.loader.load (dirlist)
@@ -38,3 +40,10 @@ class PluginNameTest (unittest.TestCase):
 
     def testPluginLoad (self):
         self.assertEqual (len (self.loader), 1)
+
+
+    def testFactory (self):
+        from htmlformatter.paragraphimprover import ParagraphHtmlImprover
+        factory = HtmlImproverFactory (Application)
+
+        self.assertEqual (type (factory['pimprover']), ParagraphHtmlImprover)

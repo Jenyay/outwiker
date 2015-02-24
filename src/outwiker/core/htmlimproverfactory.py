@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-from htmlimprover import BrHtmlImprover, ParagraphHtmlImprover
+from htmlimprover import BrHtmlImprover
 
 
 class HtmlImproverInfo (object):
@@ -26,10 +26,6 @@ class HtmlImproverFactory (object):
         self.add (self._defaultImprover,
                   BrHtmlImprover(),
                   _(u"Line Breaks"))
-
-        self.add (u'pimprover',
-                  ParagraphHtmlImprover(),
-                  _(u"Paragraphs"))
 
         application.onPrepareHtmlImprovers (self)
 
