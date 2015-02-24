@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-13 21:04+0300\n"
+"POT-Creation-Date: 2015-02-24 22:05+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -12,6 +12,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Generator: Poedit 1.5.4\n"
+
+#: outwiker/core/htmlimproverfactory.py:28
+msgid "Line Breaks (<br/>)"
+msgstr "Разрывы строк (<br/>)"
 
 #: outwiker/core/pagetitletester.py:50
 #, python-format
@@ -78,7 +82,7 @@ msgstr "Страница открыта только для чтения"
 #: outwiker/gui/pagedialog.py:45 outwiker/gui/pagedialog.py:137
 #: outwiker/gui/pagedialog.py:196 outwiker/gui/renametagdialog.py:75
 #: outwiker/gui/renametagdialog.py:79 outwiker/gui/basetextpanel.py:182
-#: outwiker/gui/basetextpanel.py:195 outwiker/pages/html/htmlpageview.py:596
+#: outwiker/gui/basetextpanel.py:195 outwiker/pages/html/htmlpageview.py:597
 #: outwiker/pages/html/basehtmlpanel.py:332
 #: outwiker/pages/html/basehtmlpanel.py:336
 #: outwiker/pages/wiki/basewikipageview.py:277
@@ -381,7 +385,7 @@ msgstr "Вставить разрыв строки"
 msgid "Convert HTML Symbols"
 msgstr "Преобразовать символы в HTML"
 
-#: outwiker/core/commands.py:998 outwiker/pages/html/htmlpageview.py:218
+#: outwiker/core/commands.py:998 outwiker/pages/html/htmlpageview.py:219
 msgid "Table"
 msgstr "Таблица"
 
@@ -602,15 +606,15 @@ msgstr "Создать или открыть страницу для глоба�
 msgid "Can't create page"
 msgstr "Невозможно создать страницу"
 
-#: outwiker/actions/openhelp.py:22 outwiker/gui/mainmenu.py:34
+#: outwiker/actions/openhelp.py:21 outwiker/gui/mainmenu.py:34
 msgid "Help"
 msgstr "Справка"
 
-#: outwiker/actions/openhelp.py:27
+#: outwiker/actions/openhelp.py:26
 msgid "Open help"
 msgstr "Открыть справку"
 
-#: outwiker/actions/openhelp.py:32
+#: outwiker/actions/openhelp.py:31
 msgid "help_en"
 msgstr "help_ru"
 
@@ -1123,8 +1127,8 @@ msgstr "Символ '%'"
 
 #: outwiker/gui/preferences/editorpanel.py:32
 #: outwiker/gui/preferences/textprintpanel.py:28
-#: outwiker/gui/preferences/htmlrenderpanel.py:27
-#: outwiker/pages/html/htmlpageview.py:214
+#: outwiker/gui/preferences/htmlrenderpanel.py:25
+#: outwiker/pages/html/htmlpageview.py:215
 #: outwiker/pages/wiki/wikipageview.py:140
 msgid "Font"
 msgstr "Шрифт"
@@ -1321,7 +1325,7 @@ msgid "User's iconset"
 msgstr "Значки пользователя"
 
 #: outwiker/gui/preferences/wikieditorpanel.py:38
-#: outwiker/pages/html/htmlpageview.py:213
+#: outwiker/pages/html/htmlpageview.py:214
 #: outwiker/pages/wiki/wikipageview.py:139
 msgid "Heading"
 msgstr "Заголовки"
@@ -1407,6 +1411,10 @@ msgid "Auto"
 msgstr "Авто"
 
 #: outwiker/gui/preferences/htmlrenderpanel.py:29
+msgid "Paragraphs separator"
+msgstr "Разделитель параграфов"
+
+#: outwiker/gui/preferences/htmlrenderpanel.py:33
 msgid "Additional styles (CSS):"
 msgstr "Дополнительные стили (CSS):"
 
@@ -1724,26 +1732,26 @@ msgstr "Копировать"
 msgid "HTML Page"
 msgstr "HTML-страница"
 
-#: outwiker/pages/html/htmlpageview.py:215
+#: outwiker/pages/html/htmlpageview.py:216
 #: outwiker/pages/wiki/wikipageview.py:141
 msgid "Alignment"
 msgstr "Выравнивание"
 
-#: outwiker/pages/html/htmlpageview.py:216
+#: outwiker/pages/html/htmlpageview.py:217
 #: outwiker/pages/wiki/wikipageview.py:142
 msgid "Formatting"
 msgstr "Форматирование"
 
-#: outwiker/pages/html/htmlpageview.py:217
+#: outwiker/pages/html/htmlpageview.py:218
 #: outwiker/pages/wiki/wikipageview.py:143
 msgid "Lists"
 msgstr "Списки"
 
-#: outwiker/pages/html/htmlpageview.py:229
+#: outwiker/pages/html/htmlpageview.py:230
 msgid "Html"
 msgstr "Html"
 
-#: outwiker/pages/html/htmlpageview.py:595
+#: outwiker/pages/html/htmlpageview.py:596
 msgid "Page style Error. Style by default is used"
 msgstr ""
 "Ошибка в файле стиля страницы. Будет использоваться стиль по умолчанию."

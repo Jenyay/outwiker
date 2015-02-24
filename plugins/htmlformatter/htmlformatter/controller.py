@@ -36,4 +36,4 @@ class Controller (object):
     def _onAddHtmlImprover (self, factory):
         factory.add (u'pimprover',
                      ParagraphHtmlImprover(),
-                     _(u"Paragraphs"))
+                     _(u"Paragraphs (<p>...</p>)"))
