@@ -94,7 +94,6 @@ if __name__ == '__main__':
     from test.pagethumbmaker import PageThumbmakerTest
     from test.thumbnails import ThumbnailsTest
     from test.htmlimproverbr import BrHtmlImproverTest
-    from test.htmlimproverp import ParagraphHtmlImproverTest
     from test.htmlimproverfactory import HtmlImproverFactoryTest
     from test.wikihtmlcache import WikiHtmlCacheTest
     from test.wikihtmlgenerator import WikiHtmlGeneratorTest
@@ -222,6 +221,7 @@ if __name__ == '__main__':
     from test.plugins.datagraph.command_plot_highcharts import CommandPlotHighchartsTest
 
     from test.plugins.htmlformatter.htmlformatter_test import HtmlFormatterTest
+    from test.plugins.htmlformatter.htmlimproverp import ParagraphHtmlImproverTest
 
     from test.styles.styles import StylesTest
     from test.styles.styleslist import StylesListTest

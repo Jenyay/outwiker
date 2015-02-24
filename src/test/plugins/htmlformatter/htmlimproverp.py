@@ -2,19 +2,31 @@
 
 import unittest
 
-from outwiker.core.htmlimprover import ParagraphHtmlImprover
+from outwiker.core.pluginsloader import PluginsLoader
+from outwiker.core.application import Application
+from outwiker.core.htmlimproverfactory import HtmlImproverFactory
 
 
 class ParagraphHtmlImproverTest (unittest.TestCase):
     def setUp (self):
-        self.maxDiff = None
+        dirlist = [u"../plugins/htmlformatter"]
+
+        self.loader = PluginsLoader(Application)
+        self.loader.load (dirlist)
+
+        factory = HtmlImproverFactory (Application)
+        self.improver = factory['pimprover']
+
+
+    def tearDown (self):
+        self.loader.clear()
 
 
     def test_empty (self):
         src = u''
         expectedResult = u''
 
-        result = ParagraphHtmlImprover().run (src)
+        result = self.improver.run (src)
         self.assertEqual (expectedResult, result)
 
 
@@ -22,7 +34,7 @@ class ParagraphHtmlImproverTest (unittest.TestCase):
         src = u'Абырвалг'
         expectedResult = u'<p>Абырвалг</p>'
 
-        result = ParagraphHtmlImprover().run (src)
+        result = self.improver.run (src)
         self.assertEqual (expectedResult, result)
 
 
@@ -34,7 +46,7 @@ Bar'''
 Foo<br/>
 Bar</p>'''
 
-        result = ParagraphHtmlImprover().run (src)
+        result = self.improver.run (src)
 
         self.assertEqual (expectedResult, result)
 
@@ -47,7 +59,7 @@ Bar</p>'''
         expectedResult = u'''<p>Абырвалг</p>
 <p>Второй параграф</p>'''
 
-        result = ParagraphHtmlImprover().run (src)
+        result = self.improver.run (src)
 
         self.assertEqual (expectedResult, result)
 
@@ -65,7 +77,7 @@ Bar</p>'''
         expectedResult = u'''<p>Абырвалг</p>
 <p>Второй параграф</p>'''
 
-        result = ParagraphHtmlImprover().run (src)
+        result = self.improver.run (src)
 
         self.assertEqual (expectedResult, result)
 
@@ -80,7 +92,7 @@ Bar</p>'''
 <a href="__attach/file with spaces.pdf">file with spaces.pdf</a></p>
 <h2>Images</h2>"""
 
-        result = ParagraphHtmlImprover().run (src)
+        result = self.improver.run (src)
 
         self.assertEqual (expectedResult, result)
 
@@ -119,7 +131,7 @@ qwewqeqwe wqe</p>
 sdfsdf<br/>
 sdf sdfsdf sdf</p>"""
 
-        result = ParagraphHtmlImprover().run (src)
+        result = self.improver.run (src)
         self.assertEqual (expectedResult, result, result)
 
 
@@ -134,7 +146,7 @@ sdf sdfsdf sdf</p>"""
 
 <pre><br/><h1>111</h1></pre>"""
 
-        result = ParagraphHtmlImprover().run (src)
+        result = self.improver.run (src)
         self.assertEqual (expectedResult, result, result)
 
 
@@ -152,7 +164,7 @@ sdf sdfsdf sdf</p>"""
 
 <pre>222</pre>"""
 
-        result = ParagraphHtmlImprover().run (src)
+        result = self.improver.run (src)
         self.assertEqual (expectedResult, result, result)
 
 
@@ -171,7 +183,7 @@ sdf sdfsdf sdf</p>"""
 
 <pre>222</pre>"""
 
-        result = ParagraphHtmlImprover().run (src)
+        result = self.improver.run (src)
         self.assertEqual (expectedResult, result, result)
 
 
@@ -192,7 +204,7 @@ qwerty
 фыва
 </script>"""
 
-        result = ParagraphHtmlImprover().run (src)
+        result = self.improver.run (src)
         self.assertEqual (expectedResult, result, result)
 
 
@@ -212,7 +224,7 @@ qwerty
 фыва
 </script>"""
 
-        result = ParagraphHtmlImprover().run (src)
+        result = self.improver.run (src)
         self.assertEqual (expectedResult, result, result)
 
 
@@ -231,7 +243,7 @@ qwerty
 
 <script>222</script>"""
 
-        result = ParagraphHtmlImprover().run (src)
+        result = self.improver.run (src)
 
         self.assertEqual (expectedResult, result, result)
 
@@ -256,7 +268,7 @@ qwerty
 фыва
 </script>"""
 
-        result = ParagraphHtmlImprover().run (src)
+        result = self.improver.run (src)
         self.assertEqual (expectedResult, result, result)
 
 
@@ -282,7 +294,7 @@ qwerty
 
 <p>Абырвалг</p>"""
 
-        result = ParagraphHtmlImprover().run (src)
+        result = self.improver.run (src)
         self.assertEqual (expectedResult, result, result)
 
 
@@ -293,7 +305,7 @@ qwerty
 <p>Абырвалг</p>
 </blockquote>"""
 
-        result = ParagraphHtmlImprover().run (src)
+        result = self.improver.run (src)
         self.assertEqual (expectedResult, result, result)
 
 
@@ -306,7 +318,7 @@ qwerty
 </blockquote>
 <p>Абзац 2</p>"""
 
-        result = ParagraphHtmlImprover().run (src)
+        result = self.improver.run (src)
         self.assertEqual (expectedResult, result, result)
 
 
@@ -323,7 +335,7 @@ qwerty
 </blockquote>
 <p>Абзац 2</p>"""
 
-        result = ParagraphHtmlImprover().run (src)
+        result = self.improver.run (src)
         self.assertEqual (expectedResult, result, result)
 
 
@@ -342,7 +354,7 @@ qwerty
 </blockquote>
 <p>Абзац 2</p>"""
 
-        result = ParagraphHtmlImprover().run (src)
+        result = self.improver.run (src)
         self.assertEqual (expectedResult, result, result)
 
 
@@ -357,7 +369,7 @@ qwerty
 </table>
 Абзац 2</p>"""
 
-        result = ParagraphHtmlImprover().run (src)
+        result = self.improver.run (src)
         self.assertEqual (expectedResult, result, result)
 
 
@@ -374,7 +386,7 @@ qwerty
 </table>
 Абзац 2</p>"""
 
-        result = ParagraphHtmlImprover().run (src)
+        result = self.improver.run (src)
         self.assertEqual (expectedResult, result, result)
 
 
@@ -393,5 +405,5 @@ qwerty
 </table>
 Абзац 2</p>"""
 
-        result = ParagraphHtmlImprover().run (src)
+        result = self.improver.run (src)
         self.assertEqual (expectedResult, result, result)
