@@ -603,7 +603,8 @@ class HtmlPageView (BaseHtmlPanel):
 
         if page.autoLineWrap:
             config = HtmlRenderConfig (Application.config)
-            text = HtmlImproverFactory()[config.HTMLImprover.value].run (content)
+            improverFactory = HtmlImproverFactory (Application)
+            text = improverFactory[config.HTMLImprover.value].run (content)
         else:
             text = content
 

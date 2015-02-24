@@ -154,6 +154,13 @@ class ApplicationParams (object):
         self.onPostprocessing = Event()
 
 
+        # Событие вызывается при создании класса HtmlImproverFactory.
+        # Параметры:
+        # factory - экземпляр класса HtmlImproverFactory, в который можно
+        #     добавить новые классы HtmlImprover с помощью метода add()
+        self.onPrepareHtmlImprovers = Event()
+
+
     def init (self, configFilename):
         """
         Инициализировать конфиг и локаль

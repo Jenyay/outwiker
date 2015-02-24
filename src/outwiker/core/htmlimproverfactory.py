@@ -18,10 +18,12 @@ class HtmlImproverFactory (object):
     """
     Collection of the HTML improvers
     """
-    def __init__ (self):
+    def __init__ (self, application):
         self._improvers = {}
 
-        self.add (u'brimprover',
+        self._defaultImprover = u'brimprover'
+
+        self.add (self._defaultImprover,
                   BrHtmlImprover(),
                   _(u"Line Breaks"))
 
@@ -29,7 +31,8 @@ class HtmlImproverFactory (object):
                   ParagraphHtmlImprover(),
                   _(u"Paragraphs"))
 
-        self._defaultImprover = u'brimprover'
+        application.onPrepareHtmlImprovers (self)
+
 
 
     def add (self, key, obj, description):

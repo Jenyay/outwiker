@@ -87,7 +87,7 @@ class HtmlRenderPanel(wx.Panel):
     def _fillHtmlImprovers (self, config):
         self.improverComboBox.Clear()
 
-        factory = HtmlImproverFactory()
+        factory = HtmlImproverFactory(Application)
         for name in factory.names:
             self.improverComboBox.Append (factory.getDescription (name), name)
 
