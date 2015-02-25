@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: htmlformatter\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-02-24 22:03+0300\n"
-"PO-Revision-Date: 2015-02-24 22:04+0300\n"
+"PO-Revision-Date: 2015-02-25 08:37+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: jenyay.net <jenyay.ilin@gmail.com>\n"
 "Language: ru_RU\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: htmlformatter.py:42
 msgid "Plugin for more punctual HTML generation"
-msgstr "Плагин для более генерации более аккуратного HTML-кода страниц"
+msgstr "Плагин для генерации более аккуратного HTML-кода страниц"
 
 #: htmlformatter.py:52
 msgid "http://jenyay.net/Outwiker/HtmlFormatterEn"
