@@ -2,15 +2,23 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-13 21:04+0300\n"
-"PO-Revision-Date: 2015-01-13 21:06+0300\n"
+"POT-Creation-Date: 2015-02-24 22:05+0300\n"
+"PO-Revision-Date: 2015-02-26 10:02+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Poedit 1.5.4\n"
+"X-Crowdin-Project: outwiker\n"
+"X-Crowdin-File: outwiker.pot\n"
+
+#: outwiker/core/htmlimproverfactory.py:28
+msgid "Line Breaks (<br/>)"
+msgstr "Розриви рядків (<br/>)"
 
 #: outwiker/core/pagetitletester.py:50
 #, python-format
@@ -77,7 +85,7 @@ msgstr "Сторінка відкрита лише для читання"
 #: outwiker/gui/pagedialog.py:45 outwiker/gui/pagedialog.py:137
 #: outwiker/gui/pagedialog.py:196 outwiker/gui/renametagdialog.py:75
 #: outwiker/gui/renametagdialog.py:79 outwiker/gui/basetextpanel.py:182
-#: outwiker/gui/basetextpanel.py:195 outwiker/pages/html/htmlpageview.py:596
+#: outwiker/gui/basetextpanel.py:195 outwiker/pages/html/htmlpageview.py:597
 #: outwiker/pages/html/basehtmlpanel.py:332
 #: outwiker/pages/html/basehtmlpanel.py:336
 #: outwiker/pages/wiki/basewikipageview.py:277
@@ -379,7 +387,7 @@ msgstr "Вставити розрив рядка"
 msgid "Convert HTML Symbols"
 msgstr "Конвертувати символи в HTML"
 
-#: outwiker/core/commands.py:998 outwiker/pages/html/htmlpageview.py:218
+#: outwiker/core/commands.py:998 outwiker/pages/html/htmlpageview.py:219
 msgid "Table"
 msgstr "Таблиця"
 
@@ -599,15 +607,15 @@ msgstr "Створити або відкрити сторінку для гло�
 msgid "Can't create page"
 msgstr "Неможливо створити сторінку"
 
-#: outwiker/actions/openhelp.py:22 outwiker/gui/mainmenu.py:34
+#: outwiker/actions/openhelp.py:21 outwiker/gui/mainmenu.py:34
 msgid "Help"
 msgstr "Довідка"
 
-#: outwiker/actions/openhelp.py:27
+#: outwiker/actions/openhelp.py:26
 msgid "Open help"
 msgstr "Відкрити довідку"
 
-#: outwiker/actions/openhelp.py:32
+#: outwiker/actions/openhelp.py:31
 msgid "help_en"
 msgstr "help_ru"
 
@@ -1120,8 +1128,8 @@ msgstr "Символ '%'"
 
 #: outwiker/gui/preferences/editorpanel.py:32
 #: outwiker/gui/preferences/textprintpanel.py:28
-#: outwiker/gui/preferences/htmlrenderpanel.py:27
-#: outwiker/pages/html/htmlpageview.py:214
+#: outwiker/gui/preferences/htmlrenderpanel.py:25
+#: outwiker/pages/html/htmlpageview.py:215
 #: outwiker/pages/wiki/wikipageview.py:140
 msgid "Font"
 msgstr "Шрифт"
@@ -1318,7 +1326,7 @@ msgid "User's iconset"
 msgstr "Значки користувача"
 
 #: outwiker/gui/preferences/wikieditorpanel.py:38
-#: outwiker/pages/html/htmlpageview.py:213
+#: outwiker/pages/html/htmlpageview.py:214
 #: outwiker/pages/wiki/wikipageview.py:139
 msgid "Heading"
 msgstr "Заголовки"
@@ -1404,6 +1412,10 @@ msgid "Auto"
 msgstr "Авто"
 
 #: outwiker/gui/preferences/htmlrenderpanel.py:29
+msgid "Paragraphs separator"
+msgstr "Роздільник параграфів"
+
+#: outwiker/gui/preferences/htmlrenderpanel.py:33
 msgid "Additional styles (CSS):"
 msgstr "Додаткові стилі (CSS):"
 
@@ -1718,26 +1730,26 @@ msgstr "Копіювати"
 msgid "HTML Page"
 msgstr "HTML-сторінка"
 
-#: outwiker/pages/html/htmlpageview.py:215
+#: outwiker/pages/html/htmlpageview.py:216
 #: outwiker/pages/wiki/wikipageview.py:141
 msgid "Alignment"
 msgstr "Вирівнювання"
 
-#: outwiker/pages/html/htmlpageview.py:216
+#: outwiker/pages/html/htmlpageview.py:217
 #: outwiker/pages/wiki/wikipageview.py:142
 msgid "Formatting"
 msgstr "Форматування"
 
-#: outwiker/pages/html/htmlpageview.py:217
+#: outwiker/pages/html/htmlpageview.py:218
 #: outwiker/pages/wiki/wikipageview.py:143
 msgid "Lists"
 msgstr "Списки"
 
-#: outwiker/pages/html/htmlpageview.py:229
+#: outwiker/pages/html/htmlpageview.py:230
 msgid "Html"
 msgstr "Html"
 
-#: outwiker/pages/html/htmlpageview.py:595
+#: outwiker/pages/html/htmlpageview.py:596
 msgid "Page style Error. Style by default is used"
 msgstr ""
 "Помилка в файлі стилю сторінки. Буде використаний стиль за замовчуванням."
@@ -2141,6 +2153,3 @@ msgstr "# Пошук"
 #: outwiker/pages/text/textpage.py:37
 msgid "Text Page"
 msgstr "Текстова сторінка"
-
-#~ msgid "Not in groups [custom]"
-#~ msgstr "Без груп [користувача]"
