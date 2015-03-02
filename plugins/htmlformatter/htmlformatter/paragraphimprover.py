@@ -89,9 +89,10 @@ class ParagraphHtmlImprover (HtmlImprover):
 
 
     def _coverParagraphs (self, text):
-        parRegExp = re.compile ("(.*?(?:\s*\n\s*){2,})|$",
-                                re.I | re.M | re.S | re.U)
-        paragraphs = parRegExp.split (text)
+        paragraphs = [par.strip()
+                      for par
+                      in text.split (u'\n\n')
+                      if len (par.strip()) != 0]
 
         buf = StringIO()
         for par in paragraphs:
