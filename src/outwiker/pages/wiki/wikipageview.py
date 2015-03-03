@@ -2,6 +2,7 @@
 
 import wx
 import os
+from StringIO import StringIO
 
 from .wikieditor import WikiEditor
 from .wikitoolbar import WikiToolBar
@@ -364,7 +365,7 @@ class WikiPageView (BaseWikiPageView):
         menu = self._listMenu
 
         # Ненумерованный список
-        self._application.actionController.getAction (LIST_BULLETS_STR_ID).setFunc (lambda param: self._application.mainWindow.pagePanel.pageView.codeEditor.turnList ("* "))
+        self._application.actionController.getAction (LIST_BULLETS_STR_ID).setFunc (lambda param: self._turnList ("*"))
 
         self._application.actionController.appendMenuItem (LIST_BULLETS_STR_ID, menu)
         self._application.actionController.appendToolbarButton (LIST_BULLETS_STR_ID,
@@ -374,7 +375,7 @@ class WikiPageView (BaseWikiPageView):
 
 
         # Нумерованный список
-        self._application.actionController.getAction (LIST_NUMBERS_STR_ID).setFunc (lambda param: self._application.mainWindow.pagePanel.pageView.codeEditor.turnList ("# "))
+        self._application.actionController.getAction (LIST_NUMBERS_STR_ID).setFunc (lambda param: self._turnList ("#"))
 
         self._application.actionController.appendMenuItem (LIST_NUMBERS_STR_ID, menu)
         self._application.actionController.appendToolbarButton (LIST_NUMBERS_STR_ID,
@@ -492,3 +493,59 @@ class WikiPageView (BaseWikiPageView):
         # Преобразовать некоторые символы в и их HTML-представление
         self._application.actionController.getAction (HTML_ESCAPE_STR_ID).setFunc (lambda param: self.escapeHtml ())
         self._application.actionController.appendMenuItem (HTML_ESCAPE_STR_ID, menu)
+
+
+    def _turnList (self, symbol):
+        editor = self._application.mainWindow.pagePanel.pageView.codeEditor
+
+        startSelection = editor.GetSelectionStart()
+        endSelection = editor.GetSelectionEnd()
+
+        text = editor.GetText()
+
+        if len (text) == 0:
+            text = symbol + u" "
+            position = len (text)
+
+            editor.SetText (text)
+            editor.SetSelection (position, position)
+            return
+
+        firstLine = text[:startSelection].rfind ("\n")
+        lastLine = text[endSelection:].find ("\n")
+
+        if firstLine == -1:
+            firstLine = 0
+
+        if lastLine == -1:
+            lastLine = len (text)
+        else:
+            lastLine += endSelection
+
+        selectedText = text[firstLine: lastLine]
+        lines = selectedText.splitlines ()
+
+        # result = (u"\n" + symbol + u" ").join (lines)
+        buf = StringIO()
+
+        for n, line in enumerate (lines):
+            if n == 0 and len (line) == 0:
+                continue
+
+            if n != 0:
+                buf.write (u"\n")
+
+            buf.write (symbol)
+            if not line.startswith (symbol):
+                buf.write (u" ")
+
+            buf.write (line)
+
+        result = buf.getvalue()
+        buf.close()
+
+        newtext = text[:firstLine] + result + text[lastLine:]
+        editor.SetText (newtext)
+
+        position = firstLine + len (result)
+        editor.SetSelection (firstLine + 1, position)

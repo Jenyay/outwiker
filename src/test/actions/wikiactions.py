@@ -196,3 +196,466 @@ class WikiActionsTest (BaseMainWndTest):
 
         Application.actionController.getAction (LIST_NUMBERS_STR_ID).run(None)
         self.assertEqual (self._getEditor().GetText(), result)
+
+
+    def testListBulletsSelectedPart_01 (self):
+        text = u"""йцкуйцук
+укеуке
+ывапвыап
+ывапвыапыап
+ывапываппа"""
+
+        result = u"""* йцкуйцук
+* укеуке
+* ывапвыап
+* ывапвыапыап
+* ывапываппа"""
+
+        start = 3
+        end = len (text) - 3
+
+        Application.selectedPage = self.temppage
+        self.testpage.content = text
+        Application.selectedPage = self.testpage
+
+        self._getEditor().SetSelection (start, end)
+
+        Application.actionController.getAction (LIST_BULLETS_STR_ID).run(None)
+
+        self.assertEqual (self._getEditor().GetText(),
+                          result,
+                          self._getEditor().GetText())
+
+
+    def testListNumbersSelectedPart_01 (self):
+        text = u"""йцкуйцук
+укеуке
+ывапвыап
+ывапвыапыап
+ывапываппа"""
+
+        result = u"""# йцкуйцук
+# укеуке
+# ывапвыап
+# ывапвыапыап
+# ывапываппа"""
+
+        start = 3
+        end = len (text) - 3
+
+        Application.selectedPage = self.temppage
+        self.testpage.content = text
+        Application.selectedPage = self.testpage
+
+        self._getEditor().SetSelection (start, end)
+
+        Application.actionController.getAction (LIST_NUMBERS_STR_ID).run(None)
+
+        self.assertEqual (self._getEditor().GetText(),
+                          result,
+                          self._getEditor().GetText())
+
+
+    def testListBulletsSelectedPart_02 (self):
+        text = u"""йцукен
+укеуке
+ывапвыап
+ывапвыапыап
+ывапываппа"""
+
+        result = u"""йцукен
+* укеуке
+* ывапвыап
+* ывапвыапыап
+* ывапываппа"""
+
+        start = 7
+        end = len (text) - 3
+
+        Application.selectedPage = self.temppage
+        self.testpage.content = text
+        Application.selectedPage = self.testpage
+
+        self._getEditor().SetSelection (start, end)
+
+        Application.actionController.getAction (LIST_BULLETS_STR_ID).run(None)
+
+        self.assertEqual (self._getEditor().GetText(),
+                          result,
+                          self._getEditor().GetText())
+
+
+    def testListBulletsSelectedPart_03 (self):
+        text = u"""йцукен
+укеуке
+ывапвыап
+ывапвыапыап
+ывапываппа"""
+
+        result = u"""йцукен
+* укеуке
+* ывапвыап
+* ывапвыапыап
+* ывапываппа"""
+
+        start = 10
+        end = len (text) - 3
+
+        Application.selectedPage = self.temppage
+        self.testpage.content = text
+        Application.selectedPage = self.testpage
+
+        self._getEditor().SetSelection (start, end)
+
+        Application.actionController.getAction (LIST_BULLETS_STR_ID).run(None)
+
+        self.assertEqual (self._getEditor().GetText(),
+                          result,
+                          self._getEditor().GetText())
+
+
+    def testListNumbersSelectedPart_02 (self):
+        text = u"""йцукен
+укеуке
+ывапвыап
+ывапвыапыап
+ывапываппа"""
+
+        result = u"""йцукен
+# укеуке
+# ывапвыап
+# ывапвыапыап
+# ывапываппа"""
+
+        start = 7
+        end = len (text) - 3
+
+        Application.selectedPage = self.temppage
+        self.testpage.content = text
+        Application.selectedPage = self.testpage
+
+        self._getEditor().SetSelection (start, end)
+
+        Application.actionController.getAction (LIST_NUMBERS_STR_ID).run(None)
+
+        self.assertEqual (self._getEditor().GetText(),
+                          result,
+                          self._getEditor().GetText())
+
+
+    def testListNumbersSelectedPart_03 (self):
+        text = u"""йцукен
+укеуке
+ывапвыап
+ывапвыапыап
+ывапываппа"""
+
+        result = u"""йцукен
+# укеуке
+# ывапвыап
+# ывапвыапыап
+# ывапываппа"""
+
+        start = 10
+        end = len (text) - 3
+
+        Application.selectedPage = self.temppage
+        self.testpage.content = text
+        Application.selectedPage = self.testpage
+
+        self._getEditor().SetSelection (start, end)
+
+        Application.actionController.getAction (LIST_NUMBERS_STR_ID).run(None)
+
+        self.assertEqual (self._getEditor().GetText(),
+                          result,
+                          self._getEditor().GetText())
+
+
+    def testListBulletsSelectedPart_04 (self):
+        text = u"""йцукен
+укеуке
+ывапвыап
+ывапвыапыап
+ывапываппа"""
+
+        result = u"""* йцукен
+укеуке
+ывапвыап
+ывапвыапыап
+ывапываппа"""
+
+        start = 0
+        end = 0
+
+        Application.selectedPage = self.temppage
+        self.testpage.content = text
+        Application.selectedPage = self.testpage
+
+        self._getEditor().SetSelection (start, end)
+
+        Application.actionController.getAction (LIST_BULLETS_STR_ID).run(None)
+
+        self.assertEqual (self._getEditor().GetText(),
+                          result,
+                          self._getEditor().GetText())
+
+
+    def testListNumbersSelectedPart_04 (self):
+        text = u"""йцукен
+укеуке
+ывапвыап
+ывапвыапыап
+ывапываппа"""
+
+        result = u"""# йцукен
+укеуке
+ывапвыап
+ывапвыапыап
+ывапываппа"""
+
+        start = 0
+        end = 0
+
+        Application.selectedPage = self.temppage
+        self.testpage.content = text
+        Application.selectedPage = self.testpage
+
+        self._getEditor().SetSelection (start, end)
+
+        Application.actionController.getAction (LIST_NUMBERS_STR_ID).run(None)
+
+        self.assertEqual (self._getEditor().GetText(),
+                          result,
+                          self._getEditor().GetText())
+
+
+    def testListBulletsSelectedPart_05 (self):
+        text = u"""йцукен
+укеуке
+ывапвыап
+ывапвыапыап
+ывапываппа"""
+
+        result = u"""йцукен
+* укеуке
+ывапвыап
+ывапвыапыап
+ывапываппа"""
+
+        start = 7
+        end = 7
+
+        Application.selectedPage = self.temppage
+        self.testpage.content = text
+        Application.selectedPage = self.testpage
+
+        self._getEditor().SetSelection (start, end)
+
+        Application.actionController.getAction (LIST_BULLETS_STR_ID).run(None)
+
+        self.assertEqual (self._getEditor().GetText(),
+                          result,
+                          self._getEditor().GetText())
+
+
+    def testListNumbersSelectedPart_05 (self):
+        text = u"""йцукен
+укеуке
+ывапвыап
+ывапвыапыап
+ывапываппа"""
+
+        result = u"""йцукен
+# укеуке
+ывапвыап
+ывапвыапыап
+ывапываппа"""
+
+        start = 7
+        end = 7
+
+        Application.selectedPage = self.temppage
+        self.testpage.content = text
+        Application.selectedPage = self.testpage
+
+        self._getEditor().SetSelection (start, end)
+
+        Application.actionController.getAction (LIST_NUMBERS_STR_ID).run(None)
+
+        self.assertEqual (self._getEditor().GetText(),
+                          result,
+                          self._getEditor().GetText())
+
+
+    def testListBulletsSelectedPart_06 (self):
+        text = u"""* йцукен
+* укеуке
+* ывапвыап
+* ывапвыапыап
+* ывапываппа"""
+
+        result = u"""** йцукен
+** укеуке
+** ывапвыап
+** ывапвыапыап
+** ывапываппа"""
+
+        start = 0
+        end = len (text)
+
+        Application.selectedPage = self.temppage
+        self.testpage.content = text
+        Application.selectedPage = self.testpage
+
+        self._getEditor().SetSelection (start, end)
+
+        Application.actionController.getAction (LIST_BULLETS_STR_ID).run(None)
+
+        self.assertEqual (self._getEditor().GetText(),
+                          result,
+                          self._getEditor().GetText())
+
+
+    def testListNumbersSelectedPart_06 (self):
+        text = u"""# йцукен
+# укеуке
+# ывапвыап
+# ывапвыапыап
+# ывапываппа"""
+
+        result = u"""## йцукен
+## укеуке
+## ывапвыап
+## ывапвыапыап
+## ывапываппа"""
+
+        start = 0
+        end = len (text)
+
+        Application.selectedPage = self.temppage
+        self.testpage.content = text
+        Application.selectedPage = self.testpage
+
+        self._getEditor().SetSelection (start, end)
+
+        Application.actionController.getAction (LIST_NUMBERS_STR_ID).run(None)
+
+        self.assertEqual (self._getEditor().GetText(),
+                          result,
+                          self._getEditor().GetText())
+
+
+    def testListBulletsSelectedPart_07 (self):
+        text = u"""# йцукен
+# укеуке
+# ывапвыап
+# ывапвыапыап
+# ывапываппа"""
+
+        result = u"""* # йцукен
+* # укеуке
+* # ывапвыап
+* # ывапвыапыап
+* # ывапываппа"""
+
+        start = 0
+        end = len (text)
+
+        Application.selectedPage = self.temppage
+        self.testpage.content = text
+        Application.selectedPage = self.testpage
+
+        self._getEditor().SetSelection (start, end)
+
+        Application.actionController.getAction (LIST_BULLETS_STR_ID).run(None)
+
+        self.assertEqual (self._getEditor().GetText(),
+                          result,
+                          self._getEditor().GetText())
+
+
+    def testListNumbersSelectedPart_07 (self):
+        text = u"""* йцукен
+* укеуке
+* ывапвыап
+* ывапвыапыап
+* ывапываппа"""
+
+        result = u"""# * йцукен
+# * укеуке
+# * ывапвыап
+# * ывапвыапыап
+# * ывапываппа"""
+
+        start = 0
+        end = len (text)
+
+        Application.selectedPage = self.temppage
+        self.testpage.content = text
+        Application.selectedPage = self.testpage
+
+        self._getEditor().SetSelection (start, end)
+
+        Application.actionController.getAction (LIST_NUMBERS_STR_ID).run(None)
+
+        self.assertEqual (self._getEditor().GetText(),
+                          result)
+
+
+    def testListBulletsSelectedPart_08 (self):
+        text = u"""йцукен
+* укеуке
+ывапвыап
+ывапвыапыап
+ывапываппа"""
+
+        result = u"""йцукен
+** укеуке
+ывапвыап
+ывапвыапыап
+ывапываппа"""
+
+        start = 7
+        end = 7
+
+        Application.selectedPage = self.temppage
+        self.testpage.content = text
+        Application.selectedPage = self.testpage
+
+        self._getEditor().SetSelection (start, end)
+
+        Application.actionController.getAction (LIST_BULLETS_STR_ID).run(None)
+
+        self.assertEqual (self._getEditor().GetText(),
+                          result,
+                          self._getEditor().GetText())
+
+
+    def testListNumbersSelectedPart_08 (self):
+        text = u"""йцукен
+# укеуке
+ывапвыап
+ывапвыапыап
+ывапываппа"""
+
+        result = u"""йцукен
+## укеуке
+ывапвыап
+ывапвыапыап
+ывапываппа"""
+
+        start = 7
+        end = 7
+
+        Application.selectedPage = self.temppage
+        self.testpage.content = text
+        Application.selectedPage = self.testpage
+
+        self._getEditor().SetSelection (start, end)
+
+        Application.actionController.getAction (LIST_NUMBERS_STR_ID).run(None)
+
+        self.assertEqual (self._getEditor().GetText(),
+                          result,
+                          self._getEditor().GetText())
