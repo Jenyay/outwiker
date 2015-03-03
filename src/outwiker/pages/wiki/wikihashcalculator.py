@@ -2,6 +2,7 @@
 
 import os.path
 import hashlib
+from StringIO import StringIO
 
 from outwiker.core.attachment import Attachment
 from outwiker.core.style import Style
@@ -33,39 +34,42 @@ class WikiHashCalculator (object):
         Получить контент для расчета контрольной суммы, по которой определяется, нужно ли обновлять страницу
         """
         # Здесь накапливаем список интересующих строк (по которым определяем изменилась страница или нет)
-        content = []
+        content = StringIO()
 
         # Заголовок страницы
-        content.append (page.title.encode (self._unicodeEncoding))
+        content.write (page.title.encode (self._unicodeEncoding))
 
         # Содержимое
         pagecontent = page.content.encode (self._unicodeEncoding)
-        content.append (pagecontent)
+        content.write (pagecontent)
 
         self.__getDirContent (page, content)
-        content.append (self.__getPluginsList())
-        content.append (self.__getStyleContent (page))
+        content.write (self.__getPluginsList())
+        content.write (self.__getStyleContent (page))
 
         # Настройки, касающиеся вида вики-страницы
-        content.append (str (self._wikiConfig.showAttachInsteadBlankOptions.value))
-        content.append (str (self._wikiConfig.thumbSizeOptions.value))
+        content.write (str (self._wikiConfig.showAttachInsteadBlankOptions.value))
+        content.write (str (self._wikiConfig.thumbSizeOptions.value))
 
         # Настройки отображения HTML-страницы
-        content.append (str (self._htmlConfig.fontSize.value))
-        content.append (self._htmlConfig.fontName.value.encode(self._unicodeEncoding))
-        content.append (self._htmlConfig.userStyle.value.encode(self._unicodeEncoding))
-        content.append (self._htmlConfig.HTMLImprover.value.encode(self._unicodeEncoding))
+        content.write (str (self._htmlConfig.fontSize.value))
+        content.write (self._htmlConfig.fontName.value.encode(self._unicodeEncoding))
+        content.write (self._htmlConfig.userStyle.value.encode(self._unicodeEncoding))
+        content.write (self._htmlConfig.HTMLImprover.value.encode(self._unicodeEncoding))
 
         # Список подстраниц
         for child in page.children:
-            content.append (child.title.encode (self._unicodeEncoding) + "\n")
+            content.write (child.title.encode (self._unicodeEncoding) + "\n")
 
         if len (page.content) == 0:
             # Если страница пустая, то проверим настройку, отвечающую за шаблон пустой страницы
             emptycontent = EmptyContent (self._mainConfig)
-            content.append (emptycontent.content.encode (self._unicodeEncoding))
+            content.write (emptycontent.content.encode (self._unicodeEncoding))
 
-        return u"".join (content)
+        result = content.getvalue()
+        content.close()
+
+        return result
 
 
     def __getStyleContent (self, page):
@@ -117,8 +121,8 @@ class WikiHashCalculator (object):
             # Пропустим директории, которые начинаются с __
             if not os.path.isdir (fname) or not fname.startswith ("__"):
                 try:
-                    filescontent.append (fname.encode (self._unicodeEncoding))
-                    filescontent.append (unicode (os.stat (fullpath).st_mtime))
+                    filescontent.write (fname.encode (self._unicodeEncoding))
+                    filescontent.write (unicode (os.stat (fullpath).st_mtime))
 
                     if os.path.isdir (fullpath):
                         self.__getDirContent (page, filescontent, os.path.join (dirname, fname))
