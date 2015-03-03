@@ -42,4 +42,4 @@ class UrlToken (object):
 
 
     def __getUrlTag (self, url, comment):
-        return '<a href="%s">%s</a>' % (url.strip(), self.parser.parseLinkMarkup (comment.strip()))
+        return '<a href="%s">%s</a>' % (url, comment)
