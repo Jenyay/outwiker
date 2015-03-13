@@ -1,7 +1,8 @@
 # -*- coding: UTF-8 -*-
 
+import os
 import os.path
-import unittest
+from unittest import TestCase, skipIf
 from tempfile import mkdtemp
 
 from outwiker.core.tree import WikiDocument
@@ -15,7 +16,7 @@ from outwiker.gui.htmlcontrollerie import UriIdentifierIE
 from outwiker.gui.htmlcontrollerwebkit import UriIdentifierWebKit
 
 
-class UriIdentifierTest (unittest.TestCase):
+class UriIdentifierTest (TestCase):
     """
     Базовый класс для тестов идентификации сслок разными HTML-движками
     """
@@ -56,6 +57,7 @@ class UriIdentifierTest (unittest.TestCase):
 
 
 
+@skipIf (os.name != "nt", u'Test executed under Windows only')
 class UriIdentifierIETest (UriIdentifierTest):
     def _getContentFile (self, page):
         """
@@ -305,6 +307,7 @@ class UriIdentifierIETest (UriIdentifierTest):
         self.assertEqual (anchor, u"#anchor")
 
 
+@skipIf (os.name == "nt", u'Test executed under Unix only')
 class UriIdentifierWebKitTest (UriIdentifierTest):
     """
     Тесты идентификации ссылок для WebKit

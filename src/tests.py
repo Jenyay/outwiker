@@ -121,7 +121,6 @@ if __name__ == '__main__':
     from test.iconscollection import IconsCollectionTest
     from test.iconmaker import IconMakerTest
 
-    # from test.guitests.tray import TrayNormalTest#, TrayIconizedTest
     from test.guitests.mainwnd import MainWndTest
     from test.guitests.bookmarks import BookmarksGuiTest
     from test.guitests.attach import AttachPanelTest
@@ -149,8 +148,7 @@ if __name__ == '__main__':
     from test.guitests.openwiki import OpenWikiGuiTest
     from test.guitests.newwiki import NewWikiGuiTest
 
-    if os.name == "nt":
-        from test.guitests.fileicons import FileIconsTestWindows
+    from test.guitests.fileicons import FileIconsTestWindows
 
     from test.plugins.template import TemplateTest
     from test.plugins.testplugin.testpage import TestPageTest
@@ -226,10 +224,8 @@ if __name__ == '__main__':
     from test.styles.styles import StylesTest
     from test.styles.styleslist import StylesListTest
 
-    if os.name == "nt":
-        from test.guitests.uriidentifiers import UriIdentifierIETest
-    else:
-        from test.guitests.uriidentifiers import UriIdentifierWebKitTest
+    from test.guitests.uriidentifiers import UriIdentifierIETest
+    from test.guitests.uriidentifiers import UriIdentifierWebKitTest
 
     # import cProfile
     # import pstats
