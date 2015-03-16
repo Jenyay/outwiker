@@ -49,7 +49,7 @@ class HtmlGenerator (object):
         """
         Запускает препроцессинг
         """
-        # Дадим возможность изменить результат в построцессинге
+        # Дадим возможность изменить результат в препроцессинге
         result = [content]
         Application.onPreprocessing (self.page, result)
         return result[0]

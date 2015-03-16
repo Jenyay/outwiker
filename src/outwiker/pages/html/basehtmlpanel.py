@@ -296,7 +296,7 @@ class BaseHtmlPanel(BaseTextPanel):
         """
         Запускает препроцессинг
         """
-        # Дадим возможность изменить результат в построцессинге
+        # Дадим возможность изменить результат в препроцессинге
         result = [content]
         Application.onPreprocessing (self._currentpage, result)
         return result[0]

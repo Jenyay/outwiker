@@ -10,154 +10,176 @@ from outwiker.core.pageuiddepot import PageUidDepot
 
 class ApplicationParams (object):
     def __init__ (self):
-        # Открытая в данный момент wiki
+        # Current at given time wiki
         self.__wikiroot = None
 
-        # Главное окно приложения
+        # Application's main window
         self.__mainWindow = None
+
+        # Application's global config
         self.config = None
         self.recentWiki = None
         self.actionController = None
         self.plugins = PluginsLoader (self)
         self.pageUidDepot = PageUidDepot()
 
-        # Якорь, на который должны перейти при переходе на другую страницу
+        # Anchor for transition during the opening other page
         self._anchor = None
 
-        # Создать экземпляры событий
+        # Events
 
-        # Открытие вики
-        # Параметр: root - корень новой вики (возможно, None)
+        # Opening wiki event
+        # Parameters:
+        #     root - opened wiki root (it may be None)
         self.onWikiOpen = Event()
 
-        # Закрытие вики
-        # Параметр: root - корень закрываемой вики (возможно, None)
+        # Closing wiki event
+        # Parameters:
+        #     root - closed wiki root (it may be None)
         self.onWikiClose = Event()
 
-        # Обновление страницы
-        # Параметры:
-        #     sender
+        # Updating page wiki event
+        # Parameters:
+        #     sender - updated page
         #     **kwargs
-        # kwargs содержит значение 'change', хранящее флаги того, что изменилось
+        # kwargs contain 'change' key, which contain changing flags
         self.onPageUpdate = Event()
 
-        # Создание страницы
-        # Параметры: sender
+        # Creating new wiki page
+        # Parameters:
+        #     sender - new page
         self.onPageCreate = Event()
 
-        # Обновление дерева
-        # Параметры: sender - из-за кого обновляется дерево
+        # Tree updating event
+        # Parameters:
+        #     sender - Page, because of which the tree is updated.
         self.onTreeUpdate = Event()
 
-        # Выбор новой страницы
-        # Параметры: новая выбранная страница
+        # Other page selection event
+        # Parameters:
+        #     sender - selected page
         self.onPageSelect = Event()
 
-        # Пользователь хочет скопировать выбранные файлы в страницу
-        # Параметры: fnames - выбранные имена файлов (basename без путей)
+        # User want insert link to selected attached files to page
+        # Parameters:
+        #     fnames - selected file names (names only, without full paths)
         self.onAttachmentPaste = Event()
 
-        # Изменение списка закладок
-        # Параметр - экземпляр класса Bookmarks
+        # Changings in the bookmarks list event
+        # Parameters:
+        #     bookmark - Bookmarks class instance
         self.onBookmarksChanged = Event()
 
-        # Удаление страницы
-        # Параметр - удаленная страница
+        # Removing the page event
+        # Parameters:
+        #     page - page is removed
         self.onPageRemove = Event()
 
-        # Переименование страницы.
-        # Параметры: page - переименованная страница, oldSubpath - старый относительный путь до страницы
+        # Renaming page event
+        # Parameters:
+        #     page - page is renamed,
+        #     oldSubpath - previous relative path to page
         self.onPageRename = Event()
 
-        # Начало сложного обновления дерева
-        # Параметры: root - корень дерева
+        # Beginning complex tree updating (updating of several steps) event
+        # Parameters:
+        #     root - wiki tree root
         self.onStartTreeUpdate = Event()
 
-        # Конец сложного обновления дерева
-        # Параметры: root - корень дерева
+        # Finishing complex tree updating (updating of several steps) event
+        # Parameters:
+        #     root - wiki tree root
         self.onEndTreeUpdate = Event()
 
-        # Начало рендеринга HTML
-        # Параметры:
-        # page - страница, которую рендерят
-        # htmlView - окно, где будет представлен HTML
+        # Beginning HTML rendering event
+        # Parameters:
+        #   page - rendered page
+        #   htmlView - window for HTML view
         self.onHtmlRenderingBegin = Event()
 
-        # Завершение рендеринга HTML
-        # Параметры:
-        # page - страница, которую рендерят
-        # htmlView - окно, где будет представлен HTML
+        # Finishing HTML rendering event
+        # Parameters:
+        #   page - rendered page
+        #   htmlView - window for HTML view
         self.onHtmlRenderingEnd = Event()
 
-        # Изменение порядка страниц
-        # Параметры: page - страница, положение которой изменили
+        # Changing page order event
+        # Parameters:
+        #     page - page with changed order
         self.onPageOrderChange = Event()
 
-        # Событие на принудительное сохранение состояния страницы
-        # Например, при потере фокуса приложением или по таймеру.
-        # Параметры: нет
+        # Evont for forced saving page state (e.g. by the loss the focus or by timer)
+        # Parameters:
+        #     --
         self.onForceSave = Event()
 
-        # Событие вызывается после создания википарсера (Parser), но до его использования
-        # Параметры: экземпляр Parser
+        # The event occurs after wiki parser (Parser cllass) creation, but before it using
+        # Parameter:
+        #     parser - Parser class instance
         self.onWikiParserPrepare = Event ()
 
-        # Событие вызывается, когда создается диалог с настройками
-        # Параметры: экземпляр класса outwiker.gui.preferences.prefdialog.PrefDialog
+        # Event occurs during preferences dialog creation
+        # Parameters:
+        #     dialog - outwiker.gui.preferences.prefdialog.PrefDialog class instance
         self.onPreferencesDialogCreate = Event()
 
-        # Событие вызывается, когда закрывается диалог с настройками
-        # Параметры: экземпляр класса outwiker.gui.preferences.prefdialog.PrefDialog
+        # Event occurs after preferences dialog closing.
+        # Parameters:
+        #     dialog - outwiker.gui.preferences.prefdialog.PrefDialog class instance
         self.onPreferencesDialogClose = Event()
 
-        # Событие вызывается после (!) создания представления страницы в CurrentPagePanel
-        # Параметры: page - новая выбранная страница,
+        # Event occurs after (!) the page view creation (inside CurrentPagePanel instance)
+        # Parameters:
+        #     page - new selected page
         self.onPageViewCreate = Event()
 
-        # Событие вызывается перед (!) удалением представления страницы в CurrentPagePanel
-        # Параметры: page - текущая выбранная страница,
+        # Event occurs before (!) the page view removing  (inside CurrentPagePanel instance)
+        # Parameters:
+        #     page - Current selected page
         self.onPageViewDestroy = Event()
 
-        # Событие вызывается в конце создания всплывающего меню при нажатии правой кнопки на дереве заметок
-        # Параметр: menu - созданное всплывающее меню,
-        # page - страница, соответствующая заметке, на которую нажали правой кнопкой мыши
+        # Event occurs after the popup menu creation by right mouse click on the notes tree
+        # Parameters:
+        #     menu - created popup menu,
+        #     page - the page on which was right clicked in the notes tree
         self.onTreePopupMenu = Event()
 
-        # Событие вызывается в конце создания всплывающего меню при нажатии правой кнопки на иконку в трее
-        # Параметр: menu - созданное всплывающее меню,
-        # tray - экземпляра класса OutwikerTrayIcon
+        # Event occurs after the popup menu creation by right mouse click on the tree
+        # Parameters:
+        #     menu - created popup menu,
+        #     tray - the OutwikerTrayIcon class instance
         self.onTrayPopupMenu = Event()
 
-        # Событие вызывается, когда изменяется список фабрик для создания страниц.
-        # Параметры:
-        #     newfactory - новая фабрика, если она добавляется, если фабрика
-        #         удаляется, то этот параметр равен None
+        # Event occurs by chanching list of the factories for page creation.
+        # Parameters:
+        #     newfactory - new factory instance (if new facroty was added)
+        #         or None (if factory was removed)
         self.onPageFactoryListChange = Event()
 
-        # Событие вызывается до генерации HTML для викинотации и HTML-страниц.
-        # Порядок вызова обработчиков препроцессинга не регламентируется
-        # Параметры:
-        #    page - страница, для которой генерится код
-        #    result - список из одного строкового элемента, куда помещается
-        #        сгенерированный код HTML. Его могут менять обработчики событий
+        # Event occurs before HTML generation (for wiki and HTML pages)
+        # Order of the calling preprocessing events is not regulated
+        # Parameters:
+        #    page - page for which HTML is generated
+        #    result - list of the one string item, which contains
+        #          resulted code (wiki or HTML) by which will be generated
+        #          final HTML code. This item can change event handlers
         self.onPreprocessing = Event()
 
 
-        # Событие вызывается после генерации HTML для викинотации и HTML-страниц.
-        # Порядок вызова обработчиков постпроцессинга не регламентируется
-        # Параметры:
-        #    page - страница, для которой генерится код
-        #    result - список из одного строкового элемента, куда помещается
-        #        сгенерированный код HTML. Его могут менять обработчики
-        #        событий, в этом случае в качестве результата, который увидит
-        #        пользователь, будет эта строка после всех правок.
+        # Event occurs after HTML generation (for wiki and HTML pages)
+        # Order of the calling preprocessing events is not regulated
+        # Parameters:
+        #    page - page for which HTML is generated
+        #    result - list of the one string item, which contains
+        #         resulted HTML code. This item can change event handlers.
+        #         User will be see result after all changes.
         self.onPostprocessing = Event()
 
 
-        # Событие вызывается при создании класса HtmlImproverFactory.
-        # Параметры:
-        # factory - экземпляр класса HtmlImproverFactory, в который можно
-        #     добавить новые классы HtmlImprover с помощью метода add()
+        # Event occurs during HtmlImproverFactory instance creation
+        # Parameters:
+        #     factory - HtmlImproverFactory instance in which can add
+        #     the new HtmlImprover instances by add() method
         self.onPrepareHtmlImprovers = Event()
 
 
