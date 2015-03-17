@@ -177,3 +177,12 @@ class ActionTabsTest(BaseMainWndTest):
 
         self.assertEqual (Application.selectedPage, self.wikiroot[u"Страница 1"])
         self.assertEqual (self._tabsController.getSelection(), 0)
+
+
+    def testInvalidWiki (self):
+        Application.wikiroot = None
+
+        self.assertRaises (AssertionError,
+                           self._tabsController.openInTab,
+                           self.wikiroot[u"Страница 2/Страница 3"],
+                           False)

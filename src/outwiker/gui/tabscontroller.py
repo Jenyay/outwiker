@@ -1,4 +1,4 @@
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 import os.path
 
@@ -8,7 +8,6 @@ import wx.lib.agw.flatnotebook as fnb
 from outwiker.core.config import StringListSection, IntegerOption
 from outwiker.core.tree import RootWikiPage
 from outwiker.core.commands import MessageBox
-from .mainid import MainId
 from .pagepopupmenu import PagePopupMenu
 
 
@@ -38,8 +37,15 @@ class TabsController (object):
         page - страница, которую надо открыть в новой вкладке
         select - нужно ли сразу выбрать новую вкладку
         """
+        assert (page is None or
+                page.root == self._application.wikiroot)
+
         selectedTab = self._tabsCtrl.GetSelection()
-        self._tabsCtrl.InsertPage (selectedTab + 1, self.__getTitle (page), page, select)
+
+        self._tabsCtrl.InsertPage (selectedTab + 1,
+                                   self.__getTitle (page),
+                                   page,
+                                   select)
         self.__saveTabs()
 
 
@@ -176,7 +182,6 @@ class TabsController (object):
 
 
     def __onTabClose (self, event):
-        selectedTabIndex = self._tabsCtrl.GetSelection()
         tabsCount = self._tabsCtrl.GetPageCount()
 
         if tabsCount == 1:
@@ -201,7 +206,7 @@ class TabsController (object):
         self.__unbindGuiEvents()
         self._tabsCtrl.Clear()
 
-        if wikiroot == None:
+        if wikiroot is None:
             self.__bindGuiEvents()
             return
 
@@ -209,13 +214,13 @@ class TabsController (object):
 
         for tab in tabsList:
             page = wikiroot[tab]
-            if page != None:
+            if page is not None:
                 self._tabsCtrl.AddPage (self.__getTitle (page), page)
 
-        selectedTab = IntegerOption (wikiroot.params, 
-                self._tabSelectedSection, 
-                self._tabSelectedOption,
-                0).value
+        selectedTab = IntegerOption (wikiroot.params,
+                                     self._tabSelectedSection,
+                                     self._tabSelectedOption,
+                                     0).value
 
         pageCount = self._tabsCtrl.GetPageCount()
 
@@ -232,17 +237,21 @@ class TabsController (object):
 
 
     def __saveTabs (self):
-        if self._application.wikiroot != None:
+        if self._application.wikiroot is not None:
             try:
-                pageSubpathList = [page.subpath for page in self._tabsCtrl.GetPages() if page != None]
+                pageSubpathList = [page.subpath
+                                   for page
+                                   in self._tabsCtrl.GetPages()
+                                   if page is not None]
+
                 self.__createStringListConfig (self._application.wikiroot.params).value = pageSubpathList
 
                 selectedTab = self._tabsCtrl.GetSelection()
                 self._application.wikiroot.params.set (self._tabSelectedSection, self._tabSelectedOption, str (selectedTab))
             except IOError, e:
-                MessageBox (_(u"Can't save file %s") % (unicode (e.filename)), 
-                    _(u"Error"), 
-                    wx.ICON_ERROR | wx.OK)
+                MessageBox (_(u"Can't save file %s") % (unicode (e.filename)),
+                            _(u"Error"),
+                            wx.ICON_ERROR | wx.OK)
 
 
     def __onPageRename (self, page, oldSubpath):
@@ -254,10 +263,10 @@ class TabsController (object):
 
 
     def __getTitle (self, page):
-        if page != None:
+        if page is not None:
             return page.title
 
-        if self._application.wikiroot == None:
+        if self._application.wikiroot is None:
             return "    "
         else:
             return os.path.basename (self._application.wikiroot.path)
@@ -283,10 +292,10 @@ class TabsController (object):
             selectedIndex = self.getSelection()
             page = self.getPage (index)
 
-            if (page == None or page.isRemoved) and index != selectedIndex:
+            if (page is None or page.isRemoved) and index != selectedIndex:
                 self._tabsCtrl.DeletePage (index)
                 index -= 1
-            elif page == None or page.title != self.getTabTitle (index):
+            elif page is None or page.title != self.getTabTitle (index):
                 self._tabsCtrl.RenameTab (index, self.__getTitle (page))
 
             index += 1
