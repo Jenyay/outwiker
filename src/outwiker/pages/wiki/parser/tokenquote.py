@@ -31,4 +31,20 @@ class QuoteToken (object):
 
 
     def __parse (self, s, l, t):
-        return u''.join([u'<blockquote>', self.parser.parseWikiMarkup (u''.join(t)), u'</blockquote>'])
+        text = u''.join(t)
+        leftpos = text.find (u'<blockquote>')
+        rightpos = text.rfind (u'</blockquote>')
+
+        if leftpos == -1 or rightpos == -1:
+            return u''.join([u'<blockquote>', self.parser.parseWikiMarkup (text), u'</blockquote>'])
+
+        lefttext = text[:leftpos]
+        righttext = text[rightpos:]
+        centertext = text[leftpos:rightpos]
+
+        return u''.join([
+            u'<blockquote>',
+            self.parser.parseWikiMarkup (lefttext),
+            centertext,
+            self.parser.parseWikiMarkup (righttext),
+            u'</blockquote>'])

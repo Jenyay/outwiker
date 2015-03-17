@@ -123,7 +123,7 @@ class ParserQuoteTest (unittest.TestCase):
                           self.parser.toHtml (text).encode (self.encoding))
 
 
-    def testNested_04 (self):
+    def testNested_04_url (self):
         text = u"[>Проверка [>http://jenyay.net<] 1-2-3<]"
         result = u'<blockquote>Проверка <blockquote><a href="http://jenyay.net">http://jenyay.net</a></blockquote> 1-2-3</blockquote>'
 
@@ -132,10 +132,18 @@ class ParserQuoteTest (unittest.TestCase):
                           self.parser.toHtml (text).encode (self.encoding))
 
 
-    def testNested_05 (self):
+    def testNested_05_url (self):
         text = u"[>Проверка [>[[http://jenyay.net | Ссылка]]<] 1-2-3<]"
         result = u'<blockquote>Проверка <blockquote><a href="http://jenyay.net">Ссылка</a></blockquote> 1-2-3</blockquote>'
 
         self.assertEqual (self.parser.toHtml (text),
                           result,
                           self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testNested_06_url (self):
+        text = u"[>Проверка [>http://jenyay.net/image.png<] 1-2-3<]"
+        result = u'<blockquote>Проверка <blockquote><img src="http://jenyay.net/image.png"/></blockquote> 1-2-3</blockquote>'
+
+        self.assertEqual (self.parser.toHtml (text),
+                          result)
