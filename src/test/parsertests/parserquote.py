@@ -94,3 +94,30 @@ class ParserQuoteTest (unittest.TestCase):
 
         self.assertEqual (self.parser.toHtml (text),
                           result)
+
+
+    def testNested_01 (self):
+        text = u"[>[>Абырвалг<]<]"
+        result = u"<blockquote><blockquote>Абырвалг</blockquote></blockquote>"
+
+        self.assertEqual (self.parser.toHtml (text),
+                          result,
+                          self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testNested_02 (self):
+        text = u"[>[>[>Абырвалг<]<]<]"
+        result = u"<blockquote><blockquote><blockquote>Абырвалг</blockquote></blockquote></blockquote>"
+
+        self.assertEqual (self.parser.toHtml (text),
+                          result,
+                          self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testNested_03 (self):
+        text = u"[>Проверка [>Абырвалг<] 1-2-3<]"
+        result = u"<blockquote>Проверка <blockquote>Абырвалг</blockquote> 1-2-3</blockquote>"
+
+        self.assertEqual (self.parser.toHtml (text),
+                          result,
+                          self.parser.toHtml (text).encode (self.encoding))

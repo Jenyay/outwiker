@@ -1,7 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-from outwiker.libs.pyparsing import QuotedString
-from tokenblock import BlockToken
+from outwiker.libs.pyparsing import Forward, CharsNotIn, NotAny, ZeroOrMore, OneOrMore, Combine, Literal, Suppress
 
 
 class QuoteFactory (object):
@@ -13,16 +12,24 @@ class QuoteFactory (object):
         return QuoteToken(parser).getToken()
 
 
-class QuoteToken (BlockToken):
-    quoteStart = "[>"
-    quoteEnd = "<]"
+class QuoteToken (object):
+    quoteStart = '[>'
+    quoteEnd = '<]'
+    anyExcept = Combine( ZeroOrMore( NotAny (Literal(quoteStart) | Literal(quoteEnd)) + CharsNotIn('', exact=1) ) )
+    # anyExcept = Regex(r'(?:(?!\[>|<\]).)*')
 
     def __init__ (self, parser):
-        BlockToken.__init__ (self, parser)
+        self.parser = parser
 
 
     def getToken (self):
-        return QuotedString (
-            QuoteToken.quoteStart,
-            endQuoteChar = QuoteToken.quoteEnd,
-            multiline = True).setParseAction(self.convertToHTML("<blockquote>", "</blockquote>"))("quote")
+        token = Forward()
+        token << (Suppress(QuoteToken.quoteStart) + ( OneOrMore( QuoteToken.anyExcept + token) +
+                                            QuoteToken.anyExcept | QuoteToken.anyExcept ) +
+                  Suppress(QuoteToken.quoteEnd)) \
+                .leaveWhitespace().setParseAction(self.__parse)("quote")
+        return token
+
+
+    def __parse (self, s, l, t):
+        return u''.join([u'<blockquote>', self.parser.parseWikiMarkup (u''.join(t)), u'</blockquote>'])
