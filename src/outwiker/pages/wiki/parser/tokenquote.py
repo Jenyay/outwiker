@@ -15,8 +15,7 @@ class QuoteFactory (object):
 class QuoteToken (object):
     quoteStart = '[>'
     quoteEnd = '<]'
-    anyExcept = Combine( ZeroOrMore( NotAny (Literal(quoteStart) | Literal(quoteEnd)) + CharsNotIn('', exact=1) ) )
-    # anyExcept = Regex(r'(?:(?!\[>|<\]).)*')
+    anyExcept = Combine(ZeroOrMore(NotAny (Literal(quoteStart) | Literal(quoteEnd)) + CharsNotIn('', exact=1)))
 
     def __init__ (self, parser):
         self.parser = parser
@@ -24,10 +23,10 @@ class QuoteToken (object):
 
     def getToken (self):
         token = Forward()
-        token << (Suppress(QuoteToken.quoteStart) + ( OneOrMore( QuoteToken.anyExcept + token) +
-                                            QuoteToken.anyExcept | QuoteToken.anyExcept ) +
-                  Suppress(QuoteToken.quoteEnd)) \
-                .leaveWhitespace().setParseAction(self.__parse)("quote")
+        token << (Suppress(QuoteToken.quoteStart) +
+                  (OneOrMore(QuoteToken.anyExcept + token) +
+                   QuoteToken.anyExcept | QuoteToken.anyExcept) +
+                  Suppress(QuoteToken.quoteEnd)).leaveWhitespace().setParseAction(self.__parse)("quote")
         return token
 
 
