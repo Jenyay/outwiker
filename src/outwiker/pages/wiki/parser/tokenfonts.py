@@ -210,7 +210,7 @@ class SmallFontToken (TextBlockToken):
         # Расчет масштаба в зависимости от количества минусов
         size = 100 - len (t["count"]) * 20
 
-        return u'<span style="font-size:{size}%">{text}</span>'.format (size=size, text=self.parser.parseWikiMarkup (t["text"]))
+        return u'<span style="font-size:{size}%">{text}</span>'.format (size=size, text=self.parser.parseTextLevelMarkup (t["text"]))
 
 
 class BigFontToken (TextBlockToken):
@@ -228,5 +228,5 @@ class BigFontToken (TextBlockToken):
 
         return u'<span style="font-size:{size}%">{text}</span>'.format (
             size=size,
-            text=self.parser.parseWikiMarkup (t["text"])
+            text=self.parser.parseTextLevelMarkup (t["text"])
         )
