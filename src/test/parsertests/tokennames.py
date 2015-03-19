@@ -40,8 +40,11 @@ class FakeParser (object):
     def __init__(self):
         pass
 
-
     def parseWikiMarkup (self, text):
+        return u""
+
+
+    def parseTextLevelMarkup (self, text):
         return u""
 
 

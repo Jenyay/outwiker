@@ -4,7 +4,7 @@ import re
 
 from outwiker.libs.pyparsing import QuotedString, Regex
 
-from tokenblock import BlockToken
+from tokenblock import TextBlockToken
 
 
 class FontsFactory (object):
@@ -92,16 +92,12 @@ class FontsFactory (object):
 
 
 
-class CodeToken (BlockToken):
+class CodeToken (TextBlockToken):
     """
     Токен для кода
     """
     codeStart = "@@"
     codeEnd = "@@"
-
-    def __init__ (self, parser):
-        BlockToken.__init__ (self, parser)
-
 
     def getToken (self):
         return QuotedString (CodeToken.codeStart,
@@ -109,16 +105,12 @@ class CodeToken (BlockToken):
                              multiline = True).setParseAction(self.convertToHTML("<code>", "</code>"))("code")
 
 
-class SuperscriptToken (BlockToken):
+class SuperscriptToken (TextBlockToken):
     """
     Токен для верхнего индекса
     """
     superscriptStart = "'^"
     superscriptEnd = "^'"
-
-    def __init__ (self, parser):
-        BlockToken.__init__ (self, parser)
-
 
     def getToken (self):
         return QuotedString (SuperscriptToken.superscriptStart,
@@ -126,16 +118,12 @@ class SuperscriptToken (BlockToken):
                              multiline = True).setParseAction(self.convertToHTML("<sup>", "</sup>"))("superscript")
 
 
-class SubscriptToken (BlockToken):
+class SubscriptToken (TextBlockToken):
     """
     Токен для нижнего индекса
     """
     subscriptStart = "'_"
     subscriptEnd = "_'"
-
-    def __init__ (self, parser):
-        BlockToken.__init__ (self, parser)
-
 
     def getToken (self):
         return QuotedString (SubscriptToken.subscriptStart,
@@ -143,16 +131,12 @@ class SubscriptToken (BlockToken):
                              multiline = True).setParseAction(self.convertToHTML("<sub>", "</sub>"))("subscript")
 
 
-class UnderlineToken (BlockToken):
+class UnderlineToken (TextBlockToken):
     """
     Токен для курсива
     """
     underlineStart = "{+"
     underlineEnd = "+}"
-
-    def __init__ (self, parser):
-        BlockToken.__init__ (self, parser)
-
 
     def getToken (self):
         return QuotedString (UnderlineToken.underlineStart,
@@ -160,16 +144,12 @@ class UnderlineToken (BlockToken):
                              multiline = True).setParseAction(self.convertToHTML("<u>", "</u>"))("underline")
 
 
-class StrikeToken (BlockToken):
+class StrikeToken (TextBlockToken):
     """
     Токен для курсива
     """
     strikeStart = "{-"
     strikeEnd = "-}"
-
-    def __init__ (self, parser):
-        BlockToken.__init__ (self, parser)
-
 
     def getToken (self):
         return QuotedString (StrikeToken.strikeStart,
@@ -178,16 +158,12 @@ class StrikeToken (BlockToken):
 
 
 
-class ItalicToken (BlockToken):
+class ItalicToken (TextBlockToken):
     """
     Токен для курсива
     """
     italicStart = "''"
     italicEnd = "''"
-
-    def __init__ (self, parser):
-        BlockToken.__init__ (self, parser)
-
 
     def getToken (self):
         return QuotedString (ItalicToken.italicStart,
@@ -195,16 +171,12 @@ class ItalicToken (BlockToken):
                              multiline = True).setParseAction(self.convertToHTML("<i>", "</i>"))("italic")
 
 
-class BoldToken (BlockToken):
+class BoldToken (TextBlockToken):
     """
     Токен для полужирного шрифта
     """
     boldStart = "'''"
     boldEnd = "'''"
-
-    def __init__ (self, parser):
-        BlockToken.__init__ (self, parser)
-
 
     def getToken (self):
         return QuotedString (BoldToken.boldStart,
@@ -212,16 +184,12 @@ class BoldToken (BlockToken):
                              multiline = True).setParseAction(self.convertToHTML("<b>", "</b>"))("bold")
 
 
-class BoldItalicToken (BlockToken):
+class BoldItalicToken (TextBlockToken):
     """
     Токен для полужирного курсивного шрифта
     """
     boldItalicStart = "''''"
     boldItalicEnd = "''''"
-
-    def __init__ (self, parser):
-        BlockToken.__init__ (self, parser)
-
 
     def getToken (self):
         return QuotedString (BoldItalicToken.boldItalicStart,
@@ -229,16 +197,13 @@ class BoldItalicToken (BlockToken):
                              multiline = True).setParseAction(self.convertToHTML("<b><i>", "</i></b>"))("bold_italic")
 
 
-class SmallFontToken (BlockToken):
+class SmallFontToken (TextBlockToken):
     """
     Токен для мелкого шрифта
     """
-    def __init__ (self, parser):
-        BlockToken.__init__ (self, parser)
-
-
     def getToken (self):
-        return Regex (r"\[(?P<count>-{1,4})(?P<text>.*?)\1\]", re.MULTILINE | re.UNICODE | re.DOTALL).setParseAction (self.__parse)("small")
+        return Regex (r"\[(?P<count>-{1,4})(?P<text>.*?)\1\]",
+                      re.MULTILINE | re.UNICODE | re.DOTALL).setParseAction (self.__parse)("small")
 
 
     def __parse (self, s, l, t):
@@ -248,20 +213,20 @@ class SmallFontToken (BlockToken):
         return u'<span style="font-size:{size}%">{text}</span>'.format (size=size, text=self.parser.parseWikiMarkup (t["text"]))
 
 
-class BigFontToken (BlockToken):
+class BigFontToken (TextBlockToken):
     """
     Токен для крупного шрифта
     """
-    def __init__ (self, parser):
-        BlockToken.__init__ (self, parser)
-
-
     def getToken (self):
-        return Regex (r"\[(?P<count>\+{1,5})(?P<text>.*?)\1\]", re.MULTILINE | re.UNICODE | re.DOTALL).setParseAction (self.__parse)("big")
+        return Regex (r"\[(?P<count>\+{1,5})(?P<text>.*?)\1\]",
+                      re.MULTILINE | re.UNICODE | re.DOTALL).setParseAction (self.__parse)("big")
 
 
     def __parse (self, s, l, t):
         # Расчет масштаба в зависимости от количества минусов
         size = 100 + len (t["count"]) * 20
 
-        return u'<span style="font-size:{size}%">{text}</span>'.format (size=size, text=self.parser.parseWikiMarkup (t["text"]))
+        return u'<span style="font-size:{size}%">{text}</span>'.format (
+            size=size,
+            text=self.parser.parseWikiMarkup (t["text"])
+        )

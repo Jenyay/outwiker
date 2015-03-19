@@ -61,7 +61,7 @@ class AdHocToken (object):
         Преобразование в HTML для отдельный случаев, когда надо добавить в начало или конец обрабатываемой строки префикс или суффикс
         """
         def conversionParseAction(s, l, t):
-            return opening + self.parser.parseWikiMarkup (prefix + t[0] + suffix) + closing
+            return opening + self.parser.parseTextLevelMarkup (prefix + t[0] + suffix) + closing
         return conversionParseAction
 
 

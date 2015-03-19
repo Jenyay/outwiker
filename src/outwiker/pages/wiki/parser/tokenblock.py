@@ -1,9 +1,9 @@
 # -*- coding: UTF-8 -*-
 
 
-class BlockToken (object):
+class TextBlockToken (object):
     """
-    Класс, содержащий метод для оборачивания текста в блочные теги
+    Класс, содержащий метод для оборачивания текста в теги текстового уровня
     """
     def __init__ (self, parser):
         self.parser = parser
@@ -15,5 +15,9 @@ class BlockToken (object):
         closing - закрывающийся тег(и)
         """
         def conversionParseAction(s, l, t):
-            return u"".join ([opening, self.parser.parseWikiMarkup (t[0]), closing])
+            return u"".join ([
+                opening,
+                self.parser.parseTextLevelMarkup (u''.join(t)),
+                closing,
+            ])
         return conversionParseAction
