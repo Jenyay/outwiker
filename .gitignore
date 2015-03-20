@@ -57,3 +57,4 @@ doc/doxygen/html
 doc/coverage
 tests_win
 *.sublime-*
+.idea/
