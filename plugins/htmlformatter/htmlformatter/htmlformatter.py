@@ -9,7 +9,7 @@ from outwiker.core.system import getOS
 
 
 if getCurrentVersion() < Version (1, 9, 0, 765, status=StatusSet.DEV):
-    print ("ChangeUID plugin. OutWiker version requirement: 1.9.0.765")
+    print ("HtmlFormatter plugin. OutWiker version requirement: 1.9.0.765")
 else:
     from .i18n import set_
     from .controller import Controller
