@@ -76,7 +76,7 @@ class CounterTest (unittest.TestCase):
 
     def testAlign_01 (self):
         text = u"%center%(:counter:)"
-        validResult = u'<div style="text-align:center">1</div>'
+        validResult = u'<div align="center">1</div>'
 
         result = self.parser.toHtml (text)
         self.assertEqual (result, validResult)
@@ -84,7 +84,7 @@ class CounterTest (unittest.TestCase):
 
     def testAlign_02 (self):
         text = u"%center%Рисунок (:counter:)."
-        validResult = u'<div style="text-align:center">Рисунок 1.</div>'
+        validResult = u'<div align="center">Рисунок 1.</div>'
 
         result = self.parser.toHtml (text)
         self.assertEqual (result, validResult)
@@ -92,7 +92,7 @@ class CounterTest (unittest.TestCase):
 
     def testAlign_03 (self):
         text = u"%center%Рисунок (:counter:).\nqqq"
-        validResult = u'<div style="text-align:center">Рисунок 1.\nqqq</div>'
+        validResult = u'<div align="center">Рисунок 1.\nqqq</div>'
 
         result = self.parser.toHtml (text)
         self.assertEqual (result, validResult)
@@ -100,7 +100,7 @@ class CounterTest (unittest.TestCase):
 
     def testAlign_04 (self):
         text = u"%center%Рисунок (:counter:).\n\nqqq"
-        validResult = u'<div style="text-align:center">Рисунок 1.</div>\n\nqqq'
+        validResult = u'<div align="center">Рисунок 1.</div>\n\nqqq'
 
         result = self.parser.toHtml (text)
         self.assertEqual (result, validResult)
@@ -108,7 +108,7 @@ class CounterTest (unittest.TestCase):
 
     def testAlign_05 (self):
         text = u"%center%Рисунок (:counter:). (:counter:).\n\nqqq"
-        validResult = u'<div style="text-align:center">Рисунок 1. 2.</div>\n\nqqq'
+        validResult = u'<div align="center">Рисунок 1. 2.</div>\n\nqqq'
 
         result = self.parser.toHtml (text)
         self.assertEqual (result, validResult)
