@@ -516,6 +516,8 @@ class WikiPageView (BaseWikiPageView):
 
         if firstLine == -1:
             firstLine = 0
+        else:
+            firstLine += 1
 
         if lastLine == -1:
             lastLine = len (text)
@@ -525,13 +527,11 @@ class WikiPageView (BaseWikiPageView):
         selectedText = text[firstLine: lastLine]
         lines = selectedText.splitlines ()
 
-        # result = (u"\n" + symbol + u" ").join (lines)
         buf = StringIO()
 
-        for n, line in enumerate (lines):
-            if n == 0 and len (line) == 0:
-                continue
+        appendSymbols = 0
 
+        for n, line in enumerate (lines):
             if n != 0:
                 buf.write (u"\n")
 
@@ -540,12 +540,22 @@ class WikiPageView (BaseWikiPageView):
                 buf.write (u" ")
 
             buf.write (line)
+            appendSymbols = len (symbol)
+
+        if len (lines) == 0:
+            buf.write (symbol)
+            buf.write (u" ")
+            appendSymbols = len (symbol) + 1
 
         result = buf.getvalue()
         buf.close()
 
-        newtext = text[:firstLine] + result + text[lastLine:]
-        editor.SetText (newtext)
+        editor.SetSelection (firstLine, lastLine)
+        editor.replaceText (result)
 
-        position = firstLine + len (result)
-        editor.SetSelection (firstLine + 1, position)
+        if len (lines) > 1:
+            position = firstLine + len (result)
+            editor.SetSelection (firstLine, position)
+        elif startSelection == endSelection:
+            editor.SetSelection (startSelection + appendSymbols,
+                                 endSelection + appendSymbols)

@@ -116,6 +116,7 @@ class TextEditor(wx.Panel):
         backColor = self.config.backColor.value
 
         self.__showlinenumbers = self.config.lineNumbers.value
+        self.textCtrl.SetEndAtLastLine (False)
 
         self.textCtrl.StyleSetSize (wx.stc.STC_STYLE_DEFAULT, size)
         self.textCtrl.StyleSetFaceName (wx.stc.STC_STYLE_DEFAULT, faceName)
