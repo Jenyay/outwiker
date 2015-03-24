@@ -147,6 +147,7 @@ def plugins():
         "datagraph",
         "export2html",
         "externaltools",
+        "htmlformatter",
         "htmlheads",
         "lightbox",
         "livejournal",
