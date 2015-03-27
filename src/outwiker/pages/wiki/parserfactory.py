@@ -35,13 +35,6 @@ class ParserFactory (object):
         return parser
 
 
-    def appendCommand (self, commandType):
-        """
-        Добавить тип команды
-        """
-        self.__commands.append (commandType)
-
-
     def _addCommands (self, parser):
         """
         Добавить команды из self.__commands в парсер

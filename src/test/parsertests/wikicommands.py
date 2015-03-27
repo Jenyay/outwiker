@@ -228,9 +228,9 @@ content: Контент"""
 
     def testCommandTest7 (self):
         factory = ParserFactory ()
-        factory.appendCommand (TestCommand)
 
         parser = factory.make (self.testPage, Application.config)
+        parser.addCommand (TestCommand (parser))
 
 
         text = u"""(: test Параметр1 Параметр2=2 Параметр3=3 :)
@@ -273,9 +273,9 @@ content: Контент"""
 
     def testExceptionCommand (self):
         factory = ParserFactory ()
-        factory.appendCommand (ExceptionCommand)
 
         parser = factory.make (self.testPage, Application.config)
+        parser.addCommand (ExceptionCommand (parser))
 
         text = u"""(:exception:)"""
 

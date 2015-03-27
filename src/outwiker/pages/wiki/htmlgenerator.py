@@ -21,16 +21,18 @@ class HtmlGenerator (object):
 
 
     def makeHtml (self, stylepath):
+        content = self.page.content if self.page.content else EmptyContent (Application.config).content
+        content = self._runPreprocessing (content)
+
         factory = ParserFactory ()
         parser = factory.make(self.page, Application.config)
 
-        content = self.page.content if len (self.page.content) > 0 else self._generateEmptyContent (parser)
-
-        content = self._runPreprocessing (content)
-
         config = HtmlRenderConfig (Application.config)
+
+        html = parser.toHtml (content)
+
         improverFactory = HtmlImproverFactory (Application)
-        text = improverFactory[config.HTMLImprover.value].run (parser.toHtml (content))
+        text = improverFactory[config.HTMLImprover.value].run (html)
         head = parser.head
 
         tpl = HtmlTemplate (readTextFile (stylepath))
@@ -38,11 +40,6 @@ class HtmlGenerator (object):
         result = tpl.substitute (content=text, userhead=head)
 
         return result
-
-
-    def _generateEmptyContent (self, parser):
-        content = EmptyContent (Application.config)
-        return parser.toHtml (content.content)
 
 
     def _runPreprocessing (self, content):
