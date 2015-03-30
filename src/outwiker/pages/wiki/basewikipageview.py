@@ -322,7 +322,6 @@ class BaseWikiPageView (BaseHtmlPanel):
                         _(u"Error"),
                         wx.ICON_ERROR | wx.OK)
 
-        html = self._runPostprocessing (html)
         return html
 
 

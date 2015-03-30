@@ -599,9 +599,15 @@ class HtmlPageView (BaseHtmlPanel):
 
             tpl = HtmlTemplate (readTextFile (style.getDefaultStyle()))
 
-        content = self._runPreprocessing (page.content)
+        content = self._changeContentByEvent (self.page,
+                                              page.content,
+                                              Application.onPreprocessing)
 
         if page.autoLineWrap:
+            content = self._changeContentByEvent (self.page,
+                                                  content,
+                                                  Application.onPreHtmlImproving)
+
             config = HtmlRenderConfig (Application.config)
             improverFactory = HtmlImproverFactory (Application)
             text = improverFactory[config.HTMLImprover.value].run (content)
@@ -612,10 +618,18 @@ class HtmlPageView (BaseHtmlPanel):
         result = tpl.substitute (content = text,
                                  userhead = userhead)
 
-        result = self._runPostprocessing (result)
+        result = self._changeContentByEvent (self.page,
+                                             result,
+                                             Application.onPostprocessing)
         return result
 
 
     def removeGui (self):
         super (HtmlPageView, self).removeGui ()
         self.mainWindow.mainMenu.Remove (self.__HTML_MENU_INDEX - 1)
+
+
+    def _changeContentByEvent (self, page, content, event):
+        result = [content]
+        event (page, result)
+        return result[0]

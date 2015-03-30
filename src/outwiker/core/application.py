@@ -162,7 +162,8 @@ class ApplicationParams (object):
         #    page - page for which HTML is generated
         #    result - list of the one string item, which contains
         #          resulted code (wiki or HTML) by which will be generated
-        #          final HTML code. This item can change event handlers
+        #          final HTML code.
+        #          This item can be changed by event handlers
         self.onPreprocessing = Event()
 
 
@@ -171,7 +172,8 @@ class ApplicationParams (object):
         # Parameters:
         #    page - page for which HTML is generated
         #    result - list of the one string item, which contains
-        #         resulted HTML code. This item can change event handlers.
+        #         resulted HTML code.
+        #         This item can be changed by event handlers.
         #         User will be see result after all changes.
         self.onPostprocessing = Event()
 
@@ -181,6 +183,14 @@ class ApplicationParams (object):
         #     factory - HtmlImproverFactory instance in which can add
         #     the new HtmlImprover instances by add() method
         self.onPrepareHtmlImprovers = Event()
+
+        # Event occurs after wiki parsing but before HTML improveing
+        # Parameters:
+        #     page - page for which HTML is generated
+        #     html - list of the one string item, which contains
+        #         HTML code after wiki parsing.
+        #         This item can be changed by event handlers.
+        self.onPreHtmlImproving = Event()
 
 
     def init (self, configFilename):

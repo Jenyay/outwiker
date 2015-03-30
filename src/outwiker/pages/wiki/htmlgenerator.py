@@ -13,7 +13,7 @@ from .emptycontent import EmptyContent
 
 class HtmlGenerator (object):
     """
-    Класс, который создает HTML для вики-страницы с учетом кэширования.
+    Class creates HTML file for wiki page taking into account caching
     """
     def __init__ (self, page):
         self.page = page
@@ -21,32 +21,45 @@ class HtmlGenerator (object):
 
 
     def makeHtml (self, stylepath):
-        content = self.page.content if self.page.content else EmptyContent (Application.config).content
-        content = self._runPreprocessing (content)
+        # Get content
+        content = (self.page.content
+                   if self.page.content
+                   else EmptyContent (Application.config).content)
 
+        content = self._changeContentByEvent (self.page,
+                                              content,
+                                              Application.onPreprocessing)
+
+        # Create parser
         factory = ParserFactory ()
         parser = factory.make(self.page, Application.config)
 
         config = HtmlRenderConfig (Application.config)
 
+        # Parse wiki content
         html = parser.toHtml (content)
+
+        # Improve HTML
+        html = self._changeContentByEvent (self.page,
+                                           html,
+                                           Application.onPreHtmlImproving)
 
         improverFactory = HtmlImproverFactory (Application)
         text = improverFactory[config.HTMLImprover.value].run (html)
         head = parser.head
 
+        # Create final HTML file
         tpl = HtmlTemplate (readTextFile (stylepath))
-
         result = tpl.substitute (content=text, userhead=head)
+
+        result = self._changeContentByEvent (self.page,
+                                             result,
+                                             Application.onPostprocessing)
 
         return result
 
 
-    def _runPreprocessing (self, content):
-        """
-        Запускает препроцессинг
-        """
-        # Дадим возможность изменить результат в препроцессинге
+    def _changeContentByEvent (self, page, content, event):
         result = [content]
-        Application.onPreprocessing (self.page, result)
+        event (page, result)
         return result[0]

@@ -282,26 +282,6 @@ class BaseHtmlPanel(BaseTextPanel):
         self._updateResult()
 
 
-    def _runPostprocessing (self, html):
-        """
-        Запускает постпроцессинг для сгенерированного HTML
-        """
-        # Дадим возможность изменить результат в построцессинге
-        result = [html]
-        Application.onPostprocessing (self._currentpage, result)
-        return result[0]
-
-
-    def _runPreprocessing (self, content):
-        """
-        Запускает препроцессинг
-        """
-        # Дадим возможность изменить результат в препроцессинге
-        result = [content]
-        Application.onPreprocessing (self._currentpage, result)
-        return result[0]
-
-
     def _updateResult (self):
         """
         Подготовить и показать HTML текущей страницы
