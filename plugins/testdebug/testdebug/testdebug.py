@@ -11,24 +11,41 @@ from outwiker.gui.hotkey import HotKey
 from outwiker.core.pluginbase import Plugin
 from outwiker.core.system import getOS
 
-from .debugaction import DebugAction
+from debugaction import DebugAction
+from eventswatcher import EventsWatcher
 
 
 class PluginDebug (Plugin):
     def __init__ (self, application):
         Plugin.__init__ (self, application)
         self._url = u"http://jenyay.net/Outwiker/DebugPlugin"
+        self._watcher = EventsWatcher (self._application)
 
 
     def __createMenu (self):
         self.menu = wx.Menu (u"")
         self.menu.Append (self.ID_PLUGINSLIST, _(u"Plugins List"))
         self.menu.Append (self.ID_BUTTONSDIALOG, _(u"ButtonsDialog"))
+        self.menu.Append (self.ID_START_WATCH_EVENTS, _(u"Start watch events"))
+        self.menu.Append (self.ID_STOP_WATCH_EVENTS, _(u"Stop watch events"))
 
         self._application.mainWindow.mainMenu.Append (self.menu, self.__menuName)
 
-        self._application.mainWindow.Bind(wx.EVT_MENU, self.__onPluginsList, id=self.ID_PLUGINSLIST)
-        self._application.mainWindow.Bind(wx.EVT_MENU, self.__onButtonsDialog, id=self.ID_BUTTONSDIALOG)
+        self._application.mainWindow.Bind(wx.EVT_MENU,
+                                          self.__onPluginsList,
+                                          id=self.ID_PLUGINSLIST)
+
+        self._application.mainWindow.Bind(wx.EVT_MENU,
+                                          self.__onButtonsDialog,
+                                          id=self.ID_BUTTONSDIALOG)
+
+        self._application.mainWindow.Bind(wx.EVT_MENU,
+                                          self.__onStartWatchEvents,
+                                          id=self.ID_START_WATCH_EVENTS)
+
+        self._application.mainWindow.Bind(wx.EVT_MENU,
+                                          self.__onStopWatchEvents,
+                                          id=self.ID_STOP_WATCH_EVENTS)
 
 
     def __createTestAction (self):
@@ -113,6 +130,14 @@ class PluginDebug (Plugin):
         MessageBox (u"".join (pluginslist), _(u"Plugins List"))
 
 
+    def __onStartWatchEvents (self, event):
+        self._watcher.startWatch()
+
+
+    def __onStopWatchEvents (self, event):
+        self._watcher.stopWatch()
+
+
     ###################################################
     # Свойства и методы, которые необходимо определить
     ###################################################
@@ -134,7 +159,7 @@ class PluginDebug (Plugin):
 
     @property
     def version (self):
-        return u"0.4"
+        return u"0.5"
 
 
     @property
@@ -162,6 +187,8 @@ class PluginDebug (Plugin):
 
         self.ID_PLUGINSLIST = wx.NewId()
         self.ID_BUTTONSDIALOG = wx.NewId()
+        self.ID_START_WATCH_EVENTS = wx.NewId()
+        self.ID_STOP_WATCH_EVENTS = wx.NewId()
 
         self.__menuName = _(u"Debug")
 
@@ -185,8 +212,21 @@ class PluginDebug (Plugin):
             self._application.actionController.removeToolbarButton (DebugAction.stringId)
             self._application.actionController.removeAction (DebugAction.stringId)
 
-            self._application.mainWindow.Unbind(wx.EVT_MENU, handler=self.__onPluginsList, id=self.ID_PLUGINSLIST)
-            self._application.mainWindow.Unbind(wx.EVT_MENU, handler=self.__onButtonsDialog, id=self.ID_BUTTONSDIALOG)
+            self._application.mainWindow.Unbind(wx.EVT_MENU,
+                                                handler=self.__onPluginsList,
+                                                id=self.ID_PLUGINSLIST)
+
+            self._application.mainWindow.Unbind(wx.EVT_MENU,
+                                                handler=self.__onButtonsDialog,
+                                                id=self.ID_BUTTONSDIALOG)
+
+            self._application.mainWindow.Unbind(wx.EVT_MENU,
+                                                handler=self.__onStartWatchEvents,
+                                                id=self.ID_START_WATCH_EVENTS)
+
+            self._application.mainWindow.Unbind(wx.EVT_MENU,
+                                                handler=self.__onStopWatchEvents,
+                                                id=self.ID_STOP_WATCH_EVENTS)
 
             index = self._application.mainWindow.mainMenu.FindMenu (self.__menuName)
             assert index != wx.NOT_FOUND

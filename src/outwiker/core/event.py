@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 
-class Event:
+class Event (object):
     """
     Класс событий
     """
