@@ -21,6 +21,10 @@ class PluginDebug (Plugin):
         self._url = u"http://jenyay.net/Outwiker/DebugPlugin"
         self._watcher = EventsWatcher (self._application)
 
+        self._enablePreProcessing = False
+        self._enablePostProcessing = False
+        self._enableOnHoverLink = True
+
 
     def __createMenu (self):
         self.menu = wx.Menu (u"")
@@ -107,11 +111,13 @@ class PluginDebug (Plugin):
 
 
     def __onPostProcessing (self, page, result):
-        result[0] = re.compile(re.escape(u"абырвалг"), re.I | re.U).sub (u"Главрыба", result[0])
+        if self._enablePostProcessing:
+            result[0] = re.compile(re.escape(u"абырвалг"), re.I | re.U).sub (u"Главрыба", result[0])
 
 
     def __onPreProcessing (self, page, result):
-        result[0] = "!! Debug!!!\n" + result[0]
+        if self._enablePreProcessing:
+            result[0] = "!! Debug!!!\n" + result[0]
 
 
     def __onButtonsDialog (self, event):
@@ -136,6 +142,20 @@ class PluginDebug (Plugin):
 
     def __onStopWatchEvents (self, event):
         self._watcher.stopWatch()
+
+
+    def __onHoverLink (self, page, link, title):
+        assert len (title) == 1
+        if link is None:
+            return
+
+        if link.startswith (u"http"):
+            title[0] = u"(link) {}".format (title[0])
+        elif link.startswith (u"tag://"):
+            title[0] = u"(tag) {}".format (link)
+        elif link.startswith (u"exec://"):
+            title[0] = u">>> {}".format (link[len ("exec://"):])
+
 
 
     ###################################################
@@ -200,6 +220,7 @@ class PluginDebug (Plugin):
             self._application.onTrayPopupMenu += self.__onTrayPopupMenu
             self._application.onPostprocessing += self.__onPostProcessing
             self._application.onPreprocessing += self.__onPreProcessing
+            self._application.onHoverLink += self.__onHoverLink
 
 
     def destroy (self):
@@ -234,7 +255,9 @@ class PluginDebug (Plugin):
             index = self._application.mainWindow.mainMenu.Remove (index)
 
             self._application.onTreePopupMenu -= self.__onTreePopupMenu
-            self._application.onTrayPopupMenu = self.__onTrayPopupMenu
+            self._application.onTrayPopupMenu -= self.__onTrayPopupMenu
+            self._application.onPostprocessing -= self.__onPostProcessing
             self._application.onPreprocessing -= self.__onPreProcessing
+            self._application.onHoverLink -= self.__onHoverLink
 
     #############################################

@@ -6,6 +6,7 @@ from abc import ABCMeta
 import wx
 
 import outwiker.core
+from outwiker.core.application import Application
 
 
 class HtmlRender (wx.Panel):
@@ -58,3 +59,53 @@ class HtmlRender (wx.Panel):
         except OSError:
             text = _(u"Can't execute file '%s'") % (href)
             outwiker.core.commands.MessageBox (text, "Error", wx.ICON_ERROR | wx.OK)
+
+
+    def _getLinkProtocol (self, link):
+        """
+        Return protocol for link or None if link contains not protocol
+        """
+        if link is None:
+            return None
+
+        endProtocol = u"://"
+        pos = link.find (endProtocol)
+        if pos == -1:
+            return None
+
+        return link[:pos + len (endProtocol)]
+
+
+    def _decodeIDNA (self, link):
+        """
+        Decode link like protocol://xn--80afndtacjikc
+        """
+        if link is None:
+            return None
+
+        protocol = self._getLinkProtocol (link)
+        if protocol is not None:
+            url = link[len (protocol):]
+            try:
+                link = u"{}{}".format (
+                    protocol,
+                    unicode (url.decode ("idna")))
+            except UnicodeError:
+                # Под IE ссылки не преобразуются в кодировку IDNA
+                pass
+
+        return link
+
+
+    def setStatusText (self, link, text):
+        """
+        Execute onHoverLink event and set status text
+        """
+        link_decoded = self._decodeIDNA (link)
+        page = self._currentPage
+        result = [text]
+        Application.onHoverLink (page=page,
+                                 link=link_decoded,
+                                 title=result)
+
+        outwiker.core.commands.setStatusText (result[0], self._status_item)
