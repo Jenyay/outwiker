@@ -193,6 +193,16 @@ class ApplicationParams (object):
         self.onPreHtmlImproving = Event()
 
 
+        # Event occurs when cursor hovers under link on preview tab
+        # Parameters:
+        #     page - current page
+        #     link - link under cursor
+        #     title - list with one string item, which contains
+        #         text which will be showed in status bar.
+        #         This item can be changed by event handlers.
+        self.onHoverLink = Event()
+
+
     def init (self, configFilename):
         """
         Инициализировать конфиг и локаль
