@@ -200,6 +200,35 @@ class HtmlRenderWebKit(HtmlRender):
             return self.__onLinkClicked (href, button, modifier)
 
 
+    def _getClickParams (self,
+                         href,
+                         button,
+                         modifier,
+                         isurl,
+                         ispage,
+                         isfilename,
+                         isanchor):
+        params = {
+            u"link": href,
+            u"button": button,
+            u"modifier": modifier,
+            u"process": False,
+            u"linktype": None,
+        }
+
+        if isanchor:
+            params["linktype"] = u"anchor"
+
+        if isurl:
+            params["linktype"] = u"url"
+        elif ispage:
+            params["linktype"] = u"page"
+        elif isfilename:
+            params["linktype"] = u"filename"
+
+        return params
+
+
     def __onLinkClicked (self, href, button, modifier):
         """
         Клик по ссылке
@@ -213,6 +242,18 @@ class HtmlRenderWebKit(HtmlRender):
         ctrl_key = 4
 
         (url, page, filename, anchor) = self.__identifyUri (href)
+
+        params = self._getClickParams (href,
+                                       button,
+                                       modifier,
+                                       url,
+                                       page,
+                                       filename,
+                                       anchor)
+
+        Application.onLinkClick (self._currentPage, params)
+        if params["process"]:
+            return True
 
         if url is not None:
             self.openUrl (url)

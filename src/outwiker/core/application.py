@@ -203,9 +203,31 @@ class ApplicationParams (object):
         self.onHoverLink = Event()
 
 
+        # Event occurs when user click to link on a page
+        # Parameters:
+        #     page - current page
+        #     params - dictionary with keys:
+        #         "link" - clicked link
+        #         "button" - mouse button by link was clicked:
+        #             (1 - left, 2 - middle, 3 - right, -1 - unknown)
+        #         "modifier" - pressed keys (1 - Shift, 4 - Ctrl)
+        #         "linktype" - string (or None) which shows type of link:
+        #             "url" - link to Internet site
+        #             "page" - link to page (note)
+        #             "file" - link to file
+        #             "anchor" - link to anchor on current page
+        #             None - unknown
+        #         "process" - boolean value, which indicates what
+        #             processed this click (True) or not (False).
+        #             This value can be changed by event handlers.
+        #             If click was processed, standard (internal) processing
+        #             is not process.
+        self.onLinkClick = Event()
+
+
     def init (self, configFilename):
         """
-        Инициализировать конфиг и локаль
+        Initialize config and locale
         """
         self.config = Config (configFilename)
         self.recentWiki = RecentWiki (self.config)
