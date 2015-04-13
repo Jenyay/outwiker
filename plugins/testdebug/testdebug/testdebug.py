@@ -24,6 +24,7 @@ class PluginDebug (Plugin):
         self._enablePreProcessing = False
         self._enablePostProcessing = False
         self._enableOnHoverLink = True
+        self._enableOnLinkClick = True
 
 
     def __createMenu (self):
@@ -146,6 +147,10 @@ class PluginDebug (Plugin):
 
     def __onHoverLink (self, page, link, title):
         assert len (title) == 1
+
+        if not self._enableOnHoverLink:
+            return
+
         if link is None:
             return
 
@@ -157,11 +162,19 @@ class PluginDebug (Plugin):
             title[0] = u">>> {}".format (link[len ("exec://"):])
 
 
+    def __onLinkClick (self, page, params):
+        assert len (params) == 5
+
+        if not self._enableOnLinkClick:
+            return
+
+        print params["link"]
+
+
 
     ###################################################
     # Свойства и методы, которые необходимо определить
     ###################################################
-
 
     @property
     def name (self):
@@ -221,6 +234,7 @@ class PluginDebug (Plugin):
             self._application.onPostprocessing += self.__onPostProcessing
             self._application.onPreprocessing += self.__onPreProcessing
             self._application.onHoverLink += self.__onHoverLink
+            self._application.onLinkClick += self.__onLinkClick
 
 
     def destroy (self):
@@ -259,5 +273,6 @@ class PluginDebug (Plugin):
             self._application.onPostprocessing -= self.__onPostProcessing
             self._application.onPreprocessing -= self.__onPreProcessing
             self._application.onHoverLink -= self.__onHoverLink
+            self._application.onLinkClick -= self.__onLinkClick
 
     #############################################
