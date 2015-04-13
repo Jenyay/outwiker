@@ -48,6 +48,8 @@ class HtmlRenderIE (HtmlRender):
 
 
     def StatusTextChange(self, status):
+        statustext = u""
+
         if len (status) != 0:
             (url, page, filename, anchor) = self.__identifyUri (status)
 
@@ -56,15 +58,15 @@ class HtmlRenderIE (HtmlRender):
                 if anchor is not None:
                     text = u"{}/{}".format (text, anchor)
 
-                outwiker.core.commands.setStatusText (text, self._status_item)
+                statustext = text
             elif filename is not None:
-                outwiker.core.commands.setStatusText (filename, self._status_item)
+                statustext = filename
             elif anchor is not None:
-                outwiker.core.commands.setStatusText (anchor, self._status_item)
+                statustext = anchor
             else:
-                outwiker.core.commands.setStatusText (status, self._status_item)
-        else:
-            outwiker.core.commands.setStatusText (status, self._status_item)
+                statustext = status
+
+        self.setStatusText (status, statustext)
 
 
     def __onCopyFromHtml(self, event):
