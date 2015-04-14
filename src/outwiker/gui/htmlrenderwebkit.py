@@ -6,11 +6,6 @@ import urllib
 
 import wx
 
-# import gobject
-# gobject.threads_init()
-
-# import pygtk
-# pygtk.require('2.0')
 import gtk
 import gtk.gdk
 
@@ -21,7 +16,12 @@ import webkit
 import outwiker.core.system
 import outwiker.core.commands
 from outwiker.core.application import Application
-from .htmlcontrollerwebkit import UriIdentifierWebKit
+from outwiker.gui.htmlcontrollerwebkit import UriIdentifierWebKit
+from outwiker.gui.defines import (ID_MOUSE_LEFT,
+                                  ID_MOUSE_MIDDLE,
+                                  ID_MOUSE_RIGHT,
+                                  ID_KEY_CTRL,
+                                  ID_KEY_SHIFT)
 
 '''
 As far as I know (I may be wrong), a wx.Panel is "composed" by a GtkPizza
@@ -200,22 +200,61 @@ class HtmlRenderWebKit(HtmlRender):
             return self.__onLinkClicked (href, button, modifier)
 
 
-    def __onLinkClicked (self, href, button, modifier):
+    def __gtk2OutWikerKeyCode (self, gtk_key_modifier):
+        """
+        Convert from GTK key modifier to const from gui.defines
+        """
+        # Consts in GTK
+        gtk_shift_key = 1
+        gtk_ctrl_key = 4
+
+        modifier = 0
+        if gtk_key_modifier & gtk_shift_key:
+            modifier |= ID_KEY_SHIFT
+
+        if gtk_key_modifier & gtk_ctrl_key:
+            modifier |= ID_KEY_CTRL
+
+        return modifier
+
+
+    def __gtk2OutWikerMouseButtonCode (self, gtk_mouse_button):
+        """
+        Convert from GTK mouse key modifier to const from gui.defines
+        """
+        # Consts in GTK
+        gtk_left_button = 1
+        gtk_middle_button = 2
+        gtk_right_button = 3
+
+        mouse_button = -1
+
+        if gtk_mouse_button == gtk_left_button:
+            mouse_button = ID_MOUSE_LEFT
+        elif gtk_mouse_button == gtk_middle_button:
+            mouse_button = ID_MOUSE_MIDDLE
+        elif gtk_middle_button == gtk_right_button:
+            mouse_button = ID_MOUSE_RIGHT
+
+        return mouse_button
+
+
+    def __onLinkClicked (self, href, gtk_mouse_button, gtk_key_modifier):
         """
         Клик по ссылке
         Возвращает False, если обрабатывать ссылку разрешить компоненту,
-        в противном случае - True
+        в противном случае - True (если обрабатываем сами)
         href - ссылка
-        button - кнопка мыши, с помощью которой кликнули по ссылке (1 - левая, 2 - средняя, 3 - правая, -1 - не известно)
-        modifier - зажатые клавиши (1 - Shift, 4 - Ctrl)
+        gtk_mouse_button - кнопка мыши, с помощью которой кликнули по ссылке (1 - левая, 2 - средняя, 3 - правая, -1 - не известно)
+        gtk_key_modifier - зажатые клавиши (1 - Shift, 4 - Ctrl)
         """
-        middle_button = 2
-        ctrl_key = 4
-
         (url, page, filename, anchor) = self.__identifyUri (href)
 
+        modifier = self.__gtk2OutWikerKeyCode (gtk_key_modifier)
+        mouse_button = self.__gtk2OutWikerMouseButtonCode (gtk_mouse_button)
+
         params = self._getClickParams (self._decodeIDNA (href),
-                                       button,
+                                       mouse_button,
                                        modifier,
                                        url,
                                        page,
@@ -229,7 +268,7 @@ class HtmlRenderWebKit(HtmlRender):
         if url is not None:
             self.openUrl (url)
 
-        elif page is not None and (button == middle_button or modifier == ctrl_key):
+        elif page is not None and (mouse_button == ID_MOUSE_MIDDLE or modifier == ID_KEY_CTRL):
             Application.mainWindow.tabsController.openInTab (page, True)
 
         elif page is not None:
