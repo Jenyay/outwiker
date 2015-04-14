@@ -163,6 +163,28 @@ class HtmlRenderIE (HtmlRender):
         """
         (url, page, filename, anchor) = self.__identifyUri (href)
         ctrlstate = wx.GetKeyState(wx.WXK_CONTROL)
+        shiftstate = wx.GetKeyState(wx.WXK_SHIFT)
+
+        button = 1
+        modifier = 0
+
+        if shiftstate:
+            modifier = modifier | 1
+
+        if ctrlstate:
+            modifier = modifier | 4
+
+        params = self._getClickParams (self._decodeIDNA (href),
+                                       button,
+                                       modifier,
+                                       url,
+                                       page,
+                                       filename,
+                                       anchor)
+
+        Application.onLinkClick (self._currentPage, params)
+        if params["process"]:
+            return
 
         if url is not None:
             self.openUrl (url)
