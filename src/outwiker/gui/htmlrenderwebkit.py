@@ -243,7 +243,7 @@ class HtmlRenderWebKit(HtmlRender):
 
         (url, page, filename, anchor) = self.__identifyUri (href)
 
-        params = self._getClickParams (href,
+        params = self._getClickParams (self._decodeIDNA (href),
                                        button,
                                        modifier,
                                        url,
