@@ -169,6 +169,7 @@ class PluginDebug (Plugin):
             return
 
         print params
+        # params["process"] = True
 
 
     ###################################################
