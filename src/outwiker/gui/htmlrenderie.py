@@ -5,11 +5,14 @@ import urllib
 import wx
 import wx.lib.iewin
 
-from .htmlrender import HtmlRender
 import outwiker.core.system
 import outwiker.core.commands
 from outwiker.core.application import Application
-from .htmlcontrollerie import UriIdentifierIE
+from outwiker.gui.htmlrender import HtmlRender
+from outwiker.gui.htmlcontrollerie import UriIdentifierIE
+from outwiker.gui.defines import (ID_MOUSE_LEFT,
+                                  ID_KEY_CTRL,
+                                  ID_KEY_SHIFT)
 
 
 class HtmlRenderIE (HtmlRender):
@@ -157,22 +160,26 @@ class HtmlRenderIE (HtmlRender):
         return identifier.identify (href)
 
 
+    def __getKeyCode (self):
+        modifier = 0
+
+        if wx.GetKeyState(wx.WXK_SHIFT):
+            modifier |= ID_KEY_SHIFT
+
+        if wx.GetKeyState(wx.WXK_CONTROL):
+            modifier |= ID_KEY_CTRL
+
+        return modifier
+
+
     def __onLinkClicked (self, href):
         """
         Клик по ссылке
         """
         (url, page, filename, anchor) = self.__identifyUri (href)
-        ctrlstate = wx.GetKeyState(wx.WXK_CONTROL)
-        shiftstate = wx.GetKeyState(wx.WXK_SHIFT)
 
-        button = 1
-        modifier = 0
-
-        if shiftstate:
-            modifier = modifier | 1
-
-        if ctrlstate:
-            modifier = modifier | 4
+        button = ID_MOUSE_LEFT
+        modifier = self.__getKeyCode()
 
         params = self._getClickParams (self._decodeIDNA (href),
                                        button,
@@ -189,7 +196,7 @@ class HtmlRenderIE (HtmlRender):
         if url is not None:
             self.openUrl (url)
 
-        elif page is not None and ctrlstate:
+        elif page is not None and modifier == ID_KEY_CTRL:
             Application.anchor = anchor
             Application.mainWindow.tabsController.openInTab (page, True)
 
