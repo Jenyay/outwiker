@@ -1,0 +1,8 @@
+# -*- coding: UTF-8 -*-
+
+ID_MOUSE_LEFT = 1
+ID_MOUSE_MIDDLE = 2
+ID_MOUSE_RIGHT = 3
+
+ID_KEY_SHIFT = 1
+ID_KEY_CTRL = 4

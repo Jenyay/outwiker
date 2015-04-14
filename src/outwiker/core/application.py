@@ -209,8 +209,8 @@ class ApplicationParams (object):
         #     params - dictionary with keys:
         #         "link" - clicked link
         #         "button" - mouse button by link was clicked:
-        #             (1 - left, 2 - middle, 3 - right, -1 - unknown)
-        #         "modifier" - pressed keys (1 - Shift, 4 - Ctrl)
+        #             (consts from gui.defines module)
+        #         "modifier" - pressed keys (consts from gui.defines module)
         #         "linktype" - string (or None) which shows type of link:
         #             "url" - link to Internet site
         #             "page" - link to page (note)
