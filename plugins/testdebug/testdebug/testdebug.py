@@ -168,8 +168,7 @@ class PluginDebug (Plugin):
         if not self._enableOnLinkClick:
             return
 
-        print params["link"]
-
+        print params
 
 
     ###################################################
