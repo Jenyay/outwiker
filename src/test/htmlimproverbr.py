@@ -154,6 +154,22 @@ qwerty
         self.assertEqual (expectedResult, result, result)
 
 
+    def test_script_04 (self):
+        src = ur"""Абырвалг<script>Абырвалг
+йцукен
+qwerty
+фыва"""
+
+        expectedResult = ur"""Абырвалг
+<script>Абырвалг
+йцукен
+qwerty
+фыва"""
+
+        result = BrHtmlImprover().run (src)
+        self.assertEqual (expectedResult, result, result)
+
+
     def test_script_pre_01 (self):
         src = ur"""Абырвалг
 <script>Абырвалг
