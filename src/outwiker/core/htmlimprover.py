@@ -41,14 +41,12 @@ class HtmlImprover (object):
         while start != -1:
             nexttagstart, nexttagend, currenttag = self._findNextTag (text, start)
             if nexttagstart != -1:
-                buf.write (self._appendLineBreaks (text[start: nexttagstart]))
-                buf.write (u'\n')
-            else:
-                buf.write (self._appendLineBreaks (text[start:]))
-
-            if nexttagstart != -1:
                 assert currenttag is not None
                 assert nexttagend != -1
+
+                buf.write (self._appendLineBreaks (text[start: nexttagstart]))
+                buf.write (u'\n')
+
                 closingend = self._findClosingTag (text, nexttagend, currenttag)
 
                 if closingend != -1:
@@ -59,6 +57,7 @@ class HtmlImprover (object):
 
                 start = closingend
             else:
+                buf.write (self._appendLineBreaks (text[start:]))
                 start = nexttagstart
 
         result = buf.getvalue()
@@ -75,7 +74,7 @@ class HtmlImprover (object):
 
         match = self._tagsRegexp[tagindex][1].search (text, pos)
 
-        return None if match is None else match.end()
+        return -1 if match is None else match.end()
 
 
     def _findNextTag (self, text, pos):
