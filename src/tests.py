@@ -222,6 +222,7 @@ if __name__ == '__main__':
     from test.plugins.htmlformatter.htmlimproverp import ParagraphHtmlImproverTest
 
     from test.plugins.externaltools.loading import ExternalToolsLoadingTest
+    from test.plugins.externaltools.commandexec import CommandExecTest
 
     from test.styles.styles import StylesTest
     from test.styles.styleslist import StylesListTest

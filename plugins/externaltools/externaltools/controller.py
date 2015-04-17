@@ -4,6 +4,7 @@ from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
 
 from i18n import get_
 from menutoolscontroller import MenuToolsController
+from commandcontroller import CommandController
 
 
 class Controller (object):
@@ -14,6 +15,7 @@ class Controller (object):
         self._owner = ownerPlugin
         self._page = None
         self._menuToolsController = MenuToolsController (ownerPlugin.application)
+        self._commandController = CommandController (ownerPlugin.application)
 
 
     def initialize (self):
@@ -21,11 +23,13 @@ class Controller (object):
         _ = get_()
 
         self._menuToolsController.initialize()
+        self._commandController.initialize()
         self._owner.application.onPreferencesDialogCreate += self.__onPreferencesDialogCreate
 
 
     def destroy (self):
         self._menuToolsController.destroy()
+        self._commandController.destroy()
         self._owner.application.onPreferencesDialogCreate -= self.__onPreferencesDialogCreate
 
 
