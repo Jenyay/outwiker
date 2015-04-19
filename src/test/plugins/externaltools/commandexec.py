@@ -15,10 +15,10 @@ class CommandExecTest (unittest.TestCase):
     def setUp(self):
         self.maxDiff = None
 
-        self.filesPath = u"../test/samplefiles/"
         self.__createWiki()
+        self.testPage = self.wikiroot[u'Страница 1']
 
-        dirlist = [u"../plugins/externaltools"]
+        dirlist = [u'../plugins/externaltools']
 
         self.loader = PluginsLoader(Application)
         self.loader.load (dirlist)
@@ -30,11 +30,8 @@ class CommandExecTest (unittest.TestCase):
     def __createWiki (self):
         # Здесь будет создаваться вики
         self.path = mkdtemp (prefix=u'Абырвалг абыр')
-
         self.wikiroot = WikiDocument.create (self.path)
-
-        WikiPageFactory().create (self.wikiroot, u"Страница 1", [])
-        self.testPage = self.wikiroot[u"Страница 1"]
+        WikiPageFactory().create (self.wikiroot, u'Страница 1', [])
 
 
     def tearDown(self):
@@ -47,8 +44,38 @@ class CommandExecTest (unittest.TestCase):
 
 
     def testEmpty (self):
-        text = u"(:exec:)(:execend:)"
-        validResult = u""
+        text = u'(:exec:)(:execend:)'
+        validResult = u''
+
+        result = self.parser.toHtml (text)
+        self.assertEqual (result, validResult)
+
+
+    def testLinkSimple_01 (self):
+        text = u'''(:exec:)gvim(:execend:)'''
+        validResult = u'<a href="exec://exec/?com1=gvim">gvim</a>'
+
+        result = self.parser.toHtml (text)
+        self.assertEqual (result, validResult)
+
+
+    def testLinkSimple_02 (self):
+        text = u'''(:exec:)
+
+        gvim
+
+(:execend:)'''
+        validResult = u'<a href="exec://exec/?com1=gvim">gvim</a>'
+
+        result = self.parser.toHtml (text)
+        self.assertEqual (result, validResult)
+
+
+    def testLinkSimple_03 (self):
+        text = u'''(:exec:)
+gvim -d "Первый файл.txt" "Второй файл.txt"
+(:execend:)'''
+        validResult = ur'<a href="exec://exec/?com1=gvim&com1=-d&com1=%D0%9F%D0%B5%D1%80%D0%B2%D1%8B%D0%B9+%D1%84%D0%B0%D0%B9%D0%BB.txt&com1=%D0%92%D1%82%D0%BE%D1%80%D0%BE%D0%B9+%D1%84%D0%B0%D0%B9%D0%BB.txt">gvim</a>'
 
         result = self.parser.toHtml (text)
         self.assertEqual (result, validResult)

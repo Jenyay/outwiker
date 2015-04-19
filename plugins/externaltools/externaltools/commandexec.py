@@ -1,7 +1,9 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 from outwiker.pages.wiki.parser.command import Command
+
+from commandexecparser import CommandExecParser
+from htmlmakers import HtmlMakerLink
 
 
 class CommandExec (Command):
@@ -25,11 +27,18 @@ class CommandExec (Command):
         Run command.
         The method returns link which will replace the command notation
         """
-        params_dict = Command.parseParams (params)
+        paramsDict = Command.parseParams (params)
 
-        return u''
+        commandParser = CommandExecParser()
+        commandsList = commandParser.parse (content)
+
+        htmlMaker = self._createHtmlMaker (paramsDict)
+        html = htmlMaker.createHtml (commandsList, paramsDict)
+
+        return html
 
 
-    # def _getNameParam (self, params_dict):
-    #     name = params_dict[NAME_PARAM_NAME].strip() if NAME_PARAM_NAME in params_dict else u""
-    #     return name
+    @staticmethod
+    def _createHtmlMaker (paramsDict):
+        htmlMaker = HtmlMakerLink ()
+        return htmlMaker

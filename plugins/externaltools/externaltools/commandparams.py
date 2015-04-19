@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 
+# (:exec:) command parameters
 # Text for created link or button
 TITLE_NAME = u'title'
 
@@ -14,3 +15,9 @@ FORMAT_NAME = u'format'
 FORMAT_LINK = u'link'
 
 FORMAT_BUTTON = u'button'
+
+
+# exec:// protocol params
+
+# Common parameter for whole command (one line is one command)
+PROTO_COMMAND = u'com{number}'
