@@ -223,6 +223,7 @@ if __name__ == '__main__':
 
     from test.plugins.externaltools.loading import ExternalToolsLoadingTest
     from test.plugins.externaltools.commandexec import CommandExecTest
+    from test.plugins.externaltools.commandexecparser import CommandExecParserTest
 
     from test.styles.styles import StylesTest
     from test.styles.styleslist import StylesListTest

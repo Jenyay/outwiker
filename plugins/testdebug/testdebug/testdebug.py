@@ -158,8 +158,6 @@ class PluginDebug (Plugin):
             title[0] = u"(link) {}".format (title[0])
         elif link.startswith (u"tag://"):
             title[0] = u"(tag) {}".format (link)
-        elif link.startswith (u"exec://"):
-            title[0] = u">>> {}".format (link[len ("exec://"):])
 
 
     def __onLinkClick (self, page, params):
