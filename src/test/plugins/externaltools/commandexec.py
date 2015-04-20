@@ -53,10 +53,13 @@ class CommandExecTest (unittest.TestCase):
 
     def testLinkSimple_01 (self):
         text = u'''(:exec:)gvim(:execend:)'''
-        validResult = u'<a href="exec://exec/?com1=gvim">gvim</a>'
 
+        # <a href="exec://exec/?com1=gvim&title=gvim">gvim</a>
         result = self.parser.toHtml (text)
-        self.assertEqual (result, validResult)
+        self.assertIn (u'href="exec://exec/?', result)
+        self.assertIn (u'com1=gvim', result)
+        self.assertIn (u'title=gvim', result)
+        self.assertIn (u'>gvim</a>', result)
 
 
     def testLinkSimple_02 (self):
@@ -65,17 +68,25 @@ class CommandExecTest (unittest.TestCase):
         gvim
 
 (:execend:)'''
-        validResult = u'<a href="exec://exec/?com1=gvim">gvim</a>'
 
+        # <a href="exec://exec/?com1=gvim&title=gvim">gvim</a>
         result = self.parser.toHtml (text)
-        self.assertEqual (result, validResult)
+
+        self.assertIn (u'href="exec://exec/?', result)
+        self.assertIn (u'com1=gvim', result)
+        self.assertIn (u'title=gvim', result)
+        self.assertIn (u'>gvim</a>', result)
 
 
     def testLinkSimple_03 (self):
         text = u'''(:exec:)
 gvim -d "Первый файл.txt" "Второй файл.txt"
 (:execend:)'''
-        validResult = ur'<a href="exec://exec/?com1=gvim&com1=-d&com1=%D0%9F%D0%B5%D1%80%D0%B2%D1%8B%D0%B9+%D1%84%D0%B0%D0%B9%D0%BB.txt&com1=%D0%92%D1%82%D0%BE%D1%80%D0%BE%D0%B9+%D1%84%D0%B0%D0%B9%D0%BB.txt">gvim</a>'
+        # <a href="exec://exec/?com1=gvim&com1=-d&com1=%D0%9F%D0%B5%D1%80%D0%B2%D1%8B%D0%B9+%D1%84%D0%B0%D0%B9%D0%BB.txt&com1=%D0%92%D1%82%D0%BE%D1%80%D0%BE%D0%B9+%D1%84%D0%B0%D0%B9%D0%BB.txt&title=gvim">gvim</a>
 
         result = self.parser.toHtml (text)
-        self.assertEqual (result, validResult)
+
+        self.assertIn (u'href="exec://exec/?', result)
+        self.assertIn (u'com1=gvim&com1=-d&com1=%D0%9F%D0%B5%D1%80%D0%B2%D1%8B%D0%B9+%D1%84%D0%B0%D0%B9%D0%BB.txt&com1=%D0%92%D1%82%D0%BE%D1%80%D0%BE%D0%B9+%D1%84%D0%B0%D0%B9%D0%BB.txt', result)
+        self.assertIn (u'title=gvim', result)
+        self.assertIn (u'>gvim</a>', result)
