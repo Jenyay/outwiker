@@ -18,13 +18,13 @@ class ExecInfo (object):
 
 
 class CommandExecParser (object):
+    """
+    Class for parsing text between (:exec:) and (:execend:)
+    """
     def __init__ (self):
         self._joinRegexp = re.compile (r'\\\s*$\s*', re.MULTILINE)
 
 
-    """
-    Class for parsing text between (:exec:) and (:execend:)
-    """
     def parse (self, text):
         """
         Return list of the ExecInfo instances
