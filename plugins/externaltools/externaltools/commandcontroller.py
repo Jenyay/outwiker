@@ -7,13 +7,19 @@ class CommandController (object):
     def __init__ (self, application):
         self._application = application
 
+        # Enable (:exec:) command only in the "new" OutWiker version.
+        # If Application has onLinkClick event
+        self._enableExecCommand = u'onLinkClick' in dir (self._application)
+
 
     def initialize (self):
-        self._application.onWikiParserPrepare += self.__onWikiParserPrepare
+        if self._enableExecCommand:
+            self._application.onWikiParserPrepare += self.__onWikiParserPrepare
 
 
     def destroy (self):
-        self._application.onWikiParserPrepare -= self.__onWikiParserPrepare
+        if self._enableExecCommand:
+            self._application.onWikiParserPrepare -= self.__onWikiParserPrepare
 
 
     def __onWikiParserPrepare (self, parser):
