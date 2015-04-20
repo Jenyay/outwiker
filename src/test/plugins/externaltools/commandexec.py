@@ -95,7 +95,7 @@ gvim -d "Первый файл.txt" "Второй файл.txt"
     def testLinkTitle_01 (self):
         text = u'''(:exec title="Запуск gvim":)gvim(:execend:)'''
 
-        # <a href="exec://exec/?com1=gvim&title=gvim">gvim</a>
+        # <a href="exec://exec/?com1=gvim&title=%D0%97%D0%B0%D0%BF%D1%83%D1%81%D0%BA">Запуск gvim</a>
         result = self.parser.toHtml (text)
         self.assertIn (u'href="exec://exec/?', result)
         self.assertIn (u'com1=gvim', result)
