@@ -1,5 +1,7 @@
 # -*- coding: UTF-8 -*-
 
+import re
+
 import lib.ushlex
 
 
@@ -16,6 +18,10 @@ class ExecInfo (object):
 
 
 class CommandExecParser (object):
+    def __init__ (self):
+        self._joinRegexp = re.compile (r'\\\s*$\s*', re.MULTILINE)
+
+
     """
     Class for parsing text between (:exec:) and (:execend:)
     """
@@ -23,19 +29,20 @@ class CommandExecParser (object):
         """
         Return list of the ExecInfo instances
         """
-        result = []
+        joinedLines = self._joinRegexp.sub (u' ', text)
 
         lines = [line.strip()
                  for line
-                 in text.split (u'\n')
+                 in joinedLines.split (u'\n')
                  if line.strip()]
 
+        result = []
         for line in lines:
             items = lib.ushlex.split (line)
             assert len (items) != 0
 
             command = items[0]
-            params = items[1:] if len (items) > 2 else []
+            params = items[1:] if len (items) > 1 else []
 
             result.append (ExecInfo (command, params))
 

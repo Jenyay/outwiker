@@ -181,3 +181,70 @@ krusader'''
 
         self.assertEqual (result[1].command, u'krusader')
         self.assertEqual (result[1].params, [u'Параметр1', u'Параметр 2 с пробелом'])
+
+
+    def testCommandExecParser_10_join (self):
+        from externaltools.commandexecparser import CommandExecParser
+        text = ur'''gvim \
+"Имя файла"
+'''
+
+        parser = CommandExecParser()
+        result = parser.parse (text)
+
+        self.assertEqual (len (result), 1)
+
+        self.assertEqual (result[0].command, u'gvim')
+        self.assertEqual (result[0].params, [u'Имя файла'])
+
+
+    def testCommandExecParser_11_join (self):
+        from externaltools.commandexecparser import CommandExecParser
+        text = ur'''gvim \   
+   "Имя файла"
+'''
+
+        parser = CommandExecParser()
+        result = parser.parse (text)
+
+        self.assertEqual (len (result), 1)
+
+        self.assertEqual (result[0].command, u'gvim')
+        self.assertEqual (result[0].params, [u'Имя файла'])
+
+
+    def testCommandExecParser_12_join (self):
+        from externaltools.commandexecparser import CommandExecParser
+        text = ur'''gvim \
+
+
+"Имя файла"
+'''
+
+        parser = CommandExecParser()
+        result = parser.parse (text)
+
+        self.assertEqual (len (result), 1)
+
+        self.assertEqual (result[0].command, u'gvim')
+        self.assertEqual (result[0].params, [u'Имя файла'])
+
+
+    def testCommandExecParser_13_invalid (self):
+        from externaltools.commandexecparser import CommandExecParser
+        text = ur'''gvim \ asdfadsf'''
+
+        parser = CommandExecParser()
+        parser.parse (text)
+
+
+    def testCommandExecParser_14_params (self):
+        from externaltools.commandexecparser import CommandExecParser
+        text = u'gvim -d'
+
+        parser = CommandExecParser()
+        result = parser.parse (text)
+
+        self.assertEqual (len (result), 1)
+        self.assertEqual (result[0].command, u'gvim')
+        self.assertEqual (result[0].params, [u'-d'])
