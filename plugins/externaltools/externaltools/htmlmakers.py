@@ -1,13 +1,21 @@
 # -*- coding: UTF-8 -*-
 
+from abc import ABCMeta, abstractmethod
 import urllib
 
-from commandparams import PROTO_COMMAND
+from commandparams import PROTO_COMMAND, PROTO_TITLE, EXEC_BEGIN
 
 
-class HtmlMakerLink (object):
-    def __init__ (self):
-        self._begin = u'exec://exec/'
+class HtmlMaker (object):
+    """
+    A base class for all HTML makers
+    """
+    __metaclass__ = ABCMeta
+
+
+    @abstractmethod
+    def createHtml (self, commandsList, paramsDict):
+        pass
 
 
     def _createUrl (self, commandsList, paramsDict):
@@ -18,18 +26,30 @@ class HtmlMakerLink (object):
             params_encoded = [param.encode (u'utf-8') for param in command.params]
             urldict[commandname] = [command.command.encode (u'utf-8')] + params_encoded
 
+        urldict[PROTO_TITLE] = self._getTitle (commandsList, paramsDict)
         urlparams = urllib.urlencode (urldict, True)
 
-        return u''.join ([self._begin, u'?', urlparams])
+        return u''.join ([EXEC_BEGIN, u'?', urlparams])
 
 
+    def _getTitle (self, commandsList, paramsDict):
+        text = commandsList[0].command
+        if len (commandsList) > 1:
+            text += u'...'
+
+        return text
+
+
+
+class HtmlMakerLink (HtmlMaker):
+    """
+    Create HTML code for (:exec:) command as link.
+    """
     def createHtml (self, commandsList, paramsDict):
         if len (commandsList) == 0:
             return u''
 
         url = self._createUrl (commandsList, paramsDict)
-        text = commandsList[0].command
-        if len (commandsList) > 1:
-            text += u'...'
+        text = self._getTitle(commandsList, paramsDict)
 
         return u'<a href="{url}">{text}</a>'.format (url=url, text=text)
