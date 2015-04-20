@@ -3,7 +3,7 @@
 from abc import ABCMeta, abstractmethod
 import urllib
 
-from commandparams import PROTO_COMMAND, PROTO_TITLE, EXEC_BEGIN
+from commandparams import PROTO_COMMAND, PROTO_TITLE, EXEC_BEGIN, TITLE_NAME
 
 
 class HtmlMaker (object):
@@ -26,14 +26,17 @@ class HtmlMaker (object):
             params_encoded = [param.encode (u'utf-8') for param in command.params]
             urldict[commandname] = [command.command.encode (u'utf-8')] + params_encoded
 
-        urldict[PROTO_TITLE] = self._getTitle (commandsList, paramsDict)
+        urldict[PROTO_TITLE] = self._getTitle (commandsList, paramsDict).encode (u'utf-8')
         urlparams = urllib.urlencode (urldict, True)
 
         return u''.join ([EXEC_BEGIN, u'?', urlparams])
 
 
     def _getTitle (self, commandsList, paramsDict):
-        text = commandsList[0].command
+        text = (paramsDict[TITLE_NAME]
+                if TITLE_NAME in paramsDict
+                else commandsList[0].command)
+
         if len (commandsList) > 1:
             text += u'...'
 
