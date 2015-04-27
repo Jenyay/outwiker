@@ -160,10 +160,7 @@ class ApplicationParams (object):
         # Order of the calling preprocessing events is not regulated
         # Parameters:
         #    page - page for which HTML is generated
-        #    result - list of the one string item, which contains
-        #          resulted code (wiki or HTML) by which will be generated
-        #          final HTML code.
-        #          This item can be changed by event handlers
+        #    params - instance of the outwiker.core.events.PreprocessingParams class
         self.onPreprocessing = Event()
 
 
@@ -171,10 +168,7 @@ class ApplicationParams (object):
         # Order of the calling preprocessing events is not regulated
         # Parameters:
         #    page - page for which HTML is generated
-        #    result - list of the one string item, which contains
-        #         resulted HTML code.
-        #         This item can be changed by event handlers.
-        #         User will be see result after all changes.
+        #    params - instance of the outwiker.core.events.PostprocessingParams class
         self.onPostprocessing = Event()
 
 
@@ -187,9 +181,7 @@ class ApplicationParams (object):
         # Event occurs after wiki parsing but before HTML improveing
         # Parameters:
         #     page - page for which HTML is generated
-        #     html - list of the one string item, which contains
-        #         HTML code after wiki parsing.
-        #         This item can be changed by event handlers.
+        #     params - instance of the outwiker.core.events.PreHtmlImprovingParams class
         self.onPreHtmlImproving = Event()
 
 

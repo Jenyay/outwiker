@@ -528,13 +528,13 @@ class WikiPageViewTest (BaseMainWndTest):
         return self._getPageView().codeEditor
 
 
-    def _onPostProcessing (self, page, result):
-        result[0] += u" 111"
+    def _onPostProcessing (self, page, params):
+        params.result += u" 111"
 
 
-    def _onPostProcessing2 (self, page, result):
-        result[0] += u" 222"
+    def _onPostProcessing2 (self, page, params):
+        params.result += u" 222"
 
 
-    def _onPreProcessing (self, page, result):
-        result[0] += u" 000"
+    def _onPreProcessing (self, page, params):
+        params.result += u" 000"
