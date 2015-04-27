@@ -7,7 +7,7 @@ import wx
 
 import outwiker.core
 from outwiker.core.application import Application
-from outwiker.core.events import LinkClickParams
+from outwiker.core.events import LinkClickParams, HoverLinkParams
 
 
 class HtmlRender (wx.Panel):
@@ -131,10 +131,8 @@ class HtmlRender (wx.Panel):
         Execute onHoverLink event and set status text
         """
         link_decoded = self._decodeIDNA (link)
-        page = self._currentPage
-        result = [text]
-        Application.onHoverLink (page=page,
-                                 link=link_decoded,
-                                 title=result)
 
-        outwiker.core.commands.setStatusText (result[0], self._status_item)
+        params = HoverLinkParams (link = link_decoded, text = text)
+        Application.onHoverLink (page=self._currentPage, params = params)
+
+        outwiker.core.commands.setStatusText (params.text, self._status_item)

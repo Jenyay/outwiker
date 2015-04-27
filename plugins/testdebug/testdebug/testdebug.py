@@ -145,19 +145,17 @@ class PluginDebug (Plugin):
         self._watcher.stopWatch()
 
 
-    def __onHoverLink (self, page, link, title):
-        assert len (title) == 1
-
+    def __onHoverLink (self, page, params):
         if not self._enableOnHoverLink:
             return
 
-        if link is None:
+        if params.link is None:
             return
 
-        if link.startswith (u"http"):
-            title[0] = u"(link) {}".format (title[0])
-        elif link.startswith (u"tag://"):
-            title[0] = u"(tag) {}".format (link)
+        if params.link.startswith (u"http"):
+            params.text = u"(link) {}".format (params.text)
+        elif params.link.startswith (u"tag://"):
+            params.text = u"(tag) {}".format (params.link)
 
 
     def __onLinkClick (self, page, params):

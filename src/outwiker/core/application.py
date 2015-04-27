@@ -196,10 +196,7 @@ class ApplicationParams (object):
         # Event occurs when cursor hovers under link on preview tab
         # Parameters:
         #     page - current page
-        #     link - link under cursor (or None)
-        #     title - list with one string item, which contains
-        #         text which will be showed in status bar.
-        #         This item can be changed by event handlers.
+        #     params - instance of the outwiker.core.events.HoverLinkParams class
         self.onHoverLink = Event()
 
 
