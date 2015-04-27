@@ -161,12 +161,10 @@ class PluginDebug (Plugin):
 
 
     def __onLinkClick (self, page, params):
-        assert len (params) == 5
-
         if not self._enableOnLinkClick:
             return
 
-        print params
+        print params.link
         # params["process"] = True
 
 
