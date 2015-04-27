@@ -10,6 +10,10 @@ from outwiker.core.htmlimproverfactory import HtmlImproverFactory
 from outwiker.core.htmltemplate import HtmlTemplate
 from outwiker.core.style import Style
 from outwiker.core.system import readTextFile
+from outwiker.core.events import (PreprocessingParams,
+                                  PreHtmlImprovingParams,
+                                  PostprocessingParams
+                                  )
 from outwiker.gui.htmltexteditor import HtmlTextEditor
 from outwiker.gui.guiconfig import HtmlRenderConfig
 
@@ -600,12 +604,12 @@ class HtmlPageView (BaseHtmlPanel):
             tpl = HtmlTemplate (readTextFile (style.getDefaultStyle()))
 
         content = self._changeContentByEvent (self.page,
-                                              page.content,
+                                              PreprocessingParams (page.content),
                                               Application.onPreprocessing)
 
         if page.autoLineWrap:
             content = self._changeContentByEvent (self.page,
-                                                  content,
+                                                  PreHtmlImprovingParams (content),
                                                   Application.onPreHtmlImproving)
 
             config = HtmlRenderConfig (Application.config)
@@ -619,7 +623,7 @@ class HtmlPageView (BaseHtmlPanel):
                                  userhead = userhead)
 
         result = self._changeContentByEvent (self.page,
-                                             result,
+                                             PostprocessingParams (result),
                                              Application.onPostprocessing)
         return result
 
@@ -629,7 +633,6 @@ class HtmlPageView (BaseHtmlPanel):
         self.mainWindow.mainMenu.Remove (self.__HTML_MENU_INDEX - 1)
 
 
-    def _changeContentByEvent (self, page, content, event):
-        result = [content]
-        event (page, result)
-        return result[0]
+    def _changeContentByEvent (self, page, params, event):
+        event (page, params)
+        return params.result

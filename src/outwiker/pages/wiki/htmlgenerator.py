@@ -4,6 +4,10 @@ from outwiker.core.htmlimproverfactory import HtmlImproverFactory
 from outwiker.core.htmltemplate import HtmlTemplate
 from outwiker.core.application import Application
 from outwiker.core.system import readTextFile
+from outwiker.core.events import (PreprocessingParams,
+                                  PreHtmlImprovingParams,
+                                  PostprocessingParams
+                                  )
 from outwiker.gui.guiconfig import HtmlRenderConfig
 
 from .parserfactory import ParserFactory
@@ -27,7 +31,7 @@ class HtmlGenerator (object):
                    else EmptyContent (Application.config).content)
 
         content = self._changeContentByEvent (self.page,
-                                              content,
+                                              PreprocessingParams (content),
                                               Application.onPreprocessing)
 
         # Create parser
@@ -41,7 +45,7 @@ class HtmlGenerator (object):
 
         # Improve HTML
         html = self._changeContentByEvent (self.page,
-                                           html,
+                                           PreHtmlImprovingParams (html),
                                            Application.onPreHtmlImproving)
 
         improverFactory = HtmlImproverFactory (Application)
@@ -53,13 +57,12 @@ class HtmlGenerator (object):
         result = tpl.substitute (content=text, userhead=head)
 
         result = self._changeContentByEvent (self.page,
-                                             result,
+                                             PostprocessingParams (result),
                                              Application.onPostprocessing)
 
         return result
 
 
-    def _changeContentByEvent (self, page, content, event):
-        result = [content]
-        event (page, result)
-        return result[0]
+    def _changeContentByEvent (self, page, params, event):
+        event (page, params)
+        return params.result

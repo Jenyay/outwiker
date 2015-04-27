@@ -22,7 +22,7 @@ PAGE_UPDATE_STYLE = 16
 
 class LinkClickParams (object):
     """
-    Parameter set for onLinkClick event
+    Parameter set for the onLinkClick event
     """
     def __init__ (self,
                   link = u'',
@@ -60,7 +60,7 @@ class LinkClickParams (object):
 
 class HoverLinkParams (object):
     """
-    Parameter set for onHoverLink event
+    Parameter set for the onHoverLink event
     """
     def __init__ (self, link = None, text = u''):
         """
@@ -70,3 +70,38 @@ class HoverLinkParams (object):
         """
         self.link = link
         self.text = text
+
+
+class PreprocessingParams (object):
+    """
+    Parameter set for the onPreprocessing event
+    """
+    def __init__ (self, result):
+        """
+        result - resulted code (wiki or HTML) for which will be generated final HTML code.
+        This item can be changed by event handlers
+        """
+        self.result = result
+
+
+class PostprocessingParams (object):
+    """
+    Parameter set for the onPostprocessing event
+    """
+    def __init__ (self, result):
+        """
+        result - resulted HTML code. This item can be changed by event handlers.
+            User will see result after all changes.
+        """
+        self.result = result
+
+
+class PreHtmlImprovingParams (object):
+    """
+    Parameter set for the onPreHtmlImproving event
+    """
+    def __init__ (self, result):
+        """
+        result - HTML code after wiki parsing. This item can be changed by event handlers.
+        """
+        self.result = result

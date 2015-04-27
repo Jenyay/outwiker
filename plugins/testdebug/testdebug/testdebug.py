@@ -21,10 +21,10 @@ class PluginDebug (Plugin):
         self._url = u"http://jenyay.net/Outwiker/DebugPlugin"
         self._watcher = EventsWatcher (self._application)
 
-        self._enablePreProcessing = False
-        self._enablePostProcessing = False
-        self._enableOnHoverLink = True
-        self._enableOnLinkClick = True
+        self._enablePreProcessing = True
+        self._enablePostProcessing = True
+        self._enableOnHoverLink = False
+        self._enableOnLinkClick = False
 
 
     def __createMenu (self):
@@ -111,19 +111,24 @@ class PluginDebug (Plugin):
                   id=self.__ID_TRAY_POPUP)
 
 
-    def __onPostProcessing (self, page, result):
+    def __onPostProcessing (self, page, params):
         if self._enablePostProcessing:
-            result[0] = re.compile(re.escape(u"абырвалг"), re.I | re.U).sub (u"Главрыба", result[0])
+            params.result = re.compile(re.escape(u"абырвалг"), re.I | re.U).sub (u"Главрыба", params.result)
 
 
-    def __onPreProcessing (self, page, result):
+    def __onPreProcessing (self, page, params):
         if self._enablePreProcessing:
-            result[0] = "!! Debug!!!\n" + result[0]
+            params.result = "!! Debug!!!\n" + params.result
 
 
     def __onButtonsDialog (self, event):
         buttons = [_(u"Button 1"), _(u"Button 2"), _(u"Button 3"), _(u"Cancel")]
-        with ButtonsDialog (self._application.mainWindow, _(u"Message"), _(u"Caption"), buttons, default=0, cancel=3) as dlg:
+        with ButtonsDialog (self._application.mainWindow,
+                            _(u"Message"),
+                            _(u"Caption"),
+                            buttons,
+                            default=0,
+                            cancel=3) as dlg:
             result = dlg.ShowModal()
 
             if result == wx.ID_CANCEL:
