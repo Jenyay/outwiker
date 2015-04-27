@@ -56,3 +56,17 @@ class LinkClickParams (object):
         self.linktype = linktype
 
         self.process = False
+
+
+class HoverLinkParams (object):
+    """
+    Parameter set for onHoverLink event
+    """
+    def __init__ (self, link = None, text = u''):
+        """
+        link - link under cursor (or None)
+        text - text which will be showed in status bar.
+                This member can be changed by event handlers.
+        """
+        self.link = link
+        self.text = text

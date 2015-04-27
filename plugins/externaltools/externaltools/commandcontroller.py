@@ -58,10 +58,10 @@ class CommandController (object):
         return paramsDict
 
 
-    def __onHoverLink (self, page, link, title):
-        if link is None:
+    def __onHoverLink (self, page, params):
+        if params.link is None:
             return
 
-        urlparams = self._getParams (link)
+        urlparams = self._getParams (params.link)
         if PROTO_TITLE in urlparams:
-            title[0] = u'>>> ' + urlparams[PROTO_TITLE][0]
+            params.text = u'>>> ' + urlparams[PROTO_TITLE][0]
