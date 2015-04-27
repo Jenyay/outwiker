@@ -190,7 +190,7 @@ class HtmlRenderIE (HtmlRender):
                                        anchor)
 
         Application.onLinkClick (self._currentPage, params)
-        if params["process"]:
+        if params.process:
             return
 
         if url is not None:

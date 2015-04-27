@@ -7,6 +7,7 @@ import wx
 
 import outwiker.core
 from outwiker.core.application import Application
+from outwiker.core.events import LinkClickParams
 
 
 class HtmlRender (wx.Panel):
@@ -105,25 +106,24 @@ class HtmlRender (wx.Panel):
                          ispage,
                          isfilename,
                          isanchor):
-        params = {
-            u"link": href,
-            u"button": button,
-            u"modifier": modifier,
-            u"process": False,
-            u"linktype": None,
-        }
+        linktype = None
 
         if isanchor:
-            params["linktype"] = u"anchor"
+            linktype = u"anchor"
 
         if isurl:
-            params["linktype"] = u"url"
+            linktype = u"url"
         elif ispage:
-            params["linktype"] = u"page"
+            linktype = u"page"
         elif isfilename:
-            params["linktype"] = u"filename"
+            linktype = u"filename"
 
-        return params
+        return LinkClickParams (
+            link = href,
+            button = button,
+            modifier = modifier,
+            linktype = linktype,
+        )
 
 
     def setStatusText (self, link, text):

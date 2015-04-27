@@ -206,22 +206,7 @@ class ApplicationParams (object):
         # Event occurs when user click to link on a page
         # Parameters:
         #     page - current page
-        #     params - dictionary with keys:
-        #         "link" - clicked link
-        #         "button" - mouse button by link was clicked:
-        #             (consts from gui.defines module)
-        #         "modifier" - pressed keys (consts from gui.defines module)
-        #         "linktype" - string (or None) which shows type of link:
-        #             "url" - link to Internet site
-        #             "page" - link to page (note)
-        #             "file" - link to file
-        #             "anchor" - link to anchor on current page
-        #             None - unknown
-        #         "process" - boolean value, which indicates what
-        #             processed this click (True) or not (False).
-        #             This value can be changed by event handlers.
-        #             If click was processed, standard (internal) processing
-        #             is not process.
+        #     params - instance of the outwiker.core.events.LinkClickParams class
         self.onLinkClick = Event()
 
 
