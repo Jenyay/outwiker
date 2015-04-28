@@ -2,7 +2,7 @@
 
 import re
 
-import lib.ushlex
+import libs.ushlex
 
 
 class ExecInfo (object):
@@ -38,7 +38,7 @@ class CommandExecParser (object):
 
         result = []
         for line in lines:
-            items = lib.ushlex.split (line)
+            items = libs.ushlex.split (line)
             assert len (items) != 0
 
             command = items[0]

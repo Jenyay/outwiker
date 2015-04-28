@@ -21,8 +21,8 @@ class PluginDebug (Plugin):
         self._url = u"http://jenyay.net/Outwiker/DebugPlugin"
         self._watcher = EventsWatcher (self._application)
 
-        self._enablePreProcessing = True
-        self._enablePostProcessing = True
+        self._enablePreProcessing = False
+        self._enablePostProcessing = False
         self._enableOnHoverLink = False
         self._enableOnLinkClick = False
 
