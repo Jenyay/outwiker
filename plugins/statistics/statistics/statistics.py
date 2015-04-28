@@ -10,11 +10,11 @@ from outwiker.core.version import Version, StatusSet
 from outwiker.core.system import getOS
 
 
-__version__ = u"1.0.1"
+__version__ = u"1.0.2"
 
 
-if getCurrentVersion() < Version (1, 7, 0, 684, status=StatusSet.DEV):
-    print ("Statistics plugin. OutWiker version requirement: 1.7.0.684")
+if getCurrentVersion() < Version (1, 7, 0):
+    print ("Statistics plugin. OutWiker version requirement: 1.7.0")
 else:
     from .i18n import set_
     from .pagestat import PageStat
