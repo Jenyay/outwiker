@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 from outwiker.gui.guiconfig import GeneralGuiConfig
+from outwiker.core.system import getOS
 
 from .i18n import get_
 
@@ -56,7 +57,7 @@ class DatePageInfo (object):
         items = [u"<li><a href='{url}'>{title}</a> ({date})</li>".format (
             url=u"/" + page.subpath,
             title=page.title,
-            date=page.datetime.strftime (self._dateTimeFormat))
+            date=unicode (page.datetime.strftime (self._dateTimeFormat), getOS().filesEncoding))
             for page in pageList]
 
         return u"<ul>" + u"".join (items) + u"</ul>"
