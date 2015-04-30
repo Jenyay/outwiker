@@ -1,9 +1,12 @@
 # -*- coding: UTF-8 -*-
 
 import urlparse
+import subprocess
+
+from outwiker.core.system import getOS
 
 from commandexec import CommandExec
-from commandparams import EXEC_BEGIN, PROTO_TITLE
+from commandparams import EXEC_BEGIN, PROTO_TITLE, PROTO_COMMAND
 
 
 class CommandController (object):
@@ -18,13 +21,15 @@ class CommandController (object):
     def initialize (self):
         if self._enableExecCommand:
             self._application.onWikiParserPrepare += self.__onWikiParserPrepare
-            self._application.onHoverLink += self.__onHoverLink
+            self._application.onHoverLink += self._onHoverLink
+            self._application.onLinkClick += self._onLinkClick
 
 
     def destroy (self):
         if self._enableExecCommand:
             self._application.onWikiParserPrepare -= self.__onWikiParserPrepare
-            self._application.onHoverLink -= self.__onHoverLink
+            self._application.onHoverLink -= self._onHoverLink
+            self._application.onLinkClick -= self._onLinkClick
 
 
     def __onWikiParserPrepare (self, parser):
@@ -58,10 +63,44 @@ class CommandController (object):
         return paramsDict
 
 
-    def __onHoverLink (self, page, params):
+    def _onHoverLink (self, page, params):
         if params.link is None:
             return
 
         urlparams = self._getParams (params.link)
         if PROTO_TITLE in urlparams:
             params.text = u'>>> ' + urlparams[PROTO_TITLE][0]
+
+
+    def _onLinkClick (self, page, params):
+        if params.link is None:
+            return
+
+        urlparams = self._getParams (params.link)
+        if not urlparams:
+            return
+
+        params.process = True
+
+        comindex = 1
+        comparams = PROTO_COMMAND.format (number = comindex)
+
+        encoding = getOS().filesEncoding
+
+        while comparams in urlparams:
+            command = urlparams[comparams][0].encode (encoding)
+            params = [param.encode (encoding)
+                      for param
+                      in urlparams[comparams][1:]]
+
+            self._execute (command, params)
+
+            comindex += 1
+            comparams = PROTO_COMMAND.format (number = comindex)
+
+
+    def _execute (self, command, params):
+        try:
+            subprocess.Popen ([command] + params)
+        except (OSError, subprocess.CalledProcessError):
+            pass
