@@ -56,7 +56,7 @@ class CommandController (object):
         params = url[startpos + 1:]
 
         try:
-            paramsDict = urlparse.parse_qs (params)
+            paramsDict = urlparse.parse_qs (str (params))
         except ValueError:
             return {}
 
@@ -69,7 +69,7 @@ class CommandController (object):
 
         urlparams = self._getParams (params.link)
         if PROTO_TITLE in urlparams:
-            params.text = u'>>> ' + urlparams[PROTO_TITLE][0]
+            params.text = u'>>> ' + unicode (urlparams[PROTO_TITLE][0], "utf8")
 
 
     def _onLinkClick (self, page, params):
@@ -88,8 +88,8 @@ class CommandController (object):
         encoding = getOS().filesEncoding
 
         while comparams in urlparams:
-            command = urlparams[comparams][0].encode (encoding)
-            params = [param.encode (encoding)
+            command = unicode (urlparams[comparams][0], "utf8").encode (encoding)
+            params = [unicode (param, "utf8").encode (encoding)
                       for param
                       in urlparams[comparams][1:]]
 
