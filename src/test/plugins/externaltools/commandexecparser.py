@@ -52,7 +52,7 @@ class CommandExecParserTest (unittest.TestCase):
 
 
     def testCommandExecParser_01_empty (self):
-        from externaltools.commandexecparser import CommandExecParser
+        from externaltools.commandexec.commandexecparser import CommandExecParser
         text = u''
 
         parser = CommandExecParser()
@@ -62,7 +62,7 @@ class CommandExecParserTest (unittest.TestCase):
 
 
     def testCommandExecParser_02 (self):
-        from externaltools.commandexecparser import CommandExecParser
+        from externaltools.commandexec.commandexecparser import CommandExecParser
         text = u'gvim'
 
         parser = CommandExecParser()
@@ -74,7 +74,7 @@ class CommandExecParserTest (unittest.TestCase):
 
 
     def testCommandExecParser_03 (self):
-        from externaltools.commandexecparser import CommandExecParser
+        from externaltools.commandexec.commandexecparser import CommandExecParser
         text = u'''gvim
 krusader'''
 
@@ -91,7 +91,7 @@ krusader'''
 
 
     def testCommandExecParser_04 (self):
-        from externaltools.commandexecparser import CommandExecParser
+        from externaltools.commandexec.commandexecparser import CommandExecParser
         text = u'''
 
     gvim  
@@ -114,7 +114,7 @@ krusader'''
 
 
     def testCommandExecParser_05_params (self):
-        from externaltools.commandexecparser import CommandExecParser
+        from externaltools.commandexec.commandexecparser import CommandExecParser
         text = u'gvim -d файл1.txt файл2.txt'
 
         parser = CommandExecParser()
@@ -126,7 +126,7 @@ krusader'''
 
 
     def testCommandExecParser_06_params (self):
-        from externaltools.commandexecparser import CommandExecParser
+        from externaltools.commandexec.commandexecparser import CommandExecParser
         text = u'  gvim   -d   файл1.txt   файл2.txt   '
 
         parser = CommandExecParser()
@@ -138,7 +138,7 @@ krusader'''
 
 
     def testCommandExecParser_07_params (self):
-        from externaltools.commandexecparser import CommandExecParser
+        from externaltools.commandexec.commandexecparser import CommandExecParser
         text = u'  gvim   -d   "Имя файла 1.txt"   "Имя файла 2.txt"   '
 
         parser = CommandExecParser()
@@ -150,7 +150,7 @@ krusader'''
 
 
     def testCommandExecParser_08_params (self):
-        from externaltools.commandexecparser import CommandExecParser
+        from externaltools.commandexec.commandexecparser import CommandExecParser
         text = ur'  gvim   -d   "Имя файла 1\".txt"   "Имя файла 2.txt"   '
 
         parser = CommandExecParser()
@@ -162,7 +162,7 @@ krusader'''
 
 
     def testCommandExecParser_09_params (self):
-        from externaltools.commandexecparser import CommandExecParser
+        from externaltools.commandexec.commandexecparser import CommandExecParser
         text = u'''
         gvim   -d   "Имя файла 1.txt"   "Имя файла 2.txt"
 
@@ -184,7 +184,7 @@ krusader'''
 
 
     def testCommandExecParser_10_join (self):
-        from externaltools.commandexecparser import CommandExecParser
+        from externaltools.commandexec.commandexecparser import CommandExecParser
         text = ur'''gvim \
 "Имя файла"
 '''
@@ -199,7 +199,7 @@ krusader'''
 
 
     def testCommandExecParser_11_join (self):
-        from externaltools.commandexecparser import CommandExecParser
+        from externaltools.commandexec.commandexecparser import CommandExecParser
         text = ur'''gvim \   
    "Имя файла"
 '''
@@ -214,7 +214,7 @@ krusader'''
 
 
     def testCommandExecParser_12_join (self):
-        from externaltools.commandexecparser import CommandExecParser
+        from externaltools.commandexec.commandexecparser import CommandExecParser
         text = ur'''gvim \
 
 
@@ -231,7 +231,7 @@ krusader'''
 
 
     def testCommandExecParser_13_invalid (self):
-        from externaltools.commandexecparser import CommandExecParser
+        from externaltools.commandexec.commandexecparser import CommandExecParser
         text = ur'''gvim \ asdfadsf'''
 
         parser = CommandExecParser()
@@ -239,7 +239,7 @@ krusader'''
 
 
     def testCommandExecParser_14_params (self):
-        from externaltools.commandexecparser import CommandExecParser
+        from externaltools.commandexec.commandexecparser import CommandExecParser
         text = u'gvim -d'
 
         parser = CommandExecParser()

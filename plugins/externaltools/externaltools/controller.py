@@ -4,7 +4,7 @@ from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
 
 from i18n import get_
 from menutoolscontroller import MenuToolsController
-from commandcontroller import CommandController
+from commandexec.commandcontroller import CommandController
 
 
 class Controller (object):
