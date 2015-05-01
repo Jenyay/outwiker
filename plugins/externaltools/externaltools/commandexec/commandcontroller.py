@@ -7,6 +7,7 @@ from outwiker.core.system import getOS
 
 from commandexec import CommandExec
 from commandparams import EXEC_BEGIN, PROTO_TITLE, PROTO_COMMAND
+from execinfo import ExecInfo
 
 
 class CommandController (object):
@@ -82,6 +83,16 @@ class CommandController (object):
 
         params.process = True
 
+        for command in self.getCommandsList (urlparams):
+            self._execute (command.command, command.params)
+
+
+    def getCommandsList (self, urlparams):
+        """
+        Return list of the ExecInfo. Macros will be replaced in params
+        """
+        result = []
+
         comindex = 1
         comparams = PROTO_COMMAND.format (number = comindex)
 
@@ -93,10 +104,13 @@ class CommandController (object):
                       for param
                       in urlparams[comparams][1:]]
 
-            self._execute (command, params)
+            result.append (ExecInfo (command, params))
 
             comindex += 1
             comparams = PROTO_COMMAND.format (number = comindex)
+
+        return result
+
 
 
     def _execute (self, command, params):
