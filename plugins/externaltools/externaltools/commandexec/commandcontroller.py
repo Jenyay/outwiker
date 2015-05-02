@@ -2,11 +2,12 @@
 
 import urlparse
 import subprocess
+from StringIO import StringIO
 
 from outwiker.core.system import getOS
 
 from commandexec import CommandExec
-from commandparams import EXEC_BEGIN, PROTO_TITLE, PROTO_COMMAND
+from commandparams import EXEC_BEGIN, PROTO_COMMAND
 from execinfo import ExecInfo
 
 
@@ -69,8 +70,40 @@ class CommandController (object):
             return
 
         urlparams = self._getParams (params.link)
-        if PROTO_TITLE in urlparams:
-            params.text = u'>>> ' + unicode (urlparams[PROTO_TITLE][0], "utf8")
+        if not urlparams:
+            return
+
+        commands = self.getCommandsList (urlparams)
+
+        if commands:
+            params.text = self._getStatusTitle (commands)
+
+
+    def _getStatusTitle (self, commands):
+        """
+        command - instance of the ExecInfo class
+        """
+        assert commands
+
+        buf = StringIO()
+        buf.write (u'>>> ')
+        buf.write (self._getParamText (commands[0].command))
+
+        for param in commands[0].params:
+            buf.write (u' ')
+            buf.write (self._getParamText (param))
+
+        if len (commands) > 1:
+            buf.write (u' ...')
+
+        return buf.getvalue()
+
+
+    def _getParamText (self, param):
+        """
+        Quoted param if it contain a space
+        """
+        return u'"{}"'.format (param) if u' ' in param else param
 
 
     def _onLinkClick (self, page, params):
