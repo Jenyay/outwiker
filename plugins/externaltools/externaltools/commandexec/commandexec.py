@@ -29,7 +29,7 @@ class CommandExec (Command):
         """
         paramsDict = Command.parseParams (params)
 
-        commandParser = CommandExecParser()
+        commandParser = CommandExecParser (self.parser.page)
         commandsList = commandParser.parse (content)
 
         htmlMaker = self._createHtmlMaker (paramsDict)

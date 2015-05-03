@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 import unittest
+import os.path
 from tempfile import mkdtemp
 
 from outwiker.core.pluginsloader import PluginsLoader
@@ -17,6 +18,8 @@ class CommandExecParserTest (unittest.TestCase):
 
         self.__createWiki()
         self.testPage = self.wikiroot[u'Страница 1']
+        self.testPageTextPath = os.path.join (self.testPage.path, u'__page.text')
+        self.testPageHtmlPath = os.path.join (self.testPage.path, u'__content.html')
 
         dirlist = [u'../plugins/externaltools']
 
@@ -55,7 +58,7 @@ class CommandExecParserTest (unittest.TestCase):
         from externaltools.commandexec.commandexecparser import CommandExecParser
         text = u''
 
-        parser = CommandExecParser()
+        parser = CommandExecParser (self.testPage)
         result = parser.parse (text)
 
         self.assertEqual (len (result), 0)
@@ -65,7 +68,7 @@ class CommandExecParserTest (unittest.TestCase):
         from externaltools.commandexec.commandexecparser import CommandExecParser
         text = u'gvim'
 
-        parser = CommandExecParser()
+        parser = CommandExecParser (self.testPage)
         result = parser.parse (text)
 
         self.assertEqual (len (result), 1)
@@ -78,7 +81,7 @@ class CommandExecParserTest (unittest.TestCase):
         text = u'''gvim
 krusader'''
 
-        parser = CommandExecParser()
+        parser = CommandExecParser (self.testPage)
         result = parser.parse (text)
 
         self.assertEqual (len (result), 2)
@@ -101,7 +104,7 @@ krusader'''
 
 '''
 
-        parser = CommandExecParser()
+        parser = CommandExecParser (self.testPage)
         result = parser.parse (text)
 
         self.assertEqual (len (result), 2)
@@ -117,7 +120,7 @@ krusader'''
         from externaltools.commandexec.commandexecparser import CommandExecParser
         text = u'gvim -d файл1.txt файл2.txt'
 
-        parser = CommandExecParser()
+        parser = CommandExecParser (self.testPage)
         result = parser.parse (text)
 
         self.assertEqual (len (result), 1)
@@ -129,7 +132,7 @@ krusader'''
         from externaltools.commandexec.commandexecparser import CommandExecParser
         text = u'  gvim   -d   файл1.txt   файл2.txt   '
 
-        parser = CommandExecParser()
+        parser = CommandExecParser (self.testPage)
         result = parser.parse (text)
 
         self.assertEqual (len (result), 1)
@@ -141,7 +144,7 @@ krusader'''
         from externaltools.commandexec.commandexecparser import CommandExecParser
         text = u'  gvim   -d   "Имя файла 1.txt"   "Имя файла 2.txt"   '
 
-        parser = CommandExecParser()
+        parser = CommandExecParser (self.testPage)
         result = parser.parse (text)
 
         self.assertEqual (len (result), 1)
@@ -153,7 +156,7 @@ krusader'''
         from externaltools.commandexec.commandexecparser import CommandExecParser
         text = ur'  gvim   -d   "Имя файла 1\".txt"   "Имя файла 2.txt"   '
 
-        parser = CommandExecParser()
+        parser = CommandExecParser (self.testPage)
         result = parser.parse (text)
 
         self.assertEqual (len (result), 1)
@@ -171,7 +174,7 @@ krusader'''
 
         '''
 
-        parser = CommandExecParser()
+        parser = CommandExecParser (self.testPage)
         result = parser.parse (text)
 
         self.assertEqual (len (result), 2)
@@ -189,7 +192,7 @@ krusader'''
 "Имя файла"
 '''
 
-        parser = CommandExecParser()
+        parser = CommandExecParser (self.testPage)
         result = parser.parse (text)
 
         self.assertEqual (len (result), 1)
@@ -204,7 +207,7 @@ krusader'''
    "Имя файла"
 '''
 
-        parser = CommandExecParser()
+        parser = CommandExecParser (self.testPage)
         result = parser.parse (text)
 
         self.assertEqual (len (result), 1)
@@ -221,7 +224,7 @@ krusader'''
 "Имя файла"
 '''
 
-        parser = CommandExecParser()
+        parser = CommandExecParser (self.testPage)
         result = parser.parse (text)
 
         self.assertEqual (len (result), 1)
@@ -234,7 +237,7 @@ krusader'''
         from externaltools.commandexec.commandexecparser import CommandExecParser
         text = ur'''gvim \ asdfadsf'''
 
-        parser = CommandExecParser()
+        parser = CommandExecParser (self.testPage)
         parser.parse (text)
 
 
@@ -242,9 +245,61 @@ krusader'''
         from externaltools.commandexec.commandexecparser import CommandExecParser
         text = u'gvim -d'
 
-        parser = CommandExecParser()
+        parser = CommandExecParser (self.testPage)
         result = parser.parse (text)
 
         self.assertEqual (len (result), 1)
         self.assertEqual (result[0].command, u'gvim')
         self.assertEqual (result[0].params, [u'-d'])
+
+
+    def testMacrosPage_01 (self):
+        from externaltools.commandexec.commandexecparser import CommandExecParser
+
+        text = u'''gvim %page%'''
+
+        parser = CommandExecParser (self.testPage)
+        result = parser.parse (text)
+
+        self.assertEqual (len (result), 1)
+        self.assertEqual (result[0].command, u'gvim')
+        self.assertEqual (result[0].params, [self.testPageTextPath])
+
+
+    def testMacrosHtml_01 (self):
+        from externaltools.commandexec.commandexecparser import CommandExecParser
+
+        text = u'''gvim %html%'''
+
+        parser = CommandExecParser (self.testPage)
+        result = parser.parse (text)
+
+        self.assertEqual (len (result), 1)
+        self.assertEqual (result[0].command, u'gvim')
+        self.assertEqual (result[0].params, [self.testPageHtmlPath])
+
+
+    def testMacrosFolder_01 (self):
+        from externaltools.commandexec.commandexecparser import CommandExecParser
+
+        text = u'''gvim %folder%'''
+
+        parser = CommandExecParser (self.testPage)
+        result = parser.parse (text)
+
+        self.assertEqual (len (result), 1)
+        self.assertEqual (result[0].command, u'gvim')
+        self.assertEqual (result[0].params, [self.testPage.path])
+
+
+    def testMacrosFolder_02 (self):
+        from externaltools.commandexec.commandexecparser import CommandExecParser
+
+        text = u'''gvim %folder%/111.txt'''
+
+        parser = CommandExecParser (self.testPage)
+        result = parser.parse (text)
+
+        self.assertEqual (len (result), 1)
+        self.assertEqual (result[0].command, u'gvim')
+        self.assertEqual (result[0].params, [self.testPage.path + u'/111.txt'])
