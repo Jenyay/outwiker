@@ -76,10 +76,10 @@ class CommandController (object):
         commands = self.getCommandsList (urlparams)
 
         if commands:
-            params.text = self._getStatusTitle (commands)
+            params.text = self.getStatusTitle (commands)
 
 
-    def _getStatusTitle (self, commands):
+    def getStatusTitle (self, commands):
         """
         command - instance of the ExecInfo class
         """
@@ -101,7 +101,7 @@ class CommandController (object):
 
     def _getParamText (self, param):
         """
-        Quoted param if it contain a space
+        Quote param if it contain a space
         """
         return u'"{}"'.format (param) if u' ' in param else param
 
