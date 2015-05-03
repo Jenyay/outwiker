@@ -87,3 +87,55 @@ class CommandExecControllerTest (unittest.TestCase):
         rightTitle = u'>>> gvim "абырвалг главрыба" ...'
 
         self.assertEqual (title, rightTitle)
+
+
+    def testCommandsList_01 (self):
+        urlparams = {}
+        commands = self._controller.getCommandsList (urlparams)
+
+        self.assertEqual (len (commands), 0)
+
+
+    def testCommandsList_02 (self):
+        urlparams = {u'com1': ['gvim']}
+        commands = self._controller.getCommandsList (urlparams)
+
+        self.assertEqual (len (commands), 1)
+        self.assertEqual (commands[0].command, u'gvim')
+        self.assertEqual (commands[0].params, [])
+
+
+    def testCommandsList_03 (self):
+        urlparams = {u'com1': ['gvim', 'abyrvalg']}
+        commands = self._controller.getCommandsList (urlparams)
+
+        self.assertEqual (len (commands), 1)
+        self.assertEqual (commands[0].command, u'gvim')
+        self.assertEqual (commands[0].params, [u'abyrvalg'])
+
+
+    def testCommandsList_04 (self):
+        urlparams = {
+            u'com1': ['gvim', 'abyrvalg'],
+            u'com3': ['gvim', 'abyrvalg'],
+        }
+        commands = self._controller.getCommandsList (urlparams)
+
+        self.assertEqual (len (commands), 1)
+        self.assertEqual (commands[0].command, u'gvim')
+        self.assertEqual (commands[0].params, [u'abyrvalg'])
+
+
+    def testCommandsList_05 (self):
+        urlparams = {
+            u'com1': ['gvim', 'abyrvalg'],
+            u'com2': ['krusader', 'glavryba'],
+        }
+        commands = self._controller.getCommandsList (urlparams)
+
+        self.assertEqual (len (commands), 2)
+        self.assertEqual (commands[0].command, u'gvim')
+        self.assertEqual (commands[0].params, [u'abyrvalg'])
+
+        self.assertEqual (commands[1].command, u'krusader')
+        self.assertEqual (commands[1].params, [u'glavryba'])

@@ -123,6 +123,7 @@ class CommandController (object):
     def getCommandsList (self, urlparams):
         """
         Return list of the ExecInfo. Macros will be replaced in params
+        urlparams is dictionary with params from url.
         """
         result = []
 
