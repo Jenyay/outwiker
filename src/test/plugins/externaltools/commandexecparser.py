@@ -4,6 +4,7 @@ import unittest
 import os.path
 from tempfile import mkdtemp
 
+from outwiker.core.attachment import Attachment
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
@@ -22,6 +23,7 @@ class CommandExecParserTest (unittest.TestCase):
         self.testPage = self.wikiroot[u'Страница 1']
         self.testPageTextPath = os.path.join (self.testPage.path, u'__page.text')
         self.testPageHtmlPath = os.path.join (self.testPage.path, PAGE_RESULT_HTML)
+        self.testPageAttachPath = Attachment(self.testPage).getAttachPath(False)
 
         dirlist = [u'../plugins/externaltools']
 
@@ -268,6 +270,19 @@ krusader'''
         self.assertEqual (result[0].params, [self.testPageTextPath])
 
 
+    def testMacrosPage_02 (self):
+        from externaltools.commandexec.commandexecparser import CommandExecParser
+
+        text = u'''gvim %PAGE%'''
+
+        parser = CommandExecParser (self.testPage)
+        result = parser.parse (text)
+
+        self.assertEqual (len (result), 1)
+        self.assertEqual (result[0].command, u'gvim')
+        self.assertEqual (result[0].params, [self.testPageTextPath])
+
+
     def testMacrosHtml_01 (self):
         from externaltools.commandexec.commandexecparser import CommandExecParser
 
@@ -305,3 +320,98 @@ krusader'''
         self.assertEqual (len (result), 1)
         self.assertEqual (result[0].command, u'gvim')
         self.assertEqual (result[0].params, [self.testPage.path + u'/111.txt'])
+
+
+    def testMacrosFolder_03 (self):
+        from externaltools.commandexec.commandexecparser import CommandExecParser
+
+        text = u'''gvim %FOLDER%'''
+
+        parser = CommandExecParser (self.testPage)
+        result = parser.parse (text)
+
+        self.assertEqual (len (result), 1)
+        self.assertEqual (result[0].command, u'gvim')
+        self.assertEqual (result[0].params, [self.testPage.path])
+
+
+    def testMacrosAttach_01 (self):
+        from externaltools.commandexec.commandexecparser import CommandExecParser
+
+        text = u'''gvim %attach%'''
+
+        parser = CommandExecParser (self.testPage)
+        result = parser.parse (text)
+
+        self.assertEqual (len (result), 1)
+        self.assertEqual (result[0].command, u'gvim')
+        self.assertEqual (result[0].params, [self.testPageAttachPath])
+
+
+    def testMacrosAttach_02 (self):
+        from externaltools.commandexec.commandexecparser import CommandExecParser
+
+        text = u'''gvim %ATTACH%'''
+
+        parser = CommandExecParser (self.testPage)
+        result = parser.parse (text)
+
+        self.assertEqual (len (result), 1)
+        self.assertEqual (result[0].command, u'gvim')
+        self.assertEqual (result[0].params, [self.testPageAttachPath])
+
+
+    def testMacrosAttach_03 (self):
+        from externaltools.commandexec.commandexecparser import CommandExecParser
+
+        text = u'''gvim Attach:абырвалг.txt'''
+
+        attachPath = os.path.join (self.testPageAttachPath, u'абырвалг.txt')
+
+        parser = CommandExecParser (self.testPage)
+        result = parser.parse (text)
+
+        self.assertEqual (len (result), 1)
+        self.assertEqual (result[0].command, u'gvim')
+        self.assertEqual (result[0].params, [attachPath])
+
+
+    def testMacrosAttach_04 (self):
+        from externaltools.commandexec.commandexecparser import CommandExecParser
+
+        text = u'''gvim "Attach:абырвалг главрыба.txt"'''
+
+        attachPath = os.path.join (self.testPageAttachPath, u'абырвалг главрыба.txt')
+
+        parser = CommandExecParser (self.testPage)
+        result = parser.parse (text)
+
+        self.assertEqual (len (result), 1)
+        self.assertEqual (result[0].command, u'gvim')
+        self.assertEqual (result[0].params, [attachPath])
+
+
+    def testMacrosAttach_05 (self):
+        from externaltools.commandexec.commandexecparser import CommandExecParser
+
+        text = u'''gvim xAttach:абырвалг.txt'''
+
+        parser = CommandExecParser (self.testPage)
+        result = parser.parse (text)
+
+        self.assertEqual (len (result), 1)
+        self.assertEqual (result[0].command, u'gvim')
+        self.assertEqual (result[0].params, [u'xAttach:абырвалг.txt'])
+
+
+    def testMacrosAttach_06 (self):
+        from externaltools.commandexec.commandexecparser import CommandExecParser
+
+        text = u'''gvim attach:абырвалг.txt'''
+
+        parser = CommandExecParser (self.testPage)
+        result = parser.parse (text)
+
+        self.assertEqual (len (result), 1)
+        self.assertEqual (result[0].command, u'gvim')
+        self.assertEqual (result[0].params, [u'attach:абырвалг.txt'])

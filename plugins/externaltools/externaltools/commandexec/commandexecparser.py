@@ -3,6 +3,7 @@
 import os.path
 import re
 
+from outwiker.core.attachment import Attachment
 from outwiker.core.defines import PAGE_CONTENT_FILE
 
 from externaltools.libs import ushlex
@@ -21,6 +22,7 @@ class CommandExecParser (object):
         self._macrosPage = re.compile (commandparams.MACROS_PAGE, re.I)
         self._macrosHtml = re.compile (commandparams.MACROS_HTML, re.I)
         self._macrosFolder = re.compile (commandparams.MACROS_FOLDER, re.I)
+        self._macrosAttach = re.compile (commandparams.MACROS_ATTACH, re.I)
 
 
     def parse (self, text):
@@ -51,6 +53,7 @@ class CommandExecParser (object):
         result = self._substitutePage (paramText)
         result = self._substituteHtml (result)
         result = self._substituteFolder (result)
+        result = self._substituteAttach (result)
 
         return result
 
@@ -67,3 +70,30 @@ class CommandExecParser (object):
 
     def _substituteFolder (self, paramText):
         return self._macrosFolder.sub (self._page.path, paramText)
+
+
+    def _substituteAttach (self, paramText):
+        attachPath = Attachment (self._page).getAttachPath (True)
+        if attachPath.endswith (u'/') or attachPath.endswith (u'\\'):
+            attachPath = attachPath[:-1]
+
+        # Substitute %attach%
+        result = self._macrosAttach.sub (attachPath, paramText)
+
+        # Substitute Attach:
+        result = self._substituteAttachWiki (result)
+
+        return result
+
+
+    def _substituteAttachWiki (self, paramText):
+        attachWiki = u'Attach:'
+        attachPath = Attachment (self._page).getAttachPath (True)
+
+        # "Attach:" may be at the beginning only
+        if not paramText.startswith (attachWiki):
+            return paramText
+
+        fname = paramText[len (attachWiki):]
+
+        return os.path.join (attachPath, fname)

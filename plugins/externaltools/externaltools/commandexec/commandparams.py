@@ -25,11 +25,15 @@ PROTO_COMMAND = u'com{number}'
 
 PROTO_TITLE = u'title'
 
-# Will be replaced by full path to page text
+# The macros will be replaced by full path to page text
 MACROS_PAGE = u'%page%'
 
-# Will be replaced by full path to HTML content file
+# The macros will be replaced by full path to HTML content file
 MACROS_HTML = u'%html%'
 
-# Will be replaced by full path to page folder
+# The macros will be replaced by full path to page folder
 MACROS_FOLDER = u'%folder%'
+
+# The macros will be replaced by full path fo attach folder
+#     without slash on the end
+MACROS_ATTACH = u'%attach%'
