@@ -3,6 +3,13 @@ import wx
 
 from outwiker.pages.html.basehtmlpanel import EVT_PAGE_TAB_CHANGED
 from externaltools.i18n import get_
+from externaltools.commandexec.actions import (
+    CommandExecAction,
+    MacrosPageAction,
+    MacrosHtmlAction,
+    MacrosAttachAction,
+    MacrosFolderAction,
+)
 
 
 class GuiCreator (object):
@@ -12,7 +19,13 @@ class GuiCreator (object):
     def __init__ (self, application):
         self._application = application
 
-        self._actions = []
+        self._actions = [
+            CommandExecAction,
+            MacrosPageAction,
+            MacrosHtmlAction,
+            MacrosAttachAction,
+            MacrosFolderAction,
+        ]
 
         # MenuItem for ExternalTools submenu
         self._submenuItem = None

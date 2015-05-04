@@ -88,7 +88,7 @@ class CommandExecParser (object):
 
     def _substituteAttachWiki (self, paramText):
         attachWiki = u'Attach:'
-        attachPath = Attachment (self._page).getAttachPath (True)
+        attachPath = Attachment (self._page).getAttachPath (False)
 
         # "Attach:" may be at the beginning only
         if not paramText.startswith (attachWiki):
