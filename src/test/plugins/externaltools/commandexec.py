@@ -101,3 +101,25 @@ gvim -d "Первый файл.txt" "Второй файл.txt"
         self.assertIn (u'com1=gvim', result)
         self.assertIn (u'title=%D0%97%D0%B0%D0%BF%D1%83%D1%81%D0%BA', result)
         self.assertIn (u'>Запуск gvim</a>', result)
+
+
+    def testButton_01 (self):
+        text = u'''(:exec format="button":)gvim(:execend:)'''
+
+        # exec://exec/?com1=gvim&title=gvim
+        result = self.parser.toHtml (text)
+        self.assertIn (u'location.href="exec://exec/?', result)
+        self.assertIn (u'com1=gvim', result)
+        self.assertIn (u'title=gvim', result)
+        self.assertIn (u'<button', result)
+        self.assertIn (u'>gvim</button>', result)
+
+
+    def testButton_02 (self):
+        text = u'''(:exec format="button" title="Запуск":)gvim(:execend:)'''
+
+        result = self.parser.toHtml (text)
+        self.assertIn (u'location.href="exec://exec/?', result)
+        self.assertIn (u'com1=gvim', result)
+        self.assertIn (u'<button', result)
+        self.assertIn (u'>Запуск</button>', result)

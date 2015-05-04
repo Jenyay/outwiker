@@ -56,3 +56,17 @@ class HtmlMakerLink (HtmlMaker):
         text = self._getTitle(commandsList, paramsDict)
 
         return u'<a href="{url}">{text}</a>'.format (url=url, text=text)
+
+
+class HtmlMakerButton (HtmlMaker):
+    """
+    Create HTML code for (:exec:) command as button.
+    """
+    def createHtml (self, commandsList, paramsDict):
+        if len (commandsList) == 0:
+            return u''
+
+        url = self._createUrl (commandsList, paramsDict)
+        text = self._getTitle(commandsList, paramsDict)
+
+        return u'''<button onclick='location.href="{url}"'>{text}</button>'''.format (url=url, text=text)

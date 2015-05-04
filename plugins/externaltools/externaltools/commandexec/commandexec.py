@@ -2,8 +2,11 @@
 
 from outwiker.pages.wiki.parser.command import Command
 
-from commandexecparser import CommandExecParser
-from htmlmakers import HtmlMakerLink
+from externaltools.commandexec.commandexecparser import CommandExecParser
+from externaltools.commandexec.htmlmakers import HtmlMakerLink, HtmlMakerButton
+from externaltools.commandexec.commandparams import (FORMAT_NAME,
+                                                     FORMAT_BUTTON)
+
 
 
 class CommandExec (Command):
@@ -40,5 +43,11 @@ class CommandExec (Command):
 
     @staticmethod
     def _createHtmlMaker (paramsDict):
-        htmlMaker = HtmlMakerLink ()
+        if FORMAT_NAME not in paramsDict:
+            htmlMaker = HtmlMakerLink ()
+        elif paramsDict[FORMAT_NAME] == FORMAT_BUTTON:
+            htmlMaker = HtmlMakerButton()
+        else:
+            htmlMaker = HtmlMakerLink ()
+
         return htmlMaker
