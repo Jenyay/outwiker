@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 from outwiker.gui.baselinkdialogcontroller import BaseLinkDialogController
+from outwiker.core.defines import PAGE_ATTACH_DIR
 
 
 class HtmlLinkDialogController (BaseLinkDialogController):
@@ -18,4 +19,4 @@ class HtmlLinkDialogController (BaseLinkDialogController):
         """
         Создать ссылку на прикрепленный файл
         """
-        return u'__attach/' + fname
+        return u'{}/{}'.format (PAGE_ATTACH_DIR, fname)

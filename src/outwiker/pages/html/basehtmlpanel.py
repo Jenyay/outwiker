@@ -11,6 +11,7 @@ from outwiker.core.commands import MessageBox, setStatusText
 from outwiker.core.system import getImagesDir
 from outwiker.core.attachment import Attachment
 from outwiker.core.config import IntegerOption
+from outwiker.core.defines import PAGE_RESULT_HTML
 from outwiker.gui.basetextpanel import BaseTextPanel
 from outwiker.actions.search import SearchAction, SearchNextAction, SearchPrevAction, SearchAndReplaceAction
 from outwiker.actions.attachfiles import AttachFilesAction
@@ -31,8 +32,6 @@ class BaseHtmlPanel(BaseTextPanel):
 
     def __init__(self, parent, *args, **kwds):
         super (BaseHtmlPanel, self).__init__ (parent, *args, **kwds)
-
-        self._htmlFile = "__content.html"
 
         # Предыдущее содержимое результирующего HTML, чтобы не переписывать
         # его каждый раз
@@ -223,7 +222,7 @@ class BaseHtmlPanel(BaseTextPanel):
         """
         Получить путь до результирующего файла HTML
         """
-        path = os.path.join (self._currentpage.path, self._htmlFile)
+        path = os.path.join (self._currentpage.path, PAGE_RESULT_HTML)
         return path
 
 

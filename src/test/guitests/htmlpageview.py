@@ -8,6 +8,7 @@ from basemainwnd import BaseMainWndTest
 from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
 from outwiker.core.system import readTextFile
+from outwiker.core.defines import PAGE_RESULT_HTML
 
 from outwiker.pages.html.htmlpage import HtmlPageFactory
 from outwiker.pages.html.htmlpageview import HtmlPageView
@@ -247,7 +248,7 @@ class HtmlPageViewTest (BaseMainWndTest):
 
         Application.onPostprocessing -= self._onPostProcessing
 
-        result = readTextFile (os.path.join (self.wikiroot[u"HTML-страница"].path, u"__content.html"))
+        result = readTextFile (os.path.join (self.wikiroot[u"HTML-страница"].path, PAGE_RESULT_HTML))
 
         self.assertTrue (result.endswith (u" 111"))
 
@@ -286,7 +287,7 @@ class HtmlPageViewTest (BaseMainWndTest):
 
         Application.onPostprocessing -= self._onPostProcessing
 
-        result = readTextFile (os.path.join (self.wikiroot[u"HTML-страница"].path, u"__content.html"))
+        result = readTextFile (os.path.join (self.wikiroot[u"HTML-страница"].path, PAGE_RESULT_HTML))
 
         self.assertTrue (result.endswith (u" 111"))
         self.assertFalse (result.endswith (u" 111 111"))
@@ -317,7 +318,7 @@ class HtmlPageViewTest (BaseMainWndTest):
 
         Application.onPreprocessing -= self._onPreProcessing
 
-        result = readTextFile (os.path.join (self.wikiroot[u"HTML-страница"].path, u"__content.html"))
+        result = readTextFile (os.path.join (self.wikiroot[u"HTML-страница"].path, PAGE_RESULT_HTML))
 
         self.assertIn (u"Абырвалг 000", result)
 

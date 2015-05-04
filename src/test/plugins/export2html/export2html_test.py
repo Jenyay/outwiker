@@ -7,6 +7,8 @@ from outwiker.core.tree import WikiDocument
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.application import Application
 from outwiker.core.system import readTextFile
+from outwiker.core.defines import PAGE_RESULT_HTML
+
 from test.utils import removeDir
 
 
@@ -72,7 +74,7 @@ class Export2HtmlTest (unittest.TestCase):
         self.assertTrue (os.path.exists (os.path.join (self.outputdir, pagename, "__icon.png")))
 
         self.assertFalse (os.path.exists (os.path.join (self.outputdir, "__index.html")))
-        self.assertFalse (os.path.exists (os.path.join (self.outputdir, "__content.html")))
+        self.assertFalse (os.path.exists (os.path.join (self.outputdir, PAGE_RESULT_HTML)))
 
 
     def testExportWithName (self):
@@ -483,8 +485,8 @@ class Export2HtmlTest (unittest.TestCase):
         self.assertTrue (os.path.exists (os.path.join (self.outputdir, "__index.html")))
         self.assertTrue (os.path.isfile (os.path.join (self.outputdir, "__index.html")))
 
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, "__content.html")))
-        self.assertTrue (os.path.isfile (os.path.join (self.outputdir, "__content.html")))
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, PAGE_RESULT_HTML)))
+        self.assertTrue (os.path.isfile (os.path.join (self.outputdir, PAGE_RESULT_HTML)))
 
 
     def testExportBranchRoot (self):
@@ -590,8 +592,8 @@ class Export2HtmlTest (unittest.TestCase):
         self.assertTrue (os.path.exists (os.path.join (self.outputdir, "__index.html")))
         self.assertTrue (os.path.isfile (os.path.join (self.outputdir, "__index.html")))
 
-        self.assertTrue (os.path.exists (os.path.join (self.outputdir, "__content.html")))
-        self.assertTrue (os.path.isfile (os.path.join (self.outputdir, "__content.html")))
+        self.assertTrue (os.path.exists (os.path.join (self.outputdir, PAGE_RESULT_HTML)))
+        self.assertTrue (os.path.isfile (os.path.join (self.outputdir, PAGE_RESULT_HTML)))
 
 
     def testBranchContentTitleNames1 (self):

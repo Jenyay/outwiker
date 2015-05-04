@@ -10,10 +10,11 @@ import stat
 import unittest
 from tempfile import mkdtemp
 
-from outwiker.core.tree import RootWikiPage, WikiDocument
+from outwiker.core.tree import WikiDocument
 from outwiker.core.attachment import Attachment
 from outwiker.core.application import Application
 from outwiker.core.exceptions import DublicateTitle
+from outwiker.core.defines import PAGE_OPT_FILE
 from outwiker.pages.text.textpage import TextPageFactory, TextWikiPage
 from outwiker.pages.html.htmlpage import HtmlPageFactory, HtmlWikiPage
 from outwiker.pages.search.searchpage import SearchPageFactory, SearchWikiPage
@@ -198,7 +199,7 @@ class TextPageCreationTest(unittest.TestCase):
 
     def testCreation (self):
         self.assertTrue (os.path.exists (self.path))
-        self.assertTrue (os.path.exists (os.path.join (self.path, RootWikiPage.pageConfig)))
+        self.assertTrue (os.path.exists (os.path.join (self.path, PAGE_OPT_FILE)))
 
 
     def testInvalidPageName (self):
@@ -279,4 +280,4 @@ class TextPageCreationTest(unittest.TestCase):
 
 
     def _getConfigPath (self, page):
-        return os.path.join (page.path, RootWikiPage.pageConfig)
+        return os.path.join (page.path, PAGE_OPT_FILE)

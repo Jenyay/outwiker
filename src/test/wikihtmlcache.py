@@ -9,6 +9,8 @@ from outwiker.core.tree import WikiDocument
 from outwiker.core.attachment import Attachment
 from outwiker.core.application import Application
 from outwiker.core.style import Style
+from outwiker.core.defines import PAGE_RESULT_HTML
+
 from outwiker.gui.guiconfig import HtmlRenderConfig
 
 from outwiker.pages.wiki.wikipage import WikiPageFactory
@@ -42,7 +44,7 @@ class WikiHtmlCacheTest (unittest.TestCase):
         self.__htmlconfig = HtmlRenderConfig (Application.config)
         self.__setDefaultConfig()
 
-        self.resultPath = os.path.join (self.testPage.path, u"__content.html")
+        self.resultPath = os.path.join (self.testPage.path, PAGE_RESULT_HTML)
 
 
     def __setDefaultConfig (self):

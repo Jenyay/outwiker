@@ -6,14 +6,16 @@ from unittest import TestCase, skipIf
 from tempfile import mkdtemp
 
 from outwiker.core.tree import WikiDocument
-from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.core.attachment import Attachment
 from outwiker.core.application import Application
-from test.utils import removeDir
+from outwiker.core.defines import PAGE_RESULT_HTML
 from outwiker.core.commands import generateLink
 
+from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.gui.htmlcontrollerie import UriIdentifierIE
 from outwiker.gui.htmlcontrollerwebkit import UriIdentifierWebKit
+
+from test.utils import removeDir
 
 
 class UriIdentifierTest (TestCase):
@@ -63,7 +65,7 @@ class UriIdentifierIETest (UriIdentifierTest):
         """
         Возвращает путь до файла __content.html
         """
-        return os.path.join (page.path, u"__content.html")
+        return os.path.join (page.path, PAGE_RESULT_HTML)
 
     """
     Тесты идентификации ссылок для IE

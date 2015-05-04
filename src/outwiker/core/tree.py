@@ -13,15 +13,14 @@ from .exceptions import ClearConfigError, RootFormatError, DublicateTitle, Reado
 from .tagscommands import parseTagsList
 from .sortfunctions import sortOrderFunction, sortAlphabeticalFunction
 import events
+from outwiker.core.defines import PAGE_CONTENT_FILE, PAGE_OPT_FILE, PAGE_ICON_NAME
 
 
 class RootWikiPage (object):
     """
     Класс для корня вики
     """
-    pageConfig = u"__page.opt"
-    contentFile = u"__page.text"
-    iconName = u"__icon"
+    contentFile = PAGE_CONTENT_FILE
 
     sectionGeneral = u"General"
 
@@ -35,7 +34,7 @@ class RootWikiPage (object):
         self._children = []
         self.readonly = readonly
 
-        configpath = os.path.join (path, RootWikiPage.pageConfig)
+        configpath = os.path.join (path, PAGE_OPT_FILE)
         if (not self.readonly and
                 os.path.exists (configpath) and
                 not os.access (configpath, os.W_OK)):
@@ -46,7 +45,7 @@ class RootWikiPage (object):
 
     @staticmethod
     def _readParams (path, readonly=False):
-        return PageConfig (os.path.join (path, RootWikiPage.pageConfig), readonly)
+        return PageConfig (os.path.join (path, PAGE_OPT_FILE), readonly)
 
 
     @property
@@ -324,10 +323,10 @@ class WikiDocument (RootWikiPage):
         Используется в случае, если файл __page.opt испорчен
         path - путь до вики (или до директории с файлом __page.opt, или включая этот файл)
         """
-        if path.endswith (RootWikiPage.pageConfig):
+        if path.endswith (PAGE_OPT_FILE):
             realpath = path
         else:
-            realpath = os.path.join (path, RootWikiPage.pageConfig)
+            realpath = os.path.join (path, PAGE_OPT_FILE)
 
         try:
             fp = open (realpath, "w")
@@ -595,7 +594,7 @@ class WikiPage (RootWikiPage):
         dot = name.rfind (".")
         extension = name[dot:]
 
-        newname = RootWikiPage.iconName + extension
+        newname = PAGE_ICON_NAME + extension
         newpath = os.path.join (self.path, newname)
 
         if iconpath != newpath:
@@ -647,7 +646,7 @@ class WikiPage (RootWikiPage):
         files = os.listdir (self.path)
 
         icons = [os.path.join (self.path, fname) for fname in files
-                 if (fname.startswith (RootWikiPage.iconName) and
+                 if (fname.startswith (PAGE_ICON_NAME) and
                      not os.path.isdir (fname))]
 
         return icons

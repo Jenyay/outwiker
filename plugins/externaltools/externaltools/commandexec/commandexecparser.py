@@ -3,6 +3,8 @@
 import os.path
 import re
 
+from outwiker.core.defines import PAGE_CONTENT_FILE
+
 from externaltools.libs import ushlex
 from execinfo import ExecInfo
 import commandparams
@@ -54,7 +56,7 @@ class CommandExecParser (object):
 
 
     def _substitutePage (self, paramText):
-        pagePath = os.path.join (self._page.path, u'__page.text')
+        pagePath = os.path.join (self._page.path, PAGE_CONTENT_FILE)
         return self._macrosPage.sub (pagePath, paramText)
 
 

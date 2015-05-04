@@ -7,8 +7,10 @@ from tempfile import mkdtemp
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
+from outwiker.core.defines import PAGE_RESULT_HTML
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
+
 from test.utils import removeDir
 
 
@@ -19,7 +21,7 @@ class CommandExecParserTest (unittest.TestCase):
         self.__createWiki()
         self.testPage = self.wikiroot[u'Страница 1']
         self.testPageTextPath = os.path.join (self.testPage.path, u'__page.text')
-        self.testPageHtmlPath = os.path.join (self.testPage.path, u'__content.html')
+        self.testPageHtmlPath = os.path.join (self.testPage.path, PAGE_RESULT_HTML)
 
         dirlist = [u'../plugins/externaltools']
 

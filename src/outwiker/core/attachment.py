@@ -4,7 +4,8 @@ import os
 import os.path
 import shutil
 
-from .exceptions import ReadonlyException
+from outwiker.core.exceptions import ReadonlyException
+from outwiker.core.defines import PAGE_ATTACH_DIR
 import events
 
 
@@ -13,7 +14,7 @@ class Attachment (object):
     Класс для работы с прикрепленными файлами
     """
     # Название директории с прикрепленными файлами
-    attachDir = u"__attach"
+    attachDir = PAGE_ATTACH_DIR
 
     def __init__ (self, page):
         """
@@ -27,7 +28,7 @@ class Attachment (object):
         Возвращает путь до папки с прикрепленными файлами
         create - создать папку для прикрепленных файлов, если она еще не создана?
         """
-        path = os.path.join (self.page.path, Attachment.attachDir)
+        path = os.path.join (self.page.path, PAGE_ATTACH_DIR)
 
         if create and not os.path.exists(path):
             os.mkdir (path)
@@ -50,7 +51,7 @@ class Attachment (object):
     def getAttachRelative (self, dirname="."):
         """
         Возвращает список прикрепленных файлов (только имена файлов без путей относительно директории dirname).
-        dirname - поддиректория в __attach, где хотим получить список файлов
+        dirname - поддиректория в PAGE_ATTACH_DIR, где хотим получить список файлов
         """
         path = self.getAttachPath()
 
@@ -86,7 +87,7 @@ class Attachment (object):
     def removeAttach (self, files):
         """
         Удалить прикрепленные файлы
-        files - список имен файлов (путей относительно папки __attach)
+        files - список имен файлов (путей относительно папки PAGE_ATTACH_DIR)
         """
         if self.page.readonly:
             raise ReadonlyException
@@ -209,6 +210,6 @@ class Attachment (object):
         """
         Возвращает полный путь до прикрепленного файла с именем fname.
         Файл fname не обязательно должен существовать.
-        create - нужно ли создавать папку __attach, если ее еще не существует?
+        create - нужно ли создавать папку PAGE_ATTACH_DIR, если ее еще не существует?
         """
         return os.path.join (self.getAttachPath(create), fname)

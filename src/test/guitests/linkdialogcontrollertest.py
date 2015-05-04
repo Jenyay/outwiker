@@ -2,15 +2,16 @@
 
 from .basemainwnd import BaseMainWndTest
 
-from outwiker.pages.html.htmllinkdialogcontroller import HtmlLinkDialogController
-from outwiker.pages.wiki.wikilinkdialogcontroller import WikiLinkDialogController
-from outwiker.pages.wiki.wikiconfig import WikiConfig
-from outwiker.pages.wiki.wikipage import WikiPageFactory
-from outwiker.gui.linkdialog import LinkDialog
-from outwiker.gui.tester import Tester
-from outwiker.core.commands import copyTextToClipboard
 from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
+from outwiker.core.commands import copyTextToClipboard
+from outwiker.core.defines import PAGE_ATTACH_DIR
+from outwiker.gui.linkdialog import LinkDialog
+from outwiker.gui.tester import Tester
+from outwiker.pages.html.htmllinkdialogcontroller import HtmlLinkDialogController
+from outwiker.pages.wiki.wikiconfig import WikiConfig
+from outwiker.pages.wiki.wikilinkdialogcontroller import WikiLinkDialogController
+from outwiker.pages.wiki.wikipage import WikiPageFactory
 
 
 class LinkDialogControllerTest (BaseMainWndTest):
@@ -466,9 +467,12 @@ class LinkDialogControllerTest (BaseMainWndTest):
                                                selectedString)
         controller.showDialog()
 
-        self.assertIn (u'__attach/accept.png', parent.linkText.GetItems())
-        self.assertIn (u'__attach/add.png', parent.linkText.GetItems())
-        self.assertIn (u'__attach/html.txt', parent.linkText.GetItems())
+        self.assertIn (u'{}/accept.png'.format (PAGE_ATTACH_DIR),
+                       parent.linkText.GetItems())
+        self.assertIn (u'{}/add.png'.format (PAGE_ATTACH_DIR),
+                       parent.linkText.GetItems())
+        self.assertIn (u'{}/html.txt'.format (PAGE_ATTACH_DIR),
+                       parent.linkText.GetItems())
 
 
     def testSelectedAttach_wiki (self):
@@ -498,23 +502,28 @@ class LinkDialogControllerTest (BaseMainWndTest):
         Attachment (self._testpage).attach (self.files)
         parent = LinkDialog (self.wnd)
         Tester.dialogTester.appendOk()
-        selectedString = u'__attach/add.png'
+        selectedString = u'{}/add.png'.format (PAGE_ATTACH_DIR)
 
         controller = HtmlLinkDialogController (self._testpage,
                                                parent,
                                                selectedString)
         controller.showDialog()
 
-        self.assertIn (u'__attach/accept.png', parent.linkText.GetItems())
-        self.assertIn (u'__attach/add.png', parent.linkText.GetItems())
-        self.assertIn (u'__attach/html.txt', parent.linkText.GetItems())
+        self.assertIn (u'{}/accept.png'.format (PAGE_ATTACH_DIR),
+                       parent.linkText.GetItems())
+        self.assertIn (u'{}/add.png'.format (PAGE_ATTACH_DIR),
+                       parent.linkText.GetItems())
+        self.assertIn (u'{}/html.txt'.format (PAGE_ATTACH_DIR),
+                       parent.linkText.GetItems())
 
-        self.assertEqual (controller.link, u'__attach/add.png')
-        self.assertEqual (controller.comment, u'__attach/add.png')
+        self.assertEqual (controller.link,
+                          u'{}/add.png'.format (PAGE_ATTACH_DIR))
+        self.assertEqual (controller.comment,
+                          u'{}/add.png'.format (PAGE_ATTACH_DIR))
         self.assertEqual (controller.linkResult,
-                          u'<a href="__attach/add.png">__attach/add.png</a>')
+                          u'<a href="{attach}/add.png">{attach}/add.png</a>'.format (attach=PAGE_ATTACH_DIR))
 
-        self.assertEqual (parent.linkText.GetValue(), u'__attach/add.png')
+        self.assertEqual (parent.linkText.GetValue(), u'{}/add.png'.format (PAGE_ATTACH_DIR))
 
 
     def testLinkStyle_01 (self):
