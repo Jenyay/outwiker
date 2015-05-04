@@ -6,9 +6,10 @@ from StringIO import StringIO
 
 from outwiker.core.system import getOS
 
-from commandexec import CommandExec
-from commandparams import EXEC_BEGIN, PROTO_COMMAND
-from execinfo import ExecInfo
+from externaltools.commandexec.commandexec import CommandExec
+from externaltools.commandexec.commandparams import EXEC_BEGIN, PROTO_COMMAND
+from externaltools.commandexec.execinfo import ExecInfo
+from externaltools.commandexec.guicreator import GuiCreator
 
 
 class CommandController (object):
@@ -19,12 +20,22 @@ class CommandController (object):
         # If Application has onLinkClick event
         self._enableExecCommand = u'onLinkClick' in dir (self._application)
 
+        self._guiCreator = None
+
 
     def initialize (self):
         if self._enableExecCommand:
             self._application.onWikiParserPrepare += self.__onWikiParserPrepare
             self._application.onHoverLink += self._onHoverLink
             self._application.onLinkClick += self._onLinkClick
+            self._application.onPageViewCreate += self.__onPageViewCreate
+            self._application.onPageViewDestroy += self.__onPageViewDestroy
+
+            self._guiCreator = GuiCreator (self._application)
+            self._guiCreator.initialize()
+
+            if self._isCurrentWikiPage:
+                self.__onPageViewCreate (self._application.selectedPage)
 
 
     def destroy (self):
@@ -32,6 +43,47 @@ class CommandController (object):
             self._application.onWikiParserPrepare -= self.__onWikiParserPrepare
             self._application.onHoverLink -= self._onHoverLink
             self._application.onLinkClick -= self._onLinkClick
+            self._application.onPageViewCreate -= self.__onPageViewCreate
+            self._application.onPageViewDestroy -= self.__onPageViewDestroy
+
+            if self._isCurrentWikiPage:
+                self._guiCreator.removeTools()
+
+            self._guiCreator.destroy ()
+
+
+    def __onPageViewCreate(self, page):
+        """Обработка события после создания представления страницы"""
+        assert self._application.mainWindow is not None
+
+        if page.getTypeString() == u"wiki":
+            self._guiCreator.createTools()
+
+
+    def __onPageViewDestroy (self, page):
+        """
+        Обработка события перед удалением вида страницы
+        """
+        assert self._application.mainWindow is not None
+
+        if page.getTypeString() == u"wiki":
+            self._guiCreator.removeTools()
+
+
+    def _getPageView (self):
+        """
+        Получить указатель на панель представления страницы
+        """
+        return self._application.mainWindow.pagePanel.pageView
+
+
+    @property
+    def _isCurrentWikiPage (self):
+        """
+        Возвращает True, если текущая страница - это викистраница, и False в противном случае
+        """
+        return (self._application.selectedPage is not None and
+                self._application.selectedPage.getTypeString() == u"wiki")
 
 
     def __onWikiParserPrepare (self, parser):
