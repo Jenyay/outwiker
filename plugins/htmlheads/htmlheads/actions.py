@@ -18,7 +18,7 @@ class BaseHeadAction (BaseAction):
 
     def _getEditor (self):
         """
-        Получить указатель на панель представления страницы
+        Возвращает указатель на редактор
         """
         return self._application.mainWindow.pagePanel.pageView.codeEditor
 
