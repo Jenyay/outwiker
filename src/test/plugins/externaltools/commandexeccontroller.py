@@ -20,6 +20,7 @@ class CommandExecControllerTest (unittest.TestCase):
 
     def tearDown (self):
         self._controller.destroy()
+        self.loader.clear()
 
 
     def testStatus_01 (self):

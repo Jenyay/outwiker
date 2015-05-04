@@ -1,4 +1,5 @@
 # -*- coding: UTF-8 -*-
+
 import wx
 
 from outwiker.pages.html.basehtmlpanel import EVT_PAGE_TAB_CHANGED

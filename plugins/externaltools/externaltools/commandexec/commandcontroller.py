@@ -4,7 +4,10 @@ import urlparse
 import subprocess
 from StringIO import StringIO
 
+import wx
+
 from outwiker.core.system import getOS
+from outwiker.core.commands import MessageBox
 
 from externaltools.commandexec.commandexec import CommandExec
 from externaltools.commandexec.commandparams import EXEC_BEGIN, PROTO_COMMAND
@@ -168,7 +171,21 @@ class CommandController (object):
 
         params.process = True
 
-        for command in self.getCommandsList (urlparams):
+        commands = self.getCommandsList (urlparams)
+
+        if len (commands) > 1:
+            message = _(u'Run applications by ExternalTools plugin?\nIt may be unsafe.')
+        else:
+            message = _(u'Run application by ExternalTools plugin?\nIt may be unsafe.')
+
+        if (MessageBox (
+            message,
+            _(u'ExternalTools'),
+            wx.YES_NO | wx.ICON_QUESTION | wx.NO_DEFAULT
+        ) != wx.YES):
+            return
+
+        for command in commands:
             self._execute (command.command, command.params)
 
 
