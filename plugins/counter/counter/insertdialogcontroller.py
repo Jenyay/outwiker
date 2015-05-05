@@ -1,10 +1,7 @@
 # -*- coding: UTF-8 -*-
 
-import os.path
-
 import wx
 
-import outwiker.core.exceptions
 from outwiker.pages.wiki.parser.wikiparser import Parser
 
 from .config import CounterConfig
@@ -31,8 +28,7 @@ class InsertDialogController (object):
 
     def showDialog (self):
         """
-        Метод показывает диалог и возвращает строку, соответствующую выбранным настройкам
-        Если пользователь нажимает кнопку "Cancel", возвращается None
+        Метод показывает диалог и возвращает результат работы диалога (как ShowModal).
         """
         self.loadState()
 
@@ -68,12 +64,13 @@ class InsertDialogController (object):
         hide = self._getHideParam()
 
         result = u"(:counter{name}{parent}{separator}{start}{step}{hide}:)".format (
-                name = name,
-                parent = parent,
-                separator = separator,
-                start = start,
-                step = step,
-                hide = hide)
+            name = name,
+            parent = parent,
+            separator = separator,
+            start = start,
+            step = step,
+            hide = hide
+        )
 
         return result
 
