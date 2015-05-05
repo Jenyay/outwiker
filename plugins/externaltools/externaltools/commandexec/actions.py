@@ -10,6 +10,8 @@ from externaltools.commandexec.commandparams import (
     MACROS_ATTACH,
 )
 
+from externaltools.commandexec.execdialog import ExecDialog
+
 
 class BaseHeadAction (BaseAction):
     """
@@ -48,6 +50,11 @@ class CommandExecAction (BaseHeadAction):
 
 
     def run (self, params):
+        assert self._application.mainWindow is not None
+
+        with ExecDialog (self._application.mainWindow) as dlg:
+            dlg.ShowModal()
+
         self._getEditor().turnText (u"(:exec:)", u"(:execend:)")
 
 
