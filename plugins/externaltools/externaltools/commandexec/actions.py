@@ -1,16 +1,18 @@
 # -*- coding: UTF-8 -*-
 
+import wx
+
 from outwiker.gui.baseaction import BaseAction
 
 from externaltools.i18n import get_
+from externaltools.commandexec.execdialog import ExecDialog
+from externaltools.commandexec.execdialogcontroller import ExecDialogController
 from externaltools.commandexec.commandparams import (
     MACROS_PAGE,
     MACROS_HTML,
     MACROS_FOLDER,
     MACROS_ATTACH,
 )
-
-from externaltools.commandexec.execdialog import ExecDialog
 
 
 class BaseHeadAction (BaseAction):
@@ -53,9 +55,10 @@ class CommandExecAction (BaseHeadAction):
         assert self._application.mainWindow is not None
 
         with ExecDialog (self._application.mainWindow) as dlg:
-            dlg.ShowModal()
-
-        self._getEditor().turnText (u"(:exec:)", u"(:execend:)")
+            controller = ExecDialogController (dlg, self._application)
+            if controller.showDialog() == wx.ID_OK:
+                begin, end = controller.getResult()
+                self._getEditor().turnText (begin, end)
 
 
 

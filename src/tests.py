@@ -225,6 +225,7 @@ if __name__ == '__main__':
     from test.plugins.externaltools.commandexec import CommandExecTest
     from test.plugins.externaltools.commandexecparser import CommandExecParserTest
     from test.plugins.externaltools.commandexeccontroller import CommandExecControllerTest
+    from test.plugins.externaltools.execdialog import ExecDialogTest
 
     from test.styles.styles import StylesTest
     from test.styles.styleslist import StylesListTest

@@ -19,6 +19,7 @@ class ExecDialog (TestedDialog):
         self.SetTitle (_(u'Inserting (:exec:) command'))
         self._createGui ()
         self.Fit()
+        self._titleTextBox.SetFocus()
 
 
     def _createGui (self):
@@ -69,7 +70,10 @@ class ExecDialog (TestedDialog):
 
         okCancel = self.CreateButtonSizer (wx.OK | wx.CANCEL)
         mainSizer.AddStretchSpacer ()
-        mainSizer.Add (okCancel, 1, wx.ALIGN_RIGHT | wx.ALIGN_BOTTOM, border = 2)
+        mainSizer.Add (okCancel,
+                       1,
+                       wx.ALIGN_RIGHT | wx.ALIGN_BOTTOM | wx.ALL,
+                       border = 2)
 
         self.SetSizer (mainSizer)
 
@@ -82,3 +86,13 @@ class ExecDialog (TestedDialog):
     @title.setter
     def title (self, value):
         self._titleTextBox.SetValue (value)
+
+
+    @property
+    def format (self):
+        return self._formatCombo.GetSelection()
+
+
+    @format.setter
+    def format (self, value):
+        self._formatCombo.SetSelection (value)
