@@ -55,7 +55,7 @@ class HtmlMakerLink (HtmlMaker):
         url = self._createUrl (commandsList, paramsDict)
         text = self._getTitle(commandsList, paramsDict)
 
-        return u'<a href="{url}">{text}</a>'.format (url=url, text=text)
+        return u'<a href="{url}" class="extools-execlink">{text}</a>'.format (url=url, text=text)
 
 
 class HtmlMakerButton (HtmlMaker):
@@ -69,4 +69,4 @@ class HtmlMakerButton (HtmlMaker):
         url = self._createUrl (commandsList, paramsDict)
         text = self._getTitle(commandsList, paramsDict)
 
-        return u'''<button onclick='location.href="{url}"'>{text}</button>'''.format (url=url, text=text)
+        return u'''<button onclick='location.href="{url}"' class="extools-execbutton">{text}</button>'''.format (url=url, text=text)
