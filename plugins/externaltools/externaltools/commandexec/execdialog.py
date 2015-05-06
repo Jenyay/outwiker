@@ -18,12 +18,13 @@ class ExecDialog (TestedDialog):
 
         self.SetTitle (_(u'Inserting (:exec:) command'))
         self._createGui ()
-        self.Fit()
         self._titleTextBox.SetFocus()
 
 
     def _createGui (self):
         mainSizer = wx.FlexGridSizer (cols=2)
+        mainSizer.AddGrowableCol (1)
+        mainSizer.AddGrowableRow (2)
 
         # Title
         titleLabel = wx.StaticText (self, -1, _(u'Title'))
@@ -76,6 +77,7 @@ class ExecDialog (TestedDialog):
                        border = 2)
 
         self.SetSizer (mainSizer)
+        self.Fit()
 
 
     @property

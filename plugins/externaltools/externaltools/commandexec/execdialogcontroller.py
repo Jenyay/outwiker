@@ -4,6 +4,7 @@ from StringIO import StringIO
 
 import wx
 
+from externaltools.config import ExternalToolsConfig
 from externaltools.commandexec.commandparams import (
     TITLE_NAME,
     FORMAT_NAME,
@@ -15,14 +16,14 @@ class ExecDialogController (object):
     def __init__ (self, dialog, application):
         self._dialog = dialog
         self._application = application
+        self._config = ExternalToolsConfig (self._application.config)
+        self._loadState()
 
 
     def showDialog (self):
         """
         The method shows dialog and return result of the ShowModal method
         """
-        self._loadState()
-
         result = self._dialog.ShowModal()
         if result == wx.ID_OK:
             self._saveState()
@@ -31,11 +32,32 @@ class ExecDialogController (object):
 
 
     def _loadState (self):
-        pass
+        """
+        Load settings from config
+        """
+        self._updateDialogSize()
+        self._dialog.format = self._config.execFormat
+
+
+    def _updateDialogSize (self):
+        """
+        Set dialog size
+        """
+        currentWidth, currentHeight = self._dialog.GetSizeTuple ()
+        dialogWidth = max (self._config.dialogWidth, currentWidth)
+        dialogHeight = max (self._config.dialogHeight, currentHeight)
+
+        self._dialog.SetSizeWH (dialogWidth, dialogHeight)
 
 
     def _saveState (self):
-        pass
+        """
+        Save settings to config
+        """
+        currentWidth, currentHeight = self._dialog.GetSizeTuple ()
+        self._config.dialogWidth = currentWidth
+        self._config.dialogHeight = currentHeight
+        self._config.execFormat = self._dialog.format
 
 
     def getResult (self):

@@ -5,15 +5,81 @@ import ConfigParser
 
 import wx
 
-from .toolsinfo import ToolsInfo
+from outwiker.core.config import IntegerOption
+
+from toolsinfo import ToolsInfo
 
 
-class ToolsConfig (object):
+class ExternalToolsConfig (object):
     def __init__ (self, config):
         self._sectionName = "ExternalTools"
         self._toolsItemTemplate = "tools{index}"
 
         self._config = config
+
+        # Dialog size for (:exec:) command inserting
+        DEFAULT_DIALOG_WIDTH = -1
+        DEFAULT_DIALOG_HEIGHT = -1
+
+        DIALOG_WIDTH_OPTION = u"DialogWidth"
+        DIALOG_HEIGHT_OPTION = u"DialogHeight"
+
+        # Recent selected format
+        DEFAULT_FORMAT = 0
+        DIALOG_SELECTED_FORMAT = u'ExecFormat'
+
+        self._dialogWidth = IntegerOption (self._config,
+                                           self._sectionName,
+                                           DIALOG_WIDTH_OPTION,
+                                           DEFAULT_DIALOG_WIDTH)
+
+        self._dialogHeight = IntegerOption (self._config,
+                                            self._sectionName,
+                                            DIALOG_HEIGHT_OPTION,
+                                            DEFAULT_DIALOG_HEIGHT)
+
+
+        self._execFormat = IntegerOption (self._config,
+                                          self._sectionName,
+                                          DIALOG_SELECTED_FORMAT,
+                                          DEFAULT_FORMAT)
+
+
+    def clearAll (self):
+        """
+        Remove all options
+        """
+        self._config.remove_section (self._sectionName)
+
+
+    @property
+    def dialogWidth (self):
+        return self._dialogWidth.value
+
+
+    @dialogWidth.setter
+    def dialogWidth (self, value):
+        self._dialogWidth.value = value
+
+
+    @property
+    def dialogHeight (self):
+        return self._dialogHeight.value
+
+
+    @dialogHeight.setter
+    def dialogHeight (self, value):
+        self._dialogHeight.value = value
+
+
+    @property
+    def execFormat (self):
+        return self._execFormat.value
+
+
+    @execFormat.setter
+    def execFormat (self, value):
+        self._execFormat.value = value
 
 
     @property

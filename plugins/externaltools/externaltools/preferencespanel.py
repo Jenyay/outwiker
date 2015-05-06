@@ -9,7 +9,7 @@ from outwiker.core.exceptions import PreferencesException
 
 from .toolslistpanel import ToolsListPanel
 from .i18n import get_
-from .toolsconfig import ToolsConfig
+from .config import ExternalToolsConfig
 
 
 class PreferencesPanel (wx.Panel):
@@ -75,13 +75,13 @@ class PrefController (object):
 
 
     def loadState (self):
-        toolsConfig = ToolsConfig (self._config)
+        toolsConfig = ExternalToolsConfig (self._config)
         self._prefPanel.toolsListPanel.tools = toolsConfig.tools
         self._prefPanel.Layout()
 
 
     def save (self):
-        toolsConfig = ToolsConfig (self._config)
+        toolsConfig = ExternalToolsConfig (self._config)
         try:
             toolsConfig.tools = self._prefPanel.toolsListPanel.tools
         except ConfigParser.Error:

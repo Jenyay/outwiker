@@ -21,6 +21,9 @@ class ExecDialogTest (BaseMainWndTest):
         self._loader = PluginsLoader(Application)
         self._loader.load (dirlist)
 
+        from externaltools.config import ExternalToolsConfig
+        ExternalToolsConfig (Application.config).clearAll()
+
         from externaltools.commandexec.execdialog import ExecDialog
         self._dlg = ExecDialog (Application.mainWindow)
         Tester.dialogTester.clear()
@@ -31,6 +34,9 @@ class ExecDialogTest (BaseMainWndTest):
         Application.wikiroot = None
         self._dlg.Destroy()
         self._loader.clear()
+
+        from externaltools.config import ExternalToolsConfig
+        ExternalToolsConfig (Application.config).clearAll()
 
         BaseMainWndTest.tearDown (self)
 

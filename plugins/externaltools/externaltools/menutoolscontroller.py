@@ -9,15 +9,15 @@ from outwiker.core.tree import RootWikiPage
 from outwiker.core.commands import MessageBox
 from outwiker.core.system import getOS
 
-from toolsconfig import ToolsConfig
-from i18n import get_
-from menumaker import MenuMaker
+from .i18n import get_
+from .menumaker import MenuMaker
+from .config import ExternalToolsConfig
 
 
 class MenuToolsController (object):
     def __init__ (self, application):
         self._application = application
-        self._toolsConfig = ToolsConfig (self._application.config)
+        self._toolsConfig = ExternalToolsConfig (self._application.config)
 
         self._page = None
 
