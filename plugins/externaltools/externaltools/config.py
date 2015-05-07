@@ -5,7 +5,7 @@ import ConfigParser
 
 import wx
 
-from outwiker.core.config import IntegerOption
+from outwiker.core.config import IntegerOption, BooleanOption
 
 from toolsinfo import ToolsInfo
 
@@ -26,7 +26,12 @@ class ExternalToolsConfig (object):
 
         # Recent selected format
         DEFAULT_FORMAT = 0
-        DIALOG_SELECTED_FORMAT = u'ExecFormat'
+        DIALOG_SELECTED_FORMAT_OPTION = u'ExecFormat'
+
+        # Show warning
+        DEFAULT_WARNING = True
+        WARNING_OPTION = u'ShowExecWarning'
+
 
         self._dialogWidth = IntegerOption (self._config,
                                            self._sectionName,
@@ -41,8 +46,13 @@ class ExternalToolsConfig (object):
 
         self._execFormat = IntegerOption (self._config,
                                           self._sectionName,
-                                          DIALOG_SELECTED_FORMAT,
+                                          DIALOG_SELECTED_FORMAT_OPTION,
                                           DEFAULT_FORMAT)
+
+        self._execWarning = BooleanOption (self._config,
+                                           self._sectionName,
+                                           WARNING_OPTION,
+                                           DEFAULT_WARNING)
 
 
     def clearAll (self):
@@ -80,6 +90,16 @@ class ExternalToolsConfig (object):
     @execFormat.setter
     def execFormat (self, value):
         self._execFormat.value = value
+
+
+    @property
+    def execWarning (self):
+        return self._execWarning.value
+
+
+    @execWarning.setter
+    def execWarning (self, value):
+        self._execWarning.value = value
 
 
     @property

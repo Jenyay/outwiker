@@ -13,6 +13,7 @@ from externaltools.commandexec.commandexec import CommandExec
 from externaltools.commandexec.commandparams import EXEC_BEGIN, PROTO_COMMAND
 from externaltools.commandexec.execinfo import ExecInfo
 from externaltools.commandexec.guicreator import GuiCreator
+from externaltools.config import ExternalToolsConfig
 
 
 class CommandController (object):
@@ -173,16 +174,19 @@ class CommandController (object):
 
         commands = self.getCommandsList (urlparams)
 
+        config = ExternalToolsConfig (self._application.config)
+
         if len (commands) > 1:
             message = _(u'Run applications by ExternalTools plugin?\nIt may be unsafe.')
         else:
             message = _(u'Run application by ExternalTools plugin?\nIt may be unsafe.')
 
-        if (MessageBox (
-            message,
-            _(u'ExternalTools'),
-            wx.YES_NO | wx.ICON_QUESTION | wx.NO_DEFAULT
-        ) != wx.YES):
+        if (config.execWarning and
+                MessageBox (
+                    message,
+                    _(u'ExternalTools'),
+                    wx.YES_NO | wx.ICON_QUESTION | wx.NO_DEFAULT
+                ) != wx.YES):
             return
 
         for command in commands:
