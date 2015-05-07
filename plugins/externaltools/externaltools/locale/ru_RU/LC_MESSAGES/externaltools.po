@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: externaltools\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-03 21:18+0400\n"
-"PO-Revision-Date: 2014-10-03 21:19+0300\n"
+"POT-Creation-Date: 2015-05-07 22:01+0300\n"
+"PO-Revision-Date: 2015-05-07 22:15+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: jenyay.net <jenyay.ilin@gmail.com>\n"
 "Language: ru_RU\n"
@@ -16,58 +16,179 @@ msgstr ""
 "X-Generator: Poedit 1.5.4\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: controller.py:89
+#: menutoolscontroller.py:81
 msgid "Can't execute tools"
 msgstr "Ошибка запуска приложения"
 
-#: controller.py:90 preferencespanel.py:90
+#: menutoolscontroller.py:82 preferencespanel.py:98
 msgid "Error"
 msgstr "Ошибка"
 
-#: controller.py:98
+#: controller.py:40
 msgid "External Tools [Plugin]"
 msgstr "External Tools [Расширение]"
 
-#: toolslistpanel.py:110
+#: toolslistpanel.py:109
 msgid "Open file dialog..."
 msgstr "Открыть диалог выбора файла..."
 
-#: toolslistpanel.py:116
+#: toolslistpanel.py:115
 msgid "Remove tool"
 msgstr "Удалить приложение"
 
-#: toolslistpanel.py:126
+#: toolslistpanel.py:125
 msgid "Executables (*.exe)|*.exe|All Files|*.*"
 msgstr "Выполняемые файлы (*.exe)|*.exe|Все файлы|*.*"
 
-#: toolslistpanel.py:128
+#: toolslistpanel.py:127
 msgid "All Files|*"
 msgstr "Все файлы|*"
 
-#: preferencespanel.py:36
+#: commandexec/execdialog.py:17
+msgid "Link"
+msgstr "Ссылка"
+
+#: commandexec/execdialog.py:17
+msgid "Button"
+msgstr "Кнопка"
+
+#: commandexec/execdialog.py:19
+msgid "Inserting (:exec:) command"
+msgstr "Вставка команды (:exec:)"
+
+#: commandexec/execdialog.py:30
+msgid "Title"
+msgstr "Заголовок"
+
+#: commandexec/execdialog.py:48
+msgid "Format"
+msgstr "Формат"
+
+#: commandexec/guicreator.py:56 commandexec/commandcontroller.py:187
+msgid "ExternalTools"
+msgstr "ExternalTools"
+
+#: commandexec/actions.py:46
+msgid "Run applications (:exec:)"
+msgstr "Запустить приложения (:exec:)"
+
+#: commandexec/actions.py:51
+msgid "ExternalTools plugin. Insert (:exec:) command"
+msgstr "Плагин ExternalTools. Вставить команду (:exec:)"
+
+#: commandexec/actions.py:74
+msgid "%page%. Current page. Text file"
+msgstr "%page%. Текущая страница. Текстовый файл"
+
+#: commandexec/actions.py:79
+msgid ""
+"ExternalTools plugin. Insert a %page% macros. The macros will be replaced by "
+"a path to current page text file."
+msgstr ""
+"Плагин ExternalTools. Вставить макрос %page%. Этот макрос будет заменен на "
+"путь до текстового файла текущей страницы."
+
+#: commandexec/actions.py:96
+msgid "%html%. Current page. HTML file"
+msgstr "%html%. Текущая страница. Файл HTML"
+
+#: commandexec/actions.py:101
+msgid ""
+"ExternalTools plugin. Insert a %html% macros. The macros will be replaced by "
+"a path to current HTML file."
+msgstr ""
+"Плагин ExternalTools. Вставить макрос %html%. Этот макрос будет заменен на "
+"путь до файла HTML текущей страницы."
+
+#: commandexec/actions.py:118
+msgid "%attach%. Path to current attachments folder"
+msgstr "%attach%. Путь до текущей папки вложенных файлов"
+
+#: commandexec/actions.py:123
+msgid ""
+"ExternalTools plugin. Insert a %attach% macros. The macros will be replaced "
+"by a path to current attach folder."
+msgstr ""
+"Плагин ExternalTools. Вставить макрос %attach%. Этот макрос будет заменен на "
+"путь до папки с вложенными файлами текущей страницы."
+
+#: commandexec/actions.py:140
+msgid "%folder%. Path to current page folder"
+msgstr "%folder%. Путь до папки текущей страницы"
+
+#: commandexec/actions.py:145
+msgid ""
+"ExternalTools plugin. Insert a %folder% macros. The macros will be replaced "
+"by a path to current page folder."
+msgstr ""
+"Плагин ExternalTools. Вставить макрос %folder%. Этот макрос будет заменен на "
+"путь до папки текущей страницы."
+
+#: commandexec/commandcontroller.py:180
+msgid ""
+"Run applications by ExternalTools plugin?\n"
+"It may be unsafe."
+msgstr ""
+"Запустить приложения с помощью плагина ExternalTools?\n"
+"Это может быть опасно."
+
+#: commandexec/commandcontroller.py:182
+msgid ""
+"Run application by ExternalTools plugin?\n"
+"It may be unsafe."
+msgstr ""
+"Запустить приложение с помощью плагина ExternalTools?\n"
+"Это может быть опасно."
+
+#: preferencespanel.py:38
+msgid "Show warning before executing applications by (:exec:) command"
+msgstr ""
+"Показывать предупреждение перед запуском\n"
+"приложений с помощью команды (:exec:)"
+
+#: preferencespanel.py:41
 msgid "Tools List"
 msgstr "Список приложений"
 
-#: preferencespanel.py:37
+#: preferencespanel.py:42
 msgid "Append Tools"
 msgstr "Добавить приложение"
 
-#: preferencespanel.py:89
+#: preferencespanel.py:97
 msgid "Can't save options"
 msgstr "Ошибка сохранения настроек"
 
-#: externaltools.py:41
-msgid "Open notes files with external editor"
-msgstr "Открывает файлы заметок во внешних приложениях."
+#: externaltools.py:50
+msgid ""
+"Open notes files with external editor.\n"
+"Added (:exec:) command for creation link for execute external tools from "
+"wiki page.\n"
+"\n"
+"<b>Examples</b>\n"
+"(:exec text=\"Open gvim in diff mode\":)\n"
+"gvim -d \"file name 1.txt\" \"file name 2.txt\"\n"
+"(:execend:)\n"
+msgstr ""
+"Открывает файлы заметок во внешних редакторах.\n"
+"Добавляет команду (:exec:) для создания ссылок на запуск внешних приложений "
+"на викистраницах.\n"
+"\n"
+"<b>Примеры</b>\n"
+"(:exec text=\"Открыть gvim в режиме сравнения\":)\n"
+"gvim -d \"file name 1.txt\" \"file name 2.txt\"\n"
+"(:execend:)\n"
 
-#: externaltools.py:62
+#: externaltools.py:79
 msgid "http://jenyay.net/Outwiker/ExternalToolsEn"
 msgstr "http://jenyay.net/Outwiker/ExternalTools"
 
-#: menumaker.py:44
+#: menumaker.py:43
 msgid "Open Content File with..."
 msgstr "Открыть файл с текстом заметки в..."
 
-#: menumaker.py:57
+#: menumaker.py:56
 msgid "Open Result HTML File with..."
 msgstr "Открыть HTML-файл в..."
+
+#~ msgid "Open notes files with external editor"
+#~ msgstr "Открывает файлы заметок во внешних приложениях."

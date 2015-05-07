@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-03 21:18+0400\n"
+"POT-Creation-Date: 2015-05-07 22:01+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,58 +17,154 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: controller.py:89
+#: menutoolscontroller.py:81
 msgid "Can't execute tools"
 msgstr ""
 
-#: controller.py:90 preferencespanel.py:90
+#: menutoolscontroller.py:82 preferencespanel.py:98
 msgid "Error"
 msgstr ""
 
-#: controller.py:98
+#: controller.py:40
 msgid "External Tools [Plugin]"
 msgstr ""
 
-#: toolslistpanel.py:110
+#: toolslistpanel.py:109
 msgid "Open file dialog..."
 msgstr ""
 
-#: toolslistpanel.py:116
+#: toolslistpanel.py:115
 msgid "Remove tool"
 msgstr ""
 
-#: toolslistpanel.py:126
+#: toolslistpanel.py:125
 msgid "Executables (*.exe)|*.exe|All Files|*.*"
 msgstr ""
 
-#: toolslistpanel.py:128
+#: toolslistpanel.py:127
 msgid "All Files|*"
 msgstr ""
 
-#: preferencespanel.py:36
+#: commandexec/execdialog.py:17
+msgid "Link"
+msgstr ""
+
+#: commandexec/execdialog.py:17
+msgid "Button"
+msgstr ""
+
+#: commandexec/execdialog.py:19
+msgid "Inserting (:exec:) command"
+msgstr ""
+
+#: commandexec/execdialog.py:30
+msgid "Title"
+msgstr ""
+
+#: commandexec/execdialog.py:48
+msgid "Format"
+msgstr ""
+
+#: commandexec/guicreator.py:56 commandexec/commandcontroller.py:187
+msgid "ExternalTools"
+msgstr ""
+
+#: commandexec/actions.py:46
+msgid "Run applications (:exec:)"
+msgstr ""
+
+#: commandexec/actions.py:51
+msgid "ExternalTools plugin. Insert (:exec:) command"
+msgstr ""
+
+#: commandexec/actions.py:74
+msgid "%page%. Current page. Text file"
+msgstr ""
+
+#: commandexec/actions.py:79
+msgid ""
+"ExternalTools plugin. Insert a %page% macros. The macros will be replaced by "
+"a path to current page text file."
+msgstr ""
+
+#: commandexec/actions.py:96
+msgid "%html%. Current page. HTML file"
+msgstr ""
+
+#: commandexec/actions.py:101
+msgid ""
+"ExternalTools plugin. Insert a %html% macros. The macros will be replaced by "
+"a path to current HTML file."
+msgstr ""
+
+#: commandexec/actions.py:118
+msgid "%attach%. Path to current attachments folder"
+msgstr ""
+
+#: commandexec/actions.py:123
+msgid ""
+"ExternalTools plugin. Insert a %attach% macros. The macros will be replaced "
+"by a path to current attach folder."
+msgstr ""
+
+#: commandexec/actions.py:140
+msgid "%folder%. Path to current page folder"
+msgstr ""
+
+#: commandexec/actions.py:145
+msgid ""
+"ExternalTools plugin. Insert a %folder% macros. The macros will be replaced "
+"by a path to current page folder."
+msgstr ""
+
+#: commandexec/commandcontroller.py:180
+msgid ""
+"Run applications by ExternalTools plugin?\n"
+"It may be unsafe."
+msgstr ""
+
+#: commandexec/commandcontroller.py:182
+msgid ""
+"Run application by ExternalTools plugin?\n"
+"It may be unsafe."
+msgstr ""
+
+#: preferencespanel.py:38
+msgid "Show warning before executing applications by (:exec:) command"
+msgstr ""
+
+#: preferencespanel.py:41
 msgid "Tools List"
 msgstr ""
 
-#: preferencespanel.py:37
+#: preferencespanel.py:42
 msgid "Append Tools"
 msgstr ""
 
-#: preferencespanel.py:89
+#: preferencespanel.py:97
 msgid "Can't save options"
 msgstr ""
 
-#: externaltools.py:41
-msgid "Open notes files with external editor"
+#: externaltools.py:50
+msgid ""
+"Open notes files with external editor.\n"
+"Added (:exec:) command for creation link for execute external tools from "
+"wiki page.\n"
+"\n"
+"<b>Examples</b>\n"
+"(:exec text=\"Open gvim in diff mode\":)\n"
+"gvim -d \"file name 1.txt\" \"file name 2.txt\"\n"
+"(:execend:)\n"
 msgstr ""
 
-#: externaltools.py:62
+#: externaltools.py:79
 msgid "http://jenyay.net/Outwiker/ExternalToolsEn"
 msgstr ""
 
-#: menumaker.py:44
+#: menumaker.py:43
 msgid "Open Content File with..."
 msgstr ""
 
-#: menumaker.py:57
+#: menumaker.py:56
 msgid "Open Result HTML File with..."
 msgstr ""

@@ -71,7 +71,7 @@ class MacrosPageAction (BaseHeadAction):
 
     @property
     def title (self):
-        return _(u"%page%. Current page text file")
+        return _(u"%page%. Current page. Text file")
 
 
     @property
@@ -93,7 +93,7 @@ class MacrosHtmlAction (BaseHeadAction):
 
     @property
     def title (self):
-        return _(u"%html%. Current HTML file")
+        return _(u"%html%. Current page. HTML file")
 
 
     @property
@@ -115,7 +115,7 @@ class MacrosAttachAction (BaseHeadAction):
 
     @property
     def title (self):
-        return _(u"%attach%. Path to current attach folder")
+        return _(u"%attach%. Path to current attachments folder")
 
 
     @property
