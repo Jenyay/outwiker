@@ -280,7 +280,7 @@ krusader'''
 
         self.assertEqual (len (result), 1)
         self.assertEqual (result[0].command, u'gvim')
-        self.assertEqual (result[0].params, [self.testPageTextPath])
+        self.assertEqual (result[0].params, [u'%PAGE%'])
 
 
     def testMacrosHtml_01 (self):
@@ -332,7 +332,7 @@ krusader'''
 
         self.assertEqual (len (result), 1)
         self.assertEqual (result[0].command, u'gvim')
-        self.assertEqual (result[0].params, [self.testPage.path])
+        self.assertEqual (result[0].params, [u'%FOLDER%'])
 
 
     def testMacrosAttach_01 (self):
@@ -358,7 +358,7 @@ krusader'''
 
         self.assertEqual (len (result), 1)
         self.assertEqual (result[0].command, u'gvim')
-        self.assertEqual (result[0].params, [self.testPageAttachPath])
+        self.assertEqual (result[0].params, [u'%ATTACH%'])
 
 
     def testMacrosAttach_03 (self):
@@ -415,3 +415,29 @@ krusader'''
         self.assertEqual (len (result), 1)
         self.assertEqual (result[0].command, u'gvim')
         self.assertEqual (result[0].params, [u'attach:абырвалг.txt'])
+
+
+    def testMacrosApp_01 (self):
+        from externaltools.commandexec.commandexecparser import CommandExecParser
+
+        text = u'''%folder%/gvim'''
+
+        parser = CommandExecParser (self.testPage)
+        result = parser.parse (text)
+
+        self.assertEqual (len (result), 1)
+        self.assertEqual (result[0].command,
+                          self.testPage.path + u'/gvim')
+
+
+    def testMacrosApp_02 (self):
+        from externaltools.commandexec.commandexecparser import CommandExecParser
+
+        text = u'''%attach%/gvim'''
+
+        parser = CommandExecParser (self.testPage)
+        result = parser.parse (text)
+
+        self.assertEqual (len (result), 1)
+        self.assertEqual (result[0].command,
+                          self.testPageAttachPath + u'/gvim')

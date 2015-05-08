@@ -19,10 +19,6 @@ class CommandExecParser (object):
         self._page = page
 
         self._joinRegexp = re.compile (r'\\\s*$\s*', re.MULTILINE)
-        self._macrosPage = re.compile (commandparams.MACROS_PAGE, re.I)
-        self._macrosHtml = re.compile (commandparams.MACROS_HTML, re.I)
-        self._macrosFolder = re.compile (commandparams.MACROS_FOLDER, re.I)
-        self._macrosAttach = re.compile (commandparams.MACROS_ATTACH, re.I)
 
 
     def parse (self, text):
@@ -41,10 +37,9 @@ class CommandExecParser (object):
             items = ushlex.split (line)
             assert len (items) != 0
 
-            command = items[0]
-            params = [self._substituteMacros (item) for item in items[1:]]
+            params = [self._substituteMacros (item) for item in items]
 
-            result.append (ExecInfo (command, params))
+            result.append (ExecInfo (params[0], params[1:]))
 
         return result
 
@@ -60,16 +55,19 @@ class CommandExecParser (object):
 
     def _substitutePage (self, paramText):
         pagePath = os.path.join (self._page.path, PAGE_CONTENT_FILE)
-        return self._macrosPage.sub (pagePath, paramText)
+        return paramText.replace (commandparams.MACROS_PAGE,
+                                  pagePath)
 
 
     def _substituteHtml (self, paramText):
         htmlPath = os.path.join (self._page.path, u'__content.html')
-        return self._macrosHtml.sub (htmlPath, paramText)
+        return paramText.replace (commandparams.MACROS_HTML,
+                                  htmlPath)
 
 
     def _substituteFolder (self, paramText):
-        return self._macrosFolder.sub (self._page.path, paramText)
+        return paramText.replace (commandparams.MACROS_FOLDER,
+                                  self._page.path)
 
 
     def _substituteAttach (self, paramText):
@@ -78,7 +76,7 @@ class CommandExecParser (object):
             attachPath = attachPath[:-1]
 
         # Substitute %attach%
-        result = self._macrosAttach.sub (attachPath, paramText)
+        result = paramText.replace (commandparams.MACROS_ATTACH, attachPath)
 
         # Substitute Attach:
         result = self._substituteAttachWiki (result)
