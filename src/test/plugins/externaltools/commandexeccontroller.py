@@ -4,6 +4,8 @@ import unittest
 
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.application import Application
+from outwiker.core.events import LinkClickParams
+from outwiker.gui.tester import Tester
 
 
 class CommandExecControllerTest (unittest.TestCase):
@@ -17,10 +19,19 @@ class CommandExecControllerTest (unittest.TestCase):
         self._controller = CommandController (Application)
         self._controller.initialize()
 
+        from externaltools.config import ExternalToolsConfig
+        ExternalToolsConfig (Application.config).clearAll()
+
+        Tester.dialogTester.clear()
+
 
     def tearDown (self):
+        from externaltools.config import ExternalToolsConfig
+        ExternalToolsConfig (Application.config).clearAll()
+
         self._controller.destroy()
         self.loader.clear()
+        Tester.dialogTester.clear()
 
 
     def testStatus_01 (self):
@@ -140,3 +151,88 @@ class CommandExecControllerTest (unittest.TestCase):
 
         self.assertEqual (commands[1].command, u'krusader')
         self.assertEqual (commands[1].params, [u'glavryba'])
+
+
+    def testOnLinkClick_01 (self):
+        params = LinkClickParams (u'exec://exec/?com1=sometools')
+
+        Tester.dialogTester.appendOk()
+        self.assertEqual (Tester.dialogTester.count, 1)
+
+        self._controller.onLinkClick (None, params)
+        self.assertEqual (Tester.dialogTester.count, 0)
+        self.assertTrue (params.process)
+
+
+    def testOnLinkClick_02 (self):
+        params = LinkClickParams (u'other://exec/?com1=sometools')
+
+        Tester.dialogTester.appendOk()
+        self.assertEqual (Tester.dialogTester.count, 1)
+
+        self._controller.onLinkClick (None, params)
+        self.assertEqual (Tester.dialogTester.count, 1)
+        self.assertFalse (params.process)
+
+
+    def testOnLinkClick_03 (self):
+        params = LinkClickParams (u'exec://other/?com1=sometools')
+
+        Tester.dialogTester.appendOk()
+        self.assertEqual (Tester.dialogTester.count, 1)
+
+        self._controller.onLinkClick (None, params)
+        self.assertEqual (Tester.dialogTester.count, 1)
+        self.assertFalse (params.process)
+
+
+    def testOnLinkClick_04 (self):
+        params = LinkClickParams (u'exec://exec/')
+
+        Tester.dialogTester.appendOk()
+        self.assertEqual (Tester.dialogTester.count, 1)
+
+        self._controller.onLinkClick (None, params)
+        self.assertEqual (Tester.dialogTester.count, 1)
+        self.assertFalse (params.process)
+
+
+    def testOnLinkClick_05 (self):
+        params = LinkClickParams (u'exec://exec/?title=qqq')
+
+        Tester.dialogTester.appendOk()
+        self.assertEqual (Tester.dialogTester.count, 1)
+
+        self._controller.onLinkClick (None, params)
+        self.assertEqual (Tester.dialogTester.count, 0)
+        self.assertTrue (params.process)
+
+
+    def testWarning_01 (self):
+        from externaltools.config import ExternalToolsConfig
+        config = ExternalToolsConfig (Application.config)
+        config.execWarning = True
+
+        params = LinkClickParams (u'exec://exec/?com1=sometools')
+
+        Tester.dialogTester.appendOk()
+        self.assertEqual (Tester.dialogTester.count, 1)
+
+        self._controller.onLinkClick (None, params)
+        self.assertEqual (Tester.dialogTester.count, 0)
+        self.assertTrue (params.process)
+
+
+    def testWarning_02 (self):
+        from externaltools.config import ExternalToolsConfig
+        config = ExternalToolsConfig (Application.config)
+        config.execWarning = False
+
+        params = LinkClickParams (u'exec://exec/?com1=sometools')
+
+        Tester.dialogTester.appendOk()
+        self.assertEqual (Tester.dialogTester.count, 1)
+
+        self._controller.onLinkClick (None, params)
+        self.assertEqual (Tester.dialogTester.count, 1)
+        self.assertTrue (params.process)

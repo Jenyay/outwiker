@@ -31,7 +31,7 @@ class CommandController (object):
         if self._enableExecCommand:
             self._application.onWikiParserPrepare += self.__onWikiParserPrepare
             self._application.onHoverLink += self._onHoverLink
-            self._application.onLinkClick += self._onLinkClick
+            self._application.onLinkClick += self.onLinkClick
             self._application.onPageViewCreate += self.__onPageViewCreate
             self._application.onPageViewDestroy += self.__onPageViewDestroy
 
@@ -46,7 +46,7 @@ class CommandController (object):
         if self._enableExecCommand:
             self._application.onWikiParserPrepare -= self.__onWikiParserPrepare
             self._application.onHoverLink -= self._onHoverLink
-            self._application.onLinkClick -= self._onLinkClick
+            self._application.onLinkClick -= self.onLinkClick
             self._application.onPageViewCreate -= self.__onPageViewCreate
             self._application.onPageViewDestroy -= self.__onPageViewDestroy
 
@@ -162,7 +162,10 @@ class CommandController (object):
         return u'"{}"'.format (param) if u' ' in param else param
 
 
-    def _onLinkClick (self, page, params):
+    def onLinkClick (self, page, params):
+        """
+        Event handler for clicking on link
+        """
         if params.link is None:
             return
 
@@ -173,7 +176,6 @@ class CommandController (object):
         params.process = True
 
         commands = self.getCommandsList (urlparams)
-
         config = ExternalToolsConfig (self._application.config)
 
         if len (commands) > 1:
