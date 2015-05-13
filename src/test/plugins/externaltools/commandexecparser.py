@@ -467,3 +467,157 @@ krusader'''
         self.assertEqual (len (result), 1)
         self.assertEqual (result[0].command,
                           self.testPageAttachPath + u'/gvim')
+
+
+    def testComments_01 (self):
+        from externaltools.commandexec.commandexecparser import CommandExecParser
+
+        text = u'''gvim fname
+# Комментарий'''
+
+        parser = CommandExecParser (self.testPage)
+        result = parser.parse (text)
+
+        self.assertEqual (len (result), 1)
+        self.assertEqual (result[0].command, u'gvim')
+        self.assertEqual (result[0].params, [u'fname'])
+
+
+    def testComments_02 (self):
+        from externaltools.commandexec.commandexecparser import CommandExecParser
+
+        text = u'''gvim fname
+
+# Комментарий
+
+
+'''
+
+        parser = CommandExecParser (self.testPage)
+        result = parser.parse (text)
+
+        self.assertEqual (len (result), 1)
+        self.assertEqual (result[0].command, u'gvim')
+        self.assertEqual (result[0].params, [u'fname'])
+
+
+    def testComments_03 (self):
+        from externaltools.commandexec.commandexecparser import CommandExecParser
+
+        text = u'''# Комментарий
+
+gvim fname'''
+
+        parser = CommandExecParser (self.testPage)
+        result = parser.parse (text)
+
+        self.assertEqual (len (result), 1)
+        self.assertEqual (result[0].command, u'gvim')
+        self.assertEqual (result[0].params, [u'fname'])
+
+
+    def testComments_04 (self):
+        from externaltools.commandexec.commandexecparser import CommandExecParser
+
+        text = u'''gvim fname # Комментарий'''
+
+        parser = CommandExecParser (self.testPage)
+        result = parser.parse (text)
+
+        self.assertEqual (len (result), 1)
+        self.assertEqual (result[0].command, u'gvim')
+        self.assertEqual (result[0].params, [u'fname', u'#', u'Комментарий'])
+
+
+    def testComments_05 (self):
+        from externaltools.commandexec.commandexecparser import CommandExecParser
+
+        text = u'''gvim fname
+#Комментарий'''
+
+        parser = CommandExecParser (self.testPage)
+        result = parser.parse (text)
+
+        self.assertEqual (len (result), 1)
+        self.assertEqual (result[0].command, u'gvim')
+        self.assertEqual (result[0].params, [u'fname'])
+
+
+    def testComments_06 (self):
+        from externaltools.commandexec.commandexecparser import CommandExecParser
+
+        text = u'''gvim fname \\
+#Комментарий'''
+
+        parser = CommandExecParser (self.testPage)
+        result = parser.parse (text)
+
+        self.assertEqual (len (result), 1)
+        self.assertEqual (result[0].command, u'gvim')
+        self.assertEqual (result[0].params, [u'fname'])
+
+
+    def testComments_07 (self):
+        from externaltools.commandexec.commandexecparser import CommandExecParser
+
+        text = u'''gvim \\
+#Комментарий
+fname'''
+
+        parser = CommandExecParser (self.testPage)
+        result = parser.parse (text)
+
+        self.assertEqual (len (result), 1)
+        self.assertEqual (result[0].command, u'gvim')
+        self.assertEqual (result[0].params, [u'fname'])
+
+
+    def testComments_08 (self):
+        from externaltools.commandexec.commandexecparser import CommandExecParser
+
+        text = u'''gvim \\
+ #Комментарий'''
+
+        parser = CommandExecParser (self.testPage)
+        result = parser.parse (text)
+
+        self.assertEqual (len (result), 1)
+        self.assertEqual (result[0].command, u'gvim')
+        self.assertEqual (result[0].params, [u'#Комментарий'])
+
+
+    def testComments_09 (self):
+        from externaltools.commandexec.commandexecparser import CommandExecParser
+
+        text = u'''gvim \\
+ #Комментарий
+
+'''
+
+        parser = CommandExecParser (self.testPage)
+        result = parser.parse (text)
+
+        self.assertEqual (len (result), 1)
+        self.assertEqual (result[0].command, u'gvim')
+        self.assertEqual (result[0].params, [u'#Комментарий'])
+
+
+    def testComments_10 (self):
+        from externaltools.commandexec.commandexecparser import CommandExecParser
+
+        text = u'''gvim
+# Комментарий
+krusader
+# Комментарий 2
+'''
+
+        parser = CommandExecParser (self.testPage)
+        result = parser.parse (text)
+
+        self.assertEqual (len (result), 2)
+
+        self.assertEqual (result[0].command, u'gvim')
+        self.assertEqual (result[0].params, [])
+
+        self.assertEqual (result[1].command, u'krusader')
+        self.assertEqual (result[1].params, [])

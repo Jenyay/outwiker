@@ -18,6 +18,7 @@ class CommandExecParser (object):
     def __init__ (self, page):
         self._page = page
 
+        self._commentsRegexp = re.compile (r'^#.*?$', re.MULTILINE)
         self._joinRegexp = re.compile (r'\\\s*$\s*', re.MULTILINE)
 
 
@@ -25,11 +26,12 @@ class CommandExecParser (object):
         """
         Return list of the ExecInfo instances
         """
-        joinedLines = self._joinRegexp.sub (u' ', text)
+        text = self._commentsRegexp.sub (u'', text)
+        text = self._joinRegexp.sub (u' ', text)
 
         lines = [line.strip()
                  for line
-                 in joinedLines.split (u'\n')
+                 in text.split (u'\n')
                  if line.strip()]
 
         result = []
