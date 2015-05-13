@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-02-24 22:05+0300\n"
-"PO-Revision-Date: 2015-02-26 10:02+0300\n"
+"PO-Revision-Date: 2015-05-13 19:39+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
@@ -14,6 +14,7 @@ msgstr ""
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Poedit 1.5.4\n"
 "X-Crowdin-Project: outwiker\n"
+"X-Crowdin-Language: uk\n"
 "X-Crowdin-File: outwiker.pot\n"
 
 #: outwiker/core/htmlimproverfactory.py:28
@@ -425,7 +426,7 @@ msgstr "Помилка друку"
 
 #: outwiker/actions/openpluginsfolder.py:22
 msgid "Open Plugins Folder"
-msgstr "Відкрити папку з плагінами"
+msgstr "Відкрити папку з додатками"
 
 #: outwiker/actions/openpluginsfolder.py:27
 msgid "Open folder with plugins"
