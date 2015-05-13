@@ -48,12 +48,40 @@ else:
         @property
         def description (self):
             return _(u"""Open notes files with external editor.
-Added (:exec:) command for creation link for execute external tools from wiki page.
+
+For OutWiker 1.9 and above ExternalTools adds the (:exec:) command for creation link or button for execute external applications from wiki page.
+
+The (:exec:) command has the following optional parameters:
+<ul>
+<li>format. If the parameter equals "button" command will create a button instead of a link.</li>
+<li>title. The parameter sets the text for link or button.</li>
+</ul>
+
+The (:exec:) command allow to run many applications. Every application must writed on the separated lines.
+
+If line begins with "#" this line will be ignored. "#" in begin of the line is sign of the comment.
 
 <b>Examples</b>
-(:exec text="Open gvim in diff mode":)
-gvim -d "file name 1.txt" "file name 2.txt"
-(:execend:)
+
+Creating a link for running application.exe:
+<code><pre>(:exec:)application.exe(:execend:)</pre></code>
+
+Same but creating a button
+<code><pre>(:exec format=button:)
+application.exe
+(:execend:)</pre></code>
+
+Create a link for running application.exe with parameters:
+<code><pre>(:exec:)
+application.exe param1 "c:\\myfolder\\path to file name"
+(:execend:)</pre></code>
+
+Run many applications:
+<code><pre>(:exec text="Run application_1, application_2 and application_3":)
+application_1.exe
+application_2.exe param_1 param_2
+application_3.exe param_1 param_2
+(:execend:)</pre></code>
 """)
 
 
