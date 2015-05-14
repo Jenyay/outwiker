@@ -22,7 +22,7 @@ PROTO_COMMAND = u'com{number}'
 
 PROTO_TITLE = u'title'
 
-# The macros will be replaced by full path to page text
+# The macros will be replaced by full path to page text file
 MACROS_PAGE = u'%page%'
 
 # The macros will be replaced by full path to HTML content file
