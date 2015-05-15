@@ -2,7 +2,7 @@ Source: outwiker
 Section: text
 Priority: optional
 Maintainer: Eugeniy Ilin <jenyay.ilin@gmail.com>
-Standards-Version: 3.9.5
+Standards-Version: 3.9.6
 Build-Depends: debhelper (>=8), python, dh-python
 Homepage: http://jenyay.net/Outwiker/English
 

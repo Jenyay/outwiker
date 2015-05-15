@@ -8,7 +8,7 @@ import shutil
 from fabric.api import local, lcd
 
 # Supported Ubuntu releases
-distribs = ["utopic", "trusty", "precise", "vivid"]
+distribs = ["vivid", "utopic", "trusty", "precise"]
 
 # The separate folder for building under Ubuntu 12.04
 debian_precise = "debian_precise"
