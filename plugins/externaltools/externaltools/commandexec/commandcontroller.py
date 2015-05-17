@@ -9,10 +9,7 @@ import wx
 from outwiker.core.system import getOS
 from outwiker.core.commands import MessageBox
 
-from externaltools.commandexec.commandexec import CommandExec
 from externaltools.commandexec.commandparams import EXEC_BEGIN, PROTO_COMMAND
-from externaltools.commandexec.execinfo import ExecInfo
-from externaltools.commandexec.guicreator import GuiCreator
 from externaltools.config import ExternalToolsConfig
 
 
@@ -29,6 +26,8 @@ class CommandController (object):
 
     def initialize (self):
         if self._enableExecCommand:
+            from externaltools.commandexec.guicreator import GuiCreator
+
             self._application.onWikiParserPrepare += self.__onWikiParserPrepare
             self._application.onHoverLink += self._onHoverLink
             self._application.onLinkClick += self.onLinkClick
@@ -94,6 +93,7 @@ class CommandController (object):
         """
         Teh event occures before parsing. Add the (:exec:) command
         """
+        from externaltools.commandexec.commandexec import CommandExec
         parser.addCommand (CommandExec (parser))
 
 
@@ -200,6 +200,8 @@ class CommandController (object):
         Return list of the ExecInfo. Macros will be replaced in params
         urlparams is dictionary with params from url.
         """
+        from externaltools.commandexec.execinfo import ExecInfo
+
         result = []
 
         comindex = 1
