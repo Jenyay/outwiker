@@ -18,7 +18,7 @@ class CommandController (object):
         self._application = application
 
         # Enable (:exec:) command only in the "new" OutWiker version.
-        # If Application has onLinkClick event
+        # If Application have onLinkClick event
         self._enableExecCommand = u'onLinkClick' in dir (self._application)
 
         self._guiCreator = None
