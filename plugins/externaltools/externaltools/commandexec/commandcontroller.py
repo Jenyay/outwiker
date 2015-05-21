@@ -145,13 +145,15 @@ class CommandController (object):
         """
         assert commands
 
+        encoding = getOS().filesEncoding
+
         buf = StringIO()
         buf.write (u'>>> ')
-        buf.write (self._getParamText (commands[0].command))
+        buf.write (self._getParamText (unicode (commands[0].command, encoding)))
 
         for param in commands[0].params:
             buf.write (u' ')
-            buf.write (self._getParamText (param))
+            buf.write (self._getParamText (unicode (param, encoding)))
 
         if len (commands) > 1:
             buf.write (u' ...')
