@@ -141,6 +141,7 @@ def plugins():
     Create an archive with plugins (7z required)
     """
     plugins = [
+    	"autorenamer",
         "changepageuid",
         "counter",
         "diagrammer",
