@@ -11,6 +11,7 @@ from outwiker.core.commands import MessageBox
 
 from externaltools.commandexec.commandparams import EXEC_BEGIN, PROTO_COMMAND
 from externaltools.config import ExternalToolsConfig
+from externaltools.i18n import get_
 
 
 class CommandController (object):
@@ -25,6 +26,9 @@ class CommandController (object):
 
 
     def initialize (self):
+        global _
+        _ = get_()
+
         if self._enableExecCommand:
             from externaltools.commandexec.guicreator import GuiCreator
 
@@ -141,13 +145,15 @@ class CommandController (object):
         """
         assert commands
 
+        encoding = getOS().filesEncoding
+
         buf = StringIO()
         buf.write (u'>>> ')
-        buf.write (self._getParamText (commands[0].command))
+        buf.write (self._getParamText (unicode (commands[0].command, encoding)))
 
         for param in commands[0].params:
             buf.write (u' ')
-            buf.write (self._getParamText (param))
+            buf.write (self._getParamText (unicode (param, encoding)))
 
         if len (commands) > 1:
             buf.write (u' ...')
