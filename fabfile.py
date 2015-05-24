@@ -13,6 +13,29 @@ distribs = ["vivid", "utopic", "trusty", "precise"]
 # The separate folder for building under Ubuntu 12.04
 debian_precise = "debian_precise"
 
+# List of the supported plugins
+plugins_list = [
+    "autorenamer",
+    "changepageuid",
+    "counter",
+    "diagrammer",
+    "datagraph",
+    "export2html",
+    "externaltools",
+    "htmlformatter",
+    "htmlheads",
+    "lightbox",
+    "livejournal",
+    "sessions",
+    "source",
+    "spoiler",
+    "statistics",
+    "style",
+    "thumbgallery",
+    "tableofcontents",
+    "updatenotifier",
+]
+
 
 def _getVersion():
     """
@@ -140,32 +163,10 @@ def plugins():
     """
     Create an archive with plugins (7z required)
     """
-    plugins = [
-    	"autorenamer",
-        "changepageuid",
-        "counter",
-        "diagrammer",
-        "datagraph",
-        "export2html",
-        "externaltools",
-        "htmlformatter",
-        "htmlheads",
-        "lightbox",
-        "livejournal",
-        "sessions",
-        "source",
-        "spoiler",
-        "statistics",
-        "style",
-        "thumbgallery",
-        "tableofcontents",
-        "updatenotifier",
-    ]
+    _remove (u"build/plugins/outwiker-plugins-all.zip")
 
-    _removeFile (u"build/plugins/outwiker-plugins-all.zip")
-
-    for plugin in plugins:
-        _removeFile (u"build/plugins/{}.zip".format (plugin))
+    for plugin in plugins_list:
+        _remove (u"build/plugins/{}.zip".format (plugin))
 
         with lcd ("plugins/{}".format (plugin)):
             local ("7z a -r -aoa -xr!*.pyc -xr!.ropeproject ../../build/plugins/{}.zip ./*".format (plugin))
@@ -186,8 +187,8 @@ def source ():
     fullfname = u"outwiker-src-full.zip"
     srcfname = u"outwiker-src-min.zip"
 
-    _removeFile (fullfname)
-    _removeFile (srcfname)
+    _remove (fullfname)
+    _remove (srcfname)
 
     local ('git archive --prefix=outwiker-{}.{}/ -o "{}/{}" HEAD'.format (version[0], version[1], sourcesdir, fullfname))
 
@@ -197,22 +198,47 @@ def source ():
 
 def win():
     """
-    Assemble buildes under Windows
+    Assemble builds under Windows
     """
     pluginsdir = os.path.join ("src", "plugins")
+    src_pluginsdir = u"plugins"
+    build_pluginsdir = u"build\\outwiker_win\\plugins\\"
 
     # Create the plugins folder (it is not appened to the git repository)
-    if not os.path.exists (pluginsdir):
-        os.mkdir (pluginsdir)
+    _remove (pluginsdir)
+    os.mkdir (pluginsdir)
 
+    # Build by cx_Freeze
     with lcd ("src"):
         local ("python setup_win.py build")
 
+    _remove (build_pluginsdir)
+    os.mkdir (build_pluginsdir)
+
+    # Remove old versions
+    _remove ("build/outwiker_win_unstable.zip")
+    _remove ("build/outwiker_win_unstable.7z")
+
+    # Create archive without plugins
     with lcd ("build/outwiker_win"):
         local ("7z a ..\outwiker_win_unstable.zip .\* .\plugins -r -aoa")
         local ("7z a ..\outwiker_win_unstable.7z .\* .\plugins -r -aoa")
 
+    # Compile installer
     local ("iscc outwiker_setup.iss")
+
+    # Copy plugins to build folder
+    for plugin in plugins_list:
+        shutil.copytree (
+            os.path.join (src_pluginsdir, plugin, plugin),
+            os.path.join (build_pluginsdir, plugin),
+        )
+
+    # Archive versions with plugins
+    with lcd ("build/outwiker_win"):
+        local ("7z a ..\outwiker_win_unstable_all_plugins.zip .\* .\plugins -r -aoa -xr!*.pyc -xr!.ropeproject")
+        local ("7z a ..\outwiker_win_unstable_all_plugins.7z .\* .\plugins -r -aoa -xr!*.pyc -xr!.ropeproject")
+
 
 
 def wintests():
@@ -314,9 +340,12 @@ def _makechangelog (distrib_src, distrib_new):
         fp.write (u"".join (lines))
 
 
-def _removeFile (fname):
+def _remove (path):
     """
     Remove the fname file if it exists. The function not catch exceptions.
     """
-    if os.path.exists (fname):
-        os.remove (fname)
+    if os.path.exists (path):
+        if os.path.isfile (path):
+            os.remove (path)
+        elif os.path.isdir (path):
+            shutil.rmtree (path)
