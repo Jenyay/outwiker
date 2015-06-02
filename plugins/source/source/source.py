@@ -6,18 +6,16 @@ import sys
 from outwiker.core.pluginbase import Plugin
 from outwiker.core.system import getOS
 from outwiker.core.commands import getCurrentVersion
-from outwiker.core.version import Version, StatusSet
+from outwiker.core.version import Version
 
-from .sourceconfig import SourceConfig
-from .controller import Controller
 from .i18n import set_
 
-__version__ = u"1.12"
+__version__ = u"1.13"
 
 
-# Для работы этого плагина требуется OutWiker 1.7
-if getCurrentVersion() < Version (1, 7, 0, 680, status=StatusSet.DEV):
-    print ("Source plugin. OutWiker version requirement: 1.7.0.680")
+# Для работы этого плагина требуется OutWiker 1.8.1
+if getCurrentVersion() < Version (1, 8, 1):
+    print ("Source plugin. OutWiker version requirement: 1.8.1")
 else:
     class PluginSource (Plugin):
         """
@@ -29,14 +27,14 @@ else:
             """
             Plugin.__init__ (self, application)
 
+            self.__correctSysPath()
+
+            from .controller import Controller
             self.__controller = Controller(self, application)
 
 
         def initialize(self):
             self._initlocale(u"source")
-
-            self.__correctSysPath()
-
             self.__controller.initialize()
 
 
@@ -53,6 +51,7 @@ else:
 
         @property
         def config (self):
+            from .sourceconfig import SourceConfig
             return SourceConfig (self._application.config)
 
 

@@ -3,10 +3,6 @@
 from outwiker.pages.wiki.parser.command import Command
 from outwiker.core.attachment import Attachment
 
-from pygments import highlight
-from pygments.formatters import HtmlFormatter
-from pygments.styles import STYLE_MAP
-
 from .sourceconfig import SourceConfig
 from .lexermaker import LexerMaker
 from .i18n import get_
@@ -139,6 +135,7 @@ class CommandSource (Command):
 
 
     def __getStyle (self, params_dict):
+        from pygments.styles import STYLE_MAP
         if (STYLE_PARAM_NAME not in params_dict or
                 params_dict[STYLE_PARAM_NAME] not in STYLE_MAP):
             return getDefaultStyle (self.__config)
@@ -158,6 +155,9 @@ class CommandSource (Command):
         """
         Раскраска исходников. Возвращает получившийся HTML и добавляет нужные стили в заголовок страницы
         """
+        from pygments import highlight
+        from pygments.formatters import HtmlFormatter
+
         lexermaker = LexerMaker ()
         lexer = lexermaker.getLexer (params_dict)
 
