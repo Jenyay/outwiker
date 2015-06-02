@@ -37,7 +37,7 @@ class CommandExecControllerTest (unittest.TestCase):
     def testStatus_01 (self):
         from externaltools.commandexec.execinfo import ExecInfo
 
-        commands = [ExecInfo (u'gvim', [])]
+        commands = [ExecInfo ('gvim', [])]
         title = self._controller.getStatusTitle (commands)
         rightTitle = u'>>> gvim'
 
@@ -48,8 +48,8 @@ class CommandExecControllerTest (unittest.TestCase):
         from externaltools.commandexec.execinfo import ExecInfo
 
         commands = [
-            ExecInfo (u'gvim', []),
-            ExecInfo (u'krusader', []),
+            ExecInfo ('gvim', []),
+            ExecInfo ('krusader', []),
         ]
 
         title = self._controller.getStatusTitle (commands)
@@ -61,7 +61,7 @@ class CommandExecControllerTest (unittest.TestCase):
     def testStatus_03 (self):
         from externaltools.commandexec.execinfo import ExecInfo
 
-        commands = [ExecInfo (u'gvim', [u'абырвалг'])]
+        commands = [ExecInfo ('gvim', ['абырвалг'])]
         title = self._controller.getStatusTitle (commands)
         rightTitle = u'>>> gvim абырвалг'
 
@@ -71,7 +71,7 @@ class CommandExecControllerTest (unittest.TestCase):
     def testStatus_04 (self):
         from externaltools.commandexec.execinfo import ExecInfo
 
-        commands = [ExecInfo (u'gvim', [u'абырвалг', u'главрыба'])]
+        commands = [ExecInfo ('gvim', ['абырвалг', 'главрыба'])]
         title = self._controller.getStatusTitle (commands)
         rightTitle = u'>>> gvim абырвалг главрыба'
 
@@ -81,7 +81,7 @@ class CommandExecControllerTest (unittest.TestCase):
     def testStatus_05 (self):
         from externaltools.commandexec.execinfo import ExecInfo
 
-        commands = [ExecInfo (u'gvim', [u'абырвалг главрыба'])]
+        commands = [ExecInfo ('gvim', ['абырвалг главрыба'])]
         title = self._controller.getStatusTitle (commands)
         rightTitle = u'>>> gvim "абырвалг главрыба"'
 
@@ -92,8 +92,8 @@ class CommandExecControllerTest (unittest.TestCase):
         from externaltools.commandexec.execinfo import ExecInfo
 
         commands = [
-            ExecInfo (u'gvim', [u'абырвалг главрыба']),
-            ExecInfo (u'gvim', [u'абырвалг главрыба']),
+            ExecInfo ('gvim', ['абырвалг главрыба']),
+            ExecInfo ('gvim', ['абырвалг главрыба']),
         ]
         title = self._controller.getStatusTitle (commands)
         rightTitle = u'>>> gvim "абырвалг главрыба" ...'
