@@ -61,9 +61,9 @@ class CommandExecControllerTest (unittest.TestCase):
     def testStatus_03 (self):
         from externaltools.commandexec.execinfo import ExecInfo
 
-        commands = [ExecInfo ('gvim', ['абырвалг'])]
+        commands = [ExecInfo ('gvim', ['abyrvalg'])]
         title = self._controller.getStatusTitle (commands)
-        rightTitle = u'>>> gvim абырвалг'
+        rightTitle = u'>>> gvim abyrvalg'
 
         self.assertEqual (title, rightTitle)
 
@@ -71,9 +71,9 @@ class CommandExecControllerTest (unittest.TestCase):
     def testStatus_04 (self):
         from externaltools.commandexec.execinfo import ExecInfo
 
-        commands = [ExecInfo ('gvim', ['абырвалг', 'главрыба'])]
+        commands = [ExecInfo ('gvim', ['abyrvalg', 'glavryba'])]
         title = self._controller.getStatusTitle (commands)
-        rightTitle = u'>>> gvim абырвалг главрыба'
+        rightTitle = u'>>> gvim abyrvalg glavryba'
 
         self.assertEqual (title, rightTitle)
 
@@ -81,9 +81,9 @@ class CommandExecControllerTest (unittest.TestCase):
     def testStatus_05 (self):
         from externaltools.commandexec.execinfo import ExecInfo
 
-        commands = [ExecInfo ('gvim', ['абырвалг главрыба'])]
+        commands = [ExecInfo ('gvim', ['abyrvalg glavryba'])]
         title = self._controller.getStatusTitle (commands)
-        rightTitle = u'>>> gvim "абырвалг главрыба"'
+        rightTitle = u'>>> gvim "abyrvalg glavryba"'
 
         self.assertEqual (title, rightTitle)
 
@@ -92,11 +92,11 @@ class CommandExecControllerTest (unittest.TestCase):
         from externaltools.commandexec.execinfo import ExecInfo
 
         commands = [
-            ExecInfo ('gvim', ['абырвалг главрыба']),
-            ExecInfo ('gvim', ['абырвалг главрыба']),
+            ExecInfo ('gvim', ['abyrvalg glavryba']),
+            ExecInfo ('gvim', ['abyrvalg glavryba']),
         ]
         title = self._controller.getStatusTitle (commands)
-        rightTitle = u'>>> gvim "абырвалг главрыба" ...'
+        rightTitle = u'>>> gvim "abyrvalg glavryba" ...'
 
         self.assertEqual (title, rightTitle)
 
