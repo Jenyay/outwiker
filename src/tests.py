@@ -147,6 +147,7 @@ if __name__ == '__main__':
     from test.guitests.movepage import MovePageGuiTest
     from test.guitests.openwiki import OpenWikiGuiTest
     from test.guitests.newwiki import NewWikiGuiTest
+    from test.guitests.pagetabs import PageTabsTest
 
     from test.guitests.fileicons import FileIconsTestWindows
 
