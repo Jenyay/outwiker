@@ -31,45 +31,58 @@ class GeneralGuiConfig (object):
     # Последний используемый формат представления даты
     RECENT_DATETIME_FORMAT_PARAM = u"RecentDateTimeFormat"
 
+    # Default tab for page (editor / preview / recent used)
+    PAGE_TAB_RECENT = 0
+    PAGE_TAB_CODE = 1
+    PAGE_TAB_RESULT = 2
+
+    PAGE_TAB_PARAM = u"PageTab"
+
 
     def __init__ (self, config):
         self.config = config
 
         # Спрашивать подтверждение выхода?
         self.askBeforeExit = BooleanOption (self.config,
-                                            GeneralGuiConfig.GENERAL_SECTION,
-                                            GeneralGuiConfig.ASK_BEFORE_EXIT_PARAM,
-                                            GeneralGuiConfig.ASK_BEFORE_EXIT_DEFAULT)
+                                            self.GENERAL_SECTION,
+                                            self.ASK_BEFORE_EXIT_PARAM,
+                                            self.ASK_BEFORE_EXIT_DEFAULT)
 
         # Интервал, через которое происходит автосохранение страницы. Если значение <= 0, значит автосохранение отключено
         self.autosaveInterval = IntegerOption (self.config,
-                                               GeneralGuiConfig.GENERAL_SECTION,
-                                               GeneralGuiConfig.AUTOSAVE_INTERVAL_PARAM,
-                                               GeneralGuiConfig.AUTOSAVE_INTERVAL_DEFAULT)
+                                               self.GENERAL_SECTION,
+                                               self.AUTOSAVE_INTERVAL_PARAM,
+                                               self.AUTOSAVE_INTERVAL_DEFAULT)
 
         # Количество последних открытых вики
         self.historyLength = IntegerOption (self.config,
-                                            GeneralGuiConfig.RECENT_SECTION,
-                                            GeneralGuiConfig.RECENT_WIKI_COUNT_PARAM,
-                                            GeneralGuiConfig.RECENT_WIKI_COUNT_DEFAULT)
+                                            self.RECENT_SECTION,
+                                            self.RECENT_WIKI_COUNT_PARAM,
+                                            self.RECENT_WIKI_COUNT_DEFAULT)
 
         # Открывать последнуюю открытую вики при старте?
         self.autoopen = BooleanOption (self.config,
-                                       GeneralGuiConfig.RECENT_SECTION,
-                                       GeneralGuiConfig.RECENT_AUTOOPEN_PARAM,
-                                       GeneralGuiConfig.RECENT_AUTOOPEN_DEFAULT)
+                                       self.RECENT_SECTION,
+                                       self.RECENT_AUTOOPEN_PARAM,
+                                       self.RECENT_AUTOOPEN_DEFAULT)
 
         # Формат для представления даты и времени модификиции страниц
         self.dateTimeFormat = StringOption (self.config,
-                                            GeneralGuiConfig.GENERAL_SECTION,
-                                            GeneralGuiConfig.DATETIME_FORMAT_PARAM,
-                                            GeneralGuiConfig.DATETIME_FORMAT_DEFAULT)
+                                            self.GENERAL_SECTION,
+                                            self.DATETIME_FORMAT_PARAM,
+                                            self.DATETIME_FORMAT_DEFAULT)
 
         # Последний используемый формат для представления даты и времени модификиции страниц
         self.recentDateTimeFormat = StringOption (self.config,
-                                                  GeneralGuiConfig.GENERAL_SECTION,
-                                                  GeneralGuiConfig.RECENT_DATETIME_FORMAT_PARAM,
+                                                  self.GENERAL_SECTION,
+                                                  self.RECENT_DATETIME_FORMAT_PARAM,
                                                   self.dateTimeFormat.value)
+
+        # Default tab for page (editor / preview / recent used)
+        self.pageTab = IntegerOption (self.config,
+                                      self.GENERAL_SECTION,
+                                      self.PAGE_TAB_PARAM,
+                                      self.PAGE_TAB_RECENT)
 
 
 class PluginsConfig (object):

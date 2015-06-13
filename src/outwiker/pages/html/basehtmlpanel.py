@@ -6,17 +6,18 @@ from abc import ABCMeta, abstractmethod, abstractproperty
 import wx
 import wx.lib.newevent
 
+from outwiker.actions.search import SearchAction, SearchNextAction, SearchPrevAction, SearchAndReplaceAction
+from outwiker.actions.attachfiles import AttachFilesAction
+from outwiker.actions.globalsearch import GlobalSearchAction
 from outwiker.core.application import Application
 from outwiker.core.commands import MessageBox, setStatusText
 from outwiker.core.system import getImagesDir
 from outwiker.core.attachment import Attachment
 from outwiker.core.config import IntegerOption
 from outwiker.core.defines import PAGE_RESULT_HTML
-from outwiker.gui.basetextpanel import BaseTextPanel
-from outwiker.actions.search import SearchAction, SearchNextAction, SearchPrevAction, SearchAndReplaceAction
-from outwiker.actions.attachfiles import AttachFilesAction
-from outwiker.actions.globalsearch import GlobalSearchAction
 from outwiker.core.system import writeTextFile, getOS
+from outwiker.gui.basetextpanel import BaseTextPanel
+from outwiker.gui.guiconfig import GeneralGuiConfig
 
 # Событие вызывается, когда переключаются вкладки страницы (код, HTML, ...)
 PageTabChangedEvent, EVT_PAGE_TAB_CHANGED = wx.lib.newevent.NewEvent()
@@ -255,6 +256,17 @@ class BaseHtmlPanel(BaseTextPanel):
         Прочитать из страницы настройки текущей вкладки (код, просмотр и т.п.)
         """
         assert page is not None
+
+        # Get global tab option
+        generalConfig = GeneralGuiConfig (Application.config)
+        generalTab = generalConfig.pageTab.value
+
+        if generalTab == GeneralGuiConfig.PAGE_TAB_CODE:
+            return self.CODE_PAGE_INDEX
+        elif generalTab == GeneralGuiConfig.PAGE_TAB_RESULT:
+            return self.RESULT_PAGE_INDEX
+
+        # Get tab option from page
         tabOption = IntegerOption (page.params, self.tabSectionName, self.tabParamName, -1)
         return tabOption.value
 
