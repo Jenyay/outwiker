@@ -405,8 +405,11 @@ class NotesTree(wx.Panel):
             # Будущий родитель для страницы
             if endDragItem.IsOk():
                 newParent = self.treeCtrl.GetItemData (endDragItem).GetData()
-                outwiker.core.commands.movePage (draggedPage, newParent)
-                self.expand (newParent)
+
+                # Moving page to itself is ignored
+                if newParent != draggedPage:
+                    outwiker.core.commands.movePage (draggedPage, newParent)
+                    self.expand (newParent)
 
         self.dragItem = None
 
