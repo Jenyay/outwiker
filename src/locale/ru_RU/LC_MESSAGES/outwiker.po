@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-24 22:05+0300\n"
+"POT-Creation-Date: 2015-06-15 21:28+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 1.7.5\n"
 
 #: outwiker/core/htmlimproverfactory.py:28
 msgid "Line Breaks (<br/>)"
@@ -66,14 +66,14 @@ msgstr "Страница открыта только для чтения"
 #: outwiker/actions/openattachfolder.py:38
 #: outwiker/actions/sortchildalpha.py:37 outwiker/gui/notestree.py:284
 #: outwiker/gui/notestree.py:339 outwiker/gui/mainwndcontroller.py:213
-#: outwiker/gui/mainwindow.py:513 outwiker/gui/htmlrenderie.py:181
+#: outwiker/gui/mainwindow.py:513 outwiker/gui/htmlrenderie.py:212
 #: outwiker/gui/htmlrenderwx.py:105
 #: outwiker/gui/preferences/iconsetpanel.py:220
 #: outwiker/gui/preferences/iconsetpanel.py:277
 #: outwiker/gui/preferences/iconsetpanel.py:283
 #: outwiker/gui/preferences/iconsetpanel.py:289
 #: outwiker/gui/preferences/iconsetpanel.py:332
-#: outwiker/gui/tabscontroller.py:244 outwiker/gui/htmlrenderwebkit.py:232
+#: outwiker/gui/tabscontroller.py:253 outwiker/gui/htmlrenderwebkit.py:283
 #: outwiker/gui/attachpanel.py:232 outwiker/gui/attachpanel.py:242
 #: outwiker/gui/attachpanel.py:254 outwiker/gui/attachpanel.py:275
 #: outwiker/gui/attachpanel.py:285 outwiker/gui/currentpagepanel.py:84
@@ -82,9 +82,9 @@ msgstr "Страница открыта только для чтения"
 #: outwiker/gui/pagedialog.py:45 outwiker/gui/pagedialog.py:137
 #: outwiker/gui/pagedialog.py:196 outwiker/gui/renametagdialog.py:75
 #: outwiker/gui/renametagdialog.py:79 outwiker/gui/basetextpanel.py:182
-#: outwiker/gui/basetextpanel.py:195 outwiker/pages/html/htmlpageview.py:597
-#: outwiker/pages/html/basehtmlpanel.py:332
-#: outwiker/pages/html/basehtmlpanel.py:336
+#: outwiker/gui/basetextpanel.py:195 outwiker/pages/html/htmlpageview.py:601
+#: outwiker/pages/html/basehtmlpanel.py:323
+#: outwiker/pages/html/basehtmlpanel.py:327
 #: outwiker/pages/wiki/basewikipageview.py:277
 #: outwiker/pages/wiki/basewikipageview.py:309
 #: outwiker/pages/wiki/basewikipageview.py:322
@@ -385,7 +385,7 @@ msgstr "Вставить разрыв строки"
 msgid "Convert HTML Symbols"
 msgstr "Преобразовать символы в HTML"
 
-#: outwiker/core/commands.py:998 outwiker/pages/html/htmlpageview.py:219
+#: outwiker/core/commands.py:998 outwiker/pages/html/htmlpageview.py:223
 msgid "Table"
 msgstr "Таблица"
 
@@ -1000,9 +1000,9 @@ msgstr ""
 "Невозможно сохранить настройки\n"
 "%s"
 
-#: outwiker/gui/htmlrenderie.py:180 outwiker/gui/htmlrenderwx.py:104
-#: outwiker/gui/htmlrenderwx.py:151 outwiker/gui/htmlrenderwebkit.py:231
-#: outwiker/gui/attachpanel.py:284 outwiker/gui/htmlrender.py:59
+#: outwiker/gui/htmlrenderie.py:211 outwiker/gui/htmlrenderwx.py:104
+#: outwiker/gui/htmlrenderwx.py:151 outwiker/gui/htmlrenderwebkit.py:282
+#: outwiker/gui/attachpanel.py:284 outwiker/gui/htmlrender.py:61
 #, python-format
 msgid "Can't execute file '%s'"
 msgstr "Ошибка запуска файла '%s'"
@@ -1128,8 +1128,8 @@ msgstr "Символ '%'"
 #: outwiker/gui/preferences/editorpanel.py:32
 #: outwiker/gui/preferences/textprintpanel.py:28
 #: outwiker/gui/preferences/htmlrenderpanel.py:25
-#: outwiker/pages/html/htmlpageview.py:215
-#: outwiker/pages/wiki/wikipageview.py:140
+#: outwiker/pages/html/htmlpageview.py:219
+#: outwiker/pages/wiki/wikipageview.py:141
 msgid "Font"
 msgstr "Шрифт"
 
@@ -1292,6 +1292,7 @@ msgid "Preferences"
 msgstr "Параметры"
 
 #: outwiker/gui/preferences/prefdialog.py:130
+#: outwiker/gui/preferences/generalpanel.py:34
 #: outwiker/pages/html/basehtmlpanel.py:201
 msgid "Preview"
 msgstr "Просмотр"
@@ -1325,8 +1326,8 @@ msgid "User's iconset"
 msgstr "Значки пользователя"
 
 #: outwiker/gui/preferences/wikieditorpanel.py:38
-#: outwiker/pages/html/htmlpageview.py:214
-#: outwiker/pages/wiki/wikipageview.py:139
+#: outwiker/pages/html/htmlpageview.py:218
+#: outwiker/pages/wiki/wikipageview.py:140
 msgid "Heading"
 msgstr "Заголовки"
 
@@ -1354,59 +1355,71 @@ msgstr "Описание"
 msgid "Site"
 msgstr "Сайт"
 
-#: outwiker/gui/preferences/generalpanel.py:66
+#: outwiker/gui/preferences/generalpanel.py:33
+msgid "Recent used"
+msgstr "Последний используемый"
+
+#: outwiker/gui/preferences/generalpanel.py:35 outwiker/gui/mainmenu.py:19
+msgid "Edit"
+msgstr "Правка"
+
+#: outwiker/gui/preferences/generalpanel.py:73
 msgid "Autosave interval in seconds (0 - disabled)"
 msgstr "Интервал автосохранения в секундах (0 - отключено)"
 
-#: outwiker/gui/preferences/generalpanel.py:87
+#: outwiker/gui/preferences/generalpanel.py:94
 msgid "Date and time format"
 msgstr "Формат даты и времени"
 
-#: outwiker/gui/preferences/generalpanel.py:103
+#: outwiker/gui/preferences/generalpanel.py:110
 msgid "Ask before exit"
 msgstr "Спрашивать подтверждение перед выходом"
 
-#: outwiker/gui/preferences/generalpanel.py:110
+#: outwiker/gui/preferences/generalpanel.py:117
 msgid "Minimize to tray"
 msgstr "Сворачивать в трей"
 
-#: outwiker/gui/preferences/generalpanel.py:111
+#: outwiker/gui/preferences/generalpanel.py:118
 msgid "Start iconized"
 msgstr "Запускаться свернутым в трей"
 
-#: outwiker/gui/preferences/generalpanel.py:112
+#: outwiker/gui/preferences/generalpanel.py:119
 msgid "Always show tray icon"
 msgstr "Всегда показывать иконку в трее"
 
-#: outwiker/gui/preferences/generalpanel.py:113
+#: outwiker/gui/preferences/generalpanel.py:120
 msgid "Minimize on close window"
 msgstr "Сворачивать при закрытии окна"
 
-#: outwiker/gui/preferences/generalpanel.py:120
+#: outwiker/gui/preferences/generalpanel.py:127
 msgid "Recent files history length (restart required)"
 msgstr "Длина истории открытых файлов (требуется перезапуск)"
 
-#: outwiker/gui/preferences/generalpanel.py:128
+#: outwiker/gui/preferences/generalpanel.py:135
 msgid "Automatically open the recent file"
 msgstr "При запуске открывать последний открытый файл"
 
-#: outwiker/gui/preferences/generalpanel.py:143
+#: outwiker/gui/preferences/generalpanel.py:150
 msgid "Wiki file name"
 msgstr "Имя файла загруженной вики"
 
-#: outwiker/gui/preferences/generalpanel.py:144
+#: outwiker/gui/preferences/generalpanel.py:151
 msgid "Page title"
 msgstr "Заголовок страницы"
 
-#: outwiker/gui/preferences/generalpanel.py:147
+#: outwiker/gui/preferences/generalpanel.py:154
 msgid "Main window title format"
 msgstr "Формат заголовка главного окна"
 
-#: outwiker/gui/preferences/generalpanel.py:161
+#: outwiker/gui/preferences/generalpanel.py:168
 msgid "Language (restart required)"
 msgstr "Язык (требуется перезапуск)"
 
-#: outwiker/gui/preferences/generalpanel.py:290
+#: outwiker/gui/preferences/generalpanel.py:194
+msgid "Default opening page mode"
+msgstr "Режим открытия страниц по умолчанию"
+
+#: outwiker/gui/preferences/generalpanel.py:353
 msgid "Auto"
 msgstr "Авто"
 
@@ -1534,7 +1547,7 @@ msgstr "&Отмена"
 msgid "Overwrite Files"
 msgstr "Перезапись файлов"
 
-#: outwiker/gui/tabscontroller.py:243 outwiker/gui/basetextpanel.py:181
+#: outwiker/gui/tabscontroller.py:252 outwiker/gui/basetextpanel.py:181
 #: outwiker/gui/basetextpanel.py:194
 #, python-format
 msgid "Can't save file %s"
@@ -1692,10 +1705,6 @@ msgstr "П&оиск"
 msgid "File"
 msgstr "Файл"
 
-#: outwiker/gui/mainmenu.py:19
-msgid "Edit"
-msgstr "Правка"
-
 #: outwiker/gui/mainmenu.py:22
 msgid "Tree"
 msgstr "Дерево"
@@ -1732,26 +1741,26 @@ msgstr "Копировать"
 msgid "HTML Page"
 msgstr "HTML-страница"
 
-#: outwiker/pages/html/htmlpageview.py:216
-#: outwiker/pages/wiki/wikipageview.py:141
+#: outwiker/pages/html/htmlpageview.py:220
+#: outwiker/pages/wiki/wikipageview.py:142
 msgid "Alignment"
 msgstr "Выравнивание"
 
-#: outwiker/pages/html/htmlpageview.py:217
-#: outwiker/pages/wiki/wikipageview.py:142
+#: outwiker/pages/html/htmlpageview.py:221
+#: outwiker/pages/wiki/wikipageview.py:143
 msgid "Formatting"
 msgstr "Форматирование"
 
-#: outwiker/pages/html/htmlpageview.py:218
-#: outwiker/pages/wiki/wikipageview.py:143
+#: outwiker/pages/html/htmlpageview.py:222
+#: outwiker/pages/wiki/wikipageview.py:144
 msgid "Lists"
 msgstr "Списки"
 
-#: outwiker/pages/html/htmlpageview.py:230
+#: outwiker/pages/html/htmlpageview.py:234
 msgid "Html"
 msgstr "Html"
 
-#: outwiker/pages/html/htmlpageview.py:596
+#: outwiker/pages/html/htmlpageview.py:600
 msgid "Page style Error. Style by default is used"
 msgstr ""
 "Ошибка в файле стиля страницы. Будет использоваться стиль по умолчанию."
@@ -1762,12 +1771,12 @@ msgstr ""
 msgid "HTML"
 msgstr "HTML"
 
-#: outwiker/pages/html/basehtmlpanel.py:313
+#: outwiker/pages/html/basehtmlpanel.py:304
 msgid "Page rendered. Please wait…"
 msgstr "Страница подготавливается. Пожалуйста, подождите…"
 
-#: outwiker/pages/html/basehtmlpanel.py:331
-#: outwiker/pages/html/basehtmlpanel.py:335
+#: outwiker/pages/html/basehtmlpanel.py:322
+#: outwiker/pages/html/basehtmlpanel.py:326
 msgid ""
 "Can't save file\n"
 "\n"
@@ -1794,8 +1803,8 @@ msgid "Switch Code <--> Preview for HTML and wiki pages"
 msgstr "Переключение Код <--> Просмотр для HTML- и викистраниц"
 
 #: outwiker/pages/wiki/wikitoolbar.py:25
-#: outwiker/pages/wiki/wikipageview.py:52
-#: outwiker/pages/wiki/wikipageview.py:56
+#: outwiker/pages/wiki/wikipageview.py:53
+#: outwiker/pages/wiki/wikipageview.py:57
 msgid "Wiki"
 msgstr "Вики"
 
@@ -2087,7 +2096,7 @@ msgstr ""
 "!!! Дочерние страницы\n"
 "(:childlist:)"
 
-#: outwiker/pages/wiki/wikipageview.py:144
+#: outwiker/pages/wiki/wikipageview.py:145
 msgid "Commands"
 msgstr "Команды"
 
