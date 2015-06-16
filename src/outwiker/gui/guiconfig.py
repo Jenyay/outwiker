@@ -668,13 +668,19 @@ class TagsConfig (object):
     """
     SECTION = u'Tags'
 
-    TAG_COLOR_FONT_NORMAL_PARAM = u'TagColor'
+    TAG_COLOR_FONT_NORMAL_PARAM = u'TagFontNormalColor'
     TAG_COLOR_FONT_NORMAL_DEFAULT = u'#0000FF'
 
-    TAG_COLOR_FONT_SELECTED_PARAM = u'TagColorSelected'
+    TAG_COLOR_FONT_SELECTED_PARAM = u'TagFontSelectedColor'
     TAG_COLOR_FONT_SELECTED_DEFAULT = u'#0000FF'
 
-    TAG_COLOR_BACK_SELECTED_PARAM = u'TagBackColor'
+    TAG_COLOR_FONT_NORMAL_HOVER_PARAM = u'TagFontNormalHoverColor'
+    TAG_COLOR_FONT_NORMAL_HOVER_DEFAULT = u'#FF0000'
+
+    TAG_COLOR_FONT_SELECTED_HOVER_PARAM = u'TagFontSelectedHoverColor'
+    TAG_COLOR_FONT_SELECTED_HOVER_DEFAULT = u'#FF0000'
+
+    TAG_COLOR_BACK_SELECTED_PARAM = u'TagBackSelectedColor'
     TAG_COLOR_BACK_SELECTED_DEFAULT = u'#FAFF24'
 
 
@@ -693,6 +699,20 @@ class TagsConfig (object):
             self.SECTION,
             self.TAG_COLOR_FONT_SELECTED_PARAM,
             self.TAG_COLOR_FONT_SELECTED_DEFAULT
+        )
+
+        self.colorFontNormalHover = StringOption (
+            self.config,
+            self.SECTION,
+            self.TAG_COLOR_FONT_NORMAL_HOVER_PARAM,
+            self.TAG_COLOR_FONT_NORMAL_HOVER_DEFAULT
+        )
+
+        self.colorFontSelectedHover = StringOption (
+            self.config,
+            self.SECTION,
+            self.TAG_COLOR_FONT_SELECTED_HOVER_PARAM,
+            self.TAG_COLOR_FONT_SELECTED_HOVER_DEFAULT
         )
 
         self.colorBackSelected = StringOption (

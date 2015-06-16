@@ -22,20 +22,85 @@ class TagLabel (wx.HyperlinkCtrl):
 
         self.__minFontSize = 8
         self.__maxFontSize = 15
-        self.__normalBackgroundColor = wx.Colour (255, 255, 255)
-        self.__markedBackgroundColor = wx.Colour (250, 255, 36)
+        self.__normalBackColor = wx.Colour (255, 255, 255)
+
+        self.__normalFontColor = wx.Colour (0, 0, 0)
+        self.__markedFontColor = wx.Colour (0, 0, 0)
+        self.__markedBackColor = wx.Colour (250, 255, 36)
+
+        self.__normalHoverFontColor = wx.Colour (255, 0, 0)
+        self.__markedHoverFontColor = wx.Colour (255, 0, 0)
 
         self.__isMarked = False
-        self.__format()
+        self.updateColors()
         self.Bind (wx.EVT_HYPERLINK, self.__onMouseLeftDown)
         self.Bind (wx.EVT_MIDDLE_DOWN, self.__onMouseMiddleDown)
 
 
-    def __format (self):
+    @property
+    def normalFontColor (self):
+        return self.__normalFontColor
+
+
+    @normalFontColor.setter
+    def normalFontColor (self, value):
+        self.__normalFontColor = value
+        self.updateColors()
+
+
+    @property
+    def markedFontColor(self):
+        return self.__markedFontColor
+
+
+    @markedFontColor.setter
+    def markedFontColor (self, value):
+        self.__markedFontColor = value
+        self.updateColors()
+
+
+    @property
+    def markedBackColor (self):
+        return self.__markedBackColor
+
+
+    @markedBackColor.setter
+    def markedBackColor (self, value):
+        self.__markedBackColor = value
+        self.updateColors()
+
+
+    @property
+    def normalHoverFontColor (self):
+        return self.__normalHoverFontColor
+
+
+    @normalHoverFontColor.setter
+    def normalHoverFontColor (self, value):
+        self.__normalHoverFontColor = value
+        self.updateColors()
+
+
+    @property
+    def markedHoverFontColor(self):
+        return self.__markedHoverFontColor
+
+
+    @markedHoverFontColor.setter
+    def markedHoverFontColor (self, value):
+        self.__markedHoverFontColor = value
+        self.updateColors()
+
+
+    def updateColors (self):
         if self.__isMarked:
-            self.SetBackgroundColour(self.__markedBackgroundColor)
+            self.SetBackgroundColour(self.__markedBackColor)
+            self.SetNormalColour (self.__markedFontColor)
+            self.SetHoverColour (self.__markedHoverFontColor)
         else:
-            self.SetBackgroundColour(self.__normalBackgroundColor)
+            self.SetBackgroundColour(self.__normalBackColor)
+            self.SetNormalColour (self.__normalFontColor)
+            self.SetHoverColour (self.__normalHoverFontColor)
 
         self.SetVisitedColour (self.GetNormalColour())
         self.Refresh()
@@ -75,7 +140,7 @@ class TagLabel (wx.HyperlinkCtrl):
 
     def mark (self, marked=True):
         self.__isMarked = marked
-        self.__format()
+        self.updateColors()
 
 
     @property

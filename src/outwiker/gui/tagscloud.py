@@ -4,7 +4,9 @@ import os
 
 import wx
 
-from .taglabel import TagLabel
+from outwiker.core.application import Application
+from outwiker.gui.taglabel import TagLabel
+from outwiker.gui.guiconfig import TagsConfig
 
 
 class TagsCloud (wx.ScrolledWindow):
@@ -13,6 +15,7 @@ class TagsCloud (wx.ScrolledWindow):
 
         self.SetScrollRate (0, 0)
         self.SetBackgroundColour (wx.Colour (255, 255, 255))
+
 
         # Отступ от края окна
         self.__margin = 4
@@ -28,12 +31,40 @@ class TagsCloud (wx.ScrolledWindow):
         # Ключ - имя метки, значение - контрол, отображающий эту метку
         self.__labels = {}
 
+        self.__loadColors ()
+
         self.Bind (wx.EVT_SIZE, self.__onSize)
 
 
     def __onSize (self, event):
-        # self.__layoutTags()
         self.__moveLabels()
+
+
+    def __loadColors (self):
+        config = TagsConfig (Application.config)
+        self.__tagNormalFontColor = config.colorFontNormal.value
+        self.__tagNormalHoverFontColor = config.colorFontNormalHover.value
+
+        self.__tagSelectedFontColor = config.colorFontSelected.value
+        self.__tagSelectedHoverFontColor = config.colorFontSelectedHover.value
+
+        self.__tagSelectedBackColor = config.colorBackSelected.value
+
+
+    def __updateTagLabel (self, tagLabel):
+        tagLabel.normalFontColor = self.__tagNormalFontColor
+        tagLabel.normalHoverFontColor = self.__tagNormalHoverFontColor
+
+        tagLabel.markedFontColor = self.__tagSelectedFontColor
+        tagLabel.markedHoverFontColor = self.__tagSelectedHoverFontColor
+
+        tagLabel.markedBackColor = self.__tagSelectedBackColor
+
+
+    def updateTagLabels (self):
+        self.__loadColors()
+        for label in self.__labels.values():
+            self.__updateTagLabel (label)
 
 
     def setTags (self, taglist):
@@ -48,6 +79,7 @@ class TagsCloud (wx.ScrolledWindow):
 
         for tag in taglist:
             newlabel = TagLabel(self, tag)
+            self.__updateTagLabel (newlabel)
             self.__labels[tag] = newlabel
 
         self.__layoutTags()
@@ -59,7 +91,6 @@ class TagsCloud (wx.ScrolledWindow):
         """
         Выделить метку
         """
-        # assert tag.lower().strip() in self.__labels.keys()
         if tag.lower().strip() in self.__labels.keys():
             self.__labels[tag.lower().strip()].mark(marked)
 
@@ -162,17 +193,14 @@ class TagsCloud (wx.ScrolledWindow):
             newRightBorder = currentx + label.GetSizeTuple()[0]
 
             if newRightBorder > maxwidth and len (currentLine) != 0:
-                # self.__valignLineLabels (currentLine)
 
                 currentx = self.__margin
-                # currenty += self.__getMaxHeight (currentLine)[0] + self.__space
                 currenty += self.__stepy
 
                 currentLine = []
                 linesCount += 1
 
             label.MoveXY (currentx, currenty - label.GetSizeTuple()[1] / 2)
-            # label.MoveXY (currentx, currenty)
             label.Refresh()
 
             currentLine.append (label)

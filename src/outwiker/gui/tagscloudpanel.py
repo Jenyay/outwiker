@@ -45,6 +45,10 @@ class TagsCloudPanel (wx.Panel):
         self.__tagscloud.setTags (tags)
 
 
+    def updateTagLabels (self):
+        self.__tagscloud.updateTagLabels ()
+
+
     def __layout (self):
         mainSizer = wx.FlexGridSizer (1, 1)
         mainSizer.AddGrowableCol (0)

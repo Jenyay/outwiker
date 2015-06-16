@@ -26,13 +26,19 @@ class TagsPanel(wx.Panel):
 
 
     def _createColorsGui (self, mainsizer):
-        self.colorFontNormalLabel = wx.StaticText (self, label = _(u'Normal tags color'))
+        self.colorFontNormalLabel = wx.StaticText (self, label = _(u'Tag color'))
         self.colorFontNormalPicker = wx.ColourPickerCtrl(self, style=wx.CLRP_SHOW_LABEL)
 
-        self.colorFontSelectedlLabel = wx.StaticText (self, label = _(u'Selected tags color'))
+        self.colorFontNormalHoverLabel = wx.StaticText (self, label = _(u'Hover tag color'))
+        self.colorFontNormalHoverPicker = wx.ColourPickerCtrl(self, style=wx.CLRP_SHOW_LABEL)
+
+        self.colorFontSelectedLabel = wx.StaticText (self, label = _(u'Marked tag color'))
         self.colorFontSelectedPicker = wx.ColourPickerCtrl(self, style=wx.CLRP_SHOW_LABEL)
 
-        self.colorBackSelectedlLabel = wx.StaticText (self, label = _(u'Selected tags background'))
+        self.colorFontSelectedHoverLabel = wx.StaticText (self, label = _(u'Hover marked tag color'))
+        self.colorFontSelectedHoverPicker = wx.ColourPickerCtrl(self, style=wx.CLRP_SHOW_LABEL)
+
+        self.colorBackSelectedLabel = wx.StaticText (self, label = _(u'Marked tag background'))
         self.colorBackSelectedPicker = wx.ColourPickerCtrl(self, style=wx.CLRP_SHOW_LABEL)
 
         colorsSizer = wx.FlexGridSizer(cols=2)
@@ -41,21 +47,37 @@ class TagsPanel(wx.Panel):
 
         colorsSizer.Add(self.colorFontNormalLabel, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
         colorsSizer.Add(self.colorFontNormalPicker, 0, wx.ALL | wx.ALIGN_RIGHT, border=2)
-        colorsSizer.Add(self.colorFontSelectedlLabel, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
+
+        colorsSizer.Add(self.colorFontSelectedLabel, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
         colorsSizer.Add(self.colorFontSelectedPicker, 0, wx.ALL | wx.ALIGN_RIGHT, border=2)
-        colorsSizer.Add(self.colorBackSelectedlLabel, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
+
+        colorsSizer.Add(self.colorBackSelectedLabel, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
         colorsSizer.Add(self.colorBackSelectedPicker, 0, wx.ALL | wx.ALIGN_RIGHT, border=2)
+
+        colorsSizer.Add(self.colorFontNormalHoverLabel, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
+        colorsSizer.Add(self.colorFontNormalHoverPicker, 0, wx.ALL | wx.ALIGN_RIGHT, border=2)
+
+        colorsSizer.Add(self.colorFontSelectedHoverLabel, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
+        colorsSizer.Add(self.colorFontSelectedHoverPicker, 0, wx.ALL | wx.ALIGN_RIGHT, border=2)
 
         mainsizer.Add (colorsSizer, 0, wx.EXPAND | wx.ALL, border = 2)
 
 
     def LoadState(self):
         self.colorFontNormalPicker.SetColour (self.config.colorFontNormal.value)
+        self.colorFontNormalHoverPicker.SetColour (self.config.colorFontNormalHover.value)
+
         self.colorFontSelectedPicker.SetColour (self.config.colorFontSelected.value)
+        self.colorFontSelectedHoverPicker.SetColour (self.config.colorFontSelectedHover.value)
+
         self.colorBackSelectedPicker.SetColour (self.config.colorBackSelected.value)
 
 
     def Save (self):
         self.config.colorFontNormal.value = self.colorFontNormalPicker.GetColour().GetAsString (wx.C2S_HTML_SYNTAX)
+        self.config.colorFontNormalHover.value = self.colorFontNormalHoverPicker.GetColour().GetAsString (wx.C2S_HTML_SYNTAX)
+
         self.config.colorFontSelected.value = self.colorFontSelectedPicker.GetColour().GetAsString (wx.C2S_HTML_SYNTAX)
+        self.config.colorFontSelectedHover.value = self.colorFontSelectedHoverPicker.GetColour().GetAsString (wx.C2S_HTML_SYNTAX)
+
         self.config.colorBackSelected.value = self.colorBackSelectedPicker.GetColour().GetAsString (wx.C2S_HTML_SYNTAX)
