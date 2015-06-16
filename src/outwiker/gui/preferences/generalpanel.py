@@ -12,7 +12,7 @@ from outwiker.gui.datetimeformatctrl import DateTimeFormatCtrl
 
 class GeneralPanel (wx.ScrolledWindow):
     def __init__(self, *args, **kwds):
-        kwds["style"] = wx.TAB_TRAVERSAL
+        kwds["style"] = wx.TAB_TRAVERSAL | wx.HSCROLL | wx.VSCROLL
         wx.ScrolledWindow.__init__(self, *args, **kwds)
 
         self.trayConfig = TrayConfig (Application.config)
@@ -54,6 +54,20 @@ class GeneralPanel (wx.ScrolledWindow):
 
         self.LoadState()
         self.updateCheckState()
+        self.__setScrolling()
+
+
+    def __setScrolling (self):
+        bottomElement = self.langCombo
+        btElementTop = bottomElement.GetPositionTuple()[1]
+        btElementHeight = bottomElement.GetSizeTuple()[1]
+        scrollHeight = btElementHeight
+        scrollCount = (btElementTop + btElementHeight) / scrollHeight + 1
+
+        self.SetScrollbars (0,
+                            scrollHeight,
+                            0,
+                            scrollCount)
 
 
     def __set_properties(self):

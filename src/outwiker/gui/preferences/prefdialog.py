@@ -86,7 +86,7 @@ class PrefDialog(wx.Dialog):
         height = 500
 
         self.SetSize((width, height))
-        self.__treeBook.SetMinSize((300, 400))
+        self.__treeBook.SetMinSize((300, -1))
 
         self.__centerWindow()
 
@@ -107,10 +107,10 @@ class PrefDialog(wx.Dialog):
 
 
     def __do_layout(self):
-        main_sizer = wx.FlexGridSizer(rows=2)
+        main_sizer = wx.FlexGridSizer(cols=1)
         main_sizer.AddGrowableRow(0)
         main_sizer.AddGrowableCol(0)
-        main_sizer.Add(self.__treeBook, 1, wx.ALL | wx.EXPAND, 4)
+        main_sizer.Add(self.__treeBook, 0, wx.ALL | wx.EXPAND, 4)
 
         self.__createOkCancelButtons(main_sizer)
 
@@ -216,13 +216,13 @@ class PrefDialog(wx.Dialog):
         Создать кнопки Ok / Cancel
         """
         buttonsSizer = self.CreateButtonSizer (wx.OK | wx.CANCEL)
-        sizer.AddSpacer(0)
-        sizer.Add (buttonsSizer, 1, wx.ALIGN_RIGHT | wx.ALL, border = 4)
+        sizer.Add (buttonsSizer,
+                   0,
+                   wx.ALIGN_RIGHT | wx.ALIGN_BOTTOM | wx.ALL,
+                   border = 4)
 
         self.Bind (wx.EVT_BUTTON, self.__onOk, id=wx.ID_OK)
         self.Bind (wx.EVT_BUTTON, self.__onCancel, id=wx.ID_CANCEL)
-
-        self.Layout()
 
 
     def __onOk (self, event):
