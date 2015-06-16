@@ -7,36 +7,36 @@ from outwiker.gui.stcstyle import StcStyle
 
 
 class GeneralGuiConfig (object):
-    """
+    '''
     Класс для хранения основных настроек
-    """
-    GENERAL_SECTION = u"General"
-    RECENT_SECTION = u"RecentWiki"
+    '''
+    GENERAL_SECTION = u'General'
+    RECENT_SECTION = u'RecentWiki'
 
-    ASK_BEFORE_EXIT_PARAM = u"AskBeforeExit"
+    ASK_BEFORE_EXIT_PARAM = u'AskBeforeExit'
     ASK_BEFORE_EXIT_DEFAULT = False
 
-    AUTOSAVE_INTERVAL_PARAM = u"AutosaveInterval"
+    AUTOSAVE_INTERVAL_PARAM = u'AutosaveInterval'
     AUTOSAVE_INTERVAL_DEFAULT = 3
 
-    RECENT_WIKI_COUNT_PARAM = u"maxcount"
+    RECENT_WIKI_COUNT_PARAM = u'maxcount'
     RECENT_WIKI_COUNT_DEFAULT = 5
 
-    RECENT_AUTOOPEN_PARAM = u"AutoOpen"
+    RECENT_AUTOOPEN_PARAM = u'AutoOpen'
     RECENT_AUTOOPEN_DEFAULT = True
 
-    DATETIME_FORMAT_PARAM = u"DateTimeFormat"
-    DATETIME_FORMAT_DEFAULT = u"%c"
+    DATETIME_FORMAT_PARAM = u'DateTimeFormat'
+    DATETIME_FORMAT_DEFAULT = u'%c'
 
     # Последний используемый формат представления даты
-    RECENT_DATETIME_FORMAT_PARAM = u"RecentDateTimeFormat"
+    RECENT_DATETIME_FORMAT_PARAM = u'RecentDateTimeFormat'
 
     # Default tab for page (editor / preview / recent used)
     PAGE_TAB_RECENT = 0
     PAGE_TAB_CODE = 1
     PAGE_TAB_RESULT = 2
 
-    PAGE_TAB_PARAM = u"PageTab"
+    PAGE_TAB_PARAM = u'PageTab'
 
 
     def __init__ (self, config):
@@ -86,12 +86,12 @@ class GeneralGuiConfig (object):
 
 
 class PluginsConfig (object):
-    """
+    '''
     Класс для хранения настроек, связанных с плагинами
-    """
+    '''
 
-    PLUGINS_SECTION = u"Plugins"
-    DISABLED_PARAM = u"Disabled"
+    PLUGINS_SECTION = u'Plugins'
+    DISABLED_PARAM = u'Disabled'
 
     def __init__ (self, config):
         self.config = config
@@ -100,24 +100,24 @@ class PluginsConfig (object):
                                            PluginsConfig.PLUGINS_SECTION,
                                            PluginsConfig.DISABLED_PARAM,
                                            [],
-                                           separator=u";")
+                                           separator=u';')
 
 
 
 class TrayConfig (object):
-    """
+    '''
     Класс для хранения настроек, связанных с иконками в трее
-    """
-    MINIMIZE_TO_TRAY_PARAM = u"MinimizeToTray"
+    '''
+    MINIMIZE_TO_TRAY_PARAM = u'MinimizeToTray'
     MINIMIZE_TO_TRAY_DEFAULT = True
 
-    START_ICONIZED_PARAM = u"StartIconized"
+    START_ICONIZED_PARAM = u'StartIconized'
     START_ICONIZED_DEFAULT = False
 
-    ALWAYS_SHOW_TRAY_ICON_PARAM = u"AlwaysShowTrayIcon"
+    ALWAYS_SHOW_TRAY_ICON_PARAM = u'AlwaysShowTrayIcon'
     ALWAYS_SHOW_TRAY_ICON_DEFAULT = False
 
-    MINIMIZE_ON_CLOSE_PARAM = u"MinimizeOnClose"
+    MINIMIZE_ON_CLOSE_PARAM = u'MinimizeOnClose'
     MINIMIZE_ON_CLOSE_DEFAULT = False
 
 
@@ -151,43 +151,43 @@ class TrayConfig (object):
 
 
 class EditorConfig (object):
-    """
+    '''
     Класс для хранения настроек редактора
-    """
-    FONT_SECTION = u"Font"
+    '''
+    FONT_SECTION = u'Font'
 
-    SHOW_LINE_NUMBERS_SECTION = u"ShowLineNumbers"
+    SHOW_LINE_NUMBERS_SECTION = u'ShowLineNumbers'
     SHOW_LINE_NUMBERS_DEFAULT = False
 
-    TAB_WIDTH_SECTION = u"TabWidth"
+    TAB_WIDTH_SECTION = u'TabWidth'
     TAB_WIDTH_DEFAULT = 4
 
-    FONT_SIZE_SECTION = u"size"
+    FONT_SIZE_SECTION = u'size'
     FONT_SIZE_DEFAULT = 10
 
-    FONT_NAME_SECTION = u"FaceName"
-    FONT_NAME_DEFAULT = u""
+    FONT_NAME_SECTION = u'FaceName'
+    FONT_NAME_DEFAULT = u''
 
-    FONT_BOLD_SECTION = u"bold"
+    FONT_BOLD_SECTION = u'bold'
     FONT_BOLD_DEFAULT = False
 
-    FONT_ITALIC_SECTION = u"italic"
+    FONT_ITALIC_SECTION = u'italic'
     FONT_ITALIC_DEFAULT = False
 
     # Поведение клавиш Home / End.
     HOME_END_OF_LINE = 0
     HOME_END_OF_PARAGRAPH = 1
 
-    HOME_END_KEYS_SECTION = u"HomeEndKeys"
+    HOME_END_KEYS_SECTION = u'HomeEndKeys'
     HOME_END_KEYS_DEFAULT = HOME_END_OF_LINE
 
     # Цвет шрифта
-    FONT_COLOR_SECTION = u"FontColor"
-    FONT_COLOR_DEFAULT = u"#000000"
+    FONT_COLOR_SECTION = u'FontColor'
+    FONT_COLOR_DEFAULT = u'#000000'
 
     # Цвет фона
-    BACK_COLOR_SECTION = u"BackColor"
-    BACK_COLOR_DEFAULT = u"#FFFFFF"
+    BACK_COLOR_SECTION = u'BackColor'
+    BACK_COLOR_DEFAULT = u'#FFFFFF'
 
 
     def __init__ (self, config):
@@ -245,31 +245,31 @@ class EditorConfig (object):
 
 
 class HtmlEditorStylesConfig (object):
-    """
+    '''
     Класс для хранения настроек стилей редактора HTML
-    """
-    HTML_STYLES_SECTION = u"EditorStyles"
+    '''
+    HTML_STYLES_SECTION = u'EditorStyles'
 
-    STYLE_TAG_SECTION = u"tag"
-    STYLE_TAG_DEFAULT = StcStyle.parse (u"fore:#000080,bold")
+    STYLE_TAG_SECTION = u'tag'
+    STYLE_TAG_DEFAULT = StcStyle.parse (u'fore:#000080,bold')
 
-    STYLE_TAG_UNKNOWN_SECTION = u"tag_unknown"
-    STYLE_TAG_UNKNOWN_DEFAULT = StcStyle.parse (u"fore:#FF0000")
+    STYLE_TAG_UNKNOWN_SECTION = u'tag_unknown'
+    STYLE_TAG_UNKNOWN_DEFAULT = StcStyle.parse (u'fore:#FF0000')
 
-    STYLE_ATTRIBUTE_SECTION = u"attribute"
-    STYLE_ATTRIBUTE_DEFAULT = StcStyle.parse (u"fore:#008080")
+    STYLE_ATTRIBUTE_SECTION = u'attribute'
+    STYLE_ATTRIBUTE_DEFAULT = StcStyle.parse (u'fore:#008080')
 
-    STYLE_ATTRIBUTE_UNKNOWN_SECTION = u"attribute_unknown"
-    STYLE_ATTRIBUTE_UNKNOWN_DEFAULT = StcStyle.parse (u"fore:#FF0000")
+    STYLE_ATTRIBUTE_UNKNOWN_SECTION = u'attribute_unknown'
+    STYLE_ATTRIBUTE_UNKNOWN_DEFAULT = StcStyle.parse (u'fore:#FF0000')
 
-    STYLE_NUMBER_SECTION = u"number"
-    STYLE_NUMBER_DEFAULT = StcStyle.parse (u"fore:#000000")
+    STYLE_NUMBER_SECTION = u'number'
+    STYLE_NUMBER_DEFAULT = StcStyle.parse (u'fore:#000000')
 
-    STYLE_STRING_SECTION = u"string"
-    STYLE_STRING_DEFAULT = StcStyle.parse (u"fore:#0000FF")
+    STYLE_STRING_SECTION = u'string'
+    STYLE_STRING_DEFAULT = StcStyle.parse (u'fore:#0000FF')
 
-    STYLE_COMMENT_SECTION = u"comment"
-    STYLE_COMMENT_DEFAULT = StcStyle.parse (u"fore:#12B535")
+    STYLE_COMMENT_SECTION = u'comment'
+    STYLE_COMMENT_DEFAULT = StcStyle.parse (u'fore:#12B535')
 
 
     def __init__ (self, config):
@@ -312,29 +312,29 @@ class HtmlEditorStylesConfig (object):
 
 
 class HtmlRenderConfig (object):
-    """
+    '''
     Класс для хранения настроек HTML-рендера
-    """
+    '''
     # Название секции в конфиге для настроек HTML
-    HTML_SECTION = u"HTML"
+    HTML_SECTION = u'HTML'
 
-    FONT_FACE_NAME_PARAM = u"FontFaceName"
-    FONT_NAME_DEFAULT = u"Verdana"
+    FONT_FACE_NAME_PARAM = u'FontFaceName'
+    FONT_NAME_DEFAULT = u'Verdana'
 
-    FONT_SIZE_PARAM = u"FontSize"
+    FONT_SIZE_PARAM = u'FontSize'
     FONT_SIZE_DEFAULT = 10
 
-    FONT_BOLD_PARAM = u"FontBold"
+    FONT_BOLD_PARAM = u'FontBold'
     FONT_BOLD_DEFAULT = False
 
-    FONT_ITALIC_PARAM = u"FontItalic"
+    FONT_ITALIC_PARAM = u'FontItalic'
     FONT_ITALIC_DEFAULT = False
 
-    USER_STYLE_PARAM = u"UserStyle"
-    USER_STYLE_DEFAULT = u""
+    USER_STYLE_PARAM = u'UserStyle'
+    USER_STYLE_DEFAULT = u''
 
-    HTML_IMPROVER_PARAM = u"HtmlImprover"
-    HTML_IMPROVER_DEFAULT = "brimprover"
+    HTML_IMPROVER_PARAM = u'HtmlImprover'
+    HTML_IMPROVER_DEFAULT = 'brimprover'
 
 
     def __init__ (self, config):
@@ -372,36 +372,36 @@ class HtmlRenderConfig (object):
 
 
 class TextPrintConfig (object):
-    """
+    '''
     Класс для хранения настроек печати текста
-    """
-    PRINT_SECTION = u"Print"
+    '''
+    PRINT_SECTION = u'Print'
 
-    FONT_NAME_SECTION = u"FontFaceName"
-    FONT_NAME_DEFAULT = u"Arial"
+    FONT_NAME_SECTION = u'FontFaceName'
+    FONT_NAME_DEFAULT = u'Arial'
 
-    FONT_SIZE_SECTION = u"FontSize"
+    FONT_SIZE_SECTION = u'FontSize'
     FONT_SIZE_DEFAULT = 10
 
-    FONT_BOLD_SECTION = u"FontBold"
+    FONT_BOLD_SECTION = u'FontBold'
     FONT_BOLD_DEFAULT = False
 
-    FONT_ITALIC_SECTION = u"FontItalic"
+    FONT_ITALIC_SECTION = u'FontItalic'
     FONT_ITALIC_DEFAULT = False
 
-    PAPPER_SIZE_SECTION = u"PaperId"
+    PAPPER_SIZE_SECTION = u'PaperId'
     PAPPER_SIZE_DEFAULT = wx.PAPER_A4
 
-    MARGIN_TOP_SECTION = u"MarginTop"
+    MARGIN_TOP_SECTION = u'MarginTop'
     MARGIN_TOP_DEFAULT = 20
 
-    MARGIN_BOTTOM_SECTION = u"MarginBottom"
+    MARGIN_BOTTOM_SECTION = u'MarginBottom'
     MARGIN_BOTTOM_DEFAULT = 20
 
-    MARGIN_LEFT_SECTION = u"MarginLeft"
+    MARGIN_LEFT_SECTION = u'MarginLeft'
     MARGIN_LEFT_DEFAULT = 20
 
-    MARGIN_RIGHT_SECTION = u"MarginRight"
+    MARGIN_RIGHT_SECTION = u'MarginRight'
     MARGIN_RIGHT_DEFAULT = 20
 
     def __init__ (self, config):
@@ -455,35 +455,35 @@ class TextPrintConfig (object):
 
 
 class MainWindowConfig (object):
-    """
+    '''
     Класс для хранения настроек главного окна
-    """
-    MAIN_WINDOW_SECTION = u"MainWindow"
+    '''
+    MAIN_WINDOW_SECTION = u'MainWindow'
 
-    TITLE_FORMAT_SECTION = u"Title"
-    TITLE_FORMAT_DEFAULT = u"{page} - {file} - OutWiker"
+    TITLE_FORMAT_SECTION = u'Title'
+    TITLE_FORMAT_DEFAULT = u'{page} - {file} - OutWiker'
 
-    WIDTH_SECTION = u"width"
+    WIDTH_SECTION = u'width'
     WIDTH_DEFAULT = 800
 
-    HEIGHT_SECTION = u"height"
+    HEIGHT_SECTION = u'height'
     HEIGHT_DEFAULT = 680
 
-    XPOS_SECTION = u"xpos"
+    XPOS_SECTION = u'xpos'
     XPOS_DEFAULT = 0
 
-    YPOS_SECTION = u"ypos"
+    YPOS_SECTION = u'ypos'
     YPOS_DEFAULT = 0
 
-    FULLSCREEN_SECTION = u"fullscreen"
+    FULLSCREEN_SECTION = u'fullscreen'
     FULLSCREEN_DEFAULT = False
 
-    MAXIMIZED_SECTION = u"maximized"
+    MAXIMIZED_SECTION = u'maximized'
     MAXIMIZED_DEFAULT = False
 
     # Размер области в статусной панели для показа даты изменения текущей
     # страницы
-    DATETIME_STATUS_WIDTH_SECTION = "datetime_status_width"
+    DATETIME_STATUS_WIDTH_SECTION = 'datetime_status_width'
     DATETIME_STATUS_WIDTH_DEFAULT = 250
 
 
@@ -533,17 +533,17 @@ class MainWindowConfig (object):
 
 
 class TreeConfig (object):
-    """
+    '''
     Класс для хранения настроек панели с деревом
-    """
-    WIDTH_SECTION = u"TreeWidth"
+    '''
+    WIDTH_SECTION = u'TreeWidth'
     WIDTH_DEFAULT = 250
 
-    HEIGHT_SECTION = u"TreeHeight"
+    HEIGHT_SECTION = u'TreeHeight'
     HEIGHT_DEFAULT = 250
 
-    PANE_OPTIONS_SECTION = u"TreePane"
-    PANE_OPTIONS_DEFAULT = ""
+    PANE_OPTIONS_SECTION = u'TreePane'
+    PANE_OPTIONS_DEFAULT = ''
 
     def __init__ (self, config):
         self.config = config
@@ -567,17 +567,17 @@ class TreeConfig (object):
 
 
 class AttachConfig (object):
-    """
+    '''
     Класс для хранения настроек панели с вложенными файлами
-    """
-    WIDTH_SECTION = u"AttachesWidth"
+    '''
+    WIDTH_SECTION = u'AttachesWidth'
     WIDTH_DEFAULT = 250
 
-    HEIGHT_SECTION = u"AttachesHeight"
+    HEIGHT_SECTION = u'AttachesHeight'
     HEIGHT_DEFAULT = 150
 
-    PANE_OPTIONS_SECTION = u"AttachesPane"
-    PANE_OPTIONS_DEFAULT = u""
+    PANE_OPTIONS_SECTION = u'AttachesPane'
+    PANE_OPTIONS_DEFAULT = u''
 
     def __init__ (self, config):
         self.config = config
@@ -600,17 +600,17 @@ class AttachConfig (object):
 
 
 class TagsCloudConfig (object):
-    """
+    '''
     Класс для хранения настроек панели с облагом тегов
-    """
-    WIDTH_SECTION = u"TagsCloudWidth"
+    '''
+    WIDTH_SECTION = u'TagsCloudWidth'
     WIDTH_DEFAULT = 250
 
-    HEIGHT_SECTION = u"TagsCloudHeight"
+    HEIGHT_SECTION = u'TagsCloudHeight'
     HEIGHT_DEFAULT = 170
 
-    PANE_OPTIONS_SECTION = u"TagsCloudPane"
-    PANE_OPTIONS_DEFAULT = ""
+    PANE_OPTIONS_SECTION = u'TagsCloudPane'
+    PANE_OPTIONS_DEFAULT = ''
 
     def __init__ (self, config):
         self.config = config
@@ -633,15 +633,15 @@ class TagsCloudConfig (object):
 
 
 class PageDialogConfig (object):
-    WIDTH_SECTION = u"PageDialogWidth"
+    WIDTH_SECTION = u'PageDialogWidth'
     WIDTH_DEFAULT = 500
 
-    HEIGHT_SECTION = u"PageDialogHeight"
+    HEIGHT_SECTION = u'PageDialogHeight'
     HEIGHT_DEFAULT = 350
 
     # Последний используемый стиль
-    RECENT_STYLE_SECTION = u"RecentStyle"
-    RECENT_STYLE_DEFAULT = u""
+    RECENT_STYLE_SECTION = u'RecentStyle'
+    RECENT_STYLE_DEFAULT = u''
 
     def __init__ (self, config):
         self.config = config
@@ -660,3 +660,44 @@ class PageDialogConfig (object):
                                          GeneralGuiConfig.GENERAL_SECTION,
                                          self.RECENT_STYLE_SECTION,
                                          self.RECENT_STYLE_DEFAULT)
+
+
+class TagsConfig (object):
+    """
+    Options for tags and tags cloud
+    """
+    SECTION = u'Tags'
+
+    TAG_COLOR_FONT_NORMAL_PARAM = u'TagColor'
+    TAG_COLOR_FONT_NORMAL_DEFAULT = u'#0000FF'
+
+    TAG_COLOR_FONT_SELECTED_PARAM = u'TagColorSelected'
+    TAG_COLOR_FONT_SELECTED_DEFAULT = u'#0000FF'
+
+    TAG_COLOR_BACK_SELECTED_PARAM = u'TagBackColor'
+    TAG_COLOR_BACK_SELECTED_DEFAULT = u'#FAFF24'
+
+
+    def __init__ (self, config):
+        self.config = config
+
+        self.colorFontNormal = StringOption (
+            self.config,
+            self.SECTION,
+            self.TAG_COLOR_FONT_NORMAL_PARAM,
+            self.TAG_COLOR_FONT_NORMAL_DEFAULT
+        )
+
+        self.colorFontSelected = StringOption (
+            self.config,
+            self.SECTION,
+            self.TAG_COLOR_FONT_SELECTED_PARAM,
+            self.TAG_COLOR_FONT_SELECTED_DEFAULT
+        )
+
+        self.colorBackSelected = StringOption (
+            self.config,
+            self.SECTION,
+            self.TAG_COLOR_BACK_SELECTED_PARAM,
+            self.TAG_COLOR_BACK_SELECTED_DEFAULT
+        )
