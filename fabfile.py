@@ -196,7 +196,7 @@ def source ():
         local ("7z a -r -aoa -xr!*.pyc -xr!.ropeproject -xr!tests.py -xr!profile.py -xr!setup_tests.py -xr!setup_win.py -xr!test -xr!profiles ../{}/{} ./*".format (sourcesdir, srcfname))
 
 
-def win():
+def win (skipinstaller=False):
     """
     Assemble builds under Windows
     """
@@ -225,7 +225,8 @@ def win():
         local ("7z a ..\outwiker_win_unstable.7z .\* .\plugins -r -aoa")
 
     # Compile installer
-    local ("iscc outwiker_setup.iss")
+    if not skipinstaller:
+        local ("iscc outwiker_setup.iss")
 
     # Copy plugins to build folder
     for plugin in plugins_list:
