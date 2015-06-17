@@ -683,6 +683,15 @@ class TagsConfig (object):
     TAG_COLOR_BACK_SELECTED_PARAM = u'TagBackSelectedColor'
     TAG_COLOR_BACK_SELECTED_DEFAULT = u'#FAFF24'
 
+    ACTION_SHOW_LIST = 0
+    ACTION_MARK_TOGGLE = 1
+
+    LEFT_CLICK_ACTION_PARAM = u'LeftClickAction'
+    LEFT_CLICK_ACTION_DEFAULT = ACTION_SHOW_LIST
+
+    MIDDLE_CLICK_ACTION_PARAM = u'MiddleClickAction'
+    MIDDLE_CLICK_ACTION_DEFAULT = ACTION_MARK_TOGGLE
+
 
     def __init__ (self, config):
         self.config = config
@@ -720,4 +729,18 @@ class TagsConfig (object):
             self.SECTION,
             self.TAG_COLOR_BACK_SELECTED_PARAM,
             self.TAG_COLOR_BACK_SELECTED_DEFAULT
+        )
+
+        self.leftClickAction = IntegerOption (
+            self.config,
+            self.SECTION,
+            self.LEFT_CLICK_ACTION_PARAM,
+            self.LEFT_CLICK_ACTION_DEFAULT
+        )
+
+        self.middleClickAction = IntegerOption (
+            self.config,
+            self.SECTION,
+            self.MIDDLE_CLICK_ACTION_PARAM,
+            self.MIDDLE_CLICK_ACTION_DEFAULT
         )

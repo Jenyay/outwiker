@@ -8,6 +8,7 @@ from .taglabel import EVT_TAG_LEFT_CLICK, EVT_TAG_MIDDLE_CLICK
 from outwiker.core.tagslist import TagsList
 from outwiker.core.tagscommands import removeTag, appendTag
 from outwiker.core.sortfunctions import sortAlphabeticalFunction
+from outwiker.gui.guiconfig import TagsConfig
 
 
 class TagsPanelController (object):
@@ -53,27 +54,47 @@ class TagsPanelController (object):
         self.updateTags()
 
 
-    def __onTagLeftClick (self, event):
-        assert self.__currentTags is not None
+    def __runAction (self, action, tagname):
+        if action == TagsConfig.ACTION_MARK_TOGGLE:
+            self.__toggleMarkTag (tagname)
+        else:
+            self.__showPopup (tagname)
 
-        pages = self.__currentTags[event.text][:]
+
+    def __showPopup (self, tagname):
+        pages = self.__currentTags[tagname][:]
         pages.sort (sortAlphabeticalFunction)
 
         self.__tagsPanel.showPopup(pages)
 
 
+    def __toggleMarkTag (self, tagname):
+        selectedPage = self.__application.selectedPage
+        if selectedPage is None:
+            return
+
+        if tagname in selectedPage.tags:
+            removeTag (selectedPage, tagname)
+        else:
+            appendTag (selectedPage, tagname)
+
+
+    def __onTagLeftClick (self, event):
+        """
+        Клик левой кнопкой мыши по тегу
+        """
+        assert self.__currentTags is not None
+        action = TagsConfig (self.__application.config).leftClickAction.value
+        self.__runAction (action, event.text)
+
+
     def __onTagMiddleClick (self, event):
         """
-        Средний клик по тегу
+        Клик средней кнопкой мыши по тегу
         """
-        selectedPage = self.__application.selectedPage
-        if selectedPage is not None:
-            tag = event.text
-
-            if tag in selectedPage.tags:
-                removeTag (selectedPage, tag)
-            else:
-                appendTag (selectedPage, tag)
+        assert self.__currentTags is not None
+        action = TagsConfig (self.__application.config).middleClickAction.value
+        self.__runAction (action, event.text)
 
 
     def __onPageClick (self, event):
@@ -131,6 +152,7 @@ class TagsPanelController (object):
         if self.__application.wikiroot is None:
             self.__tagsPanel.clearMarks()
             self.__tagsPanel.clearTags()
+            self.__currentTags = None
             return
 
         tags = TagsList (self.__application.wikiroot)
