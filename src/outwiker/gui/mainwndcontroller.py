@@ -241,9 +241,8 @@ class MainWndController (object):
         """
         self.updateTitle()
         self.updatePageDateTime()
-        self.mainWindow.tagsCloudPanel.panel.updateTagLabels()
-        #
-        ###################################################
+    #
+    ###################################################
 
 
     ###################################################

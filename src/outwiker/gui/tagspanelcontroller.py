@@ -87,6 +87,7 @@ class TagsPanelController (object):
         self.__application.onPageCreate += self.__onUpdate
         self.__application.onTreeUpdate += self.__onUpdate
         self.__application.onWikiOpen += self.__onUpdate
+        self.__application.onPreferencesDialogClose += self.__onUpdate
 
 
     def __unbindAppEvents (self):
@@ -95,6 +96,7 @@ class TagsPanelController (object):
         self.__application.onPageCreate -= self.__onUpdate
         self.__application.onTreeUpdate -= self.__onUpdate
         self.__application.onWikiOpen -= self.__onUpdate
+        self.__application.onPreferencesDialogClose -= self.__onUpdate
 
 
     def __onPageSelect (self, page):
@@ -137,6 +139,8 @@ class TagsPanelController (object):
             self.__tagsPanel.setTags (tags)
             self.__currentTags = tags
             self.__markTags()
+        else:
+            self.__tagsPanel.updateTagLabels()
 
 
     def __markTags (self):
