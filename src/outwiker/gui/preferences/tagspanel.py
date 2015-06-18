@@ -28,7 +28,7 @@ class TagsPanel(wx.Panel):
         mainSizer.AddGrowableCol (0)
 
         self._createColorsGui (mainSizer)
-        self._createActionssGui (mainSizer)
+        self._createActionsGui (mainSizer)
 
         self.SetSizer (mainSizer)
 
@@ -38,86 +38,61 @@ class TagsPanel(wx.Panel):
         sizer.Add(control, 0, wx.ALL | wx.ALIGN_RIGHT, border=2)
 
 
+    def _createLabelAndColorPicker (self, text, sizer):
+        label = wx.StaticText (
+            self,
+            label = text)
+
+        colorPicker = wx.ColourPickerCtrl(
+            self,
+            style=wx.CLRP_SHOW_LABEL)
+
+        self._addControlsPairToSizer (sizer, label, colorPicker)
+
+        return (label, colorPicker)
+
+
     def _createColorsGui (self, mainsizer):
-        colorFontNormalLabel = wx.StaticText (self, label = _(u'Tag color'))
-        self.colorFontNormalPicker = wx.ColourPickerCtrl(self, style=wx.CLRP_SHOW_LABEL)
-
-        colorFontNormalHoverLabel = wx.StaticText (self, label = _(u'Hover tag color'))
-        self.colorFontNormalHoverPicker = wx.ColourPickerCtrl(self, style=wx.CLRP_SHOW_LABEL)
-
-        colorFontSelectedLabel = wx.StaticText (self, label = _(u'Marked tag color'))
-        self.colorFontSelectedPicker = wx.ColourPickerCtrl(self, style=wx.CLRP_SHOW_LABEL)
-
-        colorFontSelectedHoverLabel = wx.StaticText (self, label = _(u'Hover marked tag color'))
-        self.colorFontSelectedHoverPicker = wx.ColourPickerCtrl(self, style=wx.CLRP_SHOW_LABEL)
-
-        colorBackSelectedLabel = wx.StaticText (self, label = _(u'Marked tag background'))
-        self.colorBackSelectedPicker = wx.ColourPickerCtrl(self, style=wx.CLRP_SHOW_LABEL)
-
         colorsSizer = wx.FlexGridSizer(cols=2)
         colorsSizer.AddGrowableCol(0)
         colorsSizer.AddGrowableCol(1)
 
-        self._addControlsPairToSizer (colorsSizer,
-                                      colorFontNormalLabel,
-                                      self.colorFontNormalPicker)
+        colorFontNormalLabel, self.colorFontNormalPicker = self._createLabelAndColorPicker (_(u'Tag color'), colorsSizer)
 
-        self._addControlsPairToSizer (colorsSizer,
-                                      colorFontSelectedLabel,
-                                      self.colorFontSelectedPicker)
+        colorFontNormalHoverLabel, self.colorFontNormalHoverPicker = self._createLabelAndColorPicker (_(u'Hover tag color'), colorsSizer)
 
-        self._addControlsPairToSizer (colorsSizer,
-                                      colorBackSelectedLabel,
-                                      self.colorBackSelectedPicker)
+        colorFontSelectedLabel, self.colorFontSelectedPicker = self._createLabelAndColorPicker (_(u'Marked tag color'), colorsSizer)
 
-        self._addControlsPairToSizer (colorsSizer,
-                                      colorFontNormalHoverLabel,
-                                      self.colorFontNormalHoverPicker)
+        colorFontSelectedHoverLabel, self.colorFontSelectedHoverPicker = self._createLabelAndColorPicker (_(u'Hover marked tag color'), colorsSizer)
 
-        self._addControlsPairToSizer (colorsSizer,
-                                      colorFontSelectedHoverLabel,
-                                      self.colorFontSelectedHoverPicker)
+        colorBackSelectedLabel, self.colorBackSelectedPicker = self._createLabelAndColorPicker (_(u'Marked tag background color'), colorsSizer)
 
         mainsizer.Add (colorsSizer, 0, wx.EXPAND | wx.ALL, border = 2)
 
 
-    def _createActionssGui (self, mainsizer):
-        leftClickActionLabel = wx.StaticText (
-            self,
-            label = _(u'Left click on the tag')
-        )
+    def _createLabelAndComboBox (self, text, sizer):
+        label = wx.StaticText (self, label = text)
 
-        self.leftClickActionCombo = wx.ComboBox (
-            self,
-            -1,
-            style=wx.CB_DROPDOWN | wx.CB_READONLY)
+        combobox = wx.ComboBox (self,
+                                -1,
+                                style=wx.CB_DROPDOWN | wx.CB_READONLY)
+
+        combobox.SetMinSize((self.ACTIONS_COMBOBOX_WIDTH, -1))
+
+        self._addControlsPairToSizer (sizer, label, combobox)
+
+        return (label, combobox)
 
 
-        middleClickActionLabel = wx.StaticText (
-            self,
-            label = _(u'Middle click on the tag')
-        )
-
-        self.middleClickActionCombo = wx.ComboBox (
-            self,
-            -1,
-            style=wx.CB_DROPDOWN | wx.CB_READONLY)
-
-        self.leftClickActionCombo.SetMinSize((self.ACTIONS_COMBOBOX_WIDTH, -1))
-        self.middleClickActionCombo.SetMinSize((self.ACTIONS_COMBOBOX_WIDTH, -1))
-
-        self._fillActionsCombos()
-
+    def _createActionsGui (self, mainsizer):
         actionsSizer = wx.FlexGridSizer(cols=2)
         actionsSizer.AddGrowableCol(0)
 
-        self._addControlsPairToSizer (actionsSizer,
-                                      leftClickActionLabel,
-                                      self.leftClickActionCombo)
+        leftClickActionLabel, self.leftClickActionCombo = self._createLabelAndComboBox (_(u'Left click on the tag'), actionsSizer)
 
-        self._addControlsPairToSizer (actionsSizer,
-                                      middleClickActionLabel,
-                                      self.middleClickActionCombo)
+        middleClickActionLabel, self.middleClickActionCombo = self._createLabelAndComboBox (_(u'Middle click on the tag'), actionsSizer)
+
+        self._fillActionsCombos()
 
         mainsizer.Add (actionsSizer, 0, wx.EXPAND | wx.ALL, border = 2)
 

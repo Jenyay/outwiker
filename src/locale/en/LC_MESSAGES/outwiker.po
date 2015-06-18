@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-15 21:28+0300\n"
+"POT-Creation-Date: 2015-06-18 09:46+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -927,14 +927,14 @@ msgstr "weather"
 
 #: outwiker/gui/toolbars/generaltoolbar.py:25
 #: outwiker/gui/basepagedialog.py:40
-#: outwiker/gui/preferences/prefdialog.py:129
-#: outwiker/gui/preferences/prefdialog.py:145
+#: outwiker/gui/preferences/prefdialog.py:134
+#: outwiker/gui/preferences/prefdialog.py:153
 #: outwiker/pages/wiki/wikipage.py:85
 msgid "General"
 msgstr "General"
 
 #: outwiker/gui/toolbars/pluginstoolbar.py:25
-#: outwiker/gui/preferences/prefdialog.py:155
+#: outwiker/gui/preferences/prefdialog.py:163
 msgid "Plugins"
 msgstr "Plugins"
 
@@ -1164,6 +1164,42 @@ msgstr "Font color"
 msgid "Background color"
 msgstr "Background color"
 
+#: outwiker/gui/preferences/tagspanel.py:17
+msgid "Search pages with the tag"
+msgstr "Search pages with the tag"
+
+#: outwiker/gui/preferences/tagspanel.py:18
+msgid "Toggle tag selection"
+msgstr "Toggle tag selection"
+
+#: outwiker/gui/preferences/tagspanel.py:44
+msgid "Tag color"
+msgstr "Tag color"
+
+#: outwiker/gui/preferences/tagspanel.py:52
+msgid "Hover tag color"
+msgstr "Hover tag color"
+
+#: outwiker/gui/preferences/tagspanel.py:61
+msgid "Marked tag color"
+msgstr "Marked tag color"
+
+#: outwiker/gui/preferences/tagspanel.py:69
+msgid "Hover marked tag color"
+msgstr "Hover marked tag color"
+
+#: outwiker/gui/preferences/tagspanel.py:77
+msgid "Marked tag background color"
+msgstr "Marked tag background color"
+
+#: outwiker/gui/preferences/tagspanel.py:113
+msgid "Left click on the tag"
+msgstr "Left click on the tag"
+
+#: outwiker/gui/preferences/tagspanel.py:124
+msgid "Middle click on the tag"
+msgstr "Middle click on the tag"
+
 #: outwiker/gui/preferences/hotkeyspanel.py:90
 msgid "Actions with the same hotkey"
 msgstr "Actions with the same hotkey"
@@ -1286,41 +1322,45 @@ msgstr "This options for text printing only"
 msgid "Page Options..."
 msgstr "Page Options..."
 
-#: outwiker/gui/preferences/prefdialog.py:82
+#: outwiker/gui/preferences/prefdialog.py:84
 msgid "Preferences"
 msgstr "Preferences"
 
-#: outwiker/gui/preferences/prefdialog.py:130
+#: outwiker/gui/preferences/prefdialog.py:135
 #: outwiker/gui/preferences/generalpanel.py:34
 #: outwiker/pages/html/basehtmlpanel.py:201
 msgid "Preview"
 msgstr "Preview"
 
-#: outwiker/gui/preferences/prefdialog.py:131
-msgid "Text Printout"
-msgstr "Text Printout"
+#: outwiker/gui/preferences/prefdialog.py:136
+msgid "Tags cloud"
+msgstr "Tags cloud"
 
-#: outwiker/gui/preferences/prefdialog.py:133
-msgid "Interface"
-msgstr "Interface"
-
-#: outwiker/gui/preferences/prefdialog.py:146
-msgid "HTML Editor"
-msgstr "HTML Editor"
-
-#: outwiker/gui/preferences/prefdialog.py:147
-msgid "Wiki Editor"
-msgstr "Wiki Editor"
-
-#: outwiker/gui/preferences/prefdialog.py:150
-msgid "Editor"
-msgstr "Editor"
-
-#: outwiker/gui/preferences/prefdialog.py:160
+#: outwiker/gui/preferences/prefdialog.py:137
 msgid "Hotkeys"
 msgstr "Hotkeys"
 
-#: outwiker/gui/preferences/prefdialog.py:165
+#: outwiker/gui/preferences/prefdialog.py:138
+msgid "Text Printout"
+msgstr "Text Printout"
+
+#: outwiker/gui/preferences/prefdialog.py:141
+msgid "Interface"
+msgstr "Interface"
+
+#: outwiker/gui/preferences/prefdialog.py:154
+msgid "HTML Editor"
+msgstr "HTML Editor"
+
+#: outwiker/gui/preferences/prefdialog.py:155
+msgid "Wiki Editor"
+msgstr "Wiki Editor"
+
+#: outwiker/gui/preferences/prefdialog.py:158
+msgid "Editor"
+msgstr "Editor"
+
+#: outwiker/gui/preferences/prefdialog.py:168
 msgid "User's iconset"
 msgstr "User's iconset"
 
@@ -1362,63 +1402,63 @@ msgstr "Recent used"
 msgid "Edit"
 msgstr "Edit"
 
-#: outwiker/gui/preferences/generalpanel.py:73
+#: outwiker/gui/preferences/generalpanel.py:87
 msgid "Autosave interval in seconds (0 - disabled)"
 msgstr "Autosave interval in seconds (0 - disabled)"
 
-#: outwiker/gui/preferences/generalpanel.py:94
+#: outwiker/gui/preferences/generalpanel.py:108
 msgid "Date and time format"
 msgstr "Date and time format"
 
-#: outwiker/gui/preferences/generalpanel.py:110
+#: outwiker/gui/preferences/generalpanel.py:124
 msgid "Ask before exit"
 msgstr "Ask before exit"
 
-#: outwiker/gui/preferences/generalpanel.py:117
+#: outwiker/gui/preferences/generalpanel.py:131
 msgid "Minimize to tray"
 msgstr "Minimize to tray"
 
-#: outwiker/gui/preferences/generalpanel.py:118
+#: outwiker/gui/preferences/generalpanel.py:132
 msgid "Start iconized"
 msgstr "Start iconized"
 
-#: outwiker/gui/preferences/generalpanel.py:119
+#: outwiker/gui/preferences/generalpanel.py:133
 msgid "Always show tray icon"
 msgstr "Always show tray icon"
 
-#: outwiker/gui/preferences/generalpanel.py:120
+#: outwiker/gui/preferences/generalpanel.py:134
 msgid "Minimize on close window"
 msgstr "Minimize on close window"
 
-#: outwiker/gui/preferences/generalpanel.py:127
+#: outwiker/gui/preferences/generalpanel.py:141
 msgid "Recent files history length (restart required)"
 msgstr "Recent files history length (restart required)"
 
-#: outwiker/gui/preferences/generalpanel.py:135
+#: outwiker/gui/preferences/generalpanel.py:149
 msgid "Automatically open the recent file"
 msgstr "Automatically open the recent file"
 
-#: outwiker/gui/preferences/generalpanel.py:150
+#: outwiker/gui/preferences/generalpanel.py:164
 msgid "Wiki file name"
 msgstr "Wiki file name"
 
-#: outwiker/gui/preferences/generalpanel.py:151
+#: outwiker/gui/preferences/generalpanel.py:165
 msgid "Page title"
 msgstr "Page title"
 
-#: outwiker/gui/preferences/generalpanel.py:154
+#: outwiker/gui/preferences/generalpanel.py:168
 msgid "Main window title format"
 msgstr "Main window title format"
 
-#: outwiker/gui/preferences/generalpanel.py:168
+#: outwiker/gui/preferences/generalpanel.py:182
 msgid "Language (restart required)"
 msgstr "Language (restart required)"
 
-#: outwiker/gui/preferences/generalpanel.py:194
+#: outwiker/gui/preferences/generalpanel.py:208
 msgid "Default opening page mode"
 msgstr "Default opening page mode"
 
-#: outwiker/gui/preferences/generalpanel.py:353
+#: outwiker/gui/preferences/generalpanel.py:367
 msgid "Auto"
 msgstr "Auto"
 
