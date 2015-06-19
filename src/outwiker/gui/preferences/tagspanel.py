@@ -89,10 +89,7 @@ class TagsPanel(wx.Panel):
         actionsSizer.AddGrowableCol(0)
 
         leftClickActionLabel, self.leftClickActionCombo = self._createLabelAndComboBox (_(u'Left click on the tag'), actionsSizer)
-
         middleClickActionLabel, self.middleClickActionCombo = self._createLabelAndComboBox (_(u'Middle click on the tag'), actionsSizer)
-
-        self._fillActionsCombos()
 
         mainsizer.Add (actionsSizer, 0, wx.EXPAND | wx.ALL, border = 2)
 
@@ -114,6 +111,8 @@ class TagsPanel(wx.Panel):
 
 
     def LoadState(self):
+        self._fillActionsCombos()
+
         self.colorFontNormalPicker.SetColour (self._config.colorFontNormal.value)
         self.colorFontNormalHoverPicker.SetColour (self._config.colorFontNormalHover.value)
 
