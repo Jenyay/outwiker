@@ -674,7 +674,7 @@ msgstr "Метки"
 
 #: outwiker/actions/showhidetags.py:23
 msgid "Show / hide a tags panel"
-msgstr "Показать / спрятать панель с тегами"
+msgstr "Показать / спрятать панель с метками"
 
 #: outwiker/actions/openreadonly.py:19
 msgid "Open Read-only…"
@@ -1167,39 +1167,39 @@ msgstr "Цвет фона"
 
 #: outwiker/gui/preferences/tagspanel.py:17
 msgid "Search pages with the tag"
-msgstr "Поиск страниц с этим тегом"
+msgstr "Поиск страниц с этой меткой"
 
 #: outwiker/gui/preferences/tagspanel.py:18
 msgid "Toggle tag selection"
-msgstr "Добавить / удалить тег"
+msgstr "Добавить / удалить метку"
 
 #: outwiker/gui/preferences/tagspanel.py:60
 msgid "Tag color"
-msgstr "Цвет тега"
+msgstr "Цвет метки"
 
 #: outwiker/gui/preferences/tagspanel.py:62
 msgid "Hover tag color"
-msgstr "Цвет тега при наведении мыши"
+msgstr "Цвет метки при наведении мыши"
 
 #: outwiker/gui/preferences/tagspanel.py:64
 msgid "Marked tag color"
-msgstr "Цвет выбранного тега"
+msgstr "Цвет выбранной метки"
 
 #: outwiker/gui/preferences/tagspanel.py:66
 msgid "Hover marked tag color"
-msgstr "Цвет выбранного тега при наведении мыши"
+msgstr "Цвет выбранной метки при наведении мыши"
 
 #: outwiker/gui/preferences/tagspanel.py:68
 msgid "Marked tag background color"
-msgstr "Цвет фона выбранного тега"
+msgstr "Цвет фона выбранной метки"
 
 #: outwiker/gui/preferences/tagspanel.py:91
 msgid "Left click on the tag"
-msgstr "Клик левой кнопкой мыши по тегу"
+msgstr "Клик левой кнопкой мыши по метке"
 
 #: outwiker/gui/preferences/tagspanel.py:93
 msgid "Middle click on the tag"
-msgstr "Клик средней кнопкой мыши по тегу"
+msgstr "Клик средней кнопкой мыши по метке"
 
 #: outwiker/gui/preferences/hotkeyspanel.py:90
 msgid "Actions with the same hotkey"
@@ -1335,7 +1335,7 @@ msgstr "Просмотр"
 
 #: outwiker/gui/preferences/prefdialog.py:136
 msgid "Tags cloud"
-msgstr "Облако тегов"
+msgstr "Облако меток"
 
 #: outwiker/gui/preferences/prefdialog.py:137
 msgid "Hotkeys"
