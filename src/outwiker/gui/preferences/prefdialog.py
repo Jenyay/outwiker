@@ -15,6 +15,7 @@ from htmleditorpanel import HtmlEditorPanel
 from wikieditorpanel import WikiEditorPanel
 from iconsetpanel import IconsetPanel
 from tagspanel import TagsPanel
+from attachpanel import AttachPanel
 
 from outwiker.core.exceptions import PreferencesException
 from outwiker.core.factoryselector import FactorySelector
@@ -44,6 +45,7 @@ class PrefDialog(wx.Dialog):
         self.__htmlEditorPage = None
         self.__iconsetPage = None
         self.__tagsPage = None
+        self.__attachPage = None
         self.__createPages()
 
         Application.onPreferencesDialogCreate (self)
@@ -129,11 +131,13 @@ class PrefDialog(wx.Dialog):
         self.__textPrintPage = TextPrintPanel (self.__treeBook)
         self.__hotkeysPage = HotKeysPanel (self.__treeBook)
         self.__tagsPage = TagsPanel (self.__treeBook)
+        self.__attachPage = AttachPanel (self.__treeBook)
 
         interfacePanelsList = [
             PreferencePanelInfo (self.__generalPage, _(u"General")),
             PreferencePanelInfo (self.__htmlRenderPage, _(u"Preview")),
             PreferencePanelInfo (self.__tagsPage, _(u"Tags cloud")),
+            PreferencePanelInfo (self.__attachPage, _(u"Attachments")),
             PreferencePanelInfo (self.__hotkeysPage, _(u"Hotkeys")),
             PreferencePanelInfo (self.__textPrintPage, _(u"Text Printout")),
         ]

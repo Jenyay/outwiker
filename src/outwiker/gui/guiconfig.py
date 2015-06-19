@@ -579,23 +579,40 @@ class AttachConfig (object):
     PANE_OPTIONS_SECTION = u'AttachesPane'
     PANE_OPTIONS_DEFAULT = u''
 
+    ACTION_INSERT_LINK = 0
+    ACTION_OPEN = 1
+
+    DOUBLE_CLICK_ACTION_PARAM = u'AttachDoubleClickAction'
+    DOUBLE_CLICK_ACTION_DEFAULT = ACTION_INSERT_LINK
+
+
     def __init__ (self, config):
         self.config = config
 
-        self.width = IntegerOption (self.config,
-                                    MainWindowConfig.MAIN_WINDOW_SECTION,
-                                    self.WIDTH_SECTION,
-                                    self.WIDTH_DEFAULT)
+        self.width = IntegerOption (
+            self.config,
+            MainWindowConfig.MAIN_WINDOW_SECTION,
+            self.WIDTH_SECTION,
+            self.WIDTH_DEFAULT)
 
-        self.height = IntegerOption (self.config,
-                                     MainWindowConfig.MAIN_WINDOW_SECTION,
-                                     self.HEIGHT_SECTION,
-                                     self.HEIGHT_DEFAULT)
+        self.height = IntegerOption (
+            self.config,
+            MainWindowConfig.MAIN_WINDOW_SECTION,
+            self.HEIGHT_SECTION,
+            self.HEIGHT_DEFAULT)
 
-        self.pane = StringOption (self.config,
-                                  MainWindowConfig.MAIN_WINDOW_SECTION,
-                                  self.PANE_OPTIONS_SECTION,
-                                  self.PANE_OPTIONS_DEFAULT)
+        self.pane = StringOption (
+            self.config,
+            MainWindowConfig.MAIN_WINDOW_SECTION,
+            self.PANE_OPTIONS_SECTION,
+            self.PANE_OPTIONS_DEFAULT)
+
+        self.doubleClickAction = IntegerOption (
+            self.config,
+            MainWindowConfig.MAIN_WINDOW_SECTION,
+            self.DOUBLE_CLICK_ACTION_PARAM,
+            self.DOUBLE_CLICK_ACTION_DEFAULT
+        )
 
 
 

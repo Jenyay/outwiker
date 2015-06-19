@@ -8,9 +8,10 @@ from outwiker.core.application import Application
 from outwiker.core.commands import MessageBox
 from outwiker.core.system import getOS, getImagesDir
 from outwiker.core.attachment import Attachment
+from outwiker.core.events import PAGE_UPDATE_ATTACHMENT
 from outwiker.actions.attachfiles import AttachFilesAction
 from outwiker.actions.openattachfolder import OpenAttachFolderAction
-from outwiker.core.events import PAGE_UPDATE_ATTACHMENT
+from outwiker.gui.guiconfig import AttachConfig
 
 
 class AttachPanel(wx.Panel):
@@ -44,7 +45,7 @@ class AttachPanel(wx.Panel):
 
         self.__bindAppEvents()
 
-        self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.__onPaste, self.__attachList)
+        self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.__onDoubleClick, self.__attachList)
 
 
     @property
@@ -244,7 +245,7 @@ class AttachPanel(wx.Panel):
                 self.updateAttachments ()
 
 
-    def __onPaste(self, event):
+    def __pasteLink (self):
         """
         Сгенерировать сообщение о том, что пользователь хочет вставить ссылку на приаттаченные файлы
         """
@@ -258,15 +259,7 @@ class AttachPanel(wx.Panel):
         Application.onAttachmentPaste (files)
 
 
-    def __onRefresh (self, event):
-        self.updateAttachments()
-
-
-    def __onOpenFolder (self, event):
-        Application.actionController.getAction (OpenAttachFolderAction.stringId).run (None)
-
-
-    def __onExecute(self, event):
+    def __executeFile (self):
         if Application.selectedPage is not None:
             files = self.__getSelectedFiles()
 
@@ -283,6 +276,30 @@ class AttachPanel(wx.Panel):
                 except OSError:
                     text = _(u"Can't execute file '%s'") % file
                     MessageBox (text, _(u"Error"), wx.ICON_ERROR | wx.OK)
+
+
+    def __onPaste(self, event):
+        self.__pasteLink ()
+
+
+    def __onRefresh (self, event):
+        self.updateAttachments()
+
+
+    def __onOpenFolder (self, event):
+        Application.actionController.getAction (OpenAttachFolderAction.stringId).run (None)
+
+
+    def __onExecute(self, event):
+        self.__executeFile()
+
+
+    def __onDoubleClick (self, event):
+        config = AttachConfig (Application.config)
+        if config.doubleClickAction.value == AttachConfig.ACTION_INSERT_LINK:
+            self.__pasteLink()
+        elif config.doubleClickAction.value == AttachConfig.ACTION_OPEN:
+            self.__executeFile()
 
 
     def __onBeginDrag(self, event):
