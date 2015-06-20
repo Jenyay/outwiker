@@ -157,8 +157,11 @@ class HotKeysPanel (wx.Panel):
 
         # Список кортежей (заголовок, strid)
         # Отбросим те actions, что не удовлетворяют фильтру
-        titleStridList = [(actionController.getTitle (strid), strid) for strid in strIdList
-                          if self.__filter (actionController.getTitle (strid))]
+        titleStridList = [
+            (actionController.getTitle (strid), strid)
+            for strid in strIdList
+            if self.__filter (actionController.getAction (strid))
+        ]
         titleStridList.sort()
 
         self.__actionsList.Clear()
@@ -166,11 +169,14 @@ class HotKeysPanel (wx.Panel):
             self.__actionsList.Append (title, strid)
 
 
-    def __filter (self, title):
+    def __filter (self, action):
         if len (self.__filterText.Value.strip()) == 0:
             return True
 
-        return self.__filterText.Value.lower() in title.lower()
+        filterText = self.__filterText.Value.lower()
+
+        return (filterText in action.title.lower() or
+                filterText in action.description.lower())
 
 
     def Save (self):
