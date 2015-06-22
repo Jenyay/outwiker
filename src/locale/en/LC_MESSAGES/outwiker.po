@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-18 09:46+0300\n"
+"POT-Creation-Date: 2015-06-22 10:18+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -76,9 +76,9 @@ msgstr "Page is opened as read-only"
 #: outwiker/gui/preferences/iconsetpanel.py:289
 #: outwiker/gui/preferences/iconsetpanel.py:332
 #: outwiker/gui/tabscontroller.py:253 outwiker/gui/htmlrenderwebkit.py:283
-#: outwiker/gui/attachpanel.py:232 outwiker/gui/attachpanel.py:242
-#: outwiker/gui/attachpanel.py:254 outwiker/gui/attachpanel.py:275
-#: outwiker/gui/attachpanel.py:285 outwiker/gui/currentpagepanel.py:84
+#: outwiker/gui/attachpanel.py:233 outwiker/gui/attachpanel.py:243
+#: outwiker/gui/attachpanel.py:255 outwiker/gui/attachpanel.py:268
+#: outwiker/gui/attachpanel.py:278 outwiker/gui/currentpagepanel.py:84
 #: outwiker/gui/currentpagepanel.py:222 outwiker/gui/currentpagepanel.py:231
 #: outwiker/gui/pagedialog.py:27 outwiker/gui/pagedialog.py:40
 #: outwiker/gui/pagedialog.py:45 outwiker/gui/pagedialog.py:137
@@ -554,6 +554,7 @@ msgstr "Begin search and replace on page"
 
 #: outwiker/actions/showhideattaches.py:18
 #: outwiker/gui/mainpanes/attachmainpane.py:21
+#: outwiker/gui/preferences/prefdialog.py:140
 msgid "Attachments"
 msgstr "Attachments"
 
@@ -703,8 +704,8 @@ msgstr "Fullscreen"
 msgid "Fullscreen mode on/off"
 msgstr "Fullscreen mode on/off"
 
-#: outwiker/actions/openattachfolder.py:23 outwiker/gui/attachpanel.py:135
-#: outwiker/gui/attachpanel.py:140 outwiker/gui/pagepopupmenu.py:93
+#: outwiker/actions/openattachfolder.py:23 outwiker/gui/attachpanel.py:136
+#: outwiker/gui/attachpanel.py:141 outwiker/gui/pagepopupmenu.py:93
 msgid "Open Attachments Folder"
 msgstr "Open Attachments Folder"
 
@@ -712,8 +713,8 @@ msgstr "Open Attachments Folder"
 msgid "Open folder with attached files"
 msgstr "Open folder with attached files"
 
-#: outwiker/actions/attachfiles.py:22 outwiker/gui/attachpanel.py:97
-#: outwiker/gui/attachpanel.py:102
+#: outwiker/actions/attachfiles.py:22 outwiker/gui/attachpanel.py:98
+#: outwiker/gui/attachpanel.py:103
 msgid "Attach Files…"
 msgstr "Attach Files…"
 
@@ -927,14 +928,14 @@ msgstr "weather"
 
 #: outwiker/gui/toolbars/generaltoolbar.py:25
 #: outwiker/gui/basepagedialog.py:40
-#: outwiker/gui/preferences/prefdialog.py:134
-#: outwiker/gui/preferences/prefdialog.py:153
+#: outwiker/gui/preferences/prefdialog.py:137
+#: outwiker/gui/preferences/prefdialog.py:157
 #: outwiker/pages/wiki/wikipage.py:85
 msgid "General"
 msgstr "General"
 
 #: outwiker/gui/toolbars/pluginstoolbar.py:25
-#: outwiker/gui/preferences/prefdialog.py:163
+#: outwiker/gui/preferences/prefdialog.py:167
 msgid "Plugins"
 msgstr "Plugins"
 
@@ -1001,7 +1002,7 @@ msgstr ""
 
 #: outwiker/gui/htmlrenderie.py:211 outwiker/gui/htmlrenderwx.py:104
 #: outwiker/gui/htmlrenderwx.py:151 outwiker/gui/htmlrenderwebkit.py:282
-#: outwiker/gui/attachpanel.py:284 outwiker/gui/htmlrender.py:61
+#: outwiker/gui/attachpanel.py:277 outwiker/gui/htmlrender.py:61
 #, python-format
 msgid "Can't execute file '%s'"
 msgstr "Can't execute file '%s'"
@@ -1172,31 +1173,31 @@ msgstr "Search pages with the tag"
 msgid "Toggle tag selection"
 msgstr "Toggle tag selection"
 
-#: outwiker/gui/preferences/tagspanel.py:44
+#: outwiker/gui/preferences/tagspanel.py:60
 msgid "Tag color"
 msgstr "Tag color"
 
-#: outwiker/gui/preferences/tagspanel.py:52
+#: outwiker/gui/preferences/tagspanel.py:62
 msgid "Hover tag color"
 msgstr "Hover tag color"
 
-#: outwiker/gui/preferences/tagspanel.py:61
+#: outwiker/gui/preferences/tagspanel.py:64
 msgid "Marked tag color"
 msgstr "Marked tag color"
 
-#: outwiker/gui/preferences/tagspanel.py:69
+#: outwiker/gui/preferences/tagspanel.py:66
 msgid "Hover marked tag color"
 msgstr "Hover marked tag color"
 
-#: outwiker/gui/preferences/tagspanel.py:77
+#: outwiker/gui/preferences/tagspanel.py:68
 msgid "Marked tag background color"
 msgstr "Marked tag background color"
 
-#: outwiker/gui/preferences/tagspanel.py:113
+#: outwiker/gui/preferences/tagspanel.py:91
 msgid "Left click on the tag"
 msgstr "Left click on the tag"
 
-#: outwiker/gui/preferences/tagspanel.py:124
+#: outwiker/gui/preferences/tagspanel.py:92
 msgid "Middle click on the tag"
 msgstr "Middle click on the tag"
 
@@ -1322,45 +1323,45 @@ msgstr "This options for text printing only"
 msgid "Page Options..."
 msgstr "Page Options..."
 
-#: outwiker/gui/preferences/prefdialog.py:84
+#: outwiker/gui/preferences/prefdialog.py:86
 msgid "Preferences"
 msgstr "Preferences"
 
-#: outwiker/gui/preferences/prefdialog.py:135
+#: outwiker/gui/preferences/prefdialog.py:138
 #: outwiker/gui/preferences/generalpanel.py:34
 #: outwiker/pages/html/basehtmlpanel.py:201
 msgid "Preview"
 msgstr "Preview"
 
-#: outwiker/gui/preferences/prefdialog.py:136
+#: outwiker/gui/preferences/prefdialog.py:139
 msgid "Tags cloud"
 msgstr "Tags cloud"
 
-#: outwiker/gui/preferences/prefdialog.py:137
+#: outwiker/gui/preferences/prefdialog.py:141
 msgid "Hotkeys"
 msgstr "Hotkeys"
 
-#: outwiker/gui/preferences/prefdialog.py:138
+#: outwiker/gui/preferences/prefdialog.py:142
 msgid "Text Printout"
 msgstr "Text Printout"
 
-#: outwiker/gui/preferences/prefdialog.py:141
+#: outwiker/gui/preferences/prefdialog.py:145
 msgid "Interface"
 msgstr "Interface"
 
-#: outwiker/gui/preferences/prefdialog.py:154
+#: outwiker/gui/preferences/prefdialog.py:158
 msgid "HTML Editor"
 msgstr "HTML Editor"
 
-#: outwiker/gui/preferences/prefdialog.py:155
+#: outwiker/gui/preferences/prefdialog.py:159
 msgid "Wiki Editor"
 msgstr "Wiki Editor"
 
-#: outwiker/gui/preferences/prefdialog.py:158
+#: outwiker/gui/preferences/prefdialog.py:162
 msgid "Editor"
 msgstr "Editor"
 
-#: outwiker/gui/preferences/prefdialog.py:168
+#: outwiker/gui/preferences/prefdialog.py:172
 msgid "User's iconset"
 msgstr "User's iconset"
 
@@ -1393,6 +1394,18 @@ msgstr "Description"
 #: outwiker/gui/preferences/pluginspanel.py:139
 msgid "Site"
 msgstr "Site"
+
+#: outwiker/gui/preferences/attachpanel.py:17
+msgid "Insert link"
+msgstr "Insert link"
+
+#: outwiker/gui/preferences/attachpanel.py:18
+msgid "Open file"
+msgstr "Open file"
+
+#: outwiker/gui/preferences/attachpanel.py:59
+msgid "Double click on an attached file"
+msgstr "Double click on an attached file"
 
 #: outwiker/gui/preferences/generalpanel.py:33
 msgid "Recent used"
@@ -1597,40 +1610,40 @@ msgstr "Can't save file %s"
 msgid "Can't read file %s"
 msgstr "Can't read file %s"
 
-#: outwiker/gui/attachpanel.py:86 outwiker/gui/attachpanel.py:91
+#: outwiker/gui/attachpanel.py:87 outwiker/gui/attachpanel.py:92
 msgid "Refresh"
 msgstr "Refresh"
 
-#: outwiker/gui/attachpanel.py:106 outwiker/gui/attachpanel.py:111
+#: outwiker/gui/attachpanel.py:107 outwiker/gui/attachpanel.py:112
 msgid "Remove Files…"
 msgstr "Remove Files…"
 
-#: outwiker/gui/attachpanel.py:117 outwiker/gui/attachpanel.py:122
+#: outwiker/gui/attachpanel.py:118 outwiker/gui/attachpanel.py:123
 #: outwiker/gui/mainmenu.py:63
 msgid "Paste"
 msgstr "Paste"
 
-#: outwiker/gui/attachpanel.py:126 outwiker/gui/attachpanel.py:131
+#: outwiker/gui/attachpanel.py:127 outwiker/gui/attachpanel.py:132
 msgid "Execute"
 msgstr "Execute"
 
-#: outwiker/gui/attachpanel.py:231
+#: outwiker/gui/attachpanel.py:232
 msgid "You did not select a file to remove"
 msgstr "You did not select a file to remove"
 
-#: outwiker/gui/attachpanel.py:236
+#: outwiker/gui/attachpanel.py:237
 msgid "Remove selected files?"
 msgstr "Remove selected files?"
 
-#: outwiker/gui/attachpanel.py:237
+#: outwiker/gui/attachpanel.py:238
 msgid "Remove files?"
 msgstr "Remove files?"
 
-#: outwiker/gui/attachpanel.py:253
+#: outwiker/gui/attachpanel.py:254
 msgid "You did not select a file to paste"
 msgstr "You did not select a file to paste"
 
-#: outwiker/gui/attachpanel.py:274
+#: outwiker/gui/attachpanel.py:267
 msgid "You did not select a file to execute"
 msgstr "You did not select a file to execute"
 

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-18 10:03+0300\n"
+"POT-Creation-Date: 2015-06-22 10:18+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -74,9 +74,9 @@ msgstr "Страница открыта только для чтения"
 #: outwiker/gui/preferences/iconsetpanel.py:289
 #: outwiker/gui/preferences/iconsetpanel.py:332
 #: outwiker/gui/tabscontroller.py:253 outwiker/gui/htmlrenderwebkit.py:283
-#: outwiker/gui/attachpanel.py:232 outwiker/gui/attachpanel.py:242
-#: outwiker/gui/attachpanel.py:254 outwiker/gui/attachpanel.py:275
-#: outwiker/gui/attachpanel.py:285 outwiker/gui/currentpagepanel.py:84
+#: outwiker/gui/attachpanel.py:233 outwiker/gui/attachpanel.py:243
+#: outwiker/gui/attachpanel.py:255 outwiker/gui/attachpanel.py:268
+#: outwiker/gui/attachpanel.py:278 outwiker/gui/currentpagepanel.py:84
 #: outwiker/gui/currentpagepanel.py:222 outwiker/gui/currentpagepanel.py:231
 #: outwiker/gui/pagedialog.py:27 outwiker/gui/pagedialog.py:40
 #: outwiker/gui/pagedialog.py:45 outwiker/gui/pagedialog.py:137
@@ -555,6 +555,7 @@ msgstr "Начать поиск и замену по странице"
 
 #: outwiker/actions/showhideattaches.py:18
 #: outwiker/gui/mainpanes/attachmainpane.py:21
+#: outwiker/gui/preferences/prefdialog.py:140
 msgid "Attachments"
 msgstr "Прикрепленные файлы"
 
@@ -704,8 +705,8 @@ msgstr "Полноэкранный режим"
 msgid "Fullscreen mode on/off"
 msgstr "Полноэкранный режим вкл/выкл"
 
-#: outwiker/actions/openattachfolder.py:23 outwiker/gui/attachpanel.py:135
-#: outwiker/gui/attachpanel.py:140 outwiker/gui/pagepopupmenu.py:93
+#: outwiker/actions/openattachfolder.py:23 outwiker/gui/attachpanel.py:136
+#: outwiker/gui/attachpanel.py:141 outwiker/gui/pagepopupmenu.py:93
 msgid "Open Attachments Folder"
 msgstr "Открыть папку с прикрепленными файлами"
 
@@ -713,8 +714,8 @@ msgstr "Открыть папку с прикрепленными файлами
 msgid "Open folder with attached files"
 msgstr "Открывает папку с прикрепленными файлами"
 
-#: outwiker/actions/attachfiles.py:22 outwiker/gui/attachpanel.py:97
-#: outwiker/gui/attachpanel.py:102
+#: outwiker/actions/attachfiles.py:22 outwiker/gui/attachpanel.py:98
+#: outwiker/gui/attachpanel.py:103
 msgid "Attach Files…"
 msgstr "Прикрепить &файлы…"
 
@@ -928,14 +929,14 @@ msgstr "погода"
 
 #: outwiker/gui/toolbars/generaltoolbar.py:25
 #: outwiker/gui/basepagedialog.py:40
-#: outwiker/gui/preferences/prefdialog.py:134
-#: outwiker/gui/preferences/prefdialog.py:153
+#: outwiker/gui/preferences/prefdialog.py:137
+#: outwiker/gui/preferences/prefdialog.py:157
 #: outwiker/pages/wiki/wikipage.py:85
 msgid "General"
 msgstr "Общие"
 
 #: outwiker/gui/toolbars/pluginstoolbar.py:25
-#: outwiker/gui/preferences/prefdialog.py:163
+#: outwiker/gui/preferences/prefdialog.py:167
 msgid "Plugins"
 msgstr "Плагины"
 
@@ -1002,7 +1003,7 @@ msgstr ""
 
 #: outwiker/gui/htmlrenderie.py:211 outwiker/gui/htmlrenderwx.py:104
 #: outwiker/gui/htmlrenderwx.py:151 outwiker/gui/htmlrenderwebkit.py:282
-#: outwiker/gui/attachpanel.py:284 outwiker/gui/htmlrender.py:61
+#: outwiker/gui/attachpanel.py:277 outwiker/gui/htmlrender.py:61
 #, python-format
 msgid "Can't execute file '%s'"
 msgstr "Ошибка запуска файла '%s'"
@@ -1197,7 +1198,7 @@ msgstr "Цвет фона выбранной метки"
 msgid "Left click on the tag"
 msgstr "Клик левой кнопкой мыши по метке"
 
-#: outwiker/gui/preferences/tagspanel.py:93
+#: outwiker/gui/preferences/tagspanel.py:92
 msgid "Middle click on the tag"
 msgstr "Клик средней кнопкой мыши по метке"
 
@@ -1323,45 +1324,45 @@ msgstr "Эти настройки предназначены только для
 msgid "Page Options..."
 msgstr "Настройки страницы..."
 
-#: outwiker/gui/preferences/prefdialog.py:84
+#: outwiker/gui/preferences/prefdialog.py:86
 msgid "Preferences"
 msgstr "Параметры"
 
-#: outwiker/gui/preferences/prefdialog.py:135
+#: outwiker/gui/preferences/prefdialog.py:138
 #: outwiker/gui/preferences/generalpanel.py:34
 #: outwiker/pages/html/basehtmlpanel.py:201
 msgid "Preview"
 msgstr "Просмотр"
 
-#: outwiker/gui/preferences/prefdialog.py:136
+#: outwiker/gui/preferences/prefdialog.py:139
 msgid "Tags cloud"
 msgstr "Облако меток"
 
-#: outwiker/gui/preferences/prefdialog.py:137
+#: outwiker/gui/preferences/prefdialog.py:141
 msgid "Hotkeys"
 msgstr "Горячие клавиши"
 
-#: outwiker/gui/preferences/prefdialog.py:138
+#: outwiker/gui/preferences/prefdialog.py:142
 msgid "Text Printout"
 msgstr "Печать текста"
 
-#: outwiker/gui/preferences/prefdialog.py:141
+#: outwiker/gui/preferences/prefdialog.py:145
 msgid "Interface"
 msgstr "Интерфейс"
 
-#: outwiker/gui/preferences/prefdialog.py:154
+#: outwiker/gui/preferences/prefdialog.py:158
 msgid "HTML Editor"
 msgstr "HTML-редактор"
 
-#: outwiker/gui/preferences/prefdialog.py:155
+#: outwiker/gui/preferences/prefdialog.py:159
 msgid "Wiki Editor"
 msgstr "Викиредактор"
 
-#: outwiker/gui/preferences/prefdialog.py:158
+#: outwiker/gui/preferences/prefdialog.py:162
 msgid "Editor"
 msgstr "Редактор"
 
-#: outwiker/gui/preferences/prefdialog.py:168
+#: outwiker/gui/preferences/prefdialog.py:172
 msgid "User's iconset"
 msgstr "Значки пользователя"
 
@@ -1394,6 +1395,18 @@ msgstr "Описание"
 #: outwiker/gui/preferences/pluginspanel.py:139
 msgid "Site"
 msgstr "Сайт"
+
+#: outwiker/gui/preferences/attachpanel.py:17
+msgid "Insert link"
+msgstr "Вставить ссылку"
+
+#: outwiker/gui/preferences/attachpanel.py:18
+msgid "Open file"
+msgstr "Открыть файл"
+
+#: outwiker/gui/preferences/attachpanel.py:59
+msgid "Double click on an attached file"
+msgstr "Двойной клик на прикрепленном файле"
 
 #: outwiker/gui/preferences/generalpanel.py:33
 msgid "Recent used"
@@ -1598,40 +1611,40 @@ msgstr "Ошибка записи в файл %s"
 msgid "Can't read file %s"
 msgstr "Ошибка чтения файла %s"
 
-#: outwiker/gui/attachpanel.py:86 outwiker/gui/attachpanel.py:91
+#: outwiker/gui/attachpanel.py:87 outwiker/gui/attachpanel.py:92
 msgid "Refresh"
 msgstr "Обновить"
 
-#: outwiker/gui/attachpanel.py:106 outwiker/gui/attachpanel.py:111
+#: outwiker/gui/attachpanel.py:107 outwiker/gui/attachpanel.py:112
 msgid "Remove Files…"
 msgstr "Удалить файлы…"
 
-#: outwiker/gui/attachpanel.py:117 outwiker/gui/attachpanel.py:122
+#: outwiker/gui/attachpanel.py:118 outwiker/gui/attachpanel.py:123
 #: outwiker/gui/mainmenu.py:63
 msgid "Paste"
 msgstr "Вставить"
 
-#: outwiker/gui/attachpanel.py:126 outwiker/gui/attachpanel.py:131
+#: outwiker/gui/attachpanel.py:127 outwiker/gui/attachpanel.py:132
 msgid "Execute"
 msgstr "Запустить"
 
-#: outwiker/gui/attachpanel.py:231
+#: outwiker/gui/attachpanel.py:232
 msgid "You did not select a file to remove"
 msgstr "Вы не выбрали файл(ы) для удаления"
 
-#: outwiker/gui/attachpanel.py:236
+#: outwiker/gui/attachpanel.py:237
 msgid "Remove selected files?"
 msgstr "Удалить выбранные файлы?"
 
-#: outwiker/gui/attachpanel.py:237
+#: outwiker/gui/attachpanel.py:238
 msgid "Remove files?"
 msgstr "Удалить файлы?"
 
-#: outwiker/gui/attachpanel.py:253
+#: outwiker/gui/attachpanel.py:254
 msgid "You did not select a file to paste"
 msgstr "Вы не выбрали файл(ы) для вставки"
 
-#: outwiker/gui/attachpanel.py:274
+#: outwiker/gui/attachpanel.py:267
 msgid "You did not select a file to execute"
 msgstr "Вы не выбрали файл(ы) для запуска"
 

@@ -11,7 +11,7 @@ class AttachPanel(wx.Panel):
         kwds["style"] = wx.TAB_TRAVERSAL
         wx.Panel.__init__(self, *args, **kwds)
 
-        self.ACTIONS_COMBOBOX_WIDTH = 300
+        self.ACTIONS_COMBOBOX_WIDTH = 200
 
         self._actions = [
             (_(u'Insert link'), AttachConfig.ACTION_INSERT_LINK),
