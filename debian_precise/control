@@ -2,13 +2,13 @@ Source: outwiker
 Section: text
 Priority: optional
 Maintainer: Eugeniy Ilin <jenyay.ilin@gmail.com>
-Standards-Version: 3.9.5
-Build-Depends: debhelper (>=8), python2.7, python-support (>=1)
+Standards-Version: 3.9.6
+Build-Depends: debhelper (>=8), python, dh-python
 Homepage: http://jenyay.net/Outwiker/English
 
 Package: outwiker
 Architecture: all
-Depends: python (>=2.7), python-wxgtk2.8, python-wxversion, mimetex, python-webkit-dev, python-pil|python-imaging, ${python:Depends}, ${misc:Depends}
+Depends: python2.7 (>=2.7), python-wxgtk2.8, python-wxversion, mimetex, python-webkit-dev, python-pil|python-imaging, ${python:Depends}, ${misc:Depends}
 Description: Outliner and personal wiki
  OutWiker is designed to store notes in a tree. Such programs are called
  "outliner", personal wiki, or tree-like editors. OutWiker's main difference
