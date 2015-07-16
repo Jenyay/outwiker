@@ -74,12 +74,12 @@ class BoldSubscriptToken (AdHocToken):
 
 
     def getToken (self):
-        return QuotedString (BoldToken.boldStart,
-                             endQuoteChar = SubscriptToken.subscriptEnd + BoldToken.boldEnd,
+        return QuotedString (BoldToken.start,
+                             endQuoteChar = SubscriptToken.end + BoldToken.end,
                              multiline = True).setParseAction(
                                  self.convertToHTMLAdHoc("<b>",
                                                          "</b>",
-                                                         suffix = SubscriptToken.subscriptEnd))("bold_subscript")
+                                                         suffix = SubscriptToken.end))("bold_subscript")
 
 
 
@@ -92,12 +92,12 @@ class BoldSuperscriptToken (AdHocToken):
 
 
     def getToken (self):
-        return QuotedString (BoldToken.boldStart,
-                             endQuoteChar = SuperscriptToken.superscriptEnd + BoldToken.boldEnd,
+        return QuotedString (BoldToken.start,
+                             endQuoteChar = SuperscriptToken.end + BoldToken.end,
                              multiline = True).setParseAction (self.convertToHTMLAdHoc (
                                  "<b>",
                                  "</b>",
-                                 suffix = SuperscriptToken.superscriptEnd))("bold_superscript")
+                                 suffix = SuperscriptToken.end))("bold_superscript")
 
 
 class ItalicSubscriptToken (AdHocToken):
@@ -109,12 +109,12 @@ class ItalicSubscriptToken (AdHocToken):
 
 
     def getToken (self):
-        return QuotedString (ItalicToken.italicStart,
-                             endQuoteChar = SubscriptToken.subscriptEnd + ItalicToken.italicEnd,
+        return QuotedString (ItalicToken.start,
+                             endQuoteChar = SubscriptToken.end + ItalicToken.end,
                              multiline = True).setParseAction(self.convertToHTMLAdHoc(
                                  "<i>",
                                  "</i>",
-                                 suffix = SubscriptToken.subscriptEnd))("italic_subscript")
+                                 suffix = SubscriptToken.end))("italic_subscript")
 
 
 
@@ -127,12 +127,12 @@ class ItalicSuperscriptToken (AdHocToken):
 
 
     def getToken (self):
-        return QuotedString (ItalicToken.italicStart,
-                             endQuoteChar = SuperscriptToken.superscriptEnd + ItalicToken.italicEnd,
+        return QuotedString (ItalicToken.start,
+                             endQuoteChar = SuperscriptToken.end + ItalicToken.end,
                              multiline = True).setParseAction(self.convertToHTMLAdHoc(
                                  "<i>",
                                  "</i>",
-                                 suffix = SuperscriptToken.superscriptEnd))("italic_superscript")
+                                 suffix = SuperscriptToken.end))("italic_superscript")
 
 
 class BoldItalicSubscriptToken (AdHocToken):
@@ -144,12 +144,12 @@ class BoldItalicSubscriptToken (AdHocToken):
 
 
     def getToken (self):
-        return QuotedString (BoldItalicToken.boldItalicStart,
-                             endQuoteChar = SubscriptToken.subscriptEnd + BoldItalicToken.boldItalicEnd,
+        return QuotedString (BoldItalicToken.start,
+                             endQuoteChar = SubscriptToken.end + BoldItalicToken.end,
                              multiline = True).setParseAction(self.convertToHTMLAdHoc(
                                  "<b><i>",
                                  "</i></b>",
-                                 suffix = SubscriptToken.subscriptEnd))("bold_italic_subscript")
+                                 suffix = SubscriptToken.end))("bold_italic_subscript")
 
 
 
@@ -162,9 +162,9 @@ class BoldItalicSuperscriptToken (AdHocToken):
 
 
     def getToken (self):
-        return QuotedString (BoldItalicToken.boldItalicStart,
-                             endQuoteChar = SuperscriptToken.superscriptEnd + BoldItalicToken.boldItalicEnd,
+        return QuotedString (BoldItalicToken.start,
+                             endQuoteChar = SuperscriptToken.end + BoldItalicToken.end,
                              multiline = True).setParseAction(self.convertToHTMLAdHoc(
                                  "<b><i>",
                                  "</i></b>",
-                                 suffix = SuperscriptToken.superscriptEnd))("bold_italic_superscript")
+                                 suffix = SuperscriptToken.end))("bold_italic_superscript")
