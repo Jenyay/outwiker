@@ -9,11 +9,12 @@ from wx.stc import StyledTextCtrl
 
 import outwiker.core.system
 from outwiker.core.application import Application
-from .guiconfig import EditorConfig
 from outwiker.core.textprinter import TextPrinter
-from searchreplacecontroller import SearchReplaceController
-from searchreplacepanel import SearchReplacePanel
-from .mainid import MainId
+from outwiker.gui.spellchecker import SpellChecker
+from outwiker.gui.guiconfig import EditorConfig
+from outwiker.gui.searchreplacecontroller import SearchReplaceController
+from outwiker.gui.searchreplacepanel import SearchReplacePanel
+from outwiker.gui.mainid import MainId
 
 
 class TextEditor(wx.Panel):
@@ -22,6 +23,10 @@ class TextEditor(wx.Panel):
     def __init__(self, *args, **kwds):
         kwds["style"] = wx.TAB_TRAVERSAL
         wx.Panel.__init__(self, *args, **kwds)
+        self._spellChecker = None
+
+        self.SPELL_ERROR_INDICATOR = 0
+
         self.textCtrl = StyledTextCtrl(self, -1)
 
         # Создание панели поиска и ее контроллера
@@ -108,6 +113,8 @@ class TextEditor(wx.Panel):
         """
         Установить шрифт по умолчанию в контрол StyledTextCtrl
         """
+        self._spellChecker = SpellChecker (Application.config)
+
         size = self.config.fontSize.value
         faceName = self.config.fontName.value
         isBold = self.config.fontIsBold.value
@@ -180,6 +187,9 @@ class TextEditor(wx.Panel):
             self.textCtrl.CmdKeyAssign (wx.stc.STC_KEY_END,
                                         wx.stc.STC_SCMOD_ALT,
                                         wx.stc.STC_CMD_LINEENDDISPLAY)
+
+        self.textCtrl.IndicatorSetStyle(self.SPELL_ERROR_INDICATOR, wx.stc.STC_INDIC_SQUIGGLE)
+        self.textCtrl.IndicatorSetForeground(self.SPELL_ERROR_INDICATOR, "red")
 
 
     def __setMarginWidth (self, editor):
@@ -359,3 +369,28 @@ class TextEditor(wx.Panel):
         text_left = self.textCtrl.GetTextRange (0, pos_bytes)
         currpos = len (text_left)
         return currpos
+
+
+    def checkSpellWord (self, word):
+        return self._spellChecker.check (word)
+
+
+    def _getTextForParse (self):
+        # Табуляция в редакторе считается за несколько символов
+        return self.textCtrl.GetText().replace ("\t", " ")
+
+
+    def setSpellError (self, startpos, endpos):
+        """
+        Mark positions as error
+        startpos, endpos - positions in characters
+        """
+        text = self._getTextForParse()
+        # startbytes = self.calcBytePos (text, startpos)
+        # endbytes = self.calcBytePos (text, endpos)
+        startbytes = 0
+        endbytes = self.calcByteLen (text)
+        # endbytes = self.calcByteLen (text)
+
+        self.textCtrl.StartStyling (startbytes, wx.stc.STC_INDIC0_MASK)
+        self.textCtrl.SetStyling (endbytes - startbytes, wx.stc.STC_INDIC0_MASK)

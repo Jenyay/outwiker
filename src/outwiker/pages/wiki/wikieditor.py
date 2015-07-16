@@ -1,12 +1,13 @@
 # -*- coding: UTF-8 -*-
 
 from datetime import datetime, timedelta
+import re
 
 import wx.stc
 
+from outwiker.core.application import Application
 from outwiker.gui.texteditor import TextEditor
 from .wikicolorizer import WikiColorizer, EVT_APPLY_STYLE
-from outwiker.core.application import Application
 from .wikiconfig import WikiConfig
 
 
@@ -39,10 +40,10 @@ class WikiEditor (TextEditor):
         # Константы для стилей
         self.STYLE_BOLD_ID = 1
         self.STYLE_ITALIC_ID = 2
-        self.STYLE_UNDERLINE_ID = 4
-        self.STYLE_LINK_ID = 8
-        self.STYLE_HEADING_ID = 126
-        self.STYLE_COMMAND_ID = 125
+        self.STYLE_UNDERLINE_ID = 3
+        self.STYLE_LINK_ID = 4
+        self.STYLE_HEADING_ID = 5
+        self.STYLE_COMMAND_ID = 6
 
         # Комбинации стилей
         self.STYLE_BOLD_ITALIC_UNDERLINE_ID = (self.STYLE_BOLD_ID |
@@ -129,23 +130,16 @@ class WikiEditor (TextEditor):
         event.Skip()
 
 
-    def __getTextForParse (self):
-        # Табуляция в редакторе считается за несколько символов
-        return self.textCtrl.GetText().replace ("\t", " ")
-
-
     def __onStyleNeeded (self, event):
-        if (self.__styleSet or
-                datetime.now() - self.__lastEdit < self.__DELAY):
-            return
-
-        text = self.__getTextForParse()
-        self._colorizer.start (text)
+        if not self.__styleSet and datetime.now() - self.__lastEdit >= self.__DELAY:
+            text = self._getTextForParse()
+            self._colorizer.start (text)
 
 
     def __onApplyStyle (self, event):
-        if event.text == self.__getTextForParse():
+        if event.text == self._getTextForParse():
             self.__applyStyles (event.stylebytes)
+            self.runSpellChecking()
 
 
     def __applyStyles (self, stylebytes):
@@ -170,3 +164,14 @@ class WikiEditor (TextEditor):
         itemsList = itemsList[: -1]
 
         self.textCtrl.ReplaceSelection (itemsList)
+
+
+    def runSpellChecking (self):
+        text = self._getTextForParse()
+
+        wordRegex = re.compile ('\w+(?:-\w+)*', re.U)
+        words = wordRegex.finditer (text)
+        for wordMatch in words:
+            word = wordMatch.group(0)
+            if not self.checkSpellWord (word):
+                self.setSpellError (wordMatch.start(), wordMatch.end())
