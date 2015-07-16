@@ -98,8 +98,11 @@ class WikiColorizer (object):
 
             tokenname = token[0].getName()
 
-            if (tokenname == "text" or
-                    tokenname == "linebreak" or
+            if tokenname == "text":
+                self._editor.runSpellChecking (pos_start, pos_end)
+                continue
+
+            if (tokenname == "linebreak" or
                     tokenname == "noformat" or
                     tokenname == "preformat"):
                 continue
@@ -155,6 +158,7 @@ class WikiColorizer (object):
                                 self._editor.STYLE_HEADING_ID,
                                 bytepos_start,
                                 bytepos_end)
+                self._editor.runSpellChecking (pos_start, pos_end)
 
             elif tokenname == "command":
                 self._setStyle (stylelist,
@@ -167,6 +171,7 @@ class WikiColorizer (object):
                                 self._editor.STYLE_LINK_ID,
                                 bytepos_start,
                                 bytepos_end)
+                self._editor.runSpellChecking (pos_start, pos_end)
 
             elif tokenname == "url":
                 self._addStyle (stylelist,

@@ -3,6 +3,7 @@
 import codecs
 import cgi
 import math
+import re
 
 import wx
 from wx.stc import StyledTextCtrl
@@ -385,3 +386,14 @@ class TextEditor(wx.Panel):
 
         self.textCtrl.StartStyling (startbytes, self.SPELL_ERROR_INDICATOR_MASK)
         self.textCtrl.SetStyling (endbytes - startbytes, self.SPELL_ERROR_INDICATOR_MASK)
+
+
+    def runSpellChecking (self, start, end):
+        text = self._getTextForParse()[start: end]
+
+        wordRegex = re.compile ('\w+(?:-\w+)*', re.U)
+        words = wordRegex.finditer (text)
+        for wordMatch in words:
+            word = wordMatch.group(0)
+            if not self.checkSpellWord (word):
+                self.setSpellError (wordMatch.start() + start, wordMatch.end() + start)

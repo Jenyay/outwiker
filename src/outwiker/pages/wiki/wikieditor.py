@@ -1,7 +1,6 @@
 # -*- coding: UTF-8 -*-
 
 from datetime import datetime, timedelta
-import re
 
 import wx.stc
 
@@ -136,11 +135,10 @@ class WikiEditor (TextEditor):
     def __onApplyStyle (self, event):
         if event.text == self._getTextForParse():
             self.__applyStyles (event.stylebytes)
-            self.runSpellChecking()
 
 
     def __applyStyles (self, stylebytes):
-        self.textCtrl.StartStyling (0, 0xff)
+        self.textCtrl.StartStyling (0, 0xff ^ wx.stc.STC_INDICS_MASK)
         self.textCtrl.SetStyleBytes (len (stylebytes), stylebytes)
         self.__styleSet = True
 
@@ -161,14 +159,3 @@ class WikiEditor (TextEditor):
         itemsList = itemsList[: -1]
 
         self.textCtrl.ReplaceSelection (itemsList)
-
-
-    def runSpellChecking (self):
-        text = self._getTextForParse()
-
-        wordRegex = re.compile ('\w+(?:-\w+)*', re.U)
-        words = wordRegex.finditer (text)
-        for wordMatch in words:
-            word = wordMatch.group(0)
-            if not self.checkSpellWord (word):
-                self.setSpellError (wordMatch.start(), wordMatch.end())
