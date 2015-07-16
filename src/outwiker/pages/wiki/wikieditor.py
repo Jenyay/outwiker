@@ -38,12 +38,12 @@ class WikiEditor (TextEditor):
         self._styles = {}
 
         # Константы для стилей
-        self.STYLE_BOLD_ID = 1
-        self.STYLE_ITALIC_ID = 2
-        self.STYLE_UNDERLINE_ID = 3
-        self.STYLE_LINK_ID = 4
-        self.STYLE_HEADING_ID = 5
-        self.STYLE_COMMAND_ID = 6
+        self.STYLE_BOLD_ID = 1 << 0
+        self.STYLE_ITALIC_ID = 1 << 1
+        self.STYLE_UNDERLINE_ID = 1 << 2
+        self.STYLE_LINK_ID = 1 << 3
+        self.STYLE_HEADING_ID = 1 << 4
+        self.STYLE_COMMAND_ID = (1 << 4) + 1
 
         # Комбинации стилей
         self.STYLE_BOLD_ITALIC_UNDERLINE_ID = (self.STYLE_BOLD_ID |
@@ -72,9 +72,7 @@ class WikiEditor (TextEditor):
                                           self.STYLE_LINK_ID)
 
         self.STYLE_LINK_ITALIC_ID = self.STYLE_ITALIC_ID | self.STYLE_LINK_ID
-
         self.STYLE_LINK_UNDERLINE_ID = self.STYLE_UNDERLINE_ID | self.STYLE_LINK_ID
-
         self.STYLE_LINK_BOLD_ID = self.STYLE_BOLD_ID | self.STYLE_LINK_ID
 
         config = WikiConfig (Application.config)
@@ -106,7 +104,6 @@ class WikiEditor (TextEditor):
 
         self.textCtrl.SetLexer (wx.stc.STC_LEX_CONTAINER)
         self.textCtrl.SetModEventMask(wx.stc.STC_MOD_INSERTTEXT | wx.stc.STC_MOD_DELETETEXT)
-        self.textCtrl.SetStyleBits (7)
 
         for (styleid, style) in self._styles.items():
             self.textCtrl.StyleSetSpec (styleid, style)

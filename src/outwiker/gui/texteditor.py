@@ -26,6 +26,7 @@ class TextEditor(wx.Panel):
         self._spellChecker = None
 
         self.SPELL_ERROR_INDICATOR = 0
+        self.SPELL_ERROR_INDICATOR_MASK = wx.stc.STC_INDIC0_MASK
 
         self.textCtrl = StyledTextCtrl(self, -1)
 
@@ -133,13 +134,6 @@ class TextEditor(wx.Panel):
         self.textCtrl.StyleSetBackground (wx.stc.STC_STYLE_DEFAULT, backColor)
 
         self.textCtrl.StyleClearAll()
-
-        self.textCtrl.StyleSetSize (0, size)
-        self.textCtrl.StyleSetFaceName (0, faceName)
-        self.textCtrl.StyleSetBold (0, isBold)
-        self.textCtrl.StyleSetItalic (0, isItalic)
-        self.textCtrl.StyleSetForeground (0, fontColor)
-        self.textCtrl.StyleSetBackground (0, backColor)
 
         self.textCtrl.SetCaretForeground (fontColor)
         self.textCtrl.SetCaretLineBack (backColor)
@@ -386,11 +380,8 @@ class TextEditor(wx.Panel):
         startpos, endpos - positions in characters
         """
         text = self._getTextForParse()
-        # startbytes = self.calcBytePos (text, startpos)
-        # endbytes = self.calcBytePos (text, endpos)
-        startbytes = 0
-        endbytes = self.calcByteLen (text)
-        # endbytes = self.calcByteLen (text)
+        startbytes = self.calcBytePos (text, startpos)
+        endbytes = self.calcBytePos (text, endpos)
 
-        self.textCtrl.StartStyling (startbytes, wx.stc.STC_INDIC0_MASK)
-        self.textCtrl.SetStyling (endbytes - startbytes, wx.stc.STC_INDIC0_MASK)
+        self.textCtrl.StartStyling (startbytes, self.SPELL_ERROR_INDICATOR_MASK)
+        self.textCtrl.SetStyling (endbytes - startbytes, self.SPELL_ERROR_INDICATOR_MASK)
