@@ -11,7 +11,7 @@ from wx.stc import StyledTextCtrl
 import outwiker.core.system
 from outwiker.core.application import Application
 from outwiker.core.textprinter import TextPrinter
-from outwiker.gui.spellchecker import SpellChecker
+from outwiker.core.spellchecker import SpellChecker
 from outwiker.gui.guiconfig import EditorConfig
 from outwiker.gui.searchreplacecontroller import SearchReplaceController
 from outwiker.gui.searchreplacepanel import SearchReplacePanel
