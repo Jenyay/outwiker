@@ -22,6 +22,7 @@ IMAGES_DIR = u"images"
 STYLES_DIR = u"styles"
 PLUGINS_DIR = u"plugins"
 ICONS_DIR = u"iconset"
+SPELL_DIR = u"spell"
 
 # Имя файла настроек по умолчанию
 DEFAULT_CONFIG_NAME = u"outwiker.ini"
@@ -262,6 +263,10 @@ def getConfigPath (dirname=DEFAULT_CONFIG_DIR, fname=DEFAULT_CONFIG_NAME):
         if not op.exists (iconsDir):
             os.mkdir (iconsDir)
 
+        spellDir = op.join (mainConfDir, SPELL_DIR)
+        if not op.exists (spellDir):
+            os.mkdir (spellDir)
+
     return confPath
 
 
@@ -300,6 +305,14 @@ def getStylesDirList (configDirName=DEFAULT_CONFIG_DIR,
     Возвращает список директорий, откуда должны грузиться плагины
     """
     return getSpecialDirList (STYLES_DIR, configDirName, configFileName)
+
+
+def getSpellDirList (configDirName=DEFAULT_CONFIG_DIR,
+                      configFileName=DEFAULT_CONFIG_NAME):
+    """
+    Возвращает список директорий со словарями для проверки орфографии
+    """
+    return getSpecialDirList (SPELL_DIR, configDirName, configFileName)
 
 
 def getSpecialDirList (dirname,

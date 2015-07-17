@@ -21,6 +21,7 @@ install:
 	cp -r "src/images" $(outwiker_dir)
 	cp -r "src/locale" $(outwiker_dir)
 	cp -r "src/iconset" $(outwiker_dir)
+	cp -r "src/spell" $(outwiker_dir)
 	# cp -r "src/plugins" $(outwiker_dir)
 	cp -r "src/styles" $(outwiker_dir)
 	cp "src/runoutwiker.py" $(outwiker_dir)
