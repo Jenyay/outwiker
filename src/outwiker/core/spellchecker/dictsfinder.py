@@ -24,12 +24,14 @@ class DictsFinder (object):
         return list(result)
 
 
-    def getFolderForLang (self, lang):
+    def getFoldersForLang (self, lang):
         """
-        Return folder which contains dictionary for lang language.
-        Return None if lang will not be found
+        Return a list of folders which contains dictionary for lang language.
         """
-        return None
+        return [path
+                for path in self._dirlist
+                if (os.path.exists (os.path.join (path, lang + self.dictExtensions[0])) and
+                    os.path.exists (os.path.join (path, lang + self.dictExtensions[1])))]
 
 
     def _findLangs (self, path):
