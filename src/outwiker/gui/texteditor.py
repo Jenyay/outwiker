@@ -25,6 +25,7 @@ class TextEditor(wx.Panel):
         kwds["style"] = wx.TAB_TRAVERSAL
         wx.Panel.__init__(self, *args, **kwds)
         self._spellChecker = None
+        self._wordRegex = re.compile ('\w+(?:-\w+)*', re.U)
 
         self.SPELL_ERROR_INDICATOR = 0
         self.SPELL_ERROR_INDICATOR_MASK = wx.stc.STC_INDIC0_MASK
@@ -375,7 +376,7 @@ class TextEditor(wx.Panel):
         return self.textCtrl.GetText().replace ("\t", " ")
 
 
-    def setSpellError (self, startpos, endpos):
+    def setSpellError (self, stylelist, startpos, endpos):
         """
         Mark positions as error
         startpos, endpos - positions in characters
@@ -384,16 +385,31 @@ class TextEditor(wx.Panel):
         startbytes = self.calcBytePos (text, startpos)
         endbytes = self.calcBytePos (text, endpos)
 
-        self.textCtrl.StartStyling (startbytes, self.SPELL_ERROR_INDICATOR_MASK)
-        self.textCtrl.SetStyling (endbytes - startbytes, self.SPELL_ERROR_INDICATOR_MASK)
+        self.addStyle (stylelist, self.SPELL_ERROR_INDICATOR_MASK, startbytes, endbytes)
 
 
-    def runSpellChecking (self, start, end):
+    def addStyle (self, stylelist, styleid, bytepos_start, bytepos_end):
+        """
+        Добавляет (с помощью операции побитового ИЛИ) стиль с идентификатором styleid к массиву байт stylelist
+        """
+        style_src = stylelist[bytepos_start: bytepos_end]
+        style_new = [style | styleid for style in style_src]
+
+        stylelist[bytepos_start: bytepos_end] = style_new
+
+
+    def setStyle (self, stylelist, styleid, bytepos_start, bytepos_end):
+        """
+        Добавляет стиль с идентификатором styleid к массиву байт stylelist
+        """
+        stylelist[bytepos_start: bytepos_end] = [styleid] * (bytepos_end - bytepos_start)
+
+
+    def runSpellChecking (self, stylelist, start, end):
         text = self._getTextForParse()[start: end]
 
-        wordRegex = re.compile ('\w+(?:-\w+)*', re.U)
-        words = wordRegex.finditer (text)
+        words = self._wordRegex.finditer (text)
         for wordMatch in words:
             word = wordMatch.group(0)
             if not self.checkSpellWord (word):
-                self.setSpellError (wordMatch.start() + start, wordMatch.end() + start)
+                self.setSpellError (stylelist, wordMatch.start() + start, wordMatch.end() + start)

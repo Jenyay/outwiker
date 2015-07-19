@@ -138,7 +138,7 @@ class WikiEditor (TextEditor):
 
 
     def __applyStyles (self, stylebytes):
-        self.textCtrl.StartStyling (0, 0xff ^ wx.stc.STC_INDICS_MASK)
+        self.textCtrl.StartStyling (0, 0xff)
         self.textCtrl.SetStyleBytes (len (stylebytes), stylebytes)
         self.__styleSet = True
 

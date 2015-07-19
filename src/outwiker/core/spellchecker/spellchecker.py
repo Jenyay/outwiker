@@ -9,7 +9,7 @@ class SpellChecker (object):
     """
     def __init__ (self, config):
         self._config = config
-        langlist = ["ru_RU"]
+        langlist = ["ru_RU", "en_US"]
         self._realChecker = self._getSpellCheckerWrapper (langlist)
 
 

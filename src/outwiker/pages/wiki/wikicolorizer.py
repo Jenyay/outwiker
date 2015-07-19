@@ -67,8 +67,7 @@ class WikiColorizer (object):
 
 
     def start (self, text):
-        if (self._thread is None or
-                not self._thread.isAlive()):
+        if (self._thread is None or not self._thread.isAlive()):
             self._thread = threading.Thread (None, self._threadFunc, args=(text,))
             self._thread.start()
 
@@ -99,7 +98,7 @@ class WikiColorizer (object):
             tokenname = token[0].getName()
 
             if tokenname == "text":
-                self._editor.runSpellChecking (pos_start, pos_end)
+                self._editor.runSpellChecking (stylelist, pos_start, pos_end)
                 continue
 
             if (tokenname == "linebreak" or
@@ -113,40 +112,40 @@ class WikiColorizer (object):
 
             # Применим стиль
             if tokenname == "bold":
-                self._addStyle (stylelist,
-                                self._editor.STYLE_BOLD_ID,
-                                bytepos_start,
-                                bytepos_end)
+                self._editor.addStyle (stylelist,
+                                       self._editor.STYLE_BOLD_ID,
+                                       bytepos_start,
+                                       bytepos_end)
                 self._colorizeText (text,
                                     pos_start + len (BoldToken.start),
                                     pos_end - len (BoldToken.end),
                                     self.insideBlockParser, stylelist)
 
             elif tokenname == "italic":
-                self._addStyle (stylelist,
-                                self._editor.STYLE_ITALIC_ID,
-                                bytepos_start,
-                                bytepos_end)
+                self._editor.addStyle (stylelist,
+                                       self._editor.STYLE_ITALIC_ID,
+                                       bytepos_start,
+                                       bytepos_end)
                 self._colorizeText (text,
                                     pos_start + len (ItalicToken.start),
                                     pos_end - len (ItalicToken.end),
                                     self.insideBlockParser, stylelist)
 
             elif tokenname == "bold_italic":
-                self._addStyle (stylelist,
-                                self._editor.STYLE_BOLD_ITALIC_ID,
-                                bytepos_start,
-                                bytepos_end)
+                self._editor.addStyle (stylelist,
+                                       self._editor.STYLE_BOLD_ITALIC_ID,
+                                       bytepos_start,
+                                       bytepos_end)
                 self._colorizeText (text,
                                     pos_start + len (BoldItalicToken.start),
                                     pos_end - len (BoldItalicToken.end),
                                     self.insideBlockParser, stylelist)
 
             elif tokenname == "underline":
-                self._addStyle (stylelist,
-                                self._editor.STYLE_UNDERLINE_ID,
-                                bytepos_start,
-                                bytepos_end)
+                self._editor.addStyle (stylelist,
+                                       self._editor.STYLE_UNDERLINE_ID,
+                                       bytepos_start,
+                                       bytepos_end)
                 self._colorizeText (text,
                                     pos_start + len (UnderlineToken.start),
                                     pos_end - len (UnderlineToken.end),
@@ -154,44 +153,27 @@ class WikiColorizer (object):
                                     stylelist)
 
             elif tokenname == "heading":
-                self._setStyle (stylelist,
-                                self._editor.STYLE_HEADING_ID,
-                                bytepos_start,
-                                bytepos_end)
-                self._editor.runSpellChecking (pos_start, pos_end)
+                self._editor.setStyle (stylelist,
+                                       self._editor.STYLE_HEADING_ID,
+                                       bytepos_start,
+                                       bytepos_end)
+                self._editor.runSpellChecking (stylelist, pos_start, pos_end)
 
             elif tokenname == "command":
-                self._setStyle (stylelist,
-                                self._editor.STYLE_COMMAND_ID,
-                                bytepos_start,
-                                bytepos_end)
+                self._editor.setStyle (stylelist,
+                                       self._editor.STYLE_COMMAND_ID,
+                                       bytepos_start,
+                                       bytepos_end)
 
             elif tokenname == "link":
-                self._addStyle (stylelist,
-                                self._editor.STYLE_LINK_ID,
-                                bytepos_start,
-                                bytepos_end)
-                self._editor.runSpellChecking (pos_start, pos_end)
+                self._editor.addStyle (stylelist,
+                                       self._editor.STYLE_LINK_ID,
+                                       bytepos_start,
+                                       bytepos_end)
+                self._editor.runSpellChecking (stylelist, pos_start, pos_end)
 
             elif tokenname == "url":
-                self._addStyle (stylelist,
-                                self._editor.STYLE_LINK_ID,
-                                bytepos_start,
-                                bytepos_end)
-
-
-    def _addStyle (self, stylelist, styleid, bytepos_start, bytepos_end):
-        """
-        Добавляет стиль с идентификатором styleid к массиву stylelist
-        """
-        style_src = stylelist[bytepos_start: bytepos_end]
-        style_new = [style | styleid for style in style_src]
-
-        stylelist[bytepos_start: bytepos_end] = style_new
-
-
-    def _setStyle (self, stylelist, styleid, bytepos_start, bytepos_end):
-        """
-        Добавляет стиль с идентификатором styleid к массиву stylelist
-        """
-        stylelist[bytepos_start: bytepos_end] = [styleid] * (bytepos_end - bytepos_start)
+                self._editor.addStyle (stylelist,
+                                       self._editor.STYLE_LINK_ID,
+                                       bytepos_start,
+                                       bytepos_end)
