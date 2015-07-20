@@ -105,6 +105,10 @@ class WikiEditor (TextEditor):
 
 
     def getStyleBytes (self, text):
+        """
+        Функция должна возвращать список байт, описывающих раскраску (стили) для текста text
+        Этот метод выполняется в отдельном потоке
+        """
         stylebytes = self._colorizer.colorize (text)
         return stylebytes
 

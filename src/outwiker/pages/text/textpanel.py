@@ -2,8 +2,8 @@
 
 import wx
 
-from outwiker.gui.texteditor import TextEditor
 from outwiker.gui.basetextpanel import BaseTextPanel
+from outwiker.pages.text.simpletexteditor import SimpleTextEditor
 
 
 class TextPanel (BaseTextPanel):
@@ -52,7 +52,7 @@ class TextPanel (BaseTextPanel):
 
 
     def __createGui (self):
-        self.textEditor = TextEditor(self, -1)
+        self.textEditor = SimpleTextEditor(self)
 
         mainSizer = wx.FlexGridSizer(1, 1, 0, 0)
         mainSizer.Add(self.textEditor, 1, wx.EXPAND, 0)
