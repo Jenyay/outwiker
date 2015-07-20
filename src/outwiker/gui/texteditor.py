@@ -4,8 +4,11 @@ import codecs
 import cgi
 import math
 import re
+from datetime import datetime, timedelta
+import threading
 
 import wx
+import wx.lib.newevent
 from wx.stc import StyledTextCtrl
 
 import outwiker.core.system
@@ -16,6 +19,8 @@ from outwiker.gui.guiconfig import EditorConfig
 from outwiker.gui.searchreplacecontroller import SearchReplaceController
 from outwiker.gui.searchreplacepanel import SearchReplacePanel
 from outwiker.gui.mainid import MainId
+
+ApplyStyleEvent, EVT_APPLY_STYLE = wx.lib.newevent.NewEvent()
 
 
 class TextEditor(wx.Panel):
@@ -29,6 +34,20 @@ class TextEditor(wx.Panel):
 
         self.SPELL_ERROR_INDICATOR = 0
         self.SPELL_ERROR_INDICATOR_MASK = wx.stc.STC_INDIC0_MASK
+
+        self._enableColorizing = False
+
+        # Уже были установлены стили текста (раскраска)
+        self._styleSet = False
+        # Начинаем раскраску кода не менее чем через это время с момента его изменения
+        self._DELAY = timedelta (milliseconds=300)
+
+        # Время последней модификации текста страницы.
+        # Используется для замера времени после модификации, чтобы не парсить текст
+        # после каждой введенной буквы
+        self._lastEdit = datetime.now() - self._DELAY * 2
+
+        self._thread = None
 
         self.textCtrl = StyledTextCtrl(self, -1)
 
@@ -54,12 +73,18 @@ class TextEditor(wx.Panel):
         self.textCtrl.Bind (wx.EVT_CHAR, self.__OnChar_ImeWorkaround)
         self.textCtrl.Bind (wx.EVT_KEY_DOWN, self.__onKeyDown)
 
+        # self.textCtrl.Bind (wx.stc.EVT_STC_STYLENEEDED, self._onStyleNeeded)
+        self.textCtrl.Bind (wx.EVT_IDLE, self._onStyleNeeded)
+        self.Bind (EVT_APPLY_STYLE, self._onApplyStyle)
+
         # При перехвате этого сообщения в других классах, нужно вызывать event.Skip(),
         # чтобы это сообщение дошло досюда
         self.textCtrl.Bind (wx.stc.EVT_STC_CHANGE, self.__onChange)
 
 
     def __onChange (self, event):
+        self._styleSet = False
+        self._lastEdit = datetime.now()
         self.__setMarginWidth (self.textCtrl)
 
 
@@ -413,3 +438,39 @@ class TextEditor(wx.Panel):
             word = wordMatch.group(0)
             if not self.checkSpellWord (word):
                 self.setSpellError (stylelist, wordMatch.start() + start, wordMatch.end() + start)
+
+
+    def _onStyleNeeded (self, event):
+        if (self._enableColorizing and
+                not self._styleSet and
+                datetime.now() - self._lastEdit >= self._DELAY and
+                (self._thread is None or not self._thread.isAlive())):
+            text = self._getTextForParse()
+            self._thread = threading.Thread (None, self._colorizeThreadFunc, args=(text,))
+            self._thread.start()
+
+
+    def _colorizeThreadFunc (self, text):
+        stylebytes = self.getStyleBytes (text)
+        event = ApplyStyleEvent (text=text, stylebytes=stylebytes)
+        wx.PostEvent (self, event)
+
+
+    def _onApplyStyle (self, event):
+        if event.text == self._getTextForParse():
+            stylebytes = event.stylebytes
+            self.textCtrl.StartStyling (0, 0xff)
+            self.textCtrl.SetStyleBytes (len (stylebytes), stylebytes)
+            self._styleSet = True
+
+
+    def getStyleBytes (self, text):
+        """
+        Функция довлжна возвращать список байт, описывающих раскраску (стили) для текста text.
+        Функцию нужно переопределить, если используется собственная раскраска текста.
+        """
+        textlength = self.calcByteLen (text)
+        stylelist = [0] * textlength
+
+        stylebytes = "".join ([chr(byte) for byte in stylelist])
+        return stylebytes

@@ -1,11 +1,5 @@
 # -*- coding: UTF-8 -*-
 
-import wx
-import wx.lib.newevent
-import wx.stc
-
-import threading
-
 from parser.tokenfonts import FontsFactory, BoldToken, ItalicToken, BoldItalicToken, UnderlineToken
 from parser.tokenheading import HeadingFactory
 from parser.tokencommand import CommandFactory
@@ -15,9 +9,6 @@ from parser.tokenlinebreak import LineBreakFactory
 from parser.tokennoformat import NoFormatFactory
 from parser.tokenpreformat import PreFormatFactory
 from parser.tokentext import TextFactory
-
-
-ApplyStyleEvent, EVT_APPLY_STYLE = wx.lib.newevent.NewEvent()
 
 
 class WikiColorizer (object):
@@ -63,22 +54,8 @@ class WikiColorizer (object):
             self.italic |
             self.underline)
 
-        self._thread = None
 
-
-    def start (self, text):
-        if (self._thread is None or not self._thread.isAlive()):
-            self._thread = threading.Thread (None, self._threadFunc, args=(text,))
-            self._thread.start()
-
-
-    def _threadFunc (self, text):
-        stylebytes = self._startColorize (text)
-        event = ApplyStyleEvent (text=text, stylebytes=stylebytes)
-        wx.PostEvent (self._editor, event)
-
-
-    def _startColorize (self, text):
+    def colorize (self, text):
         textlength = self._editor.calcByteLen (text)
         stylelist = [0] * textlength
 

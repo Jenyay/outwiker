@@ -1,12 +1,10 @@
 # -*- coding: UTF-8 -*-
 
-from datetime import datetime, timedelta
-
 import wx.stc
 
 from outwiker.core.application import Application
 from outwiker.gui.texteditor import TextEditor
-from .wikicolorizer import WikiColorizer, EVT_APPLY_STYLE
+from .wikicolorizer import WikiColorizer
 from .wikiconfig import WikiConfig
 
 
@@ -15,22 +13,8 @@ class WikiEditor (TextEditor):
         self.__createStyles()
         super (WikiEditor, self).__init__ (parent)
 
+        self._enableColorizing = True
         self._colorizer = WikiColorizer (self)
-
-        self.textCtrl.Bind (wx.EVT_IDLE, self.__onStyleNeeded)
-        # self.textCtrl.Bind (wx.stc.EVT_STC_STYLENEEDED, self.__onStyleNeeded)
-        self.textCtrl.Bind (wx.stc.EVT_STC_CHANGE, self.__onChange)
-        self.Bind (EVT_APPLY_STYLE, self.__onApplyStyle)
-
-        # Уже были установлены стили текста (раскраска)
-        self.__styleSet = False
-        # Начинаем раскраску кода не менее чем через это время с момента его изменения
-        self.__DELAY = timedelta (milliseconds=300)
-
-        # Время последней модификации текста страницы.
-        # Используется для замера времени после модификации, чтобы не парсить текст
-        # после каждой введенной буквы
-        self.__lastEdit = datetime.now() - self.__DELAY * 2
 
 
     def __createStyles (self):
@@ -120,27 +104,9 @@ class WikiEditor (TextEditor):
         self.textCtrl.StyleSetBackground (self.STYLE_HEADING_ID, self.config.backColor.value)
 
 
-    def __onChange (self, event):
-        self.__styleSet = False
-        self.__lastEdit = datetime.now()
-        event.Skip()
-
-
-    def __onStyleNeeded (self, event):
-        if not self.__styleSet and datetime.now() - self.__lastEdit >= self.__DELAY:
-            text = self._getTextForParse()
-            self._colorizer.start (text)
-
-
-    def __onApplyStyle (self, event):
-        if event.text == self._getTextForParse():
-            self.__applyStyles (event.stylebytes)
-
-
-    def __applyStyles (self, stylebytes):
-        self.textCtrl.StartStyling (0, 0xff)
-        self.textCtrl.SetStyleBytes (len (stylebytes), stylebytes)
-        self.__styleSet = True
+    def getStyleBytes (self, text):
+        stylebytes = self._colorizer.colorize (text)
+        return stylebytes
 
 
     def turnList (self, itemStart):
