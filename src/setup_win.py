@@ -28,10 +28,20 @@ includefiles = ['images',
                 'tools',
                 'styles',
                 'iconset',
-                'plugins']
+                'plugins',
+                'spell',
+                ('../libs/lib', 'lib'),
+                ('../libs/libenchant-1.dll', 'libenchant-1.dll'),
+                ('../libs/libglib-2.0-0.dll', 'libglib-2.0-0.dll'),
+                ('../libs/libgmodule-2.0-0.dll', 'libgmodule-2.0-0.dll'),
+                ]
 
 includes = []
-excludes = []
+excludes = [
+    'numpy',
+    'scipy',
+    'tcl',
+]
 # Добавляем 'outwiker.pages.wiki.wikipanel',
 # т.к. этот модуль используется только в старых версиях плагинов
 packages = ['urllib',
@@ -42,6 +52,7 @@ packages = ['urllib',
             'PIL.ImageDraw',
             'PIL.ImageFont',
             'PIL.ImageFilter',
+            'enchant',
             ]
 
 
