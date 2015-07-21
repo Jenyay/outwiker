@@ -35,8 +35,6 @@ class TextEditor(wx.Panel):
         self.SPELL_ERROR_INDICATOR = 0
         self.SPELL_ERROR_INDICATOR_MASK = wx.stc.STC_INDIC0_MASK
 
-        self._enableColorizing = False
-
         # Уже были установлены стили текста (раскраска)
         self._styleSet = False
         # Начинаем раскраску кода не менее чем через это время с момента его изменения
@@ -47,7 +45,7 @@ class TextEditor(wx.Panel):
         # после каждой введенной буквы
         self._lastEdit = datetime.now() - self._DELAY * 2
 
-        self._thread = None
+        self._colorizingThread = None
 
         self.textCtrl = StyledTextCtrl(self, -1)
 
@@ -441,36 +439,53 @@ class TextEditor(wx.Panel):
 
 
     def _onStyleNeeded (self, event):
-        if (self._enableColorizing and
-                not self._styleSet and
+        if (not self._styleSet and
                 datetime.now() - self._lastEdit >= self._DELAY and
-                (self._thread is None or not self._thread.isAlive())):
+                (self._colorizingThread is None or not self._colorizingThread.isAlive())):
             text = self._getTextForParse()
-            self._thread = threading.Thread (None, self._colorizeThreadFunc, args=(text,))
-            self._thread.start()
+            self._colorizingThread = threading.Thread (None, self._colorizeThreadFunc, args=(text,))
+            self._colorizingThread.start()
 
 
     def _colorizeThreadFunc (self, text):
         stylebytes = self.getStyleBytes (text)
-        event = ApplyStyleEvent (text=text, stylebytes=stylebytes)
+        indicatorsbytes = self.getIndcatorsStyleBytes (text)
+        event = ApplyStyleEvent (text=text,
+                                 stylebytes=stylebytes,
+                                 indicatorsbytes = indicatorsbytes)
         wx.PostEvent (self, event)
 
 
     def _onApplyStyle (self, event):
         if event.text == self._getTextForParse():
             stylebytes = event.stylebytes
-            self.textCtrl.StartStyling (0, 0xff)
-            self.textCtrl.SetStyleBytes (len (stylebytes), stylebytes)
+            indicatorsbytes = event.indicatorsbytes
+
+            if stylebytes is not None:
+                self.textCtrl.StartStyling (0, 0xff ^ wx.stc.STC_INDICS_MASK)
+                self.textCtrl.SetStyleBytes (len (stylebytes), stylebytes)
+
+            if indicatorsbytes is not None:
+                self.textCtrl.StartStyling (0, wx.stc.STC_INDICS_MASK)
+                self.textCtrl.SetStyleBytes (len (indicatorsbytes), indicatorsbytes)
+
             self._styleSet = True
 
 
     def getStyleBytes (self, text):
         """
-        Функция должна возвращать список байт, описывающих раскраску (стили) для текста text.
+        Функция должна возвращать список байт, описывающих раскраску (стили)
+        для текста text (за исключением индикаторов).
         Функцию нужно переопределить, если используется собственная раскраска текста.
+        Исли функция возвращает None, то раскраска синтаксиса не применяется.
         """
-        textlength = self.calcByteLen (text)
-        stylelist = [0] * textlength
+        return None
 
-        stylebytes = "".join ([chr(byte) for byte in stylelist])
-        return stylebytes
+
+    def getIndcatorsStyleBytes (self, text):
+        """
+        Функция должна возвращать список байт, описывающих раскраску (стили индикаторов) для текста text.
+        Функцию нужно переопределить, если используются индикаторы.
+        Исли функция возвращает None, то раскраска индикаторов не применяется.
+        """
+        return None

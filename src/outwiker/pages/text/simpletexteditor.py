@@ -6,10 +6,9 @@ from outwiker.gui.texteditor import TextEditor
 class SimpleTextEditor (TextEditor):
     def __init__ (self, parent):
         super (SimpleTextEditor, self).__init__ (parent)
-        self._enableColorizing = True
 
 
-    def getStyleBytes (self, text):
+    def getIndcatorsStyleBytes (self, text):
         """
         Функция должна возвращать список байт, описывающих раскраску (стили) для текста text
         Этот метод выполняется в отдельном потоке
@@ -21,3 +20,7 @@ class SimpleTextEditor (TextEditor):
 
         stylebytes = "".join ([chr(byte) for byte in stylelist])
         return stylebytes
+
+
+    def getStyleBytes (self, text):
+        return None

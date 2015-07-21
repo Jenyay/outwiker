@@ -116,3 +116,17 @@ class HtmlTextEditor (TextEditor):
 
             newPos = self.GetSelectionEnd() - len (endText)
             self.SetSelection (newPos, newPos)
+
+
+    def getIndcatorsStyleBytes (self, text):
+        """
+        Функция должна возвращать список байт, описывающих раскраску (стили) для текста text
+        Этот метод выполняется в отдельном потоке
+        """
+        textlength = self.calcByteLen (text)
+        stylelist = [0] * textlength
+
+        self.runSpellChecking (stylelist, 0, len (text))
+
+        stylebytes = "".join ([chr(byte) for byte in stylelist])
+        return stylebytes
