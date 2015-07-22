@@ -121,6 +121,7 @@ if __name__ == '__main__':
     from test.iconscollection import IconsCollectionTest
     from test.iconmaker import IconMakerTest
     from test.spellchecker.dictsfinder import DictsFinderTest
+    from test.spellchecker.spellchecker import SpellCheckerTest
 
     from test.guitests.mainwnd import MainWndTest
     from test.guitests.bookmarks import BookmarksGuiTest

@@ -1,20 +1,19 @@
 # -*- coding: UTF-8 -*-
 
-from outwiker.core.system import getSpellDirList
-from dictsfinder import DictsFinder
-
 from enchant import Dict, Broker
+
+from dictsfinder import DictsFinder
 
 
 class EnchantWrapper (object):
     """
     Wrapper around pyenchant (http://pythonhosted.org/pyenchant/)
     """
-    def __init__ (self, langlist):
+    def __init__ (self, langlist, folders):
         """
         langlist - list of the languages ("ru_RU", "en_US", etc)
         """
-        dictsFinder = DictsFinder (getSpellDirList())
+        dictsFinder = DictsFinder (folders)
         self._checkers = []
 
         for lang in langlist:

@@ -29,6 +29,8 @@ class TextEditor(wx.Panel):
     def __init__(self, *args, **kwds):
         kwds["style"] = wx.TAB_TRAVERSAL
         wx.Panel.__init__(self, *args, **kwds)
+
+        self._langlist = ["ru_RU", "en_US"]
         self._spellChecker = None
         self._wordRegex = re.compile ('\w+(?:-\w+)*', re.U)
 
@@ -137,9 +139,10 @@ class TextEditor(wx.Panel):
 
     def setDefaultSettings (self):
         """
-        Установить шрифт по умолчанию в контрол StyledTextCtrl
+        Установить стили и настройки по умолчанию в контрол StyledTextCtrl
         """
-        self._spellChecker = SpellChecker (Application.config)
+        self._spellChecker = SpellChecker (self._langlist,
+                                           outwiker.core.system.getSpellDirList())
 
         size = self.config.fontSize.value
         faceName = self.config.fontName.value
