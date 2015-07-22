@@ -30,9 +30,10 @@ class TextEditor(wx.Panel):
         kwds["style"] = wx.TAB_TRAVERSAL
         wx.Panel.__init__(self, *args, **kwds)
 
-        self._langlist = ["ru_RU", "en_US"]
+        self._enableSpellChecking = True
         self._spellChecker = None
-        self._wordRegex = re.compile ('\w+(?:-\w+)*', re.U)
+        self._wordRegex = re.compile ('\w+', re.U)
+        self._digitRegex = re.compile ('\d', re.U)
 
         self.SPELL_ERROR_INDICATOR = 0
         self.SPELL_ERROR_INDICATOR_MASK = wx.stc.STC_INDIC0_MASK
@@ -80,6 +81,17 @@ class TextEditor(wx.Panel):
         # При перехвате этого сообщения в других классах, нужно вызывать event.Skip(),
         # чтобы это сообщение дошло досюда
         self.textCtrl.Bind (wx.stc.EVT_STC_CHANGE, self.__onChange)
+
+
+    @property
+    def enableSpellChecking (self):
+        return self._enableSpellChecking
+
+
+    @enableSpellChecking.setter
+    def enableSpellChecking (self, value):
+        self._enableSpellChecking = value
+        self._styleSet = False
 
 
     def __onChange (self, event):
@@ -141,8 +153,7 @@ class TextEditor(wx.Panel):
         """
         Установить стили и настройки по умолчанию в контрол StyledTextCtrl
         """
-        self._spellChecker = SpellChecker (self._langlist,
-                                           outwiker.core.system.getSpellDirList())
+        self._spellChecker = self.getSpellChecker()
 
         size = self.config.fontSize.value
         faceName = self.config.fontName.value
@@ -394,6 +405,10 @@ class TextEditor(wx.Panel):
 
 
     def checkSpellWord (self, word):
+        match = self._digitRegex.search (word)
+        if match is not None:
+            return True
+
         return self._spellChecker.check (word)
 
 
@@ -432,6 +447,9 @@ class TextEditor(wx.Panel):
 
 
     def runSpellChecking (self, stylelist, start, end):
+        if not self._enableSpellChecking:
+            return
+
         text = self._getTextForParse()[start: end]
 
         words = self._wordRegex.finditer (text)
@@ -492,3 +510,9 @@ class TextEditor(wx.Panel):
         Исли функция возвращает None, то раскраска индикаторов не применяется.
         """
         return None
+
+
+    def getSpellChecker (self):
+        langlist = ["ru_RU", "en_US"]
+        return SpellChecker (langlist,
+                             outwiker.core.system.getSpellDirList())
