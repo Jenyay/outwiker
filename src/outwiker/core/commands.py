@@ -232,8 +232,7 @@ def createNewWiki (parentwnd):
     newPageTitle = _(u"First Wiki Page")
     newPageContent = _(u"""!! First Wiki Page
 
-                       This is the first page. You can use a text formating: '''bold''', ''italic'', {+underlined text+}, [[http://jenyay.net | link]] and others.
-                       """)
+This is the first page. You can use a text formatting: '''bold''', ''italic'', {+underlined text+}, [[http://jenyay.net | link]] and others.""")
 
     if dlg.ShowModal() == wx.ID_OK:
         try:
