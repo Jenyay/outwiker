@@ -30,6 +30,8 @@ class TextEditor(wx.Panel):
         kwds["style"] = wx.TAB_TRAVERSAL
         wx.Panel.__init__(self, *args, **kwds)
 
+        self._config = EditorConfig (Application.config)
+
         self._enableSpellChecking = True
         self._spellChecker = None
         self._wordRegex = re.compile ('[\w-]+', re.U)
@@ -61,8 +63,7 @@ class TextEditor(wx.Panel):
 
         self.__createCoders()
 
-        self.config = EditorConfig (Application.config)
-        self.__showlinenumbers = self.config.lineNumbers.value
+        self.__showlinenumbers = self._config.lineNumbers.value
 
         self.setDefaultSettings()
 
@@ -81,6 +82,11 @@ class TextEditor(wx.Panel):
         # При перехвате этого сообщения в других классах, нужно вызывать event.Skip(),
         # чтобы это сообщение дошло досюда
         self.textCtrl.Bind (wx.stc.EVT_STC_CHANGE, self.__onChange)
+
+
+    @property
+    def config (self):
+        return self._config
 
 
     @property
@@ -155,14 +161,14 @@ class TextEditor(wx.Panel):
         """
         self._spellChecker = self.getSpellChecker()
 
-        size = self.config.fontSize.value
-        faceName = self.config.fontName.value
-        isBold = self.config.fontIsBold.value
-        isItalic = self.config.fontIsItalic.value
-        fontColor = self.config.fontColor.value
-        backColor = self.config.backColor.value
+        size = self._config.fontSize.value
+        faceName = self._config.fontName.value
+        isBold = self._config.fontIsBold.value
+        isItalic = self._config.fontIsItalic.value
+        fontColor = self._config.fontColor.value
+        backColor = self._config.backColor.value
 
-        self.__showlinenumbers = self.config.lineNumbers.value
+        self.__showlinenumbers = self._config.lineNumbers.value
         self.textCtrl.SetEndAtLastLine (False)
 
         self.textCtrl.StyleSetSize (wx.stc.STC_STYLE_DEFAULT, size)
@@ -184,9 +190,9 @@ class TextEditor(wx.Panel):
         self.textCtrl.SetWrapVisualFlags (wx.stc.STC_WRAPVISUALFLAG_END)
 
         self.__setMarginWidth (self.textCtrl)
-        self.textCtrl.SetTabWidth (self.config.tabWidth.value)
+        self.textCtrl.SetTabWidth (self._config.tabWidth.value)
 
-        if self.config.homeEndKeys.value == EditorConfig.HOME_END_OF_LINE:
+        if self._config.homeEndKeys.value == EditorConfig.HOME_END_OF_LINE:
             # Клавиши Home / End переносят курсор на начало / конец строки
             self.textCtrl.CmdKeyAssign (wx.stc.STC_KEY_HOME,
                                         0,
@@ -223,6 +229,7 @@ class TextEditor(wx.Panel):
 
         self.textCtrl.IndicatorSetStyle(self.SPELL_ERROR_INDICATOR, wx.stc.STC_INDIC_SQUIGGLE)
         self.textCtrl.IndicatorSetForeground(self.SPELL_ERROR_INDICATOR, "red")
+        self._styleSet = False
 
 
     def __setMarginWidth (self, editor):
@@ -241,7 +248,7 @@ class TextEditor(wx.Panel):
         """
         Расчет размера серой области с номером строк
         """
-        fontSize = self.config.fontSize.value
+        fontSize = self._config.fontSize.value
         linescount = len (self.GetText().split("\n"))
 
         if linescount == 0:
@@ -513,6 +520,14 @@ class TextEditor(wx.Panel):
 
 
     def getSpellChecker (self):
-        langlist = ["ru_RU", "en_US"]
+        langlist = self._getDictsFromConfig()
         return SpellChecker (langlist,
                              outwiker.core.system.getSpellDirList())
+
+
+    def _getDictsFromConfig (self):
+        dictsStr = self._config.spellCheckerDicts.value
+        return [item.strip()
+                for item
+                in dictsStr.split(',')
+                if item.strip()]

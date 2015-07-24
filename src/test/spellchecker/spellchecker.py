@@ -29,6 +29,17 @@ class SpellCheckerTest (unittest.TestCase):
         checker = SpellChecker ([u'ru_RU'], [self._pathToDicts])
         self.assertTrue (checker.check (u'Проверка'))
         self.assertFalse (checker.check (u'ывпывапыяа'))
+        self.assertFalse (checker.check (u'ёж'))
+
+
+    def testInvalid_01 (self):
+        SpellChecker ([u'en-US-абырвалг'], [u'../test/spell'])
+
+
+    def testRu_yo_01 (self):
+        checker = SpellChecker ([u'ru_YO'], [self._pathToDicts])
+        self.assertFalse (checker.check (u'еж'))
+        self.assertTrue (checker.check (u'ёж'))
 
 
     def testRuEn_01 (self):

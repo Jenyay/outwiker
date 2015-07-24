@@ -189,6 +189,10 @@ class EditorConfig (object):
     BACK_COLOR_SECTION = u'BackColor'
     BACK_COLOR_DEFAULT = u'#FFFFFF'
 
+    # Spell checker
+    SPELL_DICTS_SECTION = u'dictionaries'
+    SPELL_DICT_DEFAULT = u'en_US, ru_RU, ru_RU_yo, uk_UA'
+
 
     def __init__ (self, config):
         self.config = config
@@ -242,6 +246,11 @@ class EditorConfig (object):
                                        GeneralGuiConfig.GENERAL_SECTION,
                                        EditorConfig.BACK_COLOR_SECTION,
                                        EditorConfig.BACK_COLOR_DEFAULT)
+
+        self.spellCheckerDicts = StringOption (self.config,
+                                               GeneralGuiConfig.GENERAL_SECTION,
+                                               EditorConfig.SPELL_DICTS_SECTION,
+                                               EditorConfig.SPELL_DICT_DEFAULT)
 
 
 class HtmlEditorStylesConfig (object):

@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 from enchant import Dict, Broker
+import enchant.errors
 
 from dictsfinder import DictsFinder
 
@@ -21,7 +22,10 @@ class EnchantWrapper (object):
 
         for lang in langlist:
             for path in dictsFinder.getFoldersForLang (lang):
-                self._checkers.append (self._getDict (lang, path))
+                try:
+                    self._checkers.append (self._getDict (lang, path))
+                except enchant.errors.Error:
+                    pass
 
 
     def _getDict (self, lang, path):

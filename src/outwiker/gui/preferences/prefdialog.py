@@ -7,6 +7,7 @@ import wx
 
 from generalpanel import GeneralPanel
 from editorpanel import EditorPanel
+from spellpanel import SpellPanel
 from htmlrenderpanel import HtmlRenderPanel
 from textprintpanel import TextPrintPanel
 from pluginspanel import PluginsPanel
@@ -38,6 +39,7 @@ class PrefDialog(wx.Dialog):
         # Страницы с настройками
         self.__generalPage = None
         self.__editorPage = None
+        self.__spellPage = None
         self.__htmlRenderPage = None
         self.__textPrintPage = None
         self.__pluginsPage = None
@@ -150,11 +152,13 @@ class PrefDialog(wx.Dialog):
         Создать страницы с подгруппой "Редактор"
         """
         self.__editorPage = EditorPanel (self.__treeBook)
+        self.__spellPage = SpellPanel (self.__treeBook)
         self.__htmlEditorPage = HtmlEditorPanel (self.__treeBook)
         self.__wikiEditorPage = WikiEditorPanel (self.__treeBook)
 
         editorPanesList = [
             PreferencePanelInfo (self.__editorPage, _(u"General")),
+            PreferencePanelInfo (self.__spellPage, _(u"Spell checking")),
             PreferencePanelInfo (self.__htmlEditorPage, _(u"HTML Editor")),
             PreferencePanelInfo (self.__wikiEditorPage, _(u"Wiki Editor")),
         ]
