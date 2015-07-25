@@ -21,7 +21,7 @@ class EnchantWrapper (object):
         """
         dictsFinder = DictsFinder (folders)
         self._checkers = []
-        self._customDictPath = os.path.join (folders[-1], u'custom.dic')
+        self._customDictName = u'custom.dic'
         self._customTag = '__custom'
 
         for lang in langlist:
@@ -31,24 +31,26 @@ class EnchantWrapper (object):
                 except enchant.errors.Error:
                     pass
 
-        try:
-            self._checkers.append (self._getCustomDict ())
-        except enchant.errors.Error:
-            pass
-        except IOError:
-            pass
+        if folders:
+            try:
+                self._checkers.append (self._getCustomDict (folders))
+            except enchant.errors.Error:
+                pass
+            except IOError:
+                pass
 
 
-    def _getCustomDict (self):
-        key = (self._customTag, self._customDictPath)
+    def _getCustomDict (self, folders):
+        customDictPath = os.path.join (folders[-1], self._customDictName)
+        key = (self._customTag, customDictPath)
 
         if key not in self._dictCache:
             broker = Broker ()
             broker.set_param ('enchant.myspell.dictionary.path',
-                              self._customDictPath)
+                              customDictPath)
 
             currentDict = DictWithPWL (None,
-                                       self._customDictPath,
+                                       customDictPath,
                                        broker=broker)
             self._dictCache[key] = currentDict
         else:
@@ -71,7 +73,8 @@ class EnchantWrapper (object):
 
 
     def check (self, word):
-        if not self._checkers:
+        # One (last) is custom dictionary
+        if len (self._checkers) < 2:
             return True
 
         for checker in self._checkers:
