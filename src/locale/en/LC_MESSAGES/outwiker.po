@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-24 20:23+0300\n"
+"POT-Creation-Date: 2015-07-25 21:01+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -339,8 +339,8 @@ msgstr "Wiki Page"
 
 #: outwiker/pages/wiki/wikipage.py:85
 #: outwiker/gui/toolbars/generaltoolbar.py:25
-#: outwiker/gui/preferences/prefdialog.py:137
-#: outwiker/gui/preferences/prefdialog.py:157
+#: outwiker/gui/preferences/prefdialog.py:139
+#: outwiker/gui/preferences/prefdialog.py:160
 #: outwiker/gui/basepagedialog.py:40
 msgid "General"
 msgstr "General"
@@ -482,7 +482,7 @@ msgid "Text Page"
 msgstr "Text Page"
 
 #: outwiker/pages/html/basehtmlpanel.py:201
-#: outwiker/gui/preferences/prefdialog.py:138
+#: outwiker/gui/preferences/prefdialog.py:140
 #: outwiker/gui/preferences/generalpanel.py:34
 msgid "Preview"
 msgstr "Preview"
@@ -539,7 +539,7 @@ msgid "&Toolbars"
 msgstr "&Toolbars"
 
 #: outwiker/gui/toolbars/pluginstoolbar.py:25
-#: outwiker/gui/preferences/prefdialog.py:167
+#: outwiker/gui/preferences/prefdialog.py:171
 msgid "Plugins"
 msgstr "Plugins"
 
@@ -562,45 +562,49 @@ msgstr "Curent icon"
 msgid "Default icon"
 msgstr "Default icon"
 
-#: outwiker/gui/preferences/prefdialog.py:86
+#: outwiker/gui/preferences/prefdialog.py:88
 msgid "Preferences"
 msgstr "Preferences"
 
-#: outwiker/gui/preferences/prefdialog.py:139
+#: outwiker/gui/preferences/prefdialog.py:141
 msgid "Tags cloud"
 msgstr "Tags cloud"
 
-#: outwiker/gui/preferences/prefdialog.py:140
+#: outwiker/gui/preferences/prefdialog.py:142
 #: outwiker/gui/mainpanes/attachmainpane.py:21
 #: outwiker/actions/showhideattaches.py:18
 msgid "Attachments"
 msgstr "Attachments"
 
-#: outwiker/gui/preferences/prefdialog.py:141
+#: outwiker/gui/preferences/prefdialog.py:143
 msgid "Hotkeys"
 msgstr "Hotkeys"
 
-#: outwiker/gui/preferences/prefdialog.py:142
+#: outwiker/gui/preferences/prefdialog.py:144
 msgid "Text Printout"
 msgstr "Text Printout"
 
-#: outwiker/gui/preferences/prefdialog.py:145
+#: outwiker/gui/preferences/prefdialog.py:147
 msgid "Interface"
 msgstr "Interface"
 
-#: outwiker/gui/preferences/prefdialog.py:158
+#: outwiker/gui/preferences/prefdialog.py:161
+msgid "Spell checking"
+msgstr "Spell checking"
+
+#: outwiker/gui/preferences/prefdialog.py:162
 msgid "HTML Editor"
 msgstr "HTML Editor"
 
-#: outwiker/gui/preferences/prefdialog.py:159
+#: outwiker/gui/preferences/prefdialog.py:163
 msgid "Wiki Editor"
 msgstr "Wiki Editor"
 
-#: outwiker/gui/preferences/prefdialog.py:162
+#: outwiker/gui/preferences/prefdialog.py:166
 msgid "Editor"
 msgstr "Editor"
 
-#: outwiker/gui/preferences/prefdialog.py:172
+#: outwiker/gui/preferences/prefdialog.py:176
 msgid "User's iconset"
 msgstr "User's iconset"
 
@@ -770,6 +774,10 @@ msgstr "Paragraphs separator"
 #: outwiker/gui/preferences/htmlrenderpanel.py:33
 msgid "Additional styles (CSS):"
 msgstr "Additional styles (CSS):"
+
+#: outwiker/gui/preferences/spellpanel.py:31
+msgid "Use dictionaries"
+msgstr "Use dictionaries"
 
 #: outwiker/gui/preferences/attachpanel.py:17
 msgid "Insert link"
