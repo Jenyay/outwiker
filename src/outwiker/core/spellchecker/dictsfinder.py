@@ -3,6 +3,8 @@
 import os
 import os.path
 
+from defines import CUSTOM_DICT_LANG
+
 
 class DictsFinder (object):
     """
@@ -39,6 +41,9 @@ class DictsFinder (object):
         for fname in os.listdir (path):
             if fname.endswith (self.dictExtensions[0]):
                 lang = fname[:-len (self.dictExtensions[0])]
+                if lang == CUSTOM_DICT_LANG:
+                    continue
+
                 fname_dic = lang + self.dictExtensions[1]
                 if os.path.exists (os.path.join (path, fname_dic)):
                     langs.add (lang)

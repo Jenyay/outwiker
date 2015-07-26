@@ -6,6 +6,7 @@ from enchant import Dict, DictWithPWL, Broker
 import enchant.errors
 
 from dictsfinder import DictsFinder
+from defines import CUSTOM_DICT_LANG
 
 
 class EnchantWrapper (object):
@@ -22,7 +23,6 @@ class EnchantWrapper (object):
         dictsFinder = DictsFinder (folders)
         self._checkers = []
         self._customDictName = u'custom.dic'
-        self._customDictLang = u'xx_XX'
 
         for lang in langlist:
             for path in dictsFinder.getFoldersForLang (lang):
@@ -40,26 +40,35 @@ class EnchantWrapper (object):
                 pass
 
 
+    def _createCustomDict (self, pathToDict):
+        # Create fake language for custom dictionary
+        dicFile = os.path.join (pathToDict,
+                                CUSTOM_DICT_LANG + u'.dic')
+
+        affFile = os.path.join (pathToDict,
+                                CUSTOM_DICT_LANG + u'.aff')
+
+        if not os.path.exists (dicFile):
+            with open (dicFile, 'w') as fp:
+                fp.writelines ([u'1', u'test'])
+
+        if not os.path.exists (affFile):
+            with open (affFile, 'w'):
+                pass
+
+
     def _getCustomDict (self, pathToDict):
         customDictPath = os.path.join (pathToDict, self._customDictName)
+        self._createCustomDict (pathToDict)
 
-        # Create fake language for custom dictionary
-        with open (os.path.join (pathToDict,
-                                 self._customDictLang + u'.dic'), 'w'):
-            pass
-
-        with open (os.path.join (pathToDict,
-                                 self._customDictLang + u'.aff'), 'w'):
-            pass
-
-        key = (self._customDictLang, customDictPath)
+        key = (CUSTOM_DICT_LANG, customDictPath)
 
         if key not in self._dictCache:
             broker = Broker ()
             broker.set_param ('enchant.myspell.dictionary.path',
                               pathToDict)
 
-            currentDict = DictWithPWL (self._customDictLang,
+            currentDict = DictWithPWL (CUSTOM_DICT_LANG,
                                        customDictPath,
                                        broker=broker)
             self._dictCache[key] = currentDict

@@ -5,7 +5,7 @@ from tempfile import mkdtemp
 import os.path
 import shutil
 
-from outwiker.core.spellchecker import SpellChecker
+from outwiker.core.spellchecker import SpellChecker, DictsFinder
 from test.utils import removeDir
 
 
@@ -73,3 +73,9 @@ class SpellCheckerTest (unittest.TestCase):
         self.assertTrue (checker.check (u'cat'))
         self.assertFalse (checker.check (u'ывпывапыяа'))
         self.assertFalse (checker.check (u'adfasdfasd'))
+
+        finder = DictsFinder ([self._pathToDicts])
+        langs = finder.getLangList()
+        langs.sort()
+
+        self.assertEqual (langs, [u"en_US", u"ru_RU"])
