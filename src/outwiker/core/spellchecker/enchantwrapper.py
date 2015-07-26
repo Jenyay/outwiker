@@ -50,7 +50,7 @@ class EnchantWrapper (object):
 
         if not os.path.exists (dicFile):
             with open (dicFile, 'w') as fp:
-                fp.writelines ([u'1', u'test'])
+                fp.write (u'1\ntest')
 
         if not os.path.exists (affFile):
             with open (affFile, 'w'):
