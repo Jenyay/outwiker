@@ -10,12 +10,12 @@ from outwiker.core.iconscollection import IconsCollection, DuplicateGroupError
 from outwiker.core.commands import MessageBox
 from outwiker.gui.testeddialog import TestedFileDialog
 from outwiker.core.defines import ICON_WIDTH, ICON_HEIGHT
+from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
 
 
-class IconsetPanel (wx.Panel):
-    def __init__ (self, *args, **kwds):
-        kwds["style"] = wx.TAB_TRAVERSAL
-        super (IconsetPanel, self).__init__ (*args, **kwds)
+class IconsetPanel (BasePrefPanel):
+    def __init__ (self, parent):
+        super (type (self), self).__init__ (parent)
 
         self.ADD_GROUP = wx.NewId()
         self.REMOVE_GROUP = wx.NewId()

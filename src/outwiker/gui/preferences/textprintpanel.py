@@ -6,12 +6,12 @@ import configelements
 from outwiker.core.application import Application
 from outwiker.core.config import FontOption
 from outwiker.gui.guiconfig import TextPrintConfig
+from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
 
 
-class TextPrintPanel(wx.Panel):
-    def __init__(self, *args, **kwds):
-        kwds["style"] = wx.TAB_TRAVERSAL
-        wx.Panel.__init__(self, *args, **kwds)
+class TextPrintPanel(BasePrefPanel):
+    def __init__(self, parent):
+        super (type (self), self).__init__ (parent)
 
         self.__createGuiElements()
         self.__set_properties()

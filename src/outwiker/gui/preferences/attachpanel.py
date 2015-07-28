@@ -4,12 +4,12 @@ import wx
 
 from outwiker.core.application import Application
 from outwiker.gui.guiconfig import AttachConfig
+from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
 
 
-class AttachPanel(wx.Panel):
-    def __init__(self, *args, **kwds):
-        kwds["style"] = wx.TAB_TRAVERSAL
-        wx.Panel.__init__(self, *args, **kwds)
+class AttachPanel(BasePrefPanel):
+    def __init__(self, parent):
+        super (type(self), self).__init__ (parent)
 
         self.ACTIONS_COMBOBOX_WIDTH = 200
 
@@ -32,25 +32,6 @@ class AttachPanel(wx.Panel):
         self.SetSizer (mainSizer)
 
 
-    def _addControlsPairToSizer (self, sizer, label, control):
-        sizer.Add(label, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
-        sizer.Add(control, 0, wx.ALL | wx.ALIGN_RIGHT, border=2)
-
-
-    def _createLabelAndComboBox (self, text, sizer):
-        label = wx.StaticText (self, label = text)
-
-        combobox = wx.ComboBox (self,
-                                -1,
-                                style=wx.CB_DROPDOWN | wx.CB_READONLY)
-
-        combobox.SetMinSize((self.ACTIONS_COMBOBOX_WIDTH, -1))
-
-        self._addControlsPairToSizer (sizer, label, combobox)
-
-        return (label, combobox)
-
-
     def _createActionsGui (self, mainsizer):
         actionsSizer = wx.FlexGridSizer(cols=2)
         actionsSizer.AddGrowableCol(0)
@@ -58,6 +39,8 @@ class AttachPanel(wx.Panel):
         doubleClickActionLabel, self.doubleClickActionCombo = self._createLabelAndComboBox (
             _(u'Double click on an attached file'),
             actionsSizer)
+
+        self.doubleClickActionCombo.SetMinSize((self.ACTIONS_COMBOBOX_WIDTH, -1))
         mainsizer.Add (actionsSizer, 0, wx.EXPAND | wx.ALL, border = 2)
 
 

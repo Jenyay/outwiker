@@ -5,14 +5,15 @@ import wx
 from outwiker.core.application import Application
 from outwiker.gui.guiconfig import PluginsConfig
 from outwiker.core.system import getCurrentDir, getOS
+from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
 
 
-class PluginsPanel (wx.Panel):
+class PluginsPanel (BasePrefPanel):
     """
     Панель со списком установленных плагинов
     """
     def __init__ (self, parent):
-        wx.Panel.__init__ (self, parent, style=wx.TAB_TRAVERSAL)
+        super (type (self), self).__init__ (parent)
         self.__htmlMinWidth = 150
 
         self.__createGui ()

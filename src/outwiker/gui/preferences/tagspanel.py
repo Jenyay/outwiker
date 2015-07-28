@@ -4,12 +4,12 @@ import wx
 
 from outwiker.core.application import Application
 from outwiker.gui.guiconfig import TagsConfig
+from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
 
 
-class TagsPanel(wx.Panel):
-    def __init__(self, *args, **kwds):
-        kwds["style"] = wx.TAB_TRAVERSAL
-        wx.Panel.__init__(self, *args, **kwds)
+class TagsPanel(BasePrefPanel):
+    def __init__(self, parent):
+        super (type (self), self).__init__ (parent)
 
         self.ACTIONS_COMBOBOX_WIDTH = 300
 
@@ -19,7 +19,6 @@ class TagsPanel(wx.Panel):
         ]
 
         self._config = TagsConfig (Application.config)
-
         self._createGui()
 
 

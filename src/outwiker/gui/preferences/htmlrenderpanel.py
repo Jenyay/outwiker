@@ -7,12 +7,12 @@ from outwiker.core.application import Application
 from outwiker.core.config import FontOption
 from outwiker.core.htmlimproverfactory import HtmlImproverFactory
 from outwiker.gui.guiconfig import HtmlRenderConfig
+from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
 
 
-class HtmlRenderPanel(wx.Panel):
-    def __init__(self, *args, **kwds):
-        kwds["style"] = wx.TAB_TRAVERSAL
-        wx.Panel.__init__(self, *args, **kwds)
+class HtmlRenderPanel(BasePrefPanel):
+    def __init__(self, parent):
+        super (type (self), self).__init__ (parent)
 
         self.config = HtmlRenderConfig (Application.config)
 

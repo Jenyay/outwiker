@@ -4,15 +4,15 @@ import wx
 
 from outwiker.core.application import Application
 from outwiker.gui.hotkeyeditor import HotkeyEditor, EVT_HOTKEY_EDIT
+from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
 
 
-class HotKeysPanel (wx.Panel):
+class HotKeysPanel (BasePrefPanel):
     """
     Панель с настройками, связанными с редактором
     """
-    def __init__(self, *args, **kwds):
-        kwds["style"] = wx.TAB_TRAVERSAL
-        super (HotKeysPanel, self).__init__ (*args, **kwds)
+    def __init__(self, parent):
+        super (type (self), self).__init__ (parent)
 
         # Новые горячие клавиши
         # Ключ - strid, значение - горячая клавиша

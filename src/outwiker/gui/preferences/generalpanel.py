@@ -8,12 +8,12 @@ from outwiker.core.application import Application
 from outwiker.gui.guiconfig import TrayConfig, GeneralGuiConfig, MainWindowConfig
 from outwiker.gui.formatctrl import FormatCtrl
 from outwiker.gui.datetimeformatctrl import DateTimeFormatCtrl
+from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
 
 
-class GeneralPanel (wx.ScrolledWindow):
-    def __init__(self, *args, **kwds):
-        kwds["style"] = wx.TAB_TRAVERSAL | wx.HSCROLL | wx.VSCROLL
-        wx.ScrolledWindow.__init__(self, *args, **kwds)
+class GeneralPanel (BasePrefPanel):
+    def __init__(self, parent):
+        super (type (self), self).__init__ (parent)
 
         self.trayConfig = TrayConfig (Application.config)
         self.generalConfig = GeneralGuiConfig (Application.config)
@@ -54,20 +54,7 @@ class GeneralPanel (wx.ScrolledWindow):
 
         self.LoadState()
         self.updateCheckState()
-        self.__setScrolling()
-
-
-    def __setScrolling (self):
-        bottomElement = self.langCombo
-        btElementTop = bottomElement.GetPositionTuple()[1]
-        btElementHeight = bottomElement.GetSizeTuple()[1]
-        scrollHeight = btElementHeight
-        scrollCount = (btElementTop + btElementHeight) / scrollHeight + 1
-
-        self.SetScrollbars (0,
-                            scrollHeight,
-                            0,
-                            scrollCount)
+        self._setScrolling()
 
 
     def __set_properties(self):
@@ -179,55 +166,34 @@ class GeneralPanel (wx.ScrolledWindow):
         """
         Создать элементы интерфейса, связанные с выбором языка
         """
-        self.langLabel = wx.StaticText(self, -1, _("Language (restart required)"))
-        self.langCombo = wx.ComboBox(self, -1, choices=[], style= wx.CB_DROPDOWN | wx.CB_READONLY)
-
-        self.langCombo.SetMinSize((self.LANG_COMBO_WIDTH, -1))
-
-        self.languageSizer = wx.FlexGridSizer(1, 2, 0, 0)
-
-        self.languageSizer.Add(self.langLabel,
-                               0,
-                               wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                               2)
-
-        self.languageSizer.Add(self.langCombo,
-                               0,
-                               wx.ALL | wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL,
-                               2)
-
+        self.languageSizer = wx.FlexGridSizer(cols=2)
         self.languageSizer.AddGrowableRow(0)
         self.languageSizer.AddGrowableCol(0)
         self.languageSizer.AddGrowableCol(1)
+
+        self.langLabel, self.langCombo = self._createLabelAndComboBox (
+            _("Language (restart required)"),
+            self.languageSizer
+        )
+        self.langCombo.SetMinSize((self.LANG_COMBO_WIDTH, -1))
 
 
     def __createOpenPageTabGui (self):
         """
         Создать элементы интерфейса для выбора вкладки страницы по умолчанию (Код / просмотр / последний используемый)
         """
-        pageTabLabel = wx.StaticText(self, -1, _(u'Default opening page mode'))
-        self.pageTabComboBox = wx.ComboBox (self,
-                                            -1,
-                                            style=wx.CB_DROPDOWN | wx.CB_READONLY)
-
-        self.pageTabComboBox.SetMinSize((self.PAGE_TAB_COMBO_WIDTH, -1))
-        self.__fillPageTabComboBox ()
-
         # Layout GUI elements
         self.pageTabSizer = wx.FlexGridSizer (cols=2)
         self.pageTabSizer.AddGrowableCol (0)
         self.pageTabSizer.AddGrowableCol (1)
         self.pageTabSizer.AddGrowableRow (0)
 
-        self.pageTabSizer.Add(pageTabLabel,
-                              0,
-                              wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                              2)
+        pageTabLabel, self.pageTabComboBox = self._createLabelAndComboBox (
+            _(u'Default opening page mode'),
+            self.pageTabSizer)
 
-        self.pageTabSizer.Add(self.pageTabComboBox,
-                              0,
-                              wx.ALL | wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL,
-                              2)
+        self.pageTabComboBox.SetMinSize((self.PAGE_TAB_COMBO_WIDTH, -1))
+        self.__fillPageTabComboBox ()
 
 
     def __fillPageTabComboBox (self):

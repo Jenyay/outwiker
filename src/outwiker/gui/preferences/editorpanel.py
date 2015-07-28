@@ -6,16 +6,16 @@ import configelements
 from outwiker.core.application import Application
 from outwiker.gui.guiconfig import EditorConfig
 from outwiker.gui.stcstyle import StcStyle
+from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
 from outwiker.core.config import FontOption
 
 
-class EditorPanel(wx.Panel):
+class EditorPanel(BasePrefPanel):
     """
     Панель с настройками, связанными с редактором
     """
-    def __init__(self, *args, **kwds):
-        kwds["style"] = wx.TAB_TRAVERSAL
-        wx.Panel.__init__(self, *args, **kwds)
+    def __init__(self, parent):
+        super (type (self), self).__init__ (parent)
 
         self.MIN_TAB_WIDTH = 1
         self.MAX_TAB_WIDTH = 50

@@ -6,15 +6,14 @@ from outwiker.core.application import Application
 from outwiker.core.spellchecker import DictsFinder
 from outwiker.core.system import getSpellDirList
 from outwiker.gui.guiconfig import EditorConfig
+from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
 
 
-class SpellPanel(wx.Panel):
-    def __init__(self, *args, **kwds):
-        kwds["style"] = wx.TAB_TRAVERSAL
-        wx.Panel.__init__(self, *args, **kwds)
+class SpellPanel(BasePrefPanel):
+    def __init__(self, parent):
+        super (type (self), self).__init__ (parent)
 
         self._config = EditorConfig (Application.config)
-
         self._createGui()
 
 

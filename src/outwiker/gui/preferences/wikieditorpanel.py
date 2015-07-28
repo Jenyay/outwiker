@@ -5,15 +5,14 @@ import wx
 from outwiker.core.application import Application
 from outwiker.gui.editorstyleslist import EditorStylesList
 from outwiker.pages.wiki.wikiconfig import WikiConfig
+from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
 
 
-class WikiEditorPanel(wx.Panel):
-    def __init__(self, *args, **kwds):
-        kwds["style"] = wx.TAB_TRAVERSAL
-        wx.Panel.__init__(self, *args, **kwds)
+class WikiEditorPanel(BasePrefPanel):
+    def __init__(self, parent):
+        super (type (self), self).__init__ (parent)
 
         self._config = WikiConfig (Application.config)
-
         self.__createGui()
         self.__layout()
 
