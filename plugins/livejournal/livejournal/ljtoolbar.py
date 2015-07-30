@@ -1,13 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-import os.path
-
 import wx
 import wx.aui
 
-from outwiker.gui.mainid import MainId
-from outwiker.core.system import getImagesDir
 from outwiker.gui.toolbars.basetoolbar import BaseToolBar
 
 
