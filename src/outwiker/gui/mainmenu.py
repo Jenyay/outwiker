@@ -2,8 +2,6 @@
 
 import wx
 
-from .mainid import MainId
-
 
 class MainMenu (wx.MenuBar):
     """
@@ -37,30 +35,37 @@ class MainMenu (wx.MenuBar):
     def __createEditMenu (self):
         editMenu = wx.Menu()
 
-        editMenu.Append (MainId.ID_UNDO,
+        editMenu.Append (wx.ID_UNDO,
                          _("Undo") + "\tCtrl+Z",
                          "",
                          wx.ITEM_NORMAL)
 
-        editMenu.Append (MainId.ID_REDO,
+        editMenu.Append (wx.ID_REDO,
                          _("Redo") + "\tCtrl+Y",
                          "",
                          wx.ITEM_NORMAL)
 
         editMenu.AppendSeparator()
 
-        editMenu.Append (MainId.ID_CUT,
+        editMenu.Append (wx.ID_CUT,
                          _("Cut") + "\tCtrl+X",
                          "",
                          wx.ITEM_NORMAL)
 
-        editMenu.Append (MainId.ID_COPY,
+        editMenu.Append (wx.ID_COPY,
                          _("Copy") + "\tCtrl+C",
                          "",
                          wx.ITEM_NORMAL)
 
-        editMenu.Append (MainId.ID_PASTE,
+        editMenu.Append (wx.ID_PASTE,
                          _("Paste") + "\tCtrl+V",
+                         "",
+                         wx.ITEM_NORMAL)
+
+        editMenu.AppendSeparator()
+
+        editMenu.Append (wx.ID_SELECTALL,
+                         _("Select All") + "\tCtrl+A",
                          "",
                          wx.ITEM_NORMAL)
 

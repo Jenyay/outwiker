@@ -10,7 +10,6 @@ from outwiker.core.application import Application
 
 from .guiconfig import MainWindowConfig
 
-from .mainid import MainId
 from .mainmenu import MainMenu
 from .trayicon import OutwikerTrayIcon
 from .mainwndcontroller import MainWndController
@@ -473,11 +472,12 @@ class MainWindow(wx.Frame):
         """
         Подписаться на события меню, кнопок и т.п.
         """
-        self.Bind (wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_UNDO)
-        self.Bind (wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_REDO)
-        self.Bind (wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_CUT)
-        self.Bind (wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_COPY)
-        self.Bind (wx.EVT_MENU, self.__onStdEvent, id=MainId.ID_PASTE)
+        self.Bind (wx.EVT_MENU, self.__onStdEvent, id=wx.ID_UNDO)
+        self.Bind (wx.EVT_MENU, self.__onStdEvent, id=wx.ID_REDO)
+        self.Bind (wx.EVT_MENU, self.__onStdEvent, id=wx.ID_CUT)
+        self.Bind (wx.EVT_MENU, self.__onStdEvent, id=wx.ID_COPY)
+        self.Bind (wx.EVT_MENU, self.__onStdEvent, id=wx.ID_PASTE)
+        self.Bind (wx.EVT_MENU, self.__onStdEvent, id=wx.ID_SELECTALL)
 
 
     def __saveParams (self):

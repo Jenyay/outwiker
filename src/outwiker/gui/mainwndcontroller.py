@@ -8,7 +8,6 @@ from outwiker.core.application import Application
 from outwiker.core.commands import setStatusText, getMainWindowTitle
 from .bookmarkscontroller import BookmarksController
 from .autosavetimer import AutosaveTimer
-from .mainid import MainId
 from .guiconfig import GeneralGuiConfig, TrayConfig
 import outwiker.core.commands
 
@@ -48,11 +47,12 @@ class MainWndController (object):
 
         # Идентификаторы пунктов меню и кнопок, которые надо задизаблить, если не открыта вики
         self.disabledTools = [
-            MainId.ID_UNDO,
-            MainId.ID_REDO,
-            MainId.ID_CUT,
-            MainId.ID_COPY,
-            MainId.ID_PASTE,
+            wx.ID_UNDO,
+            wx.ID_REDO,
+            wx.ID_CUT,
+            wx.ID_COPY,
+            wx.ID_PASTE,
+            wx.ID_SELECTALL,
         ]
 
 

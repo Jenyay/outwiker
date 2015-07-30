@@ -18,7 +18,7 @@ from outwiker.core.spellchecker import SpellChecker
 from outwiker.gui.guiconfig import EditorConfig
 from outwiker.gui.searchreplacecontroller import SearchReplaceController
 from outwiker.gui.searchreplacepanel import SearchReplacePanel
-from outwiker.gui.mainid import MainId
+from outwiker.gui.texteditormenu import TextEditorMenu
 
 ApplyStyleEvent, EVT_APPLY_STYLE = wx.lib.newevent.NewEvent()
 
@@ -54,26 +54,30 @@ class TextEditor(wx.Panel):
 
         self.textCtrl = StyledTextCtrl(self, -1)
 
+        self._popupMenu = TextEditorMenu(self.textCtrl)
+
         # Создание панели поиска и ее контроллера
         self._searchPanel = SearchReplacePanel (self)
         self._searchPanelController = SearchReplaceController (self._searchPanel, self)
         self._searchPanel.setController (self._searchPanelController)
 
         self.__do_layout()
-
         self.__createCoders()
 
         self.__showlinenumbers = self._config.lineNumbers.value
 
         self.setDefaultSettings()
 
-        self.textCtrl.Bind(wx.EVT_MENU, self.__onCopyFromEditor, id = MainId.ID_COPY)
-        self.textCtrl.Bind(wx.EVT_MENU, self.__onCutFromEditor, id = MainId.ID_CUT)
-        self.textCtrl.Bind(wx.EVT_MENU, self.__onPasteToEditor, id = MainId.ID_PASTE)
-        self.textCtrl.Bind(wx.EVT_MENU, self.__onUndo, id = MainId.ID_UNDO)
-        self.textCtrl.Bind(wx.EVT_MENU, self.__onRedo, id = MainId.ID_REDO)
+        self.textCtrl.Bind(wx.EVT_MENU, self.__onCopyFromEditor, id = wx.ID_COPY)
+        self.textCtrl.Bind(wx.EVT_MENU, self.__onCutFromEditor, id = wx.ID_CUT)
+        self.textCtrl.Bind(wx.EVT_MENU, self.__onPasteToEditor, id = wx.ID_PASTE)
+        self.textCtrl.Bind(wx.EVT_MENU, self.__onUndo, id = wx.ID_UNDO)
+        self.textCtrl.Bind(wx.EVT_MENU, self.__onRedo, id = wx.ID_REDO)
+        self.textCtrl.Bind(wx.EVT_MENU, self.__onSelectAll, id = wx.ID_SELECTALL)
+
         self.textCtrl.Bind (wx.EVT_CHAR, self.__OnChar_ImeWorkaround)
         self.textCtrl.Bind (wx.EVT_KEY_DOWN, self.__onKeyDown)
+        self.textCtrl.Bind (wx.EVT_CONTEXT_MENU, self.__onContextMenu)
 
         # self.textCtrl.Bind (wx.stc.EVT_STC_STYLENEEDED, self._onStyleNeeded)
         self.textCtrl.Bind (wx.EVT_IDLE, self._onStyleNeeded)
@@ -140,6 +144,10 @@ class TextEditor(wx.Panel):
 
     def __onRedo (self, event):
         self.textCtrl.Redo()
+
+
+    def __onSelectAll (self, event):
+        self.textCtrl.SelectAll()
 
 
     def __do_layout(self):
@@ -505,7 +513,7 @@ class TextEditor(wx.Panel):
         Функция должна возвращать список байт, описывающих раскраску (стили)
         для текста text (за исключением индикаторов).
         Функцию нужно переопределить, если используется собственная раскраска текста.
-        Исли функция возвращает None, то раскраска синтаксиса не применяется.
+        Если функция возвращает None, то раскраска синтаксиса не применяется.
         """
         return None
 
@@ -514,7 +522,7 @@ class TextEditor(wx.Panel):
         """
         Функция должна возвращать список байт, описывающих раскраску (стили индикаторов) для текста text.
         Функцию нужно переопределить, если используются индикаторы.
-        Исли функция возвращает None, то раскраска индикаторов не применяется.
+        Если функция возвращает None, то раскраска индикаторов не применяется.
         """
         return None
 
@@ -531,3 +539,13 @@ class TextEditor(wx.Panel):
                 for item
                 in dictsStr.split(',')
                 if item.strip()]
+
+
+    def _getMenu (self):
+        self._popupMenu.RefreshItems ()
+        return self._popupMenu
+
+
+    def __onContextMenu (self, event):
+        popupMenu = self._getMenu ()
+        self.textCtrl.PopupMenu(popupMenu)
