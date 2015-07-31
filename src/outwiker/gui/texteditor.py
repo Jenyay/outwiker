@@ -54,7 +54,7 @@ class TextEditor(wx.Panel):
 
         self.textCtrl = StyledTextCtrl(self, -1)
 
-        self._popupMenu = TextEditorMenu(self.textCtrl)
+        self._popupMenu = TextEditorMenu(self)
 
         # Создание панели поиска и ее контроллера
         self._searchPanel = SearchReplacePanel (self)
@@ -277,6 +277,10 @@ class TextEditor(wx.Panel):
     def calcBytePos (self, text, pos):
         """Преобразовать позицию в символах в позицию в байтах"""
         return len(self.encoder (text[: pos])[0])
+
+
+    def getPosChar (self, posBytes):
+        return len (self.textCtrl.GetTextRange (0, posBytes))
 
 
     def __createCoders (self):
@@ -541,11 +545,17 @@ class TextEditor(wx.Panel):
                 if item.strip()]
 
 
-    def _getMenu (self):
-        self._popupMenu.RefreshItems ()
+    def _getMenu (self, pos_byte):
+        """
+        pos_byte - nearest text position (in bytes) where was produce a click
+        """
+        self._popupMenu.RefreshItems (pos_byte)
         return self._popupMenu
 
 
     def __onContextMenu (self, event):
-        popupMenu = self._getMenu ()
+        point = self.textCtrl.ScreenToClient (event.GetPosition())
+        pos_byte = self.textCtrl.PositionFromPoint(point)
+
+        popupMenu = self._getMenu (pos_byte)
         self.textCtrl.PopupMenu(popupMenu)

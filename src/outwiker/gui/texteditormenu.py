@@ -10,7 +10,7 @@ class TextEditorMenu (wx.Menu):
         self._editor = editor
 
 
-    def RefreshItems (self):
+    def RefreshItems (self, pos_byte):
         """
         Remove all items and add standard items
         """
@@ -25,3 +25,12 @@ class TextEditorMenu (wx.Menu):
         self.Append (wx.ID_PASTE, _(u'Paste'))
         self.AppendSeparator ()
         self.Append (wx.ID_SELECTALL, _(u'Select All'))
+
+        # wordStartByte = self._editor.textCtrl.WordStartPosition (pos_byte, True)
+        # wordEndByte = self._editor.textCtrl.WordEndPosition (pos_byte, True)
+        #
+        # text = self._editor.textCtrl.GetTextRange (wordStartByte, wordEndByte)
+        #
+        # if not self._editor.checkSpellWord (text):
+        #     self.AppendSeparator ()
+        #     self.Append (-1, text)
