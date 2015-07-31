@@ -17,9 +17,7 @@ class SimpleTextEditor (TextEditor):
         stylelist = [0] * textlength
 
         self.runSpellChecking (stylelist, 0, len (text))
-
-        stylebytes = "".join ([chr(byte) for byte in stylelist])
-        return stylebytes
+        return stylelist
 
 
     def getStyleBytes (self, text):

@@ -28,3 +28,7 @@ class SpellChecker (object):
         Return wrapper for "real" spell checker (hunspell, enchant, etc)
         """
         return EnchantWrapper (langlist, folders)
+
+
+    def addToCustomDict (self, word):
+        self._realChecker.addToCustomDict (word)

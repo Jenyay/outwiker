@@ -23,6 +23,7 @@ class EnchantWrapper (object):
         dictsFinder = DictsFinder (folders)
         self._checkers = []
         self._customDictName = u'custom.dic'
+        self._useCustomDict = False
 
         for lang in langlist:
             for path in dictsFinder.getFoldersForLang (lang):
@@ -34,10 +35,16 @@ class EnchantWrapper (object):
         if folders:
             try:
                 self._checkers.append (self._getCustomDict (folders[-1]))
+                self._useCustomDict = True
             except enchant.errors.Error:
                 pass
             except IOError:
                 pass
+
+
+    def addToCustomDict (self, word):
+        if self._useCustomDict:
+            self._checkers[-1].add_to_pwl (word)
 
 
     def _createCustomDict (self, pathToDict):

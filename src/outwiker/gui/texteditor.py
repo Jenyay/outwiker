@@ -30,6 +30,8 @@ class TextEditor(wx.Panel):
         kwds["style"] = wx.TAB_TRAVERSAL
         wx.Panel.__init__(self, *args, **kwds)
 
+        self.ID_ADD_WORD = wx.NewId()
+
         self._config = EditorConfig (Application.config)
 
         self._enableSpellChecking = True
@@ -40,8 +42,14 @@ class TextEditor(wx.Panel):
         self.SPELL_ERROR_INDICATOR = 0
         self.SPELL_ERROR_INDICATOR_MASK = wx.stc.STC_INDIC0_MASK
 
+        self._spellErrorText = None
+
         # Уже были установлены стили текста (раскраска)
         self._styleSet = False
+
+        self.__stylebytes = None
+        self.__indicatorsbytes = None
+
         # Начинаем раскраску кода не менее чем через это время с момента его изменения
         self._DELAY = timedelta (milliseconds=300)
 
@@ -74,6 +82,7 @@ class TextEditor(wx.Panel):
         self.textCtrl.Bind(wx.EVT_MENU, self.__onUndo, id = wx.ID_UNDO)
         self.textCtrl.Bind(wx.EVT_MENU, self.__onRedo, id = wx.ID_REDO)
         self.textCtrl.Bind(wx.EVT_MENU, self.__onSelectAll, id = wx.ID_SELECTALL)
+        self.textCtrl.Bind(wx.EVT_MENU, self.__onAddWordToDict, id = self.ID_ADD_WORD)
 
         self.textCtrl.Bind (wx.EVT_CHAR, self.__OnChar_ImeWorkaround)
         self.textCtrl.Bind (wx.EVT_KEY_DOWN, self.__onKeyDown)
@@ -498,16 +507,28 @@ class TextEditor(wx.Panel):
 
     def _onApplyStyle (self, event):
         if event.text == self._getTextForParse():
-            stylebytes = event.stylebytes
-            indicatorsbytes = event.indicatorsbytes
+            textlength = self.calcByteLen (event.text)
+            self.__stylebytes = [0] * textlength
 
-            if stylebytes is not None:
+            if event.stylebytes is not None:
+                self.__stylebytes = [item1 | item2
+                                     for item1, item2
+                                     in zip (self.__stylebytes, event.stylebytes)]
+
+            if event.indicatorsbytes is not None:
+                self.__stylebytes = [item1 | item2
+                                     for item1, item2
+                                     in zip (self.__stylebytes, event.indicatorsbytes)]
+
+            stylebytesstr = "".join ([chr(byte) for byte in self.__stylebytes])
+
+            if event.stylebytes is not None:
                 self.textCtrl.StartStyling (0, 0xff ^ wx.stc.STC_INDICS_MASK)
-                self.textCtrl.SetStyleBytes (len (stylebytes), stylebytes)
+                self.textCtrl.SetStyleBytes (len (stylebytesstr), stylebytesstr)
 
-            if indicatorsbytes is not None:
+            if event.indicatorsbytes is not None:
                 self.textCtrl.StartStyling (0, wx.stc.STC_INDICS_MASK)
-                self.textCtrl.SetStyleBytes (len (indicatorsbytes), indicatorsbytes)
+                self.textCtrl.SetStyleBytes (len (stylebytesstr), stylebytesstr)
 
             self._styleSet = True
 
@@ -545,11 +566,11 @@ class TextEditor(wx.Panel):
                 if item.strip()]
 
 
-    def _getMenu (self, pos_byte):
+    def _getMenu (self):
         """
         pos_byte - nearest text position (in bytes) where was produce a click
         """
-        self._popupMenu.RefreshItems (pos_byte)
+        self._popupMenu.RefreshItems ()
         return self._popupMenu
 
 
@@ -557,5 +578,42 @@ class TextEditor(wx.Panel):
         point = self.textCtrl.ScreenToClient (event.GetPosition())
         pos_byte = self.textCtrl.PositionFromPoint(point)
 
-        popupMenu = self._getMenu (pos_byte)
+        popupMenu = self._getMenu ()
+        self._appendSpellItems (popupMenu, pos_byte)
         self.textCtrl.PopupMenu(popupMenu)
+
+
+    def getCachedStyleBytes (self):
+        return self.__stylebytes
+
+
+    def __onAddWordToDict (self, event):
+        if self._spellErrorText is not None:
+            self._spellChecker.addToCustomDict (self._spellErrorText)
+            self._spellErrorText = None
+            self._styleSet = False
+
+
+    def _appendSpellItems (self, menu, pos_byte):
+        stylebytes = self.getCachedStyleBytes()
+        stylebytes_len = len (stylebytes)
+
+        if (stylebytes is None or
+                pos_byte >= stylebytes_len or
+                stylebytes[pos_byte] & self.SPELL_ERROR_INDICATOR_MASK == 0):
+            return
+
+        endSpellError = startSpellError = pos_byte
+
+        while (startSpellError >= 0 and
+               stylebytes[startSpellError] & self.SPELL_ERROR_INDICATOR_MASK != 0):
+            startSpellError -= 1
+
+
+        while (endSpellError < stylebytes_len and
+               stylebytes[endSpellError] & self.SPELL_ERROR_INDICATOR_MASK != 0):
+            endSpellError += 1
+
+        self._spellErrorText = self.textCtrl.GetTextRange (startSpellError + 1, endSpellError)
+        menu.AppendSeparator ()
+        menu.Append (self.ID_ADD_WORD, _(u'Add to dictionary'))

@@ -11,7 +11,7 @@ from .wikiconfig import WikiConfig
 class WikiEditor (TextEditor):
     def __init__ (self, parent):
         self.__createStyles()
-        self._stylebytes = None
+        self.__stylebytes = None
 
         super (WikiEditor, self).__init__ (parent)
 
@@ -110,12 +110,12 @@ class WikiEditor (TextEditor):
         Функция должна возвращать список байт, описывающих раскраску (стили) для текста text
         Этот метод выполняется в отдельном потоке
         """
-        self._stylebytes = self._colorizer.colorize (text)
-        return self._stylebytes
+        self.__stylebytes = self._colorizer.colorize (text)
+        return self.__stylebytes
 
 
     def getIndcatorsStyleBytes (self, text):
-        return self._stylebytes
+        return self.__stylebytes
 
 
     def turnList (self, itemStart):

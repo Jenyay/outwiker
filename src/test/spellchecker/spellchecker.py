@@ -79,3 +79,17 @@ class SpellCheckerTest (unittest.TestCase):
         langs.sort()
 
         self.assertEqual (langs, [u"en_US", u"ru_RU"])
+
+
+    def testUserDict_01 (self):
+        word = u'ывпывапыяа'
+        self._copyDict (u'ru_RU')
+        checker = SpellChecker ([u'ru_RU'], [self._pathToDicts])
+        self.assertTrue (checker.check (u'Проверка'))
+        self.assertFalse (checker.check (word))
+
+        checker.addToCustomDict (word)
+        self.assertTrue (checker.check (word))
+
+        checker2 = SpellChecker ([u'ru_RU'], [self._pathToDicts])
+        self.assertTrue (checker2.check (word))

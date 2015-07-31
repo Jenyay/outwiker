@@ -58,11 +58,9 @@ class WikiColorizer (object):
     def colorize (self, text):
         textlength = self._editor.calcByteLen (text)
         stylelist = [0] * textlength
-
         self._colorizeText (text, 0, textlength, self.colorParser, stylelist)
 
-        stylebytes = "".join ([chr(byte) for byte in stylelist])
-        return stylebytes
+        return stylelist
 
 
     def _colorizeText (self, text, start, end, parser, stylelist):
