@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-31 18:46+0300\n"
+"POT-Creation-Date: 2015-08-03 20:52+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -930,30 +930,38 @@ msgstr "Строка"
 msgid "Comment"
 msgstr "Комментарий"
 
-#: outwiker/gui/texteditormenu.py:22 outwiker/gui/mainmenu.py:39
+#: outwiker/gui/texteditormenu.py:28 outwiker/gui/mainmenu.py:39
 msgid "Undo"
 msgstr "Отменить"
 
-#: outwiker/gui/texteditormenu.py:23 outwiker/gui/mainmenu.py:44
+#: outwiker/gui/texteditormenu.py:29 outwiker/gui/mainmenu.py:44
 msgid "Redo"
 msgstr "Вернуть"
 
-#: outwiker/gui/texteditormenu.py:25 outwiker/gui/mainmenu.py:51
+#: outwiker/gui/texteditormenu.py:31 outwiker/gui/mainmenu.py:51
 msgid "Cut"
 msgstr "Вырезать"
 
-#: outwiker/gui/texteditormenu.py:26 outwiker/gui/mainmenu.py:56
+#: outwiker/gui/texteditormenu.py:32 outwiker/gui/mainmenu.py:56
 msgid "Copy"
 msgstr "Копировать"
 
-#: outwiker/gui/texteditormenu.py:27 outwiker/gui/mainmenu.py:61
+#: outwiker/gui/texteditormenu.py:33 outwiker/gui/mainmenu.py:61
 #: outwiker/gui/attachpanel.py:118 outwiker/gui/attachpanel.py:123
 msgid "Paste"
 msgstr "Вставить"
 
-#: outwiker/gui/texteditormenu.py:29 outwiker/gui/mainmenu.py:68
+#: outwiker/gui/texteditormenu.py:35 outwiker/gui/mainmenu.py:68
 msgid "Select All"
 msgstr "Выделить всё"
+
+#: outwiker/gui/texteditormenu.py:42
+msgid "Add \"{}\" to dictionary"
+msgstr "Добавить \"{}\" в словарь"
+
+#: outwiker/gui/texteditormenu.py:49
+msgid "Spell"
+msgstr "Орфография"
 
 #: outwiker/gui/overwritedialog.py:18
 msgid "Overwrite file?"
@@ -1284,10 +1292,6 @@ msgstr "Копировать ссылку на страницу"
 #: outwiker/gui/attachpanel.py:141 outwiker/actions/openattachfolder.py:23
 msgid "Open Attachments Folder"
 msgstr "Открыть папку с прикрепленными файлами"
-
-#: outwiker/gui/texteditor.py:619
-msgid "Add to dictionary"
-msgstr "Добавить в словарь"
 
 #: outwiker/gui/datetimeformatctrl.py:20
 msgid "Abbreviated weekday name"
@@ -2232,6 +2236,9 @@ msgid ""
 "The page title contains invalid characters for Microsoft Windows operating "
 "system"
 msgstr "Заголовок страницы содержит запрещённые в Microsoft Windows символы"
+
+#~ msgid "Add to dictionary"
+#~ msgstr "Добавить в словарь"
 
 #~ msgid ""
 #~ "!! First Wiki Page\n"

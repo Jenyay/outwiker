@@ -32,3 +32,7 @@ class SpellChecker (object):
 
     def addToCustomDict (self, word):
         self._realChecker.addToCustomDict (word)
+
+
+    def getSuggest (self, word):
+        return self._realChecker.getSuggest (word)

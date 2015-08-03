@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-31 18:46+0300\n"
+"POT-Creation-Date: 2015-08-03 20:52+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -930,30 +930,38 @@ msgstr "String"
 msgid "Comment"
 msgstr "Comment"
 
-#: outwiker/gui/texteditormenu.py:22 outwiker/gui/mainmenu.py:39
+#: outwiker/gui/texteditormenu.py:28 outwiker/gui/mainmenu.py:39
 msgid "Undo"
 msgstr "Undo"
 
-#: outwiker/gui/texteditormenu.py:23 outwiker/gui/mainmenu.py:44
+#: outwiker/gui/texteditormenu.py:29 outwiker/gui/mainmenu.py:44
 msgid "Redo"
 msgstr "Redo"
 
-#: outwiker/gui/texteditormenu.py:25 outwiker/gui/mainmenu.py:51
+#: outwiker/gui/texteditormenu.py:31 outwiker/gui/mainmenu.py:51
 msgid "Cut"
 msgstr "Cut"
 
-#: outwiker/gui/texteditormenu.py:26 outwiker/gui/mainmenu.py:56
+#: outwiker/gui/texteditormenu.py:32 outwiker/gui/mainmenu.py:56
 msgid "Copy"
 msgstr "Copy"
 
-#: outwiker/gui/texteditormenu.py:27 outwiker/gui/mainmenu.py:61
+#: outwiker/gui/texteditormenu.py:33 outwiker/gui/mainmenu.py:61
 #: outwiker/gui/attachpanel.py:118 outwiker/gui/attachpanel.py:123
 msgid "Paste"
 msgstr "Paste"
 
-#: outwiker/gui/texteditormenu.py:29 outwiker/gui/mainmenu.py:68
+#: outwiker/gui/texteditormenu.py:35 outwiker/gui/mainmenu.py:68
 msgid "Select All"
 msgstr "Select All"
+
+#: outwiker/gui/texteditormenu.py:42
+msgid "Add \"{}\" to dictionary"
+msgstr "Add \"{}\" to dictionary"
+
+#: outwiker/gui/texteditormenu.py:49
+msgid "Spell"
+msgstr "Spell"
 
 #: outwiker/gui/overwritedialog.py:18
 msgid "Overwrite file?"
@@ -1276,10 +1284,6 @@ msgstr "Copy Page Link"
 #: outwiker/gui/attachpanel.py:141 outwiker/actions/openattachfolder.py:23
 msgid "Open Attachments Folder"
 msgstr "Open Attachments Folder"
-
-#: outwiker/gui/texteditor.py:619
-msgid "Add to dictionary"
-msgstr "Add to dictionary"
 
 #: outwiker/gui/datetimeformatctrl.py:20
 msgid "Abbreviated weekday name"
@@ -2222,6 +2226,9 @@ msgid ""
 msgstr ""
 "The page title contains invalid characters for Microsoft Windows operating "
 "system"
+
+#~ msgid "Add to dictionary"
+#~ msgstr "Add to dictionary"
 
 #~ msgid ""
 #~ "!! First Wiki Page\n"

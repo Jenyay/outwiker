@@ -30,8 +30,6 @@ class TextEditor(wx.Panel):
         kwds["style"] = wx.TAB_TRAVERSAL
         wx.Panel.__init__(self, *args, **kwds)
 
-        self.ID_ADD_WORD = wx.NewId()
-
         self._config = EditorConfig (Application.config)
 
         self._enableSpellChecking = True
@@ -43,6 +41,11 @@ class TextEditor(wx.Panel):
         self.SPELL_ERROR_INDICATOR_MASK = wx.stc.STC_INDIC0_MASK
 
         self._spellErrorText = None
+        self._spellSuggestList = []
+
+        self._spellMaxSuggest = len (TextEditorMenu.ID_SUGGESTS)
+        self._spellStartByteError = -1
+        self._spellEndByteError = -1
 
         # Уже были установлены стили текста (раскраска)
         self._styleSet = False
@@ -82,7 +85,10 @@ class TextEditor(wx.Panel):
         self.textCtrl.Bind(wx.EVT_MENU, self.__onUndo, id = wx.ID_UNDO)
         self.textCtrl.Bind(wx.EVT_MENU, self.__onRedo, id = wx.ID_REDO)
         self.textCtrl.Bind(wx.EVT_MENU, self.__onSelectAll, id = wx.ID_SELECTALL)
-        self.textCtrl.Bind(wx.EVT_MENU, self.__onAddWordToDict, id = self.ID_ADD_WORD)
+
+        self.textCtrl.Bind(wx.EVT_MENU, self.__onAddWordToDict, id = TextEditorMenu.ID_ADD_WORD)
+        for suggestId in TextEditorMenu.ID_SUGGESTS:
+            self.textCtrl.Bind(wx.EVT_MENU, self.__onSpellSuggest, id = suggestId)
 
         self.textCtrl.Bind (wx.EVT_CHAR, self.__OnChar_ImeWorkaround)
         self.textCtrl.Bind (wx.EVT_KEY_DOWN, self.__onKeyDown)
@@ -614,6 +620,19 @@ class TextEditor(wx.Panel):
                stylebytes[endSpellError] & self.SPELL_ERROR_INDICATOR_MASK != 0):
             endSpellError += 1
 
-        self._spellErrorText = self.textCtrl.GetTextRange (startSpellError + 1, endSpellError)
-        menu.AppendSeparator ()
-        menu.Append (self.ID_ADD_WORD, _(u'Add to dictionary'))
+        self._spellStartByteError = startSpellError + 1
+        self._spellEndByteError = endSpellError
+        self._spellErrorText = self.textCtrl.GetTextRange (self._spellStartByteError, self._spellEndByteError)
+        self._spellSuggestList = self._spellChecker.getSuggest (self._spellErrorText)[:self._spellMaxSuggest]
+
+        menu.AppendSpellSubmenu (self._spellErrorText, self._spellSuggestList)
+
+
+    def __onSpellSuggest (self, event):
+        assert event.GetId() in TextEditorMenu.ID_SUGGESTS
+
+        index = TextEditorMenu.ID_SUGGESTS.index (event.GetId())
+        word = self._spellSuggestList[index]
+
+        self.textCtrl.SetSelection (self._spellStartByteError, self._spellEndByteError)
+        self.textCtrl.ReplaceSelection (word)

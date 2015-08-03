@@ -4,7 +4,13 @@ import wx
 import wx.stc
 
 
+def _getIdSuggests (count):
+    return [wx.NewId() for n in xrange(count)]
+
+
 class TextEditorMenu (wx.Menu):
+    ID_ADD_WORD = wx.NewId()
+    ID_SUGGESTS = _getIdSuggests(10)
 
 
     def __init__ (self, editor):
@@ -27,3 +33,17 @@ class TextEditorMenu (wx.Menu):
         self.Append (wx.ID_PASTE, _(u'Paste'))
         self.AppendSeparator ()
         self.Append (wx.ID_SELECTALL, _(u'Select All'))
+
+
+    def AppendSpellSubmenu (self, word, suggestList):
+        assert len (suggestList) <= len (self.ID_SUGGESTS)
+
+        spellMenu = wx.Menu()
+        spellMenu.Append (self.ID_ADD_WORD, _(u'Add "{}" to dictionary').format (word))
+
+        if suggestList:
+            spellMenu.AppendSeparator()
+            for n, suggest in enumerate (suggestList):
+                spellMenu.Append (self.ID_SUGGESTS[n], suggest)
+
+        self.AppendSubMenu (spellMenu, _(u'Spell'))
