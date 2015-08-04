@@ -193,6 +193,9 @@ class EditorConfig (object):
     SPELL_DICTS_SECTION = u'dictionaries'
     SPELL_DICT_DEFAULT = u'en_US, ru_RU, ru_RU_yo, uk_UA'
 
+    SPELL_ENABLE_SECTION = u'spellchecking'
+    SPELL_ENABLE_DEFAULT = True
+
 
     def __init__ (self, config):
         self.config = config
@@ -251,6 +254,11 @@ class EditorConfig (object):
                                                GeneralGuiConfig.GENERAL_SECTION,
                                                EditorConfig.SPELL_DICTS_SECTION,
                                                EditorConfig.SPELL_DICT_DEFAULT)
+
+        self.spellEnabled = BooleanOption (self.config,
+                                           GeneralGuiConfig.GENERAL_SECTION,
+                                           EditorConfig.SPELL_ENABLE_SECTION,
+                                           EditorConfig.SPELL_ENABLE_DEFAULT)
 
 
 class HtmlEditorStylesConfig (object):

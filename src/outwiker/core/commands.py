@@ -813,7 +813,6 @@ def registerActions (application):
 
 def _registerPolyActions (application):
     # Шрифты
-
     application.actionController.register (PolyAction (application,
                                                        BOLD_STR_ID,
                                                        _(u"Bold"),
@@ -1015,3 +1014,9 @@ def _registerPolyActions (application):
                                                        _(u"Current date"),
                                                        _(u"Insert the current date")),
                                            None)
+
+    application.actionController.register (PolyAction (application,
+                                                       SPELL_ON_OFF_ID,
+                                                       _(u"Spell checking"),
+                                                       _(u"Enable / disable spell checking")),
+                                           HotKey ("F7"))

@@ -5,7 +5,6 @@ import os
 from abc import ABCMeta, abstractmethod
 
 from outwiker.core.commands import MessageBox
-from outwiker.core.application import Application
 from outwiker.core.style import Style
 
 from outwiker.gui.htmltexteditor import HtmlTextEditor
@@ -23,9 +22,10 @@ class BaseWikiPageView (BaseHtmlPanel):
     HTML_RESULT_PAGE_INDEX = BaseHtmlPanel.RESULT_PAGE_INDEX + 1
 
     def __init__ (self, parent, *args, **kwds):
-        super (BaseWikiPageView, self).__init__ (parent, *args, **kwds)
+        # Редактор с просмотром получившегося HTML (если есть)
+        self.htmlCodeWindow = None
 
-        self._application = Application
+        super (BaseWikiPageView, self).__init__ (parent, *args, **kwds)
 
         self._hashKey = u"md5_hash"
         self.__WIKI_MENU_INDEX = 7
@@ -55,9 +55,6 @@ class BaseWikiPageView (BaseHtmlPanel):
 
         self._application.mainWindow.updateShortcuts()
         self.mainWindow.UpdateAuiManager()
-
-        # Редактор с просмотром получившегося HTML (если есть)
-        self.htmlCodeWindow = None
 
         if self._isHtmlCodeShown():
             self.htmlcodePageIndex = self.__createHtmlCodePanel(self.htmlSizer)
@@ -150,7 +147,6 @@ class BaseWikiPageView (BaseHtmlPanel):
     def Clear (self):
         self._removeActionTools()
         self.Unbind (EVT_PAGE_TAB_CHANGED, handler=self.onTabChanged)
-        # self.htmlCodeWindow.Destroy()
 
         if self._getName() in self.mainWindow.toolbars:
             self.mainWindow.toolbars.destroyToolBar (self._getName())
@@ -299,7 +295,7 @@ class BaseWikiPageView (BaseHtmlPanel):
     def generateHtml (self, page):
         resultFileName = self.getHtmlPath()
 
-        cache = self._getCacher (page, Application)
+        cache = self._getCacher (page, self._application)
         # Проверим, можно ли прочитать уже готовый HTML
         if (cache.canReadFromCache() and os.path.exists (resultFileName)) or page.readonly:
             try:
@@ -351,7 +347,7 @@ class BaseWikiPageView (BaseHtmlPanel):
         """
         Сбросить кэш для того, чтобы заново сделать HTML
         """
-        self._getCacher (self._currentpage, Application).resetHash()
+        self._getCacher (self._currentpage, self._application).resetHash()
 
         if self.selectedPageIndex == self.RESULT_PAGE_INDEX:
             self._onSwitchToPreview()
@@ -380,3 +376,10 @@ class BaseWikiPageView (BaseHtmlPanel):
 
         # Обновить код HTML
         self._application.actionController.appendMenuItem (WikiUpdateHtmlAction.stringId, self.toolsMenu)
+
+
+    def _spellOnOff (self, checked):
+        super (BaseWikiPageView, self)._spellOnOff (checked)
+
+        if self.htmlCodeWindow is not None:
+            self.htmlCodeWindow.setDefaultSettings()

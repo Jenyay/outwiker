@@ -215,6 +215,8 @@ class TextEditor(wx.Panel):
         self.__setMarginWidth (self.textCtrl)
         self.textCtrl.SetTabWidth (self._config.tabWidth.value)
 
+        self.enableSpellChecking = self._config.spellEnabled.value
+
         if self._config.homeEndKeys.value == EditorConfig.HOME_END_OF_LINE:
             # Клавиши Home / End переносят курсор на начало / конец строки
             self.textCtrl.CmdKeyAssign (wx.stc.STC_KEY_HOME,

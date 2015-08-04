@@ -12,6 +12,8 @@ class TextPanel (BaseTextPanel):
     """
 
     def __init__ (self, parent, *args, **kwds):
+        self.textEditor = None
+
         BaseTextPanel.__init__ (self, parent, *args, **kwds)
 
         self.__createGui()
@@ -78,3 +80,10 @@ class TextPanel (BaseTextPanel):
 
     def _isEnabledTool (self, tool):
         return True
+
+
+    def _spellOnOff (self, checked):
+        super (TextPanel, self)._spellOnOff (checked)
+
+        if self.textEditor is not None:
+            self.textEditor.setDefaultSettings()

@@ -6,6 +6,7 @@ import os
 import wx
 
 from outwiker.actions.search import SearchAction, SearchNextAction, SearchPrevAction, SearchAndReplaceAction
+from outwiker.actions.polyactionsid import SPELL_ON_OFF_ID
 from outwiker.core.system import getImagesDir
 from outwiker.core.commands import MessageBox, pageExists
 from outwiker.core.attachment import Attachment
@@ -14,6 +15,7 @@ from outwiker.core.config import IntegerOption
 from outwiker.core.tree import RootWikiPage
 from outwiker.gui.basepagepanel import BasePagePanel
 from outwiker.gui.buttonsdialog import ButtonsDialog
+from outwiker.gui.guiconfig import EditorConfig
 
 
 class BaseTextPanel (BasePagePanel):
@@ -57,6 +59,7 @@ class BaseTextPanel (BasePagePanel):
 
     def __init__ (self, parent, *args, **kwds):
         super (BaseTextPanel, self).__init__ (parent, *args, **kwds)
+        self._application = Application
 
         self.searchMenu = None
 
@@ -72,9 +75,10 @@ class BaseTextPanel (BasePagePanel):
         self.imagesDir = getImagesDir()
 
         self._addSearchTools ()
+        self._addSpellTools ()
 
-        Application.onAttachmentPaste += self.onAttachmentPaste
-        Application.onPreferencesDialogClose += self.onPreferencesDialogClose
+        self._application.onAttachmentPaste += self.onAttachmentPaste
+        self._application.onPreferencesDialogClose += self.onPreferencesDialogClose
 
         self._onSetPage += self.__onSetPage
 
@@ -226,8 +230,10 @@ class BaseTextPanel (BasePagePanel):
         """
         Убрать за собой
         """
-        Application.onAttachmentPaste -= self.onAttachmentPaste
-        Application.onPreferencesDialogClose -= self.onPreferencesDialogClose
+        self._application.actionController.getAction (SPELL_ON_OFF_ID).setFunc (None)
+
+        self._application.onAttachmentPaste -= self.onAttachmentPaste
+        self._application.onPreferencesDialogClose -= self.onPreferencesDialogClose
         self._onSetPage -= self.__onSetPage
 
         self.removeGui()
@@ -242,16 +248,18 @@ class BaseTextPanel (BasePagePanel):
         assert self.mainWindow.mainMenu.GetMenuCount() >= 3
         assert self.searchMenu is not None
 
-        Application.actionController.removeMenuItem (SearchAction.stringId)
-        Application.actionController.removeMenuItem (SearchAndReplaceAction.stringId)
-        Application.actionController.removeMenuItem (SearchNextAction.stringId)
-        Application.actionController.removeMenuItem (SearchPrevAction.stringId)
+        self._application.actionController.removeMenuItem (SearchAction.stringId)
+        self._application.actionController.removeMenuItem (SearchAndReplaceAction.stringId)
+        self._application.actionController.removeMenuItem (SearchNextAction.stringId)
+        self._application.actionController.removeMenuItem (SearchPrevAction.stringId)
+        self._application.actionController.removeMenuItem (SPELL_ON_OFF_ID)
 
         if self.mainWindow.GENERAL_TOOLBAR_STR in self.mainWindow.toolbars:
-            Application.actionController.removeToolbarButton (SearchAction.stringId)
-            Application.actionController.removeToolbarButton (SearchAndReplaceAction.stringId)
-            Application.actionController.removeToolbarButton (SearchNextAction.stringId)
-            Application.actionController.removeToolbarButton (SearchPrevAction.stringId)
+            self._application.actionController.removeToolbarButton (SearchAction.stringId)
+            self._application.actionController.removeToolbarButton (SearchAndReplaceAction.stringId)
+            self._application.actionController.removeToolbarButton (SearchNextAction.stringId)
+            self._application.actionController.removeToolbarButton (SearchPrevAction.stringId)
+            self._application.actionController.removeToolbarButton (SPELL_ON_OFF_ID)
 
         self._removeAllTools()
         self.mainWindow.mainMenu.Remove (self.searchMenuIndex)
@@ -266,21 +274,45 @@ class BaseTextPanel (BasePagePanel):
         toolbar = self.mainWindow.toolbars[self.mainWindow.GENERAL_TOOLBAR_STR]
 
         # Начать поиск на странице
-        Application.actionController.appendMenuItem (SearchAction.stringId, self.searchMenu)
-        Application.actionController.appendToolbarButton (SearchAction.stringId,
-                                                          toolbar,
-                                                          os.path.join (self.imagesDir, "local_search.png"),
-                                                          fullUpdate=False)
+        self._application.actionController.appendMenuItem (SearchAction.stringId, self.searchMenu)
+        self._application.actionController.appendToolbarButton (SearchAction.stringId,
+                                                                toolbar,
+                                                                os.path.join (self.imagesDir, "local_search.png"),
+                                                                fullUpdate=False)
 
         # Начать поиск и замену на странице
-        Application.actionController.appendMenuItem (SearchAndReplaceAction.stringId, self.searchMenu)
-        Application.actionController.appendToolbarButton (SearchAndReplaceAction.stringId,
-                                                          toolbar,
-                                                          os.path.join (self.imagesDir, "local_replace.png"),
-                                                          fullUpdate=False)
+        self._application.actionController.appendMenuItem (SearchAndReplaceAction.stringId, self.searchMenu)
+        self._application.actionController.appendToolbarButton (SearchAndReplaceAction.stringId,
+                                                                toolbar,
+                                                                os.path.join (self.imagesDir, "local_replace.png"),
+                                                                fullUpdate=False)
 
         # Продолжить поиск вперед на странице
-        Application.actionController.appendMenuItem (SearchNextAction.stringId, self.searchMenu)
+        self._application.actionController.appendMenuItem (SearchNextAction.stringId, self.searchMenu)
 
         # Продолжить поиск назад на странице
-        Application.actionController.appendMenuItem (SearchPrevAction.stringId, self.searchMenu)
+        self._application.actionController.appendMenuItem (SearchPrevAction.stringId, self.searchMenu)
+
+
+    def _addSpellTools (self):
+        generalToolbar = self.mainWindow.toolbars[self.mainWindow.GENERAL_TOOLBAR_STR]
+        self._application.actionController.getAction (SPELL_ON_OFF_ID).setFunc (self._spellOnOff)
+
+        self._application.actionController.appendMenuCheckItem (
+            SPELL_ON_OFF_ID,
+            self._application.mainWindow.mainMenu.editMenu
+        )
+
+        self._application.actionController.appendToolbarCheckButton (
+            SPELL_ON_OFF_ID,
+            generalToolbar,
+            os.path.join (self.imagesDir, "spellcheck.png"),
+            fullUpdate=False
+        )
+
+        enableSpell = EditorConfig (Application.config).spellEnabled.value
+        self._application.actionController.check (SPELL_ON_OFF_ID, enableSpell)
+
+
+    def _spellOnOff (self, checked):
+        EditorConfig (self._application.config).spellEnabled.value = checked

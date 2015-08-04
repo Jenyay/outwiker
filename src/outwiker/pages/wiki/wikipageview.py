@@ -4,15 +4,15 @@ import wx
 import os
 from StringIO import StringIO
 
+from outwiker.actions.polyactionsid import *
+from outwiker.core.commands import insertCurrentDate
+
 from .wikieditor import WikiEditor
 from .wikitoolbar import WikiToolBar
-
 from .wikiconfig import WikiConfig
 from .htmlgenerator import HtmlGenerator
 from .htmlcache import HtmlCache
-
-from outwiker.actions.polyactionsid import *
-from outwiker.core.commands import insertCurrentDate
+from .basewikipageview import BaseWikiPageView
 
 from actions.fontsizebig import WikiFontSizeBigAction
 from actions.fontsizesmall import WikiFontSizeSmallAction
@@ -25,12 +25,11 @@ from actions.childlist import WikiChildListAction
 from actions.include import WikiIncludeAction
 from actions.dates import WikiDateCreationAction, WikiDateEditionAction
 
-from .basewikipageview import BaseWikiPageView
 
 
 class WikiPageView (BaseWikiPageView):
-    def __init__ (self, parent, *args, **kwds):
-        super (WikiPageView, self).__init__ (parent, *args, **kwds)
+    def __init__ (self, parent):
+        super (WikiPageView, self).__init__ (parent)
 
 
     def Clear (self):
@@ -486,7 +485,6 @@ class WikiPageView (BaseWikiPageView):
                                                                 toolbar,
                                                                 os.path.join (self.imagesDir, "date.png"),
                                                                 fullUpdate=False)
-
 
         self.toolsMenu.AppendSeparator()
 
