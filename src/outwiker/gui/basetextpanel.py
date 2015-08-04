@@ -4,6 +4,7 @@ from abc import ABCMeta, abstractmethod
 import os
 
 import wx
+import wx.lib.newevent
 
 from outwiker.actions.search import SearchAction, SearchNextAction, SearchPrevAction, SearchAndReplaceAction
 from outwiker.actions.polyactionsid import SPELL_ON_OFF_ID
@@ -73,6 +74,8 @@ class BaseTextPanel (BasePagePanel):
 
         self.searchMenuIndex = 2
         self.imagesDir = getImagesDir()
+
+        self._spellOnOffEvent, self.EVT_SPELL_ON_OFF = wx.lib.newevent.NewEvent()
 
         self._addSearchTools ()
         self._addSpellTools ()
@@ -316,3 +319,6 @@ class BaseTextPanel (BasePagePanel):
 
     def _spellOnOff (self, checked):
         EditorConfig (self._application.config).spellEnabled.value = checked
+
+        event = self._spellOnOffEvent (checked=checked)
+        wx.PostEvent (self, event)

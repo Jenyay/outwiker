@@ -11,15 +11,15 @@ class TextPanel (BaseTextPanel):
     Класс для представления текстовых страниц
     """
 
-    def __init__ (self, parent, *args, **kwds):
-        self.textEditor = None
-
-        BaseTextPanel.__init__ (self, parent, *args, **kwds)
+    def __init__ (self, parent):
+        super (TextPanel, self).__init__ (parent)
 
         self.__createGui()
+        self.Bind (self.EVT_SPELL_ON_OFF, handler=self._onSpellOnOff)
 
 
     def Clear (self):
+        self.Unbind (self.EVT_SPELL_ON_OFF, handler=self._onSpellOnOff)
         super (TextPanel, self).Clear()
 
 
@@ -82,8 +82,5 @@ class TextPanel (BaseTextPanel):
         return True
 
 
-    def _spellOnOff (self, checked):
-        super (TextPanel, self)._spellOnOff (checked)
-
-        if self.textEditor is not None:
-            self.textEditor.setDefaultSettings()
+    def _onSpellOnOff (self, event):
+        self.textEditor.setDefaultSettings()

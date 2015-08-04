@@ -31,8 +31,6 @@ class BaseHtmlPanel(BaseTextPanel):
 
 
     def __init__(self, parent, *args, **kwds):
-        self._codeEditor = None
-
         super (BaseHtmlPanel, self).__init__ (parent, *args, **kwds)
 
         # Предыдущее содержимое результирующего HTML, чтобы не переписывать
@@ -55,10 +53,13 @@ class BaseHtmlPanel(BaseTextPanel):
         self.__do_layout()
 
         self.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED, self._onTabChanged, self.notebook)
+        self.Bind (self.EVT_SPELL_ON_OFF, handler=self._onSpellOnOff)
 
 
     def Clear (self):
-        self.Unbind(wx.EVT_NOTEBOOK_PAGE_CHANGED, source = self.notebook, handler = self._onTabChanged)
+        self.Unbind(wx.EVT_NOTEBOOK_PAGE_CHANGED, source=self.notebook, handler=self._onTabChanged)
+        self.Unbind (self.EVT_SPELL_ON_OFF, handler=self._onSpellOnOff)
+
         super (BaseHtmlPanel, self).Clear()
 
 
@@ -422,8 +423,5 @@ class BaseHtmlPanel(BaseTextPanel):
         self._application.mainWindow.pagePanel.pageView.codeEditor.escapeHtml ()
 
 
-    def _spellOnOff (self, checked):
-        super (BaseHtmlPanel, self)._spellOnOff (checked)
-
-        if self._codeEditor is not None:
-            self._codeEditor.setDefaultSettings()
+    def _onSpellOnOff (self, event):
+        self._codeEditor.setDefaultSettings()

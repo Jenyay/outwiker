@@ -22,10 +22,10 @@ class BaseWikiPageView (BaseHtmlPanel):
     HTML_RESULT_PAGE_INDEX = BaseHtmlPanel.RESULT_PAGE_INDEX + 1
 
     def __init__ (self, parent, *args, **kwds):
+        super (BaseWikiPageView, self).__init__ (parent, *args, **kwds)
+
         # Редактор с просмотром получившегося HTML (если есть)
         self.htmlCodeWindow = None
-
-        super (BaseWikiPageView, self).__init__ (parent, *args, **kwds)
 
         self._hashKey = u"md5_hash"
         self.__WIKI_MENU_INDEX = 7
@@ -378,8 +378,8 @@ class BaseWikiPageView (BaseHtmlPanel):
         self._application.actionController.appendMenuItem (WikiUpdateHtmlAction.stringId, self.toolsMenu)
 
 
-    def _spellOnOff (self, checked):
-        super (BaseWikiPageView, self)._spellOnOff (checked)
+    def _onSpellOnOff (self, event):
+        super (BaseWikiPageView, self)._onSpellOnOff (event)
 
         if self.htmlCodeWindow is not None:
             self.htmlCodeWindow.setDefaultSettings()
