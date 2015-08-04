@@ -627,6 +627,7 @@ class TextEditor(wx.Panel):
         self._spellErrorText = self.textCtrl.GetTextRange (self._spellStartByteError, self._spellEndByteError)
         self._spellSuggestList = self._spellChecker.getSuggest (self._spellErrorText)[:self._spellMaxSuggest]
 
+        menu.AppendSeparator()
         menu.AppendSpellSubmenu (self._spellErrorText, self._spellSuggestList)
 
 
