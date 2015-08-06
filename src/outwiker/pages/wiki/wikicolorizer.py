@@ -149,10 +149,29 @@ class WikiColorizer (object):
                                        self._editor.STYLE_LINK_ID,
                                        bytepos_start,
                                        bytepos_end)
-                self._editor.runSpellChecking (stylelist, pos_start, pos_end)
+                self._linkSpellChecking (text, stylelist, pos_start, pos_end)
 
             elif tokenname == "url":
                 self._editor.addStyle (stylelist,
                                        self._editor.STYLE_LINK_ID,
                                        bytepos_start,
                                        bytepos_end)
+
+
+    def _linkSpellChecking (self, text, stylelist, pos_start, pos_end):
+        separator1 = u'->'
+        separator2 = u'|'
+
+        link = text[pos_start: pos_end]
+        sep1_pos = link.find (separator1)
+        if sep1_pos != -1:
+            self._editor.runSpellChecking (stylelist,
+                                           pos_start,
+                                           pos_start + sep1_pos)
+            return
+
+        sep2_pos = link.find (separator2)
+        if sep2_pos != -1:
+            self._editor.runSpellChecking (stylelist,
+                                           pos_start + sep2_pos + len (separator2),
+                                           pos_end)
