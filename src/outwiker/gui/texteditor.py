@@ -604,6 +604,9 @@ class TextEditor(wx.Panel):
 
     def _appendSpellItems (self, menu, pos_byte):
         stylebytes = self.getCachedStyleBytes()
+        if stylebytes is None:
+            return
+
         stylebytes_len = len (stylebytes)
 
         if (stylebytes is None or
