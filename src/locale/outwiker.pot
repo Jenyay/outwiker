@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-06 12:12+0300\n"
+"POT-Creation-Date: 2015-08-06 13:48+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -774,7 +774,7 @@ msgid "Use dictionaries"
 msgstr ""
 
 #: outwiker/gui/preferences/spellpanel.py:49
-msgid "Custom dictonary"
+msgid "Custom dictonary (one word per line)"
 msgstr ""
 
 #: outwiker/gui/preferences/attachpanel.py:17

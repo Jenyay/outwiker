@@ -46,7 +46,7 @@ class SpellPanel(BasePrefPanel):
 
 
     def _createCustomDict (self, mainSizer):
-        dictLabel = wx.StaticText (self, label = _(u'Custom dictonary'))
+        dictLabel = wx.StaticText (self, label = _(u'Custom dictonary (one word per line)'))
         self.customDict = wx.TextCtrl (self, style=wx.TE_MULTILINE)
 
         mainSizer.Add (dictLabel,

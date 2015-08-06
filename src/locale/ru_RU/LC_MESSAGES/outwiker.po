@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-06 12:12+0300\n"
+"POT-Creation-Date: 2015-08-06 13:48+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -784,8 +784,8 @@ msgid "Use dictionaries"
 msgstr "Используемые словари"
 
 #: outwiker/gui/preferences/spellpanel.py:49
-msgid "Custom dictonary"
-msgstr "Пользовательский словарь"
+msgid "Custom dictonary (one word per line)"
+msgstr "Пользовательский словарь (одно слово на строку)"
 
 #: outwiker/gui/preferences/attachpanel.py:17
 msgid "Insert link"
@@ -2248,6 +2248,9 @@ msgid ""
 "The page title contains invalid characters for Microsoft Windows operating "
 "system"
 msgstr "Заголовок страницы содержит запрещённые в Microsoft Windows символы"
+
+#~ msgid "Custom dictonary"
+#~ msgstr "Пользовательский словарь"
 
 #~ msgid "Add to dictionary"
 #~ msgstr "Добавить в словарь"

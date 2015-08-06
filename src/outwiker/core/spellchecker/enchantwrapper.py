@@ -46,7 +46,7 @@ class EnchantWrapper (object):
             self._checkers[-1].add_to_pwl (word)
 
 
-    def _createCustomDict (self, pathToDict):
+    def _createCustomDictLang (self, pathToDict):
         # Create fake language for custom dictionary
         dicFile = os.path.join (pathToDict,
                                 CUSTOM_DICT_LANG + u'.dic')
@@ -65,7 +65,7 @@ class EnchantWrapper (object):
 
     def _getCustomDict (self, pathToDict):
         customDictPath = os.path.join (pathToDict, CUSTOM_DICT_FILE_NAME)
-        self._createCustomDict (pathToDict)
+        self._createCustomDictLang (pathToDict)
 
         key = (CUSTOM_DICT_LANG, customDictPath)
 
