@@ -224,3 +224,6 @@ reset
 file
 hidden
 image
+doctype
+X-UA-Compatible
+css

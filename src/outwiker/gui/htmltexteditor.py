@@ -1,13 +1,20 @@
 # -*- coding: utf-8 -*-
 
+import os.path
+import shutil
+
 import wx
 
 from outwiker.gui.texteditor import TextEditor
-from outwiker.core.application import Application
 from outwiker.gui.guiconfig import HtmlEditorStylesConfig
+from outwiker.core.application import Application
+from outwiker.core.system import getSpellDirList
 
 
 class HtmlTextEditor (TextEditor):
+    _htmlDictIsCopied = False
+
+
     def __init__(self, *args, **kwds):
         self._htmlStylesSection = "HtmlStyles"
         TextEditor.__init__(self, *args, **kwds)
@@ -127,3 +134,24 @@ class HtmlTextEditor (TextEditor):
 
         self.runSpellChecking (stylelist, 0, len (text))
         return stylelist
+
+
+    def getSpellChecker (self):
+        checker = super (HtmlTextEditor, self).getSpellChecker()
+        htmlDictName = u'html.dic'
+
+        # Copy html.dic dictionary to folder with user's permissions
+        if not self._htmlDictIsCopied:
+            srcname = os.path.join (getSpellDirList()[0], htmlDictName)
+            dstname = os.path.join (getSpellDirList()[-1], htmlDictName)
+
+            if srcname != dstname:
+                try:
+                    shutil.copyfile (srcname, dstname)
+                except IOError:
+                    return checker
+
+            self._htmlDictIsCopied = True
+
+        checker.addCustomDict (os.path.join (getSpellDirList()[-1], htmlDictName))
+        return checker

@@ -29,8 +29,12 @@ class SpellChecker (object):
         return EnchantWrapper (langlist, folders)
 
 
-    def addToCustomDict (self, word):
-        self._realChecker.addToCustomDict (word)
+    def addCustomDict (self, path):
+        self._realChecker.addCustomDict (path)
+
+
+    def addToCustomDict (self, dictIndex, word):
+        self._realChecker.addToCustomDict (dictIndex, word)
 
 
     def getSuggest (self, word):

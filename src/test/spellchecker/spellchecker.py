@@ -83,13 +83,41 @@ class SpellCheckerTest (unittest.TestCase):
 
     def testUserDict_01 (self):
         word = u'ывпывапыяа'
+        dictname = u'mydict.dic'
+
         self._copyDict (u'ru_RU')
         checker = SpellChecker ([u'ru_RU'], [self._pathToDicts])
         self.assertTrue (checker.check (u'Проверка'))
         self.assertFalse (checker.check (word))
 
-        checker.addToCustomDict (word)
+        checker.addCustomDict (os.path.join (self._pathToDicts, dictname))
+        checker.addToCustomDict (0, word)
         self.assertTrue (checker.check (word))
 
         checker2 = SpellChecker ([u'ru_RU'], [self._pathToDicts])
+        checker2.addCustomDict (os.path.join (self._pathToDicts, dictname))
         self.assertTrue (checker2.check (word))
+
+
+    def testUserDict_02 (self):
+        word = u'ывпывапыяа'
+        dictname1 = u'mydict_1.dic'
+        dictname2 = u'mydict_2.dic'
+
+        self._copyDict (u'ru_RU')
+        checker = SpellChecker ([u'ru_RU'], [self._pathToDicts])
+        self.assertTrue (checker.check (u'Проверка'))
+        self.assertFalse (checker.check (word))
+
+        checker.addCustomDict (os.path.join (self._pathToDicts, dictname1))
+        checker.addCustomDict (os.path.join (self._pathToDicts, dictname2))
+        checker.addToCustomDict (1, word)
+        self.assertTrue (checker.check (word))
+
+        checker2 = SpellChecker ([u'ru_RU'], [self._pathToDicts])
+        checker2.addCustomDict (os.path.join (self._pathToDicts, dictname1))
+        self.assertFalse (checker2.check (word))
+
+        checker3 = SpellChecker ([u'ru_RU'], [self._pathToDicts])
+        checker3.addCustomDict (os.path.join (self._pathToDicts, dictname2))
+        self.assertTrue (checker3.check (word))

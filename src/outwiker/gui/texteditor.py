@@ -6,6 +6,7 @@ import math
 import re
 from datetime import datetime, timedelta
 import threading
+import os.path
 
 import wx
 import wx.lib.newevent
@@ -15,6 +16,7 @@ import outwiker.core.system
 from outwiker.core.application import Application
 from outwiker.core.textprinter import TextPrinter
 from outwiker.core.spellchecker import SpellChecker
+from outwiker.core.spellchecker.defines import CUSTOM_DICT_FILE_NAME
 from outwiker.gui.guiconfig import EditorConfig
 from outwiker.gui.searchreplacecontroller import SearchReplaceController
 from outwiker.gui.searchreplacepanel import SearchReplacePanel
@@ -562,8 +564,12 @@ class TextEditor(wx.Panel):
 
     def getSpellChecker (self):
         langlist = self._getDictsFromConfig()
-        return SpellChecker (langlist,
-                             outwiker.core.system.getSpellDirList())
+        spellDirList = outwiker.core.system.getSpellDirList()
+
+        spellChecker = SpellChecker (langlist, spellDirList)
+        spellChecker.addCustomDict (os.path.join (spellDirList[-1], CUSTOM_DICT_FILE_NAME))
+
+        return spellChecker
 
 
     def _getDictsFromConfig (self):
@@ -597,7 +603,7 @@ class TextEditor(wx.Panel):
 
     def __onAddWordToDict (self, event):
         if self._spellErrorText is not None:
-            self._spellChecker.addToCustomDict (self._spellErrorText)
+            self._spellChecker.addToCustomDict (0, self._spellErrorText)
             self._spellErrorText = None
             self._styleSet = False
 
