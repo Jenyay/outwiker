@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-04 15:11+0300\n"
+"POT-Creation-Date: 2015-08-06 10:27+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -775,9 +775,13 @@ msgstr "Paragraphs separator"
 msgid "Additional styles (CSS):"
 msgstr "Additional styles (CSS):"
 
-#: outwiker/gui/preferences/spellpanel.py:30
+#: outwiker/gui/preferences/spellpanel.py:34
 msgid "Use dictionaries"
 msgstr "Use dictionaries"
+
+#: outwiker/gui/preferences/spellpanel.py:49
+msgid "Custom dictonary"
+msgstr "Custom dictonary"
 
 #: outwiker/gui/preferences/attachpanel.py:17
 msgid "Insert link"

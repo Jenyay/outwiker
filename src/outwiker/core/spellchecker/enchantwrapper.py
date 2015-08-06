@@ -6,7 +6,7 @@ from enchant import Dict, DictWithPWL, Broker
 import enchant.errors
 
 from dictsfinder import DictsFinder
-from defines import CUSTOM_DICT_LANG
+from defines import CUSTOM_DICT_LANG, CUSTOM_DICT_FILE_NAME
 
 
 class EnchantWrapper (object):
@@ -22,7 +22,6 @@ class EnchantWrapper (object):
         """
         dictsFinder = DictsFinder (folders)
         self._checkers = []
-        self._customDictName = u'custom.dic'
         self._useCustomDict = False
 
         for lang in langlist:
@@ -65,7 +64,7 @@ class EnchantWrapper (object):
 
 
     def _getCustomDict (self, pathToDict):
-        customDictPath = os.path.join (pathToDict, self._customDictName)
+        customDictPath = os.path.join (pathToDict, CUSTOM_DICT_FILE_NAME)
         self._createCustomDict (pathToDict)
 
         key = (CUSTOM_DICT_LANG, customDictPath)
