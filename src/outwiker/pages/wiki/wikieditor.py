@@ -10,15 +10,13 @@ from .wikiconfig import WikiConfig
 
 class WikiEditor (TextEditor):
     def __init__ (self, parent):
-        self.__createStyles()
         self.__stylebytes = None
+        self.__colorizeSyntax = True
 
         super (WikiEditor, self).__init__ (parent)
 
-        self._colorizer = WikiColorizer (self)
 
-
-    def __createStyles (self):
+    def __createStyles (self, config):
         self._styles = {}
 
         # Константы для стилей
@@ -59,9 +57,6 @@ class WikiEditor (TextEditor):
         self.STYLE_LINK_UNDERLINE_ID = self.STYLE_UNDERLINE_ID | self.STYLE_LINK_ID
         self.STYLE_LINK_BOLD_ID = self.STYLE_BOLD_ID | self.STYLE_LINK_ID
 
-        config = WikiConfig (Application.config)
-
-
         # Заполняем словарь стилей
         self._styles[self.STYLE_BOLD_ID] = "bold"
         self._styles[self.STYLE_ITALIC_ID] = "italic"
@@ -84,7 +79,11 @@ class WikiEditor (TextEditor):
 
     def setDefaultSettings (self):
         super (WikiEditor, self).setDefaultSettings()
-        self.__createStyles()
+        config = WikiConfig (Application.config)
+
+        self.__createStyles(config)
+
+        self.__colorizeSyntax = config.colorizeSyntax.value
 
         self.textCtrl.SetLexer (wx.stc.STC_LEX_CONTAINER)
         self.textCtrl.SetModEventMask(wx.stc.STC_MOD_INSERTTEXT | wx.stc.STC_MOD_DELETETEXT)
@@ -110,7 +109,8 @@ class WikiEditor (TextEditor):
         Функция должна возвращать список байт, описывающих раскраску (стили) для текста text
         Этот метод выполняется в отдельном потоке
         """
-        self.__stylebytes = self._colorizer.colorize (text)
+        _colorizer = WikiColorizer (self, self.__colorizeSyntax)
+        self.__stylebytes = _colorizer.colorize (text)
         return self.__stylebytes
 
 

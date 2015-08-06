@@ -6,12 +6,12 @@ from outwiker.gui.preferences.configelements import BooleanElement, IntegerEleme
 from outwiker.core.application import Application
 from wikiconfig import WikiConfig
 from emptycontent import EmptyContent
+from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
 
 
-class WikiPrefGeneralPanel(wx.Panel):
-    def __init__(self, *args, **kwds):
-        kwds["style"] = wx.TAB_TRAVERSAL
-        wx.Panel.__init__(self, *args, **kwds)
+class WikiPrefGeneralPanel(BasePrefPanel):
+    def __init__(self, parent):
+        super (WikiPrefGeneralPanel, self).__init__ (parent)
 
         self.__createGui()
         self.config = WikiConfig (Application.config)
@@ -20,6 +20,9 @@ class WikiPrefGeneralPanel(wx.Panel):
     def __createGui (self):
         # Показывать ли результирующий HTML?
         self.htmlCodeCheckbox = wx.CheckBox(self, -1, _(u"Show HTML Code Tab"))
+
+        # Highlight the wiki notation?
+        self.colorizeWiki = wx.CheckBox(self, -1, _(u"Highlight the Wiki Notation"))
 
         # Размер миниатюр
         self.thumbSizeLabel = wx.StaticText(self, -1, _(u"Thumbnail Size"))
@@ -44,11 +47,14 @@ class WikiPrefGeneralPanel(wx.Panel):
 
     def __do_layout(self):
         mainSizer = wx.FlexGridSizer(cols=1)
-        mainSizer.AddGrowableRow(4)
+        mainSizer.AddGrowableRow(5)
         mainSizer.AddGrowableCol(0)
 
         # Показывать ли результирующий HTML?
         mainSizer.Add(self.htmlCodeCheckbox, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
+
+        # Highlight the wiki notation?
+        mainSizer.Add(self.colorizeWiki, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
 
         # Размер миниатюр
         thumbSizer = wx.FlexGridSizer(1, 2)
@@ -80,6 +86,8 @@ class WikiPrefGeneralPanel(wx.Panel):
         # Показывать ли вкладку с кодом HTML
         self.showHtmlCodeOption = BooleanElement (self.config.showHtmlCodeOptions, self.htmlCodeCheckbox)
 
+        self.colorizeWiki.SetValue (self.config.colorizeSyntax.value)
+
         # Размер превьюшек по умолчанию
         self.thumbSizeOption = IntegerElement (self.config.thumbSizeOptions, self.thumbSize, 1, 10000)
 
@@ -99,6 +107,8 @@ class WikiPrefGeneralPanel(wx.Panel):
 
         self.showHtmlCodeOption.save()
         self.thumbSizeOption.save()
+
+        self.config.colorizeSyntax.value = self.colorizeWiki.GetValue()
 
         emptycontent = EmptyContent (Application.config)
         emptycontent.content = self.emptyTplTextCtrl.GetValue()

@@ -42,6 +42,9 @@ class WikiConfig (object):
     STYLE_COMMAND_SECTION = u"command"
     STYLE_COMMAND_DEFAULT = StcStyle.parse (u"fore:#6A686B")
 
+    COLORIZE_SYNTAX_SECTION = u'ColorizeSyntax'
+    COLORIZE_SYNTAX_DEFAULT = True
+
 
     def __init__ (self, config):
         self.config = config
@@ -85,3 +88,8 @@ class WikiConfig (object):
                                        WikiConfig.STYLES_SECTION,
                                        WikiConfig.STYLE_COMMAND_SECTION,
                                        WikiConfig.STYLE_COMMAND_DEFAULT)
+
+        self.colorizeSyntax = BooleanOption (self.config,
+                                             self.WIKI_SECTION,
+                                             self.COLORIZE_SYNTAX_SECTION,
+                                             self.COLORIZE_SYNTAX_DEFAULT)

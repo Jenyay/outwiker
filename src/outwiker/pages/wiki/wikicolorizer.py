@@ -12,7 +12,7 @@ from parser.tokentext import TextFactory
 
 
 class WikiColorizer (object):
-    def __init__ (self, editor):
+    def __init__ (self, editor, colorizeSyntax):
         self._editor = editor
 
         self.text = TextFactory.make (None)
@@ -28,31 +28,35 @@ class WikiColorizer (object):
         self.noformat = NoFormatFactory.make (None).setParseAction(lambda s, l, t: None)
         self.preformat = PreFormatFactory.make (None).setParseAction(lambda s, l, t: None)
 
-        self.colorParser = (
-            self.url |
-            self.text |
-            self.linebreak |
-            self.link |
-            self.noformat |
-            self.preformat |
-            self.command |
-            self.bold_italic |
-            self.bold |
-            self.italic |
-            self.underline |
-            self.heading)
+        if colorizeSyntax:
+            self.colorParser = (
+                self.url |
+                self.text |
+                self.linebreak |
+                self.link |
+                self.noformat |
+                self.preformat |
+                self.command |
+                self.bold_italic |
+                self.bold |
+                self.italic |
+                self.underline |
+                self.heading)
 
-        self.insideBlockParser = (
-            self.url |
-            self.text |
-            self.linebreak |
-            self.link |
-            self.noformat |
-            self.preformat |
-            self.bold_italic |
-            self.bold |
-            self.italic |
-            self.underline)
+            self.insideBlockParser = (
+                self.url |
+                self.text |
+                self.linebreak |
+                self.link |
+                self.noformat |
+                self.preformat |
+                self.bold_italic |
+                self.bold |
+                self.italic |
+                self.underline)
+        else:
+            self.colorParser = self.text
+            self.insideBlockParser = self.text
 
 
     def colorize (self, text):

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-06 10:27+0300\n"
+"POT-Creation-Date: 2015-08-06 12:12+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -418,22 +418,26 @@ msgid "Show HTML Code Tab"
 msgstr "Показывать вкладку с кодом HTML"
 
 #: outwiker/pages/wiki/wikipreferences.py:25
+msgid "Highlight the Wiki Notation"
+msgstr "Раскрашивать викинотацию"
+
+#: outwiker/pages/wiki/wikipreferences.py:28
 msgid "Thumbnail Size"
 msgstr "Размер миниатюр"
 
-#: outwiker/pages/wiki/wikipreferences.py:29
+#: outwiker/pages/wiki/wikipreferences.py:32
 msgid "Template for empty page"
 msgstr "Шаблон для пустой страницы"
 
-#: outwiker/pages/wiki/wikipreferences.py:34
+#: outwiker/pages/wiki/wikipreferences.py:37
 msgid "Default link style"
 msgstr "Стиль ссылок по умолчанию"
 
-#: outwiker/pages/wiki/wikipreferences.py:37
+#: outwiker/pages/wiki/wikipreferences.py:40
 msgid "[[comment -> link]]"
 msgstr "[[комментарий -> ссылка]]"
 
-#: outwiker/pages/wiki/wikipreferences.py:38
+#: outwiker/pages/wiki/wikipreferences.py:41
 msgid "[[link | comment]]"
 msgstr "[[ссылка | комментарий]]"
 

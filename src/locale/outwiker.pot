@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-06 10:27+0300\n"
+"POT-Creation-Date: 2015-08-06 12:12+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -412,22 +412,26 @@ msgid "Show HTML Code Tab"
 msgstr ""
 
 #: outwiker/pages/wiki/wikipreferences.py:25
+msgid "Highlight the Wiki Notation"
+msgstr ""
+
+#: outwiker/pages/wiki/wikipreferences.py:28
 msgid "Thumbnail Size"
 msgstr ""
 
-#: outwiker/pages/wiki/wikipreferences.py:29
+#: outwiker/pages/wiki/wikipreferences.py:32
 msgid "Template for empty page"
 msgstr ""
 
-#: outwiker/pages/wiki/wikipreferences.py:34
+#: outwiker/pages/wiki/wikipreferences.py:37
 msgid "Default link style"
 msgstr ""
 
-#: outwiker/pages/wiki/wikipreferences.py:37
+#: outwiker/pages/wiki/wikipreferences.py:40
 msgid "[[comment -> link]]"
 msgstr ""
 
-#: outwiker/pages/wiki/wikipreferences.py:38
+#: outwiker/pages/wiki/wikipreferences.py:41
 msgid "[[link | comment]]"
 msgstr ""
 
