@@ -5,7 +5,7 @@ import os.path
 import wx
 
 from outwiker.core.application import Application
-from outwiker.core.system import getSpellDirList
+from outwiker.core.system import getSpellDirList, writeTextFile, readTextFile
 from outwiker.core.spellchecker.defines import CUSTOM_DICT_FILE_NAME
 from outwiker.core.spellchecker.dictsfinder import DictsFinder
 from outwiker.gui.guiconfig import EditorConfig
@@ -79,17 +79,25 @@ class SpellPanel(BasePrefPanel):
         """
         self.customDict.SetValue (u'')
         try:
-            with open (self._getCustomDictFileName()) as fp:
-                text = fp.read()
-            self.customDict.SetValue (text)
+            text = readTextFile (self._getCustomDictFileName())
         except (IOError, SystemError):
-            pass
+            return
+
+        self.customDict.SetValue (self._sanitizeDictText (text))
+
+
+    def _sanitizeDictText (self, text):
+        text = u'\n'.join ([item.strip()
+                            for item
+                            in text.split (u'\n')
+                            if len (item.strip()) > 0])
+        return text
 
 
     def _saveCustomDict (self):
+        text = self._sanitizeDictText (self.customDict.GetValue())
         try:
-            with open (self._getCustomDictFileName(), 'w') as fp:
-                fp.write(self.customDict.GetValue())
+            writeTextFile (self._getCustomDictFileName(), text)
         except (IOError, SystemError):
             pass
 
