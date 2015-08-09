@@ -57,3 +57,9 @@ class BasePrefPanel (wx.ScrolledWindow):
 
         self._addControlsPairToSizer (sizer, label, combobox)
         return (label, combobox)
+
+
+    def _createCheckBox (self, text, sizer):
+        checkBox = wx.CheckBox (self, label=text)
+        sizer.Add (checkBox, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
+        return checkBox

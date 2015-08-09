@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-06 13:48+0300\n"
+"POT-Creation-Date: 2015-08-09 19:47+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -779,11 +779,15 @@ msgstr "Paragraphs separator"
 msgid "Additional styles (CSS):"
 msgstr "Additional styles (CSS):"
 
-#: outwiker/gui/preferences/spellpanel.py:34
+#: outwiker/gui/preferences/spellpanel.py:29
+msgid "Skip words with digits"
+msgstr "Skip words with digits"
+
+#: outwiker/gui/preferences/spellpanel.py:39
 msgid "Use dictionaries"
 msgstr "Use dictionaries"
 
-#: outwiker/gui/preferences/spellpanel.py:49
+#: outwiker/gui/preferences/spellpanel.py:54
 msgid "Custom dictonary (one word per line)"
 msgstr "Custom dictonary (one word per line)"
 

@@ -23,10 +23,15 @@ class SpellPanel(BasePrefPanel):
     def _createGui (self):
         mainSizer = wx.FlexGridSizer (cols=1)
         mainSizer.AddGrowableCol (0)
-        mainSizer.AddGrowableRow (3)
+        mainSizer.AddGrowableRow (4)
 
+        self._skipDigitsCheckBox = self._createCheckBox (
+            _(u'Skip words with digits'),
+            mainSizer
+        )
         self._createDictsList (mainSizer)
         self._createCustomDict (mainSizer)
+
         self.SetSizer (mainSizer)
 
 
@@ -117,8 +122,10 @@ class SpellPanel(BasePrefPanel):
     def LoadState(self):
         self._fillDictsList ()
         self._loadCustomDict ()
+        self._skipDigitsCheckBox.SetValue (self._config.spellSkipDigits.value)
 
 
     def Save (self):
         self._config.spellCheckerDicts.value = u', '.join (self.dictsList.GetCheckedStrings())
         self._saveCustomDict()
+        self._config.spellSkipDigits.value = self._skipDigitsCheckBox.GetValue()

@@ -35,6 +35,7 @@ class TextEditor(wx.Panel):
         self._config = EditorConfig (Application.config)
 
         self._enableSpellChecking = True
+        self._spellSkipWordsWithNumbers = True
         self._spellChecker = None
         self._wordRegex = re.compile ('[\w-]*\w[\w-]*', re.U)
         self._digitRegex = re.compile ('\d', re.U)
@@ -218,6 +219,7 @@ class TextEditor(wx.Panel):
         self.textCtrl.SetTabWidth (self._config.tabWidth.value)
 
         self.enableSpellChecking = self._config.spellEnabled.value
+        self._spellSkipWordsWithNumbers = self.config.spellSkipDigits.value
 
         if self._config.homeEndKeys.value == EditorConfig.HOME_END_OF_LINE:
             # Клавиши Home / End переносят курсор на начало / конец строки
@@ -443,9 +445,10 @@ class TextEditor(wx.Panel):
 
 
     def checkSpellWord (self, word):
-        match = self._digitRegex.search (word)
-        if match is not None:
-            return True
+        if self._spellSkipWordsWithNumbers:
+            match = self._digitRegex.search (word)
+            if match is not None:
+                return True
 
         return self._spellChecker.check (word)
 

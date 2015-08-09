@@ -193,8 +193,11 @@ class EditorConfig (object):
     SPELL_DICTS_SECTION = u'dictionaries'
     SPELL_DICT_DEFAULT = u'en_US, ru_RU, ru_RU_yo, uk_UA'
 
-    SPELL_ENABLE_SECTION = u'spellchecking'
+    SPELL_ENABLE_SECTION = u'SpellChecking'
     SPELL_ENABLE_DEFAULT = True
+
+    SPELL_SKIP_DIGITS_SECTION = u'SpellSkipDigits'
+    SPELL_SKIP_DIGITS_DEFAULT = True
 
 
     def __init__ (self, config):
@@ -259,6 +262,11 @@ class EditorConfig (object):
                                            GeneralGuiConfig.GENERAL_SECTION,
                                            EditorConfig.SPELL_ENABLE_SECTION,
                                            EditorConfig.SPELL_ENABLE_DEFAULT)
+
+        self.spellSkipDigits = BooleanOption (self.config,
+                                              GeneralGuiConfig.GENERAL_SECTION,
+                                              EditorConfig.SPELL_SKIP_DIGITS_SECTION,
+                                              EditorConfig.SPELL_SKIP_DIGITS_DEFAULT)
 
 
 class HtmlEditorStylesConfig (object):
