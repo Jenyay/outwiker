@@ -38,7 +38,7 @@ class TextEditor(wx.Panel):
         self._enableSpellChecking = True
         self._spellSkipWordsWithNumbers = True
         self._spellChecker = None
-        self._wordRegex = re.compile ('[\w-]*\w[\w-]*', re.U)
+        self._wordRegex = re.compile (r'(?:(?:\w-\w)|\w)+', re.U)
         self._digitRegex = re.compile ('\d', re.U)
 
         self.SPELL_ERROR_INDICATOR = 0

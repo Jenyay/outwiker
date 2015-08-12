@@ -16,7 +16,7 @@ class TextToken (object):
     Токен для обычного текста
     '''
     def getToken (self):
-        textRegex = '[\w-]*\w[\w-]*'
+        textRegex = r'(?:(?:\w-\w)|\w)+'
         token = Regex (textRegex, re.UNICODE)('text')
         token.leaveWhitespace()
         return token
