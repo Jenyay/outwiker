@@ -39,6 +39,18 @@ class EventTest (unittest.TestCase):
         self.value4 += 1
 
 
+    def eventAdd_1 (self, param):
+        param.append (1)
+
+
+    def eventAdd_2 (self, param):
+        param.append (2)
+
+
+    def eventAdd_3 (self, param):
+        param.append (3)
+
+
     def testAdd1 (self):
         event = Event()
         event += self.event1
@@ -130,6 +142,78 @@ class EventTest (unittest.TestCase):
 
         self.assertEqual (self.value1, 0)
         self.assertEqual (self.value2, 0)
+
+
+    def testPriority_01 (self):
+        items = []
+        event = Event()
+        event.bind (self.eventAdd_1, 0)
+        event(items)
+
+        self.assertEqual (items, [1])
+
+
+    def testPriority_02 (self):
+        items = []
+        event = Event()
+        event.bind (self.eventAdd_1, 0)
+        event.bind (self.eventAdd_2, 0)
+        event(items)
+
+        self.assertEqual (items, [1, 2])
+
+
+    def testPriority_03 (self):
+        items = []
+        event = Event()
+        event.bind (self.eventAdd_1, 0)
+        event.bind (self.eventAdd_2, 0)
+        event.bind (self.eventAdd_3, 0)
+        event(items)
+
+        self.assertEqual (items, [1, 2, 3])
+
+
+    def testPriority_04 (self):
+        items = []
+        event = Event()
+        event.bind (self.eventAdd_1, 1)
+        event.bind (self.eventAdd_2, 0)
+        event(items)
+
+        self.assertEqual (items, [1, 2])
+
+
+    def testPriority_05 (self):
+        items = []
+        event = Event()
+        event.bind (self.eventAdd_1, 0)
+        event.bind (self.eventAdd_2, 1)
+        event(items)
+
+        self.assertEqual (items, [2, 1])
+
+
+    def testPriority_06 (self):
+        items = []
+        event = Event()
+        event.bind (self.eventAdd_1, 10)
+        event.bind (self.eventAdd_2, 10)
+        event.bind (self.eventAdd_3, 1)
+        event(items)
+
+        self.assertEqual (items, [1, 2, 3])
+
+
+    def testPriority_07 (self):
+        items = []
+        event = Event()
+        event.bind (self.eventAdd_1, 10)
+        event.bind (self.eventAdd_2, 10)
+        event.bind (self.eventAdd_3, 20)
+        event(items)
+
+        self.assertEqual (items, [3, 1, 2])
 
 
 class EventsTest (unittest.TestCase):

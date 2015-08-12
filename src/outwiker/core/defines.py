@@ -23,3 +23,6 @@ PAGE_ATTACH_DIR = u'__attach'
 
 # Final file after wiki parsing or HTML generation
 PAGE_RESULT_HTML = u'__content.html'
+
+EVENT_PRIORITY_DEFAULT = 0
+EVENT_PRIORITY_CORE = 100
