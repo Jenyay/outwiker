@@ -25,6 +25,7 @@ class PluginDebug (Plugin):
         self._enablePostProcessing = False
         self._enableOnHoverLink = False
         self._enableOnLinkClick = False
+        self._enableOnEditorPopup = False
 
 
     def __createMenu (self):
@@ -171,6 +172,12 @@ class PluginDebug (Plugin):
         # params["process"] = True
 
 
+    def __onEditorPopupMenu (self, page, params):
+        if self._enableOnEditorPopup:
+            params.menu.AppendSeparator()
+            params.menu.Append (-1, u'Debug popup menu item')
+
+
     ###################################################
     # Свойства и методы, которые необходимо определить
     ###################################################
@@ -234,6 +241,7 @@ class PluginDebug (Plugin):
             self._application.onPreprocessing += self.__onPreProcessing
             self._application.onHoverLink += self.__onHoverLink
             self._application.onLinkClick += self.__onLinkClick
+            self._application.onEditorPopupMenu += self.__onEditorPopupMenu
 
 
     def destroy (self):
@@ -273,5 +281,6 @@ class PluginDebug (Plugin):
             self._application.onPreprocessing -= self.__onPreProcessing
             self._application.onHoverLink -= self.__onHoverLink
             self._application.onLinkClick -= self.__onLinkClick
+            self._application.onEditorPopupMenu -= self.__onEditorPopupMenu
 
     #############################################

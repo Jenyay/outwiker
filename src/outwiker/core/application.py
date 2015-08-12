@@ -198,6 +198,12 @@ class ApplicationParams (object):
         #     params - instance of the outwiker.core.events.LinkClickParams class
         self.onLinkClick = Event()
 
+        # Event occurs when user click with right button in text editor
+        # Parameters:
+        #     page - current page
+        #     params - instance of the the outwiker.core.events.EditorPopupMenuParams class
+        self.onEditorPopupMenu = Event()
+
 
     def init (self, configFilename):
         """

@@ -17,6 +17,7 @@ from outwiker.core.application import Application
 from outwiker.core.textprinter import TextPrinter
 from outwiker.core.spellchecker import SpellChecker
 from outwiker.core.spellchecker.defines import CUSTOM_DICT_FILE_NAME
+from outwiker.core.events import EditorPopupMenuParams
 from outwiker.gui.guiconfig import EditorConfig
 from outwiker.gui.searchreplacecontroller import SearchReplaceController
 from outwiker.gui.searchreplacepanel import SearchReplacePanel
@@ -597,6 +598,12 @@ class TextEditor(wx.Panel):
 
         popupMenu = self._getMenu ()
         self._appendSpellItems (popupMenu, pos_byte)
+
+        Application.onEditorPopupMenu (
+            Application.selectedPage,
+            EditorPopupMenuParams (self, popupMenu, point, pos_byte)
+        )
+
         self.textCtrl.PopupMenu(popupMenu)
 
 

@@ -105,3 +105,20 @@ class PreHtmlImprovingParams (object):
         result - HTML code after wiki parsing. This item can be changed by event handlers.
         """
         self.result = result
+
+
+class EditorPopupMenuParams (object):
+    """
+    Parameter set for onEditorPopupMenu event
+    """
+    def __init__ (self, editor, menu, point, pos_byte):
+        """
+        editor - text editor
+        menu - popup menu
+        point - mouse click position (in pixels)
+        pos_byte - nearest editor character position (in bytes, not characters)
+        """
+        self.editor = editor
+        self.menu = menu
+        self.point = point
+        self.pos_byte = pos_byte
