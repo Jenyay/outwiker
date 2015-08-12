@@ -122,3 +122,12 @@ class EditorPopupMenuParams (object):
         self.menu = menu
         self.point = point
         self.pos_byte = pos_byte
+
+
+class SpellCheckingParams (object):
+    """
+    Parameter set for onSpellChecking event
+    """
+    def __init__ (self, word, isValid):
+        self.word = word
+        self.isValid = isValid
