@@ -128,6 +128,7 @@ class SpellCheckingParams (object):
     """
     Parameter set for onSpellChecking event
     """
-    def __init__ (self, word, isValid):
+    def __init__ (self, spellChecker, word, isValid):
+        self.spellChecker = spellChecker
         self.word = word
         self.isValid = isValid

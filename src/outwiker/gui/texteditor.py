@@ -3,7 +3,6 @@
 import codecs
 import cgi
 import math
-import re
 from datetime import datetime, timedelta
 import threading
 import os.path
@@ -17,7 +16,7 @@ from outwiker.core.application import Application
 from outwiker.core.textprinter import TextPrinter
 from outwiker.core.spellchecker import SpellChecker
 from outwiker.core.spellchecker.defines import CUSTOM_DICT_FILE_NAME
-from outwiker.core.events import EditorPopupMenuParams, SpellCheckingParams
+from outwiker.core.events import EditorPopupMenuParams
 from outwiker.gui.guiconfig import EditorConfig
 from outwiker.gui.searchreplacecontroller import SearchReplaceController
 from outwiker.gui.searchreplacepanel import SearchReplacePanel
@@ -36,10 +35,7 @@ class TextEditor(wx.Panel):
         self._config = EditorConfig (Application.config)
 
         self._enableSpellChecking = True
-        self._spellSkipWordsWithNumbers = True
         self._spellChecker = None
-        self._wordRegex = re.compile (r'(?:(?:\w-\w)|\w)+', re.U)
-        self._digitRegex = re.compile ('\d', re.U)
 
         self.SPELL_ERROR_INDICATOR = 0
         self.SPELL_ERROR_INDICATOR_MASK = wx.stc.STC_INDIC0_MASK
@@ -225,7 +221,7 @@ class TextEditor(wx.Panel):
         self.textCtrl.SetTabWidth (self._config.tabWidth.value)
 
         self.enableSpellChecking = self._config.spellEnabled.value
-        self._spellSkipWordsWithNumbers = self.config.spellSkipDigits.value
+        self._spellChecker.skipWordsWithNumbers = self.config.spellSkipDigits.value
 
         if self._config.homeEndKeys.value == EditorConfig.HOME_END_OF_LINE:
             # Клавиши Home / End переносят курсор на начало / конец строки
@@ -450,18 +446,6 @@ class TextEditor(wx.Panel):
         return currpos
 
 
-    def checkSpellWord (self, word):
-        """
-        Return True if word in dictionary (valid word) and False otherwise
-        """
-        if self._spellSkipWordsWithNumbers:
-            match = self._digitRegex.search (word)
-            if match is not None:
-                return True
-
-        return self._spellChecker.check (word)
-
-
     def _getTextForParse (self):
         # Табуляция в редакторе считается за несколько символов
         return self.textCtrl.GetText().replace ("\t", " ")
@@ -501,16 +485,10 @@ class TextEditor(wx.Panel):
             return
 
         text = self._getTextForParse()[start: end]
+        errors = self._spellChecker.findErrors (text)
 
-        words = self._wordRegex.finditer (text)
-        for wordMatch in words:
-            word = wordMatch.group(0)
-            isValid = self.checkSpellWord (word)
-            params = SpellCheckingParams (word, isValid)
-            Application.onSpellChecking (Application.selectedPage, params)
-
-            if not params.isValid:
-                self.setSpellError (stylelist, wordMatch.start() + start, wordMatch.end() + start)
+        for word, err_start, err_end in errors:
+            self.setSpellError (stylelist, err_start + start, err_end + start)
 
 
     def _onStyleNeeded (self, event):
@@ -582,7 +560,7 @@ class TextEditor(wx.Panel):
         langlist = self._getDictsFromConfig()
         spellDirList = outwiker.core.system.getSpellDirList()
 
-        spellChecker = SpellChecker (langlist, spellDirList)
+        spellChecker = SpellChecker (Application, langlist, spellDirList)
         spellChecker.addCustomDict (os.path.join (spellDirList[-1], CUSTOM_DICT_FILE_NAME))
 
         return spellChecker
