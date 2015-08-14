@@ -82,7 +82,10 @@ class TextEditor(wx.Panel):
         self.__showlinenumbers = self._config.lineNumbers.value
 
         self.setDefaultSettings()
+        self.__bindEvents()
 
+
+    def __bindEvents (self):
         self.textCtrl.Bind(wx.EVT_MENU, self.__onCopyFromEditor, id = wx.ID_COPY)
         self.textCtrl.Bind(wx.EVT_MENU, self.__onCutFromEditor, id = wx.ID_CUT)
         self.textCtrl.Bind(wx.EVT_MENU, self.__onPasteToEditor, id = wx.ID_PASTE)
@@ -91,6 +94,8 @@ class TextEditor(wx.Panel):
         self.textCtrl.Bind(wx.EVT_MENU, self.__onSelectAll, id = wx.ID_SELECTALL)
 
         self.textCtrl.Bind(wx.EVT_MENU, self.__onAddWordToDict, id = TextEditorMenu.ID_ADD_WORD)
+        self.textCtrl.Bind(wx.EVT_MENU, self.__onAddWordLowerToDict, id = TextEditorMenu.ID_ADD_WORD_LOWER)
+
         for suggestId in TextEditorMenu.ID_SUGGESTS:
             self.textCtrl.Bind(wx.EVT_MENU, self.__onSpellSuggest, id = suggestId)
 
@@ -620,9 +625,18 @@ class TextEditor(wx.Panel):
 
     def __onAddWordToDict (self, event):
         if self._spellErrorText is not None:
-            self._spellChecker.addToCustomDict (0, self._spellErrorText)
-            self._spellErrorText = None
-            self._styleSet = False
+            self.__addWordToDict (self._spellErrorText)
+
+
+    def __onAddWordLowerToDict (self, event):
+        if self._spellErrorText is not None:
+            self.__addWordToDict (self._spellErrorText.lower())
+
+
+    def __addWordToDict (self, word):
+        self._spellChecker.addToCustomDict (0, word)
+        self._spellErrorText = None
+        self._styleSet = False
 
 
     def _appendSpellItems (self, menu, pos_byte):
