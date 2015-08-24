@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+	<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
+
+	<style type='text/css'>
+		body, div, p, table {
+			font-size:${fontsize}pt;
+			font-family:$fontfamily;
+		}
+		/* Стиль страницы "Solarized Dark" */
+		body {
+			background-color: #002b36;
+			color: #839496;
+		}
+		h1, h2 {
+			color: #93a1a1;
+		}
+		h3, h4, h5, h6 {
+			color: #93a1a1;
+		}
+		a:link, a:active, a:hover {
+			color: #268bd2;
+		}
+		a:visited {
+			color: #859900;
+		}
+		a:hover {
+			text-decoration: none;
+		}
+		table {
+			border-collapse: collapse;
+			background-color: #073642;
+		}
+		td {
+			vertical-align: top;
+			padding: 3px 5px;
+			border: 1px solid #586e75;
+		}
+		blockquote {
+			margin: 0px 0px 0px 20px;
+			padding: 10px 10px 10px 10px;
+			background-color: #073642;
+			color: #93a1a1;
+			font-style: italic;
+		}
+		pre {
+			margin: 0px 0px 0px 0px;
+			padding: 10px 10px 10px 10px;
+			background-color: #073642;
+			color: #93a1a1;
+			font-family: Consolas, monospace;
+			/*font-family: "DejaVu LGC Sans Mono", monospace;*/
+			/*font-family: "Droid Sans Mono Slashed", monospace;*/
+			white-space: pre-wrap;      /* css-3 */
+			white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+			white-space: -pre-wrap;     /* Opera 4-6 */
+			white-space: -o-pre-wrap;   /* Opera 7 */
+			word-wrap: break-word;      /* Internet Explorer 5.5+ */			
+		}
+		code {
+			color: #2aa198;
+			font-family: Consolas, monospace;
+			/*font-family: "DejaVu LGC Sans Mono", monospace;*/
+			/*font-family: "Droid Sans Mono Slashed", monospace;*/
+		}
+		hr {
+			border: 1px solid #839496;
+		}
+		img {
+			border: none;
+		}
+		/* Для оформления цветом Даты создания и Даты последнего исправления */
+		/* <div class="date">(:crdate format="%x %H:%M":)</div><div align="right" class="date">(:eddate format="%x %H:%M":)</div> */
+		.date {
+			float: left;
+			width: 50%;
+			background-color: #002b36;
+			color: #b58900;
+		}
+		/* Кнопка "Наверх" */
+		#scrollup {
+			position: fixed; /* фиксированная позиция */
+			right: 10px; /* отступ справа */
+			bottom: 10px; /* отступ снизу */
+			z-index: 99;
+			padding: 0px 5px 5px 5px;
+			background-color: #073642;
+			opacity: 0.8;
+			cursor: pointer;
+		}
+		$userstyle
+	</style>
+	$userhead
+</head>
+
+<body>
+	<!-- <a name="#top"></a>  Кнопка "Наверх" -->
+$content
+	<div id="scrollup"><a href="#top">† Наверх †</a></div> <!-- Кнопка "Наверх" -->
+</body>
+</html>
