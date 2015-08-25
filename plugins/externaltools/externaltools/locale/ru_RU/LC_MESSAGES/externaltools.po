@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: externaltools\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-14 23:03+0300\n"
-"PO-Revision-Date: 2015-05-20 09:42+0300\n"
+"POT-Creation-Date: 2015-08-25 11:31+0300\n"
+"PO-Revision-Date: 2015-08-25 11:32+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: jenyay.net <jenyay.ilin@gmail.com>\n"
 "Language: ru_RU\n"
@@ -44,11 +44,105 @@ msgstr "Выполняемые файлы (*.exe)|*.exe|Все файлы|*.*"
 msgid "All Files|*"
 msgstr "Все файлы|*"
 
-#: preferencespanel.py:38
-msgid "Show warning before executing applications by (:exec:) command"
+#: commandexec/execdialog.py:17
+msgid "Link"
+msgstr "Ссылка"
+
+#: commandexec/execdialog.py:17
+msgid "Button"
+msgstr "Кнопка"
+
+#: commandexec/execdialog.py:19
+msgid "Inserting (:exec:) command"
+msgstr "Вставка команды (:exec:)"
+
+#: commandexec/execdialog.py:30
+msgid "Title"
+msgstr "Заголовок"
+
+#: commandexec/execdialog.py:48
+msgid "Format"
+msgstr "Формат"
+
+#: commandexec/guicreator.py:56 commandexec/commandcontroller.py:195
+msgid "ExternalTools"
+msgstr "ExternalTools"
+
+#: commandexec/actions.py:46
+msgid "Run applications (:exec:)"
+msgstr "Запуск приложений (:exec:)"
+
+#: commandexec/actions.py:51
+msgid "ExternalTools plugin. Insert (:exec:) command"
+msgstr "Плагин ExternalTools. Вставить команду (:exec:)"
+
+#: commandexec/actions.py:74
+msgid "%page%. Current page. Text file"
+msgstr "%page%. Текущая страница. Текстовый файл"
+
+#: commandexec/actions.py:79
+msgid ""
+"ExternalTools plugin. Insert a %page% macros. The macros will be replaced by "
+"a path to current page text file."
 msgstr ""
-"Показывать предупреждение перед запуском\n"
-"приложений с помощью команды (:exec:)"
+"Плагин ExternalTools. Вставить макрос %page%. Этот макрос будет заменен на "
+"путь до текстового файла текущей страницы."
+
+#: commandexec/actions.py:96
+msgid "%html%. Current page. HTML file"
+msgstr "%html%. Текущая страница. Файл HTML"
+
+#: commandexec/actions.py:101
+msgid ""
+"ExternalTools plugin. Insert a %html% macros. The macros will be replaced by "
+"a path to current HTML file."
+msgstr ""
+"Плагин ExternalTools. Вставить макрос %html%. Этот макрос будет заменен на "
+"путь до файла HTML текущей страницы."
+
+#: commandexec/actions.py:118
+msgid "%attach%. Path to current attachments folder"
+msgstr "%attach%. Путь до текущей папки вложенных файлов"
+
+#: commandexec/actions.py:123
+msgid ""
+"ExternalTools plugin. Insert a %attach% macros. The macros will be replaced "
+"by a path to current attach folder."
+msgstr ""
+"Плагин ExternalTools. Вставить макрос %attach%. Этот макрос будет заменен на "
+"путь до папки с вложенными файлами текущей страницы."
+
+#: commandexec/actions.py:140
+msgid "%folder%. Path to current page folder"
+msgstr "%folder%. Путь до папки текущей страницы"
+
+#: commandexec/actions.py:145
+msgid ""
+"ExternalTools plugin. Insert a %folder% macros. The macros will be replaced "
+"by a path to current page folder."
+msgstr ""
+"Плагин ExternalTools. Вставить макрос %folder%. Этот макрос будет заменен на "
+"путь до папки текущей страницы."
+
+#: commandexec/commandcontroller.py:188
+msgid ""
+"Run applications by ExternalTools plugin?\n"
+"It may be unsafe."
+msgstr ""
+"Запустить приложения с помощью плагина ExternalTools?\n"
+"Это может быть опасно."
+
+#: commandexec/commandcontroller.py:190
+msgid ""
+"Run application by ExternalTools plugin?\n"
+"It may be unsafe."
+msgstr ""
+"Запустить приложение с помощью плагина ExternalTools?\n"
+"Это может быть опасно."
+
+#: preferencespanel.py:38
+msgid "Warn before executing applications by (:exec:) command"
+msgstr "Предупреждать перед запуском приложений с помощью команды (:exec:)"
 
 #: preferencespanel.py:41
 msgid "Tools List"
@@ -227,102 +321,6 @@ msgstr "Открыть файл с текстом заметки в..."
 #: menumaker.py:56
 msgid "Open Result HTML File with..."
 msgstr "Открыть HTML-файл в..."
-
-#: commandexec/execdialog.py:17
-msgid "Link"
-msgstr "Ссылка"
-
-#: commandexec/execdialog.py:17
-msgid "Button"
-msgstr "Кнопка"
-
-#: commandexec/execdialog.py:19
-msgid "Inserting (:exec:) command"
-msgstr "Вставка команды (:exec:)"
-
-#: commandexec/execdialog.py:30
-msgid "Title"
-msgstr "Заголовок"
-
-#: commandexec/execdialog.py:48
-msgid "Format"
-msgstr "Формат"
-
-#: commandexec/guicreator.py:56 commandexec/commandcontroller.py:189
-msgid "ExternalTools"
-msgstr "ExternalTools"
-
-#: commandexec/actions.py:46
-msgid "Run applications (:exec:)"
-msgstr "Запуск приложений (:exec:)"
-
-#: commandexec/actions.py:51
-msgid "ExternalTools plugin. Insert (:exec:) command"
-msgstr "Плагин ExternalTools. Вставить команду (:exec:)"
-
-#: commandexec/actions.py:74
-msgid "%page%. Current page. Text file"
-msgstr "%page%. Текущая страница. Текстовый файл"
-
-#: commandexec/actions.py:79
-msgid ""
-"ExternalTools plugin. Insert a %page% macros. The macros will be replaced by "
-"a path to current page text file."
-msgstr ""
-"Плагин ExternalTools. Вставить макрос %page%. Этот макрос будет заменен на "
-"путь до текстового файла текущей страницы."
-
-#: commandexec/actions.py:96
-msgid "%html%. Current page. HTML file"
-msgstr "%html%. Текущая страница. Файл HTML"
-
-#: commandexec/actions.py:101
-msgid ""
-"ExternalTools plugin. Insert a %html% macros. The macros will be replaced by "
-"a path to current HTML file."
-msgstr ""
-"Плагин ExternalTools. Вставить макрос %html%. Этот макрос будет заменен на "
-"путь до файла HTML текущей страницы."
-
-#: commandexec/actions.py:118
-msgid "%attach%. Path to current attachments folder"
-msgstr "%attach%. Путь до текущей папки вложенных файлов"
-
-#: commandexec/actions.py:123
-msgid ""
-"ExternalTools plugin. Insert a %attach% macros. The macros will be replaced "
-"by a path to current attach folder."
-msgstr ""
-"Плагин ExternalTools. Вставить макрос %attach%. Этот макрос будет заменен на "
-"путь до папки с вложенными файлами текущей страницы."
-
-#: commandexec/actions.py:140
-msgid "%folder%. Path to current page folder"
-msgstr "%folder%. Путь до папки текущей страницы"
-
-#: commandexec/actions.py:145
-msgid ""
-"ExternalTools plugin. Insert a %folder% macros. The macros will be replaced "
-"by a path to current page folder."
-msgstr ""
-"Плагин ExternalTools. Вставить макрос %folder%. Этот макрос будет заменен на "
-"путь до папки текущей страницы."
-
-#: commandexec/commandcontroller.py:182
-msgid ""
-"Run applications by ExternalTools plugin?\n"
-"It may be unsafe."
-msgstr ""
-"Запустить приложения с помощью плагина ExternalTools?\n"
-"Это может быть опасно."
-
-#: commandexec/commandcontroller.py:184
-msgid ""
-"Run application by ExternalTools plugin?\n"
-"It may be unsafe."
-msgstr ""
-"Запустить приложение с помощью плагина ExternalTools?\n"
-"Это может быть опасно."
 
 #~ msgid ""
 #~ "Open notes files with external editor.\n"

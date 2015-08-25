@@ -35,7 +35,7 @@ class PreferencesPanel (wx.Panel):
         self.warningCheckBox = wx.CheckBox (
             self,
             -1,
-            _(u'Show warning before executing applications by (:exec:) command')
+            _(u'Warn before executing applications by (:exec:) command')
         )
 
         self.toolsLabel = wx.StaticText (self, -1, _(u"Tools List"))

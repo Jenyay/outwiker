@@ -13,7 +13,7 @@ from outwiker.core.version import Version
 from outwiker.core.pluginbase import Plugin
 from outwiker.core.system import getOS
 
-__version__ = u"1.3"
+__version__ = u"1.3.1"
 
 
 if getCurrentVersion() < Version (1, 8, 0):

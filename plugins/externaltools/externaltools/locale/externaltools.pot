@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-14 23:10+0300\n"
+"POT-Creation-Date: 2015-08-25 11:31+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -65,7 +65,7 @@ msgstr ""
 msgid "Format"
 msgstr ""
 
-#: commandexec/guicreator.py:56 commandexec/commandcontroller.py:189
+#: commandexec/guicreator.py:56 commandexec/commandcontroller.py:195
 msgid "ExternalTools"
 msgstr ""
 
@@ -117,20 +117,20 @@ msgid ""
 "by a path to current page folder."
 msgstr ""
 
-#: commandexec/commandcontroller.py:182
+#: commandexec/commandcontroller.py:188
 msgid ""
 "Run applications by ExternalTools plugin?\n"
 "It may be unsafe."
 msgstr ""
 
-#: commandexec/commandcontroller.py:184
+#: commandexec/commandcontroller.py:190
 msgid ""
 "Run application by ExternalTools plugin?\n"
 "It may be unsafe."
 msgstr ""
 
 #: preferencespanel.py:38
-msgid "Show warning before executing applications by (:exec:) command"
+msgid "Warn before executing applications by (:exec:) command"
 msgstr ""
 
 #: preferencespanel.py:41
