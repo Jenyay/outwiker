@@ -2,6 +2,7 @@
 strategy = 1
 tags = for users
 phrase = 
+sort = 0
 
 [SearchResults]
 page_10 = Page Types/Wiki Page/Attachments and Pictures
@@ -35,4 +36,5 @@ expand = False
 type = search
 order = 0
 tags = 
+datetime = 2015-07-02 08:29:57.941714
 
