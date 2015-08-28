@@ -94,6 +94,7 @@ class BasePageDialog(wx.Dialog):
 
         names.append (_(u"Default"))
         style_names = [os.path.basename (style) for style in styleslist]
+        style_names.sort()
 
         names += style_names
 
