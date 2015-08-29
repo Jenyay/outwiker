@@ -6,6 +6,7 @@ from parser.commands.include import IncludeCommand
 from parser.commands.childlist import ChildListCommand
 from parser.commands.attachlist import AttachListCommand
 from parser.commands.dates import CommandDateCreation, CommandDateEdition
+from parser.commands.table import TableCommand
 
 
 class ParserFactory (object):
@@ -41,3 +42,10 @@ class ParserFactory (object):
         """
         for command in self.__commands:
             parser.addCommand (command (parser))
+
+        parser.addCommand (TableCommand (parser))
+        parser.addCommand (TableCommand (parser, u'1'))
+        parser.addCommand (TableCommand (parser, u'2'))
+        parser.addCommand (TableCommand (parser, u'3'))
+        parser.addCommand (TableCommand (parser, u'4'))
+        parser.addCommand (TableCommand (parser, u'5'))

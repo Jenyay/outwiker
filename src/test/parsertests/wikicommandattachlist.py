@@ -31,7 +31,6 @@ class WikiAttachListCommandTest (unittest.TestCase):
         self.fullFilesPath = [os.path.join (filesPath, fname) for fname in self.files]
 
 
-
     def _attachFiles (self):
         attach = Attachment (self.testPage)
         attach.attach (self.fullFilesPath)
