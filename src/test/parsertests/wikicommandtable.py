@@ -95,3 +95,15 @@ class WikiCommandTableTest (unittest.TestCase):
 
         valid = u'''(:table20:)(:table20end:)'''
         self.assertEqual (result, valid)
+
+
+    def testCommand_single_row (self):
+        cmd = TableCommand (self.parser)
+        text = u'''(:row:)
+(:cell:)ааа
+(:cell:)ббб'''
+
+        result = cmd.execute (u'', text)
+
+        valid = u'''<table><tr><td>ааа</td><td>ббб</td></tr></table>'''
+        self.assertEqual (result, valid)

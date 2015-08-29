@@ -265,3 +265,8 @@ class Parser (object):
 
     def addCommand (self, command):
         self.commands[command.name] = command
+
+
+    def removeCommand (self, commandName):
+        if commandName in self.commands:
+            del self.commands[commandName]
