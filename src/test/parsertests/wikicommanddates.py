@@ -8,7 +8,7 @@ from outwiker.core.tree import WikiDocument
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from test.utils import removeDir
 from outwiker.core.application import Application
-from outwiker.pages.wiki.parser.commanddates import CommandDateCreation, CommandDateEdition
+from outwiker.pages.wiki.parser.commands.dates import CommandDateCreation, CommandDateEdition
 from outwiker.pages.wiki.parserfactory import ParserFactory
 from outwiker.gui.guiconfig import GeneralGuiConfig
 

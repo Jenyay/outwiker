@@ -8,7 +8,7 @@ from outwiker.core.tree import WikiDocument
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from test.utils import removeDir
 from outwiker.core.application import Application
-from outwiker.pages.wiki.parser.commandchildlist import ChildListCommand
+from outwiker.pages.wiki.parser.commands.childlist import ChildListCommand
 from outwiker.pages.wiki.parserfactory import ParserFactory
 
 

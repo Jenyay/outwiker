@@ -3,7 +3,7 @@
 import os.path
 import cgi
 
-from command import Command
+from outwiker.pages.wiki.parser.command import Command
 from outwiker.core.attachment import Attachment
 
 

@@ -8,7 +8,7 @@ from tempfile import mkdtemp
 from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
-from outwiker.pages.wiki.parser.commandattachlist import AttachListCommand
+from outwiker.pages.wiki.parser.commands.attachlist import AttachListCommand
 from outwiker.pages.wiki.parserfactory import ParserFactory
 from outwiker.pages.wiki.thumbnails import Thumbnails
 from outwiker.pages.wiki.wikipage import WikiPageFactory

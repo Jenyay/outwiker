@@ -2,7 +2,7 @@
 
 from abc import ABCMeta, abstractmethod
 
-from command import Command
+from outwiker.pages.wiki.parser.command import Command
 from outwiker.gui.guiconfig import GeneralGuiConfig
 from outwiker.core.system import getOS
 from outwiker.core.application import Application

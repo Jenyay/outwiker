@@ -2,10 +2,10 @@
 
 from outwiker.core.application import Application
 from parser.wikiparser import Parser
-from parser.commandinclude import IncludeCommand
-from parser.commandchildlist import ChildListCommand
-from parser.commandattachlist import AttachListCommand
-from parser.commanddates import CommandDateCreation, CommandDateEdition
+from parser.commands.include import IncludeCommand
+from parser.commands.childlist import ChildListCommand
+from parser.commands.attachlist import AttachListCommand
+from parser.commands.dates import CommandDateCreation, CommandDateEdition
 
 
 class ParserFactory (object):

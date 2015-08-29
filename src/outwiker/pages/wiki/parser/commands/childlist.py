@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-from command import Command
+from outwiker.pages.wiki.parser.command import Command
 
 
 class SimpleView (object):

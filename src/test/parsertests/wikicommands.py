@@ -5,7 +5,7 @@ from tempfile import mkdtemp
 
 from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
-from outwiker.pages.wiki.parser.commandtest import TestCommand, ExceptionCommand
+from outwiker.pages.wiki.parser.commands.test import TestCommand, ExceptionCommand
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parser.command import Command
 from outwiker.pages.wiki.parserfactory import ParserFactory

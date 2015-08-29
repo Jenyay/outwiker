@@ -2,7 +2,7 @@
 
 import os.path
 
-from command import Command
+from outwiker.pages.wiki.parser.command import Command
 from outwiker.core.attachment import Attachment
 
 
