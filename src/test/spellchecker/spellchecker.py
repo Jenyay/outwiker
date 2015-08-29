@@ -53,7 +53,6 @@ class SpellCheckerTest (unittest.TestCase):
         checker = SpellChecker (self._application, [u'ru_RU'], [self._pathToDicts])
         self.assertTrue (checker.check (u'Проверка'))
         self.assertFalse (checker.check (u'ывпывапыяа'))
-        self.assertFalse (checker.check (u'ёж'))
 
 
     def testNumbers_01 (self):
