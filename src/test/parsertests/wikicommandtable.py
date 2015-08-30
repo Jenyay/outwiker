@@ -97,13 +97,116 @@ class WikiCommandTableTest (unittest.TestCase):
         self.assertEqual (result, valid)
 
 
-    def testCommand_single_row (self):
+    def testCommand_single_row_01 (self):
         cmd = TableCommand (self.parser)
-        text = u'''(:row:)
-(:cell:)ааа
-(:cell:)ббб'''
+        text = u'''(:row:)(:cell:)ааа(:cell:)ббб'''
 
         result = cmd.execute (u'', text)
 
         valid = u'''<table><tr><td>ааа</td><td>ббб</td></tr></table>'''
-        self.assertEqual (result, valid)
+        self.assertEqual (result, valid, result)
+
+
+    def testCommand_single_row_02 (self):
+        cmd = TableCommand (self.parser)
+        text = u'''(:cell:)ааа(:cell:)ббб'''
+
+        result = cmd.execute (u'', text)
+
+        valid = u'''<table><tr><td>ааа</td><td>ббб</td></tr></table>'''
+        self.assertEqual (result, valid, result)
+
+
+    def testCommand_many_row_01 (self):
+        cmd = TableCommand (self.parser)
+        text = u'''(:row:)(:cell:)ааа(:cell:)ббб(:row:)(:cell:)ввв(:cell:)ггг'''
+
+        result = cmd.execute (u'', text)
+
+        valid = u'''<table><tr><td>ааа</td><td>ббб</td></tr><tr><td>ввв</td><td>ггг</td></tr></table>'''
+        self.assertEqual (result, valid, result)
+
+
+    def testCommand_many_row_02 (self):
+        cmd = TableCommand (self.parser)
+        text = u'''(:row:)(:cell:)ааа(:cell:)ббб(:row:)(:cell:)ввв(:cell:)ггг(:cell:)'''
+
+        result = cmd.execute (u'', text)
+
+        valid = u'''<table><tr><td>ааа</td><td>ббб</td></tr><tr><td>ввв</td><td>ггг</td><td></td></tr></table>'''
+        self.assertEqual (result, valid, result)
+
+
+    def testCommand_many_row_03 (self):
+        cmd = TableCommand (self.parser)
+        text = u'''(:row:)(:cell:)ааа(:cell:)ббб(:row:)(:cell:)ввв(:cell:)ггг(:row:)'''
+
+        result = cmd.execute (u'', text)
+
+        valid = u'''<table><tr><td>ааа</td><td>ббб</td></tr><tr><td>ввв</td><td>ггг</td></tr><tr></tr></table>'''
+        self.assertEqual (result, valid, result)
+
+
+    def testCommand_many_row_04_params (self):
+        cmd = TableCommand (self.parser)
+        text = u'''(:row rowparam=один:)(:cell cellparam=два:)ааа(:cell cellparam2=три cellparam3=четыре:)ббб(:row:)(:cell:)ввв(:cell:)ггг(:cell:)'''
+
+        result = cmd.execute (u'', text)
+
+        valid = u'''<table><tr rowparam=один><td cellparam=два>ааа</td><td cellparam2=три cellparam3=четыре>ббб</td></tr><tr><td>ввв</td><td>ггг</td><td></td></tr></table>'''
+        self.assertEqual (result, valid, result)
+
+
+    def testCommand_many_row_05 (self):
+        cmd = TableCommand (self.parser)
+        text = u'''(:row:)
+(:cell:)ааа
+(:cell:)ббб
+(:row:)
+(:cell:)ввв
+(:cell:)ггг'''
+
+        result = cmd.execute (u'', text)
+
+        valid = u'''<table><tr><td>ааа</td><td>ббб</td></tr><tr><td>ввв</td><td>ггг</td></tr></table>'''
+        self.assertEqual (result, valid, result)
+
+
+    def testParser_single_row_01 (self):
+        text = u'''(:table:)(:row:)(:cell:)ааа(:cell:)ббб(:tableend:)'''
+        result = self.parser.toHtml (text)
+
+        valid = u'''<table><tr><td>ааа</td><td>ббб</td></tr></table>'''
+        self.assertEqual (result, valid, result)
+
+
+    def testParser_single_row_02 (self):
+        text = u'''(:table:)(:cell:)ааа(:cell:)ббб(:tableend:)'''
+        result = self.parser.toHtml (text)
+
+        valid = u'''<table><tr><td>ааа</td><td>ббб</td></tr></table>'''
+        self.assertEqual (result, valid, result)
+
+
+    def testParser_single_row_03 (self):
+        text = u'''(:table:)
+(:row:)
+(:cell:)ааа
+(:cell:)ббб
+(:tableend:)'''
+        result = self.parser.toHtml (text)
+
+        valid = u'''<table><tr><td>ааа</td><td>ббб</td></tr></table>'''
+        self.assertEqual (result, valid, result)
+
+
+    def testParser_single_row_04 (self):
+        text = u'''(:table:)
+(:row:)
+(:cell:)ааа
+(:cell:)ббб
+(:tableend:)'''
+        result = self.parser.toHtml (text)
+
+        valid = u'''<table><tr><td>ааа</td><td>ббб</td></tr></table>'''
+        self.assertEqual (result, valid, result)
