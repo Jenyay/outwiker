@@ -262,3 +262,39 @@ class WikiCommandTableTest (unittest.TestCase):
 
         valid = u'''<table><tr><td>ааа</td><td>ббб</td></tr><tr><td>ввв</td><td>ггг</td></tr></table>'''
         self.assertEqual (result, valid, result)
+
+
+    def testParser_nested_01 (self):
+        text = u'''(:table:)
+(:row:)
+(:cell:)ааа(:table2:)(:table2end:)
+(:cell:)ббб
+(:tableend:)'''
+        result = self.parser.toHtml (text)
+
+        valid = u'''<table><tr><td>ааа<table></table></td><td>ббб</td></tr></table>'''
+        self.assertEqual (result, valid, result)
+
+
+    def testParser_nested_02 (self):
+        text = u'''(:table:)
+(:row:)
+(:cell:)ааа(:table2:)(:row2:)(:cell2:)111(:cell2:)222(:table2end:)
+(:cell:)ббб
+(:tableend:)'''
+        result = self.parser.toHtml (text)
+
+        valid = u'''<table><tr><td>ааа<table><tr><td>111</td><td>222</td></tr></table></td><td>ббб</td></tr></table>'''
+        self.assertEqual (result, valid, result)
+
+
+    def testParser_nested_03 (self):
+        text = u'''(:table:)
+(:row:)
+(:cell:)ааа(:table2:)(:row2:)(:cell2:)111(:cell2:)222(:row2:)(:cell2:)Абырвалг(:cell2:)Главрыба(:table2end:)
+(:cell:)ббб
+(:tableend:)'''
+        result = self.parser.toHtml (text)
+
+        valid = u'''<table><tr><td>ааа<table><tr><td>111</td><td>222</td></tr><tr><td>Абырвалг</td><td>Главрыба</td></tr></table></td><td>ббб</td></tr></table>'''
+        self.assertEqual (result, valid, result)
