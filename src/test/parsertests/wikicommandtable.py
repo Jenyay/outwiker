@@ -210,3 +210,55 @@ class WikiCommandTableTest (unittest.TestCase):
 
         valid = u'''<table><tr><td>ааа</td><td>ббб</td></tr></table>'''
         self.assertEqual (result, valid, result)
+
+
+    def testParser_single_row_05 (self):
+        text = u'''(:table:)
+(:row:)
+(:cell:)ааа(:cellend:)
+(:cell:)ббб(:cellend:)
+(:tableend:)'''
+        result = self.parser.toHtml (text)
+
+        valid = u'''<table><tr><td>ааа</td><td>ббб</td></tr></table>'''
+        self.assertEqual (result, valid, result)
+
+
+    def testParser_single_row_06 (self):
+        text = u'''(:table:)
+(:row:)
+(:cell:)ааа(:cellend:)ййй
+(:cell:)ббб(:cellend:)ццц
+(:tableend:)'''
+        result = self.parser.toHtml (text)
+
+        valid = u'''<table><tr><td>аааййй</td><td>бббццц</td></tr></table>'''
+        self.assertEqual (result, valid, result)
+
+
+    def testParser_single_row_07 (self):
+        text = u'''(:table:)
+(:row:)
+(:cell:)''ааа''(:cellend:)
+(:cell:)ббб(:cellend:)
+(:tableend:)'''
+        result = self.parser.toHtml (text)
+
+        valid = u'''<table><tr><td><i>ааа</i></td><td>ббб</td></tr></table>'''
+        self.assertEqual (result, valid, result)
+
+
+    def testCommand_many_row_08 (self):
+        cmd = TableCommand (self.parser)
+        text = u'''(:row:)
+(:cell:)ааа
+(:cell:)ббб
+(:rowend:)(:row:)
+(:cell:)ввв
+(:cell:)ггг
+(:rowend:)'''
+
+        result = cmd.execute (u'', text)
+
+        valid = u'''<table><tr><td>ааа</td><td>ббб</td></tr><tr><td>ввв</td><td>ггг</td></tr></table>'''
+        self.assertEqual (result, valid, result)

@@ -122,7 +122,9 @@ class RowCommand (Command):
         self._table.firstRow = False
         self._table.firstCell = True
 
-        return tag
+        result = tag + self.parser.parseWikiMarkup (content.strip())
+
+        return result
 
 
 
@@ -145,9 +147,11 @@ class CellCommand (Command):
             tag = u'<tr>' + tag
             self._table.firstRow = False
 
+
         if not self._table.firstCell:
             tag = u'</td>' + tag
 
         self._table.firstCell = False
 
+        tag = tag + self.parser.parseWikiMarkup (content.strip())
         return tag
