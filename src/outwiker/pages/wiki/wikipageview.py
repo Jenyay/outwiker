@@ -106,6 +106,9 @@ class WikiPageView (BaseWikiPageView):
             LINE_BREAK_STR_ID,
             HTML_ESCAPE_STR_ID,
             CURRENT_DATE,
+            TABLE_STR_ID,
+            TABLE_ROW_STR_ID,
+            TABLE_CELL_STR_ID,
         ]
 
 
@@ -133,6 +136,7 @@ class WikiPageView (BaseWikiPageView):
         self._formatMenu = wx.Menu()
         self._listMenu = wx.Menu()
         self._commandsMenu = wx.Menu()
+        self._tableMenu = wx.Menu()
 
         self.toolsMenu.AppendSeparator()
 
@@ -140,6 +144,7 @@ class WikiPageView (BaseWikiPageView):
         self.toolsMenu.AppendSubMenu (self._fontMenu, _(u"Font"))
         self.toolsMenu.AppendSubMenu (self._alignMenu, _(u"Alignment"))
         self.toolsMenu.AppendSubMenu (self._formatMenu, _(u"Formatting"))
+        self.toolsMenu.AppendSubMenu (self._tableMenu, _(u"Tables"))
         self.toolsMenu.AppendSubMenu (self._listMenu, _(u"Lists"))
         self.toolsMenu.AppendSubMenu (self._commandsMenu, _(u"Commands"))
 
@@ -147,6 +152,7 @@ class WikiPageView (BaseWikiPageView):
         self.__addFontTools()
         self.__addAlignTools()
         self.__addHTools()
+        self.__addTableTools()
         self.__addListTools()
         self.__addFormatTools()
         self.__addOtherTools()
@@ -491,6 +497,45 @@ class WikiPageView (BaseWikiPageView):
         # Преобразовать некоторые символы в и их HTML-представление
         self._application.actionController.getAction (HTML_ESCAPE_STR_ID).setFunc (lambda param: self.escapeHtml ())
         self._application.actionController.appendMenuItem (HTML_ESCAPE_STR_ID, menu)
+
+
+    def __addTableTools (self):
+        """
+        Добавить инструменты, связанные с таблицами
+        """
+        toolbar = self.mainWindow.toolbars[self._getName()]
+        menu = self._tableMenu
+
+        # Вставить таблицу
+        # self._application.actionController.getAction (TABLE_STR_ID).setFunc (lambda param: pass)
+
+        self._application.actionController.appendMenuItem (TABLE_STR_ID, menu)
+        self._application.actionController.appendToolbarButton (TABLE_STR_ID,
+                                                                toolbar,
+                                                                os.path.join (self.imagesDir, "table.png"),
+                                                                fullUpdate=False)
+
+
+        # Вставить строку таблицы
+        # Find table number
+        # self._application.actionController.getAction (TABLE_ROW_STR_ID).setFunc (lambda param: self.turnText (u'(:row:)', u''))
+
+        self._application.actionController.appendMenuItem (TABLE_ROW_STR_ID, menu)
+        self._application.actionController.appendToolbarButton (TABLE_ROW_STR_ID,
+                                                                toolbar,
+                                                                os.path.join (self.imagesDir, "table_insert_row.png"),
+                                                                fullUpdate=False)
+
+
+        # Вставить ячейку таблицы
+        # Find table number
+        # self._application.actionController.getAction (TABLE_CELL_STR_ID).setFunc (lambda param: self.turnText (u'(:cell:)', u''))
+
+        self._application.actionController.appendMenuItem (TABLE_CELL_STR_ID, menu)
+        self._application.actionController.appendToolbarButton (TABLE_CELL_STR_ID,
+                                                                toolbar,
+                                                                os.path.join (self.imagesDir, "table_insert_cell.png"),
+                                                                fullUpdate=False)
 
 
     def _turnList (self, symbol):
