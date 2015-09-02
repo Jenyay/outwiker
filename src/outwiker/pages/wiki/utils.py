@@ -6,6 +6,9 @@ from outwiker.pages.wiki.parser.tokencommand import CommandToken
 
 
 def getCommandsByPos (text, position):
+    """
+    Return matches list with command which cover position
+    """
     regex = re.compile (CommandToken.regex, re.U | re.M | re.S | re.X)
     result = []
 

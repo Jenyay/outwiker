@@ -3,6 +3,7 @@
 import unittest
 
 from outwiker.pages.wiki.utils import getCommandsByPos
+from outwiker.pages.wiki.tableactions import getTableByPos
 
 
 class WikiUtilsTest (unittest.TestCase):
@@ -110,3 +111,67 @@ class WikiUtilsTest (unittest.TestCase):
         result = getCommandsByPos (text, pos)
         self.assertEqual (len (result), 1)
         self.assertEqual (result[0].groupdict()['name'], u'command')
+
+
+    def testTableByPos_01 (self):
+        text = u'(:table:)(:tableend:)'
+        pos = 0
+
+        result = getTableByPos (text, pos)
+        self.assertEqual (result, None)
+
+
+    def testTableByPos_02 (self):
+        text = u'(:table:)(:tableend:)'
+        pos = 1
+
+        result = getTableByPos (text, pos)
+        self.assertEqual (result, u'')
+
+
+    def testTableByPos_03 (self):
+        text = u'(:table:)(:tableend:)'
+        pos = 21
+
+        result = getTableByPos (text, pos)
+        self.assertEqual (result, None)
+
+
+    def testTableByPos_04 (self):
+        text = u'(:table:)(:row:)(:rowend:)(:tableend:)'
+        pos = 16
+
+        result = getTableByPos (text, pos)
+        self.assertEqual (result, u'')
+
+
+    def testTableByPos_05 (self):
+        text = u'(:table20:)(:row:)(:rowend:)(:table20end:)'
+        pos = 16
+
+        result = getTableByPos (text, pos)
+        self.assertEqual (result, u'20')
+
+
+    def testTableByPos_06 (self):
+        text = u'(:table20:)(:row:)(:table3:)(:table3end:)(:rowend:)(:table20end:)'
+        pos = 28
+
+        result = getTableByPos (text, pos)
+        self.assertEqual (result, u'3')
+
+
+    def testTableByPos_07 (self):
+        text = u'(:table1:)(:table1end:)(:table20:)(:row:)(:table3:)(:table3end:)(:rowend:)(:table20end:)(:table4:)(:table4end:)'
+        pos = 51
+
+        result = getTableByPos (text, pos)
+        self.assertEqual (result, u'3')
+
+
+    def testTableByPos_08_invalid (self):
+        text = u'(:tableqqq:)(:tableqqqend:)'
+        pos = 2
+
+        result = getTableByPos (text, pos)
+        self.assertEqual (result, None)
