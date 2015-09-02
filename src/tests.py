@@ -102,6 +102,7 @@ if __name__ == '__main__':
     from test.htmltemplate import HtmlTemplateTest
     from test.htmlpages import HtmlPagesTest
     from test.wikilinkcreator import WikiLinkCreatorTest
+    from test.wikiutils import WikiUtilsTest
 
     from test.event import EventTest, EventsTest
     from test.config import ConfigTest, ConfigOptionsTest, TrayConfigTest, EditorConfigTest
