@@ -2,6 +2,7 @@
 
 import re
 
+from outwiker.gui.tabledialog import TableDialog
 from outwiker.pages.wiki.utils import getCommandsByPos
 
 
@@ -20,3 +21,12 @@ def getTableByPos (text, position):
             return tableMatch.groupdict()['suffix']
 
     return None
+
+
+def getInsertTableActionFunc (parent, pageView):
+    def func (param):
+        editor = pageView.codeEditor
+        with TableDialog (parent) as dlg:
+            dlg.ShowModal()
+
+    return func

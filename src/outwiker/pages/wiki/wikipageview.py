@@ -13,6 +13,7 @@ from .wikiconfig import WikiConfig
 from .htmlgenerator import HtmlGenerator
 from .htmlcache import HtmlCache
 from .basewikipageview import BaseWikiPageView
+from .tableactions import getInsertTableActionFunc
 
 from actions.fontsizebig import WikiFontSizeBigAction
 from actions.fontsizesmall import WikiFontSizeSmallAction
@@ -507,7 +508,9 @@ class WikiPageView (BaseWikiPageView):
         menu = self._tableMenu
 
         # Вставить таблицу
-        # self._application.actionController.getAction (TABLE_STR_ID).setFunc (lambda param: pass)
+        self._application.actionController.getAction (TABLE_STR_ID).setFunc (
+            getInsertTableActionFunc (self._application.mainWindow, self)
+        )
 
         self._application.actionController.appendMenuItem (TABLE_STR_ID, menu)
         self._application.actionController.appendToolbarButton (TABLE_STR_ID,
