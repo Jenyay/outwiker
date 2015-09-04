@@ -8,17 +8,47 @@ from outwiker.gui.testeddialog import TestedDialog
 class TableDialog (TestedDialog):
     def __init__ (self, parent):
         super (TableDialog, self).__init__ (parent)
+        self._SPIN_SIZE = 150
         self._createGui()
 
         self.SetTitle (_(u'Insert table'))
 
 
-    def _createTextAndSpin (self, label, sizer):
-        label = wx.StaticText (self, label=label)
-        spin = wx.SpinCtrl (self)
+    @property
+    def colsCount (self):
+        return self._colsCount.GetValue()
+
+
+    @colsCount.setter
+    def colsCount (self, value):
+        self._colsCount.SetValue (value)
+
+
+    @property
+    def rowsCount (self):
+        return self._rowsCount.GetValue()
+
+
+    @rowsCount.setter
+    def rowsCount (self, value):
+        self._rowsCount.SetValue (value)
+
+
+    @property
+    def borderWidth (self):
+        return self._border.GetValue()
+
+
+    @borderWidth.setter
+    def borderWidth (self, value):
+        self._border.SetValue (value)
+
+
+    def _createTextAndSpin (self, parent, label, sizer):
+        label = wx.StaticText (parent, label=label)
+        spin = wx.SpinCtrl (parent)
         spin.SetRange (1, 100)
-        spin.SetValue (1)
-        spin.SetMinSize ((150, -1))
+        spin.SetMinSize ((self._SPIN_SIZE, -1))
 
         sizer.Add (label,
                    flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
@@ -34,20 +64,46 @@ class TableDialog (TestedDialog):
     def _createGui (self):
         mainSizer = wx.FlexGridSizer (cols=1)
         mainSizer.AddGrowableCol (0)
+        mainSizer.AddGrowableRow (2)
 
         sizeSizer = wx.FlexGridSizer (cols=2)
         sizeSizer.AddGrowableCol (0)
         sizeSizer.AddGrowableCol (1)
 
-        self._colsCount = self._createTextAndSpin (_(u'Columns count'), sizeSizer)
-        self._rowsCount = self._createTextAndSpin (_(u'Rows count'), sizeSizer)
+        self._colsCount = self._createTextAndSpin (self, _(u'Columns count'), sizeSizer)
+        self._colsCount.SetValue (1)
+
+        self._rowsCount = self._createTextAndSpin (self, _(u'Rows count'), sizeSizer)
+        self._rowsCount.SetValue (1)
 
         mainSizer.Add (sizeSizer,
                        flag = wx.ALL | wx.EXPAND,
                        border = 2)
+
+        mainSizer.AddSpacer ((0, 10))
+        self._createAdvancedControls (mainSizer)
 
         okCancel = self.CreateButtonSizer (wx.OK | wx.CANCEL)
         mainSizer.Add (okCancel, 1, wx.ALIGN_RIGHT | wx.ALIGN_BOTTOM, border = 2)
 
         self.SetSizer(mainSizer)
         self.Fit()
+
+
+    def _createAdvancedControls (self, mainSizer):
+        advancedPanel = wx.CollapsiblePane (self, label=_(u'Advanced'))
+        pane = advancedPanel.GetPane()
+
+        paneSizer = wx.FlexGridSizer (cols=2)
+        paneSizer.AddGrowableCol (0)
+        paneSizer.AddGrowableCol (1)
+
+        self._border = self._createTextAndSpin (pane, _(u'Border width'), paneSizer)
+        self._border.SetRange (0, 100)
+        self._border.SetValue (1)
+
+        pane.SetSizer (paneSizer)
+
+        mainSizer.Add (advancedPanel,
+                       flag = wx.ALL | wx.EXPAND,
+                       border = 2)
