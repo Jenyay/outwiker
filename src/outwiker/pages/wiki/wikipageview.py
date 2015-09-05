@@ -509,7 +509,9 @@ class WikiPageView (BaseWikiPageView):
 
         # Вставить таблицу
         self._application.actionController.getAction (TABLE_STR_ID).setFunc (
-            getInsertTableActionFunc (self._application.mainWindow, self)
+            getInsertTableActionFunc (self._application,
+                                      self._application.mainWindow,
+                                      self)
         )
 
         self._application.actionController.appendMenuItem (TABLE_STR_ID, menu)

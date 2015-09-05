@@ -2,8 +2,11 @@
 
 import re
 
+import wx
+
 from outwiker.gui.tabledialog import TableDialog
 from outwiker.pages.wiki.utils import getCommandsByPos
+from outwiker.pages.wiki.tabledialogcontroller import TableDialogController
 
 
 def getTableByPos (text, position):
@@ -23,10 +26,26 @@ def getTableByPos (text, position):
     return None
 
 
-def getInsertTableActionFunc (parent, pageView):
+def getInsertTableActionFunc (application, parent, pageView):
     def func (param):
         editor = pageView.codeEditor
+        tableSuffix = getTableByPos (editor.GetText(),
+                                     editor.GetCurrentPosition())
+        if tableSuffix is None:
+            suffix = u''
+        elif tableSuffix == u'':
+            suffix = '2'
+        else:
+            try:
+                suffix = int (tableSuffix)
+                suffix += 1
+            except (ValueError):
+                suffix = u''
+
         with TableDialog (parent) as dlg:
-            dlg.ShowModal()
+            controller = TableDialogController (dlg, suffix, application.config)
+            if controller.showDialog() == wx.ID_OK:
+                result = controller.getResult()
+                editor.replaceText (result)
 
     return func
