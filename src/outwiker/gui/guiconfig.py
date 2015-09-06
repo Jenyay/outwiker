@@ -38,6 +38,9 @@ class GeneralGuiConfig (object):
 
     PAGE_TAB_PARAM = u'PageTab'
 
+    TABLE_COLS_COUNT = u'TableColsCount'
+    TABLE_COLS_COUNT_DEFAULT = 1
+
 
     def __init__ (self, config):
         self.config = config
@@ -83,6 +86,12 @@ class GeneralGuiConfig (object):
                                       self.GENERAL_SECTION,
                                       self.PAGE_TAB_PARAM,
                                       self.PAGE_TAB_RECENT)
+
+        # Default columns count in table dialog
+        self.tableColsCount = IntegerOption (self.config,
+                                             self.GENERAL_SECTION,
+                                             self.TABLE_COLS_COUNT,
+                                             self.TABLE_COLS_COUNT_DEFAULT)
 
 
 class PluginsConfig (object):

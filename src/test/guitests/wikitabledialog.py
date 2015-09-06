@@ -7,6 +7,7 @@ from outwiker.gui.tester import Tester
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.gui.tabledialog import TableDialog
 from outwiker.pages.wiki.tabledialogcontroller import TableDialogController
+from outwiker.gui.guiconfig import GeneralGuiConfig
 
 
 class WikiTableDialogTest (BaseMainWndTest):
@@ -14,6 +15,8 @@ class WikiTableDialogTest (BaseMainWndTest):
         super (WikiTableDialogTest, self).setUp()
         self._application = Application
 
+        config = GeneralGuiConfig (self._application.config)
+        config.tableColsCount.remove_option()
         factory = WikiPageFactory()
         self._testpage = factory.create (self.wikiroot, u"Страница 1", [])
 
@@ -216,3 +219,21 @@ class WikiTableDialogTest (BaseMainWndTest):
 (:tableend:)'''
 
         self.assertEqual (result, validResult, result)
+
+
+    def testColsCount (self):
+        suffix = u''
+        dlg = TableDialog (self.wnd)
+        Tester.dialogTester.appendOk()
+
+        controller = TableDialogController (dlg, suffix, self._application.config)
+        dlg.colsCount = 10
+        controller.showDialog()
+
+        dlg2 = TableDialog (self.wnd)
+        controller2 = TableDialogController (dlg2, suffix, self._application.config)
+
+        self.assertEqual (dlg2.colsCount, 10)
+
+        Tester.dialogTester.appendOk()
+        controller2.showDialog()

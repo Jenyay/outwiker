@@ -1,5 +1,9 @@
 # -*- coding: UTF-8 -*-
 
+import wx
+
+from outwiker.gui.guiconfig import GeneralGuiConfig
+
 
 class TableDialogController (object):
     def __init__ (self, dialog, suffix, config):
@@ -7,12 +11,17 @@ class TableDialogController (object):
         suffix - suffix for future table ('', '2', '3', etc)
         """
         self._dialog = dialog
-        self._config = config
+        self._config = GeneralGuiConfig (config)
         self._suffix = suffix
+
+        self._dialog.colsCount = self._config.tableColsCount.value
 
 
     def showDialog (self):
         result = self._dialog.ShowModal()
+        if result == wx.ID_OK:
+            self._config.tableColsCount.value = self._dialog.colsCount
+
         return result
 
 
