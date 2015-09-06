@@ -112,7 +112,7 @@ class WikiTableDialogTest (BaseMainWndTest):
 
         result = controller.getResult()
 
-        validResult = u'''(:table border="1":)
+        validResult = u'''(:table:)
 (:row:)
 (:cell:)
 (:tableend:)'''
@@ -130,7 +130,7 @@ class WikiTableDialogTest (BaseMainWndTest):
 
         result = controller.getResult()
 
-        validResult = u'''(:table20 border="1":)
+        validResult = u'''(:table20:)
 (:row20:)
 (:cell20:)
 (:table20end:)'''
@@ -150,7 +150,7 @@ class WikiTableDialogTest (BaseMainWndTest):
 
         result = controller.getResult()
 
-        validResult = u'''(:table border="1":)
+        validResult = u'''(:table:)
 (:row:)
 (:cell:)
 (:cell:)
@@ -175,7 +175,7 @@ class WikiTableDialogTest (BaseMainWndTest):
 
         result = controller.getResult()
 
-        validResult = u'''(:table border="1":)
+        validResult = u'''(:table:)
 (:row:)
 (:cell:)
 (:cell:)
