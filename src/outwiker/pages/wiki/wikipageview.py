@@ -13,7 +13,9 @@ from .wikiconfig import WikiConfig
 from .htmlgenerator import HtmlGenerator
 from .htmlcache import HtmlCache
 from .basewikipageview import BaseWikiPageView
-from .tableactions import getInsertTableActionFunc, getInsertTableRowsActionFunc
+from .tableactions import (getInsertTableActionFunc,
+                           getInsertTableRowsActionFunc,
+                           getInsertTableCellActionFunc)
 
 from actions.fontsizebig import WikiFontSizeBigAction
 from actions.fontsizesmall import WikiFontSizeSmallAction
@@ -521,8 +523,7 @@ class WikiPageView (BaseWikiPageView):
                                                                 fullUpdate=False)
 
 
-        # Вставить строку таблицы
-        # Find table number
+        # Вставить строки таблицы
         self._application.actionController.getAction (TABLE_ROW_STR_ID).setFunc (
             getInsertTableRowsActionFunc (self._application,
                                           self._application.mainWindow,
@@ -537,8 +538,11 @@ class WikiPageView (BaseWikiPageView):
 
 
         # Вставить ячейку таблицы
-        # Find table number
-        # self._application.actionController.getAction (TABLE_CELL_STR_ID).setFunc (lambda param: self.turnText (u'(:cell:)', u''))
+        self._application.actionController.getAction (TABLE_CELL_STR_ID).setFunc (
+            getInsertTableCellActionFunc (self._application,
+                                          self._application.mainWindow,
+                                          self)
+        )
 
         self._application.actionController.appendMenuItem (TABLE_CELL_STR_ID, menu)
         self._application.actionController.appendToolbarButton (TABLE_CELL_STR_ID,

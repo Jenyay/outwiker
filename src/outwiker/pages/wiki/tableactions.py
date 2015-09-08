@@ -74,3 +74,22 @@ def getInsertTableRowsActionFunc (application, parent, pageView):
                 editor.replaceText (result)
 
     return func
+
+
+def getInsertTableCellActionFunc (application, parent, pageView):
+    def func (param):
+        editor = pageView.codeEditor
+        tableSuffix = getTableByPos (editor.GetText(),
+                                     editor.GetCurrentPosition())
+        if tableSuffix is None:
+            suffix = u''
+        else:
+            try:
+                suffix = unicode (int (tableSuffix))
+            except ValueError:
+                suffix = u''
+
+        text = u'(:cell{}:)'.format (suffix)
+        editor.replaceText (text)
+
+    return func
