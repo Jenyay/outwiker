@@ -99,7 +99,31 @@ class TableDialogController (BaseTableDialogController):
         """
         params = {}
         if self._dialog.borderWidth != 0:
-            if self._dialog.borderWidth != 1:
-                params[u'border'] = unicode (self._dialog.borderWidth)
+            params[u'border'] = unicode (self._dialog.borderWidth)
 
         return params
+
+
+class TableRowsDialogController (BaseTableDialogController):
+    def __init__ (self, dialog, suffix, config):
+        """
+        suffix - suffix for future table ('', '2', '3', etc)
+        """
+        super (TableRowsDialogController, self).__init__(dialog, suffix, config)
+        self._dialog.colsCount = self._config.tableColsCount.value
+
+
+    def showDialog (self):
+        result = self._dialog.ShowModal()
+        if result == wx.ID_OK:
+            self._config.tableColsCount.value = self._dialog.colsCount
+
+        return result
+
+
+    def getResult (self):
+        """
+        Return wiki notation string with (:row:)(:cell:)(:cell:)... commands
+        """
+        body = self._getRows().strip()
+        return body

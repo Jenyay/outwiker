@@ -5,8 +5,12 @@ import re
 import wx
 
 from outwiker.gui.tabledialog import TableDialog
+from outwiker.gui.tablerowsdialog import TableRowsDialog
 from outwiker.pages.wiki.utils import getCommandsByPos
-from outwiker.pages.wiki.tabledialogcontroller import TableDialogController
+from outwiker.pages.wiki.tabledialogcontroller import (
+    TableDialogController,
+    TableRowsDialogController
+)
 
 
 def getTableByPos (text, position):
@@ -34,16 +38,37 @@ def getInsertTableActionFunc (application, parent, pageView):
         if tableSuffix is None:
             suffix = u''
         elif tableSuffix == u'':
-            suffix = '2'
+            suffix = u'2'
         else:
             try:
-                suffix = int (tableSuffix)
-                suffix += 1
-            except (ValueError):
+                suffix = unicode (int (tableSuffix) + 1)
+            except ValueError:
                 suffix = u''
 
         with TableDialog (parent) as dlg:
             controller = TableDialogController (dlg, suffix, application.config)
+            if controller.showDialog() == wx.ID_OK:
+                result = controller.getResult()
+                editor.replaceText (result)
+
+    return func
+
+
+def getInsertTableRowsActionFunc (application, parent, pageView):
+    def func (param):
+        editor = pageView.codeEditor
+        tableSuffix = getTableByPos (editor.GetText(),
+                                     editor.GetCurrentPosition())
+        if tableSuffix is None:
+            suffix = u''
+        else:
+            try:
+                suffix = unicode (int (tableSuffix))
+            except ValueError:
+                suffix = u''
+
+        with TableRowsDialog (parent) as dlg:
+            controller = TableRowsDialogController (dlg, suffix, application.config)
             if controller.showDialog() == wx.ID_OK:
                 result = controller.getResult()
                 editor.replaceText (result)

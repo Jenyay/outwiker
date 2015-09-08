@@ -13,7 +13,7 @@ from .wikiconfig import WikiConfig
 from .htmlgenerator import HtmlGenerator
 from .htmlcache import HtmlCache
 from .basewikipageview import BaseWikiPageView
-from .tableactions import getInsertTableActionFunc
+from .tableactions import getInsertTableActionFunc, getInsertTableRowsActionFunc
 
 from actions.fontsizebig import WikiFontSizeBigAction
 from actions.fontsizesmall import WikiFontSizeSmallAction
@@ -523,7 +523,11 @@ class WikiPageView (BaseWikiPageView):
 
         # Вставить строку таблицы
         # Find table number
-        # self._application.actionController.getAction (TABLE_ROW_STR_ID).setFunc (lambda param: self.turnText (u'(:row:)', u''))
+        self._application.actionController.getAction (TABLE_ROW_STR_ID).setFunc (
+            getInsertTableRowsActionFunc (self._application,
+                                          self._application.mainWindow,
+                                          self)
+        )
 
         self._application.actionController.appendMenuItem (TABLE_ROW_STR_ID, menu)
         self._application.actionController.appendToolbarButton (TABLE_ROW_STR_ID,

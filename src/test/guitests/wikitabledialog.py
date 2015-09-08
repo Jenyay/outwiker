@@ -6,7 +6,7 @@ from outwiker.core.application import Application
 from outwiker.gui.tester import Tester
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.gui.tabledialog import TableDialog
-from outwiker.pages.wiki.tabledialogcontroller import TableDialogController
+from outwiker.pages.wiki.tabledialogcontroller import BaseTableDialogController, TableDialogController
 from outwiker.gui.guiconfig import GeneralGuiConfig
 
 
@@ -27,7 +27,7 @@ class WikiTableDialogTest (BaseMainWndTest):
 
     def testDictToStr_01_empty (self):
         params = {}
-        result = TableDialogController.dictToStr (params)
+        result = BaseTableDialogController.dictToStr (params)
 
         validResult = u''
 
@@ -38,7 +38,7 @@ class WikiTableDialogTest (BaseMainWndTest):
         params = {
             u'param1': 10
         }
-        result = TableDialogController.dictToStr (params)
+        result = BaseTableDialogController.dictToStr (params)
 
         validResult = u'param1="10"'
 
@@ -50,7 +50,7 @@ class WikiTableDialogTest (BaseMainWndTest):
             u'param1': 10,
             u'Параметр2': u'абырвалг',
         }
-        result = TableDialogController.dictToStr (params)
+        result = BaseTableDialogController.dictToStr (params)
 
         validResult = u'param1="10", Параметр2="абырвалг"'
 
@@ -62,7 +62,7 @@ class WikiTableDialogTest (BaseMainWndTest):
             u'param1': 10,
             u'Параметр2': u"абыр'валг",
         }
-        result = TableDialogController.dictToStr (params)
+        result = BaseTableDialogController.dictToStr (params)
 
         validResult = u'param1="10", Параметр2="абыр\'валг"'
 
@@ -74,7 +74,7 @@ class WikiTableDialogTest (BaseMainWndTest):
             u'param1': 10,
             u'Параметр2': u'абыр"валг',
         }
-        result = TableDialogController.dictToStr (params)
+        result = BaseTableDialogController.dictToStr (params)
 
         validResult = u'param1="10", Параметр2=\'абыр"валг\''
 
@@ -86,7 +86,7 @@ class WikiTableDialogTest (BaseMainWndTest):
             u'param1': 10,
             u'Параметр2': u'аб\'ыр"валг',
         }
-        result = TableDialogController.dictToStr (params)
+        result = BaseTableDialogController.dictToStr (params)
 
         validResult = u'param1="10", Параметр2="аб\'ыр\\"валг"'
 
@@ -98,7 +98,7 @@ class WikiTableDialogTest (BaseMainWndTest):
             u'param1': 10,
             u'Параметр2': u'',
         }
-        result = TableDialogController.dictToStr (params)
+        result = BaseTableDialogController.dictToStr (params)
 
         validResult = u'param1="10", Параметр2=""'
 
@@ -115,7 +115,7 @@ class WikiTableDialogTest (BaseMainWndTest):
 
         result = controller.getResult()
 
-        validResult = u'''(:table:)
+        validResult = u'''(:table border="1":)
 (:row:)
 (:cell:)
 (:tableend:)'''
@@ -133,7 +133,7 @@ class WikiTableDialogTest (BaseMainWndTest):
 
         result = controller.getResult()
 
-        validResult = u'''(:table20:)
+        validResult = u'''(:table20 border="1":)
 (:row20:)
 (:cell20:)
 (:table20end:)'''
@@ -153,7 +153,7 @@ class WikiTableDialogTest (BaseMainWndTest):
 
         result = controller.getResult()
 
-        validResult = u'''(:table:)
+        validResult = u'''(:table border="1":)
 (:row:)
 (:cell:)
 (:cell:)
@@ -178,7 +178,7 @@ class WikiTableDialogTest (BaseMainWndTest):
 
         result = controller.getResult()
 
-        validResult = u'''(:table:)
+        validResult = u'''(:table border="1":)
 (:row:)
 (:cell:)
 (:cell:)
@@ -202,7 +202,7 @@ class WikiTableDialogTest (BaseMainWndTest):
         self.assertEqual (result, validResult, result)
 
 
-    def testBorder (self):
+    def testBorder_01 (self):
         suffix = u''
         dlg = TableDialog (self.wnd)
         controller = TableDialogController (dlg, suffix, self._application.config)
@@ -214,6 +214,25 @@ class WikiTableDialogTest (BaseMainWndTest):
         result = controller.getResult()
 
         validResult = u'''(:table border="10":)
+(:row:)
+(:cell:)
+(:tableend:)'''
+
+        self.assertEqual (result, validResult, result)
+
+
+    def testBorder_02 (self):
+        suffix = u''
+        dlg = TableDialog (self.wnd)
+        controller = TableDialogController (dlg, suffix, self._application.config)
+        Tester.dialogTester.appendOk()
+
+        dlg.borderWidth = 0
+        controller.showDialog()
+
+        result = controller.getResult()
+
+        validResult = u'''(:table:)
 (:row:)
 (:cell:)
 (:tableend:)'''
