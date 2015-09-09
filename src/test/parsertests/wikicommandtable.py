@@ -298,3 +298,67 @@ class WikiCommandTableTest (unittest.TestCase):
 
         valid = u'''<table><tr><td>ааа<table><tr><td>111</td><td>222</td></tr><tr><td>Абырвалг</td><td>Главрыба</td></tr></table></td><td>ббб</td></tr></table>'''
         self.assertEqual (result, valid, result)
+
+
+    def testCommand_hcell_01 (self):
+        cmd = TableCommand (self.parser)
+        text = u'''(:row:)(:hcell:)ааа(:hcell:)ббб'''
+
+        result = cmd.execute (u'', text)
+
+        valid = u'''<table><tr><th>ааа</th><th>ббб</th></tr></table>'''
+        self.assertEqual (result, valid, result)
+
+
+    def testCommand_hcell_02 (self):
+        cmd = TableCommand (self.parser)
+        text = u'''(:hcell:)ааа(:hcell:)ббб'''
+
+        result = cmd.execute (u'', text)
+
+        valid = u'''<table><tr><th>ааа</th><th>ббб</th></tr></table>'''
+        self.assertEqual (result, valid, result)
+
+
+    def testCommand_cell_hcell (self):
+        cmd = TableCommand (self.parser)
+        text = u'''(:row:)(:cell:)ааа(:hcell:)ббб'''
+
+        result = cmd.execute (u'', text)
+
+        valid = u'''<table><tr><td>ааа</td><th>ббб</th></tr></table>'''
+        self.assertEqual (result, valid, result)
+
+
+    def testCommand_hcell_cell (self):
+        cmd = TableCommand (self.parser)
+        text = u'''(:row:)(:hcell:)ааа(:cell:)ббб'''
+
+        result = cmd.execute (u'', text)
+
+        valid = u'''<table><tr><th>ааа</th><td>ббб</td></tr></table>'''
+        self.assertEqual (result, valid, result)
+
+
+    def testParser_cell_hcell (self):
+        text = u'''(:table:)
+(:row:)
+(:cell:)ааа
+(:hcell:)ббб
+(:tableend:)'''
+        result = self.parser.toHtml (text)
+
+        valid = u'''<table><tr><td>ааа</td><th>ббб</th></tr></table>'''
+        self.assertEqual (result, valid, result)
+
+
+    def testParser_hcell_cell (self):
+        text = u'''(:table:)
+(:row:)
+(:hcell:)ааа
+(:cell:)ббб
+(:tableend:)'''
+        result = self.parser.toHtml (text)
+
+        valid = u'''<table><tr><th>ааа</th><td>ббб</td></tr></table>'''
+        self.assertEqual (result, valid, result)

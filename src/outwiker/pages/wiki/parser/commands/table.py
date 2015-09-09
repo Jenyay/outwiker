@@ -1,5 +1,7 @@
 # -*- coding: UTF-8 -*-
 
+from abc import abstractmethod
+
 from outwiker.pages.wiki.parser.command import Command
 
 
@@ -46,7 +48,9 @@ class TableCommand (Command):
 
         # For using by others commands (row, cell)
         self.firstRow = True
-        self.firstCell = True
+
+        # None / td / th
+        self.lastCellTag = None
 
 
     @property
@@ -66,21 +70,24 @@ class TableCommand (Command):
 
         rowCommand = RowCommand (self.parser, self)
         cellCommand = CellCommand (self.parser, self)
+        hcellCommand = HCellCommand (self.parser, self)
 
         self.parser.addCommand (rowCommand)
         self.parser.addCommand (cellCommand)
+        self.parser.addCommand (hcellCommand)
 
         try:
             body = self.parser.parseWikiMarkup (content)
 
-            if not self.firstCell:
-                body += u'</td>'
+            if self.lastCellTag is not None:
+                body += u'</{}>'.format (self.lastCellTag)
 
             if not self.firstRow:
                 body += u'</tr>'
         finally:
             self.parser.removeCommand (rowCommand.name)
             self.parser.removeCommand (cellCommand.name)
+            self.parser.removeCommand (hcellCommand.name)
 
         result = start + body + end
 
@@ -88,9 +95,11 @@ class TableCommand (Command):
         result = result.replace (u'\n<tr', u'<tr')
         result = result.replace (u'\n</td>', u'</td>')
         result = result.replace (u'\n<td', u'<td')
+        result = result.replace (u'\n</th>', u'</th>')
+        result = result.replace (u'\n<th', u'<th')
 
         self.firstRow = True
-        self.firstCell = True
+        self.lastCellTag = None
 
         return result
 
@@ -110,8 +119,8 @@ class RowCommand (Command):
     def execute (self, params, content):
         tag = u''
 
-        if not self._table.firstCell:
-            tag = u'</td>'
+        if self._table.lastCellTag is not None:
+            tag = u'</{}>'.format (self._table.lastCellTag)
 
         if not self._table.firstRow:
             tag = tag + u'</tr>'
@@ -120,38 +129,59 @@ class RowCommand (Command):
                 else u'<tr {}>'.format (params.strip()))
 
         self._table.firstRow = False
-        self._table.firstCell = True
+        self._table.lastCellTag = None
 
         result = tag + self.parser.parseWikiMarkup (content.strip())
 
         return result
 
 
-
-class CellCommand (Command):
+class BaseCellCommand (Command):
     def __init__ (self, parser, table):
-        super (CellCommand, self).__init__ (parser)
+        super (BaseCellCommand, self).__init__ (parser)
         self._table = table
 
 
-    @property
-    def name (self):
-        return u'cell' + self._table.suffix
+    @abstractmethod
+    def _getTag (self):
+        pass
 
 
     def execute (self, params, content):
-        tag = (u'<td>' if not params.strip()
-               else u'<td {}>'.format (params.strip()))
+        currentTag = self._getTag()
+
+        tag = (u'<{}>'.format (currentTag) if not params.strip()
+               else u'<{} {}>'.format (currentTag, params.strip()))
 
         if self._table.firstRow:
             tag = u'<tr>' + tag
             self._table.firstRow = False
 
 
-        if not self._table.firstCell:
-            tag = u'</td>' + tag
+        if self._table.lastCellTag is not None:
+            tag = u'</{}>'.format (self._table.lastCellTag) + tag
 
-        self._table.firstCell = False
+        self._table.lastCellTag = currentTag
 
         tag = tag + self.parser.parseWikiMarkup (content.strip())
         return tag
+
+
+class CellCommand (BaseCellCommand):
+    @property
+    def name (self):
+        return u'cell' + self._table.suffix
+
+
+    def _getTag (self):
+        return u'td'
+
+
+class HCellCommand (BaseCellCommand):
+    @property
+    def name (self):
+        return u'hcell' + self._table.suffix
+
+
+    def _getTag (self):
+        return u'th'
