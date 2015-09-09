@@ -50,10 +50,23 @@ class BaseTableDialogController (object):
         return cells
 
 
+    def _getHCells (self):
+        cell = u'\n(:hcell{}:)'.format (self._suffix)
+        cells = u''.join ([cell] * self._dialog.colsCount)
+        return cells
+
+
     def _getRows (self):
         cells = self._getCells()
         row = u'\n(:row{}:)'.format (self._suffix) + cells
-        body = u''.join ([row] * self._dialog.rowsCount)
+
+        if self._dialog.headerCells:
+            hcells = self._getHCells()
+            hrow = u'\n(:row{}:)'.format (self._suffix) + hcells
+            body = u''.join ([hrow] + [row] * (self._dialog.rowsCount - 1))
+        else:
+            body = u''.join ([row] * self._dialog.rowsCount)
+
         return body
 
 

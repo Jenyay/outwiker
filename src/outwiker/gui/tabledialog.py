@@ -44,6 +44,16 @@ class TableDialog (TestedDialog):
         self._border.SetValue (value)
 
 
+    @property
+    def headerCells (self):
+        return self._headerCells.GetValue()
+
+
+    @headerCells.setter
+    def headerCells (self, value):
+        self._headerCells.SetValue (value)
+
+
     def _createTextAndSpin (self, parent, label, sizer):
         label = wx.StaticText (parent, label=label)
         spin = wx.SpinCtrl (parent)
@@ -94,13 +104,35 @@ class TableDialog (TestedDialog):
         advancedPanel = wx.CollapsiblePane (self, label=_(u'Advanced'))
         pane = advancedPanel.GetPane()
 
-        paneSizer = wx.FlexGridSizer (cols=2)
+        paneSizer = wx.FlexGridSizer (cols=1)
         paneSizer.AddGrowableCol (0)
-        paneSizer.AddGrowableCol (1)
 
-        self._border = self._createTextAndSpin (pane, _(u'Border width'), paneSizer)
+        borderSizer = wx.FlexGridSizer (cols=2)
+        borderSizer.AddGrowableCol (0)
+        borderSizer.AddGrowableCol (1)
+
+        self._border = self._createTextAndSpin (pane, _(u'Border width'), borderSizer)
         self._border.SetRange (0, 100)
         self._border.SetValue (1)
+
+        self._headerCells = wx.CheckBox (
+            pane,
+            label = _(u'Header cells for first row')
+        )
+
+        paneSizer.Add (
+            borderSizer,
+            1,
+            flag = wx.ALL | wx.EXPAND,
+            border = 2
+        )
+
+        paneSizer.Add (
+            self._headerCells,
+            1,
+            flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+            border = 2
+        )
 
         pane.SetSizer (paneSizer)
 

@@ -256,3 +256,41 @@ class WikiTableDialogTest (BaseMainWndTest):
 
         Tester.dialogTester.appendOk()
         controller2.showDialog()
+
+
+    def testHCells (self):
+        suffix = u''
+        dlg = TableDialog (self.wnd)
+        controller = TableDialogController (dlg, suffix, self._application.config)
+
+        dlg.colsCount = 5
+        dlg.rowsCount = 3
+        dlg.headerCells = True
+        Tester.dialogTester.appendOk()
+
+        controller.showDialog()
+
+        result = controller.getResult()
+
+        validResult = u'''(:table border="1":)
+(:row:)
+(:hcell:)
+(:hcell:)
+(:hcell:)
+(:hcell:)
+(:hcell:)
+(:row:)
+(:cell:)
+(:cell:)
+(:cell:)
+(:cell:)
+(:cell:)
+(:row:)
+(:cell:)
+(:cell:)
+(:cell:)
+(:cell:)
+(:cell:)
+(:tableend:)'''
+
+        self.assertEqual (result, validResult, result)
