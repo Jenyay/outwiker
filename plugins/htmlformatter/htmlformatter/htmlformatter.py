@@ -7,6 +7,8 @@ from outwiker.core.commands import getCurrentVersion
 from outwiker.core.version import Version, StatusSet
 from outwiker.core.system import getOS
 
+__version__ = u'1.1'
+
 
 if getCurrentVersion() < Version (1, 9, 0, 765, status=StatusSet.DEV):
     print ("HtmlFormatter plugin. OutWiker version requirement: 1.9.0.765")
@@ -44,7 +46,7 @@ else:
 
         @property
         def version (self):
-            return u"1.0"
+            return __version__
 
 
         @property
