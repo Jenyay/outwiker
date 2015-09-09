@@ -14,7 +14,8 @@ class ParserFactory (object):
     Класс, создающий википарсер и добавляющий в него нужные команды
     """
     def __init__ (self):
-        # Список типов команд. Экземпляры команд создаются при заполнении командами парсера
+        # Список типов команд.
+        # Экземпляры команд создаются при заполнении командами парсера
         self.__commands = [IncludeCommand,
                            ChildListCommand,
                            AttachListCommand,
@@ -44,8 +45,5 @@ class ParserFactory (object):
             parser.addCommand (command (parser))
 
         parser.addCommand (TableCommand (parser))
-        parser.addCommand (TableCommand (parser, u'1'))
-        parser.addCommand (TableCommand (parser, u'2'))
-        parser.addCommand (TableCommand (parser, u'3'))
-        parser.addCommand (TableCommand (parser, u'4'))
-        parser.addCommand (TableCommand (parser, u'5'))
+        for n in range (1, 6):
+            parser.addCommand (TableCommand (parser, unicode (n)))
