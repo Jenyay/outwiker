@@ -999,8 +999,8 @@ def _registerPolyActions (application):
 
     application.actionController.register (PolyAction (application,
                                                        TABLE_ROW_STR_ID,
-                                                       _(u"Table row"),
-                                                       _(u"Insert a table row")),
+                                                       _(u"Table rows"),
+                                                       _(u"Insert table rows")),
                                            HotKey ("W", ctrl=True))
 
     application.actionController.register (PolyAction (application,
