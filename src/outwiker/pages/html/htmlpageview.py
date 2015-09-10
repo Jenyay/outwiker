@@ -227,7 +227,7 @@ class HtmlPageView (BaseHtmlPanel):
         self.__htmlMenu.AppendSubMenu (self.__alignMenu, _(u"Alignment"))
         self.__htmlMenu.AppendSubMenu (self.__formatMenu, _(u"Formatting"))
         self.__htmlMenu.AppendSubMenu (self.__listMenu, _(u"Lists"))
-        self.__htmlMenu.AppendSubMenu (self.__tableMenu, _(u"Table"))
+        self.__htmlMenu.AppendSubMenu (self.__tableMenu, _(u"Tables"))
 
         self.__addFontTools()
         self.__addAlignTools()
