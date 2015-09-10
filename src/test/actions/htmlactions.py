@@ -34,9 +34,6 @@ class HtmlActionsTest (BaseMainWndTest):
             (PREFORMAT_STR_ID, "<pre>", "</pre>"),
             (CODE_STR_ID, "<code>", "</code>"),
             (ANCHOR_STR_ID, u'<a name="', u'"></a>'),
-            (TABLE_STR_ID, u'<table>', u'</table>'),
-            (TABLE_ROW_STR_ID, u'<tr>', u'</tr>'),
-            (TABLE_CELL_STR_ID, u'<td>', u'</td>'),
             (QUOTE_STR_ID, u'<blockquote>', u'</blockquote>'),
             (IMAGE_STR_ID, u'<img src="', u'"/>'),
         ]

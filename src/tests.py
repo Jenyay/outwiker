@@ -159,6 +159,9 @@ if __name__ == '__main__':
     from test.guitests.pagetabs import PageTabsTest
 
     from test.guitests.htmlpage.htmlpageview import HtmlPageViewTest
+    from test.guitests.htmlpage.htmltabledialog import HtmlTableDialogTest
+    from test.guitests.htmlpage.htmltablerowsdialog import HtmlTableRowsDialogTest
+    from test.guitests.htmlpage.htmltableactions import HtmlTableActionsTest
 
     from test.guitests.wikipage.wikipageview import WikiPageViewTest
     from test.guitests.wikipage.wikitabledialog import WikiTableDialogTest

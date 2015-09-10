@@ -14,17 +14,24 @@ from outwiker.core.events import (PreprocessingParams,
                                   PreHtmlImprovingParams,
                                   PostprocessingParams
                                   )
+
 from outwiker.gui.htmltexteditor import HtmlTextEditor
 from outwiker.gui.guiconfig import HtmlRenderConfig
+from outwiker.gui.tabledialog import TableDialog
+from outwiker.gui.tablerowsdialog import TableRowsDialog
 
-from .htmltoolbar import HtmlToolBar
-from .basehtmlpanel import BaseHtmlPanel, EVT_PAGE_TAB_CHANGED
-
-from outwiker.actions.polyactionsid import *
-from actions.link import insertLink
+from outwiker.pages.html.htmltoolbar import HtmlToolBar
+from outwiker.pages.html.basehtmlpanel import BaseHtmlPanel, EVT_PAGE_TAB_CHANGED
+from outwiker.pages.html.tabledialogcontroller import (
+    TableDialogController,
+    TableRowsDialogController
+)
 
 from actions.autolinewrap import HtmlAutoLineWrap
+from actions.link import insertLink
 from actions.switchcoderesult import SwitchCodeResultAction
+from outwiker.actions.polyactionsid import *
+
 
 
 class HtmlPageView (BaseHtmlPanel):
@@ -375,7 +382,9 @@ class HtmlPageView (BaseHtmlPanel):
         menu = self.__tableMenu
 
         # Вставить таблицу
-        self._application.actionController.getAction (TABLE_STR_ID).setFunc (lambda param: self.turnText (u'<table>', u'</table>'))
+        self._application.actionController.getAction (TABLE_STR_ID).setFunc (
+            self._insertTable
+        )
 
         self._application.actionController.appendMenuItem (TABLE_STR_ID, menu)
         self._application.actionController.appendToolbarButton (TABLE_STR_ID,
@@ -385,7 +394,9 @@ class HtmlPageView (BaseHtmlPanel):
 
 
         # Вставить строку таблицы
-        self._application.actionController.getAction (TABLE_ROW_STR_ID).setFunc (lambda param: self.turnText (u'<tr>', u'</tr>'))
+        self._application.actionController.getAction (TABLE_ROW_STR_ID).setFunc (
+            self._insertTableRows
+        )
 
         self._application.actionController.appendMenuItem (TABLE_ROW_STR_ID, menu)
         self._application.actionController.appendToolbarButton (TABLE_ROW_STR_ID,
@@ -636,3 +647,25 @@ class HtmlPageView (BaseHtmlPanel):
     def _changeContentByEvent (self, page, params, event):
         event (page, params)
         return params.result
+
+
+    def _insertTable (self, param):
+        editor = self.codeEditor
+        parent = Application.mainWindow
+
+        with TableDialog (parent) as dlg:
+            controller = TableDialogController (dlg, Application.config)
+            if controller.showDialog() == wx.ID_OK:
+                result = controller.getResult()
+                editor.replaceText (result)
+
+
+    def _insertTableRows (self, param):
+        editor = self.codeEditor
+        parent = Application.mainWindow
+
+        with TableRowsDialog (parent) as dlg:
+            controller = TableRowsDialogController (dlg, Application.config)
+            if controller.showDialog() == wx.ID_OK:
+                result = controller.getResult()
+                editor.replaceText (result)
