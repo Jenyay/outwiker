@@ -16,7 +16,7 @@ from outwiker.pages.wiki.emptycontent import EmptyContent
 from outwiker.pages.wiki.wikiconfig import WikiConfig
 from outwiker.pages.wiki.wikihashcalculator import WikiHashCalculator
 
-from utils import removeDir
+from test.utils import removeDir
 
 
 class WikiHashTest (unittest.TestCase):

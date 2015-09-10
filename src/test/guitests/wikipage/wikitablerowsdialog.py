@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-from .basemainwnd import BaseMainWndTest
+from test.guitests.basemainwnd import BaseMainWndTest
 
 from outwiker.core.application import Application
 from outwiker.gui.tester import Tester

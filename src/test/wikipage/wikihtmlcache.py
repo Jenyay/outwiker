@@ -18,7 +18,7 @@ from outwiker.pages.wiki.htmlcache import HtmlCache
 from outwiker.pages.wiki.emptycontent import EmptyContent
 from outwiker.pages.wiki.wikiconfig import WikiConfig
 
-from utils import removeDir
+from test.utils import removeDir
 
 
 class WikiHtmlCacheTest (unittest.TestCase):

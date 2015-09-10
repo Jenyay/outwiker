@@ -2,7 +2,7 @@
 
 import wx
 
-from basemainwnd import BaseMainWndTest
+from test.guitests.basemainwnd import BaseMainWndTest
 from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
 

@@ -47,7 +47,9 @@ if __name__ == '__main__':
     from test.actions.applystyle import ApplyStyleActionTest
     from test.actions.moveupdown import MovePageUpDownActionTest
 
-    from test.treeloading import WikiPagesTest, SubWikiTest, TextPageAttachmentTest
+    from test.treeloading import (WikiPagesTest,
+                                  SubWikiTest,
+                                  TextPageAttachmentTest)
     from test.treeloading_readonly import ReadonlyLoadTest, ReadonlyChangeTest
     from test.treecreation import TextPageCreationTest
     from test.treemanualedit import ManualEditTest
@@ -65,30 +67,30 @@ if __name__ == '__main__':
     from test.pageremove import RemovePagesTest
     from test.pageorder import PageOrderTest
 
-    from test.parsertests.tokennames import TokenNamesTest
-    from test.parsertests.parserfont import ParserFontTest
-    from test.parsertests.parserformat import ParserFormatTest
-    from test.parsertests.parsermisc import ParserMiscTest
-    from test.parsertests.parserlink import ParserLinkTest
-    from test.parsertests.parserattach import ParserAttachTest
-    from test.parsertests.parserimages import ParserImagesTest
-    from test.parsertests.parserheading import ParserHeadingTest
-    from test.parsertests.parserthumb import ParserThumbTest
-    from test.parsertests.parseralign import ParserAlignTest
-    from test.parsertests.parserlist import ParserListTest
-    from test.parsertests.parsertable import ParserTableTest
-    from test.parsertests.parseradhoc import ParserAdHocTest
-    from test.parsertests.parserurl import ParserUrlTest
-    from test.parsertests.parsertex import ParserTexTest
-    from test.parsertests.parserlinebreak import ParserLineBreakTest
-    from test.parsertests.parserquote import ParserQuoteTest
+    from test.wikipage.parsertests.tokennames import TokenNamesTest
+    from test.wikipage.parsertests.parserfont import ParserFontTest
+    from test.wikipage.parsertests.parserformat import ParserFormatTest
+    from test.wikipage.parsertests.parsermisc import ParserMiscTest
+    from test.wikipage.parsertests.parserlink import ParserLinkTest
+    from test.wikipage.parsertests.parserattach import ParserAttachTest
+    from test.wikipage.parsertests.parserimages import ParserImagesTest
+    from test.wikipage.parsertests.parserheading import ParserHeadingTest
+    from test.wikipage.parsertests.parserthumb import ParserThumbTest
+    from test.wikipage.parsertests.parseralign import ParserAlignTest
+    from test.wikipage.parsertests.parserlist import ParserListTest
+    from test.wikipage.parsertests.parsertable import ParserTableTest
+    from test.wikipage.parsertests.parseradhoc import ParserAdHocTest
+    from test.wikipage.parsertests.parserurl import ParserUrlTest
+    from test.wikipage.parsertests.parsertex import ParserTexTest
+    from test.wikipage.parsertests.parserlinebreak import ParserLineBreakTest
+    from test.wikipage.parsertests.parserquote import ParserQuoteTest
 
-    from test.parsertests.wikicommands import WikiCommandsTest
-    from test.parsertests.wikicommandinclude import WikiIncludeCommandTest
-    from test.parsertests.wikicommandchildlist import WikiChildListCommandTest
-    from test.parsertests.wikicommandattachlist import WikiAttachListCommandTest
-    from test.parsertests.wikicommanddates import WikiCommandDatesTest
-    from test.parsertests.wikicommandtable import WikiCommandTableTest
+    from test.wikipage.parsertests.wikicommands import WikiCommandsTest
+    from test.wikipage.parsertests.wikicommandinclude import WikiIncludeCommandTest
+    from test.wikipage.parsertests.wikicommandchildlist import WikiChildListCommandTest
+    from test.wikipage.parsertests.wikicommandattachlist import WikiAttachListCommandTest
+    from test.wikipage.parsertests.wikicommanddates import WikiCommandDatesTest
+    from test.wikipage.parsertests.wikicommandtable import WikiCommandTableTest
 
     from test.thumbmakerwx import ThumbmakerWxTest
     from test.thumbmakerpil import ThumbmakerPilTest
@@ -96,16 +98,21 @@ if __name__ == '__main__':
     from test.thumbnails import ThumbnailsTest
     from test.htmlimproverbr import BrHtmlImproverTest
     from test.htmlimproverfactory import HtmlImproverFactoryTest
-    from test.wikihtmlcache import WikiHtmlCacheTest
-    from test.wikihtmlgenerator import WikiHtmlGeneratorTest
-    from test.wikihash import WikiHashTest
     from test.htmltemplate import HtmlTemplateTest
-    from test.htmlpages import HtmlPagesTest
-    from test.wikilinkcreator import WikiLinkCreatorTest
-    from test.wikiutils import WikiUtilsTest
+    from test.htmlpage.htmlpages import HtmlPagesTest
+
+    from test.wikipage.wikihtmlcache import WikiHtmlCacheTest
+    from test.wikipage.wikihtmlgenerator import WikiHtmlGeneratorTest
+    from test.wikipage.wikihash import WikiHashTest
+    from test.wikipage.wikilinkcreator import WikiLinkCreatorTest
+    from test.wikipage.wikiutils import WikiUtilsTest
 
     from test.event import EventTest, EventsTest
-    from test.config import ConfigTest, ConfigOptionsTest, TrayConfigTest, EditorConfigTest
+    from test.config import (ConfigTest,
+                             ConfigOptionsTest,
+                             TrayConfigTest,
+                             EditorConfigTest)
+
     from test.recent import RecentWikiTest
     from test.search import SearcherTest, SearchPageTest
     from test.localsearch import LocalSearchTest
@@ -134,8 +141,6 @@ if __name__ == '__main__':
     from test.guitests.tabs import TabsTest
     from test.guitests.linkdialogcontrollertest import LinkDialogControllerTest
     from test.guitests.thumbdialogcontrollertest import ThumbDialogControllerTest
-    from test.guitests.wikipageview import WikiPageViewTest
-    from test.guitests.htmlpageview import HtmlPageViewTest
     from test.guitests.textpageview import TextPageViewTest
     from test.guitests.actioncontroller import ActionControllerTest
     from test.guitests.mainpanes import MainPanesTest
@@ -152,9 +157,13 @@ if __name__ == '__main__':
     from test.guitests.openwiki import OpenWikiGuiTest
     from test.guitests.newwiki import NewWikiGuiTest
     from test.guitests.pagetabs import PageTabsTest
-    from test.guitests.wikitabledialog import WikiTableDialogTest
-    from test.guitests.wikitablerowsdialog import WikiTableRowsDialogTest
-    from test.guitests.wikitableactions import WikiTableActionsTest
+
+    from test.guitests.htmlpage.htmlpageview import HtmlPageViewTest
+
+    from test.guitests.wikipage.wikipageview import WikiPageViewTest
+    from test.guitests.wikipage.wikitabledialog import WikiTableDialogTest
+    from test.guitests.wikipage.wikitablerowsdialog import WikiTableRowsDialogTest
+    from test.guitests.wikipage.wikitableactions import WikiTableActionsTest
 
     from test.guitests.fileicons import FileIconsTestWindows
 

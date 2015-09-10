@@ -17,7 +17,7 @@ from outwiker.pages.wiki.htmlgenerator import HtmlGenerator
 from outwiker.pages.wiki.emptycontent import EmptyContent
 from outwiker.pages.wiki.wikiconfig import WikiConfig
 
-from utils import removeDir
+from test.utils import removeDir
 
 
 class WikiHtmlGeneratorTest (unittest.TestCase):
