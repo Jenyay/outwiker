@@ -6,7 +6,7 @@ from outwiker.core.application import Application
 from outwiker.gui.tester import Tester
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.gui.tabledialog import TableDialog
-from outwiker.pages.wiki.tabledialogcontroller import BaseTableDialogController, TableDialogController
+from outwiker.pages.wiki.tabledialogcontroller import TableDialogController
 from outwiker.gui.guiconfig import GeneralGuiConfig
 
 
@@ -23,86 +23,6 @@ class WikiTableDialogTest (BaseMainWndTest):
 
     def tearDown (self):
         super (WikiTableDialogTest, self).tearDown()
-
-
-    def testDictToStr_01_empty (self):
-        params = {}
-        result = BaseTableDialogController.dictToStr (params)
-
-        validResult = u''
-
-        self.assertEqual (result, validResult)
-
-
-    def testDictToStr_02 (self):
-        params = {
-            u'param1': 10
-        }
-        result = BaseTableDialogController.dictToStr (params)
-
-        validResult = u'param1="10"'
-
-        self.assertEqual (result, validResult)
-
-
-    def testDictToStr_03 (self):
-        params = {
-            u'param1': 10,
-            u'Параметр2': u'абырвалг',
-        }
-        result = BaseTableDialogController.dictToStr (params)
-
-        validResult = u'param1="10", Параметр2="абырвалг"'
-
-        self.assertEqual (result, validResult)
-
-
-    def testDictToStr_04 (self):
-        params = {
-            u'param1': 10,
-            u'Параметр2': u"абыр'валг",
-        }
-        result = BaseTableDialogController.dictToStr (params)
-
-        validResult = u'param1="10", Параметр2="абыр\'валг"'
-
-        self.assertEqual (result, validResult)
-
-
-    def testDictToStr_05 (self):
-        params = {
-            u'param1': 10,
-            u'Параметр2': u'абыр"валг',
-        }
-        result = BaseTableDialogController.dictToStr (params)
-
-        validResult = u'param1="10", Параметр2=\'абыр"валг\''
-
-        self.assertEqual (result, validResult)
-
-
-    def testDictToStr_06 (self):
-        params = {
-            u'param1': 10,
-            u'Параметр2': u'аб\'ыр"валг',
-        }
-        result = BaseTableDialogController.dictToStr (params)
-
-        validResult = u'param1="10", Параметр2="аб\'ыр\\"валг"'
-
-        self.assertEqual (result, validResult, result)
-
-
-    def testDictToStr_07 (self):
-        params = {
-            u'param1': 10,
-            u'Параметр2': u'',
-        }
-        result = BaseTableDialogController.dictToStr (params)
-
-        validResult = u'param1="10", Параметр2=""'
-
-        self.assertEqual (result, validResult, result)
 
 
     def testDefault (self):

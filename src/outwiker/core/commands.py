@@ -504,6 +504,36 @@ def isImage (fname):
             fnameLower.endswith (".gif"))
 
 
+def dictToStr (paramsDict):
+    """
+    Return string like param_1="value1" param_2='value "" with double quotes'...
+    """
+    items = []
+    for name, value in paramsDict.items():
+        valueStr = unicode (value)
+
+        hasSingleQuote = u"'" in valueStr
+        hasDoubleQuote = u'"' in valueStr
+
+        if hasSingleQuote and hasDoubleQuote:
+            valueStr = valueStr.replace (u'"', u'\\"')
+            quote = u'"'
+        elif hasDoubleQuote:
+            quote = u"'"
+        else:
+            quote = u'"'
+
+        paramStr = u'{name}={quote}{value}{quote}'.format (
+            name = name,
+            quote = quote,
+            value = valueStr
+        )
+
+        items.append (paramStr)
+
+    items.sort()
+    return u', '.join (items)
+
 
 def registerActions (application):
     """

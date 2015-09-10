@@ -3,6 +3,7 @@
 import wx
 
 from outwiker.gui.guiconfig import GeneralGuiConfig
+from outwiker.core.commands import dictToStr
 
 
 class BaseTableDialogController (object):
@@ -13,35 +14,6 @@ class BaseTableDialogController (object):
         self._dialog = dialog
         self._config = GeneralGuiConfig (config)
         self._suffix = suffix
-
-
-    @staticmethod
-    def dictToStr (paramsDict):
-        items = []
-        for name, value in paramsDict.items():
-            valueStr = unicode (value)
-
-            hasSingleQuote = u"'" in valueStr
-            hasDoubleQuote = u'"' in valueStr
-
-            if hasSingleQuote and hasDoubleQuote:
-                valueStr = valueStr.replace (u'"', u'\\"')
-                quote = u'"'
-            elif hasDoubleQuote:
-                quote = u"'"
-            else:
-                quote = u'"'
-
-            paramStr = u'{name}={quote}{value}{quote}'.format (
-                name = name,
-                quote = quote,
-                value = valueStr
-            )
-
-            items.append (paramStr)
-
-        items.sort()
-        return u', '.join (items)
 
 
     def _getCells (self):
@@ -93,7 +65,7 @@ class TableDialogController (BaseTableDialogController):
         """
         Return wiki notation string with (:table:)...(:tableend:) commands
         """
-        params = self.dictToStr (self._getTableParams ())
+        params = dictToStr (self._getTableParams ())
 
         if params:
             params = u' ' + params
