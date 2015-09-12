@@ -20,6 +20,7 @@ from outwiker.core.application import Application
 from outwiker.core.system import getOS, getPluginsDirList, getConfigPath, getExeFile
 from outwiker.core.starter import Starter, StarterExit
 from outwiker.core.commands import registerActions
+from outwiker.core.logredirector import LogRedirector
 from outwiker.gui.actioncontroller import ActionController
 
 
@@ -41,11 +42,8 @@ class OutWiker(wx.App):
         except StarterExit:
             return True
 
-        # Если программа запускается в виде exe-шника, то перенаправить вывод ошибок в лог
-        if getExeFile().endswith (u".exe"):
-            # Закоментировать следующую строку, если не надо выводить strout/strerr в лог-файл
-            self.RedirectStdio (self.getLogFileName (self._fullConfigPath))
-            pass
+        redirector = LogRedirector (self.getLogFileName (self._fullConfigPath))
+        redirector.init()
 
         from outwiker.gui.mainwindow import MainWindow
 
