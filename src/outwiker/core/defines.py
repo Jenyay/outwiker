@@ -2,6 +2,7 @@
 '''
 Various names and constants
 '''
+WX_VERSION = "2.8"
 
 # Page icon size
 ICON_WIDTH = 16

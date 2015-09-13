@@ -4,8 +4,9 @@
 import os
 import os.path
 import shutil
+import glob
 
-from fabric.api import local, lcd
+from fabric.api import local, lcd, settings
 
 # Supported Ubuntu releases
 distribs = ["vivid", "trusty", "precise"]
@@ -308,12 +309,23 @@ def run ():
         local ("python runoutwiker.py")
 
 
-def test (params=""):
+def test (section=u'', params=u''):
     """
     Run the unit tests
     """
+    testdir = u'src'
+    files = [fname[len(testdir) + 1:]
+             for fname
+             in glob.glob (u'{}/tests_*.py'.format (testdir))]
+    files.sort()
+
     with lcd ("src"):
-        local ("python tests.py " + params)
+        if section:
+            local ("python tests_{}.py {}".format (section, params))
+        else:
+            with settings (warn_only=True):
+                for fname in files:
+                    local ("python {}".format (fname, params))
 
 
 def testcoverage (params=""):

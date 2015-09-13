@@ -4,10 +4,11 @@
 import os
 import os.path
 
+from outwiker.core.defines import WX_VERSION
 import wxversion
 
 try:
-    wxversion.select("2.8")
+    wxversion.select(WX_VERSION)
 except wxversion.VersionError:
     if os.name == "nt":
         pass
@@ -17,7 +18,7 @@ except wxversion.VersionError:
 import wx
 
 from outwiker.core.application import Application
-from outwiker.core.system import getOS, getPluginsDirList, getConfigPath, getExeFile
+from outwiker.core.system import getOS, getPluginsDirList, getConfigPath
 from outwiker.core.starter import Starter, StarterExit
 from outwiker.core.commands import registerActions
 from outwiker.core.logredirector import LogRedirector
