@@ -242,13 +242,12 @@ def win (skipinstaller=False):
         local ("7z a ..\outwiker_win_unstable_all_plugins.7z .\* .\plugins -r -aoa -xr!*.pyc -xr!.ropeproject")
 
 
-
-def wintests():
-    """
-    Assemble test in an exe file.
-    """
-    with lcd ("src"):
-        local ("python setup_tests.py build")
+# def wintests():
+#     """
+#     Assemble test in an exe file.
+#     """
+#     with lcd ("src"):
+#         local ("python setup_tests.py build")
 
 
 def nextversion():
@@ -328,15 +327,15 @@ def test (section=u'', params=u''):
                     local ("python {}".format (fname, params))
 
 
-def testcoverage (params=""):
-    """
-    Run the unit tests and measure the coverage (coverage required)
-    """
-    with lcd ("src"):
-        local (u"coverage run tests.py " + params)
-        local (u"rm -rf ../doc/coverage")
-        local (u'coverage html --omit=outwiker/libs/*,/usr/share/pyshared/*,../plugins/source/source/pygments/* -d "../doc/coverage"')
-
+# def testcoverage (params=""):
+#     """
+#     Run the unit tests and measure the coverage (coverage required)
+#     """
+#     with lcd ("src"):
+#         local (u"coverage run tests.py " + params)
+#         local (u"rm -rf ../doc/coverage")
+#         local (u'coverage html --omit=outwiker/libs/*,/usr/share/pyshared/*,../plugins/source/source/pygments/* -d "../doc/coverage"')
+#
 
 def _makechangelog (distrib_src, distrib_new):
     """
