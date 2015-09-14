@@ -76,13 +76,13 @@ class WikiColorizer (object):
 
             tokenname = token[0].getName()
 
-            if tokenname == "text":
+            if (tokenname == "text" or
+                    tokenname == "noformat" or
+                    tokenname == "preformat"):
                 self._editor.runSpellChecking (stylelist, pos_start, pos_end)
                 continue
 
-            if (tokenname == "linebreak" or
-                    tokenname == "noformat" or
-                    tokenname == "preformat"):
+            if tokenname == "linebreak":
                 continue
 
             # Нас интересует позиция в байтах, а не в символах
