@@ -1,8 +1,10 @@
-<HTML>
-<HEAD>
-	<META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+	<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
 
-	<STYLE type="text/css">
+	<style type='text/css'>
 		body, div, p, table {
 			font-size:10pt;
 			font-family:Verdana;
@@ -10,30 +12,192 @@
 
 		img{border:none}
 		
-	</STYLE>
-</HEAD>
+	</style>
+	
+</head>
 
-<BODY>
-<P>To create tables, use the following notation:</P>
-
-<P>
-<BR>|| Table params (tag &lt;TABLE&gt; attributes): border, width etc
-<BR>|| The first cell of the first row || The Second cell of the first row || ... || The Last cell of the first row ||
-<BR>|| The first cell of the second row || The second cell of the second row || ... || The Last cell of the second row ||
-<BR>...</P>
-
-<P>
-<BR>The horizontal alignment of table cells defined by spaces before and after the cells text. This is shown in the following example:</P>
-
-<P>Table code:</P>
-
-<P>
-<BR>|| border=1 width=100%
-<BR>||Left align || Center align || Right align||</P>
-
-<P>
-<BR>Result:</P>
-
-<P><TABLE border=1 width=100%><TR><TD ALIGN="LEFT">Left align</TD><TD ALIGN="CENTER">Center align</TD><TD ALIGN="RIGHT">Right align</TD></TR></TABLE></P>
-</BODY>
-</HTML>
+<body>
+<p>Для создания таблиц на викистраницах существует два набора викикоманд: упрощенный, предназначенный в первую очередь для создания небольших таблиц, и команда (:table:)...(:tableend:), которая позволяет более гибко настраивать внешний вид таблиц. Ниже рассмотрены оба варианта:</p>
+<h2>Simple table creation</h2>
+<p>Для создания таблиц с помощью упрощенной викинотации используется следующий формат записи:</p>
+<p>|| Table params (&lt;TABLE&gt; tag attribute): border, width, etc<br/>
+|| The first cell of the first row || The second cell of the first row || ... || The last cell of the first row ||<br/>
+|| The first cell of the second row || The second cell of the second row || ... || The last cell of the last row ||<br/>
+...</p>
+<p>Горизонтальное выравнивание ячеек таблицы задается пробелами перед и после текста ячеек. Это показано на следующем примере:</p>
+<p>Код таблицы:</p>
+<p>|| border=1 width=100%<br/>
+||Left align || Center align || Right align||</p>
+<p>Результат:</p>
+<p>
+<table border=1 width=100%>
+<tr>
+<td align="left">Left align</td>
+<td align="center">Center align</td>
+<td align="right">Right align</td>
+</tr>
+</table>
+<h2>Using (:table:) command</h2>
+<h3>Syntax</h3>
+<p>Использование команды (:table:) близко к созданию таблиц с использованием языка HTML. Общий синтаксис использования этой команды следующий:</p>
+<p>(:table parameters:)<br/>
+(:row parameters:)<br/>
+(:hcell parameters:) Текст заголовочной ячейки<br/>
+(:hcell parameters:) Текст заголовочной ячейки<br/>
+...<br/>
+(:row parameters:)<br/>
+(:cell parameters:) Текст заголовочной ячейки<br/>
+(:cell parameters:) Текст заголовочной ячейки<br/>
+...<br/>
+(:tableend:)</p>
+<p>В самой команде (:table:) могут использоваться те же параметры, что и в теге &lt;table&gt; языка HTML, наиболее часто используемые параметры - это <i>border</i>, задающий толщину рамки таблицы (если border=0, что является значением по умолчанию для команды (:table:), то рамка таблицы не отображается), <i>width</i>, задающий ширину таблицы, а также <i>align</i>, задающий выравнивание таблицы.</p>
+<p>В программе OutWiker команда (:table параметры:)...(:tableend:) преобразуется в HTML-код вида: &lt;table параметры&gt;...&lt;/table&gt;</p>
+<p>Команда (:row:) указывает на начало новой строки таблицы, она является аналогом HTML-тега &lt;tr&gt; и, соответственно, может содержать в себе те же самые параметры.</p>
+<p>Начало новой ячейки задается с помощью команд (:cell:) для обычных ячеек или (:hcell:) для заголовочных ячеек. Команда (:cell:) является аналогом HTML-тега &lt;td&gt;, а команда (:hcell:) - аналогом тега &lt;th&gt;.</p>
+<h4>Using examples</h4>
+<p>
+<table width=100% border=1>
+<tr><th> Комментарий</th><th> Викинотация</th><th> Результат<br/>
+</th>
+</tr>
+<tr>
+<td> Таблица с рамкой</td>
+<td>(:table border="1":)<br/>
+(:row:)<br/>
+(:cell:)ячейка 1<br/>
+(:cell:)ячейка 2<br/>
+(:cell:)ячейка 3<br/>
+(:row:)<br/>
+(:cell:)ячейка 4<br/>
+(:cell:)ячейка 5<br/>
+(:cell:)ячейка 6<br/>
+(:tableend:)</td>
+<td>
+<table border="1">
+<tr>
+<td>ячейка 1</td>
+<td>ячейка 2</td>
+<td>ячейка 3</td>
+</tr>
+<tr>
+<td>ячейка 4</td>
+<td>ячейка 5</td>
+<td>ячейка 6</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td>Таблиа без рамки</td>
+<td>(:table:)<br/>
+(:row:)<br/>
+(:cell:)ячейка 1<br/>
+(:cell:)ячейка 2<br/>
+(:cell:)ячейка 3<br/>
+(:row:)<br/>
+(:cell:)ячейка 4<br/>
+(:cell:)ячейка 5<br/>
+(:cell:)ячейка 6<br/>
+(:tableend:)</td>
+<td>
+<table>
+<tr>
+<td>ячейка 1</td>
+<td>ячейка 2</td>
+<td>ячейка 3</td>
+</tr>
+<tr>
+<td>ячейка 4</td>
+<td>ячейка 5</td>
+<td>ячейка 6</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td> Использование параметров colspan и rowspan<br/>
+для объединения ячеек по горизонтали и вертикали</td>
+<td>(:table border="1" align="center":)<br/>
+(:row:)<br/>
+(:cell colspan=2 align=center:)ячейка 1(:cellend:)<br/>
+(:cell rowspan=2:)ячейка 2(:cellend:)<br/>
+(:row:)<br/>
+(:cell:)ячейка 4(:cellend:)<br/>
+(:cell:)ячейка 5(:cellend:)<br/>
+(:tableend:)</td>
+<td>
+<table border="1" align="center">
+<tr>
+<td colspan=2 align=center>ячейка 1</td>
+<td rowspan=2>ячейка 2</td>
+</tr>
+<tr>
+<td>ячейка 4</td>
+<td>ячейка 5</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<h3>Nested tables</h3>
+<p>Из-за особенностей работы википарсера (части программы OutWiker, который преобразует викинотацию в код HTML), чтобы одна таблица располагалась в ячейке другой таблицы, недостаточно одной команды (:table:) (в этом случае википарсер не будет знать, где заканчивается таблица верхнего уровня, а где вложенная таблица), поэтому для явного указания начала и конца команды создания таблицы были добавлены команды (:table:) с номерами, т.е. команды (:table1:), (:table2:), (:table3:), (:table4:) и (:table5:). Они могут использоваться точно также, как и команда (:table:), но создавались они именно для создания вложенных таблиц. Обратите внимание, что эти команды закрываются с помощью выражения (:table1:), (:table2end:), (:table3end:), (:table4end:) и (:table5end:) соответственно.</p>
+<p>Внутри команды вида (:tableN:) для создания строк и ячеек должны использоваться также нумерованные команды (:rowN:) и (:cellN:) / (:hcellN:) соответственно. Эта особенность добавляет наглядности, какой таблице какая строка или ячейка принадлежит.</p>
+<p>Например:</p>
+<p>
+<table border="1" width=100%>
+<tr><th>Викинотация</th><th>Результат<br/>
+</th>
+</tr>
+<tr>
+<td>(:table border=1 align=center:)<br/>
+(:row:)<br/>
+(:cell:)(:table2 border=1:)<br/>
+(:row2:)<br/>
+(:cell2:)Таблица 2. Ячейка 1<br/>
+(:cell2:)Таблица 2. Ячейка 2<br/>
+(:cell2:)Таблица 2. Ячейка 3<br/>
+(:row2:)<br/>
+(:cell2:)Таблица 2. Ячейка 4<br/>
+(:cell2:)Таблица 2. Ячейка 5<br/>
+(:cell2:)Таблица 2. Ячейка 6<br/>
+(:table2end:)</p>
+<p>(:cell:)ячейка 2<br/>
+(:cell:)ячейка 3</p>
+<p>(:row:)<br/>
+(:cell:)ячейка 4<br/>
+(:cell:)ячейка 5<br/>
+(:cell:)ячейка 6<br/>
+(:tableend:)<br/>
+</td>
+<td>
+<table border=1 align=center>
+<tr>
+<td>
+<table border=1>
+<tr>
+<td>Таблица 2. Ячейка 1</td>
+<td>Таблица 2. Ячейка 2</td>
+<td>Таблица 2. Ячейка 3</td>
+</tr>
+<tr>
+<td>Таблица 2. Ячейка 4</td>
+<td>Таблица 2. Ячейка 5</td>
+<td>Таблица 2. Ячейка 6</td>
+</tr>
+</table>
+</td>
+<td>ячейка 2</td>
+<td>ячейка 3</td>
+</tr>
+<tr>
+<td>ячейка 4</td>
+<td>ячейка 5</td>
+<td>ячейка 6</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<p>Нумерация таблиц не обязательно должна показывать уровень вложенности. Например, на данной странице справки для оформления последнего примера наружная таблица создается с помощью команды (:table3:), а вложенные с помощью команд (:table:) и (:table2:).</p>
+</body>
+</html>
