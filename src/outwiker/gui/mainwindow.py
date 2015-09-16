@@ -545,6 +545,7 @@ class MainWindow(wx.Frame):
         Application.actionController.saveHotKeys()
 
         self.__unbindGuiEvents()
+        self._dropTarget.destroy()
 
         self.tabsController.destroy()
         self.toolbars.destroyAllToolBars()
@@ -563,6 +564,11 @@ class MainWindow(wx.Frame):
         self.toolbars = None
         self.SetMenuBar (None)
         self.mainMenu.Destroy()
+
+        self.pagePanel = None
+        self.treePanel = None
+        self.attachPanel = None
+        self.tagsCloudPanel = None
 
         super (MainWindow, self).Destroy()
 
@@ -633,16 +639,21 @@ class DropFilesTarget (wx.FileDropTarget):
     """
     Класс для возможности перетаскивания файлов между другими программами и OutWiker
     """
-    def __init__ (self, mainWindow):
+    def __init__ (self, dropWnd):
         wx.FileDropTarget.__init__ (self)
-        self._mainWindow = mainWindow
-        self._mainWindow.SetDropTarget (self)
+        self._dropWnd = dropWnd
+        self._dropWnd.SetDropTarget (self)
 
 
     def OnDropFiles (self, x, y, files):
         if (Application.wikiroot is not None and
                 Application.wikiroot.selectedPage is not None):
-            cmd.attachFiles (self._mainWindow,
+            cmd.attachFiles (self._dropWnd,
                              Application.wikiroot.selectedPage,
                              files)
             return True
+
+
+    def destroy (self):
+        self._dropWnd.SetDropTarget (None)
+        self._dropWnd = None

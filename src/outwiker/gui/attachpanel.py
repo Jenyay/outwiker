@@ -33,19 +33,38 @@ class AttachPanel(wx.Panel):
         self.__fileIcons = getOS().fileIcons
         self.__attachList.SetImageList (self.__fileIcons.imageList, wx.IMAGE_LIST_SMALL)
 
-        self.Bind(wx.EVT_LIST_BEGIN_DRAG, self.__onBeginDrag, self.__attachList)
-
-        self.Bind(wx.EVT_MENU, self.__onAttach, id=self.ID_ATTACH)
-        self.Bind(wx.EVT_MENU, self.__onRemove, id=self.ID_REMOVE)
-        self.Bind(wx.EVT_MENU, self.__onPaste, id=self.ID_PASTE)
-        self.Bind(wx.EVT_MENU, self.__onExecute, id=self.ID_EXECUTE)
-        self.Bind(wx.EVT_MENU, self.__onOpenFolder, id=self.ID_OPEN_FOLDER)
-        self.Bind(wx.EVT_MENU, self.__onRefresh, id=self.ID_REFRESH)
-        self.Bind (wx.EVT_CLOSE, self.__onClose)
-
+        self.__bindGuiEvents()
         self.__bindAppEvents()
 
-        self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.__onDoubleClick, self.__attachList)
+
+    def __bindGuiEvents (self):
+        self.Bind (wx.EVT_LIST_BEGIN_DRAG, self.__onBeginDrag, self.__attachList)
+        self.Bind (wx.EVT_LIST_ITEM_ACTIVATED, self.__onDoubleClick, self.__attachList)
+        self.Bind (wx.EVT_MENU, self.__onAttach, id=self.ID_ATTACH)
+        self.Bind (wx.EVT_MENU, self.__onRemove, id=self.ID_REMOVE)
+        self.Bind (wx.EVT_MENU, self.__onPaste, id=self.ID_PASTE)
+        self.Bind (wx.EVT_MENU, self.__onExecute, id=self.ID_EXECUTE)
+        self.Bind (wx.EVT_MENU, self.__onOpenFolder, id=self.ID_OPEN_FOLDER)
+        self.Bind (wx.EVT_MENU, self.__onRefresh, id=self.ID_REFRESH)
+        self.Bind (wx.EVT_CLOSE, self.__onClose)
+
+
+    def __unbindGuiEvents (self):
+        self.Unbind (wx.EVT_LIST_BEGIN_DRAG,
+                     handler=self.__onBeginDrag,
+                     source=self.__attachList)
+
+        self.Unbind (wx.EVT_LIST_ITEM_ACTIVATED,
+                     handler=self.__onDoubleClick,
+                     source=self.__attachList)
+
+        self.Unbind (wx.EVT_MENU, handler=self.__onAttach, id=self.ID_ATTACH)
+        self.Unbind (wx.EVT_MENU, handler=self.__onRemove, id=self.ID_REMOVE)
+        self.Unbind (wx.EVT_MENU, handler=self.__onPaste, id=self.ID_PASTE)
+        self.Unbind (wx.EVT_MENU, handler=self.__onExecute, id=self.ID_EXECUTE)
+        self.Unbind (wx.EVT_MENU, handler=self.__onOpenFolder, id=self.ID_OPEN_FOLDER)
+        self.Unbind (wx.EVT_MENU, handler=self.__onRefresh, id=self.ID_REFRESH)
+        self.Unbind (wx.EVT_CLOSE, handler=self.__onClose)
 
 
     @property
@@ -72,6 +91,7 @@ class AttachPanel(wx.Panel):
 
     def __onClose (self, event):
         self.__unbindAppEvents()
+        self.__unbindGuiEvents()
         self.toolBar.ClearTools()
         self.attachList.ClearAll()
         self.__fileIcons.clear()
