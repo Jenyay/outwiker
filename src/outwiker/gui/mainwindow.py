@@ -480,6 +480,18 @@ class MainWindow(wx.Frame):
         self.Bind (wx.EVT_MENU, self.__onStdEvent, id=wx.ID_SELECTALL)
 
 
+    def __unbindGuiEvents (self):
+        """
+        Подписаться на события меню, кнопок и т.п.
+        """
+        self.Unbind (wx.EVT_MENU, id=wx.ID_UNDO, handler=self.__onStdEvent)
+        self.Unbind (wx.EVT_MENU, id=wx.ID_REDO, handler=self.__onStdEvent)
+        self.Unbind (wx.EVT_MENU, id=wx.ID_CUT, handler=self.__onStdEvent)
+        self.Unbind (wx.EVT_MENU, id=wx.ID_COPY, handler=self.__onStdEvent)
+        self.Unbind (wx.EVT_MENU, id=wx.ID_PASTE, handler=self.__onStdEvent)
+        self.Unbind (wx.EVT_MENU, id=wx.ID_SELECTALL, handler=self.__onStdEvent)
+
+
     def __saveParams (self):
         """
         Сохранить параметры в конфиг
@@ -532,6 +544,8 @@ class MainWindow(wx.Frame):
         self.__saveParams()
         Application.actionController.saveHotKeys()
 
+        self.__unbindGuiEvents()
+
         self.tabsController.destroy()
         self.toolbars.destroyAllToolBars()
 
@@ -539,12 +553,14 @@ class MainWindow(wx.Frame):
 
         self.pagePanel.close()
         self.__panesController.closePanes()
+        self.__panesController = None
 
         self.statusbar.Close()
         self.taskBarIcon.Destroy()
         self.controller.destroy()
         self.auiManager.Destroy()
 
+        self.toolbars = None
         self.SetMenuBar (None)
         self.mainMenu.Destroy()
 

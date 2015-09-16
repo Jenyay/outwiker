@@ -71,6 +71,8 @@ class MainPane (object):
 
     def close (self):
         self.panel.Close()
+        self._parent = None
+        self._panel = None
 
 
     def saveParams (self):

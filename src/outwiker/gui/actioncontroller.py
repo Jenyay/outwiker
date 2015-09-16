@@ -38,6 +38,12 @@ class ActionController (object):
         self._configSection = "HotKeys"
 
 
+    def destroy (self):
+        self._mainWindow = None
+        self._config = None
+        self._actionsInfo = {}
+
+
     @property
     def configSection (self):
         return self._configSection

@@ -56,6 +56,7 @@ class ToolBarsController (object):
 
     def _removeMenu (self, toolbarinfo):
         self._toolbarsMenu.DeleteItem (toolbarinfo.menuitem)
+        self._parent.Unbind(wx.EVT_MENU, source=toolbarinfo.menuitem, handler=self.__onToolBarMenuClick)
 
 
     def __onToolBarMenuClick (self, event):
@@ -100,6 +101,8 @@ class ToolBarsController (object):
         Нужно вызывать до вызова auiManager.UnInit()
         """
         self.updatePanesInfo()
+
+        self._parent.auiManager.Unbind (wx.aui.EVT_AUI_PANE_CLOSE, handler=self.__onPaneClose)
 
         for toolbarname in self._toolbars.keys():
             self.destroyToolBar (toolbarname)

@@ -62,4 +62,12 @@ class BaseMainWndTest(unittest.TestCase):
         Application.mainWindow = None
         Application.selectedPage = None
         Application.wikiroot = None
+        Application.actionController.destroy()
+        Application.actionController = None
         removeDir (self.path)
+        # wnd = self.wnd
+        self.wnd = None
+
+        # from pympler import refbrowser
+        # cb = refbrowser.ConsoleBrowser(wnd, maxdepth=3)
+        # cb.print_tree()
