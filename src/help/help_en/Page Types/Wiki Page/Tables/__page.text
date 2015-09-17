@@ -68,9 +68,9 @@ The [=(:cell:)=] command is specified to begin a new cell,  and [=(:cell:)=] is 
 (:cell2:) Table with a border
 (:cell2:)[=(:table border="1":)
 (:row:)
-(:cell:)cell 1
-(:cell:)cell 2
-(:cell:)cell 3
+(:hcell:)cell 1
+(:hcell:)cell 2
+(:hcell:)cell 3
 (:row:)
 (:cell:)cell 4
 (:cell:)cell 5
@@ -78,9 +78,9 @@ The [=(:cell:)=] command is specified to begin a new cell,  and [=(:cell:)=] is 
 (:tableend:)=]
 (:cell2:)(:table border="1":)
 (:row:)
-(:cell:)cell 1
-(:cell:)cell 2
-(:cell:)cell 3
+(:hcell:)cell 1
+(:hcell:)cell 2
+(:hcell:)cell 3
 (:row:)
 (:cell:)cell 4
 (:cell:)cell 5
@@ -115,19 +115,19 @@ The [=(:cell:)=] command is specified to begin a new cell,  and [=(:cell:)=] is 
 to join cell horizontally and vertically
 (:cell2:)[=(:table border="1" align="center":)
 (:row:)
-(:cell colspan=2 align=center:)cell 1(:cellend:)
-(:cell rowspan=2:)cell 2(:cellend:)
+(:cell colspan=2 align=center:)cell 1
+(:cell rowspan=2:)cell 2
 (:row:)
-(:cell:)cell 4(:cellend:)
-(:cell:)cell 5(:cellend:)
+(:cell:)cell 4
+(:cell:)cell 5
 (:tableend:)=]
 (:cell2:)(:table border="1" align="center":)
 (:row:)
-(:cell colspan=2 align=center:)cell 1(:cellend:)
-(:cell rowspan=2:)cell 2(:cellend:)
+(:cell colspan=2 align=center:)cell 1
+(:cell rowspan=2:)cell 2
 (:row:)
-(:cell:)cell 4(:cellend:)
-(:cell:)cell 5(:cellend:)
+(:cell:)cell 4
+(:cell:)cell 5
 (:tableend:)
 (:table2end:)
 

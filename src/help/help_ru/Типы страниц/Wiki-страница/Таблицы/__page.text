@@ -66,9 +66,9 @@
 (:cell2:) Таблица с рамкой
 (:cell2:)[=(:table border="1":)
 (:row:)
-(:cell:)ячейка 1
-(:cell:)ячейка 2
-(:cell:)ячейка 3
+(:hcell:)ячейка 1
+(:hcell:)ячейка 2
+(:hcell:)ячейка 3
 (:row:)
 (:cell:)ячейка 4
 (:cell:)ячейка 5
@@ -76,9 +76,9 @@
 (:tableend:)=]
 (:cell2:)(:table border="1":)
 (:row:)
-(:cell:)ячейка 1
-(:cell:)ячейка 2
-(:cell:)ячейка 3
+(:hcell:)ячейка 1
+(:hcell:)ячейка 2
+(:hcell:)ячейка 3
 (:row:)
 (:cell:)ячейка 4
 (:cell:)ячейка 5
@@ -113,19 +113,19 @@
 для объединения ячеек по горизонтали и вертикали
 (:cell2:)[=(:table border="1" align="center":)
 (:row:)
-(:cell colspan=2 align=center:)ячейка 1(:cellend:)
-(:cell rowspan=2:)ячейка 2(:cellend:)
+(:cell colspan=2 align=center:)ячейка 1
+(:cell rowspan=2:)ячейка 2
 (:row:)
-(:cell:)ячейка 4(:cellend:)
-(:cell:)ячейка 5(:cellend:)
+(:cell:)ячейка 4
+(:cell:)ячейка 5
 (:tableend:)=]
 (:cell2:)(:table border="1" align="center":)
 (:row:)
-(:cell colspan=2 align=center:)ячейка 1(:cellend:)
-(:cell rowspan=2:)ячейка 2(:cellend:)
+(:cell colspan=2 align=center:)ячейка 1
+(:cell rowspan=2:)ячейка 2
 (:row:)
-(:cell:)ячейка 4(:cellend:)
-(:cell:)ячейка 5(:cellend:)
+(:cell:)ячейка 4
+(:cell:)ячейка 5
 (:tableend:)
 (:table2end:)
 
