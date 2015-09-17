@@ -17,135 +17,162 @@
 </head>
 
 <body>
-<p>Для создания таблиц на викистраницах существует два набора викикоманд: упрощенный, предназначенный в первую очередь для создания небольших таблиц, и команда (:table:)...(:tableend:), которая позволяет более гибко настраивать внешний вид таблиц. Ниже рассмотрены оба варианта:</p>
+There are several ways to create table on wiki page: simple wiki notation and using (:table:)...(:tableend:) command. Simple method is designed for creation small and compact tables. (:table:) command allows to tune table appearance mode flexibly. Next will be described both methods.<br/>
+<br/>
 <h2>Simple table creation</h2>
-<p>Для создания таблиц с помощью упрощенной викинотации используется следующий формат записи:</p>
-<p>|| Table params (&lt;TABLE&gt; tag attribute): border, width, etc<br/>
+<br/>
+To create table with simple wiki notation is used follow syntax:<br/>
+<br/>
+<br/>
+|| Table params (&lt;TABLE&gt; tag attribute): border, width, etc<br/>
 || The first cell of the first row || The second cell of the first row || ... || The last cell of the first row ||<br/>
 || The first cell of the second row || The second cell of the second row || ... || The last cell of the last row ||<br/>
-...</p>
-<p>Горизонтальное выравнивание ячеек таблицы задается пробелами перед и после текста ячеек. Это показано на следующем примере:</p>
-<p>Код таблицы:</p>
-<p>|| border=1 width=100%<br/>
-||Left align || Center align || Right align||</p>
-<p>Результат:</p>
-<p>
+...<br/>
+<br/>
+<br/>
+Horizontal align is given by spaces before and after text inside the cells. This is shown in follow example:<br/>
+<br/>
+Table code:<br/>
+<br/>
+<br/>
+|| border=1 width=100%<br/>
+||Left align || Center align || Right align||<br/>
+<br/>
+<br/>
+Result:<br/>
+<br/>
 <table border=1 width=100%>
 <tr>
 <td align="left">Left align</td>
 <td align="center">Center align</td>
 <td align="right">Right align</td>
 </tr>
-</table>
+</table><br/>
 <h2>Using (:table:) command</h2>
 <h3>Syntax</h3>
-<p>Использование команды (:table:) близко к созданию таблиц с использованием языка HTML. Общий синтаксис использования этой команды следующий:</p>
-<p>(:table parameters:)<br/>
+<br/>
+Using the (:table:) command reminds table creation with HTML. Generalized using syntax is as follows:<br/>
+<br/>
+<br/>
+<br/>
+(:table parameters:)<br/>
 (:row parameters:)<br/>
-(:hcell parameters:) Текст заголовочной ячейки<br/>
-(:hcell parameters:) Текст заголовочной ячейки<br/>
+(:hcell parameters:) Header cell text<br/>
+(:hcell parameters:) Header cell text<br/>
 ...<br/>
 (:row parameters:)<br/>
-(:cell parameters:) Текст заголовочной ячейки<br/>
-(:cell parameters:) Текст заголовочной ячейки<br/>
+(:cell parameters:) Cell text<br/>
+(:cell parameters:) Cell text<br/>
 ...<br/>
-(:tableend:)</p>
-<p>В самой команде (:table:) могут использоваться те же параметры, что и в теге &lt;table&gt; языка HTML, наиболее часто используемые параметры - это <i>border</i>, задающий толщину рамки таблицы (если border=0, что является значением по умолчанию для команды (:table:), то рамка таблицы не отображается), <i>width</i>, задающий ширину таблицы, а также <i>align</i>, задающий выравнивание таблицы.</p>
-<p>В программе OutWiker команда (:table параметры:)...(:tableend:) преобразуется в HTML-код вида: &lt;table параметры&gt;...&lt;/table&gt;</p>
-<p>Команда (:row:) указывает на начало новой строки таблицы, она является аналогом HTML-тега &lt;tr&gt; и, соответственно, может содержать в себе те же самые параметры.</p>
-<p>Начало новой ячейки задается с помощью команд (:cell:) для обычных ячеек или (:hcell:) для заголовочных ячеек. Команда (:cell:) является аналогом HTML-тега &lt;td&gt;, а команда (:hcell:) - аналогом тега &lt;th&gt;.</p>
-<h4>Using examples</h4>
-<p>
+(:tableend:)<br/>
+<br/>
+<br/>
+In the (:table:) command may used the same parameters as in &lt;table&gt; tag from HTML. Most used parameters are <i>border</i> to set table border width (if <i>border</i>="0" (default value) then table frame is not visible), <i>width</i> to set table width, and <i>align</i> to set table align.<br/>
+<br/>
+In OutWiker (:table paraameters:)...(:tableend:) command will be converted to HTML code &lt;table parameters&gt;...&lt;/table&gt;<br/>
+<br/>
+The (:row:) command is specified to begin a new table row. This command is analog &lt;tr&gt; HTML tag and it may contain the same parameters.<br/>
+<br/>
+The (:cell:) command is specified to begin a new cell,  and (:cell:) is specified to begin a new heading cell. The (:cell:) command is analog &lt;td&gt; HTML tag, and (:hcell:) command is analog &lt;th&gt HTML tag.<br/>
+<br/>
+<h4>Examples</h4>
+<br/>
 <table width=100% border=1>
-<tr><th> Комментарий</th><th> Викинотация</th><th> Результат<br/>
+<tr><th> Comment</th><th> Wiki notation</th><th> Result<br/>
 </th>
 </tr>
 <tr>
-<td> Таблица с рамкой</td>
+<td> Table with a border</td>
 <td>(:table border="1":)<br/>
 (:row:)<br/>
-(:cell:)ячейка 1<br/>
-(:cell:)ячейка 2<br/>
-(:cell:)ячейка 3<br/>
+(:cell:)cell 1<br/>
+(:cell:)cell 2<br/>
+(:cell:)cell 3<br/>
 (:row:)<br/>
-(:cell:)ячейка 4<br/>
-(:cell:)ячейка 5<br/>
-(:cell:)ячейка 6<br/>
+(:cell:)cell 4<br/>
+(:cell:)cell 5<br/>
+(:cell:)cell 6<br/>
 (:tableend:)</td>
 <td>
 <table border="1">
 <tr>
-<td>ячейка 1</td>
-<td>ячейка 2</td>
-<td>ячейка 3</td>
+<td>cell 1</td>
+<td>cell 2</td>
+<td>cell 3</td>
 </tr>
 <tr>
-<td>ячейка 4</td>
-<td>ячейка 5</td>
-<td>ячейка 6</td>
+<td>cell 4</td>
+<td>cell 5</td>
+<td>cell 6</td>
 </tr>
-</table>
+</table><br/>
 </td>
 </tr>
 <tr>
-<td>Таблиа без рамки</td>
+<td>Table without a border</td>
 <td>(:table:)<br/>
 (:row:)<br/>
-(:cell:)ячейка 1<br/>
-(:cell:)ячейка 2<br/>
-(:cell:)ячейка 3<br/>
+(:cell:)cell 1<br/>
+(:cell:)cell 2<br/>
+(:cell:)cell 3<br/>
 (:row:)<br/>
-(:cell:)ячейка 4<br/>
-(:cell:)ячейка 5<br/>
-(:cell:)ячейка 6<br/>
+(:cell:)cell 4<br/>
+(:cell:)cell 5<br/>
+(:cell:)cell 6<br/>
 (:tableend:)</td>
 <td>
 <table>
 <tr>
-<td>ячейка 1</td>
-<td>ячейка 2</td>
-<td>ячейка 3</td>
+<td>cell 1</td>
+<td>cell 2</td>
+<td>cell 3</td>
 </tr>
 <tr>
-<td>ячейка 4</td>
-<td>ячейка 5</td>
-<td>ячейка 6</td>
+<td>cell 4</td>
+<td>cell 5</td>
+<td>cell 6</td>
 </tr>
-</table>
+</table><br/>
 </td>
 </tr>
 <tr>
-<td> Использование параметров colspan и rowspan<br/>
-для объединения ячеек по горизонтали и вертикали</td>
+<td> Using colspan and rowspan parameters<br/>
+to join cell horizontally and vertically</td>
 <td>(:table border="1" align="center":)<br/>
 (:row:)<br/>
-(:cell colspan=2 align=center:)ячейка 1(:cellend:)<br/>
-(:cell rowspan=2:)ячейка 2(:cellend:)<br/>
+(:cell colspan=2 align=center:)cell 1(:cellend:)<br/>
+(:cell rowspan=2:)cell 2(:cellend:)<br/>
 (:row:)<br/>
-(:cell:)ячейка 4(:cellend:)<br/>
-(:cell:)ячейка 5(:cellend:)<br/>
+(:cell:)cell 4(:cellend:)<br/>
+(:cell:)cell 5(:cellend:)<br/>
 (:tableend:)</td>
 <td>
 <table border="1" align="center">
 <tr>
-<td colspan=2 align=center>ячейка 1</td>
-<td rowspan=2>ячейка 2</td>
+<td colspan=2 align=center>cell 1</td>
+<td rowspan=2>cell 2</td>
 </tr>
 <tr>
-<td>ячейка 4</td>
-<td>ячейка 5</td>
+<td>cell 4</td>
+<td>cell 5</td>
 </tr>
-</table>
-</td>
+</table></td>
 </tr>
-</table>
+</table><br/>
+<br/>
 <h3>Nested tables</h3>
-<p>Из-за особенностей работы википарсера (части программы OutWiker, который преобразует викинотацию в код HTML), чтобы одна таблица располагалась в ячейке другой таблицы, недостаточно одной команды (:table:) (в этом случае википарсер не будет знать, где заканчивается таблица верхнего уровня, а где вложенная таблица), поэтому для явного указания начала и конца команды создания таблицы были добавлены команды (:table:) с номерами, т.е. команды (:table1:), (:table2:), (:table3:), (:table4:) и (:table5:). Они могут использоваться точно также, как и команда (:table:), но создавались они именно для создания вложенных таблиц. Обратите внимание, что эти команды закрываются с помощью выражения (:table1:), (:table2end:), (:table3end:), (:table4end:) и (:table5end:) соответственно.</p>
-<p>Внутри команды вида (:tableN:) для создания строк и ячеек должны использоваться также нумерованные команды (:rowN:) и (:cellN:) / (:hcellN:) соответственно. Эта особенность добавляет наглядности, какой таблице какая строка или ячейка принадлежит.</p>
-<p>Например:</p>
-<p>
+<br/>
+Due to the nature of the wiki parser (part OutWiker program that convert wiki notation to HTML code) to a table be arranged in the cell the other table not enough single (:table:) command (In this case wiki parser will not know where ends the table top level, and where ends the nested table). Therefor for explicit indication to begin and end of the command it was created (:table:) commands with numbers, i.e. (:table1:), (:table2:), (:table3:), (:table4:) end (:table5:). They is used alike (:table:) command, but is designed for nested tables. <br/>
+<br/>
+Note that these commands is closed with (:table1:), (:table2end:), (:table3end:), (:table4end:) and (:table5end:) expression respectively.<br/>
+<br/>
+Inside (:tableN:) command must used numbered commands (:rowN:) and (:cellN:) / (:hcellN:) for creation table rows and cell respectively. This feature adds to the visibility of what the table which row or cell belongs.<br/>
+<br/>
+<br/>
+For example:<br/>
+<br/>
 <table border="1" width=100%>
-<tr><th>Викинотация</th><th>Результат<br/>
+<tr><th>Wiki notation</th><th>Result<br/>
 </th>
 </tr>
 <tr>
@@ -153,20 +180,22 @@
 (:row:)<br/>
 (:cell:)(:table2 border=1:)<br/>
 (:row2:)<br/>
-(:cell2:)Таблица 2. Ячейка 1<br/>
-(:cell2:)Таблица 2. Ячейка 2<br/>
-(:cell2:)Таблица 2. Ячейка 3<br/>
+(:cell2:)Table 2. Cell 1<br/>
+(:cell2:)Table 2. Cell 2<br/>
+(:cell2:)Table 2. Cell 3<br/>
 (:row2:)<br/>
-(:cell2:)Таблица 2. Ячейка 4<br/>
-(:cell2:)Таблица 2. Ячейка 5<br/>
-(:cell2:)Таблица 2. Ячейка 6<br/>
-(:table2end:)</p>
-<p>(:cell:)ячейка 2<br/>
-(:cell:)ячейка 3</p>
-<p>(:row:)<br/>
-(:cell:)ячейка 4<br/>
-(:cell:)ячейка 5<br/>
-(:cell:)ячейка 6<br/>
+(:cell2:)Table 2. Cell 4<br/>
+(:cell2:)Table 2. Cell 5<br/>
+(:cell2:)Table 2. Cell 6<br/>
+(:table2end:)<br/>
+<br/>
+(:cell:)cell 2<br/>
+(:cell:)cell 3<br/>
+<br/>
+(:row:)<br/>
+(:cell:)cell 4<br/>
+(:cell:)cell 5<br/>
+(:cell:)cell 6<br/>
 (:tableend:)<br/>
 </td>
 <td>
@@ -175,29 +204,28 @@
 <td>
 <table border=1>
 <tr>
-<td>Таблица 2. Ячейка 1</td>
-<td>Таблица 2. Ячейка 2</td>
-<td>Таблица 2. Ячейка 3</td>
+<td>Table 2. Cell 1</td>
+<td>Table 2. Cell 2</td>
+<td>Table 2. Cell 3</td>
 </tr>
 <tr>
-<td>Таблица 2. Ячейка 4</td>
-<td>Таблица 2. Ячейка 5</td>
-<td>Таблица 2. Ячейка 6</td>
+<td>Table 2. Cell 4</td>
+<td>Table 2. Cell 5</td>
+<td>Table 2. Cell 6</td>
 </tr>
-</table>
-</td>
-<td>ячейка 2</td>
-<td>ячейка 3</td>
+</table></td>
+<td>cell 2</td>
+<td>cell 3</td>
 </tr>
 <tr>
-<td>ячейка 4</td>
-<td>ячейка 5</td>
-<td>ячейка 6</td>
+<td>cell 4</td>
+<td>cell 5</td>
+<td>cell 6</td>
 </tr>
-</table>
-</td>
+</table></td>
 </tr>
-</table>
-<p>Нумерация таблиц не обязательно должна показывать уровень вложенности. Например, на данной странице справки для оформления последнего примера наружная таблица создается с помощью команды (:table3:), а вложенные с помощью команд (:table:) и (:table2:).</p>
+</table><br/>
+<br/>
+The numbering of the tables does not necessarily indicate the level of nesting. For example on this help page for decor the recent example outer table is created with (:table3:) command and nested tables - with (:table:) and (:table2:)
 </body>
 </html>
