@@ -27,10 +27,10 @@ class IconsCollection (object):
         '''
         self._iconsDir = iconsDir
 
-        # Key - group name, value - list of the files (full paths)
+        # Key - group name, value - files list (full paths)
         self._groups = {}
 
-        # Key - group name, value - full path to icon for group
+        # Key - group name, value - full path to group icon
         self._groupsCover = {}
 
         self._rootGroupName = u''
@@ -46,48 +46,57 @@ class IconsCollection (object):
         if groupname is None:
             groupname = self._rootGroupName
 
-        if groupname not in self._groups:
+        if groupname not in self._groupsCover:
             raise KeyError
 
         return self._groupsCover.get (groupname, None)
 
 
-    def _scanIconsDir (self, folder):
+    def _scanIconsDir (self, rootFolder):
         '''
         Fill _groups and _groupsCover
         '''
         self._groups = {}
         self._groupsCover = {}
 
-        files = [self._rootGroupName] + os.listdir (folder)
+        rootFiles = [self._rootGroupName] + os.listdir (rootFolder)
 
-        for dirname in files:
-            fullpath = os.path.join (folder, dirname)
+        for itemname in rootFiles:
+            fullpath = os.path.join (rootFolder, itemname)
 
             if os.path.isdir (fullpath):
-                icons, cover = self._findIcons (os.path.join (fullpath))
-                self._groups[dirname] = icons
-                self._groupsCover[dirname] = cover
+                self._groups[itemname] = self._findIcons (fullpath)
+                self._groupsCover[itemname] = self._findCover (fullpath)
+
+
+    def _findCover (self, folder):
+        '''
+        Return path to group cover or None if it is not exists
+        '''
+        cover = None
+        fullpath = os.path.join (folder, self.COVER_FILE_NAME)
+        if os.path.exists (fullpath):
+            cover = fullpath
+
+        return cover
 
 
     def _findIcons (self, folder):
         '''
-        Return files list (full paths) for icons in 'folder' and cover icon
+        Return files list (full paths) for icons in 'folder'
         '''
-        cover = None
         result = []
         files = sorted (os.listdir (folder))
 
         for fname in files:
             fullpath = os.path.join (folder, fname)
 
-            if os.path.isfile (fullpath) and self._isIcon (fullpath):
-                if fname == self.COVER_FILE_NAME:
-                    cover = fullpath
-                else:
-                    result.append (fullpath)
+            if (os.path.isfile (fullpath) and
+                    self._isIcon (fullpath) and
+                    fname != self.COVER_FILE_NAME):
+                result.append (fullpath)
 
-        return (result, cover)
+        return result
 
 
     def _isIcon (self, fname):
