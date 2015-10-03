@@ -9,6 +9,8 @@ from outwiker.core.application import Application
 from outwiker.core.config import StringOption
 from outwiker.core.commands import testPageTitle, pageExists, MessageBox
 from outwiker.core.style import Style
+from outwiker.core.styleslist import StylesList
+from outwiker.core.system import getStylesDirList
 
 
 @outwiker.core.commands.testreadonly
@@ -122,6 +124,7 @@ class CreatePageDialog (BasePageDialog):
         if parentPage.parent is not None:
             self.generalPanel.tagsSelector.tags = parentPage.tags
 
+        self._stylesList = StylesList (getStylesDirList ())
         self._fillStyleCombo (self._stylesList, None)
 
 
@@ -162,6 +165,7 @@ class EditPageDialog (BasePageDialog):
         self.generalPanel.titleTextCtrl.SetFocus()
         self.generalPanel.titleTextCtrl.SetSelection (-1, -1)
 
+        self._stylesList = StylesList (getStylesDirList ())
         self._fillStyleCombo (self._stylesList, currentPage)
 
 
@@ -181,7 +185,7 @@ class EditPageDialog (BasePageDialog):
         # Добавить текущую иконку
         icon = currentPage.icon
         if icon is not None:
-            self.iconPanel.iconsList.setCurrentIcon (icon)
+            self.iconsPanel.iconsList.setCurrentIcon (icon)
 
 
     def onOk (self, event):
