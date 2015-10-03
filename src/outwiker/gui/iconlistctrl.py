@@ -126,11 +126,11 @@ class IconButton (object):
         return self._height
 
 
-    def __getToolTipText (self, fname):
+    def getToolTipText (self):
         """
         Return the text of the tooltip with file name
         """
-        text = os.path.basename (fname)
+        text = os.path.basename (self.fname)
 
         # Отбросим расширение файла
         dotPos = text.rfind (".")
@@ -156,6 +156,7 @@ class IconListCtrl (wx.ScrolledWindow):
         self._canvas.SetBackgroundColour (IconButton._normalBackground)
         self._canvas.Bind (wx.EVT_PAINT, handler=self.__onPaint)
         self._canvas.Bind (wx.EVT_LEFT_DOWN, handler=self.__onCanvasClick)
+        self._canvas.Bind (wx.EVT_MOTION, handler=self.__onMouseMove)
 
         self.cellWidth = 32
         self.cellHeight = 32
@@ -186,6 +187,15 @@ class IconListCtrl (wx.ScrolledWindow):
     def __onPaint (self, event):
         for button in self.buttons:
             button.paint()
+
+
+    def __onMouseMove (self, event):
+        button = self._getButtonByCoord (event.GetPosition()[0],
+                                         event.GetPosition()[1])
+        self._canvas.SetToolTipString (u'')
+
+        if button is not None:
+            self._canvas.SetToolTipString (button.getToolTipText())
 
 
     def clear (self):
