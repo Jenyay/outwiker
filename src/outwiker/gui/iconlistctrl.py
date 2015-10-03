@@ -8,35 +8,122 @@ import wx.grid
 from outwiker.core.system import getImagesDir
 
 
-class IconButton (wx.PyControl):
+class IconButton (object):
     """
     Button with single icons
     """
+    _invalidFileName = os.path.join (getImagesDir(), u'cross.png')
+
+    # Оформление
+    _normalBackground = wx.Colour (255, 255, 255)
+    _selectedBackground = wx.Colour (160, 190, 255)
+    _borderColor = wx.Colour (0, 0, 255)
+
+
     def __init__ (self, parent, fname, width, height):
-        wx.PyControl.__init__ (self, parent, id=wx.NewId(), style=wx.BORDER_NONE)
+        self._parent = parent
         self.fname = fname
+        self._width = width
+        self._height = height
 
-        # Disable wxPython message about the invalid picture format
-        wx.Log_EnableLogging(False)
-        self.image = wx.Bitmap (fname)
-        wx.Log_EnableLogging(True)
-
-        if not self.image.IsOk():
-            print _(u'Invalid icon file: {}').format (fname)
-            raise ValueError
+        self._x = 0
+        self._y = 0
+        self.image = None
 
         # Выбрана ли данная иконка?
         self.__selected = False
 
-        # Оформление
-        self.normalBackground = wx.Colour (255, 255, 255)
-        self.selectedBackground = wx.Colour (160, 190, 255)
-        self.borderColor = wx.Colour (0, 0, 255)
 
-        self.SetToolTipString (self.__getToolTipText (fname))
+    def _createImage (self, fname):
+        # Disable wxPython message about the invalid picture format
+        wx.Log_EnableLogging(False)
+        image = wx.Bitmap (fname)
+        wx.Log_EnableLogging(True)
 
-        self.SetSize ((width, height))
-        self.Bind (wx.EVT_PAINT, self.__onPaint)
+        if not image.IsOk():
+            print _(u'Invalid icon file: {}').format (fname)
+            image = wx.Bitmap (self._invalidFileName)
+
+        return image
+
+
+    def paint (self):
+        if self.image is None:
+            self.image = self._createImage (self.fname)
+
+        assert self.image.IsOk()
+
+        dc = wx.PaintDC (self._parent)
+
+        dc.SetBrush (wx.Brush (self._selectedBackground
+                               if self.selected
+                               else self._normalBackground))
+
+        dc.SetPen(wx.TRANSPARENT_PEN)
+
+        dc.DrawRectangle (self._x,
+                          self._y,
+                          self._width,
+                          self._height)
+
+        posx = self._x + (self._width - self.image.GetWidth()) / 2
+        posy = self._y + (self._height - self.image.GetHeight()) / 2
+
+        dc.DrawBitmap(self.image, posx, posy, True)
+
+        if self.selected:
+            dc.SetPen (wx.Pen (self._borderColor))
+            dc.SetBrush (wx.TRANSPARENT_BRUSH)
+            dc.DrawRectangle (self._x,
+                              self._y,
+                              self._width,
+                              self._height)
+
+
+    @property
+    def selected (self):
+        return self.__selected
+
+
+    @selected.setter
+    def selected (self, value):
+        if value != self.__selected:
+            self.__selected = value
+
+
+    def SetPosition (self, x, y):
+        self._x = x
+        self._y = y
+
+
+    @property
+    def x (self):
+        return self._x
+
+
+    @x.setter
+    def x (self, value):
+        self._x = value
+
+
+    @property
+    def y (self):
+        return self._y
+
+
+    @y.setter
+    def y (self, value):
+        self._y = value
+
+
+    @property
+    def width (self):
+        return self._width
+
+
+    @property
+    def height (self):
+        return self._height
 
 
     def __getToolTipText (self, fname):
@@ -58,45 +145,17 @@ class IconButton (wx.PyControl):
         return text
 
 
-    def __onPaint (self, event):
-        assert self.image.IsOk()
-
-        dc = wx.PaintDC (self)
-
-        dc.SetBrush (wx.Brush (self.selectedBackground if self.selected else self.normalBackground))
-        dc.SetPen(wx.TRANSPARENT_PEN)
-        dc.DrawRectangle (0, 0, self.Size[0], self.Size[1])
-
-        (xsize, ysize) = self.GetSizeTuple()
-        posx = (xsize - self.image.GetWidth()) / 2
-        posy = (ysize - self.image.GetHeight()) / 2
-
-        dc.DrawBitmap(self.image, posx, posy, True)
-
-        if self.selected:
-            dc.SetPen (wx.Pen (self.borderColor))
-            dc.SetBrush (wx.TRANSPARENT_BRUSH)
-            dc.DrawRectangle (0, 0, self.Size[0], self.Size[1])
-
-
-    @property
-    def selected (self):
-        return self.__selected
-
-
-    @selected.setter
-    def selected (self, value):
-        if value != self.__selected:
-            self.__selected = value
-            self.Refresh()
-
-
 class IconListCtrl (wx.ScrolledWindow):
     """
     Control with icons for pages
     """
     def __init__ (self, parent, multiselect=False):
         wx.ScrolledWindow.__init__ (self, parent, style = wx.BORDER_THEME)
+        self._canvas = wx.Panel (self)
+        self._canvas.SetSize ((0, 0))
+        self._canvas.SetBackgroundColour (IconButton._normalBackground)
+        self._canvas.Bind (wx.EVT_PAINT, handler=self.__onPaint)
+        self._canvas.Bind (wx.EVT_LEFT_DOWN, handler=self.__onCanvasClick)
 
         self.cellWidth = 32
         self.cellHeight = 32
@@ -113,6 +172,7 @@ class IconListCtrl (wx.ScrolledWindow):
 
         # Список картинок, которые хранятся в окне
         self.buttons = []
+        self._iconFileNames = []
 
         self.defaultIcon = os.path.join (getImagesDir(), "page.png")
 
@@ -123,29 +183,30 @@ class IconListCtrl (wx.ScrolledWindow):
         self.__layout()
 
 
+    def __onPaint (self, event):
+        for button in self.buttons:
+            button.paint()
+
+
     def clear (self):
         """
         Remove old buttons with icons.
         """
-        for button in self.buttons:
-            button.Unbind (wx.EVT_LEFT_DOWN, handler=self.__onButtonClick)
-            button.Hide()
-            button.Destroy()
-
         self.buttons = []
+        self._iconFileNames = []
         self._lastClickedButton = None
         self.Scroll (0, 0)
 
 
-    def setIconsList (self, icons):
+    def setIconsList (self, iconFileNames):
         self.clear()
+        self._iconFileNames = iconFileNames
 
-        for fname in reversed (icons):
+        for fname in reversed (iconFileNames):
             self.__addButton (fname)
 
-        self.setCurrentIcon (self._currentIcon)
         if len (self.buttons) != 0:
-            self.__selectSingleButton (self.buttons[0].GetId())
+            self.__selectSingleButton (self.buttons[0])
 
         self.__layout()
         self.Scroll (0, 0)
@@ -156,55 +217,70 @@ class IconListCtrl (wx.ScrolledWindow):
         Add the button with icons fname (full path)
         """
         try:
-            button = IconButton (self, fname, self.cellWidth, self.cellHeight)
+            button = IconButton (self._canvas, fname, self.cellWidth, self.cellHeight)
         except ValueError:
             return
 
-        button.Bind (wx.EVT_LEFT_DOWN, self.__onButtonClick)
         self.buttons.insert (0, button)
+        return button
 
 
-    def __onButtonClick (self, event):
+    def _getButtonByCoord (self, x, y):
+        for button in self.buttons:
+            if (x >= button.x and
+                    x <= button.x + button.width and
+                    y >= button.y and
+                    y <= button.y + button.height):
+                return button
+
+
+    def __onCanvasClick (self, event):
         ctrl = wx.GetKeyState (wx.WXK_CONTROL)
         shift = wx.GetKeyState (wx.WXK_SHIFT)
 
-        if (not self.multiselect or
-                (not ctrl and not shift)):
-            self.__selectSingleButton (event.GetId())
+        button = self._getButtonByCoord (event.GetPosition()[0],
+                                         event.GetPosition()[1])
+
+        if button is None:
+            return
+
+        if not self.multiselect or (not ctrl and not shift):
+            self.__selectSingleButton (button)
         elif ctrl:
-            self.__toggleSelectionButton (event.GetId())
+            self.__toggleSelectionButton (button)
         elif shift and self._lastClickedButton is not None:
-            self.__selectFromTo (self._lastClickedButton.GetId(), event.GetId())
+            self.__selectFromTo (self._lastClickedButton, button)
+
+        self._refreshCanvas()
 
 
-    def __selectSingleButton (self, buttonid):
+    def _refreshCanvas (self):
+        self._canvas.Refresh()
+
+
+    def __selectSingleButton (self, selectedButton):
         for button in self.buttons:
-            if button.GetId() == buttonid:
+            if button is selectedButton:
                 button.selected = True
-                button.SetFocus()
                 self._lastClickedButton = button
             else:
                 button.selected = False
 
 
-    def __toggleSelectionButton (self, buttonid):
-        for button in self.buttons:
-            if button.GetId() == buttonid:
-                button.selected = not button.selected
-                button.SetFocus()
-                self._lastClickedButton = button
-                break
+    def __toggleSelectionButton (self, button):
+        button.selected = not button.selected
+        self._lastClickedButton = button
 
 
-    def __selectFromTo (self, fromId, toId):
+    def __selectFromTo (self, fromButton, toButton):
         fromIndex = -1
         toIndex = -1
 
         for index, button in enumerate (self.buttons):
-            if fromId == button.GetId():
+            if button is fromButton:
                 fromIndex = index
 
-            if toId == button.GetId():
+            if button is toButton:
                 toIndex = index
 
         assert fromIndex != -1
@@ -215,7 +291,6 @@ class IconListCtrl (wx.ScrolledWindow):
 
         for button in self.buttons[minIndex: maxIndex + 1]:
             button.selected = True
-            button.SetFocus()
             self._lastClickedButton = button
 
 
@@ -226,18 +301,27 @@ class IconListCtrl (wx.ScrolledWindow):
 
         # Row size in cells (columns count)
         colsCount = (windowWidth - self.margin) // (self.cellWidth + self.margin)
-        rowsCount = len (self.buttons) // colsCount
+        rowsCount = len (self.buttons) // colsCount + 1
 
         for n, button in enumerate (self.buttons):
             row = n // colsCount
             col = n % colsCount
 
-            currx = col * (self.cellWidth + self.margin)
-            curry = row * (self.cellHeight + self.margin)
+            currx = self.margin + col * (self.cellWidth + self.margin)
+            curry = self.margin + row * (self.cellHeight + self.margin)
 
-            button.SetPosition ((currx, curry))
+            button.x = currx
+            button.y = curry
 
-        self.SetScrollbars (self.cellWidth, self.cellHeight, 1, rowsCount + 1)
+        self.Scroll (0, 0)
+        self._canvas.SetSizeWH (windowWidth,
+                                rowsCount * (self.cellHeight + self.margin))
+
+        self.SetScrollbars (self.cellWidth,
+                            self.cellHeight + self.margin,
+                            1,
+                            rowsCount)
+        self._refreshCanvas()
 
 
     def getSelection (self):
@@ -255,6 +339,7 @@ class IconListCtrl (wx.ScrolledWindow):
         if self._currentIcon is None:
             return
 
+        self._iconFileNames.insert (0, fname)
         self.__addButton (self._currentIcon)
         self.__layout()
-        self.__selectSingleButton (self.buttons[0].GetId())
+        self.__selectSingleButton (self.buttons[0])
