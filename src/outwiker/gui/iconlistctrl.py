@@ -156,6 +156,8 @@ class IconListCtrl (wx.ScrolledWindow):
         self._canvas.Bind (wx.EVT_LEFT_DOWN, handler=self.__onCanvasClick)
         self._canvas.Bind (wx.EVT_MOTION, handler=self.__onMouseMove)
 
+        self.Bind (wx.EVT_SCROLLWIN, handler=self.__onScroll)
+
         self.cellWidth = 32
         self.cellHeight = 32
         self.margin = 1
@@ -185,8 +187,12 @@ class IconListCtrl (wx.ScrolledWindow):
     def __onPaint (self, event):
         dc = wx.PaintDC (self._canvas)
 
+        y0 = self.GetScrollPos (wx.VERTICAL) * (self.cellHeight + self.margin)
+        y1 = y0 + self.GetClientSizeTuple()[1]
+
         for button in self.buttons:
-            button.paint(dc)
+            if button.y >= y0 and button.y <= y1:
+                button.paint(dc)
 
 
     def __onMouseMove (self, event):
@@ -264,6 +270,11 @@ class IconListCtrl (wx.ScrolledWindow):
         self._refreshCanvas()
 
 
+    def __onScroll (self, event):
+        self._refreshCanvas()
+        event.Skip()
+
+
     def _refreshCanvas (self):
         self._canvas.Refresh()
 
@@ -305,6 +316,8 @@ class IconListCtrl (wx.ScrolledWindow):
 
 
     def __layout (self):
+        self.Unbind (wx.EVT_SCROLLWIN, handler=self.__onScroll)
+
         currx = 0
         curry = 0
         windowWidth = self.GetClientSizeTuple()[0]
@@ -332,6 +345,8 @@ class IconListCtrl (wx.ScrolledWindow):
                             1,
                             rowsCount)
         self._refreshCanvas()
+
+        self.Bind (wx.EVT_SCROLLWIN, handler=self.__onScroll)
 
 
     def getSelection (self):
