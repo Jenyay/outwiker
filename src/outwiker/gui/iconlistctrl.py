@@ -47,13 +47,11 @@ class IconButton (object):
         return image
 
 
-    def paint (self):
+    def paint (self, dc):
         if self.image is None:
             self.image = self._createImage (self.fname)
 
         assert self.image.IsOk()
-
-        dc = wx.PaintDC (self._parent)
 
         dc.SetBrush (wx.Brush (self._selectedBackground
                                if self.selected
@@ -185,8 +183,10 @@ class IconListCtrl (wx.ScrolledWindow):
 
 
     def __onPaint (self, event):
+        dc = wx.PaintDC (self._canvas)
+
         for button in self.buttons:
-            button.paint()
+            button.paint(dc)
 
 
     def __onMouseMove (self, event):
