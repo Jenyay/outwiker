@@ -67,7 +67,6 @@ class IconsPanel (wx.Panel):
                                        (n, group))
 
 
-
     def _getImageForGroup (self, fname):
         neww = ICON_WIDTH
         newh = ICON_HEIGHT + 2

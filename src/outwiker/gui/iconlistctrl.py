@@ -222,21 +222,22 @@ class IconListCtrl (wx.ScrolledWindow):
     def __layout (self):
         currx = 0
         curry = 0
-        rowcount = 1
         windowWidth = self.GetClientSizeTuple()[0]
 
-        for button in self.buttons:
-            buttonWidth = button.Size[0]
+        # Row size in cells (columns count)
+        colsCount = (windowWidth - self.margin) // (self.cellWidth + self.margin)
+        rowsCount = len (self.buttons) // colsCount
 
-            if buttonWidth + currx + self.margin >= windowWidth:
-                currx = 0
-                curry += self.cellHeight + self.margin
-                rowcount += 1
+        for n, button in enumerate (self.buttons):
+            row = n // colsCount
+            col = n % colsCount
+
+            currx = col * (self.cellWidth + self.margin)
+            curry = row * (self.cellHeight + self.margin)
 
             button.SetPosition ((currx, curry))
-            currx += buttonWidth + self.margin
 
-        self.SetScrollbars (self.cellWidth, self.cellHeight, 1, rowcount + 1)
+        self.SetScrollbars (self.cellWidth, self.cellHeight, 1, rowsCount + 1)
 
 
     def getSelection (self):
