@@ -22,13 +22,13 @@ class IconButton (object):
 
     def __init__ (self, parent, fname, width, height):
         self._parent = parent
-        self.fname = fname
+        self._fname = fname
         self._width = width
         self._height = height
 
         self._x = 0
         self._y = 0
-        self.image = None
+        self._image = None
 
         # Выбрана ли данная иконка?
         self.__selected = False
@@ -48,10 +48,10 @@ class IconButton (object):
 
 
     def paint (self, dc):
-        if self.image is None:
-            self.image = self._createImage (self.fname)
+        if self._image is None:
+            self._image = self._createImage (self._fname)
 
-        assert self.image.IsOk()
+        assert self._image.IsOk()
 
         dc.SetBrush (wx.Brush (self._selectedBackground
                                if self.selected
@@ -64,10 +64,10 @@ class IconButton (object):
                           self._width,
                           self._height)
 
-        posx = self._x + (self._width - self.image.GetWidth()) / 2
-        posy = self._y + (self._height - self.image.GetHeight()) / 2
+        posx = self._x + (self._width - self._image.GetWidth()) / 2
+        posy = self._y + (self._height - self._image.GetHeight()) / 2
 
-        dc.DrawBitmap(self.image, posx, posy, True)
+        dc.DrawBitmap(self._image, posx, posy, True)
 
         if self.selected:
             dc.SetPen (wx.Pen (self._borderColor))
@@ -131,7 +131,7 @@ class IconButton (object):
         """
         Return the text of the tooltip with file name
         """
-        text = os.path.basename (self.fname)
+        text = os.path.basename (self._fname)
 
         # Отбросим расширение файла
         dotPos = text.rfind (".")
@@ -152,9 +152,11 @@ class IconListCtrl (wx.ScrolledWindow):
     """
     def __init__ (self, parent, multiselect=False):
         wx.ScrolledWindow.__init__ (self, parent, style = wx.BORDER_THEME)
+        self._backgroundColor = wx.Colour (255, 255, 255)
+
         self._canvas = wx.Panel (self)
         self._canvas.SetSize ((0, 0))
-        self._canvas.SetBackgroundColour (IconButton._normalBackground)
+        self._canvas.SetBackgroundColour (self._backgroundColor)
         self._canvas.Bind (wx.EVT_PAINT, handler=self.__onPaint)
         self._canvas.Bind (wx.EVT_LEFT_DOWN, handler=self.__onCanvasClick)
         self._canvas.Bind (wx.EVT_MOTION, handler=self.__onMouseMove)
@@ -188,16 +190,16 @@ class IconListCtrl (wx.ScrolledWindow):
 
 
     def __onPaint (self, event):
-        dc = wx.BufferedPaintDC (self._canvas)
+        dc = wx.AutoBufferedPaintDCFactory (self._canvas)
 
         y0 = self.GetScrollPos (wx.VERTICAL) * (self.cellHeight + self.margin)
         y1 = y0 + self.GetClientSizeTuple()[1]
 
-        dc.SetBrush (wx.Brush (IconButton._normalBackground))
+        dc.SetBrush (wx.Brush (self._backgroundColor))
         dc.SetPen(wx.TRANSPARENT_PEN)
 
         dc.DrawRectangle (0,
-                          0,
+                          y0,
                           self._canvas.GetSizeTuple()[0],
                           self._canvas.GetSizeTuple()[1])
 
@@ -290,7 +292,7 @@ class IconListCtrl (wx.ScrolledWindow):
 
 
     def _refreshCanvas (self):
-        self._canvas.Refresh()
+        self._canvas.Refresh(False)
 
 
     def __selectSingleButton (self, selectedButton):
