@@ -77,6 +77,9 @@ class IconButton (object):
                               self._width,
                               self._height)
 
+        dc.SetBrush (wx.NullBrush)
+        dc.SetPen (wx.NullPen)
+
 
     @property
     def selected (self):
@@ -185,10 +188,21 @@ class IconListCtrl (wx.ScrolledWindow):
 
 
     def __onPaint (self, event):
-        dc = wx.PaintDC (self._canvas)
+        dc = wx.BufferedPaintDC (self._canvas)
 
         y0 = self.GetScrollPos (wx.VERTICAL) * (self.cellHeight + self.margin)
         y1 = y0 + self.GetClientSizeTuple()[1]
+
+        dc.SetBrush (wx.Brush (IconButton._normalBackground))
+        dc.SetPen(wx.TRANSPARENT_PEN)
+
+        dc.DrawRectangle (0,
+                          0,
+                          self._canvas.GetSizeTuple()[0],
+                          self._canvas.GetSizeTuple()[1])
+
+        dc.SetBrush (wx.NullBrush)
+        dc.SetPen (wx.NullPen)
 
         for button in self.buttons:
             if button.y >= y0 and button.y <= y1:
