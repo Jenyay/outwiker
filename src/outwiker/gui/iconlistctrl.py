@@ -224,6 +224,8 @@ class IconListCtrl (wx.ScrolledWindow):
         if button is not None:
             self._canvas.SetToolTipString (button.getToolTipText())
 
+        self.SetFocus()
+
 
     def clear (self):
         """
