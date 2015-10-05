@@ -146,6 +146,11 @@ class IconButton (object):
         return text
 
 
+    @property
+    def iconFileName (self):
+        return self._fname
+
+
 class IconListCtrl (wx.ScrolledWindow):
     """
     Control with icons for pages
@@ -373,7 +378,7 @@ class IconListCtrl (wx.ScrolledWindow):
         """
         Return list of the selected icons
         """
-        return [button.fname for button in self.buttons if button.selected]
+        return [button.iconFileName for button in self.buttons if button.selected]
 
 
     def setCurrentIcon (self, fname):
