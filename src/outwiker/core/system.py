@@ -308,7 +308,7 @@ def getStylesDirList (configDirName=DEFAULT_CONFIG_DIR,
 
 
 def getSpellDirList (configDirName=DEFAULT_CONFIG_DIR,
-                      configFileName=DEFAULT_CONFIG_NAME):
+                     configFileName=DEFAULT_CONFIG_NAME):
     """
     Возвращает список директорий со словарями для проверки орфографии
     """
@@ -349,7 +349,7 @@ def writeTextFile (fname, text):
     Write text with utf-8 encoding
     """
     with codecs.open (fname, "w", "utf-8") as fp:
-        return fp.write (text)
+        fp.write (text)
 
 
 def openInNewWindow (path, readonly=False):
