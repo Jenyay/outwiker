@@ -272,7 +272,7 @@ class BaseTextPanel (BasePagePanel):
     def _addSearchTools (self):
         assert self.mainWindow is not None
         self.searchMenu = wx.Menu()
-        self.mainWindow.mainMenu.Insert (self.searchMenuIndex, self.searchMenu, _("&Search"))
+        self.mainWindow.mainMenu.Insert (self.searchMenuIndex, self.searchMenu, _("Search"))
 
         toolbar = self.mainWindow.toolbars[self.mainWindow.GENERAL_TOOLBAR_STR]
 

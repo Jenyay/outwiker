@@ -20,7 +20,7 @@ class OverwriteDialog(wx.Dialog):
         self.overwriteAll = wx.Button(self, -1, _("Overwrite all"))
         self.button_1 = wx.Button(self, -1, _("Skip"))
         self.skipAll = wx.Button(self, -1, _("Skip all"))
-        self.cancel = wx.Button(self, wx.ID_CANCEL, _("&Cancel"))
+        self.cancel = wx.Button(self, wx.ID_CANCEL, _("Cancel"))
 
         self.__set_properties()
         self.__do_layout()
