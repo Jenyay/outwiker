@@ -1,0 +1,43 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: readingmode\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-10-07 21:51+0300\n"
+"PO-Revision-Date: 2015-10-07 21:52+0300\n"
+"Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
+"Language-Team: jenyay.net <jenyay.ilin@gmail.com>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Generator: Poedit 1.7.5\n"
+
+#: actions.py:25
+msgid "Reading Mode"
+msgstr "Вид для чтения"
+
+#: actions.py:30
+msgid ""
+"Reading Mode disables the panel \"Tree\", \"Tag\", \"Attach Files\" without "
+"changing the geometry of the main window."
+msgstr ""
+"Вид для чтенияя отключает панели \"Дерево заметок\", \"Метки\" и "
+"\"Прикрепленные файлы\" без изменения геометрии главного окна программы."
+
+#: readingmode.py:35
+msgid ""
+"Plugin disables the panel \"Tree\", \"Tag\", \"Attach Files\" without "
+"changing the geometry of the main window."
+msgstr ""
+"Плагин отключает панели \"Дерево заметок\", \"Метки\" и \"Прикрепленные файлы"
+"\" без изменения геометрии главного окна программы."
+
+#: readingmode.py:40
+msgid "http://jenyay.net/Outwiker/ReadingModeEn"
+msgstr "http://jenyay.net/Outwiker/ReadingMode"
