@@ -8,7 +8,7 @@ from tempfile import mkdtemp
 from outwiker.pages.wiki.thumbnails import Thumbnails
 from test.utils import removeDir
 from outwiker.core.tree import WikiDocument
-from outwiker.pages.wiki.parser.wikiparser import Parser
+from outwiker.pages.wiki.parserfactory import ParserFactory
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
@@ -28,7 +28,7 @@ class ThumbnailsTest (unittest.TestCase):
 
         self.__createWiki()
 
-        self.parser = Parser(self.testPage, Application.config)
+        self.parser = ParserFactory().make (self.testPage, Application.config)
 
 
     def __createWiki (self):

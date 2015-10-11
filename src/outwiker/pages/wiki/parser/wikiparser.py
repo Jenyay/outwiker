@@ -209,13 +209,11 @@ class Parser (object):
             self.command,
         ]
 
-
-    def initMarkups (self):
-        self._listItemMarkup = self._createMarkup (self.listItemsTokens)
-        self._wikiMarkup = self._createMarkup (self.wikiTokens)
-        self._linkMarkup = self._createMarkup (self.linkTokens)
-        self._headingMarkup = self._createMarkup (self.headingTokens)
-        self._textLevelMarkup = self._createMarkup (self.textLevelTokens)
+        self._listItemMarkup = None
+        self._wikiMarkup = None
+        self._linkMarkup = None
+        self._headingMarkup = None
+        self._textLevelMarkup = None
 
 
     def _createMarkup (self, tokensList):
@@ -253,6 +251,9 @@ class Parser (object):
 
 
     def parseWikiMarkup (self, text):
+        if self._wikiMarkup is None:
+            self._wikiMarkup = self._createMarkup (self.wikiTokens)
+
         try:
             return self._wikiMarkup.transformString (text)
         except Exception:
@@ -260,6 +261,9 @@ class Parser (object):
 
 
     def parseListItemMarkup (self, text):
+        if self._listItemMarkup is None:
+            self._listItemMarkup = self._createMarkup (self.listItemsTokens)
+
         try:
             return self._listItemMarkup.transformString (text)
         except Exception:
@@ -267,6 +271,9 @@ class Parser (object):
 
 
     def parseLinkMarkup (self, text):
+        if self._linkMarkup is None:
+            self._linkMarkup = self._createMarkup (self.linkTokens)
+
         try:
             return self._linkMarkup.transformString (text)
         except Exception:
@@ -274,6 +281,9 @@ class Parser (object):
 
 
     def parseHeadingMarkup (self, text):
+        if self._headingMarkup is None:
+            self._headingMarkup = self._createMarkup (self.headingTokens)
+
         try:
             return self._headingMarkup.transformString (text)
         except Exception:
@@ -281,6 +291,9 @@ class Parser (object):
 
 
     def parseTextLevelMarkup (self, text):
+        if self._textLevelMarkup is None:
+            self._textLevelMarkup = self._createMarkup (self.textLevelTokens)
+
         try:
             return self._textLevelMarkup.transformString (text)
         except Exception:
