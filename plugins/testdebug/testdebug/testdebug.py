@@ -15,6 +15,7 @@ from outwiker.core.system import getOS
 from debugaction import DebugAction
 from eventswatcher import EventsWatcher
 from timer import Timer
+from tokendebug import DebugTokenFactory
 
 
 class PluginDebug (Plugin):
@@ -207,6 +208,16 @@ class PluginDebug (Plugin):
             logging.info (text)
 
 
+    def __onWikiParserPrepare (self, parser):
+        token = DebugTokenFactory.makeDebugToken(parser)
+
+        parser.listItemsTokens.append (token)
+        parser.wikiTokens.append (token)
+        parser.linkTokens.append (token)
+        parser.headingTokens.append (token)
+        parser.textLevelTokens.append (token)
+
+
     ###################################################
     # Свойства и методы, которые необходимо определить
     ###################################################
@@ -274,6 +285,7 @@ class PluginDebug (Plugin):
             self._application.onSpellChecking += self.__onSpellChecking
             self._application.onHtmlRenderingBegin += self.__onHtmlRenderingBegin
             self._application.onHtmlRenderingEnd += self.__onHtmlRenderingEnd
+            self._application.onWikiParserPrepare += self.__onWikiParserPrepare
 
 
     def destroy (self):
@@ -317,5 +329,6 @@ class PluginDebug (Plugin):
             self._application.onSpellChecking -= self.__onSpellChecking
             self._application.onHtmlRenderingBegin -= self.__onHtmlRenderingBegin
             self._application.onHtmlRenderingEnd -= self.__onHtmlRenderingEnd
+            self._application.onWikiParserPrepare -= self.__onWikiParserPrepare
 
     #############################################

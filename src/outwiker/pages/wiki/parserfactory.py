@@ -34,6 +34,7 @@ class ParserFactory (object):
         self._addCommands (parser)
         Application.onWikiParserPrepare (parser)
 
+        parser.initMarkups()
         return parser
 
 

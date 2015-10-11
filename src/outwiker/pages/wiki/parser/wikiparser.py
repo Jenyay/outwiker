@@ -24,6 +24,7 @@ from tokentext import TextFactory
 from tokenquote import QuoteFactory
 
 from ..thumbnails import Thumbnails
+from outwiker.libs.pyparsing import NoMatch
 
 
 class Parser (object):
@@ -71,136 +72,158 @@ class Parser (object):
         self.command = CommandFactory.make (self)
         self.text = TextFactory.make(self)
 
-        self.listItemMarkup = (self.attaches |
-                               self.urlImage |
-                               self.url |
-                               self.text |
-                               self.lineBreak |
-                               self.lineJoin |
-                               self.link |
-                               self.boldItalicized |
-                               self.bolded |
-                               self.italicized |
-                               self.code |
-                               self.small |
-                               self.big |
-                               self.preformat |
-                               self.noformat |
-                               self.thumb |
-                               self.underlined |
-                               self.strike |
-                               self.subscript |
-                               self.superscript |
-                               self.quote |
-                               self.attaches |
-                               self.tex |
-                               self.command
-                               )
+        # Common wiki tokens
+        self.wikiTokens = [
+            self.attaches,
+            self.urlImage,
+            self.url,
+            self.text,
+            self.lineBreak,
+            self.lineJoin,
+            self.link,
+            self.adhoctokens,
+            self.subscript,
+            self.superscript,
+            self.boldItalicized,
+            self.bolded,
+            self.italicized,
+            self.code,
+            self.small,
+            self.big,
+            self.quote,
+            self.preformat,
+            self.noformat,
+            self.thumb,
+            self.underlined,
+            self.strike,
+            self.horline,
+            self.align,
+            self.lists,
+            self.table,
+            self.headings,
+            self.tex,
+            self.command,
+        ]
+
+        # Tokens for using inside links
+        self.linkTokens = [
+            self.attachImages,
+            self.urlImage,
+            self.text,
+            self.adhoctokens,
+            self.subscript,
+            self.superscript,
+            self.boldItalicized,
+            self.bolded,
+            self.italicized,
+            self.underlined,
+            self.small,
+            self.big,
+            self.strike,
+            self.tex,
+            self.command,
+            self.lineBreak,
+            self.lineJoin,
+            self.noformat,
+        ]
+
+        # Tokens for using inside headings
+        self.headingTokens = [
+            self.attaches,
+            self.urlImage,
+            self.url,
+            self.text,
+            self.lineBreak,
+            self.lineJoin,
+            self.link,
+            self.adhoctokens,
+            self.subscript,
+            self.superscript,
+            self.boldItalicized,
+            self.bolded,
+            self.italicized,
+            self.small,
+            self.big,
+            self.noformat,
+            self.thumb,
+            self.underlined,
+            self.strike,
+            self.horline,
+            self.align,
+            self.tex,
+            self.command,
+        ]
+
+        # Tokens for using inside text
+        self.textLevelTokens = [
+            self.attaches,
+            self.urlImage,
+            self.url,
+            self.text,
+            self.lineBreak,
+            self.lineJoin,
+            self.link,
+            self.adhoctokens,
+            self.subscript,
+            self.superscript,
+            self.boldItalicized,
+            self.bolded,
+            self.italicized,
+            self.code,
+            self.small,
+            self.big,
+            self.noformat,
+            self.thumb,
+            self.underlined,
+            self.strike,
+            self.horline,
+            self.tex,
+            self.command,
+        ]
+
+        # Tokens for using inside list items (bullets and numeric)
+        self.listItemsTokens = [
+            self.attaches,
+            self.urlImage,
+            self.url,
+            self.text,
+            self.lineBreak,
+            self.lineJoin,
+            self.link,
+            self.boldItalicized,
+            self.bolded,
+            self.italicized,
+            self.code,
+            self.small,
+            self.big,
+            self.preformat,
+            self.noformat,
+            self.thumb,
+            self.underlined,
+            self.strike,
+            self.subscript,
+            self.superscript,
+            self.quote,
+            self.attaches,
+            self.tex,
+            self.command,
+        ]
 
 
-        self.wikiMarkup = (self.attaches |
-                           self.urlImage |
-                           self.url |
-                           self.text |
-                           self.lineBreak |
-                           self.lineJoin |
-                           self.link |
-                           self.adhoctokens |
-                           self.subscript |
-                           self.superscript |
-                           self.boldItalicized |
-                           self.bolded |
-                           self.italicized |
-                           self.code |
-                           self.small |
-                           self.big |
-                           self.quote |
-                           self.preformat |
-                           self.noformat |
-                           self.thumb |
-                           self.underlined |
-                           self.strike |
-                           self.horline |
-                           self.align |
-                           self.lists |
-                           self.table |
-                           self.headings |
-                           self.tex |
-                           self.command
-                           )
+    def initMarkups (self):
+        self._listItemMarkup = self._createMarkup (self.listItemsTokens)
+        self._wikiMarkup = self._createMarkup (self.wikiTokens)
+        self._linkMarkup = self._createMarkup (self.linkTokens)
+        self._headingMarkup = self._createMarkup (self.headingTokens)
+        self._textLevelMarkup = self._createMarkup (self.textLevelTokens)
 
-        # Нотация для ссылок
-        self.linkMarkup = (self.attachImages |
-                           self.urlImage |
-                           self.text |
-                           self.adhoctokens |
-                           self.subscript |
-                           self.superscript |
-                           self.boldItalicized |
-                           self.bolded |
-                           self.italicized |
-                           self.underlined |
-                           self.small |
-                           self.big |
-                           self.strike |
-                           self.tex |
-                           self.command |
-                           self.lineBreak |
-                           self.lineJoin |
-                           self.noformat
-                           )
 
-        # Нотация для заголовков
-        self.headingMarkup = (self.attaches |
-                              self.urlImage |
-                              self.url |
-                              self.text |
-                              self.lineBreak |
-                              self.lineJoin |
-                              self.link |
-                              self.adhoctokens |
-                              self.subscript |
-                              self.superscript |
-                              self.boldItalicized |
-                              self.bolded |
-                              self.italicized |
-                              self.small |
-                              self.big |
-                              self.noformat |
-                              self.thumb |
-                              self.underlined |
-                              self.strike |
-                              self.horline |
-                              self.align |
-                              self.tex |
-                              self.command
-                              )
+    def _createMarkup (self, tokensList):
+        markup = NoMatch()
+        for token in tokensList:
+            markup |= token
 
-        # Нотация для форматированного текста
-        self.textLevelMarkup = (self.attaches |
-                                self.urlImage |
-                                self.url |
-                                self.text |
-                                self.lineBreak |
-                                self.lineJoin |
-                                self.link |
-                                self.adhoctokens |
-                                self.subscript |
-                                self.superscript |
-                                self.boldItalicized |
-                                self.bolded |
-                                self.italicized |
-                                self.code |
-                                self.small |
-                                self.big |
-                                self.noformat |
-                                self.thumb |
-                                self.underlined |
-                                self.strike |
-                                self.horline |
-                                self.tex |
-                                self.command
-                                )
+        return markup
 
 
     @property
@@ -231,35 +254,35 @@ class Parser (object):
 
     def parseWikiMarkup (self, text):
         try:
-            return self.wikiMarkup.transformString (text)
+            return self._wikiMarkup.transformString (text)
         except Exception:
             return self.error_template.format (error = traceback.format_exc())
 
 
     def parseListItemMarkup (self, text):
         try:
-            return self.listItemMarkup.transformString (text)
+            return self._listItemMarkup.transformString (text)
         except Exception:
             return self.error_template.format (error = traceback.format_exc())
 
 
     def parseLinkMarkup (self, text):
         try:
-            return self.linkMarkup.transformString (text)
+            return self._linkMarkup.transformString (text)
         except Exception:
             return self.error_template.format (error = traceback.format_exc())
 
 
     def parseHeadingMarkup (self, text):
         try:
-            return self.headingMarkup.transformString (text)
+            return self._headingMarkup.transformString (text)
         except Exception:
             return self.error_template.format (error = traceback.format_exc())
 
 
     def parseTextLevelMarkup (self, text):
         try:
-            return self.textLevelMarkup.transformString (text)
+            return self._textLevelMarkup.transformString (text)
         except Exception:
             return self.error_template.format (error = traceback.format_exc())
 
