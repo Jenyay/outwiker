@@ -20,7 +20,7 @@ class LogRedirector(object):
 
         self._runTime = time.strftime (u'%Y-%m-%d %H:%M:%S')
         logging.basicConfig (format = '%(asctime)s - %(levelname)s - %(message)s',
-                             level = logging.WARNING)
+                             level = logging.INFO)
 
 
     def write(self, message):

@@ -2,6 +2,7 @@
 
 import os.path
 import re
+import logging
 
 import wx
 
@@ -13,6 +14,7 @@ from outwiker.core.system import getOS
 
 from debugaction import DebugAction
 from eventswatcher import EventsWatcher
+from timer import Timer
 
 
 class PluginDebug (Plugin):
@@ -20,13 +22,15 @@ class PluginDebug (Plugin):
         Plugin.__init__ (self, application)
         self._url = u"http://jenyay.net/Outwiker/DebugPlugin"
         self._watcher = EventsWatcher (self._application)
+        self._timer = Timer()
 
         self._enablePreProcessing = False
         self._enablePostProcessing = False
         self._enableOnHoverLink = False
         self._enableOnLinkClick = False
         self._enableOnEditorPopup = False
-        self._enableOnSpellChecking = True
+        self._enableOnSpellChecking = False
+        self._enableRenderingTimeMeasuring = True
 
 
     def __createMenu (self):
@@ -187,6 +191,22 @@ class PluginDebug (Plugin):
                 params.isValid = True
 
 
+    def __onHtmlRenderingBegin (self, page, htmlView):
+        self._timer.start()
+
+
+    def __onHtmlRenderingEnd (self, page, htmlView):
+        assert page is not None
+
+        if self._enableRenderingTimeMeasuring:
+            interval = self._timer.getTimeInterval()
+            text = u'Rendering "{page}": {time} sec'.format (
+                page = page.title,
+                time = interval)
+
+            logging.info (text)
+
+
     ###################################################
     # Свойства и методы, которые необходимо определить
     ###################################################
@@ -252,6 +272,8 @@ class PluginDebug (Plugin):
             self._application.onLinkClick += self.__onLinkClick
             self._application.onEditorPopupMenu += self.__onEditorPopupMenu
             self._application.onSpellChecking += self.__onSpellChecking
+            self._application.onHtmlRenderingBegin += self.__onHtmlRenderingBegin
+            self._application.onHtmlRenderingEnd += self.__onHtmlRenderingEnd
 
 
     def destroy (self):
@@ -292,6 +314,8 @@ class PluginDebug (Plugin):
             self._application.onHoverLink -= self.__onHoverLink
             self._application.onLinkClick -= self.__onLinkClick
             self._application.onEditorPopupMenu -= self.__onEditorPopupMenu
-            self._application.onSpellChecking += self.__onSpellChecking
+            self._application.onSpellChecking -= self.__onSpellChecking
+            self._application.onHtmlRenderingBegin -= self.__onHtmlRenderingBegin
+            self._application.onHtmlRenderingEnd -= self.__onHtmlRenderingEnd
 
     #############################################
