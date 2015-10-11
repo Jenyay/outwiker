@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from abc import ABCMeta, abstractproperty, abstractmethod
+import os.path
 
 import wx
 
@@ -65,9 +66,13 @@ class BaseLinkDialogController (object):
 
 
     def _prepareDialog (self):
+        attach = Attachment (self._page)
+
         attachList = [self.createFileLink (fname)
                       for fname
-                      in Attachment (self._page).getAttachRelative()]
+                      in attach.getAttachRelative()
+                      if (not fname.startswith (u'__')
+                          or os.path.isfile (attach.getFullPath (fname)))]
 
         attachList.sort ()
         self._dlg.linkText.AppendItems (attachList)
