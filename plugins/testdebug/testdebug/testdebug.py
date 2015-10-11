@@ -31,7 +31,7 @@ class PluginDebug (Plugin):
         self._enableOnLinkClick = False
         self._enableOnEditorPopup = False
         self._enableOnSpellChecking = False
-        self._enableRenderingTimeMeasuring = True
+        self._enableRenderingTimeMeasuring = False
 
 
     def __createMenu (self):
