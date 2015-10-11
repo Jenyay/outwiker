@@ -2,7 +2,7 @@
 
 import wx
 
-from outwiker.pages.wiki.parser.wikiparser import Parser
+from outwiker.pages.wiki.parserfactory import ParserFactory
 
 from .config import CounterConfig
 from .nameharvester import NameHarvester
@@ -40,7 +40,7 @@ class InsertDialogController (object):
 
 
     def _getCountersList (self, page):
-        parser = Parser (page, self._config)
+        parser = ParserFactory().make (page, self._config)
         parser.addCommand (NameHarvester (parser))
         parser.toHtml (page.content)
 
