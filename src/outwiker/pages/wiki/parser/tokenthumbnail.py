@@ -29,34 +29,33 @@ class ThumbnailToken (object):
 
 
     def getToken (self):
-        result = Regex (r"""% *?(?:(?:thumb +)?(?:width *?= *?(?P<width>\d+)|height *?= *?(?P<height>\d+)|maxsize *?= *?(?P<maxsize>\d+)) *?(?:px)?|thumb *?) *?% *?Attach:(?P<fname>.*?\.(?:jpe?g|bmp|gif|tiff?|png)) *?%%""", re.IGNORECASE)
+        result = Regex (r"""%\s*?
+                        (?:
+                            (?:thumb\s+)?
+                            (?:width\s*?=\s*?(?P<width>\d+)
+                            |height\s*?=\s*?(?P<height>\d+)
+                            |maxsize\s*?=\s*?(?P<maxsize>\d+))\s*?
+                            (?:px)?
+                            |thumb\s*?
+                        )\s*?
+                        %\s*?
+                        Attach:(?P<fname>.*?\.(?:jpe?g|bmp|gif|tiff?|png))\s*?%%""",
+                        re.IGNORECASE | re.VERBOSE)
         result = result.setParseAction (self.__convertThumb)("thumbnail")
         return result
 
 
     def __convertThumb (self, s, l, t):
         if t["width"] is not None:
-            try:
-                size = int (t["width"])
-            except ValueError:
-                return _(u"<b>Width error</b>")
-
+            size = int (t["width"])
             func = self.thumbmaker.createThumbByWidth
 
         elif t["height"] is not None:
-            try:
-                size = int (t["height"])
-            except ValueError:
-                return u"<b>Height error</b>"
-
+            size = int (t["height"])
             func = self.thumbmaker.createThumbByHeight
 
         elif t["maxsize"] is not None:
-            try:
-                size = int (t["maxsize"])
-            except ValueError:
-                return u"<b>Maxsize error</b>"
-
+            size = int (t["maxsize"])
             func = self.thumbmaker.createThumbByMaxSize
 
         else:

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-11 19:57+0300\n"
+"POT-Creation-Date: 2015-10-11 20:18+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -2288,11 +2288,7 @@ msgstr "<b>Ошибка создания папки с миниатюрами</b
 msgid "<b>Can't create image file</b>"
 msgstr "<b>Ошибка создания файла с изображением</b>"
 
-#: ../../../outwiker/pages/wiki/parser/tokenthumbnail.py:42
-msgid "<b>Width error</b>"
-msgstr "<b>Неправильная ширина</b>"
-
-#: ../../../outwiker/pages/wiki/parser/tokenthumbnail.py:73
+#: ../../../outwiker/pages/wiki/parser/tokenthumbnail.py:72
 msgid "<b>Can't create thumbnail for \"{}\"</b>"
 msgstr "<b>Ошибка создания миниатюры для \"{}\"</b>"
 
@@ -2365,6 +2361,9 @@ msgstr "[[комментарий -> ссылка]]"
 #: ../../../outwiker/pages/wiki/wikipreferences.py:41
 msgid "[[link | comment]]"
 msgstr "[[ссылка | комментарий]]"
+
+#~ msgid "<b>Width error</b>"
+#~ msgstr "<b>Неправильная ширина</b>"
 
 #~ msgid "&Search"
 #~ msgstr "П&оиск"
