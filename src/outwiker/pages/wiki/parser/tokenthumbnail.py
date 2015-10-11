@@ -69,10 +69,7 @@ class ThumbnailToken (object):
         try:
             thumb = func (self.parser.page, fname, size)
 
-        except ThumbException as e:
-            return _(u"<b>Can't create thumbnail: \n%s</b>" % repr (e))
-
-        except IOError as e:
-            return _(u"<b>Can't create thumbnail: \n%s</b>" % repr (e))
+        except (ThumbException, IOError):
+            return _(u"<b>Can't create thumbnail for \"{}\"</b>").format (fname)
 
         return u'<a href="%s/%s"><img src="%s"/></a>' % (Attachment.attachDir, fname, thumb.replace ("\\", "/"))

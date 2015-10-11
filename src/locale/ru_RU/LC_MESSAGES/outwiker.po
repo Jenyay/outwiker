@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-07 21:02+0300\n"
+"POT-Creation-Date: 2015-10-11 19:57+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -2293,14 +2293,8 @@ msgid "<b>Width error</b>"
 msgstr "<b>Неправильная ширина</b>"
 
 #: ../../../outwiker/pages/wiki/parser/tokenthumbnail.py:73
-#: ../../../outwiker/pages/wiki/parser/tokenthumbnail.py:76
-#, python-format
-msgid ""
-"<b>Can't create thumbnail: \n"
-"%s</b>"
-msgstr ""
-"<b>Ошибка создания миниатюры: \n"
-"%s</b>"
+msgid "<b>Can't create thumbnail for \"{}\"</b>"
+msgstr "<b>Ошибка создания миниатюры для \"{}\"</b>"
 
 #: ../../../outwiker/pages/wiki/thumbdialog.py:19
 msgid "Thumbnails"
