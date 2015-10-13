@@ -202,9 +202,20 @@ def win (skipinstaller=False):
     """
     Assemble builds under Windows
     """
-    pluginsdir = os.path.join ("src", "plugins")
+    build_dir = u'build'
     src_pluginsdir = u"plugins"
-    build_pluginsdir = u"build\\outwiker_win\\plugins\\"
+    pluginsdir = os.path.join ("src", "plugins")
+    win_build_dir = os.path.join (build_dir, u"outwiker_win")
+    build_pluginsdir = os.path.join (win_build_dir, u'plugins')
+
+    filesForRemoving = [
+        os.path.join (win_build_dir, u'_hashlib.pyd'),
+        os.path.join (win_build_dir, u'_ssl.pyd'),
+        os.path.join (win_build_dir, u'bz2.pyd'),
+        os.path.join (win_build_dir, u'PIL._imagingft.pyd'),
+        os.path.join (win_build_dir, u'pyexpat.pyd'),
+        os.path.join (win_build_dir, u'select.pyd'),
+    ]
 
     # Create the plugins folder (it is not appened to the git repository)
     _remove (pluginsdir)
@@ -214,6 +225,8 @@ def win (skipinstaller=False):
     with lcd ("src"):
         local ("python setup_win.py build")
 
+    map (_remove, filesForRemoving)
+
     _remove (build_pluginsdir)
     os.mkdir (build_pluginsdir)
 
@@ -222,7 +235,7 @@ def win (skipinstaller=False):
     _remove ("build/outwiker_win_unstable.7z")
 
     # Create archive without plugins
-    with lcd ("build/outwiker_win"):
+    with lcd (win_build_dir):
         local ("7z a ..\outwiker_win_unstable.zip .\* .\plugins -r -aoa")
         local ("7z a ..\outwiker_win_unstable.7z .\* .\plugins -r -aoa")
 
@@ -238,17 +251,9 @@ def win (skipinstaller=False):
         )
 
     # Archive versions with plugins
-    with lcd ("build/outwiker_win"):
+    with lcd (win_build_dir):
         local ("7z a ..\outwiker_win_unstable_all_plugins.zip .\* .\plugins -r -aoa -xr!*.pyc -xr!.ropeproject")
         local ("7z a ..\outwiker_win_unstable_all_plugins.7z .\* .\plugins -r -aoa -xr!*.pyc -xr!.ropeproject")
-
-
-# def wintests():
-#     """
-#     Assemble test in an exe file.
-#     """
-#     with lcd ("src"):
-#         local ("python setup_tests.py build")
 
 
 def nextversion():
@@ -327,16 +332,6 @@ def test (section=u'', params=u''):
                 for fname in files:
                     local ("python {}".format (fname, params))
 
-
-# def testcoverage (params=""):
-#     """
-#     Run the unit tests and measure the coverage (coverage required)
-#     """
-#     with lcd ("src"):
-#         local (u"coverage run tests.py " + params)
-#         local (u"rm -rf ../doc/coverage")
-#         local (u'coverage html --omit=outwiker/libs/*,/usr/share/pyshared/*,../plugins/source/source/pygments/* -d "../doc/coverage"')
-#
 
 def _makechangelog (distrib_src, distrib_new):
     """
