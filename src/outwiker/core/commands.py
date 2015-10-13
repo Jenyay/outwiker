@@ -818,11 +818,11 @@ def registerActions (application):
     from outwiker.actions.history import HistoryBackAction, HistoryForwardAction
     application.actionController.register (
         HistoryBackAction (application),
-        HotKey ("Left", ctrl=True))
+        HotKey ("Left", ctrl=True, alt=True))
 
     application.actionController.register (
         HistoryForwardAction (application),
-        HotKey ("Right", ctrl=True))
+        HotKey ("Right", ctrl=True, alt=True))
 
 
     # Применить стиль страницы ко всей ветке
