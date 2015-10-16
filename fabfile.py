@@ -35,6 +35,7 @@ plugins_list = [
     "style",
     "thumbgallery",
     "tableofcontents",
+    "texequation",
     "updatenotifier",
 ]
 
