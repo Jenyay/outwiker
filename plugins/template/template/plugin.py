@@ -9,6 +9,9 @@ from outwiker.core.version import Version, StatusSet
 from outwiker.core.system import getOS
 
 
+__version__ = u'1.0'
+
+
 if getCurrentVersion() < Version (1, 9, 0, 777, status=StatusSet.DEV):
     logging.warning ("PluginName plugin. OutWiker version requirement: 1.9.0.777")
 else:
@@ -45,7 +48,7 @@ else:
 
         @property
         def version (self):
-            return u"1.0"
+            return __version__
 
 
         @property
