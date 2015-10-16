@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 import os.path
+import logging
 
 from outwiker.core.pluginbase import Plugin
 from outwiker.core.commands import getCurrentVersion
@@ -8,8 +9,8 @@ from outwiker.core.version import Version, StatusSet
 from outwiker.core.system import getOS
 
 
-if getCurrentVersion() < Version (1, 8, 0, 731, status=StatusSet.DEV):
-    print ("ChangeUID plugin. OutWiker version requirement: 1.8.0.731")
+if getCurrentVersion() < Version (1, 9, 0, 777, status=StatusSet.DEV):
+    logging.warning ("PluginName plugin. OutWiker version requirement: 1.9.0.777")
 else:
     from .i18n import set_
     from .controller import Controller
@@ -19,7 +20,7 @@ else:
             """
             application - экземпляр класса core.application.ApplicationParams
             """
-            Plugin.__init__ (self, application)
+            super (PluginName, self).__init__ (application)
             self.__controller = Controller(self, application)
 
 
