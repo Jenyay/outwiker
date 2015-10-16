@@ -50,7 +50,14 @@ class Controller (object):
 
 
     def __onWikiParserPrepare (self, parser):
-        pass
+        from tokentex import TexFactory
+        tex = TexFactory().make (parser)
+
+        parser.wikiTokens.append (tex)
+        parser.linkTokens.append (tex)
+        parser.headingTokens.append (tex)
+        parser.textLevelTokens.append (tex)
+        parser.listItemsTokens.append (tex)
 
 
     @property

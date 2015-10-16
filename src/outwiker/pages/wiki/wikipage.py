@@ -14,7 +14,6 @@ from actions.fontsizebig import WikiFontSizeBigAction
 from actions.fontsizesmall import WikiFontSizeSmallAction
 from actions.nonparsed import WikiNonParsedAction
 from actions.thumb import WikiThumbAction
-from actions.equation import WikiEquationAction
 from actions.openhtmlcode import WikiOpenHtmlCodeAction
 from actions.updatehtml import WikiUpdateHtmlAction
 from actions.attachlist import WikiAttachListAction
@@ -28,7 +27,6 @@ _actions = [
     (WikiFontSizeSmallAction, HotKey (",", ctrl=True)),
     (WikiNonParsedAction, None),
     (WikiThumbAction, HotKey ("M", ctrl=True)),
-    (WikiEquationAction, HotKey ("Q", ctrl=True)),
     (WikiOpenHtmlCodeAction, HotKey ("F4", shift=True)),
     (WikiUpdateHtmlAction, HotKey ("F4", ctrl=True)),
     (WikiAttachListAction, None),

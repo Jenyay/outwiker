@@ -5,7 +5,7 @@ import os.path
 import subprocess
 import hashlib
 
-from outwiker.core.system import getOS, getCurrentDir
+from outwiker.core.system import getOS
 
 
 def getTexRender (thumb_path):
@@ -78,7 +78,7 @@ class MimeTexWindows (MimeTex):
     """
     @property
     def mimeTexPath (self):
-        return os.path.join (getCurrentDir(), "tools\\mimetex\\mimetex.exe")
+        return os.path.join (os.path.dirname (__file__), u"tools", u"mimetex.exe")
 
 
     def run (self, args):

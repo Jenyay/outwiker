@@ -4,8 +4,8 @@ import os
 import os.path
 
 from outwiker.libs.pyparsing import QuotedString
-from ..texrender import getTexRender
-from ..thumbnails import Thumbnails
+from texrender import getTexRender
+from outwiker.pages.wiki.thumbnails import Thumbnails
 
 
 class TexFactory (object):

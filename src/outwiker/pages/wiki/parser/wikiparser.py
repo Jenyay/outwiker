@@ -18,7 +18,6 @@ from tokenattach import AttachFactory, AttachImagesFactory
 from tokenlist import ListFactory
 from tokenlinebreak import LineBreakFactory
 from tokenlinejoin import LineJoinFactory
-from tokentex import TexFactory
 from tokencommand import CommandFactory
 from tokentext import TextFactory
 from tokenquote import QuoteFactory
@@ -68,7 +67,6 @@ class Parser (object):
         self.lists = ListFactory.make (self)
         self.lineBreak = LineBreakFactory.make (self)
         self.lineJoin = LineJoinFactory.make (self)
-        self.tex = TexFactory.make (self)
         self.command = CommandFactory.make (self)
         self.text = TextFactory.make(self)
 
@@ -101,7 +99,6 @@ class Parser (object):
             self.lists,
             self.table,
             self.headings,
-            self.tex,
             self.command,
         ]
 
@@ -120,7 +117,6 @@ class Parser (object):
             self.small,
             self.big,
             self.strike,
-            self.tex,
             self.command,
             self.lineBreak,
             self.lineJoin,
@@ -150,7 +146,6 @@ class Parser (object):
             self.strike,
             self.horline,
             self.align,
-            self.tex,
             self.command,
         ]
 
@@ -177,7 +172,6 @@ class Parser (object):
             self.underlined,
             self.strike,
             self.horline,
-            self.tex,
             self.command,
         ]
 
@@ -205,12 +199,11 @@ class Parser (object):
             self.superscript,
             self.quote,
             self.attaches,
-            self.tex,
             self.command,
         ]
 
-        self._listItemMarkup = None
         self._wikiMarkup = None
+        self._listItemMarkup = None
         self._linkMarkup = None
         self._headingMarkup = None
         self._textLevelMarkup = None
