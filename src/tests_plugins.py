@@ -114,4 +114,6 @@ if __name__ == '__main__':
     from test.plugins.externaltools.commandexeccontroller import CommandExecControllerTest
     from test.plugins.externaltools.execdialog import ExecDialogTest
 
+    from test.plugins.texequation.texequation_test import TexEquationTest
+
     unittest.main()
