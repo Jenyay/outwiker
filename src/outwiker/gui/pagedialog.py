@@ -114,12 +114,14 @@ def createChildPage (parentwnd, page):
 
 class CreatePageDialog (BasePageDialog):
     def __init__ (self, parentPage = None, *args, **kwds):
-        BasePageDialog.__init__ (self, parentPage, *args, **kwds)
+        super (CreatePageDialog, self).__init__ (parentPage, *args, **kwds)
+
+        map (lambda panel: panel.initBeforeCreation (parentPage), self._panels)
 
         # Опция для хранения типа страницы, которая была создана последней
         self.lastCreatedPageType = StringOption (Application.config, u"General", u"LastCreatedPageType", u"wiki")
 
-        self._setComboPageType(self.lastCreatedPageType.value)
+        self.generalPanel.setComboPageType(self.lastCreatedPageType.value)
 
         if parentPage.parent is not None:
             self.generalPanel.tagsSelector.tags = parentPage.tags
@@ -155,10 +157,12 @@ class CreatePageDialog (BasePageDialog):
 
 class EditPageDialog (BasePageDialog):
     def __init__ (self, currentPage, parentPage = None, *args, **kwds):
-        BasePageDialog.__init__ (self, parentPage, *args, **kwds)
+        super (EditPageDialog, self).__init__ (parentPage, *args, **kwds)
 
         assert currentPage is not None
         self.currentPage = currentPage
+
+        map (lambda panel: panel.initBeforeEditing (currentPage), self._panels)
 
         self.SetTitle(_(u"Edit page properties"))
         self._prepareForChange (currentPage)
@@ -179,7 +183,7 @@ class EditPageDialog (BasePageDialog):
         self.generalPanel.titleTextCtrl.SetValue (currentPage.title)
 
         # Установить тип страницы
-        self._setComboPageType(currentPage.getTypeString())
+        self.generalPanel.setComboPageType(currentPage.getTypeString())
         self.generalPanel.typeCombo.Disable ()
 
         # Добавить текущую иконку

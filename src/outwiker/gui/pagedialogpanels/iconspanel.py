@@ -10,14 +10,15 @@ from outwiker.core.system import getIconsDirList
 from outwiker.core.iconscollection import IconsCollection
 from outwiker.core.defines import ICON_WIDTH, ICON_HEIGHT
 from outwiker.gui.iconlistctrl import IconListCtrl
+from basepanel import BasePageDialogPanel
 
 
-class IconsPanel (wx.Panel):
+class IconsPanel (BasePageDialogPanel):
     """
     Class of the panel in the "Icon" tab.
     """
-    def __init__ (self, parent):
-        super (IconsPanel, self).__init__ (parent)
+    def __init__ (self, parent, application):
+        super (IconsPanel, self).__init__ (parent, application)
 
         self._iconsCollections = [IconsCollection (path) for path in getIconsDirList()]
         self.__createGui()
@@ -25,6 +26,11 @@ class IconsPanel (wx.Panel):
         self.__appendGroups ()
         self.groupCtrl.SetSelection (0)
         self.__switchToCurrentGroup()
+
+
+    @property
+    def title (self):
+        return _(u'Icon')
 
 
     def __createGui (self):

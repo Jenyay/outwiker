@@ -6,22 +6,23 @@ import os.path
 import wx
 import wx.combo
 
-from outwiker.core.factoryselector import FactorySelector
 from outwiker.core.application import Application
-from outwiker.core.tagslist import TagsList
 from outwiker.gui.guiconfig import PageDialogConfig
 from outwiker.gui.pagedialogpanels.iconspanel import IconsPanel
 from outwiker.gui.pagedialogpanels.appearancepanel import AppearancePanel
 from outwiker.gui.pagedialogpanels.generalpanel import GeneralPanel
 
 
-class BasePageDialog(wx.Dialog):
+class BasePageDialog (wx.Dialog):
     def __init__(self, parentPage = None, *args, **kwds):
         """
         parentPage - родительская страница (используется, если страницу нужно создавать, а не изменять)
         """
         kwds["style"] = wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.THICK_FRAME
-        wx.Dialog.__init__(self, *args, **kwds)
+        super (BasePageDialog, self).__init__(*args, **kwds)
+
+        self._application = Application
+        self._panels = []
 
         # Используется для редактирования существующей страницы
         self.currentPage = None
@@ -30,7 +31,7 @@ class BasePageDialog(wx.Dialog):
         self.config = PageDialogConfig (Application.config)
 
         self.notebook = wx.Notebook (self, -1)
-        self.__createPanels (self.notebook)
+        self._createPanels (self.notebook)
 
         self.__do_layout()
 
@@ -40,20 +41,18 @@ class BasePageDialog(wx.Dialog):
         self.generalPanel.titleTextCtrl.SetFocus()
 
 
-    def __createPanels (self, notebook):
-        # Create general parameters panel
-        self.generalPanel = GeneralPanel (notebook)
-        self.notebook.AddPage (self.generalPanel, _("General"))
-        self._fillComboType()
-        self._setTagsList()
+    def _createPanels (self, notebook):
+        self._panels = [GeneralPanel (notebook, self._application),
+                        IconsPanel (notebook, self._application),
+                        AppearancePanel (notebook, self._application),
+                        ]
 
-        # Create icons panel
-        self.iconsPanel = IconsPanel (notebook)
-        self.notebook.AddPage (self.iconsPanel, _("Icon"))
+        self.generalPanel = self._panels[0]
+        self.iconsPanel = self._panels[1]
+        self.appearancePanel = self._panels[2]
 
-        # Create appearance panel
-        self.appearancePanel = AppearancePanel (notebook)
-        self.notebook.AddPage (self.appearancePanel, _("Appearance"))
+        for panel in self._panels:
+            self.notebook.AddPage (panel, panel.title)
 
 
     def __do_layout(self):
@@ -114,39 +113,11 @@ class BasePageDialog(wx.Dialog):
         self.appearancePanel.styleCombo.SetSelection (currentStyleIndex)
 
 
-    def _setTagsList (self):
-        assert Application.wikiroot is not None
-
-        tagslist = TagsList (Application.wikiroot)
-        self.generalPanel.tagsSelector.setTagsList (tagslist)
-
-
     def _createOkCancelButtons (self, sizer):
         # Создание кнопок Ok/Cancel
         buttonsSizer = self.CreateButtonSizer (wx.OK | wx.CANCEL)
         sizer.Add (buttonsSizer, 1, wx.ALIGN_RIGHT | wx.ALL, border = 2)
         self.Bind (wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
-
-
-    def _fillComboType (self):
-        self.generalPanel.typeCombo.Clear()
-        for factory in FactorySelector.getFactories():
-            self.generalPanel.typeCombo.Append (factory.title, factory)
-
-        if not self.generalPanel.typeCombo.IsEmpty():
-            self.generalPanel.typeCombo.SetSelection (0)
-
-
-    def _setComboPageType (self, pageTypeString):
-        """
-        Установить тип страницы в диалоге по строке, описывающей тип страницы
-        """
-        n = 0
-        for factory in FactorySelector.getFactories():
-            if factory.getTypeString() == FactorySelector.getFactory(pageTypeString).getTypeString():
-                self.generalPanel.typeCombo.SetSelection (n)
-                break
-            n += 1
 
 
     @property

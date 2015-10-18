@@ -3,18 +3,29 @@
 import wx
 import wx.combo
 
+from outwiker.core.tagslist import TagsList
+from outwiker.core.factoryselector import FactorySelector
 from outwiker.gui.tagsselector import TagsSelector
+from basepanel import BasePageDialogPanel
 
 
-class GeneralPanel (wx.Panel):
+class GeneralPanel (BasePageDialogPanel):
     """
     Класс панели, расположенной на вкладке "Общее"
     """
-    def __init__ (self, parent):
-        super (GeneralPanel, self).__init__ (parent)
+    def __init__ (self, parent, application):
+        super (GeneralPanel, self).__init__ (parent, application)
 
         self.__createGeneralControls()
+        self._fillComboType()
+        self._setTagsList()
+
         self.__layout ()
+
+
+    @property
+    def title (self):
+        return _(u'General')
 
 
     def __layout (self):
@@ -52,3 +63,47 @@ class GeneralPanel (wx.Panel):
 
         self.tagsSelector = TagsSelector (self)
         self.typeLabel = wx.StaticText(self, -1, _(u"Page type"))
+
+
+    def _fillComboType (self):
+        self.typeCombo.Clear()
+        for factory in FactorySelector.getFactories():
+            self.typeCombo.Append (factory.title, factory)
+
+        if not self.typeCombo.IsEmpty():
+            self.typeCombo.SetSelection (0)
+
+
+    def _setTagsList (self):
+        assert self._application.wikiroot is not None
+
+        tagslist = TagsList (self._application.wikiroot)
+        self.tagsSelector.setTagsList (tagslist)
+
+
+    def setComboPageType (self, pageTypeString):
+        """
+        Установить тип страницы в диалоге по строке, описывающей тип страницы
+        """
+        n = 0
+        for factory in FactorySelector.getFactories():
+            if factory.getTypeString() == FactorySelector.getFactory(pageTypeString).getTypeString():
+                self.typeCombo.SetSelection (n)
+                break
+            n += 1
+
+
+    def initBeforeCreation (self, parentPage):
+        """
+        Initialize the panel before new page creation
+        parentPage - the parent page for new page
+        """
+        pass
+
+
+    def initBeforeEditing (self, page):
+        """
+        Initialize the panel before new page editing.
+        page - page for editing
+        """
+        pass

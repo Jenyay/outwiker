@@ -3,10 +3,12 @@
 import wx
 import wx.combo
 
+from basepanel import BasePageDialogPanel
 
-class AppearancePanel (wx.Panel):
-    def __init__ (self, parent):
-        super (AppearancePanel, self).__init__ (parent)
+
+class AppearancePanel (BasePageDialogPanel):
+    def __init__ (self, parent, application):
+        super (AppearancePanel, self).__init__ (parent, application)
 
         self.styleText = wx.StaticText (self, -1, _("Page style"))
         self.styleCombo = wx.ComboBox (self,
@@ -15,6 +17,11 @@ class AppearancePanel (wx.Panel):
                                        style=wx.CB_DROPDOWN | wx.CB_DROPDOWN | wx.CB_READONLY)
 
         self.__layout ()
+
+
+    @property
+    def title (self):
+        return _(u'Appearance')
 
 
     def __layout (self):
