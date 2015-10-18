@@ -7,29 +7,49 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plugin name\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-25 21:56+0400\n"
-"PO-Revision-Date: 2014-06-25 21:58+0300\n"
-"Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
+"POT-Creation-Date: 2015-10-18 20:02+0300\n"
+"PO-Revision-Date: 2015-10-18 20:03+0300\n"
+"Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: \n"
+"Language: ru_RU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.4\n"
-"Language: ru_RU\n"
+"X-Generator: Poedit 1.7.5\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-#: actions.py:22
-msgid "Menu Item Title"
-msgstr "Название пункта меню"
+#: actions.py:21
+msgid "Equation"
+msgstr "Формула"
 
-#: actions.py:27
-msgid "Description"
-msgstr "Описание"
+#: actions.py:26
+msgid "Insert the equation in te TeX format"
+msgstr "Вставить формулу в формате TeX"
 
-#: plugin.py:42
-msgid "Plugin description"
-msgstr "Описание плагина"
+#: tokentex.py:44
+msgid "Can't create thumbnails directory"
+msgstr "Ошибка создания папки с миниатюрами"
 
-#: plugin.py:52
-msgid "http://jenyay.net"
-msgstr "http://jenyay.net"
+#: tokentex.py:51
+msgid "Can't create image file"
+msgstr "Ошибка создания файла с изображением"
+
+#: texequation.py:46
+msgid "TeXEquation plug-in allow to insert equations in the TeX format."
+msgstr "Плагин TeXEquation дает возможность вставлять формулы в формате TeX"
+
+#: texequation.py:56
+msgid "http://jenyay.net/Outwiker/TexEquationEn"
+msgstr "http://jenyay.net/Outwiker/TexEquation"
+
+#~ msgid "Menu Item Title"
+#~ msgstr "Название пункта меню"
+
+#~ msgid "Description"
+#~ msgstr "Описание"
+
+#~ msgid "Plugin description"
+#~ msgstr "Описание плагина"
+
+#~ msgid "http://jenyay.net"
+#~ msgstr "http://jenyay.net"

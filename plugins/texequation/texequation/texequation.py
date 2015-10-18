@@ -38,12 +38,12 @@ else:
 
         @property
         def name (self):
-            return u"TexEquation"
+            return u"TeXEquation"
 
 
         @property
         def description (self):
-            return _(u"TexEquation enable to insert equations in with the TeX format.")
+            return _(u"TeXEquation plug-in allow to insert equations in the TeX format.")
 
 
         @property

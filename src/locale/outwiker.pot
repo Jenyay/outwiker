@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-11 19:57+0300\n"
+"POT-Creation-Date: 2015-10-18 19:49+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1145,7 +1145,7 @@ msgstr ""
 #: outwiker/gui/preferences/editorpanel.py:32
 #: outwiker/gui/preferences/htmlrenderpanel.py:25
 #: outwiker/gui/preferences/textprintpanel.py:28
-#: outwiker/pages/wiki/wikipageview.py:147
+#: outwiker/pages/wiki/wikipageview.py:145
 #: outwiker/pages/html/htmlpageview.py:226
 msgid "Font"
 msgstr ""
@@ -1406,7 +1406,7 @@ msgid "Page Options..."
 msgstr ""
 
 #: outwiker/gui/preferences/wikieditorpanel.py:37
-#: outwiker/pages/wiki/wikipageview.py:146
+#: outwiker/pages/wiki/wikipageview.py:144
 #: outwiker/pages/html/htmlpageview.py:225
 msgid "Heading"
 msgstr ""
@@ -1422,7 +1422,7 @@ msgstr ""
 #: outwiker/gui/preferences/prefdialog.py:139
 #: outwiker/gui/preferences/prefdialog.py:160
 #: outwiker/gui/toolbars/generaltoolbar.py:25
-#: outwiker/gui/basepagedialog.py:46 outwiker/pages/wiki/wikipage.py:85
+#: outwiker/gui/basepagedialog.py:46 outwiker/pages/wiki/wikipage.py:83
 msgid "General"
 msgstr ""
 
@@ -1808,8 +1808,8 @@ msgid "Default icon"
 msgstr ""
 
 #: outwiker/pages/wiki/wikitoolbar.py:25
-#: outwiker/pages/wiki/wikipageview.py:55
-#: outwiker/pages/wiki/wikipageview.py:59
+#: outwiker/pages/wiki/wikipageview.py:54
+#: outwiker/pages/wiki/wikipageview.py:58
 msgid "Wiki"
 msgstr ""
 
@@ -1841,27 +1841,27 @@ msgstr ""
 msgid "[[link | comment]]"
 msgstr ""
 
-#: outwiker/pages/wiki/wikipageview.py:148
+#: outwiker/pages/wiki/wikipageview.py:146
 #: outwiker/pages/html/htmlpageview.py:227
 msgid "Alignment"
 msgstr ""
 
-#: outwiker/pages/wiki/wikipageview.py:149
+#: outwiker/pages/wiki/wikipageview.py:147
 #: outwiker/pages/html/htmlpageview.py:228
 msgid "Formatting"
 msgstr ""
 
-#: outwiker/pages/wiki/wikipageview.py:150
+#: outwiker/pages/wiki/wikipageview.py:148
 #: outwiker/pages/html/htmlpageview.py:230
 msgid "Tables"
 msgstr ""
 
-#: outwiker/pages/wiki/wikipageview.py:151
+#: outwiker/pages/wiki/wikipageview.py:149
 #: outwiker/pages/html/htmlpageview.py:229
 msgid "Lists"
 msgstr ""
 
-#: outwiker/pages/wiki/wikipageview.py:152
+#: outwiker/pages/wiki/wikipageview.py:150
 msgid "Commands"
 msgstr ""
 
@@ -1952,11 +1952,6 @@ msgstr ""
 #: outwiker/pages/wiki/actions/childlist.py:113
 #: outwiker/pages/wiki/actions/attachlist.py:103
 msgid "Descending sort"
-msgstr ""
-
-#: outwiker/pages/wiki/actions/equation.py:18
-#: outwiker/pages/wiki/actions/equation.py:23
-msgid "Equation"
 msgstr ""
 
 #: outwiker/pages/wiki/actions/attachlist.py:21
@@ -2091,20 +2086,8 @@ msgstr ""
 msgid "Font size"
 msgstr ""
 
-#: outwiker/pages/wiki/parser/tokenthumbnail.py:42
-msgid "<b>Width error</b>"
-msgstr ""
-
-#: outwiker/pages/wiki/parser/tokenthumbnail.py:73
+#: outwiker/pages/wiki/parser/tokenthumbnail.py:72
 msgid "<b>Can't create thumbnail for \"{}\"</b>"
-msgstr ""
-
-#: outwiker/pages/wiki/parser/tokentex.py:44
-msgid "<b>Can't create thumbnails directory</b>"
-msgstr ""
-
-#: outwiker/pages/wiki/parser/tokentex.py:51
-msgid "<b>Can't create image file</b>"
 msgstr ""
 
 #: outwiker/pages/wiki/parser/commands/include.py:51
@@ -2117,7 +2100,7 @@ msgstr ""
 msgid "<b>Encoding error in file %s</b>"
 msgstr ""
 
-#: outwiker/pages/wiki/wikipage.py:68
+#: outwiker/pages/wiki/wikipage.py:66
 msgid "Wiki Page"
 msgstr ""
 

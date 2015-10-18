@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-25 21:56+0400\n"
+"POT-Creation-Date: 2015-10-18 20:02+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,18 +17,26 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: actions.py:22
-msgid "Menu Item Title"
+#: actions.py:21
+msgid "Equation"
 msgstr ""
 
-#: actions.py:27
-msgid "Description"
+#: actions.py:26
+msgid "Insert the equation in te TeX format"
 msgstr ""
 
-#: plugin.py:42
-msgid "Plugin description"
+#: tokentex.py:44
+msgid "Can't create thumbnails directory"
 msgstr ""
 
-#: plugin.py:52
-msgid "http://jenyay.net"
+#: tokentex.py:51
+msgid "Can't create image file"
+msgstr ""
+
+#: texequation.py:46
+msgid "TeXEquation plug-in allow to insert equations in the TeX format."
+msgstr ""
+
+#: texequation.py:56
+msgid "http://jenyay.net/Outwiker/TexEquationEn"
 msgstr ""
