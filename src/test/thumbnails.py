@@ -73,34 +73,6 @@ class ThumbnailsTest (unittest.TestCase):
         self.assertFalse (os.path.exists (thumb.getThumbPath (create=False)))
 
 
-    def testThumbnailsClear2 (self):
-        thumb = Thumbnails (self.parser.page)
-
-        eqn = "y = f(x)"
-
-        text = "{$ %s $}" % (eqn)
-        self.parser.toHtml (text)
-
-        self.assertFalse (len (os.listdir (thumb.getThumbPath (False))) == 0)
-
-        thumb.clearDir()
-
-        self.assertEqual (len (os.listdir (thumb.getThumbPath (False))), 0)
-
-
-    def testThumbnailsClear3 (self):
-        thumb = Thumbnails (self.parser.page)
-
-        eqn1 = "y = f(x)"
-        eqn2 = "y = f_2(x)"
-
-        self.parser.toHtml ("{$ %s $}" % (eqn1))
-        self.assertEqual (len (os.listdir (thumb.getThumbPath (False))), 2)
-
-        self.parser.toHtml ("{$ %s $}" % (eqn2))
-        self.assertEqual (len (os.listdir (thumb.getThumbPath (False))), 2)
-
-
     def testThumbnails1_attach (self):
         thumb = Thumbnails (self.parser.page)
         thumbDir = thumb.getThumbPath (create=False)
@@ -141,39 +113,3 @@ class ThumbnailsTest (unittest.TestCase):
         thumb.clearDir ()
 
         self.assertFalse (os.path.exists (thumb.getThumbPath (create=False)))
-
-
-    def testThumbnailsClear2_attach (self):
-        fname = u"accept.png"
-        attachPath = os.path.join (self.filesPath, fname)
-        Attachment (self.parser.page).attach ([attachPath])
-
-        thumb = Thumbnails (self.parser.page)
-
-        eqn = "y = f(x)"
-
-        text = "{$ %s $}" % (eqn)
-        self.parser.toHtml (text)
-
-        self.assertFalse (len (os.listdir (thumb.getThumbPath (False))) == 0)
-
-        thumb.clearDir()
-
-        self.assertEqual (len (os.listdir (thumb.getThumbPath (False))), 0)
-
-
-    def testThumbnailsClear3_attach (self):
-        fname = u"accept.png"
-        attachPath = os.path.join (self.filesPath, fname)
-        Attachment (self.parser.page).attach ([attachPath])
-
-        thumb = Thumbnails (self.parser.page)
-
-        eqn1 = "y = f(x)"
-        eqn2 = "y = f_2(x)"
-
-        self.parser.toHtml ("{$ %s $}" % (eqn1))
-        self.assertEqual (len (os.listdir (thumb.getThumbPath (False))), 2)
-
-        self.parser.toHtml ("{$ %s $}" % (eqn2))
-        self.assertEqual (len (os.listdir (thumb.getThumbPath (False))), 2)

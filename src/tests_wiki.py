@@ -51,7 +51,6 @@ if __name__ == '__main__':
     from test.wikipage.parsertests.parsertable import ParserTableTest
     from test.wikipage.parsertests.parseradhoc import ParserAdHocTest
     from test.wikipage.parsertests.parserurl import ParserUrlTest
-    from test.wikipage.parsertests.parsertex import ParserTexTest
     from test.wikipage.parsertests.parserlinebreak import ParserLineBreakTest
     from test.wikipage.parsertests.parserquote import ParserQuoteTest
 

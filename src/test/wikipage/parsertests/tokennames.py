@@ -20,9 +20,7 @@ from outwiker.pages.wiki.parser.tokenattach import AttachFactory, AttachImagesFa
 from outwiker.pages.wiki.parser.tokenlist import ListFactory
 from outwiker.pages.wiki.parser.tokenlinebreak import LineBreakFactory
 from outwiker.pages.wiki.parser.tokenlinejoin import LineJoinFactory
-from outwiker.pages.wiki.parser.tokentex import TexFactory
 from outwiker.pages.wiki.parser.tokencommand import CommandFactory
-from outwiker.pages.wiki.parser.tokentext import TextFactory
 
 from test.utils import removeDir
 
@@ -373,26 +371,10 @@ class TokenNamesTest (unittest.TestCase):
         self._checkToken (testtoken, text, validname)
 
 
-    def testTex (self):
-        testtoken = TexFactory.make (FakeParser()).setParseAction(lambda s, l, t: None)
-        text = u"{$e^x$}"
-        validname = u"tex"
-
-        self._checkToken (testtoken, text, validname)
-
-
     def testCommand (self):
         testtoken = CommandFactory.make (FakeParser()).setParseAction(lambda s, l, t: None)
         text = u"(:command:)Бла-бла-бла(:commandend:)"
         validname = u"command"
-
-        self._checkToken (testtoken, text, validname)
-
-
-    def testText (self):
-        testtoken = TextFactory.make (FakeParser()).setParseAction(lambda s, l, t: None)
-        text = u"Бла бла бла"
-        validname = u"text"
 
         self._checkToken (testtoken, text, validname)
 

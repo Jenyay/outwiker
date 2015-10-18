@@ -228,13 +228,6 @@ class ParserHeadingTest (unittest.TestCase):
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
 
-    def testHeaderTex (self):
-        text = u"бла-бла-бла \n!!! Заголовок {$e^x$}\nбла-бла-бла"
-        result_parse = self.parser.toHtml (text)
-
-        self.assertTrue (result_parse.startswith (u'бла-бла-бла \n<h2>Заголовок <img src="__attach/__thumb/eqn_'))
-
-
     def testHeaderLink1 (self):
         text = u"бла-бла-бла \n!!! Заголовок [[бла-бла-бла -> http://jenyay.net]]\nбла-бла-бла"
         result = u'бла-бла-бла \n<h2>Заголовок <a href="http://jenyay.net">бла-бла-бла</a></h2>\nбла-бла-бла'

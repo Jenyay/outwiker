@@ -244,22 +244,6 @@ class ParserLinkTest (unittest.TestCase):
             self.assertEqual (self.parser.toHtml (text), result)
 
 
-    def testTexLinks1 (self):
-        for link in self.pagelinks:
-            text = u"бла-бла-бла \n[[%s | {$e^x$} ]] бла-бла-бла\nбла-бла-бла" % (link)
-            result_begin = u'бла-бла-бла \n<a href="%s"><img src="__attach/__thumb/eqn_' % (link)
-
-            self.assertTrue (self.parser.toHtml (text).startswith (result_begin))
-
-
-    def testTexLinks2 (self):
-        for link in self.pagelinks:
-            text = u"бла-бла-бла \n[[{$e^x$} -> %s]] бла-бла-бла\nбла-бла-бла" % (link)
-            result_begin = u'бла-бла-бла \n<a href="%s"><img src="__attach/__thumb/eqn_' % (link)
-
-            self.assertTrue (self.parser.toHtml (text).startswith (result_begin))
-
-
     def testPageCommentsLinks1 (self):
         for n in range (len (self.pagelinks)):
             link = self.pagelinks[n]
