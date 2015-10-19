@@ -694,6 +694,9 @@ class PageDialogConfig (object):
     RECENT_STYLE_SECTION = u'RecentStyle'
     RECENT_STYLE_DEFAULT = u''
 
+    RECENT_CREATED_PAGE_TYPE_PARAM = u'RecentCreatedPageType'
+    RECENT_CREATED_PAGE_TYPE_DEFAULT = u'wiki'
+
     def __init__ (self, config):
         self.config = config
 
@@ -711,6 +714,11 @@ class PageDialogConfig (object):
                                          GeneralGuiConfig.GENERAL_SECTION,
                                          self.RECENT_STYLE_SECTION,
                                          self.RECENT_STYLE_DEFAULT)
+
+        self.recentCreatedPageType = StringOption (self.config,
+                                                   GeneralGuiConfig.GENERAL_SECTION,
+                                                   self.RECENT_CREATED_PAGE_TYPE_PARAM,
+                                                   self.RECENT_CREATED_PAGE_TYPE_DEFAULT)
 
 
 class TagsConfig (object):

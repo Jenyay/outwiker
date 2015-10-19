@@ -6,8 +6,7 @@ import outwiker.core.commands
 from .basepagedialog import BasePageDialog
 from outwiker.core.tree import RootWikiPage
 from outwiker.core.application import Application
-from outwiker.core.config import StringOption
-from outwiker.core.commands import testPageTitle, pageExists, MessageBox
+from outwiker.core.commands import pageExists, MessageBox
 from outwiker.core.style import Style
 from outwiker.core.styleslist import StylesList
 from outwiker.core.system import getStylesDirList
@@ -115,26 +114,18 @@ def createChildPage (parentwnd, page):
 class CreatePageDialog (BasePageDialog):
     def __init__ (self, parentPage = None, *args, **kwds):
         super (CreatePageDialog, self).__init__ (parentPage, *args, **kwds)
+        self.SetTitle(_(u"Create Page"))
 
         map (lambda panel: panel.initBeforeCreation (parentPage), self._panels)
-
-        # Опция для хранения типа страницы, которая была создана последней
-        self.lastCreatedPageType = StringOption (Application.config, u"General", u"LastCreatedPageType", u"wiki")
-
-        self.generalPanel.setComboPageType(self.lastCreatedPageType.value)
-
-        if parentPage.parent is not None:
-            self.generalPanel.tagsSelector.tags = parentPage.tags
 
         self._stylesList = StylesList (getStylesDirList ())
         self._fillStyleCombo (self._stylesList, None)
 
 
     def onOk (self, event):
-        if not testPageTitle (self.pageTitle):
-            self.generalPanel.titleTextCtrl.SetFocus()
-            self.generalPanel.titleTextCtrl.SetSelection (-1, -1)
-            return
+        for panel in self._panels:
+            if not panel.validateBeforeCreation (self.parentPage):
+                return
 
         if (self.parentPage is not None and
                 not RootWikiPage.testDublicate(self.parentPage, self.pageTitle)):
@@ -142,7 +133,7 @@ class CreatePageDialog (BasePageDialog):
                     return
 
         self.saveParams()
-        self.lastCreatedPageType.value = self.selectedFactory.getTypeString()
+        map (lambda panel: panel.saveParams(), self._panels)
         event.Skip()
 
 
@@ -158,45 +149,21 @@ class CreatePageDialog (BasePageDialog):
 class EditPageDialog (BasePageDialog):
     def __init__ (self, currentPage, parentPage = None, *args, **kwds):
         super (EditPageDialog, self).__init__ (parentPage, *args, **kwds)
+        self.SetTitle(_(u"Edit page properties"))
 
         assert currentPage is not None
         self.currentPage = currentPage
 
         map (lambda panel: panel.initBeforeEditing (currentPage), self._panels)
 
-        self.SetTitle(_(u"Edit page properties"))
-        self._prepareForChange (currentPage)
-        self.generalPanel.titleTextCtrl.SetFocus()
-        self.generalPanel.titleTextCtrl.SetSelection (-1, -1)
-
         self._stylesList = StylesList (getStylesDirList ())
         self._fillStyleCombo (self._stylesList, currentPage)
 
 
-    def _prepareForChange (self, currentPage):
-        """
-        Подготовить диалог к редактированию свойств страницы
-        """
-        self.generalPanel.tagsSelector.tags = currentPage.tags
-
-        # Запретить изменять заголовок
-        self.generalPanel.titleTextCtrl.SetValue (currentPage.title)
-
-        # Установить тип страницы
-        self.generalPanel.setComboPageType(currentPage.getTypeString())
-        self.generalPanel.typeCombo.Disable ()
-
-        # Добавить текущую иконку
-        icon = currentPage.icon
-        if icon is not None:
-            self.iconsPanel.iconsList.setCurrentIcon (icon)
-
-
     def onOk (self, event):
-        if not testPageTitle (self.pageTitle):
-            self.generalPanel.titleTextCtrl.SetFocus()
-            self.generalPanel.titleTextCtrl.SetSelection (-1, -1)
-            return
+        for panel in self._panels:
+            if not panel.validateBeforeEditing (self.currentPage):
+                return
 
         if not self.currentPage.canRename (self.pageTitle):
             outwiker.core.commands.MessageBox (_(u"Can't rename page when page with that title already exists"),
@@ -205,6 +172,7 @@ class EditPageDialog (BasePageDialog):
             return
 
         self.saveParams()
+        map (lambda panel: panel.saveParams(), self._panels)
         event.Skip()
 
 

@@ -10,6 +10,8 @@ class AppearancePanel (BasePageDialogPanel):
     def __init__ (self, parent, application):
         super (AppearancePanel, self).__init__ (parent, application)
 
+        self._stylesList = []
+
         self.styleText = wx.StaticText (self, -1, _("Page style"))
         self.styleCombo = wx.ComboBox (self,
                                        -1,

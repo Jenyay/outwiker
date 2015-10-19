@@ -35,21 +35,19 @@ class BasePageDialog (wx.Dialog):
 
         self.__do_layout()
 
-        self.SetTitle(_(u"Create Page"))
         self.SetSize((self.config.width.value, self.config.height.value))
         self.Center(wx.CENTRE_ON_SCREEN)
-        self.generalPanel.titleTextCtrl.SetFocus()
 
 
     def _createPanels (self, notebook):
-        self._panels = [GeneralPanel (notebook, self._application),
-                        IconsPanel (notebook, self._application),
-                        AppearancePanel (notebook, self._application),
-                        ]
+        self.generalPanel = GeneralPanel (notebook, self._application)
+        self.iconsPanel = IconsPanel (notebook, self._application)
+        self.appearancePanel = AppearancePanel (notebook, self._application)
 
-        self.generalPanel = self._panels[0]
-        self.iconsPanel = self._panels[1]
-        self.appearancePanel = self._panels[2]
+        self._panels = [self.generalPanel,
+                        self.iconsPanel,
+                        self.appearancePanel,
+                        ]
 
         for panel in self._panels:
             self.notebook.AddPage (panel, panel.title)
@@ -122,13 +120,12 @@ class BasePageDialog (wx.Dialog):
 
     @property
     def selectedFactory (self):
-        index = self.generalPanel.typeCombo.GetSelection()
-        return self.generalPanel.typeCombo.GetClientData (index)
+        return self.generalPanel.selectedFactory
 
 
     @property
     def pageTitle (self):
-        return self.generalPanel.titleTextCtrl.GetValue().strip()
+        return self.generalPanel.pageTitle
 
 
     @property

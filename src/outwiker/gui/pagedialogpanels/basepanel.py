@@ -26,9 +26,21 @@ class BasePageDialogPanel (wx.Panel):
         pass
 
 
-    def initBeforeEditing (self, page):
+    def initBeforeEditing (self, currentPage):
         """
         Initialize the panel before new page editing.
         page - page for editing
         """
+        pass
+
+
+    def validateBeforeCreation (self, parentPage):
+        return True
+
+
+    def validateBeforeEditing (self, currentPage):
+        return True
+
+
+    def saveParams (self):
         pass

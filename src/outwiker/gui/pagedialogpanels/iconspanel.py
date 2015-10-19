@@ -142,3 +142,13 @@ class IconsPanel (BasePageDialogPanel):
     def _localize (self, groupname):
         name = _(groupname)
         return name.capitalize()
+
+
+    def initBeforeEditing (self, currentPage):
+        """
+        Initialize the panel before new page editing.
+        page - page for editing
+        """
+        icon = currentPage.icon
+        if icon is not None:
+            self.iconsList.setCurrentIcon (icon)

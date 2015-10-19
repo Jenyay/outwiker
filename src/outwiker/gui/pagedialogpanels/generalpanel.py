@@ -5,7 +5,9 @@ import wx.combo
 
 from outwiker.core.tagslist import TagsList
 from outwiker.core.factoryselector import FactorySelector
+from outwiker.core.commands import testPageTitle
 from outwiker.gui.tagsselector import TagsSelector
+from outwiker.gui.guiconfig import PageDialogConfig
 from basepanel import BasePageDialogPanel
 
 
@@ -93,17 +95,61 @@ class GeneralPanel (BasePageDialogPanel):
             n += 1
 
 
+    @property
+    def pageTitle (self):
+        return self.titleTextCtrl.GetValue().strip()
+
+
+    @property
+    def selectedFactory (self):
+        index = self.typeCombo.GetSelection()
+        return self.typeCombo.GetClientData (index)
+
+
     def initBeforeCreation (self, parentPage):
         """
         Initialize the panel before new page creation
         parentPage - the parent page for new page
         """
-        pass
+        if parentPage.parent is not None:
+            self.tagsSelector.tags = parentPage.tags
+
+        # Опция для хранения типа страницы, которая была создана последней
+        lastCreatedPageType = PageDialogConfig (self._application.config).recentCreatedPageType.value
+        self.setComboPageType(lastCreatedPageType)
+        self.titleTextCtrl.SetFocus()
 
 
-    def initBeforeEditing (self, page):
+    def initBeforeEditing (self, currentPage):
         """
         Initialize the panel before new page editing.
         page - page for editing
         """
-        pass
+        self.titleTextCtrl.SetFocus()
+        self.titleTextCtrl.SetSelection (-1, -1)
+
+        self.tagsSelector.tags = currentPage.tags
+
+        # Запретить изменять заголовок
+        self.titleTextCtrl.SetValue (currentPage.title)
+
+        # Установить тип страницы
+        self.setComboPageType(currentPage.getTypeString())
+        self.typeCombo.Disable ()
+
+
+    def validateBeforeCreation (self, parentPage):
+        if not testPageTitle (self.pageTitle):
+            self.titleTextCtrl.SetFocus()
+            self.titleTextCtrl.SetSelection (-1, -1)
+            return False
+
+        return True
+
+
+    def validateBeforeEditing (self, page):
+        return self.validateBeforeCreation (page.parent)
+
+
+    def saveParams (self):
+        PageDialogConfig (self._application.config).recentCreatedPageType.value = self.selectedFactory.getTypeString()
