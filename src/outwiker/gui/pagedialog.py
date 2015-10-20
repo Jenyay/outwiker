@@ -26,25 +26,26 @@ def editPage (parentWnd, currentPage):
                     wx.OK | wx.ICON_ERROR)
         return
 
-    dlg = EditPageDialog (currentPage, parent = parentWnd)
+    with EditPageDialog (currentPage, parent = parentWnd) as dlg:
+        if dlg.ShowModal() == wx.ID_OK:
+            try:
+                currentPage.title = dlg.pageTitle
+            except EnvironmentError as e:
+                outwiker.core.commands.MessageBox (_(u"Can't rename page\n") + unicode (e), _(u"Error"), wx.ICON_ERROR | wx.OK)
 
-    if dlg.ShowModal() == wx.ID_OK:
-        currentPage.tags = dlg.tags
-        currentPage.icon = dlg.icon
+            currentPage.tags = dlg.tags
 
-        try:
-            currentPage.title = dlg.pageTitle
-        except OSError as e:
-            outwiker.core.commands.MessageBox (_(u"Can't rename page\n") + unicode (e), _(u"Error"), wx.ICON_ERROR | wx.OK)
+            try:
+                currentPage.icon = dlg.icon
+            except EnvironmentError as e:
+                outwiker.core.commands.MessageBox (_(u"Can't change page icon\n") + unicode (e), _(u"Error"), wx.ICON_ERROR | wx.OK)
 
-        try:
-            Style().setPageStyle (currentPage, dlg.style)
-        except IOError as e:
-            outwiker.core.commands.MessageBox (_(u"Can't change page style\n") + unicode (e), _(u"Error"), wx.ICON_ERROR | wx.OK)
+            try:
+                Style().setPageStyle (currentPage, dlg.style)
+            except EnvironmentError as e:
+                outwiker.core.commands.MessageBox (_(u"Can't change page style\n") + unicode (e), _(u"Error"), wx.ICON_ERROR | wx.OK)
 
-        currentPage.root.selectedPage = currentPage
-
-    dlg.Destroy()
+            currentPage.root.selectedPage = currentPage
 
 
 @outwiker.core.commands.testreadonly
@@ -55,27 +56,26 @@ def createPageWithDialog (parentwnd, parentpage):
     if parentpage.readonly:
         raise outwiker.core.exceptions.ReadonlyException
 
-    dlg = CreatePageDialog (parentpage, parentwnd)
     page = None
 
-    if dlg.ShowModal() == wx.ID_OK:
-        factory = dlg.selectedFactory
-        title = dlg.pageTitle
-        tags = dlg.tags
+    with CreatePageDialog (parentpage, parentwnd) as dlg:
+        if dlg.ShowModal() == wx.ID_OK:
+            factory = dlg.selectedFactory
+            title = dlg.pageTitle
 
-        try:
-            page = factory.create (parentpage, title, tags)
+            try:
+                page = factory.create (parentpage, title, [])
 
-            assert page is not None
+                assert page is not None
 
-            page.icon = dlg.icon
-            Style().setPageStyle (page, dlg.style)
-            page.root.selectedPage = page
+                page.tags = dlg.tags
+                page.icon = dlg.icon
+                Style().setPageStyle (page, dlg.style)
 
-        except (OSError, IOError):
-            outwiker.core.commands.MessageBox (_(u"Can't create page"), "Error", wx.ICON_ERROR | wx.OK)
+                page.root.selectedPage = page
+            except EnvironmentError:
+                outwiker.core.commands.MessageBox (_(u"Can't create page"), "Error", wx.ICON_ERROR | wx.OK)
 
-    dlg.Destroy()
     return page
 
 
