@@ -24,12 +24,12 @@ class BasePageDialog (wx.Dialog):
 
         self._config = PageDialogConfig (Application.config)
 
-        self.notebook = wx.Notebook (self, -1)
-        self._createPanels (self.notebook)
+        self._notebook = wx.Notebook (self, -1)
+        self._createPanels ()
 
         self.__do_layout()
 
-        self.SetSize((self._config.width.value, self._config.height.value))
+        self.SetSizeWH (self._config.width.value, self._config.height.value)
         self.Center(wx.CENTRE_ON_SCREEN)
 
 
@@ -53,25 +53,32 @@ class BasePageDialog (wx.Dialog):
         event.Skip()
 
 
-    def _createPanels (self, notebook):
-        self._generalPanel = GeneralPanel (notebook, self._application)
-        self._iconsPanel = IconsPanel (notebook, self._application)
-        self._appearancePanel = AppearancePanel (notebook, self._application)
+    def getPanelsParent (self):
+        return self._notebook
 
-        self._panels = [self._generalPanel,
-                        self._iconsPanel,
-                        self._appearancePanel,
-                        ]
 
-        for panel in self._panels:
-            self.notebook.AddPage (panel, panel.title)
+    def addPanel (self, panel):
+        self._panels.append (panel)
+        self.getPanelsParent().AddPage (panel, panel.title)
+
+
+    def _createPanels (self):
+        parent = self.getPanelsParent ()
+
+        self._generalPanel = GeneralPanel (parent, self._application)
+        iconsPanel = IconsPanel (parent, self._application)
+        appearancePanel = AppearancePanel (parent, self._application)
+
+        self.addPanel (self._generalPanel)
+        self.addPanel (iconsPanel)
+        self.addPanel (appearancePanel)
 
 
     def __do_layout(self):
-        mainSizer = wx.FlexGridSizer(2, 1, 0, 0)
+        mainSizer = wx.FlexGridSizer(rows=2)
         mainSizer.AddGrowableCol(0)
         mainSizer.AddGrowableRow(0)
-        mainSizer.Add (self.notebook, 0, wx.EXPAND, 0)
+        mainSizer.Add (self._notebook, 0, wx.EXPAND, 0)
         self._createOkCancelButtons (mainSizer)
         self.SetSizer(mainSizer)
 
@@ -102,19 +109,9 @@ class BasePageDialog (wx.Dialog):
         return self._generalPanel.pageTitle
 
 
-    @property
-    def tags (self):
-        return self._generalPanel.tagsSelector.tags
+    def setPageProperties (self, page):
+        for panel in self._panels:
+            if not panel.setPageProperties (page):
+                return False
 
-
-    @property
-    def icon (self):
-        selection = self._iconsPanel.iconsList.getSelection()
-        assert len (selection) != 0
-
-        return selection[0]
-
-
-    @property
-    def style (self):
-        return self._appearancePanel.style
+        return True

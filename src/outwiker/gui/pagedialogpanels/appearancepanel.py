@@ -9,6 +9,7 @@ import wx.combo
 from outwiker.core.style import Style
 from outwiker.core.styleslist import StylesList
 from outwiker.core.system import getStylesDirList
+from outwiker.core.commands import MessageBox
 from outwiker.gui.guiconfig import PageDialogConfig
 
 from basepanel import BasePageDialogPanel
@@ -34,6 +35,19 @@ class AppearancePanel (BasePageDialogPanel):
     @property
     def title (self):
         return _(u'Appearance')
+
+
+    def setPageProperties (self, page):
+        """
+        Return True if success and False otherwise
+        """
+        try:
+            Style().setPageStyle (page, self.style)
+        except EnvironmentError as e:
+            MessageBox (_(u"Can't set page style\n") + unicode (e), _(u"Error"), wx.ICON_ERROR | wx.OK)
+            return False
+
+        return True
 
 
     def __layout (self):

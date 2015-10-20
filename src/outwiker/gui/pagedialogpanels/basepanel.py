@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-from abc import ABCMeta, abstractproperty
+from abc import ABCMeta, abstractproperty, abstractmethod
 
 import wx
 
@@ -16,6 +16,14 @@ class BasePageDialogPanel (wx.Panel):
     @abstractproperty
     def title (self):
         pass
+
+
+    @abstractmethod
+    def setPageProperties (self, page):
+        """
+        Return True if success and False otherwise
+        """
+        return False
 
 
     def initBeforeCreation (self, parentPage):

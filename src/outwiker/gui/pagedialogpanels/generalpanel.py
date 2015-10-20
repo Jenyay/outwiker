@@ -5,7 +5,8 @@ import wx.combo
 
 from outwiker.core.tagslist import TagsList
 from outwiker.core.factoryselector import FactorySelector
-from outwiker.core.commands import testPageTitle
+from outwiker.core.commands import testPageTitle, MessageBox
+from outwiker.core.tree import RootWikiPage
 from outwiker.gui.tagsselector import TagsSelector
 from outwiker.gui.guiconfig import PageDialogConfig
 from basepanel import BasePageDialogPanel
@@ -28,6 +29,14 @@ class GeneralPanel (BasePageDialogPanel):
     @property
     def title (self):
         return _(u'General')
+
+
+    def setPageProperties (self, page):
+        """
+        Return True if success and False otherwise
+        """
+        page.tags = self.tagsSelector.tags
+        return True
 
 
     def __layout (self):
@@ -138,7 +147,7 @@ class GeneralPanel (BasePageDialogPanel):
         self.typeCombo.Disable ()
 
 
-    def validateBeforeCreation (self, parentPage):
+    def _validateCommon (self, parentPage):
         if not testPageTitle (self.pageTitle):
             self.titleTextCtrl.SetFocus()
             self.titleTextCtrl.SetSelection (-1, -1)
@@ -147,8 +156,31 @@ class GeneralPanel (BasePageDialogPanel):
         return True
 
 
+    def validateBeforeCreation (self, parentPage):
+        if not self._validateCommon (parentPage):
+            return False
+
+        if (parentPage is not None and
+                not RootWikiPage.testDublicate (parentPage, self.pageTitle)):
+            MessageBox (_(u"A page with some title already exists"),
+                        _(u"Error"),
+                        wx.ICON_ERROR | wx.OK)
+            return False
+
+        return True
+
+
     def validateBeforeEditing (self, page):
-        return self.validateBeforeCreation (page.parent)
+        if not self._validateCommon (page.parent):
+            return False
+
+        if not page.canRename (self.pageTitle):
+            MessageBox (_(u"Can't rename page when page with that title already exists"),
+                        _(u"Error"),
+                        wx.ICON_ERROR | wx.OK)
+            return False
+
+        return True
 
 
     def saveParams (self):

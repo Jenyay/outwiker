@@ -9,6 +9,7 @@ import wx.combo
 from outwiker.core.system import getIconsDirList
 from outwiker.core.iconscollection import IconsCollection
 from outwiker.core.defines import ICON_WIDTH, ICON_HEIGHT
+from outwiker.core.commands import MessageBox
 from outwiker.gui.iconlistctrl import IconListCtrl
 from basepanel import BasePageDialogPanel
 
@@ -31,6 +32,28 @@ class IconsPanel (BasePageDialogPanel):
     @property
     def title (self):
         return _(u'Icon')
+
+
+    def setPageProperties (self, page):
+        """
+        Return True if success and False otherwise
+        """
+        selection = self.iconsList.getSelection()
+
+        assert len (selection) != 0
+        icon = selection[0]
+
+        # If icon not exists, page may be renamed. Don't will to change icon
+        if os.path.exists (icon):
+            try:
+                page.icon = icon
+            except EnvironmentError as e:
+                MessageBox (_(u"Can't set page icon\n") + unicode (e),
+                            _(u"Error"),
+                            wx.ICON_ERROR | wx.OK)
+                return False
+
+        return True
 
 
     def __createGui (self):
