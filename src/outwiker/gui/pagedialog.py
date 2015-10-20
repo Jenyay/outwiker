@@ -8,8 +8,6 @@ from outwiker.core.tree import RootWikiPage
 from outwiker.core.application import Application
 from outwiker.core.commands import pageExists, MessageBox
 from outwiker.core.style import Style
-from outwiker.core.styleslist import StylesList
-from outwiker.core.system import getStylesDirList
 
 
 @outwiker.core.commands.testreadonly
@@ -28,7 +26,7 @@ def editPage (parentWnd, currentPage):
                     wx.OK | wx.ICON_ERROR)
         return
 
-    dlg = EditPageDialog (currentPage, currentPage.parent, parent = parentWnd)
+    dlg = EditPageDialog (currentPage, parent = parentWnd)
 
     if dlg.ShowModal() == wx.ID_OK:
         currentPage.tags = dlg.tags
@@ -78,8 +76,6 @@ def createPageWithDialog (parentwnd, parentpage):
             outwiker.core.commands.MessageBox (_(u"Can't create page"), "Error", wx.ICON_ERROR | wx.OK)
 
     dlg.Destroy()
-
-
     return page
 
 
@@ -113,75 +109,46 @@ def createChildPage (parentwnd, page):
 
 class CreatePageDialog (BasePageDialog):
     def __init__ (self, parentPage = None, *args, **kwds):
-        super (CreatePageDialog, self).__init__ (parentPage, *args, **kwds)
+        super (CreatePageDialog, self).__init__ (*args, **kwds)
+        self._parentPage = parentPage
+
         self.SetTitle(_(u"Create Page"))
 
-        map (lambda panel: panel.initBeforeCreation (parentPage), self._panels)
-
-        self._stylesList = StylesList (getStylesDirList ())
-        self._fillStyleCombo (self._stylesList, None)
+        map (lambda panel: panel.initBeforeCreation (self._parentPage), self._panels)
 
 
-    def onOk (self, event):
+    def _validate (self):
         for panel in self._panels:
-            if not panel.validateBeforeCreation (self.parentPage):
-                return
+            if not panel.validateBeforeCreation (self._parentPage):
+                return False
 
-        if (self.parentPage is not None and
-                not RootWikiPage.testDublicate(self.parentPage, self.pageTitle)):
-                    outwiker.core.commands.MessageBox (_(u"A page with this title already exists"), _(u"Error"), wx.ICON_ERROR | wx.OK)
-                    return
-
-        self.saveParams()
-        map (lambda panel: panel.saveParams(), self._panels)
-        event.Skip()
-
-
-    @property
-    def style (self):
-        selItem = self.appearancePanel.styleCombo.GetSelection()
-        if selItem == 0:
-            return Style().getDefaultStyle()
-
-        return self._stylesList[selItem - 1]
+        if (self._parentPage is not None and
+                not RootWikiPage.testDublicate(self._parentPage, self.pageTitle)):
+                    outwiker.core.commands.MessageBox (_(u"A page with some title already exists"), _(u"Error"), wx.ICON_ERROR | wx.OK)
+                    return False
+        return True
 
 
 class EditPageDialog (BasePageDialog):
-    def __init__ (self, currentPage, parentPage = None, *args, **kwds):
-        super (EditPageDialog, self).__init__ (parentPage, *args, **kwds)
+    def __init__ (self, currentPage, *args, **kwds):
+        super (EditPageDialog, self).__init__ (*args, **kwds)
         self.SetTitle(_(u"Edit page properties"))
 
         assert currentPage is not None
-        self.currentPage = currentPage
+        self._currentPage = currentPage
 
-        map (lambda panel: panel.initBeforeEditing (currentPage), self._panels)
-
-        self._stylesList = StylesList (getStylesDirList ())
-        self._fillStyleCombo (self._stylesList, currentPage)
+        map (lambda panel: panel.initBeforeEditing (self._currentPage), self._panels)
 
 
-    def onOk (self, event):
+    def _validate (self):
         for panel in self._panels:
-            if not panel.validateBeforeEditing (self.currentPage):
-                return
+            if not panel.validateBeforeEditing (self._currentPage):
+                return False
 
-        if not self.currentPage.canRename (self.pageTitle):
+        if not self._currentPage.canRename (self.pageTitle):
             outwiker.core.commands.MessageBox (_(u"Can't rename page when page with that title already exists"),
                                                _(u"Error"),
                                                wx.ICON_ERROR | wx.OK)
-            return
+            return False
 
-        self.saveParams()
-        map (lambda panel: panel.saveParams(), self._panels)
-        event.Skip()
-
-
-    @property
-    def style (self):
-        selItem = self.appearancePanel.styleCombo.GetSelection()
-        if selItem == 0:
-            return Style().getPageStyle (self.currentPage)
-        elif selItem == 1:
-            return Style().getDefaultStyle()
-
-        return self._stylesList[selItem - 2]
+        return True

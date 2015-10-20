@@ -44,3 +44,7 @@ class BasePageDialogPanel (wx.Panel):
 
     def saveParams (self):
         pass
+
+
+    def clear (self):
+        pass

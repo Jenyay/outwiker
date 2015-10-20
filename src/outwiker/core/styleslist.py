@@ -15,7 +15,7 @@ class StylesList (object):
         dirlist - список директорий, где ищутся стили
         """
         # Список хранит пути до имеющихся проверенных стилей
-        self.__styles = self.__findStyles (dirlist)
+        self.__styles = sorted (self.__findStyles (dirlist))
 
 
     def __len__ (self):
