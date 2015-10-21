@@ -7,7 +7,8 @@ from outwiker.core.tagslist import TagsList
 from outwiker.core.factoryselector import FactorySelector
 from outwiker.core.commands import testPageTitle, MessageBox
 from outwiker.core.tree import RootWikiPage
-from outwiker.core.events import PageDialogPageTypeChangedParams
+from outwiker.core.events import (PageDialogPageTypeChangedParams,
+                                  PageDialogPageTitleChangedParams)
 from outwiker.gui.tagsselector import TagsSelector
 from outwiker.gui.guiconfig import PageDialogConfig
 from basepanel import BasePageDialogPanel
@@ -28,6 +29,7 @@ class GeneralPanel (BasePageDialogPanel):
         self.__layout ()
 
         self.typeCombo.Bind (wx.EVT_COMBOBOX, handler=self.__onPageTypeChanged)
+        self.titleTextCtrl.Bind (wx.EVT_TEXT, handler=self.__onPageTitleChanged)
 
 
     @property
@@ -197,5 +199,15 @@ class GeneralPanel (BasePageDialogPanel):
             self.selectedFactory.getPageType().getTypeString())
 
         self._application.onPageDialogPageTypeChanged (
+            self._application.selectedPage,
+            eventParams)
+
+
+    def __onPageTitleChanged (self, event):
+        eventParams = PageDialogPageTitleChangedParams (
+            self._dialog,
+            self.pageTitle)
+
+        self._application.onPageDialogPageTitleChanged (
             self._application.selectedPage,
             eventParams)

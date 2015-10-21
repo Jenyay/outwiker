@@ -92,6 +92,7 @@ class PluginDebug (Plugin):
             self._application.onWikiParserPrepare += self.__onWikiParserPrepare
             self._application.onPageDialogInit += self.__onPageDialogInit
             self._application.onPageDialogPageTypeChanged += self.__onPageDialogPageTypeChanged
+            self._application.onPageDialogPageTitleChanged += self.__onPageDialogPageTitleChanged
 
 
     def destroy (self):
@@ -138,6 +139,7 @@ class PluginDebug (Plugin):
             self._application.onWikiParserPrepare -= self.__onWikiParserPrepare
             self._application.onPageDialogInit -= self.__onPageDialogInit
             self._application.onPageDialogPageTypeChanged -= self.__onPageDialogPageTypeChanged
+            self._application.onPageDialogPageTitleChanged -= self.__onPageDialogPageTitleChanged
 
 
     def __createMenu (self):
@@ -334,6 +336,11 @@ class PluginDebug (Plugin):
     def __onPageDialogPageTypeChanged (self, page, params):
         if self._enablePageDialogEvents:
             print params.pageType
+
+
+    def __onPageDialogPageTitleChanged (self, page, params):
+        if self._enablePageDialogEvents:
+            print params.pageTitle
 
 
     ###################################################

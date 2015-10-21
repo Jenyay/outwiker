@@ -227,6 +227,13 @@ class ApplicationParams (object):
         self.onPageDialogPageTypeChanged = Event()
 
 
+        # Event occurs after page type changing
+        # Parameters:
+        #     page - current (selected) page
+        #     params - instance of the PageDialogPageTitleChangedParams class
+        self.onPageDialogPageTitleChanged = Event()
+
+
     def init (self, configFilename):
         """
         Initialize config and locale
