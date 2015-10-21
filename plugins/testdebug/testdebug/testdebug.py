@@ -17,6 +17,7 @@ from eventswatcher import EventsWatcher
 from timer import Timer
 from tokendebug import DebugTokenFactory
 from newpagedialogpanel import NewPageDialogPanel
+from debugconfig import DebugConfig
 
 
 class PluginDebug (Plugin):
@@ -26,14 +27,10 @@ class PluginDebug (Plugin):
         self._watcher = EventsWatcher (self._application)
         self._timer = Timer()
 
-        self._enablePreProcessing = False
-        self._enablePostProcessing = False
-        self._enableOnHoverLink = False
-        self._enableOnLinkClick = False
-        self._enableOnEditorPopup = False
-        self._enableOnSpellChecking = False
-        self._enableRenderingTimeMeasuring = False
-        self._enableNewPageDialogTab = True
+        self.ID_PLUGINSLIST = wx.NewId()
+        self.ID_BUTTONSDIALOG = wx.NewId()
+        self.ID_START_WATCH_EVENTS = wx.NewId()
+        self.ID_STOP_WATCH_EVENTS = wx.NewId()
 
 
     def __createMenu (self):
@@ -260,23 +257,43 @@ class PluginDebug (Plugin):
         self._url = value
 
 
+    def enableFeatures (self):
+        config = DebugConfig (self._application.config)
+
+        self._enablePreProcessing = config.enablePreprocessing.value
+        self._enablePostProcessing = config.enablePostprocessing.value
+        self._enableOnHoverLink = config.enableOnHoverLink.value
+        self._enableOnLinkClick = config.enableOnLinkClick.value
+        self._enableOnEditorPopup = config.enableOnEditorPopup.value
+        self._enableOnSpellChecking = config.enableOnSpellChecking.value
+        self._enableRenderingTimeMeasuring = config.enableRenderingTimeMeasuring.value
+        self._enableNewPageDialogTab = config.enableNewPageDialogTab.value
+
+        config.enablePreprocessing.value = self._enablePreProcessing
+        config.enablePostprocessing.value = self._enablePostProcessing
+        config.enableOnHoverLink.value = self._enableOnHoverLink
+        config.enableOnLinkClick.value = self._enableOnLinkClick
+        config.enableOnEditorPopup.value = self._enableOnEditorPopup
+        config.enableOnSpellChecking.value = self._enableOnSpellChecking
+        config.enableRenderingTimeMeasuring.value = self._enableRenderingTimeMeasuring
+        config.enableNewPageDialogTab.value = self._enableNewPageDialogTab
+
+
     def initialize(self):
+        self.enableFeatures()
+
         domain = u"testdebug"
         self.__ID_TREE_POPUP = wx.NewId()
         self.__ID_TRAY_POPUP = wx.NewId()
 
-        langdir = unicode (os.path.join (os.path.dirname (__file__), "locale"), getOS().filesEncoding)
+        langdir = unicode (os.path.join (os.path.dirname (__file__), "locale"),
+                           getOS().filesEncoding)
         global _
 
         try:
             _ = self._init_i18n (domain, langdir)
         except BaseException as e:
             print e
-
-        self.ID_PLUGINSLIST = wx.NewId()
-        self.ID_BUTTONSDIALOG = wx.NewId()
-        self.ID_START_WATCH_EVENTS = wx.NewId()
-        self.ID_STOP_WATCH_EVENTS = wx.NewId()
 
         self.__menuName = _(u"Debug")
 
