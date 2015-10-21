@@ -10,14 +10,17 @@ from outwiker.gui.guiconfig import PageDialogConfig
 from outwiker.gui.pagedialogpanels.iconspanel import IconsPanel
 from outwiker.gui.pagedialogpanels.appearancepanel import AppearancePanel
 from outwiker.gui.pagedialogpanels.generalpanel import GeneralPanel
+from outwiker.gui.testeddialog import TestedDialog
 
 
-class BasePageDialog (wx.Dialog):
+class BasePageDialog (TestedDialog):
     __metaclass__ = ABCMeta
 
-    def __init__(self, *args, **kwds):
-        kwds["style"] = wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.THICK_FRAME
-        super (BasePageDialog, self).__init__(*args, **kwds)
+    def __init__(self, parentWnd, currentPage, parentPage):
+        super (BasePageDialog, self).__init__(parent=parentWnd)
+
+        self._parentPage = parentPage
+        self._currentPage = currentPage
 
         self._application = Application
         self._panels = []
@@ -62,16 +65,41 @@ class BasePageDialog (wx.Dialog):
         self.getPanelsParent().AddPage (panel, panel.title)
 
 
+    @property
+    def currentPage (self):
+        return self._currentPage
+
+
+    @property
+    def parentPage (self):
+        return self._parentPage
+
+
+    @property
+    def generalPanel (self):
+        return self._generalPanel
+
+
+    @property
+    def iconsPanel (self):
+        return self._iconsPanel
+
+
+    @property
+    def appearancePanel (self):
+        return self._appearancePanel
+
+
     def _createPanels (self):
         parent = self.getPanelsParent ()
 
         self._generalPanel = GeneralPanel (parent, self._application)
-        iconsPanel = IconsPanel (parent, self._application)
-        appearancePanel = AppearancePanel (parent, self._application)
+        self._iconsPanel = IconsPanel (parent, self._application)
+        self._appearancePanel = AppearancePanel (parent, self._application)
 
         self.addPanel (self._generalPanel)
-        self.addPanel (iconsPanel)
-        self.addPanel (appearancePanel)
+        self.addPanel (self._iconsPanel)
+        self.addPanel (self._appearancePanel)
 
 
     def __do_layout(self):

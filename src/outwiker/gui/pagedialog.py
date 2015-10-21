@@ -24,7 +24,7 @@ def editPage (parentWnd, currentPage):
                     wx.OK | wx.ICON_ERROR)
         return
 
-    with EditPageDialog (currentPage, parent = parentWnd) as dlg:
+    with EditPageDialog (parentWnd, currentPage) as dlg:
         if dlg.ShowModal() == wx.ID_OK:
             try:
                 currentPage.title = dlg.pageTitle
@@ -49,7 +49,7 @@ def createPageWithDialog (parentwnd, parentpage):
 
     page = None
 
-    with CreatePageDialog (parentpage, parentwnd) as dlg:
+    with CreatePageDialog (parentwnd, parentpage) as dlg:
         if dlg.ShowModal() == wx.ID_OK:
             factory = dlg.selectedFactory
             title = dlg.pageTitle
@@ -100,39 +100,41 @@ def createChildPage (parentwnd, page):
 
 
 class CreatePageDialog (BasePageDialog):
-    def __init__ (self, parentPage = None, *args, **kwds):
-        super (CreatePageDialog, self).__init__ (*args, **kwds)
+    def __init__ (self, parentWnd, parentPage):
+        super (CreatePageDialog, self).__init__ (parentWnd,
+                                                 None,
+                                                 parentPage)
         self.SetTitle(_(u"Create Page"))
 
-        self._parentPage = parentPage
-
-        map (lambda panel: panel.initBeforeCreation (self._parentPage),
+        map (lambda panel: panel.initBeforeCreation (self.parentPage),
              self._panels)
 
 
     def _validate (self):
         for panel in self._panels:
-            if not panel.validateBeforeCreation (self._parentPage):
+            if not panel.validateBeforeCreation (self.parentPage):
                 return False
 
         return True
 
 
 class EditPageDialog (BasePageDialog):
-    def __init__ (self, currentPage, *args, **kwds):
-        super (EditPageDialog, self).__init__ (*args, **kwds)
+    def __init__ (self, parentWnd, currentPage):
+        assert currentPage is not None
+
+        super (EditPageDialog, self).__init__ (parentWnd,
+                                               currentPage,
+                                               currentPage.parent)
+
         self.SetTitle(_(u"Edit page properties"))
 
-        assert currentPage is not None
-        self._currentPage = currentPage
-
-        map (lambda panel: panel.initBeforeEditing (self._currentPage),
+        map (lambda panel: panel.initBeforeEditing (self.currentPage),
              self._panels)
 
 
     def _validate (self):
         for panel in self._panels:
-            if not panel.validateBeforeEditing (self._currentPage):
+            if not panel.validateBeforeEditing (self.currentPage):
                 return False
 
         return True
