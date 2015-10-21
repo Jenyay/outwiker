@@ -216,7 +216,7 @@ class ApplicationParams (object):
         # Event occurs after page dialog creation
         # Parameters:
         #     page - current (selected) page
-        #     dialog - instance of the inherited from BasePageDialog class
+        #     params - instance of the PageDialogInitParams class
         self.onPageDialogInit = Event()
 
 
