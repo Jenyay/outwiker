@@ -145,7 +145,8 @@ class BasePageDialog (TestedDialog):
 
     def setPageProperties (self, page):
         for panel in self._panels:
-            if not panel.setPageProperties (page):
-                return False
+            if panel.IsShown ():
+                if not panel.setPageProperties (page):
+                    return False
 
         return True
