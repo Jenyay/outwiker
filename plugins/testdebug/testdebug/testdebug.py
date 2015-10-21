@@ -335,12 +335,12 @@ class PluginDebug (Plugin):
 
     def __onPageDialogPageTypeChanged (self, page, params):
         if self._enablePageDialogEvents:
-            print params.pageType
+            print u'Selected page type: {}'.format (params.pageType)
 
 
     def __onPageDialogPageTitleChanged (self, page, params):
         if self._enablePageDialogEvents:
-            print params.pageTitle
+            print u'New page title: {}'.format (params.pageTitle)
 
 
     ###################################################

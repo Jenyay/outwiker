@@ -35,14 +35,20 @@ class IconsPanel (BasePageDialogPanel):
         return _(u'Icon')
 
 
-    def setPageProperties (self, page):
-        """
-        Return True if success and False otherwise
-        """
+    @property
+    def icon (self):
         selection = self.iconsList.getSelection()
 
         assert len (selection) != 0
         icon = selection[0]
+        return icon
+
+
+    def setPageProperties (self, page):
+        """
+        Return True if success and False otherwise
+        """
+        icon = self.icon
 
         # If icon not exists, page may be renamed. Don't will to change icon
         if os.path.exists (icon):
