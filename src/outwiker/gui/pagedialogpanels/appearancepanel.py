@@ -16,8 +16,9 @@ from basepanel import BasePageDialogPanel
 
 
 class AppearancePanel (BasePageDialogPanel):
-    def __init__ (self, parent, application):
+    def __init__ (self, parent, application, dialog):
         super (AppearancePanel, self).__init__ (parent, application)
+        self._dialog = dialog
 
         self._currentPage = None
         self._stylesList = None

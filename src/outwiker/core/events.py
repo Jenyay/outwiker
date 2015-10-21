@@ -138,6 +138,14 @@ class PageDialogInitParams (object):
     """
     Parameter set for the onPageDialogInit event
     """
-    def __init__ (self, page, dialog):
-        self.page = page
+    def __init__ (self, dialog):
         self.dialog = dialog
+
+
+class PageDialogPageTypeChangedParams (object):
+    """
+    Parameter set for the onPageDialogPageTypeChanged event
+    """
+    def __init__ (self, dialog, pageType):
+        self.dialog = dialog
+        self.pageType = pageType

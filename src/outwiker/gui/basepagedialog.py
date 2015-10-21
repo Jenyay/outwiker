@@ -33,10 +33,8 @@ class BasePageDialog (TestedDialog):
 
         self.__do_layout()
 
-        eventParams = PageDialogInitParams (self._application.selectedPage,
-                                            self)
-
-        self._application.onPageDialogInit (eventParams)
+        self._application.onPageDialogInit (self._application.selectedPage,
+                                            PageDialogInitParams (self))
 
         self.SetSizeWH (self._config.width.value, self._config.height.value)
         self.Center(wx.CENTRE_ON_SCREEN)
@@ -99,9 +97,9 @@ class BasePageDialog (TestedDialog):
     def _createPanels (self):
         parent = self.getPanelsParent ()
 
-        self._generalPanel = GeneralPanel (parent, self._application)
-        self._iconsPanel = IconsPanel (parent, self._application)
-        self._appearancePanel = AppearancePanel (parent, self._application)
+        self._generalPanel = GeneralPanel (parent, self._application, self)
+        self._iconsPanel = IconsPanel (parent, self._application, self)
+        self._appearancePanel = AppearancePanel (parent, self._application, self)
 
         self.addPanel (self._generalPanel)
         self.addPanel (self._iconsPanel)

@@ -18,8 +18,9 @@ class IconsPanel (BasePageDialogPanel):
     """
     Class of the panel in the "Icon" tab.
     """
-    def __init__ (self, parent, application):
+    def __init__ (self, parent, application, dialog):
         super (IconsPanel, self).__init__ (parent, application)
+        self._dialog = dialog
 
         self._iconsCollections = [IconsCollection (path) for path in getIconsDirList()]
         self.__createGui()

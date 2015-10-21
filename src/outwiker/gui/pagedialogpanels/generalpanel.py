@@ -7,6 +7,7 @@ from outwiker.core.tagslist import TagsList
 from outwiker.core.factoryselector import FactorySelector
 from outwiker.core.commands import testPageTitle, MessageBox
 from outwiker.core.tree import RootWikiPage
+from outwiker.core.events import PageDialogPageTypeChangedParams
 from outwiker.gui.tagsselector import TagsSelector
 from outwiker.gui.guiconfig import PageDialogConfig
 from basepanel import BasePageDialogPanel
@@ -16,14 +17,17 @@ class GeneralPanel (BasePageDialogPanel):
     """
     Класс панели, расположенной на вкладке "Общее"
     """
-    def __init__ (self, parent, application):
+    def __init__ (self, parent, application, dialog):
         super (GeneralPanel, self).__init__ (parent, application)
+        self._dialog = dialog
 
         self.__createGeneralControls()
         self._fillComboType()
         self._setTagsList()
 
         self.__layout ()
+
+        self.typeCombo.Bind (wx.EVT_COMBOBOX, handler=self.__onPageTypeChanged)
 
 
     @property
@@ -185,3 +189,13 @@ class GeneralPanel (BasePageDialogPanel):
 
     def saveParams (self):
         PageDialogConfig (self._application.config).recentCreatedPageType.value = self.selectedFactory.getTypeString()
+
+
+    def __onPageTypeChanged (self, event):
+        eventParams = PageDialogPageTypeChangedParams (
+            self._dialog,
+            self.selectedFactory.getPageType().getTypeString())
+
+        self._application.onPageDialogPageTypeChanged (
+            self._application.selectedPage,
+            eventParams)

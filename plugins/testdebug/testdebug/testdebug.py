@@ -33,6 +33,113 @@ class PluginDebug (Plugin):
         self.ID_STOP_WATCH_EVENTS = wx.NewId()
 
 
+    def enableFeatures (self):
+        config = DebugConfig (self._application.config)
+
+        self._enablePreProcessing = config.enablePreprocessing.value
+        self._enablePostProcessing = config.enablePostprocessing.value
+        self._enableOnHoverLink = config.enableOnHoverLink.value
+        self._enableOnLinkClick = config.enableOnLinkClick.value
+        self._enableOnEditorPopup = config.enableOnEditorPopup.value
+        self._enableOnSpellChecking = config.enableOnSpellChecking.value
+        self._enableRenderingTimeMeasuring = config.enableRenderingTimeMeasuring.value
+        self._enableNewPageDialogTab = config.enableNewPageDialogTab.value
+        self._enablePageDialogEvents = config.enablePageDialogEvents.value
+
+        config.enablePreprocessing.value = self._enablePreProcessing
+        config.enablePostprocessing.value = self._enablePostProcessing
+        config.enableOnHoverLink.value = self._enableOnHoverLink
+        config.enableOnLinkClick.value = self._enableOnLinkClick
+        config.enableOnEditorPopup.value = self._enableOnEditorPopup
+        config.enableOnSpellChecking.value = self._enableOnSpellChecking
+        config.enableRenderingTimeMeasuring.value = self._enableRenderingTimeMeasuring
+        config.enableNewPageDialogTab.value = self._enableNewPageDialogTab
+        config.enablePageDialogEvents.value = self._enablePageDialogEvents
+
+
+    def initialize(self):
+        self.enableFeatures()
+
+        domain = u"testdebug"
+        self.__ID_TREE_POPUP = wx.NewId()
+        self.__ID_TRAY_POPUP = wx.NewId()
+
+        langdir = unicode (os.path.join (os.path.dirname (__file__), "locale"),
+                           getOS().filesEncoding)
+        global _
+
+        try:
+            _ = self._init_i18n (domain, langdir)
+        except BaseException as e:
+            print e
+
+        self.__menuName = _(u"Debug")
+
+        if self._application.mainWindow is not None:
+            self.__createMenu()
+            self.__createTestAction()
+
+            self._application.onTreePopupMenu += self.__onTreePopupMenu
+            self._application.onTrayPopupMenu += self.__onTrayPopupMenu
+            self._application.onPostprocessing += self.__onPostProcessing
+            self._application.onPreprocessing += self.__onPreProcessing
+            self._application.onHoverLink += self.__onHoverLink
+            self._application.onLinkClick += self.__onLinkClick
+            self._application.onEditorPopupMenu += self.__onEditorPopupMenu
+            self._application.onSpellChecking += self.__onSpellChecking
+            self._application.onHtmlRenderingBegin += self.__onHtmlRenderingBegin
+            self._application.onHtmlRenderingEnd += self.__onHtmlRenderingEnd
+            self._application.onWikiParserPrepare += self.__onWikiParserPrepare
+            self._application.onPageDialogInit += self.__onPageDialogInit
+            self._application.onPageDialogPageTypeChanged += self.__onPageDialogPageTypeChanged
+
+
+    def destroy (self):
+        """
+        Уничтожение (выгрузка) плагина. Здесь плагин должен отписаться от всех событий
+        """
+        mainWindow = self._application.mainWindow
+        if mainWindow is not None and mainWindow.PLUGINS_TOOLBAR_STR in mainWindow.toolbars:
+            self._application.actionController.removeMenuItem (DebugAction.stringId)
+            self._application.actionController.removeToolbarButton (DebugAction.stringId)
+            self._application.actionController.removeAction (DebugAction.stringId)
+
+            self._application.mainWindow.Unbind(wx.EVT_MENU,
+                                                handler=self.__onPluginsList,
+                                                id=self.ID_PLUGINSLIST)
+
+            self._application.mainWindow.Unbind(wx.EVT_MENU,
+                                                handler=self.__onButtonsDialog,
+                                                id=self.ID_BUTTONSDIALOG)
+
+            self._application.mainWindow.Unbind(wx.EVT_MENU,
+                                                handler=self.__onStartWatchEvents,
+                                                id=self.ID_START_WATCH_EVENTS)
+
+            self._application.mainWindow.Unbind(wx.EVT_MENU,
+                                                handler=self.__onStopWatchEvents,
+                                                id=self.ID_STOP_WATCH_EVENTS)
+
+            index = self._application.mainWindow.mainMenu.FindMenu (self.__menuName)
+            assert index != wx.NOT_FOUND
+
+            index = self._application.mainWindow.mainMenu.Remove (index)
+
+            self._application.onTreePopupMenu -= self.__onTreePopupMenu
+            self._application.onTrayPopupMenu -= self.__onTrayPopupMenu
+            self._application.onPostprocessing -= self.__onPostProcessing
+            self._application.onPreprocessing -= self.__onPreProcessing
+            self._application.onHoverLink -= self.__onHoverLink
+            self._application.onLinkClick -= self.__onLinkClick
+            self._application.onEditorPopupMenu -= self.__onEditorPopupMenu
+            self._application.onSpellChecking -= self.__onSpellChecking
+            self._application.onHtmlRenderingBegin -= self.__onHtmlRenderingBegin
+            self._application.onHtmlRenderingEnd -= self.__onHtmlRenderingEnd
+            self._application.onWikiParserPrepare -= self.__onWikiParserPrepare
+            self._application.onPageDialogInit -= self.__onPageDialogInit
+            self._application.onPageDialogPageTypeChanged -= self.__onPageDialogPageTypeChanged
+
+
     def __createMenu (self):
         self.menu = wx.Menu (u"")
         self.menu.Append (self.ID_PLUGINSLIST, _(u"Plugins List"))
@@ -217,11 +324,16 @@ class PluginDebug (Plugin):
         parser.textLevelTokens.append (token)
 
 
-    def __onPageDialogInit (self, params):
+    def __onPageDialogInit (self, page, params):
         if self._enableNewPageDialogTab:
             panel = NewPageDialogPanel (params.dialog.getPanelsParent(),
                                         self._application)
             params.dialog.addPanel (panel)
+
+
+    def __onPageDialogPageTypeChanged (self, page, params):
+        if self._enablePageDialogEvents:
+            print params.pageType
 
 
     ###################################################
@@ -255,108 +367,3 @@ class PluginDebug (Plugin):
     @url.setter
     def url (self, value):
         self._url = value
-
-
-    def enableFeatures (self):
-        config = DebugConfig (self._application.config)
-
-        self._enablePreProcessing = config.enablePreprocessing.value
-        self._enablePostProcessing = config.enablePostprocessing.value
-        self._enableOnHoverLink = config.enableOnHoverLink.value
-        self._enableOnLinkClick = config.enableOnLinkClick.value
-        self._enableOnEditorPopup = config.enableOnEditorPopup.value
-        self._enableOnSpellChecking = config.enableOnSpellChecking.value
-        self._enableRenderingTimeMeasuring = config.enableRenderingTimeMeasuring.value
-        self._enableNewPageDialogTab = config.enableNewPageDialogTab.value
-
-        config.enablePreprocessing.value = self._enablePreProcessing
-        config.enablePostprocessing.value = self._enablePostProcessing
-        config.enableOnHoverLink.value = self._enableOnHoverLink
-        config.enableOnLinkClick.value = self._enableOnLinkClick
-        config.enableOnEditorPopup.value = self._enableOnEditorPopup
-        config.enableOnSpellChecking.value = self._enableOnSpellChecking
-        config.enableRenderingTimeMeasuring.value = self._enableRenderingTimeMeasuring
-        config.enableNewPageDialogTab.value = self._enableNewPageDialogTab
-
-
-    def initialize(self):
-        self.enableFeatures()
-
-        domain = u"testdebug"
-        self.__ID_TREE_POPUP = wx.NewId()
-        self.__ID_TRAY_POPUP = wx.NewId()
-
-        langdir = unicode (os.path.join (os.path.dirname (__file__), "locale"),
-                           getOS().filesEncoding)
-        global _
-
-        try:
-            _ = self._init_i18n (domain, langdir)
-        except BaseException as e:
-            print e
-
-        self.__menuName = _(u"Debug")
-
-        if self._application.mainWindow is not None:
-            self.__createMenu()
-            self.__createTestAction()
-
-            self._application.onTreePopupMenu += self.__onTreePopupMenu
-            self._application.onTrayPopupMenu += self.__onTrayPopupMenu
-            self._application.onPostprocessing += self.__onPostProcessing
-            self._application.onPreprocessing += self.__onPreProcessing
-            self._application.onHoverLink += self.__onHoverLink
-            self._application.onLinkClick += self.__onLinkClick
-            self._application.onEditorPopupMenu += self.__onEditorPopupMenu
-            self._application.onSpellChecking += self.__onSpellChecking
-            self._application.onHtmlRenderingBegin += self.__onHtmlRenderingBegin
-            self._application.onHtmlRenderingEnd += self.__onHtmlRenderingEnd
-            self._application.onWikiParserPrepare += self.__onWikiParserPrepare
-            self._application.onPageDialogInit += self.__onPageDialogInit
-
-
-    def destroy (self):
-        """
-        Уничтожение (выгрузка) плагина. Здесь плагин должен отписаться от всех событий
-        """
-        mainWindow = self._application.mainWindow
-        if mainWindow is not None and mainWindow.PLUGINS_TOOLBAR_STR in mainWindow.toolbars:
-            self._application.actionController.removeMenuItem (DebugAction.stringId)
-            self._application.actionController.removeToolbarButton (DebugAction.stringId)
-            self._application.actionController.removeAction (DebugAction.stringId)
-
-            self._application.mainWindow.Unbind(wx.EVT_MENU,
-                                                handler=self.__onPluginsList,
-                                                id=self.ID_PLUGINSLIST)
-
-            self._application.mainWindow.Unbind(wx.EVT_MENU,
-                                                handler=self.__onButtonsDialog,
-                                                id=self.ID_BUTTONSDIALOG)
-
-            self._application.mainWindow.Unbind(wx.EVT_MENU,
-                                                handler=self.__onStartWatchEvents,
-                                                id=self.ID_START_WATCH_EVENTS)
-
-            self._application.mainWindow.Unbind(wx.EVT_MENU,
-                                                handler=self.__onStopWatchEvents,
-                                                id=self.ID_STOP_WATCH_EVENTS)
-
-            index = self._application.mainWindow.mainMenu.FindMenu (self.__menuName)
-            assert index != wx.NOT_FOUND
-
-            index = self._application.mainWindow.mainMenu.Remove (index)
-
-            self._application.onTreePopupMenu -= self.__onTreePopupMenu
-            self._application.onTrayPopupMenu -= self.__onTrayPopupMenu
-            self._application.onPostprocessing -= self.__onPostProcessing
-            self._application.onPreprocessing -= self.__onPreProcessing
-            self._application.onHoverLink -= self.__onHoverLink
-            self._application.onLinkClick -= self.__onLinkClick
-            self._application.onEditorPopupMenu -= self.__onEditorPopupMenu
-            self._application.onSpellChecking -= self.__onSpellChecking
-            self._application.onHtmlRenderingBegin -= self.__onHtmlRenderingBegin
-            self._application.onHtmlRenderingEnd -= self.__onHtmlRenderingEnd
-            self._application.onWikiParserPrepare -= self.__onWikiParserPrepare
-            self._application.onPageDialogInit -= self.__onPageDialogInit
-
-    #############################################

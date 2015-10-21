@@ -53,3 +53,8 @@ class DebugConfig (object):
                                                      self.SECTION,
                                                      u'enableNewPageDialogTab',
                                                      False)
+
+        self.enablePageDialogEvents = BooleanOption (self.config,
+                                                     self.SECTION,
+                                                     u'enablePageDialogEvents',
+                                                     False)
