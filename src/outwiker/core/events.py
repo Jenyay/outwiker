@@ -109,7 +109,7 @@ class PreHtmlImprovingParams (object):
 
 class EditorPopupMenuParams (object):
     """
-    Parameter set for onEditorPopupMenu event
+    Parameter set for the onEditorPopupMenu event
     """
     def __init__ (self, editor, menu, point, pos_byte):
         """
@@ -126,9 +126,18 @@ class EditorPopupMenuParams (object):
 
 class SpellCheckingParams (object):
     """
-    Parameter set for onSpellChecking event
+    Parameter set for the onSpellChecking event
     """
     def __init__ (self, spellChecker, word, isValid):
         self.spellChecker = spellChecker
         self.word = word
         self.isValid = isValid
+
+
+class PageDialogInitParams (object):
+    """
+    Parameter set for the onPageDialogInit event
+    """
+    def __init__ (self, page, dialog):
+        self.page = page
+        self.dialog = dialog

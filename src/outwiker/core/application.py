@@ -213,6 +213,13 @@ class ApplicationParams (object):
         self.onSpellChecking = Event()
 
 
+        # Event occurs after page dialog creation
+        # Parameters:
+        #     page - current (selected) page
+        #     dialog - instance of the inherited from BasePageDialog class
+        self.onPageDialogInit = Event()
+
+
     def init (self, configFilename):
         """
         Initialize config and locale

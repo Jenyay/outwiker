@@ -11,6 +11,7 @@ from outwiker.gui.pagedialogpanels.iconspanel import IconsPanel
 from outwiker.gui.pagedialogpanels.appearancepanel import AppearancePanel
 from outwiker.gui.pagedialogpanels.generalpanel import GeneralPanel
 from outwiker.gui.testeddialog import TestedDialog
+from outwiker.core.events import PageDialogInitParams
 
 
 class BasePageDialog (TestedDialog):
@@ -31,6 +32,11 @@ class BasePageDialog (TestedDialog):
         self._createPanels ()
 
         self.__do_layout()
+
+        eventParams = PageDialogInitParams (self._application.selectedPage,
+                                            self)
+
+        self._application.onPageDialogInit (eventParams)
 
         self.SetSizeWH (self._config.width.value, self._config.height.value)
         self.Center(wx.CENTRE_ON_SCREEN)

@@ -16,6 +16,7 @@ from debugaction import DebugAction
 from eventswatcher import EventsWatcher
 from timer import Timer
 from tokendebug import DebugTokenFactory
+from newpagedialogpanel import NewPageDialogPanel
 
 
 class PluginDebug (Plugin):
@@ -32,6 +33,7 @@ class PluginDebug (Plugin):
         self._enableOnEditorPopup = False
         self._enableOnSpellChecking = False
         self._enableRenderingTimeMeasuring = False
+        self._enableNewPageDialogTab = True
 
 
     def __createMenu (self):
@@ -218,6 +220,13 @@ class PluginDebug (Plugin):
         parser.textLevelTokens.append (token)
 
 
+    def __onPageDialogInit (self, params):
+        if self._enableNewPageDialogTab:
+            panel = NewPageDialogPanel (params.dialog.getPanelsParent(),
+                                        self._application)
+            params.dialog.addPanel (panel)
+
+
     ###################################################
     # Свойства и методы, которые необходимо определить
     ###################################################
@@ -286,6 +295,7 @@ class PluginDebug (Plugin):
             self._application.onHtmlRenderingBegin += self.__onHtmlRenderingBegin
             self._application.onHtmlRenderingEnd += self.__onHtmlRenderingEnd
             self._application.onWikiParserPrepare += self.__onWikiParserPrepare
+            self._application.onPageDialogInit += self.__onPageDialogInit
 
 
     def destroy (self):
@@ -330,5 +340,6 @@ class PluginDebug (Plugin):
             self._application.onHtmlRenderingBegin -= self.__onHtmlRenderingBegin
             self._application.onHtmlRenderingEnd -= self.__onHtmlRenderingEnd
             self._application.onWikiParserPrepare -= self.__onWikiParserPrepare
+            self._application.onPageDialogInit -= self.__onPageDialogInit
 
     #############################################
