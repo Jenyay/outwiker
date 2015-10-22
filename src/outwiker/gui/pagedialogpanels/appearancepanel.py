@@ -13,17 +13,12 @@ from outwiker.core.commands import MessageBox
 from outwiker.core.events import PageDialogPageStyleChangedParams
 from outwiker.gui.guiconfig import PageDialogConfig
 
-from basepanel import BasePageDialogPanel
+from basecontroller import BasePageDialogController
 
 
-class AppearancePanel (BasePageDialogPanel):
-    def __init__ (self, parent, application, dialog):
-        super (AppearancePanel, self).__init__ (parent, application)
-        self._dialog = dialog
-
-        self._currentPage = None
-        self._stylesList = None
-        self.config = PageDialogConfig (self._application.config)
+class AppearancePanel (wx.Panel):
+    def __init__ (self, parent):
+        super (AppearancePanel, self).__init__ (parent)
 
         self.styleText = wx.StaticText (self, -1, _("Page style"))
         self.styleCombo = wx.ComboBox (self,
@@ -32,7 +27,40 @@ class AppearancePanel (BasePageDialogPanel):
                                        style=wx.CB_DROPDOWN | wx.CB_DROPDOWN | wx.CB_READONLY)
 
         self.__layout ()
-        self.styleCombo.Bind (wx.EVT_COMBOBOX, handler=self.__onStyleChanged)
+
+
+    def __layout (self):
+        styleSizer = wx.FlexGridSizer (1, 2, 0, 0)
+        styleSizer.AddGrowableCol (1)
+        styleSizer.Add (self.styleText, 1, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 4)
+        styleSizer.Add (self.styleCombo, 1, wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND, 4)
+
+        self.SetSizer (styleSizer)
+        self.Layout()
+
+
+class AppearanceController (BasePageDialogController):
+    def __init__ (self, appearancePanel, application, dialog):
+        super (AppearanceController, self).__init__ (application)
+        self._dialog = dialog
+        self._appearancePanel = appearancePanel
+
+        self._currentPage = None
+        self._stylesList = None
+
+        self.config = PageDialogConfig (self._application.config)
+
+        self._appearancePanel.styleCombo.Bind (wx.EVT_COMBOBOX,
+                                               handler=self.__onStyleChanged)
+
+
+    def saveParams (self):
+        styleName = self._appearancePanel.styleCombo.GetStringSelection()
+
+        # Не будем изменять стиль по умолчанию в случае,
+        # если изменяется существующая страница
+        if (self._currentPage is None):
+            self.config.recentStyle.value = styleName
 
 
     def setPageProperties (self, page):
@@ -48,16 +76,6 @@ class AppearancePanel (BasePageDialogPanel):
         return True
 
 
-    def __layout (self):
-        styleSizer = wx.FlexGridSizer (1, 2, 0, 0)
-        styleSizer.AddGrowableCol (1)
-        styleSizer.Add (self.styleText, 1, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 4)
-        styleSizer.Add (self.styleCombo, 1, wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND, 4)
-
-        self.SetSizer (styleSizer)
-        self.Layout()
-
-
     def initBeforeCreation (self, parentPage):
         self._initStyleList (None)
 
@@ -70,33 +88,6 @@ class AppearancePanel (BasePageDialogPanel):
     def _initStyleList (self, currentPage):
         self._stylesList = StylesList (getStylesDirList ())
         self._fillStyleCombo (self._stylesList, currentPage)
-
-
-    def _getStyleByEditing (self):
-        selItem = self.styleCombo.GetSelection()
-        if selItem == 0:
-            return Style().getPageStyle (self._currentPage)
-        elif selItem == 1:
-            return Style().getDefaultStyle()
-
-        return self._stylesList[selItem - 2]
-
-
-    def _getStyleByCreation (self):
-        selItem = self.styleCombo.GetSelection()
-        if selItem == 0:
-            return Style().getDefaultStyle()
-
-        return self._stylesList[selItem - 1]
-
-
-    @property
-    def style (self):
-        style = (self._getStyleByEditing()
-                 if self._currentPage is not None
-                 else self._getStyleByCreation())
-
-        return style
 
 
     def _fillStyleCombo (self, styleslist, currentPage=None):
@@ -115,8 +106,8 @@ class AppearancePanel (BasePageDialogPanel):
 
         names += style_names
 
-        self.styleCombo.Clear()
-        self.styleCombo.AppendItems (names)
+        self._appearancePanel.styleCombo.Clear()
+        self._appearancePanel.styleCombo.AppendItems (names)
 
         # Определение последнего используемого стиля
         recentStyle = self.config.recentStyle.value
@@ -130,16 +121,7 @@ class AppearancePanel (BasePageDialogPanel):
             # Для уже существующих страниц по умолчанию использовать уже установленный стиль
             currentStyleIndex = 0
 
-        self.styleCombo.SetSelection (currentStyleIndex)
-
-
-    def saveParams (self):
-        styleName = self.styleCombo.GetStringSelection()
-
-        # Не будем изменять стиль по умолчанию в случае,
-        # если изменяется существующая страница
-        if (self._currentPage is None):
-            self.config.recentStyle.value = styleName
+        self._appearancePanel.styleCombo.SetSelection (currentStyleIndex)
 
 
     def __onStyleChanged (self, event):
@@ -150,3 +132,30 @@ class AppearancePanel (BasePageDialogPanel):
         self._application.onPageDialogPageStyleChanged (
             self._application.selectedPage,
             eventParams)
+
+
+    def _getStyleByEditing (self):
+        selItem = self._appearancePanel.styleCombo.GetSelection()
+        if selItem == 0:
+            return Style().getPageStyle (self._currentPage)
+        elif selItem == 1:
+            return Style().getDefaultStyle()
+
+        return self._stylesList[selItem - 2]
+
+
+    def _getStyleByCreation (self):
+        selItem = self._appearancePanel.styleCombo.GetSelection()
+        if selItem == 0:
+            return Style().getDefaultStyle()
+
+        return self._stylesList[selItem - 1]
+
+
+    @property
+    def style (self):
+        style = (self._getStyleByEditing()
+                 if self._currentPage is not None
+                 else self._getStyleByCreation())
+
+        return style

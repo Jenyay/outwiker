@@ -12,20 +12,17 @@ from outwiker.core.events import (PageDialogPageTypeChangedParams,
                                   PageDialogPageTagsChangedParams)
 from outwiker.gui.tagsselector import TagsSelector, EVT_TAGS_LIST_CHANGED
 from outwiker.gui.guiconfig import PageDialogConfig
-from basepanel import BasePageDialogPanel
 from basecontroller import BasePageDialogController
 
 
-class GeneralPanel (BasePageDialogPanel):
+class GeneralPanel (wx.Panel):
     """
     Класс панели, расположенной на вкладке "Общее"
     """
-    def __init__ (self, parent, application, dialog):
-        super (GeneralPanel, self).__init__ (parent, application)
-        self._dialog = dialog
-
+    def __init__ (self, parent):
+        super (GeneralPanel, self).__init__ (parent)
         self.__createGeneralControls()
-        self.__layout ()
+        self.__layout()
 
 
     def __layout (self):
@@ -65,27 +62,6 @@ class GeneralPanel (BasePageDialogPanel):
         self.typeLabel = wx.StaticText(self, -1, _(u"Page type"))
 
 
-    @property
-    def pageTitle (self):
-        return self.titleTextCtrl.GetValue().strip()
-
-
-    @property
-    def selectedFactory (self):
-        index = self.typeCombo.GetSelection()
-        return self.typeCombo.GetClientData (index)
-
-
-    @property
-    def tags (self):
-        return self.tagsSelector.tags
-
-
-    @tags.setter
-    def tags (self, value):
-        self.tagsSelector.tags = value
-
-
 class GeneralController (BasePageDialogController):
     def __init__ (self, generalPanel, application, dialog):
         super (GeneralController, self).__init__ (application)
@@ -111,16 +87,37 @@ class GeneralController (BasePageDialogController):
         )
 
 
+    @property
+    def pageTitle (self):
+        return self._generalPanel.titleTextCtrl.GetValue().strip()
+
+
+    @property
+    def selectedFactory (self):
+        index = self._generalPanel.typeCombo.GetSelection()
+        return self._generalPanel.typeCombo.GetClientData (index)
+
+
+    @property
+    def tags (self):
+        return self._generalPanel.tagsSelector.tags
+
+
+    @tags.setter
+    def tags (self, value):
+        self._generalPanel.tagsSelector.tags = value
+
+
     def setPageProperties (self, page):
         """
         Return True if success and False otherwise
         """
-        page.tags = self._generalPanel.tags
+        page.tags = self.tags
         return True
 
 
     def saveParams (self):
-        PageDialogConfig (self._application.config).recentCreatedPageType.value = self._generalPanel.selectedFactory.getTypeString()
+        PageDialogConfig (self._application.config).recentCreatedPageType.value = self.selectedFactory.getTypeString()
 
 
     def initBeforeCreation (self, parentPage):
@@ -129,7 +126,7 @@ class GeneralController (BasePageDialogController):
         parentPage - the parent page for new page
         """
         if parentPage.parent is not None:
-            self._generalPanel.tags = parentPage.tags
+            self.tags = parentPage.tags
 
         # Опция для хранения типа страницы, которая была создана последней
         lastCreatedPageType = PageDialogConfig (self._application.config).recentCreatedPageType.value
@@ -145,7 +142,7 @@ class GeneralController (BasePageDialogController):
         self._generalPanel.titleTextCtrl.SetFocus()
         self._generalPanel.titleTextCtrl.SetSelection (-1, -1)
 
-        self._generalPanel.tags = currentPage.tags
+        self.tags = currentPage.tags
 
         # Запретить изменять заголовок
         self._generalPanel.titleTextCtrl.SetValue (currentPage.title)
@@ -156,7 +153,7 @@ class GeneralController (BasePageDialogController):
 
 
     def _validateCommon (self, parentPage):
-        if not testPageTitle (self._generalPanel.pageTitle):
+        if not testPageTitle (self.pageTitle):
             self._generalPanel.titleTextCtrl.SetFocus()
             self._generalPanel.titleTextCtrl.SetSelection (-1, -1)
             return False
@@ -169,7 +166,7 @@ class GeneralController (BasePageDialogController):
             return False
 
         if (parentPage is not None and
-                not RootWikiPage.testDublicate (parentPage, self._generalPanel.pageTitle)):
+                not RootWikiPage.testDublicate (parentPage, self.pageTitle)):
             MessageBox (_(u"A page with some title already exists"),
                         _(u"Error"),
                         wx.ICON_ERROR | wx.OK)
@@ -182,7 +179,7 @@ class GeneralController (BasePageDialogController):
         if not self._validateCommon (page.parent):
             return False
 
-        if not page.canRename (self._generalPanel.pageTitle):
+        if not page.canRename (self.pageTitle):
             MessageBox (_(u"Can't rename page when page with that title already exists"),
                         _(u"Error"),
                         wx.ICON_ERROR | wx.OK)
@@ -222,7 +219,7 @@ class GeneralController (BasePageDialogController):
     def __onPageTypeChanged (self, event):
         eventParams = PageDialogPageTypeChangedParams (
             self._dialog,
-            self._generalPanel.selectedFactory.getPageType().getTypeString())
+            self.selectedFactory.getPageType().getTypeString())
 
         self._application.onPageDialogPageTypeChanged (
             self._generalPanel._application.selectedPage,
@@ -232,7 +229,7 @@ class GeneralController (BasePageDialogController):
     def __onPageTitleChanged (self, event):
         eventParams = PageDialogPageTitleChangedParams (
             self._dialog,
-            self._generalPanel.pageTitle)
+            self.pageTitle)
 
         self._application.onPageDialogPageTitleChanged (
             self._application.selectedPage,
@@ -242,7 +239,7 @@ class GeneralController (BasePageDialogController):
     def __onTagsListChanged (self, event):
         eventParams = PageDialogPageTagsChangedParams (
             self._dialog,
-            self._generalPanel.tags)
+            self.tags)
 
         self._application.onPageDialogPageTagsChanged (
             self._application.selectedPage,

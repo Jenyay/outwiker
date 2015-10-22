@@ -18,6 +18,7 @@ from timer import Timer
 from tokendebug import DebugTokenFactory
 from newpagedialogpanel import NewPageDialogPanel
 from debugconfig import DebugConfig
+from pagedialogcontroller import DebugPageDialogController
 
 
 class PluginDebug (Plugin):
@@ -334,9 +335,11 @@ class PluginDebug (Plugin):
 
     def __onPageDialogInit (self, page, params):
         if self._enableNewPageDialogTab:
-            panel = NewPageDialogPanel (params.dialog.getPanelsParent(),
-                                        self._application)
+            panel = NewPageDialogPanel (params.dialog.getPanelsParent())
             params.dialog.addPanel (panel, _(u'Debug'))
+
+            controller = DebugPageDialogController (self._application)
+            params.dialog.addController (controller)
 
 
     def __onPageDialogPageTypeChanged (self, page, params):
