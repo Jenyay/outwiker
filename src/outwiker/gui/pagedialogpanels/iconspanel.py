@@ -10,7 +10,8 @@ from outwiker.core.system import getIconsDirList
 from outwiker.core.iconscollection import IconsCollection
 from outwiker.core.defines import ICON_WIDTH, ICON_HEIGHT
 from outwiker.core.commands import MessageBox
-from outwiker.gui.iconlistctrl import IconListCtrl
+from outwiker.core.events import PageDialogPageIconChangedParams
+from outwiker.gui.iconlistctrl import IconListCtrl, EVT_ICON_SELECTED
 from basepanel import BasePageDialogPanel
 
 
@@ -28,6 +29,8 @@ class IconsPanel (BasePageDialogPanel):
         self.__appendGroups ()
         self.groupCtrl.SetSelection (0)
         self.__switchToCurrentGroup()
+
+        self.iconsList.Bind (EVT_ICON_SELECTED, handler=self.__onIconSelected)
 
 
     @property
@@ -182,3 +185,15 @@ class IconsPanel (BasePageDialogPanel):
         icon = currentPage.icon
         if icon is not None:
             self.iconsList.setCurrentIcon (icon)
+
+
+    def __onIconSelected (self, event):
+        assert len (event.icons) == 1
+
+        eventParams = PageDialogPageIconChangedParams (
+            self._dialog,
+            event.icons[0])
+
+        self._application.onPageDialogPageIconChanged (
+            self._application.selectedPage,
+            eventParams)

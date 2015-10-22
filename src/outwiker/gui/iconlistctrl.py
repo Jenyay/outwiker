@@ -4,8 +4,11 @@ import os.path
 
 import wx
 import wx.grid
+from wx.lib.newevent import NewEvent
 
 from outwiker.core.system import getImagesDir
+
+IconSelectedEvent, EVT_ICON_SELECTED = NewEvent()
 
 
 class IconButton (object):
@@ -290,6 +293,7 @@ class IconListCtrl (wx.ScrolledWindow):
 
         self._refreshCanvas()
         self.SetFocus()
+        self._sendIconSelectedEvent()
 
 
     def __onScroll (self, event):
@@ -394,3 +398,11 @@ class IconListCtrl (wx.ScrolledWindow):
         self.__addButton (self._currentIcon)
         self.__layout()
         self.__selectSingleButton (self.buttons[0])
+        self._sendIconSelectedEvent()
+
+
+    def _sendIconSelectedEvent (self):
+        propagationLevel = 10
+        newevent = IconSelectedEvent (icons=self.getSelection())
+        newevent.ResumePropagation (propagationLevel)
+        wx.PostEvent(self, newevent)
