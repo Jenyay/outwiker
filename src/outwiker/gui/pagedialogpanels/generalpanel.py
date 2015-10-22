@@ -192,6 +192,25 @@ class GeneralController (BasePageDialogController):
         return True
 
 
+    def clear (self):
+        self._generalPanel.typeCombo.Unbind (
+            wx.EVT_COMBOBOX,
+            handler=self.__onPageTypeChanged
+        )
+
+        self._generalPanel.titleTextCtrl.Unbind (
+            wx.EVT_TEXT,
+            handler=self.__onPageTitleChanged
+        )
+
+        self._generalPanel.tagsSelector.Unbind (
+            EVT_TAGS_LIST_CHANGED,
+            handler=self.__onTagsListChanged
+        )
+        self._dialog = None
+        self._iconsPanel = None
+
+
     def _fillComboType (self):
         self._generalPanel.typeCombo.Clear()
         for factory in FactorySelector.getFactories():

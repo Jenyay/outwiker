@@ -189,6 +189,13 @@ class IconsController (BasePageDialogController):
             self._iconsPanel.iconsList.setCurrentIcon (icon)
 
 
+    def clear (self):
+        self._iconsPanel.iconsList.Unbind (EVT_ICON_SELECTED,
+                                           handler=self.__onIconSelected)
+        self._dialog = None
+        self._iconsPanel = None
+
+
     def __onIconSelected (self, event):
         assert len (event.icons) == 1
 
