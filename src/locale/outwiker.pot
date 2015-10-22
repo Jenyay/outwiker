@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-18 19:49+0300\n"
+"POT-Creation-Date: 2015-10-22 09:59+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -48,13 +48,16 @@ msgstr ""
 #: outwiker/gui/attachpanel.py:253 outwiker/gui/attachpanel.py:263
 #: outwiker/gui/attachpanel.py:275 outwiker/gui/attachpanel.py:288
 #: outwiker/gui/attachpanel.py:298 outwiker/gui/mainwindow.py:525
-#: outwiker/gui/pagedialog.py:28 outwiker/gui/pagedialog.py:41
-#: outwiker/gui/pagedialog.py:46 outwiker/gui/pagedialog.py:139
-#: outwiker/gui/pagedialog.py:199 outwiker/gui/tabscontroller.py:253
-#: outwiker/gui/currentpagepanel.py:84 outwiker/gui/currentpagepanel.py:222
-#: outwiker/gui/currentpagepanel.py:231 outwiker/gui/mainwndcontroller.py:214
-#: outwiker/gui/renametagdialog.py:75 outwiker/gui/renametagdialog.py:79
-#: outwiker/gui/notestree.py:284 outwiker/gui/notestree.py:339
+#: outwiker/gui/pagedialog.py:23 outwiker/gui/pagedialog.py:33
+#: outwiker/gui/tabscontroller.py:253 outwiker/gui/currentpagepanel.py:84
+#: outwiker/gui/currentpagepanel.py:222 outwiker/gui/currentpagepanel.py:231
+#: outwiker/gui/mainwndcontroller.py:214 outwiker/gui/renametagdialog.py:75
+#: outwiker/gui/renametagdialog.py:79 outwiker/gui/notestree.py:284
+#: outwiker/gui/notestree.py:339
+#: outwiker/gui/pagedialogpanels/appearancepanel.py:50
+#: outwiker/gui/pagedialogpanels/iconspanel.py:62
+#: outwiker/gui/pagedialogpanels/generalpanel.py:179
+#: outwiker/gui/pagedialogpanels/generalpanel.py:192
 #: outwiker/pages/wiki/actions/include.py:37
 #: outwiker/pages/wiki/basewikipageview.py:273
 #: outwiker/pages/wiki/basewikipageview.py:305
@@ -489,7 +492,8 @@ msgstr ""
 msgid "Style"
 msgstr ""
 
-#: outwiker/actions/applystyle.py:122 outwiker/gui/basepagedialog.py:93
+#: outwiker/actions/applystyle.py:122
+#: outwiker/gui/pagedialogpanels/appearancepanel.py:118
 msgid "Default"
 msgstr ""
 
@@ -531,7 +535,7 @@ msgstr ""
 msgid "Create or open page for global search"
 msgstr ""
 
-#: outwiker/actions/globalsearch.py:40 outwiker/gui/pagedialog.py:79
+#: outwiker/actions/globalsearch.py:40 outwiker/gui/pagedialog.py:60
 msgid "Can't create page"
 msgstr ""
 
@@ -847,7 +851,7 @@ msgstr ""
 msgid "Page Properties…"
 msgstr ""
 
-#: outwiker/actions/editpageprop.py:24 outwiker/gui/pagedialog.py:163
+#: outwiker/actions/editpageprop.py:24 outwiker/gui/pagedialog.py:129
 msgid "Edit page properties"
 msgstr ""
 
@@ -1241,7 +1245,7 @@ msgid "Set icon as group cover"
 msgstr ""
 
 #: outwiker/gui/preferences/iconsetpanel.py:169
-#: outwiker/gui/pagedialogpanels/iconspanel.py:58
+#: outwiker/gui/pagedialogpanels/iconspanel.py:97
 msgid "Not in groups"
 msgstr ""
 
@@ -1422,7 +1426,8 @@ msgstr ""
 #: outwiker/gui/preferences/prefdialog.py:139
 #: outwiker/gui/preferences/prefdialog.py:160
 #: outwiker/gui/toolbars/generaltoolbar.py:25
-#: outwiker/gui/basepagedialog.py:46 outwiker/pages/wiki/wikipage.py:83
+#: outwiker/gui/pagedialogpanels/generalpanel.py:39
+#: outwiker/pages/wiki/wikipage.py:83
 msgid "General"
 msgstr ""
 
@@ -1542,25 +1547,17 @@ msgid ""
 "%s"
 msgstr ""
 
-#: outwiker/gui/pagedialog.py:27
+#: outwiker/gui/pagedialog.py:22
 #, python-format
 msgid "Page \"%s\" not found"
 msgstr ""
 
-#: outwiker/gui/pagedialog.py:41
+#: outwiker/gui/pagedialog.py:32
 msgid "Can't rename page\n"
 msgstr ""
 
-#: outwiker/gui/pagedialog.py:46
-msgid "Can't change page style\n"
-msgstr ""
-
-#: outwiker/gui/pagedialog.py:139
-msgid "A page with this title already exists"
-msgstr ""
-
-#: outwiker/gui/pagedialog.py:198
-msgid "Can't rename page when page with that title already exists"
+#: outwiker/gui/pagedialog.py:107
+msgid "Create Page"
 msgstr ""
 
 #: outwiker/gui/searchreplacecontroller.py:174
@@ -1655,7 +1652,7 @@ msgid ""
 "%s"
 msgstr ""
 
-#: outwiker/gui/tagsselector.py:24
+#: outwiker/gui/tagsselector.py:28
 msgid "Tags (comma separated)"
 msgstr ""
 
@@ -1765,45 +1762,57 @@ msgstr ""
 msgid "Toolbars"
 msgstr ""
 
-#: outwiker/gui/pagedialogpanels/appearancepanel.py:11
+#: outwiker/gui/pagedialogpanels/appearancepanel.py:28
 msgid "Page style"
 msgstr ""
 
-#: outwiker/gui/pagedialogpanels/iconspanel.py:79
-#: outwiker/gui/iconlistctrl.py:44
+#: outwiker/gui/pagedialogpanels/appearancepanel.py:40
+msgid "Appearance"
+msgstr ""
+
+#: outwiker/gui/pagedialogpanels/appearancepanel.py:50
+msgid "Can't set page style\n"
+msgstr ""
+
+#: outwiker/gui/pagedialogpanels/appearancepanel.py:116
+msgid "Do not change"
+msgstr ""
+
+#: outwiker/gui/pagedialogpanels/iconspanel.py:38
+msgid "Icon"
+msgstr ""
+
+#: outwiker/gui/pagedialogpanels/iconspanel.py:61
+msgid "Can't set page icon\n"
+msgstr ""
+
+#: outwiker/gui/pagedialogpanels/iconspanel.py:118
+#: outwiker/gui/iconlistctrl.py:47
 msgid "Invalid icon file: {}"
 msgstr ""
 
-#: outwiker/gui/pagedialogpanels/generalpanel.py:43
+#: outwiker/gui/pagedialogpanels/generalpanel.py:73
 #: outwiker/pages/search/sortstrategies.py:55
 msgid "Title"
 msgstr ""
 
-#: outwiker/gui/pagedialogpanels/generalpanel.py:54
+#: outwiker/gui/pagedialogpanels/generalpanel.py:84
 msgid "Page type"
 msgstr ""
 
-#: outwiker/gui/basepagedialog.py:37
-msgid "Create Page"
+#: outwiker/gui/pagedialogpanels/generalpanel.py:178
+msgid "A page with some title already exists"
 msgstr ""
 
-#: outwiker/gui/basepagedialog.py:52
-msgid "Icon"
+#: outwiker/gui/pagedialogpanels/generalpanel.py:191
+msgid "Can't rename page when page with that title already exists"
 msgstr ""
 
-#: outwiker/gui/basepagedialog.py:56
-msgid "Appearance"
-msgstr ""
-
-#: outwiker/gui/basepagedialog.py:91
-msgid "Do not change"
-msgstr ""
-
-#: outwiker/gui/iconlistctrl.py:142
+#: outwiker/gui/iconlistctrl.py:145
 msgid "Curent icon"
 msgstr ""
 
-#: outwiker/gui/iconlistctrl.py:144
+#: outwiker/gui/iconlistctrl.py:147
 msgid "Default icon"
 msgstr ""
 
