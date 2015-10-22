@@ -12,39 +12,17 @@ from outwiker.core.events import (PageDialogPageTypeChangedParams,
                                   PageDialogPageTagsChangedParams)
 from outwiker.gui.tagsselector import TagsSelector, EVT_TAGS_LIST_CHANGED
 from outwiker.gui.guiconfig import PageDialogConfig
-from basepanel import BasePageDialogPanel
+from basecontroller import BasePageDialogController
 
 
-class GeneralPanel (BasePageDialogPanel):
+class GeneralPanel (wx.Panel):
     """
     Класс панели, расположенной на вкладке "Общее"
     """
-    def __init__ (self, parent, application, dialog):
-        super (GeneralPanel, self).__init__ (parent, application)
-        self._dialog = dialog
-
+    def __init__ (self, parent):
+        super (GeneralPanel, self).__init__ (parent)
         self.__createGeneralControls()
-        self._fillComboType()
-        self._setTagsList()
-
-        self.__layout ()
-
-        self.typeCombo.Bind (wx.EVT_COMBOBOX, handler=self.__onPageTypeChanged)
-        self.titleTextCtrl.Bind (wx.EVT_TEXT, handler=self.__onPageTitleChanged)
-        self.tagsSelector.Bind (EVT_TAGS_LIST_CHANGED, handler=self.__onTagsListChanged)
-
-
-    @property
-    def title (self):
-        return _(u'General')
-
-
-    def setPageProperties (self, page):
-        """
-        Return True if success and False otherwise
-        """
-        page.tags = self.tagsSelector.tags
-        return True
+        self.__layout()
 
 
     def __layout (self):
@@ -84,48 +62,62 @@ class GeneralPanel (BasePageDialogPanel):
         self.typeLabel = wx.StaticText(self, -1, _(u"Page type"))
 
 
-    def _fillComboType (self):
-        self.typeCombo.Clear()
-        for factory in FactorySelector.getFactories():
-            self.typeCombo.Append (factory.title, factory)
+class GeneralController (BasePageDialogController):
+    def __init__ (self, generalPanel, application, dialog):
+        super (GeneralController, self).__init__ (application)
+        self._dialog = dialog
+        self._generalPanel = generalPanel
 
-        if not self.typeCombo.IsEmpty():
-            self.typeCombo.SetSelection (0)
+        self._fillComboType()
+        self._setTagsList()
 
+        self._generalPanel.typeCombo.Bind (
+            wx.EVT_COMBOBOX,
+            handler=self.__onPageTypeChanged
+        )
 
-    def _setTagsList (self):
-        assert self._application.wikiroot is not None
+        self._generalPanel.titleTextCtrl.Bind (
+            wx.EVT_TEXT,
+            handler=self.__onPageTitleChanged
+        )
 
-        tagslist = TagsList (self._application.wikiroot)
-        self.tagsSelector.setTagsList (tagslist)
-
-
-    def setComboPageType (self, pageTypeString):
-        """
-        Установить тип страницы в диалоге по строке, описывающей тип страницы
-        """
-        n = 0
-        for factory in FactorySelector.getFactories():
-            if factory.getTypeString() == FactorySelector.getFactory(pageTypeString).getTypeString():
-                self.typeCombo.SetSelection (n)
-                break
-            n += 1
+        self._generalPanel.tagsSelector.Bind (
+            EVT_TAGS_LIST_CHANGED,
+            handler=self.__onTagsListChanged
+        )
 
 
     @property
     def pageTitle (self):
-        return self.titleTextCtrl.GetValue().strip()
+        return self._generalPanel.titleTextCtrl.GetValue().strip()
 
 
     @property
     def selectedFactory (self):
-        index = self.typeCombo.GetSelection()
-        return self.typeCombo.GetClientData (index)
+        index = self._generalPanel.typeCombo.GetSelection()
+        return self._generalPanel.typeCombo.GetClientData (index)
 
 
     @property
     def tags (self):
-        return self.tagsSelector.tags
+        return self._generalPanel.tagsSelector.tags
+
+
+    @tags.setter
+    def tags (self, value):
+        self._generalPanel.tagsSelector.tags = value
+
+
+    def setPageProperties (self, page):
+        """
+        Return True if success and False otherwise
+        """
+        page.tags = self.tags
+        return True
+
+
+    def saveParams (self):
+        PageDialogConfig (self._application.config).recentCreatedPageType.value = self.selectedFactory.getTypeString()
 
 
     def initBeforeCreation (self, parentPage):
@@ -134,12 +126,12 @@ class GeneralPanel (BasePageDialogPanel):
         parentPage - the parent page for new page
         """
         if parentPage.parent is not None:
-            self.tagsSelector.tags = parentPage.tags
+            self.tags = parentPage.tags
 
         # Опция для хранения типа страницы, которая была создана последней
         lastCreatedPageType = PageDialogConfig (self._application.config).recentCreatedPageType.value
-        self.setComboPageType(lastCreatedPageType)
-        self.titleTextCtrl.SetFocus()
+        self._setComboPageType(lastCreatedPageType)
+        self._generalPanel.titleTextCtrl.SetFocus()
 
 
     def initBeforeEditing (self, currentPage):
@@ -147,23 +139,23 @@ class GeneralPanel (BasePageDialogPanel):
         Initialize the panel before new page editing.
         page - page for editing
         """
-        self.titleTextCtrl.SetFocus()
-        self.titleTextCtrl.SetSelection (-1, -1)
+        self._generalPanel.titleTextCtrl.SetFocus()
+        self._generalPanel.titleTextCtrl.SetSelection (-1, -1)
 
-        self.tagsSelector.tags = currentPage.tags
+        self.tags = currentPage.tags
 
         # Запретить изменять заголовок
-        self.titleTextCtrl.SetValue (currentPage.title)
+        self._generalPanel.titleTextCtrl.SetValue (currentPage.title)
 
         # Установить тип страницы
-        self.setComboPageType(currentPage.getTypeString())
-        self.typeCombo.Disable ()
+        self._setComboPageType(currentPage.getTypeString())
+        self._generalPanel.typeCombo.Disable ()
 
 
     def _validateCommon (self, parentPage):
         if not testPageTitle (self.pageTitle):
-            self.titleTextCtrl.SetFocus()
-            self.titleTextCtrl.SetSelection (-1, -1)
+            self._generalPanel.titleTextCtrl.SetFocus()
+            self._generalPanel.titleTextCtrl.SetSelection (-1, -1)
             return False
 
         return True
@@ -196,8 +188,32 @@ class GeneralPanel (BasePageDialogPanel):
         return True
 
 
-    def saveParams (self):
-        PageDialogConfig (self._application.config).recentCreatedPageType.value = self.selectedFactory.getTypeString()
+    def _fillComboType (self):
+        self._generalPanel.typeCombo.Clear()
+        for factory in FactorySelector.getFactories():
+            self._generalPanel.typeCombo.Append (factory.title, factory)
+
+        if not self._generalPanel.typeCombo.IsEmpty():
+            self._generalPanel.typeCombo.SetSelection (0)
+
+
+    def _setTagsList (self):
+        assert self._application.wikiroot is not None
+
+        tagslist = TagsList (self._application.wikiroot)
+        self._generalPanel.tagsSelector.setTagsList (tagslist)
+
+
+    def _setComboPageType (self, pageTypeString):
+        """
+        Установить тип страницы в диалоге по строке, описывающей тип страницы
+        """
+        n = 0
+        for factory in FactorySelector.getFactories():
+            if factory.getTypeString() == FactorySelector.getFactory(pageTypeString).getTypeString():
+                self._generalPanel.typeCombo.SetSelection (n)
+                break
+            n += 1
 
 
     def __onPageTypeChanged (self, event):
@@ -206,7 +222,7 @@ class GeneralPanel (BasePageDialogPanel):
             self.selectedFactory.getPageType().getTypeString())
 
         self._application.onPageDialogPageTypeChanged (
-            self._application.selectedPage,
+            self._generalPanel._application.selectedPage,
             eventParams)
 
 

@@ -1,21 +1,9 @@
 # -*- coding: UTF-8 -*-
 
-from outwiker.gui.pagedialogpanels.basepanel import BasePageDialogPanel
+import wx
 
 
-class NewPageDialogPanel (BasePageDialogPanel):
-    def __init__ (self, parent, application):
-        super (NewPageDialogPanel, self).__init__ (parent, application)
+class NewPageDialogPanel (wx.Panel):
+    def __init__ (self, parent):
+        super (NewPageDialogPanel, self).__init__ (parent)
         self.SetBackgroundColour ("blue")
-
-
-    @property
-    def title (self):
-        return u'Debug'
-
-
-    def setPageProperties (self, page):
-        """
-        Return True if success and False otherwise
-        """
-        return True

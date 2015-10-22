@@ -7,9 +7,12 @@ import wx.combo
 
 from outwiker.core.application import Application
 from outwiker.gui.guiconfig import PageDialogConfig
-from outwiker.gui.pagedialogpanels.iconspanel import IconsPanel
-from outwiker.gui.pagedialogpanels.appearancepanel import AppearancePanel
-from outwiker.gui.pagedialogpanels.generalpanel import GeneralPanel
+from outwiker.gui.pagedialogpanels.generalpanel import (GeneralPanel,
+                                                        GeneralController)
+from outwiker.gui.pagedialogpanels.iconspanel import (IconsPanel,
+                                                      IconsController)
+from outwiker.gui.pagedialogpanels.appearancepanel import (AppearancePanel,
+                                                           AppearanceController)
 from outwiker.gui.testeddialog import TestedDialog
 from outwiker.core.events import PageDialogInitParams
 
@@ -25,6 +28,7 @@ class BasePageDialog (TestedDialog):
 
         self._application = Application
         self._panels = []
+        self._controllers = []
 
         self._config = PageDialogConfig (Application.config)
 
@@ -50,23 +54,26 @@ class BasePageDialog (TestedDialog):
             return
 
         self.saveParams()
-        map (lambda panel: panel.saveParams(), self._panels)
-        map (lambda panel: panel.clear(), self._panels)
+        map (lambda controller: controller.saveParams(), self._controllers)
         event.Skip()
 
 
-    def _onCancel (self, event):
-        map (lambda panel: panel.clear(), self._panels)
-        event.Skip()
+    def Destroy (self):
+        map (lambda controller: controller.clear(), self._controllers)
+        super (BasePageDialog, self).Destroy()
 
 
     def getPanelsParent (self):
         return self._notebook
 
 
-    def addPanel (self, panel):
+    def addPanel (self, panel, title):
         self._panels.append (panel)
-        self.getPanelsParent().AddPage (panel, panel.title)
+        self.getPanelsParent().AddPage (panel, title)
+
+
+    def addController (self, controller):
+        self._controllers.append (controller)
 
 
     @property
@@ -97,13 +104,31 @@ class BasePageDialog (TestedDialog):
     def _createPanels (self):
         parent = self.getPanelsParent ()
 
-        self._generalPanel = GeneralPanel (parent, self._application, self)
-        self._iconsPanel = IconsPanel (parent, self._application, self)
-        self._appearancePanel = AppearancePanel (parent, self._application, self)
+        # Create General panel
+        self._generalPanel = GeneralPanel (parent)
+        self.addPanel (self._generalPanel, _(u'General'))
+        self._generalController = GeneralController (self._generalPanel,
+                                                     self._application,
+                                                     self)
+        self.addController (self._generalController)
 
-        self.addPanel (self._generalPanel)
-        self.addPanel (self._iconsPanel)
-        self.addPanel (self._appearancePanel)
+        # Create Icon panel
+        self._iconsPanel = IconsPanel (parent)
+        self.addPanel (self._iconsPanel, _(u'Icon'))
+        self._iconsController = IconsController (self._iconsPanel,
+                                                 self._application,
+                                                 self)
+        self.addController (self._iconsController)
+
+        # Create Appearance panel
+        self._appearancePanel = AppearancePanel (parent)
+        self.addPanel (self._appearancePanel, _(u'Appearance'))
+        self._appearanceController = AppearanceController (
+            self._appearancePanel,
+            self._application,
+            self
+        )
+        self.addController (self._appearanceController)
 
 
     def __do_layout(self):
@@ -128,23 +153,21 @@ class BasePageDialog (TestedDialog):
         buttonsSizer = self.CreateButtonSizer (wx.OK | wx.CANCEL)
         sizer.Add (buttonsSizer, 1, wx.ALIGN_RIGHT | wx.ALL, border = 2)
         self.Bind (wx.EVT_BUTTON, self._onOk, id=wx.ID_OK)
-        self.Bind (wx.EVT_BUTTON, self._onCancel, id=wx.ID_CANCEL)
 
 
     @property
     def selectedFactory (self):
-        return self._generalPanel.selectedFactory
+        return self._generalController.selectedFactory
 
 
     @property
     def pageTitle (self):
-        return self._generalPanel.pageTitle
+        return self._generalController.pageTitle
 
 
     def setPageProperties (self, page):
-        for panel in self._panels:
-            if panel.IsShown ():
-                if not panel.setPageProperties (page):
-                    return False
+        for controller in self._controllers:
+            if not controller.setPageProperties (page):
+                return False
 
         return True

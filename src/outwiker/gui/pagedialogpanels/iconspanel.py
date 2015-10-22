@@ -12,16 +12,15 @@ from outwiker.core.defines import ICON_WIDTH, ICON_HEIGHT
 from outwiker.core.commands import MessageBox
 from outwiker.core.events import PageDialogPageIconChangedParams
 from outwiker.gui.iconlistctrl import IconListCtrl, EVT_ICON_SELECTED
-from basepanel import BasePageDialogPanel
+from basecontroller import BasePageDialogController
 
 
-class IconsPanel (BasePageDialogPanel):
+class IconsPanel (wx.Panel):
     """
     Class of the panel in the "Icon" tab.
     """
-    def __init__ (self, parent, application, dialog):
-        super (IconsPanel, self).__init__ (parent, application)
-        self._dialog = dialog
+    def __init__ (self, parent):
+        super (IconsPanel, self).__init__ (parent)
 
         self._iconsCollections = [IconsCollection (path) for path in getIconsDirList()]
         self.__createGui()
@@ -29,41 +28,6 @@ class IconsPanel (BasePageDialogPanel):
         self.__appendGroups ()
         self.groupCtrl.SetSelection (0)
         self.__switchToCurrentGroup()
-
-        self.iconsList.Bind (EVT_ICON_SELECTED, handler=self.__onIconSelected)
-
-
-    @property
-    def title (self):
-        return _(u'Icon')
-
-
-    @property
-    def icon (self):
-        selection = self.iconsList.getSelection()
-
-        assert len (selection) != 0
-        icon = selection[0]
-        return icon
-
-
-    def setPageProperties (self, page):
-        """
-        Return True if success and False otherwise
-        """
-        icon = self.icon
-
-        # If icon not exists, page may be renamed. Don't will to change icon
-        if os.path.exists (icon):
-            try:
-                page.icon = icon
-            except EnvironmentError as e:
-                MessageBox (_(u"Can't set page icon\n") + unicode (e),
-                            _(u"Error"),
-                            wx.ICON_ERROR | wx.OK)
-                return False
-
-        return True
 
 
     def __createGui (self):
@@ -177,6 +141,44 @@ class IconsPanel (BasePageDialogPanel):
         return name.capitalize()
 
 
+class IconsController (BasePageDialogController):
+    def __init__ (self, iconsPanel, application, dialog):
+        super (IconsController, self).__init__ (application)
+        self._dialog = dialog
+        self._iconsPanel = iconsPanel
+
+        self._iconsPanel.iconsList.Bind (EVT_ICON_SELECTED,
+                                         handler=self.__onIconSelected)
+
+
+    @property
+    def icon (self):
+        selection = self._iconsPanel.iconsList.getSelection()
+
+        assert len (selection) != 0
+        icon = selection[0]
+        return icon
+
+
+    def setPageProperties (self, page):
+        """
+        Return True if success and False otherwise
+        """
+        icon = self.icon
+
+        # If icon not exists, page may be renamed. Don't will to change icon
+        if os.path.exists (icon):
+            try:
+                page.icon = icon
+            except EnvironmentError as e:
+                MessageBox (_(u"Can't set page icon\n") + unicode (e),
+                            _(u"Error"),
+                            wx.ICON_ERROR | wx.OK)
+                return False
+
+        return True
+
+
     def initBeforeEditing (self, currentPage):
         """
         Initialize the panel before new page editing.
@@ -184,7 +186,7 @@ class IconsPanel (BasePageDialogPanel):
         """
         icon = currentPage.icon
         if icon is not None:
-            self.iconsList.setCurrentIcon (icon)
+            self._iconsPanel.iconsList.setCurrentIcon (icon)
 
 
     def __onIconSelected (self, event):
