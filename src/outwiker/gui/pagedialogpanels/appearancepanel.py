@@ -10,6 +10,7 @@ from outwiker.core.style import Style
 from outwiker.core.styleslist import StylesList
 from outwiker.core.system import getStylesDirList
 from outwiker.core.commands import MessageBox
+from outwiker.core.events import PageDialogPageStyleChangedParams
 from outwiker.gui.guiconfig import PageDialogConfig
 
 from basepanel import BasePageDialogPanel
@@ -31,6 +32,7 @@ class AppearancePanel (BasePageDialogPanel):
                                        style=wx.CB_DROPDOWN | wx.CB_DROPDOWN | wx.CB_READONLY)
 
         self.__layout ()
+        self.styleCombo.Bind (wx.EVT_COMBOBOX, handler=self.__onStyleChanged)
 
 
     @property
@@ -143,3 +145,13 @@ class AppearancePanel (BasePageDialogPanel):
         # если изменяется существующая страница
         if (self._currentPage is None):
             self.config.recentStyle.value = styleName
+
+
+    def __onStyleChanged (self, event):
+        eventParams = PageDialogPageStyleChangedParams (
+            self._dialog,
+            self.style)
+
+        self._application.onPageDialogPageStyleChanged (
+            self._application.selectedPage,
+            eventParams)
