@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-from abc import ABCMeta, abstractproperty, abstractmethod
+from abc import ABCMeta, abstractmethod
 
 import wx
 
@@ -11,11 +11,6 @@ class BasePageDialogPanel (wx.Panel):
     def __init__ (self, parent, application):
         super (BasePageDialogPanel, self).__init__ (parent)
         self._application = application
-
-
-    @abstractproperty
-    def title (self):
-        pass
 
 
     @abstractmethod

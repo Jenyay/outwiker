@@ -35,11 +35,6 @@ class AppearancePanel (BasePageDialogPanel):
         self.styleCombo.Bind (wx.EVT_COMBOBOX, handler=self.__onStyleChanged)
 
 
-    @property
-    def title (self):
-        return _(u'Appearance')
-
-
     def setPageProperties (self, page):
         """
         Return True if success and False otherwise

@@ -34,11 +34,6 @@ class GeneralPanel (BasePageDialogPanel):
         self.tagsSelector.Bind (EVT_TAGS_LIST_CHANGED, handler=self.__onTagsListChanged)
 
 
-    @property
-    def title (self):
-        return _(u'General')
-
-
     def setPageProperties (self, page):
         """
         Return True if success and False otherwise

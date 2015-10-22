@@ -9,11 +9,6 @@ class NewPageDialogPanel (BasePageDialogPanel):
         self.SetBackgroundColour ("blue")
 
 
-    @property
-    def title (self):
-        return u'Debug'
-
-
     def setPageProperties (self, page):
         """
         Return True if success and False otherwise

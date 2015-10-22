@@ -336,7 +336,7 @@ class PluginDebug (Plugin):
         if self._enableNewPageDialogTab:
             panel = NewPageDialogPanel (params.dialog.getPanelsParent(),
                                         self._application)
-            params.dialog.addPanel (panel)
+            params.dialog.addPanel (panel, _(u'Debug'))
 
 
     def __onPageDialogPageTypeChanged (self, page, params):

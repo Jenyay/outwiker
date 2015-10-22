@@ -64,9 +64,9 @@ class BasePageDialog (TestedDialog):
         return self._notebook
 
 
-    def addPanel (self, panel):
+    def addPanel (self, panel, title):
         self._panels.append (panel)
-        self.getPanelsParent().AddPage (panel, panel.title)
+        self.getPanelsParent().AddPage (panel, title)
 
 
     @property
@@ -101,9 +101,9 @@ class BasePageDialog (TestedDialog):
         self._iconsPanel = IconsPanel (parent, self._application, self)
         self._appearancePanel = AppearancePanel (parent, self._application, self)
 
-        self.addPanel (self._generalPanel)
-        self.addPanel (self._iconsPanel)
-        self.addPanel (self._appearancePanel)
+        self.addPanel (self._generalPanel, _(u'General'))
+        self.addPanel (self._iconsPanel, _(u'Icon'))
+        self.addPanel (self._appearancePanel, _(u'Appearance'))
 
 
     def __do_layout(self):

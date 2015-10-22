@@ -34,11 +34,6 @@ class IconsPanel (BasePageDialogPanel):
 
 
     @property
-    def title (self):
-        return _(u'Icon')
-
-
-    @property
     def icon (self):
         selection = self.iconsList.getSelection()
 
