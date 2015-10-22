@@ -131,7 +131,10 @@ class GeneralController (BasePageDialogController):
         # Опция для хранения типа страницы, которая была создана последней
         lastCreatedPageType = PageDialogConfig (self._application.config).recentCreatedPageType.value
         self._setComboPageType(lastCreatedPageType)
+        self._generalPanel.titleTextCtrl.SetValue (u'')
         self._generalPanel.titleTextCtrl.SetFocus()
+
+        self.__onPageTypeChanged (None)
 
 
     def initBeforeEditing (self, currentPage):
@@ -150,6 +153,7 @@ class GeneralController (BasePageDialogController):
         # Установить тип страницы
         self._setComboPageType(currentPage.getTypeString())
         self._generalPanel.typeCombo.Disable ()
+        self.__onPageTypeChanged (None)
 
 
     def _validateCommon (self, parentPage):
@@ -222,7 +226,7 @@ class GeneralController (BasePageDialogController):
             self.selectedFactory.getPageType().getTypeString())
 
         self._application.onPageDialogPageTypeChanged (
-            self._generalPanel._application.selectedPage,
+            self._application.selectedPage,
             eventParams)
 
 

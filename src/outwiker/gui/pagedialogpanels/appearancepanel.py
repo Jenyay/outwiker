@@ -67,11 +67,12 @@ class AppearanceController (BasePageDialogController):
         """
         Return True if success and False otherwise
         """
-        try:
-            Style().setPageStyle (page, self.style)
-        except EnvironmentError as e:
-            MessageBox (_(u"Can't set page style\n") + unicode (e), _(u"Error"), wx.ICON_ERROR | wx.OK)
-            return False
+        if self._appearancePanel.IsShown():
+            try:
+                Style().setPageStyle (page, self.style)
+            except EnvironmentError as e:
+                MessageBox (_(u"Can't set page style\n") + unicode (e), _(u"Error"), wx.ICON_ERROR | wx.OK)
+                return False
 
         return True
 
