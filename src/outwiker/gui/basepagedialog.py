@@ -9,7 +9,8 @@ from outwiker.core.application import Application
 from outwiker.gui.guiconfig import PageDialogConfig
 from outwiker.gui.pagedialogpanels.iconspanel import IconsPanel
 from outwiker.gui.pagedialogpanels.appearancepanel import AppearancePanel
-from outwiker.gui.pagedialogpanels.generalpanel import GeneralPanel
+from outwiker.gui.pagedialogpanels.generalpanel import (GeneralPanel,
+                                                        GeneralController)
 from outwiker.gui.testeddialog import TestedDialog
 from outwiker.core.events import PageDialogInitParams
 
@@ -25,6 +26,7 @@ class BasePageDialog (TestedDialog):
 
         self._application = Application
         self._panels = []
+        self._controllers = []
 
         self._config = PageDialogConfig (Application.config)
 
@@ -52,11 +54,16 @@ class BasePageDialog (TestedDialog):
         self.saveParams()
         map (lambda panel: panel.saveParams(), self._panels)
         map (lambda panel: panel.clear(), self._panels)
+
+        map (lambda controller: controller.saveParams(), self._controllers)
+        map (lambda controller: controller.clear(), self._controllers)
         event.Skip()
 
 
     def _onCancel (self, event):
         map (lambda panel: panel.clear(), self._panels)
+
+        map (lambda controller: controller.clear(), self._controllers)
         event.Skip()
 
 
@@ -67,6 +74,10 @@ class BasePageDialog (TestedDialog):
     def addPanel (self, panel, title):
         self._panels.append (panel)
         self.getPanelsParent().AddPage (panel, title)
+
+
+    def addController (self, controller):
+        self._controllers.append (controller)
 
 
     @property
@@ -98,11 +109,16 @@ class BasePageDialog (TestedDialog):
         parent = self.getPanelsParent ()
 
         self._generalPanel = GeneralPanel (parent, self._application, self)
-        self._iconsPanel = IconsPanel (parent, self._application, self)
-        self._appearancePanel = AppearancePanel (parent, self._application, self)
-
         self.addPanel (self._generalPanel, _(u'General'))
+        self._generalController = GeneralController (self._generalPanel,
+                                                     self._application,
+                                                     self)
+        self.addController (self._generalController)
+
+        self._iconsPanel = IconsPanel (parent, self._application, self)
         self.addPanel (self._iconsPanel, _(u'Icon'))
+
+        self._appearancePanel = AppearancePanel (parent, self._application, self)
         self.addPanel (self._appearancePanel, _(u'Appearance'))
 
 
@@ -146,5 +162,9 @@ class BasePageDialog (TestedDialog):
             if panel.IsShown ():
                 if not panel.setPageProperties (page):
                     return False
+
+        for controller in self._controllers:
+            if not controller.setPageProperties (page):
+                return False
 
         return True

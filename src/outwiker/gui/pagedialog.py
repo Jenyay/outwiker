@@ -109,10 +109,17 @@ class CreatePageDialog (BasePageDialog):
         map (lambda panel: panel.initBeforeCreation (self.parentPage),
              self._panels)
 
+        map (lambda controller: controller.initBeforeCreation (self.parentPage),
+             self._controllers)
+
 
     def _validate (self):
         for panel in self._panels:
             if not panel.validateBeforeCreation (self.parentPage):
+                return False
+
+        for controller in self._controllers:
+            if not controller.validateBeforeCreation (self.parentPage):
                 return False
 
         return True
@@ -131,10 +138,17 @@ class EditPageDialog (BasePageDialog):
         map (lambda panel: panel.initBeforeEditing (self.currentPage),
              self._panels)
 
+        map (lambda controller: controller.initBeforeEditing (self.currentPage),
+             self._controllers)
+
 
     def _validate (self):
         for panel in self._panels:
             if not panel.validateBeforeEditing (self.currentPage):
+                return False
+
+        for controller in self._controllers:
+            if not controller.validateBeforeEditing (self.currentPage):
                 return False
 
         return True

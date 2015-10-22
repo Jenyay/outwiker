@@ -2,14 +2,11 @@
 
 from abc import ABCMeta
 
-import wx
 
-
-class BasePageDialogPanel (wx.Panel):
+class BasePageDialogController (object):
     __metaclass__ = ABCMeta
 
-    def __init__ (self, parent, application):
-        super (BasePageDialogPanel, self).__init__ (parent)
+    def __init__ (self, application):
         self._application = application
 
 
