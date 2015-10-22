@@ -176,3 +176,12 @@ class PageDialogPageIconChangedParams (object):
     def __init__ (self, dialog, pageIcon):
         self.dialog = dialog
         self.pageIcon = pageIcon
+
+
+class PageDialogPageTagsChangedParams (object):
+    """
+    Parameter set for the PageDialogPageTagsChanged event
+    """
+    def __init__ (self, dialog, pageTags):
+        self.dialog = dialog
+        self.pageTags = pageTags

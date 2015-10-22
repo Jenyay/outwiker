@@ -8,8 +8,9 @@ from outwiker.core.factoryselector import FactorySelector
 from outwiker.core.commands import testPageTitle, MessageBox
 from outwiker.core.tree import RootWikiPage
 from outwiker.core.events import (PageDialogPageTypeChangedParams,
-                                  PageDialogPageTitleChangedParams)
-from outwiker.gui.tagsselector import TagsSelector
+                                  PageDialogPageTitleChangedParams,
+                                  PageDialogPageTagsChangedParams)
+from outwiker.gui.tagsselector import TagsSelector, EVT_TAGS_LIST_CHANGED
 from outwiker.gui.guiconfig import PageDialogConfig
 from basepanel import BasePageDialogPanel
 
@@ -30,6 +31,7 @@ class GeneralPanel (BasePageDialogPanel):
 
         self.typeCombo.Bind (wx.EVT_COMBOBOX, handler=self.__onPageTypeChanged)
         self.titleTextCtrl.Bind (wx.EVT_TEXT, handler=self.__onPageTitleChanged)
+        self.tagsSelector.Bind (EVT_TAGS_LIST_CHANGED, handler=self.__onTagsListChanged)
 
 
     @property
@@ -121,6 +123,11 @@ class GeneralPanel (BasePageDialogPanel):
         return self.typeCombo.GetClientData (index)
 
 
+    @property
+    def tags (self):
+        return self.tagsSelector.tags
+
+
     def initBeforeCreation (self, parentPage):
         """
         Initialize the panel before new page creation
@@ -209,5 +216,15 @@ class GeneralPanel (BasePageDialogPanel):
             self.pageTitle)
 
         self._application.onPageDialogPageTitleChanged (
+            self._application.selectedPage,
+            eventParams)
+
+
+    def __onTagsListChanged (self, event):
+        eventParams = PageDialogPageTagsChangedParams (
+            self._dialog,
+            self.tags)
+
+        self._application.onPageDialogPageTagsChanged (
             self._application.selectedPage,
             eventParams)

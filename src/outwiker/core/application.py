@@ -248,6 +248,13 @@ class ApplicationParams (object):
         self.onPageDialogPageIconChanged = Event()
 
 
+        # Event occurs after page tag list changing
+        # Parameters:
+        #     page - current (selected) page
+        #     params - instance of the PageDialogPageTagsChangedParams class
+        self.onPageDialogPageTagsChanged = Event()
+
+
     def init (self, configFilename):
         """
         Initialize config and locale

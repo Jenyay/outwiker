@@ -3,11 +3,15 @@
 import os.path
 
 import wx
+from wx.lib.newevent import NewEvent
 
 from outwiker.core.system import getImagesDir
 from outwiker.core.tagscommands import getTagsString, parseTagsList
-from .tagscloud import TagsCloud
-from .taglabel import EVT_TAG_LEFT_CLICK
+from outwiker.gui.tagscloud import TagsCloud
+from outwiker.gui.taglabel import EVT_TAG_LEFT_CLICK
+
+
+TagsListChangedEvent, EVT_TAGS_LIST_CHANGED = NewEvent()
 
 
 class TagsSelector (wx.Panel):
@@ -29,6 +33,7 @@ class TagsSelector (wx.Panel):
         self.__tagsCloud = TagsCloud (self)
         self.__tagsCloud.SetMinSize ((self.__tagsWidth, self.__tagsHeight))
         self.__tagsCloud.Bind (EVT_TAG_LEFT_CLICK, self.__onTagClick)
+        self.tagsTextCtrl.Bind (wx.EVT_TEXT, handler=self.__onTagsChanged)
 
         self.__layout()
 
@@ -84,3 +89,14 @@ class TagsSelector (wx.Panel):
 
     def setTagsList (self, tagsList):
         self.__tagsCloud.setTags (tagsList)
+
+
+    def _sendTagsListChangedEvent (self):
+        propagationLevel = 10
+        newevent = TagsListChangedEvent (tags=self.tags)
+        newevent.ResumePropagation (propagationLevel)
+        wx.PostEvent(self, newevent)
+
+
+    def __onTagsChanged (self, event):
+        self._sendTagsListChangedEvent()

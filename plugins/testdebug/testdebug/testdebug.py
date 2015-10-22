@@ -95,6 +95,7 @@ class PluginDebug (Plugin):
             self._application.onPageDialogPageTitleChanged += self.__onPageDialogPageTitleChanged
             self._application.onPageDialogPageStyleChanged += self.__onPageDialogPageStyleChanged
             self._application.onPageDialogPageIconChanged += self.__onPageDialogPageIconChanged
+            self._application.onPageDialogPageTagsChanged += self.__onPageDialogPageTagsChanged
 
 
     def destroy (self):
@@ -144,6 +145,7 @@ class PluginDebug (Plugin):
             self._application.onPageDialogPageTitleChanged -= self.__onPageDialogPageTitleChanged
             self._application.onPageDialogPageStyleChanged -= self.__onPageDialogPageStyleChanged
             self._application.onPageDialogPageIconChanged -= self.__onPageDialogPageIconChanged
+            self._application.onPageDialogPageTagsChanged -= self.__onPageDialogPageTagsChanged
 
 
     def __createMenu (self):
@@ -355,6 +357,11 @@ class PluginDebug (Plugin):
     def __onPageDialogPageIconChanged (self, page, params):
         if self._enablePageDialogEvents:
             print u'New page icon: {}'.format (params.pageIcon)
+
+
+    def __onPageDialogPageTagsChanged (self, page, params):
+        if self._enablePageDialogEvents:
+            print u'New page tags: {}'.format (params.pageTags)
 
 
     ###################################################
