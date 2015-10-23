@@ -67,14 +67,13 @@ class AppearanceController (BasePageDialogController):
         """
         Return True if success and False otherwise
         """
-        if self._appearancePanel.IsShown():
-            try:
-                Style().setPageStyle (page, self.style)
-            except EnvironmentError as e:
-                MessageBox (_(u"Can't set page style\n") + unicode (e),
-                            _(u"Error"),
-                            wx.ICON_ERROR | wx.OK)
-                return False
+        try:
+            Style().setPageStyle (page, self.style)
+        except EnvironmentError as e:
+            MessageBox (_(u"Can't set page style\n") + unicode (e),
+                        _(u"Error"),
+                        wx.ICON_ERROR | wx.OK)
+            return False
 
         return True
 
@@ -89,10 +88,6 @@ class AppearanceController (BasePageDialogController):
 
 
     def clear (self):
-        self._appearancePanel.styleCombo.Unbind (
-            wx.EVT_COMBOBOX,
-            handler=self.__onStyleChanged
-        )
         self._dialog = None
         self._iconsPanel = None
 

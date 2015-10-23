@@ -142,6 +142,14 @@ class PageDialogInitParams (object):
         self.dialog = dialog
 
 
+class PageDialogDestroyParams (object):
+    """
+    Parameter set for the onPageDialogDestroy event
+    """
+    def __init__ (self, dialog):
+        self.dialog = dialog
+
+
 class PageDialogPageTypeChangedParams (object):
     """
     Parameter set for the onPageDialogPageTypeChanged event

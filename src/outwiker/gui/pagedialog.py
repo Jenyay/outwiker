@@ -106,9 +106,6 @@ class CreatePageDialog (BasePageDialog):
                                                  parentPage)
         self.SetTitle(_(u"Create Page"))
 
-        map (lambda controller: controller.initBeforeCreation (self.parentPage),
-             self._controllers)
-
 
     def _validate (self):
         for controller in self._controllers:
@@ -116,6 +113,10 @@ class CreatePageDialog (BasePageDialog):
                 return False
 
         return True
+
+
+    def _initController (self, controller):
+        controller.initBeforeCreation (self.parentPage)
 
 
 class EditPageDialog (BasePageDialog):
@@ -128,8 +129,9 @@ class EditPageDialog (BasePageDialog):
 
         self.SetTitle(_(u"Edit page properties"))
 
-        map (lambda controller: controller.initBeforeEditing (self.currentPage),
-             self._controllers)
+
+    def _initController (self, controller):
+        controller.initBeforeEditing (self.currentPage)
 
 
     def _validate (self):

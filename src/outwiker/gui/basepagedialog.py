@@ -11,10 +11,9 @@ from outwiker.gui.pagedialogpanels.generalpanel import (GeneralPanel,
                                                         GeneralController)
 from outwiker.gui.pagedialogpanels.iconspanel import (IconsPanel,
                                                       IconsController)
-from outwiker.gui.pagedialogpanels.appearancepanel import (AppearancePanel,
-                                                           AppearanceController)
 from outwiker.gui.testeddialog import TestedDialog
-from outwiker.core.events import PageDialogInitParams
+from outwiker.core.events import (PageDialogInitParams,
+                                  PageDialogDestroyParams)
 
 
 class BasePageDialog (TestedDialog):
@@ -48,6 +47,10 @@ class BasePageDialog (TestedDialog):
     def _validate (self):
         pass
 
+    @abstractmethod
+    def _initController (self, controller):
+        pass
+
 
     def _onOk (self, event):
         if not self._validate():
@@ -60,6 +63,9 @@ class BasePageDialog (TestedDialog):
 
     def Destroy (self):
         map (lambda controller: controller.clear(), self._controllers)
+
+        self._application.onPageDialogDestroy (self._application.selectedPage,
+                                               PageDialogDestroyParams (self))
         super (BasePageDialog, self).Destroy()
 
 
@@ -72,8 +78,22 @@ class BasePageDialog (TestedDialog):
         self.getPanelsParent().AddPage (panel, title)
 
 
+    def removePanel (self, panel):
+        if panel in self._panels:
+            index = self._panels.index (panel)
+            self._notebook.DeletePage (index)
+            self._panels.remove (panel)
+
+
     def addController (self, controller):
         self._controllers.append (controller)
+        self._initController (controller)
+
+
+    def removeController (self, controller):
+        if controller in self._controllers:
+            controller.clear()
+            self._controllers.remove (controller)
 
 
     @property
@@ -104,31 +124,21 @@ class BasePageDialog (TestedDialog):
     def _createPanels (self):
         parent = self.getPanelsParent ()
 
-        # Create General panel
         self._generalPanel = GeneralPanel (parent)
         self.addPanel (self._generalPanel, _(u'General'))
+
+        self._iconsPanel = IconsPanel (parent)
+        self.addPanel (self._iconsPanel, _(u'Icon'))
+
         self._generalController = GeneralController (self._generalPanel,
                                                      self._application,
                                                      self)
         self.addController (self._generalController)
 
-        # Create Icon panel
-        self._iconsPanel = IconsPanel (parent)
-        self.addPanel (self._iconsPanel, _(u'Icon'))
         self._iconsController = IconsController (self._iconsPanel,
                                                  self._application,
                                                  self)
         self.addController (self._iconsController)
-
-        # Create Appearance panel
-        self._appearancePanel = AppearancePanel (parent)
-        self.addPanel (self._appearancePanel, _(u'Appearance'))
-        self._appearanceController = AppearanceController (
-            self._appearancePanel,
-            self._application,
-            self
-        )
-        self.addController (self._appearanceController)
 
 
     def __do_layout(self):

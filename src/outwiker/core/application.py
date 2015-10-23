@@ -220,6 +220,13 @@ class ApplicationParams (object):
         self.onPageDialogInit = Event()
 
 
+        # Event occurs before page dialog will be destroyed
+        # Parameters:
+        #     page - current (selected) page
+        #     params - instance of the PageDialogDestroyParams class
+        self.onPageDialogDestroy = Event()
+
+
         # Event occurs after page type changing
         # Parameters:
         #     page - current (selected) page
