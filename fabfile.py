@@ -27,6 +27,7 @@ plugins_list = [
     "htmlheads",
     "lightbox",
     "livejournal",
+    "pagetypecolor",
     "readingmode",
     "sessions",
     "source",
