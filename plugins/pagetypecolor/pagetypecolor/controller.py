@@ -56,6 +56,7 @@ class Controller (object):
     def __onPageDialogPageTypeChanged (self, page, params):
         color = self._colors.get (params.pageType, 'white')
         params.dialog.generalPanel.titleTextCtrl.SetBackgroundColour (color)
+        params.dialog.generalPanel.titleTextCtrl.Refresh()
 
 
     def __onPreferencesDialogCreate (self, dialog):

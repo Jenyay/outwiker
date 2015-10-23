@@ -15,12 +15,12 @@ class PageTypeColorConfig (object):
         self.wikiColor = StringOption (self.config,
                                        self.SECTION,
                                        u'wiki',
-                                       u'#F1F779')
+                                       u'#9DC0FA')
 
         self.htmlColor = StringOption (self.config,
                                        self.SECTION,
                                        u'html',
-                                       u'#9DC0FA')
+                                       u'#F1F779')
 
         self.textColor = StringOption (self.config,
                                        self.SECTION,
