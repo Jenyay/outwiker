@@ -1,7 +1,6 @@
 # -*- coding: UTF-8 -*-
 
 import wx
-import wx.combo
 
 from outwiker.core.tagslist import TagsList
 from outwiker.core.factoryselector import FactorySelector
