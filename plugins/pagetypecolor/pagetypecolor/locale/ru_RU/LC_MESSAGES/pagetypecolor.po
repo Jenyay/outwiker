@@ -1,0 +1,67 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Plugin name\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-10-25 16:46+0300\n"
+"PO-Revision-Date: 2015-10-25 16:46+0300\n"
+"Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
+"Language-Team: \n"
+"Language: ru_RU\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.4\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+#: pagetypecolor.py:46
+msgid ""
+"Plugin colorize the page dialog controls in depending on the selected page "
+"type."
+msgstr ""
+"Плагин раскрашивает элементы диалога редактирования страницы в зависимости "
+"от выбранного типа страницы"
+
+#: pagetypecolor.py:56
+msgid "http://jenyay.net/Outwiker/PageTypeColorEn"
+msgstr "http://jenyay.net/Outwiker/PageTypeColor"
+
+#: controller.py:68
+msgid "PageTypeColor [Plugin]"
+msgstr "PageTypeColor [Плагин]"
+
+#: preferencepanel.py:36
+msgid "The colors for the various page types"
+msgstr "Цвета для различных типов страниц"
+
+#: preferencepanel.py:43
+msgid "Wiki page"
+msgstr "Викистраница"
+
+#: preferencepanel.py:48
+msgid "HTML page"
+msgstr "HTML-страница"
+
+#: preferencepanel.py:53
+msgid "Text page"
+msgstr "Текстовая страница"
+
+#: preferencepanel.py:58
+msgid "Search page"
+msgstr "Страница поиска"
+
+#~ msgid "Menu Item Title"
+#~ msgstr "Название пункта меню"
+
+#~ msgid "Description"
+#~ msgstr "Описание"
+
+#~ msgid "Plugin description"
+#~ msgstr "Описание плагина"
+
+#~ msgid "http://jenyay.net"
+#~ msgstr "http://jenyay.net"

@@ -33,6 +33,12 @@ class PreferencePanel (BasePrefPanel):
         mainSizer.AddGrowableCol(0)
         mainSizer.AddGrowableCol(1)
 
+        descriptionLabel = wx.StaticText (self, -1, _(u'The colors for the various page types'))
+        mainSizer.Add (descriptionLabel,
+                       flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+                       border=2)
+        mainSizer.AddSpacer(0)
+
         wikiLabel, self._wikiColorPicker = self._createLabelAndColorPicker (
             _(u'Wiki page'),
             mainSizer
