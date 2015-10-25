@@ -29,10 +29,67 @@ class PreferencePanel (BasePrefPanel):
         """
         Создать элементы управления
         """
-        mainSizer = wx.FlexGridSizer (cols=1)
+        mainSizer = wx.FlexGridSizer (cols=2)
         mainSizer.AddGrowableCol(0)
+        mainSizer.AddGrowableCol(1)
+
+        wikiLabel, self._wikiColorPicker = self._createLabelAndColorPicker (
+            _(u'Wiki page'),
+            mainSizer
+        )
+
+        htmlLabel, self._htmlColorPicker = self._createLabelAndColorPicker (
+            _(u'HTML page'),
+            mainSizer
+        )
+
+        textLabel, self._textColorPicker = self._createLabelAndColorPicker (
+            _(u'Text page'),
+            mainSizer
+        )
+
+        searchLabel, self._searchColorPicker = self._createLabelAndColorPicker (
+            _(u'Search page'),
+            mainSizer
+        )
 
         self.SetSizer(mainSizer)
+
+
+    @property
+    def wikiColor (self):
+        return self._wikiColorPicker.GetColour().GetAsString (wx.C2S_HTML_SYNTAX)
+
+    @wikiColor.setter
+    def wikiColor (self, value):
+        self._wikiColorPicker.SetColour (value)
+
+
+    @property
+    def htmlColor (self):
+        return self._htmlColorPicker.GetColour().GetAsString (wx.C2S_HTML_SYNTAX)
+
+    @htmlColor.setter
+    def htmlColor (self, value):
+        self._htmlColorPicker.SetColour (value)
+
+
+    @property
+    def textColor (self):
+        return self._textColorPicker.GetColour().GetAsString (wx.C2S_HTML_SYNTAX)
+
+    @textColor.setter
+    def textColor (self, value):
+        self._textColorPicker.SetColour (value)
+
+
+    @property
+    def searchColor (self):
+        return self._searchColorPicker.GetColour().GetAsString (wx.C2S_HTML_SYNTAX)
+
+    @searchColor.setter
+    def searchColor (self, value):
+        self._searchColorPicker.SetColour (value)
 
 
     def LoadState(self):
@@ -54,8 +111,14 @@ class PrefPanelController (object):
 
 
     def loadState (self):
-        pass
+        self._panel.wikiColor = self._config.wikiColor.value
+        self._panel.htmlColor = self._config.htmlColor.value
+        self._panel.textColor = self._config.textColor.value
+        self._panel.searchColor = self._config.searchColor.value
 
 
     def save (self):
-        pass
+        self._config.wikiColor.value = self._panel.wikiColor
+        self._config.htmlColor.value = self._panel.htmlColor
+        self._config.textColor.value = self._panel.textColor
+        self._config.searchColor.value = self._panel.searchColor

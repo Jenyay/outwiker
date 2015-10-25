@@ -59,6 +59,14 @@ class BasePrefPanel (wx.ScrolledWindow):
         return (label, combobox)
 
 
+    def _createLabelAndColorPicker (self, text, sizer):
+        label = wx.StaticText (self, label = text)
+        colorPicker = wx.ColourPickerCtrl (self, style=wx.CLRP_SHOW_LABEL)
+
+        self._addControlsPairToSizer (sizer, label, colorPicker)
+        return (label, colorPicker)
+
+
     def _createCheckBox (self, text, sizer):
         checkBox = wx.CheckBox (self, label=text)
         sizer.Add (checkBox, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
