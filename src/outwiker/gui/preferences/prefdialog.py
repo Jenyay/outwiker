@@ -5,23 +5,8 @@
 
 import wx
 
-from generalpanel import GeneralPanel
-from editorpanel import EditorPanel
-from spellpanel import SpellPanel
-from htmlrenderpanel import HtmlRenderPanel
-from textprintpanel import TextPrintPanel
-from pluginspanel import PluginsPanel
-from hotkeyspanel import HotKeysPanel
-from htmleditorpanel import HtmlEditorPanel
-from wikieditorpanel import WikiEditorPanel
-from iconsetpanel import IconsetPanel
-from tagspanel import TagsPanel
-from attachpanel import AttachPanel
-
 from outwiker.core.exceptions import PreferencesException
-from outwiker.core.factoryselector import FactorySelector
 from outwiker.core.application import Application
-from .preferencepanelinfo import PreferencePanelInfo
 
 
 class PrefDialog(wx.Dialog):
@@ -36,21 +21,9 @@ class PrefDialog(wx.Dialog):
         self.__set_properties()
         self.__do_layout()
 
-        # Страницы с настройками
-        self.__generalPage = None
-        self.__editorPage = None
-        self.__spellPage = None
-        self.__htmlRenderPage = None
-        self.__textPrintPage = None
-        self.__pluginsPage = None
-        self.__hotkeysPage = None
-        self.__htmlEditorPage = None
-        self.__iconsetPage = None
-        self.__tagsPage = None
-        self.__attachPage = None
-        self.__createPages()
-
         Application.onPreferencesDialogCreate (self)
+        self.__expandAllPages()
+        self.__treeBook.SetSelection (0)
 
         self.__loadAllOptions()
         self.Center(wx.CENTRE_ON_SCREEN)
@@ -124,74 +97,6 @@ class PrefDialog(wx.Dialog):
         self.Layout()
 
 
-    def __createInterfaceGroup (self):
-        """
-        Создать страницы с подгруппой "Interface"
-        """
-        self.__generalPage = GeneralPanel (self.__treeBook)
-        self.__htmlRenderPage = HtmlRenderPanel (self.__treeBook)
-        self.__textPrintPage = TextPrintPanel (self.__treeBook)
-        self.__hotkeysPage = HotKeysPanel (self.__treeBook)
-        self.__tagsPage = TagsPanel (self.__treeBook)
-        self.__attachPage = AttachPanel (self.__treeBook)
-
-        interfacePanelsList = [
-            PreferencePanelInfo (self.__generalPage, _(u"General")),
-            PreferencePanelInfo (self.__htmlRenderPage, _(u"Preview")),
-            PreferencePanelInfo (self.__tagsPage, _(u"Tags cloud")),
-            PreferencePanelInfo (self.__attachPage, _(u"Attachments")),
-            PreferencePanelInfo (self.__hotkeysPage, _(u"Hotkeys")),
-            PreferencePanelInfo (self.__textPrintPage, _(u"Text Printout")),
-        ]
-
-        self.appendPreferenceGroup (_(u"Interface"), interfacePanelsList)
-
-
-    def __createEditorGroup (self):
-        """
-        Создать страницы с подгруппой "Редактор"
-        """
-        self.__editorPage = EditorPanel (self.__treeBook)
-        self.__spellPage = SpellPanel (self.__treeBook)
-        self.__htmlEditorPage = HtmlEditorPanel (self.__treeBook)
-        self.__wikiEditorPage = WikiEditorPanel (self.__treeBook)
-
-        editorPanesList = [
-            PreferencePanelInfo (self.__editorPage, _(u"General")),
-            PreferencePanelInfo (self.__spellPage, _(u"Spell checking")),
-            PreferencePanelInfo (self.__htmlEditorPage, _(u"HTML Editor")),
-            PreferencePanelInfo (self.__wikiEditorPage, _(u"Wiki Editor")),
-        ]
-
-        self.appendPreferenceGroup (_(u"Editor"), editorPanesList)
-
-
-    def __createPluginsPage (self):
-        self.__pluginsPage = PluginsPanel (self.__treeBook)
-        self.__treeBook.AddPage (self.__pluginsPage, _(u"Plugins"))
-
-
-    def __createIconsetPage (self):
-        self.__iconsetPage = IconsetPanel (self.__treeBook)
-        self.__treeBook.AddPage (self.__iconsetPage, _(u"User's iconset"))
-
-
-    def __createPages (self):
-        """
-        Создать страницы окна настроек
-        """
-        self.__createInterfaceGroup ()
-        self.__createEditorGroup ()
-        self.__createPagesForPages ()
-        self.__createIconsetPage ()
-        self.__createPluginsPage ()
-
-        self.__expandAllPages()
-        self.__treeBook.SetSelection (0)
-
-        self.__generalPage.minimizeCheckBox.SetFocus()
-
-
     def __loadAllOptions (self):
         """
         Загрузить настройки для всех страниц
@@ -199,18 +104,6 @@ class PrefDialog(wx.Dialog):
         for pageIndex in range (self.__treeBook.GetPageCount()):
             page = self.__treeBook.GetPage (pageIndex)
             page.LoadState()
-
-
-    def __createPagesForPages (self):
-        """
-        Создать страницы настроек для типов страниц
-        """
-        for factory in FactorySelector.getFactories():
-            # Список экземпляров класса PreferencePanelInfo
-            panelsList = factory.getPrefPanels(self.__treeBook)
-
-            if len (panelsList) > 0:
-                self.appendPreferenceGroup (factory.title, panelsList)
 
 
     def __expandAllPages (self):

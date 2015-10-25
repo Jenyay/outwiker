@@ -1,6 +1,8 @@
 # -*- coding: UTF-8 -*-
 
-from outwiker.core.defines import EVENT_PRIORITY_DEFAULT
+EVENT_PRIORITY_DEFAULT = 0
+EVENT_PRIORITY_MAX_CORE = 100
+EVENT_PRIORITY_MIN_CORE = -100
 
 
 class Event (object):
