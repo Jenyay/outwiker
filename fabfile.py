@@ -9,7 +9,7 @@ import glob
 from fabric.api import local, lcd, settings
 
 # Supported Ubuntu releases
-distribs = ["vivid", "trusty", "precise", "wily"]
+distribs = ["wily", "vivid", "trusty", "precise"]
 
 # The separate folder for building under Ubuntu 12.04
 debian_precise = "debian_precise"

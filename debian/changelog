@@ -1,6 +1,7 @@
-outwiker (1.9.0+777~vivid) vivid; urgency=medium
+outwiker (1.9.0+777~wily) wily; urgency=medium
 
-  * 
+  * Acelerated icons drawing
+  * Rafactoring PageDialog
 
  -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Fri, 18 Sep 2015 10:04:55 +0300
 
