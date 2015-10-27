@@ -131,7 +131,6 @@ class GeneralController (BasePageDialogController):
         lastCreatedPageType = PageDialogConfig (self._application.config).recentCreatedPageType.value
         self._setComboPageType(lastCreatedPageType)
         self._generalPanel.titleTextCtrl.SetValue (u'')
-        self._generalPanel.titleTextCtrl.SetFocus()
 
         self.__onPageTypeChanged (None)
 
@@ -141,7 +140,6 @@ class GeneralController (BasePageDialogController):
         Initialize the panel before new page editing.
         page - page for editing
         """
-        self._generalPanel.titleTextCtrl.SetFocus()
         self._generalPanel.titleTextCtrl.SetSelection (-1, -1)
 
         self.tags = currentPage.tags

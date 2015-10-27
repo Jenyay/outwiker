@@ -41,6 +41,7 @@ class BasePageDialog (TestedDialog):
 
         self.SetSizeWH (self._config.width.value, self._config.height.value)
         self.Center(wx.CENTRE_ON_SCREEN)
+        self._generalPanel.titleTextCtrl.SetFocus()
 
 
     @abstractmethod
