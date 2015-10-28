@@ -214,7 +214,6 @@ def win (skipinstaller=False):
         os.path.join (win_build_dir, u'_hashlib.pyd'),
         os.path.join (win_build_dir, u'_ssl.pyd'),
         os.path.join (win_build_dir, u'bz2.pyd'),
-        os.path.join (win_build_dir, u'PIL._imagingft.pyd'),
         os.path.join (win_build_dir, u'pyexpat.pyd'),
         os.path.join (win_build_dir, u'select.pyd'),
     ]
