@@ -1,3 +1,10 @@
+outwiker (1.9.0+778~wily) wily; urgency=medium
+
+  * Acelerated icons drawing
+  * Rafactoring PageDialog
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Thu, 29 Oct 2015 08:52:44 +0300
+
 outwiker (1.9.0+777~wily) wily; urgency=medium
 
   * Acelerated icons drawing
