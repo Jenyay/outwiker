@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-25 16:45+0300\n"
-"PO-Revision-Date: 2015-10-30 09:22+0300\n"
+"PO-Revision-Date: 2015-10-30 10:18+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
@@ -26,7 +26,7 @@ msgstr "http://jenyay.net/Outwiker/PageTypeColor"
 
 #: controller.py:68
 msgid "PageTypeColor [Plugin]"
-msgstr "PageTypeColor [Plugin]"
+msgstr "Сторінка типу кольору"
 
 #: preferencepanel.py:36
 msgid "The colors for the various page types"
@@ -42,7 +42,7 @@ msgstr "HTML сторінка"
 
 #: preferencepanel.py:53
 msgid "Text page"
-msgstr "Text page"
+msgstr "Текстова сторінка"
 
 #: preferencepanel.py:58
 msgid "Search page"
