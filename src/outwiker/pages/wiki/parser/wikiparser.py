@@ -24,6 +24,7 @@ from tokenquote import QuoteFactory
 
 from ..thumbnails import Thumbnails
 from outwiker.libs.pyparsing import NoMatch
+from outwiker.core.system import getOS
 
 
 class Parser (object):
@@ -250,7 +251,8 @@ class Parser (object):
         try:
             return self._wikiMarkup.transformString (text)
         except Exception:
-            return self.error_template.format (error = traceback.format_exc())
+            error = unicode (traceback.format_exc(), getOS().filesEncoding)
+            return self.error_template.format (error = error)
 
 
     def parseListItemMarkup (self, text):
@@ -260,7 +262,8 @@ class Parser (object):
         try:
             return self._listItemMarkup.transformString (text)
         except Exception:
-            return self.error_template.format (error = traceback.format_exc())
+            error = unicode (traceback.format_exc(), getOS().filesEncoding)
+            return self.error_template.format (error = error)
 
 
     def parseLinkMarkup (self, text):
@@ -270,7 +273,8 @@ class Parser (object):
         try:
             return self._linkMarkup.transformString (text)
         except Exception:
-            return self.error_template.format (error = traceback.format_exc())
+            error = unicode (traceback.format_exc(), getOS().filesEncoding)
+            return self.error_template.format (error = error)
 
 
     def parseHeadingMarkup (self, text):
@@ -280,7 +284,8 @@ class Parser (object):
         try:
             return self._headingMarkup.transformString (text)
         except Exception:
-            return self.error_template.format (error = traceback.format_exc())
+            error = unicode (traceback.format_exc(), getOS().filesEncoding)
+            return self.error_template.format (error = error)
 
 
     def parseTextLevelMarkup (self, text):
@@ -290,7 +295,8 @@ class Parser (object):
         try:
             return self._textLevelMarkup.transformString (text)
         except Exception:
-            return self.error_template.format (error = traceback.format_exc())
+            error = unicode (traceback.format_exc(), getOS().filesEncoding)
+            return self.error_template.format (error = error)
 
 
     def addCommand (self, command):
