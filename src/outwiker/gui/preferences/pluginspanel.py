@@ -17,13 +17,13 @@ class PluginsPanel (BasePrefPanel):
         self.__htmlMinWidth = 150
 
         self.__createGui ()
-
         self.__controller = PluginsController (self)
+        self._setScrolling()
 
 
     def __createGui (self):
         self.pluginsList = wx.CheckListBox (self, -1, style=wx.LB_SORT)
-        self.pluginsList.SetMinSize ((50, -1))
+        self.pluginsList.SetMinSize ((50, 20))
 
         self.__downloadLink = wx.HyperlinkCtrl (self,
                                                 -1,

@@ -16,6 +16,7 @@ class HtmlEditorPanel(BasePrefPanel):
 
         self.__createGui()
         self.__layout()
+        self._setScrolling()
 
 
     def __createGui (self):

@@ -15,6 +15,7 @@ class WikiEditorPanel(BasePrefPanel):
         self._config = WikiConfig (Application.config)
         self.__createGui()
         self.__layout()
+        self._setScrolling()
 
 
     def __createGui (self):

@@ -23,6 +23,7 @@ class PreferencePanel (BasePrefPanel):
 
         self.__createGui()
         self.__controller = PrefPanelController (self, config)
+        self._setScrolling()
 
 
     def __createGui(self):

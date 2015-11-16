@@ -18,7 +18,6 @@ class PrefDialog(wx.Dialog):
         wx.Dialog.__init__(self, *args, **kwds)
         self.__treeBook = wx.Treebook(self, -1)
 
-        self.__set_properties()
         self.__do_layout()
 
         Application.onPreferencesDialogCreate (self)
@@ -26,7 +25,7 @@ class PrefDialog(wx.Dialog):
         self.__treeBook.SetSelection (0)
 
         self.__loadAllOptions()
-        self.Center(wx.CENTRE_ON_SCREEN)
+        self.__set_properties()
 
 
     @property
@@ -58,14 +57,16 @@ class PrefDialog(wx.Dialog):
 
 
     def __set_properties(self):
-        title = _("Preferences")
-        self.SetTitle(title)
-
-        width = 800
+        width = 850
         height = 500
 
-        self.SetSize((width, height))
+        self.SetTitle(_("Preferences"))
         self.__treeBook.SetMinSize((300, -1))
+
+        self.Fit()
+        fitWidth, fitHeight = self.GetSizeTuple()
+        self.SetMinSize ((fitWidth, fitHeight))
+        self.SetSize((width, height))
 
         self.__centerWindow()
 

@@ -22,10 +22,9 @@ class EditorPanel(BasePrefPanel):
 
         self.__config = EditorConfig (Application.config)
         self.__createGuiElements (self.__config)
-
         self.__do_layout()
-
         self.LoadState()
+        self._setScrolling()
 
 
     def __createGuiElements (self, config):

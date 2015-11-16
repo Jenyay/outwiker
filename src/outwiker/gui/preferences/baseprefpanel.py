@@ -28,10 +28,7 @@ class BasePrefPanel (wx.ScrolledWindow):
             scrollHeight = btElementHeight
             scrollCount = (btElementTop + btElementHeight) / scrollHeight + 1
 
-            self.SetScrollbars (0,
-                                scrollHeight,
-                                0,
-                                scrollCount)
+            self.SetScrollbars (0, scrollHeight, 0, scrollCount)
 
 
     @abstractmethod
