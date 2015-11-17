@@ -262,6 +262,13 @@ class ApplicationParams (object):
         self.onPageDialogPageTagsChanged = Event()
 
 
+        # Event occurs by TextEditor when it needs styles
+        # Parameters:
+        #     page - current (selected) page
+        #     params - instance of the EditorStyleNeededParams class
+        self.onEditorStyleNeeded = Event()
+
+
     def init (self, configFilename):
         """
         Initialize config and locale

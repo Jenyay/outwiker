@@ -4,14 +4,13 @@ import wx.stc
 
 from outwiker.core.application import Application
 from outwiker.gui.texteditor import TextEditor
-from .wikicolorizer import WikiColorizer
 from .wikiconfig import WikiConfig
 
 
 class WikiEditor (TextEditor):
     def __init__ (self, parent):
-        self.__stylebytes = None
-        self.__colorizeSyntax = True
+        self._colorizeSyntax = True
+        self._styles = {}
 
         super (WikiEditor, self).__init__ (parent)
 
@@ -83,7 +82,7 @@ class WikiEditor (TextEditor):
 
         self.__createStyles(config)
 
-        self.__colorizeSyntax = config.colorizeSyntax.value
+        self._colorizeSyntax = config.colorizeSyntax.value
 
         self.textCtrl.SetLexer (wx.stc.STC_LEX_CONTAINER)
         self.textCtrl.SetModEventMask(wx.stc.STC_MOD_INSERTTEXT | wx.stc.STC_MOD_DELETETEXT)
@@ -97,25 +96,16 @@ class WikiEditor (TextEditor):
         self.__setStyleHeading()
 
 
+    @property
+    def colorizeSyntax (self):
+        return self._colorizeSyntax
+
+
     def __setStyleHeading (self):
         self.textCtrl.StyleSetSpec (self.STYLE_HEADING_ID, self._styles[self.STYLE_HEADING_ID])
         self.textCtrl.StyleSetSize (self.STYLE_HEADING_ID, self.config.fontSize.value + 2)
         self.textCtrl.StyleSetFaceName (self.STYLE_HEADING_ID, self.config.fontName.value)
         self.textCtrl.StyleSetBackground (self.STYLE_HEADING_ID, self.config.backColor.value)
-
-
-    def getStyleBytes (self, text):
-        """
-        Функция должна возвращать список байт, описывающих раскраску (стили) для текста text
-        Этот метод выполняется в отдельном потоке
-        """
-        _colorizer = WikiColorizer (self, self.__colorizeSyntax)
-        self.__stylebytes = _colorizer.colorize (text)
-        return self.__stylebytes
-
-
-    def getIndcatorsStyleBytes (self, text):
-        return self.__stylebytes
 
 
     def turnList (self, itemStart):

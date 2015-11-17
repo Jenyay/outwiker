@@ -4,7 +4,6 @@ import codecs
 import cgi
 import math
 from datetime import datetime, timedelta
-import threading
 import os.path
 
 import wx
@@ -21,6 +20,7 @@ from outwiker.gui.guiconfig import EditorConfig
 from outwiker.gui.searchreplacecontroller import SearchReplaceController
 from outwiker.gui.searchreplacepanel import SearchReplacePanel
 from outwiker.gui.texteditormenu import TextEditorMenu
+from outwiker.core.events import EditorStyleNeededParams
 
 ApplyStyleEvent, EVT_APPLY_STYLE = wx.lib.newevent.NewEvent()
 
@@ -60,8 +60,6 @@ class TextEditor(wx.Panel):
         # Используется для замера времени после модификации, чтобы не парсить текст
         # после каждой введенной буквы
         self._lastEdit = datetime.now() - self._DELAY * 2
-
-        self._colorizingThread = None
 
         self.textCtrl = StyledTextCtrl(self, -1)
 
@@ -493,20 +491,11 @@ class TextEditor(wx.Panel):
 
     def _onStyleNeeded (self, event):
         if (not self._styleSet and
-                datetime.now() - self._lastEdit >= self._DELAY and
-                (self._colorizingThread is None or not self._colorizingThread.isAlive())):
+                datetime.now() - self._lastEdit >= self._DELAY):
+            page = Application.selectedPage
             text = self._getTextForParse()
-            self._colorizingThread = threading.Thread (None, self._colorizeThreadFunc, args=(text,))
-            self._colorizingThread.start()
-
-
-    def _colorizeThreadFunc (self, text):
-        stylebytes = self.getStyleBytes (text)
-        indicatorsbytes = self.getIndcatorsStyleBytes (text)
-        event = ApplyStyleEvent (text=text,
-                                 stylebytes=stylebytes,
-                                 indicatorsbytes = indicatorsbytes)
-        wx.PostEvent (self, event)
+            params = EditorStyleNeededParams (self, text)
+            Application.onEditorStyleNeeded (page, params)
 
 
     def _onApplyStyle (self, event):
