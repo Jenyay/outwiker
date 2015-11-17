@@ -41,7 +41,3 @@ class LatexPageFactory (PageFactory):
         Вернуть контрол, который будет отображать и редактировать страницу
         """
         return LatexPageView (parent)
-
-
-    def getPrefPanels (self, parent):
-        return []

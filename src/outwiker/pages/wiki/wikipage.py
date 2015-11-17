@@ -5,9 +5,7 @@
 
 from outwiker.core.tree import WikiPage
 from wikipageview import WikiPageView
-from wikipreferences import WikiPrefGeneralPanel
 from outwiker.core.factory import PageFactory
-from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
 from outwiker.gui.hotkey import HotKey
 
 from actions.fontsizebig import WikiFontSizeBigAction
@@ -71,16 +69,6 @@ class WikiPageFactory (PageFactory):
         Вернуть контрол, который будет отображать и редактировать страницу
         """
         return WikiPageView (parent)
-
-
-    def getPrefPanels (self, parent):
-        """
-        Получить список панелей для окна настроек
-        Возвращает список кортежей ("название", Панель)
-        """
-        generalPanel = WikiPrefGeneralPanel (parent)
-
-        return [PreferencePanelInfo (generalPanel, _(u"General"))]
 
 
     @staticmethod

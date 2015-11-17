@@ -43,14 +43,6 @@ class PageFactory (object):
         pass
 
 
-    @abstractmethod
-    def getPrefPanels (self, parent):
-        """
-        Метод возвращает список страниц для окна настроек (или пустой список)
-        """
-        pass
-
-
     @staticmethod
     def _createPage (pageType, parent, title, tags):
         """

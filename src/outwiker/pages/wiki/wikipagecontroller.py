@@ -3,8 +3,10 @@
 from outwiker.gui.controllers.basecontroller import BaseController
 from outwiker.gui.pagedialogpanels.appearancepanel import (AppearancePanel,
                                                            AppearanceController)
+from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
 
 from wikipage import WikiWikiPage
+from wikipreferences import WikiPrefGeneralPanel
 
 
 class WikiPageController (BaseController):
@@ -19,11 +21,13 @@ class WikiPageController (BaseController):
     def initialize (self):
         self._application.onPageDialogPageTypeChanged += self.__onPageDialogPageTypeChanged
         self._application.onPageDialogDestroy += self.__onPageDialogDestroy
+        self._application.onPreferencesDialogCreate += self.__onPreferencesDialogCreate
 
 
     def clear (self):
         self._application.onPageDialogPageTypeChanged -= self.__onPageDialogPageTypeChanged
         self._application.onPageDialogDestroy -= self.__onPageDialogDestroy
+        self._application.onPreferencesDialogCreate -= self.__onPreferencesDialogCreate
 
 
     def _addTab (self, dialog):
@@ -52,3 +56,10 @@ class WikiPageController (BaseController):
     def __onPageDialogDestroy (self, page, params):
         self._appearancePanel = None
         self._appearanceController = None
+
+
+    def __onPreferencesDialogCreate (self, dialog):
+        panel = WikiPrefGeneralPanel (dialog.treeBook)
+        prefPanelInfo = PreferencePanelInfo (panel, _(u"General"))
+
+        dialog.appendPreferenceGroup (_(u'Wiki Page'), [prefPanelInfo])

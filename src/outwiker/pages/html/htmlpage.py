@@ -88,7 +88,3 @@ class HtmlPageFactory (PageFactory):
         Вернуть контрол, который будет отображать и редактировать страницу
         """
         return HtmlPageView (parent)
-
-
-    def getPrefPanels (self, parent):
-        return []

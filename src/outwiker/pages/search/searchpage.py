@@ -153,11 +153,6 @@ class SearchPageFactory (PageFactory):
         return SearchPanel (parent)
 
 
-    def getPrefPanels (self, parent):
-        return []
-
-
-
 class GlobalSearch (object):
     pageTitle = _(u"# Search")
 

@@ -42,7 +42,3 @@ class TextPageFactory (PageFactory):
         Вернуть контрол, который будет отображать и редактировать страницу
         """
         return TextPanel (parent)
-
-
-    def getPrefPanels (self, parent):
-        return []

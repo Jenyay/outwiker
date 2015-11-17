@@ -41,7 +41,3 @@ class TestPageFactory (PageFactory):
         Вернуть контрол, который будет отображать и редактировать страницу
         """
         return TestPageView (parent)
-
-
-    def getPrefPanels (self, parent):
-        return []

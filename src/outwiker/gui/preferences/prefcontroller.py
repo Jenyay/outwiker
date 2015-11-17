@@ -41,7 +41,6 @@ class PrefController (BaseController):
         self._dialog = dialog
         self.__createInterfaceGroup ()
         self.__createEditorGroup ()
-        self.__createPagesForPages ()
         self.__createIconsetPage ()
         self.__createPluginsPage ()
 

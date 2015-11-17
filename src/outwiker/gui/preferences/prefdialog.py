@@ -36,21 +36,21 @@ class PrefDialog(wx.Dialog):
         return self.__treeBook
 
 
-    def appendPreferenceGroup (self, groupname, panelsList):
+    def appendPreferenceGroup (self, groupname, prefPanelsInfoList):
         """
         Добавить группу настроек
         groupname - имя группы
-        panels - массив экземпляров класса PreferencePanelInfo
+        prefPanelsInfoList - массив экземпляров класса PreferencePanelInfo
 
         Страница корня группы - первая страница в списке панелей.
         Массив не должен быть пустым
         """
-        assert len (panelsList) != 0
-        self.__treeBook.AddPage (panelsList[0].panel, groupname)
+        assert len (prefPanelsInfoList) != 0
+        self.__treeBook.AddPage (prefPanelsInfoList[0].panel, groupname)
 
         # Если всего одна страница в списке, то не будем добавлять вложенные страницы
-        if len (panelsList) > 1:
-            for panelInfo in panelsList:
+        if len (prefPanelsInfoList) > 1:
+            for panelInfo in prefPanelsInfoList:
                 self.__treeBook.AddSubPage (panelInfo.panel, panelInfo.name)
 
         self.__expandAllPages()
