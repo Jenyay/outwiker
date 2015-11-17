@@ -5,6 +5,7 @@ from outwiker.gui.pagedialogpanels.appearancepanel import (AppearancePanel,
                                                            AppearanceController)
 
 from htmlpage import HtmlWikiPage
+from htmlspellcontroller import HtmlSpellController
 
 
 class HtmlPageController (BaseController):
@@ -14,16 +15,21 @@ class HtmlPageController (BaseController):
         self._application = application
         self._appearancePanel = None
         self._appearanceController = None
+        self._spellController = HtmlSpellController (self._application)
 
 
     def initialize (self):
         self._application.onPageDialogPageTypeChanged += self.__onPageDialogPageTypeChanged
         self._application.onPageDialogDestroy += self.__onPageDialogDestroy
+        self._application.onPageViewCreate += self.__onPageViewCreate
+        self._application.onPageViewDestroy += self.__onPageViewDestroy
 
 
     def clear (self):
         self._application.onPageDialogPageTypeChanged -= self.__onPageDialogPageTypeChanged
         self._application.onPageDialogDestroy -= self.__onPageDialogDestroy
+        self._application.onPageViewCreate -= self.__onPageViewCreate
+        self._application.onPageViewDestroy -= self.__onPageViewDestroy
 
 
     def _addTab (self, dialog):
@@ -52,3 +58,17 @@ class HtmlPageController (BaseController):
     def __onPageDialogDestroy (self, page, params):
         self._appearancePanel = None
         self._appearanceController = None
+
+
+    def __onPageViewCreate (self, page):
+        assert page is not None
+
+        if page.getTypeString() == HtmlWikiPage.getTypeString():
+            self._spellController.initialize()
+
+
+    def __onPageViewDestroy (self, page):
+        assert page is not None
+
+        if page.getTypeString() == HtmlWikiPage.getTypeString():
+            self._spellController.clear()

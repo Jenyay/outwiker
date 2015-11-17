@@ -59,8 +59,8 @@ from outwiker.actions.applystyle import SetStyleToBranchAction
 from outwiker.actions.openpluginsfolder import OpenPluginsFolderAction
 
 from outwiker.pages.wiki.wikipagecontroller import WikiPageController
-from outwiker.pages.wiki.wikicolorizercontroller import WikiColorizerController
 from outwiker.pages.html.htmlpagecontroller import HtmlPageController
+from outwiker.pages.text.textpagecontroller import TextPageController
 from outwiker.gui.preferences.prefcontroller import PrefController
 
 
@@ -115,8 +115,8 @@ class MainWindow(wx.Frame):
 
         self._coreControllers = [
             WikiPageController (Application),
-            WikiColorizerController (Application),
             HtmlPageController (Application),
+            TextPageController (Application),
             PrefController (Application),
         ]
 

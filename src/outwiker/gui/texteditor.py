@@ -22,8 +22,6 @@ from outwiker.gui.searchreplacepanel import SearchReplacePanel
 from outwiker.gui.texteditormenu import TextEditorMenu
 from outwiker.core.events import EditorStyleNeededParams
 
-ApplyStyleEvent, EVT_APPLY_STYLE = wx.lib.newevent.NewEvent()
-
 
 class TextEditor(wx.Panel):
     _fontConfigSection = "Font"
@@ -99,7 +97,6 @@ class TextEditor(wx.Panel):
 
         # self.textCtrl.Bind (wx.stc.EVT_STC_STYLENEEDED, self._onStyleNeeded)
         self.textCtrl.Bind (wx.EVT_IDLE, self._onStyleNeeded)
-        self.Bind (EVT_APPLY_STYLE, self._onApplyStyle)
 
         # При перехвате этого сообщения в других классах, нужно вызывать event.Skip(),
         # чтобы это сообщение дошло досюда
@@ -498,51 +495,32 @@ class TextEditor(wx.Panel):
             Application.onEditorStyleNeeded (page, params)
 
 
-    def _onApplyStyle (self, event):
-        if event.text == self._getTextForParse():
-            textlength = self.calcByteLen (event.text)
+    def applyStyle (self, text, stylebytes, indicatorsbytes):
+        if text == self._getTextForParse():
+            textlength = self.calcByteLen (text)
             self.__stylebytes = [0] * textlength
 
-            if event.stylebytes is not None:
+            if stylebytes is not None:
                 self.__stylebytes = [item1 | item2
                                      for item1, item2
-                                     in zip (self.__stylebytes, event.stylebytes)]
+                                     in zip (self.__stylebytes, stylebytes)]
 
-            if event.indicatorsbytes is not None:
+            if indicatorsbytes is not None:
                 self.__stylebytes = [item1 | item2
                                      for item1, item2
-                                     in zip (self.__stylebytes, event.indicatorsbytes)]
+                                     in zip (self.__stylebytes, indicatorsbytes)]
 
             stylebytesstr = "".join ([chr(byte) for byte in self.__stylebytes])
 
-            if event.stylebytes is not None:
+            if stylebytes is not None:
                 self.textCtrl.StartStyling (0, 0xff ^ wx.stc.STC_INDICS_MASK)
                 self.textCtrl.SetStyleBytes (len (stylebytesstr), stylebytesstr)
 
-            if event.indicatorsbytes is not None:
+            if indicatorsbytes is not None:
                 self.textCtrl.StartStyling (0, wx.stc.STC_INDICS_MASK)
                 self.textCtrl.SetStyleBytes (len (stylebytesstr), stylebytesstr)
 
             self._styleSet = True
-
-
-    def getStyleBytes (self, text):
-        """
-        Функция должна возвращать список байт, описывающих раскраску (стили)
-        для текста text (за исключением индикаторов).
-        Функцию нужно переопределить, если используется собственная раскраска текста.
-        Если функция возвращает None, то раскраска синтаксиса не применяется.
-        """
-        return None
-
-
-    def getIndcatorsStyleBytes (self, text):
-        """
-        Функция должна возвращать список байт, описывающих раскраску (стили индикаторов) для текста text.
-        Функцию нужно переопределить, если используются индикаторы.
-        Если функция возвращает None, то раскраска индикаторов не применяется.
-        """
-        return None
 
 
     def getSpellChecker (self):
