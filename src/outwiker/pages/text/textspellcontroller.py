@@ -4,6 +4,7 @@ import threading
 
 import wx
 
+from outwiker.gui.texteditor import ApplyStyleEvent
 from textpage import TextWikiPage
 
 
@@ -44,5 +45,7 @@ class TextSpellController (object):
         stylebytes = [0] * textlength
         editor.runSpellChecking (stylebytes, 0, len (text))
 
-        if editor:
-            wx.CallAfter (editor.applyStyle, text, None, stylebytes)
+        event = ApplyStyleEvent (text=text,
+                                 stylebytes=None,
+                                 indicatorsbytes = stylebytes)
+        wx.PostEvent (editor, event)

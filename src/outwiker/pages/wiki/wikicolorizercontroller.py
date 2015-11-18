@@ -4,6 +4,7 @@ import threading
 
 import wx
 
+from outwiker.gui.texteditor import ApplyStyleEvent
 from wikicolorizer import WikiColorizer
 from wikieditor import WikiEditor
 from wikipage import WikiWikiPage
@@ -49,5 +50,7 @@ class WikiColorizerController (object):
         colorizer = WikiColorizer (editor, colorizeSyntax)
         stylebytes = colorizer.colorize (text)
 
-        if editor:
-            wx.CallAfter (editor.applyStyle, text, stylebytes, stylebytes)
+        event = ApplyStyleEvent (text=text,
+                                 stylebytes=stylebytes,
+                                 indicatorsbytes = stylebytes)
+        wx.PostEvent (editor, event)
