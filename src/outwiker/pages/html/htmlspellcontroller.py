@@ -5,6 +5,7 @@ import threading
 import wx
 
 from outwiker.gui.texteditor import ApplyStyleEvent
+from outwiker.gui.texteditorhelper import TextEditorHelper
 from htmlpage import HtmlWikiPage
 
 
@@ -40,9 +41,10 @@ class HtmlSpellController (object):
 
 
     def _colorizeThreadFunc (self, text, editor):
-        textlength = editor.calcByteLen (text)
+        helper = TextEditorHelper()
+        textlength = helper.calcByteLen (text)
         stylebytes = [0] * textlength
-        editor.runSpellChecking (stylebytes, 0, len (text))
+        editor.runSpellChecking (stylebytes, text, 0, len (text))
 
         event = ApplyStyleEvent (text=text,
                                  stylebytes=None,

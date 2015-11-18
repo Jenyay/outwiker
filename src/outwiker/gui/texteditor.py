@@ -20,6 +20,7 @@ from outwiker.gui.guiconfig import EditorConfig
 from outwiker.gui.searchreplacecontroller import SearchReplaceController
 from outwiker.gui.searchreplacepanel import SearchReplacePanel
 from outwiker.gui.texteditormenu import TextEditorMenu
+from outwiker.gui.texteditorhelper import TextEditorHelper
 from outwiker.core.events import EditorStyleNeededParams
 
 
@@ -39,7 +40,6 @@ class TextEditor(wx.Panel):
         self._spellChecker = None
 
         self.SPELL_ERROR_INDICATOR = 0
-        self.SPELL_ERROR_INDICATOR_MASK = wx.stc.STC_INDIC0_MASK
 
         self._spellErrorText = None
         self._spellSuggestList = []
@@ -73,6 +73,7 @@ class TextEditor(wx.Panel):
 
         self.__do_layout()
         self.__createCoders()
+        self._helper = TextEditorHelper()
 
         self.__showlinenumbers = self._config.lineNumbers.value
 
@@ -291,25 +292,13 @@ class TextEditor(wx.Panel):
         return width
 
 
-    def calcByteLen(self, text):
-        """Посчитать длину строки в байтах, а не в символах"""
-        return len(self.encoder(text)[0])
-
-
-    def calcBytePos (self, text, pos):
-        """Преобразовать позицию в символах в позицию в байтах"""
-        return len(self.encoder (text[: pos])[0])
-
-
     def getPosChar (self, posBytes):
         return len (self.textCtrl.GetTextRange (0, posBytes))
 
 
     def __createCoders (self):
         encoding = outwiker.core.system.getOS().inputEncoding
-
         self.mbcsEnc = codecs.getencoder(encoding)
-        self.encoder = codecs.getencoder("utf-8")
 
 
     def __onKeyDown (self, event):
@@ -404,8 +393,8 @@ class TextEditor(wx.Panel):
         startText = self.GetText()[:start]
         endText = self.GetText()[:end]
 
-        firstByte = self.calcByteLen (startText)
-        endByte = self.calcByteLen (endText)
+        firstByte = self._helper.calcByteLen (startText)
+        endByte = self._helper.calcByteLen (endText)
 
         self.textCtrl.SetSelection (firstByte, endByte)
 
@@ -450,44 +439,17 @@ class TextEditor(wx.Panel):
         return self.textCtrl.GetText().replace ("\t", " ")
 
 
-    def setSpellError (self, stylelist, startpos, endpos):
-        """
-        Mark positions as error
-        startpos, endpos - positions in characters
-        """
-        text = self._getTextForParse()
-        startbytes = self.calcBytePos (text, startpos)
-        endbytes = self.calcBytePos (text, endpos)
-
-        self.addStyle (stylelist, self.SPELL_ERROR_INDICATOR_MASK, startbytes, endbytes)
-
-
-    def addStyle (self, stylelist, styleid, bytepos_start, bytepos_end):
-        """
-        Добавляет (с помощью операции побитового ИЛИ) стиль с идентификатором styleid к массиву байт stylelist
-        """
-        style_src = stylelist[bytepos_start: bytepos_end]
-        style_new = [style | styleid for style in style_src]
-
-        stylelist[bytepos_start: bytepos_end] = style_new
-
-
-    def setStyle (self, stylelist, styleid, bytepos_start, bytepos_end):
-        """
-        Добавляет стиль с идентификатором styleid к массиву байт stylelist
-        """
-        stylelist[bytepos_start: bytepos_end] = [styleid] * (bytepos_end - bytepos_start)
-
-
-    def runSpellChecking (self, stylelist, start, end):
+    def runSpellChecking (self, stylelist, fullText, start, end):
         if not self._enableSpellChecking:
             return
 
-        text = self._getTextForParse()[start: end]
-        errors = self._spellChecker.findErrors (text)
+        errors = self._spellChecker.findErrors (fullText[start: end])
 
         for word, err_start, err_end in errors:
-            self.setSpellError (stylelist, err_start + start, err_end + start)
+            self._helper.setSpellError (stylelist,
+                                        fullText,
+                                        err_start + start,
+                                        err_end + start)
 
 
     def _onStyleNeeded (self, event):
@@ -501,7 +463,7 @@ class TextEditor(wx.Panel):
 
     def _onApplyStyle (self, event):
         if event.text == self._getTextForParse():
-            textlength = self.calcByteLen (event.text)
+            textlength = self._helper.calcByteLen (event.text)
             self.__stylebytes = [0] * textlength
 
             if event.stylebytes is not None:
@@ -597,18 +559,18 @@ class TextEditor(wx.Panel):
 
         if (stylebytes is None or
                 pos_byte >= stylebytes_len or
-                stylebytes[pos_byte] & self.SPELL_ERROR_INDICATOR_MASK == 0):
+                stylebytes[pos_byte] & self._helper.SPELL_ERROR_INDICATOR_MASK == 0):
             return
 
         endSpellError = startSpellError = pos_byte
 
         while (startSpellError >= 0 and
-               stylebytes[startSpellError] & self.SPELL_ERROR_INDICATOR_MASK != 0):
+               stylebytes[startSpellError] & self._helper.SPELL_ERROR_INDICATOR_MASK != 0):
             startSpellError -= 1
 
 
         while (endSpellError < stylebytes_len and
-               stylebytes[endSpellError] & self.SPELL_ERROR_INDICATOR_MASK != 0):
+               stylebytes[endSpellError] & self._helper.SPELL_ERROR_INDICATOR_MASK != 0):
             endSpellError += 1
 
         self._spellStartByteError = startSpellError + 1
