@@ -46,10 +46,8 @@ class Event (object):
                 removed_item = item
                 break
 
-        if removed_item is None:
-            raise ValueError("Handler is not handling this event, so cannot unhandle it.")
-
-        self._handlers.remove (removed_item)
+        if removed_item is not None:
+            self._handlers.remove (removed_item)
         return self
 
 

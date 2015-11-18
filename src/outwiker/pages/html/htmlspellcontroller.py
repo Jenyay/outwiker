@@ -4,19 +4,19 @@ import threading
 
 import wx
 
-from outwiker.gui.controllers.basecontroller import BaseController
+from htmlpage import HtmlWikiPage
 
 
-class HtmlSpellController (BaseController):
+class HtmlSpellController (object):
     """Spell controller for HTML editor"""
     def __init__(self, application):
-        super(HtmlSpellController, self).__init__()
         self._application = application
         self._colorizingThread = None
 
 
-    def initialize (self):
-        self._application.onEditorStyleNeeded += self.__onEditorStyleNeeded
+    def initialize (self, page):
+        if page.getTypeString() == HtmlWikiPage.getTypeString():
+            self._application.onEditorStyleNeeded += self.__onEditorStyleNeeded
 
 
     def clear (self):
@@ -43,4 +43,5 @@ class HtmlSpellController (BaseController):
         stylebytes = [0] * textlength
         editor.runSpellChecking (stylebytes, 0, len (text))
 
-        wx.CallAfter (editor.applyStyle, text, None, stylebytes)
+        if editor:
+            wx.CallAfter (editor.applyStyle, text, None, stylebytes)

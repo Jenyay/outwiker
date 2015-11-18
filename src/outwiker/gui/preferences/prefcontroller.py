@@ -1,6 +1,5 @@
 # -*- coding: UTF-8 -*-
 
-from outwiker.gui.controllers.basecontroller import BaseController
 from outwiker.core.event import EVENT_PRIORITY_MAX_CORE
 from outwiker.core.factoryselector import FactorySelector
 
@@ -19,7 +18,7 @@ from tagspanel import TagsPanel
 from attachpanel import AttachPanel
 
 
-class PrefController (BaseController):
+class PrefController (object):
     def __init__ (self, application):
         self._application = application
         self._dialog = None

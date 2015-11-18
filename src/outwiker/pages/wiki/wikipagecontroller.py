@@ -1,6 +1,5 @@
 # -*- coding: UTF-8 -*-
 
-from outwiker.gui.controllers.basecontroller import BaseController
 from outwiker.gui.pagedialogpanels.appearancepanel import (AppearancePanel,
                                                            AppearanceController)
 from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
@@ -10,10 +9,9 @@ from wikipreferences import WikiPrefGeneralPanel
 from wikicolorizercontroller import WikiColorizerController
 
 
-class WikiPageController (BaseController):
+class WikiPageController (object):
     """GUI controller for wiki page"""
     def __init__(self, application):
-        super(WikiPageController, self).__init__()
         self._application = application
         self._appearancePanel = None
         self._appearanceController = None
@@ -34,6 +32,7 @@ class WikiPageController (BaseController):
         self._application.onPreferencesDialogCreate -= self.__onPreferencesDialogCreate
         self._application.onPageViewCreate -= self.__onPageViewCreate
         self._application.onPageViewDestroy -= self.__onPageViewDestroy
+        self._colorizerController.clear()
 
 
     def _addTab (self, dialog):
@@ -73,13 +72,9 @@ class WikiPageController (BaseController):
 
     def __onPageViewCreate (self, page):
         assert page is not None
-
-        if page.getTypeString() == WikiWikiPage.getTypeString():
-            self._colorizerController.initialize()
+        self._colorizerController.initialize(page)
 
 
     def __onPageViewDestroy (self, page):
         assert page is not None
-
-        if page.getTypeString() == WikiWikiPage.getTypeString():
-            self._colorizerController.clear()
+        self._colorizerController.clear()

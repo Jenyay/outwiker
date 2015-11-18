@@ -1,17 +1,15 @@
 # -*- coding: UTF-8 -*-
 
-from outwiker.gui.controllers.basecontroller import BaseController
 from outwiker.gui.pagedialogpanels.appearancepanel import (AppearancePanel,
                                                            AppearanceController)
 
-from htmlpage import HtmlWikiPage
 from htmlspellcontroller import HtmlSpellController
+from htmlpage import HtmlWikiPage
 
 
-class HtmlPageController (BaseController):
+class HtmlPageController (object):
     """GUI controller for HTML page"""
     def __init__(self, application):
-        super(HtmlPageController, self).__init__()
         self._application = application
         self._appearancePanel = None
         self._appearanceController = None
@@ -30,6 +28,8 @@ class HtmlPageController (BaseController):
         self._application.onPageDialogDestroy -= self.__onPageDialogDestroy
         self._application.onPageViewCreate -= self.__onPageViewCreate
         self._application.onPageViewDestroy -= self.__onPageViewDestroy
+
+        self._spellController.clear()
 
 
     def _addTab (self, dialog):
@@ -62,13 +62,9 @@ class HtmlPageController (BaseController):
 
     def __onPageViewCreate (self, page):
         assert page is not None
-
-        if page.getTypeString() == HtmlWikiPage.getTypeString():
-            self._spellController.initialize()
+        self._spellController.initialize(page)
 
 
     def __onPageViewDestroy (self, page):
         assert page is not None
-
-        if page.getTypeString() == HtmlWikiPage.getTypeString():
-            self._spellController.clear()
+        self._spellController.clear()

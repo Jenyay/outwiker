@@ -4,22 +4,21 @@ import threading
 
 import wx
 
-from outwiker.gui.controllers.basecontroller import BaseController
-
 from wikicolorizer import WikiColorizer
 from wikieditor import WikiEditor
+from wikipage import WikiWikiPage
 
 
-class WikiColorizerController (BaseController):
+class WikiColorizerController (object):
     """Controller for colorize text in wiki editor"""
     def __init__(self, application):
-        super(WikiColorizerController, self).__init__()
         self._application = application
         self._colorizingThread = None
 
 
-    def initialize (self):
-        self._application.onEditorStyleNeeded += self.__onEditorStyleNeeded
+    def initialize (self, page):
+        if page.getTypeString() == WikiWikiPage.getTypeString():
+            self._application.onEditorStyleNeeded += self.__onEditorStyleNeeded
 
 
     def clear (self):
@@ -50,4 +49,5 @@ class WikiColorizerController (BaseController):
         colorizer = WikiColorizer (editor, colorizeSyntax)
         stylebytes = colorizer.colorize (text)
 
-        wx.CallAfter (editor.applyStyle, text, stylebytes, stylebytes)
+        if editor:
+            wx.CallAfter (editor.applyStyle, text, stylebytes, stylebytes)

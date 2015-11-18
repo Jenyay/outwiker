@@ -1,15 +1,11 @@
 # -*- coding: UTF-8 -*-
 
-from outwiker.gui.controllers.basecontroller import BaseController
-
-from textpage import TextWikiPage
 from textspellcontroller import TextSpellController
 
 
-class TextPageController (BaseController):
+class TextPageController (object):
     """GUI controller for text page"""
     def __init__(self, application):
-        super(TextPageController, self).__init__()
         self._application = application
         self._spellController = TextSpellController (self._application)
 
@@ -22,17 +18,14 @@ class TextPageController (BaseController):
     def clear (self):
         self._application.onPageViewCreate -= self.__onPageViewCreate
         self._application.onPageViewDestroy -= self.__onPageViewDestroy
+        self._spellController.clear()
 
 
     def __onPageViewCreate (self, page):
         assert page is not None
-
-        if page.getTypeString() == TextWikiPage.getTypeString():
-            self._spellController.initialize()
+        self._spellController.initialize(page)
 
 
     def __onPageViewDestroy (self, page):
         assert page is not None
-
-        if page.getTypeString() == TextWikiPage.getTypeString():
-            self._spellController.clear()
+        self._spellController.clear()

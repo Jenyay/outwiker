@@ -92,8 +92,8 @@ class EventTest (unittest.TestCase):
         self.assertEqual (self.value4, 1)
 
         event -= self.event4
-
-        self.assertRaises (ValueError, event.__isub__, self.event1)
+        event -= self.event4
+        event -= self.event4
 
 
     def testRemove1 (self):
@@ -119,7 +119,7 @@ class EventTest (unittest.TestCase):
 
     def testRemove3 (self):
         event = Event()
-        self.assertRaises (ValueError, event.__isub__, self.event1)
+        event -= self.event1
 
 
     def testClear1 (self):
