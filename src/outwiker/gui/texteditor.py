@@ -440,9 +440,6 @@ class TextEditor(wx.Panel):
 
 
     def runSpellChecking (self, stylelist, fullText, start, end):
-        if not self._enableSpellChecking:
-            return
-
         errors = self._spellChecker.findErrors (fullText[start: end])
 
         for word, err_start, err_end in errors:
@@ -457,7 +454,9 @@ class TextEditor(wx.Panel):
                 datetime.now() - self._lastEdit >= self._DELAY):
             page = Application.selectedPage
             text = self._getTextForParse()
-            params = EditorStyleNeededParams (self, text)
+            params = EditorStyleNeededParams (self,
+                                              text,
+                                              self._enableSpellChecking)
             Application.onEditorStyleNeeded (page, params)
 
 

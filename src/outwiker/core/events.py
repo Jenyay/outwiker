@@ -199,6 +199,7 @@ class EditorStyleNeededParams (object):
     """
     Parameter set for the onEditorStyleNeeded event
     """
-    def __init__ (self, editor, text):
+    def __init__ (self, editor, text, enableSpellChecking):
         self.editor = editor
         self.text = text
+        self.enableSpellChecking = enableSpellChecking

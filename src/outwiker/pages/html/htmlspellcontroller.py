@@ -34,17 +34,20 @@ class HtmlSpellController (object):
                 None,
                 self._colorizeThreadFunc,
                 args=(params.text,
-                      params.editor)
+                      params.editor,
+                      params.enableSpellChecking)
             )
 
             self._colorizingThread.start()
 
 
-    def _colorizeThreadFunc (self, text, editor):
+    def _colorizeThreadFunc (self, text, editor, enableSpellChecking):
         helper = TextEditorHelper()
         textlength = helper.calcByteLen (text)
         stylebytes = [0] * textlength
-        editor.runSpellChecking (stylebytes, text, 0, len (text))
+
+        if enableSpellChecking:
+            editor.runSpellChecking (stylebytes, text, 0, len (text))
 
         event = ApplyStyleEvent (text=text,
                                  stylebytes=None,

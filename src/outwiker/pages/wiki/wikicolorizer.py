@@ -14,9 +14,10 @@ from outwiker.gui.texteditorhelper import TextEditorHelper
 
 
 class WikiColorizer (object):
-    def __init__ (self, editor, colorizeSyntax):
+    def __init__ (self, editor, colorizeSyntax, enableSpellChecking):
         self._editor = editor
         self._helper = TextEditorHelper()
+        self._enableSpellChecking = enableSpellChecking
 
         self.text = TextFactory.make (None)
         self.bold = FontsFactory.makeBold (None).setParseAction(lambda s, l, t: None)
@@ -82,10 +83,11 @@ class WikiColorizer (object):
             if (tokenname == "text" or
                     tokenname == "noformat" or
                     tokenname == "preformat"):
-                self._editor.runSpellChecking (stylelist,
-                                               fullText,
-                                               pos_start,
-                                               pos_end)
+                if self._enableSpellChecking:
+                    self._editor.runSpellChecking (stylelist,
+                                                   fullText,
+                                                   pos_start,
+                                                   pos_end)
                 continue
 
             if tokenname == "linebreak":
@@ -146,10 +148,11 @@ class WikiColorizer (object):
                                        self._editor.STYLE_HEADING_ID,
                                        bytepos_start,
                                        bytepos_end)
-                self._editor.runSpellChecking (stylelist,
-                                               fullText,
-                                               pos_start,
-                                               pos_end)
+                if self._enableSpellChecking:
+                    self._editor.runSpellChecking (stylelist,
+                                                   fullText,
+                                                   pos_start,
+                                                   pos_end)
 
             elif tokenname == "command":
                 self._helper.setStyle (stylelist,
@@ -182,15 +185,17 @@ class WikiColorizer (object):
         link = text[pos_start: pos_end]
         sep1_pos = link.find (separator1)
         if sep1_pos != -1:
-            self._editor.runSpellChecking (stylelist,
-                                           fullText,
-                                           pos_start,
-                                           pos_start + sep1_pos)
+            if self._enableSpellChecking:
+                self._editor.runSpellChecking (stylelist,
+                                               fullText,
+                                               pos_start,
+                                               pos_start + sep1_pos)
             return
 
         sep2_pos = link.find (separator2)
         if sep2_pos != -1:
-            self._editor.runSpellChecking (stylelist,
-                                           fullText,
-                                           pos_start + sep2_pos + len (separator2),
-                                           pos_end)
+            if self._enableSpellChecking:
+                self._editor.runSpellChecking (stylelist,
+                                               fullText,
+                                               pos_start + sep2_pos + len (separator2),
+                                               pos_end)

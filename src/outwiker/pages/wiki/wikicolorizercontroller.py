@@ -40,14 +40,15 @@ class WikiColorizerController (object):
                 self._colorizeThreadFunc,
                 args=(params.text,
                       params.editor,
-                      params.editor.colorizeSyntax)
+                      params.editor.colorizeSyntax,
+                      params.editor.enableSpellChecking)
             )
 
             self._colorizingThread.start()
 
 
-    def _colorizeThreadFunc (self, text, editor, colorizeSyntax):
-        colorizer = WikiColorizer (editor, colorizeSyntax)
+    def _colorizeThreadFunc (self, text, editor, colorizeSyntax, enableSpellChecking):
+        colorizer = WikiColorizer (editor, colorizeSyntax, enableSpellChecking)
         stylebytes = colorizer.colorize (text)
 
         event = ApplyStyleEvent (text=text,
