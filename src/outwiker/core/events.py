@@ -124,16 +124,6 @@ class EditorPopupMenuParams (object):
         self.pos_byte = pos_byte
 
 
-class SpellCheckingParams (object):
-    """
-    Parameter set for the onSpellChecking event
-    """
-    def __init__ (self, spellChecker, word, isValid):
-        self.spellChecker = spellChecker
-        self.word = word
-        self.isValid = isValid
-
-
 class PageDialogInitParams (object):
     """
     Parameter set for the onPageDialogInit event

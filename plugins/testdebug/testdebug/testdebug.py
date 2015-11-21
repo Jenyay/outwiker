@@ -42,7 +42,6 @@ class PluginDebug (Plugin):
         self._enableOnHoverLink = config.enableOnHoverLink.value
         self._enableOnLinkClick = config.enableOnLinkClick.value
         self._enableOnEditorPopup = config.enableOnEditorPopup.value
-        self._enableOnSpellChecking = config.enableOnSpellChecking.value
         self._enableRenderingTimeMeasuring = config.enableRenderingTimeMeasuring.value
         self._enableNewPageDialogTab = config.enableNewPageDialogTab.value
         self._enablePageDialogEvents = config.enablePageDialogEvents.value
@@ -52,7 +51,6 @@ class PluginDebug (Plugin):
         config.enableOnHoverLink.value = self._enableOnHoverLink
         config.enableOnLinkClick.value = self._enableOnLinkClick
         config.enableOnEditorPopup.value = self._enableOnEditorPopup
-        config.enableOnSpellChecking.value = self._enableOnSpellChecking
         config.enableRenderingTimeMeasuring.value = self._enableRenderingTimeMeasuring
         config.enableNewPageDialogTab.value = self._enableNewPageDialogTab
         config.enablePageDialogEvents.value = self._enablePageDialogEvents
@@ -87,7 +85,6 @@ class PluginDebug (Plugin):
             self._application.onHoverLink += self.__onHoverLink
             self._application.onLinkClick += self.__onLinkClick
             self._application.onEditorPopupMenu += self.__onEditorPopupMenu
-            self._application.onSpellChecking += self.__onSpellChecking
             self._application.onHtmlRenderingBegin += self.__onHtmlRenderingBegin
             self._application.onHtmlRenderingEnd += self.__onHtmlRenderingEnd
             self._application.onWikiParserPrepare += self.__onWikiParserPrepare
@@ -137,7 +134,6 @@ class PluginDebug (Plugin):
             self._application.onHoverLink -= self.__onHoverLink
             self._application.onLinkClick -= self.__onLinkClick
             self._application.onEditorPopupMenu -= self.__onEditorPopupMenu
-            self._application.onSpellChecking -= self.__onSpellChecking
             self._application.onHtmlRenderingBegin -= self.__onHtmlRenderingBegin
             self._application.onHtmlRenderingEnd -= self.__onHtmlRenderingEnd
             self._application.onWikiParserPrepare -= self.__onWikiParserPrepare
@@ -297,14 +293,6 @@ class PluginDebug (Plugin):
         if self._enableOnEditorPopup:
             params.menu.AppendSeparator()
             params.menu.Append (-1, u'Debug popup menu item')
-
-
-    def __onSpellChecking (self, page, params):
-        if self._enableOnSpellChecking:
-            if params.word.lower() == u'хрень':
-                params.isValid = False
-            elif params.word.lower() == u'блаблабла':
-                params.isValid = True
 
 
     def __onHtmlRenderingBegin (self, page, htmlView):

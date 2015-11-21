@@ -206,13 +206,6 @@ class ApplicationParams (object):
         self.onEditorPopupMenu = Event()
 
 
-        # Event occurs after spell checking for any word
-        # Parameters:
-        #     page - current page
-        #     params - instance of the the outwiker.core.events.SpellCheckingParams class
-        self.onSpellChecking = Event()
-
-
         # Event occurs after page dialog creation
         # Parameters:
         #     page - current (selected) page

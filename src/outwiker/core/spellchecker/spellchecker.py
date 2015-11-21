@@ -3,7 +3,6 @@
 import re
 
 from enchantwrapper import EnchantWrapper
-from outwiker.core.events import SpellCheckingParams
 
 
 class SpellChecker (object):
@@ -48,10 +47,7 @@ class SpellChecker (object):
         if not isValid:
             isValid = self._realChecker.check (word)
 
-        params = SpellCheckingParams (self, word, isValid)
-        self._application.onSpellChecking (self._application.selectedPage, params)
-
-        return params.isValid
+        return isValid
 
 
     def _getSpellCheckerWrapper (self, langlist, folders):
