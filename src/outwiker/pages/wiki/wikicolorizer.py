@@ -14,10 +14,11 @@ from outwiker.gui.texteditorhelper import TextEditorHelper
 
 
 class WikiColorizer (object):
-    def __init__ (self, editor, colorizeSyntax, enableSpellChecking):
+    def __init__ (self, editor, colorizeSyntax, enableSpellChecking, runEvent):
         self._editor = editor
         self._helper = TextEditorHelper()
         self._enableSpellChecking = enableSpellChecking
+        self._runEvent = runEvent
 
         self.text = TextFactory.make (None)
         self.bold = FontsFactory.makeBold (None).setParseAction(lambda s, l, t: None)
@@ -75,6 +76,9 @@ class WikiColorizer (object):
         tokens = parser.scanString (text[start: end])
 
         for token in tokens:
+            if not self._runEvent.is_set():
+                break
+
             pos_start = token[1] + start
             pos_end = token[2] + start
 
