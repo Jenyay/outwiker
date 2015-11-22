@@ -41,4 +41,10 @@ class WikiColorizerController (BaseTextStylingController):
         colorizer = WikiColorizer (editor, colorizeSyntax, enableSpellChecking, runEvent)
         stylebytes = colorizer.colorize (text)
 
-        self._updateStyles (editor, text, stylebytes, stylebytes, 0, len (text))
+        if self._runColorizingEvent.is_set():
+            self._updateStyles (editor,
+                                text,
+                                stylebytes,
+                                stylebytes,
+                                0,
+                                len (text))

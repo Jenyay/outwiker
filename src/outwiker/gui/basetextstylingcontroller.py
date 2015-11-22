@@ -50,6 +50,7 @@ class BaseTextStylingController (object):
 
         if self._colorizingThread is not None:
             self._colorizingThread.join()
+            self._colorizingThread = None
 
 
     def _updateStyles (self, editor, text, stylebytes, indicatorsbytes, start, end):

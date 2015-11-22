@@ -34,11 +34,10 @@ class SimpleSpellController (BaseTextStylingController):
         if enableSpellChecking:
             for start, end in self._splitText (text):
                 if not self._runColorizingEvent.is_set():
-                    break
-
+                    return
                 editor.runSpellChecking (stylebytes, text, start, end)
 
-            self._updateStyles (editor, text, None, stylebytes, 0, len (text))
+        self._updateStyles (editor, text, None, stylebytes, 0, len (text))
 
 
     def _splitText (self, text):

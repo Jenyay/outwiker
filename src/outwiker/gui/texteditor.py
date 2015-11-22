@@ -458,6 +458,7 @@ class TextEditor(wx.Panel):
                                               text,
                                               self._enableSpellChecking)
             Application.onEditorStyleNeeded (page, params)
+            self._styleSet = True
 
 
     def _onApplyStyle (self, event):
