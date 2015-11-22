@@ -37,9 +37,7 @@ class SimpleSpellController (BaseTextStylingController):
                     break
 
                 editor.runSpellChecking (stylebytes, text, start, end)
-                self._updateStyles (editor, text, None, stylebytes)
-
-        self._updateStyles (editor, text, None, stylebytes)
+                self._updateStyles (editor, text, None, stylebytes, start, end)
 
 
     def _splitText (self, text):
@@ -54,7 +52,7 @@ class SimpleSpellController (BaseTextStylingController):
             newposition = text.rfind (u' ', position, position + portion)
             if newposition != -1:
                 yield (position, newposition)
+                position = newposition + 1
             else:
                 yield (position, len(text))
-
-            position += portion
+                break

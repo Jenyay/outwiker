@@ -52,10 +52,12 @@ class BaseTextStylingController (object):
             self._colorizingThread.join()
 
 
-    def _updateStyles (self, editor, text, stylebytes, indicatorsbytes):
+    def _updateStyles (self, editor, text, stylebytes, indicatorsbytes, start, end):
         event = ApplyStyleEvent (text=text,
                                  stylebytes=stylebytes,
-                                 indicatorsbytes = indicatorsbytes)
+                                 indicatorsbytes = indicatorsbytes,
+                                 start = start,
+                                 end = end)
         wx.PostEvent (editor, event)
 
 

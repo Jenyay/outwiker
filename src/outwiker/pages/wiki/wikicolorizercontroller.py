@@ -40,4 +40,5 @@ class WikiColorizerController (BaseTextStylingController):
     def _colorizeThreadFunc (self, text, editor, colorizeSyntax, enableSpellChecking, runEvent):
         colorizer = WikiColorizer (editor, colorizeSyntax, enableSpellChecking, runEvent)
         stylebytes = colorizer.colorize (text)
-        self._updateStyles (editor, text, stylebytes, stylebytes)
+
+        self._updateStyles (editor, text, stylebytes, stylebytes, 0, len (text))
