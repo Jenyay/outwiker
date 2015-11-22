@@ -37,7 +37,8 @@ class SimpleSpellController (BaseTextStylingController):
                     break
 
                 editor.runSpellChecking (stylebytes, text, start, end)
-                self._updateStyles (editor, text, None, stylebytes, start, end)
+
+            self._updateStyles (editor, text, None, stylebytes, 0, len (text))
 
 
     def _splitText (self, text):

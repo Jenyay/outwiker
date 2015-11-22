@@ -462,13 +462,15 @@ class TextEditor(wx.Panel):
 
     def _onApplyStyle (self, event):
         if event.text == self._getTextForParse():
+            startByte = self._helper.calcBytePos (event.text, event.start)
+            endByte = self._helper.calcBytePos (event.text, event.end)
+            lenBytes = endByte - startByte
+
             textlength = self._helper.calcByteLen (event.text)
             self.__stylebytes = [0] * textlength
 
             if event.stylebytes is not None:
-                self.__stylebytes = [item1 | item2
-                                     for item1, item2
-                                     in zip (self.__stylebytes, event.stylebytes)]
+                self.__stylebytes = event.stylebytes
 
             if event.indicatorsbytes is not None:
                 self.__stylebytes = [item1 | item2
@@ -477,13 +479,14 @@ class TextEditor(wx.Panel):
 
             stylebytesstr = "".join ([chr(byte) for byte in self.__stylebytes])
 
+
             if event.stylebytes is not None:
-                self.textCtrl.StartStyling (0, 0xff ^ wx.stc.STC_INDICS_MASK)
-                self.textCtrl.SetStyleBytes (len (stylebytesstr), stylebytesstr)
+                self.textCtrl.StartStyling (startByte, 0xff ^ wx.stc.STC_INDICS_MASK)
+                self.textCtrl.SetStyleBytes (lenBytes, stylebytesstr[startByte:endByte])
 
             if event.indicatorsbytes is not None:
-                self.textCtrl.StartStyling (0, wx.stc.STC_INDICS_MASK)
-                self.textCtrl.SetStyleBytes (len (stylebytesstr), stylebytesstr)
+                self.textCtrl.StartStyling (startByte, wx.stc.STC_INDICS_MASK)
+                self.textCtrl.SetStyleBytes (lenBytes, stylebytesstr[startByte:endByte])
 
             self._styleSet = True
 
