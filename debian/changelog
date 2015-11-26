@@ -1,3 +1,10 @@
+outwiker (1.9.0+780~wily) wily; urgency=medium
+
+  * Fixed preferences dialog
+  * Fixed crashes with spell checker and wiki colorizing
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Thu, 26 Nov 2015 20:43:24 +0300
+
 outwiker (1.9.0+779~wily) wily; urgency=medium
 
   * Next version
