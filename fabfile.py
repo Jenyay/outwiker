@@ -210,14 +210,6 @@ def win (skipinstaller=False):
     win_build_dir = os.path.join (build_dir, u"outwiker_win")
     build_pluginsdir = os.path.join (win_build_dir, u'plugins')
 
-    filesForRemoving = [
-        os.path.join (win_build_dir, u'_hashlib.pyd'),
-        os.path.join (win_build_dir, u'_ssl.pyd'),
-        os.path.join (win_build_dir, u'bz2.pyd'),
-        os.path.join (win_build_dir, u'pyexpat.pyd'),
-        os.path.join (win_build_dir, u'select.pyd'),
-    ]
-
     # Create the plugins folder (it is not appened to the git repository)
     _remove (pluginsdir)
     os.mkdir (pluginsdir)
@@ -225,8 +217,6 @@ def win (skipinstaller=False):
     # Build by cx_Freeze
     with lcd ("src"):
         local ("python setup_win.py build")
-
-    map (_remove, filesForRemoving)
 
     _remove (build_pluginsdir)
     os.mkdir (build_pluginsdir)
