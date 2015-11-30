@@ -247,6 +247,49 @@ def win (skipinstaller=False):
         local ("7z a ..\outwiker_win_unstable_all_plugins.7z .\* .\plugins -r -aoa -xr!*.pyc -xr!.ropeproject")
 
 
+def linux ():
+    """
+    Assemble builds under Windows
+    """
+    build_dir = u'build'
+    pluginsdir = os.path.join ("src", "plugins")
+    linux_build_dir = os.path.join (build_dir, u"outwiker_linux")
+    build_pluginsdir = os.path.join (linux_build_dir, u'plugins')
+
+    toRemove = [
+        os.path.join (linux_build_dir, u'tcl'),
+        os.path.join (linux_build_dir, u'tk'),
+        os.path.join (linux_build_dir, u'PyQt4.QtCore.so'),
+        os.path.join (linux_build_dir, u'PyQt4.QtGui.so'),
+        os.path.join (linux_build_dir, u'_tkinter.so'),
+        # os.path.join (linux_build_dir, u'pango.so'),
+        # os.path.join (linux_build_dir, u'pangocairo.so'),
+        # os.path.join (linux_build_dir, u'cairo._cairo.so'),
+    ]
+
+    # Create the plugins folder (it is not appened to the git repository)
+    _remove (pluginsdir)
+    os.mkdir (pluginsdir)
+
+    # Build by cx_Freeze
+    with lcd ("src"):
+        local ("python setup_linux.py build")
+
+    map (_remove, toRemove)
+
+    _remove (build_pluginsdir)
+    os.mkdir (build_pluginsdir)
+
+    # Remove old versions
+    _remove ("build/outwiker_linux_unstable_x64.zip")
+    _remove ("build/outwiker_linux_unstable_x64.7z")
+
+    # Create archive without plugins
+    with lcd (linux_build_dir):
+        local ("7z a ../outwiker_linux_unstable_x64.zip ./* ./plugins -r -aoa")
+        local ("7z a ../outwiker_linux_unstable_x64.7z ./* ./plugins -r -aoa")
+
+
 def nextversion():
     """
     Increment a version number (execute under Linux only, incremented the deb package version also)
