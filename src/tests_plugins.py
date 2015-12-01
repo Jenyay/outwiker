@@ -116,4 +116,6 @@ if __name__ == '__main__':
 
     from test.plugins.texequation.texequation_test import TexEquationTest
 
+    from test.plugins.webpage.webpage import WebPageTest
+
     unittest.main()
