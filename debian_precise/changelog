@@ -1,3 +1,9 @@
+outwiker (1.9.0+781~wily) wily; urgency=medium
+
+  * Next version
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Tue, 01 Dec 2015 21:15:12 +0300
+
 outwiker (1.9.0+780~wily) wily; urgency=medium
 
   * Fixed preferences dialog
