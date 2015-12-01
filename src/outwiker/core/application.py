@@ -150,11 +150,6 @@ class ApplicationParams (object):
         #     tray - the OutwikerTrayIcon class instance
         self.onTrayPopupMenu = Event()
 
-        # Event occurs by chanching list of the factories for page creation.
-        # Parameters:
-        #     newfactory - new factory instance (if new facroty was added)
-        #         or None (if factory was removed)
-        self.onPageFactoryListChange = Event()
 
         # Event occurs before HTML generation (for wiki and HTML pages)
         # Order of the calling preprocessing events is not regulated

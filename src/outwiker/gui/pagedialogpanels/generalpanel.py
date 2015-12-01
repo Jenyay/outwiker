@@ -67,7 +67,6 @@ class GeneralController (BasePageDialogController):
         self._dialog = dialog
         self._generalPanel = generalPanel
 
-        self._fillComboType()
         self._setTagsList()
 
         self._generalPanel.typeCombo.Bind (
@@ -124,6 +123,7 @@ class GeneralController (BasePageDialogController):
         Initialize the panel before new page creation
         parentPage - the parent page for new page
         """
+        self._fillComboType (None)
         if parentPage.parent is not None:
             self.tags = parentPage.tags
 
@@ -140,6 +140,7 @@ class GeneralController (BasePageDialogController):
         Initialize the panel before new page editing.
         page - page for editing
         """
+        self._fillComboType(currentPage)
         self._generalPanel.titleTextCtrl.SetSelection (-1, -1)
 
         self.tags = currentPage.tags
@@ -208,7 +209,10 @@ class GeneralController (BasePageDialogController):
         self._iconsPanel = None
 
 
-    def _fillComboType (self):
+    def _fillComboType (self, currentPage):
+        """
+        currentPage - page for edit or None if dialog opened for creation a page
+        """
         self._generalPanel.typeCombo.Clear()
         for factory in FactorySelector.getFactories():
             self._generalPanel.typeCombo.Append (factory.title, factory)
