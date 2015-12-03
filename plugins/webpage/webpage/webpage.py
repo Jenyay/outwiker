@@ -13,7 +13,7 @@ else:
     class PluginWebPage (Plugin):
         def __init__ (self, application):
             """
-            application - экземпляр класса core.application.ApplicationParams
+            application - instance of the core.application.ApplicationParams class
             """
             super (PluginWebPage, self).__init__ (application)
             self.__controller = Controller(self, self._application)
