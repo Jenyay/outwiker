@@ -250,6 +250,15 @@ class ApplicationParams (object):
         self.onPageDialogPageTagsChanged = Event()
 
 
+        # Event occurs during page dialog initialoztion,
+        # during general panel creation. Evens sender expect what event 
+        # handlers will fill the page factories list with addPageFactory method.
+        # Parameters:
+        #     page - current (selected) page
+        #     params - instance of the PageDialogPageFactoriesNeededParams class
+        self.onPageDialogPageFactoriesNeeded = Event()
+
+
         # Event occurs by TextEditor when it needs styles
         # Parameters:
         #     page - current (selected) page
