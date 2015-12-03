@@ -8,7 +8,7 @@ from .controller import Controller
 
 
 if getCurrentVersion() < Version (1, 9, 0, 781, status=StatusSet.DEV):
-    print ("TestPage plugin. OutWiker version requirement: 1.9.0.781")
+    print ("WebPage plugin. OutWiker version requirement: 1.9.0.781")
 else:
     class PluginWebPage (Plugin):
         def __init__ (self, application):
