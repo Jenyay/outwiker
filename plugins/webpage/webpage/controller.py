@@ -1,8 +1,11 @@
 # -*- coding: UTF-8 -*-
 
+import os
+
 import wx
 
 from outwiker.core.factoryselector import FactorySelector
+from outwiker.core.system import getOS
 
 from webnotepage import WebPageFactory, WebNotePage
 from actions.downloadaction import DownloadAction
@@ -20,7 +23,7 @@ class Controller (object):
 
 
     def initialize (self):
-        self.__menuName = _(u"Web page")
+        self._menuName = _(u"Web page")
         self._createGui()
 
         self._application.onPageDialogPageFactoriesNeeded += self.__onPageDialogPageFactoriesNeeded
@@ -47,7 +50,7 @@ class Controller (object):
             self._application.actionController.removeMenuItem (DownloadAction.stringId)
             self._application.actionController.removeToolbarButton (DownloadAction.stringId)
 
-            index = mainWindow.mainMenu.FindMenu (self.__menuName)
+            index = mainWindow.mainMenu.FindMenu (self._menuName)
             assert index != wx.NOT_FOUND
 
             mainWindow.mainMenu.Remove (index)
@@ -60,8 +63,32 @@ class Controller (object):
 
 
     def _createMenu (self):
-        pass
+        self.menu = wx.Menu (u"")
+        self._application.mainWindow.mainMenu.Append (self.menu, self._menuName)
 
 
     def _createAction (self):
-        pass
+        mainWindow = self._application.mainWindow
+
+        if (mainWindow is not None and
+                mainWindow.PLUGINS_TOOLBAR_STR in mainWindow.toolbars):
+            action = DownloadAction(self._application)
+            toolbar = mainWindow.toolbars[mainWindow.PLUGINS_TOOLBAR_STR]
+            image = self.getImagePath ("download.png")
+
+            controller = self._application.actionController
+
+            controller.register (action, hotkey=None)
+            controller.appendMenuItem (DownloadAction.stringId, self.menu)
+            controller.appendToolbarButton (DownloadAction.stringId,
+                                            toolbar,
+                                            image)
+
+
+    def getImagePath (self, imageName):
+        """
+        Получить полный путь до картинки
+        """
+        imagedir = unicode (os.path.join (os.path.dirname (__file__), "images"), getOS().filesEncoding)
+        fname = os.path.join (imagedir, imageName)
+        return fname
