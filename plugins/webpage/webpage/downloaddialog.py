@@ -1,10 +1,16 @@
 # -*- coding: UTF-8 -*-
 
+from threading import Event, Thread
+
 import wx
 
 from outwiker.core.tagslist import TagsList
 from outwiker.gui.testeddialog import TestedDialog
 from outwiker.gui.tagsselector import TagsSelector
+from outwiker.core.commands import MessageBox
+
+UpdateLogEvent, EVT_UPDATE_LOG = wx.lib.newevent.NewEvent()
+FinishDownloadEvent, EVT_FINISH_DOWNLOAD = wx.lib.newevent.NewEvent()
 
 
 class DownloadDialog (TestedDialog):
@@ -69,14 +75,17 @@ class DownloadDialog (TestedDialog):
 
 
 
-
 class DownloadDialogController (object):
     def __init__ (self, dialog, application):
         self._dialog = dialog
         self._application = application
 
+        self._runEvent = Event()
+        self._thread = None
+
         self._dialog.Bind (wx.EVT_BUTTON, self._onOk, id=wx.ID_OK)
         self._dialog.Bind (wx.EVT_BUTTON, self._onCancel, id=wx.ID_CANCEL)
+        self._dialog.Bind (EVT_UPDATE_LOG, self._onLogUpdate)
 
 
     def showDialog (self):
@@ -104,9 +113,50 @@ class DownloadDialogController (object):
         pass
 
 
+    def _onLogUpdate (self, event):
+        self._dialog.logText.Value += event.text
+
+        count = len (self._dialog.logText.Value)
+        self._dialog.logText.SetSelection (count, count)
+        self._dialog.logText.SetFocus()
+
+
     def _onOk (self, event):
-        event.Skip()
+        if len (self._dialog.urlText.Value.strip()) == 0:
+            MessageBox (_(u'Enter url for downloading'),
+                        _(u"Error"),
+                        wx.ICON_ERROR | wx.OK)
+            self._dialog.urlText.SetFocus()
+            return
+
+        if self._thread is None:
+            self._runEvent.clear()
+            self._thread = DownloadThread (self._dialog, self._runEvent)
+            self._thread.start()
+        elif self._thread is not None:
+            event.Skip()
 
 
     def _onCancel (self, event):
+        self._runEvent.set()
+        if self._thread is not None:
+            self._thread.join()
+
         event.Skip()
+
+
+
+class DownloadThread (Thread):
+    def __init__ (self, parentWnd, runEvent, name=None):
+        super (DownloadThread, self).__init__ (name=name)
+        self._parentWnd = parentWnd
+        self._runEvent = runEvent
+
+
+    def run (self):
+        self._updateLog (_(u'Start download\n'))
+
+
+    def _updateLog (self, text):
+        event = UpdateLogEvent (text=text)
+        wx.PostEvent (self._parentWnd, event)
