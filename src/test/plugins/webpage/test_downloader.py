@@ -23,10 +23,22 @@ class DownloaderTest (unittest.TestCase):
 
     def testEmpty (self):
         from webpage.downloader import Downloader
-        downloader = Downloader (self._staticDirName)
+        downloader = Downloader (self._staticDirName,
+                                 self._getTestController())
 
-        fname = self._path2url (u'../test/webpage/empty.html')
+        fname = self._path2url (u'../test/webpage/example0/example0.html')
         downloader.start (fname)
+        self.assertIn (u'<html>', downloader.content_src)
+
+
+    def _getTestController (self):
+        from webpage.downloader import BaseDownloadController
+
+        class TestController (BaseDownloadController):
+            def process (self, url, node):
+                pass
+
+        return TestController()
 
 
     @staticmethod

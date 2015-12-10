@@ -1,6 +1,8 @@
 # -*- coding: UTF-8 -*-
 
 import os
+import os.path
+import sys
 
 import wx
 
@@ -26,8 +28,23 @@ class Controller (object):
         self._menuName = _(u"Web page")
         self._createGui()
 
+        self._correctSysPath()
+
         self._application.onPageDialogPageFactoriesNeeded += self.__onPageDialogPageFactoriesNeeded
         FactorySelector.addFactory (WebPageFactory())
+
+
+    def _correctSysPath (self):
+        cmd_folder = unicode (os.path.dirname(os.path.abspath(__file__)),
+                              getOS().filesEncoding)
+        cmd_folder = os.path.join (cmd_folder, u'libs')
+
+        syspath = [unicode (item, getOS().filesEncoding)
+                   if type (item) != type(u"")
+                   else item for item in sys.path]
+
+        if cmd_folder not in syspath:
+            sys.path.insert(0, cmd_folder)
 
 
     def destroy (self):

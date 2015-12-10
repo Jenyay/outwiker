@@ -6,6 +6,8 @@ from outwiker.core.version import Version, StatusSet
 
 from .controller import Controller
 
+__version__ = u'1.0'
+
 
 if getCurrentVersion() < Version (1, 9, 0, 781, status=StatusSet.DEV):
     print ("WebPage plugin. OutWiker version requirement: 1.9.0.781")
@@ -39,7 +41,7 @@ else:
 
         @property
         def version (self):
-            return u"1.0"
+            return __version__
 
 
         @property
