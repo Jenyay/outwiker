@@ -1,17 +1,20 @@
 # -*- coding: UTF-8 -*-
 
 import os.path
+from tempfile import mkdtemp
 import urllib
 import unittest
 
 from outwiker.core.application import Application
 from outwiker.core.pluginsloader import PluginsLoader
+from test.utils import removeDir
 
 
 class DownloaderTest (unittest.TestCase):
     def setUp (self):
         self.plugindirlist = [u'../plugins/webpage']
         self._staticDirName = u'download'
+        self._tempDir = mkdtemp (prefix=u'Абырвалг абыр')
 
         self.loader = PluginsLoader(Application)
         self.loader.load (self.plugindirlist)
@@ -19,12 +22,13 @@ class DownloaderTest (unittest.TestCase):
 
     def tearDown (self):
         self.loader.clear()
+        removeDir (self._tempDir)
 
 
     def testEmpty (self):
         from webpage.downloader import Downloader
         controller = self._getTestController()
-        downloader = Downloader (self._staticDirName)
+        downloader = Downloader ()
 
         fname = self._path2url (u'../test/webpage/example0/example0.html')
         downloader.start (fname, controller)
@@ -35,7 +39,7 @@ class DownloaderTest (unittest.TestCase):
     def testExample1 (self):
         from webpage.downloader import Downloader
         controller = self._getTestController()
-        downloader = Downloader (self._staticDirName)
+        downloader = Downloader ()
 
         examplePath = u'../test/webpage/example1/'
         exampleHtmlPath = os.path.join (examplePath, u'example1.html')
@@ -43,20 +47,45 @@ class DownloaderTest (unittest.TestCase):
         downloader.start (self._path2url (exampleHtmlPath), controller)
         self.assertEqual (downloader.pageTitle, u'Заголовок страницы')
 
-        imagePath_01 = os.path.join (examplePath, u'image_01.png')
-        self.assertEqual (controller.files[0][0], self._path2url (imagePath_01))
+        self.assertEqual (controller.files[0][0], u'image_01.png')
+        self.assertEqual (controller.files[1][0], u'/images/image_02.png')
+        self.assertEqual (controller.files[2][0], u'images/image_03.png')
+        self.assertEqual (controller.files[3][0],
+                          u'images/subfolder/image_04.png')
 
-        imagePath_02 = u'file:///images/image_02.png'
-        self.assertEqual (controller.files[1][0], imagePath_02)
 
-        imagePath_03 = os.path.join (examplePath, u'images', u'image_03.png')
-        self.assertEqual (controller.files[2][0], self._path2url (imagePath_03))
+    def testDownloading_01 (self):
+        from webpage.downloader import Downloader, DownloadController
 
-        imagePath_04 = os.path.join (examplePath,
-                                     u'images',
-                                     u'subfolder',
-                                     u'image_04.png')
-        self.assertEqual (controller.files[3][0], self._path2url (imagePath_04))
+        controller = DownloadController(self._tempDir, self._staticDirName)
+        downloader = Downloader ()
+
+        examplePath = u'../test/webpage/example1/'
+        exampleHtmlPath = os.path.join (examplePath, u'example1.html')
+
+        downloader.start (self._path2url (exampleHtmlPath), controller)
+
+        downloadDir = os.path.join (self._tempDir, self._staticDirName)
+
+        fname1 = os.path.join (self._tempDir,
+                               self._staticDirName,
+                               u'image_01.png')
+
+        fname3 = os.path.join (self._tempDir,
+                               self._staticDirName,
+                               u'images',
+                               u'image_03.png')
+
+        fname4 = os.path.join (self._tempDir,
+                               self._staticDirName,
+                               u'images',
+                               u'subfolder',
+                               u'image_04.png')
+
+        self.assertTrue (os.path.exists (downloadDir))
+        self.assertTrue (os.path.exists (fname1))
+        self.assertTrue (os.path.exists (fname3))
+        self.assertTrue (os.path.exists (fname4))
 
 
     def _getTestController (self):
@@ -66,7 +95,7 @@ class DownloaderTest (unittest.TestCase):
             def __init__ (self):
                 self.files = []
 
-            def process (self, url, node):
+            def process (self, startUrl, url, node):
                 self.files.append ((url, node))
 
         return TestController()
