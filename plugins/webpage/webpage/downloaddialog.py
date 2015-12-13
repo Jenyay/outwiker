@@ -11,9 +11,7 @@ from outwiker.gui.testeddialog import TestedDialog
 from outwiker.gui.tagsselector import TagsSelector
 from outwiker.core.commands import MessageBox
 
-UpdateLogEvent, EVT_UPDATE_LOG = wx.lib.newevent.NewEvent()
-ErrorDownloadEvent, EVT_DOWNLOAD_ERROR = wx.lib.newevent.NewEvent()
-FinishDownloadEvent, EVT_DOWNLOAD_FINISH = wx.lib.newevent.NewEvent()
+import events
 
 # Directory for images, scripts, css etc.
 STATIC_DIR_NAME = u'__download'
@@ -95,9 +93,9 @@ class DownloadDialogController (object):
         self._dialog.Bind (wx.EVT_BUTTON, self._onOk, id=wx.ID_OK)
         self._dialog.Bind (wx.EVT_BUTTON, self._onCancel, id=wx.ID_CANCEL)
 
-        self._dialog.Bind (EVT_UPDATE_LOG, self._onLogUpdate)
-        self._dialog.Bind (EVT_DOWNLOAD_ERROR, self._onDownloadError)
-        self._dialog.Bind (EVT_DOWNLOAD_FINISH, self._onDownloadFinish)
+        self._dialog.Bind (events.EVT_UPDATE_LOG, self._onLogUpdate)
+        self._dialog.Bind (events.EVT_DOWNLOAD_ERROR, self._onDownloadError)
+        self._dialog.Bind (events.EVT_DOWNLOAD_FINISH, self._onDownloadFinish)
 
 
     def showDialog (self):
@@ -157,7 +155,7 @@ class DownloadDialogController (object):
             self._removeDownloadDir()
             self._downloadDir = mkdtemp (prefix=u'webpage_tmp_')
 
-            self._runEvent.clear()
+            self._runEvent.set()
             self._thread = DownloadThread (self._dialog,
                                            self._runEvent,
                                            self._downloadDir)
@@ -168,7 +166,7 @@ class DownloadDialogController (object):
 
 
     def _onCancel (self, event):
-        self._runEvent.set()
+        self._runEvent.clear()
         if self._thread is not None:
             self._thread.join()
 
@@ -201,10 +199,10 @@ class DownloadThread (Thread):
         self._log (_(u'Start downloading\n'))
 
         self._log (_(u'Finish downloading\n'))
-        finishEvent = FinishDownloadEvent ()
+        finishEvent = events.FinishDownloadEvent ()
         wx.PostEvent (self._parentWnd, finishEvent)
 
 
     def _log (self, text):
-        event = UpdateLogEvent (text=text)
+        event = events.UpdateLogEvent (text=text)
         wx.PostEvent (self._parentWnd, event)

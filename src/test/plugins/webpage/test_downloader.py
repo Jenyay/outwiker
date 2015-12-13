@@ -13,7 +13,7 @@ from test.utils import removeDir
 class DownloaderTest (unittest.TestCase):
     def setUp (self):
         self.plugindirlist = [u'../plugins/webpage']
-        self._staticDirName = u'download'
+        self._staticDirName = u'__download'
         self._tempDir = mkdtemp (prefix=u'Абырвалг абыр')
 
         self.loader = PluginsLoader(Application)
@@ -32,7 +32,7 @@ class DownloaderTest (unittest.TestCase):
 
         fname = self._path2url (u'../test/webpage/example0/example0.html')
         downloader.start (fname, controller)
-        self.assertIn (u'<html>', downloader.content_src)
+        self.assertIn (u'<html>', downloader.contentSrc)
         self.assertEqual (downloader.pageTitle, None)
 
 
@@ -48,10 +48,52 @@ class DownloaderTest (unittest.TestCase):
         self.assertEqual (downloader.pageTitle, u'Заголовок страницы')
 
         self.assertEqual (controller.files[0][0], u'image_01.png')
-        self.assertEqual (controller.files[1][0], u'/images/image_02.png')
-        self.assertEqual (controller.files[2][0], u'images/image_03.png')
+        self.assertEqual (controller.files[1][0], u'/images/image_invalid.png')
+        self.assertEqual (controller.files[2][0], u'images/image_02.png')
         self.assertEqual (controller.files[3][0],
-                          u'images/subfolder/image_04.png')
+                          u'images/subfolder/image_03.png')
+
+
+    def testContentExample1 (self):
+        from webpage.downloader import Downloader, DownloadController
+
+        controller = DownloadController(self._tempDir, self._staticDirName)
+        downloader = Downloader ()
+
+        examplePath = u'../test/webpage/example1/'
+        exampleHtmlPath = os.path.join (examplePath, u'example1.html')
+
+        downloader.start (self._path2url (exampleHtmlPath), controller)
+
+        self.assertIn (self._staticDirName + u'/image_01.png',
+                       downloader.contentResult)
+
+        self.assertIn (self._staticDirName + u'/images/image_02.png',
+                       downloader.contentResult)
+
+        self.assertIn (self._staticDirName + u'/images/subfolder/image_03.png',
+                       downloader.contentResult)
+
+
+    def testContentExample2 (self):
+        from webpage.downloader import Downloader, DownloadController
+
+        controller = DownloadController(self._tempDir, self._staticDirName)
+        downloader = Downloader ()
+
+        examplePath = u'../test/webpage/example2/'
+        exampleHtmlPath = os.path.join (examplePath, u'example2.html')
+
+        downloader.start (self._path2url (exampleHtmlPath), controller)
+
+        self.assertIn (self._staticDirName + u'/image_01.png',
+                       downloader.contentResult)
+
+        self.assertIn (self._staticDirName + u'/images/image_02.png',
+                       downloader.contentResult)
+
+        self.assertIn (self._staticDirName + u'/images/subfolder/image_03.png',
+                       downloader.contentResult)
 
 
     def testDownloading_01 (self):
@@ -71,21 +113,55 @@ class DownloaderTest (unittest.TestCase):
                                self._staticDirName,
                                u'image_01.png')
 
+        fname2 = os.path.join (self._tempDir,
+                               self._staticDirName,
+                               u'images',
+                               u'image_02.png')
+
         fname3 = os.path.join (self._tempDir,
                                self._staticDirName,
                                u'images',
-                               u'image_03.png')
-
-        fname4 = os.path.join (self._tempDir,
-                               self._staticDirName,
-                               u'images',
                                u'subfolder',
-                               u'image_04.png')
+                               u'image_03.png')
 
         self.assertTrue (os.path.exists (downloadDir))
         self.assertTrue (os.path.exists (fname1))
+        self.assertTrue (os.path.exists (fname2))
         self.assertTrue (os.path.exists (fname3))
-        self.assertTrue (os.path.exists (fname4))
+
+
+    def testDownloading_02 (self):
+        from webpage.downloader import Downloader, DownloadController
+
+        controller = DownloadController(self._tempDir, self._staticDirName)
+        downloader = Downloader ()
+
+        examplePath = u'../test/webpage/example2/'
+        exampleHtmlPath = os.path.join (examplePath, u'example2.html')
+
+        downloader.start (self._path2url (exampleHtmlPath), controller)
+
+        downloadDir = os.path.join (self._tempDir, self._staticDirName)
+
+        fname1 = os.path.join (self._tempDir,
+                               self._staticDirName,
+                               u'image_01.png')
+
+        fname2 = os.path.join (self._tempDir,
+                               self._staticDirName,
+                               u'images',
+                               u'image_02.png')
+
+        fname3 = os.path.join (self._tempDir,
+                               self._staticDirName,
+                               u'images',
+                               u'subfolder',
+                               u'image_03.png')
+
+        self.assertTrue (os.path.exists (downloadDir))
+        self.assertTrue (os.path.exists (fname1))
+        self.assertTrue (os.path.exists (fname2))
+        self.assertTrue (os.path.exists (fname3))
 
 
     def _getTestController (self):
