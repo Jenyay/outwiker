@@ -31,28 +31,52 @@ class WebPageTest (BaseMainWndTest):
         self.assertEqual (len (self.loader), 1)
 
 
-    # def testAddRemoveFactory (self):
-    #     plugin = self.loader[u"TestPage"]
-    #
-    #     path = u"../test/samplewiki"
-    #     wikiroot = WikiDocument.load (path)
-    #
-    #     test_page = wikiroot[u"Типы страниц/TestPage"]
-    #     self.assertEqual (type (test_page), plugin.TestPage)
-    #
-    #     self.assertEqual (type (FactorySelector.getFactory (plugin.TestPage.getTypeString())),
-    #                       plugin.TestPageFactory)
-    #
-    #     self.loader.clear()
-    #     self.assertEqual (type (FactorySelector.getFactory (plugin.TestPage.getTypeString())),
-    #                       TextPageFactory)
-    #
-    #     self.loader.load (self.dirlist)
-    #
-    #     self.assertEqual (type (FactorySelector.getFactory (plugin.TestPage.getTypeString())),
-    #                       plugin.TestPageFactory)
-    #
-    #
+    def testCreate (self):
+        from webpage.webnotepage import WebPageFactory, WebNotePage
+
+        wikiroot = WikiDocument.create (self.path)
+        test_page = WebPageFactory().create (wikiroot, u"Страница 1", [])
+        self.assertEqual (type (test_page), WebNotePage)
+
+        self.assertEqual (
+            type (FactorySelector.getFactory (WebNotePage.getTypeString())),
+            WebPageFactory)
+
+        self.loader.clear()
+        self.assertEqual (type (FactorySelector.getFactory (WebNotePage.getTypeString())),
+                          TextPageFactory)
+
+        self.loader.load (self.dirlist)
+
+        self.assertEqual (type (FactorySelector.getFactory (WebNotePage.getTypeString())),
+                          WebPageFactory)
+
+
+    def testClear_01 (self):
+        from webpage.webnotepage import WebPageFactory
+
+        wikiroot = WikiDocument.create (self.path)
+        Application.wikiroot = wikiroot
+
+        test_page = WebPageFactory().create (wikiroot, u"Страница 1", [])
+        Application.selectedPage = test_page
+
+        self.loader.clear()
+
+
+    def testClear_02 (self):
+        from webpage.webnotepage import WebPageFactory
+
+        wikiroot = WikiDocument.create (self.path)
+        Application.wikiroot = wikiroot
+
+        test_page = WebPageFactory().create (wikiroot, u"Страница 1", [])
+        Application.selectedPage = test_page
+        Application.selectedPage = None
+
+        self.loader.clear()
+
+
     # def testPageView (self):
     #     plugin = self.loader[u"TestPage"]
     #

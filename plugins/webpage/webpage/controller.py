@@ -66,6 +66,7 @@ class Controller (object):
                 mainWindow.PLUGINS_TOOLBAR_STR in mainWindow.toolbars):
             self._application.actionController.removeMenuItem (DownloadAction.stringId)
             self._application.actionController.removeToolbarButton (DownloadAction.stringId)
+            self._application.actionController.removeAction (DownloadAction.stringId)
 
             index = mainWindow.mainMenu.FindMenu (self._menuName)
             assert index != wx.NOT_FOUND

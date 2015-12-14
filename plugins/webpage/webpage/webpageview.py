@@ -164,11 +164,6 @@ class WebPageView (BaseHtmlPanel):
                 self._updateResult()
 
 
-    def UpdateView (self, page):
-        self.__updateLineWrapTools()
-        BaseHtmlPanel.UpdateView (self, page)
-
-
     def __createCustomTools (self):
         """
         Создать кнопки и меню для данного типа страниц
