@@ -3,6 +3,7 @@
 from threading import Event, Thread
 from tempfile import mkdtemp
 from shutil import rmtree
+import urllib2
 
 import wx
 
@@ -12,6 +13,8 @@ from outwiker.gui.tagsselector import TagsSelector
 from outwiker.core.commands import MessageBox
 
 import events
+from .downloader import Downloader, WebPageDownloadController
+
 
 # Directory for images, scripts, css etc.
 STATIC_DIR_NAME = u'__download'
@@ -144,8 +147,10 @@ class DownloadDialogController (object):
 
 
     def _onOk (self, event):
-        if len (self._dialog.urlText.Value.strip()) == 0:
-            MessageBox (_(u'Enter url for downloading'),
+        url = self._dialog.urlText.Value.strip()
+
+        if len (url) == 0:
+            MessageBox (_(u'Enter link for downloading'),
                         _(u"Error"),
                         wx.ICON_ERROR | wx.OK)
             self._dialog.urlText.SetFocus()
@@ -158,7 +163,8 @@ class DownloadDialogController (object):
             self._runEvent.set()
             self._thread = DownloadThread (self._dialog,
                                            self._runEvent,
-                                           self._downloadDir)
+                                           self._downloadDir,
+                                           url)
             self._thread.start()
         elif self._thread is not None:
             self._removeDownloadDir()
@@ -175,7 +181,7 @@ class DownloadDialogController (object):
 
 
     def _onDownloadError (self, event):
-        self._onLogUpdate (event.text)
+        self._onLogUpdate (event)
         self._thread = None
 
 
@@ -185,24 +191,46 @@ class DownloadDialogController (object):
 
 
 class DownloadThread (Thread):
-    def __init__ (self, parentWnd, runEvent, downloadDir, name=None):
+    def __init__ (self, parentWnd, runEvent, downloadDir, url,  name=None):
         super (DownloadThread, self).__init__ (name=name)
         self._parentWnd = parentWnd
         self._runEvent = runEvent
         self._downloadDir = downloadDir
+        self._url = url
 
         # Timeout in seconds
         self._timeout = 20
 
 
     def run (self):
+        controller = WebPageDownloadController (
+            self._runEvent,
+            self._downloadDir,
+            STATIC_DIR_NAME,
+            self._timeout
+        )
+
+        downloader = Downloader (self._timeout)
+
         self._log (_(u'Start downloading\n'))
 
-        self._log (_(u'Finish downloading\n'))
-        finishEvent = events.FinishDownloadEvent ()
-        wx.PostEvent (self._parentWnd, finishEvent)
+        try:
+            downloader.start (self._url, controller)
+        except urllib2.URLError:
+            self._error (_(u'Download error\n'))
+        except ValueError:
+            self._error (_(u'Invalid URL\n'))
+        else:
+            self._log (_(u'Finish downloading\n'))
+            finishEvent = events.FinishDownloadEvent ()
+            wx.PostEvent (self._parentWnd, finishEvent)
 
 
     def _log (self, text):
         event = events.UpdateLogEvent (text=text)
+        wx.PostEvent (self._parentWnd, event)
+
+
+    def _error (self, text):
+        event = events.ErrorDownloadEvent (text=text)
         wx.PostEvent (self._parentWnd, event)
