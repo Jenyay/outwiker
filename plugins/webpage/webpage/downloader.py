@@ -31,11 +31,31 @@ class Downloader (object):
         if self._soup.title is not None:
             self._pageTitle = self._soup.title.string
 
-        images = self._soup.find_all (u'img')
+        self._downloadImages (self._soup, controller, url)
+        self._downloadCSS (self._soup, controller, url)
+        self._downloadScripts (self._soup, controller, url)
+
+        self._contentResult = self._soup.prettify()
+
+
+    def _downloadImages (self, soup, controller, url):
+        images = soup.find_all (u'img')
         for image in images:
             controller.process (url, image['src'], image)
 
-        self._contentResult = self._soup.prettify()
+
+    def _downloadCSS (self, soup, controller, url):
+        links = soup.find_all (u'link')
+        for link in links:
+            if link.has_attr ('rel') and link.has_attr ('href'):
+                controller.process (url, link['href'], link)
+
+
+    def _downloadScripts (self, soup, controller, url):
+        scripts = soup.find_all (u'script')
+        for script in scripts:
+            if script.has_attr ('src'):
+                controller.process (url, script['src'], script)
 
 
     @property
@@ -71,6 +91,10 @@ class BaseDownloadController (object):
 
     def _changeNodeUrl (self, node, url):
         if node.name == 'img':
+            node['src'] = url
+        elif node.name == 'link':
+            node['href'] = url
+        elif node.name == 'script':
             node['src'] = url
 
 
@@ -119,10 +143,17 @@ class DownloadController (BaseDownloadController):
         if url_clean.startswith (u'/'):
             url_clean = url_clean[1:]
 
-        url_clean = url_clean.replace (u':', u'_')
+        url_clean = self._sanitizePath (url_clean)
 
         relativeDownloadPath = os.path.join (self._staticDir, url_clean).replace (u'\\', u'/')
         return relativeDownloadPath
+
+
+    def _sanitizePath (self, path):
+        path = path.replace (u':', u'_')
+        path = path.replace (u'&', u'_')
+        path = path.replace (u'?', u'_')
+        return path
 
 
 class WebPageDownloadController (DownloadController):

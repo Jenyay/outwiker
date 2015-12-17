@@ -189,7 +189,6 @@ class DownloadDialogController (object):
 
 
     def _onDownloadFinish (self, event):
-        # self.addToLog (event.staticPath)
         parentPage = self._application.selectedPage
         factory = FactorySelector.getFactory (WebNotePage.getTypeString())
 
