@@ -13,6 +13,9 @@ from outwiker.gui.testeddialog import TestedDialog
 from outwiker.gui.tagsselector import TagsSelector
 from outwiker.core.commands import MessageBox
 from outwiker.core.factoryselector import FactorySelector
+from outwiker.core.pagetitletester import (WindowsPageTitleTester,
+                                           PageTitleError,
+                                           PageTitleWarning)
 
 import events
 from .downloader import Downloader, WebPageDownloadController
@@ -202,10 +205,16 @@ class DownloadDialogController (object):
 
         copytree (event.staticPath, staticDir)
 
+        self._dialog.EndModal (wx.ID_OK)
         self._application.selectedPage = page
 
 
     def _getTitle (self, parentPage, title):
+        try:
+            WindowsPageTitleTester().test (title)
+        except (PageTitleError, PageTitleWarning):
+            title = _(u'Web page')
+
         index = 1
         newTitle = title
         while parentPage[newTitle] is not None:
