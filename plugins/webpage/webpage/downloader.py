@@ -113,6 +113,8 @@ class DownloadController (BaseDownloadController):
         if not os.path.exists (self._fullStaticDir):
             os.mkdir (self._fullStaticDir)
 
+        self.log (_(u'Download: {}\n').format (url))
+
         fullUrl = urljoin (startUrl, url)
 
         relativeDownloadPath = self._getRelativeDownloadPath (url)

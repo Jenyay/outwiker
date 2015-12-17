@@ -192,7 +192,7 @@ class DownloadDialogController (object):
         parentPage = self._application.selectedPage
         factory = FactorySelector.getFactory (WebNotePage.getTypeString())
 
-        title = event.title
+        title = self._getTitle (parentPage, event.title)
         page = factory.create (parentPage, title, [])
         page.tags = self._dialog.tagsSelector.tags
         page.content = event.content
@@ -203,6 +203,17 @@ class DownloadDialogController (object):
         copytree (event.staticPath, staticDir)
 
         self._application.selectedPage = page
+
+
+    def _getTitle (self, parentPage, title):
+        index = 1
+        newTitle = title
+        while parentPage[newTitle] is not None:
+            newTitle = u'{title} ({index})'.format (title=title,
+                                                    index=index)
+            index += 1
+
+        return newTitle
 
 
 
