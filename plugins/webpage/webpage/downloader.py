@@ -47,7 +47,9 @@ class Downloader (object):
     def _downloadCSS (self, soup, controller, url):
         links = soup.find_all (u'link')
         for link in links:
-            if link.has_attr ('rel') and link.has_attr ('href'):
+            if (link.has_attr ('rel') and
+                    link.has_attr ('href') and
+                    link['rel'][0].lower() == u'stylesheet'):
                 controller.process (url, link['href'], link)
 
 
@@ -147,7 +149,9 @@ class DownloadController (BaseDownloadController):
 
         url_clean = self._sanitizePath (url_clean)
 
-        relativeDownloadPath = os.path.join (self._staticDir, url_clean).replace (u'\\', u'/')
+        relativeDownloadPath = os.path.join (self._staticDir, url_clean)
+        relativeDownloadPath = relativeDownloadPath.replace (u'\\', u'/')
+        relativeDownloadPath = relativeDownloadPath.replace (u'../', u'')
         return relativeDownloadPath
 
 
