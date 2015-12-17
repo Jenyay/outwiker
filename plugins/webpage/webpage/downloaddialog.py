@@ -2,8 +2,9 @@
 
 from threading import Event, Thread
 from tempfile import mkdtemp
-from shutil import rmtree
+from shutil import rmtree, copytree
 import urllib2
+import os.path
 
 import wx
 
@@ -11,9 +12,11 @@ from outwiker.core.tagslist import TagsList
 from outwiker.gui.testeddialog import TestedDialog
 from outwiker.gui.tagsselector import TagsSelector
 from outwiker.core.commands import MessageBox
+from outwiker.core.factoryselector import FactorySelector
 
 import events
 from .downloader import Downloader, WebPageDownloadController
+from .webnotepage import WebNotePage
 
 
 # Directory for images, scripts, css etc.
@@ -186,7 +189,21 @@ class DownloadDialogController (object):
 
 
     def _onDownloadFinish (self, event):
-        pass
+        # self.addToLog (event.staticPath)
+        parentPage = self._application.selectedPage
+        factory = FactorySelector.getFactory (WebNotePage.getTypeString())
+
+        title = event.title
+        page = factory.create (parentPage, title, [])
+        page.tags = self._dialog.tagsSelector.tags
+        page.content = event.content
+        page.source = event.url
+
+        staticDir = os.path.join (page.path, STATIC_DIR_NAME)
+
+        copytree (event.staticPath, staticDir)
+
+        self._application.selectedPage = page
 
 
 
@@ -207,6 +224,7 @@ class DownloadThread (Thread):
             self._runEvent,
             self._downloadDir,
             STATIC_DIR_NAME,
+            self._parentWnd,
             self._timeout
         )
 
@@ -222,7 +240,15 @@ class DownloadThread (Thread):
             self._error (_(u'Invalid URL\n'))
         else:
             self._log (_(u'Finish downloading\n'))
-            finishEvent = events.FinishDownloadEvent ()
+
+            content = downloader.contentResult
+            staticPath = os.path.join (self._downloadDir, STATIC_DIR_NAME)
+            title = downloader.pageTitle
+
+            finishEvent = events.FinishDownloadEvent (content=content,
+                                                      staticPath=staticPath,
+                                                      title=title,
+                                                      url=self._url)
             wx.PostEvent (self._parentWnd, finishEvent)
 
 

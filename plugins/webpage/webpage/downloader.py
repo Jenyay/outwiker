@@ -25,7 +25,7 @@ class Downloader (object):
 
     def start (self, url, controller):
         obj = urllib2.urlopen (url, timeout=self._timeout)
-        self._soup = BeautifulSoup(obj.read())
+        self._soup = BeautifulSoup(obj.read(), "html.parser")
         self._contentSrc = self._soup.prettify()
 
         if self._soup.title is not None:
@@ -82,7 +82,7 @@ class DownloadController (BaseDownloadController):
         self._rootDownloadDir = rootDownloadDir
         self._staticDir = staticDir
         self._timeout = timeout
-        self._fullStaticDir = os.path.join (rootDownloadDir, staticDir)
+        self._fullStaticDir = os.path.join (rootDownloadDir, staticDir).replace (u'\\', u'/')
 
 
     def process (self, startUrl, url, node):
@@ -93,7 +93,7 @@ class DownloadController (BaseDownloadController):
 
         relativeDownloadPath = self._getRelativeDownloadPath (url)
         fullDownloadPath = os.path.join (self._rootDownloadDir,
-                                         relativeDownloadPath)
+                                         relativeDownloadPath).replace (u'\\', u'/')
         downloadDir = os.path.dirname (fullDownloadPath)
 
         if not os.path.exists (downloadDir):
@@ -104,8 +104,8 @@ class DownloadController (BaseDownloadController):
             with open (fullDownloadPath, 'wb') as fp:
                 fp.write (obj.read())
             self._changeNodeUrl (node, relativeDownloadPath)
-        except urllib2.URLError:
-            self.log (_(u"Can't download {}").format (url))
+        except (urllib2.URLError, IOError):
+            self.log (_(u"Can't download {}\n").format (url))
 
 
     def _getRelativeDownloadPath (self, url):
@@ -121,7 +121,7 @@ class DownloadController (BaseDownloadController):
 
         url_clean = url_clean.replace (u':', u'_')
 
-        relativeDownloadPath = os.path.join (self._staticDir, url_clean)
+        relativeDownloadPath = os.path.join (self._staticDir, url_clean).replace (u'\\', u'/')
         return relativeDownloadPath
 
 
@@ -131,11 +131,12 @@ class WebPageDownloadController (DownloadController):
     Downloading can be terminated with event.
     Log will be send with UpdateLogEvent
     """
-    def __init__ (self, runEvent, rootDownloadDir, staticDir, timeout=20):
+    def __init__ (self, runEvent, rootDownloadDir, staticDir, dialog, timeout=20):
         super (WebPageDownloadController, self).__init__ (rootDownloadDir,
                                                           staticDir,
                                                           timeout)
         self._runEvent = runEvent
+        self._dialog = dialog
 
 
     def process (self, startUrl, url, node):
