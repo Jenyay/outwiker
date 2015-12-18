@@ -203,6 +203,39 @@ class DownloaderTest (unittest.TestCase):
         self.assertTrue (os.path.exists (fname4))
 
 
+    def testDownloading_css_import_01 (self):
+        from webpage.downloader import Downloader, DownloadController
+
+        controller = DownloadController(self._tempDir, self._staticDirName)
+        downloader = Downloader ()
+
+        examplePath = u'../test/webpage/example1/'
+        exampleHtmlPath = os.path.join (examplePath, u'example1.html')
+
+        downloader.start (self._path2url (exampleHtmlPath), controller)
+
+        self.assertTrue (
+            os.path.exists (
+                os.path.join (
+                    self._tempDir,
+                    self._staticDirName,
+                    u'basic.css'
+                )
+            )
+        )
+
+        self.assertTrue (
+            os.path.exists (
+                os.path.join (
+                    self._tempDir,
+                    self._staticDirName,
+                    u'css',
+                    u'basic2.css'
+                )
+            )
+        )
+
+
     def testDownloading_javascript_01 (self):
         from webpage.downloader import Downloader, DownloadController
 
