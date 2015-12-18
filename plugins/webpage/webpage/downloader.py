@@ -35,7 +35,7 @@ class Downloader (object):
         self._downloadCSS (self._soup, controller, url)
         self._downloadScripts (self._soup, controller, url)
 
-        self._contentResult = self._soup.prettify()
+        self._contentResult = unicode (self._soup)
 
 
     def _downloadImages (self, soup, controller, url):
