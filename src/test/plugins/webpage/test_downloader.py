@@ -219,7 +219,7 @@ class DownloaderTest (unittest.TestCase):
                 os.path.join (
                     self._tempDir,
                     self._staticDirName,
-                    u'basic.css'
+                    u'basic1.css'
                 )
             )
         )
@@ -231,6 +231,39 @@ class DownloaderTest (unittest.TestCase):
                     self._staticDirName,
                     u'css',
                     u'basic2.css'
+                )
+            )
+        )
+
+        self.assertTrue (
+            os.path.exists (
+                os.path.join (
+                    self._tempDir,
+                    self._staticDirName,
+                    u'css',
+                    u'basic3.css'
+                )
+            )
+        )
+
+        self.assertTrue (
+            os.path.exists (
+                os.path.join (
+                    self._tempDir,
+                    self._staticDirName,
+                    u'css',
+                    u'basic4.css'
+                )
+            )
+        )
+
+        self.assertTrue (
+            os.path.exists (
+                os.path.join (
+                    self._tempDir,
+                    self._staticDirName,
+                    u'css',
+                    u'basic5.css'
                 )
             )
         )
@@ -282,7 +315,20 @@ class DownloaderTest (unittest.TestCase):
             def __init__ (self):
                 self.files = []
 
-            def process (self, startUrl, url, node):
+
+            def processImg (self, startUrl, url, node):
+                self._process (startUrl, url, node)
+
+
+            def processCSS (self, startUrl, url, node):
+                self._process (startUrl, url, node)
+
+
+            def processScript (self, startUrl, url, node):
+                self._process (startUrl, url, node)
+
+
+            def _process (self, startUrl, url, node):
                 self.files.append ((url, node))
 
         return TestController()

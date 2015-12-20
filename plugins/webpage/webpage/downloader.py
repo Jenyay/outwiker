@@ -3,6 +3,7 @@
 from abc import ABCMeta, abstractmethod
 import os
 import os.path
+import re
 import urllib2
 from urlparse import urljoin
 
@@ -41,7 +42,7 @@ class Downloader (object):
     def _downloadImages (self, soup, controller, url):
         images = soup.find_all (u'img')
         for image in images:
-            controller.process (url, image['src'], image)
+            controller.processImg (url, image['src'], image)
 
 
     def _downloadCSS (self, soup, controller, url):
@@ -50,14 +51,14 @@ class Downloader (object):
             if (link.has_attr ('rel') and
                     link.has_attr ('href') and
                     link['rel'][0].lower() == u'stylesheet'):
-                controller.process (url, link['href'], link)
+                controller.processCSS (url, link['href'], link)
 
 
     def _downloadScripts (self, soup, controller, url):
         scripts = soup.find_all (u'script')
         for script in scripts:
             if script.has_attr ('src'):
-                controller.process (url, script['src'], script)
+                controller.processScript (url, script['src'], script)
 
 
     @property
@@ -83,7 +84,17 @@ class BaseDownloadController (object):
     __metaclass__ = ABCMeta
 
     @abstractmethod
-    def process (self, startUrl, url, node):
+    def processImg (self, startUrl, url, node):
+        pass
+
+
+    @abstractmethod
+    def processCSS (self, startUrl, url, node):
+        pass
+
+
+    @abstractmethod
+    def processScript (self, startUrl, url, node):
         pass
 
 
@@ -92,6 +103,9 @@ class BaseDownloadController (object):
 
 
     def _changeNodeUrl (self, node, url):
+        if node is None:
+            return
+
         if node.name == 'img':
             node['src'] = url
         elif node.name == 'link':
@@ -111,7 +125,61 @@ class DownloadController (BaseDownloadController):
         self._fullStaticDir = os.path.join (rootDownloadDir, staticDir).replace (u'\\', u'/')
 
 
-    def process (self, startUrl, url, node):
+    def processImg (self, startUrl, url, node):
+        self._process (startUrl, url, node, self._processFuncNone)
+
+
+    def processCSS (self, startUrl, url, node):
+        self._process (startUrl, url, node, self._processFuncCSS)
+
+
+    def processScript (self, startUrl, url, node):
+        self._process (startUrl, url, node, self._processFuncNone)
+
+
+    def _processFuncNone (self, startUrl, url, node, text):
+        return text
+
+
+    def _processFuncCSS (self, startUrl, url, node, text):
+        regexp1 = re.compile (r'''^@import\s*
+                              url\s*\((?P<quote>['"])(?P<url>.*?)(?P=quote)\)
+                              (?P<other>.*)$''',
+                              re.X | re.U)
+
+        regexp2 = re.compile (r'''^@import\s*
+                              (?P<quote>['"])(?P<url>.*?)(?P=quote)
+                              (?P<other>.*)$''',
+                              re.X | re.U)
+
+        lines = text.split (u'\n')
+        resultLines = []
+        for line in lines:
+            match1 = regexp1.match (line)
+            match2 = regexp2.match (line)
+
+            match = match1 if match1 is not None else match2
+
+            if match is not None:
+                importurl = match.group ('url')
+                relativeurl = os.path.dirname (url) + '/' + importurl
+                if relativeurl.startswith (u'/'):
+                    relativeurl = relativeurl[1:]
+
+                self._process (startUrl, relativeurl, None, self._processFuncNone)
+
+                resultLines.append (
+                    u'@import url ({url}){other}'.format (
+                        url = importurl,
+                        other = match.group ('other')
+                    )
+                )
+            else:
+                resultLines.append (line)
+        return u'\n'.join (resultLines)
+
+
+    def _process (self, startUrl, url, node, processFunc):
         if not os.path.exists (self._fullStaticDir):
             os.mkdir (self._fullStaticDir)
 
@@ -130,8 +198,11 @@ class DownloadController (BaseDownloadController):
         try:
             obj = urllib2.urlopen (fullUrl, timeout=self._timeout)
             with open (fullDownloadPath, 'wb') as fp:
-                fp.write (obj.read())
-            self._changeNodeUrl (node, relativeDownloadPath)
+                text = processFunc (startUrl, url, node, obj.read())
+                fp.write (text)
+
+            if node is not None:
+                self._changeNodeUrl (node, relativeDownloadPath)
         except (urllib2.URLError, IOError):
             self.log (_(u"Can't download {}\n").format (url))
 
@@ -176,9 +247,19 @@ class WebPageDownloadController (DownloadController):
         self._dialog = dialog
 
 
-    def process (self, startUrl, url, node):
+    def processImg (self, startUrl, url, node):
         if self._runEvent.is_set():
-            super (WebPageDownloadController, self).process (startUrl, url, node)
+            super (WebPageDownloadController, self).processImg (startUrl, url, node)
+
+
+    def processCSS (self, startUrl, url, node):
+        if self._runEvent.is_set():
+            super (WebPageDownloadController, self).processCSS (startUrl, url, node)
+
+
+    def processScript (self, startUrl, url, node):
+        if self._runEvent.is_set():
+            super (WebPageDownloadController, self).processScript (startUrl, url, node)
 
 
     def log (self, text):
