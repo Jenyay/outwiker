@@ -169,7 +169,7 @@ class DownloadController (BaseDownloadController):
                 self._process (startUrl, relativeurl, None, self._processFuncNone)
 
                 resultLines.append (
-                    u'@import url ({url}){other}'.format (
+                    u'@import url("{url}"){other}'.format (
                         url = importurl,
                         other = match.group ('other')
                     )
