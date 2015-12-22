@@ -34,6 +34,8 @@ class RealTest (unittest.TestCase):
         url = u'http://www.crummy.com/software/BeautifulSoup/bs4/doc/'
         downloader.start (url, controller)
 
+        self.assertTrue (downloader.success)
+
         downloadDir = os.path.join (self._tempDir, self._staticDirName)
         self.assertTrue (os.path.exists (downloadDir))
 
@@ -71,6 +73,18 @@ class RealTest (unittest.TestCase):
             u'_static',
             u'doctools.js')
         )
+
+
+    def testDownloading_toster (self):
+        from webpage.downloader import Downloader, DownloadController
+
+        controller = DownloadController(self._tempDir, self._staticDirName)
+        downloader = Downloader ()
+
+        url = u'https://toster.ru/q/273244'
+        downloader.start (url, controller)
+
+        self.assertTrue (downloader.success)
 
 
     def _getTestController (self):

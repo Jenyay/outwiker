@@ -22,9 +22,11 @@ class Downloader (object):
         self._soup = None
 
         self._contentResult = None
+        self._success = False
 
 
     def start (self, url, controller):
+        self._success = False
         obj = urllib2.urlopen (url, timeout=self._timeout)
         self._soup = BeautifulSoup(obj.read(), "html.parser")
         self._contentSrc = self._soup.prettify()
@@ -36,7 +38,25 @@ class Downloader (object):
         self._downloadCSS (self._soup, controller, url)
         self._downloadScripts (self._soup, controller, url)
 
+        self._improveResult (self._soup, url)
+
         self._contentResult = unicode (self._soup)
+        self._success = True
+
+
+    def _improveResult (self, soup, url):
+        self._disableBaseTag (soup)
+
+
+    def _disableBaseTag (self, soup):
+        for basetag in soup.find_all (u'base'):
+            if basetag.has_attr (u'href'):
+                basetag[u'href'] = u''
+
+
+    @property
+    def success (self):
+        return self._success
 
 
     def _downloadImages (self, soup, controller, url):
@@ -163,7 +183,7 @@ class DownloadController (BaseDownloadController):
             if match is not None:
                 importurl = match.group ('url')
                 relativeurl = os.path.dirname (url) + '/' + importurl
-                if relativeurl.startswith (u'/'):
+                while relativeurl.startswith (u'/'):
                     relativeurl = relativeurl[1:]
 
                 self._process (startUrl, relativeurl, None, self._processFuncNone)
@@ -215,7 +235,7 @@ class DownloadController (BaseDownloadController):
         protocol_pos = url.find (u'://')
         url_clean = url[protocol_pos + 3:] if protocol_pos != -1 else url
 
-        if url_clean.startswith (u'/'):
+        while url_clean.startswith (u'/'):
             url_clean = url_clean[1:]
 
         url_clean = self._sanitizePath (url_clean)
