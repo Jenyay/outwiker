@@ -92,7 +92,7 @@ class Controller (object):
                 mainWindow.PLUGINS_TOOLBAR_STR in mainWindow.toolbars):
             action = CreateChildWebPageAction(self._application)
             toolbar = mainWindow.treePanel.panel.toolbar
-            image = self.getImagePath ("download.png")
+            image = self.getImagePath ("insert-child.png")
 
             controller = self._application.actionController
 
