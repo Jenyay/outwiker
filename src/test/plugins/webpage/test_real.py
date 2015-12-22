@@ -87,6 +87,18 @@ class RealTest (unittest.TestCase):
         self.assertTrue (downloader.success)
 
 
+    def testDownloading_stackoverflow (self):
+        from webpage.downloader import Downloader, DownloadController
+
+        controller = DownloadController(self._tempDir, self._staticDirName)
+        downloader = Downloader ()
+
+        url = u'http://ru.stackoverflow.com/questions/476918/django-%D0%97%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B8%D0%B5-%D0%B2-%D0%B7%D0%B0%D0%B2%D0%B8%D1%81%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D0%B8-%D0%BE%D1%82-%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B8%D0%B9-%D0%B2-%D0%91%D0%94'
+        downloader.start (url, controller)
+
+        self.assertTrue (downloader.success)
+
+
     def _getTestController (self):
         from webpage.downloader import BaseDownloadController
 

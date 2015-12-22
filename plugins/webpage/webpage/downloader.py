@@ -13,7 +13,14 @@ from bs4 import BeautifulSoup
 from events import UpdateLogEvent
 
 
-class Downloader (object):
+class BaseDownloader (object):
+    def download (self, url):
+        opener = urllib2.build_opener()
+        opener.addheaders = [('User-agent', 'OutWiker')]
+        return opener.open(url, timeout = self._timeout)
+
+
+class Downloader (BaseDownloader):
     def __init__ (self, timeout=20):
         self._timeout = 20
 
@@ -27,8 +34,8 @@ class Downloader (object):
 
     def start (self, url, controller):
         self._success = False
-        obj = urllib2.urlopen (url, timeout=self._timeout)
-        self._soup = BeautifulSoup(obj.read(), "html.parser")
+        obj = self.download (url)
+        self._soup = BeautifulSoup (obj.read(), "html.parser")
         self._contentSrc = self._soup.prettify()
 
         if self._soup.title is not None:
@@ -97,7 +104,7 @@ class Downloader (object):
 
 
 
-class BaseDownloadController (object):
+class BaseDownloadController (BaseDownloader):
     '''
     Instance the class select action for every downloaded file
     '''
@@ -216,7 +223,7 @@ class DownloadController (BaseDownloadController):
             os.makedirs (downloadDir)
 
         try:
-            obj = urllib2.urlopen (fullUrl, timeout=self._timeout)
+            obj = self.download (fullUrl)
             with open (fullDownloadPath, 'wb') as fp:
                 text = processFunc (startUrl, url, node, obj.read())
                 fp.write (text)
