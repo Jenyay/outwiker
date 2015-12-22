@@ -10,7 +10,7 @@ from outwiker.core.factoryselector import FactorySelector
 from outwiker.core.system import getOS
 
 from webnotepage import WebPageFactory, WebNotePage
-from actions.downloadaction import DownloadAction
+from actions.downloadaction import CreateChildWebPageAction
 
 
 class Controller (object):
@@ -64,9 +64,9 @@ class Controller (object):
         mainWindow = self._application.mainWindow
         if (mainWindow is not None and
                 mainWindow.PLUGINS_TOOLBAR_STR in mainWindow.toolbars):
-            self._application.actionController.removeMenuItem (DownloadAction.stringId)
-            self._application.actionController.removeToolbarButton (DownloadAction.stringId)
-            self._application.actionController.removeAction (DownloadAction.stringId)
+            self._application.actionController.removeMenuItem (CreateChildWebPageAction.stringId)
+            self._application.actionController.removeToolbarButton (CreateChildWebPageAction.stringId)
+            self._application.actionController.removeAction (CreateChildWebPageAction.stringId)
 
             index = mainWindow.mainMenu.FindMenu (self._menuName)
             assert index != wx.NOT_FOUND
@@ -81,7 +81,7 @@ class Controller (object):
 
 
     def _createMenu (self):
-        self.menu = wx.Menu (u"")
+        self.menu = wx.Menu (u'')
         self._application.mainWindow.mainMenu.Append (self.menu, self._menuName)
 
 
@@ -90,15 +90,15 @@ class Controller (object):
 
         if (mainWindow is not None and
                 mainWindow.PLUGINS_TOOLBAR_STR in mainWindow.toolbars):
-            action = DownloadAction(self._application)
-            toolbar = mainWindow.toolbars[mainWindow.PLUGINS_TOOLBAR_STR]
+            action = CreateChildWebPageAction(self._application)
+            toolbar = mainWindow.treePanel.panel.toolbar
             image = self.getImagePath ("download.png")
 
             controller = self._application.actionController
 
             controller.register (action, hotkey=None)
-            controller.appendMenuItem (DownloadAction.stringId, self.menu)
-            controller.appendToolbarButton (DownloadAction.stringId,
+            controller.appendMenuItem (CreateChildWebPageAction.stringId, self.menu)
+            controller.appendToolbarButton (CreateChildWebPageAction.stringId,
                                             toolbar,
                                             image)
 

@@ -4,6 +4,7 @@ import wx
 
 from outwiker.gui.hotkeyparser import HotKeyParser
 from outwiker.gui.hotkeyoption import HotKeyOption
+from outwiker.gui.toolbars.basetoolbar import BaseToolBar
 
 
 class ActionInfo (object):
@@ -175,8 +176,17 @@ class ActionController (object):
 
         if actionInfo.toolbar is not None:
             toolid = self._actionsInfo[strid].toolItemId
-            self._actionsInfo[strid].toolbar.DeleteTool (toolid, False)
-            self._actionsInfo[strid].toolbar.Realize()
+            toolbar = self._actionsInfo[strid].toolbar
+
+            if issubclass (type (toolbar), BaseToolBar):
+                toolbar.DeleteTool (toolid, False)
+            elif issubclass (type (toolbar), wx.ToolBar):
+                toolbar.DeleteTool (toolid)
+            else:
+                raise ValueError (u'Invalid toolbar type')
+
+            toolbar.Realize()
+
             self._mainWindow.Unbind (wx.EVT_TOOL, id=toolid)
             actionInfo.toolbar = None
             actionInfo.toolItemId = None
@@ -255,18 +265,30 @@ class ActionController (object):
     def _appendToolbarItem (self, strid, toolbar, image, buttonType, actionid, fullUpdate=True):
         """
         Общий метод для добавления кнопки на панель инструментов
+        toolbar - панель инструментов, куда будет добавлена кнопка (класс, производный от BaseToolBar)
         buttonType - тип кнопки (wx.ITEM_NORMAL для обычной кнопки и wx.ITEM_CHECK для зажимаемой кнопки)
         """
         assert strid in self._actionsInfo
         title = self._getToolbarItemTitle (strid)
         bitmap = wx.Bitmap (image)
 
-        toolbar.AddTool(actionid,
-                        title,
-                        bitmap,
-                        short_help_string=title,
-                        kind=buttonType,
-                        fullUpdate=fullUpdate)
+        if issubclass (type (toolbar), BaseToolBar):
+            toolbar.AddTool(actionid,
+                            title,
+                            bitmap,
+                            short_help_string=title,
+                            kind=buttonType,
+                            fullUpdate=fullUpdate)
+        elif issubclass (type (toolbar), wx.ToolBar):
+            toolbar.AddLabelTool(actionid,
+                                 title,
+                                 bitmap,
+                                 wx.NullBitmap,
+                                 wx.ITEM_NORMAL,
+                                 title,
+                                 "")
+        else:
+            raise ValueError (u'Invalid toolbar type')
 
         self._actionsInfo[strid].toolbar = toolbar
         self._actionsInfo[strid].toolItemId = actionid

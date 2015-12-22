@@ -45,7 +45,7 @@ class DownloadDialog (TestedDialog):
         self._addOkCancel (mainSizer)
 
         self.SetSizer (mainSizer)
-        self.SetTitle (_(u'Download page'))
+        self.SetTitle (_(u'Download web page'))
         self.SetMinSize ((500, 350))
         self.Fit()
 

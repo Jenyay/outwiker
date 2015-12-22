@@ -3,14 +3,14 @@
 from outwiker.gui.baseaction import BaseAction
 
 
-class DownloadAction (BaseAction):
+class CreateChildWebPageAction (BaseAction):
     """
     Download content and create web page
     """
-    stringId = u"download_webpage_action"
+    stringId = u"webpage_create_child_page"
 
     def __init__ (self, application):
-        super (DownloadAction, self).__init__()
+        super (CreateChildWebPageAction, self).__init__()
         self._application = application
 
     @property
@@ -20,7 +20,7 @@ class DownloadAction (BaseAction):
 
     @property
     def description (self):
-        return _(u'Download content from the Internet and create a web page')
+        return _(u'Download content from the Internet and create child web page')
 
 
     def run (self, params):
