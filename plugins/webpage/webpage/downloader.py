@@ -173,17 +173,22 @@ class DownloadController (BaseDownloadController):
 
 
     def _processFuncCSS (self, startUrl, url, node, text):
-        regexp1 = re.compile (r'''^@import\s*
+        text = self._processCSSImport (startUrl, url, text)
+        return text
+
+
+    def _processCSSImport (self, startUrl, url, text):
+        regexp1 = re.compile (r'''\s*@import\s*
                               url\((?P<quote>['"])(?P<url>.*?)(?P=quote)\)
                               (?P<other>.*)$''',
                               re.X | re.U)
 
-        regexp2 = re.compile (r'''^@import\s*
+        regexp2 = re.compile (r'''\s*@import\s*
                               (?P<quote>['"])(?P<url>.*?)(?P=quote)
                               (?P<other>.*)$''',
                               re.X | re.U)
 
-        regexp3 = re.compile (r'''^@import\s*
+        regexp3 = re.compile (r'''\s*@import\s*
                               url\((?P<url>.*?)\)
                               (?P<other>.*)$''',
                               re.X | re.U)
