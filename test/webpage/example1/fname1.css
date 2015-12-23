@@ -1,1 +1,25 @@
 @import url("basic1.css");
+
+.image1 {
+    background-image: url("back_img_01.png");
+}
+
+.image2 {
+	background-image: url(back_img_02.png);
+}
+
+.image3 {
+	background-image: url('back_img_03.png');
+}
+
+.image4 {
+	background-image: url("css/back_img_04.png");
+}
+
+.image5 {
+	background-image: url("css/subdir/back_img_05.png");
+}
+
+.image6 {
+	background: url("css/subdir/back_img_06.png");
+}

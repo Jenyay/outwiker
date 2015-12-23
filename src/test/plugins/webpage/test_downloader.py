@@ -286,6 +286,78 @@ class DownloaderTest (unittest.TestCase):
         )
 
 
+    def testDownloading_css_back_img_01 (self):
+        from webpage.downloader import Downloader, DownloadController
+
+        controller = DownloadController(self._tempDir, self._staticDirName)
+        downloader = Downloader ()
+
+        examplePath = u'../test/webpage/example1/'
+        exampleHtmlPath = os.path.join (examplePath, u'example1.html')
+
+        downloader.start (self._path2url (exampleHtmlPath), controller)
+
+        self.assertTrue (
+            os.path.exists (
+                os.path.join (
+                    self._tempDir,
+                    self._staticDirName,
+                    u'back_img_01.png'
+                )
+            )
+        )
+
+        self.assertTrue (
+            os.path.exists (
+                os.path.join (
+                    self._tempDir,
+                    self._staticDirName,
+                    u'back_img_02.png'
+                )
+            )
+        )
+
+        self.assertTrue (
+            os.path.exists (
+                os.path.join (
+                    self._tempDir,
+                    self._staticDirName,
+                    u'back_img_03.png'
+                )
+            )
+        )
+
+        self.assertTrue (
+            os.path.exists (
+                os.path.join (
+                    self._tempDir,
+                    self._staticDirName,
+                    u'back_img_04.png'
+                )
+            )
+        )
+
+        self.assertTrue (
+            os.path.exists (
+                os.path.join (
+                    self._tempDir,
+                    self._staticDirName,
+                    u'back_img_05.png'
+                )
+            )
+        )
+
+        self.assertTrue (
+            os.path.exists (
+                os.path.join (
+                    self._tempDir,
+                    self._staticDirName,
+                    u'back_img_06.png'
+                )
+            )
+        )
+
+
     def testDownloading_javascript_01 (self):
         from webpage.downloader import Downloader, DownloadController
 

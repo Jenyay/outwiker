@@ -174,6 +174,38 @@ class DownloadController (BaseDownloadController):
 
     def _processFuncCSS (self, startUrl, url, node, text):
         text = self._processCSSImport (startUrl, url, text)
+        text = self._processCSSUrl (startUrl, url, text)
+        return text
+
+
+    def _processCSSUrl (self, startUrl, url, text):
+        regexp = re.compile (r'''url\((?P<url>.*?)\)''',
+                             re.X | re.U | re.I)
+
+        delta = 0
+
+        for match in regexp.finditer (text):
+            importurl = match.group ('url')
+            importurl = importurl.replace (u'"', u'')
+            importurl = importurl.replace (u"'", u'')
+
+            relativeurl = os.path.dirname (url) + '/' + importurl
+            while relativeurl.startswith (u'/'):
+                relativeurl = relativeurl[1:]
+
+            relativeDownloadPath = self._process (startUrl,
+                                                  relativeurl,
+                                                  None,
+                                                  self._processFuncNone)
+            replace = u'url("{url}")'.format (
+                url = relativeDownloadPath.replace (
+                    self._staticDir + u'/', u''
+                )
+            )
+
+            text = text[:match.start() + delta] + replace + text[match.end() + delta:]
+            delta += len (replace) - (match.end() - match.start())
+
         return text
 
 
@@ -181,17 +213,17 @@ class DownloadController (BaseDownloadController):
         regexp1 = re.compile (r'''\s*@import\s*
                               url\((?P<quote>['"])(?P<url>.*?)(?P=quote)\)
                               (?P<other>.*)$''',
-                              re.X | re.U)
+                              re.X | re.U | re.I)
 
         regexp2 = re.compile (r'''\s*@import\s*
                               (?P<quote>['"])(?P<url>.*?)(?P=quote)
                               (?P<other>.*)$''',
-                              re.X | re.U)
+                              re.X | re.U | re.I)
 
         regexp3 = re.compile (r'''\s*@import\s*
                               url\((?P<url>.*?)\)
                               (?P<other>.*)$''',
-                              re.X | re.U)
+                              re.X | re.U | re.I)
 
         regexp_list = [regexp1, regexp2, regexp3]
 
@@ -212,11 +244,12 @@ class DownloadController (BaseDownloadController):
                     relativeDownloadPath = self._process (startUrl,
                                                           relativeurl,
                                                           None,
-                                                          self._processFuncNone)
+                                                          self._processFuncCSS)
 
                     resultLines.append (
                         u'@import url("{url}"){other}'.format (
-                            url = os.path.basename (relativeDownloadPath),
+                            url = relativeDownloadPath.replace (
+                                self._staticDir + u'/', u''),
                             other = match.group ('other')
                         )
                     )
@@ -239,23 +272,21 @@ class DownloadController (BaseDownloadController):
         fullUrl = urljoin (startUrl, url)
 
         relativeDownloadPath = self._getRelativeDownloadPath (fullUrl)
-        if fullUrl in self._staticFiles:
-            return relativeDownloadPath
-
-        self._staticFiles[fullUrl] = relativeDownloadPath
         fullDownloadPath = os.path.join (self._rootDownloadDir,
                                          relativeDownloadPath)
 
-        try:
-            obj = self.download (fullUrl)
-            with open (fullDownloadPath, 'wb') as fp:
-                text = processFunc (startUrl, url, node, obj.read())
-                fp.write (text)
+        if fullUrl not in self._staticFiles:
+            try:
+                obj = self.download (fullUrl)
+                with open (fullDownloadPath, 'wb') as fp:
+                    text = processFunc (startUrl, url, node, obj.read())
+                    fp.write (text)
+            except (urllib2.URLError, IOError):
+                self.log (_(u"Can't download {}\n").format (url))
+            self._staticFiles[fullUrl] = relativeDownloadPath
 
-            if node is not None:
-                self._changeNodeUrl (node, relativeDownloadPath)
-        except (urllib2.URLError, IOError):
-            self.log (_(u"Can't download {}\n").format (url))
+        if node is not None:
+            self._changeNodeUrl (node, relativeDownloadPath)
 
         return relativeDownloadPath
 
@@ -265,6 +296,9 @@ class DownloadController (BaseDownloadController):
         Return relative path to download.
         For example: '__download/image.png'
         """
+        if url in self._staticFiles:
+            return self._staticFiles[url]
+
         path = urlparse (url).path
         if path.endswith (u'/'):
             path = path[:-1]
