@@ -129,6 +129,7 @@ class DownloadDialogController (object):
         count = len (self._dialog.logText.Value)
         self._dialog.logText.SetSelection (count, count)
         self._dialog.logText.SetFocus()
+        self._dialog.logText.ShowPosition (count)
 
 
     def _loadState (self):
