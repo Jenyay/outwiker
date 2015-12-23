@@ -68,10 +68,10 @@ class DownloaderTest (unittest.TestCase):
         self.assertIn (self._staticDirName + u'/image_01.png',
                        downloader.contentResult)
 
-        self.assertIn (self._staticDirName + u'/images/image_02.png',
+        self.assertIn (self._staticDirName + u'/image_02.png',
                        downloader.contentResult)
 
-        self.assertIn (self._staticDirName + u'/images/subfolder/image_03.png',
+        self.assertIn (self._staticDirName + u'/image_03.png',
                        downloader.contentResult)
 
 
@@ -89,10 +89,10 @@ class DownloaderTest (unittest.TestCase):
         self.assertIn (self._staticDirName + u'/image_01.png',
                        downloader.contentResult)
 
-        self.assertIn (self._staticDirName + u'/images/image_02.png',
+        self.assertIn (self._staticDirName + u'/image_02.png',
                        downloader.contentResult)
 
-        self.assertIn (self._staticDirName + u'/images/subfolder/image_03.png',
+        self.assertIn (self._staticDirName + u'/image_03.png',
                        downloader.contentResult)
 
 
@@ -115,19 +115,21 @@ class DownloaderTest (unittest.TestCase):
 
         fname2 = os.path.join (self._tempDir,
                                self._staticDirName,
-                               u'images',
                                u'image_02.png')
 
         fname3 = os.path.join (self._tempDir,
                                self._staticDirName,
-                               u'images',
-                               u'subfolder',
                                u'image_03.png')
+
+        fname4 = os.path.join (self._tempDir,
+                               self._staticDirName,
+                               u'image_01_1.png')
 
         self.assertTrue (os.path.exists (downloadDir))
         self.assertTrue (os.path.exists (fname1))
         self.assertTrue (os.path.exists (fname2))
         self.assertTrue (os.path.exists (fname3))
+        self.assertTrue (os.path.exists (fname4))
 
 
     def testDownloading_img_02 (self):
@@ -149,13 +151,10 @@ class DownloaderTest (unittest.TestCase):
 
         fname2 = os.path.join (self._tempDir,
                                self._staticDirName,
-                               u'images',
                                u'image_02.png')
 
         fname3 = os.path.join (self._tempDir,
                                self._staticDirName,
-                               u'images',
-                               u'subfolder',
                                u'image_03.png')
 
         self.assertTrue (os.path.exists (downloadDir))
@@ -183,24 +182,26 @@ class DownloaderTest (unittest.TestCase):
 
         fname2 = os.path.join (self._tempDir,
                                self._staticDirName,
-                               u'css',
                                u'fname2.css')
 
         fname3 = os.path.join (self._tempDir,
                                self._staticDirName,
-                               u'css',
-                               u'subdir',
                                u'fname3.css')
 
         fname4 = os.path.join (self._tempDir,
                                self._staticDirName,
                                u'fname4.css')
 
+        fname5 = os.path.join (self._tempDir,
+                               self._staticDirName,
+                               u'fname1_1.css')
+
         self.assertTrue (os.path.exists (downloadDir))
         self.assertTrue (os.path.exists (fname1))
         self.assertTrue (os.path.exists (fname2))
         self.assertTrue (os.path.exists (fname3))
         self.assertTrue (os.path.exists (fname4))
+        self.assertTrue (os.path.exists (fname5))
 
 
     def testDownloading_css_import_01 (self):
@@ -229,7 +230,6 @@ class DownloaderTest (unittest.TestCase):
                 os.path.join (
                     self._tempDir,
                     self._staticDirName,
-                    u'css',
                     u'basic2.css'
                 )
             )
@@ -240,7 +240,6 @@ class DownloaderTest (unittest.TestCase):
                 os.path.join (
                     self._tempDir,
                     self._staticDirName,
-                    u'css',
                     u'basic3.css'
                 )
             )
@@ -251,7 +250,6 @@ class DownloaderTest (unittest.TestCase):
                 os.path.join (
                     self._tempDir,
                     self._staticDirName,
-                    u'css',
                     u'basic4.css'
                 )
             )
@@ -262,8 +260,27 @@ class DownloaderTest (unittest.TestCase):
                 os.path.join (
                     self._tempDir,
                     self._staticDirName,
-                    u'css',
                     u'basic5.css'
+                )
+            )
+        )
+
+        self.assertTrue (
+            os.path.exists (
+                os.path.join (
+                    self._tempDir,
+                    self._staticDirName,
+                    u'basic5_1.css'
+                )
+            )
+        )
+
+        self.assertTrue (
+            os.path.exists (
+                os.path.join (
+                    self._tempDir,
+                    self._staticDirName,
+                    u'basic6.css'
                 )
             )
         )
@@ -288,13 +305,10 @@ class DownloaderTest (unittest.TestCase):
 
         fname2 = os.path.join (self._tempDir,
                                self._staticDirName,
-                               u'js',
                                u'fname2.js')
 
         fname3 = os.path.join (self._tempDir,
                                self._staticDirName,
-                               u'js',
-                               u'subdir',
                                u'fname3.js')
 
         fname4 = os.path.join (self._tempDir,

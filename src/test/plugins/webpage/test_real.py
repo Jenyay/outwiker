@@ -42,35 +42,30 @@ class RealTest (unittest.TestCase):
         self.assertTrue (os.path.join (
             self._tempDir,
             self._staticDirName,
-            u'_static',
             u'default.css')
         )
 
         self.assertTrue (os.path.join (
             self._tempDir,
             self._staticDirName,
-            u'_static',
             u'pygments.css')
         )
 
         self.assertTrue (os.path.join (
             self._tempDir,
             self._staticDirName,
-            u'_static',
             u'jquery.js')
         )
 
         self.assertTrue (os.path.join (
             self._tempDir,
             self._staticDirName,
-            u'_static',
             u'underscore.js')
         )
 
         self.assertTrue (os.path.join (
             self._tempDir,
             self._staticDirName,
-            u'_static',
             u'doctools.js')
         )
 

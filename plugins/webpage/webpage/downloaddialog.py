@@ -254,8 +254,7 @@ class DownloadThread (Thread):
         try:
             downloader.start (self._url, controller)
         except urllib2.URLError as error:
-            self._error (_(u'Download error {}: {}\n').format (
-                error.code,
+            self._error (_(u'Download error: {}\n').format (
                 unicode (error.reason))
             )
         except ValueError:

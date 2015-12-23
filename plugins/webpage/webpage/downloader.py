@@ -5,7 +5,7 @@ import os
 import os.path
 import re
 import urllib2
-from urlparse import urljoin
+from urlparse import urljoin, urlparse
 
 import wx
 
@@ -151,6 +151,10 @@ class DownloadController (BaseDownloadController):
         self._timeout = timeout
         self._fullStaticDir = os.path.join (rootDownloadDir, staticDir).replace (u'\\', u'/')
 
+        # Key - url from source HTML page,
+        # value - relative path to downloaded file
+        self._staticFiles = {}
+
 
     def processImg (self, startUrl, url, node):
         self._process (startUrl, url, node, self._processFuncNone)
@@ -170,7 +174,7 @@ class DownloadController (BaseDownloadController):
 
     def _processFuncCSS (self, startUrl, url, node, text):
         regexp1 = re.compile (r'''^@import\s*
-                              url\s*\((?P<quote>['"])(?P<url>.*?)(?P=quote)\)
+                              url\((?P<quote>['"])(?P<url>.*?)(?P=quote)\)
                               (?P<other>.*)$''',
                               re.X | re.U)
 
@@ -179,34 +183,49 @@ class DownloadController (BaseDownloadController):
                               (?P<other>.*)$''',
                               re.X | re.U)
 
+        regexp3 = re.compile (r'''^@import\s*
+                              url\((?P<url>.*?)\)
+                              (?P<other>.*)$''',
+                              re.X | re.U)
+
+        regexp_list = [regexp1, regexp2, regexp3]
+
         lines = text.split (u'\n')
         resultLines = []
         for line in lines:
-            match1 = regexp1.match (line)
-            match2 = regexp2.match (line)
+            # success will be True if line match any of regexp_list regexp
+            success = False
 
-            match = match1 if match1 is not None else match2
+            for regexp in regexp_list:
+                match = regexp.match (line)
+                if match is not None:
+                    importurl = match.group ('url')
+                    relativeurl = os.path.dirname (url) + '/' + importurl
+                    while relativeurl.startswith (u'/'):
+                        relativeurl = relativeurl[1:]
 
-            if match is not None:
-                importurl = match.group ('url')
-                relativeurl = os.path.dirname (url) + '/' + importurl
-                while relativeurl.startswith (u'/'):
-                    relativeurl = relativeurl[1:]
+                    relativeDownloadPath = self._process (startUrl,
+                                                          relativeurl,
+                                                          None,
+                                                          self._processFuncNone)
 
-                self._process (startUrl, relativeurl, None, self._processFuncNone)
-
-                resultLines.append (
-                    u'@import url("{url}"){other}'.format (
-                        url = importurl,
-                        other = match.group ('other')
+                    resultLines.append (
+                        u'@import url("{url}"){other}'.format (
+                            url = os.path.basename (relativeDownloadPath),
+                            other = match.group ('other')
+                        )
                     )
-                )
-            else:
+                    success = True
+                    break
+
+            if not success:
                 resultLines.append (line)
+
         return u'\n'.join (resultLines)
 
 
     def _process (self, startUrl, url, node, processFunc):
+        # Create dir for downloading
         if not os.path.exists (self._fullStaticDir):
             os.mkdir (self._fullStaticDir)
 
@@ -214,13 +233,13 @@ class DownloadController (BaseDownloadController):
 
         fullUrl = urljoin (startUrl, url)
 
-        relativeDownloadPath = self._getRelativeDownloadPath (url)
-        fullDownloadPath = os.path.join (self._rootDownloadDir,
-                                         relativeDownloadPath).replace (u'\\', u'/')
-        downloadDir = os.path.dirname (fullDownloadPath)
+        relativeDownloadPath = self._getRelativeDownloadPath (fullUrl)
+        if fullUrl in self._staticFiles:
+            return relativeDownloadPath
 
-        if not os.path.exists (downloadDir):
-            os.makedirs (downloadDir)
+        self._staticFiles[fullUrl] = relativeDownloadPath
+        fullDownloadPath = os.path.join (self._rootDownloadDir,
+                                         relativeDownloadPath)
 
         try:
             obj = self.download (fullUrl)
@@ -233,31 +252,48 @@ class DownloadController (BaseDownloadController):
         except (urllib2.URLError, IOError):
             self.log (_(u"Can't download {}\n").format (url))
 
+        return relativeDownloadPath
+
 
     def _getRelativeDownloadPath (self, url):
         """
         Return relative path to download.
-        For example: '__download/folder/subfolder/image.jpg'
+        For example: '__download/image.png'
         """
-        protocol_pos = url.find (u'://')
-        url_clean = url[protocol_pos + 3:] if protocol_pos != -1 else url
+        path = urlparse (url).path
+        if path.endswith (u'/'):
+            path = path[:-1]
 
-        while url_clean.startswith (u'/'):
-            url_clean = url_clean[1:]
+        slashpos = path.rfind ('/')
+        if slashpos != -1:
+            fname = path[slashpos + 1:]
+        else:
+            fname = path
 
-        url_clean = self._sanitizePath (url_clean)
+        relativeDownloadPath = u'{}/{}'.format (self._staticDir, fname)
+        result = relativeDownloadPath
 
-        relativeDownloadPath = os.path.join (self._staticDir, url_clean)
-        relativeDownloadPath = relativeDownloadPath.replace (u'\\', u'/')
-        relativeDownloadPath = relativeDownloadPath.replace (u'../', u'')
-        return relativeDownloadPath
+        fullDownloadPath = os.path.join (self._rootDownloadDir,
+                                         result)
 
+        number = 1
+        while os.path.exists (fullDownloadPath):
+            dotpos = relativeDownloadPath.rfind (u'.')
+            if dotpos == -1:
+                newRelativePath = u'{}_{}'.format (relativeDownloadPath, number)
+            else:
+                newRelativePath = u'{}_{}{}'.format (
+                    relativeDownloadPath[:dotpos],
+                    number,
+                    relativeDownloadPath[dotpos:]
+                )
 
-    def _sanitizePath (self, path):
-        path = path.replace (u':', u'_')
-        path = path.replace (u'&', u'_')
-        path = path.replace (u'?', u'_')
-        return path
+            result = newRelativePath
+            fullDownloadPath = os.path.join (self._rootDownloadDir,
+                                             newRelativePath)
+            number += 1
+
+        return result
 
 
 class WebPageDownloadController (DownloadController):
