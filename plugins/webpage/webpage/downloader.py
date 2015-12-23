@@ -199,7 +199,8 @@ class DownloadController (BaseDownloadController):
                                                   self._processFuncNone)
             replace = u'url("{url}")'.format (
                 url = relativeDownloadPath.replace (
-                    self._staticDir + u'/', u''
+                    self._staticDir + u'/', u'',
+                    1
                 )
             )
 
@@ -249,7 +250,9 @@ class DownloadController (BaseDownloadController):
                     resultLines.append (
                         u'@import url("{url}"){other}'.format (
                             url = relativeDownloadPath.replace (
-                                self._staticDir + u'/', u''),
+                                self._staticDir + u'/', u'',
+                                1,
+                            ),
                             other = match.group ('other')
                         )
                     )
