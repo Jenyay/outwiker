@@ -1,0 +1,6 @@
+	@import url("basic2.css");
+	@import "basic3.css";
+	@import url('basic4.css');
+	@import 'basic5.css';
+    @import url(basic6.css);
+	@import url("subdir/basic5.css");
