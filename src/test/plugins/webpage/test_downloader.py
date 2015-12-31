@@ -139,6 +139,36 @@ class DownloaderTest (unittest.TestCase):
             downloader.contentResult)
 
 
+    def testTitleExample1 (self):
+        from webpage.downloader import Downloader, DownloadController
+
+        controller = DownloadController(self._tempDir, self._staticDirName)
+        downloader = Downloader ()
+
+        examplePath = u'../test/webpage/example1/'
+        exampleHtmlPath = os.path.join (examplePath, u'example1.html')
+
+        downloader.start (self._path2url (exampleHtmlPath), controller)
+
+        self.assertTrue (downloader.success)
+        self.assertEqual (downloader.pageTitle, u'Заголовок страницы')
+
+
+    def testNoTitle (self):
+        from webpage.downloader import Downloader, DownloadController
+
+        controller = DownloadController(self._tempDir, self._staticDirName)
+        downloader = Downloader ()
+
+        examplePath = u'../test/webpage/example_no_title/'
+        exampleHtmlPath = os.path.join (examplePath, u'example_no_title.html')
+
+        downloader.start (self._path2url (exampleHtmlPath), controller)
+
+        self.assertTrue (downloader.success)
+        self.assertIsNone (downloader.pageTitle)
+
+
     def testContentExample2 (self):
         from webpage.downloader import Downloader, DownloadController
 
