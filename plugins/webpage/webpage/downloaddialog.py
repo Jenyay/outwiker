@@ -89,9 +89,10 @@ class DownloadDialog (TestedDialog):
 
 
 class DownloadDialogController (object):
-    def __init__ (self, dialog, application):
+    def __init__ (self, dialog, application, parentPage):
         self._dialog = dialog
         self._application = application
+        self._parentPage = parentPage
 
         self._downloadDir = None
 
@@ -193,11 +194,10 @@ class DownloadDialogController (object):
 
 
     def _onDownloadFinish (self, event):
-        parentPage = self._application.selectedPage
         factory = FactorySelector.getFactory (WebNotePage.getTypeString())
 
-        title = self._getTitle (parentPage, event.title)
-        page = factory.create (parentPage, title, [])
+        title = self._getTitle (self._parentPage, event.title)
+        page = factory.create (self._parentPage, title, [])
         page.tags = self._dialog.tagsSelector.tags
         page.content = event.content
         page.source = event.url
@@ -218,7 +218,7 @@ class DownloadDialogController (object):
 
         index = 1
         newTitle = title
-        while parentPage[newTitle] is not None:
+        while self._parentPage[newTitle] is not None:
             newTitle = u'{title} ({index})'.format (title=title,
                                                     index=index)
             index += 1

@@ -10,7 +10,8 @@ from outwiker.core.factoryselector import FactorySelector
 from outwiker.core.system import getOS
 
 from webnotepage import WebPageFactory, WebNotePage
-from actions.downloadaction import CreateChildWebPageAction
+from actions.downloadaction import (CreateChildWebPageAction,
+                                    CreateSiblingWebPageAction)
 
 
 class Controller (object):
@@ -57,7 +58,8 @@ class Controller (object):
     def _createGui (self):
         if self._application.mainWindow is not None:
             self._createMenu()
-            self._createAction()
+            self._createChildWebPageAction()
+            self._createSiblingWebPageAction()
 
 
     def _removeGui (self):
@@ -67,6 +69,10 @@ class Controller (object):
             self._application.actionController.removeMenuItem (CreateChildWebPageAction.stringId)
             self._application.actionController.removeToolbarButton (CreateChildWebPageAction.stringId)
             self._application.actionController.removeAction (CreateChildWebPageAction.stringId)
+
+            self._application.actionController.removeMenuItem (CreateSiblingWebPageAction.stringId)
+            self._application.actionController.removeToolbarButton (CreateSiblingWebPageAction.stringId)
+            self._application.actionController.removeAction (CreateSiblingWebPageAction.stringId)
 
             index = mainWindow.mainMenu.FindMenu (self._menuName)
             assert index != wx.NOT_FOUND
@@ -85,20 +91,38 @@ class Controller (object):
         self._application.mainWindow.mainMenu.Append (self.menu, self._menuName)
 
 
-    def _createAction (self):
+    def _createChildWebPageAction (self):
         mainWindow = self._application.mainWindow
 
         if (mainWindow is not None and
                 mainWindow.PLUGINS_TOOLBAR_STR in mainWindow.toolbars):
             action = CreateChildWebPageAction(self._application)
             toolbar = mainWindow.treePanel.panel.toolbar
-            image = self.getImagePath ("insert-child.png")
+            image = self.getImagePath (u'create-child.png')
 
             controller = self._application.actionController
 
             controller.register (action, hotkey=None)
             controller.appendMenuItem (CreateChildWebPageAction.stringId, self.menu)
             controller.appendToolbarButton (CreateChildWebPageAction.stringId,
+                                            toolbar,
+                                            image)
+
+
+    def _createSiblingWebPageAction (self):
+        mainWindow = self._application.mainWindow
+
+        if (mainWindow is not None and
+                mainWindow.PLUGINS_TOOLBAR_STR in mainWindow.toolbars):
+            action = CreateSiblingWebPageAction(self._application)
+            toolbar = mainWindow.treePanel.panel.toolbar
+            image = self.getImagePath (u'create-sibling.png')
+
+            controller = self._application.actionController
+
+            controller.register (action, hotkey=None)
+            controller.appendMenuItem (CreateSiblingWebPageAction.stringId, self.menu)
+            controller.appendToolbarButton (CreateSiblingWebPageAction.stringId,
                                             toolbar,
                                             image)
 
