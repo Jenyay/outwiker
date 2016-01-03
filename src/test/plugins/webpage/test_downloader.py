@@ -7,6 +7,7 @@ import unittest
 
 from outwiker.core.application import Application
 from outwiker.core.pluginsloader import PluginsLoader
+from outwiker.core.system import readTextFile
 from test.utils import removeDir
 
 
@@ -459,6 +460,58 @@ class DownloaderTest (unittest.TestCase):
                 )
             )
         )
+
+
+    def testDownloading_css_url_01 (self):
+        from webpage.downloader import Downloader, DownloadController
+
+        template = u'url("{url}")'
+
+        controller = DownloadController(self._tempDir, self._staticDirName)
+        downloader = Downloader ()
+
+        examplePath = u'../test/webpage/example1/'
+        exampleHtmlPath = os.path.join (examplePath, u'example1.html')
+
+        downloader.start (self._path2url (exampleHtmlPath), controller)
+
+        fname1_text = readTextFile (os.path.join (self._tempDir,
+                                                  self._staticDirName,
+                                                  u'fname1.css'))
+
+        self.assertIn (template.format (url = u'basic1.css'), fname1_text)
+        self.assertIn (template.format (url = u'back_img_01.png'), fname1_text)
+        self.assertIn (template.format (url = u'back_img_02.png'), fname1_text)
+        self.assertIn (template.format (url = u'back_img_03.png'), fname1_text)
+        self.assertIn (template.format (url = u'back_img_04.png'), fname1_text)
+        self.assertIn (template.format (url = u'back_img_05.png'), fname1_text)
+        self.assertIn (template.format (url = u'back_img_06.png'), fname1_text)
+
+
+    def testDownloading_css_url_02 (self):
+        from webpage.downloader import Downloader, DownloadController
+
+        template = u'url("{url}")'
+
+        controller = DownloadController(self._tempDir, self._staticDirName)
+        downloader = Downloader ()
+
+        examplePath = u'../test/webpage/example1/'
+        exampleHtmlPath = os.path.join (examplePath, u'example1.html')
+
+        downloader.start (self._path2url (exampleHtmlPath), controller)
+
+        fname2_text = readTextFile (os.path.join (self._tempDir,
+                                                  self._staticDirName,
+                                                  u'fname2.css'))
+
+        self.assertIn (template.format (url = u'basic2.css'), fname2_text)
+        self.assertIn (template.format (url = u'basic4.css'), fname2_text)
+        self.assertIn (template.format (url = u'basic5.css'), fname2_text)
+        self.assertIn (template.format (url = u'basic6.css'), fname2_text)
+        self.assertIn ('basic3.css', fname2_text)
+        self.assertIn ('basic5.css', fname2_text)
+
 
 
     def testDownloading_javascript_01 (self):
