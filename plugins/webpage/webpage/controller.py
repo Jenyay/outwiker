@@ -12,6 +12,7 @@ from outwiker.core.system import getOS
 from webnotepage import WebPageFactory, WebNotePage
 from actions.downloadaction import (CreateChildWebPageAction,
                                     CreateSiblingWebPageAction)
+from actions.opensourceurl import OpenSourceURLAction
 
 
 class Controller (object):
@@ -22,6 +23,7 @@ class Controller (object):
         """Constructor."""
         self._plugin = plugin
         self._application = application
+        self._addedWebPageMenuItems = False
 
 
     def initialize (self):
@@ -31,6 +33,7 @@ class Controller (object):
         self._correctSysPath()
 
         self._application.onPageDialogPageFactoriesNeeded += self.__onPageDialogPageFactoriesNeeded
+        self._application.onPageSelect += self.__onPageSelect
         FactorySelector.addFactory (WebPageFactory())
 
 
@@ -51,6 +54,8 @@ class Controller (object):
         self._removeGui()
 
         self._application.onPageDialogPageFactoriesNeeded -= self.__onPageDialogPageFactoriesNeeded
+        self._application.onPageSelect -= self.__onPageSelect
+
         FactorySelector.removeFactory (WebPageFactory().getTypeString())
 
 
@@ -65,13 +70,18 @@ class Controller (object):
         mainWindow = self._application.mainWindow
         if (mainWindow is not None and
                 mainWindow.PLUGINS_TOOLBAR_STR in mainWindow.toolbars):
-            self._application.actionController.removeMenuItem (CreateChildWebPageAction.stringId)
-            self._application.actionController.removeToolbarButton (CreateChildWebPageAction.stringId)
-            self._application.actionController.removeAction (CreateChildWebPageAction.stringId)
+            actionController = self._application.actionController
+            actionController.removeMenuItem (CreateChildWebPageAction.stringId)
+            actionController.removeToolbarButton (CreateChildWebPageAction.stringId)
+            actionController.removeAction (CreateChildWebPageAction.stringId)
 
-            self._application.actionController.removeMenuItem (CreateSiblingWebPageAction.stringId)
-            self._application.actionController.removeToolbarButton (CreateSiblingWebPageAction.stringId)
-            self._application.actionController.removeAction (CreateSiblingWebPageAction.stringId)
+            actionController.removeMenuItem (CreateSiblingWebPageAction.stringId)
+            actionController.removeToolbarButton (CreateSiblingWebPageAction.stringId)
+            actionController.removeAction (CreateSiblingWebPageAction.stringId)
+
+            if (self._application.selectedPage is not None and
+                    self._application.selectedPage.getTypeString() == WebNotePage.getTypeString()):
+                self._removeWebPageMenuItems()
 
             index = mainWindow.mainMenu.FindMenu (self._menuName)
             assert index != wx.NOT_FOUND
@@ -83,6 +93,35 @@ class Controller (object):
         if (params.pageForEdit is not None and
                 params.pageForEdit.getTypeString() == WebNotePage.getTypeString()):
             params.addPageFactory (WebPageFactory())
+
+
+    def __onPageSelect (self, page):
+        if (page is not None and
+                page.getTypeString() == WebNotePage.getTypeString()):
+            self._addWebPageMenuItems()
+        else:
+            self._removeWebPageMenuItems()
+
+
+    def _addWebPageMenuItems (self):
+        mainWindow = self._application.mainWindow
+
+        if (mainWindow is not None and not self._addedWebPageMenuItems):
+            action = OpenSourceURLAction(self._application)
+            controller = self._application.actionController
+            controller.register (action, hotkey=None)
+            controller.appendMenuItem (action.stringId, self.menu)
+
+            self._addedWebPageMenuItems = True
+
+
+    def _removeWebPageMenuItems (self):
+        if self._addedWebPageMenuItems:
+            actionController = self._application.actionController
+            actionController.removeMenuItem (OpenSourceURLAction.stringId)
+            actionController.removeAction (OpenSourceURLAction.stringId)
+
+            self._addedWebPageMenuItems = False
 
 
     def _createMenu (self):
@@ -102,8 +141,8 @@ class Controller (object):
             controller = self._application.actionController
 
             controller.register (action, hotkey=None)
-            controller.appendMenuItem (CreateChildWebPageAction.stringId, self.menu)
-            controller.appendToolbarButton (CreateChildWebPageAction.stringId,
+            controller.appendMenuItem (action.stringId, self.menu)
+            controller.appendToolbarButton (action.stringId,
                                             toolbar,
                                             image)
 
@@ -120,8 +159,8 @@ class Controller (object):
             controller = self._application.actionController
 
             controller.register (action, hotkey=None)
-            controller.appendMenuItem (CreateSiblingWebPageAction.stringId, self.menu)
-            controller.appendToolbarButton (CreateSiblingWebPageAction.stringId,
+            controller.appendMenuItem (action.stringId, self.menu)
+            controller.appendToolbarButton (action.stringId,
                                             toolbar,
                                             image)
 

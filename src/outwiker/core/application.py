@@ -251,7 +251,7 @@ class ApplicationParams (object):
 
 
         # Event occurs during page dialog initialoztion,
-        # during general panel creation. Evens sender expect what event 
+        # during general panel creation. Evens sender expect what event
         # handlers will fill the page factories list with addPageFactory method.
         # Parameters:
         #     page - current (selected) page
