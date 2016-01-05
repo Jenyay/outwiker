@@ -192,13 +192,15 @@ class DownloadDialogController (object):
         content = event.content
         url = event.url
         tmpStaticDir = event.staticPath
+        logContent = self._dialog.logText.Value
 
         page = WebPageFactory().createWebPage (parentPage,
                                                title,
                                                tags,
                                                content,
                                                url,
-                                               tmpStaticDir)
+                                               tmpStaticDir,
+                                               logContent)
 
         self._dialog.EndModal (wx.ID_OK)
         self._application.selectedPage = page

@@ -34,8 +34,12 @@ class WebNotePage (WikiPage):
         super (WebNotePage, self).__init__ (path, title, parent, readonly)
 
         self.PARAMS_SECTION = u'WebPage'
+
         self.SOURCE_PARAM = u'source'
         self.SOURCE_DEFAULT = None
+
+        self.LOG_PARAM = u'log'
+        self.LOG_DEFAULT = u''
 
 
     @staticmethod
@@ -55,11 +59,29 @@ class WebNotePage (WikiPage):
         self._getSourceOption().value = value
 
 
+    @property
+    def log (self):
+        return self._getLogOption().value
+
+
+    @log.setter
+    def log (self, value):
+        self._getLogOption().value = value
+
+
     def _getSourceOption (self):
         return StringOption (self.params,
                              self.PARAMS_SECTION,
                              self.SOURCE_PARAM,
                              self.SOURCE_DEFAULT
+                             )
+
+
+    def _getLogOption (self):
+        return StringOption (self.params,
+                             self.PARAMS_SECTION,
+                             self.LOG_PARAM,
+                             self.LOG_DEFAULT
                              )
 
 
@@ -106,6 +128,7 @@ class WebPageFactory (PageFactory):
         page.tags = tags
         page.content = content
         page.source = url
+        page.log = logContent
 
         staticDir = os.path.join (page.path, STATIC_DIR_NAME)
         copytree (tmpStaticDir, staticDir)
