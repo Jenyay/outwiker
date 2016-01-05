@@ -2,9 +2,9 @@
 
 from threading import Event, Thread
 from tempfile import mkdtemp
-from shutil import rmtree, copytree
 import urllib2
 import os.path
+from shutil import rmtree
 
 import wx
 
@@ -12,23 +12,15 @@ from outwiker.core.tagslist import TagsList
 from outwiker.gui.testeddialog import TestedDialog
 from outwiker.gui.tagsselector import TagsSelector
 from outwiker.core.commands import MessageBox
-from outwiker.core.factoryselector import FactorySelector
-from outwiker.core.pagetitletester import (WindowsPageTitleTester,
-                                           PageTitleError,
-                                           PageTitleWarning)
 
 import events
 from .downloader import Downloader, WebPageDownloadController
-from .webnotepage import WebNotePage
-
-
-# Directory for images, scripts, css etc.
-STATIC_DIR_NAME = u'__download'
+from webnotepage import STATIC_DIR_NAME, WebPageFactory
 
 
 class DownloadDialog (TestedDialog):
-    def __init__ (self, parent):
-        super (DownloadDialog, self).__init__ (parent)
+    def __init__ (self, parentPage):
+        super (DownloadDialog, self).__init__ (parentPage)
         self._createGui()
         self.urlText.SetFocus()
 
@@ -194,41 +186,26 @@ class DownloadDialogController (object):
 
 
     def _onDownloadFinish (self, event):
-        factory = FactorySelector.getFactory (WebNotePage.getTypeString())
+        parentPage = self._parentPage
+        title = event.title
+        tags = self._dialog.tagsSelector.tags
+        content = event.content
+        url = event.url
+        tmpStaticDir = event.staticPath
 
-        title = self._getTitle (self._parentPage, event.title)
-        page = factory.create (self._parentPage, title, [])
-        page.tags = self._dialog.tagsSelector.tags
-        page.content = event.content
-        page.source = event.url
-
-        staticDir = os.path.join (page.path, STATIC_DIR_NAME)
-
-        copytree (event.staticPath, staticDir)
+        page = WebPageFactory().createWebPage (parentPage,
+                                               title,
+                                               tags,
+                                               content,
+                                               url,
+                                               tmpStaticDir)
 
         self._dialog.EndModal (wx.ID_OK)
         self._application.selectedPage = page
 
 
-    def _getTitle (self, parentPage, title):
-        try:
-            WindowsPageTitleTester().test (title)
-        except (PageTitleError, PageTitleWarning):
-            title = _(u'Web page')
-
-        index = 1
-        newTitle = title
-        while self._parentPage[newTitle] is not None:
-            newTitle = u'{title} ({index})'.format (title=title,
-                                                    index=index)
-            index += 1
-
-        return newTitle
-
-
-
 class DownloadThread (Thread):
-    def __init__ (self, parentWnd, runEvent, downloadDir, url,  name=None):
+    def __init__ (self, parentWnd, runEvent, downloadDir, url, name=None):
         super (DownloadThread, self).__init__ (name=name)
         self._parentWnd = parentWnd
         self._runEvent = runEvent

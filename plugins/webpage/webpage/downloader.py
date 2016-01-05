@@ -14,6 +14,10 @@ from events import UpdateLogEvent
 
 
 class BaseDownloader (object):
+    def __init__ (self, timeout=20):
+        self._timeout = timeout
+
+
     def download (self, url):
         opener = urllib2.build_opener()
         opener.addheaders = [('User-agent', 'OutWiker')]
@@ -22,7 +26,7 @@ class BaseDownloader (object):
 
 class Downloader (BaseDownloader):
     def __init__ (self, timeout=20):
-        self._timeout = 20
+        super (Downloader, self).__init__ (timeout)
 
         self._contentSrc = None
         self._pageTitle = None
@@ -110,6 +114,10 @@ class BaseDownloadController (BaseDownloader):
     '''
     __metaclass__ = ABCMeta
 
+    def __init__ (self, timeout=20):
+        super (BaseDownloadController, self).__init__ (timeout)
+
+
     @abstractmethod
     def processImg (self, startUrl, url, node):
         pass
@@ -146,9 +154,10 @@ class DownloadController (BaseDownloadController):
     Class with main logic for downloading
     """
     def __init__ (self, rootDownloadDir, staticDir, timeout=20):
+        super (DownloadController, self).__init__ (timeout)
+
         self._rootDownloadDir = rootDownloadDir
         self._staticDir = staticDir
-        self._timeout = timeout
         self._fullStaticDir = os.path.join (rootDownloadDir, staticDir).replace (u'\\', u'/')
 
         # Key - url from source HTML page,

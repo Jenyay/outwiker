@@ -15,12 +15,11 @@ from actions.downloadaction import (CreateChildWebPageAction,
 
 
 class Controller (object):
-    """
-    Класс отвечает за основную работу интерфейса плагина
-    """
+
+    """General plugin controller."""
+
     def __init__ (self, plugin, application):
-        """
-        """
+        """Constructor."""
         self._plugin = plugin
         self._application = application
 
@@ -41,7 +40,7 @@ class Controller (object):
         cmd_folder = os.path.join (cmd_folder, u'libs')
 
         syspath = [unicode (item, getOS().filesEncoding)
-                   if type (item) != type(u"")
+                   if not isinstance (item, unicode)
                    else item for item in sys.path]
 
         if cmd_folder not in syspath:
@@ -58,8 +57,8 @@ class Controller (object):
     def _createGui (self):
         if self._application.mainWindow is not None:
             self._createMenu()
-            self._createChildWebPageAction()
             self._createSiblingWebPageAction()
+            self._createChildWebPageAction()
 
 
     def _removeGui (self):
@@ -128,9 +127,7 @@ class Controller (object):
 
 
     def getImagePath (self, imageName):
-        """
-        Получить полный путь до картинки
-        """
+        """Return path to images directory."""
         imagedir = unicode (os.path.join (os.path.dirname (__file__), "images"), getOS().filesEncoding)
         fname = os.path.join (imagedir, imageName)
         return fname

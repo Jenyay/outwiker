@@ -31,9 +31,9 @@ class BaseWebPageAction (BaseAction):
 
 
 class CreateChildWebPageAction (BaseWebPageAction):
-    """
-    Download content and create web page
-    """
+
+    """Download content and create child web page."""
+
     stringId = u"webpage_create_child_page"
 
     @property
@@ -58,9 +58,9 @@ class CreateChildWebPageAction (BaseWebPageAction):
 
 
 class CreateSiblingWebPageAction (BaseWebPageAction):
-    """
-    Download content and create web page
-    """
+
+    """Download content and create sibling web page."""
+
     stringId = u"webpage_create_sibling_page"
 
     @property

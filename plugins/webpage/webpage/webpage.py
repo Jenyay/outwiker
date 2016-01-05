@@ -10,7 +10,7 @@ __version__ = u'1.0'
 
 
 if getCurrentVersion() < Version (1, 9, 0, 781, status=StatusSet.DEV):
-    print ("WebPage plugin. OutWiker version requirement: 1.9.0.781")
+    print u"WebPage plugin. OutWiker version requirement: 1.9.0.781"
 else:
     class PluginWebPage (Plugin):
         def __init__ (self, application):
