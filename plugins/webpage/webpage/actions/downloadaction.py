@@ -25,9 +25,9 @@ class BaseWebPageAction (BaseAction):
             controller.showDialog()
 
 
-        @abstractmethod
-        def _getParentPage (self):
-            pass
+    @abstractmethod
+    def _getParentPage (self):
+        pass
 
 
 class CreateChildWebPageAction (BaseWebPageAction):

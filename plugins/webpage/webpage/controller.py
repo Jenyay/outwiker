@@ -13,6 +13,7 @@ from webnotepage import WebPageFactory, WebNotePage
 from actions.downloadaction import (CreateChildWebPageAction,
                                     CreateSiblingWebPageAction)
 from actions.opensourceurl import OpenSourceURLAction
+from actions.showpageinfo import ShowPageInfoAction
 
 
 class Controller (object):
@@ -20,7 +21,6 @@ class Controller (object):
     """General plugin controller."""
 
     def __init__ (self, plugin, application):
-        """Constructor."""
         self._plugin = plugin
         self._application = application
         self._addedWebPageMenuItems = False
@@ -109,10 +109,15 @@ class Controller (object):
         mainWindow = self._application.mainWindow
 
         if (mainWindow is not None and not self._addedWebPageMenuItems):
-            action = OpenSourceURLAction(self._application)
             controller = self._application.actionController
-            controller.register (action, hotkey=None)
-            controller.appendMenuItem (action.stringId, self.menu)
+
+            openSourceAction = OpenSourceURLAction(self._application)
+            controller.register (openSourceAction, hotkey=None)
+            controller.appendMenuItem (openSourceAction.stringId, self.menu)
+
+            showInfoAction = ShowPageInfoAction(self._application)
+            controller.register (showInfoAction, hotkey=None)
+            controller.appendMenuItem (showInfoAction.stringId, self.menu)
 
             self._addedWebPageMenuItems = True
 
@@ -120,8 +125,12 @@ class Controller (object):
     def _removeWebPageMenuItems (self):
         if self._addedWebPageMenuItems:
             actionController = self._application.actionController
+
             actionController.removeMenuItem (OpenSourceURLAction.stringId)
             actionController.removeAction (OpenSourceURLAction.stringId)
+
+            actionController.removeMenuItem (ShowPageInfoAction.stringId)
+            actionController.removeAction (ShowPageInfoAction.stringId)
 
             self._addedWebPageMenuItems = False
 

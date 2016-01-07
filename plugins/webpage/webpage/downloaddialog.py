@@ -19,8 +19,8 @@ from webnotepage import STATIC_DIR_NAME, WebPageFactory
 
 
 class DownloadDialog (TestedDialog):
-    def __init__ (self, parentPage):
-        super (DownloadDialog, self).__init__ (parentPage)
+    def __init__ (self, parent):
+        super (DownloadDialog, self).__init__ (parent)
         self._createGui()
         self.urlText.SetFocus()
 
