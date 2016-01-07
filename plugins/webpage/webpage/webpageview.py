@@ -30,6 +30,7 @@ class WebPageView (BaseHtmlPanel):
 
         self.__HTML_MENU_INDEX = 7
         self._htmlPanelName = "webpage"
+        self.__htmlMenu = None
 
         self.mainWindow.toolbars[self._htmlPanelName] = HtmlToolBar(self.mainWindow,
                                                                     self.mainWindow.auiManager)
@@ -164,13 +165,20 @@ class WebPageView (BaseHtmlPanel):
                 self._updateResult()
 
 
+    def _getMenu (self):
+        index = self.mainWindow.mainMenu.FindMenu (_(u'Web page'))
+        assert index != -1
+
+        return self.mainWindow.mainMenu.GetMenu (index)
+
+
     def __createCustomTools (self):
         """
         Создать кнопки и меню для данного типа страниц
         """
         assert self.mainWindow is not None
 
-        self.__htmlMenu = wx.Menu()
+        self.__htmlMenu = self._getMenu()
 
         self.__headingMenu = wx.Menu()
         self.__fontMenu = wx.Menu()
@@ -181,12 +189,35 @@ class WebPageView (BaseHtmlPanel):
 
         self.toolsMenu.AppendSeparator()
 
-        self.__htmlMenu.AppendSubMenu (self.__headingMenu, _(u"Heading"))
-        self.__htmlMenu.AppendSubMenu (self.__fontMenu, _(u"Font"))
-        self.__htmlMenu.AppendSubMenu (self.__alignMenu, _(u"Alignment"))
-        self.__htmlMenu.AppendSubMenu (self.__formatMenu, _(u"Formatting"))
-        self.__htmlMenu.AppendSubMenu (self.__listMenu, _(u"Lists"))
-        self.__htmlMenu.AppendSubMenu (self.__tableMenu, _(u"Tables"))
+        self.__headingMenuItem = self.__htmlMenu.AppendSubMenu (
+            self.__headingMenu,
+            _(u"Heading")
+        )
+
+        self.__fontMenuItem = self.__htmlMenu.AppendSubMenu (
+            self.__fontMenu,
+            _(u"Font")
+        )
+
+        self.__alignMenuItem = self.__htmlMenu.AppendSubMenu (
+            self.__alignMenu,
+            _(u"Alignment")
+        )
+
+        self.__formatMenuItem = self.__htmlMenu.AppendSubMenu (
+            self.__formatMenu,
+            _(u"Formatting")
+        )
+
+        self.__listMenuItem = self.__htmlMenu.AppendSubMenu (
+            self.__listMenu,
+            _(u"Lists")
+        )
+
+        self.__tableMenuItem = self.__htmlMenu.AppendSubMenu (
+            self.__tableMenu,
+            _(u"Tables")
+        )
 
         self.__addFontTools()
         self.__addAlignTools()
@@ -196,8 +227,6 @@ class WebPageView (BaseHtmlPanel):
         self.__addFormatTools()
         self.__addOtherTools()
         self._addRenderTools()
-
-        self.mainWindow.mainMenu.Insert (self.__HTML_MENU_INDEX, self.__htmlMenu, _(u"WebPage"))
 
 
     def _addRenderTools (self):
@@ -560,7 +589,13 @@ class WebPageView (BaseHtmlPanel):
 
     def removeGui (self):
         super (WebPageView, self).removeGui ()
-        self.mainWindow.mainMenu.Remove (self.__HTML_MENU_INDEX - 1)
+
+        self.__htmlMenu.RemoveItem (self.__headingMenuItem)
+        self.__htmlMenu.RemoveItem (self.__fontMenuItem)
+        self.__htmlMenu.RemoveItem (self.__alignMenuItem)
+        self.__htmlMenu.RemoveItem (self.__formatMenuItem)
+        self.__htmlMenu.RemoveItem (self.__listMenuItem)
+        self.__htmlMenu.RemoveItem (self.__tableMenuItem)
 
 
     def _changeContentByEvent (self, page, params, event):

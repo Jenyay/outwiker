@@ -25,6 +25,8 @@ class Controller (object):
         self._application = application
         self._addedWebPageMenuItems = False
 
+        self.MENU_INDEX = 5
+
 
     def initialize (self):
         self._menuName = _(u"Web page")
@@ -126,7 +128,9 @@ class Controller (object):
 
     def _createMenu (self):
         self.menu = wx.Menu (u'')
-        self._application.mainWindow.mainMenu.Append (self.menu, self._menuName)
+        self._application.mainWindow.mainMenu.Insert (self.MENU_INDEX,
+                                                      self.menu,
+                                                      self._menuName)
 
 
     def _createChildWebPageAction (self):
