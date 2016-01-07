@@ -12,6 +12,7 @@ from outwiker.core.config import StringOption
 from outwiker.core.pagetitletester import (WindowsPageTitleTester,
                                            PageTitleError,
                                            PageTitleWarning)
+from outwiker.core.iconmaker import IconMaker
 
 from .webpageview import WebPageView
 
@@ -108,6 +109,7 @@ class WebPageFactory (PageFactory):
     def createWebPage (self,
                        parentPage,
                        title,
+                       favicon,
                        tags,
                        content,
                        url,
@@ -118,6 +120,7 @@ class WebPageFactory (PageFactory):
 
         parentPage - parent page for creating page.
         title - offered title for the page. The title may be changed.
+        favicon - path to favicon or None.
         tags - tags for page.
         content - HTML code for the page.
         tmpStaticDir - path to downloaded static files.
@@ -129,6 +132,12 @@ class WebPageFactory (PageFactory):
         page.content = content
         page.source = url
         page.log = logContent
+        if favicon is not None:
+            iconname = favicon[::-1].replace(u'.', u'_16.'[::-1], 1)[::-1]
+            iconname = iconname.replace (u'.ico', u'.png')
+            iconmaker = IconMaker ()
+            iconmaker.create (favicon, iconname)
+            page.icon = iconname
 
         staticDir = os.path.join (page.path, STATIC_DIR_NAME)
         copytree (tmpStaticDir, staticDir)

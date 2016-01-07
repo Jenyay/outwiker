@@ -8,7 +8,6 @@ from outwiker.gui.baseaction import BaseAction
 class BaseWebPageAction (BaseAction):
     __metaclass__ = ABCMeta
 
-
     def __init__ (self, application):
         super (BaseWebPageAction, self).__init__()
         self._application = application
@@ -31,7 +30,6 @@ class BaseWebPageAction (BaseAction):
 
 
 class CreateChildWebPageAction (BaseWebPageAction):
-
     """Download content and create child web page."""
 
     stringId = u"webpage_create_child_page"
@@ -56,9 +54,7 @@ class CreateChildWebPageAction (BaseWebPageAction):
 
 
 
-
 class CreateSiblingWebPageAction (BaseWebPageAction):
-
     """Download content and create sibling web page."""
 
     stringId = u"webpage_create_sibling_page"

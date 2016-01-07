@@ -188,6 +188,7 @@ class DownloadDialogController (object):
     def _onDownloadFinish (self, event):
         parentPage = self._parentPage
         title = event.title
+        favicon = event.favicon
         tags = self._dialog.tagsSelector.tags
         content = event.content
         url = event.url
@@ -196,6 +197,7 @@ class DownloadDialogController (object):
 
         page = WebPageFactory().createWebPage (parentPage,
                                                title,
+                                               favicon,
                                                tags,
                                                content,
                                                url,
@@ -245,10 +247,12 @@ class DownloadThread (Thread):
             content = downloader.contentResult
             staticPath = os.path.join (self._downloadDir, STATIC_DIR_NAME)
             title = downloader.pageTitle
+            favicon = downloader.favicon
 
             finishEvent = events.FinishDownloadEvent (content=content,
                                                       staticPath=staticPath,
                                                       title=title,
+                                                      favicon=favicon,
                                                       url=self._url)
             wx.PostEvent (self._parentWnd, finishEvent)
 

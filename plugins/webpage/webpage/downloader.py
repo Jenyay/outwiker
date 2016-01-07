@@ -14,7 +14,7 @@ from events import UpdateLogEvent
 
 
 class BaseDownloader (object):
-    def __init__ (self, timeout=20):
+    def __init__ (self, timeout):
         self._timeout = timeout
 
 
@@ -30,6 +30,8 @@ class Downloader (BaseDownloader):
 
         self._contentSrc = None
         self._pageTitle = None
+        self._faviconPath = None
+
         self._soup = None
 
         self._contentResult = None
@@ -48,6 +50,9 @@ class Downloader (BaseDownloader):
         self._downloadImages (self._soup, controller, url)
         self._downloadCSS (self._soup, controller, url)
         self._downloadScripts (self._soup, controller, url)
+        self._downloadFavicon (self._soup, controller, url)
+
+        self._faviconPath = controller.favicon
 
         self._improveResult (self._soup, url)
 
@@ -92,6 +97,20 @@ class Downloader (BaseDownloader):
                 controller.processScript (url, script['src'], script)
 
 
+    def _downloadFavicon (self, soup, controller, url):
+        links = soup.find_all (u'link')
+        for link in links:
+            if (link.has_attr ('rel') and
+                    link.has_attr ('href') and
+                    len (link['rel']) == 2 and
+                    link['rel'][0].lower() == u'shortcut' and
+                    link['rel'][1].lower() == u'icon'):
+                controller.processFavicon (url, link['href'], link)
+
+        if controller.favicon is None:
+            controller.processFavicon (url, u'/favicon.ico', None)
+
+
     @property
     def contentSrc (self):
         return self._contentSrc
@@ -107,6 +126,11 @@ class Downloader (BaseDownloader):
         return self._pageTitle
 
 
+    @property
+    def favicon (self):
+        return self._faviconPath
+
+
 
 class BaseDownloadController (BaseDownloader):
     '''
@@ -116,6 +140,7 @@ class BaseDownloadController (BaseDownloader):
 
     def __init__ (self, timeout=20):
         super (BaseDownloadController, self).__init__ (timeout)
+        self.favicon = None
 
 
     @abstractmethod
@@ -130,6 +155,16 @@ class BaseDownloadController (BaseDownloader):
 
     @abstractmethod
     def processScript (self, startUrl, url, node):
+        pass
+
+
+    @abstractmethod
+    def processFavicon (self, startUrl, url, node):
+        """
+        startUrl - downloaded page URL.
+        url - favicon url.
+        node - link node instance if this tag exists or None otherwise.
+        """
         pass
 
 
@@ -175,6 +210,22 @@ class DownloadController (BaseDownloadController):
 
     def processScript (self, startUrl, url, node):
         self._process (startUrl, url, node, self._processFuncNone)
+
+    def processFavicon (self, startUrl, url, node):
+        """
+        startUrl - downloaded page URL.
+        url - favicon url.
+        node - link node instance if this tag exists or None otherwise.
+        """
+        if self.favicon is None:
+            relativeDownloadPath = self._process (startUrl,
+                                                  url,
+                                                  node,
+                                                  self._processFuncNone)
+            fullDownloadPath = os.path.join (self._rootDownloadDir,
+                                             relativeDownloadPath)
+            if os.path.exists (fullDownloadPath):
+                self.favicon = fullDownloadPath
 
 
     def _processFuncNone (self, startUrl, url, node, text):
@@ -374,6 +425,11 @@ class WebPageDownloadController (DownloadController):
     def processScript (self, startUrl, url, node):
         if self._runEvent.is_set():
             super (WebPageDownloadController, self).processScript (startUrl, url, node)
+
+
+    def processFavicon (self, startUrl, url, node):
+        if self._runEvent.is_set():
+            super (WebPageDownloadController, self).processFavicon (startUrl, url, node)
 
 
     def log (self, text):
