@@ -20,7 +20,7 @@ class BaseDownloader (object):
 
     def download (self, url):
         opener = urllib2.build_opener()
-        opener.addheaders = [('User-agent', 'OutWiker')]
+        opener.addheaders = [('User-agent', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36 OutWiker/1')]
         return opener.open(url, timeout = self._timeout)
 
 
@@ -249,9 +249,10 @@ class DownloadController (BaseDownloadController):
             importurl = importurl.replace (u'"', u'')
             importurl = importurl.replace (u"'", u'')
 
-            relativeurl = os.path.dirname (url) + '/' + importurl
-            while relativeurl.startswith (u'/'):
-                relativeurl = relativeurl[1:]
+            if importurl.startswith (u'/'):
+                relativeurl = importurl
+            else:
+                relativeurl = os.path.dirname (url) + '/' + importurl
 
             relativeDownloadPath = self._process (startUrl,
                                                   relativeurl,
@@ -298,9 +299,10 @@ class DownloadController (BaseDownloadController):
                 match = regexp.match (line)
                 if match is not None:
                     importurl = match.group ('url')
-                    relativeurl = os.path.dirname (url) + '/' + importurl
-                    while relativeurl.startswith (u'/'):
-                        relativeurl = relativeurl[1:]
+                    if importurl.startswith (u'/'):
+                        relativeurl = importurl
+                    else:
+                        relativeurl = os.path.dirname (url) + '/' + importurl
 
                     relativeDownloadPath = self._process (startUrl,
                                                           relativeurl,
