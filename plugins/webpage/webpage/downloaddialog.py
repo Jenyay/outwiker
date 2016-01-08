@@ -260,8 +260,10 @@ class DownloadThread (Thread):
 
     def _prepareFavicon (self, favicon_src):
         if favicon_src is not None:
+            ico_ext = u'.ico'
             iconname = favicon_src[::-1].replace(u'.', u'_16.'[::-1], 1)[::-1]
-            iconname = iconname.replace (u'.ico', u'.png')
+            if iconname.endswith (ico_ext):
+                iconname = iconname[:-len (ico_ext)] + u'.png'
             iconmaker = IconMaker ()
             iconmaker.create (favicon_src, iconname)
             return iconname
