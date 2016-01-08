@@ -12,6 +12,7 @@ from outwiker.core.tagslist import TagsList
 from outwiker.gui.testeddialog import TestedDialog
 from outwiker.gui.tagsselector import TagsSelector
 from outwiker.core.commands import MessageBox
+from outwiker.core.iconmaker import IconMaker
 
 import events
 from .downloader import Downloader, WebPageDownloadController
@@ -247,7 +248,7 @@ class DownloadThread (Thread):
             content = downloader.contentResult
             staticPath = os.path.join (self._downloadDir, STATIC_DIR_NAME)
             title = downloader.pageTitle
-            favicon = downloader.favicon
+            favicon = self._prepareFavicon (downloader.favicon)
 
             finishEvent = events.FinishDownloadEvent (content=content,
                                                       staticPath=staticPath,
@@ -255,6 +256,15 @@ class DownloadThread (Thread):
                                                       favicon=favicon,
                                                       url=self._url)
             wx.PostEvent (self._parentWnd, finishEvent)
+
+
+    def _prepareFavicon (self, favicon_src):
+        if favicon_src is not None:
+            iconname = favicon_src[::-1].replace(u'.', u'_16.'[::-1], 1)[::-1]
+            iconname = iconname.replace (u'.ico', u'.png')
+            iconmaker = IconMaker ()
+            iconmaker.create (favicon_src, iconname)
+            return iconname
 
 
     def _log (self, text):

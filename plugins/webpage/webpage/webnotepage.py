@@ -12,7 +12,6 @@ from outwiker.core.config import StringOption
 from outwiker.core.pagetitletester import (WindowsPageTitleTester,
                                            PageTitleError,
                                            PageTitleWarning)
-from outwiker.core.iconmaker import IconMaker
 
 from .webpageview import WebPageView
 
@@ -133,11 +132,7 @@ class WebPageFactory (PageFactory):
         page.source = url
         page.log = logContent
         if favicon is not None:
-            iconname = favicon[::-1].replace(u'.', u'_16.'[::-1], 1)[::-1]
-            iconname = iconname.replace (u'.ico', u'.png')
-            iconmaker = IconMaker ()
-            iconmaker.create (favicon, iconname)
-            page.icon = iconname
+            page.icon = favicon
 
         staticDir = os.path.join (page.path, STATIC_DIR_NAME)
         copytree (tmpStaticDir, staticDir)
