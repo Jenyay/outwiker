@@ -80,6 +80,16 @@ class DownloadDialog (TestedDialog):
         self.tagsSelector.setTagsList (tagslist)
 
 
+    @property
+    def url (self):
+        return self.urlText.Value.strip()
+
+
+    @url.setter
+    def url (self, url):
+        self.urlText.Value = url
+
+
 
 class DownloadDialogController (object):
     def __init__ (self, dialog, application, parentPage):
@@ -88,7 +98,6 @@ class DownloadDialogController (object):
         self._parentPage = parentPage
 
         self._downloadDir = None
-
 
         self._runEvent = Event()
         self._thread = None
@@ -148,7 +157,7 @@ class DownloadDialogController (object):
 
 
     def _onOk (self, event):
-        url = self._dialog.urlText.Value.strip()
+        url = self._dialog.url
 
         if len (url) == 0:
             MessageBox (_(u'Enter link for downloading'),
