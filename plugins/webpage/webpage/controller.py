@@ -27,6 +27,7 @@ from actions.opensourceurl import OpenSourceURLAction
 from actions.showpageinfo import ShowPageInfoAction
 from misc import polyActions, panelName
 from webpagetoolbar import WebPageToolBar
+from spellcontroller import WebPageSpellController
 
 
 class Controller (object):
@@ -41,6 +42,8 @@ class Controller (object):
         self.imagesDir = getImagesDir()
         self._MENU_INDEX = 5
 
+        self._spellController = WebPageSpellController (self._application)
+
 
     def initialize (self):
         self._menuName = _(u"Web page")
@@ -51,6 +54,7 @@ class Controller (object):
         self._application.onPageDialogPageFactoriesNeeded += self.__onPageDialogPageFactoriesNeeded
         self._application.onPageSelect += self.__onPageSelect
         self._application.onPageViewDestroy += self.__onPageViewDestroy
+        self._application.onPageViewCreate += self.__onPageViewCreate
         FactorySelector.addFactory (WebPageFactory())
 
 
@@ -73,8 +77,10 @@ class Controller (object):
         self._application.onPageDialogPageFactoriesNeeded -= self.__onPageDialogPageFactoriesNeeded
         self._application.onPageSelect -= self.__onPageSelect
         self._application.onPageViewDestroy -= self.__onPageViewDestroy
+        self._application.onPageViewCreate -= self.__onPageViewCreate
 
         FactorySelector.removeFactory (WebPageFactory().getTypeString())
+        self._spellController.clear()
 
 
     def _createGui (self):
@@ -120,10 +126,16 @@ class Controller (object):
             self._addWebPageGui()
 
 
+    def __onPageViewCreate (self, page):
+        assert page is not None
+        self._spellController.initialize(page)
+
+
     def __onPageViewDestroy (self, page):
         if (page is not None and
                 page.getTypeString() == WebNotePage.getTypeString()):
             self._removeWebPageGui()
+            self._spellController.clear()
 
 
     def _addWebPageGui (self):
