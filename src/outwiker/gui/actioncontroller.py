@@ -127,7 +127,6 @@ class ActionController (object):
         self.saveHotKeys()
 
 
-
     def appendMenuItem (self, strid, menu):
         """
         Добавить действие в меню menu

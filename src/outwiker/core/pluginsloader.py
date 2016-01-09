@@ -3,6 +3,7 @@
 import os
 import os.path
 import sys
+import traceback
 
 from .pluginbase import Plugin
 from outwiker.gui.guiconfig import PluginsConfig
@@ -156,10 +157,12 @@ class PluginsLoader (object):
                         if module is not None:
                             self.__loadPlugin (module)
                     except BaseException, e:
-                        errors.append ("*** Plugin {package} loading error ***\n{package}/{fileName}\n{error}".format (
+                        errors.append ("*** Plugin {package} loading error ***\n{package}/{fileName}\n{error}\n{traceback}".format (
                             package = packageName,
                             fileName = fileName,
-                            error=str(e)))
+                            error=str(e),
+                            traceback=traceback.format_exc()
+                            ))
 
                 # Проверим, удалось ли загрузить плагин
                 newPluginsCount = len (self.__plugins) + len (self.__disabledPlugins)
