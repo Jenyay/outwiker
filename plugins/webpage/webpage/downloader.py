@@ -78,7 +78,8 @@ class Downloader (BaseDownloader):
     def _downloadImages (self, soup, controller, url):
         images = soup.find_all (u'img')
         for image in images:
-            controller.processImg (url, image['src'], image)
+            if image.has_attr (u'src'):
+                controller.processImg (url, image['src'], image)
 
 
     def _downloadCSS (self, soup, controller, url):
