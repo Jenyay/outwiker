@@ -50,6 +50,7 @@ class Controller (object):
 
         self._application.onPageDialogPageFactoriesNeeded += self.__onPageDialogPageFactoriesNeeded
         self._application.onPageSelect += self.__onPageSelect
+        self._application.onPageViewDestroy += self.__onPageViewDestroy
         FactorySelector.addFactory (WebPageFactory())
 
 
@@ -71,6 +72,7 @@ class Controller (object):
 
         self._application.onPageDialogPageFactoriesNeeded -= self.__onPageDialogPageFactoriesNeeded
         self._application.onPageSelect -= self.__onPageSelect
+        self._application.onPageViewDestroy -= self.__onPageViewDestroy
 
         FactorySelector.removeFactory (WebPageFactory().getTypeString())
 
@@ -98,7 +100,7 @@ class Controller (object):
 
             if (self._application.selectedPage is not None and
                     self._application.selectedPage.getTypeString() == WebNotePage.getTypeString()):
-                self._removeWebPageMenuItems()
+                self._removeWebPageGui()
 
             index = mainWindow.mainMenu.FindMenu (self._menuName)
             assert index != wx.NOT_FOUND
@@ -116,7 +118,11 @@ class Controller (object):
         if (page is not None and
                 page.getTypeString() == WebNotePage.getTypeString()):
             self._addWebPageGui()
-        else:
+
+
+    def __onPageViewDestroy (self, page):
+        if (page is not None and
+                page.getTypeString() == WebNotePage.getTypeString()):
             self._removeWebPageGui()
 
 
@@ -130,8 +136,6 @@ class Controller (object):
                 mainWindow,
                 mainWindow.auiManager)
 
-            self._createWebPageMenu()
-
             openSourceAction = OpenSourceURLAction(self._application)
             controller.register (openSourceAction, hotkey=None)
             controller.appendMenuItem (openSourceAction.stringId, self._menu)
@@ -140,14 +144,18 @@ class Controller (object):
             controller.register (showInfoAction, hotkey=None)
             controller.appendMenuItem (showInfoAction.stringId, self._menu)
 
-            # self.__addFontTools()
-            # self.__addAlignTools()
-            # self.__addHTools()
-            # self.__addTableTools()
-            # self.__addListTools()
-            # self.__addFormatTools()
-            # self.__addOtherTools()
-            # self._addRenderTools()
+            self._createWebPageMenu()
+
+            self.__addFontTools()
+            self.__addAlignTools()
+            self.__addHTools()
+            self.__addTableTools()
+            self.__addListTools()
+            self.__addFormatTools()
+            self.__addOtherTools()
+            self._addRenderTools()
+
+            self._application.mainWindow.UpdateAuiManager()
 
             self._addedWebPageMenuItems = True
 
@@ -647,22 +655,23 @@ class Controller (object):
 
 
     def _insertTable (self, param):
-        editor = self.codeEditor
-        parent = Application.mainWindow
+        editor = self._application.mainWindow.pagePanel.pageView.codeEditor
+        parent = self._application.mainWindow
 
         with TableDialog (parent) as dlg:
-            controller = TableDialogController (dlg, Application.config)
+            controller = TableDialogController (dlg, self._application.config)
             if controller.showDialog() == wx.ID_OK:
                 result = controller.getResult()
                 editor.replaceText (result)
 
 
     def _insertTableRows (self, param):
-        editor = self.codeEditor
-        parent = Application.mainWindow
+        editor = self._application.mainWindow.pagePanel.pageView.codeEditor
+        parent = self._application.mainWindow
 
         with TableRowsDialog (parent) as dlg:
-            controller = TableRowsDialogController (dlg, Application.config)
+            controller = TableRowsDialogController (dlg,
+                                                    self._application.config)
             if controller.showDialog() == wx.ID_OK:
                 result = controller.getResult()
                 editor.replaceText (result)
