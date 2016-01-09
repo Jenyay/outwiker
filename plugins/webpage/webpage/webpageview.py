@@ -71,13 +71,6 @@ class WebPageView (BaseHtmlPanel):
             CURRENT_DATE,
         ]
 
-        # Список действий, которые нужно удалять с панелей и из меню.
-        # А еще их надо дизаблить при переходе на вкладку просмотра результата
-        # Не убираю пустой список, поскольку в будущем могут появиться нестандартные
-        # действия, специфические только для HTML-страниц
-        self.__htmlNotationActions = [
-        ]
-
         self.__createCustomTools()
         self._application.mainWindow.updateShortcuts()
         self.mainWindow.UpdateAuiManager()
@@ -123,10 +116,6 @@ class WebPageView (BaseHtmlPanel):
     def _removeActionTools (self):
         actionController = self._application.actionController
 
-        # Удалим элементы меню
-        map (lambda action: actionController.removeMenuItem (action.stringId),
-             self.__htmlNotationActions)
-
         # Удалим элементы меню полиморфных действий
         map (lambda strid: actionController.removeMenuItem (strid),
              self.__polyActions)
@@ -135,9 +124,6 @@ class WebPageView (BaseHtmlPanel):
 
         # Удалим кнопки с панелей инструментов
         if self._htmlPanelName in self.mainWindow.toolbars:
-            map (lambda action: actionController.removeToolbarButton (action.stringId),
-                 self.__htmlNotationActions)
-
             map (lambda strid: actionController.removeToolbarButton (strid),
                  self.__polyActions)
 
@@ -150,9 +136,6 @@ class WebPageView (BaseHtmlPanel):
 
     def _enableActions (self, enabled):
         actionController = self._application.actionController
-
-        map (lambda action: actionController.enableTools (action.stringId, enabled),
-             self.__htmlNotationActions)
 
         # Активируем / дизактивируем полиморфные действия
         map (lambda strid: actionController.enableTools (strid, enabled),
