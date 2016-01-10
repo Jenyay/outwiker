@@ -31,7 +31,6 @@ from spellcontroller import WebPageSpellController
 
 
 class Controller (object):
-
     """General plugin controller."""
 
     def __init__ (self, plugin, application):
@@ -51,10 +50,9 @@ class Controller (object):
 
         self._correctSysPath()
 
-        self._application.onPageDialogPageFactoriesNeeded += self.__onPageDialogPageFactoriesNeeded
-        self._application.onPageSelect += self.__onPageSelect
-        self._application.onPageViewDestroy += self.__onPageViewDestroy
-        self._application.onPageViewCreate += self.__onPageViewCreate
+        self._application.onPageDialogPageFactoriesNeeded += self._onPageDialogPageFactoriesNeeded
+        self._application.onPageViewDestroy += self._onPageViewDestroy
+        self._application.onPageViewCreate += self._onPageViewCreate
         FactorySelector.addFactory (WebPageFactory())
 
 
@@ -74,10 +72,9 @@ class Controller (object):
     def destroy (self):
         self._removeGui()
 
-        self._application.onPageDialogPageFactoriesNeeded -= self.__onPageDialogPageFactoriesNeeded
-        self._application.onPageSelect -= self.__onPageSelect
-        self._application.onPageViewDestroy -= self.__onPageViewDestroy
-        self._application.onPageViewCreate -= self.__onPageViewCreate
+        self._application.onPageDialogPageFactoriesNeeded -= self._onPageDialogPageFactoriesNeeded
+        self._application.onPageViewDestroy -= self._onPageViewDestroy
+        self._application.onPageViewCreate -= self._onPageViewCreate
 
         FactorySelector.removeFactory (WebPageFactory().getTypeString())
         self._spellController.clear()
@@ -114,26 +111,22 @@ class Controller (object):
             mainWindow.mainMenu.Remove (index)
 
 
-    def __onPageDialogPageFactoriesNeeded (self, page, params):
+    def _onPageDialogPageFactoriesNeeded (self, page, params):
         if (params.pageForEdit is not None and
                 params.pageForEdit.getTypeString() == WebNotePage.getTypeString()):
             params.addPageFactory (WebPageFactory())
 
 
-    def __onPageSelect (self, page):
-        if (page is not None and
-                page.getTypeString() == WebNotePage.getTypeString()):
-            self._addWebPageGui()
-
-
-    def __onPageViewCreate (self, page):
+    def _onPageViewCreate (self, page):
         assert page is not None
-        self._spellController.initialize(page)
+        if page.getTypeString() == WebNotePage.getTypeString():
+            self._addWebPageGui()
+            self._spellController.initialize(page)
 
 
-    def __onPageViewDestroy (self, page):
-        if (page is not None and
-                page.getTypeString() == WebNotePage.getTypeString()):
+    def _onPageViewDestroy (self, page):
+        assert page is not None
+        if page.getTypeString() == WebNotePage.getTypeString():
             self._removeWebPageGui()
             self._spellController.clear()
 
@@ -158,13 +151,13 @@ class Controller (object):
 
             self._createWebPageMenu()
 
-            self.__addFontTools()
-            self.__addAlignTools()
-            self.__addHTools()
-            self.__addTableTools()
-            self.__addListTools()
-            self.__addFormatTools()
-            self.__addOtherTools()
+            self._addFontTools()
+            self._addAlignTools()
+            self._addHTools()
+            self._addTableTools()
+            self._addListTools()
+            self._addFormatTools()
+            self._addOtherTools()
             self._addRenderTools()
 
             self._application.mainWindow.UpdateAuiManager()
@@ -189,12 +182,12 @@ class Controller (object):
                 actionController.removeToolbarButton (SwitchCodeResultAction.stringId)
                 self._application.mainWindow.toolbars.destroyToolBar (panelName)
 
-            self._menu.RemoveItem (self.__headingMenuItem)
-            self._menu.RemoveItem (self.__fontMenuItem)
-            self._menu.RemoveItem (self.__alignMenuItem)
-            self._menu.RemoveItem (self.__formatMenuItem)
-            self._menu.RemoveItem (self.__listMenuItem)
-            self._menu.RemoveItem (self.__tableMenuItem)
+            self._menu.RemoveItem (self._headingMenuItem)
+            self._menu.RemoveItem (self._fontMenuItem)
+            self._menu.RemoveItem (self._alignMenuItem)
+            self._menu.RemoveItem (self._formatMenuItem)
+            self._menu.RemoveItem (self._listMenuItem)
+            self._menu.RemoveItem (self._tableMenuItem)
 
             self._addedWebPageMenuItems = False
 
@@ -223,42 +216,42 @@ class Controller (object):
                                                       self._menuName)
 
     def _createWebPageMenu (self):
-        self.__headingMenu = wx.Menu()
-        self.__fontMenu = wx.Menu()
-        self.__alignMenu = wx.Menu()
-        self.__formatMenu = wx.Menu()
-        self.__listMenu = wx.Menu()
-        self.__tableMenu = wx.Menu()
+        self._headingMenu = wx.Menu()
+        self._fontMenu = wx.Menu()
+        self._alignMenu = wx.Menu()
+        self._formatMenu = wx.Menu()
+        self._listMenu = wx.Menu()
+        self._tableMenu = wx.Menu()
 
         self.toolsMenu.AppendSeparator()
 
-        self.__headingMenuItem = self._menu.AppendSubMenu (
-            self.__headingMenu,
+        self._headingMenuItem = self._menu.AppendSubMenu (
+            self._headingMenu,
             _(u"Heading")
         )
 
-        self.__fontMenuItem = self._menu.AppendSubMenu (
-            self.__fontMenu,
+        self._fontMenuItem = self._menu.AppendSubMenu (
+            self._fontMenu,
             _(u"Font")
         )
 
-        self.__alignMenuItem = self._menu.AppendSubMenu (
-            self.__alignMenu,
+        self._alignMenuItem = self._menu.AppendSubMenu (
+            self._alignMenu,
             _(u"Alignment")
         )
 
-        self.__formatMenuItem = self._menu.AppendSubMenu (
-            self.__formatMenu,
+        self._formatMenuItem = self._menu.AppendSubMenu (
+            self._formatMenu,
             _(u"Formatting")
         )
 
-        self.__listMenuItem = self._menu.AppendSubMenu (
-            self.__listMenu,
+        self._listMenuItem = self._menu.AppendSubMenu (
+            self._listMenu,
             _(u"Lists")
         )
 
-        self.__tableMenuItem = self._menu.AppendSubMenu (
-            self.__tableMenu,
+        self._tableMenuItem = self._menu.AppendSubMenu (
+            self._tableMenu,
             _(u"Tables")
         )
 
@@ -277,12 +270,12 @@ class Controller (object):
             fullUpdate=False)
 
 
-    def __addFontTools (self):
+    def _addFontTools (self):
         """
         Добавить инструменты, связанные со шрифтами
         """
         toolbar = self._application.mainWindow.toolbars[panelName]
-        menu = self.__fontMenu
+        menu = self._fontMenu
 
         # Полужирный шрифт
         self._application.actionController.getAction (BOLD_STR_ID).setFunc (lambda param: self.turnText (u"<b>", u"</b>"))
@@ -354,12 +347,12 @@ class Controller (object):
 
 
 
-    def __addAlignTools (self):
+    def _addAlignTools (self):
         """
         Добавить инструменты, связанные с выравниванием
         """
         toolbar = self._application.mainWindow.toolbars[panelName]
-        menu = self.__alignMenu
+        menu = self._alignMenu
 
         # Выравнивание по левому краю
         self._application.actionController.getAction (ALIGN_LEFT_STR_ID).setFunc (lambda param: self.turnText (u'<div align="left">', u'</div>'))
@@ -402,12 +395,12 @@ class Controller (object):
 
 
 
-    def __addTableTools (self):
+    def _addTableTools (self):
         """
         Добавить инструменты, связанные с таблицами
         """
         toolbar = self._application.mainWindow.toolbars[panelName]
-        menu = self.__tableMenu
+        menu = self._tableMenu
 
         # Вставить таблицу
         self._application.actionController.getAction (TABLE_STR_ID).setFunc (
@@ -444,12 +437,12 @@ class Controller (object):
 
 
 
-    def __addListTools (self):
+    def _addListTools (self):
         """
         Добавить инструменты, связанные со списками
         """
         toolbar = self._application.mainWindow.toolbars[panelName]
-        menu = self.__listMenu
+        menu = self._listMenu
 
         # Ненумерованный список
         self._application.actionController.getAction (LIST_BULLETS_STR_ID).setFunc (lambda param: self._application.mainWindow.pagePanel.pageView.codeEditor.turnList (u'<ul>\n', u'</ul>', u'<li>', u'</li>'))
@@ -471,12 +464,12 @@ class Controller (object):
 
 
 
-    def __addHTools (self):
+    def _addHTools (self):
         """
         Добавить инструменты для заголовочных тегов <H>
         """
         toolbar = self._application.mainWindow.toolbars[panelName]
-        menu = self.__headingMenu
+        menu = self._headingMenu
 
         self._application.actionController.getAction (HEADING_1_STR_ID).setFunc (lambda param: self.turnText (u"<h1>", u"</h1>"))
         self._application.actionController.getAction (HEADING_2_STR_ID).setFunc (lambda param: self.turnText (u"<h2>", u"</h2>"))
@@ -522,9 +515,9 @@ class Controller (object):
                                                                 fullUpdate=False)
 
 
-    def __addFormatTools (self):
+    def _addFormatTools (self):
         toolbar = self._application.mainWindow.toolbars[panelName]
-        menu = self.__formatMenu
+        menu = self._formatMenu
 
         # Preformat
         self._application.actionController.getAction (PREFORMAT_STR_ID).setFunc (lambda param: self.turnText (u"<pre>", u"</pre>"))
@@ -549,7 +542,7 @@ class Controller (object):
                                                                 fullUpdate=False)
 
 
-    def __addOtherTools (self):
+    def _addOtherTools (self):
         """
         Добавить остальные инструменты
         """
