@@ -70,14 +70,16 @@ class Controller (object):
 
 
     def destroy (self):
-        self._removeGui()
-
         self._application.onPageDialogPageFactoriesNeeded -= self._onPageDialogPageFactoriesNeeded
         self._application.onPageViewDestroy -= self._onPageViewDestroy
         self._application.onPageViewCreate -= self._onPageViewCreate
 
+        if self._application.selectedPage.getTypeString() == WebNotePage.getTypeString():
+            self._spellController.clear()
+
+        self._removeGui()
+
         FactorySelector.removeFactory (WebPageFactory().getTypeString())
-        self._spellController.clear()
 
 
     def _createGui (self):
@@ -91,7 +93,7 @@ class Controller (object):
 
     def _removeGui (self):
         mainWindow = self._application.mainWindow
-        if mainWindow is not None and panelName in mainWindow.toolbars:
+        if mainWindow is not None:
             actionController = self._application.actionController
             actionController.removeMenuItem (CreateChildWebPageAction.stringId)
             actionController.removeToolbarButton (CreateChildWebPageAction.stringId)
@@ -619,8 +621,7 @@ class Controller (object):
     def _createChildWebPageAction (self):
         mainWindow = self._application.mainWindow
 
-        if (mainWindow is not None and
-                mainWindow.PLUGINS_TOOLBAR_STR in mainWindow.toolbars):
+        if mainWindow is not None:
             action = CreateChildWebPageAction(self._application)
             toolbar = mainWindow.treePanel.panel.toolbar
             image = self.getImagePath (u'create-child.png')
@@ -632,13 +633,13 @@ class Controller (object):
             controller.appendToolbarButton (action.stringId,
                                             toolbar,
                                             image)
+            toolbar.Realize()
 
 
     def _createSiblingWebPageAction (self):
         mainWindow = self._application.mainWindow
 
-        if (mainWindow is not None and
-                mainWindow.PLUGINS_TOOLBAR_STR in mainWindow.toolbars):
+        if mainWindow is not None:
             action = CreateSiblingWebPageAction(self._application)
             toolbar = mainWindow.treePanel.panel.toolbar
             image = self.getImagePath (u'create-sibling.png')
@@ -650,6 +651,7 @@ class Controller (object):
             controller.appendToolbarButton (action.stringId,
                                             toolbar,
                                             image)
+            toolbar.Realize()
 
 
     def getImagePath (self, imageName):
