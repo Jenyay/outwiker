@@ -567,6 +567,7 @@ class MainWindow(wx.Frame):
         Убрать за собой
         """
         self.__saveParams()
+        self.destroyPagePanel (True)
         Application.actionController.saveHotKeys()
 
         self._destroyCoreControllers()
