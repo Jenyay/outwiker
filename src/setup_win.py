@@ -52,6 +52,8 @@ packages = ['urllib',
             'PIL.ImageFont',
             'PIL.ImageFilter',
             'enchant',
+            'htmlentitydefs',
+            'HTMLParser',
             ]
 
 
