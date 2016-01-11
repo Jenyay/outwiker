@@ -38,6 +38,7 @@ plugins_list = [
     "tableofcontents",
     "texequation",
     "updatenotifier",
+    "webpage",
 ]
 
 
