@@ -5,7 +5,7 @@ import os
 import os.path
 import re
 import urllib2
-from urlparse import urljoin, urlparse
+import urlparse
 
 import wx
 
@@ -250,7 +250,7 @@ class DownloadController (BaseDownloadController):
             importurl = importurl.replace (u'"', u'')
             importurl = importurl.replace (u"'", u'')
 
-            if importurl.startswith (u'/'):
+            if importurl.startswith (u'/') or u'://' in importurl:
                 relativeurl = importurl
             else:
                 relativeurl = os.path.dirname (url) + '/' + importurl
@@ -328,6 +328,13 @@ class DownloadController (BaseDownloadController):
         return u'\n'.join (resultLines)
 
 
+    def urljoin (self, startUrl, url):
+        if u'://' in url:
+            return url
+
+        return urlparse.urljoin (startUrl, url)
+
+
     def _process (self, startUrl, url, node, processFunc):
         # Create dir for downloading
         if not os.path.exists (self._fullStaticDir):
@@ -335,7 +342,7 @@ class DownloadController (BaseDownloadController):
 
         self.log (_(u'Download: {}\n').format (url))
 
-        fullUrl = urljoin (startUrl, url)
+        fullUrl = self.urljoin (startUrl, url)
 
         relativeDownloadPath = self._getRelativeDownloadPath (fullUrl)
         fullDownloadPath = os.path.join (self._rootDownloadDir,
@@ -365,7 +372,7 @@ class DownloadController (BaseDownloadController):
         if url in self._staticFiles:
             return self._staticFiles[url]
 
-        path = urlparse (url).path
+        path = urlparse.urlparse (url).path
         if path.endswith (u'/'):
             path = path[:-1]
 
