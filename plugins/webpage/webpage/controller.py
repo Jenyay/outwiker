@@ -185,12 +185,12 @@ class Controller (object):
                 actionController.removeToolbarButton (SwitchCodeResultAction.stringId)
                 self._application.mainWindow.toolbars.destroyToolBar (panelName)
 
-            self._menu.RemoveItem (self._headingMenuItem)
-            self._menu.RemoveItem (self._fontMenuItem)
-            self._menu.RemoveItem (self._alignMenuItem)
-            self._menu.RemoveItem (self._formatMenuItem)
-            self._menu.RemoveItem (self._listMenuItem)
-            self._menu.RemoveItem (self._tableMenuItem)
+            self._menu.DestroyItem (self._headingMenuItem)
+            self._menu.DestroyItem (self._fontMenuItem)
+            self._menu.DestroyItem (self._alignMenuItem)
+            self._menu.DestroyItem (self._formatMenuItem)
+            self._menu.DestroyItem (self._listMenuItem)
+            self._menu.DestroyItem (self._tableMenuItem)
 
             self._addedWebPageMenuItems = False
 
