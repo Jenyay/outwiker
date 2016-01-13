@@ -141,10 +141,15 @@ class WebPageFactory (PageFactory):
 
 
     def _getTitle (self, parentPage, title):
-        try:
-            WindowsPageTitleTester().test (title)
-        except (PageTitleError, PageTitleWarning):
-            title = _(u'Web page')
+        defaultTitle = _(u'Web page')
+
+        if title is None:
+            title = defaultTitle
+        else:
+            try:
+                WindowsPageTitleTester().test (title)
+            except (PageTitleError, PageTitleWarning):
+                title = defaultTitle
 
         index = 1
         newTitle = title

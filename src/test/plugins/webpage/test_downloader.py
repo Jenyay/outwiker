@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 
+import os
 import os.path
 from tempfile import mkdtemp
 import urllib
@@ -400,6 +401,8 @@ class DownloaderTest (unittest.TestCase):
         exampleHtmlPath = os.path.join (examplePath, u'example1.html')
 
         downloader.start (self._path2url (exampleHtmlPath), controller)
+
+        # print os.listdir (os.path.join (self._tempDir, self._staticDirName))
 
         self.assertTrue (
             os.path.exists (

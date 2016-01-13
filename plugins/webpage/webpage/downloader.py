@@ -253,7 +253,8 @@ class DownloadController (BaseDownloadController):
             if importurl.startswith (u'/') or u'://' in importurl:
                 relativeurl = importurl
             else:
-                relativeurl = os.path.dirname (url) + '/' + importurl
+                relativeurl = os.path.join (os.path.dirname (url), importurl)
+                relativeurl = relativeurl.replace (u'\\', u'/')
 
             relativeDownloadPath = self._process (startUrl,
                                                   relativeurl,

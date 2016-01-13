@@ -74,7 +74,8 @@ class Controller (object):
         self._application.onPageViewDestroy -= self._onPageViewDestroy
         self._application.onPageViewCreate -= self._onPageViewCreate
 
-        if self._application.selectedPage.getTypeString() == WebNotePage.getTypeString():
+        if (self._application.selectedPage is not None and
+                self._application.selectedPage.getTypeString() == WebNotePage.getTypeString()):
             self._spellController.clear()
 
         self._removeGui()
