@@ -41,7 +41,9 @@ class Downloader (BaseDownloader):
     def start (self, url, controller):
         self._success = False
         obj = self.download (url)
-        self._soup = BeautifulSoup (obj.read(), "html.parser")
+        html = obj.read()
+        html = html.decode ("utf8")
+        self._soup = BeautifulSoup (html, "html.parser")
         self._contentSrc = self._soup.prettify()
 
         if self._soup.title is not None:
@@ -234,99 +236,68 @@ class DownloadController (BaseDownloadController):
 
 
     def _processFuncCSS (self, startUrl, url, node, text):
-        text = self._processCSSImport (startUrl, url, text)
-        text = self._processCSSUrl (startUrl, url, text)
+        text = text.decode ("utf8")
+        regexp_url = re.compile (r'''url\((?P<url>.*?)\)''',
+                                 re.X | re.U | re.I)
+        repace_tpl_url = u'url("{url}")'
+
+        regexp_import = re.compile (r'''@import\s+
+                                    (?P<quote>['"])
+                                    (?P<url>.*?)
+                                    (?P=quote)''',
+                                    re.X | re.U | re.I)
+        replace_tmpl_import = u'@import "{url}"'
+
+        text = self._processCSSContent (startUrl, url, text, regexp_url, repace_tpl_url)
+        text = self._processCSSContent (startUrl, url, text, regexp_import, replace_tmpl_import)
         return text
 
 
-    def _processCSSUrl (self, startUrl, url, text):
-        regexp = re.compile (r'''url\((?P<url>.*?)\)''',
-                             re.X | re.U | re.I)
-
+    def _processCSSContent (self, startUrl, url, text, regexp, replace_tpl):
         delta = 0
 
-        for match in regexp.finditer (text):
-            importurl = match.group ('url')
-            importurl = importurl.replace (u'"', u'')
-            importurl = importurl.replace (u"'", u'')
+        result = text
 
-            if importurl.startswith (u'/') or u'://' in importurl:
-                relativeurl = importurl
+        for match in regexp.finditer (text):
+            url_found = match.group ('url')
+            url_found = url_found.strip()
+            url_found = url_found.replace (u'"', u'')
+            url_found = url_found.replace (u"'", u'')
+
+            if url_found.startswith (u'/') or u'://' in url_found:
+                relativeurl = url_found
             else:
-                relativeurl = os.path.join (os.path.dirname (url), importurl)
+                relativeurl = os.path.join (os.path.dirname (url), url_found)
                 relativeurl = relativeurl.replace (u'\\', u'/')
+
+            processFunc = (self._processFuncCSS
+                           if url_found.endswith (u'.css')
+                           else self._processFuncNone)
 
             relativeDownloadPath = self._process (startUrl,
                                                   relativeurl,
                                                   None,
-                                                  self._processFuncNone)
-            replace = u'url("{url}")'.format (
-                url = relativeDownloadPath.replace (
-                    self._staticDir + u'/', u'',
-                    1
-                )
+                                                  processFunc)
+            replace = replace_tpl.format (
+                url = relativeDownloadPath.replace (self._staticDir + u'/', u'', 1)
             )
 
-            text = text[:match.start() + delta] + replace + text[match.end() + delta:]
+            # print match.group (0)
+            # print url_found
+            # print replace
+            # print match.start()
+            # print match.end()
+            # print (match.end() - match.start())
+            # print len (replace)
+            # print result[match.start() + delta: match.end() + delta]
+
+            result = result[:match.start() + delta] + replace + result[match.end() + delta:]
             delta += len (replace) - (match.end() - match.start())
 
-        return text
+            # print delta
+            # print
 
-
-    def _processCSSImport (self, startUrl, url, text):
-        regexp1 = re.compile (r'''\s*@import\s*
-                              url\((?P<quote>['"])(?P<url>.*?)(?P=quote)\)
-                              (?P<other>.*)$''',
-                              re.X | re.U | re.I)
-
-        regexp2 = re.compile (r'''\s*@import\s*
-                              (?P<quote>['"])(?P<url>.*?)(?P=quote)
-                              (?P<other>.*)$''',
-                              re.X | re.U | re.I)
-
-        regexp3 = re.compile (r'''\s*@import\s*
-                              url\((?P<url>.*?)\)
-                              (?P<other>.*)$''',
-                              re.X | re.U | re.I)
-
-        regexp_list = [regexp1, regexp2, regexp3]
-
-        lines = text.split (u'\n')
-        resultLines = []
-        for line in lines:
-            # success will be True if line match any of regexp_list regexp
-            success = False
-
-            for regexp in regexp_list:
-                match = regexp.match (line)
-                if match is not None:
-                    importurl = match.group ('url')
-                    if importurl.startswith (u'/'):
-                        relativeurl = importurl
-                    else:
-                        relativeurl = os.path.dirname (url) + '/' + importurl
-
-                    relativeDownloadPath = self._process (startUrl,
-                                                          relativeurl,
-                                                          None,
-                                                          self._processFuncCSS)
-
-                    resultLines.append (
-                        u'@import url("{url}"){other}'.format (
-                            url = relativeDownloadPath.replace (
-                                self._staticDir + u'/', u'',
-                                1,
-                            ),
-                            other = match.group ('other')
-                        )
-                    )
-                    success = True
-                    break
-
-            if not success:
-                resultLines.append (line)
-
-        return u'\n'.join (resultLines)
+        return result
 
 
     def urljoin (self, startUrl, url):

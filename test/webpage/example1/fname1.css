@@ -1,7 +1,7 @@
-@import url("basic1.css");
+@import url(  "import1.css"  ); @import url(  import2.css  ); @import url(  'import3.css'  ); @import 'import4.css';
 
 .image1 {
-    background-image: url("back_img_01.png");
+    background-image: url(  "back_img_01.png"  );
 }
 
 .image2 {

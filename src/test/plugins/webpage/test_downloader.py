@@ -325,7 +325,37 @@ class DownloaderTest (unittest.TestCase):
                 os.path.join (
                     self._tempDir,
                     self._staticDirName,
-                    u'basic1.css'
+                    u'import1.css'
+                )
+            )
+        )
+
+        self.assertTrue (
+            os.path.exists (
+                os.path.join (
+                    self._tempDir,
+                    self._staticDirName,
+                    u'import2.css'
+                )
+            )
+        )
+
+        self.assertTrue (
+            os.path.exists (
+                os.path.join (
+                    self._tempDir,
+                    self._staticDirName,
+                    u'import3.css'
+                )
+            )
+        )
+
+        self.assertTrue (
+            os.path.exists (
+                os.path.join (
+                    self._tempDir,
+                    self._staticDirName,
+                    u'import4.css'
                 )
             )
         )
@@ -482,7 +512,7 @@ class DownloaderTest (unittest.TestCase):
                                                   self._staticDirName,
                                                   u'fname1.css'))
 
-        self.assertIn (template.format (url = u'basic1.css'), fname1_text)
+        self.assertIn (template.format (url = u'import1.css'), fname1_text)
         self.assertIn (template.format (url = u'back_img_01.png'), fname1_text)
         self.assertIn (template.format (url = u'back_img_02.png'), fname1_text)
         self.assertIn (template.format (url = u'back_img_03.png'), fname1_text)
