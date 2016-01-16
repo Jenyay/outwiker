@@ -102,6 +102,8 @@ class DownloadDialogController (object):
         self._runEvent = Event()
         self._thread = None
 
+        self._logIndex = 1
+
         self._dialog.Bind (wx.EVT_BUTTON, self._onOk, id=wx.ID_OK)
         self._dialog.Bind (wx.EVT_BUTTON, self._onCancel, id=wx.ID_CANCEL)
 
@@ -127,12 +129,20 @@ class DownloadDialogController (object):
 
 
     def addToLog (self, text):
-        self._dialog.logText.Value += text
+        logString = u'[{index:03g}] {text}'.format (index=self._logIndex, text=text)
+        self._logIndex += 1
+
+        self._dialog.logText.Value += logString
 
         count = len (self._dialog.logText.Value)
         self._dialog.logText.SetSelection (count, count)
         self._dialog.logText.SetFocus()
         self._dialog.logText.ShowPosition (count)
+
+
+    def resetLog (self):
+        self._logIndex = 1
+        self._dialog.logText.Value = u''
 
 
     def _loadState (self):
@@ -157,6 +167,7 @@ class DownloadDialogController (object):
 
 
     def _onOk (self, event):
+        self.resetLog()
         url = self._dialog.url
 
         if len (url) == 0:
@@ -251,7 +262,7 @@ class DownloadThread (Thread):
             )
         except ValueError as e:
             self._error (_(u'Invalid URL or file format\n'))
-            self._error (e.message)
+            self._error (unicode (e))
         else:
             self._log (_(u'Finish downloading\n'))
 
