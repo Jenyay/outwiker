@@ -9,7 +9,7 @@ import urlparse
 
 import wx
 
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, UnicodeDammit
 from events import UpdateLogEvent
 
 
@@ -22,6 +22,12 @@ class BaseDownloader (object):
         opener = urllib2.build_opener()
         opener.addheaders = [('User-agent', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36 OutWiker/1')]
         return opener.open(url, timeout = self._timeout)
+
+
+    def toUnicode (self, text):
+        dammit = UnicodeDammit(text)
+        text = dammit.unicode_markup
+        return text
 
 
 class Downloader (BaseDownloader):
@@ -42,7 +48,7 @@ class Downloader (BaseDownloader):
         self._success = False
         obj = self.download (url)
         html = obj.read()
-        html = html.decode ("utf8")
+        html = self.toUnicode (html)
         self._soup = BeautifulSoup (html, "html.parser")
         self._contentSrc = self._soup.prettify()
 
@@ -208,6 +214,7 @@ class DownloadController (BaseDownloadController):
 
 
     def processCSS (self, startUrl, url, node):
+        self.log (_(u'Processing: {}\n').format (url))
         self._process (startUrl, url, node, self._processFuncCSS)
 
 
@@ -236,7 +243,7 @@ class DownloadController (BaseDownloadController):
 
 
     def _processFuncCSS (self, startUrl, url, node, text):
-        text = text.decode ("utf8")
+        text = self.toUnicode (text)
         regexp_url = re.compile (r'''url\((?P<url>.*?)\)''',
                                  re.X | re.U | re.I)
         repace_tpl_url = u'url("{url}")'
