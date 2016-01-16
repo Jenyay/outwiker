@@ -6,6 +6,8 @@ import os.path
 import re
 import urllib2
 import urlparse
+from StringIO import StringIO
+import gzip
 
 import wx
 
@@ -20,8 +22,14 @@ class BaseDownloader (object):
 
     def download (self, url):
         opener = urllib2.build_opener()
-        opener.addheaders = [('User-agent', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36 OutWiker/1')]
-        return opener.open(url, timeout = self._timeout)
+        opener.addheaders = [('User-agent', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36 OutWiker/1'),
+                             ('Accept-encoding', 'gzip')]
+        response = opener.open(url, timeout = self._timeout)
+        if response.info().get('Content-Encoding') == 'gzip':
+            buf = StringIO (response.read())
+            zipfile = gzip.GzipFile (fileobj=buf)
+            return zipfile
+        return response
 
 
     def toUnicode (self, text):
