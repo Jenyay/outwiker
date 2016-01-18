@@ -301,20 +301,8 @@ class DownloadController (BaseDownloadController):
                 url = relativeDownloadPath.replace (self._staticDir + u'/', u'', 1)
             )
 
-            # print match.group (0)
-            # print url_found
-            # print replace
-            # print match.start()
-            # print match.end()
-            # print (match.end() - match.start())
-            # print len (replace)
-            # print result[match.start() + delta: match.end() + delta]
-
             result = result[:match.start() + delta] + replace + result[match.end() + delta:]
             delta += len (replace) - (match.end() - match.start())
-
-            # print delta
-            # print
 
         return result
 
@@ -331,7 +319,6 @@ class DownloadController (BaseDownloadController):
         if not os.path.exists (self._fullStaticDir):
             os.mkdir (self._fullStaticDir)
 
-        self.log (_(u'Download: {}\n').format (url))
 
         fullUrl = self.urljoin (startUrl, url)
 
@@ -340,6 +327,7 @@ class DownloadController (BaseDownloadController):
                                          relativeDownloadPath)
 
         if fullUrl not in self._staticFiles:
+            self.log (_(u'Download: {}\n').format (url))
             try:
                 obj = self.download (fullUrl)
                 with open (fullDownloadPath, 'wb') as fp:
