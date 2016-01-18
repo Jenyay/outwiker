@@ -98,7 +98,7 @@ class PageTitleTester (object):
 
     def replaceDangerousSymbols (self, title, replace):
         """Replace dangerous symbols by 'replace'"""
-        regexp = re.compile (r'[><|?*:"\\]|(%[0-9a-fA-F]{2})', re.U)
+        regexp = re.compile (r'[><|?*:"\\/]|(%[0-9a-fA-F]{2})', re.U)
         return regexp.sub (replace, title)
 
 
