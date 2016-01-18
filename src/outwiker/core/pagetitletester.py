@@ -96,12 +96,18 @@ class PageTitleTester (object):
         pass
 
 
+    def replaceDangerousSymbols (self, title, replace):
+        """Replace dangerous symbols by 'replace'"""
+        regexp = re.compile (r'[><|?*:"\\]|(%[0-9a-fA-F]{2})', re.U)
+        return regexp.sub (replace, title)
+
+
 class WindowsPageTitleTester (PageTitleTester):
     """
     Проверка имени страницы для Windows
     """
     def _testForError (self, title):
-        invalidCharacters = '><|?*:"'
+        invalidCharacters = '><|?*:"\\'
         striptitle = title.strip()
 
         if not self._testForInvalidChar (striptitle, invalidCharacters):
