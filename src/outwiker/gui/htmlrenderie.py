@@ -23,6 +23,7 @@ class HtmlRenderIE (HtmlRender):
         HtmlRender.__init__ (self, parent)
 
         self.render = wx.lib.iewin.IEHtmlWindow (self)
+        self.render.silent = 1
 
         # Подпишемся на события IE
         self.render.AddEventSink(self)
