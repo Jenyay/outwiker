@@ -131,7 +131,7 @@ class HtmlRenderIE (HtmlRender):
         curr_href = self.__cleanUpUrl (self.render.locationurl)
 
         # Пока другого признака о том, что пытаемся открыть встроенный фрейм, не нашел
-        if pDisp.LocationURL == "about:blank":
+        if 'LocationURL' in dir (pDisp) and pDisp.LocationURL == "about:blank":
             Cancel[0] = False
             return
 
