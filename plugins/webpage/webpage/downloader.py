@@ -14,10 +14,14 @@ import wx
 from bs4 import BeautifulSoup, UnicodeDammit
 from events import UpdateLogEvent
 
+from .i18n import get_
+
 
 class BaseDownloader (object):
     def __init__ (self, timeout):
         self._timeout = timeout
+        global _
+        _ = get_()
 
 
     def download (self, url):

@@ -18,10 +18,15 @@ import events
 from .downloader import Downloader, WebPageDownloadController
 from webnotepage import STATIC_DIR_NAME, WebPageFactory
 
+from .i18n import get_
+
 
 class DownloadDialog (TestedDialog):
     def __init__ (self, parent):
         super (DownloadDialog, self).__init__ (parent)
+        global _
+        _ = get_()
+
         self._createGui()
         self.urlText.SetFocus()
 
@@ -96,6 +101,9 @@ class DownloadDialogController (object):
         self._dialog = dialog
         self._application = application
         self._parentPage = parentPage
+
+        global _
+        _ = get_()
 
         self._downloadDir = None
 

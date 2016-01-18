@@ -28,6 +28,7 @@ from actions.showpageinfo import ShowPageInfoAction
 from misc import polyActions, panelName
 from webpagetoolbar import WebPageToolBar
 from spellcontroller import WebPageSpellController
+from i18n import get_
 
 
 class Controller (object):
@@ -45,6 +46,9 @@ class Controller (object):
 
 
     def initialize (self):
+        global _
+        _ = get_()
+
         self._menuName = _(u"Web page")
         self._createGui()
 

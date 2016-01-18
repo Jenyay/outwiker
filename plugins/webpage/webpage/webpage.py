@@ -1,10 +1,15 @@
 # -*- coding: UTF-8 -*-
 
+import os.path
+
 from outwiker.core.pluginbase import Plugin
 from outwiker.core.commands import getCurrentVersion
 from outwiker.core.version import Version, StatusSet
+from outwiker.core.system import getOS
 
 from .controller import Controller
+from .i18n import set_
+
 
 __version__ = u'1.0'
 
@@ -50,6 +55,7 @@ else:
 
 
         def initialize(self):
+            self._initlocale(u'webpage')
             self.__controller.initialize()
 
 
@@ -60,3 +66,14 @@ else:
             self.__controller.destroy()
 
         #############################################
+
+        def _initlocale (self, domain):
+            langdir = unicode (os.path.join (os.path.dirname (__file__), "locale"), getOS().filesEncoding)
+            global _
+
+            try:
+                _ = self._init_i18n (domain, langdir)
+            except BaseException:
+                pass
+
+            set_(_)

@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 
-import wx
-
 from outwiker.gui.baseaction import BaseAction
+
+from webpage.i18n import get_
 
 
 class ShowPageInfoAction (BaseAction):
@@ -11,6 +11,8 @@ class ShowPageInfoAction (BaseAction):
     def __init__ (self, application):
         super (ShowPageInfoAction, self).__init__()
         self._application = application
+        global _
+        _ = get_()
 
 
     def run (self, params):

@@ -4,6 +4,8 @@ from abc import ABCMeta, abstractmethod
 
 from outwiker.gui.baseaction import BaseAction
 
+from webpage.i18n import get_
+
 
 class BaseWebPageAction (BaseAction):
     __metaclass__ = ABCMeta
@@ -11,6 +13,8 @@ class BaseWebPageAction (BaseAction):
     def __init__ (self, application):
         super (BaseWebPageAction, self).__init__()
         self._application = application
+        global _
+        _ = get_()
 
 
     def run (self, params):

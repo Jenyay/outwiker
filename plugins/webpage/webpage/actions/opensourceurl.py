@@ -6,6 +6,8 @@ from outwiker.gui.baseaction import BaseAction
 from outwiker.core.system import getOS
 from outwiker.core.commands import MessageBox
 
+from webpage.i18n import get_
+
 
 class OpenSourceURLAction (BaseAction):
     stringId = u"webpage_open_source_url"
@@ -13,6 +15,8 @@ class OpenSourceURLAction (BaseAction):
     def __init__ (self, application):
         super (OpenSourceURLAction, self).__init__()
         self._application = application
+        global _
+        _ = get_()
 
 
     def run (self, params):
@@ -25,7 +29,7 @@ class OpenSourceURLAction (BaseAction):
             try:
                 getOS().startFile (url)
             except OSError:
-                text = _(u"Can't execute file '%s'") % (url)
+                text = _(u"Can't open URL '{}'").format (url)
                 MessageBox (text, "Error", wx.ICON_ERROR | wx.OK)
 
 
