@@ -9,9 +9,7 @@ from shutil import copytree
 from outwiker.core.factory import PageFactory
 from outwiker.core.tree import WikiPage
 from outwiker.core.config import StringOption
-from outwiker.core.pagetitletester import (WindowsPageTitleTester,
-                                           PageTitleError,
-                                           PageTitleWarning)
+from outwiker.core.pagetitletester import WindowsPageTitleTester
 
 from .webpageview import WebPageView
 
@@ -146,10 +144,7 @@ class WebPageFactory (PageFactory):
         if title is None:
             title = defaultTitle
         else:
-            try:
-                WindowsPageTitleTester().test (title)
-            except (PageTitleError, PageTitleWarning):
-                title = defaultTitle
+            title = WindowsPageTitleTester().replaceDangerousSymbols (title, u'_')
 
         index = 1
         newTitle = title
