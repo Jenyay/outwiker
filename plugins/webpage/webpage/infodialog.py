@@ -42,7 +42,7 @@ class InfoDialog (TestedDialog):
         sizer.AddGrowableCol (1)
 
         self.urlLabel = wx.StaticText (self, label = _(u'Source URL'))
-        self.urlText = wx.HyperlinkCtrl (self, -1, u'', u'', style=wx.HL_ALIGN_LEFT)
+        self.urlText = wx.HyperlinkCtrl (self, -1, _(u'Link'), u'http://jenyay.net', style=wx.HL_ALIGN_LEFT | wx.NO_BORDER)
 
         sizer.Add (self.urlLabel, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
         sizer.Add (self.urlText, 0, wx.ALL | wx.EXPAND, border=2)
