@@ -332,7 +332,10 @@ class DownloadController (BaseDownloadController):
                 obj = self.download (fullUrl)
                 with open (fullDownloadPath, 'wb') as fp:
                     text = processFunc (startUrl, url, node, obj.read())
-                    fp.write (text)
+                    if isinstance (text, unicode):
+                        fp.write (text.encode (u'utf8'))
+                    else:
+                        fp.write (text)
             except (urllib2.URLError, IOError):
                 self.log (_(u"Can't download {}\n").format (url))
             self._staticFiles[fullUrl] = relativeDownloadPath
