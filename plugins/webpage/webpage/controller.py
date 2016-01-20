@@ -10,7 +10,7 @@ from outwiker.core.system import getOS
 from webnotepage import WebPageFactory, WebNotePage
 from spellcontroller import WebPageSpellController
 from i18n import get_
-from guicontroller import GuiController
+from gui.guicontroller import GuiController
 
 
 class Controller (object):

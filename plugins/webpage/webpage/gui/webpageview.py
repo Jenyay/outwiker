@@ -4,7 +4,7 @@ from outwiker.core.application import Application
 from outwiker.gui.htmltexteditor import HtmlTextEditor
 from outwiker.pages.html.basehtmlpanel import BaseHtmlPanel, EVT_PAGE_TAB_CHANGED
 
-from misc import polyActions
+from webpage.misc import polyActions
 
 
 class WebPageView (BaseHtmlPanel):

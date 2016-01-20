@@ -14,11 +14,11 @@ from outwiker.gui.tagsselector import TagsSelector
 from outwiker.core.commands import MessageBox
 from outwiker.core.iconmaker import IconMaker
 
-import events
-from .downloader import Downloader, WebPageDownloadController
-from webnotepage import STATIC_DIR_NAME, WebPageFactory
+import webpage.events
+from webpage.downloader import Downloader, WebPageDownloadController
+from webpage.webnotepage import STATIC_DIR_NAME, WebPageFactory
 
-from .i18n import get_
+from webpage.i18n import get_
 
 
 class DownloadDialog (TestedDialog):
@@ -115,9 +115,9 @@ class DownloadDialogController (object):
         self._dialog.Bind (wx.EVT_BUTTON, self._onOk, id=wx.ID_OK)
         self._dialog.Bind (wx.EVT_BUTTON, self._onCancel, id=wx.ID_CANCEL)
 
-        self._dialog.Bind (events.EVT_UPDATE_LOG, self._onLogUpdate)
-        self._dialog.Bind (events.EVT_DOWNLOAD_ERROR, self._onDownloadError)
-        self._dialog.Bind (events.EVT_DOWNLOAD_FINISH, self._onDownloadFinish)
+        self._dialog.Bind (webpage.events.EVT_UPDATE_LOG, self._onLogUpdate)
+        self._dialog.Bind (webpage.events.EVT_DOWNLOAD_ERROR, self._onDownloadError)
+        self._dialog.Bind (webpage.events.EVT_DOWNLOAD_FINISH, self._onDownloadFinish)
 
 
     def showDialog (self):
@@ -279,11 +279,11 @@ class DownloadThread (Thread):
             title = downloader.pageTitle
             favicon = self._prepareFavicon (downloader.favicon)
 
-            finishEvent = events.FinishDownloadEvent (content=content,
-                                                      staticPath=staticPath,
-                                                      title=title,
-                                                      favicon=favicon,
-                                                      url=self._url)
+            finishEvent = webpage.events.FinishDownloadEvent (content=content,
+                                                              staticPath=staticPath,
+                                                              title=title,
+                                                              favicon=favicon,
+                                                              url=self._url)
             wx.PostEvent (self._parentWnd, finishEvent)
 
 
@@ -299,10 +299,10 @@ class DownloadThread (Thread):
 
 
     def _log (self, text):
-        event = events.UpdateLogEvent (text=text)
+        event = webpage.events.UpdateLogEvent (text=text)
         wx.PostEvent (self._parentWnd, event)
 
 
     def _error (self, text):
-        event = events.ErrorDownloadEvent (text=text)
+        event = webpage.events.ErrorDownloadEvent (text=text)
         wx.PostEvent (self._parentWnd, event)

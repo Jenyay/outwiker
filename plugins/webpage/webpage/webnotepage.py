@@ -11,7 +11,7 @@ from outwiker.core.tree import WikiPage
 from outwiker.core.config import StringOption
 from outwiker.core.pagetitletester import WindowsPageTitleTester
 
-from .webpageview import WebPageView
+from .gui.webpageview import WebPageView
 
 # Directory for images, scripts, css etc.
 STATIC_DIR_NAME = u'__download'

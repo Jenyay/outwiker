@@ -18,8 +18,8 @@ class BaseWebPageAction (BaseAction):
 
 
     def run (self, params):
-        from webpage.downloaddialog import (DownloadDialog,
-                                            DownloadDialogController)
+        from webpage.gui.downloaddialog import (DownloadDialog,
+                                                DownloadDialogController)
 
         with DownloadDialog (self._application.mainWindow) as dlg:
             controller = DownloadDialogController (dlg,

@@ -16,7 +16,7 @@ class ShowPageInfoAction (BaseAction):
 
 
     def run (self, params):
-        from webpage.infodialog import InfoDialog, InfoDialogController
+        from webpage.gui.infodialog import InfoDialog, InfoDialogController
 
         page = self._application.selectedPage
         assert page is not None

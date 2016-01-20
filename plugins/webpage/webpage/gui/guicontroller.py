@@ -16,14 +16,14 @@ from outwiker.pages.html.tabledialogcontroller import (
 )
 from outwiker.actions.polyactionsid import *
 
-from i18n import get_
-from webnotepage import WebNotePage
+from webpage.i18n import get_
+from webpage.webnotepage import WebNotePage
 
-from actions.downloadaction import (CreateChildWebPageAction,
-                                    CreateSiblingWebPageAction)
-from actions.opensourceurl import OpenSourceURLAction
-from actions.showpageinfo import ShowPageInfoAction
-from misc import polyActions, panelName
+from webpage.actions.downloadaction import (CreateChildWebPageAction,
+                                            CreateSiblingWebPageAction)
+from webpage.actions.opensourceurl import OpenSourceURLAction
+from webpage.actions.showpageinfo import ShowPageInfoAction
+from webpage.misc import polyActions, panelName
 from webpagetoolbar import WebPageToolBar
 
 
@@ -622,7 +622,9 @@ class GuiController (object):
 
     def getImagePath (self, imageName):
         """Return path to images directory."""
-        imagedir = unicode (os.path.join (os.path.dirname (__file__), "images"), getOS().filesEncoding)
+        selfdir = os.path.dirname (__file__)
+        parentdir = os.path.dirname (selfdir)
+        imagedir = unicode (os.path.join (parentdir, "images"), getOS().filesEncoding)
         fname = os.path.join (imagedir, imageName)
         return fname
 
