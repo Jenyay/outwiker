@@ -212,3 +212,11 @@ class EditorStyleNeededParams (object):
         self.editor = editor
         self.text = text
         self.enableSpellChecking = enableSpellChecking
+
+
+class PageUpdateNeededParams (object):
+    """
+    Parameter set for the onPageUpdateNeededParams event
+    """
+    def __init__ (self, data):
+        self.data = data

@@ -25,6 +25,7 @@ class WikiPageController (object):
         self._application.onPageViewCreate += self.__onPageViewCreate
         self._application.onPageViewDestroy += self.__onPageViewDestroy
         self._application.onPageDialogPageFactoriesNeeded += self.__onPageDialogPageFactoriesNeeded
+        self._application.onPageUpdateNeeded += self.__onPageUpdateNeeded
 
 
     def clear (self):
@@ -34,6 +35,7 @@ class WikiPageController (object):
         self._application.onPageViewCreate -= self.__onPageViewCreate
         self._application.onPageViewDestroy -= self.__onPageViewDestroy
         self._application.onPageDialogPageFactoriesNeeded -= self.__onPageDialogPageFactoriesNeeded
+        self._application.onPageUpdateNeeded -= self.__onPageUpdateNeeded
 
         self._colorizerController.clear()
 
@@ -85,3 +87,7 @@ class WikiPageController (object):
 
     def __onPageDialogPageFactoriesNeeded (self, page, params):
         params.addPageFactory (WikiPageFactory())
+
+
+    def __onPageUpdateNeeded (self, page, params):
+        self._application.mainWindow.pagePanel.pageView.updateHtml()

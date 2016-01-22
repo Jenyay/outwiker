@@ -265,6 +265,12 @@ class ApplicationParams (object):
         #     params - instance of the EditorStyleNeededParams class
         self.onEditorStyleNeeded = Event()
 
+        # Event forces update and render current page
+        # Parameters:
+        #     page - current (selected) page
+        #     params - instance of the PageUpdateNeededParams class
+        self.onPageUpdateNeeded = Event()
+
 
     def init (self, configFilename):
         """

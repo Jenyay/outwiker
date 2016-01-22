@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 from outwiker.gui.baseaction import BaseAction
+from outwiker.core.events import PageUpdateNeededParams
 
 
 class WikiUpdateHtmlAction (BaseAction):
@@ -27,4 +28,5 @@ class WikiUpdateHtmlAction (BaseAction):
         assert self._application.mainWindow is not None
         assert self._application.mainWindow.pagePanel is not None
 
-        self._application.mainWindow.pagePanel.pageView.updateHtml()
+        self._application.onPageUpdateNeeded (self._application.selectedPage,
+                                              PageUpdateNeededParams(None))
