@@ -8,7 +8,7 @@ from shutil import copytree
 
 from outwiker.core.factory import PageFactory
 from outwiker.core.tree import WikiPage
-from outwiker.core.config import StringOption
+from outwiker.core.config import StringOption, BooleanOption
 from outwiker.core.pagetitletester import WindowsPageTitleTester
 
 from .gui.webpageview import WebPageView
@@ -39,6 +39,9 @@ class WebNotePage (WikiPage):
         self.LOG_PARAM = u'log'
         self.LOG_DEFAULT = u''
 
+        self.DISABLE_SCRIPTS_PARAM = u'disable_scripts'
+        self.DISABLE_SCRIPTS_DEFAULT = True
+
 
     @staticmethod
     def getTypeString ():
@@ -67,6 +70,16 @@ class WebNotePage (WikiPage):
         self._getLogOption().value = value
 
 
+    @property
+    def disableScripts (self):
+        return self._getDisableScriptOption().value
+
+
+    @disableScripts.setter
+    def disableScripts (self, value):
+        self._getDisableScriptOption().value = value
+
+
     def _getSourceOption (self):
         return StringOption (self.params,
                              self.PARAMS_SECTION,
@@ -81,6 +94,14 @@ class WebNotePage (WikiPage):
                              self.LOG_PARAM,
                              self.LOG_DEFAULT
                              )
+
+
+    def _getDisableScriptOption (self):
+        return BooleanOption (self.params,
+                              self.PARAMS_SECTION,
+                              self.DISABLE_SCRIPTS_PARAM,
+                              self.DISABLE_SCRIPTS_DEFAULT
+                              )
 
 
 class WebPageFactory (PageFactory):

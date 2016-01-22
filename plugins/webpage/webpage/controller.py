@@ -12,6 +12,12 @@ from spellcontroller import WebPageSpellController
 from i18n import get_
 from gui.guicontroller import GuiController
 
+from actions.downloadaction import (CreateChildWebPageAction,
+                                    CreateSiblingWebPageAction)
+from actions.opensourceurl import OpenSourceURLAction
+from actions.showpageinfo import ShowPageInfoAction
+from actions.disablescripts import DisableScriptsAction
+
 
 class Controller (object):
     """General plugin controller."""
@@ -22,6 +28,13 @@ class Controller (object):
         self._guiController = GuiController(self._application)
 
         self._spellController = WebPageSpellController (self._application)
+        self._actions = [
+            (CreateChildWebPageAction, None),
+            (CreateSiblingWebPageAction, None),
+            (OpenSourceURLAction, None),
+            (ShowPageInfoAction, None),
+            (DisableScriptsAction, None),
+        ]
 
 
     def initialize (self):
@@ -33,6 +46,7 @@ class Controller (object):
         self._application.onPageViewDestroy += self._onPageViewDestroy
         self._application.onPageViewCreate += self._onPageViewCreate
 
+        self._registerActions ()
         self._guiController.initialize()
         FactorySelector.addFactory (WebPageFactory())
 
@@ -43,12 +57,21 @@ class Controller (object):
         self._application.onPageViewCreate -= self._onPageViewCreate
 
         self._guiController.destroy()
+        self._unregisterActions ()
 
         if (self._application.selectedPage is not None and
                 self._application.selectedPage.getTypeString() == WebNotePage.getTypeString()):
             self._spellController.clear()
 
         FactorySelector.removeFactory (WebPageFactory().getTypeString())
+
+
+    def _registerActions (self):
+        map (lambda actionTuple: self._application.actionController.register (actionTuple[0](self._application), actionTuple[1]), self._actions)
+
+
+    def _unregisterActions (self):
+        map (lambda actionTuple: self._application.actionController.removeAction (actionTuple[0].stringId), self._actions)
 
 
     def _correctSysPath (self):

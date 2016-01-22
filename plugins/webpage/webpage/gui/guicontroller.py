@@ -23,6 +23,7 @@ from webpage.actions.downloadaction import (CreateChildWebPageAction,
                                             CreateSiblingWebPageAction)
 from webpage.actions.opensourceurl import OpenSourceURLAction
 from webpage.actions.showpageinfo import ShowPageInfoAction
+from webpage.actions.disablescripts import DisableScriptsAction
 from webpage.misc import polyActions, panelName
 from webpagetoolbar import WebPageToolBar
 
@@ -83,11 +84,9 @@ class GuiController (object):
             actionController = self._application.actionController
             actionController.removeMenuItem (CreateChildWebPageAction.stringId)
             actionController.removeToolbarButton (CreateChildWebPageAction.stringId)
-            actionController.removeAction (CreateChildWebPageAction.stringId)
 
             actionController.removeMenuItem (CreateSiblingWebPageAction.stringId)
             actionController.removeToolbarButton (CreateSiblingWebPageAction.stringId)
-            actionController.removeAction (CreateSiblingWebPageAction.stringId)
 
             if (self._application.selectedPage is not None and
                     self._application.selectedPage.getTypeString() == WebNotePage.getTypeString()):
@@ -110,15 +109,14 @@ class GuiController (object):
                 mainWindow.auiManager)
 
             openSourceAction = OpenSourceURLAction(self._application)
-            controller.register (openSourceAction, hotkey=None)
             controller.appendMenuItem (openSourceAction.stringId, self._menu)
 
             showInfoAction = ShowPageInfoAction(self._application)
-            controller.register (showInfoAction, hotkey=None)
             controller.appendMenuItem (showInfoAction.stringId, self._menu)
 
             self._createWebPageMenu()
 
+            self._addDisableScriptsTools()
             self._addFontTools()
             self._addAlignTools()
             self._addHTools()
@@ -138,16 +136,15 @@ class GuiController (object):
             actionController = self._application.actionController
 
             actionController.removeMenuItem (OpenSourceURLAction.stringId)
-            actionController.removeAction (OpenSourceURLAction.stringId)
-
             actionController.removeMenuItem (ShowPageInfoAction.stringId)
-            actionController.removeAction (ShowPageInfoAction.stringId)
-
             actionController.removeMenuItem (SwitchCodeResultAction.stringId)
+            actionController.removeMenuItem (DisableScriptsAction.stringId)
 
             self._removePolyActionTools()
             if panelName in self._application.mainWindow.toolbars:
                 actionController.removeToolbarButton (SwitchCodeResultAction.stringId)
+                actionController.removeToolbarButton (DisableScriptsAction.stringId)
+
                 self._application.mainWindow.toolbars.destroyToolBar (panelName)
 
             self._menu.DestroyItem (self._headingMenuItem)
@@ -236,6 +233,21 @@ class GuiController (object):
             self._application.mainWindow.toolbars[self._application.mainWindow.GENERAL_TOOLBAR_STR],
             os.path.join (self.imagesDir, "render.png"),
             fullUpdate=False)
+
+
+    def _addDisableScriptsTools (self):
+        """
+        Create button and menu item to enable / disable scripts.
+        """
+        image = self.getImagePath (u'script-delete.png')
+        toolbar = self._application.mainWindow.toolbars[panelName]
+        menu = self.toolsMenu
+
+        self._application.actionController.appendMenuCheckItem (DisableScriptsAction.stringId, menu)
+        self._application.actionController.appendToolbarCheckButton (DisableScriptsAction.stringId,
+                                                                     toolbar,
+                                                                     image,
+                                                                     fullUpdate=False)
 
 
     def _addFontTools (self):
@@ -594,7 +606,6 @@ class GuiController (object):
 
             controller = self._application.actionController
 
-            controller.register (action, hotkey=None)
             controller.appendMenuItem (action.stringId, self._menu)
             controller.appendToolbarButton (action.stringId,
                                             toolbar,
@@ -612,7 +623,6 @@ class GuiController (object):
 
             controller = self._application.actionController
 
-            controller.register (action, hotkey=None)
             controller.appendMenuItem (action.stringId, self._menu)
             controller.appendToolbarButton (action.stringId,
                                             toolbar,
