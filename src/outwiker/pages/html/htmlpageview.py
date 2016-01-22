@@ -184,7 +184,7 @@ class HtmlPageView (BaseHtmlPanel):
 
     def __createLineWrapTools (self):
         """
-        Создать кнопки и пункты меню, отображающие настройки страницы
+        Create button and menu item to enable / disable lines wrap.
         """
         image = os.path.join (self.imagesDir, "linewrap.png")
         toolbar = self.mainWindow.toolbars[self._htmlPanelName]

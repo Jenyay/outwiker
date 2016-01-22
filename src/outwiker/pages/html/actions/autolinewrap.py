@@ -4,9 +4,8 @@ from outwiker.gui.baseaction import BaseAction
 
 
 class HtmlAutoLineWrap (BaseAction):
-    """
-    Выделение текста полужирным шрифтом (добавление тега <B>)
-    """
+    """Enable / disable auto line wrap on HTML pages."""
+
     stringId = u"HtmlAutoLineWrap"
 
     def __init__ (self, application):
