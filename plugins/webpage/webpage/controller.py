@@ -102,4 +102,4 @@ class Controller (object):
     def _onPageViewDestroy (self, page):
         assert page is not None
         if page.getTypeString() == WebNotePage.getTypeString():
-            self._spellController.clear
+            self._spellController.clear()
