@@ -1,6 +1,8 @@
 # -*- coding: UTF-8 -*-
 
 from outwiker.gui.baseaction import BaseAction
+from outwiker.core.events import PageUpdateNeededParams
+
 from webpage.webnotepage import WebNotePage
 
 
@@ -27,3 +29,5 @@ class DisableScriptsAction (BaseAction):
         assert self._application.selectedPage.getTypeString() == WebNotePage.getTypeString()
 
         self._application.selectedPage.disableScripts = checked
+        self._application.onPageUpdateNeeded (self._application.selectedPage,
+                                              PageUpdateNeededParams(None))

@@ -48,6 +48,7 @@ class GuiController (object):
         self._application.onPageViewCreate += self._onPageViewCreate
         self._application.onPageSelect.bind (self._onPageSelect,
                                              EVENT_PRIORITY_DEFAULT - 10)
+        self._application.onPageUpdateNeeded += self._onPageUpdateNeeded
 
         self._menuName = _(u"Web page")
         self._createGui()
@@ -57,8 +58,13 @@ class GuiController (object):
         self._application.onPageViewDestroy -= self._onPageViewDestroy
         self._application.onPageViewCreate -= self._onPageViewCreate
         self._application.onPageSelect -= self._onPageSelect
+        self._application.onPageUpdateNeeded -= self._onPageUpdateNeeded
 
         self._removeGui()
+
+
+    def _onPageUpdateNeeded (self, page, params):
+        self._application.mainWindow.pagePanel.pageView.updateHtml()
 
 
     def _onPageSelect (self, page):

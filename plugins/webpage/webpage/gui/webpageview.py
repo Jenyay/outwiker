@@ -54,7 +54,11 @@ class WebPageView (BaseHtmlPanel):
     def __onPageUpdate (self, sender, **kwargs):
         if sender == self._currentpage:
             if self.notebook.GetSelection() == self.RESULT_PAGE_INDEX:
-                self._updateResult()
+                self.updateHtml()
+
+
+    def updateHtml (self):
+        self._updateResult()
 
 
     def generateHtml (self, page):
