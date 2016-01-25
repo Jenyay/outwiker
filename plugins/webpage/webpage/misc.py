@@ -39,3 +39,5 @@ polyActions = [
 ]
 
 panelName = "webPageToolBar"
+
+onPrepareHtmlEventString = 'WebPage_onPrepareHtml'

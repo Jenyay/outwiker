@@ -18,6 +18,9 @@ from actions.opensourceurl import OpenSourceURLAction
 from actions.showpageinfo import ShowPageInfoAction
 from actions.disablescripts import DisableScriptsAction
 
+from misc import onPrepareHtmlEventString
+from htmlprocessors.disablescripts import disableScripts
+
 
 class Controller (object):
     """General plugin controller."""
@@ -36,6 +39,10 @@ class Controller (object):
             (DisableScriptsAction, None),
         ]
 
+        self._htmlProcessors = [
+            disableScripts,
+        ]
+
 
     def initialize (self):
         global _
@@ -46,6 +53,7 @@ class Controller (object):
         self._application.onPageViewDestroy += self._onPageViewDestroy
         self._application.onPageViewCreate += self._onPageViewCreate
 
+        self._registerHtmlProcessors()
         self._registerActions ()
         self._guiController.initialize()
         FactorySelector.addFactory (WebPageFactory())
@@ -56,6 +64,8 @@ class Controller (object):
         self._application.onPageViewDestroy -= self._onPageViewDestroy
         self._application.onPageViewCreate -= self._onPageViewCreate
 
+        self._unregisterHtmlProcessors()
+
         self._guiController.destroy()
         self._unregisterActions ()
 
@@ -64,6 +74,16 @@ class Controller (object):
             self._spellController.clear()
 
         FactorySelector.removeFactory (WebPageFactory().getTypeString())
+
+
+    def _registerHtmlProcessors (self):
+        for proc in self._htmlProcessors:
+            self._application.getEvent(onPrepareHtmlEventString).bind(proc)
+
+
+    def _unregisterHtmlProcessors (self):
+        for proc in self._htmlProcessors:
+            self._application.getEvent(onPrepareHtmlEventString).unbind(proc)
 
 
     def _registerActions (self):
