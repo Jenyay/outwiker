@@ -134,11 +134,23 @@ class GuiController (object):
             self._createWebPageMenu()
 
             self._addDisableScriptsTools()
+            self._addSeparator()
+
             self._addFontTools()
+            self._addSeparator()
+
             self._addAlignTools()
+            self._addSeparator()
+
             self._addHTools()
+            self._addSeparator()
+
             self._addTableTools()
+            self._addSeparator()
+
             self._addListTools()
+            self._addSeparator()
+
             self._addFormatTools()
             self._addOtherTools()
             self._addRenderTools()
@@ -611,6 +623,11 @@ class GuiController (object):
         # Преобразовать символы в их HTML-представление
         self._application.actionController.getAction (HTML_ESCAPE_STR_ID).setFunc (lambda param: self.escapeHtml ())
         self._application.actionController.appendMenuItem (HTML_ESCAPE_STR_ID, menu)
+
+
+    def _addSeparator (self):
+        toolbar = self._application.mainWindow.toolbars[panelName]
+        toolbar.AddSeparator()
 
 
     def _createChildWebPageAction (self):

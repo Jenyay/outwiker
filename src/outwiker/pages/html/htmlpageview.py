@@ -230,11 +230,23 @@ class HtmlPageView (BaseHtmlPanel):
         self.__htmlMenu.AppendSubMenu (self.__tableMenu, _(u"Tables"))
 
         self.__addFontTools()
+        self._addSeparator()
+
         self.__addAlignTools()
+        self._addSeparator()
+
         self.__addHTools()
+        self._addSeparator()
+
         self.__addTableTools()
+        self._addSeparator()
+
         self.__addListTools()
+        self._addSeparator()
+
         self.__addFormatTools()
+        self._addSeparator()
+
         self.__addOtherTools()
         self._addRenderTools()
 
@@ -593,6 +605,11 @@ class HtmlPageView (BaseHtmlPanel):
         # Преобразовать символы в их HTML-представление
         self._application.actionController.getAction (HTML_ESCAPE_STR_ID).setFunc (lambda param: self.escapeHtml ())
         self._application.actionController.appendMenuItem (HTML_ESCAPE_STR_ID, menu)
+
+
+    def _addSeparator (self):
+        toolbar = self.mainWindow.toolbars[self._htmlPanelName]
+        toolbar.AddSeparator()
 
 
     def generateHtml (self, page):

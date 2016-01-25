@@ -150,12 +150,25 @@ class WikiPageView (BaseWikiPageView):
         self.toolsMenu.AppendSubMenu (self._commandsMenu, _(u"Commands"))
 
         self.__addCommandsTools()
+
         self.__addFontTools()
+        self._addSeparator()
+
         self.__addAlignTools()
+        self._addSeparator()
+
         self.__addHTools()
+        self._addSeparator()
+
         self.__addTableTools()
+        self._addSeparator()
+
         self.__addListTools()
+        self._addSeparator()
+
         self.__addFormatTools()
+        self._addSeparator()
+
         self.__addOtherTools()
 
 
@@ -540,6 +553,11 @@ class WikiPageView (BaseWikiPageView):
                                                                 toolbar,
                                                                 os.path.join (self.imagesDir, "table_insert_cell.png"),
                                                                 fullUpdate=False)
+
+
+    def _addSeparator (self):
+        toolbar = self.mainWindow.toolbars[self._getName()]
+        toolbar.AddSeparator()
 
 
     def _turnList (self, symbol):
