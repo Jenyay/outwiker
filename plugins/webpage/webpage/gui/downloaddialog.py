@@ -95,6 +95,16 @@ class DownloadDialog (TestedDialog):
         self.urlText.Value = url
 
 
+    @property
+    def tags (self):
+        return self.tagsSelector.tags
+
+
+    @tags.setter
+    def tags (self, tags):
+        self.tagsSelector.tags = tags
+
+
 
 class DownloadDialogController (object):
     def __init__ (self, dialog, application, parentPage):
@@ -156,6 +166,8 @@ class DownloadDialogController (object):
     def _loadState (self):
         tagslist = TagsList (self._application.wikiroot)
         self._dialog.setTagsList (tagslist)
+        if self._parentPage is not None and self._parentPage.parent is not None:
+            self._dialog.tags = self._parentPage.tags
 
 
     def _saveState (self):
@@ -218,7 +230,7 @@ class DownloadDialogController (object):
         parentPage = self._parentPage
         title = event.title
         favicon = event.favicon
-        tags = self._dialog.tagsSelector.tags
+        tags = self._dialog.tags
         content = event.content
         url = event.url
         tmpStaticDir = event.staticPath
