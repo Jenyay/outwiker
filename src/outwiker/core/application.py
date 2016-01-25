@@ -2,7 +2,7 @@
 
 from outwiker.core.i18n import init_i18n, getLanguageFromConfig
 from outwiker.core.config import Config
-from outwiker.core.event import Event
+from outwiker.core.event import Event, CustomEvents
 from outwiker.core.recent import RecentWiki
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.pageuiddepot import PageUidDepot
@@ -25,6 +25,8 @@ class ApplicationParams (object):
 
         # Anchor for transition during the opening other page
         self._anchor = None
+
+        self._customEvents = CustomEvents()
 
         # Events
 
@@ -396,6 +398,14 @@ class ApplicationParams (object):
             init_i18n (language)
         except IOError:
             print u"Can't load language: %s" % language
+
+
+    def getEvent (self, name):
+        """Return build-in event or custom event"""
+        if hasattr (self, name) and isinstance (getattr (self, name), Event):
+            return getattr (self, name)
+
+        return self._customEvents.get(name)
 
 
 Application = ApplicationParams()
