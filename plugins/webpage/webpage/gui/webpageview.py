@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from bs4 import BeautifulSoup
-
 from outwiker.core.application import Application
 from outwiker.gui.htmltexteditor import HtmlTextEditor
 from outwiker.pages.html.basehtmlpanel import BaseHtmlPanel, EVT_PAGE_TAB_CHANGED
@@ -65,6 +63,8 @@ class WebPageView (BaseHtmlPanel):
 
 
     def generateHtml (self, page):
+        from bs4 import BeautifulSoup
+
         soup = BeautifulSoup (page.content, "html.parser")
         params = PrepareHtmlEventParams (self._application.selectedPage,
                                          soup)
