@@ -20,6 +20,7 @@ from actions.disablescripts import DisableScriptsAction
 
 from misc import onPrepareHtmlEventString
 from htmlprocessors.disablescripts import disableScripts
+from htmlprocessors.maxieversion import maxIEVersion
 
 
 class Controller (object):
@@ -41,6 +42,7 @@ class Controller (object):
 
         self._htmlProcessors = [
             disableScripts,
+            maxIEVersion,
         ]
 
 
