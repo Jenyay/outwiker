@@ -25,6 +25,8 @@ from webpage.actions.downloadaction import (CreateChildWebPageAction,
 from webpage.actions.opensourceurl import OpenSourceURLAction
 from webpage.actions.showpageinfo import ShowPageInfoAction
 from webpage.actions.disablescripts import DisableScriptsAction
+from webpage.actions.copysourceurl import CopySourceURLToClipboardAction
+
 from webpage.misc import polyActions, panelName
 from webpagetoolbar import WebPageToolBar
 
@@ -131,6 +133,9 @@ class GuiController (object):
             showInfoAction = ShowPageInfoAction(self._application)
             controller.appendMenuItem (showInfoAction.stringId, self._menu)
 
+            copySourceUrlAction = CopySourceURLToClipboardAction (self._application)
+            controller.appendMenuItem (copySourceUrlAction.stringId, self._menu)
+
             self._createWebPageMenu()
 
             self._addDisableScriptsTools()
@@ -165,6 +170,7 @@ class GuiController (object):
             actionController = self._application.actionController
 
             actionController.removeMenuItem (OpenSourceURLAction.stringId)
+            actionController.removeMenuItem (CopySourceURLToClipboardAction.stringId)
             actionController.removeMenuItem (ShowPageInfoAction.stringId)
             actionController.removeMenuItem (SwitchCodeResultAction.stringId)
             actionController.removeMenuItem (DisableScriptsAction.stringId)

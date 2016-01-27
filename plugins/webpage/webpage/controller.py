@@ -17,6 +17,7 @@ from actions.downloadaction import (CreateChildWebPageAction,
 from actions.opensourceurl import OpenSourceURLAction
 from actions.showpageinfo import ShowPageInfoAction
 from actions.disablescripts import DisableScriptsAction
+from actions.copysourceurl import CopySourceURLToClipboardAction
 
 from misc import onPrepareHtmlEventString
 from htmlprocessors.disablescripts import disableScripts
@@ -38,6 +39,7 @@ class Controller (object):
             (OpenSourceURLAction, None),
             (ShowPageInfoAction, None),
             (DisableScriptsAction, None),
+            (CopySourceURLToClipboardAction, None),
         ]
 
         self._htmlProcessors = [
