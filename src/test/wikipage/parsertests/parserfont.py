@@ -215,3 +215,10 @@ class ParserFontTest (unittest.TestCase):
         result = u'бла-бла-бла \n<h1>Кхм <span style="font-size:120%">крупный шрифт</span> бла-бла-бла</h1>\nбла-бла-бла'
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testMark (self):
+        text = u"бла-бла-бла \nкхм [! это верхний индекс!] бла-бла-бла\nбла-бла-бла"
+        result = u'бла-бла-бла \nкхм <mark> это верхний индекс</mark> бла-бла-бла\nбла-бла-бла'
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))

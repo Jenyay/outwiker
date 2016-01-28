@@ -111,6 +111,7 @@ class WikiPageView (BaseWikiPageView):
             TABLE_STR_ID,
             TABLE_ROW_STR_ID,
             TABLE_CELL_STR_ID,
+            MARK_STR_ID,
         ]
 
 
@@ -421,6 +422,15 @@ class WikiPageView (BaseWikiPageView):
         self._application.actionController.appendToolbarButton (QUOTE_STR_ID,
                                                                 toolbar,
                                                                 os.path.join (self.imagesDir, "quote.png"),
+                                                                fullUpdate=False)
+
+        # Mark
+        self._application.actionController.getAction (MARK_STR_ID).setFunc (lambda param: self.turnText (u'[!', u'!]'))
+
+        self._application.actionController.appendMenuItem (MARK_STR_ID, menu)
+        self._application.actionController.appendToolbarButton (MARK_STR_ID,
+                                                                toolbar,
+                                                                os.path.join (self.imagesDir, "mark.png"),
                                                                 fullUpdate=False)
 
 

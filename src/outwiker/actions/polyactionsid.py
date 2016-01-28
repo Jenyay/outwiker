@@ -91,3 +91,6 @@ CURRENT_DATE = "CurrentDate"
 
 # Spell checking on / off
 SPELL_ON_OFF_ID = "SpellChecking"
+
+# Mark text
+MARK_STR_ID = "Mark"

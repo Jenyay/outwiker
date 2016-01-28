@@ -547,6 +547,15 @@ class GuiController (object):
                                                                 os.path.join (self.imagesDir, "quote.png"),
                                                                 fullUpdate=False)
 
+        # Mark
+        self._application.actionController.getAction (MARK_STR_ID).setFunc (lambda param: self.turnText (u"<mark>", u"</mark>"))
+
+        self._application.actionController.appendMenuItem (MARK_STR_ID, menu)
+        self._application.actionController.appendToolbarButton (MARK_STR_ID,
+                                                                toolbar,
+                                                                os.path.join (self.imagesDir, "mark.png"),
+                                                                fullUpdate=False)
+
         # Код
         self._application.actionController.getAction (CODE_STR_ID).setFunc (lambda param: self.turnText (u'<code>', u'</code>'))
 

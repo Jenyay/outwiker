@@ -79,6 +79,7 @@ class HtmlPageView (BaseHtmlPanel):
             QUOTE_STR_ID,
             IMAGE_STR_ID,
             CURRENT_DATE,
+            MARK_STR_ID,
         ]
 
         # Список действий, которые нужно удалять с панелей и из меню.
@@ -521,6 +522,16 @@ class HtmlPageView (BaseHtmlPanel):
         self._application.actionController.appendToolbarButton (QUOTE_STR_ID,
                                                                 toolbar,
                                                                 os.path.join (self.imagesDir, "quote.png"),
+                                                                fullUpdate=False)
+
+
+        # Mark
+        self._application.actionController.getAction (MARK_STR_ID).setFunc (lambda param: self.turnText (u"<mark>", u"</mark>"))
+
+        self._application.actionController.appendMenuItem (MARK_STR_ID, menu)
+        self._application.actionController.appendToolbarButton (MARK_STR_ID,
+                                                                toolbar,
+                                                                os.path.join (self.imagesDir, "mark.png"),
                                                                 fullUpdate=False)
 
         # Код
