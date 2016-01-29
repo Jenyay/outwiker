@@ -136,10 +136,10 @@ class GuiController (object):
             copySourceUrlAction = CopySourceURLToClipboardAction (self._application)
             controller.appendMenuItem (copySourceUrlAction.stringId, self._menu)
 
-            self._createWebPageMenu()
-
             self._addDisableScriptsTools()
             self._addSeparator()
+
+            self._createWebPageMenu()
 
             self._addFontTools()
             self._addSeparator()
