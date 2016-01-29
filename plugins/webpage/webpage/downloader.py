@@ -123,9 +123,7 @@ class Downloader (BaseDownloader):
         for link in links:
             if (link.has_attr ('rel') and
                     link.has_attr ('href') and
-                    len (link['rel']) == 2 and
-                    (link['rel'][0].lower() == u'icon' or
-                        link['rel'][1].lower() == u'icon')):
+                    u'icon' in link['rel']):
                 controller.processFavicon (url, link['href'], link)
 
         if controller.favicon is None:
