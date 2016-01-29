@@ -36,6 +36,7 @@ polyActions = [
     QUOTE_STR_ID,
     IMAGE_STR_ID,
     CURRENT_DATE,
+    MARK_STR_ID,
 ]
 
 panelName = "webPageToolBar"
