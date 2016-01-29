@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: webpage\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-18 08:44+0300\n"
-"PO-Revision-Date: 2016-01-18 08:44+0300\n"
+"POT-Creation-Date: 2016-01-29 22:39+0300\n"
+"PO-Revision-Date: 2016-01-29 22:39+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language: en_US\n"
@@ -21,34 +21,6 @@ msgstr ""
 "X-Poedit-KeywordsList: _\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: controller.py:52 webnotepage.py:144 webpagetoolbar.py:25
-msgid "Web page"
-msgstr "Web page"
-
-#: controller.py:237
-msgid "Heading"
-msgstr "Heading"
-
-#: controller.py:242
-msgid "Font"
-msgstr "Font"
-
-#: controller.py:247
-msgid "Alignment"
-msgstr "Alignment"
-
-#: controller.py:252
-msgid "Formatting"
-msgstr "Formatting"
-
-#: controller.py:257
-msgid "Lists"
-msgstr "Lists"
-
-#: controller.py:262
-msgid "Tables"
-msgstr "Tables"
-
 #: webpage.py:44
 msgid "Download HTML pages from web"
 msgstr "Download HTML pages from web"
@@ -57,29 +29,25 @@ msgstr "Download HTML pages from web"
 msgid "http://jenyay.net/Outwiker/WebPageEn"
 msgstr "http://jenyay.net/Outwiker/WebPageEn"
 
-#: infodialog.py:25
-msgid "Web page information"
-msgstr "Web page information"
-
-#: infodialog.py:31
-msgid "Downloading log"
-msgstr "Downloading log"
-
-#: infodialog.py:44
-msgid "Source URL"
-msgstr "Source URL"
-
 #: downloader.py:229
 msgid "Processing: {}\n"
 msgstr "Processing: {}\n"
 
-#: downloader.py:334
+#: downloader.py:330
 msgid "Download: {}\n"
 msgstr "Download: {}\n"
 
-#: downloader.py:349
+#: downloader.py:340
 msgid "Can't download {}\n"
 msgstr "Can't download {}\n"
+
+#: actions/copysourceurl.py:32
+msgid "Copy source URL to clipboard"
+msgstr "Copy source URL to clipboard"
+
+#: actions/copysourceurl.py:37
+msgid "WebPage. Copy source URL of the page to clipboard."
+msgstr "WebPage. Copy source URL of the page to clipboard."
 
 #: actions/opensourceurl.py:32
 msgid "Can't open URL '{}'"
@@ -117,43 +85,91 @@ msgstr "Create sibling web page"
 msgid "Download content from the Internet and create sibling web page"
 msgstr "Download content from the Internet and create sibling web page"
 
-#: webnotepage.py:100
+#: actions/disablescripts.py:20
+msgid "Disable scripts on page"
+msgstr "Disable scripts on page"
+
+#: actions/disablescripts.py:25
+msgid "WebPage. Enable / disable scripts on downloaded page."
+msgstr "WebPage. Enable / disable scripts on downloaded page."
+
+#: webnotepage.py:119
 msgid "Web Page"
 msgstr "Web Page"
 
-#: downloaddialog.py:46
-msgid "Download web page"
-msgstr "Download web page"
+#: webnotepage.py:163 gui/guicontroller.py:55 gui/webpagetoolbar.py:25
+msgid "Web page"
+msgstr "Web page"
 
-#: downloaddialog.py:55
+#: gui/infodialog.py:25
+msgid "Web page information"
+msgstr "Web page information"
+
+#: gui/infodialog.py:31
+msgid "Downloading log"
+msgstr "Downloading log"
+
+#: gui/infodialog.py:44
+msgid "Source URL"
+msgstr "Source URL"
+
+#: gui/infodialog.py:45 gui/downloaddialog.py:55
 msgid "Link"
 msgstr "Link"
 
-#: downloaddialog.py:174
+#: gui/guicontroller.py:230
+msgid "Heading"
+msgstr "Heading"
+
+#: gui/guicontroller.py:235
+msgid "Font"
+msgstr "Font"
+
+#: gui/guicontroller.py:240
+msgid "Alignment"
+msgstr "Alignment"
+
+#: gui/guicontroller.py:245
+msgid "Formatting"
+msgstr "Formatting"
+
+#: gui/guicontroller.py:250
+msgid "Lists"
+msgstr "Lists"
+
+#: gui/guicontroller.py:255
+msgid "Tables"
+msgstr "Tables"
+
+#: gui/downloaddialog.py:46
+msgid "Download web page"
+msgstr "Download web page"
+
+#: gui/downloaddialog.py:186
 msgid "Can't remove temp directory"
 msgstr "Can't remove temp directory"
 
-#: downloaddialog.py:182
+#: gui/downloaddialog.py:194
 msgid "Enter link for downloading"
 msgstr "Enter link for downloading"
 
-#: downloaddialog.py:183
+#: gui/downloaddialog.py:195
 msgid "Error"
 msgstr "Error"
 
-#: downloaddialog.py:263
+#: gui/downloaddialog.py:275
 msgid "Start downloading\n"
 msgstr "Start downloading\n"
 
-#: downloaddialog.py:268
+#: gui/downloaddialog.py:280
 msgid "Download error: {}\n"
 msgstr "Download error: {}\n"
 
-#: downloaddialog.py:272
+#: gui/downloaddialog.py:284
 msgid "Invalid URL or file format\n"
 msgstr "Invalid URL or file format\n"
 
-#: downloaddialog.py:275
+#: gui/downloaddialog.py:287
 msgid "Finish downloading\n"
 msgstr "Finish downloading\n"
 
