@@ -179,7 +179,7 @@ class DownloadDialogController (object):
 
 
     def _removeDownloadDir (self):
-        if self._downloadDir is not None:
+        if self._downloadDir is not None and os.path.exists (self._downloadDir):
             try:
                 rmtree (self._downloadDir)
             except EnvironmentError:
@@ -207,9 +207,6 @@ class DownloadDialogController (object):
                                            self._downloadDir,
                                            url)
             self._thread.start()
-        elif self._thread is not None:
-            self._removeDownloadDir()
-            event.Skip()
 
 
     def _onCancel (self, event):
@@ -224,9 +221,14 @@ class DownloadDialogController (object):
     def _onDownloadError (self, event):
         self._onLogUpdate (event)
         self._thread = None
+        self._removeDownloadDir()
 
 
     def _onDownloadFinish (self, event):
+        if not self._runEvent.is_set():
+            self._removeDownloadDir()
+            return
+
         parentPage = self._parentPage
         title = event.title
         favicon = event.favicon
@@ -244,7 +246,7 @@ class DownloadDialogController (object):
                                                url,
                                                tmpStaticDir,
                                                logContent)
-
+        self._removeDownloadDir()
         self._dialog.EndModal (wx.ID_OK)
         self._application.selectedPage = page
 
