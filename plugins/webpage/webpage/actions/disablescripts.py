@@ -4,6 +4,7 @@ from outwiker.gui.baseaction import BaseAction
 from outwiker.core.events import PageUpdateNeededParams
 
 from webpage.webnotepage import WebNotePage
+from webpage.i18n import get_
 
 
 class DisableScriptsAction (BaseAction):
@@ -13,6 +14,8 @@ class DisableScriptsAction (BaseAction):
 
     def __init__ (self, application):
         self._application = application
+        global _
+        _ = get_()
 
 
     @property

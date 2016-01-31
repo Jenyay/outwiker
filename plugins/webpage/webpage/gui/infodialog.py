@@ -4,11 +4,16 @@ import wx
 
 from outwiker.gui.testeddialog import TestedDialog
 
+from webpage.i18n import get_
+
 
 class InfoDialog (TestedDialog):
     """Dialog with Web page information (log, source url, etc)"""
     def __init__ (self, parent):
         super (InfoDialog, self).__init__ (parent)
+        global _
+        _ = get_()
+
         self._createGui()
 
 
@@ -23,7 +28,7 @@ class InfoDialog (TestedDialog):
 
         self.SetSizer (mainSizer)
         self.SetTitle (_(u'Web page information'))
-        self.SetMinSize ((500, 350))
+        self.SetMinSize ((550, 350))
         self.Fit()
 
 
