@@ -41,6 +41,7 @@ class HtmlPageView (BaseHtmlPanel):
 
         self.__HTML_MENU_INDEX = 7
         self._htmlPanelName = "html"
+        self._menuName = _(u"HTML")
 
         self.mainWindow.toolbars[self._htmlPanelName] = HtmlToolBar(self.mainWindow,
                                                                     self.mainWindow.auiManager)
@@ -251,7 +252,9 @@ class HtmlPageView (BaseHtmlPanel):
         self.__addOtherTools()
         self._addRenderTools()
 
-        self.mainWindow.mainMenu.Insert (self.__HTML_MENU_INDEX, self.__htmlMenu, _(u"Html"))
+        self.mainWindow.mainMenu.Insert (self.__HTML_MENU_INDEX,
+                                         self.__htmlMenu,
+                                         self._menuName)
 
 
     def _addRenderTools (self):
@@ -669,7 +672,11 @@ class HtmlPageView (BaseHtmlPanel):
 
     def removeGui (self):
         super (HtmlPageView, self).removeGui ()
-        self.mainWindow.mainMenu.Remove (self.__HTML_MENU_INDEX - 1)
+        mainMenu = self._application.mainWindow.mainMenu
+        index = mainMenu.FindMenu (self._menuName)
+        assert index != wx.NOT_FOUND
+
+        mainMenu.Remove (index)
 
 
     def _changeContentByEvent (self, page, params, event):

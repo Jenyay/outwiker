@@ -40,6 +40,7 @@ class GuiController (object):
         self.imagesDir = getImagesDir()
         self._MENU_INDEX = 5
         self._menuName = None
+        self._menu = None
 
 
     def initialize (self):
@@ -53,7 +54,7 @@ class GuiController (object):
         self._application.onPageUpdateNeeded += self._onPageUpdateNeeded
 
         self._menuName = _(u"Web page")
-        self._createGui()
+        self._createMenu()
 
 
     def destroy (self):
@@ -78,6 +79,7 @@ class GuiController (object):
 
     def _onPageViewCreate (self, page):
         assert page is not None
+        self._createMenu()
         if page.getTypeString() == WebNotePage.getTypeString():
             self._addWebPageGui()
 
@@ -85,16 +87,8 @@ class GuiController (object):
     def _onPageViewDestroy (self, page):
         assert page is not None
         if page.getTypeString() == WebNotePage.getTypeString():
-            self._removeWebPageGui()
-
-
-    def _createGui (self):
-        mainWindow = self._application.mainWindow
-
-        if mainWindow is not None:
+            self._removeGui()
             self._createMenu()
-            self._createSiblingWebPageAction()
-            self._createChildWebPageAction()
 
 
     def _removeGui (self):
@@ -107,14 +101,18 @@ class GuiController (object):
             actionController.removeMenuItem (CreateSiblingWebPageAction.stringId)
             actionController.removeToolbarButton (CreateSiblingWebPageAction.stringId)
 
-            if (self._application.selectedPage is not None and
-                    self._application.selectedPage.getTypeString() == WebNotePage.getTypeString()):
-                self._removeWebPageGui()
+            self._removeWebPageGui()
+            self._removeMenu()
 
-            index = mainWindow.mainMenu.FindMenu (self._menuName)
+
+    def _removeMenu (self):
+        if self._menu is not None:
+            mainMenu = self._application.mainWindow.mainMenu
+            index = mainMenu.FindMenu (self._menuName)
             assert index != wx.NOT_FOUND
 
-            mainWindow.mainMenu.Remove (index)
+            mainMenu.Remove (index)
+            self._menu = None
 
 
     def _addWebPageGui (self):
@@ -127,6 +125,8 @@ class GuiController (object):
                 mainWindow,
                 mainWindow.auiManager)
 
+            self._menu.AppendSeparator()
+
             openSourceAction = OpenSourceURLAction(self._application)
             controller.appendMenuItem (openSourceAction.stringId, self._menu)
 
@@ -137,24 +137,24 @@ class GuiController (object):
             controller.appendMenuItem (copySourceUrlAction.stringId, self._menu)
 
             self._addDisableScriptsTools()
-            self._addSeparator()
+            self._addToolbarSeparator()
 
             self._createWebPageMenu()
 
             self._addFontTools()
-            self._addSeparator()
+            self._addToolbarSeparator()
 
             self._addAlignTools()
-            self._addSeparator()
+            self._addToolbarSeparator()
 
             self._addHTools()
-            self._addSeparator()
+            self._addToolbarSeparator()
 
             self._addTableTools()
-            self._addSeparator()
+            self._addToolbarSeparator()
 
             self._addListTools()
-            self._addSeparator()
+            self._addToolbarSeparator()
 
             self._addFormatTools()
             self._addOtherTools()
@@ -210,10 +210,14 @@ class GuiController (object):
 
 
     def _createMenu (self):
-        self._menu = wx.Menu (u'')
-        self._application.mainWindow.mainMenu.Insert (self._MENU_INDEX,
-                                                      self._menu,
-                                                      self._menuName)
+        if self._application.mainWindow is not None and self._menu is None:
+            self._menu = wx.Menu (u'')
+            self._application.mainWindow.mainMenu.Insert (self._MENU_INDEX,
+                                                          self._menu,
+                                                          self._menuName)
+            self._createSiblingWebPageAction()
+            self._createChildWebPageAction()
+
 
     def _createWebPageMenu (self):
         self._headingMenu = wx.Menu()
@@ -640,7 +644,7 @@ class GuiController (object):
         self._application.actionController.appendMenuItem (HTML_ESCAPE_STR_ID, menu)
 
 
-    def _addSeparator (self):
+    def _addToolbarSeparator (self):
         toolbar = self._application.mainWindow.toolbars[panelName]
         toolbar.AddSeparator()
 
