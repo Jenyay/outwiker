@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-29 22:35+0300\n"
+"POT-Creation-Date: 2016-02-01 21:42+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,7 +29,7 @@ msgstr ""
 #: outwiker/core/commands.py:378 outwiker/core/commands.py:389
 #: outwiker/core/commands.py:400 outwiker/core/commands.py:411
 #: outwiker/core/commands.py:415 outwiker/core/textprinter.py:105
-#: outwiker/pages/html/htmlpageview.py:640
+#: outwiker/pages/html/htmlpageview.py:643
 #: outwiker/pages/html/basehtmlpanel.py:320
 #: outwiker/pages/html/basehtmlpanel.py:324
 #: outwiker/pages/wiki/actions/include.py:37
@@ -503,13 +503,20 @@ msgstr ""
 msgid "Creation date (oldest first)"
 msgstr ""
 
-#: outwiker/pages/html/htmlpageview.py:226
+#: outwiker/pages/html/htmlpageview.py:44
+#: outwiker/pages/html/htmltoolbar.py:25
+#: outwiker/pages/html/basehtmlpanel.py:197
+#: outwiker/pages/wiki/basewikipageview.py:205
+msgid "HTML"
+msgstr ""
+
+#: outwiker/pages/html/htmlpageview.py:227
 #: outwiker/pages/wiki/wikipageview.py:145
 #: outwiker/gui/preferences/wikieditorpanel.py:38
 msgid "Heading"
 msgstr ""
 
-#: outwiker/pages/html/htmlpageview.py:227
+#: outwiker/pages/html/htmlpageview.py:228
 #: outwiker/pages/wiki/wikipageview.py:146
 #: outwiker/gui/preferences/editorpanel.py:31
 #: outwiker/gui/preferences/htmlrenderpanel.py:25
@@ -517,31 +524,27 @@ msgstr ""
 msgid "Font"
 msgstr ""
 
-#: outwiker/pages/html/htmlpageview.py:228
+#: outwiker/pages/html/htmlpageview.py:229
 #: outwiker/pages/wiki/wikipageview.py:147
 msgid "Alignment"
 msgstr ""
 
-#: outwiker/pages/html/htmlpageview.py:229
+#: outwiker/pages/html/htmlpageview.py:230
 #: outwiker/pages/wiki/wikipageview.py:148
 msgid "Formatting"
 msgstr ""
 
-#: outwiker/pages/html/htmlpageview.py:230
+#: outwiker/pages/html/htmlpageview.py:231
 #: outwiker/pages/wiki/wikipageview.py:150
 msgid "Lists"
 msgstr ""
 
-#: outwiker/pages/html/htmlpageview.py:231
+#: outwiker/pages/html/htmlpageview.py:232
 #: outwiker/pages/wiki/wikipageview.py:149
 msgid "Tables"
 msgstr ""
 
-#: outwiker/pages/html/htmlpageview.py:254
-msgid "Html"
-msgstr ""
-
-#: outwiker/pages/html/htmlpageview.py:639
+#: outwiker/pages/html/htmlpageview.py:642
 msgid "Page style Error. Style by default is used"
 msgstr ""
 
@@ -563,12 +566,6 @@ msgstr ""
 
 #: outwiker/pages/html/htmlpage.py:83
 msgid "HTML Page"
-msgstr ""
-
-#: outwiker/pages/html/htmltoolbar.py:25
-#: outwiker/pages/html/basehtmlpanel.py:197
-#: outwiker/pages/wiki/basewikipageview.py:205
-msgid "HTML"
 msgstr ""
 
 #: outwiker/pages/html/htmlpagecontroller.py:40
