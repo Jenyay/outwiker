@@ -22,9 +22,10 @@ class WebPageTest (BaseMainWndTest):
 
 
     def tearDown (self):
-        BaseMainWndTest.tearDown (self)
+        Application.selectedPage = None
         Application.wikiroot = None
         self.loader.clear()
+        super (WebPageTest, self).tearDown ()
 
 
     def testPluginLoad (self):
