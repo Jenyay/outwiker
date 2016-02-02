@@ -58,8 +58,10 @@ class Controller (object):
         self._application.onPageViewCreate += self._onPageViewCreate
 
         self._registerHtmlProcessors()
-        self._registerActions ()
-        self._guiController.initialize()
+
+        if self._application.mainWindow is not None:
+            self._registerActions ()
+            self._guiController.initialize()
         FactorySelector.addFactory (WebPageFactory())
 
 
@@ -70,8 +72,9 @@ class Controller (object):
 
         self._unregisterHtmlProcessors()
 
-        self._guiController.destroy()
-        self._unregisterActions ()
+        if self._application.mainWindow is not None:
+            self._guiController.destroy()
+            self._unregisterActions ()
 
         if (self._application.selectedPage is not None and
                 self._application.selectedPage.getTypeString() == WebNotePage.getTypeString()):
