@@ -130,11 +130,11 @@ class GuiController (object):
             openSourceAction = OpenSourceURLAction(self._application)
             controller.appendMenuItem (openSourceAction.stringId, self._menu)
 
-            showInfoAction = ShowPageInfoAction(self._application)
-            controller.appendMenuItem (showInfoAction.stringId, self._menu)
-
             copySourceUrlAction = CopySourceURLToClipboardAction (self._application)
             controller.appendMenuItem (copySourceUrlAction.stringId, self._menu)
+
+            showInfoAction = ShowPageInfoAction(self._application)
+            controller.appendMenuItem (showInfoAction.stringId, self._menu)
 
             self._addDisableScriptsTools()
             self._addToolbarSeparator()
