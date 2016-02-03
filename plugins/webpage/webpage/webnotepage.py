@@ -166,7 +166,7 @@ class WebPageFactory (PageFactory):
     def _getTitle (self, parentPage, title):
         defaultTitle = _(u'Web page')
 
-        if title is None:
+        if title is None or len (title.strip()) == 0:
             title = defaultTitle
         else:
             title = WindowsPageTitleTester().replaceDangerousSymbols (title, u'_')

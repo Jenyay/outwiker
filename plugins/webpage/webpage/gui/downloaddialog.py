@@ -154,7 +154,6 @@ class DownloadDialogController (object):
 
         count = len (self._dialog.logText.Value)
         self._dialog.logText.SetSelection (count, count)
-        self._dialog.logText.SetFocus()
         self._dialog.logText.ShowPosition (count)
 
 
@@ -225,7 +224,9 @@ class DownloadDialogController (object):
 
 
     def _onDownloadFinish (self, event):
+        self._thread = None
         if not self._runEvent.is_set():
+            self.addToLog (_(u"Page creation is canceled."))
             self._removeDownloadDir()
             return
 
@@ -237,6 +238,18 @@ class DownloadDialogController (object):
         url = event.url
         tmpStaticDir = event.staticPath
         logContent = self._dialog.logText.Value
+
+        titleDlg = wx.TextEntryDialog (self._dialog,
+                                       _(u'Enter a title for the page'),
+                                       _(u'Page title'),
+                                       title)
+
+        if titleDlg.ShowModal() == wx.ID_OK:
+            title = titleDlg.GetValue()
+        else:
+            self.addToLog (_(u"Page creation is canceled."))
+            self._removeDownloadDir()
+            return
 
         try:
             page = WebPageFactory().createWebPage (parentPage,
