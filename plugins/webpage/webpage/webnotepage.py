@@ -3,6 +3,7 @@
 """WebPage page class."""
 
 import os.path
+import shutil
 from shutil import copytree
 
 
@@ -154,7 +155,10 @@ class WebPageFactory (PageFactory):
             page.icon = favicon
 
         staticDir = os.path.join (page.path, STATIC_DIR_NAME)
-        copytree (tmpStaticDir, staticDir)
+        try:
+            copytree (tmpStaticDir, staticDir)
+        except shutil.Error as e:
+            raise IOError (e.message)
 
         return page
 

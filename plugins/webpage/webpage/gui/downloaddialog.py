@@ -238,17 +238,21 @@ class DownloadDialogController (object):
         tmpStaticDir = event.staticPath
         logContent = self._dialog.logText.Value
 
-        page = WebPageFactory().createWebPage (parentPage,
-                                               title,
-                                               favicon,
-                                               tags,
-                                               content,
-                                               url,
-                                               tmpStaticDir,
-                                               logContent)
-        self._removeDownloadDir()
-        self._dialog.EndModal (wx.ID_OK)
-        self._application.selectedPage = page
+        try:
+            page = WebPageFactory().createWebPage (parentPage,
+                                                   title,
+                                                   favicon,
+                                                   tags,
+                                                   content,
+                                                   url,
+                                                   tmpStaticDir,
+                                                   logContent)
+            self._dialog.EndModal (wx.ID_OK)
+            self._application.selectedPage = page
+        except EnvironmentError:
+            self.addToLog (_(u"Can't create the page. Perhaps the title of the page is too long."))
+        finally:
+            self._removeDownloadDir()
 
 
 class DownloadThread (Thread):
