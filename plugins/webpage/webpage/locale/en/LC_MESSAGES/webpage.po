@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: webpage\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-29 22:39+0300\n"
-"PO-Revision-Date: 2016-01-29 22:39+0300\n"
+"POT-Creation-Date: 2016-02-03 20:43+0300\n"
+"PO-Revision-Date: 2016-02-03 20:43+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language: en_US\n"
@@ -29,15 +29,15 @@ msgstr "Download HTML pages from web"
 msgid "http://jenyay.net/Outwiker/WebPageEn"
 msgstr "http://jenyay.net/Outwiker/WebPageEn"
 
-#: downloader.py:229
+#: downloader.py:227
 msgid "Processing: {}\n"
 msgstr "Processing: {}\n"
 
-#: downloader.py:330
+#: downloader.py:328
 msgid "Download: {}\n"
 msgstr "Download: {}\n"
 
-#: downloader.py:340
+#: downloader.py:338
 msgid "Can't download {}\n"
 msgstr "Can't download {}\n"
 
@@ -85,59 +85,59 @@ msgstr "Create sibling web page"
 msgid "Download content from the Internet and create sibling web page"
 msgstr "Download content from the Internet and create sibling web page"
 
-#: actions/disablescripts.py:20
+#: actions/disablescripts.py:23
 msgid "Disable scripts on page"
 msgstr "Disable scripts on page"
 
-#: actions/disablescripts.py:25
+#: actions/disablescripts.py:28
 msgid "WebPage. Enable / disable scripts on downloaded page."
 msgstr "WebPage. Enable / disable scripts on downloaded page."
 
-#: webnotepage.py:119
+#: webnotepage.py:120
 msgid "Web Page"
 msgstr "Web Page"
 
-#: webnotepage.py:163 gui/guicontroller.py:55 gui/webpagetoolbar.py:25
+#: webnotepage.py:167 gui/guicontroller.py:56 gui/webpagetoolbar.py:25
 msgid "Web page"
 msgstr "Web page"
 
-#: gui/infodialog.py:25
+#: gui/infodialog.py:30
 msgid "Web page information"
 msgstr "Web page information"
 
-#: gui/infodialog.py:31
+#: gui/infodialog.py:36
 msgid "Downloading log"
 msgstr "Downloading log"
 
-#: gui/infodialog.py:44
+#: gui/infodialog.py:49
 msgid "Source URL"
 msgstr "Source URL"
 
-#: gui/infodialog.py:45 gui/downloaddialog.py:55
+#: gui/infodialog.py:50 gui/downloaddialog.py:55
 msgid "Link"
 msgstr "Link"
 
-#: gui/guicontroller.py:230
+#: gui/guicontroller.py:234
 msgid "Heading"
 msgstr "Heading"
 
-#: gui/guicontroller.py:235
+#: gui/guicontroller.py:239
 msgid "Font"
 msgstr "Font"
 
-#: gui/guicontroller.py:240
+#: gui/guicontroller.py:244
 msgid "Alignment"
 msgstr "Alignment"
 
-#: gui/guicontroller.py:245
+#: gui/guicontroller.py:249
 msgid "Formatting"
 msgstr "Formatting"
 
-#: gui/guicontroller.py:250
+#: gui/guicontroller.py:254
 msgid "Lists"
 msgstr "Lists"
 
-#: gui/guicontroller.py:255
+#: gui/guicontroller.py:259
 msgid "Tables"
 msgstr "Tables"
 
@@ -145,31 +145,47 @@ msgstr "Tables"
 msgid "Download web page"
 msgstr "Download web page"
 
-#: gui/downloaddialog.py:186
+#: gui/downloaddialog.py:185
 msgid "Can't remove temp directory"
 msgstr "Can't remove temp directory"
 
-#: gui/downloaddialog.py:194
+#: gui/downloaddialog.py:193
 msgid "Enter link for downloading"
 msgstr "Enter link for downloading"
 
-#: gui/downloaddialog.py:195
+#: gui/downloaddialog.py:194
 msgid "Error"
 msgstr "Error"
 
-#: gui/downloaddialog.py:275
+#: gui/downloaddialog.py:229 gui/downloaddialog.py:250
+msgid "Page creation is canceled."
+msgstr "Page creation is canceled."
+
+#: gui/downloaddialog.py:243
+msgid "Enter a title for the page"
+msgstr "Enter a title for the page"
+
+#: gui/downloaddialog.py:244
+msgid "Page title"
+msgstr "Page title"
+
+#: gui/downloaddialog.py:266
+msgid "Can't create the page. Perhaps the title of the page is too long."
+msgstr "Can't create the page. Perhaps the title of the page is too long."
+
+#: gui/downloaddialog.py:294
 msgid "Start downloading\n"
 msgstr "Start downloading\n"
 
-#: gui/downloaddialog.py:280
+#: gui/downloaddialog.py:299
 msgid "Download error: {}\n"
 msgstr "Download error: {}\n"
 
-#: gui/downloaddialog.py:284
+#: gui/downloaddialog.py:303
 msgid "Invalid URL or file format\n"
 msgstr "Invalid URL or file format\n"
 
-#: gui/downloaddialog.py:287
+#: gui/downloaddialog.py:306
 msgid "Finish downloading\n"
 msgstr "Finish downloading\n"
 

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-29 22:36+0300\n"
+"POT-Creation-Date: 2016-02-03 20:42+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -27,7 +27,7 @@ msgstr "Page is opened as read-only"
 #: outwiker/core/commands.py:378 outwiker/core/commands.py:389
 #: outwiker/core/commands.py:400 outwiker/core/commands.py:411
 #: outwiker/core/commands.py:415 outwiker/core/textprinter.py:105
-#: outwiker/pages/html/htmlpageview.py:640
+#: outwiker/pages/html/htmlpageview.py:643
 #: outwiker/pages/html/basehtmlpanel.py:320
 #: outwiker/pages/html/basehtmlpanel.py:324
 #: outwiker/pages/wiki/actions/include.py:37
@@ -48,7 +48,7 @@ msgstr "Page is opened as read-only"
 #: outwiker/gui/attachpanel.py:275 outwiker/gui/attachpanel.py:288
 #: outwiker/gui/attachpanel.py:298 outwiker/gui/renametagdialog.py:75
 #: outwiker/gui/renametagdialog.py:79 outwiker/gui/currentpagepanel.py:84
-#: outwiker/gui/currentpagepanel.py:222 outwiker/gui/currentpagepanel.py:231
+#: outwiker/gui/currentpagepanel.py:224 outwiker/gui/currentpagepanel.py:233
 #: outwiker/gui/tabscontroller.py:253
 #: outwiker/gui/pagedialogpanels/generalpanel.py:173
 #: outwiker/gui/pagedialogpanels/generalpanel.py:186
@@ -518,13 +518,20 @@ msgstr "Creation date (newest first)"
 msgid "Creation date (oldest first)"
 msgstr "Creation date (oldest first)"
 
-#: outwiker/pages/html/htmlpageview.py:226
+#: outwiker/pages/html/htmlpageview.py:44
+#: outwiker/pages/html/htmltoolbar.py:25
+#: outwiker/pages/html/basehtmlpanel.py:197
+#: outwiker/pages/wiki/basewikipageview.py:205
+msgid "HTML"
+msgstr "HTML"
+
+#: outwiker/pages/html/htmlpageview.py:227
 #: outwiker/pages/wiki/wikipageview.py:145
 #: outwiker/gui/preferences/wikieditorpanel.py:38
 msgid "Heading"
 msgstr "Heading"
 
-#: outwiker/pages/html/htmlpageview.py:227
+#: outwiker/pages/html/htmlpageview.py:228
 #: outwiker/pages/wiki/wikipageview.py:146
 #: outwiker/gui/preferences/editorpanel.py:31
 #: outwiker/gui/preferences/htmlrenderpanel.py:25
@@ -532,31 +539,27 @@ msgstr "Heading"
 msgid "Font"
 msgstr "Font"
 
-#: outwiker/pages/html/htmlpageview.py:228
+#: outwiker/pages/html/htmlpageview.py:229
 #: outwiker/pages/wiki/wikipageview.py:147
 msgid "Alignment"
 msgstr "Alignment"
 
-#: outwiker/pages/html/htmlpageview.py:229
+#: outwiker/pages/html/htmlpageview.py:230
 #: outwiker/pages/wiki/wikipageview.py:148
 msgid "Formatting"
 msgstr "Formatting"
 
-#: outwiker/pages/html/htmlpageview.py:230
+#: outwiker/pages/html/htmlpageview.py:231
 #: outwiker/pages/wiki/wikipageview.py:150
 msgid "Lists"
 msgstr "Lists"
 
-#: outwiker/pages/html/htmlpageview.py:231
+#: outwiker/pages/html/htmlpageview.py:232
 #: outwiker/pages/wiki/wikipageview.py:149
 msgid "Tables"
 msgstr "Tables"
 
-#: outwiker/pages/html/htmlpageview.py:254
-msgid "Html"
-msgstr "Html"
-
-#: outwiker/pages/html/htmlpageview.py:639
+#: outwiker/pages/html/htmlpageview.py:642
 msgid "Page style Error. Style by default is used"
 msgstr "Page style Error. Style by default is used"
 
@@ -579,12 +582,6 @@ msgstr "Auto line wrap for HTML pages"
 #: outwiker/pages/html/htmlpage.py:83
 msgid "HTML Page"
 msgstr "HTML Page"
-
-#: outwiker/pages/html/htmltoolbar.py:25
-#: outwiker/pages/html/basehtmlpanel.py:197
-#: outwiker/pages/wiki/basewikipageview.py:205
-msgid "HTML"
-msgstr "HTML"
 
 #: outwiker/pages/html/htmlpagecontroller.py:40
 #: outwiker/pages/wiki/wikipagecontroller.py:46
@@ -1849,11 +1846,11 @@ msgstr "Add to Bookmarks"
 msgid "Remove from Bookmarks"
 msgstr "Remove from Bookmarks"
 
-#: outwiker/gui/currentpagepanel.py:222
+#: outwiker/gui/currentpagepanel.py:224
 msgid "Can't save page. Wiki folder not exists. Wiki will be closed."
 msgstr "Can't save page. Wiki folder not exists. Wiki will be closed."
 
-#: outwiker/gui/currentpagepanel.py:231
+#: outwiker/gui/currentpagepanel.py:233
 msgid "Can't save page. Page folder not exists. Wiki will be reloaded."
 msgstr "Can't save page. Page folder not exists. Wiki will be reloaded."
 
@@ -2266,6 +2263,9 @@ msgstr "Insert table"
 #: outwiker/gui/tabledialog.py:114
 msgid "Border width"
 msgstr "Border width"
+
+#~ msgid "Html"
+#~ msgstr "Html"
 
 #~ msgid "Equation"
 #~ msgstr "Equation"
