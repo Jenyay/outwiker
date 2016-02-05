@@ -63,11 +63,14 @@ class HtmlRenderWebKit(HtmlRender):
         scrolled_window.remove(pizza)
 
         self.ctrl = ctrl = webkit.WebView()
-        scrolled_window.add(ctrl)
 
+        scrolled_window.add(ctrl)
         scrolled_window.show_all()
 
         self.canOpenUrl = False                # Можно ли открывать ссылки
+
+        # Disable console output
+        self.ctrl.connect("console-message", self._javascript_console_message)
 
         self.ctrl.connect("navigation-policy-decision-requested", self.__onNavigate)
         self.ctrl.connect("hovering-over-link", self.__onHoveredOverLink)
@@ -79,6 +82,10 @@ class HtmlRenderWebKit(HtmlRender):
         self.ctrl.get_settings().set_property("tab-key-cycles-through-elements", False)
 
         self._path = None
+
+
+    def _javascript_console_message(self, view, message, line, sourceid):
+        return True
 
 
     def __onLoadStatus (self, frame, status):

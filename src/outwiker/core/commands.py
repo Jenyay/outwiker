@@ -994,6 +994,13 @@ def _registerPolyActions (application):
                                            HotKey ("M", ctrl=True))
 
 
+    application.actionController.register (PolyAction (application,
+                                                       MARK_STR_ID,
+                                                       _(u"Mark"),
+                                                       _(u"Mark text")),
+                                           HotKey ("M", ctrl=True, shift=True))
+
+
     # Списки
     application.actionController.register (PolyAction (application,
                                                        LIST_BULLETS_STR_ID,

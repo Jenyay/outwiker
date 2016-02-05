@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os
-from abc import ABCMeta, abstractmethod, abstractproperty
+from abc import ABCMeta, abstractmethod
 
 import wx
 import wx.lib.newevent
@@ -80,11 +80,6 @@ class BaseHtmlPanel(BaseTextPanel):
     @property
     def codeEditor (self):
         return self._codeEditor
-
-
-    @abstractproperty
-    def toolsMenu (self):
-        pass
 
 
     def addTool (self,

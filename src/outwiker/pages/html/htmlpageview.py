@@ -41,6 +41,7 @@ class HtmlPageView (BaseHtmlPanel):
 
         self.__HTML_MENU_INDEX = 7
         self._htmlPanelName = "html"
+        self._menuName = _(u"HTML")
 
         self.mainWindow.toolbars[self._htmlPanelName] = HtmlToolBar(self.mainWindow,
                                                                     self.mainWindow.auiManager)
@@ -79,6 +80,7 @@ class HtmlPageView (BaseHtmlPanel):
             QUOTE_STR_ID,
             IMAGE_STR_ID,
             CURRENT_DATE,
+            MARK_STR_ID,
         ]
 
         # Список действий, которые нужно удалять с панелей и из меню.
@@ -184,7 +186,7 @@ class HtmlPageView (BaseHtmlPanel):
 
     def __createLineWrapTools (self):
         """
-        Создать кнопки и пункты меню, отображающие настройки страницы
+        Create button and menu item to enable / disable lines wrap.
         """
         image = os.path.join (self.imagesDir, "linewrap.png")
         toolbar = self.mainWindow.toolbars[self._htmlPanelName]
@@ -230,15 +232,29 @@ class HtmlPageView (BaseHtmlPanel):
         self.__htmlMenu.AppendSubMenu (self.__tableMenu, _(u"Tables"))
 
         self.__addFontTools()
+        self._addSeparator()
+
         self.__addAlignTools()
+        self._addSeparator()
+
         self.__addHTools()
+        self._addSeparator()
+
         self.__addTableTools()
+        self._addSeparator()
+
         self.__addListTools()
+        self._addSeparator()
+
         self.__addFormatTools()
+        self._addSeparator()
+
         self.__addOtherTools()
         self._addRenderTools()
 
-        self.mainWindow.mainMenu.Insert (self.__HTML_MENU_INDEX, self.__htmlMenu, _(u"Html"))
+        self.mainWindow.mainMenu.Insert (self.__HTML_MENU_INDEX,
+                                         self.__htmlMenu,
+                                         self._menuName)
 
 
     def _addRenderTools (self):
@@ -511,6 +527,16 @@ class HtmlPageView (BaseHtmlPanel):
                                                                 os.path.join (self.imagesDir, "quote.png"),
                                                                 fullUpdate=False)
 
+
+        # Mark
+        self._application.actionController.getAction (MARK_STR_ID).setFunc (lambda param: self.turnText (u"<mark>", u"</mark>"))
+
+        self._application.actionController.appendMenuItem (MARK_STR_ID, menu)
+        self._application.actionController.appendToolbarButton (MARK_STR_ID,
+                                                                toolbar,
+                                                                os.path.join (self.imagesDir, "mark.png"),
+                                                                fullUpdate=False)
+
         # Код
         self._application.actionController.getAction (CODE_STR_ID).setFunc (lambda param: self.turnText (u'<code>', u'</code>'))
 
@@ -595,6 +621,11 @@ class HtmlPageView (BaseHtmlPanel):
         self._application.actionController.appendMenuItem (HTML_ESCAPE_STR_ID, menu)
 
 
+    def _addSeparator (self):
+        toolbar = self.mainWindow.toolbars[self._htmlPanelName]
+        toolbar.AddSeparator()
+
+
     def generateHtml (self, page):
         path = self.getHtmlPath ()
 
@@ -641,7 +672,11 @@ class HtmlPageView (BaseHtmlPanel):
 
     def removeGui (self):
         super (HtmlPageView, self).removeGui ()
-        self.mainWindow.mainMenu.Remove (self.__HTML_MENU_INDEX - 1)
+        mainMenu = self._application.mainWindow.mainMenu
+        index = mainMenu.FindMenu (self._menuName)
+        assert index != wx.NOT_FOUND
+
+        mainMenu.Remove (index)
 
 
     def _changeContentByEvent (self, page, params, event):

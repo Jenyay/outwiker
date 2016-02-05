@@ -61,6 +61,7 @@ from outwiker.actions.openpluginsfolder import OpenPluginsFolderAction
 from outwiker.pages.wiki.wikipagecontroller import WikiPageController
 from outwiker.pages.html.htmlpagecontroller import HtmlPageController
 from outwiker.pages.text.textpagecontroller import TextPageController
+from outwiker.pages.search.searchpagecontroller import SearchPageController
 from outwiker.gui.preferences.prefcontroller import PrefController
 
 
@@ -117,6 +118,7 @@ class MainWindow(wx.Frame):
             WikiPageController (Application),
             HtmlPageController (Application),
             TextPageController (Application),
+            SearchPageController (Application),
             PrefController (Application),
         ]
 
@@ -565,6 +567,7 @@ class MainWindow(wx.Frame):
         Убрать за собой
         """
         self.__saveParams()
+        self.destroyPagePanel (True)
         Application.actionController.saveHotKeys()
 
         self._destroyCoreControllers()

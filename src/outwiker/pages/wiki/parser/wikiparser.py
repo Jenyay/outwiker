@@ -31,7 +31,10 @@ class Parser (object):
     def __init__ (self, page, config):
         self.page = page
         self.config = config
-        self.error_template = u"<B>{error}</B>"
+        self.error_template = u"<b>{error}</b>"
+
+        # Dictionary with nonstandard parameters (for plugins for example)
+        self.customProps = {}
 
         # Массив строк, которые надо добавить в заголовок страницы
         self.__headers = []
@@ -50,6 +53,7 @@ class Parser (object):
         self.superscript = FontsFactory.makeSuperscript (self)
         self.quote = QuoteFactory.make (self)
         self.code = FontsFactory.makeCode (self)
+        self.mark = FontsFactory.makeMark (self)
         self.small = FontsFactory.makeSmall(self)
         self.big = FontsFactory.makeBig(self)
         self.headings = HeadingFactory.make(self)
@@ -87,6 +91,7 @@ class Parser (object):
             self.bolded,
             self.italicized,
             self.code,
+            self.mark,
             self.small,
             self.big,
             self.quote,
@@ -117,6 +122,7 @@ class Parser (object):
             self.underlined,
             self.small,
             self.big,
+            self.mark,
             self.strike,
             self.command,
             self.lineBreak,
@@ -141,6 +147,7 @@ class Parser (object):
             self.italicized,
             self.small,
             self.big,
+            self.mark,
             self.noformat,
             self.thumb,
             self.underlined,
@@ -166,6 +173,7 @@ class Parser (object):
             self.bolded,
             self.italicized,
             self.code,
+            self.mark,
             self.small,
             self.big,
             self.noformat,
@@ -189,6 +197,7 @@ class Parser (object):
             self.bolded,
             self.italicized,
             self.code,
+            self.mark,
             self.small,
             self.big,
             self.preformat,

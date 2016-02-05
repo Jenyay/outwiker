@@ -51,7 +51,12 @@ packages = ['urllib',
             'PIL.ImageDraw',
             'PIL.ImageFont',
             'PIL.ImageFilter',
+            'PIL.IcoImagePlugin',
+            'PIL.BmpImagePlugin',
+            'PIL.TiffImagePlugin',
             'enchant',
+            'htmlentitydefs',
+            'HTMLParser',
             ]
 
 

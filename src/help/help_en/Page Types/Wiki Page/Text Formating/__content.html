@@ -17,54 +17,189 @@
 </head>
 
 <body>
-<p>
-<br><table border=1><tr><td align="center"><b>Syntax</b></td><td align="center"><b>Result</b></td><td align="center"><b>Comment</b></td></tr><tr><td align="left">''Italic''</td><td align="left"><i>Italic</i></td><td align="center">-</td></tr><tr><td align="left">'''Bold'''</td><td align="left"><b>Bold</b></td><td align="center">-</td></tr><tr><td align="left">''''Bold Italic''''</td><td align="left"><b><i>Bold Italic</i></b></td><td align="center">-</td></tr><tr><td align="left">@@Monospaced font@@</td><td align="left"><code>Monospaced font</code></td><td align="center">The text is enclosed by the tag &lt;code&gt;...&lt;/code&gt;</td></tr><tr><td align="left">'^Superscript^'</td><td align="left"><sup>Superscript</sup></td><td align="center">For comparison: the normal font <sup>Superscript</sup></td></tr><tr><td align="left">'_Subscript_'</td><td align="left"><sub>Subscript</sub></td><td align="center">For comparison: the normal font <sub>Subscript</sub></td></tr><tr><td align="left">[----Small font----]</td><td align="left"><span style="font-size:20%">Small font</span></td><td align="center">-</td></tr><tr><td align="left">[---Small font---]</td><td align="left"><span style="font-size:40%">Small font</span></td><td align="center">-</td></tr><tr><td align="left">[--Small font--]</td><td align="left"><span style="font-size:60%">Small font</span></td><td align="center">-</td></tr><tr><td align="left">[-Small font-]</td><td align="left"><span style="font-size:80%">Small font</span></td><td align="center">-</td></tr><tr><td align="left">[+Big font+]</td><td align="left"><span style="font-size:120%">Big font</span></td><td align="center">-</td></tr><tr><td align="left">[++Big font++]</td><td align="left"><span style="font-size:140%">Big font</span></td><td align="center">-</td></tr><tr><td align="left">[+++Big font+++]</td><td align="left"><span style="font-size:160%">Big font</span></td><td align="center">-</td></tr><tr><td align="left">[++++Big font++++]</td><td align="left"><span style="font-size:180%">Big font</span></td><td align="center">-</td></tr><tr><td align="left">[+++++Big font+++++]</td><td align="left"><span style="font-size:200%">Big font</span></td><td align="center">-</td></tr><tr><td align="left">{+Underlined+}</td><td align="left"><u>Underlined</u></td><td align="center">-</td></tr><tr><td align="left">{-Strikethrough-}</td><td align="left"><strike>Strikethrough</strike></td><td align="center">-</td></tr><tr><td align="left">[>Quote<]</td><td align="left"><blockquote>Quote</blockquote></td><td align="left">The text is enclosed by the tag &lt;clockquote&gt;...&lt;/blockquote&gt;</td></tr><tr><td align="left">[@Preformated '''text'''@]</td><td align="left">
-<pre>Preformated '''text'''</pre></td><td align="center">Within the brackets, there is no substitute symbols wiki notation, text is enclosed by tag &lt;pre&gt;...&lt;/pre&gt;</td></tr><tr><td align="left">
-<pre>[=Nonformated '''text'''=]</pre></td><td align="left">Nonformated '''text'''</td><td align="center">Within the brackets, there is no substitute symbols wiki notation</td></tr><tr><td align="left">----</td><td align="center"><hr></td><td align="center">Horisontal line</td></tr></table></p>
-
-<p>There are commands to linebreak. Thus, the symbol "\" at the end of the line indicates that the line continues on the next line and break at this point to do. For example:</p>
-
-<p>This is a long line, which continues on the next line</p>
-
-<p>Command <b>[[<<]]</b> indicates that this place should be a line break. This command works on lists and tables, as they have a line break indicates a new list item or a new row. For example:</p>
-
-<p>commands:</p>
-
-<p>
-<br># The first list item.
-<br># The second list item [[<<]]The second line of the second list item.
-<br># The third list item [[<<]][[<<]] The second line of the third list item after two indents.
-<br># The fourth list item.</p>
-
-<p>
-<br>result:</p>
-
-<p>
+<br/>
+<table border=1>
+<tr>
+<td align="center"><b>Syntax</b></td>
+<td align="center"><b>Result</b></td>
+<td align="center"><b>Comment</b></td>
+</tr>
+<tr>
+<td align="left">''Italic''</td>
+<td align="left"><i>Italic</i></td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="left">'''Bold'''</td>
+<td align="left"><b>Bold</b></td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="left">''''Bold Italic''''</td>
+<td align="left"><b><i>Bold Italic</i></b></td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="left">@@Monospaced font@@</td>
+<td align="left"><code>Monospaced font</code></td>
+<td align="center">The text is enclosed by the tag &lt;code&gt;...&lt;/code&gt;</td>
+</tr>
+<tr>
+<td align="left">'^Superscript^'</td>
+<td align="left"><sup>Superscript</sup></td>
+<td align="center">For comparison: the normal font <sup>Superscript</sup></td>
+</tr>
+<tr>
+<td align="left">'_Subscript_'</td>
+<td align="left"><sub>Subscript</sub></td>
+<td align="center">For comparison: the normal font <sub>Subscript</sub></td>
+</tr>
+<tr>
+<td align="left">[----Small font----]</td>
+<td align="left"><span style="font-size:20%">Small font</span></td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="left">[---Small font---]</td>
+<td align="left"><span style="font-size:40%">Small font</span></td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="left">[--Small font--]</td>
+<td align="left"><span style="font-size:60%">Small font</span></td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="left">[-Small font-]</td>
+<td align="left"><span style="font-size:80%">Small font</span></td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="left">[+Big font+]</td>
+<td align="left"><span style="font-size:120%">Big font</span></td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="left">[++Big font++]</td>
+<td align="left"><span style="font-size:140%">Big font</span></td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="left">[+++Big font+++]</td>
+<td align="left"><span style="font-size:160%">Big font</span></td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="left">[++++Big font++++]</td>
+<td align="left"><span style="font-size:180%">Big font</span></td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="left">[+++++Big font+++++]</td>
+<td align="left"><span style="font-size:200%">Big font</span></td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="left">{+Underlined+}</td>
+<td align="left"><u>Underlined</u></td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="left">{-Strikethrough-}</td>
+<td align="left"><strike>Strikethrough</strike></td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="left">[>Quote<]</td>
+<td align="left"><blockquote>Quote</blockquote></td>
+<td align="center">The text is enclosed by the tag &lt;clockquote&gt;...&lt;/blockquote&gt;</td>
+</tr>
+<tr>
+<td align="left">[!Marked text!]</td>
+<td align="left"><mark>Marked text</mark></td>
+<td align="center">The text is enclosed by the tag &lt;mark&gt;...&lt;/mark&gt;</td>
+</tr>
+<tr>
+<td align="left">[@Preformated '''text'''@]</td>
+<td align="left">
+<pre>Preformated '''text'''</pre>
+</td>
+<td align="center">Within the brackets, there is no substitute symbols wiki notation, text is enclosed by tag &lt;pre&gt;...&lt;/pre&gt;</td>
+</tr>
+<tr>
+<td align="left">
+<pre>[=Nonformated '''text'''=]</pre>
+</td>
+<td align="left">Nonformated '''text'''</td>
+<td align="center">Within the brackets, there is no substitute symbols wiki notation</td>
+</tr>
+<tr>
+<td align="left">----</td>
+<td align="center">
+<hr>
+</td>
+<td align="center">Horisontal line</td>
+</tr>
+</table><br/>
+<br/>
+There are commands to linebreak. Thus, the symbol "\" at the end of the line indicates that the line continues on the next line and break at this point to do. For example:<br/>
+<br/>
+This is a long line, which continues on the next line<br/>
+<br/>
+Command <b>[[<<]]</b> indicates that this place should be a line break. This command works on lists and tables, as they have a line break indicates a new list item or a new row. For example:<br/>
+<br/>
+commands:<br/>
+<br/>
+<br/>
+# The first list item.<br/>
+# The second list item [[<<]]The second line of the second list item.<br/>
+# The third list item [[<<]][[<<]] The second line of the third list item after two indents.<br/>
+# The fourth list item.<br/>
+<br/>
+<br/>
+result:<br/>
 <ol>
 <li>The first list item.</li>
-<li>The second list item 
-<br>The second line of the second list item.</li>
-<li>The third list item 
-<br>
-<br> The second line of the third list item after two indents.</li>
+<li>The second list item <br/>
+The second line of the second list item.</li>
+<li>The third list item <br/>
+<br/>
+ The second line of the third list item after two indents.</li>
 <li>The fourth list item.</li>
-</ol>
-<br>or command:</p>
-
-<p>
-<br>|| border=1
-<br>||The forst line || bla-bla-bla ||
-<br>||The second line [[<<]]the continuation of the second line || bla-bla-bla ||
-<br>||The third line [[<<]][[<<]] the continuation of the third line || bla-bla-bla ||
-<br>||The fourth \
-<br>line || bla-bla-bla ||</p>
-
-<p>
-<br>result:</p>
-
-<p><table border=1><tr><td align="left">The forst line</td><td align="center">bla-bla-bla</td></tr><tr><td align="left">The second line 
-<br>the continuation of the second line</td><td align="center">bla-bla-bla</td></tr><tr><td align="left">The third line 
-<br>
-<br> the continuation of the third line</td><td align="center">bla-bla-bla</td></tr><tr><td align="left">The fourth line</td><td align="center">bla-bla-bla</td></tr></table></p>
+</ol><br/>
+or command:<br/>
+<br/>
+<br/>
+|| border=1<br/>
+||The forst line || bla-bla-bla ||<br/>
+||The second line [[<<]]the continuation of the second line || bla-bla-bla ||<br/>
+||The third line [[<<]][[<<]] the continuation of the third line || bla-bla-bla ||<br/>
+||The fourth \<br/>
+line || bla-bla-bla ||<br/>
+<br/>
+<br/>
+result:<br/>
+<br/>
+<table border=1>
+<tr>
+<td align="left">The forst line</td>
+<td align="center">bla-bla-bla</td>
+</tr>
+<tr>
+<td align="left">The second line <br/>
+the continuation of the second line</td>
+<td align="center">bla-bla-bla</td>
+</tr>
+<tr>
+<td align="left">The third line <br/>
+<br/>
+ the continuation of the third line</td>
+<td align="center">bla-bla-bla</td>
+</tr>
+<tr>
+<td align="left">The fourth line</td>
+<td align="center">bla-bla-bla</td>
+</tr>
+</table>
 </body>
 </html>

@@ -36,7 +36,9 @@
 
 ||[={-Strikethrough-}=] ||{-Strikethrough-} || - ||
 
-||[=[>Quote<]=] ||[>Quote<] ||The text is enclosed by the tag &lt;clockquote&gt;...&lt;/blockquote&gt; ||
+||[=[>Quote<]=] ||[>Quote<] || The text is enclosed by the tag &lt;clockquote&gt;...&lt;/blockquote&gt; ||
+
+||[=[!Marked text!]=] ||[!Marked text!] || The text is enclosed by the tag &lt;mark&gt;...&lt;/mark&gt; ||
 
 ||[=[@Preformated '''text'''@]=] ||[@Preformated '''text'''@] || Within the brackets, there is no substitute symbols wiki notation, text is enclosed by tag &lt;pre&gt;...&lt;/pre&gt; ||
 

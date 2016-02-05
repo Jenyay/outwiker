@@ -47,7 +47,11 @@ class HtmlTextEditor (TextEditor):
             object ol optgroup option p param pre q s samp
             script select small span strike strong style sub sup
             table tbody td textarea tfoot th thead title tr tt u ul
-            var xml xmlns"""
+            var xml xmlns aside svg section use header main nav time footer
+            article bdi details dialog figcaption figure mark menuitem meter
+            progress rp rt ruby summary wbr datalist keygen output canvas
+            audio embed source track video
+            """
 
         attributes = u"""abbr accept-charset accept accesskey action align alink
             alt archive axis background bgcolor border
@@ -70,7 +74,9 @@ class HtmlTextEditor (TextEditor):
             summary tabindex target text title topmargin type usemap
             valign value valuetype version vlink vspace width
             text password checkbox radio submit reset
-            file hidden image"""
+            file hidden image property sizes async role autocomplete itemprop
+            datetime data-toggle data-default-title viewbox itemscope pubdate
+            """
 
         textCtrl.SetKeyWords (0, tags + " " + attributes)
 

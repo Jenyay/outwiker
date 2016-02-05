@@ -4,7 +4,6 @@ from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.pages.html.htmlpage import HtmlPageFactory
 from outwiker.pages.search.searchpage import SearchPageFactory
 from outwiker.pages.wiki.wikipage import WikiPageFactory
-from outwiker.core.application import Application
 
 
 class FactorySelector (object):
@@ -49,8 +48,6 @@ class FactorySelector (object):
                                           TextPageFactory(),
                                           SearchPageFactory()]}
 
-        Application.onPageFactoryListChange (newfactory = None)
-
 
     @staticmethod
     def addFactory (newFactory):
@@ -58,7 +55,6 @@ class FactorySelector (object):
         Добавить новую фабрику. При этом у фабрики может быть новый создаваемый тип страниц, в то же время фабрика может заменить существующую фабрику.
         """
         FactorySelector._factories[newFactory.getTypeString()] = newFactory
-        Application.onPageFactoryListChange (newfactory = newFactory)
 
 
     @staticmethod
@@ -67,4 +63,3 @@ class FactorySelector (object):
         Удаляет фабрику из словаря
         """
         FactorySelector._factories.pop (typeString, None)
-        Application.onPageFactoryListChange (newfactory = None)

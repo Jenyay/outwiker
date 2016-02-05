@@ -4,7 +4,7 @@ from outwiker.gui.pagedialogpanels.appearancepanel import (AppearancePanel,
                                                            AppearanceController)
 
 from htmlspellcontroller import HtmlSpellController
-from htmlpage import HtmlWikiPage
+from htmlpage import HtmlWikiPage, HtmlPageFactory
 
 
 class HtmlPageController (object):
@@ -21,6 +21,7 @@ class HtmlPageController (object):
         self._application.onPageDialogDestroy += self.__onPageDialogDestroy
         self._application.onPageViewCreate += self.__onPageViewCreate
         self._application.onPageViewDestroy += self.__onPageViewDestroy
+        self._application.onPageDialogPageFactoriesNeeded += self.__onPageDialogPageFactoriesNeeded
 
 
     def clear (self):
@@ -28,6 +29,7 @@ class HtmlPageController (object):
         self._application.onPageDialogDestroy -= self.__onPageDialogDestroy
         self._application.onPageViewCreate -= self.__onPageViewCreate
         self._application.onPageViewDestroy -= self.__onPageViewDestroy
+        self._application.onPageDialogPageFactoriesNeeded -= self.__onPageDialogPageFactoriesNeeded
 
         self._spellController.clear()
 
@@ -68,3 +70,7 @@ class HtmlPageController (object):
     def __onPageViewDestroy (self, page):
         assert page is not None
         self._spellController.clear()
+
+
+    def __onPageDialogPageFactoriesNeeded (self, page, params):
+        params.addPageFactory (HtmlPageFactory())

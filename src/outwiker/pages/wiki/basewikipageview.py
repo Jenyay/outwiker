@@ -321,9 +321,17 @@ class BaseWikiPageView (BaseHtmlPanel):
         return html
 
 
+    def removeMenu (self):
+        mainMenu = self._application.mainWindow.mainMenu
+        index = mainMenu.FindMenu (self._getMenuTitle())
+        assert index != wx.NOT_FOUND
+
+        mainMenu.Remove (index)
+
+
     def removeGui (self):
         super (BaseWikiPageView, self).removeGui ()
-        self.mainWindow.mainMenu.Remove (self.__WIKI_MENU_INDEX - 1)
+        self.removeMenu()
 
 
     def _getAttachString (self, fnames):

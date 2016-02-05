@@ -9,7 +9,7 @@ from tempfile import mkdtemp
 
 from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
-from outwiker.core.event import Event
+from outwiker.core.event import Event, CustomEvents
 from outwiker.core.application import Application
 from test.utils import removeDir
 from outwiker.core.events import PAGE_UPDATE_CONTENT, PAGE_UPDATE_TAGS, PAGE_UPDATE_ICON
@@ -216,6 +216,53 @@ class EventTest (unittest.TestCase):
         self.assertEqual (items, [3, 1, 2])
 
 
+    def testCustomEvent_01 (self):
+        cevent = CustomEvents()
+        cevent.get('event4').bind (self.event4)
+
+        cevent.get('event4')(None)
+        self.assertEqual (self.value4, 1)
+
+        cevent.get('event4')(None)
+        self.assertEqual (self.value4, 2)
+
+        cevent.get('event4').unbind (self.event4)
+
+        cevent.get('event4')(None)
+        self.assertEqual (self.value4, 2)
+
+
+    def testCustomEvent_02 (self):
+        cevent = CustomEvents()
+        cevent.get('event4').bind (self.event4)
+
+        cevent.get('event4')(None)
+        self.assertEqual (self.value4, 1)
+
+        cevent.get('event4')(None)
+        self.assertEqual (self.value4, 2)
+
+        cevent.get('event4').clear()
+
+        cevent.get('event4')(None)
+        self.assertEqual (self.value4, 2)
+
+
+    def testCustomEvent_03 (self):
+        cevent = CustomEvents()
+        param = []
+        cevent.get('eventAdd1').bind (self.eventAdd_1)
+        cevent.get('eventAdd1')(param)
+
+        self.assertEqual (param, [1])
+        cevent.get('eventAdd1').clear()
+
+
+    def testCustomEvent_04 (self):
+        cevent = CustomEvents()
+        cevent.get('unknown')(None)
+
+
 class EventsTest (unittest.TestCase):
     def setUp (self):
         Application.wikiroot = None
@@ -270,7 +317,7 @@ class EventsTest (unittest.TestCase):
         self.pageSelectCount += 1
 
 
-    def testLoad (self):
+    def testLoad_01 (self):
         path = u"../test/samplewiki"
         Application.onTreeUpdate += self.treeUpdate
 
@@ -282,6 +329,20 @@ class EventsTest (unittest.TestCase):
         self.assertEqual (self.treeUpdateCount, 0)
 
         Application.onTreeUpdate -= self.treeUpdate
+
+
+    def testLoad_02 (self):
+        path = u"../test/samplewiki"
+        Application.getEvent ('onTreeUpdate').bind (self.treeUpdate)
+
+        self.assertFalse(self.isTreeUpdate)
+        WikiDocument.load (path)
+
+        self.assertFalse (self.isTreeUpdate)
+        self.assertEqual (self.treeUpdateSender, None)
+        self.assertEqual (self.treeUpdateCount, 0)
+
+        Application.getEvent ('onTreeUpdate').unbind (self.treeUpdate)
 
 
     def testCreateEvent (self):

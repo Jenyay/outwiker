@@ -1,0 +1,221 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: webpage\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-02-03 20:44+0300\n"
+"PO-Revision-Date: 2016-02-03 20:44+0300\n"
+"Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
+"Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
+"Language: ru_RU\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 1.8.4\n"
+
+#: webpage.py:44
+msgid "Download HTML pages from web"
+msgstr "Скачать HTML-страницу из интернета"
+
+#: webpage.py:54
+msgid "http://jenyay.net/Outwiker/WebPageEn"
+msgstr "http://jenyay.net/Outwiker/WebPage"
+
+#: downloader.py:227
+msgid "Processing: {}\n"
+msgstr "Обработка: {}\n"
+
+#: downloader.py:328
+msgid "Download: {}\n"
+msgstr "Скачивание: {}\n"
+
+#: downloader.py:338
+msgid "Can't download {}\n"
+msgstr "Ошибка скачивания {}\n"
+
+#: actions/copysourceurl.py:32
+msgid "Copy source URL to clipboard"
+msgstr "Копировать URL источника в буфер обмена"
+
+#: actions/copysourceurl.py:37
+msgid "WebPage. Copy source URL of the page to clipboard."
+msgstr "WebPage. Копировать URL источника в буфер обмена."
+
+#: actions/opensourceurl.py:32
+msgid "Can't open URL '{}'"
+msgstr "Ошибка открытия ссылки '{}'"
+
+#: actions/opensourceurl.py:38
+msgid "Open source URL in browser"
+msgstr "Открыть исходную ссылку в браузере"
+
+#: actions/opensourceurl.py:43
+msgid "WebPage. Open source URL of the page in the browser."
+msgstr "WebPage. Открыть исходную ссылку страницы в браузере."
+
+#: actions/showpageinfo.py:31
+msgid "Show web page information"
+msgstr "Показать информацию о web-странице"
+
+#: actions/showpageinfo.py:36
+msgid "WebPage. Show current web page information."
+msgstr "WebPage. Показать информацию о текущей web-странице"
+
+#: actions/downloadaction.py:43
+msgid "Create child web page"
+msgstr "Создать дочернюю web-страницу"
+
+#: actions/downloadaction.py:48
+msgid "Download content from the Internet and create child web page"
+msgstr "Скачать содержимое из интернета и создать дочернюю web-страницу"
+
+#: actions/downloadaction.py:68
+msgid "Create sibling web page"
+msgstr "Создать web-страницу того же уровня"
+
+#: actions/downloadaction.py:73
+msgid "Download content from the Internet and create sibling web page"
+msgstr "Скачать содержимое из интернета и создать web-страницу того же уровня"
+
+#: actions/disablescripts.py:23
+msgid "Disable scripts on page"
+msgstr "Отключить скрипты на странице"
+
+#: actions/disablescripts.py:28
+msgid "WebPage. Enable / disable scripts on downloaded page."
+msgstr "WebPage. Включить / отключить скрипты на скачанной странице"
+
+#: webnotepage.py:120
+msgid "Web Page"
+msgstr "Web-страница"
+
+#: webnotepage.py:167 gui/guicontroller.py:56 gui/webpagetoolbar.py:25
+msgid "Web page"
+msgstr "Web-страница"
+
+#: gui/infodialog.py:30
+msgid "Web page information"
+msgstr "Информация о Web-странице"
+
+#: gui/infodialog.py:36
+msgid "Downloading log"
+msgstr "Лог скачивания"
+
+#: gui/infodialog.py:49
+msgid "Source URL"
+msgstr "Ссылка на источник"
+
+#: gui/infodialog.py:50 gui/downloaddialog.py:55
+msgid "Link"
+msgstr "Ссылка"
+
+#: gui/guicontroller.py:234
+msgid "Heading"
+msgstr "Заголовки"
+
+#: gui/guicontroller.py:239
+msgid "Font"
+msgstr "Шрифт"
+
+#: gui/guicontroller.py:244
+msgid "Alignment"
+msgstr "Выравнивание"
+
+#: gui/guicontroller.py:249
+msgid "Formatting"
+msgstr "Форматирование"
+
+#: gui/guicontroller.py:254
+msgid "Lists"
+msgstr "Списки"
+
+#: gui/guicontroller.py:259
+msgid "Tables"
+msgstr "Таблицы"
+
+#: gui/downloaddialog.py:46
+msgid "Download web page"
+msgstr "Скачать web-страницу"
+
+#: gui/downloaddialog.py:185
+msgid "Can't remove temp directory"
+msgstr "Ошибка удаления временной директории"
+
+#: gui/downloaddialog.py:193
+msgid "Enter link for downloading"
+msgstr "Введите ссылку для скачивания"
+
+#: gui/downloaddialog.py:194
+msgid "Error"
+msgstr "Ошибка"
+
+#: gui/downloaddialog.py:229 gui/downloaddialog.py:250
+msgid "Page creation is canceled."
+msgstr "Создание страницы отменено"
+
+#: gui/downloaddialog.py:243
+msgid "Enter a title for the page"
+msgstr "Введите заголовок для страницы"
+
+#: gui/downloaddialog.py:244
+msgid "Page title"
+msgstr "Заголовок страницы"
+
+#: gui/downloaddialog.py:266
+msgid "Can't create the page. Perhaps the title of the page is too long."
+msgstr "Ошибка создания страницы. Возможно, заголовок страницы слишком длинный."
+
+#: gui/downloaddialog.py:294
+msgid "Start downloading\n"
+msgstr "Начало скачивания\n"
+
+#: gui/downloaddialog.py:299
+msgid "Download error: {}\n"
+msgstr "Ошибка скачивания: {}\n"
+
+#: gui/downloaddialog.py:303
+msgid "Invalid URL or file format\n"
+msgstr "Неправильная ссылка или формат файла\n"
+
+#: gui/downloaddialog.py:306
+msgid "Finish downloading\n"
+msgstr "Завершение скачивания\n"
+
+#~ msgid "Can't execute file '%s'"
+#~ msgstr "Ошибка запуска файла '%s'"
+
+#~ msgid ""
+#~ "Add command (:style:) to wiki parser. This command allow the setting of a user CSS style for a page.\n"
+#~ "\n"
+#~ "<B>Usage</B>:\n"
+#~ "(:style:)\n"
+#~ "styles\n"
+#~ "(:styleend:)\n"
+#~ "\n"
+#~ "<B>Example:</B>\n"
+#~ "(:style:)\n"
+#~ "body {background-color: #EEE;}\n"
+#~ "(:styleend:)\n"
+#~ msgstr ""
+#~ "Расширение добавляет вики-команду (:style:), которая позволяет добавить пользовательские стили CSS к странице.\n"
+#~ "\n"
+#~ "<B>Использование</B>:\n"
+#~ "(:style:)\n"
+#~ "Перечисление стилей\n"
+#~ "(:styleend:)\n"
+#~ "\n"
+#~ "<B>Пример:</B>\n"
+#~ "(:style:)\n"
+#~ "body {background-color: #EEE;}\n"
+#~ "(:styleend:)\n"
+
+#~ msgid "Custom Style (:style:)"
+#~ msgstr "Пользовательский стиль (:style:)"
+
+#~ msgid "http://jenyay.net/Outwiker/StylePluginEn"
+#~ msgstr "http://jenyay.net/Outwiker/StylePlugin"

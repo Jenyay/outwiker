@@ -3,12 +3,12 @@
 import wx
 
 from outwiker.core.tagslist import TagsList
-from outwiker.core.factoryselector import FactorySelector
 from outwiker.core.commands import testPageTitle, MessageBox
 from outwiker.core.tree import RootWikiPage
 from outwiker.core.events import (PageDialogPageTypeChangedParams,
                                   PageDialogPageTitleChangedParams,
-                                  PageDialogPageTagsChangedParams)
+                                  PageDialogPageTagsChangedParams,
+                                  PageDialogPageFactoriesNeededParams)
 from outwiker.gui.tagsselector import TagsSelector, EVT_TAGS_LIST_CHANGED
 from outwiker.gui.guiconfig import PageDialogConfig
 from basecontroller import BasePageDialogController
@@ -67,7 +67,6 @@ class GeneralController (BasePageDialogController):
         self._dialog = dialog
         self._generalPanel = generalPanel
 
-        self._fillComboType()
         self._setTagsList()
 
         self._generalPanel.typeCombo.Bind (
@@ -124,6 +123,7 @@ class GeneralController (BasePageDialogController):
         Initialize the panel before new page creation
         parentPage - the parent page for new page
         """
+        self._fillComboType (None)
         if parentPage.parent is not None:
             self.tags = parentPage.tags
 
@@ -140,6 +140,7 @@ class GeneralController (BasePageDialogController):
         Initialize the panel before new page editing.
         page - page for editing
         """
+        self._fillComboType(currentPage)
         self._generalPanel.titleTextCtrl.SetSelection (-1, -1)
 
         self.tags = currentPage.tags
@@ -208,10 +209,21 @@ class GeneralController (BasePageDialogController):
         self._iconsPanel = None
 
 
-    def _fillComboType (self):
+    def _fillComboType (self, currentPage):
+        """
+        currentPage - page for edit or None if dialog opened for creation a page
+        """
+        eventParams = PageDialogPageFactoriesNeededParams (self._dialog,
+                                                           currentPage)
+        self._application.onPageDialogPageFactoriesNeeded (
+            self._application.selectedPage,
+            eventParams
+        )
+
         self._generalPanel.typeCombo.Clear()
-        for factory in FactorySelector.getFactories():
-            self._generalPanel.typeCombo.Append (factory.title, factory)
+        for factory in eventParams.pageFactories:
+            self._generalPanel.typeCombo.Append (factory.title,
+                                                 factory)
 
         if not self._generalPanel.typeCombo.IsEmpty():
             self._generalPanel.typeCombo.SetSelection (0)
@@ -228,12 +240,9 @@ class GeneralController (BasePageDialogController):
         """
         Установить тип страницы в диалоге по строке, описывающей тип страницы
         """
-        n = 0
-        for factory in FactorySelector.getFactories():
-            if factory.getTypeString() == FactorySelector.getFactory(pageTypeString).getTypeString():
+        for n in range (self._generalPanel.typeCombo.GetCount()):
+            if self._generalPanel.typeCombo.GetClientData(n).getTypeString() == pageTypeString:
                 self._generalPanel.typeCombo.SetSelection (n)
-                break
-            n += 1
 
 
     def __onPageTypeChanged (self, event):

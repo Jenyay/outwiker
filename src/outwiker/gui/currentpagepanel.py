@@ -64,7 +64,7 @@ class CurrentPagePanel(wx.Panel):
         Application.onBookmarksChanged -= self.__onBookmarksChanged
 
         if self.__pageView is not None:
-            self.__pageView.Close()
+            self.destroyPageView()
         self.Destroy()
 
 
@@ -124,6 +124,7 @@ class CurrentPagePanel(wx.Panel):
 
         # Если представление создано, то загрузим в него новую страницу
         if self.__pageView is not None:
+            assert page is not None
             self.__pageView.page = page
 
         # Запомнить страницу, чтобы потом можно было бы сравнивать ее тип с новой страницей
@@ -186,6 +187,7 @@ class CurrentPagePanel(wx.Panel):
         Уничтожить текущий контрол
         """
         if self.__pageView is not None:
+            assert self.__currentPage is not None
             Application.onPageViewDestroy (self.__currentPage)
 
             self.contentSizer.Detach (self.__pageView)

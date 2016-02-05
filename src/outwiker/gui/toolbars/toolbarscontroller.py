@@ -86,6 +86,7 @@ class ToolBarsController (object):
         Уничтожить панель инструментов. Нужно вызывать до вызова auiManager.UnInit()
         """
         toolbarinfo = self._toolbars[toolbarname]
+        toolbarinfo.toolbar.updatePaneInfo()
         self._removeMenu (toolbarinfo)
         self._parent.auiManager.DetachPane (toolbarinfo.toolbar)
 

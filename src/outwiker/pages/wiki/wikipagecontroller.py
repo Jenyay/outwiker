@@ -4,7 +4,7 @@ from outwiker.gui.pagedialogpanels.appearancepanel import (AppearancePanel,
                                                            AppearanceController)
 from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
 
-from wikipage import WikiWikiPage
+from wikipage import WikiWikiPage, WikiPageFactory
 from wikipreferences import WikiPrefGeneralPanel
 from wikicolorizercontroller import WikiColorizerController
 
@@ -24,6 +24,8 @@ class WikiPageController (object):
         self._application.onPreferencesDialogCreate += self.__onPreferencesDialogCreate
         self._application.onPageViewCreate += self.__onPageViewCreate
         self._application.onPageViewDestroy += self.__onPageViewDestroy
+        self._application.onPageDialogPageFactoriesNeeded += self.__onPageDialogPageFactoriesNeeded
+        self._application.onPageUpdateNeeded += self.__onPageUpdateNeeded
 
 
     def clear (self):
@@ -32,6 +34,9 @@ class WikiPageController (object):
         self._application.onPreferencesDialogCreate -= self.__onPreferencesDialogCreate
         self._application.onPageViewCreate -= self.__onPageViewCreate
         self._application.onPageViewDestroy -= self.__onPageViewDestroy
+        self._application.onPageDialogPageFactoriesNeeded -= self.__onPageDialogPageFactoriesNeeded
+        self._application.onPageUpdateNeeded -= self.__onPageUpdateNeeded
+
         self._colorizerController.clear()
 
 
@@ -78,3 +83,11 @@ class WikiPageController (object):
     def __onPageViewDestroy (self, page):
         assert page is not None
         self._colorizerController.clear()
+
+
+    def __onPageDialogPageFactoriesNeeded (self, page, params):
+        params.addPageFactory (WikiPageFactory())
+
+
+    def __onPageUpdateNeeded (self, page, params):
+        self._application.mainWindow.pagePanel.pageView.updateHtml()

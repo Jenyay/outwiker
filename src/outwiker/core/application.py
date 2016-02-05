@@ -2,7 +2,7 @@
 
 from outwiker.core.i18n import init_i18n, getLanguageFromConfig
 from outwiker.core.config import Config
-from outwiker.core.event import Event
+from outwiker.core.event import Event, CustomEvents
 from outwiker.core.recent import RecentWiki
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.pageuiddepot import PageUidDepot
@@ -25,6 +25,8 @@ class ApplicationParams (object):
 
         # Anchor for transition during the opening other page
         self._anchor = None
+
+        self._customEvents = CustomEvents()
 
         # Events
 
@@ -150,11 +152,6 @@ class ApplicationParams (object):
         #     tray - the OutwikerTrayIcon class instance
         self.onTrayPopupMenu = Event()
 
-        # Event occurs by chanching list of the factories for page creation.
-        # Parameters:
-        #     newfactory - new factory instance (if new facroty was added)
-        #         or None (if factory was removed)
-        self.onPageFactoryListChange = Event()
 
         # Event occurs before HTML generation (for wiki and HTML pages)
         # Order of the calling preprocessing events is not regulated
@@ -255,11 +252,26 @@ class ApplicationParams (object):
         self.onPageDialogPageTagsChanged = Event()
 
 
+        # Event occurs during page dialog initialoztion,
+        # during general panel creation. Evens sender expect what event
+        # handlers will fill the page factories list with addPageFactory method.
+        # Parameters:
+        #     page - current (selected) page
+        #     params - instance of the PageDialogPageFactoriesNeededParams class
+        self.onPageDialogPageFactoriesNeeded = Event()
+
+
         # Event occurs by TextEditor when it needs styles
         # Parameters:
         #     page - current (selected) page
         #     params - instance of the EditorStyleNeededParams class
         self.onEditorStyleNeeded = Event()
+
+        # Event forces update and render current page
+        # Parameters:
+        #     page - current (selected) page
+        #     params - instance of the PageUpdateNeededParams class
+        self.onPageUpdateNeeded = Event()
 
 
     def init (self, configFilename):
@@ -386,6 +398,14 @@ class ApplicationParams (object):
             init_i18n (language)
         except IOError:
             print u"Can't load language: %s" % language
+
+
+    def getEvent (self, name):
+        """Return build-in event or custom event"""
+        if hasattr (self, name) and isinstance (getattr (self, name), Event):
+            return getattr (self, name)
+
+        return self._customEvents.get(name)
 
 
 Application = ApplicationParams()

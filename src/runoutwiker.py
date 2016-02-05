@@ -3,6 +3,7 @@
 
 import os
 import os.path
+import sys
 
 from outwiker.core.defines import WX_VERSION
 import wxversion
@@ -10,7 +11,8 @@ import wxversion
 try:
     wxversion.select(WX_VERSION)
 except wxversion.VersionError:
-    if os.name == "nt":
+    if (sys.argv[0].endswith (u'outwiker') or
+            sys.argv[0].endswith (u'outwiker.exe')):
         pass
     else:
         raise

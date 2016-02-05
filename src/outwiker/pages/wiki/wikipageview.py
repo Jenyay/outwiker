@@ -111,6 +111,7 @@ class WikiPageView (BaseWikiPageView):
             TABLE_STR_ID,
             TABLE_ROW_STR_ID,
             TABLE_CELL_STR_ID,
+            MARK_STR_ID,
         ]
 
 
@@ -150,12 +151,25 @@ class WikiPageView (BaseWikiPageView):
         self.toolsMenu.AppendSubMenu (self._commandsMenu, _(u"Commands"))
 
         self.__addCommandsTools()
+
         self.__addFontTools()
+        self._addSeparator()
+
         self.__addAlignTools()
+        self._addSeparator()
+
         self.__addHTools()
+        self._addSeparator()
+
         self.__addTableTools()
+        self._addSeparator()
+
         self.__addListTools()
+        self._addSeparator()
+
         self.__addFormatTools()
+        self._addSeparator()
+
         self.__addOtherTools()
 
 
@@ -410,6 +424,15 @@ class WikiPageView (BaseWikiPageView):
                                                                 os.path.join (self.imagesDir, "quote.png"),
                                                                 fullUpdate=False)
 
+        # Mark
+        self._application.actionController.getAction (MARK_STR_ID).setFunc (lambda param: self.turnText (u'[!', u'!]'))
+
+        self._application.actionController.appendMenuItem (MARK_STR_ID, menu)
+        self._application.actionController.appendToolbarButton (MARK_STR_ID,
+                                                                toolbar,
+                                                                os.path.join (self.imagesDir, "mark.png"),
+                                                                fullUpdate=False)
+
 
         # Моноширинный шрифт
         self._application.actionController.getAction (CODE_STR_ID).setFunc (lambda param: self.turnText (u'@@', u'@@'))
@@ -540,6 +563,11 @@ class WikiPageView (BaseWikiPageView):
                                                                 toolbar,
                                                                 os.path.join (self.imagesDir, "table_insert_cell.png"),
                                                                 fullUpdate=False)
+
+
+    def _addSeparator (self):
+        toolbar = self.mainWindow.toolbars[self._getName()]
+        toolbar.AddSeparator()
 
 
     def _turnList (self, symbol):

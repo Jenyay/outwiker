@@ -1,7 +1,6 @@
 # -*- coding: UTF-8 -*-
 
 from outwiker.core.event import EVENT_PRIORITY_MAX_CORE
-from outwiker.core.factoryselector import FactorySelector
 
 from preferencepanelinfo import PreferencePanelInfo
 from generalpanel import GeneralPanel
@@ -42,18 +41,6 @@ class PrefController (object):
         self.__createEditorGroup ()
         self.__createIconsetPage ()
         self.__createPluginsPage ()
-
-
-    def __createPagesForPages (self):
-        """
-        Создать страницы настроек для типов страниц
-        """
-        for factory in FactorySelector.getFactories():
-            # Список экземпляров класса PreferencePanelInfo
-            panelsList = factory.getPrefPanels(self._dialog.treeBook)
-
-            if len (panelsList) > 0:
-                self._dialog.appendPreferenceGroup (factory.title, panelsList)
 
 
     def __createInterfaceGroup (self):

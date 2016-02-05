@@ -34,12 +34,7 @@ class Event (object):
         self._handlers.insert (index, (handler, priority))
 
 
-    def __iadd__ (self, handler):
-        self.bind (handler)
-        return self
-
-
-    def __isub__ (self, handler):
+    def unbind (self, handler):
         removed_item = None
         for item in self._handlers:
             if item[0] == handler:
@@ -48,6 +43,15 @@ class Event (object):
 
         if removed_item is not None:
             self._handlers.remove (removed_item)
+
+
+    def __iadd__ (self, handler):
+        self.bind (handler)
+        return self
+
+
+    def __isub__ (self, handler):
+        self.unbind (handler)
         return self
 
 
@@ -58,3 +62,17 @@ class Event (object):
 
     def __len__ (self):
         return len (self._handlers)
+
+
+class CustomEvents (object):
+    """Class contains events for access by key"""
+    def __init__ (self):
+        # key - string is event ID
+        # value - Event instance
+        self._events = {}
+
+
+    def get (self, key):
+        if key not in self._events:
+            self._events[key] = Event()
+        return self._events[key]

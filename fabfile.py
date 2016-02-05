@@ -9,10 +9,7 @@ import glob
 from fabric.api import local, lcd, settings
 
 # Supported Ubuntu releases
-distribs = ["wily", "vivid", "trusty", "precise"]
-
-# The separate folder for building under Ubuntu 12.04
-debian_precise = "debian_precise"
+distribs = ["wily", "trusty"]
 
 # List of the supported plugins
 plugins_list = [
@@ -38,6 +35,7 @@ plugins_list = [
     "tableofcontents",
     "texequation",
     "updatenotifier",
+    "webpage",
 ]
 
 
@@ -83,7 +81,7 @@ def _source():
     dirname = os.path.join ("build", _getDebSourceDirName())
     os.mkdir (dirname)
 
-    local ("rsync -avz --exclude=.bzr --exclude=distrib --exclude=build --exclude=*.pyc --exclude=*.dll --exclude=*.exe * --exclude=src/.ropeproject --exclude=src/test --exclude=src/setup_win.py --exclude=src/setup_tests.py --exclude=src/profile.py --exclude=src/tests.py --exclude=src/Microsoft.VC90.CRT.manifest --exclude=src/profiles --exclude=src/tools --exclude=doc --exclude=plugins --exclude=profiles --exclude=test --exclude=_update_version_bzr.py --exclude=outwiker_setup.iss --exclude=updateversion --exclude=updateversion.py --exclude=debian_tmp --exclude=debian_precise {dirname}/".format (dirname=dirname))
+    local ("rsync -avz --exclude=.bzr --exclude=distrib --exclude=build --exclude=*.pyc --exclude=*.dll --exclude=*.exe * --exclude=src/.ropeproject --exclude=src/test --exclude=src/setup_win.py --exclude=src/setup_tests.py --exclude=src/profile.py --exclude=src/tests.py --exclude=src/Microsoft.VC90.CRT.manifest --exclude=src/profiles --exclude=src/tools --exclude=doc --exclude=plugins --exclude=profiles --exclude=test --exclude=_update_version_bzr.py --exclude=outwiker_setup.iss --exclude=updateversion --exclude=updateversion.py --exclude=debian_tmp {dirname}/".format (dirname=dirname))
 
 
 def _orig (distname):
@@ -130,12 +128,6 @@ def _debuild (command, distriblist):
     Run command with debuild. The function assembles the deb packages for all releases in distriblist.
     """
     for distname in distriblist:
-        debian_tmp = "debian_tmp"
-
-        if distname == u"precise":
-            os.rename ("debian", debian_tmp)
-            os.rename (debian_precise, "debian")
-
         # Change release name in the changelog file
         _makechangelog (distribs[0], distname)
 
@@ -146,10 +138,6 @@ def _debuild (command, distriblist):
 
         # Return the source release name
         _makechangelog (distname, distribs[0])
-
-        if distname == u"precise":
-            os.rename ("debian", debian_precise)
-            os.rename (debian_tmp, "debian")
 
 
 def ppaunstable ():
@@ -247,6 +235,49 @@ def win (skipinstaller=False):
         local ("7z a ..\outwiker_win_unstable_all_plugins.7z .\* .\plugins -r -aoa -xr!*.pyc -xr!.ropeproject")
 
 
+def linux ():
+    """
+    Assemble builds under Windows
+    """
+    build_dir = u'build'
+    pluginsdir = os.path.join ("src", "plugins")
+    linux_build_dir = os.path.join (build_dir, u"outwiker_linux")
+    build_pluginsdir = os.path.join (linux_build_dir, u'plugins')
+
+    toRemove = [
+        os.path.join (linux_build_dir, u'tcl'),
+        os.path.join (linux_build_dir, u'tk'),
+        os.path.join (linux_build_dir, u'PyQt4.QtCore.so'),
+        os.path.join (linux_build_dir, u'PyQt4.QtGui.so'),
+        os.path.join (linux_build_dir, u'_tkinter.so'),
+        # os.path.join (linux_build_dir, u'pango.so'),
+        # os.path.join (linux_build_dir, u'pangocairo.so'),
+        # os.path.join (linux_build_dir, u'cairo._cairo.so'),
+    ]
+
+    # Create the plugins folder (it is not appened to the git repository)
+    _remove (pluginsdir)
+    os.mkdir (pluginsdir)
+
+    # Build by cx_Freeze
+    with lcd ("src"):
+        local ("python setup_linux.py build")
+
+    map (_remove, toRemove)
+
+    _remove (build_pluginsdir)
+    os.mkdir (build_pluginsdir)
+
+    # Remove old versions
+    _remove ("build/outwiker_linux_unstable_x64.zip")
+    _remove ("build/outwiker_linux_unstable_x64.7z")
+
+    # Create archive without plugins
+    with lcd (linux_build_dir):
+        local ("7z a ../outwiker_linux_unstable_x64.zip ./* ./plugins -r -aoa")
+        local ("7z a ../outwiker_linux_unstable_x64.7z ./* ./plugins -r -aoa")
+
+
 def nextversion():
     """
     Increment a version number (execute under Linux only, incremented the deb package version also)
@@ -265,7 +296,6 @@ def nextversion():
         fp_out.write (result)
 
     local ('dch -v "{}+{}~{}"'.format (lines[0].strip(), lines[1].strip(), distribs[0]))
-    shutil.copyfile ("debian/changelog", os.path.join (debian_precise, "changelog"))
 
 
 

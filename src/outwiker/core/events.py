@@ -185,6 +185,25 @@ class PageDialogPageTagsChangedParams (object):
         self.pageTags = pageTags
 
 
+class PageDialogPageFactoriesNeededParams (object):
+    def __init__ (self, dialog, pageForEdit):
+        """
+        Parameter set for the onPageDialogPageFactoriesNeeded event
+        """
+        self.dialog = dialog
+        self.pageForEdit = pageForEdit
+        self._pageFactories = []
+
+
+    def addPageFactory (self, factory):
+        self._pageFactories.append (factory)
+
+
+    @property
+    def pageFactories (self):
+        return self._pageFactories[:]
+
+
 class EditorStyleNeededParams (object):
     """
     Parameter set for the onEditorStyleNeeded event
@@ -193,3 +212,11 @@ class EditorStyleNeededParams (object):
         self.editor = editor
         self.text = text
         self.enableSpellChecking = enableSpellChecking
+
+
+class PageUpdateNeededParams (object):
+    """
+    Parameter set for the onPageUpdateNeededParams event
+    """
+    def __init__ (self, data):
+        self.data = data
