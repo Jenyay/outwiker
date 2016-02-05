@@ -299,7 +299,7 @@ class DownloadThread (Thread):
             self._error (_(u'Download error: {}\n').format (
                 unicode (error.reason))
             )
-        except ValueError as e:
+        except (IOError, ValueError) as e:
             self._error (_(u'Invalid URL or file format\n'))
             self._error (unicode (e))
         else:
