@@ -119,5 +119,6 @@ if __name__ == '__main__':
     from test.plugins.webpage.test_webpage import WebPageTest
     from test.plugins.webpage.test_downloader import DownloaderTest
     from test.plugins.webpage.test_real import RealTest
+    from test.plugins.webpage.test_loading import WebPageLoadingTest
 
     unittest.main()
