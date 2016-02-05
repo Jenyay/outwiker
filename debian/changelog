@@ -1,3 +1,10 @@
+outwiker (1.9.0+782~wily) wily; urgency=medium
+
+  * Added [!...!] wiki command.
+  * Refactoring.
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Fri, 05 Feb 2016 10:04:59 +0300
+
 outwiker (1.9.0+781~wily) wily; urgency=medium
 
   * Next version
