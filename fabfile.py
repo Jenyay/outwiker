@@ -250,9 +250,6 @@ def linux ():
         os.path.join (linux_build_dir, u'PyQt4.QtCore.so'),
         os.path.join (linux_build_dir, u'PyQt4.QtGui.so'),
         os.path.join (linux_build_dir, u'_tkinter.so'),
-        # os.path.join (linux_build_dir, u'pango.so'),
-        # os.path.join (linux_build_dir, u'pangocairo.so'),
-        # os.path.join (linux_build_dir, u'cairo._cairo.so'),
     ]
 
     # Create the plugins folder (it is not appened to the git repository)
@@ -269,12 +266,10 @@ def linux ():
     os.mkdir (build_pluginsdir)
 
     # Remove old versions
-    _remove ("build/outwiker_linux_unstable_x64.zip")
     _remove ("build/outwiker_linux_unstable_x64.7z")
 
     # Create archive without plugins
     with lcd (linux_build_dir):
-        local ("7z a ../outwiker_linux_unstable_x64.zip ./* ./plugins -r -aoa")
         local ("7z a ../outwiker_linux_unstable_x64.7z ./* ./plugins -r -aoa")
 
 
