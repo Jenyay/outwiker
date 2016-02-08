@@ -1,8 +1,0 @@
-{
-  edge_layout = flowchart;
-
-  A;
-  B -> C;
-  A -> C [folded];
-}
-

@@ -1,7 +1,0 @@
-{
-  group {
-    label = "test label";
-
-    A;
-  }
-}

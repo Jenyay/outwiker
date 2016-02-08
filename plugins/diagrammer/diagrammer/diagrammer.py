@@ -8,7 +8,7 @@ from outwiker.core.commands import getCurrentVersion
 from outwiker.core.version import Version, StatusSet
 from outwiker.core.system import getOS
 
-__version__ = u"1.0.2"
+__version__ = u"1.0.3"
 
 
 if getCurrentVersion() < Version (1, 8, 0, 735, status=StatusSet.DEV):
@@ -68,7 +68,7 @@ else:
                                        u"libs")
 
             syspath = [unicode (item, getOS().filesEncoding)
-                       if type (item) != type(u"")
+                       if not isinstance (item, unicode)
                        else item for item in sys.path]
 
             if cmd_folder not in syspath:

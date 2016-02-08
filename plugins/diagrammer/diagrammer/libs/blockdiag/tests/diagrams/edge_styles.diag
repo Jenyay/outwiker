@@ -1,9 +1,0 @@
-diagram {
-  A -> B [style = "none"];
-  B -> C [style = "solid"];
-  C -> D [style = "dashed"];
-  D -> E [style = "dotted"];
-  E -> F [hstyle = "generalization"];
-  F -> H [hstyle = "composition"];
-  H -> I [hstyle = "aggregation"];
-}

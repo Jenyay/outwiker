@@ -22,13 +22,18 @@ try:
 except ImportError:
     pass
 from functools import partial, wraps
-from PIL import PILLOW_VERSION, Image, ImageDraw, ImageFont, ImageFilter
+from PIL import Image, ImageDraw, ImageFont, ImageFilter
 from blockdiag.imagedraw import base
-from blockdiag.imagedraw.utils import cached
+from blockdiag.imagedraw.utils import memoize
 from blockdiag.imagedraw.utils.ellipse import dots as ellipse_dots
 from blockdiag.utils import images, Box, Size, XY
 from blockdiag.utils.fontmap import parse_fontpath, FontMap
 from blockdiag.utils.myitertools import istep, stepslice
+
+
+# apply monkey patch to pillow
+from blockdiag.imagedraw.utils import pillow
+pillow.apply_patch()
 
 
 def point_pairs(xylist):
@@ -270,7 +275,7 @@ class ImageDrawExBase(base.ImageDraw):
         textfolder = super(ImageDrawExBase, self).textfolder
         return partial(textfolder, scale=self.scale_ratio)
 
-    @cached
+    @memoize
     def textlinesize(self, string, font):
         ttfont = ttfont_for(font)
         if ttfont is None:
@@ -280,14 +285,7 @@ class ImageDrawExBase(base.ImageDraw):
             size = Size(int(size[0] * font_ratio),
                         int(size[1] * font_ratio))
         else:
-            size = ttfont.getsize(string)
-
-            # Avoid offset problem in Pillow (>= 2.2.0, < 2.6.0)
-            if "2.2.0" <= PILLOW_VERSION < "2.6.0":
-                offset = ttfont.getoffset(string)
-                size = (size[0] + offset[0], size[1] + offset[1])
-
-            size = Size(*size)
+            size = Size(*ttfont.getsize(string))
 
         return size
 
@@ -311,11 +309,6 @@ class ImageDrawExBase(base.ImageDraw):
                 self.paste(text_image, xy, text_image)
         else:
             size = ttfont.getsize(string)
-
-            # Avoid offset problem in Pillow (>= 2.2.0)
-            if hasattr(ttfont, 'getoffset'):
-                offset = ttfont.getoffset(string)
-                size = (size[0] + offset[0], size[1] + offset[1])
 
             # Generate mask to support BDF(bitmap font)
             mask = Image.new('1', size)

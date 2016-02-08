@@ -560,6 +560,7 @@ class Diagram(NodeGroup):
     def __init__(self):
         super(Diagram, self).__init__(None)
 
+        self.config = None
         self.node_width = None
         self.node_height = None
         self.span_width = None
@@ -567,14 +568,14 @@ class Diagram(NodeGroup):
         self.page_padding = None
         self.edge_layout = None
 
-    def set_plugin(self, name, attrs):
-        kwargs = dict([str(unquote(attr.name)), unquote(attr.value)]
-                      for attr in attrs)
+    def set_plugin(self, name, attrs, **kwargs):
+        kwargs.update(dict([str(unquote(attr.name)), unquote(attr.value)]
+                           for attr in attrs))
         plugins.load([name], diagram=self, **kwargs)
 
-    def set_plugins(self, value):
+    def set_plugins(self, value, **kwargs):
         modules = [name.strip() for name in value.split(',')]
-        plugins.load(modules, diagram=self)
+        plugins.load(modules, diagram=self, **kwargs)
 
     def set_default_shape(self, value):
         if noderenderer.get(value):

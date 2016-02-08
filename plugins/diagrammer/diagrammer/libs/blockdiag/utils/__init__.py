@@ -167,18 +167,7 @@ class Box(list):
 
 
 def unquote(string):
-    """
-    Remove quotas from string
-
-    >>> unquote('"test"')
-    'test'
-    >>> unquote("'test'")
-    'test'
-    >>> unquote("'half quoted")
-    "'half quoted"
-    >>> unquote('"half quoted')
-    '"half quoted'
-    """
+    """ Remove quotas from string """
     if string:
         m = re.match('\A(?P<quote>"|\')((.|\s)*)(?P=quote)\Z', string, re.M)
         if m:

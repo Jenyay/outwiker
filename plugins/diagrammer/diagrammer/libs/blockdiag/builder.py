@@ -15,12 +15,14 @@
 
 from blockdiag import parser
 from blockdiag.elements import Diagram, DiagramNode, NodeGroup, DiagramEdge
+from blockdiag.plugins import fire_node_event
 from blockdiag.utils import unquote, XY
 from blockdiag.utils.compat import cmp_to_key
 
 
 class DiagramTreeBuilder:
-    def build(self, tree):
+    def build(self, tree, config):
+        self.config = config
         self.diagram = Diagram()
         self.instantiate(self.diagram, tree)
         for subgroup in self.diagram.traverse_groups():
@@ -28,7 +30,13 @@ class DiagramTreeBuilder:
                 subgroup.group.nodes.remove(subgroup)
 
         self.bind_edges(self.diagram)
+        self.fire_node_event('build_finished')
         return self.diagram
+
+    def fire_node_event(self, event_type):
+        for node in self.diagram.nodes:
+            if node.drawable:
+                fire_node_event(node, event_type)
 
     def is_related_group(self, group1, group2):
         if group1.is_parent(group2) or group2.is_parent(group1):
@@ -111,7 +119,8 @@ class DiagramTreeBuilder:
                     name = unquote(stmt.name)
                     Diagram.classes[name] = stmt
                 elif stmt.type == 'plugin':
-                    self.diagram.set_plugin(stmt.name, stmt.attrs)
+                    self.diagram.set_plugin(stmt.name, stmt.attrs,
+                                            config=self.config)
 
             elif isinstance(stmt, parser.Statements):
                 self.instantiate(group, stmt)
@@ -595,16 +604,17 @@ class EdgeLayoutManager(object):
 
 class ScreenNodeBuilder:
     @classmethod
-    def build(cls, tree, layout=True):
+    def build(cls, tree, config=None, layout=True):
         DiagramNode.clear()
         DiagramEdge.clear()
         NodeGroup.clear()
         Diagram.clear()
 
-        return cls(tree, layout).run()
+        return cls(tree, config, layout).run()
 
-    def __init__(self, tree, layout):
-        self.diagram = DiagramTreeBuilder().build(tree)
+    def __init__(self, tree, config, layout):
+        self.diagram = DiagramTreeBuilder().build(tree, config)
+        self.config = config
         self.layout = layout
 
     def run(self):

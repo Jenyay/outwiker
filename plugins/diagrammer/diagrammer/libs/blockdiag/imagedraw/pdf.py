@@ -20,7 +20,7 @@ from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.lib.utils import ImageReader
 from blockdiag.imagedraw import base
-from blockdiag.imagedraw.utils import cached
+from blockdiag.imagedraw.utils import memoize
 from blockdiag.utils import images, Box, Size
 from blockdiag.utils.fontmap import parse_fontpath
 from blockdiag.utils.compat import string_types
@@ -128,7 +128,7 @@ class PDFImageDraw(base.ImageDraw):
         if 'thick' in kwargs:
             self.canvas.setLineWidth(1)
 
-    @cached
+    @memoize
     def textlinesize(self, string, font):
         self.set_font(font)
         width = self.canvas.stringWidth(string, font.path, font.size)

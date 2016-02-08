@@ -14,6 +14,7 @@
 #  limitations under the License.
 
 import sys
+import codecs
 
 if sys.version_info[0] == 2:
     string_types = (str, unicode)  # NOQA: pyflakes complains to unicode in py3
@@ -28,6 +29,16 @@ def u(string):
         return unicode(string, "unicode_escape")  # NOQA: pyflakes complains to unicode in py3
     else:
         return string
+
+
+# replace codecs.getreader
+if sys.version_info[0] == 3:
+    getreader = codecs.getreader
+
+    def py3_getreader(encoding):
+        return lambda stream, *args: getreader(encoding)(stream.buffer, *args)
+
+    codecs.getreader = py3_getreader
 
 
 def cmp_to_key(mycmp):
