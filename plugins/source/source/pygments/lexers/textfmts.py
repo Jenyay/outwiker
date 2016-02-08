@@ -5,7 +5,7 @@
 
     Lexers for various text formats.
 
-    :copyright: Copyright 2006-2014 by the Pygments team, see AUTHORS.
+    :copyright: Copyright 2006-2015 by the Pygments team, see AUTHORS.
     :license: BSD, see LICENSE for details.
 """
 
@@ -39,7 +39,7 @@ class IrcLogsLexer(RegexLexer):
                     (?:\d{1,4})
                  [T ])?                # Date/time separator: T or space
                 (?: \d?\d [:.])*       # Time as :/.-separated groups of 1 or 2 digits
-                    (?: \d?\d [:.])
+                    (?: \d?\d)
             )
           (?: \]|\))?\s+               # Closing bracket or paren for the timestamp
         |
@@ -102,7 +102,7 @@ class GettextLexer(RegexLexer):
             (r'^(")([A-Za-z-]+:)(.*")$',
              bygroups(String, Name.Property, String)),
             (r'^".*"$', String),
-            (r'^(msgid|msgid_plural|msgstr)(\s+)(".*")$',
+            (r'^(msgid|msgid_plural|msgstr|msgctxt)(\s+)(".*")$',
              bygroups(Name.Variable, Text, String)),
             (r'^(msgstr\[)(\d)(\])(\s+)(".*")$',
              bygroups(Name.Variable, Number.Integer, Name.Variable, Text, String)),

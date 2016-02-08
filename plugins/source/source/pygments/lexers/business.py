@@ -5,7 +5,7 @@
 
     Lexers for "business-oriented" languages.
 
-    :copyright: Copyright 2006-2014 by the Pygments team, see AUTHORS.
+    :copyright: Copyright 2006-2015 by the Pygments team, see AUTHORS.
     :license: BSD, see LICENSE for details.
 """
 
@@ -244,7 +244,7 @@ class ABAPLexer(RegexLexer):
     """
     name = 'ABAP'
     aliases = ['abap']
-    filenames = ['*.abap']
+    filenames = ['*.abap', '*.ABAP']
     mimetypes = ['text/x-abap']
 
     flags = re.IGNORECASE | re.MULTILINE

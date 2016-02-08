@@ -5,7 +5,7 @@
 
     Basic token types and the standard tokens.
 
-    :copyright: Copyright 2006-2014 by the Pygments team, see AUTHORS.
+    :copyright: Copyright 2006-2015 by the Pygments team, see AUTHORS.
     :license: BSD, see LICENSE for details.
 """
 
@@ -179,8 +179,10 @@ STANDARD_TYPES = {
     Punctuation:                   'p',
 
     Comment:                       'c',
+    Comment.Hashbang:              'ch',
     Comment.Multiline:             'cm',
     Comment.Preproc:               'cp',
+    Comment.PreprocFile:           'cpf',
     Comment.Single:                'c1',
     Comment.Special:               'cs',
 
