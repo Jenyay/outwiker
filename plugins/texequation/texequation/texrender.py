@@ -78,7 +78,8 @@ class MimeTexWindows (MimeTex):
     """
     @property
     def mimeTexPath (self):
-        return os.path.join (os.path.dirname (__file__), u"tools", u"mimetex.exe")
+        currentOS = getOS()
+        return os.path.join (os.path.dirname (__file__).decode (currentOS.filesEncoding), u"tools", u"mimetex.exe")
 
 
     def run (self, args):
