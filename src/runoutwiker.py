@@ -11,8 +11,8 @@ import wxversion
 try:
     wxversion.select(WX_VERSION)
 except wxversion.VersionError:
-    if (sys.argv[0].endswith (u'outwiker') or
-            sys.argv[0].endswith (u'outwiker.exe')):
+    if (sys.argv[0].endswith ('outwiker') or
+            sys.argv[0].endswith ('outwiker.exe')):
         pass
     else:
         raise
